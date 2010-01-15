@@ -157,8 +157,7 @@ _cb_btn_click(void *data, void *data2)
 
    icon = e_icon_add(evas_object_evas_get(inst->o_btn));
    state = bd->client.vkbd.state;
-   if ((state == ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF) ||
-       (state == ECORE_X_VIRTUAL_KEYBOARD_STATE_UNKNOWN)) 
+   if (state <= ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF) 
      {
         ecore_x_e_virtual_keyboard_state_set(bd->client.win, 
                                              ECORE_X_VIRTUAL_KEYBOARD_STATE_ON);
@@ -192,8 +191,7 @@ _cb_border_focus_in(void *data, int type, void *event)
 
    icon = e_icon_add(evas_object_evas_get(inst->o_btn));
    state = bd->client.vkbd.state;
-   if ((state == ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF) ||
-       (state == ECORE_X_VIRTUAL_KEYBOARD_STATE_UNKNOWN)) 
+   if (state <= ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF)
      e_icon_file_edje_set(icon, buff, "icon");
    else 
      e_icon_file_edje_set(icon, buff, "btn_icon");
