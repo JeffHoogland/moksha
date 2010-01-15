@@ -20,6 +20,7 @@
 //      wallpaper, efm - hell even menus and anything else in e (this is what
 //      e18 was mostly about)
 //  10. fullscreen windows need to be able to bypass compositing
+//  11. handle root window resize!
 //  
 //////////////////////////////////////////////////////////////////////////
 
@@ -854,6 +855,18 @@ _e_mod_comp_damage(void *data, int type, void *event)
    return 1;
 }
 
+static int
+_e_mod_comp_randr(void *data, int type, void *event)
+{
+   Eina_List *l;
+   E_Comp *c;
+
+   EINA_LIST_FOREACH(compositors, l, c)
+     {
+        ecore_evas_resize(c->ee, c->man->w, c->man->h);
+     }
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 static E_Comp *
@@ -974,6 +987,8 @@ e_mod_comp_init(void)
    handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHAPE,     _e_mod_comp_shape,     NULL));
    handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_DAMAGE_NOTIFY,    _e_mod_comp_damage,    NULL));
 
+   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_CONTAINER_RESIZE,       _e_mod_comp_randr,     NULL));
+   
    EINA_LIST_FOREACH(e_manager_list(), l, man)
      {
         E_Comp *c;
