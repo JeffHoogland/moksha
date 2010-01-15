@@ -775,7 +775,6 @@ e_ilist_multi_select(Evas_Object *obj, int n)
 EAPI void 
 e_ilist_range_select(Evas_Object *obj, int n) 
 {
-   E_Ilist_Item *si = NULL;
    int i, j, dir;
 
    API_ENTRY return;
@@ -788,7 +787,7 @@ e_ilist_range_select(Evas_Object *obj, int n)
    if (n < sd->selected) dir = 0;
    else dir = 1;
 
-   if (!(si = eina_list_nth(sd->items, n))) return;
+   if (!eina_list_nth(sd->items, n)) return;
    if (dir == 1) 
      {
 	for (j = (sd->selected + 1); ((j < i) && (j <= n)); j++) 

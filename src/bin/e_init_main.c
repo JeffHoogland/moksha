@@ -170,9 +170,6 @@ _e_ipc_cb_server_add(void *data, int type, void *event)
 static int
 _e_ipc_cb_server_del(void *data, int type, void *event)
 {
-   Ecore_Ipc_Event_Server_Del *e;
-
-   e = event;
    /* quit now */
    ecore_main_loop_quit();
    return 1;

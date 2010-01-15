@@ -3997,8 +3997,8 @@ _e_gadcon_layout_smart_gadcons_position(E_Smart_Data *sd, Eina_List **list)
 {
    int ok, lc_moving_prev_pos;
    Eina_List *l, *l2, *l3;
-   E_Layout_Item_Container *lc_moving = NULL, *lc_back, *lc, *lc3;
-   E_Gadcon_Layout_Item *bi, *bi_moving;
+   E_Layout_Item_Container *lc_moving = NULL, *lc_back = NULL, *lc, *lc3;
+   E_Gadcon_Layout_Item *bi, *bi_moving = NULL;
 
    if ((!list) || (!*list)) return;
 
@@ -4345,8 +4345,11 @@ _e_gadcon_layout_smart_gadcons_position(E_Smart_Data *sd, Eina_List **list)
 	LC_FREE(lc_back);
      }
 
-   bi_moving->gcc->config.pos = bi_moving->ask.pos = bi_moving->x; 
-   bi_moving->gcc->config.size = bi_moving->w;
+   if (bi_moving)
+     {
+	bi_moving->gcc->config.pos = bi_moving->ask.pos = bi_moving->x; 
+	bi_moving->gcc->config.size = bi_moving->w;
+     }
 }
 
 static void

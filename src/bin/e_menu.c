@@ -1010,6 +1010,7 @@ e_menu_idler_before(void)
 				 break;
 			      }
 			 }
+		       // TODO: This is meaningless
 		       changed = 0;
 		    }
 		  if (changed)
@@ -1034,7 +1035,7 @@ e_menu_idler_before(void)
 	  }
      }
    /* del refcount to all menus we worked with */
-   tmp = _e_menu_list_free_unref(tmp);
+   _e_menu_list_free_unref(tmp);
 
    if (!_e_active_menus)
      {

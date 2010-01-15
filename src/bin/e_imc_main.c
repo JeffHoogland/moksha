@@ -128,8 +128,6 @@ main(int argc, char **argv)
    /* else create new imc */
    if (write_ops != 0)
      {
-	int write_ok;
-	
 	write_imc = calloc(sizeof(E_Input_Method_Config), 1);
 	write_imc->version = E_INTL_INPUT_METHOD_CONFIG_VERSION;
 	if (read_imc != NULL)
@@ -157,7 +155,7 @@ main(int argc, char **argv)
 
 	
 	/* write imc to file */
-	write_ok = e_intl_input_method_config_write(ef, write_imc);
+	e_intl_input_method_config_write(ef, write_imc);
      }
 
 

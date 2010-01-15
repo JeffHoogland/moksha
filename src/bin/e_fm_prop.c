@@ -324,12 +324,10 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    Evas_Object *o, *ot, *ob, *of, *oi;
    E_Radio_Group *rg;
    char buf[4096];
-   E_Fm2_Config *cfg;
    const char *itype = NULL;
    
    snprintf(buf, sizeof(buf), "%s/%s", 
 	    e_fm2_real_path_get(cfdata->fi->fm), cfdata->fi->file);
-   cfg = e_fm2_config_get(cfdata->fi->fm);
    o = e_widget_table_add(evas, 0);
 
    ot = e_widget_table_add(evas, 0);

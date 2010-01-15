@@ -56,7 +56,7 @@ e_msg_send(const char *name, const char *info, int val, E_Object *obj)
    unsigned int size, pos, name_len, info_len;
    E_Msg_Event *ev;
    
-   name_len = info_len = size = 0;
+   name_len = info_len = 0;
    size = sizeof(E_Msg_Event);
    if (name) name_len = strlen(name) + 1;
    if (info) info_len = strlen(info) + 1;

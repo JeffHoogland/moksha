@@ -98,12 +98,9 @@ e_manager_new(Ecore_X_Window root, int num)
    ecore_x_window_size_get(man->root, &(man->w), &(man->h));
    if (e_config->use_virtual_roots)
      {
-	Ecore_X_Window mwin;
-	
 	man->win = ecore_x_window_override_new(man->root, man->x, man->y, man->w, man->h);
 	ecore_x_icccm_title_set(man->win, "Enlightenment Manager");
 	ecore_x_netwm_name_set(man->win, "Enlightenment Manager");
-	mwin = e_menu_grab_window_get();
 	ecore_x_window_raise(man->win);
      }
    else
@@ -172,12 +169,10 @@ e_manager_manage_windows(E_Manager *man)
 	       "KWM_DOCKWINDOW"
 	  };
 	Ecore_X_Atom atoms[3];
-        Ecore_X_Atom atom_xmbed, atom_kde_netwm_systray, atom_kwm_dockwindow,
-	  atom_window;
+        Ecore_X_Atom atom_xmbed, atom_kde_netwm_systray, atom_kwm_dockwindow;
 	unsigned char *data = NULL;
 	int count;
 	
-	atom_window = ECORE_X_ATOM_WINDOW;
 	ecore_x_atoms_get(atom_names, 3, atoms);
 	atom_xmbed = atoms[0];
 	atom_kde_netwm_systray = atoms[1];
@@ -666,7 +661,6 @@ _e_manager_cb_frame_extents_request(void *data, int ev_type __UNUSED__, void *ev
    if (state)
      {
 	int maximized = 0;
-	int fullscreen = 0;
 
 	for (i = 0; i < num; i++)
 	  {
@@ -679,7 +673,6 @@ _e_manager_cb_frame_extents_request(void *data, int ev_type __UNUSED__, void *ev
 		  maximized++;
 		  break;
 		case ECORE_X_WINDOW_STATE_FULLSCREEN:
-		  fullscreen = 1;
 		  border = "borderless";
 		  key = border;
 		  break;
@@ -815,11 +808,9 @@ _e_manager_cb_screensaver_notify(void *data __UNUSED__, int ev_type __UNUSED__, 
 static int
 _e_manager_cb_client_message(void *data, int ev_type, void *ev)
 {
-   E_Manager *man;
    Ecore_X_Event_Client_Message *e;
    E_Border *bd;
    
-   man = data;
    e = ev;
    
    if (e->message_type == ECORE_X_ATOM_NET_ACTIVE_WINDOW)

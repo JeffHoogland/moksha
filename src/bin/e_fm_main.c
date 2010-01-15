@@ -763,9 +763,12 @@ _e_dbus_format_error_msg(char **buf, E_Volume *v, DBusError *error)
    tmp = *buf = malloc(size);
    
    strcpy(tmp, v->udi);
-   strcpy(tmp += vu, v->mount_point);
-   strcpy(tmp += vm, error->name);
-   strcpy(tmp += en, error->message);
+   tmp += vu;
+   strcpy(tmp, v->mount_point);
+   tmp += vm;
+   strcpy(tmp, error->name);
+   tmp += en;
+   strcpy(tmp, error->message);
    
    return size;
 }
@@ -971,7 +974,7 @@ e_volume_mount(E_Volume *v)
    v->guard = ecore_timer_add(E_FM_MOUNT_TIMEOUT, _e_dbus_vol_mount_timeout, v);
    v->op = e_hal_device_volume_mount(_e_dbus_conn, v->udi, mount_point,
                                      v->fstype, opt, _e_dbus_cb_vol_mounted, v);
-   opt = eina_list_free(opt);
+   eina_list_free(opt);
 }
 
 static int
@@ -1184,9 +1187,6 @@ _e_ipc_cb_server_add(void *data, int type, void *event)
 static int
 _e_ipc_cb_server_del(void *data, int type, void *event)
 {
-   Ecore_Ipc_Event_Server_Del *e;
-   
-   e = event;
    /* quit now */
    ecore_main_loop_quit();
    return 1;

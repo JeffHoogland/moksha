@@ -228,7 +228,6 @@ e_int_border_menu_create(E_Border *bd)
      {
 	mi = e_menu_item_new(m);
 	e_menu_item_separator_set(mi, 1);
-	separator = 1;
      }
 
    if ((!bd->lock_close) && (!bd->internal))
@@ -269,13 +268,10 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 EAPI void
 e_int_border_menu_del(E_Border *bd)
 {
-   int was_menu = 0;
-
    if (bd->border_menu)
      {
 	e_object_del(E_OBJECT(bd->border_menu));
 	bd->border_menu = NULL;
-	was_menu = 1;
      }
 }
 
@@ -962,7 +958,6 @@ _e_border_menu_cb_border_pre(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Menu *subm;
    E_Menu_Item *submi;
    E_Border *bd;
-   Evas *evas;
 
    if (!(bd = data)) return;
 
@@ -993,7 +988,6 @@ _e_border_menu_cb_border_pre(void *data, E_Menu *m, E_Menu_Item *mi)
    e_menu_item_callback_set(submi, _e_border_menu_cb_iconpref_e, bd);
 
    submi = e_menu_item_new(subm);
-   evas = submi->menu->evas;
    e_menu_item_label_set(submi, _("Use Application Provided Icon "));
    e_menu_item_radio_set(submi, 1);
    e_menu_item_radio_group_set(submi, 2);

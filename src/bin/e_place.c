@@ -169,8 +169,6 @@ e_place_zone_region_smart(E_Zone *zone, Eina_List *skiplist, int x, int y, int w
    a_alloc_w = 2;
    a_alloc_h = 2;
 
-   x -= zone->x;
-   y -= zone->y;
    zw = zone->w;
    zh = zone->h;
 
