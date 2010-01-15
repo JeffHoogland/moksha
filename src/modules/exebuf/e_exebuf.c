@@ -738,7 +738,7 @@ _e_exebuf_complete(void)
 {
    char common[EXEBUFLEN], *exe = NULL;
    Eina_List *l;
-   int orig_len = 0, common_len = 0, exe_len, next_char, val, pos, matches;
+   int orig_len = 0, common_len = 0, exe_len, next_char, val, matches;
    int clear_hist = 0;
    
    if (!(strlen(cmd_buf)))
@@ -778,7 +778,6 @@ _e_exebuf_complete(void)
 		  if (exe_len > common_len)
 		    {
 		       val = 0;
-		       pos = evas_string_char_next_get(exe, common_len, &val);
 		       if (!next_char)
 			 next_char = val;
 		       else if (next_char != val)
@@ -1008,7 +1007,7 @@ _e_exebuf_matches_update(void)
 	if (hist_matches)
 	  {
 	     _e_exebuf_hist_update(hist_matches);
-	     hist_matches = eina_list_free(hist_matches);
+	     eina_list_free(hist_matches);
 	     exe_sel = eaps->data;
 	     if (exe_sel)
 	       {

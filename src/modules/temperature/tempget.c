@@ -105,11 +105,11 @@ init(void)
 	     sensor_type = SENSOR_TYPE_LINUX_ACPI;
 	     sensor_name = strdup(name);
 
-	     therms = eina_list_free(therms);
+	     eina_list_free(therms);
 	  }
 	else
 	  {
-	     therms = eina_list_free(therms);
+	     eina_list_free(therms);
 	     if (ecore_file_exists("/proc/omnibook/temperature"))
 	       {
 		  sensor_type = SENSOR_TYPE_OMNIBOOK;
@@ -157,7 +157,7 @@ init(void)
                                         sensor_path, sensor_name);
 			      }
 			 }
-		       therms = eina_list_free(therms);
+		       eina_list_free(therms);
 		    }
 		  if (!sensor_path)
 		    {
@@ -186,7 +186,7 @@ init(void)
                                              sensor_path, sensor_name);
 				   }
 			      }
-			    therms = eina_list_free(therms);
+			    eina_list_free(therms);
 			 }
 		    }
 	       }

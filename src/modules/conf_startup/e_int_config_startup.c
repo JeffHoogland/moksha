@@ -105,14 +105,6 @@ _cb_files_selection_change(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void
-_cb_files_selected(void *data, Evas_Object *obj, void *event_info)
-{
-   E_Config_Dialog_Data *cfdata;
-   
-   cfdata = data;
-}
-
-static void
 _cb_files_files_changed(void *data, Evas_Object *obj, void *event_info)
 {
    E_Config_Dialog_Data *cfdata;
@@ -307,8 +299,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 				  _cb_files_changed, cfdata);
    evas_object_smart_callback_add(o, "selection_change",
 				  _cb_files_selection_change, cfdata);
-   evas_object_smart_callback_add(o, "selected",
-				  _cb_files_selected, cfdata);
    evas_object_smart_callback_add(o, "changed",
 				  _cb_files_files_changed, cfdata);
    e_fm2_path_set(o, path, "/");

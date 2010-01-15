@@ -23,7 +23,6 @@ static int _e_slipshelf_cb_animate(void *data);
 static void _e_slipshelf_slide(E_Slipshelf *ess, int out, double len);
 static int _e_slipshelf_cb_mouse_up(void *data, int type, void *event);
 static int _e_slipshelf_cb_zone_move_resize(void *data, int type, void *event);
-static int _e_slipshelf_cb_zone_del(void *data, int type, void *event);
 static void _e_slipshelf_event_simple_free(void *data, void *ev);
 static void _e_slipshelf_object_del_attach(void *o);
 static int _e_slipshelf_cb_border_focus_in(void *data, int type, void *event);
@@ -31,7 +30,6 @@ static int _e_slipshelf_cb_border_focus_out(void *data, int type, void *event);
 static int _e_slipshelf_cb_border_property(void *data, int type, void *event);
 static void _e_slipshelf_title_update(E_Slipshelf *ess);
 static void _e_slipshelf_cb_gadcon_min_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h);
-static void _e_slipshelf_cb_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h);
 static Evas_Object *_e_slipshelf_cb_gadcon_frame_request(void *data, E_Gadcon_Client *gcc, const char *style);
 static void _e_winilist_cb_item_sel(void *data, void *data2);
 
@@ -54,8 +52,6 @@ e_slipshelf_init(void)
 EAPI int
 e_slipshelf_shutdown(void)
 {
-   E_Config_Dialog *cfd;
-   
    e_winilist_shutdown();
    return 1;
 }
@@ -64,7 +60,7 @@ EAPI E_Slipshelf *
 e_slipshelf_new(E_Zone *zone, const char *themedir)
 {
    E_Slipshelf *ess;
-   Evas_Coord mw, mh, vx, vy, vw, vh, w, h;
+   Evas_Coord mw, mh, vx, vy, vw, vh;
    int x, y;
    Evas_Object *o;
 
@@ -143,7 +139,6 @@ e_slipshelf_new(E_Zone *zone, const char *themedir)
    edje_object_part_swallow(ess->base_obj, "e.swallow.extra", ess->gadcon_extra->o_container);
    
    e_gadcon_min_size_request_callback_set(ess->gadcon_extra, _e_slipshelf_cb_gadcon_min_size_request, ess);
-   e_gadcon_size_request_callback_set(ess->gadcon_extra, _e_slipshelf_cb_gadcon_size_request, ess);
    e_gadcon_frame_request_callback_set(ess->gadcon_extra, _e_slipshelf_cb_gadcon_frame_request, ess);
    e_gadcon_orient(ess->gadcon_extra, E_GADCON_ORIENT_TOP);
    e_gadcon_zone_set(ess->gadcon_extra, ess->zone);
@@ -156,7 +151,6 @@ e_slipshelf_new(E_Zone *zone, const char *themedir)
    edje_object_part_swallow(ess->base_obj, "e.swallow.content", ess->gadcon->o_container);
    
    e_gadcon_min_size_request_callback_set(ess->gadcon, _e_slipshelf_cb_gadcon_min_size_request, ess);
-   e_gadcon_size_request_callback_set(ess->gadcon, _e_slipshelf_cb_gadcon_size_request, ess);
    e_gadcon_frame_request_callback_set(ess->gadcon, _e_slipshelf_cb_gadcon_frame_request, ess);
    e_gadcon_orient(ess->gadcon, E_GADCON_ORIENT_TOP);
    e_gadcon_zone_set(ess->gadcon, ess->zone);
@@ -608,14 +602,9 @@ _e_slipshelf_cb_item_sel(void *data, E_Border *bd)
 static void
 _e_slipshelf_applist_update(E_Slipshelf *ess)
 {
-   Evas_Coord mw, mh, vx, vy, vw, vh, w, h, sfmw, sfmh, cmw, cmh, smw, smh;
-   int i, selnum, x, y;
-   int pw, ph;
+   Evas_Coord vx, vy, vw, vh, sfmw, sfmh, cmw, cmh, smw, smh;
+   int x, y;
    
-   i = 0;
-
-   pw = ess->popup->w;
-   ph = ess->popup->h;
    ess->bsel = e_border_focused_get();
    
    e_winilist_optimial_size_get(ess->scrollframe_obj, &sfmw, &sfmh);
@@ -798,7 +787,6 @@ static void
 _e_slipshelf_object_del_attach(void *o)
 {
    E_Slipshelf *ess;
-   E_Event_Slipshelf_Del *ev;
 
    if (e_object_is_del(E_OBJECT(o))) return;
    ess = o;
@@ -819,7 +807,8 @@ _e_slipshelf_cb_border_focus_in(void *data, int type, void *event)
    ev = event;
    ess = data;
    ess->focused_border = ev->border;
-     _e_slipshelf_title_update(ess);
+   _e_slipshelf_title_update(ess);
+   return 1;
 }
 
 static int
@@ -832,7 +821,8 @@ _e_slipshelf_cb_border_focus_out(void *data, int type, void *event)
    ess = data;
    if (ess->focused_border == ev->border)
      ess->focused_border = NULL;
-     _e_slipshelf_title_update(ess);
+   _e_slipshelf_title_update(ess);
+   return 1;
 }
 
 static int
@@ -845,6 +835,7 @@ _e_slipshelf_cb_border_property(void *data, int type, void *event)
    ess = data;
    if (ess->focused_border == ev->border)
      _e_slipshelf_title_update(ess);
+   return 1;
 }
 
 static void
@@ -903,15 +894,6 @@ _e_slipshelf_cb_gadcon_min_size_request(void *data, E_Gadcon *gc, Evas_Coord w, 
    mw = ess->zone->w;
    e_popup_move_resize(ess->popup, x, y, mw, mh);
    evas_object_resize(ess->base_obj, ess->popup->w, ess->popup->h);
-   return;
-}
-
-static void
-_e_slipshelf_cb_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h)
-{
-   E_Slipshelf *ess;
-   
-   ess = data;
    return;
 }
 

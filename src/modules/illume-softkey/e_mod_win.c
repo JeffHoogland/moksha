@@ -90,11 +90,10 @@ _il_sk_win_cb_resize(E_Win *win)
 static void 
 _il_sk_win_cb_back_click(void *data, void *data2) 
 {
-   Il_Sk_Win *swin;
    E_Border *bd, *fbd;
    Eina_List *focused, *l;
 
-   if (!(swin = data)) return;
+   if (!data) return;
    if (!(bd = e_border_focused_get())) return;
    focused = e_border_focus_stack_get();
    EINA_LIST_REVERSE_FOREACH(focused, l, fbd) 
@@ -122,10 +121,9 @@ _il_sk_win_cb_back_click(void *data, void *data2)
 static void 
 _il_sk_win_cb_close_click(void *data, void *data2) 
 {
-   Il_Sk_Win *swin;
    E_Border *bd;
 
-   if (!(swin = data)) return;
+   if (!data) return;
    if (!(bd = e_border_focused_get())) return;
    e_border_act_close_begin(bd);
 }

@@ -240,7 +240,7 @@ static E_Popup *
 _e_wizard_main_new(E_Zone *zone)
 {
    E_Popup *pop;
-   Evas_Object *o, *o_ev;
+   Evas_Object *o;
    Evas_Modifier_Mask mask;
    Eina_Bool kg;
    
@@ -275,7 +275,6 @@ _e_wizard_main_new(E_Zone *zone)
       fprintf(stderr,"ERROR: unable to redirect \"KP_Enter\" key events to object %p.\n", o);
    evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN,
 				  _e_wizard_cb_key_down, pop);
-   o_ev = o;
 
    /* set up next/prev buttons */
    edje_object_part_text_set(o_bg, "e.text.title", _("Welcome to Enlightenment"));
@@ -315,10 +314,8 @@ static void
 _e_wizard_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event)
 {
    Evas_Event_Key_Down *ev;
-   E_Popup *pop;
    
    ev = event;
-   pop = (E_Popup *)data;
    if (!o_content) return;
    if (!strcmp(ev->keyname, "Tab"))
      {

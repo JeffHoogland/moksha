@@ -71,7 +71,6 @@ static int _il_home_cb_client_message(void *data, int type, void *event);
 /* local variables */
 static Eina_List *instances = NULL;
 static Eina_List *desks = NULL;
-static Eina_List *sels = NULL;
 static Eina_List *handlers = NULL;
 static Eina_List *exes = NULL;
 static Ecore_Timer *defer = NULL;
@@ -597,7 +596,6 @@ _il_home_desks_populate(void)
    if (menu) 
      {
         Eina_List *l, *ll;
-        Efreet_Desktop *desktop;
         char buff[PATH_MAX];
         Efreet_Menu *entry, *subentry;
         Eina_List *settings, *sys, *kbd;
@@ -609,9 +607,9 @@ _il_home_desks_populate(void)
         EINA_LIST_FOREACH(menu->entries, l, entry) 
           {
              if (entry->type != EFREET_MENU_ENTRY_MENU) continue;
-             desktop = entry->desktop;
              EINA_LIST_FOREACH(entry->entries, ll, subentry) 
                {
+		  Efreet_Desktop *desktop;
                   if (subentry->type != EFREET_MENU_ENTRY_DESKTOP) continue;
                   if (!(desktop = subentry->desktop)) continue;
                   if ((settings) && (sys) && 

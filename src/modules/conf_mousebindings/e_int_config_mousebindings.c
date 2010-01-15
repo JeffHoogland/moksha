@@ -1028,8 +1028,8 @@ _auto_apply_changes(E_Config_Dialog_Data *cfdata)
 	params = &(bw->params);
      } 
    
-   eina_stringshare_del(*action); 
-   eina_stringshare_del(*params); 
+   if (*action) eina_stringshare_del(*action); 
+   if (*params) eina_stringshare_del(*params); 
    *action = NULL; 
    *params = NULL;
 
@@ -1188,7 +1188,7 @@ _helper_wheel_name_get(E_Config_Binding_Wheel *bw)
 static char *
 _helper_modifier_name_get(int mod)
 {
-   char mods[1024]="";
+   char mods[1024] = "";
 
    if (mod & E_BINDING_MODIFIER_SHIFT)
      snprintf(mods, sizeof(mods), "SHIFT");

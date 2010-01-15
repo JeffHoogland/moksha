@@ -221,9 +221,9 @@ _battery_face_time_set(Evas_Object *battery, int time_left)
 
    hrs = (time_left / 3600);
    mins = ((time_left) / 60 - (hrs * 60));
-   snprintf(buf, sizeof(buf), "%i:%02i", hrs, mins);
    if (hrs < 0) hrs = 0;
    if (mins < 0) mins = 0;
+   snprintf(buf, sizeof(buf), "%i:%02i", hrs, mins);
    edje_object_part_text_set(battery, "e.text.time", buf);
 }
 

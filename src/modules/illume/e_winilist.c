@@ -417,86 +417,54 @@ _refill(Data *d)
 static int
 _cb_border_add(void *data, int ev_type, void *event)
 {
-   E_Event_Border_Add *ev;
-   
-   ev = event;
-     {
-	Eina_List *l;
+   Eina_List *l;
 	
-	for (l = winilists; l; l = l->next) _refill(l->data);
-     }
+   for (l = winilists; l; l = l->next) _refill(l->data);
    return 1;
 }
 
 static int
 _cb_border_remove(void *data, int ev_type, void *event)
 {
-   E_Event_Border_Remove *ev;
-   
-   ev = event;
-     {
-	Eina_List *l;
+   Eina_List *l;
 	
-	for (l = winilists; l; l = l->next) _refill(l->data);
-     }
+   for (l = winilists; l; l = l->next) _refill(l->data);
    return 1;
 }
 
 static int
 _cb_border_show(void *data, int ev_type, void *event)
 {
-   E_Event_Border_Show *ev;
-   
-   ev = event;
-     {
-	Eina_List *l;
+   Eina_List *l;
 	
-	for (l = winilists; l; l = l->next) _refill(l->data);
-     }
+   for (l = winilists; l; l = l->next) _refill(l->data);
    return 1;
 }
 
 static int
 _cb_border_hide(void *data, int ev_type, void *event)
 {
-   E_Event_Border_Hide *ev;
-   
-   ev = event;
-     {
-	Eina_List *l;
+   Eina_List *l;
 	
-	for (l = winilists; l; l = l->next) _refill(l->data);
-     }
+   for (l = winilists; l; l = l->next) _refill(l->data);
    return 1;
 }
 
 static int
 _cb_border_property(void *data, int ev_type, void *event)
 {
-   E_Event_Border_Property *ev;
-   
-   ev = event;
-   /* FIXME: should really be optimal on what properties warrant a refill */
-     {
-	Eina_List *l;
+   Eina_List *l;
 	
-	for (l = winilists; l; l = l->next) _refill(l->data);
-     }
+   for (l = winilists; l; l = l->next) _refill(l->data);
    return 1;
 }
 
 static int
 _cb_desk_show(void *data, int ev_type, void *event)
 {
-   E_Event_Desk_Show *ev;
-   
-   ev = event;
-   /* FIXME: should really be optimal on what properties warrant a refill */
-     {
-	Eina_List *l;
+   Eina_List *l;
 	
-	for (l = winilists; l; l = l->next) _refill(l->data);
-     }
+   for (l = winilists; l; l = l->next) _refill(l->data);
    return 1;
 }
 

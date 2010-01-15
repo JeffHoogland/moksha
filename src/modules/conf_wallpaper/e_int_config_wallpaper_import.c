@@ -71,7 +71,6 @@ struct _E_Config_Dialog_Data
    int quality;
 };
 
-static void _import_opt_disabled_set(Import *import, int disabled);
 static void _fsel_path_save(FSel *fsel);
 static void _import_edj_gen(Import *import);
 static int _import_cb_edje_cc_exit(void *data, int type, void *event);
@@ -85,7 +84,6 @@ static void _fsel_cb_close(void *data, void *data2);
 static void _fsel_cb_ok(void *data, void *data2);
 static void _import_cb_wid_on_focus(void *data, Evas_Object *obj);
 static void _import_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event);
-static void _fsel_cb_wid_on_focus(void *data, Evas_Object *obj);
 static void _fsel_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event);
 
 E_Win *
@@ -161,7 +159,6 @@ e_int_config_wallpaper_import(void *data, const char *path)
    kg = evas_object_key_grab(o, "KP_Enter", mask, ~mask, 0);
    if (!kg)
      fprintf(stderr,"ERROR: unable to redirect \"KP_Enter\" key events to object %p.\n", o);
-   mask = 0;
    evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN,
                                   _import_cb_key_down, import);
 
@@ -317,7 +314,6 @@ e_int_config_wallpaper_fsel(E_Config_Dialog *parent)
    kg = evas_object_key_grab(o, "KP_Enter", mask, ~mask, 0);
    if (!kg)
      fprintf(stderr,"ERROR: unable to redirect \"KP_Enter\" key events to object %p.\n", o);
-   mask = 0;
    evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN,
                                   _fsel_cb_key_down, fsel);
 
@@ -789,8 +785,9 @@ _fsel_cb_ok(void *data, void *data2)
    win = data;
    if (!(fsel = win->data)) return;
    path = e_widget_fsel_selection_path_get(fsel->fsel_obj);
+   if (!path) return;
 
-   if (path) p = strrchr(path, '.');
+   p = strrchr(path, '.');
    if ((!p) || (!strcasecmp(p, ".edj")))
      {
 	int r;
@@ -845,18 +842,6 @@ _import_cb_wid_on_focus(void *data, Evas_Object *obj)
      e_widget_focused_object_clear(import->box_obj);
    else if (import->content_obj)
      e_widget_focused_object_clear(import->content_obj);
-}
-
-static void
-_fsel_cb_wid_on_focus(void *data, Evas_Object *obj)
-{
-   FSel *fsel;
-
-   fsel = data;
-   if (obj == fsel->content_obj)
-     e_widget_focused_object_clear(fsel->box_obj);
-   else if (fsel->content_obj)
-     e_widget_focused_object_clear(fsel->content_obj);
 }
 
 static void 

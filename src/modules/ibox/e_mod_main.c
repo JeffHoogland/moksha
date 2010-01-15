@@ -654,10 +654,8 @@ _ibox_cb_menu_post(void *data, E_Menu *m)
 static void
 _ibox_cb_icon_mouse_in(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
-   Evas_Event_Mouse_In *ev;
    IBox_Icon *ic;
 
-   ev = event_info;
    ic = data;
    _ibox_icon_signal_emit(ic, "e,state,focused", "e");
    if (ic->ibox->inst->ci->show_label)
@@ -941,10 +939,8 @@ _ibox_inst_cb_move(void *data, const char *type, void *event_info)
 static void
 _ibox_inst_cb_leave(void *data, const char *type, void *event_info)
 {
-   E_Event_Dnd_Leave *ev;
    Instance *inst;
 
-   ev = event_info;
    inst = data;
    inst->ibox->ic_drop_before = NULL;
    evas_object_del(inst->ibox->o_drop);

@@ -329,11 +329,10 @@ _e_mod_win_cb_mouse_move(void *data, Evas *evas, Evas_Object *obj, void *event)
 static void 
 _e_mod_win_cb_mouse_wheel(void *data, Evas *evas, Evas_Object *obj, void *event) 
 {
-   Il_Ind_Win *iwin;
    Evas_Event_Mouse_Wheel *ev;
    Ecore_X_Illume_Quickpanel_State state;
 
-   if (!(iwin = data)) return;
+   if (!data) return;
    ev = event;
    if (ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD) return;
    if (ev->direction != 0) return;

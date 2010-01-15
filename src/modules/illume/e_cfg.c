@@ -1112,9 +1112,6 @@ _e_cfg_keyboard_ui(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdata)
 	kbds = efreet_util_desktop_category_list("Keyboard");
 	EINA_LIST_FOREACH(kbds, l, desktop)
 	       {
-                  const char *dname;
-		  
-		  dname = ecore_file_file_get(desktop->orig_path);
 		  o = e_widget_radio_add(e, desktop->name, nn, rg);
 		  e_widget_framelist_object_append(frame, o);
 		  evas_object_smart_callback_add(o, "changed", _e_cfg_keyboard_change, NULL);

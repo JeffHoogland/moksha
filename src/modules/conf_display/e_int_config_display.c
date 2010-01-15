@@ -366,15 +366,12 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
    if ((cfdata->can_rotate) || (cfdata->can_flip))
      {
-	int rot;
-
 	cfdata->flip = cfdata->rotation;
 	if (cfdata->flip_x)
 	  cfdata->flip = (cfdata->flip | ECORE_X_RANDR_FLIP_X);
 	if (cfdata->flip_y)
 	  cfdata->flip = (cfdata->flip | ECORE_X_RANDR_FLIP_Y);
 
-	rot = ecore_x_randr_screen_rotation_get(man->root);
 	ecore_x_randr_screen_rotation_set(man->root,
 					  (cfdata->rotation | cfdata->flip));
 	cfdata->orig_rotation = cfdata->rotation;
@@ -573,7 +570,6 @@ _load_resolutions(E_Config_Dialog_Data *cfdata)
 	       {
 		  ob = e_icon_add(evas);
 		  e_util_icon_theme_set(ob, "dialog-ok-apply");
-		  sel = res->id;
 	       }
 	     e_widget_ilist_nth_icon_set(cfdata->res_list, res->id, ob);
 	  }

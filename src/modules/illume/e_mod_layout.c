@@ -820,9 +820,6 @@ _cb_event_border_hide(void *data, int type, void *event)
 static int
 _cb_event_zone_move_resize(void *data, int type, void *event)
 {
-   E_Event_Zone_Move_Resize *ev;
-   
-   ev = event;
    _e_mod_layout_apply_all();
    return 1;
 }

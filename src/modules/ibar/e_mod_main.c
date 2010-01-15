@@ -743,10 +743,8 @@ _ibar_cb_menu_post(void *data, E_Menu *m)
 static void
 _ibar_cb_icon_mouse_in(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
-   Evas_Event_Mouse_In *ev;
    IBar_Icon *ic;
 
-   ev = event_info;
    ic = data;
    _ibar_icon_signal_emit(ic, "e,state,focused", "e");
    if (ic->ibar->inst->ci->show_label)
@@ -756,10 +754,8 @@ _ibar_cb_icon_mouse_in(void *data, Evas *e, Evas_Object *obj, void *event_info)
 static void
 _ibar_cb_icon_mouse_out(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
-   Evas_Event_Mouse_Out *ev;
    IBar_Icon *ic;
 
-   ev = event_info;
    ic = data;
    _ibar_icon_signal_emit(ic, "e,state,unfocused", "e");
    if (ic->ibar->inst->ci->show_label)
@@ -1096,10 +1092,8 @@ _ibar_inst_cb_move(void *data, const char *type, void *event_info)
 static void
 _ibar_inst_cb_leave(void *data, const char *type, void *event_info)
 {
-   E_Event_Dnd_Leave *ev;
    Instance *inst;
 
-   ev = event_info;
    inst = data;
    inst->ibar->ic_drop_before = NULL;
    evas_object_del(inst->ibar->o_drop);

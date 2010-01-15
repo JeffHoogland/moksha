@@ -226,12 +226,11 @@ _e_kbd_dbus_dev_add(void *data, DBusMessage *msg)
 {
    DBusError err;
    char *udi;
-   int ret;
 
    dbus_error_init(&err);
    dbus_message_get_args(msg, &err, DBUS_TYPE_STRING, &udi, DBUS_TYPE_INVALID);
-   ret = e_hal_device_query_capability(dbus_conn, udi, "input.keyboard", 
-                                       _e_kbd_dbus_cb_input_kbd_is, udi);
+   e_hal_device_query_capability(dbus_conn, udi, "input.keyboard", 
+                                 _e_kbd_dbus_cb_input_kbd_is, udi);
 }
 
 static void 

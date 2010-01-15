@@ -633,8 +633,8 @@ _preview_set(void *data)
 	  ret = e_widget_preview_edje_set(cfdata->o_preview, theme,
 					  parts_list[i] + strlen(c_label));
         if (!ret)
-	  ret = e_widget_preview_edje_set(cfdata->o_preview, theme,
-					  "e/desktop/background");
+	  e_widget_preview_edje_set(cfdata->o_preview, theme,
+				    "e/desktop/background");
 	eina_stringshare_del(theme);
      }
 }

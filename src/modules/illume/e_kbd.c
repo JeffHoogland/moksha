@@ -290,16 +290,6 @@ _e_kbd_cb_client_message(void *data, int type, void *event)
 }
 
 static int
-_e_kbd_cb_border_add(void *data, int type, void *event)
-{
-   E_Event_Border_Add *ev;
-   
-   ev = event;
-   // nothing - border hooks do this
-   return 1;
-}
-
-static int
 _e_kbd_cb_border_remove(void *data, int type, void *event)
 {
    E_Event_Border_Remove *ev;
@@ -913,10 +903,6 @@ e_kbd_init(E_Module *m)
 			       ecore_event_handler_add
 			       (ECORE_X_EVENT_CLIENT_MESSAGE,
 				_e_kbd_cb_client_message, NULL));
-   handlers = eina_list_append(handlers, 
-			       ecore_event_handler_add
-			       (E_EVENT_BORDER_ADD,
-				_e_kbd_cb_border_add, NULL));
    handlers = eina_list_append(handlers, 
 			       ecore_event_handler_add
 			       (E_EVENT_BORDER_REMOVE,

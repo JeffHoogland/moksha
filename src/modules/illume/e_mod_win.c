@@ -48,7 +48,6 @@ static void _cb_slipshelf_keyboard(const void *data, E_Slipshelf *ess, E_Slipshe
 static void _cb_slipshelf_app_next(const void *data, E_Slipshelf *ess, E_Slipshelf_Action action);
 static void _cb_slipshelf_app_prev(const void *data, E_Slipshelf *ess, E_Slipshelf_Action action);
 static void _cb_slipwin_border_select(void *data, E_Slipwin *esw, E_Border *bd);
-static void _cb_slipshelf_select(const void *data, E_Slipshelf *ess, E_Slipshelf_Action action);
 static void _cb_slipshelf_border_select(void *data, E_Slipshelf *ess, E_Border *bd);
 static void _cb_slipshelf_border_home2(void *data, E_Slipshelf *ess, E_Border *pbd);
 static void _cb_selected(void *data, Evas_Object *obj, void *event_info);
@@ -700,7 +699,6 @@ static int
 _cb_event_border_add(void *data, int type, void *event)
 {
    E_Event_Border_Add *ev;
-   Efreet_Desktop *desktop;
    Instance *ins;
    Eina_List *l;
    
@@ -712,8 +710,6 @@ _cb_event_border_add(void *data, int type, void *event)
 	e_slipshelf_action_enabled_set(slipshelf, E_SLIPSHELF_ACTION_APP_NEXT, 1);
 	e_slipshelf_action_enabled_set(slipshelf, E_SLIPSHELF_ACTION_APP_PREV, 1);
      }
-   desktop = e_exec_startup_id_pid_find(ev->border->client.netwm.pid,
-					ev->border->client.netwm.startup_id);
    EINA_LIST_FOREACH(instances, l, ins)
 	if (!ins->border)
 	  {
@@ -1050,7 +1046,6 @@ _apps_populate(void)
    
      {
 	Efreet_Menu *menu, *entry, *subentry;
-	Efreet_Desktop *desktop;
 	char *label, *icon, *plabel;
 	Eina_List *settings_desktops, *system_desktops, *keyboard_desktops;
 	Eina_List *l, *ll;
@@ -1065,8 +1060,6 @@ _apps_populate(void)
 	       {
 		  if (entry->type != EFREET_MENU_ENTRY_MENU) continue;
 		  
-		  desktop = entry->desktop;
-		  
 		  plabel = NULL;
 		  
 		  if (entry->name) plabel = strdup(entry->name);
@@ -1080,6 +1073,7 @@ _apps_populate(void)
 		  
 		  EINA_LIST_FOREACH(entry->entries, ll, subentry)
 		    {
+		       Efreet_Desktop *desktop;
 		       if (subentry->type != EFREET_MENU_ENTRY_DESKTOP) continue;
 
 		       label = icon = NULL;

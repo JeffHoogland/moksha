@@ -654,11 +654,10 @@ _save_menu(E_Config_Dialog_Data *cfdata)
    menu = efreet_menu_new("Favorites");
    for (i = 0, l = e_widget_ilist_items_get(cfdata->o_sel); l; l = l->next, i++) 
      {
-	E_Ilist_Item *item = NULL;
 	Efreet_Desktop *desk = NULL;
 	const char *lbl;
 
-	if (!(item = l->data)) continue;
+	if (!l->data) continue;
 	lbl = e_widget_ilist_nth_label_get(cfdata->o_sel, i);
 	if (!lbl) continue;
 	desk = efreet_util_desktop_name_find(lbl);
@@ -682,11 +681,10 @@ _save_order(E_Config_Dialog_Data *cfdata)
    e_order_clear(order);
    for (i = 0, l = e_widget_ilist_items_get(cfdata->o_sel); l; l = l->next, i++) 
      {
-	E_Ilist_Item *item = NULL;
 	Efreet_Desktop *desk = NULL;
 	const char *lbl;
 
-	if (!(item = l->data)) continue;
+	if (!l->data) continue;
 	lbl = e_widget_ilist_nth_label_get(cfdata->o_sel, i);
 	if (!lbl) continue;
 	desk = efreet_util_desktop_name_find(lbl);

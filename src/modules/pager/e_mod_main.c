@@ -126,8 +126,6 @@ static int _pager_cb_event_zone_desk_count_set(void *data, int type, void *event
 static int _pager_cb_event_desk_show(void *data, int type, void *event);
 static int _pager_cb_event_desk_name_change(void *data, int type, void *event);
 static int _pager_cb_event_container_resize(void *data, int type, void *event);
-static void _pager_window_cb_mouse_in(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static void _pager_window_cb_mouse_out(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _pager_window_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _pager_window_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _pager_window_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
@@ -606,10 +604,6 @@ _pager_window_new(Pager_Desk *pd, E_Border *border)
    e_layout_pack(pd->o_layout, pw->o_window);
    e_layout_child_raise(pw->o_window);
 
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_IN,  
-                                  _pager_window_cb_mouse_in,  pw);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_OUT, 
-                                  _pager_window_cb_mouse_out, pw);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, 
                                   _pager_window_cb_mouse_down, pw);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_UP, 
@@ -1729,28 +1723,6 @@ _pager_cb_event_container_resize(void *data, int type, void *event)
 }
 
 static void
-_pager_window_cb_mouse_in(void *data, Evas *e, Evas_Object *obj, void *event_info)
-{
-   Evas_Event_Mouse_In *ev;
-   Pager_Win *pw;
-
-   ev = event_info;
-   pw = data;
-   /* FIXME: display window title in some tooltip thing */
-}
-
-static void
-_pager_window_cb_mouse_out(void *data, Evas *e, Evas_Object *obj, void *event_info)
-{
-   Evas_Event_Mouse_Out *ev;
-   Pager_Win *pw;
-
-   ev = event_info;
-   pw = data;
-   /* FIXME: close tooltip */
-}
-
-static void
 _pager_window_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
    Evas_Event_Mouse_Down *ev;
@@ -2059,11 +2031,9 @@ _pager_drop_cb_move(void *data, const char *type, void *event_info)
 static void
 _pager_drop_cb_leave(void *data, const char *type, void *event_info)
 {
-   E_Event_Dnd_Leave *ev;
    Pager *p;
    Eina_List *l;
 
-   ev = event_info;
    p = data;
 
    if (act_popup) p = act_popup->pager;

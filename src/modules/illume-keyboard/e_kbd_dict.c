@@ -201,7 +201,7 @@ _e_kbd_dict_lookup_build_line(E_Kbd_Dict *kd, const char *p, const char *eol, in
    s[eol - p] = 0;
    p2 = evas_string_char_next_get(s, 0, &(glyphs[0]));
    if ((p2 > 0) && (glyphs[0] > 0))
-     p2 = evas_string_char_next_get(s, p2, &(glyphs[1]));
+     evas_string_char_next_get(s, p2, &(glyphs[1]));
 }
 
 static void
@@ -683,12 +683,12 @@ static void
 _e_kbd_dict_matches_lookup_iter(E_Kbd_Dict *kd, Eina_List *word,
 				Eina_List *more)
 {
-   Eina_List *l, *l2, *list;
-   const char *p, *pn;
+   Eina_List *l, *list;
+   const char *p;
    char *base, *buf, *wd, *bufapp;
    E_Kbd_Dict_Letter *kl;
    int len = 0, dist = 0, d, baselen, maxdist = 0, md;
-   static int level = 0, lv;
+   static int level = 0;
 
    level++;
    for (l = word; l; l = l->next)
@@ -758,7 +758,7 @@ _e_kbd_dict_matches_lookup_iter(E_Kbd_Dict *kd, Eina_List *word,
 		  if (kw)
 		    {
 		       int accuracy;
-		       int w, b, w2, b2, wc, bc, upper;
+		       int w, b, w2, b2, wc, bc;
 
 		       // match any capitalisation
 		       for (w = 0, b = 0; wd[w] && buf[b];)

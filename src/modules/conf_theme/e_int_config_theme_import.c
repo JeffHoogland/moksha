@@ -99,7 +99,6 @@ e_int_config_theme_import(E_Config_Dialog *parent)
    kg = evas_object_key_grab(o, "KP_Enter", mask, ~mask, 0);
    if (!kg)
      fprintf(stderr,"ERROR: unable to redirect \"KP_Enter\" key events to object %p.\n", o);
-   mask = 0;
    evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN, 
 				  _theme_import_cb_key_down, import);
 

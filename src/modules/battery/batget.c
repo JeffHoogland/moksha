@@ -129,40 +129,6 @@ str_get(char *buf)
    return strdup(p);
 }
 
-static int
-axtoi(char *arg)
-{
-   int n, val, pwr=1, m, rc = 0;
-   char hex[9], c;
-   
-   for (n = 0, m = 0; n < strlen(arg); n++)
-     {
-	if (arg[n] != ' ')
-	  {
-	     hex[m++] = c = toupper(arg[n]);
-	     if ((m == sizeof(hex)) || (c < '0') || (c > 'F'))
-	       return 0;   /* overflow or invalid */
-	  }
-     }
-   hex[m] = 0;  /* terminate string */
-   
-   for (n = 0; n < m; n++)
-     {
-	c = hex[m-n-1];
-	if ((c >= 'A') && (c <= 'F'))
-	  val = c -'A' + 10;
-	else
-	  val = c - '0';
-	rc = rc + val * pwr;
-	pwr *= 16;
-     }
-   return rc;
-}
-
-
-
-
-
 #ifdef __FreeBSD__
 
 #define BATTERY_STATE_NONE 0
@@ -913,9 +879,6 @@ linux_acpi_cb_acpid_del(void *data, int type, void *event)
 static int
 linux_acpi_cb_acpid_data(void *data, int type, void *event)
 {
-   Ecore_Con_Event_Server_Data *ev;
-   
-   ev = event;
    if (delay_check) ecore_timer_del(delay_check);
    delay_check = ecore_timer_add(0.2, linux_acpi_cb_delay_check, NULL);
    return 1;
@@ -1292,10 +1255,8 @@ linux_pmu_check(void)
    Eina_List *bats;
    char *name;
    int ac = 0;
-   int flags = 0;
    int charge = 0;
    int max_charge = 0;
-   int voltage = 0;
    int seconds = 0;
    int curcharge = 0;
    int curmax = 0;
@@ -1333,9 +1294,7 @@ linux_pmu_check(void)
 		       
 		       if ((token = strtok(buf, ":")))
 			 {
-			    if (!strncmp("flags", token, 5))
-			      flags = axtoi(strtok (0, ": "));
-			    else if (!strncmp("charge", token, 6))
+			    if (!strncmp("charge", token, 6))
 			      charge = atoi(strtok(0, ": "));
 			    else if (!strncmp("max_charge", token, 9))
 			      max_charge = atoi(strtok(0, ": "));
@@ -1343,8 +1302,6 @@ linux_pmu_check(void)
 			      current = atoi(strtok(0, ": "));
 			    else if (!strncmp("time rem", token, 8))
 			      timeleft = atoi(strtok(0, ": "));
-			    else if (!strncmp("voltage", token, 7))
-			      voltage = atoi(strtok(0, ": "));
 			    else
 			      strtok(0, ": ");
 			 }

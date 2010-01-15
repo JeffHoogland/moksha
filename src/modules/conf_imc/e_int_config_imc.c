@@ -16,7 +16,6 @@ static Evas_Object *_advanced_create_widgets (E_Config_Dialog *cfd, Evas *evas, 
 
 /* Basic Callbacks */
 static int	    _basic_list_sort_cb	     (const void *d1, const void *d2);
-static void	    _e_imc_disable_change_cb (void *data, Evas_Object *obj);
 static void	    _e_imc_list_change_cb    (void *data, Evas_Object *obj);
 static void	    _e_imc_setup_cb          (void *data, void *data2);
 
@@ -28,7 +27,6 @@ static void	    _cb_new		     (void *data, void *data2);
 static void	    _cb_files_changed	     (void *data, Evas_Object *obj, void *event_info);
 static void         _cb_files_selection_change(void *data, Evas_Object *obj, void *event_info);
 static void         _cb_files_files_changed  (void *data, Evas_Object *obj, void *event_info);
-static void	    _cb_files_selected       (void *data, Evas_Object *obj, void *event_info);
 static void         _cb_files_files_deleted  (void *data, Evas_Object *obj, void *event_info);
 static void         _e_imc_adv_setup_cb      (void *data, void *data2);
 
@@ -210,14 +208,6 @@ _basic_list_sort_cb(const void *d1, const void *d2)
    if (!d2) return -1;
 
    return (strcmp((const char*)d1, (const char*)d2));
-}
-
-static void
-_e_imc_disable_change_cb(void *data, Evas_Object *obj)
-{
-   E_Config_Dialog_Data *cfdata;
-
-   cfdata = data;
 }
 
 void
@@ -584,14 +574,6 @@ _cb_files_selection_change(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void
-_cb_files_selected(void *data, Evas_Object *obj, void *event_info)
-{
-   E_Config_Dialog_Data *cfdata;
-
-   cfdata = data;
-}
-
-static void
 _cb_files_files_changed(void *data, Evas_Object *obj, void *event_info)
 {
    const char *buf;
@@ -866,8 +848,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 				  _cb_files_changed, cfdata);
    evas_object_smart_callback_add(o, "selection_change",
 				  _cb_files_selection_change, cfdata);
-   evas_object_smart_callback_add(o, "selected",
-				  _cb_files_selected, cfdata);
    evas_object_smart_callback_add(o, "changed",
 				  _cb_files_files_changed, cfdata);
    evas_object_smart_callback_add(o, "files_deleted",
@@ -892,7 +872,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    il = e_widget_list_add(evas, 0, 1);
 
    o = e_widget_check_add(evas, _("Use No Input Method"), &(cfdata->imc_disable));
-   e_widget_on_change_hook_set(o, _e_imc_disable_change_cb, cfdata);
    cfdata->gui.imc_advanced_disable = o;
    e_widget_list_object_append(il, o, 1, 0, 0.5);
 

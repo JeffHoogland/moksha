@@ -854,18 +854,14 @@ _ds_shadow_recalc(Shadow *sh)
      }
    else
      {
-	int shw, shh, bsz, shx, shy;
+	int bsz, shx, shy;
 	
 	_ds_shadow_obj_init(sh);
 	sh->square = 1;
 	
 	shx = sh->ds->conf->shadow_x;
 	shy = sh->ds->conf->shadow_y;
-	shw = sh->w;
-	shh = sh->h;
 	bsz = sh->ds->conf->blur_size;
-	if (shw > ((bsz * 2) + 2)) shw = (bsz * 2) + 2;
-	if (shh > ((bsz * 2) + 2)) shh = (bsz * 2) + 2;
 
 	if (sh->use_shared)
 	  {

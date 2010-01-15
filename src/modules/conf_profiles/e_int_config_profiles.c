@@ -146,7 +146,6 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
 {
    Evas *evas;
    Eina_List *l, *profiles;
-   const char *cur_profile;
    int selected = -1, i;
    
    if (!cfdata) return;
@@ -160,7 +159,6 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
    e_widget_ilist_clear(cfdata->o_list);
    e_widget_ilist_go(cfdata->o_list);
 
-   cur_profile = e_config_profile_get();
    profiles = e_config_profile_list();
    for (i = 0, l = profiles; l; l = l->next, i++)
      {

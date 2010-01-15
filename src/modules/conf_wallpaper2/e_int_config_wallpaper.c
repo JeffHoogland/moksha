@@ -177,7 +177,7 @@ _e_smart_reconfigure_do(void *data)
              sd->sx = it->x + (it->w / 2);
              sd->sy = it->y + (it->h / 2);
           }
-        if ((x + ww) > mw)mw = x + ww;
+        if ((x + ww) > mw) mw = x + ww;
         if ((y + hh) > mh) mh = y + hh;
         x += ww;
      }
@@ -274,7 +274,6 @@ _e_smart_reconfigure_do(void *data)
                     a = M_PI - atan(-(double)dy / (double)dx);
                }
              d = sqrt((double)(dx * dx) + (double)(dy * dy));
-             dx = dy = 0;
 
              sum = 0;
              if (it->file)

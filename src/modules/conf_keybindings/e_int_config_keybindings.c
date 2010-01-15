@@ -895,7 +895,7 @@ _key_binding_sort_cb(const void *d1, const void *d2)
    if (i < j) return -1;
    else if (i > j) return 1;
    
-   i = strcmp(bi->key, bi2->key);
+   i = e_util_strcmp(bi->key, bi2->key);
    if (i < 0) return -1;
    else if (i > 0) return 1;
 

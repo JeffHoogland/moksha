@@ -251,15 +251,12 @@ _import_config_save(Import *import)
 static void 
 _import_edj_gen(Import *import)
 {
-   Evas *evas;
    int fd, num = 1;
    const char *file;
    char buf[4096], cmd[4096], tmpn[4096];
    char *fstrip;
    FILE *f;
    size_t len, off;
-
-   evas = e_win_evas_get(import->dia->win);
 
    file = import->cfdata->name;
    fstrip = ecore_file_strip_ext(file);

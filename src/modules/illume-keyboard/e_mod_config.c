@@ -180,9 +180,6 @@ _il_kbd_config_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata
         kbds = efreet_util_desktop_category_list("Keyboard");
         EINA_LIST_FOREACH(kbds, l, desktop) 
           {
-             const char *dname;
-
-             dname = ecore_file_file_get(desktop->orig_path);
              ow = e_widget_radio_add(evas, desktop->name, nn, rg);
              e_widget_framelist_object_append(of, ow);
              evas_object_smart_callback_add(ow, "changed", 

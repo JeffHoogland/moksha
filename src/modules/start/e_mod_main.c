@@ -162,7 +162,6 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	     e_menu_post_deactivate_callback_set(inst->main_menu,
 						 _menu_cb_post,
 						 inst);
-	     dir = E_MENU_POP_DIRECTION_AUTO;
 	     switch (inst->gcc->gadcon->orient)
 	       {
 		case E_GADCON_ORIENT_TOP:

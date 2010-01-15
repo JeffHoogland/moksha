@@ -800,7 +800,7 @@ _e_winlist_cb_key_down(void *data, int type, void *event)
 	  {
 	     bind = l->data;
 
-	     if (bind->action && strcmp(bind->action,"winlist")) continue;
+	     if (bind->action && strcmp(bind->action, "winlist")) continue;
 
 	     mod = 0;
 
@@ -816,7 +816,7 @@ _e_winlist_cb_key_down(void *data, int type, void *event)
 	     if (bind->key && (!strcmp(bind->key, ev->keyname)) &&
 		 ((bind->modifiers == mod) || (bind->any_mod))) 
 	       {
-		  if (!(act = e_action_find(bind->action)));
+		  if (!(act = e_action_find(bind->action))) continue;
 		  if (act->func.go_key)
 		    act->func.go_key(E_OBJECT(winlist->zone), bind->params, ev);
 		  else if (act->func.go)
