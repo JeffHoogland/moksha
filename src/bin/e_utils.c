@@ -757,9 +757,9 @@ e_util_shell_env_path_eval(const char *path)
     * $HOME/bin/$HOSTNAME/blah -> /home/user/bin/localhost/blah
     * etc. etc.
     */
-   char buf[PATH_MAX], *pd, *p, *v2, *s, *vp;
+   const char *p, *v2, *v1 = NULL;
+   char buf[PATH_MAX], *pd, *s, *vp;
    char *v = NULL;
-   char *v1 = NULL;
    int esc = 0, invar = 0;
 
    for (p = path, pd = buf; (pd < (buf + sizeof(buf) - 1)); p++)
@@ -1128,6 +1128,9 @@ e_util_zone_edge_toggle(E_Zone_Edge edge, Eina_Bool show)
 	       {
 		  switch(edge)
 		    {
+		     case E_ZONE_EDGE_NONE:
+			/* noop */
+			break;
 		     case E_ZONE_EDGE_LEFT:
 			if (show)
 			  ecore_x_window_show(zone->edge.left);
