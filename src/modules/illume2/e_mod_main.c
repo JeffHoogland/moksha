@@ -102,7 +102,6 @@ e_modapi_init(E_Module *m)
                            mode = ECORE_X_ILLUME_MODE_DUAL_LEFT;
                       }
                     ecore_x_e_illume_mode_set(zone->black_win, mode);
-                    ecore_x_e_illume_mode_send(zone->black_win, mode);
                     zones[i++] = zone->black_win;
                  }
              if (i > 0) 
