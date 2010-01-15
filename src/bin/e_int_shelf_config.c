@@ -540,6 +540,11 @@ _calibrate_bindings(void)
      {
 	switch(es->gadcon->orient)
 	  {
+	   case E_GADCON_ORIENT_FLOAT:
+	   case E_GADCON_ORIENT_HORIZ:
+	   case E_GADCON_ORIENT_VERT:
+	      /* noop */
+	      break;
 	   case E_GADCON_ORIENT_LEFT:
 	   case E_GADCON_ORIENT_CORNER_LT:
 	   case E_GADCON_ORIENT_CORNER_LB:
