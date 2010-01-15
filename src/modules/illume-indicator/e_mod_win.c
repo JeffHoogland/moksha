@@ -27,10 +27,12 @@ e_mod_win_new(E_Zone *zone)
    Il_Ind_Win *iwin;
    Evas *evas;
    Ecore_X_Window_State states[2];
+   Ecore_X_Illume_Mode mode;
 
    iwin = E_OBJECT_ALLOC(Il_Ind_Win, IL_IND_WIN_TYPE, _e_mod_win_cb_free);
    if (!iwin) return NULL;
 
+   iwin->dragging = 0;
    iwin->win = e_win_new(zone->container);
    iwin->win->data = iwin;
    states[0] = ECORE_X_WINDOW_STATE_SKIP_TASKBAR;
@@ -97,6 +99,14 @@ e_mod_win_new(E_Zone *zone)
    e_border_zone_set(iwin->win->border, zone);
 //   e_win_placed_set(iwin->win, 1);
 //   iwin->win->border->lock_user_location = 1;
+
+   mode = ecore_x_e_illume_mode_get(zone->black_win);
+   if (mode < ECORE_X_ILLUME_MODE_DUAL_TOP)
+     iwin->win->border->client.illume.drag.locked = 1;
+   else if (mode == ECORE_X_ILLUME_MODE_DUAL_TOP)
+     iwin->win->border->client.illume.drag.locked = 0;
+   else if (mode == ECORE_X_ILLUME_MODE_DUAL_LEFT)
+     iwin->win->border->client.illume.drag.locked = 1;
 
    ecore_x_e_illume_top_shelf_geometry_set(ecore_x_window_root_first_get(), 
                                            zone->x, zone->y, zone->w, 32);
@@ -236,6 +246,7 @@ _e_mod_win_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event)
         if (iwin->win->border->client.illume.drag.locked) return;
         ecore_x_e_illume_drag_start_send(iwin->win->border->client.win);
         ecore_x_pointer_last_xy_get(NULL, &my);
+        iwin->dragging = 1;
      }
    else if (ev->button == 3) 
      {
@@ -267,6 +278,7 @@ _e_mod_win_cb_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event)
    if (ev->button != 1) return;
    bd = iwin->win->border;
    if (bd->client.illume.drag.locked) return;
+   iwin->dragging = 0;
    ecore_x_e_illume_drag_end_send(bd->client.win);
    my = 0;
 }
@@ -283,24 +295,25 @@ _e_mod_win_cb_mouse_move(void *data, Evas *evas, Evas_Object *obj, void *event)
    ev = event;
    bd = iwin->win->border;
    if (bd->client.illume.drag.locked) return;
-   if (!ecore_x_e_illume_drag_get(bd->zone->black_win)) return;
+   if (!iwin->dragging) return;
    if ((bd->y + bd->h + ev->cur.output.y) >= (bd->zone->h)) return;
 
    ecore_x_pointer_last_xy_get(NULL, &py);
    dy = ((bd->zone->h - bd->h) / 8);
 
-   if ((ev->cur.output.y > ev->prev.output.y)) 
+   if (ev->cur.output.y > ev->prev.output.y) 
      {
         if ((py - my) < dy) return;
      }
-   else 
+   else if (ev->cur.output.y < ev->prev.output.y)
      {
         if ((my - py) < dy) return;
      }
+   else return;
 
    if (py > my) 
      ny = bd->y + dy;
-   else if (py <= my) 
+   else if (py < my) 
      ny = bd->y - dy;
    else return;
 
