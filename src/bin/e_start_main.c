@@ -320,7 +320,7 @@ precache(void)
 static int
 find_valgrind(char *path, size_t path_len)
 {
-   char *env = getenv("PATH");
+   const char *env = getenv("PATH");
 
    while (env)
      {
@@ -359,7 +359,7 @@ find_valgrind(char *path, size_t path_len)
 #define VALGRIND_MODE_ALL 15
 
 static int
-valgrind_append(char **dst, int valgrind_mode, const char *valgrind_path, const char *valgrind_log)
+valgrind_append(char **dst, int valgrind_mode, char *valgrind_path, const char *valgrind_log)
 {
    int i = 0;
 
@@ -405,7 +405,8 @@ main(int argc, char **argv)
 {
    int i, do_precache = 0, valgrind_mode = 0;
    char buf[16384], **args, *p;
-   char valgrind_path[PATH_MAX] = "", *valgrind_log = NULL;
+   char valgrind_path[PATH_MAX] = "";
+   const char *valgrind_log = NULL;
 
    prefix_determine(argv[0]);
 
@@ -499,7 +500,6 @@ main(int argc, char **argv)
      {
 	void *lib, *func;
 
-	do_precache = 0;
 	/* sanity checks - if precache might fail - check here first */
 	lib = dlopen("libevas.so", RTLD_GLOBAL | RTLD_LAZY);
 	if (!lib) dlopen("libevas.so.1", RTLD_GLOBAL | RTLD_LAZY);
