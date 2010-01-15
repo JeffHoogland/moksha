@@ -1,11 +1,12 @@
 #include "e.h"
 #include "e_mod_main.h"
 #include "e_mod_config.h"
+#include "e_mod_comp.h"
 #include "config.h"
 
 struct _E_Config_Dialog_Data
 {
-   int x;
+   int use_shadow;
 };
 
 /* Protos */
@@ -43,28 +44,20 @@ e_int_config_comp_module(E_Container *con, const char *params __UNUSED__)
 static void *
 _create_data(E_Config_Dialog *cfd) 
 {
-   /*
    E_Config_Dialog_Data *cfdata;
-   Dropshadow *ds;
    
-   ds = cfd->data;
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
-   _fill_data(ds, cfdata);
+
+   cfdata->use_shadow = _comp_mod->conf->use_shadow;
+   
    return cfdata;
-    */
-   return NULL;
 }
 
 static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
-   /*
-   Dropshadow *ds;
-   
-   ds = cfd->data;
-   ds->config_dialog = NULL;
+   _comp_mod->config_dialog = NULL;
    free(cfdata);
-    */
 }
 
 static Evas_Object *
@@ -76,100 +69,26 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    o = e_widget_list_add(evas, 0, 0);
    ot = e_widget_table_add(evas, 1);
    
-   of = e_widget_framelist_add(evas, _("Quality"), 0);
+   of = e_widget_framelist_add(evas, _("Shadow"), 0);
    e_widget_framelist_content_align_set(of, 0.5, 0.0);
-   rg = e_widget_radio_group_new(&(cfdata->x));   
-   ob = e_widget_radio_add(evas, _("X"), 1, rg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Y"), 2, rg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Z"), 4, rg);
+   ob = e_widget_check_add(evas, _("Enabled"), &(cfdata->use_shadow));
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
-/*   
-   of = e_widget_framelist_add(evas, _("Blur Type"), 0);
-   e_widget_framelist_content_align_set(of, 0.5, 0.0);
-   rg = e_widget_radio_group_new(&(cfdata->blur_size));   
-   ob = e_widget_radio_add(evas, _("Very Fuzzy"), 80, rg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Fuzzy"), 40, rg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Medium"), 20, rg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Sharp"), 10, rg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Very Sharp"), 5, rg);
-   e_widget_framelist_object_append(of, ob);
-   e_widget_table_object_append(ot, of, 0, 1, 1, 1, 1, 1, 1, 1);
-
-   of = e_widget_framelist_add(evas, _("Shadow Distance"), 0);
-   e_widget_framelist_content_align_set(of, 0.5, 0.0);
-   rg = e_widget_radio_group_new(&(cfdata->shadow_x));   
-   ob = e_widget_radio_add(evas, _("Very Far"), 32, rg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Far"), 16, rg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Near"), 8, rg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Very Near"), 4, rg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Extremely Near"), 2, rg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Underneath"), 0, rg);
-   e_widget_framelist_object_append(of, ob);   
-   e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
-
-   of = e_widget_framelist_add(evas, _("Shadow Darkness"), 0);
-   e_widget_framelist_content_align_set(of, 0.5, 0.0);
-   rg = e_widget_radio_group_new(&(cfdata->darkness));   
-   ob = e_widget_radio_add(evas, _("Very Dark"), 0, rg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Dark"), 1, rg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Light"), 2, rg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Very Light"), 3, rg);
-   e_widget_framelist_object_append(of, ob);
-   e_widget_table_object_append(ot, of, 1, 1, 1, 1, 1, 1, 1, 1);
-
+   
    e_widget_list_object_append(o, ot, 1, 1, 0.5);   
-*/   
+
    return o;
 }
 
 static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
-   /*
-   Dropshadow *ds;
-   
-   ds = cfd->data;
-   e_border_button_bindings_ungrab_all();
-
-   ds->conf->quality = cfdata->quality;
-   ds->conf->blur_size = cfdata->blur_size;
-   ds->conf->shadow_x = cfdata->shadow_x;
-   ds->conf->shadow_y = cfdata->shadow_x;
-   switch (cfdata->darkness) 
+   if (_comp_mod->conf->use_shadow != cfdata->use_shadow)
      {
-      case 0:
-	ds->conf->shadow_darkness = 1.0;
-	break;
-      case 1:
-	ds->conf->shadow_darkness = 0.75;
-	break;
-      case 2:
-	ds->conf->shadow_darkness = 0.5;	
-	break;
-      case 3:
-	ds->conf->shadow_darkness = 0.25;	
-	break;
+        _comp_mod->conf->use_shadow = cfdata->use_shadow;
+        e_mod_comp_shadow_set();
      }
    
    e_config_save_queue();
-   e_border_button_bindings_grab_all();
-   
-   _dropshadow_cb_config_updated(ds);
-    */
    return 1;
 }

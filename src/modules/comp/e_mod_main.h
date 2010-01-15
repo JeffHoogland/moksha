@@ -7,7 +7,8 @@ typedef struct _Mod           Mod;
 
 struct _Config
 {
-   int x;
+   unsigned char    use_shadow;
+   const char      *shadow_file;
 };
 
 struct _Mod

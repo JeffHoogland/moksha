@@ -4,7 +4,8 @@ MODULE = comp
 # data files for the module
 filesdir = $(libdir)/enlightenment/modules/$(MODULE)
 files_DATA = \
-e-module-$(MODULE).edj module.desktop
+e-module-$(MODULE).edj module.desktop \
+shadow.edj
 
 EXTRA_DIST = $(files_DATA)
 

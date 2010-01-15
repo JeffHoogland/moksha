@@ -90,6 +90,7 @@ static Eina_Bool _e_menu_categories_free_cb(const Eina_Hash *hash, const void *k
 /* local subsystem globals */
 static Ecore_X_Window _e_menu_win = 0;
 static Eina_List *_e_active_menus = NULL;
+static Eina_Hash *_e_menu_hash = NULL;
 static E_Menu_Item *_e_active_menu_item = NULL;
 /*static Eina_Hash	   *_e_menu_category_items	= NULL;*/
 static Eina_Hash *_e_menu_categories = NULL;
@@ -160,6 +161,8 @@ e_menu_init(void)
      ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHAPE, 
                              _e_menu_cb_window_shape, NULL);
    _e_menu_categories = eina_hash_string_superfast_new(NULL);
+
+   if (!_e_menu_hash) _e_menu_hash = eina_hash_string_superfast_new(NULL);
    return 1;
 }
 
@@ -168,6 +171,12 @@ e_menu_shutdown(void)
 {
    E_Menu *m;
 
+   if (_e_menu_hash)
+     {
+        eina_hash_free(_e_menu_hash);
+        _e_menu_hash = NULL;
+     }
+   
    E_FN_DEL(ecore_event_handler_del, _e_menu_key_down_handler);
    E_FN_DEL(ecore_event_handler_del, _e_menu_key_up_handler);
    E_FN_DEL(ecore_event_handler_del, _e_menu_mouse_down_handler);
@@ -1044,6 +1053,18 @@ e_menu_grab_window_get(void)
   return _e_menu_win;
 }
 
+EAPI E_Menu *
+e_menu_find_by_window(Ecore_X_Window win)
+{
+   E_Menu *m;
+   
+   m = eina_hash_find(_e_menu_hash, e_util_winid_str_get(win));
+   if ((m) && (m->evas_win != win))
+     return NULL;
+   return m;
+}
+
+
 /* local subsystem functions */
 static void
 _e_menu_free(E_Menu *m)
@@ -1418,6 +1439,7 @@ _e_menu_realize(E_Menu *m)
                   m->cur.x, m->cur.y, m->cur.w, m->cur.h, 1, 1,
                   &(m->evas_win));
    e_canvas_add(m->ecore_evas);
+   eina_hash_add(_e_menu_hash, e_util_winid_str_get(m->evas_win), m);
    m->shape = e_container_shape_add(m->zone->container);
    e_container_shape_move(m->shape, m->cur.x, m->cur.y);
    e_container_shape_resize(m->shape, m->cur.w, m->cur.h);
@@ -1464,7 +1486,10 @@ _e_menu_realize(E_Menu *m)
 	if (e_config->use_composite)
 	  {
 	     ecore_evas_alpha_set(m->ecore_evas, m->shaped);
-	     m->evas_win = ecore_evas_software_x11_window_get(m->ecore_evas);
+
+             eina_hash_del(_e_menu_hash, e_util_winid_str_get(m->evas_win), m);
+             m->evas_win = ecore_evas_software_x11_window_get(m->ecore_evas);
+             eina_hash_add(_e_menu_hash, e_util_winid_str_get(m->evas_win), m);
 	  }
 	else
 	  ecore_evas_shaped_set(m->ecore_evas, m->shaped);
@@ -1737,6 +1762,7 @@ _e_menu_unrealize(E_Menu *m)
    ecore_evas_free(m->ecore_evas);
    m->ecore_evas = NULL;
    m->evas = NULL;
+   eina_hash_del(_e_menu_hash, e_util_winid_str_get(m->evas_win), m);
    m->evas_win = 0;
 }
 

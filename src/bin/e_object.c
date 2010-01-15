@@ -66,6 +66,16 @@ e_object_free(E_Object *obj)
 {
    E_OBJECT_CHECK(obj);
    if (obj->free_att_func) obj->free_att_func(obj);
+   obj->walking_list++;
+   while (obj->del_fn_list)
+     {
+        E_Object_Delfn *dfn = (E_Object_Delfn *)obj->del_fn_list;
+        if (!dfn->delete_me) dfn->func(dfn->data, obj);
+        obj->del_fn_list = eina_inlist_remove(obj->del_fn_list,
+                                              EINA_INLIST_GET(dfn));
+        free(dfn);
+     }
+   obj->walking_list--;
    /*
     * FIXME:
     * although this is good - if during cleanup the cleanup func calls
@@ -262,17 +272,43 @@ e_object_data_get(E_Object *obj)
 }
 
 EAPI void
-e_object_free_attach_func_set(E_Object *obj, void (*func) (void *obj))
+e_object_free_attach_func_set(E_Object *obj, E_Object_Cleanup_Func func)
 {
    E_OBJECT_CHECK(obj);
    obj->free_att_func = func;
 }
 
 EAPI void
-e_object_del_attach_func_set(E_Object *obj, void (*func) (void *obj))
+e_object_del_attach_func_set(E_Object *obj, E_Object_Cleanup_Func func)
 {
    E_OBJECT_CHECK(obj);
    obj->del_att_func = func;
+}
+
+EAPI E_Object_Delfn *
+e_object_delfn_add(E_Object *obj, void (*func) (void *data, void *obj), void *data)
+{
+   E_Object_Delfn *dfn;
+   E_OBJECT_CHECK_RETURN(obj, NULL);
+   dfn = calloc(1, sizeof(E_Object_Delfn));
+   if (!dfn) return NULL;
+   dfn->func = func;
+   dfn->data = data;
+   obj->del_fn_list = eina_inlist_append(obj->del_fn_list, EINA_INLIST_GET(dfn));
+   return dfn;
+}
+
+EAPI void
+e_object_delfn_del(E_Object *obj, E_Object_Delfn *dfn)
+{
+   E_OBJECT_CHECK(obj);
+   if (obj->walking_list)
+     {
+        dfn->delete_me = 1;
+        return;
+     }
+   obj->del_fn_list = eina_inlist_remove(obj->del_fn_list, EINA_INLIST_GET(dfn));
+   free(dfn);
 }
 
 /*

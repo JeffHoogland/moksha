@@ -5,17 +5,17 @@
 
 //////////////////////////////////////////////////////////////////////////
 
-struct _Update
+struct _E_Update
 {
    int w, h;
    int tw, th;
    int tsw, tsh;
    unsigned char *tiles;
-   Update_Policy pol;
+   E_Update_Policy pol;
 };
 
 static void
-_e_mod_comp_tiles_alloc(Update *up)
+_e_mod_comp_tiles_alloc(E_Update *up)
 {
    if (up->tiles) return;
    up->tiles = calloc(up->tw * up->th, sizeof(unsigned char));
@@ -23,33 +23,33 @@ _e_mod_comp_tiles_alloc(Update *up)
 
 //////////////////////////////////////////////////////////////////////////
 
-Update *
+E_Update *
 e_mod_comp_update_new(void)
 {
-   Update *up;
+   E_Update *up;
    
-   up = calloc(1, sizeof(Update));
+   up = calloc(1, sizeof(E_Update));
    up->tsw = 32;
    up->tsh = 32;
-   up->pol = UPDATE_POLICY_RAW;
+   up->pol = E_UPDATE_POLICY_RAW;
    return up;
 }
 
 void
-e_mod_comp_update_free(Update *up)
+e_mod_comp_update_free(E_Update *up)
 {
    if (up->tiles) free(up->tiles);
    free(up);
 }
 
 void
-e_mod_comp_update_policy_set(Update *up, Update_Policy pol)
+e_mod_comp_update_policy_set(E_Update *up, E_Update_Policy pol)
 {
    up->pol = pol;
 }
 
 void
-e_mod_comp_update_tile_size_set(Update *up, int tsw, int tsh)
+e_mod_comp_update_tile_size_set(E_Update *up, int tsw, int tsh)
 {
    if ((up->tsw == tsw) && (up->tsh == tsh)) return;
    up->tsw = tsw;
@@ -58,7 +58,7 @@ e_mod_comp_update_tile_size_set(Update *up, int tsw, int tsh)
 }
 
 void
-e_mod_comp_update_resize(Update *up, int w, int h)
+e_mod_comp_update_resize(E_Update *up, int w, int h)
 {
    if ((up->w == w) && (up->h == h)) return;
    up->w = w;
@@ -73,7 +73,7 @@ e_mod_comp_update_resize(Update *up, int w, int h)
 }
 
 void
-e_mod_comp_update_add(Update *up, int x, int y, int w, int h)
+e_mod_comp_update_add(E_Update *up, int x, int y, int w, int h)
 {
    int tx, ty, txx, tyy, xx, yy;
    unsigned char *t, *t2;
@@ -88,9 +88,9 @@ e_mod_comp_update_add(Update *up, int x, int y, int w, int h)
 
    switch (up->pol)
      {
-     case UPDATE_POLICY_RAW:
+     case E_UPDATE_POLICY_RAW:
         break;
-     case UPDATE_POLICY_HALF_WIDTH_OR_MORE_ROUND_UP_TO_FULL_WIDTH:
+     case E_UPDATE_POLICY_HALF_WIDTH_OR_MORE_ROUND_UP_TO_FULL_WIDTH:
         if (w > (up->w / 2))
           {
              x = 0;
@@ -118,16 +118,16 @@ e_mod_comp_update_add(Update *up, int x, int y, int w, int h)
      }
 }
 
-Update_Rect *
-e_mod_comp_update_rects_get(Update *up)
+E_Update_Rect *
+e_mod_comp_update_rects_get(E_Update *up)
 {
-   Update_Rect *r;
+   E_Update_Rect *r;
    int ri = 0;
    int x, y;
    unsigned char *t, *t2, *t3;
    
    if (!up->tiles) return NULL;
-   r = calloc((up->tw * up->th) + 1, sizeof(Update_Rect));
+   r = calloc((up->tw * up->th) + 1, sizeof(E_Update_Rect));
    if (!r) return NULL;
    t = up->tiles;
    for (y = 0; y < up->th; y++)
@@ -198,7 +198,7 @@ e_mod_comp_update_rects_get(Update *up)
 }
 
 void
-e_mod_comp_update_clear(Update *up)
+e_mod_comp_update_clear(E_Update *up)
 {
    if (up->tiles)
      {

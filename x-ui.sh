@@ -23,6 +23,9 @@ Xephyr :1 -noreset -ac -br -dpi 183 -screen 960x400x16 -host-cursor &
 
 sleep 1
 export DISPLAY=:1
+#export E_CONF_PROFILE=illume-home
+#valgrind --db-attach=yes --leak-check=full --leak-resolution=high --num-callers=32 \
+#enlightenment \
 unset E_RESTART E_START E_IPC_SOCKET E_START_TIME E_CONF_PROFILE
 enlightenment_start \
 -no-precache \

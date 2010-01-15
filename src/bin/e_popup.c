@@ -7,20 +7,11 @@
 static void _e_popup_free(E_Popup *pop);
 static int  _e_popup_idle_enterer(void *data);
 static int  _e_popup_cb_window_shape(void *data, int ev_type, void *ev);
-/*static E_Popup *_e_popup_find_by_window(Ecore_X_Window win);
-static int _e_popup_cb_mouse_down(void *data, int type, void *event);
-static int _e_popup_cb_mouse_up(void *data, int type, void *event);
-static int _e_popup_cb_mouse_wheel(void *data, int type, void *event);
-*/
 
 /* local subsystem globals */
 static Ecore_Event_Handler *_e_popup_window_shape_handler = NULL;
-/*
-static Ecore_Event_Handler *_e_popup_mouse_down_handler = NULL;
-static Ecore_Event_Handler *_e_popup_mouse_up_handler = NULL;
-static Ecore_Event_Handler *_e_popup_mouse_wheel_handler = NULL;
- */
 static Eina_List *_e_popup_list = NULL;
+static Eina_Hash *_e_popup_hash = NULL;
 
 /* externally accessible functions */
 
@@ -29,26 +20,19 @@ e_popup_init(void)
 {
    _e_popup_window_shape_handler = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHAPE,
 							   _e_popup_cb_window_shape, NULL);
-/*   
-   _e_popup_mouse_down_handler = ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_DOWN,
-							 _e_popup_cb_mouse_down, NULL);
-   _e_popup_mouse_up_handler = ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP,
-						       _e_popup_cb_mouse_up, NULL);
-   _e_popup_mouse_wheel_handler = ecore_event_handler_add(ECORE_EVENT_MOUSE_WHEEL,
-							  _e_popup_cb_mouse_wheel, NULL);
- */
+   if (!_e_popup_hash) _e_popup_hash = eina_hash_string_superfast_new(NULL);
    return 1;
 }
 
 EAPI int
 e_popup_shutdown(void)
 {
+   if (_e_popup_hash)
+     {
+        eina_hash_free(_e_popup_hash);
+        _e_popup_hash = NULL;
+     }
    E_FN_DEL(ecore_event_handler_del, _e_popup_window_shape_handler);
-/*   
-   E_FN_DEL(ecore_event_handler_del, _e_popup_mouse_down_handler);
-   E_FN_DEL(ecore_event_handler_del, _e_popup_mouse_up_handler);
-   E_FN_DEL(ecore_event_handler_del, _e_popup_mouse_wheel_handler);
- */
    return 1;
 }
 
@@ -83,6 +67,7 @@ e_popup_new(E_Zone *zone, int x, int y, int w, int h)
    e_object_ref(E_OBJECT(pop->zone));
    pop->zone->popups = eina_list_append(pop->zone->popups, pop);
    _e_popup_list = eina_list_append(_e_popup_list, pop);
+   eina_hash_add(_e_popup_hash, e_util_winid_str_get(pop->evas_win), pop);
    return pop;
 }
 
@@ -194,7 +179,9 @@ e_popup_edje_bg_object_set(E_Popup *pop, Evas_Object *o)
 	if (e_config->use_composite)
 	  {
 	     ecore_evas_alpha_set(pop->ecore_evas, pop->shaped);
+             eina_hash_del(_e_popup_hash, e_util_winid_str_get(pop->evas_win), pop);
 	     pop->evas_win = ecore_evas_software_x11_window_get(pop->ecore_evas);
+             eina_hash_add(_e_popup_hash, e_util_winid_str_get(pop->evas_win), pop);
 	     e_container_window_raise(pop->zone->container, pop->evas_win, pop->layer);
 	  }
 	else
@@ -288,6 +275,17 @@ e_popup_idler_before(void)
      }
 }
 
+EAPI E_Popup *
+e_popup_find_by_window(Ecore_X_Window win)
+{
+   E_Popup *pop;
+   
+   pop = eina_hash_find(_e_popup_hash, e_util_winid_str_get(win));
+   if ((pop) && (pop->evas_win != win))
+     return NULL;
+   return pop;
+}
+
 /* local subsystem functions */
 
 static void
@@ -304,6 +302,7 @@ _e_popup_free(E_Popup *pop)
    e_object_unref(E_OBJECT(pop->zone));
    pop->zone->popups = eina_list_remove(pop->zone->popups, pop);
    _e_popup_list = eina_list_remove(_e_popup_list, pop);
+   eina_hash_del(_e_popup_hash, e_util_winid_str_get(pop->evas_win), pop);
    free(pop);
 }
 
@@ -327,88 +326,11 @@ _e_popup_idle_enterer(void *data)
 static int
 _e_popup_cb_window_shape(void *data, int ev_type, void *ev)
 {
-   Eina_List *l;
    E_Popup *pop;
    Ecore_X_Event_Window_Shape *e;
    
    e = ev;
-   EINA_LIST_FOREACH(_e_popup_list, l, pop)
-     {
-	if (pop->evas_win == e->win)
-	  pop->need_shape_export = 1;
-     }
+   pop = e_popup_find_by_window(e->win);
+   if (pop) pop->need_shape_export = 1;
    return 1;
 }
-
-/*static E_Popup *
-_e_popup_find_by_window(Ecore_X_Window win)
-{
-   E_Popup *pop;
-   Eina_List *l;
-   
-   EINA_LIST_FOREACH(_e_popup_list, l, pop)
-     {
-	if (pop->evas_win == win) return pop;
-     }
-   return NULL;
-}
-*/
-/*
-static int
-_e_popup_cb_mouse_down(void *data, int type, void *event)
-{
-   Ecore_Event_Mouse_Button *ev;
-   E_Popup *pop;
-   
-   ev = event;
-   pop = _e_popup_find_by_window(ev->event_window);
-   if (pop)
-     {
-	Evas_Button_Flags flags = EVAS_BUTTON_NONE;
-	
-	e_bindings_mouse_down_event_handle(E_BINDING_CONTEXT_POPUP,
-					   E_OBJECT(pop), ev);
-	if (ev->double_click) flags |= EVAS_BUTTON_DOUBLE_CLICK;
-	if (ev->triple_click) flags |= EVAS_BUTTON_TRIPLE_CLICK;
-	evas_event_feed_mouse_down(pop->evas, ev->buttons, flags, ev->timestamp, NULL);
-	return 0;
-     }
-   return 1;
-}
-
-static int
-_e_popup_cb_mouse_up(void *data, int type, void *event)
-{
-   Ecore_Event_Mouse_Button *ev;
-   E_Popup *pop;
-   
-   ev = event;
-   pop = _e_popup_find_by_window(ev->event_window);
-   if (pop)
-     {
-	evas_event_feed_mouse_up(pop->evas, ev->buttons, EVAS_BUTTON_NONE, ev->timestamp, NULL);
-	e_bindings_mouse_up_event_handle(E_BINDING_CONTEXT_POPUP,
-					 E_OBJECT(pop), ev);
-	return 0;
-     }
-   return 1;
-}
-
-static int
-_e_popup_cb_mouse_wheel(void *data, int type, void *event)
-{
-   Ecore_Event_Mouse_Wheel *ev;
-   E_Popup *pop;
-   
-   ev = event;
-   pop = _e_popup_find_by_window(ev->event_window);
-   if (pop)
-     {
-	e_bindings_wheel_event_handle(E_BINDING_CONTEXT_POPUP,
-				      E_OBJECT(pop), ev);
-	evas_event_feed_mouse_wheel(pop->evas, ev->direction, ev->z, ev->timestamp, NULL);
-	return 0;
-     }
-   return 1;
-}
-*/

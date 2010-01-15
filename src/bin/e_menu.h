@@ -208,5 +208,7 @@ EAPI void         e_menu_idler_before(void);
 
 EAPI Ecore_X_Window e_menu_grab_window_get(void);
 
+EAPI E_Menu      *e_menu_find_by_window(Ecore_X_Window win);
+
 #endif
 #endif

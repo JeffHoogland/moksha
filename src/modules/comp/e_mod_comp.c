@@ -4,6 +4,8 @@
 #include "e_mod_comp_update.h"
 #include "config.h"
 
+//////////////////////////////////////////////////////////////////////////
+//
 // TODO (no specific order):
 //   1. abstract evas object and compwin so we can duplicate the object N times
 //      in N canvases - for winlist, everything, pager etc. too
@@ -12,19 +14,16 @@
 //   3. for unmapped windows - when window goes out of unmapped comp cache
 //      make a miniature copy (1/4 width+height?) and set property on window
 //      with pixmap id
-//   4. add shadow to rect non argb windows
-//   5. abstract composite canvas to add extras in and "expose" it
 //   6. other engine fast-paths (gl specifically)!
 //   8. transparenty property
 //   9. shortcut lots of stuff to draw inside the compositor - shelf,
 //      wallpaper, efm - hell even menus and anything else in e (this is what
 //      e18 was mostly about)
 //  10. fullscreen windows need to be able to bypass compositing
+//  
+//////////////////////////////////////////////////////////////////////////
 
-typedef struct _Comp     Comp;
-typedef struct _Comp_Win Comp_Win;
-
-struct _Comp
+struct _E_Comp
 {
    Ecore_X_Window  win;
    Ecore_Evas     *ee;
@@ -36,14 +35,15 @@ struct _Comp
    Ecore_Animator *render_animator;
 };
 
-struct _Comp_Win
+struct _E_Comp_Win
 {
    EINA_INLIST;
    
-   Comp           *c; // parent compositor
+   E_Comp         *c; // parent compositor
    Ecore_X_Window  win; // raw window - for menus etc.
    E_Border       *bd; // if its a border - later
    E_Popup        *pop; // if its a popup - later
+   E_Menu         *menu; // if it is a menu - later
    int             x, y, w, h; // geometry
    int             pw, ph; // pixmap w/h
    int             border; // border width
@@ -51,9 +51,12 @@ struct _Comp_Win
    Ecore_X_Damage  damage; // damage region
    Ecore_X_Visual  vis;
    int             depth;
-   Evas_Object    *obj; // shadow object
+   Evas_Object    *obj; // composite object
+   Evas_Object    *shobj; // shadow object
    Ecore_X_Image  *xim; // x image - software fallback
-   Update         *up; // update handler
+   E_Update       *up; // update handler
+   E_Object_Delfn *dfn; // delete function handle for objects being tracked
+   
    Eina_Bool       visible : 1; // is visible
    Eina_Bool       input_only : 1; // is input_only
    Eina_Bool       argb : 1; // is argb
@@ -76,197 +79,201 @@ static Eina_Hash *damages = NULL;
 #define DBG(f, x...)
 #endif
 
-static void _e_mod_comp_render_queue(Comp *c);
-static void _e_mod_comp_win_damage(Comp_Win *cw, int x, int y, int w, int h, Eina_Bool dmg);
+static void _e_mod_comp_render_queue(E_Comp *c);
+static void _e_mod_comp_win_damage(E_Comp_Win *cw, int x, int y, int w, int h, Eina_Bool dmg);
+
+static void
+_e_mod_comp_win_shape_rectangles_apply(E_Comp_Win *cw)
+{
+   Ecore_X_Rectangle *rects;
+   int num, i;
+   
+   DBG("SHAPE [0x%x] change\n", cw->win);
+   rects = ecore_x_window_shape_rectangles_get(cw->win, &num);
+   if ((rects) && (num == 1))
+     {
+        DBG("SHAPE [0x%x] rect 1\n", cw->win);
+        if ((rects[0].x == 0) &&
+            (rects[0].y == 0) &&
+            (rects[0].width == cw->w) &&
+            (rects[0].height == cw->h))
+          {
+             DBG("SHAPE [0x%x] rect solid\n", cw->win);
+             free(rects);
+             rects = NULL;
+          }
+     }
+   if (rects)
+     {
+        unsigned int *pix, *p;
+        unsigned char *spix, *sp;
+        int w, h, px, py;
+        
+        cw->shaped = 1;
+        evas_object_image_size_get(cw->obj, &w, &h);
+        if ((w > 0) && (h > 0))
+          {
+             pix = evas_object_image_data_get(cw->obj, 1);
+             spix = calloc(w * h, sizeof(unsigned char));
+             if (spix)
+               {
+                  DBG("SHAPE [0x%x] rects %i\n", num);
+                  for (i = 0; i < num; i++)
+                    {
+                       int rx, ry, rw, rh;
+                       
+                       rx = rects[i].x; ry = rects[i].y;
+                       rw = rects[i].width; rh = rects[i].height;
+                       E_RECTS_CLIP_TO_RECT(rx, ry, rw, rh, 0, 0, w, h);
+                       sp = spix + (w * ry) + rx;
+                       for (py = 0; py < rh; py++)
+                         {
+                            for (px = 0; px < rw; px++)
+                              {
+                                 *sp = 1; sp++;
+                              }
+                            sp += w - rw;
+                         }
+                    }
+                  sp = spix;
+                  p = pix;
+                  for (py = 0; py < h; py++)
+                    {
+                       for (px = 0; px < w; px++)
+                         {
+                            if (*sp) *p |= 0xff000000;
+                            else *p = 0x00000000;
+                            sp++;
+                            p++;
+                         }
+                    }
+                  free(spix);
+               }
+             evas_object_image_data_set(cw->obj, pix);
+             evas_object_image_alpha_set(cw->obj, 1);
+             evas_object_image_data_update_add(cw->obj, 0, 0, w, h);
+          }
+        free(rects);
+     }
+   else
+     {
+        cw->shaped = 0;
+        evas_object_image_alpha_set(cw->obj, 0);
+        // dont need to fix alpha chanel as blending 
+        // should be totally off here regardless of
+        // alpha channe; content
+     }
+}
+
+static void
+_e_mod_comp_win_update(E_Comp_Win *cw)
+{
+   E_Update_Rect *r;
+   int i;
+   
+   cw->update = 0;
+   if (!cw->pixmap)
+     {
+        cw->pixmap = ecore_x_composite_name_window_pixmap_get(cw->win);
+        if (cw->pixmap)
+          ecore_x_pixmap_geometry_get(cw->pixmap, NULL, NULL, &(cw->pw), &(cw->ph));
+        else
+          {
+             cw->pw = 0;
+             cw->ph = 0;
+          }
+        DBG("REND [0x%x] pixma = [0x%x], %ix%i\n", cw->win, cw->pixmap, cw->pw, cw->ph);
+        if ((cw->pw <= 0) || (cw->ph <= 0))
+          {
+             ecore_x_pixmap_free(cw->pixmap);
+             cw->pixmap = 0;
+             cw->pw = 0;
+             cw->ph = 0;
+          }
+     }
+   if (!((cw->pw > 0) && (cw->ph > 0))) return;
+
+   e_mod_comp_update_resize(cw->up, cw->pw, cw->ph);
+   if (!cw->xim)
+     {
+        if (cw->xim = ecore_x_image_new(cw->pw, cw->ph, cw->vis, cw->depth))
+          e_mod_comp_update_add(cw->up, 0, 0, cw->pw, cw->ph);
+     }
+   r = e_mod_comp_update_rects_get(cw->up);
+   if (r) 
+     {
+        if (cw->xim)
+          {
+             e_mod_comp_update_clear(cw->up);
+             for (i = 0; r[i].w > 0; i++)
+               {
+                  unsigned int *pix;
+                  int x, y, w, h;
+                  
+                  x = r[i].x; y = r[i].y;
+                  w = r[i].w; h = r[i].h;
+                  ecore_x_image_get(cw->xim, cw->pixmap, x, y, x, y, w, h);
+                  DBG("UPDATE [0x%x] %i %i %ix%i\n", cw->win, x, y, w, h);
+                  pix = ecore_x_image_data_get(cw->xim, NULL, NULL, NULL);
+                  evas_object_image_size_set(cw->obj, cw->pw, cw->ph);
+                  evas_object_image_data_set(cw->obj, pix);
+                  evas_object_image_data_update_add(cw->obj, x, y, w, h);
+                  if (cw->shaped) cw->shape_changed = 1;
+               }
+             if ((cw->shape_changed) && (!cw->argb))
+               {
+                  _e_mod_comp_win_shape_rectangles_apply(cw);
+                  cw->shape_changed = 0;
+               }
+          }
+        free(r);
+     }
+   else
+     cw->update = 1;
+   if (cw->shobj)
+     {
+        if (cw->shaped) evas_object_hide(cw->shobj);
+     }
+}
 
 static int
 _e_mod_comp_cb_animator(void *data)
 {
-   Comp *c = data;
-   Comp_Win *cw;
+   E_Comp *c = data;
+   E_Comp_Win *cw;
    Eina_List *new_updates = NULL; // for failed pixmap fetches - get them next frame
    
    c->render_animator = NULL;
    EINA_LIST_FREE(c->updates, cw)
      {
-        Update_Rect *r;
-        int i;
-        
-        cw->update = 0;
-        if (!cw->pixmap)
-          {
-             cw->pixmap = ecore_x_composite_name_window_pixmap_get(cw->win);
-             if (cw->pixmap)
-               ecore_x_pixmap_geometry_get(cw->pixmap, NULL, NULL, &(cw->pw), &(cw->ph));
-             else
-               {
-                  cw->pw = 0;
-                  cw->ph = 0;
-               }
-             DBG("REND [0x%x] pixma = [0x%x], %ix%i\n", cw->win, cw->pixmap, cw->pw, cw->ph);
-             if ((cw->pw <= 0) || (cw->ph <= 0))
-               {
-                  ecore_x_pixmap_free(cw->pixmap);
-                  cw->pixmap = 0;
-                  cw->pw = 0;
-                  cw->ph = 0;
-               }
-          }
-        if ((cw->pw > 0) && (cw->ph > 0))
-          {
-             e_mod_comp_update_resize(cw->up, cw->pw, cw->ph);
-             if (!cw->xim)
-               {
-                  if (cw->xim = ecore_x_image_new(cw->pw, cw->ph, cw->vis, cw->depth))
-                    e_mod_comp_update_add(cw->up, 0, 0, cw->pw, cw->ph);
-               }
-             r = e_mod_comp_update_rects_get(cw->up);
-             if (r) 
-               {
-                  if (cw->xim)
-                    {
-                       e_mod_comp_update_clear(cw->up);
-                       for (i = 0; r[i].w > 0; i++)
-                         {
-                            unsigned int *pix;
-                            int x, y, w, h;
-                            
-                            x = r[i].x;
-                            y = r[i].y;
-                            w = r[i].w;
-                            h = r[i].h;
-                            ecore_x_image_get(cw->xim, cw->pixmap, x, y, x, y, w, h);
-                            DBG("UPDATE [0x%x] %i %i %ix%i\n", cw->win, x, y, w, h);
-                            pix = ecore_x_image_data_get(cw->xim, NULL, NULL, NULL);
-                            evas_object_image_size_set(cw->obj, cw->pw, cw->ph);
-                            evas_object_image_data_set(cw->obj, pix);
-                            evas_object_image_data_update_add(cw->obj, x, y, w, h);
-                            if (cw->shaped) cw->shape_changed = 1;
-                         }
-                       if ((cw->shape_changed) && (!cw->argb))
-//                       if (0)
-                         {
-                            Ecore_X_Rectangle *rects;
-                            int num, i;
-                            
-                            DBG("SHAPE [0x%x] change\n", cw->win);
-                            rects = ecore_x_window_shape_rectangles_get
-                              (cw->win, &num);
-                            if ((rects) && (num == 1))
-                              {
-                                 DBG("SHAPE [0x%x] rect 1\n", cw->win);
-                                 if ((rects[0].x == 0) &&
-                                     (rects[0].y == 0) &&
-                                     (rects[0].width == cw->w) &&
-                                     (rects[0].height == cw->h))
-                                   {
-                                      DBG("SHAPE [0x%x] rect solid\n", cw->win);
-                                      free(rects);
-                                      rects = NULL;
-                                   }
-                              }
-                            if (rects)
-                              {
-                                 unsigned int *pix, *p;
-                                 unsigned char *spix, *sp;
-                                 int w, h, px, py;
-                                 
-                                 cw->shaped = 1;
-                                 evas_object_image_size_get(cw->obj, &w, &h);
-                                 if ((w > 0) && (h > 0))
-                                   {
-                                      pix = evas_object_image_data_get(cw->obj, 1);
-                                      spix = calloc(w * h, sizeof(unsigned char));
-                                      if (spix)
-                                        {
-                                           DBG("SHAPE [0x%x] rects %i\n", num);
-                                           for (i = 0; i < num; i++)
-                                             {
-                                                int rx, ry, rw, rh;
-                                                
-                                                rx = rects[i].x;
-                                                ry = rects[i].y;
-                                                rw = rects[i].width;
-                                                rh = rects[i].height;
-                                                E_RECTS_CLIP_TO_RECT
-                                                  (rx, ry, rw, rh, 0, 0, w, h);
-                                                sp = spix + (w * ry) + rx;
-                                                for (py = 0; py < rh; py++)
-                                                  {
-                                                     for (px = 0; px < rw; px++)
-                                                       {
-                                                          *sp = 1;
-                                                          sp++;
-                                                       }
-                                                     sp += w - rw;
-                                                  }
-                                             }
-                                           sp = spix;
-                                           p = pix;
-                                           for (py = 0; py < h; py++)
-                                             {
-                                                for (px = 0; px < w; px++)
-                                                  {
-                                                     if (*sp)
-                                                       *p |= 0xff000000;
-                                                     else
-                                                       *p = 0x00000000;
-                                                     sp++;
-                                                     p++;
-                                                  }
-                                             }
-                                           free(spix);
-                                        }
-                                      evas_object_image_data_set(cw->obj, pix);
-                                      evas_object_image_alpha_set(cw->obj, 1);
-                                      evas_object_image_data_update_add(cw->obj, 0, 0, w, h);
-                                   }
-                                 free(rects);
-                              }
-                            else
-                              {
-                                 cw->shaped = 0;
-                                 evas_object_image_alpha_set(cw->obj, 0);
-                                 // dont need to fix alpha chanel as blending 
-                                 // should be totally off here regardless of
-                                 // alpha channe; content
-                              }
-                            cw->shape_changed = 0;
-                         }
-                    }
-                  free(r);
-               }
-             else
-               {
-                  cw->update = 1;
-                  new_updates = eina_list_append(new_updates, cw);
-                  _e_mod_comp_render_queue(c);
-               }
-          }
+        _e_mod_comp_win_update(cw);
+        if (cw->update)
+          new_updates = eina_list_append(new_updates, cw);
      }
    ecore_evas_manual_render(c->ee);
+   if (new_updates) _e_mod_comp_render_queue(c);
    c->updates = new_updates;
    return 0;
 }
 
 static void
-_e_mod_comp_render_queue(Comp *c)
+_e_mod_comp_render_queue(E_Comp *c)
 {
    if (c->render_animator) return;
    c->render_animator = ecore_animator_add(_e_mod_comp_cb_animator, c);
 }
 
 static void
-_e_mod_comp_win_render_queue(Comp_Win *cw)
+_e_mod_comp_win_render_queue(E_Comp_Win *cw)
 {
    _e_mod_comp_render_queue(cw->c);
 }
 
-static Comp *
+static E_Comp *
 _e_mod_comp_find(Ecore_X_Window root)
 {
    Eina_List *l;
-   Comp *c;
+   E_Comp *c;
    
    // fixme: use hash if compositors list > 4
    EINA_LIST_FOREACH(compositors, l, c)
@@ -276,39 +283,44 @@ _e_mod_comp_find(Ecore_X_Window root)
    return NULL;
 }
 
-static Comp_Win *
+static E_Comp_Win *
 _e_mod_comp_win_find(Ecore_X_Window win)
 {
    Eina_List *l;
-   Comp_Win *cw;
+   E_Comp_Win *cw;
 
    cw = eina_hash_find(windows, e_util_winid_str_get(win));
    return cw;
 }
 
-static Comp_Win *
+static E_Comp_Win *
 _e_mod_comp_win_damage_find(Ecore_X_Damage damage)
 {
-   Comp_Win *cw;
+   E_Comp_Win *cw;
    
    cw = eina_hash_find(damages, e_util_winid_str_get(damage));
    return cw;
 }
 
-static Comp_Win *
-_e_mod_comp_win_add(Comp *c, Ecore_X_Window win)
+static E_Comp_Win *
+_e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
 {
    Ecore_X_Window_Attributes att;
-   Comp_Win *cw;
+   E_Comp_Win *cw;
    
-   cw = calloc(1, sizeof(Comp_Win));
+   cw = calloc(1, sizeof(E_Comp_Win));
    if (!cw) return NULL;
    cw->win = win;
    // FIXME: check if bd or pop - track
    cw->c = c;
    memset((&att), 0, sizeof(Ecore_X_Window_Attributes));
-   ecore_x_window_attributes_get(cw->win, &att);
-   if ((!att.input_only) && (att.depth != 24))
+   if (!ecore_x_window_attributes_get(cw->win, &att))
+     {
+        free(cw);
+        return NULL;
+     }
+   if ((!att.input_only) && 
+       ((att.depth != 24) && (att.depth != 32)))
      {
         printf("WARNING: window 0x%x not 24/32bpp -> %ibpp\n", cw->win, att.depth);
         free(cw);
@@ -326,6 +338,7 @@ _e_mod_comp_win_add(Comp *c, Ecore_X_Window win)
         
         cw->damage = ecore_x_damage_new(cw->win, ECORE_X_DAMAGE_REPORT_DELTA_RECTANGLES);
         eina_hash_add(damages, e_util_winid_str_get(cw->damage), cw);
+        cw->shobj = edje_object_add(c->evas);
         cw->obj = evas_object_image_filled_add(c->evas);
         evas_object_image_colorspace_set(cw->obj, EVAS_COLORSPACE_ARGB8888);
         if (cw->argb)
@@ -364,16 +377,24 @@ _e_mod_comp_win_add(Comp *c, Ecore_X_Window win)
    cw->up = e_mod_comp_update_new();
    e_mod_comp_update_tile_size_set(cw->up, 32, 32);
    // for software:
-   e_mod_comp_update_policy_set(cw->up, UPDATE_POLICY_HALF_WIDTH_OR_MORE_ROUND_UP_TO_FULL_WIDTH);
+   e_mod_comp_update_policy_set
+     (cw->up, E_UPDATE_POLICY_HALF_WIDTH_OR_MORE_ROUND_UP_TO_FULL_WIDTH);
    DBG("  [0x%x] add\n", cw->win);
    return cw;
 }
 
 static void
-_e_mod_comp_win_del(Comp_Win *cw)
+_e_mod_comp_win_del(E_Comp_Win *cw)
 {
    e_mod_comp_update_free(cw->up);
    DBG("  [0x%x] del\n", cw->win);
+   if (cw->dfn)
+     {
+        if (cw->bd) e_object_delfn_del(E_OBJECT(cw->bd), cw->dfn);
+        else if (cw->pop) e_object_delfn_del(E_OBJECT(cw->pop), cw->dfn);
+        else if (cw->menu) e_object_delfn_del(E_OBJECT(cw->menu), cw->dfn);
+        cw->dfn = NULL;
+     }
    if (cw->pixmap)
      {
         ecore_x_pixmap_free(cw->pixmap);
@@ -392,6 +413,10 @@ _e_mod_comp_win_del(Comp_Win *cw)
      {
         evas_object_del(cw->obj);
      }
+   if (cw->shobj)
+     {
+        evas_object_del(cw->shobj);
+     }
    eina_hash_del(windows, e_util_winid_str_get(cw->win), cw);
    if (cw->damage)
      {
@@ -409,7 +434,22 @@ _e_mod_comp_win_del(Comp_Win *cw)
 }
 
 static void
-_e_mod_comp_win_show(Comp_Win *cw)
+_e_mod_comp_object_del(void *data, void *obj)
+{
+   E_Comp_Win *cw = data;
+
+   if (obj == cw->bd) cw->bd = NULL;
+   else if (obj == cw->pop) cw->pop = NULL;
+   else if (obj == cw->menu) cw->menu = NULL;
+   if (cw->dfn)
+     {
+        e_object_delfn_del(obj, cw->dfn);
+        cw->dfn = NULL;
+     }
+}
+
+static void
+_e_mod_comp_win_show(E_Comp_Win *cw)
 {
    if (cw->visible) return;
    cw->visible = 1;
@@ -421,12 +461,89 @@ _e_mod_comp_win_show(Comp_Win *cw)
         ecore_x_composite_redirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
         _e_mod_comp_win_damage(cw, 0, 0, cw->w, cw->h, 0);
      }
+
+   if (cw->dfn)
+     {
+        if (cw->bd) e_object_delfn_del(E_OBJECT(cw->bd), cw->dfn);
+        else if (cw->pop) e_object_delfn_del(E_OBJECT(cw->pop), cw->dfn);
+        else if (cw->menu) e_object_delfn_del(E_OBJECT(cw->menu), cw->dfn);
+        cw->dfn = NULL;
+     }
+   
+   cw->bd = NULL;
+   cw->pop = NULL;
+   cw->menu = NULL;
+   
+   cw->bd = e_border_find_by_window(cw->win);
+   if (cw->bd)
+     {
+        cw->dfn = e_object_delfn_add(E_OBJECT(cw->bd), 
+                                     _e_mod_comp_object_del, cw);
+        // ref bd
+     }
+   else
+     {
+        cw->pop = e_popup_find_by_window(cw->win);
+        if (cw->pop)
+          {
+             cw->dfn = e_object_delfn_add(E_OBJECT(cw->pop), 
+                                          _e_mod_comp_object_del, cw);
+             // ref pop
+          }
+        else
+          {
+             cw->menu = e_menu_find_by_window(cw->win);
+             if (cw->menu)
+               {
+                  cw->dfn = e_object_delfn_add(E_OBJECT(cw->menu), 
+                                               _e_mod_comp_object_del, cw);
+                  // ref menu
+               }
+          }
+     }
    evas_object_show(cw->obj);
+   if (cw->shobj)
+     {
+        if (_comp_mod->conf->use_shadow)
+          {
+             if ((!cw->argb) && (!cw->shaped))
+               {
+                  int ok = 0;
+                  char buf[PATH_MAX];
+                  
+                 // fimxe: maker shadow object configurable - use theme first
+                  if (_comp_mod->conf->shadow_file)
+                    {
+                       ok = 1;
+                       if (!edje_object_file_set(cw->shobj, 
+                                                 _comp_mod->conf->shadow_file,
+                                                 "shadow"))
+                         ok = 0;
+                    }
+                  if (!ok)
+                    {
+                       ok = 1;
+                       if (!e_theme_edje_object_set(cw->shobj,
+                                                    "base/theme/borders",
+                                                    "e/shadow/box"))
+                         ok = 0;
+                    }
+                  if (!ok)
+                    {
+                       snprintf(buf, sizeof(buf), "%s/shadow.edj", 
+                                e_module_dir_get(_comp_mod->module)
+                                );
+                       edje_object_file_set(cw->shobj, buf, "shadow");
+                    }
+                  evas_object_show(cw->shobj);
+               }
+          }
+     }
    _e_mod_comp_win_render_queue(cw);
 }
 
 static void
-_e_mod_comp_win_hide(Comp_Win *cw)
+_e_mod_comp_win_hide(E_Comp_Win *cw)
 {
    if (!cw->visible) return;
    cw->visible = 0;
@@ -445,11 +562,15 @@ _e_mod_comp_win_hide(Comp_Win *cw)
         cw->pixmap = 0;
      }
    evas_object_hide(cw->obj);
+   if (cw->shobj)
+     {
+        evas_object_hide(cw->shobj);
+     }
    _e_mod_comp_win_render_queue(cw);
 }
 
 static void
-_e_mod_comp_win_raise_above(Comp_Win *cw, Comp_Win *cw2)
+_e_mod_comp_win_raise_above(E_Comp_Win *cw, E_Comp_Win *cw2)
 {
    DBG("  [0x%x] abv [0x%x]\n", cw->win, cw2->win);
    cw->c->wins = eina_inlist_remove(cw->c->wins, EINA_INLIST_GET(cw));
@@ -457,34 +578,46 @@ _e_mod_comp_win_raise_above(Comp_Win *cw, Comp_Win *cw2)
                                              EINA_INLIST_GET(cw), 
                                              EINA_INLIST_GET(cw2));
    evas_object_stack_above(cw->obj, cw2->obj);
+   if (cw->shobj)
+     {
+        evas_object_stack_below(cw->shobj, cw->obj);
+     }
    _e_mod_comp_win_render_queue(cw);
    if (cw->input_only) return;
 }
 
 static void
-_e_mod_comp_win_raise(Comp_Win *cw)
+_e_mod_comp_win_raise(E_Comp_Win *cw)
 {
    DBG("  [0x%x] rai\n", cw->win);
    cw->c->wins = eina_inlist_remove(cw->c->wins, EINA_INLIST_GET(cw));
    cw->c->wins = eina_inlist_append(cw->c->wins, EINA_INLIST_GET(cw));
    evas_object_raise(cw->obj);
+   if (cw->shobj)
+     {
+        evas_object_stack_below(cw->shobj, cw->obj);
+     }
    _e_mod_comp_win_render_queue(cw);
    if (cw->input_only) return;
 }
 
 static void
-_e_mod_comp_win_lower(Comp_Win *cw)
+_e_mod_comp_win_lower(E_Comp_Win *cw)
 {
    DBG("  [0x%x] low\n", cw->win);
    cw->c->wins = eina_inlist_remove(cw->c->wins, EINA_INLIST_GET(cw));
    cw->c->wins = eina_inlist_prepend(cw->c->wins, EINA_INLIST_GET(cw));
    evas_object_lower(cw->obj);
+   if (cw->shobj)
+     {
+        evas_object_stack_below(cw->shobj, cw->obj);
+     }
    _e_mod_comp_win_render_queue(cw);
    if (cw->input_only) return;
 }
 
 static void
-_e_mod_comp_win_configure(Comp_Win *cw, int x, int y, int w, int h, int border)
+_e_mod_comp_win_configure(E_Comp_Win *cw, int x, int y, int w, int h, int border)
 {
    if (!((x == cw->x) && (y == cw->y)))
      {
@@ -492,6 +625,10 @@ _e_mod_comp_win_configure(Comp_Win *cw, int x, int y, int w, int h, int border)
         cw->x = x;
         cw->y = y;
         evas_object_move(cw->obj, cw->x, cw->y);
+        if (cw->shobj)
+          {
+             evas_object_move(cw->shobj, cw->x, cw->y);
+          }
      }
    if (!((w == cw->w) && (h == cw->h)))
      {
@@ -510,6 +647,12 @@ _e_mod_comp_win_configure(Comp_Win *cw, int x, int y, int w, int h, int border)
         evas_object_resize(cw->obj, 
                            cw->w + (cw->border * 2), 
                            cw->h + (cw->border * 2));
+        if (cw->shobj)
+          {
+             evas_object_resize(cw->shobj, 
+                                cw->w + (cw->border * 2),
+                                cw->h + (cw->border * 2));
+          }
         if (cw->xim)
           {
              evas_object_image_data_set(cw->obj, NULL);
@@ -523,13 +666,19 @@ _e_mod_comp_win_configure(Comp_Win *cw, int x, int y, int w, int h, int border)
         evas_object_resize(cw->obj, 
                            cw->w + (cw->border * 2), 
                            cw->h + (cw->border * 2));
+        if (cw->shobj)
+          {
+             evas_object_resize(cw->shobj, 
+                                cw->w + (cw->border * 2),
+                                cw->h + (cw->border * 2));
+          }
      }
    if (cw->input_only) return;
    _e_mod_comp_win_render_queue(cw);
 }
 
 static void
-_e_mod_comp_win_damage(Comp_Win *cw, int x, int y, int w, int h, Eina_Bool dmg)
+_e_mod_comp_win_damage(E_Comp_Win *cw, int x, int y, int w, int h, Eina_Bool dmg)
 {
    if (cw->input_only) return;
    DBG("  [0x%x] dmg %4i %4i %4ix%4i\n", cw->win, x, y, w, h);
@@ -541,18 +690,6 @@ _e_mod_comp_win_damage(Comp_Win *cw, int x, int y, int w, int h, Eina_Bool dmg)
         ecore_x_damage_subtract(cw->damage, 0, parts);
         ecore_x_region_free(parts);
      }
-   /*
-   if (cw->xim)
-     {
-        unsigned int *pix;
-        
-        ecore_x_image_get(cw->xim, cw->pixmap, x, y, x, y, w, h);
-        pix = ecore_x_image_data_get(cw->xim, NULL, NULL, NULL);
-        evas_object_image_data_set(cw->obj, pix);
-        evas_object_image_size_set(cw->obj, cw->w, cw->h);
-        evas_object_image_data_update_add(cw->obj, x, y, w, h);
-     }
-    */
    if (!cw->update)
      {
         cw->update = 1;
@@ -563,7 +700,7 @@ _e_mod_comp_win_damage(Comp_Win *cw, int x, int y, int w, int h, Eina_Bool dmg)
 }
 
 static void
-_e_mod_comp_win_reshape(Comp_Win *cw)
+_e_mod_comp_win_reshape(E_Comp_Win *cw)
 {
    if (cw->shape_changed) return;
    cw->shape_changed = 1;
@@ -580,10 +717,10 @@ _e_mod_comp_win_reshape(Comp_Win *cw)
 
 static int
 _e_mod_comp_create(void *data, int type, void *event)
-{ // do nothing. only worry about maps
+{
    Ecore_X_Event_Window_Create *ev = event;
-   Comp_Win *cw;
-   Comp *c = _e_mod_comp_find(ev->parent);
+   E_Comp_Win *cw;
+   E_Comp *c = _e_mod_comp_find(ev->parent);
    if (!c) return 1;
    if (_e_mod_comp_win_find(ev->win)) return 1;
    if (c->win == ev->win) return 1;
@@ -595,11 +732,10 @@ _e_mod_comp_create(void *data, int type, void *event)
 
 static int
 _e_mod_comp_destroy(void *data, int type, void *event)
-{ // do nothing. only worry about unmaps
+{
    Ecore_X_Event_Window_Destroy *ev = event;
-   Comp_Win *cw = _e_mod_comp_win_find(ev->win);
+   E_Comp_Win *cw = _e_mod_comp_win_find(ev->win);
    if (!cw) return 1;
-//   if (ev->event_win != cw->c->man->root) return 1;
    _e_mod_comp_win_del(cw);
    return 1;
 }
@@ -608,9 +744,8 @@ static int
 _e_mod_comp_show(void *data, int type, void *event)
 {
    Ecore_X_Event_Window_Show *ev = event;
-   Comp_Win *cw = _e_mod_comp_win_find(ev->win);
+   E_Comp_Win *cw = _e_mod_comp_win_find(ev->win);
    if (!cw) return 1;
-//   if (ev->event_win != cw->c->man->root) return 1;
    if (cw->visible) return 1;
    _e_mod_comp_win_show(cw);
    return 1;
@@ -620,9 +755,8 @@ static int
 _e_mod_comp_hide(void *data, int type, void *event)
 {
    Ecore_X_Event_Window_Hide *ev = event;
-   Comp_Win *cw = _e_mod_comp_win_find(ev->win);
+   E_Comp_Win *cw = _e_mod_comp_win_find(ev->win);
    if (!cw) return 1;
-//   if (ev->event_win != cw->c->man->root) return 1;
    if (!cw->visible) return 1;
    _e_mod_comp_win_hide(cw);
    return 1;
@@ -632,7 +766,7 @@ static int
 _e_mod_comp_reparent(void *data, int type, void *event)
 {
    Ecore_X_Event_Window_Reparent *ev = event;
-   Comp_Win *cw = _e_mod_comp_win_find(ev->win);
+   E_Comp_Win *cw = _e_mod_comp_win_find(ev->win);
    if (!cw) return 1;
    DBG("== repar [0x%x] to [0x%x]\n", ev->win, ev->parent);
    if (ev->parent != cw->c->man->root)
@@ -644,9 +778,8 @@ static int
 _e_mod_comp_configure(void *data, int type, void *event)
 {
    Ecore_X_Event_Window_Configure *ev = event;
-   Comp_Win *cw = _e_mod_comp_win_find(ev->win);
+   E_Comp_Win *cw = _e_mod_comp_win_find(ev->win);
    if (!cw) return 1;
-//   if (ev->event_win != cw->c->man->root) return 1;
 
    if (ev->abovewin == 0)
      {
@@ -654,11 +787,11 @@ _e_mod_comp_configure(void *data, int type, void *event)
      }
    else
      {
-        Comp_Win *cw2 = _e_mod_comp_win_find(ev->abovewin);
+        E_Comp_Win *cw2 = _e_mod_comp_win_find(ev->abovewin);
 
         if (cw2)
           {
-             Comp_Win *cw3 = (Comp_Win *)(EINA_INLIST_GET(cw)->prev);
+             E_Comp_Win *cw3 = (E_Comp_Win *)(EINA_INLIST_GET(cw)->prev);
 
              if (cw3 != cw2)
                _e_mod_comp_win_raise_above(cw, cw2);
@@ -678,9 +811,8 @@ static int
 _e_mod_comp_stack(void *data, int type, void *event)
 {
    Ecore_X_Event_Window_Stack *ev = event;
-   Comp_Win *cw = _e_mod_comp_win_find(ev->win);
+   E_Comp_Win *cw = _e_mod_comp_win_find(ev->win);
    if (!cw) return 1;
-//   if (ev->event_win != cw->c->man->root) return 1;
    if (ev->detail == ECORE_X_WINDOW_STACK_ABOVE) _e_mod_comp_win_raise(cw);
    else _e_mod_comp_win_lower(cw);
    return 1;
@@ -688,36 +820,33 @@ _e_mod_comp_stack(void *data, int type, void *event)
 
 static int
 _e_mod_comp_property(void *data, int type, void *event)
-{ // later
+{
    Ecore_X_Event_Window_Property *ev = event;
    return 1;
 }
 
 static int
 _e_mod_comp_message(void *data, int type, void *event)
-{ // later
+{
    Ecore_X_Event_Client_Message *ev = event;
    return 1;
 }
 
 static int
 _e_mod_comp_shape(void *data, int type, void *event)
-{ // later
+{
    Ecore_X_Event_Window_Shape *ev = event;
-   Comp_Win *cw = _e_mod_comp_win_find(ev->win);
+   E_Comp_Win *cw = _e_mod_comp_win_find(ev->win);
    if (!cw) return 1;
-//   if (ev->event_win != cw->c->man->root) return 1;
    _e_mod_comp_win_reshape(cw);
    return 1;
 }
-
-//////////////////////////////////////////////////////////////////////////
 
 static int
 _e_mod_comp_damage(void *data, int type, void *event)
 {
    Ecore_X_Event_Damage *ev = event;
-   Comp_Win *cw = _e_mod_comp_win_damage_find(ev->damage);
+   E_Comp_Win *cw = _e_mod_comp_win_damage_find(ev->damage);
    if (!cw) return 1;
    _e_mod_comp_win_damage(cw, 
                           ev->area.x, ev->area.y, 
@@ -725,15 +854,17 @@ _e_mod_comp_damage(void *data, int type, void *event)
    return 1;
 }
 
-static Comp *
+//////////////////////////////////////////////////////////////////////////
+
+static E_Comp *
 _e_mod_comp_add(E_Manager *man)
 {
-   Comp *c;
+   E_Comp *c;
    Ecore_X_Window *wins;
    Ecore_X_Window_Attributes att;
    int i, num;
    
-   c = calloc(1, sizeof(Comp));
+   c = calloc(1, sizeof(E_Comp));
    if (!c) return NULL;
    c->man = man;
    c->win = ecore_x_composite_render_window_enable(man->root);
@@ -751,7 +882,7 @@ _e_mod_comp_add(E_Manager *man)
    memset((&att), 0, sizeof(Ecore_X_Window_Attributes));
    ecore_x_window_attributes_get(c->win, &att);   
    
-   if (att.depth != 24)
+   if ((att.depth != 24) && (att.depth != 32))
      {
         e_util_dialog_internal
           (_("Compositor Error"),
@@ -779,7 +910,7 @@ _e_mod_comp_add(E_Manager *man)
      {
         for (i = 0; i < num; i++)
           {
-             Comp_Win *cw;
+             E_Comp_Win *cw;
              int x, y, w, h, border;
              
              cw = _e_mod_comp_win_add(c, wins[i]);
@@ -800,14 +931,14 @@ _e_mod_comp_add(E_Manager *man)
 }
 
 static void
-_e_mod_comp_del(Comp *c)
+_e_mod_comp_del(E_Comp *c)
 {
-   Comp_Win *cw;
+   E_Comp_Win *cw;
    
    ecore_x_screen_is_composited_set(c->man->num, 0);
    while (c->wins)
      {
-        cw = (Comp_Win *)(c->wins);
+        cw = (E_Comp_Win *)(c->wins);
         _e_mod_comp_win_hide(cw);
         _e_mod_comp_win_del(cw);
      }
@@ -845,7 +976,7 @@ e_mod_comp_init(void)
 
    EINA_LIST_FOREACH(e_manager_list(), l, man)
      {
-        Comp *c;
+        E_Comp *c;
         
         c = _e_mod_comp_add(man);
         if (c) compositors = eina_list_append(compositors, c);
@@ -857,7 +988,7 @@ e_mod_comp_init(void)
 void
 e_mod_comp_shutdown(void)
 {
-   Comp *c;
+   E_Comp *c;
    
    EINA_LIST_FREE(compositors, c) _e_mod_comp_del(c);
    
@@ -865,4 +996,145 @@ e_mod_comp_shutdown(void)
    
    eina_hash_free(damages);
    eina_hash_free(windows);
+}
+
+void
+e_mod_comp_shadow_set(void)
+{
+   Eina_List *l;
+   E_Comp *c;
+
+   EINA_LIST_FOREACH(compositors, l, c)
+     {
+        E_Comp_Win *cw;
+        
+        EINA_INLIST_FOREACH(c->wins, cw)
+          {
+             if (cw->shobj)
+               {
+                  if (_comp_mod->conf->use_shadow)
+                    {
+                       if ((!cw->argb) && (!cw->shaped))
+                         {
+                            int ok = 0;
+                            char buf[PATH_MAX];
+                            
+                            if (_comp_mod->conf->shadow_file)
+                              {
+                                 ok = 1;
+                                 if (!edje_object_file_set(cw->shobj, 
+                                                           _comp_mod->conf->shadow_file,
+                                                           "shadow"))
+                                   ok = 0;
+                              }
+                            if (!ok)
+                              {
+                                 ok = 1;
+                                 if (!e_theme_edje_object_set(cw->shobj,
+                                                              "base/theme/borders",
+                                                              "e/shadow/box"))
+                                   ok = 0;
+                              }
+                            if (!ok)
+                              {
+                                 snprintf(buf, sizeof(buf), "%s/shadow.edj", 
+                                          e_module_dir_get(_comp_mod->module)
+                                          );
+                                 edje_object_file_set(cw->shobj, buf, "shadow");
+                              }
+                            evas_object_show(cw->shobj);
+                         }
+                    }
+                  else
+                    evas_object_hide(cw->shobj);
+               }
+          }
+     }
+}
+
+E_Comp *
+e_mod_comp_manager_get(E_Manager *man)
+{
+   return _e_mod_comp_find(man->root);
+}
+
+/*
+void
+e_mod_comp_callback_win_add_add(E_Comp *c, void (*func) (void *data, Comp *c, Comp_Win *cw), void *data)
+{
+}
+
+void
+e_mod_comp_callback_win_add_del(E_Comp *c, void (*func) (void *data, Comp *c, Comp_Win *cw), void *data)
+{
+}
+
+void
+e_mod_comp_callback_del_add(E_Comp *c, void (*func) (void *data, Comp *c), void *data)
+{
+}
+
+void
+e_mod_comp_callback_del_delE_Comp *c, void (*func) (void *data, Comp *c), void *data)
+{
+}
+*/
+
+E_Comp_Win *
+e_mod_comp_win_find_by_window(E_Comp *c, Ecore_X_Window win)
+{
+   E_Comp_Win *cw;
+   
+   EINA_INLIST_FOREACH(c->wins, cw)
+     {
+        if (cw->win == win) return cw;
+     }
+   return NULL;
+}
+
+E_Comp_Win *
+e_mod_comp_win_find_by_border(E_Comp *c, E_Border *bd)
+{
+   E_Comp_Win *cw;
+   
+   EINA_INLIST_FOREACH(c->wins, cw)
+     {
+        if (cw->bd == bd) return cw;
+     }
+   return NULL;
+}
+
+E_Comp_Win *
+e_mod_comp_win_find_by_popup(E_Comp *c, E_Popup *pop)
+{
+   E_Comp_Win *cw;
+   
+   EINA_INLIST_FOREACH(c->wins, cw)
+     {
+        if (cw->pop == pop) return cw;
+     }
+   return NULL;
+}
+
+E_Comp_Win *
+e_mod_comp_win_find_by_menu(E_Comp *c, E_Menu *menu)
+{
+   E_Comp_Win *cw;
+   
+   EINA_INLIST_FOREACH(c->wins, cw)
+     {
+        if (cw->menu == menu) return cw;
+     }
+   return NULL;
+}
+
+Evas_Object *
+e_mod_comp_win_evas_object_get(E_Comp_Win *cw)
+{
+   return cw->obj;
+}
+
+Evas_Object *
+e_mod_comp_win_mirror_object_add(Evas *e, E_Comp_Win *cw)
+{
 }

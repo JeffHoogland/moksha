@@ -30,15 +30,16 @@ e_modapi_init(E_Module *m)
 #undef D
 #define T Config
 #define D mod->conf_edd
-   E_CONFIG_VAL(D, T, x, INT);
+   E_CONFIG_VAL(D, T, use_shadow, UCHAR);
+   E_CONFIG_VAL(D, T, shadow_file, STR);
    
    mod->conf = e_config_domain_load("module.comp", mod->conf_edd);
    if (!mod->conf)
      {
 	mod->conf = E_NEW(Config, 1);
-	mod->conf->x = 1;
+        mod->conf->use_shadow = 1;
+        mod->conf->shadow_file = NULL;
      }
-   E_CONFIG_LIMIT(mod->conf->x, -2, 2);
    
    _comp_mod = mod;
 
@@ -65,7 +66,7 @@ e_modapi_shutdown(E_Module *m)
         e_object_del(E_OBJECT(mod->config_dialog));
         mod->config_dialog = NULL;
      }
-   
+   if (mod->conf->shadow_file) eina_stringshare_del(mod->conf->shadow_file);
    free(mod->conf);
    E_CONFIG_DD_FREE(mod->conf_edd);
    free(mod);

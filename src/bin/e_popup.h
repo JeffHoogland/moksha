@@ -44,6 +44,7 @@ EAPI void        e_popup_ignore_events_set(E_Popup *pop, int ignore);
 EAPI void        e_popup_edje_bg_object_set(E_Popup *pop, Evas_Object *o);
 EAPI void        e_popup_layer_set(E_Popup *pop, int layer);
 EAPI void        e_popup_idler_before(void);
+EAPI E_Popup    *e_popup_find_by_window(Ecore_X_Window win);
     
 #endif
 #endif
