@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-01-13 09:57+0800\n"
-"PO-Revision-Date: 2010-01-13 12:39+0800\n"
+"PO-Revision-Date: 2010-01-15 16:19+0800\n"
 "Last-Translator: Aron Xu <happyaron.xu@gmail.com>\n"
 "Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -5818,7 +5818,7 @@ msgstr "最大化策略"
 
 #: ../src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:152
 msgid "Maximize Directions"
-msgstr "最大化风向"
+msgstr "最大化方向"
 
 #: ../src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:158
 msgid "Both"
@@ -5830,7 +5830,7 @@ msgstr "都是"
 #. their window (hannes)
 #: ../src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:167
 msgid "Allow manipulation of maximized windows"
-msgstr ""
+msgstr "允许自定义最大化窗口"
 
 #. FIXME: does this option make any sense? use a shelf that is
 #. above windows in this case!
@@ -6687,7 +6687,7 @@ msgstr "选择侧栏按键"
 #: ../src/modules/pager/e_mod_config.c:413
 #, c-format
 msgid "Click to set"
-msgstr "点击已设定"
+msgstr "点击以设定"
 
 #: ../src/modules/pager/e_mod_config.c:176
 msgid "Drag and Drop button"
@@ -6715,7 +6715,7 @@ msgstr "拖拽阻力"
 
 #: ../src/modules/pager/e_mod_config.c:209
 msgid "Popup pager height"
-msgstr ""
+msgstr "弹窗高度"
 
 #: ../src/modules/pager/e_mod_config.c:218
 #: ../src/modules/pager/e_mod_config.c:238
