@@ -244,9 +244,9 @@ _e_mod_win_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event)
    if (ev->button == 1)
      {
         if (iwin->win->border->client.illume.drag.locked) return;
+        iwin->dragging = 1;
         ecore_x_e_illume_drag_start_send(iwin->win->border->client.win);
         ecore_x_pointer_last_xy_get(NULL, &my);
-        iwin->dragging = 1;
      }
    else if (ev->button == 3) 
      {
@@ -273,13 +273,14 @@ _e_mod_win_cb_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event)
    Evas_Event_Mouse_Up *ev;
    E_Border *bd;
 
-   if (!(iwin = data)) return;
    ev = event;
    if (ev->button != 1) return;
+   if (!(iwin = data)) return;
+   if (!iwin->dragging) return;
    bd = iwin->win->border;
-   if (bd->client.illume.drag.locked) return;
-   iwin->dragging = 0;
+//   if (bd->client.illume.drag.locked) return;
    ecore_x_e_illume_drag_end_send(bd->client.win);
+   iwin->dragging = 0;
    my = 0;
 }
 
@@ -292,10 +293,11 @@ _e_mod_win_cb_mouse_move(void *data, Evas *evas, Evas_Object *obj, void *event)
    int dy, ny, py;
 
    if (!(iwin = data)) return;
+   if (!iwin->dragging) return;
+
    ev = event;
    bd = iwin->win->border;
-   if (bd->client.illume.drag.locked) return;
-   if (!iwin->dragging) return;
+//   if (bd->client.illume.drag.locked) return;
    if ((bd->y + bd->h + ev->cur.output.y) >= (bd->zone->h)) return;
 
    ecore_x_pointer_last_xy_get(NULL, &py);
