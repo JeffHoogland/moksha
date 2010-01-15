@@ -158,11 +158,9 @@ _e_smart_event_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
    if (ev->button == 1)
      {
 	int gop = 0;
-	int n;
 	
 	sd->down = 0;
-	n = eina_list_count(sd->items);
-	
+
 	gop = sd->pos - (sd->p1 * sd->dist);
 	gop = ((gop / sd->dist) * sd->dist) + (sd->p1 * sd->dist);
 	sd->slide_start_pos = sd->pos;

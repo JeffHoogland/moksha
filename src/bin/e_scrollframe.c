@@ -737,9 +737,8 @@ static int
 _e_smart_scrollbar_bar_v_visibility_adjust(E_Smart_Data *sd)
 {
    int scroll_v_vis_change = 0;
-   Evas_Coord w, h, vh;
+   Evas_Coord h, vh;
 
-   w = sd->child.w;
    h = sd->child.h;
    edje_object_part_geometry_get(sd->edje_obj, "e.swallow.content", 
                                  NULL, NULL, NULL, &vh);
@@ -876,8 +875,8 @@ _e_smart_scrollbar_bar_visibility_adjust(E_Smart_Data *sd)
      }
    if (changed)
      {
-	changed |= _e_smart_scrollbar_bar_h_visibility_adjust(sd);
-	changed |= _e_smart_scrollbar_bar_v_visibility_adjust(sd);
+	_e_smart_scrollbar_bar_h_visibility_adjust(sd);
+	_e_smart_scrollbar_bar_v_visibility_adjust(sd);
      }
 }
 

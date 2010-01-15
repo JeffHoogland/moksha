@@ -811,10 +811,8 @@ _e_wid_cb_item_hilight(void *data, void *data2)
 {
    E_Widget_Data *wd;
    Evas_Coord x, y, w, h;
-   E_Widget_Callback *wcb;
 
    wd = data;
-   wcb = data2;
    e_ilist_selected_geometry_get(wd->o_ilist, &x, &y, &w, &h);
    e_scrollframe_child_region_show(wd->o_scrollframe, x, y, w, h);
 }

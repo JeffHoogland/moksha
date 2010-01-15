@@ -478,11 +478,9 @@ _e_pointer_cb_mouse_down(void *data, int type, void *event)
 static int
 _e_pointer_cb_mouse_up(void *data, int type, void *event)
 {
-   Ecore_Event_Mouse_Button *ev;
    Eina_List *l;
    E_Pointer *p;
 
-   ev = event;
    EINA_LIST_FOREACH(_e_pointers, l, p)
      {
 	_e_pointer_active_handle(p);

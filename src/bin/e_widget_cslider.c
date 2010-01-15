@@ -22,7 +22,6 @@ struct _E_Widget_Data
 
 static void _e_wid_del_hook(Evas_Object *obj);
 static void _e_wid_focus_hook(Evas_Object *obj);
-static void _e_wid_activate_hook(Evas_Object *obj);
 static void _e_wid_disable_hook(Evas_Object *obj);
 static void _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_wid_value_set(Evas_Object *obj, double vx);
@@ -47,7 +46,6 @@ e_widget_cslider_add(Evas *evas, E_Color_Component mode, E_Color *color, int ver
    
    e_widget_del_hook_set(obj, _e_wid_del_hook);
    e_widget_focus_hook_set(obj, _e_wid_focus_hook);
-   e_widget_activate_hook_set(obj, _e_wid_activate_hook);
    e_widget_disable_hook_set(obj, _e_wid_disable_hook);
    wd = calloc(1, sizeof(E_Widget_Data));
    e_widget_data_set(obj, wd);
@@ -201,7 +199,7 @@ _e_wid_update_standard(E_Widget_Data *wd)
 {
    int r, g, b;
    int max, min;
-   float vx;
+   float vx = 0;
 
    if (!wd->color) return;
 
@@ -261,7 +259,7 @@ void
 _e_wid_update_fixed(E_Widget_Data *wd)
 {
   int max, min;
-  float vx;
+  float vx = 0;
   if (!wd) return;
 
   evas_object_gradient_clear(wd->o_grad);
@@ -347,14 +345,6 @@ _e_wid_focus_hook(Evas_Object *obj)
 	edje_object_signal_emit(wd->o_cslider, "e,state,unfocused", "e");
 	evas_object_focus_set(wd->o_cslider, 0);
      }
-}
-
-static void 
-_e_wid_activate_hook(Evas_Object *obj)
-{
-   E_Widget_Data *wd;
-   
-   wd = e_widget_data_get(obj);
 }
 
 static void

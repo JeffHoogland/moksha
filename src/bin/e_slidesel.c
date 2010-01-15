@@ -35,7 +35,6 @@ struct _E_Smart_Item
 };
 
 /* local subsystem functions */
-static void _e_smart_event_wheel(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_smart_event_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_smart_event_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_smart_event_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
@@ -106,16 +105,6 @@ e_slidesel_jump(Evas_Object *obj, int num)
 
 /* local subsystem functions */
 static void
-_e_smart_event_wheel(void *data, Evas *e, Evas_Object *obj, void *event_info)
-{
-   Evas_Event_Mouse_Wheel *ev;
-   E_Smart_Data *sd;
-
-   sd = data;
-   ev = event_info;
-}
-
-static void
 _e_smart_event_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
    Evas_Event_Mouse_Down *ev;
@@ -144,9 +133,6 @@ _e_smart_event_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
    ev = event_info;
    if (ev->button == 1)
      {
-	double t;
-	
-	t = ecore_loop_time_get();
 	if (!sd->down_cancel)
 	  {
 	     edje_object_signal_emit(sd->edje_obj, "e,state,slide,hint,off", "e");
@@ -270,7 +256,6 @@ _e_smart_add(Evas_Object *obj)
    o = evas_object_rectangle_add(evas_object_evas_get(obj));
    sd->event_obj = o;
    evas_object_color_set(o, 0, 0, 0, 0);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_WHEEL, _e_smart_event_wheel, sd);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _e_smart_event_mouse_down, sd);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_UP, _e_smart_event_mouse_up, sd);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_MOVE, _e_smart_event_mouse_move, sd);

@@ -19,7 +19,6 @@ struct _E_Widget_Data
 
 static void _e_wid_del_hook(Evas_Object *obj);
 static void _e_wid_focus_hook(Evas_Object *obj);
-static void _e_wid_activate_hook(Evas_Object *obj);
 static void _e_wid_disable_hook(Evas_Object *obj);
 static void _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *event_info);
 
@@ -42,7 +41,6 @@ e_widget_spectrum_add(Evas *evas, E_Color_Component mode, E_Color *cv)
    
    e_widget_del_hook_set(obj, _e_wid_del_hook);
    e_widget_focus_hook_set(obj, _e_wid_focus_hook);
-   e_widget_activate_hook_set(obj, _e_wid_activate_hook);
    e_widget_disable_hook_set(obj, _e_wid_disable_hook);
 
    wd = calloc(1, sizeof(E_Widget_Data));
@@ -93,7 +91,7 @@ void
 e_widget_spectrum_update(Evas_Object *obj, int redraw)
 {
    E_Widget_Data *wd;
-   double vx, vy;
+   double vx = 0, vy = 0;
    
    wd = e_widget_data_get(obj);
    /* redraw spectrum */
@@ -130,7 +128,6 @@ e_widget_spectrum_update(Evas_Object *obj, int redraw)
 	break;
      }
    edje_object_part_drag_value_set(wd->o_edje, "cursor", vx, vy);
-
 }
 
 void
@@ -187,15 +184,6 @@ _e_wid_focus_hook(Evas_Object *obj)
 	edje_object_signal_emit(wd->o_edje, "e,state,unfocused", "e");
 	evas_object_focus_set(wd->o_edje, 0);
      }
-}
-
-static void 
-_e_wid_activate_hook(Evas_Object *obj)
-{
-   E_Widget_Data *wd;
-   
-   wd = e_widget_data_get(obj);
-   
 }
 
 static void

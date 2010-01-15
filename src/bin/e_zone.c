@@ -1046,9 +1046,7 @@ static void
 _e_zone_cb_bg_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_info)
 {
    E_Zone *zone;
-   Evas_Event_Mouse_Up *ev;
 
-   ev = (Evas_Event_Mouse_Up *)event_info;      
    zone = data;
    if (zone->cur_mouse_action)
      {

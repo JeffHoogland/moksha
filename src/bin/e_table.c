@@ -325,12 +325,10 @@ _e_table_smart_reconfigure(E_Smart_Data *sd)
      }
    if (expandw == 0)
      {
-	x += (w - minw) / 2;
 	w = minw;
      }
    if (expandh == 0)
      {
-	y += (h - minh) / 2;
 	h = minh;
      }
    x = sd->x;

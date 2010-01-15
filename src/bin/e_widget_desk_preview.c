@@ -44,8 +44,6 @@ _e_wid_del_hook(Evas_Object *obj)
    if (wd->update_handler) ecore_event_handler_del(wd->update_handler);
    EINA_LIST_FOREACH(wd->desks, l, o)
      {
-	E_Widget_Desk_Data *dd;
-	dd = e_widget_data_get(o);
 	e_thumb_icon_end(o);
      }
    eina_list_free(wd->desks);

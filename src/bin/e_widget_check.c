@@ -206,9 +206,6 @@ _e_wid_do(Evas_Object *obj)
 static void
 _e_wid_activate_hook(Evas_Object *obj)
 {
-   E_Widget_Data *wd;
-   
-   wd = e_widget_data_get(obj);
    _e_wid_do(obj);
 }
 
