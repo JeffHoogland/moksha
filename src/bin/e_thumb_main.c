@@ -271,7 +271,7 @@ _e_thumb_generate(E_Thumb *eth)
    Evas_Object *im = NULL, *edje = NULL;
    Eet_File *ef;
    int iw, ih, alpha, ww, hh;
-   unsigned int *data = NULL;
+   const unsigned int *data = NULL;
    time_t mtime_orig, mtime_thumb;
    
    id = _e_thumb_file_id(eth->file, eth->key);
@@ -360,7 +360,7 @@ _e_thumb_generate(E_Thumb *eth)
 	evas_object_show(im);
 	if (ww > 0)
 	  {
-	     data = (int *)ecore_evas_buffer_pixels_get(ee);
+	     data = ecore_evas_buffer_pixels_get(ee);
 	     if (data)
 	       {
 		  ef = eet_open(buf, EET_FILE_MODE_WRITE);
@@ -378,7 +378,7 @@ _e_thumb_generate(E_Thumb *eth)
                        evas_object_image_fill_set(im, 0, 0, ww, hh);
                        evas_object_resize(im, ww, hh);
                        ecore_evas_resize(ee, ww, hh);
-                       data = (int *)ecore_evas_buffer_pixels_get(ee);
+                       data = ecore_evas_buffer_pixels_get(ee);
                        if (data)
                          {
                             unsigned int *data1;
@@ -389,7 +389,7 @@ _e_thumb_generate(E_Thumb *eth)
                             evas_object_image_fill_set(im, 0, 0, ww, hh);
                             evas_object_resize(im, ww, hh);
                             ecore_evas_resize(ee, ww, hh);
-                            data = (int *)ecore_evas_buffer_pixels_get(ee);
+                            data = ecore_evas_buffer_pixels_get(ee);
                             if (data)
                               {
                                  unsigned int *data2;
@@ -400,7 +400,7 @@ _e_thumb_generate(E_Thumb *eth)
                                  evas_object_image_fill_set(im, 0, 0, ww, hh);
                                  evas_object_resize(im, ww, hh);
                                  ecore_evas_resize(ee, ww, hh);
-                                 data = (int *)ecore_evas_buffer_pixels_get(ee);
+                                 data = ecore_evas_buffer_pixels_get(ee);
                                  if (data)
                                    {
                                       unsigned int *data3;
