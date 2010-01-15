@@ -4,16 +4,6 @@
 #include <errno.h>
 
 #ifdef USE_IPC
-static void
-_ipc_socket_help(void)
-{
-   fputs("The E_IPC_SOCKET environment variable is not set or invalid.\n"
-	 "This is exported by Enlightenment to all processes it launches.\n"
-	 "This environment variable must be set and must point to "
-	 "Enlightenment's IPC socket file (minus '|' and port number).\n",
-	 stderr);
-}
-
 static int
 _ipc_server_add(void *data, int type, void *event)
 {
