@@ -22,7 +22,7 @@ static char        *title = NULL, *str1 = NULL, *str2 = NULL;
 static Font         font = 0;
 static XFontStruct *fs = NULL;
 static GC           gc = 0;
-static Window       cwin = 0, win = 0, b1 = 0, b2 = 0;
+static Window       win = 0, b1 = 0, b2 = 0;
 static int          ww = 320, hh = 240, wx = 20, wy = 20;
 
 EAPI unsigned long       e_alert_composite_win = 0;
