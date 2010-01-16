@@ -543,10 +543,7 @@ _e_kbd_cb_border_focus_in(void *data, int type, void *event)
    focused_vkbd_state = ev->border->client.vkbd.state;
    if (focused_vkbd_state == 0) return 1;
    if (focused_vkbd_state == ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF) 
-     {
-        _e_kbd_all_hide();
-        return 1;
-     }
+     _e_kbd_all_hide();
    else 
      {
         if (focused_vkbd_state == ECORE_X_VIRTUAL_KEYBOARD_STATE_ALPHA)
@@ -603,7 +600,7 @@ _e_kbd_cb_border_property(void *data, int type, void *event)
      e_kbd_fullscreen_set(ev->border->zone, 0);
 
    /* app wants kbd off - then kbd off it is */
-   if (focused_vkbd_state == ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF)
+   if (focused_vkbd_state <= ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF)
      _e_kbd_all_hide();
    /* app wants something other than off... */
    else

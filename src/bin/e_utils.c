@@ -424,7 +424,7 @@ static int
 _e_util_icon_theme_set(Evas_Object *obj, const char *icon)
 {
    const char *file;
-   char buf[4096];
+   char buf[PATH_MAX];
 
    if ((!icon) || (!icon[0])) return 0;
    snprintf(buf, sizeof(buf), "e/icons/%s", icon);
@@ -557,6 +557,22 @@ e_util_container_window_find(Ecore_X_Window win)
 	       return con;
 	  }
      }
+   return NULL;
+}
+
+EAPI E_Zone *
+e_util_zone_window_find(Ecore_X_Window win) 
+{
+   Eina_List *l, *ll, *lll;
+   E_Manager *man;
+   E_Container *con;
+   E_Zone *zone;
+
+   EINA_LIST_FOREACH(e_manager_list(), l, man)
+     EINA_LIST_FOREACH(man->containers, ll, con)
+       EINA_LIST_FOREACH(con->zones, lll, zone) 
+         if (zone->black_win == win) return zone;
+
    return NULL;
 }
 

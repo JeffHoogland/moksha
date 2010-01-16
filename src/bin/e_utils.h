@@ -3,7 +3,7 @@
  */
 #ifdef E_TYPEDEFS
 
-typedef struct _E_Util_Image_Import_Handle       E_Util_Image_Import_Handle;
+typedef struct _E_Util_Image_Import_Handle E_Util_Image_Import_Handle;
 
 typedef enum _E_Image_Import_Mode E_Image_Import_Mode;
 enum _E_Image_Import_Mode
@@ -15,7 +15,6 @@ enum _E_Image_Import_Mode
   E_IMAGE_IMPORT_SCALE_ASPECT_OUT = 4
 };
 
-
 #else
 #ifndef E_UTILS_H
 #define E_UTILS_H
@@ -24,12 +23,11 @@ enum _E_Image_Import_Mode
 
 #define e_util_dialog_show(title, args...) \
 { \
-   char __tmpbuf[4096]; \
+   char __tmpbuf[PATH_MAX]; \
    \
    snprintf(__tmpbuf, sizeof(__tmpbuf), ##args); \
    e_util_dialog_internal(title, __tmpbuf); \
 }
-
 
 EAPI void         e_util_wakeup(void);
 EAPI void         e_util_env_set(const char *var, const char *val);
@@ -53,6 +51,7 @@ EAPI int          e_util_menu_item_edje_icon_set(E_Menu_Item *mi, const char *na
 EAPI unsigned int e_util_icon_size_normalize(unsigned int desired);
 EAPI int          e_util_menu_item_theme_icon_set(E_Menu_Item *mi, const char *icon);
 EAPI E_Container *e_util_container_window_find(Ecore_X_Window win);
+EAPI E_Zone      *e_util_zone_window_find(Ecore_X_Window win);
 EAPI E_Border    *e_util_desk_border_above(E_Border *bd);
 EAPI E_Border    *e_util_desk_border_below(E_Border *bd);
 EAPI int          e_util_edje_collection_exists(const char *file, const char *coll);

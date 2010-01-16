@@ -159,7 +159,7 @@ _layout_zone_layout(E_Zone *zone)
                  (bd->y != (zone->y + zone->h - kbdsize))) 
                _zone_layout_border_move(bd, zone->x, 
                                         (zone->y + zone->h - kbdsize));
-             e_border_stick(bd);
+//             e_border_stick(bd);
              if (bd->layer != IL_KEYBOARD_LAYER)
                e_border_layer_set(bd, IL_KEYBOARD_LAYER);
           }
