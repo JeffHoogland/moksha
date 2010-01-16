@@ -15,20 +15,20 @@ plugindir              = $(libdir)/enlightenment/everything_plugins/core/$(MODUL
 evry_plug_border_actdir = $(plugindir)
 evry_plug_border_act_LTLIBRARIES = evry_plug_border_act.la
 evry_plug_border_act_la_SOURCES =  evry_plug_border_act.c
-evry_plug_border_act_la_LIBADD       = @e_libs@
+evry_plug_border_act_la_LIBADD       = @e_libs@ ../libfoo.la
 evry_plug_border_act_la_LDFLAGS      = -no-undefined -module -avoid-version
 evry_plug_border_act_la_LIBTOOLFLAGS = --tag=disable-static
 
 evry_plug_clipboarddir = $(plugindir)
 evry_plug_clipboard_LTLIBRARIES = evry_plug_clipboard.la
 evry_plug_clipboard_la_SOURCES =  evry_plug_clipboard.c
-evry_plug_clipboard_la_LIBADD       = @e_libs@
+evry_plug_clipboard_la_LIBADD       = @e_libs@ ../libfoo.la
 evry_plug_clipboard_la_LDFLAGS      = -no-undefined -module -avoid-version
 evry_plug_clipboard_la_LIBTOOLFLAGS = --tag=disable-static
 
 evry_plug_wallpaperdir = $(plugindir)
 evry_plug_wallpaper_LTLIBRARIES = evry_plug_wallpaper.la
 evry_plug_wallpaper_la_SOURCES =  evry_plug_wallpaper.c
-evry_plug_wallpaper_la_LIBADD       = @e_libs@
+evry_plug_wallpaper_la_LIBADD       = @e_libs@ ../libfoo.la
 evry_plug_wallpaper_la_LDFLAGS      = -no-undefined -module -avoid-version
 evry_plug_wallpaper_la_LIBTOOLFLAGS = --tag=disable-static
