@@ -192,12 +192,12 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    inst->gcc = e_gadcon_client_new(gc, name, id, style, inst->o_btn);
    inst->gcc->data = inst;
 
-//   _il_home_win_new(inst);
+   _il_home_win_new(inst);
 
    xwin = inst->gcc->gadcon->zone->black_win;
    mode = ecore_x_e_illume_mode_get(xwin);
-//   if (mode > ECORE_X_ILLUME_MODE_SINGLE)
-//     _il_home_win_new(inst);
+   if (mode > ECORE_X_ILLUME_MODE_SINGLE)
+     _il_home_win_new(inst);
 
    inst->hdl = ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE, 
                                        _il_home_cb_client_message, inst);
