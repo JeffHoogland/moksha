@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-01-13 09:57+0800\n"
-"PO-Revision-Date: 2010-01-15 16:19+0800\n"
+"PO-Revision-Date: 2010-01-16 11:57+0800\n"
 "Last-Translator: Aron Xu <happyaron.xu@gmail.com>\n"
 "Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -3834,7 +3834,7 @@ msgstr "建议进入演示模式"
 #: ../src/modules/conf_desklock/e_int_config_desklock.c:439
 #: ../src/modules/conf_screensaver/e_int_config_screensaver.c:202
 msgid "If deactivated before"
-msgstr ""
+msgstr "若在禁用前"
 
 #: ../src/modules/conf_desklock/e_int_config_desklock.c:457
 msgid "Custom Screenlock"
@@ -3963,7 +3963,7 @@ msgstr "高级模式"
 
 #: ../src/modules/conf_dialogs/e_int_config_dialogs.c:116
 msgid "Remember size and position of dialogs"
-msgstr ""
+msgstr "记住对话框的位置和尺寸"
 
 #. of = e_widget_framelist_add(evas, _("General Settings"), 0);
 #. ob = e_widget_check_add(evas, _("Auto-Apply Settings Changes"), &(cfdata->auto_apply));
@@ -4601,7 +4601,7 @@ msgstr "启用回滚"
 
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:691
 msgid "Hinting / Fallbacks"
-msgstr ""
+msgstr "渲染和会滚"
 
 #: ../src/modules/conf_icon_theme/e_int_config_icon_themes.c:43
 msgid "Icon Theme Settings"
@@ -4970,7 +4970,7 @@ msgstr "更改绑定"
 
 #: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:295
 msgid "Restore Mouse and Wheel Binding Defaults"
-msgstr ""
+msgstr "恢复默认鼠标和滚轮绑定"
 
 #: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:315
 msgid "Action Context"
@@ -5314,7 +5314,7 @@ msgstr "不偏好"
 
 #: ../src/modules/conf_screensaver/e_int_config_screensaver.c:229
 msgid "Exposure Events"
-msgstr ""
+msgstr "曝光事件"
 
 #: ../src/modules/conf_screensaver/e_int_config_screensaver.c:234
 msgid "Allow"
@@ -5581,7 +5581,7 @@ msgstr "移动或缩放时显示窗口坐标信息"
 #: ../src/modules/conf_window_display/e_int_config_window_display.c:171
 #: ../src/modules/conf_window_display/e_int_config_window_display.c:228
 msgid "Animate the shading and unshading of windows"
-msgstr ""
+msgstr "窗口淡入淡出时使用动画"
 
 #: ../src/modules/conf_window_display/e_int_config_window_display.c:175
 #: ../src/modules/conf_window_display/e_int_config_window_display.c:255
@@ -5882,11 +5882,11 @@ msgstr "窗口记忆"
 
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:119
 msgid "Remember internal dialogs"
-msgstr ""
+msgstr "记住内部对话框"
 
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:121
 msgid "Remember fileman windows"
-msgstr ""
+msgstr "记住文件管理器窗口"
 
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:124
 msgid "Delete Remember(s)"
@@ -6281,7 +6281,7 @@ msgstr "启用单击"
 
 #: ../src/modules/fileman/e_mod_config.c:251
 msgid "Use Alternate Selection Modifiers"
-msgstr ""
+msgstr "使用其他修饰键"
 
 #: ../src/modules/fileman/e_mod_config.c:255
 msgid "Show Icon Extension"
