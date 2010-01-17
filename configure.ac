@@ -380,8 +380,7 @@ AC_SUBST(BATTERY_LDFLAGS)
 AM_CONDITIONAL(HAVE_TEMPERATURE, false)
 define([CHECK_MODULE_TEMPERATURE],
 [
-        AC_E_CHECK_PKG(ECORE_TXT, [ecore-txt], [], [TEMPERATURE=false])
-        AC_E_CHECK_PKG(TEMPERATURE, [ecore ecore-file eina-0], [], [TEMPERATURE=false])
+        AC_E_CHECK_PKG(TEMPERATURE, [ecore ecore-txt ecore-file eina-0], [], [TEMPERATURE=false])
 ])
 
 AM_CONDITIONAL(HAVE_EXCHANGE, false)
