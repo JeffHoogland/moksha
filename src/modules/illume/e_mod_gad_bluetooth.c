@@ -1,6 +1,5 @@
 #include "e.h"
 
-/***************************************************************************/
 typedef struct _Instance Instance;
 
 struct _Instance
@@ -11,8 +10,6 @@ struct _Instance
    int on;
 };
 
-/***************************************************************************/
-/**/
 /* gadcon requirements */
 static E_Gadcon_Client *_gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style);
 static void _gc_shutdown(E_Gadcon_Client *gcc);
@@ -32,8 +29,6 @@ static const E_Gadcon_Client_Class _gadcon_class =
    E_GADCON_CLIENT_STYLE_PLAIN
 };
 static E_Module *mod = NULL;
-/**/
-/***************************************************************************/
 
 static int _cb_poll(void *data);
 
@@ -57,14 +52,14 @@ static Evas_Object *
 _theme_obj_new(Evas *e, const char *custom_dir, const char *group)
 {
    Evas_Object *o;
-   
+
    o = edje_object_add(e);
    if (!e_theme_edje_object_set(o, "base/theme/modules/illume", group))
      {
 	if (custom_dir)
 	  {
 	     char buf[PATH_MAX];
-	     
+
 	     snprintf(buf, sizeof(buf), "%s/illume.edj", custom_dir);
 	     if (edje_object_file_set(o, buf, group))
 	       {
@@ -81,7 +76,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    Evas_Object *o;
    E_Gadcon_Client *gcc;
    Instance *inst;
-   
+
    inst = E_NEW(Instance, 1);
    o = _theme_obj_new(gc->evas, e_module_dir_get(mod),
 		      "e/modules/illume/gadget/bluetooth");
@@ -94,7 +89,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 
    inst->on = -1;
    inst->poller = ecore_poller_add(ECORE_POLLER_CORE, 16, _cb_poll, inst);
-   
+
    return gcc;
 }
 
@@ -102,7 +97,7 @@ static void
 _gc_shutdown(E_Gadcon_Client *gcc)
 {
    Instance *inst;
-   
+
    inst = gcc->data;
    ecore_poller_del(inst->poller);
    evas_object_del(inst->obj);
@@ -114,7 +109,7 @@ _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
 {
    Instance *inst;
    Evas_Coord mw, mh, mxw, mxh;
-   
+
    inst = gcc->data;
    mw = 0, mh = 0;
    edje_object_size_min_get(inst->obj, &mw, &mh);
@@ -160,14 +155,14 @@ static int
 _find_interface_class(int iclass)
 {
    Eina_List *devs;
-	char *name;
-	
+   char *name;
+
    devs = ecore_file_ls("/sys/bus/usb/devices");
    EINA_LIST_FREE(devs, name)
 	  {
 	     char buf[PATH_MAX];
 	     FILE *f;
-	     
+
 	     snprintf(buf, sizeof(buf), "%s/%s/%s",
 		      "/sys/bus/usb/devices", name, "bInterfaceClass");
 	     f = fopen(buf, "r");
@@ -176,12 +171,12 @@ _find_interface_class(int iclass)
 		  if (fgets(buf, sizeof(buf), f))
 		    {
 		       int id = -1;
-		       
+
 		       sscanf(buf, "%x", &id);
 		       if (iclass == id)
 			 {
-		       EINA_LIST_FREE(devs, name)
-			 free(name);
+                            EINA_LIST_FREE(devs, name)
+                              free(name);
 			    fclose(f);
 			    return 1;
 			 }
@@ -199,7 +194,7 @@ _cb_poll(void *data)
 {
    Instance *inst;
    int pon;
-   
+
    inst = data;
    /* FIXME: get bt status and emit signal */
    pon = inst->on;

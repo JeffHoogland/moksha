@@ -1,10 +1,5 @@
 #include "e.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-
 static E_DBus_Connection *conn = NULL;
 static E_DBus_Connection *conn_system = NULL;
 static E_DBus_Signal_Handler *changed_h = NULL;
@@ -25,7 +20,6 @@ typedef enum _Phone_Sys
 
 static Phone_Sys detected_system = PH_SYS_UNKNOWN;
 
-/***************************************************************************/
 typedef struct _Instance Instance;
 
 struct _Instance
@@ -36,8 +30,6 @@ struct _Instance
    char *oper;
 };
 
-/***************************************************************************/
-/**/
 /* gadcon requirements */
 static E_Gadcon_Client *_gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style);
 static void _gc_shutdown(E_Gadcon_Client *gcc);
@@ -57,8 +49,6 @@ static const E_Gadcon_Client_Class _gadcon_class =
    E_GADCON_CLIENT_STYLE_PLAIN
 };
 static E_Module *mod = NULL;
-/**/
-/***************************************************************************/
 
 static int try_again(void *data);
 static void *signal_unmarhsall(DBusMessage *msg, DBusError *err);
@@ -106,14 +96,14 @@ static Evas_Object *
 _theme_obj_new(Evas *e, const char *custom_dir, const char *group)
 {
    Evas_Object *o;
-   
+
    o = edje_object_add(e);
    if (!e_theme_edje_object_set(o, "base/theme/modules/illume", group))
      {
 	if (custom_dir)
 	  {
 	     char buf[PATH_MAX];
-	     
+
 	     snprintf(buf, sizeof(buf), "%s/illume.edj", custom_dir);
 	     if (edje_object_file_set(o, buf, group))
 	       {
@@ -130,7 +120,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    Evas_Object *o;
    E_Gadcon_Client *gcc;
    Instance *inst;
-   
+
    inst = E_NEW(Instance, 1);
    o = _theme_obj_new(gc->evas, e_module_dir_get(mod),
 		      "e/modules/illume/gadget/gsm");
@@ -140,14 +130,10 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    inst->gcc = gcc;
    inst->obj = o;
    e_gadcon_client_util_menu_attach(gcc);
-   
+
    inst->strength = -1;
    inst->oper = NULL;
-   
-   ecore_init();
-   ecore_string_init();
-   e_dbus_init();
-   
+
    conn = e_dbus_bus_get(DBUS_BUS_SESSION);
    conn_system = e_dbus_bus_get(DBUS_BUS_SYSTEM);
 
@@ -195,7 +181,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
      }
    get_signal(inst);
    get_operator(inst);
-   
+
    return gcc;
 }
 
@@ -203,13 +189,10 @@ static void
 _gc_shutdown(E_Gadcon_Client *gcc)
 {
    Instance *inst;
-   
+
    if (conn) e_dbus_connection_close(conn);
    if (conn_system) e_dbus_connection_close(conn_system);
-   e_dbus_shutdown();
-   ecore_string_shutdown();
-   ecore_shutdown();
-   
+
    inst = gcc->data;
    evas_object_del(inst->obj);
    if (inst->oper) free(inst->oper);
@@ -221,7 +204,7 @@ _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
 {
    Instance *inst;
    Evas_Coord mw, mh, mxw, mxh;
-   
+
    inst = gcc->data;
    mw = 0, mh = 0;
    edje_object_size_min_get(inst->obj, &mw, &mh);
@@ -268,7 +251,7 @@ update_operator(char *op, void *data)
 {
    Instance *inst = data;
    char *poper;
-   
+
    poper = inst->oper;
    if ((poper) && (op) && (!strcmp(op, poper))) return;
    if (op) inst->oper = strdup(op);
@@ -276,7 +259,7 @@ update_operator(char *op, void *data)
    if (inst->oper != poper)
      {
 	Edje_Message_String msg;
-	
+
 	if (inst->oper) msg.str = inst->oper;
 	else msg.str = "";
 	edje_object_message_send(inst->obj, EDJE_MESSAGE_STRING, 1, &msg);
@@ -289,7 +272,7 @@ update_signal(int sig, void *data)
 {
    Instance *inst = data;
    int pstrength;
-   
+
    pstrength = inst->strength;
    inst->strength = sig;
 
@@ -297,7 +280,7 @@ update_signal(int sig, void *data)
      {
 	Edje_Message_Float msg;
 	double level;
-	
+
 	level = (double)inst->strength / 100.0;
 	if (level < 0.0) level = 0.0;
 	else if (level > 1.0) level = 1.0;
@@ -315,11 +298,11 @@ static void *
 signal_unmarhsall(DBusMessage *msg, DBusError *err)
 {
    dbus_int32_t val = -1;
-   
+
    if (dbus_message_get_args(msg, NULL, DBUS_TYPE_INT32, &val, DBUS_TYPE_INVALID))
      {
 	int *val_ret;
-	
+
 	val_ret = malloc(sizeof(int));
 	if (val_ret)
 	  {
@@ -338,7 +321,7 @@ operator_unmarhsall(DBusMessage *msg, DBusError *err)
    if (dbus_message_get_args(msg, NULL, DBUS_TYPE_STRING, &str, DBUS_TYPE_INVALID))
      {
 	char *str_ret;
-	
+
 	str_ret = malloc(strlen(str)+1);
 	if (str_ret)
 	  {
@@ -356,16 +339,16 @@ _fso_operator_unmarhsall(DBusMessage *msg)
     * informations get ingnored for the gadget for now */
    const char *provider = 0 , *name = 0, *reg_stat = 0;
    DBusMessageIter iter, a_iter, s_iter, v_iter;
-   
+
    if (!dbus_message_has_signature(msg, "a{sv}")) return NULL;
-   
+
    dbus_message_iter_init(msg, &iter);
    dbus_message_iter_recurse(&iter, &a_iter);
    while (dbus_message_iter_get_arg_type(&a_iter) != DBUS_TYPE_INVALID)
      {
 	dbus_message_iter_recurse(&a_iter, &s_iter);
 	dbus_message_iter_get_basic(&s_iter, &name);
-	
+
 	if (strcmp(name, "registration") == 0)
 	  {
 	     dbus_message_iter_next(&s_iter);
@@ -380,7 +363,7 @@ _fso_operator_unmarhsall(DBusMessage *msg)
 	  }
 	dbus_message_iter_next(&a_iter);
      }
-   
+
    if (!reg_stat) return NULL;
    if (strcmp(reg_stat, "unregistered") == 0) provider = "No Service";
    else if (strcmp(reg_stat, "busy") == 0) provider = "Searching...";
@@ -404,7 +387,7 @@ signal_callback_qtopia(void *data, void *ret, DBusError *err)
    if (ret)
      {
 	int *val_ret;
-	
+
 	if ((detected_system == PH_SYS_UNKNOWN) && (changed_h) && (conn))
 	  {
 	     e_dbus_signal_handler_del(conn, changed_h);
@@ -435,7 +418,7 @@ signal_callback_fso(void *data, void *ret, DBusError *err)
    if (ret)
      {
 	int *val_ret;
-	
+
 	if ((detected_system == PH_SYS_UNKNOWN) && (changed_fso_h) && (conn_system))
 	  {
 	     e_dbus_signal_handler_del(conn_system, changed_fso_h);
@@ -531,7 +514,7 @@ static void
 get_signal(void *data)
 {
    DBusMessage *msg;
-   
+
 //   printf("GSM-gadget: Get signal called\n");
    if (((detected_system == PH_SYS_UNKNOWN) || (detected_system == PH_SYS_QTOPIA)) && (conn))
      {
@@ -608,7 +591,7 @@ signal_changed(void *data, DBusMessage *msg)
 {
    DBusError err;
    dbus_int32_t val = -1;
-   
+
    dbus_error_init(&err);
    if (!dbus_message_get_args(msg, &err, DBUS_TYPE_INT32, &val, DBUS_TYPE_INVALID))
      return;
@@ -620,7 +603,7 @@ operator_changed(void *data, DBusMessage *msg)
 {
    DBusError err;
    char *str = NULL;
-   
+
    dbus_error_init(&err);
    if (!dbus_message_get_args(msg, &err, DBUS_TYPE_STRING, &str, DBUS_TYPE_INVALID))
      return;
@@ -631,6 +614,7 @@ static void
 fso_operator_changed(void *data, DBusMessage *msg)
 {
    char *provider;
+
    provider = _fso_operator_unmarhsall(msg);
    update_operator(provider, data);
 }
@@ -640,7 +624,7 @@ name_changed(void *data, DBusMessage *msg)
 {
    DBusError err;
    const char *s1, *s2, *s3;
-   
+
    dbus_error_init(&err);
    if (!dbus_message_get_args(msg, &err,
 			      DBUS_TYPE_STRING, &s1,

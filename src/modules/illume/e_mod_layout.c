@@ -82,7 +82,7 @@ _e_mod_layout_init(E_Module *m)
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
          (E_EVENT_ZONE_MOVE_RESIZE, _cb_event_zone_move_resize, NULL));
-   
+
      {
 	E_Zone *zone;
 	unsigned int area[4];
@@ -90,7 +90,7 @@ _e_mod_layout_init(E_Module *m)
 	int wx2 = 0, wy2 = 0, ww2 = 0, wh2 = 0;
 	Ecore_X_Atom *supported, *supported_new;
 	int i, supported_num;
-	
+
 	zone = e_util_zone_current_get(e_manager_current_get());
 	e_slipshelf_safe_app_region_get(zone, &wx, &wy, &ww, &wh);
 	e_kbd_safe_app_region_get(zone, &wx2, &wy2, &ww2, &wh2);
@@ -101,12 +101,12 @@ _e_mod_layout_init(E_Module *m)
 	area[3] = wh;
 	ecore_x_netwm_desk_workareas_set(zone->container->manager->root,
 					 area, 1);
-	
+
 	if (ecore_x_netwm_supported_get(zone->container->manager->root,
 					&supported, &supported_num))
 	  {
 	     int have_it = 0;
-	     
+
 	     for (i = 0; i < supported_num; i++)
 	       {
 		  if (supported[i] == ECORE_X_ATOM_NET_WORKAREA)
@@ -133,7 +133,7 @@ _e_mod_layout_init(E_Module *m)
 	else
 	  {
 	     Ecore_X_Atom atom;
-	     
+
 	     atom = ECORE_X_ATOM_NET_WORKAREA;
 	     ecore_x_netwm_supported_set(zone->container->manager->root,
 					 &atom, 1);
@@ -198,7 +198,7 @@ _e_mod_layout_apply_all(void)
    for (l = borders; l; l = l->next)
      {
 	E_Border *bd;
-	
+
 	bd = l->data;
 	if (e_object_is_del(E_OBJECT(bd))) continue;
 	_e_mod_layout_post_border_assign(bd, 1);
@@ -211,7 +211,7 @@ _e_mod_layout_cb_effect_animator(void *data)
 {
    Effect *ef;
    double t, p;
-   
+
    ef = data;
    t = ecore_loop_time_get() - ef->time_start;
    if (ef->in > 0.0)
@@ -223,7 +223,7 @@ _e_mod_layout_cb_effect_animator(void *data)
      {
 	t = 1.0;
      }
-   
+
    p = 1.0 - t;
    p = 1.0 - (p * p * p * p);
 
@@ -231,7 +231,7 @@ _e_mod_layout_cb_effect_animator(void *data)
      e_border_fx_offset(ef->border, 0, (-ef->border->zone->h * (1.0 - p)));
    else
      e_border_fx_offset(ef->border, 0, (-ef->border->zone->h * p));
-   
+
    if (t >= 1.0)
      {
 	if (ef->post == POST_HIDE)
@@ -264,7 +264,7 @@ static void
 _e_mod_layout_effect_slide_out(E_Border *bd, double in, int post)
 {
    Effect *ef;
-   
+
    ef = E_NEW(Effect, 1);
    ef->border = bd;
    ef->animator = ecore_animator_add(_e_mod_layout_cb_effect_animator, ef);
@@ -273,7 +273,7 @@ _e_mod_layout_effect_slide_out(E_Border *bd, double in, int post)
    ef->direction = 0;
    ef->post = post;
    effects = eina_list_append(effects, ef);
-   
+
    e_border_fx_offset(ef->border, 0, 0);
    if (in <= 0.0)
      {
@@ -288,7 +288,7 @@ static void
 _e_mod_layout_effect_slide_in(E_Border *bd, double in, int post)
 {
    Effect *ef;
-   
+
    ef = E_NEW(Effect, 1);
    ef->border = bd;
    ef->animator = ecore_animator_add(_e_mod_layout_cb_effect_animator, ef);
@@ -353,7 +353,7 @@ static int
 _is_dialog(E_Border *bd)
 {
    int isdialog = 0, i;
-   
+
    if (bd->client.icccm.transient_for != 0)
      isdialog = 1;
    if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DIALOG)
@@ -414,7 +414,7 @@ _e_mod_layout_post_border_assign(E_Border *bd, int not_new)
    int wx2 = 0, wy2 = 0, ww2 = 0, wh2 = 0;
    int isdialog = 0;
    int pbx, pby, pbw, pbh;
-   
+
    if (bd->stolen) return;
    /* FIXME: make some modification based on policy */
    if ((bd->new_client) && (not_new)) return;
@@ -432,7 +432,7 @@ _e_mod_layout_post_border_assign(E_Border *bd, int not_new)
      {
 	  {
 	     unsigned int area[4];
-	     
+
 	     dockwin = bd;
 	     dockwin->lock_focus_out = 1;
 	     area[0] = wx;
@@ -452,10 +452,7 @@ _e_mod_layout_post_border_assign(E_Border *bd, int not_new)
      }
    else if (isdialog)
      {
-	if (dockwin)
-	  {
-	     wh -= dockwin->h;
-	  }
+	if (dockwin) wh -= dockwin->h;
 //	if (ww > (bd->client.icccm.min_w + bd->client_inset.l + bd->client_inset.r))
 //	  ww = bd->client.icccm.min_w + bd->client_inset.l + bd->client_inset.r;
 	bd->w = ww;
@@ -477,9 +474,7 @@ _e_mod_layout_post_border_assign(E_Border *bd, int not_new)
 //	if (bd->client.icccm.min_h > (wh - bd->client_inset.t - bd->client_inset.b))
 //	  bd->client.icccm.min_h = wh - bd->client_inset.t - bd->client_inset.b;
 	if (bd->new_client)
-	  {
-	     _e_mod_layout_effect_slide_in(bd, (double)illume_cfg->sliding.layout.duration / 1000.0, POST_NONE);
-	  }
+          _e_mod_layout_effect_slide_in(bd, (double)illume_cfg->sliding.layout.duration / 1000.0, POST_NONE);
      }
    else
      {
@@ -489,9 +484,7 @@ _e_mod_layout_post_border_assign(E_Border *bd, int not_new)
 	     wh -= dockwin->h;
 	  }
 	if (bd->new_client)
-	  {
-	     _e_mod_layout_effect_slide_in(bd, (double)illume_cfg->sliding.layout.duration / 1000.0, POST_NONE);
-	  }
+          _e_mod_layout_effect_slide_in(bd, (double)illume_cfg->sliding.layout.duration / 1000.0, POST_NONE);
      }
 
    if (bd == dockwin)
@@ -500,7 +493,7 @@ _e_mod_layout_post_border_assign(E_Border *bd, int not_new)
 	bd->y = wy + wh - bd->h;
 	bd->w = ww;
 	bd->h = bd->h;
-	
+
 	if ((pbx != bd->x) || (pby != bd->y)  ||
 	    (pbw != bd->w) || (pbh != bd->h))
 	  {
@@ -518,9 +511,9 @@ _e_mod_layout_post_border_assign(E_Border *bd, int not_new)
 	     bd->changes.pos = 1;
 	     bd->changes.size = 1;
 	  }
-	
+
 	bd->lock_border = 1;
-	
+
 	bd->lock_client_location = 1;
 	bd->lock_client_size = 1;
 //	bd->lock_client_stacking = 1;
@@ -528,7 +521,7 @@ _e_mod_layout_post_border_assign(E_Border *bd, int not_new)
 	bd->lock_client_sticky = 1;
 	bd->lock_client_shade = 1;
 	bd->lock_client_maximize = 1;
-	
+
 	bd->lock_user_location = 1;
 	bd->lock_user_size = 1;
 //	bd->lock_user_stacking = 1;
@@ -569,16 +562,16 @@ _e_mod_layout_post_border_assign(E_Border *bd, int not_new)
 	       }
 	  }
 	bd->placed = 1;
-	
+
 	bd->lock_border = 1;
-	
+
 	bd->lock_client_location = 1;
 //	bd->lock_client_size = 1;
 	bd->lock_client_desk = 1;
 	bd->lock_client_sticky = 1;
 	bd->lock_client_shade = 1;
 	bd->lock_client_maximize = 1;
-	
+
 	bd->lock_user_location = 1;
 	bd->lock_user_size = 1;
 //	bd->lock_user_desk = 1;
@@ -651,7 +644,7 @@ _e_mod_layout_post_border_assign(E_Border *bd, int not_new)
 	     bd->remember = NULL;
 	  }
 	bd->lock_border = 1;
-	
+
 	bd->lock_client_location = 1;
 	bd->lock_client_size = 1;
 //	bd->lock_client_stacking = 1;
@@ -659,7 +652,7 @@ _e_mod_layout_post_border_assign(E_Border *bd, int not_new)
 	bd->lock_client_sticky = 1;
 	bd->lock_client_shade = 1;
 	bd->lock_client_maximize = 1;
-	
+
 	bd->lock_user_location = 1;
 	bd->lock_user_size = 1;
 //	bd->lock_user_stacking = 1;
@@ -667,7 +660,7 @@ _e_mod_layout_post_border_assign(E_Border *bd, int not_new)
 	bd->lock_user_sticky = 1;
 //	bd->lock_user_shade = 1;
 //	bd->lock_user_maximize = 1;
-	
+
 	bd->client.icccm.base_w = 1;
 	bd->client.icccm.base_h = 1;
 	bd->client.icccm.min_w = 1;
@@ -703,7 +696,7 @@ static int
 _cb_event_border_add(void *data, int type, void *event)
 {
    E_Event_Border_Add *ev;
-   
+
    ev = event;
    if (ev->border->stolen) return 1;
    return 1;
@@ -714,7 +707,7 @@ _cb_event_border_remove(void *data, int type, void *event)
 {
    E_Event_Border_Remove *ev;
    Eina_List *l, *pl;
-   
+
    ev = event;
    if (ev->border->stolen) return 1;
    if (ev->border == dockwin)
@@ -722,7 +715,7 @@ _cb_event_border_remove(void *data, int type, void *event)
 	unsigned int area[4];
 	int wx = 0, wy = 0, ww = 0, wh = 0;
 	int wx2 = 0, wy2 = 0, ww2 = 0, wh2 = 0;
-	
+
 	dockwin = NULL;
 	dockwin_use = 0;
 	e_slipshelf_safe_app_region_get(ev->border->zone, &wx, &wy, &ww, &wh);
@@ -738,7 +731,7 @@ _cb_event_border_remove(void *data, int type, void *event)
    for (l = effects; l;)
      {
 	Effect *ef;
-	
+
 	ef = l->data;
 	pl = l;
 	l = l->next;
@@ -757,7 +750,7 @@ _cb_event_border_focus_in(void *data, int type, void *event)
 {
    E_Event_Border_Focus_In *ev;
    E_Border *bd;
-   
+
    ev = event;
    if (ev->border->stolen) return 1;
    bd = ev->border;
@@ -782,7 +775,7 @@ _cb_event_border_focus_out(void *data, int type, void *event)
 {
    E_Event_Border_Focus_Out *ev;
    E_Border *bd;
-   
+
    ev = event;
    if (ev->border->stolen) return 1;
    bd = ev->border;
@@ -801,7 +794,7 @@ static int
 _cb_event_border_show(void *data, int type, void *event)
 {
    E_Event_Border_Show *ev;
-   
+
    ev = event;
    if (ev->border->stolen) return 1;
    return 1;
@@ -811,7 +804,7 @@ static int
 _cb_event_border_hide(void *data, int type, void *event)
 {
    E_Event_Border_Hide *ev;
-   
+
    ev = event;
    if (ev->border->stolen) return 1;
    return 1;
