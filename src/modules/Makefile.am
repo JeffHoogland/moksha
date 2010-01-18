@@ -243,7 +243,7 @@ SUBDIRS += illume
 endif
 
 if USE_MODULE_ILLUME2
-SUBDIRS += illume2 illume-home illume-softkey illume-keyboard illume-indicator illume-kbd-toggle illume-mode-toggle
+SUBDIRS += illume2 illume-home illume-softkey illume-keyboard illume-indicator illume-kbd-toggle illume-mode-toggle illume-bluetooth
 endif
 
 if USE_MODULE_SYSCON

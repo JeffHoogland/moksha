@@ -637,6 +637,8 @@ src/modules/illume-kbd-toggle/Makefile
 src/modules/illume-kbd-toggle/module.desktop
 src/modules/illume-mode-toggle/Makefile
 src/modules/illume-mode-toggle/module.desktop
+src/modules/illume-bluetooth/Makefile
+src/modules/illume-bluetooth/module.desktop
 src/modules/illume2/Makefile
 src/modules/illume2/module.desktop
 src/modules/illume2/keyboards/Makefile
