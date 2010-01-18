@@ -23,7 +23,9 @@ files_DATA = \
 	module.mixer.cfg \
 	module.pager.cfg
 
-%.cfg: %.src
+SUFFIXES = .cfg
+
+.src.cfg:
 	$(EET_EET) -e \
 	$(top_builddir)/config/illume/$@ config \
 	$< 1

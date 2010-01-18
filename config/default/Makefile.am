@@ -13,7 +13,9 @@ files_DATA = \
         icon.png \
 	e.cfg
 
-%.cfg: %.src
+SUFFIXES = .cfg
+
+.src.cfg:
 	$(EET_EET) -e \
 	$(top_builddir)/config/default/$@ config \
 	$< 1

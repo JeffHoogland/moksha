@@ -29,7 +29,9 @@ files_DATA = \
 	module.pager.cfg \
 	module.temperature.cfg
 
-%.cfg: %.src
+SUFFIXES = .cfg
+
+.src.cfg:
 	$(EET_EET) -e \
 	$(top_builddir)/config/standard/$@ config \
 	$< 1

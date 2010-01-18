@@ -23,7 +23,9 @@ files_DATA = \
         module.illume-softkey.cfg \
         module.illume2.cfg
 
-%.cfg: %.src
+SUFFIXES = .cfg
+
+.src.cfg:
 	$(EET_EET) -e \
 	$(top_builddir)/config/illume-home/$@ config \
 	$< 1
