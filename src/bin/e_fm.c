@@ -3194,12 +3194,12 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
 	      */
 	     if (strcmp(path, "/") == 0)
 	       {
-		  if (e_user_homedir_concat_static(buf, "Desktop") >= sizeof(buf))
+		  if (e_user_homedir_concat_static(buf, _("Desktop")) >= sizeof(buf))
 		    return NULL;
 	       }
 	     else
 	       {
-		  if (e_user_homedir_snprintf(buf, sizeof(buf), "Desktop-%s", path) >= sizeof(buf))
+		  if (e_user_homedir_snprintf(buf, sizeof(buf), "%s-%s", _("Desktop"), path) >= sizeof(buf))
 		    return NULL;
 	       }
 	     ecore_file_mkpath(buf);
