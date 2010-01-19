@@ -31,6 +31,7 @@ struct _Il_Home_Exec
    Efreet_Desktop *desktop;
    Ecore_Exe *exec;
    E_Border *border;
+   E_Zone *zone;
    Ecore_Timer *timeout;
    int startup_id;
    pid_t pid;
@@ -495,6 +496,7 @@ _il_home_desktop_run(Il_Home_Win *hwin, Efreet_Desktop *desktop)
 
    eins = e_exec(hwin->win->border->zone, desktop, NULL, NULL, "illume-home");
    exe->desktop = desktop;
+   exe->zone = hwin->win->border->zone;
    if (eins) 
      {
         exe->exec = eins->exe;
@@ -778,6 +780,11 @@ _il_home_border_add(void *data, int type, void *event)
                  (exe->pid == ev->border->client.netwm.pid)) 
                {
                   exe->border = ev->border;
+                  if (exe->border->zone != exe->zone) 
+                    {
+                       if (exe->border->zone != exe->zone) 
+                         e_border_zone_set(exe->border, exe->zone);
+                    }
                   if (exe->handle) 
                     {
                        e_busycover_pop(exe->cover, exe->handle);
@@ -787,6 +794,11 @@ _il_home_border_add(void *data, int type, void *event)
                   exe->timeout = NULL;
                   break;
                }
+          }
+        else 
+          {
+             if (exe->border->zone != exe->zone) 
+               e_border_zone_set(exe->border, exe->zone);
           }
      }
    return 1;
