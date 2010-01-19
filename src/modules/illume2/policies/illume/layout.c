@@ -58,6 +58,7 @@ void
 _layout_border_focus_in(E_Border *bd) 
 {
    /* Do something if focus enters a window */
+   e_border_focus_latest_set(bd);
 }
 
 void 
