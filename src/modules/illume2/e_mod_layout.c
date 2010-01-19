@@ -492,6 +492,7 @@ _e_mod_layout_cb_client_message(void *data, int type, void *event)
           {
              E_Border *fb;
 
+             if (fbd->zone != bd->zone) continue;
              if (e_object_is_del(E_OBJECT(fbd))) continue;
              if ((!fbd->client.icccm.accepts_focus) && 
                  (!fbd->client.icccm.take_focus)) continue;

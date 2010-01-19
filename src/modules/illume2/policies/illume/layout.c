@@ -51,6 +51,7 @@ _layout_border_del(E_Border *bd)
         b = e_illume_border_top_shelf_get(bd->zone);
         if (b) e_border_show(b);
      }
+   ecore_x_e_illume_back_send(bd->zone->black_win);
 }
 
 void 
