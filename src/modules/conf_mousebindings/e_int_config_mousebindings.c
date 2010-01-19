@@ -1059,7 +1059,7 @@ _auto_apply_changes(E_Config_Dialog_Data *cfdata)
 	  ok = 0;
 
 	if (ok)
-	  *params = eina_stringshare_ref(cfdata->locals.params);
+	  *params = eina_stringshare_add(cfdata->locals.params);
      }
 }
 
