@@ -782,8 +782,11 @@ _il_home_border_add(void *data, int type, void *event)
                   exe->border = ev->border;
                   if (exe->border->zone != exe->zone) 
                     {
-                       if (exe->border->zone != exe->zone) 
-                         e_border_zone_set(exe->border, exe->zone);
+                       exe->border->zone = exe->zone;
+                       exe->border->x = exe->zone->x;
+                       exe->border->y = exe->zone->y;
+                       exe->border->changes.pos = 1;
+                       exe->border->changed = 1;
                     }
                   if (exe->handle) 
                     {
@@ -798,7 +801,13 @@ _il_home_border_add(void *data, int type, void *event)
         else 
           {
              if (exe->border->zone != exe->zone) 
-               e_border_zone_set(exe->border, exe->zone);
+               {
+                  exe->border->zone = exe->zone;
+                  exe->border->x = exe->zone->x;
+                  exe->border->y = exe->zone->y;
+                  exe->border->changes.pos = 1;
+                  exe->border->changed = 1;
+               }
           }
      }
    return 1;
