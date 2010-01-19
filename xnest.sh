@@ -5,6 +5,12 @@ debugger_default="b"
 xnest_geo_default="800x600+0+0"
 
 
+if [ `type Xnest &>/dev/null; echo $?` -ne 0 ]; then
+	echo "Please install Xnest!"
+	exit 1
+fi
+
+
 echo
 for arg in $@; do
    option=`echo "'$arg'" | cut -d'=' -f1 | tr -d "'"`
