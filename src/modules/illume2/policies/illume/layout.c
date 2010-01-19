@@ -21,6 +21,10 @@ _layout_border_add(E_Border *bd)
    if ((bd->new_client) || (!bd->visible)) return;
    if ((bd->need_fullscreen) || (bd->fullscreen)) 
      {
+        E_Border *b;
+
+        b = e_illume_border_top_shelf_get(bd->zone);
+        if (b) e_border_hide(b, 2);
         if (bd->layer != IL_FULLSCREEN_LAYER)
           e_border_layer_set(bd, IL_FULLSCREEN_LAYER);
         bd->lock_user_stacking = 1;
@@ -40,6 +44,13 @@ void
 _layout_border_del(E_Border *bd) 
 {
    /* Do something if a border gets removed */
+   if ((bd->need_fullscreen) || (bd->fullscreen)) 
+     {
+        E_Border *b;
+
+        b = e_illume_border_top_shelf_get(bd->zone);
+        if (b) e_border_show(b);
+     }
 }
 
 void 
