@@ -9748,7 +9748,7 @@ _e_fm2_volume_icon_update(E_Volume *v)
    if (!v || !v->storage) return;
    
    e_user_dir_snprintf(fav, sizeof(fav), "fileman/favorites");
-   e_user_homedir_snprintf(desk, sizeof(desk), "Desktop");
+   e_user_homedir_concat_static(desk, _("Desktop"));
    snprintf(file, sizeof(file), "|%s_%d.desktop", 
             ecore_file_file_get(v->storage->udi), v->partition_number);
    

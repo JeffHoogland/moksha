@@ -324,8 +324,8 @@ _e_fm2_volume_write(E_Volume *v)
 	if (e_config->hal_desktop)
 	  {
 	     e_user_homedir_snprintf(buf2, sizeof(buf2),
-				     "Desktop/|%s_%d.desktop",
-				     id, v->partition_number);
+				     "%s/|%s_%d.desktop",
+				     _("Desktop"), id, v->partition_number);
 	     ecore_file_symlink(buf, buf2);
 	  }
 
@@ -348,8 +348,8 @@ _e_fm2_volume_erase(E_Volume *v)
   
    if (!v->storage) return;
    id = ecore_file_file_get(v->storage->udi);
-   e_user_homedir_snprintf(buf, sizeof(buf), "Desktop/|%s_%d.desktop",
-			   id, v->partition_number);
+   e_user_homedir_snprintf(buf, sizeof(buf), "%s/|%s_%d.desktop",
+			   _("Desktop"), id, v->partition_number);
    ecore_file_unlink(buf);
    _e_fm2_file_force_update(buf);
 
@@ -624,8 +624,8 @@ e_fm2_hal_show_desktop_icons(void)
 			    id, v->partition_number);
 
 	e_user_homedir_snprintf(buf2, sizeof(buf2),
-				"Desktop/|%s_%d.desktop",
-				id, v->partition_number);
+				"%s/|%s_%d.desktop",
+				_("Desktop"), id, v->partition_number);
 
 	if (ecore_file_exists(buf) && !ecore_file_exists(buf2))
 	  {
@@ -651,8 +651,8 @@ e_fm2_hal_hide_desktop_icons(void)
 	id = ecore_file_file_get(v->storage->udi);
 
 	e_user_homedir_snprintf(buf, sizeof(buf),
-				"Desktop/|%s_%d.desktop",
-				id, v->partition_number);
+				"%s/|%s_%d.desktop",
+				_("Desktop"), id, v->partition_number);
 
 	if (ecore_file_exists(buf))
 	  {
