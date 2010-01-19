@@ -9,6 +9,7 @@ struct _Config
 {
    unsigned char    use_shadow;
    const char      *shadow_file;
+   int              engine;
 };
 
 struct _Mod

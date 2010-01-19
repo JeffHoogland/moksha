@@ -32,6 +32,7 @@ e_modapi_init(E_Module *m)
 #define D mod->conf_edd
    E_CONFIG_VAL(D, T, use_shadow, UCHAR);
    E_CONFIG_VAL(D, T, shadow_file, STR);
+   E_CONFIG_VAL(D, T, engine, INT);
    
    mod->conf = e_config_domain_load("module.comp", mod->conf_edd);
    if (!mod->conf)
@@ -39,6 +40,7 @@ e_modapi_init(E_Module *m)
 	mod->conf = E_NEW(Config, 1);
         mod->conf->use_shadow = 1;
         mod->conf->shadow_file = NULL;
+        mod->conf->engine = E_EVAS_ENGINE_SOFTWARE_X11;
      }
    
    _comp_mod = mod;

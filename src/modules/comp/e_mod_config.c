@@ -7,6 +7,7 @@
 struct _E_Config_Dialog_Data
 {
    int use_shadow;
+   int engine;
 };
 
 /* Protos */
@@ -49,7 +50,11 @@ _create_data(E_Config_Dialog *cfd)
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
 
    cfdata->use_shadow = _comp_mod->conf->use_shadow;
-   
+   cfdata->engine = _comp_mod->conf->engine;
+   if ((cfdata->engine != E_EVAS_ENGINE_SOFTWARE_X11) &&
+       (cfdata->engine != E_EVAS_ENGINE_GL_X11))
+     cfdata->engine = E_EVAS_ENGINE_SOFTWARE_X11;
+
    return cfdata;
 }
 
@@ -65,6 +70,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 {
    Evas_Object *o, *ob, *of, *ot;
    E_Radio_Group *rg;
+   int engine;
    
    o = e_widget_list_add(evas, 0, 0);
    ot = e_widget_table_add(evas, 1);
@@ -74,6 +80,24 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    ob = e_widget_check_add(evas, _("Enabled"), &(cfdata->use_shadow));
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
+   
+   of = e_widget_framelist_add(evas, _("Engine"), 0);
+   e_widget_framelist_content_align_set(of, 0.5, 0.0);
+   
+   rg = e_widget_radio_group_new(&(cfdata->engine));
+   
+   engine = E_EVAS_ENGINE_SOFTWARE_X11;
+   ob = e_widget_radio_add(evas, _("Software"), engine, rg);
+   e_widget_framelist_object_append(of, ob);
+
+   if (ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_OPENGL_X11))
+     {
+        engine = E_EVAS_ENGINE_GL_X11;
+        ob = e_widget_radio_add(evas, _("OpenGL"), engine, rg);
+        e_widget_framelist_object_append(of, ob);
+     }
+   
+   e_widget_table_object_append(ot, of, 0, 1, 1, 1, 1, 1, 1, 1);
    
    e_widget_list_object_append(o, ot, 1, 1, 0.5);   
 
@@ -88,7 +112,12 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
         _comp_mod->conf->use_shadow = cfdata->use_shadow;
         e_mod_comp_shadow_set();
      }
-   
+   if (_comp_mod->conf->engine != cfdata->engine)
+     {
+        _comp_mod->conf->engine = cfdata->engine;
+        e_mod_comp_shutdown();
+        e_mod_comp_init();
+     }
    e_config_save_queue();
    return 1;
 }

@@ -34,6 +34,8 @@ struct _E_Comp
    Eina_Inlist    *wins;
    Eina_List      *updates;
    Ecore_Animator *render_animator;
+
+   Eina_Bool       gl : 1; // is visible
 };
 
 struct _E_Comp_Win
@@ -908,7 +910,15 @@ _e_mod_comp_add(E_Manager *man)
      }
    
    if (c->man->num == 0) e_alert_composite_win = c->win;
-   c->ee = ecore_evas_software_x11_new(NULL, c->win, 0, 0, man->w, man->h);
+   
+   if (_comp_mod->conf->engine == E_EVAS_ENGINE_GL_X11)
+     {
+        c->ee = ecore_evas_gl_x11_new(NULL, c->win, 0, 0, man->w, man->h);
+        if (c->ee) c->gl = 1;
+     }
+   if (!c->ee)
+     c->ee = ecore_evas_software_x11_new(NULL, c->win, 0, 0, man->w, man->h);
+   
    ecore_evas_manual_render_set(c->ee, 1);
    c->evas = ecore_evas_get(c->ee);
    ecore_evas_show(c->ee);
