@@ -484,14 +484,19 @@ _e_mod_layout_cb_client_message(void *data, int type, void *event)
    else if (ev->message_type == ECORE_X_ATOM_E_ILLUME_BACK) 
      {
         E_Zone *zone;
-        Eina_List *focused, *l;
+        Eina_List *focused, *l, *f2 = NULL;
         E_Border *fbd;
 
         zone = e_util_zone_window_find(ev->win);
         focused = e_border_focus_stack_get();
-        EINA_LIST_REVERSE_FOREACH(focused, l, fbd) 
+        EINA_LIST_FOREACH(focused, l, fbd) 
           {
              if (fbd->zone != zone) continue;
+             f2 = eina_list_append(f2, fbd);
+          }
+        if (eina_list_count(f2) < 1) return 1;
+        EINA_LIST_REVERSE_FOREACH(f2, l, fbd) 
+          {
              if (e_object_is_del(E_OBJECT(fbd))) continue;
              if ((!fbd->client.icccm.accepts_focus) && 
                  (!fbd->client.icccm.take_focus)) continue;
@@ -500,8 +505,7 @@ _e_mod_layout_cb_client_message(void *data, int type, void *event)
                {
                   E_Border *fb;
 
-                  if (!(fb = focused->next->data)) continue;
-                  if (fb->zone != zone) continue;
+                  if (!(fb = f2->next->data)) continue;
                   if (e_object_is_del(E_OBJECT(fb))) continue;
                   if ((!fb->client.icccm.accepts_focus) && 
                       (!fb->client.icccm.take_focus)) continue;
