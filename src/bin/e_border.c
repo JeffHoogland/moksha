@@ -2985,18 +2985,25 @@ _e_border_resize_key_down(void *data, int type, void *event)
    dx = e_config->border_keyboard.resize.dx;
    if (dx < action_border->client.icccm.step_w)
      dx = action_border->client.icccm.step_w;
+   dx = _e_border_key_down_modifier_apply(ev->modifiers, dx);
+   if (dx < action_border->client.icccm.step_w)
+     dx = action_border->client.icccm.step_w;
+
    dy = e_config->border_keyboard.resize.dy;
+   if (dy < action_border->client.icccm.step_h)
+     dy = action_border->client.icccm.step_h;
+   dy = _e_border_key_down_modifier_apply(ev->modifiers, dy);
    if (dy < action_border->client.icccm.step_h)
      dy = action_border->client.icccm.step_h;
 
    if (strcmp(ev->key, "Up") == 0)
-     h -= _e_border_key_down_modifier_apply(ev->modifiers, dy);
+     h -= dy;
    else if (strcmp(ev->key, "Down") == 0)
-     h += _e_border_key_down_modifier_apply(ev->modifiers, dy);
+     h += dy;
    else if (strcmp(ev->key, "Left") == 0)
-     w -= _e_border_key_down_modifier_apply(ev->modifiers, dx);
+     w -= dx;
    else if (strcmp(ev->key, "Right") == 0)
-     w += _e_border_key_down_modifier_apply(ev->modifiers, dx);
+     w += dx;
    else if (strcmp(ev->key, "Return") == 0)
      goto stop;
    else if (strcmp(ev->key, "Escape") == 0)
