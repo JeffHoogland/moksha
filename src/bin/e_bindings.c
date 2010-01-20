@@ -425,7 +425,7 @@ e_bindings_edge_add(E_Binding_Context ctxt, E_Zone_Edge edge, E_Binding_Modifier
    if (params) bind->params = eina_stringshare_add(params);
    edge_bindings = eina_list_append(edge_bindings, bind);
 
-   e_util_zone_edge_toggle(edge, 1);
+   e_zone_edge_new(edge);
 }
 
 EAPI E_Binding_Edge *
@@ -474,7 +474,7 @@ e_bindings_edge_del(E_Binding_Context ctxt, E_Zone_Edge edge, E_Binding_Modifier
      }
 
    if (!ref_count)
-     e_util_zone_edge_toggle(edge, 0);
+     e_zone_edge_free(edge);
 }
 
 EAPI E_Action *

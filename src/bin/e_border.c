@@ -3081,7 +3081,7 @@ e_border_act_move_begin(E_Border *bd, Ecore_Event_Mouse_Button *ev)
    if (!_e_border_move_begin(bd))
      return;
    
-   e_zone_flip_win_disable();
+   e_zone_edge_disable();
    bd->moving = 1;
    _e_border_pointer_move_begin(bd);
    if (ev)
@@ -3101,7 +3101,7 @@ e_border_act_move_end(E_Border *bd, Ecore_Event_Mouse_Button *ev)
    if (!bd->moving) return;
    bd->moving = 0;
    _e_border_pointer_move_end(bd);
-   e_zone_flip_win_restore();
+   e_zone_edge_enable();
    _e_border_move_end(bd);
    e_zone_flip_coords_handle(bd->zone, -1, -1);
 }
@@ -3516,7 +3516,7 @@ e_border_signal_move_begin(E_Border *bd, const char *sig, const char *src)
    if (!_e_border_move_begin(bd)) return;
    bd->moving = 1;
    _e_border_pointer_move_begin(bd);
-   e_zone_flip_win_disable();
+   e_zone_edge_disable();
    _e_border_moveinfo_gather(bd, sig);
 }
 
@@ -3528,7 +3528,7 @@ e_border_signal_move_end(E_Border *bd, const char *sig, const char *src)
    if (!bd->moving) return;
    bd->moving = 0;
    _e_border_pointer_move_end(bd);
-   e_zone_flip_win_restore();
+   e_zone_edge_enable();
    _e_border_move_end(bd);
    e_zone_flip_coords_handle(bd->zone, -1, -1);
 }
