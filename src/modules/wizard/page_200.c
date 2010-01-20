@@ -52,7 +52,7 @@ wizard_page_apply(E_Wizard_Page *pg)
    // FIXME: efm favorites linked to desktop should be an option in another
    // wizard page
    // ~/Desktop
-   e_user_homedir_concat_static(buf, _("Desktop"));
+   e_user_homedir_concat(buf, _("Desktop"));
    ecore_file_mkpath(buf);
    e_user_homedir_snprintf(buf, sizeof(buf), "%s/%s", _("Desktop"), "home.desktop");
    ecore_file_symlink("../.e/e/fileman/favorites/home.desktop", buf);
