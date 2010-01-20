@@ -30,6 +30,8 @@ static void _e_shelf_menu_pre_cb(void *data, E_Menu *m);
 static void _e_shelf_gadcon_client_remove(void *data, E_Gadcon_Client *gcc);
 static int _e_shelf_gadcon_client_add(void *data, const E_Gadcon_Client_Class *cc);
 static const char * _e_shelf_orient_icon_name_get(E_Shelf *s);
+static void _e_shelf_bindings_add(E_Shelf *es);
+static void _e_shelf_bindings_del(E_Shelf *es);
 
 static Eina_List *shelves = NULL;
 static Eina_Hash *winid_shelves = NULL;
@@ -97,7 +99,7 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
    E_Shelf *es;
    const char *option;
    char buf[1024];
-   const char * locname;
+   const char *locname;
 
    es = E_OBJECT_ALLOC(E_Shelf, E_SHELF_TYPE, _e_shelf_free);
    if (!es) return NULL;
@@ -631,6 +633,7 @@ e_shelf_position_calc(E_Shelf *es)
 	e_shelf_toggle(es, 0);
      }
    e_zone_useful_geometry_dirty(es->zone);
+   _e_shelf_bindings_add(es);
 }
 
 EAPI void 
@@ -762,6 +765,8 @@ e_shelf_config_new(E_Zone *zone, E_Config_Shelf *cf_es)
 static void
 _e_shelf_free(E_Shelf *es)
 {
+   _e_shelf_bindings_del(es);
+
    e_gadcon_location_unregister(es->gadcon->location);
    e_zone_useful_geometry_dirty(es->zone);
    E_FREE_LIST(es->handlers, ecore_event_handler_del);
@@ -1787,5 +1792,70 @@ _e_shelf_orient_icon_name_get(E_Shelf * s)
 	break;
      }
    return name;
+}
+
+static void
+_e_shelf_bindings_add(E_Shelf *es)
+{
+   char buf[1024];
+
+   _e_shelf_bindings_del(es);
+
+   /* Don't need edge binding if we don't hide shelf */
+   if ((!es->cfg->autohide) && (!es->cfg->autohide_show_action)) return;
+
+   snprintf(buf, sizeof(buf), "shelf.%d", es->id);
+   switch (es->gadcon->orient)
+     {
+      case E_GADCON_ORIENT_FLOAT:
+      case E_GADCON_ORIENT_HORIZ:
+      case E_GADCON_ORIENT_VERT:
+	 /* noop */
+	 break;
+      case E_GADCON_ORIENT_LEFT:
+	 e_bindings_edge_add(E_BINDING_CONTEXT_ZONE, E_ZONE_EDGE_LEFT, E_BINDING_MODIFIER_NONE, 1, buf, NULL, 0);
+	 break;
+      case E_GADCON_ORIENT_RIGHT:
+	 e_bindings_edge_add(E_BINDING_CONTEXT_ZONE, E_ZONE_EDGE_RIGHT, E_BINDING_MODIFIER_NONE, 1, buf, NULL, 0);
+	 break;
+      case E_GADCON_ORIENT_TOP:
+	 e_bindings_edge_add(E_BINDING_CONTEXT_ZONE, E_ZONE_EDGE_TOP, E_BINDING_MODIFIER_NONE, 1, buf, NULL, 0);
+	 break;
+      case E_GADCON_ORIENT_BOTTOM:
+	 e_bindings_edge_add(E_BINDING_CONTEXT_ZONE, E_ZONE_EDGE_BOTTOM, E_BINDING_MODIFIER_NONE, 1, buf, NULL, 0);
+	 break;
+      case E_GADCON_ORIENT_CORNER_TL:
+      case E_GADCON_ORIENT_CORNER_LT:
+	 e_bindings_edge_add(E_BINDING_CONTEXT_ZONE, E_ZONE_EDGE_TOP, E_BINDING_MODIFIER_NONE, 1, buf, NULL, 0);
+	 e_bindings_edge_add(E_BINDING_CONTEXT_ZONE, E_ZONE_EDGE_LEFT, E_BINDING_MODIFIER_NONE, 1, buf, NULL, 0);
+	 break;
+      case E_GADCON_ORIENT_CORNER_TR:
+      case E_GADCON_ORIENT_CORNER_RT:
+	 e_bindings_edge_add(E_BINDING_CONTEXT_ZONE, E_ZONE_EDGE_TOP, E_BINDING_MODIFIER_NONE, 1, buf, NULL, 0);
+	 e_bindings_edge_add(E_BINDING_CONTEXT_ZONE, E_ZONE_EDGE_RIGHT, E_BINDING_MODIFIER_NONE, 1, buf, NULL, 0);
+	 break;
+      case E_GADCON_ORIENT_CORNER_BL:
+      case E_GADCON_ORIENT_CORNER_LB:
+	 e_bindings_edge_add(E_BINDING_CONTEXT_ZONE, E_ZONE_EDGE_BOTTOM, E_BINDING_MODIFIER_NONE, 1, buf, NULL, 0);
+	 e_bindings_edge_add(E_BINDING_CONTEXT_ZONE, E_ZONE_EDGE_LEFT, E_BINDING_MODIFIER_NONE, 1, buf, NULL, 0);
+	 break;
+      case E_GADCON_ORIENT_CORNER_BR:
+      case E_GADCON_ORIENT_CORNER_RB:
+	 e_bindings_edge_add(E_BINDING_CONTEXT_ZONE, E_ZONE_EDGE_BOTTOM, E_BINDING_MODIFIER_NONE, 1, buf, NULL, 0);
+	 e_bindings_edge_add(E_BINDING_CONTEXT_ZONE, E_ZONE_EDGE_RIGHT, E_BINDING_MODIFIER_NONE, 1, buf, NULL, 0);
+	 break;
+     }
+}
+
+static void
+_e_shelf_bindings_del(E_Shelf *es)
+{
+   char buf[1024];
+
+   snprintf(buf, sizeof(buf), "shelf.%d", es->id);
+   e_bindings_edge_del(E_BINDING_CONTEXT_ZONE, E_ZONE_EDGE_LEFT, E_BINDING_MODIFIER_NONE, 1, buf, NULL, 0);
+   e_bindings_edge_del(E_BINDING_CONTEXT_ZONE, E_ZONE_EDGE_RIGHT, E_BINDING_MODIFIER_NONE, 1, buf, NULL, 0);
+   e_bindings_edge_del(E_BINDING_CONTEXT_ZONE, E_ZONE_EDGE_TOP, E_BINDING_MODIFIER_NONE, 1, buf, NULL, 0);
+   e_bindings_edge_del(E_BINDING_CONTEXT_ZONE, E_ZONE_EDGE_BOTTOM, E_BINDING_MODIFIER_NONE, 1, buf, NULL, 0);
 }
 
