@@ -3194,7 +3194,7 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
 	      */
 	     if (strcmp(path, "/") == 0)
 	       {
-		  if (e_user_homedir_concat(buf, _("Desktop")) >= sizeof(buf))
+		  if (e_user_homedir_concat(buf, sizeof(buf), _("Desktop")) >= sizeof(buf))
 		    return NULL;
 	       }
 	     else
@@ -9748,7 +9748,7 @@ _e_fm2_volume_icon_update(E_Volume *v)
    if (!v || !v->storage) return;
    
    e_user_dir_snprintf(fav, sizeof(fav), "fileman/favorites");
-   e_user_homedir_concat(desk, _("Desktop"));
+   e_user_homedir_concat(desk, sizeof(desk), _("Desktop"));
    snprintf(file, sizeof(file), "|%s_%d.desktop", 
             ecore_file_file_get(v->storage->udi), v->partition_number);
    
