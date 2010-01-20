@@ -1035,7 +1035,7 @@ e_mod_comp_shadow_set(void)
         
         EINA_INLIST_FOREACH(c->wins, cw)
           {
-             if (cw->shobj)
+             if (evas_object_visible_get(cw->obj) && (cw->shobj))
                {
                   if (_comp_mod->conf->use_shadow)
                     {
