@@ -943,6 +943,7 @@ e_zone_edge_new(E_Zone_Edge edge)
 		    e_zone_edge_win_layer_set(zone, 250);
 		  else
 		    e_zone_edge_win_layer_set(zone, 200);
+
 	       }
 	  }
      }
