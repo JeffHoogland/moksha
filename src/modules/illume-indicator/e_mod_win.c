@@ -263,30 +263,29 @@ _e_mod_win_cb_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event)
 {
    Il_Ind_Win *iwin;
    Evas_Event_Mouse_Up *ev;
-   E_Border *bd;
+   Ecore_X_Window xwin;
 
    ev = event;
    if (ev->button != 1) return;
    if (!(iwin = data)) return;
+   xwin = ecore_x_window_root_first_get();
    if ((!iwin->drag.dnd) && (iwin->mouse_down == 1)) 
      {
-        Ecore_X_Window xwin;
         Ecore_X_Illume_Quickpanel_State state;
 
-        iwin->drag.start = 0;
-        iwin->drag.dnd = 0;
-        iwin->drag.y = 0;
-        iwin->mouse_down = 0;
-
-        xwin = ecore_x_window_root_first_get();
         state = ECORE_X_ILLUME_QUICKPANEL_STATE_ON;
         ecore_x_e_illume_quickpanel_state_set(xwin, state);
         ecore_x_e_illume_quickpanel_state_send(xwin, state);
-        return;
      }
+   else if (iwin->drag.dnd) 
+     {
+        E_Border *bd;
 
-   bd = iwin->win->border;
-   ecore_x_e_illume_drag_end_send(bd->client.win);
+        bd = iwin->win->border;
+        ecore_x_e_illume_drag_end_send(bd->client.win);
+        ecore_x_e_illume_top_shelf_geometry_set(xwin, bd->x, bd->y, bd->w, 
+                                                (32 * e_scale));
+     }
    iwin->drag.start = 0;
    iwin->drag.dnd = 0;
    iwin->drag.y = 0;
