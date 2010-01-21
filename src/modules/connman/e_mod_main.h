@@ -10,7 +10,6 @@
 
 #define MOD_CONF_VERSION 2
 
-
 typedef struct E_Connman_Instance E_Connman_Instance;
 typedef struct E_Connman_Module_Context E_Connman_Module_Context;
 typedef struct E_Connman_Service E_Connman_Service;

@@ -112,22 +112,12 @@ _connman_toggle_offline_mode_cb(void *data, DBusMessage *msg __UNUSED__, DBusErr
    if ((!error) || (!dbus_error_is_set(error)))
      {
 	printf("DBG CONNMAN: successfuly toggled to offline mode\n");
-	// XXX hack: connman does not emit propertychanged for this, they need to fix it
-	e_connman_manager_sync_elements();
-	_connman_default_service_changed_delayed(ctxt);
+	ctxt->offline_mode_pending = EINA_FALSE;
 	return;
      }
 
    _connman_dbus_error_show(_("Cannot toggle system's offline mode."), error);
    dbus_error_free(error);
-}
-
-static void
-_connman_toggle_offline_mode_pending_cb(void *data, DBusMessage *msg, DBusError *error)
-{
-   E_Connman_Module_Context *ctxt = data;
-   ctxt->offline_mode_pending = EINA_FALSE;
-   _connman_toggle_offline_mode_cb(data, msg, error);
 }
 
 static void
@@ -915,6 +905,7 @@ _connman_popup_cb_offline_mode_changed(void *data, Evas_Object *obj, void *event
 	  (_("Cannot toggle system's offline mode."));
 	return;
      }
+   ctxt->offline_mode_pending = EINA_TRUE;
 }
 
 static void
@@ -1617,13 +1608,14 @@ _connman_event_mode_changed(void *data, int type __UNUSED__, void *event __UNUSE
    if ((ctxt->offline_mode == e_config->mode.offline) ||
        (!ctxt->has_manager))
      return 1;
-
-   if (!e_connman_manager_offline_mode_set
-       (e_config->mode.offline, _connman_toggle_offline_mode_pending_cb, ctxt))
-     _connman_operation_error_show
-       (_("Cannot toggle system's offline mode."));
+   if (!ctxt->offline_mode_pending)
+     {
+	if (!e_connman_manager_offline_mode_set(e_config->mode.offline,
+		 _connman_toggle_offline_mode_cb, ctxt))
+	  _connman_operation_error_show(_("Cannot toggle system's offline mode."));
+     }
    else
-     ctxt->offline_mode_pending = EINA_TRUE;
+     ctxt->offline_mode_pending = EINA_FALSE;
 
    return 1;
 }
