@@ -53,16 +53,17 @@ e_mod_softkey_win_new(E_Zone *zone)
                                        _il_sk_win_cb_close_click, swin, NULL);
    e_widget_list_object_append(swin->o_box, swin->b_close, 1, 0, 0.5);
 
-   e_win_size_min_set(swin->win, zone->w, 32);
-   e_win_move_resize(swin->win, zone->x, (zone->h - 32), zone->w, 32);
+   e_win_size_min_set(swin->win, zone->w, 32 * e_scale);
+   e_win_move_resize(swin->win, zone->x, (zone->h - (32 * e_scale)), 
+                     zone->w, (32 * e_scale));
    e_win_show(swin->win);
    e_border_zone_set(swin->win->border, zone);
    e_win_placed_set(swin->win, 1);
    swin->win->border->lock_user_location = 1;
 
    ecore_x_e_illume_bottom_panel_geometry_set(ecore_x_window_root_first_get(), 
-                                              zone->x, (zone->h - 32), 
-                                              zone->w, 32);
+                                              zone->x, (zone->h - (32 * e_scale)), 
+                                              zone->w, (32 * e_scale));
    return swin;
 }
 
