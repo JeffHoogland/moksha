@@ -2558,12 +2558,6 @@ e_actions_init(void)
    e_action_predef_name_set(_("Desktop"), _("Show The Desktop"), 
 			    "desk_deskshow_toggle", NULL, NULL, 0);
 
-   /* shelf_show */
-   ACT_GO(shelf_show);
-   ACT_GO_EDGE(shelf_show);
-   e_action_predef_name_set(_("Desktop"), _("Show The Shelf"), "shelf_show",
-			    NULL, "shelf name glob: Shelf-* ", 1);
-
    /* desk_linear_flip_to */
    ACT_GO(desk_flip_to);
    e_action_predef_name_set(_("Desktop"), _("Flip Desktop To..."), 
