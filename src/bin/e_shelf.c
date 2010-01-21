@@ -1364,64 +1364,36 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
 
 	ev = event;
 	if (es->zone != ev->zone) return 1;
-	switch (es->gadcon->orient)
+	switch (ev->edge)
 	  {
-	   case E_GADCON_ORIENT_LEFT:
-             if ((ev->edge == E_ZONE_EDGE_LEFT) && (ev->y >= es->y) && 
-                 (ev->y <= (es->y + es->h)))
+	   case E_ZONE_EDGE_LEFT:
+             if (((es->gadcon->orient == E_GADCON_ORIENT_LEFT) ||
+		  (es->gadcon->orient == E_GADCON_ORIENT_CORNER_TL) ||
+		  (es->gadcon->orient == E_GADCON_ORIENT_CORNER_BL)) &&
+		 (ev->y >= es->y) && (ev->y <= (es->y + es->h)))
                show = 1;
              break;
-	   case E_GADCON_ORIENT_RIGHT:
-             if ((ev->edge == E_ZONE_EDGE_RIGHT) && (ev->y >= es->y) && 
-                 (ev->y <= (es->y + es->h)))
+	   case E_ZONE_EDGE_RIGHT:
+             if (((es->gadcon->orient == E_GADCON_ORIENT_RIGHT) ||
+		  (es->gadcon->orient == E_GADCON_ORIENT_CORNER_TR) ||
+		  (es->gadcon->orient == E_GADCON_ORIENT_CORNER_BR)) &&
+		 (ev->y >= es->y) && (ev->y <= (es->y + es->h)))
                show = 1;
              break;
-	   case E_GADCON_ORIENT_TOP:
-             if ((ev->edge == E_ZONE_EDGE_TOP) && (ev->x >= es->x) && 
-                 (ev->x <= (es->x + es->w)))
+	   case E_ZONE_EDGE_TOP:
+             if (((es->gadcon->orient == E_GADCON_ORIENT_TOP) ||
+		  (es->gadcon->orient == E_GADCON_ORIENT_CORNER_TL) ||
+		  (es->gadcon->orient == E_GADCON_ORIENT_CORNER_TR)) &&
+		 (ev->x >= es->x) && (ev->x <= (es->x + es->w)))
                show = 1;
              break;
-	   case E_GADCON_ORIENT_BOTTOM:
-             if ((ev->edge == E_ZONE_EDGE_BOTTOM) && (ev->x >= es->x) && 
-                 (ev->x <= (es->x + es->w)))
+	   case E_ZONE_EDGE_BOTTOM:
+             if (((es->gadcon->orient == E_GADCON_ORIENT_BOTTOM) ||
+		  (es->gadcon->orient == E_GADCON_ORIENT_CORNER_BL) ||
+		  (es->gadcon->orient == E_GADCON_ORIENT_CORNER_BR)) &&
+		 (ev->x >= es->x) && (ev->x <= (es->x + es->w)))
                show = 1;
-             break;
-	   case E_GADCON_ORIENT_CORNER_TL:
-	   case E_GADCON_ORIENT_CORNER_LT:
-             if ((ev->edge == E_ZONE_EDGE_TOP) && (ev->x >= es->x) && 
-                 (ev->x <= (es->x + es->w)))
-               show = 1;
-             else if ((ev->edge == E_ZONE_EDGE_LEFT) && (ev->y >= es->y) && 
-                      (ev->y <= (es->y + es->h)))
-               show = 1;
-             break;
-	   case E_GADCON_ORIENT_CORNER_TR:
-	   case E_GADCON_ORIENT_CORNER_RT:
-             if ((ev->edge == E_ZONE_EDGE_TOP) && (ev->x >= es->x) && 
-                 (ev->x <= (es->x + es->w)))
-               show = 1;
-             else if ((ev->edge == E_ZONE_EDGE_RIGHT) && (ev->y >= es->y) && 
-                      (ev->y <= (es->y + es->h)))
-               show = 1;
-             break;
-	   case E_GADCON_ORIENT_CORNER_BL:
-	   case E_GADCON_ORIENT_CORNER_LB:
-             if ((ev->edge == E_ZONE_EDGE_BOTTOM) && (ev->x >= es->x) && 
-                 (ev->x <= (es->x + es->w)))
-               show = 1;
-             else if ((ev->edge == E_ZONE_EDGE_LEFT) && (ev->y >= es->y) && 
-                      (ev->y <= (es->y + es->h)))
-               show = 1;
-             break;
-	   case E_GADCON_ORIENT_CORNER_BR:
-	   case E_GADCON_ORIENT_CORNER_RB:
-             if ((ev->edge == E_ZONE_EDGE_BOTTOM) && (ev->x >= es->x) && 
-                 (ev->x <= (es->x + es->w)))
-               show = 1;
-             else if ((ev->edge == E_ZONE_EDGE_RIGHT) && (ev->y >= es->y) && 
-                      (ev->y <= (es->y + es->h)))
-               show = 1;
-             break;
+	     break;
 	   default:
              break;
 	  }
