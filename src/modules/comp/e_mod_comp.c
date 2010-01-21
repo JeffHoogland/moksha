@@ -621,6 +621,22 @@ _e_mod_comp_win_hide(E_Comp_Win *cw)
      {
         evas_object_hide(cw->shobj);
      }
+   evas_object_image_size_set(cw->obj, 1, 1);
+   if (cw->pixmap)
+     {
+        ecore_x_pixmap_free(cw->pixmap);
+        cw->pixmap = 0;
+        cw->pw = 0;
+        cw->ph = 0;
+     }
+   if (cw->xim)
+     {
+        evas_object_image_data_set(cw->obj, NULL);
+        ecore_x_image_free(cw->xim);
+        cw->xim = NULL;
+     }
+   if (cw->c->gl)
+     evas_object_image_native_surface_set(cw->obj, NULL);
    _e_mod_comp_win_render_queue(cw);
 }
 
