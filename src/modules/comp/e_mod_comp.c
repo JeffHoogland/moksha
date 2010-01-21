@@ -196,43 +196,92 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
      }
    if (!((cw->pw > 0) && (cw->ph > 0))) return;
 
-   e_mod_comp_update_resize(cw->up, cw->pw, cw->ph);
-   if (!cw->xim)
+   if ((cw->pw != cw->w) || (cw->ph != cw->h))
      {
-        if (cw->xim = ecore_x_image_new(cw->pw, cw->ph, cw->vis, cw->depth))
-          e_mod_comp_update_add(cw->up, 0, 0, cw->pw, cw->ph);
+        ecore_x_window_geometry_get(cw->win, 
+                                    &(cw->x), &(cw->y), 
+                                    &(cw->w), &(cw->h));
+        evas_object_move(cw->obj, cw->x, cw->y);
+        if (cw->shobj)
+          {
+             evas_object_move(cw->shobj, cw->x, cw->y);
+          }
+        evas_object_resize(cw->obj, 
+                           cw->w + (cw->border * 2), 
+                           cw->h + (cw->border * 2));
+        if (cw->shobj)
+          {
+             evas_object_resize(cw->shobj, 
+                                cw->w + (cw->border * 2),
+                                cw->h + (cw->border * 2));
+          }
      }
-   r = e_mod_comp_update_rects_get(cw->up);
-   if (r) 
+   
+   e_mod_comp_update_resize(cw->up, cw->pw, cw->ph);
+   if ((cw->c->gl) && (!cw->shaped) && (!cw->shape_changed))
      {
-        if (cw->xim)
+        r = e_mod_comp_update_rects_get(cw->up);
+        if (r) 
           {
              e_mod_comp_update_clear(cw->up);
              for (i = 0; r[i].w > 0; i++)
                {
-                  unsigned int *pix;
+                  Evas_Native_Surface ns;
                   int x, y, w, h;
-                  
+                       
                   x = r[i].x; y = r[i].y;
                   w = r[i].w; h = r[i].h;
-                  ecore_x_image_get(cw->xim, cw->pixmap, x, y, x, y, w, h);
                   DBG("UPDATE [0x%x] %i %i %ix%i\n", cw->win, x, y, w, h);
-                  pix = ecore_x_image_data_get(cw->xim, NULL, NULL, NULL);
                   evas_object_image_size_set(cw->obj, cw->pw, cw->ph);
-                  evas_object_image_data_set(cw->obj, pix);
+                  ns.data.x11.visual = cw->vis;
+                  ns.data.x11.pixmap = cw->pixmap;
+                  evas_object_image_native_surface_set(cw->obj, &ns);
                   evas_object_image_data_update_add(cw->obj, x, y, w, h);
-                  if (cw->shaped) cw->shape_changed = 1;
                }
-             if ((cw->shape_changed) && (!cw->argb))
-               {
-                  _e_mod_comp_win_shape_rectangles_apply(cw);
-                  cw->shape_changed = 0;
-               }
+             free(r);
           }
-        free(r);
+        else
+          cw->update = 1;
      }
    else
-     cw->update = 1;
+     {
+        if (!cw->xim)
+          {
+             if (cw->xim = ecore_x_image_new(cw->pw, cw->ph, cw->vis, cw->depth))
+               e_mod_comp_update_add(cw->up, 0, 0, cw->pw, cw->ph);
+          }
+        r = e_mod_comp_update_rects_get(cw->up);
+        if (r) 
+          {
+             if (cw->xim)
+               {
+                  e_mod_comp_update_clear(cw->up);
+                  for (i = 0; r[i].w > 0; i++)
+                    {
+                       unsigned int *pix;
+                       int x, y, w, h;
+                       
+                       x = r[i].x; y = r[i].y;
+                       w = r[i].w; h = r[i].h;
+                       ecore_x_image_get(cw->xim, cw->pixmap, x, y, x, y, w, h);
+                       DBG("UPDATE [0x%x] %i %i %ix%i\n", cw->win, x, y, w, h);
+                       pix = ecore_x_image_data_get(cw->xim, NULL, NULL, NULL);
+                       evas_object_image_size_set(cw->obj, cw->pw, cw->ph);
+                       evas_object_image_data_set(cw->obj, pix);
+                       evas_object_image_data_update_add(cw->obj, x, y, w, h);
+                       if (cw->shaped) cw->shape_changed = 1;
+                    }
+                  if ((cw->shape_changed) && (!cw->argb))
+                    {
+                       _e_mod_comp_win_shape_rectangles_apply(cw);
+                       cw->shape_changed = 0;
+                    }
+               }
+             free(r);
+          }
+        else
+          cw->update = 1;
+     }
    if (cw->shobj)
      {
         if (cw->shaped) evas_object_hide(cw->shobj);
@@ -247,6 +296,8 @@ _e_mod_comp_cb_animator(void *data)
    Eina_List *new_updates = NULL; // for failed pixmap fetches - get them next frame
    
    c->render_animator = NULL;
+//   ecore_x_grab();
+//   ecore_x_sync();
    EINA_LIST_FREE(c->updates, cw)
      {
         _e_mod_comp_win_update(cw);
@@ -256,6 +307,7 @@ _e_mod_comp_cb_animator(void *data)
    ecore_evas_manual_render(c->ee);
    if (new_updates) _e_mod_comp_render_queue(c);
    c->updates = new_updates;
+//   ecore_x_ungrab();
    return 0;
 }
 
