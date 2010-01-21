@@ -93,8 +93,8 @@ e_mod_win_new(E_Zone *zone)
                                       _e_mod_win_cb_menu_items_append, iwin);
    e_gadcon_populate(iwin->gadcon);
 
-   e_win_size_min_set(iwin->win, zone->w, 32);
-   e_win_move_resize(iwin->win, zone->x, zone->y, zone->w, 32);
+   e_win_size_min_set(iwin->win, zone->w, 32 * e_scale);
+   e_win_move_resize(iwin->win, zone->x, zone->y, zone->w, 32 * e_scale);
    e_win_show(iwin->win);
    e_border_zone_set(iwin->win->border, zone);
 //   e_win_placed_set(iwin->win, 1);
@@ -109,7 +109,7 @@ e_mod_win_new(E_Zone *zone)
      iwin->win->border->client.illume.drag.locked = 1;
 
    ecore_x_e_illume_top_shelf_geometry_set(ecore_x_window_root_first_get(), 
-                                           zone->x, zone->y, zone->w, 32);
+                                           zone->x, zone->y, zone->w, 32 * e_scale);
 
    return iwin;
 }
