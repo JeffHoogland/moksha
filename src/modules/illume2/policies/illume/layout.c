@@ -342,10 +342,9 @@ _zone_layout_dual_top(E_Border *bd)
                }
              else 
                {
-                  /* border there is conformant */
                   if (conform) 
                     {
-                       /* if current border is conformant, divide zone in half */
+                       /* current border is conformant, divide zone in half */
                        bh = ((bd->zone->h - ss) / 2);
                        by = by + bh;
                     }

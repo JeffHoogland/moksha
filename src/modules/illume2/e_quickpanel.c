@@ -313,10 +313,16 @@ _e_quickpanel_cb_animate(void *data)
      }
    qp->adjust = (qp->adjust_end * v) + (qp->adjust_start * (1.0 - v));
 
-   EINA_LIST_REVERSE_FOREACH(qp->borders, l, bd) 
+   if (qp->borders) 
      {
-        e_border_lower(bd);
-        e_border_fx_offset(bd, 0, (bd->h + qp->adjust));
+        printf("Border Count: %d\n", eina_list_count(qp->borders));
+        EINA_LIST_REVERSE_FOREACH(qp->borders, l, bd) 
+          {
+             printf("Border: %s\n", bd->client.icccm.name);
+             if (e_object_is_del(E_OBJECT(bd))) continue;
+             e_border_lower(bd);
+             e_border_fx_offset(bd, 0, (bd->h + qp->adjust));
+          }
      }
 
    if (t == qp->len) 

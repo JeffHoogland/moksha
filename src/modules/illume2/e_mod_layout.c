@@ -1,6 +1,7 @@
 #include "E_Illume.h"
 #include "e_mod_layout.h"
 #include "e_mod_main.h" // For logging functions
+#include "e_quickpanel.h"
 
 /* local function prototypes */
 static const char *_e_mod_layout_policy_find(void);
@@ -376,7 +377,14 @@ _e_mod_layout_cb_border_del(void *data, int type, void *event)
    E_Event_Border_Remove *ev;
 
    ev = event;
-   if (ev->border->stolen) return 1;
+   if (e_illume_border_is_quickpanel(ev->border)) 
+     {
+        E_Quickpanel *qp;
+
+        if (qp = e_quickpanel_by_zone_get(ev->border->zone)) 
+          qp->borders = eina_list_remove(qp->borders, ev->border);
+     }
+   if (ev->border->stolen) return 1; 
    if ((policy) && (policy->funcs.border_del)) 
      policy->funcs.border_del(ev->border);
    return 1;
