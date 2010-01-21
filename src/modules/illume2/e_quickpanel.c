@@ -315,10 +315,8 @@ _e_quickpanel_cb_animate(void *data)
 
    if (qp->borders) 
      {
-        printf("Border Count: %d\n", eina_list_count(qp->borders));
         EINA_LIST_REVERSE_FOREACH(qp->borders, l, bd) 
           {
-             printf("Border: %s\n", bd->client.icccm.name);
              if (e_object_is_del(E_OBJECT(bd))) continue;
              e_border_lower(bd);
              e_border_fx_offset(bd, 0, (bd->h + qp->adjust));
