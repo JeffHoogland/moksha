@@ -294,11 +294,14 @@ _e_quickpanel_cb_animate(void *data)
              if (bd->fx.y != (qp->adjust + pbh))
                e_border_fx_offset(bd, 0, (qp->adjust + pbh));
              pbh += bd->h;
-             if (bd->fx.y > 0) 
-               if (!bd->visible) _e_quickpanel_border_show(bd);
-             if (qp->visible) 
+             if (!qp->visible) 
                {
-                  if (bd->fx.y <= 0)
+                  if (bd->fx.y > 0) 
+                    if (!bd->visible) _e_quickpanel_border_show(bd);
+               }
+             else 
+               {
+                  if (bd->fx.y <= 10)
                     if (bd->visible) _e_quickpanel_border_hide(bd);
                }
           }

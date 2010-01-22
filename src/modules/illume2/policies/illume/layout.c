@@ -125,7 +125,10 @@ _layout_zone_layout(E_Zone *zone)
                   if (!cfg_zone->mode.dual) 
                     {
                        if ((bd->x != zone->x) || (bd->y != zone->y)) 
-                         _zone_layout_border_move(bd, zone->x, zone->y);
+                         {
+                            _zone_layout_border_move(bd, zone->x, zone->y);
+                            ecore_x_e_illume_quickpanel_position_update_send(bd->client.win);
+                         }
                     }
                   else 
                     {
@@ -137,7 +140,10 @@ _layout_zone_layout(E_Zone *zone)
                        else 
                          {
                             if ((bd->x != zone->x) || (bd->y != zone->y)) 
-                              _zone_layout_border_move(bd, zone->x, zone->y);
+                              {
+                                 _zone_layout_border_move(bd, zone->x, zone->y);
+                                 ecore_x_e_illume_quickpanel_position_update_send(bd->client.win);
+                              }
                          }
                     }
                }
