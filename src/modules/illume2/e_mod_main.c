@@ -7,7 +7,7 @@
 
 /* local variabels */
 static E_Kbd *kbd = NULL;
-static Eina_List *quickpanels = NULL;
+Eina_List *quickpanels = NULL;
 int _e_illume_log_dom = -1;
 
 EAPI E_Module_Api e_modapi = { E_MODULE_API_VERSION, "Illume2" };

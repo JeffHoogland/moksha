@@ -13,7 +13,7 @@ struct _E_Quickpanel
    Ecore_Timer *timer;
    Ecore_Animator *animator;
    double start, len;
-   int h, adjust, adjust_start, adjust_end;
+   int h, adjust, adjust_start, adjust_end, top_height;
    unsigned char visible : 1;
 };
 
