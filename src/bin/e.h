@@ -123,6 +123,19 @@ void *alloca (size_t);
 # endif
 #endif
 
+#ifdef EINTERN
+#undef EINTERN
+#endif
+#ifdef __GNUC__
+# if __GNUC__ >= 4
+#  define EINTERN __attribute__ ((visibility("hidden")))
+# else
+#  define EINTERN
+# endif
+#else
+# define EINTERN
+#endif
+
 typedef struct _E_Before_Idler E_Before_Idler;
 typedef struct _E_Rect E_Rect;
 
