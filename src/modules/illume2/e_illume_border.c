@@ -35,9 +35,15 @@ e_illume_border_is_keyboard(E_Border *bd)
    if (bd->client.vkbd.vkbd) return 1;
    if (il_cfg->policy.vkbd.match.title) 
      {
-        if ((bd->client.icccm.title) && 
-            (!strcmp(bd->client.icccm.title, il_cfg->policy.vkbd.title)))
-          return 1;
+        char *title;
+        int ret = 0;
+
+        title = ecore_x_icccm_title_get(bd->client.win);
+        if ((title) && 
+            (!strcmp(title, il_cfg->policy.vkbd.title))) 
+          ret = 1;
+        if (title) free(title);
+        if (ret) return ret;
      }
    if (il_cfg->policy.vkbd.match.name) 
      {
@@ -64,9 +70,15 @@ e_illume_border_is_bottom_panel(E_Border *bd)
 {
    if (il_cfg->policy.softkey.match.title) 
      {
-        if ((bd->client.icccm.title) && 
-            (!strcmp(bd->client.icccm.title, il_cfg->policy.softkey.title)))
-          return 1;
+        char *title;
+        int ret = 0;
+
+        title = ecore_x_icccm_title_get(bd->client.win);
+        if ((title) && 
+            (!strcmp(title, il_cfg->policy.softkey.title))) 
+          ret = 1;
+        if (title) free(title);
+        if (ret) return ret;
      }
    if (il_cfg->policy.softkey.match.name) 
      {
@@ -91,9 +103,15 @@ e_illume_border_is_top_shelf(E_Border *bd)
 {
    if (il_cfg->policy.indicator.match.title) 
      {
-        if ((bd->client.icccm.title) && 
-            (!strcmp(bd->client.icccm.title, il_cfg->policy.indicator.title)))
-          return 1;
+        char *title;
+        int ret = 0;
+
+        title = ecore_x_icccm_title_get(bd->client.win);
+        if ((title) && 
+            (!strcmp(title, il_cfg->policy.indicator.title))) 
+          ret = 1;
+        if (title) free(title);
+        if (ret) return ret;
      }
    if (il_cfg->policy.indicator.match.name) 
      {
@@ -115,9 +133,15 @@ e_illume_border_is_home(E_Border *bd)
 {
    if (il_cfg->policy.home.match.title) 
      {
-        if ((bd->client.icccm.title) && 
-            (!strcmp(bd->client.icccm.title, il_cfg->policy.home.title)))
-          return 1;
+        char *title;
+        int ret = 0;
+
+        title = ecore_x_icccm_title_get(bd->client.win);
+        if ((title) && 
+            (!strcmp(title, il_cfg->policy.home.title))) 
+          ret = 1;
+        if (title) free(title);
+        if (ret) return ret;
      }
    if (il_cfg->policy.home.match.name) 
      {
