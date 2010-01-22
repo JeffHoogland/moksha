@@ -578,5 +578,8 @@ connman-ethernet.png \
 connman-wifi.png \
 connman-wifi-good.png \
 connman-wifi-medium.png \
-connman-wifi-bad.png
-
+connman-wifi-bad.png \
+connman-connecting-1.png \
+connman-connecting-2.png \
+connman-connecting-3.png \
+connman-connecting-4.png

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment (e17) CVS\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-12-02 11:51+1100\n"
+"POT-Creation-Date: 2010-01-22 13:03+0900\n"
 "PO-Revision-Date: 2009-11-08 13:02+0000\n"
 "Last-Translator: Jussi Aalto <jta_lnx@dnainternet.net>\n"
 "Language-Team: Finnish <fi@li.org>\n"
@@ -21,10 +21,10 @@ msgstr ""
 msgid "About Enlightenment"
 msgstr "Tietoa Enlightenmentista"
 
-#: src/bin/e_about.c:20 src/bin/e_actions.c:2547 src/bin/e_config_dialog.c:270
-#: src/bin/e_fm.c:943 src/bin/e_int_border_menu.c:222
+#: src/bin/e_about.c:20 src/bin/e_actions.c:2552 src/bin/e_config_dialog.c:272
+#: src/bin/e_fm.c:943 src/bin/e_int_border_menu.c:247
 #: src/bin/e_int_border_prop.c:81 src/bin/e_theme_about.c:20
-#: src/modules/conf/e_conf.c:180
+#: src/modules/conf/e_conf.c:179
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:848
 #: src/modules/conf_theme/e_int_config_theme_web.c:130
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:120
@@ -33,8 +33,8 @@ msgstr "Tietoa Enlightenmentista"
 msgid "Close"
 msgstr "Sulje"
 
-#: src/bin/e_about.c:21 src/bin/e_actions.c:2844 src/bin/e_actions.c:2848
-#: src/bin/e_actions.c:2852 src/bin/e_int_menus.c:165 src/bin/e_main.c:668
+#: src/bin/e_about.c:21 src/bin/e_actions.c:2849 src/bin/e_actions.c:2853
+#: src/bin/e_actions.c:2857 src/bin/e_int_menus.c:165 src/bin/e_main.c:668
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:210
 #: src/modules/wizard/page_000.c:32
 msgid "Enlightenment"
@@ -65,7 +65,7 @@ msgstr ""
 msgid "<title>The Team</title>"
 msgstr "<title>Tiimi</title>"
 
-#: src/bin/e_actions.c:345
+#: src/bin/e_actions.c:353
 #, c-format
 msgid ""
 "You are about to kill %s.<br><br>Please keep in mind that all data of this "
@@ -76,59 +76,59 @@ msgstr ""
 "tieto,<br>jota ei ole vielä tallennettu, häviää!<br><br>Haluatko varmasti "
 "tappaa tämän ikkunan?"
 
-#: src/bin/e_actions.c:357
+#: src/bin/e_actions.c:365
 msgid "Are you sure you want to kill this window?"
 msgstr "Haluatko varmasti tappaa tämän ikkunan?"
 
-#: src/bin/e_actions.c:360 src/bin/e_actions.c:1769 src/bin/e_actions.c:1867
-#: src/bin/e_actions.c:1931 src/bin/e_actions.c:1995 src/bin/e_actions.c:2059
-#: src/bin/e_actions.c:2123 src/bin/e_confirm_dialog.c:47
-#: src/bin/e_desklock.c:1027 src/bin/e_fm.c:9023 src/bin/e_fm.c:9252
+#: src/bin/e_actions.c:368 src/bin/e_actions.c:1783 src/bin/e_actions.c:1880
+#: src/bin/e_actions.c:1943 src/bin/e_actions.c:2006 src/bin/e_actions.c:2069
+#: src/bin/e_actions.c:2132 src/bin/e_confirm_dialog.c:47
+#: src/bin/e_desklock.c:1029 src/bin/e_fm.c:9002 src/bin/e_fm.c:9234
 #: src/bin/e_module.c:506 src/bin/e_screensaver.c:106
 msgid "Yes"
 msgstr "Kyllä"
 
-#: src/bin/e_actions.c:362 src/bin/e_actions.c:1771 src/bin/e_actions.c:1869
-#: src/bin/e_actions.c:1933 src/bin/e_actions.c:1997 src/bin/e_actions.c:2061
-#: src/bin/e_actions.c:2125 src/bin/e_confirm_dialog.c:48
-#: src/bin/e_desklock.c:1029 src/bin/e_fm.c:9021 src/bin/e_fm.c:9253
+#: src/bin/e_actions.c:370 src/bin/e_actions.c:1785 src/bin/e_actions.c:1882
+#: src/bin/e_actions.c:1945 src/bin/e_actions.c:2008 src/bin/e_actions.c:2071
+#: src/bin/e_actions.c:2134 src/bin/e_confirm_dialog.c:48
+#: src/bin/e_desklock.c:1031 src/bin/e_fm.c:9000 src/bin/e_fm.c:9235
 #: src/bin/e_module.c:507 src/bin/e_screensaver.c:108
 msgid "No"
 msgstr "Ei"
 
-#: src/bin/e_actions.c:1762
+#: src/bin/e_actions.c:1777
 msgid "Are you sure you want to exit?"
 msgstr "Haluatko varmasti poistua?"
 
-#: src/bin/e_actions.c:1764
+#: src/bin/e_actions.c:1779
 msgid ""
 "You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
 msgstr ""
 "Vaadit Enlightenmentista poistumista.<br><br>Haluatko varmasti poistua?"
 
-#: src/bin/e_actions.c:1860
+#: src/bin/e_actions.c:1874
 msgid "Are you sure you want to log out?"
 msgstr "Haluatko varmasti uloskirjautua?"
 
-#: src/bin/e_actions.c:1862
+#: src/bin/e_actions.c:1876
 msgid "You are about to log out.<br><br>Are you sure you want to do this?"
 msgstr "Olet uloskirjautumassa.<br><br>Haluatko varmasti tehdä tämän?"
 
-#: src/bin/e_actions.c:1924 src/bin/e_actions.c:2052
+#: src/bin/e_actions.c:1937 src/bin/e_actions.c:2063
 msgid "Are you sure you want to turn off?"
 msgstr "Haluatko varmasti sammuttaa?"
 
-#: src/bin/e_actions.c:1926
+#: src/bin/e_actions.c:1939
 msgid ""
 "You requested to turn off your Computer.<br><br>Are you sure you want to "
 "shut down?"
 msgstr "Vaadit tietokoneesi sammuttamista.<br><br>Haluatko varmasti sammuttaa?"
 
-#: src/bin/e_actions.c:1988
+#: src/bin/e_actions.c:2000
 msgid "Are you sure you want to reboot?"
 msgstr "Haluatko varmasti uudelleenkäynnistää?"
 
-#: src/bin/e_actions.c:1990
+#: src/bin/e_actions.c:2002
 msgid ""
 "You requested to reboot your Computer.<br><br>Are you sure you want to "
 "restart it?"
@@ -136,7 +136,7 @@ msgstr ""
 "Vaadit tietokoneesi uudelleenkäynnistämistä.<br><br>Haluatko varmasti "
 "uudelleenkäynnistää?"
 
-#: src/bin/e_actions.c:2054
+#: src/bin/e_actions.c:2065
 msgid ""
 "You requested to suspend your Computer.<br><br>Are you sure you want to "
 "suspend?"
@@ -144,11 +144,11 @@ msgstr ""
 "Vaadit tietokoneesi asettamista valmiustilaan.<br><br>Haluatko varmasti "
 "asettua valmiustilaan?"
 
-#: src/bin/e_actions.c:2116
+#: src/bin/e_actions.c:2126
 msgid "Are you sure you want to hibernate?"
 msgstr "Haluatko varmasti asettua lepotilaan?"
 
-#: src/bin/e_actions.c:2118
+#: src/bin/e_actions.c:2128
 msgid ""
 "You requested to hibernate your Computer.<br><br>Are you sure you want to "
 "suspend to disk?"
@@ -156,494 +156,498 @@ msgstr ""
 "Vaadit koneesi asettamista lepotilaan.<br><br>Haluatko varmasti asettua "
 "lepotilaan?"
 
-#: src/bin/e_actions.c:2507 src/bin/e_actions.c:2518 src/bin/e_actions.c:2537
-#: src/bin/e_actions.c:2542 src/bin/e_actions.c:2547 src/bin/e_actions.c:2552
-#: src/bin/e_actions.c:2772 src/bin/e_actions.c:2776 src/bin/e_actions.c:2781
-#: src/bin/e_actions.c:2787 src/bin/e_actions.c:2793 src/bin/e_actions.c:2799
+#: src/bin/e_actions.c:2512 src/bin/e_actions.c:2523 src/bin/e_actions.c:2542
+#: src/bin/e_actions.c:2547 src/bin/e_actions.c:2552 src/bin/e_actions.c:2557
+#: src/bin/e_actions.c:2777 src/bin/e_actions.c:2781 src/bin/e_actions.c:2786
+#: src/bin/e_actions.c:2792 src/bin/e_actions.c:2798 src/bin/e_actions.c:2804
 msgid "Window : Actions"
 msgstr "Ikkuna : Toiminnot"
 
-#: src/bin/e_actions.c:2507 src/bin/e_fm.c:6080
+#: src/bin/e_actions.c:2512 src/bin/e_fm.c:6066
+#: src/bin/e_int_border_menu.c:148
 msgid "Move"
 msgstr "Siirrä"
 
-#: src/bin/e_actions.c:2518
+#: src/bin/e_actions.c:2523 src/bin/e_int_border_menu.c:160
 msgid "Resize"
 msgstr "Muuta kokoa"
 
-#: src/bin/e_actions.c:2529 src/bin/e_actions.c:2820 src/bin/e_actions.c:2822
-#: src/bin/e_actions.c:2824 src/bin/e_actions.c:2826 src/bin/e_actions.c:2828
+#: src/bin/e_actions.c:2534 src/bin/e_actions.c:2825 src/bin/e_actions.c:2827
+#: src/bin/e_actions.c:2829 src/bin/e_actions.c:2831 src/bin/e_actions.c:2833
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:325
 msgid "Menu"
 msgstr "Valikko"
 
-#: src/bin/e_actions.c:2529
+#: src/bin/e_actions.c:2534
 msgid "Window Menu"
 msgstr "Ikkunavalikko"
 
-#: src/bin/e_actions.c:2537 src/bin/e_int_border_menu.c:192
+#: src/bin/e_actions.c:2542 src/bin/e_int_border_menu.c:218
 msgid "Raise"
 msgstr "Nosta"
 
-#: src/bin/e_actions.c:2542 src/bin/e_int_border_menu.c:184
+#: src/bin/e_actions.c:2547 src/bin/e_int_border_menu.c:210
 msgid "Lower"
 msgstr "Laske"
 
-#: src/bin/e_actions.c:2552 src/bin/e_int_border_menu.c:211
+#: src/bin/e_actions.c:2557 src/bin/e_int_border_menu.c:236
 msgid "Kill"
 msgstr "Tapa"
 
-#: src/bin/e_actions.c:2557 src/bin/e_actions.c:2564 src/bin/e_actions.c:2571
-#: src/bin/e_actions.c:2578 src/bin/e_actions.c:2580 src/bin/e_actions.c:2583
-#: src/bin/e_actions.c:2586 src/bin/e_actions.c:2588 src/bin/e_actions.c:2590
-#: src/bin/e_actions.c:2592 src/bin/e_actions.c:2599 src/bin/e_actions.c:2601
-#: src/bin/e_actions.c:2603 src/bin/e_actions.c:2605 src/bin/e_actions.c:2607
-#: src/bin/e_actions.c:2614 src/bin/e_actions.c:2619
+#: src/bin/e_actions.c:2562 src/bin/e_actions.c:2569 src/bin/e_actions.c:2576
+#: src/bin/e_actions.c:2583 src/bin/e_actions.c:2585 src/bin/e_actions.c:2588
+#: src/bin/e_actions.c:2591 src/bin/e_actions.c:2593 src/bin/e_actions.c:2595
+#: src/bin/e_actions.c:2597 src/bin/e_actions.c:2604 src/bin/e_actions.c:2606
+#: src/bin/e_actions.c:2608 src/bin/e_actions.c:2610 src/bin/e_actions.c:2612
+#: src/bin/e_actions.c:2619 src/bin/e_actions.c:2624
 msgid "Window : State"
 msgstr "Ikkuna : Tila"
 
-#: src/bin/e_actions.c:2557
+#: src/bin/e_actions.c:2562
 msgid "Sticky Mode Toggle"
 msgstr "Tarttuva tila"
 
-#: src/bin/e_actions.c:2564
+#: src/bin/e_actions.c:2569
 msgid "Iconic Mode Toggle"
 msgstr "Ikonisoitu tila"
 
-#: src/bin/e_actions.c:2571
+#: src/bin/e_actions.c:2576
 msgid "Fullscreen Mode Toggle"
 msgstr "Koko ruudun -tila"
 
-#: src/bin/e_actions.c:2578 src/bin/e_int_border_menu.c:153
-#: src/bin/e_int_border_menu.c:357
+#: src/bin/e_actions.c:2583 src/bin/e_int_border_menu.c:179
+#: src/bin/e_int_border_menu.c:401
 msgid "Maximize"
 msgstr "Maksimoi"
 
-#: src/bin/e_actions.c:2580
+#: src/bin/e_actions.c:2585
 msgid "Maximize Vertically"
 msgstr "Maksimoi korkeussuunnassa"
 
-#: src/bin/e_actions.c:2583
+#: src/bin/e_actions.c:2588
 msgid "Maximize Horizontally"
 msgstr "Maksimoi leveyssuunnassa"
 
-#: src/bin/e_actions.c:2586
+#: src/bin/e_actions.c:2591
 msgid "Maximize Fullscreen"
 msgstr "Maksimoi Koko ruudun -tila"
 
-#: src/bin/e_actions.c:2588
+#: src/bin/e_actions.c:2593
 msgid "Maximize Mode \"Smart\""
 msgstr "Maksimointitila \"Älykäs\""
 
-#: src/bin/e_actions.c:2590
+#: src/bin/e_actions.c:2595
 msgid "Maximize Mode \"Expand\""
 msgstr "Maksimointitila \"Laajennus\""
 
-#: src/bin/e_actions.c:2592
+#: src/bin/e_actions.c:2597
 msgid "Maximize Mode \"Fill\""
 msgstr "Maksimointitila \"Täyttö\""
 
-#: src/bin/e_actions.c:2599
+#: src/bin/e_actions.c:2604
 msgid "Shade Up Mode Toggle"
 msgstr "Varjo ylhäällä"
 
-#: src/bin/e_actions.c:2601
+#: src/bin/e_actions.c:2606
 msgid "Shade Down Mode Toggle"
 msgstr "Varjo alhaalla"
 
-#: src/bin/e_actions.c:2603
+#: src/bin/e_actions.c:2608
 msgid "Shade Left Mode Toggle"
 msgstr "Varjo vasemmalla"
 
-#: src/bin/e_actions.c:2605
+#: src/bin/e_actions.c:2610
 msgid "Shade Right Mode Toggle"
 msgstr "Varjo oikealla"
 
-#: src/bin/e_actions.c:2607
+#: src/bin/e_actions.c:2612
 msgid "Shade Mode Toggle"
 msgstr "Varjo"
 
-#: src/bin/e_actions.c:2614
+#: src/bin/e_actions.c:2619
 msgid "Toggle Borderless State"
 msgstr "Kehyksetön tila"
 
-#: src/bin/e_actions.c:2619
+#: src/bin/e_actions.c:2624
 msgid "Toggle Pinned State"
 msgstr "Kiinnitetty tila"
 
-#: src/bin/e_actions.c:2624 src/bin/e_actions.c:2626 src/bin/e_actions.c:2628
-#: src/bin/e_actions.c:2630 src/bin/e_actions.c:2632 src/bin/e_actions.c:2638
-#: src/bin/e_actions.c:2644 src/bin/e_actions.c:2649 src/bin/e_actions.c:2655
-#: src/bin/e_actions.c:2661 src/bin/e_actions.c:2663 src/bin/e_actions.c:2665
-#: src/bin/e_actions.c:2667 src/bin/e_actions.c:2669 src/bin/e_actions.c:2671
-#: src/bin/e_actions.c:2673 src/bin/e_actions.c:2675 src/bin/e_actions.c:2677
-#: src/bin/e_actions.c:2679 src/bin/e_actions.c:2681 src/bin/e_actions.c:2683
-#: src/bin/e_actions.c:2685 src/bin/e_actions.c:2691 src/bin/e_actions.c:2693
-#: src/bin/e_actions.c:2695 src/bin/e_actions.c:2697 src/bin/e_actions.c:2699
-#: src/bin/e_actions.c:2705 src/bin/e_actions.c:2711 src/bin/e_actions.c:2717
-#: src/bin/e_actions.c:2722 src/bin/e_actions.c:2724 src/bin/e_actions.c:2726
-#: src/bin/e_actions.c:2728 src/bin/e_actions.c:2730 src/bin/e_actions.c:2732
-#: src/bin/e_actions.c:2734 src/bin/e_actions.c:2736 src/bin/e_actions.c:2738
-#: src/bin/e_actions.c:2740 src/bin/e_actions.c:2742 src/bin/e_actions.c:2744
-#: src/bin/e_actions.c:2746 src/bin/e_actions.c:2894 src/bin/e_actions.c:2899
-#: src/bin/e_int_menus.c:134 src/bin/e_int_shelf_config.c:786
-#: src/modules/conf_clientlist/e_int_config_clientlist.c:103
-#: src/modules/fileman/e_mod_main.c:316 src/modules/ibox/e_mod_config.c:165
+#: src/bin/e_actions.c:2629 src/bin/e_actions.c:2631 src/bin/e_actions.c:2633
+#: src/bin/e_actions.c:2635 src/bin/e_actions.c:2637 src/bin/e_actions.c:2643
+#: src/bin/e_actions.c:2649 src/bin/e_actions.c:2654 src/bin/e_actions.c:2660
+#: src/bin/e_actions.c:2666 src/bin/e_actions.c:2668 src/bin/e_actions.c:2670
+#: src/bin/e_actions.c:2672 src/bin/e_actions.c:2674 src/bin/e_actions.c:2676
+#: src/bin/e_actions.c:2678 src/bin/e_actions.c:2680 src/bin/e_actions.c:2682
+#: src/bin/e_actions.c:2684 src/bin/e_actions.c:2686 src/bin/e_actions.c:2688
+#: src/bin/e_actions.c:2690 src/bin/e_actions.c:2696 src/bin/e_actions.c:2698
+#: src/bin/e_actions.c:2700 src/bin/e_actions.c:2702 src/bin/e_actions.c:2704
+#: src/bin/e_actions.c:2710 src/bin/e_actions.c:2716 src/bin/e_actions.c:2722
+#: src/bin/e_actions.c:2727 src/bin/e_actions.c:2729 src/bin/e_actions.c:2731
+#: src/bin/e_actions.c:2733 src/bin/e_actions.c:2735 src/bin/e_actions.c:2737
+#: src/bin/e_actions.c:2739 src/bin/e_actions.c:2741 src/bin/e_actions.c:2743
+#: src/bin/e_actions.c:2745 src/bin/e_actions.c:2747 src/bin/e_actions.c:2749
+#: src/bin/e_actions.c:2751 src/bin/e_actions.c:2899 src/bin/e_actions.c:2904
+#: src/bin/e_fm.c:3197 src/bin/e_fm.c:3202 src/bin/e_fm.c:9751
+#: src/bin/e_fm_hal.c:328 src/bin/e_fm_hal.c:352 src/bin/e_fm_hal.c:628
+#: src/bin/e_fm_hal.c:655 src/bin/e_int_menus.c:134
+#: src/bin/e_int_shelf_config.c:724
+#: src/modules/conf_clientlist/e_int_config_clientlist.c:104
+#: src/modules/fileman/e_mod_main.c:324 src/modules/ibox/e_mod_config.c:165
 msgid "Desktop"
 msgstr "Työpöytä"
 
-#: src/bin/e_actions.c:2624
+#: src/bin/e_actions.c:2629
 msgid "Flip Desktop Left"
 msgstr "Vaihda vasemmanpuoleiseen työpöytään"
 
-#: src/bin/e_actions.c:2626
+#: src/bin/e_actions.c:2631
 msgid "Flip Desktop Right"
 msgstr "Vaihda oikeanpuoleiseen työpöytään"
 
-#: src/bin/e_actions.c:2628
+#: src/bin/e_actions.c:2633
 msgid "Flip Desktop Up"
 msgstr "Vaihda yläpuoleiseen työpöytään"
 
-#: src/bin/e_actions.c:2630
+#: src/bin/e_actions.c:2635
 msgid "Flip Desktop Down"
 msgstr "Vaihda alapuoleiseen työpöytään"
 
-#: src/bin/e_actions.c:2632
+#: src/bin/e_actions.c:2637
 msgid "Flip Desktop By..."
 msgstr "Vaihda työpöytä..."
 
-#: src/bin/e_actions.c:2638
+#: src/bin/e_actions.c:2643
 msgid "Show The Desktop"
 msgstr "Näytä työpöytä"
 
-#: src/bin/e_actions.c:2644
+#: src/bin/e_actions.c:2649
 msgid "Show The Shelf"
 msgstr "Näytä hylly"
 
-#: src/bin/e_actions.c:2649
+#: src/bin/e_actions.c:2654
 msgid "Flip Desktop To..."
 msgstr "Vaihda työpöytään..."
 
-#: src/bin/e_actions.c:2655
+#: src/bin/e_actions.c:2660
 msgid "Flip Desktop Linearly..."
 msgstr "Vaihda työpöytä lineaarisesti..."
 
-#: src/bin/e_actions.c:2661
+#: src/bin/e_actions.c:2666
 msgid "Switch To Desktop 0"
 msgstr "Vaihda työpöytään 0"
 
-#: src/bin/e_actions.c:2663
+#: src/bin/e_actions.c:2668
 msgid "Switch To Desktop 1"
 msgstr "Vaihda työpöytään 1"
 
-#: src/bin/e_actions.c:2665
+#: src/bin/e_actions.c:2670
 msgid "Switch To Desktop 2"
 msgstr "Vaihda työpöytään 2"
 
-#: src/bin/e_actions.c:2667
+#: src/bin/e_actions.c:2672
 msgid "Switch To Desktop 3"
 msgstr "Vaihda työpöytään 3"
 
-#: src/bin/e_actions.c:2669
+#: src/bin/e_actions.c:2674
 msgid "Switch To Desktop 4"
 msgstr "Vaihda työpöytään 4"
 
-#: src/bin/e_actions.c:2671
+#: src/bin/e_actions.c:2676
 msgid "Switch To Desktop 5"
 msgstr "Vaihda työpöytään 5"
 
-#: src/bin/e_actions.c:2673
+#: src/bin/e_actions.c:2678
 msgid "Switch To Desktop 6"
 msgstr "Vaihda työpöytään 6"
 
-#: src/bin/e_actions.c:2675
+#: src/bin/e_actions.c:2680
 msgid "Switch To Desktop 7"
 msgstr "Vaihda työpöytään 7"
 
-#: src/bin/e_actions.c:2677
+#: src/bin/e_actions.c:2682
 msgid "Switch To Desktop 8"
 msgstr "Vaihda työpöytään 8"
 
-#: src/bin/e_actions.c:2679
+#: src/bin/e_actions.c:2684
 msgid "Switch To Desktop 9"
 msgstr "Vaihda työpöytään 9"
 
-#: src/bin/e_actions.c:2681
+#: src/bin/e_actions.c:2686
 msgid "Switch To Desktop 10"
 msgstr "Vaihda työpöytään 10"
 
-#: src/bin/e_actions.c:2683
+#: src/bin/e_actions.c:2688
 msgid "Switch To Desktop 11"
 msgstr "Vaihda työpöytään 11"
 
-#: src/bin/e_actions.c:2685
+#: src/bin/e_actions.c:2690
 msgid "Switch To Desktop..."
 msgstr "Vaihda työpöytään..."
 
-#: src/bin/e_actions.c:2691
+#: src/bin/e_actions.c:2696
 msgid "Flip Desktop Left (All Screens)"
 msgstr "Vaihda vasemmanpuoleiseen työpöytään (Kaikki näytöt)"
 
-#: src/bin/e_actions.c:2693
+#: src/bin/e_actions.c:2698
 msgid "Flip Desktop Right (All Screens)"
 msgstr "Vaihda oikeanpuoleiseen työpöytään (Kaikki näytöt)"
 
-#: src/bin/e_actions.c:2695
+#: src/bin/e_actions.c:2700
 msgid "Flip Desktop Up (All Screens)"
 msgstr "Vaihda yläpuoliseen työpöytään (Kaikki näytöt)"
 
-#: src/bin/e_actions.c:2697
+#: src/bin/e_actions.c:2702
 msgid "Flip Desktop Down (All Screens)"
 msgstr "Vaihda alapuoliseen työpöytään (Kaikki näytöt)"
 
-#: src/bin/e_actions.c:2699
+#: src/bin/e_actions.c:2704
 msgid "Flip Desktop By... (All Screens)"
 msgstr "Vaihda työpöytä... (Kaikki näytöt)"
 
-#: src/bin/e_actions.c:2705
+#: src/bin/e_actions.c:2710
 msgid "Flip Desktop To... (All Screens)"
 msgstr "Vaihda työpöytään... (Kaikki näytöt)"
 
-#: src/bin/e_actions.c:2711
+#: src/bin/e_actions.c:2716
 msgid "Flip Desktop Linearly... (All Screens)"
 msgstr "Vaihda työpöytä lineaarisesti (Kaikki näytöt)"
 
-#: src/bin/e_actions.c:2717
+#: src/bin/e_actions.c:2722
 msgid "Flip Desktop In Direction..."
 msgstr "Vaihda työpöytää suunnassa..."
 
-#: src/bin/e_actions.c:2722
+#: src/bin/e_actions.c:2727
 msgid "Switch To Desktop 0 (All Screens)"
 msgstr "Vaihda työpöytään 0 (Kaikki näytöt)"
 
-#: src/bin/e_actions.c:2724
+#: src/bin/e_actions.c:2729
 msgid "Switch To Desktop 1 (All Screens)"
 msgstr "Vaihda työpöytään 1 (Kaikki näytöt)"
 
-#: src/bin/e_actions.c:2726
+#: src/bin/e_actions.c:2731
 msgid "Switch To Desktop 2 (All Screens)"
 msgstr "Vaihda työpöytään 2 (Kaikki näytöt)"
 
-#: src/bin/e_actions.c:2728
+#: src/bin/e_actions.c:2733
 msgid "Switch To Desktop 3 (All Screens)"
 msgstr "Vaihda työpöytään 3 (Kaikki näytöt)"
 
-#: src/bin/e_actions.c:2730
+#: src/bin/e_actions.c:2735
 msgid "Switch To Desktop 4 (All Screens)"
 msgstr "Vaihda työpöytään 4 (Kaikki näytöt)"
 
-#: src/bin/e_actions.c:2732
+#: src/bin/e_actions.c:2737
 msgid "Switch To Desktop 5 (All Screens)"
 msgstr "Vaihda työpöytään 5 (Kaikki näytöt)"
 
-#: src/bin/e_actions.c:2734
+#: src/bin/e_actions.c:2739
 msgid "Switch To Desktop 6 (All Screens)"
 msgstr "Vaihda työpöytään 6 (Kaikki näytöt)"
 
-#: src/bin/e_actions.c:2736
+#: src/bin/e_actions.c:2741
 msgid "Switch To Desktop 7 (All Screens)"
 msgstr "Vaihda työpöytään 7 (Kaikki näytöt)"
 
-#: src/bin/e_actions.c:2738
+#: src/bin/e_actions.c:2743
 msgid "Switch To Desktop 8 (All Screens)"
 msgstr "Vaihda työpöytään 8 (Kaikki näytöt)"
 
-#: src/bin/e_actions.c:2740
+#: src/bin/e_actions.c:2745
 msgid "Switch To Desktop 9 (All Screens)"
 msgstr "Vaihda työpöytään 9 (Kaikki näytöt)"
 
-#: src/bin/e_actions.c:2742
+#: src/bin/e_actions.c:2747
 msgid "Switch To Desktop 10 (All Screens)"
 msgstr "Vaihda työpöytään 10 (Kaikki näytöt)"
 
-#: src/bin/e_actions.c:2744
+#: src/bin/e_actions.c:2749
 msgid "Switch To Desktop 11 (All Screens)"
 msgstr "Vaihda työpöytään 11 (Kaikki näytöt)"
 
-#: src/bin/e_actions.c:2746
+#: src/bin/e_actions.c:2751
 msgid "Switch To Desktop... (All Screens)"
 msgstr "Vaihda työpöytään... (Kaikki näytöt)"
 
-#: src/bin/e_actions.c:2753 src/bin/e_actions.c:2755 src/bin/e_actions.c:2757
-#: src/bin/e_actions.c:2762 src/bin/e_actions.c:2764 src/bin/e_actions.c:2766
-#: src/modules/conf_desklock/e_mod_main.c:34
-#: src/modules/conf_desks/e_mod_main.c:34
-#: src/modules/conf_display/e_mod_main.c:34
-#: src/modules/conf_dpms/e_mod_main.c:34
-#: src/modules/conf_screensaver/e_mod_main.c:34
+#: src/bin/e_actions.c:2757 src/bin/e_actions.c:2759 src/bin/e_actions.c:2761
+#: src/bin/e_actions.c:2767 src/bin/e_actions.c:2769 src/bin/e_actions.c:2771
+#: src/modules/conf_desklock/e_mod_main.c:20
+#: src/modules/conf_desks/e_mod_main.c:22
+#: src/modules/conf_display/e_mod_main.c:20
+#: src/modules/conf_dpms/e_mod_main.c:20
+#: src/modules/conf_screensaver/e_mod_main.c:20
 #: src/modules/ibox/e_mod_config.c:134
 msgid "Screen"
 msgstr "Näyttö"
 
-#: src/bin/e_actions.c:2753
+#: src/bin/e_actions.c:2757
 msgid "Send Mouse To Screen 0"
 msgstr "Lähetä hiiri näytölle 0"
 
-#: src/bin/e_actions.c:2755
+#: src/bin/e_actions.c:2759
 msgid "Send Mouse To Screen 1"
 msgstr "Lähetä hiiri näytölle 1"
 
-#: src/bin/e_actions.c:2757
+#: src/bin/e_actions.c:2761
 msgid "Send Mouse To Screen..."
 msgstr "Lähetä hiiri näytölle..."
 
-#: src/bin/e_actions.c:2762
+#: src/bin/e_actions.c:2767
 msgid "Send Mouse Forward 1 Screen"
 msgstr "Lähetä hiiri ruudun verran eteenpäin"
 
-#: src/bin/e_actions.c:2764
+#: src/bin/e_actions.c:2769
 msgid "Send Mouse Back 1 Screen"
 msgstr "Lähetä hiiri ruudun verran taaksepäin"
 
-#: src/bin/e_actions.c:2766
+#: src/bin/e_actions.c:2771
 msgid "Send Mouse Forward/Back Screens..."
 msgstr "Lähetä hiiri eteenpäin/taaksepäin..."
 
-#: src/bin/e_actions.c:2804 src/bin/e_actions.c:2806 src/bin/e_actions.c:2808
-#: src/bin/e_actions.c:2814
+#: src/bin/e_actions.c:2809 src/bin/e_actions.c:2811 src/bin/e_actions.c:2813
+#: src/bin/e_actions.c:2819
 msgid "Window : Moving"
 msgstr "Ikkuna : Siirtäminen"
 
-#: src/bin/e_actions.c:2804
+#: src/bin/e_actions.c:2809
 msgid "To Next Desktop"
 msgstr "Seuraavalle työpöydälle"
 
-#: src/bin/e_actions.c:2806
+#: src/bin/e_actions.c:2811
 msgid "To Previous Desktop"
 msgstr "Edelliselle työpöydälle"
 
-#: src/bin/e_actions.c:2808
+#: src/bin/e_actions.c:2813
 msgid "By Desktop #..."
 msgstr "Työpöydältä #..."
 
-#: src/bin/e_actions.c:2814
+#: src/bin/e_actions.c:2819
 msgid "To Desktop..."
 msgstr "Työpöydälle..."
 
-#: src/bin/e_actions.c:2820
+#: src/bin/e_actions.c:2825
 msgid "Show Main Menu"
 msgstr "Näytä päävalikko"
 
-#: src/bin/e_actions.c:2822
+#: src/bin/e_actions.c:2827
 msgid "Show Favorites Menu"
 msgstr "Näytä Suosikkisovellukset-valikko"
 
-#: src/bin/e_actions.c:2824
+#: src/bin/e_actions.c:2829
 msgid "Show All Applications Menu"
 msgstr "Näytä Kaikki sovellukset -valikko"
 
-#: src/bin/e_actions.c:2826
+#: src/bin/e_actions.c:2831
 msgid "Show Clients Menu"
 msgstr "Näytä Asiakkaat-valikko"
 
-#: src/bin/e_actions.c:2828
+#: src/bin/e_actions.c:2833
 msgid "Show Menu..."
 msgstr "Näytä valikko..."
 
-#: src/bin/e_actions.c:2835 src/bin/e_actions.c:2840
-#: src/modules/conf/e_mod_main.c:149 src/modules/conf/e_mod_main.c:173
-#: src/modules/exebuf/e_mod_main.c:48 src/modules/exebuf/e_mod_main.c:69
+#: src/bin/e_actions.c:2840 src/bin/e_actions.c:2845
+#: src/modules/conf/e_mod_main.c:124 src/modules/conf/e_mod_main.c:149
+#: src/modules/exebuf/e_mod_main.c:34 src/modules/exebuf/e_mod_main.c:55
 #: src/modules/fileman/e_mod_main.c:63 src/modules/fileman/e_mod_main.c:146
 msgid "Launch"
 msgstr "Käynnistä"
 
-#: src/bin/e_actions.c:2835 src/bin/e_int_border_prop.c:439
+#: src/bin/e_actions.c:2840 src/bin/e_int_border_prop.c:439
 msgid "Command"
 msgstr "Komento"
 
-#: src/bin/e_actions.c:2840
+#: src/bin/e_actions.c:2845
 msgid "Application"
 msgstr "Sovellus"
 
-#: src/bin/e_actions.c:2844 src/bin/e_int_menus.c:189
+#: src/bin/e_actions.c:2849 src/bin/e_int_menus.c:189
 msgid "Restart"
 msgstr "Käynnistä uudelleen"
 
-#: src/bin/e_actions.c:2848 src/bin/e_int_menus.c:194
+#: src/bin/e_actions.c:2853 src/bin/e_int_menus.c:194
 msgid "Exit"
 msgstr "Poistu"
 
-#: src/bin/e_actions.c:2852
+#: src/bin/e_actions.c:2857
 msgid "Exit Now"
 msgstr "Poistu nyt"
 
-#: src/bin/e_actions.c:2856 src/bin/e_actions.c:2861
+#: src/bin/e_actions.c:2861 src/bin/e_actions.c:2866
 msgid "Enlightenment : Mode"
 msgstr "Enlightenment : Tila"
 
-#: src/bin/e_actions.c:2857
+#: src/bin/e_actions.c:2862
 msgid "Presentation Mode Toggle"
 msgstr "Esitystilaan vaihto"
 
-#: src/bin/e_actions.c:2862
+#: src/bin/e_actions.c:2867
 msgid "Offline Mode Toggle"
 msgstr "Offline-tilaan vaihto"
 
-#: src/bin/e_actions.c:2866 src/bin/e_actions.c:2870 src/bin/e_actions.c:2874
-#: src/bin/e_actions.c:2878 src/bin/e_actions.c:2882 src/bin/e_actions.c:2886
+#: src/bin/e_actions.c:2871 src/bin/e_actions.c:2875 src/bin/e_actions.c:2879
+#: src/bin/e_actions.c:2883 src/bin/e_actions.c:2887 src/bin/e_actions.c:2891
 #: src/bin/e_configure.c:145 src/bin/e_int_config_modules.c:45
 #: src/modules/conf_desklock/e_int_config_desklock.c:301
-#: src/modules/conf_imc/e_int_config_imc.c:827
-#: src/modules/conf_startup/e_int_config_startup.c:267
-#: src/modules/conf_theme/e_int_config_theme.c:398
-#: src/modules/conf_theme/e_int_config_theme.c:791
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:513
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:645
+#: src/modules/conf_imc/e_int_config_imc.c:809
+#: src/modules/conf_startup/e_int_config_startup.c:259
+#: src/modules/conf_theme/e_int_config_theme.c:400
+#: src/modules/conf_theme/e_int_config_theme.c:793
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:481
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:614
 #: src/modules/gadman/e_mod_config.c:189 src/modules/syscon/e_mod_main.c:34
 #: src/modules/syscon/e_mod_main.c:38 src/modules/syscon/e_mod_main.c:55
 #: src/modules/syscon/e_mod_main.c:122
 msgid "System"
 msgstr "Järjestelmä"
 
-#: src/bin/e_actions.c:2866
+#: src/bin/e_actions.c:2871
 msgid "Log Out"
 msgstr "Uloskirjaudu"
 
-#: src/bin/e_actions.c:2870
+#: src/bin/e_actions.c:2875
 msgid "Power Off Now"
 msgstr "Sammuta nyt"
 
-#: src/bin/e_actions.c:2874
+#: src/bin/e_actions.c:2879
 msgid "Power Off"
 msgstr "Sammuta"
 
-#: src/bin/e_actions.c:2878
+#: src/bin/e_actions.c:2883
 msgid "Reboot"
 msgstr "Käynnistä uudelleen"
 
-#: src/bin/e_actions.c:2882
+#: src/bin/e_actions.c:2887
 msgid "Suspend"
 msgstr "Valmiustila"
 
-#: src/bin/e_actions.c:2886
+#: src/bin/e_actions.c:2891
 msgid "Hibernate"
 msgstr "Lepotila"
 
-#: src/bin/e_actions.c:2894
+#: src/bin/e_actions.c:2899
 msgid "Lock"
 msgstr "Lukitse"
 
-#: src/bin/e_actions.c:2899 src/bin/e_int_menus.c:1122
+#: src/bin/e_actions.c:2904 src/bin/e_int_menus.c:1122
 msgid "Cleanup Windows"
 msgstr "Siivoa ikkunat"
 
-#: src/bin/e_actions.c:2904
+#: src/bin/e_actions.c:2909
 msgid "Generic : Actions"
 msgstr "Yleiset : Toiminnot"
 
-#: src/bin/e_actions.c:2904
+#: src/bin/e_actions.c:2909
 msgid "Delayed Action"
 msgstr "Viivästetty toiminto"
 
-#: src/bin/e_bg.c:38 src/modules/conf_wallpaper/e_mod_main.c:34
+#: src/bin/e_bg.c:53
 msgid "Set As Background"
 msgstr "Aseta taustakuvaksi"
 
-#: src/bin/e_border.c:4922
+#: src/bin/e_border.c:4974
 msgid "Desktop files scan done"
 msgstr "Työpöytätiedostojen skannaus valmis"
 
-#: src/bin/e_border.c:4935
+#: src/bin/e_border.c:4987
 msgid "Desktop file scan"
 msgstr "Työpöytätiedostojen skannaus"
 
@@ -651,40 +655,41 @@ msgstr "Työpöytätiedostojen skannaus"
 msgid "Color Selector"
 msgstr "Värivalitsin"
 
-#: src/bin/e_color_dialog.c:48 src/bin/e_config.c:1839
-#: src/bin/e_config_dialog.c:260 src/bin/e_eap_editor.c:613
-#: src/bin/e_eap_editor.c:677 src/bin/e_entry_dialog.c:62 src/bin/e_exec.c:365
-#: src/bin/e_fm.c:8541 src/bin/e_fm.c:9179 src/bin/e_fm_prop.c:512
+#: src/bin/e_color_dialog.c:48 src/bin/e_config.c:1876
+#: src/bin/e_config_dialog.c:262 src/bin/e_eap_editor.c:607
+#: src/bin/e_eap_editor.c:671 src/bin/e_entry_dialog.c:62 src/bin/e_exec.c:365
+#: src/bin/e_fm.c:8520 src/bin/e_fm.c:9158 src/bin/e_fm_prop.c:510
 #: src/bin/e_int_border_remember.c:324 src/bin/e_int_border_remember.c:524
 #: src/bin/e_module.c:403 src/bin/e_sys.c:437 src/bin/e_sys.c:483
-#: src/bin/e_utils.c:640 src/modules/conf_dpms/e_int_config_dpms.c:64
+#: src/bin/e_utils.c:695 src/modules/conf_dpms/e_int_config_dpms.c:64
 #: src/modules/conf_dpms/e_int_config_dpms.c:85
-#: src/modules/conf_imc/e_int_config_imc_import.c:112
+#: src/modules/conf_imc/e_int_config_imc_import.c:111
 #: src/modules/conf_mime/e_int_config_mime_edit.c:283
-#: src/modules/conf_profiles/e_int_config_profiles.c:364
-#: src/modules/conf_theme/e_int_config_theme_import.c:113
+#: src/modules/conf_profiles/e_int_config_profiles.c:362
+#: src/modules/conf_theme/e_int_config_theme_import.c:120
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:198
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:212
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:334
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:218
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:348
 #: src/modules/cpufreq/e_mod_main.c:389 src/modules/cpufreq/e_mod_main.c:416
-#: src/modules/cpufreq/e_mod_main.c:435 src/modules/connman/e_mod_main.c:778
+#: src/modules/cpufreq/e_mod_main.c:439
 msgid "OK"
 msgstr "OK"
 
-#: src/bin/e_color_dialog.c:49 src/bin/e_eap_editor.c:615
-#: src/bin/e_eap_editor.c:679 src/bin/e_entry_dialog.c:63 src/bin/e_fm.c:8543
-#: src/bin/e_fm_prop.c:513 src/modules/conf_imc/e_int_config_imc_import.c:116
+#: src/bin/e_color_dialog.c:49 src/bin/e_eap_editor.c:609
+#: src/bin/e_eap_editor.c:673 src/bin/e_entry_dialog.c:63 src/bin/e_fm.c:8522
+#: src/bin/e_fm_prop.c:511 src/bin/e_utils.c:1172
+#: src/modules/conf_imc/e_int_config_imc_import.c:115
 #: src/modules/conf_mime/e_int_config_mime_edit.c:284
-#: src/modules/conf_profiles/e_int_config_profiles.c:365
-#: src/modules/conf_theme/e_int_config_theme_import.c:117
+#: src/modules/conf_profiles/e_int_config_profiles.c:363
+#: src/modules/conf_theme/e_int_config_theme_import.c:124
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:199
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:216
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:338
-#: src/modules/syscon/e_syscon.c:97 src/modules/connman/e_mod_main.c:779
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:222
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:352
+#: src/modules/syscon/e_syscon.c:97 src/modules/connman/e_mod_main.c:317
 msgid "Cancel"
 msgstr "Peruuta"
 
-#: src/bin/e_config.c:760 src/bin/e_config.c:793
+#: src/bin/e_config.c:797 src/bin/e_config.c:830
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -702,7 +707,7 @@ msgstr ""
 "korjaavat tämän lisäämällä nämä uudet<br>ominaisuudet. Voit tehdä haluamasi "
 "asetukset uudelleen.<br>Olemme pahoillamme häiriöstä.<br>"
 
-#: src/bin/e_config.c:777
+#: src/bin/e_config.c:814
 msgid ""
 "Your settings are NEWER than Enlightenment. This is very<br>strange. This "
 "should not happen unless you downgraded<br>Enlightenment or copied the "
@@ -716,11 +721,11 @@ msgstr ""
 "versio Enlightenmentista. Tämä on<br>huono asia, ja varokeinona asetuksesi "
 "on nyt palautettu<br> oletusasetuksiin. Olemme pahoillamme häiriöstä.<br>"
 
-#: src/bin/e_config.c:1740
+#: src/bin/e_config.c:1777
 msgid "Settings Upgraded"
 msgstr "Asetukset päivitetty"
 
-#: src/bin/e_config.c:1763
+#: src/bin/e_config.c:1800
 #, c-format
 msgid ""
 "An error occured while saving Enlightenment's<br>settings to disk. The error "
@@ -731,7 +736,7 @@ msgstr ""
 "ei voitu<br>tunnistaa.<br><br>Tiedosto, jossa virhe ilmeni,oli:<br>%"
 "s<br><br>Tämä tiedosto on poistettu korruptoituneen datan välttämiseksi.<br>"
 
-#: src/bin/e_config.c:1774
+#: src/bin/e_config.c:1811
 #, c-format
 msgid ""
 "Enlightenment's settings files are too big<br>for the file system they are "
@@ -746,7 +751,7 @@ msgstr ""
 "<br><br>Tiedosto, jossa virhe ilmeni, oli:<br>%s<br><br>Tämä tiedosto on "
 "poistettu korruptoituneen datan välttämiseksi.<br>"
 
-#: src/bin/e_config.c:1787
+#: src/bin/e_config.c:1824
 #, c-format
 msgid ""
 "An output error occured when writing the settings<br>files for "
@@ -759,7 +764,7 @@ msgstr ""
 "<br><br>Tiedosto, jossa virhe ilmeni, oli:<br>%s<br><br>Tämä tiedosto on "
 "poistettu korruptoituneen datan välttämiseksi.<br>"
 
-#: src/bin/e_config.c:1798
+#: src/bin/e_config.c:1835
 #, c-format
 msgid ""
 "Enlightenment cannot write its settings file<br>because it ran out of space "
@@ -773,7 +778,7 @@ msgstr ""
 "ilmeni, oli:<br>%s<br><br>Tämä tiedosto on poistettu korruptoituneen datan "
 "välttämiseksi.<br>"
 
-#: src/bin/e_config.c:1810
+#: src/bin/e_config.c:1847
 #, c-format
 msgid ""
 "Enlightenment unexpectedly had the settings file<br>it was writing closed on "
@@ -785,23 +790,23 @@ msgstr ""
 "ilmeni, oli:<br>%s<br><br>Tämä tiedosto on poistettu korruptoituneen datan "
 "välttämiseksi.<br>"
 
-#: src/bin/e_config.c:1835
+#: src/bin/e_config.c:1872
 msgid "Enlightenment Settings Write Problems"
 msgstr "Ongelmia Enlightenmentin asetusten kirjoituksessa"
 
-#: src/bin/e_config_dialog.c:208 src/modules/battery/e_mod_main.c:1094
-#: src/modules/conf_engine/e_mod_main.c:34
-#: src/modules/conf_exebuf/e_mod_main.c:34
-#: src/modules/conf_paths/e_mod_main.c:34
-#: src/modules/conf_performance/e_mod_main.c:34
+#: src/bin/e_config_dialog.c:210 src/modules/battery/e_mod_main.c:1094
+#: src/modules/conf_engine/e_mod_main.c:20
+#: src/modules/conf_exebuf/e_mod_main.c:20
+#: src/modules/conf_paths/e_mod_main.c:20
+#: src/modules/conf_performance/e_mod_main.c:20
 msgid "Advanced"
 msgstr "Lisäasetukset"
 
-#: src/bin/e_config_dialog.c:237
+#: src/bin/e_config_dialog.c:239
 msgid "Basic"
 msgstr "Perusasetukset"
 
-#: src/bin/e_config_dialog.c:262
+#: src/bin/e_config_dialog.c:264
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:847
 msgid "Apply"
 msgstr "Käytä"
@@ -814,12 +819,12 @@ msgstr "Käytä"
 msgid "Modules"
 msgstr "Moduulit"
 
-#: src/bin/e_configure.c:33 src/modules/conf_shelves/e_mod_main.c:38
-#: src/modules/gadman/e_mod_main.c:25 src/modules/mixer/e_mod_main.c:1079
+#: src/bin/e_configure.c:33 src/modules/conf_shelves/e_mod_main.c:24
+#: src/modules/gadman/e_mod_main.c:25 src/modules/mixer/e_mod_main.c:1080
 msgid "Extensions"
 msgstr "Lisäosat"
 
-#: src/bin/e_container.c:113
+#: src/bin/e_container.c:112
 #, c-format
 msgid "Container %d"
 msgstr "Säiliö %d"
@@ -851,11 +856,11 @@ msgstr ""
 msgid "Please enter your unlock password"
 msgstr "Syötä lukituksen avaava salasanasi, kiitos"
 
-#: src/bin/e_desklock.c:689
+#: src/bin/e_desklock.c:691
 msgid "Authentication System Error"
 msgstr "Todennusjärjestelmän virhe"
 
-#: src/bin/e_desklock.c:690
+#: src/bin/e_desklock.c:692
 #, c-format
 msgid ""
 "Authentication via PAM had errors setting up the<br>authentication session. "
@@ -866,11 +871,11 @@ msgstr ""
 "todennusistunnon aloittamisessa. Virhekoodi oli <hilight>%i</hilight>.\n"
 "Tämä on paha juttu, eikä tätä pitäisi tapahtua. Raportoi tämä bugi, kiitos."
 
-#: src/bin/e_desklock.c:1016 src/bin/e_screensaver.c:95
+#: src/bin/e_desklock.c:1018 src/bin/e_screensaver.c:95
 msgid "Activate Presentation Mode?"
 msgstr "Aktivoidaanko esitystila?"
 
-#: src/bin/e_desklock.c:1020
+#: src/bin/e_desklock.c:1022
 msgid ""
 "You unlocked desktop too fast.<br><br>Would you like to enable "
 "<b>presentation</b> mode and temporarily disable screen saver, lock and "
@@ -880,11 +885,11 @@ msgstr ""
 "käyttöön <b>esitys</b>tila ja poistetaan näytönsäästäjä, näytön lukitus ja "
 "virransäästötila tilapäisesti käytöstä?"
 
-#: src/bin/e_desklock.c:1031 src/bin/e_screensaver.c:110
+#: src/bin/e_desklock.c:1033 src/bin/e_screensaver.c:110
 msgid "No, but increase timeout"
 msgstr "Ei, mutta lisää aikaviivettä"
 
-#: src/bin/e_desklock.c:1034 src/bin/e_screensaver.c:113
+#: src/bin/e_desklock.c:1036 src/bin/e_screensaver.c:113
 msgid "No, and stop asking"
 msgstr "Ei, äläkä kysele enää"
 
@@ -910,100 +915,100 @@ msgstr ""
 msgid "Desktop Entry Editor"
 msgstr "Työpöydän alkioeditori"
 
-#: src/bin/e_eap_editor.c:461 src/bin/e_fm_prop.c:399
+#: src/bin/e_eap_editor.c:457 src/bin/e_fm_prop.c:397
 #: src/modules/conf_fonts/e_int_config_fonts.c:96
 #: src/modules/conf_mime/e_int_config_mime_edit.c:145
 msgid "Icon"
 msgstr "Kuvake"
 
-#: src/bin/e_eap_editor.c:472
+#: src/bin/e_eap_editor.c:468
 #: src/modules/conf_mime/e_int_config_mime_edit.c:136
 msgid "Basic Info"
 msgstr "Perusinfo"
 
-#: src/bin/e_eap_editor.c:473 src/bin/e_int_border_prop.c:420
-#: src/bin/e_int_border_prop.c:467 src/modules/conf_imc/e_int_config_imc.c:911
+#: src/bin/e_eap_editor.c:469 src/bin/e_int_border_prop.c:420
+#: src/bin/e_int_border_prop.c:467 src/modules/conf_imc/e_int_config_imc.c:890
 msgid "Name"
 msgstr "Nimi"
 
-#: src/bin/e_eap_editor.c:479
+#: src/bin/e_eap_editor.c:475
 msgid "Executable"
 msgstr "Suoritettava ohjelma"
 
-#: src/bin/e_eap_editor.c:487
+#: src/bin/e_eap_editor.c:483
 msgid "Comment"
 msgstr "Kommentti"
 
-#: src/bin/e_eap_editor.c:512
+#: src/bin/e_eap_editor.c:506
 msgid "General"
 msgstr "Yleiset"
 
-#: src/bin/e_eap_editor.c:515
+#: src/bin/e_eap_editor.c:509
 msgid "Generic Name"
 msgstr "Yleinen nimi"
 
-#: src/bin/e_eap_editor.c:520
-#: src/modules/conf_clientlist/e_int_config_clientlist.c:105
+#: src/bin/e_eap_editor.c:514
+#: src/modules/conf_clientlist/e_int_config_clientlist.c:106
 msgid "Window Class"
 msgstr "Ikkunan luokka"
 
-#: src/bin/e_eap_editor.c:524 src/modules/conf_mime/e_int_config_mime.c:179
+#: src/bin/e_eap_editor.c:518 src/modules/conf_mime/e_int_config_mime.c:179
 msgid "Categories"
 msgstr "Luokat"
 
-#: src/bin/e_eap_editor.c:528
+#: src/bin/e_eap_editor.c:522
 msgid "Mime Types"
 msgstr "Mime-tyypit"
 
-#: src/bin/e_eap_editor.c:534 src/bin/e_int_border_remember.c:751
+#: src/bin/e_eap_editor.c:528 src/bin/e_int_border_remember.c:751
 msgid "Options"
 msgstr "Valinnat"
 
-#: src/bin/e_eap_editor.c:535
+#: src/bin/e_eap_editor.c:529
 msgid "Startup Notify"
 msgstr "Käynnistyksen huomautus"
 
-#: src/bin/e_eap_editor.c:537
+#: src/bin/e_eap_editor.c:531
 msgid "Run in Terminal"
 msgstr "Aja päätteessä"
 
-#: src/bin/e_eap_editor.c:539
+#: src/bin/e_eap_editor.c:533
 msgid "Show in Menus"
 msgstr "Näytä valikoissa"
 
-#: src/bin/e_eap_editor.c:543
+#: src/bin/e_eap_editor.c:537
 msgid "Desktop file"
 msgstr "Työpöytätiedosto"
 
-#: src/bin/e_eap_editor.c:544
+#: src/bin/e_eap_editor.c:538
 msgid "Filename"
 msgstr "Tiedostonimi"
 
-#: src/bin/e_eap_editor.c:573
+#: src/bin/e_eap_editor.c:567
 msgid "Select an Icon"
 msgstr "Valitse kuvake"
 
-#: src/bin/e_eap_editor.c:642
+#: src/bin/e_eap_editor.c:636
 msgid "Select an Executable"
 msgstr "Valitse suoritettava ohjelma"
 
-#: src/bin/e_entry.c:493 src/bin/e_fm.c:8043
-#: src/modules/conf_applications/e_int_config_apps.c:269
+#: src/bin/e_entry.c:493 src/bin/e_fm.c:8022
+#: src/modules/conf_applications/e_int_config_apps.c:272
 #: src/modules/conf_profiles/e_int_config_profiles.c:122
 #: src/modules/conf_shelves/e_int_config_shelf.c:81
 #: src/modules/ibar/e_mod_config.c:112
 msgid "Delete"
 msgstr "Poista"
 
-#: src/bin/e_entry.c:503 src/bin/e_fm.c:7950
+#: src/bin/e_entry.c:503 src/bin/e_fm.c:7930
 msgid "Cut"
 msgstr "Leikkaa"
 
-#: src/bin/e_entry.c:511 src/bin/e_fm.c:6075 src/bin/e_fm.c:7964
+#: src/bin/e_entry.c:511 src/bin/e_fm.c:6061 src/bin/e_fm.c:7944
 msgid "Copy"
 msgstr "Kopioi"
 
-#: src/bin/e_entry.c:519 src/bin/e_fm.c:7789 src/bin/e_fm.c:7977
+#: src/bin/e_entry.c:519 src/bin/e_fm.c:7769 src/bin/e_fm.c:7957
 msgid "Paste"
 msgstr "Liitä"
 
@@ -1011,15 +1016,15 @@ msgstr "Liitä"
 msgid "Select All"
 msgstr "Valitse kaikki"
 
-#: src/bin/e_exec.c:225 src/bin/e_utils.c:200
-#: src/modules/conf_imc/e_int_config_imc.c:278
-#: src/modules/conf_imc/e_int_config_imc.c:518
+#: src/bin/e_exec.c:225 src/bin/e_utils.c:237
+#: src/modules/conf_imc/e_int_config_imc.c:268
+#: src/modules/conf_imc/e_int_config_imc.c:508
 msgid "Run Error"
 msgstr "Ajovirhe"
 
-#: src/bin/e_exec.c:226 src/bin/e_utils.c:201
-#: src/modules/conf_imc/e_int_config_imc.c:279
-#: src/modules/conf_imc/e_int_config_imc.c:519
+#: src/bin/e_exec.c:226 src/bin/e_utils.c:238
+#: src/modules/conf_imc/e_int_config_imc.c:269
+#: src/modules/conf_imc/e_int_config_imc.c:509
 #, c-format
 msgid "Enlightenment was unable to fork a child process:<br><br>%s<br>"
 msgstr "Enlightenment ei pystynyt alustamaan lapsiprosessia:<br><br>%s<br>"
@@ -1037,106 +1042,106 @@ msgstr ""
 "Enlightenment ei voinut suorittaa sovellusta:<br><br>%s<br><br>Sovelluksen "
 "käynnistys epäonnistui."
 
-#: src/bin/e_exec.c:454
+#: src/bin/e_exec.c:452
 msgid "Application Execution Error"
 msgstr "Sovelluksen suoritusvirhe"
 
-#: src/bin/e_exec.c:466
+#: src/bin/e_exec.c:464
 #, c-format
 msgid "%s stopped running unexpectedly."
 msgstr "Sovelluksen %s suoritus loppui odottamatta."
 
-#: src/bin/e_exec.c:472
+#: src/bin/e_exec.c:470
 #, c-format
 msgid "An exit code of %i was returned from %s."
 msgstr "Lopetuskoodi %i palautettiin sovelluksesta %s."
 
-#: src/bin/e_exec.c:480
+#: src/bin/e_exec.c:478
 #, c-format
 msgid "%s was interrupted by an Interrupt Signal."
 msgstr "%s keskeytyi keskeytyssignaaliin."
 
-#: src/bin/e_exec.c:483
+#: src/bin/e_exec.c:481
 #, c-format
 msgid "%s was interrupted by a Quit Signal."
 msgstr "%s keskeytyi lopetussignaaliin."
 
-#: src/bin/e_exec.c:487
+#: src/bin/e_exec.c:485
 #, c-format
 msgid "%s was interrupted by an Abort Signal."
 msgstr "%s keskeytyi poikkeussignaaliin."
 
-#: src/bin/e_exec.c:490
+#: src/bin/e_exec.c:488
 #, c-format
 msgid "%s was interrupted by a Floating Point Error."
 msgstr "%s keskeytyi liukulukuvirheeseen."
 
-#: src/bin/e_exec.c:494
+#: src/bin/e_exec.c:492
 #, c-format
 msgid "%s was interrupted by an Uninterruptable Kill Signal."
 msgstr "%s keskeytyi keskeyttämättömään kill-signaaliin."
 
-#: src/bin/e_exec.c:498
+#: src/bin/e_exec.c:496
 #, c-format
 msgid "%s was interrupted by a Segmentation Fault."
 msgstr "%s keskeytyi segmentointivirheeseen."
 
-#: src/bin/e_exec.c:502
+#: src/bin/e_exec.c:500
 #, c-format
 msgid "%s was interrupted by a Broken Pipe."
 msgstr "%s keskeytyi rikkoutuneeseen putkeen."
 
-#: src/bin/e_exec.c:505
+#: src/bin/e_exec.c:503
 #, c-format
 msgid "%s was interrupted by a Termination Signal."
 msgstr "%s keskeytyi terminaatiosignaaliin."
 
-#: src/bin/e_exec.c:509
+#: src/bin/e_exec.c:507
 #, c-format
 msgid "%s was interrupted by a Bus Error."
 msgstr "%s keskeytyi väylävirheeseen."
 
-#: src/bin/e_exec.c:512
+#: src/bin/e_exec.c:510
 #, c-format
 msgid "%s was interrupted by the signal number %i."
 msgstr "%s keskeytyi signaaliin %i."
 
-#: src/bin/e_exec.c:568
+#: src/bin/e_exec.c:566
 msgid ""
 "***The remaining output has been truncated. Save the output to view.***\n"
 msgstr ""
 "***Loput tulosteesta jätettiin pois. Tallenna tuloste katseltavaksi.***\n"
 
-#: src/bin/e_exec.c:630 src/bin/e_exec.c:704 src/bin/e_exec.c:711
+#: src/bin/e_exec.c:628 src/bin/e_exec.c:702 src/bin/e_exec.c:709
 msgid "Error Logs"
 msgstr "Virhelogit"
 
-#: src/bin/e_exec.c:636 src/bin/e_exec.c:712
+#: src/bin/e_exec.c:634 src/bin/e_exec.c:710
 msgid "There was no error message."
 msgstr "Virheviestiä ei ollut."
 
-#: src/bin/e_exec.c:640 src/bin/e_exec.c:719
+#: src/bin/e_exec.c:638 src/bin/e_exec.c:717
 msgid "Save This Message"
 msgstr "Tallenna tämä viesti"
 
-#: src/bin/e_exec.c:644 src/bin/e_exec.c:723
+#: src/bin/e_exec.c:642 src/bin/e_exec.c:721
 #, c-format
 msgid "This error log will be saved as %s/%s.log"
 msgstr "Tämä virhelogi tallennetaan tiedostoon %s/%s.log"
 
-#: src/bin/e_exec.c:670
+#: src/bin/e_exec.c:668
 msgid "Error Information"
 msgstr "Virheinfo"
 
-#: src/bin/e_exec.c:678
+#: src/bin/e_exec.c:676
 msgid "Error Signal Information"
 msgstr "Virhesignaalin info"
 
-#: src/bin/e_exec.c:688 src/bin/e_exec.c:695
+#: src/bin/e_exec.c:686 src/bin/e_exec.c:693
 msgid "Output Data"
 msgstr "Tulosteen data"
 
-#: src/bin/e_exec.c:696
+#: src/bin/e_exec.c:694
 msgid "There was no output."
 msgstr "Tulostetta ei ollut."
 
@@ -1144,202 +1149,202 @@ msgstr "Tulostetta ei ollut."
 msgid "Nonexistent path"
 msgstr "Virheellinen polku"
 
-#: src/bin/e_fm.c:949
+#: src/bin/e_fm.c:948
 #, c-format
 msgid "%s doesn't exist."
 msgstr "Polkua %s ei ole."
 
-#: src/bin/e_fm.c:3017
+#: src/bin/e_fm.c:3007
 msgid "Mount Error"
 msgstr "Liitosvirhe"
 
-#: src/bin/e_fm.c:3017
+#: src/bin/e_fm.c:3007
 msgid "Can't mount device"
 msgstr "Laitetta ei voida liittää"
 
-#: src/bin/e_fm.c:3033
+#: src/bin/e_fm.c:3023
 msgid "Unmount Error"
 msgstr "Irrotusvirhe"
 
-#: src/bin/e_fm.c:3033
+#: src/bin/e_fm.c:3023
 msgid "Can't unmount device"
 msgstr "Laitetta ei voida irrottaa"
 
-#: src/bin/e_fm.c:3048
+#: src/bin/e_fm.c:3038
 msgid "Eject Error"
 msgstr "Virhe poistettaessa"
 
-#: src/bin/e_fm.c:3048
+#: src/bin/e_fm.c:3038
 msgid "Can't eject device"
 msgstr ""
 
-#: src/bin/e_fm.c:3685
+#: src/bin/e_fm.c:3675
 #, c-format
 msgid "%i Files"
 msgstr "%i tiedostoa"
 
-#: src/bin/e_fm.c:6088 src/bin/e_fm.c:7797 src/bin/e_fm.c:7985
+#: src/bin/e_fm.c:6074 src/bin/e_fm.c:7777 src/bin/e_fm.c:7965
 msgid "Link"
 msgstr "Tee linkki"
 
-#: src/bin/e_fm.c:6096 src/bin/e_fm.c:8964 src/bin/e_fm.c:9102
+#: src/bin/e_fm.c:6082 src/bin/e_fm.c:8943 src/bin/e_fm.c:9081
 msgid "Abort"
 msgstr "Keskeytä"
 
-#: src/bin/e_fm.c:7716 src/bin/e_fm.c:7876
+#: src/bin/e_fm.c:7696 src/bin/e_fm.c:7856
 msgid "Inherit parent settings"
 msgstr "Käytä ylemmän tason asetuksia"
 
-#: src/bin/e_fm.c:7725 src/bin/e_fm.c:7885
-#: src/modules/fileman/e_mod_config.c:208
+#: src/bin/e_fm.c:7705 src/bin/e_fm.c:7865
+#: src/modules/fileman/e_mod_config.c:209
 msgid "View Mode"
 msgstr "Näkymän tila"
 
-#: src/bin/e_fm.c:7732 src/bin/e_fm.c:7892
+#: src/bin/e_fm.c:7712 src/bin/e_fm.c:7872
 msgid "Refresh View"
 msgstr "Päivitä näkymä"
 
-#: src/bin/e_fm.c:7740 src/bin/e_fm.c:7900
+#: src/bin/e_fm.c:7720 src/bin/e_fm.c:7880
 msgid "Show Hidden Files"
 msgstr "Näytä piilotiedostot"
 
-#: src/bin/e_fm.c:7752 src/bin/e_fm.c:7912
+#: src/bin/e_fm.c:7732 src/bin/e_fm.c:7892
 msgid "Remember Ordering"
 msgstr "Muista järjestys"
 
-#: src/bin/e_fm.c:7761 src/bin/e_fm.c:7921
+#: src/bin/e_fm.c:7741 src/bin/e_fm.c:7901
 msgid "Sort Now"
 msgstr "Lajittele nyt"
 
-#: src/bin/e_fm.c:7773 src/bin/e_fm.c:7936
+#: src/bin/e_fm.c:7753 src/bin/e_fm.c:7916
 #: src/modules/conf_paths/e_int_config_paths.c:208
 msgid "New Directory"
 msgstr "Uusi hakemisto"
 
-#: src/bin/e_fm.c:8051
+#: src/bin/e_fm.c:8030
 msgid "Rename"
 msgstr "Nimeä uudelleen"
 
-#: src/bin/e_fm.c:8070
+#: src/bin/e_fm.c:8049
 msgid "Unmount"
 msgstr ""
 
-#: src/bin/e_fm.c:8075
+#: src/bin/e_fm.c:8054
 msgid "Mount"
 msgstr "Liitä"
 
-#: src/bin/e_fm.c:8080
+#: src/bin/e_fm.c:8059
 msgid "Eject"
 msgstr ""
 
-#: src/bin/e_fm.c:8090
+#: src/bin/e_fm.c:8069
 msgid "Properties"
 msgstr "Ominaisuudet"
 
-#: src/bin/e_fm.c:8325 src/bin/e_fm.c:8378
+#: src/bin/e_fm.c:8304 src/bin/e_fm.c:8357
 msgid "Use default"
 msgstr "Käytä oletusta"
 
-#: src/bin/e_fm.c:8351 src/modules/fileman/e_mod_config.c:213
+#: src/bin/e_fm.c:8330 src/modules/fileman/e_mod_config.c:214
 msgid "Grid Icons"
 msgstr "Ruudukoidut kuvakkeet"
 
-#: src/bin/e_fm.c:8359 src/modules/fileman/e_mod_config.c:215
+#: src/bin/e_fm.c:8338 src/modules/fileman/e_mod_config.c:216
 msgid "Custom Icons"
 msgstr "Mukautetut kuvakkeet"
 
-#: src/bin/e_fm.c:8367 src/modules/fileman/e_mod_config.c:223
+#: src/bin/e_fm.c:8346 src/modules/fileman/e_mod_config.c:224
 msgid "List"
 msgstr "Listaa"
 
-#: src/bin/e_fm.c:8392
+#: src/bin/e_fm.c:8371
 #, c-format
 msgid "Icon Size (%d)"
 msgstr "Kuvakkeen koko (%d)"
 
-#: src/bin/e_fm.c:8438 src/bin/e_fm.c:8644
+#: src/bin/e_fm.c:8417 src/bin/e_fm.c:8623
 msgid "Set background..."
 msgstr "Aseta taustakuva..."
 
-#: src/bin/e_fm.c:8443 src/bin/e_fm.c:8687
+#: src/bin/e_fm.c:8422 src/bin/e_fm.c:8666
 msgid "Set overlay..."
 msgstr "Aseta peitto..."
 
-#: src/bin/e_fm.c:8542 src/modules/conf_theme/e_int_config_theme.c:1022
+#: src/bin/e_fm.c:8521 src/modules/conf_theme/e_int_config_theme.c:1024
 msgid "Clear"
 msgstr "Poista käytöstä"
 
-#: src/bin/e_fm.c:8766
+#: src/bin/e_fm.c:8745
 msgid "Create a new Directory"
 msgstr "Luo uusi hakemisto"
 
-#: src/bin/e_fm.c:8767
+#: src/bin/e_fm.c:8746
 msgid "New Directory Name:"
 msgstr "Uuden hakemiston nimi:"
 
-#: src/bin/e_fm.c:8821
+#: src/bin/e_fm.c:8800
 #, c-format
 msgid "Rename %s to:"
 msgstr "Uudelleennimeä %s:"
 
-#: src/bin/e_fm.c:8823
+#: src/bin/e_fm.c:8802
 msgid "Rename File"
 msgstr "Uudelleennimeä tiedosto"
 
-#: src/bin/e_fm.c:8963 src/bin/e_fm.c:9101
+#: src/bin/e_fm.c:8942 src/bin/e_fm.c:9080
 msgid "Retry"
 msgstr "Yritä uudelleen"
 
-#: src/bin/e_fm.c:8967 src/bin/e_fm.c:9107 src/modules/wizard/page_030.c:85
+#: src/bin/e_fm.c:8946 src/bin/e_fm.c:9086 src/modules/wizard/page_030.c:85
 msgid "Error"
 msgstr "Virhe"
 
-#: src/bin/e_fm.c:8970
+#: src/bin/e_fm.c:8949
 #, c-format
 msgid "%s"
 msgstr "%s"
 
-#: src/bin/e_fm.c:9022
+#: src/bin/e_fm.c:9001
 msgid "No to all"
 msgstr "Ei kaikkiin"
 
-#: src/bin/e_fm.c:9024
+#: src/bin/e_fm.c:9003
 msgid "Yes to all"
 msgstr "Kyllä kaikkiin"
 
-#: src/bin/e_fm.c:9027
+#: src/bin/e_fm.c:9006
 msgid "Warning"
 msgstr "Varoitus"
 
-#: src/bin/e_fm.c:9030
+#: src/bin/e_fm.c:9009
 #, c-format
 msgid "File already exists, overwrite?<br><hilight>%s</hilight>"
 msgstr ""
 "Tiedosto on jo olemassa, haluatko korvata sen?<br><hilight>%s</hilight>"
 
-#: src/bin/e_fm.c:9103
+#: src/bin/e_fm.c:9082
 msgid "Ignore this"
 msgstr "Ohita tämä"
 
-#: src/bin/e_fm.c:9104
+#: src/bin/e_fm.c:9083
 msgid "Ignore all"
 msgstr "Ohita kaikki"
 
-#: src/bin/e_fm.c:9109
+#: src/bin/e_fm.c:9088
 #, c-format
 msgid "An error occured while performing an operation.<br>%s"
 msgstr "Toimintoa suoritettaessa tapahtui virhe.<br>%s"
 
-#: src/bin/e_fm.c:9255
+#: src/bin/e_fm.c:9237
 msgid "Confirm Delete"
 msgstr "Vahvista poisto"
 
-#: src/bin/e_fm.c:9260
+#: src/bin/e_fm.c:9242
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight> ?"
 msgstr "Haluatko varmasti poistaa tiedoston<br><hilight>%s</hilight> ?"
 
-#: src/bin/e_fm.c:9266
+#: src/bin/e_fm.c:9248
 #, c-format
 msgid ""
 "Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</"
@@ -1352,77 +1357,77 @@ msgstr ""
 msgid "File Properties"
 msgstr "Tiedoston ominaisuudet"
 
-#: src/bin/e_fm_prop.c:337
+#: src/bin/e_fm_prop.c:335
 msgid "File:"
 msgstr "Tiedosto:"
 
-#: src/bin/e_fm_prop.c:344 src/bin/e_widget_fsel.c:327
+#: src/bin/e_fm_prop.c:342 src/bin/e_widget_fsel.c:327
 msgid "Size:"
 msgstr "Koko:"
 
-#: src/bin/e_fm_prop.c:351
+#: src/bin/e_fm_prop.c:349
 msgid "Last Modified:"
 msgstr "Viimeksi muokattu:"
 
-#: src/bin/e_fm_prop.c:358
+#: src/bin/e_fm_prop.c:356
 msgid "File Type:"
 msgstr "Tiedostotyyppi"
 
-#: src/bin/e_fm_prop.c:365
+#: src/bin/e_fm_prop.c:363
 msgid "Permissions"
 msgstr "Oikeudet"
 
-#: src/bin/e_fm_prop.c:366 src/bin/e_widget_fsel.c:343
+#: src/bin/e_fm_prop.c:364 src/bin/e_widget_fsel.c:343
 msgid "Owner:"
 msgstr "Omistaja"
 
-#: src/bin/e_fm_prop.c:372
+#: src/bin/e_fm_prop.c:370
 msgid "Others can read"
 msgstr "Muut saavat lukea"
 
-#: src/bin/e_fm_prop.c:374
+#: src/bin/e_fm_prop.c:372
 msgid "Others can write"
 msgstr "Muut saavat kirjoittaa"
 
-#: src/bin/e_fm_prop.c:376
+#: src/bin/e_fm_prop.c:374
 msgid "Owner can read"
 msgstr "Omistaja saa lukea"
 
-#: src/bin/e_fm_prop.c:378
+#: src/bin/e_fm_prop.c:376
 msgid "Owner can write"
 msgstr "Omistaja saa kirjoittaa"
 
-#: src/bin/e_fm_prop.c:384 src/bin/e_widget_fsel.c:306
-#: src/modules/conf_theme/e_int_config_theme.c:1030
-#: src/modules/conf_transitions/e_int_config_transitions.c:167
+#: src/bin/e_fm_prop.c:382 src/bin/e_widget_fsel.c:306
+#: src/modules/conf_theme/e_int_config_theme.c:1032
+#: src/modules/conf_transitions/e_int_config_transitions.c:166
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:154
 msgid "Preview"
 msgstr "Esikatselu"
 
-#: src/bin/e_fm_prop.c:431
+#: src/bin/e_fm_prop.c:429
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:218
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:231
 msgid "Default"
 msgstr "Oletus"
 
-#: src/bin/e_fm_prop.c:434
+#: src/bin/e_fm_prop.c:432
 msgid "Thumbnail"
 msgstr "Pikkukuva"
 
-#: src/bin/e_fm_prop.c:437
+#: src/bin/e_fm_prop.c:435
 #: src/modules/conf_desklock/e_int_config_desklock.c:425
 msgid "Custom"
 msgstr "Mukautettu"
 
-#: src/bin/e_fm_prop.c:447
+#: src/bin/e_fm_prop.c:445
 msgid "Use this icon for all files of this type"
 msgstr "Käytä tätä kuvaketta kaikille tämän tyypin tiedostoille"
 
-#: src/bin/e_fm_prop.c:455
+#: src/bin/e_fm_prop.c:453
 msgid "Link Information"
 msgstr "Linkin tiedot"
 
-#: src/bin/e_fm_prop.c:501 src/modules/conf_mime/e_int_config_mime_edit.c:272
+#: src/bin/e_fm_prop.c:499 src/modules/conf_mime/e_int_config_mime_edit.c:272
 msgid "Select an Image"
 msgstr "Valitse kuva"
 
@@ -1460,40 +1465,40 @@ msgstr "Tuntematon tilavuus"
 msgid "Removable Device"
 msgstr "Irroitettava laite"
 
-#: src/bin/e_gadcon.c:1339
+#: src/bin/e_gadcon.c:1331
 msgid "Move this gadget to"
 msgstr "Siirrä tämä vempain"
 
-#: src/bin/e_gadcon.c:1359 src/modules/gadman/e_mod_gadman.c:703
+#: src/bin/e_gadcon.c:1351 src/modules/gadman/e_mod_gadman.c:703
 msgid "Plain"
 msgstr "Paljas"
 
-#: src/bin/e_gadcon.c:1368 src/modules/gadman/e_mod_gadman.c:711
+#: src/bin/e_gadcon.c:1360 src/modules/gadman/e_mod_gadman.c:711
 msgid "Inset"
 msgstr "Upotettu"
 
-#: src/bin/e_gadcon.c:1377 src/bin/e_int_config_modules.c:41
+#: src/bin/e_gadcon.c:1369 src/bin/e_int_config_modules.c:41
 #: src/modules/gadman/e_mod_gadman.c:747
 msgid "Appearance"
 msgstr "Ulkoasu"
 
-#: src/bin/e_gadcon.c:1385
+#: src/bin/e_gadcon.c:1377
 msgid "Automatically scroll contents"
 msgstr "Vieritä sisältöä automaattisesti"
 
-#: src/bin/e_gadcon.c:1392
+#: src/bin/e_gadcon.c:1384
 msgid "Able to be resized"
 msgstr "Koko muutettavissa"
 
-#: src/bin/e_gadcon.c:1404 src/modules/gadman/e_mod_gadman.c:782
+#: src/bin/e_gadcon.c:1396 src/modules/gadman/e_mod_gadman.c:782
 msgid "Begin move/resize this gadget"
 msgstr "Vempain: siirrä/muuta kokoa"
 
-#: src/bin/e_gadcon.c:1412 src/modules/gadman/e_mod_gadman.c:790
+#: src/bin/e_gadcon.c:1404 src/modules/gadman/e_mod_gadman.c:790
 msgid "Remove this gadget"
 msgstr "Poista tämä vempain"
 
-#: src/bin/e_gadcon.c:1891
+#: src/bin/e_gadcon.c:1882
 msgid "Stop move/resize this gadget"
 msgstr "Vempain: lopeta siirtäminen/koon muuttaminen"
 
@@ -1505,7 +1510,7 @@ msgstr ""
 "Enlightenmentin edellinen istunto on yhä aktiivinen\n"
 "tällä näytöllä. Keskeytetään käynnistys.\n"
 
-#: src/bin/e_int_border_locks.c:67 src/bin/e_int_border_menu.c:571
+#: src/bin/e_int_border_locks.c:67 src/bin/e_int_border_menu.c:615
 msgid "Window Locks"
 msgstr "Ikkunalukot"
 
@@ -1544,16 +1549,16 @@ msgid "Position"
 msgstr "Sijainti"
 
 #: src/bin/e_int_border_locks.c:311 src/bin/e_int_border_locks.c:330
-#: src/bin/e_int_border_remember.c:705 src/bin/e_int_shelf_config.c:599
-#: src/bin/e_int_shelf_config.c:704
+#: src/bin/e_int_border_remember.c:705 src/bin/e_int_shelf_config.c:537
+#: src/bin/e_int_shelf_config.c:642
 #: src/modules/conf_fonts/e_int_config_fonts.c:442
 #: src/modules/conf_fonts/e_int_config_fonts.c:637
 msgid "Size"
 msgstr "Koko"
 
 #: src/bin/e_int_border_locks.c:313 src/bin/e_int_border_locks.c:332
-#: src/bin/e_int_border_menu.c:543 src/bin/e_int_border_prop.c:469
-#: src/bin/e_int_border_remember.c:708 src/bin/e_int_shelf_config.c:639
+#: src/bin/e_int_border_menu.c:587 src/bin/e_int_border_prop.c:469
+#: src/bin/e_int_border_remember.c:708 src/bin/e_int_shelf_config.c:577
 msgid "Stacking"
 msgstr "Pinoutuminen"
 
@@ -1604,144 +1609,144 @@ msgstr "Uloskirjautumasta, kun tämä ikkuna on auki"
 msgid "Remember these Locks"
 msgstr "Muista nämä lukot"
 
-#: src/bin/e_int_border_menu.c:73
+#: src/bin/e_int_border_menu.c:75
 msgid "Edit Icon"
 msgstr "Muokkaa kuvaketta"
 
-#: src/bin/e_int_border_menu.c:78
+#: src/bin/e_int_border_menu.c:80
 msgid "Add Application..."
 msgstr "Lisää sovellus..."
 
-#: src/bin/e_int_border_menu.c:89
+#: src/bin/e_int_border_menu.c:91
 msgid "Create Icon"
 msgstr "Luo kuvake"
 
-#: src/bin/e_int_border_menu.c:99
+#: src/bin/e_int_border_menu.c:101
 msgid "Send to Desktop"
 msgstr "Lähetä työpöydälle"
 
-#: src/bin/e_int_border_menu.c:111
+#: src/bin/e_int_border_menu.c:113
 msgid "Pin to Desktop"
 msgstr "Kiinnitä työpöydälle"
 
-#: src/bin/e_int_border_menu.c:122
+#: src/bin/e_int_border_menu.c:124
 msgid "Unpin from Desktop"
 msgstr "Irrota työpöydältä"
 
-#: src/bin/e_int_border_menu.c:131
+#: src/bin/e_int_border_menu.c:133
 msgid "More..."
 msgstr "Lisää..."
 
-#: src/bin/e_int_border_menu.c:171
+#: src/bin/e_int_border_menu.c:197
 msgid "Iconify"
 msgstr "Ikonisoi"
 
-#: src/bin/e_int_border_menu.c:368
+#: src/bin/e_int_border_menu.c:412
 msgid "Maximize vertically"
 msgstr "Maksimoi korkeussuunnassa"
 
-#: src/bin/e_int_border_menu.c:379
+#: src/bin/e_int_border_menu.c:423
 msgid "Maximize horizontally"
 msgstr "Maksimoi leveyssuunnassa"
 
-#: src/bin/e_int_border_menu.c:390
+#: src/bin/e_int_border_menu.c:434
 msgid "Unmaximize"
 msgstr "Poista maksimointi"
 
-#: src/bin/e_int_border_menu.c:491
+#: src/bin/e_int_border_menu.c:535
 msgid "Keyboard Shortcut"
 msgstr "Pikanäppäin"
 
-#: src/bin/e_int_border_menu.c:497
+#: src/bin/e_int_border_menu.c:541
 msgid "To Favorites Menu"
 msgstr "Suosikkisovelluksiin"
 
-#: src/bin/e_int_border_menu.c:502
+#: src/bin/e_int_border_menu.c:546
 msgid "To Launcher"
 msgstr "Käynnistimeen"
 
-#: src/bin/e_int_border_menu.c:524 src/modules/conf_borders/e_mod_main.c:37
+#: src/bin/e_int_border_menu.c:568 src/modules/conf_borders/e_mod_main.c:23
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:321
 msgid "Border"
 msgstr "Kehys"
 
-#: src/bin/e_int_border_menu.c:533
+#: src/bin/e_int_border_menu.c:577
 msgid "Skip"
 msgstr "Ohita"
 
-#: src/bin/e_int_border_menu.c:552 src/bin/e_int_border_prop.c:433
-#: src/modules/conf_colors/e_int_config_color_classes.c:514
+#: src/bin/e_int_border_menu.c:596 src/bin/e_int_border_prop.c:433
+#: src/modules/conf_colors/e_int_config_color_classes.c:515
 msgid "State"
 msgstr "Tila"
 
-#: src/bin/e_int_border_menu.c:563
+#: src/bin/e_int_border_menu.c:607
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:115
 msgid "Remember"
 msgstr "Muista"
 
-#: src/bin/e_int_border_menu.c:579 src/bin/e_int_border_prop.c:75
+#: src/bin/e_int_border_menu.c:623 src/bin/e_int_border_prop.c:75
 msgid "Window Properties"
 msgstr "Ikkunan ominaisuudet"
 
-#: src/bin/e_int_border_menu.c:814
+#: src/bin/e_int_border_menu.c:858
 msgid "Always On Top"
 msgstr "Aina päällä"
 
-#: src/bin/e_int_border_menu.c:825
+#: src/bin/e_int_border_menu.c:869
 #: src/modules/conf_fonts/e_int_config_fonts.c:101
 #: src/modules/conf_fonts/e_int_config_fonts.c:265
-#: src/modules/temperature/e_mod_config.c:260
+#: src/modules/temperature/e_mod_config.c:251
 msgid "Normal"
 msgstr "Normaali"
 
-#: src/bin/e_int_border_menu.c:836
+#: src/bin/e_int_border_menu.c:880
 msgid "Always Below"
 msgstr "Aina alla"
 
-#: src/bin/e_int_border_menu.c:928
+#: src/bin/e_int_border_menu.c:971
 msgid "Select Border Style"
 msgstr "Valitse kehyksen tyyli"
 
-#: src/bin/e_int_border_menu.c:940
+#: src/bin/e_int_border_menu.c:983
 msgid "Use E17 Default Icon Preference"
 msgstr "Käytä E17:n oletuskuvakeasetuksia"
 
-#: src/bin/e_int_border_menu.c:949
+#: src/bin/e_int_border_menu.c:991
 msgid "Use Application Provided Icon "
 msgstr "Käytä sovelluksen tarjoamaa kuvaketta "
 
-#: src/bin/e_int_border_menu.c:957
+#: src/bin/e_int_border_menu.c:999
 msgid "Use User Defined Icon"
 msgstr "Käytä käyttäjän määrittämää kuvaketta"
 
-#: src/bin/e_int_border_menu.c:1018 src/bin/e_int_border_prop.c:473
+#: src/bin/e_int_border_menu.c:1060 src/bin/e_int_border_prop.c:473
 msgid "Shaded"
 msgstr "Varjostettu"
 
-#: src/bin/e_int_border_menu.c:1031 src/bin/e_int_border_prop.c:472
+#: src/bin/e_int_border_menu.c:1073 src/bin/e_int_border_prop.c:472
 msgid "Sticky"
 msgstr "Tarttuva"
 
-#: src/bin/e_int_border_menu.c:1047 src/bin/e_int_border_prop.c:477
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:117
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:140
+#: src/bin/e_int_border_menu.c:1089 src/bin/e_int_border_prop.c:477
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:118
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:141
 msgid "Fullscreen"
 msgstr "Koko näyttö"
 
-#: src/bin/e_int_border_menu.c:1072 src/modules/conf_winlist/e_mod_main.c:35
+#: src/bin/e_int_border_menu.c:1114 src/modules/conf_winlist/e_mod_main.c:21
 msgid "Window List"
 msgstr "Ikkunalista"
 
-#: src/bin/e_int_border_menu.c:1082 src/modules/pager/e_mod_main.c:261
-#: src/modules/pager/e_mod_main.c:2843 src/modules/pager/e_mod_main.c:2850
-#: src/modules/pager/e_mod_main.c:2857 src/modules/pager/e_mod_main.c:2859
-#: src/modules/pager/e_mod_main.c:2861 src/modules/pager/e_mod_main.c:2863
-#: src/modules/pager/e_mod_main.c:2896 src/modules/pager/e_mod_main.c:2897
-#: src/modules/pager/e_mod_main.c:2898 src/modules/pager/e_mod_main.c:2899
+#: src/bin/e_int_border_menu.c:1124 src/modules/pager/e_mod_main.c:259
+#: src/modules/pager/e_mod_main.c:2812 src/modules/pager/e_mod_main.c:2819
+#: src/modules/pager/e_mod_main.c:2826 src/modules/pager/e_mod_main.c:2828
+#: src/modules/pager/e_mod_main.c:2830 src/modules/pager/e_mod_main.c:2832
+#: src/modules/pager/e_mod_main.c:2865 src/modules/pager/e_mod_main.c:2866
+#: src/modules/pager/e_mod_main.c:2867 src/modules/pager/e_mod_main.c:2868
 msgid "Pager"
 msgstr "Sivuttaja"
 
-#: src/bin/e_int_border_menu.c:1092
+#: src/bin/e_int_border_menu.c:1134
 msgid "Taskbar"
 msgstr "Tehtäväpalkki"
 
@@ -1758,6 +1763,7 @@ msgid "ICCCM Properties"
 msgstr "ICCCM:n ominaisuudet"
 
 #: src/bin/e_int_border_prop.c:419 src/bin/e_int_border_remember.c:662
+#: src/bin/e_utils.c:1197
 msgid "Title"
 msgstr "Otsikko"
 
@@ -2000,12 +2006,13 @@ msgstr "Aloita tämä ohjelma sisäänkirjauduttaessa"
 
 #: src/bin/e_int_config_modules.c:42 src/bin/e_int_menus.c:210
 #: src/modules/battery/e_mod_main.c:176 src/modules/conf/e_conf.c:120
-#: src/modules/conf/e_conf.c:131 src/modules/conf_dialogs/e_mod_main.c:34
+#: src/modules/conf/e_conf.c:130 src/modules/conf/e_mod_main.c:81
+#: src/modules/conf_dialogs/e_mod_main.c:20
 #: src/modules/conf_profiles/e_mod_main.c:20 src/modules/ibar/e_mod_main.c:314
-#: src/modules/ibar/e_mod_main.c:828 src/modules/ibox/e_mod_main.c:319
-#: src/modules/ibox/e_mod_main.c:716 src/modules/pager/e_mod_main.c:815
-#: src/modules/temperature/e_mod_main.c:281 src/modules/mixer/e_mod_main.c:662
-#: src/modules/connman/e_mod_main.c:1077
+#: src/modules/ibar/e_mod_main.c:824 src/modules/ibox/e_mod_main.c:313
+#: src/modules/ibox/e_mod_main.c:708 src/modules/pager/e_mod_main.c:808
+#: src/modules/temperature/e_mod_main.c:278 src/modules/mixer/e_mod_main.c:663
+#: src/modules/connman/e_mod_main.c:1142
 msgid "Settings"
 msgstr "Asetukset"
 
@@ -2019,28 +2026,28 @@ msgstr "Tiedostonhallinta"
 msgid "Shelf"
 msgstr "Hylly"
 
-#: src/bin/e_int_config_modules.c:120
+#: src/bin/e_int_config_modules.c:95
 msgid "Module Settings"
 msgstr "Moduulien asetukset"
 
-#: src/bin/e_int_config_modules.c:180
+#: src/bin/e_int_config_modules.c:155
 msgid "Available Modules"
 msgstr "Käytettävissä olevat moduulit"
 
-#: src/bin/e_int_config_modules.c:187
+#: src/bin/e_int_config_modules.c:162
 msgid "Load Module"
 msgstr "Ota moduuli käyttöön"
 
-#: src/bin/e_int_config_modules.c:194
+#: src/bin/e_int_config_modules.c:169
 msgid "Loaded Modules"
 msgstr "Käytössä olevat moduulit"
 
-#: src/bin/e_int_config_modules.c:201
+#: src/bin/e_int_config_modules.c:176
 msgid "Unload Module"
 msgstr "Poista moduuli käytöstä"
 
-#: src/bin/e_int_config_modules.c:211 src/bin/e_int_config_modules.c:631
-#: src/bin/e_int_config_modules.c:648 src/bin/e_int_config_modules.c:673
+#: src/bin/e_int_config_modules.c:186 src/bin/e_int_config_modules.c:599
+#: src/bin/e_int_config_modules.c:616 src/bin/e_int_config_modules.c:641
 #: src/bin/e_int_gadcon_config.c:148 src/bin/e_int_gadcon_config.c:183
 #: src/bin/e_int_gadcon_config.c:205
 msgid "Description: Unavailable"
@@ -2074,8 +2081,8 @@ msgstr "Poista vempain"
 msgid "Toolbar Settings"
 msgstr "Työkalurivin asetukset"
 
-#: src/bin/e_int_toolbar_config.c:82 src/bin/e_int_shelf_config.c:577
-#: src/bin/e_int_shelf_config.c:652
+#: src/bin/e_int_toolbar_config.c:82 src/bin/e_int_shelf_config.c:515
+#: src/bin/e_int_shelf_config.c:590
 msgid "Layout"
 msgstr "Asettelu"
 
@@ -2108,11 +2115,11 @@ msgid "Applications"
 msgstr "Sovellukset"
 
 #: src/bin/e_int_menus.c:141 src/bin/e_int_menus.c:1081
-#: src/modules/conf_window_display/e_mod_main.c:34
-#: src/modules/conf_window_focus/e_mod_main.c:34
-#: src/modules/conf_window_manipulation/e_mod_main.c:34
+#: src/modules/conf_window_display/e_mod_main.c:20
+#: src/modules/conf_window_focus/e_mod_main.c:20
+#: src/modules/conf_window_manipulation/e_mod_main.c:20
 #: src/modules/conf_window_remembers/e_mod_main.c:14
-#: src/modules/conf_winlist/e_mod_main.c:34
+#: src/modules/conf_winlist/e_mod_main.c:20
 msgid "Windows"
 msgstr "Ikkunat"
 
@@ -2124,9 +2131,9 @@ msgstr "Kadonneet ikkunat"
 msgid "About"
 msgstr "Tietoa"
 
-#: src/bin/e_int_menus.c:175 src/modules/conf_theme/e_mod_main.c:39
-#: src/modules/conf_theme/e_mod_main.c:40
-#: src/modules/conf_theme/e_mod_main.c:84
+#: src/bin/e_int_menus.c:175 src/modules/conf_theme/e_mod_main.c:26
+#: src/modules/conf_theme/e_mod_main.c:31
+#: src/modules/conf_theme/e_mod_main.c:80
 msgid "Theme"
 msgstr "Teema"
 
@@ -2134,9 +2141,9 @@ msgstr "Teema"
 msgid "Virtual"
 msgstr "Virtuaali:"
 
-#: src/bin/e_int_menus.c:269 src/modules/conf_shelves/e_mod_main.c:39
-#: src/modules/conf_shelves/e_mod_main.c:41
-#: src/modules/conf_shelves/e_mod_main.c:85
+#: src/bin/e_int_menus.c:269 src/modules/conf_shelves/e_mod_main.c:25
+#: src/modules/conf_shelves/e_mod_main.c:27
+#: src/modules/conf_shelves/e_mod_main.c:71
 msgid "Shelves"
 msgstr "Hyllyt"
 
@@ -2164,7 +2171,7 @@ msgstr "Ei nimeä!!"
 msgid "(No Shelves)"
 msgstr "(Ei hyllyjä)"
 
-#: src/bin/e_int_menus.c:1374 src/bin/e_shelf.c:166 src/bin/e_shelf.c:1168
+#: src/bin/e_int_menus.c:1374 src/bin/e_shelf.c:168 src/bin/e_shelf.c:1173
 #: src/modules/conf_shelves/e_int_config_shelf.c:132
 msgid "Shelf #"
 msgstr "Hylly #"
@@ -2177,103 +2184,103 @@ msgstr "Lisää hylly"
 msgid "Delete A Shelf"
 msgstr "Poista hylly"
 
-#: src/bin/e_int_shelf_config.c:76 src/bin/e_shelf.c:1700
+#: src/bin/e_int_shelf_config.c:75 src/bin/e_shelf.c:1674
 #: src/modules/conf_shelves/e_int_config_shelf.c:43
 msgid "Shelf Settings"
 msgstr "Hyllyn asetukset"
 
-#: src/bin/e_int_shelf_config.c:601
+#: src/bin/e_int_shelf_config.c:539
 #: src/modules/conf_fonts/e_int_config_fonts.c:253
 msgid "Tiny"
 msgstr "Pikkuruinen"
 
-#: src/bin/e_int_shelf_config.c:603
+#: src/bin/e_int_shelf_config.c:541
 #: src/modules/conf_fonts/e_int_config_fonts.c:100
 #: src/modules/conf_fonts/e_int_config_fonts.c:259
 msgid "Small"
 msgstr "Pieni"
 
-#: src/bin/e_int_shelf_config.c:605 src/modules/dropshadow/e_mod_config.c:126
+#: src/bin/e_int_shelf_config.c:543 src/modules/dropshadow/e_mod_config.c:126
 msgid "Medium"
 msgstr "Keskikokoinen"
 
-#: src/bin/e_int_shelf_config.c:607
+#: src/bin/e_int_shelf_config.c:545
 #: src/modules/conf_fonts/e_int_config_fonts.c:102
 msgid "Large"
 msgstr "Suuri"
 
-#: src/bin/e_int_shelf_config.c:609
+#: src/bin/e_int_shelf_config.c:547
 #: src/modules/conf_fonts/e_int_config_fonts.c:283
 msgid "Huge"
 msgstr "Valtava"
 
-#: src/bin/e_int_shelf_config.c:615 src/bin/e_int_shelf_config.c:742
+#: src/bin/e_int_shelf_config.c:553 src/bin/e_int_shelf_config.c:680
 msgid "Set Contents..."
 msgstr "Aseta sisältö..."
 
-#: src/bin/e_int_shelf_config.c:641
+#: src/bin/e_int_shelf_config.c:579
 msgid "Above Everything"
 msgstr "Kaiken päällä"
 
-#: src/bin/e_int_shelf_config.c:643
+#: src/bin/e_int_shelf_config.c:581
 msgid "Below Windows"
 msgstr "Ikkunoiden alla"
 
-#: src/bin/e_int_shelf_config.c:645
+#: src/bin/e_int_shelf_config.c:583
 msgid "Below Everything"
 msgstr "Kaiken alla"
 
-#: src/bin/e_int_shelf_config.c:647
+#: src/bin/e_int_shelf_config.c:585
 msgid "Allow windows to overlap the shelf"
 msgstr "Salli ikkunoiden limittyä hyllyn kanssa"
 
-#: src/bin/e_int_shelf_config.c:694
+#: src/bin/e_int_shelf_config.c:632
 msgid "Shrink to Content Size"
 msgstr "Kutista sisältöä vastaavaksi"
 
-#: src/bin/e_int_shelf_config.c:705
+#: src/bin/e_int_shelf_config.c:643
 #, c-format
 msgid "%3.0f pixels"
 msgstr "%3.0f pikseliä"
 
-#: src/bin/e_int_shelf_config.c:710
+#: src/bin/e_int_shelf_config.c:648
 msgid "Styles"
 msgstr "Tyylit"
 
-#: src/bin/e_int_shelf_config.c:750
+#: src/bin/e_int_shelf_config.c:688
 msgid "Auto Hide"
 msgstr "Automaattinen piilotus"
 
-#: src/bin/e_int_shelf_config.c:751
+#: src/bin/e_int_shelf_config.c:689
 msgid "Auto-hide the shelf"
 msgstr "Piilota hylly automaattisesti"
 
-#: src/bin/e_int_shelf_config.c:755
+#: src/bin/e_int_shelf_config.c:693
 msgid "Show on mouse in"
 msgstr "Näytä hiiren hiirenheilautuksella"
 
-#: src/bin/e_int_shelf_config.c:759
+#: src/bin/e_int_shelf_config.c:697
 msgid "Show on mouse click"
 msgstr "Näytä hiiren napsautuksella"
 
-#: src/bin/e_int_shelf_config.c:763
+#: src/bin/e_int_shelf_config.c:701
 msgid "Hide timeout"
 msgstr "Piiloutumisen viive"
 
-#: src/bin/e_int_shelf_config.c:767 src/bin/e_int_shelf_config.c:776
+#: src/bin/e_int_shelf_config.c:705 src/bin/e_int_shelf_config.c:714
 #, c-format
 msgid "%.1f seconds"
 msgstr "%.1f sekuntia"
 
-#: src/bin/e_int_shelf_config.c:772
+#: src/bin/e_int_shelf_config.c:710
 msgid "Hide duration"
 msgstr "Piiloutumisen kesto"
 
-#: src/bin/e_int_shelf_config.c:788
+#: src/bin/e_int_shelf_config.c:726
 msgid "Show on all Desktops"
 msgstr "Näytä kaikilla työpöydillä"
 
-#: src/bin/e_int_shelf_config.c:790
+#: src/bin/e_int_shelf_config.c:728
 msgid "Show on specified Desktops"
 msgstr "Näytä määritetyillä työpöydillä"
 
@@ -2861,29 +2868,29 @@ msgid ""
 "power saving?"
 msgstr ""
 
-#: src/bin/e_shelf.c:1296 src/modules/conf_shelves/e_int_config_shelf.c:281
+#: src/bin/e_shelf.c:1301 src/modules/conf_shelves/e_int_config_shelf.c:281
 msgid "Are you sure you want to delete this shelf?"
 msgstr "Haluatko varmasti poistaa tämän hyllyn?"
 
-#: src/bin/e_shelf.c:1297
+#: src/bin/e_shelf.c:1302
 msgid ""
 "You requested to delete this shelf.<br><br>Are you sure you want to delete "
 "it?"
 msgstr "Vaadit tämän hyllyn poistamista.<br><br>Haluatko varmasti poistaa sen?"
 
-#: src/bin/e_shelf.c:1690 src/bin/e_toolbar.c:325
+#: src/bin/e_shelf.c:1664 src/bin/e_toolbar.c:325
 msgid "Stop Moving/Resizing Items"
 msgstr "Lopeta kohteiden siirtäminen/koon muuttaminen"
 
-#: src/bin/e_shelf.c:1692 src/bin/e_toolbar.c:327
+#: src/bin/e_shelf.c:1666 src/bin/e_toolbar.c:327
 msgid "Begin Moving/Resizing Items"
 msgstr "Aloita kohteiden siirtäminen/koon muuttaminen"
 
-#: src/bin/e_shelf.c:1705
+#: src/bin/e_shelf.c:1679
 msgid "Set Shelf Contents"
 msgstr "Määritä hyllyn sisältö"
 
-#: src/bin/e_shelf.c:1710
+#: src/bin/e_shelf.c:1684
 msgid "Delete this Shelf"
 msgstr "Poista tämä hylly"
 
@@ -3042,11 +3049,11 @@ msgstr "Aseta teemaksi"
 msgid "Set Toolbar Contents"
 msgstr "Määritä työkalurivin sisältö"
 
-#: src/bin/e_utils.c:245
+#: src/bin/e_utils.c:282
 msgid "Cannot exit - immortal windows."
 msgstr "Ei voi poistua - kuolemattomia ikkunoita."
 
-#: src/bin/e_utils.c:246
+#: src/bin/e_utils.c:283
 msgid ""
 "Some windows are left still around with the Lifespan lock enabled. This "
 "means<br>that Enlightenment will not allow itself to exit until these "
@@ -3056,76 +3063,127 @@ msgstr ""
 "Tämä tarkoittaa sitä,<br>että Enlightenment ei salli itseään suljettavan "
 "ennen kuin nämä ikkunat on<br>suljettu tai elinaikalukko poistettu.<br>"
 
-#: src/bin/e_utils.c:804
+#: src/bin/e_utils.c:859
 #, c-format
 msgid "%'.0f Bytes"
 msgstr "%'.0f tavua"
 
-#: src/bin/e_utils.c:808
+#: src/bin/e_utils.c:863
 #, c-format
 msgid "%'.0f KB"
 msgstr "%'.0f kt"
 
-#: src/bin/e_utils.c:812
+#: src/bin/e_utils.c:867
 #, c-format
 msgid "%'.0f MB"
 msgstr "%'.0f Mt"
 
-#: src/bin/e_utils.c:816
+#: src/bin/e_utils.c:871
 #, c-format
 msgid "%'.1f GB"
 msgstr "%'.1f Gt"
 
-#: src/bin/e_utils.c:836
+#: src/bin/e_utils.c:890
 #, c-format
 msgid "In the Future"
 msgstr "Tulevaisuudessa"
 
-#: src/bin/e_utils.c:841
+#: src/bin/e_utils.c:894
 #, c-format
 msgid "In the last Minute"
 msgstr "Viimeisimmän minuutin aikana"
 
-#: src/bin/e_utils.c:843
+#: src/bin/e_utils.c:896
 #, c-format
 msgid "%li Years ago"
 msgstr "%li vuotta sitten"
 
-#: src/bin/e_utils.c:845
+#: src/bin/e_utils.c:898
 #, c-format
 msgid "%li Months ago"
 msgstr "%li kuukautta sitten"
 
-#: src/bin/e_utils.c:847
+#: src/bin/e_utils.c:900
 #, c-format
 msgid "%li Weeks ago"
 msgstr "%li viikkoa sitten"
 
-#: src/bin/e_utils.c:849
+#: src/bin/e_utils.c:902
 #, c-format
 msgid "%li Days ago"
 msgstr "%li päivää sitten"
 
-#: src/bin/e_utils.c:851
+#: src/bin/e_utils.c:904
 #, c-format
 msgid "%li Hours ago"
 msgstr "%li tuntia sitten"
 
-#: src/bin/e_utils.c:853
+#: src/bin/e_utils.c:906
 #, c-format
 msgid "%li Minutes ago"
 msgstr "%li minuuttia sitten"
 
-#: src/bin/e_utils.c:859
+#: src/bin/e_utils.c:912
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1180
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1134
-#: src/modules/conf_profiles/e_int_config_profiles.c:250
+#: src/modules/conf_profiles/e_int_config_profiles.c:248
 #: src/modules/wizard/page_020.c:22 src/modules/wizard/page_020.c:30
 msgid "Unknown"
 msgstr "Tuntematon"
 
+#: src/bin/e_utils.c:1166
+#, fuzzy
+msgid "Image Import Settings"
+msgstr "Sivuttajan asetukset"
+
+#: src/bin/e_utils.c:1170
+#, fuzzy
+msgid "Import"
+msgstr "Tuo..."
+
+#: src/bin/e_utils.c:1187
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:170
+msgid "Fill and Stretch Options"
+msgstr "Täytön ja venytyksen valinnat"
+
+#: src/bin/e_utils.c:1195
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:173
+msgid "Stretch"
+msgstr "Täytä"
+
+#: src/bin/e_utils.c:1196
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:178
+msgid "Center"
+msgstr "Keskitä"
+
+#: src/bin/e_utils.c:1198
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:188
+msgid "Within"
+msgstr "Sisäkkäin"
+
+#: src/bin/e_utils.c:1199
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:193
+msgid "Fill"
+msgstr "Täytä"
+
+#: src/bin/e_utils.c:1204
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:200
+msgid "File Quality"
+msgstr "Tiedoston laatu"
+
+#: src/bin/e_utils.c:1206
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:202
+msgid "Use original file"
+msgstr "Käytä alkuperäistä tiedostoa"
+
+#: src/bin/e_utils.c:1210
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:205
+#, c-format
+msgid "%3.0f%%"
+msgstr "%3.0f%%"
+
 #: src/bin/e_widget_config_list.c:63
-#: src/modules/conf_applications/e_int_config_apps.c:243
+#: src/modules/conf_applications/e_int_config_apps.c:244
 #: src/modules/conf_profiles/e_int_config_profiles.c:120
 #: src/modules/conf_shelves/e_int_config_shelf.c:79
 #: src/modules/ibar/e_mod_config.c:110
@@ -3137,12 +3195,12 @@ msgid "Remove"
 msgstr "Poista"
 
 #: src/bin/e_widget_config_list.c:83
-#: src/modules/conf_applications/e_int_config_apps.c:258
+#: src/modules/conf_applications/e_int_config_apps.c:261
 msgid "Up"
 msgstr "Ylös"
 
 #: src/bin/e_widget_config_list.c:89
-#: src/modules/conf_applications/e_int_config_apps.c:263
+#: src/modules/conf_applications/e_int_config_apps.c:266
 msgid "Down"
 msgstr "Alas"
 
@@ -3152,11 +3210,11 @@ msgstr "Lisää Suosikkeihin"
 
 #: src/bin/e_widget_fsel.c:298
 #: src/modules/conf_desklock/e_int_config_desklock.c:305
-#: src/modules/conf_imc/e_int_config_imc.c:834
-#: src/modules/conf_startup/e_int_config_startup.c:275
-#: src/modules/conf_theme/e_int_config_theme.c:405
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:519
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:651
+#: src/modules/conf_imc/e_int_config_imc.c:816
+#: src/modules/conf_startup/e_int_config_startup.c:267
+#: src/modules/conf_theme/e_int_config_theme.c:407
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:487
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:620
 #: src/modules/gadman/e_mod_config.c:193
 msgid "Go up a Directory"
 msgstr "Siirry ylös hakemistossa"
@@ -3212,7 +3270,7 @@ msgstr "Tarkistusväli:"
 
 #: src/modules/battery/e_mod_config.c:140
 #: src/modules/conf_performance/e_int_config_performance.c:149
-#: src/modules/temperature/e_mod_config.c:379
+#: src/modules/temperature/e_mod_config.c:369
 #, c-format
 msgid "%1.0f ticks"
 msgstr "%1.0f tickiä"
@@ -3258,14 +3316,14 @@ msgstr "Automaattinen tunnistus"
 
 #: src/modules/battery/e_mod_config.c:172
 #: src/modules/conf_applications/e_mod_main.c:39
-#: src/modules/conf_borders/e_mod_main.c:36
-#: src/modules/conf_desk/e_mod_main.c:34
-#: src/modules/conf_wallpaper/e_mod_main.c:30
+#: src/modules/conf_borders/e_mod_main.c:22
+#: src/modules/conf_desk/e_mod_main.c:20
+#: src/modules/conf_wallpaper/e_mod_main.c:28
 msgid "Internal"
 msgstr "Sisäinen"
 
 #: src/modules/battery/e_mod_config.c:174
-#: src/modules/fileman/e_mod_config.c:280
+#: src/modules/fileman/e_mod_config.c:281
 msgid "HAL"
 msgstr "HAL"
 
@@ -3302,20 +3360,20 @@ msgstr "Akkumittari"
 msgid "Clock"
 msgstr "Kello"
 
-#: src/modules/conf/e_mod_main.c:149 src/modules/conf/e_mod_main.c:153
-#: src/modules/conf/e_mod_main.c:173 src/modules/conf/e_mod_main.c:274
+#: src/modules/conf/e_mod_main.c:124 src/modules/conf/e_mod_main.c:128
+#: src/modules/conf/e_mod_main.c:149 src/modules/conf/e_mod_main.c:251
 msgid "Settings Panel"
 msgstr "Asetuspaneeli"
 
-#: src/modules/conf/e_mod_main.c:244
+#: src/modules/conf/e_mod_main.c:220
 msgid "Presentation"
 msgstr "Esitystila"
 
-#: src/modules/conf/e_mod_main.c:251
+#: src/modules/conf/e_mod_main.c:227
 msgid "Offline"
 msgstr "Offline-tila"
 
-#: src/modules/conf/e_mod_main.c:279
+#: src/modules/conf/e_mod_main.c:256
 msgid "Modes"
 msgstr "Tilat"
 
@@ -3340,12 +3398,12 @@ msgstr "Käynnistyksen sovellukset"
 msgid "Restart Applications"
 msgstr "Uudelleenkäynnistyksen sovellukset"
 
-#: src/modules/conf_applications/e_int_config_apps.c:236
+#: src/modules/conf_applications/e_int_config_apps.c:237
 #: src/modules/fileman/e_fwin.c:1869
 msgid "All Applications"
 msgstr "Kaikki sovellukset"
 
-#: src/modules/conf_applications/e_int_config_apps.c:250
+#: src/modules/conf_applications/e_int_config_apps.c:253
 msgid "Selected Applications"
 msgstr "Valitut sovellukset"
 
@@ -3362,8 +3420,8 @@ msgid "IBar Other"
 msgstr "IBar muut"
 
 #: src/modules/conf_applications/e_mod_main.c:41
-#: src/modules/conf_clientlist/e_mod_main.c:34
-#: src/modules/conf_menus/e_mod_main.c:34 src/modules/wizard/page_030.c:81
+#: src/modules/conf_clientlist/e_mod_main.c:20
+#: src/modules/conf_menus/e_mod_main.c:20 src/modules/wizard/page_030.c:81
 msgid "Menus"
 msgstr "Valikot"
 
@@ -3380,109 +3438,109 @@ msgstr "Ikkunankehyksen valinta"
 msgid "Remember this Border for this window next time it appears"
 msgstr "Muista tämä kehys tälle ikkunalle, kun ikkuna seuraavan kerran avautuu"
 
-#: src/modules/conf_borders/e_mod_main.c:34
-#: src/modules/conf_colors/e_mod_main.c:34
-#: src/modules/conf_fonts/e_mod_main.c:34
+#: src/modules/conf_borders/e_mod_main.c:20
+#: src/modules/conf_colors/e_mod_main.c:20
+#: src/modules/conf_fonts/e_mod_main.c:20
 #: src/modules/conf_icon_theme/e_mod_main.c:21
-#: src/modules/conf_mouse_cursor/e_mod_main.c:34
-#: src/modules/conf_scale/e_mod_main.c:34
-#: src/modules/conf_startup/e_mod_main.c:34
-#: src/modules/conf_theme/e_mod_main.c:38
-#: src/modules/conf_transitions/e_mod_main.c:34
-#: src/modules/conf_wallpaper/e_mod_main.c:28
+#: src/modules/conf_mouse_cursor/e_mod_main.c:20
+#: src/modules/conf_scale/e_mod_main.c:21
+#: src/modules/conf_startup/e_mod_main.c:20
+#: src/modules/conf_theme/e_mod_main.c:24
+#: src/modules/conf_transitions/e_mod_main.c:20
+#: src/modules/conf_wallpaper/e_mod_main.c:24
 #: src/modules/dropshadow/e_mod_main.c:89
 msgid "Look"
 msgstr "Ulkoasu"
 
-#: src/modules/conf_borders/e_mod_main.c:35
+#: src/modules/conf_borders/e_mod_main.c:21
 msgid "Borders"
 msgstr "Kehykset"
 
-#: src/modules/conf_clientlist/e_int_config_clientlist.c:40
+#: src/modules/conf_clientlist/e_int_config_clientlist.c:41
 msgid "Client List Settings"
 msgstr "Asiakaslistan asetukset"
 
-#: src/modules/conf_clientlist/e_int_config_clientlist.c:99
+#: src/modules/conf_clientlist/e_int_config_clientlist.c:100
 msgid "Group By"
 msgstr "Ryhmittelyn peruste"
 
-#: src/modules/conf_clientlist/e_int_config_clientlist.c:101
-#: src/modules/conf_clientlist/e_int_config_clientlist.c:114
-#: src/modules/conf_clientlist/e_int_config_clientlist.c:124
+#: src/modules/conf_clientlist/e_int_config_clientlist.c:102
+#: src/modules/conf_clientlist/e_int_config_clientlist.c:115
+#: src/modules/conf_clientlist/e_int_config_clientlist.c:125
 #: src/modules/conf_fonts/e_int_config_fonts.c:664
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:349
 #: src/modules/conf_transitions/e_int_config_transitions.c:152
-#: src/modules/conf_transitions/e_int_config_transitions.c:204
-#: src/modules/conf_transitions/e_int_config_transitions.c:236
+#: src/modules/conf_transitions/e_int_config_transitions.c:203
+#: src/modules/conf_transitions/e_int_config_transitions.c:235
 msgid "None"
 msgstr "Ei mikään"
 
-#: src/modules/conf_clientlist/e_int_config_clientlist.c:107
+#: src/modules/conf_clientlist/e_int_config_clientlist.c:108
 msgid "Include windows from other screens"
 msgstr "Sisällytä ikkunat muilta näytöiltä"
 
-#: src/modules/conf_clientlist/e_int_config_clientlist.c:111
+#: src/modules/conf_clientlist/e_int_config_clientlist.c:112
 msgid "Separate Groups By"
 msgstr "Ryhmien erottamistapa"
 
-#: src/modules/conf_clientlist/e_int_config_clientlist.c:116
+#: src/modules/conf_clientlist/e_int_config_clientlist.c:117
 msgid "Using separator bars"
 msgstr "Erottavat palkit"
 
-#: src/modules/conf_clientlist/e_int_config_clientlist.c:118
+#: src/modules/conf_clientlist/e_int_config_clientlist.c:119
 msgid "Using menus"
 msgstr "Valikot"
 
-#: src/modules/conf_clientlist/e_int_config_clientlist.c:122
+#: src/modules/conf_clientlist/e_int_config_clientlist.c:123
 msgid "Client Sort Order"
 msgstr "Asiakkaiden lajittelujärjestys"
 
-#: src/modules/conf_clientlist/e_int_config_clientlist.c:126
+#: src/modules/conf_clientlist/e_int_config_clientlist.c:127
 msgid "Alphabetical"
 msgstr "Aakkosjärjestys"
 
-#: src/modules/conf_clientlist/e_int_config_clientlist.c:128
+#: src/modules/conf_clientlist/e_int_config_clientlist.c:129
 msgid "Window stacking layer"
 msgstr "Ikkunan pinoamistaso"
 
-#: src/modules/conf_clientlist/e_int_config_clientlist.c:130
+#: src/modules/conf_clientlist/e_int_config_clientlist.c:131
 msgid "Most recently used"
 msgstr "Viimeiseksi käytetty"
 
-#: src/modules/conf_clientlist/e_int_config_clientlist.c:134
+#: src/modules/conf_clientlist/e_int_config_clientlist.c:135
 msgid "Iconified Windows"
 msgstr "Ikonisoidut ikkunat"
 
-#: src/modules/conf_clientlist/e_int_config_clientlist.c:136
+#: src/modules/conf_clientlist/e_int_config_clientlist.c:137
 msgid "Group with owning desktop"
 msgstr "Ryhmittele omistavalla työpöydällä"
 
-#: src/modules/conf_clientlist/e_int_config_clientlist.c:138
+#: src/modules/conf_clientlist/e_int_config_clientlist.c:139
 msgid "Group with current desktop"
 msgstr "Ryhmittele nykyisellä työpöydällä"
 
-#: src/modules/conf_clientlist/e_int_config_clientlist.c:140
+#: src/modules/conf_clientlist/e_int_config_clientlist.c:141
 msgid "Separate group"
 msgstr "Erota ryhmä"
 
-#: src/modules/conf_clientlist/e_int_config_clientlist.c:142
+#: src/modules/conf_clientlist/e_int_config_clientlist.c:143
 msgid "Warp to owning desktop"
 msgstr "Loikkaa omistavalle työpöydälle"
 
-#: src/modules/conf_clientlist/e_int_config_clientlist.c:146
+#: src/modules/conf_clientlist/e_int_config_clientlist.c:147
 msgid "Menu Item Captions"
 msgstr "Valikon kohteiden tekstit"
 
-#: src/modules/conf_clientlist/e_int_config_clientlist.c:147
+#: src/modules/conf_clientlist/e_int_config_clientlist.c:148
 msgid "Limit caption length"
 msgstr "Rajoita tekstin pituus"
 
-#: src/modules/conf_clientlist/e_int_config_clientlist.c:149
+#: src/modules/conf_clientlist/e_int_config_clientlist.c:150
 #, c-format
 msgid "%1.0f Chars"
 msgstr "%1.0f merkkiä"
 
-#: src/modules/conf_clientlist/e_mod_main.c:35
+#: src/modules/conf_clientlist/e_mod_main.c:23
 msgid "Client List Menu"
 msgstr "Asiakaslista-valikko"
 
@@ -3613,58 +3671,58 @@ msgstr "Passiivisen liukusäätimen teksti"
 msgid "Module Label"
 msgstr "Moduulin nimike"
 
-#: src/modules/conf_colors/e_int_config_color_classes.c:130
-#: src/modules/conf_colors/e_mod_main.c:35
+#: src/modules/conf_colors/e_int_config_color_classes.c:131
+#: src/modules/conf_colors/e_mod_main.c:22
 msgid "Colors"
 msgstr "Värit"
 
-#: src/modules/conf_colors/e_int_config_color_classes.c:251
+#: src/modules/conf_colors/e_int_config_color_classes.c:252
 msgid "Other"
 msgstr "Muut"
 
-#: src/modules/conf_colors/e_int_config_color_classes.c:435
+#: src/modules/conf_colors/e_int_config_color_classes.c:436
 msgid "Window Manager Colors"
 msgstr "Ikkunanhallinnan värit"
 
-#: src/modules/conf_colors/e_int_config_color_classes.c:437
-#: src/modules/conf_colors/e_int_config_color_classes.c:445
-#: src/modules/conf_colors/e_int_config_color_classes.c:453
-#: src/modules/conf_colors/e_int_config_color_classes.c:517
+#: src/modules/conf_colors/e_int_config_color_classes.c:438
+#: src/modules/conf_colors/e_int_config_color_classes.c:446
+#: src/modules/conf_colors/e_int_config_color_classes.c:454
+#: src/modules/conf_colors/e_int_config_color_classes.c:518
 msgid "Enabled"
 msgstr "Käytössä"
 
-#: src/modules/conf_colors/e_int_config_color_classes.c:439
-#: src/modules/conf_colors/e_int_config_color_classes.c:447
-#: src/modules/conf_colors/e_int_config_color_classes.c:455
-#: src/modules/conf_colors/e_int_config_color_classes.c:522
+#: src/modules/conf_colors/e_int_config_color_classes.c:440
+#: src/modules/conf_colors/e_int_config_color_classes.c:448
+#: src/modules/conf_colors/e_int_config_color_classes.c:456
+#: src/modules/conf_colors/e_int_config_color_classes.c:523
 msgid "Disabled"
 msgstr "Ei käytössä"
 
-#: src/modules/conf_colors/e_int_config_color_classes.c:443
+#: src/modules/conf_colors/e_int_config_color_classes.c:444
 msgid "Widget Colors"
 msgstr "Vempainten värit"
 
-#: src/modules/conf_colors/e_int_config_color_classes.c:451
+#: src/modules/conf_colors/e_int_config_color_classes.c:452
 msgid "Module Colors"
 msgstr "Moduulien värit"
 
-#: src/modules/conf_colors/e_int_config_color_classes.c:501
+#: src/modules/conf_colors/e_int_config_color_classes.c:502
 msgid "Color Classes"
 msgstr "Väriluokat"
 
-#: src/modules/conf_colors/e_int_config_color_classes.c:529
+#: src/modules/conf_colors/e_int_config_color_classes.c:530
 msgid "Object Color"
 msgstr "Objektin väri"
 
-#: src/modules/conf_colors/e_int_config_color_classes.c:538
+#: src/modules/conf_colors/e_int_config_color_classes.c:539
 msgid "Outline Color"
 msgstr "Reunuksen väri"
 
-#: src/modules/conf_colors/e_int_config_color_classes.c:547
+#: src/modules/conf_colors/e_int_config_color_classes.c:548
 msgid "Shadow Color"
 msgstr "Varjon väri"
 
-#: src/modules/conf_colors/e_int_config_color_classes.c:556
+#: src/modules/conf_colors/e_int_config_color_classes.c:557
 msgid "Defaults"
 msgstr "Oletukset"
 
@@ -3677,7 +3735,7 @@ msgid "Desktop Name"
 msgstr "Työpöydän nimi"
 
 #: src/modules/conf_desk/e_int_config_desk.c:150
-#: src/modules/conf_profiles/e_int_config_profiles.c:352
+#: src/modules/conf_profiles/e_int_config_profiles.c:350
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:120
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:135
 msgid "Name:"
@@ -3692,7 +3750,7 @@ msgstr "Työpöydän taustakuva"
 msgid "Set"
 msgstr "Aseta"
 
-#: src/modules/conf_desk/e_mod_main.c:35
+#: src/modules/conf_desk/e_mod_main.c:21
 msgid "Desk"
 msgstr "Työpöytä"
 
@@ -3733,9 +3791,9 @@ msgid "Idle time to exceed"
 msgstr "Joutoaika"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:225
-#: src/modules/conf_dpms/e_int_config_dpms.c:208
-#: src/modules/conf_dpms/e_int_config_dpms.c:220
-#: src/modules/conf_dpms/e_int_config_dpms.c:232
+#: src/modules/conf_dpms/e_int_config_dpms.c:218
+#: src/modules/conf_dpms/e_int_config_dpms.c:230
+#: src/modules/conf_dpms/e_int_config_dpms.c:242
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:143
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:181
 #, c-format
@@ -3743,12 +3801,12 @@ msgid "%1.0f minutes"
 msgstr "%1.0f minuuttia"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:298
-#: src/modules/conf_imc/e_int_config_imc.c:822
-#: src/modules/conf_startup/e_int_config_startup.c:262
-#: src/modules/conf_theme/e_int_config_theme.c:394
-#: src/modules/conf_theme/e_int_config_theme.c:787
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:509
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:641
+#: src/modules/conf_imc/e_int_config_imc.c:804
+#: src/modules/conf_startup/e_int_config_startup.c:254
+#: src/modules/conf_theme/e_int_config_theme.c:396
+#: src/modules/conf_theme/e_int_config_theme.c:789
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:477
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:610
 #: src/modules/gadman/e_mod_config.c:186
 msgid "Personal"
 msgstr "Oma"
@@ -3770,10 +3828,10 @@ msgid "Show on screen zone #:"
 msgstr "Näytä näytön alueella #:"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:406
-#: src/modules/conf_desks/e_int_config_desks.c:247
-#: src/modules/conf_desks/e_int_config_desks.c:251
-#: src/modules/conf_desks/e_int_config_desks.c:284
-#: src/modules/conf_desks/e_int_config_desks.c:288
+#: src/modules/conf_desks/e_int_config_desks.c:236
+#: src/modules/conf_desks/e_int_config_desks.c:240
+#: src/modules/conf_desks/e_int_config_desks.c:273
+#: src/modules/conf_desks/e_int_config_desks.c:277
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:117
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:121
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:125
@@ -3782,7 +3840,7 @@ msgstr "Näytä näytön alueella #:"
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:178
 #: src/modules/conf_mouse/e_int_config_mouse.c:115
 #: src/modules/conf_mouse/e_int_config_mouse.c:121
-#: src/modules/fileman/e_mod_config.c:229
+#: src/modules/fileman/e_mod_config.c:230
 #, c-format
 msgid "%1.0f"
 msgstr "%1.0f"
@@ -3827,78 +3885,78 @@ msgstr "Mukautettu ruudun lukitus"
 msgid "Use custom screenlock"
 msgstr "Käytä mukautettua ruudun lukitusta"
 
-#: src/modules/conf_desklock/e_mod_main.c:35
+#: src/modules/conf_desklock/e_mod_main.c:21
 msgid "Screen Lock"
 msgstr "Näytön lukitus"
 
 #: src/modules/conf_desks/e_int_config_desks.c:62
-#: src/modules/pager/e_mod_main.c:822
+#: src/modules/pager/e_mod_main.c:815
 msgid "Virtual Desktops Settings"
 msgstr "Virtuaalityöpöytien asetukset"
 
-#: src/modules/conf_desks/e_int_config_desks.c:239
+#: src/modules/conf_desks/e_int_config_desks.c:228
 msgid "Number of Desktops"
 msgstr "Työpöytien lukumäärä"
 
-#: src/modules/conf_desks/e_int_config_desks.c:258
-#: src/modules/conf_desks/e_int_config_desks.c:295
+#: src/modules/conf_desks/e_int_config_desks.c:247
+#: src/modules/conf_desks/e_int_config_desks.c:284
 msgid "Desktop Mouse Flip"
 msgstr "Työpöydän vaihto hiirellä"
 
-#: src/modules/conf_desks/e_int_config_desks.c:259
+#: src/modules/conf_desks/e_int_config_desks.c:248
 msgid "Animated flip"
 msgstr "Animoitu vaihto"
 
-#: src/modules/conf_desks/e_int_config_desks.c:277
+#: src/modules/conf_desks/e_int_config_desks.c:266
 msgid "Desktops"
 msgstr "Työpöydät"
 
-#: src/modules/conf_desks/e_int_config_desks.c:296
+#: src/modules/conf_desks/e_int_config_desks.c:285
 msgid "Flip when dragging objects to the screen edge"
 msgstr "Vaihda vedettäessä objekteja näytön reunalle"
 
-#: src/modules/conf_desks/e_int_config_desks.c:298
+#: src/modules/conf_desks/e_int_config_desks.c:287
 msgid "Wrap desktops around when flipping"
 msgstr "Kierrätä työpöytiä vaihdettaessa"
 
-#: src/modules/conf_desks/e_int_config_desks.c:302
+#: src/modules/conf_desks/e_int_config_desks.c:291
 msgid "Flip Animation"
 msgstr "Vaihdon animaatio"
 
-#: src/modules/conf_desks/e_int_config_desks.c:304
+#: src/modules/conf_desks/e_int_config_desks.c:293
 msgid "Off"
 msgstr "Pois"
 
-#: src/modules/conf_desks/e_int_config_desks.c:307
+#: src/modules/conf_desks/e_int_config_desks.c:296
 msgid "Pane"
 msgstr "Vieritys sivuilta"
 
-#: src/modules/conf_desks/e_int_config_desks.c:310
+#: src/modules/conf_desks/e_int_config_desks.c:299
 msgid "Zoom"
 msgstr "Vieritys kulmista"
 
-#: src/modules/conf_desks/e_int_config_desks.c:313
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:163
-#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:146
+#: src/modules/conf_desks/e_int_config_desks.c:302
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:164
+#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:147
 #, c-format
 msgid "%1.1f sec"
 msgstr "%1.1f sekuntia"
 
-#: src/modules/conf_desks/e_int_config_desks.c:317
+#: src/modules/conf_desks/e_int_config_desks.c:306
 msgid "Background panning"
 msgstr "Taustan panorointi"
 
-#: src/modules/conf_desks/e_int_config_desks.c:321
+#: src/modules/conf_desks/e_int_config_desks.c:310
 #, c-format
 msgid "%.2f X-axis pan factor"
 msgstr "%.2f X-akselin kerroin"
 
-#: src/modules/conf_desks/e_int_config_desks.c:325
+#: src/modules/conf_desks/e_int_config_desks.c:314
 #, c-format
 msgid "%.2f Y-axis pan factor"
 msgstr "%.2f Y-akselin kerroin"
 
-#: src/modules/conf_desks/e_mod_main.c:35
+#: src/modules/conf_desks/e_mod_main.c:25
 msgid "Virtual Desktops"
 msgstr "Virtuaalityöpöydät"
 
@@ -3950,7 +4008,7 @@ msgstr ""
 msgid "Default Dialog Mode"
 msgstr "Oletus valintaikkunan tilalle"
 
-#: src/modules/conf_dialogs/e_mod_main.c:35
+#: src/modules/conf_dialogs/e_mod_main.c:21
 msgid "Dialogs"
 msgstr "Valintaikkunat"
 
@@ -4014,31 +4072,31 @@ msgstr "Palauta"
 msgid "Screen Resolution Settings"
 msgstr "Näytön tarkkuuden asetukset"
 
-#: src/modules/conf_display/e_int_config_display.c:404
+#: src/modules/conf_display/e_int_config_display.c:401
 msgid "Resolution"
 msgstr "Tarkkuus"
 
-#: src/modules/conf_display/e_int_config_display.c:411
+#: src/modules/conf_display/e_int_config_display.c:408
 msgid "Restore on login"
 msgstr "Palauta sisäänkirjauduttaessa"
 
-#: src/modules/conf_display/e_int_config_display.c:415
+#: src/modules/conf_display/e_int_config_display.c:412
 msgid "Refresh"
 msgstr "Päivitys"
 
-#: src/modules/conf_display/e_int_config_display.c:474
+#: src/modules/conf_display/e_int_config_display.c:471
 msgid "Rotation"
 msgstr "Kierto"
 
-#: src/modules/conf_display/e_int_config_display.c:493
+#: src/modules/conf_display/e_int_config_display.c:490
 msgid "Mirroring"
 msgstr "Peilaus"
 
-#: src/modules/conf_display/e_int_config_display.c:640
+#: src/modules/conf_display/e_int_config_display.c:636
 msgid "Missing Features"
 msgstr "Puuttuvia ominaisuuksia"
 
-#: src/modules/conf_display/e_int_config_display.c:641
+#: src/modules/conf_display/e_int_config_display.c:637
 msgid ""
 "Your X Display Server is missing support for<br>the <hilight>XRandR</"
 "hilight> (X Resize and Rotate) extension.<br>You cannot change screen "
@@ -4051,11 +4109,11 @@ msgstr ""
 "laajennoksen tuki puuttuu. On myös mahdollista<br>että <hilight>ecore</"
 "hilight>a käännettäessä<br>XRandR-tukea ei havaittu."
 
-#: src/modules/conf_display/e_int_config_display.c:653
+#: src/modules/conf_display/e_int_config_display.c:649
 msgid "No Refresh Rates Found"
 msgstr "Ei löydettyjä ruudunpäivityksen arvoja"
 
-#: src/modules/conf_display/e_int_config_display.c:654
+#: src/modules/conf_display/e_int_config_display.c:650
 msgid ""
 "No refresh rates were reported by your X Display Server.<br>If you are "
 "running a nested X Display Server, then<br>this is to be expected. However, "
@@ -4069,7 +4127,7 @@ msgstr ""
 "käytetään resoluutiota asetettaessa,<br>mikä voi aiheuttaa "
 "<hilight>vahinkoa</hilight> sinun näytöllesi."
 
-#: src/modules/conf_display/e_mod_main.c:35
+#: src/modules/conf_display/e_mod_main.c:21
 msgid "Screen Resolution"
 msgstr "Näytön tarkkuus"
 
@@ -4090,27 +4148,27 @@ msgstr "Nykyisellä näyttöpalvelimella ei ole<br>DPMS-laajennusta."
 msgid "Display Power Management Settings"
 msgstr "Näytä virranhallinnan asetukset"
 
-#: src/modules/conf_dpms/e_int_config_dpms.c:198
+#: src/modules/conf_dpms/e_int_config_dpms.c:208
 msgid "Enable Display Power Management"
 msgstr "Ota käyttöön näytön virranhallinta"
 
-#: src/modules/conf_dpms/e_int_config_dpms.c:202
+#: src/modules/conf_dpms/e_int_config_dpms.c:212
 msgid "Timers"
 msgstr "Ajastukset"
 
-#: src/modules/conf_dpms/e_int_config_dpms.c:204
+#: src/modules/conf_dpms/e_int_config_dpms.c:214
 msgid "Standby time"
 msgstr "Valmiustilan viive"
 
-#: src/modules/conf_dpms/e_int_config_dpms.c:216
+#: src/modules/conf_dpms/e_int_config_dpms.c:226
 msgid "Suspend time"
 msgstr "Lepotilan viive"
 
-#: src/modules/conf_dpms/e_int_config_dpms.c:228
+#: src/modules/conf_dpms/e_int_config_dpms.c:238
 msgid "Off time"
 msgstr "Sammutuksen viive"
 
-#: src/modules/conf_dpms/e_mod_main.c:35
+#: src/modules/conf_dpms/e_mod_main.c:21
 msgid "Power Management"
 msgstr "Virranhallinta"
 
@@ -4134,7 +4192,7 @@ msgid "Edge Binding Settings"
 msgstr "Reunatoimintojen asetukset"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:258
-#: src/modules/conf_edgebindings/e_mod_main.c:35
+#: src/modules/conf_edgebindings/e_mod_main.c:21
 msgid "Edge Bindings"
 msgstr "Reunatoiminnot"
 
@@ -4231,11 +4289,11 @@ msgstr "SHIFT"
 msgid "WIN"
 msgstr "WIN"
 
-#: src/modules/conf_edgebindings/e_mod_main.c:34
-#: src/modules/conf_interaction/e_mod_main.c:34
-#: src/modules/conf_keybindings/e_mod_main.c:34
-#: src/modules/conf_mousebindings/e_mod_main.c:34
-#: src/modules/conf_mouse/e_mod_main.c:34 src/modules/mixer/app_mixer.c:283
+#: src/modules/conf_edgebindings/e_mod_main.c:20
+#: src/modules/conf_interaction/e_mod_main.c:20
+#: src/modules/conf_keybindings/e_mod_main.c:20
+#: src/modules/conf_mousebindings/e_mod_main.c:20
+#: src/modules/conf_mouse/e_mod_main.c:20 src/modules/mixer/app_mixer.c:283
 #: src/modules/mixer/app_mixer.c:301
 msgid "Input"
 msgstr "Syöttölaitteet"
@@ -4265,7 +4323,7 @@ msgstr ""
 "Olet valinnut komposiittituen käyttöön ottamisen,<br>mutta nykyinen näyttösi "
 "ei tue komposiittia.<br><br>Haluatko varmasti ottaa komposiittituen käyttöön?"
 
-#: src/modules/conf_engine/e_mod_main.c:35
+#: src/modules/conf_engine/e_mod_main.c:21
 msgid "Engine"
 msgstr "Moottori"
 
@@ -4378,8 +4436,8 @@ msgstr "X-akselin kohdistus"
 msgid "Y-Axis Alignment"
 msgstr "Y-akselin kohdistus"
 
-#: src/modules/conf_exebuf/e_mod_main.c:35 src/modules/exebuf/e_mod_main.c:52
-#: src/modules/exebuf/e_mod_main.c:129
+#: src/modules/conf_exebuf/e_mod_main.c:21 src/modules/exebuf/e_mod_main.c:38
+#: src/modules/exebuf/e_mod_main.c:115
 msgid "Run Command"
 msgstr "Suorita komento"
 
@@ -4529,7 +4587,7 @@ msgid "Enable Custom Font Classes"
 msgstr "Ota käyttöön mukautetut fonttiluokat"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:434
-#: src/modules/conf_fonts/e_mod_main.c:35
+#: src/modules/conf_fonts/e_mod_main.c:21
 #: src/modules/conf_paths/e_int_config_paths.c:77
 msgid "Fonts"
 msgstr "Fontit"
@@ -4603,46 +4661,46 @@ msgstr "Kuvaketeema korvaa perusteeman"
 msgid "Icon Theme"
 msgstr "Kuvaketeema"
 
-#: src/modules/conf_imc/e_int_config_imc.c:109
-#: src/modules/conf_imc/e_mod_main.c:35
+#: src/modules/conf_imc/e_int_config_imc.c:107
+#: src/modules/conf_imc/e_mod_main.c:21
 msgid "Input Method Settings"
 msgstr "Syöttötavan asetukset"
 
-#: src/modules/conf_imc/e_int_config_imc.c:297
+#: src/modules/conf_imc/e_int_config_imc.c:287
 msgid "Input Method Selector"
 msgstr "Syöttötavan valitsin"
 
-#: src/modules/conf_imc/e_int_config_imc.c:300
-#: src/modules/conf_imc/e_int_config_imc.c:894
+#: src/modules/conf_imc/e_int_config_imc.c:290
+#: src/modules/conf_imc/e_int_config_imc.c:874
 msgid "Use No Input Method"
 msgstr "Älä käytä mitään syöttötapaa"
 
-#: src/modules/conf_imc/e_int_config_imc.c:305
-#: src/modules/conf_imc/e_int_config_imc.c:961
+#: src/modules/conf_imc/e_int_config_imc.c:295
+#: src/modules/conf_imc/e_int_config_imc.c:940
 msgid "Setup Selected Input Method"
 msgstr "Aseta valittu syöttötapa"
 
-#: src/modules/conf_imc/e_int_config_imc.c:901
+#: src/modules/conf_imc/e_int_config_imc.c:880
 msgid "New"
 msgstr "Uusi"
 
-#: src/modules/conf_imc/e_int_config_imc.c:903
+#: src/modules/conf_imc/e_int_config_imc.c:882
 msgid "Import..."
 msgstr "Tuo..."
 
-#: src/modules/conf_imc/e_int_config_imc.c:908
+#: src/modules/conf_imc/e_int_config_imc.c:887
 msgid "Input Method Parameters"
 msgstr "Syöttötavan parametrit"
 
-#: src/modules/conf_imc/e_int_config_imc.c:918
+#: src/modules/conf_imc/e_int_config_imc.c:897
 msgid "Execute Command"
 msgstr "Suorituskomento"
 
-#: src/modules/conf_imc/e_int_config_imc.c:925
+#: src/modules/conf_imc/e_int_config_imc.c:904
 msgid "Setup Command"
 msgstr "Asetuskomento"
 
-#: src/modules/conf_imc/e_int_config_imc.c:934
+#: src/modules/conf_imc/e_int_config_imc.c:913
 msgid "Exported Environment Variables"
 msgstr "Viedyt ympäristömuuttujat"
 
@@ -4650,12 +4708,12 @@ msgstr "Viedyt ympäristömuuttujat"
 msgid "Select an Input Method Settings..."
 msgstr "Valitse syöttötavan asetukset..."
 
-#: src/modules/conf_imc/e_int_config_imc_import.c:281
-#: src/modules/conf_imc/e_int_config_imc_import.c:296
+#: src/modules/conf_imc/e_int_config_imc_import.c:280
+#: src/modules/conf_imc/e_int_config_imc_import.c:295
 msgid "Input Method Config Import Error"
 msgstr "Syöttötavan asetusten tuontivirhe"
 
-#: src/modules/conf_imc/e_int_config_imc_import.c:282
+#: src/modules/conf_imc/e_int_config_imc_import.c:281
 msgid ""
 "Enlightenment was unable to import the configuration.<br><br>Are you sure "
 "this is really a valid configuration?"
@@ -4663,12 +4721,12 @@ msgstr ""
 "Enlightenment ei voinut tuoda asetuksia.<br><br>Oletko varma, että nämä "
 "todella ovat oikeat asetukset?"
 
-#: src/modules/conf_imc/e_int_config_imc_import.c:297
+#: src/modules/conf_imc/e_int_config_imc_import.c:296
 msgid ""
 "Enlightenment was unable to import the configuration<br>due to a copy error."
 msgstr "Enlightenment ei voinut tuoda asetuksia kopiointivirheen<br>vuoksi."
 
-#: src/modules/conf_imc/e_mod_main.c:34 src/modules/conf_intl/e_mod_main.c:34
+#: src/modules/conf_imc/e_mod_main.c:20 src/modules/conf_intl/e_mod_main.c:20
 #: src/modules/wizard/page_010.c:142
 msgid "Language"
 msgstr "Kieli"
@@ -4713,12 +4771,12 @@ msgstr "Hidastuskitkan aloitusviive"
 msgid "%1.2f sec"
 msgstr "%1.2f s"
 
-#: src/modules/conf_interaction/e_mod_main.c:35
+#: src/modules/conf_interaction/e_mod_main.c:21
 msgid "Interaction"
 msgstr "Vuorovaikutus"
 
 #: src/modules/conf_intl/e_int_config_intl.c:583
-#: src/modules/conf_intl/e_mod_main.c:35
+#: src/modules/conf_intl/e_mod_main.c:21
 msgid "Language Settings"
 msgstr "Kieliasetukset"
 
@@ -4749,7 +4807,7 @@ msgid "Key Binding Settings"
 msgstr "Näppäimistötoimintojen asetukset"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:223
-#: src/modules/conf_keybindings/e_mod_main.c:35
+#: src/modules/conf_keybindings/e_mod_main.c:21
 msgid "Key Bindings"
 msgstr "Näppäimistötoiminnot"
 
@@ -4785,7 +4843,7 @@ msgstr ""
 #: src/modules/conf_menus/e_int_config_menus.c:44
 #: src/modules/conf_menus/e_int_config_menus.c:110
 #: src/modules/conf_menus/e_int_config_menus.c:169
-#: src/modules/conf_menus/e_mod_main.c:35
+#: src/modules/conf_menus/e_mod_main.c:21
 msgid "Menu Settings"
 msgstr "Valikon asetukset"
 
@@ -4829,11 +4887,11 @@ msgstr "Automaattivierityksen marginaali"
 
 #: src/modules/conf_menus/e_int_config_menus.c:184
 #: src/modules/conf_menus/e_int_config_menus.c:189
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:136
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:144
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:152
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:167
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:171
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:137
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:145
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:153
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:168
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:172
 #, c-format
 msgid "%2.0f pixels"
 msgstr "%2.0f pikseliä"
@@ -4843,7 +4901,7 @@ msgid "Autoscroll Cursor Margin"
 msgstr "Automaattivierityksen kursorimarginaali"
 
 #: src/modules/conf_menus/e_int_config_menus.c:194
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:161
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:162
 msgid "Miscellaneous Options"
 msgstr "Sekalaiset valinnat"
 
@@ -4861,7 +4919,7 @@ msgid "Fast Mouse Move Threshhold"
 msgstr "Nopea hiiren liikkeen kynnys"
 
 #: src/modules/conf_menus/e_int_config_menus.c:202
-#: src/modules/conf_window_display/e_int_config_window_display.c:229
+#: src/modules/conf_window_display/e_int_config_window_display.c:230
 #, c-format
 msgid "%4.0f pixels/sec"
 msgstr "%4.0f pikseliä/sekunti"
@@ -4876,7 +4934,7 @@ msgid "%2.2f seconds"
 msgstr "%2.2f sekuntia"
 
 #: src/modules/conf_mime/e_int_config_mime.c:64
-#: src/modules/conf_mime/e_mod_main.c:35
+#: src/modules/conf_mime/e_mod_main.c:21
 msgid "File Icons"
 msgstr "Tiedostokuvakkeet"
 
@@ -4916,8 +4974,8 @@ msgstr "Käytä oletusta"
 msgid "Select an Edj File"
 msgstr "Valitse edj-tiedosto"
 
-#: src/modules/conf_mime/e_mod_main.c:34 src/modules/fileman/e_mod_main.c:49
-#: src/modules/fileman/e_mod_main.c:67 src/modules/fileman/e_mod_main.c:377
+#: src/modules/conf_mime/e_mod_main.c:20 src/modules/fileman/e_mod_main.c:49
+#: src/modules/fileman/e_mod_main.c:67 src/modules/fileman/e_mod_main.c:385
 msgid "Files"
 msgstr "Tiedostot"
 
@@ -4936,7 +4994,7 @@ msgid "Mouse Binding Settings"
 msgstr "Hiiritoimintojen asetukset"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:275
-#: src/modules/conf_mousebindings/e_mod_main.c:35
+#: src/modules/conf_mousebindings/e_mod_main.c:21
 msgid "Mouse Bindings"
 msgstr "Hiiritoiminnot"
 
@@ -5018,12 +5076,12 @@ msgstr "Käytä X:n kursoria"
 msgid "Cursor Size"
 msgstr "Kursorin koko"
 
-#: src/modules/conf_mouse_cursor/e_mod_main.c:35
+#: src/modules/conf_mouse_cursor/e_mod_main.c:21
 msgid "Mouse Cursor"
 msgstr "Hiiren kursori"
 
 #: src/modules/conf_mouse/e_int_config_mouse.c:37
-#: src/modules/conf_mouse/e_mod_main.c:35
+#: src/modules/conf_mouse/e_mod_main.c:21
 msgid "Mouse Settings"
 msgstr "Hiiren asetukset"
 
@@ -5056,7 +5114,7 @@ msgid "Images"
 msgstr "Kuvat"
 
 #: src/modules/conf_paths/e_int_config_paths.c:79
-#: src/modules/conf_theme/e_int_config_theme.c:1010
+#: src/modules/conf_theme/e_int_config_theme.c:1012
 msgid "Themes"
 msgstr "Teemat"
 
@@ -5084,7 +5142,7 @@ msgstr "Oletushakemistot"
 msgid "User Defined Directories"
 msgstr "Käyttäjän määrittämät hakemistot"
 
-#: src/modules/conf_paths/e_mod_main.c:35
+#: src/modules/conf_paths/e_mod_main.c:21
 msgid "Search Directories"
 msgstr "Etsi hakemistoista"
 
@@ -5152,7 +5210,7 @@ msgstr "Välimuistiin ladattavien edje-kokoelmien määrä"
 msgid "%1.0f collections"
 msgstr "%1.0f kokoelmaa"
 
-#: src/modules/conf_performance/e_mod_main.c:35
+#: src/modules/conf_performance/e_mod_main.c:21
 msgid "Performance"
 msgstr "Suorituskyky"
 
@@ -5173,16 +5231,16 @@ msgstr "Valitse profiili"
 msgid "Reset"
 msgstr "Nollaa"
 
-#: src/modules/conf_profiles/e_int_config_profiles.c:280
+#: src/modules/conf_profiles/e_int_config_profiles.c:278
 #, c-format
 msgid "You want to delete the \"%s\" profile.<br><br>Are you sure?"
 msgstr "Aiot poistaa profiilin \"%s\".<br><br>Oletko varma?"
 
-#: src/modules/conf_profiles/e_int_config_profiles.c:284
+#: src/modules/conf_profiles/e_int_config_profiles.c:282
 msgid "Delete OK?"
 msgstr "Hyväksy poisto?"
 
-#: src/modules/conf_profiles/e_int_config_profiles.c:349
+#: src/modules/conf_profiles/e_int_config_profiles.c:347
 msgid "Add New Profile"
 msgstr "Lisää uusi profiili"
 
@@ -5257,7 +5315,7 @@ msgstr "Vähintään"
 msgid "Maximum"
 msgstr "Enintään"
 
-#: src/modules/conf_scale/e_mod_main.c:35
+#: src/modules/conf_scale/e_mod_main.c:22
 msgid "Scaling"
 msgstr "Skaalaus"
 
@@ -5308,7 +5366,7 @@ msgstr "Salli"
 msgid "Don't Allow"
 msgstr "Älä salli"
 
-#: src/modules/conf_screensaver/e_mod_main.c:35
+#: src/modules/conf_screensaver/e_mod_main.c:21
 msgid "Screen Saver"
 msgstr "Näytönsäästäjä"
 
@@ -5334,36 +5392,36 @@ msgstr ""
 msgid "Startup Settings"
 msgstr "Käynnistyksen asetukset"
 
-#: src/modules/conf_startup/e_int_config_startup.c:328
+#: src/modules/conf_startup/e_int_config_startup.c:318
 msgid "Show Splash Screen on Login"
 msgstr "Näytä käynnistysruutu sisäänkirjauduttaessa"
 
-#: src/modules/conf_startup/e_mod_main.c:35
+#: src/modules/conf_startup/e_mod_main.c:21
 #: src/modules/conf_transitions/e_int_config_transitions.c:134
 msgid "Startup"
 msgstr "Käynnistys"
 
-#: src/modules/conf_theme/e_int_config_theme.c:90
+#: src/modules/conf_theme/e_int_config_theme.c:91
 msgid "Theme Selector"
 msgstr "Teeman valitsin"
 
-#: src/modules/conf_theme/e_int_config_theme.c:434
+#: src/modules/conf_theme/e_int_config_theme.c:436
 msgid " Import..."
 msgstr " Tuo..."
 
-#: src/modules/conf_theme/e_int_config_theme.c:438
+#: src/modules/conf_theme/e_int_config_theme.c:440
 msgid " Online..."
 msgstr ""
 
-#: src/modules/conf_theme/e_int_config_theme.c:1001
+#: src/modules/conf_theme/e_int_config_theme.c:1003
 msgid "Theme Categories"
 msgstr "Teeman osa-alueet"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1019
+#: src/modules/conf_theme/e_int_config_theme.c:1021
 msgid "Assign"
 msgstr "Ota käyttöön"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1025
+#: src/modules/conf_theme/e_int_config_theme.c:1027
 msgid "Clear All"
 msgstr "Poista kaikki käytöstä"
 
@@ -5371,12 +5429,12 @@ msgstr "Poista kaikki käytöstä"
 msgid "Select a Theme..."
 msgstr "Valitse teema..."
 
-#: src/modules/conf_theme/e_int_config_theme_import.c:274
-#: src/modules/conf_theme/e_int_config_theme_import.c:283
+#: src/modules/conf_theme/e_int_config_theme_import.c:281
+#: src/modules/conf_theme/e_int_config_theme_import.c:290
 msgid "Theme Import Error"
 msgstr "Teeman tuontivirhe"
 
-#: src/modules/conf_theme/e_int_config_theme_import.c:275
+#: src/modules/conf_theme/e_int_config_theme_import.c:282
 msgid ""
 "Enlightenment was unable to import the theme.<br><br>Are you sure this is "
 "really a valid theme?"
@@ -5384,7 +5442,7 @@ msgstr ""
 "Enlightenment ei voinut tuoda teemaa.<br><br>Oletko varma, että tämä on "
 "todella teematiedosto?"
 
-#: src/modules/conf_theme/e_int_config_theme_import.c:284
+#: src/modules/conf_theme/e_int_config_theme_import.c:291
 msgid "Enlightenment was unable to import the theme<br>due to a copy error."
 msgstr "Enlightenment ei voinut tuoda teemaa<br>kopiointivirheen vuoksi."
 
@@ -5409,7 +5467,7 @@ msgid "Background Change"
 msgstr "Taustakuvan vaihto"
 
 #: src/modules/conf_transitions/e_int_config_transitions.c:144
-#: src/modules/conf_transitions/e_mod_main.c:35
+#: src/modules/conf_transitions/e_mod_main.c:21
 msgid "Transitions"
 msgstr "Vaihtumat"
 
@@ -5417,39 +5475,39 @@ msgstr "Vaihtumat"
 msgid "Wallpaper Settings"
 msgstr "Taustakuvan asetukset"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:546
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:676
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:514
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:645
 msgid "Use Theme Wallpaper"
 msgstr "Käytä teeman taustakuvaa"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:551
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:681
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:519
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:650
 msgid "Picture..."
 msgstr "Kuva..."
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:554
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:684
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:522
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:653
 msgid "Gradient..."
 msgstr "Liukuväri..."
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:560
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:690
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:529
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:660
 msgid "Online..."
 msgstr ""
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:710
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:680
 msgid "Where to place the Wallpaper"
 msgstr "Mihin taustakuva sijoitetaan"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:711
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:681
 msgid "All Desktops"
 msgstr "Kaikille työpöydille"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:713
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:683
 msgid "This Desktop"
 msgstr "Tälle työpöydälle"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:715
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:685
 msgid "This Screen"
 msgstr "Tälle näytölle"
 
@@ -5470,13 +5528,13 @@ msgid "Fill Options"
 msgstr "Täytön valinnat"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:167
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:153
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:154
 #: src/modules/gadman/e_mod_gadman.c:731
 msgid "Horizontal"
 msgstr "Leveyssuuntaan"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:172
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:155
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:156
 #: src/modules/gadman/e_mod_gadman.c:739
 msgid "Vertical"
 msgstr "Korkeussuuntaan"
@@ -5493,83 +5551,50 @@ msgstr "Vinosti alaspäin"
 msgid "Radial"
 msgstr "Säteittäin"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:370
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:367
 msgid "Gradient Creation Error"
 msgstr "Liukuvärin luontivirhe"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:371
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:368
 msgid "For some reason, Enlightenment was unable to create a gradient."
 msgstr "Jostain syystä Enlightenment ei voinut luoda liukuväriä."
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:128
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:127
 msgid "Wallpaper settings..."
 msgstr "Taustakuvan asetukset..."
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:164
-msgid "Fill and Stretch Options"
-msgstr "Täytön ja venytyksen valinnat"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:167
-msgid "Stretch"
-msgstr "Täytä"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:172
-msgid "Center"
-msgstr "Keskitä"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:177
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:183
 msgid "Tile"
 msgstr "Vierekkäin"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:182
-msgid "Within"
-msgstr "Sisäkkäin"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:187
-msgid "Fill"
-msgstr "Täytä"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:194
-msgid "File Quality"
-msgstr "Tiedoston laatu"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:196
-msgid "Use original file"
-msgstr "Käytä alkuperäistä tiedostoa"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:199
-#, c-format
-msgid "%3.0f%%"
-msgstr "%3.0f%%"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:275
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:282
 msgid "Select a Picture..."
 msgstr "Valitse kuva..."
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:613
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:627
 msgid "Picture Import Error"
 msgstr "Kuvan tuontivirhe"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:614
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:628
 msgid ""
 "Enlightenment was unable to import the picture<br>due to conversion errors."
 msgstr "Enlightenment ei voinut tuoda kuvaa<br>muunnosvirheen vuoksi."
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:702
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:712
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:795
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:805
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:716
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:726
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:810
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:820
 msgid "Wallpaper Import Error"
 msgstr "Taustakuvan tuontivirhe"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:703
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:796
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:717
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:811
 msgid ""
 "Enlightenment was unable to import the wallpaper<br>due to a copy error."
 msgstr "Enlightenment ei voinut tuoda taustakuvaa<br>kopiointivirheen vuoksi."
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:713
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:806
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:727
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:821
 msgid ""
 "Enlightenment was unable to import the wallpaper.<br><br>Are you sure this "
 "is a valid wallpaper?"
@@ -5581,307 +5606,307 @@ msgstr ""
 msgid "Exchange wallpapers"
 msgstr "Vaihda taustakuvia"
 
-#: src/modules/conf_wallpaper/e_mod_main.c:29
-#: src/modules/conf_wallpaper/e_mod_main.c:31
-#: src/modules/conf_wallpaper/e_mod_main.c:32
-#: src/modules/conf_wallpaper/e_mod_main.c:96
+#: src/modules/conf_wallpaper/e_mod_main.c:26
+#: src/modules/conf_wallpaper/e_mod_main.c:30
+#: src/modules/conf_wallpaper/e_mod_main.c:33
+#: src/modules/conf_wallpaper/e_mod_main.c:83
 msgid "Wallpaper"
 msgstr "Taustakuva"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:58
-#: src/modules/conf_window_display/e_mod_main.c:35
+#: src/modules/conf_window_display/e_int_config_window_display.c:59
+#: src/modules/conf_window_display/e_mod_main.c:21
 msgid "Window Display"
 msgstr "Ikkunan näyttö"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:167
+#: src/modules/conf_window_display/e_int_config_window_display.c:168
 msgid "Display"
 msgstr "Näytä"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:168
+#: src/modules/conf_window_display/e_int_config_window_display.c:169
 msgid "Show window geometry information when moving or resizing"
 msgstr "Näytä ikkunan sijainti siirrettäessä ja koko kokoa muutettaessa"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:170
-#: src/modules/conf_window_display/e_int_config_window_display.c:227
+#: src/modules/conf_window_display/e_int_config_window_display.c:171
+#: src/modules/conf_window_display/e_int_config_window_display.c:228
 msgid "Animate the shading and unshading of windows"
 msgstr "Animoi ikkunoiden varjostus ja varjon poisto"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:174
-#: src/modules/conf_window_display/e_int_config_window_display.c:254
+#: src/modules/conf_window_display/e_int_config_window_display.c:175
+#: src/modules/conf_window_display/e_int_config_window_display.c:255
 msgid "Automatic New Window Placement"
 msgstr "Automaattinen uuden ikkunan sijoittaminen"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:176
-#: src/modules/conf_window_display/e_int_config_window_display.c:257
+#: src/modules/conf_window_display/e_int_config_window_display.c:177
+#: src/modules/conf_window_display/e_int_config_window_display.c:258
 msgid "Smart Placement"
 msgstr "Älykäs sijoittaminen"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:178
-#: src/modules/conf_window_display/e_int_config_window_display.c:259
+#: src/modules/conf_window_display/e_int_config_window_display.c:179
+#: src/modules/conf_window_display/e_int_config_window_display.c:260
 msgid "Don't hide Gadgets"
 msgstr "Älä piilota vempaimia"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:180
-#: src/modules/conf_window_display/e_int_config_window_display.c:261
+#: src/modules/conf_window_display/e_int_config_window_display.c:181
+#: src/modules/conf_window_display/e_int_config_window_display.c:262
 msgid "Place at mouse pointer"
 msgstr "Sijoita hiiren osoittimen kohdalle"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:182
-#: src/modules/conf_window_display/e_int_config_window_display.c:263
+#: src/modules/conf_window_display/e_int_config_window_display.c:183
+#: src/modules/conf_window_display/e_int_config_window_display.c:264
 msgid "Place manually with the mouse"
 msgstr "Sijoita manuaalisesti hiirellä"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:184
-#: src/modules/conf_window_display/e_int_config_window_display.c:265
+#: src/modules/conf_window_display/e_int_config_window_display.c:185
+#: src/modules/conf_window_display/e_int_config_window_display.c:266
 msgid "Automatically switch to desktop of new window"
 msgstr "Siirry automaattisesti työpöydälle, jossa uusi ikkuna on"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:203
+#: src/modules/conf_window_display/e_int_config_window_display.c:204
 msgid "Window Move Geometry"
 msgstr "Ikkunan siirron geometria"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:205
-#: src/modules/conf_window_display/e_int_config_window_display.c:216
+#: src/modules/conf_window_display/e_int_config_window_display.c:206
+#: src/modules/conf_window_display/e_int_config_window_display.c:217
 msgid "Display information"
 msgstr "Näytä info"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:207
+#: src/modules/conf_window_display/e_int_config_window_display.c:208
 msgid "Follow the window as it moves"
 msgstr "Seuraa ikkunaa sen liikkuessa"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:214
+#: src/modules/conf_window_display/e_int_config_window_display.c:215
 msgid "Window Resize Geometry"
 msgstr "Ikkunan koon muutoksen geometria"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:218
+#: src/modules/conf_window_display/e_int_config_window_display.c:219
 msgid "Follow the window as it resizes"
 msgstr "Seuraa ikkunaa sen koon muuttuessa"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:225
+#: src/modules/conf_window_display/e_int_config_window_display.c:226
 msgid "Window Shading"
 msgstr "Ikkunan varjostus"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:234
+#: src/modules/conf_window_display/e_int_config_window_display.c:235
 msgid "Linear"
 msgstr "Lineaarinen"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:238
+#: src/modules/conf_window_display/e_int_config_window_display.c:239
 msgid "Smooth accelerate and decelerate"
 msgstr "Kiihdytä ja jarrutus sulavasti"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:242
+#: src/modules/conf_window_display/e_int_config_window_display.c:243
 msgid "Accelerate"
 msgstr "Kiihdytä"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:246
+#: src/modules/conf_window_display/e_int_config_window_display.c:247
 msgid "Decelerate"
 msgstr "Jarruta"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:269
+#: src/modules/conf_window_display/e_int_config_window_display.c:270
 msgid "Window Border"
 msgstr "Ikkunankehys"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:272
+#: src/modules/conf_window_display/e_int_config_window_display.c:273
 msgid "Prefer user defined icon"
 msgstr "Käytä mieluiten käyttäjän määrittämää kuvaketta"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:274
+#: src/modules/conf_window_display/e_int_config_window_display.c:275
 msgid "Prefer application provided icon"
 msgstr "Käytä mieluiten sovelluksen tarjoamaa kuvaketta"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:50
+#: src/modules/conf_window_focus/e_int_config_focus.c:51
 msgid "Focus Settings"
 msgstr "Aktivoinnin asetukset"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:165
+#: src/modules/conf_window_focus/e_int_config_focus.c:166
 msgid "Click Window to Focus"
 msgstr "Napsauta ikkunaa aktivoidaksesi"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:167
+#: src/modules/conf_window_focus/e_int_config_focus.c:168
 msgid "Window under the Mouse"
 msgstr "Ikkuna hiiren kohdalla"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:169
+#: src/modules/conf_window_focus/e_int_config_focus.c:170
 msgid "Most recent Window under the Mouse"
 msgstr "Viimeisin hiiren kohdalla ollut ikkuna"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:183
+#: src/modules/conf_window_focus/e_int_config_focus.c:184
 msgid "Focus"
 msgstr "Aktivointi"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:185
+#: src/modules/conf_window_focus/e_int_config_focus.c:186
 msgid "Click to focus"
 msgstr "Aktivointi napsauttamalla"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:187
+#: src/modules/conf_window_focus/e_int_config_focus.c:188
 msgid "Pointer focus"
 msgstr "Aktivointi osoittamalla"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:189
+#: src/modules/conf_window_focus/e_int_config_focus.c:190
 msgid "Sloppy focus"
 msgstr "Puolittainen aktivointi"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:193
+#: src/modules/conf_window_focus/e_int_config_focus.c:194
 msgid "New Window Focus"
 msgstr "Uuden ikkunan aktivointi"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:195
+#: src/modules/conf_window_focus/e_int_config_focus.c:196
 msgid "No new windows get focus"
 msgstr "Uusi ikkuna ei aktivoidu"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:197
+#: src/modules/conf_window_focus/e_int_config_focus.c:198
 msgid "All new windows get focus"
 msgstr "Kaikki uudet ikkunat aktivoituvat"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:199
+#: src/modules/conf_window_focus/e_int_config_focus.c:200
 msgid "Only new dialogs get focus"
 msgstr "Vain uudet valintaikkunat aktivoituvat"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:201
+#: src/modules/conf_window_focus/e_int_config_focus.c:202
 msgid "Only new dialogs get focus if the parent has focus"
 msgstr "Vain ne uudet valintaikkunat, joilla on isäntä, aktivoituvat"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:205
+#: src/modules/conf_window_focus/e_int_config_focus.c:206
 msgid "Other Settings"
 msgstr "Muut asetukset"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:206
+#: src/modules/conf_window_focus/e_int_config_focus.c:207
 msgid "Always pass on caught click events to programs"
 msgstr "Välitä aina havaitut napsautustapahtumat ohjelmille"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:208
+#: src/modules/conf_window_focus/e_int_config_focus.c:209
 msgid "A click on a window always raises it"
 msgstr "Ikkunan napsauttaminen nostaa sen aina"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:210
+#: src/modules/conf_window_focus/e_int_config_focus.c:211
 msgid "A click in a window always focuses it"
 msgstr "Ikkunan napsautus aktivoi sen aina"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:212
+#: src/modules/conf_window_focus/e_int_config_focus.c:213
 msgid "Refocus last focused window on desktop switch"
 msgstr "Aktivoi uudelleen viimeksi aktivoitu ikkuna työpöytää vaihdettaessa"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:214
+#: src/modules/conf_window_focus/e_int_config_focus.c:215
 msgid "Revert focus when hiding or closing a window"
 msgstr "Palauta aktivointi ikkunan piiloutuessa tai sulkeutuessa"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:216
+#: src/modules/conf_window_focus/e_int_config_focus.c:217
 msgid "Slide pointer to a new focused window"
 msgstr "Liu'uta osoitin vasta aktivoituun ikkunaan"
 
-#: src/modules/conf_window_focus/e_mod_main.c:35
+#: src/modules/conf_window_focus/e_mod_main.c:21
 #: src/modules/wizard/page_060.c:26
 msgid "Window Focus"
 msgstr "Ikkunan aktivointi"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:54
-#: src/modules/conf_window_manipulation/e_mod_main.c:35
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:55
+#: src/modules/conf_window_manipulation/e_mod_main.c:21
 msgid "Window Geometry"
 msgstr "Ikkunageometria"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:129
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:130
 msgid "Resistance"
 msgstr "Vastustus"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:130
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:131
 msgid "Resist moving or resizing a window over an obstacle"
 msgstr "Vastusta ikkunan siirtämistä tai koon muuttamista esteen yli"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:132
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:133
 msgid "Resistance between windows:"
 msgstr "Ikkunoiden välinen vastustus:"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:140
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:141
 msgid "Resistance at the edge of the screen:"
 msgstr "Vastustus näytön reunalla:"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:148
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:149
 msgid "Resistance to desktop gadgets:"
 msgstr "Vastustus työpöydän vempaimiin:"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:160
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:161
 msgid "Keyboard move and resize"
 msgstr "Siirto ja koon muutos näppäimistöllä"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:161
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:162
 msgid "Automatically accept changes after:"
 msgstr "Hyväksy muutokset automaattisesti kun aikaa on kulunut:"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:165
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:166
 msgid "Move by:"
 msgstr "Painallus siirtää:"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:169
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:170
 msgid "Resize by:"
 msgstr "Painallus muuttaa kokoa:"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:44
-#: src/modules/conf_window_manipulation/e_mod_main.c:37
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:45
+#: src/modules/conf_window_manipulation/e_mod_main.c:23
 msgid "Window Maximize Policy"
 msgstr "Ikkunan maksimoinnin käytännöt"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:119
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:143
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:120
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:144
 msgid "Smart expansion"
 msgstr "Älykäs laajennus"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:123
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:147
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:124
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:148
 msgid "Fill available space"
 msgstr "Täytä käytettävissä oleva tila"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:138
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:139
 msgid "Maximize Policy"
 msgstr "Maksimoinnin käytäntö"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:151
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:152
 msgid "Maximize Directions"
 msgstr "Maksimoinnin suunta"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:157
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:158
 msgid "Both"
 msgstr "Molemmat"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:166
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:167
 msgid "Allow manipulation of maximized windows"
 msgstr ""
 
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:170
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:171
 msgid "Automatically move/resize windows on shelf autohide"
 msgstr "Siirrä ikkunaa/muuta ikkunan kokoa automaattisesti hyllyn piiloutuessa"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:48
-#: src/modules/conf_window_manipulation/e_mod_main.c:36
+#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:49
+#: src/modules/conf_window_manipulation/e_mod_main.c:22
 msgid "Window Stacking"
 msgstr "Ikkunoiden pinoaminen"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:121
-#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:140
+#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:122
+#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:141
 msgid "Automatically raise windows on mouse over"
 msgstr "Nosta ikkuna automaattisesti hiiren ollessa kohdalla"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:124
-#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:161
+#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:125
+#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:162
 msgid "Allow windows to be above fullscreen window"
 msgstr "Salli ikkunoiden olla Koko näytön -ikkunan päällä"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:139
+#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:140
 msgid "Autoraise"
 msgstr "Automaattinosto"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:142
+#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:143
 msgid "Delay before raising:"
 msgstr "Noston viive:"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:155
+#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:156
 msgid "Raise Window"
 msgstr "Nosta ikkuna"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:157
+#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:158
 msgid "Raise when starting to move or resize"
 msgstr "Nosta aloitettaessa siirto tai koon muuttaminen"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:159
+#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:160
 msgid "Raise when clicking to focus"
 msgstr "Nosta napsautettaessa aktivoitavaksi"
 
@@ -6103,7 +6128,7 @@ msgstr ""
 "puuttua<br>kernelin moduuleita tai ominaisuuksia, tai sinun CPU:si<br>ei "
 "yksinkertaisesti tue tätä ominaisuutta."
 
-#: src/modules/cpufreq/e_mod_main.c:432
+#: src/modules/cpufreq/e_mod_main.c:436
 msgid ""
 "There was an error trying to set the<br>cpu frequency setting via the "
 "module's<br>setfreq utility."
@@ -6203,23 +6228,23 @@ msgstr "Hyvin vaalea"
 msgid "Dropshadow"
 msgstr "Ikkunavarjo"
 
-#: src/modules/exebuf/e_mod_main.c:48 src/modules/exebuf/e_mod_main.c:69
+#: src/modules/exebuf/e_mod_main.c:34 src/modules/exebuf/e_mod_main.c:55
 msgid "Run Command Dialog"
 msgstr "Suorita komento -valintaikkuna"
 
-#: src/modules/fileman/e_mod_main.c:310 src/modules/illume/e_mod_win.c:180
+#: src/modules/fileman/e_mod_main.c:318 src/modules/illume/e_mod_win.c:180
 msgid "Home"
 msgstr ""
 
-#: src/modules/fileman/e_mod_main.c:322
+#: src/modules/fileman/e_mod_main.c:330
 msgid "Favorites"
 msgstr "Suosikit"
 
-#: src/modules/fileman/e_mod_main.c:334
+#: src/modules/fileman/e_mod_main.c:342
 msgid "Root"
 msgstr "Root"
 
-#: src/modules/fileman/e_mod_main.c:431
+#: src/modules/fileman/e_mod_main.c:439
 msgid ""
 "Fileman Module Settings data needed upgrading. Your old configuration<br>has "
 "been wiped and a new set of defaults initialized. This<br>will happen "
@@ -6238,7 +6263,7 @@ msgstr ""
 "asettaa asetukset uudelleen<br>mieleiseksesi. Anteeksi asetuksiesi "
 "sorkkiminen.<br>"
 
-#: src/modules/fileman/e_mod_main.c:444
+#: src/modules/fileman/e_mod_main.c:452
 msgid ""
 "Your Fileman Module configuration is NEWER than Fileman Module version. This "
 "is very<br>strange. This should not happen unless you downgraded<br>the "
@@ -6254,72 +6279,72 @@ msgstr ""
 "ja<br> varotoimena asetuksesi on palautettu oletus arvoihin.<br>Pahoittelut "
 "aiheutetusta vaivasta.<br>"
 
-#: src/modules/fileman/e_mod_main.c:513
+#: src/modules/fileman/e_mod_main.c:521
 msgid "Fileman Settings Updated"
 msgstr "Filemanin asetukset päivitetty"
 
-#: src/modules/fileman/e_mod_config.c:95
+#: src/modules/fileman/e_mod_config.c:96
 msgid "Fileman Settings"
 msgstr "Filemanin asetukset"
 
-#: src/modules/fileman/e_mod_config.c:227
+#: src/modules/fileman/e_mod_config.c:228
 msgid "Icon Size"
 msgstr "Kuvakkeen koko"
 
-#: src/modules/fileman/e_mod_config.c:233
+#: src/modules/fileman/e_mod_config.c:234
 msgid "View"
 msgstr "Näkymä"
 
-#: src/modules/fileman/e_mod_config.c:236
+#: src/modules/fileman/e_mod_config.c:237
 msgid "Open Dirs In Place"
 msgstr "Avaa hakemistot samaan ikkunaan"
 
-#: src/modules/fileman/e_mod_config.c:240
+#: src/modules/fileman/e_mod_config.c:241
 msgid "Sort Dirs First"
 msgstr "Lajittele hakemistot ensin"
 
-#: src/modules/fileman/e_mod_config.c:243
+#: src/modules/fileman/e_mod_config.c:244
 msgid "Case Sensitive"
 msgstr "Huomioi kirjainkoko"
 
-#: src/modules/fileman/e_mod_config.c:247
+#: src/modules/fileman/e_mod_config.c:248
 msgid "Use Single Click"
 msgstr "Käytä kertanapsautusta"
 
-#: src/modules/fileman/e_mod_config.c:250
+#: src/modules/fileman/e_mod_config.c:251
 msgid "Use Alternate Selection Modifiers"
 msgstr "Käytä vaihtoehtoisia muuntonäppäimiä"
 
-#: src/modules/fileman/e_mod_config.c:254
+#: src/modules/fileman/e_mod_config.c:255
 msgid "Show Icon Extension"
 msgstr "Näytä kuvakelaajennus"
 
-#: src/modules/fileman/e_mod_config.c:257
+#: src/modules/fileman/e_mod_config.c:258
 msgid "Show Full Path"
 msgstr "Näytä koko polku"
 
-#: src/modules/fileman/e_mod_config.c:260
+#: src/modules/fileman/e_mod_config.c:261
 msgid "Show Desktop Icons"
 msgstr "Näytä työpöydän kuvakkeet"
 
-#: src/modules/fileman/e_mod_config.c:263
+#: src/modules/fileman/e_mod_config.c:264
 msgid "Show Toolbar"
 msgstr "Näytä työkalurivi"
 
-#: src/modules/fileman/e_mod_config.c:267
+#: src/modules/fileman/e_mod_config.c:268
 #: src/modules/gadman/e_mod_gadman.c:775
 msgid "Behavior"
 msgstr "Käytös"
 
-#: src/modules/fileman/e_mod_config.c:270
+#: src/modules/fileman/e_mod_config.c:271
 msgid "Show HAL icons on desktop"
 msgstr "Näytä HAL-kuvakkeet työpöydällä"
 
-#: src/modules/fileman/e_mod_config.c:273
+#: src/modules/fileman/e_mod_config.c:274
 msgid "Mount volumes on insert"
 msgstr ""
 
-#: src/modules/fileman/e_mod_config.c:276
+#: src/modules/fileman/e_mod_config.c:277
 msgid "Open filemanager on mount"
 msgstr "Avaa tiedostonhallinta liitettäessä"
 
@@ -6504,20 +6529,20 @@ msgstr "Lisää muita vempaimia"
 msgid "Show/hide gadgets"
 msgstr "Näytä/piilota vempaimet"
 
-#: src/modules/winlist/e_mod_main.c:48 src/modules/winlist/e_mod_main.c:50
-#: src/modules/winlist/e_mod_main.c:63 src/modules/winlist/e_mod_main.c:64
+#: src/modules/winlist/e_mod_main.c:34 src/modules/winlist/e_mod_main.c:36
+#: src/modules/winlist/e_mod_main.c:49 src/modules/winlist/e_mod_main.c:50
 msgid "Window : List"
 msgstr "Ikkuna : Lista"
 
-#: src/modules/winlist/e_mod_main.c:48 src/modules/winlist/e_mod_main.c:64
+#: src/modules/winlist/e_mod_main.c:34 src/modules/winlist/e_mod_main.c:50
 msgid "Next Window"
 msgstr "Seuraava ikkuna"
 
-#: src/modules/winlist/e_mod_main.c:50 src/modules/winlist/e_mod_main.c:63
+#: src/modules/winlist/e_mod_main.c:36 src/modules/winlist/e_mod_main.c:49
 msgid "Previous Window"
 msgstr "Edellinen ikkuna"
 
-#: src/modules/winlist/e_winlist.c:141
+#: src/modules/winlist/e_winlist.c:147
 msgid "Select a window"
 msgstr "Valitse ikkuna"
 
@@ -6574,23 +6599,23 @@ msgstr "Haluatko varmasti poistaa palkin lähteen?"
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:797
+#: src/modules/ibar/e_mod_main.c:793
 msgid "Change Icon Properties"
 msgstr "Muuta kuvakkeen ominaisuuksia"
 
-#: src/modules/ibar/e_mod_main.c:802
+#: src/modules/ibar/e_mod_main.c:798
 msgid "Remove Icon"
 msgstr "Poista kuvake"
 
-#: src/modules/ibar/e_mod_main.c:812
+#: src/modules/ibar/e_mod_main.c:808
 msgid "Add An Icon"
 msgstr "Lisää kuvake"
 
-#: src/modules/ibar/e_mod_main.c:819
+#: src/modules/ibar/e_mod_main.c:815
 msgid "Create New Icon"
 msgstr "Luo uusi kuvake"
 
-#: src/modules/ibar/e_mod_main.c:835
+#: src/modules/ibar/e_mod_main.c:831
 msgid "Add Application"
 msgstr "Lisää sovellus"
 
@@ -6634,7 +6659,7 @@ msgstr "Näytä kaikkien työpöytien ikkunat"
 msgid "Show windows from active desktop"
 msgstr "Näytä aktiivisen työpöydän ikkunat"
 
-#: src/modules/ibox/e_mod_main.c:227
+#: src/modules/ibox/e_mod_main.c:221
 msgid "IBox"
 msgstr "IBox"
 
@@ -6752,23 +6777,23 @@ msgstr ""
 msgid "Button %i"
 msgstr "Painike %i"
 
-#: src/modules/pager/e_mod_main.c:2850
+#: src/modules/pager/e_mod_main.c:2819
 msgid "Show Pager Popup"
 msgstr "Näytä sivuttajan ponnahdusikkuna"
 
-#: src/modules/pager/e_mod_main.c:2857 src/modules/pager/e_mod_main.c:2896
+#: src/modules/pager/e_mod_main.c:2826 src/modules/pager/e_mod_main.c:2865
 msgid "Popup Desk Right"
 msgstr "Oikealle työpöydälle ponnahdusikkunasta"
 
-#: src/modules/pager/e_mod_main.c:2859 src/modules/pager/e_mod_main.c:2897
+#: src/modules/pager/e_mod_main.c:2828 src/modules/pager/e_mod_main.c:2866
 msgid "Popup Desk Left"
 msgstr "Vasemmalle työpöydälle ponnahdusikkunasta"
 
-#: src/modules/pager/e_mod_main.c:2861 src/modules/pager/e_mod_main.c:2898
+#: src/modules/pager/e_mod_main.c:2830 src/modules/pager/e_mod_main.c:2867
 msgid "Popup Desk Up"
 msgstr "Ylemmälle työpöydälle ponnahdusikkunasta"
 
-#: src/modules/pager/e_mod_main.c:2863 src/modules/pager/e_mod_main.c:2899
+#: src/modules/pager/e_mod_main.c:2832 src/modules/pager/e_mod_main.c:2868
 msgid "Popup Desk Down"
 msgstr "Alemmalle työpöydälle ponnahdusikkunasta"
 
@@ -6784,115 +6809,115 @@ msgstr "Järjestelmän hallinta"
 msgid "System Controls"
 msgstr "Järjestelmän hallinta"
 
-#: src/modules/temperature/e_mod_config.c:63
+#: src/modules/temperature/e_mod_config.c:62
 msgid "Temperature Settings"
 msgstr "Lämpötila-asetukset"
 
-#: src/modules/temperature/e_mod_config.c:248
-#: src/modules/temperature/e_mod_config.c:352
+#: src/modules/temperature/e_mod_config.c:239
+#: src/modules/temperature/e_mod_config.c:342
 msgid "Display Units"
 msgstr "Näytä yksiköt"
 
-#: src/modules/temperature/e_mod_config.c:250
-#: src/modules/temperature/e_mod_config.c:354
+#: src/modules/temperature/e_mod_config.c:241
+#: src/modules/temperature/e_mod_config.c:344
 msgid "Celsius"
 msgstr "Celsius"
 
-#: src/modules/temperature/e_mod_config.c:252
-#: src/modules/temperature/e_mod_config.c:356
+#: src/modules/temperature/e_mod_config.c:243
+#: src/modules/temperature/e_mod_config.c:346
 msgid "Fahrenheit"
 msgstr "Fahrenheit"
 
-#: src/modules/temperature/e_mod_config.c:256
-#: src/modules/temperature/e_mod_config.c:378
+#: src/modules/temperature/e_mod_config.c:247
+#: src/modules/temperature/e_mod_config.c:368
 msgid "Check Interval"
 msgstr "Tarkistusaikaväli"
 
-#: src/modules/temperature/e_mod_config.c:258
+#: src/modules/temperature/e_mod_config.c:249
 msgid "Fast"
 msgstr "Nopea"
 
-#: src/modules/temperature/e_mod_config.c:262
+#: src/modules/temperature/e_mod_config.c:253
 msgid "Slow"
 msgstr "Hidas"
 
-#: src/modules/temperature/e_mod_config.c:264
+#: src/modules/temperature/e_mod_config.c:255
 msgid "Very Slow"
 msgstr "Hyvin hidas"
 
-#: src/modules/temperature/e_mod_config.c:271
-#: src/modules/temperature/e_mod_config.c:295
-#: src/modules/temperature/e_mod_config.c:396
-#: src/modules/temperature/e_mod_config.c:408
+#: src/modules/temperature/e_mod_config.c:261
+#: src/modules/temperature/e_mod_config.c:285
+#: src/modules/temperature/e_mod_config.c:386
+#: src/modules/temperature/e_mod_config.c:398
 msgid "High Temperature"
 msgstr "Korkea lämpötila"
 
-#: src/modules/temperature/e_mod_config.c:274
+#: src/modules/temperature/e_mod_config.c:264
 msgid "200 F"
 msgstr "200 F"
 
-#: src/modules/temperature/e_mod_config.c:276
+#: src/modules/temperature/e_mod_config.c:266
 msgid "150 F"
 msgstr "150 F"
 
-#: src/modules/temperature/e_mod_config.c:278
-#: src/modules/temperature/e_mod_config.c:287
+#: src/modules/temperature/e_mod_config.c:268
+#: src/modules/temperature/e_mod_config.c:277
 msgid "110 F"
 msgstr "110 F"
 
-#: src/modules/temperature/e_mod_config.c:282
-#: src/modules/temperature/e_mod_config.c:306
-#: src/modules/temperature/e_mod_config.c:401
-#: src/modules/temperature/e_mod_config.c:413
+#: src/modules/temperature/e_mod_config.c:272
+#: src/modules/temperature/e_mod_config.c:296
+#: src/modules/temperature/e_mod_config.c:391
+#: src/modules/temperature/e_mod_config.c:403
 msgid "Low Temperature"
 msgstr "Matala lämpötila"
 
-#: src/modules/temperature/e_mod_config.c:285
+#: src/modules/temperature/e_mod_config.c:275
 msgid "130 F"
 msgstr "130 F"
 
-#: src/modules/temperature/e_mod_config.c:289
+#: src/modules/temperature/e_mod_config.c:279
 msgid "90 F"
 msgstr "90 F"
 
-#: src/modules/temperature/e_mod_config.c:298
+#: src/modules/temperature/e_mod_config.c:288
 msgid "93 C"
 msgstr "93 C"
 
-#: src/modules/temperature/e_mod_config.c:300
+#: src/modules/temperature/e_mod_config.c:290
 msgid "65 C"
 msgstr "65 C"
 
-#: src/modules/temperature/e_mod_config.c:302
-#: src/modules/temperature/e_mod_config.c:311
+#: src/modules/temperature/e_mod_config.c:292
+#: src/modules/temperature/e_mod_config.c:301
 msgid "43 C"
 msgstr "43 C"
 
-#: src/modules/temperature/e_mod_config.c:309
+#: src/modules/temperature/e_mod_config.c:299
 msgid "55 C"
 msgstr "55 C"
 
-#: src/modules/temperature/e_mod_config.c:313
+#: src/modules/temperature/e_mod_config.c:303
 msgid "32 C"
 msgstr "32 C"
 
-#: src/modules/temperature/e_mod_config.c:367
+#: src/modules/temperature/e_mod_config.c:357
 msgid "Sensors"
 msgstr "Sensorit"
 
-#: src/modules/temperature/e_mod_config.c:397
-#: src/modules/temperature/e_mod_config.c:402
+#: src/modules/temperature/e_mod_config.c:387
+#: src/modules/temperature/e_mod_config.c:392
 #, c-format
 msgid "%1.0f F"
 msgstr "%1.0f F"
 
-#: src/modules/temperature/e_mod_config.c:409
-#: src/modules/temperature/e_mod_config.c:414
+#: src/modules/temperature/e_mod_config.c:399
+#: src/modules/temperature/e_mod_config.c:404
 #, c-format
 msgid "%1.0f C"
 msgstr "%1.0f C"
 
-#: src/modules/temperature/e_mod_main.c:147
+#: src/modules/temperature/e_mod_main.c:144
 msgid "Temperature"
 msgstr "Lämpötila"
 
@@ -6900,7 +6925,7 @@ msgstr "Lämpötila"
 msgid "Next"
 msgstr "Seuraava"
 
-#: src/modules/wizard/e_wizard.c:281
+#: src/modules/wizard/e_wizard.c:280
 msgid "Welcome to Enlightenment"
 msgstr "Tervetuloa Enlightenmentiin"
 
@@ -7014,7 +7039,7 @@ msgstr "Vasen:"
 msgid "Right:"
 msgstr "Oikea:"
 
-#: src/modules/mixer/app_mixer.c:412 src/modules/mixer/e_mod_main.c:592
+#: src/modules/mixer/app_mixer.c:412 src/modules/mixer/e_mod_main.c:593
 msgid "Mute"
 msgstr "Vaimenna"
 
@@ -7054,11 +7079,11 @@ msgstr "Mikserimoduulin asetukset"
 msgid "Mixer Settings Updated"
 msgstr "Mikseriasetukset päivitetty"
 
-#: src/modules/mixer/e_mod_main.c:602
+#: src/modules/mixer/e_mod_main.c:603 src/modules/connman/e_mod_main.c:1084
 msgid "Controls"
 msgstr "Säätimet"
 
-#: src/modules/mixer/e_mod_main.c:1157
+#: src/modules/mixer/e_mod_main.c:1158
 msgid ""
 "Mixer Module Settings data changed.<br>Your old configuration has been "
 "replaced with new default.<br>Sorry for the inconvenience."
@@ -7066,45 +7091,170 @@ msgstr ""
 "Mikserimoduulin asetustiedot ovat muuttuneet.<br>Aiemmat asetukset on "
 "korvattu uusilla oletusarvoilla.<br>Pahoittelut aiheutuneesta haitasta."
 
-#: src/modules/connman/e_mod_main.c:214
-msgid "Connection Manager"
-msgstr "Yhteyksien hallinta"
+#: src/modules/connman/e_mod_main.c:92
+msgid "Connman Server Operation Failed"
+msgstr ""
 
-#: src/modules/connman/e_mod_main.c:731
-msgid "Network Connection Settings"
+#: src/modules/connman/e_mod_main.c:93
+#, c-format
+msgid ""
+"Could not execute remote operation:<br>%s<br>Server Error <hilight>%s:</"
+"hilight> %s"
+msgstr ""
+
+#: src/modules/connman/e_mod_main.c:102
+msgid "Connman Operation Failed"
+msgstr ""
+
+#: src/modules/connman/e_mod_main.c:103
+#, c-format
+msgid "Could not execute local operation:<br>%s"
+msgstr ""
+
+#: src/modules/connman/e_mod_main.c:119 src/modules/connman/e_mod_main.c:146
+#: src/modules/connman/e_mod_main.c:905 src/modules/connman/e_mod_main.c:1615
+msgid "Cannot toggle system's offline mode."
+msgstr ""
+
+#: src/modules/connman/e_mod_main.c:130 src/modules/connman/e_mod_main.c:895
+msgid "ConnMan Daemon is not running."
+msgstr ""
+
+#: src/modules/connman/e_mod_main.c:137
+msgid "Query system's offline mode."
+msgstr ""
+
+#: src/modules/connman/e_mod_main.c:263
+msgid "ConnMan needs your passphrase"
+msgstr ""
+
+#: src/modules/connman/e_mod_main.c:275
+#, c-format
+msgid ""
+"Connection Manager needs your passphrase for <br>the service <hilight>%s</"
+"hilight>"
+msgstr ""
+
+#: src/modules/connman/e_mod_main.c:299
+msgid "Show passphrase as clear text"
+msgstr ""
+
+#: src/modules/connman/e_mod_main.c:315
+msgid "Ok"
+msgstr ""
+
+#: src/modules/connman/e_mod_main.c:513 src/modules/connman/e_mod_main.c:526
+msgid "Disconnect from network service."
+msgstr ""
+
+#: src/modules/connman/e_mod_main.c:556 src/modules/connman/e_mod_main.c:615
+#: src/modules/connman/e_mod_main.c:640
+msgid "Service does not exist anymore"
+msgstr ""
+
+#: src/modules/connman/e_mod_main.c:564 src/modules/connman/e_mod_main.c:569
+#: src/modules/connman/e_mod_main.c:596
+msgid "Connect to network service."
+msgstr ""
+
+#: src/modules/connman/e_mod_main.c:662
+msgid "Could not set service's passphrase"
+msgstr ""
+
+#: src/modules/connman/e_mod_main.c:1074
+#, fuzzy
+msgid "Offline mode"
+msgstr "Offline-tila"
+
+#: src/modules/connman/e_mod_main.c:1240
+msgid "No ConnMan"
+msgstr ""
+
+#: src/modules/connman/e_mod_main.c:1242
+msgid "No ConnMan server found."
+msgstr ""
+
+#: src/modules/connman/e_mod_main.c:1255
+msgid "Offline mode: all radios are turned off"
+msgstr ""
+
+#: src/modules/connman/e_mod_main.c:1280
+#, fuzzy
+msgid "No Connection"
 msgstr "Verkkoyhteyden asetukset"
 
-#: src/modules/connman/e_mod_main.c:737
-msgid "Network Device"
-msgstr "Verkkolaite"
+#: src/modules/connman/e_mod_main.c:1284
+#, fuzzy
+msgid "Not connected"
+msgstr "Suojattu"
 
-#: src/modules/connman/e_mod_main.c:742
-msgid "Wifi"
-msgstr "Wifi"
+#: src/modules/connman/e_mod_main.c:1287 src/modules/connman/e_mod_main.c:1655
+msgid "disconnect"
+msgstr ""
 
-#: src/modules/connman/e_mod_main.c:745
-msgid "LAN"
-msgstr "Lähiverkko"
+#: src/modules/connman/e_mod_main.c:1310
+#, fuzzy
+msgid "Unknown Name"
+msgstr "Tuntematon tilavuus"
 
-#: src/modules/connman/e_mod_main.c:748
-msgid "Specific Device"
-msgstr "Määritelty laite"
+#: src/modules/connman/e_mod_main.c:1319
+#, fuzzy
+msgid "No error"
+msgstr "Liitosvirhe"
 
-#: src/modules/connman/e_mod_main.c:769
-msgid "Networks"
-msgstr "Verkot"
+#: src/modules/connman/e_mod_main.c:1651
+#, fuzzy
+msgid "idle"
+msgstr "Vierekkäin"
 
-#: src/modules/systray/e_mod_main.c:891
+#: src/modules/connman/e_mod_main.c:1652
+#, fuzzy
+msgid "association"
+msgstr "Vaihtumat"
+
+#: src/modules/connman/e_mod_main.c:1653
+#, fuzzy
+msgid "configuration"
+msgstr "Asetukset"
+
+#: src/modules/connman/e_mod_main.c:1654
+msgid "ready"
+msgstr ""
+
+#: src/modules/connman/e_mod_main.c:1656
+#, fuzzy
+msgid "failure"
+msgstr "Muokkaa"
+
+#: src/modules/systray/e_mod_main.c:895
 msgid "Another systray exists"
 msgstr "Yksi ilmoitusalue on jo olemassa"
 
-#: src/modules/systray/e_mod_main.c:892
+#: src/modules/systray/e_mod_main.c:896
 msgid "There can be only one systray gadget and another one already exists."
 msgstr "Käytössä voi olla vain yksi ilmoitusalue ja sellainen on jo olemassa."
 
-#: src/modules/systray/e_mod_main.c:1094
+#: src/modules/systray/e_mod_main.c:1098
 msgid "Systray"
 msgstr "Ilmoitusalue"
+
+#~ msgid "Connection Manager"
+#~ msgstr "Yhteyksien hallinta"
+
+#~ msgid "Network Device"
+#~ msgstr "Verkkolaite"
+
+#~ msgid "Wifi"
+#~ msgstr "Wifi"
+
+#~ msgid "LAN"
+#~ msgstr "Lähiverkko"
+
+#~ msgid "Specific Device"
+#~ msgstr "Määritelty laite"
+
+#~ msgid "Networks"
+#~ msgstr "Verkot"
 
 #~ msgid ""
 #~ "You are trying to ask Enlightenment to remember to apply<br>properties "
@@ -7154,9 +7304,6 @@ msgstr "Ilmoitusalue"
 
 #~ msgid "Configure Toolbar Contents"
 #~ msgstr "Muokkaa työkalupalkin sisältöä"
-
-#~ msgid "Configure"
-#~ msgstr "Muokkaa"
 
 #~ msgid "Internal Windows"
 #~ msgstr "Sisäiset ikkunat"
@@ -7248,9 +7395,6 @@ msgstr "Ilmoitusalue"
 
 #~ msgid "Configuration Upgraded"
 #~ msgstr "Asetukset päivitetty"
-
-#~ msgid "Configuration"
-#~ msgstr "Asetukset"
 
 #~ msgid "Toolbar Configuration"
 #~ msgstr "Työkalupalkin asetukset"

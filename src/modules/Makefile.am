@@ -324,6 +324,8 @@ gadman \
 mixer \
 connman \
 illume \
+illume2 \
+illume-bluetooth \
 illume-home \
 illume-softkey \
 illume-keyboard \
