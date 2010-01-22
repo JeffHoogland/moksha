@@ -436,7 +436,6 @@ _il_home_cb_selected(void *data, Evas_Object *obj, void *event)
 
    if (!(hwin = data)) return;
    if (!(selected = e_fm2_selected_list_get(hwin->o_fm))) return;
-   printf("Selected Count: %d\n", eina_list_count(selected));
    EINA_LIST_FREE(selected, ici) 
      {
         Efreet_Desktop *desktop;
@@ -445,7 +444,6 @@ _il_home_cb_selected(void *data, Evas_Object *obj, void *event)
           {
              if (ici->real_link) 
                {
-                  printf("Selected: %s\n", ici->real_link);
                   desktop = efreet_desktop_get(ici->real_link);
                   if (desktop) 
                     _il_home_desktop_run(hwin, desktop);
