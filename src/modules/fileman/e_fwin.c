@@ -143,7 +143,7 @@ static void _e_fwin_op_registry_abort_cb(void *data, Evas_Object *obj, const cha
 static Eina_List *fwins = NULL;
 
 /* externally accessible functions */
-EAPI int
+int
 e_fwin_init(void)
 {
    eina_init();
@@ -151,7 +151,7 @@ e_fwin_init(void)
    return 1;
 }
 
-EAPI int
+int
 e_fwin_shutdown(void)
 {
    E_Fwin *fwin;
@@ -167,13 +167,13 @@ e_fwin_shutdown(void)
 /* FIXME: this opens a new window - we need a way to inherit a zone as the
  * "fwin" window
  */
-EAPI void
+void
 e_fwin_new(E_Container *con, const char *dev, const char *path)
 {
    _e_fwin_new(con, dev, path);
 }
 
-EAPI void
+void
 e_fwin_zone_new(E_Zone *zone, const char *dev, const char *path)
 {
    E_Fwin *fwin;
@@ -263,7 +263,7 @@ e_fwin_zone_new(E_Zone *zone, const char *dev, const char *path)
    fwin->cur_page = fwin->pages->data;
 }
 
-EAPI void
+void
 e_fwin_all_unsel(void *data)
 {
    E_Fwin *fwin;
@@ -274,7 +274,7 @@ e_fwin_all_unsel(void *data)
    e_fm2_all_unsel(fwin->cur_page->fm_obj);
 }
 
-EAPI void 
+void 
 e_fwin_zone_shutdown(E_Zone *zone) 
 {
    Eina_List *f;
@@ -288,7 +288,7 @@ e_fwin_zone_shutdown(E_Zone *zone)
      }
 }
 
-EAPI void 
+void 
 e_fwin_reload_all(void) 
 {
    Eina_List *l, *ll, *lll;
@@ -340,7 +340,7 @@ e_fwin_reload_all(void)
 	       }
 }
 
-EAPI int
+int
 e_fwin_zone_find(E_Zone *zone)
 {
    Eina_List *f;

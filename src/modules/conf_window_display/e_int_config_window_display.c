@@ -37,7 +37,7 @@ struct _E_Config_Dialog_Data
 Eina_List *shading_list = NULL;
 
 /* a nice easy setup function that does the dirty work */
-EAPI E_Config_Dialog *
+E_Config_Dialog *
 e_int_config_window_display(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd;

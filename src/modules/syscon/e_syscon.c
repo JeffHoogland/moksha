@@ -29,20 +29,20 @@ static int inevas = 0;
 static Ecore_Timer *deftimer = NULL;
 
 /* externally accessible functions */
-EAPI int
+int
 e_syscon_init(void)
 {
    return 1;
 }
 
-EAPI int
+int
 e_syscon_shutdown(void)
 {
    e_syscon_hide();
    return 1;
 }
 
-EAPI int
+int
 e_syscon_show(E_Zone *zone, const char *defact)
 {
    Evas_Object *o, *o2;
@@ -281,7 +281,7 @@ e_syscon_show(E_Zone *zone, const char *defact)
    return 1;
 }
 
-EAPI void
+void
 e_syscon_hide(void)
 {
    if (!popup) return;

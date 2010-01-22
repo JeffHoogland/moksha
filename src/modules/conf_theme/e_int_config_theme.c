@@ -71,7 +71,7 @@ static const char *parts_list[] =
      NULL
 };
 
-EAPI E_Config_Dialog *
+E_Config_Dialog *
 e_int_config_theme(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd;
@@ -94,7 +94,7 @@ e_int_config_theme(E_Container *con, const char *params __UNUSED__)
    return cfd;
 }
 
-EAPI void
+void
 e_int_config_theme_import_done(E_Config_Dialog *dia)
 {
    E_Config_Dialog_Data *cfdata;
@@ -103,7 +103,7 @@ e_int_config_theme_import_done(E_Config_Dialog *dia)
    cfdata->win_import = NULL;
 }
 
-EAPI void
+void
 e_int_config_theme_web_done(E_Config_Dialog *dia)
 {
    E_Config_Dialog_Data *cfdata;
@@ -112,7 +112,7 @@ e_int_config_theme_web_done(E_Config_Dialog *dia)
    cfdata->dia_web = NULL;
 }
 
-EAPI void
+void
 e_int_config_theme_update(E_Config_Dialog *dia, char *file)
 {
    E_Config_Dialog_Data *cfdata;

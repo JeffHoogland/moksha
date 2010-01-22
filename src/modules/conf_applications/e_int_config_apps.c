@@ -39,7 +39,7 @@ static void _cb_down(void *data, void *data2);
 static int _save_menu(E_Config_Dialog_Data *cfdata);
 static int _save_order(E_Config_Dialog_Data *cfdata);
 
-EAPI E_Config_Dialog *
+E_Config_Dialog *
 e_int_config_apps_favs(E_Container *con, const char *params __UNUSED__) 
 {
    E_Config_Data *data;
@@ -55,7 +55,7 @@ e_int_config_apps_favs(E_Container *con, const char *params __UNUSED__)
    return _create_dialog(con, data);
 }
 
-EAPI E_Config_Dialog *
+E_Config_Dialog *
 e_int_config_apps_add(E_Container *con, const char *params __UNUSED__) 
 {
    E_Desktop_Edit *ed;
@@ -93,7 +93,7 @@ e_int_config_apps_add(E_Container *con, const char *params __UNUSED__)
    return ed->cfd;
 }
 
-EAPI E_Config_Dialog *
+E_Config_Dialog *
 e_int_config_apps_ibar(E_Container *con, const char *params __UNUSED__) 
 {
    E_Config_Data *data;
@@ -109,7 +109,7 @@ e_int_config_apps_ibar(E_Container *con, const char *params __UNUSED__)
    return _create_dialog(con, data);
 }
 
-EAPI E_Config_Dialog *
+E_Config_Dialog *
 e_int_config_apps_ibar_other(E_Container *con, const char *path) 
 {
    E_Config_Data *data;
@@ -124,7 +124,7 @@ e_int_config_apps_ibar_other(E_Container *con, const char *path)
    return _create_dialog(con, data);
 }
 
-EAPI E_Config_Dialog *
+E_Config_Dialog *
 e_int_config_apps_startup(E_Container *con, const char *params __UNUSED__) 
 {
    E_Config_Data *data;
@@ -140,7 +140,7 @@ e_int_config_apps_startup(E_Container *con, const char *params __UNUSED__)
    return _create_dialog(con, data);
 }
 
-EAPI E_Config_Dialog *
+E_Config_Dialog *
 e_int_config_apps_restart(E_Container *con, const char *params __UNUSED__) 
 {
    E_Config_Data *data;

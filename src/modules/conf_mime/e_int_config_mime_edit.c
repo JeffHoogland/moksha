@@ -44,7 +44,7 @@ struct _E_Config_Dialog_Data
 #define IFDUP(src, dst) if (src) dst = strdup(src); else dst = NULL;
 #define IFFREE(src) if (src) free(src); src = NULL;
 
-EAPI E_Config_Dialog *
+E_Config_Dialog *
 e_int_config_mime_edit(E_Config_Mime_Icon *data, void *data2) 
 {
    E_Config_Dialog *cfd;

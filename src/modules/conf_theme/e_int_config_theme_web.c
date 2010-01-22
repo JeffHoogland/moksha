@@ -104,7 +104,7 @@ _web_apply(const char *path, void *data)
    if ((a) && (a->func.go)) a->func.go(NULL, NULL);
 }
 
-EAPI E_Dialog *
+E_Dialog *
 e_int_config_theme_web(E_Config_Dialog *parent)
 {
    E_Dialog *dia;

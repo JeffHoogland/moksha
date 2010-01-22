@@ -17,7 +17,7 @@ struct _E_Config_Dialog_Data
    double threshold;
 };
 
-EAPI E_Config_Dialog *
+E_Config_Dialog *
 e_int_config_mouse(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd;

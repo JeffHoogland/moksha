@@ -19,7 +19,7 @@ struct _E_Config_Dialog_Data
    Evas_Object *o_composite;
 };
 
-EAPI E_Config_Dialog *
+E_Config_Dialog *
 e_int_config_engine(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd;

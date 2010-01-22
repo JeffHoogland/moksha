@@ -16,7 +16,7 @@ struct _E_Config_Dialog_Data
    int remember_fm_wins;
 };
 
-EAPI E_Config_Dialog *
+E_Config_Dialog *
 e_int_config_remembers(E_Container *con, const char *params __UNUSED__) 
 {
    E_Config_Dialog *cfd;

@@ -87,7 +87,7 @@ struct _E_Config_Dialog_Data
    E_Win *win_import;
 };
 
-EAPI E_Config_Dialog *
+E_Config_Dialog *
 e_int_config_imc(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd;
@@ -748,7 +748,7 @@ _e_imc_file_name_new_get(void)
 /** End IMC Utility Functions **/
 
 /** Import Dialog **/
-EAPI void
+void
 e_int_config_imc_import_done(E_Config_Dialog *dia)
 {
    E_Config_Dialog_Data *cfdata;
@@ -769,7 +769,7 @@ _cb_import(void *data1, void *data2)
      cfdata->win_import = e_int_config_imc_import(cfdata->cfd);
 }
 
-EAPI void
+void
 e_int_config_imc_update(E_Config_Dialog *dia, const char *file)
 {
    E_Config_Dialog_Data *cfdata;

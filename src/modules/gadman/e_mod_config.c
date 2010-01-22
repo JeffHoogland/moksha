@@ -34,7 +34,7 @@ static void _cb_fm_change(void *data, Evas_Object *obj, void *event_info);
 static void _cb_fm_sel_change(void *data, Evas_Object *obj, void *event_info);
 static void _cb_button_up(void *data1, void *data2);
 
-EAPI E_Config_Dialog *
+E_Config_Dialog *
 _config_gadman_module(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd;

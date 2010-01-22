@@ -60,7 +60,7 @@ static int  _e_configure_module_update_cb(void *data, int type, void *event);
 
 static E_Configure *_e_configure = NULL;
 
-EAPI void
+void
 e_configure_show(E_Container *con) 
 {
    E_Configure *eco;
@@ -205,7 +205,7 @@ e_configure_show(E_Container *con)
    _e_configure = eco;
 }
 
-EAPI void 
+void 
 e_configure_del(void) 
 {
    if (_e_configure) e_object_del(E_OBJECT(_e_configure));

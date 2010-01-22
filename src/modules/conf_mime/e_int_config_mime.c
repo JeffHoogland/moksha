@@ -48,7 +48,7 @@ static void         _cb_config       (void *data, void *data2);
 
 Eina_List *types = NULL;
 
-EAPI E_Config_Dialog *
+E_Config_Dialog *
 e_int_config_mime(E_Container *con, const char *params __UNUSED__) 
 {
    E_Config_Dialog *cfd;
@@ -66,7 +66,7 @@ e_int_config_mime(E_Container *con, const char *params __UNUSED__)
    return cfd;
 }
 
-EAPI void
+void
 e_int_config_mime_edit_done(void *data) 
 {
    E_Config_Dialog_Data *cfdata;

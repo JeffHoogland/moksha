@@ -21,7 +21,7 @@ struct _E_Config_Dialog_Data
    char *splash;
 };
 
-EAPI E_Config_Dialog *
+E_Config_Dialog *
 e_int_config_startup(E_Container *con, const char *params __UNUSED__) 
 {
    E_Config_Dialog *cfd;

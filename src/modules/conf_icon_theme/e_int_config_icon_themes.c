@@ -24,7 +24,7 @@ struct _E_Config_Dialog_Data
    Ecore_Idler *fill_icon_themes_delayed;
 };
 
-EAPI E_Config_Dialog *
+E_Config_Dialog *
 e_int_config_icon_themes(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd;

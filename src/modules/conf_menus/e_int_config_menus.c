@@ -24,7 +24,7 @@ struct _E_Config_Dialog_Data
    int menu_autoscroll_cursor_margin;
 };
 
-EAPI E_Config_Dialog *
+E_Config_Dialog *
 e_int_config_menus(E_Container *con, const char *params __UNUSED__) 
 {
    E_Config_Dialog *cfd;

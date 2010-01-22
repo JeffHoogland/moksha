@@ -27,7 +27,7 @@ struct _Shelf_Del_Confirm_Data
     E_Shelf *es;
 };
 
-EAPI E_Config_Dialog *
+E_Config_Dialog *
 e_int_config_shelf(E_Container *con, const char *params __UNUSED__) 
 {
    E_Config_Dialog *cfd;

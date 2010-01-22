@@ -12,7 +12,7 @@ static void _cb_reset(void *data, void *data2);
 static void _cb_dialog_yes(void *data);
 static void _cb_dialog_destroy(void *data);
 
-EAPI E_Dialog *_dia_new_profile(E_Config_Dialog_Data *cfdata);
+E_Dialog *_dia_new_profile(E_Config_Dialog_Data *cfdata);
 static void _new_profile_cb_close(void *data, E_Dialog *dia);
 static void _new_profile_cb_ok(void *data, E_Dialog *dia);
 static void _new_profile_cb_dia_del(void *obj);
@@ -37,7 +37,7 @@ struct _Del_Profile_Confirm_Data
    E_Config_Dialog_Data *cfdata;
 };
 
-EAPI E_Config_Dialog *
+E_Config_Dialog *
 e_int_config_profiles(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd;
@@ -327,7 +327,7 @@ _cb_dialog_destroy(void *data)
    E_FREE(d);
 }
 
-EAPI E_Dialog *
+E_Dialog *
 _dia_new_profile(E_Config_Dialog_Data *cfdata)
 {
    E_Dialog *dia;

@@ -74,7 +74,7 @@ struct _E_Config_Dialog_Data
    E_Config_Dialog *cfd;
 };
 
-EAPI E_Config_Dialog *
+E_Config_Dialog *
 e_int_config_keybindings(E_Container *con, const char *params)
 {
    E_Config_Dialog *cfd;

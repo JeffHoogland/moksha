@@ -109,7 +109,7 @@ static int ev_last_which_list = NO_LIST;
 #define EXEBUFLEN 2048
 
 /* externally accessible functions */
-EAPI int
+int
 e_exebuf_init(void)
 {
    exelist_exe_edd = E_CONFIG_DD_NEW("E_Exe", E_Exe);
@@ -129,7 +129,7 @@ e_exebuf_init(void)
    return 1;
 }
 
-EAPI int
+int
 e_exebuf_shutdown(void)
 {
    E_CONFIG_DD_FREE(exelist_edd);
@@ -138,7 +138,7 @@ e_exebuf_shutdown(void)
    return 1;
 }
 
-EAPI int
+int
 e_exebuf_show(E_Zone *zone)
 {
    Evas_Object *o;
@@ -282,7 +282,7 @@ e_exebuf_show(E_Zone *zone)
    return 1;
 }
 
-EAPI void
+void
 e_exebuf_hide(void)
 {
    Ecore_Event_Handler *ev;

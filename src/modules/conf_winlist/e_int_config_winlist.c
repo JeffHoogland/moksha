@@ -42,7 +42,7 @@ Eina_List *iconified_list = NULL;
 Eina_List *warp_at_end_list = NULL;
 Eina_List *scroll_animation_list = NULL;
 
-EAPI E_Config_Dialog *
+E_Config_Dialog *
 e_int_config_winlist(E_Container *con, const char *params __UNUSED__) 
 {
    E_Config_Dialog *cfd;

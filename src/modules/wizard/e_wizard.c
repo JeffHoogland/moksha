@@ -20,7 +20,7 @@ static int next_ok = 1;
 static int next_can = 0;
 static int next_prev = 0;
 
-EAPI int
+int
 e_wizard_init(void)
 {
    Eina_List *l;
@@ -52,7 +52,7 @@ e_wizard_init(void)
    return 1;
 }
 
-EAPI int
+int
 e_wizard_shutdown(void)
 {
    if (pop)
@@ -72,7 +72,7 @@ e_wizard_shutdown(void)
    return 1;
 }
 
-EAPI void
+void
 e_wizard_go(void)
 {
    if (!curpage)
@@ -94,7 +94,7 @@ e_wizard_go(void)
      }
 }
 
-EAPI void
+void
 e_wizard_apply(void)
 {
    Eina_List *l;
@@ -108,7 +108,7 @@ e_wizard_apply(void)
      }
 }
 
-EAPI void
+void
 e_wizard_next(void)
 {
    Eina_List *l;
@@ -148,7 +148,7 @@ e_wizard_next(void)
      }
 }
 
-EAPI void
+void
 e_wizard_page_show(Evas_Object *obj)
 {
    Evas_Coord minw, minh;
@@ -166,7 +166,7 @@ e_wizard_page_show(Evas_Object *obj)
      }
 }
 
-EAPI E_Wizard_Page *
+E_Wizard_Page *
 e_wizard_page_add(void *handle,
 		  int (*init)     (E_Wizard_Page *pg),
 		  int (*shutdown) (E_Wizard_Page *pg),
@@ -194,7 +194,7 @@ e_wizard_page_add(void *handle,
    return pg;
 }
 
-EAPI void
+void
 e_wizard_page_del(E_Wizard_Page *pg)
 {
    if (pg->handle) dlclose(pg->handle);
@@ -202,20 +202,20 @@ e_wizard_page_del(E_Wizard_Page *pg)
    free(pg);
 }
 
-EAPI void
+void
 e_wizard_button_next_enable_set(int enable)
 {
    next_ok = enable;
    _e_wizard_next_eval();
 }
 
-EAPI void
+void
 e_wizard_title_set(const char *title)
 {
    edje_object_part_text_set(o_bg, "e.text.title", title);
 }
 
-EAPI void
+void
 e_wizard_labels_update(void)
 {
    edje_object_part_text_set(o_bg, "e.text.label", _("Next"));

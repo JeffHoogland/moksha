@@ -39,7 +39,7 @@ struct _E_Config_Dialog_Data
 };
 
 /* a nice easy setup function that does the dirty work */
-EAPI E_Config_Dialog *
+E_Config_Dialog *
 e_int_config_desks(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd;

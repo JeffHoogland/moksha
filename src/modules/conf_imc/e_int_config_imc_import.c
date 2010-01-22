@@ -35,7 +35,7 @@ static void _imc_import_cb_close     (void *data, void *data2);
 static void _imc_import_cb_key_down  (void *data, Evas *e, Evas_Object *obj, 
 					void *event);
 
-EAPI E_Win *
+E_Win *
 e_int_config_imc_import(E_Config_Dialog *parent)
 {
    Evas *evas;
@@ -139,7 +139,7 @@ e_int_config_imc_import(E_Config_Dialog *parent)
    return win;
 }
 
-EAPI void
+void
 e_int_config_imc_import_del(E_Win *win) 
 {
    Import *import;

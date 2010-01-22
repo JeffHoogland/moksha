@@ -20,7 +20,7 @@ struct _E_Config_Dialog_Data
    int edje_collection_cache;
 };
 
-EAPI E_Config_Dialog *
+E_Config_Dialog *
 e_int_config_performance(E_Container *con, const char *params __UNUSED__) 
 {
    E_Config_Dialog *cfd;
