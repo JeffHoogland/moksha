@@ -172,7 +172,7 @@ static void
 _e_mod_comp_win_update(E_Comp_Win *cw)
 {
    E_Update_Rect *r;
-   int i;
+   int i, new_pixmap = 0;
    
    cw->update = 0;
    if (!cw->pixmap)
@@ -193,6 +193,8 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
              cw->pw = 0;
              cw->ph = 0;
           }
+        else
+          new_pixmap = 1;
      }
    if (!((cw->pw > 0) && (cw->ph > 0))) return;
 
@@ -220,6 +222,8 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
    e_mod_comp_update_resize(cw->up, cw->pw, cw->ph);
    if ((cw->c->gl) && (!cw->shaped) && (!cw->shape_changed))
      {
+        if (new_pixmap)
+          e_mod_comp_update_add(cw->up, 0, 0, cw->pw, cw->ph);
         r = e_mod_comp_update_rects_get(cw->up);
         if (r) 
           {
