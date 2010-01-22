@@ -77,6 +77,16 @@ e_busycover_resize(E_Busycover *cover, int w, int h)
 static void 
 _e_busycover_cb_free(E_Busycover *cover) 
 {
+   Eina_List *l;
+   E_Busycover_Handle *handle;
+
+   EINA_LIST_FREE(cover->handles, handle) 
+     {
+        if (handle->msg) eina_stringshare_del(handle->msg);
+        if (handle->icon) eina_stringshare_del(handle->icon);
+        E_FREE(handle);
+     }
+
    if (cover->o_base) evas_object_del(cover->o_base);
    E_FREE(cover);
 }

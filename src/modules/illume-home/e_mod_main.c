@@ -435,8 +435,8 @@ _il_home_cb_selected(void *data, Evas_Object *obj, void *event)
    E_Fm2_Icon_Info *ici;
 
    if (!(hwin = data)) return;
-   selected = e_fm2_selected_list_get(hwin->o_fm);
-   if (!selected) return;
+   if (!(selected = e_fm2_selected_list_get(hwin->o_fm))) return;
+   printf("Selected Count: %d\n", eina_list_count(selected));
    EINA_LIST_FREE(selected, ici) 
      {
         Efreet_Desktop *desktop;
@@ -445,6 +445,7 @@ _il_home_cb_selected(void *data, Evas_Object *obj, void *event)
           {
              if (ici->real_link) 
                {
+                  printf("Selected: %s\n", ici->real_link);
                   desktop = efreet_desktop_get(ici->real_link);
                   if (desktop) 
                     _il_home_desktop_run(hwin, desktop);
@@ -598,9 +599,9 @@ _il_home_desks_populate(void)
    if (menu) 
      {
         Eina_List *l, *ll;
-        char buff[PATH_MAX];
         Efreet_Menu *entry, *subentry;
         Eina_List *settings, *sys, *kbd;
+        char buff[PATH_MAX];
         int num = 0;
 
         settings = efreet_util_desktop_category_list("Settings");
@@ -612,6 +613,7 @@ _il_home_desks_populate(void)
              EINA_LIST_FOREACH(entry->entries, ll, subentry) 
                {
 		  Efreet_Desktop *desktop;
+
                   if (subentry->type != EFREET_MENU_ENTRY_DESKTOP) continue;
                   if (!(desktop = subentry->desktop)) continue;
                   if ((settings) && (sys) && 
