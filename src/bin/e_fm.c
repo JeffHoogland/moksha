@@ -5496,8 +5496,7 @@ _e_fm2_inplace_open(const E_Fm2_Icon *ic)
 
    if (!((S_ISDIR(ic->info.statinfo.st_mode)) &&
 	 (ic->sd->config->view.open_dirs_in_place) &&
-	 (!ic->sd->config->view.no_subdir_jump) &&
-	 (!ic->sd->config->view.single_click)))
+	 (!ic->sd->config->view.no_subdir_jump)))
      return 0;
 
    if (!_e_fm2_icon_path(ic, buf, sizeof(buf)))
