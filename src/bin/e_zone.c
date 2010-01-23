@@ -22,6 +22,7 @@ static void _e_zone_event_move_resize_free(void *data, void *ev);
 static void _e_zone_event_add_free(void *data, void *ev);
 static void _e_zone_event_del_free(void *data, void *ev);
 static void _e_zone_object_del_attach(void *o);
+static E_Zone_Edge _e_zone_detect_edge(E_Zone *zone, Ecore_X_Window win);
 
 EAPI int E_EVENT_ZONE_DESK_COUNT_SET = 0;
 EAPI int E_EVENT_POINTER_WARP = 0;
@@ -1291,33 +1292,14 @@ _e_zone_cb_mouse_in(void *data, int type, void *event)
    ev = event;
    zone = data;
 
-   if (ev->win == zone->edge.left)
-     edge = E_ZONE_EDGE_LEFT;
-   else if (ev->win == zone->edge.top)
-     edge = E_ZONE_EDGE_TOP;
-   else if (ev->win == zone->edge.right)
-     edge = E_ZONE_EDGE_RIGHT;
-   else if (ev->win == zone->edge.bottom)
-     edge = E_ZONE_EDGE_BOTTOM;
-   else if ((ev->win == zone->corner.left_top) ||
-	    (ev->win == zone->corner.top_left))
-     edge = E_ZONE_EDGE_TOP_LEFT;
-   else if ((ev->win == zone->corner.right_top) ||
-	    (ev->win == zone->corner.top_right))
-     edge = E_ZONE_EDGE_TOP_RIGHT;
-   else if ((ev->win == zone->corner.right_bottom) ||
-	    (ev->win == zone->corner.bottom_right))
-     edge = E_ZONE_EDGE_BOTTOM_RIGHT;
-   else if ((ev->win == zone->corner.left_bottom) ||
-	    (ev->win == zone->corner.bottom_left))
-     edge = E_ZONE_EDGE_BOTTOM_LEFT;
-   else return 1;
+   edge = _e_zone_detect_edge(zone, ev->win);
+   if (edge == E_ZONE_EDGE_NONE) return 1;
 
    zev = E_NEW(E_Event_Zone_Edge, 1);
    zev->zone = zone;
    zev->edge = edge;
-   zev->x = ev->x;
-   zev->y = ev->y;
+   zev->x = ev->root.x;
+   zev->y = ev->root.y;
    zev->modifiers = ev->modifiers;
    ecore_event_add(E_EVENT_ZONE_EDGE_IN, zev, NULL, NULL);
    e_bindings_edge_in_event_handle(E_BINDING_CONTEXT_ZONE, E_OBJECT(zone), zev);
@@ -1336,33 +1318,14 @@ _e_zone_cb_mouse_out(void *data, int type, void *event)
    ev = event;
    zone = data;
 
-   if (ev->win == zone->edge.left)
-     edge = E_ZONE_EDGE_LEFT;
-   else if (ev->win == zone->edge.top)
-     edge = E_ZONE_EDGE_TOP;
-   else if (ev->win == zone->edge.right)
-     edge = E_ZONE_EDGE_RIGHT;
-   else if (ev->win == zone->edge.bottom)
-     edge = E_ZONE_EDGE_BOTTOM;
-   else if ((ev->win == zone->corner.left_top) ||
-	    (ev->win == zone->corner.top_left))
-     edge = E_ZONE_EDGE_TOP_LEFT;
-   else if ((ev->win == zone->corner.right_top) ||
-	    (ev->win == zone->corner.top_right))
-     edge = E_ZONE_EDGE_TOP_RIGHT;
-   else if ((ev->win == zone->corner.right_bottom) ||
-	    (ev->win == zone->corner.bottom_right))
-     edge = E_ZONE_EDGE_BOTTOM_RIGHT;
-   else if ((ev->win == zone->corner.left_bottom) ||
-	    (ev->win == zone->corner.bottom_left))
-     edge = E_ZONE_EDGE_BOTTOM_LEFT;
-   else return 1;
+   edge = _e_zone_detect_edge(zone, ev->win);
+   if (edge == E_ZONE_EDGE_NONE) return 1;
 
    zev = E_NEW(E_Event_Zone_Edge, 1);
    zev->zone = zone;
    zev->edge = edge;
-   zev->x = ev->x;
-   zev->y = ev->y;
+   zev->x = ev->root.x;
+   zev->y = ev->root.y;
    zev->modifiers = ev->modifiers;
    ecore_event_add(E_EVENT_ZONE_EDGE_OUT, zev, NULL, NULL);
    e_bindings_edge_out_event_handle(E_BINDING_CONTEXT_ZONE, E_OBJECT(zone), zev);
@@ -1380,33 +1343,14 @@ _e_zone_cb_mouse_down(void *data, int type, void *event)
    ev = event;
    zone = data;
 
-   if (ev->event_window == zone->edge.left)
-     edge = E_ZONE_EDGE_LEFT;
-   else if (ev->event_window == zone->edge.top)
-     edge = E_ZONE_EDGE_TOP;
-   else if (ev->event_window == zone->edge.right)
-     edge = E_ZONE_EDGE_RIGHT;
-   else if (ev->event_window == zone->edge.bottom)
-     edge = E_ZONE_EDGE_BOTTOM;
-   else if ((ev->event_window == zone->corner.left_top) ||
-	    (ev->event_window == zone->corner.top_left))
-     edge = E_ZONE_EDGE_TOP_LEFT;
-   else if ((ev->event_window == zone->corner.right_top) ||
-	    (ev->event_window == zone->corner.top_right))
-     edge = E_ZONE_EDGE_TOP_RIGHT;
-   else if ((ev->event_window == zone->corner.right_bottom) ||
-	    (ev->event_window == zone->corner.bottom_right))
-     edge = E_ZONE_EDGE_BOTTOM_RIGHT;
-   else if ((ev->event_window == zone->corner.left_bottom) ||
-	    (ev->event_window == zone->corner.bottom_left))
-     edge = E_ZONE_EDGE_BOTTOM_LEFT;
-   else return 1;
+   edge = _e_zone_detect_edge(zone, ev->window);
+   if (edge == E_ZONE_EDGE_NONE) return 1;
 
    zev = E_NEW(E_Event_Zone_Edge, 1);
    zev->zone = zone;
    zev->edge = edge;
-   zev->x = ev->x;
-   zev->y = ev->y;
+   zev->x = ev->root.x;
+   zev->y = ev->root.y;
    zev->modifiers = ev->modifiers;
    ecore_event_add(E_EVENT_ZONE_EDGE_OUT, zev, NULL, NULL);
    e_bindings_edge_down_event_handle(E_BINDING_CONTEXT_ZONE, E_OBJECT(zone), zev);
@@ -1424,33 +1368,14 @@ _e_zone_cb_mouse_up(void *data, int type, void *event)
    ev = event;
    zone = data;
 
-   if (ev->event_window == zone->edge.left)
-     edge = E_ZONE_EDGE_LEFT;
-   else if (ev->event_window == zone->edge.top)
-     edge = E_ZONE_EDGE_TOP;
-   else if (ev->event_window == zone->edge.right)
-     edge = E_ZONE_EDGE_RIGHT;
-   else if (ev->event_window == zone->edge.bottom)
-     edge = E_ZONE_EDGE_BOTTOM;
-   else if ((ev->event_window == zone->corner.left_top) ||
-	    (ev->event_window == zone->corner.top_left))
-     edge = E_ZONE_EDGE_TOP_LEFT;
-   else if ((ev->event_window == zone->corner.right_top) ||
-	    (ev->event_window == zone->corner.top_right))
-     edge = E_ZONE_EDGE_TOP_RIGHT;
-   else if ((ev->event_window == zone->corner.right_bottom) ||
-	    (ev->event_window == zone->corner.bottom_right))
-     edge = E_ZONE_EDGE_BOTTOM_RIGHT;
-   else if ((ev->event_window == zone->corner.left_bottom) ||
-	    (ev->event_window == zone->corner.bottom_left))
-     edge = E_ZONE_EDGE_BOTTOM_LEFT;
-   else return 1;
+   edge = _e_zone_detect_edge(zone, ev->window);
+   if (edge == E_ZONE_EDGE_NONE) return 1;
 
    zev = E_NEW(E_Event_Zone_Edge, 1);
    zev->zone = zone;
    zev->edge = edge;
-   zev->x = ev->x;
-   zev->y = ev->y;
+   zev->x = ev->root.x;
+   zev->y = ev->root.y;
    zev->modifiers = ev->modifiers;
    ecore_event_add(E_EVENT_ZONE_EDGE_OUT, zev, NULL, NULL);
    e_bindings_edge_up_event_handle(E_BINDING_CONTEXT_ZONE, E_OBJECT(zone), zev);
@@ -1468,33 +1393,14 @@ _e_zone_cb_mouse_move(void *data, int type, void *event)
    ev = event;
    zone = data;
 
-   if (ev->window == zone->edge.left)
-     edge = E_ZONE_EDGE_LEFT;
-   else if (ev->window == zone->edge.top)
-     edge = E_ZONE_EDGE_TOP;
-   else if (ev->window == zone->edge.right)
-     edge = E_ZONE_EDGE_RIGHT;
-   else if (ev->window == zone->edge.bottom)
-     edge = E_ZONE_EDGE_BOTTOM;
-   else if ((ev->window == zone->corner.left_top) ||
-	    (ev->window == zone->corner.top_left))
-     edge = E_ZONE_EDGE_TOP_LEFT;
-   else if ((ev->window == zone->corner.right_top) ||
-	    (ev->window == zone->corner.top_right))
-     edge = E_ZONE_EDGE_TOP_RIGHT;
-   else if ((ev->window == zone->corner.right_bottom) ||
-	    (ev->window == zone->corner.bottom_right))
-     edge = E_ZONE_EDGE_BOTTOM_RIGHT;
-   else if ((ev->window == zone->corner.left_bottom) ||
-	    (ev->window == zone->corner.bottom_left))
-     edge = E_ZONE_EDGE_BOTTOM_LEFT;
-   else return 1;
+   edge = _e_zone_detect_edge(zone, ev->window);
+   if (edge == E_ZONE_EDGE_NONE) return 1;
 
    zev = E_NEW(E_Event_Zone_Edge, 1);
    zev->zone = zone;
    zev->edge = edge;
-   zev->x = ev->x;
-   zev->y = ev->y;
+   zev->x = ev->root.x;
+   zev->y = ev->root.y;
    zev->modifiers = ev->modifiers;
    ecore_event_add(E_EVENT_ZONE_EDGE_MOVE, zev, NULL, NULL);
    return 1;
@@ -1581,4 +1487,32 @@ _e_zone_object_del_attach(void *o)
    ev->zone = zone;
    e_object_ref(E_OBJECT(ev->zone));
    ecore_event_add(E_EVENT_ZONE_DEL, ev, _e_zone_event_del_free, NULL);
+}
+
+static E_Zone_Edge
+_e_zone_detect_edge(E_Zone *zone, Ecore_X_Window win)
+{
+   E_Zone_Edge edge = E_ZONE_EDGE_NONE;
+
+   if (win == zone->edge.left)
+     edge = E_ZONE_EDGE_LEFT;
+   else if (win == zone->edge.top)
+     edge = E_ZONE_EDGE_TOP;
+   else if (win == zone->edge.right)
+     edge = E_ZONE_EDGE_RIGHT;
+   else if (win == zone->edge.bottom)
+     edge = E_ZONE_EDGE_BOTTOM;
+   else if ((win == zone->corner.left_top) ||
+	    (win == zone->corner.top_left))
+     edge = E_ZONE_EDGE_TOP_LEFT;
+   else if ((win == zone->corner.right_top) ||
+	    (win == zone->corner.top_right))
+     edge = E_ZONE_EDGE_TOP_RIGHT;
+   else if ((win == zone->corner.right_bottom) ||
+	    (win == zone->corner.bottom_right))
+     edge = E_ZONE_EDGE_BOTTOM_RIGHT;
+   else if ((win == zone->corner.left_bottom) ||
+	    (win == zone->corner.bottom_left))
+     edge = E_ZONE_EDGE_BOTTOM_LEFT;
+   return edge;
 }

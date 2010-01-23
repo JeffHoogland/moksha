@@ -1366,6 +1366,9 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
 	if (es->zone != ev->zone) return 1;
 	switch (ev->edge)
 	  {
+	   case E_ZONE_EDGE_NONE:
+	      /* noop */
+	      break;
 	   case E_ZONE_EDGE_LEFT:
              if (((es->gadcon->orient == E_GADCON_ORIENT_LEFT) ||
 		  (es->gadcon->orient == E_GADCON_ORIENT_CORNER_TL) ||
@@ -1394,8 +1397,30 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
 		 (ev->x >= es->x) && (ev->x <= (es->x + es->w)))
                show = 1;
 	     break;
-	   default:
-             break;
+	   case E_ZONE_EDGE_TOP_LEFT:
+             if ((es->gadcon->orient == E_GADCON_ORIENT_CORNER_TL) &&
+		 ((ev->x >= es->x) && (ev->x <= (es->x + es->w))) &&
+		 ((ev->y >= es->y) && (ev->y <= (es->y + es->h))))
+               show = 1;
+	     break;
+	   case E_ZONE_EDGE_TOP_RIGHT:
+             if ((es->gadcon->orient == E_GADCON_ORIENT_CORNER_TR) &&
+		 ((ev->x >= es->x) && (ev->x <= (es->x + es->w))) &&
+		  ((ev->y >= es->y) && (ev->y <= (es->y + es->h))))
+               show = 1;
+	     break;
+	   case E_ZONE_EDGE_BOTTOM_RIGHT:
+             if ((es->gadcon->orient == E_GADCON_ORIENT_CORNER_BR) &&
+		 ((ev->x >= es->x) && (ev->x <= (es->x + es->w))) &&
+		 ((ev->y >= es->y) && (ev->y <= (es->y + es->h))))
+               show = 1;
+	     break;
+	   case E_ZONE_EDGE_BOTTOM_LEFT:
+             if ((es->gadcon->orient == E_GADCON_ORIENT_CORNER_BL) &&
+		 ((ev->x >= es->x) && (ev->x <= (es->x + es->w))) &&
+		 ((ev->y >= es->y) && (ev->y <= (es->y + es->h))))
+               show = 1;
+	     break;
 	  }
 
 	if (show)
@@ -1771,6 +1796,7 @@ _e_shelf_bindings_add(E_Shelf *es)
 {
    char buf[1024];
 
+   /* TODO: This might delete edge windows, and then add them again further down. Should prevent this. */
    _e_shelf_bindings_del(es);
 
    /* Don't need edge binding if we don't hide shelf */
@@ -1800,21 +1826,25 @@ _e_shelf_bindings_add(E_Shelf *es)
       case E_GADCON_ORIENT_CORNER_LT:
 	 e_bindings_edge_add(E_BINDING_CONTEXT_ZONE, E_ZONE_EDGE_TOP, E_BINDING_MODIFIER_NONE, 1, buf, NULL, 0);
 	 e_bindings_edge_add(E_BINDING_CONTEXT_ZONE, E_ZONE_EDGE_LEFT, E_BINDING_MODIFIER_NONE, 1, buf, NULL, 0);
+	 e_bindings_edge_add(E_BINDING_CONTEXT_ZONE, E_ZONE_EDGE_TOP_LEFT, E_BINDING_MODIFIER_NONE, 1, buf, NULL, 0);
 	 break;
       case E_GADCON_ORIENT_CORNER_TR:
       case E_GADCON_ORIENT_CORNER_RT:
 	 e_bindings_edge_add(E_BINDING_CONTEXT_ZONE, E_ZONE_EDGE_TOP, E_BINDING_MODIFIER_NONE, 1, buf, NULL, 0);
 	 e_bindings_edge_add(E_BINDING_CONTEXT_ZONE, E_ZONE_EDGE_RIGHT, E_BINDING_MODIFIER_NONE, 1, buf, NULL, 0);
+	 e_bindings_edge_add(E_BINDING_CONTEXT_ZONE, E_ZONE_EDGE_TOP_RIGHT, E_BINDING_MODIFIER_NONE, 1, buf, NULL, 0);
 	 break;
       case E_GADCON_ORIENT_CORNER_BL:
       case E_GADCON_ORIENT_CORNER_LB:
 	 e_bindings_edge_add(E_BINDING_CONTEXT_ZONE, E_ZONE_EDGE_BOTTOM, E_BINDING_MODIFIER_NONE, 1, buf, NULL, 0);
 	 e_bindings_edge_add(E_BINDING_CONTEXT_ZONE, E_ZONE_EDGE_LEFT, E_BINDING_MODIFIER_NONE, 1, buf, NULL, 0);
+	 e_bindings_edge_add(E_BINDING_CONTEXT_ZONE, E_ZONE_EDGE_BOTTOM_LEFT, E_BINDING_MODIFIER_NONE, 1, buf, NULL, 0);
 	 break;
       case E_GADCON_ORIENT_CORNER_BR:
       case E_GADCON_ORIENT_CORNER_RB:
 	 e_bindings_edge_add(E_BINDING_CONTEXT_ZONE, E_ZONE_EDGE_BOTTOM, E_BINDING_MODIFIER_NONE, 1, buf, NULL, 0);
 	 e_bindings_edge_add(E_BINDING_CONTEXT_ZONE, E_ZONE_EDGE_RIGHT, E_BINDING_MODIFIER_NONE, 1, buf, NULL, 0);
+	 e_bindings_edge_add(E_BINDING_CONTEXT_ZONE, E_ZONE_EDGE_BOTTOM_RIGHT, E_BINDING_MODIFIER_NONE, 1, buf, NULL, 0);
 	 break;
      }
 }
@@ -1823,11 +1853,9 @@ static void
 _e_shelf_bindings_del(E_Shelf *es)
 {
    char buf[1024];
+   E_Zone_Edge edge;
 
    snprintf(buf, sizeof(buf), "shelf.%d", es->id);
-   e_bindings_edge_del(E_BINDING_CONTEXT_ZONE, E_ZONE_EDGE_LEFT, E_BINDING_MODIFIER_NONE, 1, buf, NULL, 0);
-   e_bindings_edge_del(E_BINDING_CONTEXT_ZONE, E_ZONE_EDGE_RIGHT, E_BINDING_MODIFIER_NONE, 1, buf, NULL, 0);
-   e_bindings_edge_del(E_BINDING_CONTEXT_ZONE, E_ZONE_EDGE_TOP, E_BINDING_MODIFIER_NONE, 1, buf, NULL, 0);
-   e_bindings_edge_del(E_BINDING_CONTEXT_ZONE, E_ZONE_EDGE_BOTTOM, E_BINDING_MODIFIER_NONE, 1, buf, NULL, 0);
+   for (edge = E_ZONE_EDGE_LEFT; edge <= E_ZONE_EDGE_BOTTOM_LEFT; edge++)
+     e_bindings_edge_del(E_BINDING_CONTEXT_ZONE, edge, E_BINDING_MODIFIER_NONE, 1, buf, NULL, 0);
 }
-
