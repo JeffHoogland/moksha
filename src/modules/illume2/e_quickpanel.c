@@ -266,8 +266,6 @@ _e_quickpanel_cb_animate(void *data)
 {
    E_Quickpanel *qp;
    double t, v = 1.0;
-   Eina_List *l;
-   E_Border *bd;
 
    if (!(qp = data)) return 0;
    t = ecore_loop_time_get() - qp->start;
@@ -285,6 +283,8 @@ _e_quickpanel_cb_animate(void *data)
    qp->adjust = (qp->adjust_end * v) + (qp->adjust_start * (1.0 - v));
    if (qp->borders) 
      {
+        Eina_List *l;
+        E_Border *bd;
         int pbh = 0;
 
         pbh = qp->top_height - qp->h;
@@ -326,8 +326,8 @@ _e_quickpanel_cb_border_add(void *data, int type, void *event)
    ev = event;
    if (!ev->border->client.illume.quickpanel.quickpanel) return 1;
    if (!(qp = e_quickpanel_by_zone_get(ev->border->zone))) return 1;
-   e_illume_border_top_shelf_pos_get(qp->zone, NULL, &ty);
    _e_quickpanel_border_hide(ev->border);
+   e_illume_border_top_shelf_pos_get(qp->zone, NULL, &ty);
    if ((ev->border->x != qp->zone->x) || (ev->border->y != ty)) 
      e_border_move(ev->border, qp->zone->x, ty);
    if (ev->border->zone != qp->zone)
@@ -374,19 +374,17 @@ _e_quickpanel_cb_client_message(void *data, int type, void *event)
         E_Border *bd;
         E_Zone *zone;
         Ecore_X_Window z;
+        int ty;
 
         if (!(bd = e_border_find_by_client_window(ev->data.l[1]))) return 1;
         z = ecore_x_e_illume_quickpanel_zone_get(bd->client.win);
         if (!(zone = e_util_zone_window_find(z))) return 1;
+        _e_quickpanel_border_hide(bd);
+        e_illume_border_top_shelf_pos_get(zone, NULL, &ty);
+        if ((bd->x != zone->x) || (bd->y != ty)) 
+          e_border_move(bd, zone->x, ty);
         if (bd->zone != zone) 
-          {
-             int ty;
-
-             e_illume_border_top_shelf_pos_get(zone, NULL, &ty);
-             if ((bd->x != zone->x) || (bd->y != ty)) 
-               e_border_move(bd, zone->x, ty);
-             e_border_zone_set(bd, zone);
-          }
+          e_border_zone_set(bd, zone);
      }
    return 1;
 }
