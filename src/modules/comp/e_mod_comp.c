@@ -433,9 +433,8 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
                }
              if (rects)
                {
-//// testing                  
-//                  cw->shaped = 1;
-//                  cw->shape_changed = 1;
+                  cw->shaped = 1;
+                  cw->shape_changed = 1;
                   free(rects);
                }
           }
