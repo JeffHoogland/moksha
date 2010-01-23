@@ -341,8 +341,7 @@ _il_home_win_new(Instance *inst)
    e_win_move_resize(hwin->win, zone->x, zone->y, zone->w, 100);
    e_win_show(hwin->win);
    e_border_zone_set(hwin->win->border, zone);
-   e_win_placed_set(hwin->win, 1);
-   hwin->win->border->lock_user_location = 1;
+   hwin->win->border->lock_user_stacking = 1;
 
    if (hwin->win->evas_win)
      e_drop_xdnd_register_set(hwin->win->evas_win, 1);
@@ -448,6 +447,7 @@ _il_home_cb_selected(void *data, Evas_Object *obj, void *event)
                   if (desktop) 
                     _il_home_desktop_run(hwin, desktop);
                }
+             e_fm2_select_set(hwin->o_fm, ici->file, 0);
           }
      }
 }
