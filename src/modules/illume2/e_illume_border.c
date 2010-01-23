@@ -194,7 +194,7 @@ e_illume_border_valid_borders_get(E_Zone *zone)
    Eina_List *bds, *l, *ret = NULL;
    E_Border *bd;
 
-   bds = e_border_client_list();
+   if (!(bds = e_border_client_list())) return NULL;
    EINA_LIST_FOREACH(bds, l, bd) 
      {
         if (!bd) continue;
@@ -209,18 +209,17 @@ EAPI E_Border *
 e_illume_border_valid_border_get(E_Zone *zone) 
 {
    Eina_List *bds, *l;
-   E_Border *bd, *ret = NULL;
+   E_Border *bd;
 
-   bds = e_border_client_list();
+   if (!(bds = e_border_client_list())) return NULL;
    EINA_LIST_FOREACH(bds, l, bd) 
      {
         if (!bd) continue;
         if (bd->zone != zone) continue;
         if (!e_illume_border_is_valid(bd)) continue;
-        ret = bd;
-        break;
+        return bd;
      }
-   return ret;
+   return NULL;
 }
 
 EAPI int 
@@ -229,7 +228,7 @@ e_illume_border_valid_count_get(E_Zone *zone)
    Eina_List *l;
    int count;
 
-   l = e_illume_border_valid_borders_get(zone);
+   if (!(l = e_illume_border_valid_borders_get(zone))) return 0;
    count = eina_list_count(l);
    eina_list_free(l);
    return count;
@@ -241,7 +240,7 @@ e_illume_border_quickpanel_borders_get(E_Zone *zone)
    Eina_List *bds, *l, *ret = NULL;
    E_Border *bd;
 
-   bds = e_border_client_list();
+   if (!(bds = e_border_client_list())) return NULL;
    EINA_LIST_FOREACH(bds, l, bd) 
      {
         if (!bd) continue;
@@ -258,7 +257,7 @@ e_illume_border_quickpanel_count_get(E_Zone *zone)
    Eina_List *l;
    int count;
 
-   l = e_illume_border_quickpanel_borders_get(zone);
+   if (!(l = e_illume_border_quickpanel_borders_get(zone))) return 0;
    count = eina_list_count(l);
    eina_list_free(l);
    return count;
@@ -270,7 +269,7 @@ e_illume_border_at_xy_get(E_Zone *zone, int x, int y)
    Eina_List *bds, *l;
    E_Border *bd, *b = NULL;
 
-   bds = e_illume_border_valid_borders_get(zone);
+   if (!(bds = e_illume_border_valid_borders_get(zone))) return NULL;
    EINA_LIST_FOREACH(bds, l, bd) 
      {
         if (((bd->fx.x == x) && (bd->fx.y == y)) ||
@@ -290,7 +289,7 @@ e_illume_border_in_region_get(E_Zone *zone, int x, int y, int w, int h)
    Eina_List *bds, *l;
    E_Border *bd, *b = NULL;
 
-   bds = e_illume_border_valid_borders_get(zone);
+   if (!(bds = e_illume_border_valid_borders_get(zone))) return NULL;
    EINA_LIST_FOREACH(bds, l, bd) 
      {
         if (E_INSIDE(bd->x, bd->fx.y, x, y, w, h)) 
@@ -307,51 +306,48 @@ EAPI E_Border *
 e_illume_border_keyboard_get(E_Zone *zone) 
 {
    Eina_List *bds, *l;
-   E_Border *bd, *b = NULL;
+   E_Border *bd;
 
-   bds = e_border_client_list();
+   if (!(bds = e_border_client_list())) return NULL;
    EINA_LIST_FOREACH(bds, l, bd) 
      {
         if (bd->zone != zone) continue;
         if (!e_illume_border_is_keyboard(bd)) continue;
-        b = bd;
-        break;
+        return bd;
      }
-   return b;
+   return NULL;
 }
 
 EAPI E_Border *
 e_illume_border_top_shelf_get(E_Zone *zone) 
 {
    Eina_List *bds, *l;
-   E_Border *bd, *b = NULL;
+   E_Border *bd;
 
-   bds = e_border_client_list();
+   if (!(bds = e_border_client_list())) return NULL;
    EINA_LIST_FOREACH(bds, l, bd) 
      {
         if (bd->zone != zone) continue;
         if (!e_illume_border_is_top_shelf(bd)) continue;
-        b = bd;
-        break;
+        return bd;
      }
-   return b;
+   return NULL;
 }
 
 EAPI E_Border *
 e_illume_border_bottom_panel_get(E_Zone *zone) 
 {
    Eina_List *bds, *l;
-   E_Border *bd, *b = NULL;
+   E_Border *bd;
 
-   bds = e_border_client_list();
+   if (!(bds = e_border_client_list())) return NULL;
    EINA_LIST_FOREACH(bds, l, bd) 
      {
         if (bd->zone != zone) continue;
         if (!e_illume_border_is_bottom_panel(bd)) continue;
-        b = bd;
-        break;
+        return bd;
      }
-   return b;
+   return NULL;
 }
 
 EAPI void 
