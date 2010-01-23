@@ -199,11 +199,7 @@ e_illume_border_valid_borders_get(E_Zone *zone)
      {
         if (!bd) continue;
         if (bd->zone != zone) continue;
-        if (e_illume_border_is_top_shelf(bd)) continue;
-        if (e_illume_border_is_bottom_panel(bd)) continue;
-        if (e_illume_border_is_keyboard(bd)) continue;
-        if (e_illume_border_is_dialog(bd)) continue;
-        if (e_illume_border_is_quickpanel(bd)) continue;
+        if (!e_illume_border_is_valid(bd)) continue;
         ret = eina_list_append(ret, bd);
      }
    return ret;
@@ -220,11 +216,7 @@ e_illume_border_valid_border_get(E_Zone *zone)
      {
         if (!bd) continue;
         if (bd->zone != zone) continue;
-        if (e_illume_border_is_top_shelf(bd)) continue;
-        if (e_illume_border_is_bottom_panel(bd)) continue;
-        if (e_illume_border_is_keyboard(bd)) continue;
-        if (e_illume_border_is_dialog(bd)) continue;
-        if (e_illume_border_is_quickpanel(bd)) continue;
+        if (!e_illume_border_is_valid(bd)) continue;
         ret = bd;
         break;
      }
