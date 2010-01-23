@@ -66,7 +66,7 @@ static void
 _e_xinerama_clean(void)
 {
    E_FREE_LIST(all_screens, E_FREE);
-   eina_list_free(chosen_screens);
+   chosen_screens = eina_list_free(chosen_screens);
    E_FREE_LIST(fake_screens, E_FREE);
 }
 
