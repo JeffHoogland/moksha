@@ -67,6 +67,7 @@ struct _E_Comp_Win
    Eina_Bool       update : 1; // has updates to fetch
    Eina_Bool       redirected : 1; // has updates to fetch
    Eina_Bool       shape_changed : 1; // shape changed
+   Eina_Bool       native : 1; // native
 };
 
 static Eina_List *handlers = NULL;
@@ -188,6 +189,11 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
         DBG("REND [0x%x] pixma = [0x%x], %ix%i\n", cw->win, cw->pixmap, cw->pw, cw->ph);
         if ((cw->pw <= 0) || (cw->ph <= 0))
           {
+             if (cw->native)
+               {
+                  evas_object_image_native_surface_set(cw->obj, NULL);
+                  cw->native = 0;
+               }
              ecore_x_pixmap_free(cw->pixmap);
              cw->pixmap = 0;
              cw->pw = 0;
@@ -224,22 +230,28 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
      {
         if (new_pixmap)
           e_mod_comp_update_add(cw->up, 0, 0, cw->pw, cw->ph);
+        
+        evas_object_image_size_set(cw->obj, cw->pw, cw->ph);
+        if (!cw->native)
+          {
+             Evas_Native_Surface ns;
+             
+             ns.data.x11.visual = cw->vis;
+             ns.data.x11.pixmap = cw->pixmap;
+             evas_object_image_native_surface_set(cw->obj, &ns);
+          }
         r = e_mod_comp_update_rects_get(cw->up);
         if (r) 
           {
              e_mod_comp_update_clear(cw->up);
              for (i = 0; r[i].w > 0; i++)
                {
-                  Evas_Native_Surface ns;
                   int x, y, w, h;
                        
+                  cw->native = 1;
                   x = r[i].x; y = r[i].y;
                   w = r[i].w; h = r[i].h;
                   DBG("UPDATE [0x%x] %i %i %ix%i\n", cw->win, x, y, w, h);
-                  evas_object_image_size_set(cw->obj, cw->pw, cw->ph);
-                  ns.data.x11.visual = cw->vis;
-                  ns.data.x11.pixmap = cw->pixmap;
-                  evas_object_image_native_surface_set(cw->obj, &ns);
                   evas_object_image_data_update_add(cw->obj, x, y, w, h);
                }
              free(r);
@@ -300,18 +312,18 @@ _e_mod_comp_cb_animator(void *data)
    Eina_List *new_updates = NULL; // for failed pixmap fetches - get them next frame
    
    c->render_animator = NULL;
-//   ecore_x_grab();
-//   ecore_x_sync();
+   ecore_x_grab();
+   ecore_x_sync();
    EINA_LIST_FREE(c->updates, cw)
      {
         _e_mod_comp_win_update(cw);
         if (cw->update)
           new_updates = eina_list_append(new_updates, cw);
      }
+   ecore_x_ungrab();
    ecore_evas_manual_render(c->ee);
    if (new_updates) _e_mod_comp_render_queue(c);
    c->updates = new_updates;
-//   ecore_x_ungrab();
    return 0;
 }
 
@@ -421,8 +433,9 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
                }
              if (rects)
                {
-                  cw->shaped = 1;
-                  cw->shape_changed = 1;
+//// testing                  
+//                  cw->shaped = 1;
+//                  cw->shape_changed = 1;
                   free(rects);
                }
           }
@@ -453,6 +466,11 @@ _e_mod_comp_win_del(E_Comp_Win *cw)
         else if (cw->pop) e_object_delfn_del(E_OBJECT(cw->pop), cw->dfn);
         else if (cw->menu) e_object_delfn_del(E_OBJECT(cw->menu), cw->dfn);
         cw->dfn = NULL;
+     }
+   if (cw->native)
+     {
+        evas_object_image_native_surface_set(cw->obj, NULL);
+        cw->native = 0;
      }
    if (cw->pixmap)
      {
@@ -615,6 +633,11 @@ _e_mod_comp_win_hide(E_Comp_Win *cw)
         cw->pw = 0;
         cw->ph = 0;
      }
+   if (cw->native)
+     {
+        evas_object_image_native_surface_set(cw->obj, NULL);
+        cw->native = 0;
+     }
    if (cw->pixmap)
      {
         ecore_x_pixmap_free(cw->pixmap);
@@ -639,8 +662,6 @@ _e_mod_comp_win_hide(E_Comp_Win *cw)
         ecore_x_image_free(cw->xim);
         cw->xim = NULL;
      }
-   if (cw->c->gl)
-     evas_object_image_native_surface_set(cw->obj, NULL);
    _e_mod_comp_win_render_queue(cw);
 }
 
