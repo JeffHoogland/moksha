@@ -329,12 +329,7 @@ _e_quickpanel_cb_border_add(void *data, int type, void *event)
    e_illume_border_top_shelf_pos_get(qp->zone, NULL, &ty);
    _e_quickpanel_border_hide(ev->border);
    if ((ev->border->x != qp->zone->x) || (ev->border->y != ty)) 
-     {
-        ev->border->x = qp->zone->x;
-        ev->border->y = ty;
-        ev->border->changes.pos = 1;
-        ev->border->changed = 1;
-     }
+     e_border_move(ev->border, qp->zone->x, ty);
    if (ev->border->zone != qp->zone)
      e_border_zone_set(ev->border, qp->zone);
    qp->h += ev->border->h;
@@ -389,12 +384,7 @@ _e_quickpanel_cb_client_message(void *data, int type, void *event)
 
              e_illume_border_top_shelf_pos_get(zone, NULL, &ty);
              if ((bd->x != zone->x) || (bd->y != ty)) 
-               {
-                  bd->x = zone->x;
-                  bd->y = ty;
-                  bd->changes.pos = 1;
-                  bd->changed = 1;
-               }
+               e_border_move(bd, zone->x, ty);
              e_border_zone_set(bd, zone);
           }
      }
