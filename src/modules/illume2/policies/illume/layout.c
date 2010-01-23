@@ -36,7 +36,7 @@ _layout_border_add(E_Border *bd)
         bd->lock_user_stacking = 1;
      }
    if ((bd->client.icccm.accepts_focus) && (bd->client.icccm.take_focus) 
-       && (!bd->lock_focus_out))
+       && (!bd->lock_focus_out) && (!bd->focused))
      e_border_focus_set(bd, 1, 1);
 }
 
@@ -51,14 +51,12 @@ _layout_border_del(E_Border *bd)
         b = e_illume_border_top_shelf_get(bd->zone);
         if (b) e_border_show(b);
      }
-   ecore_x_e_illume_back_send(bd->zone->black_win);
 }
 
 void 
 _layout_border_focus_in(E_Border *bd) 
 {
    /* Do something if focus enters a window */
-   e_border_focus_latest_set(bd);
 }
 
 void 
@@ -178,7 +176,6 @@ _layout_zone_layout(E_Zone *zone)
                  (bd->y != (zone->y + zone->h - kbdsize))) 
                _zone_layout_border_move(bd, zone->x, 
                                         (zone->y + zone->h - kbdsize));
-//             e_border_stick(bd);
              if (bd->layer != IL_KEYBOARD_LAYER)
                e_border_layer_set(bd, IL_KEYBOARD_LAYER);
           }
@@ -326,59 +323,50 @@ _zone_layout_dual_top(E_Border *bd)
    else 
      {
         E_Border *b;
-        int bx, by, bw, bh;
+        int by, bh;
 
         /* more than one valid border */
-        bx = kx;
         by = (ky + ss);
-        bw = kw;
-        bh = (kh - ss - ps);
+        bh = ((kh - ss - ps) / 2);
 
         /* grab the border at this location */
-        b = e_illume_border_at_xy_get(bd->zone, kx, shelfsize);
-
+        b = e_illume_border_at_xy_get(bd->zone, kx, by);
         if ((b) && (bd != b)) 
           {
-             /* we have a border there, and it's not the current one */
-             if (!e_illume_border_is_conformant(b)) 
+             if (e_illume_border_is_home(b)) 
                {
-                  /* border in this location is not conformant */
-                  bh = ((kh - ss - ps) / 2);
-                  by = (b->y + b->h); // b->fx.y
+                  if (e_illume_border_is_home(bd)) 
+                    by = (b->y + b->h);
                }
+             else if (!e_illume_border_is_conformant(b)) 
+               by = (b->y + b->h);
              else 
                {
                   if (conform) 
                     {
-                       /* current border is conformant, divide zone in half */
                        bh = ((bd->zone->h - ss) / 2);
                        by = by + bh;
                     }
                   else 
                     {
-                       /* current border is not conformant */
                        by = (b->y + b->h);
                        bh = (kh - by - ps);
                     }
                }
           }
         else if (b) 
-          {
-             /* border at this location and it's the current border */
-             by = bd->y;
-             bh = ((kh - ss - ps) / 2);
-          }
+          by = bd->y;
         else 
           {
-             /* no border at this location */
              b = e_illume_border_valid_border_get(bd->zone);
              by = ky + ss;
              bh = (ky - b->h);
           }
-        if ((bd->w != bw) || (bd->h != bh))
-          _zone_layout_border_resize(bd, bw, bh);
-        if ((bd->x != bx) || (bd->y != by))
-          _zone_layout_border_move(bd, bx, by);
+
+        if ((bd->w != kw) || (bd->h != bh))
+          _zone_layout_border_resize(bd, kw, bh);
+        if ((bd->x != kx) || (bd->y != by)) 
+          _zone_layout_border_move(bd, kx, by);
      }
 }
 
@@ -386,15 +374,8 @@ static void
 _zone_layout_dual_top_custom(E_Border *bd) 
 {
    int kx, kw;
-   int count, conform;
    int ax, ay, aw, ah;
    int zx, zy, zw, zh;
-
-   /* get count of valid borders */
-   count = e_illume_border_valid_count_get(bd->zone);
-
-   /* fetch if this border is conformant */
-   conform = e_illume_border_is_conformant(bd);
 
    /* grab the 'safe' region. Safe region is space not occupied by keyboard */
    e_illume_kbd_safe_app_region_get(bd->zone, &kx, NULL, &kw, NULL);
@@ -403,7 +384,7 @@ _zone_layout_dual_top_custom(E_Border *bd)
    e_illume_border_app2_safe_region_get(bd->zone, &zx, &zy, &zw, &zh);
 
    /* if there are no other borders, than give this one all available space */
-   if (count < 2) 
+   if (e_illume_border_valid_count_get(bd->zone) < 2) 
      {
         if (ah >= zh) 
           {
@@ -419,64 +400,63 @@ _zone_layout_dual_top_custom(E_Border *bd)
      }
    else 
      {
-        E_Border *bt, *bb;
         int bh, by;
 
-        /* more than one valid border */
+        bh = ah;
+        by = ay;
 
-        if (bd->client.vkbd.state == ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF)
+        if (bd->client.vkbd.state <= ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF) 
           {
-             bh = ah;
-             by = ay;
-          }
-        else 
-          {
-             /* grab the border at this location */
+             E_Border *bt;
+
+             /* grab the border at the top */
              bt = e_illume_border_at_xy_get(bd->zone, kx, ay);
-
-             if ((bt) && (bd != bt)) 
+             if ((bt) && (bd != bt))
                {
-                  /* is there a border in the bottom section */
+                  E_Border *bb;
+
+                  /* have border @ top, check for border @ bottom */
                   bb = e_illume_border_at_xy_get(bd->zone, kx, zy);
-                  if (!bb) 
+                  if ((bb) && (bd != bb)) 
                     {
-                       bh = zh;
-                       by = zy;
-                    }
-                  else if ((bb) && (bd != bb))
-                    {
-                       if (bt == e_border_focused_get()) 
+                       /* have border @ top & bottom; neither is current */
+
+                       /* if top border is !home, check bottom */
+                       if (!e_illume_border_is_home(bt)) 
                          {
-                            if (bd->client.vkbd.state == ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF)
+                            if (e_illume_border_is_home(bb)) 
                               {
                                  bh = zh;
                                  by = zy;
                               }
                             else 
                               {
+                                 /* potential hole */
                                  bh = ah;
                                  by = ay;
                               }
                          }
-                       else if (bb = e_border_focused_get()) 
+                       else 
                          {
-                            if (bd->client.vkbd.state == ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF)
-                              {
-                                 bh = ah;
-                                 by = ay;
-                              }
-                            else 
-                              {
-                                 bh = zh;
-                                 by = zy;
-                              }
+                            bh = ah;
+                            by = ay;
                          }
                     }
                   else if (bb) 
                     {
                        bh = zh;
+                       by = bd->y;
+                    }
+                  else 
+                    {
+                       bh = zh;
                        by = zy;
                     }
+               }
+             else if (bt) 
+               {
+                  bh = ah;
+                  by = bd->y;
                }
              else 
                {
@@ -484,6 +464,7 @@ _zone_layout_dual_top_custom(E_Border *bd)
                   by = ay;
                }
           }
+
         if ((bd->w != kw) || (bd->h != bh))
           _zone_layout_border_resize(bd, kw, bh);
         if ((bd->x != kx) || (bd->y != by))
@@ -529,19 +510,21 @@ _zone_layout_dual_left(E_Border *bd)
         /* more than one valid border */
         bx = kx;
         by = (ky + ss);
-        bw = kw;
+        bw = (kw / 2);
         bh = (kh - ss - ps);
 
         /* grab the border at this location */
-        b = e_illume_border_at_xy_get(bd->zone, kx, shelfsize);
-
+        b = e_illume_border_at_xy_get(bd->zone, kx, by);
         if ((b) && (bd != b)) 
           {
-             /* we have a border there, and it's not the current one */
-             if (!e_illume_border_is_conformant(b)) 
+             if (e_illume_border_is_home(b)) 
+               {
+                  if (e_illume_border_is_home(bd)) 
+                    bx = (b->x + b->w);
+               }
+             else if (!e_illume_border_is_conformant(b)) 
                {
                   /* border in this location is not conformant */
-                  bw = (kw / 2);
                   bx = (b->x + b->w);
                }
              else 
@@ -562,11 +545,7 @@ _zone_layout_dual_left(E_Border *bd)
                }
           }
         else if (b) 
-          {
-             /* border at this location and it's the current border */
-             bx = bd->x;
-             bw = (kw / 2);
-          }
+          bx = bd->x;
         else 
           {
              /* no border at this location */
