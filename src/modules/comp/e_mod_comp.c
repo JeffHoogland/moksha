@@ -35,7 +35,8 @@ struct _E_Comp
    Eina_List      *updates;
    Ecore_Animator *render_animator;
 
-   Eina_Bool       gl : 1; // is visible
+   Eina_Bool       gl : 1;
+   Eina_Bool       grabbed : 1;
 };
 
 struct _E_Comp_Win
@@ -304,6 +305,15 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
      }
 }
 
+static void
+_e_mod_comp_pre_swap(void *data, Evas *e)
+{
+   E_Comp *c = data;
+   
+   ecore_x_ungrab();
+   c->grabbed = 0;
+}
+
 static int
 _e_mod_comp_cb_animator(void *data)
 {
@@ -314,14 +324,19 @@ _e_mod_comp_cb_animator(void *data)
    c->render_animator = NULL;
    ecore_x_grab();
    ecore_x_sync();
+   c->grabbed = 1;
    EINA_LIST_FREE(c->updates, cw)
      {
         _e_mod_comp_win_update(cw);
         if (cw->update)
           new_updates = eina_list_append(new_updates, cw);
      }
-   ecore_x_ungrab();
    ecore_evas_manual_render(c->ee);
+   if (c->grabbed)
+     {
+        c->grabbed = 0;
+        ecore_x_ungrab();
+     }
    if (new_updates) _e_mod_comp_render_queue(c);
    c->updates = new_updates;
    return 0;
@@ -1006,7 +1021,12 @@ _e_mod_comp_add(E_Manager *man)
    if (_comp_mod->conf->engine == E_EVAS_ENGINE_GL_X11)
      {
         c->ee = ecore_evas_gl_x11_new(NULL, c->win, 0, 0, man->w, man->h);
-        if (c->ee) c->gl = 1;
+        if (c->ee)
+          {
+             c->gl = 1;
+             ecore_evas_gl_x11_pre_post_swap_callback_set
+               (c->ee, c, _e_mod_comp_pre_swap, NULL);
+          }
      }
    if (!c->ee)
      c->ee = ecore_evas_software_x11_new(NULL, c->win, 0, 0, man->w, man->h);
@@ -1050,6 +1070,11 @@ _e_mod_comp_del(E_Comp *c)
 {
    E_Comp_Win *cw;
    
+   if (c->grabbed)
+     {
+        c->grabbed = 0;
+        ecore_x_ungrab();
+     }
    ecore_x_screen_is_composited_set(c->man->num, 0);
    while (c->wins)
      {
