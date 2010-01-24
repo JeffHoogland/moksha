@@ -236,6 +236,9 @@ _e_mod_win_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event)
      {
         iwin->mouse_down = 1;
         if (iwin->win->border->client.illume.drag.locked) return;
+        if (iwin->win->border->pointer)
+          e_pointer_type_push(iwin->win->border->pointer, 
+                              iwin->win->border, "move");
         iwin->drag.start = 1;
         iwin->drag.dnd = 0;
         ecore_x_pointer_last_xy_get(NULL, &iwin->drag.y);
@@ -279,6 +282,8 @@ _e_mod_win_cb_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event)
         E_Border *bd;
 
         bd = iwin->win->border;
+        if (bd->pointer)
+          e_pointer_type_pop(bd->pointer, bd, "move");
         edje_object_signal_emit(iwin->o_base, "e,action,move,stop", "e");
         ecore_x_e_illume_top_shelf_geometry_set(xwin, bd->x, bd->y, bd->w, 
                                                 (32 * e_scale));
