@@ -1,5 +1,5 @@
 group "E_Config" struct {
-  value "config_version" int: 65842;
+  value "config_version" int: 65844;
   value "show_splash" int: 1;
   value "init_default_theme" string: "default.edj";
   value "desktop_default_background" string: "Dark_Gradient.edj";
@@ -2120,4 +2120,7 @@ group "E_Config" struct {
   }
   value "mode.presentation" uchar: 0;
   value "mode.offline" uchar: 0;
+  value "exec.expire_timeout" double: 30.0;
+  value "exec.show_run_dialog" uchar: 1;
+  value "exec.show_exit_dialog" uchar: 1;
 }

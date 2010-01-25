@@ -10,6 +10,7 @@ struct _Config
    unsigned char    use_shadow;
    const char      *shadow_file;
    int              engine;
+   unsigned char    texture_from_pixmap;
 };
 
 struct _Mod

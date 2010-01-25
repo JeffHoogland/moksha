@@ -8,6 +8,7 @@ struct _E_Config_Dialog_Data
 {
    int use_shadow;
    int engine;
+   int texture_from_pixmap;
 };
 
 /* Protos */
@@ -54,7 +55,7 @@ _create_data(E_Config_Dialog *cfd)
    if ((cfdata->engine != E_EVAS_ENGINE_SOFTWARE_X11) &&
        (cfdata->engine != E_EVAS_ENGINE_GL_X11))
      cfdata->engine = E_EVAS_ENGINE_SOFTWARE_X11;
-
+   cfdata->texture_from_pixmap = _comp_mod->conf->texture_from_pixmap;
    return cfdata;
 }
 
@@ -99,6 +100,12 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    
    e_widget_table_object_append(ot, of, 0, 1, 1, 1, 1, 1, 1, 1);
    
+   of = e_widget_framelist_add(evas, _("GL Options"), 0);
+   e_widget_framelist_content_align_set(of, 0.5, 0.0);
+   ob = e_widget_check_add(evas, _("Texture from Pixmap"), &(cfdata->texture_from_pixmap));
+   e_widget_framelist_object_append(of, ob);
+   e_widget_table_object_append(ot, of, 0, 2, 1, 1, 1, 1, 1, 1);
+   
    e_widget_list_object_append(o, ot, 1, 1, 0.5);   
 
    return o;
@@ -112,9 +119,11 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
         _comp_mod->conf->use_shadow = cfdata->use_shadow;
         e_mod_comp_shadow_set();
      }
-   if (_comp_mod->conf->engine != cfdata->engine)
+   if ((_comp_mod->conf->engine != cfdata->engine) ||
+       (cfdata->texture_from_pixmap != _comp_mod->conf->texture_from_pixmap))
      {
         _comp_mod->conf->engine = cfdata->engine;
+        _comp_mod->conf->texture_from_pixmap = cfdata->texture_from_pixmap;
         e_mod_comp_shutdown();
         e_mod_comp_init();
      }

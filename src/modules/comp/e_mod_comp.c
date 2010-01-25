@@ -227,7 +227,8 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
      }
    
    e_mod_comp_update_resize(cw->up, cw->pw, cw->ph);
-   if ((cw->c->gl) && (!cw->shaped) && (!cw->shape_changed))
+   if ((cw->c->gl) && (_comp_mod->conf->texture_from_pixmap) &&
+       (!cw->shaped) && (!cw->shape_changed))
      {
         if (new_pixmap)
           e_mod_comp_update_add(cw->up, 0, 0, cw->pw, cw->ph);
@@ -310,7 +311,7 @@ _e_mod_comp_pre_swap(void *data, Evas *e)
 {
    E_Comp *c = data;
    
-   ecore_x_ungrab();
+//   ecore_x_ungrab();
    c->grabbed = 0;
 }
 
@@ -322,8 +323,8 @@ _e_mod_comp_cb_animator(void *data)
    Eina_List *new_updates = NULL; // for failed pixmap fetches - get them next frame
    
    c->render_animator = NULL;
-   ecore_x_grab();
-   ecore_x_sync();
+//   ecore_x_grab();
+//   ecore_x_sync();
    c->grabbed = 1;
    EINA_LIST_FREE(c->updates, cw)
      {
@@ -335,7 +336,7 @@ _e_mod_comp_cb_animator(void *data)
    if (c->grabbed)
      {
         c->grabbed = 0;
-        ecore_x_ungrab();
+//        ecore_x_ungrab();
      }
    if (new_updates) _e_mod_comp_render_queue(c);
    c->updates = new_updates;
