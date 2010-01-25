@@ -89,7 +89,6 @@ void *alloca (size_t);
 #include <Ecore_Input_Evas.h>
 #include <Ecore_Con.h>
 #include <Ecore_Ipc.h>
-#include <Ecore_Job.h>
 #include <Ecore_File.h>
 #include <Eet.h>
 #include <Edje.h>

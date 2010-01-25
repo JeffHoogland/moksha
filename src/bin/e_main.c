@@ -392,8 +392,6 @@ main(int argc, char **argv)
 #endif
 // FIXME: SEGV's on shutdown if fm2 windows up - disable for now.   
 //   _e_main_shutdown_push(ecore_shutdown);
-   ecore_job_init();
-   _e_main_shutdown_push(ecore_job_shutdown);
 
    /* init edje and set it up in frozen mode */
    edje_init();

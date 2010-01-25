@@ -302,7 +302,6 @@ PKG_CHECK_MODULES(E, [
   ecore-input-evas
   ecore-con
   ecore-ipc
-  ecore-job
   ecore-file
   eet >= 1.2.3
   edje
@@ -313,7 +312,7 @@ PKG_CHECK_MODULES(E, [
   edbus
   ehal
 ])
-requirements_e="evas ecore ecore-x ecore-evas ecore-con ecore-ipc ecore-job ecore-file eet edje efreet efreet-mime eina-0 dbus-1 edbus ehal"
+requirements_e="evas ecore ecore-x ecore-evas ecore-con ecore-ipc ecore-file eet edje efreet efreet-mime eina-0 dbus-1 edbus ehal"
 
 AC_E_CHECK_PKG(ECORE_IMF, [ecore-imf ecore-imf-evas], [], [:])
 
