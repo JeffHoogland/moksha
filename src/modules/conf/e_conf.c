@@ -42,6 +42,7 @@ struct _E_Configure_Item
 {
    E_Configure_CB *cb;
    const char *label;
+   const char *icon_file;
    const char *icon;
 };
 
@@ -49,9 +50,9 @@ static void _e_configure_free(E_Configure *eco);
 static void _e_configure_cb_del_req(E_Win *win);
 static void _e_configure_cb_resize(E_Win *win);
 static void _e_configure_cb_close(void *data, void *data2);
-static E_Configure_Category *_e_configure_category_add(E_Configure *eco, const char *label, const char *icon);
+static E_Configure_Category *_e_configure_category_add(E_Configure *eco, const char *label, const char *icon_file, const char *icon);
 static void _e_configure_category_cb(void *data, void *data2);
-static void _e_configure_item_add(E_Configure_Category *cat, const char *label, const char *icon, const char *path);
+static void _e_configure_item_add(E_Configure_Category *cat, const char *label, const char *icon_file, const char *icon, const char *path);
 static void _e_configure_item_cb(void *data);
 static void _e_configure_focus_cb(void *data, Evas_Object *obj);
 static void _e_configure_keydown_cb(void *data, Evas *e, Evas_Object *obj, void *event);
@@ -232,6 +233,7 @@ _e_configure_free(E_Configure *eco)
 
 	     if (!(ci = cat->items->data)) continue;
 	     if (ci->label) eina_stringshare_del(ci->label);
+             if (ci->icon_file) eina_stringshare_del(ci->icon_file);
 	     if (ci->icon) eina_stringshare_del(ci->icon);
 	     if (ci->cb)
 	       {
@@ -283,7 +285,7 @@ _e_configure_cb_close(void *data, void *data2)
 }
 
 static E_Configure_Category *
-_e_configure_category_add(E_Configure *eco, const char *label, const char *icon)
+_e_configure_category_add(E_Configure *eco, const char *label, const char *icon_file, const char *icon)
 {
    Evas_Object *o = NULL;
    E_Configure_Category *cat;
@@ -297,7 +299,9 @@ _e_configure_category_add(E_Configure *eco, const char *label, const char *icon)
    if (icon) 
      {
         o = e_icon_add(eco->evas);
-        if (!e_util_icon_theme_set(o, icon))
+        if (icon_file) 
+          e_icon_file_edje_set(o, icon_file, icon);
+        else if (!e_util_icon_theme_set(o, icon))
 	  {
 	    evas_object_del(o);
 	    o = e_util_icon_add(icon, eco->evas);
@@ -335,7 +339,9 @@ _e_configure_category_cb(void *data, void *data2)
 	if (ci->icon) 
 	  {
 	     o = e_icon_add(eco->evas);
-	     if (!e_util_icon_theme_set(o, ci->icon))
+             if (ci->icon_file) 
+               e_icon_file_edje_set(o, ci->icon_file, ci->icon);
+	     else if (!e_util_icon_theme_set(o, ci->icon))
 	       {
 		  evas_object_del(o);
 		  o = e_util_icon_add(ci->icon, eco->evas);
@@ -353,7 +359,7 @@ _e_configure_category_cb(void *data, void *data2)
 }
 
 static void
-_e_configure_item_add(E_Configure_Category *cat, const char *label, const char *icon, const char *path)
+_e_configure_item_add(E_Configure_Category *cat, const char *label, const char *icon_file, const char *icon, const char *path)
 {
    E_Configure_Item *ci;
    E_Configure_CB *cb;
@@ -366,6 +372,7 @@ _e_configure_item_add(E_Configure_Category *cat, const char *label, const char *
    cb->path = eina_stringshare_add(path);
    ci->cb = cb;
    ci->label = eina_stringshare_add(label);
+   if (icon_file) ci->icon_file = eina_stringshare_add(icon_file);
    if (icon) ci->icon = eina_stringshare_add(icon);
    cat->items = eina_list_append(cat->items, ci);
 }
@@ -481,7 +488,8 @@ _e_configure_fill_cat_list(void *data)
 	ecat = l->data;
 	if ((ecat->pri >= 0) && (ecat->items))
 	  {
-	     cat = _e_configure_category_add(eco, _(ecat->label), ecat->icon);
+	     cat = _e_configure_category_add(eco, _(ecat->label), 
+                                             ecat->icon_file, ecat->icon);
 	     for (ll = ecat->items; ll; ll = ll->next)
 	       {
 		  E_Configure_It *eci;
@@ -493,7 +501,7 @@ _e_configure_fill_cat_list(void *data)
 		       snprintf(buf, sizeof(buf), "%s/%s", ecat->cat, 
                                 eci->item);
 		       _e_configure_item_add(cat, _(eci->label), 
-                                             eci->icon, buf);
+                                             eci->icon_file, eci->icon, buf);
 		    }
 	       }
 	  }
