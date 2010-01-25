@@ -743,6 +743,10 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, mode.presentation, UCHAR);
    E_CONFIG_VAL(D, T, mode.offline, UCHAR);
 
+   E_CONFIG_VAL(D, T, exec.expire_timeout, DOUBLE);
+   E_CONFIG_VAL(D, T, exec.show_run_dialog, UCHAR);
+   E_CONFIG_VAL(D, T, exec.show_exit_dialog, UCHAR);
+   
    e_config_load();
    
    e_config_save_queue();
@@ -965,17 +969,18 @@ e_config_load(void)
 	COPYVAL(desklock_ask_presentation_timeout);
 	COPYVAL(screensaver_ask_presentation);
 	COPYVAL(screensaver_ask_presentation_timeout);
-	IFCFGELSE;
-	e_config->desklock_ask_presentation = 1;
-	e_config->desklock_ask_presentation_timeout = 30.0;
-	e_config->screensaver_ask_presentation = 1;
-	e_config->screensaver_ask_presentation_timeout = 30.0;
 	IFCFGEND;
 
         IFCFG(0x0133);
         COPYVAL(desk_flip_pan_bg);
         COPYVAL(desk_flip_pan_x_axis_factor);
         COPYVAL(desk_flip_pan_y_axis_factor);
+        IFCFGEND;
+
+        IFCFG(0x0134);
+        COPYVAL(exec.expire_timeout);
+        COPYVAL(exec.show_run_dialog);
+        COPYVAL(exec.show_exit_dialog);
         IFCFGEND;
 
         e_config->config_version = E_CONFIG_FILE_VERSION;   
@@ -1123,6 +1128,10 @@ e_config_load(void)
    E_CONFIG_LIMIT(e_config->mode.presentation, 0, 1);
    E_CONFIG_LIMIT(e_config->mode.offline, 0, 1);
 
+   E_CONFIG_LIMIT(e_config->exec.expire_timeout, 0.1, 1000);
+   E_CONFIG_LIMIT(e_config->exec.show_run_dialog, 0, 1);
+   E_CONFIG_LIMIT(e_config->exec.show_exit_dialog, 0, 1);
+   
    /* FIXME: disabled auto apply because it causes problems */
    e_config->cfgdlg_auto_apply = 0;
    /* FIXME: desklock personalized password id disabled for security reasons */

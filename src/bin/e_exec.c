@@ -248,7 +248,7 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
 	inst->exe = exe;
 	inst->startup_id = startup_id;
 	inst->launch_time = ecore_time_get();
-	inst->expire_timer = ecore_timer_add(10.0, 
+	inst->expire_timer = ecore_timer_add(e_config->exec.expire_timeout, 
                                              _e_exec_cb_expire_timer, inst);
 
 	l = eina_hash_find(e_exec_instances, desktop->orig_path);
@@ -345,52 +345,58 @@ _e_exec_cb_exit(void *data, int type, void *event)
    if ((ev->exited) &&
        ((ev->exit_code == 127) || (ev->exit_code == 255)))
      {
-	E_Dialog *dia;
-
-	dia = e_dialog_new(e_container_current_get(e_manager_current_get()),
-			   "E", "_e_exec_run_error_dialog");
-	if (dia)
-	  {
-	     char buf[4096];
-
-	     e_dialog_title_set(dia, _("Application run error"));
-	     snprintf(buf, sizeof(buf),
-		      _("Enlightenment was unable to run the application:<br>"
-			"<br>"
-			"%s<br>"
-			"<br>"
-			"The application failed to start."),
-		      ecore_exe_cmd_get(ev->exe));
-	     e_dialog_text_set(dia, buf);
-	     e_dialog_button_add(dia, _("OK"), NULL, NULL, NULL);
-	     e_dialog_button_focus_num(dia, 1);
-	     e_win_centered_set(dia->win, 1);
-	     e_dialog_show(dia);
-	  }
+        if (e_config->exec.show_run_dialog)
+          {
+             E_Dialog *dia;
+             
+             dia = e_dialog_new(e_container_current_get(e_manager_current_get()),
+                                "E", "_e_exec_run_error_dialog");
+             if (dia)
+               {
+                  char buf[4096];
+                  
+                  e_dialog_title_set(dia, _("Application run error"));
+                  snprintf(buf, sizeof(buf),
+                           _("Enlightenment was unable to run the application:<br>"
+                             "<br>"
+                             "%s<br>"
+                             "<br>"
+                             "The application failed to start."),
+                           ecore_exe_cmd_get(ev->exe));
+                  e_dialog_text_set(dia, buf);
+                  e_dialog_button_add(dia, _("OK"), NULL, NULL, NULL);
+                  e_dialog_button_focus_num(dia, 1);
+                  e_win_centered_set(dia->win, 1);
+                  e_dialog_show(dia);
+               }
+          }
      }
    /* Let's hope that everything returns this properly. */
    else if (!((ev->exited) && (ev->exit_code == EXIT_SUCCESS))) 
      {
-	/* filter out common exits via signals - int/term/quit. not really
-	 * worth popping up a dialog for */
-	if (!((ev->signalled) &&
-	     ((ev->exit_signal == SIGINT) ||
-	      (ev->exit_signal == SIGQUIT) ||
-	      (ev->exit_signal == SIGTERM)))
-	    )
-	  {
-	     /* Show the error dialog with details from the exe. */
-	     _e_exec_error_dialog(inst->desktop, ecore_exe_cmd_get(ev->exe), ev,
-				  ecore_exe_event_data_get(ev->exe, ECORE_EXE_PIPE_ERROR),
-				  ecore_exe_event_data_get(ev->exe, ECORE_EXE_PIPE_READ));
-	  }
+        if (e_config->exec.show_exit_dialog)
+          {
+             /* filter out common exits via signals - int/term/quit. not really
+              * worth popping up a dialog for */
+             if (!((ev->signalled) &&
+                   ((ev->exit_signal == SIGINT) ||
+                    (ev->exit_signal == SIGQUIT) ||
+                    (ev->exit_signal == SIGTERM)))
+                 )
+               {
+                  /* Show the error dialog with details from the exe. */
+                  _e_exec_error_dialog(inst->desktop, ecore_exe_cmd_get(ev->exe), ev,
+                                       ecore_exe_event_data_get(ev->exe, ECORE_EXE_PIPE_ERROR),
+                                       ecore_exe_event_data_get(ev->exe, ECORE_EXE_PIPE_READ));
+               }
+          }
      }
 
    /* maybe better 1 minute? it might be openoffice */
-   if (ecore_time_get() - inst->launch_time < 5.0)
+   if (ecore_time_get() - inst->launch_time < 2.0)
      {
 	if (inst->expire_timer) ecore_timer_del(inst->expire_timer);
-	inst->expire_timer = ecore_timer_add(30.0, _e_exec_cb_instance_finish, inst); 
+	inst->expire_timer = ecore_timer_add(e_config->exec.expire_timeout, _e_exec_cb_instance_finish, inst); 
      }
    else
      _e_exec_instance_free(inst);
