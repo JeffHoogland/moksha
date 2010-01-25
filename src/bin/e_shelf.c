@@ -1364,67 +1364,49 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
 
 	ev = event;
 	if (es->zone != ev->zone) return 1;
-	switch (ev->edge)
+	switch (es->gadcon->orient)
 	  {
-	   case E_ZONE_EDGE_NONE:
+	   case E_GADCON_ORIENT_FLOAT:
+	   case E_GADCON_ORIENT_HORIZ:
+	   case E_GADCON_ORIENT_VERT:
 	      /* noop */
 	      break;
-	   case E_ZONE_EDGE_LEFT:
-             if (((es->gadcon->orient == E_GADCON_ORIENT_LEFT) ||
-		  (es->gadcon->orient == E_GADCON_ORIENT_CORNER_LT) ||
-		  (es->gadcon->orient == E_GADCON_ORIENT_CORNER_LB)) &&
-		 (ev->y >= es->y) && (ev->y <= (es->y + es->h)))
-               show = 1;
-             break;
-	   case E_ZONE_EDGE_RIGHT:
-             if (((es->gadcon->orient == E_GADCON_ORIENT_RIGHT) ||
-		  (es->gadcon->orient == E_GADCON_ORIENT_CORNER_RT) ||
-		  (es->gadcon->orient == E_GADCON_ORIENT_CORNER_RB)) &&
-		 (ev->y >= es->y) && (ev->y <= (es->y + es->h)))
-               show = 1;
-             break;
-	   case E_ZONE_EDGE_TOP:
-             if (((es->gadcon->orient == E_GADCON_ORIENT_TOP) ||
-		  (es->gadcon->orient == E_GADCON_ORIENT_CORNER_TL) ||
-		  (es->gadcon->orient == E_GADCON_ORIENT_CORNER_TR)) &&
-		 (ev->x >= es->x) && (ev->x <= (es->x + es->w)))
-               show = 1;
-             break;
-	   case E_ZONE_EDGE_BOTTOM:
-             if (((es->gadcon->orient == E_GADCON_ORIENT_BOTTOM) ||
-		  (es->gadcon->orient == E_GADCON_ORIENT_CORNER_BL) ||
-		  (es->gadcon->orient == E_GADCON_ORIENT_CORNER_BR)) &&
-		 (ev->x >= es->x) && (ev->x <= (es->x + es->w)))
-               show = 1;
-	     break;
-	   case E_ZONE_EDGE_TOP_LEFT:
-             if (((es->gadcon->orient == E_GADCON_ORIENT_CORNER_TL) ||
-		  (es->gadcon->orient == E_GADCON_ORIENT_CORNER_LT)) &&
-		 ((ev->x >= es->x) && (ev->x <= (es->x + es->w))) &&
-		 ((ev->y >= es->y) && (ev->y <= (es->y + es->h))))
-               show = 1;
-	     break;
-	   case E_ZONE_EDGE_TOP_RIGHT:
-             if (((es->gadcon->orient == E_GADCON_ORIENT_CORNER_TR) ||
-		  (es->gadcon->orient == E_GADCON_ORIENT_CORNER_RT)) &&
-		 ((ev->x >= es->x) && (ev->x <= (es->x + es->w))) &&
-		  ((ev->y >= es->y) && (ev->y <= (es->y + es->h))))
-               show = 1;
-	     break;
-	   case E_ZONE_EDGE_BOTTOM_RIGHT:
-             if (((es->gadcon->orient == E_GADCON_ORIENT_CORNER_BR) ||
-		  (es->gadcon->orient == E_GADCON_ORIENT_CORNER_RB)) &&
-		 ((ev->x >= es->x) && (ev->x <= (es->x + es->w))) &&
-		 ((ev->y >= es->y) && (ev->y <= (es->y + es->h))))
-               show = 1;
-	     break;
-	   case E_ZONE_EDGE_BOTTOM_LEFT:
-             if (((es->gadcon->orient == E_GADCON_ORIENT_CORNER_BL) ||
-		  (es->gadcon->orient == E_GADCON_ORIENT_CORNER_LB)) &&
-		 ((ev->x >= es->x) && (ev->x <= (es->x + es->w))) &&
-		 ((ev->y >= es->y) && (ev->y <= (es->y + es->h))))
-               show = 1;
-	     break;
+	   case E_GADCON_ORIENT_LEFT:
+	   case E_GADCON_ORIENT_CORNER_LT:
+	   case E_GADCON_ORIENT_CORNER_LB:
+	      if (((ev->edge == E_ZONE_EDGE_LEFT) ||
+		   (ev->edge == E_ZONE_EDGE_TOP_LEFT) ||
+		   (ev->edge == E_ZONE_EDGE_BOTTOM_LEFT)) &&
+		  (ev->x >= es->x) && (ev->x <= (es->x + es->w)))
+		show = 1;
+	      break;
+	   case E_GADCON_ORIENT_RIGHT:
+	   case E_GADCON_ORIENT_CORNER_RT:
+	   case E_GADCON_ORIENT_CORNER_RB:
+	      if (((ev->edge == E_ZONE_EDGE_RIGHT) ||
+		   (ev->edge == E_ZONE_EDGE_TOP_RIGHT) ||
+		   (ev->edge == E_ZONE_EDGE_BOTTOM_RIGHT)) &&
+		  (ev->x >= es->x) && (ev->x <= (es->x + es->w)))
+		show = 1;
+	      break;
+	   case E_GADCON_ORIENT_TOP:
+	   case E_GADCON_ORIENT_CORNER_TL:
+	   case E_GADCON_ORIENT_CORNER_TR:
+	      if (((ev->edge == E_ZONE_EDGE_TOP) ||
+		   (ev->edge == E_ZONE_EDGE_TOP_LEFT) ||
+		   (ev->edge == E_ZONE_EDGE_TOP_RIGHT)) &&
+		  (ev->y >= es->y) && (ev->y <= (es->y + es->h)))
+		show = 1;
+	      break;
+	   case E_GADCON_ORIENT_BOTTOM:
+	   case E_GADCON_ORIENT_CORNER_BL:
+	   case E_GADCON_ORIENT_CORNER_BR:
+	      if (((ev->edge == E_ZONE_EDGE_BOTTOM) ||
+		   (ev->edge == E_ZONE_EDGE_BOTTOM_LEFT) ||
+		   (ev->edge == E_ZONE_EDGE_BOTTOM_RIGHT)) &&
+		  (ev->y >= es->y) && (ev->y <= (es->y + es->h)))
+		show = 1;
+	      break;
 	  }
 
 	if (show)
