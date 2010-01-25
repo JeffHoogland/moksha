@@ -79,10 +79,8 @@ e_shelf_config_init(void)
 	if (cf_es->id <= 0) cf_es->id = id + 1;
 	zone = e_util_container_zone_id_get(cf_es->container, cf_es->zone);
 	if (zone) 
-	  {
-	     id = cf_es->id;
-	     e_shelf_config_new(zone, cf_es);
-	  }
+	  e_shelf_config_new(zone, cf_es);
+	id = cf_es->id;
      }
 }
 
