@@ -1377,7 +1377,7 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
 	      if (((ev->edge == E_ZONE_EDGE_LEFT) ||
 		   (ev->edge == E_ZONE_EDGE_TOP_LEFT) ||
 		   (ev->edge == E_ZONE_EDGE_BOTTOM_LEFT)) &&
-		  (ev->x >= es->x) && (ev->x <= (es->x + es->w)))
+		  (ev->y >= es->y) && (ev->y <= (es->y + es->h)))
 		show = 1;
 	      break;
 	   case E_GADCON_ORIENT_RIGHT:
@@ -1386,7 +1386,7 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
 	      if (((ev->edge == E_ZONE_EDGE_RIGHT) ||
 		   (ev->edge == E_ZONE_EDGE_TOP_RIGHT) ||
 		   (ev->edge == E_ZONE_EDGE_BOTTOM_RIGHT)) &&
-		  (ev->x >= es->x) && (ev->x <= (es->x + es->w)))
+		  (ev->y >= es->y) && (ev->y <= (es->y + es->h)))
 		show = 1;
 	      break;
 	   case E_GADCON_ORIENT_TOP:
@@ -1395,7 +1395,7 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
 	      if (((ev->edge == E_ZONE_EDGE_TOP) ||
 		   (ev->edge == E_ZONE_EDGE_TOP_LEFT) ||
 		   (ev->edge == E_ZONE_EDGE_TOP_RIGHT)) &&
-		  (ev->y >= es->y) && (ev->y <= (es->y + es->h)))
+		  (ev->x >= es->x) && (ev->x <= (es->x + es->w)))
 		show = 1;
 	      break;
 	   case E_GADCON_ORIENT_BOTTOM:
@@ -1404,7 +1404,7 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
 	      if (((ev->edge == E_ZONE_EDGE_BOTTOM) ||
 		   (ev->edge == E_ZONE_EDGE_BOTTOM_LEFT) ||
 		   (ev->edge == E_ZONE_EDGE_BOTTOM_RIGHT)) &&
-		  (ev->y >= es->y) && (ev->y <= (es->y + es->h)))
+		  (ev->x >= es->x) && (ev->x <= (es->x + es->w)))
 		show = 1;
 	      break;
 	  }
