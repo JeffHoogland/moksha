@@ -381,12 +381,12 @@ _zone_layout_dual_top(E_Border *bd)
 static void 
 _zone_layout_dual_top_custom(E_Border *bd) 
 {
-   int kx, kw;
+   int kx, kw, ky, kh;
    int ax, ay, aw, ah;
    int zx, zy, zw, zh;
 
    /* grab the 'safe' region. Safe region is space not occupied by keyboard */
-   e_illume_kbd_safe_app_region_get(bd->zone, &kx, NULL, &kw, NULL);
+   e_illume_kbd_safe_app_region_get(bd->zone, &kx, &ky, &kw, &kh);
 
    e_illume_border_app1_safe_region_get(bd->zone, &ax, &ay, &aw, &ah);
    e_illume_border_app2_safe_region_get(bd->zone, &zx, &zy, &zw, &zh);
@@ -473,6 +473,11 @@ _zone_layout_dual_top_custom(E_Border *bd)
                }
           }
 
+        if ((bd->fullscreen) || (bd->need_fullscreen))
+          {
+             bh = kh;
+             by = ky;
+          }
         if ((bd->w != kw) || (bd->h != bh))
           _zone_layout_border_resize(bd, kw, bh);
         if ((bd->x != kx) || (bd->y != by))
