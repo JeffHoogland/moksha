@@ -258,6 +258,7 @@ _zone_layout_single(E_Border *bd)
 {
    int kx, ky, kw, kh;
    int ss = 0, ps = 0;
+   int nh, ny;
 
    e_illume_kbd_safe_app_region_get(bd->zone, &kx, &ky, &kw, &kh);
    if (!((bd->need_fullscreen) || (bd->fullscreen))) 
@@ -265,10 +266,17 @@ _zone_layout_single(E_Border *bd)
         if (kh >= bd->zone->h) ps = panelsize;
         ss = shelfsize;
      }
-   if ((bd->w != kw) || (bd->h != (kh - ss - ps)))
-     _zone_layout_border_resize(bd, kw, (kh - ss - ps));
-   if ((bd->x != kx) || (bd->y != (ky + ss)))
-     _zone_layout_border_move(bd, kx, (ky + ss));
+   nh = kh - ss - ps;
+   ny = ky + ss;
+   if (e_illume_border_is_conformant(bd)) 
+     {
+        nh = kh;
+        ny = ky;
+     }
+   if ((bd->w != kw) || (bd->h != nh))
+     _zone_layout_border_resize(bd, kw, nh);
+   if ((bd->x != kx) || (bd->y != ny))
+     _zone_layout_border_move(bd, kx, ny);
 }
 
 static void 
