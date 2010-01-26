@@ -99,7 +99,7 @@ e_mod_win_new(E_Zone *zone)
    else if (mode == ECORE_X_ILLUME_MODE_DUAL_LEFT)
      iwin->win->border->client.illume.drag.locked = 1;
 
-   ecore_x_e_illume_top_shelf_geometry_set(zone->black_win, 
+   ecore_x_e_illume_top_shelf_geometry_set(ecore_x_window_root_first_get(), 
                                            zone->x, zone->y, zone->w, 32 * e_scale);
 
    return iwin;
