@@ -195,9 +195,6 @@ evry_history_unload(void)
 
    e_config_domain_save("module.everything.history", hist_edd, evry_hist);
 
-   eina_hash_foreach(evry_hist->subjects, _hist_free_cb, NULL);
-   eina_hash_foreach(evry_hist->actions,  _hist_free_cb, NULL);
-
    E_FREE(evry_hist);
    evry_hist = NULL;
 }
