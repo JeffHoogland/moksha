@@ -1370,7 +1370,8 @@ _e_kbd_int_dictlist_up(E_Kbd_Int *ki)
 		      "e/modules/kbd/match/default");
    ki->dictlist.base_obj = o;
 
-   o = e_widget_ilist_add(ki->dictlist.popup->evas, 32 * e_scale, 32 * e_scale, NULL);
+   o = e_widget_ilist_add(ki->dictlist.popup->evas, 
+                          32 * e_scale, 32 * e_scale, NULL);
    e_widget_ilist_selector_set(o, 1);
    e_widget_ilist_freeze(o);
    ki->dictlist.ilist_obj = o;
@@ -1465,14 +1466,14 @@ _e_kbd_int_dictlist_up(E_Kbd_Int *ki)
    printf("Popup Move: %d %d %d %d\n", ki->win->x, ki->win->y - mh, mw, mh);
    e_popup_move_resize(ki->dictlist.popup,
 		       ki->win->x, ki->win->y - mh, mw, mh);
+
    evas_object_resize(ki->dictlist.base_obj, 
 		      ki->dictlist.popup->w, ki->dictlist.popup->h);
    evas_object_show(ki->dictlist.base_obj);
    e_popup_edje_bg_object_set(ki->dictlist.popup, ki->dictlist.base_obj);
    e_popup_show(ki->dictlist.popup);
    printf("Popup Show\n");
-   e_popup_layer_set(ki->dictlist.popup, 190);
-
+   printf("Visible: %d\n", ki->dictlist.popup->visible);
    _e_kbd_int_matchlist_down(ki);
 }
 
