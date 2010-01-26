@@ -216,6 +216,14 @@ fi
 AC_CHECK_LIB(dl, dlopen, dlopen_libs=-ldl)
 AC_SUBST(dlopen_libs)
 
+AC_MSG_CHECKING([whether to install sysactions.conf])
+AC_ARG_ENABLE([install-sysactions],
+   AS_HELP_STRING([--disable-install-sysactions],[disable installing /etc/enlightenment/sysactions.conf @<:@default=enabled@:>@]),
+   [e_cv_enable_install_sysactions=$enableval],
+   AC_CACHE_VAL([e_cv_enable_install_sysactions], [e_cv_enable_install_sysactions=yes]))
+AC_MSG_RESULT([$e_cv_enable_install_sysactions])
+AM_CONDITIONAL(INSTALL_SYSACTIONS, test x${e_cv_enable_install_sysactions} = xyes)
+
 AC_MSG_CHECKING([whether to enable Files menu item])
 AC_ARG_ENABLE([files],
    AS_HELP_STRING([--disable-files],[disable Files menu item @<:@default=enabled@:>@]),
