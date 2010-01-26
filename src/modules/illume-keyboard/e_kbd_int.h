@@ -29,6 +29,7 @@ struct _E_Kbd_Int
    Eina_List           *layouts;
    Eina_List           *matches;
    Ecore_Event_Handler *client_message_handler;
+   Ecore_Event_Handler *kbd_move_hdl;
    struct {
       char             *directory;
       const char       *file;

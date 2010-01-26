@@ -20,6 +20,7 @@ static void _e_kbd_int_zoomkey_down(E_Kbd_Int *ki);
 static void _e_kbd_int_matches_update(void *data);
 static void _e_kbd_int_dictlist_down(E_Kbd_Int *ki);
 static void _e_kbd_int_matchlist_down(E_Kbd_Int *ki);
+static int _e_kbd_int_cb_border_move(void *data, int type, void *event);
 
 static void
 _e_kbd_int_cb_resize(E_Win *win)
@@ -590,6 +591,7 @@ _e_kbd_int_zoomkey_up(E_Kbd_Int *ki)
    evas_object_show(ki->zoomkey.base_obj);
    e_popup_edje_bg_object_set(ki->zoomkey.popup, ki->zoomkey.base_obj);
    e_popup_show(ki->zoomkey.popup);
+   e_popup_layer_set(ki->zoomkey.popup, 190);
 }
 
 static void
@@ -1311,6 +1313,7 @@ _e_kbd_int_dictlist_down(E_Kbd_Int *ki)
    char *str;
 
    if (!ki->dictlist.popup) return;
+   printf("Dict List Down\n");
    e_object_del(E_OBJECT(ki->dictlist.popup));
    ki->dictlist.popup = NULL;
    EINA_LIST_FREE(ki->dictlist.matches, str)
@@ -1352,7 +1355,14 @@ _e_kbd_int_dictlist_up(E_Kbd_Int *ki)
    char buf[PATH_MAX], *p, *file, *pp;
    const char *str;
 
-   if (ki->dictlist.popup) return;
+   printf("Dict List Up\n");
+   if (ki->dictlist.popup) 
+     {
+        printf("Returning\n");
+        return;
+     }
+
+   printf("Dict Zone: %d\n", ki->win->border->zone->id);
    ki->dictlist.popup = e_popup_new(ki->win->border->zone, -1, -1, 1, 1);
    e_popup_layer_set(ki->dictlist.popup, 190);
 
@@ -1448,9 +1458,11 @@ _e_kbd_int_dictlist_up(E_Kbd_Int *ki)
    edje_extern_object_min_size_set(ki->dictlist.ilist_obj, 0, 0);
    edje_object_part_swallow(ki->dictlist.base_obj, "e.swallow.content",
                             ki->dictlist.ilist_obj);
+
    e_zone_useful_geometry_get(ki->win->border->zone, &sx, &sy, &sw, &sh);   
    mw = ki->win->w;
    if (mh > (sh - ki->win->h)) mh = sh - ki->win->h;
+   printf("Popup Move: %d %d %d %d\n", ki->win->x, ki->win->y - mh, mw, mh);
    e_popup_move_resize(ki->dictlist.popup,
 		       ki->win->x, ki->win->y - mh, mw, mh);
    evas_object_resize(ki->dictlist.base_obj, 
@@ -1458,6 +1470,8 @@ _e_kbd_int_dictlist_up(E_Kbd_Int *ki)
    evas_object_show(ki->dictlist.base_obj);
    e_popup_edje_bg_object_set(ki->dictlist.popup, ki->dictlist.base_obj);
    e_popup_show(ki->dictlist.popup);
+   printf("Popup Show\n");
+   e_popup_layer_set(ki->dictlist.popup, 190);
 
    _e_kbd_int_matchlist_down(ki);
 }
@@ -1689,9 +1703,10 @@ e_kbd_int_new(const char *themedir, const char *syskbds, const char *sysdicts)
 
    ki->client_message_handler = ecore_event_handler_add
      (ECORE_X_EVENT_CLIENT_MESSAGE, _e_kbd_int_cb_client_message, ki);
+   ki->kbd_move_hdl = ecore_event_handler_add
+     (E_EVENT_BORDER_MOVE, _e_kbd_int_cb_border_move, ki);
 
    e_win_show(ki->win);
-//   e_win_move_resize(ki->win, 0, (zone->h - mh), zone->w, mh);
    return ki;
 }
 
@@ -1705,6 +1720,7 @@ e_kbd_int_free(E_Kbd_Int *ki)
    _e_kbd_int_matches_free(ki);
    _e_kbd_int_layout_free(ki);
    ecore_event_handler_del(ki->client_message_handler);
+   ecore_event_handler_del(ki->kbd_move_hdl);
    if (ki->down.hold_timer) ecore_timer_del(ki->down.hold_timer);
    _e_kbd_int_matchlist_down(ki);
    _e_kbd_int_zoomkey_down(ki);
@@ -1731,4 +1747,19 @@ _theme_obj_new(Evas *e, const char *custom_dir, const char *group)
 	  }
      }
    return o;
+}
+
+static int 
+_e_kbd_int_cb_border_move(void *data, int type, void *event) 
+{
+   E_Event_Border_Move *ev;
+   E_Kbd_Int *ki;
+
+   ev = event;
+   if (!(ki = data)) return 1;
+   if (ki->win->border != ev->border) return 1;
+   _e_kbd_int_zoomkey_down(ki);
+   _e_kbd_int_matchlist_down(ki);
+   _e_kbd_int_dictlist_down(ki);
+   return 1;
 }
