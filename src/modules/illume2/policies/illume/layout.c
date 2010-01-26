@@ -206,8 +206,21 @@ _layout_zone_layout(E_Zone *zone)
           {
              if (cfg_zone->mode.dual) _zone_layout_dual(bd);
              else _zone_layout_single(bd);
-             if (bd->layer != IL_APP_LAYER)
-               e_border_layer_set(bd, IL_APP_LAYER);
+             if (e_illume_border_is_conformant(bd)) 
+               {
+                  if (bd->layer != IL_CONFORM_LAYER)
+                    e_border_layer_set(bd, IL_CONFORM_LAYER);
+               }
+             else if ((bd->fullscreen) || (bd->need_fullscreen))
+               {
+                  if (bd->layer != IL_FULLSCREEN_LAYER)
+                    e_border_layer_set(bd, IL_FULLSCREEN_LAYER);
+               }
+             else 
+               {
+                  if (bd->layer != IL_APP_LAYER)
+                    e_border_layer_set(bd, IL_APP_LAYER);
+               }
           }
      }
 }
@@ -302,76 +315,67 @@ _zone_layout_dual(E_Border *bd)
 static void 
 _zone_layout_dual_top(E_Border *bd) 
 {
-   int kx, ky, kw, kh;
-   int ss = 0, ps = 0;
    int conform;
+   int kx, ky, kw, kh;
+   int ps = 0, ss = 0;
+   int by, bh;
+   E_Border *b;
 
    conform = e_illume_border_is_conformant(bd);
    e_illume_kbd_safe_app_region_get(bd->zone, &kx, &ky, &kw, &kh);
-   if (!conform) 
+
+   if (!((bd->need_fullscreen) || (bd->fullscreen))) 
      {
-        if (!((bd->need_fullscreen) || (bd->fullscreen))) 
-          {
-             if (kh >= bd->zone->h) ps = panelsize;
-             ss = shelfsize;
-          }
+        if (kh >= bd->zone->h) ps = panelsize;
+        ss = shelfsize;
      }
 
-   if (e_illume_border_valid_count_get(bd->zone) < 2) 
-     {
-        if ((bd->w != kw) || (bd->h != (kh - ss - ps)))
-          _zone_layout_border_resize(bd, kw, (kh - ss - ps));
-        if ((bd->x != kx) || (bd->y != (ky + ss)))
-          _zone_layout_border_move(bd, kx, (ky + ss));
-     }
-   else 
-     {
-        E_Border *b;
-        int by, bh;
+   by = (ky + ss);
+   bh = ((kh - ss - ps) / 2);
 
-        /* more than one valid border */
-        by = (ky + ss);
-        bh = ((kh - ss - ps) / 2);
-
-        /* grab the border at this location */
-        b = e_illume_border_at_xy_get(bd->zone, kx, by);
-        if ((b) && (bd != b)) 
+   b = e_illume_border_at_xy_get(bd->zone, kx, by);
+   if ((b) && (bd != b)) 
+     {
+        if (e_illume_border_is_home(b)) 
           {
-             if (e_illume_border_is_home(b)) 
+             if (conform) 
                {
-                  if (e_illume_border_is_home(bd)) 
-                    by = (b->y + b->h);
+                  by = ky;
+                  bh += ss;
                }
-             else if (!e_illume_border_is_conformant(b)) 
+             else if (e_illume_border_is_home(bd))
                by = (b->y + b->h);
-             else 
-               {
-                  if (conform) 
-                    {
-                       bh = ((bd->zone->h - ss) / 2);
-                       by = by + bh;
-                    }
-                  else 
-                    {
-                       by = (b->y + b->h);
-                       bh = (kh - by - ps);
-                    }
-               }
           }
-        else if (b) 
-          by = bd->y;
+        else if (e_illume_border_is_conformant(b)) 
+          {
+             by = (b->y + b->h);
+             if (conform) bh += ps;
+          }
         else 
           {
-             b = e_illume_border_valid_border_get(bd->zone);
-             by = ky + ss;
-             bh = (ky - b->h);
+             by = (b->y + b->h);
+             if (conform) bh += ps;
           }
-
-        if ((bd->w != kw) || (bd->h != bh))
-          _zone_layout_border_resize(bd, kw, bh);
-        if ((bd->x != kx) || (bd->y != by)) 
-          _zone_layout_border_move(bd, kx, by);
      }
+   else if (b) 
+     {
+        if (bd->client.vkbd.state > ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF) 
+          {
+             by = (ky + ss);
+             bh = ((kh - ss - ps) / 2);
+          }
+     }
+
+   if ((bd->need_fullscreen) || (bd->fullscreen))
+     {
+        by = ky;
+        bh = kh;
+     }
+
+   if ((bd->w != kw) || (bd->h != bh))
+     _zone_layout_border_resize(bd, kw, bh);
+   if ((bd->x != kx) || (bd->y != by))
+     _zone_layout_border_move(bd, kx, by);
 }
 
 static void 
@@ -479,87 +483,77 @@ _zone_layout_dual_top_custom(E_Border *bd)
 static void 
 _zone_layout_dual_left(E_Border *bd) 
 {
-   int kx, ky, kw, kh, ss = 0, ps = 0;
    int conform;
+   int kx, ky, kw, kh;
+   int ps = 0, ss = 0;
+   int by, bh, bx, bw;
+   E_Border *b;
 
-   /* fetch if this border is conformant */
    conform = e_illume_border_is_conformant(bd);
-
-   /* grab the 'safe' region. Safe region is space not occupied by keyboard */
    e_illume_kbd_safe_app_region_get(bd->zone, &kx, &ky, &kw, &kh);
-   if (!conform) 
+
+   if (!((bd->need_fullscreen) || (bd->fullscreen))) 
      {
-        /* if the border is not conformant and doesn't need fullscreen, then 
-         * we account for shelf & panel sizes */
-        if (!((bd->need_fullscreen) || (bd->fullscreen))) 
-          {
-             if (kh >= bd->zone->h) ps = panelsize;
-             ss = shelfsize;
-          }
+        if (kh >= bd->zone->h) ps = panelsize;
+        ss = shelfsize;
      }
 
-   /* if there are no other borders, than give this one all available space */
-   if (e_illume_border_valid_count_get(bd->zone) < 2) 
-     {
-        if ((bd->w != kw) || (bd->h != (kh - ss - ps)))
-          _zone_layout_border_resize(bd, kw, (kh - ss - ps));
-        if ((bd->x != kx) || (bd->y != (ky + ss)))
-          _zone_layout_border_move(bd, kx, (ky + ss));
-     }
-   else 
-     {
-        E_Border *b;
-        int bx, by, bw, bh;
+   bx = kx;
+   by = (ky + ss);
+   bw = (kw / 2);
+   bh = (kh - ss - ps);
 
-        /* more than one valid border */
-        bx = kx;
-        by = (ky + ss);
-        bw = (kw / 2);
-        bh = (kh - ss - ps);
-
-        /* grab the border at this location */
-        b = e_illume_border_at_xy_get(bd->zone, kx, by);
-        if ((b) && (bd != b)) 
+   b = e_illume_border_at_xy_get(bd->zone, kx, by);
+   if ((b) && (bd != b)) 
+     {
+        if (e_illume_border_is_home(b)) 
           {
-             if (e_illume_border_is_home(b)) 
+             if (conform) 
                {
-                  if (e_illume_border_is_home(bd)) 
-                    bx = (b->x + b->w);
+                  by = ky;
+                  bh += ps + ss;
                }
-             else if (!e_illume_border_is_conformant(b)) 
+             else if (e_illume_border_is_home(bd))
+               bx = (b->x + b->w);
+          }
+        else if (e_illume_border_is_conformant(b)) 
+          {
+             bx = (b->x + b->w);
+             if (conform) 
                {
-                  /* border in this location is not conformant */
-                  bx = (b->x + b->w);
-               }
-             else 
-               {
-                  /* border there is conformant */
-                  if (conform) 
-                    {
-                       /* if current border is conformant, divide zone in half */
-                       bw = (bd->zone->w / 2);
-                       bx = bx + bw;
-                    }
-                  else 
-                    {
-                       /* current border is not conformant */
-                       bx = (b->x + b->w);
-                       bw = (kw - bx);
-                    }
+                  by = ky;
+                  bh += ps + ss;
                }
           }
-        else if (b) 
-          bx = bd->x;
         else 
           {
-             /* no border at this location */
-             b = e_illume_border_valid_border_get(bd->zone);
-             bx = kx;
-             bw = (kw - b->w);
+             bx = (b->x + b->w);
+             if (conform) 
+               {
+                  by = ky;
+                  bh += ps + ss;
+               }
           }
-        if ((bd->w != bw) || (bd->h != bh))
-          _zone_layout_border_resize(bd, bw, bh);
-        if ((bd->x != bx) || (bd->y != by))
-          _zone_layout_border_move(bd, bx, by);
      }
+   else if (b) 
+     {
+        if (bd->client.vkbd.state > ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF) 
+          {
+             by = (ky + ss);
+             bh = ((kh - ss - ps) / 2);
+          }
+     }
+
+   if ((bd->need_fullscreen) || (bd->fullscreen))
+     {
+        bx = kx;
+        by = ky;
+        bw = kw;
+        bh = kh;
+     }
+
+   if ((bd->w != bw) || (bd->h != bh))
+     _zone_layout_border_resize(bd, bw, bh);
+   if ((bd->x != bx) || (bd->y != by))
+     _zone_layout_border_move(bd, bx, by);
 }
