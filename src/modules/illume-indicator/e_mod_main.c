@@ -61,6 +61,7 @@ e_modapi_shutdown(E_Module *m)
    if (_ind_mod_dir) eina_stringshare_del(_ind_mod_dir);
    _ind_mod_dir = NULL;
 
+   /* reset indicator geometry for conformant apps to zero */
    ecore_x_e_illume_top_shelf_geometry_set(ecore_x_window_root_first_get(), 
                                            0, 0, 0, 0);
 
