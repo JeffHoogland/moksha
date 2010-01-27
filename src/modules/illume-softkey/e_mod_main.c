@@ -61,6 +61,9 @@ e_modapi_shutdown(E_Module *m)
    if (_sft_mod_dir) eina_stringshare_del(_sft_mod_dir);
    _sft_mod_dir = NULL;
 
+   /* reset bottom panel geometry to zero for conformant apps */
+   ecore_x_e_illume_bottom_panel_geometry_set(ecore_x_window_root_first_get(), 
+                                              0, 0, 0, 0);
    return 1;
 }
 
