@@ -34,6 +34,7 @@ struct _E_Comp
    Eina_Inlist    *wins;
    Eina_List      *updates;
    Ecore_Animator *render_animator;
+   int             render_overflow;
 
    Eina_Bool       gl : 1;
    Eina_Bool       grabbed : 1;
@@ -322,7 +323,6 @@ _e_mod_comp_cb_animator(void *data)
    E_Comp_Win *cw;
    Eina_List *new_updates = NULL; // for failed pixmap fetches - get them next frame
    
-   c->render_animator = NULL;
 //   ecore_x_grab();
 //   ecore_x_sync();
    c->grabbed = 1;
@@ -340,13 +340,23 @@ _e_mod_comp_cb_animator(void *data)
      }
    if (new_updates) _e_mod_comp_render_queue(c);
    c->updates = new_updates;
-   return 0;
+   c->render_overflow--;
+   if (c->render_overflow == 0)
+     {
+        c->render_animator = NULL;
+        return 0;
+     }
+   return 1;
 }
 
 static void
 _e_mod_comp_render_queue(E_Comp *c)
 {
-   if (c->render_animator) return;
+   if (c->render_animator)
+     {
+        c->render_overflow = 10;
+        return;
+     }
    c->render_animator = ecore_animator_add(_e_mod_comp_cb_animator, c);
 }
 
