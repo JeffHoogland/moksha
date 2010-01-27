@@ -49,6 +49,9 @@ e_modapi_shutdown(E_Module *m)
    if (mod_dir) eina_stringshare_del(mod_dir);
    mod_dir = NULL;
 
+   ecore_x_e_illume_bottom_panel_geometry_set(ecore_x_window_root_first_get(), 
+                                              0, 0, 0, 0);
+
    return 1;
 }
 

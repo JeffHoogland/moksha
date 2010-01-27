@@ -58,8 +58,8 @@ e_mod_softkey_win_new(E_Zone *zone)
                      zone->w, (32 * e_scale));
    e_win_show(swin->win);
    e_border_zone_set(swin->win->border, zone);
-   e_win_placed_set(swin->win, 1);
-   swin->win->border->lock_user_location = 1;
+//   e_win_placed_set(swin->win, 1);
+//   swin->win->border->lock_user_location = 1;
 
    ecore_x_e_illume_bottom_panel_geometry_set(ecore_x_window_root_first_get(), 
                                               zone->x, (zone->h - (32 * e_scale)), 
