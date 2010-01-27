@@ -482,7 +482,7 @@ _e_module_free(E_Module *m)
      }
    if (m->name) eina_stringshare_del(m->name);
    if (m->dir) eina_stringshare_del(m->dir);
-   if (m->handle) dlclose(m->handle);
+//   if (m->handle) dlclose(m->handle); DONT dlclose! causes problems with deferred callbacks for free etc. - when their code goes away!
    _e_modules = eina_list_remove(_e_modules, m);
    free(m);
 }
