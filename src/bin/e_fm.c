@@ -6518,6 +6518,7 @@ _e_fm2_cb_icon_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
         ic->down_sel = 0;
 
 	if ((ic->sd->config->view.single_click) &&
+	    (ic->sd->config->view.single_click_delay == 0) &&
 	    (!evas_key_modifier_is_set(ev->modifiers, "Control")) &&
 	    (!evas_key_modifier_is_set(ev->modifiers, "Shift")) &&
 	    (_e_fm2_inplace_open(ic) == 0))
