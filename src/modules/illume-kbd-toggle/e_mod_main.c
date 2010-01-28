@@ -70,6 +70,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    snprintf(buff, sizeof(buff), "%s/e-module-illume-kbd-toggle.edj", mod_dir);
 
    inst = E_NEW(Instance, 1);
+
    inst->o_btn = e_widget_button_add(gc->evas, NULL, NULL, 
                                      _cb_btn_click, inst, NULL);
    icon = e_icon_add(evas_object_evas_get(inst->o_btn));
@@ -152,6 +153,7 @@ _cb_btn_click(void *data, void *data2)
 
    if (!(inst = data)) return;
    if (!(bd = e_border_focused_get())) return;
+   if (bd->zone != inst->gcc->gadcon->zone) return;
 
    snprintf(buff, sizeof(buff), "%s/e-module-illume-kbd-toggle.edj", mod_dir);
 
@@ -186,6 +188,7 @@ _cb_border_focus_in(void *data, int type, void *event)
    ev = event;
    if (ev->border->stolen) return 1;
    if (!(bd = ev->border)) return 1;
+   if (bd->zone != inst->gcc->gadcon->zone) return 1;
 
    snprintf(buff, sizeof(buff), "%s/e-module-illume-kbd-toggle.edj", mod_dir);
 
