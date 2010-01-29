@@ -21,8 +21,10 @@ il_config_select_window(Il_Select_Window_Type type)
    E_Config_Dialog_View *v;
 
    if (e_config_dialog_find("E", "_config_illume_select_window")) return;
-   stype = type;
+
    v = E_NEW(E_Config_Dialog_View, 1);
+   if (!v) return;
+
    v->create_cfdata = _il_config_select_window_create_data;
    v->free_cfdata = _il_config_select_window_free_data;
    v->basic.create_widgets = _il_config_select_window_create;
@@ -33,7 +35,9 @@ il_config_select_window(Il_Select_Window_Type type)
                              _("Select Home Window"), "E", 
                              "_config_illume_select_window", 
                              "enlightenment/windows", 0, v, NULL);
+   if (!cfd) return;
    e_dialog_resizable_set(cfd->dia, 1);
+   stype = type;
 }
 
 static void *
@@ -65,19 +69,23 @@ _il_config_select_window_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialo
    e_widget_ilist_go(ow);
 
    bds = e_border_client_list();
-   for (i = 0, l = bds; l; l = l->next, i++) 
+   if (bds)
      {
-        E_Border *bd;
-        const char *name;
+        for (i = 0, l = bds; l; l = l->next, i++) 
+          {
+             E_Border *bd;
+             const char *name;
 
-        if (!(bd = l->data)) continue;
-        if (e_object_is_del(E_OBJECT(bd))) continue;
-        if (_il_config_select_window_match(bd)) sel = i;
-        name = e_border_name_get(bd);
-        e_widget_ilist_append(ow, NULL, name, 
-                              _il_config_select_window_list_changed, 
-                              bd, name);
+             if (!(bd = l->data)) continue;
+             if (e_object_is_del(E_OBJECT(bd))) continue;
+             if (_il_config_select_window_match(bd)) sel = i;
+             if (!(name = e_border_name_get(bd))) continue;
+             e_widget_ilist_append(ow, NULL, name, 
+                                   _il_config_select_window_list_changed, 
+                                   bd, name);
+          }
      }
+
    e_widget_size_min_set(ow, 100, 200);
    e_widget_ilist_go(ow);
    if (sel >= 0) e_widget_ilist_selected_set(ow, sel);
