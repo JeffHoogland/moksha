@@ -18,6 +18,7 @@ static int panelsize = 0;
 void 
 _layout_border_add(E_Border *bd) 
 {
+   if (!bd) return;
    if ((bd->new_client) || (!bd->visible)) return;
    if ((bd->need_fullscreen) || (bd->fullscreen)) 
      {
@@ -43,6 +44,8 @@ _layout_border_add(E_Border *bd)
 void 
 _layout_border_del(E_Border *bd) 
 {
+   if (!bd) return;
+
    /* Do something if a border gets removed */
    if ((bd->need_fullscreen) || (bd->fullscreen)) 
      {
@@ -70,7 +73,7 @@ _layout_border_activate(E_Border *bd)
 {
    /* HANDLE A BORDER BEING ACTIVATED */
 
-   if (bd->stolen) return;
+   if ((!bd) || (bd->stolen)) return;
 
    /* only set focus if border accepts it and it's not locked out */
    if (((!bd->client.icccm.accepts_focus) && (!bd->client.icccm.take_focus)) ||
@@ -106,7 +109,11 @@ _layout_zone_layout(E_Zone *zone)
    Eina_List *l;
    E_Border *bd;
 
+   if (!zone) return;
+
    cfg_zone = e_illume_zone_config_get(zone->id);
+   if (!cfg_zone) return;
+
    EINA_LIST_FOREACH(e_border_client_list(), l, bd) 
      {
         int mh;
@@ -230,12 +237,14 @@ _layout_zone_layout(E_Zone *zone)
 void 
 _layout_zone_move_resize(E_Zone *zone) 
 {
+   if (!zone) return;
    _layout_zone_layout(zone);
 }
 
 void 
 _layout_drag_start(E_Border *bd) 
 {
+   if (!bd) return;
    ecore_x_e_illume_drag_set(bd->client.win, 1);
    ecore_x_e_illume_drag_set(bd->zone->black_win, 1);
 }
@@ -243,6 +252,7 @@ _layout_drag_start(E_Border *bd)
 void 
 _layout_drag_end(E_Border *bd) 
 {
+   if (!bd) return;
    ecore_x_e_illume_drag_set(bd->client.win, 0);
    ecore_x_e_illume_drag_set(bd->zone->black_win, 0);
 }
@@ -251,6 +261,7 @@ _layout_drag_end(E_Border *bd)
 static void 
 _zone_layout_border_move(E_Border *bd, int x, int y) 
 {
+   if (!bd) return;
    bd->x = x;
    bd->y = y;
    bd->changes.pos = 1;
@@ -260,6 +271,7 @@ _zone_layout_border_move(E_Border *bd, int x, int y)
 static void 
 _zone_layout_border_resize(E_Border *bd, int w, int h) 
 {
+   if (!bd) return;
    bd->w = w;
    bd->h = h;
    bd->client.w = bd->w - (bd->client_inset.l + bd->client_inset.r);
@@ -275,6 +287,7 @@ _zone_layout_single(E_Border *bd)
    int ss = 0, ps = 0;
    int nh, ny;
 
+   if (!bd) return;
    e_illume_kbd_safe_app_region_get(bd->zone, &kx, &ky, &kw, &kh);
    if (!((bd->need_fullscreen) || (bd->fullscreen))) 
      {
@@ -299,7 +312,9 @@ _zone_layout_dual(E_Border *bd)
 {
    E_Illume_Config_Zone *cz;
 
+   if (!bd) return;
    cz = e_illume_zone_config_get(bd->zone->id);
+   if (!cz) return;
    if (cz->mode.side == 0) 
      {
         int ty;
@@ -323,6 +338,7 @@ _zone_layout_dual_top(E_Border *bd)
    int by, bh;
    E_Border *b;
 
+   if (!bd) return;
    conform = e_illume_border_is_conformant(bd);
    e_illume_kbd_safe_app_region_get(bd->zone, &kx, &ky, &kw, &kh);
 
@@ -386,6 +402,8 @@ _zone_layout_dual_top_custom(E_Border *bd)
    int kx, kw, ky, kh;
    int ax, ay, aw, ah;
    int zx, zy, zw, zh;
+
+   if (!bd) return;
 
    /* grab the 'safe' region. Safe region is space not occupied by keyboard */
    e_illume_kbd_safe_app_region_get(bd->zone, &kx, &ky, &kw, &kh);
@@ -495,6 +513,8 @@ _zone_layout_dual_left(E_Border *bd)
    int ps = 0, ss = 0;
    int by, bh, bx, bw;
    E_Border *b;
+
+   if (!bd) return;
 
    conform = e_illume_border_is_conformant(bd);
    e_illume_kbd_safe_app_region_get(bd->zone, &kx, &ky, &kw, &kh);
