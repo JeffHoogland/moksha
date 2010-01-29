@@ -52,6 +52,9 @@ e_modapi_init(E_Module *m)
    /* initialize the layout subsystem */
    if (!e_mod_layout_init()) 
      {
+        /* shutdown config subsystem */
+        e_mod_config_shutdown();
+
         /* cleanup eina logging */
         if (_e_illume_log_dom > 0) 
           {
@@ -74,9 +77,10 @@ e_modapi_init(E_Module *m)
      EINA_LIST_FOREACH(man->containers, ll, con)
        zone_count += eina_list_count(con->zones);
 
-   zones = calloc(zone_count, sizeof(Ecore_X_Window));
    if (zone_count > 0) 
      {
+        zones = calloc(zone_count, sizeof(Ecore_X_Window));
+
         EINA_LIST_FOREACH(e_manager_list(), l, man)
           {
              i = 0;
@@ -111,8 +115,8 @@ e_modapi_init(E_Module *m)
              if (i > 0) 
                ecore_x_e_illume_zone_list_set(man->root, zones, i);
           }
+        E_FREE(zones);
      }
-   E_FREE(zones);
 
    return m;
 }
