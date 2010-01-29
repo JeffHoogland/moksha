@@ -99,11 +99,14 @@ e_quickpanel_show(E_Quickpanel *qp)
         int ny = 0;
 
         ny = qp->top_height;
-        EINA_LIST_FOREACH(qp->borders, l, bd) 
+        if (qp->borders) 
           {
-             if (!bd->visible) _e_quickpanel_border_show(bd);
-             e_border_fx_offset(bd, 0, ny);
-             ny += bd->h;
+             EINA_LIST_FOREACH(qp->borders, l, bd) 
+               {
+                  if (!bd->visible) _e_quickpanel_border_show(bd);
+                  e_border_fx_offset(bd, 0, ny);
+                  ny += bd->h;
+               }
           }
         qp->visible = 1;
      }
@@ -142,12 +145,15 @@ e_quickpanel_position_update(E_Quickpanel *qp)
    if (!qp) return;
    e_quickpanel_hide(qp);
    e_illume_border_top_shelf_pos_get(qp->zone, NULL, &ty);
-   EINA_LIST_FOREACH(qp->borders, l, bd) 
+   if (qp->borders) 
      {
-        bd->x = qp->zone->x;
-        bd->y = ty;
-        bd->changes.pos = 1;
-        bd->changed = 1;
+        EINA_LIST_FOREACH(qp->borders, l, bd) 
+          {
+             bd->x = qp->zone->x;
+             bd->y = ty;
+             bd->changes.pos = 1;
+             bd->changed = 1;
+          }
      }
 }
 
@@ -171,10 +177,13 @@ _e_quickpanel_hide(E_Quickpanel *qp)
         Eina_List *l;
         E_Border *bd;
 
-        EINA_LIST_REVERSE_FOREACH(qp->borders, l, bd) 
+        if (qp->borders) 
           {
-             e_border_fx_offset(bd, 0, 0);
-             if (bd->visible) _e_quickpanel_border_hide(bd);
+             EINA_LIST_REVERSE_FOREACH(qp->borders, l, bd) 
+               {
+                  e_border_fx_offset(bd, 0, 0);
+                  if (bd->visible) _e_quickpanel_border_hide(bd);
+               }
           }
         qp->visible = 0;
      }
@@ -186,6 +195,7 @@ _e_quickpanel_hide(E_Quickpanel *qp)
 static void 
 _e_quickpanel_slide(E_Quickpanel *qp, int visible, double len) 
 {
+   if (!qp) return;
    qp->start = ecore_loop_time_get();
    qp->len = len;
    qp->adjust_start = qp->adjust;
@@ -216,6 +226,7 @@ _e_quickpanel_border_hide(E_Border *bd)
 {
    unsigned int visible = 0;
 
+   if (!bd) return;
    e_container_shape_hide(bd->shape);
    e_hints_window_hidden_set(bd);
    bd->visible = 0;
@@ -230,10 +241,14 @@ _e_quickpanel_by_border_get(E_Border *bd)
    E_Border *b;
    E_Quickpanel *qp;
 
-   if (!bd->stolen) return NULL;
+   if ((!bd) || (!bd->stolen)) return NULL;
+   if (!quickpanels) return NULL;
    EINA_LIST_FOREACH(quickpanels, l, qp)
-     EINA_LIST_FOREACH(qp->borders, ll, b)
-       if (b == bd) return qp;
+     {
+        if (!qp->borders) continue;
+        EINA_LIST_FOREACH(qp->borders, ll, b)
+          if (b == bd) return qp;
+     }
    return NULL;
 }
 
@@ -242,6 +257,7 @@ _e_quickpanel_cb_free(E_Quickpanel *qp)
 {
    E_Border *bd;
 
+   if (!qp) return;
    if (qp->animator) ecore_animator_del(qp->animator);
    qp->animator = NULL;
    if (qp->timer) ecore_timer_del(qp->timer);
@@ -398,6 +414,7 @@ _e_quickpanel_cb_mouse_down(void *data, int type, void *event)
 
    ev = event;
    if (ev->event_window != input_win) return 1;
+   if (!quickpanels) return 1;
    EINA_LIST_FOREACH(quickpanels, l, qp)
      if (qp->visible) 
        ecore_x_e_illume_quickpanel_state_send(qp->zone->black_win, 
