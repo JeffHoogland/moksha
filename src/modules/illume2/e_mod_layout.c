@@ -83,6 +83,8 @@ e_illume_layout_policies_get(void)
             e_prefix_lib_get());
 
    files = ecore_file_ls(dir);
+   if (!files) return NULL;
+
    EINA_LIST_FREE(files, file) 
      {
         E_Illume_Layout_Policy *p;
@@ -95,6 +97,7 @@ e_illume_layout_policies_get(void)
         p = 
           E_OBJECT_ALLOC(E_Illume_Layout_Policy, E_ILLUME_LAYOUT_POLICY_TYPE, 
                          _e_mod_layout_policy_free);
+        if (!p) continue;
 
         p->handle = dlopen(dir, RTLD_NOW | RTLD_GLOBAL);
         if (!p->handle) 
@@ -119,6 +122,7 @@ e_illume_layout_policies_get(void)
              p = NULL;
              continue;
           }
+        if (file) free(file);
         l = eina_list_append(l, p);
      }
 
@@ -138,6 +142,7 @@ _e_mod_layout_policy_find(void)
 
    /* get all files in this directory */
    files = ecore_file_ls(dir);
+   if (!files) return NULL;
 
    /* loop through the files, searching for this policy */
    EINA_LIST_FREE(files, file) 
@@ -176,6 +181,7 @@ _e_mod_layout_policy_load(const char *dir)
    policy = 
      E_OBJECT_ALLOC(E_Illume_Layout_Policy, E_ILLUME_LAYOUT_POLICY_TYPE, 
                     _e_mod_layout_policy_free);
+   if (!policy) return 0;
 
    /* attempt to open .so */
    policy->handle = dlopen(dir, RTLD_NOW | RTLD_GLOBAL);
@@ -213,7 +219,13 @@ _e_mod_layout_policy_load(const char *dir)
      }
 
    /* initialize the policy */
-   policy->funcs.init(policy);
+   if (!policy->funcs.init(policy)) 
+     {
+        E_ILLUME_ERR("Policy failed to initialize: %s", dir);
+        e_object_del(E_OBJECT(policy));
+        policy = NULL;
+        return 0;
+     }
 
    return 1;
 }
@@ -223,8 +235,8 @@ _e_mod_layout_policy_free(E_Illume_Layout_Policy *p)
 {
    /* call the policy shutdown function if we can */
    if (p->funcs.shutdown) p->funcs.shutdown(p);
-
    p->funcs.shutdown = NULL;
+
    p->funcs.init = NULL;
    p->api = NULL;
 
@@ -496,13 +508,20 @@ _e_mod_layout_cb_client_message(void *data, int type, void *event)
         E_Border *fbd;
 
         zone = e_util_zone_window_find(ev->win);
+        if (!zone) return 1;
+
         focused = e_border_focus_stack_get();
+        if (!focused) return 1;
+
         EINA_LIST_FOREACH(focused, l, fbd) 
           {
              if (fbd->zone != zone) continue;
              f2 = eina_list_append(f2, fbd);
           }
+
+        if (!f2) return 1;
         if (eina_list_count(f2) < 1) return 1;
+
         EINA_LIST_REVERSE_FOREACH(f2, l, fbd) 
           {
              if (e_object_is_del(E_OBJECT(fbd))) continue;
