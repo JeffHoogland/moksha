@@ -20,7 +20,10 @@ il_config_policy_show(E_Container *con, const char *params)
    E_Config_Dialog_View *v;
 
    if (e_config_dialog_find("E", "_config_illume_policy")) return;
+
    v = E_NEW(E_Config_Dialog_View, 1);
+   if (!v) return;
+
    v->create_cfdata = _il_config_policy_create;
    v->free_cfdata = _il_config_policy_free;
    v->basic.create_widgets = _il_config_policy_ui;
@@ -30,6 +33,7 @@ il_config_policy_show(E_Container *con, const char *params)
    cfd = e_config_dialog_new(con, _("Policy"), "E", 
                              "_config_illume_policy", 
                              "enlightenment/policy", 0, v, NULL);
+   if (!cfd) return;
    e_dialog_resizable_set(cfd->dia, 1);
 }
 
@@ -65,22 +69,25 @@ _il_config_policy_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfd
    e_widget_ilist_go(ow);
 
    policies = e_illume_layout_policies_get();
-   EINA_LIST_FREE(policies, p) 
+   if (policies) 
      {
-        e_widget_ilist_append(ow, NULL, strdup(p->api->label), 
-                              _il_config_policy_list_changed, NULL, 
-                              strdup(p->api->name));
-
-        if ((p) && (il_cfg->policy.name) && 
-            (!strcmp(il_cfg->policy.name, p->api->name))) 
-          sel = i;
-
-        if (p) 
+        EINA_LIST_FREE(policies, p) 
           {
-             e_object_del(E_OBJECT(p));
-             p = NULL;
+             e_widget_ilist_append(ow, NULL, strdup(p->api->label), 
+                                   _il_config_policy_list_changed, NULL, 
+                                   strdup(p->api->name));
+
+             if ((p) && (il_cfg->policy.name) && 
+                 (!strcmp(il_cfg->policy.name, p->api->name))) 
+               sel = i;
+
+             if (p) 
+               {
+                  e_object_del(E_OBJECT(p));
+                  p = NULL;
+               }
+             i++;
           }
-        i++;
      }
 
    e_widget_size_min_set(ow, 100, 200);
