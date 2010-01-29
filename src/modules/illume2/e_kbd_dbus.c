@@ -60,12 +60,12 @@ e_kbd_dbus_shutdown(void)
    char *str;
 
    /* remove the dbus signal handlers if we can */
-   if (dbus_conn) 
-     {
-        e_dbus_signal_handler_del(dbus_conn, dbus_dev_add);
-        e_dbus_signal_handler_del(dbus_conn, dbus_dev_del);
-        e_dbus_signal_handler_del(dbus_conn, dbus_dev_chg);
-     }
+   if (dbus_dev_add) 
+     e_dbus_signal_handler_del(dbus_conn, dbus_dev_add);
+   if (dbus_dev_del) 
+     e_dbus_signal_handler_del(dbus_conn, dbus_dev_del);
+   if (dbus_dev_chg) 
+     e_dbus_signal_handler_del(dbus_conn, dbus_dev_chg);
 
    /* free the list of ignored keyboards */
    EINA_LIST_FREE(ignore_kbds, str)
@@ -118,8 +118,12 @@ _e_kbd_dbus_cb_input_kbd_is(void *data, void *reply, DBusError *err)
    /* if it's an input keyboard, than add it and eval */
    if ((ret) && (ret->boolean)) 
      {
-        _e_kbd_dbus_kbd_add(udi);
-        _e_kbd_dbus_kbd_eval();
+        if (udi) 
+          {
+             _e_kbd_dbus_kbd_add(udi);
+             _e_kbd_dbus_kbd_eval();
+             free(udi);
+          }
      }
 }
 
@@ -175,6 +179,7 @@ _e_kbd_dbus_kbd_add(const char *udi)
    const char *str;
    Eina_List *l;
 
+   if (!udi) return;
    EINA_LIST_FOREACH(dbus_kbds, l, str)
      if (!strcmp(str, udi)) return;
    dbus_kbds = eina_list_append(dbus_kbds, eina_stringshare_add(udi));
@@ -186,6 +191,7 @@ _e_kbd_dbus_kbd_del(const char *udi)
    const char *str;
    Eina_List *l;
 
+   if (!udi) return;
    EINA_LIST_FOREACH(dbus_kbds, l, str)
      if (!strcmp(str, udi)) 
        {
@@ -258,11 +264,17 @@ _e_kbd_dbus_dev_chg(void *data, DBusMessage *msg)
    dbus_error_init(&err);
    dbus_message_get_args(msg, &err, DBUS_TYPE_STRING, &udi, 
                          DBUS_TYPE_STRING, &cap, DBUS_TYPE_INVALID);
-   if (!strcmp(cap, "input.keyboard")) 
+   if (cap) 
      {
-        _e_kbd_dbus_kbd_add(udi);
-        _e_kbd_dbus_kbd_eval();
+        if (!strcmp(cap, "input.keyboard")) 
+          {
+             if (udi) 
+               {
+                  _e_kbd_dbus_kbd_add(udi);
+                  _e_kbd_dbus_kbd_eval();
+                  free(udi);
+               }
+          }
+        free(cap);
      }
-   if (cap) free(cap);
-   if (udi) free(udi);
 }
