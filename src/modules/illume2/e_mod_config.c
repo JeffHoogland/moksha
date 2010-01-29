@@ -67,10 +67,8 @@ e_mod_config_init(E_Module *m)
    /* load the config */
    il_cfg = e_config_domain_load("module.illume2", conf_edd);
    if ((il_cfg) && ((il_cfg->version >> 16) < IL_CONFIG_MAJ)) 
-     {
-        E_FREE(il_cfg);
-        il_cfg = NULL;
-     }
+     E_FREE(il_cfg);
+
    if (!il_cfg) 
      {
         E_Illume_Config_Zone *cz;
@@ -202,7 +200,6 @@ e_mod_config_shutdown(void)
      E_FREE(cz);
 
    E_FREE(il_cfg);
-   il_cfg = NULL;
 
    E_CONFIG_DD_FREE(conf_zone_edd);
    E_CONFIG_DD_FREE(conf_edd);
