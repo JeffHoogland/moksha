@@ -20,6 +20,7 @@ il_config_animation_show(E_Container *con, const char *params)
 
    if (e_config_dialog_find("E", "_config_illume_animation_settings")) return;
    v = E_NEW(E_Config_Dialog_View, 1);
+   if (!v) return;
    v->create_cfdata = _il_config_animation_create;
    v->free_cfdata = _il_config_animation_free;
    v->basic.create_widgets = _il_config_animation_ui;
@@ -29,6 +30,7 @@ il_config_animation_show(E_Container *con, const char *params)
    cfd = e_config_dialog_new(con, _("Animation Settings"), "E", 
                              "_config_illume_animation_settings", 
                              "enlightenment/animation_settings", 0, v, NULL);
+   if (!cfd) return;
    e_dialog_resizable_set(cfd->dia, 1);
 }
 
@@ -43,6 +45,7 @@ static void
 _il_config_animation_free(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    if (_anim_change_timer) ecore_timer_del(_anim_change_timer);
+   _anim_change_timer = NULL;
 }
 
 static Evas_Object *
