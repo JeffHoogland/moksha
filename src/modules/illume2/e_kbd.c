@@ -78,8 +78,6 @@ e_kbd_shutdown(void)
    Ecore_Event_Handler *handler;
    E_Border_Hook *hook;
 
-   e_kbd_dbus_shutdown();
-
    EINA_LIST_FREE(handlers, handler)
      ecore_event_handler_del(handler);
 
@@ -88,6 +86,8 @@ e_kbd_shutdown(void)
 
    EINA_LIST_FREE(kbds, kbd)
      e_object_del(E_OBJECT(kbd));
+
+   e_kbd_dbus_shutdown();
 
    return 1;
 }
@@ -264,7 +264,8 @@ _e_kbd_cb_animate(void *data)
    E_Kbd *kbd;
    double t, v;
 
-   kbd = data;
+   if (!(kbd = data)) return 0;
+
    t = ecore_loop_time_get() - kbd->start;
    if (t > kbd->len) t = kbd->len;
    if (kbd->len > 0.0)
@@ -305,7 +306,7 @@ _e_kbd_by_border_get(E_Border *bd)
    E_Border *over;
    E_Kbd *kbd;
 
-   if (!bd->stolen) return NULL;
+   if ((!bd) || (!bd->stolen)) return NULL;
    EINA_LIST_FOREACH(kbds, l, kbd) 
      {
         if (kbd->border == bd) return kbd;
@@ -320,6 +321,7 @@ _e_kbd_layout_send(E_Kbd *kbd)
 {
    Ecore_X_Virtual_Keyboard_State type;
 
+   if (!kbd) return;
    if ((kbd->visible) && (!kbd->disabled))
      {
 	type = ECORE_X_VIRTUAL_KEYBOARD_STATE_ON;
@@ -373,6 +375,8 @@ _e_kbd_border_hide(E_Border *bd)
 static void 
 _e_kbd_border_adopt(E_Kbd *kbd, E_Border *bd) 
 {
+   if ((!kbd) || (!bd)) return;
+
    kbd->border = bd;
    bd->sticky = 1;
    if (kbd->fullscreen)
@@ -390,6 +394,7 @@ _e_kbd_border_adopt(E_Kbd *kbd, E_Border *bd)
 static int
 _e_kbd_border_is_keyboard(E_Border *bd)
 {
+   if (!bd) return 0;
    if ((bd->client.vkbd.vkbd) || /* explicit hint that its a virtual keyboard */
        /* legacy */
        ( /* trap the matchbox qwerty and multitap kbd's */
@@ -404,6 +409,7 @@ _e_kbd_border_is_keyboard(E_Border *bd)
 static void 
 _e_kbd_hide(E_Kbd *kbd) 
 {
+   if (!kbd) return;
    if (kbd->timer) ecore_timer_del(kbd->timer);
    kbd->timer = NULL;
    if ((!kbd->visible) || (kbd->disabled)) return;
@@ -424,6 +430,7 @@ _e_kbd_hide(E_Kbd *kbd)
 static void 
 _e_kbd_slide(E_Kbd *kbd, int visible, double len) 
 {
+   if (!kbd) return;
    kbd->start = ecore_loop_time_get();
    kbd->len = len;
    kbd->adjust_start = kbd->adjust;
@@ -502,29 +509,35 @@ _e_kbd_cb_border_remove(void *data, int type, void *event)
    E_Kbd *kbd;
 
    ev = event;
-   if (ev->border == focused_border) 
+   if (focused_border) 
      {
-        focused_border = NULL;
-        focused_vkbd_state = 0;
-        return 1;
+        if (ev->border == focused_border) 
+          {
+             focused_border = NULL;
+             focused_vkbd_state = 0;
+             return 1;
+          }
      }
    if (!(kbd = _e_kbd_by_border_get(ev->border))) return 1;
-   if (kbd->border == ev->border) 
+   if (kbd->border) 
      {
-        kbd->border = NULL;
-        if (kbd->waiting_borders) 
+        if (kbd->border == ev->border) 
           {
-             E_Border *bd;
+             kbd->border = NULL;
+             if (kbd->waiting_borders) 
+               {
+                  E_Border *bd;
 
-             bd = kbd->waiting_borders->data;
-             kbd->waiting_borders = 
-               eina_list_remove_list(kbd->waiting_borders, kbd->waiting_borders);
-             _e_kbd_border_adopt(kbd, bd);
-          }
-        if (kbd->visible) 
-          {
-             _e_kbd_border_hide(ev->border);
-             e_kbd_hide(kbd);
+                  bd = kbd->waiting_borders->data;
+                  kbd->waiting_borders = 
+                    eina_list_remove_list(kbd->waiting_borders, kbd->waiting_borders);
+                  _e_kbd_border_adopt(kbd, bd);
+               }
+             if (kbd->visible) 
+               {
+                  _e_kbd_border_hide(ev->border);
+                  e_kbd_hide(kbd);
+               }
           }
      }
    else
@@ -589,8 +602,11 @@ _e_kbd_cb_border_property(void *data, int type, void *event)
    ev = event;
    if (!ev->border->focused) return 1;
    if (_e_kbd_by_border_get(ev->border)) return 1;
-   if ((ev->border == focused_border) && 
-       (ev->border->client.vkbd.state == focused_vkbd_state)) return 1;
+   if (focused_border) 
+     {
+        if ((ev->border == focused_border) && 
+            (ev->border->client.vkbd.state == focused_vkbd_state)) return 1;
+     }
    focused_vkbd_state = ev->border->client.vkbd.state;
    if (focused_vkbd_state == 0) return 1;
 
