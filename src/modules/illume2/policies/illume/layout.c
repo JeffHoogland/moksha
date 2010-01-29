@@ -188,6 +188,8 @@ _layout_zone_layout(E_Zone *zone)
              if (mh > zone->h) mh = zone->h;
              nx = (zone->x + ((zone->w - mw) / 2));
              ny = (zone->y + ((zone->h - mh) / 2));
+             if ((bd->w != mw) || (bd->h != mh))
+               _zone_layout_border_resize(bd, mw, mh);
              if ((bd->x != nx) || (bd->y != ny))
                _zone_layout_border_move(bd, nx, ny);
              if (bd->layer != IL_DIALOG_LAYER)
