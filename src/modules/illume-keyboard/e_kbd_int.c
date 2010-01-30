@@ -1313,7 +1313,6 @@ _e_kbd_int_dictlist_down(E_Kbd_Int *ki)
    char *str;
 
    if (!ki->dictlist.popup) return;
-   printf("Dict List Down\n");
    e_object_del(E_OBJECT(ki->dictlist.popup));
    ki->dictlist.popup = NULL;
    EINA_LIST_FREE(ki->dictlist.matches, str)
@@ -1355,14 +1354,8 @@ _e_kbd_int_dictlist_up(E_Kbd_Int *ki)
    char buf[PATH_MAX], *p, *file, *pp;
    const char *str;
 
-   printf("Dict List Up\n");
-   if (ki->dictlist.popup) 
-     {
-        printf("Returning\n");
-        return;
-     }
+   if (ki->dictlist.popup) return;
 
-   printf("Dict Zone: %d\n", ki->win->border->zone->id);
    ki->dictlist.popup = e_popup_new(ki->win->border->zone, -1, -1, 1, 1);
    e_popup_layer_set(ki->dictlist.popup, 190);
 
@@ -1459,17 +1452,13 @@ _e_kbd_int_dictlist_up(E_Kbd_Int *ki)
    e_zone_useful_geometry_get(ki->win->border->zone, &sx, &sy, &sw, &sh);   
    mw = ki->win->w;
    if (mh > (sh - ki->win->h)) mh = sh - ki->win->h;
-   printf("Popup Move: %d %d %d %d\n", ki->win->x, ki->win->y - mh, mw, mh);
-   e_popup_move_resize(ki->dictlist.popup,
-		       ki->win->x, ki->win->y - mh, mw, mh);
+   e_popup_move_resize(ki->dictlist.popup, 0, ki->win->y - mh, mw, mh);
 
    evas_object_resize(ki->dictlist.base_obj, 
 		      ki->dictlist.popup->w, ki->dictlist.popup->h);
    evas_object_show(ki->dictlist.base_obj);
    e_popup_edje_bg_object_set(ki->dictlist.popup, ki->dictlist.base_obj);
    e_popup_show(ki->dictlist.popup);
-   printf("Popup Show\n");
-   printf("Visible: %d\n", ki->dictlist.popup->visible);
    _e_kbd_int_matchlist_down(ki);
 }
 
