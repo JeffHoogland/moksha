@@ -1077,15 +1077,18 @@ EAPI void
 e_kbd_fullscreen_set(E_Zone *zone, int fullscreen)
 {
    Eina_List *l;
-	E_Kbd *kbd;
+   E_Kbd *kbd;
 	
    EINA_LIST_FOREACH(kbds, l, kbd)
-	if ((!!fullscreen) != kbd->fullscreen)
-	  {
-	     kbd->fullscreen = fullscreen;
-	     if (kbd->fullscreen)
-	       e_border_layer_set(kbd->border, 250);
-	     else
-	       e_border_layer_set(kbd->border, 100);
-	  }
+     if ((!!fullscreen) != kbd->fullscreen)
+       {
+          kbd->fullscreen = fullscreen;
+          if (kbd->border) 
+            {
+               if (kbd->fullscreen)
+                 e_border_layer_set(kbd->border, 250);
+               else
+                 e_border_layer_set(kbd->border, 100);
+            }
+       }
 }
