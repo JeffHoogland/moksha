@@ -889,7 +889,7 @@ _e_kbd_int_layout_parse(E_Kbd_Int *ki, const char *layout)
    while (fgets(buf, sizeof(buf), f))
      {
 	int len;
-	char str[PATH_MAX];
+	char str[4096];
 
 	if (!isok)
 	  {
@@ -930,7 +930,7 @@ _e_kbd_int_layout_parse(E_Kbd_Int *ki, const char *layout)
 	    (!strcmp(str, "capslock")))
 	  {
 	     char *p;
-	     char label[PATH_MAX];
+	     char label[4096];
 	     int xx;
 
 	     if (sscanf(buf, "%*s %4000s", label) != 1) continue;
@@ -1148,7 +1148,7 @@ _e_kbd_int_layouts_list_update(E_Kbd_Int *ki)
 		  while (fgets(buf, sizeof(buf), f))
 		    {
 		       int len;
-		       char str[PATH_MAX];
+		       char str[4096];
 
 		       if (!isok)
 			 {
@@ -1348,7 +1348,7 @@ static void
 _e_kbd_int_dictlist_up(E_Kbd_Int *ki)
 {
    Evas_Object *o;
-   Evas_Coord w, h, mw, mh, vw, vh;
+   Evas_Coord w, h, mw, mh;
    int sx, sy, sw, sh, used;
    Eina_List *files;
    Eina_List *l;
