@@ -889,7 +889,7 @@ _e_kbd_int_layout_parse(E_Kbd_Int *ki, const char *layout)
    while (fgets(buf, sizeof(buf), f))
      {
 	int len;
-	char str[4096];
+	char str[PATH_MAX];
 
 	if (!isok)
 	  {
@@ -930,7 +930,7 @@ _e_kbd_int_layout_parse(E_Kbd_Int *ki, const char *layout)
 	    (!strcmp(str, "capslock")))
 	  {
 	     char *p;
-	     char label[4096];
+	     char label[PATH_MAX];
 	     int xx;
 
 	     if (sscanf(buf, "%*s %4000s", label) != 1) continue;
@@ -1148,7 +1148,7 @@ _e_kbd_int_layouts_list_update(E_Kbd_Int *ki)
 		  while (fgets(buf, sizeof(buf), f))
 		    {
 		       int len;
-		       char str[4096];
+		       char str[PATH_MAX];
 
 		       if (!isok)
 			 {
@@ -1455,10 +1455,6 @@ _e_kbd_int_dictlist_up(E_Kbd_Int *ki)
    edje_object_part_swallow(ki->dictlist.base_obj, "e.swallow.content",
                             ki->dictlist.ilist_obj);
    edje_object_size_min_calc(ki->dictlist.base_obj, &mw, &mh);
-
-   edje_extern_object_min_size_set(ki->dictlist.ilist_obj, 0, 0);
-   edje_object_part_swallow(ki->dictlist.base_obj, "e.swallow.content",
-                            ki->dictlist.ilist_obj);
 
    e_zone_useful_geometry_get(ki->win->border->zone, &sx, &sy, &sw, &sh);   
    mw = ki->win->w;
