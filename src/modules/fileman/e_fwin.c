@@ -709,7 +709,7 @@ _e_fwin_desktop_run(Efreet_Desktop *desktop, E_Fwin_Page *page, Eina_Bool skip_h
 	if (ext == E_FWIN_EXEC_NONE)
 	  {
 	     if (!((ici->link) && (ici->mount)))
-	       ecore_strlcpy(buf, ici->file, sizeof(buf));
+	       eina_strlcpy(buf, ici->file, sizeof(buf));
 	  }
 	else
 	  _e_fwin_file_exec(page, ici, ext);
@@ -938,7 +938,7 @@ _e_fwin_window_title_set(E_Fwin_Page *page)
 
    if (file) 
      {
-	ecore_strlcpy(buf, file, sizeof(buf));
+	eina_strlcpy(buf, file, sizeof(buf));
 	e_win_title_set(page->fwin->win, buf);
      }
 }

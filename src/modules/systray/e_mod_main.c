@@ -816,7 +816,7 @@ _systray_theme(Evas_Object *o, const char *shelf_style, const char *gc_style)
    char buf[128], *p;
    size_t len, avail;
 
-   len = ecore_strlcpy(buf, _group_gadget, sizeof(buf));
+   len = eina_strlcpy(buf, _group_gadget, sizeof(buf));
    if (len >= sizeof(buf))
      goto fallback;
    p = buf + len;
@@ -835,7 +835,7 @@ _systray_theme(Evas_Object *o, const char *shelf_style, const char *gc_style)
    if (shelf_style)
      {
 	size_t r;
-	r = ecore_strlcpy(p, shelf_style, avail);
+	r = eina_strlcpy(p, shelf_style, avail);
 	if (r < avail && e_theme_edje_object_set(o, base_theme, buf))
 	  return;
      }
@@ -843,7 +843,7 @@ _systray_theme(Evas_Object *o, const char *shelf_style, const char *gc_style)
    if (gc_style)
      {
 	size_t r;
-	r = ecore_strlcpy(p, gc_style, avail);
+	r = eina_strlcpy(p, gc_style, avail);
 	if (r < avail && e_theme_edje_object_set(o, base_theme, buf))
 	  return;
      }
@@ -862,7 +862,7 @@ _systray_theme(Evas_Object *o, const char *shelf_style, const char *gc_style)
    if (shelf_style)
      {
 	size_t r;
-	r = ecore_strlcpy(p, shelf_style, avail);
+	r = eina_strlcpy(p, shelf_style, avail);
 	if (r < avail && edje_object_file_set(o, path, buf))
 	  return;
      }
@@ -870,7 +870,7 @@ _systray_theme(Evas_Object *o, const char *shelf_style, const char *gc_style)
    if (gc_style)
      {
 	size_t r;
-	r = ecore_strlcpy(p, gc_style, avail);
+	r = eina_strlcpy(p, gc_style, avail);
 	if (r < avail && edje_object_file_set(o, path, buf))
 	  return;
      }

@@ -1560,7 +1560,7 @@ e_fm2_icons_update(Evas_Object *obj)
    if (!evas_object_type_get(obj)) return; // safety
    if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
 
-   bufused = ecore_strlcpy(buf, sd->realpath, sizeof(buf));
+   bufused = eina_strlcpy(buf, sd->realpath, sizeof(buf));
    if (bufused >= sizeof(buf) - 2)
      return;
 
@@ -1584,7 +1584,7 @@ e_fm2_icons_update(Evas_Object *obj)
 	if (_e_fm2_file_is_desktop(ic->info.file))
 	  _e_fm2_icon_desktop_load(ic);
 
-	if (ecore_strlcpy(pfile, ic->info.file, buffree) >= buffree)
+	if (eina_strlcpy(pfile, ic->info.file, buffree) >= buffree)
 	  continue;
 
 	cf = e_fm2_custom_file_get(buf);
@@ -3160,7 +3160,7 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
 	  {
 	     if (dev[1] == '\0')
 	       {
-		  if (ecore_strlcpy(buf, path, sizeof(buf)) >= sizeof(buf))
+		  if (eina_strlcpy(buf, path, sizeof(buf)) >= sizeof(buf))
 		    return NULL;
 	       }
 	     else
@@ -3241,7 +3241,7 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
 
    if (buf[0] == '\0')
      {
-	if (ecore_strlcpy(buf, path, sizeof(buf)) >= sizeof(buf))
+	if (eina_strlcpy(buf, path, sizeof(buf)) >= sizeof(buf))
 	  return NULL;
      }
 
@@ -3398,7 +3398,7 @@ _e_fm2_buffer_fill(Evas_Object *obj)
    realpath = e_fm2_real_path_get(obj);
    if (!realpath) return 0;
 
-   bufused = ecore_strlcpy(buf, realpath, sizeof(buf));
+   bufused = eina_strlcpy(buf, realpath, sizeof(buf));
    if (bufused >= sizeof(buf) - 2) return 0;
 
    if ((bufused > 0) && (buf[bufused - 1] != '/'))
@@ -3414,7 +3414,7 @@ _e_fm2_buffer_fill(Evas_Object *obj)
    EINA_LIST_FREE(sel, ici)
      {
 	if (!ici) continue;
-	if (ecore_strlcpy(pfile, ici->file, buffree) >= buffree) continue;
+	if (eina_strlcpy(pfile, ici->file, buffree) >= buffree) continue;
 	_e_fm_file_buffer = eina_list_append(_e_fm_file_buffer, _e_fm2_uri_escape(buf));
      }
 
@@ -4750,7 +4750,7 @@ _e_fm2_icon_label_set(E_Fm2_Icon *ic, Evas_Object *obj)
 	 * also be fuzzy - up to 4 chars of extn is ok - eg .html but 5 or
 	 * more is considered part of the name
 	 */
-	ecore_strlcpy(buf, ic->info.file, sizeof(buf));
+	eina_strlcpy(buf, ic->info.file, sizeof(buf));
 
 	len = strlen(buf);
 	p = strrchr(buf, '.');
@@ -6664,7 +6664,7 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	     ic->drag.start = 0;
 	     evas_object_geometry_get(ic->obj, &x, &y, &w, &h);
 	     realpath = e_fm2_real_path_get(ic->sd->obj);
-	     p_offset = ecore_strlcpy(buf, realpath, sizeof(buf));
+	     p_offset = eina_strlcpy(buf, realpath, sizeof(buf));
 	     if ((p_offset < 1) || (p_offset >= sizeof(buf) - 2)) return;
 	     if (buf[p_offset - 1] != '/')
 	       {
@@ -6681,7 +6681,7 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 		  const char *s;
 		  int s_len;
 
-		  if (ecore_strlcpy(p, ici->file, p_length) >= p_length) continue;
+		  if (eina_strlcpy(p, ici->file, p_length) >= p_length) continue;
 		  s = _e_fm2_uri_escape(buf);
 		  if (!s) continue;
 		  s_len = strlen(s);
@@ -7316,8 +7316,8 @@ _e_fm2_cb_icon_sort(const void *data1, const void *data2)
 	  }
 	else
 */	  {
-	     ecore_strlcpy(buf1, l1, sizeof(buf1));
-	     ecore_strlcpy(buf2, l2, sizeof(buf2));
+	     eina_strlcpy(buf1, l1, sizeof(buf1));
+	     eina_strlcpy(buf2, l2, sizeof(buf2));
 	  }
 	p = buf1;
 	while (*p)

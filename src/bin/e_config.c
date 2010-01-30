@@ -1230,7 +1230,7 @@ e_config_profile_list(void)
 	files = eina_list_sort(files, 0, (Eina_Compare_Cb)_cb_sort_files);
 	EINA_LIST_FREE(files, file)
 	  {
-	     if (ecore_strlcpy(p, file, len) >= len)
+	     if (eina_strlcpy(p, file, len) >= len)
 	       {
 		  free(file);
 		  continue;
@@ -1258,7 +1258,7 @@ e_config_profile_list(void)
 	files = eina_list_sort(files, 0, (Eina_Compare_Cb)_cb_sort_files);
 	EINA_LIST_FREE(files, file)
 	  {
-	     if (ecore_strlcpy(p, file, len) >= len)
+	     if (eina_strlcpy(p, file, len) >= len)
 	       {
 		  free(file);
 		  continue;
@@ -1448,7 +1448,7 @@ e_config_domain_save(const char *domain, E_Config_DD *edd, const void *data)
    buf[len] = '/';
    len++;
 
-   len2 = ecore_strlcpy(buf + len, domain, sizeof(buf) - len);
+   len2 = eina_strlcpy(buf + len, domain, sizeof(buf) - len);
    if (len2 + sizeof(".cfg") >= sizeof(buf) - len) return 0;
 
    len += len2;

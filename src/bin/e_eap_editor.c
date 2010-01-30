@@ -414,7 +414,7 @@ _e_desktop_edit_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfd
 	     basename[i] = '\0';
 	  }
 	else
-	  ecore_strlcpy(basename, "unnamed_desktop", sizeof(basename));
+	  eina_strlcpy(basename, "unnamed_desktop", sizeof(basename));
 
 	i = 0;
 	snprintf(path, sizeof(path), "%s/applications/%s.desktop", 

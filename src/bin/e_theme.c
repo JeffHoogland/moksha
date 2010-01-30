@@ -155,7 +155,7 @@ e_theme_edje_object_set(Evas_Object *o, const char *category, const char *group)
 	  }
      }
    /* no mapping or set failed - fall back */
-   ecore_strlcpy(buf, category, sizeof(buf));
+   eina_strlcpy(buf, category, sizeof(buf));
    /* shorten string up to and not including last / char */
    p = strrchr(buf, '/');
    if (p) *p = 0;
@@ -237,7 +237,7 @@ e_theme_edje_file_get(const char *category, const char *group)
 	  }
      }
    /* no mapping or set failed - fall back */
-   ecore_strlcpy(buf, category, sizeof(buf));
+   eina_strlcpy(buf, category, sizeof(buf));
    /* shorten string up to and not including last / char */
    p = strrchr(buf, '/');
    if (p) *p = 0;

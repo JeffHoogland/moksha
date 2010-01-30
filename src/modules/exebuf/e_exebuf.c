@@ -752,13 +752,13 @@ _e_exebuf_complete(void)
 	     exe = ecore_file_app_exe_get(exe_sel->desktop->exec);
 	     if (exe)
 	       {
-		  ecore_strlcpy(cmd_buf, exe, EXEBUFLEN);
+		  eina_strlcpy(cmd_buf, exe, EXEBUFLEN);
 		  free(exe);
 	       }
 	  }
 	else if (exe_sel->file)
 	  {
-	     ecore_strlcpy(cmd_buf, exe_sel->file, EXEBUFLEN);
+	     eina_strlcpy(cmd_buf, exe_sel->file, EXEBUFLEN);
 	  }
      }
    else
@@ -797,7 +797,7 @@ _e_exebuf_complete(void)
      }
    if ((exe) && (orig_len < common_len) && (common_len < (EXEBUFLEN - 1)))
      {
-	ecore_strlcpy(cmd_buf, exe, common_len + 1);
+	eina_strlcpy(cmd_buf, exe, common_len + 1);
      }
    if (clear_hist)
      _e_exebuf_hist_clear();

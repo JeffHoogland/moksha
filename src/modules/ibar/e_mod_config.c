@@ -279,7 +279,7 @@ _load_tlist(E_Config_Dialog_Data *cfdata)
    EINA_LIST_FREE(dirs, file)
      {
 	if (file[0] == '.') continue;
-	if (ecore_strlcpy(buf + len, file, sizeof(buf) - len) >= sizeof(buf) - len)
+	if (eina_strlcpy(buf + len, file, sizeof(buf) - len) >= sizeof(buf) - len)
 	  continue;
 	if (ecore_file_is_dir(buf))
 	  {

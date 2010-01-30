@@ -622,7 +622,7 @@ _desktop_run(Efreet_Desktop *desktop)
 	exename = malloc(p - desktop->exec + 1);
 	if (exename)
 	  {
-	     ecore_strlcpy(exename, desktop->exec, p - desktop->exec + 1);
+	     eina_strlcpy(exename, desktop->exec, p - desktop->exec + 1);
 	  }
      }
    if (exename)
@@ -972,7 +972,7 @@ _apps_unpopulate(void)
 
    EINA_LIST_FREE(files, file)
      {
-	if (ecore_strlcpy(buf + len, file, sizeof(buf) - len) >= sizeof(buf) - len)
+	if (eina_strlcpy(buf + len, file, sizeof(buf) - len) >= sizeof(buf) - len)
 	  continue;
 	ecore_file_unlink(buf);
 	free(file);

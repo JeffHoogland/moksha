@@ -80,7 +80,6 @@ void *alloca (size_t);
 #include <Evas.h>
 #include <Evas_Engine_Buffer.h>
 #include <Ecore.h>
-#include <Ecore_Str.h>
 #include <Ecore_X.h>
 #include <Ecore_X_Atoms.h>
 #include <Ecore_X_Cursor.h>

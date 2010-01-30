@@ -1113,7 +1113,7 @@ _e_kbd_int_layouts_list_update(E_Kbd_Int *ki)
 	p = strrchr(file, '.');
 	if ((p) && (!strcmp(p, ".kbd")))
 	  {
-	     if (ecore_strlcpy(buf + len, file, sizeof(buf) - len) >= sizeof(buf) - len)
+	     if (eina_strlcpy(buf + len, file, sizeof(buf) - len) >= sizeof(buf) - len)
 	       continue;
 	     kbs = eina_list_append(kbs, eina_stringshare_add(buf));
 	  }
@@ -1144,7 +1144,7 @@ _e_kbd_int_layouts_list_update(E_Kbd_Int *ki)
 	       }
 	     if (ok)
 	       {
-		  if (ecore_strlcpy(buf + len, file, sizeof(buf) - len) >= sizeof(buf) - len)
+		  if (eina_strlcpy(buf + len, file, sizeof(buf) - len) >= sizeof(buf) - len)
 		    continue;
 		  kbs = eina_list_append(kbs, eina_stringshare_add(buf));
 	       }

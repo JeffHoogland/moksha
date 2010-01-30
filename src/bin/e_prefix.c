@@ -112,7 +112,7 @@ e_prefix_determine(char *argv0)
 		  _prefix_path = malloc(p - _exe_path + 1);
 		  if (_prefix_path)
 		    {
-		       ecore_strlcpy(_prefix_path, _exe_path, p - _exe_path + 1);
+		       eina_strlcpy(_prefix_path, _exe_path, p - _exe_path + 1);
 
 		       /* bin and lib always together */
 		       snprintf(buf, sizeof(buf), "%s/bin", _prefix_path);
@@ -261,7 +261,7 @@ _e_prefix_share_hunt(void)
 	       {
 		  /* path is ok - magic file found */
 		  _prefix_path_data = strdup(buf2);
-		  _prefix_path_data_len = ecore_strlcpy(buf, buf2, sizeof(buf));
+		  _prefix_path_data_len = eina_strlcpy(buf, buf2, sizeof(buf));
 		  p = strrchr(buf, '/');
 		  if (p) *p = 0;
 		  snprintf(buf2, sizeof(buf2), "%s/locale", buf);
@@ -285,7 +285,7 @@ _e_prefix_share_hunt(void)
 	Eina_List *files;
 	Eina_List *l;
 
-	ecore_strlcpy(buf, _prefix_path, sizeof(buf));
+	eina_strlcpy(buf, _prefix_path, sizeof(buf));
 	p = strrchr(buf, '/');
 	if (p) *p = 0;
 	files = ecore_file_ls(buf);
@@ -318,7 +318,7 @@ _e_prefix_share_hunt(void)
     */
    if (!_prefix_path_data)
      {
-	ecore_strlcpy(buf, _prefix_path, sizeof(buf));
+	eina_strlcpy(buf, _prefix_path, sizeof(buf));
 	p = strrchr(buf, '/');
 	if (p) *p = 0;
 	snprintf(buf2, sizeof(buf2), "%s/"MAGIC_DAT, buf);
@@ -521,7 +521,7 @@ _e_prefix_try_argv(char *argv0)
 size_t
 e_prefix_data_concat_len(char *dst, size_t size, const char *path, size_t path_len)
 {
-   return ecore_str_join_len(dst, size, '/', _prefix_path_data, _prefix_path_data_len, path, path_len);
+   return eina_str_join_len(dst, size, '/', _prefix_path_data, _prefix_path_data_len, path, path_len);
 }
 
 size_t

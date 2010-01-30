@@ -555,7 +555,7 @@ _il_home_apps_unpopulate(void)
 
    EINA_LIST_FREE(files, file) 
      {
-        if (ecore_strlcpy(buff + len, file, sizeof(buff) - len) >= sizeof(buff) - len)
+        if (eina_strlcpy(buff + len, file, sizeof(buff) - len) >= sizeof(buff) - len)
           continue;
         ecore_file_unlink(buff);
         free(file);
@@ -700,7 +700,7 @@ _il_home_desktop_find_border(E_Zone *zone, Efreet_Desktop *desktop)
    else 
      {
         exe = malloc(p - desktop->exec + 1);
-        if (exe) ecore_strlcpy(exe, desktop->exec, p - desktop->exec + 1);
+        if (exe) eina_strlcpy(exe, desktop->exec, p - desktop->exec + 1);
      }
    if (exe) 
      {

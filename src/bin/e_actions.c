@@ -2387,13 +2387,13 @@ _delayed_action_list_parse(Delayed_Action *da, const char *params)
 	const char *action, *params;
 
 	a1 = alloca(a1stop - a1start + 1);
-	ecore_strlcpy(a1, a1start, a1stop - a1start + 1);
+	eina_strlcpy(a1, a1start, a1stop - a1start + 1);
 	action = NULL;
 	params = NULL;
 	_delayed_action_list_parse_action(a1, &delay, &da->def.action, &da->def.params);
 
 	a2 = alloca(a1stop - a1start + 1);
-	ecore_strlcpy(a2, a2start, a2stop - a2start + 1);
+	eina_strlcpy(a2, a2start, a2stop - a2start + 1);
 	_delayed_action_list_parse_action(a2, &delay, &da->delayed.action, &da->delayed.params);
      }
    da->timer = ecore_timer_add(delay, _delayed_action_cb_timer, da);

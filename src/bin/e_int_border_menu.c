@@ -1196,7 +1196,7 @@ _e_border_menu_cb_ibar_add_pre(void *data, E_Menu *m, E_Menu_Item *mi)
 
 	if (file[0] == '.') continue;
 
-	ecore_strlcpy(buf + len, file, sizeof(buf) - len);
+	eina_strlcpy(buf + len, file, sizeof(buf) - len);
 	if (ecore_file_is_dir(buf))
 	  {
 	     smi = e_menu_item_new(sm);

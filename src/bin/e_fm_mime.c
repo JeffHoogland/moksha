@@ -48,7 +48,7 @@ e_fm_mime_icon_get(const char *mime)
    val = eina_hash_find(icon_map, mime);
    if (val) return val;
 
-   ecore_strlcpy(buf2, mime, sizeof(buf2));
+   eina_strlcpy(buf2, mime, sizeof(buf2));
    val = strchr(buf2, '/');
    if (val) *val = 0;
 
@@ -57,7 +57,7 @@ e_fm_mime_icon_get(const char *mime)
      {
 	if (e_util_glob_match(mi->mime, mime))
 	  {
-	     ecore_strlcpy(buf, mi->icon, sizeof(buf));
+	     eina_strlcpy(buf, mi->icon, sizeof(buf));
 	     goto ok;
 	  }
      }
@@ -87,12 +87,12 @@ e_fm_mime_icon_get(const char *mime)
    /* 3. look up icon in theme */
  try_theme:
    memcpy(buf, "e/icons/fileman/mime/", sizeof("e/icons/fileman/mime/") - 1);
-   ecore_strlcpy(buf + sizeof("e/icons/fileman/mime/") - 1, mime,
+   eina_strlcpy(buf + sizeof("e/icons/fileman/mime/") - 1, mime,
 		 sizeof(buf) - (sizeof("e/icons/fileman/mime/") - 1));
    val = (char *)e_theme_edje_file_get("base/theme/fileman", buf);
    if ((val) && (e_util_edje_collection_exists(val, buf))) goto ok;
 
-   ecore_strlcpy(buf + sizeof("e/icons/fileman/mime/") - 1, buf2,
+   eina_strlcpy(buf + sizeof("e/icons/fileman/mime/") - 1, buf2,
 		 sizeof(buf) - (sizeof("e/icons/fileman/mime/") - 1));
    val = (char *)e_theme_edje_file_get("base/theme/fileman", buf);
    if ((val) && (e_util_edje_collection_exists(val, buf))) goto ok;
