@@ -76,6 +76,20 @@ e_modapi_init(E_Module *m)
 	free(file);
      }
 
+   snprintf(dir, sizeof(dir), "%s/.e/e/everything_plugins",
+	    e_user_homedir_get());
+   files = ecore_file_ls(dir);
+
+   EINA_LIST_FREE(files, file)
+     {
+	snprintf(buf, sizeof(buf), "%s/%s/%s", dir, file, MODULE_ARCH);
+
+	if (ecore_file_is_dir(buf))
+	  plugins = eina_module_list_get(plugins, buf, 1, &list_cb, NULL);
+
+	free(file);
+     }
+
    /* add module supplied action */
    act = e_action_add("everything");
    if (act)
