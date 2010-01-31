@@ -930,8 +930,7 @@ _e_kbd_int_layout_parse(E_Kbd_Int *ki, const char *layout)
 	    (!strcmp(str, "capslock")))
 	  {
 	     char *p;
-	     char label[4096];
-	     int xx;
+	     char label[PATH_MAX];
 
 	     if (sscanf(buf, "%*s %4000s", label) != 1) continue;
 	     st = calloc(1, sizeof(E_Kbd_Int_Key_State));
