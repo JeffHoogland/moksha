@@ -3,4 +3,6 @@ Type=Link
 Name=Composite
 Icon=e-module-comp
 Comment=<title>Composite Module</title><br>
+Comment[fr]=<title>Module Composite</title><br>
+Comment[it]=<title>Modulo Composite</title><br>
 X-Enlightenment-ModuleType=appearance
