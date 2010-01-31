@@ -34,6 +34,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, shadow_file, STR);
    E_CONFIG_VAL(D, T, engine, INT);
    E_CONFIG_VAL(D, T, texture_from_pixmap, UCHAR);
+   E_CONFIG_VAL(D, T, lock_fps, UCHAR);
    
    mod->conf = e_config_domain_load("module.comp", mod->conf_edd);
    if (!mod->conf)
@@ -43,6 +44,7 @@ e_modapi_init(E_Module *m)
         mod->conf->shadow_file = NULL;
         mod->conf->engine = E_EVAS_ENGINE_SOFTWARE_X11;
         mod->conf->texture_from_pixmap = 0;
+        mod->conf->lock_fps = 1;
      }
    
    _comp_mod = mod;

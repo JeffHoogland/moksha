@@ -34,6 +34,7 @@ struct _E_Comp
    Eina_Inlist    *wins;
    Eina_List      *updates;
    Ecore_Animator *render_animator;
+   Ecore_Job      *update_job;
    int             render_overflow;
 
    Eina_Bool       gl : 1;
@@ -317,9 +318,8 @@ _e_mod_comp_pre_swap(void *data, Evas *e)
 }
 
 static int
-_e_mod_comp_cb_animator(void *data)
+_e_mod_comp_cb_update(E_Comp *c)
 {
-   E_Comp *c = data;
    E_Comp_Win *cw;
    Eina_List *new_updates = NULL; // for failed pixmap fetches - get them next frame
    
@@ -332,7 +332,8 @@ _e_mod_comp_cb_animator(void *data)
         if (cw->update)
           new_updates = eina_list_append(new_updates, cw);
      }
-   ecore_evas_manual_render(c->ee);
+   if (_comp_mod->conf->lock_fps)
+     ecore_evas_manual_render(c->ee);
    if (c->grabbed)
      {
         c->grabbed = 0;
@@ -341,23 +342,48 @@ _e_mod_comp_cb_animator(void *data)
    if (new_updates) _e_mod_comp_render_queue(c);
    c->updates = new_updates;
    c->render_overflow--;
+   c->update_job = NULL;
    if (c->render_overflow == 0)
      {
-        c->render_animator = NULL;
+        if (c->render_animator) c->render_animator = NULL;
         return 0;
      }
    return 1;
 }
 
 static void
+_e_mod_comp_cb_job(void *data)
+{
+   _e_mod_comp_cb_update(data);
+}
+
+static int
+_e_mod_comp_cb_animator(void *data)
+{
+   return _e_mod_comp_cb_update(data);
+}
+
+static void
 _e_mod_comp_render_queue(E_Comp *c)
 {
-   if (c->render_animator)
+   if (_comp_mod->conf->lock_fps)
      {
-        c->render_overflow = 10;
-        return;
+        if (c->render_animator)
+          {
+             c->render_overflow = 10;
+             return;
+          }
+        c->render_animator = ecore_animator_add(_e_mod_comp_cb_animator, c);
      }
-   c->render_animator = ecore_animator_add(_e_mod_comp_cb_animator, c);
+   else
+     {
+        if (c->update_job)
+          {
+             ecore_job_del(c->update_job);
+             c->render_overflow = 0;
+          }
+        c->update_job = ecore_job_add(_e_mod_comp_cb_job, c);
+     }
 }
 
 static void
@@ -397,6 +423,20 @@ _e_mod_comp_win_damage_find(Ecore_X_Damage damage)
    
    cw = eina_hash_find(damages, e_util_winid_str_get(damage));
    return cw;
+}
+
+static Eina_Bool
+_e_mod_comp_win_do_shadow(E_Comp_Win *cw)
+{
+   if (cw->shaped) return 0;
+   if (cw->argb)
+     {
+        if (!cw->bd) return 0;
+        if ((cw->bd->client.border.name) &&
+            (!strcmp(cw->bd->client.border.name, "borderless")))
+          return 0;
+     }
+   return 1;
 }
 
 static E_Comp_Win *
@@ -608,7 +648,7 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
      {
         if (_comp_mod->conf->use_shadow)
           {
-             if ((!cw->argb) && (!cw->shaped))
+             if (_e_mod_comp_win_do_shadow(cw))
                {
                   int ok = 0;
                   char buf[PATH_MAX];
@@ -1042,7 +1082,7 @@ _e_mod_comp_add(E_Manager *man)
    if (!c->ee)
      c->ee = ecore_evas_software_x11_new(NULL, c->win, 0, 0, man->w, man->h);
    
-   ecore_evas_manual_render_set(c->ee, 1);
+   ecore_evas_manual_render_set(c->ee, _comp_mod->conf->lock_fps);
    c->evas = ecore_evas_get(c->ee);
    ecore_evas_show(c->ee);
    
@@ -1099,6 +1139,7 @@ _e_mod_comp_del(E_Comp *c)
    ecore_x_composite_render_window_disable(c->win);
    if (c->man->num == 0) e_alert_composite_win = 0;
    if (c->render_animator) ecore_animator_del(c->render_animator);
+   if (c->update_job) ecore_job_del(c->update_job);
    free(c);
 }
 
@@ -1161,13 +1202,14 @@ e_mod_comp_shadow_set(void)
      {
         E_Comp_Win *cw;
         
+        ecore_evas_manual_render_set(c->ee, _comp_mod->conf->lock_fps);
         EINA_INLIST_FOREACH(c->wins, cw)
           {
              if (evas_object_visible_get(cw->obj) && (cw->shobj))
                {
                   if (_comp_mod->conf->use_shadow)
                     {
-                       if ((!cw->argb) && (!cw->shaped))
+                       if (_e_mod_comp_win_do_shadow(cw))
                          {
                             int ok = 0;
                             char buf[PATH_MAX];

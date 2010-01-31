@@ -11,6 +11,7 @@ struct _Config
    const char      *shadow_file;
    int              engine;
    unsigned char    texture_from_pixmap;
+   unsigned char    lock_fps;
 };
 
 struct _Mod

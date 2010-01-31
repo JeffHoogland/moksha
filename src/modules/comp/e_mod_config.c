@@ -9,6 +9,7 @@ struct _E_Config_Dialog_Data
    int use_shadow;
    int engine;
    int texture_from_pixmap;
+   int lock_fps;
 };
 
 /* Protos */
@@ -56,6 +57,7 @@ _create_data(E_Config_Dialog *cfd)
        (cfdata->engine != E_EVAS_ENGINE_GL_X11))
      cfdata->engine = E_EVAS_ENGINE_SOFTWARE_X11;
    cfdata->texture_from_pixmap = _comp_mod->conf->texture_from_pixmap;
+   cfdata->lock_fps = _comp_mod->conf->lock_fps;
    return cfdata;
 }
 
@@ -76,9 +78,11 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    o = e_widget_list_add(evas, 0, 0);
    ot = e_widget_table_add(evas, 1);
    
-   of = e_widget_framelist_add(evas, _("Shadow"), 0);
+   of = e_widget_framelist_add(evas, _("General"), 0);
    e_widget_framelist_content_align_set(of, 0.5, 0.0);
-   ob = e_widget_check_add(evas, _("Enabled"), &(cfdata->use_shadow));
+   ob = e_widget_check_add(evas, _("Shadow"), &(cfdata->use_shadow));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_check_add(evas, _("Limit FPS"), &(cfdata->lock_fps));
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
    
@@ -100,7 +104,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    
    e_widget_table_object_append(ot, of, 0, 1, 1, 1, 1, 1, 1, 1);
    
-   of = e_widget_framelist_add(evas, _("GL Options"), 0);
+   of = e_widget_framelist_add(evas, _("OpenGL Options"), 0);
    e_widget_framelist_content_align_set(of, 0.5, 0.0);
    ob = e_widget_check_add(evas, _("Texture from Pixmap"), &(cfdata->texture_from_pixmap));
    e_widget_framelist_object_append(of, ob);
@@ -114,9 +118,11 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
-   if (_comp_mod->conf->use_shadow != cfdata->use_shadow)
+   if ((_comp_mod->conf->use_shadow != cfdata->use_shadow) ||
+       (cfdata->lock_fps != _comp_mod->conf->lock_fps))
      {
         _comp_mod->conf->use_shadow = cfdata->use_shadow;
+        _comp_mod->conf->lock_fps = cfdata->lock_fps;
         e_mod_comp_shadow_set();
      }
    if ((_comp_mod->conf->engine != cfdata->engine) ||
