@@ -16,6 +16,8 @@ e_modapi_init(E_Module *m)
    E_Manager *man;
    Eina_List *l;
 
+   e_module_priority_set(m, 85);
+
    /* setup variable to hold module directory */
    _sft_mod_dir = eina_stringshare_add(m->dir);
 

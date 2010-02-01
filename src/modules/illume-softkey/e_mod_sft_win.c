@@ -37,9 +37,6 @@ e_mod_sft_win_new(E_Zone *zone)
    states[1] = ECORE_X_WINDOW_STATE_SKIP_PAGER;
    ecore_x_netwm_window_state_set(swin->win->evas_win, states, 2);
 
-   /* set this window to be a 'dock' window */
-   ecore_x_netwm_window_type_set(swin->win->evas_win, ECORE_X_WINDOW_TYPE_DOCK);
-
    /* set this window to not accept or take focus */
    ecore_x_icccm_hints_set(swin->win->evas_win, 0, 0, 0, 0, 0, 0, 0);
 
@@ -88,6 +85,9 @@ e_mod_sft_win_new(E_Zone *zone)
 
    /* show the window */
    e_win_show(swin->win);
+
+   /* set this window to be a 'dock' window */
+   ecore_x_netwm_window_type_set(swin->win->evas_win, ECORE_X_WINDOW_TYPE_DOCK);
 
    /* tell illume conformant apps our position and size */
    ecore_x_e_illume_bottom_panel_geometry_set(ecore_x_window_root_first_get(), 
