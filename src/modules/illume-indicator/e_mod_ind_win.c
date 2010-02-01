@@ -47,9 +47,6 @@ e_mod_ind_win_new(E_Zone *zone)
    states[1] = ECORE_X_WINDOW_STATE_SKIP_PAGER;
    ecore_x_netwm_window_state_set(iwin->win->evas_win, states, 2);
 
-   /* set this window to be a 'dock' window */
-   ecore_x_netwm_window_type_set(iwin->win->evas_win, ECORE_X_WINDOW_TYPE_DOCK);
-
    /* set this window to not accept or take focus */
    ecore_x_icccm_hints_set(iwin->win->evas_win, 0, 0, 0, 0, 0, 0, 0);
 
@@ -113,6 +110,9 @@ e_mod_ind_win_new(E_Zone *zone)
 
    /* show the window */
    e_win_show(iwin->win);
+
+   /* set this window to be a 'dock' window */
+   ecore_x_netwm_window_type_set(iwin->win->evas_win, ECORE_X_WINDOW_TYPE_DOCK);
 
    /* get the current illume mode and lock dragging if we need to */
    mode = ecore_x_e_illume_mode_get(zone->black_win);
