@@ -10,6 +10,7 @@ struct _E_Config_Dialog_Data
    int engine;
    int texture_from_pixmap;
    int lock_fps;
+   int efl_sync;
 };
 
 /* Protos */
@@ -58,6 +59,7 @@ _create_data(E_Config_Dialog *cfd)
      cfdata->engine = E_EVAS_ENGINE_SOFTWARE_X11;
    cfdata->texture_from_pixmap = _comp_mod->conf->texture_from_pixmap;
    cfdata->lock_fps = _comp_mod->conf->lock_fps;
+   cfdata->efl_sync = _comp_mod->conf->efl_sync;
    return cfdata;
 }
 
@@ -76,13 +78,15 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    int engine;
    
    o = e_widget_list_add(evas, 0, 0);
-   ot = e_widget_table_add(evas, 1);
+   ot = e_widget_table_add(evas, 0);
    
    of = e_widget_framelist_add(evas, _("General"), 0);
    e_widget_framelist_content_align_set(of, 0.5, 0.0);
    ob = e_widget_check_add(evas, _("Shadow"), &(cfdata->use_shadow));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_check_add(evas, _("Limit FPS"), &(cfdata->lock_fps));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_check_add(evas, _("Sync EFL Windows"), &(cfdata->efl_sync));
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
    
@@ -126,10 +130,12 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
         e_mod_comp_shadow_set();
      }
    if ((_comp_mod->conf->engine != cfdata->engine) ||
-       (cfdata->texture_from_pixmap != _comp_mod->conf->texture_from_pixmap))
+       (cfdata->texture_from_pixmap != _comp_mod->conf->texture_from_pixmap) ||
+       (cfdata->efl_sync != _comp_mod->conf->efl_sync))
      {
         _comp_mod->conf->engine = cfdata->engine;
         _comp_mod->conf->texture_from_pixmap = cfdata->texture_from_pixmap;
+        _comp_mod->conf->efl_sync = cfdata->efl_sync;
         e_mod_comp_shutdown();
         e_mod_comp_init();
      }

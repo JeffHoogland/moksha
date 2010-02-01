@@ -12,6 +12,7 @@ struct _Config
    int              engine;
    unsigned char    texture_from_pixmap;
    unsigned char    lock_fps;
+   unsigned char    efl_sync;
 };
 
 struct _Mod

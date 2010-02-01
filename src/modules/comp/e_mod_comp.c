@@ -38,6 +38,7 @@ struct _E_Comp
    int             render_overflow;
 
    Eina_Bool       gl : 1;
+   Eina_Bool       efl_sync : 1;
    Eina_Bool       grabbed : 1;
 };
 
@@ -62,7 +63,8 @@ struct _E_Comp_Win
    Ecore_X_Image  *xim; // x image - software fallback
    E_Update       *up; // update handler
    E_Object_Delfn *dfn; // delete function handle for objects being tracked
-   
+   Ecore_X_Sync_Counter counter; // sync counter for syncronised drawing
+   Ecore_Timer    *update_timeout; // max time between damage and "done" event
    Eina_Bool       visible : 1; // is visible
    Eina_Bool       input_only : 1; // is input_only
    Eina_Bool       argb : 1; // is argb
@@ -71,11 +73,13 @@ struct _E_Comp_Win
    Eina_Bool       redirected : 1; // has updates to fetch
    Eina_Bool       shape_changed : 1; // shape changed
    Eina_Bool       native : 1; // native
+   Eina_Bool       drawme : 1; // native
 };
 
 static Eina_List *handlers = NULL;
 static Eina_List *compositors = NULL;
 static Eina_Hash *windows = NULL;
+static Eina_Hash *borders = NULL;
 static Eina_Hash *damages = NULL;
 
 //////////////////////////////////////////////////////////////////////////
@@ -322,18 +326,39 @@ _e_mod_comp_cb_update(E_Comp *c)
 {
    E_Comp_Win *cw;
    Eina_List *new_updates = NULL; // for failed pixmap fetches - get them next frame
+   Eina_List *update_done = NULL;
    
 //   ecore_x_grab();
 //   ecore_x_sync();
    c->grabbed = 1;
    EINA_LIST_FREE(c->updates, cw)
      {
-        _e_mod_comp_win_update(cw);
+        if (c->efl_sync)
+          {
+             if (((cw->counter) && (cw->drawme)) || (!cw->counter))
+               {
+                  _e_mod_comp_win_update(cw);
+                  if (cw->drawme)
+                    update_done = eina_list_append(update_done, cw);
+                  cw->drawme = 0;
+               }
+             else
+               cw->update = 0;
+          }
+        else
+          _e_mod_comp_win_update(cw);
         if (cw->update)
           new_updates = eina_list_append(new_updates, cw);
      }
    if (_comp_mod->conf->lock_fps)
      ecore_evas_manual_render(c->ee);
+   if (c->efl_sync)
+     {  
+        EINA_LIST_FREE(update_done, cw)
+          {
+             ecore_x_sync_counter_inc(cw->counter, 1);
+          }
+     }
    if (c->grabbed)
      {
         c->grabbed = 0;
@@ -409,20 +434,29 @@ _e_mod_comp_find(Ecore_X_Window root)
 static E_Comp_Win *
 _e_mod_comp_win_find(Ecore_X_Window win)
 {
-   Eina_List *l;
-   E_Comp_Win *cw;
+   return eina_hash_find(windows, e_util_winid_str_get(win));
+}
 
-   cw = eina_hash_find(windows, e_util_winid_str_get(win));
-   return cw;
+static E_Comp_Win *
+_e_mod_comp_border_client_find(Ecore_X_Window win)
+{
+   return eina_hash_find(borders, e_util_winid_str_get(win));
 }
 
 static E_Comp_Win *
 _e_mod_comp_win_damage_find(Ecore_X_Damage damage)
 {
-   E_Comp_Win *cw;
-   
-   cw = eina_hash_find(damages, e_util_winid_str_get(damage));
-   return cw;
+   return eina_hash_find(damages, e_util_winid_str_get(damage));
+}
+
+static Eina_Bool
+_e_mod_comp_win_is_borderless(E_Comp_Win *cw)
+{
+   if (!cw->bd) return 1;
+   if ((cw->bd->client.border.name) &&
+       (!strcmp(cw->bd->client.border.name, "borderless")))
+     return 1;
+   return 0;
 }
 
 static Eina_Bool
@@ -431,12 +465,30 @@ _e_mod_comp_win_do_shadow(E_Comp_Win *cw)
    if (cw->shaped) return 0;
    if (cw->argb)
      {
-        if (!cw->bd) return 0;
-        if ((cw->bd->client.border.name) &&
-            (!strcmp(cw->bd->client.border.name, "borderless")))
-          return 0;
+        if (_e_mod_comp_win_is_borderless(cw)) return 0;
      }
    return 1;
+}
+
+static int
+_e_mod_comp_win_damage_timeout(void *data)
+{
+   E_Comp_Win *cw = data;
+   
+   if (!cw->update)
+     {
+        if (cw->update_timeout)
+          {
+             ecore_timer_del(cw->update_timeout);
+             cw->update_timeout = NULL;
+          }
+        cw->update = 1;
+        cw->c->updates = eina_list_append(cw->c->updates, cw);
+     }
+   cw->drawme = 1;
+   _e_mod_comp_win_render_queue(cw);
+   cw->update_timeout = NULL;
+   return 0;
 }
 
 static E_Comp_Win *
@@ -525,9 +577,18 @@ _e_mod_comp_win_del(E_Comp_Win *cw)
 {
    e_mod_comp_update_free(cw->up);
    DBG("  [0x%x] del\n", cw->win);
+   if (cw->update_timeout)
+     {
+        ecore_timer_del(cw->update_timeout);
+        cw->update_timeout = NULL;
+     }
    if (cw->dfn)
      {
-        if (cw->bd) e_object_delfn_del(E_OBJECT(cw->bd), cw->dfn);
+        if (cw->bd)
+          {
+             eina_hash_del(borders, e_util_winid_str_get(cw->bd->client.win), cw);
+             e_object_delfn_del(E_OBJECT(cw->bd), cw->dfn);
+          }
         else if (cw->pop) e_object_delfn_del(E_OBJECT(cw->pop), cw->dfn);
         else if (cw->menu) e_object_delfn_del(E_OBJECT(cw->menu), cw->dfn);
         cw->dfn = NULL;
@@ -550,14 +611,17 @@ _e_mod_comp_win_del(E_Comp_Win *cw)
      {
         evas_object_image_data_set(cw->obj, NULL);
         ecore_x_image_free(cw->xim);
+        cw->xim = NULL;
      }
    if (cw->obj)
      {
         evas_object_del(cw->obj);
+        cw->obj = NULL;
      }
    if (cw->shobj)
      {
         evas_object_del(cw->shobj);
+        cw->shobj = NULL;
      }
    eina_hash_del(windows, e_util_winid_str_get(cw->win), cw);
    if (cw->damage)
@@ -580,7 +644,12 @@ _e_mod_comp_object_del(void *data, void *obj)
 {
    E_Comp_Win *cw = data;
 
-   if (obj == cw->bd) cw->bd = NULL;
+   if (obj == cw->bd)
+     {
+        eina_hash_del(borders, e_util_winid_str_get(cw->bd->client.win), cw);
+        cw->bd = NULL;
+        cw->counter = 0;
+     }
    else if (obj == cw->pop) cw->pop = NULL;
    else if (obj == cw->menu) cw->menu = NULL;
    if (cw->dfn)
@@ -606,7 +675,12 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
 
    if (cw->dfn)
      {
-        if (cw->bd) e_object_delfn_del(E_OBJECT(cw->bd), cw->dfn);
+        if (cw->bd)
+          {
+             eina_hash_del(borders, e_util_winid_str_get(cw->bd->client.win), cw);
+             e_object_delfn_del(E_OBJECT(cw->bd), cw->dfn);
+             cw->counter = 0;
+          }
         else if (cw->pop) e_object_delfn_del(E_OBJECT(cw->pop), cw->dfn);
         else if (cw->menu) e_object_delfn_del(E_OBJECT(cw->menu), cw->dfn);
         cw->dfn = NULL;
@@ -619,8 +693,28 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
    cw->bd = e_border_find_by_window(cw->win);
    if (cw->bd)
      {
+        Ecore_X_Sync_Counter counter;
+        
+        eina_hash_add(borders, e_util_winid_str_get(cw->bd->client.win), cw);
         cw->dfn = e_object_delfn_add(E_OBJECT(cw->bd), 
                                      _e_mod_comp_object_del, cw);
+        if (cw->c->efl_sync)
+          {
+             if (_e_mod_comp_win_is_borderless(cw))
+               {
+                  counter = ecore_x_e_comp_sync_counter_get(cw->bd->client.win);
+                  if (counter)
+                    {
+                       cw->counter = counter;
+                       ecore_x_sync_counter_inc(cw->counter, 1);
+                       ecore_x_e_comp_sync_begin_send(cw->bd->client.win);
+                    }
+               }
+             else
+               {
+                  ecore_x_e_comp_sync_cancel_send(cw->bd->client.win);
+               }
+          }
         // ref bd
      }
    else
@@ -691,6 +785,16 @@ _e_mod_comp_win_hide(E_Comp_Win *cw)
    cw->visible = 0;
    if (cw->input_only) return;
    DBG("  [0x%x] hid --\n", cw->win);
+   if (cw->update_timeout)
+     {
+        ecore_timer_del(cw->update_timeout);
+        cw->update_timeout = NULL;
+     }
+   if (cw->c->efl_sync)
+     {
+        if ((cw->bd) && (cw->counter))
+          ecore_x_e_comp_sync_end_send(cw->bd->client.win);
+     }
    if (cw->redirected)
      {
         ecore_x_composite_unredirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
@@ -851,12 +955,18 @@ _e_mod_comp_win_damage(E_Comp_Win *cw, int x, int y, int w, int h, Eina_Bool dmg
         ecore_x_damage_subtract(cw->damage, 0, parts);
         ecore_x_region_free(parts);
      }
+   e_mod_comp_update_add(cw->up, x, y, w, h);
+   if (cw->counter)
+     {
+        if (!cw->update_timeout)
+          cw->update_timeout = ecore_timer_add(0.25, _e_mod_comp_win_damage_timeout, cw);
+        return;
+     }
    if (!cw->update)
      {
         cw->update = 1;
         cw->c->updates = eina_list_append(cw->c->updates, cw);
      }
-   e_mod_comp_update_add(cw->up, x, y, w, h);
    _e_mod_comp_win_render_queue(cw);
 }
 
@@ -990,6 +1100,31 @@ static int
 _e_mod_comp_message(void *data, int type, void *event)
 {
    Ecore_X_Event_Client_Message *ev = event;
+   E_Comp_Win *cw = NULL;
+   if ((ev->message_type != ECORE_X_ATOM_E_COMP_SYNC_DRAW_DONE) ||
+       (ev->format != 32)) return 1;
+   cw = _e_mod_comp_border_client_find(ev->data.l[0]);
+   if (!cw) return 1;
+   if (!cw->bd) return 1;
+   if (ev->data.l[0] != cw->bd->client.win) return 1;
+   if (cw->bd)
+     {
+        if (cw->counter)
+          {
+             if (!cw->update)
+               {
+                  if (cw->update_timeout)
+                    {
+                       ecore_timer_del(cw->update_timeout);
+                       cw->update_timeout = NULL;
+                    }
+                  cw->update = 1;
+                  cw->c->updates = eina_list_append(cw->c->updates, cw);
+               }
+             cw->drawme = 1;
+             _e_mod_comp_win_render_queue(cw);
+          }
+     }
    return 1;
 }
 
@@ -1039,6 +1174,10 @@ _e_mod_comp_add(E_Manager *man)
    
    c = calloc(1, sizeof(E_Comp));
    if (!c) return NULL;
+
+   c->efl_sync = _comp_mod->conf->efl_sync;
+   ecore_x_e_comp_sync_supported_set(man->root, c->efl_sync);
+   
    c->man = man;
    c->win = ecore_x_composite_render_window_enable(man->root);
    if (!c->win)
@@ -1082,6 +1221,7 @@ _e_mod_comp_add(E_Manager *man)
    if (!c->ee)
      c->ee = ecore_evas_software_x11_new(NULL, c->win, 0, 0, man->w, man->h);
    
+   ecore_evas_comp_sync_set(c->ee, 0);
    ecore_evas_manual_render_set(c->ee, _comp_mod->conf->lock_fps);
    c->evas = ecore_evas_get(c->ee);
    ecore_evas_show(c->ee);
@@ -1130,6 +1270,11 @@ _e_mod_comp_del(E_Comp *c)
    while (c->wins)
      {
         cw = (E_Comp_Win *)(c->wins);
+        if (cw->counter)
+          {
+             ecore_x_sync_counter_free(cw->counter);
+             cw->counter = 0;
+          }
         _e_mod_comp_win_hide(cw);
         _e_mod_comp_win_del(cw);
      }
@@ -1140,6 +1285,9 @@ _e_mod_comp_del(E_Comp *c)
    if (c->man->num == 0) e_alert_composite_win = 0;
    if (c->render_animator) ecore_animator_del(c->render_animator);
    if (c->update_job) ecore_job_del(c->update_job);
+   
+   ecore_x_e_comp_sync_supported_set(c->man->root, 0);
+   
    free(c);
 }
 
@@ -1152,6 +1300,7 @@ e_mod_comp_init(void)
    E_Manager *man;
 
    windows = eina_hash_string_superfast_new(NULL);
+   borders = eina_hash_string_superfast_new(NULL);
    damages = eina_hash_string_superfast_new(NULL);
    
    handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_CREATE,    _e_mod_comp_create,    NULL));
@@ -1190,6 +1339,7 @@ e_mod_comp_shutdown(void)
    
    eina_hash_free(damages);
    eina_hash_free(windows);
+   eina_hash_free(borders);
 }
 
 void
