@@ -149,7 +149,7 @@ struct _Evry_Plugin
   /* provide more information for a candidate */
   /* int (*candidate_info) (Evas *evas, Evry_Item *item); */
 
-  /* optional: default action for this plugins items */
+  /* only used when plugin is of type_action */
   int  (*action) (Evry_Plugin *p, const Evry_Item *item);
 
   Evas_Object *(*config_page) (Evry_Plugin *p);
