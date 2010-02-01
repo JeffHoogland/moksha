@@ -11,6 +11,8 @@ struct _E_Config_Dialog_Data
    int texture_from_pixmap;
    int lock_fps;
    int efl_sync;
+   int loose_sync;
+   int grab;
 };
 
 /* Protos */
@@ -60,6 +62,8 @@ _create_data(E_Config_Dialog *cfd)
    cfdata->texture_from_pixmap = _comp_mod->conf->texture_from_pixmap;
    cfdata->lock_fps = _comp_mod->conf->lock_fps;
    cfdata->efl_sync = _comp_mod->conf->efl_sync;
+   cfdata->loose_sync = _comp_mod->conf->loose_sync;
+   cfdata->grab = _comp_mod->conf->grab;
    return cfdata;
 }
 
@@ -86,7 +90,11 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_check_add(evas, _("Limit FPS"), &(cfdata->lock_fps));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_check_add(evas, _("Sync EFL Windows"), &(cfdata->efl_sync));
+   ob = e_widget_check_add(evas, _("Sync EFL windows"), &(cfdata->efl_sync));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_check_add(evas, _("Loose Sync"), &(cfdata->loose_sync));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_check_add(evas, _("Grab during composite"), &(cfdata->grab));
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
    
@@ -123,19 +131,23 @@ static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    if ((_comp_mod->conf->use_shadow != cfdata->use_shadow) ||
-       (cfdata->lock_fps != _comp_mod->conf->lock_fps))
+       (cfdata->lock_fps != _comp_mod->conf->lock_fps) ||
+       (cfdata->grab != _comp_mod->conf->grab))
      {
         _comp_mod->conf->use_shadow = cfdata->use_shadow;
         _comp_mod->conf->lock_fps = cfdata->lock_fps;
+        _comp_mod->conf->grab = cfdata->grab;
         e_mod_comp_shadow_set();
      }
    if ((_comp_mod->conf->engine != cfdata->engine) ||
        (cfdata->texture_from_pixmap != _comp_mod->conf->texture_from_pixmap) ||
-       (cfdata->efl_sync != _comp_mod->conf->efl_sync))
+       (cfdata->efl_sync != _comp_mod->conf->efl_sync) ||
+       (cfdata->loose_sync != _comp_mod->conf->loose_sync))
      {
         _comp_mod->conf->engine = cfdata->engine;
         _comp_mod->conf->texture_from_pixmap = cfdata->texture_from_pixmap;
         _comp_mod->conf->efl_sync = cfdata->efl_sync;
+        _comp_mod->conf->loose_sync = cfdata->loose_sync;
         e_mod_comp_shutdown();
         e_mod_comp_init();
      }

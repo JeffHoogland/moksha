@@ -36,6 +36,8 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, texture_from_pixmap, UCHAR);
    E_CONFIG_VAL(D, T, lock_fps, UCHAR);
    E_CONFIG_VAL(D, T, efl_sync, UCHAR);
+   E_CONFIG_VAL(D, T, loose_sync, UCHAR);
+   E_CONFIG_VAL(D, T, grab, UCHAR);
    
    mod->conf = e_config_domain_load("module.comp", mod->conf_edd);
    if (!mod->conf)
@@ -47,6 +49,8 @@ e_modapi_init(E_Module *m)
         mod->conf->texture_from_pixmap = 0;
         mod->conf->lock_fps = 1;
         mod->conf->efl_sync = 1;
+        mod->conf->loose_sync = 0;
+        mod->conf->grab = 0;
      }
    
    _comp_mod = mod;

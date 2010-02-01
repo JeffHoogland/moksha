@@ -38,7 +38,6 @@ struct _E_Comp
    int             render_overflow;
 
    Eina_Bool       gl : 1;
-   Eina_Bool       efl_sync : 1;
    Eina_Bool       grabbed : 1;
 };
 
@@ -317,8 +316,14 @@ _e_mod_comp_pre_swap(void *data, Evas *e)
 {
    E_Comp *c = data;
    
-//   ecore_x_ungrab();
-   c->grabbed = 0;
+   if (_comp_mod->conf->grab)
+     {
+        if (c->grabbed)
+          {
+             ecore_x_ungrab();
+             c->grabbed = 0;
+          }
+     }
 }
 
 static int
@@ -327,13 +332,16 @@ _e_mod_comp_cb_update(E_Comp *c)
    E_Comp_Win *cw;
    Eina_List *new_updates = NULL; // for failed pixmap fetches - get them next frame
    Eina_List *update_done = NULL;
-   
-//   ecore_x_grab();
-//   ecore_x_sync();
-   c->grabbed = 1;
+
+   if (_comp_mod->conf->grab)
+     {
+        ecore_x_grab();
+        ecore_x_sync();
+        c->grabbed = 1;
+     }
    EINA_LIST_FREE(c->updates, cw)
      {
-        if (c->efl_sync)
+        if (_comp_mod->conf->efl_sync)
           {
              if (((cw->counter) && (cw->drawme)) || (!cw->counter))
                {
@@ -352,17 +360,20 @@ _e_mod_comp_cb_update(E_Comp *c)
      }
    if (_comp_mod->conf->lock_fps)
      ecore_evas_manual_render(c->ee);
-   if (c->efl_sync)
+   if (_comp_mod->conf->efl_sync)
      {  
         EINA_LIST_FREE(update_done, cw)
           {
              ecore_x_sync_counter_inc(cw->counter, 1);
           }
      }
-   if (c->grabbed)
+   if (_comp_mod->conf->grab)
      {
-        c->grabbed = 0;
-//        ecore_x_ungrab();
+        if (c->grabbed)
+          {
+             c->grabbed = 0;
+             ecore_x_ungrab();
+          }
      }
    if (new_updates) _e_mod_comp_render_queue(c);
    c->updates = new_updates;
@@ -698,9 +709,10 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
         eina_hash_add(borders, e_util_winid_str_get(cw->bd->client.win), cw);
         cw->dfn = e_object_delfn_add(E_OBJECT(cw->bd), 
                                      _e_mod_comp_object_del, cw);
-        if (cw->c->efl_sync)
+        if (_comp_mod->conf->efl_sync)
           {
-             if (_e_mod_comp_win_is_borderless(cw))
+             if (_e_mod_comp_win_is_borderless(cw) ||
+                 (_comp_mod->conf->loose_sync))
                {
                   counter = ecore_x_e_comp_sync_counter_get(cw->bd->client.win);
                   if (counter)
@@ -790,7 +802,7 @@ _e_mod_comp_win_hide(E_Comp_Win *cw)
         ecore_timer_del(cw->update_timeout);
         cw->update_timeout = NULL;
      }
-   if (cw->c->efl_sync)
+   if (_comp_mod->conf->efl_sync)
      {
         if ((cw->bd) && (cw->counter))
           ecore_x_e_comp_sync_end_send(cw->bd->client.win);
@@ -959,7 +971,9 @@ _e_mod_comp_win_damage(E_Comp_Win *cw, int x, int y, int w, int h, Eina_Bool dmg
    if (cw->counter)
      {
         if (!cw->update_timeout)
-          cw->update_timeout = ecore_timer_add(0.25, _e_mod_comp_win_damage_timeout, cw);
+          cw->update_timeout = ecore_timer_add
+          (ecore_animator_frametime_get() * 2, 
+           _e_mod_comp_win_damage_timeout, cw);
         return;
      }
    if (!cw->update)
@@ -1175,8 +1189,7 @@ _e_mod_comp_add(E_Manager *man)
    c = calloc(1, sizeof(E_Comp));
    if (!c) return NULL;
 
-   c->efl_sync = _comp_mod->conf->efl_sync;
-   ecore_x_e_comp_sync_supported_set(man->root, c->efl_sync);
+   ecore_x_e_comp_sync_supported_set(man->root, _comp_mod->conf->efl_sync);
    
    c->man = man;
    c->win = ecore_x_composite_render_window_enable(man->root);
