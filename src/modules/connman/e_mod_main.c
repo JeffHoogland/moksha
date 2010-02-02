@@ -42,6 +42,15 @@ static const char *e_str_ready = NULL;
 static const char *e_str_disconnect = NULL;
 static const char *e_str_failure = NULL;
 
+static struct _Connman_Technologies_Names
+{
+   const char **names;
+   int count;
+} _connman_enabled_technologies = {
+     NULL,
+     0
+};
+
 static void _connman_service_ask_pass_and_connect(E_Connman_Service *service);
 static void _connman_default_service_changed_delayed(E_Connman_Module_Context *ctxt);
 static void _connman_gadget_update(E_Connman_Instance *inst);
@@ -702,6 +711,43 @@ _connman_technology_exists(const E_Connman_Module_Context *ctxt, const char* nam
    return EINA_FALSE;
 }
 
+static inline int
+_connman_technologies_enabled_update()
+{
+   int ret;
+   if (_connman_enabled_technologies.names)
+     free(_connman_enabled_technologies.names);
+
+   ret = e_connman_manager_technologies_enabled_get
+      (&_connman_enabled_technologies.count, &_connman_enabled_technologies.names);
+   if (!ret)
+     {
+        printf("DBG CONNMAN enabled technologies?\n");
+        return 0;
+     }
+   return 1;
+}
+
+static inline int
+_connman_technology_enabled(const char *type)
+{
+   int i;
+   if (!_connman_enabled_technologies.names && !_connman_technologies_enabled_update())
+     return 0;
+   printf("DBG CONNMAN %d technologies enabled\n", _connman_enabled_technologies.count);
+   printf("DBG CONNMAN technology enabled: %s", type);
+   for (i = 0; i < _connman_enabled_technologies.count; i++)
+     {
+        if(!strcmp(type, _connman_enabled_technologies.names[i]))
+          {
+             printf(" ... yes\n");
+             return 1;
+          }
+     }
+   printf(" ... no\n");
+   return 0;
+}
+
 static void
 _connman_technologies_free(E_Connman_Module_Context *ctxt)
 {
@@ -712,6 +758,8 @@ _connman_technologies_free(E_Connman_Module_Context *ctxt)
 	ctxt->technologies = eina_inlist_remove(ctxt->technologies, EINA_INLIST_GET(t));
 	E_FREE(t);
      }
+   if (_connman_enabled_technologies.names)
+      free(_connman_enabled_technologies.names);
 }
 
 static void
@@ -736,6 +784,7 @@ _connman_technologies_load(E_Connman_Module_Context *ctxt)
 	  }
 	t = E_NEW(E_Connman_Technology, 1);
 	t->name = name;
+	t->enabled = _connman_technology_enabled(name);
 	printf("DBG CONNMAN added technology: %s\n", t->name);
 	ctxt->technologies = eina_inlist_append(ctxt->technologies, EINA_INLIST_GET(t));
      }
