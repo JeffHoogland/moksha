@@ -662,6 +662,20 @@ _connman_services_free(E_Connman_Module_Context *ctxt)
      }
 }
 
+E_Connman_Technology *
+_connman_technology_find(E_Connman_Module_Context *ctxt, const char* name)
+{
+   E_Connman_Technology *t;
+
+   EINA_INLIST_FOREACH(ctxt->technologies, t)
+     {
+	if (!strcmp(t->name, name))
+	  return t;
+     }
+
+   return NULL;
+}
+
 static inline Eina_Bool
 _connman_services_element_exists(const E_Connman_Module_Context *ctxt, const E_Connman_Element *element)
 {
@@ -672,6 +686,60 @@ _connman_services_element_exists(const E_Connman_Module_Context *ctxt, const E_C
        return EINA_TRUE;
 
    return EINA_FALSE;
+}
+
+static inline Eina_Bool
+_connman_technology_exists(const E_Connman_Module_Context *ctxt, const char* name)
+{
+   const E_Connman_Technology *t;
+
+   EINA_INLIST_FOREACH(ctxt->technologies, t)
+     {
+	if (t->name == name)
+	  return EINA_TRUE;
+     }
+
+   return EINA_FALSE;
+}
+
+static void
+_connman_technologies_free(E_Connman_Module_Context *ctxt)
+{
+   while (ctxt->technologies)
+     {
+	E_Connman_Technology *t = (E_Connman_Technology *) ctxt->technologies;
+	eina_stringshare_del(t->name);
+	ctxt->technologies = eina_inlist_remove(ctxt->technologies, EINA_INLIST_GET(t));
+	E_FREE(t);
+     }
+}
+
+static void
+_connman_technologies_load(E_Connman_Module_Context *ctxt)
+{
+   const char **names;
+   int count, i;
+
+   if (!e_connman_manager_technologies_available_get(&count, &names))
+     return;
+
+   printf("DBG CONNMAN technologies = %d\n", count);
+   for (i = 0; i < count; i++)
+     {
+	const char *name = eina_stringshare_add(names[i]);
+	E_Connman_Technology *t;
+
+	if ((name == NULL) || _connman_technology_exists(ctxt, name))
+	  {
+	     eina_stringshare_del(name);
+	     continue;
+	  }
+	t = E_NEW(E_Connman_Technology, 1);
+	t->name = name;
+	printf("DBG CONNMAN added technology: %s\n", t->name);
+	ctxt->technologies = eina_inlist_append(ctxt->technologies, EINA_INLIST_GET(t));
+     }
+   free(names);
 }
 
 static void
@@ -1533,6 +1601,7 @@ _connman_manager_changed_do(void *data)
 {
    E_Connman_Module_Context *ctxt = data;
 
+   _connman_technologies_load(ctxt);
    _connman_services_reload(ctxt);
 
    ctxt->poller.manager_changed = NULL;
@@ -1643,6 +1712,8 @@ e_modapi_init(E_Module *m)
    ctxt = E_NEW(E_Connman_Module_Context, 1);
    if (!ctxt)
      return NULL;
+
+   ctxt->technologies = NULL;
 
    _connman_actions_register(ctxt);
    e_gadcon_provider_register(&_gc_class);

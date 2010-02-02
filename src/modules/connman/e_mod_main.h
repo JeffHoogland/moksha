@@ -13,6 +13,7 @@
 typedef struct E_Connman_Instance E_Connman_Instance;
 typedef struct E_Connman_Module_Context E_Connman_Module_Context;
 typedef struct E_Connman_Service E_Connman_Service;
+typedef struct E_Connman_Technology E_Connman_Technology;
 
 struct E_Connman_Instance
 {
@@ -66,6 +67,13 @@ struct E_Connman_Service
    Eina_Bool pass_required:1;
 };
 
+struct E_Connman_Technology
+{
+   EINA_INLIST;
+   const char *name;
+   bool enabled;
+};
+
 struct E_Connman_Module_Context
 {
    Eina_List *instances;
@@ -94,6 +102,7 @@ struct E_Connman_Module_Context
    const char *technology;
    const E_Connman_Service *default_service;
    Eina_Inlist *services;
+   Eina_Inlist *technologies;
 };
 
 EAPI extern E_Module_Api e_modapi;
@@ -101,4 +110,5 @@ EAPI void *e_modapi_init     (E_Module *m);
 EAPI int   e_modapi_shutdown (E_Module *m);
 EAPI int   e_modapi_save     (E_Module *m);
 
+E_Connman_Technology *_connman_technology_find(E_Connman_Module_Context *ctxt, const char* name);
 #endif
