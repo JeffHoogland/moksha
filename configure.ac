@@ -384,6 +384,13 @@ esac
 
 AC_SUBST(BATTERY_LDFLAGS)
 
+AM_CONDITIONAL(HAVE_TEMPERATURE, false)
+define([CHECK_MODULE_TEMPERATURE],
+[
+        AC_E_CHECK_PKG(TEMPERATURE, [ecore ecore-file eina-0],
+                       [], [TEMPERATURE=false])
+])
+
 AM_CONDITIONAL(HAVE_EXCHANGE, false)
 define([CHECK_MODULE_CONF_THEME],
 [
@@ -433,7 +440,7 @@ AC_E_OPTIONAL_MODULE([dropshadow], true)
 AC_E_OPTIONAL_MODULE([clock], true)
 AC_E_OPTIONAL_MODULE([pager], true)
 AC_E_OPTIONAL_MODULE([battery], true, [CHECK_MODULE_BATTERY])
-AC_E_OPTIONAL_MODULE([temperature], true)
+AC_E_OPTIONAL_MODULE([temperature], true, [CHECK_MODULE_TEMPERATURE])
 AC_E_OPTIONAL_MODULE([cpufreq], true)
 AC_E_OPTIONAL_MODULE([ibox], true)
 AC_E_OPTIONAL_MODULE([start], true)
