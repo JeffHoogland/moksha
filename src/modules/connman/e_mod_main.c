@@ -761,6 +761,14 @@ _connman_technologies_free(E_Connman_Module_Context *ctxt)
    if (_connman_enabled_technologies.names)
       free(_connman_enabled_technologies.names);
 }
+void
+_connman_request_scan_cb(void *data __UNUSED__, DBusMessage *msg __UNUSED__, DBusError *error)
+{
+   if (dbus_error_is_set(error))
+     _connman_dbus_error_show(__func__, error);
+
+   return;
+}
 
 static void
 _connman_technologies_load(E_Connman_Module_Context *ctxt)
@@ -788,6 +796,9 @@ _connman_technologies_load(E_Connman_Module_Context *ctxt)
 	printf("DBG CONNMAN added technology: %s\n", t->name);
 	ctxt->technologies = eina_inlist_append(ctxt->technologies, EINA_INLIST_GET(t));
      }
+
+   if (!e_connman_manager_request_scan("", _connman_request_scan_cb, NULL))
+     printf("DBG CONNMAN request scan on all technologies failed\n");
    free(names);
 }
 
