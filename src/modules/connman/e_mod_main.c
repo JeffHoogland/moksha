@@ -1714,6 +1714,26 @@ _connman_config(E_Container *con, const char *params __UNUSED__)
    return ctxt->conf_dialog;
 }
 
+static const char _reg_cat[] = "advanced";
+static const char _reg_item[] = "advanced/connman";
+
+static void
+_connman_configure_registry_register(void)
+{
+   e_configure_registry_category_add(_reg_cat, 80, _("Advanced"), NULL,
+                                     "preferences-advanced");
+   e_configure_registry_item_add(_reg_item, 110, _(_e_connman_Name), NULL,
+                                 e_connman_theme_path(),
+                                 _connman_config);
+}
+
+static void
+_connman_configure_registry_unregister(void)
+{
+   e_configure_registry_item_del(_reg_item);
+   e_configure_registry_category_del(_reg_cat);
+}
+
 static void
 _connman_events_register(E_Connman_Module_Context *ctxt)
 {
@@ -1762,13 +1782,14 @@ e_modapi_init(E_Module *m)
    ctxt->services = NULL;
    ctxt->technologies = NULL;
    ctxt->conf_dialog = NULL;
+   connman_mod = m;
 
+   _connman_configure_registry_register();
    _connman_actions_register(ctxt);
    e_gadcon_provider_register(&_gc_class);
 
    _connman_events_register(ctxt);
 
-   connman_mod = m;
    return ctxt;
 }
 
