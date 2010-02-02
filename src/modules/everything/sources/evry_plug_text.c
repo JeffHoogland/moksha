@@ -15,14 +15,18 @@ static int
 _fetch(Evry_Plugin *p, const char *input)
 {
    Evry_Item *it;
-
-   EVRY_PLUGIN_ITEMS_FREE(p);
    
-   it = evry_item_new(NULL, p, input, NULL);
+   EVRY_PLUGIN_ITEMS_FREE(p);
 
-   EVRY_PLUGIN_ITEM_APPEND(p, it);
+   if (input)
+     {
+	it = evry_item_new(NULL, p, input, NULL);
+	EVRY_PLUGIN_ITEM_APPEND(p, it);
 
-   return 1;
+	return 1;
+     }
+   
+   return 0;
 }
 
 static Eina_Bool
