@@ -111,7 +111,6 @@ _connman_toggle_offline_mode_cb(void *data, DBusMessage *msg __UNUSED__, DBusErr
 
    if ((!error) || (!dbus_error_is_set(error)))
      {
-	printf("DBG CONNMAN: successfuly toggled to offline mode\n");
 	ctxt->offline_mode_pending = EINA_FALSE;
 	return;
      }
@@ -392,27 +391,6 @@ _connman_service_changed(void *data, const E_Connman_Element *element)
    GBOOL(pass_required, e_connman_service_passphrase_required_get);
 #undef GBOOL
 
-
-   printf("DBG CONNMAN: service details changed: (default=%p, %hhu)\n"
-	  "    name....: %s\n"
-	  "    state...: %s\n"
-	  "    type....: %s\n"
-	  "    error...: %s\n"
-	  "    security: %s\n"
-	  "    strength: %hhu\n"
-	  "    flags...: favorite=%hhu, auto_connect=%hhu, pass_required=%hhu\n",
-	  service->ctxt->default_service,
-	  service->ctxt->default_service == service,
-	  service->name,
-	  service->state,
-	  service->type,
-	  service->error,
-	  service->security,
-	  service->strength,
-	  service->favorite,
-	  service->auto_connect,
-	  service->pass_required);
-
    if ((service->ctxt->default_service == service) ||
        (!service->ctxt->default_service))
      _connman_default_service_changed_delayed(service->ctxt);
@@ -425,8 +403,6 @@ _connman_service_freed(void *data)
 {
    E_Connman_Service *service = data;
    E_Connman_Module_Context *ctxt = service->ctxt;
-
-   printf("DBG CONNMAN service freed %s\n", service->name);
 
    ctxt->services = eina_inlist_remove
      (ctxt->services, EINA_INLIST_GET(service));
@@ -618,7 +594,6 @@ _connman_service_ask_pass_and_connect__set_cb(void *data, DBusMessage *msg __UNU
 
    if ((!error) || (!dbus_error_is_set(error)))
      _connman_service_connect(service);
-   // TODO: check if connman reports password was invalid and ask again?
 
  end:
    if ((error) && (dbus_error_is_set(error)))
@@ -714,11 +689,7 @@ _connman_services_load(E_Connman_Module_Context *ctxt)
 	E_Connman_Service *service;
 
 	if ((!e) || (_connman_services_element_exists(ctxt, e)))
-	  {
-	     printf("DBG CONNMAN service already exists %p (%s)\n",
-		    e, e ? e->path : "");
-	     continue;
-	  }
+	  continue;
 
 	service = _connman_service_new(ctxt, e);
 	if (!service)
@@ -895,8 +866,6 @@ _connman_popup_cb_offline_mode_changed(void *data, Evas_Object *obj, void *event
 	_connman_operation_error_show(_("ConnMan Daemon is not running."));
 	return;
      }
-
-   printf(">>>> OFFLINE=%hhu\n", offline);
 
    if (!e_connman_manager_offline_mode_set
        (offline, _connman_toggle_offline_mode_cb, ctxt))
