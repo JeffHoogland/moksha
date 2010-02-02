@@ -62,4 +62,11 @@ evry_plug_aspell_la_LIBADD       = @e_libs@  ../libfoo.la
 evry_plug_aspell_la_LDFLAGS      = -no-undefined -module -avoid-version
 evry_plug_aspell_la_LIBTOOLFLAGS = --tag=disable-static
 
+evry_plug_textdir = $(plugindir)
+evry_plug_text_LTLIBRARIES = evry_plug_text.la
+evry_plug_text_la_SOURCES =  evry_plug_text.c
+evry_plug_text_la_LIBADD       = @e_libs@  ../libfoo.la
+evry_plug_text_la_LDFLAGS      = -no-undefined -module -avoid-version
+evry_plug_text_la_LIBTOOLFLAGS = --tag=disable-static
+
 
