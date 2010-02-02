@@ -1762,6 +1762,7 @@ e_modapi_init(E_Module *m)
    if (!ctxt)
      return NULL;
 
+   ctxt->services = NULL;
    ctxt->technologies = NULL;
 
    _connman_actions_register(ctxt);
