@@ -32,8 +32,8 @@
 static E_Module *connman_mod = NULL;
 static char tmpbuf[PATH_MAX]; /* general purpose buffer, just use immediately */
 
-static const char _name[] = "connman";
-static const char _Name[] = "Connection Manager";
+const char _e_connman_name[] = "connman";
+const char _e_connman_Name[] = "Connection Manager";
 
 static const char *e_str_idle = NULL;
 static const char *e_str_association = NULL;
@@ -56,7 +56,7 @@ static void _connman_default_service_changed_delayed(E_Connman_Module_Context *c
 static void _connman_gadget_update(E_Connman_Instance *inst);
 static void _connman_tip_update(E_Connman_Instance *inst);
 
-static const char *
+const char *
 e_connman_theme_path(void)
 {
 #define TF "/e-module-connman.edj"
@@ -71,46 +71,6 @@ e_connman_theme_path(void)
 
    return tmpbuf;
 #undef TF
-}
-
-static inline E_Connman_Service *
-_connman_ctxt_find_service_stringshare(const E_Connman_Module_Context *ctxt, const char *service_path)
-{
-   E_Connman_Service *itr;
-
-   EINA_INLIST_FOREACH(ctxt->services, itr)
-     if (itr->path == service_path)
-       return itr;
-
-   return NULL;
-}
-
-static inline void
-_connman_dbus_error_show(const char *msg, const DBusError *error)
-{
-   const char *name;
-
-   if ((!error) || (!dbus_error_is_set(error)))
-     return;
-
-   name = error->name;
-   if (strncmp(name, "org.moblin.connman.Error.",
-	       sizeof("org.moblin.connman.Error.") - 1) == 0)
-     name += sizeof("org.moblin.connman.Error.") - 1;
-
-   e_util_dialog_show(_("Connman Server Operation Failed"),
-		      _("Could not execute remote operation:<br>"
-			"%s<br>"
-			"Server Error <hilight>%s:</hilight> %s"),
-		      msg, name, error->message);
-}
-
-static inline void
-_connman_operation_error_show(const char *msg)
-{
-   e_util_dialog_show(_("Connman Operation Failed"),
-		      _("Could not execute local operation:<br>%s"),
-		      msg);
 }
 
 static void
@@ -128,7 +88,7 @@ _connman_toggle_offline_mode_cb(void *data, DBusMessage *msg __UNUSED__, DBusErr
    dbus_error_free(error);
 }
 
-static void
+void
 _connman_toggle_offline_mode(E_Connman_Module_Context *ctxt)
 {
    bool offline;
@@ -1009,10 +969,18 @@ static void
 _connman_popup_cb_controls(void *data, void *data2 __UNUSED__)
 {
    E_Connman_Instance *inst = data;
+   E_Container *con;
 
    _connman_popup_del(inst);
 
-   e_util_dialog_show("TODO", "TODO!");
+   if (!inst)
+      return;
+   if (inst->popup)
+      _connman_popup_del(inst);
+   if (inst->ctxt->conf_dialog)
+     return;
+
+   inst->ctxt->conf_dialog = e_connman_config_dialog_new(NULL, inst->ctxt);
 }
 
 static void
@@ -1584,7 +1552,7 @@ _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient __UNUSED__)
 static char *
 _gc_label(E_Gadcon_Client_Class *client_class __UNUSED__)
 {
-   return _(_Name);
+   return _(_e_connman_Name);
 }
 
 static Evas_Object *
@@ -1617,7 +1585,7 @@ _gc_id_new(E_Gadcon_Client_Class *client_class __UNUSED__)
 
 static const E_Gadcon_Client_Class _gc_class =
 {
-   GADCON_CLIENT_CLASS_VERSION, _name,
+   GADCON_CLIENT_CLASS_VERSION, _e_connman_name,
    {
      _gc_init, _gc_shutdown, _gc_orient, _gc_label, _gc_icon, _gc_id_new, NULL,
      e_gadcon_site_is_not_toolbar
@@ -1627,7 +1595,7 @@ static const E_Gadcon_Client_Class _gc_class =
 
 
 
-EAPI E_Module_Api e_modapi = {E_MODULE_API_VERSION, _Name};
+EAPI E_Module_Api e_modapi = {E_MODULE_API_VERSION, _e_connman_Name};
 
 static const char _act_toggle_offline_mode[] = "toggle_offline_mode";
 static const char _lbl_toggle_offline_mode[] = "Toggle Offline Mode";
@@ -1641,7 +1609,7 @@ _connman_actions_register(E_Connman_Module_Context *ctxt)
       ctxt->actions.toggle_offline_mode->func.go =
 	_connman_cb_toggle_offline_mode;
       e_action_predef_name_set
-	(_(_Name), _(_lbl_toggle_offline_mode), _act_toggle_offline_mode,
+	(_(_e_connman_Name), _(_lbl_toggle_offline_mode), _act_toggle_offline_mode,
 	 NULL, NULL, 0);
    }
 }
@@ -1651,7 +1619,7 @@ _connman_actions_unregister(E_Connman_Module_Context *ctxt)
 {
    if (ctxt->actions.toggle_offline_mode)
    {
-      e_action_predef_name_del(_(_Name), _(_lbl_toggle_offline_mode));
+      e_action_predef_name_del(_(_e_connman_Name), _(_lbl_toggle_offline_mode));
       e_action_del(_act_toggle_offline_mode);
    }
 }
@@ -1728,6 +1696,24 @@ _connman_event_mode_changed(void *data, int type __UNUSED__, void *event __UNUSE
    return 1;
 }
 
+static E_Config_Dialog *
+_connman_config(E_Container *con, const char *params __UNUSED__)
+{
+   E_Connman_Module_Context *ctxt;
+
+   if (!connman_mod)
+      return NULL;
+
+   ctxt = connman_mod->data;
+   if (!ctxt)
+      return NULL;
+
+   if (!ctxt->conf_dialog)
+      ctxt->conf_dialog = e_connman_config_dialog_new(con, ctxt);
+
+   return ctxt->conf_dialog;
+}
+
 static void
 _connman_events_register(E_Connman_Module_Context *ctxt)
 {
@@ -1775,6 +1761,7 @@ e_modapi_init(E_Module *m)
 
    ctxt->services = NULL;
    ctxt->technologies = NULL;
+   ctxt->conf_dialog = NULL;
 
    _connman_actions_register(ctxt);
    e_gadcon_provider_register(&_gc_class);

@@ -9,6 +9,7 @@
 #include <E_Connman.h>
 
 #define MOD_CONF_VERSION 2
+#define PRINT_VAR_NAME_VAL_INT(prefix, x) printf(prefix #x " = %d\n", x)
 
 typedef struct E_Connman_Instance E_Connman_Instance;
 typedef struct E_Connman_Module_Context E_Connman_Module_Context;
@@ -77,6 +78,7 @@ struct E_Connman_Technology
 struct E_Connman_Module_Context
 {
    Eina_List *instances;
+   E_Config_Dialog *conf_dialog;
 
    struct st_connman_actions
    {
@@ -110,5 +112,49 @@ EAPI void *e_modapi_init     (E_Module *m);
 EAPI int   e_modapi_shutdown (E_Module *m);
 EAPI int   e_modapi_save     (E_Module *m);
 
+const char *e_connman_theme_path(void);
+E_Config_Dialog *e_connman_config_dialog_new(E_Container *con, E_Connman_Module_Context *ctxt);
+void _connman_toggle_offline_mode(E_Connman_Module_Context *ctxt);
 E_Connman_Technology *_connman_technology_find(E_Connman_Module_Context *ctxt, const char* name);
+Evas_Object *_connman_service_new_list_item(Evas *evas, E_Connman_Service *service);
+
+static inline void
+_connman_dbus_error_show(const char *msg, const DBusError *error)
+{
+   const char *name;
+
+   if ((!error) || (!dbus_error_is_set(error)))
+     return;
+
+   name = error->name;
+   if (strncmp(name, "org.moblin.connman.Error.",
+	       sizeof("org.moblin.connman.Error.") - 1) == 0)
+     name += sizeof("org.moblin.connman.Error.") - 1;
+
+   e_util_dialog_show(_("Connman Server Operation Failed"),
+		      _("Could not execute remote operation:<br>"
+			"%s<br>"
+			"Server Error <hilight>%s:</hilight> %s"),
+		      msg, name, error->message);
+}
+
+static inline void
+_connman_operation_error_show(const char *msg)
+{
+   e_util_dialog_show(_("Connman Operation Failed"),
+		      _("Could not execute local operation:<br>%s"),
+		      msg);
+}
+
+static inline E_Connman_Service *
+_connman_ctxt_find_service_stringshare(const E_Connman_Module_Context *ctxt, const char *service_path)
+{
+   E_Connman_Service *itr;
+
+   EINA_INLIST_FOREACH(ctxt->services, itr)
+     if (itr->path == service_path)
+       return itr;
+
+   return NULL;
+}
 #endif
