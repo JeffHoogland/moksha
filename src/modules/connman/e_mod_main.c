@@ -917,6 +917,53 @@ _connman_popup_service_selected(void *data)
      _connman_service_connect(service);
 }
 
+Evas_Object *
+_connman_service_new_list_item(Evas *evas, E_Connman_Service *service)
+{
+   Evas_Object *icon;
+   Edje_Message_Int msg;
+   char buf[128];
+
+   snprintf(buf, sizeof(buf), "e/modules/connman/icon/%s", service->type);
+   icon = edje_object_add(evas);
+   e_theme_edje_object_set(icon, "base/theme/modules/connman", buf);
+
+   snprintf(buf, sizeof(buf), "e,state,%s", service->state);
+   edje_object_signal_emit(icon, buf, "e");
+
+   if (service->mode)
+     {
+	snprintf(buf, sizeof(buf), "e,mode,%s", service->mode);
+	edje_object_signal_emit(icon, buf, "e");
+     }
+
+   if (service->security)
+     {
+	snprintf(buf, sizeof(buf), "e,security,%s", service->security);
+	edje_object_signal_emit(icon, buf, "e");
+     }
+
+   if (service->favorite)
+      edje_object_signal_emit(icon, "e,favorite,yes", "e");
+   else
+      edje_object_signal_emit(icon, "e,favorite,no", "e");
+
+   if (service->auto_connect)
+      edje_object_signal_emit(icon, "e,auto_connect,yes", "e");
+   else
+      edje_object_signal_emit(icon, "e,auto_connect,no", "e");
+
+   if (service->pass_required)
+      edje_object_signal_emit(icon, "e,pass_required,yes", "e");
+   else
+      edje_object_signal_emit(icon, "e,pass_required,no", "e");
+
+   msg.val = service->strength;
+   edje_object_message_send(icon, EDJE_MESSAGE_INT, 1, &msg);
+
+   return icon;
+}
+
 static void
 _connman_popup_update(E_Connman_Instance *inst)
 {
@@ -925,7 +972,6 @@ _connman_popup_update(E_Connman_Instance *inst)
    const char *default_path;
    Evas *evas = evas_object_evas_get(list);
    int i, selected;
-   char buf[128];
 
    default_path = inst->ctxt->default_service ?
      inst->ctxt->default_service->path : NULL;
@@ -940,48 +986,12 @@ _connman_popup_update(E_Connman_Instance *inst)
    EINA_INLIST_FOREACH(inst->ctxt->services, service)
      {
 	Evas_Object *icon;
-	Edje_Message_Int msg;
 
 	if (service->path == default_path)
 	  selected = i;
 	i++;
 
-	snprintf(buf, sizeof(buf), "e/modules/connman/icon/%s", service->type);
-	icon = edje_object_add(evas);
-	e_theme_edje_object_set(icon, "base/theme/modules/connman", buf);
-
-	snprintf(buf, sizeof(buf), "e,state,%s", service->state);
-	edje_object_signal_emit(icon, buf, "e");
-
-	if (service->mode)
-	  {
-	     snprintf(buf, sizeof(buf), "e,mode,%s", service->mode);
-	     edje_object_signal_emit(icon, buf, "e");
-	  }
-
-	if (service->security)
-	  {
-	     snprintf(buf, sizeof(buf), "e,security,%s", service->security);
-	     edje_object_signal_emit(icon, buf, "e");
-	  }
-
-	if (service->favorite)
-	  edje_object_signal_emit(icon, "e,favorite,yes", "e");
-	else
-	  edje_object_signal_emit(icon, "e,favorite,no", "e");
-
-	if (service->auto_connect)
-	  edje_object_signal_emit(icon, "e,auto_connect,yes", "e");
-	else
-	  edje_object_signal_emit(icon, "e,auto_connect,no", "e");
-
-	if (service->pass_required)
-	  edje_object_signal_emit(icon, "e,pass_required,yes", "e");
-	else
-	  edje_object_signal_emit(icon, "e,pass_required,no", "e");
-
-	msg.val = service->strength;
-	edje_object_message_send(icon, EDJE_MESSAGE_INT, 1, &msg);
+	icon = _connman_service_new_list_item(evas, service);
 
 	e_widget_ilist_append
 	  (list, icon, service->name, _connman_popup_service_selected,
