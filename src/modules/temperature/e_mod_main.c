@@ -4,8 +4,6 @@
 #include "e.h"
 #include "e_mod_main.h"
 
-#include <Ecore_Txt.h>
-
 #ifdef __FreeBSD__
 #include <sys/types.h>
 #include <sys/sysctl.h>
@@ -221,13 +219,13 @@ _temperature_cb_exe_data(void *data, int type, void *event)
 	  snprintf(buf, sizeof(buf), "%i°F", temp);
 	else
 	  snprintf(buf, sizeof(buf), "%i°C", temp);  
-	utf8 = ecore_txt_convert("iso-8859-1", "utf-8", buf);
+	utf8 = eina_str_convert("iso-8859-1", "utf-8", buf);
 
         _temperature_face_level_set(inst,
 				    (double)(temp - inst->low) /
 				    (double)(inst->high - inst->low));
 	edje_object_part_text_set(inst->o_temp, "e.text.reading", utf8);
-	free(utf8);
+	if (utf8) free(utf8);
      }
    else
      {
