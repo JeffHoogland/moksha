@@ -634,12 +634,14 @@ src/modules/illume-home/Makefile
 src/modules/illume-home/module.desktop
 src/modules/illume-softkey/Makefile
 src/modules/illume-softkey/module.desktop
+src/modules/illume-softkey/images/Makefile
 src/modules/illume-keyboard/Makefile
 src/modules/illume-keyboard/module.desktop
 src/modules/illume-keyboard/keyboards/Makefile
 src/modules/illume-keyboard/dicts/Makefile
 src/modules/illume-indicator/Makefile
 src/modules/illume-indicator/module.desktop
+src/modules/illume-indicator/images/Makefile
 src/modules/illume-kbd-toggle/Makefile
 src/modules/illume-kbd-toggle/module.desktop
 src/modules/illume-mode-toggle/Makefile

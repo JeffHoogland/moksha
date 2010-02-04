@@ -1,3 +1,5 @@
+SUBDIRS = images
+
 MAINTAINERCLEANFILES = Makefile.in
 MODULE = illume-indicator
 
