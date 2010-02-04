@@ -1009,6 +1009,33 @@ group "E_Config" struct {
       value "any_mod" uchar: 0;
     }
   }
+  group "key_bindings" list {
+    group "E_Config_Binding_Key" struct {
+      value "context" int: 9;
+      value "modifiers" int: 0;
+      value "key" string: "XF86AudioLowerVolume";
+      value "action" string: "volume_decrease";
+      value "any_mod" uchar: 0;
+    }
+  }
+  group "key_bindings" list {
+    group "E_Config_Binding_Key" struct {
+      value "context" int: 9;
+      value "modifiers" int: 0;
+      value "key" string: "XF86AudioRaiseVolume";
+      value "action" string: "volume_increase";
+      value "any_mod" uchar: 0;
+    }
+  }
+  group "key_bindings" list {
+    group "E_Config_Binding_Key" struct {
+      value "context" int: 9;
+      value "modifiers" int: 0;
+      value "key" string: "XF86AudioMute";
+      value "action" string: "volume_mute";
+      value "any_mod" uchar: 0;
+    }
+  }
   group "edge_bindings" list {
     group "E_Config_Binding_Edge" struct {
       value "context" int: 3;
