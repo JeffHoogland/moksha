@@ -57,6 +57,12 @@ e_modapi_init(E_Module *m)
         mod->conf->efl_sync = 1;
         mod->conf->loose_sync = 0;
         mod->conf->grab = 0;
+        mod->conf->keep_unmapped = 1;
+        mod->conf->send_flush = 1;
+        mod->conf->send_dump = 0;
+        mod->conf->max_unmapped_pixels =  32 * 1024;
+        mod->conf->max_unmapped_time = 10 * 3600;
+        mod->conf->min_unmapped_time = 5 * 60;
      }
    
    _comp_mod = mod;
