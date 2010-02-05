@@ -391,10 +391,21 @@ define([CHECK_MODULE_TEMPERATURE],
                        [], [TEMPERATURE=false])
 ])
 
+have_exchange=no
+AC_ARG_ENABLE(exchange,
+	AC_HELP_STRING([--disable-exchange], [disable Exchange support @<:@default=detect@:>@]),
+	[want_exchange=$enableval],
+	[want_exchange=auto]
+)
+
 AM_CONDITIONAL(HAVE_EXCHANGE, false)
 define([CHECK_MODULE_CONF_THEME],
 [
-        AC_E_CHECK_PKG(EXCHANGE, [exchange], [], [:])
+        if test "x$want_exchange" != "xno" ; then
+                AC_E_CHECK_PKG(EXCHANGE, [exchange], [], [:])
+        else
+                AC_MSG_NOTICE([requested to not use exchange library])
+        fi
 ])
 
 AM_CONDITIONAL(HAVE_ALSA, false)
