@@ -75,6 +75,15 @@ _layout_border_activate(E_Border *bd)
 
    if ((!bd) || (bd->stolen)) return;
 
+   if (e_illume_border_is_conformant(bd))
+     {
+        // FIXME: hide bottom panel
+     }
+   else
+     {
+        // FIXME: show bottom panel
+     }
+   
    /* only set focus if border accepts it and it's not locked out */
    if (((!bd->client.icccm.accepts_focus) && (!bd->client.icccm.take_focus)) ||
        (bd->lock_focus_out))

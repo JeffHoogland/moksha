@@ -4,10 +4,10 @@
 /* define some values here for easily changing layers so we don't have to 
  * grep through code to change layers */
 #define IL_TOP_SHELF_LAYER 200
-#define IL_BOTTOM_PANEL_LAYER 100
+#define IL_BOTTOM_PANEL_LAYER 110
 #define IL_KEYBOARD_LAYER 150
 #define IL_DIALOG_LAYER 120
-#define IL_CONFORM_LAYER 140
+#define IL_CONFORM_LAYER 100
 #define IL_FULLSCREEN_LAYER 140
 #define IL_QUICKPANEL_LAYER 160
 #define IL_APP_LAYER 100
