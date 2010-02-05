@@ -20,6 +20,11 @@ struct _E_Config_Dialog_Data
    int min_unmapped_time;
    int send_flush;
    int send_dump;
+   
+   int effect_fade;
+   int effect_zoom;
+   int effect_wobble;
+   int effect_rotate;
 };
 
 /* Protos */
@@ -72,6 +77,17 @@ _create_data(E_Config_Dialog *cfd)
    cfdata->loose_sync = _comp_mod->conf->loose_sync;
    cfdata->grab = _comp_mod->conf->grab;
 
+   cfdata->keep_unmapped = _comp_mod->conf->keep_unmapped;
+   cfdata->max_unmapped_pixels = _comp_mod->conf->max_unmapped_pixels;
+   cfdata->max_unmapped_time = _comp_mod->conf->max_unmapped_time;
+   cfdata->min_unmapped_time = _comp_mod->conf->min_unmapped_time;
+   cfdata->send_flush = _comp_mod->conf->send_flush;
+   cfdata->send_dump = _comp_mod->conf->send_dump;
+   
+   cfdata->effect_fade = _comp_mod->conf->effect_fade;
+   cfdata->effect_zoom = _comp_mod->conf->effect_zoom;
+   cfdata->effect_wobble = _comp_mod->conf->effect_wobble;
+   cfdata->effect_rotate = _comp_mod->conf->effect_rotate;
    return cfdata;
 }
 
@@ -96,6 +112,18 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_list_object_append(ol, ob, 1, 1, 0.5);
    ob = e_widget_check_add(evas, _("Limit framerate"), &(cfdata->lock_fps));
    e_widget_list_object_append(ol, ob, 1, 1, 0.5);
+   of = e_widget_framelist_add(evas, _("Show/hide"), 0);
+   e_widget_framelist_content_align_set(of, 0.5, 0.0);
+   ob = e_widget_check_add(evas, _("Fade"), &(cfdata->effect_fade));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_check_add(evas, _("Zoom"), &(cfdata->effect_zoom));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_check_add(evas, _("Wobble"), &(cfdata->effect_wobble));
+   e_widget_framelist_object_append(of, ob);
+// implement much later   
+//   ob = e_widget_check_add(evas, _("Rotate"), &(cfdata->effect_rotate));
+//   e_widget_framelist_object_append(of, ob);
+   e_widget_list_object_append(ol, of, 1, 1, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Effects"), ol, 0, 0, 0, 0, 0.5, 0.0);
    
    ///////////////////////////////////////////
@@ -199,6 +227,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
+   // FIXME: save new config options as they are implemented.
    if ((_comp_mod->conf->use_shadow != cfdata->use_shadow) ||
        (cfdata->lock_fps != _comp_mod->conf->lock_fps) ||
        (cfdata->grab != _comp_mod->conf->grab))

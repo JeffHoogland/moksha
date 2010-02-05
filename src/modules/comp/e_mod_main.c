@@ -44,6 +44,10 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, max_unmapped_pixels, INT);
    E_CONFIG_VAL(D, T, max_unmapped_time, INT);
    E_CONFIG_VAL(D, T, min_unmapped_time, INT);
+   E_CONFIG_VAL(D, T, effect_fade, UCHAR);
+   E_CONFIG_VAL(D, T, effect_zoom, UCHAR);
+   E_CONFIG_VAL(D, T, effect_rotate, UCHAR);
+   E_CONFIG_VAL(D, T, effect_wobble, UCHAR);
    
    mod->conf = e_config_domain_load("module.comp", mod->conf_edd);
    if (!mod->conf)
@@ -63,6 +67,10 @@ e_modapi_init(E_Module *m)
         mod->conf->max_unmapped_pixels =  32 * 1024;
         mod->conf->max_unmapped_time = 10 * 3600;
         mod->conf->min_unmapped_time = 5 * 60;
+        mod->conf->effect_fade = 1;
+        mod->conf->effect_zoom = 0;
+        mod->conf->effect_wobble = 0;
+        mod->conf->effect_rotate = 0;
      }
    
    _comp_mod = mod;
