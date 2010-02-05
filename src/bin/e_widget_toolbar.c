@@ -29,6 +29,8 @@ static void _e_wid_disable_hook(Evas_Object *obj);
 static void _e_wid_signal_cb1(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_wid_cb_scrollframe_resize(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_wid_cb_key_down(void *data, Evas *evas, Evas_Object *obj, void *event_info);
+static void _e_wid_signal_prev(void *data, Evas_Object *obj, const char *emission, const char *source);
+static void _e_wid_signal_next(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _item_show(Item *it);
 static void _item_select(Item *it);
 static void _item_unselect(Item *it);
@@ -71,6 +73,13 @@ e_widget_toolbar_add(Evas *evas, int icon_w, int icon_h)
                                   _e_wid_focus_steal, obj);
    evas_object_event_callback_add(obj, EVAS_CALLBACK_KEY_DOWN,
                                   _e_wid_cb_key_down, obj);
+   
+   edje_object_signal_callback_add(e_scrollframe_edje_object_get(o),
+                                   "e,action,prev", "e",
+                                   _e_wid_signal_prev, obj);
+   edje_object_signal_callback_add(e_scrollframe_edje_object_get(o),
+                                   "e,action,next", "e",
+                                   _e_wid_signal_next, obj);
    evas_object_show(o);
    e_widget_sub_object_add(obj, o);
    e_widget_resize_object_set(obj, o);
@@ -324,6 +333,56 @@ _e_wid_signal_cb1(void *data, Evas_Object *obj, const char *emission, const char
           }
      }
    _item_select(it);
+}
+
+static void
+_e_wid_signal_prev(void *data, Evas_Object *obj, const char *emission, const char *source)
+{
+   E_Widget_Data *wd;
+   Eina_List *l, *l2;
+   Item *it = NULL, *it2 = NULL;
+
+   wd = e_widget_data_get(data);
+   if ((!wd->o_base) || (!wd->o_box)) return;
+   EINA_LIST_FOREACH(wd->items, l, it)
+     {
+        if (it->selected)
+          {
+             l2 = eina_list_prev(l);
+             if (l2) it2 = eina_list_data_get(l2);
+             break;
+          }
+     }
+   if ((it) && (it2) && (it != it2))
+     {
+	_item_unselect(it);
+	_item_select(it2);
+     }
+}
+
+static void
+_e_wid_signal_next(void *data, Evas_Object *obj, const char *emission, const char *source)
+{
+   E_Widget_Data *wd;
+   Eina_List *l, *l2;
+   Item *it = NULL, *it2 = NULL;
+
+   wd = e_widget_data_get(data);
+   if ((!wd->o_base) || (!wd->o_box)) return;
+   EINA_LIST_FOREACH(wd->items, l, it)
+     {
+        if (it->selected)
+          {
+             l2 = eina_list_next(l);
+             if (l2) it2 = eina_list_data_get(l2);
+             break;
+          }
+     }
+   if ((it) && (it2) && (it != it2))
+     {
+	_item_unselect(it);
+	_item_select(it2);
+     }
 }
 
 static void
