@@ -15,6 +15,12 @@ struct _Config
    unsigned char    loose_sync;
    unsigned char    efl_sync;
    unsigned char    grab;
+   unsigned char    keep_unmapped;
+   unsigned char    send_flush;
+   unsigned char    send_dump;
+   int              max_unmapped_pixels;
+   int              max_unmapped_time;
+   int              min_unmapped_time;
 };
 
 struct _Mod

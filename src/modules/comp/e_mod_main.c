@@ -38,6 +38,12 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, efl_sync, UCHAR);
    E_CONFIG_VAL(D, T, loose_sync, UCHAR);
    E_CONFIG_VAL(D, T, grab, UCHAR);
+   E_CONFIG_VAL(D, T, keep_unmapped, UCHAR);
+   E_CONFIG_VAL(D, T, send_flush, UCHAR);
+   E_CONFIG_VAL(D, T, send_dump, UCHAR);
+   E_CONFIG_VAL(D, T, max_unmapped_pixels, INT);
+   E_CONFIG_VAL(D, T, max_unmapped_time, INT);
+   E_CONFIG_VAL(D, T, min_unmapped_time, INT);
    
    mod->conf = e_config_domain_load("module.comp", mod->conf_edd);
    if (!mod->conf)

@@ -13,6 +13,13 @@ struct _E_Config_Dialog_Data
    int efl_sync;
    int loose_sync;
    int grab;
+   
+   int keep_unmapped;
+   int max_unmapped_pixels;
+   int max_unmapped_time;
+   int min_unmapped_time;
+   int send_flush;
+   int send_dump;
 };
 
 /* Protos */
@@ -64,6 +71,7 @@ _create_data(E_Config_Dialog *cfd)
    cfdata->efl_sync = _comp_mod->conf->efl_sync;
    cfdata->loose_sync = _comp_mod->conf->loose_sync;
    cfdata->grab = _comp_mod->conf->grab;
+
    return cfdata;
 }
 
@@ -77,54 +85,115 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
-   Evas_Object *o, *ob, *of, *ot;
+   Evas_Object *ob, *ol, *ol2, *of, *otb;
    E_Radio_Group *rg;
-   int engine;
-   
-   o = e_widget_list_add(evas, 0, 0);
-   ot = e_widget_table_add(evas, 0);
-   
-   of = e_widget_framelist_add(evas, _("General"), 0);
-   e_widget_framelist_content_align_set(of, 0.5, 0.0);
-   ob = e_widget_check_add(evas, _("Shadow"), &(cfdata->use_shadow));
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_check_add(evas, _("Limit FPS"), &(cfdata->lock_fps));
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_check_add(evas, _("Sync EFL windows"), &(cfdata->efl_sync));
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_check_add(evas, _("Loose Sync"), &(cfdata->loose_sync));
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_check_add(evas, _("Grab during composite"), &(cfdata->grab));
-   e_widget_framelist_object_append(of, ob);
-   e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
-   
-   of = e_widget_framelist_add(evas, _("Engine"), 0);
-   e_widget_framelist_content_align_set(of, 0.5, 0.0);
-   
-   rg = e_widget_radio_group_new(&(cfdata->engine));
-   
-   engine = E_EVAS_ENGINE_SOFTWARE_X11;
-   ob = e_widget_radio_add(evas, _("Software"), engine, rg);
-   e_widget_framelist_object_append(of, ob);
 
+   otb = e_widget_toolbook_add(evas, 48 * e_scale, 48 * e_scale);
+   
+   ///////////////////////////////////////////
+   ol = e_widget_list_add(evas, 0, 0);
+   ob = e_widget_check_add(evas, _("Shadows"), &(cfdata->use_shadow));
+   e_widget_list_object_append(ol, ob, 1, 1, 0.5);
+   ob = e_widget_check_add(evas, _("Limit framerate"), &(cfdata->lock_fps));
+   e_widget_list_object_append(ol, ob, 1, 1, 0.5);
+   e_widget_toolbook_page_append(otb, NULL, _("Effects"), ol, 0, 0, 0, 0, 0.5, 0.0);
+   
+   ///////////////////////////////////////////
+   ol = e_widget_list_add(evas, 0, 0);
+   ob = e_widget_check_add(evas, _("Sync windows"), &(cfdata->efl_sync));
+   e_widget_list_object_append(ol, ob, 1, 1, 0.5);
+   ob = e_widget_check_add(evas, _("Loose sync"), &(cfdata->loose_sync));
+   e_widget_list_object_append(ol, ob, 1, 1, 0.5);
+   ob = e_widget_check_add(evas, _("Grab X11 during draw"), &(cfdata->grab));
+   e_widget_list_object_append(ol, ob, 1, 1, 0.5);
+   e_widget_toolbook_page_append(otb, NULL, _("Sync"), ol, 0, 0, 0, 0, 0.5, 0.0);
+   
+   ///////////////////////////////////////////
+   ol = e_widget_list_add(evas, 0, 0);
+   rg = e_widget_radio_group_new(&(cfdata->engine));
+   ob = e_widget_radio_add(evas, _("Software"), E_EVAS_ENGINE_SOFTWARE_X11, rg);
+   e_widget_list_object_append(ol, ob, 1, 1, 0.5);
    if (ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_OPENGL_X11))
      {
-        engine = E_EVAS_ENGINE_GL_X11;
-        ob = e_widget_radio_add(evas, _("OpenGL"), engine, rg);
-        e_widget_framelist_object_append(of, ob);
+        ob = e_widget_radio_add(evas, _("OpenGL"), E_EVAS_ENGINE_GL_X11, rg);
+        e_widget_list_object_append(ol, ob, 1, 1, 0.5);
      }
-   
-   e_widget_table_object_append(ot, of, 0, 1, 1, 1, 1, 1, 1, 1);
-   
-   of = e_widget_framelist_add(evas, _("OpenGL Options"), 0);
+   of = e_widget_framelist_add(evas, _("OpenGL options"), 0);
    e_widget_framelist_content_align_set(of, 0.5, 0.0);
-   ob = e_widget_check_add(evas, _("Texture from Pixmap"), &(cfdata->texture_from_pixmap));
+   ob = e_widget_check_add(evas, _("Texture from pixmap"), &(cfdata->texture_from_pixmap));
    e_widget_framelist_object_append(of, ob);
-   e_widget_table_object_append(ot, of, 0, 2, 1, 1, 1, 1, 1, 1);
+   e_widget_list_object_append(ol, of, 1, 1, 0.5);
+   e_widget_toolbook_page_append(otb, NULL, _("Engine"), ol, 0, 0, 0, 0, 0.5, 0.0);
    
-   e_widget_list_object_append(o, ot, 1, 1, 0.5);   
-
-   return o;
+   ///////////////////////////////////////////
+   ol = e_widget_list_add(evas, 0, 0);
+   ob = e_widget_check_add(evas, _("Send flush"), &(cfdata->send_flush));
+   e_widget_list_object_append(ol, ob, 1, 1, 0.5);
+   ob = e_widget_check_add(evas, _("Send dump"), &(cfdata->send_dump));
+   e_widget_list_object_append(ol, ob, 1, 1, 0.5);
+   ob = e_widget_check_add(evas, _("Keep hidden windows"), &(cfdata->keep_unmapped));
+   e_widget_list_object_append(ol, ob, 1, 1, 0.5);
+   of = e_widget_framelist_add(evas, _("Maximum hidden pixels"), 0);
+   e_widget_framelist_content_align_set(of, 0.5, 0.0);
+   rg = e_widget_radio_group_new(&(cfdata->max_unmapped_pixels));
+   ob = e_widget_radio_add(evas, _("1M"), 1 * 1024, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, _("2M"), 2 * 1024, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, _("8M"), 8 * 1024, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, _("32M"), 32 * 1024, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, _("256M"), 256 * 1024, rg);
+   e_widget_framelist_object_append(of, ob);
+   e_widget_list_object_append(ol, of, 1, 1, 0.5);
+   e_widget_toolbook_page_append(otb, NULL, _("Memory"), ol, 0, 0, 0, 0, 0.5, 0.0);
+   
+   ///////////////////////////////////////////
+   ol = e_widget_list_add(evas, 0, 0);
+   ol2 = e_widget_list_add(evas, 1, 1);
+   of = e_widget_framelist_add(evas, _("Min hidden"), 0);
+   e_widget_framelist_content_align_set(of, 0.5, 0.0);
+   rg = e_widget_radio_group_new(&(cfdata->min_unmapped_time));
+   ob = e_widget_radio_add(evas, _("30 Seconds"), 30, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, _("1 Minute"), 60, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, _("5 Minutes"), 5 * 60, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, _("30 Minutes"), 30 * 60, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, _("2 Hours"), 2 * 3600, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, _("10 Hours"), 10 * 3600, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, _("Forever"), 0, rg);
+   e_widget_framelist_object_append(of, ob);
+   e_widget_list_object_append(ol2, of, 1, 1, 0.5);
+   of = e_widget_framelist_add(evas, _("Max hidden"), 0);
+   e_widget_framelist_content_align_set(of, 0.5, 0.0);
+   rg = e_widget_radio_group_new(&(cfdata->max_unmapped_time));
+   ob = e_widget_radio_add(evas, _("30 Seconds"), 30, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, _("1 Minute"), 60, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, _("5 Minutes"), 5 * 60, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, _("30 Minutes"), 30 * 60, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, _("2 Hours"), 2 * 3600, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, _("10 Hours"), 10 * 3600, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, _("Forever"), 0, rg);
+   e_widget_framelist_object_append(of, ob);
+   e_widget_list_object_append(ol2, of, 1, 1, 0.5);
+   e_widget_list_object_append(ol, ol2, 1, 1, 0.5);
+   e_widget_toolbook_page_append(otb, NULL, _("Timeouts"), ol, 0, 0, 0, 0, 0.5, 0.0);
+   
+   e_widget_toolbook_page_show(otb, 0);
+   
+   return otb;
 }
 
 static int

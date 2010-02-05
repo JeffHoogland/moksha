@@ -55,8 +55,8 @@ struct _E_Comp_Win
    int             border; // border width
    Ecore_X_Pixmap  pixmap; // the compositing pixmap
    Ecore_X_Damage  damage; // damage region
-   Ecore_X_Visual  vis;
-   int             depth;
+   Ecore_X_Visual  vis; // window visual
+   int             depth; // window depth
    Evas_Object    *obj; // composite object
    Evas_Object    *shobj; // shadow object
    Ecore_X_Image  *xim; // x image - software fallback
@@ -64,6 +64,13 @@ struct _E_Comp_Win
    E_Object_Delfn *dfn; // delete function handle for objects being tracked
    Ecore_X_Sync_Counter counter; // sync counter for syncronised drawing
    Ecore_Timer    *update_timeout; // max time between damage and "done" event
+
+   Ecore_X_Pixmap  cache_pixmap; // the cached pixmap (1/nth the dimensions)
+   int             cache_w, cache_h; // cached pixmap size
+   int             update_count; // how many updates have happend to this win
+   double          last_visible_time; // last time window was visible
+   double          last_draw_time; // last time window was damaged
+   
    Eina_Bool       visible : 1; // is visible
    Eina_Bool       input_only : 1; // is input_only
    Eina_Bool       argb : 1; // is argb
