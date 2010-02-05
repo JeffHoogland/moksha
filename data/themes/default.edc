@@ -5556,14 +5556,12 @@ collections { /* begin the collection of edje groups that are in this file */
          program { name: "sb_left";
             signal: "mouse,down,1";
             source: "left_arrow";
-            action:  DRAG_VAL_STEP -1.0 0.0;
-            target: "e.dragable.hbar";
+	    action:  SIGNAL_EMIT "e,action,prev" "e";
          }
          program { name: "sb_right";
             signal: "mouse,down,1";
             source: "right_arrow";
-            action:  DRAG_VAL_STEP 1.0 0.0;
-            target: "e.dragable.hbar";
+	    action:  SIGNAL_EMIT "e,action,next" "e";
          }
       }
    }
