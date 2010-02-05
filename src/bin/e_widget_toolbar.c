@@ -7,7 +7,7 @@ typedef struct _E_Widget_Data E_Widget_Data;
 typedef struct _Item Item;
 struct _E_Widget_Data
 {
-   Evas_Object *o_base, *o_box, *o_scrollframe0;
+   Evas_Object *o_base, *o_box;
    int icon_w, icon_h;
    Eina_List *items;
    Eina_Bool scrollable : 1;
@@ -128,7 +128,6 @@ e_widget_toolbar_item_append(Evas_Object *obj, Evas_Object *icon, const char *la
    edje_object_size_min_calc(o, &mw, &mh);
    e_widget_sub_object_add(obj, o);
    e_box_pack_end(wd->o_box, o);
-   evas_object_show(o);
    e_box_pack_options_set(o,
 			  1, 1, /* fill */
 			  0, 0, /* expand */
@@ -136,6 +135,7 @@ e_widget_toolbar_item_append(Evas_Object *obj, Evas_Object *icon, const char *la
 			  mw, mh, /* min */
 			  9999, 9999 /* max */
 			  );
+   evas_object_show(o);
    e_box_size_min_get(wd->o_box, &mw, &mh);
    evas_object_resize(wd->o_box, mw, mh);
    evas_object_resize(wd->o_base, 500, 500);
@@ -144,6 +144,7 @@ e_widget_toolbar_item_append(Evas_Object *obj, Evas_Object *icon, const char *la
      e_widget_size_min_set(obj, 500 - vw, mh + (500 - vh));
    else
      e_widget_size_min_set(obj, mw + (500 - vw), mh + (500 - vh));
+   evas_object_resize(wd->o_box, mw, mh);
 }
 
 EAPI void
@@ -226,6 +227,7 @@ e_widget_toolbar_scrollable_set(Evas_Object *obj, Eina_Bool scrollable)
      e_widget_size_min_set(obj, 500 - vw, mh + (500 - vh));
    else
      e_widget_size_min_set(obj, mw + (500 - vw), mh + (500 - vh));
+   evas_object_resize(wd->o_box, mw, mh);
 }
 
 EAPI void
