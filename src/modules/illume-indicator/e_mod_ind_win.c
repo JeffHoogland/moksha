@@ -85,7 +85,8 @@ e_mod_ind_win_new(E_Zone *zone)
    /* create our gadget container */
    iwin->gadcon = e_gadcon_swallowed_new("illume-indicator", zone->id, 
                                          iwin->o_base, "e.swallow.content");
-
+   iwin->gadcon->instant_edit = 1;
+   
    edje_extern_object_min_size_set(iwin->gadcon->o_container, zone->w, 32);
    edje_object_part_swallow(iwin->o_base, "e.swallow.container", 
                             iwin->gadcon->o_container);
