@@ -79,12 +79,12 @@ _layout_border_activate(E_Border *bd)
 
    if (e_illume_border_is_conformant(bd))
      {
-        b = e_illume_border_top_shelf_get(bd->zone);
+        b = e_illume_border_bottom_panel_get(bd->zone);
         if (b) e_border_hide(b, 2);
      }
    else
      {
-        b = e_illume_border_top_shelf_get(bd->zone);
+        b = e_illume_border_bottom_panel_get(bd->zone);
         if (b) e_border_show(b);
      }
    
