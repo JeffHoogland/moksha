@@ -1,4 +1,4 @@
-MAINTAINERCLEANFILES = Makefile.in E_Illume.pc module.desktop
+MAINTAINERCLEANFILES = Makefile.in module.desktop
 MODULE = illume2
 SUBDIRS = keyboards policies
 
