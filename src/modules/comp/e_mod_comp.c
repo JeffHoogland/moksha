@@ -299,7 +299,7 @@ _e_mod_comp_win_shape_rectangles_apply(E_Comp_Win *cw)
              spix = calloc(w * h, sizeof(unsigned char));
              if (spix)
                {
-                  DBG("SHAPE [0x%x] rects %i\n", num);
+                  DBG("SHAPE [0x%x] rects %i\n", cw->win, num);
                   for (i = 0; i < num; i++)
                     {
                        int rx, ry, rw, rh;
@@ -372,7 +372,7 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
                   evas_object_image_native_surface_set(cw->obj, NULL);
                   cw->native = 0;
                }
-             ecore_x_pixmap_free(cw->pixmap);
+             if (cw->pixmap) ecore_x_pixmap_free(cw->pixmap);
              cw->pixmap = 0;
              cw->pw = 0;
              cw->ph = 0;
@@ -418,6 +418,8 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
              ns.data.x11.visual = cw->vis;
              ns.data.x11.pixmap = cw->pixmap;
              evas_object_image_native_surface_set(cw->obj, &ns);
+             DBG("NATIVE [0x%x] %x %ix%i\n", cw->win, cw->pixmap, cw->pw, cw->ph);
+             cw->native = 1;
           }
         r = e_mod_comp_update_rects_get(cw->up);
         if (r) 
@@ -427,7 +429,6 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
                {
                   int x, y, w, h;
                        
-                  cw->native = 1;
                   x = r[i].x; y = r[i].y;
                   w = r[i].w; h = r[i].h;
                   DBG("UPDATE [0x%x] %i %i %ix%i\n", cw->win, x, y, w, h);
@@ -1006,11 +1007,6 @@ _e_mod_comp_win_hide(E_Comp_Win *cw)
         evas_object_image_native_surface_set(cw->obj, NULL);
         cw->native = 0;
      }
-   if (cw->pixmap)
-     {
-        ecore_x_pixmap_free(cw->pixmap);
-        cw->pixmap = 0;
-     }
    evas_object_hide(cw->obj);
    if (cw->shobj)
      {
@@ -1021,6 +1017,7 @@ _e_mod_comp_win_hide(E_Comp_Win *cw)
      {
         ecore_x_pixmap_free(cw->pixmap);
         cw->pixmap = 0;
+        cw->native = 0;
         cw->pw = 0;
         cw->ph = 0;
      }
@@ -1099,8 +1096,10 @@ _e_mod_comp_win_configure(E_Comp_Win *cw, int x, int y, int w, int h, int border
         DBG("  [0x%x] rsz %4ix%4i\n", cw->win, w, h);
         if (cw->pixmap)
           {
+             DBG("  [0x%x] free pm %x\n", cw->win, cw->pixmap);
              ecore_x_pixmap_free(cw->pixmap);
              cw->pixmap = 0;
+             cw->native = 0;
              cw->pw = 0;
              cw->ph = 0;
           }
