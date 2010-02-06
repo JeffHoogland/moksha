@@ -332,7 +332,7 @@ _zone_layout_single(E_Border *bd)
    ny = ky + ss;
    if (e_illume_border_is_conformant(bd)) 
      {
-        nh = kh;
+        nh = bd->zone->h;
         ny = ky;
      }
    if ((bd->w != kw) || (bd->h != nh))
@@ -393,7 +393,7 @@ _zone_layout_dual_top(E_Border *bd)
              if (conform) 
                {
                   by = ky;
-                  bh += ss;
+                  bh = bd->zone->h / 2;
                }
              else if (e_illume_border_is_home(bd))
                by = (b->y + b->h);
@@ -401,12 +401,12 @@ _zone_layout_dual_top(E_Border *bd)
         else if (e_illume_border_is_conformant(b)) 
           {
              by = (b->y + b->h);
-             if (conform) bh += ps;
+             if (conform) bh = bd->zone->h / 2;
           }
         else 
           {
              by = (b->y + b->h);
-             if (conform) bh += ps;
+             if (conform) bh = bd->zone->h / 2;
           }
      }
    else if (b) 
@@ -572,7 +572,7 @@ _zone_layout_dual_left(E_Border *bd)
              if (conform) 
                {
                   by = ky;
-                  bh += ps + ss;
+                  bh = bd->zone->h;
                }
              else if (e_illume_border_is_home(bd))
                bx = (b->x + b->w);
@@ -583,7 +583,7 @@ _zone_layout_dual_left(E_Border *bd)
              if (conform) 
                {
                   by = ky;
-                  bh += ps + ss;
+                  bh = bd->zone->h;
                }
           }
         else 
@@ -592,7 +592,7 @@ _zone_layout_dual_left(E_Border *bd)
              if (conform) 
                {
                   by = ky;
-                  bh += ps + ss;
+                  bh = bd->zone->h;
                }
           }
      }
@@ -601,7 +601,7 @@ _zone_layout_dual_left(E_Border *bd)
         if (bd->client.vkbd.state > ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF) 
           {
              by = (ky + ss);
-             bh = ((kh - ss - ps) / 2);
+             bh = (kh - ss - ps);
           }
      }
 
