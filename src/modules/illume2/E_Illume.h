@@ -47,6 +47,7 @@ struct _E_Illume_Layout_Policy
         void (*border_focus_in) (E_Border *bd);
         void (*border_focus_out) (E_Border *bd);
         void (*border_activate) (E_Border *bd);
+        void (*border_property_change) (E_Border *bd, Ecore_X_Event_Window_Property *event);
         void (*zone_layout) (E_Zone *zone);
         void (*zone_move_resize) (E_Zone *zone);
         void (*drag_start) (E_Border *bd);

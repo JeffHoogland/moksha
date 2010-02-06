@@ -17,6 +17,7 @@ static int _e_mod_layout_cb_border_add(void *data, int type, void *event);
 static int _e_mod_layout_cb_border_del(void *data, int type, void *event);
 static int _e_mod_layout_cb_border_focus_in(void *data, int type, void *event);
 static int _e_mod_layout_cb_border_focus_out(void *data, int type, void *event);
+static int _e_mod_layout_cb_border_property_change(void *data, int type, void *event);
 static int _e_mod_layout_cb_zone_move_resize(void *data, int type, void *event);
 static int _e_mod_layout_cb_client_message(void *data, int type, void *event);
 
@@ -302,6 +303,11 @@ _e_mod_layout_handlers_add(void)
                       ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE, 
                                               _e_mod_layout_cb_client_message, 
                                               NULL));
+   handlers = 
+     eina_list_append(handlers, 
+                      ecore_event_handler_add(ECORE_X_EVENT_WINDOW_PROPERTY, 
+                                              _e_mod_layout_cb_border_property_change, 
+                                              NULL));
 }
 
 static void 
@@ -423,6 +429,19 @@ _e_mod_layout_cb_border_focus_out(void *data, int type, void *event)
    if (ev->border->stolen) return 1;
    if ((policy) && (policy->funcs.border_focus_out)) 
      policy->funcs.border_focus_out(ev->border);
+   return 1;
+}
+
+static int 
+_e_mod_layout_cb_border_property_change(void *data, int type, void *event) 
+{
+   Ecore_X_Event_Window_Property *ev;
+   E_Border *bd;
+
+   ev = event;
+   if (!(bd = e_border_find_by_client_window(ev->win))) return 1;
+   if ((policy) && (policy->funcs.border_property_change)) 
+     policy->funcs.border_property_change(bd, ev);
    return 1;
 }
 

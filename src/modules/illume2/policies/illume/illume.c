@@ -15,6 +15,7 @@ e_layapi_init(E_Illume_Layout_Policy *p)
    p->funcs.border_focus_in = _layout_border_focus_in;
    p->funcs.border_focus_out = _layout_border_focus_out;
    p->funcs.border_activate = _layout_border_activate;
+   p->funcs.border_property_change = _layout_border_property_change;
    p->funcs.zone_layout = _layout_zone_layout;
    p->funcs.zone_move_resize = _layout_zone_move_resize;
    p->funcs.drag_start = _layout_drag_start;
@@ -30,6 +31,7 @@ e_layapi_shutdown(E_Illume_Layout_Policy *p)
    p->funcs.border_focus_in = NULL;
    p->funcs.border_focus_out = NULL;
    p->funcs.border_activate = NULL;
+   p->funcs.border_property_change = NULL;
    p->funcs.zone_layout = NULL;
    p->funcs.zone_move_resize = NULL;
    p->funcs.drag_start = NULL;

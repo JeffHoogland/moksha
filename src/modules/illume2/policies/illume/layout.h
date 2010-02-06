@@ -17,6 +17,7 @@ void _layout_border_del(E_Border *bd);
 void _layout_border_focus_in(E_Border *bd);
 void _layout_border_focus_out(E_Border *bd);
 void _layout_border_activate(E_Border *bd);
+void _layout_border_property_change(E_Border *bd, Ecore_X_Event_Window_Property *event);
 void _layout_zone_layout(E_Zone *zone);
 void _layout_zone_move_resize(E_Zone *zone);
 void _layout_drag_start(E_Border *bd);

@@ -116,6 +116,26 @@ _layout_border_activate(E_Border *bd)
 }
 
 void 
+_layout_border_property_change(E_Border *bd, Ecore_X_Event_Window_Property *event) 
+{
+   E_Border *ind;
+
+   if (event->atom != ECORE_X_ATOM_NET_WM_STATE) return;
+   if ((!bd->client.icccm.name) || (!bd->client.icccm.class) || 
+       (bd->stolen)) 
+     return;
+   if (!(ind = e_illume_border_top_shelf_get(bd->zone))) return;
+   if ((bd->fullscreen) || (bd->need_fullscreen)) 
+     {
+        if (ind) e_border_hide(ind, 2);
+     }
+   else 
+     {
+        if (ind) e_border_show(ind);
+     }
+}
+
+void 
 _layout_zone_layout(E_Zone *zone) 
 {
    E_Illume_Config_Zone *cfg_zone;
