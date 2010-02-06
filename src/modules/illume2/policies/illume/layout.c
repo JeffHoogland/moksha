@@ -246,6 +246,7 @@ _layout_zone_layout(E_Zone *zone)
           }
         else 
           {
+             if (bd->stolen) continue;
              if (cfg_zone->mode.dual) _zone_layout_dual(bd);
              else _zone_layout_single(bd);
              if (e_illume_border_is_conformant(bd)) 

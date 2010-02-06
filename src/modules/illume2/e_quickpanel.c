@@ -148,12 +148,7 @@ e_quickpanel_position_update(E_Quickpanel *qp)
    if (qp->borders) 
      {
         EINA_LIST_FOREACH(qp->borders, l, bd) 
-          {
-             bd->x = qp->zone->x;
-             bd->y = ty;
-             bd->changes.pos = 1;
-             bd->changed = 1;
-          }
+          e_border_move(bd, qp->zone->x, ty);
      }
 }
 
@@ -397,10 +392,8 @@ _e_quickpanel_cb_client_message(void *data, int type, void *event)
         if (!(zone = e_util_zone_window_find(z))) return 1;
         _e_quickpanel_border_hide(bd);
         e_illume_border_top_shelf_pos_get(zone, NULL, &ty);
-        if ((bd->x != zone->x) || (bd->y != ty)) 
-          e_border_move(bd, zone->x, ty);
-        if (bd->zone != zone) 
-          e_border_zone_set(bd, zone);
+        e_border_move(bd, zone->x, ty);
+        e_border_zone_set(bd, zone);
      }
    return 1;
 }
