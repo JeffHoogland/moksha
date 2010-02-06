@@ -77,6 +77,7 @@ static int  _e_main_path_shutdown(void);
 static void _e_main_cb_x_fatal(void *data);
 static int  _e_main_cb_signal_exit(void *data, int ev_type, void *ev);
 static int  _e_main_cb_signal_hup(void *data, int ev_type, void *ev);
+static int  _e_main_cb_signal_user(void *data, int ev_type, void *ev);
 static int  _e_main_cb_x_flusher(void *data);
 static int  _e_main_cb_idler_before(void *data);
 static int  _e_main_cb_idler_after(void *data);
@@ -426,6 +427,12 @@ main(int argc, char **argv)
    if (!ecore_event_handler_add(ECORE_EVENT_SIGNAL_HUP, _e_main_cb_signal_hup, NULL))
      {
 	e_error_message_show(_("Enlightenment cannot set up a HUP signal handler.\n"
+			       "Perhaps you are out of memory?"));
+	_e_main_shutdown(-1);
+     }
+   if (!ecore_event_handler_add(ECORE_EVENT_SIGNAL_USER, _e_main_cb_signal_user, NULL))
+     {
+	e_error_message_show(_("Enlightenment cannot set up a USER signal handler.\n"
 			       "Perhaps you are out of memory?"));
 	_e_main_shutdown(-1);
      }
@@ -1491,6 +1498,23 @@ static int
 _e_main_cb_signal_hup(void *data __UNUSED__, int ev_type __UNUSED__, void *ev __UNUSED__)
 {
    e_sys_action_do(E_SYS_RESTART, NULL);
+   return 1;
+}
+
+static int
+_e_main_cb_signal_user(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
+{
+   Ecore_Event_Signal_User *e = ev;
+   
+   if (e->number == 1)
+     {
+        E_Action *a = e_action_find("configuration");
+        if ((a) && (a->func.go)) a->func.go(NULL, NULL);
+     }
+   else if (e->number == 2)
+     {
+        // FIXME: another core util for doing things with e
+     }
    return 1;
 }
 
