@@ -346,7 +346,7 @@ _networks_fill_details(E_Config_Dialog_Data *cfdata, Evas_Object *list, int sel)
    evas_object_show(ui->table_general);
 }
 
-inline void
+static inline void
 _networks_disable_buttons(E_Config_Dialog_Data *cfdata, Evas_Object *list, int sel)
 {
    Evas_Object *o_up = cfdata->networks.o_up;
