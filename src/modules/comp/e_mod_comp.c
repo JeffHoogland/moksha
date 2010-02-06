@@ -64,6 +64,8 @@ struct _E_Comp_Win
    E_Object_Delfn *dfn; // delete function handle for objects being tracked
    Ecore_X_Sync_Counter counter; // sync counter for syncronised drawing
    Ecore_Timer    *update_timeout; // max time between damage and "done" event
+   
+   Eina_List      *effects;
 
    Ecore_X_Pixmap  cache_pixmap; // the cached pixmap (1/nth the dimensions)
    int             cache_w, cache_h; // cached pixmap size
@@ -73,13 +75,17 @@ struct _E_Comp_Win
    
    Eina_Bool       visible : 1; // is visible
    Eina_Bool       input_only : 1; // is input_only
+   Eina_Bool       override : 1; // is override-redirect
    Eina_Bool       argb : 1; // is argb
    Eina_Bool       shaped : 1; // is shaped
    Eina_Bool       update : 1; // has updates to fetch
    Eina_Bool       redirected : 1; // has updates to fetch
    Eina_Bool       shape_changed : 1; // shape changed
    Eina_Bool       native : 1; // native
-   Eina_Bool       drawme : 1; // native
+   Eina_Bool       drawme : 1; // drawme flag fo syncing rendering
+   Eina_Bool       invalid : 1; // invalid depth used - just use as marker
+   Eina_Bool       defer_hide : 1; // flag to get hide to work on deferred hide
+   Eina_Bool       delete_me : 1;
 };
 
 static Eina_List *handlers = NULL;
@@ -87,6 +93,165 @@ static Eina_List *compositors = NULL;
 static Eina_Hash *windows = NULL;
 static Eina_Hash *borders = NULL;
 static Eina_Hash *damages = NULL;
+
+//////////////////////////////////////////////////////////////////////////
+// not working yet.
+typedef struct _Effect Effect;
+
+struct _Effect
+{
+   E_Comp_Win *cw;
+   Ecore_Animator *animator;
+   double start, len;
+   double src, dst;
+   int type;
+};
+
+#define EFFECT_SHOW 1
+#define EFFECT_HIDE 2
+#define EFFECT_MOVE 3
+
+static Effect *
+_e_mod_comp_effect_add(E_Comp_Win *cw, int (*func) (void *data), double len, int type)
+{
+   Effect *ef;
+   
+   ef = calloc(1, sizeof(Effect));
+   ef->animator = ecore_animator_add(func, ef);
+   ef->start = ecore_loop_time_get();
+   ef->len = len;
+   ef->cw = cw;
+   ef->type = type;
+   cw->effects = eina_list_append(cw->effects, ef);
+   return ef;
+}
+
+static void
+_e_mod_comp_effect_del(Effect *ef)
+{
+   ef->cw->effects = eina_list_remove(ef->cw->effects, ef);
+   ecore_animator_del(ef->animator);
+   free(ef);
+}
+
+static Effect *
+_e_mod_comp_win_effect_find(E_Comp_Win *cw, int type)
+{
+   Eina_List *l;
+   Effect *ef;
+   
+   // fixme: use hash if compositors list > 4
+   EINA_LIST_FOREACH(cw->effects, l, ef)
+     {
+        if (ef->type == type) return ef;
+     }
+   return NULL;
+}
+
+static void _e_mod_comp_win_hide(E_Comp_Win *cw); // quick and dirty
+static void _e_mod_comp_win_del(E_Comp_Win *cw); // quick and dirty
+static void _e_mod_comp_win_render_queue(E_Comp_Win *cw); // quick and dirty
+
+static int
+_e_mod_comp_ef_cb_fade_to(void *data)
+{
+   Effect *ef = data;
+   double t = (ecore_loop_time_get() - ef->start) / ef->len;
+   E_Comp_Win *cw = ef->cw;
+   double v;
+   int col;
+   if (t > 1.0) t = 1.0;
+   
+   v = ef->src + ((ef->dst - ef->src) * t);
+   col = 255.0 * v;
+   evas_object_color_set(cw->obj, col, col, col, col);
+   if (ef->cw->shobj)
+     evas_object_color_set(cw->shobj, col, col, col, col);
+   if (t >= 1.0)
+     {
+        evas_object_color_set(cw->obj, 255, 255, 255, 255);
+        _e_mod_comp_effect_del(ef);
+        _e_mod_comp_win_render_queue(cw);
+        if (!cw->effects)
+          {
+             if (cw->defer_hide)
+               {
+                  cw->defer_hide = 0;
+                  _e_mod_comp_win_hide(cw);
+               }
+             if (cw->delete_me)
+               _e_mod_comp_win_del(cw);
+          }
+        return 0;
+     }
+   return 1;
+}
+
+static void
+_e_mod_comp_win_show_effects_add(E_Comp_Win *cw)
+{
+   Effect *ef;
+   
+   do
+     {
+        ef = _e_mod_comp_win_effect_find(cw, EFFECT_SHOW);
+        if (ef) _e_mod_comp_effect_del(ef);
+     }
+   while (ef);
+   
+   do
+     {
+        ef = _e_mod_comp_win_effect_find(cw, EFFECT_HIDE);
+        if (ef) _e_mod_comp_effect_del(ef);
+     }
+   while (ef);
+   
+   if (_comp_mod->conf->effect_fade)
+     {
+        ef = _e_mod_comp_effect_add(cw, _e_mod_comp_ef_cb_fade_to, 0.2, EFFECT_SHOW);
+        ef->src = 0.0;
+        ef->dst = 1.0;
+        cw->defer_hide = 0;
+        _e_mod_comp_ef_cb_fade_to(ef);
+     }
+}
+
+static void
+_e_mod_comp_win_hide_effects_add(E_Comp_Win *cw)
+{
+   Effect *ef;
+   
+   do
+     {
+        ef = _e_mod_comp_win_effect_find(cw, EFFECT_SHOW);
+        if (ef) _e_mod_comp_effect_del(ef);
+     }
+   while (ef);
+   
+   do
+     {
+        ef = _e_mod_comp_win_effect_find(cw, EFFECT_HIDE);
+        if (ef) _e_mod_comp_effect_del(ef);
+     }
+   while (ef);
+   
+   if (_comp_mod->conf->effect_fade)
+     {
+        int a;
+        
+        ef = _e_mod_comp_effect_add(cw, _e_mod_comp_ef_cb_fade_to, 0.2, EFFECT_HIDE);
+        evas_object_color_get(cw->obj, NULL, NULL, NULL, &a);
+        ef->src = (double)a / 255.0;
+        ef->dst = 0.0;
+        cw->defer_hide = 1;
+        _e_mod_comp_ef_cb_fade_to(ef);
+     }
+}
+
+static void
+_e_mod_comp_win_move_effects_add(E_Comp_Win *cw)
+{
+}
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -530,15 +695,15 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
        ((att.depth != 24) && (att.depth != 32)))
      {
         printf("WARNING: window 0x%x not 24/32bpp -> %ibpp\n", cw->win, att.depth);
-        free(cw);
-        return NULL;
+        cw->invalid = 1;
      }
    cw->input_only = att.input_only;
+   cw->override = att.override;
    cw->vis = att.visual;
    cw->depth = att.depth;
    cw->argb = ecore_x_window_argb_get(cw->win);
    eina_hash_add(windows, e_util_winid_str_get(cw->win), cw);
-   if (!cw->input_only)
+   if ((!cw->input_only) && (!cw->invalid))
      {
         Ecore_X_Rectangle *rects;
         int num;
@@ -548,24 +713,18 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
         cw->shobj = edje_object_add(c->evas);
         cw->obj = evas_object_image_filled_add(c->evas);
         evas_object_image_colorspace_set(cw->obj, EVAS_COLORSPACE_ARGB8888);
-        if (cw->argb)
-          evas_object_image_alpha_set(cw->obj, 1);
-        else
-          evas_object_image_alpha_set(cw->obj, 0);
+        if (cw->argb) evas_object_image_alpha_set(cw->obj, 1);
+        else evas_object_image_alpha_set(cw->obj, 0);
         ecore_x_window_shape_events_select(cw->win, 1);
         rects = ecore_x_window_shape_rectangles_get(cw->win, &num);
         if (rects)
           {
-             if ((rects) && (num == 1))
+             if ((rects) && (num == 1)  &&
+                 (rects[0].x == 0) && (rects[0].y == 0) &&
+                 (rects[0].width == att.w) && (rects[0].height == att.h))
                {
-                  if ((rects[0].x == 0) &&
-                      (rects[0].y == 0) &&
-                      (rects[0].width == att.w) &&
-                      (rects[0].height == att.h))
-                    {
-                       free(rects);
-                       rects = NULL;
-                    }
+                  free(rects);
+                  rects = NULL;
                }
              if (rects)
                {
@@ -586,6 +745,12 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
    // for software:
    e_mod_comp_update_policy_set
      (cw->up, E_UPDATE_POLICY_HALF_WIDTH_OR_MORE_ROUND_UP_TO_FULL_WIDTH);
+   if (((!cw->input_only) && (!cw->invalid)) && (cw->override))
+     {
+        cw->redirected = 1;
+        ecore_x_composite_redirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
+        _e_mod_comp_win_damage(cw, 0, 0, cw->w, cw->h, 0);
+     }
    DBG("  [0x%x] add\n", cw->win);
    return cw;
 }
@@ -595,6 +760,7 @@ _e_mod_comp_win_del(E_Comp_Win *cw)
 {
    e_mod_comp_update_free(cw->up);
    DBG("  [0x%x] del\n", cw->win);
+   while (cw->effects) _e_mod_comp_effect_del(cw->effects->data);
    if (cw->update_timeout)
      {
         ecore_timer_del(cw->update_timeout);
@@ -683,7 +849,7 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
    if (cw->visible) return;
    cw->visible = 1;
    DBG("  [0x%x] sho ++++++++++\n", cw->win);
-   if (cw->input_only) return;
+   if ((cw->input_only) || (cw->invalid)) return;
    if (!cw->redirected)
      {
         cw->redirected = 1;
@@ -691,6 +857,9 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
         _e_mod_comp_win_damage(cw, 0, 0, cw->w, cw->h, 0);
      }
 
+   // FIXME: only do this if no bd set
+   // FIXME: listen for bd del events
+   
    if (cw->dfn)
      {
         if (cw->bd)
@@ -795,15 +964,26 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
           }
      }
    _e_mod_comp_win_render_queue(cw);
+   _e_mod_comp_win_show_effects_add(cw);
 }
 
 static void
 _e_mod_comp_win_hide(E_Comp_Win *cw)
 {
-   if (!cw->visible) return;
+   if (!cw->defer_hide)
+     {
+        if (!cw->visible) return;
+     }
+   cw->defer_hide = 0;
    cw->visible = 0;
-   if (cw->input_only) return;
+   if ((cw->input_only) || (cw->invalid)) return;
    DBG("  [0x%x] hid --\n", cw->win);
+   _e_mod_comp_win_hide_effects_add(cw);
+   if (cw->effects)
+     {
+        cw->defer_hide = 1;
+        return; // defer rest of hide
+     }
    if (cw->update_timeout)
      {
         ecore_timer_del(cw->update_timeout);
@@ -867,7 +1047,6 @@ _e_mod_comp_win_raise_above(E_Comp_Win *cw, E_Comp_Win *cw2)
         evas_object_stack_below(cw->shobj, cw->obj);
      }
    _e_mod_comp_win_render_queue(cw);
-   if (cw->input_only) return;
 }
 
 static void
@@ -882,7 +1061,6 @@ _e_mod_comp_win_raise(E_Comp_Win *cw)
         evas_object_stack_below(cw->shobj, cw->obj);
      }
    _e_mod_comp_win_render_queue(cw);
-   if (cw->input_only) return;
 }
 
 static void
@@ -897,12 +1075,13 @@ _e_mod_comp_win_lower(E_Comp_Win *cw)
         evas_object_stack_below(cw->shobj, cw->obj);
      }
    _e_mod_comp_win_render_queue(cw);
-   if (cw->input_only) return;
 }
 
 static void
 _e_mod_comp_win_configure(E_Comp_Win *cw, int x, int y, int w, int h, int border)
 {
+   Eina_Bool moved = 0;
+   
    if (!((x == cw->x) && (y == cw->y)))
      {
         DBG("  [0x%x] mov %4i %4i\n", cw->win, x, y);
@@ -913,12 +1092,11 @@ _e_mod_comp_win_configure(E_Comp_Win *cw, int x, int y, int w, int h, int border
           {
              evas_object_move(cw->shobj, cw->x, cw->y);
           }
+        moved = 1;
      }
    if (!((w == cw->w) && (h == cw->h)))
      {
         DBG("  [0x%x] rsz %4ix%4i\n", cw->win, w, h);
-//        ecore_x_composite_unredirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
-//        ecore_x_composite_redirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
         if (cw->pixmap)
           {
              ecore_x_pixmap_free(cw->pixmap);
@@ -957,14 +1135,15 @@ _e_mod_comp_win_configure(E_Comp_Win *cw, int x, int y, int w, int h, int border
                                 cw->h + (cw->border * 2));
           }
      }
-   if (cw->input_only) return;
+   if ((cw->input_only) || (cw->invalid)) return;
    _e_mod_comp_win_render_queue(cw);
+   if (moved) _e_mod_comp_win_move_effects_add(cw);
 }
 
 static void
 _e_mod_comp_win_damage(E_Comp_Win *cw, int x, int y, int w, int h, Eina_Bool dmg)
 {
-   if (cw->input_only) return;
+   if ((cw->input_only) || (cw->invalid)) return;
    DBG("  [0x%x] dmg %4i %4i %4ix%4i\n", cw->win, x, y, w, h);
    if ((dmg) && (cw->damage))
      {
@@ -1028,7 +1207,8 @@ _e_mod_comp_destroy(void *data, int type, void *event)
    Ecore_X_Event_Window_Destroy *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->win);
    if (!cw) return 1;
-   _e_mod_comp_win_del(cw);
+   if (cw->effects) cw->delete_me = 1;
+   else _e_mod_comp_win_del(cw);
    return 1;
 }
 
@@ -1181,6 +1361,107 @@ _e_mod_comp_randr(void *data, int type, void *event)
      {
         ecore_evas_resize(c->ee, c->man->w, c->man->h);
      }
+   return 1;
+}
+
+static int
+_e_mod_comp_bd_add(void *data, int type, void *event)
+{
+   E_Event_Border_Add *ev = event;
+   E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
+   if (!cw) return 1;
+   // fimxe: add/enable compositing here not in show event for borders
+   return 1;
+}
+
+static int
+_e_mod_comp_bd_del(void *data, int type, void *event)
+{
+   E_Event_Border_Remove *ev = event;
+   E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
+   if (!cw) return 1;
+   if (cw->bd == ev->border) _e_mod_comp_object_del(cw, ev->border);
+   return 1;
+}
+
+static int
+_e_mod_comp_bd_show(void *data, int type, void *event)
+{
+   E_Event_Border_Show *ev = event;
+   E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
+   if (!cw) return 1;
+   // fimxe: show compwin here
+   return 1;
+}
+
+static int
+_e_mod_comp_bd_hide(void *data, int type, void *event)
+{
+   E_Event_Border_Hide *ev = event;
+   E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
+   if (!cw) return 1;
+   // fimxe: hide compwin here
+   return 1;
+}
+
+static int
+_e_mod_comp_bd_iconify(void *data, int type, void *event)
+{
+   E_Event_Border_Iconify *ev = event;
+   E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
+   if (!cw) return 1;
+   // fimxe: special iconfiy anim
+   return 1;
+}
+
+static int
+_e_mod_comp_bd_uniconify(void *data, int type, void *event)
+{
+   E_Event_Border_Uniconify *ev = event;
+   E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
+   if (!cw) return 1;
+   // fimxe: special uniconfiy anim
+   return 1;
+}
+
+static int
+_e_mod_comp_bd_urgent_change(void *data, int type, void *event)
+{
+   E_Event_Border_Urgent_Change *ev = event;
+   E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
+   if (!cw) return 1;
+   // fimxe: do special anim to show urgency
+   return 1;
+}
+
+static int
+_e_mod_comp_bd_focus_in(void *data, int type, void *event)
+{
+   E_Event_Border_Focus_In *ev = event;
+   E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
+   if (!cw) return 1;
+   // fimxe: can do anim on focus in
+   return 1;
+}
+
+static int
+_e_mod_comp_bd_focus_out(void *data, int type, void *event)
+{
+   E_Event_Border_Focus_Out *ev = event;
+   E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
+   if (!cw) return 1;
+   // fimxe: can do anim on focus out
+   return 1;
+}
+
+static int
+_e_mod_comp_bd_property(void *data, int type, void *event)
+{
+   E_Event_Border_Property *ev = event;
+   E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
+   if (!cw) return 1;
+   // fimxe: check properties and adjust things if needed...
+   return 1;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -1323,19 +1604,31 @@ e_mod_comp_init(void)
    borders = eina_hash_string_superfast_new(NULL);
    damages = eina_hash_string_superfast_new(NULL);
    
-   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_CREATE,    _e_mod_comp_create,    NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_DESTROY,   _e_mod_comp_destroy,   NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHOW,      _e_mod_comp_show,      NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_HIDE,      _e_mod_comp_hide,      NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_REPARENT,  _e_mod_comp_reparent,  NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_CONFIGURE, _e_mod_comp_configure, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_STACK,     _e_mod_comp_stack,     NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_PROPERTY,  _e_mod_comp_property,  NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE,   _e_mod_comp_message,   NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHAPE,     _e_mod_comp_shape,     NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_DAMAGE_NOTIFY,    _e_mod_comp_damage,    NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_CREATE,    _e_mod_comp_create,           NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_DESTROY,   _e_mod_comp_destroy,          NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHOW,      _e_mod_comp_show,             NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_HIDE,      _e_mod_comp_hide,             NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_REPARENT,  _e_mod_comp_reparent,         NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_CONFIGURE, _e_mod_comp_configure,        NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_STACK,     _e_mod_comp_stack,            NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_PROPERTY,  _e_mod_comp_property,         NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE,   _e_mod_comp_message,          NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHAPE,     _e_mod_comp_shape,            NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_DAMAGE_NOTIFY,    _e_mod_comp_damage,           NULL));
 
-   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_CONTAINER_RESIZE,       _e_mod_comp_randr,     NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_CONTAINER_RESIZE,       _e_mod_comp_randr,            NULL));
+   
+   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_ADD,             _e_mod_comp_bd_add,           NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_REMOVE,          _e_mod_comp_bd_del,           NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_SHOW,            _e_mod_comp_bd_show,          NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_HIDE,            _e_mod_comp_bd_hide,          NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_ICONIFY,         _e_mod_comp_bd_iconify,       NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_UNICONIFY,       _e_mod_comp_bd_uniconify,     NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_URGENT_CHANGE,   _e_mod_comp_bd_urgent_change, NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_FOCUS_IN,        _e_mod_comp_bd_focus_in,      NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_FOCUS_OUT,       _e_mod_comp_bd_focus_out,     NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_PROPERTY,        _e_mod_comp_bd_property,      NULL));
+
    
    EINA_LIST_FOREACH(e_manager_list(), l, man)
      {

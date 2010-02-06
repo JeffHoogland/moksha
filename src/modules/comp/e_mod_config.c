@@ -230,11 +230,13 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    // FIXME: save new config options as they are implemented.
    if ((_comp_mod->conf->use_shadow != cfdata->use_shadow) ||
        (cfdata->lock_fps != _comp_mod->conf->lock_fps) ||
-       (cfdata->grab != _comp_mod->conf->grab))
+       (cfdata->grab != _comp_mod->conf->grab) ||
+       (cfdata->effect_fade != _comp_mod->conf->effect_fade))
      {
         _comp_mod->conf->use_shadow = cfdata->use_shadow;
         _comp_mod->conf->lock_fps = cfdata->lock_fps;
         _comp_mod->conf->grab = cfdata->grab;
+//        _comp_mod->conf->effect_fade = cfdata->effect_fade;
         e_mod_comp_shadow_set();
      }
    if ((_comp_mod->conf->engine != cfdata->engine) ||
