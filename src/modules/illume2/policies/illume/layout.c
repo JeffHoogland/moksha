@@ -71,17 +71,21 @@ _layout_border_focus_out(E_Border *bd)
 void 
 _layout_border_activate(E_Border *bd) 
 {
+   E_Border *b;
+
    /* HANDLE A BORDER BEING ACTIVATED */
 
    if ((!bd) || (bd->stolen)) return;
 
    if (e_illume_border_is_conformant(bd))
      {
-        // FIXME: hide bottom panel
+        b = e_illume_border_top_shelf_get(bd->zone);
+        if (b) e_border_hide(b, 2);
      }
    else
      {
-        // FIXME: show bottom panel
+        b = e_illume_border_top_shelf_get(bd->zone);
+        if (b) e_border_show(b);
      }
    
    /* only set focus if border accepts it and it's not locked out */
