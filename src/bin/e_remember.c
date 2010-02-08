@@ -604,7 +604,7 @@ _e_remember_cb_hook_pre_post_fetch(void *data, void *border)
    E_Remember *rem = NULL;
    int temporary = 0;
    
-   if (!bd->new_client) return;
+   if ((!bd->new_client) || (bd->internal_no_remember)) return;
 
    if (!bd->remember)
      {
