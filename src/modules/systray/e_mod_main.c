@@ -160,8 +160,6 @@ _systray_menu_new(Instance *inst, Evas_Event_Mouse_Down *ev)
    e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &x, &y, NULL, NULL);
    e_menu_activate_mouse(mn, zone, x + ev->output.x, y + ev->output.y,
 			 1, 1, E_MENU_POP_DIRECTION_AUTO, ev->timestamp);
-   evas_event_feed_mouse_up(inst->evas, ev->button,
-			    EVAS_BUTTON_NONE, ev->timestamp, NULL);
 }
 
 static void
