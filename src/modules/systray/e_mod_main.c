@@ -362,7 +362,7 @@ _systray_icon_add(Instance *inst, const Ecore_X_Window win)
    ecore_x_window_save_set_add(win);
    ecore_x_window_shape_events_select(win, 1);
 
-   ecore_x_window_geometry_get(win, NULL, NULL, &w, &h);
+   //ecore_x_window_geometry_get(win, NULL, NULL, &w, &h);
 
    evas_object_event_callback_add
      (o, EVAS_CALLBACK_MOVE, _systray_icon_cb_move, icon);
