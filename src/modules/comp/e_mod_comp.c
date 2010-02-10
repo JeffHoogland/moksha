@@ -364,16 +364,21 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
              cw->pw = 0;
              cw->ph = 0;
           }
-        DBG("REND [0x%x] pixma = [0x%x], %ix%i\n", cw->win, cw->pixmap, cw->pw, cw->ph);
+        DBG("REND [0x%x] pixmap = [0x%x], %ix%i\n", cw->win, cw->pixmap, cw->pw, cw->ph);
         if ((cw->pw <= 0) || (cw->ph <= 0))
           {
              if (cw->native)
                {
+                  DBG("  [0x%x] free native\n", cw->win);
                   evas_object_image_native_surface_set(cw->obj, NULL);
                   cw->native = 0;
                }
-             if (cw->pixmap) ecore_x_pixmap_free(cw->pixmap);
-             cw->pixmap = 0;
+             if (cw->pixmap)
+               {
+                  DBG("  [0x%x] free pixmap\n", cw->win);
+                  ecore_x_pixmap_free(cw->pixmap);
+                  cw->pixmap = 0;
+               }
              cw->pw = 0;
              cw->ph = 0;
           }
@@ -452,6 +457,12 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
           {
              if (cw->xim)
                {
+                  unsigned int *pix;
+                  
+                  pix = ecore_x_image_data_get(cw->xim, NULL, NULL, NULL);
+                  evas_object_image_data_set(cw->obj, pix);
+                  evas_object_image_size_set(cw->obj, cw->pw, cw->ph);
+                  
                   e_mod_comp_update_clear(cw->up);
                   for (i = 0; r[i].w > 0; i++)
                     {
@@ -462,9 +473,10 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
                        w = r[i].w; h = r[i].h;
                        ecore_x_image_get(cw->xim, cw->pixmap, x, y, x, y, w, h);
                        DBG("UPDATE [0x%x] %i %i %ix%i\n", cw->win, x, y, w, h);
+// why do we neeed these 2? this smells wrong
                        pix = ecore_x_image_data_get(cw->xim, NULL, NULL, NULL);
-                       evas_object_image_size_set(cw->obj, cw->pw, cw->ph);
                        evas_object_image_data_set(cw->obj, pix);
+                       
                        evas_object_image_data_update_add(cw->obj, x, y, w, h);
                        if (cw->shaped) cw->shape_changed = 1;
                     }
@@ -787,6 +799,9 @@ _e_mod_comp_win_del(E_Comp_Win *cw)
    if (cw->pixmap)
      {
         ecore_x_pixmap_free(cw->pixmap);
+        cw->pixmap = 0;
+        cw->pw = 0;
+        cw->ph = 0;
      }
    if (cw->update)
      {
@@ -996,6 +1011,11 @@ _e_mod_comp_win_hide(E_Comp_Win *cw)
         if ((cw->bd) && (cw->counter))
           ecore_x_e_comp_sync_end_send(cw->bd->client.win);
      }
+   evas_object_hide(cw->obj);
+   if (cw->shobj) evas_object_hide(cw->shobj);
+
+   if (_comp_mod->conf->keep_unmapped) return;
+   
    if (cw->redirected)
      {
         ecore_x_composite_unredirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
@@ -1008,17 +1028,11 @@ _e_mod_comp_win_hide(E_Comp_Win *cw)
         evas_object_image_native_surface_set(cw->obj, NULL);
         cw->native = 0;
      }
-   evas_object_hide(cw->obj);
-   if (cw->shobj)
-     {
-        evas_object_hide(cw->shobj);
-     }
    evas_object_image_size_set(cw->obj, 1, 1);
    if (cw->pixmap)
      {
         ecore_x_pixmap_free(cw->pixmap);
         cw->pixmap = 0;
-        cw->native = 0;
         cw->pw = 0;
         cw->ph = 0;
      }
@@ -1136,7 +1150,7 @@ _e_mod_comp_win_configure(E_Comp_Win *cw, int x, int y, int w, int h, int border
           }
      }
    if ((cw->input_only) || (cw->invalid)) return;
-   e_mod_comp_update_resize(cw->up, cw->w, cw->h); // this will lose updates - but configure == new pixmap == more damgaes
+   e_mod_comp_update_resize(cw->up, cw->w, cw->h);
    _e_mod_comp_win_render_queue(cw);
    if (moved) _e_mod_comp_win_move_effects_add(cw);
 }
