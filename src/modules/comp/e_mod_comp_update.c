@@ -60,16 +60,45 @@ e_mod_comp_update_tile_size_set(E_Update *up, int tsw, int tsh)
 void
 e_mod_comp_update_resize(E_Update *up, int w, int h)
 {
+   unsigned char *ptiles = up->tiles, *p, *pp;
+   int ptw, pth, x, y;
+   
    if ((up->w == w) && (up->h == h)) return;
+   
+   ptw = up->tw;
+   pth = up->th;
+   ptiles = up->tiles;
+   
    up->w = w;
    up->h = h;
    up->tw = (up->w + up->tsw - 1) / up->tsw;
    up->th = (up->h + up->tsh - 1) / up->tsh;
-   if (up->tiles)
+   up->tiles = NULL;
+   _e_mod_comp_tiles_alloc(up);
+   if ((ptiles) && (up->tiles))
      {
-        free(up->tiles);
-        up->tiles = NULL;
+        if (pth <= up->th)
+          {
+             for (y = 0; y < pth; y++)
+               {
+                  p = up->tiles + (y * up->tw);
+                  pp = ptiles + (y * ptw);
+                  if (ptw <= up->tw) for (x = 0; x < ptw; x++) *p++ = *pp++;
+                  else for (x = 0; x < up->tw; x++) *p++ = *pp++;
+               }
+          }
+        else
+          {
+             for (y = 0; y < up->th; y++)
+               {
+                  p = up->tiles + (y * up->tw);
+                  pp = ptiles + (y * ptw);
+                  if (ptw <= up->tw) for (x = 0; x < ptw; x++) *p++ = *pp++;
+                  else for (x = 0; x < up->tw; x++) *p++ = *pp++;
+               }
+          }
      }
+   free(ptiles);
 }
 
 void

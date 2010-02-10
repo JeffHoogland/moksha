@@ -403,12 +403,11 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
           }
      }
    
-   e_mod_comp_update_resize(cw->up, cw->pw, cw->ph);
    if ((cw->c->gl) && (_comp_mod->conf->texture_from_pixmap) &&
        (!cw->shaped) && (!cw->shape_changed))
      {
-        if (new_pixmap)
-          e_mod_comp_update_add(cw->up, 0, 0, cw->pw, cw->ph);
+//y        if (new_pixmap)
+//y          e_mod_comp_update_add(cw->up, 0, 0, cw->pw, cw->ph);
         
         evas_object_image_size_set(cw->obj, cw->pw, cw->ph);
         if (!cw->native)
@@ -444,7 +443,9 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
         if (!cw->xim)
           {
              if (cw->xim = ecore_x_image_new(cw->pw, cw->ph, cw->vis, cw->depth))
-               e_mod_comp_update_add(cw->up, 0, 0, cw->pw, cw->ph);
+               {
+//y                  e_mod_comp_update_add(cw->up, 0, 0, cw->pw, cw->ph);
+               }
           }
         r = e_mod_comp_update_rects_get(cw->up);
         if (r) 
@@ -1135,6 +1136,7 @@ _e_mod_comp_win_configure(E_Comp_Win *cw, int x, int y, int w, int h, int border
           }
      }
    if ((cw->input_only) || (cw->invalid)) return;
+   e_mod_comp_update_resize(cw->up, cw->w, cw->h); // this will lose updates - but configure == new pixmap == more damgaes
    _e_mod_comp_win_render_queue(cw);
    if (moved) _e_mod_comp_win_move_effects_add(cw);
 }
@@ -1404,6 +1406,26 @@ _e_mod_comp_bd_hide(void *data, int type, void *event)
 }
 
 static int
+_e_mod_comp_bd_move(void *data, int type, void *event)
+{
+   E_Event_Border_Move *ev = event;
+   E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
+   if (!cw) return 1;
+   // fimxe: do move here for composited bd
+   return 1;
+}
+
+static int
+_e_mod_comp_bd_resize(void *data, int type, void *event)
+{
+   E_Event_Border_Resize *ev = event;
+   E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
+   if (!cw) return 1;
+   // fimxe: do resize here instead of conf notify
+   return 1;
+}
+
+static int
 _e_mod_comp_bd_iconify(void *data, int type, void *event)
 {
    E_Event_Border_Iconify *ev = event;
@@ -1621,6 +1643,8 @@ e_mod_comp_init(void)
    handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_REMOVE,          _e_mod_comp_bd_del,           NULL));
    handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_SHOW,            _e_mod_comp_bd_show,          NULL));
    handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_HIDE,            _e_mod_comp_bd_hide,          NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_MOVE,            _e_mod_comp_bd_move,          NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_RESIZE,          _e_mod_comp_bd_resize,        NULL));
    handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_ICONIFY,         _e_mod_comp_bd_iconify,       NULL));
    handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_UNICONIFY,       _e_mod_comp_bd_uniconify,     NULL));
    handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_URGENT_CHANGE,   _e_mod_comp_bd_urgent_change, NULL));
