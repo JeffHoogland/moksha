@@ -80,7 +80,7 @@ e_mod_sft_win_new(E_Zone *zone)
    e_win_size_min_set(swin->win, zone->w, (32 * e_scale));
 
    /* position and resize the window */
-   e_win_move_resize(swin->win, zone->x, (zone->h - (32 * e_scale)), 
+   e_win_move_resize(swin->win, zone->x, (zone->y + zone->h - (32 * e_scale)), 
                      zone->w, (32 * e_scale));
 
    /* show the window */
@@ -91,7 +91,7 @@ e_mod_sft_win_new(E_Zone *zone)
 
    /* tell illume conformant apps our position and size */
    ecore_x_e_illume_bottom_panel_geometry_set(ecore_x_window_root_first_get(), 
-                                              zone->x, (zone->h - (32 * e_scale)), 
+                                              zone->x, (zone->y + zone->h - (32 * e_scale)), 
                                               zone->w, (32 * e_scale));
    return swin;
 }
@@ -133,9 +133,9 @@ _e_mod_sft_win_cb_hook_eval_end(void *data, void *data2)
         bd->y = (swin->zone->h - bd->h);
         bd->changes.pos = 1;
         bd->changed = 1;
+        bd->lock_user_location = 1;
         e_border_zone_set(bd, swin->zone);
      }
-   bd->lock_user_location = 1;
 }
 
 static void 
