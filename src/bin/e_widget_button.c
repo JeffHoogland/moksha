@@ -90,6 +90,7 @@ EAPI void
 e_widget_button_label_set(Evas_Object *obj, const char *label)
 {
    E_Widget_Data *wd;
+   int mw, mh;
 
    wd = e_widget_data_get(obj);
    edje_object_part_text_set(wd->o_button, "e.text.label", label);
@@ -98,6 +99,8 @@ e_widget_button_label_set(Evas_Object *obj, const char *label)
    else
      wd->type = ~(wd->type & E_WIDGET_BUTTON_TEXT);
    _e_wid_button_state_send(wd);
+   edje_object_size_min_calc(wd->o_button, &mw, &mh);
+   e_widget_size_min_set(obj, mw, mh);
 }
 
 EAPI void
