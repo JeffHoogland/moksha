@@ -255,7 +255,7 @@ _e_mod_comp_win_move_effects_add(E_Comp_Win *cw)
 
 //////////////////////////////////////////////////////////////////////////
 
-#if 0
+#if 1
 #define DBG(f, x...) printf(f, ##x)
 #else
 #define DBG(f, x...)
@@ -384,6 +384,7 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
           }
         else
           new_pixmap = 1;
+        cw->native = 0;
      }
    if (!((cw->pw > 0) && (cw->ph > 0))) return;
 
@@ -845,6 +846,7 @@ _e_mod_comp_object_del(void *data, void *obj)
 {
    E_Comp_Win *cw = data;
 
+   _e_mod_comp_win_render_queue(cw);
    if (obj == cw->bd)
      {
         eina_hash_del(borders, e_util_winid_str_get(cw->bd->client.win), cw);
