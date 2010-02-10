@@ -255,7 +255,7 @@ _e_mod_comp_win_move_effects_add(E_Comp_Win *cw)
 
 //////////////////////////////////////////////////////////////////////////
 
-#if 1
+#if 0
 #define DBG(f, x...) printf(f, ##x)
 #else
 #define DBG(f, x...)
@@ -351,8 +351,9 @@ static void
 _e_mod_comp_win_update(E_Comp_Win *cw)
 {
    E_Update_Rect *r;
-   int i, new_pixmap = 0;
+   int i/*, new_pixmap = 0*/;
    
+   ecore_x_grab();
    cw->update = 0;
    if (!cw->pixmap)
      {
@@ -382,11 +383,15 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
              cw->pw = 0;
              cw->ph = 0;
           }
-        else
-          new_pixmap = 1;
+//        else
+//          new_pixmap = 1;
         cw->native = 0;
      }
-   if (!((cw->pw > 0) && (cw->ph > 0))) return;
+   if (!((cw->pw > 0) && (cw->ph > 0)))
+     {
+        ecore_x_ungrab();
+        return;
+     }
 
    if ((cw->pw != cw->w) || (cw->ph != cw->h))
      {
@@ -408,6 +413,7 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
                                 cw->h + (cw->border * 2));
           }
      }
+   ecore_x_ungrab();
    
    if ((cw->c->gl) && (_comp_mod->conf->texture_from_pixmap) &&
        (!cw->shaped) && (!cw->shape_changed))
@@ -415,6 +421,7 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
 //y        if (new_pixmap)
 //y          e_mod_comp_update_add(cw->up, 0, 0, cw->pw, cw->ph);
         
+//        DBG("DEBUG - pm now %x\n", ecore_x_composite_name_window_pixmap_get(cw->win));
         evas_object_image_size_set(cw->obj, cw->pw, cw->ph);
         if (!cw->native)
           {
@@ -436,7 +443,7 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
                        
                   x = r[i].x; y = r[i].y;
                   w = r[i].w; h = r[i].h;
-                  DBG("UPDATE [0x%x] %i %i %ix%i\n", cw->win, x, y, w, h);
+                  DBG("UPDATE [0x%x] pm [0x%x] %i %i %ix%i\n", cw->win, cw->pixmap, x, y, w, h);
                   evas_object_image_data_update_add(cw->obj, x, y, w, h);
                }
              free(r);
@@ -764,7 +771,7 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
      {
         cw->redirected = 1;
         ecore_x_composite_redirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
-        _e_mod_comp_win_damage(cw, 0, 0, cw->w, cw->h, 0);
+//z        _e_mod_comp_win_damage(cw, 0, 0, cw->w, cw->h, 0);
      }
    DBG("  [0x%x] add\n", cw->win);
    return cw;
@@ -873,7 +880,7 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
      {
         cw->redirected = 1;
         ecore_x_composite_redirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
-        _e_mod_comp_win_damage(cw, 0, 0, cw->w, cw->h, 0);
+//z        _e_mod_comp_win_damage(cw, 0, 0, cw->w, cw->h, 0);
      }
 
    // FIXME: only do this if no bd set
@@ -1016,7 +1023,38 @@ _e_mod_comp_win_hide(E_Comp_Win *cw)
    evas_object_hide(cw->obj);
    if (cw->shobj) evas_object_hide(cw->shobj);
 
-   if (_comp_mod->conf->keep_unmapped) return;
+   if (_comp_mod->conf->keep_unmapped)
+     {
+        // fixme: ask the x homies. why does this need to be done?
+        // why free pixmap (+texture bound), undriect, then redirect again
+        // getting pixmap againand well - getting texture too again. why?
+        if (cw->redirected)
+          {
+             if (cw->native) evas_object_image_native_surface_set(cw->obj, NULL);
+             if (cw->pixmap) ecore_x_pixmap_free(cw->pixmap);
+             evas_object_image_size_set(cw->obj, 1, 1);
+             cw->pixmap = 0;
+             cw->pw = 0;
+             cw->ph = 0;
+             cw->native = 0;
+             ecore_x_composite_unredirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
+             ecore_x_composite_redirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
+             cw->pixmap = ecore_x_composite_name_window_pixmap_get(cw->win);
+             if (cw->pixmap)
+               ecore_x_pixmap_geometry_get(cw->pixmap, NULL, NULL, &(cw->pw), &(cw->ph));
+             else
+               {
+                  cw->pw = 0;
+                  cw->ph = 0;
+               }
+             if ((cw->pw <= 0) || (cw->ph <= 0))
+               {
+                  ecore_x_pixmap_free(cw->pixmap);
+                  cw->pixmap = 0;
+               }
+          }
+        return;
+     }
    
    if (cw->redirected)
      {
@@ -1161,7 +1199,7 @@ static void
 _e_mod_comp_win_damage(E_Comp_Win *cw, int x, int y, int w, int h, Eina_Bool dmg)
 {
    if ((cw->input_only) || (cw->invalid)) return;
-   DBG("  [0x%x] dmg %4i %4i %4ix%4i\n", cw->win, x, y, w, h);
+   DBG("  [0x%x] dmg [%x] %4i %4i %4ix%4i\n", cw->win, cw->damage, x, y, w, h);
    if ((dmg) && (cw->damage))
      {
         Ecore_X_Region parts;
@@ -1171,13 +1209,16 @@ _e_mod_comp_win_damage(E_Comp_Win *cw, int x, int y, int w, int h, Eina_Bool dmg
         ecore_x_region_free(parts);
      }
    e_mod_comp_update_add(cw->up, x, y, w, h);
-   if (cw->counter)
+   if (dmg)
      {
-        if (!cw->update_timeout)
-          cw->update_timeout = ecore_timer_add
-          (ecore_animator_frametime_get() * 2, 
-           _e_mod_comp_win_damage_timeout, cw);
-        return;
+        if (cw->counter)
+          {
+             if (!cw->update_timeout)
+               cw->update_timeout = ecore_timer_add
+               (ecore_animator_frametime_get() * 2, 
+                _e_mod_comp_win_damage_timeout, cw);
+             return;
+          }
      }
    if (!cw->update)
      {

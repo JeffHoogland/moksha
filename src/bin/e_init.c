@@ -3,6 +3,8 @@
  */
 #include "e.h"
 
+EAPI int E_EVENT_INIT_DONE = 0;
+
 /* local function prototypes */
 static int _e_init_cb_exe_event_del(void *data __UNUSED__, int type __UNUSED__, void *event);
 
@@ -20,6 +22,7 @@ static Eina_List *stats = NULL;
 EAPI int
 e_init_init(void)
 {
+   E_EVENT_INIT_DONE = ecore_event_type_new();
    exe_del_handler = 
      ecore_event_handler_add(ECORE_EXE_EVENT_DEL,
                              _e_init_cb_exe_event_del, NULL);
@@ -122,6 +125,7 @@ e_init_done(void)
    undone--;
    if (undone > 0) return;
    done = 1;
+   ecore_event_add(E_EVENT_INIT_DONE, NULL, NULL, NULL);
 //   printf("---DONE %p\n", client);
    if (!client) return;
    ecore_ipc_client_send(client, E_IPC_DOMAIN_INIT, 2, 0, 0, 0, NULL, 0);
@@ -197,6 +201,12 @@ e_init_client_del(Ecore_Ipc_Event_Client_Del *e)
 	     man->initwin = 0;
 	  }
      }
+}
+
+EAPI int
+e_init_count_get(void)
+{
+   return undone;
 }
 
 /* local functions */

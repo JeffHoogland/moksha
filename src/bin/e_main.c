@@ -662,19 +662,19 @@ main(int argc, char **argv)
    _e_main_shutdown_push(e_moveresize_shutdown);
    
    TS("splash");
+   /* setup init status window/screen */
+   if (!e_init_init())
+     {
+        e_error_message_show(_("Enlightenment cannot set up init screen.\n"
+                               "Perhaps you are out of memory?"));
+        _e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_init_shutdown);
    if (!((!e_config->show_splash) || (after_restart)))
      {
-	/* setup init status window/screen */
-	if (!e_init_init())
-	  {
-	     e_error_message_show(_("Enlightenment cannot set up init screen.\n"
-				    "Perhaps you are out of memory?"));
-	     _e_main_shutdown(-1);
-	  }
 	e_init_title_set(_("Enlightenment"));
 	e_init_version_set(VERSION);
 	e_init_show();
-	_e_main_shutdown_push(e_init_shutdown);
 	pause();
      }
    if (!really_know)

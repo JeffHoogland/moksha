@@ -3,6 +3,20 @@
 #include "e_mod_config.h"
 #include "e_mod_comp.h"
 
+static Ecore_Event_Handler *init_done_handler = NULL;
+
+static int
+_e_init_done(void *data, int type, void *event)
+{
+   ecore_event_handler_del(init_done_handler);
+   init_done_handler = NULL;
+   if (!e_mod_comp_init())
+     {
+        // FIXME: handle if comp init fails
+     }
+   return 1;
+}
+
 /* module private routines */
 Mod *_comp_mod = NULL;
 
@@ -75,9 +89,17 @@ e_modapi_init(E_Module *m)
    
    _comp_mod = mod;
 
-   if (!e_mod_comp_init())
+   if (e_init_count_get() <= 0)
      {
-        // FIXME: handle if comp init fails
+        if (!e_mod_comp_init())
+          {
+             // FIXME: handle if comp init fails
+          }
+     }
+   else
+     {
+        init_done_handler = ecore_event_handler_add(E_EVENT_INIT_DONE,
+                                                    _e_init_done, NULL);
      }
    
    return mod;
