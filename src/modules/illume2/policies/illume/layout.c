@@ -25,16 +25,7 @@ _layout_border_add(E_Border *bd)
         E_Border *b;
 
         b = e_illume_border_top_shelf_get(bd->zone);
-        if (b) e_border_hide(b, 2);
-        if (bd->layer != IL_FULLSCREEN_LAYER)
-          e_border_layer_set(bd, IL_FULLSCREEN_LAYER);
-        bd->lock_user_stacking = 1;
-     }
-   else if (e_illume_border_is_conformant(bd)) 
-     {
-        if (bd->layer != IL_CONFORM_LAYER)
-          e_border_layer_set(bd, IL_CONFORM_LAYER);
-        bd->lock_user_stacking = 1;
+        if ((b) && (b->visible)) e_border_hide(b, 2);
      }
    if ((bd->client.icccm.accepts_focus) && (bd->client.icccm.take_focus) 
        && (!bd->lock_focus_out) && (!bd->focused))
@@ -52,7 +43,7 @@ _layout_border_del(E_Border *bd)
         E_Border *b;
 
         b = e_illume_border_top_shelf_get(bd->zone);
-        if (b) e_border_show(b);
+        if ((b) && (!b->visible)) e_border_show(b);
      }
 }
 
@@ -76,18 +67,16 @@ _layout_border_activate(E_Border *bd)
    /* HANDLE A BORDER BEING ACTIVATED */
 
    if ((!bd) || (bd->stolen)) return;
-
+   b = e_illume_border_bottom_panel_get(bd->zone);
    if (e_illume_border_is_conformant(bd))
      {
-        b = e_illume_border_bottom_panel_get(bd->zone);
-        if (b) e_border_hide(b, 2);
+        if ((b) && (b->visible)) e_border_hide(b, 2);
      }
    else
      {
-        b = e_illume_border_bottom_panel_get(bd->zone);
-        if (b) e_border_show(b);
+        if ((b) && (!b->visible)) e_border_show(b);
      }
-   
+
    /* only set focus if border accepts it and it's not locked out */
    if (((!bd->client.icccm.accepts_focus) && (!bd->client.icccm.take_focus)) ||
        (bd->lock_focus_out))
@@ -122,17 +111,12 @@ _layout_border_property_change(E_Border *bd, Ecore_X_Event_Window_Property *even
 
    if (event->atom != ECORE_X_ATOM_NET_WM_STATE) return;
    if ((!bd->client.icccm.name) || (!bd->client.icccm.class) || 
-       (bd->stolen)) 
-     return;
+       (bd->stolen) || (!bd->visible)) return;
    if (!(ind = e_illume_border_top_shelf_get(bd->zone))) return;
    if ((bd->fullscreen) || (bd->need_fullscreen)) 
-     {
-        if (ind) e_border_hide(ind, 2);
-     }
+     e_border_hide(ind, 2);
    else 
-     {
-        if (ind) e_border_show(ind);
-     }
+     e_border_show(ind);
 }
 
 void 
@@ -151,7 +135,7 @@ _layout_zone_layout(E_Zone *zone)
      {
         int mh;
 
-        if ((bd->zone != zone) || (bd->new_client) || (!bd->visible)) continue;
+        if (bd->zone != zone) continue;
         if (e_illume_border_is_top_shelf(bd)) 
           {
              e_illume_border_min_get(bd, NULL, &mh);
@@ -185,9 +169,9 @@ _layout_zone_layout(E_Zone *zone)
                          }
                     }
                }
-             e_border_stick(bd);
-             if (bd->layer != IL_TOP_SHELF_LAYER)
+             if (bd->layer != IL_TOP_SHELF_LAYER) 
                e_border_layer_set(bd, IL_TOP_SHELF_LAYER);
+             bd->lock_user_stacking = 1;
           }
         else if (e_illume_border_is_bottom_panel(bd)) 
           {
@@ -202,9 +186,9 @@ _layout_zone_layout(E_Zone *zone)
                     _zone_layout_border_move(bd, zone->x, 
                                              (zone->y + zone->h - panelsize));
                }
-             e_border_stick(bd);
              if (bd->layer != IL_BOTTOM_PANEL_LAYER)
                e_border_layer_set(bd, IL_BOTTOM_PANEL_LAYER);
+             bd->lock_user_stacking = 1;
           }
         else if (e_illume_border_is_keyboard(bd)) 
           {
@@ -264,6 +248,7 @@ _layout_zone_layout(E_Zone *zone)
                   if (bd->layer != IL_APP_LAYER)
                     e_border_layer_set(bd, IL_APP_LAYER);
                }
+             bd->lock_user_stacking = 1;
           }
      }
 }
