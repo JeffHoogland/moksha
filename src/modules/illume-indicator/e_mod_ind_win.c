@@ -176,9 +176,9 @@ _e_mod_ind_win_cb_hook_eval_end(void *data, void *data2)
         bd->y = iwin->zone->y;
         bd->changes.pos = 1;
         bd->changed = 1;
+        bd->lock_user_location = 1;
         e_border_zone_set(bd, iwin->zone);
      }
-   bd->lock_user_location = 1;
 }
 
 static void 
@@ -409,9 +409,6 @@ _e_mod_ind_win_cb_min_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_
    if (gc != iwin->gadcon) return;
    if (h < (32 * e_scale)) h = (32 * e_scale);
    edje_extern_object_min_size_set(iwin->gadcon->o_container, w, h);
-   edje_object_part_swallow(iwin->o_base, "e.swallow.content", 
-                            iwin->gadcon->o_container);
-   evas_object_resize(iwin->o_base, iwin->win->w, iwin->win->h);
 }
 
 static void 
