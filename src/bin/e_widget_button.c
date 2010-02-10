@@ -107,6 +107,7 @@ EAPI void
 e_widget_button_icon_set(Evas_Object *obj, Evas_Object *icon)
 {
    E_Widget_Data *wd;
+   int mw, mh;
 
    wd = e_widget_data_get(obj);
    if (wd->o_icon)
@@ -129,6 +130,8 @@ e_widget_button_icon_set(Evas_Object *obj, Evas_Object *icon)
    else
      wd->type = ~(wd->type & E_WIDGET_BUTTON_ICON);
    _e_wid_button_state_send(wd);
+   edje_object_size_min_calc(wd->o_button, &mw, &mh);
+   e_widget_size_min_set(obj, mw, mh);
 }
 
 static void
