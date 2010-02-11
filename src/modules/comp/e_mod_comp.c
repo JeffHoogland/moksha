@@ -255,7 +255,7 @@ _e_mod_comp_win_move_effects_add(E_Comp_Win *cw)
 
 //////////////////////////////////////////////////////////////////////////
 
-#if 1
+#if 0
 #define DBG(f, x...) printf(f, ##x)
 #else
 #define DBG(f, x...)
