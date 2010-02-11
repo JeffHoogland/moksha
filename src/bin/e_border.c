@@ -4350,12 +4350,12 @@ _e_border_cb_window_resize_request(void *data, int ev_type, void *ev)
 static int
 _e_border_cb_window_gravity(void *data, int ev_type, void *ev)
 {
-   E_Border *bd;
-   Ecore_X_Event_Window_Gravity *e;
+//   E_Border *bd;
+//   Ecore_X_Event_Window_Gravity *e;
 
-   e = ev;
-   bd = e_border_find_by_client_window(e->win);
-   if (!bd) return 1;
+//   e = ev;
+//   bd = e_border_find_by_client_window(e->win);
+//   if (!bd) return 1;
    return 1;
 }
 
