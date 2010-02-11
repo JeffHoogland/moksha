@@ -234,6 +234,10 @@ if test "[${e_cv_enable_files}]" = yes; then
 fi
 AC_MSG_RESULT([$e_cv_enable_files])
 
+# doxygen program for documentation building
+
+EFL_CHECK_DOXYGEN([build_doc="yes"], [build_doc="no"])
+
 # explicit libs for each binary to reduce linkage requirements
 PKG_CHECK_MODULES(E_REMOTE, [
   ecore
@@ -690,6 +694,7 @@ data/etc/Makefile
 data/icons/Makefile
 data/backgrounds/Makefile
 doc/Makefile
+doc/e.dox
 config/Makefile
 config/default/Makefile
 config/standard/Makefile
@@ -706,40 +711,42 @@ txt_strip() {
         echo "[$]@" | sed -e 's/^[[ \t]]*\([[^ \t]]*\)[[ \t]]*$/\1/g'
 }
 
-MODS=""
-for mod in $OPTIONAL_MODULES; do
-        MODS="$MODS ${COLOR_HGREEN}+$mod${COLOR_END}"
-done
-MODS=$(txt_strip $MODS)
-
-UNUSED_MODS=""
-for mod in $UNUSED_OPTIONAL_MODULES; do
-        UNUSED_MODS="$UNUSED_MODS ${COLOR_HRED}-$mod${COLOR_END}"
-done
-UNUSED_MODS=$(txt_strip $UNUSED_MODS)
-
+echo
 cat << SUMMARY_EOF
-
 Summary:
  * project.........: $PACKAGE $VERSION
  * prefix..........: $(txt_strip $prefix)
  * CFLAGS..........: $(txt_strip $CFLAGS)
  * LDFLAGS.........: $(txt_strip $LDFLAGS)
-
 SUMMARY_EOF
+echo
 
-if test "x$MODS" != "x"; then
-   echo -e " * enabled modules.: $MODS"
+UNUSED_MODS=""
+for mod in $UNUSED_OPTIONAL_MODULES; do
+        UNUSED_MODS="$UNUSED_MODS${COLOR_HRED}$mod${COLOR_END} "
+done
+
+cat << MODULES_EOF
+Modules:
+ * disabled........: $(txt_strip $UNUSED_MODS)
+MODULES_EOF
+echo
+
+cat << DOCS_EOF
+Documentation:
+ * enabled.........: ${build_doc}
+DOCS_EOF
+if test "x${build_doc}" = "xyes" ; then
+   echo " Building..........: make doc"
 fi
+echo
 
-if test "x$UNUSED_MODS" != "x"; then
-   echo -e " * disabled modules: $UNUSED_MODS"
-fi
+cat << COMPILE_EOF
+Compilation........: make (or gmake)
+COMPILE_EOF
+echo
 
-cat << HINT_EOF
-
-now type:
-
-     make all install
-
-HINT_EOF
+cat << INSTALL_EOF
+Installation.......: make all install (as root if needed, with 'su' or 'sudo')
+INSTALL_EOF
+echo
