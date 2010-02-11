@@ -255,7 +255,7 @@ _e_mod_comp_win_move_effects_add(E_Comp_Win *cw)
 
 //////////////////////////////////////////////////////////////////////////
 
-#if 0
+#if 1
 #define DBG(f, x...) printf(f, ##x)
 #else
 #define DBG(f, x...)
@@ -469,22 +469,26 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
                   e_mod_comp_update_clear(cw->up);
                   for (i = 0; r[i].w > 0; i++)
                     {
-                       unsigned int *pix;
                        int x, y, w, h;
                        
                        x = r[i].x; y = r[i].y;
                        w = r[i].w; h = r[i].h;
                        if (!ecore_x_image_get(cw->xim, cw->pixmap, x, y, x, y, w, h))
                          {
-                            printf("EEEEK! get failed\n");
+                            e_mod_comp_update_add(cw->up, x, y, w, h);
+                            cw->update = 1;
                          }
+                       else
+                         {
+                            unsigned int *pix;
 // why do we neeed these 2? this smells wrong
-                       pix = ecore_x_image_data_get(cw->xim, NULL, NULL, NULL);
-                       DBG("UPDATE [0x%x] %i %i %ix%i -- pix = %p\n", cw->win, x, y, w, h, pix);
-                       evas_object_image_data_set(cw->obj, pix);
+                            pix = ecore_x_image_data_get(cw->xim, NULL, NULL, NULL);
+                            DBG("UPDATE [0x%x] %i %i %ix%i -- pix = %p\n", cw->win, x, y, w, h, pix);
+                            evas_object_image_data_set(cw->obj, pix);
                        
-                       evas_object_image_data_update_add(cw->obj, x, y, w, h);
-                       if (cw->shaped) cw->shape_changed = 1;
+                            evas_object_image_data_update_add(cw->obj, x, y, w, h);
+                            if (cw->shaped) cw->shape_changed = 1;
+                         }
                     }
                   if ((cw->shape_changed) && (!cw->argb))
                     {

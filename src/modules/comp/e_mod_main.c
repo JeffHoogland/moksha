@@ -73,7 +73,7 @@ e_modapi_init(E_Module *m)
         mod->conf->texture_from_pixmap = 0;
         mod->conf->lock_fps = 1;
         mod->conf->efl_sync = 1;
-        mod->conf->loose_sync = 0;
+        mod->conf->loose_sync = 1;
         mod->conf->grab = 0;
         mod->conf->keep_unmapped = 1;
         mod->conf->send_flush = 1;
@@ -81,11 +81,13 @@ e_modapi_init(E_Module *m)
         mod->conf->max_unmapped_pixels =  32 * 1024;
         mod->conf->max_unmapped_time = 10 * 3600;
         mod->conf->min_unmapped_time = 5 * 60;
-        mod->conf->effect_fade = 1;
+        mod->conf->effect_fade = 0;
         mod->conf->effect_zoom = 0;
         mod->conf->effect_wobble = 0;
         mod->conf->effect_rotate = 0;
      }
+   
+   mod->conf->effect_fade = 0; // OOOFFF!!!
    
    _comp_mod = mod;
 
