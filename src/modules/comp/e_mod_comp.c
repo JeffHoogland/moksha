@@ -64,6 +64,7 @@ struct _E_Comp_Win
    E_Object_Delfn *dfn; // delete function handle for objects being tracked
    Ecore_X_Sync_Counter counter; // sync counter for syncronised drawing
    Ecore_Timer    *update_timeout; // max time between damage and "done" event
+   int             dmg_updates; // num of damage event updates since a redirect
    
    Eina_List      *effects; // list of effects attached to this window currently
 
@@ -501,6 +502,14 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
         else
           cw->update = 1;
      }
+   if ((!cw->update) && (cw->visible) && (cw->dmg_updates > 0))
+     {
+        if (!evas_object_visible_get(cw->obj))
+          {
+             evas_object_show(cw->obj);
+             if (cw->shobj) evas_object_show(cw->shobj);
+          }
+     }
    if (cw->shobj)
      {
         if (cw->shaped) evas_object_hide(cw->shobj);
@@ -832,6 +841,7 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
      {
         cw->redirected = 1;
         ecore_x_composite_redirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
+        cw->dmg_updates = 0;
      }
    DBG("  [0x%x] add\n", cw->win);
    return cw;
@@ -946,8 +956,8 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
              cw->pixmap = 0;
           }
         cw->redirected = 1;
+        cw->dmg_updates = 0;
      }
-   evas_object_show(cw->obj);
    if (cw->shobj)
      {
         if (_comp_mod->conf->use_shadow)
@@ -957,7 +967,7 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
                   int ok = 0;
                   char buf[PATH_MAX];
                   
-                 // fimxe: make shadow object configurable - use theme first
+                  // fimxe: make shadow object configurable - use theme first
                   if (_comp_mod->conf->shadow_file)
                     {
                        ok = 1;
@@ -981,9 +991,13 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
                                 );
                        edje_object_file_set(cw->shobj, buf, "shadow");
                     }
-                  evas_object_show(cw->shobj);
                }
           }
+     }
+   if (cw->dmg_updates > 0)
+     {
+        evas_object_show(cw->obj);
+        if (cw->shobj) evas_object_show(cw->shobj);
      }
    _e_mod_comp_win_render_queue(cw);
    _e_mod_comp_win_show_effects_add(cw);
@@ -1048,6 +1062,7 @@ _e_mod_comp_win_hide(E_Comp_Win *cw)
                   ecore_x_pixmap_free(cw->pixmap);
                   cw->pixmap = 0;
                }
+             cw->dmg_updates = 0;
           }
         return;
      }
@@ -1203,6 +1218,7 @@ _e_mod_comp_win_damage(E_Comp_Win *cw, int x, int y, int w, int h, Eina_Bool dmg
         parts = ecore_x_region_new(NULL, 0);
         ecore_x_damage_subtract(cw->damage, 0, parts);
         ecore_x_region_free(parts);
+        cw->dmg_updates++;
      }
    e_mod_comp_update_add(cw->up, x, y, w, h);
    if (dmg)
