@@ -1,0 +1,18 @@
+/**
+
+@mainpage Enlightenment
+
+@image html  e.png
+
+@version @PACKAGE_VERSION@
+@date 2000-2010
+
+@section intro Introduction
+
+@section compiling How to compile using Enlightenment?
+
+@section install How is it installed?
+
+@todo (0.17) Document API
+
+*/
