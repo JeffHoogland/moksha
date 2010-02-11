@@ -869,11 +869,6 @@ _e_mod_comp_win_del(E_Comp_Win *cw)
         else if (cw->menu) e_object_delfn_del(E_OBJECT(cw->menu), cw->dfn);
         cw->dfn = NULL;
      }
-   if (cw->native)
-     {
-        evas_object_image_native_surface_set(cw->obj, NULL);
-        cw->native = 0;
-     }
    if (cw->pixmap)
      {
         ecore_x_pixmap_free(cw->pixmap);
@@ -881,6 +876,9 @@ _e_mod_comp_win_del(E_Comp_Win *cw)
         cw->pw = 0;
         cw->ph = 0;
      }
+// segv?   
+//   evas_object_image_native_surface_set(cw->obj, NULL);
+//   cw->native = 0;
    if (cw->update)
      {
         cw->update = 0;
@@ -925,53 +923,36 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
    cw->visible = 1;
    DBG("  [0x%x] sho ++++++++++\n", cw->win);
    if ((cw->input_only) || (cw->invalid)) return;
-//   if (cw->redirected)
+   if (cw->pixmap) ecore_x_pixmap_free(cw->pixmap);
+   evas_object_image_size_set(cw->obj, cw->pw, cw->ph);
+   cw->pixmap = ecore_x_composite_name_window_pixmap_get(cw->win);
+   if (cw->pixmap)
+     ecore_x_pixmap_geometry_get(cw->pixmap, NULL, NULL, &(cw->pw), &(cw->ph));
+   else
      {
-/*        
-        if (cw->native) evas_object_image_native_surface_set(cw->obj, NULL);
-        if (cw->pixmap) ecore_x_pixmap_free(cw->pixmap);
-        evas_object_image_size_set(cw->obj, 1, 1);
-        cw->pixmap = 0;
         cw->pw = 0;
         cw->ph = 0;
-        cw->native = 0;
-        ecore_x_composite_unredirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
-        cw->redirected = 0;
- */
-        if (cw->pixmap) ecore_x_pixmap_free(cw->pixmap);
-        evas_object_image_size_set(cw->obj, cw->pw, cw->ph);
-//        ecore_x_window_resize(cw->win, cw->w + 10, cw->h + 10);
-        cw->pixmap = ecore_x_composite_name_window_pixmap_get(cw->win);
-        if (cw->pixmap)
-          ecore_x_pixmap_geometry_get(cw->pixmap, NULL, NULL, &(cw->pw), &(cw->ph));
-        else
-          {
-             cw->pw = 0;
-             cw->ph = 0;
-          }
-        if ((cw->pw <= 0) || (cw->ph <= 0))
-          {
-             ecore_x_pixmap_free(cw->pixmap);
-             cw->pixmap = 0;
-          }
-        if ((cw->c->gl) && (_comp_mod->conf->texture_from_pixmap) &&
-            (!cw->shaped) && (!cw->shape_changed) && (cw->pixmap))
-          {
-             Evas_Native_Surface ns;
-             
-             ns.data.x11.visual = cw->vis;
-             ns.data.x11.pixmap = cw->pixmap;
-             evas_object_image_native_surface_set(cw->obj, &ns);
-             DBG("NATIVE SHOW1 [0x%x] %x %ix%i\n", cw->win, cw->pixmap, cw->pw, cw->ph);
-             cw->native = 1;
-          }
-//        ecore_x_window_resize(cw->win, cw->w, cw->h);
-        if (cw->pixmap) ecore_x_pixmap_free(cw->pixmap);
-        cw->pixmap = 0; 
-        cw->pw = 0;
-        cw->ph = 0;
-        cw->native = 0;
      }
+   if ((cw->pw <= 0) || (cw->ph <= 0))
+     {
+        ecore_x_pixmap_free(cw->pixmap);
+        cw->pixmap = 0;
+     }
+   if ((cw->c->gl) && (_comp_mod->conf->texture_from_pixmap) &&
+       (!cw->shaped) && (!cw->shape_changed) && (cw->pixmap))
+     {
+        Evas_Native_Surface ns;
+        
+        ns.data.x11.visual = cw->vis;
+        ns.data.x11.pixmap = cw->pixmap;
+        evas_object_image_native_surface_set(cw->obj, &ns);
+        DBG("NATIVE SHOW1 [0x%x] %x %ix%i\n", cw->win, cw->pixmap, cw->pw, cw->ph);
+     }
+   if (cw->pixmap) ecore_x_pixmap_free(cw->pixmap);
+   cw->pixmap = 0; 
+   cw->pw = 0;
+   cw->ph = 0;
+   cw->native = 0;
    if (!cw->redirected)
      {
         ecore_x_composite_redirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
@@ -1016,7 +997,7 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
                                                     "base/theme/borders",
                                                     "e/shadow/box"))
                          ok = 0;
-                    }
+                   }
                   if (!ok)
                     {
                        snprintf(buf, sizeof(buf), "%s/shadow.edj", 
@@ -1073,15 +1054,12 @@ _e_mod_comp_win_hide(E_Comp_Win *cw)
         // getting pixmap againand well - getting texture too again. why?
         if (cw->redirected)
           {
-             if (cw->native) evas_object_image_native_surface_set(cw->obj, NULL);
              if (cw->pixmap) ecore_x_pixmap_free(cw->pixmap);
              evas_object_image_size_set(cw->obj, 1, 1);
              cw->pixmap = 0;
              cw->pw = 0;
              cw->ph = 0;
              cw->native = 0;
-             ecore_x_composite_unredirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
-             ecore_x_composite_redirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
              cw->pixmap = ecore_x_composite_name_window_pixmap_get(cw->win);
              if (cw->pixmap)
                ecore_x_pixmap_geometry_get(cw->pixmap, NULL, NULL, &(cw->pw), &(cw->ph));
