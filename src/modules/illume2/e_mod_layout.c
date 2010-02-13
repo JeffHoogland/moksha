@@ -43,10 +43,11 @@ e_mod_layout_init(void)
    /* add our border hooks */
    _e_mod_layout_hooks_add();
 
+   /* add event type FIRST */
+   E_ILLUME_EVENT_POLICY_CHANGE = ecore_event_type_new();
+
    /* add our event handlers */
    _e_mod_layout_handlers_add();
-
-   E_ILLUME_EVENT_POLICY_CHANGE = ecore_event_type_new();
 
    return 1;
 }
