@@ -80,11 +80,11 @@ _connman_service_move_cb(void *data, DBusMessage *msg __UNUSED__, DBusError *err
    struct connman_service_move_data *d = data;
    if (error && dbus_error_is_set(error))
      {
-	_connman_dbus_error_show(__func__, error);
+	ERR("%s method failed with message \'%s\'", error->name, error->message);
 	dbus_error_free(error);
      }
    else
-     printf("Changed service order");
+     DBG("Changed service order");
 
    eina_stringshare_del(d->service_ref_path);
    eina_stringshare_del(d->service_path);
@@ -105,8 +105,7 @@ _connman_service_move(E_Connman_Service *service, const E_Connman_Service *servi
    d->service_path = eina_stringshare_ref(service->path);
    d->ctxt = service->ctxt;
 
-   printf("DBG CONNMAN Move %s %s %s\n", d->service_path, direction==SERVICE_MOVE_UP?"before":"after", d->service_ref_path);
-
+   DBG("Try to move %s %s %s\n", d->service_path, direction==SERVICE_MOVE_UP?"before":"after", d->service_ref_path);
    if (direction == SERVICE_MOVE_UP)
      ret =  e_connman_service_move_before(service->element, d->service_ref_path, _connman_service_move_cb, d);
    else
@@ -134,7 +133,7 @@ _connman_technology_onoff_cb(void *data, DBusMessage *msg __UNUSED__, DBusError 
    struct _connman_technology_onoff_data *d = data;
    if (error && dbus_error_is_set(error))
      {
-	_connman_dbus_error_show(__func__, error);
+	ERR("%s method failed with message \'%s\'.", error->name, error->message);
 	dbus_error_free(error);
      }
    else
@@ -142,13 +141,13 @@ _connman_technology_onoff_cb(void *data, DBusMessage *msg __UNUSED__, DBusError 
 	/* TODO: update config dialog */
 	E_Connman_Technology *t;
 	t = _connman_technology_find(d->ctxt, d->name);
-	if (!t)
+	if (t)
 	  {
-	     printf("DBG CONNMAN Technology does not exist anymore\n", d->name);
-	     return;
+	     t->enabled = d->on;
+	     DBG("Technology %s has been %s.", d->name, d->on?"enabled":"disabled");
 	  }
-	t->enabled = d->on;
-	printf("Technology %s has been %s\n", d->name, d->on?"enabled":"disabled");
+	else
+	  WRN("Technology does not exist anymore: %s.", d->name);
      }
 
    eina_stringshare_del(d->name);
@@ -333,7 +332,7 @@ _networks_fill_details(E_Config_Dialog_Data *cfdata, Evas_Object *list, int sel)
    service = _connman_ctxt_find_service_stringshare(ctxt, cfdata->selected_network);
    if (!service)
      {
-	printf("ERROR: service not found: %s\n", cfdata->selected_network);
+	ERR("service not found: %s.", cfdata->selected_network);
 	return;
      }
    e_widget_label_text_set(ui->lb_autoconn_val, service->auto_connect?"True":"False");
@@ -556,16 +555,10 @@ _basic_apply(E_Config_Dialog *dialog, E_Config_Dialog_Data *cfdata)
    EINA_INLIST_FOREACH(sw->technologies, t)
      {
 	if (t->val != t->technology->enabled)
-	  {
-	     _connman_technology_onoff(ctxt, t->technology->name, t->val);
-	     PRINT_VAR_NAME_VAL_INT ("DBG CONNMAN ", t->val);
-	  }
+	  _connman_technology_onoff(ctxt, t->technology->name, t->val);
      }
    if (ctxt->offline_mode != sw->offline_mode)
-     {
-	_connman_toggle_offline_mode(ctxt);
-	PRINT_VAR_NAME_VAL_INT ("DBG CONNMAN ", sw->offline_mode);
-     }
+     _connman_toggle_offline_mode(ctxt);
 
    return 1;
 }

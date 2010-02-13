@@ -34,6 +34,7 @@ static char tmpbuf[PATH_MAX]; /* general purpose buffer, just use immediately */
 
 const char _e_connman_name[] = "connman";
 const char _e_connman_Name[] = "Connection Manager";
+int _e_connman_log_dom = -1;
 
 static const char *e_str_idle = NULL;
 static const char *e_str_association = NULL;
@@ -364,7 +365,7 @@ _connman_service_changed(void *data, const E_Connman_Element *element)
        (!service->ctxt->default_service))
      _connman_default_service_changed_delayed(service->ctxt);
    else
-     printf("DBG CONNMAN: do not request for delayed changed as this is not the default.\n");
+     DBG("Do not request for delayed changed as this is not the default.");
 }
 
 static void
@@ -682,7 +683,7 @@ _connman_technologies_enabled_update()
       (&_connman_enabled_technologies.count, &_connman_enabled_technologies.names);
    if (!ret)
      {
-        printf("DBG CONNMAN enabled technologies?\n");
+	WRN("Failed to query enabled technologies.");
         return 0;
      }
    return 1;
@@ -694,17 +695,18 @@ _connman_technology_enabled(const char *type)
    int i;
    if (!_connman_enabled_technologies.names && !_connman_technologies_enabled_update())
      return 0;
-   printf("DBG CONNMAN %d technologies enabled\n", _connman_enabled_technologies.count);
-   printf("DBG CONNMAN technology enabled: %s", type);
+   DBG("%d technologies enabled.", _connman_enabled_technologies.count);
+
    for (i = 0; i < _connman_enabled_technologies.count; i++)
      {
         if(!strcmp(type, _connman_enabled_technologies.names[i]))
           {
-             printf(" ... yes\n");
+	     DBG("Technology %s is enabled.", type);
              return 1;
           }
+
      }
-   printf(" ... no\n");
+   DBG("Technology %s is disabled.", type);
    return 0;
 }
 
@@ -724,8 +726,11 @@ _connman_technologies_free(E_Connman_Module_Context *ctxt)
 void
 _connman_request_scan_cb(void *data __UNUSED__, DBusMessage *msg __UNUSED__, DBusError *error)
 {
-   if (dbus_error_is_set(error))
-     _connman_dbus_error_show(__func__, error);
+   if (error && dbus_error_is_set(error))
+     {
+	ERR("%s method failed with message \'%s\'", error->name, error->message);
+	dbus_error_free(error);
+     }
 
    return;
 }
@@ -739,7 +744,7 @@ _connman_technologies_load(E_Connman_Module_Context *ctxt)
    if (!e_connman_manager_technologies_available_get(&count, &names))
      return;
 
-   printf("DBG CONNMAN technologies = %d\n", count);
+   DBG("Available Technologies = %d.", count);
    for (i = 0; i < count; i++)
      {
 	const char *name = eina_stringshare_add(names[i]);
@@ -753,12 +758,13 @@ _connman_technologies_load(E_Connman_Module_Context *ctxt)
 	t = E_NEW(E_Connman_Technology, 1);
 	t->name = name;
 	t->enabled = _connman_technology_enabled(name);
-	printf("DBG CONNMAN added technology: %s\n", t->name);
 	ctxt->technologies = eina_inlist_append(ctxt->technologies, EINA_INLIST_GET(t));
+
+	DBG("Added technology: %s.", t->name);
      }
 
    if (!e_connman_manager_request_scan("", _connman_request_scan_cb, NULL))
-     printf("DBG CONNMAN request scan on all technologies failed\n");
+     ERR("Request scan on all technologies failed.");
    free(names);
 }
 
@@ -783,13 +789,12 @@ _connman_services_load(E_Connman_Module_Context *ctxt)
 	if (!service)
 	  continue;
 
-	printf("DBG CONNMAN added service: %s\n", service->name);
+	DBG("Added service: %s\n", service->name);
 	ctxt->services = eina_inlist_append
 	  (ctxt->services, EINA_INLIST_GET(service));
      }
 
    /* no need to remove elements, as they remove themselves */
-
    free(elements);
 }
 
@@ -815,12 +820,12 @@ _connman_default_service_changed(E_Connman_Module_Context *ctxt)
 	  def = itr;
      }
 
-   printf("DBG CONNMAN: default service changed to %p (%s)\n", def, def ? def->name : "");
+   DBG("Default service changed to %p (%s)", def, def ? def->name : "");
 
    if (!e_connman_manager_technology_default_get(&tech))
      tech = NULL;
    eina_stringshare_replace(&ctxt->technology, tech);
-   printf("DBG CONNMAN: manager technology is '%s'\n", tech);
+   DBG("Manager technology is '%s'", tech);
 
    if (!e_connman_manager_offline_mode_get(&ctxt->offline_mode))
      ctxt->offline_mode = EINA_FALSE;
@@ -849,9 +854,9 @@ static int
 _connman_default_service_changed_delayed_do(void *data)
 {
    E_Connman_Module_Context *ctxt = data;
+   DBG("Do delayed change.");
 
    ctxt->poller.default_service_changed = NULL;
-   printf("\033[32mDBG CONNMAN: do delayed change\033[0m\n");
    _connman_default_service_changed(ctxt);
    return 0;
 }
@@ -861,7 +866,7 @@ _connman_default_service_changed_delayed(E_Connman_Module_Context *ctxt)
 {
    if (!ctxt->has_manager)
      return;
-   printf("\033[1;31mDBG CONNMAN: request delayed change\033[0m\n");
+   DBG("Request delayed change.");
    if (ctxt->poller.default_service_changed)
      ecore_poller_del(ctxt->poller.default_service_changed);
    ctxt->poller.default_service_changed = ecore_poller_add
@@ -1801,6 +1806,16 @@ e_modapi_init(E_Module *m)
    ctxt->conf_dialog = NULL;
    connman_mod = m;
 
+   if (_e_connman_log_dom < 0)
+     {
+	_e_connman_log_dom = eina_log_domain_register("econnman", EINA_COLOR_ORANGE);
+	if (_e_connman_log_dom < 0)
+	  {
+	     EINA_LOG_CRIT("could not register logging domain econnman");
+	     goto error_log_domain;
+	  }
+     }
+
    _connman_configure_registry_register();
    _connman_actions_register(ctxt);
    e_gadcon_provider_register(&_gc_class);
@@ -1809,6 +1824,10 @@ e_modapi_init(E_Module *m)
 
    return ctxt;
 
+error_log_domain:
+   _e_connman_log_dom = -1;
+   connman_mod = NULL;
+   E_FREE(ctxt);
 error_connman_context:
    e_connman_system_shutdown();
 error_connman_system_init:

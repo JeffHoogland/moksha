@@ -7,9 +7,14 @@
 #include "config.h"
 #include <e.h>
 #include <E_Connman.h>
+#include <eina_log.h>
 
 #define MOD_CONF_VERSION 2
-#define PRINT_VAR_NAME_VAL_INT(prefix, x) printf(prefix #x " = %d\n", x)
+
+extern int _e_connman_log_dom;
+#define DBG(...) EINA_LOG_DOM_DBG(_e_connman_log_dom, __VA_ARGS__)
+#define WRN(...) EINA_LOG_DOM_WARN(_e_connman_log_dom, __VA_ARGS__)
+#define ERR(...) EINA_LOG_DOM_ERR(_e_connman_log_dom, __VA_ARGS__)
 
 typedef struct E_Connman_Instance E_Connman_Instance;
 typedef struct E_Connman_Module_Context E_Connman_Module_Context;
