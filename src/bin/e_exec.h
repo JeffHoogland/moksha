@@ -12,6 +12,7 @@ typedef struct _E_Exec_Instance E_Exec_Instance;
 struct _E_Exec_Instance
 {
    Efreet_Desktop *desktop;
+   const char     *key;
    Ecore_Exe      *exe;
    int             startup_id;
    double          launch_time;

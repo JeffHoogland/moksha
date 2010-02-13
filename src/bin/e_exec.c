@@ -113,17 +113,14 @@ e_exec(E_Zone *zone, Efreet_Desktop *desktop, const char *exec,
      }
    if (launch_method) 
      launch->launch_method = eina_stringshare_add(launch_method);
-
+   
    if (desktop)
      {
 	if (exec)
 	  inst = _e_exec_cb_exec(launch, NULL, strdup(exec), 0);
 	else 
-          {
-             inst = 
-               efreet_desktop_command_get(desktop, files, 
-                                          _e_exec_cb_exec, launch);
-          }
+          inst = efreet_desktop_command_get(desktop, files, 
+                                            _e_exec_cb_exec, launch);
      }
    else
      inst = _e_exec_cb_exec(launch, NULL, strdup(exec), 0);
@@ -242,28 +239,24 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
    if (desktop)
      {
 	Eina_List *l;
-
+        
 	efreet_desktop_ref(desktop);
 	inst->desktop = desktop;
+        inst->key = eina_stringshare_add(desktop->orig_path);
 	inst->exe = exe;
 	inst->startup_id = startup_id;
 	inst->launch_time = ecore_time_get();
 	inst->expire_timer = ecore_timer_add(e_config->exec.expire_timeout, 
                                              _e_exec_cb_expire_timer, inst);
-
+        
 	l = eina_hash_find(e_exec_instances, desktop->orig_path);
+        l = eina_list_append(l, inst);
 	if (l)
-	  {
-	     l = eina_list_append(l, inst);
-	     eina_hash_modify(e_exec_instances, desktop->orig_path, l);
-	  }
+          eina_hash_modify(e_exec_instances, desktop->orig_path, l);
 	else
-	  {
-	     l = eina_list_append(l, inst);
-	     eina_hash_add(e_exec_instances, desktop->orig_path, l);
-	  }
+          eina_hash_add(e_exec_instances, desktop->orig_path, l);
 	e_exec_start_pending = eina_list_append(e_exec_start_pending, desktop);
-
+        
 	e_exehist_add(launch->launch_method, desktop->exec);
      }
    else if (exe)
@@ -272,12 +265,12 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
 	inst = NULL;
 	ecore_exe_free(exe);
      }
-
+   
    if (!remaining)
      {
 	if (launch->launch_method) eina_stringshare_del(launch->launch_method);
 	if (launch->zone) e_object_unref(E_OBJECT(launch->zone));
-      	free(launch);
+        free(launch);
      }
    return inst;
 }
@@ -298,17 +291,18 @@ _e_exec_instance_free(E_Exec_Instance *inst)
 {
    Eina_List *instances;
    
-   if (inst->desktop)
+   if (inst->key)
      {
-	instances = eina_hash_find(e_exec_instances, inst->desktop->orig_path);
+	instances = eina_hash_find(e_exec_instances, inst->key);
 	if (instances)
 	  {
 	     instances = eina_list_remove(instances, inst);
 	     if (instances)
-	       eina_hash_modify(e_exec_instances, inst->desktop->orig_path, instances);
+	       eina_hash_modify(e_exec_instances, inst->key, instances);
 	     else
-	       eina_hash_del(e_exec_instances, inst->desktop->orig_path, NULL);
+	       eina_hash_del(e_exec_instances, inst->key, NULL);
 	  }
+        eina_stringshare_del(inst->key);
      }
    e_exec_start_pending = eina_list_remove(e_exec_start_pending, inst->desktop);
    if (inst->expire_timer) ecore_timer_del(inst->expire_timer);
@@ -322,7 +316,6 @@ static int
 _e_exec_cb_instance_finish(void *data)
 {
    _e_exec_instance_free(data);
-   
    return 0;
 }
 
@@ -337,7 +330,8 @@ _e_exec_cb_exit(void *data, int type, void *event)
    if (!ev->exe) return 1;
 //   if (ecore_exe_tag_get(ev->exe)) printf("  tag %s\n", ecore_exe_tag_get(ev->exe));
    if (!(ecore_exe_tag_get(ev->exe) && 
-	 (!strcmp(ecore_exe_tag_get(ev->exe), "E/exec")))) return 1;
+	 (!strcmp(ecore_exe_tag_get(ev->exe), "E/exec"))))
+     return 1;
    inst = ecore_exe_data_get(ev->exe);
    if (!inst) return 1;
 
@@ -395,8 +389,9 @@ _e_exec_cb_exit(void *data, int type, void *event)
    /* maybe better 1 minute? it might be openoffice */
    if (ecore_time_get() - inst->launch_time < 2.0)
      {
+        inst->exe = NULL;
 	if (inst->expire_timer) ecore_timer_del(inst->expire_timer);
-	inst->expire_timer = ecore_timer_add(e_config->exec.expire_timeout, _e_exec_cb_instance_finish, inst); 
+	inst->expire_timer = ecore_timer_add(e_config->exec.expire_timeout, _e_exec_cb_instance_finish, inst);
      }
    else
      _e_exec_instance_free(inst);
@@ -412,16 +407,17 @@ _e_exec_startup_id_pid_find(const Eina_Hash *hash __UNUSED__, const void *key __
    Eina_List *l;
 
    search = data;
-
    EINA_LIST_FOREACH(value, l, inst)
-     if (((search->startup_id > 0) && (search->startup_id == inst->startup_id)) ||
-         ((inst->exe) && (search->pid > 1) && 
-          (search->pid == ecore_exe_pid_get(inst->exe))))
-       {
-          search->desktop = inst->desktop;
-          return EINA_FALSE;
-       }
-
+     {
+        if (((search->startup_id > 0) && 
+             (search->startup_id == inst->startup_id)) ||
+            ((inst->exe) && (search->pid > 1) && 
+             (search->pid == ecore_exe_pid_get(inst->exe))))
+          {
+             search->desktop = inst->desktop;
+             return EINA_FALSE;
+          }
+     }
    return EINA_TRUE;
 }
 
