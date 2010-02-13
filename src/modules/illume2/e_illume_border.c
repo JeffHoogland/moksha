@@ -38,7 +38,8 @@ e_illume_border_is_keyboard(E_Border *bd)
         char *title;
         int ret = 0;
 
-        title = bd->client.icccm.title;
+        title = bd->client.netwm.name;
+        if (!title) title = bd->client.icccm.title;
         if ((title) && 
             (!strcmp(title, il_cfg->policy.vkbd.title))) 
           ret = 1;
@@ -72,7 +73,8 @@ e_illume_border_is_bottom_panel(E_Border *bd)
         char *title;
         int ret = 0;
 
-        title = bd->client.icccm.title;
+        title = bd->client.netwm.name;
+        if (!title) title = bd->client.icccm.title;
         if ((title) && 
             (!strcmp(title, il_cfg->policy.softkey.title))) 
           ret = 1;
@@ -105,7 +107,8 @@ e_illume_border_is_top_shelf(E_Border *bd)
         char *title;
         int ret = 0;
 
-        title = bd->client.icccm.title;
+        title = bd->client.netwm.name;
+        if (!title) title = bd->client.icccm.title;
         if ((title) && 
             (!strcmp(title, il_cfg->policy.indicator.title))) 
           ret = 1;
@@ -135,7 +138,8 @@ e_illume_border_is_home(E_Border *bd)
         char *title;
         int ret = 0;
 
-        title = bd->client.icccm.title;
+        title = bd->client.netwm.name;
+        if (!title) title = bd->client.icccm.title;
         if ((title) && 
             (!strcmp(title, il_cfg->policy.home.title))) 
           ret = 1;
