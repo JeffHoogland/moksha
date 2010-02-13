@@ -1756,28 +1756,45 @@ _connman_events_unregister(E_Connman_Module_Context *ctxt)
      ecore_event_handler_del(ctxt->event.mode_changed);
 }
 
-EAPI void *
-e_modapi_init(E_Module *m)
+static inline void
+_connman_status_stringshare_init(void)
 {
-   E_Connman_Module_Context *ctxt;
-   E_DBus_Connection *c;
-
    e_str_idle = eina_stringshare_add(N_("idle"));
    e_str_association = eina_stringshare_add(N_("association"));
    e_str_configuration = eina_stringshare_add(N_("configuration"));
    e_str_ready = eina_stringshare_add(N_("ready"));
    e_str_disconnect = eina_stringshare_add(N_("disconnect"));
    e_str_failure = eina_stringshare_add(N_("failure"));
+}
+
+static inline void
+_connman_status_stringshare_del(void)
+{
+   eina_stringshare_replace(&e_str_idle, NULL);
+   eina_stringshare_replace(&e_str_association, NULL);
+   eina_stringshare_replace(&e_str_configuration, NULL);
+   eina_stringshare_replace(&e_str_ready, NULL);
+   eina_stringshare_replace(&e_str_disconnect, NULL);
+   eina_stringshare_replace(&e_str_failure, NULL);
+}
+
+EAPI void *
+e_modapi_init(E_Module *m)
+{
+   E_Connman_Module_Context *ctxt;
+   E_DBus_Connection *c;
+
+   _connman_status_stringshare_init();
 
    c = e_dbus_bus_get(DBUS_BUS_SYSTEM);
    if (!c)
-     return NULL;
+     goto error_dbus_bus_get;
    if (!e_connman_system_init(c))
-     return NULL;
+     goto error_connman_system_init;
 
    ctxt = E_NEW(E_Connman_Module_Context, 1);
    if (!ctxt)
-     return NULL;
+     goto error_connman_context;
 
    ctxt->services = NULL;
    ctxt->technologies = NULL;
@@ -1791,6 +1808,13 @@ e_modapi_init(E_Module *m)
    _connman_events_register(ctxt);
 
    return ctxt;
+
+error_connman_context:
+   e_connman_system_shutdown();
+error_connman_system_init:
+error_dbus_bus_get:
+   _connman_status_stringshare_del();
+   return NULL;
 }
 
 static void
@@ -1843,13 +1867,7 @@ e_modapi_shutdown(E_Module *m)
 
    e_connman_system_shutdown();
 
-   eina_stringshare_replace(&e_str_idle, NULL);
-   eina_stringshare_replace(&e_str_association, NULL);
-   eina_stringshare_replace(&e_str_configuration, NULL);
-   eina_stringshare_replace(&e_str_ready, NULL);
-   eina_stringshare_replace(&e_str_disconnect, NULL);
-   eina_stringshare_replace(&e_str_failure, NULL);
-
+   _connman_status_stringshare_del();
    return 1;
 }
 
