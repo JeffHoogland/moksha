@@ -35,12 +35,10 @@ e_illume_border_is_keyboard(E_Border *bd)
    if (bd->client.vkbd.vkbd) return 1;
    if (il_cfg->policy.vkbd.match.title) 
      {
-        char *title;
+        const char *title;
 
-        title = bd->client.netwm.name;
-        if (!title) title = bd->client.icccm.title;
-        if ((title) && 
-            (!strcmp(title, il_cfg->policy.vkbd.title))) 
+        title = e_border_name_get(bd);
+        if (!strcmp(title, il_cfg->policy.vkbd.title))
           return 1;
      }
    if (il_cfg->policy.vkbd.match.name) 
@@ -68,13 +66,10 @@ e_illume_border_is_bottom_panel(E_Border *bd)
 {
    if (il_cfg->policy.softkey.match.title) 
      {
-        char *title;
-        int ret = 0;
+        const char *title;
 
-        title = bd->client.netwm.name;
-        if (!title) title = bd->client.icccm.title;
-        if ((title) && 
-            (!strcmp(title, il_cfg->policy.softkey.title))) 
+        title = e_border_name_get(bd);
+        if (!strcmp(title, il_cfg->policy.softkey.title))
           return 1;
      }
    if (il_cfg->policy.softkey.match.name) 
@@ -100,12 +95,10 @@ e_illume_border_is_top_shelf(E_Border *bd)
 {
    if (il_cfg->policy.indicator.match.title) 
      {
-        char *title;
+        const char *title;
 
-        title = bd->client.netwm.name;
-        if (!title) title = bd->client.icccm.title;
-        if ((title) && 
-            (!strcmp(title, il_cfg->policy.indicator.title))) 
+        title = e_border_name_get(bd);
+        if (!strcmp(title, il_cfg->policy.indicator.title))
           return 1;
      }
    if (il_cfg->policy.indicator.match.name) 
