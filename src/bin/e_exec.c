@@ -202,6 +202,10 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
    snprintf(buf, sizeof(buf), "E_START|%i", startup_id);
    e_util_env_set("DESKTOP_STARTUP_ID", buf);
 
+   // dont set vsync for clients - maybe inherited from compositore. fixme:
+   // need a way to still inherit from parent env of wm.
+   e_util_env_set("__GL_SYNC_TO_VBLANK", NULL);
+   
    e_util_library_path_strip();
 //// FIXME: seem to be some issues with the pipe and filling up ram - need to
 //// check. for now disable.   

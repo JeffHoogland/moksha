@@ -15,6 +15,7 @@ struct _Config
    unsigned char    loose_sync;
    unsigned char    efl_sync;
    unsigned char    grab;
+   unsigned char    vsync;
    unsigned char    keep_unmapped;
    unsigned char    send_flush;
    unsigned char    send_dump;

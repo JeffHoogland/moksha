@@ -52,6 +52,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, efl_sync, UCHAR);
    E_CONFIG_VAL(D, T, loose_sync, UCHAR);
    E_CONFIG_VAL(D, T, grab, UCHAR);
+   E_CONFIG_VAL(D, T, vsync, UCHAR);
    E_CONFIG_VAL(D, T, keep_unmapped, UCHAR);
    E_CONFIG_VAL(D, T, send_flush, UCHAR);
    E_CONFIG_VAL(D, T, send_dump, UCHAR);
@@ -75,6 +76,7 @@ e_modapi_init(E_Module *m)
         mod->conf->efl_sync = 1;
         mod->conf->loose_sync = 1;
         mod->conf->grab = 0;
+        mod->conf->vsync = 1;
         mod->conf->keep_unmapped = 1;
         mod->conf->send_flush = 1;
         mod->conf->send_dump = 0;

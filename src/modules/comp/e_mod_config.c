@@ -13,6 +13,7 @@ struct _E_Config_Dialog_Data
    int efl_sync;
    int loose_sync;
    int grab;
+   int vsync;
    
    int keep_unmapped;
    int max_unmapped_pixels;
@@ -76,6 +77,7 @@ _create_data(E_Config_Dialog *cfd)
    cfdata->efl_sync = _comp_mod->conf->efl_sync;
    cfdata->loose_sync = _comp_mod->conf->loose_sync;
    cfdata->grab = _comp_mod->conf->grab;
+   cfdata->vsync = _comp_mod->conf->vsync;
 
    cfdata->keep_unmapped = _comp_mod->conf->keep_unmapped;
    cfdata->max_unmapped_pixels = _comp_mod->conf->max_unmapped_pixels;
@@ -128,11 +130,13 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    
    ///////////////////////////////////////////
    ol = e_widget_list_add(evas, 0, 0);
+   ob = e_widget_check_add(evas, _("Sync screen (VBlank)"), &(cfdata->vsync));
+   e_widget_list_object_append(ol, ob, 1, 1, 0.5);
    ob = e_widget_check_add(evas, _("Sync windows"), &(cfdata->efl_sync));
    e_widget_list_object_append(ol, ob, 1, 1, 0.5);
    ob = e_widget_check_add(evas, _("Loose sync"), &(cfdata->loose_sync));
    e_widget_list_object_append(ol, ob, 1, 1, 0.5);
-   ob = e_widget_check_add(evas, _("Grab X11 during draw"), &(cfdata->grab));
+   ob = e_widget_check_add(evas, _("Grab Server during draw"), &(cfdata->grab));
    e_widget_list_object_append(ol, ob, 1, 1, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Sync"), ol, 0, 0, 0, 0, 0.5, 0.0);
    
@@ -244,12 +248,14 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if ((_comp_mod->conf->engine != cfdata->engine) ||
        (cfdata->texture_from_pixmap != _comp_mod->conf->texture_from_pixmap) ||
        (cfdata->efl_sync != _comp_mod->conf->efl_sync) ||
-       (cfdata->loose_sync != _comp_mod->conf->loose_sync))
+       (cfdata->loose_sync != _comp_mod->conf->loose_sync) ||
+       (cfdata->vsync != _comp_mod->conf->vsync))
      {
         _comp_mod->conf->engine = cfdata->engine;
         _comp_mod->conf->texture_from_pixmap = cfdata->texture_from_pixmap;
         _comp_mod->conf->efl_sync = cfdata->efl_sync;
         _comp_mod->conf->loose_sync = cfdata->loose_sync;
+        _comp_mod->conf->vsync = cfdata->vsync;
         e_mod_comp_shutdown();
         e_mod_comp_init();
      }
