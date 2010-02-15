@@ -501,11 +501,9 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
 		  if (!app) continue;
 
-		  eina_stringshare_del(EVRY_ITEM(app)->label);
-		  if (!space)
-		    EVRY_ITEM(app)->label = eina_stringshare_add(file);
-		  else
+		  if (space)
 		    {
+		       eina_stringshare_del(EVRY_ITEM(app)->label);
 		       snprintf(buf, sizeof(buf), "%s%s", file, space);
 		       EVRY_ITEM(app)->label = eina_stringshare_add(buf);
 		       eina_stringshare_del(app->file);
@@ -729,7 +727,7 @@ _new_app_action(Evry_Action *act)
    return 1;
 }
 
-#define TIME_FACTOR(_now) (1.0 - (evry_hist->begin / _now)) / 1000000000000000.0
+//#define TIME_FACTOR(_now) (1.0 - (evry_hist->begin / _now)) / 1000000000000000.0
 
 static Eina_Bool
 _init(void)
@@ -789,7 +787,7 @@ _init(void)
    name = EVRY_PLUGIN(p1)->name;
    double t;
    int found = 0;
-
+   /*
    evry_history_load();
    
    EINA_LIST_FOREACH(e_exehist_list_get(), l, file)
@@ -832,7 +830,7 @@ _init(void)
 	found = 0;
      }
    evry_history_unload();
-   
+   */
    /* taken from e_exebuf.c */
    exelist_exe_edd = E_CONFIG_DD_NEW("E_Exe", E_Exe);
 #undef T
