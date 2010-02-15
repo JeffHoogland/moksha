@@ -1,13 +1,13 @@
-[Desktop Entry]
+t[Desktop Entry]
 Type=Link
 Name=Settings - Wallpaper 2
 Name[cs]=Nastavení - pozadí plochy
 Name[de]=
 Name[eo]=Agordo - Tapeto
 Name[es]=Configuración - Fondo de pantalla
-Name[fr]=Configuration - Fond d'écran
+Name[fr]=Configuration - Fond d'écran 2
 Name[hu]=Beállítások - Háttérkép
-Name[it]=Configurazione - Sfondo
+Name[it]=Configurazione - Sfondo 2
 Name[ja]=
 Name[pt]=
 Name[pt_BR]=
@@ -20,7 +20,7 @@ Comment[cs]=<title>E17 applet nastavení</title><br>Použit k volbě pozadí.
 Comment[de]=
 Comment[eo]=<title>Aplikaĵeto de E17 agordo<title><br>Elekti tapeton.
 Comment[es]=<title>Applet de configuración de E17</title><br>Para elegir un fondo de pantalla.
-Comment[fr]=<title>Appliquette de configuration pour E17</title><br>Permet de choisir un fond d'écran.
+Comment[fr]=<title>Appliquette de configuration pour E17</title><br>Sélection du fond d'écran.
 Comment[hu]=<title>E17 beállító alkalmazás</title><br>Háttérkép beállító modul.
 Comment[it]=<title>Applet configurazione di E17</title><br>Usato per selezionare uno sfondo.
 Comment[ja]=
