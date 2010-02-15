@@ -47,6 +47,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, use_shadow, UCHAR);
    E_CONFIG_VAL(D, T, shadow_file, STR);
    E_CONFIG_VAL(D, T, engine, INT);
+   E_CONFIG_VAL(D, T, indirect, UCHAR);
    E_CONFIG_VAL(D, T, texture_from_pixmap, UCHAR);
    E_CONFIG_VAL(D, T, lock_fps, UCHAR);
    E_CONFIG_VAL(D, T, efl_sync, UCHAR);
@@ -71,7 +72,8 @@ e_modapi_init(E_Module *m)
         mod->conf->use_shadow = 1;
         mod->conf->shadow_file = NULL;
         mod->conf->engine = E_EVAS_ENGINE_SOFTWARE_X11;
-        mod->conf->texture_from_pixmap = 0;
+        mod->conf->indirect = 0;
+        mod->conf->texture_from_pixmap = 0; 
         mod->conf->lock_fps = 1;
         mod->conf->efl_sync = 1;
         mod->conf->loose_sync = 1;

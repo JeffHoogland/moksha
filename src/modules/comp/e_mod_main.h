@@ -10,6 +10,7 @@ struct _Config
    unsigned char    use_shadow;
    const char      *shadow_file;
    int              engine;
+   unsigned char    indirect;
    unsigned char    texture_from_pixmap;
    unsigned char    lock_fps;
    unsigned char    loose_sync;

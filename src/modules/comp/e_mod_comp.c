@@ -876,6 +876,13 @@ _e_mod_comp_win_del(E_Comp_Win *cw)
         cw->pw = 0;
         cw->ph = 0;
      }
+   if (cw->redirected)
+     {
+        ecore_x_composite_unredirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
+        cw->redirected = 0;
+        cw->pw = 0;
+        cw->ph = 0;
+     }
 // segv?   
 //   evas_object_image_native_surface_set(cw->obj, NULL);
 //   cw->native = 0;
@@ -1632,7 +1639,17 @@ _e_mod_comp_add(E_Manager *man)
    
    if (_comp_mod->conf->engine == E_EVAS_ENGINE_GL_X11)
      {
-        c->ee = ecore_evas_gl_x11_new(NULL, c->win, 0, 0, man->w, man->h);
+        if (_comp_mod->conf->indirect)
+          {
+             const int opt[] = 
+               { ECORE_EVAS_GL_X11_OPT_INDIRECT, 1,
+                    ECORE_EVAS_GL_X11_OPT_NONE 
+               };
+             c->ee = ecore_evas_gl_x11_options_new
+               (NULL, c->win, 0, 0, man->w, man->h, opt);
+          }
+        if (!c->ee)
+          c->ee = ecore_evas_gl_x11_new(NULL, c->win, 0, 0, man->w, man->h);
         if (c->ee)
           {
              c->gl = 1;

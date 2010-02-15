@@ -8,6 +8,7 @@ struct _E_Config_Dialog_Data
 {
    int use_shadow;
    int engine;
+   int indirect;
    int texture_from_pixmap;
    int lock_fps;
    int efl_sync;
@@ -72,6 +73,7 @@ _create_data(E_Config_Dialog *cfd)
    if ((cfdata->engine != E_EVAS_ENGINE_SOFTWARE_X11) &&
        (cfdata->engine != E_EVAS_ENGINE_GL_X11))
      cfdata->engine = E_EVAS_ENGINE_SOFTWARE_X11;
+   cfdata->indirect = _comp_mod->conf->indirect;
    cfdata->texture_from_pixmap = _comp_mod->conf->texture_from_pixmap;
    cfdata->lock_fps = _comp_mod->conf->lock_fps;
    cfdata->efl_sync = _comp_mod->conf->efl_sync;
@@ -153,6 +155,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    of = e_widget_framelist_add(evas, _("OpenGL options"), 0);
    e_widget_framelist_content_align_set(of, 0.5, 0.0);
    ob = e_widget_check_add(evas, _("Texture from pixmap"), &(cfdata->texture_from_pixmap));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_check_add(evas, _("Indirect OpenGL"), &(cfdata->indirect));
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(ol, of, 1, 1, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Engine"), ol, 0, 0, 0, 0, 0.5, 0.0);
@@ -246,18 +250,25 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
         e_mod_comp_shadow_set();
      }
    if ((_comp_mod->conf->engine != cfdata->engine) ||
+       (cfdata->indirect != _comp_mod->conf->indirect) ||
        (cfdata->texture_from_pixmap != _comp_mod->conf->texture_from_pixmap) ||
        (cfdata->efl_sync != _comp_mod->conf->efl_sync) ||
        (cfdata->loose_sync != _comp_mod->conf->loose_sync) ||
        (cfdata->vsync != _comp_mod->conf->vsync))
      {
+        E_Action *a;
+        
         _comp_mod->conf->engine = cfdata->engine;
+        _comp_mod->conf->indirect = cfdata->indirect;
         _comp_mod->conf->texture_from_pixmap = cfdata->texture_from_pixmap;
         _comp_mod->conf->efl_sync = cfdata->efl_sync;
         _comp_mod->conf->loose_sync = cfdata->loose_sync;
         _comp_mod->conf->vsync = cfdata->vsync;
-        e_mod_comp_shutdown();
-        e_mod_comp_init();
+        
+        a = e_action_find("restart");
+        if ((a) && (a->func.go)) a->func.go(NULL, NULL);
+//        e_mod_comp_shutdown();
+//        e_mod_comp_init();
      }
    e_config_save_queue();
    return 1;
