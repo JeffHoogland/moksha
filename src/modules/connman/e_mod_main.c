@@ -40,6 +40,8 @@ static const char *e_str_idle = NULL;
 static const char *e_str_association = NULL;
 static const char *e_str_configuration = NULL;
 static const char *e_str_ready = NULL;
+static const char *e_str_login = NULL;
+static const char *e_str_online = NULL;
 static const char *e_str_disconnect = NULL;
 static const char *e_str_failure = NULL;
 
@@ -808,7 +810,9 @@ _connman_default_service_changed(E_Connman_Module_Context *ctxt)
 
    EINA_INLIST_FOREACH(ctxt->services, itr)
      {
-	if (itr->state == e_str_ready)
+	if ((itr->state == e_str_ready) ||
+	    (itr->state == e_str_login) ||
+	    (itr->state == e_str_online))
 	  {
 	     def = itr;
 	     break;
@@ -1010,10 +1014,12 @@ _connman_popup_service_selected(void *data)
 
    _connman_popup_del(inst);
 
-   if (service->pass_required)
-     _connman_service_ask_pass_and_connect(service);
-   else if (service->state == e_str_ready)
+   if ((service->state != e_str_idle) &&
+       (service->state != e_str_disconnect) &&
+       (service->state != e_str_failure))
      _connman_service_disconnect(service);
+   else if (service->pass_required)
+     _connman_service_ask_pass_and_connect(service);
    else
      _connman_service_connect(service);
 }
@@ -1768,6 +1774,8 @@ _connman_status_stringshare_init(void)
    e_str_association = eina_stringshare_add(N_("association"));
    e_str_configuration = eina_stringshare_add(N_("configuration"));
    e_str_ready = eina_stringshare_add(N_("ready"));
+   e_str_login = eina_stringshare_add(N_("login"));
+   e_str_online = eina_stringshare_add(N_("online"));
    e_str_disconnect = eina_stringshare_add(N_("disconnect"));
    e_str_failure = eina_stringshare_add(N_("failure"));
 }
@@ -1779,6 +1787,8 @@ _connman_status_stringshare_del(void)
    eina_stringshare_replace(&e_str_association, NULL);
    eina_stringshare_replace(&e_str_configuration, NULL);
    eina_stringshare_replace(&e_str_ready, NULL);
+   eina_stringshare_replace(&e_str_login, NULL);
+   eina_stringshare_replace(&e_str_online, NULL);
    eina_stringshare_replace(&e_str_disconnect, NULL);
    eina_stringshare_replace(&e_str_failure, NULL);
 }
