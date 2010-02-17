@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-01-22 13:03+0900\n"
+"POT-Creation-Date: 2010-02-16 18:40+1100\n"
 "PO-Revision-Date: 2009-11-09 18:07+0000\n"
 "Last-Translator: Miro Glavić <glavicmiro@gmail.com>\n"
 "Language-Team: Croatian <hr@li.org>\n"
@@ -23,7 +23,7 @@ msgstr "O Enlightenment"
 #: src/bin/e_about.c:20 src/bin/e_actions.c:2552 src/bin/e_config_dialog.c:272
 #: src/bin/e_fm.c:943 src/bin/e_int_border_menu.c:247
 #: src/bin/e_int_border_prop.c:81 src/bin/e_theme_about.c:20
-#: src/modules/conf/e_conf.c:179
+#: src/modules/conf/e_conf.c:180
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:848
 #: src/modules/conf_theme/e_int_config_theme_web.c:130
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:120
@@ -33,7 +33,7 @@ msgid "Close"
 msgstr "Zatvori"
 
 #: src/bin/e_about.c:21 src/bin/e_actions.c:2849 src/bin/e_actions.c:2853
-#: src/bin/e_actions.c:2857 src/bin/e_int_menus.c:165 src/bin/e_main.c:668
+#: src/bin/e_actions.c:2857 src/bin/e_int_menus.c:165 src/bin/e_main.c:675
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:210
 #: src/modules/wizard/page_000.c:32
 msgid "Enlightenment"
@@ -164,7 +164,7 @@ msgstr ""
 msgid "Window : Actions"
 msgstr "Prozor: Akcije"
 
-#: src/bin/e_actions.c:2512 src/bin/e_fm.c:6066
+#: src/bin/e_actions.c:2512 src/bin/e_fm.c:6065
 #: src/bin/e_int_border_menu.c:148
 msgid "Move"
 msgstr "Premjesti"
@@ -656,7 +656,7 @@ msgstr "Skeniranje datoteka radne površine"
 msgid "Color Selector"
 msgstr "Odabirač Boja"
 
-#: src/bin/e_color_dialog.c:48 src/bin/e_config.c:1876
+#: src/bin/e_color_dialog.c:48 src/bin/e_config.c:1885
 #: src/bin/e_config_dialog.c:262 src/bin/e_eap_editor.c:607
 #: src/bin/e_eap_editor.c:671 src/bin/e_entry_dialog.c:62 src/bin/e_exec.c:365
 #: src/bin/e_fm.c:8520 src/bin/e_fm.c:9158 src/bin/e_fm_prop.c:510
@@ -686,11 +686,11 @@ msgstr "U redu"
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:199
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:222
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:352
-#: src/modules/syscon/e_syscon.c:97 src/modules/connman/e_mod_main.c:317
+#: src/modules/syscon/e_syscon.c:97 src/modules/connman/e_mod_main.c:288
 msgid "Cancel"
 msgstr "Poništi"
 
-#: src/bin/e_config.c:797 src/bin/e_config.c:830
+#: src/bin/e_config.c:801 src/bin/e_config.c:834
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -709,7 +709,7 @@ msgstr ""
 "rekonfigurirati  stvari<br>po vašoj želji. Izvinjavamo se zbog problema sa "
 "vašim postavkama.<br>"
 
-#: src/bin/e_config.c:814
+#: src/bin/e_config.c:818
 msgid ""
 "Your settings are NEWER than Enlightenment. This is very<br>strange. This "
 "should not happen unless you downgraded<br>Enlightenment or copied the "
@@ -723,11 +723,11 @@ msgstr ""
 "i radi predostrožnosti vaše postavke su vraćene u<br>originalno stanje. "
 "Izvinjavamo se zbog neugodnosti.<br>"
 
-#: src/bin/e_config.c:1777
+#: src/bin/e_config.c:1786
 msgid "Settings Upgraded"
 msgstr "Postavke Unaprijeđene"
 
-#: src/bin/e_config.c:1800
+#: src/bin/e_config.c:1809
 #, c-format
 msgid ""
 "An error occured while saving Enlightenment's<br>settings to disk. The error "
@@ -739,7 +739,7 @@ msgstr ""
 "<br>%s<br><br>Ova datoteka je uklonjena da bi se izbjegla korupcija podataka."
 "<br>"
 
-#: src/bin/e_config.c:1811
+#: src/bin/e_config.c:1820
 #, c-format
 msgid ""
 "Enlightenment's settings files are too big<br>for the file system they are "
@@ -754,7 +754,7 @@ msgstr ""
 "direktorija.<br><br>Datoteka kod koje je greška otkrivena:<br>%s<br><br>je "
 "uklonjena da bi se izbjegla korupcija podataka.<br>"
 
-#: src/bin/e_config.c:1824
+#: src/bin/e_config.c:1833
 #, c-format
 msgid ""
 "An output error occured when writing the settings<br>files for "
@@ -767,7 +767,7 @@ msgstr ""
 "zamijeniti.<br>Datoteka kod koje je greška otkrivena: <br>%s<br><br>je "
 "uklonjena da bi se izbjegla korupcija podataka.<br>"
 
-#: src/bin/e_config.c:1835
+#: src/bin/e_config.c:1844
 #, c-format
 msgid ""
 "Enlightenment cannot write its settings file<br>because it ran out of space "
@@ -780,7 +780,7 @@ msgstr ""
 "ste pebacili svoj limit.<br><br>Datoteka kod koje je greška otkrivena:<br>%"
 "s<br><br>je uklonjena da bi se izbjegla korupcija podataka.<br>"
 
-#: src/bin/e_config.c:1847
+#: src/bin/e_config.c:1856
 #, c-format
 msgid ""
 "Enlightenment unexpectedly had the settings file<br>it was writing closed on "
@@ -792,7 +792,7 @@ msgstr ""
 "otkrivena:<br>%s<br><br>je uklonjena da bi se izbjegla korupcija podataka."
 "<br>"
 
-#: src/bin/e_config.c:1872
+#: src/bin/e_config.c:1881
 msgid "Enlightenment Settings Write Problems"
 msgstr "Problemi Pisanja Enlightenment Postavki"
 
@@ -801,6 +801,7 @@ msgstr "Problemi Pisanja Enlightenment Postavki"
 #: src/modules/conf_exebuf/e_mod_main.c:20
 #: src/modules/conf_paths/e_mod_main.c:20
 #: src/modules/conf_performance/e_mod_main.c:20
+#: src/modules/connman/e_mod_main.c:1734
 msgid "Advanced"
 msgstr "Napredno"
 
@@ -1006,7 +1007,7 @@ msgstr "Izbriši"
 msgid "Cut"
 msgstr "Izreži"
 
-#: src/bin/e_entry.c:511 src/bin/e_fm.c:6061 src/bin/e_fm.c:7944
+#: src/bin/e_entry.c:511 src/bin/e_fm.c:6060 src/bin/e_fm.c:7944
 msgid "Copy"
 msgstr "Kopiraj"
 
@@ -1018,13 +1019,13 @@ msgstr "Zalijepi"
 msgid "Select All"
 msgstr "Odaberi sve"
 
-#: src/bin/e_exec.c:225 src/bin/e_utils.c:237
+#: src/bin/e_exec.c:226 src/bin/e_utils.c:237
 #: src/modules/conf_imc/e_int_config_imc.c:268
 #: src/modules/conf_imc/e_int_config_imc.c:508
 msgid "Run Error"
 msgstr "Greška kod Izvođenja"
 
-#: src/bin/e_exec.c:226 src/bin/e_utils.c:238
+#: src/bin/e_exec.c:227 src/bin/e_utils.c:238
 #: src/modules/conf_imc/e_int_config_imc.c:269
 #: src/modules/conf_imc/e_int_config_imc.c:509
 #, c-format
@@ -1044,105 +1045,105 @@ msgstr ""
 "Enlightenment nije u mogućnosti da izvede aplikaciju:<br><br>%"
 "s<br><br>Neuspješan start aplikacije."
 
-#: src/bin/e_exec.c:452
+#: src/bin/e_exec.c:458
 msgid "Application Execution Error"
 msgstr "Greška Izvršenja Aplikacije"
 
-#: src/bin/e_exec.c:464
+#: src/bin/e_exec.c:470
 #, c-format
 msgid "%s stopped running unexpectedly."
 msgstr "%s je neočekivano zaustavio izvođenje"
 
-#: src/bin/e_exec.c:470
+#: src/bin/e_exec.c:476
 #, c-format
 msgid "An exit code of %i was returned from %s."
 msgstr "Izlazni kod %i je vraćen iz %s."
 
-#: src/bin/e_exec.c:478
+#: src/bin/e_exec.c:484
 #, c-format
 msgid "%s was interrupted by an Interrupt Signal."
 msgstr "%s je prekinut Interrupt Signalom"
 
-#: src/bin/e_exec.c:481
+#: src/bin/e_exec.c:487
 #, c-format
 msgid "%s was interrupted by a Quit Signal."
 msgstr "%s je prekinut Quit Signalom"
 
-#: src/bin/e_exec.c:485
+#: src/bin/e_exec.c:491
 #, c-format
 msgid "%s was interrupted by an Abort Signal."
 msgstr "%s je prekinut Abort Signalom"
 
-#: src/bin/e_exec.c:488
+#: src/bin/e_exec.c:494
 #, c-format
 msgid "%s was interrupted by a Floating Point Error."
 msgstr "%s je prekinut Floating Point Greškom"
 
-#: src/bin/e_exec.c:492
+#: src/bin/e_exec.c:498
 #, c-format
 msgid "%s was interrupted by an Uninterruptable Kill Signal."
 msgstr "%s je prekinut Uninterruptable Kill Signalom"
 
-#: src/bin/e_exec.c:496
+#: src/bin/e_exec.c:502
 #, c-format
 msgid "%s was interrupted by a Segmentation Fault."
 msgstr "%s je prekinut Segmentation Greškom"
 
-#: src/bin/e_exec.c:500
+#: src/bin/e_exec.c:506
 #, c-format
 msgid "%s was interrupted by a Broken Pipe."
 msgstr "%s je prekinut od Slomljene Cijevi"
 
-#: src/bin/e_exec.c:503
+#: src/bin/e_exec.c:509
 #, c-format
 msgid "%s was interrupted by a Termination Signal."
 msgstr "%s je prekinut Termination Signalom"
 
-#: src/bin/e_exec.c:507
+#: src/bin/e_exec.c:513
 #, c-format
 msgid "%s was interrupted by a Bus Error."
 msgstr "%s je prekinut Bus Greškom"
 
-#: src/bin/e_exec.c:510
+#: src/bin/e_exec.c:516
 #, c-format
 msgid "%s was interrupted by the signal number %i."
 msgstr "%s je prekinut signalom broj %i."
 
-#: src/bin/e_exec.c:566
+#: src/bin/e_exec.c:572
 msgid ""
 "***The remaining output has been truncated. Save the output to view.***\n"
 msgstr "***Preostali izlaz je okrnjen. Pohrani izlaz u pogled.***\n"
 
-#: src/bin/e_exec.c:628 src/bin/e_exec.c:702 src/bin/e_exec.c:709
+#: src/bin/e_exec.c:634 src/bin/e_exec.c:708 src/bin/e_exec.c:715
 msgid "Error Logs"
 msgstr "Pogrešni Logovi"
 
-#: src/bin/e_exec.c:634 src/bin/e_exec.c:710
+#: src/bin/e_exec.c:640 src/bin/e_exec.c:716
 msgid "There was no error message."
 msgstr "Nema poruke o grešci."
 
-#: src/bin/e_exec.c:638 src/bin/e_exec.c:717
+#: src/bin/e_exec.c:644 src/bin/e_exec.c:723
 msgid "Save This Message"
 msgstr "Pohrani Ovu Poruku"
 
-#: src/bin/e_exec.c:642 src/bin/e_exec.c:721
+#: src/bin/e_exec.c:648 src/bin/e_exec.c:727
 #, c-format
 msgid "This error log will be saved as %s/%s.log"
 msgstr "Zapis ove greške će biti pohranjen kao %s/%s. zapis"
 
-#: src/bin/e_exec.c:668
+#: src/bin/e_exec.c:674
 msgid "Error Information"
 msgstr "Informacije o Grešci"
 
-#: src/bin/e_exec.c:676
+#: src/bin/e_exec.c:682
 msgid "Error Signal Information"
 msgstr "Informacije o Signalu Greške"
 
-#: src/bin/e_exec.c:686 src/bin/e_exec.c:693
+#: src/bin/e_exec.c:692 src/bin/e_exec.c:699
 msgid "Output Data"
 msgstr "Izlazni Podaci"
 
-#: src/bin/e_exec.c:694
+#: src/bin/e_exec.c:700
 msgid "There was no output."
 msgstr "Nije bilo izlaza."
 
@@ -1184,11 +1185,11 @@ msgstr "Nemoguće izbaciti uređaj"
 msgid "%i Files"
 msgstr "%i Datoteke"
 
-#: src/bin/e_fm.c:6074 src/bin/e_fm.c:7777 src/bin/e_fm.c:7965
+#: src/bin/e_fm.c:6073 src/bin/e_fm.c:7777 src/bin/e_fm.c:7965
 msgid "Link"
 msgstr "Link"
 
-#: src/bin/e_fm.c:6082 src/bin/e_fm.c:8943 src/bin/e_fm.c:9081
+#: src/bin/e_fm.c:6081 src/bin/e_fm.c:8943 src/bin/e_fm.c:9081
 msgid "Abort"
 msgstr "Odustani"
 
@@ -2002,14 +2003,14 @@ msgid "Start this program on login"
 msgstr "Pokreni ovaj program loginom"
 
 #: src/bin/e_int_config_modules.c:42 src/bin/e_int_menus.c:210
-#: src/modules/battery/e_mod_main.c:176 src/modules/conf/e_conf.c:120
-#: src/modules/conf/e_conf.c:130 src/modules/conf/e_mod_main.c:81
+#: src/modules/battery/e_mod_main.c:176 src/modules/conf/e_conf.c:121
+#: src/modules/conf/e_conf.c:131 src/modules/conf/e_mod_main.c:81
 #: src/modules/conf_dialogs/e_mod_main.c:20
 #: src/modules/conf_profiles/e_mod_main.c:20 src/modules/ibar/e_mod_main.c:314
 #: src/modules/ibar/e_mod_main.c:824 src/modules/ibox/e_mod_main.c:313
 #: src/modules/ibox/e_mod_main.c:708 src/modules/pager/e_mod_main.c:808
-#: src/modules/temperature/e_mod_main.c:278 src/modules/mixer/e_mod_main.c:663
-#: src/modules/connman/e_mod_main.c:1142
+#: src/modules/temperature/e_mod_main.c:276 src/modules/mixer/e_mod_main.c:663
+#: src/modules/connman/e_mod_main.c:1228
 msgid "Settings"
 msgstr "Postavke"
 
@@ -2168,7 +2169,7 @@ msgstr "Nema imena!!"
 msgid "(No Shelves)"
 msgstr "(Nema Polica)"
 
-#: src/bin/e_int_menus.c:1374 src/bin/e_shelf.c:168 src/bin/e_shelf.c:1173
+#: src/bin/e_int_menus.c:1374 src/bin/e_shelf.c:166 src/bin/e_shelf.c:1171
 #: src/modules/conf_shelves/e_int_config_shelf.c:132
 msgid "Shelf #"
 msgstr "Polica #"
@@ -2181,7 +2182,7 @@ msgstr "dodaj Policu"
 msgid "Delete A Shelf"
 msgstr "Ukloni Policu"
 
-#: src/bin/e_int_shelf_config.c:75 src/bin/e_shelf.c:1674
+#: src/bin/e_int_shelf_config.c:75 src/bin/e_shelf.c:1683
 #: src/modules/conf_shelves/e_int_config_shelf.c:43
 msgid "Shelf Settings"
 msgstr "Postavke Police"
@@ -2311,7 +2312,7 @@ msgstr ""
 "Molimo provjerite:\n"
 "%s/enlightenment-%s\n"
 
-#: src/bin/e_main.c:323
+#: src/bin/e_main.c:324
 #, c-format
 msgid ""
 "Options:\n"
@@ -2365,7 +2366,7 @@ msgstr ""
 "\t-ja-znam-što-radim-i-prihvaćam-svu-odgovornost-za-to-\n"
 "\t\tAko trebate ovu pomoć, onda ne trebate ovu opciju.\n"
 
-#: src/bin/e_main.c:385
+#: src/bin/e_main.c:386
 msgid ""
 "Enlightenment cannot Initialize Ecore!\n"
 "Perhaps you are out of memory?"
@@ -2373,7 +2374,7 @@ msgstr ""
 "Enlightenment ne može inicijalizirati Ecore!\n"
 "Možda vam nedostaje memorije?"
 
-#: src/bin/e_main.c:411
+#: src/bin/e_main.c:410
 msgid ""
 "Enlightenment cannot initialize the File system.\n"
 "Perhaps you are out of memory?"
@@ -2381,7 +2382,7 @@ msgstr ""
 "Enlightenment ne može inicijalizirati Sistem datoteka.\n"
 "Možda vam nedostaje memorije?"
 
-#: src/bin/e_main.c:424
+#: src/bin/e_main.c:423
 msgid ""
 "Enlightenment cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
@@ -2389,7 +2390,7 @@ msgstr ""
 "Enlightenment ne može postaviti manipulator izlaznog signala.\n"
 "Možda vam nedostaje memorije?"
 
-#: src/bin/e_main.c:430
+#: src/bin/e_main.c:429
 msgid ""
 "Enlightenment cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
@@ -2397,7 +2398,16 @@ msgstr ""
 "Enlightenment ne može postaviti manipulator HUP signala.\n"
 "Možda vam nedostaje memorije?"
 
-#: src/bin/e_main.c:442
+#: src/bin/e_main.c:435
+#, fuzzy
+msgid ""
+"Enlightenment cannot set up a USER signal handler.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment ne može postaviti manipulator HUP signala.\n"
+"Možda vam nedostaje memorije?"
+
+#: src/bin/e_main.c:447
 msgid ""
 "Enlightenment cannot initialize its X connection.\n"
 "Have you set your DISPLAY variable?"
@@ -2405,7 +2415,7 @@ msgstr ""
 "Enlightenment ne može inicijalizirati svoju X konekciju.\n"
 "Jeste li postavili vašu PRIKAZ varijablu?"
 
-#: src/bin/e_main.c:450
+#: src/bin/e_main.c:455
 msgid ""
 "Enlightenment cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
@@ -2413,7 +2423,7 @@ msgstr ""
 "Enlightenment ne može inicijalizirati svoj sistem hitnog alarma.\n"
 "Jeste li postavili svoju PRIKAZ varijablu?"
 
-#: src/bin/e_main.c:473
+#: src/bin/e_main.c:478
 msgid ""
 "Enlightenment cannot initialize the connections system.\n"
 "Perhaps you are out of memory?"
@@ -2421,7 +2431,7 @@ msgstr ""
 "Enlightenment ne može inicijalizirati sistem povezanosti.\n"
 "Možda vam nedostaje memorije?"
 
-#: src/bin/e_main.c:481
+#: src/bin/e_main.c:486
 msgid ""
 "Enlightenment cannot initialize the IPC system.\n"
 "Perhaps you are out of memory?"
@@ -2429,7 +2439,7 @@ msgstr ""
 "Enlightenment ne može inicijalizirati IPC sistem.\n"
 "Možda vam nedostaje memorije?"
 
-#: src/bin/e_main.c:490
+#: src/bin/e_main.c:495
 msgid ""
 "Enlightenment cannot setup xinerama wrapping.\n"
 "This should not happen."
@@ -2437,7 +2447,7 @@ msgstr ""
 "Enlightenment ne može postaviti xinerama omot.\n"
 "Ovo se nije trebalo dogoditi."
 
-#: src/bin/e_main.c:509
+#: src/bin/e_main.c:514
 msgid ""
 "Enlightenment cannot initialize the Evas system.\n"
 "Perhaps you are out of memory?"
@@ -2445,7 +2455,7 @@ msgstr ""
 "Enlightenment ne može inicijalizirati Evas sistem.\n"
 "Možda vam nedostaje memorije?"
 
-#: src/bin/e_main.c:515
+#: src/bin/e_main.c:521
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -2455,7 +2465,7 @@ msgstr ""
 "prikaz u Evas. Molimo provjerite instalaciju Evas i\n"
 "Ecore i provjerite da podržava Software X11 prikaznu mašinu."
 
-#: src/bin/e_main.c:522
+#: src/bin/e_main.c:528
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software Buffer\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -2465,7 +2475,7 @@ msgstr ""
 "koji prezentira u Evas. Molimo provjerite vašu instalaciju Evas i Ecore i \n"
 "provjerite da ovi podržavaju Softver Bufer prezentacionu mašinu."
 
-#: src/bin/e_main.c:538 src/bin/e_main.c:545
+#: src/bin/e_main.c:544 src/bin/e_main.c:551
 msgid ""
 "Enlightenment cannot initialize the FDO desktop system.\n"
 "Perhaps you are out of memory?"
@@ -2473,7 +2483,7 @@ msgstr ""
 "Enlightenment ne može inicijalizirati sistem FDO radne površine,\n"
 "Možda vam nedostaje memorije?"
 
-#: src/bin/e_main.c:559
+#: src/bin/e_main.c:565
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
@@ -2481,23 +2491,23 @@ msgstr ""
 "Enlightenment ne može kreirati direktorije u vašem polaznom direktoriju.\n"
 "Možda nemate polazni direktorij ili je vašdisk pun?"
 
-#: src/bin/e_main.c:569
+#: src/bin/e_main.c:575
 msgid "Enlightenment cannot set up its file registry system."
 msgstr "Enlightenment ne može postaviti svoj sistem datotečnih registara."
 
-#: src/bin/e_main.c:578
+#: src/bin/e_main.c:584
 msgid "Enlightenment cannot set up its config system."
 msgstr "Enlightenment ne može postaviti svoj Config sistem."
 
-#: src/bin/e_main.c:592
+#: src/bin/e_main.c:598
 msgid "Enlightenment cannot set up its scale system."
 msgstr "Enlightenment ne može postaviti svoj sustav promjene veličine."
 
-#: src/bin/e_main.c:600
+#: src/bin/e_main.c:606
 msgid "Enlightenment cannot set up the pointer system."
 msgstr "Enlightenment ne može postaviti svoj sustav pokazivača."
 
-#: src/bin/e_main.c:609
+#: src/bin/e_main.c:615
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -2505,23 +2515,23 @@ msgstr ""
 "Enlightenment ne može postaviti puteve za pronalaženje datoteka.\n"
 "Možda nemate dovoljno memorije?"
 
-#: src/bin/e_main.c:627
+#: src/bin/e_main.c:633
 msgid "Enlightenment cannot set up its font system."
 msgstr "Enlightenment ne može postaviti svoj sistem pisma."
 
-#: src/bin/e_main.c:638
+#: src/bin/e_main.c:644
 msgid "Enlightenment cannot set up its theme system."
 msgstr "Enlightenment ne može postaviti svoj sistem tema."
 
-#: src/bin/e_main.c:643
+#: src/bin/e_main.c:649
 msgid "Starting International Support"
 msgstr "Pokretanje Međunarodne Podrške"
 
-#: src/bin/e_main.c:648
+#: src/bin/e_main.c:654
 msgid "Enlightenment cannot set up its intl system."
 msgstr "Enlightenment ne može postaviti svoj intl sistem."
 
-#: src/bin/e_main.c:664
+#: src/bin/e_main.c:668
 msgid ""
 "Enlightenment cannot set up init screen.\n"
 "Perhaps you are out of memory?"
@@ -2529,11 +2539,11 @@ msgstr ""
 "Enlightenment ne može postaviti init ekran.\n"
 "Možda nemate dovoljno memorije?"
 
-#: src/bin/e_main.c:676
+#: src/bin/e_main.c:682
 msgid "Testing Format Support"
 msgstr "Testiranje Podrške Formata"
 
-#: src/bin/e_main.c:687
+#: src/bin/e_main.c:693
 msgid ""
 "Enlightenment found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
@@ -2542,7 +2552,7 @@ msgstr ""
 "provjerite\n"
 "da Evas ima podršku za Softver Bafer mašinu.\n"
 
-#: src/bin/e_main.c:698
+#: src/bin/e_main.c:704
 msgid ""
 "Enlightenment found Evas can't load PNG files. Check Evas has PNG\n"
 "loader support.\n"
@@ -2550,7 +2560,7 @@ msgstr ""
 "Enlightenment je otkrio da Evas ne može učitavati PNG datoteke. Provjeri \n"
 "da li Evas ima podršku učitavanja za PNG.\n"
 
-#: src/bin/e_main.c:707
+#: src/bin/e_main.c:713
 msgid ""
 "Enlightenment found Evas can't load JPEG files. Check Evas has JPEG\n"
 "loader support.\n"
@@ -2558,7 +2568,7 @@ msgstr ""
 "Enlightenment je otkrio da Evas ne može učitavati JPEG datoteke. Provjeri \n"
 "da li Evas ima podršku učitavanja za JPEG.\n"
 
-#: src/bin/e_main.c:716
+#: src/bin/e_main.c:722
 msgid ""
 "Enlightenment found Evas can't load EET files. Check Evas has EET\n"
 "loader support.\n"
@@ -2566,7 +2576,7 @@ msgstr ""
 "Enlightenment je otkrio da Evas ne može učitavati EET datoteke. Provjeri \n"
 "da li Evas ima podršku učitavanja za EET.\n"
 
-#: src/bin/e_main.c:727
+#: src/bin/e_main.c:733
 msgid ""
 "Enlightenment found Evas can't load the 'Sans' font. Check Evas has "
 "fontconfig\n"
@@ -2576,11 +2586,11 @@ msgstr ""
 "da li Evas ima fontconfig podršku i da sustavni fontconfig definira 'Sans' "
 "pismo.\n"
 
-#: src/bin/e_main.c:737
+#: src/bin/e_main.c:743
 msgid "Setup Screens"
 msgstr "Postavi Ekrane"
 
-#: src/bin/e_main.c:742
+#: src/bin/e_main.c:748
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
@@ -2589,192 +2599,192 @@ msgstr ""
 "sustavu\n"
 "nije uspio. Možda je neki drugi upravitelj prozora aktivan?\n"
 
-#: src/bin/e_main.c:748
+#: src/bin/e_main.c:754
 msgid "Setup Screensaver"
 msgstr "Postavka Čuvara Zaslona"
 
-#: src/bin/e_main.c:753
+#: src/bin/e_main.c:759
 msgid "Enlightenment cannot configure the X screensaver."
 msgstr "Enlightenment ne može konfigurirati X čuvar zaslona."
 
-#: src/bin/e_main.c:757
+#: src/bin/e_main.c:763
 msgid "Setup Desklock"
 msgstr "Postavi Zaključavanje Radne Površine"
 
-#: src/bin/e_main.c:762
+#: src/bin/e_main.c:768
 msgid "Enlightenment cannot set up its desk locking system."
 msgstr ""
 "Enlightenment ne može postaviti svoj sistem zaključavanja radne površine."
 
-#: src/bin/e_main.c:775
+#: src/bin/e_main.c:781
 msgid "Setting up Paths"
 msgstr "Postavke Puteva"
 
-#: src/bin/e_main.c:792
+#: src/bin/e_main.c:798
 msgid "Setup System Controls"
 msgstr "Postavljanje Kontrola Sustava"
 
-#: src/bin/e_main.c:797
+#: src/bin/e_main.c:803
 msgid "Enlightenment cannot initialize the System Command system.\n"
 msgstr "Enlightenment ne može inicijalizirati Sustavne Naredbe\n"
 
-#: src/bin/e_main.c:802
+#: src/bin/e_main.c:808
 msgid "Setup Actions"
 msgstr "Postavi Akcije"
 
-#: src/bin/e_main.c:807
+#: src/bin/e_main.c:813
 msgid "Enlightenment cannot set up its actions system."
 msgstr "Enlightenment ne može postaviti svoj sistem akcija."
 
-#: src/bin/e_main.c:811
+#: src/bin/e_main.c:817
 msgid "Setup Execution System"
 msgstr "Postavljanje Izvršnog Sistema"
 
-#: src/bin/e_main.c:816
+#: src/bin/e_main.c:822
 msgid "Enlightenment cannot set up its exec system."
 msgstr "Enlightenment ne može postaviti svoj exec sistem."
 
-#: src/bin/e_main.c:824
+#: src/bin/e_main.c:830
 msgid "Setup FM"
 msgstr "Postavi FM"
 
-#: src/bin/e_main.c:829
+#: src/bin/e_main.c:835
 msgid "Enlightenment cannot initialize the File manager.\n"
 msgstr "Enlightenment ne može inicijalizirati svoj Datotečni Upravitelj.\n"
 
-#: src/bin/e_main.c:844
+#: src/bin/e_main.c:850
 msgid "Setup Message System"
 msgstr "Postavi Sistem Poruka"
 
-#: src/bin/e_main.c:849
+#: src/bin/e_main.c:855
 msgid "Enlightenment cannot set up its msg system."
 msgstr "Enlightenment ne može postaviti svoj msg sistem."
 
-#: src/bin/e_main.c:854
+#: src/bin/e_main.c:860
 msgid "Setup DND"
 msgstr "Postavi DND"
 
-#: src/bin/e_main.c:859
+#: src/bin/e_main.c:865
 msgid "Enlightenment cannot set up its dnd system."
 msgstr "Enlightenment ne može postaviti svoj DND sistem."
 
-#: src/bin/e_main.c:864
+#: src/bin/e_main.c:870
 msgid "Setup Grab Input Handling"
 msgstr "Postavke Rukovanja Masovnog Unosa"
 
-#: src/bin/e_main.c:869
+#: src/bin/e_main.c:875
 msgid "Enlightenment cannot set up its input grab handling system."
 msgstr "Enlightenment ne može postaviti svoj sustav rrkovanja grabljenja unosa"
 
-#: src/bin/e_main.c:874
+#: src/bin/e_main.c:880
 msgid "Setup Modules"
 msgstr "Postavi Module"
 
-#: src/bin/e_main.c:879
+#: src/bin/e_main.c:885
 msgid "Enlightenment cannot set up its module system."
 msgstr "Enlightenmet ne može postaviti svoj sistem modula."
 
-#: src/bin/e_main.c:884
+#: src/bin/e_main.c:890
 msgid "Setup Remembers"
 msgstr "Postavi Podsjetnike"
 
-#: src/bin/e_main.c:889
+#: src/bin/e_main.c:895
 msgid "Enlightenment cannot setup remember settings."
 msgstr "Enlightenment ne može postaviti postavke podsjetnika."
 
-#: src/bin/e_main.c:894
+#: src/bin/e_main.c:900
 msgid "Setup Color Classes"
 msgstr "Postavi Klase Boja"
 
-#: src/bin/e_main.c:899
+#: src/bin/e_main.c:905
 msgid "Enlightenment cannot set up its color class system."
 msgstr "Enlightenment ne može postaviti svoj sistem klasiranja boja."
 
-#: src/bin/e_main.c:904
+#: src/bin/e_main.c:910
 msgid "Setup Gadcon"
 msgstr "Postavi Gadcon"
 
-#: src/bin/e_main.c:909
+#: src/bin/e_main.c:915
 msgid "Enlightenment cannot set up its gadget control system."
 msgstr "Enlightenment ne može postaviti svoj sistem kontrole aparata"
 
-#: src/bin/e_main.c:914
+#: src/bin/e_main.c:920
 msgid "Setup DPMS"
 msgstr "Postavi DPMS"
 
-#: src/bin/e_main.c:919
+#: src/bin/e_main.c:925
 msgid "Enlightenment cannot configure the DPMS settings."
 msgstr "Enlightenment ne može konfigurirati DPMS postavke."
 
-#: src/bin/e_main.c:923
+#: src/bin/e_main.c:929
 msgid "Set Up Powersave modes"
 msgstr "Postavi modove Štednje energije"
 
-#: src/bin/e_main.c:927
+#: src/bin/e_main.c:933
 msgid "Enlightenment cannot set up its powersave modes."
 msgstr "Enlightenment ne može postaviti svoje modove štednje energije."
 
-#: src/bin/e_main.c:932
+#: src/bin/e_main.c:938
 msgid "Setup Wallpaper"
 msgstr "Postavi Tapetu"
 
-#: src/bin/e_main.c:937
+#: src/bin/e_main.c:943
 msgid "Enlightenment cannot set up its desktop background system."
 msgstr "Enlightenment ne može postaviti svoj sistem pozadine radne površine"
 
-#: src/bin/e_main.c:942
+#: src/bin/e_main.c:948
 msgid "Setup Mouse"
 msgstr "Postavi Miša"
 
-#: src/bin/e_main.c:947
+#: src/bin/e_main.c:953
 msgid "Enlightenment cannot configure the mouse settings."
 msgstr "Enlightenment ne može konfigurirati postavke miša."
 
-#: src/bin/e_main.c:952
+#: src/bin/e_main.c:958
 msgid "Setup Bindings"
 msgstr "Postavljanje Poveznika"
 
-#: src/bin/e_main.c:957
+#: src/bin/e_main.c:963
 msgid "Enlightenment cannot set up its bindings system."
 msgstr "Enlightenment ne može postaviti svoj sistem poveznika"
 
-#: src/bin/e_main.c:962
+#: src/bin/e_main.c:968
 msgid "Setup Popups"
 msgstr "Postavi Pop-ups"
 
-#: src/bin/e_main.c:967
+#: src/bin/e_main.c:973
 msgid "Enlightenment cannot set up its popup system."
 msgstr "Enlightenment ne može postaviti svoj pop-up sistem."
 
-#: src/bin/e_main.c:972
+#: src/bin/e_main.c:978
 msgid "Setup Shelves"
 msgstr "Postavi Police"
 
-#: src/bin/e_main.c:977
+#: src/bin/e_main.c:983
 msgid "Enlightenment cannot set up its shelf system."
 msgstr "Enlightenment ne može postaviti svoj sistem polica."
 
-#: src/bin/e_main.c:982
+#: src/bin/e_main.c:988
 msgid "Setup Thumbnailer"
 msgstr "Postavi Urednika Sličica"
 
-#: src/bin/e_main.c:987
+#: src/bin/e_main.c:993
 msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
 msgstr "Enlightenment ne može inicijalizirati sustav Postavljanja Sličica.\n"
 
-#: src/bin/e_main.c:992
+#: src/bin/e_main.c:998
 msgid "Set Up File Ordering"
 msgstr "Postavi Raspored Datoteka"
 
-#: src/bin/e_main.c:996
+#: src/bin/e_main.c:1002
 msgid "Enlightenment cannot set up its order file system."
 msgstr "Enlightenment ne može postaviti svoj sistem rasporeda datoteka."
 
-#: src/bin/e_main.c:1031
+#: src/bin/e_main.c:1037
 msgid "Load Modules"
 msgstr "Unesi Module"
 
-#: src/bin/e_main.c:1039
+#: src/bin/e_main.c:1045
 msgid ""
 "Enlightenment crashed early on start and has<br>been restarted. All modules "
 "have been disabled<br>and will not be loaded to help remove any "
@@ -2786,13 +2796,13 @@ msgstr ""
 "problemni<br>moduliu vašoj konfiguraciji. Dijalog konfiguracije modula<br>će "
 "vam omogućiti ponovni odabir vaših modula."
 
-#: src/bin/e_main.c:1046
+#: src/bin/e_main.c:1052
 msgid "Enlightenment crashed early on start and has been restarted"
 msgstr ""
 "Enlightenment je pao prilikom ranijeg starta i morao je biti ponovno "
 "podignut."
 
-#: src/bin/e_main.c:1047
+#: src/bin/e_main.c:1053
 msgid ""
 "Enlightenment crashed early on start and has been restarted.<br>All modules "
 "have been disabled and will not be loaded to help<br>remove any problem "
@@ -2804,11 +2814,11 @@ msgstr ""
 "moduliu vašoj konfiguraciji.<br><br>Dijalog konfiguracije modula će vam "
 "omogućiti ponovni odabir<br>vaših modula."
 
-#: src/bin/e_main.c:1055
+#: src/bin/e_main.c:1061
 msgid "Configure Shelves"
 msgstr "Konfiguriraj Police"
 
-#: src/bin/e_main.c:1066
+#: src/bin/e_main.c:1072
 msgid "Almost Done"
 msgstr "Skoro Gotovo"
 
@@ -2868,29 +2878,29 @@ msgstr ""
 "način </b>prezentiranja</b> i privremeno onesposobiti zaštitnika zaslona, "
 "bravu  i uštedu energije?"
 
-#: src/bin/e_shelf.c:1301 src/modules/conf_shelves/e_int_config_shelf.c:281
+#: src/bin/e_shelf.c:1299 src/modules/conf_shelves/e_int_config_shelf.c:281
 msgid "Are you sure you want to delete this shelf?"
 msgstr "Jeste li sigurni da hoćete ukloniti ovu policu?"
 
-#: src/bin/e_shelf.c:1302
+#: src/bin/e_shelf.c:1300
 msgid ""
 "You requested to delete this shelf.<br><br>Are you sure you want to delete "
 "it?"
 msgstr "Zatražili ste da uklonite ovu policu.<br>Jeste li sigurni?"
 
-#: src/bin/e_shelf.c:1664 src/bin/e_toolbar.c:325
+#: src/bin/e_shelf.c:1673 src/bin/e_toolbar.c:325
 msgid "Stop Moving/Resizing Items"
 msgstr "Zaustavi Pomicanje/Promjenu Veličine Stvari"
 
-#: src/bin/e_shelf.c:1666 src/bin/e_toolbar.c:327
+#: src/bin/e_shelf.c:1675 src/bin/e_toolbar.c:327
 msgid "Begin Moving/Resizing Items"
 msgstr "Počni Pomicanje/Promjenu Veličine Stvari"
 
-#: src/bin/e_shelf.c:1679
+#: src/bin/e_shelf.c:1688
 msgid "Set Shelf Contents"
 msgstr "Postavi Sadržaj Police"
 
-#: src/bin/e_shelf.c:1684
+#: src/bin/e_shelf.c:1693
 msgid "Delete this Shelf"
 msgstr "Ukloni ovu Policu"
 
@@ -3424,16 +3434,16 @@ msgstr "IBar Ostalo"
 msgid "Menus"
 msgstr "Izbornici"
 
-#: src/modules/conf_borders/e_int_config_borders.c:30
-#: src/modules/conf_borders/e_int_config_borders.c:202
+#: src/modules/conf_borders/e_int_config_borders.c:31
+#: src/modules/conf_borders/e_int_config_borders.c:204
 msgid "Default Border Style"
 msgstr "Zadani Stil Bordure"
 
-#: src/modules/conf_borders/e_int_config_borders.c:50
+#: src/modules/conf_borders/e_int_config_borders.c:52
 msgid "Window Border Selection"
 msgstr "Odabir Obruba Prozora"
 
-#: src/modules/conf_borders/e_int_config_borders.c:247
+#: src/modules/conf_borders/e_int_config_borders.c:249
 msgid "Remember this Border for this window next time it appears"
 msgstr "Zapamti ovu Borduru kad se ovaj prozor slijedeći put pojavi."
 
@@ -6921,7 +6931,7 @@ msgstr "%1.0f F"
 msgid "%1.0f C"
 msgstr "%1.0f C"
 
-#: src/modules/temperature/e_mod_main.c:144
+#: src/modules/temperature/e_mod_main.c:142
 msgid "Temperature"
 msgstr "Temperatura"
 
@@ -7083,7 +7093,7 @@ msgstr "Postavke Mikser Modula"
 msgid "Mixer Settings Updated"
 msgstr "Postavke Miksera Unaprijeđene"
 
-#: src/modules/mixer/e_mod_main.c:603 src/modules/connman/e_mod_main.c:1084
+#: src/modules/mixer/e_mod_main.c:603 src/modules/connman/e_mod_main.c:1170
 msgid "Controls"
 msgstr "Kontrole"
 
@@ -7095,150 +7105,140 @@ msgstr ""
 "Podaci o Postavkama Modula Miksera su promijenjeni.<br>Stara konfiguracija "
 "je zamijenjena sa standardnom.<br>Izvinite zbog neugodnosti."
 
-#: src/modules/connman/e_mod_main.c:92
-msgid "Connman Server Operation Failed"
-msgstr ""
-
-#: src/modules/connman/e_mod_main.c:93
-#, c-format
-msgid ""
-"Could not execute remote operation:<br>%s<br>Server Error <hilight>%s:</"
-"hilight> %s"
-msgstr ""
-
-#: src/modules/connman/e_mod_main.c:102
-msgid "Connman Operation Failed"
-msgstr ""
-
-#: src/modules/connman/e_mod_main.c:103
-#, c-format
-msgid "Could not execute local operation:<br>%s"
-msgstr ""
-
-#: src/modules/connman/e_mod_main.c:119 src/modules/connman/e_mod_main.c:146
-#: src/modules/connman/e_mod_main.c:905 src/modules/connman/e_mod_main.c:1615
+#: src/modules/connman/e_mod_main.c:90 src/modules/connman/e_mod_main.c:117
+#: src/modules/connman/e_mod_main.c:971 src/modules/connman/e_mod_main.c:1702
 msgid "Cannot toggle system's offline mode."
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:130 src/modules/connman/e_mod_main.c:895
+#: src/modules/connman/e_mod_main.c:101 src/modules/connman/e_mod_main.c:963
 msgid "ConnMan Daemon is not running."
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:137
+#: src/modules/connman/e_mod_main.c:108
 msgid "Query system's offline mode."
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:263
+#: src/modules/connman/e_mod_main.c:234
 msgid "ConnMan needs your passphrase"
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:275
+#: src/modules/connman/e_mod_main.c:246
 #, c-format
 msgid ""
 "Connection Manager needs your passphrase for <br>the service <hilight>%s</"
 "hilight>"
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:299
+#: src/modules/connman/e_mod_main.c:270
 msgid "Show passphrase as clear text"
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:315
+#: src/modules/connman/e_mod_main.c:286
 msgid "Ok"
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:513 src/modules/connman/e_mod_main.c:526
+#: src/modules/connman/e_mod_main.c:461 src/modules/connman/e_mod_main.c:474
 msgid "Disconnect from network service."
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:556 src/modules/connman/e_mod_main.c:615
-#: src/modules/connman/e_mod_main.c:640
+#: src/modules/connman/e_mod_main.c:504 src/modules/connman/e_mod_main.c:563
+#: src/modules/connman/e_mod_main.c:587
 msgid "Service does not exist anymore"
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:564 src/modules/connman/e_mod_main.c:569
-#: src/modules/connman/e_mod_main.c:596
+#: src/modules/connman/e_mod_main.c:512 src/modules/connman/e_mod_main.c:517
+#: src/modules/connman/e_mod_main.c:544
 msgid "Connect to network service."
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:662
+#: src/modules/connman/e_mod_main.c:609
 msgid "Could not set service's passphrase"
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:1074
+#: src/modules/connman/e_mod_main.c:1160
 #, fuzzy
 msgid "Offline mode"
 msgstr "Isključen"
 
-#: src/modules/connman/e_mod_main.c:1240
+#: src/modules/connman/e_mod_main.c:1326
 msgid "No ConnMan"
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:1242
+#: src/modules/connman/e_mod_main.c:1328
 msgid "No ConnMan server found."
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:1255
+#: src/modules/connman/e_mod_main.c:1341
 msgid "Offline mode: all radios are turned off"
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:1280
+#: src/modules/connman/e_mod_main.c:1366
 #, fuzzy
 msgid "No Connection"
 msgstr "Postavke Mrežne Veze"
 
-#: src/modules/connman/e_mod_main.c:1284
+#: src/modules/connman/e_mod_main.c:1370
 #, fuzzy
 msgid "Not connected"
 msgstr "Zaštićen"
 
-#: src/modules/connman/e_mod_main.c:1287 src/modules/connman/e_mod_main.c:1655
+#: src/modules/connman/e_mod_main.c:1373 src/modules/connman/e_mod_main.c:1779
 msgid "disconnect"
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:1310
+#: src/modules/connman/e_mod_main.c:1396
 #, fuzzy
 msgid "Unknown Name"
 msgstr "Nepoznata Jačina"
 
-#: src/modules/connman/e_mod_main.c:1319
+#: src/modules/connman/e_mod_main.c:1405
 #, fuzzy
 msgid "No error"
 msgstr "Greška kod montiranja"
 
-#: src/modules/connman/e_mod_main.c:1651
+#: src/modules/connman/e_mod_main.c:1773
 #, fuzzy
 msgid "idle"
 msgstr "Pločica"
 
-#: src/modules/connman/e_mod_main.c:1652
+#: src/modules/connman/e_mod_main.c:1774
 #, fuzzy
 msgid "association"
 msgstr "Promjene"
 
-#: src/modules/connman/e_mod_main.c:1653
+#: src/modules/connman/e_mod_main.c:1775
 #, fuzzy
 msgid "configuration"
 msgstr "Konfiguriraj Zaglavlje"
 
-#: src/modules/connman/e_mod_main.c:1654
+#: src/modules/connman/e_mod_main.c:1776
 msgid "ready"
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:1656
+#: src/modules/connman/e_mod_main.c:1777
+#, fuzzy
+msgid "login"
+msgstr "Običan"
+
+#: src/modules/connman/e_mod_main.c:1778
+#, fuzzy
+msgid "online"
+msgstr "Stroj"
+
+#: src/modules/connman/e_mod_main.c:1780
 #, fuzzy
 msgid "failure"
 msgstr "Konfiguriraj"
 
-#: src/modules/systray/e_mod_main.c:895
+#: src/modules/systray/e_mod_main.c:893
 msgid "Another systray exists"
 msgstr "Postoji drugi systray"
 
-#: src/modules/systray/e_mod_main.c:896
+#: src/modules/systray/e_mod_main.c:894
 msgid "There can be only one systray gadget and another one already exists."
 msgstr "Može postojati samo jedan systray uređaj, i jedan već postoji."
 
-#: src/modules/systray/e_mod_main.c:1098
+#: src/modules/systray/e_mod_main.c:1096
 msgid "Systray"
 msgstr "Systray"
 

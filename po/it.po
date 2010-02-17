@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-02-09 12:53+0100\n"
+"POT-Creation-Date: 2010-02-16 18:40+1100\n"
 "PO-Revision-Date: 2010-02-09 12:55+0100\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
@@ -31,7 +31,7 @@ msgid "Close"
 msgstr "Chiudi"
 
 #: src/bin/e_about.c:21 src/bin/e_actions.c:2849 src/bin/e_actions.c:2853
-#: src/bin/e_actions.c:2857 src/bin/e_int_menus.c:165 src/bin/e_main.c:674
+#: src/bin/e_actions.c:2857 src/bin/e_int_menus.c:165 src/bin/e_main.c:675
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:210
 #: src/modules/wizard/page_000.c:32
 msgid "Enlightenment"
@@ -657,7 +657,7 @@ msgstr "Selettore colore"
 
 #: src/bin/e_color_dialog.c:48 src/bin/e_config.c:1885
 #: src/bin/e_config_dialog.c:262 src/bin/e_eap_editor.c:607
-#: src/bin/e_eap_editor.c:671 src/bin/e_entry_dialog.c:62 src/bin/e_exec.c:367
+#: src/bin/e_eap_editor.c:671 src/bin/e_entry_dialog.c:62 src/bin/e_exec.c:365
 #: src/bin/e_fm.c:8520 src/bin/e_fm.c:9158 src/bin/e_fm_prop.c:510
 #: src/bin/e_int_border_remember.c:324 src/bin/e_int_border_remember.c:524
 #: src/bin/e_module.c:403 src/bin/e_sys.c:437 src/bin/e_sys.c:483
@@ -685,7 +685,7 @@ msgstr "OK"
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:199
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:222
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:352
-#: src/modules/syscon/e_syscon.c:97 src/modules/connman/e_mod_main.c:285
+#: src/modules/syscon/e_syscon.c:97 src/modules/connman/e_mod_main.c:288
 msgid "Cancel"
 msgstr "Annulla"
 
@@ -805,7 +805,7 @@ msgstr "Problemi scrittura configurazione di Enlightenment"
 #: src/modules/conf_exebuf/e_mod_main.c:20
 #: src/modules/conf_paths/e_mod_main.c:20
 #: src/modules/conf_performance/e_mod_main.c:20
-#: src/modules/connman/e_mod_main.c:1723
+#: src/modules/connman/e_mod_main.c:1734
 msgid "Advanced"
 msgstr "Avanzate"
 
@@ -1025,13 +1025,13 @@ msgstr "Incolla"
 msgid "Select All"
 msgstr "Seleziona tutto"
 
-#: src/bin/e_exec.c:225 src/bin/e_utils.c:237
+#: src/bin/e_exec.c:226 src/bin/e_utils.c:237
 #: src/modules/conf_imc/e_int_config_imc.c:268
 #: src/modules/conf_imc/e_int_config_imc.c:508
 msgid "Run Error"
 msgstr "Errore di esecuzione"
 
-#: src/bin/e_exec.c:226 src/bin/e_utils.c:238
+#: src/bin/e_exec.c:227 src/bin/e_utils.c:238
 #: src/modules/conf_imc/e_int_config_imc.c:269
 #: src/modules/conf_imc/e_int_config_imc.c:509
 #, c-format
@@ -1039,11 +1039,11 @@ msgid "Enlightenment was unable to fork a child process:<br><br>%s<br>"
 msgstr ""
 "Enlightenment non ha potuto fare il fork di un processo figlio:<br><br>%s<br>"
 
-#: src/bin/e_exec.c:358
+#: src/bin/e_exec.c:356
 msgid "Application run error"
 msgstr "Errore d'esecuzione dell'applicazione"
 
-#: src/bin/e_exec.c:360
+#: src/bin/e_exec.c:358
 #, c-format
 msgid ""
 "Enlightenment was unable to run the application:<br><br>%s<br><br>The "
@@ -2021,7 +2021,7 @@ msgstr "Avvia questo programma al login"
 #: src/modules/ibar/e_mod_main.c:824 src/modules/ibox/e_mod_main.c:313
 #: src/modules/ibox/e_mod_main.c:708 src/modules/pager/e_mod_main.c:808
 #: src/modules/temperature/e_mod_main.c:276 src/modules/mixer/e_mod_main.c:663
-#: src/modules/connman/e_mod_main.c:1217
+#: src/modules/connman/e_mod_main.c:1228
 msgid "Settings"
 msgstr "Impostazioni"
 
@@ -2554,7 +2554,7 @@ msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di intl (internazionalizzazione)."
 
-#: src/bin/e_main.c:670
+#: src/bin/e_main.c:668
 msgid ""
 "Enlightenment cannot set up init screen.\n"
 "Perhaps you are out of memory?"
@@ -7173,7 +7173,7 @@ msgstr "Impostazioni del modulo Mixer"
 msgid "Mixer Settings Updated"
 msgstr "Impostazioni di Mixer aggiornate"
 
-#: src/modules/mixer/e_mod_main.c:603 src/modules/connman/e_mod_main.c:1159
+#: src/modules/mixer/e_mod_main.c:603 src/modules/connman/e_mod_main.c:1170
 msgid "Controls"
 msgstr "Controlli"
 
@@ -7186,24 +7186,24 @@ msgstr ""
 "configurazione è stata rimpiazzatata con<br>quella predefinita. Ci scusiamo "
 "per l'inconveniente."
 
-#: src/modules/connman/e_mod_main.c:87 src/modules/connman/e_mod_main.c:114
-#: src/modules/connman/e_mod_main.c:962 src/modules/connman/e_mod_main.c:1691
+#: src/modules/connman/e_mod_main.c:90 src/modules/connman/e_mod_main.c:117
+#: src/modules/connman/e_mod_main.c:971 src/modules/connman/e_mod_main.c:1702
 msgid "Cannot toggle system's offline mode."
 msgstr "Impossibile commutare modalità disconnessa del sistema"
 
-#: src/modules/connman/e_mod_main.c:98 src/modules/connman/e_mod_main.c:954
+#: src/modules/connman/e_mod_main.c:101 src/modules/connman/e_mod_main.c:963
 msgid "ConnMan Daemon is not running."
 msgstr "Il demone Connman non è in esecuzione"
 
-#: src/modules/connman/e_mod_main.c:105
+#: src/modules/connman/e_mod_main.c:108
 msgid "Query system's offline mode."
 msgstr "Interroga modalita' disconnessa del sistema"
 
-#: src/modules/connman/e_mod_main.c:231
+#: src/modules/connman/e_mod_main.c:234
 msgid "ConnMan needs your passphrase"
 msgstr "Connman ha bisogno della passphrase"
 
-#: src/modules/connman/e_mod_main.c:243
+#: src/modules/connman/e_mod_main.c:246
 #, c-format
 msgid ""
 "Connection Manager needs your passphrase for <br>the service <hilight>%s</"
@@ -7212,98 +7212,108 @@ msgstr ""
 "Il gestore delle connessioni Connman ha bisogno della<br>passphrase per il "
 "servizio<hilight>%s</hilight>"
 
-#: src/modules/connman/e_mod_main.c:267
+#: src/modules/connman/e_mod_main.c:270
 msgid "Show passphrase as clear text"
 msgstr "Mostra passphrase come testo"
 
-#: src/modules/connman/e_mod_main.c:283
+#: src/modules/connman/e_mod_main.c:286
 msgid "Ok"
 msgstr "Ok"
 
-#: src/modules/connman/e_mod_main.c:458 src/modules/connman/e_mod_main.c:471
+#: src/modules/connman/e_mod_main.c:461 src/modules/connman/e_mod_main.c:474
 msgid "Disconnect from network service."
 msgstr "Disconnetti dal servizio di rete"
 
-#: src/modules/connman/e_mod_main.c:501 src/modules/connman/e_mod_main.c:560
-#: src/modules/connman/e_mod_main.c:584
+#: src/modules/connman/e_mod_main.c:504 src/modules/connman/e_mod_main.c:563
+#: src/modules/connman/e_mod_main.c:587
 msgid "Service does not exist anymore"
 msgstr "Il servizio non esiste più"
 
-#: src/modules/connman/e_mod_main.c:509 src/modules/connman/e_mod_main.c:514
-#: src/modules/connman/e_mod_main.c:541
+#: src/modules/connman/e_mod_main.c:512 src/modules/connman/e_mod_main.c:517
+#: src/modules/connman/e_mod_main.c:544
 msgid "Connect to network service."
 msgstr "Connetti al servizio di rete"
 
-#: src/modules/connman/e_mod_main.c:606
+#: src/modules/connman/e_mod_main.c:609
 msgid "Could not set service's passphrase"
 msgstr "Impossibile impostare la passphrase per il servizio"
 
-#: src/modules/connman/e_mod_main.c:1149
+#: src/modules/connman/e_mod_main.c:1160
 msgid "Offline mode"
 msgstr "Modalità disconnessa"
 
-#: src/modules/connman/e_mod_main.c:1315
+#: src/modules/connman/e_mod_main.c:1326
 msgid "No ConnMan"
 msgstr "Nessun Connman"
 
-#: src/modules/connman/e_mod_main.c:1317
+#: src/modules/connman/e_mod_main.c:1328
 msgid "No ConnMan server found."
 msgstr "Non è stato trovato nessun server Connman"
 
-#: src/modules/connman/e_mod_main.c:1330
+#: src/modules/connman/e_mod_main.c:1341
 msgid "Offline mode: all radios are turned off"
 msgstr "Modalità disconnessa: le funzioni di rete sono disattivate"
 
-#: src/modules/connman/e_mod_main.c:1355
+#: src/modules/connman/e_mod_main.c:1366
 msgid "No Connection"
 msgstr "Nessuna connessione"
 
-#: src/modules/connman/e_mod_main.c:1359
+#: src/modules/connman/e_mod_main.c:1370
 msgid "Not connected"
 msgstr "Disconnesso"
 
-#: src/modules/connman/e_mod_main.c:1362 src/modules/connman/e_mod_main.c:1769
+#: src/modules/connman/e_mod_main.c:1373 src/modules/connman/e_mod_main.c:1779
 msgid "disconnect"
 msgstr "disconnetti"
 
-#: src/modules/connman/e_mod_main.c:1385
+#: src/modules/connman/e_mod_main.c:1396
 msgid "Unknown Name"
 msgstr "Nome sconosciuto"
 
-#: src/modules/connman/e_mod_main.c:1394
+#: src/modules/connman/e_mod_main.c:1405
 msgid "No error"
 msgstr "Nessun errore"
 
-#: src/modules/connman/e_mod_main.c:1765
+#: src/modules/connman/e_mod_main.c:1773
 msgid "idle"
 msgstr "In attesa"
 
-#: src/modules/connman/e_mod_main.c:1766
+#: src/modules/connman/e_mod_main.c:1774
 msgid "association"
 msgstr "associazione"
 
-#: src/modules/connman/e_mod_main.c:1767
+#: src/modules/connman/e_mod_main.c:1775
 msgid "configuration"
 msgstr "configurazione"
 
-#: src/modules/connman/e_mod_main.c:1768
+#: src/modules/connman/e_mod_main.c:1776
 msgid "ready"
 msgstr "pronto"
 
-#: src/modules/connman/e_mod_main.c:1770
+#: src/modules/connman/e_mod_main.c:1777
+#, fuzzy
+msgid "login"
+msgstr "Liscio"
+
+#: src/modules/connman/e_mod_main.c:1778
+#, fuzzy
+msgid "online"
+msgstr "Motore"
+
+#: src/modules/connman/e_mod_main.c:1780
 msgid "failure"
 msgstr "errore"
 
-#: src/modules/systray/e_mod_main.c:895
+#: src/modules/systray/e_mod_main.c:893
 msgid "Another systray exists"
 msgstr "Esiste un'altra istanza di Systray"
 
-#: src/modules/systray/e_mod_main.c:896
+#: src/modules/systray/e_mod_main.c:894
 msgid "There can be only one systray gadget and another one already exists."
 msgstr ""
 "Può esserci una sola istanza di Systray, e attualmente ne esiste già "
 "un'altra."
 
-#: src/modules/systray/e_mod_main.c:1098
+#: src/modules/systray/e_mod_main.c:1096
 msgid "Systray"
 msgstr "Systray"

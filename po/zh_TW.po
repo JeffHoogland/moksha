@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-01-22 13:03+0900\n"
+"POT-Creation-Date: 2010-02-16 18:40+1100\n"
 "PO-Revision-Date: 2007-11-06 20:25+0800\n"
 "Last-Translator: Chia-I Wu <olv@openmoko.com>\n"
 "Language-Team: none\n"
@@ -23,7 +23,7 @@ msgstr "關於 Enlightenment"
 #: src/bin/e_about.c:20 src/bin/e_actions.c:2552 src/bin/e_config_dialog.c:272
 #: src/bin/e_fm.c:943 src/bin/e_int_border_menu.c:247
 #: src/bin/e_int_border_prop.c:81 src/bin/e_theme_about.c:20
-#: src/modules/conf/e_conf.c:179
+#: src/modules/conf/e_conf.c:180
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:848
 #: src/modules/conf_theme/e_int_config_theme_web.c:130
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:120
@@ -33,7 +33,7 @@ msgid "Close"
 msgstr "關閉"
 
 #: src/bin/e_about.c:21 src/bin/e_actions.c:2849 src/bin/e_actions.c:2853
-#: src/bin/e_actions.c:2857 src/bin/e_int_menus.c:165 src/bin/e_main.c:668
+#: src/bin/e_actions.c:2857 src/bin/e_int_menus.c:165 src/bin/e_main.c:675
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:210
 #: src/modules/wizard/page_000.c:32
 msgid "Enlightenment"
@@ -145,7 +145,7 @@ msgstr "您要求進入休眠狀態。<br><br>您是否確定休眠？"
 msgid "Window : Actions"
 msgstr "視窗: 動作"
 
-#: src/bin/e_actions.c:2512 src/bin/e_fm.c:6066
+#: src/bin/e_actions.c:2512 src/bin/e_fm.c:6065
 #: src/bin/e_int_border_menu.c:148
 msgid "Move"
 msgstr "移動"
@@ -667,7 +667,7 @@ msgstr "掃描 desktop 檔案"
 msgid "Color Selector"
 msgstr "Profile 選擇器"
 
-#: src/bin/e_color_dialog.c:48 src/bin/e_config.c:1876
+#: src/bin/e_color_dialog.c:48 src/bin/e_config.c:1885
 #: src/bin/e_config_dialog.c:262 src/bin/e_eap_editor.c:607
 #: src/bin/e_eap_editor.c:671 src/bin/e_entry_dialog.c:62 src/bin/e_exec.c:365
 #: src/bin/e_fm.c:8520 src/bin/e_fm.c:9158 src/bin/e_fm_prop.c:510
@@ -697,11 +697,11 @@ msgstr "確定"
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:199
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:222
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:352
-#: src/modules/syscon/e_syscon.c:97 src/modules/connman/e_mod_main.c:317
+#: src/modules/syscon/e_syscon.c:97 src/modules/connman/e_mod_main.c:288
 msgid "Cancel"
 msgstr "取消"
 
-#: src/bin/e_config.c:797 src/bin/e_config.c:830
+#: src/bin/e_config.c:801 src/bin/e_config.c:834
 #, fuzzy
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
@@ -717,7 +717,7 @@ msgstr ""
 "資料未能提供的功能。<br>新的組態會加入這些功能。您現在可以重新配置您的桌面設"
 "定。<br>抱歉打斷您的配置。<br>"
 
-#: src/bin/e_config.c:814
+#: src/bin/e_config.c:818
 #, fuzzy
 msgid ""
 "Your settings are NEWER than Enlightenment. This is very<br>strange. This "
@@ -730,12 +730,12 @@ msgstr ""
 "Enlightenment 或是從其它地方複製了新版的組態檔<br>否則這不應該發生。這是不好"
 "的，所以為防萬一，您的組態檔已被<br>恢復成預設值。很抱歉為您帶來不便。<br>"
 
-#: src/bin/e_config.c:1777
+#: src/bin/e_config.c:1786
 #, fuzzy
 msgid "Settings Upgraded"
 msgstr "桌面設定"
 
-#: src/bin/e_config.c:1800
+#: src/bin/e_config.c:1809
 #, fuzzy, c-format
 msgid ""
 "An error occured while saving Enlightenment's<br>settings to disk. The error "
@@ -745,7 +745,7 @@ msgstr ""
 "當儲存 Enlightment 設定檔時有錯誤發生。<br>錯誤原因無法確定。<br><br>發生錯誤"
 "的檔案為:<br>%s<br><br>此檔案已刪除以防止損壞設定。<br>"
 
-#: src/bin/e_config.c:1811
+#: src/bin/e_config.c:1820
 #, fuzzy, c-format
 msgid ""
 "Enlightenment's settings files are too big<br>for the file system they are "
@@ -758,7 +758,7 @@ msgstr ""
 "設定檔應該非常小。<br>請檢查您家目錄的設定。<br><br>發生錯誤的檔案為:<br>%"
 "s<br><br>此檔案已刪除以防止損壞設定。<br>"
 
-#: src/bin/e_config.c:1824
+#: src/bin/e_config.c:1833
 #, fuzzy, c-format
 msgid ""
 "An output error occured when writing the settings<br>files for "
@@ -769,7 +769,7 @@ msgstr ""
 "當寫入 Enlightment 設定檔時有錯誤發生。<br>您的磁碟有問題而且可能需要替換。"
 "<br><br>發生錯誤的檔案為:<br>%s<br><br>此檔案已刪除以防止損壞設定。<br>"
 
-#: src/bin/e_config.c:1835
+#: src/bin/e_config.c:1844
 #, fuzzy, c-format
 msgid ""
 "Enlightenment cannot write its settings file<br>because it ran out of space "
@@ -781,7 +781,7 @@ msgstr ""
 "了磁碟配額。<br><br>發生錯誤的檔案為:<br>%s<br><br>此檔案已刪除以防止損壞設"
 "定。<br>"
 
-#: src/bin/e_config.c:1847
+#: src/bin/e_config.c:1856
 #, fuzzy, c-format
 msgid ""
 "Enlightenment unexpectedly had the settings file<br>it was writing closed on "
@@ -791,7 +791,7 @@ msgstr ""
 "Enlightment 要寫入的設定檔未預期的被關閉了。<br>這很不尋常。<br><br>發生錯誤"
 "的檔案為:<br>%s<br><br>此檔案已刪除以防止損壞設定。<br>"
 
-#: src/bin/e_config.c:1872
+#: src/bin/e_config.c:1881
 #, fuzzy
 msgid "Enlightenment Settings Write Problems"
 msgstr "Enlightenment 組態寫入發生問題"
@@ -801,6 +801,7 @@ msgstr "Enlightenment 組態寫入發生問題"
 #: src/modules/conf_exebuf/e_mod_main.c:20
 #: src/modules/conf_paths/e_mod_main.c:20
 #: src/modules/conf_performance/e_mod_main.c:20
+#: src/modules/connman/e_mod_main.c:1734
 msgid "Advanced"
 msgstr "進階設定"
 
@@ -999,7 +1000,7 @@ msgstr "刪除"
 msgid "Cut"
 msgstr "剪下"
 
-#: src/bin/e_entry.c:511 src/bin/e_fm.c:6061 src/bin/e_fm.c:7944
+#: src/bin/e_entry.c:511 src/bin/e_fm.c:6060 src/bin/e_fm.c:7944
 msgid "Copy"
 msgstr "複製"
 
@@ -1011,13 +1012,13 @@ msgstr "貼上"
 msgid "Select All"
 msgstr "全選"
 
-#: src/bin/e_exec.c:225 src/bin/e_utils.c:237
+#: src/bin/e_exec.c:226 src/bin/e_utils.c:237
 #: src/modules/conf_imc/e_int_config_imc.c:268
 #: src/modules/conf_imc/e_int_config_imc.c:508
 msgid "Run Error"
 msgstr "執行錯誤"
 
-#: src/bin/e_exec.c:226 src/bin/e_utils.c:238
+#: src/bin/e_exec.c:227 src/bin/e_utils.c:238
 #: src/modules/conf_imc/e_int_config_imc.c:269
 #: src/modules/conf_imc/e_int_config_imc.c:509
 #, c-format
@@ -1035,105 +1036,105 @@ msgid ""
 "application failed to start."
 msgstr "Enlightment 無法執行應用程式:<br><br>%s<br><br>此程式無法啟動。"
 
-#: src/bin/e_exec.c:452
+#: src/bin/e_exec.c:458
 msgid "Application Execution Error"
 msgstr "應用程式執行錯誤"
 
-#: src/bin/e_exec.c:464
+#: src/bin/e_exec.c:470
 #, c-format
 msgid "%s stopped running unexpectedly."
 msgstr "%s 無預警地停止執行。"
 
-#: src/bin/e_exec.c:470
+#: src/bin/e_exec.c:476
 #, c-format
 msgid "An exit code of %i was returned from %s."
 msgstr "錯誤代碼 %i 被 %s 傳回。"
 
-#: src/bin/e_exec.c:478
+#: src/bin/e_exec.c:484
 #, c-format
 msgid "%s was interrupted by an Interrupt Signal."
 msgstr "%s 被 Interrupt Signal 中斷。"
 
-#: src/bin/e_exec.c:481
+#: src/bin/e_exec.c:487
 #, c-format
 msgid "%s was interrupted by a Quit Signal."
 msgstr "%s 被 Quit Signal 中斷。"
 
-#: src/bin/e_exec.c:485
+#: src/bin/e_exec.c:491
 #, c-format
 msgid "%s was interrupted by an Abort Signal."
 msgstr "%s 被 Abort Signal 中斷。"
 
-#: src/bin/e_exec.c:488
+#: src/bin/e_exec.c:494
 #, c-format
 msgid "%s was interrupted by a Floating Point Error."
 msgstr "%s 被 FPE Signal 中斷。"
 
-#: src/bin/e_exec.c:492
+#: src/bin/e_exec.c:498
 #, c-format
 msgid "%s was interrupted by an Uninterruptable Kill Signal."
 msgstr "%s 被 Kill Signal 中斷。"
 
-#: src/bin/e_exec.c:496
+#: src/bin/e_exec.c:502
 #, c-format
 msgid "%s was interrupted by a Segmentation Fault."
 msgstr "%s 被 Segmentation Fault 中斷。"
 
-#: src/bin/e_exec.c:500
+#: src/bin/e_exec.c:506
 #, c-format
 msgid "%s was interrupted by a Broken Pipe."
 msgstr "%s 被 Broken Pipe 中斷。"
 
-#: src/bin/e_exec.c:503
+#: src/bin/e_exec.c:509
 #, c-format
 msgid "%s was interrupted by a Termination Signal."
 msgstr "%s 被 Terminal Signal 中斷。"
 
-#: src/bin/e_exec.c:507
+#: src/bin/e_exec.c:513
 #, c-format
 msgid "%s was interrupted by a Bus Error."
 msgstr "%s 被 Bus Error 中斷。"
 
-#: src/bin/e_exec.c:510
+#: src/bin/e_exec.c:516
 #, c-format
 msgid "%s was interrupted by the signal number %i."
 msgstr "%s 被 Signal %i 中斷。"
 
-#: src/bin/e_exec.c:566
+#: src/bin/e_exec.c:572
 msgid ""
 "***The remaining output has been truncated. Save the output to view.***\n"
 msgstr "*** 剩下的輸出被刪節了。儲存輸出以供檢視。***\n"
 
-#: src/bin/e_exec.c:628 src/bin/e_exec.c:702 src/bin/e_exec.c:709
+#: src/bin/e_exec.c:634 src/bin/e_exec.c:708 src/bin/e_exec.c:715
 msgid "Error Logs"
 msgstr "錯誤紀錄檔"
 
-#: src/bin/e_exec.c:634 src/bin/e_exec.c:710
+#: src/bin/e_exec.c:640 src/bin/e_exec.c:716
 msgid "There was no error message."
 msgstr "沒有錯誤訊息。"
 
-#: src/bin/e_exec.c:638 src/bin/e_exec.c:717
+#: src/bin/e_exec.c:644 src/bin/e_exec.c:723
 msgid "Save This Message"
 msgstr "儲存訊息"
 
-#: src/bin/e_exec.c:642 src/bin/e_exec.c:721
+#: src/bin/e_exec.c:648 src/bin/e_exec.c:727
 #, c-format
 msgid "This error log will be saved as %s/%s.log"
 msgstr "錯誤紀錄檔已被儲存到 %s/%s.log"
 
-#: src/bin/e_exec.c:668
+#: src/bin/e_exec.c:674
 msgid "Error Information"
 msgstr "錯誤資訊"
 
-#: src/bin/e_exec.c:676
+#: src/bin/e_exec.c:682
 msgid "Error Signal Information"
 msgstr "錯誤 Signal 資訊"
 
-#: src/bin/e_exec.c:686 src/bin/e_exec.c:693
+#: src/bin/e_exec.c:692 src/bin/e_exec.c:699
 msgid "Output Data"
 msgstr "輸出資料"
 
-#: src/bin/e_exec.c:694
+#: src/bin/e_exec.c:700
 msgid "There was no output."
 msgstr "沒有輸入。"
 
@@ -1179,12 +1180,12 @@ msgstr ""
 msgid "%i Files"
 msgstr "%i 筆檔案"
 
-#: src/bin/e_fm.c:6074 src/bin/e_fm.c:7777 src/bin/e_fm.c:7965
+#: src/bin/e_fm.c:6073 src/bin/e_fm.c:7777 src/bin/e_fm.c:7965
 #, fuzzy
 msgid "Link"
 msgstr "線性"
 
-#: src/bin/e_fm.c:6082 src/bin/e_fm.c:8943 src/bin/e_fm.c:9081
+#: src/bin/e_fm.c:6081 src/bin/e_fm.c:8943 src/bin/e_fm.c:9081
 #, fuzzy
 msgid "Abort"
 msgstr "關於"
@@ -2012,14 +2013,14 @@ msgid "Start this program on login"
 msgstr "登入時啟動此程式"
 
 #: src/bin/e_int_config_modules.c:42 src/bin/e_int_menus.c:210
-#: src/modules/battery/e_mod_main.c:176 src/modules/conf/e_conf.c:120
-#: src/modules/conf/e_conf.c:130 src/modules/conf/e_mod_main.c:81
+#: src/modules/battery/e_mod_main.c:176 src/modules/conf/e_conf.c:121
+#: src/modules/conf/e_conf.c:131 src/modules/conf/e_mod_main.c:81
 #: src/modules/conf_dialogs/e_mod_main.c:20
 #: src/modules/conf_profiles/e_mod_main.c:20 src/modules/ibar/e_mod_main.c:314
 #: src/modules/ibar/e_mod_main.c:824 src/modules/ibox/e_mod_main.c:313
 #: src/modules/ibox/e_mod_main.c:708 src/modules/pager/e_mod_main.c:808
-#: src/modules/temperature/e_mod_main.c:278 src/modules/mixer/e_mod_main.c:663
-#: src/modules/connman/e_mod_main.c:1142
+#: src/modules/temperature/e_mod_main.c:276 src/modules/mixer/e_mod_main.c:663
+#: src/modules/connman/e_mod_main.c:1228
 #, fuzzy
 msgid "Settings"
 msgstr "桌面設定"
@@ -2182,7 +2183,7 @@ msgstr "無名稱！！"
 msgid "(No Shelves)"
 msgstr "(無任何置物架)"
 
-#: src/bin/e_int_menus.c:1374 src/bin/e_shelf.c:168 src/bin/e_shelf.c:1173
+#: src/bin/e_int_menus.c:1374 src/bin/e_shelf.c:166 src/bin/e_shelf.c:1171
 #: src/modules/conf_shelves/e_int_config_shelf.c:132
 msgid "Shelf #"
 msgstr "置物架 #"
@@ -2195,7 +2196,7 @@ msgstr "新增置物架"
 msgid "Delete A Shelf"
 msgstr "移除置物架"
 
-#: src/bin/e_int_shelf_config.c:75 src/bin/e_shelf.c:1674
+#: src/bin/e_int_shelf_config.c:75 src/bin/e_shelf.c:1683
 #: src/modules/conf_shelves/e_int_config_shelf.c:43
 msgid "Shelf Settings"
 msgstr "置物架設定"
@@ -2323,7 +2324,7 @@ msgstr ""
 "請檢查:\n"
 "%s/enlightenment-%s\n"
 
-#: src/bin/e_main.c:323
+#: src/bin/e_main.c:324
 #, c-format
 msgid ""
 "Options:\n"
@@ -2352,7 +2353,7 @@ msgid ""
 "\t\tIf you need this help, you don't need this option.\n"
 msgstr ""
 
-#: src/bin/e_main.c:385
+#: src/bin/e_main.c:386
 msgid ""
 "Enlightenment cannot Initialize Ecore!\n"
 "Perhaps you are out of memory?"
@@ -2360,7 +2361,7 @@ msgstr ""
 "Enlightenment 無法初始化 Ecore!\n"
 "可能是記憶體不足？"
 
-#: src/bin/e_main.c:411
+#: src/bin/e_main.c:410
 msgid ""
 "Enlightenment cannot initialize the File system.\n"
 "Perhaps you are out of memory?"
@@ -2368,7 +2369,7 @@ msgstr ""
 "Enlightenment 無法初始化檔案系統。\n"
 "可能是記憶體不足？"
 
-#: src/bin/e_main.c:424
+#: src/bin/e_main.c:423
 msgid ""
 "Enlightenment cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
@@ -2376,7 +2377,7 @@ msgstr ""
 "Enlightenment 無法建立 exit signal handler。\n"
 "可能是記憶體不足？"
 
-#: src/bin/e_main.c:430
+#: src/bin/e_main.c:429
 msgid ""
 "Enlightenment cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
@@ -2384,7 +2385,16 @@ msgstr ""
 "Enlightenment 無法建立 HUP signal handler。\n"
 "可能是記憶體不足？"
 
-#: src/bin/e_main.c:442
+#: src/bin/e_main.c:435
+#, fuzzy
+msgid ""
+"Enlightenment cannot set up a USER signal handler.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment 無法建立 HUP signal handler。\n"
+"可能是記憶體不足？"
+
+#: src/bin/e_main.c:447
 msgid ""
 "Enlightenment cannot initialize its X connection.\n"
 "Have you set your DISPLAY variable?"
@@ -2392,7 +2402,7 @@ msgstr ""
 "Enlightenment 無法初始化 X 連結。\n"
 "您是否已設定 DISPLAY 環境變數？"
 
-#: src/bin/e_main.c:450
+#: src/bin/e_main.c:455
 msgid ""
 "Enlightenment cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
@@ -2400,7 +2410,7 @@ msgstr ""
 "Enlightenment 無法初始化緊急警報系統。\n"
 "您是否已設定 DISPLAY 環境變數？"
 
-#: src/bin/e_main.c:473
+#: src/bin/e_main.c:478
 msgid ""
 "Enlightenment cannot initialize the connections system.\n"
 "Perhaps you are out of memory?"
@@ -2408,7 +2418,7 @@ msgstr ""
 "Enlightenment 無法初始化連結系統。\n"
 "可能是記憶體不足？"
 
-#: src/bin/e_main.c:481
+#: src/bin/e_main.c:486
 msgid ""
 "Enlightenment cannot initialize the IPC system.\n"
 "Perhaps you are out of memory?"
@@ -2416,7 +2426,7 @@ msgstr ""
 "Enlightenment 無法初始化 IPC 系統。\n"
 "可能是記憶體不足？"
 
-#: src/bin/e_main.c:490
+#: src/bin/e_main.c:495
 msgid ""
 "Enlightenment cannot setup xinerama wrapping.\n"
 "This should not happen."
@@ -2424,7 +2434,7 @@ msgstr ""
 "Enlightenment 無法設定 xinerama wrapping。\n"
 "這種情況不應該發生。"
 
-#: src/bin/e_main.c:509
+#: src/bin/e_main.c:514
 msgid ""
 "Enlightenment cannot initialize the Evas system.\n"
 "Perhaps you are out of memory?"
@@ -2432,7 +2442,7 @@ msgstr ""
 "Enlightenment 無法初始化 Evas 系統。\n"
 "可能是記憶體不足？"
 
-#: src/bin/e_main.c:515
+#: src/bin/e_main.c:521
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -2441,7 +2451,7 @@ msgstr ""
 "Enlightenment 發現 ecore_evas 不支援 Evas Software X11 繪圖。\n"
 "請檢查您的 Evas 和 Ecore 是否正確安裝且支援 Software X11 繪圖引擎。"
 
-#: src/bin/e_main.c:522
+#: src/bin/e_main.c:528
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software Buffer\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -2450,7 +2460,7 @@ msgstr ""
 "Enlightenment 發現 ecore_evas 不支援 Evas Software Buffer 繪圖。\n"
 "請檢查您的 Evas 和 Ecore 是否正確安裝且支援 Software Buffer 繪圖引擎。"
 
-#: src/bin/e_main.c:538 src/bin/e_main.c:545
+#: src/bin/e_main.c:544 src/bin/e_main.c:551
 msgid ""
 "Enlightenment cannot initialize the FDO desktop system.\n"
 "Perhaps you are out of memory?"
@@ -2458,7 +2468,7 @@ msgstr ""
 "Enlightenment 無法初始化 FDO desktop 系統。\n"
 "可能是記憶體不足？"
 
-#: src/bin/e_main.c:559
+#: src/bin/e_main.c:565
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
@@ -2466,25 +2476,25 @@ msgstr ""
 "Enlightenment 無法在你的家目錄建立目錄。\n"
 "可能你沒有家目錄或是磁碟已滿？"
 
-#: src/bin/e_main.c:569
+#: src/bin/e_main.c:575
 msgid "Enlightenment cannot set up its file registry system."
 msgstr "Enlightenment 無法設定他的登錄系統。"
 
-#: src/bin/e_main.c:578
+#: src/bin/e_main.c:584
 msgid "Enlightenment cannot set up its config system."
 msgstr "Enlightenment 無法設定他的配置系統。"
 
-#: src/bin/e_main.c:592
+#: src/bin/e_main.c:598
 #, fuzzy
 msgid "Enlightenment cannot set up its scale system."
 msgstr "Enlightenment 無法建立他的置物架系統。"
 
-#: src/bin/e_main.c:600
+#: src/bin/e_main.c:606
 #, fuzzy
 msgid "Enlightenment cannot set up the pointer system."
 msgstr "Enlightenment 無法建立他的字形系統。"
 
-#: src/bin/e_main.c:609
+#: src/bin/e_main.c:615
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -2492,23 +2502,23 @@ msgstr ""
 "Enlightenment 無法為找到的文件建立路徑。\n"
 "可能是記憶體不足？"
 
-#: src/bin/e_main.c:627
+#: src/bin/e_main.c:633
 msgid "Enlightenment cannot set up its font system."
 msgstr "Enlightenment 無法建立他的字形系統。"
 
-#: src/bin/e_main.c:638
+#: src/bin/e_main.c:644
 msgid "Enlightenment cannot set up its theme system."
 msgstr "Enlightenment 無法建立他的主題系統。"
 
-#: src/bin/e_main.c:643
+#: src/bin/e_main.c:649
 msgid "Starting International Support"
 msgstr "開始國際化支援"
 
-#: src/bin/e_main.c:648
+#: src/bin/e_main.c:654
 msgid "Enlightenment cannot set up its intl system."
 msgstr "Enlightenment 無法建立國際化系統。"
 
-#: src/bin/e_main.c:664
+#: src/bin/e_main.c:668
 msgid ""
 "Enlightenment cannot set up init screen.\n"
 "Perhaps you are out of memory?"
@@ -2516,11 +2526,11 @@ msgstr ""
 "Enlightenment 無法建立初始螢幕。\n"
 "可能是記憶體不足？"
 
-#: src/bin/e_main.c:676
+#: src/bin/e_main.c:682
 msgid "Testing Format Support"
 msgstr "測試格式支援"
 
-#: src/bin/e_main.c:687
+#: src/bin/e_main.c:693
 msgid ""
 "Enlightenment found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
@@ -2528,7 +2538,7 @@ msgstr ""
 "Enlightment 發現 Evas 無法創造緩衝畫面。請確認\n"
 "Evas 支援軟體緩衝引擎。\n"
 
-#: src/bin/e_main.c:698
+#: src/bin/e_main.c:704
 msgid ""
 "Enlightenment found Evas can't load PNG files. Check Evas has PNG\n"
 "loader support.\n"
@@ -2536,7 +2546,7 @@ msgstr ""
 "Enlightment 發現 Evas 無法讀入 PNG 檔案。請確認\n"
 "Evas 支援 PNG 檔讀取。\n"
 
-#: src/bin/e_main.c:707
+#: src/bin/e_main.c:713
 msgid ""
 "Enlightenment found Evas can't load JPEG files. Check Evas has JPEG\n"
 "loader support.\n"
@@ -2544,7 +2554,7 @@ msgstr ""
 "Enlightment 發現 Evas 無法讀入 JPEG 檔案。請確認\n"
 "Evas 支援 JPEG 檔案讀取。\n"
 
-#: src/bin/e_main.c:716
+#: src/bin/e_main.c:722
 msgid ""
 "Enlightenment found Evas can't load EET files. Check Evas has EET\n"
 "loader support.\n"
@@ -2552,7 +2562,7 @@ msgstr ""
 "Enlightment 發現 Evas 無法讀入 EET 檔案。請確認\n"
 "Evas 支援 EET 檔案讀取。\n"
 
-#: src/bin/e_main.c:727
+#: src/bin/e_main.c:733
 #, fuzzy
 msgid ""
 "Enlightenment found Evas can't load the 'Sans' font. Check Evas has "
@@ -2562,11 +2572,11 @@ msgstr ""
 "Enlightment 發現 Evas 無法讀入 PNG 檔案。請確認\n"
 "Evas 支援 PNG 檔讀取。\n"
 
-#: src/bin/e_main.c:737
+#: src/bin/e_main.c:743
 msgid "Setup Screens"
 msgstr "設定螢幕"
 
-#: src/bin/e_main.c:742
+#: src/bin/e_main.c:748
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
@@ -2574,195 +2584,195 @@ msgstr ""
 "Enlightenment 在你所有的screen上建立視窗管理都失敗。\n"
 "可能有另一個視窗管理程式正在執行？\n"
 
-#: src/bin/e_main.c:748
+#: src/bin/e_main.c:754
 msgid "Setup Screensaver"
 msgstr "設定螢幕保護程式"
 
-#: src/bin/e_main.c:753
+#: src/bin/e_main.c:759
 msgid "Enlightenment cannot configure the X screensaver."
 msgstr "Enlightenment 無法設定 X 螢幕保護程式。"
 
-#: src/bin/e_main.c:757
+#: src/bin/e_main.c:763
 msgid "Setup Desklock"
 msgstr "設定桌面鎖定"
 
-#: src/bin/e_main.c:762
+#: src/bin/e_main.c:768
 msgid "Enlightenment cannot set up its desk locking system."
 msgstr "Enlightenment 無法建立他的桌面鎖定系統。"
 
-#: src/bin/e_main.c:775
+#: src/bin/e_main.c:781
 msgid "Setting up Paths"
 msgstr "設定路徑"
 
-#: src/bin/e_main.c:792
+#: src/bin/e_main.c:798
 msgid "Setup System Controls"
 msgstr "設定系統控制"
 
-#: src/bin/e_main.c:797
+#: src/bin/e_main.c:803
 msgid "Enlightenment cannot initialize the System Command system.\n"
 msgstr "Enlightenment 無法初始化系統命令系統。\n"
 
-#: src/bin/e_main.c:802
+#: src/bin/e_main.c:808
 msgid "Setup Actions"
 msgstr "設定行動"
 
-#: src/bin/e_main.c:807
+#: src/bin/e_main.c:813
 msgid "Enlightenment cannot set up its actions system."
 msgstr "Enlightenment 無法建立他的動作系統。"
 
-#: src/bin/e_main.c:811
+#: src/bin/e_main.c:817
 msgid "Setup Execution System"
 msgstr "設定執行系統"
 
-#: src/bin/e_main.c:816
+#: src/bin/e_main.c:822
 msgid "Enlightenment cannot set up its exec system."
 msgstr "Enlightenment 無法建立他的執行系統。"
 
-#: src/bin/e_main.c:824
+#: src/bin/e_main.c:830
 msgid "Setup FM"
 msgstr "設定 FM"
 
-#: src/bin/e_main.c:829
+#: src/bin/e_main.c:835
 msgid "Enlightenment cannot initialize the File manager.\n"
 msgstr "Enlightenment 無法初始文件管理器。\n"
 
-#: src/bin/e_main.c:844
+#: src/bin/e_main.c:850
 msgid "Setup Message System"
 msgstr "設定訊息系統"
 
-#: src/bin/e_main.c:849
+#: src/bin/e_main.c:855
 msgid "Enlightenment cannot set up its msg system."
 msgstr "Enlightenment 無法建立他的訊息系統。"
 
-#: src/bin/e_main.c:854
+#: src/bin/e_main.c:860
 msgid "Setup DND"
 msgstr "設定拖放"
 
-#: src/bin/e_main.c:859
+#: src/bin/e_main.c:865
 msgid "Enlightenment cannot set up its dnd system."
 msgstr "Enlightenment 無法建立他的拖放系統。"
 
-#: src/bin/e_main.c:864
+#: src/bin/e_main.c:870
 #, fuzzy
 msgid "Setup Grab Input Handling"
 msgstr "設定輸入攫取處理系統"
 
-#: src/bin/e_main.c:869
+#: src/bin/e_main.c:875
 msgid "Enlightenment cannot set up its input grab handling system."
 msgstr "Enlightenment 無法建立他的輸入擷取處理系統。"
 
-#: src/bin/e_main.c:874
+#: src/bin/e_main.c:880
 msgid "Setup Modules"
 msgstr "設定模組"
 
-#: src/bin/e_main.c:879
+#: src/bin/e_main.c:885
 msgid "Enlightenment cannot set up its module system."
 msgstr "Enlightenment 無法建立他的模組系統。"
 
-#: src/bin/e_main.c:884
+#: src/bin/e_main.c:890
 msgid "Setup Remembers"
 msgstr "設定記憶值"
 
-#: src/bin/e_main.c:889
+#: src/bin/e_main.c:895
 msgid "Enlightenment cannot setup remember settings."
 msgstr "Enlightenment 無法設定他的設定記憶系統。"
 
-#: src/bin/e_main.c:894
+#: src/bin/e_main.c:900
 msgid "Setup Color Classes"
 msgstr "設定顏色類別"
 
-#: src/bin/e_main.c:899
+#: src/bin/e_main.c:905
 msgid "Enlightenment cannot set up its color class system."
 msgstr "Enlightenment 無法建立他的顏色類別系統。"
 
-#: src/bin/e_main.c:904
+#: src/bin/e_main.c:910
 msgid "Setup Gadcon"
 msgstr "設定小工具控制"
 
-#: src/bin/e_main.c:909
+#: src/bin/e_main.c:915
 msgid "Enlightenment cannot set up its gadget control system."
 msgstr "Enlightenment 無法建立他的小工具控制系統。"
 
-#: src/bin/e_main.c:914
+#: src/bin/e_main.c:920
 msgid "Setup DPMS"
 msgstr "設定 DPMS"
 
-#: src/bin/e_main.c:919
+#: src/bin/e_main.c:925
 msgid "Enlightenment cannot configure the DPMS settings."
 msgstr "Enlightenment 無法設定 DPMS 設定。"
 
-#: src/bin/e_main.c:923
+#: src/bin/e_main.c:929
 #, fuzzy
 msgid "Set Up Powersave modes"
 msgstr "設定 CPU 電源管理原則"
 
-#: src/bin/e_main.c:927
+#: src/bin/e_main.c:933
 #, fuzzy
 msgid "Enlightenment cannot set up its powersave modes."
 msgstr "Enlightenment 無法建立他的彈出系統。"
 
-#: src/bin/e_main.c:932
+#: src/bin/e_main.c:938
 msgid "Setup Wallpaper"
 msgstr "設定桌布"
 
-#: src/bin/e_main.c:937
+#: src/bin/e_main.c:943
 msgid "Enlightenment cannot set up its desktop background system."
 msgstr "Enlightenment 無法建立桌面背景系統。"
 
-#: src/bin/e_main.c:942
+#: src/bin/e_main.c:948
 msgid "Setup Mouse"
 msgstr "設定滑鼠"
 
-#: src/bin/e_main.c:947
+#: src/bin/e_main.c:953
 #, fuzzy
 msgid "Enlightenment cannot configure the mouse settings."
 msgstr "Enlightenment 無法設定 DPMS 設定。"
 
-#: src/bin/e_main.c:952
+#: src/bin/e_main.c:958
 msgid "Setup Bindings"
 msgstr "設定快速鍵"
 
-#: src/bin/e_main.c:957
+#: src/bin/e_main.c:963
 msgid "Enlightenment cannot set up its bindings system."
 msgstr "Enlightenment 無法建立他的連接系統。"
 
-#: src/bin/e_main.c:962
+#: src/bin/e_main.c:968
 msgid "Setup Popups"
 msgstr "設定彈出視窗"
 
-#: src/bin/e_main.c:967
+#: src/bin/e_main.c:973
 msgid "Enlightenment cannot set up its popup system."
 msgstr "Enlightenment 無法建立他的彈出系統。"
 
-#: src/bin/e_main.c:972
+#: src/bin/e_main.c:978
 msgid "Setup Shelves"
 msgstr "設定置物架"
 
-#: src/bin/e_main.c:977
+#: src/bin/e_main.c:983
 msgid "Enlightenment cannot set up its shelf system."
 msgstr "Enlightenment 無法建立他的置物架系統。"
 
-#: src/bin/e_main.c:982
+#: src/bin/e_main.c:988
 msgid "Setup Thumbnailer"
 msgstr "設定縮圖"
 
-#: src/bin/e_main.c:987
+#: src/bin/e_main.c:993
 msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
 msgstr "Enlightenment 無法初始化縮圖系統。\n"
 
-#: src/bin/e_main.c:992
+#: src/bin/e_main.c:998
 msgid "Set Up File Ordering"
 msgstr "設定檔案排序"
 
-#: src/bin/e_main.c:996
+#: src/bin/e_main.c:1002
 msgid "Enlightenment cannot set up its order file system."
 msgstr "Enlightenment 無法建立他的有序檔案系統。"
 
-#: src/bin/e_main.c:1031
+#: src/bin/e_main.c:1037
 msgid "Load Modules"
 msgstr "載入模組"
 
-#: src/bin/e_main.c:1039
+#: src/bin/e_main.c:1045
 msgid ""
 "Enlightenment crashed early on start and has<br>been restarted. All modules "
 "have been disabled<br>and will not be loaded to help remove any "
@@ -2773,11 +2783,11 @@ msgstr ""
 "您<br>\n"
 "從設定檔中移除任何問題模組。<br>模組設定對話框應可讓您重新選擇模組。"
 
-#: src/bin/e_main.c:1046
+#: src/bin/e_main.c:1052
 msgid "Enlightenment crashed early on start and has been restarted"
 msgstr "Enlightment 在啟動途中當機，已經重新啟動。"
 
-#: src/bin/e_main.c:1047
+#: src/bin/e_main.c:1053
 msgid ""
 "Enlightenment crashed early on start and has been restarted.<br>All modules "
 "have been disabled and will not be loaded to help<br>remove any problem "
@@ -2788,11 +2798,11 @@ msgstr ""
 "您<br>\n"
 "從設定檔中移除任何問題模組。<br><br>模組設定對話框應可讓您重新選擇模組。"
 
-#: src/bin/e_main.c:1055
+#: src/bin/e_main.c:1061
 msgid "Configure Shelves"
 msgstr "設定置物架"
 
-#: src/bin/e_main.c:1066
+#: src/bin/e_main.c:1072
 msgid "Almost Done"
 msgstr "快好了"
 
@@ -2847,30 +2857,30 @@ msgid ""
 "power saving?"
 msgstr ""
 
-#: src/bin/e_shelf.c:1301 src/modules/conf_shelves/e_int_config_shelf.c:281
+#: src/bin/e_shelf.c:1299 src/modules/conf_shelves/e_int_config_shelf.c:281
 msgid "Are you sure you want to delete this shelf?"
 msgstr "您是否確定移除這個置物架？"
 
-#: src/bin/e_shelf.c:1302
+#: src/bin/e_shelf.c:1300
 msgid ""
 "You requested to delete this shelf.<br><br>Are you sure you want to delete "
 "it?"
 msgstr "您要求移除此置物架。<br><br>您是否確定移除？"
 
-#: src/bin/e_shelf.c:1664 src/bin/e_toolbar.c:325
+#: src/bin/e_shelf.c:1673 src/bin/e_toolbar.c:325
 msgid "Stop Moving/Resizing Items"
 msgstr "停止移動或改變項目大小"
 
-#: src/bin/e_shelf.c:1666 src/bin/e_toolbar.c:327
+#: src/bin/e_shelf.c:1675 src/bin/e_toolbar.c:327
 msgid "Begin Moving/Resizing Items"
 msgstr "開始移動或改變項目大小"
 
-#: src/bin/e_shelf.c:1679
+#: src/bin/e_shelf.c:1688
 #, fuzzy
 msgid "Set Shelf Contents"
 msgstr "置物架內容物"
 
-#: src/bin/e_shelf.c:1684
+#: src/bin/e_shelf.c:1693
 msgid "Delete this Shelf"
 msgstr "移除這個置物架"
 
@@ -3431,16 +3441,16 @@ msgstr "其它 IBar 應用程式"
 msgid "Menus"
 msgstr "選單"
 
-#: src/modules/conf_borders/e_int_config_borders.c:30
-#: src/modules/conf_borders/e_int_config_borders.c:202
+#: src/modules/conf_borders/e_int_config_borders.c:31
+#: src/modules/conf_borders/e_int_config_borders.c:204
 msgid "Default Border Style"
 msgstr "預設邊框樣式"
 
-#: src/modules/conf_borders/e_int_config_borders.c:50
+#: src/modules/conf_borders/e_int_config_borders.c:52
 msgid "Window Border Selection"
 msgstr "選擇視窗邊框"
 
-#: src/modules/conf_borders/e_int_config_borders.c:247
+#: src/modules/conf_borders/e_int_config_borders.c:249
 msgid "Remember this Border for this window next time it appears"
 msgstr "記住這個視窗的邊框樣式"
 
@@ -7024,7 +7034,7 @@ msgstr "%1.0f F"
 msgid "%1.0f C"
 msgstr "%1.0f C"
 
-#: src/modules/temperature/e_mod_main.c:144
+#: src/modules/temperature/e_mod_main.c:142
 msgid "Temperature"
 msgstr "温度"
 
@@ -7213,7 +7223,7 @@ msgstr "設定模組"
 msgid "Mixer Settings Updated"
 msgstr "檔案管理員組態已經更新"
 
-#: src/modules/mixer/e_mod_main.c:603 src/modules/connman/e_mod_main.c:1084
+#: src/modules/mixer/e_mod_main.c:603 src/modules/connman/e_mod_main.c:1170
 #, fuzzy
 msgid "Controls"
 msgstr "設定系統控制"
@@ -7224,151 +7234,141 @@ msgid ""
 "replaced with new default.<br>Sorry for the inconvenience."
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:92
-msgid "Connman Server Operation Failed"
-msgstr ""
-
-#: src/modules/connman/e_mod_main.c:93
-#, c-format
-msgid ""
-"Could not execute remote operation:<br>%s<br>Server Error <hilight>%s:</"
-"hilight> %s"
-msgstr ""
-
-#: src/modules/connman/e_mod_main.c:102
-msgid "Connman Operation Failed"
-msgstr ""
-
-#: src/modules/connman/e_mod_main.c:103
-#, c-format
-msgid "Could not execute local operation:<br>%s"
-msgstr ""
-
-#: src/modules/connman/e_mod_main.c:119 src/modules/connman/e_mod_main.c:146
-#: src/modules/connman/e_mod_main.c:905 src/modules/connman/e_mod_main.c:1615
+#: src/modules/connman/e_mod_main.c:90 src/modules/connman/e_mod_main.c:117
+#: src/modules/connman/e_mod_main.c:971 src/modules/connman/e_mod_main.c:1702
 msgid "Cannot toggle system's offline mode."
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:130 src/modules/connman/e_mod_main.c:895
+#: src/modules/connman/e_mod_main.c:101 src/modules/connman/e_mod_main.c:963
 msgid "ConnMan Daemon is not running."
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:137
+#: src/modules/connman/e_mod_main.c:108
 msgid "Query system's offline mode."
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:263
+#: src/modules/connman/e_mod_main.c:234
 msgid "ConnMan needs your passphrase"
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:275
+#: src/modules/connman/e_mod_main.c:246
 #, c-format
 msgid ""
 "Connection Manager needs your passphrase for <br>the service <hilight>%s</"
 "hilight>"
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:299
+#: src/modules/connman/e_mod_main.c:270
 msgid "Show passphrase as clear text"
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:315
+#: src/modules/connman/e_mod_main.c:286
 msgid "Ok"
 msgstr "OK"
 
-#: src/modules/connman/e_mod_main.c:513 src/modules/connman/e_mod_main.c:526
+#: src/modules/connman/e_mod_main.c:461 src/modules/connman/e_mod_main.c:474
 msgid "Disconnect from network service."
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:556 src/modules/connman/e_mod_main.c:615
-#: src/modules/connman/e_mod_main.c:640
+#: src/modules/connman/e_mod_main.c:504 src/modules/connman/e_mod_main.c:563
+#: src/modules/connman/e_mod_main.c:587
 msgid "Service does not exist anymore"
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:564 src/modules/connman/e_mod_main.c:569
-#: src/modules/connman/e_mod_main.c:596
+#: src/modules/connman/e_mod_main.c:512 src/modules/connman/e_mod_main.c:517
+#: src/modules/connman/e_mod_main.c:544
 msgid "Connect to network service."
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:662
+#: src/modules/connman/e_mod_main.c:609
 msgid "Could not set service's passphrase"
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:1074
+#: src/modules/connman/e_mod_main.c:1160
 #, fuzzy
 msgid "Offline mode"
 msgstr "關機時間"
 
-#: src/modules/connman/e_mod_main.c:1240
+#: src/modules/connman/e_mod_main.c:1326
 msgid "No ConnMan"
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:1242
+#: src/modules/connman/e_mod_main.c:1328
 msgid "No ConnMan server found."
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:1255
+#: src/modules/connman/e_mod_main.c:1341
 msgid "Offline mode: all radios are turned off"
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:1280
+#: src/modules/connman/e_mod_main.c:1366
 #, fuzzy
 msgid "No Connection"
 msgstr "選取設定"
 
-#: src/modules/connman/e_mod_main.c:1284
+#: src/modules/connman/e_mod_main.c:1370
 #, fuzzy
 msgid "Not connected"
 msgstr "受保護的"
 
-#: src/modules/connman/e_mod_main.c:1287 src/modules/connman/e_mod_main.c:1655
+#: src/modules/connman/e_mod_main.c:1373 src/modules/connman/e_mod_main.c:1779
 msgid "disconnect"
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:1310
+#: src/modules/connman/e_mod_main.c:1396
 #, fuzzy
 msgid "Unknown Name"
 msgstr "末知"
 
-#: src/modules/connman/e_mod_main.c:1319
+#: src/modules/connman/e_mod_main.c:1405
 #, fuzzy
 msgid "No error"
 msgstr "執行錯誤"
 
-#: src/modules/connman/e_mod_main.c:1651
+#: src/modules/connman/e_mod_main.c:1773
 #, fuzzy
 msgid "idle"
 msgstr "並排"
 
-#: src/modules/connman/e_mod_main.c:1652
+#: src/modules/connman/e_mod_main.c:1774
 #, fuzzy
 msgid "association"
 msgstr "轉換"
 
-#: src/modules/connman/e_mod_main.c:1653
+#: src/modules/connman/e_mod_main.c:1775
 #, fuzzy
 msgid "configuration"
 msgstr "組態"
 
-#: src/modules/connman/e_mod_main.c:1654
+#: src/modules/connman/e_mod_main.c:1776
 #, fuzzy
 msgid "ready"
 msgstr "格瑞那達"
 
-#: src/modules/connman/e_mod_main.c:1656
+#: src/modules/connman/e_mod_main.c:1777
+#, fuzzy
+msgid "login"
+msgstr "Blin"
+
+#: src/modules/connman/e_mod_main.c:1778
+#, fuzzy
+msgid "online"
+msgstr "引擎"
+
+#: src/modules/connman/e_mod_main.c:1780
 #, fuzzy
 msgid "failure"
 msgstr "設定"
 
-#: src/modules/systray/e_mod_main.c:895
+#: src/modules/systray/e_mod_main.c:893
 msgid "Another systray exists"
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:896
+#: src/modules/systray/e_mod_main.c:894
 msgid "There can be only one systray gadget and another one already exists."
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:1098
+#: src/modules/systray/e_mod_main.c:1096
 #, fuzzy
 msgid "Systray"
 msgstr "系統"
@@ -7765,9 +7765,6 @@ msgstr "系統"
 
 #~ msgid "Bosnian"
 #~ msgstr "Bosnian"
-
-#~ msgid "Blin"
-#~ msgstr "Blin"
 
 #~ msgid "Atsam"
 #~ msgstr "Atsam"
