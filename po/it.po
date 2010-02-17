@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-02-16 18:40+1100\n"
-"PO-Revision-Date: 2010-02-09 12:55+0100\n"
+"POT-Creation-Date: 2010-02-17 13:47+0100\n"
+"PO-Revision-Date: 2010-02-17 13:49+0100\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -7291,14 +7291,12 @@ msgid "ready"
 msgstr "pronto"
 
 #: src/modules/connman/e_mod_main.c:1777
-#, fuzzy
 msgid "login"
-msgstr "Liscio"
+msgstr "login"
 
 #: src/modules/connman/e_mod_main.c:1778
-#, fuzzy
 msgid "online"
-msgstr "Motore"
+msgstr "connesso"
 
 #: src/modules/connman/e_mod_main.c:1780
 msgid "failure"
