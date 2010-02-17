@@ -33,6 +33,10 @@ static Ecore_Exe *_e_sys_exe = NULL;
 static double _e_sys_logout_begin_time = 0.0;
 static Ecore_Timer *_e_sys_logout_timer = NULL;
 static E_Obj_Dialog *_e_sys_dialog = NULL;
+static E_Dialog *_e_sys_logout_confirm_dialog = NULL;
+
+static const int E_LOGOUT_AUTO_TIME = 60;
+static const int E_LOGOUT_WAIT_TIME = 15;
 
 /* externally accessible functions */
 EAPI int
@@ -255,6 +259,7 @@ _e_sys_cb_logout_logout(void *data, E_Dialog *dia)
    _e_sys_logout_begin_time = 0.0;
    _e_sys_logout_after();
    e_object_del(E_OBJECT(dia));
+   _e_sys_logout_confirm_dialog = NULL;
 }
 
 static void
@@ -264,6 +269,7 @@ _e_sys_cb_logout_wait(void *data, E_Dialog *dia)
    _e_sys_logout_timer = ecore_timer_add(0.5, _e_sys_cb_logout_timer, NULL);
    _e_sys_logout_begin_time = ecore_time_get();
    e_object_del(E_OBJECT(dia));
+   _e_sys_logout_confirm_dialog = NULL;
 }
 
 static void
@@ -276,6 +282,7 @@ _e_sys_cb_logout_abort(void *data, E_Dialog *dia)
      }
    _e_sys_logout_begin_time = 0.0;
    e_object_del(E_OBJECT(dia));
+   _e_sys_logout_confirm_dialog = NULL;
    _e_sys_action_current = E_SYS_NONE;
    _e_sys_action_after = E_SYS_NONE;
    if (_e_sys_dialog)
@@ -283,6 +290,30 @@ _e_sys_cb_logout_abort(void *data, E_Dialog *dia)
 	e_object_del(E_OBJECT(_e_sys_dialog));
 	_e_sys_dialog = NULL;
      }
+}
+
+static void
+_e_sys_logout_confirm_dialog_update(int remaining)
+{
+   char txt[4096];
+
+   if (!_e_sys_logout_confirm_dialog)
+     {
+	fputs("ERROR: updating logout confirm dialog, but none exists!\n",
+	      stderr);
+	return;
+     }
+
+   snprintf(txt, sizeof(txt),
+	    _("Logout is taking too long.<br>"
+	      "Some applications refuse to close.<br>"
+	      "Do you want to finish the logout<br>"
+	      "anyway without closing these<br>"
+	      "applications first?<br><br>"
+	      "Auto logout in %d seconds."),
+	    remaining);
+
+   e_dialog_text_set(_e_sys_logout_confirm_dialog, txt);
 }
 
 static int
@@ -297,37 +328,56 @@ _e_sys_cb_logout_timer(void *data)
 	if (!bd->internal) pending++;
      }
    if (pending == 0) goto after;
+   else if (_e_sys_logout_confirm_dialog)
+     {
+	int remaining = E_LOGOUT_AUTO_TIME -
+	  round(ecore_loop_time_get() - _e_sys_logout_begin_time);
+	/* it has taken 60 (E_LOGOUT_AUTO_TIME) seconds of waiting the
+	 * confirm dialog and we still have apps that will not go
+	 * away. Do the action as user may be far away or forgot it.
+	 *
+	 * NOTE: this is the behavior for many operating systems and I
+	 *       guess the reason is people that hit "shutdown" and
+	 *       put their laptops in their backpacks in the hope
+	 *       everything will be turned off properly.
+	 */
+	if (remaining > 0)
+	  {
+	     _e_sys_logout_confirm_dialog_update(remaining);
+	     return 1;
+	  }
+	else
+	  {
+	     _e_sys_cb_logout_logout(NULL, _e_sys_logout_confirm_dialog);
+	     return 0;
+	  }
+     }
    else
      {
 	/* it has taken 15 seconds of waiting and we still have apps that
 	 * will not go away
 	 */
-	if ((ecore_time_get() - _e_sys_logout_begin_time) > 15.0)
+	double now = ecore_loop_time_get();
+	if ((now - _e_sys_logout_begin_time) > E_LOGOUT_WAIT_TIME)
 	  {
 	     E_Dialog *dia;
 
 	     dia = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_sys_error_logout_slow");
 	     if (dia)
 	       {
+		  _e_sys_logout_confirm_dialog = dia;
 		  e_dialog_title_set(dia, _("Logout problems"));
 		  e_dialog_icon_set(dia, "system-log-out", 64);
-		  e_dialog_text_set(dia,
-				    _("Logout is taking too long. Some<br>"
-				      "applications refuse to close.<br>"
-				      "Do you want to finish the logout<br>"
-				      "anyway without closing these<br>"
-				      "applications first?")
-				    );
 		  e_dialog_button_add(dia, _("Logout now"), NULL, _e_sys_cb_logout_logout, NULL);
 		  e_dialog_button_add(dia, _("Wait longer"), NULL, _e_sys_cb_logout_wait, NULL);
 		  e_dialog_button_add(dia, _("Cancel Logout"), NULL, _e_sys_cb_logout_abort, NULL);
 		  e_dialog_button_focus_num(dia, 1);
+		  _e_sys_logout_confirm_dialog_update(E_LOGOUT_AUTO_TIME);
 		  e_win_centered_set(dia->win, 1);
 		  e_dialog_show(dia);
-		  _e_sys_logout_begin_time = 0.0;
+		  _e_sys_logout_begin_time = now;
 	       }
-	     _e_sys_logout_timer = NULL;
-	     return 0;
+	     return 1;
 	  }
      }
    return 1;
