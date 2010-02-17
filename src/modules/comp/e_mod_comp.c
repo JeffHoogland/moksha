@@ -297,44 +297,54 @@ _e_mod_comp_win_shape_rectangles_apply(E_Comp_Win *cw)
         if ((w > 0) && (h > 0))
           {
              pix = evas_object_image_data_get(cw->obj, 1);
-             spix = calloc(w * h, sizeof(unsigned char));
-             if (spix)
+             if (pix)
                {
-                  DBG("SHAPE [0x%x] rects %i\n", cw->win, num);
-                  for (i = 0; i < num; i++)
+                  spix = calloc(w * h, sizeof(unsigned char));
+                  if (spix)
                     {
-                       int rx, ry, rw, rh;
-                       
-                       rx = rects[i].x; ry = rects[i].y;
-                       rw = rects[i].width; rh = rects[i].height;
-                       E_RECTS_CLIP_TO_RECT(rx, ry, rw, rh, 0, 0, w, h);
-                       sp = spix + (w * ry) + rx;
-                       for (py = 0; py < rh; py++)
+                       DBG("SHAPE [0x%x] rects %i\n", cw->win, num);
+                       for (i = 0; i < num; i++)
                          {
-                            for (px = 0; px < rw; px++)
+                            int rx, ry, rw, rh;
+                            
+                            rx = rects[i].x; ry = rects[i].y;
+                            rw = rects[i].width; rh = rects[i].height;
+                            E_RECTS_CLIP_TO_RECT(rx, ry, rw, rh, 0, 0, w, h);
+                            sp = spix + (w * ry) + rx;
+                            for (py = 0; py < rh; py++)
                               {
-                                 *sp = 1; sp++;
+                                 for (px = 0; px < rw; px++)
+                                   {
+                                      *sp = 0xff; sp++;
+                                   }
+                                 sp += w - rw;
                               }
-                            sp += w - rw;
                          }
-                    }
-                  sp = spix;
-                  p = pix;
-                  for (py = 0; py < h; py++)
-                    {
-                       for (px = 0; px < w; px++)
+                       sp = spix;
+                       p = pix;
+                       for (py = 0; py < h; py++)
                          {
-                            if (*sp) *p |= 0xff000000;
-                            else *p = 0x00000000;
-                            sp++;
-                            p++;
+                            for (px = 0; px < w; px++)
+                              {
+                                 unsigned int mask, imask;
+                                 
+                                 mask = ((unsigned int)(*sp)) << 24;
+                                 imask = mask >> 8;
+                                 imask |= imask >> 8;
+                                 imask |= imask >> 8;
+                                 *p = mask | (*p & imask);
+//                                 if (*sp) *p = 0xff000000 | *p;
+//                                 else *p = 0x00000000;
+                                 sp++;
+                                 p++;
+                              }
                          }
+                       free(spix);
                     }
-                  free(spix);
+                  evas_object_image_data_set(cw->obj, pix);
+                  evas_object_image_alpha_set(cw->obj, 1);
+                  evas_object_image_data_update_add(cw->obj, 0, 0, w, h);
                }
-             evas_object_image_data_set(cw->obj, pix);
-             evas_object_image_alpha_set(cw->obj, 1);
-             evas_object_image_data_update_add(cw->obj, 0, 0, w, h);
           }
         free(rects);
      }
@@ -451,6 +461,8 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
      }
    else
      {
+        evas_object_image_native_surface_set(cw->obj, NULL);
+        cw->native = 0;
         if (!cw->xim)
           {
              if (cw->xim = ecore_x_image_new(cw->pw, cw->ph, cw->vis, cw->depth))
