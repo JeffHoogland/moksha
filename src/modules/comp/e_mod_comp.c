@@ -369,8 +369,36 @@ _e_mod_comp_win_shape_rectangles_apply(E_Comp_Win *cw, const Ecore_X_Rectangle *
      }
    else
      {
+        if (cw->shaped)
+          {
+             unsigned int *pix, *p;
+             int w, h, px, py;
+        
+             evas_object_image_size_get(cw->obj, &w, &h);
+             if ((w > 0) && (h > 0))
+               {
+                  if (cw->native)
+                    {
+                       fprintf(stderr, "BUGGER: shape with native surface? cw=%p\n", cw);
+                       return;
+                    }
+
+                  pix = evas_object_image_data_get(cw->obj, 1);
+                  if (pix)
+                    {
+                       p = pix;
+                       for (py = 0; py < h; py++)
+                         {
+                            for (px = 0; px < w; px++)
+                              *p |= 0xff000000;
+                         }
+                    }
+                  evas_object_image_data_set(cw->obj, pix);
+                  evas_object_image_alpha_set(cw->obj, 0);
+                  evas_object_image_data_update_add(cw->obj, 0, 0, w, h);
+               }
+          }
         cw->shaped = 0;
-        evas_object_image_alpha_set(cw->obj, 0);
         // dont need to fix alpha chanel as blending 
         // should be totally off here regardless of
         // alpha channe; content
@@ -540,7 +568,8 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
                     }
                   if ((cw->shape_changed) && (!cw->argb))
                     {
-                       _e_mod_comp_win_shape_rectangles_apply(cw, rects, rects_num);
+                       _e_mod_comp_win_shape_rectangles_apply
+                         (cw, rects, rects_num);
                        cw->shape_changed = 0;
                     }
                }
