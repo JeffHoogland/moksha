@@ -265,27 +265,41 @@ _e_mod_comp_win_move_effects_add(E_Comp_Win *cw)
 static void _e_mod_comp_render_queue(E_Comp *c);
 static void _e_mod_comp_win_damage(E_Comp_Win *cw, int x, int y, int w, int h, Eina_Bool dmg);
 
-static void
-_e_mod_comp_win_shape_rectangles_apply(E_Comp_Win *cw)
+static inline Eina_Bool
+_e_mod_comp_shaped_check(int w, int h, const Ecore_X_Rectangle *rects, int num)
 {
-   Ecore_X_Rectangle *rects;
-   int num, i;
-   
-   DBG("SHAPE [0x%x] change\n", cw->win);
-   rects = ecore_x_window_shape_rectangles_get(cw->win, &num);
-   if ((rects) && (num == 1))
+   if ((!rects) || (num < 1))
+     return EINA_FALSE;
+   if (num > 1)
+     return EINA_TRUE;
+
+   DBG("SHAPE [0x%x] rect 1\n", cw->win);
+   if ((rects[0].x == 0) &&
+       (rects[0].y == 0) &&
+       (rects[0].width == w) &&
+       (rects[0].height == h))
      {
-        DBG("SHAPE [0x%x] rect 1\n", cw->win);
-        if ((rects[0].x == 0) &&
-            (rects[0].y == 0) &&
-            (rects[0].width == cw->w) &&
-            (rects[0].height == cw->h))
-          {
-             DBG("SHAPE [0x%x] rect solid\n", cw->win);
-             free(rects);
-             rects = NULL;
-          }
+	DBG("SHAPE [0x%x] rect solid\n", cw->win);
+	return EINA_FALSE;
      }
+
+   return EINA_TRUE;
+}
+
+static inline Eina_Bool
+_e_mod_comp_win_shaped_check(const E_Comp_Win *cw, const Ecore_X_Rectangle *rects, int num)
+{
+   return _e_mod_comp_shaped_check(cw->w, cw->h, rects, num);
+}
+
+static void
+_e_mod_comp_win_shape_rectangles_apply(E_Comp_Win *cw, const Ecore_X_Rectangle *rects, int num)
+{
+   int i;
+
+   DBG("SHAPE [0x%x] change, rects=%p (%d)\n", cw->win, rects, num);
+   if (!_e_mod_comp_win_shaped_check(cw, rects, num))
+     rects = NULL;
    if (rects)
      {
         unsigned int *pix, *p;
@@ -296,6 +310,12 @@ _e_mod_comp_win_shape_rectangles_apply(E_Comp_Win *cw)
         evas_object_image_size_get(cw->obj, &w, &h);
         if ((w > 0) && (h > 0))
           {
+	     if (cw->native)
+	       {
+		  fprintf(stderr, "BUGGER: shape with native surface? cw=%p\n", cw);
+		  return;
+	       }
+
              pix = evas_object_image_data_get(cw->obj, 1);
              if (pix)
                {
@@ -346,7 +366,6 @@ _e_mod_comp_win_shape_rectangles_apply(E_Comp_Win *cw)
                   evas_object_image_data_update_add(cw->obj, 0, 0, w, h);
                }
           }
-        free(rects);
      }
    else
      {
@@ -362,7 +381,8 @@ static void
 _e_mod_comp_win_update(E_Comp_Win *cw)
 {
    E_Update_Rect *r;
-   int i;
+   Ecore_X_Rectangle *rects;
+   int rects_num, i;
    
    ecore_x_grab();
    cw->update = 0;
@@ -425,7 +445,22 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
           }
      }
    ecore_x_ungrab();
-   
+
+   /* watch out: rects is just freed at the function end!
+    * adding any premature "return" will make it leak!
+    */
+   rects = ecore_x_window_shape_rectangles_get(cw->win, &rects_num);
+   if (!_e_mod_comp_win_shaped_check(cw, rects, rects_num))
+     {
+	free(rects);
+	rects = NULL;
+     }
+   if ((rects) && (!cw->shaped))
+     {
+	cw->shaped = 1;
+	cw->shape_changed = 1;
+     }
+
    if ((cw->c->gl) && (_comp_mod->conf->texture_from_pixmap) &&
        (!cw->shaped) && (!cw->shape_changed))
      {
@@ -505,7 +540,7 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
                     }
                   if ((cw->shape_changed) && (!cw->argb))
                     {
-                       _e_mod_comp_win_shape_rectangles_apply(cw);
+                       _e_mod_comp_win_shape_rectangles_apply(cw, rects, rects_num);
                        cw->shape_changed = 0;
                     }
                }
@@ -526,6 +561,9 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
      {
         if (cw->shaped) evas_object_hide(cw->shobj);
      }
+
+   if (rects)
+     free(rects);
 }
 
 static void
@@ -823,10 +861,8 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
         rects = ecore_x_window_shape_rectangles_get(cw->win, &num);
         if (rects)
           {
-             if ((rects) && (num == 1)  &&
-                 (rects[0].x == 0) && (rects[0].y == 0) &&
-                 (rects[0].width == att.w) && (rects[0].height == att.h))
-               {
+	     if (!_e_mod_comp_shaped_check(att.w, att.h, rects, num))
+	       {
                   free(rects);
                   rects = NULL;
                }
