@@ -474,19 +474,24 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
      }
    ecore_x_ungrab();
 
-   /* watch out: rects is just freed at the function end!
-    * adding any premature "return" will make it leak!
-    */
-   rects = ecore_x_window_shape_rectangles_get(cw->win, &rects_num);
-   if (!_e_mod_comp_win_shaped_check(cw, rects, rects_num))
+   if (cw->argb)
+     rects = NULL;
+   else
      {
-	free(rects);
-	rects = NULL;
-     }
-   if ((rects) && (!cw->shaped))
-     {
-	cw->shaped = 1;
-	cw->shape_changed = 1;
+	/* watch out: rects is just freed at the function end!
+	 * adding any premature "return" will make it leak!
+	 */
+	rects = ecore_x_window_shape_rectangles_get(cw->win, &rects_num);
+	if (!_e_mod_comp_win_shaped_check(cw, rects, rects_num))
+	  {
+	     free(rects);
+	     rects = NULL;
+	  }
+	if ((rects) && (!cw->shaped))
+	  {
+	     cw->shaped = 1;
+	     cw->shape_changed = 1;
+	  }
      }
 
    if ((cw->c->gl) && (_comp_mod->conf->texture_from_pixmap) &&
