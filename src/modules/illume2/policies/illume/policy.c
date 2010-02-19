@@ -406,9 +406,6 @@ _policy_zone_layout_home_single(E_Border *bd, E_Illume_Config_Zone *cz)
 
 //   printf("\tLayout Home Single: %s\n", bd->client.icccm.class);
 
-   /* no point in adjusting size or position if it's not visible */
-   if ((!bd->new_client) && (!bd->visible)) return;
-
    /* make sure it's the required width & height */
    nh = (bd->zone->h - cz->indicator.size - cz->softkey.size);
    if ((bd->w != bd->zone->w) || (bd->h != nh)) 
@@ -429,9 +426,6 @@ _policy_zone_layout_home_dual_top(E_Border *bd, E_Illume_Config_Zone *cz)
 {
    E_Border *home;
    int ny, nh;
-
-   /* no point in adjusting size or position if it's not visible */
-   if ((!bd->new_client) && (!bd->visible)) return;
 
    /* set some defaults */
    ny = (bd->zone->y + cz->indicator.size);
@@ -464,9 +458,6 @@ _policy_zone_layout_home_dual_custom(E_Border *bd, E_Illume_Config_Zone *cz)
    int iy, ny, nh;
 
 //   printf("\tLayout Home Dual Custom: %s\n", bd->client.icccm.class);
-
-   /* no point in adjusting size or position if it's not visible */
-   if ((!bd->new_client) && (!bd->visible)) return;
 
    /* grab indicator position */
    e_illume_border_indicator_pos_get(bd->zone, NULL, &iy);
@@ -506,9 +497,6 @@ _policy_zone_layout_home_dual_left(E_Border *bd, E_Illume_Config_Zone *cz)
    int nx, nw, nh;
 
 //   printf("\tLayout Home Dual Left: %s\n", bd->client.icccm.class);
-
-   /* no point in adjusting size or position if it's not visible */
-   if ((!bd->new_client) && (!bd->visible)) return;
 
    nh = (bd->zone->h - cz->indicator.size - cz->softkey.size);
 
