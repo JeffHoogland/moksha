@@ -20,7 +20,7 @@
  * 
  * @ingroup E_Illume_Config_Group
  */
-E_Illume_Config_Zone *
+EAPI E_Illume_Config_Zone *
 e_illume_zone_config_get(int id) 
 {
    Eina_List *l;
@@ -63,7 +63,7 @@ e_illume_zone_config_get(int id)
  * 
  * @ingroup E_Illume_Main_Group
  */
-Eina_Bool 
+EAPI Eina_Bool 
 e_illume_border_is_indicator(E_Border *bd) 
 {
    /* make sure we have a border */
@@ -119,7 +119,7 @@ e_illume_border_is_indicator(E_Border *bd)
  * 
  * @ingroup E_Illume_Main_Group
  */
-Eina_Bool 
+EAPI Eina_Bool 
 e_illume_border_is_softkey(E_Border *bd) 
 {
    /* make sure we have a border */
@@ -175,7 +175,7 @@ e_illume_border_is_softkey(E_Border *bd)
  * 
  * @ingroup E_Illume_Main_Group
  */
-Eina_Bool 
+EAPI Eina_Bool 
 e_illume_border_is_keyboard(E_Border *bd) 
 {
    /* make sure we have a border */
@@ -233,7 +233,7 @@ e_illume_border_is_keyboard(E_Border *bd)
  * 
  * @ingroup E_Illume_Main_Group
  */
-Eina_Bool 
+EAPI Eina_Bool 
 e_illume_border_is_home(E_Border *bd) 
 {
    /* make sure we have a border */
@@ -281,7 +281,7 @@ e_illume_border_is_home(E_Border *bd)
  * 
  * @ingroup E_Illume_Main_Group
  */
-Eina_Bool 
+EAPI Eina_Bool 
 e_illume_border_is_splash(E_Border *bd) 
 {
    /* make sure we have a border */
@@ -311,7 +311,7 @@ e_illume_border_is_splash(E_Border *bd)
  * 
  * @ingroup E_Illume_Main_Group
  */
-Eina_Bool 
+EAPI Eina_Bool 
 e_illume_border_is_dialog(E_Border *bd) 
 {
    /* make sure we have a border */
@@ -346,7 +346,7 @@ e_illume_border_is_dialog(E_Border *bd)
  * 
  * @ingroup E_Illume_Main_Group
  */
-Eina_Bool 
+EAPI Eina_Bool 
 e_illume_border_is_qt_frame(E_Border *bd) 
 {
    /* make sure we have a border */
@@ -371,7 +371,7 @@ e_illume_border_is_qt_frame(E_Border *bd)
  * 
  * @ingroup E_Illume_Main_Group
  */
-Eina_Bool 
+EAPI Eina_Bool 
 e_illume_border_is_fullscreen(E_Border *bd) 
 {
    /* make sure we have a border */
@@ -394,7 +394,7 @@ e_illume_border_is_fullscreen(E_Border *bd)
  * 
  * @ingroup E_Illume_Main_Group
  */
-Eina_Bool 
+EAPI Eina_Bool 
 e_illume_border_is_conformant(E_Border *bd) 
 {
    /* make sure we have a border */
@@ -414,7 +414,7 @@ e_illume_border_is_conformant(E_Border *bd)
  * 
  * @ingroup E_Illume_Main_Group
  */
-Eina_Bool 
+EAPI Eina_Bool 
 e_illume_border_is_quickpanel(E_Border *bd) 
 {
    /* make sure we have a border */
@@ -435,7 +435,7 @@ e_illume_border_is_quickpanel(E_Border *bd)
  * 
  * @ingroup E_Illume_Main_Group
  */
-void 
+EAPI void 
 e_illume_border_min_get(E_Border *bd, int *w, int *h) 
 {
    if (w) *w = 0;
@@ -471,7 +471,7 @@ e_illume_border_min_get(E_Border *bd, int *w, int *h)
  * 
  * @ingroup E_Illume_Main_Group
  */
-E_Border *
+EAPI E_Border *
 e_illume_border_at_xy_get(E_Zone *zone, int x, int y) 
 {
    Eina_List *l;
@@ -520,7 +520,7 @@ e_illume_border_at_xy_get(E_Zone *zone, int x, int y)
  * 
  * @ingroup E_Illume_Main_Group
  */
-E_Border *
+EAPI E_Border *
 e_illume_border_parent_get(E_Border *bd) 
 {
    /* make sure we have a border */
@@ -560,7 +560,7 @@ e_illume_border_parent_get(E_Border *bd)
  * 
  * @ingroup E_Illume_Main_Group
  */
-void 
+EAPI void 
 e_illume_border_show(E_Border *bd) 
 {
    unsigned int visible = 1;
@@ -589,7 +589,7 @@ e_illume_border_show(E_Border *bd)
  * 
  * @ingroup E_Illume_Main_Group
  */
-void 
+EAPI void 
 e_illume_border_hide(E_Border *bd) 
 {
    unsigned int visible = 0;
@@ -616,7 +616,7 @@ e_illume_border_hide(E_Border *bd)
  * 
  * @ingroup E_Illume_Main_Group
  */
-E_Border *
+EAPI E_Border *
 e_illume_border_indicator_get(E_Zone *zone) 
 {
    Eina_List *l;
@@ -655,7 +655,7 @@ e_illume_border_indicator_get(E_Zone *zone)
  * 
  * @ingroup E_Illume_Main_Group
  */
-void 
+EAPI void 
 e_illume_border_indicator_pos_get(E_Zone *zone, int *x, int *y) 
 {
    E_Border *ind;
@@ -690,7 +690,7 @@ e_illume_border_indicator_pos_get(E_Zone *zone, int *x, int *y)
  * 
  * @ingroup E_Illume_Main_Group
  */
-E_Border *
+EAPI E_Border *
 e_illume_border_softkey_get(E_Zone *zone) 
 {
    Eina_List *l;
@@ -729,7 +729,7 @@ e_illume_border_softkey_get(E_Zone *zone)
  * 
  * @ingroup E_Illume_Main_Group
  */
-void 
+EAPI void 
 e_illume_border_softkey_pos_get(E_Zone *zone, int *x, int *y) 
 {
    E_Border *sft;
@@ -761,7 +761,7 @@ e_illume_border_softkey_pos_get(E_Zone *zone, int *x, int *y)
  * 
  * @ingroup E_Illume_Keyboard_Group
  */
-E_Illume_Keyboard *
+EAPI E_Illume_Keyboard *
 e_illume_keyboard_get(void) 
 {
    /* make sure we have a keyboard and a zone */
@@ -787,7 +787,7 @@ e_illume_keyboard_get(void)
  * 
  * @ingroup E_Illume_Keyboard_Group
  */
-void 
+EAPI void 
 e_illume_keyboard_safe_app_region_get(E_Zone *zone, int *x, int *y, int *w, int *h) 
 {
    /* make sure we have a zone */
@@ -837,7 +837,7 @@ e_illume_keyboard_safe_app_region_get(E_Zone *zone, int *x, int *y, int *w, int 
  * 
  * @ingroup E_Illume_Main_Group
  */
-E_Border *
+EAPI E_Border *
 e_illume_border_home_get(E_Zone *zone) 
 {
    E_Border *bd;
@@ -875,7 +875,7 @@ e_illume_border_home_get(E_Zone *zone)
  * 
  * @ingroup E_Illume_Main_Group
  */
-Eina_List *
+EAPI Eina_List *
 e_illume_border_home_borders_get(E_Zone *zone) 
 {
    Eina_List *ret = NULL, *l;
@@ -913,7 +913,7 @@ e_illume_border_home_borders_get(E_Zone *zone)
  * 
  * @ingroup E_Illume_Quickpanel_Group
  */
-E_Illume_Quickpanel *
+EAPI E_Illume_Quickpanel *
 e_illume_quickpanel_by_zone_get(E_Zone *zone) 
 {
    E_Illume_Quickpanel *qp;
