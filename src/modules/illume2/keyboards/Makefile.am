@@ -1,5 +1,5 @@
 MAINTAINERCLEANFILES = Makefile.in
-MODULE = illume3
+MODULE = illume2
 
 filesdir = $(libdir)/enlightenment/modules/$(MODULE)/keyboards
 files_DATA = ignore_built_in_keyboards
