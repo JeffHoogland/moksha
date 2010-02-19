@@ -1,0 +1,133 @@
+collections 
+{
+   group 
+     {
+        images.image: "module_icon.png" COMP;
+        name: "icon";
+        max: 128 128;
+        parts 
+          {
+             part 
+               {
+                  name: "base";
+                  mouse_events: 0;
+                  description 
+                    {
+                       state: "default" 0.0;
+                       aspect: 1.0 1.0;
+                       aspect_preference: BOTH;
+                       image.normal: "module_icon.png";
+                    }
+               }
+          }
+     }
+   group 
+     {
+        images 
+          {
+             image: "shelf_alt_bg.png" COMP;
+             image: "shelf_alt_over.png" COMP;
+             image: "shelf_alt_shine.png" COMP;
+          }
+        name: "modules/illume-softkey/window";
+        parts 
+          {
+             part 
+               {
+                  name: "base";
+                  type: IMAGE;
+                  mouse_events: 0;
+                  description 
+                    {
+                       state: "default" 0.0;
+                       color_class: "shelf_base";
+                       image.normal: "shelf_alt_bg.png";
+                       fill.smooth: 0;
+                    }
+               }
+             part 
+               {
+                  name: "shine";
+                  type: IMAGE;
+                  mouse_events: 0;
+                  description 
+                    {
+                       state: "default" 0.0;
+                       image.normal: "shelf_alt_shine.png";
+                       rel2.relative: 1.0 0.5;
+                       fill.smooth: 0;
+                    }
+               }
+             part 
+               {
+                  name: "over";
+                  type: IMAGE;
+                  mouse_events: 0;
+                  description 
+                    {
+                       state: "default" 0.0;
+                       image 
+                         {
+                            normal: "shelf_alt_over.png";
+                            border: 5 5 5 5;
+                            middle: 0;
+                         }
+                       fill.smooth: 0;
+                    }
+               }
+             part 
+               {
+                  name: "e.box.extra_buttons";
+                  type: BOX;
+                  description 
+                    {
+                       state: "default" 0.0;
+                       rel1 
+                         {
+                            offset: 3 3;
+                            to: "base";
+                         }
+                       rel2 
+                         {
+                            relative: 0.60 1.0;
+                            offset: 0 -4;
+                            to: "base";
+                         }
+                       box 
+                         {
+                            layout: "horizontal";
+                            padding: 2 0;
+                            align: 0.0 0.5;
+                            min: 1 1;
+                         }
+                    }
+               }
+             part 
+               {
+                  name: "e.box.buttons";
+                  type: BOX;
+                  description 
+                    {
+                       state: "default" 0.0;
+                       rel1 
+                         {
+                            relative: 1.0 0.0;
+                            to: "e.box.extra_buttons";
+                         }
+                       rel2 
+                         {
+                            offset: -2 -4;
+                            to: "base";
+                         }
+                       box 
+                         {
+                            layout: "horizontal";
+                            padding: 2 0;
+                            align: 1.0 0.5;
+                            min: 1 1;
+                         }
+                    }
+               }
+          }
+     }
+}
