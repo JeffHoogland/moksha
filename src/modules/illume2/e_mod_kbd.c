@@ -16,6 +16,7 @@ static void _e_mod_kbd_slide(int visible, double len);
 static int _e_mod_kbd_cb_animate(void *data __UNUSED__);
 static E_Illume_Keyboard *_e_mod_kbd_by_border_get(E_Border *bd);
 static void _e_mod_kbd_border_adopt(E_Border *bd);
+static void _e_mod_kbd_layout_send(void);
 
 /* local variables */
 static Eina_List *_kbd_hdls = NULL;
@@ -146,7 +147,7 @@ e_mod_kbd_show(void)
    /* if it's disabled, get out */
    if (_e_illume_kbd->disabled) return;
 
-   /* TODO: Layout send */
+   _e_mod_kbd_layout_send();
 
    /* if we are not animating, just show it */
    if (_e_illume_cfg->animation.vkbd.duration <= 0) 
@@ -209,9 +210,11 @@ e_mod_kbd_fullscreen_set(E_Zone *zone, int fullscreen)
 }
 
 void 
-e_mod_kbd_layout_set(E_Illume_Keyboard *kbd, E_Illume_Keyboard_Layout layout) 
+e_mod_kbd_layout_set(E_Illume_Keyboard_Layout layout) 
 {
-
+   if (!_e_illume_kbd->border) return;
+   _e_illume_kbd->layout = layout;
+   _e_mod_kbd_layout_send();
 }
 
 /* local functions */
@@ -444,6 +447,8 @@ _e_mod_kbd_hide(void)
    /* can't hide keyboard if it's not visible, or disabled */
    if ((!_e_illume_kbd->visible) || (_e_illume_kbd->disabled)) return;
 
+   _e_mod_kbd_layout_send();
+
    /* if we are not animating, just hide it */
    if (_e_illume_cfg->animation.vkbd.duration <= 0) 
      {
@@ -513,7 +518,7 @@ _e_mod_kbd_cb_animate(void *data __UNUSED__)
         else 
           _e_illume_kbd->visible = 1;
 
-        /* layout send */
+        _e_mod_kbd_layout_send();
 
         /* tell the focused border it changed so layout gets udpated */
         if (_focused_border) 
@@ -559,6 +564,50 @@ _e_mod_kbd_border_adopt(E_Border *bd)
    if (!_e_illume_kbd->visible) 
      {
         e_border_fx_offset(bd, 0, bd->h);
-        /* layout send */
+        _e_mod_kbd_layout_send();
      }
+}
+
+static void 
+_e_mod_kbd_layout_send(void) 
+{
+   Ecore_X_Virtual_Keyboard_State type;
+
+   type = ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF;
+   if ((!_e_illume_kbd->visible) && (!_e_illume_kbd->disabled)) 
+     {
+        type = ECORE_X_VIRTUAL_KEYBOARD_STATE_ON;
+        if (_e_illume_kbd->layout == E_ILLUME_KEYBOARD_LAYOUT_DEFAULT) 
+          type = ECORE_X_VIRTUAL_KEYBOARD_STATE_ON;
+        else if (_e_illume_kbd->layout == E_ILLUME_KEYBOARD_LAYOUT_ALPHA) 
+          type = ECORE_X_VIRTUAL_KEYBOARD_STATE_ALPHA;
+        else if (_e_illume_kbd->layout == E_ILLUME_KEYBOARD_LAYOUT_NUMERIC) 
+          type = ECORE_X_VIRTUAL_KEYBOARD_STATE_NUMERIC;
+        else if (_e_illume_kbd->layout == E_ILLUME_KEYBOARD_LAYOUT_PIN) 
+          type = ECORE_X_VIRTUAL_KEYBOARD_STATE_PIN;
+        else if (_e_illume_kbd->layout == E_ILLUME_KEYBOARD_LAYOUT_PHONE_NUMBER) 
+          type = ECORE_X_VIRTUAL_KEYBOARD_STATE_PHONE_NUMBER;
+        else if (_e_illume_kbd->layout == E_ILLUME_KEYBOARD_LAYOUT_HEX) 
+          type = ECORE_X_VIRTUAL_KEYBOARD_STATE_HEX;
+        else if (_e_illume_kbd->layout == E_ILLUME_KEYBOARD_LAYOUT_TERMINAL) 
+          type = ECORE_X_VIRTUAL_KEYBOARD_STATE_TERMINAL;
+        else if (_e_illume_kbd->layout == E_ILLUME_KEYBOARD_LAYOUT_PASSWORD) 
+          type = ECORE_X_VIRTUAL_KEYBOARD_STATE_PASSWORD;
+        else if (_e_illume_kbd->layout == E_ILLUME_KEYBOARD_LAYOUT_IP) 
+          type = ECORE_X_VIRTUAL_KEYBOARD_STATE_IP;
+        else if (_e_illume_kbd->layout == E_ILLUME_KEYBOARD_LAYOUT_HOST) 
+          type = ECORE_X_VIRTUAL_KEYBOARD_STATE_HOST;
+        else if (_e_illume_kbd->layout == E_ILLUME_KEYBOARD_LAYOUT_FILE) 
+          type = ECORE_X_VIRTUAL_KEYBOARD_STATE_FILE;
+        else if (_e_illume_kbd->layout == E_ILLUME_KEYBOARD_LAYOUT_URL) 
+          type = ECORE_X_VIRTUAL_KEYBOARD_STATE_URL;
+        else if (_e_illume_kbd->layout == E_ILLUME_KEYBOARD_LAYOUT_KEYPAD) 
+          type = ECORE_X_VIRTUAL_KEYBOARD_STATE_KEYPAD;
+        else if (_e_illume_kbd->layout == E_ILLUME_KEYBOARD_LAYOUT_J2ME) 
+          type = ECORE_X_VIRTUAL_KEYBOARD_STATE_J2ME;
+        else if (_e_illume_kbd->layout == E_ILLUME_KEYBOARD_LAYOUT_NONE) 
+          type = ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF;
+     }
+   if (_e_illume_kbd->border) 
+     ecore_x_e_virtual_keyboard_state_send(_e_illume_kbd->border->client.win, type);
 }
