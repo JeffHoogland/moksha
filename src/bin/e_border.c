@@ -471,6 +471,8 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map, int internal)
                     bd->client.illume.quickpanel.fetch.priority.major = 1;
                   else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_PRIORITY_MINOR)
                     bd->client.illume.quickpanel.fetch.priority.minor = 1;
+                  else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_ZONE)
+                    bd->client.illume.quickpanel.fetch.zone = 1;
                   else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_DRAG_LOCKED)
                     bd->client.illume.drag.fetch.locked = 1;
                   else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_DRAG)
@@ -4526,6 +4528,11 @@ _e_border_cb_window_property(void *data, int ev_type, void *ev)
         bd->client.illume.quickpanel.fetch.priority.minor = 1;
         bd->changed = 1;
      }
+   else if (e->atom == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_ZONE) 
+     {
+        bd->client.illume.quickpanel.fetch.zone = 1;
+        bd->changed = 1;
+     }
    else if (e->atom == ECORE_X_ATOM_E_ILLUME_DRAG_LOCKED) 
      {
         bd->client.illume.drag.fetch.locked = 1;
@@ -6011,49 +6018,48 @@ _e_border_eval0(E_Border *bd)
         bd->client.illume.conformant.conformant = 
           ecore_x_e_illume_conformant_get(bd->client.win);
         bd->client.illume.conformant.fetch.conformant = 0;
-        rem_change = 1;
      }
    if (bd->client.illume.quickpanel.fetch.state) 
      {
         bd->client.illume.quickpanel.state = 
           ecore_x_e_illume_quickpanel_state_get(bd->client.win);
         bd->client.illume.quickpanel.fetch.state = 0;
-        rem_change = 1;
      }
    if (bd->client.illume.quickpanel.fetch.quickpanel) 
      {
         bd->client.illume.quickpanel.quickpanel = 
           ecore_x_e_illume_quickpanel_get(bd->client.win);
         bd->client.illume.quickpanel.fetch.quickpanel = 0;
-        rem_change = 1;
      }
    if (bd->client.illume.quickpanel.fetch.priority.major) 
      {
         bd->client.illume.quickpanel.priority.major = 
           ecore_x_e_illume_quickpanel_priority_major_get(bd->client.win);
         bd->client.illume.quickpanel.fetch.priority.major = 0;
-        rem_change = 1;
      }
    if (bd->client.illume.quickpanel.fetch.priority.minor) 
      {
         bd->client.illume.quickpanel.priority.minor = 
           ecore_x_e_illume_quickpanel_priority_minor_get(bd->client.win);
         bd->client.illume.quickpanel.fetch.priority.minor = 0;
-        rem_change = 1;
+     }
+   if (bd->client.illume.quickpanel.fetch.zone) 
+     {
+        bd->client.illume.quickpanel.zone = 
+          ecore_x_e_illume_quickpanel_zone_get(bd->client.win);
+        bd->client.illume.quickpanel.fetch.zone = 0;
      }
    if (bd->client.illume.drag.fetch.drag) 
      {
         bd->client.illume.drag.drag = 
           ecore_x_e_illume_drag_get(bd->client.win);
         bd->client.illume.drag.fetch.drag = 0;
-        rem_change = 1;
      }
    if (bd->client.illume.drag.fetch.locked) 
      {
         bd->client.illume.drag.locked = 
           ecore_x_e_illume_drag_locked_get(bd->client.win);
         bd->client.illume.drag.fetch.locked = 0;
-        rem_change = 1;
      }
    if (bd->changes.shape)
      {

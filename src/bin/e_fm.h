@@ -71,7 +71,7 @@ struct _E_Fm2_Config
       unsigned char   always_order;
       unsigned char   link_drop;
       unsigned char   fit_custom_pos;
-	  unsigned int    single_click_delay;
+      unsigned int    single_click_delay;
    } view;
    /* display of icons */
    struct {
@@ -89,7 +89,7 @@ struct _E_Fm2_Config
    /* how to sort files */
    struct {
       struct {
-	 unsigned char    no_case;
+	 unsigned char no_case;
 	 struct {
 	    unsigned char first;
 	    unsigned char last;
@@ -98,13 +98,13 @@ struct _E_Fm2_Config
    } list;
    /* control how you can select files */
    struct {
-      unsigned char    single, windows_modifiers;
+      unsigned char single, windows_modifiers;
    } selection;
    /* the background - if any, and how to handle it */
    /* FIXME: not implemented yet */
    struct {
-      const char      *background, *frame, *icons;
-      unsigned char    fixed;
+      const char *background, *frame, *icons;
+      unsigned char fixed;
    } theme;
 };
 

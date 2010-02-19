@@ -11,13 +11,13 @@ static void _e_zone_free(E_Zone *zone);
 static void _e_zone_cb_bg_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static void _e_zone_cb_bg_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static void _e_zone_event_zone_desk_count_set_free(void *data, void *ev);
-static int  _e_zone_cb_mouse_in(void *data, int type, void *event);
-static int  _e_zone_cb_mouse_out(void *data, int type, void *event);
-static int  _e_zone_cb_mouse_down(void *data, int type, void *event);
-static int  _e_zone_cb_mouse_up(void *data, int type, void *event);
-static int  _e_zone_cb_mouse_move(void *data, int type, void *event);
-static int  _e_zone_cb_desk_after_show(void *data, int type, void *event);
-static int  _e_zone_cb_edge_timer(void *data);
+static int _e_zone_cb_mouse_in(void *data, int type, void *event);
+static int _e_zone_cb_mouse_out(void *data, int type, void *event);
+static int _e_zone_cb_mouse_down(void *data, int type, void *event);
+static int _e_zone_cb_mouse_up(void *data, int type, void *event);
+static int _e_zone_cb_mouse_move(void *data, int type, void *event);
+static int _e_zone_cb_desk_after_show(void *data, int type, void *event);
+static int _e_zone_cb_edge_timer(void *data);
 static void _e_zone_event_move_resize_free(void *data, void *ev);
 static void _e_zone_event_add_free(void *data, void *ev);
 static void _e_zone_event_del_free(void *data, void *ev);
@@ -128,7 +128,7 @@ e_zone_new(E_Container *con, int num, int id, int x, int y, int w, int h)
    evas_object_repeat_events_set(o, 1);
    evas_object_show(o);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _e_zone_cb_bg_mouse_down, zone);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_UP,   _e_zone_cb_bg_mouse_up, zone);
+   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_UP, _e_zone_cb_bg_mouse_up, zone);
 
    /* TODO: config the ecore_evas type. */
    zone->black_ecore_evas = 

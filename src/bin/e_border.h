@@ -386,6 +386,7 @@ struct _E_Border
                           unsigned int minor : 1;
                        } priority;
                      unsigned char quickpanel : 1;
+                     unsigned char zone : 1;
                   } fetch;
                 Ecore_X_Illume_Quickpanel_State state;
                 struct 
@@ -394,6 +395,7 @@ struct _E_Border
                      unsigned int minor : 1;
                   } priority;
                 unsigned char quickpanel : 1;
+                int zone;
              } quickpanel;
            struct 
              {
