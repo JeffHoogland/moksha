@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-02-16 18:40+1100\n"
-"PO-Revision-Date: 2010-02-17 09:55+0400\n"
+"POT-Creation-Date: 2010-02-19 10:47+0400\n"
+"PO-Revision-Date: 2010-02-19 13:43+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment French Team <pourunmondesansgourou@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -718,11 +718,11 @@ msgstr "Action reportée"
 msgid "Set As Background"
 msgstr "Utiliser comme fond d'écran"
 
-#: src/bin/e_border.c:4974
+#: src/bin/e_border.c:4981
 msgid "Desktop files scan done"
 msgstr "Analyse des fichiers desktop terminée"
 
-#: src/bin/e_border.c:4987
+#: src/bin/e_border.c:4994
 msgid "Desktop file scan"
 msgstr "Analyse des fichiers desktop"
 
@@ -743,8 +743,8 @@ msgstr "Sélecteur de couleurs"
 #: src/bin/e_int_border_remember.c:324
 #: src/bin/e_int_border_remember.c:524
 #: src/bin/e_module.c:403
-#: src/bin/e_sys.c:437
-#: src/bin/e_sys.c:483
+#: src/bin/e_sys.c:487
+#: src/bin/e_sys.c:533
 #: src/bin/e_utils.c:695
 #: src/modules/conf_dpms/e_int_config_dpms.c:64
 #: src/modules/conf_dpms/e_int_config_dpms.c:85
@@ -2939,120 +2939,121 @@ msgstr "Supprimer ce rack"
 msgid "Starting"
 msgstr "Démarrage"
 
-#: src/bin/e_sys.c:170
+#: src/bin/e_sys.c:174
 msgid "Checking System Permissions"
 msgstr "Vérification des permissions du système"
 
-#: src/bin/e_sys.c:208
-#: src/bin/e_sys.c:219
-#: src/bin/e_sys.c:228
-#: src/bin/e_sys.c:237
+#: src/bin/e_sys.c:212
+#: src/bin/e_sys.c:223
+#: src/bin/e_sys.c:232
+#: src/bin/e_sys.c:241
 msgid "System Check Done"
 msgstr "Vérification du système terminée"
 
-#: src/bin/e_sys.c:312
+#: src/bin/e_sys.c:308
+#, c-format
+msgid "Logout is taking too long.<br>Some applications refuse to close.<br>Do you want to finish the logout<br>anyway without closing these<br>applications first?<br><br>Auto logout in %d seconds."
+msgstr "La fermeture de la session est trop longue.<br>Certaines applications refusent de se terminer.<br>Voulez-vous forcer la fin de cette session<br>sans attendre la fermeture des applications ?<br><br>Fermeture automatique dans %d secondes."
+
+#: src/bin/e_sys.c:369
 msgid "Logout problems"
 msgstr "Problème de fermeture de session"
 
-#: src/bin/e_sys.c:315
-msgid "Logout is taking too long. Some<br>applications refuse to close.<br>Do you want to finish the logout<br>anyway without closing these<br>applications first?"
-msgstr "La fermeture de la session est trop longue.<br>Certaines applications refusent de se terminer.<br>Voulez-vous forcer la fermeture de la session<br> sans attendre la fermeture des applications ?"
-
-#: src/bin/e_sys.c:321
+#: src/bin/e_sys.c:371
 msgid "Logout now"
 msgstr "Fermer immédiatement la session"
 
-#: src/bin/e_sys.c:322
+#: src/bin/e_sys.c:372
 msgid "Wait longer"
 msgstr "Attendre plus longtemps"
 
-#: src/bin/e_sys.c:323
+#: src/bin/e_sys.c:373
 msgid "Cancel Logout"
 msgstr "Annuler la fermeture de session"
 
-#: src/bin/e_sys.c:362
+#: src/bin/e_sys.c:412
 msgid "Logout in progress"
 msgstr "Fermeture de la session en cours…"
 
-#: src/bin/e_sys.c:365
+#: src/bin/e_sys.c:415
 msgid "Logout in progress.<br><hilight>Please wait.</hilight>"
 msgstr "Fermeture de session en cours.<br><hilight>Veuillez patienter…</hilight>"
 
-#: src/bin/e_sys.c:391
-#: src/bin/e_sys.c:452
+#: src/bin/e_sys.c:441
+#: src/bin/e_sys.c:502
 msgid "Enlightenment is busy with another request"
 msgstr "Enlightenment est occupé à traiter une autre requête"
 
-#: src/bin/e_sys.c:397
+#: src/bin/e_sys.c:447
 msgid "Logging out.<br>You cannot perform other system actions<br>once a logout has begun."
 msgstr "Fermeture de session en cours.<br>Vous ne pouvez pas effectuer d'autres actions système<br>une fois que la fermeture de session est amorcée."
 
-#: src/bin/e_sys.c:405
+#: src/bin/e_sys.c:455
 msgid "Powering off.<br>You cannot do any other system actions<br>once a shutdown has been started."
 msgstr "Extinction du système en cours.<br>Vous ne pouvez pas effectuer d'autres actions système<br>pendant l'arrêt de votre ordinateur."
 
-#: src/bin/e_sys.c:412
+#: src/bin/e_sys.c:462
 msgid "Resetting.<br>You cannot do any other system actions<br>once a reboot has begun."
 msgstr "Redémarrage en cours.<br>Vous ne pouvez pas effectuer d'autres actions système<br>lorsqu'un redémarrage est amorcé."
 
-#: src/bin/e_sys.c:419
+#: src/bin/e_sys.c:469
 msgid "Suspending.<br>Until suspend is complete you cannot perform<br>any other system actions."
 msgstr "Mise en veille en cours.<br>Vous ne pouvez pas effectuer d'autres actions système<br>pendant ce temps."
 
-#: src/bin/e_sys.c:426
+#: src/bin/e_sys.c:476
 msgid "Hibernating.<br>You cannot perform an other system actions<br>until this is complete."
 msgstr "Mise en hibernation en cours.<br>Vous ne pouvez pas effectuer d'autres actions système<br>tant que ce n'est pas terminé."
 
-#: src/bin/e_sys.c:433
-#: src/bin/e_sys.c:479
+#: src/bin/e_sys.c:483
+#: src/bin/e_sys.c:529
 msgid "EEK! This should not happen"
 msgstr "ARGH ! Ça ne devrait pas se produire…"
 
-#: src/bin/e_sys.c:459
+#: src/bin/e_sys.c:509
 msgid "Power off failed."
 msgstr "Échec de l'extinction."
 
-#: src/bin/e_sys.c:464
+#: src/bin/e_sys.c:514
 msgid "Reset failed."
 msgstr "Échec du redémarrage."
 
-#: src/bin/e_sys.c:469
+#: src/bin/e_sys.c:519
 msgid "Suspend failed."
 msgstr "Échec de la mise en veille."
 
-#: src/bin/e_sys.c:474
+#: src/bin/e_sys.c:524
 msgid "Hibernate failed."
 msgstr "Échec de la mise en hibernation."
 
-#: src/bin/e_sys.c:531
+#: src/bin/e_sys.c:581
 msgid "Power off"
 msgstr "Extinction"
 
-#: src/bin/e_sys.c:534
+#: src/bin/e_sys.c:584
 msgid "Power off.<br><hilight>Please wait.</hilight>"
 msgstr "Extinction.<br><hilight>Veuillez patienter…</hilight>"
 
-#: src/bin/e_sys.c:558
+#: src/bin/e_sys.c:608
 msgid "Resetting"
 msgstr "Redémarrage"
 
-#: src/bin/e_sys.c:561
+#: src/bin/e_sys.c:611
 msgid "Resetting.<br><hilight>Please wait.</hilight>"
 msgstr "Redémarrage.<br><hilight>Veuillez patienter…</hilight>"
 
-#: src/bin/e_sys.c:584
+#: src/bin/e_sys.c:634
 msgid "Suspending"
 msgstr "Mise en veille"
 
-#: src/bin/e_sys.c:587
+#: src/bin/e_sys.c:637
 msgid "Suspending.<br><hilight>Please wait.</hilight>"
 msgstr "Mise en veille.<br><hilight>Veuillez patienter…</hilight>"
 
-#: src/bin/e_sys.c:610
+#: src/bin/e_sys.c:660
 msgid "Hibernating"
 msgstr "Mise en hibernation"
 
-#: src/bin/e_sys.c:613
+#: src/bin/e_sys.c:663
 msgid "Hibernating.<br><hilight>Please wait.</hilight>"
 msgstr "Mise en hibernation.<br><hilight>Veuillez patienter…</hilight>"
 
