@@ -202,20 +202,16 @@ _policy_border_show_below(E_Border *bd)
 
              if ((bd->fullscreen) || (bd->need_fullscreen)) 
                {
-                  if (!b->visible) 
-                    e_border_show(b);
-                  b->changes.visible = 1;
-                  b->changed = 1;
+                  if (!b->visible) e_border_show(b);
+                  _policy_border_set_focus(b);
                }
              else 
                {
                   /* need to check x/y position */
                   if ((b->x == bd->x) && (b->y == bd->y)) 
                     {
-                       if (!b->visible) 
-                         e_border_show(b);
-                       b->changes.visible = 1;
-                       b->changed = 1;
+                       if (!b->visible) e_border_show(b);
+                       _policy_border_set_focus(b);
                     }
                }
           }
