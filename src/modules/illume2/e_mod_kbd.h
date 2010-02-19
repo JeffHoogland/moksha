@@ -14,6 +14,6 @@ void e_mod_kbd_show(void);
 void e_mod_kbd_hide(void);
 void e_mod_kbd_toggle(void);
 void e_mod_kbd_fullscreen_set(E_Zone *zone, int fullscreen);
-void e_mod_kbd_layout_set(E_Illume_Keyboard *kbd, E_Illume_Keyboard_Layout layout);
+void e_mod_kbd_layout_set(E_Illume_Keyboard_Layout layout);
 
 #endif
