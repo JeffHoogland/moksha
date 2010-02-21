@@ -65,6 +65,8 @@ struct _E_Comp_Win
    Ecore_X_Sync_Counter counter; // sync counter for syncronised drawing
    Ecore_Timer    *update_timeout; // max time between damage and "done" event
    int             dmg_updates; // num of damage event updates since a redirect
+   Ecore_X_Rectangle *rects; // shape rects... if shaped :(
+   int                rects_num; // num rects above
    
    Eina_List      *effects; // list of effects attached to this window currently
 
@@ -269,9 +271,13 @@ static inline Eina_Bool
 _e_mod_comp_shaped_check(int w, int h, const Ecore_X_Rectangle *rects, int num)
 {
    if ((!rects) || (num < 1))
-     return EINA_FALSE;
+     {
+        return EINA_FALSE;
+     }
    if (num > 1)
-     return EINA_TRUE;
+     {
+        return EINA_TRUE;
+     }
 
    DBG("SHAPE [0x%x] rect 1\n", cw->win);
    if ((rects[0].x == 0) &&
@@ -282,7 +288,6 @@ _e_mod_comp_shaped_check(int w, int h, const Ecore_X_Rectangle *rects, int num)
 	DBG("SHAPE [0x%x] rect solid\n", cw->win);
 	return EINA_FALSE;
      }
-
    return EINA_TRUE;
 }
 
@@ -299,23 +304,26 @@ _e_mod_comp_win_shape_rectangles_apply(E_Comp_Win *cw, const Ecore_X_Rectangle *
 
    DBG("SHAPE [0x%x] change, rects=%p (%d)\n", cw->win, rects, num);
    if (!_e_mod_comp_win_shaped_check(cw, rects, num))
-     rects = NULL;
+     {
+        rects = NULL;
+     }
    if (rects)
      {
         unsigned int *pix, *p;
         unsigned char *spix, *sp;
         int w, h, px, py;
         
-        cw->shaped = 1;
         evas_object_image_size_get(cw->obj, &w, &h);
         if ((w > 0) && (h > 0))
           {
 	     if (cw->native)
 	       {
-		  fprintf(stderr, "BUGGER: shape with native surface? cw=%p\n", cw);
+		  printf("BUGGER: shape with native surface? cw=%p\n", cw);
 		  return;
 	       }
 
+             evas_object_image_native_surface_set(cw->obj, NULL);
+             evas_object_image_alpha_set(cw->obj, 1);
              pix = evas_object_image_data_get(cw->obj, 1);
              if (pix)
                {
@@ -362,7 +370,6 @@ _e_mod_comp_win_shape_rectangles_apply(E_Comp_Win *cw, const Ecore_X_Rectangle *
                        free(spix);
                     }
                   evas_object_image_data_set(cw->obj, pix);
-                  evas_object_image_alpha_set(cw->obj, 1);
                   evas_object_image_data_update_add(cw->obj, 0, 0, w, h);
                }
           }
@@ -383,6 +390,7 @@ _e_mod_comp_win_shape_rectangles_apply(E_Comp_Win *cw, const Ecore_X_Rectangle *
                        return;
                     }
 
+                  evas_object_image_alpha_set(cw->obj, 0);
                   pix = evas_object_image_data_get(cw->obj, 1);
                   if (pix)
                     {
@@ -394,11 +402,9 @@ _e_mod_comp_win_shape_rectangles_apply(E_Comp_Win *cw, const Ecore_X_Rectangle *
                          }
                     }
                   evas_object_image_data_set(cw->obj, pix);
-                  evas_object_image_alpha_set(cw->obj, 0);
                   evas_object_image_data_update_add(cw->obj, 0, 0, w, h);
                }
           }
-        cw->shaped = 0;
         // dont need to fix alpha chanel as blending 
         // should be totally off here regardless of
         // alpha channe; content
@@ -409,11 +415,55 @@ static void
 _e_mod_comp_win_update(E_Comp_Win *cw)
 {
    E_Update_Rect *r;
-   Ecore_X_Rectangle *rects;
-   int rects_num, i;
+   int i;
    
    ecore_x_grab();
    cw->update = 0;
+   
+   if (cw->argb)
+     {
+        if (cw->rects)
+          {
+             free(cw->rects);
+             cw->rects = NULL;
+             cw->rects_num = 0;
+          }
+     }
+   else
+     {
+        if (cw->shape_changed)
+          {
+             ecore_x_pixmap_geometry_get(cw->win, NULL, NULL, &(cw->w), &(cw->h));
+             cw->rects = ecore_x_window_shape_rectangles_get(cw->win, &(cw->rects_num));
+             if (cw->rects)
+               {
+                  for (i = 0; i < cw->rects_num; i++)
+                    {
+                       E_RECTS_CLIP_TO_RECT(cw->rects[i].x,
+                                            cw->rects[i].y, 
+                                            cw->rects[i].width,
+                                            cw->rects[i].height, 
+                                            0, 0, cw->w, cw->h);
+                    }
+               }
+             if (!_e_mod_comp_win_shaped_check(cw, cw->rects, cw->rects_num))
+               {
+                  free(cw->rects);
+                  cw->rects = NULL;
+                  cw->rects_num = 0;
+               }
+             if ((cw->rects) && (!cw->shaped))
+               {
+                  cw->shaped = 1;
+               }
+             else if ((!cw->rects) && (cw->shaped))
+               {
+                  cw->shaped = 0;
+               }
+             
+          }
+     }
+
    if (!cw->pixmap)
      {
         cw->pixmap = ecore_x_composite_name_window_pixmap_get(cw->win);
@@ -452,50 +502,23 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
         return;
      }
 
-   if ((cw->pw != cw->w) || (cw->ph != cw->h))
+   evas_object_move(cw->obj, cw->x, cw->y);
+   if (cw->shobj)
      {
-        ecore_x_window_geometry_get(cw->win, 
-                                    &(cw->x), &(cw->y), 
-                                    &(cw->w), &(cw->h));
-        evas_object_move(cw->obj, cw->x, cw->y);
-        if (cw->shobj)
-          {
-             evas_object_move(cw->shobj, cw->x, cw->y);
-          }
-        evas_object_resize(cw->obj, 
-                           cw->w + (cw->border * 2), 
-                           cw->h + (cw->border * 2));
-        if (cw->shobj)
-          {
-             evas_object_resize(cw->shobj, 
-                                cw->w + (cw->border * 2),
-                                cw->h + (cw->border * 2));
-          }
+        evas_object_move(cw->shobj, cw->x, cw->y);
      }
-   ecore_x_ungrab();
-
-   if (cw->argb)
-     rects = NULL;
-   else
+   evas_object_resize(cw->obj, 
+                      cw->pw + (cw->border * 2), 
+                      cw->ph + (cw->border * 2));
+   if (cw->shobj)
      {
-	/* watch out: rects is just freed at the function end!
-	 * adding any premature "return" will make it leak!
-	 */
-	rects = ecore_x_window_shape_rectangles_get(cw->win, &rects_num);
-	if (!_e_mod_comp_win_shaped_check(cw, rects, rects_num))
-	  {
-	     free(rects);
-	     rects = NULL;
-	  }
-	if ((rects) && (!cw->shaped))
-	  {
-	     cw->shaped = 1;
-	     cw->shape_changed = 1;
-	  }
+        evas_object_resize(cw->shobj, 
+                           cw->pw + (cw->border * 2),
+                           cw->ph + (cw->border * 2));
      }
 
    if ((cw->c->gl) && (_comp_mod->conf->texture_from_pixmap) &&
-       (!cw->shaped) && (!cw->shape_changed))
+       (!cw->shaped) && (!cw->rects)/* && (!cw->shape_changed)*/)
      {
 //        DBG("DEBUG - pm now %x\n", ecore_x_composite_name_window_pixmap_get(cw->win));
         evas_object_image_size_set(cw->obj, cw->pw, cw->ph);
@@ -561,24 +584,26 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
                          }
                        else
                          {
-                            unsigned int *pix;
 // why do we neeed these 2? this smells wrong
                             pix = ecore_x_image_data_get(cw->xim, NULL, NULL, NULL);
                             DBG("UPDATE [0x%x] %i %i %ix%i -- pix = %p\n", cw->win, x, y, w, h, pix);
                             evas_object_image_data_set(cw->obj, pix);
                        
                             evas_object_image_data_update_add(cw->obj, x, y, w, h);
-                            if (cw->shaped) cw->shape_changed = 1;
                          }
-                    }
-                  if ((cw->shape_changed) && (!cw->argb))
-                    {
-                       _e_mod_comp_win_shape_rectangles_apply
-                         (cw, rects, rects_num);
-                       cw->shape_changed = 0;
                     }
                }
              free(r);
+             if (cw->shaped)
+               {
+                  _e_mod_comp_win_shape_rectangles_apply(cw, cw->rects, cw->rects_num);
+               }
+             else
+               {
+                  if (cw->shape_changed)
+                    _e_mod_comp_win_shape_rectangles_apply(cw, cw->rects, cw->rects_num);
+               }
+             cw->shape_changed = 0;
           }
         else
           cw->update = 1;
@@ -596,8 +621,7 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
         if (cw->shaped) evas_object_hide(cw->shobj);
      }
 
-   if (rects)
-     free(rects);
+   ecore_x_ungrab();
 }
 
 static void
@@ -823,6 +847,7 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
    cw->win = win;
    cw->c = c;
    cw->bd = e_border_find_by_window(cw->win);
+   ecore_x_grab();
    if (cw->bd)
      {
         eina_hash_add(borders, e_util_winid_str_get(cw->bd->client.win), cw);
@@ -864,6 +889,7 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
    if (!ecore_x_window_attributes_get(cw->win, &att))
      {
         free(cw);
+        ecore_x_ungrab();
         return NULL;
      }
    if ((!att.input_only) && 
@@ -895,6 +921,17 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
         rects = ecore_x_window_shape_rectangles_get(cw->win, &num);
         if (rects)
           {
+             int i;
+             
+             if (rects)
+               {
+                  for (i = 0; i < num; i++)
+                    {
+                       E_RECTS_CLIP_TO_RECT(rects[i].x, rects[i].y, 
+                                            rects[i].width, rects[i].height, 
+                                            0, 0, att.w, att.h);
+                    }
+               }
 	     if (!_e_mod_comp_shaped_check(att.w, att.h, rects, num))
 	       {
                   free(rects);
@@ -902,7 +939,6 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
                }
              if (rects)
                {
-                  cw->shaped = 1;
                   cw->shape_changed = 1;
                   free(rects);
                }
@@ -926,6 +962,7 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
         cw->dmg_updates = 0;
      }
    DBG("  [0x%x] add\n", cw->win);
+   ecore_x_ungrab();
    return cw;
 }
 
@@ -935,6 +972,11 @@ _e_mod_comp_win_del(E_Comp_Win *cw)
    e_mod_comp_update_free(cw->up);
    DBG("  [0x%x] del\n", cw->win);
    while (cw->effects) _e_mod_comp_effect_del(cw->effects->data);
+   if (cw->rects)
+     {
+        free(cw->rects);
+        cw->rects = NULL;
+     }
    if (cw->update_timeout)
      {
         ecore_timer_del(cw->update_timeout);
@@ -1028,7 +1070,9 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
         cw->pixmap = 0;
      }
    if ((cw->c->gl) && (_comp_mod->conf->texture_from_pixmap) &&
-       (!cw->shaped) && (!cw->shape_changed) && (cw->pixmap))
+       (!cw->shaped) && (!cw->rects)/* && (!cw->shape_changed)*/)
+//   if ((cw->c->gl) && (_comp_mod->conf->texture_from_pixmap) &&
+//       (!cw->shaped) && (!cw->shape_changed) && (cw->pixmap))
      {
         Evas_Native_Surface ns;
         
@@ -1163,7 +1207,9 @@ _e_mod_comp_win_hide(E_Comp_Win *cw)
                   cw->pixmap = 0;
                }
              if ((cw->c->gl) && (_comp_mod->conf->texture_from_pixmap) &&
-                 (!cw->shaped) && (!cw->shape_changed) && (cw->pixmap))
+                 (!cw->shaped) && (!cw->rects)/* && (!cw->shape_changed)*/)
+//             if ((cw->c->gl) && (_comp_mod->conf->texture_from_pixmap) &&
+//                 (!cw->shaped) && (!cw->shape_changed) && (cw->pixmap))
                {
                   Evas_Native_Surface ns;
                   
