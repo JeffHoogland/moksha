@@ -433,6 +433,12 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
      {
         if (cw->shape_changed)
           {
+             if (cw->rects)
+               {
+                  free(cw->rects);
+                  cw->rects = NULL;
+                  cw->rects_num = 0;
+               }
              ecore_x_pixmap_geometry_get(cw->win, NULL, NULL, &(cw->w), &(cw->h));
              cw->rects = ecore_x_window_shape_rectangles_get(cw->win, &(cw->rects_num));
              if (cw->rects)
