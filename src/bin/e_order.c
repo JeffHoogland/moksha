@@ -152,6 +152,7 @@ e_order_clear(E_Order *eo)
 static void
 _e_order_free(E_Order *eo)
 {
+   if (eo->delay) ecore_timer_del(eo->delay);
    E_FREE_LIST(eo->desktops, efreet_desktop_free);
    if (eo->path) eina_stringshare_del(eo->path);
    if (eo->monitor) ecore_file_monitor_del(eo->monitor);
@@ -159,16 +160,25 @@ _e_order_free(E_Order *eo)
    free(eo);
 }
 
-static void
-_e_order_cb_monitor(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, const char *path)
+static int
+_e_order_cb_monitor_delay(void *data)
 {
-   E_Order *eo;
-
-   eo = data;
-
+   E_Order *eo = data;
+   
    /* It doesn't really matter what the change is, just re-read the file */
    _e_order_read(eo);
    if (eo->cb.update) eo->cb.update(eo->cb.data, eo);
+   eo->delay = NULL;
+   return 0;
+}
+
+static void
+_e_order_cb_monitor(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, const char *path)
+{
+   E_Order *eo = data;
+
+   if (eo->delay) ecore_timer_del(eo->delay);
+   eo->delay = ecore_timer_add(0.2, _e_order_cb_monitor_delay, eo);
 }
 
 static void

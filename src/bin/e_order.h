@@ -18,6 +18,7 @@ struct _E_Order
    const char         *path;
    Eina_List          *desktops; /* A list of Efreet_Desktop files this .order contains */
    Ecore_File_Monitor *monitor; /* Check for changes int the .order file */
+   Ecore_Timer        *delay;
 
    struct {
 	void (*update)(void *data, E_Order *eo);
