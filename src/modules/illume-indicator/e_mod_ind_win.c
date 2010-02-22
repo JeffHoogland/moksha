@@ -161,7 +161,6 @@ _e_mod_ind_win_cb_free(Ind_Win *iwin)
 
    /* tell conformant apps our position and size */
    ecore_x_e_illume_indicator_geometry_set(iwin->zone->black_win, 0, 0, 0, 0);
-   ecore_x_e_illume_zone_set(iwin->win->border->client.win, iwin->zone->black_win);
 
    /* delete the window */
    if (iwin->win) e_object_del(E_OBJECT(iwin->win));
