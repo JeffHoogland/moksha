@@ -94,7 +94,7 @@ struct _E_Illume_Keyboard
 {
    E_Object e_obj_inherit;
 
-   E_Border *border; /**< Test struct member */
+   E_Border *border;
    Ecore_Timer *timer;
    Ecore_Animator *animator;
 
@@ -142,7 +142,8 @@ struct _E_Illume_Keyboard
 typedef struct _E_Illume_Policy_Api E_Illume_Policy_Api;
 struct _E_Illume_Policy_Api 
 {
-   int version; /**< The version of this policy. */
+   /**< The version of this policy. */
+   int version;
 
    /**< The name of this policy. */
    const char *name;
@@ -171,26 +172,47 @@ struct _E_Illume_Policy
    struct 
      {
         /** @warning Required Functions. */
-        void *(*init) (E_Illume_Policy *p); /**< pointer to the function that will be called by Illume to initialize this policy. */
-        int (*shutdown) (E_Illume_Policy *p); /**< pointer to the function that Illume will call to shutdown this policy.*/
+
+        /**< pointer to the function that Illume will call to initialize this policy. */
+        void *(*init) (E_Illume_Policy *p);
+        /**< pointer to the function that Illume will call to shutdown this policy.*/
+        int (*shutdown) (E_Illume_Policy *p);
 
         /** @note Optional Functions. */
+
+        /**< pointer to the function that Illume will call when a new border gets added. */
         void (*border_add) (E_Border *bd);
+        /**< pointer to the function that Illume will call when a border gets deleted. */
         void (*border_del) (E_Border *bd);
+        /**< pointer to the function that Illume will call when a border gets focus. */
         void (*border_focus_in) (E_Border *bd);
+        /**< pointer to the function that Illume will call when a border loses focus. */
         void (*border_focus_out) (E_Border *bd);
+        /**< pointer to the function that Illume will call when a border gets an activate message */
         void (*border_activate) (E_Border *bd);
+        /**< pointer to the function that Illume will call when E signals a border post fetch. */
         void (*border_post_fetch) (E_Border *bd);
+        /**< pointer to the funcion that Illume will call when E signals a border post assign. */
         void (*border_post_assign) (E_Border *bd);
+        /**< pointer to the function that Illume will call when a Zone needs to update it's layout. */
         void (*zone_layout) (E_Zone *zone);
+        /**< pointer to the function that Illume will call when a Zone gets moved or resized. */
         void (*zone_move_resize) (E_Zone *zone);
+        /**< pointer to the function that Illume will call when the layout mode of a Zone changes. */
         void (*zone_mode_change) (E_Zone *zone, Ecore_X_Atom mode);
+        /**< pointer to the function that Illume will call when the user has requested a border get closed. This is usually signaled from the Softkey window. */
         void (*zone_close) (E_Zone *zone);
+        /**< pointer to the function that Illume will call when the user has started to drag the Indicator/Softkey windows. */
         void (*drag_start) (E_Border *bd);
+        /**< pointer to the function that Illume will call when the user has stopped draging the Indicator/Softkey windows. */
         void (*drag_end) (E_Border *bd);
+        /**< pointer to the function that Illume will call when the user has requested to cycle the focused border backwards. This is typically signalled from the Softkey window. */
         void (*focus_back) (E_Zone *zone);
+        /**< pointer to the function that Illume will call when the user has requested to cycle the focused border forward. This is typically signalled from the Softkey window. */
         void (*focus_forward) (E_Zone *zone);
+        /**< pointer to the function that Illume will call when the user has requested that Home window be focused. */
         void (*focus_home) (E_Zone *zone);
+        /**< pointer to the function that Illume will call when properties change on a window. */
         void (*property_change) (Ecore_X_Event_Window_Property *event);
      } funcs;
 };
