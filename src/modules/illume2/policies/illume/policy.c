@@ -52,6 +52,9 @@ _policy_border_set_focus(E_Border *bd)
               ((bd->parent->focused) && 
                (e_config->focus_setting == E_FOCUS_NEW_DIALOG_IF_OWNER_FOCUSED))))) 
           {
+             /* if the border was hidden due to layout, we need to unhide */
+             if (!bd->visible) e_border_show(bd);
+
              /* if the border is iconified then uniconify */
              if (bd->iconic) 
                {
