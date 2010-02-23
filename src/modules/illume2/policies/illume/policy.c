@@ -72,13 +72,14 @@ _policy_border_set_focus(E_Border *bd)
               * 
               * This is potentially useless as THIS policy 
               * makes all windows borderless anyway, but it's in here for 
-              * completeness */
+              * completeness
              e_border_focus_latest_set(bd);
              if (bd->bg_object) 
                edje_object_signal_emit(bd->bg_object, "e,state,focused", "e");
              if (bd->icon_object) 
                edje_object_signal_emit(bd->icon_object, "e,state,focused", "e");
              e_focus_event_focus_in(bd);
+              */
           }
      }
 }
@@ -118,7 +119,7 @@ _policy_border_hide_below(E_Border *bd)
    int pos = 0, i;
 
 //   printf("Hide Borders Below: %s %d %d\n", 
-//          bd->client.icccm.class, bd->x, bd->y);
+//          bd->client.icccm.name, bd->x, bd->y);
 
    /* determine layering position */
    if (bd->layer <= 0) pos = 0;
@@ -129,7 +130,7 @@ _policy_border_hide_below(E_Border *bd)
    else pos = 5;
 
    /* Find the windows below this one */
-   for (i = pos; i >= 0; i--) 
+   for (i = pos; i >= 2; i--) 
      {
         Eina_List *l;
         E_Border *b;
@@ -155,7 +156,7 @@ _policy_border_hide_below(E_Border *bd)
              else 
                {
                   /* we need to check x/y position */
-                  if ((b->x == bd->x) && (b->y == bd->y)) 
+                  if (E_CONTAINS(bd->x, bd->y, bd->w, bd->h, b->x, b->y, b->w, b->h))
                     {
                        if (b->visible) e_border_hide(b, 2);
                     }
@@ -181,7 +182,7 @@ _policy_border_show_below(E_Border *bd)
    else pos = 5;
 
    /* Find the windows below this one */
-   for (i = pos; i >= 0; i--) 
+   for (i = pos; i >= 2; i--) 
      {
         Eina_List *l;
         E_Border *b;
@@ -204,14 +205,16 @@ _policy_border_show_below(E_Border *bd)
                {
                   if (!b->visible) e_border_show(b);
                   _policy_border_set_focus(b);
+                  return;
                }
              else 
                {
                   /* need to check x/y position */
-                  if ((b->x == bd->x) && (b->y == bd->y)) 
+                  if (E_CONTAINS(bd->x, bd->y, bd->w, bd->h, b->x, b->y, b->w, b->h))
                     {
                        if (!b->visible) e_border_show(b);
                        _policy_border_set_focus(b);
+                       return;
                     }
                }
           }
@@ -535,9 +538,6 @@ _policy_zone_layout_fullscreen(E_Border *bd)
    /* set layer if needed */
    if (bd->layer != POL_FULLSCREEN_LAYER) 
      e_border_layer_set(bd, POL_FULLSCREEN_LAYER);
-
-   /* hide any apps/windows below this one */
-   _policy_border_hide_below(bd);
 }
 
 static void 
@@ -571,9 +571,6 @@ _policy_zone_layout_app_single(E_Border *bd, E_Illume_Config_Zone *cz)
    /* set layer if needed */
    if (bd->layer != POL_APP_LAYER) 
      e_border_layer_set(bd, POL_APP_LAYER);
-
-   /* hide any apps/windows below this one */
-   _policy_border_hide_below(bd);
 }
 
 static void 
@@ -641,9 +638,6 @@ _policy_zone_layout_app_dual_top(E_Border *bd, E_Illume_Config_Zone *cz)
    /* set layer if needed */
    if (bd->layer != POL_APP_LAYER) 
      e_border_layer_set(bd, POL_APP_LAYER);
-
-   /* hide any apps/windows below this one */
-   _policy_border_hide_below(bd);
 }
 
 static void 
@@ -684,9 +678,6 @@ _policy_zone_layout_app_dual_custom(E_Border *bd, E_Illume_Config_Zone *cz)
    /* set layer if needed */
    if (bd->layer != POL_APP_LAYER) 
      e_border_layer_set(bd, POL_APP_LAYER);
-
-   /* hide any apps/windows below this one */
-   _policy_border_hide_below(bd);
 }
 
 static void 
@@ -729,9 +720,6 @@ _policy_zone_layout_app_dual_left(E_Border *bd, E_Illume_Config_Zone *cz)
    /* set layer if needed */
    if (bd->layer != POL_APP_LAYER) 
      e_border_layer_set(bd, POL_APP_LAYER);
-
-   /* hide any apps/windows below this one */
-   _policy_border_hide_below(bd);
 }
 
 static void 
@@ -866,9 +854,6 @@ _policy_zone_layout_conformant_single(E_Border *bd, E_Illume_Config_Zone *cz)
    /* set layer if needed */
    if (bd->layer != POL_CONFORMANT_LAYER) 
      e_border_layer_set(bd, POL_CONFORMANT_LAYER);
-
-   /* hide any apps/windows below this one */
-   _policy_border_hide_below(bd);
 }
 
 static void 
@@ -897,9 +882,6 @@ _policy_zone_layout_conformant_dual_top(E_Border *bd, E_Illume_Config_Zone *cz)
    /* set layer if needed */
    if (bd->layer != POL_CONFORMANT_LAYER) 
      e_border_layer_set(bd, POL_CONFORMANT_LAYER);
-
-   /* hide any apps/windows below this one */
-   _policy_border_hide_below(bd);
 }
 
 static void 
@@ -928,9 +910,6 @@ _policy_zone_layout_conformant_dual_custom(E_Border *bd, E_Illume_Config_Zone *c
    /* set layer if needed */
    if (bd->layer != POL_CONFORMANT_LAYER) 
      e_border_layer_set(bd, POL_CONFORMANT_LAYER);
-
-   /* hide any apps/windows below this one */
-   _policy_border_hide_below(bd);
 }
 
 static void 
@@ -958,9 +937,6 @@ _policy_zone_layout_conformant_dual_left(E_Border *bd, E_Illume_Config_Zone *cz)
    /* set layer if needed */
    if (bd->layer != POL_CONFORMANT_LAYER) 
      e_border_layer_set(bd, POL_CONFORMANT_LAYER);
-
-   /* hide any apps/windows below this one */
-   _policy_border_hide_below(bd);
 }
 
 
@@ -1022,7 +998,7 @@ _policy_border_del(E_Border *bd)
           }
      }
 
-   /* show borders below this one */
+   /* show the border below this one */
    _policy_border_show_below(bd);
 }
 
@@ -1060,7 +1036,7 @@ _policy_border_activate(E_Border *bd)
 //   printf("Border Activate: %s\n", bd->client.icccm.name);
 
    /* NB: stolen borders may or may not need focus call...have to test */
-//   if (bd->stolen) return;
+   if (bd->stolen) return;
 
    /* conformant windows hide the softkey */
    sft = e_illume_border_softkey_get(bd->zone);
@@ -1076,8 +1052,42 @@ _policy_border_activate(E_Border *bd)
           }
      }
 
-   /* set focus on new border is we can */
-   _policy_border_set_focus(bd);
+   /* NB: We cannot use our set_focus function here because it does, 
+    * occasionally fall through wrt E's focus policy, so cherry pick the good 
+    * parts and use here :) */
+
+   /* if the border is iconified then uniconify */
+   if (bd->iconic) 
+     {
+        /* if the user is allowed to uniconify, then do it */
+        if (!bd->lock_user_iconify) e_border_uniconify(bd);
+     }
+
+   /* set very high layer for this window as it needs attention and thus 
+    * should show above everything */
+   e_border_layer_set(bd, 250);
+
+   /* if we can raise the border do it */
+   if (!bd->lock_user_stacking) e_border_raise(bd);
+
+   /* focus the border */
+   e_border_focus_set(bd, 1, 1);
+
+   /* NB: since we skip needless border evals when container layout 
+    * is called (to save cpu cycles), we need to 
+    * signal this border that it's focused so that the edj gets 
+    * updated. 
+    * 
+    * This is potentially useless as THIS policy 
+    * makes all windows borderless anyway, but it's in here for 
+    * completeness
+   e_border_focus_latest_set(bd);
+   if (bd->bg_object) 
+     edje_object_signal_emit(bd->bg_object, "e,state,focused", "e");
+   if (bd->icon_object) 
+     edje_object_signal_emit(bd->icon_object, "e,state,focused", "e");
+   e_focus_event_focus_in(bd);
+    */
 }
 
 void 
@@ -1132,6 +1142,21 @@ _policy_border_post_assign(E_Border *bd)
 }
 
 void 
+_policy_border_show(E_Border *bd) 
+{
+   /* make sure we have a name so that we don't handle windows like E's root */
+   if (!bd->client.icccm.name) return;
+
+   /* trap for special windows so we can ignore hides below them */
+   if (e_illume_border_is_indicator(bd)) return;
+   if (e_illume_border_is_softkey(bd)) return;
+   if (e_illume_border_is_quickpanel(bd)) return;
+   if (e_illume_border_is_keyboard(bd)) return;
+
+   _policy_border_hide_below(bd);
+}
+
+void 
 _policy_zone_layout(E_Zone *zone) 
 {
    E_Illume_Config_Zone *cz;
@@ -1154,7 +1179,8 @@ _policy_zone_layout(E_Zone *zone)
 
         /* only update layout for this border if it really needs it */
         if ((!bd->new_client) && (!bd->changes.pos) && (!bd->changes.size) && 
-            (!bd->changes.visible) && (!bd->pending_move_resize)) continue;
+            (!bd->changes.visible) && (!bd->pending_move_resize) && 
+            (!bd->need_shape_export) && (!bd->need_shape_merge)) continue;
 
         /* are we laying out an indicator ? */
         if (e_illume_border_is_indicator(bd)) 
@@ -1259,7 +1285,6 @@ _policy_zone_layout(E_Zone *zone)
                     _policy_zone_layout_app_dual_left(bd, cz);
                }
           }
-
      }
 }
 
@@ -1356,9 +1381,6 @@ _policy_zone_close(E_Zone *zone)
 
    /* close this border */
    e_border_act_close_begin(bd);
-
-   /* revert focus to previous border (if possible) */
-   _policy_focus_back(zone);
 }
 
 void 
@@ -1476,9 +1498,7 @@ _policy_focus_home(E_Zone *zone)
 
    if (!bd->visible) e_border_show(bd);
 
-   /* no point in calling set_focus here as home windows do not accept it 
-    * anyway, so just raise */
-   e_border_raise(bd);
+   _policy_border_set_focus(bd);
 }
 
 void 

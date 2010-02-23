@@ -19,6 +19,7 @@ e_illume_policy_init(E_Illume_Policy *p)
    p->funcs.border_activate = _policy_border_activate;
    p->funcs.border_post_fetch = _policy_border_post_fetch;
    p->funcs.border_post_assign = _policy_border_post_assign;
+   p->funcs.border_show = _policy_border_show;
    p->funcs.zone_layout = _policy_zone_layout;
    p->funcs.zone_move_resize = _policy_zone_move_resize;
    p->funcs.zone_mode_change = _policy_zone_mode_change;
@@ -43,6 +44,7 @@ e_illume_policy_shutdown(E_Illume_Policy *p)
    p->funcs.border_activate = NULL;
    p->funcs.border_post_fetch = NULL;
    p->funcs.border_post_assign = NULL;
+   p->funcs.border_show = NULL;
    p->funcs.zone_layout = NULL;
    p->funcs.zone_move_resize = NULL;
    p->funcs.zone_mode_change = NULL;

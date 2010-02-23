@@ -208,8 +208,10 @@ struct _E_Illume_Policy
         void (*border_activate) (E_Border *bd);
         /**< pointer to the function that Illume will call when E signals a border post fetch. */
         void (*border_post_fetch) (E_Border *bd);
-        /**< pointer to the funcion that Illume will call when E signals a border post assign. */
+        /**< pointer to the function that Illume will call when E signals a border post assign. */
         void (*border_post_assign) (E_Border *bd);
+        /**< pointer to the function that Illume will call when a border gets shown. */
+        void (*border_show) (E_Border *bd);
         /**< pointer to the function that Illume will call when a Zone needs to update it's layout. */
         void (*zone_layout) (E_Zone *zone);
         /**< pointer to the function that Illume will call when a Zone gets moved or resized. */

@@ -11,6 +11,7 @@ static int _e_mod_policy_cb_border_add(void *data __UNUSED__, int type __UNUSED_
 static int _e_mod_policy_cb_border_del(void *data __UNUSED__, int type __UNUSED__, void *event);
 static int _e_mod_policy_cb_border_focus_in(void *data __UNUSED__, int type __UNUSED__, void *event);
 static int _e_mod_policy_cb_border_focus_out(void *data __UNUSED__, int type __UNUSED__, void *event);
+static int _e_mod_policy_cb_border_show(void *data __UNUSED__, int type __UNUSED__, void *event);
 static int _e_mod_policy_cb_zone_move_resize(void *data __UNUSED__, int type __UNUSED__, void *event);
 static int _e_mod_policy_cb_client_message(void *data __UNUSED__, int type __UNUSED__, void *event);
 static int _e_mod_policy_cb_window_property(void *data __UNUSED__, int type __UNUSED__, void *event);
@@ -248,6 +249,11 @@ _e_mod_policy_handlers_add(void)
                                               NULL));
    _policy_hdls = 
      eina_list_append(_policy_hdls, 
+                      ecore_event_handler_add(E_EVENT_BORDER_SHOW, 
+                                              _e_mod_policy_cb_border_show, 
+                                              NULL));
+   _policy_hdls = 
+     eina_list_append(_policy_hdls, 
                       ecore_event_handler_add(E_EVENT_ZONE_MOVE_RESIZE, 
                                               _e_mod_policy_cb_zone_move_resize, 
                                               NULL));
@@ -346,6 +352,18 @@ _e_mod_policy_cb_border_focus_out(void *data __UNUSED__, int type __UNUSED__, vo
    ev = event;
    if ((_policy) && (_policy->funcs.border_focus_out))
      _policy->funcs.border_focus_out(ev->border);
+
+   return 1;
+}
+
+static int 
+_e_mod_policy_cb_border_show(void *data __UNUSED__, int type __UNUSED__, void *event) 
+{
+   E_Event_Border_Show *ev;
+
+   ev = event;
+   if ((_policy) && (_policy->funcs.border_show))
+     _policy->funcs.border_show(ev->border);
 
    return 1;
 }
@@ -497,7 +515,8 @@ _e_mod_policy_cb_hook_layout(void *data __UNUSED__, void *data2 __UNUSED__)
    EINA_LIST_FOREACH(e_border_client_list(), l, bd) 
      {
         if ((bd->new_client) || (bd->pending_move_resize) || 
-            (bd->changes.pos) || (bd->changes.size) || (bd->changes.visible))
+            (bd->changes.pos) || (bd->changes.size) || (bd->changes.visible) || 
+            (bd->need_shape_export) || (bd->need_shape_merge)) 
           {
              /* NB: this border changed. add it's zone to list of what needs 
               * updating. This is done so we do not waste cpu cycles 

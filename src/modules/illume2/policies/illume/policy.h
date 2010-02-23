@@ -20,6 +20,7 @@ void _policy_border_focus_out(E_Border *bd);
 void _policy_border_activate(E_Border *bd);
 void _policy_border_post_fetch(E_Border *bd);
 void _policy_border_post_assign(E_Border *bd);
+void _policy_border_show(E_Border *bd);
 void _policy_zone_layout(E_Zone *zone);
 void _policy_zone_move_resize(E_Zone *zone);
 void _policy_zone_mode_change(E_Zone *zone, Ecore_X_Atom mode);
