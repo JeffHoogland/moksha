@@ -9797,225 +9797,55 @@ collections { /* begin the collection of edje groups that are in this file */
    }
 
 /////////////////////////////////////////////////////////////////////////////
+#define CLOCK_SECONDS 1
    /*** MOD: CLOCK ***/
    group { name: "e/modules/clock/main";
       images {
 	 image: "clock_base.png" COMP;
 	 image: "tacho_fg.png" COMP;
-	 image: "ch-00.png" COMP;
-	 image: "ch-01.png" COMP;
-	 image: "ch-02.png" COMP;
-	 image: "ch-03.png" COMP;
-	 image: "ch-04.png" COMP;
-	 image: "ch-05.png" COMP;
-	 image: "ch-06.png" COMP;
-	 image: "ch-07.png" COMP;
-	 image: "ch-08.png" COMP;
-	 image: "ch-09.png" COMP;
-	 image: "ch-10.png" COMP;
-	 image: "ch-11.png" COMP;
-	 image: "ch-12.png" COMP;
-	 image: "ch-13.png" COMP;
-	 image: "ch-14.png" COMP;
-	 image: "ch-15.png" COMP;
-	 image: "ch-16.png" COMP;
-	 image: "ch-17.png" COMP;
-	 image: "ch-18.png" COMP;
-	 image: "ch-19.png" COMP;
-	 image: "ch-20.png" COMP;
-	 image: "ch-21.png" COMP;
-	 image: "ch-22.png" COMP;
-	 image: "ch-23.png" COMP;
-	 image: "ch-24.png" COMP;
-	 image: "ch-25.png" COMP;
-	 image: "ch-26.png" COMP;
-	 image: "ch-27.png" COMP;
-	 image: "ch-28.png" COMP;
-	 image: "ch-29.png" COMP;
-	 image: "ch-30.png" COMP;
-	 image: "ch-31.png" COMP;
-	 image: "ch-32.png" COMP;
-	 image: "ch-33.png" COMP;
-	 image: "ch-34.png" COMP;
-	 image: "ch-35.png" COMP;
-	 image: "ch-36.png" COMP;
-	 image: "ch-37.png" COMP;
-	 image: "ch-38.png" COMP;
-	 image: "ch-39.png" COMP;
-	 image: "ch-40.png" COMP;
-	 image: "ch-41.png" COMP;
-	 image: "ch-42.png" COMP;
-	 image: "ch-43.png" COMP;
-	 image: "ch-44.png" COMP;
-	 image: "ch-45.png" COMP;
-	 image: "ch-46.png" COMP;
-	 image: "ch-47.png" COMP;
-	 image: "ch-48.png" COMP;
-	 image: "ch-49.png" COMP;
-	 image: "ch-50.png" COMP;
-	 image: "ch-51.png" COMP;
-	 image: "ch-52.png" COMP;
-	 image: "ch-53.png" COMP;
-	 image: "ch-54.png" COMP;
-	 image: "ch-55.png" COMP;
-	 image: "ch-56.png" COMP;
-	 image: "ch-57.png" COMP;
-	 image: "ch-58.png" COMP;
-	 image: "ch-59.png" COMP;
-	 image: "cm-00.png" COMP;
-	 image: "cm-01.png" COMP;
-	 image: "cm-02.png" COMP;
-	 image: "cm-03.png" COMP;
-	 image: "cm-04.png" COMP;
-	 image: "cm-05.png" COMP;
-	 image: "cm-06.png" COMP;
-	 image: "cm-07.png" COMP;
-	 image: "cm-08.png" COMP;
-	 image: "cm-09.png" COMP;
-	 image: "cm-10.png" COMP;
-	 image: "cm-11.png" COMP;
-	 image: "cm-12.png" COMP;
-	 image: "cm-13.png" COMP;
-	 image: "cm-14.png" COMP;
-	 image: "cm-15.png" COMP;
-	 image: "cm-16.png" COMP;
-	 image: "cm-17.png" COMP;
-	 image: "cm-18.png" COMP;
-	 image: "cm-19.png" COMP;
-	 image: "cm-20.png" COMP;
-	 image: "cm-21.png" COMP;
-	 image: "cm-22.png" COMP;
-	 image: "cm-23.png" COMP;
-	 image: "cm-24.png" COMP;
-	 image: "cm-25.png" COMP;
-	 image: "cm-26.png" COMP;
-	 image: "cm-27.png" COMP;
-	 image: "cm-28.png" COMP;
-	 image: "cm-29.png" COMP;
-	 image: "cm-30.png" COMP;
-	 image: "cm-31.png" COMP;
-	 image: "cm-32.png" COMP;
-	 image: "cm-33.png" COMP;
-	 image: "cm-34.png" COMP;
-	 image: "cm-35.png" COMP;
-	 image: "cm-36.png" COMP;
-	 image: "cm-37.png" COMP;
-	 image: "cm-38.png" COMP;
-	 image: "cm-39.png" COMP;
-	 image: "cm-40.png" COMP;
-	 image: "cm-41.png" COMP;
-	 image: "cm-42.png" COMP;
-	 image: "cm-43.png" COMP;
-	 image: "cm-44.png" COMP;
-	 image: "cm-45.png" COMP;
-	 image: "cm-46.png" COMP;
-	 image: "cm-47.png" COMP;
-	 image: "cm-48.png" COMP;
-	 image: "cm-49.png" COMP;
-	 image: "cm-50.png" COMP;
-	 image: "cm-51.png" COMP;
-	 image: "cm-52.png" COMP;
-	 image: "cm-53.png" COMP;
-	 image: "cm-54.png" COMP;
-	 image: "cm-55.png" COMP;
-	 image: "cm-56.png" COMP;
-	 image: "cm-57.png" COMP;
-	 image: "cm-58.png" COMP;
-	 image: "cm-59.png" COMP;
+         image: "ch-h1.png" COMP;
+         image: "ch-h2.png" COMP;
+         image: "ch-m1.png" COMP;
+         image: "ch-m2.png" COMP;
 #ifdef CLOCK_SECONDS
-	 image: "cs-00.png" COMP;
-	 image: "cs-01.png" COMP;
-	 image: "cs-02.png" COMP;
-	 image: "cs-03.png" COMP;
-	 image: "cs-04.png" COMP;
-	 image: "cs-05.png" COMP;
-	 image: "cs-06.png" COMP;
-	 image: "cs-07.png" COMP;
-	 image: "cs-08.png" COMP;
-	 image: "cs-09.png" COMP;
-	 image: "cs-10.png" COMP;
-	 image: "cs-11.png" COMP;
-	 image: "cs-12.png" COMP;
-	 image: "cs-13.png" COMP;
-	 image: "cs-14.png" COMP;
-	 image: "cs-15.png" COMP;
-	 image: "cs-16.png" COMP;
-	 image: "cs-17.png" COMP;
-	 image: "cs-18.png" COMP;
-	 image: "cs-19.png" COMP;
-	 image: "cs-20.png" COMP;
-	 image: "cs-21.png" COMP;
-	 image: "cs-22.png" COMP;
-	 image: "cs-23.png" COMP;
-	 image: "cs-24.png" COMP;
-	 image: "cs-25.png" COMP;
-	 image: "cs-26.png" COMP;
-	 image: "cs-27.png" COMP;
-	 image: "cs-28.png" COMP;
-	 image: "cs-29.png" COMP;
-	 image: "cs-30.png" COMP;
-	 image: "cs-31.png" COMP;
-	 image: "cs-32.png" COMP;
-	 image: "cs-33.png" COMP;
-	 image: "cs-34.png" COMP;
-	 image: "cs-35.png" COMP;
-	 image: "cs-36.png" COMP;
-	 image: "cs-37.png" COMP;
-	 image: "cs-38.png" COMP;
-	 image: "cs-39.png" COMP;
-	 image: "cs-40.png" COMP;
-	 image: "cs-41.png" COMP;
-	 image: "cs-42.png" COMP;
-	 image: "cs-43.png" COMP;
-	 image: "cs-44.png" COMP;
-	 image: "cs-45.png" COMP;
-	 image: "cs-46.png" COMP;
-	 image: "cs-47.png" COMP;
-	 image: "cs-48.png" COMP;
-	 image: "cs-49.png" COMP;
-	 image: "cs-50.png" COMP;
-	 image: "cs-51.png" COMP;
-	 image: "cs-52.png" COMP;
-	 image: "cs-53.png" COMP;
-	 image: "cs-54.png" COMP;
-	 image: "cs-55.png" COMP;
-	 image: "cs-56.png" COMP;
-	 image: "cs-57.png" COMP;
-	 image: "cs-58.png" COMP;
-	 image: "cs-59.png" COMP;
+         image: "ch-s1.png" COMP;
+         image: "ch-s2.png" COMP;
 #endif
       }
       min: 16 16;
       max:  128 128;
       script {
 	 public clock_cb(val) {
-	    new buf[11];
 	    new year, month, day, yearday, weekday, hour, minute;
 	    new Float:second;
-	    new v;
+            new v;
 
 	    date(year, month, day, yearday, weekday, hour, minute, second);
 #ifdef CLOCK_SECONDS
-	    v = round(second);
-	    timer(1.0 - (second - v), "clock_cb", 1);
-	    buf[0] = 0;
-	    if (v < 10) {snprintf(buf, 10, "0%i", v);}
-	    else        {snprintf(buf, 10, "%i", v);}
-	    set_state(PART:"seconds", buf, 0.0);
+            v = round(second);
+            timer(1.0 - (second - v), "clock_cb", 1);
+            custom_state(PART:"seconds", "default", 0.0);
+            set_state_val(PART:"seconds", STATE_MAP_ROT_Z, (v * 360.0) / 60.0);
+            set_state(PART:"seconds", "custom", 0.0);
+            custom_state(PART:"seconds-sh", "default", 0.0);
+            set_state_val(PART:"seconds-sh", STATE_MAP_ROT_Z, (v * 360.0) / 60.0);
+            set_state(PART:"seconds-sh", "custom", 0.0);
 #else
 	    timer(60.0 - (second), "clock_cb", 1);
 #endif
-	    v = minute;
-	    buf[0] = 0;
-	    if (v < 10) {snprintf(buf, 10, "0%i", v);}
-	    else        {snprintf(buf, 10, "%i", v);}
-	    set_state(PART:"minutes", buf, 0.0);
-
-	    v = ((hour % 12) * 5) + ((minute * 5) / 60);
-	    buf[0] = 0;
-	    if (v < 10) {snprintf(buf, 10, "0%i", v);}
-	    else        {snprintf(buf, 10, "%i", v);}
-	    set_state(PART:"hour", buf, 0.0);
+            custom_state(PART:"minutes", "default", 0.0);
+            set_state_val(PART:"minutes", STATE_MAP_ROT_Z, (minute * 360.0) / 60.0);
+            set_state(PART:"minutes", "custom", 0.0);
+            custom_state(PART:"minutes-sh", "default", 0.0);
+            set_state_val(PART:"minutes-sh", STATE_MAP_ROT_Z, (minute * 360.0) / 60.0);
+            set_state(PART:"minutes-sh", "custom", 0.0);
+            
+            custom_state(PART:"hour", "default", 0.0);
+            set_state_val(PART:"hour", STATE_MAP_ROT_Z, (hour * 360.0) / 12.0);
+            set_state(PART:"hour", "custom", 0.0);
+            custom_state(PART:"hour-sh", "default", 0.0);
+            set_state_val(PART:"hour-sh", STATE_MAP_ROT_Z, (hour * 360.0) / 12.0);
+            set_state(PART:"hour-sh", "custom", 0.0);
 	 }
       }
       parts {
@@ -10026,210 +9856,144 @@ collections { /* begin the collection of edje groups that are in this file */
 	       image.normal: "clock_base.png";
 	    }
 	 }
+         part { name: "base2";
+            type: RECT;
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               visible: 0;
+               rel1 {
+                  to: "base";
+                  relative: (2.0/128.0) (2.0/128.0);
+               }
+               rel2 {
+                  to: "base";
+                  relative: (1.0+(2.0/128.0)) (1.0+(2.0/128.0));
+               }
+            }
+         }
 #ifdef CLOCK_SECONDS
-	 part { name: "seconds";
-	    mouse_events: 0;
-	    description { state: "default" 0.0;
-	       rel1.to: "base"; rel2.to: "base";
-	       image.normal: "cs-00.png";
-	    }
-	    description { state: "00" 0.0; inherit: "default" 0.0; image.normal: "cs-00.png";}
-	    description { state: "01" 0.0; inherit: "default" 0.0; image.normal: "cs-01.png";}
-	    description { state: "02" 0.0; inherit: "default" 0.0; image.normal: "cs-02.png";}
-	    description { state: "03" 0.0; inherit: "default" 0.0; image.normal: "cs-03.png";}
-	    description { state: "04" 0.0; inherit: "default" 0.0; image.normal: "cs-04.png";}
-	    description { state: "05" 0.0; inherit: "default" 0.0; image.normal: "cs-05.png";}
-	    description { state: "06" 0.0; inherit: "default" 0.0; image.normal: "cs-06.png";}
-	    description { state: "07" 0.0; inherit: "default" 0.0; image.normal: "cs-07.png";}
-	    description { state: "08" 0.0; inherit: "default" 0.0; image.normal: "cs-08.png";}
-	    description { state: "09" 0.0; inherit: "default" 0.0; image.normal: "cs-09.png";}
-	    description { state: "10" 0.0; inherit: "default" 0.0; image.normal: "cs-10.png";}
-	    description { state: "11" 0.0; inherit: "default" 0.0; image.normal: "cs-11.png";}
-	    description { state: "12" 0.0; inherit: "default" 0.0; image.normal: "cs-12.png";}
-	    description { state: "13" 0.0; inherit: "default" 0.0; image.normal: "cs-13.png";}
-	    description { state: "14" 0.0; inherit: "default" 0.0; image.normal: "cs-14.png";}
-	    description { state: "15" 0.0; inherit: "default" 0.0; image.normal: "cs-15.png";}
-	    description { state: "16" 0.0; inherit: "default" 0.0; image.normal: "cs-16.png";}
-	    description { state: "17" 0.0; inherit: "default" 0.0; image.normal: "cs-17.png";}
-	    description { state: "18" 0.0; inherit: "default" 0.0; image.normal: "cs-18.png";}
-	    description { state: "19" 0.0; inherit: "default" 0.0; image.normal: "cs-19.png";}
-	    description { state: "20" 0.0; inherit: "default" 0.0; image.normal: "cs-20.png";}
-	    description { state: "21" 0.0; inherit: "default" 0.0; image.normal: "cs-21.png";}
-	    description { state: "22" 0.0; inherit: "default" 0.0; image.normal: "cs-22.png";}
-	    description { state: "23" 0.0; inherit: "default" 0.0; image.normal: "cs-23.png";}
-	    description { state: "24" 0.0; inherit: "default" 0.0; image.normal: "cs-24.png";}
-	    description { state: "25" 0.0; inherit: "default" 0.0; image.normal: "cs-25.png";}
-	    description { state: "26" 0.0; inherit: "default" 0.0; image.normal: "cs-26.png";}
-	    description { state: "27" 0.0; inherit: "default" 0.0; image.normal: "cs-27.png";}
-	    description { state: "28" 0.0; inherit: "default" 0.0; image.normal: "cs-28.png";}
-	    description { state: "29" 0.0; inherit: "default" 0.0; image.normal: "cs-29.png";}
-	    description { state: "30" 0.0; inherit: "default" 0.0; image.normal: "cs-30.png";}
-	    description { state: "31" 0.0; inherit: "default" 0.0; image.normal: "cs-31.png";}
-	    description { state: "32" 0.0; inherit: "default" 0.0; image.normal: "cs-32.png";}
-	    description { state: "33" 0.0; inherit: "default" 0.0; image.normal: "cs-33.png";}
-	    description { state: "34" 0.0; inherit: "default" 0.0; image.normal: "cs-34.png";}
-	    description { state: "35" 0.0; inherit: "default" 0.0; image.normal: "cs-35.png";}
-	    description { state: "36" 0.0; inherit: "default" 0.0; image.normal: "cs-36.png";}
-	    description { state: "37" 0.0; inherit: "default" 0.0; image.normal: "cs-37.png";}
-	    description { state: "38" 0.0; inherit: "default" 0.0; image.normal: "cs-38.png";}
-	    description { state: "39" 0.0; inherit: "default" 0.0; image.normal: "cs-39.png";}
-	    description { state: "40" 0.0; inherit: "default" 0.0; image.normal: "cs-40.png";}
-	    description { state: "41" 0.0; inherit: "default" 0.0; image.normal: "cs-41.png";}
-	    description { state: "42" 0.0; inherit: "default" 0.0; image.normal: "cs-42.png";}
-	    description { state: "43" 0.0; inherit: "default" 0.0; image.normal: "cs-43.png";}
-	    description { state: "44" 0.0; inherit: "default" 0.0; image.normal: "cs-44.png";}
-	    description { state: "45" 0.0; inherit: "default" 0.0; image.normal: "cs-45.png";}
-	    description { state: "46" 0.0; inherit: "default" 0.0; image.normal: "cs-46.png";}
-	    description { state: "47" 0.0; inherit: "default" 0.0; image.normal: "cs-47.png";}
-	    description { state: "48" 0.0; inherit: "default" 0.0; image.normal: "cs-48.png";}
-	    description { state: "49" 0.0; inherit: "default" 0.0; image.normal: "cs-49.png";}
-	    description { state: "50" 0.0; inherit: "default" 0.0; image.normal: "cs-50.png";}
-	    description { state: "51" 0.0; inherit: "default" 0.0; image.normal: "cs-51.png";}
-	    description { state: "52" 0.0; inherit: "default" 0.0; image.normal: "cs-52.png";}
-	    description { state: "53" 0.0; inherit: "default" 0.0; image.normal: "cs-53.png";}
-	    description { state: "54" 0.0; inherit: "default" 0.0; image.normal: "cs-54.png";}
-	    description { state: "55" 0.0; inherit: "default" 0.0; image.normal: "cs-55.png";}
-	    description { state: "56" 0.0; inherit: "default" 0.0; image.normal: "cs-56.png";}
-	    description { state: "57" 0.0; inherit: "default" 0.0; image.normal: "cs-57.png";}
-	    description { state: "58" 0.0; inherit: "default" 0.0; image.normal: "cs-58.png";}
-	    description { state: "59" 0.0; inherit: "default" 0.0; image.normal: "cs-59.png";}
-	 }
+         part { name: "seconds-sh";
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               rel1 {
+                  to: "base2";
+                  relative: 0.3125 0.0;
+               }
+               rel2 {
+                  to: "base2";
+                  relative: 0.6875 0.6875;
+               }
+               image.normal: "ch-s2.png";
+               map {
+                  on: 1;
+                  rotation {
+                     center: "base2";
+                  }
+               }
+            }
+         }
+         part { name: "seconds";
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               rel1 {
+                  to: "base";
+                  relative: 0.3125 0.0;
+               }
+               rel2 {
+                  to: "base";
+                  relative: 0.6875 0.6875;
+               }
+               image.normal: "ch-s1.png";
+               map {
+                  on: 1;
+                  rotation {
+                     center: "base";
+                  }
+               }
+            }
+         }
 #endif
-	 part { name: "minutes";
-	    mouse_events: 0;
-	    description { state: "default" 0.0;
-	       rel1.to: "base"; rel2.to: "base";
-	       image.normal: "ch-00.png";
-	    }
-	    description { state: "00" 0.0; inherit: "default" 0.0; image.normal: "ch-00.png";}
-	    description { state: "01" 0.0; inherit: "default" 0.0; image.normal: "ch-01.png";}
-	    description { state: "02" 0.0; inherit: "default" 0.0; image.normal: "ch-02.png";}
-	    description { state: "03" 0.0; inherit: "default" 0.0; image.normal: "ch-03.png";}
-	    description { state: "04" 0.0; inherit: "default" 0.0; image.normal: "ch-04.png";}
-	    description { state: "05" 0.0; inherit: "default" 0.0; image.normal: "ch-05.png";}
-	    description { state: "06" 0.0; inherit: "default" 0.0; image.normal: "ch-06.png";}
-	    description { state: "07" 0.0; inherit: "default" 0.0; image.normal: "ch-07.png";}
-	    description { state: "08" 0.0; inherit: "default" 0.0; image.normal: "ch-08.png";}
-	    description { state: "09" 0.0; inherit: "default" 0.0; image.normal: "ch-09.png";}
-	    description { state: "10" 0.0; inherit: "default" 0.0; image.normal: "ch-10.png";}
-	    description { state: "11" 0.0; inherit: "default" 0.0; image.normal: "ch-11.png";}
-	    description { state: "12" 0.0; inherit: "default" 0.0; image.normal: "ch-12.png";}
-	    description { state: "13" 0.0; inherit: "default" 0.0; image.normal: "ch-13.png";}
-	    description { state: "14" 0.0; inherit: "default" 0.0; image.normal: "ch-14.png";}
-	    description { state: "15" 0.0; inherit: "default" 0.0; image.normal: "ch-15.png";}
-	    description { state: "16" 0.0; inherit: "default" 0.0; image.normal: "ch-16.png";}
-	    description { state: "17" 0.0; inherit: "default" 0.0; image.normal: "ch-17.png";}
-	    description { state: "18" 0.0; inherit: "default" 0.0; image.normal: "ch-18.png";}
-	    description { state: "19" 0.0; inherit: "default" 0.0; image.normal: "ch-19.png";}
-	    description { state: "20" 0.0; inherit: "default" 0.0; image.normal: "ch-20.png";}
-	    description { state: "21" 0.0; inherit: "default" 0.0; image.normal: "ch-21.png";}
-	    description { state: "22" 0.0; inherit: "default" 0.0; image.normal: "ch-22.png";}
-	    description { state: "23" 0.0; inherit: "default" 0.0; image.normal: "ch-23.png";}
-	    description { state: "24" 0.0; inherit: "default" 0.0; image.normal: "ch-24.png";}
-	    description { state: "25" 0.0; inherit: "default" 0.0; image.normal: "ch-25.png";}
-	    description { state: "26" 0.0; inherit: "default" 0.0; image.normal: "ch-26.png";}
-	    description { state: "27" 0.0; inherit: "default" 0.0; image.normal: "ch-27.png";}
-	    description { state: "28" 0.0; inherit: "default" 0.0; image.normal: "ch-28.png";}
-	    description { state: "29" 0.0; inherit: "default" 0.0; image.normal: "ch-29.png";}
-	    description { state: "30" 0.0; inherit: "default" 0.0; image.normal: "ch-30.png";}
-	    description { state: "31" 0.0; inherit: "default" 0.0; image.normal: "ch-31.png";}
-	    description { state: "32" 0.0; inherit: "default" 0.0; image.normal: "ch-32.png";}
-	    description { state: "33" 0.0; inherit: "default" 0.0; image.normal: "ch-33.png";}
-	    description { state: "34" 0.0; inherit: "default" 0.0; image.normal: "ch-34.png";}
-	    description { state: "35" 0.0; inherit: "default" 0.0; image.normal: "ch-35.png";}
-	    description { state: "36" 0.0; inherit: "default" 0.0; image.normal: "ch-36.png";}
-	    description { state: "37" 0.0; inherit: "default" 0.0; image.normal: "ch-37.png";}
-	    description { state: "38" 0.0; inherit: "default" 0.0; image.normal: "ch-38.png";}
-	    description { state: "39" 0.0; inherit: "default" 0.0; image.normal: "ch-39.png";}
-	    description { state: "40" 0.0; inherit: "default" 0.0; image.normal: "ch-40.png";}
-	    description { state: "41" 0.0; inherit: "default" 0.0; image.normal: "ch-41.png";}
-	    description { state: "42" 0.0; inherit: "default" 0.0; image.normal: "ch-42.png";}
-	    description { state: "43" 0.0; inherit: "default" 0.0; image.normal: "ch-43.png";}
-	    description { state: "44" 0.0; inherit: "default" 0.0; image.normal: "ch-44.png";}
-	    description { state: "45" 0.0; inherit: "default" 0.0; image.normal: "ch-45.png";}
-	    description { state: "46" 0.0; inherit: "default" 0.0; image.normal: "ch-46.png";}
-	    description { state: "47" 0.0; inherit: "default" 0.0; image.normal: "ch-47.png";}
-	    description { state: "48" 0.0; inherit: "default" 0.0; image.normal: "ch-48.png";}
-	    description { state: "49" 0.0; inherit: "default" 0.0; image.normal: "ch-49.png";}
-	    description { state: "50" 0.0; inherit: "default" 0.0; image.normal: "ch-50.png";}
-	    description { state: "51" 0.0; inherit: "default" 0.0; image.normal: "ch-51.png";}
-	    description { state: "52" 0.0; inherit: "default" 0.0; image.normal: "ch-52.png";}
-	    description { state: "53" 0.0; inherit: "default" 0.0; image.normal: "ch-53.png";}
-	    description { state: "54" 0.0; inherit: "default" 0.0; image.normal: "ch-54.png";}
-	    description { state: "55" 0.0; inherit: "default" 0.0; image.normal: "ch-55.png";}
-	    description { state: "56" 0.0; inherit: "default" 0.0; image.normal: "ch-56.png";}
-	    description { state: "57" 0.0; inherit: "default" 0.0; image.normal: "ch-57.png";}
-	    description { state: "58" 0.0; inherit: "default" 0.0; image.normal: "ch-58.png";}
-	    description { state: "59" 0.0; inherit: "default" 0.0; image.normal: "ch-59.png";}
-	 }
-	 part { name: "hour";
-	    mouse_events: 0;
-	    description { state: "default" 0.0;
-	       rel1.to: "base"; rel2.to: "base";
-	       image.normal: "cm-00.png";
-	    }
-	    description { state: "00" 0.0; inherit: "default" 0.0; image.normal: "cm-00.png";}
-	    description { state: "01" 0.0; inherit: "default" 0.0; image.normal: "cm-01.png";}
-	    description { state: "02" 0.0; inherit: "default" 0.0; image.normal: "cm-02.png";}
-	    description { state: "03" 0.0; inherit: "default" 0.0; image.normal: "cm-03.png";}
-	    description { state: "04" 0.0; inherit: "default" 0.0; image.normal: "cm-04.png";}
-	    description { state: "05" 0.0; inherit: "default" 0.0; image.normal: "cm-05.png";}
-	    description { state: "06" 0.0; inherit: "default" 0.0; image.normal: "cm-06.png";}
-	    description { state: "07" 0.0; inherit: "default" 0.0; image.normal: "cm-07.png";}
-	    description { state: "08" 0.0; inherit: "default" 0.0; image.normal: "cm-08.png";}
-	    description { state: "09" 0.0; inherit: "default" 0.0; image.normal: "cm-09.png";}
-	    description { state: "10" 0.0; inherit: "default" 0.0; image.normal: "cm-10.png";}
-	    description { state: "11" 0.0; inherit: "default" 0.0; image.normal: "cm-11.png";}
-	    description { state: "12" 0.0; inherit: "default" 0.0; image.normal: "cm-12.png";}
-	    description { state: "13" 0.0; inherit: "default" 0.0; image.normal: "cm-13.png";}
-	    description { state: "14" 0.0; inherit: "default" 0.0; image.normal: "cm-14.png";}
-	    description { state: "15" 0.0; inherit: "default" 0.0; image.normal: "cm-15.png";}
-	    description { state: "16" 0.0; inherit: "default" 0.0; image.normal: "cm-16.png";}
-	    description { state: "17" 0.0; inherit: "default" 0.0; image.normal: "cm-17.png";}
-	    description { state: "18" 0.0; inherit: "default" 0.0; image.normal: "cm-18.png";}
-	    description { state: "19" 0.0; inherit: "default" 0.0; image.normal: "cm-19.png";}
-	    description { state: "20" 0.0; inherit: "default" 0.0; image.normal: "cm-20.png";}
-	    description { state: "21" 0.0; inherit: "default" 0.0; image.normal: "cm-21.png";}
-	    description { state: "22" 0.0; inherit: "default" 0.0; image.normal: "cm-22.png";}
-	    description { state: "23" 0.0; inherit: "default" 0.0; image.normal: "cm-23.png";}
-	    description { state: "24" 0.0; inherit: "default" 0.0; image.normal: "cm-24.png";}
-	    description { state: "25" 0.0; inherit: "default" 0.0; image.normal: "cm-25.png";}
-	    description { state: "26" 0.0; inherit: "default" 0.0; image.normal: "cm-26.png";}
-	    description { state: "27" 0.0; inherit: "default" 0.0; image.normal: "cm-27.png";}
-	    description { state: "28" 0.0; inherit: "default" 0.0; image.normal: "cm-28.png";}
-	    description { state: "29" 0.0; inherit: "default" 0.0; image.normal: "cm-29.png";}
-	    description { state: "30" 0.0; inherit: "default" 0.0; image.normal: "cm-30.png";}
-	    description { state: "31" 0.0; inherit: "default" 0.0; image.normal: "cm-31.png";}
-	    description { state: "32" 0.0; inherit: "default" 0.0; image.normal: "cm-32.png";}
-	    description { state: "33" 0.0; inherit: "default" 0.0; image.normal: "cm-33.png";}
-	    description { state: "34" 0.0; inherit: "default" 0.0; image.normal: "cm-34.png";}
-	    description { state: "35" 0.0; inherit: "default" 0.0; image.normal: "cm-35.png";}
-	    description { state: "36" 0.0; inherit: "default" 0.0; image.normal: "cm-36.png";}
-	    description { state: "37" 0.0; inherit: "default" 0.0; image.normal: "cm-37.png";}
-	    description { state: "38" 0.0; inherit: "default" 0.0; image.normal: "cm-38.png";}
-	    description { state: "39" 0.0; inherit: "default" 0.0; image.normal: "cm-39.png";}
-	    description { state: "40" 0.0; inherit: "default" 0.0; image.normal: "cm-40.png";}
-	    description { state: "41" 0.0; inherit: "default" 0.0; image.normal: "cm-41.png";}
-	    description { state: "42" 0.0; inherit: "default" 0.0; image.normal: "cm-42.png";}
-	    description { state: "43" 0.0; inherit: "default" 0.0; image.normal: "cm-43.png";}
-	    description { state: "44" 0.0; inherit: "default" 0.0; image.normal: "cm-44.png";}
-	    description { state: "45" 0.0; inherit: "default" 0.0; image.normal: "cm-45.png";}
-	    description { state: "46" 0.0; inherit: "default" 0.0; image.normal: "cm-46.png";}
-	    description { state: "47" 0.0; inherit: "default" 0.0; image.normal: "cm-47.png";}
-	    description { state: "48" 0.0; inherit: "default" 0.0; image.normal: "cm-48.png";}
-	    description { state: "49" 0.0; inherit: "default" 0.0; image.normal: "cm-49.png";}
-	    description { state: "50" 0.0; inherit: "default" 0.0; image.normal: "cm-50.png";}
-	    description { state: "51" 0.0; inherit: "default" 0.0; image.normal: "cm-51.png";}
-	    description { state: "52" 0.0; inherit: "default" 0.0; image.normal: "cm-52.png";}
-	    description { state: "53" 0.0; inherit: "default" 0.0; image.normal: "cm-53.png";}
-	    description { state: "54" 0.0; inherit: "default" 0.0; image.normal: "cm-54.png";}
-	    description { state: "55" 0.0; inherit: "default" 0.0; image.normal: "cm-55.png";}
-	    description { state: "56" 0.0; inherit: "default" 0.0; image.normal: "cm-56.png";}
-	    description { state: "57" 0.0; inherit: "default" 0.0; image.normal: "cm-57.png";}
-	    description { state: "58" 0.0; inherit: "default" 0.0; image.normal: "cm-58.png";}
-	    description { state: "59" 0.0; inherit: "default" 0.0; image.normal: "cm-59.png";}
-	 }
-	 part { name: "over";
+         part { name: "minutes-sh";
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               rel1 {
+                  to: "base2";
+                  relative: 0.3125 0.0;
+               }
+               rel2 {
+                  to: "base2";
+                  relative: 0.6875 0.6875;
+               }
+               image.normal: "ch-m2.png";
+               map {
+                  on: 1;
+                  rotation {
+                     center: "base2";
+                  }
+               }
+            }
+         }
+         part { name: "minutes";
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               rel1 {
+                  to: "base";
+                  relative: 0.3125 0.0;
+               }
+               rel2 {
+                  to: "base";
+                  relative: 0.6875 0.6875;
+               }
+               image.normal: "ch-m1.png";
+               map {
+                  on: 1;
+                  rotation {
+                     center: "base";
+                  }
+               }
+            }
+         }
+         part { name: "hour-sh";
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               rel1 {
+                  to: "base2";
+                  relative: 0.3125 0.0;
+               }
+               rel2 {
+                  to: "base2";
+                  relative: 0.6875 0.6875;
+               }
+               image.normal: "ch-h2.png";
+               map {
+                  on: 1;
+                  rotation {
+                     center: "base2";
+                  }
+               }
+            }
+         }
+         part { name: "hour";
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               rel1 {
+                  to: "base";
+                  relative: 0.3125 0.0;
+               }
+               rel2 {
+                  to: "base";
+                  relative: 0.6875 0.6875;
+               }
+               image.normal: "ch-h1.png";
+               map {
+                  on: 1;
+                  rotation {
+                     center: "base";
+                  }
+               }
+            }
+         }
+         part { name: "over";
 	    mouse_events: 0;
 	    description { state: "default" 0.0;
 	       rel1.to: "base"; rel2.to: "base";
