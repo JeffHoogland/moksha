@@ -30,11 +30,6 @@ e_mod_ind_win_new(E_Zone *zone)
    if (!iwin) return NULL;
 
    iwin->zone = zone;
-   
-   /* hook into property change so we can adjust w/ e_scale */
-   iwin->scale_hdl = 
-     ecore_event_handler_add(ECORE_X_EVENT_WINDOW_PROPERTY, 
-                             _e_mod_ind_win_cb_win_prop, iwin);
 
    /* create new window */
    iwin->win = e_win_new(zone->container);
@@ -105,6 +100,11 @@ e_mod_ind_win_new(E_Zone *zone)
    e_gadcon_util_menu_attach_func_set(iwin->gadcon, 
                                       _e_mod_ind_win_cb_menu_items_append, iwin);
    e_gadcon_populate(iwin->gadcon);
+
+   /* hook into property change so we can adjust w/ e_scale */
+   iwin->scale_hdl = 
+     ecore_event_handler_add(ECORE_X_EVENT_WINDOW_PROPERTY, 
+                             _e_mod_ind_win_cb_win_prop, iwin);
 
    /* set minimum size of this window */
    e_win_size_min_set(iwin->win, zone->w, (32 * e_scale));
@@ -180,10 +180,16 @@ _e_mod_ind_win_cb_win_prop(void *data, int type __UNUSED__, void *event)
 
    if (!(iwin = data)) return 1;
    if (ev->win != ecore_x_window_root_get(iwin->win->evas_win)) return 1;
-   if (strcmp(ecore_x_atom_name_get(ev->atom), "ENLIGHTENMENT_SCALE")) return 1;
+   if (strcmp(ecore_x_atom_name_get(ev->atom), "ENLIGHTENMENT_SCALE")) 
+     return 1;
 
    /* set minimum size of this window */
    e_win_size_min_set(iwin->win, iwin->zone->w, (32 * e_scale));
+
+   /* NB: Not sure why, but we need to tell this border to fetch icccm 
+    * size position hints now :( (NOTE: This was not needed a few days ago) 
+    * If we do not do this, than indicator does not change w/ scale anymore */
+   iwin->win->border->client.icccm.fetch.size_pos_hints = 1;
 
    /* resize this window */
    e_win_resize(iwin->win, iwin->zone->w, (32 * e_scale));
