@@ -278,18 +278,26 @@ static void
 _il_home_btn_cb_click(void *data, void *data2) 
 {
    Instance *inst;
+   E_Zone *zone;
+   Ecore_X_Illume_Mode mode;
+   int hcount = 0;
 
    if (!(inst = data)) return;
 
+   /* we need to check current illume mode here first */
+   zone = inst->gcc->gadcon->zone;
+   mode = ecore_x_e_illume_mode_get(zone->black_win);
+
+   if (mode <= ECORE_X_ILLUME_MODE_SINGLE) 
+     hcount = 1;
+   else 
+     hcount = 2;
+
    /* if there are less than 2 home windows, create a new one */
-   if (eina_list_count(inst->wins) < 2) 
+   if (eina_list_count(inst->wins) < hcount) 
      _il_home_win_new(inst);
    else 
      {
-        E_Zone *zone;
-
-        zone = inst->gcc->gadcon->zone;
-
         /* already 2 home windows, so tell illume to focus one */
         ecore_x_e_illume_focus_home_send(zone->black_win);
      }
