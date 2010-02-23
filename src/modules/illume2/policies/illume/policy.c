@@ -1294,10 +1294,20 @@ _policy_zone_layout(E_Zone *zone)
 void 
 _policy_zone_move_resize(E_Zone *zone) 
 {
+   Eina_List *l;
+   E_Border *bd;
+
 //   printf("Zone move resize\n");
 
-   /* zone size or position changed, tell layout to update */
-   _policy_zone_layout(zone);
+   EINA_LIST_FOREACH(e_border_client_list(), l, bd) 
+     {
+        /* skip borders not on this zone */
+        if (bd->zone != zone) continue;
+
+        /* signal a changed pos here so layout gets updated */
+        bd->changes.pos = 1;
+        bd->changed = 1;
+     }
 }
 
 void 
