@@ -432,8 +432,6 @@ _e_mod_policy_cb_client_message(void *data __UNUSED__, int type __UNUSED__, void
         if ((_policy) && (_policy->funcs.drag_end))
           _policy->funcs.drag_end(bd);
      }
-//   else
-//     printf("Client Message: %s\n", ecore_x_atom_name_get(ev->message_type));
 
    return 1;
 }

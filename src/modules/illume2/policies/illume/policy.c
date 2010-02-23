@@ -230,9 +230,7 @@ _policy_zone_layout_update(E_Zone *zone)
         if (bd->zone != zone) continue;
 
         /* skip special windows */
-        /* NB: We trigger a layout update on indicator windows so that 
-         * quickpanel position gets updated so don't include indicators here */
-//        if (e_illume_border_is_indicator(bd)) continue;
+        if (e_illume_border_is_indicator(bd)) continue;
         if (e_illume_border_is_softkey(bd)) continue;
         if (e_illume_border_is_keyboard(bd)) continue;
         if (e_illume_border_is_quickpanel(bd)) continue;
@@ -1268,7 +1266,7 @@ _policy_zone_layout(E_Zone *zone)
 void 
 _policy_zone_move_resize(E_Zone *zone) 
 {
-   printf("Zone move resize\n");
+//   printf("Zone move resize\n");
 
    /* zone size or position changed, tell layout to update */
    _policy_zone_layout(zone);
@@ -1281,7 +1279,7 @@ _policy_zone_mode_change(E_Zone *zone, Ecore_X_Atom mode)
    E_Border *bd;
    int count;
 
-//   printf("Zone mode change\n");
+//   printf("Zone mode change: %d\n", zone->id);
 
    /* get the config for this zone */
    cz = e_illume_zone_config_get(zone->id);
@@ -1573,7 +1571,7 @@ _policy_property_change(Ecore_X_Event_Window_Property *event)
              ecore_x_e_illume_softkey_geometry_set(bd->client.win, x, y, w, h);
           }
      }
-   else if (!(strcmp(ecore_x_atom_name_get(event->atom), "ENLIGHTENMENT_SCALE"))) 
+   else if (!strcmp(ecore_x_atom_name_get(event->atom), "ENLIGHTENMENT_SCALE")) 
      {
         Eina_List *ml;
         E_Manager *man;
