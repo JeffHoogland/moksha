@@ -129,8 +129,16 @@ struct _E_Illume_Keyboard
 # define E_ILLUME_POLICY_API_VERSION 2
 
 /**
+ * @typedef E_Illume_Policy_Api
+ * @brief structure for policy API.
+ * 
+ * @ingroup E_Illume_Policy_Group
+ */
+typedef struct _E_Illume_Policy_Api E_Illume_Policy_Api;
+
+/**
  * @struct E_Illume_Policy_Api
- * @brief structure for policy api
+ * @brief structure for policy API.
  * 
  * When Illume tries to load a policy, it will check for the existince of 
  * this structure. If it is not found, the policy will fail to load.
@@ -139,7 +147,6 @@ struct _E_Illume_Keyboard
  * 
  * @ingroup E_Illume_Policy_Group
  */
-typedef struct _E_Illume_Policy_Api E_Illume_Policy_Api;
 struct _E_Illume_Policy_Api 
 {
    /**< The version of this policy. */
@@ -160,6 +167,15 @@ struct _E_Illume_Policy_Api
  * @ingroup E_Illume_Policy_Group
  */
 typedef struct _E_Illume_Policy E_Illume_Policy;
+
+/**
+ * @struct E_Illume_Policy
+ * @brief structure for policy
+ * 
+ * This structure actually holds the policy functions to call.
+ * 
+ * @ingroup E_Illume_Policy_Group
+ */
 struct _E_Illume_Policy 
 {
    E_Object e_obj_inherit;
@@ -230,6 +246,13 @@ struct _E_Illume_Policy
  * @ingroup E_Illume_Config_Group
  */
 typedef struct _E_Illume_Config E_Illume_Config;
+
+/**
+ * @struct E_Illume_Config
+ * @brief structure for Illume configuration.
+ * 
+ * @ingroup E_Illume_Config_Group
+ */
 struct _E_Illume_Config 
 {
    int version;
@@ -266,6 +289,13 @@ struct _E_Illume_Config
  * @ingroup E_Illume_Config_Group
  */
 typedef struct _E_Illume_Config_Zone E_Illume_Config_Zone;
+
+/**
+ * @struct E_Illume_Config_Zone
+ * @brief structure for Illume zone configuration.
+ * 
+ * @ingroup E_Illume_Config_Group
+ */
 struct _E_Illume_Config_Zone 
 {
    int id; /**< Id of the Zone that this config belongs to. */
@@ -295,6 +325,13 @@ struct _E_Illume_Config_Zone
  * @ingroup E_Illume_Quickpanel_Group
  */
 typedef struct _E_Illume_Quickpanel E_Illume_Quickpanel;
+
+/**
+ * @struct E_Illume_Quickpanel
+ * @brief structure for Illume Quickpanels.
+ * 
+ * @ingroup E_Illume_Quickpanel_Group
+ */
 struct _E_Illume_Quickpanel 
 {
    E_Object e_obj_inherit;
