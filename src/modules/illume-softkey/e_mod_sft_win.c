@@ -4,9 +4,7 @@
 
 /* local function prototypes */
 static void _e_mod_sft_win_cb_free(Sft_Win *swin);
-static void _e_mod_sft_win_cb_hook_eval_end(void *data, void *data2);
 static int _e_mod_sft_win_cb_win_prop(void *data, int type __UNUSED__, void *event);
-static int _e_mod_sft_win_cb_client_message(void *data, int type __UNUSED__, void *event);
 static void _e_mod_sft_win_cb_resize(E_Win *win);
 static void _e_mod_sft_win_create_default_buttons(Sft_Win *swin);
 static void _e_mod_sft_win_cb_close(void *data, void *data2 __UNUSED__);
@@ -23,22 +21,11 @@ e_mod_sft_win_new(E_Zone *zone)
    if (!swin) return NULL;
 
    swin->zone = zone;
-
-   /* hook into eval so we can set the softkey on the correct zone
-   swin->hook = e_border_hook_add(E_BORDER_HOOK_EVAL_END, 
-                                  _e_mod_sft_win_cb_hook_eval_end, swin);
-*/
    
    /* hook into property change so we can adjust w/ e_scale */
    swin->scale_hdl = 
      ecore_event_handler_add(ECORE_X_EVENT_WINDOW_PROPERTY, 
                              _e_mod_sft_win_cb_win_prop, swin);
-
-   /* hook into client messages
-   swin->msg_hdl = 
-     ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE, 
-                             _e_mod_sft_win_cb_client_message, swin);
-    */
 
    /* create new window */
    swin->win = e_win_new(zone->container);
@@ -159,38 +146,6 @@ _e_mod_sft_win_cb_free(Sft_Win *swin)
    E_FREE(swin);
 }
 
-static void 
-_e_mod_sft_win_cb_hook_eval_end(void *data, void *data2) 
-{
-   Sft_Win *swin;
-   E_Border *bd;
-
-   if (!(swin = data)) return;
-   if (!(bd = data2)) return;
-   if (bd != swin->win->border) return;
-
-   /* check border position and size */
-   if (bd->x != swin->zone->x) 
-     {
-        bd->x = swin->zone->x;
-        bd->changes.pos = 1;
-     }
-   if (bd->y != ((swin->zone->y + swin->zone->h) - bd->h)) 
-     {
-        bd->y = ((swin->zone->y + swin->zone->h) - bd->h);
-        bd->changes.pos = 1;
-     }
-   if (bd->w != swin->zone->w) 
-     {
-        bd->w = swin->zone->w;
-        bd->changes.size = 1;
-     }
-   if ((bd->changes.pos) || (bd->changes.size)) bd->changed = 1;
-
-   /* if zone is not correct, set it */
-   if (bd->zone != swin->zone) e_border_zone_set(bd, swin->zone);
-}
-
 static int 
 _e_mod_sft_win_cb_win_prop(void *data, int type __UNUSED__, void *event) 
 {
@@ -206,6 +161,11 @@ _e_mod_sft_win_cb_win_prop(void *data, int type __UNUSED__, void *event)
    /* set minimum size of this window */
    e_win_size_min_set(swin->win, swin->zone->w, (32 * e_scale));
 
+   /* NB: Not sure why, but we need to tell this border to fetch icccm 
+    * size position hints now :( (NOTE: This was not needed a few days ago) 
+    * If we do not do this, than softkey does not change w/ scale anymore */
+   swin->win->border->client.icccm.fetch.size_pos_hints = 1;
+
    /* resize this window */
    e_win_resize(swin->win, swin->zone->w, (32 * e_scale));
 
@@ -213,18 +173,6 @@ _e_mod_sft_win_cb_win_prop(void *data, int type __UNUSED__, void *event)
    ecore_x_e_illume_softkey_geometry_set(swin->zone->black_win, 
                                          swin->win->x, swin->win->y, 
                                          swin->win->w, (32 * e_scale));
-   return 1;
-}
-
-static int 
-_e_mod_sft_win_cb_client_message(void *data, int type __UNUSED__, void *event) 
-{
-   Sft_Win *swin;
-   Ecore_X_Event_Client_Message *ev;
-
-   ev = event;
-   if (!(swin = data)) return 1;
-   if (ev->win != swin->zone->black_win) return 1;
    return 1;
 }
 
