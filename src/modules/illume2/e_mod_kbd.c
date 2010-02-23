@@ -17,6 +17,7 @@ static int _e_mod_kbd_cb_animate(void *data __UNUSED__);
 static E_Illume_Keyboard *_e_mod_kbd_by_border_get(E_Border *bd);
 static void _e_mod_kbd_border_adopt(E_Border *bd);
 static void _e_mod_kbd_layout_send(void);
+static void _e_mod_kbd_geometry_send(void);
 
 /* local variables */
 static Eina_List *_kbd_hdls = NULL;
@@ -519,6 +520,7 @@ _e_mod_kbd_cb_animate(void *data __UNUSED__)
           _e_illume_kbd->visible = 1;
 
         _e_mod_kbd_layout_send();
+        _e_mod_kbd_geometry_send();
 
         /* tell the focused border it changed so layout gets udpated */
         if (_focused_border) 
@@ -610,4 +612,26 @@ _e_mod_kbd_layout_send(void)
      }
    if (_e_illume_kbd->border) 
      ecore_x_e_virtual_keyboard_state_send(_e_illume_kbd->border->client.win, type);
+}
+
+static void 
+_e_mod_kbd_geometry_send(void) 
+{
+   E_Zone *zone;
+   int y = 0;
+
+   /* make sure we have a keyboard border */
+   if (!_e_illume_kbd->border) return;
+
+   /* adjust Y for keyboard visibility */
+   if (_e_illume_kbd->border->fx.y <= 0) 
+     y = _e_illume_kbd->border->y;
+
+   if (_focused_border) zone = _focused_border->zone;
+   else zone = _e_illume_kbd->border->zone;
+
+   ecore_x_e_illume_keyboard_geometry_set(zone->black_win, 
+                                          _e_illume_kbd->border->x, y, 
+                                          _e_illume_kbd->border->w, 
+                                          _e_illume_kbd->border->h);
 }

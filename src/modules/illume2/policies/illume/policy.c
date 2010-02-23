@@ -1591,6 +1591,31 @@ _policy_property_change(Ecore_X_Event_Window_Property *event)
              ecore_x_e_illume_softkey_geometry_set(bd->client.win, x, y, w, h);
           }
      }
+   else if (event->atom == ECORE_X_ATOM_E_ILLUME_KEYBOARD_GEOMETRY) 
+     {
+        Eina_List *l;
+        E_Zone *zone;
+        E_Border *bd;
+        int x, y, w, h;
+
+        /* make sure this property changed on a zone */
+        if (!(zone = e_util_zone_window_find(event->win))) return;
+
+        /* get the geometry. This is X round-trip :( */
+        ecore_x_e_illume_keyboard_geometry_get(zone->black_win, &x, &y, &w, &h);
+
+        /* look for conformant borders */
+        EINA_LIST_FOREACH(e_border_client_list(), l, bd) 
+          {
+             if (bd->zone != zone) continue;
+             if (!e_illume_border_is_conformant(bd)) continue;
+             /* set keyboard geometry on conformant window */
+             /* NB: This is needed so that conformant apps get told about 
+              * the keyboard size/position...else they have no way of 
+              * knowing that the geometry has been updated */
+             ecore_x_e_illume_keyboard_geometry_set(bd->client.win, x, y, w, h);
+          }
+     }
    else if (!strcmp(ecore_x_atom_name_get(event->atom), "ENLIGHTENMENT_SCALE")) 
      {
         Eina_List *ml;
