@@ -21,6 +21,7 @@ e_modapi_init(E_Module *m)
 {
    Eina_List *ml;
    E_Manager *man;
+   int zcount = 0;
 
    /* set module priority so we load first */
    e_module_priority_set(m, 100);
@@ -66,7 +67,10 @@ e_modapi_init(E_Module *m)
      {
         Eina_List *cl;
         E_Container *con;
+        Ecore_X_Window *zones;
 
+        zcount = 0;
+        zones = calloc(1, sizeof(Ecore_X_Window));
         EINA_LIST_FOREACH(man->containers, cl, con) 
           {
              Eina_List *zl;
@@ -76,6 +80,15 @@ e_modapi_init(E_Module *m)
                {
                   E_Illume_Quickpanel *qp;
 
+                  /* set zone window in list of zones */
+                  zones[zcount] = zone->black_win;
+
+                  /* increment zone count */
+                  zcount++;
+
+                  /* allocate more space for zones */
+                  zones = realloc(zones, (zcount * sizeof(Ecore_X_Window)));
+
                   /* try to create a new quickpanel for this zone */
                   if (!(qp = e_mod_quickpanel_new(zone))) continue;
 
@@ -83,6 +96,13 @@ e_modapi_init(E_Module *m)
                   _e_illume_qps = eina_list_append(_e_illume_qps, qp);
                }
           }
+        /* set the zone list on this root. This is needed for some 
+         * elm apps like elm_indicator so that they know how many 
+         * indicators to create at startup */
+        ecore_x_e_illume_zone_list_set(man->root, zones, zcount);
+
+        /* free zones variable */
+        free(zones);
      }
 
    return m;

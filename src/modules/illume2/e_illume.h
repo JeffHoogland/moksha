@@ -153,6 +153,7 @@ typedef struct _E_Illume_Policy_Api
    /**< The label of this policy. */
 } E_Illume_Policy_Api;
 
+
 typedef struct _E_Illume_Policy E_Illume_Policy;
 
 /**
