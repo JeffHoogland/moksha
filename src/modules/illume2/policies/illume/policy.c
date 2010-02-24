@@ -254,7 +254,7 @@ _policy_zone_layout_indicator(E_Border *bd, E_Illume_Config_Zone *cz)
    e_illume_border_min_get(bd, NULL, &cz->indicator.size);
 
    /* no point in doing anything here if indicator is hidden */
-   if (!bd->visible) return;
+   if ((!bd->new_client) && (!bd->visible)) return;
 
    /* if we are dragging, then skip it for now */
    if (bd->client.illume.drag.drag) 
@@ -356,7 +356,7 @@ _policy_zone_layout_softkey(E_Border *bd, E_Illume_Config_Zone *cz)
     * that it is already in this position...but it's actually not. 
     * So for now, just disable the ny check until this gets sorted out */
 //   if ((bd->x != bd->zone->x) || (bd->y != ny))
-   _policy_border_move(bd, bd->zone->x, ny);
+     _policy_border_move(bd, bd->zone->x, ny);
 
    /* set layer if needed */
    if (bd->layer != POL_SOFTKEY_LAYER) 
