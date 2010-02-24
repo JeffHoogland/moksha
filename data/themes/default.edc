@@ -9841,10 +9841,10 @@ collections { /* begin the collection of edje groups that are in this file */
             set_state(PART:"minutes-sh", "custom", 0.0);
             
             custom_state(PART:"hour", "default", 0.0);
-            set_state_val(PART:"hour", STATE_MAP_ROT_Z, (hour * 360.0) / 12.0);
+            set_state_val(PART:"hour", STATE_MAP_ROT_Z, ((hour + minute / 60.0) * 360.0) / 12.0);
             set_state(PART:"hour", "custom", 0.0);
             custom_state(PART:"hour-sh", "default", 0.0);
-            set_state_val(PART:"hour-sh", STATE_MAP_ROT_Z, (hour * 360.0) / 12.0);
+            set_state_val(PART:"hour-sh", STATE_MAP_ROT_Z, ((hour + minute / 60.0) * 360.0) / 12.0);
             set_state(PART:"hour-sh", "custom", 0.0);
 	 }
       }
