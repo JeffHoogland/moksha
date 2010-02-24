@@ -1462,7 +1462,13 @@ _policy_focus_back(E_Zone *zone)
      {
         E_Border *fbd;
 
-        if (fbd = fl->data) _policy_border_set_focus(fbd);
+        if (fbd = fl->data) 
+          {
+             if (fbd == e_border_focused_get()) 
+               _policy_focus_home(zone);                  
+             else
+               _policy_border_set_focus(fbd);
+          }
 
         /* cleanup our list variable */
         fl = eina_list_free(fl);
@@ -1475,13 +1481,27 @@ _policy_focus_back(E_Zone *zone)
     * border first....saves time and iterations */
    EINA_LIST_REVERSE_FOREACH(fl, l, bd) 
      {
+        /* if no border is currently focused, then set focus to first in list 
+         * and get out */
+        if (!e_border_focused_get()) 
+          {
+             /* focus the previous border */
+             _policy_border_set_focus(bd);
+             break;
+          }
+
         /* is this the currently focused border ? */
-        if (bd == e_border_focused_get()) 
+        else if (bd == e_border_focused_get()) 
           {
              E_Border *fbd;
 
              /* see if we have another border previous to this one */
-             if (!(fbd = fl->next->data)) continue;
+             if (!(fbd = fl->next->data)) 
+               {
+                  /* if we don't, send focus to home */
+                  _policy_focus_home(zone);
+                  break;
+               }
 
              /* focus the previous border */
              _policy_border_set_focus(fbd);
@@ -1510,8 +1530,9 @@ _policy_focus_home(E_Zone *zone)
    if (!(bd = e_illume_border_home_get(zone))) return;
 
    if (!bd->visible) e_border_show(bd);
+   e_border_raise(bd);
 
-   _policy_border_set_focus(bd);
+//   _policy_border_set_focus(bd);
 }
 
 void 
