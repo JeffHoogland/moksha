@@ -907,7 +907,7 @@ e_illume_border_home_borders_get(E_Zone *zone)
  * Retrieve the Illume Quickpanel on a given zone.
  * 
  * @param zone The zone on which to retrieve the Quickpanel.
- * @return The Quickpanel on this zone, or NULL if none exists.
+ * @return The @ref E_Illume_Quickpanel on this zone, or NULL if none exists.
  * 
  * @note If @p zone is NULL then this function will return NULL.
  * 
