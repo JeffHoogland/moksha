@@ -153,6 +153,8 @@ typedef struct _E_Illume_Policy_Api
    /**< The label of this policy. */
 } E_Illume_Policy_Api;
 
+typedef struct _E_Illume_Policy E_Illume_Policy;
+
 /**
  * @brief structure for policy
  * 
@@ -161,7 +163,7 @@ typedef struct _E_Illume_Policy_Api
  * 
  * @ingroup E_Illume_Policy_Group
  */
-typedef struct _E_Illume_Policy 
+struct _E_Illume_Policy 
 {
    E_Object e_obj_inherit;
 
@@ -262,7 +264,7 @@ typedef struct _E_Illume_Policy
         /**< pointer to the function that Illume will call when properties 
          * change on a window. @note This function is optional. */
      } funcs;
-} E_Illume_Policy;
+};
 
 /**
  * @defgroup E_Illume_Config_Group Illume Configuration Information
