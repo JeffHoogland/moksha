@@ -1,10 +1,10 @@
 #include "e.h"
 
-static void        *_create_data(E_Config_Dialog *cfd);
-static void        _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static int         _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static void *_create_data(E_Config_Dialog *cfd);
+static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static int         _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 
 struct _E_Config_Dialog_Data 
@@ -134,7 +134,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    of = e_widget_framelist_add(evas, _("General Settings"), 0);
    ob = e_widget_label_add(evas, _("Framerate"));
    e_widget_framelist_object_append(of, ob);   
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f fps"), 5.0, 240.0, 1.0, 0, &(cfdata->framerate), NULL, 150);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f fps"), 5.0, 200.0, 1.0, 0, &(cfdata->framerate), NULL, 150);
    e_widget_framelist_object_append(of, ob);
 
    ob = e_widget_label_add(evas, _("Application Priority"));
@@ -168,7 +168,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);   
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f collections"), 0, 512, 1, 0, NULL, &(cfdata->edje_collection_cache), 150);
    e_widget_framelist_object_append(of, ob);
-   
+
    e_widget_list_object_append(o, of, 1, 1, 0.5);   
    return o;
 }
