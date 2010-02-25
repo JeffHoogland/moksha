@@ -1068,7 +1068,7 @@ _policy_border_activate(E_Border *bd)
 
    /* set very high layer for this window as it needs attention and thus 
     * should show above everything */
-   e_border_layer_set(bd, 250);
+   e_border_layer_set(bd, POL_ACTIVATE_LAYER);
 
    /* if we can raise the border do it */
    if (!bd->lock_user_stacking) e_border_raise(bd);
