@@ -416,8 +416,8 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
 {
    E_Update_Rect *r;
    int i;
-   
-   ecore_x_grab();
+
+   if (_comp_mod->conf->grab) ecore_x_grab();
    cw->update = 0;
    
    if (cw->argb)
@@ -504,7 +504,7 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
      }
    if (!((cw->pw > 0) && (cw->ph > 0)))
      {
-        ecore_x_ungrab();
+        if (_comp_mod->conf->grab) ecore_x_ungrab();
         return;
      }
 
@@ -627,7 +627,7 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
         if (cw->shaped) evas_object_hide(cw->shobj);
      }
 
-   ecore_x_ungrab();
+   if (_comp_mod->conf->grab) ecore_x_ungrab();
 }
 
 static void
@@ -683,6 +683,7 @@ _e_mod_comp_cb_update(E_Comp *c)
      {  
         EINA_LIST_FREE(update_done, cw)
           {
+             printf("inc counter %i\n", cw->counter);
              ecore_x_sync_counter_inc(cw->counter, 1);
           }
      }
@@ -853,7 +854,7 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
    cw->win = win;
    cw->c = c;
    cw->bd = e_border_find_by_window(cw->win);
-   ecore_x_grab();
+   if (_comp_mod->conf->grab) ecore_x_grab();
    if (cw->bd)
      {
         eina_hash_add(borders, e_util_winid_str_get(cw->bd->client.win), cw);
@@ -895,7 +896,7 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
    if (!ecore_x_window_attributes_get(cw->win, &att))
      {
         free(cw);
-        ecore_x_ungrab();
+        if (_comp_mod->conf->grab) ecore_x_ungrab();
         return NULL;
      }
    if ((!att.input_only) && 
@@ -968,7 +969,7 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
         cw->dmg_updates = 0;
      }
    DBG("  [0x%x] add\n", cw->win);
-   ecore_x_ungrab();
+   if (_comp_mod->conf->grab) ecore_x_ungrab();
    return cw;
 }
 
@@ -1177,11 +1178,6 @@ _e_mod_comp_win_hide(E_Comp_Win *cw)
      {
         ecore_timer_del(cw->update_timeout);
         cw->update_timeout = NULL;
-     }
-   if (_comp_mod->conf->efl_sync)
-     {
-        if ((cw->bd) && (cw->counter))
-          ecore_x_e_comp_sync_end_send(cw->bd->client.win);
      }
    evas_object_hide(cw->obj);
    if (cw->shobj) evas_object_hide(cw->shobj);
