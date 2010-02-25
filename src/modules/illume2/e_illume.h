@@ -34,7 +34,7 @@
  * @file e_illume.h
  * 
  * This header provides the various defines, structures and functions that 
- * make writing illume policies easier.
+ * make writing Illume policies easier.
  * 
  * For details on the available functions, see @ref E_Illume_Main_Group.
  * 
@@ -117,13 +117,14 @@ typedef struct _E_Illume_Keyboard
  * Policy.
  * 
  * @warning There are some requirements that every policy must implement and 
- * some things are optional. Please reference @ref E_Illume_Policy structure 
- * for the requirements.
+ * some things are optional. Please reference the E_Illume_Policy structure 
+ * for requirements.
  */
 
 /**
  * @def E_ILLUME_POLICY_API_VERSION
- * @brief Current version of the Policy API that is supported by the Illume module.
+ * @brief Current version of the Policy API that is supported by the Illume 
+ * module.
  * 
  * @warning Policies not written to match this version will fail to load.
  * 
@@ -179,11 +180,15 @@ struct _E_Illume_Policy
      {
         void *(*init) (E_Illume_Policy *p);
         /**< pointer to the function that Illume will call to initialize this 
-         * policy. @warning Policies are required to implement this function. */
+         * policy. Typically, a policy would set the pointers to the functions 
+         * that it supports in here.
+         * @warning Policies are required to implement this function. */
 
         int (*shutdown) (E_Illume_Policy *p);
         /**< pointer to the function that Illume will call to shutdown this 
-         * policy. @warning Policies are required to implement this function. */
+         * policy. Typically, a policy would do any cleanup that it needs to 
+         * do in here.
+         * @warning Policies are required to implement this function. */
 
         void (*border_add) (E_Border *bd);
         /**< pointer to the function that Illume will call when a new border 
@@ -287,15 +292,20 @@ typedef struct _E_Illume_Config
         struct 
           {
              int duration;
+             /**< integer specifying the amount of time it takes for an 
+              * animation to complete. */
           } vkbd, quickpanel;
      } animation;
 
    struct 
      {
         const char *name;
+        /**< the name of the currently active/selected policy. */
         struct 
           {
-             const char *class, *name, *title;
+             const char *class;
+             const char *name;
+             const char *title;
              int type;
              struct 
                {
@@ -316,7 +326,8 @@ typedef struct _E_Illume_Config_Zone
    int id;
    struct 
      {
-        int dual, side;
+        int dual;
+        int side;
      } mode;
 
    /* NB: These are not configurable by user...just placeholders */
