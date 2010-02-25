@@ -699,6 +699,24 @@ _e_mod_comp_cb_update(E_Comp *c)
    c->updates = new_updates;
    c->render_overflow--;
    c->update_job = NULL;
+   
+     {
+        static double t0 = 0.0;
+        double td, t;
+        
+        t = ecore_time_get();
+        td = t - t0;
+        if (td > 0.0)
+          {
+             int fps, i;
+             
+             fps = 1.0 / td;
+             for (i = 0; i < fps; i+= 2) putchar('=');
+             printf(" : %3.3f\n", 1.0 / td);
+          }
+        t0 = t;
+     }
+   
    if (c->render_overflow == 0)
      {
         if (c->render_animator) c->render_animator = NULL;

@@ -55,8 +55,12 @@ EAPI void e_hints_openoffice_kde_fake(Ecore_X_Window root);
 
 EAPI void e_hints_scale_update(void);
 
-extern EAPI Ecore_X_Atom _QTOPIA_SOFT_MENU;
-extern EAPI Ecore_X_Atom _QTOPIA_SOFT_MENUS;
+extern EAPI Ecore_X_Atom ATM__QTOPIA_SOFT_MENU;
+extern EAPI Ecore_X_Atom ATM__QTOPIA_SOFT_MENUS;
+extern EAPI Ecore_X_Atom ATM_GNOME_SM_PROXY;
+extern EAPI Ecore_X_Atom ATM_ENLIGHTENMENT_COMMS;
+extern EAPI Ecore_X_Atom ATM_ENLIGHTENMENT_VERSION;
+extern EAPI Ecore_X_Atom ATM_ENLIGHTENMENT_SCALE;
 
 #endif
 #endif

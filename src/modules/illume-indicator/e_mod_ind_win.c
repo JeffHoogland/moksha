@@ -179,9 +179,8 @@ _e_mod_ind_win_cb_win_prop(void *data, int type __UNUSED__, void *event)
    ev = event;
 
    if (!(iwin = data)) return 1;
-   if (ev->win != ecore_x_window_root_get(iwin->win->evas_win)) return 1;
-   if (strcmp(ecore_x_atom_name_get(ev->atom), "ENLIGHTENMENT_SCALE")) 
-     return 1;
+   if (ev->win != iwin->win->container->manager->root) return 1;
+   if (ev->atom != ATM_ENLIGHTENMENT_SCALE) return 1;
 
    /* set minimum size of this window */
    e_win_size_min_set(iwin->win, iwin->zone->w, (32 * e_scale));

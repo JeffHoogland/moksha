@@ -897,8 +897,7 @@ _il_home_cb_prop_change(void *data, int type, void *event)
    ev = event;
    if (!(inst = data)) return 1;
 //   if (ev->win != ecore_x_window_root_first_get()) return 1;
-   if (strcmp(ecore_x_atom_name_get(ev->atom), "ENLIGHTENMENT_SCALE")) 
-     return 1;
+   if (ev->atom != ATM_ENLIGHTENMENT_SCALE) return 1;
 
    EINA_LIST_FOREACH(inst->wins, l, hwin) 
      if (hwin->o_fm) 

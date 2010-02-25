@@ -1650,7 +1650,7 @@ _policy_property_change(Ecore_X_Event_Window_Property *event)
              ecore_x_e_illume_keyboard_geometry_set(bd->client.win, x, y, w, h);
           }
      }
-   else if (!strcmp(ecore_x_atom_name_get(event->atom), "ENLIGHTENMENT_SCALE")) 
+   else if (event->atom == ATM_ENLIGHTENMENT_SCALE)
      {
         Eina_List *ml;
         E_Manager *man;

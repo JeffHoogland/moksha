@@ -763,7 +763,9 @@ _e_drag_update(Ecore_X_Window root, int x, int y, Ecore_X_Atom action)
 	  {
 	     /* A little bit of caching to avoid trips to X. */
 	     cache.win = root;
-	     cache.root = ecore_x_window_root_get(root);
+// wtf - get root of root window? pointless!             
+//	     cache.root = ecore_x_window_root_get(root);
+	     cache.root = root;
 	  }
 	win = ecore_x_window_shadow_tree_at_xy_with_skip_get(cache.root, x, y, ignore_win, 2);
 //	win = ecore_x_window_at_xy_with_skip_get(x, y, ignore_win, 2);
