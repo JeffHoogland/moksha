@@ -1437,7 +1437,7 @@ group "E_Config" struct {
     value "scale.use_dpi" uchar: 1;
     value "scale.use_custom" uchar: 0;
     value "show_cursor" uchar: 1;
-    value "idle_cursor" uchar: 1;
+    value "idle_cursor" uchar: 0;
     value "default_system_menu" string: "/etc/xdg/menus/gnome-applications.menu";
     value "cfgdlg_normal_wins" uchar: 1;
     value "syscon.main.icon_size" int: 64;
