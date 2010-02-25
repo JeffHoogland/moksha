@@ -45,50 +45,50 @@ struct _E_Comp_Win
 {
    EINA_INLIST;
    
-   E_Comp         *c; // parent compositor
-   Ecore_X_Window  win; // raw window - for menus etc.
-   E_Border       *bd; // if its a border - later
-   E_Popup        *pop; // if its a popup - later
-   E_Menu         *menu; // if it is a menu - later
-   int             x, y, w, h; // geometry
-   int             pw, ph; // pixmap w/h
-   int             border; // border width
-   Ecore_X_Pixmap  pixmap; // the compositing pixmap
-   Ecore_X_Damage  damage; // damage region
-   Ecore_X_Visual  vis; // window visual
-   int             depth; // window depth
-   Evas_Object    *obj; // composite object
-   Evas_Object    *shobj; // shadow object
-   Ecore_X_Image  *xim; // x image - software fallback
-   E_Update       *up; // update handler
-   E_Object_Delfn *dfn; // delete function handle for objects being tracked
-   Ecore_X_Sync_Counter counter; // sync counter for syncronised drawing
-   Ecore_Timer    *update_timeout; // max time between damage and "done" event
-   int             dmg_updates; // num of damage event updates since a redirect
-   Ecore_X_Rectangle *rects; // shape rects... if shaped :(
-   int                rects_num; // num rects above
+   E_Comp               *c; // parent compositor
+   Ecore_X_Window        win; // raw window - for menus etc.
+   E_Border             *bd; // if its a border - later
+   E_Popup              *pop; // if its a popup - later
+   E_Menu               *menu; // if it is a menu - later
+   int                   x, y, w, h; // geometry
+   int                   pw, ph; // pixmap w/h
+   int                   border; // border width
+   Ecore_X_Pixmap        pixmap; // the compositing pixmap
+   Ecore_X_Damage        damage; // damage region
+   Ecore_X_Visual        vis; // window visual
+   int                   depth; // window depth
+   Evas_Object          *obj; // composite object
+   Evas_Object          *shobj; // shadow object
+   Ecore_X_Image        *xim; // x image - software fallback
+   E_Update             *up; // update handler
+   E_Object_Delfn       *dfn; // delete function handle for objects being tracked
+   Ecore_X_Sync_Counter  counter; // sync counter for syncronised drawing
+   Ecore_Timer          *update_timeout; // max time between damage and "done" event
+   int                   dmg_updates; // num of damage event updates since a redirect
+   Ecore_X_Rectangle    *rects; // shape rects... if shaped :(
+   int                   rects_num; // num rects above
    
-   Eina_List      *effects; // list of effects attached to this window currently
+   Eina_List            *effects; // list of effects attached to this window currently
 
-   Ecore_X_Pixmap  cache_pixmap; // the cached pixmap (1/nth the dimensions)
-   int             cache_w, cache_h; // cached pixmap size
-   int             update_count; // how many updates have happend to this win
-   double          last_visible_time; // last time window was visible
-   double          last_draw_time; // last time window was damaged
+   Ecore_X_Pixmap        cache_pixmap; // the cached pixmap (1/nth the dimensions)
+   int                   cache_w, cache_h; // cached pixmap size
+   int                   update_count; // how many updates have happend to this win
+   double                last_visible_time; // last time window was visible
+   double                last_draw_time; // last time window was damaged
    
-   Eina_Bool       visible : 1; // is visible
-   Eina_Bool       input_only : 1; // is input_only
-   Eina_Bool       override : 1; // is override-redirect
-   Eina_Bool       argb : 1; // is argb
-   Eina_Bool       shaped : 1; // is shaped
-   Eina_Bool       update : 1; // has updates to fetch
-   Eina_Bool       redirected : 1; // has updates to fetch
-   Eina_Bool       shape_changed : 1; // shape changed
-   Eina_Bool       native : 1; // native
-   Eina_Bool       drawme : 1; // drawme flag fo syncing rendering
-   Eina_Bool       invalid : 1; // invalid depth used - just use as marker
-   Eina_Bool       defer_hide : 1; // flag to get hide to work on deferred hide
-   Eina_Bool       delete_me : 1;
+   Eina_Bool             visible : 1; // is visible
+   Eina_Bool             input_only : 1; // is input_only
+   Eina_Bool             override : 1; // is override-redirect
+   Eina_Bool             argb : 1; // is argb
+   Eina_Bool             shaped : 1; // is shaped
+   Eina_Bool             update : 1; // has updates to fetch
+   Eina_Bool             redirected : 1; // has updates to fetch
+   Eina_Bool             shape_changed : 1; // shape changed
+   Eina_Bool             native : 1; // native
+   Eina_Bool             drawme : 1; // drawme flag fo syncing rendering
+   Eina_Bool             invalid : 1; // invalid depth used - just use as marker
+   Eina_Bool             defer_hide : 1; // flag to get hide to work on deferred hide
+   Eina_Bool             delete_me : 1; // delete me!
 };
 
 static Eina_List *handlers = NULL;
@@ -651,6 +651,7 @@ _e_mod_comp_cb_update(E_Comp *c)
    E_Comp_Win *cw;
    Eina_List *new_updates = NULL; // for failed pixmap fetches - get them next frame
    Eina_List *update_done = NULL;
+   static int doframeinfo = -1;
 
    if (_comp_mod->conf->grab)
      {
@@ -700,6 +701,12 @@ _e_mod_comp_cb_update(E_Comp *c)
    c->render_overflow--;
    c->update_job = NULL;
    
+   if (doframeinfo == -1)
+     {
+        doframeinfo = 0;
+        if (getenv("DFI")) doframeinfo = 1;
+     }
+   if (doframeinfo)
      {
         static double t0 = 0.0;
         double td, t;
