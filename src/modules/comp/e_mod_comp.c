@@ -684,7 +684,6 @@ _e_mod_comp_cb_update(E_Comp *c)
      {  
         EINA_LIST_FREE(update_done, cw)
           {
-             printf("inc counter %i\n", cw->counter);
              ecore_x_sync_counter_inc(cw->counter, 1);
           }
      }
