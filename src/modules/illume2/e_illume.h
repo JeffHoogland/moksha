@@ -1,35 +1,6 @@
 #ifndef E_ILLUME_H
 # define E_ILLUME_H
 
-/* include standard E header */
-# include "e.h"
-
-/**
- * @mainpage Illume
- * 
- * @image html e.png
- * 
- * @author Christopher Michael
- * @date 2010
- * 
- * @section illume_toc_sec Table of contents
- * 
- * <ul>
- *   <li> @ref illume_intro_sec
- * </ul>
- * 
- * @section illume_intro_sec Introduction to Illume
- * 
- * Illume is a module for Enlightenment that modifies the user interface of 
- * enlightenment to work cleanly and nicely on a mobile device - such as an 
- * Openmoko phone. It is resolution independent meaning that it can 
- * accommodate a very wide range of devices, from cell phones and PDAs to 
- * tablets and desktops. Illume has been designed from the ground up to 
- * support more than one screen in more than one way (multihead and xinerama).
- * 
- * @warning This is a work in progress and as such is subject to change.
- */
-
 /**
  * @file e_illume.h
  * 
@@ -47,13 +18,16 @@
  * For details on quickpanels, see @ref E_Illume_Quickpanel_Group.
  */
 
-/**
- * @defgroup E_Illume_Keyboard_Group Illume Keyboard Information
- * 
- * The following group defines information needed to interact with the 
- * Virtual Keyboard.
- * 
- */
+/* include standard E header */
+# include "e.h"
+
+/* define all of our typedefs */
+typedef struct _E_Illume_Keyboard E_Illume_Keyboard;
+typedef struct _E_Illume_Policy_Api E_Illume_Policy_Api;
+typedef struct _E_Illume_Policy E_Illume_Policy;
+typedef struct _E_Illume_Config E_Illume_Config;
+typedef struct _E_Illume_Config_Zone E_Illume_Config_Zone;
+typedef struct _E_Illume_Quickpanel E_Illume_Quickpanel;
 
 /**
  * @enum E_Illume_Keyboard_Layout
@@ -86,7 +60,7 @@ typedef enum _E_Illume_Keyboard_Layout
  * 
  * @ingroup E_Illume_Keyboard_Group
  */
-typedef struct _E_Illume_Keyboard 
+struct _E_Illume_Keyboard 
 {
    E_Object e_obj_inherit;
 
@@ -108,18 +82,7 @@ typedef struct _E_Illume_Keyboard
    /**< flag to indicate if the keyboard is currently disabled */
    unsigned char fullscreen : 1;
    /**< flag to indicate if the keyboard is currently fullscreen */
-} E_Illume_Keyboard;
-
-/**
- * @defgroup E_Illume_Policy_Group Illume Policy Information
- * 
- * The following group defines information needed to implement an Illume 
- * Policy.
- * 
- * @warning There are some requirements that every policy must implement and 
- * some things are optional. Please reference the E_Illume_Policy structure 
- * for requirements.
- */
+};
 
 /**
  * @def E_ILLUME_POLICY_API_VERSION
@@ -143,7 +106,7 @@ typedef struct _E_Illume_Keyboard
  * 
  * @ingroup E_Illume_Policy_Group
  */
-typedef struct _E_Illume_Policy_Api 
+struct _E_Illume_Policy_Api 
 {
    int version;
    /**< The version of this policy. */
@@ -152,10 +115,7 @@ typedef struct _E_Illume_Policy_Api
    /**< The name of this policy. */
    const char *label;
    /**< The label of this policy. */
-} E_Illume_Policy_Api;
-
-
-typedef struct _E_Illume_Policy E_Illume_Policy;
+};
 
 /**
  * @brief structure for policy
@@ -272,18 +232,13 @@ struct _E_Illume_Policy
      } funcs;
 };
 
-/**
- * @defgroup E_Illume_Config_Group Illume Configuration Information
- * 
- * The following group defines information pertaining to Illume Configuration.
- */
 
 /**
  * @brief structure for Illume configuration.
  * 
  * @ingroup E_Illume_Config_Group
  */
-typedef struct _E_Illume_Config 
+struct _E_Illume_Config 
 {
    int version;
 
@@ -314,14 +269,14 @@ typedef struct _E_Illume_Config
           } vkbd, indicator, softkey, home;
         Eina_List *zones;
      } policy;
-} E_Illume_Config;
+};
 
 /**
  * @brief structure for Illume zone configuration.
  * 
  * @ingroup E_Illume_Config_Group
  */
-typedef struct _E_Illume_Config_Zone 
+struct _E_Illume_Config_Zone 
 {
    int id;
    struct 
@@ -335,20 +290,14 @@ typedef struct _E_Illume_Config_Zone
      {
         int size;
      } vkbd, indicator, softkey;
-} E_Illume_Config_Zone;
-
-/**
- * @defgroup E_Illume_Quickpanel_Group Illume Quickpanel Information
- * 
- * The following group defines information pertaining to Illume Quickpanels.
- */
+};
 
 /**
  * @brief structure for Illume Quickpanels.
  * 
  * @ingroup E_Illume_Quickpanel_Group
  */
-typedef struct _E_Illume_Quickpanel 
+struct _E_Illume_Quickpanel 
 {
    E_Object e_obj_inherit;
 
@@ -360,7 +309,8 @@ typedef struct _E_Illume_Quickpanel
    int h, ih, adjust, adjust_start, adjust_end;
    unsigned char visible : 1;
    /**< flag to indicate if the quickpanel is currently visible */
-} E_Illume_Quickpanel;
+};
+
 
 /* define function prototypes that policies can use */
 EAPI E_Illume_Config_Zone *e_illume_zone_config_get(int id);
