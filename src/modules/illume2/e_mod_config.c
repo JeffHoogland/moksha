@@ -15,7 +15,7 @@ static E_Config_DD *_il_conf_zone_edd = NULL;
 /* external variables */
 E_Illume_Config *_e_illume_cfg = NULL;
 
-EAPI int 
+int 
 e_mod_illume_config_init(void) 
 {
    char buff[PATH_MAX];
@@ -102,7 +102,7 @@ e_mod_illume_config_init(void)
    return 1;
 }
 
-EAPI int 
+int 
 e_mod_illume_config_shutdown(void) 
 {
    /* destroy config item entries */
@@ -123,7 +123,7 @@ e_mod_illume_config_shutdown(void)
    return 1;
 }
 
-EAPI int 
+int 
 e_mod_illume_config_save(void) 
 {
    return e_config_domain_save("module.illume2", _il_conf_edd, _e_illume_cfg);
