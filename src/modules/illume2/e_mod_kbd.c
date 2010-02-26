@@ -136,7 +136,7 @@ e_mod_kbd_show(void)
    if (_e_illume_kbd->animator) ecore_animator_del(_e_illume_kbd->animator);
    _e_illume_kbd->animator = NULL;
 
-   if (_focused_border) 
+   if ((_focused_border) && (_e_illume_kbd->border))
      {
         if (_e_illume_kbd->border->zone != _focused_border->zone) 
           e_border_zone_set(_e_illume_kbd->border, _focused_border->zone);
