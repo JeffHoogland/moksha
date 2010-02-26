@@ -291,7 +291,10 @@ _policy_zone_layout_indicator(E_Border *bd, E_Illume_Config_Zone *cz)
         /* dual app mode top */
         if (cz->mode.side == 0) 
           {
-             /* top mode...indicator is draggable so just set X */
+             /* top mode...indicator is draggable so just set X.
+              * in this case, the indicator itself should be responsible for 
+              * sending the quickpanel position update message when it is 
+              * finished dragging */
              if (bd->x != bd->zone->x) 
                _policy_border_move(bd, bd->zone->x, bd->y);
           }
@@ -1530,9 +1533,8 @@ _policy_focus_home(E_Zone *zone)
    if (!(bd = e_illume_border_home_get(zone))) return;
 
    if (!bd->visible) e_border_show(bd);
-   e_border_raise(bd);
 
-//   _policy_border_set_focus(bd);
+   e_border_raise(bd);
 }
 
 void 
@@ -1585,8 +1587,14 @@ _policy_property_change(Ecore_X_Event_Window_Property *event)
         /* make sure this property changed on a zone */
         if (!(zone = e_util_zone_window_find(event->win))) return;
 
-        /* get the geometry. This is X round-trip :( */
-        ecore_x_e_illume_indicator_geometry_get(zone->black_win, &x, &y, &w, &h);
+        /* get the geometry */
+        if (!(bd = e_illume_border_indicator_get(zone))) return;
+        x = bd->x;
+        y = bd->y;
+        w = bd->w;
+        h = bd->h;
+        /* NB: Remove X Round-Trip */
+//        ecore_x_e_illume_indicator_geometry_get(zone->black_win, &x, &y, &w, &h);
 
         /* look for conformant borders */
         EINA_LIST_FOREACH(e_border_client_list(), l, bd) 
@@ -1610,8 +1618,15 @@ _policy_property_change(Ecore_X_Event_Window_Property *event)
         /* make sure this property changed on a zone */
         if (!(zone = e_util_zone_window_find(event->win))) return;
 
+        if (!(bd = e_illume_border_softkey_get(zone))) return;
+        x = bd->x;
+        y = bd->y;
+        w = bd->w;
+        h = bd->h;
+
         /* get the geometry. This is X round-trip :( */
-        ecore_x_e_illume_softkey_geometry_get(zone->black_win, &x, &y, &w, &h);
+        /* NB: Remove X Round-Trip */
+//        ecore_x_e_illume_softkey_geometry_get(zone->black_win, &x, &y, &w, &h);
 
         /* look for conformant borders */
         EINA_LIST_FOREACH(e_border_client_list(), l, bd) 
@@ -1636,6 +1651,7 @@ _policy_property_change(Ecore_X_Event_Window_Property *event)
         if (!(zone = e_util_zone_window_find(event->win))) return;
 
         /* get the geometry. This is X round-trip :( */
+        /* NB: Remove X Round-Trip */
         ecore_x_e_illume_keyboard_geometry_get(zone->black_win, &x, &y, &w, &h);
 
         /* look for conformant borders */
