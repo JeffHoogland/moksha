@@ -30,7 +30,7 @@ e_modapi_init(E_Module *m)
    _e_illume_mod_dir = eina_stringshare_add(m->dir);
 
    /* try to initialize the config subsystem */
-   if (!e_mod_config_init()) 
+   if (!e_mod_illume_config_init()) 
      {
         /* clear module directory variable */
         if (_e_illume_mod_dir) eina_stringshare_del(_e_illume_mod_dir);
@@ -43,7 +43,7 @@ e_modapi_init(E_Module *m)
    if (!e_mod_policy_init()) 
      {
         /* shutdown the config subsystem */
-        e_mod_config_shutdown();
+        e_mod_illume_config_shutdown();
 
         /* clear module directory variable */
         if (_e_illume_mod_dir) eina_stringshare_del(_e_illume_mod_dir);
@@ -131,7 +131,7 @@ e_modapi_shutdown(E_Module *m)
    e_mod_policy_shutdown();
 
    /* shutdown the config subsystem */
-   e_mod_config_shutdown();
+   e_mod_illume_config_shutdown();
 
    /* clear module directory variable */
    if (_e_illume_mod_dir) eina_stringshare_del(_e_illume_mod_dir);
@@ -143,5 +143,5 @@ e_modapi_shutdown(E_Module *m)
 EAPI int 
 e_modapi_save(E_Module *m) 
 {
-   return e_mod_config_save();
+   return e_mod_illume_config_save();
 }

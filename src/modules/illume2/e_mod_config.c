@@ -5,37 +5,37 @@
 #include "e_mod_config_policy.h"
 
 /* local function prototypes */
-static void _e_mod_config_free(void);
-static void _e_mod_config_new(void);
+static void _e_mod_illume_config_free(void);
+static void _e_mod_illume_config_new(void);
 
 /* local variables */
-static E_Config_DD *_conf_edd = NULL;
-static E_Config_DD *_conf_zone_edd = NULL;
+static E_Config_DD *_il_conf_edd = NULL;
+static E_Config_DD *_il_conf_zone_edd = NULL;
 
 /* external variables */
 E_Illume_Config *_e_illume_cfg = NULL;
 
-int 
-e_mod_config_init(void) 
+EAPI int 
+e_mod_illume_config_init(void) 
 {
    char buff[PATH_MAX];
 
    /* create config structure for zones */
-   _conf_zone_edd = E_CONFIG_DD_NEW("Illume_Config_Zone", E_Illume_Config_Zone);
+   _il_conf_zone_edd = E_CONFIG_DD_NEW("Illume_Config_Zone", E_Illume_Config_Zone);
 #undef T
 #undef D
 #define T E_Illume_Config_Zone
-#define D _conf_zone_edd
+#define D _il_conf_zone_edd
    E_CONFIG_VAL(D, T, id, INT);
    E_CONFIG_VAL(D, T, mode.dual, INT);
    E_CONFIG_VAL(D, T, mode.side, INT);
 
    /* create config structure for module */
-   _conf_edd = E_CONFIG_DD_NEW("Illume_Config", E_Illume_Config);
+   _il_conf_edd = E_CONFIG_DD_NEW("Illume_Config", E_Illume_Config);
 #undef T
 #undef D
 #define T E_Illume_Config
-#define D _conf_edd
+#define D _il_conf_edd
    E_CONFIG_VAL(D, T, version, INT);
    E_CONFIG_VAL(D, T, animation.vkbd.duration, INT);
    E_CONFIG_VAL(D, T, animation.quickpanel.duration, INT);
@@ -72,17 +72,17 @@ e_mod_config_init(void)
    E_CONFIG_VAL(D, T, policy.home.match.name, INT);
    E_CONFIG_VAL(D, T, policy.home.match.title, INT);
    E_CONFIG_VAL(D, T, policy.home.match.type, INT);
-   E_CONFIG_LIST(D, T, policy.zones, _conf_zone_edd);
+   E_CONFIG_LIST(D, T, policy.zones, _il_conf_zone_edd);
 
    /* attempt to load existing configuration */
-   _e_illume_cfg = e_config_domain_load("module.illume2", _conf_edd);
+   _e_illume_cfg = e_config_domain_load("module.illume2", _il_conf_edd);
 
    /* check version */
    if ((_e_illume_cfg) && ((_e_illume_cfg->version >> 16) < IL_CONFIG_MAJOR))
-     _e_mod_config_free();
+     _e_mod_illume_config_free();
 
    /* create new config if we need to */
-   if (!_e_illume_cfg) _e_mod_config_new();
+   if (!_e_illume_cfg) _e_mod_illume_config_new();
 
    /* setup category for config panel */
    snprintf(buff, sizeof(buff), "%s/e-module-illume2.edj", _e_illume_mod_dir);
@@ -102,8 +102,8 @@ e_mod_config_init(void)
    return 1;
 }
 
-int 
-e_mod_config_shutdown(void) 
+EAPI int 
+e_mod_illume_config_shutdown(void) 
 {
    /* destroy config item entries */
    e_configure_registry_item_del("illume/windows");
@@ -114,24 +114,24 @@ e_mod_config_shutdown(void)
    e_configure_registry_category_del("illume");
 
    /* free config structure */
-   _e_mod_config_free();
+   _e_mod_illume_config_free();
 
    /* free data descriptors */
-   E_CONFIG_DD_FREE(_conf_zone_edd);
-   E_CONFIG_DD_FREE(_conf_edd);
+   E_CONFIG_DD_FREE(_il_conf_zone_edd);
+   E_CONFIG_DD_FREE(_il_conf_edd);
 
    return 1;
 }
 
-int 
-e_mod_config_save(void) 
+EAPI int 
+e_mod_illume_config_save(void) 
 {
-   return e_config_domain_save("module.illume2", _conf_edd, _e_illume_cfg);
+   return e_config_domain_save("module.illume2", _il_conf_edd, _e_illume_cfg);
 }
 
 /* local functions */
 static void 
-_e_mod_config_free(void) 
+_e_mod_illume_config_free(void) 
 {
    E_Illume_Config_Zone *cz;
 
@@ -192,7 +192,7 @@ _e_mod_config_free(void)
 }
 
 static void 
-_e_mod_config_new(void) 
+_e_mod_illume_config_new(void) 
 {
    E_Illume_Config_Zone *cz;
 

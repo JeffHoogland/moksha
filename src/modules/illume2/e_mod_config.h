@@ -4,8 +4,8 @@
 # define IL_CONFIG_MAJOR 0
 # define IL_CONFIG_MINOR 1
 
-int e_mod_config_init(void);
-int e_mod_config_shutdown(void);
-int e_mod_config_save(void);
+EAPI int e_mod_illume_config_init(void);
+EAPI int e_mod_illume_config_shutdown(void);
+EAPI int e_mod_illume_config_save(void);
 
 #endif

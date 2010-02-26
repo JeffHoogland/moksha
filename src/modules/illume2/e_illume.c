@@ -44,7 +44,7 @@ e_illume_zone_config_get(int id)
      eina_list_append(_e_illume_cfg->policy.zones, cz);
 
    /* save it in config */
-   e_mod_config_save();
+   e_mod_illume_config_save();
 
    /* return a fallback */
    return cz;
