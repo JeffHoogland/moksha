@@ -10,6 +10,6 @@ enum _E_Illume_Select_Window_Type
      E_ILLUME_SELECT_WINDOW_TYPE_INDICATOR
 };
 
-void e_mod_config_select_window(E_Illume_Select_Window_Type type);
+void e_mod_illume_config_select_window(E_Illume_Select_Window_Type type);
 
 #endif

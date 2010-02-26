@@ -2,17 +2,17 @@
 #include "e_mod_config_animation.h"
 
 /* local function prototypes */
-static void *_e_mod_config_animation_create(E_Config_Dialog *cfd);
-static void _e_mod_config_animation_free(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static Evas_Object *_e_mod_config_animation_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static void _e_mod_config_animation_change(void *data, Evas_Object *obj, void *event);
-static int _e_mod_config_animation_timeout(void *data);
+static void *_e_mod_illume_config_animation_create(E_Config_Dialog *cfd);
+static void _e_mod_illume_config_animation_free(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static Evas_Object *_e_mod_illume_config_animation_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static void _e_mod_illume_config_animation_change(void *data, Evas_Object *obj, void *event);
+static int _e_mod_illume_config_animation_timeout(void *data);
 
 /* local variables */
 Ecore_Timer *_anim_change_timer = NULL;
 
 void 
-e_mod_config_animation_show(E_Container *con, const char *params __UNUSED__) 
+e_mod_illume_config_animation_show(E_Container *con, const char *params __UNUSED__) 
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
@@ -22,9 +22,9 @@ e_mod_config_animation_show(E_Container *con, const char *params __UNUSED__)
    v = E_NEW(E_Config_Dialog_View, 1);
    if (!v) return;
 
-   v->create_cfdata = _e_mod_config_animation_create;
-   v->free_cfdata = _e_mod_config_animation_free;
-   v->basic.create_widgets = _e_mod_config_animation_ui;
+   v->create_cfdata = _e_mod_illume_config_animation_create;
+   v->free_cfdata = _e_mod_illume_config_animation_free;
+   v->basic.create_widgets = _e_mod_illume_config_animation_ui;
    v->basic_only = 1;
    v->normal_win = 1;
    v->scroll = 1;
@@ -39,20 +39,20 @@ e_mod_config_animation_show(E_Container *con, const char *params __UNUSED__)
 
 /* local function prototypes */
 static void *
-_e_mod_config_animation_create(E_Config_Dialog *cfd) 
+_e_mod_illume_config_animation_create(E_Config_Dialog *cfd) 
 {
    return NULL;
 }
 
 static void 
-_e_mod_config_animation_free(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_e_mod_illume_config_animation_free(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    if (_anim_change_timer) ecore_timer_del(_anim_change_timer);
    _anim_change_timer = NULL;
 }
 
 static Evas_Object *
-_e_mod_config_animation_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
+_e_mod_illume_config_animation_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
    Evas_Object *list, *of, *ow;
    E_Radio_Group *rg;
@@ -64,23 +64,23 @@ _e_mod_config_animation_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Dat
    ow = e_widget_radio_add(evas, _("Slow"), 2000, rg);
    e_widget_framelist_object_append(of, ow);
    evas_object_smart_callback_add(ow, "changed", 
-                                  _e_mod_config_animation_change, NULL);
+                                  _e_mod_illume_config_animation_change, NULL);
    ow = e_widget_radio_add(evas, _("Medium"), 1000, rg);
    e_widget_framelist_object_append(of, ow);
    evas_object_smart_callback_add(ow, "changed", 
-                                  _e_mod_config_animation_change, NULL);
+                                  _e_mod_illume_config_animation_change, NULL);
    ow = e_widget_radio_add(evas, _("Fast"), 500, rg);
    e_widget_framelist_object_append(of, ow);
    evas_object_smart_callback_add(ow, "changed", 
-                                  _e_mod_config_animation_change, NULL);
+                                  _e_mod_illume_config_animation_change, NULL);
    ow = e_widget_radio_add(evas, _("Very Fast"), 250, rg);
    e_widget_framelist_object_append(of, ow);
    evas_object_smart_callback_add(ow, "changed", 
-                                  _e_mod_config_animation_change, NULL);
+                                  _e_mod_illume_config_animation_change, NULL);
    ow = e_widget_radio_add(evas, _("Off"), 0, rg);
    e_widget_framelist_object_append(of, ow);
    evas_object_smart_callback_add(ow, "changed", 
-                                  _e_mod_config_animation_change, NULL);
+                                  _e_mod_illume_config_animation_change, NULL);
    e_widget_list_object_append(list, of, 1, 0, 0.0);
 
    of = e_widget_framelist_add(evas, _("Quickpanel"), 0);
@@ -88,38 +88,38 @@ _e_mod_config_animation_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Dat
    ow = e_widget_radio_add(evas, _("Slow"), 2000, rg);
    e_widget_framelist_object_append(of, ow);
    evas_object_smart_callback_add(ow, "changed", 
-                                  _e_mod_config_animation_change, NULL);
+                                  _e_mod_illume_config_animation_change, NULL);
    ow = e_widget_radio_add(evas, _("Medium"), 1000, rg);
    e_widget_framelist_object_append(of, ow);
    evas_object_smart_callback_add(ow, "changed", 
-                                  _e_mod_config_animation_change, NULL);
+                                  _e_mod_illume_config_animation_change, NULL);
    ow = e_widget_radio_add(evas, _("Fast"), 500, rg);
    e_widget_framelist_object_append(of, ow);
    evas_object_smart_callback_add(ow, "changed", 
-                                  _e_mod_config_animation_change, NULL);
+                                  _e_mod_illume_config_animation_change, NULL);
    ow = e_widget_radio_add(evas, _("Very Fast"), 250, rg);
    e_widget_framelist_object_append(of, ow);
    evas_object_smart_callback_add(ow, "changed", 
-                                  _e_mod_config_animation_change, NULL);
+                                  _e_mod_illume_config_animation_change, NULL);
    ow = e_widget_radio_add(evas, _("Off"), 0, rg);
    e_widget_framelist_object_append(of, ow);
    evas_object_smart_callback_add(ow, "changed", 
-                                  _e_mod_config_animation_change, NULL);
+                                  _e_mod_illume_config_animation_change, NULL);
    e_widget_list_object_append(list, of, 1, 0, 0.0);
 
    return list;
 }
 
 static void 
-_e_mod_config_animation_change(void *data, Evas_Object *obj, void *event) 
+_e_mod_illume_config_animation_change(void *data, Evas_Object *obj, void *event) 
 {
    if (_anim_change_timer) ecore_timer_del(_anim_change_timer);
    _anim_change_timer = 
-     ecore_timer_add(0.5, _e_mod_config_animation_timeout, data);
+     ecore_timer_add(0.5, _e_mod_illume_config_animation_timeout, data);
 }
 
 static int 
-_e_mod_config_animation_timeout(void *data) 
+_e_mod_illume_config_animation_timeout(void *data) 
 {
    e_config_save_queue();
    _anim_change_timer = NULL;

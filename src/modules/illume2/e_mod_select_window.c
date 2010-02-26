@@ -2,12 +2,12 @@
 #include "e_mod_select_window.h"
 
 /* local function prototypes */
-static void *_e_mod_config_select_window_create_data(E_Config_Dialog *cfd);
-static void _e_mod_config_select_window_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static Evas_Object *_e_mod_config_select_window_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static void _e_mod_config_select_window_list_changed(void *data);
-static int _e_mod_config_select_window_change_timeout(void *data);
-static int _e_mod_config_select_window_match(E_Border *bd);
+static void *_e_mod_illume_config_select_window_create_data(E_Config_Dialog *cfd);
+static void _e_mod_illume_config_select_window_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static Evas_Object *_e_mod_illume_config_select_window_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static void _e_mod_illume_config_select_window_list_changed(void *data);
+static int _e_mod_illume_config_select_window_change_timeout(void *data);
+static int _e_mod_illume_config_select_window_match(E_Border *bd);
 
 /* local variables */
 E_Illume_Select_Window_Type stype;
@@ -15,7 +15,7 @@ Ecore_Timer *_sw_change_timer = NULL;
 
 /* public functions */
 void 
-e_mod_config_select_window(E_Illume_Select_Window_Type type) 
+e_mod_illume_config_select_window(E_Illume_Select_Window_Type type) 
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
@@ -25,9 +25,9 @@ e_mod_config_select_window(E_Illume_Select_Window_Type type)
    v = E_NEW(E_Config_Dialog_View, 1);
    if (!v) return;
 
-   v->create_cfdata = _e_mod_config_select_window_create_data;
-   v->free_cfdata = _e_mod_config_select_window_free_data;
-   v->basic.create_widgets = _e_mod_config_select_window_create;
+   v->create_cfdata = _e_mod_illume_config_select_window_create_data;
+   v->free_cfdata = _e_mod_illume_config_select_window_free_data;
+   v->basic.create_widgets = _e_mod_illume_config_select_window_create;
    v->basic_only = 1;
    v->normal_win = 1;
    v->scroll = 1;
@@ -41,19 +41,19 @@ e_mod_config_select_window(E_Illume_Select_Window_Type type)
 }
 
 static void *
-_e_mod_config_select_window_create_data(E_Config_Dialog *cfd) 
+_e_mod_illume_config_select_window_create_data(E_Config_Dialog *cfd) 
 {
    return NULL;
 }
 
 static void 
-_e_mod_config_select_window_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_e_mod_illume_config_select_window_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
 
 }
 
 static Evas_Object *
-_e_mod_config_select_window_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
+_e_mod_illume_config_select_window_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
    Evas_Object *list, *ow;
    Eina_List *bds, *l;
@@ -78,10 +78,10 @@ _e_mod_config_select_window_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Di
 
              if (!(bd = l->data)) continue;
              if (e_object_is_del(E_OBJECT(bd))) continue;
-             if (_e_mod_config_select_window_match(bd)) sel = i;
+             if (_e_mod_illume_config_select_window_match(bd)) sel = i;
              if (!(name = e_border_name_get(bd))) continue;
              e_widget_ilist_append(ow, NULL, name, 
-                                   _e_mod_config_select_window_list_changed, 
+                                   _e_mod_illume_config_select_window_list_changed, 
                                    bd, name);
           }
      }
@@ -97,7 +97,7 @@ _e_mod_config_select_window_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Di
 }
 
 static void 
-_e_mod_config_select_window_list_changed(void *data) 
+_e_mod_illume_config_select_window_list_changed(void *data) 
 {
    E_Border *bd;
    Ecore_X_Window_Type wtype;
@@ -162,11 +162,11 @@ _e_mod_config_select_window_list_changed(void *data)
 
    if (_sw_change_timer) ecore_timer_del(_sw_change_timer);
    _sw_change_timer = 
-     ecore_timer_add(0.5, _e_mod_config_select_window_change_timeout, data);
+     ecore_timer_add(0.5, _e_mod_illume_config_select_window_change_timeout, data);
 }
 
 static int 
-_e_mod_config_select_window_change_timeout(void *data) 
+_e_mod_illume_config_select_window_change_timeout(void *data) 
 {
    e_config_save_queue();
    _sw_change_timer = NULL;
@@ -174,7 +174,7 @@ _e_mod_config_select_window_change_timeout(void *data)
 }
 
 static int 
-_e_mod_config_select_window_match(E_Border *bd) 
+_e_mod_illume_config_select_window_match(E_Border *bd) 
 {
    Ecore_X_Window_Type wtype;
    char *title, *name, *class;

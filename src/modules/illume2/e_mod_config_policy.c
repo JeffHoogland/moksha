@@ -2,21 +2,21 @@
 #include "e_mod_config_policy.h"
 
 /* local function prototypes */
-static void *_e_mod_config_policy_create(E_Config_Dialog *cfd);
-static void _e_mod_config_policy_free(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static Evas_Object *_e_mod_config_policy_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static void _e_mod_config_policy_list_changed(void *data);
-static int _e_mod_config_policy_change_timeout(void *data);
-static Evas_Object *_e_mod_config_policy_settings_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static Eina_List *_e_mod_config_policy_policies_get(void);
-static void _e_mod_config_policy_policy_free(E_Illume_Policy *p);
+static void *_e_mod_illume_config_policy_create(E_Config_Dialog *cfd);
+static void _e_mod_illume_config_policy_free(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static Evas_Object *_e_mod_illume_config_policy_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static void _e_mod_illume_config_policy_list_changed(void *data);
+static int _e_mod_illume_config_policy_change_timeout(void *data);
+static Evas_Object *_e_mod_illume_config_policy_settings_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static Eina_List *_e_mod_illume_config_policy_policies_get(void);
+static void _e_mod_illume_config_policy_policy_free(E_Illume_Policy *p);
 
 /* local variables */
 Ecore_Timer *_policy_change_timer = NULL;
 const char *_policy_name = NULL;
 
 void 
-e_mod_config_policy_show(E_Container *con, const char *params) 
+e_mod_illume_config_policy_show(E_Container *con, const char *params) 
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
@@ -26,9 +26,9 @@ e_mod_config_policy_show(E_Container *con, const char *params)
    v = E_NEW(E_Config_Dialog_View, 1);
    if (!v) return;
 
-   v->create_cfdata = _e_mod_config_policy_create;
-   v->free_cfdata = _e_mod_config_policy_free;
-   v->basic.create_widgets = _e_mod_config_policy_ui;
+   v->create_cfdata = _e_mod_illume_config_policy_create;
+   v->free_cfdata = _e_mod_illume_config_policy_free;
+   v->basic.create_widgets = _e_mod_illume_config_policy_ui;
    v->basic_only = 1;
    v->normal_win = 1;
    v->scroll = 1;
@@ -40,20 +40,20 @@ e_mod_config_policy_show(E_Container *con, const char *params)
 
 /* local functions */
 static void *
-_e_mod_config_policy_create(E_Config_Dialog *cfd) 
+_e_mod_illume_config_policy_create(E_Config_Dialog *cfd) 
 {
    return NULL;
 }
 
 static void 
-_e_mod_config_policy_free(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_e_mod_illume_config_policy_free(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    if (_policy_change_timer) ecore_timer_del(_policy_change_timer);
    _policy_change_timer = NULL;
 }
 
 static Evas_Object *
-_e_mod_config_policy_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
+_e_mod_illume_config_policy_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
    Evas_Object *list, *ow;
    Eina_List *policies;
@@ -69,13 +69,13 @@ _e_mod_config_policy_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *
    e_widget_ilist_clear(ow);
    e_widget_ilist_go(ow);
 
-   policies = _e_mod_config_policy_policies_get();
+   policies = _e_mod_illume_config_policy_policies_get();
    if (policies) 
      {
         EINA_LIST_FREE(policies, p) 
           {
              e_widget_ilist_append(ow, NULL, strdup(p->api->label), 
-                                   _e_mod_config_policy_list_changed, NULL, 
+                                   _e_mod_illume_config_policy_list_changed, NULL, 
                                    strdup(p->api->name));
 
              if ((p) && (_e_illume_cfg->policy.name) && 
@@ -98,7 +98,7 @@ _e_mod_config_policy_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *
 }
 
 static void 
-_e_mod_config_policy_list_changed(void *data) 
+_e_mod_illume_config_policy_list_changed(void *data) 
 {
    if (_e_illume_cfg->policy.name) 
      eina_stringshare_del(_e_illume_cfg->policy.name);
@@ -106,11 +106,11 @@ _e_mod_config_policy_list_changed(void *data)
      _e_illume_cfg->policy.name = eina_stringshare_add(_policy_name);
    if (_policy_change_timer) ecore_timer_del(_policy_change_timer);
    _policy_change_timer = 
-     ecore_timer_add(0.5, _e_mod_config_policy_change_timeout, data);
+     ecore_timer_add(0.5, _e_mod_illume_config_policy_change_timeout, data);
 }
 
 static int 
-_e_mod_config_policy_change_timeout(void *data) 
+_e_mod_illume_config_policy_change_timeout(void *data) 
 {
    e_config_save_queue();
    _policy_change_timer = NULL;
@@ -119,7 +119,7 @@ _e_mod_config_policy_change_timeout(void *data)
 }
 
 static Eina_List *
-_e_mod_config_policy_policies_get(void) 
+_e_mod_illume_config_policy_policies_get(void) 
 {
    Eina_List *l = NULL, *files;
    char dir[PATH_MAX], *file;
@@ -136,7 +136,7 @@ _e_mod_config_policy_policies_get(void)
         snprintf(dir, sizeof(dir),"%s/policies/%s", _e_illume_mod_dir, file);
 
         p = E_OBJECT_ALLOC(E_Illume_Policy, E_ILLUME_POLICY_TYPE,
-                         _e_mod_config_policy_policy_free);
+                         _e_mod_illume_config_policy_policy_free);
         if (!p) continue;
 
         p->handle = dlopen(dir, RTLD_NOW | RTLD_GLOBAL);
@@ -164,7 +164,7 @@ _e_mod_config_policy_policies_get(void)
 }
 
 static void 
-_e_mod_config_policy_policy_free(E_Illume_Policy *p) 
+_e_mod_illume_config_policy_policy_free(E_Illume_Policy *p) 
 {
    p->api = NULL;
 
