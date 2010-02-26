@@ -138,11 +138,8 @@ e_mod_kbd_show(void)
 
    if (_focused_border) 
      {
-//        printf("Focused Border: %s\n", _focused_border->client.icccm.name);
         if (_e_illume_kbd->border->zone != _focused_border->zone) 
-          {
-             e_border_zone_set(_e_illume_kbd->border, _focused_border->zone);
-          }
+          e_border_zone_set(_e_illume_kbd->border, _focused_border->zone);
      }
 
    /* if it's disabled, get out */
@@ -162,6 +159,7 @@ e_mod_kbd_show(void)
              e_border_raise(_e_illume_kbd->border);
           }
         _e_illume_kbd->visible = 1;
+        _e_mod_kbd_geometry_send();
      }
    else 
      {
@@ -460,6 +458,7 @@ _e_mod_kbd_hide(void)
              e_border_hide(_e_illume_kbd->border, 2);
           }
         _e_illume_kbd->visible = 0;
+        _e_mod_kbd_geometry_send();
      }
    else  
      _e_mod_kbd_slide(0, (double)_e_illume_cfg->animation.vkbd.duration / 1000.0);
@@ -519,7 +518,6 @@ _e_mod_kbd_cb_animate(void *data __UNUSED__)
         else 
           _e_illume_kbd->visible = 1;
 
-        _e_mod_kbd_layout_send();
         _e_mod_kbd_geometry_send();
 
         /* tell the focused border it changed so layout gets udpated */
