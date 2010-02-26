@@ -184,10 +184,7 @@ e_mod_kbd_hide(void)
 
    /* create new hide timer if it doesn't exist */
    if (!_e_illume_kbd->timer) 
-     {
-        _e_illume_kbd->timer = 
-          ecore_timer_add(0.2, _e_mod_kbd_cb_delay_hide, NULL);
-     }
+     _e_illume_kbd->timer = ecore_timer_add(0.2, _e_mod_kbd_cb_delay_hide, NULL);
 }
 
 void 
@@ -202,8 +199,6 @@ e_mod_kbd_fullscreen_set(E_Zone *zone, int fullscreen)
 {
    if (!_e_illume_kbd->border) return;
    if (_e_illume_kbd->border->zone != zone) return;
-   printf("Kbd Fullscreen Set: %d\n", fullscreen);
-   printf("\tCurrent: %d\n", _e_illume_kbd->fullscreen);
    if ((!!fullscreen) != _e_illume_kbd->fullscreen) 
      _e_illume_kbd->fullscreen = fullscreen;
 }
@@ -276,10 +271,7 @@ _e_mod_kbd_cb_border_remove(void *data __UNUSED__, int type __UNUSED__, void *ev
           }
      }
    else if (!kbd->border) 
-     {
-        kbd->waiting_borders = 
-          eina_list_remove(kbd->waiting_borders, ev->border);
-     }
+     kbd->waiting_borders = eina_list_remove(kbd->waiting_borders, ev->border);
 
    return 1;
 }
@@ -378,10 +370,7 @@ _e_mod_kbd_cb_border_property(void *data __UNUSED__, int type __UNUSED__, void *
    if (_focused_state <= ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF) 
      e_mod_kbd_hide();
    else 
-     {
-        // Layout set
-        e_mod_kbd_show();
-     }
+     e_mod_kbd_show();
 
    return 1;
 }

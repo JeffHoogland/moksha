@@ -1644,15 +1644,29 @@ _policy_property_change(Ecore_X_Event_Window_Property *event)
      {
         Eina_List *l;
         E_Zone *zone;
+        E_Illume_Keyboard *kbd;
         E_Border *bd;
         int x, y, w, h;
 
         /* make sure this property changed on a zone */
         if (!(zone = e_util_zone_window_find(event->win))) return;
 
+        /* get the keyboard */
+        if (!(kbd = e_illume_keyboard_get())) return;
+        if (!kbd->border) return;
+
+        /* get the geometry */
+        x = kbd->border->x;
+        w = kbd->border->w;
+        h = kbd->border->h;
+
+        /* adjust Y for keyboard visibility because keyboard uses fx_offset */
+        y = 0;
+        if (kbd->border->fx.y <= 0) y = kbd->border->y;
+
         /* get the geometry. This is X round-trip :( */
         /* NB: Remove X Round-Trip */
-        ecore_x_e_illume_keyboard_geometry_get(zone->black_win, &x, &y, &w, &h);
+//        ecore_x_e_illume_keyboard_geometry_get(zone->black_win, &x, &y, &w, &h);
 
         /* look for conformant borders */
         EINA_LIST_FOREACH(e_border_client_list(), l, bd) 
