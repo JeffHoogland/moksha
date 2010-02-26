@@ -367,7 +367,7 @@ valgrind_append(char **dst, int valgrind_mode, char *valgrind_path, const char *
      return 0;
    dst[i++] = valgrind_path;
    dst[i++] = "--track-origins=yes";
-   dst[i++] = "--malloc-fill=0xabc79"; /* invalid pointer, make it crash */
+   dst[i++] = "--malloc-fill=13"; /* invalid pointer, make it crash */
 
    if (valgrind_log)
      {
