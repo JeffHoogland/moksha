@@ -4,14 +4,14 @@
 /* local function prototypes */
 static void _e_mod_kbd_dbus_ignore_load(void);
 static void _e_mod_kbd_dbus_ignore_load_file(const char *file);
-static void _e_mod_kbd_dbus_cb_input_kbd(void *data, void *reply, DBusError *err);
+static void _e_mod_kbd_dbus_cb_input_kbd(void *data __UNUSED__, void *reply, DBusError *err);
 static void _e_mod_kbd_dbus_cb_input_kbd_is(void *data, void *reply, DBusError *err);
 static void _e_mod_kbd_dbus_kbd_add(const char *udi);
 static void _e_mod_kbd_dbus_kbd_del(const char *udi);
 static void _e_mod_kbd_dbus_kbd_eval(void);
-static void _e_mod_kbd_dbus_dev_add(void *data, DBusMessage *msg);
-static void _e_mod_kbd_dbus_dev_del(void *data, DBusMessage *msg);
-static void _e_mod_kbd_dbus_dev_chg(void *data, DBusMessage *msg);
+static void _e_mod_kbd_dbus_dev_add(void *data __UNUSED__, DBusMessage *msg);
+static void _e_mod_kbd_dbus_dev_del(void *data __UNUSED__, DBusMessage *msg);
+static void _e_mod_kbd_dbus_dev_chg(void *data __UNUSED__, DBusMessage *msg);
 
 /* local variables */
 static int have_real_kbd = 0;
@@ -122,7 +122,7 @@ _e_mod_kbd_dbus_ignore_load_file(const char *file)
 }
 
 static void 
-_e_mod_kbd_dbus_cb_input_kbd(void *data, void *reply, DBusError *err) 
+_e_mod_kbd_dbus_cb_input_kbd(void *data __UNUSED__, void *reply, DBusError *err) 
 {
    E_Hal_Manager_Find_Device_By_Capability_Return *ret = reply;
    Eina_List *l;
@@ -227,7 +227,7 @@ _e_mod_kbd_dbus_kbd_eval(void)
 }
 
 static void 
-_e_mod_kbd_dbus_dev_add(void *data, DBusMessage *msg) 
+_e_mod_kbd_dbus_dev_add(void *data __UNUSED__, DBusMessage *msg) 
 {
    DBusError err;
    char *udi;
@@ -239,7 +239,7 @@ _e_mod_kbd_dbus_dev_add(void *data, DBusMessage *msg)
 }
 
 static void 
-_e_mod_kbd_dbus_dev_del(void *data, DBusMessage *msg) 
+_e_mod_kbd_dbus_dev_del(void *data __UNUSED__, DBusMessage *msg) 
 {
    DBusError err;
    char *udi;
@@ -255,7 +255,7 @@ _e_mod_kbd_dbus_dev_del(void *data, DBusMessage *msg)
 }
 
 static void 
-_e_mod_kbd_dbus_dev_chg(void *data, DBusMessage *msg) 
+_e_mod_kbd_dbus_dev_chg(void *data __UNUSED__, DBusMessage *msg) 
 {
    DBusError err;
    char *udi, *cap;

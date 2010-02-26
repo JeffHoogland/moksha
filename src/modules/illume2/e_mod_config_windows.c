@@ -7,12 +7,12 @@ static void *_e_mod_illume_config_windows_create(E_Config_Dialog *cfd);
 static void _e_mod_illume_config_windows_free(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_e_mod_illume_config_windows_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static void _e_mod_illume_config_windows_check_changed(void *data, Evas_Object *obj, void *event);
-static void _e_mod_illume_config_windows_change(void *data, Evas_Object *obj, void *event);
-static int _e_mod_illume_config_windows_change_timeout(void *data);
-static void _e_mod_illume_config_windows_select_home(void *data, void *data2);
-static void _e_mod_illume_config_windows_select_vkbd(void *data, void *data2);
-static void _e_mod_illume_config_windows_select_softkey(void *data, void *data2);
-static void _e_mod_illume_config_windows_select_indicator(void *data, void *data2);
+static void _e_mod_illume_config_windows_change(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED__);
+static int _e_mod_illume_config_windows_change_timeout(void *data __UNUSED__);
+static void _e_mod_illume_config_windows_select_home(void *data __UNUSED__, void *data2 __UNUSED__);
+static void _e_mod_illume_config_windows_select_vkbd(void *data __UNUSED__, void *data2 __UNUSED__);
+static void _e_mod_illume_config_windows_select_softkey(void *data __UNUSED__, void *data2 __UNUSED__);
+static void _e_mod_illume_config_windows_select_indicator(void *data __UNUSED__, void *data2 __UNUSED__);
 
 /* local variables */
 Ecore_Timer *_windows_change_timer = NULL;
@@ -177,7 +177,7 @@ _e_mod_illume_config_windows_check_changed(void *data, Evas_Object *obj, void *e
 }
 
 static void 
-_e_mod_illume_config_windows_change(void *data, Evas_Object *obj, void *event) 
+_e_mod_illume_config_windows_change(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED__) 
 {
    if (_windows_change_timer) ecore_timer_del(_windows_change_timer);
    _windows_change_timer = 
@@ -185,7 +185,7 @@ _e_mod_illume_config_windows_change(void *data, Evas_Object *obj, void *event)
 }
 
 static int 
-_e_mod_illume_config_windows_change_timeout(void *data) 
+_e_mod_illume_config_windows_change_timeout(void *data __UNUSED__) 
 {
    e_config_save_queue();
    _windows_change_timer = NULL;
@@ -193,28 +193,28 @@ _e_mod_illume_config_windows_change_timeout(void *data)
 }
 
 static void 
-_e_mod_illume_config_windows_select_home(void *data, void *data2) 
+_e_mod_illume_config_windows_select_home(void *data __UNUSED__, void *data2 __UNUSED__) 
 {
    if (e_config_dialog_find("E", "_config_illume_select_window")) return;
    e_mod_illume_config_select_window(E_ILLUME_SELECT_WINDOW_TYPE_HOME);
 }
 
 static void 
-_e_mod_illume_config_windows_select_vkbd(void *data, void *data2) 
+_e_mod_illume_config_windows_select_vkbd(void *data __UNUSED__, void *data2 __UNUSED__) 
 {
    if (e_config_dialog_find("E", "_config_illume_select_window")) return;
    e_mod_illume_config_select_window(E_ILLUME_SELECT_WINDOW_TYPE_VKBD);
 }
 
 static void 
-_e_mod_illume_config_windows_select_softkey(void *data, void *data2) 
+_e_mod_illume_config_windows_select_softkey(void *data __UNUSED__, void *data2 __UNUSED__) 
 {
    if (e_config_dialog_find("E", "_config_illume_select_window")) return;
    e_mod_illume_config_select_window(E_ILLUME_SELECT_WINDOW_TYPE_SOFTKEY);
 }
 
 static void 
-_e_mod_illume_config_windows_select_indicator(void *data, void *data2) 
+_e_mod_illume_config_windows_select_indicator(void *data __UNUSED__, void *data2 __UNUSED__) 
 {
    if (e_config_dialog_find("E", "_config_illume_select_window")) return;
    e_mod_illume_config_select_window(E_ILLUME_SELECT_WINDOW_TYPE_INDICATOR);
