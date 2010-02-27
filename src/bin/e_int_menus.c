@@ -74,7 +74,7 @@ _e_int_menus_augmentation_find(const char *key)
    Eina_List *l;
    char *data;
 
-   if (!_e_int_menus_augmentation || !key) return NULL;
+   if ((!_e_int_menus_augmentation) || (!key)) return NULL;
 
    EINA_LIST_FOREACH(_e_int_menus_augmentation_disabled, l, data)
      if (!strcmp(data, key)) return NULL;
@@ -446,10 +446,16 @@ EAPI void
 e_int_menus_menu_augmentation_point_disabled_set(const char *menu, Eina_Bool disabled)
 {
    if (!menu) return;
-   if (disabled)
-     _e_int_menus_augmentation_disabled = eina_list_append(_e_int_menus_augmentation_disabled, menu);
-   else
-     _e_int_menus_augmentation_disabled = eina_list_remove(_e_int_menus_augmentation_disabled, menu);
+   if (disabled) 
+     {
+        _e_int_menus_augmentation_disabled = 
+          eina_list_append(_e_int_menus_augmentation_disabled, menu);
+     }
+   else 
+     {
+        _e_int_menus_augmentation_disabled = 
+          eina_list_remove(_e_int_menus_augmentation_disabled, menu);
+     }
 }
 
 /* local subsystem functions */
@@ -797,8 +803,8 @@ _e_int_menus_config_pre_cb(void *data, E_Menu *m)
 	_e_int_menus_augmentation_add(m, l);
 	if (_e_int_menus_augmentation_find("config/1"))
 	  {
-	    mi = e_menu_item_new(m);
-	    e_menu_item_separator_set(mi, 1);
+             mi = e_menu_item_new(m);
+             e_menu_item_separator_set(mi, 1);
 	  }
      }
 
@@ -1345,8 +1351,8 @@ _e_int_menus_augmentation_add(E_Menu *m, Eina_List *augmentation)
    E_Int_Menu_Augmentation *aug;
    Eina_List *l;
    char *data;
-   
-   if (!augmentation || !m) return;
+
+   if ((!augmentation) || (!m)) return;
    EINA_LIST_FOREACH(_e_int_menus_augmentation_disabled, l, data)
      if (eina_hash_find(_e_int_menus_augmentation, data) == augmentation)
        return;
@@ -1361,8 +1367,8 @@ _e_int_menus_augmentation_del(E_Menu *m, Eina_List *augmentation)
    E_Int_Menu_Augmentation *aug;
    Eina_List *l;
    char *data;
-   
-   if (!augmentation || !m) return;
+
+   if ((!augmentation) || (!m)) return;
    EINA_LIST_FOREACH(_e_int_menus_augmentation_disabled, l, data)
      if (eina_hash_find(_e_int_menus_augmentation, data) == augmentation)
        return;

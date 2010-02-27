@@ -1792,7 +1792,7 @@ e_border_focus_set(E_Border *bd, int focus, int set)
      {
 	if (bd->focused)
 	  {
-	     E_Event_Border_Focus_In	 *ev;
+	     E_Event_Border_Focus_In *ev;
 	     
 	     focused = bd;
 	     // Let send the focus event iff the focus is set explicitly,

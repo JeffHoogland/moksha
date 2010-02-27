@@ -31,10 +31,11 @@ typedef struct _E_Int_Menu_Augmentation E_Int_Menu_Augmentation;
 struct _E_Int_Menu_Augmentation
 {
    const char *sort_key;
-   struct {
-      void (*func)(void *data, E_Menu *m);
-      void *data;
-   } add, del;
+   struct 
+     {
+        void (*func) (void *data, E_Menu *m);
+        void *data;
+     } add, del;
 };
 
 EAPI E_Menu *e_int_menus_main_new(void);    
