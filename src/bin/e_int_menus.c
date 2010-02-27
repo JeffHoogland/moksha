@@ -66,11 +66,18 @@ static void _e_int_menus_item_label_set(Efreet_Menu *entry, E_Menu_Item *mi);
 
 /* local subsystem globals */
 static Eina_Hash *_e_int_menus_augmentation = NULL;
+static Eina_List *_e_int_menus_augmentation_disabled = NULL;
 
 static Eina_List *
 _e_int_menus_augmentation_find(const char *key)
 {
-   if (!_e_int_menus_augmentation) return NULL;
+   Eina_List *l;
+   char *data;
+
+   if (!_e_int_menus_augmentation || !key) return NULL;
+
+   EINA_LIST_FOREACH(_e_int_menus_augmentation_disabled, l, data)
+     if (!strcmp(data, key)) return NULL;
    return eina_hash_find(_e_int_menus_augmentation, key);
 }
 
@@ -435,6 +442,16 @@ e_int_menus_menu_augmentation_del(const char *menu, E_Int_Menu_Augmentation *mau
    free(maug);
 }
 
+EAPI void
+e_int_menus_menu_augmentation_point_disabled_set(const char *menu, Eina_Bool disabled)
+{
+   if (!menu) return;
+   if (disabled)
+     _e_int_menus_augmentation_disabled = eina_list_append(_e_int_menus_augmentation_disabled, menu);
+   else
+     _e_int_menus_augmentation_disabled = eina_list_remove(_e_int_menus_augmentation_disabled, menu);
+}
+
 /* local subsystem functions */
 static void
 _e_int_menus_main_del_hook(void *obj)
@@ -778,8 +795,11 @@ _e_int_menus_config_pre_cb(void *data, E_Menu *m)
    if (l)
      {
 	_e_int_menus_augmentation_add(m, l);
-	mi = e_menu_item_new(m);
-	e_menu_item_separator_set(mi, 1);
+	if (_e_int_menus_augmentation_find("config/1"))
+	  {
+	    mi = e_menu_item_new(m);
+	    e_menu_item_separator_set(mi, 1);
+	  }
      }
 
    l = _e_int_menus_augmentation_find("config/1");
@@ -1324,6 +1344,12 @@ _e_int_menus_augmentation_add(E_Menu *m, Eina_List *augmentation)
 {
    E_Int_Menu_Augmentation *aug;
    Eina_List *l;
+   char *data;
+   
+   if (!augmentation || !m) return;
+   EINA_LIST_FOREACH(_e_int_menus_augmentation_disabled, l, data)
+     if (eina_hash_find(_e_int_menus_augmentation, data) == augmentation)
+       return;
 
    EINA_LIST_FOREACH(augmentation, l, aug)
      if (aug->add.func) aug->add.func(aug->add.data, m);
@@ -1334,6 +1360,12 @@ _e_int_menus_augmentation_del(E_Menu *m, Eina_List *augmentation)
 {
    E_Int_Menu_Augmentation *aug;
    Eina_List *l;
+   char *data;
+   
+   if (!augmentation || !m) return;
+   EINA_LIST_FOREACH(_e_int_menus_augmentation_disabled, l, data)
+     if (eina_hash_find(_e_int_menus_augmentation, data) == augmentation)
+       return;
 
    EINA_LIST_FOREACH(augmentation, l, aug)
      if (aug->del.func) aug->del.func(aug->del.data, m);

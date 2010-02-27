@@ -23,6 +23,13 @@ static Evas_Object *_gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas);
 static const char *_gc_id_new(E_Gadcon_Client_Class *client_class);
 static void _cb_button_click(void *data, void *data2);
 
+static void _conf_new(void);
+static void _conf_free(void); 
+static int _conf_timer(void *data);
+
+static E_Config_DD *conf_edd = NULL;
+Config *conf = NULL;
+
 /* and actually define the gadcon class that this module provides (just 1) */
 static const E_Gadcon_Client_Class _gadcon_class =
 {
@@ -109,12 +116,103 @@ _cb_button_click(void *data, void *data2)
    if ((a) && (a->func.go)) a->func.go(NULL, NULL);
 }
 
+static void 
+_e_mod_run_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+  Eina_List *l;
+  char buf[1024];
+  
+  for (l = e_configure_registry; l; l = l->next)
+    {
+      Eina_List *ll;
+      E_Configure_Cat *ecat;
+	
+      ecat = l->data;
+      if ((ecat->pri >= 0) && (ecat->items))
+	{
+	  for (ll = ecat->items; ll; ll = ll->next)
+	    {
+	      E_Configure_It *eci;
+	      char buf[1024];
+		  
+	      eci = ll->data;
+	      if (eci->pri >= 0 && eci == data)
+		{
+		  snprintf(buf, sizeof(buf), "%s/%s", ecat->cat, eci->item);
+		  e_configure_registry_call(buf, m->zone->container, NULL);
+		}
+	    }
+	}
+    }
+}
+
+static void
+_config_pre_activate_cb(void *data, E_Menu *m)
+{
+  E_Configure_Cat *ecat = data;
+  Eina_List *l;
+  E_Menu_Item *mi;
+  /*XXX is this the right way to not initiate the menu a second time ?*/
+  if (e_menu_item_nth(m, 0)) return;
+  
+  for (l = ecat->items; l; l = l->next)
+    {
+      E_Configure_It *eci;
+      char buf[1024];
+		  
+      eci = l->data;
+      if (eci->pri >= 0)
+	{
+	  mi = e_menu_item_new(m);
+	  e_menu_item_label_set(mi, eci->label);
+	  if(eci->icon)
+	  e_util_menu_item_theme_icon_set(mi, eci->icon);
+	  
+	  e_menu_item_callback_set(mi, _e_mod_run_cb, eci);
+	}
+    }
+}
+
+
+/* menu item add hook */
+void
+e_mod_config_menu_add(void *data, E_Menu *m)
+{
+  E_Menu_Item *mi;
+  E_Menu *sub;
+  
+  Eina_List *l;
+
+  mi = e_menu_item_new(m);
+  e_menu_item_separator_set(mi, 1);
+  
+  for (l = e_configure_registry; l; l = l->next)
+    {
+      Eina_List *ll;
+      E_Configure_Cat *ecat;
+	
+      ecat = l->data;
+      if ((ecat->pri >= 0) && (ecat->items))
+	{
+	  mi = e_menu_item_new(m);
+	  e_menu_item_label_set(mi, ecat->label);
+	  if(ecat->icon)
+	    e_util_menu_item_theme_icon_set(mi, ecat->icon);
+
+	  sub = e_menu_new();
+	  e_menu_item_submenu_set(mi, sub);
+	  e_menu_pre_activate_callback_set(sub, _config_pre_activate_cb, ecat);
+	}
+    }
+}
+
 /* module setup */
 EAPI E_Module_Api e_modapi = { E_MODULE_API_VERSION, "Conf" };
 
 EAPI void *
 e_modapi_init(E_Module *m)
 {
+   char buf[PATH_MAX];
    conf_module = m;
    /* add module supplied action */
    act = e_action_add("configuration");
@@ -128,6 +226,71 @@ e_modapi_init(E_Module *m)
      e_int_menus_menu_augmentation_add_sorted("config/0", _("Settings Panel"), 
                                               _e_mod_menu_add, NULL, NULL, NULL);
    e_module_delayed_set(m, 1);
+   
+   snprintf(buf, sizeof(buf), "%s/e-module-conf.edj",
+            e_module_dir_get(conf_module));
+   
+   e_configure_registry_category_add("advanced", 80, "Advanced", 
+                                     NULL, "preferences-advanced");
+   e_configure_registry_item_add("advanced/conf", 110, _("Configuration Panel"), 
+                                 NULL, buf, e_int_config_conf_module);
+
+   conf_edd = E_CONFIG_DD_NEW("Config", Config);
+   #undef T
+   #undef D
+   #define T Config
+   #define D conf_edd
+   E_CONFIG_VAL(D, T, version, INT);
+   E_CONFIG_VAL(D, T, menu_augmentation, INT);
+
+   conf = e_config_domain_load("module.conf", conf_edd);
+   if (conf) 
+     {
+        if ((conf->version >> 16) < MOD_CONFIG_FILE_EPOCH) 
+          {
+             _conf_free();
+             ecore_timer_add(1.0, _conf_timer,
+			     _("Configuration Panel Module Configuration data needed "
+			     "upgrading. Your old configuration<br> has been"
+			     " wiped and a new set of defaults initialized. "
+			     "This<br>will happen regularly during "
+			     "development, so don't report a<br>bug. "
+			     "This simply means the module needs "
+			     "new configuration<br>data by default for "
+			     "usable functionality that your old<br>"
+			     "configuration simply lacks. This new set of "
+			     "defaults will fix<br>that by adding it in. "
+			     "You can re-configure things now to your<br>"
+			     "liking. Sorry for the inconvenience.<br>"));
+          }
+        else if (conf->version > MOD_CONFIG_FILE_VERSION) 
+          {
+             _conf_free();
+             ecore_timer_add(1.0, _conf_timer, 
+			     _("Your Configuration Panel Module configuration is NEWER "
+			     "than the module version. This is "
+			     "very<br>strange. This should not happen unless"
+			     " you downgraded<br>the module or "
+			     "copied the configuration from a place where"
+			     "<br>a newer version of the module "
+			     "was running. This is bad and<br>as a "
+			     "precaution your configuration has been now "
+			     "restored to<br>defaults. Sorry for the "
+			     "inconvenience.<br>"));
+          }
+     }
+
+   if (!conf) _conf_new();
+   conf->module = m;
+   
+   if (conf->menu_augmentation)
+     {
+       conf->aug = e_int_menus_menu_augmentation_add("config/0", e_mod_config_menu_add, NULL, NULL, NULL);
+       e_int_menus_menu_augmentation_point_disabled_set("config/1", 1);
+     }
+   else
+     e_int_menus_menu_augmentation_point_disabled_set("config/1", 0);
+
    e_gadcon_provider_register(&_gadcon_class);
    return m;
 }
@@ -136,12 +299,25 @@ EAPI int
 e_modapi_shutdown(E_Module *m)
 {
    e_configure_del();
+
+   e_configure_registry_item_del("advanced/conf");
+   e_configure_registry_category_del("advanced");
+   
+   if (conf->cfd) e_object_del(E_OBJECT(conf->cfd));
+   conf->cfd = NULL;
+   
    e_gadcon_provider_unregister(&_gadcon_class);
    /* remove module-supplied menu additions */
    if (maug)
      {
 	e_int_menus_menu_augmentation_del("config/0", maug);
 	maug = NULL;
+     }
+   if (conf->aug)
+     {
+    e_int_menus_menu_augmentation_del("config/0", conf->aug);
+    conf->aug = NULL;
+    e_int_menus_menu_augmentation_point_disabled_set("config/1", 0);
      }
    /* remove module-supplied action */
    if (act)
@@ -151,12 +327,17 @@ e_modapi_shutdown(E_Module *m)
 	act = NULL;
      }
    conf_module = NULL;
+   
+   E_FREE(conf);
+   E_CONFIG_DD_FREE(conf_edd);
+   
    return 1;
 }
 
 EAPI int
 e_modapi_save(E_Module *m)
 {
+   e_config_domain_save("module.conf", conf_edd, conf);
    return 1;
 }
 
@@ -256,4 +437,36 @@ _e_mod_menu_add(void *data, E_Menu *m)
    e_menu_item_label_set(mi, _("Modes"));
    e_util_menu_item_theme_icon_set(mi, "preferences-modes");
    e_menu_item_submenu_set(mi, _e_mod_submenu_modes_get());
+}
+
+static void 
+_conf_new(void) 
+{
+   char buf[128];
+
+   conf = E_NEW(Config, 1);
+   conf->version = (MOD_CONFIG_FILE_EPOCH << 16);
+
+#define IFMODCFG(v) if ((conf->version & 0xffff) < v) {
+#define IFMODCFGEND }
+
+   IFMODCFG(0x008d);
+   conf->menu_augmentation = 1;
+   IFMODCFGEND;
+
+   conf->version = MOD_CONFIG_FILE_VERSION;
+   e_config_save_queue();
+}
+
+static void 
+_conf_free(void) 
+{
+   E_FREE(conf);
+}
+
+static int 
+_conf_timer(void *data) 
+{
+   e_util_dialog_show(_("Configuration Panel Configuration Updated"), data);
+   return 0;
 }
