@@ -5,6 +5,7 @@
 /* local function prototypes */
 static void _e_mod_ind_win_cb_free(Ind_Win *iwin);
 static int _e_mod_ind_win_cb_win_prop(void *data, int type __UNUSED__, void *event);
+static int _e_mod_ind_win_cb_zone_resize(void *data, int type __UNUSED__, void *event);
 static void _e_mod_ind_win_cb_resize(E_Win *win);
 static void _e_mod_ind_win_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event);
 static void _e_mod_ind_win_cb_mouse_up(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event);
@@ -102,9 +103,18 @@ e_mod_ind_win_new(E_Zone *zone)
    e_gadcon_populate(iwin->gadcon);
 
    /* hook into property change so we can adjust w/ e_scale */
-   iwin->scale_hdl = 
-     ecore_event_handler_add(ECORE_X_EVENT_WINDOW_PROPERTY, 
-                             _e_mod_ind_win_cb_win_prop, iwin);
+   iwin->hdls = 
+     eina_list_append(iwin->hdls, 
+                      ecore_event_handler_add(ECORE_X_EVENT_WINDOW_PROPERTY, 
+                                              _e_mod_ind_win_cb_win_prop, iwin));
+
+   /* hook into zone resize so we can set minimum window width when zone 
+    * size changes */
+   iwin->hdls = 
+     eina_list_append(iwin->hdls, 
+                      ecore_event_handler_add(E_EVENT_ZONE_MOVE_RESIZE, 
+                                              _e_mod_ind_win_cb_zone_resize, 
+                                              iwin));
 
    /* set minimum size of this window */
    e_win_size_min_set(iwin->win, zone->w, (32 * e_scale));
@@ -133,9 +143,11 @@ e_mod_ind_win_new(E_Zone *zone)
 static void 
 _e_mod_ind_win_cb_free(Ind_Win *iwin) 
 {
-   /* delete the scale handler */
-   if (iwin->scale_hdl) ecore_event_handler_del(iwin->scale_hdl);
-   iwin->scale_hdl = NULL;
+   Ecore_Event_Handler *hdl;
+
+   /* delete the handlers */
+   EINA_LIST_FREE(iwin->hdls, hdl)
+     ecore_event_handler_del(hdl);
 
    /* delete the border hook */
    if (iwin->hook) e_border_hook_del(iwin->hook);
@@ -197,6 +209,22 @@ _e_mod_ind_win_cb_win_prop(void *data, int type __UNUSED__, void *event)
    ecore_x_e_illume_indicator_geometry_set(iwin->zone->black_win, 
                                            iwin->win->x, iwin->win->y, 
                                            iwin->win->w, (32 * e_scale));
+
+   return 1;
+}
+
+static int 
+_e_mod_ind_win_cb_zone_resize(void *data, int type __UNUSED__, void *event) 
+{
+   Ind_Win *iwin;
+   E_Event_Zone_Move_Resize *ev;
+
+   ev = event;
+   if (!(iwin = data)) return 1;
+   if (ev->zone != iwin->zone) return 1;
+
+   /* set minimum size of this window to match zone size */
+   e_win_size_min_set(iwin->win, ev->zone->w, (32 * e_scale));
 
    return 1;
 }
