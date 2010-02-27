@@ -434,6 +434,16 @@ _e_kbd_int_key_press_handle(E_Kbd_Int *ki, Evas_Coord dx, Evas_Coord dy)
 static void
 _e_kbd_int_stroke_handle(E_Kbd_Int *ki, int dir)
 {
+   /* If the keyboard direction is RTL switch dir 3 and 1
+    * i.e, make forward backwards and the other way around */
+   if (ki->layout.direction == E_KBD_INT_DIRECTION_RTL)
+     {
+        if (dir == 3)
+          dir = 1;
+	else if (dir == 1)
+          dir = 3;
+     }
+
    if (dir == 4) // up
      _e_kbd_int_layout_next(ki);
    else if (dir == 3) // left
@@ -882,14 +892,18 @@ _e_kbd_int_layout_parse(E_Kbd_Int *ki, const char *layout)
    E_Kbd_Int_Key *ky = NULL;
    E_Kbd_Int_Key_State *st = NULL;
 
-   f = fopen(layout, "r");
-   if (!f) return;
+   if (!(f = fopen(layout, "r"))) return;
+
    ki->layout.directory = ecore_file_dir_get(layout);
    ki->layout.file = eina_stringshare_add(layout);
+
+   /* Make the default direction LTR */
+   ki->layout.direction = E_KBD_INT_DIRECTION_LTR;
+
    while (fgets(buf, sizeof(buf), f))
      {
 	int len;
-	char str[4096];
+	char str[PATH_MAX];
 
 	if (!isok)
 	  {
@@ -911,6 +925,19 @@ _e_kbd_int_layout_parse(E_Kbd_Int *ki, const char *layout)
 	if (!strcmp(str, "fuzz"))
 	  {
 	     sscanf(buf, "%*s %i\n", &(ki->layout.fuzz));
+	     continue;
+	  }
+	if (!strcmp(str, "direction"))
+	  {
+	     char direction[4];
+
+	     sscanf(buf, "%*s %3s\n", direction);
+
+	     /* If rtl mark as rtl, otherwise make it ltr */
+	     if (!strcmp(direction, "rtl"))
+               ki->layout.direction = E_KBD_INT_DIRECTION_RTL;
+	     else
+               ki->layout.direction = E_KBD_INT_DIRECTION_LTR;
 	     continue;
 	  }
 	if (!strcmp(str, "key"))
