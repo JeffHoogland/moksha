@@ -9,7 +9,8 @@ EXTRA_DIST = \
 	module.battery.src \
 	module.illume-home.src \
 	module.illume-keyboard.src \
-        module.illume2.src
+        module.illume2.src \
+        module.conf.src
 
 filesdir = $(datadir)/enlightenment/data/config/illume-home
 files_DATA = \
@@ -19,7 +20,8 @@ files_DATA = \
 	module.battery.cfg \
 	module.illume-home.cfg \
         module.illume-keyboard.cfg \
-        module.illume2.cfg
+        module.illume2.cfg \
+        module.conf.cfg
 
 SUFFIXES = .cfg
 
