@@ -5,6 +5,7 @@
 /* local function prototypes */
 static void _e_mod_sft_win_cb_free(Sft_Win *swin);
 static int _e_mod_sft_win_cb_win_prop(void *data, int type __UNUSED__, void *event);
+static int _e_mod_sft_win_cb_zone_resize(void *data, int type __UNUSED__, void *event);
 static void _e_mod_sft_win_cb_resize(E_Win *win);
 static void _e_mod_sft_win_create_default_buttons(Sft_Win *swin);
 static void _e_mod_sft_win_cb_close(void *data, void *data2 __UNUSED__);
@@ -23,9 +24,17 @@ e_mod_sft_win_new(E_Zone *zone)
    swin->zone = zone;
    
    /* hook into property change so we can adjust w/ e_scale */
-   swin->scale_hdl = 
-     ecore_event_handler_add(ECORE_X_EVENT_WINDOW_PROPERTY, 
-                             _e_mod_sft_win_cb_win_prop, swin);
+   swin->hdls = 
+     eina_list_append(swin->hdls, 
+                      ecore_event_handler_add(ECORE_X_EVENT_WINDOW_PROPERTY, 
+                                              _e_mod_sft_win_cb_win_prop, swin));
+
+   /* hook into zone resize so we can adjust min width */
+   swin->hdls = 
+     eina_list_append(swin->hdls, 
+                      ecore_event_handler_add(E_EVENT_ZONE_MOVE_RESIZE, 
+                                              _e_mod_sft_win_cb_zone_resize, 
+                                              swin));
 
    /* create new window */
    swin->win = e_win_new(zone->container);
@@ -94,15 +103,12 @@ e_mod_sft_win_new(E_Zone *zone)
 static void 
 _e_mod_sft_win_cb_free(Sft_Win *swin) 
 {
+   Ecore_Event_Handler *hdl;
    const Evas_Object *box;
 
-   /* delete the message handler */
-   if (swin->msg_hdl) ecore_event_handler_del(swin->msg_hdl);
-   swin->msg_hdl = NULL;
-
-   /* delete the scale handler */
-   if (swin->scale_hdl) ecore_event_handler_del(swin->scale_hdl);
-   swin->scale_hdl = NULL;
+   /* delete the event handlers */
+   EINA_LIST_FREE(swin->hdls, hdl)
+     ecore_event_handler_del(hdl);
 
    /* delete the border hook */
    if (swin->hook) e_border_hook_del(swin->hook);
@@ -173,6 +179,22 @@ _e_mod_sft_win_cb_win_prop(void *data, int type __UNUSED__, void *event)
    ecore_x_e_illume_softkey_geometry_set(swin->zone->black_win, 
                                          swin->win->x, swin->win->y, 
                                          swin->win->w, (32 * e_scale));
+   return 1;
+}
+
+static int 
+_e_mod_sft_win_cb_zone_resize(void *data, int type __UNUSED__, void *event) 
+{
+   Sft_Win *swin;
+   E_Event_Zone_Move_Resize *ev;
+
+   ev = event;
+   if (!(swin = data)) return 1;
+   if (ev->zone != swin->zone) return 1;
+
+   /* set minimum size of this window */
+   e_win_size_min_set(swin->win, ev->zone->w, (32 * e_scale));
+
    return 1;
 }
 

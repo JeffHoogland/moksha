@@ -12,7 +12,7 @@ struct _Sft_Win
 
    E_Zone *zone;
    E_Border_Hook *hook;
-   Ecore_Event_Handler *scale_hdl, *msg_hdl;
+   Eina_List *hdls;
 
    E_Win *win;
    Evas_Object *o_base;
