@@ -17,7 +17,7 @@ e_int_config_conf_module(E_Container *con, const char *params)
 {
    E_Config_Dialog *cfd = NULL;
    E_Config_Dialog_View *v = NULL;
-   char buf[4096];
+   char buf[PATH_MAX];
 
    /* is this config dialog already visible ? */
    if (e_config_dialog_find("Conf", "advanced/conf")) return NULL;
@@ -34,7 +34,6 @@ e_int_config_conf_module(E_Container *con, const char *params)
    cfd = e_config_dialog_new(con, _("Configuration Panel"), "Conf", 
                              "advanced/conf", buf, 0, v, NULL);
 
-   e_dialog_resizable_set(cfd->dia, 0);
    conf->cfd = cfd;
    return cfd;
 }
@@ -74,7 +73,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    ow = e_widget_check_add(evas, _("Show configuration panel contents in Settings menu"), 
                            &(cfdata->menu_augmentation));
    e_widget_framelist_object_append(of, ow);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_list_object_append(o, of, 1, 0, 0.5);
 
    return o;
 }
@@ -85,13 +84,16 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    conf->menu_augmentation = cfdata->menu_augmentation;
    if (conf->aug)
      {
-    e_int_menus_menu_augmentation_del("config/0", conf->aug);
-    conf->aug = NULL;
+        e_int_menus_menu_augmentation_del("config/0", conf->aug);
+        conf->aug = NULL;
      }
 
    if (conf->menu_augmentation)
      {
-       conf->aug = e_int_menus_menu_augmentation_add("config/0", e_mod_config_menu_add, NULL, NULL, NULL);
+       conf->aug = 
+          e_int_menus_menu_augmentation_add("config/0", 
+                                            e_mod_config_menu_add, 
+                                            NULL, NULL, NULL);
        e_int_menus_menu_augmentation_point_disabled_set("config/1", 1);
      }
    else

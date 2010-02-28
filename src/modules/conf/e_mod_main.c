@@ -163,7 +163,7 @@ _config_pre_activate_cb(void *data, E_Menu *m)
           {
              mi = e_menu_item_new(m);
              e_menu_item_label_set(mi, eci->label);
-             if(eci->icon) 
+             if (eci->icon) 
                {
                   if (eci->icon_file)
                     e_menu_item_icon_edje_set(mi, eci->icon_file, eci->icon);
