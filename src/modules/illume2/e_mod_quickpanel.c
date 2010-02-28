@@ -223,18 +223,18 @@ _e_mod_quickpanel_cb_border_add(void *data __UNUSED__, int type __UNUSED__, void
         con = e_container_current_get(e_manager_current_get());
         zn = ev->border->client.illume.quickpanel.zone;
         zone = e_util_container_zone_number_get(con->num, zn);
-        if (!zone) return 1;
+        if (!zone) zone = e_util_container_zone_number_get(con->num, 0);
      }
 
    if (!(qp = e_illume_quickpanel_by_zone_get(zone))) return 1;
 
    /* set position and zone */
    e_illume_border_indicator_pos_get(zone, NULL, &iy);
-   if ((ev->border->x != zone->x) || (ev->border->y != iy))
+   if ((ev->border->x != zone->x) || (ev->border->y != iy)) 
      e_border_move(ev->border, zone->x, iy);
    if (ev->border->zone != zone) 
      e_border_zone_set(ev->border, zone);
-
+   
    /* hide this border */
    e_illume_border_hide(ev->border);
 

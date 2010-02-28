@@ -302,6 +302,7 @@ struct _E_Illume_Quickpanel
    E_Object e_obj_inherit;
 
    E_Zone *zone;
+   /**< the current zone on which this quickpanel belongs */
    Eina_List *borders;
    Ecore_Timer *timer;
    Ecore_Animator *animator;

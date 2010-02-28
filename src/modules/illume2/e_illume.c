@@ -531,9 +531,7 @@ e_illume_border_parent_get(E_Border *bd)
 
    /* NB: TEST CODE - may need to check bd->leader here */
    if (bd->leader) 
-     {
-        printf("\tDialog Has Leader: %s\n", bd->client.icccm.name);
-     }
+     printf("\tDialog Has Leader: %s\n", bd->client.icccm.name);
 
    /* check for transient */
    if (bd->client.icccm.transient_for) 
