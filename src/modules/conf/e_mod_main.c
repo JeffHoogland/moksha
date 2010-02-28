@@ -9,6 +9,8 @@
 static void _e_mod_action_conf_cb(E_Object *obj, const char *params);
 static void _e_mod_conf_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_mod_menu_add(void *data, E_Menu *m);
+static void _e_mod_run_cb(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _config_pre_activate_cb(void *data, E_Menu *m);
 
 /* gadcon requirements */
 static E_Gadcon_Client *_gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style);
@@ -233,7 +235,7 @@ e_modapi_init(E_Module *m)
    snprintf(buf, sizeof(buf), "%s/e-module-conf.edj",
             e_module_dir_get(conf_module));
 
-   e_configure_registry_category_add("advanced", 80, "Advanced", 
+   e_configure_registry_category_add("advanced", 80, _("Advanced"), 
                                      NULL, "preferences-advanced");
    e_configure_registry_item_add("advanced/conf", 110, _("Configuration Panel"), 
                                  NULL, buf, e_int_config_conf_module);
