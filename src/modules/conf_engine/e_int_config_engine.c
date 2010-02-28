@@ -1,11 +1,11 @@
 #include "e.h"
 
 static void *_create_data(E_Config_Dialog *cfd);
-static void  _fill_data(E_Config_Dialog_Data *cfdata);
-static void  _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static int   _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static void _fill_data(E_Config_Dialog_Data *cfdata);
+static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static int   _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static void _cb_composite_change(void *data, Evas_Object *obj);
 static void _cb_confirm_yes(void *data);
 static void _cb_confirm_no(void *data);
@@ -97,21 +97,25 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    cfdata->o_composite = ob;
    e_widget_on_change_hook_set(ob, _cb_composite_change, cfdata);
    e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_list_object_append(o, of, 1, 0, 0.5);
 
    of = e_widget_framelist_add(evas, _("Default Engine"), 0);
    rg = e_widget_radio_group_new(&(cfdata->evas_engine_default));
    for (l = e_config_engine_list(); l; l = l->next)
      {
-        if (!strcmp("SOFTWARE", l->data)) engine = E_EVAS_ENGINE_SOFTWARE_X11;
-        else if (!strcmp("GL", l->data)) engine = E_EVAS_ENGINE_GL_X11;
-        else if (!strcmp("XRENDER", l->data)) engine = E_EVAS_ENGINE_XRENDER_X11;
-        else if (!strcmp("SOFTWARE_16", l->data)) engine = E_EVAS_ENGINE_SOFTWARE_X11_16;
+        if (!strcmp("SOFTWARE", l->data)) 
+          engine = E_EVAS_ENGINE_SOFTWARE_X11;
+        else if (!strcmp("GL", l->data)) 
+          engine = E_EVAS_ENGINE_GL_X11;
+        else if (!strcmp("XRENDER", l->data)) 
+          engine = E_EVAS_ENGINE_XRENDER_X11;
+        else if (!strcmp("SOFTWARE_16", l->data)) 
+          engine = E_EVAS_ENGINE_SOFTWARE_X11_16;
 	else continue;
         ob = e_widget_radio_add(evas, _(l->data), engine, rg);
         e_widget_framelist_object_append(of, ob);
      }
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_list_object_append(o, of, 1, 0, 0.5);
 
    e_dialog_resizable_set(cfd->dia, 0);
    return o;
