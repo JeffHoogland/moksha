@@ -94,15 +94,17 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    of = e_widget_framelist_add(evas, _("General Settings"), 0);
    ob = e_widget_label_add(evas, _("Framerate"));
    e_widget_framelist_object_append(of, ob);   
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f fps"), 5.0, 200.0, 5.0, 0, &(cfdata->framerate), NULL, 150);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f fps"), 5.0, 200.0, 5.0, 0, 
+                            &(cfdata->framerate), NULL, 150);
    e_widget_framelist_object_append(of, ob);
 
    ob = e_widget_label_add(evas, _("Application Priority"));
    e_widget_framelist_object_append(of, ob);   
-   ob = e_widget_slider_add(evas, 1, 0, "%1.0f", 0, 19, 1, 0, NULL, &(cfdata->priority), 150);
+   ob = e_widget_slider_add(evas, 1, 0, "%1.0f", 0, 19, 1, 0, NULL, 
+                            &(cfdata->priority), 150);
    e_widget_framelist_object_append(of, ob);
 
-   e_widget_list_object_append(o, of, 1, 1, 0.5);   
+   e_widget_list_object_append(o, of, 1, 0, 0.5);
    return o;
 }
 
@@ -146,29 +148,34 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    of = e_widget_framelist_add(evas, _("Cache Settings"), 0);   
    ob = e_widget_label_add(evas, _("Cache Flush Interval"));
    e_widget_framelist_object_append(of, ob);   
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f ticks"), 8, 4096, 8, 0, NULL, &(cfdata->cache_flush_poll_interval), 150);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f ticks"), 8, 4096, 8, 0, NULL, 
+                            &(cfdata->cache_flush_poll_interval), 150);
    e_widget_framelist_object_append(of, ob);
 
    ob = e_widget_label_add(evas, _("Size Of Font Cache"));
    e_widget_framelist_object_append(of, ob);   
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.1f MB"), 0, 4, 0.1, 0, &(cfdata->font_cache), NULL, 150);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.1f MB"), 0, 4, 0.1, 0, 
+                            &(cfdata->font_cache), NULL, 150);
    e_widget_framelist_object_append(of, ob);
 
    ob = e_widget_label_add(evas, _("Size Of Image Cache"));
    e_widget_framelist_object_append(of, ob);   
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f MB"), 0, 32, 1, 0, &(cfdata->image_cache), NULL, 150);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f MB"), 0, 32, 1, 0, 
+                            &(cfdata->image_cache), NULL, 150);
    e_widget_framelist_object_append(of, ob);
 
    ob = e_widget_label_add(evas, _("Number Of Edje Files To Cache"));
    e_widget_framelist_object_append(of, ob);   
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f files"), 0, 256, 1, 0, NULL, &(cfdata->edje_cache), 150);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f files"), 0, 256, 1, 0, NULL, 
+                            &(cfdata->edje_cache), 150);
    e_widget_framelist_object_append(of, ob);
 
    ob = e_widget_label_add(evas, _("Number Of Edje Collections To Cache"));
    e_widget_framelist_object_append(of, ob);   
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f collections"), 0, 512, 1, 0, NULL, &(cfdata->edje_collection_cache), 150);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f collections"), 0, 512, 1, 0, 
+                            NULL, &(cfdata->edje_collection_cache), 150);
    e_widget_framelist_object_append(of, ob);
 
-   e_widget_list_object_append(o, of, 1, 1, 0.5);   
+   e_widget_list_object_append(o, of, 1, 0, 0.5);
    return o;
 }
