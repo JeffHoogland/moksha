@@ -13,7 +13,8 @@ EXTRA_DIST = \
 	module.ibar.src \
 	module.ibox.src \
 	module.pager.src \
-	module.temperature.src
+	module.temperature.src \
+	module.conf.src
 
 filesdir = $(datadir)/enlightenment/data/config/scaleable
 files_DATA = \
@@ -27,7 +28,8 @@ files_DATA = \
 	module.ibar.cfg \
 	module.ibox.cfg \
 	module.pager.cfg \
-	module.temperature.cfg
+	module.temperature.cfg \
+	module.conf.cfg
 
 SUFFIXES = .cfg
 
