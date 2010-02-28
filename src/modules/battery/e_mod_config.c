@@ -25,7 +25,7 @@ e_int_config_battery_module(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
-   char buf[4096];
+   char buf[PATH_MAX];
 
    v = E_NEW(E_Config_Dialog_View, 1);
    v->create_cfdata = _create_data;
@@ -94,7 +94,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    ob = e_widget_check_add(evas, _("Show alert when battery is low"), 
                            &(cfdata->show_alert));
    e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_list_object_append(o, of, 1, 0, 0.5);
    return o;
 }
 
@@ -130,7 +130,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    Evas_Object *o, *ob, *otb;
    E_Radio_Group *rg;
 
-   otb = e_widget_toolbook_add(evas, 48 * e_scale, 48 * e_scale);
+   otb = e_widget_toolbook_add(evas, (48 * e_scale), (48 * e_scale));
 
    /* Use Sliders for both cfg options */
    o = e_widget_table_add(evas, 0);
