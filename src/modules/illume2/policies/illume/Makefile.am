@@ -23,5 +23,5 @@ illume_la_SOURCES = \
                   illume.c
 
 illume_la_LIBADD = @e_libs@
-illume_la_LDFLAGS = -no-undefined -module -avoid-version
+illume_la_LDFLAGS = -module -avoid-version
 illume_la_LIBTOOLFLAGS = --tag=disable-static
