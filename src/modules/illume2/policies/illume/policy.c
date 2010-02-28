@@ -390,10 +390,7 @@ _policy_zone_layout_keyboard(E_Border *bd, E_Illume_Config_Zone *cz)
 
    /* check layer according to fullscreen state */
    if ((bd->fullscreen) || (bd->need_fullscreen)) 
-     {
-        printf("Keyboard needs fullscreen\n");
-        layer = POL_FULLSCREEN_LAYER;
-     }
+     layer = POL_FULLSCREEN_LAYER;
    else
      layer = POL_KEYBOARD_LAYER;
 
@@ -530,7 +527,7 @@ _policy_zone_layout_home_dual_left(E_Border *bd, E_Illume_Config_Zone *cz)
 static void 
 _policy_zone_layout_fullscreen(E_Border *bd) 
 {
-   int kh, ny, nh;
+   int kh;
 
 //   printf("\tLayout Fullscreen: %s\n", bd->client.icccm.name);
 
