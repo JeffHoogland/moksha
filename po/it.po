@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-02-19 14:41+0100\n"
-"PO-Revision-Date: 2010-02-17 13:49+0100\n"
+"POT-Creation-Date: 2010-02-28 10:30+0100\n"
+"PO-Revision-Date: 2010-02-28 10:40+0100\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -31,7 +31,7 @@ msgid "Close"
 msgstr "Chiudi"
 
 #: src/bin/e_about.c:21 src/bin/e_actions.c:2849 src/bin/e_actions.c:2853
-#: src/bin/e_actions.c:2857 src/bin/e_int_menus.c:165 src/bin/e_main.c:675
+#: src/bin/e_actions.c:2857 src/bin/e_int_menus.c:172 src/bin/e_main.c:675
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:210
 #: src/modules/wizard/page_000.c:32
 msgid "Enlightenment"
@@ -289,7 +289,7 @@ msgstr "Commuta stato attaccata"
 #: src/bin/e_actions.c:2751 src/bin/e_actions.c:2899 src/bin/e_actions.c:2904
 #: src/bin/e_fm.c:3197 src/bin/e_fm.c:3202 src/bin/e_fm.c:9751
 #: src/bin/e_fm_hal.c:328 src/bin/e_fm_hal.c:352 src/bin/e_fm_hal.c:628
-#: src/bin/e_fm_hal.c:655 src/bin/e_int_menus.c:134
+#: src/bin/e_fm_hal.c:655 src/bin/e_int_menus.c:141
 #: src/bin/e_int_shelf_config.c:724
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:104
 #: src/modules/fileman/e_mod_main.c:324 src/modules/ibox/e_mod_config.c:165
@@ -545,7 +545,7 @@ msgid "Show Menu..."
 msgstr "Mostra menù..."
 
 #: src/bin/e_actions.c:2840 src/bin/e_actions.c:2845
-#: src/modules/conf/e_mod_main.c:124 src/modules/conf/e_mod_main.c:149
+#: src/modules/conf/e_mod_main.c:225 src/modules/conf/e_mod_main.c:332
 #: src/modules/exebuf/e_mod_main.c:34 src/modules/exebuf/e_mod_main.c:55
 #: src/modules/fileman/e_mod_main.c:63 src/modules/fileman/e_mod_main.c:146
 msgid "Launch"
@@ -559,11 +559,11 @@ msgstr "Comando"
 msgid "Application"
 msgstr "Applicazione"
 
-#: src/bin/e_actions.c:2849 src/bin/e_int_menus.c:189
+#: src/bin/e_actions.c:2849 src/bin/e_int_menus.c:196
 msgid "Restart"
 msgstr "Riavvia"
 
-#: src/bin/e_actions.c:2853 src/bin/e_int_menus.c:194
+#: src/bin/e_actions.c:2853 src/bin/e_int_menus.c:201
 msgid "Exit"
 msgstr "Esci"
 
@@ -627,7 +627,7 @@ msgstr "Iberna"
 msgid "Lock"
 msgstr "Blocca"
 
-#: src/bin/e_actions.c:2904 src/bin/e_int_menus.c:1122
+#: src/bin/e_actions.c:2904 src/bin/e_int_menus.c:1148
 msgid "Cleanup Windows"
 msgstr "Ordina Finestre"
 
@@ -1511,7 +1511,7 @@ msgstr "Elimina questo gadget"
 msgid "Stop move/resize this gadget"
 msgstr "Fine spostamento/ridimensionamento di questo gadget"
 
-#: src/bin/e_hints.c:151
+#: src/bin/e_hints.c:150
 msgid ""
 "A previous instance of Enlightenment is still active\n"
 "on this screen. Aborting startup.\n"
@@ -2013,9 +2013,9 @@ msgstr "Mantieni proprietà attuali"
 msgid "Start this program on login"
 msgstr "Avvia questo programma al login"
 
-#: src/bin/e_int_config_modules.c:42 src/bin/e_int_menus.c:210
+#: src/bin/e_int_config_modules.c:42 src/bin/e_int_menus.c:217
 #: src/modules/battery/e_mod_main.c:176 src/modules/conf/e_conf.c:121
-#: src/modules/conf/e_conf.c:131 src/modules/conf/e_mod_main.c:81
+#: src/modules/conf/e_conf.c:131 src/modules/conf/e_mod_main.c:86
 #: src/modules/conf_dialogs/e_mod_main.c:20
 #: src/modules/conf_profiles/e_mod_main.c:20 src/modules/ibar/e_mod_main.c:314
 #: src/modules/ibar/e_mod_main.c:824 src/modules/ibox/e_mod_main.c:313
@@ -2109,21 +2109,21 @@ msgstr ""
 "che la configurazione<br>del metodo di input sia giusta e "
 "che<br>l'eseguibile di configurazione sia nel<br>proprio PATH<br>"
 
-#: src/bin/e_int_menus.c:89
+#: src/bin/e_int_menus.c:96
 msgid "Main"
 msgstr "Principale"
 
-#: src/bin/e_int_menus.c:106
+#: src/bin/e_int_menus.c:113
 msgid "Favorite Applications"
 msgstr "Applicazioni preferite"
 
-#: src/bin/e_int_menus.c:117
+#: src/bin/e_int_menus.c:124
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:185
 #: src/modules/wizard/page_070.c:202
 msgid "Applications"
 msgstr "Applicazioni"
 
-#: src/bin/e_int_menus.c:141 src/bin/e_int_menus.c:1081
+#: src/bin/e_int_menus.c:148 src/bin/e_int_menus.c:1107
 #: src/modules/conf_window_display/e_mod_main.c:20
 #: src/modules/conf_window_focus/e_mod_main.c:20
 #: src/modules/conf_window_manipulation/e_mod_main.c:20
@@ -2132,64 +2132,64 @@ msgstr "Applicazioni"
 msgid "Windows"
 msgstr "Finestre"
 
-#: src/bin/e_int_menus.c:149 src/bin/e_int_menus.c:1135
+#: src/bin/e_int_menus.c:156 src/bin/e_int_menus.c:1161
 msgid "Lost Windows"
 msgstr "Finestre perse"
 
-#: src/bin/e_int_menus.c:170
+#: src/bin/e_int_menus.c:177
 msgid "About"
 msgstr "Informazioni su..."
 
-#: src/bin/e_int_menus.c:175 src/modules/conf_theme/e_mod_main.c:26
+#: src/bin/e_int_menus.c:182 src/modules/conf_theme/e_mod_main.c:26
 #: src/modules/conf_theme/e_mod_main.c:31
 #: src/modules/conf_theme/e_mod_main.c:80
 msgid "Theme"
 msgstr "Tema"
 
-#: src/bin/e_int_menus.c:262
+#: src/bin/e_int_menus.c:269
 msgid "Virtual"
 msgstr "Virtuali"
 
-#: src/bin/e_int_menus.c:269 src/modules/conf_shelves/e_mod_main.c:25
+#: src/bin/e_int_menus.c:276 src/modules/conf_shelves/e_mod_main.c:25
 #: src/modules/conf_shelves/e_mod_main.c:27
 #: src/modules/conf_shelves/e_mod_main.c:71
 msgid "Shelves"
 msgstr "Mensole porta-gadget"
 
-#: src/bin/e_int_menus.c:278
+#: src/bin/e_int_menus.c:285
 msgid "Show/Hide All Windows"
 msgstr "Mostra/nascondi tutte le finestre"
 
-#: src/bin/e_int_menus.c:575
+#: src/bin/e_int_menus.c:598
 msgid "(No Applications)"
 msgstr "(Nessuna Applicazione)"
 
-#: src/bin/e_int_menus.c:709
+#: src/bin/e_int_menus.c:732
 msgid "Set Virtual Desktops"
 msgstr "Imposta desktop virtuali"
 
-#: src/bin/e_int_menus.c:1087 src/bin/e_int_menus.c:1271
+#: src/bin/e_int_menus.c:1113 src/bin/e_int_menus.c:1297
 msgid "(No Windows)"
 msgstr "(Nessuna Finestra)"
 
-#: src/bin/e_int_menus.c:1181 src/bin/e_int_menus.c:1283
+#: src/bin/e_int_menus.c:1207 src/bin/e_int_menus.c:1309
 msgid "No name!!"
 msgstr "Nessun nome!!"
 
-#: src/bin/e_int_menus.c:1362
+#: src/bin/e_int_menus.c:1400
 msgid "(No Shelves)"
 msgstr "(Nessuna mensola)"
 
-#: src/bin/e_int_menus.c:1374 src/bin/e_shelf.c:166 src/bin/e_shelf.c:1171
+#: src/bin/e_int_menus.c:1412 src/bin/e_shelf.c:166 src/bin/e_shelf.c:1171
 #: src/modules/conf_shelves/e_int_config_shelf.c:132
 msgid "Shelf #"
 msgstr "Mensola #"
 
-#: src/bin/e_int_menus.c:1427
+#: src/bin/e_int_menus.c:1465
 msgid "Add A Shelf"
 msgstr "Aggiungi mensola"
 
-#: src/bin/e_int_menus.c:1434
+#: src/bin/e_int_menus.c:1472
 msgid "Delete A Shelf"
 msgstr "Elimina mensola"
 
@@ -2992,8 +2992,8 @@ msgid ""
 msgstr ""
 "La chiusura della sessione sta prendendo troppo tempo.<br>Alcune "
 "applicazioni rifiutano di chiudersi.<br>Volete chiudere comunque la sessione "
-"senza aspettare<br>prima la chiusura di queste applicazioni?<br><br>"
-"Chiusura automatica tra %d secondi."
+"senza aspettare<br>prima la chiusura di queste applicazioni?<br><br>Chiusura "
+"automatica tra %d secondi."
 
 #: src/bin/e_sys.c:369
 msgid "Logout problems"
@@ -3436,22 +3436,67 @@ msgstr "Indicatore di carica"
 msgid "Clock"
 msgstr "Clock"
 
-#: src/modules/conf/e_mod_main.c:124 src/modules/conf/e_mod_main.c:128
-#: src/modules/conf/e_mod_main.c:149 src/modules/conf/e_mod_main.c:251
+#: src/modules/conf/e_mod_main.c:225 src/modules/conf/e_mod_main.c:229
+#: src/modules/conf/e_mod_main.c:332 src/modules/conf/e_mod_main.c:439
 msgid "Settings Panel"
 msgstr "Pannello impostazioni"
 
-#: src/modules/conf/e_mod_main.c:220
+#: src/modules/conf/e_mod_main.c:238
+msgid "Configuration Panel"
+msgstr "Pannello di configurazione"
+
+#: src/modules/conf/e_mod_main.c:256
+msgid ""
+"Configuration Panel Module Configuration data needed upgrading. Your old "
+"configuration<br> has been wiped and a new set of defaults initialized. "
+"This<br>will happen regularly during development, so don't report a<br>bug. "
+"This simply means the module needs new configuration<br>data by default for "
+"usable functionality that your old<br>configuration simply lacks. This new "
+"set of defaults will fix<br>that by adding it in. You can re-configure "
+"things now to your<br>liking. Sorry for the inconvenience.<br>"
+msgstr ""
+"La configurazione del modulo \"Pannello di configurazione\" aveva bisogno "
+"di essere aggiornata.<br>La vecchia configurazione è stata sostituita con "
+"un nuovo set di impostazioni predefinite.<br>Questo avverrà spesso durante "
+"lo sviluppo, quindi non riportate bug in proposito. Significa<br>semplicemente "
+"che il modulo ha bisogno di nuovi dati di configurazione da usare "
+"per<br>funzionalità che non erano presenti nella vecchia configurazione. "
+"Questo nuovo set di<br>impostazioni predefinite sistemerà il tutto aggiungendo "
+"le nuove funzionalità. Adesso è<br>possibile riconfigurare le cose a proprio "
+"piacimento. Ci scusiamo per il disagio.<br>"
+
+#: src/modules/conf/e_mod_main.c:273
+msgid ""
+"Your Configuration Panel Module configuration is NEWER than the module "
+"version. This is very<br>strange. This should not happen unless you "
+"downgraded<br>the module or copied the configuration from a place where<br>a "
+"newer version of the module was running. This is bad and<br>as a precaution "
+"your configuration has been now restored to<br>defaults. Sorry for the "
+"inconvenience.<br>"
+msgstr ""
+"La vostra configurazione del modulo \"Pannello di configurazione\" è più "
+"NUOVA di Enlightenment.<br>Questo è molto strano. Non dovrebbe accadere a "
+"meno che si sia passati ad una versione<br>precedente di del modulo Fileman "
+"o si abbia copiato la configurazione da una macchina su cui<br>gira una "
+"versione più recente del modulo Fileman. Questo è male, quindi la "
+"vostra<br>configurazione è stata ripristinata a scopo precauzionale ai valori "
+"predefiniti. Ci scusiamo<br>per l'inconveniente.<br>"
+
+#: src/modules/conf/e_mod_main.c:408
 msgid "Presentation"
 msgstr "Presentazione"
 
-#: src/modules/conf/e_mod_main.c:227
+#: src/modules/conf/e_mod_main.c:415
 msgid "Offline"
 msgstr "Disconnesso"
 
-#: src/modules/conf/e_mod_main.c:256
+#: src/modules/conf/e_mod_main.c:444
 msgid "Modes"
 msgstr "Modalità"
+
+#: src/modules/conf/e_mod_main.c:477
+msgid "Configuration Panel Configuration Updated"
+msgstr "Impostazioni del pannello di configurazioni aggiornate"
 
 #: src/modules/conf_applications/e_int_config_apps.c:50
 #: src/modules/conf_applications/e_mod_main.c:42

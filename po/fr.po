@@ -6,12 +6,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-02-19 10:47+0400\n"
-"PO-Revision-Date: 2010-02-19 13:43+0400\n"
+"POT-Creation-Date: 2010-02-28 12:21+0400\n"
+"PO-Revision-Date: 2010-02-28 13:10+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment French Team <pourunmondesansgourou@gmail.com>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: French\n"
 "X-Poedit-Country: FRANCE\n"
@@ -43,7 +43,7 @@ msgstr "Fermer"
 #: src/bin/e_actions.c:2849
 #: src/bin/e_actions.c:2853
 #: src/bin/e_actions.c:2857
-#: src/bin/e_int_menus.c:165
+#: src/bin/e_int_menus.c:172
 #: src/bin/e_main.c:675
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:210
 #: src/modules/wizard/page_000.c:32
@@ -341,7 +341,7 @@ msgstr "Activer/Désactiver l'épinglage"
 #: src/bin/e_fm_hal.c:352
 #: src/bin/e_fm_hal.c:628
 #: src/bin/e_fm_hal.c:655
-#: src/bin/e_int_menus.c:134
+#: src/bin/e_int_menus.c:141
 #: src/bin/e_int_shelf_config.c:724
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:104
 #: src/modules/fileman/e_mod_main.c:324
@@ -605,8 +605,8 @@ msgstr "Afficher le menu…"
 
 #: src/bin/e_actions.c:2840
 #: src/bin/e_actions.c:2845
-#: src/modules/conf/e_mod_main.c:124
-#: src/modules/conf/e_mod_main.c:149
+#: src/modules/conf/e_mod_main.c:225
+#: src/modules/conf/e_mod_main.c:332
 #: src/modules/exebuf/e_mod_main.c:34
 #: src/modules/exebuf/e_mod_main.c:55
 #: src/modules/fileman/e_mod_main.c:63
@@ -624,12 +624,12 @@ msgid "Application"
 msgstr "Application"
 
 #: src/bin/e_actions.c:2849
-#: src/bin/e_int_menus.c:189
+#: src/bin/e_int_menus.c:196
 msgid "Restart"
 msgstr "Redémarrer"
 
 #: src/bin/e_actions.c:2853
-#: src/bin/e_int_menus.c:194
+#: src/bin/e_int_menus.c:201
 msgid "Exit"
 msgstr "Quitter"
 
@@ -702,7 +702,7 @@ msgid "Lock"
 msgstr "Verrouiller"
 
 #: src/bin/e_actions.c:2904
-#: src/bin/e_int_menus.c:1122
+#: src/bin/e_int_menus.c:1148
 msgid "Cleanup Windows"
 msgstr "Réorganiser les fenêtres"
 
@@ -1548,7 +1548,7 @@ msgstr "Supprimer ce gadget"
 msgid "Stop move/resize this gadget"
 msgstr "Arrêter de déplacer/redimensionner ce gadget"
 
-#: src/bin/e_hints.c:151
+#: src/bin/e_hints.c:150
 msgid ""
 "A previous instance of Enlightenment is still active\n"
 "on this screen. Aborting startup.\n"
@@ -2052,11 +2052,11 @@ msgid "Start this program on login"
 msgstr "Démarrer ce programme à l'ouverture de session"
 
 #: src/bin/e_int_config_modules.c:42
-#: src/bin/e_int_menus.c:210
+#: src/bin/e_int_menus.c:217
 #: src/modules/battery/e_mod_main.c:176
 #: src/modules/conf/e_conf.c:121
 #: src/modules/conf/e_conf.c:131
-#: src/modules/conf/e_mod_main.c:81
+#: src/modules/conf/e_mod_main.c:86
 #: src/modules/conf_dialogs/e_mod_main.c:20
 #: src/modules/conf_profiles/e_mod_main.c:20
 #: src/modules/ibar/e_mod_main.c:314
@@ -2157,22 +2157,22 @@ msgstr "Erreur du système de saisie"
 msgid "Error starting the input method executable<br><br>please make sure that your input<br>method configuration is correct and<br>that your configuration's<br>executable is in your PATH<br>"
 msgstr "Erreur lors du démarrage du système de saisie.<br><br>Veuillez vérifier que la configuration du système<br>de saisie est correcte et que l'exécutable est<br>dans votre PATH<br>"
 
-#: src/bin/e_int_menus.c:89
+#: src/bin/e_int_menus.c:96
 msgid "Main"
 msgstr "Menu Principal"
 
-#: src/bin/e_int_menus.c:106
+#: src/bin/e_int_menus.c:113
 msgid "Favorite Applications"
 msgstr "Applications favorites"
 
-#: src/bin/e_int_menus.c:117
+#: src/bin/e_int_menus.c:124
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:185
 #: src/modules/wizard/page_070.c:202
 msgid "Applications"
 msgstr "Applications"
 
-#: src/bin/e_int_menus.c:141
-#: src/bin/e_int_menus.c:1081
+#: src/bin/e_int_menus.c:148
+#: src/bin/e_int_menus.c:1107
 #: src/modules/conf_window_display/e_mod_main.c:20
 #: src/modules/conf_window_focus/e_mod_main.c:20
 #: src/modules/conf_window_manipulation/e_mod_main.c:20
@@ -2181,71 +2181,71 @@ msgstr "Applications"
 msgid "Windows"
 msgstr "Fenêtres"
 
-#: src/bin/e_int_menus.c:149
-#: src/bin/e_int_menus.c:1135
+#: src/bin/e_int_menus.c:156
+#: src/bin/e_int_menus.c:1161
 msgid "Lost Windows"
 msgstr "Fenêtres orphelines"
 
-#: src/bin/e_int_menus.c:170
+#: src/bin/e_int_menus.c:177
 msgid "About"
 msgstr "À propos"
 
-#: src/bin/e_int_menus.c:175
+#: src/bin/e_int_menus.c:182
 #: src/modules/conf_theme/e_mod_main.c:26
 #: src/modules/conf_theme/e_mod_main.c:31
 #: src/modules/conf_theme/e_mod_main.c:80
 msgid "Theme"
 msgstr "Thème"
 
-#: src/bin/e_int_menus.c:262
+#: src/bin/e_int_menus.c:269
 msgid "Virtual"
 msgstr "Virtuel"
 
-#: src/bin/e_int_menus.c:269
+#: src/bin/e_int_menus.c:276
 #: src/modules/conf_shelves/e_mod_main.c:25
 #: src/modules/conf_shelves/e_mod_main.c:27
 #: src/modules/conf_shelves/e_mod_main.c:71
 msgid "Shelves"
 msgstr "Racks"
 
-#: src/bin/e_int_menus.c:278
+#: src/bin/e_int_menus.c:285
 msgid "Show/Hide All Windows"
 msgstr "Afficher/Cacher toutes les fenêtres"
 
-#: src/bin/e_int_menus.c:575
+#: src/bin/e_int_menus.c:598
 msgid "(No Applications)"
 msgstr "(Aucune application)"
 
-#: src/bin/e_int_menus.c:709
+#: src/bin/e_int_menus.c:732
 msgid "Set Virtual Desktops"
 msgstr "Configurer les bureaux virtuels"
 
-#: src/bin/e_int_menus.c:1087
-#: src/bin/e_int_menus.c:1271
+#: src/bin/e_int_menus.c:1113
+#: src/bin/e_int_menus.c:1297
 msgid "(No Windows)"
 msgstr "(Aucune fenêtre)"
 
-#: src/bin/e_int_menus.c:1181
-#: src/bin/e_int_menus.c:1283
+#: src/bin/e_int_menus.c:1207
+#: src/bin/e_int_menus.c:1309
 msgid "No name!!"
 msgstr "Pas de nom !!"
 
-#: src/bin/e_int_menus.c:1362
+#: src/bin/e_int_menus.c:1400
 msgid "(No Shelves)"
 msgstr "(Aucun rack)"
 
-#: src/bin/e_int_menus.c:1374
+#: src/bin/e_int_menus.c:1412
 #: src/bin/e_shelf.c:166
 #: src/bin/e_shelf.c:1171
 #: src/modules/conf_shelves/e_int_config_shelf.c:132
 msgid "Shelf #"
 msgstr "Rack …"
 
-#: src/bin/e_int_menus.c:1427
+#: src/bin/e_int_menus.c:1465
 msgid "Add A Shelf"
 msgstr "Ajouter un rack"
 
-#: src/bin/e_int_menus.c:1434
+#: src/bin/e_int_menus.c:1472
 msgid "Delete A Shelf"
 msgstr "Supprimer un rack"
 
@@ -3377,24 +3377,40 @@ msgstr "Surveillance de la batterie"
 msgid "Clock"
 msgstr "Horloge"
 
-#: src/modules/conf/e_mod_main.c:124
-#: src/modules/conf/e_mod_main.c:128
-#: src/modules/conf/e_mod_main.c:149
-#: src/modules/conf/e_mod_main.c:251
+#: src/modules/conf/e_mod_main.c:225
+#: src/modules/conf/e_mod_main.c:229
+#: src/modules/conf/e_mod_main.c:332
+#: src/modules/conf/e_mod_main.c:439
 msgid "Settings Panel"
 msgstr "Panneau de configuration"
 
-#: src/modules/conf/e_mod_main.c:220
+#: src/modules/conf/e_mod_main.c:238
+msgid "Configuration Panel"
+msgstr "Panneau de configuration"
+
+#: src/modules/conf/e_mod_main.c:256
+msgid "Configuration Panel Module Configuration data needed upgrading. Your old configuration<br> has been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means the module needs new configuration<br>data by default for usable functionality that your old<br>configuration simply lacks. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the inconvenience.<br>"
+msgstr "La configuration du module Panneau de configuration a dû être mise à jour. <br>Votre ancienne configuration a été supprimée et de nouveaux paramètres<br>par défaut sont en place. Ceci risque d'arriver en phase de<br>développement, aussi est-il inutile de faire un rapport de bogue.<br>Cela signifie simplement que le module Panneau de configuration a besoin<br>de cette mise à niveau pour être à nouveau fonctionnel.<br>Vous pouvez maintenant tout reconfigurer selon votre goût.<br>Désolé pour la gêne occasionnée.<br>"
+
+#: src/modules/conf/e_mod_main.c:273
+msgid "Your Configuration Panel Module configuration is NEWER than the module version. This is very<br>strange. This should not happen unless you downgraded<br>the module or copied the configuration from a place where<br>a newer version of the module was running. This is bad and<br>as a precaution your configuration has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
+msgstr "Votre configuration du module Panneau de configuration est PLUS RÉCENTE que la version du<br>module actuelle. C'est vraiment étonnant. Cela ne devrait pas se produire<br>à moins que vous n'ayez installé une version antérieure ou copié<br>la configuration du module depuis une machine sur laquelle une<br>version plus récente était installée. Ce n'est pas bon et, par<br> mesure de précaution, votre configuration a été remise à zéro.<br> Désolé pour les désagréments.<br>"
+
+#: src/modules/conf/e_mod_main.c:408
 msgid "Presentation"
 msgstr "Présentation"
 
-#: src/modules/conf/e_mod_main.c:227
+#: src/modules/conf/e_mod_main.c:415
 msgid "Offline"
 msgstr "Hors ligne"
 
-#: src/modules/conf/e_mod_main.c:256
+#: src/modules/conf/e_mod_main.c:444
 msgid "Modes"
 msgstr "Modes"
+
+#: src/modules/conf/e_mod_main.c:477
+msgid "Configuration Panel Configuration Updated"
+msgstr "Configuration de Panneau de configuration actualisée"
 
 #: src/modules/conf_applications/e_int_config_apps.c:50
 #: src/modules/conf_applications/e_mod_main.c:42
@@ -7323,8 +7339,6 @@ msgstr "Zone de notification"
 #~ msgstr "Configuration de Enlightenment"
 #~ msgid "Items"
 #~ msgstr "Éléments"
-#~ msgid "Configuration Panel"
-#~ msgstr "Panneau de configuration"
 #~ msgid "Default Configuration Dialogs Mode"
 #~ msgstr "Configuration par défaut des boîtes de dialogue"
 #~ msgid "Input Method Configuration"
@@ -7337,8 +7351,6 @@ msgstr "Zone de notification"
 #~ msgstr "Configuration des chemins de recherche"
 #~ msgid "Dropshadow Configuration"
 #~ msgstr "Configuration de l'ombre portée"
-#~ msgid "Fileman Configuration Updated"
-#~ msgstr "Configuration de EFM actualisée"
 #~ msgid "IBar Configuration"
 #~ msgstr "Configuration de l'IBar"
 #~ msgid "IBox Configuration"
