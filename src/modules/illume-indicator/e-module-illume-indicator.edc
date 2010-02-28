@@ -37,7 +37,7 @@ collections
                        state: "default" 0.0;
                        color_class: "shelf_base";
                        image.normal: "base_bg.png";
-                       image.border: 2 2 2 2;
+                       image.border: 1 1 1 1;
                        fill.smooth: 0;
                     }
                }
