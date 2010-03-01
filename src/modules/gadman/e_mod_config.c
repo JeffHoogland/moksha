@@ -101,6 +101,7 @@ static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *of, *ob, *ol;
+   Evas_Coord mw, mh;
 
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_framelist_add(evas, _("Available Gadgets"), 0);
@@ -117,7 +118,14 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    ob = e_widget_button_add(evas, _("Add Gadget"), NULL, _cb_add, cfdata, NULL);
    e_widget_disabled_set(ob, 1);
    cfdata->o_add = ob;
-   e_widget_framelist_object_append(of, ob);
+   e_widget_size_min_get(ob, &mw, &mh);
+   e_widget_framelist_object_append_full(of, ob,
+					 1, 1, /* fill */
+					 1, 0, /* expand */
+					 0.5, 0.5, /* align */
+					 mw, mh, /* min */
+					 99999, 99999 /* max */
+					 );
 
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    e_dialog_resizable_set(cfd->dia, 1);
@@ -308,7 +316,7 @@ _fill_gadgets_list(Evas_Object *ilist)
    e_widget_ilist_go(ilist);
    e_widget_size_min_get(ilist, &w, NULL);
    if (w < 200) w = 200;
-   e_widget_size_min_set(ilist, w, 250);
+   e_widget_size_min_set(ilist, w, 100);
    e_widget_ilist_thaw(ilist);
 }
 
