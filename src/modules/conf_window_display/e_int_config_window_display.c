@@ -166,25 +166,32 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    o = e_widget_list_add(evas, 0, 0);
 
    of = e_widget_framelist_add(evas, _("Display"), 0);
-   ob = e_widget_check_add(evas, _("Geometry when moving or resizing"), &(cfdata->move_resize_info));
+   ob = e_widget_check_add(evas, _("Geometry when moving or resizing"), 
+                           &(cfdata->move_resize_info));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_check_add(evas, _("Animated shading"), &(cfdata->animate_shading));
+   ob = e_widget_check_add(evas, _("Animated shading"), 
+                           &(cfdata->animate_shading));
    e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_list_object_append(o, of, 1, 0, 0.5);
 
    of = e_widget_framelist_add(evas, _("Automatic New Window Placement"), 0);
    rg = e_widget_radio_group_new(&(cfdata->window_placement_policy));
-   ob = e_widget_radio_add(evas, _("Smart Placement"), E_WINDOW_PLACEMENT_SMART, rg);
+   ob = e_widget_radio_add(evas, _("Smart Placement"), 
+                           E_WINDOW_PLACEMENT_SMART, rg);
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Don't hide Gadgets"), E_WINDOW_PLACEMENT_ANTIGADGET, rg);
+   ob = e_widget_radio_add(evas, _("Don't hide Gadgets"), 
+                           E_WINDOW_PLACEMENT_ANTIGADGET, rg);
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Place at mouse pointer"), E_WINDOW_PLACEMENT_CURSOR, rg);
+   ob = e_widget_radio_add(evas, _("Place at mouse pointer"), 
+                           E_WINDOW_PLACEMENT_CURSOR, rg);
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Place manually with the mouse"), E_WINDOW_PLACEMENT_MANUAL, rg);
+   ob = e_widget_radio_add(evas, _("Place manually with the mouse"), 
+                           E_WINDOW_PLACEMENT_MANUAL, rg);
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_check_add(evas, _("Switch to desktop of new window"), &(cfdata->desk_auto_switch));
+   ob = e_widget_check_add(evas, _("Switch to desktop of new window"), 
+                           &(cfdata->desk_auto_switch));
    e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_list_object_append(o, of, 1, 0, 0.5);
 
    return o;
 }
