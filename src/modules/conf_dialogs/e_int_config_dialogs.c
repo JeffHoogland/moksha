@@ -1,11 +1,11 @@
 #include "e.h"
 
-static void        *_create_data(E_Config_Dialog *cfd);
-static void        _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static int         _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static void *_create_data(E_Config_Dialog *cfd);
+static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 #if 0
-static int         _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 #endif
 
@@ -33,8 +33,7 @@ e_int_config_dialogs(E_Container *con, const char *params __UNUSED__)
    v->basic.create_widgets = _basic_create_widgets;
    v->override_auto_apply = 1;
    
-   cfd = e_config_dialog_new(con,
-			     _("Dialog Settings"),
+   cfd = e_config_dialog_new(con, _("Dialog Settings"),
 			     "E", "settings/dialogs",
 			     "preferences-dialogs", 0, v, NULL);
    return cfd;
@@ -99,24 +98,23 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_framelist_object_append(of, ob);
 //   ob = e_widget_check_add(evas, _("Auto-Apply Settings Changes"), &(cfdata->cfgdlg_auto_apply));
 //   e_widget_framelist_object_append(of, ob);
-   
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
- 
+
+   e_widget_list_object_append(o, of, 1, 0, 0.5);
+
    of = e_widget_framelist_add(evas, _("Default Settings Dialogs Mode"), 0);
    rg = e_widget_radio_group_new(&(cfdata->cfgdlg_default_mode));
-
    ob = e_widget_radio_add(evas, _("Basic Mode"), E_CONFIG_DIALOG_CFDATA_TYPE_BASIC, rg);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Advanced Mode"), E_CONFIG_DIALOG_CFDATA_TYPE_ADVANCED, rg);
    e_widget_framelist_object_append(of, ob);
-   
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_list_object_append(o, of, 1, 0, 0.5);
 
    of = e_widget_framelist_add(evas, _("Remember"), 0);
-   ob = e_widget_check_add(evas, _("Remember size and position of dialogs"), &(cfdata->remember_windows));
+   ob = e_widget_check_add(evas, _("Remember size and position of dialogs"), 
+                           &(cfdata->remember_windows));
    e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
-   
+   e_widget_list_object_append(o, of, 1, 0, 0.5);
+
    return o;
 }
 
