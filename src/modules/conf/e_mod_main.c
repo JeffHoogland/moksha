@@ -152,8 +152,7 @@ _config_pre_activate_cb(void *data, E_Menu *m)
    Eina_List *l;
    E_Menu_Item *mi;
 
-   /*XXX is this the right way to not initiate the menu a second time ?*/
-   if (e_menu_item_nth(m, 0)) return;
+   e_menu_pre_activate_callback_set(m, NULL, NULL);
 
    EINA_LIST_FOREACH(ecat->items, l, eci)
      {
@@ -175,38 +174,52 @@ _config_pre_activate_cb(void *data, E_Menu *m)
      }
 }
 
-
-/* menu item add hook */
-void
-e_mod_config_menu_add(void *data, E_Menu *m)
+static void
+_config_all_pre_activate_cb(void *data __UNUSED__, E_Menu *m)
 {
-   E_Menu_Item *mi;
-   E_Menu *sub;
-   Eina_List *l;
+   const Eina_List *l;
    E_Configure_Cat *ecat;
 
-   mi = e_menu_item_new(m);
-   e_menu_item_separator_set(mi, 1);
+   e_menu_pre_activate_callback_set(m, NULL, NULL);
 
    EINA_LIST_FOREACH(e_configure_registry, l, ecat)
      {
-        if ((ecat->pri >= 0) && (ecat->items))
-          {
-             mi = e_menu_item_new(m);
-             e_menu_item_label_set(mi, ecat->label);
-             if (ecat->icon)
-               {
-                  if (ecat->icon_file)
-                    e_menu_item_icon_edje_set(mi, ecat->icon_file, ecat->icon);
-                  else
-                    e_util_menu_item_theme_icon_set(mi, ecat->icon);
-               }
+	E_Menu_Item *mi;
+	E_Menu *sub;
 
-             sub = e_menu_new();
-             e_menu_item_submenu_set(mi, sub);
-             e_menu_pre_activate_callback_set(sub, _config_pre_activate_cb, ecat);
-          }
+        if ((ecat->pri < 0) || (!ecat->items)) continue;
+
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, ecat->label);
+	if (ecat->icon)
+	  {
+	     if (ecat->icon_file)
+	       e_menu_item_icon_edje_set(mi, ecat->icon_file, ecat->icon);
+	     else
+	       e_util_menu_item_theme_icon_set(mi, ecat->icon);
+	  }
+
+	sub = e_menu_new();
+	e_menu_item_submenu_set(mi, sub);
+	e_menu_pre_activate_callback_set(sub, _config_pre_activate_cb, ecat);
      }
+}
+
+/* menu item add hook */
+void
+e_mod_config_menu_add(void *data __UNUSED__, E_Menu *m)
+{
+   E_Menu_Item *mi;
+   E_Menu *sub;
+
+   e_menu_pre_activate_callback_set(m, NULL, NULL);
+
+   sub = e_menu_new();
+   e_menu_pre_activate_callback_set(sub, _config_all_pre_activate_cb, NULL);
+
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("All"));
+   e_menu_item_submenu_set(mi, sub);
 }
 
 /* module setup */
@@ -291,12 +304,9 @@ e_modapi_init(E_Module *m)
    if (conf->menu_augmentation)
      {
         conf->aug =
-          e_int_menus_menu_augmentation_add("config/0", e_mod_config_menu_add,
-                                            NULL, NULL, NULL);
-        e_int_menus_menu_augmentation_point_disabled_set("config/1", 1);
+          e_int_menus_menu_augmentation_add
+	  ("config/2", e_mod_config_menu_add, NULL, NULL, NULL);
      }
-   else
-     e_int_menus_menu_augmentation_point_disabled_set("config/1", 0);
 
    e_gadcon_provider_register(&_gadcon_class);
    return m;
@@ -323,9 +333,8 @@ e_modapi_shutdown(E_Module *m)
      }
    if (conf->aug)
      {
-        e_int_menus_menu_augmentation_del("config/0", conf->aug);
+        e_int_menus_menu_augmentation_del("config/2", conf->aug);
         conf->aug = NULL;
-        e_int_menus_menu_augmentation_point_disabled_set("config/1", 0);
      }
 
    /* remove module-supplied action */
