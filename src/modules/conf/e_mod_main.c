@@ -22,7 +22,7 @@ static const char *_gc_id_new(E_Gadcon_Client_Class *client_class);
 static void _cb_button_click(void *data, void *data2);
 
 static void _conf_new(void);
-static void _conf_free(void); 
+static void _conf_free(void);
 static int _conf_timer(void *data);
 
 static E_Module *conf_module = NULL;
@@ -33,14 +33,14 @@ Config *conf = NULL;
 
 /* and actually define the gadcon class that this module provides (just 1) */
 static const E_Gadcon_Client_Class _gadcon_class =
-{
-   GADCON_CLIENT_CLASS_VERSION, "configuration",
-     {
-        _gc_init, _gc_shutdown, _gc_orient, _gc_label, _gc_icon, _gc_id_new, NULL, 
-        e_gadcon_site_is_not_toolbar
-     },
-   E_GADCON_CLIENT_STYLE_PLAIN
-};
+  {
+    GADCON_CLIENT_CLASS_VERSION, "configuration",
+    {
+      _gc_init, _gc_shutdown, _gc_orient, _gc_label, _gc_icon, _gc_id_new, NULL,
+      e_gadcon_site_is_not_toolbar
+    },
+    E_GADCON_CLIENT_STYLE_PLAIN
+  };
 
 static E_Gadcon_Client *
 _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
@@ -48,7 +48,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    Evas_Object *o, *icon;
    E_Gadcon_Client *gcc;
 
-   o = e_widget_button_add(gc->evas, NULL, NULL, 
+   o = e_widget_button_add(gc->evas, NULL, NULL,
                            _cb_button_click, NULL, NULL);
 
    icon = e_icon_add(evas_object_evas_get(o));
@@ -107,8 +107,8 @@ _gc_id_new(E_Gadcon_Client_Class *client_class)
    return _gadcon_class.name;
 }
 
-static void 
-_cb_button_click(void *data, void *data2) 
+static void
+_cb_button_click(void *data, void *data2)
 {
    E_Action *a;
 
@@ -116,7 +116,7 @@ _cb_button_click(void *data, void *data2)
    if ((a) && (a->func.go)) a->func.go(NULL, NULL);
 }
 
-static void 
+static void
 _e_mod_run_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    Eina_List *l;
@@ -158,12 +158,12 @@ _config_pre_activate_cb(void *data, E_Menu *m)
    EINA_LIST_FOREACH(ecat->items, l, eci)
      {
         char buf[1024];
-		  
+
         if (eci->pri >= 0)
           {
              mi = e_menu_item_new(m);
              e_menu_item_label_set(mi, eci->label);
-             if (eci->icon) 
+             if (eci->icon)
                {
                   if (eci->icon_file)
                     e_menu_item_icon_edje_set(mi, eci->icon_file, eci->icon);
@@ -194,7 +194,7 @@ e_mod_config_menu_add(void *data, E_Menu *m)
           {
              mi = e_menu_item_new(m);
              e_menu_item_label_set(mi, ecat->label);
-             if (ecat->icon) 
+             if (ecat->icon)
                {
                   if (ecat->icon_file)
                     e_menu_item_icon_edje_set(mi, ecat->icon_file, ecat->icon);
@@ -224,74 +224,74 @@ e_modapi_init(E_Module *m)
    if (act)
      {
 	act->func.go = _e_mod_action_conf_cb;
-	e_action_predef_name_set(_("Launch"), _("Settings Panel"), 
+	e_action_predef_name_set(_("Launch"), _("Settings Panel"),
                                  "configuration", NULL, NULL, 0);
      }
-   maug = 
-     e_int_menus_menu_augmentation_add_sorted("config/0", _("Settings Panel"), 
+   maug =
+     e_int_menus_menu_augmentation_add_sorted("config/0", _("Settings Panel"),
                                               _e_mod_menu_add, NULL, NULL, NULL);
    e_module_delayed_set(m, 1);
 
    snprintf(buf, sizeof(buf), "%s/e-module-conf.edj",
             e_module_dir_get(conf_module));
 
-   e_configure_registry_category_add("advanced", 80, _("Advanced"), 
+   e_configure_registry_category_add("advanced", 80, _("Advanced"),
                                      NULL, "preferences-advanced");
-   e_configure_registry_item_add("advanced/conf", 110, _("Configuration Panel"), 
+   e_configure_registry_item_add("advanced/conf", 110, _("Configuration Panel"),
                                  NULL, buf, e_int_config_conf_module);
 
    conf_edd = E_CONFIG_DD_NEW("Config", Config);
-   #undef T
-   #undef D
-   #define T Config
-   #define D conf_edd
+#undef T
+#undef D
+#define T Config
+#define D conf_edd
    E_CONFIG_VAL(D, T, version, INT);
    E_CONFIG_VAL(D, T, menu_augmentation, INT);
 
    conf = e_config_domain_load("module.conf", conf_edd);
-   if (conf) 
+   if (conf)
      {
-        if ((conf->version >> 16) < MOD_CONFIG_FILE_EPOCH) 
+        if ((conf->version >> 16) < MOD_CONFIG_FILE_EPOCH)
           {
              _conf_free();
              ecore_timer_add(1.0, _conf_timer,
 			     _("Configuration Panel Module Configuration data needed "
-			     "upgrading. Your old configuration<br> has been"
-			     " wiped and a new set of defaults initialized. "
-			     "This<br>will happen regularly during "
-			     "development, so don't report a<br>bug. "
-			     "This simply means the module needs "
-			     "new configuration<br>data by default for "
-			     "usable functionality that your old<br>"
-			     "configuration simply lacks. This new set of "
-			     "defaults will fix<br>that by adding it in. "
-			     "You can re-configure things now to your<br>"
-			     "liking. Sorry for the inconvenience.<br>"));
+			       "upgrading. Your old configuration<br> has been"
+			       " wiped and a new set of defaults initialized. "
+			       "This<br>will happen regularly during "
+			       "development, so don't report a<br>bug. "
+			       "This simply means the module needs "
+			       "new configuration<br>data by default for "
+			       "usable functionality that your old<br>"
+			       "configuration simply lacks. This new set of "
+			       "defaults will fix<br>that by adding it in. "
+			       "You can re-configure things now to your<br>"
+			       "liking. Sorry for the inconvenience.<br>"));
           }
-        else if (conf->version > MOD_CONFIG_FILE_VERSION) 
+        else if (conf->version > MOD_CONFIG_FILE_VERSION)
           {
              _conf_free();
-             ecore_timer_add(1.0, _conf_timer, 
+             ecore_timer_add(1.0, _conf_timer,
 			     _("Your Configuration Panel Module configuration is NEWER "
-			     "than the module version. This is "
-			     "very<br>strange. This should not happen unless"
-			     " you downgraded<br>the module or "
-			     "copied the configuration from a place where"
-			     "<br>a newer version of the module "
-			     "was running. This is bad and<br>as a "
-			     "precaution your configuration has been now "
-			     "restored to<br>defaults. Sorry for the "
-			     "inconvenience.<br>"));
+			       "than the module version. This is "
+			       "very<br>strange. This should not happen unless"
+			       " you downgraded<br>the module or "
+			       "copied the configuration from a place where"
+			       "<br>a newer version of the module "
+			       "was running. This is bad and<br>as a "
+			       "precaution your configuration has been now "
+			       "restored to<br>defaults. Sorry for the "
+			       "inconvenience.<br>"));
           }
      }
 
    if (!conf) _conf_new();
    conf->module = m;
-   
+
    if (conf->menu_augmentation)
      {
-        conf->aug = 
-          e_int_menus_menu_augmentation_add("config/0", e_mod_config_menu_add, 
+        conf->aug =
+          e_int_menus_menu_augmentation_add("config/0", e_mod_config_menu_add,
                                             NULL, NULL, NULL);
         e_int_menus_menu_augmentation_point_disabled_set("config/1", 1);
      }
@@ -375,7 +375,7 @@ _e_mod_action_conf_cb(E_Object *obj, const char *params)
 }
 
 /* menu item callback(s) */
-static void 
+static void
 _e_mod_conf_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    e_configure_show(m->zone->container);
@@ -448,8 +448,8 @@ _e_mod_menu_add(void *data, E_Menu *m)
    e_menu_item_submenu_set(mi, _e_mod_submenu_modes_get());
 }
 
-static void 
-_conf_new(void) 
+static void
+_conf_new(void)
 {
    char buf[128];
 
@@ -467,14 +467,14 @@ _conf_new(void)
    e_config_save_queue();
 }
 
-static void 
-_conf_free(void) 
+static void
+_conf_free(void)
 {
    E_FREE(conf);
 }
 
-static int 
-_conf_timer(void *data) 
+static int
+_conf_timer(void *data)
 {
    e_util_dialog_show(_("Configuration Panel Configuration Updated"), data);
    return 0;
