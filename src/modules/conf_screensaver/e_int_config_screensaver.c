@@ -130,10 +130,11 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 {
    Evas_Object *o, *of, *ob;
    Evas_Object *xscreensaver_check;
+
    o = e_widget_list_add(evas, 0, 0);
 
    xscreensaver_check = e_widget_check_add(evas, _("Enable X screensaver"), &(cfdata->enable_screensaver));
-   e_widget_list_object_append(o, xscreensaver_check, 1, 1, 0);
+   e_widget_list_object_append(o, xscreensaver_check, 1, 0, 0);
 
    of = e_widget_framelist_add(evas, _("Screensaver Timer(s)"), 0);
 
@@ -148,7 +149,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_on_change_hook_set(xscreensaver_check, _cb_disable_basic, cfdata);
    _cb_disable_basic(cfdata, NULL);
 
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_list_object_append(o, of, 1, 0, 0.5);
    return o;
 }
 
