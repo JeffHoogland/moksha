@@ -114,7 +114,7 @@ struct _E_Illume_Policy_Api
    const char *name;
    /**< The name of this policy. */
    const char *label;
-   /**< The label of this policy. */
+   /**< The label of this policy that will be displayed in the Policy Selection dialog. */
 };
 
 /**
@@ -259,12 +259,23 @@ struct _E_Illume_Config
         struct 
           {
              const char *class;
+             /**< The window class to match on */
              const char *name;
+             /**< The window name to match on */
              const char *title;
+             /**< The window title to match on */
              int type;
+             /**< The window type to match on */
              struct 
                {
-                  int class, name, title, type;
+                  int class;
+                  /**< flag to indicate if we should match on class */
+                  int name;
+                  /**< flag to indicate if we should match on name */
+                  int title;
+                  /**< flag to indicate if we should match on title */
+                  int type;
+                  /**< flag to indicate if we should match on type */
                } match;
           } vkbd, indicator, softkey, home;
         Eina_List *zones;
@@ -282,7 +293,9 @@ struct _E_Illume_Config_Zone
    struct 
      {
         int dual;
+        /**< integer specifying whice mode we are in (0 == single application mode, 1 == dual application mode) */
         int side;
+        /**< interger specifying if we layout windows in top/bottom or left/right when in dual mode */
      } mode;
 
    /* NB: These are not configurable by user...just placeholders */
@@ -304,6 +317,7 @@ struct _E_Illume_Quickpanel
    E_Zone *zone;
    /**< the current zone on which this quickpanel belongs */
    Eina_List *borders;
+   /**< a list of borders that this quickpanel contains */
    Ecore_Timer *timer;
    Ecore_Animator *animator;
    double start, len;
