@@ -90,11 +90,10 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (changed) 
      {
 	Eina_List *l;
-	
-	for (l = e_manager_list(); l; l = l->next) 
-	  {
-	     E_Manager *man;
-	     man = l->data;
+	E_Manager *man;
+
+        EINA_LIST_FOREACH(e_manager_list(), l, man) 
+          {
 	     if (man->pointer && !e_config->show_cursor)
 	       {
 		  e_pointer_hide(man->pointer);
@@ -128,11 +127,11 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
       
    ob = e_widget_check_add(evas, _("Show Cursor"), &(cfdata->show_cursor));
    e_widget_on_change_hook_set(ob, _basic_show_cursor_cb_change, cfdata);
-   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   e_widget_list_object_append(o, ob, 1, 0, 0.5);
 
    ob = e_widget_check_add(evas, _("Idle Cursor"), &(cfdata->idle_cursor));
    e_widget_on_change_hook_set(ob, _basic_show_cursor_cb_change, cfdata);
-   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   e_widget_list_object_append(o, ob, 1, 0, 0.5);
 
    of = e_widget_framelist_add(evas, _("Cursor Settings"), 0);
    rg = e_widget_radio_group_new(&cfdata->use_e_cursor);
@@ -143,7 +142,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    ob = e_widget_radio_add(evas, _("Use X Cursor"), 0, rg);   
    e_widget_framelist_object_append(of, ob);
 
-   e_widget_list_object_append(o, of, 1, 1, 0.5);   
+   e_widget_list_object_append(o, of, 1, 0, 0.5);
 
    return o;
 }
@@ -168,13 +167,12 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (changed) 
      {
 	Eina_List *l;
-	
+	E_Manager *man;
+
 	e_pointers_size_set(e_config->cursor_size);
-	for (l = e_manager_list(); l; l = l->next) 
+        EINA_LIST_FOREACH(e_manager_list(), l, man) 
 	  {
-	     E_Manager *man;
-	     man = l->data;
-	     if (man->pointer && !e_config->show_cursor)
+	     if ((man->pointer) && (!e_config->show_cursor))
 	       {
 		  e_pointer_hide(man->pointer);
 		  continue;
@@ -208,11 +206,11 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 
    ob = e_widget_check_add(evas, _("Show Cursor"), &(cfdata->show_cursor));
    e_widget_on_change_hook_set(ob, _advanced_show_cursor_cb_change, cfdata);
-   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   e_widget_list_object_append(o, ob, 1, 0, 0.5);
 
    ob = e_widget_check_add(evas, _("Idle Cursor"), &(cfdata->idle_cursor));
    e_widget_on_change_hook_set(ob, _advanced_show_cursor_cb_change, cfdata);
-   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   e_widget_list_object_append(o, ob, 1, 0, 0.5);
 
    of = e_widget_framelist_add(evas, _("Cursor Settings"), 0);
    rg = e_widget_radio_group_new(&cfdata->use_e_cursor);
@@ -230,7 +228,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 
    e_widget_framelist_object_append(of, ob);
 
-   e_widget_list_object_append(o, of, 1, 1, 0.5);   
+   e_widget_list_object_append(o, of, 1, 0, 0.5);
 
    return o;
 }
