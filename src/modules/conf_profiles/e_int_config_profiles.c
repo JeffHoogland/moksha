@@ -25,6 +25,7 @@ struct _E_Config_Dialog_Data
    Evas_Object *o_delete;
    Evas_Object *o_reset;
    Evas_Object *o_text;
+   Evas_Object *o_textlabel;
    const char *sel_profile;
 
    E_Dialog *dia_new_profile;
@@ -99,23 +100,37 @@ static Evas_Object *
 _create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *of, *ot, *ob;
+   Evas_Coord mw, mh;
    char buf[PATH_MAX];
 
    o = e_widget_list_add(evas, 0, 0);
 
    of = e_widget_framelist_add(evas, _("Available Profiles"), 0);
    cfdata->o_list = e_widget_ilist_add(evas, 24, 24, &(cfdata->sel_profile));
-   e_widget_size_min_set(cfdata->o_list, 140 * e_scale, 50 * e_scale);
+   e_widget_size_min_set(cfdata->o_list, 140 * e_scale, 100 * e_scale);
    e_widget_framelist_object_append(of, cfdata->o_list);
 
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   cfdata->o_textlabel = e_widget_label_add(evas, "");
+   e_widget_size_min_get(cfdata->o_textlabel, &mw, &mh);
+   e_widget_framelist_object_append_full(of, cfdata->o_textlabel,
+					 1, 1, /* fill */
+					 1, 0, /* expand */
+					 0.5, 0.5, /* align */
+					 mw, mh, /* min */
+					 99999, 99999 /* max */
+					 );
 
    ob = e_widget_textblock_add(evas);
-   e_widget_size_min_set(ob, 140 * e_scale, 50 * e_scale);
    e_widget_textblock_markup_set(ob, _("Select a profile"));
-   e_widget_list_object_append(o, ob, 1, 0, 0.5);
    cfdata->o_text = ob;
-   
+   e_widget_framelist_object_append_full(of, cfdata->o_text,
+					 1, 1, /* fill */
+					 1, 0, /* expand */
+					 0.5, 0.5, /* align */
+					 140 * e_scale, 80 * e_scale, /* min */
+					 99999, 99999 /* max */
+					 );
+
    ot = e_widget_table_add(evas, 0);
    ob = e_widget_button_add(evas, _("Add"), "list-add", _cb_add, cfdata, NULL);
    e_widget_table_object_append(ot, ob, 0, 0, 1, 1, 1, 1, 0, 0);
@@ -123,6 +138,8 @@ _create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_table_object_append(ot, cfdata->o_delete, 1, 0, 1, 1, 1, 1, 0, 0);
    cfdata->o_reset = e_widget_button_add(evas, _("Reset"), "system-restart", _cb_reset, cfdata, NULL);
    e_widget_table_object_align_append(ot, cfdata->o_reset, 2, 0, 1, 1, 0, 1, 1, 1, 1.0, 0.5);
+
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    // if there is a system version of the profile - allow reset
    e_prefix_data_snprintf(buf, sizeof(buf), "data/config/%s/", e_config_profile_get());
@@ -219,7 +236,8 @@ _ilist_cb_selected(void *data)
    unsigned char v;
    Efreet_Desktop *desk = NULL;
    char *pdir, buf[PATH_MAX];
-   
+   const char *name;
+
    cfdata = data;
    if (!cfdata) return;
 
@@ -242,6 +260,14 @@ _ilist_cb_selected(void *data)
              desk = efreet_desktop_get(buf);
           }
      }
+
+   if ((desk) && (desk->name))
+     name = desk->name;
+   else
+     name = cur_profile;
+   snprintf(buf, sizeof(buf), _("Selected profile: %s"), name);
+   e_widget_label_text_set(cfdata->o_textlabel, buf);
+
    if (desk)
      e_widget_textblock_markup_set(cfdata->o_text, desk->comment);
    else
