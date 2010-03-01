@@ -53,6 +53,32 @@ e_widget_framelist_add(Evas *evas, const char *label, int horiz)
 }
 
 EAPI void
+e_widget_framelist_object_append_full(Evas_Object *obj, Evas_Object *sobj, int fill_w, int fill_h, int expand_w, int expand_h, double align_x, double align_y, Evas_Coord min_w, Evas_Coord min_h, Evas_Coord max_w, Evas_Coord max_h)
+{
+   E_Widget_Data *wd;
+   Evas_Coord mw = 0, mh = 0;
+   
+   wd = e_widget_data_get(obj);
+   
+   e_box_pack_end(wd->o_box, sobj);
+   e_widget_size_min_get(sobj, &mw, &mh);
+   e_box_pack_options_set(sobj,
+			  fill_w, fill_h,
+			  expand_w, expand_h,
+			  align_x, align_y,
+			  min_w, min_h,
+			  max_w, max_h
+			  );
+   e_box_size_min_get(wd->o_box, &mw, &mh);
+   edje_extern_object_min_size_set(wd->o_box, mw, mh);
+   edje_object_part_swallow(wd->o_frame, "e.swallow.content", wd->o_box);
+   edje_object_size_min_calc(wd->o_frame, &mw, &mh);
+   e_widget_size_min_set(obj, mw, mh);
+   e_widget_sub_object_add(obj, sobj);
+   evas_object_show(sobj);
+}
+
+EAPI void
 e_widget_framelist_object_append(Evas_Object *obj, Evas_Object *sobj)
 {
    E_Widget_Data *wd;

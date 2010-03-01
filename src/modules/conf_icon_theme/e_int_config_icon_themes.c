@@ -185,6 +185,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 {
    Evas_Object *o, *ilist, *of, *checkbox;
    struct _fill_icon_themes_data *d;
+   Evas_Coord mw, mh;
 
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_framelist_add(evas, _("Icon Themes"), 0);
@@ -195,8 +196,15 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    e_widget_framelist_object_append(of, ilist);
 
-   checkbox = e_widget_check_add(evas, _("Icon theme overrides general theme"), &(cfdata->overrides));
-   e_widget_framelist_object_append(of, checkbox);
+   checkbox = e_widget_check_add(evas, _("This overrides general theme"), &(cfdata->overrides));
+   e_widget_size_min_get(checkbox, &mw, &mh);
+   e_widget_framelist_object_append_full(of, checkbox,
+					 1, 1, /* fill */
+					 1, 0, /* expand */
+					 0.5, 0.5, /* align */
+					 mw, mh, /* min */
+					 99999, 99999 /* max */
+					 );
 
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    e_dialog_resizable_set(cfd->dia, 1);
