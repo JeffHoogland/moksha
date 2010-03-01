@@ -43,7 +43,7 @@ E_Config_Dialog *
 e_int_config_apps_favs(E_Container *con, const char *params __UNUSED__) 
 {
    E_Config_Data *data;
-   char buf[4096];
+   char buf[PATH_MAX];
 
    e_user_dir_concat_static(buf, "applications/menu/favorite.menu");
    data = E_NEW(E_Config_Data, 1);
@@ -97,7 +97,7 @@ E_Config_Dialog *
 e_int_config_apps_ibar(E_Container *con, const char *params __UNUSED__) 
 {
    E_Config_Data *data;
-   char buf[4096];
+   char buf[PATH_MAX];
 
    e_user_dir_concat_static(buf, "applications/bar/default/.order");
    data = E_NEW(E_Config_Data, 1);
@@ -128,7 +128,7 @@ E_Config_Dialog *
 e_int_config_apps_startup(E_Container *con, const char *params __UNUSED__) 
 {
    E_Config_Data *data;
-   char buf[4096];
+   char buf[PATH_MAX];
 
    e_user_dir_concat_static(buf, "applications/startup/.order");
    data = E_NEW(E_Config_Data, 1);
@@ -144,7 +144,7 @@ E_Config_Dialog *
 e_int_config_apps_restart(E_Container *con, const char *params __UNUSED__) 
 {
    E_Config_Data *data;
-   char buf[4096];
+   char buf[PATH_MAX];
 
    e_user_dir_concat_static(buf, "applications/restart/.order");
    data = E_NEW(E_Config_Data, 1);
@@ -247,7 +247,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_disabled_set(ow, 1);
    e_widget_frametable_object_append(ot, ow, 0, 1, 1, 1, 1, 0, 1, 0);
    e_widget_size_min_get(ot, &wmw, &wmh);
-   e_widget_size_min_set(ot, 200, wmh);
+   e_widget_size_min_set(ot, wmw, wmh);
    e_widget_list_object_append(o, ot, 1, 1, 0.5);
 
    ot = e_widget_frametable_add(evas, _("Selected Applications"), 0);
@@ -275,7 +275,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_disabled_set(ow, 1);
    e_widget_frametable_object_append(ot, ow, 0, 2, 1, 1, 1, 0, 1, 0);
    e_widget_size_min_get(ot, &wmw, &wmh);
-   e_widget_size_min_set(ot, 200, wmh);
+   e_widget_size_min_set(ot, wmw, wmh);
    e_widget_list_object_append(o, ot, 1, 1, 0.5);
 
    return o;
@@ -346,7 +346,7 @@ _fill_apps(E_Config_Dialog_Data *cfdata)
    Eina_List *desks = NULL, *l = NULL;
    Efreet_Desktop *desk = NULL;
    Evas *evas;
-   int w;
+   int w, h;
 
    l = NULL;
 
@@ -355,10 +355,10 @@ _fill_apps(E_Config_Dialog_Data *cfdata)
 
    desks = eina_list_sort(desks, 0, _cb_sort_desks);
    EINA_LIST_FREE(desks, desk)
-	  {
+     {
 	if (!eina_list_search_unsorted(l, _cb_sort_desks, desk))
-	       {
-		  efreet_desktop_ref(desk);
+          {
+             efreet_desktop_ref(desk);
 	     l = eina_list_append(l, desk);
 	  }
 	efreet_desktop_free(desk);
@@ -372,12 +372,12 @@ _fill_apps(E_Config_Dialog_Data *cfdata)
    e_widget_ilist_clear(cfdata->o_all);
 
    EINA_LIST_FREE(l, desk)
-	  {
-	     Evas_Object *icon = NULL;
+     {
+        Evas_Object *icon = NULL;
 
-	     icon = e_util_desktop_icon_add(desk, 24, evas);
-	     e_widget_ilist_append(cfdata->o_all, icon, desk->name, 
-				   _all_list_cb_selected, cfdata, desk->orig_path);
+        icon = e_util_desktop_icon_add(desk, 24, evas);
+        e_widget_ilist_append(cfdata->o_all, icon, desk->name, 
+                              _all_list_cb_selected, cfdata, desk->orig_path);
 	efreet_desktop_free(desk);
      }
 
@@ -385,8 +385,8 @@ _fill_apps(E_Config_Dialog_Data *cfdata)
    e_widget_ilist_thaw(cfdata->o_all);
    edje_thaw();
    evas_event_thaw(evas);
-   e_widget_size_min_get(cfdata->o_all, &w, NULL);
-   e_widget_size_min_set(cfdata->o_all, w, 240);
+   e_widget_size_min_get(cfdata->o_all, &w, &h);
+   e_widget_size_min_set(cfdata->o_all, w, h);
 }
 
 static void 
@@ -394,7 +394,7 @@ _fill_list(E_Config_Dialog_Data *cfdata)
 {
    Efreet_Desktop *desk = NULL;
    Evas *evas;
-   int w;
+   int w, h;
 
    if (!cfdata->apps) return;
    evas = evas_object_evas_get(cfdata->o_sel);
@@ -404,18 +404,18 @@ _fill_list(E_Config_Dialog_Data *cfdata)
    e_widget_ilist_clear(cfdata->o_sel);
 
    EINA_LIST_FREE(cfdata->apps, desk)
-	  {
-	     Evas_Object *icon = NULL;
+     {
+        Evas_Object *icon = NULL;
 
-	     icon = e_util_desktop_icon_add(desk, 24, evas);
-	     e_widget_ilist_append(cfdata->o_sel, icon, desk->name, 
-				   _sel_list_cb_selected, cfdata, desk->orig_path);
-	  }
-   
+        icon = e_util_desktop_icon_add(desk, 24, evas);
+        e_widget_ilist_append(cfdata->o_sel, icon, desk->name, 
+                              _sel_list_cb_selected, cfdata, desk->orig_path);
+     }
+
    cfdata->apps = NULL;
    e_widget_ilist_go(cfdata->o_sel);
-   e_widget_size_min_get(cfdata->o_sel, &w, NULL);
-   e_widget_size_min_set(cfdata->o_sel, w, 240);
+   e_widget_size_min_get(cfdata->o_sel, &w, &h);
+   e_widget_size_min_set(cfdata->o_sel, w, h);
    e_widget_ilist_thaw(cfdata->o_sel);
    edje_thaw();
    evas_event_thaw(evas);
@@ -499,7 +499,7 @@ _cb_add(void *data, void *data2)
    E_Config_Dialog_Data *cfdata = NULL;
    Eina_List *l = NULL;
    Evas *evas;
-   int w, i;
+   int w, h, i;
 
    if (!(cfdata = data)) return;
    evas = evas_object_evas_get(cfdata->o_all);
@@ -526,8 +526,8 @@ _cb_add(void *data, void *data2)
      }
 
    e_widget_ilist_go(cfdata->o_sel);
-   e_widget_size_min_get(cfdata->o_sel, &w, NULL);
-   e_widget_size_min_set(cfdata->o_sel, w, 240);
+   e_widget_size_min_get(cfdata->o_sel, &w, &h);
+   e_widget_size_min_set(cfdata->o_sel, w, h);
    e_widget_ilist_thaw(cfdata->o_sel);
    e_widget_ilist_unselect(cfdata->o_all);
    edje_thaw();
@@ -540,7 +540,7 @@ _cb_del(void *data, void *data2)
    E_Config_Dialog_Data *cfdata = NULL;
    Eina_List *l = NULL;
    Evas *evas;
-   int w;
+   int w, h;
 
    if (!(cfdata = data)) return;
    evas = evas_object_evas_get(cfdata->o_sel);
@@ -557,8 +557,8 @@ _cb_del(void *data, void *data2)
      }
    e_widget_ilist_unselect(cfdata->o_sel);
    e_widget_ilist_go(cfdata->o_sel);
-   e_widget_size_min_get(cfdata->o_sel, &w, NULL);
-   e_widget_size_min_set(cfdata->o_sel, w, 240);
+   e_widget_size_min_get(cfdata->o_sel, &w, &h);
+   e_widget_size_min_set(cfdata->o_sel, w, h);
    e_widget_ilist_thaw(cfdata->o_sel);
    edje_thaw();
    evas_event_thaw(evas);
@@ -572,7 +572,7 @@ _cb_up(void *data, void *data2)
    Efreet_Desktop *desk = NULL;
    Evas *evas;
    const char *lbl;
-   int sel, w;
+   int sel, w, h;
 
    if (!(cfdata = data)) return;
    if (e_widget_ilist_selected_count_get(cfdata->o_sel) > 1) return;
@@ -597,8 +597,8 @@ _cb_up(void *data, void *data2)
 	  }
      }
    e_widget_ilist_go(cfdata->o_sel);
-   e_widget_size_min_get(cfdata->o_sel, &w, NULL);
-   e_widget_size_min_set(cfdata->o_sel, w, 240);
+   e_widget_size_min_get(cfdata->o_sel, &w, &h);
+   e_widget_size_min_set(cfdata->o_sel, w, h);
    e_widget_ilist_thaw(cfdata->o_sel);
    edje_thaw();
    evas_event_thaw(evas);
@@ -612,7 +612,7 @@ _cb_down(void *data, void *data2)
    Efreet_Desktop *desk = NULL;
    Evas *evas;
    const char *lbl;
-   int sel, w;
+   int sel, w, h;
 
    if (!(cfdata = data)) return;
    if (e_widget_ilist_selected_count_get(cfdata->o_sel) > 1) return;
@@ -637,8 +637,8 @@ _cb_down(void *data, void *data2)
 	  }
      }
    e_widget_ilist_go(cfdata->o_sel);
-   e_widget_size_min_get(cfdata->o_sel, &w, NULL);
-   e_widget_size_min_set(cfdata->o_sel, w, 240);
+   e_widget_size_min_get(cfdata->o_sel, &w, &h);
+   e_widget_size_min_set(cfdata->o_sel, w, h);
    e_widget_ilist_thaw(cfdata->o_sel);
    edje_thaw();
    evas_event_thaw(evas);
