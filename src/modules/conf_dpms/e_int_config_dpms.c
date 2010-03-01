@@ -41,7 +41,7 @@ struct _E_Config_Dialog_Data
 static E_Dialog *dpms_dialog = NULL;
 
 static void
-_cb_dpms_dialog_ok(void *data, E_Dialog *dia)
+_cb_dpms_dialog_ok(void *data __UNUSED__, E_Dialog *dia __UNUSED__)
 {
    e_object_del(E_OBJECT(dpms_dialog));
    dpms_dialog = NULL;
@@ -154,14 +154,14 @@ _create_data(E_Config_Dialog *cfd)
 }
 
 static void
-_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
   eina_list_free(cfdata->dpms_list);
   E_FREE(cfdata);
 }
 
 static int
-_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    e_config->dpms_enable = cfdata->enable_dpms;
    e_config->dpms_standby_enable = cfdata->enable_standby;
@@ -179,7 +179,7 @@ _apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
 /* advanced window */
 static int
-_advanced_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_advanced_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    return (e_config->dpms_enable != cfdata->enable_dpms) ||
 	  (e_config->dpms_standby_enable != cfdata->enable_standby) ||
@@ -198,7 +198,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 }
 
 static Evas_Object *
-_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
+_advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *of, *ob;
    Evas_Object *dpms_check;
@@ -258,7 +258,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 
 /* general functionality/callbacks */
 static void
-_cb_standby_slider_change(void *data, Evas_Object *obj)
+_cb_standby_slider_change(void *data, Evas_Object *obj __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata = data;
 
@@ -281,7 +281,7 @@ _cb_standby_slider_change(void *data, Evas_Object *obj)
 }
 
 static void
-_cb_suspend_slider_change(void *data, Evas_Object *obj)
+_cb_suspend_slider_change(void *data, Evas_Object *obj __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata = data;
 
@@ -303,7 +303,7 @@ _cb_suspend_slider_change(void *data, Evas_Object *obj)
 }
 
 static void
-_cb_off_slider_change(void *data, Evas_Object *obj)
+_cb_off_slider_change(void *data, Evas_Object *obj __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata = data;
 
