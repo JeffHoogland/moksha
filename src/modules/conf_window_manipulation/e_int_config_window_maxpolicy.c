@@ -41,8 +41,7 @@ e_int_config_window_maxpolicy(E_Container *con, const char *params __UNUSED__)
    v->advanced.create_widgets = _advanced_create_widgets;
 
    /* create config diaolg for NULL object/data */
-   cfd = e_config_dialog_new(con,
-			     _("Window Maximize Policy"),
+   cfd = e_config_dialog_new(con, _("Window Maximize Policy"),
 			     "E", "_config_window_maxpolicy_dialog",
 			     "preferences-window-manipulation", 0, v, NULL);
    return cfd;
@@ -88,7 +87,8 @@ static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    /* Actually take our cfdata settings and apply them in real life */
-   e_config->maximize_policy = cfdata->maximize_policy | cfdata->maximize_direction;
+   e_config->maximize_policy = 
+     (cfdata->maximize_policy | cfdata->maximize_direction);
    e_config_save_queue();
    return 1; /* Apply was OK */
 }
@@ -97,7 +97,8 @@ static int
 _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    /* Actually take our cfdata settings and apply them in real life */
-   e_config->maximize_policy = cfdata->maximize_policy | cfdata->maximize_direction;
+   e_config->maximize_policy = 
+     (cfdata->maximize_policy | cfdata->maximize_direction);
    e_config->allow_manip = cfdata->allow_manip;
    e_config->border_fix_on_shelf_toggle = cfdata->border_fix_on_shelf_toggle;
    e_config_save_queue();
@@ -109,20 +110,22 @@ static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    /* generate the core widget layout for a basic dialog */
-   Evas_Object *o, *ob;
+   Evas_Object *o, *ob, *of;
    E_Radio_Group *rg;
 
    o = e_widget_list_add(evas, 0, 0);
 
+   of = e_widget_framelist_add(evas, _("Maximize Policy"), 0);
    rg = e_widget_radio_group_new(&(cfdata->maximize_policy));
    ob = e_widget_radio_add(evas, _("Fullscreen"), E_MAXIMIZE_FULLSCREEN, rg);
-   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Smart expansion"), E_MAXIMIZE_SMART, rg);
-   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   e_widget_framelist_object_append(of, ob);
    /* ob = e_widget_radio_add(evas, _("Expand the window"), E_MAXIMIZE_EXPAND, rg);
     * e_widget_list_object_append(o, ob, 1, 1, 0.5); */
    ob = e_widget_radio_add(evas, _("Fill available space"), E_MAXIMIZE_FILL, rg);
-   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   e_widget_framelist_object_append(of, ob);
+   e_widget_list_object_append(o, of, 1, 0, 0.5);
 
    return o;
 }
@@ -147,7 +150,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
     * e_widget_framelist_object_append(of, ob); */
    ob = e_widget_radio_add(evas, _("Fill available space"), E_MAXIMIZE_FILL, rg);
    e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_list_object_append(o, of, 1, 0, 0.5);
 
    of = e_widget_framelist_add(evas, _("Maximize Directions"), 0);
    rg = e_widget_radio_group_new(&(cfdata->maximize_direction));
@@ -157,20 +160,22 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Both"), E_MAXIMIZE_BOTH, rg);
    e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_list_object_append(o, of, 1, 0, 0.5);
 
    of = e_widget_framelist_add(evas, _("Miscellaneous Options"), 0);
    /* FIXME this should be default imho. no big deal if one resizes
       a maximized window by mistake and then it's not maximized
       anymore.. people will rather wonder why they cant shade
       their window (hannes) */
-   ob = e_widget_check_add(evas, _("Allow manipulation of maximized windows"), &(cfdata->allow_manip));
+   ob = e_widget_check_add(evas, _("Allow manipulation of maximized windows"), 
+                           &(cfdata->allow_manip));
    e_widget_framelist_object_append(of, ob);
    /* FIXME: does this option make any sense? use a shelf that is
       above windows in this case! */
-   ob = e_widget_check_add(evas, _("Automatically move/resize windows on shelf autohide"), &(cfdata->border_fix_on_shelf_toggle));
+   ob = e_widget_check_add(evas, _("Automatically move/resize windows on shelf autohide"), 
+                           &(cfdata->border_fix_on_shelf_toggle));
    e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_list_object_append(o, of, 1, 0, 0.5);
 
    return o;
 }
