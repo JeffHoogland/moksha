@@ -69,7 +69,7 @@ _gc_shutdown(E_Gadcon_Client *gcc)
 }
 
 static void
-_gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
+_gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient __UNUSED__)
 {
    Evas_Coord mw, mh;
 
@@ -83,13 +83,13 @@ _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
 }
 
 static char *
-_gc_label(E_Gadcon_Client_Class *client_class)
+_gc_label(E_Gadcon_Client_Class *client_class __UNUSED__)
 {
    return _("Settings");
 }
 
 static Evas_Object *
-_gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas)
+_gc_icon(E_Gadcon_Client_Class *client_class __UNUSED__, Evas *evas)
 {
    Evas_Object *o;
    char buf[PATH_MAX];
@@ -102,13 +102,13 @@ _gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas)
 }
 
 static const char *
-_gc_id_new(E_Gadcon_Client_Class *client_class)
+_gc_id_new(E_Gadcon_Client_Class *client_class __UNUSED__)
 {
    return _gadcon_class.name;
 }
 
 static void
-_cb_button_click(void *data, void *data2)
+_cb_button_click(void *data __UNUSED__, void *data2 __UNUSED__)
 {
    E_Action *a;
 
@@ -117,11 +117,10 @@ _cb_button_click(void *data, void *data2)
 }
 
 static void
-_e_mod_run_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_mod_run_cb(void *data, E_Menu *m, E_Menu_Item *mi __UNUSED__)
 {
    Eina_List *l;
    E_Configure_Cat *ecat;
-   char buf[1024];
 
    EINA_LIST_FOREACH(e_configure_registry, l, ecat)
      {
@@ -156,8 +155,6 @@ _config_pre_activate_cb(void *data, E_Menu *m)
 
    EINA_LIST_FOREACH(ecat->items, l, eci)
      {
-        char buf[1024];
-
         if (eci->pri >= 0)
           {
              mi = e_menu_item_new(m);
@@ -313,7 +310,7 @@ e_modapi_init(E_Module *m)
 }
 
 EAPI int
-e_modapi_shutdown(E_Module *m)
+e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    e_configure_del();
 
@@ -353,7 +350,7 @@ e_modapi_shutdown(E_Module *m)
 }
 
 EAPI int
-e_modapi_save(E_Module *m)
+e_modapi_save(E_Module *m __UNUSED__)
 {
    e_config_domain_save("module.conf", conf_edd, conf);
    return 1;
@@ -385,7 +382,7 @@ _e_mod_action_conf_cb(E_Object *obj, const char *params)
 
 /* menu item callback(s) */
 static void
-_e_mod_conf_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_mod_conf_cb(void *data __UNUSED__, E_Menu *m, E_Menu_Item *mi __UNUSED__)
 {
    e_configure_show(m->zone->container);
 }
@@ -442,7 +439,7 @@ _e_mod_submenu_modes_get(void)
 
 /* menu item add hook */
 static void
-_e_mod_menu_add(void *data, E_Menu *m)
+_e_mod_menu_add(void *data __UNUSED__, E_Menu *m)
 {
    E_Menu_Item *mi;
 
@@ -460,8 +457,6 @@ _e_mod_menu_add(void *data, E_Menu *m)
 static void
 _conf_new(void)
 {
-   char buf[128];
-
    conf = E_NEW(Config, 1);
    conf->version = (MOD_CONFIG_FILE_EPOCH << 16);
 
@@ -485,6 +480,7 @@ _conf_free(void)
 static int
 _conf_timer(void *data)
 {
-   e_util_dialog_show(_("Configuration Panel Configuration Updated"), data);
+   e_util_dialog_show(_("Configuration Panel Configuration Updated"),
+		      "%s", (char *)data);
    return 0;
 }

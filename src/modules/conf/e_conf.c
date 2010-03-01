@@ -275,8 +275,8 @@ _e_configure_cb_resize(E_Win *win)
    evas_object_resize(eco->edje, w, h);
 }
 
-static void 
-_e_configure_cb_close(void *data, void *data2) 
+static void
+_e_configure_cb_close(void *data, void *data2 __UNUSED__)
 {
    E_Configure *eco;
 
@@ -314,8 +314,8 @@ _e_configure_category_add(E_Configure *eco, const char *label, const char *icon_
    return cat;
 }
 
-static void 
-_e_configure_category_cb(void *data, void *data2) 
+static void
+_e_configure_category_cb(void *data, void *data2 __UNUSED__)
 {
    E_Configure_Category *cat;
    E_Configure *eco;
@@ -413,8 +413,8 @@ _e_configure_focus_cb(void *data, Evas_Object *obj)
      }
 }
 
-static void 
-_e_configure_keydown_cb(void *data, Evas *e, Evas_Object *obj, void *event) 
+static void
+_e_configure_keydown_cb(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event)
 {
    Evas_Event_Key_Down *ev;
    E_Win *win;
@@ -513,8 +513,8 @@ _e_configure_fill_cat_list(void *data)
    evas_event_thaw(evas_object_evas_get(eco->cat_list));
 }
 
-static int 
-_e_configure_module_update_cb(void *data, int type, void *event) 
+static int
+_e_configure_module_update_cb(void *data, int type __UNUSED__, void *event __UNUSED__)
 {
    E_Configure *eco;
    int sel = 0;
