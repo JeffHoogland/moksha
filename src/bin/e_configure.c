@@ -1,8 +1,10 @@
 #include "e.h"
 
+#if 0
 static void _e_configure_efreet_desktop_update(void);
 static int _e_configure_cb_efreet_desktop_list_change(void *data, int type, void *event);
 static int _e_configure_cb_efreet_desktop_change(void *data, int type, void *event);
+#endif
 static void _e_configure_registry_item_full_add(const char *path, int pri, const char *label, const char *icon_file, const char *icon, E_Config_Dialog *(*func) (E_Container *con, const char *params), void (*generic_func) (E_Container *con, const char *params), Efreet_Desktop *desktop);
 
 EAPI Eina_List *e_configure_registry = NULL;
@@ -36,15 +38,18 @@ e_configure_init(void)
    maug = e_int_menus_menu_augmentation_add_sorted
      ("config/1", _("Modules"), _e_configure_menu_add, NULL, NULL, NULL);
 
+#if 0
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
          (EFREET_EVENT_DESKTOP_LIST_CHANGE, _e_configure_cb_efreet_desktop_list_change, NULL));
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
          (EFREET_EVENT_DESKTOP_CHANGE, _e_configure_cb_efreet_desktop_change, NULL));
+#endif
 //   _e_configure_efreet_desktop_update();
 }
 
+#if 0
 static void
 _e_configure_efreet_desktop_update(void)
 {
@@ -180,6 +185,7 @@ _e_configure_cb_efreet_desktop_change(void *data, int type, void *event)
    _e_configure_efreet_desktop_update();
    return 1;
 }
+#endif
 
 static void
 _e_configure_registry_item_full_add(const char *path, int pri, const char *label, const char *icon_file, const char *icon, E_Config_Dialog *(*func) (E_Container *con, const char *params), void (*generic_func) (E_Container *con, const char *params), Efreet_Desktop *desktop)

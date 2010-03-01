@@ -51,8 +51,10 @@ static void _cb_slipwin_border_select(void *data, E_Slipwin *esw, E_Border *bd);
 static void _cb_slipshelf_border_select(void *data, E_Slipshelf *ess, E_Border *bd);
 static void _cb_slipshelf_border_home2(void *data, E_Slipshelf *ess, E_Border *pbd);
 static void _cb_selected(void *data, Evas_Object *obj, void *event_info);
+#if 0
 static int _cb_efreet_desktop_list_change(void *data, int type, void *event);
 static int _cb_efreet_desktop_change(void *data, int type, void *event);
+#endif
 static void _apps_unpopulate(void);
 static void _apps_populate(void);
 static int _cb_update_deferred(void *data);
@@ -157,12 +159,14 @@ _e_mod_win_init(E_Module *m)
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
       (ECORE_EXE_EVENT_DEL, _cb_event_exe_del, NULL));
+#if 0
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
       (EFREET_EVENT_DESKTOP_LIST_CHANGE, _cb_efreet_desktop_list_change, NULL));
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
       (EFREET_EVENT_DESKTOP_CHANGE, _cb_efreet_desktop_change, NULL));
+#endif
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
       (E_EVENT_ZONE_MOVE_RESIZE, _cb_zone_move_resize, NULL));
@@ -1199,6 +1203,7 @@ _cb_selected(void *data, Evas_Object *obj, void *event_info)
      }
 }
 
+#if 0
 static int
 _cb_efreet_desktop_list_change(void *data, int type, void *event)
 {
@@ -1214,6 +1219,7 @@ _cb_efreet_desktop_change(void *data, int type, void *event)
    defer = ecore_timer_add(1.0, _cb_update_deferred, NULL);
    return 1;
 }
+#endif
 
 static int
 _cb_update_deferred(void *data)

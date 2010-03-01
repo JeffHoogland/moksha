@@ -44,8 +44,10 @@ static int _e_border_cb_window_state_request(void *data, int ev_type, void *ev);
 static int _e_border_cb_window_move_resize_request(void *data, int ev_type, void *ev);
 static int _e_border_cb_desktop_change(void *data, int ev_type, void *ev);
 static int _e_border_cb_sync_alarm(void *data, int ev_type, void *ev);
+#if 0
 static int _e_border_cb_efreet_desktop_list_change(void *data, int ev_type, void *ev);
 static int _e_border_cb_efreet_desktop_change(void *data, int ev_type, void *ev);
+#endif
 static int _e_border_cb_config_icon_theme(void *data, int ev_type, void *ev);
 
 static int  _e_border_cb_pointer_warp(void *data, int ev_type, void *ev);
@@ -186,8 +188,10 @@ e_border_init(void)
    ecore_x_passive_grab_replay_func_set(_e_border_cb_grab_replay, NULL);
 
    handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_POINTER_WARP, _e_border_cb_pointer_warp, NULL));
+#if 0
    handlers = eina_list_append(handlers, ecore_event_handler_add(EFREET_EVENT_DESKTOP_LIST_CHANGE, _e_border_cb_efreet_desktop_list_change, NULL));
    handlers = eina_list_append(handlers, ecore_event_handler_add(EFREET_EVENT_DESKTOP_CHANGE, _e_border_cb_efreet_desktop_change, NULL));
+#endif
    handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_CONFIG_ICON_THEME, _e_border_cb_config_icon_theme, NULL));
 
    if (!borders_hash) borders_hash = eina_hash_string_superfast_new(NULL);
@@ -4965,6 +4969,7 @@ _e_border_cb_sync_alarm(void *data, int ev_type, void *ev)
    return 1;
 }
 
+#if 0
 static int
 _e_border_cb_efreet_desktop_list_change(void *data, int ev_type, void *ev)
 {
@@ -5042,6 +5047,7 @@ _e_border_cb_efreet_desktop_change(void *data, int ev_type, void *ev)
      }
    return 1;
 }
+#endif
 
 static int
 _e_border_cb_config_icon_theme(void *data, int ev_type, void *ev)

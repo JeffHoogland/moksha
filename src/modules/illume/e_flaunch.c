@@ -190,6 +190,7 @@ _e_flaunch_cb_delayed_repopulate(void *data)
    return 0;
 }
 
+#if 0
 static int
 _e_flaunch_cb_desktop_list_change(void *data, int type, void *event)
 {       
@@ -211,6 +212,7 @@ _e_flaunch_cb_desktop_change(void *data, int type, void *event)
    fl->repopulate_timer = ecore_timer_add(0.5, _e_flaunch_cb_delayed_repopulate, fl);
    return 1;
 }
+#endif
 
 EAPI int
 e_flaunch_init(void)
@@ -269,12 +271,14 @@ e_flaunch_new(E_Zone *zone, const char *themedir)
    fl->handlers = eina_list_append
      (fl->handlers, ecore_event_handler_add
       (E_EVENT_ZONE_MOVE_RESIZE, _e_flaunch_cb_zone_move_resize, fl));
+#if 0
    fl->handlers = eina_list_append
      (fl->handlers, ecore_event_handler_add
       (EFREET_EVENT_DESKTOP_LIST_CHANGE, _e_flaunch_cb_desktop_list_change, fl));
    fl->handlers = eina_list_append
      (fl->handlers, ecore_event_handler_add
       (EFREET_EVENT_DESKTOP_CHANGE, _e_flaunch_cb_desktop_change, fl));
+#endif
    
    return fl;
 }

@@ -11,7 +11,9 @@ static void _e_order_cb_monitor (void *data, Ecore_File_Monitor *em, Ecore_File_
 static void _e_order_read       (E_Order *eo);
 static void _e_order_save       (E_Order *eo);
 
+#if 0
 static int  _e_order_cb_efreet_desktop_change(void *data, int ev_type, void *ev);
+#endif
 
 static Eina_List *orders = NULL;
 static Eina_List *handlers = NULL;
@@ -20,7 +22,9 @@ static Eina_List *handlers = NULL;
 EAPI int
 e_order_init(void)
 {
+#if 0
    handlers = eina_list_append(handlers, ecore_event_handler_add(EFREET_EVENT_DESKTOP_CHANGE, _e_order_cb_efreet_desktop_change, NULL));
+#endif
    efreet_menu_file_set(e_config->default_system_menu);
    return 1;
 }
@@ -261,6 +265,7 @@ _e_order_save(E_Order *eo)
    fclose(f);
 }
 
+#if 0
 static int
 _e_order_cb_efreet_desktop_change(void *data, int ev_type, void *ev)
 {
@@ -323,3 +328,4 @@ _e_order_cb_efreet_desktop_change(void *data, int ev_type, void *ev)
      }
    return 1;
 }
+#endif
