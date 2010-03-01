@@ -45,8 +45,7 @@ e_int_config_window_stacking(E_Container *con, const char *params __UNUSED__)
    v->advanced.create_widgets = _advanced_create_widgets;
 
    /* create config diaolg for NULL object/data */
-   cfd = e_config_dialog_new(con,
-			     _("Window Stacking"),
+   cfd = e_config_dialog_new(con, _("Window Stacking"),
 			     "E", "_config_window_stacking_dialog",
 			     "preferences-window-stacking", 0, v, NULL);
    return cfd;
@@ -119,11 +118,13 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    o = e_widget_list_add(evas, 0, 0);
 
-   ob = e_widget_check_add(evas, _("Automatically raise windows on mouse over"), &(cfdata->use_auto_raise));
-   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   ob = e_widget_check_add(evas, _("Automatically raise windows on mouse over"), 
+                           &(cfdata->use_auto_raise));
+   e_widget_list_object_append(o, ob, 1, 0, 0.5);
 
-   ob = e_widget_check_add(evas, _("Allow windows to be above fullscreen window"), &(cfdata->allow_above_fullscreen));
-   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   ob = e_widget_check_add(evas, _("Allow windows to be above fullscreen window"), 
+                           &(cfdata->allow_above_fullscreen));
+   e_widget_list_object_append(o, ob, 1, 0, 0.5);
 
    return o;
 }
@@ -138,30 +139,35 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    o = e_widget_list_add(evas, 0, 0);
 
    of = e_widget_framelist_add(evas, _("Autoraise"), 0);
-   autoraise_check = e_widget_check_add(evas, _("Automatically raise windows on mouse over"), &(cfdata->use_auto_raise));
+   autoraise_check = e_widget_check_add(evas, _("Automatically raise windows on mouse over"), 
+                                        &(cfdata->use_auto_raise));
    e_widget_framelist_object_append(of, autoraise_check);
    ob = e_widget_label_add(evas, _("Delay before raising:"));
    autoraise_list = eina_list_append (autoraise_list, ob);
    e_widget_disabled_set(ob, !cfdata->use_auto_raise); // set state from saved config
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.1f sec"), 0.0, 9.9, 0.1, 0, &(cfdata->auto_raise_delay), NULL, 200);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.1f sec"), 0.0, 9.9, 0.1, 0, 
+                            &(cfdata->auto_raise_delay), NULL, 200);
    autoraise_list = eina_list_append (autoraise_list, ob);
    e_widget_disabled_set(ob, !cfdata->use_auto_raise); // set state from saved config
    e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_list_object_append(o, of, 1, 0, 0.5);
    // handler for enable/disable widget array
-   e_widget_on_change_hook_set(autoraise_check, _cb_disable_check_list, autoraise_list);
-//
+   e_widget_on_change_hook_set(autoraise_check, 
+                               _cb_disable_check_list, autoraise_list);
 
    of = e_widget_framelist_add(evas, _("Raise Window"), 0);
    e_widget_framelist_content_align_set(of, 0.0, 0.0);
-   ob = e_widget_check_add(evas, _("Raise when starting to move or resize"), &(cfdata->border_raise_on_mouse_action));
+   ob = e_widget_check_add(evas, _("Raise when starting to move or resize"), 
+                           &(cfdata->border_raise_on_mouse_action));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_check_add(evas, _("Raise when clicking to focus"), &(cfdata->border_raise_on_focus));
+   ob = e_widget_check_add(evas, _("Raise when clicking to focus"), 
+                           &(cfdata->border_raise_on_focus));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_check_add(evas, _("Allow windows to be above fullscreen window"), &(cfdata->allow_above_fullscreen));
+   ob = e_widget_check_add(evas, _("Allow windows to be above fullscreen window"), 
+                           &(cfdata->allow_above_fullscreen));
    e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_list_object_append(o, of, 1, 0, 0.5);
 
    return o;
 }
@@ -180,5 +186,5 @@ _cb_disable_check_list(void *data, Evas_Object *obj)
    Evas_Object *o;
 
    EINA_LIST_FOREACH(list, l, o)
-      e_widget_disabled_set(o, !e_widget_check_checked_get(obj));
+     e_widget_disabled_set(o, !e_widget_check_checked_get(obj));
 }
