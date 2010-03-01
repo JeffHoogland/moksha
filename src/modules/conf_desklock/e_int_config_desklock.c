@@ -227,7 +227,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    cfdata->gui.basic.auto_lock_slider = ow;
    e_widget_disabled_set(ow, !cfdata->use_xscreensaver);
    e_widget_framelist_object_append(of, ow);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_list_object_append(o, of, 1, 0, 0.5);
 
    _basic_auto_lock_cb_changed(cfdata, NULL);
    _basic_screensaver_lock_cb_changed(cfdata, NULL);
