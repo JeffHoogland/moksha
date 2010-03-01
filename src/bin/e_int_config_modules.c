@@ -35,7 +35,7 @@ struct _E_Config_Dialog_Data
 /* Key pairs for module types 
  * 
  * Should be in alphabetic order 
-*/
+ */
 const CFTypes _types[] = 
 {
      {"appearance", N_("Appearance"), "preferences-appearance"},
@@ -244,7 +244,7 @@ _load_modules(const char *dir)
 	cft = eina_hash_find(types_hash, type);
 	if (cft)
 	  {
-	     if (cft->modules && eina_hash_find(cft->modules, mod))
+	     if ((cft->modules) && (eina_hash_find(cft->modules, mod))) 
 	       {
 		  if ((!desk->x) && (type)) eina_stringshare_del(type);
 		  if (desk) efreet_desktop_free(desk);
@@ -312,8 +312,9 @@ _fill_list(Evas_Object *obj, int enabled)
 
    e_widget_ilist_go(obj);
    e_widget_size_min_get(obj, &w, NULL);
-   e_widget_size_min_set(obj, w > (180 * e_scale) ? (w * e_scale) : (180 * e_scale), 
-                         (200 * e_scale));
+   e_widget_size_min_set(obj, (w * e_scale), (200 * e_scale));
+//   e_widget_size_min_set(obj, w > (180 * e_scale) ? (w * e_scale) : (180 * e_scale), 
+//                         (200 * e_scale));
    e_widget_ilist_thaw(obj);
    edje_thaw();
    evas_event_thaw(evas);
