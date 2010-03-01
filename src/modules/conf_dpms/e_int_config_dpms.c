@@ -216,7 +216,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    cfdata->dpms_list = eina_list_append(cfdata->dpms_list, ob);
    e_widget_disabled_set(ob, !cfdata->enable_standby); // set state from saved config
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f minutes"), 1.0, 90.0, 1.0, 0,
-			    &(cfdata->standby_timeout), NULL, 200);
+			    &(cfdata->standby_timeout), NULL, 100);
    e_widget_on_change_hook_set(ob, _cb_standby_slider_change, cfdata);
    cfdata->standby_slider = ob;
    cfdata->dpms_list = eina_list_append(cfdata->dpms_list, ob);
@@ -228,7 +228,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    cfdata->dpms_list = eina_list_append(cfdata->dpms_list, ob);
    e_widget_disabled_set(ob, !cfdata->enable_standby); // set state from saved config
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f minutes"), 1.0, 90.0, 1.0, 0,
-			    &(cfdata->suspend_timeout), NULL, 200);
+			    &(cfdata->suspend_timeout), NULL, 100);
    e_widget_on_change_hook_set(ob, _cb_suspend_slider_change, cfdata);
    cfdata->suspend_slider = ob;
    cfdata->dpms_list = eina_list_append(cfdata->dpms_list, ob);
@@ -240,7 +240,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    cfdata->dpms_list = eina_list_append(cfdata->dpms_list, ob);
    e_widget_disabled_set(ob, !cfdata->enable_standby); // set state from saved config
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f minutes"), 1.0, 90.0, 1.0, 0,
-			    &(cfdata->off_timeout), NULL, 200);
+			    &(cfdata->off_timeout), NULL, 100);
    e_widget_on_change_hook_set(ob, _cb_off_slider_change, cfdata);
    cfdata->off_slider = ob;
    cfdata->dpms_list = eina_list_append(cfdata->dpms_list, ob);
