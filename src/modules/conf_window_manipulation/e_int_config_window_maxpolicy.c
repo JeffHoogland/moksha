@@ -62,7 +62,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 }
 
 static void *
-_create_data(E_Config_Dialog *cfd)
+_create_data(E_Config_Dialog *cfd __UNUSED__)
 {
    /* Create cfdata - cfdata is a temporary block of config data that this
     * dialog will be dealing with while configuring. it will be applied to
@@ -76,7 +76,7 @@ _create_data(E_Config_Dialog *cfd)
 }
 
 static void
-_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    /* Free the cfdata */
    E_FREE(cfdata);
@@ -84,7 +84,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
 /**--APPLY--**/
 static int
-_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    /* Actually take our cfdata settings and apply them in real life */
    e_config->maximize_policy = 
@@ -94,7 +94,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 }
 
 static int
-_advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_advanced_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    /* Actually take our cfdata settings and apply them in real life */
    e_config->maximize_policy = 
@@ -107,7 +107,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
 /**--GUI--**/
 static Evas_Object *
-_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
+_basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    /* generate the core widget layout for a basic dialog */
    Evas_Object *o, *ob, *of;
@@ -131,7 +131,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 }
 
 static Evas_Object *
-_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
+_advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    /* generate the core widget layout for an advanced dialog */
    Evas_Object *o, *ob, *of;
@@ -166,13 +166,20 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    /* FIXME this should be default imho. no big deal if one resizes
       a maximized window by mistake and then it's not maximized
       anymore.. people will rather wonder why they cant shade
-      their window (hannes) */
+      their window (hannes)
+
+      k-s: often this also mean disable such border decoration, so makes sense.
+           I'd say it makes no sense to move/resize maximized windows :-)
+   */
    ob = e_widget_check_add(evas, _("Allow manipulation of maximized windows"), 
                            &(cfdata->allow_manip));
    e_widget_framelist_object_append(of, ob);
    /* FIXME: does this option make any sense? use a shelf that is
-      above windows in this case! */
-   ob = e_widget_check_add(evas, _("Automatically move/resize windows on shelf autohide"), 
+      above windows in this case!
+
+      k-s: it does, since the shelf may cover window contents. (not big deal)
+   */
+   ob = e_widget_check_add(evas, _("Adjust windows on shelf hide"), 
                            &(cfdata->border_fix_on_shelf_toggle));
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 0, 0.5);

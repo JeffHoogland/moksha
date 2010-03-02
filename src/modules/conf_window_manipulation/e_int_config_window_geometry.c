@@ -74,7 +74,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 }
 
 static void *
-_create_data(E_Config_Dialog *cfd)
+_create_data(E_Config_Dialog *cfd __UNUSED__)
 {
    /* Create cfdata - cfdata is a temporary block of config data that this
     * dialog will be dealing with while configuring. it will be applied to
@@ -88,7 +88,7 @@ _create_data(E_Config_Dialog *cfd)
 }
 
 static void
-_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    resistance_list = eina_list_free(resistance_list);
 
@@ -99,7 +99,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 /**--APPLY--**/
 
 static int
-_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    /* Actually take our cfdata settings and apply them in real life */
    e_config->use_resist = cfdata->use_resist;
@@ -119,7 +119,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
 /**--GUI--**/
 static Evas_Object *
-_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
+_basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    /* generate the core widget layout for an advanced dialog */
    Evas_Object *o, *ob, *of;
@@ -128,33 +128,33 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    o = e_widget_list_add(evas, 0, 0);
 
    of = e_widget_framelist_add(evas, _("Resistance"), 0);
-   resistance_check = e_widget_check_add(evas, _("Resist moving or resizing a window over an obstacle"), 
+   resistance_check = e_widget_check_add(evas, _("Resist obstacles"), 
                                          &(cfdata->use_resist));
    e_widget_framelist_object_append(of, resistance_check);
-   ob = e_widget_label_add(evas, _("Resistance between windows:"));
+   ob = e_widget_label_add(evas, _("Other windows:"));
    resistance_list = eina_list_append (resistance_list, ob);
    e_widget_disabled_set(ob, !cfdata->use_resist); // set state from saved config
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%2.0f pixels"), 0, 64.0, 1.0, 0, 
-                            NULL, &(cfdata->window_resist), 200);
+                            NULL, &(cfdata->window_resist), 100);
    resistance_list = eina_list_append (resistance_list, ob);
    e_widget_disabled_set(ob, !cfdata->use_resist); // set state from saved config
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_label_add(evas, _("Resistance at the edge of the screen:"));
-   resistance_list = eina_list_append (resistance_list, ob);
-   e_widget_disabled_set(ob, !cfdata->use_resist); // set state from saved config
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%2.0f pixels"), 0, 64.0, 1.0, 0, 
-                            NULL, &(cfdata->desk_resist), 200);
-   resistance_list = eina_list_append (resistance_list, ob);
-   e_widget_disabled_set(ob, !cfdata->use_resist); // set state from saved config
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_label_add(evas, _("Resistance to desktop gadgets:"));
+   ob = e_widget_label_add(evas, _("Edge of the screen:"));
    resistance_list = eina_list_append (resistance_list, ob);
    e_widget_disabled_set(ob, !cfdata->use_resist); // set state from saved config
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%2.0f pixels"), 0, 64.0, 1.0, 0, 
-                            NULL, &(cfdata->gadget_resist), 200);
+                            NULL, &(cfdata->desk_resist), 100);
+   resistance_list = eina_list_append (resistance_list, ob);
+   e_widget_disabled_set(ob, !cfdata->use_resist); // set state from saved config
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_label_add(evas, _("Desktop gadgets:"));
+   resistance_list = eina_list_append (resistance_list, ob);
+   e_widget_disabled_set(ob, !cfdata->use_resist); // set state from saved config
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_slider_add(evas, 1, 0, _("%2.0f pixels"), 0, 64.0, 1.0, 0, 
+                            NULL, &(cfdata->gadget_resist), 100);
    resistance_list = eina_list_append (resistance_list, ob);
    e_widget_disabled_set(ob, !cfdata->use_resist); // set state from saved config
    e_widget_framelist_object_append(of, ob);
@@ -173,12 +173,12 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    ob = e_widget_label_add(evas, _("Move by:"));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%2.0f pixels"), 1, 255, 1, 0, NULL, 
-                            &(cfdata->border_keyboard.move.dx), 200);
+                            &(cfdata->border_keyboard.move.dx), 100);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_label_add(evas, _("Resize by:"));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%2.0f pixels"), 1, 255, 1, 0, NULL, 
-                            &(cfdata->border_keyboard.resize.dx), 200);
+                            &(cfdata->border_keyboard.resize.dx), 100);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 0, 0.5);
 
