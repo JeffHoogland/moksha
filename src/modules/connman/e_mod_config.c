@@ -26,8 +26,8 @@ struct _E_Config_Dialog_Data
 	Evas_Object *setframe;
 	struct connman_config_network_settings_ui
 	  {
-	     Evas_Object *settings_otb;
-	     Evas_Object *table_general;
+	     Evas_Object *scr_general;
+	     Evas_Object *list_general;
 	     Evas_Object *lb_autoconn;
 	     Evas_Object *lb_autoconn_val;
 	     Evas_Object *lb_favorite;
@@ -41,7 +41,10 @@ struct _E_Config_Dialog_Data
 	     Evas_Object *lb_ipv4_netmask;
 	     Evas_Object *lb_ipv4_netmask_val;
 
+#if 0 // need to do proxy stuff to enalbe the toolbook
+	     Evas_Object *settings_otb;
 	     Evas_Object *list_proxy;
+#endif
 	  } settings_otb;
      } networks;
    struct connman_config_switch_ui
@@ -247,7 +250,7 @@ _fill_data(E_Config_Dialog_Data *cfdata, E_Connman_Module_Context *ctxt)
 }
 
 void
-_cb_table_general_show(void *data, Evas *evas __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
+_cb_scr_general_show(void *data, Evas *evas __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata = data;
    struct connman_config_network_ui *ui;
@@ -260,29 +263,46 @@ _cb_table_general_show(void *data, Evas *evas __UNUSED__, Evas_Object *obj, void
 static void _network_settings_general_page_create(Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    struct connman_config_network_settings_ui *ui;
+   Evas_Coord mw, mh;
    ui = &cfdata->networks.settings_otb;
-   int last_index=0;
 
-   ui->table_general = e_widget_table_add(evas, 1);
-#define _APPEND_ITEM(item, label, idx)		\
-do						\
-  {						\
-     ui->lb_##item = e_widget_label_add(evas, _(label));	\
-     ui->lb_##item ## _val  = e_widget_label_add(evas, NULL);\
-     e_widget_table_object_append(ui->table_general, ui->lb_##item, 0, idx, 1, 1, 1, 0, 1, 0);\
-     e_widget_table_object_append(ui->table_general, ui->lb_##item ## _val, 1, idx++, 1, 1, 1, 0, 1, 0);\
+   ui->list_general = e_widget_list_add(evas, 0, 0);
+#define _APPEND_ITEM(item, label)					\
+   do									\
+  {									\
+     ui->lb_##item = e_widget_label_add(evas, _(label));		\
+     ui->lb_##item ## _val  = e_widget_entry_add			\
+       (evas, NULL, NULL, NULL, NULL);					\
+     e_widget_entry_readonly_set(ui->lb_##item ## _val, 1);		\
+     e_widget_list_object_append					\
+       (ui->list_general, ui->lb_##item, 1, 0, 0.0);			\
+     e_widget_list_object_append					\
+       (ui->list_general, ui->lb_##item ## _val, 1, 0, 0.0);		\
 } while(0)
 
-   _APPEND_ITEM(autoconn, "Auto-connect:", last_index);
-   _APPEND_ITEM(favorite, "Favorite:", last_index);
-   _APPEND_ITEM(type, "Type:", last_index);
-   _APPEND_ITEM(ipv4_method, "IP method:", last_index);
-   _APPEND_ITEM(ipv4_address, "IP address:", last_index);
-   _APPEND_ITEM(ipv4_netmask, "Netmask:", last_index);
+   _APPEND_ITEM(autoconn, _("Auto-connect:"));
+   _APPEND_ITEM(favorite, _("Favorite:"));
+   _APPEND_ITEM(type, _("Type:"));
+   _APPEND_ITEM(ipv4_method, _("IP method:"));
+   _APPEND_ITEM(ipv4_address, _("IP address:"));
+   _APPEND_ITEM(ipv4_netmask, _("Netmask:"));
 #undef _APPEND_ITEM
-   evas_object_event_callback_add(ui->table_general, EVAS_CALLBACK_SHOW, _cb_table_general_show, cfdata);
+
+   evas_object_show(ui->list_general);
+   e_widget_size_min_get(ui->list_general, &mw, &mh);
+   if (mw < 100 * e_scale)
+     mw = 100 * e_scale;
+   if (mh < 100 * e_scale)
+     mh = 100 * e_scale;
+   evas_object_resize(ui->list_general, mw, mh);
+
+   ui->scr_general = e_widget_scrollframe_simple_add(evas, ui->list_general);
+   e_widget_size_min_set(ui->scr_general, 100 * e_scale, 100 * e_scale);
+
+   evas_object_event_callback_add(ui->scr_general, EVAS_CALLBACK_SHOW, _cb_scr_general_show, cfdata);
 }
 
+#if 0 // need to do proxy, until then hide the toolbook complexity
 static void _network_settings_proxy_page_create(Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    struct connman_config_network_settings_ui *ui;
@@ -294,22 +314,22 @@ static void _network_settings_proxy_page_create(Evas *evas, E_Config_Dialog_Data
    label_todo = e_widget_label_add(evas, "TODO");
    e_widget_list_object_append(ui->list_proxy, label_todo, 1, 1, 0.0);
 }
+#endif
 
 static void
 _network_settings_create(Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    struct connman_config_network_ui *ui;
-   Evas_Object *ot;
-   Evas_Object *otb;
 
    ui = &cfdata->networks;
    ui->setframe = e_widget_framelist_add(evas, _("Settings"), 0);
 
+#if 0 // need to do proxy, until then hide the toolbook complexity
    ui->settings_otb.settings_otb = e_widget_toolbook_add(evas, 24 * e_scale, 24 * e_scale);
 
    _network_settings_general_page_create(evas, cfdata);
    e_widget_toolbook_page_append(ui->settings_otb.settings_otb, NULL, _("General"),
-	 ui->settings_otb.table_general, 1, 0, 1, 0, 0.5, 20.0);
+	 ui->settings_otb.scr_general, 1, 1, 1, 1, 0.5, 0.0);
 
    _network_settings_proxy_page_create(evas, cfdata);
    e_widget_toolbook_page_append(ui->settings_otb.settings_otb, NULL, _("Proxy"),
@@ -318,12 +338,14 @@ _network_settings_create(Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_size_min_set(ui->settings_otb.settings_otb, 100, 100);
    e_widget_toolbook_page_show(ui->settings_otb.settings_otb, 0);
    e_widget_framelist_object_append(ui->setframe, ui->settings_otb.settings_otb);
+#else
+   _network_settings_general_page_create(evas, cfdata);
+   e_widget_framelist_object_append(ui->setframe, ui->settings_otb.scr_general);
+#endif
 }
 
-
-
 static inline void
-_networks_fill_details(E_Config_Dialog_Data *cfdata, Evas_Object *list, int sel)
+_networks_fill_details(E_Config_Dialog_Data *cfdata, Evas_Object *list __UNUSED__, int sel __UNUSED__)
 {
    E_Connman_Service *service;
    E_Connman_Module_Context *ctxt = cfdata->ctxt;
@@ -335,14 +357,17 @@ _networks_fill_details(E_Config_Dialog_Data *cfdata, Evas_Object *list, int sel)
 	ERR("service not found: %s.", cfdata->selected_network);
 	return;
      }
-   e_widget_label_text_set(ui->lb_autoconn_val, service->auto_connect?"True":"False");
-   e_widget_label_text_set(ui->lb_favorite_val, service->favorite?"True":"False");
-   e_widget_label_text_set(ui->lb_type_val, service->type);
-   e_widget_label_text_set(ui->lb_ipv4_method_val, service->ipv4_method);
-   e_widget_label_text_set(ui->lb_ipv4_address_val, service->ipv4_address);
-   e_widget_label_text_set(ui->lb_ipv4_netmask_val, service->ipv4_netmask);
+   e_widget_entry_text_set(ui->lb_autoconn_val,
+			   service->auto_connect ? _("True"): _("False"));
+   e_widget_entry_text_set(ui->lb_favorite_val,
+			   service->favorite ? _("True") : _("False"));
+   e_widget_entry_text_set(ui->lb_type_val, service->type);
+   e_widget_entry_text_set(ui->lb_ipv4_method_val, service->ipv4_method);
+   e_widget_entry_text_set(ui->lb_ipv4_address_val, service->ipv4_address);
+   e_widget_entry_text_set(ui->lb_ipv4_netmask_val, service->ipv4_netmask);
 
-   evas_object_show(ui->table_general);
+   evas_object_show(ui->list_general);
+   evas_object_show(ui->scr_general);
 }
 
 static inline void
@@ -422,7 +447,7 @@ _networks_button_up_cb(void *data, void *data2 __UNUSED__)
 }
 
 static void
-_networks_button_down_cb(void *data, void *data2)
+_networks_button_down_cb(void *data, void *data2 __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata = data;
    Evas_Object *netlist = cfdata->networks.netlist;
@@ -450,6 +475,7 @@ _networks_list_create(Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    struct connman_config_network_ui *ui;
    Evas_Object *ot;
+   Evas_Coord mw, mh;
 
    ui = &cfdata->networks;
    ui->netframe = e_widget_framelist_add(evas, _("All networks"), 0);
@@ -468,10 +494,18 @@ _networks_list_create(Evas *evas, E_Config_Dialog_Data *cfdata)
    ui->o_down = e_widget_button_add(evas, _("Down"), "go-down", _networks_button_down_cb, cfdata, NULL);
    e_widget_disabled_set(ui->o_down, 1);
    e_widget_table_object_append(ot, ui->o_down, 1, 0, 1, 1, 1, 0, 1, 0);
-   e_widget_framelist_object_append(ui->netframe, ot);
    ui->o_add = e_widget_button_add(evas, _("Add"), "list-add", NULL, cfdata, NULL);
    e_widget_disabled_set(ui->o_add, 1);
-   e_widget_framelist_object_append(ui->netframe, ui->o_add);
+   e_widget_table_object_append(ot, ui->o_add, 0, 1, 2, 1, 1, 0, 1, 0);
+
+   e_widget_size_min_get(ot, &mw, &mh);
+   e_widget_framelist_object_append_full(ui->netframe, ot,
+					 1, 1, /* fill */
+					 1, 0, /* expand */
+					 0.5, 0.5, /* align */
+					 mw, mh, /* min */
+					 99999, 99999 /* max */
+					 );
 }
 
 static void
@@ -479,14 +513,25 @@ _networks_page_create(Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    struct connman_config_network_ui *ui;
 
+   /*
+    * TODO:
+    *
+    *     Add a elm_widget_pager similar to elm_pager and push pop the
+    *     list and the associated element settings when the list
+    *     element is selected (needs a view/edit/info/whatever button
+    *     as the list elements may be reordered, thus we need th
+    *     selection).
+    *
+    *     This should reduce the width of this dialog.
+    */
+
    ui = &cfdata->networks;
    ui->hlayout = e_widget_list_add(evas, 0, 1);
    _networks_list_create(evas, cfdata);
    e_widget_list_object_append(ui->hlayout, ui->netframe, 1, 1, 0.0);
    _network_settings_create(evas, cfdata);
    e_widget_list_object_append(ui->hlayout, ui->setframe, 1, 1, 0.0);
-
-   evas_object_hide(ui->settings_otb.table_general);
+   evas_object_hide(ui->settings_otb.scr_general);
 }
 
 static inline void
@@ -525,7 +570,7 @@ _switches_page_create(Evas *evas, E_Config_Dialog_Data *cfdata)
 }
 
 static Evas_Object *
-_basic_create(E_Config_Dialog *dialog, Evas *evas, E_Config_Dialog_Data *cfdata)
+_basic_create(E_Config_Dialog *dialog __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *otb;
 
@@ -533,10 +578,10 @@ _basic_create(E_Config_Dialog *dialog, Evas *evas, E_Config_Dialog_Data *cfdata)
 
    _networks_page_create(evas, cfdata);
    e_widget_toolbook_page_append(otb, NULL, _("Networks Settings"),
-	 cfdata->networks.hlayout, 1, 0, 1, 0, 0.5, 0.0);
+	 cfdata->networks.hlayout, 1, 1, 1, 1, 0.5, 0.0);
    _switches_page_create(evas, cfdata);
    e_widget_toolbook_page_append(otb, NULL, _("Network Switches"),
-	 cfdata->switches.vlayout, 1, 0, 1, 0, 0.5, 0.0);
+	 cfdata->switches.vlayout, 1, 1, 0, 0, 0.5, 0.5);
 
    _networks_list_fill(evas, cfdata);
    e_widget_toolbook_page_show(otb, 0);
@@ -546,7 +591,7 @@ _basic_create(E_Config_Dialog *dialog, Evas *evas, E_Config_Dialog_Data *cfdata)
 }
 
 static int
-_basic_apply(E_Config_Dialog *dialog, E_Config_Dialog_Data *cfdata)
+_basic_apply(E_Config_Dialog *dialog __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    E_Connman_Module_Context *ctxt = cfdata->ctxt;
    struct connman_config_switch_ui *sw = &cfdata->switches;

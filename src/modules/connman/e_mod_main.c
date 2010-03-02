@@ -48,7 +48,7 @@ static const char *e_str_failure = NULL;
 static struct _Connman_Technologies_Names
 {
    const char **names;
-   int count;
+   unsigned int count;
 } _connman_enabled_technologies = {
      NULL,
      0
@@ -694,7 +694,7 @@ _connman_technologies_enabled_update()
 static inline int
 _connman_technology_enabled(const char *type)
 {
-   int i;
+   unsigned int i;
    if (!_connman_enabled_technologies.names && !_connman_technologies_enabled_update())
      return 0;
    DBG("%d technologies enabled.", _connman_enabled_technologies.count);
@@ -741,7 +741,7 @@ static void
 _connman_technologies_load(E_Connman_Module_Context *ctxt)
 {
    const char **names;
-   int count, i;
+   unsigned int count, i;
 
    if (!e_connman_manager_technologies_available_get(&count, &names))
      return;
@@ -978,7 +978,6 @@ static void
 _connman_popup_cb_controls(void *data, void *data2 __UNUSED__)
 {
    E_Connman_Instance *inst = data;
-   E_Container *con;
 
    _connman_popup_del(inst);
 
