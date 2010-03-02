@@ -42,7 +42,7 @@ e_int_config_menus(E_Container *con, const char *params __UNUSED__)
 
 /* local functions */
 static void *
-_create_data(E_Config_Dialog *cfd) 
+_create_data(E_Config_Dialog *cfd __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
 
@@ -51,8 +51,8 @@ _create_data(E_Config_Dialog *cfd)
    return cfdata;
 }
 
-static void 
-_fill_data(E_Config_Dialog_Data *cfdata) 
+static void
+_fill_data(E_Config_Dialog_Data *cfdata __UNUSED__)
 {
    cfdata->show_favs = e_config->menu_favorites_show;
    cfdata->show_apps = e_config->menu_apps_show;
@@ -67,40 +67,40 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->autoscroll_cursor_margin = e_config->menu_autoscroll_cursor_margin;
 }
 
-static void 
-_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+static void
+_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    E_FREE(cfdata);
 }
 
 static Evas_Object *
-_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
+_basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *of, *ow;
 
    o = e_widget_list_add(evas, 0, 0);
 
-   of = e_widget_framelist_add(evas, _("Main Menu Settings"), 0);
-   ow = e_widget_check_add(evas, _("Show Favorites"), &(cfdata->show_favs));
+   of = e_widget_framelist_add(evas, _("Main Menu"), 0);
+   ow = e_widget_check_add(evas, _("Favorites"), &(cfdata->show_favs));
    e_widget_framelist_object_append(of, ow);
-   ow = e_widget_check_add(evas, _("Show Applications"), &(cfdata->show_apps));
+   ow = e_widget_check_add(evas, _("Applications"), &(cfdata->show_apps));
    e_widget_framelist_object_append(of, ow);
    e_widget_list_object_append(o, of, 1, 0, 0.5);
 
-   of = e_widget_framelist_add(evas, _("Menu Settings"), 0);
-   ow = e_widget_check_add(evas, _("Show Name"), &(cfdata->show_name));
+   of = e_widget_framelist_add(evas, _("Display"), 0);
+   ow = e_widget_check_add(evas, _("Name"), &(cfdata->show_name));
    e_widget_framelist_object_append(of, ow);
-   ow = e_widget_check_add(evas, _("Show Generic"), &(cfdata->show_generic));
+   ow = e_widget_check_add(evas, _("Generic"), &(cfdata->show_generic));
    e_widget_framelist_object_append(of, ow);
-   ow = e_widget_check_add(evas, _("Show Comments"), &(cfdata->show_comment));
+   ow = e_widget_check_add(evas, _("Comments"), &(cfdata->show_comment));
    e_widget_framelist_object_append(of, ow);
    e_widget_list_object_append(o, of, 1, 0, 0.5);
 
    return o;
 }
 
-static int 
-_basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+static int
+_basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    e_config->menu_favorites_show = cfdata->show_favs;
    e_config->menu_apps_show = cfdata->show_apps;
@@ -112,40 +112,40 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 }
 
 static Evas_Object *
-_adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
+_adv_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *otb, *ol, *ow;
 
    otb = e_widget_toolbook_add(evas, (48 * e_scale), (48 * e_scale));
 
    ol = e_widget_list_add(evas, 0, 0);
-   ow = e_widget_check_add(evas, _("Show Favorites"), &(cfdata->show_favs));
+   ow = e_widget_check_add(evas, _("Favorites"), &(cfdata->show_favs));
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
-   ow = e_widget_check_add(evas, _("Show Applications"), &(cfdata->show_apps));
+   ow = e_widget_check_add(evas, _("Applications"), &(cfdata->show_apps));
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Main Menu"), ol, 0, 0, 0, 0, 
                                  0.5, 0.0);
 
    ol = e_widget_list_add(evas, 0, 0);
-   ow = e_widget_check_add(evas, _("Show Name"), &(cfdata->show_name));
+   ow = e_widget_check_add(evas, _("Name"), &(cfdata->show_name));
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
-   ow = e_widget_check_add(evas, _("Show Generic"), &(cfdata->show_generic));
+   ow = e_widget_check_add(evas, _("Generic"), &(cfdata->show_generic));
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
-   ow = e_widget_check_add(evas, _("Show Comments"), &(cfdata->show_comment));
+   ow = e_widget_check_add(evas, _("Comments"), &(cfdata->show_comment));
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
-   e_widget_toolbook_page_append(otb, NULL, _("General Menu"), ol, 0, 0, 0, 0, 
+   e_widget_toolbook_page_append(otb, NULL, _("Display"), ol, 0, 0, 0, 0, 
                                  0.5, 0.0);
 
    ol = e_widget_list_add(evas, 0, 0);
-   ow = e_widget_label_add(evas, _("Autoscroll Margin"));
+   ow = e_widget_label_add(evas, _("Margin"));
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
    ow = e_widget_slider_add(evas, 1, 0, _("%2.0f pixels"), 0, 50, 1, 0, NULL, 
-                            &(cfdata->autoscroll_margin), 200);
+                            &(cfdata->autoscroll_margin), 100);
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
-   ow = e_widget_label_add(evas, _("Autoscroll Cursor Margin"));
+   ow = e_widget_label_add(evas, _("Cursor Margin"));
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
    ow = e_widget_slider_add(evas, 1, 0, _("%2.0f pixels"), 0, 50, 1, 0, NULL, 
-                            &(cfdata->autoscroll_cursor_margin), 200);
+                            &(cfdata->autoscroll_cursor_margin), 100);
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Autoscroll"), ol, 0, 0, 0, 0, 
                                  0.5, 0.0);
@@ -154,17 +154,17 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    ow = e_widget_label_add(evas, _("Menu Scroll Speed"));
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
    ow = e_widget_slider_add(evas, 1, 0, _("%5.0f pixels/sec"), 0, 20000, 100, 
-                            0, &(cfdata->scroll_speed), NULL, 200);
+                            0, &(cfdata->scroll_speed), NULL, 100);
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
    ow = e_widget_label_add(evas, _("Fast Mouse Move Threshhold"));
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
    ow = e_widget_slider_add(evas, 1, 0, _("%4.0f pixels/sec"), 0, 2000, 10, 
-                            0, &(cfdata->fast_mouse_move_threshhold), NULL, 200);
+                            0, &(cfdata->fast_mouse_move_threshhold), NULL, 100);
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
    ow = e_widget_label_add(evas, _("Click Drag Timeout"));
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
    ow = e_widget_slider_add(evas, 1, 0, _("%2.2f sec"), 0, 10, 0.25, 
-                            0, &(cfdata->click_drag_timeout), NULL, 200);
+                            0, &(cfdata->click_drag_timeout), NULL, 100);
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Miscellaneous"), ol, 0, 0, 0, 0, 
                                  0.5, 0.0);
@@ -173,8 +173,8 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    return otb;
 }
 
-static int 
-_adv_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+static int
+_adv_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    e_config->menu_favorites_show = cfdata->show_favs;
    e_config->menu_apps_show = cfdata->show_apps;
