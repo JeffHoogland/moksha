@@ -215,7 +215,7 @@ e_border_init(void)
    E_EVENT_BORDER_FOCUS_OUT = ecore_event_type_new();
    E_EVENT_BORDER_PROPERTY = ecore_event_type_new();
 
-   e_init_undone();
+//   e_init_undone();
    
    return 1;
 }

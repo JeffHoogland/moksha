@@ -1923,7 +1923,6 @@ e_mod_comp_init(void)
    handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_FOCUS_OUT,       _e_mod_comp_bd_focus_out,     NULL));
    handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_PROPERTY,        _e_mod_comp_bd_property,      NULL));
 
-   
    EINA_LIST_FOREACH(e_manager_list(), l, man)
      {
         E_Comp *c;
