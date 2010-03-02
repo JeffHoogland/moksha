@@ -19,8 +19,11 @@ EAPI E_Module_Api e_modapi = { E_MODULE_API_VERSION, "Illume2" };
 EAPI void *
 e_modapi_init(E_Module *m) 
 {
-   Eina_List *ml;
+   Eina_List *ml, *cl, *zl;
    E_Manager *man;
+   E_Container *con;
+   E_Zone *zone;
+   Ecore_X_Window *zones;
    int zcount = 0;
 
    /* set module priority so we load first */
@@ -62,20 +65,21 @@ e_modapi_init(E_Module *m)
    _e_illume_kbd = e_mod_kbd_new();
    e_mod_kbd_hide();
 
+   /* loop zones and get count */
+   EINA_LIST_FOREACH(e_manager_list(), ml, man) 
+     EINA_LIST_FOREACH(man->containers, cl, con) 
+       EINA_LIST_FOREACH(con->zones, zl, zone) 
+         zcount++;
+
+   /* allocate enough zones */
+   zones = calloc(zcount, sizeof(Ecore_X_Window));
+   zcount = 0;
+
    /* loop the zones and create quickpanels for each one */
    EINA_LIST_FOREACH(e_manager_list(), ml, man) 
      {
-        Eina_List *cl;
-        E_Container *con;
-        Ecore_X_Window *zones;
-
-        zcount = 0;
-        zones = calloc(1, sizeof(Ecore_X_Window));
         EINA_LIST_FOREACH(man->containers, cl, con) 
           {
-             Eina_List *zl;
-             E_Zone *zone;
-
              EINA_LIST_FOREACH(con->zones, zl, zone) 
                {
                   E_Illume_Quickpanel *qp;
@@ -85,9 +89,6 @@ e_modapi_init(E_Module *m)
 
                   /* increment zone count */
                   zcount++;
-
-                  /* allocate more space for zones */
-                  zones = realloc(zones, (zcount * sizeof(Ecore_X_Window)));
 
                   /* try to create a new quickpanel for this zone */
                   if (!(qp = e_mod_quickpanel_new(zone))) continue;
