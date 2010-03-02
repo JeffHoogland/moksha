@@ -24,7 +24,6 @@ e_int_config_borders(E_Container *con, const char *params __UNUSED__)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
 
-   printf("e_int_config_borders\n");
    if (e_config_dialog_find("E", "appearance/borders")) return NULL;
    v = _config_view_new();
    if (!v) return NULL;
@@ -41,7 +40,6 @@ e_int_config_borders_border(E_Container *con __UNUSED__, const char *params)
    E_Config_Dialog_View *v;
    E_Border *bd;
    
-   printf("e_int_config_borders_border\n");
    if (!params) return NULL;
    bd = NULL;
    sscanf(params, "%p", &bd);
