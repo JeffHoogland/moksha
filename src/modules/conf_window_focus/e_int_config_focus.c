@@ -70,7 +70,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 }
 
 static void *
-_create_data(E_Config_Dialog *cfd)
+_create_data(E_Config_Dialog *cfd __UNUSED__)
 {
    /* Create cfdata - cfdata is a temporary block of config data that this
     * dialog will be dealing with while configuring. it will be applied to
@@ -84,7 +84,7 @@ _create_data(E_Config_Dialog *cfd)
 }
 
 static void
-_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    /* Free the cfdata */
    E_FREE(cfdata);
@@ -92,7 +92,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
 /**--APPLY--**/
 static int
-_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    /* Actually take our cfdata settings and apply them in real life */
    e_border_button_bindings_ungrab_all();
@@ -135,7 +135,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 }
 
 static int
-_advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_advanced_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    /* Actually take our cfdata settings and apply them in real life */
    e_border_button_bindings_ungrab_all();
@@ -154,7 +154,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
 /**--GUI--**/
 static Evas_Object *
-_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
+_basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    /* generate the core widget layout for a basic dialog */
    Evas_Object *o, *ob, *of;
@@ -175,7 +175,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 }
 
 static Evas_Object *
-_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
+_advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    /* generate the core widget layout for an advanced dialog */
    Evas_Object *o, *ob, *of;
@@ -185,26 +185,23 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    
    of = e_widget_framelist_add(evas, _("Focus"), 0);
    rg = e_widget_radio_group_new(&(cfdata->focus_policy));
-   ob = e_widget_radio_add(evas, _("Click to focus"), E_FOCUS_CLICK, rg);
+   ob = e_widget_radio_add(evas, _("Click"), E_FOCUS_CLICK, rg);
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Pointer focus"), E_FOCUS_MOUSE, rg);
+   ob = e_widget_radio_add(evas, _("Pointer"), E_FOCUS_MOUSE, rg);
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Sloppy focus"), E_FOCUS_SLOPPY, rg);
+   ob = e_widget_radio_add(evas, _("Sloppy"), E_FOCUS_SLOPPY, rg);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 0, 0.5);
 
    of = e_widget_framelist_add(evas, _("New Window Focus"), 0);
    rg = e_widget_radio_group_new(&(cfdata->focus_setting));
-   ob = e_widget_radio_add(evas, _("No new windows get focus"), 
-                           E_FOCUS_NONE, rg);
+   ob = e_widget_radio_add(evas, _("None"), E_FOCUS_NONE, rg);
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("All new windows get focus"), 
-                           E_FOCUS_NEW_WINDOW, rg);
+   ob = e_widget_radio_add(evas, _("All"), E_FOCUS_NEW_WINDOW, rg);
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Only new dialogs get focus"), 
-                           E_FOCUS_NEW_DIALOG, rg);
+   ob = e_widget_radio_add(evas, _("Only dialogs"), E_FOCUS_NEW_DIALOG, rg);
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Only new dialogs get focus if the parent has focus"), 
+   ob = e_widget_radio_add(evas, _("Only dialogs with focused parent"),
                            E_FOCUS_NEW_DIALOG_IF_OWNER_FOCUSED, rg);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 0, 0.5);
@@ -213,18 +210,26 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_check_add(evas, _("Always pass click events to programs"), 
                            &(cfdata->pass_click_on));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_check_add(evas, _("A click on a window always raises it"), 
+   ob = e_widget_check_add(evas, _("Click raises the window"), 
                            &(cfdata->always_click_to_raise));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_check_add(evas, _("A click in a window always focuses it"), 
+   ob = e_widget_check_add(evas, _("Click focuses the window"), 
                            &(cfdata->always_click_to_focus));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_check_add(evas, _("Refocus last focused window on desktop switch"), 
+   ob = e_widget_check_add(evas, _("Refocus last window on desktop switch"), 
                            &(cfdata->focus_last_focused_per_desktop));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_check_add(evas, _("Revert focus when hiding or closing a window"), 
+   ob = e_widget_check_add(evas, _("Revert focus when it is lost"), 
                            &(cfdata->focus_revert_on_hide_or_close));
    e_widget_framelist_object_append(of, ob);
+
+   /* NOTE/TODO:
+    *
+    * IMHO all these slide-pointer-to-window, warp and all should have
+    * an unique and consistent setting. In some cases it just do not
+    * make sense to have one but not the other.
+    */
+
    ob = e_widget_check_add(evas, _("Slide pointer to a new focused window"), 
                            &(cfdata->pointer_slide));
    e_widget_framelist_object_append(of, ob);
