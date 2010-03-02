@@ -111,7 +111,7 @@ _gc_shutdown(E_Gadcon_Client *gcc)
 }
 
 static void
-_gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
+_gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient __UNUSED__)
 {
    Instance *inst;
    Evas_Coord mw, mh, mxw, mxh;
@@ -130,13 +130,13 @@ _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
 }
 
 static char *
-_gc_label(E_Gadcon_Client_Class *client_class)
+_gc_label(E_Gadcon_Client_Class *client_class __UNUSED__)
 {
    return _("Battery");
 }
 
 static Evas_Object *
-_gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas)
+_gc_icon(E_Gadcon_Client_Class *client_class __UNUSED__, Evas *evas)
 {
    Evas_Object *o;
    char buf[4096];
@@ -149,7 +149,7 @@ _gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas)
 }
 
 static const char *
-_gc_id_new(E_Gadcon_Client_Class *client_class)
+_gc_id_new(E_Gadcon_Client_Class *client_class __UNUSED__)
 {
    return _gadcon_class.name;
 }
@@ -191,7 +191,7 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 }
 
 static void
-_menu_cb_post(void *data, E_Menu *m)
+_menu_cb_post(void *data __UNUSED__, E_Menu *m __UNUSED__)
 {
    if (!battery_config->menu) return;
    e_object_del(E_OBJECT(battery_config->menu));
@@ -227,8 +227,8 @@ _battery_face_time_set(Evas_Object *battery, int time_left)
    edje_object_part_text_set(battery, "e.text.time", buf);
 }
 
-static void 
-_battery_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi) 
+static void
+_battery_face_cb_menu_configure(void *data __UNUSED__, E_Menu *m, E_Menu_Item *mi __UNUSED__)
 {
    if (!battery_config) return;
    if (battery_config->config_dialog) return;
@@ -389,7 +389,7 @@ _battery_hal_shutdown(void)
 }
 
 static void
-_battery_hal_battery_props(void *data, void *reply_data, DBusError *error)
+_battery_hal_battery_props(void *data, void *reply_data, DBusError *error __UNUSED__)
 {
    E_Hal_Properties *ret = reply_data;
    int err = 0;
@@ -434,7 +434,7 @@ _battery_hal_battery_props(void *data, void *reply_data, DBusError *error)
 }
 
 static void
-_battery_hal_ac_adapter_props(void *data, void *reply_data, DBusError *error)
+_battery_hal_ac_adapter_props(void *data, void *reply_data, DBusError *error __UNUSED__)
 {
    E_Hal_Properties *ret = reply_data;
    int err = 0;
@@ -464,7 +464,7 @@ _battery_hal_ac_adapter_props(void *data, void *reply_data, DBusError *error)
 }
 
 static void
-_battery_hal_battery_property_changed(void *data, DBusMessage *msg)
+_battery_hal_battery_property_changed(void *data, DBusMessage *msg __UNUSED__)
 {
    E_DBus_Connection *conn;
    
@@ -476,7 +476,7 @@ _battery_hal_battery_property_changed(void *data, DBusMessage *msg)
 }
 
 static void
-_battery_hal_ac_adapter_property_changed(void *data, DBusMessage *msg)
+_battery_hal_ac_adapter_property_changed(void *data, DBusMessage *msg __UNUSED__)
 {
    E_DBus_Connection *conn;
    
@@ -585,7 +585,7 @@ _battery_hal_ac_adapter_del(const char *udi)
 }
 
 static void
-_battery_hal_find_battery(void *user_data, void *reply_data, DBusError *error)
+_battery_hal_find_battery(void *user_data __UNUSED__, void *reply_data, DBusError *error __UNUSED__)
 {
    Eina_List *l;
    char *device;
@@ -599,7 +599,7 @@ _battery_hal_find_battery(void *user_data, void *reply_data, DBusError *error)
 }
 
 static void
-_battery_hal_find_ac(void *user_data, void *reply_data, DBusError *err)
+_battery_hal_find_ac(void *user_data __UNUSED__, void *reply_data, DBusError *err __UNUSED__)
 {
    Eina_List *l;
    char *device;
@@ -649,7 +649,7 @@ _battery_hal_is_ac_adapter(void *user_data, void *reply_data, DBusError *err)
 }
 
 static void
-_battery_hal_dev_add(void *data, DBusMessage *msg)
+_battery_hal_dev_add(void *data __UNUSED__, DBusMessage *msg)
 {
    DBusError err;
    char *udi = NULL;
@@ -668,7 +668,7 @@ _battery_hal_dev_add(void *data, DBusMessage *msg)
 }
 
 static void
-_battery_hal_dev_del(void *data, DBusMessage *msg)
+_battery_hal_dev_del(void *data __UNUSED__, DBusMessage *msg)
 {
    DBusError err;
    char *udi = NULL;
@@ -681,7 +681,7 @@ _battery_hal_dev_del(void *data, DBusMessage *msg)
 }
 
 static void
-_battery_hal_have_hal(void *data, DBusMessage *msg, DBusError *err)
+_battery_hal_have_hal(void *data __UNUSED__, DBusMessage *msg, DBusError *err)
 {
    dbus_bool_t ok = 0;
    E_DBus_Connection *conn;
@@ -790,7 +790,7 @@ _battery_cb_warning_popup_timeout(void *data)
 }
 
 static void
-_battery_cb_warning_popup_hide(void *data, Evas *e, Evas_Object *obj, void *event)
+_battery_cb_warning_popup_hide(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event __UNUSED__)
 {
    Instance *inst = NULL;
 
@@ -968,7 +968,7 @@ _battery_update(int full, int time_left, int have_battery, int have_power)
 }
 
 static int
-_battery_cb_exe_data(void *data, int type, void *event)
+_battery_cb_exe_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Exe_Event_Data *ev;
 
@@ -1027,7 +1027,7 @@ _battery_cb_exe_data(void *data, int type, void *event)
 }                          
 
 static int
-_battery_cb_exe_del(void *data, int type, void *event)
+_battery_cb_exe_del(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Exe_Event_Del *ev;
 
@@ -1100,7 +1100,7 @@ e_modapi_init(E_Module *m)
 }
 
 EAPI int
-e_modapi_shutdown(E_Module *m)
+e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    e_configure_registry_item_del("advanced/battery");
    e_configure_registry_category_del("advanced");
@@ -1145,7 +1145,7 @@ e_modapi_shutdown(E_Module *m)
 }
 
 EAPI int
-e_modapi_save(E_Module *m)
+e_modapi_save(E_Module *m __UNUSED__)
 {
    e_config_domain_save("module.battery", conf_edd, battery_config);
    return 1;

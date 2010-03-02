@@ -2,6 +2,10 @@
  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -11,6 +15,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <errno.h>
+#include <limits.h>
 
 #ifdef __FreeBSD__
 # include <sys/sysctl.h>
@@ -64,15 +69,13 @@ static int have_power = -2;
 static int
 int_file_get(const char *file)
 {
-   FILE *f;
    int val = -1;
-   char buf[256];
-   
-   f = fopen(file, "r");
+   FILE *f = fopen(file, "r");
    if (f)
      {
-	fgets(buf, sizeof(buf), f);
-	val = atoi(buf);
+	char buf[256];
+	char *str = fgets(buf, sizeof(buf), f);
+	if (str) val = atoi(str);
 	fclose(f);
      }
    return val;
@@ -81,52 +84,85 @@ int_file_get(const char *file)
 static char *
 str_file_get(const char *file)
 {
-   FILE *f;
    char *val = NULL;
-   char buf[4096];
-   int len;
-   
-   f = fopen(file, "r");
+   FILE *f = fopen(file, "r");
    if (f)
      {
-	fgets(buf, sizeof(buf), f);
-	buf[sizeof(buf) - 1] = 0;
-	len = strlen(buf);
-	if (len > 0) buf[len - 1] = 0;
-	val = strdup(buf);
+	char buf[PATH_MAX];
+	char *str = fgets(buf, sizeof(buf), f);
+	if (str)
+	  {
+	     size_t len = strlen(str);
+	     if ((len > 0) && (str[len - 1] == '\n'))
+	       {
+		  len--;
+		  str[len] = 0;
+	       }
+	     val = malloc(len + 1);
+	     if (val) memcpy(val, str, len + 1);
+	  }
 	fclose(f);
      }
    return val;
 }
 
 static int
-int_get(char *buf)
+int_get(const char *buf)
 {
-   char *p, *q;
-   
-   p = strchr(buf, ':');
+   const char *p = strchr(buf, ':');
    if (!p) return 0;
    p++;
    while (*p == ' ') p++;
-   q = p;
-   while ((*q != ' ') && (*q != '\n')) q++;
-   if (q) *q = 0;
    return atoi(p);
 }
 
 static char *
-str_get(char *buf)
+str_get(const char *buf)
 {
-   char *p, *q;
-   
-   p = strchr(buf, ':');
+   const char *p = strchr(buf, ':');
+   const char *q;
+   char *ret;
+
    if (!p) return NULL;
    p++;
    while (*p == ' ') p++;
-   q = p;
-   while ((*q) && (*q != ' ') && (*q != '\n')) q++;
-   if (q) *q = 0;
-   return strdup(p);
+
+   q = p + strlen(p) - 1;
+   while ((q > p) && ((*q == ' ') || (*q == '\n'))) q--;
+
+   if (q < p) return NULL;
+   q++;
+   ret = malloc(q - p + 1);
+   if (!ret) return NULL;
+   memcpy(ret, p, q - p);
+   ret[q - p] = '\0';
+   return ret;
+}
+
+static char *
+file_str_entry_get(FILE *f, const char *entry)
+{
+   char buf[4096];
+   char *tmp;
+
+   tmp = fgets(buf, sizeof(buf), f);
+   if (!tmp)
+     {
+	EINA_LOG_ERR("unexpected end of file, expected: '%s'", entry);
+	return NULL;
+     }
+   if (strcmp(tmp, entry) != 0)
+     {
+	EINA_LOG_ERR("unexpected file entry, expected: '%s'", entry);
+	return NULL;
+     }
+   tmp = str_get(tmp);
+   if (!tmp)
+     {
+	EINA_LOG_ERR("unexpected file entry, missing value for '%s'", entry);
+	return NULL;
+     }
+   return tmp;
 }
 
 #ifdef __FreeBSD__
@@ -848,7 +884,7 @@ static int event_fd = -1;
 static Ecore_Fd_Handler *event_fd_handler = NULL;
 
 static int
-linux_acpi_cb_delay_check(void *data)
+linux_acpi_cb_delay_check(void *data __UNUSED__)
 {
    linux_acpi_init();
    poll_cb(NULL);
@@ -857,13 +893,13 @@ linux_acpi_cb_delay_check(void *data)
 }
 
 static int
-linux_acpi_cb_acpid_add(void *data, int type, void *event)
+linux_acpi_cb_acpid_add(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    return 1;
 }
 
 static int
-linux_acpi_cb_acpid_del(void *data, int type, void *event)
+linux_acpi_cb_acpid_del(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    ecore_con_server_del(acpid);
    acpid = NULL;
@@ -877,7 +913,7 @@ linux_acpi_cb_acpid_del(void *data, int type, void *event)
 }
 
 static int
-linux_acpi_cb_acpid_data(void *data, int type, void *event)
+linux_acpi_cb_acpid_data(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    if (delay_check) ecore_timer_del(delay_check);
    delay_check = ecore_timer_add(0.2, linux_acpi_cb_delay_check, NULL);
@@ -885,7 +921,7 @@ linux_acpi_cb_acpid_data(void *data, int type, void *event)
 }
 
 static int
-linux_acpi_cb_event_fd_active(void *data, Ecore_Fd_Handler *fd_handler)
+linux_acpi_cb_event_fd_active(void *data __UNUSED__, Ecore_Fd_Handler *fd_handler)
 {
    if (ecore_main_fd_handler_active_get(fd_handler, ECORE_FD_READ))
      {
@@ -950,8 +986,8 @@ linux_acpi_init(void)
 		       char *tmp;
 		       
 		       /* state */
-		       fgets(buf, sizeof(buf), f); buf[sizeof(buf) - 1] = 0;
-		       tmp = str_get(buf);
+		       tmp = fgets(buf, sizeof(buf), f);
+		       if (tmp) tmp = str_get(tmp);
 		       if (tmp)
 			 {
 			    if (!strcmp(tmp, "on-line")) have_power = 1;
@@ -978,24 +1014,24 @@ linux_acpi_init(void)
 		  char *tmp;
 		  
 		  /* present */
-                  fgets(buf, sizeof(buf), f); buf[sizeof(buf) - 1] = 0;
-		  tmp = str_get(buf);
+                  tmp = fgets(buf, sizeof(buf), f);
+		  if (tmp) tmp = str_get(tmp);
 		  if (tmp)
 		    {
 		       if (!strcmp(tmp, "yes")) have_battery = 1;
 		       free(tmp);
 		    }
 		  /* design cap */
-                  fgets(buf, sizeof(buf), f); buf[sizeof(buf) - 1] = 0;
-		  tmp = str_get(buf);
+                  tmp = fgets(buf, sizeof(buf), f);
+		  if (tmp) tmp = str_get(tmp);
 		  if (tmp)
 		    {
 		       if (strcmp(tmp, "unknown")) acpi_max_design += atoi(tmp);
 		       free(tmp);
 		    }
 		  /* last full cap */
-                  fgets(buf, sizeof(buf), f); buf[sizeof(buf) - 1] = 0;
-		  tmp = str_get(buf);
+                  tmp = fgets(buf, sizeof(buf), f);
+		  if (tmp) tmp = str_get(tmp);
 		  if (tmp)
 		    {
 		       if (strcmp(tmp, "unknown")) acpi_max_full += atoi(tmp);
@@ -1052,60 +1088,47 @@ linux_acpi_check(void)
 	char *name;
 	int rate = 0;
 	int capacity = 0;
-	
+
 	EINA_LIST_FREE(bats, name)
 	  {
 	     char buf[4096];
+	     char *tmp;
 	     FILE *f;
-	     
-	     snprintf(buf, sizeof(buf), "/proc/acpi/battery/%s/state", name);
-	     f = fopen(buf, "r");
-	     if (f)
-	       {
-		  char *tmp;
-		  
-                  /* present */
-		  fgets(buf, sizeof(buf), f); buf[sizeof(buf) - 1] = 0;
-		  tmp = str_get(buf);
-		  if (tmp)
-		    {
-		       if (!strcasecmp(tmp, "yes")) have_battery = 1;
-		       free(tmp);
-		    }
-		  /* capacity state: ok/? */
-		  fgets(buf, sizeof(buf), f);
-		  /* charging state: charging/? */
-                  fgets(buf, sizeof(buf), f); buf[sizeof(buf) - 1] = 0;
-                  tmp = str_get(buf);
-                  if (tmp)
-		    {
-		       if (have_power == 0)
-			 {
-			    if (!strcasecmp(tmp, "charging")) have_power = 1;
-			 }
-		       free(tmp);
-		    }
-		  /* present rate: unknown/NNN */
-                  fgets(buf, sizeof(buf), f); buf[sizeof(buf) - 1] = 0;
-                  tmp = str_get(buf);
-                  if (tmp)
-		    {
-		       if (strcasecmp(tmp, "unknown")) rate += atoi(tmp);
-		       free(tmp);
-		    }
-		  /* remaining capacity: NNN */
-                  fgets(buf, sizeof(buf), f); buf[sizeof(buf) - 1] = 0;
-                  tmp = str_get(buf);
-                  if (tmp)
-		    {
-		       if (strcasecmp(tmp, "unknown")) capacity += atoi(tmp);
-		       free(tmp);
-		    }
-		  fclose(f);
-	       }
 
+	     snprintf(buf, sizeof(buf), "/proc/acpi/battery/%s/state", name);
 	     free(name);
+	     f = fopen(buf, "r");
+	     if (!f) continue;
+
+	     tmp = file_str_entry_get(f, "present:");
+	     if (!tmp) goto fclose_and_continue;
+	     if (!strcasecmp(tmp, "yes")) have_battery = 1;
+	     free(tmp);
+
+	     tmp = file_str_entry_get(f, "capacity state:");
+	     if (!tmp) goto fclose_and_continue;
+	     free(tmp);
+
+	     tmp = file_str_entry_get(f, "charging state:");
+	     if (!tmp) goto fclose_and_continue;
+	     if ((have_power == 0) && (!strcasecmp(tmp, "charging")))
+		 have_power = 1;
+	     free(tmp);
+
+	     tmp = file_str_entry_get(f, "present rate:");
+	     if (!tmp) goto fclose_and_continue;
+	     if (strcasecmp(tmp, "unknown")) rate += atoi(tmp);
+	     free(tmp);
+
+	     tmp = file_str_entry_get(f, "remaining capacity:");
+	     if (!tmp) goto fclose_and_continue;
+	     if (strcasecmp(tmp, "unknown")) capacity += atoi(tmp);
+	     free(tmp);
+
+	  fclose_and_continue:
+	     fclose(f);
 	  }
+
 	if (acpi_max_full > 0)
 	  battery_full = 100 * (long long)capacity / acpi_max_full;
 	else if (acpi_max_design > 0)
@@ -1113,7 +1136,7 @@ linux_acpi_check(void)
 	else
 	  battery_full = -1;
 	if (rate <= 0) time_left = -1;
-	else 
+	else
 	  {
 	     if (have_power)
 	       time_left = (3600 * ((long long)acpi_max_full - (long long)capacity)) / rate;
@@ -1152,31 +1175,36 @@ static void
 linux_apm_check(void)
 {
    FILE *f;
-   char s[256], s1[32], s2[32], s3[32];
+   char s1[32], s2[32], s3[32], *endptr;
    int  apm_flags, ac_stat, bat_stat, bat_flags, bat_val, time_val;
-   
+
    battery_full = -1;
    time_left = -1;
    have_battery = 0;
    have_power = 0;
-   
+
    f = fopen("/proc/apm", "r");
    if (!f) return;
-   
-   fgets(s, sizeof(s), f); s[sizeof(s) - 1] = 0;
-   if (sscanf(s, "%*s %*s %x %x %x %x %s %s %s",
+
+   if (fscanf(f, "%*s %*s %x %x %x %x %31s %31s %31s",
 	      &apm_flags, &ac_stat, &bat_stat, &bat_flags, s1, s2, s3) != 7)
      {
 	fclose(f);
 	return;
      }
-   s1[strlen(s1) - 1] = 0;
-   bat_val = atoi(s1);
+   fclose(f);
+
+   bat_val = strtol(s1, &endptr, 10);
+   if (*endptr != '%')
+     {
+	bat_val = -1;
+	return;
+     }
+
    if (!strcmp(s3, "sec")) time_val = atoi(s2);
    else if (!strcmp(s3, "min")) time_val = atoi(s2) * 60;
    else time_val = 0;
-   fclose(f);
-   
+
    if ((bat_flags != 0xff) && (bat_flags & 0x80))
      {
 	have_battery = 0;
@@ -1264,13 +1292,30 @@ linux_pmu_check(void)
    f = fopen("/proc/pmu/info", "r");
    if (f)
      {
+	char *tmp;
 	/* Skip driver */
-	fgets(buf, sizeof(buf), f);
+	tmp = fgets(buf, sizeof(buf), f);
+	if (!tmp)
+	  {
+	     EINA_LOG_ERR("no driver info in /proc/pmu/info");
+	     goto fclose_and_continue;
+	  }
 	/* Skip firmware */
-	fgets(buf, sizeof(buf), f);
+	tmp = fgets(buf, sizeof(buf), f);
+	if (!tmp)
+	  {
+	     EINA_LOG_ERR("no firmware info in /proc/pmu/info");
+	     goto fclose_and_continue;
+	  }
 	/* Read ac */
-	fgets(buf, sizeof(buf), f); buf[sizeof(buf) - 1] = 0;
+	tmp = fgets(buf, sizeof(buf), f);
+	if (!tmp)
+	  {
+	     EINA_LOG_ERR("no AC info in /proc/pmu/info");
+	     goto fclose_and_continue;
+	  }
 	ac = int_get(buf);
+     fclose_and_continue:
 	fclose(f);
      }
    bats = ecore_file_ls("/proc/pmu");
@@ -1429,7 +1474,7 @@ init(void)
 }
 
 static int
-poll_cb(void *data)
+poll_cb(void *data __UNUSED__)
 {
    int ptime_left;
    int pbattery_full;

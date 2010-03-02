@@ -10,6 +10,13 @@ struct _E_Config_Dialog_Data
    int dismiss_alert;
    int alert_timeout;
    int force_mode; // 0 == auto, 1 == batget, 2 == hal
+   struct {
+      Evas_Object *show_alert_label;
+      Evas_Object *show_alert_time;
+      Evas_Object *show_alert_percent;
+      Evas_Object *dismiss_alert_label;
+      Evas_Object *alert_timeout;
+   } ui;
 };
 
 /* Protos */
@@ -17,8 +24,10 @@ static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static int _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int _advanced_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 
 E_Config_Dialog *
 e_int_config_battery_module(E_Container *con, const char *params __UNUSED__) 
@@ -32,8 +41,10 @@ e_int_config_battery_module(E_Container *con, const char *params __UNUSED__)
    v->free_cfdata = _free_data;
    v->basic.apply_cfdata = _basic_apply_data;
    v->basic.create_widgets = _basic_create_widgets;
+   v->basic.check_changed = _basic_check_changed;
    v->advanced.apply_cfdata = _advanced_apply_data;
    v->advanced.create_widgets = _advanced_create_widgets;
+   v->advanced.check_changed = _advanced_check_changed;
 
    snprintf(buf, sizeof(buf), "%s/e-module-battery.edj", 
             e_module_dir_get(battery_config->module));
@@ -66,8 +77,18 @@ _fill_data(E_Config_Dialog_Data *cfdata)
      cfdata->dismiss_alert = 0;
 }
 
+static void
+_ensure_alert_time(E_Config_Dialog_Data *cfdata)
+{
+   if ((cfdata->alert_time > 0) || (cfdata->alert_percent > 0))
+     return;
+
+   // must handle the case where user toggled the checkbox but set no threshold
+   cfdata->alert_time = 5;
+}
+
 static void *
-_create_data(E_Config_Dialog *cfd) 
+_create_data(E_Config_Dialog *cfd __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
 
@@ -77,7 +98,7 @@ _create_data(E_Config_Dialog *cfd)
 }
 
 static void
-_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    if (!battery_config) return;
    battery_config->config_dialog = NULL;
@@ -85,7 +106,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 }
 
 static Evas_Object *
-_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
+_basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *of, *ob;
 
@@ -98,34 +119,63 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    return o;
 }
 
-static int 
-_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+static int
+_basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    if (!battery_config) return 0;
 
    if (cfdata->show_alert)
-     { 
+     {
+	_ensure_alert_time(cfdata);
         battery_config->alert = cfdata->alert_time;
         battery_config->alert_p = cfdata->alert_percent;
      }
    else
-     { 
+     {
         battery_config->alert = 0;
         battery_config->alert_p = 0;
      }
-
-   if (cfdata->dismiss_alert)
-     battery_config->alert_timeout = cfdata->alert_timeout;
-   else
-     battery_config->alert_timeout = 0;
 
    _battery_config_updated();
    e_config_save_queue();
    return 1;
 }
 
+static int
+_basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
+{
+   int old_show_alert = ((battery_config->alert > 0) ||
+			 (battery_config->alert_p > 0));
+
+   return (cfdata->show_alert != old_show_alert);
+}
+
+static void
+_cb_show_alert_changed(void *data, Evas_Object *obj __UNUSED__)
+{
+   E_Config_Dialog_Data *cfdata = data;
+   Eina_Bool show_alert = cfdata->show_alert;
+   Eina_Bool dismiss_alert = cfdata->show_alert && cfdata->dismiss_alert;
+
+   e_widget_disabled_set(cfdata->ui.show_alert_label, !show_alert);
+   e_widget_disabled_set(cfdata->ui.show_alert_time, !show_alert);
+   e_widget_disabled_set(cfdata->ui.show_alert_percent, !show_alert);
+   e_widget_disabled_set(cfdata->ui.dismiss_alert_label, !show_alert);
+
+   e_widget_disabled_set(cfdata->ui.alert_timeout, !dismiss_alert);
+}
+
+static void
+_cb_dismiss_alert_changed(void *data, Evas_Object *obj __UNUSED__)
+{
+   E_Config_Dialog_Data *cfdata = data;
+   Eina_Bool dismiss_alert = cfdata->show_alert && cfdata->dismiss_alert;
+
+   e_widget_disabled_set(cfdata->ui.alert_timeout, !dismiss_alert);
+}
+
 static Evas_Object *
-_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
+_advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *ob, *otb;
    E_Radio_Group *rg;
@@ -138,29 +188,39 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_label_add(evas, _("Check every:"));
    e_widget_table_object_append(o, ob, 0, 0, 1, 1, 1, 0, 1, 0);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f ticks"), 1, 256, 4, 0, 
-                            NULL, &(cfdata->poll_interval), 180);
+                            NULL, &(cfdata->poll_interval), 100);
    e_widget_table_object_append(o, ob, 0, 1, 1, 1, 1, 0, 1, 0);
    e_widget_toolbook_page_append(otb, NULL, _("Polling"), o, 0, 0, 0, 0, 
                                  0.5, 0.0);
 
    o = e_widget_table_add(evas, 0);
-   ob = e_widget_check_add(evas, _("Show alert on low battery"), 
+   ob = e_widget_check_add(evas, _("Show low battery alert"),
                            &(cfdata->show_alert));
-   e_widget_table_object_append(o, ob, 0, 0, 1, 1, 1, 1, 1, 0);   
+   e_widget_on_change_hook_set(ob, _cb_show_alert_changed, cfdata);
+   e_widget_table_object_append(o, ob, 0, 0, 1, 1, 1, 1, 1, 0);
    ob = e_widget_label_add(evas, _("Alert when at:"));
+   cfdata->ui.show_alert_label = ob;
    e_widget_table_object_append(o, ob, 0, 1, 1, 1, 1, 0, 1, 1);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f min"), 0, 60, 1, 0, NULL, 
-                            &(cfdata->alert_time), 180);
+                            &(cfdata->alert_time), 100);
+   cfdata->ui.show_alert_time = ob;
    e_widget_table_object_append(o, ob, 0, 2, 1, 1, 1, 0, 1, 0);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f %%"), 0, 100, 1, 0, NULL, 
-                            &(cfdata->alert_percent), 180);
+                            &(cfdata->alert_percent), 100);
+   cfdata->ui.show_alert_percent = ob;
    e_widget_table_object_append(o, ob, 0, 3, 1, 1, 1, 0, 1, 0);
-   ob = e_widget_check_add(evas, _("Auto dismiss in..."), 
+   ob = e_widget_check_add(evas, _("Auto dismiss in..."),
                            &(cfdata->dismiss_alert));
-   e_widget_table_object_append(o, ob, 0, 4, 1, 1, 1, 1, 1, 0);   
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f sec"), 1, 300, 1, 0, NULL, 
-                            &(cfdata->alert_timeout), 180);
+   cfdata->ui.dismiss_alert_label = ob;
+   e_widget_on_change_hook_set(ob, _cb_dismiss_alert_changed, cfdata);
+   e_widget_table_object_append(o, ob, 0, 4, 1, 1, 1, 1, 1, 0);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f sec"), 1, 300, 1, 0, NULL,
+                            &(cfdata->alert_timeout), 100);
+   cfdata->ui.alert_timeout = ob;
    e_widget_table_object_append(o, ob, 0, 5, 1, 1, 1, 0, 1, 0);
+
+   _cb_show_alert_changed(cfdata, NULL);
+
    e_widget_toolbook_page_append(otb, NULL, _("Alert"), o, 0, 0, 0, 0, 
                                  0.5, 0.0);
 
@@ -181,25 +241,26 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    return otb;
 }
 
-static int 
-_advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+static int
+_advanced_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    if (!battery_config) return 0;
 
    battery_config->poll_interval = cfdata->poll_interval;
 
    if (cfdata->show_alert)
-     { 
+     {
+	_ensure_alert_time(cfdata);
         battery_config->alert = cfdata->alert_time;
         battery_config->alert_p = cfdata->alert_percent;
      }
-   else 
+   else
      {
         battery_config->alert = 0;
         battery_config->alert_p = 0;
      }
 
-   if (cfdata->dismiss_alert)
+   if ((cfdata->dismiss_alert) && (cfdata->alert_timeout > 0))
      battery_config->alert_timeout = cfdata->alert_timeout;
    else
      battery_config->alert_timeout = 0;
@@ -209,5 +270,21 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    _battery_config_updated();
    e_config_save_queue();
    return 1;
+}
+
+static int
+_advanced_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
+{
+   int old_show_alert = ((battery_config->alert > 0) ||
+			 (battery_config->alert_p > 0));
+   int old_dismiss_alert = (battery_config->alert_timeout > 0);
+
+   return ((cfdata->alert_time != battery_config->alert) ||
+	   (cfdata->alert_percent != battery_config->alert_p) ||
+	   (cfdata->poll_interval != battery_config->poll_interval) ||
+	   (cfdata->alert_timeout != battery_config->alert_timeout) ||
+	   (cfdata->force_mode != battery_config->force_mode) ||
+	   (cfdata->show_alert != old_show_alert) ||
+	   (cfdata->dismiss_alert != old_dismiss_alert));
 }
 
