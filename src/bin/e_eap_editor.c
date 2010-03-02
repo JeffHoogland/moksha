@@ -462,28 +462,27 @@ _e_desktop_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_
    e_widget_size_min_set(editor->img_widget, 48, 48);
    e_widget_frametable_object_append(o, editor->img_widget, 
 				     0, 0, 1, 1, 0, 0, 1, 1);
-
    e_widget_table_object_append(ol, o, 0, 0, 1, 1, 1 ,1, 1, 1);
 
    o = e_widget_frametable_add(evas, _("Basic Info"), 0);
    e_widget_frametable_object_append(o, e_widget_label_add(evas, _("Name")),
-				     0, 0, 1, 1, 1, 1, 1, 1);
+				     0, 0, 1, 1, 1, 1, 1, 0);
 
    entry = e_widget_entry_add(evas, &(cfdata->name), NULL, NULL, NULL);
    e_widget_size_min_set(entry, 100, 1);
-   e_widget_frametable_object_append(o, entry, 1, 0, 1, 1, 1, 1, 1, 1);
+   e_widget_frametable_object_append(o, entry, 1, 0, 1, 1, 1, 1, 1, 0);
    e_widget_frametable_object_append(o, e_widget_label_add(evas, _("Executable")),
-				     0, 1, 1, 1, 1, 1, 1, 1);
+				     0, 1, 1, 1, 1, 1, 1, 0);
    editor->entry_widget = e_widget_entry_add(evas, &(cfdata->exec), NULL, NULL, NULL);
    e_widget_frametable_object_append(o, editor->entry_widget,
-				     1, 1, 1, 1, 1, 1, 1, 1);
+				     1, 1, 1, 1, 1, 1, 1, 0);
    e_widget_frametable_object_append(o, e_widget_button_add(evas, "...", NULL,
 				     _e_desktop_editor_cb_exec_select, cfdata, editor),
 				     2, 1, 1, 1, 1, 1, 0, 0);
    e_widget_frametable_object_append(o, e_widget_label_add(evas, _("Comment")),
-				     0, 2, 1, 1, 1, 1, 1, 1);
+				     0, 2, 1, 1, 1, 1, 1, 0);
    e_widget_frametable_object_append(o, e_widget_entry_add(evas, &(cfdata->comment), NULL, NULL, NULL),
-				     1, 2, 1, 1, 1, 1, 1, 1);
+				     1, 2, 1, 1, 1, 1, 1, 0);
    e_widget_table_object_append(ol, o, 1, 0, 1, 1, 1 ,1, 1, 1);
    return ol;
 }
