@@ -150,7 +150,7 @@ e_sys.h \
 e_obj_dialog.h \
 e_widget_aspect.h \
 e_filereg.h \
-e_widget_desk_preview.h \
+e_widget_deskpreview.h \
 e_fm_prop.h \
 e_mouse.h \
 e_order.h \
@@ -289,7 +289,7 @@ e_color_dialog.c \
 e_sys.c \
 e_obj_dialog.c \
 e_widget_aspect.c \
-e_widget_desk_preview.c \
+e_widget_deskpreview.c \
 e_filereg.c \
 e_fm_prop.c \
 e_mouse.c \

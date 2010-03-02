@@ -120,7 +120,7 @@
 #include "e_obj_dialog.h"
 #include "e_filereg.h"
 #include "e_widget_aspect.h"
-#include "e_widget_desk_preview.h"
+#include "e_widget_deskpreview.h"
 #include "e_fm_prop.h"
 #include "e_mouse.h"
 #include "e_order.h"
