@@ -44,7 +44,8 @@ my_init_hook(void)
 
 //void *magicfree = NULL;
 
-static void my_free_hook(void *p, const void *caller)
+static void 
+my_free_hook(void *p, const void *caller)
 {
    __free_hook = old_free_hook;
 //   if ((p) && (p == magicfree))
@@ -115,7 +116,8 @@ static double t0, t1, t2;
 #define TS(x)
 #endif
 
-static int stdbg(void *data __UNUSED__)
+static int 
+stdbg(void *data __UNUSED__)
 {
 // enable to debug eina stringshare usage   
 //   eina_stringshare_dump();
@@ -1075,7 +1077,8 @@ main(int argc, char **argv)
    starting = 0;
    /* start our main loop */
 
-   ecore_timer_add(5.0, stdbg, NULL);
+   // enable to debug eina stringshare usage
+//   ecore_timer_add(5.0, stdbg, NULL);
 
    ecore_main_loop_begin();
 
