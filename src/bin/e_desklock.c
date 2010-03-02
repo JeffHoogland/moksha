@@ -711,14 +711,15 @@ static int
 _desklock_auth(char *passwd)
 {
    _e_desklock_state_set(E_DESKLOCK_STATE_CHECKING);
-   if ((_e_desklock_child_pid = fork()))
+   _e_desklock_child_pid = fork();
+   if (_e_desklock_child_pid > 0)
      {
 	/* parent */
 	_e_desklock_exit_handler = 
 	  ecore_event_handler_add(ECORE_EXE_EVENT_DEL, _e_desklock_cb_exit, 
 				  NULL);
      }
-   else
+   else if (_e_desklock_child_pid == 0)
      {
 	/* child */
 	int pamerr;
@@ -761,6 +762,11 @@ _desklock_auth(char *passwd)
 	  }
 	free(current_user);
 	exit(-1);
+     }
+   else
+     {
+	_e_desklock_state_set(E_DESKLOCK_STATE_INVALID);
+	return 0;
      }
    return 1;
 }
