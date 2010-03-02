@@ -101,10 +101,10 @@ e_modapi_init(E_Module *m)
          * elm apps like elm_indicator so that they know how many 
          * indicators to create at startup */
         ecore_x_e_illume_zone_list_set(man->root, zones, zcount);
-
-        /* free zones variable */
-        free(zones);
      }
+
+   /* free zones variable */
+   free(zones);
 
    return m;
 }
