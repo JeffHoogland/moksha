@@ -124,12 +124,19 @@ static Evas_Object *
 _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *of, *ol;
+   Evas_Coord w;
 
    cfdata->evas = e_win_evas_get(cfd->dia->win);
 
    of = e_widget_frametable_add(evas, _("Modules"), 0);
    ol = e_widget_ilist_add(evas, 24, 24, NULL);
    cfdata->l_modules = ol;
+   _widget_list_populate(cfdata);
+
+   e_widget_size_min_get(cfdata->l_modules, &w, NULL);
+   if (w < 200 * e_scale) w = 200 * e_scale;
+   e_widget_size_min_set(cfdata->l_modules, w, 150 * e_scale);
+
    e_widget_ilist_multi_select_set(ol, 1);
    e_widget_on_change_hook_set(ol, _widget_list_selection_changed, cfdata);
    e_widget_frametable_object_append(of, ol, 0, 0, 2, 1, 1, 1, 1, 1);
@@ -149,8 +156,6 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    cfdata->o_desc = ol;
    e_widget_textblock_markup_set(ol, _("No modules selected."));
    e_widget_frametable_object_append(of, ol, 0, 2, 2, 1, 1, 0, 1, 0);
-
-   _widget_list_populate(cfdata);
 
    e_dialog_resizable_set(cfd->dia, 1);
    e_util_win_auto_resize_fill(cfd->dia->win);
@@ -461,7 +466,6 @@ static void
 _widget_list_populate(E_Config_Dialog_Data *cfdata)
 {
    CFType *cft;
-   Evas_Coord w;
    Eina_List *l_type;
    int idx = 0;
 
@@ -489,9 +493,6 @@ _widget_list_populate(E_Config_Dialog_Data *cfdata)
      }
 
    e_widget_ilist_go(cfdata->l_modules);
-   e_widget_size_min_get(cfdata->l_modules, &w, NULL);
-   if (w < 250 * e_scale) w = 250 * e_scale;
-   e_widget_size_min_set(cfdata->l_modules, w, (200 * e_scale));
    e_widget_ilist_thaw(cfdata->l_modules);
    edje_thaw();
    evas_event_thaw(cfdata->evas);

@@ -21141,9 +21141,8 @@ group { name: "e/toolbar/default/base";
 		  offset:   4 4;
 	       }
 	       rel2 {
-		  to_x:     "e.swallow.end";
 		  relative: 1.0  1.0;
-		  offset:   -1 -5;
+		  offset:   -5 -5;
 	       }
 	       color: 0 0 0 255;
 	       color3: 0 0 0 0;
@@ -21339,9 +21338,8 @@ group { name: "e/toolbar/default/base";
 		  offset:   4 4;
 	       }
 	       rel2 {
-		  to_x:     "e.swallow.end";
 		  relative: 1.0  1.0;
-		  offset:   -1 -5;
+		  offset:   -5 -5;
 	       }
 	       color: 0 0 0 255;
 	       color3: 0 0 0 0;
