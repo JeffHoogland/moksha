@@ -37,6 +37,14 @@ struct _E_Config_Dialog_Data
       Eina_List *loaded, *unloaded;
       Ecore_Idler *idler;
    } selected;
+
+   /* just exists while loading: */
+   Eina_List *modules_paths;
+   Eina_List *modules_path_current;
+   Eina_Hash *types_hash;
+   Ecore_Timer *data_delay;
+   Ecore_Idler *data_loader;
+   Eina_Bool did_modules_list;
 };
 
 struct _CFTypes
@@ -112,6 +120,16 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    CFType *cft;
 
+   if (cfdata->data_delay)
+     ecore_timer_del(cfdata->data_delay);
+   else if (cfdata->data_loader)
+     ecore_idler_del(cfdata->data_loader);
+
+   if (cfdata->modules_paths)
+     e_path_dir_list_free(cfdata->modules_paths);
+   if (cfdata->types_hash)
+     eina_hash_free(cfdata->types_hash);
+
    EINA_LIST_FREE(cfdata->types, cft) _cftype_free(cft);
 
    eina_list_free(cfdata->selected.loaded);
@@ -131,7 +149,6 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    of = e_widget_frametable_add(evas, _("Modules"), 0);
    ol = e_widget_ilist_add(evas, 24, 24, NULL);
    cfdata->l_modules = ol;
-   _widget_list_populate(cfdata);
 
    e_widget_size_min_get(cfdata->l_modules, &w, NULL);
    if (w < 200 * e_scale) w = 200 * e_scale;
@@ -369,28 +386,66 @@ _types_list_sort(const void *data1, const void *data2)
    return strcmp(t1->name, t2->name);
 }
 
+static int
+_fill_data_loader_iterate(void *data)
+{
+   E_Config_Dialog_Data *cfdata = data;
+
+   if (cfdata->modules_path_current)
+     {
+	E_Path_Dir *epd = cfdata->modules_path_current->data;
+	cfdata->modules_path_current = cfdata->modules_path_current->next;
+
+	if (ecore_file_is_dir(epd->dir))
+	  _load_modules(epd->dir, cfdata->types_hash);
+     }
+   else if (!cfdata->did_modules_list)
+     {
+	cfdata->did_modules_list = EINA_TRUE;
+
+	e_path_dir_list_free(cfdata->modules_paths);
+	cfdata->modules_paths = NULL;
+
+	eina_hash_foreach
+	  (cfdata->types_hash, _types_list_create_foreach_cb, cfdata);
+	eina_hash_free(cfdata->types_hash);
+	cfdata->types_hash = NULL;
+	cfdata->types = eina_list_sort(cfdata->types, -1, _types_list_sort);
+     }
+   else
+     {
+	_widget_list_populate(cfdata);
+	cfdata->data_loader = NULL;
+	return 0;
+     }
+
+   return 1;
+}
+
+static int
+_fill_data_delayed(void *data)
+{
+   E_Config_Dialog_Data *cfdata = data;
+   cfdata->data_loader = ecore_idler_add(_fill_data_loader_iterate, cfdata);
+   cfdata->data_delay = NULL;
+   return 0;
+}
+
 static Eina_Bool
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
-   Eina_List *mdirs, *l;
-   E_Path_Dir *epd;
-   Eina_Hash *types_hash = eina_hash_string_superfast_new(NULL);
-   if (!types_hash) return EINA_FALSE;
+   cfdata->types_hash = eina_hash_string_superfast_new(NULL);
+   if (!cfdata->types_hash) return EINA_FALSE;
 
-   // TODO: postpone this to idler? segment the job?
-   /* loop each path_modules dir and load modules for that path */
-   mdirs = e_path_dir_list_get(path_modules);
-   EINA_LIST_FOREACH(mdirs, l, epd)
+   cfdata->modules_paths = e_path_dir_list_get(path_modules);
+   if (!cfdata->modules_paths)
      {
-	if (!ecore_file_is_dir(epd->dir)) continue;
-	_load_modules(epd->dir, types_hash);
+	eina_hash_free(cfdata->types_hash);
+	cfdata->types_hash = NULL;
+	return EINA_FALSE;
      }
-   if (mdirs) e_path_dir_list_free(mdirs);
-
-   eina_hash_foreach(types_hash, _types_list_create_foreach_cb, cfdata);
-   eina_hash_free(types_hash);
-   cfdata->types = eina_list_sort(cfdata->types, -1, _types_list_sort);
-
+   cfdata->modules_path_current = cfdata->modules_paths;
+   cfdata->data_delay = ecore_timer_add(0.2, _fill_data_delayed, cfdata);
    return EINA_TRUE;
 }
 
