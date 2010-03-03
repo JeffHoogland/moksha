@@ -720,10 +720,13 @@ e_border_desk_set(E_Border *bd, E_Desk *desk)
    e_object_ref(E_OBJECT(desk));
    ecore_event_add(E_EVENT_BORDER_DESK_SET, ev, _e_border_event_border_desk_set_free, NULL);
 
-   if ((bd->desk->visible) || (bd->sticky))
-     e_border_show(bd);
-   else
-     e_border_hide(bd, 1);
+   if (bd->ignore_first_unmap != 1)
+     {
+	if ((bd->desk->visible) || (bd->sticky))
+	  e_border_show(bd);
+	else
+	  e_border_hide(bd, 1);
+     }
 
    if (e_config->transient.desktop)
      {
