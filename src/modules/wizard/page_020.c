@@ -23,7 +23,7 @@ _profile_change(void *data, Evas_Object *obj)
 	return;
      }
    snprintf(buf, sizeof(buf), "%s/profile.desktop", dir);
-   desk = efreet_desktop_get(buf);
+   desk = efreet_desktop_new(buf);
    if (desk)
      e_widget_textblock_markup_set(textblock, desk->comment);
    else
@@ -96,7 +96,7 @@ wizard_page_show(E_Wizard_Page *pg)
 	     continue;
 	  }
 	snprintf(buf, sizeof(buf), "%s/profile.desktop", dir);
-        desk = efreet_desktop_get(buf);
+        desk = efreet_desktop_new(buf);
 	label = prof;
 	if ((desk) && (desk->name)) label = desk->name;
 	snprintf(buf, sizeof(buf), "%s/icon.edj", dir);

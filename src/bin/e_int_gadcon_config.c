@@ -386,7 +386,7 @@ _set_description(void *data, const char *name)
 
    snprintf(buf, sizeof(buf), "%s/module.desktop", e_module_dir_get(mod));
    if (!ecore_file_exists(buf)) return;
-   if (!(desk = efreet_desktop_get(buf))) return;
+   if (!(desk = efreet_desktop_new(buf))) return;
    if (desk->comment) 
      e_widget_textblock_markup_set(cfdata->o_desc, desk->comment);
    efreet_desktop_free(desk);

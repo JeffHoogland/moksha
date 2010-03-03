@@ -120,6 +120,7 @@ _app_write(App *a)
            a->name, a->generic, a->comment, a->exec, a->icon);
    if (a->extra) fprintf(f, "%s\n", a->extra);
    fclose(f);
+   /* TODO: This will leak */
    efreet_desktop_get(buf);
 }
 

@@ -379,7 +379,7 @@ e_module_dialog_show(E_Module *m, const char *title, const char *body)
 
 	snprintf(buf, sizeof(buf), "%s/module.desktop", e_module_dir_get(m));
 
-	desktop = efreet_desktop_get(buf);
+	desktop = efreet_desktop_new(buf);
 	if ((desktop) && (desktop->icon))
 	  {
 	     icon = efreet_icon_path_find(e_config->icon_theme, desktop->icon, 64);

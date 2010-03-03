@@ -191,7 +191,7 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
           }
         pdir = e_config_profile_dir_get(prof);
         snprintf(buf, sizeof(buf), "%s/profile.desktop", pdir);
-        desk = efreet_desktop_get(buf);
+        desk = efreet_desktop_new(buf);
         if (!desk)
           {
              e_prefix_data_snprintf(buf, sizeof(buf), "data/config/%s/", prof);
@@ -199,7 +199,7 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
              if (pdir)
                {
                   snprintf(buf, sizeof(buf), "%s/profile.desktop", pdir);
-                  desk = efreet_desktop_get(buf);
+                  desk = efreet_desktop_new(buf);
                }
           }
         label = prof;
@@ -249,7 +249,7 @@ _ilist_cb_selected(void *data)
 
    pdir = e_config_profile_dir_get(cfdata->sel_profile);
    snprintf(buf, sizeof(buf), "%s/profile.desktop", pdir);
-   desk = efreet_desktop_get(buf);
+   desk = efreet_desktop_new(buf);
    if (!desk)
      {
         e_prefix_data_snprintf(buf, sizeof(buf), "data/config/%s/", cfdata->sel_profile);
@@ -257,7 +257,7 @@ _ilist_cb_selected(void *data)
         if (pdir)
           {
              snprintf(buf, sizeof(buf), "%s/profile.desktop", pdir);
-             desk = efreet_desktop_get(buf);
+             desk = efreet_desktop_new(buf);
           }
      }
 

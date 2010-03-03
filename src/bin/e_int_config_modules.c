@@ -294,7 +294,7 @@ _load_modules(const char *dir, Eina_Hash *types_hash)
 	snprintf(modpath + modpathlen, sizeof(modpath) - modpathlen,
 		 "%s/module.desktop", mod);
 	if (!ecore_file_exists(modpath)) goto end_mod;
-	if (!(desk = efreet_desktop_get(modpath))) goto end_mod;
+	if (!(desk = efreet_desktop_new(modpath))) goto end_mod;
 
 	if (desk->x)
 	  type = eina_hash_find(desk->x, "X-Enlightenment-ModuleType");
