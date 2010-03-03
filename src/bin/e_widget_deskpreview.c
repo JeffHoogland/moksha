@@ -10,6 +10,7 @@ struct _E_Widget_Data
    Evas_Object *obj, *table;
    Eina_List *desks;
    int w, h, dx, dy, cx, cy;
+   Ecore_Event_Handler *bg_upd_hdl;
 };
 typedef struct _E_Widget_Desk_Data E_Widget_Desk_Data;
 struct _E_Widget_Desk_Data 
@@ -20,10 +21,10 @@ struct _E_Widget_Desk_Data
 
 /* local function prototypes */
 static void _e_wid_del_hook(Evas_Object *obj);
-static void _e_wid_desk_del_hook(Evas_Object *obj);
 static void _e_wid_reconfigure(E_Widget_Data *wd);
 static void _e_wid_desk_cb_config(void *data, Evas *evas, Evas_Object *obj, void *event);
 static void _e_wid_cb_resize(void *data, Evas *evas, Evas_Object *obj, void *event);
+static int _e_wid_cb_bg_update(void *data, int type, void *event);
 
 EAPI Evas_Object *
 e_widget_deskpreview_add(Evas *evas, int nx, int ny) 
@@ -51,6 +52,8 @@ e_widget_deskpreview_add(Evas *evas, int nx, int ny)
    evas_object_event_callback_add(obj, EVAS_CALLBACK_RESIZE, 
                                   _e_wid_cb_resize, NULL);
 
+   wd->bg_upd_hdl = ecore_event_handler_add(E_EVENT_BG_UPDATE, 
+                                            _e_wid_cb_bg_update, wd);
    return obj;
 }
 
@@ -99,16 +102,21 @@ static void
 _e_wid_del_hook(Evas_Object *obj) 
 {
    E_Widget_Data *wd;
+   Evas_Object *o;
 
    if (!(wd = e_widget_data_get(obj))) return;
+   if (wd->bg_upd_hdl) ecore_event_handler_del(wd->bg_upd_hdl);
+
+   EINA_LIST_FREE(wd->desks, o) 
+     {
+        E_Widget_Desk_Data *dd;
+
+        if (!(dd = evas_object_data_get(o, "desk_data"))) continue;
+        evas_object_del(o);
+        E_FREE(dd);
+     }
 
    E_FREE(wd);
-}
-
-static void 
-_e_wid_desk_del_hook(Evas_Object *obj) 
-{
-
 }
 
 static void 
@@ -195,4 +203,36 @@ _e_wid_cb_resize(void *data, Evas *evas, Evas_Object *obj, void *event)
 
    if (!(wd = e_widget_data_get(obj))) return;
    _e_wid_reconfigure(wd);
+}
+
+static int 
+_e_wid_cb_bg_update(void *data, int type, void *event) 
+{
+   E_Event_Bg_Update *ev;
+   E_Widget_Data *wd;
+   Eina_List *l;
+   Evas_Object *o;
+
+   if (type != E_EVENT_BG_UPDATE) return 1;
+   if (!(wd = data)) return 1;
+   ev = event;
+
+   EINA_LIST_FOREACH(wd->desks, l, o) 
+     {
+        E_Widget_Desk_Data *dd;
+
+        if (!(dd = evas_object_data_get(o, "desk_data"))) continue;
+        if (((ev->container < 0) || (dd->con == ev->container)) && 
+            ((ev->zone < 0) || (dd->zone == ev->zone)) && 
+            ((ev->desk_x < 0) || (dd->x == ev->desk_x)) && 
+            ((ev->desk_y < 0) || (dd->y == ev->desk_y))) 
+          {
+             const char *bgfile;
+
+             bgfile = e_bg_file_get(dd->con, dd->zone, dd->x, dd->y);
+             e_icon_file_edje_set(dd->icon, bgfile, "e/desktop/background");
+          }
+     }
+
+   return 1;
 }
