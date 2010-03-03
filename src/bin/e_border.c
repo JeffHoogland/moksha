@@ -6979,7 +6979,7 @@ _e_border_eval(E_Border *bd)
 	  {
 	     const char *desktop = bd->remember->prop.desktop_file;
 
-	     bd->desktop = efreet_desktop_new(desktop); 
+	     bd->desktop = efreet_desktop_get(desktop); 
 	     if (!bd->desktop)
 	       bd->desktop = efreet_util_desktop_name_find(desktop);
 	  }
