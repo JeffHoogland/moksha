@@ -10,12 +10,10 @@
 
 static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static int  _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static Evas_Object  *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas,
-					   E_Config_Dialog_Data *cfdata);
-static int  _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static Evas_Object  *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas,
-					      E_Config_Dialog_Data *cfdata);
+static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static int _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static void _cb_disable_basic(void *data, Evas_Object *obj);
 static void _cb_disable_adv(void *data, Evas_Object *obj);
 static void _cb_ask_presentation_changed(void *data, Evas_Object *obj);
@@ -173,23 +171,23 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
    xscreensaver_check = e_widget_check_add(evas, _("Enable X screensaver"), &(cfdata->enable_screensaver));
    e_widget_list_object_append(o, xscreensaver_check, 1, 1, 0);
 
-   of = e_widget_framelist_add(evas, _("Screensaver Timer"), 0);
+   of = e_widget_frametable_add(evas, _("Screensaver Timer"), 0);
 
    ob = e_widget_label_add(evas, _("Initial timeout"));
    cfdata->disable_list = eina_list_append(cfdata->disable_list, ob);
-   e_widget_framelist_object_append(of, ob);
+   e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 0, 0);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f minutes"),
 			    1.0, 90.0, 1.0, 0, &(cfdata->timeout), NULL, 100);
    cfdata->disable_list = eina_list_append(cfdata->disable_list, ob);
-   e_widget_framelist_object_append(of, ob);
+   e_widget_frametable_object_append(of, ob, 1, 0, 1, 1, 1, 1, 1, 0);
 
    ob = e_widget_label_add(evas, _("Alternation timeout"));
    cfdata->disable_list = eina_list_append(cfdata->disable_list, ob);
-   e_widget_framelist_object_append(of, ob);
+   e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 1, 0, 0);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f seconds"),
 			    1.0, 300.0, 1.0, 0, &(cfdata->interval), NULL, 100);
    cfdata->disable_list = eina_list_append(cfdata->disable_list, ob);
-   e_widget_framelist_object_append(of, ob);
+   e_widget_frametable_object_append(of, ob, 1, 1, 1, 1, 1, 1, 1, 0);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    of = e_widget_framelist_add(evas, _("Presentation Mode"), 0);
