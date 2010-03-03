@@ -172,7 +172,7 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    e_widget_list_object_append(ol, of, 1, 1, 0.5);
 
    e_widget_toolbook_page_append
-     (otb, NULL, _("Timers"), ol, 0, 0, 0, 0, 0.5, 0.0);
+     (otb, NULL, _("Timers"), ol, 1, 0, 1, 0, 0.5, 0.0);
 
    ol = e_widget_list_add(evas, 0, 0);
 
@@ -204,7 +204,7 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    e_widget_list_object_append(ol, of, 1, 1, 0.5);
 
    e_widget_toolbook_page_append
-     (otb, NULL, _("Miscellaneous"), ol, 0, 0, 0, 0, 0.5, 0.0);
+     (otb, NULL, _("Miscellaneous"), ol, 1, 0, 1, 0, 0.5, 0.0);
 
    e_widget_list_object_append(o, otb, 1, 1, 0.5);
 
