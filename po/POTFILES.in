@@ -107,7 +107,7 @@ src/bin/e_widget_color_well.c
 src/bin/e_widget_config_list.c
 src/bin/e_widget_csel.c
 src/bin/e_widget_cslider.c
-src/bin/e_widget_desk_preview.c
+src/bin/e_widget_deskpreview.c
 src/bin/e_widget_entry.c
 src/bin/e_widget_font_preview.c
 src/bin/e_widget_framelist.c
