@@ -11,13 +11,10 @@
 static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int  _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static Evas_Object  *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas,
-					   E_Config_Dialog_Data *cfdata);
-static int  _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static Evas_Object  *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas,
-					      E_Config_Dialog_Data *cfdata);
-static void _cb_disable_basic(void *data, Evas_Object *obj);
-static void _cb_disable_adv(void *data, Evas_Object *obj);
+static int _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
+static Evas_Object  *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+
+static void _cb_disable(void *data, Evas_Object *obj);
 static void _cb_ask_presentation_changed(void *data, Evas_Object *obj);
 
 struct _E_Config_Dialog_Data
@@ -35,13 +32,7 @@ struct _E_Config_Dialog_Data
    Eina_List *disable_list;
 
    struct {
-      struct {
-	 Evas_Object *label;
-	 Evas_Object *slider;
-      } basic;
-      struct {
-	 Evas_Object *ask_presentation_slider;
-      } adv;
+      Evas_Object *ask_presentation_slider;
    } gui;
 };
 
@@ -58,8 +49,7 @@ e_int_config_screensaver(E_Container *con, const char *params __UNUSED__)
    v->free_cfdata = _free_data;
    v->basic.apply_cfdata = _basic_apply_data;
    v->basic.create_widgets = _basic_create_widgets;
-   v->advanced.apply_cfdata = _advanced_apply_data;
-   v->advanced.create_widgets = _advanced_create_widgets;
+   v->basic.check_changed = _basic_check_changed;
 
    v->override_auto_apply = 1;
 
@@ -100,7 +90,7 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 }
 
 static int
-_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
+_basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    e_config->screensaver_enable = cfdata->enable_screensaver;
    e_config->screensaver_timeout = cfdata->timeout * 60;
@@ -112,66 +102,38 @@ _apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 
    /* Apply settings */
    e_screensaver_init();
+
+   e_config_save_queue();
    return 1;
 }
 
 static int
-_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-  _apply_data(cfd, cfdata);
-
-  e_config_save_queue();
-  return 1;
+   return ((e_config->screensaver_enable != cfdata->enable_screensaver) ||
+	   (e_config->screensaver_timeout != (int)(cfdata->timeout * 60)) ||
+	   (e_config->screensaver_interval != cfdata->interval) ||
+	   (e_config->screensaver_blanking != cfdata->blanking) ||
+	   (e_config->screensaver_expose != cfdata->exposures) ||
+	   (e_config->screensaver_ask_presentation != cfdata->ask_presentation) ||
+	   (e_config->screensaver_ask_presentation_timeout != cfdata->ask_presentation_timeout));
 }
 
 static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   Evas_Object *o, *of, *ob;
-   Evas_Object *xscreensaver_check;
-
-   o = e_widget_list_add(evas, 0, 0);
-
-   xscreensaver_check = e_widget_check_add(evas, _("Enable X screensaver"), &(cfdata->enable_screensaver));
-   e_widget_list_object_append(o, xscreensaver_check, 1, 0, 0);
-
-   of = e_widget_framelist_add(evas, _("Screensaver Timer"), 0);
-
-   ob = e_widget_label_add(evas, _("Initial timeout"));
-   cfdata->gui.basic.label = ob;
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f minutes"), 1.0, 90.0, 1.0, 0,
-			    &(cfdata->timeout), NULL, 100);
-   cfdata->gui.basic.slider = ob;
-   e_widget_framelist_object_append(of, ob);
-
-   e_widget_on_change_hook_set(xscreensaver_check, _cb_disable_basic, cfdata);
-   _cb_disable_basic(cfdata, NULL);
-
-   e_widget_list_object_append(o, of, 1, 0, 0.5);
-   return o;
-}
-
-/* advanced window */
-static int
-_advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
-{
-   if (!cfdata) return 0;
-   _apply_data(cfd, cfdata);
-   e_config_save_queue();
-   return 1;
-}
-
-static Evas_Object *
-_advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
-{
-   Evas_Object *o, *of, *ob;
+   Evas_Object *o, *otb, *ol, *of, *ob;
    Evas_Object *xscreensaver_check;
    E_Radio_Group *rg;
    o = e_widget_list_add(evas, 0, 0);
 
    xscreensaver_check = e_widget_check_add(evas, _("Enable X screensaver"), &(cfdata->enable_screensaver));
    e_widget_list_object_append(o, xscreensaver_check, 1, 1, 0);
+
+   otb = e_widget_toolbook_add(evas, 48 * e_scale, 48 * e_scale);
+   cfdata->disable_list = eina_list_append(cfdata->disable_list, otb);
+
+   ol = e_widget_list_add(evas, 0, 0);
 
    of = e_widget_framelist_add(evas, _("Screensaver Timer"), 0);
 
@@ -190,7 +152,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
 			    1.0, 300.0, 1.0, 0, &(cfdata->interval), NULL, 100);
    cfdata->disable_list = eina_list_append(cfdata->disable_list, ob);
    e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_list_object_append(ol, of, 1, 1, 0.5);
 
    of = e_widget_framelist_add(evas, _("Presentation Mode"), 0);
 
@@ -203,11 +165,16 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f seconds"),
 			    1.0, 300.0, 10.0, 0,
 			    &(cfdata->ask_presentation_timeout), NULL, 100);
-   cfdata->gui.adv.ask_presentation_slider = ob;
+   cfdata->gui.ask_presentation_slider = ob;
    cfdata->disable_list = eina_list_append(cfdata->disable_list, ob);
    e_widget_framelist_object_append(of, ob);
 
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_list_object_append(ol, of, 1, 1, 0.5);
+
+   e_widget_toolbook_page_append
+     (otb, NULL, _("Timers"), ol, 0, 0, 0, 0, 0.5, 0.0);
+
+   ol = e_widget_list_add(evas, 0, 0);
 
    of = e_widget_framelist_add(evas, _("Blanking"), 0);
    rg = e_widget_radio_group_new(&(cfdata->blanking));
@@ -220,7 +187,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
    ob = e_widget_radio_add(evas, _("Not Preferred"), E_CONFIG_BLANKING_NOT_PREFERRED, rg);
    cfdata->disable_list = eina_list_append(cfdata->disable_list, ob);
    e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_list_object_append(ol, of, 1, 1, 0.5);
 
    of = e_widget_framelist_add(evas, _("Exposure Events"), 0);
    rg = e_widget_radio_group_new(&(cfdata->exposures));
@@ -233,27 +200,25 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
    ob = e_widget_radio_add(evas, _("Don't Allow"), E_CONFIG_EXPOSURES_NOT_ALLOWED, rg);
    cfdata->disable_list = eina_list_append(cfdata->disable_list, ob);
    e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+
+   e_widget_list_object_append(ol, of, 1, 1, 0.5);
+
+   e_widget_toolbook_page_append
+     (otb, NULL, _("Miscellaneous"), ol, 0, 0, 0, 0, 0.5, 0.0);
+
+   e_widget_list_object_append(o, otb, 1, 1, 0.5);
 
    // handler for enable/disable widget array
-   e_widget_on_change_hook_set(xscreensaver_check, _cb_disable_adv, cfdata);
-   _cb_disable_adv(cfdata, NULL);
+   e_widget_on_change_hook_set(xscreensaver_check, _cb_disable, cfdata);
+   _cb_disable(cfdata, NULL);
+
+   e_widget_toolbook_page_show(otb, 0);
 
    return o;
 }
 
 static void
-_cb_disable_basic(void *data, Evas_Object *obj __UNUSED__)
-{
-   E_Config_Dialog_Data *cfdata = data;
-   Eina_Bool disable = !cfdata->enable_screensaver;
-
-   e_widget_disabled_set(cfdata->gui.basic.label, disable);
-   e_widget_disabled_set(cfdata->gui.basic.slider, disable);
-}
-
-static void
-_cb_disable_adv(void *data, Evas_Object *obj __UNUSED__)
+_cb_disable(void *data, Evas_Object *obj __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata = data;
    const Eina_List *l;
@@ -273,5 +238,5 @@ _cb_ask_presentation_changed(void *data, Evas_Object *obj __UNUSED__)
 
    disable = ((!cfdata->enable_screensaver) || (!cfdata->ask_presentation));
 
-   e_widget_disabled_set(cfdata->gui.adv.ask_presentation_slider, disable);
+   e_widget_disabled_set(cfdata->gui.ask_presentation_slider, disable);
 }
