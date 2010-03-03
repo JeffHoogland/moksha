@@ -21141,8 +21141,9 @@ group { name: "e/toolbar/default/base";
 		  offset:   4 4;
 	       }
 	       rel2 {
+		  to_x:     "e.swallow.end";
 		  relative: 1.0  1.0;
-		  offset:   -5 -5;
+		  offset:   -1 -5;
 	       }
 	       color: 0 0 0 255;
 	       color3: 0 0 0 0;
@@ -21160,6 +21161,24 @@ group { name: "e/toolbar/default/base";
 	       color: 224 224 224 255;
 	       color3: 0 0 0 64;
 	       color_class: "ilist_item";
+	    }
+	 }
+	 part {
+	    name:          "e.swallow.end";
+	    type:          SWALLOW;
+	    description {
+	       state:    "default" 0.0;
+	       align:    1.0 0.5;
+	       aspect:   1.0 1.0;
+	       aspect_preference: VERTICAL;
+	       rel1 {
+		  relative: 1.0  0.0;
+		  offset:   -5    4;
+	       }
+	       rel2 {
+		  relative: 1.0  1.0;
+		  offset:   -5   -5;
+	       }
 	    }
 	 }
          part { name: "fg1";
@@ -21320,8 +21339,9 @@ group { name: "e/toolbar/default/base";
 		  offset:   4 4;
 	       }
 	       rel2 {
+		  to_x:     "e.swallow.end";
 		  relative: 1.0  1.0;
-		  offset:   -5 -5;
+		  offset:   -1 -5;
 	       }
 	       color: 0 0 0 255;
 	       color3: 0 0 0 0;
@@ -21339,6 +21359,24 @@ group { name: "e/toolbar/default/base";
 	       color: 224 224 224 255;
 	       color3: 0 0 0 64;
 	       color_class: "ilist_item";
+	    }
+	 }
+	 part {
+	    name:          "e.swallow.end";
+	    type:          SWALLOW;
+	    description {
+	       state:    "default" 0.0;
+	       align:    1.0 0.5;
+	       aspect:   1.0 1.0;
+	       aspect_preference: VERTICAL;
+	       rel1 {
+		  relative: 1.0  0.0;
+		  offset:   -5    4;
+	       }
+	       rel2 {
+		  relative: 1.0  1.0;
+		  offset:   -5   -5;
+	       }
 	    }
 	 }
          part { name: "fg1";
@@ -21794,6 +21832,62 @@ group { name: "e/toolbar/default/base";
 	 }
       }
    }
+
+   group { name: "e/widgets/ilist/toggle_end";
+      images {
+         image: "bt_sm_base1.png" COMP;
+	 image: "bt_sm_shine.png" COMP;
+	 image: "bt_sm_hilight.png" COMP;
+	 image: "ilist_1.png" COMP;
+	 image: "ilist_item_shadow.png" COMP;
+      }
+      parts {
+	 part {
+	    name: "icon";
+	    type: IMAGE;
+	    description {
+	       state:    "default" 0.0;
+	       color:    255 255 255 0;
+	       visible: 0;
+	       align:    1.0 0.5;
+	       aspect:   1.0 1.0;
+	       aspect_preference: VERTICAL;
+	       rel1 {
+		  relative: 0.0  0.0;
+		  offset:   4    4;
+	       }
+	       rel2 {
+		  relative: 0.0  1.0;
+		  offset:   4   -5;
+	       }
+	       image.normal: "icon_favorites.png";
+	    }
+	    description {
+	       state:    "visible" 0.0;
+	       inherit:  "default" 0.0;
+	       color:    255 255 255 255;
+	       visible: 1;
+	    }
+	 }
+      }
+      programs {
+	 program {
+	    signal:  "e,state,checked";
+	    source: "e";
+	    action: STATE_SET "visible" 0.0;
+	    target: "icon";
+	    transition: LINEAR 0.1;
+	 }
+	 program {
+	    signal:  "e,state,unchecked";
+	    source: "e";
+	    action: STATE_SET "default" 0.0;
+	    target: "icon";
+	    transition: LINEAR 0.1;
+	 }
+      }
+   }
+
 
    group { name: "e/widgets/entry";
 //      min: 12 12;

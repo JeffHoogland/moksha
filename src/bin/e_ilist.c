@@ -59,7 +59,7 @@ e_ilist_add(Evas *evas)
 }
 
 EAPI void 
-e_ilist_append(Evas_Object *obj, Evas_Object *icon, const char *label, int header, void (*func) (void *data, void *data2), void (*func_hilight) (void *data, void *data2), void *data, void *data2)
+e_ilist_append(Evas_Object *obj, Evas_Object *icon, Evas_Object *end, const char *label, int header, void (*func) (void *data, void *data2), void (*func_hilight) (void *data, void *data2), void *data, void *data2)
 {
    E_Ilist_Item *si;
    Evas_Coord mw = 0, mh = 0;
@@ -103,6 +103,20 @@ e_ilist_append(Evas_Object *obj, Evas_Object *icon, const char *label, int heade
 	edje_object_part_swallow(si->o_base, "e.swallow.icon", si->o_icon);
 	evas_object_show(si->o_icon);
      }
+   si->o_end = end;
+   if (si->o_end)
+     {
+	Evas_Coord ew = 0, eh = 0;
+	evas_object_size_hint_min_get(si->o_end, &ew, &eh);
+	if ((ew <= 0) || (eh <= 0))
+	  {
+	     ew = sd->iw;
+	     eh = sd->ih;
+	  }
+	edje_extern_object_min_size_set(si->o_end, ew, eh);
+	edje_object_part_swallow(si->o_base, "e.swallow.end", si->o_end);
+	evas_object_show(si->o_end);
+     }
    si->func = func;
    si->func_hilight = func_hilight;
    si->data = data;
@@ -132,7 +146,7 @@ e_ilist_append(Evas_Object *obj, Evas_Object *icon, const char *label, int heade
 }
 
 EAPI void 
-e_ilist_append_relative(Evas_Object *obj, Evas_Object *icon, const char *label, int header, void (*func) (void *data, void *data2), void (*func_hilight) (void *data, void *data2), void *data, void *data2, int relative) 
+e_ilist_append_relative(Evas_Object *obj, Evas_Object *icon, Evas_Object *end, const char *label, int header, void (*func) (void *data, void *data2), void (*func_hilight) (void *data, void *data2), void *data, void *data2, int relative) 
 {
    E_Ilist_Item *si, *ri;
    Evas_Coord mw = 0, mh = 0;
@@ -175,6 +189,20 @@ e_ilist_append_relative(Evas_Object *obj, Evas_Object *icon, const char *label, 
 	edje_extern_object_min_size_set(si->o_icon, sd->iw, sd->ih);
 	edje_object_part_swallow(si->o_base, "e.swallow.icon", si->o_icon);
 	evas_object_show(si->o_icon);
+     }
+   si->o_end = end;
+   if (si->o_end)
+     {
+	Evas_Coord ew = 0, eh = 0;
+	evas_object_size_hint_min_get(si->o_end, &ew, &eh);
+	if ((ew <= 0) || (eh <= 0))
+	  {
+	     ew = sd->iw;
+	     eh = sd->ih;
+	  }
+	edje_extern_object_min_size_set(si->o_end, ew, eh);
+	edje_object_part_swallow(si->o_base, "e.swallow.end", si->o_end);
+	evas_object_show(si->o_end);
      }
    si->func = func;
    si->func_hilight = func_hilight;
@@ -213,7 +241,7 @@ e_ilist_append_relative(Evas_Object *obj, Evas_Object *icon, const char *label, 
 }
 
 EAPI void 
-e_ilist_prepend(Evas_Object *obj, Evas_Object *icon, const char *label, int header, void (*func) (void *data, void *data2), void (*func_hilight) (void *data, void *data2), void *data, void *data2) 
+e_ilist_prepend(Evas_Object *obj, Evas_Object *icon, Evas_Object *end, const char *label, int header, void (*func) (void *data, void *data2), void (*func_hilight) (void *data, void *data2), void *data, void *data2) 
 {
    E_Ilist_Item *si;
    Evas_Coord mw = 0, mh = 0;
@@ -241,6 +269,20 @@ e_ilist_prepend(Evas_Object *obj, Evas_Object *icon, const char *label, int head
 	edje_object_part_swallow(si->o_base, "e.swallow.icon", si->o_icon);
 	evas_object_show(si->o_icon);
      }
+   si->o_end = end;
+   if (si->o_end)
+     {
+	Evas_Coord ew = 0, eh = 0;
+	evas_object_size_hint_min_get(si->o_end, &ew, &eh);
+	if ((ew <= 0) || (eh <= 0))
+	  {
+	     ew = sd->iw;
+	     eh = sd->ih;
+	  }
+	edje_extern_object_min_size_set(si->o_end, ew, eh);
+	edje_object_part_swallow(si->o_base, "e.swallow.end", si->o_end);
+	evas_object_show(si->o_end);
+     }
    si->func = func;
    si->func_hilight = func_hilight;
    si->data = data;
@@ -264,7 +306,7 @@ e_ilist_prepend(Evas_Object *obj, Evas_Object *icon, const char *label, int head
 }
 
 EAPI void 
-e_ilist_prepend_relative(Evas_Object *obj, Evas_Object *icon, const char *label, int header, void (*func) (void *data, void *data2), void (*func_hilight) (void *data, void *data2), void *data, void *data2, int relative) 
+e_ilist_prepend_relative(Evas_Object *obj, Evas_Object *icon, Evas_Object *end, const char *label, int header, void (*func) (void *data, void *data2), void (*func_hilight) (void *data, void *data2), void *data, void *data2, int relative) 
 {
    E_Ilist_Item *si, *ri;
    Evas_Coord mw = 0, mh = 0;
@@ -291,6 +333,20 @@ e_ilist_prepend_relative(Evas_Object *obj, Evas_Object *icon, const char *label,
 	edje_extern_object_min_size_set(si->o_icon, sd->iw, sd->ih);
 	edje_object_part_swallow(si->o_base, "e.swallow.icon", si->o_icon);
 	evas_object_show(si->o_icon);
+     }
+   si->o_end = end;
+   if (si->o_end)
+     {
+	Evas_Coord ew = 0, eh = 0;
+	evas_object_size_hint_min_get(si->o_end, &ew, &eh);
+	if ((ew <= 0) || (eh <= 0))
+	  {
+	     ew = sd->iw;
+	     eh = sd->ih;
+	  }
+	edje_extern_object_min_size_set(si->o_end, ew, eh);
+	edje_object_part_swallow(si->o_base, "e.swallow.end", si->o_end);
+	evas_object_show(si->o_end);
      }
    si->func = func;
    si->func_hilight = func_hilight;
@@ -334,6 +390,7 @@ e_ilist_clear(Evas_Object *obj)
      {
 	if (!si) continue;
 	if (si->o_icon) evas_object_del(si->o_icon);
+	if (si->o_end) evas_object_del(si->o_end);
 	evas_object_del(si->o_base);
 	E_FREE(si);
      }
@@ -558,6 +615,20 @@ e_ilist_selected_icon_get(Evas_Object *obj)
    return NULL;
 }
 
+EAPI Evas_Object *
+e_ilist_selected_end_get(Evas_Object *obj)
+{
+   E_Ilist_Item *si = NULL;
+
+   API_ENTRY return NULL;
+   if (!sd->items) return NULL;
+   if (sd->multi_select) return NULL;
+   if (sd->selected < 0) return NULL;
+   si = eina_list_nth(sd->items, sd->selected);
+   if (si) return si->o_end;
+   return NULL;
+}
+
 EAPI void 
 e_ilist_selected_geometry_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y, Evas_Coord *w, Evas_Coord *h) 
 {
@@ -605,6 +676,7 @@ e_ilist_remove_num(Evas_Object *obj, int n)
 
    if (sd->selected == n) sd->selected = -1;
    if (si->o_icon) evas_object_del(si->o_icon);
+   if (si->o_end) evas_object_del(si->o_end);
    evas_object_del(si->o_base);
    E_FREE(si);
 }
@@ -669,7 +741,41 @@ e_ilist_nth_icon_set(Evas_Object *obj, int n, Evas_Object *icon)
      }
 }
 
-EAPI int 
+EAPI Evas_Object *
+e_ilist_nth_end_get(Evas_Object *obj, int n)
+{
+   E_Ilist_Item *si = NULL;
+
+   API_ENTRY return NULL;
+   if (!sd->items) return NULL;
+   si = eina_list_nth(sd->items, n);
+   if (si) return si->o_end;
+   return NULL;
+}
+
+EAPI void
+e_ilist_nth_end_set(Evas_Object *obj, int n, Evas_Object *end)
+{
+   E_Ilist_Item *si = NULL;
+
+   API_ENTRY return;
+   if (!sd->items) return;
+   if (!(si = eina_list_nth(sd->items, n))) return;
+   if (si->o_end)
+     {
+	edje_object_part_unswallow(si->o_base, si->o_end);
+	evas_object_del(si->o_end);
+     }
+   si->o_end = end;
+   if (si->o_end)
+     {
+	edje_extern_object_min_size_set(si->o_end, sd->iw, sd->ih);
+	edje_object_part_swallow(si->o_base, "e.swallow.end", si->o_end);
+	evas_object_show(si->o_end);
+     }
+}
+
+EAPI Eina_Bool
 e_ilist_nth_is_header(Evas_Object *obj, int n) 
 {
    E_Ilist_Item *si = NULL;
@@ -712,6 +818,19 @@ e_ilist_icon_size_set(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 	if (!si->o_icon) continue;
 	edje_extern_object_min_size_set(si->o_icon, w, h);
 	edje_object_part_swallow(si->o_base, "e.swallow.icon", si->o_icon);
+
+	if (si->o_end)
+	  {
+	     Evas_Coord ew = 0, eh = 0;
+	     evas_object_size_hint_min_get(si->o_end, &ew, &eh);
+	     if ((ew <= 0) || (eh <= 0))
+	       {
+		  ew = w;
+		  eh = h;
+	       }
+	     edje_extern_object_min_size_set(si->o_end, ew, eh);
+	  }
+
 	edje_object_size_min_calc(si->o_base, &mw, &mh);
 	e_box_pack_options_set(si->o_icon, 1, 1, 1, 0, 0.5, 0.5, 
 			       mw, mh, 99999, 99999);
@@ -806,24 +925,19 @@ _e_smart_init(void)
 {
    if (_e_smart) return;
      {
-	static const Evas_Smart_Class sc =
+	static Evas_Smart_Class sc = EVAS_SMART_CLASS_INIT_NAME_VERSION(SMART_NAME);
+	if (!sc.add)
 	  {
-	     SMART_NAME,
-	       EVAS_SMART_CLASS_VERSION,
-	       _e_smart_add,
-	       _e_smart_del, 
-	       _e_smart_move,
-	       _e_smart_resize,
-	       _e_smart_show,
-	       _e_smart_hide,
-	       _e_smart_color_set, 
-	       _e_smart_clip_set,
-	       _e_smart_clip_unset,
-	       NULL,
-	       NULL,
-	       NULL,
-	       NULL
-	  };
+	     sc.add = _e_smart_add;
+	     sc.del = _e_smart_del;
+	     sc.move = _e_smart_move;
+	     sc.resize = _e_smart_resize;
+	     sc.show = _e_smart_show;
+	     sc.hide = _e_smart_hide;
+	     sc.color_set = _e_smart_color_set;
+	     sc.clip_set = _e_smart_clip_set;
+	     sc.clip_unset = _e_smart_clip_unset;
+	  }
         _e_smart = evas_smart_class_new(&sc);
      }
 }
@@ -930,8 +1044,8 @@ _e_smart_reconfigure(E_Smart_Data *sd)
    evas_object_resize(sd->o_box, sd->w, sd->h);
 }
 
-static void 
-_e_smart_event_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info) 
+static void
+_e_smart_event_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
    E_Smart_Data *sd;
    Evas_Event_Mouse_Down *ev;
@@ -951,8 +1065,8 @@ _e_smart_event_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_
      evas_object_smart_callback_call(sd->o_smart, "selected", NULL);
 }
 
-static void 
-_e_smart_event_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_info) 
+static void
+_e_smart_event_mouse_up(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
    E_Smart_Data *sd;
    Evas_Event_Mouse_Up *ev;
@@ -1005,7 +1119,7 @@ _e_smart_event_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_in
 }
 
 static void 
-_e_smart_event_key_down(void *data, Evas *evas, Evas_Object *obj, void *event_info) 
+_e_smart_event_key_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj, void *event_info) 
 {
    Evas_Event_Key_Down *ev;
    E_Smart_Data *sd;
@@ -1050,7 +1164,7 @@ _e_smart_event_key_down(void *data, Evas *evas, Evas_Object *obj, void *event_in
 	n = ns;
 	do
 	  {
-	     if (n == (eina_list_count(sd->items) - 1))
+	     if (n == ((int)eina_list_count(sd->items) - 1))
 	       {
 		  n = ns;
 		  break;
@@ -1076,7 +1190,7 @@ _e_smart_event_key_down(void *data, Evas *evas, Evas_Object *obj, void *event_in
 	n = -1;
 	do
 	  {
-	     if (n == (eina_list_count(sd->items) - 1))
+	     if (n == ((int)eina_list_count(sd->items) - 1))
 	       {
 		  n = ns;
 		  break;
