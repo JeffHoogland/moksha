@@ -364,7 +364,7 @@ _refill(Data *d)
 	Special *s;
 	
 	s = l->data;
-	e_ilist_append(d->o_ilist, s->icon, s->label, 0, _cb_special_sel, NULL,
+	e_ilist_append(d->o_ilist, s->icon, NULL, s->label, 0, _cb_special_sel, NULL,
 		       s, NULL);
      }
    for (l = borders; l; l = l->next)
@@ -387,7 +387,7 @@ _refill(Data *d)
 	e_object_ref(E_OBJECT(bd));
 	d->borders = eina_list_append(d->borders, bd);
 	d->labels = eina_list_append(d->labels, eina_stringshare_add(title));
-	e_ilist_append(d->o_ilist, NULL/*icon*/, title, 0,
+	e_ilist_append(d->o_ilist, NULL/*icon*/, NULL, title, 0,
 		       _cb_item_sel,
 		       NULL, d, bd);
      }
@@ -396,7 +396,7 @@ _refill(Data *d)
 	Special *s;
 	
 	s = l->data;
-	e_ilist_append(d->o_ilist, s->icon, s->label, 0, _cb_special_sel, NULL,
+	e_ilist_append(d->o_ilist, s->icon, NULL, s->label, 0, _cb_special_sel, NULL,
 		       s, NULL);
      }
    
