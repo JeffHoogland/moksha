@@ -3,8 +3,6 @@
  */
 #include "e.h"
 
-/* TODO: We need to free out efreet_desktop's! */
-
 /* local subsystem functions */
 static void _e_order_free       (E_Order *eo);
 static void _e_order_cb_monitor (void *data, Ecore_File_Monitor *em, Ecore_File_Event event, const char *path);
