@@ -42,6 +42,7 @@ e_widget_deskpreview_add(Evas *evas, int nx, int ny)
 
    wd->table = evas_object_table_add(evas);
    evas_object_table_homogeneous_set(wd->table, EINA_TRUE);
+   evas_object_table_padding_set(wd->table, 1, 1);
    evas_object_table_align_set(wd->table, 0.5, 0.5);
    e_widget_resize_object_set(wd->obj, wd->table);
    evas_object_show(wd->table);
@@ -131,9 +132,27 @@ _e_wid_reconfigure(E_Widget_Data *wd)
 
    evas_object_geometry_get(wd->table, NULL, NULL, &tw, &th);
 
-   /* TODO: Make these values an aspect of zone */
-   mw = (tw / wd->dx);
-   mh = (th / wd->dy);
+   if (wd->dy >= wd->dx) 
+     {
+        mh = th / wd->dy;
+        mw = (mh * zone->w) / zone->h;
+     }
+   else 
+     {
+        mw = tw / wd->dx;
+        mh = (mw * zone->h) / zone->w;
+     }
+
+   if (mw > tw) 
+     {
+        mw = (tw * zone->h) / zone->w;
+        mh = (mw * zone->h) / zone->w;
+     }
+   if (mh > th) 
+     {
+        mh = (th * zone->w) / zone->h;
+        mw = (mh * zone->w) / zone->h;
+     }
 
    EINA_LIST_FOREACH(wd->desks, l, dw) 
      {
