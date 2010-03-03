@@ -1131,8 +1131,6 @@ _e_fwin_changed(void *data, Evas_Object *obj, void *event_info)
 	fwin->overlay_file = _e_fwin_custom_file_path_eval(fwin, ef, fwin->overlay_file, "X-Enlightenment-Directory-Overlay");
 	fwin->scrollframe_file = _e_fwin_custom_file_path_eval(fwin, ef, fwin->scrollframe_file, "X-Enlightenment-Directory-Scrollframe");
 	fwin->theme_file = _e_fwin_custom_file_path_eval(fwin, ef, fwin->theme_file, "X-Enlightenment-Directory-Theme");
-	// FIXME: there is no way to just unref an efreet desktop - free completely
-	// frees - doesnt just unref.
  	efreet_desktop_free(ef);
      }
    else
