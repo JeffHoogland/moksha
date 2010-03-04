@@ -39,6 +39,7 @@ struct _E_Comp
 
    Eina_Bool       gl : 1;
    Eina_Bool       grabbed : 1;
+   Eina_Bool       nocomp : 1;
 };
 
 struct _E_Comp_Win
@@ -89,6 +90,7 @@ struct _E_Comp_Win
    Eina_Bool             invalid : 1; // invalid depth used - just use as marker
    Eina_Bool             defer_hide : 1; // flag to get hide to work on deferred hide
    Eina_Bool             delete_me : 1; // delete me!
+   Eina_Bool             nocomp : 1; // nocomp applied
 };
 
 static Eina_List *handlers = NULL;
@@ -267,27 +269,37 @@ _e_mod_comp_win_move_effects_add(E_Comp_Win *cw)
 static void _e_mod_comp_render_queue(E_Comp *c);
 static void _e_mod_comp_win_damage(E_Comp_Win *cw, int x, int y, int w, int h, Eina_Bool dmg);
 
+static E_Comp_Win *
+_e_mod_comp_fullscreen_check(E_Comp *c)
+{
+   E_Comp_Win *cw;
+   
+   if (!c->wins) return NULL;
+   EINA_INLIST_REVERSE_FOREACH(c->wins, cw)
+     {
+        if ((!cw->visible) || (cw->input_only) || (cw->invalid))
+          continue;
+        if ((cw->x == 0) && (cw->y == 0) &&
+            ((cw->x + cw->w) >= c->man->w) &&
+            ((cw->y + cw->h) >= c->man->h) &&
+            (!cw->argb) && (!cw->shaped)
+            )
+          {
+             return cw;
+          }
+        return NULL;
+     }
+   return NULL;
+}
+
 static inline Eina_Bool
 _e_mod_comp_shaped_check(int w, int h, const Ecore_X_Rectangle *rects, int num)
 {
-   if ((!rects) || (num < 1))
-     {
-        return EINA_FALSE;
-     }
-   if (num > 1)
-     {
-        return EINA_TRUE;
-     }
-
-   DBG("SHAPE [0x%x] rect 1\n", cw->win);
-   if ((rects[0].x == 0) &&
-       (rects[0].y == 0) &&
-       (rects[0].width == w) &&
-       (rects[0].height == h))
-     {
-	DBG("SHAPE [0x%x] rect solid\n", cw->win);
-	return EINA_FALSE;
-     }
+   if ((!rects) || (num < 1)) return EINA_FALSE;
+   if (num > 1) return EINA_TRUE;
+   if ((rects[0].x == 0) && (rects[0].y == 0) &&
+       (rects[0].width == w) && (rects[0].height == h))
+     return EINA_FALSE;
    return EINA_TRUE;
 }
 
@@ -653,6 +665,8 @@ _e_mod_comp_cb_update(E_Comp *c)
    Eina_List *update_done = NULL;
    static int doframeinfo = -1;
 
+   c->update_job = NULL;
+   if (c->nocomp) goto nocomp;
    if (_comp_mod->conf->grab)
      {
         ecore_x_grab();
@@ -698,7 +712,6 @@ _e_mod_comp_cb_update(E_Comp *c)
    if (new_updates) _e_mod_comp_render_queue(c);
    c->updates = new_updates;
    c->render_overflow--;
-   c->update_job = NULL;
    
    if (doframeinfo == -1)
      {
@@ -721,6 +734,141 @@ _e_mod_comp_cb_update(E_Comp *c)
              printf(" : %3.3f\n", 1.0 / td);
           }
         t0 = t;
+     }
+
+   nocomp:
+   cw = _e_mod_comp_fullscreen_check(c);
+   if (cw)
+     {
+        if (_comp_mod->conf->nocomp_fs)
+          {
+             if (!c->nocomp)
+               {
+                  printf("NOCOMP!\n");
+                  printf("kill comp %x\n", cw->win);
+                  c->nocomp = 1;
+                  c->render_overflow = 1;
+//                  ecore_x_composite_render_window_disable(c->win);
+//                  ecore_x_window_shape_rectangle_set(c->win, -2, -2, 1, 1);
+                  ecore_x_window_hide(c->win);
+                  cw->nocomp = 1;
+                  if (cw->redirected)
+                    {
+                       printf("undirect\n");
+                       ecore_x_composite_unredirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
+                       cw->redirected = 0;
+                       cw->pw = 0;
+                       cw->ph = 0;
+                    }
+                  if (cw->native)
+                    {
+                       evas_object_image_native_surface_set(cw->obj, NULL);
+                       cw->native = 0;
+                    }
+                  if (cw->pixmap)
+                    {
+                       ecore_x_pixmap_free(cw->pixmap);
+                       cw->pixmap = 0;
+                       cw->pw = 0;
+                       cw->ph = 0;
+                    }
+                  if (cw->xim)
+                    {
+                       evas_object_image_size_set(cw->obj, 1, 1);
+                       evas_object_image_data_set(cw->obj, NULL);
+                       ecore_x_image_free(cw->xim);
+                       cw->xim = NULL;
+                    }
+                  if (cw->damage)
+                    {
+                       Ecore_X_Region parts;
+                       
+                       eina_hash_del(damages, e_util_winid_str_get(cw->damage), cw);
+                       parts = ecore_x_region_new(NULL, 0);
+                       ecore_x_damage_subtract(cw->damage, 0, parts);
+                       ecore_x_region_free(parts);
+                       ecore_x_damage_free(cw->damage);
+                       cw->damage = 0;
+                    }
+                  if (cw->update_timeout)
+                    {
+                       ecore_timer_del(cw->update_timeout);
+                       cw->update_timeout = NULL;
+                    }
+                  if (cw->update)
+                    {
+                       cw->update = 0;
+                       cw->c->updates = eina_list_remove(cw->c->updates, cw);
+                    }
+                  if (cw->counter)
+                    {
+                       printf("nosync\n");
+                       ecore_x_e_comp_sync_end_send(cw->bd->client.win);
+                    }
+//                  ecore_x_window_hide(cw->win);
+//                  ecore_x_window_show(cw->win);
+                  _e_mod_comp_render_queue(c);
+               }
+          }
+     }
+   else
+     {
+        if (c->nocomp)
+          {
+             printf("COMP!\n");
+             c->nocomp = 0;
+             c->render_overflow = 1;
+//             ecore_x_window_shape_rectangle_set(c->win, 0, 0, c->man->w, c->man->h);
+             ecore_x_window_show(c->win);
+//             c->win = ecore_x_composite_render_window_enable(c->man->root);
+             EINA_INLIST_FOREACH(c->wins, cw)
+               {
+                  if (!cw->nocomp) continue;
+                  cw->nocomp = 0;
+                  printf("restore comp %x --- %x\n", cw->win, cw->pixmap);
+                  if (cw->pixmap) ecore_x_pixmap_free(cw->pixmap);
+                  cw->pixmap = 0;
+                  cw->pw = 0;
+                  cw->ph = 0;
+                  cw->native = 0;
+                  if (!cw->damage)
+                    {
+                       cw->damage = ecore_x_damage_new
+                         (cw->win, ECORE_X_DAMAGE_REPORT_DELTA_RECTANGLES);
+                       eina_hash_add(damages, e_util_winid_str_get(cw->damage), cw);
+                    }
+                  if (!cw->redirected)
+                    {
+                       printf("  redr\n");
+                       ecore_x_composite_redirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
+                       cw->pixmap = ecore_x_composite_name_window_pixmap_get(cw->win);
+                       if (cw->pixmap)
+                         ecore_x_pixmap_geometry_get(cw->pixmap, NULL, NULL, &(cw->pw), &(cw->ph));
+                       else
+                         {
+                            cw->pw = 0;
+                            cw->ph = 0;
+                         }
+                       printf("  %x %ix%i\n", cw->pixmap, cw->pw, cw->ph);
+                       if ((cw->pw <= 0) || (cw->ph <= 0))
+                         {
+                            ecore_x_pixmap_free(cw->pixmap);
+                            cw->pixmap = 0;
+                         }
+                       cw->redirected = 1;
+                       cw->dmg_updates = 0;
+                    }
+//                  _e_mod_comp_win_damage(cw, 0, 0, cw->w, cw->h, 0);
+                  if (cw->visible)
+                    {
+                       evas_object_show(cw->obj);
+                       if (cw->shobj) evas_object_show(cw->shobj);
+                    }
+                  _e_mod_comp_win_render_queue(cw);
+                  if (cw->counter)
+                    ecore_x_e_comp_sync_begin_send(cw->bd->client.win);
+               }
+          }
      }
    
    if (c->render_overflow == 0)
@@ -760,6 +908,7 @@ _e_mod_comp_render_queue(E_Comp *c)
         if (c->update_job)
           {
              ecore_job_del(c->update_job);
+             c->update_job = NULL;
              c->render_overflow = 0;
           }
         c->update_job = ecore_job_add(_e_mod_comp_cb_job, c);
@@ -1087,6 +1236,7 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
    if ((cw->input_only) || (cw->invalid)) return;
    if (cw->pixmap) ecore_x_pixmap_free(cw->pixmap);
    evas_object_image_size_set(cw->obj, cw->pw, cw->ph);
+/*   
    cw->pixmap = ecore_x_composite_name_window_pixmap_get(cw->win);
    if (cw->pixmap)
      ecore_x_pixmap_geometry_get(cw->pixmap, NULL, NULL, &(cw->pw), &(cw->ph));
@@ -1101,7 +1251,9 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
         cw->pixmap = 0;
      }
    if ((cw->c->gl) && (_comp_mod->conf->texture_from_pixmap) &&
-       (!cw->shaped) && (!cw->rects)/* && (!cw->shape_changed)*/)
+       (!cw->shaped) && (!cw->rects)
+ // && (!cw->shape_changed)
+       )
 //   if ((cw->c->gl) && (_comp_mod->conf->texture_from_pixmap) &&
 //       (!cw->shaped) && (!cw->shape_changed) && (cw->pixmap))
      {
@@ -1112,6 +1264,7 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
         evas_object_image_native_surface_set(cw->obj, &ns);
         DBG("NATIVE SHOW1 [0x%x] %x %ix%i\n", cw->win, cw->pixmap, cw->pw, cw->ph);
      }
+*/
    if (cw->pixmap) ecore_x_pixmap_free(cw->pixmap);
    cw->pixmap = 0; 
    cw->pw = 0;
@@ -2008,28 +2161,6 @@ e_mod_comp_manager_get(E_Manager *man)
 {
    return _e_mod_comp_find(man->root);
 }
-
-/*
-void
-e_mod_comp_callback_win_add_add(E_Comp *c, void (*func) (void *data, Comp *c, Comp_Win *cw), void *data)
-{
-}
-
-void
-e_mod_comp_callback_win_add_del(E_Comp *c, void (*func) (void *data, Comp *c, Comp_Win *cw), void *data)
-{
-}
-
-void
-e_mod_comp_callback_del_add(E_Comp *c, void (*func) (void *data, Comp *c), void *data)
-{
-}
-
-void
-e_mod_comp_callback_del_delE_Comp *c, void (*func) (void *data, Comp *c), void *data)
-{
-}
-*/
 
 E_Comp_Win *
 e_mod_comp_win_find_by_window(E_Comp *c, Ecore_X_Window win)

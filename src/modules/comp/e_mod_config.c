@@ -22,6 +22,7 @@ struct _E_Config_Dialog_Data
    int min_unmapped_time;
    int send_flush;
    int send_dump;
+   int nocomp_fs;
    
    int effect_fade;
    int effect_zoom;
@@ -87,6 +88,7 @@ _create_data(E_Config_Dialog *cfd)
    cfdata->min_unmapped_time = _comp_mod->conf->min_unmapped_time;
    cfdata->send_flush = _comp_mod->conf->send_flush;
    cfdata->send_dump = _comp_mod->conf->send_dump;
+   cfdata->nocomp_fs = _comp_mod->conf->nocomp_fs;
    
    cfdata->effect_fade = _comp_mod->conf->effect_fade;
    cfdata->effect_zoom = _comp_mod->conf->effect_zoom;
@@ -167,6 +169,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_list_object_append(ol, ob, 1, 1, 0.5);
    ob = e_widget_check_add(evas, _("Send dump"), &(cfdata->send_dump));
    e_widget_list_object_append(ol, ob, 1, 1, 0.5);
+   ob = e_widget_check_add(evas, _("Don't composite fullscreen"), &(cfdata->nocomp_fs));
+   e_widget_list_object_append(ol, ob, 1, 1, 0.5);
    ob = e_widget_check_add(evas, _("Keep hidden windows"), &(cfdata->keep_unmapped));
    e_widget_list_object_append(ol, ob, 1, 1, 0.5);
    of = e_widget_framelist_add(evas, _("Maximum hidden pixels"), 0);
@@ -240,13 +244,15 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
        (cfdata->lock_fps != _comp_mod->conf->lock_fps) ||
        (cfdata->grab != _comp_mod->conf->grab) ||
        (cfdata->effect_fade != _comp_mod->conf->effect_fade) ||
-       (cfdata->keep_unmapped != _comp_mod->conf->keep_unmapped))
+       (cfdata->keep_unmapped != _comp_mod->conf->keep_unmapped) ||
+       (cfdata->nocomp_fs != _comp_mod->conf->nocomp_fs))
      {
         _comp_mod->conf->use_shadow = cfdata->use_shadow;
         _comp_mod->conf->lock_fps = cfdata->lock_fps;
         _comp_mod->conf->grab = cfdata->grab;
         _comp_mod->conf->effect_fade = cfdata->effect_fade;
         _comp_mod->conf->keep_unmapped = cfdata->keep_unmapped;
+        _comp_mod->conf->nocomp_fs = cfdata->nocomp_fs;
         e_mod_comp_shadow_set();
      }
    if ((_comp_mod->conf->engine != cfdata->engine) ||

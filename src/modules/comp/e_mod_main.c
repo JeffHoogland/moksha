@@ -57,6 +57,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, keep_unmapped, UCHAR);
    E_CONFIG_VAL(D, T, send_flush, UCHAR);
    E_CONFIG_VAL(D, T, send_dump, UCHAR);
+   E_CONFIG_VAL(D, T, nocomp_fs, UCHAR);
    E_CONFIG_VAL(D, T, max_unmapped_pixels, INT);
    E_CONFIG_VAL(D, T, max_unmapped_time, INT);
    E_CONFIG_VAL(D, T, min_unmapped_time, INT);
@@ -82,6 +83,7 @@ e_modapi_init(E_Module *m)
         mod->conf->keep_unmapped = 1;
         mod->conf->send_flush = 1;
         mod->conf->send_dump = 0;
+        mod->conf->nocomp_fs = 0;
         mod->conf->max_unmapped_pixels =  32 * 1024;
         mod->conf->max_unmapped_time = 10 * 3600;
         mod->conf->min_unmapped_time = 5 * 60;

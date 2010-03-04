@@ -20,6 +20,7 @@ struct _Config
    unsigned char    keep_unmapped;
    unsigned char    send_flush;
    unsigned char    send_dump;
+   unsigned char    nocomp_fs;
    int              max_unmapped_pixels;
    int              max_unmapped_time;
    int              min_unmapped_time;
