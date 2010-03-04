@@ -803,7 +803,7 @@ _e_mod_comp_cb_update(E_Comp *c)
                   if (cw->counter)
                     {
                        printf("nosync\n");
-                       ecore_x_e_comp_sync_end_send(cw->bd->client.win);
+                       ecore_x_e_comp_sync_cancel_send(cw->bd->client.win);
                     }
 //                  ecore_x_window_hide(cw->win);
 //                  ecore_x_window_show(cw->win);
