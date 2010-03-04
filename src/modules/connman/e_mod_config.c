@@ -2,12 +2,17 @@
 
 extern const char _e_connman_Name[];
 
+extern const char *e_str_enabled;
+extern const char *e_str_available;
+extern const char *e_str_connected;
+extern const char *e_str_offline;
+
 struct connman_config_technologies
 {
    EINA_INLIST;
    Evas_Object *obj;
    E_Connman_Technology *technology;
-   int val;
+   int enabled;
 };
 
 struct _E_Config_Dialog_Data
@@ -125,7 +130,7 @@ _connman_service_move(E_Connman_Service *service, const E_Connman_Service *servi
 
 struct _connman_technology_onoff_data
 {
-   const char *name;
+   const char *type;
    E_Connman_Module_Context *ctxt;
    bool on;
 };
@@ -140,25 +145,14 @@ _connman_technology_onoff_cb(void *data, DBusMessage *msg __UNUSED__, DBusError 
 	dbus_error_free(error);
      }
    else
-     {
-	/* TODO: update config dialog */
-	E_Connman_Technology *t;
-	t = _connman_technology_find(d->ctxt, d->name);
-	if (t)
-	  {
-	     t->enabled = d->on;
-	     DBG("Technology %s has been %s.", d->name, d->on?"enabled":"disabled");
-	  }
-	else
-	  WRN("Technology does not exist anymore: %s.", d->name);
-     }
+     DBG("Technology %s has been %s.", d->type, d->on?"enabled":"disabled");
 
-   eina_stringshare_del(d->name);
+   eina_stringshare_del(d->type);
    E_FREE(d);
 }
 
 static void
-_connman_technology_onoff(E_Connman_Module_Context *ctxt, const char *technology, bool on)
+_connman_technology_onoff(E_Connman_Module_Context *ctxt, const char *type, bool on)
 {
    int ret;
    struct _connman_technology_onoff_data *d;
@@ -170,23 +164,23 @@ _connman_technology_onoff(E_Connman_Module_Context *ctxt, const char *technology
 	return;
      }
 
-   d->name = eina_stringshare_add(technology);
+   d->type = eina_stringshare_add(type);
    d->ctxt = ctxt;
    d->on = on;
 
    if(on)
-      ret = e_connman_manager_technology_enable(technology, _connman_technology_onoff_cb, d);
+      ret = e_connman_manager_technology_enable(type, _connman_technology_onoff_cb, d);
    else
-      ret = e_connman_manager_technology_disable(technology, _connman_technology_onoff_cb, d);
+      ret = e_connman_manager_technology_disable(type, _connman_technology_onoff_cb, d);
 
    if(!ret)
      {
-	eina_stringshare_del(d->name);
+	eina_stringshare_del(type);
 	E_FREE(d);
      }
 
    return;
-  }
+}
 
 E_Config_Dialog *
 e_connman_config_dialog_new(E_Container *con, E_Connman_Module_Context *ctxt)
@@ -542,8 +536,8 @@ _switches_page_create_technologies(Evas *evas, E_Connman_Module_Context *ctxt, s
      {
 	struct connman_config_technologies *t_list = E_NEW(struct connman_config_technologies, 1);
 	t_list->technology = t;
-	t_list->val = t->enabled;
-	t_list->obj = e_widget_check_add(evas, _(t->name), &t_list->val);
+	t_list->enabled = ((t->state == e_str_enabled) || (t->state == e_str_connected));
+	t_list->obj = e_widget_check_add(evas, _(t->name), &t_list->enabled);
 
 	ui->technologies = eina_inlist_append(ui->technologies, EINA_INLIST_GET(t_list));
 	e_widget_framelist_object_append(ui->type_frame, t_list->obj);
@@ -599,8 +593,9 @@ _basic_apply(E_Config_Dialog *dialog __UNUSED__, E_Config_Dialog_Data *cfdata)
 
    EINA_INLIST_FOREACH(sw->technologies, t)
      {
-	if (t->val != t->technology->enabled)
-	  _connman_technology_onoff(ctxt, t->technology->name, t->val);
+	int was_enabled = ((t->technology->state == e_str_enabled) || (t->technology->state == e_str_connected));
+	if (t->enabled != was_enabled)
+	  _connman_technology_onoff(ctxt, t->technology->type, t->enabled);
      }
    if (ctxt->offline_mode != sw->offline_mode)
      _connman_toggle_offline_mode(ctxt);

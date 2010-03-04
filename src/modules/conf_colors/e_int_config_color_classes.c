@@ -35,6 +35,7 @@ struct _E_Config_Dialog_Data
 	Evas_Object *ilist, *button;
 	Evas_Object *renable, *rdisable;
 	Evas_Object *c1, *c2, *c3;
+	Eina_List *disable_list;
      } gui;
 };
 
@@ -42,7 +43,7 @@ struct _E_Config_Dialog_Data
  * 
  * These can/should be changed to "official" key/names
  */
-const CFColor_Hash _wm_hash[] = 
+static const CFColor_Hash _wm_hash[] =
 {
      {NULL,                 N_("Window Manager")},
      {"about_title",        N_("About Dialog Title")},
@@ -62,7 +63,7 @@ const CFColor_Hash _wm_hash[] =
      {NULL, NULL}
 };
 
-const CFColor_Hash _wid_hash[] = 
+static const CFColor_Hash _wid_hash[] =
 {
      {NULL, N_("Widgets")},
      {"button_text",          N_("Button Text")},
@@ -81,14 +82,16 @@ const CFColor_Hash _wid_hash[] =
      {NULL, NULL}
 };
 
-const CFColor_Hash _mod_hash[] = 
+xxx todo fix this crap design xxxx                                           
+
+static const CFColor_Hash _mod_hash[] = 
 {
      {NULL, N_("Modules")},
      {"module_label", N_("Module Label")},   
      {NULL, NULL}
 };
 
-Eina_List *color_classes;
+static Eina_List *color_classes;
 
 static void        *_create_data          (E_Config_Dialog *cfd);
 static void         _free_data            (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
@@ -102,7 +105,6 @@ static void         _fill_data_list       (E_Config_Dialog_Data *cfdata);
 static void         _fill_data_basic      (E_Config_Dialog_Data *cfdata);
 
 static void         _load_color_classes   (Evas_Object *obj, E_Config_Dialog_Data *cfdata);
-static void         _radio_cb_change      (void *data, Evas_Object *obj, void *event_info);
 static void         _list_cb_change       (void *data, Evas_Object *obj);
 static void         _update_colors        (E_Config_Dialog_Data *cfdata, CFColor_Class *cc);
 static void         _color1_cb_change     (void *data, Evas_Object *obj);
@@ -378,6 +380,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	
 	cfdata->classes = eina_list_remove_list(cfdata->classes, cfdata->classes);
      }
+   eina_list_free(cfdata->gui.disable_list);
    E_FREE(cfdata->color1);
    E_FREE(cfdata->color2);
    E_FREE(cfdata->color3);
@@ -493,73 +496,87 @@ _adv_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _adv_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
-   Evas_Object *o, *of, *ob, *ot;
-   E_Radio_Group *rg;
-   
-   o = e_widget_list_add(evas, 0, 1);
+   Evas_Object *o, *ob, *ot;
+   Evas_Coord mw, mh;
+   char buf[1024];
 
-   of = e_widget_framelist_add(evas, _("Color Classes"), 0);
-   e_widget_framelist_content_align_set(of, 0.0, 0.0);
+   o = e_widget_list_add(evas, 0, 0);
+
    ob = e_widget_ilist_add(evas, 16, 16, NULL);
    e_widget_ilist_selector_set(ob, 1);
    cfdata->gui.ilist = ob;
    e_widget_on_change_hook_set(ob, _list_cb_change, cfdata);
    _load_color_classes(ob, cfdata);
-   e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
 
-   /* Pack the right side frames into a table for resizing*/
-   ot = e_widget_table_add(evas, 0);
-   
-   of = e_widget_framelist_add(evas, _("State"), 0);
-   e_widget_framelist_content_align_set(of, 0.0, 0.0);
-   rg = e_widget_radio_group_new(&(cfdata->state));
-   ob = e_widget_radio_add(evas, _("Enabled"), 1, rg);
+   snprintf(buf, sizeof(buf), _("Color settings: %s"), "");
+   ot = e_widget_frametable_add(evas, buf, 0);
+
+   cfdata->state = 0;
+   ob = e_widget_check_add(evas, _("Custom colors"), &(cfdata->state));
    cfdata->gui.renable = ob;
-   e_widget_disabled_set(ob, 1);
-   evas_object_smart_callback_add(ob, "changed", _radio_cb_change, cfdata);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Disabled"), 0, rg);
-   cfdata->gui.rdisable = ob;
-   e_widget_disabled_set(ob, 1);
-   evas_object_smart_callback_add(ob, "changed", _radio_cb_change, cfdata);
-   e_widget_framelist_object_append(of, ob);
-   e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 0, 1, 0);
+   e_widget_on_change_hook_set(ob, _custom_color_cb_change, cfdata);
+   e_widget_size_min_get(ob, &mw, &mh);
+   e_widget_frametable_object_append_full
+     (ot, ob, 0, 0, 2, 1, 1, 0, 1, 0, 0.0, 0.0, mw, mh, 9999, 9999);
 
-   of = e_widget_framelist_add(evas, _("Object Color"), 0);
-   e_widget_framelist_content_align_set(of, 0.0, 0.0);
+   ob = e_widget_label_add(evas, _("Object:"));
+   cfdata->gui.disable_list = eina_list_append(cfdata->disable_list, ob);
+   e_widget_size_min_get(ob, &mw, &mh);
+   e_widget_frametable_object_append_full
+     (ot, ob, 0, 1, 1, 1, 0, 0, 0, 0, 1.0, 0.0, mw, mh, 9999, 9999);
+
    ob = e_widget_color_well_add(evas, cfdata->color1, 1);
+   cfdata->gui.disable_list = eina_list_append(cfdata->disable_list, ob);
    cfdata->gui.c1 = ob;
    e_widget_on_change_hook_set(ob, _color1_cb_change, cfdata);
-   e_widget_disabled_set(ob, 1);
-   e_widget_framelist_object_append(of, ob);
-   e_widget_table_object_append(ot, of, 0, 1, 1, 1, 1, 1, 1, 1);
+   e_widget_size_min_get(ob, &mw, &mh);
+   if (mw < 16 * e_scale) mw = 16 * e_scale;
+   if (mh < 16 * e_scale) mh = 16 * e_scale;
+   e_widget_frametable_object_append_full
+     (ot, ob, 0, 1, 1, 1, 0, 0, 0, 0, 1.0, 0.0, mw, mh, 9999, 9999);
 
-   of = e_widget_framelist_add(evas, _("Outline Color"), 0);
-   e_widget_framelist_content_align_set(of, 0.0, 0.0);
+   ob = e_widget_label_add(evas, _("Outline:"));
+   cfdata->gui.disable_list = eina_list_append(cfdata->disable_list, ob);
+   e_widget_size_min_get(ob, &mw, &mh);
+   e_widget_frametable_object_append_full
+     (ot, ob, 0, 2, 1, 1, 0, 0, 0, 0, 1.0, 0.0, mw, mh, 9999, 9999);
+
    ob = e_widget_color_well_add(evas, cfdata->color2, 1);
+   cfdata->gui.disable_list = eina_list_append(cfdata->disable_list, ob);
    cfdata->gui.c2 = ob;
    e_widget_on_change_hook_set(ob, _color2_cb_change, cfdata);
-   e_widget_disabled_set(ob, 1);
-   e_widget_framelist_object_append(of, ob);
-   e_widget_table_object_append(ot, of, 0, 2, 1, 1, 1, 1, 1, 1);
+   e_widget_size_min_get(ob, &mw, &mh);
+   if (mw < 16 * e_scale) mw = 16 * e_scale;
+   if (mh < 16 * e_scale) mh = 16 * e_scale;
+   e_widget_frametable_object_append_full
+     (ot, ob, 0, 2, 1, 1, 0, 0, 0, 0, 1.0, 0.0, mw, mh, 9999, 9999);
 
-   of = e_widget_framelist_add(evas, _("Shadow Color"), 0);
-   e_widget_framelist_content_align_set(of, 0.0, 0.0);
+   ob = e_widget_label_add(evas, _("Shadow:"));
+   cfdata->gui.disable_list = eina_list_append(cfdata->disable_list, ob);
+   e_widget_size_min_get(ob, &mw, &mh);
+   e_widget_frametable_object_append_full
+     (ot, ob, 0, 3, 1, 1, 0, 0, 0, 0, 1.0, 0.0, mw, mh, 9999, 9999);
+
    ob = e_widget_color_well_add(evas, cfdata->color3, 1);
+   cfdata->gui.disable_list = eina_list_append(cfdata->disable_list, ob);
    cfdata->gui.c3 = ob;
    e_widget_on_change_hook_set(ob, _color3_cb_change, cfdata);
-   e_widget_disabled_set(ob, 1);
-   e_widget_framelist_object_append(of, ob);
-   e_widget_table_object_append(ot, of, 0, 3, 1, 1, 1, 1, 1, 1);
+   e_widget_size_min_get(ob, &mw, &mh);
+   if (mw < 16 * e_scale) mw = 16 * e_scale;
+   if (mh < 16 * e_scale) mh = 16 * e_scale;
+   e_widget_frametable_object_append_full
+     (ot, ob, 0, 3, 1, 1, 0, 0, 0, 0, 1.0, 0.0, mw, mh, 9999, 9999);
 
-   ob = e_widget_button_add(evas, _("Defaults"), NULL, 
-			    _button_cb, cfdata, NULL);
+   ob = e_widget_button_add
+     (evas, _("Defaults"), NULL, _button_cb, cfdata, NULL);
+   cfdata->gui.disable_list = eina_list_append(cfdata->disable_list, ob);
    cfdata->gui.button = ob;
-   e_widget_disabled_set(ob, 1);
-   e_widget_table_object_append(ot, ob, 0, 4, 1, 1, 0, 0, 0, 0);
-   
-   e_widget_list_object_append(o, ot, 1, 1, 0.5);
+   e_widget_frametable_object_append_full
+     (ot, ob, 0, 4, 2, 1, 0, 0, 0, 0, 1.0, 0.0, mw, mh, 9999, 9999);
+
+   _custom_color_cb_change(cfdata, NULL);
+
    e_dialog_resizable_set(cfd->dia, 1);
    return o;
 }

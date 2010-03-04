@@ -76,8 +76,12 @@ struct E_Connman_Service
 struct E_Connman_Technology
 {
    EINA_INLIST;
+   E_Connman_Module_Context *ctxt;
+   E_Connman_Element *element;
+   const char *path;
    const char *name;
-   bool enabled;
+   const char *type;
+   const char *state;
 };
 
 struct E_Connman_Module_Context
@@ -120,7 +124,6 @@ EAPI int   e_modapi_save     (E_Module *m);
 const char *e_connman_theme_path(void);
 E_Config_Dialog *e_connman_config_dialog_new(E_Container *con, E_Connman_Module_Context *ctxt);
 void _connman_toggle_offline_mode(E_Connman_Module_Context *ctxt);
-E_Connman_Technology *_connman_technology_find(E_Connman_Module_Context *ctxt, const char* name);
 Evas_Object *_connman_service_new_list_item(Evas *evas, E_Connman_Service *service);
 
 static inline void
@@ -162,4 +165,17 @@ _connman_ctxt_find_service_stringshare(const E_Connman_Module_Context *ctxt, con
 
    return NULL;
 }
+
+static inline E_Connman_Technology *
+_connman_ctxt_technology_find_stringshare(const E_Connman_Module_Context *ctxt, const char *path)
+{
+   E_Connman_Technology *t;
+
+   EINA_INLIST_FOREACH(ctxt->technologies, t)
+      if (t->path == path)
+	return t;
+
+   return NULL;
+}
+
 #endif

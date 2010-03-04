@@ -45,14 +45,10 @@ static const char *e_str_online = NULL;
 static const char *e_str_disconnect = NULL;
 static const char *e_str_failure = NULL;
 
-static struct _Connman_Technologies_Names
-{
-   const char **names;
-   unsigned int count;
-} _connman_enabled_technologies = {
-     NULL,
-     0
-};
+const char *e_str_enabled = NULL;
+const char *e_str_available = NULL;
+const char *e_str_connected = NULL;
+const char *e_str_offline = NULL;
 
 static void _connman_service_ask_pass_and_connect(E_Connman_Service *service);
 static void _connman_default_service_changed_delayed(E_Connman_Module_Context *ctxt);
@@ -449,6 +445,76 @@ _connman_service_new(E_Connman_Module_Context *ctxt, E_Connman_Element *element)
    return service;
 }
 
+
+#define GSTR(name_, getter)			\
+   str = NULL;					\
+   if (!getter(element, &str))			\
+     str = NULL;				\
+   eina_stringshare_replace(&t->name_, str)
+
+static void
+_connman_technology_free(E_Connman_Technology *t)
+{
+   eina_stringshare_del(t->path);
+   eina_stringshare_del(t->name);
+   eina_stringshare_del(t->type);
+   eina_stringshare_del(t->state);
+
+   E_FREE(t);
+}
+
+static void
+_connman_technology_changed(void *data, const E_Connman_Element *element)
+{
+   E_Connman_Technology *t = data;
+   const char *str;
+
+   GSTR(name, e_connman_technology_name_get);
+   GSTR(type, e_connman_technology_type_get);
+   GSTR(state, e_connman_technology_state_get);
+}
+
+static void
+_connman_technology_freed(void *data)
+{
+   E_Connman_Technology *t = data;
+   E_Connman_Module_Context *ctxt = t->ctxt;
+
+   ctxt->technologies = eina_inlist_remove
+     (ctxt->technologies, EINA_INLIST_GET(t));
+
+   _connman_technology_free(t);
+}
+
+static E_Connman_Technology *
+_connman_technology_new(E_Connman_Module_Context *ctxt, E_Connman_Element *element)
+{
+   E_Connman_Technology *t;
+   const char *str;
+
+   if (!element)
+     return NULL;
+
+   t = E_NEW(E_Connman_Technology, 1);
+   if (!t)
+     return NULL;
+
+   t->ctxt = ctxt;
+   t->element = element;
+   t->path = eina_stringshare_add(element->path);
+
+   GSTR(name, e_connman_technology_name_get);
+   GSTR(type, e_connman_technology_type_get);
+   GSTR(state, e_connman_technology_state_get);
+
+   e_connman_element_listener_add
+     (element, _connman_technology_changed, t,
+      _connman_technology_freed);
+
+   return t;
+}
+#undef GSTR
+
 static void
 _connman_service_disconnect_cb(void *data, DBusMessage *msg __UNUSED__, DBusError *error)
 {
@@ -634,20 +700,6 @@ _connman_services_free(E_Connman_Module_Context *ctxt)
      }
 }
 
-E_Connman_Technology *
-_connman_technology_find(E_Connman_Module_Context *ctxt, const char* name)
-{
-   E_Connman_Technology *t;
-
-   EINA_INLIST_FOREACH(ctxt->technologies, t)
-     {
-	if (!strcmp(t->name, name))
-	  return t;
-     }
-
-   return NULL;
-}
-
 static inline Eina_Bool
 _connman_services_element_exists(const E_Connman_Module_Context *ctxt, const E_Connman_Element *element)
 {
@@ -661,70 +713,19 @@ _connman_services_element_exists(const E_Connman_Module_Context *ctxt, const E_C
 }
 
 static inline Eina_Bool
-_connman_technology_exists(const E_Connman_Module_Context *ctxt, const char* name)
+_connman_technologies_element_exists(const E_Connman_Module_Context *ctxt, const E_Connman_Element *element)
 {
    const E_Connman_Technology *t;
 
    EINA_INLIST_FOREACH(ctxt->technologies, t)
      {
-	if (t->name == name)
+	if (t->path == element->path)
 	  return EINA_TRUE;
      }
 
    return EINA_FALSE;
 }
 
-static inline int
-_connman_technologies_enabled_update()
-{
-   int ret;
-   if (_connman_enabled_technologies.names)
-     free(_connman_enabled_technologies.names);
-
-   ret = e_connman_manager_technologies_enabled_get
-      (&_connman_enabled_technologies.count, &_connman_enabled_technologies.names);
-   if (!ret)
-     {
-	WRN("Failed to query enabled technologies.");
-        return 0;
-     }
-   return 1;
-}
-
-static inline int
-_connman_technology_enabled(const char *type)
-{
-   unsigned int i;
-   if (!_connman_enabled_technologies.names && !_connman_technologies_enabled_update())
-     return 0;
-   DBG("%d technologies enabled.", _connman_enabled_technologies.count);
-
-   for (i = 0; i < _connman_enabled_technologies.count; i++)
-     {
-        if(!strcmp(type, _connman_enabled_technologies.names[i]))
-          {
-	     DBG("Technology %s is enabled.", type);
-             return 1;
-          }
-
-     }
-   DBG("Technology %s is disabled.", type);
-   return 0;
-}
-
-static void
-_connman_technologies_free(E_Connman_Module_Context *ctxt)
-{
-   while (ctxt->technologies)
-     {
-	E_Connman_Technology *t = (E_Connman_Technology *) ctxt->technologies;
-	eina_stringshare_del(t->name);
-	ctxt->technologies = eina_inlist_remove(ctxt->technologies, EINA_INLIST_GET(t));
-	E_FREE(t);
-     }
-   if (_connman_enabled_technologies.names)
-      free(_connman_enabled_technologies.names);
-}
 void
 _connman_request_scan_cb(void *data __UNUSED__, DBusMessage *msg __UNUSED__, DBusError *error)
 {
@@ -740,34 +741,34 @@ _connman_request_scan_cb(void *data __UNUSED__, DBusMessage *msg __UNUSED__, DBu
 static void
 _connman_technologies_load(E_Connman_Module_Context *ctxt)
 {
-   const char **names;
    unsigned int count, i;
+   E_Connman_Element **elements;
 
-   if (!e_connman_manager_technologies_available_get(&count, &names))
+   if (!e_connman_manager_technologies_get(&count, &elements))
      return;
 
-   DBG("Available Technologies = %d.", count);
+   DBG("Technologies = %d.", count);
    for (i = 0; i < count; i++)
      {
-	const char *name = eina_stringshare_add(names[i]);
+	E_Connman_Element *e = elements[i];
 	E_Connman_Technology *t;
 
-	if ((name == NULL) || _connman_technology_exists(ctxt, name))
-	  {
-	     eina_stringshare_del(name);
-	     continue;
-	  }
-	t = E_NEW(E_Connman_Technology, 1);
-	t->name = name;
-	t->enabled = _connman_technology_enabled(name);
-	ctxt->technologies = eina_inlist_append(ctxt->technologies, EINA_INLIST_GET(t));
+	if ((!e) || _connman_technologies_element_exists(ctxt, e))
+	  continue;
+
+	t = _connman_technology_new(ctxt, e);
+	if (!t)
+	  continue;
 
 	DBG("Added technology: %s.", t->name);
+	ctxt->technologies = eina_inlist_append
+	  (ctxt->technologies, EINA_INLIST_GET(t));
      }
 
    if (!e_connman_manager_request_scan("", _connman_request_scan_cb, NULL))
      ERR("Request scan on all technologies failed.");
-   free(names);
+
+   free(elements);
 }
 
 static void
@@ -1777,6 +1778,10 @@ _connman_status_stringshare_init(void)
    e_str_online = eina_stringshare_add(N_("online"));
    e_str_disconnect = eina_stringshare_add(N_("disconnect"));
    e_str_failure = eina_stringshare_add(N_("failure"));
+   e_str_enabled = eina_stringshare_add(N_("enabled"));
+   e_str_available = eina_stringshare_add(N_("available"));
+   e_str_connected = eina_stringshare_add(N_("connected"));
+   e_str_offline = eina_stringshare_add(N_("offline"));
 }
 
 static inline void
@@ -1790,6 +1795,10 @@ _connman_status_stringshare_del(void)
    eina_stringshare_replace(&e_str_online, NULL);
    eina_stringshare_replace(&e_str_disconnect, NULL);
    eina_stringshare_replace(&e_str_failure, NULL);
+   eina_stringshare_replace(&e_str_enabled, NULL);
+   eina_stringshare_replace(&e_str_available, NULL);
+   eina_stringshare_replace(&e_str_connected, NULL);
+   eina_stringshare_replace(&e_str_offline, NULL);
 }
 
 EAPI void *
