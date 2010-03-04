@@ -8,6 +8,8 @@ static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int _advanced_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static void _cb_disable_check_list(void *data, Evas_Object *obj);
@@ -22,9 +24,8 @@ struct _E_Config_Dialog_Data
    double auto_raise_delay;
    int border_raise_on_mouse_action;
    int border_raise_on_focus;
+   Eina_List *autoraise_list;
 };
-
-Eina_List *autoraise_list = NULL;
 
 /* a nice easy setup function that does the dirty work */
 E_Config_Dialog *
@@ -41,8 +42,10 @@ e_int_config_window_stacking(E_Container *con, const char *params __UNUSED__)
    v->free_cfdata = _free_data;
    v->basic.apply_cfdata = _basic_apply_data;
    v->basic.create_widgets = _basic_create_widgets;
+   v->basic.check_changed = _basic_check_changed;
    v->advanced.apply_cfdata = _advanced_apply_data;
    v->advanced.create_widgets = _advanced_create_widgets;
+   v->advanced.check_changed = _advanced_check_changed;
 
    /* create config diaolg for NULL object/data */
    cfd = e_config_dialog_new(con, _("Window Stacking"),
@@ -51,69 +54,67 @@ e_int_config_window_stacking(E_Container *con, const char *params __UNUSED__)
    return cfd;
 }
 
-/**--CREATE--**/
-static void
-_fill_data(E_Config_Dialog_Data *cfdata)
+static void *
+_create_data(E_Config_Dialog *cfd __UNUSED__)
 {
+   E_Config_Dialog_Data *cfdata = E_NEW(E_Config_Dialog_Data, 1);
+   if (!cfd) return NULL;
    cfdata->use_auto_raise = e_config->use_auto_raise;
    cfdata->allow_above_fullscreen = e_config->allow_above_fullscreen;
    cfdata->auto_raise_delay = e_config->auto_raise_delay;
    cfdata->border_raise_on_mouse_action = e_config->border_raise_on_mouse_action;
    cfdata->border_raise_on_focus = e_config->border_raise_on_focus;
-}
-
-static void *
-_create_data(E_Config_Dialog *cfd __UNUSED__)
-{
-   /* Create cfdata - cfdata is a temporary block of config data that this
-    * dialog will be dealing with while configuring. it will be applied to
-    * the running systems/config in the apply methods
-    */
-   E_Config_Dialog_Data *cfdata;
-
-   cfdata = E_NEW(E_Config_Dialog_Data, 1);
-   _fill_data(cfdata);
    return cfdata;
 }
 
 static void
 _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-   autoraise_list = eina_list_free(autoraise_list);
-
-   /* Free the cfdata */
+   eina_list_free(cfdata->autoraise_list);
    E_FREE(cfdata);
 }
 
-/**--APPLY--**/
 static int
 _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-   /* Actually take our cfdata settings and apply them in real life */
    e_config->use_auto_raise = cfdata->use_auto_raise;
    e_config->allow_above_fullscreen = cfdata->allow_above_fullscreen;
    e_config_save_queue();
-   return 1; /* Apply was OK */
+   return 1;
+}
+
+static int
+_basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
+{
+   return ((e_config->use_auto_raise != cfdata->use_auto_raise) ||
+	   (e_config->allow_above_fullscreen != cfdata->allow_above_fullscreen));
 }
 
 static int
 _advanced_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-   /* Actually take our cfdata settings and apply them in real life */
    e_config->use_auto_raise = cfdata->use_auto_raise;
    e_config->allow_above_fullscreen = cfdata->allow_above_fullscreen;
    e_config->auto_raise_delay = cfdata->auto_raise_delay;
    e_config->border_raise_on_mouse_action = cfdata->border_raise_on_mouse_action;
    e_config->border_raise_on_focus = cfdata->border_raise_on_focus;
    e_config_save_queue();
-   return 1; /* Apply was OK */
+   return 1;
 }
 
-/**--GUI--**/
+static int
+_advanced_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
+{
+   return ((e_config->use_auto_raise != cfdata->use_auto_raise) ||
+	   (e_config->allow_above_fullscreen != cfdata->allow_above_fullscreen) ||
+	   (e_config->auto_raise_delay != cfdata->auto_raise_delay) ||
+	   (e_config->border_raise_on_mouse_action != cfdata->border_raise_on_mouse_action) ||
+	   (e_config->border_raise_on_focus != cfdata->border_raise_on_focus));
+}
+
 static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   /* generate the core widget layout for a basic dialog */
    Evas_Object *o, *ob;
 
    o = e_widget_list_add(evas, 0, 0);
@@ -143,18 +144,18 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
                                         &(cfdata->use_auto_raise));
    e_widget_framelist_object_append(of, autoraise_check);
    ob = e_widget_label_add(evas, _("Delay before raising:"));
-   autoraise_list = eina_list_append (autoraise_list, ob);
+   cfdata->autoraise_list = eina_list_append(cfdata->autoraise_list, ob);
    e_widget_disabled_set(ob, !cfdata->use_auto_raise); // set state from saved config
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.1f sec"), 0.0, 9.9, 0.1, 0, 
                             &(cfdata->auto_raise_delay), NULL, 100);
-   autoraise_list = eina_list_append (autoraise_list, ob);
+   cfdata->autoraise_list = eina_list_append(cfdata->autoraise_list, ob);
    e_widget_disabled_set(ob, !cfdata->use_auto_raise); // set state from saved config
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 0, 0.5);
    // handler for enable/disable widget array
    e_widget_on_change_hook_set(autoraise_check, 
-                               _cb_disable_check_list, autoraise_list);
+                               _cb_disable_check_list, cfdata->autoraise_list);
 
    of = e_widget_framelist_add(evas, _("Raise Window"), 0);
    e_widget_framelist_content_align_set(of, 0.0, 0.0);
@@ -172,19 +173,14 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
    return o;
 }
 
-/*!
- *  * If the check is disabled then disable the chained objects in the list.
- *
- * @param data A Eina_List of Evas_Object to chain widgets together with the checkbox
- * @param obj A Evas_Object checkbox created with e_widget_check_add()
- */
 static void
 _cb_disable_check_list(void *data, Evas_Object *obj)
 {
-   Eina_List *list = (Eina_List*) data;
-   Eina_List *l;
+   const Eina_List *list = data;
+   const Eina_List *l;
    Evas_Object *o;
+   Eina_Bool disable = !e_widget_check_checked_get(obj);
 
    EINA_LIST_FOREACH(list, l, o)
-     e_widget_disabled_set(o, !e_widget_check_checked_get(obj));
+     e_widget_disabled_set(o, disable);
 }
