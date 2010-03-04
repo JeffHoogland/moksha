@@ -9871,13 +9871,13 @@ collections { /* begin the collection of edje groups that are in this file */
             set_state(PART:"minutes-sh", "custom", 0.0);
             
             custom_state(PART:"hour", "default", 0.0);
-            set_state_val(PART:"hour", STATE_MAP_ROT_Z, ((hour + minute / 60.0) * 360.0) / 12.0);
+            set_state_val(PART:"hour", STATE_MAP_ROT_Z, ((hour + (minute / 60.0)) * 360.0) / 12.0);
             if      (h < 22) set_state_val(PART:"hour", STATE_IMAGE, IMAGE:"ch-h1-3.png");
             else if (h < 44) set_state_val(PART:"hour", STATE_IMAGE, IMAGE:"ch-h1-2.png");
             else              set_state_val(PART:"hour", STATE_IMAGE, IMAGE:"ch-h1.png");
             set_state(PART:"hour", "custom", 0.0);
             custom_state(PART:"hour-sh", "default", 0.0);
-            set_state_val(PART:"hour-sh", STATE_MAP_ROT_Z, ((hour + minute / 60.0) * 360.0) / 12.0);
+            set_state_val(PART:"hour-sh", STATE_MAP_ROT_Z, ((hour + (minute / 60.0)) * 360.0) / 12.0);
             if      (h < 22) set_state_val(PART:"hour-sh", STATE_IMAGE, IMAGE:"ch-h2-3.png");
             else if (h < 44) set_state_val(PART:"hour-sh", STATE_IMAGE, IMAGE:"ch-h2-2.png");
             else              set_state_val(PART:"hour-sh", STATE_IMAGE, IMAGE:"ch-h2.png");
