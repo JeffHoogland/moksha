@@ -3,11 +3,12 @@
  */
 #include "e.h"
 
-/* PROTOTYPES - same all the time */
 static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int _advanced_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 
@@ -22,7 +23,6 @@ struct _E_Config_Dialog_Data
    int border_fix_on_shelf_toggle;
 };
 
-/* a nice easy setup function that does the dirty work */
 E_Config_Dialog *
 e_int_config_window_maxpolicy(E_Container *con, const char *params __UNUSED__)
 {
@@ -37,8 +37,10 @@ e_int_config_window_maxpolicy(E_Container *con, const char *params __UNUSED__)
    v->free_cfdata = _free_data;
    v->basic.apply_cfdata = _basic_apply_data;
    v->basic.create_widgets = _basic_create_widgets;
+   v->basic.check_changed = _basic_check_changed;
    v->advanced.apply_cfdata = _advanced_apply_data;
    v->advanced.create_widgets = _advanced_create_widgets;
+   v->advanced.check_changed = _advanced_check_changed;
 
    /* create config diaolg for NULL object/data */
    cfd = e_config_dialog_new(con, _("Window Maximize Policy"),
@@ -47,10 +49,11 @@ e_int_config_window_maxpolicy(E_Container *con, const char *params __UNUSED__)
    return cfd;
 }
 
-/**--CREATE--**/
-static void
-_fill_data(E_Config_Dialog_Data *cfdata)
+static void *
+_create_data(E_Config_Dialog *cfd __UNUSED__)
 {
+   E_Config_Dialog_Data *cfdata = E_NEW(E_Config_Dialog_Data, 1);
+   if (!cfdata) return NULL;
    cfdata->maximize_policy = (e_config->maximize_policy & E_MAXIMIZE_TYPE);
    if (cfdata->maximize_policy == E_MAXIMIZE_NONE)
      cfdata->maximize_policy = E_MAXIMIZE_FULLSCREEN;
@@ -59,57 +62,53 @@ _fill_data(E_Config_Dialog_Data *cfdata)
      cfdata->maximize_direction = E_MAXIMIZE_BOTH;
    cfdata->allow_manip = e_config->allow_manip;
    cfdata->border_fix_on_shelf_toggle = e_config->border_fix_on_shelf_toggle;
-}
-
-static void *
-_create_data(E_Config_Dialog *cfd __UNUSED__)
-{
-   /* Create cfdata - cfdata is a temporary block of config data that this
-    * dialog will be dealing with while configuring. it will be applied to
-    * the running systems/config in the apply methods
-    */
-   E_Config_Dialog_Data *cfdata;
-
-   cfdata = E_NEW(E_Config_Dialog_Data, 1);
-   _fill_data(cfdata);
    return cfdata;
 }
 
 static void
 _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-   /* Free the cfdata */
    E_FREE(cfdata);
 }
 
-/**--APPLY--**/
 static int
 _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-   /* Actually take our cfdata settings and apply them in real life */
-   e_config->maximize_policy = 
+   e_config->maximize_policy =
      (cfdata->maximize_policy | cfdata->maximize_direction);
    e_config_save_queue();
-   return 1; /* Apply was OK */
+   return 1;
+}
+
+static int
+_basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
+{
+   return (e_config->maximize_policy !=
+	   (cfdata->maximize_policy | cfdata->maximize_direction));
 }
 
 static int
 _advanced_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-   /* Actually take our cfdata settings and apply them in real life */
-   e_config->maximize_policy = 
+   e_config->maximize_policy =
      (cfdata->maximize_policy | cfdata->maximize_direction);
    e_config->allow_manip = cfdata->allow_manip;
    e_config->border_fix_on_shelf_toggle = cfdata->border_fix_on_shelf_toggle;
    e_config_save_queue();
-   return 1; /* Apply was OK */
+   return 1;
 }
 
-/**--GUI--**/
+static int
+_advanced_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
+{
+   return ((e_config->maximize_policy != (cfdata->maximize_policy | cfdata->maximize_direction)) ||
+	   (e_config->allow_manip != cfdata->allow_manip) ||
+	   (e_config->border_fix_on_shelf_toggle != cfdata->border_fix_on_shelf_toggle));
+}
+
 static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   /* generate the core widget layout for a basic dialog */
    Evas_Object *o, *ob, *of;
    E_Radio_Group *rg;
 
@@ -133,7 +132,6 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
 static Evas_Object *
 _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   /* generate the core widget layout for an advanced dialog */
    Evas_Object *o, *ob, *of;
    E_Radio_Group *rg;
 
