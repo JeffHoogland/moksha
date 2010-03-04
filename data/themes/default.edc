@@ -9811,6 +9811,22 @@ collections { /* begin the collection of edje groups that are in this file */
          image: "ch-s1.png" COMP;
          image: "ch-s2.png" COMP;
 #endif
+         image: "ch-h1-2.png" COMP;
+         image: "ch-h2-2.png" COMP;
+         image: "ch-m1-2.png" COMP;
+         image: "ch-m2-2.png" COMP;
+#ifdef CLOCK_SECONDS
+         image: "ch-s1-2.png" COMP;
+         image: "ch-s2-2.png" COMP;
+#endif
+         image: "ch-h1-3.png" COMP;
+         image: "ch-h2-3.png" COMP;
+         image: "ch-m1-3.png" COMP;
+         image: "ch-m2-3.png" COMP;
+#ifdef CLOCK_SECONDS
+         image: "ch-s1-3.png" COMP;
+         image: "ch-s2-3.png" COMP;
+#endif
       }
       min: 16 16;
       max:  128 128;
@@ -9819,32 +9835,52 @@ collections { /* begin the collection of edje groups that are in this file */
 	    new year, month, day, yearday, weekday, hour, minute;
 	    new Float:second;
             new v;
+            new x, y, w, h;
 
 	    date(year, month, day, yearday, weekday, hour, minute, second);
+            get_geometry(PART:"hour", x, y, w, h);
 #ifdef CLOCK_SECONDS
             v = round(second);
             timer(1.0 - (second - v), "clock_cb", 1);
             custom_state(PART:"seconds", "default", 0.0);
             set_state_val(PART:"seconds", STATE_MAP_ROT_Z, (v * 360.0) / 60.0);
+            if      (h < 22) set_state_val(PART:"seconds", STATE_IMAGE, IMAGE:"ch-s1-3.png");
+            else if (h < 44) set_state_val(PART:"seconds", STATE_IMAGE, IMAGE:"ch-s1-2.png");
+            else              set_state_val(PART:"seconds", STATE_IMAGE, IMAGE:"ch-s1.png");
             set_state(PART:"seconds", "custom", 0.0);
             custom_state(PART:"seconds-sh", "default", 0.0);
             set_state_val(PART:"seconds-sh", STATE_MAP_ROT_Z, (v * 360.0) / 60.0);
+            if      (h < 22) set_state_val(PART:"seconds-sh", STATE_IMAGE, IMAGE:"ch-s2-3.png");
+            else if (h < 44) set_state_val(PART:"seconds-sh", STATE_IMAGE, IMAGE:"ch-s2-2.png");
+            else              set_state_val(PART:"seconds-sh", STATE_IMAGE, IMAGE:"ch-s2.png");
             set_state(PART:"seconds-sh", "custom", 0.0);
 #else
 	    timer(60.0 - (second), "clock_cb", 1);
 #endif
             custom_state(PART:"minutes", "default", 0.0);
             set_state_val(PART:"minutes", STATE_MAP_ROT_Z, (minute * 360.0) / 60.0);
+            if      (h < 22) set_state_val(PART:"minutes", STATE_IMAGE, IMAGE:"ch-m1-3.png");
+            else if (h < 44) set_state_val(PART:"minutes", STATE_IMAGE, IMAGE:"ch-m1-2.png");
+            else              set_state_val(PART:"minutes", STATE_IMAGE, IMAGE:"ch-m1.png");
             set_state(PART:"minutes", "custom", 0.0);
             custom_state(PART:"minutes-sh", "default", 0.0);
             set_state_val(PART:"minutes-sh", STATE_MAP_ROT_Z, (minute * 360.0) / 60.0);
+            if      (h < 22) set_state_val(PART:"minutes-sh", STATE_IMAGE, IMAGE:"ch-m2-3.png");
+            else if (h < 44) set_state_val(PART:"minutes-sh", STATE_IMAGE, IMAGE:"ch-m2-2.png");
+            else              set_state_val(PART:"minutes-sh", STATE_IMAGE, IMAGE:"ch-m2.png");
             set_state(PART:"minutes-sh", "custom", 0.0);
             
             custom_state(PART:"hour", "default", 0.0);
             set_state_val(PART:"hour", STATE_MAP_ROT_Z, ((hour + minute / 60.0) * 360.0) / 12.0);
+            if      (h < 22) set_state_val(PART:"hour", STATE_IMAGE, IMAGE:"ch-h1-3.png");
+            else if (h < 44) set_state_val(PART:"hour", STATE_IMAGE, IMAGE:"ch-h1-2.png");
+            else              set_state_val(PART:"hour", STATE_IMAGE, IMAGE:"ch-h1.png");
             set_state(PART:"hour", "custom", 0.0);
             custom_state(PART:"hour-sh", "default", 0.0);
             set_state_val(PART:"hour-sh", STATE_MAP_ROT_Z, ((hour + minute / 60.0) * 360.0) / 12.0);
+            if      (h < 22) set_state_val(PART:"hour-sh", STATE_IMAGE, IMAGE:"ch-h2-3.png");
+            else if (h < 44) set_state_val(PART:"hour-sh", STATE_IMAGE, IMAGE:"ch-h2-2.png");
+            else              set_state_val(PART:"hour-sh", STATE_IMAGE, IMAGE:"ch-h2.png");
             set_state(PART:"hour-sh", "custom", 0.0);
 	 }
       }
