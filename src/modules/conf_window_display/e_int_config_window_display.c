@@ -3,17 +3,17 @@
  */
 #include "e.h"
 
-/* PROTOTYPES - same all the time */
 static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int _advanced_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static void _cb_disable_check(void *data, Evas_Object *obj);
 static void _cb_disable_check_list(void *data, Evas_Object *obj);
 
-/* Actual config data we will be playing with whil the dialog is active */
 struct _E_Config_Dialog_Data
 {
    /*- BASIC -*/
@@ -31,10 +31,9 @@ struct _E_Config_Dialog_Data
    int border_shade_transition;
    double border_shade_speed;
    int use_app_icon;
-   /* int remember_internal_windows; */
-};
 
-Eina_List *shading_list = NULL;
+   Eina_List *shading_list;
+};
 
 /* a nice easy setup function that does the dirty work */
 E_Config_Dialog *
@@ -51,8 +50,10 @@ e_int_config_window_display(E_Container *con, const char *params __UNUSED__)
    v->free_cfdata = _free_data;
    v->basic.apply_cfdata = _basic_apply_data;
    v->basic.create_widgets = _basic_create_widgets;
+   v->basic.check_changed = _basic_check_changed;
    v->advanced.apply_cfdata = _advanced_apply_data;
    v->advanced.create_widgets = _advanced_create_widgets;
+   v->advanced.check_changed = _advanced_check_changed;
 
    /* create config diaolg for NULL object/data */
    cfd = e_config_dialog_new(con,
@@ -62,54 +63,42 @@ e_int_config_window_display(E_Container *con, const char *params __UNUSED__)
    return cfd;
 }
 
-/**--CREATE--**/
-static void
-_fill_data(E_Config_Dialog_Data *cfdata)
+static void *
+_create_data(E_Config_Dialog *cfd __UNUSED__)
 {
-   cfdata->window_placement_policy = e_config->window_placement_policy;
+   E_Config_Dialog_Data *cfdata = E_NEW(E_Config_Dialog_Data, 1);
+   if (!cfdata) return NULL;
    cfdata->move_info_visible = e_config->move_info_visible;
    cfdata->move_info_follows = e_config->move_info_follows;
    cfdata->resize_info_visible = e_config->resize_info_visible;
    cfdata->resize_info_follows = e_config->resize_info_follows;
+
+   cfdata->move_resize_info = ((e_config->move_info_visible) &&
+			       (e_config->resize_info_visible));
+
+   cfdata->use_app_icon = e_config->use_app_icon;
+
+   cfdata->window_placement_policy = e_config->window_placement_policy;
+   cfdata->desk_auto_switch = e_config->desk_auto_switch;
+
+   cfdata->animate_shading = e_config->border_shade_animate;
    cfdata->border_shade_animate = e_config->border_shade_animate;
    cfdata->border_shade_transition = e_config->border_shade_transition;
    cfdata->border_shade_speed = e_config->border_shade_speed;
-   if (cfdata->move_info_visible &&
-       cfdata->resize_info_visible) cfdata->move_resize_info = 1;
-   if (cfdata->border_shade_animate) cfdata->animate_shading = 1;
-   cfdata->use_app_icon = e_config->use_app_icon;
-   /* cfdata->remember_internal_windows = e_config->remember_internal_windows; */
-   cfdata->desk_auto_switch = e_config->desk_auto_switch;
-}
 
-static void *
-_create_data(E_Config_Dialog *cfd)
-{
-   /* Create cfdata - cfdata is a temporary block of config data that this
-    * dialog will be dealing with while configuring. it will be applied to
-    * the running systems/config in the apply methods
-    */
-   E_Config_Dialog_Data *cfdata;
-
-   cfdata = E_NEW(E_Config_Dialog_Data, 1);
-   _fill_data(cfdata);
    return cfdata;
 }
 
 static void
-_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-   shading_list = eina_list_free(shading_list);
-
-   /* Free the cfdata */
+   eina_list_free(cfdata->shading_list);
    E_FREE(cfdata);
 }
 
-/**--APPLY--**/
 static int
-_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-   /* Actually take our cfdata settings and apply them in real life */
    if (cfdata->move_resize_info)
      {
 	e_config->move_info_visible = 1;
@@ -128,13 +117,24 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config->border_shade_animate = cfdata->animate_shading;
    e_config->desk_auto_switch = cfdata->desk_auto_switch;
    e_config_save_queue();
-   return 1; /* Apply was OK */
+   return 1;
 }
 
 static int
-_advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-   /* Actually take our cfdata settings and apply them in real life */
+   Eina_Bool old_move_resize_info = ((e_config->move_info_visible) &&
+				     (e_config->resize_info_visible));
+
+   return ((old_move_resize_info != cfdata->move_resize_info) ||
+	   (e_config->window_placement_policy != cfdata->window_placement_policy) ||
+	   (e_config->border_shade_animate != cfdata->animate_shading) ||
+	   (e_config->desk_auto_switch != cfdata->desk_auto_switch));
+}
+
+static int
+_advanced_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
+{
    e_config->window_placement_policy = cfdata->window_placement_policy;
    e_config->move_info_visible = cfdata->move_info_visible;
    e_config->move_info_follows = cfdata->move_info_follows;
@@ -144,51 +144,62 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config->border_shade_transition = cfdata->border_shade_transition;
    e_config->border_shade_speed = cfdata->border_shade_speed;
    e_config->use_app_icon = cfdata->use_app_icon;
-   /* e_config->remember_internal_windows = cfdata->remember_internal_windows; */
+
    e_config->desk_auto_switch = cfdata->desk_auto_switch;
    e_config_save_queue();
-   return 1; /* Apply was OK */
+   return 1;
 }
 
-/**--GUI--**/
-static Evas_Object *
-_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
+static int
+_advanced_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-   /* generate the core widget layout for a basic dialog */
+   return ((e_config->window_placement_policy != cfdata->window_placement_policy) ||
+	   (e_config->move_info_visible != cfdata->move_info_visible) ||
+	   (e_config->move_info_follows != cfdata->move_info_follows) ||
+	   (e_config->resize_info_visible != cfdata->resize_info_visible) ||
+	   (e_config->resize_info_follows != cfdata->resize_info_follows) ||
+	   (e_config->border_shade_animate != cfdata->border_shade_animate) ||
+	   (e_config->border_shade_transition != cfdata->border_shade_transition) ||
+	   (e_config->border_shade_speed != cfdata->border_shade_speed) ||
+	   (e_config->use_app_icon != cfdata->use_app_icon) ||
+	   (e_config->desk_auto_switch != cfdata->desk_auto_switch));
+}
+
+static Evas_Object *
+_basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
+{
    Evas_Object *o, *of, *ob;
    E_Radio_Group *rg;
 
-   if (cfdata->move_info_visible && cfdata->resize_info_visible)
-     cfdata->move_resize_info = 1;
-   else
-     cfdata->move_resize_info = 0;
+   cfdata->move_resize_info = ((cfdata->move_info_visible) &&
+			       (cfdata->resize_info_visible));
 
    o = e_widget_list_add(evas, 0, 0);
 
    of = e_widget_framelist_add(evas, _("Display"), 0);
-   ob = e_widget_check_add(evas, _("Geometry when moving or resizing"), 
+   ob = e_widget_check_add(evas, _("Geometry when moving or resizing"),
                            &(cfdata->move_resize_info));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_check_add(evas, _("Animated shading"), 
+   ob = e_widget_check_add(evas, _("Animated shading"),
                            &(cfdata->animate_shading));
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 0, 0.5);
 
-   of = e_widget_framelist_add(evas, _("Automatic New Window Placement"), 0);
+   of = e_widget_framelist_add(evas, _("New Window Placement"), 0);
    rg = e_widget_radio_group_new(&(cfdata->window_placement_policy));
-   ob = e_widget_radio_add(evas, _("Smart Placement"), 
+   ob = e_widget_radio_add(evas, _("Smart Placement"),
                            E_WINDOW_PLACEMENT_SMART, rg);
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Don't hide Gadgets"), 
+   ob = e_widget_radio_add(evas, _("Don't hide Gadgets"),
                            E_WINDOW_PLACEMENT_ANTIGADGET, rg);
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Place at mouse pointer"), 
+   ob = e_widget_radio_add(evas, _("Place at mouse pointer"),
                            E_WINDOW_PLACEMENT_CURSOR, rg);
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Place manually with the mouse"), 
+   ob = e_widget_radio_add(evas, _("Place manually with the mouse"),
                            E_WINDOW_PLACEMENT_MANUAL, rg);
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_check_add(evas, _("Switch to desktop of new window"), 
+   ob = e_widget_check_add(evas, _("Switch to desktop of new window"),
                            &(cfdata->desk_auto_switch));
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 0, 0.5);
@@ -197,69 +208,52 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 }
 
 static Evas_Object *
-_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
+_advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   /* generate the core widget layout for an advanced dialog */
-   Evas_Object *ob, *of, *ot;
+   Evas_Object *ob, *of, *otb, *ol;
    Evas_Object *window_move_check;
    Evas_Object *window_resize_check;
    Evas_Object *window_shading_check;
    E_Radio_Group *rg;
 
-   ot = e_widget_table_add(evas, 0);
+   otb = e_widget_toolbook_add(evas, 48 * e_scale, 48 * e_scale);
 
-   of = e_widget_framelist_add(evas, _("Window Move Geometry"), 0);
+   ol = e_widget_list_add(evas, 0, 0);
+
+   of = e_widget_framelist_add(evas, _("Move Geometry"), 0);
    e_widget_framelist_content_align_set(of, 0.0, 0.0);
    window_move_check = e_widget_check_add(evas, _("Display information"), &(cfdata->move_info_visible));
    e_widget_framelist_object_append(of, window_move_check);
-   ob = e_widget_check_add(evas, _("Follow the window as it moves"), &(cfdata->move_info_follows));
-   e_widget_disabled_set(ob, !cfdata->move_info_visible); // set state from saved config
-   e_widget_framelist_object_append(of, ob);
-   e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
-   // handler for enable/disable widget
+   ob = e_widget_check_add(evas, _("Follows the window"), &(cfdata->move_info_follows));
+   e_widget_disabled_set(ob, !cfdata->move_info_visible);
    e_widget_on_change_hook_set(window_move_check, _cb_disable_check, ob);
+   e_widget_framelist_object_append(of, ob);
+   e_widget_list_object_append(ol, of, 1, 1, 0.5);
 
-   of = e_widget_framelist_add(evas, _("Window Resize Geometry"), 0);
-   e_widget_framelist_content_align_set(of, 0.0, 0.0);
+   of = e_widget_framelist_add(evas, _("Resize Geometry"), 0);
    window_resize_check = e_widget_check_add(evas, _("Display information"), &(cfdata->resize_info_visible));
    e_widget_framelist_object_append(of, window_resize_check);
-   ob = e_widget_check_add(evas, _("Follow the window as it resizes"), &(cfdata->resize_info_follows));
-   e_widget_disabled_set(ob, !cfdata->resize_info_visible); // set state from saved config
-   e_widget_framelist_object_append(of, ob);
-   e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
-   // handler for enable/disable widget
+   ob = e_widget_check_add(evas, _("Follows the window"), &(cfdata->resize_info_follows));
+   e_widget_disabled_set(ob, !cfdata->resize_info_visible);
    e_widget_on_change_hook_set(window_resize_check, _cb_disable_check, ob);
+   e_widget_framelist_object_append(of, ob);
+   e_widget_list_object_append(ol, of, 1, 1, 0.5);
 
-   of = e_widget_framelist_add(evas, _("Window Shading"), 0);
-   e_widget_framelist_content_align_set(of, 0.0, 0.0);
-   window_shading_check = e_widget_check_add(evas, _("Animate the shading and unshading of windows"), &(cfdata->border_shade_animate));
-   e_widget_framelist_object_append(of, window_shading_check);
-   ob = e_widget_slider_add(evas, 1, 0, _("%4.0f pixels/sec"), 100, 9900, 100, 0, &(cfdata->border_shade_speed), NULL, 150);
-   e_widget_disabled_set(ob, !cfdata->border_shade_animate); // set state from saved config
-   shading_list = eina_list_append (shading_list, ob);
+   of = e_widget_framelist_add(evas, _("Border Icon Preference"), 0);
+   rg = e_widget_radio_group_new(&(cfdata->use_app_icon));
+   ob = e_widget_radio_add(evas, _("User defined"), 0, rg);
    e_widget_framelist_object_append(of, ob);
-   rg = e_widget_radio_group_new(&(cfdata->border_shade_transition));
-   ob = e_widget_radio_add(evas, _("Linear"), E_TRANSITION_LINEAR, rg);
-   e_widget_disabled_set(ob, !cfdata->border_shade_animate); // set state from saved config
-   shading_list = eina_list_append (shading_list, ob);
+   ob = e_widget_radio_add(evas, _("Application provided"), 1, rg);
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Smooth accelerate and decelerate"), E_TRANSITION_SINUSOIDAL, rg);
-   e_widget_disabled_set(ob, !cfdata->border_shade_animate); // set state from saved config
-   shading_list = eina_list_append (shading_list, ob);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Accelerate"), E_TRANSITION_ACCELERATE, rg);
-   e_widget_disabled_set(ob, !cfdata->border_shade_animate); // set state from saved config
-   shading_list = eina_list_append (shading_list, ob);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Decelerate"), E_TRANSITION_DECELERATE, rg);
-   e_widget_disabled_set(ob, !cfdata->border_shade_animate); // set state from saved config
-   shading_list = eina_list_append (shading_list, ob);
-   e_widget_framelist_object_append(of, ob);
-   e_widget_table_object_append(ot, of, 1, 1, 1, 1, 1, 1, 1, 1);
-   // handler for enable/disable widget array
-   e_widget_on_change_hook_set(window_shading_check, _cb_disable_check_list, shading_list);
+   e_widget_list_object_append(ol, of, 1, 1, 0.5);
 
-   of = e_widget_framelist_add(evas, _("Automatic New Window Placement"), 0);
+   e_widget_toolbook_page_append
+     (otb, NULL, _("Display"), ol, 0, 0, 1, 0, 0.5, 0.0);
+
+
+   ol = e_widget_list_add(evas, 0, 0);
+
+   of = e_widget_framelist_add(evas, _("Placement"), 0);
    e_widget_framelist_content_align_set(of, 0.0, 0.0);
    rg = e_widget_radio_group_new(&(cfdata->window_placement_policy));
    ob = e_widget_radio_add(evas, _("Smart Placement"), E_WINDOW_PLACEMENT_SMART, rg);
@@ -270,50 +264,64 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Place manually with the mouse"), E_WINDOW_PLACEMENT_MANUAL, rg);
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_check_add(evas, _("Automatically switch to desktop of new window"), &(cfdata->desk_auto_switch));
-   e_widget_framelist_object_append(of, ob);
-   e_widget_table_object_append(ot, of, 0, 1, 1, 1, 1, 1, 1, 1);
+   e_widget_list_object_append(ol, of, 1, 1, 0.5);
 
-   of = e_widget_framelist_add(evas, _("Window Border"), 0);
-   e_widget_framelist_content_align_set(of, 0.0, 0.0);
-   rg = e_widget_radio_group_new(&(cfdata->use_app_icon));
-   ob = e_widget_radio_add(evas, _("Prefer user defined icon"), 0, rg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Prefer application provided icon"), 1, rg);
-   e_widget_framelist_object_append(of, ob);
-   e_widget_table_object_append(ot, of, 0, 2, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_check_add(evas, _("Switch to desktop of new window"), &(cfdata->desk_auto_switch));
+   e_widget_list_object_append(ol, ob, 1, 1, 0.5);
 
-   /* of = e_widget_framelist_add(evas, _("Internal Windows"), 0);
-    * e_widget_framelist_content_align_set(of, 0.0, 0.0);
-    * ob = e_widget_check_add(evas, _("Always remember internal windows"), &(cfdata->remember_internal_windows));
-    * e_widget_framelist_object_append(of, ob);
-    * e_widget_table_object_append(ot, of, 1, 2, 1, 1, 1, 1, 1, 1); */
+   e_widget_toolbook_page_append
+     (otb, NULL, _("New Windows"), ol, 0, 0, 1, 0, 0.5, 0.0);
 
-   return ot;
+   ol = e_widget_list_add(evas, 0, 0);
+
+   window_shading_check = e_widget_check_add(evas, _("Animate"), &(cfdata->border_shade_animate));
+   e_widget_list_object_append(ol, window_shading_check, 1, 1, 0.5);
+   ob = e_widget_slider_add(evas, 1, 0, _("%4.0f pixels/sec"), 100, 9900, 100, 0, &(cfdata->border_shade_speed), NULL, 100);
+   e_widget_disabled_set(ob, !cfdata->border_shade_animate);
+   e_widget_list_object_append(ol, ob, 1, 1, 0.5);
+   cfdata->shading_list = eina_list_append(cfdata->shading_list, ob);
+   rg = e_widget_radio_group_new(&(cfdata->border_shade_transition));
+   ob = e_widget_radio_add(evas, _("Linear"), E_TRANSITION_LINEAR, rg);
+   e_widget_disabled_set(ob, !cfdata->border_shade_animate);
+   cfdata->shading_list = eina_list_append(cfdata->shading_list, ob);
+   e_widget_list_object_append(ol, ob, 1, 1, 0.5);
+   ob = e_widget_radio_add(evas, _("Accelerate, then decelerate"), E_TRANSITION_SINUSOIDAL, rg);
+   e_widget_disabled_set(ob, !cfdata->border_shade_animate);
+   cfdata->shading_list = eina_list_append(cfdata->shading_list, ob);
+   e_widget_list_object_append(ol, ob, 1, 1, 0.5);
+   ob = e_widget_radio_add(evas, _("Accelerate"), E_TRANSITION_ACCELERATE, rg);
+   e_widget_disabled_set(ob, !cfdata->border_shade_animate);
+   cfdata->shading_list = eina_list_append(cfdata->shading_list, ob);
+   e_widget_list_object_append(ol, ob, 1, 1, 0.5);
+   ob = e_widget_radio_add(evas, _("Decelerate"), E_TRANSITION_DECELERATE, rg);
+   e_widget_disabled_set(ob, !cfdata->border_shade_animate);
+   cfdata->shading_list = eina_list_append(cfdata->shading_list, ob);
+   e_widget_list_object_append(ol, ob, 1, 1, 0.5);
+
+   e_widget_toolbook_page_append
+     (otb, NULL, _("Shading"), ol, 0, 0, 1, 0, 0.5, 0.0);
+
+   e_widget_on_change_hook_set(window_shading_check, _cb_disable_check_list, cfdata->shading_list);
+
+   e_widget_toolbook_page_show(otb, 0);
+
+   return otb;
 }
 
-/*!
- * @param data A Evas_Object to chain together with the checkbox
- * @param obj A Evas_Object checkbox created with e_widget_check_add()
- */
 static void
 _cb_disable_check(void *data, Evas_Object *obj)
 {
-   e_widget_disabled_set((Evas_Object *) data, 
-                         !e_widget_check_checked_get(obj));
+   e_widget_disabled_set(data, !e_widget_check_checked_get(obj));
 }
 
-/*!
- * @param data A Eina_List of Evas_Object to chain widgets together with the checkbox
- * @param obj A Evas_Object checkbox created with e_widget_check_add()
- */
 static void
 _cb_disable_check_list(void *data, Evas_Object *obj)
 {
-   Eina_List *list = (Eina_List*) data;
-   Eina_List *l;
+   Eina_List *list = data;
+   const Eina_List *l;
    Evas_Object *o;
+   Eina_Bool disable = !e_widget_check_checked_get(obj);
 
    EINA_LIST_FOREACH(list, l, o)
-      e_widget_disabled_set(o, !e_widget_check_checked_get(obj));
+      e_widget_disabled_set(o, disable);
 }
