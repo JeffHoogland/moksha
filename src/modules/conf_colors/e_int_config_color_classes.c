@@ -30,13 +30,12 @@ struct _E_Config_Dialog_Data
    int wm_enabled, wid_enabled, mod_enabled;
    E_Color *color1, *color2, *color3;
    Eina_List *classes;
-   struct 
-     {
-	Evas_Object *ilist, *button;
-	Evas_Object *renable, *rdisable;
-	Evas_Object *c1, *c2, *c3;
-	Eina_List *disable_list;
-     } gui;
+   struct {
+      Evas_Object *ilist, *button;
+      Evas_Object *renable, *rdisable;
+      Evas_Object *c1, *c2, *c3;
+      Eina_List *disable_list;
+   } gui;
 };
 
 /* Key Pairs for color classes
@@ -82,7 +81,7 @@ static const CFColor_Hash _wid_hash[] =
      {NULL, NULL}
 };
 
-xxx todo fix this crap design xxxx                                           
+//xxx todo fix this crap design xxxx                                           
 
 static const CFColor_Hash _mod_hash[] = 
 {
@@ -515,19 +514,19 @@ _adv_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfda
    cfdata->state = 0;
    ob = e_widget_check_add(evas, _("Custom colors"), &(cfdata->state));
    cfdata->gui.renable = ob;
-   e_widget_on_change_hook_set(ob, _custom_color_cb_change, cfdata);
+//   e_widget_on_change_hook_set(ob, _custom_color_cb_change, cfdata);
    e_widget_size_min_get(ob, &mw, &mh);
    e_widget_frametable_object_append_full
      (ot, ob, 0, 0, 2, 1, 1, 0, 1, 0, 0.0, 0.0, mw, mh, 9999, 9999);
 
    ob = e_widget_label_add(evas, _("Object:"));
-   cfdata->gui.disable_list = eina_list_append(cfdata->disable_list, ob);
+   cfdata->gui.disable_list = eina_list_append(cfdata->gui.disable_list, ob);
    e_widget_size_min_get(ob, &mw, &mh);
    e_widget_frametable_object_append_full
      (ot, ob, 0, 1, 1, 1, 0, 0, 0, 0, 1.0, 0.0, mw, mh, 9999, 9999);
 
    ob = e_widget_color_well_add(evas, cfdata->color1, 1);
-   cfdata->gui.disable_list = eina_list_append(cfdata->disable_list, ob);
+   cfdata->gui.disable_list = eina_list_append(cfdata->gui.disable_list, ob);
    cfdata->gui.c1 = ob;
    e_widget_on_change_hook_set(ob, _color1_cb_change, cfdata);
    e_widget_size_min_get(ob, &mw, &mh);
@@ -537,13 +536,13 @@ _adv_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfda
      (ot, ob, 0, 1, 1, 1, 0, 0, 0, 0, 1.0, 0.0, mw, mh, 9999, 9999);
 
    ob = e_widget_label_add(evas, _("Outline:"));
-   cfdata->gui.disable_list = eina_list_append(cfdata->disable_list, ob);
+   cfdata->gui.disable_list = eina_list_append(cfdata->gui.disable_list, ob);
    e_widget_size_min_get(ob, &mw, &mh);
    e_widget_frametable_object_append_full
      (ot, ob, 0, 2, 1, 1, 0, 0, 0, 0, 1.0, 0.0, mw, mh, 9999, 9999);
 
    ob = e_widget_color_well_add(evas, cfdata->color2, 1);
-   cfdata->gui.disable_list = eina_list_append(cfdata->disable_list, ob);
+   cfdata->gui.disable_list = eina_list_append(cfdata->gui.disable_list, ob);
    cfdata->gui.c2 = ob;
    e_widget_on_change_hook_set(ob, _color2_cb_change, cfdata);
    e_widget_size_min_get(ob, &mw, &mh);
@@ -553,13 +552,13 @@ _adv_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfda
      (ot, ob, 0, 2, 1, 1, 0, 0, 0, 0, 1.0, 0.0, mw, mh, 9999, 9999);
 
    ob = e_widget_label_add(evas, _("Shadow:"));
-   cfdata->gui.disable_list = eina_list_append(cfdata->disable_list, ob);
+   cfdata->gui.disable_list = eina_list_append(cfdata->gui.disable_list, ob);
    e_widget_size_min_get(ob, &mw, &mh);
    e_widget_frametable_object_append_full
      (ot, ob, 0, 3, 1, 1, 0, 0, 0, 0, 1.0, 0.0, mw, mh, 9999, 9999);
 
    ob = e_widget_color_well_add(evas, cfdata->color3, 1);
-   cfdata->gui.disable_list = eina_list_append(cfdata->disable_list, ob);
+   cfdata->gui.disable_list = eina_list_append(cfdata->gui.disable_list, ob);
    cfdata->gui.c3 = ob;
    e_widget_on_change_hook_set(ob, _color3_cb_change, cfdata);
    e_widget_size_min_get(ob, &mw, &mh);
@@ -570,12 +569,12 @@ _adv_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfda
 
    ob = e_widget_button_add
      (evas, _("Defaults"), NULL, _button_cb, cfdata, NULL);
-   cfdata->gui.disable_list = eina_list_append(cfdata->disable_list, ob);
+   cfdata->gui.disable_list = eina_list_append(cfdata->gui.disable_list, ob);
    cfdata->gui.button = ob;
    e_widget_frametable_object_append_full
      (ot, ob, 0, 4, 2, 1, 0, 0, 0, 0, 1.0, 0.0, mw, mh, 9999, 9999);
 
-   _custom_color_cb_change(cfdata, NULL);
+//   _custom_color_cb_change(cfdata, NULL);
 
    e_dialog_resizable_set(cfd->dia, 1);
    return o;
