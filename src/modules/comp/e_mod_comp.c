@@ -748,8 +748,6 @@ _e_mod_comp_cb_update(E_Comp *c)
                   printf("kill comp %x\n", cw->win);
                   c->nocomp = 1;
                   c->render_overflow = 1;
-//                  ecore_x_composite_render_window_disable(c->win);
-//                  ecore_x_window_shape_rectangle_set(c->win, -2, -2, 1, 1);
                   ecore_x_window_hide(c->win);
                   cw->nocomp = 1;
                   if (cw->redirected)
@@ -759,11 +757,6 @@ _e_mod_comp_cb_update(E_Comp *c)
                        cw->redirected = 0;
                        cw->pw = 0;
                        cw->ph = 0;
-                    }
-                  if (cw->native)
-                    {
-                       evas_object_image_native_surface_set(cw->obj, NULL);
-                       cw->native = 0;
                     }
                   if (cw->pixmap)
                     {
@@ -818,9 +811,7 @@ _e_mod_comp_cb_update(E_Comp *c)
              printf("COMP!\n");
              c->nocomp = 0;
              c->render_overflow = 1;
-//             ecore_x_window_shape_rectangle_set(c->win, 0, 0, c->man->w, c->man->h);
              ecore_x_window_show(c->win);
-//             c->win = ecore_x_composite_render_window_enable(c->man->root);
              EINA_INLIST_FOREACH(c->wins, cw)
                {
                   if (!cw->nocomp) continue;
