@@ -2,6 +2,7 @@
 
 /* TODO check if trackerd is running and version */
 
+
 typedef struct _Plugin Plugin;
 
 struct _Plugin
@@ -21,6 +22,13 @@ static E_DBus_Connection *conn = NULL;
 static Eina_List *plugins = NULL;
 static int _prio = 5;
 static int active = 0;
+
+static DBusPendingCall *pending_get_name_owner = NULL;
+static E_DBus_Signal_Handler *cb_name_owner_changed = NULL;
+static const char bus_name[] = "org.freedesktop.Tracker";
+static const char fdo_bus_name[] = "org.freedesktop.DBus";
+static const char fdo_interface[] = "org.freedesktop.DBus";
+static const char fdo_path[] = "/org/freedesktop/DBus";
 
 static Evry_Plugin *
 _begin(Evry_Plugin *plugin, const Evry_Item *it)
@@ -88,13 +96,13 @@ _item_id(const char *uri)
 {
    const char *s1, *s2, *s3;
    s1 = s2 = s3 = uri;
-   
+
    while (s1 && ++s1 && (s1 = strchr(s1, '/')))
      {
 	s3 = s2;
 	s2 = s1;
      }
-   
+
    return s3;
 }
 
@@ -185,7 +193,7 @@ _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
      {
 	_cleanup(EVRY_PLUGIN(p));
 	active = 0;
-	printf("Error: %s - %s\n", error->name, error->message);
+	ERR("%s - %s\n", error->name, error->message);
 	return;
      }
 
@@ -268,136 +276,91 @@ _dbus_cb_reply(void *data, DBusMessage *msg, DBusError *error)
    evry_plugin_async_update(EVRY_PLUGIN(p), EVRY_ASYNC_UPDATE_ADD);
 }
 
-static void
-_dbus_cb_version(void *data, DBusMessage *msg, DBusError *error)
-{
-   DBusMessageIter iter;
-   int version = 0;
-
-   if (dbus_error_is_set(error))
-     {
-	printf("Error: %s - %s\n", error->name, error->message);
-	return;
-     }
-
-   dbus_message_iter_init(msg, &iter);
-
-   if (dbus_message_iter_get_arg_type(&iter) == DBUS_TYPE_INT32)
-     dbus_message_iter_get_basic(&iter, &version);
-
-   printf("tracker version %d\n", version);
-   
-   if (version < 690)
-     active = 0;
-   else
-     active = 2;
-}
-
-static void
-_get_version(void)
-{
-   DBusMessage *msg;
-
-   msg = dbus_message_new_method_call("org.freedesktop.Tracker",
-				      "/org/freedesktop/Tracker",
-				      "org.freedesktop.Tracker",
-				      "GetVersion");
-
-   e_dbus_message_send(conn, msg, _dbus_cb_version, -1, NULL);
-   dbus_message_unref(msg);
-
-   active = 1;
-}
-
 static int
 _fetch(Evry_Plugin *plugin, const char *input)
 {
-   PLUGIN(p, plugin);
-
-   DBusMessage *msg;
-   int live_query_id = 0;
-   int max_hits = p->max_hits;
-   int offset = 0;
-   int sort_descending = 1;
-   int sort_by_service = 0;
-   int sort_by_access = 0;
-   char *search_text;
-   char *fields[2];
-   char *keywords[1];
-   char *sort_fields[1];
-   fields[0] = "File:Mime";
-   fields[1] = "File:Accessed";
-   keywords[0] = "";
-   sort_fields[0] = "File:Accessed";
-   char **_fields = fields;
-   char **_keywords = keywords;
-   char **_sort_fields = sort_fields;
-
-   if (p->input)
-     eina_stringshare_del(p->input);
-   p->input = NULL;
-
-   if (!conn)
+   if (active)
      {
-	_cleanup(plugin);
-	return 0;
+	PLUGIN(p, plugin);
+
+	DBusMessage *msg;
+	int live_query_id = 0;
+	int max_hits = p->max_hits;
+	int offset = 0;
+	int sort_descending = 1;
+	int sort_by_service = 0;
+	int sort_by_access = 0;
+	char *search_text = NULL;
+	char *fields[2];
+	char *keywords[1];
+	char *sort_fields[1];
+	fields[0] = "File:Mime";
+	fields[1] = "File:Accessed";
+	keywords[0] = "";
+	sort_fields[0] = "File:Accessed";
+	char **_fields = fields;
+	char **_keywords = keywords;
+	char **_sort_fields = sort_fields;
+
+	if (p->input)
+	  eina_stringshare_del(p->input);
+	p->input = NULL;
+
+	if (!conn)
+	  {
+	     _cleanup(plugin);
+	     return 0;
+	  }
+
+	if (input && (strlen(input) > 2))
+	  {
+	     p->input = eina_stringshare_add(input);
+	     search_text = malloc(sizeof(char) * strlen(input) + 1);
+	     sprintf(search_text, "%s", input);
+	     max_hits = 100;
+	  }
+	else if (!input && !plugin->begin && plugin->type == type_object)
+	  {
+	     sort_by_access = 1;
+	     search_text = "";
+	  }
+	else
+	  {
+	     _cleanup(plugin);
+	     return 0;
+	  }
+
+	p->active++;
+
+	msg = dbus_message_new_method_call(bus_name,
+					   "/org/freedesktop/Tracker/Search",
+					   "org.freedesktop.Tracker.Search",
+					   "Query");
+	dbus_message_append_args(msg,
+				 DBUS_TYPE_INT32,   &live_query_id,
+				 DBUS_TYPE_STRING,  &p->service,
+				 DBUS_TYPE_ARRAY,   DBUS_TYPE_STRING,
+				 &_fields, 2,
+				 DBUS_TYPE_STRING,  &search_text,
+				 DBUS_TYPE_ARRAY,   DBUS_TYPE_STRING,
+				 &_keywords, 0,
+				 DBUS_TYPE_STRING,  &p->condition,
+				 DBUS_TYPE_BOOLEAN, &sort_by_service,
+				 DBUS_TYPE_ARRAY,   DBUS_TYPE_STRING,
+				 &_sort_fields, sort_by_access,
+				 DBUS_TYPE_BOOLEAN, &sort_descending,
+				 DBUS_TYPE_INT32,   &offset,
+				 DBUS_TYPE_INT32,   &max_hits,
+				 DBUS_TYPE_INVALID);
+
+	e_dbus_message_send(conn, msg, _dbus_cb_reply, -1, p);
+	dbus_message_unref(msg);
+
+	if (search_text)
+	  free(search_text);
+
+	if (p->files) return 1;
      }
-
-   if (input && (strlen(input) > 2))
-     {
-	p->input = eina_stringshare_add(input);
-	search_text = malloc(sizeof(char) * strlen(input) + 1);
-	sprintf(search_text, "%s", input);
-	max_hits = 100;
-     }
-   else if (!input && !plugin->begin && plugin->type == type_object)
-     {
-	sort_by_access = 1;
-	search_text = "";
-     }
-   else
-     {
-	_cleanup(plugin);
-	return 0;
-     }
-
-
-   if (!active)
-     _get_version();
-
-   if (active != 2)
-     return 0;
-   
-   p->active++;
-
-   msg = dbus_message_new_method_call("org.freedesktop.Tracker",
-				      "/org/freedesktop/Tracker/Search",
-				      "org.freedesktop.Tracker.Search",
-				      "Query");
-   dbus_message_append_args(msg,
-			    DBUS_TYPE_INT32,   &live_query_id,
-			    DBUS_TYPE_STRING,  &p->service,
-			    DBUS_TYPE_ARRAY,   DBUS_TYPE_STRING,
-			    &_fields, 2,
-			    DBUS_TYPE_STRING,  &search_text,
-			    DBUS_TYPE_ARRAY,   DBUS_TYPE_STRING,
-			    &_keywords, 0,
-			    DBUS_TYPE_STRING,  &p->condition,
-			    DBUS_TYPE_BOOLEAN, &sort_by_service,
-			    DBUS_TYPE_ARRAY,   DBUS_TYPE_STRING,
-			    &_sort_fields, sort_by_access,
-			    DBUS_TYPE_BOOLEAN, &sort_descending,
-			    DBUS_TYPE_INT32,   &offset,
-			    DBUS_TYPE_INT32,   &max_hits,
-			    DBUS_TYPE_INVALID);
-
-   e_dbus_message_send(conn, msg, _dbus_cb_reply, -1, p);
-   dbus_message_unref(msg);
-
-   if (input && (strlen(input) > 2))
-     free(search_text);
-
-   if (p->files) return 1;
 
    return 0;
 }
@@ -434,14 +397,110 @@ _plugin_new(const char *name, int type, char *service, int max_hits, int begin)
      evry_plugin_new(EVRY_PLUGIN(p), name, type, "APPLICATION", "FILE", 1, NULL, NULL,
 		   _begin, _cleanup, _fetch,
 		   NULL, _icon_get, NULL, NULL);
-   
+
    plugins = eina_list_append(plugins, p);
 
    evry_plugin_register(EVRY_PLUGIN(p), _prio++);
 }
 
 
+static void
+_dbus_cb_version(void *data, DBusMessage *msg, DBusError *error)
+{
+   DBusMessageIter iter;
+   int version = 0;
 
+   if (dbus_error_is_set(error))
+     {
+	ERR("%s - %s\n", error->name, error->message);
+	return;
+     }
+
+   dbus_message_iter_init(msg, &iter);
+
+   if (dbus_message_iter_get_arg_type(&iter) == DBUS_TYPE_INT32)
+     dbus_message_iter_get_basic(&iter, &version);
+   else
+     return;
+
+   if (version >= 690)
+     active = EINA_TRUE;
+   else
+     {
+	ERR("tracker version 0.69 required, is: %d\n", version);
+	active = EINA_FALSE;
+     }
+}
+
+static void
+_get_version(void)
+{
+   DBusMessage *msg;
+
+   msg = dbus_message_new_method_call(bus_name,
+				      "/org/freedesktop/Tracker",
+				      bus_name,
+				      "GetVersion");
+
+   e_dbus_message_send(conn, msg, _dbus_cb_version, -1, NULL);
+   dbus_message_unref(msg);
+}
+
+static void
+_name_owner_changed(void *data __UNUSED__, DBusMessage *msg)
+{
+   DBusError err;
+   const char *name, *from, *to;
+
+   dbus_error_init(&err);
+   if (!dbus_message_get_args(msg, &err,
+			      DBUS_TYPE_STRING, &name,
+			      DBUS_TYPE_STRING, &from,
+			      DBUS_TYPE_STRING, &to,
+			      DBUS_TYPE_INVALID))
+     {
+	ERR("could not get NameOwnerChanged arguments: %s: %s",
+	    err.name, err.message);
+	dbus_error_free(&err);
+	return;
+     }
+
+   if (strcmp(name, bus_name) != 0)
+     return;
+
+   DBG("NameOwnerChanged from=[%s] to=[%s]", from, to);
+
+   if (to[0] == '\0')
+     active = EINA_FALSE;
+   else
+     active = EINA_TRUE;
+     /* _get_version(); */
+}
+
+static void
+_get_name_owner(void *data __UNUSED__, DBusMessage *msg, DBusError *err)
+{
+   DBusMessageIter itr;
+   int t;
+   const char *uid;
+
+   pending_get_name_owner = NULL;
+
+   if (!dbus_message_iter_init(msg, &itr))
+     return;
+
+   t = dbus_message_iter_get_arg_type(&itr);
+   if (t != DBUS_TYPE_STRING)
+     return;
+
+   dbus_message_iter_get_basic(&itr, &uid);
+
+   if (uid)
+     active = EINA_TRUE;
+     /* _get_version(); */
+
+   return;
+}
 
 static Eina_Bool
 _init(void)
@@ -449,6 +508,13 @@ _init(void)
    conn = e_dbus_bus_get(DBUS_BUS_SESSION);
 
    if (!conn) return EINA_FALSE;
+
+   cb_name_owner_changed = e_dbus_signal_handler_add
+     (conn, fdo_bus_name, fdo_path, fdo_interface, "NameOwnerChanged",
+      _name_owner_changed, NULL);
+
+   pending_get_name_owner = e_dbus_get_name_owner
+     (conn, bus_name, _get_name_owner, NULL);
 
    _plugin_new("Folders",    type_subject, "Folders", 20, 0);
    _plugin_new("Images",     type_subject, "Images", 20, 0);
@@ -458,8 +524,6 @@ _init(void)
 
    _plugin_new("Find Files", type_object,  "Files", 20, 1);
    _plugin_new("Folders",    type_object,  "Folders", 20, 0);
-   
-   _get_version();
 
    return EINA_TRUE;
 }
