@@ -26,6 +26,9 @@ static Eina_Array  *plugins = NULL;
 static E_Config_DD *conf_edd = NULL;
 static E_Config_DD *conf_item_edd = NULL;
 
+int _e_module_evry_log_dom = -1;
+
+
 EAPI Config *evry_conf = NULL;
 
 
@@ -55,6 +58,16 @@ e_modapi_init(E_Module *m)
    /* snprintf(buf, sizeof(buf), "%s/.e/e/config/%s/module.everything",
     * 	    e_user_homedir_get(), e_config_profile_get());
     * ecore_file_mkdir(buf); */
+
+   _e_module_evry_log_dom = eina_log_domain_register
+     ("e_module_everything", EINA_LOG_DEFAULT_COLOR);
+
+   if(_e_module_evry_log_dom < 0)
+     {
+	EINA_LOG_ERR
+	  ("impossible to create a log domain for everything module");
+	return NULL;
+     }
 
    _config_init();
    evry_history_init();

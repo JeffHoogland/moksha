@@ -7,6 +7,21 @@
 #define EVRY_ASYNC_UPDATE_ADD 0
 #define EVRY_ASYNC_UPDATE_CLEAR 1
 
+extern int _e_module_evry_log_dom;
+
+#ifndef EINA_LOG_DEFAULT_COLOR
+#define EINA_LOG_DEFAULT_COLOR EINA_COLOR_CYAN
+#endif
+
+#undef DBG
+#undef INF
+#undef WRN
+#undef ERR
+
+#define DBG(...) EINA_LOG_DOM_DBG(_e_module_evry_log_dom , __VA_ARGS__)
+#define INF(...) EINA_LOG_DOM_INFO(_e_module_evry_log_dom , __VA_ARGS__)
+#define WRN(...) EINA_LOG_DOM_WARN(_e_module_evry_log_dom , __VA_ARGS__)
+#define ERR(...) EINA_LOG_DOM_ERR(_e_module_evry_log_dom , __VA_ARGS__)
 
 typedef struct _Evry_Plugin    Evry_Plugin;
 typedef struct _Evry_Item      Evry_Item;
@@ -47,6 +62,7 @@ typedef struct _Plugin_Config  Plugin_Config;
 #define EVRY_PLUGIN_FREE(_p)			\
   evry_plugin_free(EVRY_PLUGIN(_p), 0);		\
   E_FREE(_p);
+
 
 struct _Plugin_Config
 {
@@ -93,7 +109,7 @@ struct _Evry_Item
   /* if transient item is removed from history
    * on shutdown */
   Eina_Bool transient;
-  
+
   /* do not set by plugin! */
   Evry_Item   *next;
   Evry_Plugin *plugin;
@@ -176,7 +192,7 @@ struct _Evry_State
   Evry_Item   *cur_item;
 
   Eina_List   *sel_items;
-  
+
   /* this is for the case when the current plugin was not selected
      manually and a higher priority (async) plugin retrieves
      candidates, the higher priority plugin is made current */
