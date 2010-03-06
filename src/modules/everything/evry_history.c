@@ -214,7 +214,7 @@ evry_history_add(Eina_Hash *hist, Evry_State *s, const char *ctxt)
    if (!it) return;
 
    id = (it->id ? it->id : it->label);
-   
+
    he = eina_hash_find(hist, id);
    if (!he)
      {
@@ -264,7 +264,7 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, c
    Eina_List *l;
 
    it->usage = 0.0;
-   
+
    if (!(he = eina_hash_find(hist, (it->id ? it->id : it->label))))
      return 0;
    

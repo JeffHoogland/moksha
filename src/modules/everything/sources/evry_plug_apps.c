@@ -780,6 +780,7 @@ _init(void)
    evry_action_register(act4, 4);
    evry_action_register(act5, 5);
 
+   /*
    Eina_List *l, *ll;
    const char *file, *name;
    History_Entry *he;
@@ -787,7 +788,7 @@ _init(void)
    name = EVRY_PLUGIN(p1)->name;
    double t;
    int found = 0;
-   /*
+
    evry_history_load();
    
    EINA_LIST_FOREACH(e_exehist_list_get(), l, file)
