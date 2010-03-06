@@ -257,9 +257,22 @@ _advanced_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    otb = e_widget_toolbook_add(evas, (48 * e_scale), (48 * e_scale));
 
    ol = e_widget_list_add(evas, 0, 0);
-   ow = e_widget_check_add(evas, _("Show iconified windows"), 
+   oc = e_widget_check_add(evas, _("Show iconified windows"), 
                            &(cfdata->list_show_iconified));
+   e_widget_list_object_append(ol, oc, 1, 1, 0.5);
+   ow = e_widget_check_add(evas, _("Show iconified windows from other desks"), 
+                           &(cfdata->list_show_other_desk_iconified));
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
+   iconified_list = eina_list_append(iconified_list, ow);
+   e_widget_disabled_set(ow, !cfdata->list_show_iconified);
+
+   ow = e_widget_check_add(evas, _("Show iconified windows from other screens"), 
+                           &(cfdata->list_show_other_screen_iconified));
+   e_widget_list_object_append(ol, ow, 1, 1, 0.5);
+   iconified_list = eina_list_append(iconified_list, ow);
+   e_widget_disabled_set(ow, !cfdata->list_show_iconified);
+   e_widget_on_change_hook_set(oc, _cb_disable_check_list, iconified_list);
+
    ow = e_widget_check_add(evas, _("Show windows from other desks"), 
                            &(cfdata->list_show_other_desk_windows));
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
