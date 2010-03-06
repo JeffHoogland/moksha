@@ -796,7 +796,8 @@ _e_mod_comp_cb_update(E_Comp *c)
                   if (cw->counter)
                     {
                        printf("nosync\n");
-                       ecore_x_e_comp_sync_cancel_send(cw->bd->client.win);
+                       if (cw->bd)
+                         ecore_x_e_comp_sync_cancel_send(cw->bd->client.win);
                     }
 //                  ecore_x_window_hide(cw->win);
 //                  ecore_x_window_show(cw->win);
@@ -857,7 +858,10 @@ _e_mod_comp_cb_update(E_Comp *c)
                     }
                   _e_mod_comp_win_render_queue(cw);
                   if (cw->counter)
-                    ecore_x_e_comp_sync_begin_send(cw->bd->client.win);
+                    {
+                       if (cw->bd)
+                         ecore_x_e_comp_sync_begin_send(cw->bd->client.win);
+                    }
                }
           }
      }
@@ -996,7 +1000,8 @@ _e_mod_comp_object_del(void *data, void *obj)
      {
         eina_hash_del(borders, e_util_winid_str_get(cw->bd->client.win), cw);
         cw->bd = NULL;
-        cw->counter = 0;
+// hmm - lockup?
+//        cw->counter = 0;
      }
    else if (obj == cw->pop) cw->pop = NULL;
    else if (obj == cw->menu) cw->menu = NULL;
