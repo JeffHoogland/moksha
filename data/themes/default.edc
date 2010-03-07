@@ -21874,6 +21874,7 @@ group { name: "e/toolbar/default/base";
 	 image: "bt_sm_hilight.png" COMP;
 	 image: "ilist_1.png" COMP;
 	 image: "ilist_item_shadow.png" COMP;
+	 image: "icon_active.png" COMP;
       }
       parts {
 	 part {
@@ -21894,7 +21895,7 @@ group { name: "e/toolbar/default/base";
 		  relative: 0.0  1.0;
 		  offset:   4   -5;
 	       }
-	       image.normal: "icon_favorites.png";
+	       image.normal: "icon_active.png";
 	    }
 	    description {
 	       state:    "visible" 0.0;
