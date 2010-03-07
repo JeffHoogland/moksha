@@ -12705,7 +12705,7 @@ collections { /* begin the collection of edje groups that are in this file */
 /////////////////////////////////////////////////////////////////////////////
    /*** MOD: MIXER ***/
 
-// TOFO: Add code for making sound circles fade between states.
+// TODO: Add code for making sound circles fade between states.
 
    group { name: "e/modules/mixer/main";
       images {
