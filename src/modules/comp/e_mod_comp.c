@@ -1142,10 +1142,10 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
      (cw->up, E_UPDATE_POLICY_HALF_WIDTH_OR_MORE_ROUND_UP_TO_FULL_WIDTH);
    if (((!cw->input_only) && (!cw->invalid)) && (cw->override))
      {
-        printf("^^^^ redirect3 %x\n", cw->win);
+//        printf("^^^^ redirect3 %x\n", cw->win);
         cw->redirected = 1;
 // we redirect all subwindows anyway
-        ecore_x_composite_redirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
+//        ecore_x_composite_redirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
         cw->dmg_updates = 0;
      }
    DBG("  [0x%x] add\n", cw->win);
@@ -1189,9 +1189,9 @@ _e_mod_comp_win_del(E_Comp_Win *cw)
      }
    if (cw->redirected)
      {
-        printf("^^^^ undirect4 %x\n", cw->win);
+//        printf("^^^^ undirect4 %x\n", cw->win);
 // we redirect all subwindows anyway
-        ecore_x_composite_unredirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
+//        ecore_x_composite_unredirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
         cw->redirected = 0;
         cw->pw = 0;
         cw->ph = 0;
@@ -1987,7 +1987,7 @@ _e_mod_comp_add(E_Manager *man)
    
    c->ee_win = ecore_evas_software_x11_window_get(c->ee);
    ecore_x_screen_is_composited_set(c->man->num, c->ee_win);
-   ecore_x_composite_unredirect_subwindows
+   ecore_x_composite_redirect_subwindows
      (c->man->root, ECORE_X_COMPOSITE_UPDATE_MANUAL);
 
    wins = ecore_x_window_children_get(c->man->root, &num);
