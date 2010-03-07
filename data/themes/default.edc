@@ -6887,8 +6887,6 @@ collections { /* begin the collection of edje groups that are in this file */
 /////////////////////////////////////////////////////////////////////////////
    /*** MOD: CONNMAN ***/
 
-// FIXME: do proper gadget and artwork
-
 // ICONS: receive the following signals, all with source being "e"
 //    e,favorite,{yes,no}
 //    e,auto_connect,{yes,no}
@@ -10301,7 +10299,6 @@ collections { /* begin the collection of edje groups that are in this file */
    group { name: "e/modules/ibox/icon";
       alias: "e/modules/ibar/icon";
       data {
-	 // FIXME: Explain these a little better
 	 item: "raise_on_hilight" "0"; // 1 or 0 if u want an icon holder to raise when the mouse (or keyboard) hilights it
 	 //	 item: "item_list" "item item2 item3";
       }
@@ -10472,9 +10469,6 @@ collections { /* begin the collection of edje groups that are in this file */
 	 }
       }
    }
-
-// FIXME: Use urgent effect from Pager.
-// FIXME: Something fishy is going on here. When Urgent is set, the icon_overlay vanishes. Happens in bling too.
 
    group { name: "e/modules/ibox/icon_overlay";
       alias: "e/modules/ibar/icon_overlay";
@@ -12711,7 +12705,7 @@ collections { /* begin the collection of edje groups that are in this file */
 /////////////////////////////////////////////////////////////////////////////
    /*** MOD: MIXER ***/
 
-// FIXME: Add code for making sound circles fade between states.
+// TOFO: Add code for making sound circles fade between states.
 
    group { name: "e/modules/mixer/main";
       images {
