@@ -48,6 +48,172 @@ spectra {
    }
 }
 
+color_classes {
+   color_class {
+      name: "border_top";
+      color: 255 255 255 255;
+   }
+   color_class {
+      name: "border_top_hilight";
+      color: 255 255 255 255;
+   }
+   color_class {
+      name: "border_bottom";
+      color: 255 255 255 255;
+   }
+   color_class {
+      name: "border_title";
+      color: 0 0 0 255;
+   }
+   color_class {
+      name: "border_title_active";
+      color: 224 224 224 255;
+      color3: 0 0 0 64;
+   }
+   color_class {
+      name: "menu_base";
+      color: 255 255 255 255;
+   }
+   color_class {
+      name: "menu_title";
+      color: 224 224 224 255;
+      color3: 0 0 0 64;
+   }
+   color_class {
+      name: "menu_title_active";
+      color: 224 224 224 255;
+      color3: 0 0 0 64;
+   }
+   color_class {
+      name: "menu_item";
+      color: 0 0 0 255;
+      color3: 0 0 0 0;
+   }
+   color_class {
+      name: "menu_item_active";
+      color: 255 255 255 255;
+      color3: 0 0 0 64;
+   }
+   color_class {
+      name: "menu_item_disabled";
+      color: 110 110 110 255;
+      color3: 0 0 0 0;
+   }
+   color_class {
+      name: "shelf_base";
+      color: 255 255 255 255;
+   }
+   // this seems totaly bogus, should be per module or really used as
+   // an unique color for all modules!
+   //    color_class {
+   //       name: "module_label";
+   //       color: 0 0 0 0;
+   //    }
+   color_class {
+      name: "winlist_label";
+      color: 0 0 0 255;
+   }
+   color_class {
+      name: "winlist_item";
+      color: 0 0 0 255;
+      color3: 0 0 0 0;
+   }
+   color_class {
+      name: "winlist_item_active";
+      color: 224 224 224 255;
+      color3: 0 0 0 64;
+   }
+   color_class {
+      name: "button_text";
+      color: 224 224 224 255;
+      color3: 0 0 0 64;
+   }
+   color_class {
+      name: "button_text_disabled";
+      color: 0 0 0 128;
+      color3: 0 0 0 0;
+   }
+   color_class {
+      name: "fileman_base";
+      color: 255 255 255 255;
+   }
+   color_class {
+      name: "ilist_item";
+      color: 0 0 0 255;
+      color3: 0 0 0 0;
+   }
+   color_class {
+      name: "ilist_item_selected";
+      color: 255 255 255 255;
+      color3: 0 0 0 64;
+   }
+   color_class {
+      name: "ilist_item_header";
+      color: 224 224 224 255;
+      color3: 0 0 0 32;
+   }
+   color_class {
+      name: "dialog_base";
+      color: 255 255 255 255;
+   }
+   color_class {
+      name: "configure_base";
+      color: 255 255 255 255;
+   }
+   color_class {
+      name: "move_text";
+      color: 0 0 0 255;
+   }
+   color_class {
+      name: "resize_text";
+      color: 0 0 0 255;
+   }
+   color_class {
+      name: "check_text";
+      color: 0 0 0 255;
+   }
+   color_class {
+      name: "check_text_disabled";
+      color: 0 0 0 128;
+   }
+   color_class {
+      name: "radio_text";
+      color: 0 0 0 255;
+   }
+   color_class {
+      name: "radio_text_disabled";
+      color: 0 0 0 128;
+   }
+   color_class {
+      name: "entry_text";
+      color: 0 0 0 255;
+   }
+   color_class {
+      name: "entry_text_disabled";
+      color: 164 164 164 255;
+   }
+   color_class {
+      name: "slider_text";
+      color: 0 0 0 255;
+   }
+   color_class {
+      name: "slider_text_disabled";
+      color: 0 0 0 128;
+   }
+   color_class {
+      name: "frame_base";
+      color: 255 255 255 255;
+   }
+   color_class {
+      name: "label_text";
+      color: 0 0 0 255;
+   }
+   color_class {
+      name: "label_text_disabled";
+      color: 0 0 0 128;
+   }
+}
+
 /*
  * this section defined all the theme elements (a collection of groupings of
  * parts (images, text, rects etc.))
@@ -527,7 +693,6 @@ collections { /* begin the collection of edje groups that are in this file */
 		  offset: -8 2;
 		  to_x: "title_base";
 	       }
-	       color: 0 0 0 255; /* black */
 	       color_class: "border_title"; /* give it a color class so people
 					     * can re-color it if they want */
 	       text {
@@ -844,9 +1009,7 @@ collections { /* begin the collection of edje groups that are in this file */
 		  relative: 1.0 1.0;
 		  offset: 0 0;
 	       }
-	       color: 224 224 224 255;
-	       color3: 0 0 0 64;
-	       color_class: "border_title";
+	       color_class: "border_title_active";
 	       text {
 		  text_source: "e.text.title"; /* and here is the magic. tell
 						* the text to be sourced from
@@ -1698,7 +1861,6 @@ collections { /* begin the collection of edje groups that are in this file */
 		  offset: -8 2;
 		  to_x: "title_base";
 	       }
-	       color: 0 0 0 255;
 	       color_class: "border_title";
 	       text {
 		  font: "Sans:style=Bold";
@@ -1981,9 +2143,7 @@ collections { /* begin the collection of edje groups that are in this file */
 		  relative: 1.0 1.0;
 		  offset: 0 1;
 	       }
-	       color: 224 224 224 255;
-	       color3: 0 0 0 64;
-	       color_class: "border_title";
+	       color_class: "border_title_active";
 	       text {
 		  text_source: "e.text.title";
                   font: "Sans:style=Bold";
@@ -2755,7 +2915,6 @@ collections { /* begin the collection of edje groups that are in this file */
 		  offset: -8 2;
 		  to_x: "title_base";
 	       }
-	       color: 0 0 0 255;
 	       color_class: "border_title";
 	       text {
 		  font: "Sans:style=Bold";
@@ -3038,9 +3197,7 @@ collections { /* begin the collection of edje groups that are in this file */
 		  relative: 1.0 1.0;
 		  offset: 0 1;
 	       }
-	       color: 224 224 224 255;
-	       color3: 0 0 0 64;
-	       color_class: "border_title";
+	       color_class: "border_title_active";
 	       text {
 		  text_source: "e.text.title";
                   font: "Sans:style=Bold";
@@ -3632,7 +3789,6 @@ collections { /* begin the collection of edje groups that are in this file */
 		  offset: -8 2;
 		  to_x: "title_base";
 	       }
-	       color: 0 0 0 255;
 	       color_class: "border_title";
 	       text {
 		  font: "Sans:style=Bold";
@@ -3813,9 +3969,7 @@ collections { /* begin the collection of edje groups that are in this file */
 		  relative: 1.0 1.0;
 		  offset: 0 1;
 	       }
-	       color: 224 224 224 255;
-	       color3: 0 0 0 64;
-	       color_class: "border_title";
+	       color_class: "border_title_active";
 	       text {
 		  text_source: "e.text.title";
                   font: "Sans:style=Bold";
@@ -4533,7 +4687,6 @@ collections { /* begin the collection of edje groups that are in this file */
 		  offset: -8 2;
 		  to_x: "title_base";
 	       }
-	       color: 0 0 0 255;
 	       color_class: "border_title";
 	       text {
 		  font: "Sans:style=Bold";
@@ -4714,9 +4867,7 @@ collections { /* begin the collection of edje groups that are in this file */
 		  relative: 1.0 1.0;
 		  offset: 0 1;
 	       }
-	       color: 224 224 224 255;
-	       color3: 0 0 0 64;
-	       color_class: "border_title";
+	       color_class: "border_title_active";
 	       text {
 		  text_source: "e.text.title";
                   font: "Sans:style=Bold";
@@ -5789,8 +5940,6 @@ collections { /* begin the collection of edje groups that are in this file */
 		  relative: 1.0 0.0;
 		  offset: -1 0;
 	       }
-	       color: 224 224 224 255;
-	       color3: 0 0 0 64;
 	       color_class: "menu_title";
 	       text {
 		  text_source: "e.text.title";
@@ -6047,8 +6196,6 @@ collections { /* begin the collection of edje groups that are in this file */
 		  relative: 1.0 1.0;
 		  offset: 3 1;
 	       }
-	       color: 0 0 0 255;
-	       color3: 0 0 0 0;
 	       color_class: "menu_item";
 	       text {
 		  font: "Sans";
@@ -6060,14 +6207,11 @@ collections { /* begin the collection of edje groups that are in this file */
 	    }
 	    description { state: "selected" 0.0;
 	       inherit: "default" 0.0;
-	       color: 255 255 255 255;
-	       color3: 0 0 0 64;
-	       color_class: "menu_item";
+	       color_class: "menu_item_active";
 	    }
 	    description { state: "disabled" 0.0;
 	       inherit: "default" 0.0;
-	       color: 110 110 110 255;
-	       color3: 0 0 0 0;
+	       color_class: "menu_item_disabled";
 	    }
 	 }
       }
@@ -11690,8 +11834,7 @@ collections { /* begin the collection of edje groups that are in this file */
 		  offset:   -17 16;
 		  to_y: "e.swallow.icon";
 	       }
-	       color: 0 0 0 255;
-	       color_class: "winlist_label";
+ 	       color_class: "winlist_label";
 	       text {
 		  text: "Title goes here";
 		  font: "Sans:style=Bold";
@@ -11866,8 +12009,6 @@ collections { /* begin the collection of edje groups that are in this file */
 		  offset: -4 -4;
 		  to_x: "type";
 	       }
-	       color: 0 0 0 255;
-	       color3: 0 0 0 0;
 	       color_class: "winlist_item";
 	       text {
 		  font: "Sans";
@@ -11879,8 +12020,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	    }
 	    description { state: "selected" 0.0;
 	       inherit: "default" 0.0;
-	       color: 224 224 224 255;
-	       color3: 0 0 0 64;
+	       color_class: "winlist_item_active";
 	    }
 	 }
 	 part { name: "e.event.winlist.item";
@@ -12213,8 +12353,6 @@ collections { /* begin the collection of edje groups that are in this file */
 		  to_x: "e.swallow.icons";
 	       }
 	       rel2.offset: -3 -2;
-	       color: 0 0 0 255;
-	       color3: 0 0 0 0;
 	       color_class: "menu_item";
 	       text {
 		  font: "Sans";
@@ -12226,9 +12364,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	    }
 	    description { state: "selected" 0.0;
 	       inherit: "default" 0.0;
-	       color: 255 255 255 255;
-	       color3: 0 0 0 64;
-	       color_class: "menu_item";
+	       color_class: "menu_item_active";
 	    }
 	 }
 	 part {
@@ -12413,8 +12549,6 @@ collections { /* begin the collection of edje groups that are in this file */
 		  offset:   -4   -4;
 		  to:     "button_image";
 	       }
-	       color: 224 224 224 255;
-	       color3: 0 0 0 64;
 	       color_class: "button_text";
 	       text {
 		  text:     "Cancel";
@@ -12427,8 +12561,6 @@ collections { /* begin the collection of edje groups that are in this file */
 	    }
 	    description { state: "disabled" 0.0;
 	       inherit: "default" 0.0;
-	       color: 0 0 0 128;
-	       color3: 0 0 0 0;
 	       color_class: "button_text_disabled";
 	    }
 	 }
@@ -12559,8 +12691,6 @@ collections { /* begin the collection of edje groups that are in this file */
 		  offset:   -4   -4;
 		  to:     "button_image";
 	       }
-	       color: 224 224 224 255;
-	       color3: 0 0 0 64;
 	       color_class: "button_text";
 	       text {
 		  font:     "Sans";
@@ -12572,8 +12702,6 @@ collections { /* begin the collection of edje groups that are in this file */
 	    }
 	    description { state: "disabled" 0.0;
 	       inherit: "default" 0.0;
-	       color: 0 0 0 128;
-	       color3: 0 0 0 0;
 	       color_class: "button_text_disabled";
 	    }
 	 }
@@ -16878,8 +17006,6 @@ collections { /* begin the collection of edje groups that are in this file */
 		  relative: 1.0  1.0;
 		  offset:   -5 -5;
 	       }
-	       color: 0 0 0 255;
-	       color3: 0 0 0 0;
 	       color_class: "ilist_item";
 	       text {
 		  font: "Sans";
@@ -16891,9 +17017,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	    }
 	    description { state: "selected" 0.0;
 	       inherit: "default" 0.0;
-	       color: 224 224 224 255;
-	       color3: 0 0 0 64;
-	       color_class: "ilist_item";
+	       color_class: "ilist_item_selected";
 	    }
 	 }
          part { name: "fg1";
@@ -17400,8 +17524,6 @@ collections { /* begin the collection of edje groups that are in this file */
 		  relative: 1.0  1.0;
 		  offset:   -5 -5;
 	       }
-	       color: 0 0 0 255;
-	       color3: 0 0 0 0;
 	       color_class: "ilist_item";
 	       text {
 		  font: "Sans";
@@ -17413,9 +17535,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	    }
 	    description { state: "selected" 0.0;
 	       inherit: "default" 0.0;
-	       color: 224 224 224 255;
-	       color3: 0 0 0 64;
-	       color_class: "ilist_item";
+	       color_class: "ilist_item_selected";
 	    }
 	 }
          part { name: "fg1";
@@ -17924,8 +18044,6 @@ collections { /* begin the collection of edje groups that are in this file */
 		  relative: 1.0  1.0;
 		  offset:   -5 -5;
 	       }
-	       color: 0 0 0 255;
-	       color3: 0 0 0 0;
 	       color_class: "ilist_item";
 	       text {
 		  font: "Sans";
@@ -17937,9 +18055,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	    }
 	    description { state: "selected" 0.0;
 	       inherit: "default" 0.0;
-	       color: 224 224 224 255;
-	       color3: 0 0 0 64;
-	       color_class: "ilist_item";
+	       color_class: "ilist_item_selected";
 	    }
 	 }
          part { name: "fg1";
@@ -18447,8 +18563,6 @@ collections { /* begin the collection of edje groups that are in this file */
 		  relative: 1.0  1.0;
 		  offset:   -5 -5;
 	       }
-	       color: 0 0 0 255;
-	       color3: 0 0 0 0;
 	       color_class: "ilist_item";
 	       text {
 		  font: "Sans";
@@ -18460,9 +18574,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	    }
 	    description { state: "selected" 0.0;
 	       inherit: "default" 0.0;
-	       color: 224 224 224 255;
-	       color3: 0 0 0 64;
-	       color_class: "ilist_item";
+	       color_class: "ilist_item_selected";
 	    }
 	 }
          part { name: "fg1";
@@ -19121,7 +19233,6 @@ collections { /* begin the collection of edje groups that are in this file */
 	       rel1.offset: 2 4;
 	       rel1.relative: 1.0 0.0;
 	       rel2.offset: -5 -5;
-	       color: 0 0 0 255;
 	       color_class: "move_text";
 	       text { text: "X Y";
 		  font: "Sans";
@@ -19173,7 +19284,6 @@ collections { /* begin the collection of edje groups that are in this file */
 	       rel1.offset: 2 4;
 	       rel1.relative: 1.0 0.0;
 	       rel2.offset: -5 -5;
-	       color: 0 0 0 255;
 	       color_class: "resize_text";
 	       text { text: "WxH";
 		  font: "Sans";
@@ -19509,7 +19619,6 @@ group { name: "e/toolbar/default/base";
 		  relative: 1.0  1.0;
 		  offset:   -2 -2;
 	       }
-	       color: 0 0 0 255;
 	       color_class: "check_text";
 	       text {
 		  font:     "Sans";
@@ -19521,7 +19630,6 @@ group { name: "e/toolbar/default/base";
 	    }
 	    description { state:    "disabled" 0.0;
 	       inherit:  "default" 0.0;
-	       color:    0   0   0 128;
 	       color_class: "check_text_disabled";
 	    }
 	 }
@@ -19699,7 +19807,6 @@ group { name: "e/toolbar/default/base";
 		  relative: 1.0  1.0;
 		  offset: -2 -2;
 	       }
-	       color: 0 0 0 255;
 	       color_class: "check_text";
 	       text {
 		  font: "Sans";
@@ -19711,7 +19818,6 @@ group { name: "e/toolbar/default/base";
 	    }
 	    description { state:    "disabled" 0.0;
 	       inherit:  "default" 0.0;
-	       color:    0   0   0 128;
 	       color_class: "check_text_disabled";
 	    }
 	 }
@@ -19856,7 +19962,6 @@ group { name: "e/toolbar/default/base";
 		  relative: 1.0  1.0;
 		  offset:   -2 -2;
 	       }
-	       color: 0 0 0 255;
 	       color_class: "radio_text";
 	       text {
 		  font:     "Sans";
@@ -19868,7 +19973,6 @@ group { name: "e/toolbar/default/base";
 	    }
 	    description { state:    "disabled" 0.0;
 	       inherit:  "default" 0.0;
-	       color:    0 0 0 128;
 	       color_class: "radio_text_disabled";
 	    }
 	 }
@@ -20046,7 +20150,6 @@ group { name: "e/toolbar/default/base";
 		  relative: 1.0  1.0;
 		  offset: -2 -2;
 	       }
-	       color: 0 0 0 255;
 	       color_class: "radio_text";
 	       text {
 		  font: "Sans";
@@ -20058,7 +20161,6 @@ group { name: "e/toolbar/default/base";
 	    }
 	    description { state:    "disabled" 0.0;
 	       inherit:  "default" 0.0;
-	       color:    0   0   0 128;
 	       color_class: "radio_text_disabled";
 	    }
 	 }
@@ -20224,8 +20326,6 @@ group { name: "e/toolbar/default/base";
 		  offset:   -4   -4;
 		  to:     "button_image";
 	       }
-	       color: 224 224 224 255;
-	       color3: 0 0 0 64;
 	       color_class: "button_text";
 	       text {
 		  font:     "Sans";
@@ -20237,8 +20337,6 @@ group { name: "e/toolbar/default/base";
 	    }
 	    description { state: "disabled" 0.0;
 	       inherit: "default" 0.0;
-	       color: 0 0 0 128;
-	       color3: 0 0 0 0;
 	       color_class: "button_text_disabled";
 	    }
 	    description { state: "icon" 0.0;
@@ -21174,8 +21272,6 @@ group { name: "e/toolbar/default/base";
 		  relative: 1.0  1.0;
 		  offset:   -5 -5;
 	       }
-	       color: 0 0 0 255;
-	       color3: 0 0 0 0;
 	       color_class: "ilist_item";
 	       text {
 		  font: "Sans";
@@ -21187,9 +21283,7 @@ group { name: "e/toolbar/default/base";
 	    }
 	    description { state: "selected" 0.0;
 	       inherit: "default" 0.0;
-	       color: 224 224 224 255;
-	       color3: 0 0 0 64;
-	       color_class: "ilist_item";
+	       color_class: "ilist_item_selected";
 	    }
 	 }
 	 part {
@@ -21371,8 +21465,6 @@ group { name: "e/toolbar/default/base";
 		  relative: 1.0  1.0;
 		  offset:   -5 -5;
 	       }
-	       color: 0 0 0 255;
-	       color3: 0 0 0 0;
 	       color_class: "ilist_item";
 	       text {
 		  font: "Sans";
@@ -21384,9 +21476,7 @@ group { name: "e/toolbar/default/base";
 	    }
 	    description { state: "selected" 0.0;
 	       inherit: "default" 0.0;
-	       color: 224 224 224 255;
-	       color3: 0 0 0 64;
-	       color_class: "ilist_item";
+	       color_class: "ilist_item_selected";
 	    }
 	 }
 	 part {
@@ -21594,9 +21684,7 @@ group { name: "e/toolbar/default/base";
 		  relative: 1.0  1.0;
 		  offset:   -5 -5;
 	       }
-	       color: 224 224 224 255;
-	       color3: 0 0 0 32;
-	       color_class: "ilist_item";
+	       color_class: "ilist_item_header";
 	       text {
                   font: "Sans:style=Bold";
 		  size: 16;
@@ -21604,12 +21692,6 @@ group { name: "e/toolbar/default/base";
 		  align: 0.0 0.5;
 		  text_class: "ilist_item";
 	       }
-	    }
-	    description { state: "selected" 0.0;
-	       inherit: "default" 0.0;
-	       color: 224 224 224 255;
-	       color3: 0 0 0 64;
-	       color_class: "ilist_item";
 	    }
 	 }
          part { name: "fg1";
@@ -21772,9 +21854,7 @@ group { name: "e/toolbar/default/base";
 		  relative: 1.0  1.0;
 		  offset:   -5 -5;
 	       }
-	       color: 224 224 224 255;
-	       color3: 0 0 0 32;
-	       color_class: "ilist_item";
+	       color_class: "ilist_item_header";
 	       text {
                   font: "Sans:style=Bold";
 		  size: 16;
@@ -21782,12 +21862,6 @@ group { name: "e/toolbar/default/base";
 		  align: 0.0 0.5;
 		  text_class: "ilist_item";
 	       }
-	    }
-	    description { state: "selected" 0.0;
-	       inherit: "default" 0.0;
-	       color: 224 224 224 255;
-	       color3: 0 0 0 64;
-	       color_class: "ilist_item";
 	    }
 	 }
          part { name: "fg1";
@@ -21963,7 +22037,6 @@ group { name: "e/toolbar/default/base";
 	    mouse_events: 0;
 	    scale: 1;
 	    description { state: "default" 0.0;
-	       color: 0 0 0 255;
 	       color_class: "entry_text";
 	       text {
 		  text: "";
@@ -21976,7 +22049,7 @@ group { name: "e/toolbar/default/base";
 	    }
 	    description { state: "disabled" 0.0;
 	       inherit:  "default" 0.0;
-	       color: 164 164 164 255;
+	       color_class: "entry_text_disabled";
 	    }
 	 }
       }
@@ -22486,7 +22559,6 @@ group { name: "e/toolbar/default/base";
 		  relative: 1.0  1.0;
 		  offset:   -8  -8;
 	       }
-	       color: 0 0 0 255;
 	       color_class: "slider_text";
 	       text { text:     "0.0";
 		  font:     "Sans";
@@ -22743,7 +22815,6 @@ group { name: "e/toolbar/default/base";
 		  relative: 1.0  1.0;
 		  offset:   -8 -8;
 	       }
-	       color: 0 0 0 255;
 	       color_class: "slider_text";
 	       text { text:  "0.0";
 		  font:     "Sans";
@@ -22995,7 +23066,6 @@ group { name: "e/toolbar/default/base";
 	    description { state: "default" 0.0;
 	       rel1.offset: 2 2;
 	       rel2.offset: -3 -3;
-	       color: 0 0 0 255;
 	       color_class: "label_text";
 	       text {
 	          font: "Sans";
@@ -23007,7 +23077,6 @@ group { name: "e/toolbar/default/base";
 	    }
 	    description { state: "disabled" 0.0;
 	       inherit: "default" 0.0;
-	       color: 0 0 0 128;
                color_class: "label_text_disabled";
 	    }
 	 }
@@ -23035,7 +23104,6 @@ group { name: "e/toolbar/default/base";
 	    mouse_events: 0;
 	    scale: 1;
 	    description { state: "default" 0.0;
-	       color: 0 0 0 255;
 	       color_class: "entry_text";
 	       rel1.offset: 6 6;
 	       rel2.offset: -7 -7;
@@ -24423,8 +24491,6 @@ group { name: "e/toolbar/default/base";
 		  offset:   -4   -4;
 		  to:     "button_image";
 	       }
-	       color: 224 224 224 255;
-	       color3: 0 0 0 64;
 	       color_class: "button_text";
 	       text {
 		  text:     "Next";
@@ -24437,8 +24503,6 @@ group { name: "e/toolbar/default/base";
 	    }
 	    description { state: "disabled" 0.0;
 	       inherit: "default" 0.0;
-	       color: 0 0 0 128;
-	       color3: 0 0 0 0;
 	       color_class: "button_text_disabled";
 	    }
 	 }
@@ -24882,8 +24946,6 @@ group { name: "e/toolbar/default/base";
 		  offset:   -4   -4;
 		  to:     "button_image";
 	       }
-	       color: 224 224 224 255;
-	       color3: 0 0 0 64;
 	       color_class: "button_text";
 	       text {
 		  text:     "Close";
@@ -25107,8 +25169,6 @@ group { name: "e/toolbar/default/base";
 		  offset:   -4   -4;
 		  to:     "button_image";
 	       }
-	       color: 224 224 224 255;
-	       color3: 0 0 0 64;
 	       color_class: "button_text";
 	       text {
 		  text:     "Close";
