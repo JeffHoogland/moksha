@@ -14,10 +14,11 @@ static void _e_color_dialog_cb_csel_change(void *data, Evas_Object *obj);
  * Create a color selector dialog.
  *
  * @param con container to display on
- * @param color color to initialize to (or NULL for black). 
+ * @param color color to initialize to (or NULL for black).
+ * @param alpha_enabled if set, uses alpha and let user edit it.
  */
 E_Color_Dialog  *
-e_color_dialog_new(E_Container *con, const E_Color *color) 
+e_color_dialog_new(E_Container *con, const E_Color *color, Eina_Bool alpha_enabled)
 {
    E_Color_Dialog *dia;
    Evas_Object *o;
@@ -33,12 +34,13 @@ e_color_dialog_new(E_Container *con, const E_Color *color)
 
    if (color)
      e_color_copy(color, dia->color);
-   else
-      dia->color->a = 255;
+
+   if ((!color) || (!alpha_enabled))
+     dia->color->a = 255;
 
    e_color_copy(dia->color, dia->initial);
 
-   o = e_widget_csel_add(dia->dia->win->evas, dia->color);
+   o = e_widget_csel_add(dia->dia->win->evas, dia->color, alpha_enabled);
    evas_object_show(o);
    e_widget_size_min_get(o, &mw, &mh);
    e_dialog_content_set(dia->dia, o, 460, 260);

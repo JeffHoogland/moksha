@@ -13,7 +13,8 @@ struct _E_Widget_Data
    E_Color_Dialog *dia;
    E_Color *color;
    E_Container *con; /* container to pop a color dialog up on */
-   int show_color_dialog;
+   Eina_Bool show_color_dialog;
+   Eina_Bool alpha_enabled;
 };
 
 static void _e_wid_update(E_Widget_Data *wd);
@@ -48,7 +49,7 @@ _e_wid_signal_cb1(void *data, Evas_Object *obj, const char *emission, const char
    if (!wd->show_color_dialog || !wd->con) return;
    if (!wd->dia)
      {
-	wd->dia = e_color_dialog_new(wd->con, wd->color);
+	wd->dia = e_color_dialog_new(wd->con, wd->color, wd->alpha_enabled);
 	e_color_dialog_select_callback_set(wd->dia, _e_wid_color_select_cb, wd);
 	e_color_dialog_cancel_callback_set(wd->dia, _e_wid_color_cancel_cb, wd);
 	e_color_dialog_change_callback_set(wd->dia, _e_wid_color_change_cb, wd);
@@ -122,7 +123,7 @@ _e_wid_disable_hook(Evas_Object *obj)
  If not NULL, when clicked a color dialog will pop up.
  */
 Evas_Object *
-e_widget_color_well_add(Evas *evas, E_Color *color, int show_color_dialog)
+e_widget_color_well_add_full(Evas *evas, E_Color *color, Eina_Bool show_color_dialog, Eina_Bool alpha_enabled)
 {
    Evas_Object *obj, *o;
    E_Widget_Data *wd;
@@ -141,6 +142,7 @@ e_widget_color_well_add(Evas *evas, E_Color *color, int show_color_dialog)
    wd->con = win->container;
 
    wd->show_color_dialog = show_color_dialog;
+   wd->alpha_enabled = alpha_enabled;
 
    o = edje_object_add(evas);
    e_widget_sub_object_add(obj, o);
@@ -169,13 +171,23 @@ e_widget_color_well_add(Evas *evas, E_Color *color, int show_color_dialog)
 }
 
 /**
+ * Add a color well widget to an evas.
+ * An optional E_Container may be passed in.
+ If not NULL, when clicked a color dialog will pop up.
+ */
+Evas_Object *
+e_widget_color_well_add(Evas *evas, E_Color *color, Eina_Bool show_color_dialog)
+{
+   return e_widget_color_well_add_full
+     (evas, color, show_color_dialog, EINA_FALSE);
+}
+
+/**
  * Let the color well know that its color data has changed.
  */
 void
 e_widget_color_well_update(Evas_Object *obj)
 {
-   E_Widget_Data *wd;
-
-   wd = e_widget_data_get(obj);
+   E_Widget_Data *wd = e_widget_data_get(obj);
    _e_wid_update(wd);
 }

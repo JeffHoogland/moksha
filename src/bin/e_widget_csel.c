@@ -38,7 +38,7 @@ _e_wid_del_hook(Evas_Object *obj)
 }
 
 static void
-_e_wid_cb_radio_changed(void *data, Evas_Object *o)
+_e_wid_cb_radio_changed(void *data, Evas_Object *o __UNUSED__)
 {
    E_Widget_Data *wd = data;
 
@@ -181,8 +181,14 @@ _e_wid_cb_color_changed(void *data, Evas_Object *o)
    e_widget_change(wd->obj);
 }
 
+static void
+_e_wid_cb_alpha_changed(void *data, Evas_Object *o __UNUSED__)
+{
+   _e_wid_cb_color_changed(data, NULL);
+}
+
 Evas_Object *
-e_widget_csel_add(Evas *evas, E_Color *color)
+e_widget_csel_add(Evas *evas, E_Color *color, Eina_Bool alpha_enabled)
 {
    Evas_Object *obj, *o;
    Evas_Object *frame, *table;
@@ -253,7 +259,16 @@ e_widget_csel_add(Evas *evas, E_Color *color)
 	wd->entries = eina_list_append(wd->entries, o);
 	e_widget_table_object_append(frame, o, 2, i, 1, 1, 1, 1, 1, 1);
 	e_widget_on_change_hook_set(o, _e_wid_cb_color_changed, wd);
+     }
 
+   if (alpha_enabled)
+     {
+	o = e_widget_label_add(evas, "Alpha");
+	e_widget_table_object_append(frame, o, 1, i, 1, 1, 1, 1, 0, 0);
+	o = e_widget_slider_add
+	  (evas, 1, 0, "%0.0f px", 0, 255, 1, 0, NULL, &(wd->cv->a), 100);
+	e_widget_on_change_hook_set(o, _e_wid_cb_alpha_changed, wd);
+	e_widget_table_object_append(frame, o, 2, i, 1, 1, 1, 1, 0, 0);
      }
 
    o = e_widget_spectrum_add(evas, wd->mode, wd->cv);
