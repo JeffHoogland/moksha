@@ -4,867 +4,877 @@
 #include "e.h"
 
 typedef struct _CFColor_Class CFColor_Class;
-typedef struct _CFColor_Hash CFColor_Hash;
+typedef struct _CFColor_Class_Description CFColor_Class_Description;
 
-struct _CFColor_Hash 
+typedef enum {
+  COLOR_CLASS_UNKNOWN = 0,
+  COLOR_CLASS_SOLID = 1,
+  COLOR_CLASS_TEXT = 2
+} CFColor_Class_Type;
+
+struct _CFColor_Class
 {
    const char *key;
    const char *name;
-};
 
-struct _CFColor_Class 
-{
-   const char *key;
-   const char *name;
-   int enabled;
+   E_Color_Class *cc;
 
-   int r, g, b, a;
-   int r2, g2, b2, a2;
-   int r3, g3, b3, a3;   
-};
-
-struct _E_Config_Dialog_Data 
-{
-   char *cur_class;
-   int state;
-   int wm_enabled, wid_enabled, mod_enabled;
-   E_Color *color1, *color2, *color3;
-   Eina_List *classes;
    struct {
-      Evas_Object *ilist, *button;
-      Evas_Object *renable, *rdisable;
-      Evas_Object *c1, *c2, *c3;
-      Eina_List *disable_list;
+      int r[3], g[3], b[3], a[3];
+      Eina_Bool changed;
+      Eina_Bool enabled;
+   } val;
+
+   struct {
+      Evas_Object *icon;
+      Evas_Object *end;
+      CFColor_Class_Type type;
    } gui;
 };
 
-/* Key Pairs for color classes
- * 
- * These can/should be changed to "official" key/names
+struct _E_Config_Dialog_Data
+{
+   int state;
+   E_Color color[3];
+
+   Eina_List *classes;
+   Eina_List *selected;
+   Eina_List *changed;
+
+   struct {
+      Evas *evas;
+      Evas_Object *ilist;
+      Evas_Object *frame;
+      Evas_Object *state;
+      Evas_Object *color[3];
+      Evas_Object *reset;
+      Evas_Object *text_preview;
+      Eina_List *disable_list;
+   } gui;
+
+   Ecore_Timer *delay_load_timer;
+   Ecore_Timer *delay_color_timer;
+   Ecore_Idler *selection_idler;
+
+   Eina_Bool populating;
+};
+
+struct _CFColor_Class_Description
+{
+   const char *key;
+   size_t keylen;
+   const char *name;
+   CFColor_Class_Type type;
+};
+
+#define CCDESC_S(k, n) {k, sizeof(k) - 1, n, COLOR_CLASS_SOLID}
+#define CCDESC_T(k, n) {k, sizeof(k) - 1, n, COLOR_CLASS_TEXT}
+
+/*
+ * TODO PRE-RELEASE: check all color classes
  */
-static const CFColor_Hash _wm_hash[] =
+static const CFColor_Class_Description _color_classes_wm[] =
 {
-     {NULL,                 N_("Window Manager")},
-     {"about_title",        N_("About Dialog Title")},
-     {"about_version",      N_("About Dialog Version")},
-     {"border_title",       N_("Border Title")},
-     {"configure_title",    N_("Settings Dialog Title")},
-     {"error_text",         N_("Error Text")},
-     {"menu_title",         N_("Menu Title")},
-     {"menu_title_active",  N_("Menu Title Active")},
-     {"menu_item",          N_("Menu Item")},
-     {"menu_item_active",   N_("Menu Item Active")},
-     {"move_text",          N_("Move Text")},
-     {"resize_text",        N_("Resize Text")},
-     {"winlist_item",       N_("Winlist Item")},
-     {"winlist_label",      N_("Winlist Label")},
-     {"winlist_title",      N_("Winlist Title")},
-     {NULL, NULL}
+  CCDESC_T("about_title",         N_("About Dialog Title")),
+  CCDESC_T("about_version",       N_("About Dialog Version")),
+  CCDESC_T("border_title",        N_("Border Title")),
+  CCDESC_T("border_title_active", N_("Border Title Active")),
+  CCDESC_T("configure_title",     N_("Settings Dialog Title")),
+  CCDESC_T("error_text",          N_("Error Text")),
+  CCDESC_T("menu_title",          N_("Menu Title")),
+  CCDESC_T("menu_title_active",   N_("Menu Title Active")),
+  CCDESC_T("menu_item",           N_("Menu Item")),
+  CCDESC_T("menu_item_active",    N_("Menu Item Active")),
+  CCDESC_T("menu_item_disabled",  N_("Menu Item Disabled")),
+  CCDESC_T("move_text",           N_("Move Text")),
+  CCDESC_T("resize_text",         N_("Resize Text")),
+  CCDESC_T("winlist_item",        N_("Winlist Item")),
+  CCDESC_T("winlist_item_active", N_("Winlist Item Active")),
+  CCDESC_T("winlist_label",       N_("Winlist Label")),
+  CCDESC_T("winlist_title",       N_("Winlist Title")),
+  {NULL, 0, NULL, COLOR_CLASS_UNKNOWN}
 };
-
-static const CFColor_Hash _wid_hash[] =
+static const CFColor_Class_Description _color_classes_widgets[] =
 {
-     {NULL, N_("Widgets")},
-     {"button_text",          N_("Button Text")},
-     {"button_text_disabled", N_("Button Text Disabled")},
-     {"check_text",           N_("Check Text")},
-     {"check_text_disabled",  N_("Check Text Disabled")},
-     {"entry_text",           N_("Entry Text")},
-     {"label_text",           N_("Label Text")},   
-     {"ilist_item",           N_("List Item Text")},
-     {"ilist_item_odd",       N_("List Item Odd Text")},
-     {"ilist_header",         N_("List Header")},   
-     {"radio_text",           N_("Radio Text")},
-     {"radio_text_disabled",  N_("Radio Text Disabled")},
-     {"slider_text",          N_("Slider Text")},
-     {"slider_text_disabled", N_("Slider Text Disabled")},
-     {NULL, NULL}
+  CCDESC_T("button_text",          N_("Button Text")),
+  CCDESC_T("button_text_disabled", N_("Button Text Disabled")),
+  CCDESC_T("check_text",           N_("Check Text")),
+  CCDESC_T("check_text_disabled",  N_("Check Text Disabled")),
+  CCDESC_T("entry_text",           N_("Entry Text")),
+  CCDESC_T("entry_text_disabled",  N_("Entry Text Disabled")),
+  CCDESC_T("label_text",           N_("Label Text")),
+  CCDESC_T("ilist_item",           N_("List Item Text")),
+  CCDESC_T("ilist_item_selected",  N_("List Item Text Selected")),
+  CCDESC_T("ilist_item_odd",       N_("List Item Odd Text")),
+  CCDESC_T("ilist_header",         N_("List Header")),
+  CCDESC_T("radio_text",           N_("Radio Text")),
+  CCDESC_T("radio_text_disabled",  N_("Radio Text Disabled")),
+  CCDESC_T("slider_text",          N_("Slider Text")),
+  CCDESC_T("slider_text_disabled", N_("Slider Text Disabled")),
+  {NULL, 0, NULL, COLOR_CLASS_UNKNOWN}
 };
-
-//xxx todo fix this crap design xxxx                                           
-
-static const CFColor_Hash _mod_hash[] = 
+static const CFColor_Class_Description _color_classes_modules[] =
 {
-     {NULL, N_("Modules")},
-     {"module_label", N_("Module Label")},   
-     {NULL, NULL}
+  CCDESC_T("module_label", N_("Module Label")),
+  {NULL, 0, NULL, COLOR_CLASS_UNKNOWN}
 };
+#undef CCDESC_S
+#undef CCDESC_T
 
-static Eina_List *color_classes;
 
-static void        *_create_data          (E_Config_Dialog *cfd);
-static void         _free_data            (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static int          _basic_apply_data     (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static Evas_Object *_basic_create_widgets (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static int          _adv_apply_data       (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static Evas_Object *_adv_create_widgets   (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static void *_create_data(E_Config_Dialog *cfd);
+static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 
-static void         _fill_data_hash       (E_Config_Dialog_Data *cfdata, const CFColor_Hash *cfhash);
-static void         _fill_data_list       (E_Config_Dialog_Data *cfdata);
-static void         _fill_data_basic      (E_Config_Dialog_Data *cfdata);
-
-static void         _load_color_classes   (Evas_Object *obj, E_Config_Dialog_Data *cfdata);
-static void         _list_cb_change       (void *data, Evas_Object *obj);
-static void         _update_colors        (E_Config_Dialog_Data *cfdata, CFColor_Class *cc);
-static void         _color1_cb_change     (void *data, Evas_Object *obj);
-static void         _color2_cb_change     (void *data, Evas_Object *obj);
-static void         _color3_cb_change     (void *data, Evas_Object *obj);
-static void         _button_cb            (void *data, void *data2);
+static void _config_color_class_free(CFColor_Class *ccc);
+static void _config_color_class_icon_state_apply(CFColor_Class *ccc);
+static void _config_color_class_end_state_apply(CFColor_Class *ccc);
+static int _fill_data_delayed(void *data);
+static int _color_changed_delay(void *data);
 
 E_Config_Dialog *
-e_int_config_color_classes(E_Container *con, const char *params __UNUSED__) 
+e_int_config_color_classes(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
-   
+
    if (e_config_dialog_find("E", "appearance/colors")) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
    if (!v) return NULL;
-   
+
    v->create_cfdata = _create_data;
    v->free_cfdata = _free_data;
    v->basic.apply_cfdata = _basic_apply_data;
    v->basic.create_widgets = _basic_create_widgets;
-   v->advanced.apply_cfdata = _adv_apply_data;
-   v->advanced.create_widgets = _adv_create_widgets;
-   
-   cfd = 
-     e_config_dialog_new(con, _("Colors"), "E", "appearance/colors",
-                         "preferences-desktop-color", 0, v, NULL);
+
+   cfd = e_config_dialog_new(con, _("Colors"), "E", "appearance/colors",
+			     "preferences-desktop-color", 0, v, NULL);
    return cfd;
 }
 
-static void 
-_fill_data(E_Config_Dialog_Data *cfdata) 
-{
-   cfdata->cur_class = NULL;
-   cfdata->state = 0;
-   cfdata->color1 = calloc(1, sizeof(E_Color));
-   cfdata->color2 = calloc(1, sizeof(E_Color));
-   cfdata->color3 = calloc(1, sizeof(E_Color));
-   cfdata->color1->r = 255;
-   cfdata->color1->g = 255;
-   cfdata->color1->b = 255;
-   cfdata->color1->a = 255;
-   cfdata->color2->r = 0;
-   cfdata->color2->g = 0;
-   cfdata->color2->b = 0;
-   cfdata->color2->a = 255;
-   cfdata->color3->r = 0;
-   cfdata->color3->g = 0;
-   cfdata->color3->b = 0;
-   cfdata->color3->a = 255;
-   e_color_update_rgb(cfdata->color1);
-   e_color_update_rgb(cfdata->color2);
-   e_color_update_rgb(cfdata->color3);
-
-   color_classes = edje_color_class_list();
-
-   _fill_data_hash(cfdata, _wm_hash);
-   _fill_data_hash(cfdata, _wid_hash);
-   _fill_data_hash(cfdata, _mod_hash);
-
-   _fill_data_list(cfdata);
-}
-
-static void 
-_fill_data_hash(E_Config_Dialog_Data *cfdata, const CFColor_Hash *cfhash) 
-{
-   int i;
-
-   for (i = 0; cfhash[i].name; i++) 
-     {
-	CFColor_Class *cfc;
-	E_Color_Class *cc;
-
-	cfc = E_NEW(CFColor_Class, 1);
-	cfc->enabled = 0;
-	cfc->key = NULL;
-
-	if (cfhash[i].key) 
-	  {
-	     Eina_List *l, *l_next;
-	     char *key;
-	     int len = strlen(cfhash[i].key);
-
-	     EINA_LIST_FOREACH_SAFE(color_classes, l, l_next, key)
-	       {
-		  if (!strncmp(cfhash[i].key, key, len))
-		    {
-		       E_FREE(key);
-		       color_classes = eina_list_remove_list(color_classes, l);
-		    }
-	       }
-
-	     cfc->key = eina_stringshare_add(cfhash[i].key);
-	     cfc->name = eina_stringshare_add(_(cfhash[i].name));
-	     cc = e_color_class_find(cfc->key);
-	     if (cc) 
-	       {
-		  cfc->enabled = 1;
-		  cfc->r = cc->r;
-		  cfc->g = cc->g;
-		  cfc->b = cc->b;
-		  cfc->a = cc->a;
-		  cfc->r2 = cc->r2;
-		  cfc->g2 = cc->g2;
-		  cfc->b2 = cc->b2;
-		  cfc->a2 = cc->a2;
-		  cfc->r3 = cc->r3;
-		  cfc->g3 = cc->g3;
-		  cfc->b3 = cc->b3;
-		  cfc->a3 = cc->a3;
-	       }
-	     else 
-	       {
-		  cfc->r = 255;
-		  cfc->g = 255;
-		  cfc->b = 255;
-		  cfc->a = 255;
-		  cfc->r2 = 0;
-		  cfc->g2 = 0;
-		  cfc->b2 = 0;
-		  cfc->a2 = 255;
-		  cfc->r3 = 0;
-		  cfc->g3 = 0;
-		  cfc->b3 = 0;
-		  cfc->a3 = 255;
-	       }
-	  }
-	else 
-	  cfc->name = eina_stringshare_add(cfhash[i].name);
-	
-	cfdata->classes = eina_list_append(cfdata->classes, cfc);
-     }
-}
-
-static void 
-_fill_data_list(E_Config_Dialog_Data *cfdata) 
-{
-    Eina_List *l;
-    CFColor_Class *cfc;
-    E_Color_Class *cc;
-
-    if (eina_list_count(color_classes))
-      {
-	 cfc = E_NEW(CFColor_Class, 1);
-	 cfc->enabled = 0;
-	 cfc->key = NULL;
-	 cfc->name = eina_stringshare_add(_("Other"));
-
-	 cfdata->classes = eina_list_append(cfdata->classes, cfc);
-      }
-
-    for (l = color_classes; l; l = l->next)
-      {
-	 cfc = E_NEW(CFColor_Class, 1);
-	 cfc->enabled = 0;
-	 cfc->key = eina_stringshare_add((char *) l->data);
-	 cfc->name = eina_stringshare_add((char *) l->data);
-
-	 cc = e_color_class_find(cfc->key);
-	 if (cc) 
-	   {
-	      cfc->enabled = 1;
-	      cfc->r = cc->r;
-	      cfc->g = cc->g;
-	      cfc->b = cc->b;
-	      cfc->a = cc->a;
-	      cfc->r2 = cc->r2;
-	      cfc->g2 = cc->g2;
-	      cfc->b2 = cc->b2;
-	      cfc->a2 = cc->a2;
-	      cfc->r3 = cc->r3;
-	      cfc->g3 = cc->g3;
-	      cfc->b3 = cc->b3;
-	      cfc->a3 = cc->a3;
-	   }
-	 else 
-	   {
-	      cfc->r = 255;
-	      cfc->g = 255;
-	      cfc->b = 255;
-	      cfc->a = 255;
-	      cfc->r2 = 0;
-	      cfc->g2 = 0;
-	      cfc->b2 = 0;
-	      cfc->a2 = 255;
-	      cfc->r3 = 0;
-	      cfc->g3 = 0;
-	      cfc->b3 = 0;
-	      cfc->a3 = 255;
-	   }
-
-	 cfdata->classes = eina_list_append(cfdata->classes, cfc);
-	 E_FREE(l->data);
-      }
-
-    color_classes = eina_list_free(color_classes);
-}
-
-static void 
-_fill_data_basic(E_Config_Dialog_Data *cfdata) 
-{
-   Eina_List *l;
-   int i;
-
-   cfdata->wm_enabled = 0;
-   cfdata->wid_enabled = 0;
-   cfdata->mod_enabled = 0;
-   
-   for (l = cfdata->classes; l; l = l->next) 
-     {
-	CFColor_Class *c;
-
-	c = l->data;
-	if (!c) continue;
-	if (!c->key) continue;
-	for (i = 0; _wm_hash[i].name; i++) 
-	  {
-	     if (!_wm_hash[i].key) continue;
-	     if (strcmp(_wm_hash[i].key, c->key)) continue;
-	     if (c->enabled) 
-	       {
-		  cfdata->wm_enabled = 1;
-		  break;
-	       }
-	  }
-	for (i = 0; _wid_hash[i].name; i++) 
-	  {
-	     if (!_wid_hash[i].key) continue;
-	     if (strcmp(_wid_hash[i].key, c->key)) continue;
-	     if (c->enabled) 
-	       {
-		  cfdata->wid_enabled = 1;
-		  break;
-	       }
-	  }
-	for (i = 0; _mod_hash[i].name; i++) 
-	  {
-	     if (!_mod_hash[i].key) continue;
-	     if (strcmp(_mod_hash[i].key, c->key)) continue;
-	     if (c->enabled) 
-	       {
-		  cfdata->mod_enabled = 1;
-		  break;
-	       }
-	  }
-     }
-}
-
 static void *
-_create_data(E_Config_Dialog *cfd) 
+_create_data(E_Config_Dialog *cfd __UNUSED__)
 {
-   E_Config_Dialog_Data *cfdata;
-   
-   cfdata = E_NEW(E_Config_Dialog_Data, 1);
-   _fill_data(cfdata);
+   E_Config_Dialog_Data *cfdata = E_NEW(E_Config_Dialog_Data, 1);
+   if (!cfdata) return NULL;
    return cfdata;
 }
 
 static void
-_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-   while (cfdata->classes) 
-     {
-	CFColor_Class *cfc;
-	
-	cfc = cfdata->classes->data;
-	if (!cfc) continue;
-	if (cfc->name)
-	  eina_stringshare_del(cfc->name);
-	if (cfc->key)
-	  eina_stringshare_del(cfc->key);
-        E_FREE(cfc);
-	
-	cfdata->classes = eina_list_remove_list(cfdata->classes, cfdata->classes);
-     }
-   eina_list_free(cfdata->gui.disable_list);
-   E_FREE(cfdata->color1);
-   E_FREE(cfdata->color2);
-   E_FREE(cfdata->color3);
+   CFColor_Class *ccc;
+
+   EINA_LIST_FREE(cfdata->classes, ccc)
+     _config_color_class_free(ccc);
+
+   eina_list_free(cfdata->selected);
+   eina_list_free(cfdata->changed);
+
+   if (cfdata->delay_load_timer)
+     ecore_timer_del(cfdata->delay_load_timer);
+   if (cfdata->delay_color_timer)
+     ecore_timer_del(cfdata->delay_color_timer);
+   if (cfdata->selection_idler)
+     ecore_idler_del(cfdata->selection_idler);
+
    E_FREE(cfdata);
 }
 
 static int
-_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_color_class_list_selection_idler(void *data)
 {
-   Eina_List *l;
-   int i;
-   
-   for (l = cfdata->classes; l; l = l->next) 
-     {
-	CFColor_Class *c;
+   E_Config_Dialog_Data *cfdata = data;
+   const Eina_List *l;
+   const E_Ilist_Item *it;
+   CFColor_Class *ccc = NULL;
+   const char *description;
+   Evas_Object *o;
+   char buf[256];
+   unsigned int i, count;
+   int r[3] = {-1, -1, -1};
+   int g[3] = {-1, -1, -1};
+   int b[3] = {-1, -1, -1};
+   int a[3] = {-1, -1, -1};
+   Eina_Bool mixed[3];
+   Eina_Bool unset[3];
+   Eina_Bool enabled = EINA_FALSE;
 
-	c = l->data;
-	if (!c) continue;
-	if (!c->key) continue;
-	for (i = 0; _wm_hash[i].name; i++) 
-	  {
-	     if (!_wm_hash[i].key) continue;
-	     if (strcmp(_wm_hash[i].key, c->key)) continue;
-	     c->enabled = cfdata->wm_enabled;
-	     break;
-	  }
-	for (i = 0; _wid_hash[i].name; i++) 
-	  {
-	     if (!_wid_hash[i].key) continue;
-	     if (strcmp(_wid_hash[i].key, c->key)) continue;
-	     c->enabled = cfdata->wid_enabled;
-	     break;
-	  }
-	for (i = 0; _mod_hash[i].name; i++) 
-	  {
-	     if (!_mod_hash[i].key) continue;
-	     if (strcmp(_mod_hash[i].key, c->key)) continue;
-	     c->enabled = cfdata->mod_enabled;
-	     break;
-	  }
+   if (cfdata->delay_color_timer)
+     {
+	ecore_timer_del(cfdata->delay_color_timer);
+	cfdata->delay_color_timer = NULL;
+	_color_changed_delay(cfdata);
      }
-   
-   return _adv_apply_data(cfd, cfdata);
+
+   eina_list_free(cfdata->selected);
+   cfdata->selected = NULL;
+
+   EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->gui.ilist), l, it)
+     {
+	if ((!it->selected) || (it->header)) continue;
+	ccc = e_widget_ilist_item_data_get(it);
+	cfdata->selected = eina_list_append(cfdata->selected, ccc);
+
+	if ((!enabled) && (ccc->val.enabled))
+	  enabled = EINA_TRUE;
+
+#define _X(_n)							\
+	do							\
+	  {							\
+	     for (i = 0; i < 3; i++)				\
+	       {						\
+		  if (ccc->val._n[i] >= 0)			\
+		    {						\
+		       if (_n[i] == -1)				\
+			 _n[i] = ccc->val._n[i];		\
+		       else if ((_n[i] >= 0) &&			\
+				(ccc->val._n[i] != _n[i]))	\
+			 _n[i] = -2;				\
+		    }						\
+	       }						\
+	  }							\
+	while (0)
+
+	_X(r);
+	_X(g);
+	_X(b);
+	_X(a);
+#undef _X
+     }
+
+   for (i = 0; i < 3; i++)
+     {
+	mixed[i] = ((r[i] == -2) || (g[i] == -2) ||
+		    (b[i] == -2) || (a[i] == -2));
+
+	unset[i] = ((r[i] == -1) && (g[i] == -1) &&
+		    (b[i] == -1) && (a[i] == -1));
+     }
+
+   count = eina_list_count(cfdata->selected);
+   if ((ccc) && (count == 1))
+     {
+	snprintf(buf, sizeof(buf), _("Color class: %s"), ccc->name);
+	description = buf;
+     }
+   else if (count > 1)
+     {
+	if (mixed[0] || mixed[1] || mixed[2])
+	  snprintf(buf, sizeof(buf),
+		   _("Selected %u mixed colors classes"), count);
+	else if (unset[0] && unset[1] && unset[2])
+	  snprintf(buf, sizeof(buf),
+		   _("Selected %u unset colors classes"), count);
+	else
+	  snprintf(buf, sizeof(buf),
+		   _("Selected %u uniform colors classes"), count);
+	description = buf;
+     }
+   else
+     description = _("No selected color class");
+
+   cfdata->populating = EINA_TRUE;
+
+   for (i = 0; i < 3; i++)
+     {
+	if (unset[i] || mixed[i])
+	  r[i] = g[i] = b[i] = a[i] = 0;
+
+	cfdata->color[i].r = r[i];
+	cfdata->color[i].g = g[i];
+	cfdata->color[i].b = b[i];
+	cfdata->color[i].a = a[i];
+	e_color_update_rgb(cfdata->color + i);
+	e_widget_color_well_update(cfdata->gui.color[i]);
+     }
+
+   edje_object_color_class_set
+     (cfdata->gui.text_preview, "color_preview",
+      r[0], g[0], b[0], a[0],
+      r[1], g[1], b[1], a[1],
+      r[2], g[2], b[2], a[2]);
+
+   e_widget_frametable_label_set(cfdata->gui.frame, description);
+
+   e_widget_disabled_set(cfdata->gui.state, count == 0);
+   e_widget_check_checked_set(cfdata->gui.state, enabled);
+
+   EINA_LIST_FOREACH(cfdata->gui.disable_list, l, o)
+     e_widget_disabled_set(o, ((!enabled) || (count == 0)));
+
+   cfdata->populating = EINA_FALSE;
+   cfdata->selection_idler = NULL;
+   return 0;
 }
 
-static Evas_Object *
-_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
+static void
+_color_class_list_selection_changed(void *data, Evas_Object *obj __UNUSED__)
 {
-   Evas_Object *o, *of, *ob;
-   E_Radio_Group *wg, *dg, *mg;
+   E_Config_Dialog_Data *cfdata = data;
 
-   _fill_data_basic(cfdata);
-   
-   o = e_widget_list_add(evas, 0, 0);
+   if (cfdata->selection_idler)
+     ecore_idler_del(cfdata->selection_idler);
+   cfdata->selection_idler = ecore_idler_add
+     (_color_class_list_selection_idler, cfdata);
+}
 
-   of = e_widget_framelist_add(evas, _("Window Manager Colors"), 0);
-   wg = e_widget_radio_group_new(&(cfdata->wm_enabled));
-   ob = e_widget_radio_add(evas, _("Enabled"), 1, wg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Disabled"), 0, wg);
-   e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 0, 0.5);
+static Eina_Bool
+_config_color_class_color_reset(CFColor_Class *ccc)
+{
+   Eina_Bool ret = EINA_FALSE;
+   int *r = ccc->val.r;
+   int *g = ccc->val.g;
+   int *b = ccc->val.b;
+   int *a = ccc->val.a;
 
-   of = e_widget_framelist_add(evas, _("Widget Colors"), 0);
-   dg = e_widget_radio_group_new(&(cfdata->wid_enabled));
-   ob = e_widget_radio_add(evas, _("Enabled"), 1, dg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Disabled"), 0, dg);
-   e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 0, 0.5);
+   /* trick: use object so it will look up all 3 levels:
+    *   1. object (should not have)
+    *   2. global set values (may have)
+    *   3. theme file provided value (may have)
+    */
+   if (ccc->gui.icon)
+     ret = edje_object_color_class_get
+       (ccc->gui.icon, ccc->key,
+	r + 0, g + 0, b + 0, a + 0,
+	r + 1, g + 1, b + 1, a + 1,
+	r + 2, g + 2, b + 2, a + 2);
 
-   of = e_widget_framelist_add(evas, _("Module Colors"), 0);
-   mg = e_widget_radio_group_new(&(cfdata->mod_enabled));
-   ob = e_widget_radio_add(evas, _("Enabled"), 1, mg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Disabled"), 0, mg);
-   e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 0, 0.5);
+   if (!ret)
+     {
+	unsigned int i;
+	for (i = 0; i < 3; i++)
+	  {
+	     r[i] = -1;
+	     g[i] = -1;
+	     b[i] = -1;
+	     a[i] = -1;
+	  }
+     }
 
-   return o;
+   return ret;
 }
 
 static int
-_adv_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-   Eina_List *l;
-   
-   for (l = cfdata->classes; l; l = l->next) 
-     {
-	CFColor_Class *c;
-	E_Color_Class *cc;
-	
-	c = l->data;
-	if (!c) continue;
-	if (!c->key) continue;
+   CFColor_Class *ccc;
 
-	cc = e_color_class_find(c->key);
-	if (!c->enabled) 
+   if (cfdata->delay_color_timer)
+     {
+	ecore_timer_del(cfdata->delay_color_timer);
+	cfdata->delay_color_timer = NULL;
+	_color_changed_delay(cfdata);
+     }
+
+   EINA_LIST_FREE(cfdata->changed, ccc)
+     {
+	ccc->val.changed = EINA_FALSE;
+
+	if (ccc->val.enabled)
 	  {
-	     if (cc)
-	       e_color_class_del(c->key);
+	     int *r = ccc->val.r;
+	     int *g = ccc->val.g;
+	     int *b = ccc->val.b;
+	     int *a = ccc->val.a;
+
+	     if (ccc->cc)
+	       {
+		  e_color_class_instance_set
+		    (ccc->cc,
+		     r[0], g[0], b[0], a[0],
+		     r[1], g[1], b[1], a[1],
+		     r[2], g[2], b[2], a[2]);
+	       }
+	     else
+	       {
+		  ccc->cc = e_color_class_set_stringshared
+		    (ccc->key,
+		     r[0], g[0], b[0], a[0],
+		     r[1], g[1], b[1], a[1],
+		     r[2], g[2], b[2], a[2]);
+	       }
 	  }
-	else 
+	else
 	  {
-	     e_color_class_set(c->key, c->r, c->g, c->b, c->a,
-			       c->r2, c->g2, c->b2, c->a2,
-			       c->r3, c->g3, c->b3, c->a3);
+	     if (ccc->cc)
+	       {
+		  e_color_class_instance_del(ccc->cc);
+		  ccc->cc = NULL;
+	       }
+	     _config_color_class_color_reset(ccc);
+	     _config_color_class_icon_state_apply(ccc);
 	  }
      }
+
    return 1;
 }
 
-static Evas_Object *
-_adv_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
+static void
+_custom_color_cb_change(void *data, Evas_Object *obj)
 {
-   Evas_Object *o, *ob, *ot;
+   E_Config_Dialog_Data *cfdata = data;
+   const Eina_List *l;
+   CFColor_Class *ccc;
+   Eina_Bool enabled;
+   Evas_Object *o;
+
+   if (cfdata->populating) return;
+
+   enabled = e_widget_check_checked_get(obj);
+   EINA_LIST_FOREACH(cfdata->selected, l, ccc)
+     {
+	ccc->val.enabled = enabled;
+	_config_color_class_end_state_apply(ccc);
+	if (!enabled)
+	  {
+	     _config_color_class_color_reset(ccc);
+	     _config_color_class_icon_state_apply(ccc);
+	  }
+
+	if (!ccc->val.changed)
+	  {
+	     ccc->val.changed = EINA_TRUE;
+	     cfdata->changed = eina_list_append(cfdata->changed, ccc);
+	  }
+     }
+
+   EINA_LIST_FOREACH(cfdata->gui.disable_list, l, o)
+     e_widget_disabled_set(o, !enabled);
+
+   _color_class_list_selection_changed(cfdata, NULL);
+}
+
+static int
+_color_changed_delay(void *data)
+{
+   E_Config_Dialog_Data *cfdata = data;
+   const Eina_List *l;
+   CFColor_Class *ccc;
+   E_Color *col;
+
+   EINA_LIST_FOREACH(cfdata->selected, l, ccc)
+     _config_color_class_icon_state_apply(ccc);
+
+   col = cfdata->color;
+   edje_object_color_class_set
+     (cfdata->gui.text_preview, "color_preview",
+      col[0].r, col[0].g, col[0].b, col[0].a,
+      col[1].r, col[1].g, col[1].b, col[1].a,
+      col[2].r, col[2].g, col[2].b, col[2].a);
+
+   cfdata->delay_color_timer = NULL;
+   return 0;
+}
+
+static void
+_color_cb_change(void *data, Evas_Object *obj)
+{
+   E_Config_Dialog_Data *cfdata = data;
+   const Eina_List *l;
+   CFColor_Class *ccc;
+   E_Color *col;
+   unsigned int i;
+
+   if (cfdata->populating) return;
+
+   for (i = 0; i < 3; i++)
+     if (cfdata->gui.color[i] == obj)
+       break;
+
+   if (i == 3)
+     {
+	EINA_LOG_ERR("unknown widget changed color: %p\n", obj);
+	return;
+     }
+
+   col = cfdata->color + i;
+   EINA_LIST_FOREACH(cfdata->selected, l, ccc)
+     {
+   	ccc->val.r[i] = col->r;
+   	ccc->val.g[i] = col->g;
+   	ccc->val.b[i] = col->b;
+   	ccc->val.a[i] = col->a;
+
+	if (!ccc->val.changed)
+	  {
+	     ccc->val.changed = EINA_TRUE;
+	     cfdata->changed = eina_list_append(cfdata->changed, ccc);
+	  }
+     }
+
+   if (!cfdata->delay_color_timer)
+     cfdata->delay_color_timer = ecore_timer_add
+       (0.2, _color_changed_delay, cfdata);
+}
+
+static Evas_Object *
+_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
+{
+   Evas_Object *ol, *ot, *o;
    Evas_Coord mw, mh;
-   char buf[1024];
+   unsigned int i;
+   const Eina_List *l;
 
-   o = e_widget_list_add(evas, 0, 0);
+   cfdata->gui.evas = evas;
 
-   ob = e_widget_ilist_add(evas, 16, 16, NULL);
-   e_widget_ilist_selector_set(ob, 1);
-   cfdata->gui.ilist = ob;
-   e_widget_on_change_hook_set(ob, _list_cb_change, cfdata);
-   _load_color_classes(ob, cfdata);
-   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   ol = e_widget_list_add(evas, 0, 0);
 
-   snprintf(buf, sizeof(buf), _("Color settings: %s"), "");
-   ot = e_widget_frametable_add(evas, buf, 0);
+   cfdata->gui.ilist = e_widget_ilist_add(evas, 32, 24, NULL);
+   e_widget_on_change_hook_set
+     (cfdata->gui.ilist, _color_class_list_selection_changed, cfdata);
+   e_widget_ilist_multi_select_set(cfdata->gui.ilist, 1);
+   e_widget_size_min_get(cfdata->gui.ilist, &mw, &mh);
+   if (mw < 200 * e_scale) mw = 200 * e_scale;
+   if (mh < 150 * e_scale) mh = 150 * e_scale;
+   e_widget_size_min_set(cfdata->gui.ilist, mw, mh);
+   e_widget_list_object_append(ol, cfdata->gui.ilist, 1, 1, 0.0);
 
-   cfdata->state = 0;
-   ob = e_widget_check_add(evas, _("Custom colors"), &(cfdata->state));
-   cfdata->gui.renable = ob;
-//   e_widget_on_change_hook_set(ob, _custom_color_cb_change, cfdata);
-   e_widget_size_min_get(ob, &mw, &mh);
+   cfdata->gui.frame = ot = e_widget_frametable_add
+     (evas, _("No selected color class"), 0);
+
+   cfdata->gui.state = o = e_widget_check_add
+     (evas, _("Custom colors"), &(cfdata->state));
+   e_widget_on_change_hook_set(o, _custom_color_cb_change, cfdata);
+   e_widget_size_min_get(o, &mw, &mh);
    e_widget_frametable_object_append_full
-     (ot, ob, 0, 0, 2, 1, 1, 0, 1, 0, 0.0, 0.0, mw, mh, 9999, 9999);
+     (ot, o, 0, 0, 3, 1, 1, 0, 1, 0, 0.0, 0.0, mw, mh, 9999, 9999);
 
-   ob = e_widget_label_add(evas, _("Object:"));
-   cfdata->gui.disable_list = eina_list_append(cfdata->gui.disable_list, ob);
-   e_widget_size_min_get(ob, &mw, &mh);
+   o = e_widget_label_add(evas, _("Object:"));
+   cfdata->gui.disable_list = eina_list_append(cfdata->gui.disable_list, o);
+   e_widget_size_min_get(o, &mw, &mh);
    e_widget_frametable_object_append_full
-     (ot, ob, 0, 1, 1, 1, 0, 0, 0, 0, 1.0, 0.0, mw, mh, 9999, 9999);
+     (ot, o, 0, 1, 1, 1, 0, 0, 0, 0, 0.0, 0.5, mw, mh, 9999, 9999);
 
-   ob = e_widget_color_well_add(evas, cfdata->color1, 1);
-   cfdata->gui.disable_list = eina_list_append(cfdata->gui.disable_list, ob);
-   cfdata->gui.c1 = ob;
-   e_widget_on_change_hook_set(ob, _color1_cb_change, cfdata);
-   e_widget_size_min_get(ob, &mw, &mh);
-   if (mw < 16 * e_scale) mw = 16 * e_scale;
-   if (mh < 16 * e_scale) mh = 16 * e_scale;
+   o = e_widget_label_add(evas, _("Outline:"));
+   cfdata->gui.disable_list = eina_list_append(cfdata->gui.disable_list, o);
+   e_widget_size_min_get(o, &mw, &mh);
    e_widget_frametable_object_append_full
-     (ot, ob, 0, 1, 1, 1, 0, 0, 0, 0, 1.0, 0.0, mw, mh, 9999, 9999);
+     (ot, o, 1, 1, 1, 1, 0, 0, 0, 0, 0.0, 0.5, mw, mh, 9999, 9999);
 
-   ob = e_widget_label_add(evas, _("Outline:"));
-   cfdata->gui.disable_list = eina_list_append(cfdata->gui.disable_list, ob);
-   e_widget_size_min_get(ob, &mw, &mh);
+   o = e_widget_label_add(evas, _("Shadow:"));
+   cfdata->gui.disable_list = eina_list_append(cfdata->gui.disable_list, o);
+   e_widget_size_min_get(o, &mw, &mh);
    e_widget_frametable_object_append_full
-     (ot, ob, 0, 2, 1, 1, 0, 0, 0, 0, 1.0, 0.0, mw, mh, 9999, 9999);
+     (ot, o, 2, 1, 1, 1, 0, 0, 0, 0, 0.0, 0.5, mw, mh, 9999, 9999);
 
-   ob = e_widget_color_well_add(evas, cfdata->color2, 1);
-   cfdata->gui.disable_list = eina_list_append(cfdata->gui.disable_list, ob);
-   cfdata->gui.c2 = ob;
-   e_widget_on_change_hook_set(ob, _color2_cb_change, cfdata);
-   e_widget_size_min_get(ob, &mw, &mh);
-   if (mw < 16 * e_scale) mw = 16 * e_scale;
-   if (mh < 16 * e_scale) mh = 16 * e_scale;
+   if (mh < 32) mh = 32;
+
+   for (i = 0; i < 3; i++)
+     {
+	o = e_widget_color_well_add_full(evas, cfdata->color + i, 1, 1);
+	cfdata->gui.color[i] = o;
+	cfdata->gui.disable_list = eina_list_append
+	  (cfdata->gui.disable_list, o);
+	e_widget_on_change_hook_set(o, _color_cb_change, cfdata);
+	e_widget_size_min_get(o, &mw, NULL);
+	mw = 32 * e_scale;
+	e_widget_frametable_object_append_full
+	  (ot, o, i, 2, 1, 1, 1, 1, 1, 0, 0.0, 0.0, mw, mh, 9999, 9999);
+     }
+
+   o = edje_object_add(evas);
+   if (!e_theme_edje_object_set(o, "base/theme/widgets",
+				"e/modules/conf_colors/preview/text"))
+     {
+	evas_object_del(o);
+     }
+   else
+     {
+	cfdata->gui.text_preview = o;
+	edje_object_color_class_set
+	  (o, "color_preview", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+	edje_object_part_text_set(o, "e.text", _("Text with applied colors."));
+	edje_object_size_min_calc(o, &mw, &mh);
+	e_widget_frametable_object_append_full
+	  (ot, o, 0, 3, 3, 1, 0, 0, 0, 0, 0.5, 0.5, mw, mh, 9999, 9999);
+     }
+
+   o = e_widget_label_add(evas, _("Colors depends on theme capabilities."));
    e_widget_frametable_object_append_full
-     (ot, ob, 0, 2, 1, 1, 0, 0, 0, 0, 1.0, 0.0, mw, mh, 9999, 9999);
+     (ot, o, 0, 4, 3, 1, 0, 0, 0, 0, 0.0, 0.5, mw, mh, 9999, 9999);
 
-   ob = e_widget_label_add(evas, _("Shadow:"));
-   cfdata->gui.disable_list = eina_list_append(cfdata->gui.disable_list, ob);
-   e_widget_size_min_get(ob, &mw, &mh);
-   e_widget_frametable_object_append_full
-     (ot, ob, 0, 3, 1, 1, 0, 0, 0, 0, 1.0, 0.0, mw, mh, 9999, 9999);
-
-   ob = e_widget_color_well_add(evas, cfdata->color3, 1);
-   cfdata->gui.disable_list = eina_list_append(cfdata->gui.disable_list, ob);
-   cfdata->gui.c3 = ob;
-   e_widget_on_change_hook_set(ob, _color3_cb_change, cfdata);
-   e_widget_size_min_get(ob, &mw, &mh);
-   if (mw < 16 * e_scale) mw = 16 * e_scale;
-   if (mh < 16 * e_scale) mh = 16 * e_scale;
-   e_widget_frametable_object_append_full
-     (ot, ob, 0, 3, 1, 1, 0, 0, 0, 0, 1.0, 0.0, mw, mh, 9999, 9999);
-
-   ob = e_widget_button_add
-     (evas, _("Defaults"), NULL, _button_cb, cfdata, NULL);
-   cfdata->gui.disable_list = eina_list_append(cfdata->gui.disable_list, ob);
-   cfdata->gui.button = ob;
-   e_widget_frametable_object_append_full
-     (ot, ob, 0, 4, 2, 1, 0, 0, 0, 0, 1.0, 0.0, mw, mh, 9999, 9999);
-
-//   _custom_color_cb_change(cfdata, NULL);
+   e_widget_list_object_append(ol, cfdata->gui.frame, 1, 0, 0.0);
 
    e_dialog_resizable_set(cfd->dia, 1);
-   return o;
+   e_util_win_auto_resize_fill(cfd->dia->win);
+   e_win_centered_set(cfd->dia->win, 1);
+
+   cfdata->delay_load_timer = ecore_timer_add(0.15, _fill_data_delayed, cfdata);
+
+   EINA_LIST_FOREACH(cfdata->gui.disable_list, l, o)
+     e_widget_disabled_set(o, 1);
+
+   e_widget_disabled_set(cfdata->gui.state, 1);
+
+   return ol;
 }
 
-static void 
-_load_color_classes(Evas_Object *obj, E_Config_Dialog_Data *cfdata) 
+static void
+_config_color_class_free(CFColor_Class *ccc)
 {
-   Eina_List *l;
-   Evas_Coord w, h;
+   eina_stringshare_del(ccc->key);
+   eina_stringshare_del(ccc->name);
+   E_FREE(ccc);
+}
 
-   evas_event_freeze(evas_object_evas_get(obj));
-   edje_freeze();
-   e_widget_ilist_freeze(obj);
-   e_widget_ilist_clear(obj);
-   for (l = cfdata->classes; l; l = l->next) 
+static CFColor_Class *
+_config_color_class_new(const char *key_stringshared, const char *name, E_Color_Class *cc)
+{
+   CFColor_Class *ccc = E_NEW(CFColor_Class, 1);
+   if (!ccc) return NULL;
+
+   ccc->name = eina_stringshare_add(name);
+   ccc->cc = cc;
+   ccc->key = eina_stringshare_ref(key_stringshared);
+
+   if (cc)
      {
-	CFColor_Class *cfc;
-	Evas_Object *icon;
-	
-	cfc = l->data;
-	if (!cfc) continue;
-	if (!cfc->key) 
-	  e_widget_ilist_header_append(obj, NULL, cfc->name);
-	else 
-	  {
-	     if (cfc->enabled) 
-	       {
-		  icon = e_icon_add(evas_object_evas_get(obj));
-		  e_util_icon_theme_set(icon, "dialog-ok-apply");
-	       }
-	     else
-	       icon = NULL;
+	ccc->val.r[0] = cc->r;
+	ccc->val.g[0] = cc->g;
+	ccc->val.b[0] = cc->b;
+	ccc->val.a[0] = cc->a;
 
-	     e_widget_ilist_append(obj, icon, cfc->name, NULL, NULL, NULL);
-	  }
+	ccc->val.r[1] = cc->r2;
+	ccc->val.g[1] = cc->g2;
+	ccc->val.b[1] = cc->b2;
+	ccc->val.a[1] = cc->a2;
+
+	ccc->val.r[2] = cc->r3;
+	ccc->val.g[2] = cc->g3;
+	ccc->val.b[2] = cc->b3;
+	ccc->val.a[2] = cc->a3;
+
+	ccc->val.enabled = EINA_TRUE;
      }
-   e_widget_ilist_go(obj);
-   e_widget_size_min_get(obj, &w, &h);
-   e_widget_size_min_set(obj, w, 300);
-   e_widget_ilist_thaw(obj);
-   edje_thaw();
-   evas_event_thaw(evas_object_evas_get(obj));
-}
-
-static void 
-_radio_cb_change(void *data, Evas_Object *obj, void *event_info) 
-{
-   E_Config_Dialog_Data *cfdata;
-   Eina_List *l;
-   Evas_Object *icon;
-   int n;
-   
-   cfdata = data;
-   if (!cfdata) return;
-
-   n = e_widget_ilist_selected_get(cfdata->gui.ilist);
-   
-   for (l = cfdata->classes; l; l = l->next) 
+   else
      {
-	CFColor_Class *c;
-	
-	c = l->data;
-	if (!c) continue;
-	if (!c->name) continue;
-	if (strcmp(c->name, cfdata->cur_class)) continue;
-	c->enabled = cfdata->state;
-	if (c->enabled) 
-	  {
-	     icon = e_icon_add(evas_object_evas_get(cfdata->gui.ilist));
-	     e_util_icon_theme_set(icon, "dialog-ok-apply");
-	  }
-	else 
-	  icon = NULL;
-	
-	e_widget_ilist_nth_icon_set(cfdata->gui.ilist, n, icon);
-	break;
+	unsigned int i;
+	for (i = 0; i < 3; i++)
+	  ccc->val.r[i] = ccc->val.g[i] = ccc->val.b[i] = ccc->val.a[i] = -1;
+
+	ccc->val.enabled = EINA_FALSE;
      }
 
-   if (!cfdata->gui.c1) return;   
-   if (cfdata->state == 0) 
+   return ccc;
+}
+
+static void
+_config_color_class_icon_state_apply(CFColor_Class *ccc)
+{
+   if (!ccc->val.enabled)
+     _config_color_class_color_reset(ccc);
+
+   if ((ccc->gui.type == COLOR_CLASS_TEXT) ||
+       (ccc->gui.type == COLOR_CLASS_SOLID))
      {
-	e_widget_disabled_set(cfdata->gui.c1, 1);
-	e_widget_disabled_set(cfdata->gui.c2, 1);
-	e_widget_disabled_set(cfdata->gui.c3, 1);
-	e_widget_disabled_set(cfdata->gui.button, 1);
+	edje_object_color_class_set
+	  (ccc->gui.icon, "color_preview",
+	   ccc->val.r[0], ccc->val.g[0], ccc->val.b[0], ccc->val.a[0],
+	   ccc->val.r[1], ccc->val.g[1], ccc->val.b[1], ccc->val.a[1],
+	   ccc->val.r[2], ccc->val.g[2], ccc->val.b[2], ccc->val.a[2]);
      }
-   else if (cfdata->state == 1) 
+   else
      {
-	e_widget_disabled_set(cfdata->gui.c1, 0);
-	e_widget_disabled_set(cfdata->gui.c2, 0);
-	e_widget_disabled_set(cfdata->gui.c3, 0);
-	e_widget_disabled_set(cfdata->gui.button, 0);
-     }
-}
+	edje_object_color_class_set
+	  (ccc->gui.icon, "color_preview_c1",
+	   ccc->val.r[0], ccc->val.g[0], ccc->val.b[0], ccc->val.a[0],
+	   0, 0, 0, 0, 0, 0, 0, 0);
 
-static void 
-_list_cb_change(void *data, Evas_Object *obj) 
-{
-   E_Config_Dialog_Data *cfdata;
-   Eina_List *l;
-   
-   cfdata = data;
-   if (!cfdata) return;
-   
-   cfdata->cur_class = (char *)e_widget_ilist_selected_label_get(obj);
-   e_widget_disabled_set(cfdata->gui.rdisable, 0);
-   e_widget_disabled_set(cfdata->gui.renable, 0);
-   
-   for (l = cfdata->classes; l; l = l->next) 
-     {
-	CFColor_Class *c;
-	int enable = 0;
-	
-	c = l->data;
-	if (!c) continue;
-	if (!c->name) continue;
-	if (!strcmp(c->name, cfdata->cur_class)) 
-	  {
-	     enable = c->enabled;
-	     cfdata->state = enable;
-	     if (enable) 
-	       {
-		  e_widget_disabled_set(cfdata->gui.c1, 0);
-		  e_widget_disabled_set(cfdata->gui.c2, 0);
-		  e_widget_disabled_set(cfdata->gui.c3, 0);
-		  e_widget_disabled_set(cfdata->gui.button, 0);		  
-		  e_widget_radio_toggle_set(cfdata->gui.renable, 1);
-		  e_widget_radio_toggle_set(cfdata->gui.rdisable, 0);
-	       }
-	     else 
-	       {
-		  e_widget_disabled_set(cfdata->gui.c1, 1);
-		  e_widget_disabled_set(cfdata->gui.c2, 1);
-		  e_widget_disabled_set(cfdata->gui.c3, 1);
-		  e_widget_disabled_set(cfdata->gui.button, 1);
-		  e_widget_radio_toggle_set(cfdata->gui.renable, 0);
-		  e_widget_radio_toggle_set(cfdata->gui.rdisable, 1);
-	       }
-	     _update_colors(cfdata, c);
-	     break;
-	  }	
-     }   
-}
+	edje_object_color_class_set
+	  (ccc->gui.icon, "color_preview_c2",
+	   ccc->val.r[1], ccc->val.g[1], ccc->val.b[1], ccc->val.a[1],
+	   0, 0, 0, 0, 0, 0, 0, 0);
 
-static void 
-_update_colors(E_Config_Dialog_Data *cfdata, CFColor_Class *cc) 
-{
-   cfdata->color1->a = cc->a;
-   cfdata->color1->r = cc->r;
-   cfdata->color1->g = cc->g;
-   cfdata->color1->b = cc->b;
-
-   cfdata->color2->a = cc->a2;
-   cfdata->color2->r = cc->r2;
-   cfdata->color2->g = cc->g2;
-   cfdata->color2->b = cc->b2;
-
-   cfdata->color3->a = cc->a3;
-   cfdata->color3->r = cc->r3;
-   cfdata->color3->g = cc->g3;
-   cfdata->color3->b = cc->b3;
-
-   e_color_update_rgb(cfdata->color1);
-   e_color_update_rgb(cfdata->color2);
-   e_color_update_rgb(cfdata->color3);
-   
-   e_widget_color_well_update(cfdata->gui.c1);
-   e_widget_color_well_update(cfdata->gui.c2);
-   e_widget_color_well_update(cfdata->gui.c3);
-}
-
-static void 
-_color1_cb_change(void *data, Evas_Object *obj) 
-{
-   E_Config_Dialog_Data *cfdata;
-   Eina_List *l;
-   
-   cfdata = data;
-   if (!cfdata) return;
-
-   e_color_update_rgb(cfdata->color1);
-   
-   for (l = cfdata->classes; l; l = l->next) 
-     {
-	CFColor_Class *c;
-	
-	c = l->data;
-	if (!c) continue;
-	if (!c->name) continue;
-	if (!strcmp(c->name, cfdata->cur_class)) 
-	  {
-	     c->r = cfdata->color1->r;
-	     c->g = cfdata->color1->g;
-	     c->b = cfdata->color1->b;
-	     c->a = cfdata->color1->a;
-	     break;
-	  }
-     }
-}
-
-static void 
-_color2_cb_change(void *data, Evas_Object *obj) 
-{
-   E_Config_Dialog_Data *cfdata;
-   Eina_List *l;
-   
-   cfdata = data;
-   if (!cfdata) return;
-
-   e_color_update_rgb(cfdata->color2);
-   
-   for (l = cfdata->classes; l; l = l->next) 
-     {
-	CFColor_Class *c;
-	
-	c = l->data;
-	if (!c) continue;
-	if (!c->name) continue;
-	if (!strcmp(c->name, cfdata->cur_class)) 
-	  {
-	     c->r2 = cfdata->color2->r;
-	     c->g2 = cfdata->color2->g;
-	     c->b2 = cfdata->color2->b;
-	     c->a2 = cfdata->color2->a;
-	     break;
-	  }
-     }
-}
-
-static void 
-_color3_cb_change(void *data, Evas_Object *obj) 
-{
-   E_Config_Dialog_Data *cfdata;
-   Eina_List *l;
-   
-   cfdata = data;
-   if (!cfdata) return;
-
-   e_color_update_rgb(cfdata->color3);
-   
-   for (l = cfdata->classes; l; l = l->next) 
-     {
-	CFColor_Class *c;
-	
-	c = l->data;
-	if (!c) continue;
-	if (!c->name) continue;
-	if (!strcmp(c->name, cfdata->cur_class)) 
-	  {
-	     c->r3 = cfdata->color3->r;
-	     c->g3 = cfdata->color3->g;
-	     c->b3 = cfdata->color3->b;
-	     c->a3 = cfdata->color3->a;
-	     break;
-	  }
+	edje_object_color_class_set
+	  (ccc->gui.icon, "color_preview_c3",
+	   ccc->val.r[2], ccc->val.g[2], ccc->val.b[2], ccc->val.a[2],
+	   0, 0, 0, 0, 0, 0, 0, 0);
      }
 }
 
 static void
-_button_cb(void *data, void *data2) 
+_config_color_class_end_state_apply(CFColor_Class *ccc)
 {
-   E_Config_Dialog_Data *cfdata;
-   Eina_List *l;
-   const char *name;
-   
-   cfdata = data;
-   name = e_widget_ilist_selected_label_get(cfdata->gui.ilist);
-   if (!name) return;
-   
-   for (l = cfdata->classes; l; l = l->next) 
+   const char *sig;
+   if (!ccc->gui.end) return;
+   sig = ccc->val.enabled ? "e,state,checked" : "e,state,unchecked";
+   edje_object_signal_emit(ccc->gui.end, sig, "e");
+}
+
+static int
+_config_color_class_sort(const void *data1, const void *data2)
+{
+   const CFColor_Class *ccc1 = data1, *ccc2 = data2;
+   return strcmp(ccc1->name, ccc2->name);
+}
+
+static int
+_color_class_sort(const void *data1, const void *data2)
+{
+   const E_Color_Class *cc1 = data1, *cc2 = data2;
+   return strcmp(cc1->name, cc2->name);
+}
+
+static void
+_fill_data_add_header(E_Config_Dialog_Data *cfdata, const char *name)
+{
+   e_widget_ilist_header_append(cfdata->gui.ilist, NULL, name);
+}
+
+static void
+_fill_data_add_item(E_Config_Dialog_Data *cfdata, CFColor_Class *ccc)
+{
+   Evas_Object *icon, *end;
+
+   icon = edje_object_add(cfdata->gui.evas);
+   if (icon)
      {
-	CFColor_Class *c;
-	
-	c = l->data;
-	if (!c->name) continue;
-	if (strcmp(c->name, name)) continue;
-	c->r = 255;
-	c->g = 255;
-	c->b = 255;
-	c->a = 255;
-	c->r2 = 0;
-	c->g2 = 0;
-	c->b2 = 0;
-	c->a2 = 255;
-	c->r3 = 0;
-	c->g3 = 0;
-	c->b3 = 0;
-	c->a3 = 255;	     
-	_update_colors(cfdata, c);
-	break;
+	const char *group;
+
+	switch (ccc->gui.type)
+	  {
+	   case COLOR_CLASS_TEXT:
+	      group = "e/modules/conf_colors/preview/text";
+	      break;
+	   case COLOR_CLASS_SOLID:
+	      group = "e/modules/conf_colors/preview/solid";
+	      break;
+	   default:
+	      group = "e/modules/conf_colors/preview/unknown";
+	  }
+
+	if (e_theme_edje_object_set(icon, "base/theme/widgets", group))
+	  {
+	     ccc->gui.icon = icon;
+	     _config_color_class_icon_state_apply(ccc);
+	  }
+	else
+	  {
+	     EINA_LOG_ERR("your theme misses '%s'!", group);
+	     evas_object_del(icon);
+	     icon = NULL;
+	  }
      }
+
+   end = edje_object_add(cfdata->gui.evas);
+   if (end)
+     {
+	if (e_theme_edje_object_set(end, "base/theme/widgets",
+				     "e/widgets/ilist/toggle_end"))
+	  {
+	     ccc->gui.end = end;
+	     _config_color_class_end_state_apply(ccc);
+	  }
+	else
+	  {
+	     EINA_LOG_ERR("your theme misses 'e/widgets/ilist/toggle_end'!");
+	     evas_object_del(end);
+	     end = NULL;
+	  }
+     }
+
+   e_widget_ilist_append_full
+     (cfdata->gui.ilist, icon, end, ccc->name, NULL, ccc, NULL);
+}
+
+static void
+_fill_data_add_batch(E_Config_Dialog_Data *cfdata, Eina_List **p_todo, const CFColor_Class_Description *descs)
+{
+   CFColor_Class *ccc;
+   Eina_List *batch = NULL;
+   const CFColor_Class_Description *itr;
+
+   for (itr = descs; itr->key; itr++)
+     {
+	E_Color_Class *cc;
+	Eina_List *l, *found_node = NULL;
+	const char *key_stringshared = eina_stringshare_add(itr->key);
+
+	EINA_LIST_FOREACH(*p_todo, l, cc)
+	  {
+	     if (cc->name == key_stringshared)
+	       {
+		  found_node = l;
+		  break;
+	       }
+	  }
+
+	if (!found_node)
+	  cc = NULL;
+	else
+	  {
+	     cc = found_node->data;
+	     *p_todo = eina_list_remove_list(*p_todo, found_node);
+	  }
+
+	ccc = _config_color_class_new(key_stringshared, itr->name, cc);
+	eina_stringshare_del(key_stringshared);
+
+	if (ccc)
+	  {
+	     batch = eina_list_append(batch, ccc);
+	     ccc->gui.type = itr->type;
+	  }
+     }
+
+   batch = eina_list_sort(batch, -1, _config_color_class_sort);
+   EINA_LIST_FREE(batch, ccc)
+     _fill_data_add_item(cfdata, ccc);
+}
+
+static void
+_fill_data(E_Config_Dialog_Data *cfdata)
+{
+   Eina_List *todo = eina_list_clone(e_color_class_list());
+   E_Color_Class *cc;
+
+   _fill_data_add_header(cfdata, _("Window Manager"));
+   _fill_data_add_batch(cfdata, &todo, _color_classes_wm);
+   _fill_data_add_header(cfdata, _("Widgets"));
+   _fill_data_add_batch(cfdata, &todo, _color_classes_widgets);
+   _fill_data_add_header(cfdata, _("Modules"));
+   _fill_data_add_batch(cfdata, &todo, _color_classes_modules);
+
+   if (!todo) return;
+   _fill_data_add_header(cfdata, _("Others"));
+   todo = eina_list_sort(todo, -1, _color_class_sort);
+   EINA_LIST_FREE(todo, cc)
+     {
+	CFColor_Class *ccc;
+	char name[256], *d = name, *d_end = name + sizeof(name) - 1;
+	const char *s = cc->name;
+	Eina_Bool needs_upcase = EINA_TRUE;
+
+	for (; *s && d < d_end; s++, d++)
+	  {
+	     if (!isalnum(*s))
+	       {
+		  *d = ' ';
+		  needs_upcase = EINA_TRUE;
+	       }
+	     else if (needs_upcase)
+	       {
+		  *d = toupper(*s);
+		  needs_upcase = EINA_FALSE;
+	       }
+	     else
+	       *d = *s;
+	  }
+	*d = '\0';
+
+	ccc = _config_color_class_new(cc->name, name, cc);
+	if (!ccc) continue;
+	_fill_data_add_item(cfdata, ccc);
+     }
+}
+
+static int
+_fill_data_delayed(void *data)
+{
+   E_Config_Dialog_Data *cfdata = data;
+   cfdata->delay_load_timer = NULL;
+   _fill_data(cfdata);
+   return 0;
 }
