@@ -752,7 +752,7 @@ _e_mod_comp_cb_update(E_Comp *c)
                   cw->nocomp = 1;
                   if (cw->redirected)
                     {
-                       printf("undirect\n");
+                       printf("^^^^ undirect1 %x\n", cw->win);
                        ecore_x_composite_unredirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
                        cw->redirected = 0;
                        cw->pw = 0;
@@ -834,6 +834,7 @@ _e_mod_comp_cb_update(E_Comp *c)
                     }
                   if (!cw->redirected)
                     {
+                       printf("^^^^ redirect2 %x\n", cw->win);
                        printf("  redr\n");
                        ecore_x_composite_redirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
                        cw->pixmap = ecore_x_composite_name_window_pixmap_get(cw->win);
@@ -1141,7 +1142,9 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
      (cw->up, E_UPDATE_POLICY_HALF_WIDTH_OR_MORE_ROUND_UP_TO_FULL_WIDTH);
    if (((!cw->input_only) && (!cw->invalid)) && (cw->override))
      {
+        printf("^^^^ redirect3 %x\n", cw->win);
         cw->redirected = 1;
+// we redirect all subwindows anyway
         ecore_x_composite_redirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
         cw->dmg_updates = 0;
      }
@@ -1186,6 +1189,8 @@ _e_mod_comp_win_del(E_Comp_Win *cw)
      }
    if (cw->redirected)
      {
+        printf("^^^^ undirect4 %x\n", cw->win);
+// we redirect all subwindows anyway
         ecore_x_composite_unredirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
         cw->redirected = 0;
         cw->pw = 0;
@@ -1276,7 +1281,9 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
    cw->native = 0;
    if (!cw->redirected)
      {
-        ecore_x_composite_redirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
+//        printf("^^^^ redirect5 %x\n", cw->win);
+// we redirect all subwindows anyway
+//        ecore_x_composite_redirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
         cw->pixmap = ecore_x_composite_name_window_pixmap_get(cw->win);
         if (cw->pixmap)
           ecore_x_pixmap_geometry_get(cw->pixmap, NULL, NULL, &(cw->pw), &(cw->ph));
@@ -1428,7 +1435,9 @@ _e_mod_comp_win_hide(E_Comp_Win *cw)
      }
    if (cw->redirected)
      {
-        ecore_x_composite_unredirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
+//        printf("^^^^ undirect6 %x\n", cw->win);
+// we redirect all subwindows anyway
+//        ecore_x_composite_unredirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
         cw->redirected = 0;
         cw->pw = 0;
         cw->ph = 0;
