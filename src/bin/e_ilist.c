@@ -859,6 +859,7 @@ e_ilist_multi_select(Evas_Object *obj, int n)
    else if (n < 0) n = 0;
 
    if (!(si = eina_list_nth(sd->items, n))) return;
+   if (si->header) return;
    sd->selected = n;
    selectraise = edje_object_data_get(si->o_base, "selectraise");
    if (si->selected) 
