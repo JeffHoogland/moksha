@@ -103,6 +103,10 @@ color_classes {
       name: "shelf_base";
       color: 255 255 255 255;
    }
+   color_class {
+      name: "scrollframe_base";
+      color: 255 255 255 255;
+   }
    // this seems totaly bogus, should be per module or really used as
    // an unique color for all modules!
    //    color_class {
@@ -138,7 +142,28 @@ color_classes {
       color: 255 255 255 255;
    }
    color_class {
+      name: "ilist_item_base";
+      color: 255 255 255 255;
+   }
+   color_class {
+      name: "ilist_item_odd_base";
+      color: 255 255 255 255;
+   }
+   color_class {
+      name: "ilist_item_header_base";
+      color: 255 255 255 255;
+   }
+   color_class {
+      name: "ilist_item_header_odd_base";
+      color: 255 255 255 255;
+   }
+   color_class {
       name: "ilist_item";
+      color: 0 0 0 255;
+      color3: 0 0 0 0;
+   }
+   color_class {
+      name: "ilist_item_odd";
       color: 0 0 0 255;
       color3: 0 0 0 0;
    }
@@ -153,11 +178,12 @@ color_classes {
       color3: 0 0 0 32;
    }
    color_class {
-      name: "dialog_base";
-      color: 255 255 255 255;
+      name: "ilist_item_header_odd";
+      color: 224 224 224 255;
+      color3: 0 0 0 32;
    }
    color_class {
-      name: "configure_base";
+      name: "dialog_base";
       color: 255 255 255 255;
    }
    color_class {
@@ -16781,6 +16807,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	    mouse_events: 0;
 	    description {
 	       state: "default" 0.0;
+	       color_class: "ilist_item_base";
 	       image {
 		  normal: "ilist_1.png";
 		  border: 2 2 2 2;
@@ -17299,6 +17326,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	    mouse_events: 0;
 	    description {
 	       state: "default" 0.0;
+	       color_class: "ilist_item_odd_base";
 	       image {
 		  normal: "ilist_2.png";
 		  border: 2 2 2 2;
@@ -17524,7 +17552,7 @@ collections { /* begin the collection of edje groups that are in this file */
 		  relative: 1.0  1.0;
 		  offset:   -5 -5;
 	       }
-	       color_class: "ilist_item";
+	       color_class: "ilist_item_odd";
 	       text {
 		  font: "Sans";
 		  size: 10;
@@ -17819,6 +17847,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	    mouse_events: 0;
 	    description {
 	       state: "default" 0.0;
+	       color_class: "ilist_item_base";
 	       image {
 		  normal: "ilist_1.png";
 		  border: 2 2 2 2;
@@ -18338,6 +18367,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	    mouse_events: 0;
 	    description {
 	       state: "default" 0.0;
+	       color_class: "ilist_item_odd_base";
 	       image {
 		  normal: "ilist_2.png";
 		  border: 2 2 2 2;
@@ -18563,7 +18593,7 @@ collections { /* begin the collection of edje groups that are in this file */
 		  relative: 1.0  1.0;
 		  offset:   -5 -5;
 	       }
-	       color_class: "ilist_item";
+	       color_class: "ilist_item_odd";
 	       text {
 		  font: "Sans";
 		  size: 10;
@@ -19101,7 +19131,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	 part { name: "base";
 	    mouse_events:  0;
 	    description { state: "default" 0.0;
-               color_class: "configure_base";
+               color_class: "dialog_base";
 	       image.normal: "dia_grad.png";
 	       fill {
 		  smooth: 0;
@@ -20495,6 +20525,7 @@ group { name: "e/toolbar/default/base";
 	       rel1.offset: 1 1;
 	       rel2.offset: -2 -2;
 	       color: 255 255 255 255;
+	       color_class: "scrollframe_base";
 	    }
 	 }
 	 part { name: "clipper";
@@ -21197,6 +21228,7 @@ group { name: "e/toolbar/default/base";
 	    mouse_events: 0;
 	    description {
 	       state: "default" 0.0;
+	       color_class: "ilist_item_base";
 	       image {
 		  normal: "ilist_1.png";
 		  border: 2 2 2 2;
@@ -21390,6 +21422,7 @@ group { name: "e/toolbar/default/base";
 	    mouse_events: 0;
 	    description {
 	       state: "default" 0.0;
+	       color_class: "ilist_item_odd_base";
 	       image {
 		  normal: "ilist_2.png";
 		  border: 2 2 2 2;
@@ -21465,7 +21498,7 @@ group { name: "e/toolbar/default/base";
 		  relative: 1.0  1.0;
 		  offset:   -5 -5;
 	       }
-	       color_class: "ilist_item";
+	       color_class: "ilist_item_odd";
 	       text {
 		  font: "Sans";
 		  size: 10;
@@ -21610,6 +21643,7 @@ group { name: "e/toolbar/default/base";
 	    mouse_events: 0;
 	    description {
 	       state: "default" 0.0;
+	       color_class: "ilist_item_header_base";
 	       image {
 		  normal: "ilist_header_1.png";
 		  border: 2 2 2 2;
@@ -21780,6 +21814,7 @@ group { name: "e/toolbar/default/base";
 	    mouse_events: 0;
 	    description {
 	       state: "default" 0.0;
+	       color_class: "ilist_item_header_odd_base";
 	       image {
 		  normal: "ilist_header_2.png";
 		  border: 2 2 2 2;
@@ -21854,7 +21889,7 @@ group { name: "e/toolbar/default/base";
 		  relative: 1.0  1.0;
 		  offset:   -5 -5;
 	       }
-	       color_class: "ilist_item_header";
+	       color_class: "ilist_item_header_odd";
 	       text {
                   font: "Sans:style=Bold";
 		  size: 16;
@@ -21937,11 +21972,6 @@ group { name: "e/toolbar/default/base";
 
    group { name: "e/widgets/ilist/toggle_end";
       images {
-         image: "bt_sm_base1.png" COMP;
-	 image: "bt_sm_shine.png" COMP;
-	 image: "bt_sm_hilight.png" COMP;
-	 image: "ilist_1.png" COMP;
-	 image: "ilist_item_shadow.png" COMP;
 	 image: "icon_active.png" COMP;
       }
       parts {
