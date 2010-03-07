@@ -30,6 +30,10 @@ OPTIONS:
   -default-profile-get Get the default configuration profile
   -default-profile-set OPT1 Set the default configuration profile to OPT1
 
+  -desks-get Get the number of virtual desktops
+  -desktop-bg-add OPT1 OPT2 OPT3 OPT4 OPT5 Add a desktop bg definition. OPT1 = container no. OPT2 = zone no. OPT3 = desk_x. OPT4 = desk_y. OPT5 = bg file path
+  -desktop-bg-del OPT1 OPT2 OPT3 OPT4 Delete a desktop bg definition. OPT1 = container no. OPT2 = zone no. OPT3 = desk_x. OPT4 = desk_y.
+  -desktop-bg-list List all current desktop bg definitions
 
 Note: This is a new implementation of enlightenment_remote,
       for more information about it see the '--help-new' option.
@@ -111,6 +115,66 @@ ERGM(){
    done
    echo ""
    unset result value
+}
+
+#===  FUNCTION  ================================================================
+#          NAME:  ERGMI
+#   DESCRIPTION:  Get a (multiple) values (integer)
+#    PARAMETERS:  interface/method call
+#       RETURNS:  values (integer)
+#===============================================================================
+ERGMI(){
+   result="$( dbus-send --print-reply=literal --dest=org.enlightenment.wm.service /org/enlightenment/wm/RemoteObject "$1" )"
+   result="$( echo "$result" | sed 's/int32//g' )"
+   for value in $result
+   do
+      echo -n "$value "
+   done
+   echo ""
+   unset result value
+}
+
+#===  FUNCTION  ================================================================
+#          NAME:  ERGMST
+#   DESCRIPTION:  Get a (multiple) struct value
+#    PARAMETERS:  interface/method call
+#       RETURNS:  struct values
+#===============================================================================
+ERGMST(){
+   result="$( dbus-send --print-reply=literal --dest=org.enlightenment.wm.service /org/enlightenment/wm/RemoteObject "$1" )"
+   result="${result##*array \[}"
+   result="${result%%]*}"
+   result="$( echo "$result" | sed -e 's/int32//g' -e 's/struct {//g' )"
+   for value in $result
+   do
+      if test "$value" = "}"; then
+         echo
+      else
+         echo -n "$value "
+      fi
+   done
+   echo ""
+   unset result value
+}
+
+#===  FUNCTION  ================================================================
+#          NAME:  ERCIIIIS
+#   DESCRIPTION:  eremote call with int, int, int, int, string parameter
+#    PARAMETERS:  interface/method call, int, int, int, int, string
+#       RETURNS:  
+#===============================================================================
+ERCIIIIS(){
+   dbus-send --print-reply=literal --dest=org.enlightenment.wm.service /org/enlightenment/wm/RemoteObject "$1" int32:"$2" int32:"$3" int32:"$4" int32:"$5" string:"$6"
+}
+
+#===  FUNCTION  ================================================================
+#          NAME:  ERCIIIIS
+#   DESCRIPTION:  eremote call with int, int, int, int parameter
+#    PARAMETERS:  interface/method call, int, int, int, int
+#       RETURNS:  
+#===============================================================================
+ERCIIII(){
+   dbus-send --print-reply=literal --dest=org.enlightenment.wm.service /org/enlightenment/wm/RemoteObject "$1" int32:"$2" int32:"$3" int32:"$4" int32:"$5"
 }
 
 
@@ -195,6 +259,36 @@ er_default_profile_set(){
 }
 
 
+#-------------------------------------------------------------------------------
+#   E Virtual desktop get
+#-------------------------------------------------------------------------------
+er_desktop_get(){
+   ERGMI org.enlightenment.wm.Desktop.GetVirtualCount
+}
+
+
+#-------------------------------------------------------------------------------
+#   E Desktop background add
+#-------------------------------------------------------------------------------
+er_desktop_bg_add(){
+   ERCIIIIS org.enlightenment.wm.Desktop.Background.Add "$2" "$3" "$4" "$5" "$6"
+}
+
+#-------------------------------------------------------------------------------
+#   E Desktop background del
+#-------------------------------------------------------------------------------
+er_desktop_bg_del(){
+   ERCIIII org.enlightenment.wm.Desktop.Background.Del "$2" "$3" "$4" "$5"
+}
+
+#-------------------------------------------------------------------------------
+#   E Desktop background list
+#-------------------------------------------------------------------------------
+er_desktop_bg_list(){
+   ERGMST org.enlightenment.wm.Desktop.Background.List
+}
+
+
 
 
 
@@ -247,6 +341,18 @@ case "$1" in
    ;;
    -default-profile-set)
       er_default_profile_set "$@"
+   ;;
+   -desks-get)
+      er_desktop_get
+   ;;
+   -desktop-bg-add)
+      er_desktop_bg_add "$@"
+   ;;
+   -desktop-bg-del)
+      er_desktop_bg_del "$@"
+   ;;
+   -desktop-bg-list)
+      er_desktop_bg_list
    ;;
 
 
@@ -314,7 +420,6 @@ echo "
   -border-shade-speed-set OPT1 Set the shading speed (pixels/sec)
   -border-shade-speed-get Get the shading speed (pixels/sec)
   -desks-set OPT1 OPT2 Set the number of virtual desktops (X x Y desks OPT1 = X, OPT2 = Y)
-  -desks-get Get the number of virtual desktops
   -maximize-policy-set OPT1 Set the maximize policy. OPT1 = FULLSCREEN, SMART, EXPAND or FILL
   -maximize-policy-get Get maximize policy
   -maximize-manipulation-set OPT1 Allow manipulation, 1 for enabled 0 for disabled
@@ -345,9 +450,6 @@ echo "
   -window-resist-get Get window resist threshold
   -gadget-resist-set OPT1 Set gadget resist threshold (0-100)
   -gadget-resist-get Get gadget resist threshold
-  -desktop-bg-add OPT1 OPT2 OPT3 OPT4 OPT5 Add a desktop bg definition. OPT1 = container no. OPT2 = zone no. OPT3 = desk_x. OPT4 = desk_y. OPT5 = bg file path
-  -desktop-bg-del OPT1 OPT2 OPT3 OPT4 Delete a desktop bg definition. OPT1 = container no. OPT2 = zone no. OPT3 = desk_x. OPT4 = desk_y.
-  -desktop-bg-list List all current desktop bg definitions
   -winlist-warp-while-selecting-set OPT1 Set winlist (alt+tab) warp while selecting policy
   -winlist-warp-while-selecting-get Get winlist (alt+tab) warp while selecting policy
   -winlist-warp-at-end-set OPT1 Set winlist (alt+tab) warp at end policy

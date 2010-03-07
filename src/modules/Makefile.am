@@ -114,8 +114,8 @@ if USE_MODULE_CONF_PROFILES
 SUBDIRS += conf_profiles
 endif
 
-if USE_MODULE_MSGBUS_LANG
-SUBDIRS += msgbus_lang
+if USE_MODULE_MSGBUS
+SUBDIRS += msgbus
 endif
 
 if USE_MODULE_CONF_ENGINE
@@ -292,7 +292,7 @@ conf_startup \
 conf_intl \
 conf_imc \
 conf_profiles \
-msgbus_lang \
+msgbus \
 conf_engine \
 conf_applications \
 conf_desks \
