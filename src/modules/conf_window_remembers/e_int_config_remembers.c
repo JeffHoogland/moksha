@@ -111,23 +111,23 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   Evas_Object *of, *of2, *ow;
+   Evas_Object *ol, *of2, *ow;
    Evas_Coord mw, mh;
 
-   of = e_widget_frametable_add(evas, _("Window Remembers"), 0);
+   ol = e_widget_list_add(evas, 0, 0);
 
-   ow = e_widget_check_add(evas, _("Remember internal dialogs"), 
+   ow = e_widget_check_add(evas, _("Remember internal dialogs"),
                            &(cfdata->remember_dialogs));
-   e_widget_frametable_object_append(of, ow, 0, 0, 1, 1, 1, 1, 1, 0);
+   e_widget_list_object_append(ol, ow, 1, 0, 0.0);
    ow = e_widget_check_add(evas, _("Remember file manager windows"),
                            &(cfdata->remember_fm_wins));
-   e_widget_frametable_object_append(of, ow, 0, 1, 1, 1, 1, 1, 1, 0);
+   e_widget_list_object_append(ol, ow, 1, 0, 0.0);
 
    ow = e_widget_button_add(evas, _("Delete Remember(s)"), "list-remove",
 			    _cb_delete, cfdata, NULL);
    cfdata->btn = ow;
 
-   ow = e_widget_ilist_add(evas, 24, 24, NULL);
+   ow = e_widget_ilist_add(evas, 1, 1, NULL);
    cfdata->list = ow;
    e_widget_ilist_multi_select_set(ow, 1);
    e_widget_on_change_hook_set(ow, _cb_list_change, cfdata);
@@ -163,12 +163,12 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    cfdata->role = ow;
    e_widget_frametable_object_append(of2, cfdata->role, 1, 3, 1, 1, 1, 1, 1, 0);
 
-   e_widget_frametable_object_append(of, cfdata->list, 0, 2, 1, 1, 1, 1, 1, 1);
-   e_widget_frametable_object_append(of, of2, 0, 3, 1, 1, 1, 1, 1, 0);
-   e_widget_frametable_object_append(of, cfdata->btn, 0, 4, 1, 1, 1, 1, 1, 0);
+   e_widget_list_object_append(ol, cfdata->list, 1, 1, 0.0);
+   e_widget_list_object_append(ol, of2, 1, 0, 0.0);
+   e_widget_list_object_append(ol, cfdata->btn, 1, 0, 0.0);
 
    e_widget_disabled_set(cfdata->btn, 1);
-   return of;
+   return ol;
 }
 
 static void 
