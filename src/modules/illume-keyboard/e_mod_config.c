@@ -18,6 +18,8 @@ int kbd_external = 0;
 EAPI int 
 il_kbd_config_init(E_Module *m) 
 {
+   char buff[PATH_MAX];
+
    conf_edd = E_CONFIG_DD_NEW("Illume_Kbd_Cfg", Il_Kbd_Config);
    #undef T
    #undef D
@@ -52,11 +54,12 @@ il_kbd_config_init(E_Module *m)
 
    il_kbd_cfg->mod_dir = eina_stringshare_add(m->dir);
 
+   snprintf(buff, sizeof(buff), "%s/e-module-illume-keyboard.edj",
+            il_kbd_cfg->mod_dir);
    e_configure_registry_category_add("illume", 0, _("Illume"), NULL, 
                                      "enlightenment/display");
    e_configure_registry_generic_item_add("illume/keyboard", 0, _("Keyboard"), 
-                                         NULL, "enlightenment/keyboard", 
-                                         il_kbd_config_show);
+                                         buff, "icon", il_kbd_config_show);
    return 1;
 }
 
