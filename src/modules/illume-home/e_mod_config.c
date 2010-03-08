@@ -20,6 +20,8 @@ Evas_Object *delay_label, *delay_slider;
 int 
 il_home_config_init(E_Module *m) 
 {
+   char buff[PATH_MAX];
+
    conf_edd = E_CONFIG_DD_NEW("Illume-Home_Cfg", Il_Home_Config);
    #undef T
    #undef D
@@ -54,11 +56,13 @@ il_home_config_init(E_Module *m)
 
    il_home_cfg->mod_dir = eina_stringshare_add(m->dir);
 
+   snprintf(buff, sizeof(buff), "%s/e-module-illume-home.edj", 
+            il_home_cfg->mod_dir);
+
    e_configure_registry_category_add("illume", 0, _("Illume"), NULL, 
                                      "enlightenment/display");
    e_configure_registry_generic_item_add("illume/home", 0, _("Home"), 
-                                         NULL, "enlightenment/launcher", 
-                                         il_home_config_show);
+                                         buff, "icon", il_home_config_show);
    return 1;
 }
 
