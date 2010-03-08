@@ -2097,6 +2097,8 @@ e_mod_comp_init(void)
         if (c) compositors = eina_list_append(compositors, c);
      }
    
+   ecore_x_sync();
+   
    return 1;
 }
 
