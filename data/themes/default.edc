@@ -26526,9 +26526,8 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
          program { name: "show3";
             signal: "show";
             source: "";
-            in: 0.2 0.0;
             action: STATE_SET "visible" 0.0;
-            transition: LINEAR 0.5;
+            transition: LINEAR 0.2;
             target: "p0-0"; target: "p0-0.1"; target: "p0-0.2";
             target: "p1-0"; target: "p1-0.1"; target: "p1-0.2";
             target: "p2-0"; target: "p2-0.1"; target: "p2-0.2";
@@ -26630,8 +26629,9 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
          
          program { name: "exit1";
             action: STATE_SET "default" 0.0;
-            transition: ACCELERATE 0.5;
+            transition: ACCELERATE 2.0;
             target: "light";
+            target: "logoclip";
             after: "exit4";
          }
          program { name: "exit4";
