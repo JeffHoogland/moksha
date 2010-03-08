@@ -1015,26 +1015,6 @@ main(int argc, char **argv)
 
    /* ecore_x_ungrab(); */
 
-   TS("init properites");
-   if (!nostartup)
-     {
-	if (after_restart) e_startup(E_STARTUP_RESTART);
-	else e_startup(E_STARTUP_START);
-     }
-
-   if (!((!e_config->show_splash) || (after_restart)))
-     {
-	ecore_timer_add(16.0, _e_main_cb_startup_fake_end, NULL);
-
-	if (locked) e_desklock_show();
-     }
-
-   e_container_all_thaw();
-
-   TS("test code");
-   /* run any testing code now we are set up */
-   e_test();
-
    /* load modules */
    e_init_status_set(_("Load Modules"));
    TS("load modules");
@@ -1059,6 +1039,26 @@ main(int argc, char **argv)
 	     "modules again."));
 	e_config_save_queue();
      }
+
+   TS("init properites");
+   if (!nostartup)
+     {
+	if (after_restart) e_startup(E_STARTUP_RESTART);
+	else e_startup(E_STARTUP_START);
+     }
+
+   if (!((!e_config->show_splash) || (after_restart)))
+     {
+	ecore_timer_add(16.0, _e_main_cb_startup_fake_end, NULL);
+
+	if (locked) e_desklock_show();
+     }
+
+   e_container_all_thaw();
+
+   TS("test code");
+   /* run any testing code now we are set up */
+   e_test();
 
    e_init_status_set(_("Configure Shelves"));
    TS("shelf config init");
