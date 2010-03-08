@@ -90,13 +90,13 @@ e_mod_illume_config_init(void)
 
    /* add config items to category */
    e_configure_registry_generic_item_add("illume/policy", 0, _("Policy"), 
-                                         NULL, "enlightenment/policy", 
+                                         NULL, "preferences-profiles", 
                                          e_mod_illume_config_policy_show);
    e_configure_registry_generic_item_add("illume/animation", 0, _("Animation"), 
-                                         NULL, "enlightenment/animation", 
+                                         NULL, "preferences-transitions", 
                                          e_mod_illume_config_animation_show);
    e_configure_registry_generic_item_add("illume/windows", 0, _("Windows"), 
-                                         NULL, "enlightenment/windows", 
+                                         NULL, "preferences-winlist", 
                                          e_mod_illume_config_windows_show);
 
    return 1;
