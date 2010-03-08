@@ -8,7 +8,9 @@
 static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int _advanced_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 
@@ -43,8 +45,10 @@ e_int_config_focus(E_Container *con, const char *params __UNUSED__)
    v->free_cfdata = _free_data;
    v->basic.apply_cfdata = _basic_apply_data;
    v->basic.create_widgets = _basic_create_widgets;
+   v->basic.check_changed = _basic_check_changed;
    v->advanced.apply_cfdata = _advanced_apply_data;
    v->advanced.create_widgets = _advanced_create_widgets;
+   v->advanced.check_changed = _advanced_check_changed;
 
    /* create config diaolg for NULL object/data */
    cfd = e_config_dialog_new(con, _("Focus Settings"), "E", 
@@ -135,6 +139,12 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 }
 
 static int
+_basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
+{
+   return e_config->focus_policy != cfdata->mode;
+}
+
+static int
 _advanced_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    /* Actually take our cfdata settings and apply them in real life */
@@ -152,25 +162,37 @@ _advanced_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
    return 1; /* Apply was OK */
 }
 
+static int
+_advanced_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
+{
+   return ((e_config->focus_policy != cfdata->focus_policy) ||
+	   (e_config->focus_setting != cfdata->focus_setting) ||
+	   (e_config->pass_click_on != cfdata->pass_click_on) ||
+	   (e_config->always_click_to_raise != cfdata->always_click_to_raise) ||
+	   (e_config->always_click_to_focus != cfdata->always_click_to_focus) ||
+	   (e_config->focus_last_focused_per_desktop != cfdata->focus_last_focused_per_desktop) ||
+	   (e_config->focus_revert_on_hide_or_close != cfdata->focus_revert_on_hide_or_close) ||
+	   (e_config->pointer_slide != cfdata->pointer_slide));
+}
+
+
 /**--GUI--**/
 static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    /* generate the core widget layout for a basic dialog */
-   Evas_Object *o, *ob, *of;
+   Evas_Object *o, *ob;
    E_Radio_Group *rg;
-      
+
    o = e_widget_list_add(evas, 0, 0);
-   of = e_widget_framelist_add(evas, _("Focus"), 0);
    rg = e_widget_radio_group_new(&(cfdata->mode));
    ob = e_widget_radio_add(evas, _("Click Window to Focus"), E_FOCUS_CLICK, rg);
-   e_widget_framelist_object_append(of, ob);
+   e_widget_list_object_append(o, ob, 1, 0, 0.0);
    ob = e_widget_radio_add(evas, _("Window under the Mouse"), E_FOCUS_MOUSE, rg);
-   e_widget_framelist_object_append(of, ob);
+   e_widget_list_object_append(o, ob, 1, 0, 0.0);
    ob = e_widget_radio_add(evas, _("Most recent Window under the Mouse"), 
                            E_FOCUS_SLOPPY, rg);
-   e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 0, 0.5);
+   e_widget_list_object_append(o, ob, 1, 0, 0.0);
    return o;
 }
 
