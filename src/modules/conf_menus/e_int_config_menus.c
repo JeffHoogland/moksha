@@ -16,8 +16,10 @@ static void _fill_data(E_Config_Dialog_Data *cfdata);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static int _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static int _adv_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int _adv_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 
 E_Config_Dialog *
 e_int_config_menus(E_Container *con, const char *params __UNUSED__) 
@@ -32,8 +34,10 @@ e_int_config_menus(E_Container *con, const char *params __UNUSED__)
    v->free_cfdata = _free_data;
    v->basic.create_widgets = _basic_create;
    v->basic.apply_cfdata = _basic_apply;
+   v->basic.check_changed = _basic_check_changed;
    v->advanced.create_widgets = _adv_create;
    v->advanced.apply_cfdata = _adv_apply;
+   v->advanced.check_changed = _adv_check_changed;
 
    cfd = e_config_dialog_new(con, _("Menu Settings"), "E", "menus/menu_settings", 
                              "preferences-menus", 0, v, NULL);
@@ -109,6 +113,16 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    e_config->menu_eap_comment_show = cfdata->show_comment;
    e_config_save_queue();
    return 1;
+}
+
+static int
+_basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
+{
+   return ((e_config->menu_favorites_show != cfdata->show_favs) ||
+	   (e_config->menu_apps_show != cfdata->show_apps) ||
+	   (e_config->menu_eap_name_show != cfdata->show_name) ||
+	   (e_config->menu_eap_generic_show != cfdata->show_generic) ||
+	   (e_config->menu_eap_comment_show != cfdata->show_comment));
 }
 
 static Evas_Object *
@@ -197,4 +211,31 @@ _adv_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    e_config->menu_autoscroll_cursor_margin = cfdata->autoscroll_cursor_margin;
    e_config_save_queue();
    return 1;
+}
+
+static int
+_adv_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
+{
+   double scroll_speed, move_threshold;
+
+   if (cfdata->scroll_speed == 0)
+     scroll_speed = 1.0;
+   else
+     scroll_speed = cfdata->scroll_speed;
+
+   if (cfdata->fast_mouse_move_threshhold == 0)
+     move_threshold = 1.0;
+   else
+     move_threshold = cfdata->fast_mouse_move_threshhold;
+
+   return ((e_config->menu_favorites_show != cfdata->show_favs) ||
+	   (e_config->menu_apps_show != cfdata->show_apps) ||
+	   (e_config->menu_eap_name_show != cfdata->show_name) ||
+	   (e_config->menu_eap_generic_show != cfdata->show_generic) ||
+	   (e_config->menu_eap_comment_show != cfdata->show_comment) ||
+	   (e_config->menus_click_drag_timeout != cfdata->click_drag_timeout) ||
+	   (e_config->menu_autoscroll_margin != cfdata->autoscroll_margin) ||
+	   (e_config->menu_autoscroll_cursor_margin != cfdata->autoscroll_cursor_margin) ||
+	   (e_config->menus_scroll_speed != scroll_speed) ||
+	   (e_config->menus_fast_mouse_move_threshhold != move_threshold));
 }
