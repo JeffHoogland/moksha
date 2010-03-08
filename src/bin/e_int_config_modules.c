@@ -146,7 +146,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 
    cfdata->evas = e_win_evas_get(cfd->dia->win);
 
-   of = e_widget_frametable_add(evas, _("Modules"), 0);
+   of = e_widget_table_add(evas, 0);
    ol = e_widget_ilist_add(evas, 24, 24, NULL);
    cfdata->l_modules = ol;
 
@@ -156,23 +156,23 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 
    e_widget_ilist_multi_select_set(ol, 1);
    e_widget_on_change_hook_set(ol, _widget_list_selection_changed, cfdata);
-   e_widget_frametable_object_append(of, ol, 0, 0, 2, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ol, 0, 0, 2, 1, 1, 1, 1, 1);
 
    ol = e_widget_button_add(evas, _("Load"), NULL, _btn_cb_load, cfdata, NULL);
    cfdata->b_load = ol;
    e_widget_disabled_set(ol, 1);
-   e_widget_frametable_object_append(of, ol, 0, 1, 1, 1, 1, 1, 1, 0);
+   e_widget_table_object_append(of, ol, 0, 1, 1, 1, 1, 1, 1, 0);
 
    ol = e_widget_button_add(evas, _("Unload"), NULL, _btn_cb_unload, cfdata, NULL);
    cfdata->b_unload = ol;
    e_widget_disabled_set(ol, 1);
-   e_widget_frametable_object_append(of, ol, 1, 1, 1, 1, 1, 1, 1, 0);
+   e_widget_table_object_append(of, ol, 1, 1, 1, 1, 1, 1, 1, 0);
 
    ol = e_widget_textblock_add(evas);
    e_widget_size_min_set(ol, (200 * e_scale), 60 * e_scale);
    cfdata->o_desc = ol;
    e_widget_textblock_markup_set(ol, _("No modules selected."));
-   e_widget_frametable_object_append(of, ol, 0, 2, 2, 1, 1, 0, 1, 0);
+   e_widget_table_object_append(of, ol, 0, 2, 2, 1, 1, 0, 1, 0);
 
    e_dialog_resizable_set(cfd->dia, 1);
    e_util_win_auto_resize_fill(cfd->dia->win);
