@@ -406,10 +406,10 @@ systray_rounded_corners.png \
 theme-label.png \
 glow.png \
 icon_efm_file_del.png \
-exq-barglow.png \
-exq-bar.png \
 exq-bglight.png \
 exq-logo.png \
+exq-dot.png \
+exq-dot-glow.png \
 connman-disconnect.png \
 connman-disconnect-offline.png \
 connman-ethernet.png \

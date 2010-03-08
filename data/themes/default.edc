@@ -26009,8 +26009,8 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
       images {
          image: "exq-bglight.png" COMP;
          image: "exq-logo.png" COMP;
-         image: "exq-bar.png" COMP;
-         image: "exq-barglow.png" COMP;
+         image: "exq-dot.png" COMP;
+         image: "exq-dot-glow.png" COMP;
       }
       script {
 	 public is_ready;
@@ -26061,81 +26061,6 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
                aspect_preference: BOTH;
                max: 121 217;
                image.normal: "exq-logo.png";
-            }
-         }
-         part { name: "bar";
-            description { state: "default" 0.0;
-               min: 32 32;
-               aspect: 0.66 0.66;
-               rel1 {
-                  to_x: "exquisite.progress";
-                  to_y: "bar_clip";
-                  offset: -9 -9;
-               }
-               rel2 {
-                  to_x: "exquisite.progress";
-                  to_y: "bar_clip";
-                  offset: 8 -1;
-               }
-               image.normal: "exq-bar.png";
-               image.border: 10 10 10 0;
-               color: 255 255 255 0;
-            }
-            description { state: "visible" 0.0;
-               inherit: "default" 0.0;
-               color: 255 255 255 255;
-            }
-         }
-         part { name: "barglow";
-            description { state: "default" 0.0;
-               align: 1.0 0.5;
-//               max: 31 999;
-               rel1 {
-                  to: "bar";
-                  relative: 0.0 0.0;
-                  offset: 9 4;
-               }
-               rel2 {
-                  to_x: "bar";
-                  to_y: "bar_clip";
-                  relative: 1.0 0.52173913;
-                  offset: -5 4;
-               }
-               image.normal: "exq-barglow.png";
-               image.border: 0 10 10 10;
-               color: 255 255 255 0;
-            }
-            description { state: "visible" 0.0;
-               inherit: "default" 0.0;
-               color: 255 255 255 255;
-            }
-         }
-         part { name: "bar_clip";
-            mouse_events:  0;
-            type: RECT;
-            description { state: "default" 0.0;
-               visible: 0;
-               rel1.relative: 0.700 0.550;
-               rel2.relative: 0.740 0.590;
-            }
-         }
-         part {
-            name: "exquisite.progress";
-            mouse_events: 0;
-            type: RECT;
-            description {
-               state: "default" 0.0;
-               visible: 0;
-               rel1 {
-                  to: "bar_clip";
-                  relative: 0.5 0.0;
-                  offset: 0 0;
-               }
-               rel2 {
-                  to: "bar_clip";
-                  relative: 0.5 1.0;
-                  offset: -1 -1;
-               }
             }
          }
          part { name: "e.text.title";
@@ -26215,7 +26140,364 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       }
 	    }
 	 }
+         
+         part { name: "p0-0";
+            description { state: "default" 0.0;
+               min: 22 22; max: 22 22;
+               rel1 { to: "logo";
+                  relative: -0.5 0.9;
+               }
+               rel2 { to: "logo";
+                  relative: -0.5 0.9;
+               }
+               image.normal: "exq-dot.png"; color: 255 255 255 0;
+            }
+            description { state: "visible" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+            description { state: "visible2" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 255;
+               rel1.relative: -0.5 0.8;
+               rel2.relative: -0.5 0.8;
+            }
+         }
+         part { name: "p0-1";
+            description { state: "default" 0.0;
+               image.normal: "exq-dot-glow.png"; color: 255 255 255 0;
+               rel1.to: "p0-0"; rel2.to: "p0-0"; 
+            }
+            description { state: "visible" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+            description { state: "visible2" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+         }
+         part { name: "p0-0.1";
+            description { state: "default" 0.0;
+               image.normal: "exq-dot-glow.png"; color: 255 255 255 0;
+               min: 22 11; max: 22 11;
+               rel1 { to_x: "p0-0"; to_y: "logo";
+                  relative: 0.0 1.0;
+               }
+               rel2 { to_x: "p0-0"; to_y: "logo";
+                  relative: 1.0 1.0;
+               }
+            }
+            description { state: "visible" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 16;
+            }
+            description { state: "visible2" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 4;
+            }
+         }
+         part { name: "p0-0.2";
+            description { state: "default" 0.0;
+               min: 22 22; max: 22 22;
+               rel1 { to_x: "p0-0"; to_y: "logo";
+                  relative: 0.0 1.1;
+               }
+               rel2 { to_x: "p0-0"; to_y: "logo";
+                  relative: 1.0 1.1;
+               }
+               image.normal: "exq-dot.png"; color: 255 255 255 0;
+            }
+            description { state: "visible" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 16;
+            }
+            description { state: "visible2" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 4;
+               rel1.relative: 0.0 1.2;
+               rel2.relative: 1.0 1.2;
+            }
+         }
+      
+         part { name: "p1-0";
+            description { state: "default" 0.0;
+               min: 22 22; max: 22 22;
+               rel1 { to: "logo";
+                  relative:  0.0 0.9;
+               }
+               rel2 { to: "logo";
+                  relative:  0.0 0.9;
+               }
+               image.normal: "exq-dot.png"; color: 255 255 255 0;
+            }
+            description { state: "visible" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+            description { state: "visible2" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 255;
+               rel1.relative:  0.0 0.8;
+               rel2.relative:  0.0 0.8;
+            }
+         }
+         part { name: "p1-1";
+            description { state: "default" 0.0;
+               image.normal: "exq-dot-glow.png"; color: 255 255 255 0;
+               rel1.to: "p1-0"; rel2.to: "p1-0"; 
+            }
+            description { state: "visible" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+            description { state: "visible2" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+         }
+         part { name: "p1-0.1";
+            description { state: "default" 0.0;
+               image.normal: "exq-dot-glow.png"; color: 255 255 255 0;
+               min: 22 11; max: 22 11;
+               rel1 { to_x: "p1-0"; to_y: "logo";
+                  relative: 0.0 1.0;
+               }
+               rel2 { to_x: "p1-0"; to_y: "logo";
+                  relative: 1.0 1.0;
+               }
+            }
+            description { state: "visible" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 16;
+            }
+            description { state: "visible2" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 4;
+            }
+         }
+         part { name: "p1-0.2";
+            description { state: "default" 0.0;
+               min: 22 22; max: 22 22;
+               rel1 { to_x: "p1-0"; to_y: "logo";
+                  relative: 0.0 1.1;
+               }
+               rel2 { to_x: "p1-0"; to_y: "logo";
+                  relative: 1.0 1.1;
+               }
+               image.normal: "exq-dot.png"; color: 255 255 255 0;
+            }
+            description { state: "visible" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 16;
+            }
+            description { state: "visible2" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 4;
+               rel1.relative: 0.0 1.2;
+               rel2.relative: 1.0 1.2;
+            }
+         }
+         
+         part { name: "p2-0";
+            description { state: "default" 0.0;
+               min: 22 22; max: 22 22;
+               rel1 { to: "logo";
+                  relative:  0.5 0.9;
+               }
+               rel2 { to: "logo";
+                  relative:  0.5 0.9;
+               }
+               image.normal: "exq-dot.png"; color: 255 255 255 0;
+            }
+            description { state: "visible" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+            description { state: "visible2" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 255;
+               rel1.relative:  0.5 0.8;
+               rel2.relative:  0.5 0.8;
+            }
+         }
+         part { name: "p2-1";
+            description { state: "default" 0.0;
+               image.normal: "exq-dot-glow.png"; color: 255 255 255 0;
+               rel1.to: "p2-0"; rel2.to: "p2-0"; 
+            }
+            description { state: "visible" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+            description { state: "visible2" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+         }
+         part { name: "p2-0.1";
+            description { state: "default" 0.0;
+               image.normal: "exq-dot-glow.png"; color: 255 255 255 0;
+               min: 22 11; max: 22 11;
+               rel1 { to_x: "p2-0"; to_y: "logo";
+                  relative: 0.0 1.0;
+               }
+               rel2 { to_x: "p2-0"; to_y: "logo";
+                  relative: 1.0 1.0;
+               }
+            }
+            description { state: "visible" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 16;
+            }
+            description { state: "visible2" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 4;
+            }
+         }
+         part { name: "p2-0.2";
+            description { state: "default" 0.0;
+               min: 22 22; max: 22 22;
+               rel1 { to_x: "p2-0"; to_y: "logo";
+                  relative: 0.0 1.1;
+               }
+               rel2 { to_x: "p2-0"; to_y: "logo";
+                  relative: 1.0 1.1;
+               }
+               image.normal: "exq-dot.png"; color: 255 255 255 0;
+            }
+            description { state: "visible" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 16;
+            }
+            description { state: "visible2" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 4;
+               rel1.relative: 0.0 1.2;
+               rel2.relative: 1.0 1.2;
+            }
+         }
+         
+         part { name: "p3-0";
+            description { state: "default" 0.0;
+               min: 22 22; max: 22 22;
+               rel1 { to: "logo";
+                  relative:  1.0 0.9;
+               }
+               rel2 { to: "logo";
+                  relative:  1.0 0.9;
+               }
+               image.normal: "exq-dot.png"; color: 255 255 255 0;
+            }
+            description { state: "visible" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+            description { state: "visible2" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 255;
+               rel1.relative:  1.0 0.8;
+               rel2.relative:  1.0 0.8;
+            }
+         }
+         part { name: "p3-1";
+            description { state: "default" 0.0;
+               image.normal: "exq-dot-glow.png"; color: 255 255 255 0;
+               rel1.to: "p3-0"; rel2.to: "p3-0"; 
+            }
+            description { state: "visible" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+            description { state: "visible2" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+         }
+         part { name: "p3-0.1";
+            description { state: "default" 0.0;
+               image.normal: "exq-dot-glow.png"; color: 255 255 255 0;
+               min: 22 11; max: 22 11;
+               rel1 { to_x: "p3-0"; to_y: "logo";
+                  relative: 0.0 1.0;
+               }
+               rel2 { to_x: "p3-0"; to_y: "logo";
+                  relative: 1.0 1.0;
+               }
+            }
+            description { state: "visible" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 16;
+            }
+            description { state: "visible2" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 4;
+            }
+         }
+         part { name: "p3-0.2";
+            description { state: "default" 0.0;
+               min: 22 22; max: 22 22;
+               rel1 { to_x: "p3-0"; to_y: "logo";
+                  relative: 0.0 1.1;
+               }
+               rel2 { to_x: "p3-0"; to_y: "logo";
+                  relative: 1.0 1.1;
+               }
+               image.normal: "exq-dot.png"; color: 255 255 255 0;
+            }
+            description { state: "visible" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 16;
+            }
+            description { state: "visible2" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 4;
+               rel1.relative: 0.0 1.2;
+               rel2.relative: 1.0 1.2;
+            }
+         }
+
+         part { name: "p4-0";
+            description { state: "default" 0.0;
+               min: 22 22; max: 22 22;
+               rel1 { to: "logo";
+                  relative:  1.5 0.9;
+               }
+               rel2 { to: "logo";
+                  relative:  1.5 0.9;
+               }
+               image.normal: "exq-dot.png"; color: 255 255 255 0;
+            }
+            description { state: "visible" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+            description { state: "visible2" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 255;
+               rel1.relative:  1.5 0.8;
+               rel2.relative:  1.5 0.8;
+            }
+         }
+         part { name: "p4-1";
+            description { state: "default" 0.0;
+               image.normal: "exq-dot-glow.png"; color: 255 255 255 0;
+               rel1.to: "p4-0"; rel2.to: "p4-0"; 
+            }
+            description { state: "visible" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+            description { state: "visible2" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+         }
+         part { name: "p4-0.1";
+            description { state: "default" 0.0;
+               image.normal: "exq-dot-glow.png"; color: 255 255 255 0;
+               min: 22 11; max: 22 11;
+               rel1 { to_x: "p4-0"; to_y: "logo";
+                  relative: 0.0 1.0;
+               }
+               rel2 { to_x: "p4-0"; to_y: "logo";
+                  relative: 1.0 1.0;
+               }
+            }
+            description { state: "visible" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 16;
+            }
+            description { state: "visible2" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 4;
+            }
+         }
+         part { name: "p4-0.2";
+            description { state: "default" 0.0;
+               min: 22 22; max: 22 22;
+               rel1 { to_x: "p4-0"; to_y: "logo";
+                  relative: 0.0 1.1;
+               }
+               rel2 { to_x: "p4-0"; to_y: "logo";
+                  relative: 1.0 1.1;
+               }
+               image.normal: "exq-dot.png"; color: 255 255 255 0;
+            }
+            description { state: "visible" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 16;
+            }
+            description { state: "visible2" 0.0; inherit: "default" 0.0;
+               color: 255 255 255 4;
+               rel1.relative: 0.0 1.2;
+               rel2.relative: 1.0 1.2;
+            }
+         }
+      
       }
+      
       programs {
 	 program { name: "init";
 	    signal: "load";
@@ -26228,62 +26510,125 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
          program { name: "show1";
             signal: "show";
             source: "";
-            in: 0.0 0.0;
             action: STATE_SET "visible" 0.0;
-            transition: LINEAR 1.0;
+            transition: LINEAR 0.3;
             target: "light";
          }
          program { name: "show2";
             signal: "show";
             source: "";
-            in: 0.5 0.0;
+            in: 0.1 0.0;
             action: STATE_SET "visible" 0.0;
-            transition: LINEAR 1.0;
+            transition: LINEAR 0.4;
             target: "logoclip";
             target: "e.text.title";
          }
          program { name: "show3";
             signal: "show";
             source: "";
-            in: 1.0 0.0;
+            in: 0.2 0.0;
             action: STATE_SET "visible" 0.0;
-            transition: LINEAR 1.0;
-            target: "bar";
+            transition: LINEAR 0.5;
+            target: "p0-0"; target: "p0-0.1"; target: "p0-0.2";
+            target: "p1-0"; target: "p1-0.1"; target: "p1-0.2";
+            target: "p2-0"; target: "p2-0.1"; target: "p2-0.2";
+            target: "p3-0"; target: "p3-0.1"; target: "p3-0.2";
+            target: "p4-0"; target: "p4-0.1"; target: "p4-0.2";
             target: "e.text.status";
-            after: "pulsate1";
+            after: "pulsate1"; after: "pulsate1.2";
+            after: "pulsate2"; after: "pulsate2.2";
+            after: "pulsate3"; after: "pulsate3.2";
+            after: "pulsate4"; after: "pulsate4.2";
+            after: "pulsate5"; after: "pulsate5.2";
             after: "ready";
          }
          
          program { name: "pulsate1";
-            action: STATE_SET "visible" 0.0;
-            transition: SINUSOIDAL 1.0;
-            target: "barglow";
-            after: "pulsate2";
+            action: STATE_SET "visible" 0.0; transition: SINUSOIDAL 0.5;
+            in: 0.2 0.2; after: "pulsate1.1"; target: "p0-1";
          }
+         program { name: "pulsate1.1";
+            action: STATE_SET "default" 0.0; transition: SINUSOIDAL 0.5;
+            after: "pulsate1"; target: "p0-1";
+         }
+         program { name: "pulsate1.2";
+            action: STATE_SET "visible2" 0.0; transition: SINUSOIDAL 0.6;
+            in: 0.2 0.2; after: "pulsate1.2.1"; target: "p0-0"; target: "p0-0.1"; target: "p0-0.2";
+         }
+         program { name: "pulsate1.2.1";
+            action: STATE_SET "visible" 0.0; transition: SINUSOIDAL 0.7;
+            after: "pulsate1.2"; target: "p0-0"; target: "p0-0.1"; target: "p0-0.2";
+         }
+         
          program { name: "pulsate2";
-            action: STATE_SET "default" 0.0;
-            transition: SINUSOIDAL 1.0;
-            target: "barglow";
-            after: "pulsate1";
+            action: STATE_SET "visible" 0.0; transition: SINUSOIDAL 0.5;
+            in: 0.2 0.2; after: "pulsate2.1"; target: "p1-1";
          }
-
+         program { name: "pulsate2.1";
+            action: STATE_SET "default" 0.0; transition: SINUSOIDAL 0.5;
+            after: "pulsate2"; target: "p1-1";
+         }
+         program { name: "pulsate2.2";
+            action: STATE_SET "visible2" 0.0; transition: SINUSOIDAL 0.6;
+            in: 0.2 0.2; after: "pulsate2.2.1"; target: "p1-0"; target: "p1-0.1"; target: "p1-0.2";
+         }
+         program { name: "pulsate2.2.1";
+            action: STATE_SET "visible" 0.0; transition: SINUSOIDAL 0.7;
+            after: "pulsate2.2"; target: "p1-0"; target: "p1-0.1"; target: "p1-0.2";
+         }
+         
+         program { name: "pulsate3";
+            action: STATE_SET "visible" 0.0; transition: SINUSOIDAL 0.5;
+            in: 0.2 0.2; after: "pulsate3.1"; target: "p2-1";
+         }
+         program { name: "pulsate3.1";
+            action: STATE_SET "default" 0.0; transition: SINUSOIDAL 0.5;
+            after: "pulsate3"; target: "p2-1";
+         }
+         program { name: "pulsate3.2";
+            action: STATE_SET "visible2" 0.0; transition: SINUSOIDAL 0.6;
+            in: 0.2 0.2; after: "pulsate3.2.1"; target: "p2-0"; target: "p2-0.1"; target: "p2-0.2";
+         }
+         program { name: "pulsate3.2.1";
+            action: STATE_SET "visible" 0.0; transition: SINUSOIDAL 0.7;
+            after: "pulsate3.2"; target: "p2-0"; target: "p2-0.1"; target: "p2-0.2";
+         }
+         
+         program { name: "pulsate4";
+            action: STATE_SET "visible" 0.0; transition: SINUSOIDAL 0.5;
+            in: 0.2 0.2; after: "pulsate4.1"; target: "p3-1";
+         }
+         program { name: "pulsate4.1";
+            action: STATE_SET "default" 0.0; transition: SINUSOIDAL 0.5;
+            after: "pulsate4"; target: "p3-1";
+         }
+         program { name: "pulsate4.2";
+            action: STATE_SET "visible2" 0.0; transition: SINUSOIDAL 0.6;
+            in: 0.2 0.2; after: "pulsate4.2.1"; target: "p3-0"; target: "p3-0.1"; target: "p3-0.2";
+         }
+         program { name: "pulsate4.2.1";
+            action: STATE_SET "visible" 0.0; transition: SINUSOIDAL 0.7;
+            after: "pulsate4.2"; target: "p3-0"; target: "p3-0.1"; target: "p3-0.2";
+         }
+         
+         program { name: "pulsate5";
+            action: STATE_SET "visible" 0.0; transition: SINUSOIDAL 0.5;
+            in: 0.2 0.2; after: "pulsate5.1"; target: "p4-1";
+         }
+         program { name: "pulsate5.1";
+            action: STATE_SET "default" 0.0; transition: SINUSOIDAL 0.5;
+            after: "pulsate5"; target: "p4-1";
+         }
+         program { name: "pulsate5.2";
+            action: STATE_SET "visible2" 0.0; transition: SINUSOIDAL 0.6;
+            in: 0.2 0.2; after: "pulsate5.2.1"; target: "p4-0"; target: "p4-0.1"; target: "p4-0.2";
+         }
+         program { name: "pulsate5.2.1";
+            action: STATE_SET "visible" 0.0; transition: SINUSOIDAL 0.7;
+            after: "pulsate5.2"; target: "p4-0"; target: "p4-0.1"; target: "p4-0.2";
+         }
+         
          program { name: "exit1";
-            action: STATE_SET "default" 0.0;
-            transition: ACCELERATE 0.5;
-            target: "bar";
-            target: "barglow";
-            after: "exit2";
-         }
-         program { name: "exit2";
-            action: STATE_SET "default" 0.0;
-            transition: ACCELERATE 0.5;
-            target: "logoclip";
-            target: "barglow";
-            target: "e.text.title";
-            target: "e.text.status";
-            after: "exit3";
-         }
-         program { name: "exit3";
             action: STATE_SET "default" 0.0;
             transition: ACCELERATE 0.5;
             target: "light";
