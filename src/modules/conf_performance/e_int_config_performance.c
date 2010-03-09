@@ -113,7 +113,7 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    e_widget_list_object_append(ol, ob, 1, 0, 0.5);
 
    e_widget_toolbook_page_append(otb, NULL, _("General"), ol, 
-                                 0, 0, 0, 0, 0.5, 0.0);
+                                 1, 0, 1, 0, 0.5, 0.0);
 
    ol = e_widget_list_add(evas, 0, 0);
    ob = e_widget_label_add(evas, _("Cache flush interval"));
@@ -147,7 +147,7 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    e_widget_list_object_append(ol, ob, 1, 0, 0.5);
 
    e_widget_toolbook_page_append(otb, NULL, _("Caches"), ol, 
-                                 0, 0, 0, 0, 0.5, 0.0);
+                                 1, 0, 1, 0, 0.5, 0.0);
 
    e_widget_toolbook_page_show(otb, 0);
 
