@@ -125,12 +125,14 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    Evas_Object *o, *otb, *ol, *of, *ob;
    Evas_Object *xscreensaver_check;
    E_Radio_Group *rg;
+
    o = e_widget_list_add(evas, 0, 0);
 
-   xscreensaver_check = e_widget_check_add(evas, _("Enable X screensaver"), &(cfdata->enable_screensaver));
-   e_widget_list_object_append(o, xscreensaver_check, 1, 1, 0);
+   xscreensaver_check = e_widget_check_add(evas, _("Enable X screensaver"), 
+                                           &(cfdata->enable_screensaver));
+   e_widget_list_object_append(o, xscreensaver_check, 1, 0, 0);
 
-   otb = e_widget_toolbook_add(evas, 48 * e_scale, 48 * e_scale);
+   otb = e_widget_toolbook_add(evas, (48 * e_scale), (48 * e_scale));
    cfdata->disable_list = eina_list_append(cfdata->disable_list, otb);
 
    ol = e_widget_list_add(evas, 0, 0);
@@ -171,8 +173,8 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
 
    e_widget_list_object_append(ol, of, 1, 1, 0.5);
 
-   e_widget_toolbook_page_append
-     (otb, NULL, _("Timers"), ol, 1, 0, 1, 0, 0.5, 0.0);
+   e_widget_toolbook_page_append(otb, NULL, _("Timers"), ol, 
+                                 1, 0, 1, 0, 0.5, 0.0);
 
    ol = e_widget_list_add(evas, 0, 0);
 
@@ -203,8 +205,8 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
 
    e_widget_list_object_append(ol, of, 1, 1, 0.5);
 
-   e_widget_toolbook_page_append
-     (otb, NULL, _("Miscellaneous"), ol, 1, 0, 1, 0, 0.5, 0.0);
+   e_widget_toolbook_page_append(otb, NULL, _("Miscellaneous"), ol, 
+                                 1, 0, 1, 0, 0.5, 0.0);
 
    e_widget_list_object_append(o, otb, 1, 1, 0.5);
 
@@ -225,7 +227,7 @@ _cb_disable(void *data, Evas_Object *obj __UNUSED__)
    Evas_Object *o;
 
    EINA_LIST_FOREACH(cfdata->disable_list, l, o)
-      e_widget_disabled_set(o, !cfdata->enable_screensaver);
+     e_widget_disabled_set(o, !cfdata->enable_screensaver);
 
    _cb_ask_presentation_changed(cfdata, NULL);
 }
