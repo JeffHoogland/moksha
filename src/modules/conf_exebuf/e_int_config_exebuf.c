@@ -172,7 +172,7 @@ _adv_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *c
    ow = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 10, 200, 5, 0, NULL, 
                             &(cfdata->max_hist_list), 100);
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
-   e_widget_toolbook_page_append(otb, NULL, _("General"), ol, 0, 0, 0, 0, 
+   e_widget_toolbook_page_append(otb, NULL, _("General"), ol, 1, 0, 1, 0, 
                                  0.5, 0.0);
 
    /* Scroll Page */
@@ -187,7 +187,7 @@ _adv_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *c
                             &(cfdata->scroll_speed), NULL, 100);
    cfdata->gui.scroll_speed_slider = ow;
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
-   e_widget_toolbook_page_append(otb, NULL, _("Animations"), ol, 0, 0, 0, 0, 
+   e_widget_toolbook_page_append(otb, NULL, _("Animations"), ol, 1, 0, 1, 0, 
                                  0.5, 0.0);
 
    /* Size Page */
@@ -222,7 +222,7 @@ _adv_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *c
    ow = e_widget_slider_add(evas, 1, 0, _("%1.2f"), 0.0, 1.0, 0.01, 0, 
                             &(cfdata->pos_align_y), NULL, 100);
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
-   e_widget_toolbook_page_append(otb, NULL, _("Geometry"), ol, 0, 0, 0, 0, 
+   e_widget_toolbook_page_append(otb, NULL, _("Geometry"), ol, 1, 0, 1, 0, 
                                  0.5, 0.0);
 
    /* Terminal Page */
@@ -231,7 +231,7 @@ _adv_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *c
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
    ow = e_widget_entry_add(evas, &(cfdata->term_cmd), NULL, NULL, NULL);
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
-   e_widget_toolbook_page_append(otb, NULL, _("Terminal"), ol, 0, 0, 0, 0, 
+   e_widget_toolbook_page_append(otb, NULL, _("Terminal"), ol, 1, 0, 1, 0, 
                                  0.5, 0.0);
 
    e_widget_toolbook_page_show(otb, 0);
