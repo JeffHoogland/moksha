@@ -1,10 +1,11 @@
 // TODO:
-// Add group{} locations to all sections. eg. "widget/preview" is found in Wallpaper selector"
 //	Icons:
 //		EFM - All popup icons ... eg, paste copy delete properties
 //		Icons for Menus modules
 //		Icon for Edge Bindings
 //		Icon for Modes?
+//		Icons for Window Geometry/Max policy
+//		Replace all (well, most) instances of icon_dummy.png
 //
 
 /*
@@ -47,6 +48,18 @@ spectra {
       color: 0 0 0 0 1;
    }
 }
+
+/* Colour classes are used to control the colours of text and also apply
+ * tints to images. These can be controlled with the Colours dialog. Below
+ * are the standard colour_class names that the module looks for in a 
+ * theme. Consider colour classes as a style that can be applied to many
+ * different items without tinkering with the theme.
+ *
+ * color:  Font colour     (Defaults to black)
+ * color2: Outline colour  (Defaults to transparent)
+ * color3: Shadow colour   (defaults to transparent)
+ *
+ */
 
 color_classes {
    color_class {
@@ -5585,7 +5598,7 @@ collections { /* begin the collection of edje groups that are in this file */
    }
 
 /////////////////////////////////////////////////////////////////////////////
-   /*** TOOLBAR */
+   /*** TOOLBAR ****/
    group { name: "e/widgets/toolbar";
       images {
 	 image: "bt_dis_base.png" COMP;
@@ -11740,6 +11753,8 @@ collections { /* begin the collection of edje groups that are in this file */
 
 /////////////////////////////////////////////////////////////////////////////
    /*** MOD: WINLIST ***/
+   /* e/widgets/winlist/* is the Window List
+        gadget that pops up with Alt Tab       */
 
    group { name: "e/widgets/winlist/main";
       images {
@@ -12103,6 +12118,7 @@ collections { /* begin the collection of edje groups that are in this file */
 
 /////////////////////////////////////////////////////////////////////////////
    /*** MOD: EXEBUF ***/
+   /* Exebuf is the run dialog, binded to Alt-Esc by default */
 
    group { name: "e/widgets/exebuf/main";
       images {
@@ -13015,6 +13031,7 @@ collections { /* begin the collection of edje groups that are in this file */
 
 /////////////////////////////////////////////////////////////////////////////
    /*** FILEMAN ***/
+   /* E inbuilt filemanager */
 
    group { name: "e/fileman/default/window/main";
       images {
@@ -16757,6 +16774,9 @@ collections { /* begin the collection of edje groups that are in this file */
       }
    }
 
+
+   /* e/fileman/default/list/* is used in file selectors eg; Wallpaper dialog */
+
    group { name: "e/fileman/default/list/variable";
       data.item: "stacking" "above";
       data.item: "selectraise" "on";
@@ -18967,6 +18987,8 @@ collections { /* begin the collection of edje groups that are in this file */
 
 /////////////////////////////////////////////////////////////////////////////
    /*** DIALOG ***/
+   /* Used in all dialogs eg; Wallpaper selector */
+
    group { name: "e/widgets/dialog/main";
       images {
 	 image: "dia_grad.png" COMP;
@@ -19380,6 +19402,7 @@ group { name: "e/toolbar/default/base";
 
 /////////////////////////////////////////////////////////////////////////////
    /*** TRANSITIONS ***/
+   /* The fake backgrounds used in the Transitions config dialog */
 
    images {
       image: "vgrad_dark.png" COMP;
@@ -19437,6 +19460,8 @@ group { name: "e/toolbar/default/base";
 	 }
       }
    }
+
+   /* e/transitions/* The look of transitions when swapping desks */
 
    group { name: "e/transitions/crossfade";
       parts {
@@ -20503,6 +20528,8 @@ group { name: "e/toolbar/default/base";
       }
    }
 
+   /* e/widgets/scrollframe is used in the Wallpaper selector dialog */
+
    group { name: "e/widgets/scrollframe";
       images {
 	 image: "inset_sunk.png" COMP;
@@ -21185,6 +21212,8 @@ group { name: "e/toolbar/default/base";
 	 }
       }
    }
+
+   /* e/widgets/ilist is used in the Module Config Dialog for the module list */
 
    group { name: "e/widgets/ilist";
       data.item: "stacking" "above";
@@ -22021,6 +22050,7 @@ group { name: "e/toolbar/default/base";
       }
    }
 
+   /* e/widgets/entry is used in the Wallpaper Picture file selector */
 
    group { name: "e/widgets/entry";
 //      min: 12 12;
@@ -22162,6 +22192,8 @@ group { name: "e/toolbar/default/base";
       }
    }
 
+   /* e/widgets/preview is used in the Theme Selector to preview themes */
+
    group { name: "e/widgets/preview";
       images.image: "inset_sunk.png" COMP;
       parts {
@@ -22194,6 +22226,9 @@ group { name: "e/toolbar/default/base";
 	 }
       }
    }
+
+   /* e/widgets/deskpreview is used in the Wallpaper 
+        selector dialog to preview wallpapers.         */                        
 
    group { name: "e/widgets/deskpreview/desk";
       images.image: "inset_sunk.png" COMP;
@@ -22233,6 +22268,9 @@ group { name: "e/toolbar/default/base";
 	 }
       }
    }
+
+   /* color_well & gradpreview are used to display the colour
+        and the gradient in the Wallpaper Gradient config dialog. */
 
    group { name: "e/widgets/color_well";
       alias:  "e/widgets/gradpreview";
@@ -22299,6 +22337,8 @@ group { name: "e/toolbar/default/base";
 	 }
       }
    }
+
+   /* Used in the color selector widget in Wallpaper Gradient dialog */
 
    group { name: "e/widgets/spectrum";
       images.image: "inset_sunk.png" COMP;
@@ -22393,6 +22433,9 @@ group { name: "e/toolbar/default/base";
 	 }
       }
    }
+
+   /* Used to display RGB/HSV values via sliders
+        in Wallpaper Gradient Dialog               */ 
 
    group { name: "e/widgets/cslider";
       images.image: "inset_sunk.png" COMP;
@@ -22490,6 +22533,8 @@ group { name: "e/toolbar/default/base";
 	 }
       }
    }
+
+   /* e/widgets/slider* is used in the Virtual Desktops Config dialog */
 
    group { name: "e/widgets/slider_vertical";
       images {
@@ -23000,6 +23045,9 @@ group { name: "e/toolbar/default/base";
       }
    }
 
+   /* e/widgets/frame is used in the Config Dialog 
+        to outline the content                       */
+
    group { name: "e/widgets/frame";
       images {
 	 image: "frame_1.png" COMP;
@@ -23127,6 +23175,8 @@ group { name: "e/toolbar/default/base";
       }
    }
 
+   /* e/widgets/fontpreview is used in the Font Config dialog */
+
    group { name: "e/widgets/fontpreview";
       parts {
 	 part { name: "e.fontpreview.text";
@@ -23149,6 +23199,9 @@ group { name: "e/toolbar/default/base";
 	 }
       }
    }
+
+   /* e/widgets/textblock is used in the description 
+        of modules in Module Config dialog             */
 
    group { name: "e/widgets/textblock";
       styles {
