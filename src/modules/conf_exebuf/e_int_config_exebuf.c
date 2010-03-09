@@ -6,8 +6,10 @@ static void _fill_data(E_Config_Dialog_Data *cfdata);
 static void _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
 static int _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata);
+static int _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
 static int _adv_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_adv_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata);
+static int _adv_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
 static void _cb_animate_changed(void *data, Evas_Object *obj __UNUSED__);
 
 struct _E_Config_Dialog_Data 
@@ -39,8 +41,10 @@ e_int_config_exebuf(E_Container *con, const char *params __UNUSED__)
    v->free_cfdata = _free_data;
    v->basic.create_widgets = _basic_create;
    v->basic.apply_cfdata = _basic_apply;
+   v->basic.check_changed = _basic_check_changed;
    v->advanced.create_widgets = _adv_create;
    v->advanced.apply_cfdata = _adv_apply;
+   v->advanced.check_changed = _adv_check_changed;
 
    cfd = e_config_dialog_new(con, _("Run Command Settings"), "E", 
                              "advanced/run_command", "system-run", 0, v, NULL);
@@ -127,6 +131,22 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    e_widget_list_object_append(o, of, 1, 0, 0.5);
 
    return o;
+}
+
+static int 
+_basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
+{
+#define CHK_CHG(_e_config, _cfdata) \
+   if (e_config->exebuf_##_e_config != cfdata->_cfdata) return 1;
+
+   CHK_CHG(max_exe_list, max_exe_list);
+   CHK_CHG(max_eap_list, max_eap_list);
+   CHK_CHG(max_hist_list, max_hist_list);
+   CHK_CHG(scroll_animate, scroll_animate);
+
+#undef CHK_CHG
+
+   return 0;
 }
 
 static int 
@@ -236,6 +256,30 @@ _adv_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *c
 
    e_widget_toolbook_page_show(otb, 0);
    return otb;
+}
+
+static int 
+_adv_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
+{
+#define CHK_CHG(_e_config, _cfdata) \
+   if (e_config->exebuf_##_e_config != cfdata->_cfdata) return 1;
+
+   CHK_CHG(max_exe_list, max_exe_list);
+   CHK_CHG(max_eap_list, max_eap_list);
+   CHK_CHG(max_hist_list, max_hist_list);
+   CHK_CHG(scroll_animate, scroll_animate);
+   CHK_CHG(scroll_speed, scroll_speed);
+   CHK_CHG(pos_align_x, pos_align_x);
+   CHK_CHG(pos_align_y, pos_align_y);
+   CHK_CHG(pos_min_w, pos_min_w);
+   CHK_CHG(pos_min_h, pos_min_h);
+   CHK_CHG(pos_max_w, pos_max_w);
+   CHK_CHG(pos_max_h, pos_max_h);
+
+   if (strcmp(e_config->exebuf_term_cmd, cfdata->term_cmd)) return 1;
+#undef CHK_CHG
+
+   return 0;
 }
 
 static void 
