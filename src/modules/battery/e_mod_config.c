@@ -10,13 +10,14 @@ struct _E_Config_Dialog_Data
    int dismiss_alert;
    int alert_timeout;
    int force_mode; // 0 == auto, 1 == batget, 2 == hal
-   struct {
-      Evas_Object *show_alert_label;
-      Evas_Object *show_alert_time;
-      Evas_Object *show_alert_percent;
-      Evas_Object *dismiss_alert_label;
-      Evas_Object *alert_timeout;
-   } ui;
+   struct 
+     {
+        Evas_Object *show_alert_label;
+        Evas_Object *show_alert_time;
+        Evas_Object *show_alert_percent;
+        Evas_Object *dismiss_alert_label;
+        Evas_Object *alert_timeout;
+     } ui;
 };
 
 /* Protos */
@@ -48,8 +49,7 @@ e_int_config_battery_module(E_Container *con, const char *params __UNUSED__)
 
    snprintf(buf, sizeof(buf), "%s/e-module-battery.edj", 
             e_module_dir_get(battery_config->module));
-   cfd = e_config_dialog_new(con,
-			     _("Battery Monitor Settings"), 
+   cfd = e_config_dialog_new(con, _("Battery Monitor Settings"), 
 			     "E", "_e_mod_battery_config_dialog",
 			     buf, 0, v, NULL);
    battery_config->config_dialog = cfd;
@@ -188,7 +188,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f ticks"), 1, 256, 4, 0, 
                             NULL, &(cfdata->poll_interval), 100);
    e_widget_table_object_append(o, ob, 0, 1, 1, 1, 1, 0, 1, 0);
-   e_widget_toolbook_page_append(otb, NULL, _("Polling"), o, 0, 0, 0, 0, 
+   e_widget_toolbook_page_append(otb, NULL, _("Polling"), o, 1, 0, 1, 0, 
                                  0.5, 0.0);
 
    o = e_widget_table_add(evas, 0);
@@ -219,7 +219,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
 
    _cb_show_alert_changed(cfdata, NULL);
 
-   e_widget_toolbook_page_append(otb, NULL, _("Alert"), o, 0, 0, 0, 0, 
+   e_widget_toolbook_page_append(otb, NULL, _("Alert"), o, 1, 0, 1, 0, 
                                  0.5, 0.0);
 
    o = e_widget_list_add(evas, 0, 0);
@@ -232,7 +232,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
    ob = e_widget_radio_add(evas, _("HAL"), 2, rg);
    e_widget_list_object_append(o, ob, 1, 0, 0.0);
 
-   e_widget_toolbook_page_append(otb, NULL, _("Hardware"), o, 0, 0, 0, 0, 
+   e_widget_toolbook_page_append(otb, NULL, _("Hardware"), o, 1, 0, 1, 0, 
                                  0.5, 0.0);
 
    e_widget_toolbook_page_show(otb, 0);
