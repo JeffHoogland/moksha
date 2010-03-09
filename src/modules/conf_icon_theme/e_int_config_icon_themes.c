@@ -249,6 +249,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    for (i = 0; i < sizeof(_icon_previews)/sizeof(_icon_previews[0]); i++)
      {
 	cfdata->gui.preview[i] = e_icon_add(evas);
+	e_icon_preload_set(cfdata->gui.preview[i], EINA_TRUE);
+	e_icon_scale_size_set(cfdata->gui.preview[i], PREVIEW_SIZE);
 	e_widget_framelist_object_append_full
 	  (ol, cfdata->gui.preview[i], 0, 0, 0, 0, 0.5, 0.5,
 	   PREVIEW_SIZE, PREVIEW_SIZE, PREVIEW_SIZE, PREVIEW_SIZE);
