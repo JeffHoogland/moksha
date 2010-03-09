@@ -32,8 +32,7 @@ e_int_config_performance(E_Container *con, const char *params __UNUSED__)
    v->basic.create_widgets = _basic_create_widgets;
    v->basic.check_changed = _basic_check_changed;
 
-   cfd = e_config_dialog_new(con,
-			     _("Performance Settings"),
+   cfd = e_config_dialog_new(con, _("Performance Settings"),
 			     "E", "advanced/performance",
 			     "preferences-system-performance", 0, v, NULL);
    return cfd;
@@ -42,7 +41,9 @@ e_int_config_performance(E_Container *con, const char *params __UNUSED__)
 static void *
 _create_data(E_Config_Dialog *cfd __UNUSED__)
 {
-   E_Config_Dialog_Data *cfdata = E_NEW(E_Config_Dialog_Data, 1);
+   E_Config_Dialog_Data *cfdata;
+
+   cfdata = E_NEW(E_Config_Dialog_Data, 1);
    if (!cfdata) return NULL;
    cfdata->framerate = e_config->framerate;
    cfdata->priority = e_config->priority;
@@ -100,51 +101,53 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
 
    ol = e_widget_list_add(evas, 0, 0);
    ob = e_widget_label_add(evas, _("Framerate"));
-   e_widget_list_object_append(ol, ob, 1, 0, 0.0);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f fps"), 5.0, 200.0, 1.0, 0, &(cfdata->framerate), NULL, 100);
-   e_widget_list_object_append(ol, ob, 1, 0, 0.0);
+   e_widget_list_object_append(ol, ob, 1, 0, 0.5);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f fps"), 5.0, 200.0, 1.0, 0, 
+                            &(cfdata->framerate), NULL, 100);
+   e_widget_list_object_append(ol, ob, 1, 0, 0.5);
 
    ob = e_widget_label_add(evas, _("Applications priority"));
-   e_widget_list_object_append(ol, ob, 1, 0, 0.0);
-   ob = e_widget_slider_add(evas, 1, 0, "%1.0f", 0, 19, 1, 0, NULL, &(cfdata->priority), 100);
-   e_widget_list_object_append(ol, ob, 1, 0, 0.0);
+   e_widget_list_object_append(ol, ob, 1, 0, 0.5);
+   ob = e_widget_slider_add(evas, 1, 0, "%1.0f", 0, 19, 1, 0, NULL, 
+                            &(cfdata->priority), 100);
+   e_widget_list_object_append(ol, ob, 1, 0, 0.5);
 
-   e_widget_toolbook_page_append
-     (otb, NULL, _("General"), ol, 0, 0, 1, 0, 0.5, 0.0);
+   e_widget_toolbook_page_append(otb, NULL, _("General"), ol, 
+                                 0, 0, 0, 0, 0.5, 0.0);
 
    ol = e_widget_list_add(evas, 0, 0);
    ob = e_widget_label_add(evas, _("Cache flush interval"));
-   e_widget_list_object_append(ol, ob, 1, 0, 0.0);
+   e_widget_list_object_append(ol, ob, 1, 0, 0.5);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f ticks"), 8, 4096, 8, 0, NULL,
                             &(cfdata->cache_flush_poll_interval), 100);
-   e_widget_list_object_append(ol, ob, 1, 0, 0.0);
+   e_widget_list_object_append(ol, ob, 1, 0, 0.5);
 
    ob = e_widget_label_add(evas, _("Font cache size"));
-   e_widget_list_object_append(ol, ob, 1, 0, 0.0);
+   e_widget_list_object_append(ol, ob, 1, 0, 0.5);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.1f MB"), 0, 4, 0.1, 0,
                             &(cfdata->font_cache), NULL, 100);
-   e_widget_list_object_append(ol, ob, 1, 0, 0.0);
+   e_widget_list_object_append(ol, ob, 1, 0, 0.5);
 
    ob = e_widget_label_add(evas, _("Image cache size"));
-   e_widget_list_object_append(ol, ob, 1, 0, 0.0);
+   e_widget_list_object_append(ol, ob, 1, 0, 0.5);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f MB"), 0, 32, 1, 0,
                             &(cfdata->image_cache), NULL, 100);
-   e_widget_list_object_append(ol, ob, 1, 0, 0.0);
+   e_widget_list_object_append(ol, ob, 1, 0, 0.5);
 
    ob = e_widget_label_add(evas, _("Number of Edje files to cache"));
-   e_widget_list_object_append(ol, ob, 1, 0, 0.0);
+   e_widget_list_object_append(ol, ob, 1, 0, 0.5);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f files"), 0, 256, 1, 0, NULL,
                             &(cfdata->edje_cache), 100);
-   e_widget_list_object_append(ol, ob, 1, 0, 0.0);
+   e_widget_list_object_append(ol, ob, 1, 0, 0.5);
 
    ob = e_widget_label_add(evas, _("Number of Edje collections to cache"));
-   e_widget_list_object_append(ol, ob, 1, 0, 0.0);
+   e_widget_list_object_append(ol, ob, 1, 0, 0.5);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f collections"), 0, 512, 1, 0,
                             NULL, &(cfdata->edje_collection_cache), 100);
-   e_widget_list_object_append(ol, ob, 1, 0, 0.0);
+   e_widget_list_object_append(ol, ob, 1, 0, 0.5);
 
-   e_widget_toolbook_page_append
-     (otb, NULL, _("Caches"), ol, 0, 0, 1, 0, 0.5, 0.0);
+   e_widget_toolbook_page_append(otb, NULL, _("Caches"), ol, 
+                                 0, 0, 0, 0, 0.5, 0.0);
 
    e_widget_toolbook_page_show(otb, 0);
 
