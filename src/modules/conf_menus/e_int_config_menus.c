@@ -137,7 +137,7 @@ _adv_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *c
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
    ow = e_widget_check_add(evas, _("Applications"), &(cfdata->show_apps));
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
-   e_widget_toolbook_page_append(otb, NULL, _("Main Menu"), ol, 0, 0, 0, 0, 
+   e_widget_toolbook_page_append(otb, NULL, _("Main Menu"), ol, 1, 0, 1, 0, 
                                  0.5, 0.0);
 
    ol = e_widget_list_add(evas, 0, 0);
@@ -147,7 +147,7 @@ _adv_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *c
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
    ow = e_widget_check_add(evas, _("Comments"), &(cfdata->show_comment));
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
-   e_widget_toolbook_page_append(otb, NULL, _("Display"), ol, 0, 0, 0, 0, 
+   e_widget_toolbook_page_append(otb, NULL, _("Display"), ol, 1, 0, 1, 0, 
                                  0.5, 0.0);
 
    ol = e_widget_list_add(evas, 0, 0);
@@ -161,7 +161,7 @@ _adv_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *c
    ow = e_widget_slider_add(evas, 1, 0, _("%2.0f pixels"), 0, 50, 1, 0, NULL, 
                             &(cfdata->autoscroll_cursor_margin), 100);
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
-   e_widget_toolbook_page_append(otb, NULL, _("Autoscroll"), ol, 0, 0, 0, 0, 
+   e_widget_toolbook_page_append(otb, NULL, _("Autoscroll"), ol, 1, 0, 1, 0, 
                                  0.5, 0.0);
 
    ol = e_widget_list_add(evas, 0, 0);
@@ -180,7 +180,7 @@ _adv_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *c
    ow = e_widget_slider_add(evas, 1, 0, _("%2.2f sec"), 0, 10, 0.25, 
                             0, &(cfdata->click_drag_timeout), NULL, 100);
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
-   e_widget_toolbook_page_append(otb, NULL, _("Miscellaneous"), ol, 0, 0, 0, 0, 
+   e_widget_toolbook_page_append(otb, NULL, _("Miscellaneous"), ol, 1, 0, 1, 0, 
                                  0.5, 0.0);
 
    e_widget_toolbook_page_show(otb, 0);
