@@ -49,15 +49,15 @@ spectra {
    }
 }
 
-/* Colour classes are used to control the colours of text and also apply
- * tints to images. These can be controlled with the Colours dialog. Below
- * are the standard colour_class names that the module looks for in a 
- * theme. Consider colour classes as a style that can be applied to many
+/* color classes are used to control the colors of text and also apply
+ * tints to images. These can be controlled with the colors dialog. Below
+ * are the standard color_class names that the module looks for in a 
+ * theme. Consider color classes as a style that can be applied to many
  * different items without tinkering with the theme.
  *
- * color:  Font colour     (Defaults to black)
- * color2: Outline colour  (Defaults to transparent)
- * color3: Shadow colour   (defaults to transparent)
+ * color:  Font color     (Defaults to black)
+ * color2: Outline color  (Defaults to transparent)
+ * color3: Shadow color   (defaults to transparent)
  *
  */
 
@@ -22269,7 +22269,7 @@ group { name: "e/toolbar/default/base";
       }
    }
 
-   /* color_well & gradpreview are used to display the colour
+   /* color_well & gradpreview are used to display the color
         and the gradient in the Wallpaper Gradient config dialog. */
 
    group { name: "e/widgets/color_well";
