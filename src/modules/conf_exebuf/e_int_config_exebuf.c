@@ -121,7 +121,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ow);
    e_widget_list_object_append(o, of, 1, 0, 0.5);
 
-   of = e_widget_framelist_add(evas, _("Scroll"), 0);
+   of = e_widget_framelist_add(evas, _("Animations"), 0);
    ow = e_widget_check_add(evas, _("Animate"), &(cfdata->scroll_animate));
    e_widget_framelist_object_append(of, ow);
    e_widget_list_object_append(o, of, 1, 0, 0.5);
@@ -187,7 +187,7 @@ _adv_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *c
                             &(cfdata->scroll_speed), NULL, 100);
    cfdata->gui.scroll_speed_slider = ow;
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
-   e_widget_toolbook_page_append(otb, NULL, _("Scroll"), ol, 0, 0, 0, 0, 
+   e_widget_toolbook_page_append(otb, NULL, _("Animations"), ol, 0, 0, 0, 0, 
                                  0.5, 0.0);
 
    /* Size Page */
@@ -212,11 +212,6 @@ _adv_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *c
    ow = e_widget_slider_add(evas, 1, 0, _("%4.0f"), 0, 4000, 50, 0, 
                             NULL, &(cfdata->pos_max_h), 100);
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
-   e_widget_toolbook_page_append(otb, NULL, _("Size"), ol, 0, 0, 0, 0, 
-                                 0.5, 0.0);
-
-   /* Position Page */
-   ol = e_widget_list_add(evas, 0, 0);
    ow = e_widget_label_add(evas, _("X-Axis Alignment"));
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
    ow = e_widget_slider_add(evas, 1, 0, _("%1.2f"), 0.0, 1.0, 0.01, 0, 
@@ -227,7 +222,7 @@ _adv_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *c
    ow = e_widget_slider_add(evas, 1, 0, _("%1.2f"), 0.0, 1.0, 0.01, 0, 
                             &(cfdata->pos_align_y), NULL, 100);
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
-   e_widget_toolbook_page_append(otb, NULL, _("Position"), ol, 0, 0, 0, 0, 
+   e_widget_toolbook_page_append(otb, NULL, _("Geometry"), ol, 0, 0, 0, 0, 
                                  0.5, 0.0);
 
    /* Terminal Page */
