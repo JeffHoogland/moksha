@@ -84,12 +84,8 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 static void *
 _create_data(E_Config_Dialog *cdd)
 {
-   /* Create cfdata - cfdata is a temporary block of config data that this
-    * dialog will be dealing with while configuring. it will be applied to
-    * the running systems/config in the apply methods
-    */
    E_Config_Dialog_Data *cfdata;
-   
+
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    _fill_data(cfdata);
    return cfdata;
@@ -145,6 +141,7 @@ _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
        EINA_LIST_FOREACH(con->zones, lll, zone)
          {
 	    int x, y;
+
 	    e_zone_desk_count_get(zone, &x, &y);
 	    if ((x != cfdata->x) || (y != cfdata->y))
 	      return 1;
@@ -284,7 +281,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
                            &(cfdata->flip_wrap));
    e_widget_list_object_append(o, ow, 1, 0, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Desktop Mouse Flip"), o, 
-                                 0, 0, 0, 0, 0.5, 0.0);
+                                 1, 0, 1, 0, 0.5, 0.0);
 
    o = e_widget_list_add(evas, 0, 0);
    rg = e_widget_radio_group_new(&(cfdata->flip_mode));
@@ -332,7 +329,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    cfdata->flip_anim_list = eina_list_append(cfdata->flip_anim_list, ow);
 
    e_widget_toolbook_page_append(otb, NULL, _("Flip Animation"), o, 
-                                 0, 0, 0, 0, 0.5, 0.0);
+                                 1, 0, 1, 0, 0.5, 0.0);
 
    e_widget_toolbook_page_show(otb, 0);
    return otb;
