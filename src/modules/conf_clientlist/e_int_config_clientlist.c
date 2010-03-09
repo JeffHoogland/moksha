@@ -122,7 +122,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_framelist_object_append(of, ow);
    e_widget_list_object_append(ol, of, 1, 1, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Grouping"), ol, 
-                                 0, 0, 0, 0, 0.5, 0.0);
+                                 1, 0, 1, 0, 0.5, 0.0);
 
    ol = e_widget_list_add(evas, 0, 0);
    rg = e_widget_radio_group_new(&(cfdata->sort_by));
@@ -138,7 +138,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                            E_CLIENTLIST_SORT_MOST_RECENT, rg);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Sort Order"), ol, 
-                                 0, 0, 0, 0, 0.5, 0.0);
+                                 1, 0, 1, 0, 0.5, 0.0);
 
    ol = e_widget_list_add(evas, 0, 0);
    rg = e_widget_radio_group_new(&(cfdata->separate_iconified_apps));
@@ -155,7 +155,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                            &(cfdata->warp_to_iconified_desktop));
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Iconified Windows"), ol, 
-                                 0, 0, 0, 0, 0.5, 0.0);
+                                 1, 0, 1, 0, 0.5, 0.0);
 
    ol = e_widget_list_add(evas, 0, 0);
    ow = e_widget_check_add(evas, _("Limit caption length"), 
@@ -166,7 +166,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                             &(cfdata->max_caption_len), 100);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Captions"), ol, 
-                                 0, 0, 0, 0, 0.5, 0.0);
+                                 1, 0, 1, 0, 0.5, 0.0);
 
    e_widget_toolbook_page_show(otb, 0);
    return otb;
