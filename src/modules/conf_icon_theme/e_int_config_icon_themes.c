@@ -10,6 +10,7 @@ static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 
 static int _sort_icon_themes(const void *data1, const void *data2);
+static Evas_Object *_icon_new(Evas *evas, const char *theme, const char *icon, unsigned int size);
 
 struct _E_Config_Dialog_Data
 {
@@ -17,12 +18,23 @@ struct _E_Config_Dialog_Data
    Eina_List *icon_themes;
    const char *themename;
    int overrides;
+   int populating;
    struct {
       Evas_Object *list;
       Evas_Object *checkbox;
+      Evas_Object *preview[4]; /* same size as _icon_previews */
    } gui;
    Ecore_Idler *fill_icon_themes_delayed;
 };
+
+static const char *_icon_previews[4] = {
+  "system-run",
+  "system-file-manager",
+  "preferences-desktop-theme",
+  "text-x-generic"
+};
+
+#define PREVIEW_SIZE (48)
 
 E_Config_Dialog *
 e_int_config_icon_themes(E_Container *con, const char *params __UNUSED__)
@@ -121,6 +133,20 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    return 1;
 }
 
+static void
+_populate_preview(E_Config_Dialog_Data *cfdata)
+{
+   const char *t = cfdata->themename;
+   unsigned int i;
+   for (i = 0; i < sizeof(_icon_previews)/sizeof(_icon_previews[0]); i++)
+     {
+	char *path = efreet_icon_path_find(t, _icon_previews[i], PREVIEW_SIZE);
+	if (e_icon_file_set(cfdata->gui.preview[i], path))
+	  e_icon_fill_inside_set(cfdata->gui.preview[i], EINA_TRUE);
+	free(path);
+     }
+}
+
 struct _fill_icon_themes_data
 {
    Eina_List *l;
@@ -136,6 +162,15 @@ _fill_icon_themes(void *data)
    struct _fill_icon_themes_data *d = data;
    Efreet_Icon_Theme *theme;
    Evas_Object *oc = NULL;
+   const char **example_icon, *example_icons[] = {
+     NULL,
+     "folder",
+     "user-home",
+     "text-x-generic",
+     "system-run",
+     "preferences-system",
+     NULL,
+   };
 
    if (!d->themes_loaded)
      {
@@ -151,6 +186,8 @@ _fill_icon_themes(void *data)
      {
 	e_widget_ilist_go(d->cfdata->gui.list);
 	d->cfdata->fill_icon_themes_delayed = NULL;
+	d->cfdata->populating = EINA_FALSE;
+	_populate_preview(d->cfdata);
 	free(d);
 	return 0;
      }
@@ -158,55 +195,70 @@ _fill_icon_themes(void *data)
    theme = d->l->data;
    if (theme->example_icon)
      {
-	char *path;
-
-	path = efreet_icon_path_find(theme->name.internal, theme->example_icon, 24);
-	if (path)
-	  {
-	     oc = e_icon_add(d->evas);
-	     e_icon_file_set(oc, path);
-	     e_icon_fill_inside_set(oc, 1);
-	     free(path);
-	  }
+	example_icons[0] = theme->example_icon;
+	example_icon = example_icons;
+     }
+   else
+     {
+	example_icon = example_icons + 1;
      }
 
-   e_widget_ilist_append(d->cfdata->gui.list, oc, theme->name.name,
-			 NULL, NULL, theme->name.internal);
-   if ((d->cfdata->themename) && (theme->name.internal) &&
-       (strcmp(d->cfdata->themename, theme->name.internal) == 0))
-     e_widget_ilist_selected_set(d->cfdata->gui.list, d->i);
+   for (; (*example_icon) && (!oc); example_icon++)
+     oc = _icon_new(d->evas, theme->name.internal, *example_icon, 24);
+
+   if (oc)
+     {
+	e_widget_ilist_append(d->cfdata->gui.list, oc, theme->name.name,
+			      NULL, NULL, theme->name.internal);
+	if ((d->cfdata->themename) && (theme->name.internal) &&
+	    (strcmp(d->cfdata->themename, theme->name.internal) == 0))
+	  e_widget_ilist_selected_set(d->cfdata->gui.list, d->i);
+     }
+
    d->i++;
    d->l = d->l->next;
    return 1;
 }
 
+static void
+_icon_theme_changed(void *data, Evas_Object *o __UNUSED__)
+{
+   E_Config_Dialog_Data *cfdata = data;
+   if (cfdata->populating) return;
+   _populate_preview(cfdata);
+}
+
 static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   Evas_Object *o, *ilist, *of, *checkbox;
+   Evas_Object *o, *ilist, *checkbox, *ol;
    struct _fill_icon_themes_data *d;
    Evas_Coord mw, mh;
+   unsigned int i;
 
    o = e_widget_list_add(evas, 0, 0);
-   of = e_widget_framelist_add(evas, _("Icon Themes"), 0);
    ilist = e_widget_ilist_add(evas, 24, 24, &(cfdata->themename));
    cfdata->gui.list = ilist;
 
    e_widget_size_min_set(ilist, 200, 240);
+   cfdata->populating = EINA_TRUE;
+   e_widget_on_change_hook_set(ilist, _icon_theme_changed, cfdata);
+   e_widget_list_object_append(o, ilist, 1, 1, 0.5);
 
-   e_widget_framelist_object_append(of, ilist);
+   ol = e_widget_framelist_add(evas, _("Preview"), 1);
+   for (i = 0; i < sizeof(_icon_previews)/sizeof(_icon_previews[0]); i++)
+     {
+	cfdata->gui.preview[i] = e_icon_add(evas);
+	e_widget_framelist_object_append_full
+	  (ol, cfdata->gui.preview[i], 0, 0, 0, 0, 0.5, 0.5,
+	   PREVIEW_SIZE, PREVIEW_SIZE, PREVIEW_SIZE, PREVIEW_SIZE);
+     }
+   e_widget_list_object_append(o, ol, 0, 0, 0.5);
 
    checkbox = e_widget_check_add(evas, _("This overrides general theme"), &(cfdata->overrides));
    e_widget_size_min_get(checkbox, &mw, &mh);
-   e_widget_framelist_object_append_full(of, checkbox,
-					 1, 1, /* fill */
-					 1, 0, /* expand */
-					 0.5, 0.5, /* align */
-					 mw, mh, /* min */
-					 99999, 99999 /* max */
-					 );
+   e_widget_list_object_append(o, checkbox, 0, 0, 0.0);
 
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
    e_dialog_resizable_set(cfd->dia, 1);
 
    if (cfdata->fill_icon_themes_delayed)
@@ -236,4 +288,24 @@ _sort_icon_themes(const void *data1, const void *data2)
    if (!m2->name.name) return -1;
 
    return (strcmp(m1->name.name, m2->name.name));
+}
+
+static Evas_Object *
+_icon_new(Evas *evas, const char *theme, const char *icon, unsigned int size)
+{
+   Evas_Object *o;
+   char *path = efreet_icon_path_find(theme, icon, size);
+   if (!path) return NULL;
+
+   o = e_icon_add(evas);
+   if (e_icon_file_set(o, path))
+     e_icon_fill_inside_set(o, 1);
+   else
+     {
+	evas_object_del(o);
+	o = NULL;
+     }
+
+   free(path);
+   return o;
 }
