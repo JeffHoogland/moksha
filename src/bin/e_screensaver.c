@@ -114,9 +114,7 @@ _e_screensaver_ask_presentation_mode(void)
       _e_screensaver_ask_presentation_no_forever, NULL);
 
    e_dialog_button_focus_num(dia, 0);
-   e_dialog_resizable_set(dia, 1);
    e_widget_list_homogeneous_set(dia->box_object, 0);
-   e_util_win_auto_resize_fill(dia->win);
    e_win_centered_set(dia->win, 1);
    e_dialog_show(dia);
 
