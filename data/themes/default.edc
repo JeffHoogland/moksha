@@ -5817,7 +5817,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	       fixed: 0 1;
 	       rel1 {
 		  relative: 0.0 1.0;
-		  offset:   0 -1;
+		  offset:   0 2;
 	       }
 	       rel2 {
 		  relative: 1.0 1.0;
@@ -19229,7 +19229,7 @@ collections { /* begin the collection of edje groups that are in this file */
    group { name: "e/widgets/border/default/move";
       images {
 	 image: "base_bg.png" COMP;
-	 image: "move.png" COMP;
+	 image: "icon_win_move.png" COMP;
       }
       parts {
 	 part { name: "base";
@@ -19252,7 +19252,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	       rel1.offset: 2 2;
 	       rel2.relative: 0.0 1.0;
 	       rel2.offset: 2 -3;
-	       image.normal: "move.png";
+	       image.normal: "icon_win_move.png";
 	    }
 	 }
 	 part { name: "e.text.label";
@@ -19279,7 +19279,7 @@ collections { /* begin the collection of edje groups that are in this file */
    group { name: "e/widgets/border/default/resize";
       images {
 	 image: "base_bg.png" COMP;
-	 image: "resize.png" COMP;
+	 image: "icon_win_resize.png" COMP;
       }
       parts {
 	 part { name: "base";
@@ -19303,7 +19303,7 @@ collections { /* begin the collection of edje groups that are in this file */
 	       rel1.offset: 2 2;
 	       rel2.relative: 0.0 1.0;
 	       rel2.offset: 2 -3;
-	       image.normal: "resize.png";
+	       image.normal: "icon_win_resize.png";
 	    }
 	 }
 	 part { name: "e.text.label";
@@ -25310,7 +25310,7 @@ group { name: "e/icons/"NAME ;                          \
  *
  * TO ADD A NEW ICON:
  * 1. Search for a name in the spec OR
- * 2. Search for a name in kde (oxigen) and gnome (tango - human) icon set OR
+ * 2. Search for a name in kde (oxygen) and gnome (tango - human) icon set OR
  * 3. Try to follow the naming convention
  */
 
@@ -25511,8 +25511,8 @@ BORDERICON("stacking","icon_border_stack_norm.png")
 BORDERICON("stack_on_top","icon_border_stack_top.png")
 BORDERICON("stack_normal","icon_border_stack_norm.png")
 BORDERICON("stack_below","icon_border_stack_bot.png")
-BORDERICON("move_icon", "move.png")
-BORDERICON("resize_icon", "resize.png");
+BORDERICON("move_icon", "icon_win_move.png")
+BORDERICON("resize_icon", "icon_win_resize.png");
 BORDERICON("maximize","icon_border_maximize.png")
 BORDERICON("fullscreen","icon_border_maximize.png")
 BORDERICON("minimize","icon_border_minimize.png")
