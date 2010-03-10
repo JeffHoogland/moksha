@@ -980,8 +980,6 @@ _connman_popup_cb_controls(void *data, void *data2 __UNUSED__)
 {
    E_Connman_Instance *inst = data;
 
-   _connman_popup_del(inst);
-
    if (!inst)
       return;
    if (inst->popup)
