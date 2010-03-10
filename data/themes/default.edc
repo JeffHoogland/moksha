@@ -25457,7 +25457,7 @@ ICON("preferences-position-right-bottom","icon_shelf_right_bottom.png",64)   // 
 ICON("preferences-window-manipulation","icon_window_manipulation.png",64)    // *** // "enlightenment/window_manipulation"
 ICON("preferences-window-maximize","icon_window_manipulation.png",64)        // *** // "enlightenment/window_maximize"
 ICON("preferences-window-stacking","icon_winlist.png",64)                    // *** // "enlightenment/window_stacking"
-ICON("preferences-window-geometry","icon_window_manipulation.png",64)        // *** // "enlightenment/window_geometry"
+ICON("preferences-window-geometry","icon_window_geometry.png",64)            // *** // "enlightenment/window_geometry"
 ICON("preferences-windows-lost","icon_lost_windows.png",64)                  // *** // "enlightenment/lost_windows"
 
 ICON("preferences-gradient","icon_gradient.png",64)           // *** // "enlightenment/gradient"
