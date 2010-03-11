@@ -290,6 +290,8 @@ icon_window_manipulation.png \
 icon_window_remembers.png \
 icon_windows.png \
 icon_winlist.png \
+icon_win_move.png \
+icon_win_resize.png \
 ilist_1.png \
 ilist_2.png \
 ilist_header_1.png \
@@ -325,7 +327,6 @@ mixer_low_right.png \
 mixer_med_left.png \
 mixer_med_right.png \
 mixer.png \
-move.png \
 pager_base1.png \
 pager_base2.png \
 pager_base_pattern.png \
@@ -354,7 +355,6 @@ power.png \
 radio_base.png \
 radio_on.png \
 radio_sel.png \
-resize.png \
 sb_runnerh.png \
 sb_runnerv.png \
 shelf_alt_bg.png \
