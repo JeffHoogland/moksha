@@ -23,5 +23,7 @@ EAPI void         e_slider_direction_set            (Evas_Object *obj, int rever
 EAPI int          e_slider_direction_get            (Evas_Object *obj);
 EAPI void         e_slider_size_min_get             (Evas_Object *obj, Evas_Coord *minw, Evas_Coord *minh);
 EAPI Evas_Object *e_slider_edje_object_get          (Evas_Object *obj);
+
+EAPI void         e_slider_special_value_add        (Evas_Object *obj, double value, double error, const char *label);
 #endif
 #endif

@@ -147,6 +147,15 @@ e_widget_slider_value_int_get(Evas_Object *slider, int *ival)
    return 1; 
 }
 
+EAPI void
+e_widget_slider_special_value_add(Evas_Object *obj, double value, double error, const char *label)
+{
+   E_Widget_Data *wd;
+
+   wd = e_widget_data_get(obj);
+   e_slider_special_value_add(wd->o_slider, value, error, label);
+}
+
 /* Private functions */
 static void
 _e_wid_del_hook(Evas_Object *obj)
@@ -176,13 +185,13 @@ _e_wid_focus_hook(Evas_Object *obj)
 }
 
 static void
-_e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_e_wid_focus_steal(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    e_widget_focus_steal(data);
 }
 
 static void
-_e_wid_cb_changed(void *data, Evas_Object *obj, void *event_info)
+_e_wid_cb_changed(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Widget_Data *wd;
    

@@ -10,6 +10,8 @@
 #define INTERNAL_ENTRY E_Smart_Data *sd; sd = evas_object_smart_data_get(obj); if (!sd) return;
 typedef struct _E_Smart_Data E_Smart_Data;
 
+typedef struct _E_Slider_Special_Value E_Slider_Special_Value;
+
 struct _E_Smart_Data
 { 
    Evas_Coord   x, y, w, h;
@@ -22,6 +24,14 @@ struct _E_Smart_Data
    const char    *format;
    Evas_Coord     minw, minh;
    Ecore_Timer   *set_timer;
+   Eina_List     *special_values;
+};
+
+struct _E_Slider_Special_Value
+{
+   double value;
+   double error;
+   const char *label;
 };
 
 /* local subsystem functions */
@@ -216,6 +226,21 @@ e_slider_edje_object_get(Evas_Object *obj)
    return sd->edje_obj;
 }
 
+EAPI void
+e_slider_special_value_add(Evas_Object *obj, double value, double error, const char *label)
+{
+   E_Slider_Special_Value *sv;
+   API_ENTRY return;
+
+   sv = malloc(sizeof(E_Slider_Special_Value));
+   if (!sv) return;
+   sv->value = value;
+   sv->error = error;
+   sv->label = eina_stringshare_add(label);
+
+   sd->special_values = eina_list_append(sd->special_values, sv);
+   _e_smart_format_update(sd);
+}
 
 /* local subsystem functions */
 static int
@@ -301,23 +326,31 @@ _e_smart_value_limit(E_Smart_Data *sd)
 static void
 _e_smart_format_update(E_Smart_Data *sd)
 {
+   const E_Slider_Special_Value *sv;
+   const Eina_List *l;
+
+   EINA_LIST_FOREACH(sd->special_values, l, sv)
+     if (fabs(sd->val - sv->value) <= sv->error)
+       {
+	  edje_object_part_text_set(sd->edje_obj, "e.text.label", sv->label);
+	  return;
+       }
+
    if (sd->format)
      {
 	char buf[256];
-	
+
 	snprintf(buf, sizeof(buf), sd->format, sd->val);
 	edje_object_part_text_set(sd->edje_obj, "e.text.label", buf);
      }
 }
 
 static void
-_e_smart_signal_cb_drag(void *data, Evas_Object *obj, const char *emission, const char *source)
+_e_smart_signal_cb_drag(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
-   E_Smart_Data *sd;
-   double pval;
-   
-   sd = data;
-   pval = sd->val;
+   E_Smart_Data *sd = data;
+   double pval = sd->val;
+
    _e_smart_value_fetch(sd);
    _e_smart_value_limit(sd);
    _e_smart_format_update(sd);
@@ -326,13 +359,11 @@ _e_smart_signal_cb_drag(void *data, Evas_Object *obj, const char *emission, cons
 }
 
 static void
-_e_smart_signal_cb_drag_start(void *data, Evas_Object *obj, const char *emission, const char *source)
+_e_smart_signal_cb_drag_start(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
-   E_Smart_Data *sd;
-   double pval;
-   
-   sd = data;
-   pval = sd->val;
+   E_Smart_Data *sd = data;
+   double pval = sd->val;
+
    _e_smart_value_fetch(sd);
    _e_smart_value_limit(sd);
    _e_smart_format_update(sd);
@@ -341,13 +372,11 @@ _e_smart_signal_cb_drag_start(void *data, Evas_Object *obj, const char *emission
 }
 
 static void
-_e_smart_signal_cb_drag_stop(void *data, Evas_Object *obj, const char *emission, const char *source)
+_e_smart_signal_cb_drag_stop(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
-   E_Smart_Data *sd;
-   double pval;
-   
-   sd = data;
-   pval = sd->val;
+   E_Smart_Data *sd = data;
+   double pval = sd->val;
+
    _e_smart_value_fetch(sd);
    _e_smart_value_limit(sd);
    _e_smart_format_update(sd);
@@ -357,13 +386,11 @@ _e_smart_signal_cb_drag_stop(void *data, Evas_Object *obj, const char *emission,
 }
 
 static void
-_e_smart_event_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_e_smart_event_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
-   Evas_Event_Key_Down *ev;
-   E_Smart_Data *sd;
-   
-   sd = data;
-   ev = event_info;
+   Evas_Event_Key_Down *ev = event_info;
+   E_Smart_Data *sd = data;
+
    if ((!strcmp(ev->keyname, "Up")) ||
        (!strcmp(ev->keyname, "KP_Up")) ||
        (!strcmp(ev->keyname, "Left")) ||
@@ -460,10 +487,17 @@ _e_smart_add(Evas_Object *obj)
 static void
 _e_smart_del(Evas_Object *obj)
 {
+   E_Slider_Special_Value *sv;
+
    INTERNAL_ENTRY;
    evas_object_del(sd->edje_obj);
    if (sd->format) eina_stringshare_del(sd->format);
    if (sd->set_timer) ecore_timer_del(sd->set_timer);
+   EINA_LIST_FREE(sd->special_values, sv)
+     {
+	eina_stringshare_del(sv->label);
+	free(sv);
+     }
    free(sd);
 }
 
@@ -529,24 +563,19 @@ _e_smart_init(void)
 {
    if (_e_smart) return;
      {
-	static const Evas_Smart_Class sc =
+	static Evas_Smart_Class sc = EVAS_SMART_CLASS_INIT_NAME_VERSION(SMART_NAME);
+	if (!sc.add)
 	  {
-	     SMART_NAME,
-	       EVAS_SMART_CLASS_VERSION,
-	       _e_smart_add,
-	       _e_smart_del, 
-	       _e_smart_move,
-	       _e_smart_resize,
-	       _e_smart_show,
-	       _e_smart_hide,
-	       _e_smart_color_set,
-	       _e_smart_clip_set,
-	       _e_smart_clip_unset,
-	       NULL,
-	       NULL,
-	       NULL,
-	       NULL
-	  };
+	     sc.add = _e_smart_add;
+	     sc.del = _e_smart_del;
+	     sc.move = _e_smart_move;
+	     sc.resize = _e_smart_resize;
+	     sc.show = _e_smart_show;
+	     sc.hide = _e_smart_hide;
+	     sc.color_set = _e_smart_color_set;
+	     sc.clip_set = _e_smart_clip_set;
+	     sc.clip_unset = _e_smart_clip_unset;
+	  }
 	_e_smart = evas_smart_class_new(&sc);
      }
 }

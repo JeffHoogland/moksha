@@ -12,5 +12,7 @@ EAPI int e_widget_slider_value_int_set(Evas_Object *slider, int ival);
 EAPI int e_widget_slider_value_double_get(Evas_Object *slider, double *dval);
 EAPI int e_widget_slider_value_int_get(Evas_Object *slider, int *ival);
 
+EAPI void e_widget_slider_special_value_add(Evas_Object *obj, double value, double error, const char *label);
+
 #endif
 #endif
