@@ -108,6 +108,7 @@ gsm_2.png \
 gsm_3.png \
 gsm_4.png \
 gsm_no.png \
+icon_active.png \
 icon_add_fav.png \
 icon_add.png \
 icon_advanced.png \
@@ -286,6 +287,7 @@ icon_wallpaper.png \
 icon_wallpaper_screen.png \
 icon_warning.png \
 icon_window_focus.png \
+icon_window_geometry.png \
 icon_window_manipulation.png \
 icon_window_remembers.png \
 icon_windows.png \
