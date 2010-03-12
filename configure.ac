@@ -449,6 +449,14 @@ define([CHECK_MODULE_CONNMAN],
 AC_SUBST(ECONNMAN_CFLAGS)
 AC_SUBST(ECONNMAN_LIBS)
 
+AM_CONDITIONAL(HAVE_EBLUEZ, false)
+define([CHECK_MODULE_BLUEZ],
+[
+        AC_E_CHECK_PKG(EBLUEZ, [edbus ebluez],
+                       [], [EBLUEZ=false])
+])
+AC_SUBST(EBLUEZ_CFLAGS)
+AC_SUBST(EBLUEZ_LIBS)
 
 AC_E_OPTIONAL_MODULE([ibar], true)
 AC_E_OPTIONAL_MODULE([dropshadow], true)
@@ -509,6 +517,7 @@ AC_E_OPTIONAL_MODULE([conf_scale], true)
 AC_E_OPTIONAL_MODULE([gadman], true)
 AC_E_OPTIONAL_MODULE([mixer], true, [CHECK_MODULE_MIXER])
 AC_E_OPTIONAL_MODULE([connman], true, [CHECK_MODULE_CONNMAN])
+AC_E_OPTIONAL_MODULE([bluez], true, [CHECK_MODULE_BLUEZ])
 AC_E_OPTIONAL_MODULE([illume], true)
 AC_E_OPTIONAL_MODULE([illume2], true)
 AC_E_OPTIONAL_MODULE([syscon], true)
@@ -641,6 +650,8 @@ src/modules/mixer/Makefile
 src/modules/mixer/module.desktop
 src/modules/connman/Makefile
 src/modules/connman/module.desktop
+src/modules/bluez/Makefile
+src/modules/bluez/module.desktop
 src/modules/illume/Makefile
 src/modules/illume/module.desktop
 src/modules/illume/keyboards/Makefile

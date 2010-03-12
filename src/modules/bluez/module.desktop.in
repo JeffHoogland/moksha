@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Link
+Name=Bluetooth Manager
+Icon=e-module-bluez
+Comment=<title>Bluetooth Management.</title>
+X-Enlightenment-ModuleType=system

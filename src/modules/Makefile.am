@@ -238,6 +238,10 @@ if USE_MODULE_CONNMAN
 SUBDIRS += connman
 endif
 
+if USE_MODULE_BLUEZ
+SUBDIRS += bluez
+endif
+
 if USE_MODULE_ILLUME
 SUBDIRS += illume
 endif
@@ -323,6 +327,7 @@ conf_scale \
 gadman \
 mixer \
 connman \
+bluez \
 illume \
 illume2 \
 illume-bluetooth \

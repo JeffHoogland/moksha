@@ -8393,6 +8393,263 @@ collections { /* begin the collection of edje groups that are in this file */
       }
    }
 
+/////////////////////////////////////////////////////////////////////////////
+   /*** MOD: BLUEZ ***/
+
+   group { name: "e/modules/bluez/main";
+      images {
+         image: "bluetooth-powered.png" COMP;
+         image: "bluetooth-inactive.png" COMP;
+         image: "bluetooth-hidden.png" COMP;
+      }
+      //max: 128 128;
+      min: 16 16;
+
+      parts {
+         part {
+            name: "eventarea";
+            type: RECT;
+            mouse_events: 1;
+            description {
+               state: "default" 0.0;
+               color: 255 255 255 0;
+            }
+         }
+
+         part { name: "state-clipper";
+            type: RECT;
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               color: 255 255 255 255;
+            }
+         }
+
+         part { name: "state";
+            type: IMAGE;
+            mouse_events: 0;
+            clip_to: "state-clipper";
+            description {
+               state: "default" 0.0;
+               aspect: 1.0 1.0;
+               aspect_preference: BOTH;
+               fixed: 1 1;
+               image.normal: "bluetooth-inactive.png";
+            }
+            description { state: "powered" 0.0;
+               inherit: "default" 0.0;
+               image.normal: "bluetooth-powered.png";
+            }
+            description { state: "hidden" 0.0;
+               inherit: "default" 0.0;
+               image.normal: "bluetooth-hidden.png";
+            }
+         }
+
+	 programs {
+	    program {
+            signal: "e,changed,off";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "state";
+	    }
+	    program {
+            signal: "e,changed,powered";
+            source: "e";
+            action: STATE_SET "powered" 0.0;
+            target: "state";
+	    }
+	    program {
+            signal: "e,changed,hidden";
+            source: "e";
+            action: STATE_SET "hidden" 0.0;
+            target: "state";
+	    }
+	 }
+
+         part {
+            name: "e.text.name";
+            type: TEXT;
+            mouse_events: 0;
+	    effect: SOFT_SHADOW;
+            description {
+               state: "default" 0.0;
+	       color: 224 224 224 255;
+	       color3: 0 0 0 64;
+               align: 0.5 1.0;
+               rel1 {
+                  relative: 0.0 1.0;
+                  offset: 0 -20;
+               }
+               rel2 {
+                  relative: 1.0 1.0;
+                  offset: -1 -1;
+               }
+               text {
+                  font: "Sans";
+                  size: 8;
+                  align: 0.5 1.0;
+                  text: "";
+                  min: 1 1;
+               }
+            }
+            description {
+               state: "hidden" 0.0;
+               inherit: "default" 0.0;
+               visible: 0;
+            }
+         }
+
+         programs {
+            program {
+               name: "resize";
+               signal: "resize";
+	       script {
+		  new x, y, w, h, tx, ty, tw, th;
+		  get_geometry(PART:"eventarea", x, y, w, h);
+		  get_geometry(PART:"e.text.name", tx, ty, tw, th);
+		  if ((w <= 32) || (tw >= w))
+                     set_state(PART:"e.text.name", "hidden", 0.0);
+		  else
+                     set_state(PART:"e.text.name", "default", 0.0);
+	       }
+            }
+            program {
+               signal: "e,changed,name";
+               source: "e";
+               action: STATE_SET "default" 0.0; // show so calcs take effect!
+               target: "e.text.name";
+               after: "resize";
+            }
+         }
+      }
+   }
+
+   group { name: "e/modules/bluez/tip";
+      images {
+         image: "bluetooth-powered.png" COMP;
+         image: "bluetooth-inactive.png" COMP;
+         image: "bluetooth-hidden.png" COMP;
+      }
+      min: 200 84;
+
+      parts {
+         part { name: "state-clipper";
+            type: RECT;
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               color: 255 255 255 255;
+            }
+         }
+
+         part { name: "state";
+            type: IMAGE;
+            mouse_events: 0;
+            clip_to: "state-clipper";
+            description {
+               state: "default" 0.0;
+               aspect: 1.0 1.0;
+               aspect_preference: BOTH;
+               fixed: 1 1;
+               rel1 {
+                  relative: 0.0 0.0;
+                  offset: 10 10;
+               }
+	       rel2 {
+                  relative: 0.0 0.0;
+                  offset: 73 73;
+	       }
+               image.normal: "bluetooth-inactive.png";
+            }
+            description { state: "powered" 0.0;
+               inherit: "default" 0.0;
+               image.normal: "bluetooth-powered.png";
+            }
+            description { state: "hidden" 0.0;
+               inherit: "default" 0.0;
+               image.normal: "bluetooth-hidden.png";
+            }
+         }
+
+	 programs {
+	    program {
+            signal: "e,changed,off";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "state";
+	    }
+	    program {
+            signal: "e,changed,powered";
+            source: "e";
+            action: STATE_SET "powered" 0.0;
+            target: "state";
+	    }
+	    program {
+            signal: "e,changed,hidden";
+            source: "e";
+            action: STATE_SET "hidden" 0.0;
+            target: "state";
+	    }
+	 }
+
+         part { name: "e.text.name";
+            type: TEXT;
+            mouse_events: 0;
+	    effect: SOFT_SHADOW;
+            description {
+               state: "default" 0.0;
+	       color: 240 240 240 255;
+	       color3: 0 0 0 64;
+               align: 0.0 0.0;
+               rel1 {
+                  to_x: "state";
+                  relative: 1.0 0.0;
+                  offset: 10 20;
+               }
+               rel2 {
+                  relative: 1.0 0.0;
+                  offset: -10 40;
+               }
+               text {
+                  font: "Sans:style=Bold";
+                  size: 16;
+                  align: 0.0 0.0;
+                  text: "Bluetooth Manager";
+                  min: 1 0;
+               }
+            }
+         }
+
+         part { name: "e.text.status";
+            type: TEXT;
+            mouse_events: 0;
+            clip_to: "state-clipper";
+            description {
+               state: "default" 0.0;
+	       color: 16 16 16 255;
+               rel1 {
+                  to_y: "e.text.name";
+                  to_x: "state";
+                  relative: 1.0 1.0;
+                  offset: 10 10;
+               }
+               rel2 {
+                  to_y: "e.text.name";
+                  relative: 1.0 1.0;
+                  offset: -10 25;
+               }
+               text {
+                  font: "Sans";
+                  size: 10;
+                  align: 0.0 0.0;
+                  text: "";
+                  min: 1 0;
+               }
+            }
+         }
+      }
+   }
 
 /////////////////////////////////////////////////////////////////////////////
    /*** MOD: CONF_EDGEBINDINGS ***/
