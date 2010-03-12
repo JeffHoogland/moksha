@@ -5,6 +5,12 @@
 #include "e.h"
 #include "msgbus_desktop.h"
 
+static int _log_dom = -1;
+#define DBG(...) EINA_LOG_DOM_DBG(_log_dom, __VA_ARGS__)
+#define WARN(...) EINA_LOG_DOM_WARN(_log_dom, __VA_ARGS__)
+#define INF(...) EINA_LOG_DOM_INFO(_log_dom, __VA_ARGS__)
+#define ERR(...) EINA_LOG_DOM_ERR(_log_dom, __VA_ARGS__)
+
 static DBusMessage *
 cb_virtual_desktops(E_DBus_Object *obj, DBusMessage *msg)
 {
@@ -19,6 +25,69 @@ cb_virtual_desktops(E_DBus_Object *obj, DBusMessage *msg)
 				  &(e_config->zone_desks_y_count));
 
    return reply;
+}
+
+static DBusMessage *
+cb_desktop_show(E_DBus_Object *obj, DBusMessage *msg)
+{
+   DBusError err;
+   int x, y;
+
+   dbus_error_init(&err);
+   if (!dbus_message_get_args(msg, &err,
+			      DBUS_TYPE_INT32, &x,
+			      DBUS_TYPE_INT32, &y,
+			      DBUS_TYPE_INVALID))
+     {
+	ERR("could not get Show arguments: %s: %s", err.name, err.message);
+	dbus_error_free(&err);
+     }
+   else
+     {
+	E_Zone *zone = e_util_zone_current_get(e_manager_current_get());
+	fprintf(stderr, "show desktop %d,%d from zone %p.\n", x, y, zone);
+	DBG("show desktop %d,%d from zone %p.", x, y, zone);
+	e_zone_desk_flip_to(zone, x, y);
+     }
+
+   return dbus_message_new_method_return(msg);
+}
+
+static DBusMessage *
+cb_desktop_show_by_name(E_DBus_Object *obj, DBusMessage *msg)
+{
+   DBusError err;
+   const char *name;
+
+   dbus_error_init(&err);
+   if (!dbus_message_get_args(msg, &err,
+			      DBUS_TYPE_STRING, &name,
+			      DBUS_TYPE_INVALID))
+     {
+	ERR("could not get Show arguments: %s: %s", err.name, err.message);
+	dbus_error_free(&err);
+     }
+   else if (name)
+     {
+	E_Zone *zone = e_util_zone_current_get(e_manager_current_get());
+	unsigned int i, count;
+
+	DBG("show desktop %s from zone %p.", name, zone);
+	count = zone->desk_x_count * zone->desk_y_count;
+	for (i = 0; i < count; i++)
+	  {
+	     E_Desk *desk = zone->desks[i];
+	     if ((desk->name) && (strcmp(desk->name, name) == 0))
+	       {
+		  DBG("show desktop %s (%d,%d) from zone %p.",
+		      name, desk->x, desk->y, zone);
+		  e_zone_desk_flip_to(zone, desk->x, desk->y);
+		  break;
+	       }
+	  }
+     }
+
+   return dbus_message_new_method_return(msg);
 }
 
 static DBusMessage*
@@ -107,11 +176,22 @@ void msgbus_desktop_init(Eina_Array *ifaces)
 {
    E_DBus_Interface *iface;
 
+   if (_log_dom == -1)
+     {
+	_log_dom = eina_log_domain_register("msgbus_desktop", EINA_COLOR_BLUE);
+	if (_log_dom < 0)
+	  EINA_LOG_ERR("could not register msgbus_desktop log domain!");
+     }
+
    iface = e_dbus_interface_new("org.enlightenment.wm.Desktop");
    if (iface)
      {
 	e_dbus_interface_method_add(iface, "GetVirtualCount", "", "ii",
 				    cb_virtual_desktops);
+	e_dbus_interface_method_add(iface, "Show", "ii", "",
+				    cb_desktop_show);
+	e_dbus_interface_method_add(iface, "ShowByName", "s", "",
+				    cb_desktop_show_by_name);
 	e_msgbus_interface_attach(iface);
 	eina_array_push(ifaces, iface);
      }
