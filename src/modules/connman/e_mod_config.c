@@ -88,9 +88,9 @@ _connman_service_move_cb(void *data, DBusMessage *msg __UNUSED__, DBusError *err
    struct connman_service_move_data *d = data;
    if (error && dbus_error_is_set(error))
      {
- 	ERR("%s method failed with message \'%s\'",
+	ERR("%s method failed with message \'%s\'",
 	    error->name, error->message);
- 	dbus_error_free(error);
+	dbus_error_free(error);
      }
    else
      DBG("Changed service order");
@@ -147,9 +147,9 @@ _connman_technology_onoff_cb(void *data, DBusMessage *msg __UNUSED__, DBusError 
    struct _connman_technology_onoff_data *d = data;
    if (error && dbus_error_is_set(error))
      {
- 	ERR("%s method failed with message \'%s\'.",
+	ERR("%s method failed with message \'%s\'.",
 	    error->name, error->message);
- 	dbus_error_free(error);
+	dbus_error_free(error);
      }
    else
      DBG("Technology %s has been %s.", d->type, d->on ? "enabled" : "disabled");
@@ -167,8 +167,8 @@ _connman_technology_onoff(E_Connman_Module_Context *ctxt, const char *type, bool
    d = E_NEW(struct _connman_technology_onoff_data, 1);
    if (!d)
      {
- 	_connman_operation_error_show("No memory available");
- 	return;
+	_connman_operation_error_show("No memory available");
+	return;
      }
 
    d->type = eina_stringshare_add(type);
@@ -184,8 +184,8 @@ _connman_technology_onoff(E_Connman_Module_Context *ctxt, const char *type, bool
 
    if(!ret)
      {
- 	eina_stringshare_del(type);
- 	E_FREE(d);
+	eina_stringshare_del(type);
+	E_FREE(d);
      }
 
    return;
@@ -237,12 +237,12 @@ _free_data(E_Config_Dialog *dialog, E_Config_Dialog_Data *cfdata)
 
    while(ui->technologies)
      {
- 	struct connman_config_technologies *t;
+	struct connman_config_technologies *t;
 
 	t = (struct connman_config_technologies *) ui->technologies;
- 	ui->technologies = eina_inlist_remove
+	ui->technologies = eina_inlist_remove
 	  (ui->technologies, EINA_INLIST_GET(t));
- 	E_FREE(t);
+	E_FREE(t);
      }
 
    ctxt->conf_dialog = NULL;
@@ -364,13 +364,13 @@ _networks_fill_details(E_Config_Dialog_Data *cfdata, Evas_Object *list __UNUSED_
      (ctxt, cfdata->selected_network);
    if (!service)
      {
- 	ERR("service not found: %s.", cfdata->selected_network);
- 	return;
+	ERR("service not found: %s.", cfdata->selected_network);
+	return;
      }
    e_widget_entry_text_set(ui->lb_autoconn_val,
- 			   service->auto_connect ? _("True"): _("False"));
+			   service->auto_connect ? _("True"): _("False"));
    e_widget_entry_text_set(ui->lb_favorite_val,
- 			   service->favorite ? _("True") : _("False"));
+			   service->favorite ? _("True") : _("False"));
    e_widget_entry_text_set(ui->lb_type_val, service->type);
    e_widget_entry_text_set(ui->lb_ipv4_method_val, service->ipv4_method);
    e_widget_entry_text_set(ui->lb_ipv4_address_val, service->ipv4_address);
@@ -388,16 +388,16 @@ _networks_disable_buttons(E_Config_Dialog_Data *cfdata, Evas_Object *list, int s
 
    if (sel >= 0)
      {
- 	int index = e_widget_ilist_selected_get(list);
- 	int count = e_widget_ilist_count(list);
- 	e_widget_disabled_set(o_up, !index);
+	int index = e_widget_ilist_selected_get(list);
+	int count = e_widget_ilist_count(list);
+	e_widget_disabled_set(o_up, !index);
 
- 	e_widget_disabled_set(o_down, (count > index + 1)?0:1);
+	e_widget_disabled_set(o_down, (count > index + 1)?0:1);
      }
    else
      {
- 	e_widget_disabled_set(o_up, 1);
- 	e_widget_disabled_set(o_down, 1);
+	e_widget_disabled_set(o_up, 1);
+	e_widget_disabled_set(o_down, 1);
      }
 }
 
@@ -420,11 +420,11 @@ _networks_list_fill(Evas *evas, E_Config_Dialog_Data *cfdata)
 
    EINA_INLIST_FOREACH(ctxt->services, service)
      {
- 	Evas_Object *icon = _connman_service_new_list_item(evas, service);
+	Evas_Object *icon = _connman_service_new_list_item(evas, service);
 
- 	e_widget_ilist_append
- 	  (list, icon, service->name, _cb_service_selected,
- 	   cfdata, service->path);
+	e_widget_ilist_append
+	  (list, icon, service->name, _cb_service_selected,
+	   cfdata, service->path);
      }
 
    return eina_inlist_count(ctxt->services);
@@ -514,12 +514,12 @@ _networks_list_create(Evas *evas, E_Config_Dialog_Data *cfdata)
 
    e_widget_size_min_get(ot, &mw, &mh);
    e_widget_framelist_object_append_full(ui->netframe, ot,
- 					 1, 1, /* fill */
- 					 1, 0, /* expand */
- 					 0.5, 0.5, /* align */
- 					 mw, mh, /* min */
- 					 99999, 99999 /* max */
- 					 );
+					 1, 1, /* fill */
+					 1, 0, /* expand */
+					 0.5, 0.5, /* align */
+					 mw, mh, /* min */
+					 99999, 99999 /* max */
+					 );
 }
 
 static void
@@ -554,17 +554,17 @@ _switches_page_create_technologies(Evas *evas, E_Connman_Module_Context *ctxt, s
    struct E_Connman_Technology  *t;
    EINA_INLIST_FOREACH(ctxt->technologies, t)
      {
- 	struct connman_config_technologies *t_list;
+	struct connman_config_technologies *t_list;
 
 	t_list = E_NEW(struct connman_config_technologies, 1);
- 	t_list->technology = t;
- 	t_list->enabled = ((t->state == e_str_enabled) ||
+	t_list->technology = t;
+	t_list->enabled = ((t->state == e_str_enabled) ||
 			   (t->state == e_str_connected));
- 	t_list->obj = e_widget_check_add(evas, _(t->name), &t_list->enabled);
+	t_list->obj = e_widget_check_add(evas, _(t->name), &t_list->enabled);
 
- 	ui->technologies = eina_inlist_append
+	ui->technologies = eina_inlist_append
 	  (ui->technologies, EINA_INLIST_GET(t_list));
- 	e_widget_framelist_object_append(ui->type_frame, t_list->obj);
+	e_widget_framelist_object_append(ui->type_frame, t_list->obj);
      }
 }
 
@@ -619,10 +619,10 @@ _basic_apply(E_Config_Dialog *dialog __UNUSED__, E_Config_Dialog_Data *cfdata)
 
    EINA_INLIST_FOREACH(sw->technologies, t)
      {
- 	int was_enabled = ((t->technology->state == e_str_enabled) ||
+	int was_enabled = ((t->technology->state == e_str_enabled) ||
 			   (t->technology->state == e_str_connected));
- 	if (t->enabled != was_enabled)
- 	  _connman_technology_onoff(ctxt, t->technology->type, t->enabled);
+	if (t->enabled != was_enabled)
+	  _connman_technology_onoff(ctxt, t->technology->type, t->enabled);
      }
    if (ctxt->offline_mode != sw->offline_mode)
      _connman_toggle_offline_mode(ctxt);
