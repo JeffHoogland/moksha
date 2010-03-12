@@ -14,13 +14,11 @@
 //   3. for unmapped windows - when window goes out of unmapped comp cache
 //      make a miniature copy (1/4 width+height?) and set property on window
 //      with pixmap id
-//   6. other engine fast-paths (gl specifically)!
 //   8. transparenty property
 //   9. shortcut lots of stuff to draw inside the compositor - shelf,
 //      wallpaper, efm - hell even menus and anything else in e (this is what
 //      e18 was mostly about)
-//  10. fullscreen windows need to be able to bypass compositing
-//  11. handle root window resize!
+//  10. fullscreen windows need to be able to bypass compositing *seems buggy*
 //  
 //////////////////////////////////////////////////////////////////////////
 
@@ -1997,7 +1995,22 @@ _e_mod_comp_add(E_Manager *man)
           {
              E_Comp_Win *cw;
              int x, y, w, h, border;
+             char *wname = NULL, *wclass = NULL;
              
+             ecore_x_icccm_name_class_get(wins[i], &wname, &wclass);
+             if ((man->initwin == wins[i]) ||
+                 ((wname) && (wclass) && (!strcmp(wname, "E")) &&
+                  (!strcmp(wclass, "Init_Window"))))
+               {
+                  free(wname);
+                  free(wclass);
+                  ecore_x_window_reparent(wins[i], c->win, 0, 0);
+                  ecore_x_sync();
+                  continue;
+               }
+             if (wname) free(wname);
+             if (wclass) free(wclass);
+             wname = wclass = NULL;
              cw = _e_mod_comp_win_add(c, wins[i]);
              if (!cw) continue;
              ecore_x_window_geometry_get(cw->win, &x, &y, &w, &h);
@@ -2005,9 +2018,7 @@ _e_mod_comp_add(E_Manager *man)
              if (wins[i] == c->win) continue;
              _e_mod_comp_win_configure(cw, x, y, w, h, border);
              if (ecore_x_window_visible_get(wins[i]))
-               {
-                  _e_mod_comp_win_show(cw);
-               }
+               _e_mod_comp_win_show(cw);
           }
         free(wins);
      }
