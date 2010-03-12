@@ -25,9 +25,7 @@ pkg_LTLIBRARIES        = module.la
 module_la_SOURCES      = e_mod_main.c \
                          e_mod_main.h \
                          msgbus_lang.c \
-                         msgbus_lang.h \
-                         msgbus_desktop.c \
-                         msgbus_desktop.h
+                         msgbus_desktop.c
 
 module_la_LIBADD       = @e_libs@ @dlopen_libs@
 module_la_LDFLAGS      = -module -avoid-version
