@@ -13,12 +13,12 @@ typedef struct _E_Smart_Data E_Smart_Data;
 typedef struct _E_Slider_Special_Value E_Slider_Special_Value;
 
 struct _E_Smart_Data
-{ 
+{
    Evas_Coord   x, y, w, h;
-   
+
    Evas_Object   *smart_obj;
    Evas_Object   *edje_obj;
-   double         val, val_min, val_max, step_size;
+   double         val, val_min, val_max, val_range, step_size;
    int            reversed, step_count, horizontal;
    int            direction;
    const char    *format;
@@ -113,6 +113,7 @@ e_slider_value_range_set(Evas_Object *obj, double min, double max)
    sd->val_min = min;
    sd->val_max = max;
    if (sd->val_max < sd->val_min) sd->val_min = sd->val_max;
+   sd->val_range = sd->val_max - sd->val_min;
    sd->direction = 0;
    _e_smart_value_limit(sd);
    _e_smart_value_update_now(sd);
@@ -130,14 +131,15 @@ EAPI void
 e_slider_value_step_size_set(Evas_Object *obj, double step_size)
 {
    double step;
-   
+
    API_ENTRY return;
    if (step_size < 0.0) step_size = 0.0;
    sd->step_size = step_size;
    step = 0.0;
-   if (sd->val_max > sd->val_min)
-     step = step_size / (sd->val_max - sd->val_min);
-   edje_object_part_drag_step_set(sd->edje_obj, "e.dragable.slider", step, step);
+   if (sd->val_range > 0.0)
+     step = step_size / sd->val_range;
+   edje_object_part_drag_step_set
+     (sd->edje_obj, "e.dragable.slider", step, step);
    sd->direction = 0;
    _e_smart_value_limit(sd);
    _e_smart_value_update_now(sd);
@@ -171,7 +173,7 @@ EAPI void
 e_slider_value_format_display_set(Evas_Object *obj, const char *format)
 {
    int changed = 0;
-   
+
    API_ENTRY return;
    if (((sd->format) && (!format)) || ((!sd->format) && (format))) changed = 1;
    if (sd->format) eina_stringshare_del(sd->format);
@@ -246,12 +248,10 @@ e_slider_special_value_add(Evas_Object *obj, double value, double error, const c
 static int
 _e_smart_set_timer(void *data)
 {
-   E_Smart_Data *sd;
+   E_Smart_Data *sd = data;
    double pos = 0.0;
 
-   sd = data;
-   if (sd->val_max > sd->val_min)
-     pos = (sd->val - sd->val_min) / (sd->val_max - sd->val_min);
+   if (sd->val_range > 0.0) pos = (sd->val - sd->val_min) / sd->val_range;
    if (pos < 0.0) pos = 0.0;
    else if (pos > 1.0) pos = 1.0;
    if (sd->reversed) pos = 1.0 - pos;
@@ -278,11 +278,12 @@ static void
 _e_smart_value_fetch(E_Smart_Data *sd)
 {
    double posx = 0.0, posy = 0.0, pos = 0.0;
-   
-   edje_object_part_drag_value_get(sd->edje_obj, "e.dragable.slider", &posx, &posy);
+
+   edje_object_part_drag_value_get
+     (sd->edje_obj, "e.dragable.slider", &posx, &posy);
    if (sd->horizontal) pos = posx;
    else pos = posy;
-   sd->val = (pos * (sd->val_max - sd->val_min)) + sd->val_min;
+   sd->val = (pos * sd->val_range) + sd->val_min;
 }
 
 static void
@@ -290,13 +291,13 @@ _e_smart_value_limit(E_Smart_Data *sd)
 {
    if (sd->val < sd->val_min) sd->val = sd->val_min;
    if (sd->val > sd->val_max) sd->val = sd->val_max;
-   if (sd->val_max > sd->val_min)
+   if (sd->val_range > 0.0)
      {
 	if (sd->step_count > 0)
 	  {
 	     double p, s;
 
-	     s = (sd->val_max - sd->val_min) / sd->step_count;
+	     s = sd->val_range / sd->step_count;
 	     p = sd->val / s;
 	     if (sd->direction == 1)
 	       p = ceil(p);
@@ -398,9 +399,7 @@ _e_smart_event_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
      {
 	if (sd->step_count > 0)
 	  {
-	     double s;
-	     
-	     s = (sd->val_max - sd->val_min) / sd->step_count;
+	     double s = sd->val_range / sd->step_count;
 	     edje_object_part_drag_step(sd->edje_obj, "e.dragable.slider", -s, -s);
 	  }
 	else
@@ -414,9 +413,7 @@ _e_smart_event_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
      {
 	if (sd->step_count > 0)
 	  {
-	     double s;
-	     
-	     s = (sd->val_max - sd->val_min) / sd->step_count;
+	     double s = sd->val_range / sd->step_count;
 	     edje_object_part_drag_step(sd->edje_obj, "e.dragable.slider", s, s);
 	  }
 	else
@@ -448,39 +445,40 @@ static void
 _e_smart_add(Evas_Object *obj)
 {
    E_Smart_Data *sd;
-   
+
    sd = calloc(1, sizeof(E_Smart_Data));
    if (!sd) return;
    evas_object_smart_data_set(obj, sd);
-   
+
    sd->smart_obj = obj;
    sd->x = 0;
    sd->y = 0;
    sd->w = 0;
    sd->h = 0;
-   
+
    sd->val = 0.0;
    sd->val_min = 0.0;
    sd->val_max = 1.0;
+   sd->val_range = 1.0;
    sd->step_size = 0.01;
    sd->reversed = 0;
    sd->step_count = 0;
    sd->horizontal = 0;
    sd->format = NULL;
    sd->direction = 0;
-   
+
    sd->edje_obj = edje_object_add(evas_object_evas_get(obj));
    e_theme_edje_object_set(sd->edje_obj, "base/theme/widgets",
 			   "e/widgets/slider_vertical");
    edje_object_size_min_calc(sd->edje_obj, &(sd->minw), &(sd->minh));
    evas_object_smart_member_add(sd->edje_obj, obj);
-   
+
    edje_object_signal_callback_add(sd->edje_obj, "drag", "*", _e_smart_signal_cb_drag, sd);
    edje_object_signal_callback_add(sd->edje_obj, "drag,start", "*", _e_smart_signal_cb_drag_start, sd);
    edje_object_signal_callback_add(sd->edje_obj, "drag,stop", "*", _e_smart_signal_cb_drag_stop, sd);
    edje_object_signal_callback_add(sd->edje_obj, "drag,step", "*", _e_smart_signal_cb_drag_stop, sd);
    edje_object_signal_callback_add(sd->edje_obj, "drag,set", "*", _e_smart_signal_cb_drag_stop, sd);
-   
+
    evas_object_event_callback_add(obj, EVAS_CALLBACK_KEY_DOWN, _e_smart_event_key_down, sd);
 }
 
@@ -554,7 +552,7 @@ _e_smart_clip_unset(Evas_Object *obj)
 {
    INTERNAL_ENTRY;
    evas_object_clip_unset(sd->edje_obj);
-}  
+}
 
 /* never need to touch this */
 
@@ -579,4 +577,3 @@ _e_smart_init(void)
 	_e_smart = evas_smart_class_new(&sc);
      }
 }
-
