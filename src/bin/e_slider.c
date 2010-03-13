@@ -403,7 +403,7 @@ _e_smart_event_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
 	     edje_object_part_drag_step(sd->edje_obj, "e.dragable.slider", -s, -s);
 	  }
 	else
-	  edje_object_part_drag_step(sd->edje_obj, "e.dragable.slider", -sd->step_size, -sd->step_size);
+	  edje_object_part_drag_step(sd->edje_obj, "e.dragable.slider", -1, -1);
 	sd->direction = -1;
      }
    else if ((!strcmp(ev->keyname, "Down")) ||
@@ -417,7 +417,7 @@ _e_smart_event_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
 	     edje_object_part_drag_step(sd->edje_obj, "e.dragable.slider", s, s);
 	  }
 	else
-	  edje_object_part_drag_step(sd->edje_obj, "e.dragable.slider", sd->step_size, sd->step_size);
+	  edje_object_part_drag_step(sd->edje_obj, "e.dragable.slider", 1, 1);
 	sd->direction = 1;
      }
    else if ((!strcmp(ev->keyname, "Home")) ||
