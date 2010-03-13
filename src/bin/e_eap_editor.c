@@ -274,7 +274,7 @@ _e_desktop_edit_create_data(E_Config_Dialog *cfd)
 	const char *file;
 
 	snprintf(dir, sizeof(dir), "%s/applications", efreet_data_home_get());
-	if (!strncmp(dir, cfdata->editor->desktop->orig_path, sizeof(dir)))
+	if (!strncmp(dir, cfdata->editor->desktop->orig_path, strlen(dir)))
 	  cfdata->desktop = cfdata->editor->desktop;
 	else
 	  {
