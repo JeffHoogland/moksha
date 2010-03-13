@@ -2631,7 +2631,7 @@ e_actions_init(void)
    e_action_predef_name_set(_("Desktop"), _("Flip Desktop Right"), 
 			    "desk_flip_by", "1 0", NULL, 0);
    e_action_predef_name_set(_("Desktop"), _("Flip Desktop Up"), 
-			    "desk_flip_by", "0 -1", NULL,  0);
+			    "desk_flip_by", "0 -1", NULL, 0);
    e_action_predef_name_set(_("Desktop"), _("Flip Desktop Down"), 
 			    "desk_flip_by", "0 1", NULL, 0);
    e_action_predef_name_set(_("Desktop"), _("Flip Desktop By..."), 
@@ -2698,7 +2698,7 @@ e_actions_init(void)
    e_action_predef_name_set(_("Desktop"), _("Flip Desktop Right (All Screens)"), 
 			    "desk_flip_by_all", "1 0", NULL, 0);
    e_action_predef_name_set(_("Desktop"), _("Flip Desktop Up (All Screens)"), 
-			    "desk_flip_by_all", "0 -1", NULL,  0);
+			    "desk_flip_by_all", "0 -1", NULL, 0);
    e_action_predef_name_set(_("Desktop"), _("Flip Desktop Down (All Screens)"), 
 			    "desk_flip_by_all", "0 1", NULL, 0);
    e_action_predef_name_set(_("Desktop"), _("Flip Desktop By... (All Screens)"), 

@@ -779,7 +779,7 @@ e_menu_item_toggle_get(E_Menu_Item *mi)
 }
 
 EAPI void
-e_menu_item_callback_set(E_Menu_Item *mi,  void (*func) (void *data, E_Menu *m, E_Menu_Item *mi), void *data)
+e_menu_item_callback_set(E_Menu_Item *mi, void (*func) (void *data, E_Menu *m, E_Menu_Item *mi), void *data)
 {
    E_OBJECT_CHECK(mi);
    E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);
@@ -788,7 +788,7 @@ e_menu_item_callback_set(E_Menu_Item *mi,  void (*func) (void *data, E_Menu *m, 
 }
 
 EAPI void
-e_menu_item_realize_callback_set(E_Menu_Item *mi,  void (*func) (void *data, E_Menu *m, E_Menu_Item *mi), void *data)
+e_menu_item_realize_callback_set(E_Menu_Item *mi, void (*func) (void *data, E_Menu *m, E_Menu_Item *mi), void *data)
 {
    E_OBJECT_CHECK(mi);
    E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);
@@ -797,7 +797,7 @@ e_menu_item_realize_callback_set(E_Menu_Item *mi,  void (*func) (void *data, E_M
 }
 
 EAPI void
-e_menu_item_submenu_pre_callback_set(E_Menu_Item *mi,  void (*func) (void *data, E_Menu *m, E_Menu_Item *mi), void *data)
+e_menu_item_submenu_pre_callback_set(E_Menu_Item *mi, void (*func) (void *data, E_Menu *m, E_Menu_Item *mi), void *data)
 {
    E_OBJECT_CHECK(mi);
    E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);
@@ -808,7 +808,7 @@ e_menu_item_submenu_pre_callback_set(E_Menu_Item *mi,  void (*func) (void *data,
 }
 
 EAPI void
-e_menu_item_submenu_post_callback_set(E_Menu_Item *mi,  void (*func) (void *data, E_Menu *m, E_Menu_Item *mi), void *data)
+e_menu_item_submenu_post_callback_set(E_Menu_Item *mi, void (*func) (void *data, E_Menu *m, E_Menu_Item *mi), void *data)
 {
    E_OBJECT_CHECK(mi);
    E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);
@@ -817,7 +817,7 @@ e_menu_item_submenu_post_callback_set(E_Menu_Item *mi,  void (*func) (void *data
 }
 
 EAPI void
-e_menu_item_drag_callback_set(E_Menu_Item *mi,  void (*func) (void *data, E_Menu *m, E_Menu_Item *mi), void *data)
+e_menu_item_drag_callback_set(E_Menu_Item *mi, void (*func) (void *data, E_Menu *m, E_Menu_Item *mi), void *data)
 {
    E_OBJECT_CHECK(mi);
    E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);
@@ -1410,8 +1410,8 @@ _e_menu_item_realize(E_Menu_Item *mi)
 	evas_object_color_set(o, 0, 0, 0, 0);
 	evas_object_layer_set(o, 1);
 	evas_object_repeat_events_set(o, 1);
-	evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_IN,  
-                                       _e_menu_cb_item_in,  mi);
+	evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_IN,
+                                       _e_menu_cb_item_in, mi);
 	evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_OUT, 
                                        _e_menu_cb_item_out, mi);
 	evas_object_show(o);

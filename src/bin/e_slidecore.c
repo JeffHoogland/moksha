@@ -70,7 +70,7 @@ e_slidecore_item_distance_set(Evas_Object *obj, Evas_Coord dist)
 }
 
 EAPI void
-e_slidecore_item_add(Evas_Object *obj, const char *label, const char *icon,  void (*func) (void *data), void *data)
+e_slidecore_item_add(Evas_Object *obj, const char *label, const char *icon, void (*func) (void *data), void *data)
 {
    E_Smart_Item *it;
 

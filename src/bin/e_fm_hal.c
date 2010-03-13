@@ -125,7 +125,7 @@ e_fm2_hal_volume_add(E_Volume *v)
 	  , 
 	  v->udi, 
 	  v->uuid, 
-	  v->fstype,  
+	  v->fstype,
 	  v->size,
 	  v->label, 
 	  v->partition, 

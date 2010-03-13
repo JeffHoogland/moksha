@@ -182,7 +182,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 }
 
 static CFModule *
-_module_new(const char *short_name,  const Efreet_Desktop *desk)
+_module_new(const char *short_name, const Efreet_Desktop *desk)
 {
    CFModule *cfm = E_NEW(CFModule, 1);
    if (!cfm) return NULL;

@@ -62,7 +62,7 @@ e_color_class_find(const char *name)
 }
 
 EAPI void
-e_color_class_instance_set(E_Color_Class *cc,  int r, int g, int b, int a, int r2, int b2, int g2, int a2, int r3, int g3, int b3, int a3)
+e_color_class_instance_set(E_Color_Class *cc, int r, int g, int b, int a, int r2, int b2, int g2, int a2, int r3, int g3, int b3, int a3)
 {
    if (!cc) return;
 

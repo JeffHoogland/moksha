@@ -47,8 +47,8 @@ e_color_dialog_new(E_Container *con, const E_Color *color, Eina_Bool alpha_enabl
    e_widget_on_change_hook_set(o, _e_color_dialog_cb_csel_change, dia);
 
    /* buttons at the bottom */
-   e_dialog_button_add(dia->dia, _("OK"), NULL,  _e_color_dialog_button1_click, dia);
-   e_dialog_button_add(dia->dia, _("Cancel"), NULL,  _e_color_dialog_button2_click, dia);
+   e_dialog_button_add(dia->dia, _("OK"), NULL, _e_color_dialog_button1_click, dia);
+   e_dialog_button_add(dia->dia, _("Cancel"), NULL, _e_color_dialog_button2_click, dia);
    e_dialog_resizable_set(dia->dia, 1);
    e_win_centered_set(dia->dia->win, 1);
 
