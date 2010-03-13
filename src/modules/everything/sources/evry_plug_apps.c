@@ -259,18 +259,21 @@ _item_add(Plugin *p, Efreet_Desktop *desktop, char *file, int match)
 
    if (!exe) return NULL;
 
-   if ((app = eina_hash_find(p->added, exe)) &&
-       (!desktop || (desktop == app->desktop)))
+   if (app = eina_hash_find(p->added, exe))
      {
-	if (!eina_list_data_find_list(EVRY_PLUGIN(p)->items, app))
+	if (!desktop || (!app->desktop) ||
+	    (desktop == app->desktop) ||
+	    (!strcmp(desktop->exec, app->desktop->exec)))
 	  {
-	     EVRY_ITEM(app)->fuzzy_match = match;
-	     EVRY_ITEM(app)->plugin = EVRY_PLUGIN(p);
-	     EVRY_PLUGIN_ITEM_APPEND(p, app);
+	     if (!eina_list_data_find_list(EVRY_PLUGIN(p)->items, app))
+	       {
+		  EVRY_ITEM(app)->fuzzy_match = match;
+		  EVRY_ITEM(app)->plugin = EVRY_PLUGIN(p);
+		  EVRY_PLUGIN_ITEM_APPEND(p, app);
+	       }
+	     return app;
 	  }
-	return app;
      }
-
    if (desktop && !already_refd)
      efreet_desktop_ref(desktop);
 
