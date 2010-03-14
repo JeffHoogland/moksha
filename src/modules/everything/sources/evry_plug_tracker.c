@@ -489,7 +489,7 @@ _get_name_owner(void *data __UNUSED__, DBusMessage *msg, DBusError *err)
    if (dbus_error_is_set(err))
      {
         ERR("request name error: %s", err->message);
-        dbus_error_free(err);
+        //dbus_error_free(err);
         e_dbus_connection_close(conn);
 	conn = NULL;
         return;

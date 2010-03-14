@@ -247,8 +247,9 @@ evry_clear_input(void)
      }
 }
 
+//#define CHECK_REFS 1
 
-#ifdef CECHK_REFS
+#ifdef CHECK_REFS
 static int item_cnt = 0;
 #endif
 
@@ -422,6 +423,10 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
 	  _evry_selector_update(selector);
 
 	_evry_view_update(s, NULL);
+     }
+   else if (action == EVRY_ASYNC_UPDATE_CLEAR)
+     {
+	
      }
 }
 
@@ -781,11 +786,11 @@ _evry_selector_icon_set(Evry_Selector *sel)
 
    it = s->cur_item;
 
-   if (it && it->plugin && it->plugin->icon_get)
+   if (s->plugin && s->plugin->icon_get)
      {
 	if (!_evry_selector_thumb(sel, it))
 	  {
-	     o = it->plugin->icon_get(it->plugin, it, win->popup->evas);
+	     o = s->plugin->icon_get(it->plugin, it, win->popup->evas);
 	     if (o)
 	       {
 		  edje_object_part_swallow(sel->o_main, "e.swallow.icons", o);

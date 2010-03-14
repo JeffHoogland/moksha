@@ -300,9 +300,9 @@ _e_smart_reconfigure_do(void *data)
 	       }
 
 	     if (!it->image && !it->have_thumb &&
-		 it->item->plugin && it->item->plugin->icon_get)
+		 sd->view->state->plugin->icon_get)
 	       {
-		  it->image = it->item->plugin->icon_get
+		  it->image = sd->view->state->plugin->icon_get
 		    (it->item->plugin, it->item, sd->view->evas);
 
 		  if (it->image)

@@ -224,10 +224,17 @@ _cleanup(Evry_Plugin *plugin)
 static Evas_Object *
 _icon_get(Evry_Plugin *plugin, const Evry_Item *it, Evas *e)
 {
-   if (it->plugin && it->plugin->icon_get)
-     return it->plugin->icon_get(it->plugin, it, e);
+   Evas_Object *o = NULL;
 
-   return NULL;
+   if (it->plugin)
+     {
+	if (it->plugin->icon_get)
+	  o = it->plugin->icon_get(it->plugin, it, e);
+	else if  (it->plugin->icon)
+	  o = evry_icon_theme_get(it->plugin->icon, e);
+     }
+
+   return o;
 }
 
 Evry_Plugin *

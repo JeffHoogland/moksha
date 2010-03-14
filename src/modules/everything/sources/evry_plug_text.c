@@ -21,6 +21,7 @@ _fetch(Evry_Plugin *p, const char *input)
    if (input)
      {
 	it = evry_item_new(NULL, p, input, NULL);
+	it->fuzzy_match = 9999;
 	EVRY_PLUGIN_ITEM_APPEND(p, it);
 
 	return 1;
@@ -32,14 +33,14 @@ _fetch(Evry_Plugin *p, const char *input)
 static Eina_Bool
 _init(void)
 {
-   p1 = evry_plugin_new(NULL, "Text", type_subject, NULL, "TEXT", 1, "accessories-editor", NULL,
+   p1 = evry_plugin_new(NULL, "Text", type_subject, NULL, "TEXT", 1, "accessories-text-editor", NULL,
 			NULL, _cleanup, _fetch, NULL, NULL, NULL, NULL);
 
-   p2 = evry_plugin_new(NULL, "Text", type_object, NULL, "TEXT", 1, "accessories-editor", NULL,
+   p2 = evry_plugin_new(NULL, "Text", type_object,  NULL, "TEXT", 1, "accessories-text-editor", NULL,
 			NULL, _cleanup, _fetch, NULL, NULL, NULL, NULL);
 
-   evry_plugin_register(p1, 10);
-   evry_plugin_register(p2, 10);
+   evry_plugin_register(p1, 100);
+   evry_plugin_register(p2, 100);
 
    return EINA_TRUE;
 }
