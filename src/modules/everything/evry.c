@@ -786,7 +786,7 @@ _evry_selector_icon_set(Evry_Selector *sel)
 
    it = s->cur_item;
 
-   if (s->plugin && s->plugin->icon_get)
+   if (it && s->plugin && s->plugin->icon_get)
      {
 	if (!_evry_selector_thumb(sel, it))
 	  {
