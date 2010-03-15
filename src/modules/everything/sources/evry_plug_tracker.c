@@ -356,7 +356,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	e_dbus_message_send(conn, msg, _dbus_cb_reply, -1, p);
 	dbus_message_unref(msg);
 
-	if (search_text)
+	if (search_text && search_text[0] != '\0')
 	  free(search_text);
 
 	if (p->files) return 1;
