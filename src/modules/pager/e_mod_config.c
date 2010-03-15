@@ -38,8 +38,10 @@ static void _fill_data(E_Config_Dialog_Data *cfdata);
 static void _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata);
 static int _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
+static int _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_adv_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata);
 static int _adv_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
+static int _adv_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
 static void _update_btn_lbl(E_Config_Dialog_Data *cfdata);
 static void _grab_window_show(void *data1, void *data2);
 static int _grab_cb_mouse_down(void *data, int type, void *event);
@@ -62,8 +64,10 @@ _config_pager_module(Config_Item *ci)
    v->free_cfdata = _free_data;
    v->basic.create_widgets = _basic_create;
    v->basic.apply_cfdata = _basic_apply;
+   v->basic.check_changed = _basic_check_changed;
    v->advanced.create_widgets = _adv_create;
    v->advanced.apply_cfdata = _adv_apply;
+   v->advanced.check_changed = _adv_check_changed;
 
    snprintf(buff, sizeof(buff), "%s/e-module-pager.edj", 
             pager_config->module->dir);
@@ -148,6 +152,17 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    pager_config->popup_urgent = cfdata->popup.urgent_show;
    e_config_save_queue();
    return 1;
+}
+
+static int 
+_basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
+{
+   if (pager_config->popup != cfdata->popup.show) return 1;
+   if (pager_config->flip_desk != cfdata->flip_desk) return 1;
+   if (pager_config->show_desk_names != cfdata->show_desk_names) return 1;
+   if (pager_config->popup_urgent != cfdata->popup.urgent_show) return 1;
+
+   return 0;
 }
 
 static Evas_Object *
@@ -278,6 +293,26 @@ _adv_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    pager_config->btn_desk = cfdata->btn.desk;
    e_config_save_queue();
    return 1;
+}
+
+static int 
+_adv_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
+{
+   if (pager_config->popup != cfdata->popup.show) return 1;
+   if (pager_config->flip_desk != cfdata->flip_desk) return 1;
+   if (pager_config->show_desk_names != cfdata->show_desk_names) return 1;
+   if (pager_config->popup_urgent != cfdata->popup.urgent_show) return 1;
+   if (pager_config->popup_speed != cfdata->popup.speed) return 1;
+   if (pager_config->popup_urgent_stick != cfdata->popup.urgent_stick) return 1;
+   if (pager_config->popup_urgent_speed != cfdata->popup.urgent_speed) return 1;
+   if (pager_config->popup_height != cfdata->popup.height) return 1;
+   if (pager_config->popup_act_height != cfdata->popup.act_height) return 1;
+   if (pager_config->drag_resist != cfdata->drag_resist) return 1;
+   if (pager_config->btn_drag != cfdata->btn.drag) return 1;
+   if (pager_config->btn_noplace != cfdata->btn.noplace) return 1;
+   if (pager_config->btn_desk != cfdata->btn.desk) return 1;
+
+   return 0;
 }
 
 static void 
