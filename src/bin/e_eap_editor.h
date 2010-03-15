@@ -29,7 +29,6 @@ struct _E_Desktop_Edit
    //int          img_set;
 
    char *tmp_image_path;
-   int new_desktop;
    int saved; /* whether desktop has been saved or not */
    
    E_Config_Dialog *cfd;

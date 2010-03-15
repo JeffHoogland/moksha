@@ -275,7 +275,7 @@ _e_desktop_edit_create_data(E_Config_Dialog *cfd)
 
 	snprintf(dir, sizeof(dir), "%s/applications", efreet_data_home_get());
 	if (!strncmp(dir, cfdata->editor->desktop->orig_path, strlen(dir)))
-	  cfdata->desktop = cfdata->editor->desktop;
+	  cfdata->desktop = efreet_desktop_uncached_new(cfdata->editor->desktop->orig_path);
 	else
 	  {
 	     /* file not in user's dir, so create new desktop that points there */
@@ -289,16 +289,13 @@ _e_desktop_edit_create_data(E_Config_Dialog *cfd)
 	      * provide a means to edit a file in a system dir when one 
 	      * exists in the user's
 	      */
-	     cfdata->desktop = efreet_desktop_get(path);
+	     cfdata->desktop = efreet_desktop_uncached_new(path);
 	  }
 	desktop = cfdata->editor->desktop;
      }
 
    if (!cfdata->desktop)
-     {
 	cfdata->desktop = efreet_desktop_empty_new(path);
-	cfdata->editor->new_desktop = 1;
-     }
 
    if (!desktop) desktop = cfdata->desktop;
 
