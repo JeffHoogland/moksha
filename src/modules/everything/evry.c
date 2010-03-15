@@ -8,8 +8,8 @@
  * - keybinding configuration
  * - shortcuts for plugins
  */
-#define INPUTLEN 40
-#define MATCH_LAG 0.33
+#define INPUTLEN 256
+#define MATCH_LAG 0.1
 
 typedef struct _Evry_Window Evry_Window;
 typedef struct _Evry_List_Window Evry_List_Window;
