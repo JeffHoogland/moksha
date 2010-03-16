@@ -529,7 +529,8 @@ main(int argc, char **argv)
    snprintf(buf, sizeof(buf), "%s/bin/enlightenment", _prefix_path);
 
    args = alloca((argc + 2 + VALGRIND_MAX_ARGS) * sizeof(char *));
-   if (!getenv("DBUS_SESSION_BUS_ADDRESS"))
+   if ((!getenv("DBUS_SESSION_BUS_ADDRESS")) &&
+       (!getenv("DBUS_LAUNCHD_SESSION_BUS_SOCKET")))
      {
 	args[0] = "dbus-launch";
 	args[1] = "--exit-with-session";
