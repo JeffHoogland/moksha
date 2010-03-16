@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-03-13 11:13+0400\n"
-"PO-Revision-Date: 2010-03-13 13:25+0400\n"
+"POT-Creation-Date: 2010-03-16 07:28+0400\n"
+"PO-Revision-Date: 2010-03-16 09:11+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment French Team <pourunmondesansgourou@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -736,8 +736,8 @@ msgstr "Sélecteur de couleurs"
 #: src/bin/e_color_dialog.c:50
 #: src/bin/e_config.c:1885
 #: src/bin/e_config_dialog.c:262
-#: src/bin/e_eap_editor.c:801
-#: src/bin/e_eap_editor.c:865
+#: src/bin/e_eap_editor.c:798
+#: src/bin/e_eap_editor.c:862
 #: src/bin/e_entry_dialog.c:62
 #: src/bin/e_exec.c:365
 #: src/bin/e_fm.c:8520
@@ -765,8 +765,8 @@ msgid "OK"
 msgstr "O.K."
 
 #: src/bin/e_color_dialog.c:51
-#: src/bin/e_eap_editor.c:803
-#: src/bin/e_eap_editor.c:867
+#: src/bin/e_eap_editor.c:800
+#: src/bin/e_eap_editor.c:864
 #: src/bin/e_entry_dialog.c:63
 #: src/bin/e_fm.c:8522
 #: src/bin/e_fm_prop.c:511
@@ -836,7 +836,7 @@ msgid "Advanced"
 msgstr "Avancé"
 
 #: src/bin/e_config_dialog.c:239
-#: src/bin/e_eap_editor.c:669
+#: src/bin/e_eap_editor.c:666
 msgid "Basic"
 msgstr "Basique"
 
@@ -928,7 +928,7 @@ msgstr "La fenêtre pour laquelle vous voulez créer un icone<br>n'a pas de nom 
 msgid "Desktop Entry Editor"
 msgstr "Éditeur de fichier desktop"
 
-#: src/bin/e_eap_editor.c:636
+#: src/bin/e_eap_editor.c:633
 #: src/bin/e_int_border_prop.c:420
 #: src/bin/e_int_border_prop.c:467
 #: src/modules/conf_imc/e_int_config_imc.c:890
@@ -937,72 +937,74 @@ msgstr "Éditeur de fichier desktop"
 msgid "Name"
 msgstr "Nom"
 
-#: src/bin/e_eap_editor.c:647
+#: src/bin/e_eap_editor.c:644
 msgid "Executable"
 msgstr "Exécutable"
 
-#: src/bin/e_eap_editor.c:662
+#: src/bin/e_eap_editor.c:659
 msgid "Comment"
 msgstr "Commentaire"
 
-#: src/bin/e_eap_editor.c:679
+#: src/bin/e_eap_editor.c:676
 #: src/bin/e_fm_prop.c:397
 #: src/modules/conf_fonts/e_int_config_fonts.c:96
 #: src/modules/conf_mime/e_int_config_mime_edit.c:145
 msgid "Icon"
 msgstr "Icone"
 
-#: src/bin/e_eap_editor.c:684
+#: src/bin/e_eap_editor.c:681
 msgid "Generic Name"
 msgstr "Nom générique"
 
-#: src/bin/e_eap_editor.c:690
+#: src/bin/e_eap_editor.c:687
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:106
 msgid "Window Class"
 msgstr "Classe de fenêtre"
 
-#: src/bin/e_eap_editor.c:696
+#: src/bin/e_eap_editor.c:693
 #: src/modules/conf_mime/e_int_config_mime.c:179
 msgid "Categories"
 msgstr "Catégories"
 
-#: src/bin/e_eap_editor.c:703
+#: src/bin/e_eap_editor.c:700
 msgid "Mime Types"
 msgstr "Types mime"
 
-#: src/bin/e_eap_editor.c:710
+#: src/bin/e_eap_editor.c:707
 msgid "Desktop file"
 msgstr "Fichier desktop"
 
-#: src/bin/e_eap_editor.c:720
+#: src/bin/e_eap_editor.c:717
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:110
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:195
 #: src/modules/conf_performance/e_int_config_performance.c:115
+#: src/modules/pager/e_mod_config.c:125
+#: src/modules/pager/e_mod_config.c:217
 msgid "General"
 msgstr "Général"
 
-#: src/bin/e_eap_editor.c:724
+#: src/bin/e_eap_editor.c:721
 msgid "Startup Notify"
 msgstr "Notification de démarrage"
 
-#: src/bin/e_eap_editor.c:726
+#: src/bin/e_eap_editor.c:723
 msgid "Run in Terminal"
 msgstr "Exécuter dans un terminal"
 
-#: src/bin/e_eap_editor.c:728
+#: src/bin/e_eap_editor.c:725
 msgid "Show in Menus"
 msgstr "Montrer dans les menus"
 
-#: src/bin/e_eap_editor.c:731
+#: src/bin/e_eap_editor.c:728
 #: src/bin/e_int_border_remember.c:751
 msgid "Options"
 msgstr "Options"
 
-#: src/bin/e_eap_editor.c:761
+#: src/bin/e_eap_editor.c:758
 msgid "Select an Icon"
 msgstr "Sélectionner un icone"
 
-#: src/bin/e_eap_editor.c:830
+#: src/bin/e_eap_editor.c:827
 msgid "Select an Executable"
 msgstr "Sélectionner un exécutable"
 
@@ -1742,7 +1744,7 @@ msgid "State"
 msgstr "État"
 
 #: src/bin/e_int_border_menu.c:607
-#: src/modules/conf_dialogs/e_int_config_dialogs.c:112
+#: src/modules/conf_dialogs/e_int_config_dialogs.c:128
 msgid "Remember"
 msgstr "Mémoriser"
 
@@ -3490,7 +3492,7 @@ msgstr "Mémoriser la bordure lors de la prochaine apparition de cette fenêtre"
 #: src/modules/conf_wallpaper/e_mod_main.c:24
 #: src/modules/dropshadow/e_mod_main.c:89
 msgid "Look"
-msgstr "Apparence"
+msgstr "Aspect"
 
 #: src/modules/conf_borders/e_mod_main.c:21
 msgid "Borders"
@@ -4063,48 +4065,46 @@ msgstr "Animation du basculement"
 msgid "Virtual Desktops"
 msgstr "Bureaux virtuels"
 
-#: src/modules/conf_dialogs/e_int_config_dialogs.c:36
+#: src/modules/conf_dialogs/e_int_config_dialogs.c:38
 msgid "Dialog Settings"
 msgstr "Paramétrage des boîtes de dialogue"
 
-#: src/modules/conf_dialogs/e_int_config_dialogs.c:93
+#: src/modules/conf_dialogs/e_int_config_dialogs.c:109
 #: src/modules/conf_engine/e_int_config_engine.c:94
 #: src/modules/conf_fonts/e_int_config_fonts.c:649
 #: src/modules/ibox/e_mod_config.c:99
-#: src/modules/pager/e_mod_config.c:119
-#: src/modules/pager/e_mod_config.c:159
 #: src/modules/mixer/conf_gadget.c:187
 #: src/modules/mixer/conf_module.c:89
 msgid "General Settings"
 msgstr "Paramètres généraux"
 
-#: src/modules/conf_dialogs/e_int_config_dialogs.c:95
+#: src/modules/conf_dialogs/e_int_config_dialogs.c:111
 msgid "Disable Confirmation Dialogs"
 msgstr "Désactiver les boîtes de dialogue de confirmation"
 
-#: src/modules/conf_dialogs/e_int_config_dialogs.c:97
+#: src/modules/conf_dialogs/e_int_config_dialogs.c:113
 msgid "Normal Windows"
 msgstr "Fenêtres normales"
 
-#: src/modules/conf_dialogs/e_int_config_dialogs.c:104
+#: src/modules/conf_dialogs/e_int_config_dialogs.c:120
 msgid "Default Settings Dialogs Mode"
 msgstr "Mode par défaut des boîtes de dialogue"
 
-#: src/modules/conf_dialogs/e_int_config_dialogs.c:106
-#: src/modules/conf_dialogs/e_int_config_dialogs.c:150
+#: src/modules/conf_dialogs/e_int_config_dialogs.c:122
+#: src/modules/conf_dialogs/e_int_config_dialogs.c:166
 msgid "Basic Mode"
 msgstr "Mode basique"
 
-#: src/modules/conf_dialogs/e_int_config_dialogs.c:108
-#: src/modules/conf_dialogs/e_int_config_dialogs.c:152
+#: src/modules/conf_dialogs/e_int_config_dialogs.c:124
+#: src/modules/conf_dialogs/e_int_config_dialogs.c:168
 msgid "Advanced Mode"
 msgstr "Mode avancé"
 
-#: src/modules/conf_dialogs/e_int_config_dialogs.c:113
+#: src/modules/conf_dialogs/e_int_config_dialogs.c:129
 msgid "Remember size and position of dialogs"
 msgstr "La taille et la position des boîtes de dialogue"
 
-#: src/modules/conf_dialogs/e_int_config_dialogs.c:147
+#: src/modules/conf_dialogs/e_int_config_dialogs.c:163
 msgid "Default Dialog Mode"
 msgstr "Mode par défaut des boîtes de dialogue"
 
@@ -5051,6 +5051,8 @@ msgid "Win List"
 msgstr "Liste de fenêtres"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:333
+#: src/modules/pager/e_mod_config.c:134
+#: src/modules/pager/e_mod_config.c:247
 msgid "Popup"
 msgstr "Pop-up"
 
@@ -6656,120 +6658,118 @@ msgstr "Afficher les fenêtres du bureau actif"
 msgid "IBox"
 msgstr "IBox"
 
-#: src/modules/pager/e_mod_config.c:72
+#: src/modules/pager/e_mod_config.c:75
 msgid "Pager Settings"
 msgstr "Paramétrage du Pager"
 
-#: src/modules/pager/e_mod_config.c:120
-#: src/modules/pager/e_mod_config.c:160
+#: src/modules/pager/e_mod_config.c:126
+#: src/modules/pager/e_mod_config.c:178
 msgid "Flip desktop on mouse wheel"
 msgstr "Changer de bureau avec la molette de la souris"
 
-#: src/modules/pager/e_mod_config.c:123
-#: src/modules/pager/e_mod_config.c:163
+#: src/modules/pager/e_mod_config.c:129
+#: src/modules/pager/e_mod_config.c:181
 msgid "Show desktop names"
 msgstr "Afficher le nom des bureaux"
 
-#: src/modules/pager/e_mod_config.c:128
-#: src/modules/pager/e_mod_config.c:205
-msgid "Popup Settings"
-msgstr "Paramétrage du pop-up"
-
-#: src/modules/pager/e_mod_config.c:129
-#: src/modules/pager/e_mod_config.c:206
+#: src/modules/pager/e_mod_config.c:135
+#: src/modules/pager/e_mod_config.c:222
 msgid "Show popup on desktop change"
 msgstr "Afficher un pop-up lors du changement de bureau"
 
-#: src/modules/pager/e_mod_config.c:132
+#: src/modules/pager/e_mod_config.c:138
 msgid "Show popup for urgent windows"
 msgstr "Afficher le pop-up pour les fenêtres urgentes"
 
-#: src/modules/pager/e_mod_config.c:169
-msgid "Select and Slide button"
-msgstr "Bouton de sélectionner-glisser"
-
-#: src/modules/pager/e_mod_config.c:171
-#: src/modules/pager/e_mod_config.c:178
-#: src/modules/pager/e_mod_config.c:185
-#: src/modules/pager/e_mod_config.c:403
-#: src/modules/pager/e_mod_config.c:408
-#: src/modules/pager/e_mod_config.c:413
-#, c-format
-msgid "Click to set"
-msgstr "Cliquer pour configurer"
-
-#: src/modules/pager/e_mod_config.c:176
-msgid "Drag and Drop button"
-msgstr "Bouton de glisser-déposer"
-
-#: src/modules/pager/e_mod_config.c:183
-msgid "Drag whole desktop"
-msgstr "Faire glisser le bureau"
-
-#: src/modules/pager/e_mod_config.c:192
+#: src/modules/pager/e_mod_config.c:184
 msgid "Keyaction popup height"
 msgstr "Hauteur du pop-up de l'élément"
 
-#: src/modules/pager/e_mod_config.c:194
-#: src/modules/pager/e_mod_config.c:200
-#: src/modules/pager/e_mod_config.c:213
+#: src/modules/pager/e_mod_config.c:186
+#: src/modules/pager/e_mod_config.c:191
+#: src/modules/pager/e_mod_config.c:230
 #, c-format
 msgid "%.0f px"
 msgstr "%.0f pixels"
 
-#: src/modules/pager/e_mod_config.c:198
+#: src/modules/pager/e_mod_config.c:189
 msgid "Resistance to dragging"
 msgstr "Résistance au glissement"
 
-#: src/modules/pager/e_mod_config.c:209
+#: src/modules/pager/e_mod_config.c:196
+msgid "Select and Slide button"
+msgstr "Bouton de sélectionner-glisser"
+
+#: src/modules/pager/e_mod_config.c:198
+#: src/modules/pager/e_mod_config.c:206
+#: src/modules/pager/e_mod_config.c:212
+#: src/modules/pager/e_mod_config.c:324
+#: src/modules/pager/e_mod_config.c:329
+#: src/modules/pager/e_mod_config.c:333
+#, c-format
+msgid "Click to set"
+msgstr "Cliquer pour configurer"
+
+#: src/modules/pager/e_mod_config.c:204
+msgid "Drag and Drop button"
+msgstr "Bouton de glisser-déposer"
+
+#: src/modules/pager/e_mod_config.c:210
+msgid "Drag whole desktop"
+msgstr "Faire glisser le bureau"
+
+#: src/modules/pager/e_mod_config.c:226
 msgid "Popup pager height"
 msgstr "Hauteur du pop-up du Pager"
 
-#: src/modules/pager/e_mod_config.c:218
-#: src/modules/pager/e_mod_config.c:238
+#: src/modules/pager/e_mod_config.c:236
 msgid "Popup speed"
 msgstr "Vitesse du pop-up"
 
-#: src/modules/pager/e_mod_config.c:222
 #: src/modules/pager/e_mod_config.c:240
+#: src/modules/pager/e_mod_config.c:264
 #, c-format
 msgid "%1.1f seconds"
 msgstr "%1.1f secondes"
 
-#: src/modules/pager/e_mod_config.c:231
-msgid "Urgent Window Settings"
-msgstr "Paramétrage de la fenêtre urgente"
-
-#: src/modules/pager/e_mod_config.c:232
+#: src/modules/pager/e_mod_config.c:252
 msgid "Show popup on urgent window"
 msgstr "Afficher un pop-up pour les fenêtres urgentes"
 
-#: src/modules/pager/e_mod_config.c:235
-msgid "Popup on urgent window sticks on the screen"
-msgstr "Pop-up de la fenêtre urgente ancrée à l'écran"
+#: src/modules/pager/e_mod_config.c:255
+msgid "Urgent popup sticks on screen"
+msgstr "Pop-up urgent ancré à l'écran"
 
-#: src/modules/pager/e_mod_config.c:288
-msgid "Pager Button Grab"
-msgstr "Bouton de capture du Pager"
+#: src/modules/pager/e_mod_config.c:260
+msgid "Urgent popup speed"
+msgstr "Vitesse du pop-up urgent"
 
-#: src/modules/pager/e_mod_config.c:290
-msgid "Please press a mouse button<br>Press <hilight>Escape</hilight> to abort.<br>Or <hilight>Del</hilight> to reset the button."
-msgstr "Veuillez cliquer sur un bouton de la souris.<br>Pressez<hilight>Échap</hilight> pour annuler.<br>Ou<br><hilight>Suppr</hilight>pour réinitialiser le bouton."
+#: src/modules/pager/e_mod_config.c:271
+msgid "Urgent Windows"
+msgstr "Fenêtres urgentes"
 
-#: src/modules/pager/e_mod_config.c:345
-msgid "Attetion"
-msgstr "Attention"
-
-#: src/modules/pager/e_mod_config.c:346
-msgid "You cannot use the right mouse button in the<br>shelf for this as it is already taken by internal<br>code for context menus. <br>This button only works in the Popup"
-msgstr "Vous ne pouvez pas utiliser le bouton droit de la souris dans le rack<br>pour cette action car il est déjà utilisé par le code interne<br>pour les menus contextuels. <br>Ce bouton fonctionne uniquement dans le pop-up."
-
-#: src/modules/pager/e_mod_config.c:405
-#: src/modules/pager/e_mod_config.c:410
-#: src/modules/pager/e_mod_config.c:415
+#: src/modules/pager/e_mod_config.c:326
+#: src/modules/pager/e_mod_config.c:331
+#: src/modules/pager/e_mod_config.c:335
 #, c-format
 msgid "Button %i"
 msgstr "Bouton %i"
+
+#: src/modules/pager/e_mod_config.c:358
+msgid "Pager Button Grab"
+msgstr "Bouton de capture du Pager"
+
+#: src/modules/pager/e_mod_config.c:360
+msgid "Please press a mouse button<br>Press <hilight>Escape</hilight> to abort.<br>Or <hilight>Del</hilight> to reset the button."
+msgstr "Veuillez cliquer sur un bouton de la souris.<br>Pressez<hilight>Échap</hilight> pour annuler.<br>Ou<br><hilight>Suppr</hilight>pour réinitialiser le bouton."
+
+#: src/modules/pager/e_mod_config.c:415
+msgid "Attetion"
+msgstr "Attention"
+
+#: src/modules/pager/e_mod_config.c:416
+msgid "You cannot use the right mouse button in the<br>shelf for this as it is already taken by internal<br>code for context menus. <br>This button only works in the Popup"
+msgstr "Vous ne pouvez pas utiliser le bouton droit de la souris dans le rack<br>pour cette action car il est déjà utilisé par le code interne<br>pour les menus contextuels. <br>Ce bouton fonctionne uniquement dans le pop-up."
 
 #: src/modules/pager/e_mod_main.c:2819
 msgid "Show Pager Popup"
@@ -7231,6 +7231,8 @@ msgstr "Il y a déjà une zone de notification active et seule une instance de c
 msgid "Systray"
 msgstr "Zone de notification"
 
+#~ msgid "Popup Settings"
+#~ msgstr "Paramétrage du pop-up"
 #~ msgid "Basic Settings"
 #~ msgstr "Paramètres basiques"
 #~ msgid "Maximum Number of Matched Apps to List"
