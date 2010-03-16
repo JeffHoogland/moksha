@@ -1769,6 +1769,26 @@ _e_mod_comp_damage(void *data, int type, void *event)
 }
 
 static int
+_e_mod_comp_damage_win(void *data, int type, void *event)
+{
+   Ecore_X_Event_Window_Damage *ev = event;
+   Eina_List *l;
+   E_Comp *c;
+   
+   // fixme: use hash if compositors list > 4
+   EINA_LIST_FOREACH(compositors, l, c)
+     {
+        if (ev->win == c->ee_win)
+          {
+             // expose on comp win - init win or some other bypass win did it
+             _e_mod_comp_render_queue(c);
+             break;
+          }
+     }
+   return 1;
+}
+
+static int
 _e_mod_comp_randr(void *data, int type, void *event)
 {
    Eina_List *l;
@@ -1983,7 +2003,7 @@ _e_mod_comp_add(E_Manager *man)
    c->evas = ecore_evas_get(c->ee);
    ecore_evas_show(c->ee);
    
-   c->ee_win = ecore_evas_software_x11_window_get(c->ee);
+   c->ee_win = ecore_evas_window_get(c->ee);
    ecore_x_screen_is_composited_set(c->man->num, c->ee_win);
    ecore_x_composite_redirect_subwindows
      (c->man->root, ECORE_X_COMPOSITE_UPDATE_MANUAL);
@@ -2084,6 +2104,7 @@ e_mod_comp_init(void)
    handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE,   _e_mod_comp_message,          NULL));
    handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHAPE,     _e_mod_comp_shape,            NULL));
    handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_DAMAGE_NOTIFY,    _e_mod_comp_damage,           NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_DAMAGE,    _e_mod_comp_damage_win,       NULL));
 
    handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_CONTAINER_RESIZE,       _e_mod_comp_randr,            NULL));
    
