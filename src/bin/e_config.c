@@ -850,6 +850,15 @@ e_config_load(void)
      {
         printf("EEEK! no config of any sort! abort abort abort!\n");
         fprintf(stderr, "EEEK! no config of any sort! abort abort abort!\n");
+        e_alert_show("Enlightenment was started without any configuration\n"
+                     "files available for the given profile (normally\n"
+                     "default or the last profile used or provided on the\n"
+                     "command-line with -profile etc.)\n"
+                     "\n"
+                     "Cannot contiue without configuration to work with.\n"
+                     "Please ensure you have system or user configuration\n"
+                     "for the profile you are using before proceeeding."
+                     );
         abort();
      }
    if (e_config->config_version < E_CONFIG_FILE_VERSION)
