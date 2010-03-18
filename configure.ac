@@ -458,6 +458,15 @@ define([CHECK_MODULE_BLUEZ],
 AC_SUBST(EBLUEZ_CFLAGS)
 AC_SUBST(EBLUEZ_LIBS)
 
+AM_CONDITIONAL(HAVE_EOFONO, false)
+define([CHECK_MODULE_OFONO],
+[
+        AC_E_CHECK_PKG(EOFONO, [edbus eofono],
+                       [], [EOFONO=false])
+])
+AC_SUBST(EOFONO_CFLAGS)
+AC_SUBST(EOFONO_LIBS)
+
 AC_E_OPTIONAL_MODULE([ibar], true)
 AC_E_OPTIONAL_MODULE([dropshadow], true)
 AC_E_OPTIONAL_MODULE([clock], true)
@@ -518,6 +527,7 @@ AC_E_OPTIONAL_MODULE([gadman], true)
 AC_E_OPTIONAL_MODULE([mixer], true, [CHECK_MODULE_MIXER])
 AC_E_OPTIONAL_MODULE([connman], true, [CHECK_MODULE_CONNMAN])
 AC_E_OPTIONAL_MODULE([bluez], true, [CHECK_MODULE_BLUEZ])
+AC_E_OPTIONAL_MODULE([ofono], true, [CHECK_MODULE_OFONO])
 AC_E_OPTIONAL_MODULE([illume], true)
 AC_E_OPTIONAL_MODULE([illume2], true)
 AC_E_OPTIONAL_MODULE([syscon], true)
@@ -652,6 +662,8 @@ src/modules/connman/Makefile
 src/modules/connman/module.desktop
 src/modules/bluez/Makefile
 src/modules/bluez/module.desktop
+src/modules/ofono/Makefile
+src/modules/ofono/module.desktop
 src/modules/illume/Makefile
 src/modules/illume/module.desktop
 src/modules/illume/keyboards/Makefile

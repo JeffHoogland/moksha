@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Link
+Name=Mobile Modems Manager
+Name[pt_BR]=Gerenciador de modems móveis
+Name[es]=Gerenciador de modems moviles
+Name[it]=Gestore di modem mobili
+Icon=e-module-connman
+Comment=<title>Mobile Modems Manager Gadget</title><br>Control mobile modems.
+Comment[pt_BR]=<title>Gerenciador de modems móveis</title><br>Controla modems móveis.
+Comment[es]=<title>Gerenciador de modems mobiles</title><br>Controla modems móviles
+Comment[it]=<title>Gestore di modem mobili</title><br>Controlla le modem mobili..
+X-Enlightenment-ModuleType=system

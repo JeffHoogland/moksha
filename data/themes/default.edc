@@ -8651,6 +8651,547 @@ collections { /* begin the collection of edje groups that are in this file */
    }
 
 /////////////////////////////////////////////////////////////////////////////
+   /*** MOD: OFONO ***/
+
+// GADGET and TIP all have the same parts and signals:
+//
+// PARTS:
+//    e.text.name
+//    e.text.status
+//    e.text.op
+//
+// SIGNALS:
+//    e,unavailable: ofonod is not running (nothing else works)
+//    e,available:  ofonod is running
+//    e,name,available: there is info about device name
+//    e,name,unavailable: there is no info about device name
+//    e,netinfo,available: there is info about network
+//    e,netinfo,unavailable: there is no info about network
+//
+// MESSAGES:
+//    id=1, type=MSG_INT, description=strength (0-100)
+
+   group { name: "e/modules/ofono/main";
+      max: 128 128;
+      min: 1 1;
+
+      images {
+         image: "gsm_0.png" COMP;
+         image: "gsm_1.png" COMP;
+         image: "gsm_2.png" COMP;
+         image: "gsm_3.png" COMP;
+         image: "gsm_4.png" COMP;
+         image: "gsm_no.png" COMP;
+      }
+
+      script {
+	 public message(Msg_Type:type, id, ...) {
+	    if ((type == MSG_INT) && (id == 1)) {
+	       new strength;
+	       strength = getarg(2);
+               if (strength >= 80)
+                  run_program(PROGRAM:"strength,5");
+               else if (strength >= 60)
+                  run_program(PROGRAM:"strength,4");
+               else if (strength >= 40)
+                  run_program(PROGRAM:"strength,3");
+               else if (strength >= 20)
+                  run_program(PROGRAM:"strength,2");
+               else if (strength >= 1)
+                  run_program(PROGRAM:"strength,1");
+               else
+                  run_program(PROGRAM:"strength,no");
+	    }
+	 }
+      }
+
+      parts {
+         part {
+            name: "eventarea";
+            type: RECT;
+            mouse_events: 1;
+            description {
+               state: "default" 0.0;
+               color: 255 255 255 0;
+            }
+         }
+
+         part {
+            name: "eventarea.image";
+            type: IMAGE;
+            description {
+               state: "default" 0.0;
+               aspect: 1.6 1.7;
+               aspect_preference: HORIZONTAL;
+               image.normal: "gsm_no.png";
+               rel1.to: "eventarea";
+               rel2.to: "eventarea";
+            }
+	    description {
+               state: "strength,5" 0.0;
+               inherit: "default" 0.0;
+               image.normal: "gsm_4.png";
+            }
+	    description {
+               state: "strength,4" 0.0;
+               inherit: "default" 0.0;
+               image.normal: "gsm_3.png";
+            }
+	    description {
+               state: "strength,3" 0.0;
+               inherit: "default" 0.0;
+               image.normal: "gsm_2.png";
+            }
+	    description {
+               state: "strength,2" 0.0;
+               inherit: "default" 0.0;
+               image.normal: "gsm_1.png";
+            }
+	    description {
+               state: "strength,1" 0.0;
+               inherit: "default" 0.0;
+               image.normal: "gsm_0.png";
+            }
+	    description {
+               state: "strength,no" 0.0;
+               inherit: "default" 0.0;
+               image.normal: "gsm_no.png";
+            }
+	    description {
+               state: "disabled" 0.0;
+               inherit: "default" 0.0;
+	       color: 255 255 255 100;
+            }
+         }
+         programs {
+            program {
+	       name: "strength,5";
+               action: STATE_SET "strength,5" 0.0;
+               target: "eventarea.image";
+            }
+            program {
+	       name: "strength,4";
+               action: STATE_SET "strength,4" 0.0;
+               target: "eventarea.image";
+            }
+            program {
+	       name: "strength,3";
+               action: STATE_SET "strength,3" 0.0;
+               target: "eventarea.image";
+            }
+            program {
+	       name: "strength,2";
+               action: STATE_SET "strength,2" 0.0;
+               target: "eventarea.image";
+            }
+            program {
+	       name: "strength,1";
+               action: STATE_SET "strength,1" 0.0;
+               target: "eventarea.image";
+            }
+            program {
+	       name: "strength,0";
+               action: STATE_SET "strength,0" 0.0;
+               target: "eventarea.image";
+            }
+            program {
+	       name: "strength,no";
+               action: STATE_SET "strength,no" 0.0;
+               target: "eventarea.image";
+            }
+            program {
+	       name: "e,available";
+               signal: "e,available";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "eventarea.image";
+            }
+            program {
+	       name: "e,unavailable";
+               signal: "e,unavailable";
+               source: "e";
+               action: STATE_SET "disabled" 0.0;
+               target: "eventarea.image";
+            }
+            program {
+	       name: "netinfo,unavailable";
+               signal: "e,netinfo,unavailable";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "eventarea.image";
+            }
+	 }
+
+         part {
+            name: "e.text.name";
+            type: TEXT;
+            mouse_events: 0;
+	    effect: SOFT_SHADOW;
+            description {
+               state: "default" 0.0;
+	       color: 224 224 224 255;
+	       color3: 0 0 0 64;
+               align: 0.5 1.0;
+               rel1 {
+                  relative: 0.0 1.0;
+                  offset: 0 -20;
+               }
+               rel2 {
+                  relative: 1.0 1.0;
+                  offset: -1 -1;
+               }
+               text {
+                  font: "Sans";
+                  size: 8;
+                  align: 0.5 1.0;
+                  text: "";
+                  min: 0 1;
+               }
+            }
+            description {
+               state: "hidden" 0.0;
+               inherit: "default" 0.0;
+               visible: 0;
+            }
+         }
+         programs {
+            program {
+               name: "resize";
+               signal: "resize";
+	       script {
+		  new x, y, w, h;
+		  get_geometry(PART:"eventarea", x, y, w, h);
+		  if (w <= 32)
+		    set_state(PART:"e.text.name", "hidden", 0.0);
+		  else
+		    set_state(PART:"e.text.name", "default", 0.0);
+	       }
+            }
+	 }
+
+      }
+   }
+
+   group { name: "e/modules/ofono/tip";
+      min: 220 80;
+
+      images {
+         image: "inset_sunk.png" COMP;
+      }
+
+      script {
+	 public message(Msg_Type:type, id, ...) {
+	    if ((type == MSG_INT) && (id == 1)) {
+	       new strength;
+               new Float:val;
+
+	       strength = getarg(2);
+	       val = float(strength) / 100.0;
+	       set_drag(PART:"strength_gauge_knob", val, 0.0);
+	    }
+	 }
+      }
+
+      parts {
+
+         part { name: "e.text.error";
+            type: TEXT;
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               color: 150 150 150 255;
+               fixed: 1 1;
+               visible: 0;
+               text {
+                  font: "Sans:style=Bold";
+                  size: 16;
+                  text: "";
+                  min: 1 1;
+               }
+            }
+            description {
+               state: "shown" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+            }
+         }
+         programs {
+            program {
+	       name: "error,e,available";
+               signal: "e,available";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.text.error";
+            }
+            program {
+	       name: "error,e,unavailable";
+               signal: "e,unavailable";
+               source: "e";
+               action: STATE_SET "shown" 0.0;
+               target: "e.text.error";
+            }
+            program {
+	       name: "error,netinfo,available";
+               signal: "e,netinfo,available";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.text.error";
+            }
+            program {
+	       name: "error,netinfo,unavailable";
+               signal: "e,netinfo,unavailable";
+               source: "e";
+               action: STATE_SET "shown" 0.0;
+               target: "e.text.error";
+            }
+         }
+
+         part { name: "e.text.name";
+            type: TEXT;
+            mouse_events: 0;
+	    effect: SOFT_SHADOW;
+            description {
+               state: "default" 0.0;
+	       color: 240 240 240 255;
+	       color3: 0 0 0 64;
+               align: 0.0 0.0;
+               fixed: 1 1;
+	       visible: 0;
+               rel1 {
+                  relative: 0.0 0.0;
+                  offset: 10 5;
+               }
+               text {
+                  font: "Sans:style=Bold";
+                  size: 16;
+                  align: 0.0 0.0;
+                  text: "";
+                  min: 1 1;
+               }
+            }
+            description {
+               state: "shown" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+            }
+         }
+         programs {
+            program {
+	       name: "name,available";
+               signal: "e,available";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.text.name";
+            }
+            program {
+	       name: "name,unavailable";
+               signal: "e,unavailable";
+               source: "e";
+               action: STATE_SET "shown" 0.0;
+               target: "e.text.name";
+            }
+         }
+
+         part {
+	    name: "e.text.op";
+            type: TEXT;
+            mouse_events: 0;
+	    effect: SOFT_SHADOW;
+            description {
+               state: "default" 0.0;
+	       color: 240 240 240 255;
+	       color3: 0 0 0 64;
+               align: 0.0 0.0;
+               fixed: 1 1;
+               visible: 1;
+               rel1 {
+                  relative: 0.0 0.0;
+                  offset: 10 5;
+               }
+               text {
+                  font: "Sans:style=Bold";
+                  size: 16;
+                  align: 0.0 0.0;
+                  text: "";
+                  min: 1 1;
+               }
+            }
+            description {
+               state: "hidden" 0.0;
+               inherit: "default" 0.0;
+               visible: 0;
+            }
+         }
+         programs {
+            program {
+	       name: "op,available";
+               signal: "e,available";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.text.op";
+            }
+            program {
+	       name: "op,unavailable";
+               signal: "e,unavailable";
+               source: "e";
+               action: STATE_SET "hidden" 0.0;
+               target: "e.text.op";
+            }
+            program {
+	       name: "op,netinfo,unavailable";
+               signal: "e,netinfo,unavailable";
+               source: "e";
+               action: STATE_SET "hidden" 0.0;
+               target: "e.text.op";
+            }
+         }
+
+         part { name: "e.text.status";
+            type: TEXT;
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+	       color: 0 0 0 255;
+               align: 0.0 0.0;
+               fixed: 1 1;
+               visible: 0;
+               rel1 {
+                  relative: 0.0 0.0;
+                  offset: 10 30;
+               }
+               text {
+                  font: "Sans";
+                  size: 10;
+                  align: 0.0 0.0;
+                  text: "";
+                  min: 1 1;
+               }
+            }
+            description {
+               state: "shown" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+            }
+         }
+	 programs {
+            program {
+               name: "status,available";
+               signal: "e,netinfo,available";
+               source: "e";
+               action: STATE_SET "shown" 0.0;
+               target: "e.text.status";
+	    }
+            program {
+               name: "status,unavailable";
+               signal: "e,netinfo,unavailable";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.text.status";
+	    }
+	 }
+
+	 part { name: "strength_gauge_bg";
+	    type: IMAGE;
+	    scale: 1;
+	    mouse_events: 0;
+	    description {
+               state: "default" 0.0;
+               min: 100 10;
+               max: 99999 99999;
+	       visible: 0;
+               rel1 {
+                  relative: 0.0 0.0;
+                  offset: 10 55;
+               }
+	       rel2 {
+	          relative: 1.0 1.0;
+		  offset: -10 -10;
+	       }
+	       image {
+                  normal: "inset_sunk.png";
+                  border: 6 6 6 6;
+               }
+	    }
+            description {
+               state: "shown" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+            }
+         }
+	 programs {
+            program {
+               name: "strength,available";
+               signal: "e,netinfo,available";
+               source: "e";
+               action: STATE_SET "shown" 0.0;
+               target: "strength_gauge_bg";
+	    }
+            program {
+               name: "strength,unavailable";
+               signal: "e,netinfo,unavailable";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "strength_gauge_bg";
+	    }
+	 }
+
+	 part { name: "strength_gauge_confine";
+	    type: RECT;
+	    scale: 1;
+	    mouse_events: 0;
+	    description {
+               state: "default" 0.0;
+	       color: 255 255 255 0;
+               visible: 0;
+	       rel1 {
+                  to: "strength_gauge_bg";
+                  offset: 1 1;
+               }
+	       rel2 {
+                  to: "strength_gauge_bg";
+                  offset: -2 -2;
+               }
+	    }
+	 }
+
+	 part { name: "strength_gauge_knob";
+	    mouse_events: 0;
+	    scale: 1;
+	    type: RECT;
+	    dragable {
+	       x: 1 1 0;
+	       y: 0 0 0;
+               confine: "strength_gauge_confine";
+               confine: "strength_gauge_bg";
+	    }
+	    description {
+               state: "default" 0.0;
+	       color: 255 255 255 0;
+               visible: 0;
+               min: 0 0;
+               max: 0 0;
+	    }
+	 }
+
+	 part { name: "strength_gauge_fill";
+	    mouse_events: 0;
+	    type: RECT;
+	    description {
+               state: "default" 0.0;
+	       color: 55 55 55 100;
+               fixed: 1 1;
+               rel1.to: "strength_gauge_confine";
+               rel2 {
+                  to_x: "strength_gauge_knob";
+                  to_y: "strength_gauge_confine";
+               }
+	    }
+	 }
+
+      }
+   }
+
+/////////////////////////////////////////////////////////////////////////////
    /*** MOD: CONF_EDGEBINDINGS ***/
    /* This group draws the edge and corners for the user to pick.
     * XXX: Needs some love from masters of the brush! */

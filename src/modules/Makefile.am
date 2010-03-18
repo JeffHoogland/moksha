@@ -266,6 +266,9 @@ if USE_MODULE_COMP
 SUBDIRS += comp
 endif
 
+if USE_MODULE_OFONO
+SUBDIRS += ofono
+endif
 
 DIST_SUBDIRS = \
 ibar \
@@ -340,4 +343,5 @@ illume-mode-toggle \
 syscon \
 everything \
 systray \
-comp
+comp \
+ofono
