@@ -393,8 +393,8 @@ main(int argc, char **argv)
    ecore_imf_init();
    _e_main_shutdown_push(ecore_imf_shutdown);
 #endif
-// FIXME: SEGV's on shutdown if fm2 windows up - disable for now.   
-//   _e_main_shutdown_push(ecore_shutdown);
+// FIXME: SEGV's on shutdown if fm2 windows up - disable for now. => is it history ?
+  _e_main_shutdown_push(ecore_shutdown);
 
    /* init edje and set it up in frozen mode */
    edje_init();
