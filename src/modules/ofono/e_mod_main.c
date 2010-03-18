@@ -137,7 +137,7 @@ _ofono_popup_cb_powered_changed(void *data, Evas_Object *obj, void *event __UNUS
 	return;
      }
 
-   if (!e_ofono_modem_powered_set(inst->modem_element, !inst->powered,
+   if (!e_ofono_modem_powered_set(inst->modem_element, powered,
 				  _ofono_toggle_powered_cb, inst))
      {
 	_ofono_operation_error_show(_("Cannot toggle modem's powered state."));
@@ -169,7 +169,6 @@ _ofono_popup_del(E_Ofono_Instance *inst)
 static void
 _ofono_popup_new(E_Ofono_Instance *inst)
 {
-   E_Ofono_Module_Context *ctxt = inst->ctxt;
    Evas *evas;
    Evas_Coord mw, mh;
 
@@ -231,7 +230,6 @@ _ofono_menu_new(E_Ofono_Instance *inst, Evas_Event_Mouse_Down *ev)
 {
    E_Zone *zone;
    E_Menu *mn;
-   E_Menu_Item *mi;
    int x, y;
 
    zone = e_util_zone_current_get(e_manager_current_get());
@@ -590,7 +588,7 @@ _ofono_event_manager_out(void *data, int type __UNUSED__, void *event __UNUSED__
 }
 
 static int
-_eofono_event_element_add(void *data, int type, void *info)
+_eofono_event_element_add(void *data, int type __UNUSED__, void *info)
 {
    E_Ofono_Element *element = info;
    E_Ofono_Module_Context *ctxt = data;
@@ -634,7 +632,7 @@ _eofono_event_element_add(void *data, int type, void *info)
 }
 
 static int
-_eofono_event_element_del(void *data, int type, void *info)
+_eofono_event_element_del(void *data, int type __UNUSED__, void *info)
 {
    E_Ofono_Element *element = info;
    E_Ofono_Module_Context *ctxt = data;
@@ -674,7 +672,7 @@ _eofono_event_element_del(void *data, int type, void *info)
 }
 
 static int
-_eofono_event_element_updated(void *data, int type, void *event_info)
+_eofono_event_element_updated(void *data, int type __UNUSED__, void *event_info)
 {
    E_Ofono_Element *element = event_info;
    E_Ofono_Module_Context *ctxt = data;
