@@ -1,6 +1,9 @@
 [Desktop Entry]
 Type=Link
 Name=Bluetooth Manager
+Name[fr]=Gestionnaire Bluetooth
 Icon=e-module-bluez
 Comment=<title>Bluetooth Management.</title>
+Comment[fr]=<title>Gestion Bluetooth.</title>
+Comment[it]=<title>Gestione Bluetooth</title>
 X-Enlightenment-ModuleType=system
