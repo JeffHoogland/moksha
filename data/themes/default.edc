@@ -29703,6 +29703,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	    part { name: "input_bg";
 		clip_to: "input_base";
 		description { state: "default" 0.0;
+	            fixed: 1 1;
 		    min: 32 28;
 		    max: 9999 28;
 		    rel1 {
@@ -29790,8 +29791,9 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 		type: RECT;
 		clip_to: "base";
 		description { state: "default" 0.0;
-		    color: 255 255 255 255;
-		    rel1 {
+		   color: 255 255 255 255;
+	           fixed: 1 1;
+		   rel1 {
 			relative: 0.0 0.0;
 		       offset:   2 0;
 		       to: "base";
@@ -29824,6 +29826,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       clip_to: "list_clip";
 	       description { state: "default" 0.0;
 		   min: 32 170;
+	           fixed: 1 1;
 		   rel1 {
 		       relative: 0.0 0.0;
 		       offset:   0 3;
@@ -29837,7 +29840,7 @@ MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);
 	       }
 	       description { state: "visible" 0.0;
 		   inherit: "default" 0.0;
-		   min: 32 150;
+	           min: 32 150;
 	       }
 	   }
 	   part { name: "list_over";
