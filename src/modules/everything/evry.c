@@ -10,6 +10,7 @@
  */
 #define INPUTLEN 256
 #define MATCH_LAG 0.1
+#define INITIAL_MATCH_LAG 0.2
 
 typedef struct _Evry_Window Evry_Window;
 typedef struct _Evry_List_Window Evry_List_Window;
@@ -143,8 +144,8 @@ evry_show(E_Zone *zone, const char *params)
    _evry_selector_subjects_get(params);
    _evry_selector_activate(selectors[0]);
 
-   _evry_selector_update(selector);
-
+   update_timer = ecore_timer_add(INITIAL_MATCH_LAG, _evry_update_timer, NULL);
+   
    if (evry_conf->views && selector->state)
      {
 	Evry_View *view =evry_conf->views->data;

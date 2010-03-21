@@ -35,6 +35,7 @@ struct _Smart_Data
   double       selmove;
   Eina_Bool    update : 1;
   Eina_Bool    switch_mode : 1;
+  Eina_List *queue;
 };
 
 struct _Item
@@ -77,42 +78,6 @@ _thumb_gen(void *data, Evas_Object *obj, void *event_info)
 }
 
 static int
-_thumb_idler(void *data)
-{
-   Smart_Data *sd = data;
-   Eina_List *l;
-   Item *it;
-   int cnt = 0;
-
-   EINA_LIST_FOREACH(sd->items, l, it)
-     {
-	if (it->thumb && !(it->have_thumb || it->do_thumb))
-	  {
-	     ITEM_FILE(file, it->item);
-
-	     evas_object_smart_callback_add(it->thumb, "e_thumb_gen", _thumb_gen, it);
-
-	     e_thumb_icon_file_set(it->thumb, file->uri, NULL);
-	     e_thumb_icon_size_set(it->thumb, it->w, it->h);
-	     e_thumb_icon_begin(it->thumb);
-	     it->do_thumb = EINA_TRUE;
-
-	     cnt++;
-	  }
-
-	if (cnt > 4)
-	  {
-	     e_util_wakeup();
-	     return 1;
-	  }
-     }
-
-   sd->thumb_idler = NULL;
-
-   return 0;
-}
-
-static int
 _check_item(const Evry_Item *it)
 {
    if (it->plugin->type_out != view_types) return 0;
@@ -123,6 +88,63 @@ _check_item(const Evry_Item *it)
 
    if (!strncmp(file->mime, "image/", 6))
      return 1;
+
+   return 0;
+}
+
+static int
+_thumb_idler(void *data)
+{
+   Smart_Data *sd = data;
+   Eina_List *l, *ll;
+   Item *it;
+   int cnt = 0;
+
+   EINA_LIST_FOREACH_SAFE(sd->queue, l, ll, it)
+     {
+	if (!it->image && !it->have_thumb &&
+	    sd->view->state->plugin->icon_get)
+	  {
+	     it->image = sd->view->state->plugin->icon_get
+	       (it->item->plugin, it->item, sd->view->evas);
+
+	     if (it->image)
+	       {
+		  edje_object_part_swallow(it->frame, "e.swallow.icon", it->image);
+		  evas_object_show(it->image);
+	       }
+
+	     /* dirbrowse fetches the mimetype for icon_get */
+	     if (!it->get_thumb && _check_item(it->item))
+	       it->get_thumb = EINA_TRUE;
+	  }
+
+	if (it->get_thumb && !it->thumb && !(it->have_thumb || it->do_thumb))
+	  {
+	     it->thumb = e_thumb_icon_add(sd->view->evas);
+	     
+	     ITEM_FILE(file, it->item);
+
+	     evas_object_smart_callback_add(it->thumb, "e_thumb_gen", _thumb_gen, it);
+
+	     e_thumb_icon_file_set(it->thumb, file->uri, NULL);
+	     e_thumb_icon_size_set(it->thumb, it->w, it->h);
+	     e_thumb_icon_begin(it->thumb);
+	     it->do_thumb = EINA_TRUE;
+	  }
+
+	sd->queue = eina_list_remove_list(sd->queue, l);
+
+	cnt++;
+	
+	if (cnt > 2)
+	  {
+	     e_util_wakeup();
+	     return 1;
+	  }
+     }
+
+   sd->thumb_idler = NULL;
 
    return 0;
 }
@@ -284,63 +306,32 @@ _e_smart_reconfigure_do(void *data)
 		  evas_object_show(it->frame);
 
 		  if (it->changed)
-		    {
-		       edje_object_signal_emit(it->frame, "e,action,thumb,show_delayed", "e");
-		    }
+		    edje_object_signal_emit(it->frame, "e,action,thumb,show_delayed", "e");
 		  else
-		    {
-		       edje_object_signal_emit(it->frame, "e,action,thumb,show", "e");
-		    }
-
+		    edje_object_signal_emit(it->frame, "e,action,thumb,show", "e");
+		  
 		  if (it->item->browseable)
 		    edje_object_signal_emit(it->frame, "e,state,browseable", "e");
 		  
-
 		  it->visible = EINA_TRUE;
-	       }
 
-	     if (!it->image && !it->have_thumb &&
-		 sd->view->state->plugin->icon_get)
-	       {
-		  it->image = sd->view->state->plugin->icon_get
-		    (it->item->plugin, it->item, sd->view->evas);
-
-		  if (it->image)
-		    {
-		       edje_object_part_swallow(it->frame, "e.swallow.icon", it->image);
-		       evas_object_show(it->image);
-		    }
-
-		  /* dirbrowse fetches the mimetype for icon_get */
-		  if (!it->get_thumb && _check_item(it->item))
-		    it->get_thumb = EINA_TRUE;
-
+		  sd->queue = eina_list_append(sd->queue, it);
 	       }
 
 	     evas_object_move(it->frame, xx, yy);
 	     evas_object_resize(it->frame, it->w, it->h);
 
-	     if (sd->update || it->changed)
-	       {
-		  if (it->selected && sd->view->zoom < 2)
-		    edje_object_signal_emit(it->frame, "e,state,selected", "e");
-		  else
-		    edje_object_signal_emit(it->frame, "e,state,unselected", "e");
-	       }
-
-	     if (it->get_thumb && !it->thumb)
-	       {
-		  it->thumb = e_thumb_icon_add(sd->view->evas);
-
-		  if (!sd->thumb_idler)
-		    sd->thumb_idler = ecore_idle_enterer_before_add(_thumb_idler, sd);
-	       }
-	     
-	     it->changed = EINA_FALSE;
-	     
+	     /* if (sd->update || it->changed)
+	      *   {
+	      * 	  if (it->selected && sd->view->zoom < 2)
+	      * 	    edje_object_signal_emit(it->frame, "e,state,selected", "e");
+	      * 	  else
+	      * 	    edje_object_signal_emit(it->frame, "e,state,unselected", "e");
+	      *   } */
           }
         else if (it->visible)
 	  {
+	     sd->queue = eina_list_remove(sd->queue, it); 
 	     if (it->do_thumb) e_thumb_icon_end(it->thumb);
 	     if (it->thumb) evas_object_del(it->thumb);
 	     if (it->image) evas_object_del(it->image);
@@ -360,6 +351,9 @@ _e_smart_reconfigure_do(void *data)
    if (changed)
      evas_object_smart_callback_call(obj, "changed", NULL);
 
+   if (!sd->thumb_idler)
+     sd->thumb_idler = ecore_idle_enterer_before_add(_thumb_idler, sd);
+   
    sd->update = EINA_TRUE;
 
    if (recursion == 0)
@@ -623,6 +617,14 @@ _view_clear(Evry_View *view)
    if (sd->idle_enter) ecore_idle_enterer_del(sd->idle_enter);
    sd->idle_enter = ecore_idle_enterer_before_add(_e_smart_reconfigure_do, v->span);
 
+   if (sd->queue)
+     eina_list_free(sd->queue);
+   sd->queue = NULL;
+
+   if (sd->thumb_idler)
+     ecore_idle_enterer_del(sd->thumb_idler);
+   sd->thumb_idler = NULL;   
+   
    v->tabs->clear(v->tabs);
 }
 
@@ -639,9 +641,9 @@ static int
 _update_frame(Evas_Object *obj)
 {
    Smart_Data *sd = evas_object_smart_data_get(obj);
-   sd->switch_mode = EINA_TRUE;
+   //sd->switch_mode = EINA_TRUE;
    _e_smart_reconfigure_do(obj);
-   sd->switch_mode = EINA_FALSE;
+   //sd->switch_mode = EINA_FALSE;
    _pan_item_select(obj, sd->cur_item); 
 
    return 0;
@@ -663,6 +665,10 @@ _view_update(Evry_View *view)
 	_view_clear(view);
 	return 1;
      }
+
+   if (sd->queue)
+     eina_list_free(sd->queue);
+   sd->queue = NULL;
    
    p_items = v->state->plugin->items;
 
@@ -791,6 +797,14 @@ _clear_items(Evas_Object *obj)
 	it->do_thumb = EINA_FALSE;
 	it->visible = EINA_FALSE;
      }
+
+   if (sd->queue)
+     eina_list_free(sd->queue);
+   sd->queue = NULL;
+
+   if (sd->thumb_idler)
+     ecore_idle_enterer_del(sd->thumb_idler);
+   sd->thumb_idler = NULL;
 }
 
 static int
@@ -811,6 +825,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 	v->zoom = 0;
 	_clear_items(v->span);
 	_update_frame(v->span);
+	goto end;
      }
    else if ((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
        ((!strcmp(ev->key, "plus")) ||
