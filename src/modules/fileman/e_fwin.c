@@ -2114,9 +2114,16 @@ _e_fwin_op_registry_listener_cb(void *data, const E_Fm2_Op_Registry_Entry *ere)
    Evas_Object *o = data;
    char buf[PATH_MAX];
    char *total;
+   int mw, mh;
+
+   // Don't show if the operation keep less than 1 second
+   if (ere->start_time + 1.0 > ecore_loop_time_get()) return;
 
    // Update element
    edje_object_part_drag_size_set(o, "e.gauge.bar", ((double)(ere->percent)) / 100, 1.0);
+   edje_object_size_min_get(o, &mw, &mh);
+   evas_object_resize(o, mw * e_scale, mh * e_scale);
+   evas_object_show(o);
 
    // Update icon
    switch (ere->op)
@@ -2208,7 +2215,6 @@ _e_fwin_op_registry_entry_add_cb(void *data, int type, void *event)
    E_Fm2_Op_Registry_Entry *ere = (E_Fm2_Op_Registry_Entry *)event;
    E_Fwin_Page *page = data;
    Evas_Object *o;
-   int mw, mh;
 
    if (!(ere->op == E_FM_OP_COPY || ere->op == E_FM_OP_MOVE ||
          ere->op == E_FM_OP_REMOVE))
@@ -2217,19 +2223,11 @@ _e_fwin_op_registry_entry_add_cb(void *data, int type, void *event)
    o = edje_object_add(evas_object_evas_get(page->scrollframe_obj));
    e_theme_edje_object_set(o, "base/theme/fileman",
                            "e/fileman/default/progress");
-   edje_object_size_min_get(o, &mw, &mh);
-   evas_object_resize(o, mw * e_scale, mh * e_scale);
-   //evas_object_event_callback_add(o, EVAS_CALLBACK_CHANGED_SIZE_HINTS,
-   //                        _size_hint_changed_cb, NULL);
-
-   //Update the element
-   _e_fwin_op_registry_listener_cb(o, ere);
 
    // Append the element to the box
    edje_object_part_box_append(e_scrollframe_edje_object_get(page->scrollframe_obj),
                                "e.box.operations", o);
    evas_object_size_hint_align_set(o, 1.0, 1.0); //FIXME this should be theme-configurable
-   evas_object_show(o);
 
    // add abort button callback with id of operation in registry
    edje_object_signal_callback_add(o, "e,fm,operation,abort", "", 
