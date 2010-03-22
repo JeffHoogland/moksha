@@ -1123,6 +1123,12 @@ _default_adapter_callback(void *data, DBusMessage *msg, DBusError *err __UNUSED_
    E_Bluez_Instance *inst;
    const char *path;
 
+   if (err && dbus_error_is_set(err))
+     {
+	dbus_error_free(err);
+	return;
+     }
+
    if (dbus_message_get_args(msg, NULL, DBUS_TYPE_OBJECT_PATH, &path,
 			     DBUS_TYPE_INVALID) == FALSE)
      return;
