@@ -98,7 +98,6 @@ _thumb_idler(void *data)
    Smart_Data *sd = data;
    Eina_List *l, *ll;
    Item *it;
-   int cnt = 0;
 
    EINA_LIST_FOREACH_SAFE(sd->queue, l, ll, it)
      {
@@ -135,13 +134,7 @@ _thumb_idler(void *data)
 
 	sd->queue = eina_list_remove_list(sd->queue, l);
 
-	cnt++;
-	
-	if (cnt > 2)
-	  {
-	     e_util_wakeup();
-	     return 1;
-	  }
+	return 1;
      }
 
    sd->thumb_idler = NULL;
@@ -598,24 +591,26 @@ _pan_item_select(Evas_Object *obj, Item *it)
 }
 
 static void
-_view_clear(Evry_View *view)
+_clear_items(Evas_Object *obj)
 {
-   View *v = (View*) view;
-   Smart_Data *sd = evas_object_smart_data_get(v->span);
+   Smart_Data *sd = evas_object_smart_data_get(obj);
+   Eina_List *l;
    Item *it;
 
-   EINA_LIST_FREE(sd->items, it)
+   EINA_LIST_FOREACH(sd->items, l, it)
      {
-	if (it->do_thumb) e_thumb_icon_end(it->thumb);
-   	if (it->thumb) evas_object_del(it->thumb);
-   	if (it->frame) evas_object_del(it->frame);
-   	if (it->image) evas_object_del(it->image);
-   	evry_item_free(it->item);
-   	E_FREE(it);
+	if (it->do_thumb)
+	  e_thumb_icon_end(it->thumb);
+	if (it->frame) evas_object_del(it->frame);
+	if (it->image) evas_object_del(it->image);
+	if (it->thumb) evas_object_del(it->thumb);
+	it->frame = NULL;
+	it->image = NULL;
+	it->thumb = NULL;
+	it->have_thumb = EINA_FALSE;
+	it->do_thumb = EINA_FALSE;
+	it->visible = EINA_FALSE;
      }
-
-   if (sd->idle_enter) ecore_idle_enterer_del(sd->idle_enter);
-   sd->idle_enter = ecore_idle_enterer_before_add(_e_smart_reconfigure_do, v->span);
 
    if (sd->queue)
      eina_list_free(sd->queue);
@@ -623,7 +618,20 @@ _view_clear(Evry_View *view)
 
    if (sd->thumb_idler)
      ecore_idle_enterer_del(sd->thumb_idler);
-   sd->thumb_idler = NULL;   
+   sd->thumb_idler = NULL;
+}
+
+static void
+_view_clear(Evry_View *view)
+{
+   View *v = (View*) view;
+   Smart_Data *sd = evas_object_smart_data_get(v->span);
+   Item *it;
+
+   _clear_items(v->span);
+   
+   if (sd->idle_enter) ecore_idle_enterer_del(sd->idle_enter);
+   sd->idle_enter = ecore_idle_enterer_before_add(_e_smart_reconfigure_do, v->span);
    
    v->tabs->clear(v->tabs);
 }
@@ -774,37 +782,6 @@ _view_update(Evry_View *view)
    sd->update_idler = NULL;
    
    return 0;
-}
-
-static void
-_clear_items(Evas_Object *obj)
-{
-   Smart_Data *sd = evas_object_smart_data_get(obj);
-   Eina_List *l;
-   Item *it;
-
-   EINA_LIST_FOREACH(sd->items, l, it)
-     {
-	if (it->do_thumb)
-	  e_thumb_icon_end(it->thumb);
-	if (it->frame) evas_object_del(it->frame);
-	if (it->image) evas_object_del(it->image);
-	if (it->thumb) evas_object_del(it->thumb);
-	it->frame = NULL;
-	it->image = NULL;
-	it->thumb = NULL;
-	it->have_thumb = EINA_FALSE;
-	it->do_thumb = EINA_FALSE;
-	it->visible = EINA_FALSE;
-     }
-
-   if (sd->queue)
-     eina_list_free(sd->queue);
-   sd->queue = NULL;
-
-   if (sd->thumb_idler)
-     ecore_idle_enterer_del(sd->thumb_idler);
-   sd->thumb_idler = NULL;
 }
 
 static int
