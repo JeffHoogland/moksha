@@ -795,10 +795,10 @@ _e_mod_comp_cb_update(E_Comp *c)
                     {
                        printf("nosync\n");
                        if (cw->bd)
-                         {
-                            ecore_x_e_comp_sync_cancel_send(cw->bd->client.win);
-                            ecore_x_sync_counter_inc(cw->counter, 1);
-                         }
+                         ecore_x_e_comp_sync_cancel_send(cw->bd->client.win);
+                       else
+                         ecore_x_e_comp_sync_cancel_send(cw->win);
+                       ecore_x_sync_counter_inc(cw->counter, 1);
                     }
 //                  ecore_x_window_hide(cw->win);
 //                  ecore_x_window_show(cw->win);
@@ -863,6 +863,8 @@ _e_mod_comp_cb_update(E_Comp *c)
                     {
                        if (cw->bd)
                          ecore_x_e_comp_sync_begin_send(cw->bd->client.win);
+                       else
+                         ecore_x_e_comp_sync_begin_send(cw->win);
                     }
                }
           }
@@ -1002,7 +1004,10 @@ _e_mod_comp_object_del(void *data, void *obj)
      {
         if (cw->counter)
           {
-             ecore_x_e_comp_sync_cancel_send(cw->bd->client.win);
+             if (cw->bd)
+               ecore_x_e_comp_sync_cancel_send(cw->bd->client.win);
+             else
+               ecore_x_e_comp_sync_cancel_send(cw->win);
              ecore_x_sync_counter_inc(cw->counter, 1);
           }
         eina_hash_del(borders, e_util_winid_str_get(cw->bd->client.win), cw);
@@ -1016,6 +1021,28 @@ _e_mod_comp_object_del(void *data, void *obj)
      {
         e_object_delfn_del(obj, cw->dfn);
         cw->dfn = NULL;
+     }
+}
+
+static void
+_e_mod_comp_win_sync_setup(E_Comp_Win *cw, Ecore_X_Window win)
+{
+   if (!_comp_mod->conf->efl_sync) return;
+
+   if (cw->bd)
+     {
+        if (_e_mod_comp_win_is_borderless(cw) ||
+            (_comp_mod->conf->loose_sync))
+          cw->counter = ecore_x_e_comp_sync_counter_get(win);
+        else
+          ecore_x_e_comp_sync_cancel_send(win);
+     }
+   else
+     cw->counter = ecore_x_e_comp_sync_counter_get(win);
+   if (cw->counter)
+     {
+        ecore_x_sync_counter_inc(cw->counter, 1);
+        ecore_x_e_comp_sync_begin_send(win);
      }
 }
 
@@ -1036,22 +1063,7 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
         eina_hash_add(borders, e_util_winid_str_get(cw->bd->client.win), cw);
         cw->dfn = e_object_delfn_add(E_OBJECT(cw->bd), 
                                      _e_mod_comp_object_del, cw);
-        if (_comp_mod->conf->efl_sync)
-          {
-             if (_e_mod_comp_win_is_borderless(cw) ||
-                 (_comp_mod->conf->loose_sync))
-               {
-                  cw->counter = 
-                    ecore_x_e_comp_sync_counter_get(cw->bd->client.win);
-                  if (cw->counter)
-                    {
-                       ecore_x_sync_counter_inc(cw->counter, 1);
-                       ecore_x_e_comp_sync_begin_send(cw->bd->client.win);
-                    }
-               }
-             else
-               ecore_x_e_comp_sync_cancel_send(cw->bd->client.win);
-          }
+        _e_mod_comp_win_sync_setup(cw, cw->bd->client.win);
      }
    else
      {
@@ -1066,6 +1078,7 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
                cw->dfn = e_object_delfn_add(E_OBJECT(cw->menu), 
                                             _e_mod_comp_object_del, cw);
           }
+        _e_mod_comp_win_sync_setup(cw, cw->win);
      }
    // fixme: could use bd/pop/menu for this too
    memset((&att), 0, sizeof(Ecore_X_Window_Attributes));

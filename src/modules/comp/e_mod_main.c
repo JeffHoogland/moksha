@@ -109,7 +109,8 @@ e_modapi_init(E_Module *m)
 //        init_done_handler = ecore_event_handler_add(E_EVENT_INIT_DONE,
 //                                                    _e_init_done, NULL);
 //     }
-   
+
+   e_module_priority_set(m, -1000);
    return mod;
 }
 
