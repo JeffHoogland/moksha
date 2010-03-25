@@ -387,6 +387,24 @@ _e_smart_signal_cb_drag_stop(void *data, Evas_Object *obj __UNUSED__, const char
 }
 
 static void
+_e_smart_signal_cb_wheel_up(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
+{
+   E_Smart_Data *sd = data;
+
+   edje_object_part_drag_step(sd->edje_obj, "e.dragable.slider", -0.05, -0.05);
+   sd->direction = -1;
+}
+
+static void
+_e_smart_signal_cb_wheel_down(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
+{
+   E_Smart_Data *sd = data;
+
+   edje_object_part_drag_step(sd->edje_obj, "e.dragable.slider", 0.05, 0.05);
+   sd->direction = 1;
+}
+
+static void
 _e_smart_event_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
    Evas_Event_Key_Down *ev = event_info;
@@ -478,6 +496,8 @@ _e_smart_add(Evas_Object *obj)
    edje_object_signal_callback_add(sd->edje_obj, "drag,stop", "*", _e_smart_signal_cb_drag_stop, sd);
    edje_object_signal_callback_add(sd->edje_obj, "drag,step", "*", _e_smart_signal_cb_drag_stop, sd);
    edje_object_signal_callback_add(sd->edje_obj, "drag,set", "*", _e_smart_signal_cb_drag_stop, sd);
+   edje_object_signal_callback_add(sd->edje_obj, "mouse,wheel,0,1", "*", _e_smart_signal_cb_wheel_up, sd);
+   edje_object_signal_callback_add(sd->edje_obj, "mouse,wheel,0,-1", "*", _e_smart_signal_cb_wheel_down, sd);
 
    evas_object_event_callback_add(obj, EVAS_CALLBACK_KEY_DOWN, _e_smart_event_key_down, sd);
 }
