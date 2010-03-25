@@ -236,7 +236,7 @@ _policy_zone_layout_update(E_Zone *zone)
         if (bd->zone != zone) continue;
 
         /* skip special windows */
-        if (e_illume_border_is_indicator(bd)) continue;
+//        if (e_illume_border_is_indicator(bd)) continue;
         if (e_illume_border_is_softkey(bd)) continue;
         if (e_illume_border_is_keyboard(bd)) continue;
         if (e_illume_border_is_quickpanel(bd)) continue;
