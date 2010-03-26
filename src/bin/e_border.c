@@ -3706,6 +3706,11 @@ e_border_resize_limit(E_Border *bd, int *w, int *h)
 static void
 _e_border_free(E_Border *bd)
 {
+   if (bd->desktop)
+     {
+	efreet_desktop_free(bd->desktop);
+	bd->desktop = NULL;
+     }
    if (bd->post_job)
      {
 	ecore_idle_enterer_del(bd->post_job);
