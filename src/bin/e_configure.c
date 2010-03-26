@@ -1,10 +1,10 @@
+/*
+ * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
+ */
 #include "e.h"
 
-#if 0
 static void _e_configure_efreet_desktop_update(void);
-static int _e_configure_cb_efreet_desktop_list_change(void *data, int type, void *event);
-static int _e_configure_cb_efreet_desktop_change(void *data, int type, void *event);
-#endif
+static int _e_configure_cb_efreet_desktop_cache_update(void *data, int type, void *event);
 static void _e_configure_registry_item_full_add(const char *path, int pri, const char *label, const char *icon_file, const char *icon, E_Config_Dialog *(*func) (E_Container *con, const char *params), void (*generic_func) (E_Container *con, const char *params), Efreet_Desktop *desktop);
 
 EAPI Eina_List *e_configure_registry = NULL;
@@ -38,18 +38,12 @@ e_configure_init(void)
    maug = e_int_menus_menu_augmentation_add_sorted
      ("config/1", _("Modules"), _e_configure_menu_add, NULL, NULL, NULL);
 
-#if 0
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
-         (EFREET_EVENT_DESKTOP_LIST_CHANGE, _e_configure_cb_efreet_desktop_list_change, NULL));
-   handlers = eina_list_append
-     (handlers, ecore_event_handler_add
-         (EFREET_EVENT_DESKTOP_CHANGE, _e_configure_cb_efreet_desktop_change, NULL));
-#endif
-//   _e_configure_efreet_desktop_update();
+         (EFREET_EVENT_CACHE_UPDATE, _e_configure_cb_efreet_desktop_cache_update, NULL));
+   _e_configure_efreet_desktop_update();
 }
 
-#if 0
 static void
 _e_configure_efreet_desktop_update(void)
 {
@@ -69,12 +63,12 @@ _e_configure_efreet_desktop_update(void)
 	Eina_List *ll;
 
 	EINA_LIST_FOREACH(ecat->items, ll, eci)
-	  if (eci->desktop)
-	    {
-	       snprintf(buf, sizeof(buf), "%s/%s", ecat->cat, eci->item);
-	       remove_items = eina_list_append(remove_items, strdup(buf));
-	       remove_cats = eina_list_append(remove_cats, strdup(ecat->cat));
-	    }
+	   if (eci->desktop)
+	     {
+		snprintf(buf, sizeof(buf), "%s/%s", ecat->cat, eci->item);
+		remove_items = eina_list_append(remove_items, strdup(buf));
+		remove_cats = eina_list_append(remove_cats, strdup(ecat->cat));
+	     }
      }
    EINA_LIST_FREE(remove_items, data)
      {
@@ -90,7 +84,14 @@ _e_configure_efreet_desktop_update(void)
    /* get desktops */
    settings_desktops = efreet_util_desktop_category_list("Settings");
    system_desktops = efreet_util_desktop_category_list("System");
-   if ((!settings_desktops) || (!system_desktops)) return;
+   if ((!settings_desktops) || (!system_desktops))
+     {
+	EINA_LIST_FREE(settings_desktops, desktop)
+	   efreet_desktop_free(desktop);
+	EINA_LIST_FREE(system_desktops, desktop)
+	   efreet_desktop_free(desktop);
+	return;
+     }
 
    /* get ones in BOTH lists */
    EINA_LIST_FOREACH(settings_desktops, l, desktop)
@@ -170,22 +171,18 @@ _e_configure_efreet_desktop_update(void)
 	if (cfg_icon) free(cfg_icon);
 	if (cfg_cat_icon) free(cfg_cat_icon);
      }
+   EINA_LIST_FREE(settings_desktops, desktop)
+      efreet_desktop_free(desktop);
+   EINA_LIST_FREE(system_desktops, desktop)
+      efreet_desktop_free(desktop);
 }
 
 static int
-_e_configure_cb_efreet_desktop_list_change(void *data, int type, void *event)
+_e_configure_cb_efreet_desktop_cache_update(void *data, int type, void *event)
 {
    _e_configure_efreet_desktop_update();
    return 1;
 }
-
-static int
-_e_configure_cb_efreet_desktop_change(void *data, int type, void *event)
-{
-   _e_configure_efreet_desktop_update();
-   return 1;
-}
-#endif
 
 static void
 _e_configure_registry_item_full_add(const char *path, int pri, const char *label, const char *icon_file, const char *icon, E_Config_Dialog *(*func) (E_Container *con, const char *params), void (*generic_func) (E_Container *con, const char *params), Efreet_Desktop *desktop)
