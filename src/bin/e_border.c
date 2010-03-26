@@ -44,10 +44,7 @@ static int _e_border_cb_window_state_request(void *data, int ev_type, void *ev);
 static int _e_border_cb_window_move_resize_request(void *data, int ev_type, void *ev);
 static int _e_border_cb_desktop_change(void *data, int ev_type, void *ev);
 static int _e_border_cb_sync_alarm(void *data, int ev_type, void *ev);
-#if 0
-static int _e_border_cb_efreet_desktop_list_change(void *data, int ev_type, void *ev);
-static int _e_border_cb_efreet_desktop_change(void *data, int ev_type, void *ev);
-#endif
+static int _e_border_cb_efreet_cache_update(void *data, int ev_type, void *ev);
 static int _e_border_cb_config_icon_theme(void *data, int ev_type, void *ev);
 
 static int  _e_border_cb_pointer_warp(void *data, int ev_type, void *ev);
@@ -188,10 +185,7 @@ e_border_init(void)
    ecore_x_passive_grab_replay_func_set(_e_border_cb_grab_replay, NULL);
 
    handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_POINTER_WARP, _e_border_cb_pointer_warp, NULL));
-#if 0
-   handlers = eina_list_append(handlers, ecore_event_handler_add(EFREET_EVENT_DESKTOP_LIST_CHANGE, _e_border_cb_efreet_desktop_list_change, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(EFREET_EVENT_DESKTOP_CHANGE, _e_border_cb_efreet_desktop_change, NULL));
-#endif
+   handlers = eina_list_append(handlers, ecore_event_handler_add(EFREET_EVENT_CACHE_UPDATE, _e_border_cb_efreet_cache_update, NULL));
    handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_CONFIG_ICON_THEME, _e_border_cb_config_icon_theme, NULL));
 
    if (!borders_hash) borders_hash = eina_hash_string_superfast_new(NULL);
@@ -4977,9 +4971,8 @@ _e_border_cb_sync_alarm(void *data, int ev_type, void *ev)
    return 1;
 }
 
-#if 0
 static int
-_e_border_cb_efreet_desktop_list_change(void *data, int ev_type, void *ev)
+_e_border_cb_efreet_cache_update(void *data, int ev_type, void *ev)
 {
    Eina_List *l;
    E_Border *bd;
@@ -4987,75 +4980,20 @@ _e_border_cb_efreet_desktop_list_change(void *data, int ev_type, void *ev)
    /* mark all borders for desktop/icon updates */
    EINA_LIST_FOREACH(borders, l, bd)
      {
-	if (!bd->desktop)
+	if (bd->desktop)
 	  {
-	     bd->changes.icon = 1;
-	     bd->changed = 1;
+	     efreet_desktop_free(bd->desktop);
+	     bd->desktop = NULL;
 	  }
+	bd->changes.icon = 1;
+	bd->changed = 1;
      }
+   /*
    e_init_status_set(_("Desktop files scan done"));
    e_init_done();
+   */
    return 1;
 }
-
-static int
-_e_border_cb_efreet_desktop_change(void *data, int ev_type, void *ev)
-{
-   Efreet_Event_Desktop_Change *event;
-   Eina_List *l;
-   E_Border *bd;
-
-   event = ev;
-   e_init_status_set(_("Desktop file scan"));
-   switch (event->change)
-     {
-      case EFREET_DESKTOP_CHANGE_ADD:
-	 /* If a desktop is added, make the borders without icon retry */
-	 EINA_LIST_FOREACH(borders, l, bd)
-	   {
-	      if (!bd->desktop)
-		{
-		   bd->changes.icon = 1;
-		   bd->changed = 1;
-		}
-	   }
-	 break;
-      case EFREET_DESKTOP_CHANGE_REMOVE:
-	 /* If a desktop is removed, drop the .desktop pointer */
-	 EINA_LIST_FOREACH(borders, l, bd)
-	   {
-	      if (bd->desktop == event->current)
-		{
-		   efreet_desktop_free(bd->desktop);
-		   bd->desktop = NULL;
-		   bd->changes.icon = 1;
-		   bd->changed = 1;
-		}
-	   }
-	 break;
-      case EFREET_DESKTOP_CHANGE_UPDATE:
-	 /* If a desktop is updated, point to the new desktop and update the icon */
-	 EINA_LIST_FOREACH(borders, l, bd)
-	   {
-	      if (bd->desktop == event->previous)
-		{
-		   efreet_desktop_free(bd->desktop);
-		   efreet_desktop_ref(event->current);
-		   bd->desktop = event->current;
-		   bd->changes.icon = 1;
-		   bd->changed = 1;
-		}
-	      else if (bd->desktop == NULL)
-		{
-		   bd->changes.icon = 1;
-		   bd->changed = 1;
-		}
-	   }
-	 break;
-     }
-   return 1;
-}
-#endif
 
 static int
 _e_border_cb_config_icon_theme(void *data, int ev_type, void *ev)
