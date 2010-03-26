@@ -1701,7 +1701,10 @@ ACT_FN_GO(app)
 		  else if (!strcmp(p2, "exe:"))
 		    desktop = efreet_util_desktop_exec_find(p + 1);
 		  if (desktop)
-		    e_exec(zone, desktop, NULL, NULL, "action/app");
+		    {
+		       e_exec(zone, desktop, NULL, NULL, "action/app");
+		       efreet_desktop_free(desktop);
+		    }
 	       }
 	  }
      }
