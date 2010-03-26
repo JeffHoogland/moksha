@@ -59,6 +59,7 @@ _e_fluanch_cb_app_button(void *data)
    desktop = efreet_util_desktop_file_id_find(fla->desktop);
    if (!desktop) return;
    if (fla->flaunch->desktop_run_func) fla->flaunch->desktop_run_func(desktop);
+   efreet_desktop_free(desktop);
 }
 
 static E_Flaunch_App *
@@ -76,6 +77,7 @@ _e_flaunch_app_add(E_Flaunch *fl, const char *deskfile)
    e_box_pack_end(fl->app_box_obj, fla->obj);
    e_box_pack_options_set(fla->obj, 1, 1, 1, 1, 0.5, 0.5, 0, 0, 9999, 9999);
    evas_object_show(fla->obj);
+   if (desktop) efreet_desktop_free(desktop);
    return fla;
 }
 
@@ -132,6 +134,8 @@ _e_flaunch_apps_populate(E_Flaunch *fl)
 	       }
 	     if (num >= max) break;
 	  }
+	EINA_LIST_FREE(bar_desktops, desktop)
+	  efreet_desktop_free(desktop);
      }
    while (num < max)
      {
@@ -190,9 +194,8 @@ _e_flaunch_cb_delayed_repopulate(void *data)
    return 0;
 }
 
-#if 0
 static int
-_e_flaunch_cb_desktop_list_change(void *data, int type, void *event)
+_e_flaunch_cb_cache_update(void *data, int type, void *event)
 {       
    E_Flaunch *fl;
    
@@ -201,18 +204,6 @@ _e_flaunch_cb_desktop_list_change(void *data, int type, void *event)
    fl->repopulate_timer = ecore_timer_add(0.5, _e_flaunch_cb_delayed_repopulate, fl);
    return 1;
 }
-
-static int
-_e_flaunch_cb_desktop_change(void *data, int type, void *event)
-{       
-   E_Flaunch *fl;
-   
-   fl = data;
-   if (fl->repopulate_timer) ecore_timer_del(fl->repopulate_timer);
-   fl->repopulate_timer = ecore_timer_add(0.5, _e_flaunch_cb_delayed_repopulate, fl);
-   return 1;
-}
-#endif
 
 EAPI int
 e_flaunch_init(void)
@@ -271,14 +262,9 @@ e_flaunch_new(E_Zone *zone, const char *themedir)
    fl->handlers = eina_list_append
      (fl->handlers, ecore_event_handler_add
       (E_EVENT_ZONE_MOVE_RESIZE, _e_flaunch_cb_zone_move_resize, fl));
-#if 0
    fl->handlers = eina_list_append
      (fl->handlers, ecore_event_handler_add
-      (EFREET_EVENT_DESKTOP_LIST_CHANGE, _e_flaunch_cb_desktop_list_change, fl));
-   fl->handlers = eina_list_append
-     (fl->handlers, ecore_event_handler_add
-      (EFREET_EVENT_DESKTOP_CHANGE, _e_flaunch_cb_desktop_change, fl));
-#endif
+      (EFREET_EVENT_CACHE_UPDATE, _e_flaunch_cb_cache_update, fl));
    
    return fl;
 }

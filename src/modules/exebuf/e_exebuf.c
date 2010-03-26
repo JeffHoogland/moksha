@@ -359,6 +359,7 @@ _e_exebuf_exe_free(E_Exebuf_Exe *exe)
 
    evas_object_del(exe->bg_object);
    if (exe->icon_object) evas_object_del(exe->icon_object);
+   if (exe->desktop) efreet_desktop_free(exe->desktop);
    free(exe);
 }
 
@@ -370,7 +371,7 @@ _e_exebuf_matches_clear(void)
    char *file;
 
    EINA_LIST_FREE(eap_matches, desktop)
-     e_object_unref(E_OBJECT(desktop));
+     efreet_desktop_free(desktop);
    EINA_LIST_FREE(exe_matches, file)
      free(file);
    
@@ -418,6 +419,7 @@ _e_exebuf_update(void)
 	icon_object = o;
 	edje_object_part_swallow(bg_object, "e.swallow.icons", o);
 	evas_object_show(o);
+	efreet_desktop_free(desktop);
      }
 }
 
@@ -1035,8 +1037,12 @@ _e_exebuf_matches_update(void)
                     added = eina_hash_string_superfast_new(NULL);
                   eina_hash_add(added, exe, desktop);
                }
-             free(exe);
+	     else
+	       efreet_desktop_free(desktop);
+	     free(exe);
           }
+	else
+	  efreet_desktop_free(desktop);
      }
 
    snprintf(buf, sizeof(buf), "%s*", cmd_buf);
@@ -1054,8 +1060,12 @@ _e_exebuf_matches_update(void)
                     added = eina_hash_string_superfast_new(NULL);
                   eina_hash_add(added, exe, desktop);
                }
+	     else
+	       efreet_desktop_free(desktop);
              free(exe);
-          }
+	  }
+	else
+	  efreet_desktop_free(desktop);
      }
 
    snprintf(buf, sizeof(buf), "*%s*", cmd_buf);
@@ -1073,8 +1083,12 @@ _e_exebuf_matches_update(void)
                     added = eina_hash_string_superfast_new(NULL);
                   eina_hash_add(added, exe, desktop);
                }
+	     else
+	       efreet_desktop_free(desktop);
              free(exe);
           }
+	else
+	  efreet_desktop_free(desktop);
      }
 
    snprintf(buf, sizeof(buf), "*%s*", cmd_buf);
@@ -1092,8 +1106,12 @@ _e_exebuf_matches_update(void)
                     added = eina_hash_string_superfast_new(NULL);
                   eina_hash_add(added, exe, desktop);
                }
+	     else
+	       efreet_desktop_free(desktop);
              free(exe);
           }
+	else
+	  efreet_desktop_free(desktop);
      }
 
    if (added) eina_hash_free(added);
@@ -1246,7 +1264,7 @@ _e_exebuf_hist_update(Eina_List *hist_matches)
 	Evas_Coord mw, mh;
 	Evas_Object *o;
 	Efreet_Desktop *desktop;
-	int found = 0;
+	Efreet_Desktop *found = NULL;
 	int len;
 	char *tmp;
 	char match[4096];
@@ -1274,15 +1292,14 @@ _e_exebuf_hist_update(Eina_List *hist_matches)
 	EINA_LIST_FREE(ll, desktop)
 	  {
 	     if (desktop->exec && !strncmp(file, desktop->exec, len))
-	       {
-		  found = 1;
-		  break;
-	       }
+	       found = desktop;
+	     else
+	       efreet_desktop_free(desktop);
 	  }
 
 	if (found)
 	  {
-	     exe->desktop = desktop;
+	     exe->desktop = found;
 	     edje_object_part_text_set(o, "e.text.title", desktop->name);
 
 	     if (edje_object_part_exists(exe->bg_object, "e.swallow.icons"))

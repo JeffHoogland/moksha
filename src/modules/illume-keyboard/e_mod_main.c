@@ -71,12 +71,13 @@ _il_kbd_start(void)
         desktop = efreet_util_desktop_file_id_find(il_kbd_cfg->run_keyboard);
         if (!desktop) 
           {
+	     Efreet_Desktop *d;
              Eina_List *kbds, *l;
 
              kbds = efreet_util_desktop_category_list("Keyboard");
              if (kbds) 
                {
-                  EINA_LIST_FOREACH(kbds, l, desktop) 
+                  EINA_LIST_FOREACH(kbds, l, d) 
                     {
                        const char *dname;
 
@@ -84,9 +85,15 @@ _il_kbd_start(void)
                        if (dname) 
                          {
                             if (!strcmp(dname, il_kbd_cfg->run_keyboard))
-                              break;
+			      {
+				 desktop = d;
+				 efreet_desktop_ref(desktop);
+				 break;
+			      }
                          }
                     }
+		  EINA_LIST_FREE(kbds, d)
+		    efreet_desktop_free(d);
                }
           }
         if (desktop) 
@@ -102,6 +109,7 @@ _il_kbd_start(void)
                     ecore_event_handler_add(ECORE_EXE_EVENT_DEL, 
                                             _il_kbd_cb_exit, NULL);
                }
+	     efreet_desktop_free(desktop);
           }
      }
 }

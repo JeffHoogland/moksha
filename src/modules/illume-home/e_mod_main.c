@@ -61,10 +61,7 @@ static void _il_home_apps_populate(void);
 static void _il_home_apps_unpopulate(void);
 static void _il_home_fmc_set(Evas_Object *obj);
 static void _il_home_desks_populate(void);
-#if 0
-static int _il_home_desktop_list_change(void *data, int type, void *event);
-static int _il_home_desktop_change(void *data, int type, void *event);
-#endif
+static int _il_home_desktop_cache_update(void *data, int type, void *event);
 static int _il_home_update_deferred(void *data);
 static int _il_home_win_cb_exe_del(void *data, int type, void *event);
 static E_Border *_il_home_desktop_find_border(E_Zone *zone, Efreet_Desktop *desktop);
@@ -100,18 +97,11 @@ e_modapi_init(E_Module *m)
    _il_home_apps_unpopulate();
    _il_home_apps_populate();
 
-#if 0
    handlers = 
      eina_list_append(handlers, 
-                      ecore_event_handler_add(EFREET_EVENT_DESKTOP_LIST_CHANGE, 
-                                              _il_home_desktop_list_change, 
+                      ecore_event_handler_add(EFREET_EVENT_CACHE_UPDATE, 
+                                              _il_home_desktop_cache_update, 
                                               NULL));
-   handlers = 
-     eina_list_append(handlers, 
-                      ecore_event_handler_add(EFREET_EVENT_DESKTOP_CHANGE, 
-                                              _il_home_desktop_change, NULL));
-#endif
-
    handlers = 
      eina_list_append(handlers, 
                       ecore_event_handler_add(E_EVENT_BORDER_ADD, 
@@ -150,7 +140,8 @@ e_modapi_shutdown(E_Module *m)
              exe->handle = NULL;
           }
         if (exe->timeout) ecore_timer_del(exe->timeout);
-        E_FREE(exe);
+	if (exe->desktop) efreet_desktop_free(exe->desktop);
+	E_FREE(exe);
      }
 
    _il_home_apps_unpopulate();
@@ -659,31 +650,22 @@ _il_home_desks_populate(void)
                   num++;
                }
           }
+	efreet_menu_free(menu);
      }
 }
 
-#if 0
 static int 
-_il_home_desktop_list_change(void *data, int type, void *event) 
+_il_home_desktop_cache_update(void *data, int type, void *event) 
 {
+   _il_home_apps_unpopulate();
    if (defer) ecore_timer_del(defer);
    defer = ecore_timer_add(1.0, _il_home_update_deferred, NULL);
    return 1;
 }
-
-static int 
-_il_home_desktop_change(void *data, int type, void *event) 
-{
-   if (defer) ecore_timer_del(defer);
-   defer = ecore_timer_add(1.0, _il_home_update_deferred, NULL);
-   return 1;
-}
-#endif
 
 static int 
 _il_home_update_deferred(void *data) 
 {
-   _il_home_apps_unpopulate();
    _il_home_apps_populate();
    defer = NULL;
    return 0;
@@ -708,6 +690,7 @@ _il_home_win_cb_exe_del(void *data, int type, void *event)
                }
              exes = eina_list_remove_list(exes, l);
              if (exe->timeout) ecore_timer_del(exe->timeout);
+	     if (exe->desktop) efreet_desktop_free(exe->desktop);
              E_FREE(exe);
              return 1;
           }
@@ -787,7 +770,8 @@ _il_home_win_cb_timeout(void *data)
    if (!exe->border) 
      {
         exes = eina_list_remove(exes, exe);
-        E_FREE(exe);
+	if (exe->desktop) efreet_desktop_free(exe->desktop);
+	E_FREE(exe);
         return 0;
      }
    exe->timeout = NULL;

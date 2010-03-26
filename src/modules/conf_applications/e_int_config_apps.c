@@ -304,8 +304,6 @@ _load_order(const char *path)
 	efreet_desktop_ref(l->data);
 	apps = eina_list_append(apps, l->data);
      }
-   /* FIXME: The test below will never be true ! */
-   if (l) eina_list_free(l);
    e_object_del(E_OBJECT(order));
    return apps;
 }
@@ -327,11 +325,9 @@ _fill_apps(E_Config_Dialog_Data *cfdata)
    EINA_LIST_FREE(desks, desk)
      {
 	if (!eina_list_search_unsorted(l, _cb_sort_desks, desk))
-          {
-             efreet_desktop_ref(desk);
-	     l = eina_list_append(l, desk);
-	  }
-	efreet_desktop_free(desk);
+	  l = eina_list_append(l, desk);
+	else
+	  efreet_desktop_free(desk);
      }
 
    l = eina_list_sort(l, 0, _cb_sort_desks);
@@ -493,6 +489,7 @@ _cb_add(void *data, void *data2)
 	icon = e_util_desktop_icon_add(desk, 24, evas);
 	e_widget_ilist_append(cfdata->o_sel, icon, desk->name, 
 			      _sel_list_cb_selected, cfdata, desk->orig_path);
+	efreet_desktop_free(desk);
      }
 
    e_widget_ilist_go(cfdata->o_sel);
@@ -564,6 +561,7 @@ _cb_up(void *data, void *data2)
 					     _sel_list_cb_selected, cfdata, 
 					     desk->orig_path, (sel - 1));
 	     e_widget_ilist_selected_set(cfdata->o_sel, (sel - 1));
+	     efreet_desktop_free(desk);
 	  }
      }
    e_widget_ilist_go(cfdata->o_sel);
@@ -604,6 +602,7 @@ _cb_down(void *data, void *data2)
 					     _sel_list_cb_selected, cfdata, 
 					     desk->orig_path, sel);
 	     e_widget_ilist_selected_set(cfdata->o_sel, (sel + 1));
+	     efreet_desktop_free(desk);
 	  }
      }
    e_widget_ilist_go(cfdata->o_sel);
@@ -633,6 +632,7 @@ _save_menu(E_Config_Dialog_Data *cfdata)
 	desk = efreet_util_desktop_name_find(lbl);
 	if (!desk) continue;
 	efreet_menu_desktop_insert(menu, desk, -1);
+	efreet_desktop_free(desk);
      }
    ret = efreet_menu_save(menu, cfdata->data->filename);
    efreet_menu_free(menu);
@@ -660,6 +660,7 @@ _save_order(E_Config_Dialog_Data *cfdata)
 	desk = efreet_util_desktop_name_find(lbl);
 	if (!desk) continue;
 	e_order_append(order, desk);
+	efreet_desktop_free(desk);
      }
    e_object_del(E_OBJECT(order));
    return 1;

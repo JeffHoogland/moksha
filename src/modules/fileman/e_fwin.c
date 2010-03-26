@@ -666,11 +666,13 @@ _e_fwin_suggested_apps_list_get(Eina_List *files, Eina_List **mime_list)
      apps = eina_list_merge(apps, efreet_util_desktop_mime_list(mime));
 
    /* 4. create a new list without duplicates */
-   EINA_LIST_FOREACH(apps, l, desk)
-     if (!eina_list_data_find(ret, desk))
-       ret = eina_list_append(ret, desk);
-
-   if (apps) apps = eina_list_free(apps);
+   EINA_LIST_FREE(apps, desk)
+     {
+	if (!eina_list_data_find(ret, desk))
+	  ret = eina_list_append(ret, desk);
+	else
+	  efreet_desktop_free(desk);
+     }
 
    if (mime_list)
      *mime_list = mlist;
@@ -1245,6 +1247,8 @@ _e_fwin_cb_all_change(void *data, Evas_Object *obj)
    desktop = efreet_util_desktop_file_id_find(fad->app2);
    if ((desktop) && (desktop->exec)) 
      e_widget_entry_text_set(fad->o_entry, desktop->exec);
+   if (desktop)
+     efreet_desktop_free(desktop);
 }
 
 static void
@@ -1842,7 +1846,7 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page, Eina_List *files, int always)
    e_widget_ilist_freeze(o);
 
    // Adding Specific Applications list into widget
-   if(apps)
+   if (apps)
      e_widget_ilist_header_append(o, NULL, _("Specific Applications"));
    EINA_LIST_FOREACH(apps, l, desk)
      {
@@ -1858,12 +1862,16 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page, Eina_List *files, int always)
    cats = efreet_util_desktop_name_glob_list("*");
    cats = eina_list_sort(cats, 0, _e_fwin_dlg_cb_desk_sort);
    EINA_LIST_FREE(cats, desk)
+     {
 	if (!eina_list_data_find(l, desk) && !eina_list_data_find(apps, desk))
 	  l = eina_list_append(l, desk);
+	else
+	  efreet_desktop_free(desk);
+     }
    l = eina_list_sort(l, -1, _e_fwin_dlg_cb_desk_list_sort);
 
    // Adding All Applications list into widget
-   if(l)
+   if (l)
      e_widget_ilist_header_append(o, NULL, _("All Applications"));
    EINA_LIST_FREE(l, desk)
      {
@@ -1873,9 +1881,11 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page, Eina_List *files, int always)
 	icon = e_util_desktop_icon_add(desk, 24, evas);
 	e_widget_ilist_append(o, icon, desk->name, NULL, NULL, 
 			      efreet_util_path_to_file_id(desk->orig_path));
+	efreet_desktop_free(desk);
      }
 
-   eina_list_free(apps);
+   EINA_LIST_FREE(apps, desk)
+      efreet_desktop_free(desk);
 
    e_widget_ilist_go(o);
    e_widget_ilist_thaw(o);
@@ -1943,14 +1953,17 @@ _e_fwin_cb_exec_cmd_changed(void *data, void *data2)
 
    if (!(fad = data)) return;
 
-   if (fad->app2) 
+   if (fad->app2)
      desktop = efreet_util_desktop_file_id_find(fad->app2);
 
    if (!desktop) return;
-   if (!strcmp(desktop->exec, fad->exec_cmd)) return;
-
-   eina_stringshare_del(fad->app2);
-   if (fad->o_all) e_widget_ilist_unselect(fad->o_all);
+   if (strcmp(desktop->exec, fad->exec_cmd))
+     {
+	eina_stringshare_del(fad->app2);
+	fad->app2 = NULL;
+	if (fad->o_all) e_widget_ilist_unselect(fad->o_all);
+     }
+   efreet_desktop_free(desktop);
 }
 
 
@@ -1964,7 +1977,11 @@ _e_fwin_cb_open(void *data, E_Dialog *dia)
    if (fad->app2)
      desktop = efreet_util_desktop_file_id_find(fad->app2);
 
-   if ((!desktop) && (!fad->exec_cmd)) return;
+   if ((!desktop) && (!fad->exec_cmd))
+     {
+	if (desktop) efreet_desktop_free(desktop);
+	return;
+     }
 
    // Create a fake .desktop for custom command.
     if (!desktop)
@@ -1985,9 +2002,7 @@ _e_fwin_cb_open(void *data, E_Dialog *dia)
    if ((desktop) || (strcmp(fad->exec_cmd, "")))
      _e_fwin_desktop_run(desktop, fad->fwin->cur_page, EINA_FALSE);
 
-   // Free fake .desktop
-   if (!strcmp(fad->exec_cmd, ""))
-      efreet_desktop_free(desktop);
+   efreet_desktop_free(desktop);
 
    e_object_del(E_OBJECT(fad->dia));
 }

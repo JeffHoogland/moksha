@@ -164,6 +164,8 @@ _il_kbd_config_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata
                     }
                   nn++;
                }
+	     EINA_LIST_FREE(kbds, desktop)
+	       efreet_desktop_free(desktop);
           }
      }
 
@@ -181,14 +183,15 @@ _il_kbd_config_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata
         int nn = 2;
 
         kbds = efreet_util_desktop_category_list("Keyboard");
-        EINA_LIST_FOREACH(kbds, l, desktop) 
+        EINA_LIST_FREE(kbds, desktop) 
           {
              ow = e_widget_radio_add(evas, desktop->name, nn, rg);
              e_widget_framelist_object_append(of, ow);
              evas_object_smart_callback_add(ow, "changed", 
                                             _il_kbd_config_changed, NULL);
+	     efreet_desktop_free(desktop);
              nn++;
-          }
+	  }
      }
    e_widget_list_object_append(list, of, 1, 0, 0.0);
    return list;
@@ -239,6 +242,8 @@ _il_kbd_config_change_timeout(void *data)
                     }
                   nn++;
                }
+	     EINA_LIST_FREE(kbds, desktop)
+	       efreet_desktop_free(desktop);
           }
      }
 

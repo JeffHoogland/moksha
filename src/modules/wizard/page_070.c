@@ -120,8 +120,6 @@ _app_write(App *a)
            a->name, a->generic, a->comment, a->exec, a->icon);
    if (a->extra) fprintf(f, "%s\n", a->extra);
    fclose(f);
-   /* TODO: This will leak */
-   efreet_desktop_get(buf);
 }
 
 EAPI int
@@ -138,7 +136,11 @@ wizard_page_init(E_Wizard_Page *pg)
           {
              char dbuf[4096];
 
-             if (!desk->exec) continue;
+             if (!desk->exec)
+	       {
+		  efreet_desktop_free(desk);
+		  continue;
+	       }
              if (sscanf(desk->exec, "%4000s", dbuf) == 1)
                {
                   for (i = 0; i < (sizeof(apps) / sizeof(App)); i++)
@@ -172,6 +174,7 @@ wizard_page_init(E_Wizard_Page *pg)
                          }
                     }
                }
+	     efreet_desktop_free(desk);
           }
 
    efreet_util_shutdown();

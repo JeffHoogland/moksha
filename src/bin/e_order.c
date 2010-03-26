@@ -9,9 +9,7 @@ static void _e_order_cb_monitor (void *data, Ecore_File_Monitor *em, Ecore_File_
 static void _e_order_read       (E_Order *eo);
 static void _e_order_save       (E_Order *eo);
 
-#if 0
-static int  _e_order_cb_efreet_desktop_change(void *data, int ev_type, void *ev);
-#endif
+static int  _e_order_cb_efreet_cache_update(void *data, int ev_type, void *ev);
 
 static Eina_List *orders = NULL;
 static Eina_List *handlers = NULL;
@@ -20,9 +18,7 @@ static Eina_List *handlers = NULL;
 EAPI int
 e_order_init(void)
 {
-#if 0
-   handlers = eina_list_append(handlers, ecore_event_handler_add(EFREET_EVENT_DESKTOP_CHANGE, _e_order_cb_efreet_desktop_change, NULL));
-#endif
+   handlers = eina_list_append(handlers, ecore_event_handler_add(EFREET_EVENT_CACHE_UPDATE, _e_order_cb_efreet_cache_update, NULL));
    efreet_menu_file_set(e_config->default_system_menu);
    return 1;
 }
@@ -263,67 +259,17 @@ _e_order_save(E_Order *eo)
    fclose(f);
 }
 
-#if 0
 static int
-_e_order_cb_efreet_desktop_change(void *data, int ev_type, void *ev)
+_e_order_cb_efreet_cache_update(void *data, int ev_type, void *ev)
 {
-   Efreet_Event_Desktop_Change *event;
    Eina_List *l;
    E_Order *eo;
 
-   event = ev;
-   switch (event->change)
+   /* reread all .order files */
+   EINA_LIST_FOREACH(orders, l, eo)
      {
-      case EFREET_DESKTOP_CHANGE_ADD:
-	 /* If a desktop is added, reread all .order files */
-	 EINA_LIST_FOREACH(orders, l, eo)
-	   {
-	      _e_order_read(eo);
-	      if (eo->cb.update) eo->cb.update(eo->cb.data, eo);
-	   }
-	 break;
-      case EFREET_DESKTOP_CHANGE_REMOVE:
-	 /* If a desktop is removed, drop the .desktop pointer */
-	 EINA_LIST_FOREACH(orders, l, eo)
-	   {
-	      Eina_List *l2;
-	      Efreet_Desktop *desktop;
-	      int changed = 0;
-
-	      EINA_LIST_FOREACH(eo->desktops, l2, desktop)
-		{
-		   if (desktop == event->current)
-		     {
-			efreet_desktop_free(desktop);
-			eo->desktops = eina_list_remove_list(eo->desktops, l2);
-			changed = 1;
-		     }
-		}
-	      if ((changed) && (eo->cb.update)) eo->cb.update(eo->cb.data, eo);
-	   }
-	 break;
-      case EFREET_DESKTOP_CHANGE_UPDATE:
-	 /* If a desktop is updated, point to the new desktop and update */
-	 EINA_LIST_FOREACH(orders, l, eo)
-	   {
-	      Eina_List *l2;
-	      Efreet_Desktop *desktop;
-	      int changed = 0;
-
-	      EINA_LIST_FOREACH(eo->desktops, l2, desktop)
-		{
-		   if (desktop == event->previous)
-		     {
-			efreet_desktop_free(desktop);
-			efreet_desktop_ref(event->current);
-			l2->data = event->current;
-			changed = 1;
-		     }
-		}
-	      if ((changed) && (eo->cb.update)) eo->cb.update(eo->cb.data, eo);
-	   }
-	 break;
+	_e_order_read(eo);
+	if (eo->cb.update) eo->cb.update(eo->cb.data, eo);
      }
    return 1;
 }
-#endif

@@ -29,8 +29,11 @@ wizard_page_init(E_Wizard_Page *pg)
    desks = eina_list_sort(desks, 0, (Eina_Compare_Cb)_cb_sort_desks);
    EINA_LIST_FREE(desks, desk)
           {
-             if (!desk->exec) continue;
-             efreet_desktop_ref(desk);
+             if (!desk->exec)
+	       {
+		  efreet_desktop_free(desk);
+		  continue;
+	       }
              desktops = eina_list_append(desktops, desk);
           }
    efreet_util_shutdown();

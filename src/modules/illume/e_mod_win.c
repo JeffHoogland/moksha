@@ -51,10 +51,7 @@ static void _cb_slipwin_border_select(void *data, E_Slipwin *esw, E_Border *bd);
 static void _cb_slipshelf_border_select(void *data, E_Slipshelf *ess, E_Border *bd);
 static void _cb_slipshelf_border_home2(void *data, E_Slipshelf *ess, E_Border *pbd);
 static void _cb_selected(void *data, Evas_Object *obj, void *event_info);
-#if 0
-static int _cb_efreet_desktop_list_change(void *data, int type, void *event);
-static int _cb_efreet_desktop_change(void *data, int type, void *event);
-#endif
+static int _cb_efreet_cache_update(void *data, int type, void *event);
 static void _apps_unpopulate(void);
 static void _apps_populate(void);
 static int _cb_update_deferred(void *data);
@@ -159,14 +156,9 @@ _e_mod_win_init(E_Module *m)
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
       (ECORE_EXE_EVENT_DEL, _cb_event_exe_del, NULL));
-#if 0
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
-      (EFREET_EVENT_DESKTOP_LIST_CHANGE, _cb_efreet_desktop_list_change, NULL));
-   handlers = eina_list_append
-     (handlers, ecore_event_handler_add
-      (EFREET_EVENT_DESKTOP_CHANGE, _cb_efreet_desktop_change, NULL));
-#endif
+      (EFREET_EVENT_CACHE_UPDATE, _cb_efreet_cache_update, NULL));
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
       (E_EVENT_ZONE_MOVE_RESIZE, _cb_zone_move_resize, NULL));
@@ -269,11 +261,12 @@ e_mod_win_cfg_kbd_start(void)
 	if (!desktop)
 	  {
 	     Eina_List *kbds;
+	     Efreet_Desktop *d;
 	     
 	     kbds = efreet_util_desktop_category_list("Keyboard");
 	     if (kbds)
 	       {
-		  EINA_LIST_FOREACH(kbds, l, desktop)
+		  EINA_LIST_FREE(kbds, d)
 		    {
 		       const char *dname;
 		       
@@ -281,8 +274,12 @@ e_mod_win_cfg_kbd_start(void)
 		       if (dname)
 			 {
 			    if (!strcmp(dname, illume_cfg->kbd.run_keyboard))
-			      break;
+			      {
+				 desktop = d;
+				 efreet_desktop_ref(desktop);
+			      }
 			 }
+		       efreet_desktop_free(d);
 		    }
 	       }
 	  }
@@ -294,6 +291,7 @@ e_mod_win_cfg_kbd_start(void)
 		  _kbd_exe = exeinst->exe;
 		  _kbd_exe_exit_handler = ecore_event_handler_add(ECORE_EXE_EVENT_DEL, _e_mod_win_win_cfg_kbd_cb_exit, NULL);
 	       }
+	     efreet_desktop_free(desktop);
 	  }
      }
 }
@@ -672,6 +670,7 @@ _desktop_run(Efreet_Desktop *desktop)
    ins = calloc(1, sizeof(Instance));
    if (!ins) return;
    eins = e_exec(zone, desktop, NULL, NULL, "illume-launcher");
+   efreet_desktop_ref(desktop);
    ins->desktop = desktop;
    if (eins)
      {
@@ -945,7 +944,7 @@ static void
 _apps_unpopulate(void)
 {
    char buf[PATH_MAX];
-	Efreet_Desktop *desktop;
+   Efreet_Desktop *desktop;
    Evas_Object *obj;
    Eina_List *files;
    char *file;
@@ -953,9 +952,6 @@ _apps_unpopulate(void)
 
    EINA_LIST_FREE(sels, obj)
      evas_object_del(obj);
-
-   EINA_LIST_FREE(desks, desktop)
-	efreet_desktop_free(desktop);
 
    if (bx) evas_object_del(bx);
    bx = NULL;
@@ -1049,6 +1045,7 @@ _apps_populate(void)
    e_scrollframe_child_viewport_size_get(sf, &sfw, &sfh);
    
      {
+	// TODO: Needs some efreet love
 	Efreet_Menu *menu, *entry, *subentry;
 	char *label, *icon, *plabel;
 	Eina_List *settings_desktops, *system_desktops, *keyboard_desktops;
@@ -1199,27 +1196,26 @@ _cb_selected(void *data, Evas_Object *obj, void *event_info)
 	Efreet_Desktop *desktop;
 	
 	desktop = efreet_desktop_get(ici->real_link);
-	if (desktop) _desktop_run(desktop);
+	if (desktop)
+	  {
+	     _desktop_run(desktop);
+	     efreet_desktop_free(desktop);
+	  }
      }
 }
 
-#if 0
 static int
-_cb_efreet_desktop_list_change(void *data, int type, void *event)
+_cb_efreet_cache_update(void *data, int type, void *event)
 {
-   if (defer) ecore_timer_del(defer);
-   defer = ecore_timer_add(1.0, _cb_update_deferred, NULL);
-   return 1;
-}
+   Efreet_Desktop *desktop;
 
-static int
-_cb_efreet_desktop_change(void *data, int type, void *event)
-{
+   EINA_LIST_FREE(desks, desktop)
+	efreet_desktop_free(desktop);
+
    if (defer) ecore_timer_del(defer);
    defer = ecore_timer_add(1.0, _cb_update_deferred, NULL);
    return 1;
 }
-#endif
 
 static int
 _cb_update_deferred(void *data)
