@@ -548,13 +548,6 @@ main(int argc, char **argv)
         _e_main_shutdown(-1);
      }
    _e_main_shutdown_push(efreet_shutdown);
-   if (!efreet_util_init())
-     {
-        e_error_message_show(_("Enlightenment cannot initialize the FDO desktop system.\n"
-                               "Perhaps you are out of memory?"));
-        _e_main_shutdown(-1);
-     }
-   _e_main_shutdown_push(efreet_util_shutdown);
    TS("efreet done");
 
    TS("configure");

@@ -23,8 +23,6 @@ wizard_page_init(E_Wizard_Page *pg)
    Eina_List *desks = NULL;
    Efreet_Desktop *desk;
    
-   efreet_util_init();
-                  
    desks = efreet_util_desktop_name_glob_list("*");
    desks = eina_list_sort(desks, 0, (Eina_Compare_Cb)_cb_sort_desks);
    EINA_LIST_FREE(desks, desk)
@@ -36,7 +34,6 @@ wizard_page_init(E_Wizard_Page *pg)
 	       }
              desktops = eina_list_append(desktops, desk);
           }
-   efreet_util_shutdown();
    if (desktops)
      {
         desktops_num = eina_list_count(desktops);
