@@ -216,11 +216,7 @@ _e_order_read(E_Order *eo)
 		       if (!desktop)
 		         desktop = efreet_desktop_get(ecore_file_file_get(buf));
 		       if (!desktop)
-			 {
-			    desktop = efreet_util_desktop_file_id_find(ecore_file_file_get(buf));
-			    /* Need to ref this as we only get a cache pointer from efreet_util */
-			    if (desktop) efreet_desktop_ref(desktop);
-			 }
+			 desktop = efreet_util_desktop_file_id_find(ecore_file_file_get(buf));
 		       if (desktop) eo->desktops = eina_list_append(eo->desktops, desktop);
 		    }
 	       }
