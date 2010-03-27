@@ -150,10 +150,15 @@ _bluez_toggle_powered(E_Bluez_Instance *inst)
 	return;
      }
 
+   if (!inst->adapter)
+     {
+	_bluez_operation_error_show(_("No bluetooth adapter."));
+	return;
+     }
+
    if (!e_bluez_adapter_powered_get(inst->adapter, &powered))
      {
-	_bluez_operation_error_show
-	  (_("Query adapter's powered."));
+	_bluez_operation_error_show(_("Query adapter's powered."));
 	return;
      }
 
@@ -171,13 +176,15 @@ static void
 _bluez_cb_toggle_powered(E_Object *obj __UNUSED__, const char *params __UNUSED__)
 {
    E_Bluez_Module_Context *ctxt;
+   const Eina_List *l;
+   E_Bluez_Instance *inst;
 
    if (!bluez_mod)
      return;
 
    ctxt = bluez_mod->data;
-   if (ctxt->default_instance)
-     _bluez_toggle_powered(ctxt->default_instance);
+   EINA_LIST_FOREACH(ctxt->instances, l, inst)
+     if (inst->adapter) _bluez_toggle_powered(inst);
 }
 
 static void _bluez_popup_del(E_Bluez_Instance *inst);
@@ -264,6 +271,12 @@ _bluez_popup_cb_powered_changed(void *data, Evas_Object *obj)
    if ((!ctxt) || (!ctxt->has_manager))
      {
 	_bluez_operation_error_show(_("BlueZ Daemon is not running."));
+	return;
+     }
+
+   if (!inst->adapter)
+     {
+	_bluez_operation_error_show(_("No bluetooth adapter."));
 	return;
      }
 
@@ -457,7 +470,9 @@ _bluez_popup_cb_scan(void *data, void *data2 __UNUSED__)
    E_Bluez_Instance *inst = data;
    int ret;
 
-   if (inst->discovering)
+   if (!inst->adapter)
+     ret = 0;
+   else if (inst->discovering)
      ret = e_bluez_adapter_stop_discovery
        (inst->adapter, _bluez_discovery_cb, inst);
    else
@@ -483,6 +498,8 @@ _bluez_popup_cb_controls(void *data, void *data2 __UNUSED__)
    if (inst->popup)
      _bluez_popup_del(inst);
    if (inst->conf_dialog)
+     return;
+   if (!inst->adapter)
      return;
    inst->conf_dialog = e_bluez_config_dialog_new(NULL, inst);
 }
@@ -647,6 +664,12 @@ _bluez_popup_new(E_Bluez_Instance *inst)
 	return;
      }
 
+   if (!inst->adapter)
+     {
+	_bluez_operation_error_show(_("No bluetooth adapter."));
+	return;
+     }
+
    if (!e_bluez_adapter_discovering_get(inst->adapter, &b))
      {
 	_bluez_operation_error_show(_("Can't get Discovering property"));
@@ -721,6 +744,8 @@ _bluez_menu_cb_cfg(void *data, E_Menu *menu __UNUSED__, E_Menu_Item *mi __UNUSED
    if (inst->popup)
      _bluez_popup_del(inst);
    if (inst->conf_dialog)
+     return;
+   if (!inst->adapter)
      return;
    inst->conf_dialog = e_bluez_config_dialog_new(NULL, inst);
 }
@@ -834,12 +859,16 @@ _bluez_edje_view_update(E_Bluez_Instance *inst, Evas_Object *o)
    E_Bluez_Module_Context *ctxt = inst->ctxt;
    const char *name;
 
-   if (!ctxt->has_manager)
+   if ((!ctxt->has_manager) || (!inst->adapter))
      {
 	edje_object_part_text_set(o, "e.text.powered", "");
 	edje_object_part_text_set(o, "e.text.status", "");
 	edje_object_signal_emit(o, "e,changed,off", "e");
-	edje_object_part_text_set(o, "e.text.name", _("No Bluetooth daemon"));
+	if (!ctxt->has_manager)
+	  edje_object_part_text_set(o, "e.text.name", _("No Bluetooth daemon"));
+	else
+	  edje_object_part_text_set(o, "e.text.name",
+				    _("No Bluetooth adapter"));
 	edje_object_signal_emit(o, "e,changed,name", "e");
 	return;
      }
@@ -868,8 +897,7 @@ _bluez_edje_view_update(E_Bluez_Instance *inst, Evas_Object *o)
    else
      {
 	edje_object_signal_emit(o, "e,changed,off", "e");
-	edje_object_part_text_set(o, "e.text.status",
-				  _("Bluetooth is off."));
+	edje_object_part_text_set(o, "e.text.status", _("Bluetooth is off."));
      }
 }
 
@@ -884,7 +912,7 @@ _bluez_gadget_update(E_Bluez_Instance *inst)
 {
    E_Bluez_Module_Context *ctxt = inst->ctxt;
 
-   if (!ctxt->has_manager && inst->popup)
+   if (inst->popup && ((!ctxt->has_manager) || (!inst->adapter)))
      _bluez_popup_del(inst);
 
    if (inst->popup)
@@ -926,7 +954,11 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 
    // TODO: instead of getting the default adapter, get the adapter for
    // each instance. See the mixer module.
-   inst->adapter = e_bluez_adapter_get(ctxt->default_adapter);
+   if (ctxt->default_adapter)
+     inst->adapter = e_bluez_adapter_get(ctxt->default_adapter);
+   else
+     inst->adapter = NULL;
+
    if (inst->adapter)
      {
 	Eina_Bool powered, discoverable, discovering;
@@ -940,9 +972,6 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 	if (e_bluez_adapter_discovering_get(inst->adapter, &discovering))
 	  inst->discovering = discovering;
      }
-
-   if (!ctxt->default_instance)
-     ctxt->default_instance = inst;
 
    _bluez_gadget_update(inst);
 
@@ -978,9 +1007,6 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    _bluez_devices_clear(inst);
 
    ctxt->instances = eina_list_remove(ctxt->instances, inst);
-
-   if (ctxt->default_instance == inst)
-     ctxt->default_instance = NULL;
 
    E_FREE(inst);
 }

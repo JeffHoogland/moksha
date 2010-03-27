@@ -74,7 +74,6 @@ struct E_Bluez_Instance_Device
 struct E_Bluez_Module_Context
 {
    Eina_List *instances;
-   E_Bluez_Instance *default_instance;
    const char *default_adapter;
 
    struct {
