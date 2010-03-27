@@ -6913,6 +6913,11 @@ _e_border_eval(E_Border *bd)
 
    if (bd->changes.icon)
      {
+	if (bd->desktop)
+	  {
+	     efreet_desktop_free(bd->desktop);
+	     bd->desktop = NULL;
+	  }
 	if (bd->icon_object)
 	  {
 	     evas_object_del(bd->icon_object);
