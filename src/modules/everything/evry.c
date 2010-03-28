@@ -178,6 +178,9 @@ evry_show(E_Zone *zone, const char *params)
 	edje_object_part_text_set(win->o_main, "e.text.label", "Search:");
 	edje_object_part_text_set(list->o_main, "e.text.label", "Search:");
      }
+
+   if (!evry_conf->hide_list)
+     _evry_list_win_show();
    
    return 1;
 
