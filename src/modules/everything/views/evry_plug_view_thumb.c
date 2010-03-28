@@ -704,8 +704,11 @@ _view_update(Evry_View *view)
 		       v_it->selected = EINA_TRUE;
 		    }
 		  else
-		    v_it->selected = EINA_FALSE;
-
+		    {
+		       v_it->selected = EINA_FALSE;
+		       edje_object_signal_emit(v_it->frame, "e,state,unselected", "e");
+		    }
+		  
 		  break;
 	       }
 	     pos++;
