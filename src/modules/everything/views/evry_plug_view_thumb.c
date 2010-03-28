@@ -307,10 +307,11 @@ _e_smart_reconfigure_do(void *data)
 		    edje_object_signal_emit(it->frame, "e,state,browseable", "e");
 		  
 		  it->visible = EINA_TRUE;
-
-		  sd->queue = eina_list_append(sd->queue, it);
 	       }
 
+	     if (!eina_list_data_find(sd->queue, it))
+	       sd->queue = eina_list_append(sd->queue, it);
+	     
 	     evas_object_move(it->frame, xx, yy);
 	     evas_object_resize(it->frame, it->w, it->h);
 
