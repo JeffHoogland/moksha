@@ -374,7 +374,7 @@ _e_exebuf_matches_clear(void)
      efreet_desktop_free(desktop);
    EINA_LIST_FREE(exe_matches, file)
      free(file);
-   
+
    evas_event_freeze(exebuf->evas);
    e_box_freeze(eap_list_object);
    e_box_freeze(exe_list_object);
@@ -1145,14 +1145,18 @@ _e_exebuf_matches_update(void)
    e_box_freeze(eap_list_object);
    for (i = 0, l = eap_matches; l && (i < max); l = l->next, i++)
      {
+	Efreet_Desktop *desktop;
 	E_Exebuf_Exe *exe;
 	Evas_Coord mw, mh;
 	Evas_Object *o;
 	int opt = 0;
-	
+
 	exe = calloc(1, sizeof(E_Exebuf_Exe));
         eaps = eina_list_append(eaps, exe);
-	exe->desktop = l->data;
+	desktop = eina_list_data_get(l);
+	exe->desktop = desktop;
+	efreet_desktop_ref(desktop);
+
 	o = edje_object_add(exebuf->evas);
         exe->bg_object = o;
 	e_theme_edje_object_set(o, "base/theme/exebuf",
