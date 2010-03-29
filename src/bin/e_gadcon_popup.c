@@ -49,14 +49,17 @@ e_gadcon_popup_content_set(E_Gadcon_Popup *pop, Evas_Object *o)
    E_OBJECT_TYPE_CHECK(pop, E_GADCON_POPUP_TYPE);
 
    old_o = edje_object_part_swallow_get(pop->o_bg, "e.swallow.content");
-   if (old_o)
+   if (old_o != o)
      {
-	edje_object_part_unswallow(pop->o_bg, old_o);
-	evas_object_del(old_o);
+	if (old_o)
+	  {
+	     edje_object_part_unswallow(pop->o_bg, old_o);
+	     evas_object_del(old_o);
+	  }
+	edje_object_part_swallow(pop->o_bg, "e.swallow.content", o);
+	evas_object_event_callback_add(o, EVAS_CALLBACK_CHANGED_SIZE_HINTS,
+				       _e_gadcon_popup_changed_size_hints_cb, pop);
      }
-   edje_object_part_swallow(pop->o_bg, "e.swallow.content", o);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_CHANGED_SIZE_HINTS,
-	 _e_gadcon_popup_changed_size_hints_cb, pop);
 
    _e_gadcon_popup_size_recalc(pop, o);
 }
