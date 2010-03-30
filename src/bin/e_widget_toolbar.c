@@ -91,8 +91,8 @@ e_widget_toolbar_add(Evas *evas, int icon_w, int icon_h)
    e_widget_sub_object_add(obj, o);
    evas_object_show(o);
 
-   edje_object_size_min_calc
-     (e_scrollframe_edje_object_get(wd->o_base), &mw, &mh);
+   edje_object_size_min_calc(e_scrollframe_edje_object_get(wd->o_base), 
+                             &mw, &mh);
    e_widget_size_min_set(obj, mw, mh);
 
    return obj;

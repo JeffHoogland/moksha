@@ -195,18 +195,9 @@ _queue_queue(Evas_Object *obj)
 }
 
 static void
-_queue_append(Evas_Object *obj,
-              int command,
-              Evas_Object *icon,
-	      Evas_Object *end,
-              const char *label,
-              int header,
-              void (*func) (void *data),
-              void *data,
-              const char *val,
-              int relative,
-              int use_relative,
-              int item)
+_queue_append(Evas_Object *obj, int command, Evas_Object *icon, Evas_Object *end,
+              const char *label, int header, void (*func) (void *data), void *data,
+              const char *val, int relative, int use_relative, int item)
 {
    E_Widget_Data *wd;
    E_Widget_Queue_Item *qi;
@@ -281,12 +272,14 @@ e_widget_ilist_add(Evas *evas, int icon_w, int icon_h, const char **value)
    evas_object_show(o);
    e_widget_sub_object_add(obj, o);
    e_widget_resize_object_set(obj, o);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _e_wid_focus_steal, obj);
+   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, 
+                                  _e_wid_focus_steal, obj);
 
    o = e_ilist_add(evas);
    wd->o_ilist = o;
    e_ilist_icon_size_set(o, icon_w, icon_h);
-   evas_object_event_callback_add(wd->o_scrollframe, EVAS_CALLBACK_RESIZE, _e_wid_cb_scrollframe_resize, o);
+   evas_object_event_callback_add(wd->o_scrollframe, EVAS_CALLBACK_RESIZE, 
+                                  _e_wid_cb_scrollframe_resize, o);
    e_scrollframe_child_set(wd->o_scrollframe, o);
    e_widget_sub_object_add(obj, o);
    evas_object_show(o);
@@ -803,7 +796,7 @@ e_widget_ilist_remove_num(Evas_Object *obj, int n)
 }
 
 EAPI void
-e_widget_ilist_multi_select_set(Evas_Object *obj, int multi)
+e_widget_ilist_multi_select_set(Evas_Object *obj, Eina_Bool multi)
 {
    E_Widget_Data *wd;
 
@@ -811,7 +804,7 @@ e_widget_ilist_multi_select_set(Evas_Object *obj, int multi)
    e_ilist_multi_select_set(wd->o_ilist, multi);
 }
 
-EAPI int
+EAPI Eina_Bool 
 e_widget_ilist_multi_select_get(Evas_Object *obj)
 {
    E_Widget_Data *wd;

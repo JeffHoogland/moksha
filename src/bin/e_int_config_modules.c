@@ -104,8 +104,8 @@ static void *
 _create_data(E_Config_Dialog *cfd __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata = E_NEW(E_Config_Dialog_Data, 1);
-   if (!cfdata) return NULL;
 
+   if (!cfdata) return NULL;
    if (!_fill_data(cfdata))
      {
 	E_FREE(cfdata);
@@ -154,7 +154,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    if (w < 200 * e_scale) w = 200 * e_scale;
    e_widget_size_min_set(cfdata->l_modules, w, 150 * e_scale);
 
-   e_widget_ilist_multi_select_set(ol, 1);
+   e_widget_ilist_multi_select_set(ol, EINA_TRUE);
    e_widget_on_change_hook_set(ol, _widget_list_selection_changed, cfdata);
    e_widget_table_object_append(of, ol, 0, 0, 2, 1, 1, 1, 1, 1);
 
@@ -185,6 +185,7 @@ static CFModule *
 _module_new(const char *short_name, const Efreet_Desktop *desk)
 {
    CFModule *cfm = E_NEW(CFModule, 1);
+
    if (!cfm) return NULL;
    cfm->short_name = eina_stringshare_add(short_name);
 
@@ -214,6 +215,7 @@ static void
 _module_end_state_apply(CFModule *cfm)
 {
    const char *sig;
+
    if (!cfm->end) return;
    sig = cfm->enabled ? "e,state,checked" : "e,state,unchecked";
    edje_object_signal_emit(cfm->end, sig, "e");
@@ -223,6 +225,7 @@ static CFType *
 _cftype_new(const char *key, const char *name, const char *icon)
 {
    CFType * cft = E_NEW(CFType, 1);
+
    if (!cft) return NULL;
    cft->key = eina_stringshare_add(key);
    cft->name = eina_stringshare_add(name);
@@ -426,6 +429,7 @@ static int
 _fill_data_delayed(void *data)
 {
    E_Config_Dialog_Data *cfdata = data;
+
    cfdata->data_loader = ecore_idler_add(_fill_data_loader_iterate, cfdata);
    cfdata->data_delay = NULL;
    return 0;
@@ -453,6 +457,7 @@ static void
 _list_header_append(E_Config_Dialog_Data *cfdata, CFType *cft)
 {
    Evas_Object *icon = e_icon_add(cfdata->evas);
+
    if (icon)
      {
 	if (!e_util_icon_theme_set(icon, cft->icon))
@@ -482,6 +487,7 @@ _list_item_append(E_Config_Dialog_Data *cfdata, CFModule *cfm)
 		    {
 		       char *dir = ecore_file_dir_get(cfm->orig_path);
 		       char buf[PATH_MAX];
+
 		       snprintf(buf, sizeof(buf), "%s/%s.edj", dir, cfm->icon);
 		       free(dir);
 

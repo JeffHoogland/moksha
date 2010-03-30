@@ -107,6 +107,7 @@ e_ilist_append(Evas_Object *obj, Evas_Object *icon, Evas_Object *end, const char
    if (si->o_end)
      {
 	Evas_Coord ew = 0, eh = 0;
+
 	evas_object_size_hint_min_get(si->o_end, &ew, &eh);
 	if ((ew <= 0) || (eh <= 0))
 	  {
@@ -338,6 +339,7 @@ e_ilist_prepend_relative(Evas_Object *obj, Evas_Object *icon, Evas_Object *end, 
    if (si->o_end)
      {
 	Evas_Coord ew = 0, eh = 0;
+
 	evas_object_size_hint_min_get(si->o_end, &ew, &eh);
 	if ((ew <= 0) || (eh <= 0))
 	  {
@@ -433,7 +435,7 @@ e_ilist_selector_set(Evas_Object *obj, int selector)
    sd->selector = selector;
 }
 
-EAPI int 
+EAPI Eina_Bool 
 e_ilist_multi_select_get(Evas_Object *obj) 
 {
    API_ENTRY return 0;
@@ -441,7 +443,7 @@ e_ilist_multi_select_get(Evas_Object *obj)
 }
 
 EAPI void 
-e_ilist_multi_select_set(Evas_Object *obj, int multi) 
+e_ilist_multi_select_set(Evas_Object *obj, Eina_Bool multi) 
 {
    API_ENTRY return;
    sd->multi_select = multi;
