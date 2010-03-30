@@ -444,28 +444,12 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	     Eina_List *l, *ll;
 
 	     apps = efreet_util_desktop_name_glob_list("*");
-	     cat_ss = efreet_util_desktop_category_list("Screensaver");
 
+	     /* remove screensaver */
+	     cat_ss = efreet_util_desktop_category_list("Screensaver");
 	     EINA_LIST_FOREACH(cat_ss, l, desktop)
 	       {
-		  ll = eina_list_data_find_list(apps, desktop);
-		  if (ll)
-		    {
-		       efreet_desktop_free(desktop);
-		       apps = eina_list_remove_list(apps, ll);
-		    }
-	       }
-	     cat_sys = efreet_util_desktop_category_list("System");
-	     cat_app = efreet_util_desktop_category_list("Applications");
-	     cat_set = efreet_util_desktop_category_list("Settings");
-
-	     EINA_LIST_FOREACH(cat_sys, l, desktop)
-	       {
-		  if (eina_list_data_find_list(cat_set, desktop)) continue;
-		  if (eina_list_data_find_list(cat_app, desktop)) continue;
-
-		  ll = eina_list_data_find_list(apps, desktop);
-		  if (ll)
+		  if ((ll = eina_list_data_find_list(apps, desktop)))
 		    {
 		       efreet_desktop_free(desktop);
 		       apps = eina_list_remove_list(apps, ll);
