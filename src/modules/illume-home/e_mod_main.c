@@ -328,7 +328,7 @@ _il_home_win_new(Instance *inst)
    e_win_no_remember_set(hwin->win, EINA_TRUE);
 
    /* don't accept focus */
-   ecore_x_icccm_hints_set(hwin->win->evas_win, 0, 0, 0, 0, 0, 0, 0);
+//   ecore_x_icccm_hints_set(hwin->win->evas_win, 0, 0, 0, 0, 0, 0, 0);
 
    snprintf(buff, sizeof(buff), "%s/e-module-illume-home.edj", 
             il_home_cfg->mod_dir);
