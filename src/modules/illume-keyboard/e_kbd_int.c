@@ -1205,6 +1205,18 @@ _e_kbd_int_layouts_list_update(E_Kbd_Int *ki)
 			      kil->type = E_KBD_INT_TYPE_TERMINAL;
 			    else if (!strcmp(str, "PASSWORD"))
 			      kil->type = E_KBD_INT_TYPE_PASSWORD;
+			    else if (!strcmp(str, "IP"))
+			      kil->type = E_KBD_INT_TYPE_IP;
+			    else if (!strcmp(str, "HOST"))
+			      kil->type = E_KBD_INT_TYPE_HOST;
+			    else if (!strcmp(str, "FILE"))
+			      kil->type = E_KBD_INT_TYPE_FILE;
+			    else if (!strcmp(str, "URL"))
+			      kil->type = E_KBD_INT_TYPE_URL;
+			    else if (!strcmp(str, "KEYPAD"))
+			      kil->type = E_KBD_INT_TYPE_KEYPAD;
+			    else if (!strcmp(str, "J2ME"))
+			      kil->type = E_KBD_INT_TYPE_J2ME;
 			    continue;
 			 }
 		       if (!strcmp(str, "icon"))
@@ -1295,40 +1307,33 @@ _e_kbd_int_cb_client_message(void *data, int type, void *event)
 	     // do nothing - leave kbd as-is
 	  }
 	else if (ev->data.l[0] == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_ALPHA)
-	  {
-	     kil = _e_kbd_int_layouts_type_get(ki, E_KBD_INT_TYPE_ALPHA);
-	     if (kil) _e_kbd_int_layout_select(ki, kil);
-	  }
+          kil = _e_kbd_int_layouts_type_get(ki, E_KBD_INT_TYPE_ALPHA);
 	else if (ev->data.l[0] == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_NUMERIC)
-	  {
-	     kil = _e_kbd_int_layouts_type_get(ki, E_KBD_INT_TYPE_NUMERIC);
-	     if (kil) _e_kbd_int_layout_select(ki, kil);
-	  }
+          kil = _e_kbd_int_layouts_type_get(ki, E_KBD_INT_TYPE_NUMERIC);
 	else if (ev->data.l[0] == ECORE_X_VIRTUAL_KEYBOARD_STATE_PIN)
-	  {
-	     kil = _e_kbd_int_layouts_type_get(ki, E_KBD_INT_TYPE_PIN);
-	     if (kil) _e_kbd_int_layout_select(ki, kil);
-	  }
+          kil = _e_kbd_int_layouts_type_get(ki, E_KBD_INT_TYPE_PIN);
 	else if (ev->data.l[0] == ECORE_X_VIRTUAL_KEYBOARD_STATE_PHONE_NUMBER)
-	  {
-	     kil = _e_kbd_int_layouts_type_get(ki, E_KBD_INT_TYPE_PHONE_NUMBER);
-	     if (kil) _e_kbd_int_layout_select(ki, kil);
-	  }
+          kil = _e_kbd_int_layouts_type_get(ki, E_KBD_INT_TYPE_PHONE_NUMBER);
 	else if (ev->data.l[0] == ECORE_X_VIRTUAL_KEYBOARD_STATE_HEX)
-	  {
-	     kil = _e_kbd_int_layouts_type_get(ki, E_KBD_INT_TYPE_HEX);
-	     if (kil) _e_kbd_int_layout_select(ki, kil);
-	  }
+          kil = _e_kbd_int_layouts_type_get(ki, E_KBD_INT_TYPE_HEX);
 	else if (ev->data.l[0] == ECORE_X_VIRTUAL_KEYBOARD_STATE_TERMINAL)
-	  {
-	     kil = _e_kbd_int_layouts_type_get(ki, E_KBD_INT_TYPE_TERMINAL);
-	     if (kil) _e_kbd_int_layout_select(ki, kil);
-	  }
+          kil = _e_kbd_int_layouts_type_get(ki, E_KBD_INT_TYPE_TERMINAL);
 	else if (ev->data.l[0] == ECORE_X_VIRTUAL_KEYBOARD_STATE_PASSWORD)
-	  {
-	     kil = _e_kbd_int_layouts_type_get(ki, E_KBD_INT_TYPE_PASSWORD);
-	     if (kil) _e_kbd_int_layout_select(ki, kil);
-	  }
+          kil = _e_kbd_int_layouts_type_get(ki, E_KBD_INT_TYPE_PASSWORD);
+	else if (ev->data.l[0] == ECORE_X_VIRTUAL_KEYBOARD_STATE_IP)
+          kil = _e_kbd_int_layouts_type_get(ki, E_KBD_INT_TYPE_IP);
+	else if (ev->data.l[0] == ECORE_X_VIRTUAL_KEYBOARD_STATE_HOST)
+          kil = _e_kbd_int_layouts_type_get(ki, E_KBD_INT_TYPE_HOST);
+	else if (ev->data.l[0] == ECORE_X_VIRTUAL_KEYBOARD_STATE_FILE)
+          kil = _e_kbd_int_layouts_type_get(ki, E_KBD_INT_TYPE_FILE);
+	else if (ev->data.l[0] == ECORE_X_VIRTUAL_KEYBOARD_STATE_URL)
+          kil = _e_kbd_int_layouts_type_get(ki, E_KBD_INT_TYPE_URL);
+	else if (ev->data.l[0] == ECORE_X_VIRTUAL_KEYBOARD_STATE_KEYPAD)
+          kil = _e_kbd_int_layouts_type_get(ki, E_KBD_INT_TYPE_KEYPAD);
+	else if (ev->data.l[0] == ECORE_X_VIRTUAL_KEYBOARD_STATE_J2ME)
+          kil = _e_kbd_int_layouts_type_get(ki, E_KBD_INT_TYPE_J2ME);
+
+        if (kil) _e_kbd_int_layout_select(ki, kil);
      }
    return 1;
 }
