@@ -35,6 +35,8 @@ static void _policy_zone_layout_conformant_dual_top(E_Border *bd, E_Illume_Confi
 static void _policy_zone_layout_conformant_dual_custom(E_Border *bd, E_Illume_Config_Zone *cz);
 static void _policy_zone_layout_conformant_dual_left(E_Border *bd, E_Illume_Config_Zone *cz);
 
+static Eina_List *_pol_focus_stack;
+
 /* local functions */
 static void 
 _policy_border_set_focus(E_Border *bd) 
@@ -67,6 +69,9 @@ _policy_border_set_focus(E_Border *bd)
 
              /* focus the border */
              e_border_focus_set(bd, 1, 1);
+
+             /* hide the border below this one */
+             _policy_border_hide_below(bd);
 
              /* NB: since we skip needless border evals when container layout 
               * is called (to save cpu cycles), we need to 
@@ -206,16 +211,15 @@ _policy_border_show_below(E_Border *bd)
 
              if ((bd->fullscreen) || (bd->need_fullscreen)) 
                {
-                  if (!b->visible) e_border_show(b);
                   _policy_border_set_focus(b);
                   return;
                }
              else 
                {
                   /* need to check x/y position */
-                  if (E_CONTAINS(bd->x, bd->y, bd->w, bd->h, b->x, b->y, b->w, b->h))
+                  if (E_CONTAINS(bd->x, bd->y, bd->w, bd->h, 
+                                 b->x, b->y, b->w, b->h))
                     {
-                       if (!b->visible) e_border_show(b);
                        _policy_border_set_focus(b);
                        return;
                     }
@@ -236,7 +240,6 @@ _policy_zone_layout_update(E_Zone *zone)
         if (bd->zone != zone) continue;
 
         /* skip special windows */
-//        if (e_illume_border_is_indicator(bd)) continue;
         if (e_illume_border_is_softkey(bd)) continue;
         if (e_illume_border_is_keyboard(bd)) continue;
         if (e_illume_border_is_quickpanel(bd)) continue;
@@ -395,8 +398,7 @@ _policy_zone_layout_keyboard(E_Border *bd, E_Illume_Config_Zone *cz)
      layer = POL_KEYBOARD_LAYER;
 
    /* set layer if needed */
-   if (bd->layer != layer) 
-     e_border_layer_set(bd, layer);
+   if (bd->layer != layer) e_border_layer_set(bd, layer);
 }
 
 static void 
@@ -417,8 +419,7 @@ _policy_zone_layout_home_single(E_Border *bd, E_Illume_Config_Zone *cz)
      _policy_border_move(bd, bd->zone->x, ny);
 
    /* set layer if needed */
-   if (bd->layer != POL_HOME_LAYER) 
-     e_border_layer_set(bd, POL_HOME_LAYER);
+   if (bd->layer != POL_HOME_LAYER) e_border_layer_set(bd, POL_HOME_LAYER);
 }
 
 static void 
@@ -447,8 +448,7 @@ _policy_zone_layout_home_dual_top(E_Border *bd, E_Illume_Config_Zone *cz)
      _policy_border_move(bd, bd->zone->x, ny);
 
    /* set layer if needed */
-   if (bd->layer != POL_HOME_LAYER) 
-     e_border_layer_set(bd, POL_HOME_LAYER);
+   if (bd->layer != POL_HOME_LAYER) e_border_layer_set(bd, POL_HOME_LAYER);
 }
 
 static void 
@@ -486,8 +486,7 @@ _policy_zone_layout_home_dual_custom(E_Border *bd, E_Illume_Config_Zone *cz)
      _policy_border_move(bd, bd->zone->x, ny);
 
    /* set layer if needed */
-   if (bd->layer != POL_HOME_LAYER) 
-     e_border_layer_set(bd, POL_HOME_LAYER);
+   if (bd->layer != POL_HOME_LAYER) e_border_layer_set(bd, POL_HOME_LAYER);
 }
 
 static void 
@@ -520,8 +519,7 @@ _policy_zone_layout_home_dual_left(E_Border *bd, E_Illume_Config_Zone *cz)
      _policy_border_move(bd, nx, (bd->zone->y + cz->indicator.size));
 
    /* set layer if needed */
-   if (bd->layer != POL_HOME_LAYER) 
-     e_border_layer_set(bd, POL_HOME_LAYER);
+   if (bd->layer != POL_HOME_LAYER) e_border_layer_set(bd, POL_HOME_LAYER);
 }
 
 static void 
@@ -572,8 +570,7 @@ _policy_zone_layout_app_single(E_Border *bd, E_Illume_Config_Zone *cz)
      _policy_border_move(bd, bd->zone->x, ny);
 
    /* set layer if needed */
-   if (bd->layer != POL_APP_LAYER) 
-     e_border_layer_set(bd, POL_APP_LAYER);
+   if (bd->layer != POL_APP_LAYER) e_border_layer_set(bd, POL_APP_LAYER);
 }
 
 static void 
@@ -639,8 +636,7 @@ _policy_zone_layout_app_dual_top(E_Border *bd, E_Illume_Config_Zone *cz)
      _policy_border_move(bd, bd->zone->x, ny);
 
    /* set layer if needed */
-   if (bd->layer != POL_APP_LAYER) 
-     e_border_layer_set(bd, POL_APP_LAYER);
+   if (bd->layer != POL_APP_LAYER) e_border_layer_set(bd, POL_APP_LAYER);
 }
 
 static void 
@@ -679,8 +675,7 @@ _policy_zone_layout_app_dual_custom(E_Border *bd, E_Illume_Config_Zone *cz)
      _policy_border_move(bd, bd->zone->x, ny);
 
    /* set layer if needed */
-   if (bd->layer != POL_APP_LAYER) 
-     e_border_layer_set(bd, POL_APP_LAYER);
+   if (bd->layer != POL_APP_LAYER) e_border_layer_set(bd, POL_APP_LAYER);
 }
 
 static void 
@@ -721,8 +716,7 @@ _policy_zone_layout_app_dual_left(E_Border *bd, E_Illume_Config_Zone *cz)
      _policy_border_move(bd, nx, (ky + cz->indicator.size));
 
    /* set layer if needed */
-   if (bd->layer != POL_APP_LAYER) 
-     e_border_layer_set(bd, POL_APP_LAYER);
+   if (bd->layer != POL_APP_LAYER) e_border_layer_set(bd, POL_APP_LAYER);
 }
 
 static void 
@@ -779,8 +773,7 @@ _policy_zone_layout_dialog(E_Border *bd, E_Illume_Config_Zone *cz)
      _policy_border_move(bd, nx, ny);
 
    /* set layer if needed */
-   if (bd->layer != POL_DIALOG_LAYER) 
-     e_border_layer_set(bd, POL_DIALOG_LAYER);
+   if (bd->layer != POL_DIALOG_LAYER) e_border_layer_set(bd, POL_DIALOG_LAYER);
 }
 
 static void 
@@ -837,8 +830,7 @@ _policy_zone_layout_splash(E_Border *bd, E_Illume_Config_Zone *cz)
      _policy_border_move(bd, nx, ny);
 
    /* set layer if needed */
-   if (bd->layer != POL_SPLASH_LAYER) 
-     e_border_layer_set(bd, POL_SPLASH_LAYER);
+   if (bd->layer != POL_SPLASH_LAYER) e_border_layer_set(bd, POL_SPLASH_LAYER);
 }
 
 static void 
@@ -977,6 +969,10 @@ _policy_border_add(E_Border *bd)
           }
      }
 
+   /* Add this border to our focus stack if it can accept or take focus */
+   if ((bd->client.icccm.accepts_focus) || (bd->client.icccm.take_focus)) 
+     _pol_focus_stack = eina_list_append(_pol_focus_stack, bd);
+
    /* set focus on new border if we can */
    _policy_border_set_focus(bd);
 }
@@ -1000,6 +996,10 @@ _policy_border_del(E_Border *bd)
              if (!ind->visible) e_border_show(ind);
           }
      }
+
+   /* remove from our focus stack */
+   if ((bd->client.icccm.accepts_focus) || (bd->client.icccm.take_focus)) 
+     _pol_focus_stack = eina_list_remove(_pol_focus_stack, bd);
 
    /* show the border below this one */
    _policy_border_show_below(bd);
@@ -1430,95 +1430,53 @@ void
 _policy_focus_back(E_Zone *zone) 
 {
    Eina_List *l, *fl = NULL;
-   E_Border *bd;
+   E_Border *bd, *fbd;
+
+   if (eina_list_count(_pol_focus_stack) < 1) return;
 
 //   printf("Focus back\n");
 
-   /* loop the focus stack and check for borders on this zone */
-   EINA_LIST_FOREACH(e_border_focus_stack_get(), l, bd) 
+   EINA_LIST_FOREACH(_pol_focus_stack, l, bd) 
      {
-        /* not on this zone, skip */
         if (bd->zone != zone) continue;
-
-        /* on this zone but being deleted, skip it */
-        if (e_object_is_del(E_OBJECT(bd))) continue;
-
-        /* doesn't accept or take focus, skip it */
-        if ((!bd->client.icccm.accepts_focus) && 
-            (!bd->client.icccm.take_focus)) continue;
-
-        /* doesn't show in taskbar, skip it */
-        if (bd->client.netwm.state.skip_taskbar) continue;
-
-        /* add it to our list */
         fl = eina_list_append(fl, bd);
      }
 
-   /* if there are none on this zone then get out */
-   if (!fl) return;
-
-   /* if there is only one border then focus it and get out */
-   if (eina_list_count(fl) < 2) 
+   fbd = e_border_focused_get();
+   if (fbd) 
      {
-        E_Border *fbd;
-
-        if (fbd = fl->data) 
-          {
-             if (fbd == e_border_focused_get()) 
-               _policy_focus_home(zone);                  
-             else
-               _policy_border_set_focus(fbd);
-          }
-
-        /* cleanup our list variable */
-        fl = eina_list_free(fl);
-
-        return;
+        if (fbd->parent) return;
      }
 
-   /* loop focused borders on this zone */
-   /* NB: This is done in reverse order so we get the most recently focused 
-    * border first....saves time and iterations */
    EINA_LIST_REVERSE_FOREACH(fl, l, bd) 
      {
-        /* if no border is currently focused, then set focus to first in list 
-         * and get out */
-        if (!e_border_focused_get()) 
+        if ((fbd) && (bd == fbd))
           {
-             /* focus the previous border */
-             _policy_border_set_focus(bd);
-             break;
-          }
+             E_Border *b;
 
-        /* is this the currently focused border ? */
-        else if (bd == e_border_focused_get()) 
-          {
-             E_Border *fbd;
-
-             /* see if we have another border previous to this one */
-             if (!(fbd = fl->next->data)) 
+             if ((l->next) && (b = l->next->data)) 
                {
-                  /* if we don't, send focus to home */
-                  _policy_focus_home(zone);
+                  _policy_border_set_focus(b);
                   break;
                }
-
-             /* focus the previous border */
-             _policy_border_set_focus(fbd);
-
-             /* we're done, get out */
-             break;
+             else 
+               {
+                  /* we've reached the end of the list. Set focus to first */
+                  if (b = eina_list_nth(fl, 0)) 
+                    {
+                       _policy_border_set_focus(b);
+                       break;
+                    }
+               }
           }
      }
-
-   /* cleanup our list variable */
-   fl = eina_list_free(fl);
+   eina_list_free(fl);
 }
 
 void 
 _policy_focus_forward(E_Zone *zone) 
 {
-   printf("Focus forward\n");
+//   printf("Focus forward\n");
 }
 
 void 
@@ -1590,6 +1548,7 @@ _policy_property_change(Ecore_X_Event_Window_Property *event)
         y = bd->y;
         w = bd->w;
         h = bd->h;
+
         /* NB: Remove X Round-Trip */
 //        ecore_x_e_illume_indicator_geometry_get(zone->black_win, &x, &y, &w, &h);
 
