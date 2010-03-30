@@ -249,4 +249,6 @@ _cb_border_property(void *data, int type __UNUSED__, void *event)
    else 
      e_icon_file_edje_set(icon, buff, "btn_icon");
    e_widget_button_icon_set(inst->o_btn, icon);
+
+   return 1;
 }
