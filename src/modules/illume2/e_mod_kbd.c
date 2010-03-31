@@ -23,7 +23,7 @@ static void _e_mod_kbd_geometry_send(void);
 static Eina_List *_kbd_hdls = NULL;
 static E_Border_Hook *_kbd_hook = NULL;
 static Ecore_X_Atom _focused_state = 0;
-static E_Border *_focused_border = NULL;
+static E_Border *_focused_border = NULL, *_prev_focused_border = NULL;
 
 int 
 e_mod_kbd_init(void) 
@@ -145,7 +145,7 @@ e_mod_kbd_show(void)
    /* if it's disabled, get out */
    if (_e_illume_kbd->disabled) return;
 
-   _e_mod_kbd_layout_send();
+//   _e_mod_kbd_layout_send();
 
    /* if we are not animating, just show it */
    if (_e_illume_cfg->animation.vkbd.duration <= 0) 
@@ -160,6 +160,16 @@ e_mod_kbd_show(void)
           }
         _e_illume_kbd->visible = 1;
         _e_mod_kbd_geometry_send();
+
+        /* tell the focused border it changed so layout gets udpated */
+        if (_focused_border) 
+          {
+             if (!e_illume_border_is_conformant(_focused_border)) 
+               {
+                  _focused_border->changes.size = 1;
+                  _focused_border->changed = 1;
+               }
+          }
      }
    else 
      {
@@ -308,16 +318,20 @@ _e_mod_kbd_cb_border_focus_out(void *data __UNUSED__, int type __UNUSED__, void 
 
 //   printf("Kbd Focus Out: %s\n", ev->border->client.icccm.name);
 
-   /* tell this border it changed so layout gets updated for hidden 
-    * keyboard */
-   if (!e_illume_border_is_conformant(ev->border)) 
-     {
-        ev->border->changes.size = 1;
-        ev->border->changed = 1;
-     }
+   _prev_focused_border = _focused_border;
 
    /* hide the keyboard */
    e_mod_kbd_hide();
+
+   /* tell the focused border it changed so layout gets udpated */
+   if (_prev_focused_border) 
+     {
+        if (!e_illume_border_is_conformant(_prev_focused_border)) 
+          {
+             _prev_focused_border->changes.size = 1;
+             _prev_focused_border->changed = 1;
+          }
+     }
 
    /* reset some variables */
    _focused_border = NULL;
@@ -421,7 +435,6 @@ static int
 _e_mod_kbd_cb_delay_hide(void *data __UNUSED__) 
 {
    _e_mod_kbd_hide();
-   _e_illume_kbd->timer = NULL;
    return 0;
 }
 
@@ -435,7 +448,7 @@ _e_mod_kbd_hide(void)
    /* can't hide keyboard if it's not visible, or disabled */
    if ((!_e_illume_kbd->visible) || (_e_illume_kbd->disabled)) return;
 
-   _e_mod_kbd_layout_send();
+//   _e_mod_kbd_layout_send();
 
    /* if we are not animating, just hide it */
    if (_e_illume_cfg->animation.vkbd.duration <= 0) 
@@ -448,6 +461,26 @@ _e_mod_kbd_hide(void)
           }
         _e_illume_kbd->visible = 0;
         _e_mod_kbd_geometry_send();
+
+        /* tell the previous focused border it changed so layout gets udpated */
+        if (_prev_focused_border) 
+          {
+             if (!e_illume_border_is_conformant(_prev_focused_border)) 
+               {
+                  _prev_focused_border->changes.size = 1;
+                  _prev_focused_border->changed = 1;
+               }
+          }
+
+        /* tell the focused border it changed so layout gets udpated */
+        if (_focused_border) 
+          {
+             if (!e_illume_border_is_conformant(_focused_border)) 
+               {
+                  _focused_border->changes.size = 1;
+                  _focused_border->changed = 1;
+               }
+          }
      }
    else  
      _e_mod_kbd_slide(0, (double)_e_illume_cfg->animation.vkbd.duration / 1000.0);
@@ -489,10 +522,8 @@ _e_mod_kbd_cb_animate(void *data __UNUSED__)
                             (_e_illume_kbd->adjust_start * (1.0 - v)));
 
    if (_e_illume_kbd->border) 
-     {
-        e_border_fx_offset(_e_illume_kbd->border, 0, 
-                           (_e_illume_kbd->border->h - _e_illume_kbd->adjust));
-     }
+     e_border_fx_offset(_e_illume_kbd->border, 0, 
+                        (_e_illume_kbd->border->h - _e_illume_kbd->adjust));
 
    if (t == _e_illume_kbd->len) 
      {
@@ -509,6 +540,16 @@ _e_mod_kbd_cb_animate(void *data __UNUSED__)
 
         _e_mod_kbd_geometry_send();
 
+        /* tell the previous focused border it changed so layout gets udpated */
+        if (_prev_focused_border) 
+          {
+             if (!e_illume_border_is_conformant(_prev_focused_border)) 
+               {
+                  _prev_focused_border->changes.size = 1;
+                  _prev_focused_border->changed = 1;
+               }
+          }
+
         /* tell the focused border it changed so layout gets udpated */
         if (_focused_border) 
           {
@@ -518,7 +559,6 @@ _e_mod_kbd_cb_animate(void *data __UNUSED__)
                   _focused_border->changed = 1;
                }
           }
-
         return 0;
      }
 

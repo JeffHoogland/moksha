@@ -226,6 +226,10 @@ _policy_border_show_below(E_Border *bd)
                }
           }
      }
+
+   /* if we reach here, then there is a problem with showing a window below
+    * this one, so show home */
+   _policy_focus_home(bd->zone);
 }
 
 static void 
