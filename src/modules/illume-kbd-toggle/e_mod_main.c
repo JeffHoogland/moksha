@@ -21,6 +21,7 @@ static void _cb_btn_click(void *data, void *data2);
 static int _cb_border_focus_in(void *data, int type __UNUSED__, void *event);
 static int _cb_border_remove(void *data, int type __UNUSED__, void *event);
 static int _cb_border_property(void *data, int type __UNUSED__, void *event);
+static void _set_btn_icon(Evas_Object *obj, Ecore_X_Virtual_Keyboard_State state);
 
 /* local variables */
 static Eina_List *instances = NULL;
@@ -65,18 +66,12 @@ static E_Gadcon_Client *
 _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style) 
 {
    Instance *inst;
-   Evas_Object *icon;
-   char buff[PATH_MAX];
-
-   snprintf(buff, sizeof(buff), "%s/e-module-illume-kbd-toggle.edj", mod_dir);
 
    inst = E_NEW(Instance, 1);
 
    inst->o_btn = e_widget_button_add(gc->evas, NULL, NULL, 
                                      _cb_btn_click, inst, NULL);
-   icon = e_icon_add(evas_object_evas_get(inst->o_btn));
-   e_icon_file_edje_set(icon, buff, "icon");
-   e_widget_button_icon_set(inst->o_btn, icon);
+   _set_btn_icon(inst->o_btn, ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF);
 
    inst->gcc = e_gadcon_client_new(gc, name, id, style, inst->o_btn);
    inst->gcc->data = inst;
@@ -150,33 +145,25 @@ _gc_id_new(E_Gadcon_Client_Class *cc)
 static void 
 _cb_btn_click(void *data, void *data2) 
 {
-   Ecore_X_Virtual_Keyboard_State state;
    Instance *inst;
    E_Border *bd;
-   Evas_Object *icon;
-   char buff[PATH_MAX];
 
    if (!(inst = data)) return;
    if (!(bd = e_border_focused_get())) return;
    if (bd->zone != inst->gcc->gadcon->zone) return;
 
-   snprintf(buff, sizeof(buff), "%s/e-module-illume-kbd-toggle.edj", mod_dir);
-
-   icon = e_icon_add(evas_object_evas_get(inst->o_btn));
-   state = bd->client.vkbd.state;
-   if (state <= ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF) 
+   if (bd->client.vkbd.state <= ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF) 
      {
         ecore_x_e_virtual_keyboard_state_set(bd->client.win, 
                                              ECORE_X_VIRTUAL_KEYBOARD_STATE_ON);
-        e_icon_file_edje_set(icon, buff, "btn_icon");
+        _set_btn_icon(inst->o_btn, ECORE_X_VIRTUAL_KEYBOARD_STATE_ON);
      }
    else 
      {
         ecore_x_e_virtual_keyboard_state_set(bd->client.win, 
                                              ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF);
-        e_icon_file_edje_set(icon, buff, "icon");
+        _set_btn_icon(inst->o_btn, ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF);
      }
-   e_widget_button_icon_set(inst->o_btn, icon);
 }
 
 static int 
@@ -185,26 +172,13 @@ _cb_border_focus_in(void *data, int type __UNUSED__, void *event)
    Instance *inst;
    E_Event_Border_Focus_In *ev;
    E_Border *bd;
-   Evas_Object *icon;
-   Ecore_X_Virtual_Keyboard_State state;
-   char buff[PATH_MAX];
 
    if (!(inst = data)) return 1;
    ev = event;
    if (ev->border->stolen) return 1;
    if (!(bd = ev->border)) return 1;
    if (bd->zone != inst->gcc->gadcon->zone) return 1;
-
-   snprintf(buff, sizeof(buff), "%s/e-module-illume-kbd-toggle.edj", mod_dir);
-
-   icon = e_icon_add(evas_object_evas_get(inst->o_btn));
-   state = bd->client.vkbd.state;
-   if (state <= ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF)
-     e_icon_file_edje_set(icon, buff, "icon");
-   else 
-     e_icon_file_edje_set(icon, buff, "btn_icon");
-   e_widget_button_icon_set(inst->o_btn, icon);
-
+   _set_btn_icon(inst->o_btn, bd->client.vkbd.state);
    return 1;
 }
 
@@ -212,14 +186,9 @@ static int
 _cb_border_remove(void *data, int type __UNUSED__, void *event) 
 {
    Instance *inst;
-   Evas_Object *icon;
-   char buff[PATH_MAX];
 
    if (!(inst = data)) return 1;
-   snprintf(buff, sizeof(buff), "%s/e-module-illume-kbd-toggle.edj", mod_dir);
-   icon = e_icon_add(evas_object_evas_get(inst->o_btn));
-   e_icon_file_edje_set(icon, buff, "icon");
-   e_widget_button_icon_set(inst->o_btn, icon);
+   _set_btn_icon(inst->o_btn, ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF);
    return 1;
 }
 
@@ -229,9 +198,6 @@ _cb_border_property(void *data, int type __UNUSED__, void *event)
    Instance *inst;
    Ecore_X_Event_Window_Property *ev;
    E_Border *bd;
-   Evas_Object *icon;
-   Ecore_X_Virtual_Keyboard_State state;
-   char buff[PATH_MAX];
 
    ev = event;
    if (ev->atom != ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE) return 1;
@@ -239,16 +205,22 @@ _cb_border_property(void *data, int type __UNUSED__, void *event)
    if (!bd->focused) return 1;
    if (!(inst = data)) return 1;
    if (bd->zone != inst->gcc->gadcon->zone) return 1;
+   _set_btn_icon(inst->o_btn, bd->client.vkbd.state);
+   return 1;
+}
+
+static void 
+_set_btn_icon(Evas_Object *obj, Ecore_X_Virtual_Keyboard_State state) 
+{
+   Evas_Object *icon;
+   char buff[PATH_MAX];
 
    snprintf(buff, sizeof(buff), "%s/e-module-illume-kbd-toggle.edj", mod_dir);
 
-   icon = e_icon_add(evas_object_evas_get(inst->o_btn));
-   state = bd->client.vkbd.state;
+   icon = e_icon_add(evas_object_evas_get(obj));
    if (state <= ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF)
      e_icon_file_edje_set(icon, buff, "icon");
    else 
      e_icon_file_edje_set(icon, buff, "btn_icon");
-   e_widget_button_icon_set(inst->o_btn, icon);
-
-   return 1;
+   e_widget_button_icon_set(obj, icon);
 }
