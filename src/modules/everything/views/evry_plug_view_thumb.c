@@ -102,6 +102,7 @@ _thumb_idler(void *data)
    EINA_LIST_FOREACH_SAFE(sd->queue, l, ll, it)
      {
 	if (!it->image && !it->have_thumb &&
+	    sd->view->state->plugin &&
 	    sd->view->state->plugin->icon_get)
 	  {
 	     it->image = sd->view->state->plugin->icon_get
@@ -133,7 +134,7 @@ _thumb_idler(void *data)
 	  }
 
 	sd->queue = eina_list_remove_list(sd->queue, l);
-
+	e_util_wakeup();
 	return 1;
      }
 
@@ -310,7 +311,9 @@ _e_smart_reconfigure_do(void *data)
 	       }
 
 	     if (!eina_list_data_find(sd->queue, it))
-	       sd->queue = eina_list_append(sd->queue, it);
+	       {
+		  sd->queue = eina_list_append(sd->queue, it);
+	       }
 	     
 	     evas_object_move(it->frame, xx, yy);
 	     evas_object_resize(it->frame, it->w, it->h);
@@ -548,6 +551,8 @@ _pan_item_remove(Evas_Object *obj, Item *it)
    if (it->frame) evas_object_del(it->frame);
    if (it->image) evas_object_del(it->image);
 
+   sd->queue = eina_list_remove(sd->queue, it); 
+   
    evry_item_free(it->item);
    E_FREE(it);
 
@@ -675,10 +680,6 @@ _view_update(Evry_View *view)
 	return 1;
      }
 
-   if (sd->queue)
-     eina_list_free(sd->queue);
-   sd->queue = NULL;
-   
    p_items = v->state->plugin->items;
 
    /* go through current view items */
