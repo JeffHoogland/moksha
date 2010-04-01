@@ -735,9 +735,8 @@ e_ilist_nth_label_set(Evas_Object *obj, int n, const char *label)
    si = eina_list_nth(sd->items, n);
    if (si) 
      {
-        if (si->label) eina_stringshare_del(si->label);
-        si->label = eina_stringshare_add(label);
-        edje_object_part_text_set(si->o_base, "e.text.label", label);
+        if (eina_stringshare_replace(&si->label, label))
+          edje_object_part_text_set(si->o_base, "e.text.label", label);
      }
 }
 
