@@ -94,8 +94,13 @@ e_ilist_append(Evas_Object *obj, Evas_Object *icon, Evas_Object *end, const char
 	  e_theme_edje_object_set(si->o_base, "base/theme/widgets",
 				  "e/widgets/ilist");
      }
-   if (label)
-     edje_object_part_text_set(si->o_base, "e.text.label", label);
+
+   if (label) 
+     {
+        si->label = eina_stringshare_add(label);
+        edje_object_part_text_set(si->o_base, "e.text.label", label);
+     }
+
    si->o_icon = icon;
    if (si->o_icon) 
      {
@@ -182,8 +187,12 @@ e_ilist_append_relative(Evas_Object *obj, Evas_Object *icon, Evas_Object *end, c
 	  e_theme_edje_object_set(si->o_base, "base/theme/widgets",
 				  "e/widgets/ilist");
      }
-   if (label)
-     edje_object_part_text_set(si->o_base, "e.text.label", label);
+   if (label) 
+     {
+        si->label = eina_stringshare_add(label);
+        edje_object_part_text_set(si->o_base, "e.text.label", label);
+     }
+
    si->o_icon = icon;
    if (si->o_icon) 
      {
@@ -261,8 +270,12 @@ e_ilist_prepend(Evas_Object *obj, Evas_Object *icon, Evas_Object *end, const cha
    else
      e_theme_edje_object_set(si->o_base, "base/theme/widgets",
 			     "e/widgets/ilist");
-   if (label)
-     edje_object_part_text_set(si->o_base, "e.text.label", label);
+   if (label) 
+     {
+        si->label = eina_stringshare_add(label);
+        edje_object_part_text_set(si->o_base, "e.text.label", label);
+     }
+
    si->o_icon = icon;
    if (si->o_icon) 
      {
@@ -326,8 +339,12 @@ e_ilist_prepend_relative(Evas_Object *obj, Evas_Object *icon, Evas_Object *end, 
    else
      e_theme_edje_object_set(si->o_base, "base/theme/widgets",
 			     "e/widgets/ilist");
-   if (label)
-     edje_object_part_text_set(si->o_base, "e.text.label", label);
+   if (label) 
+     {
+        si->label = eina_stringshare_add(label);
+        edje_object_part_text_set(si->o_base, "e.text.label", label);
+     }
+
    si->o_icon = icon;
    if (si->o_icon) 
      {
@@ -393,6 +410,7 @@ e_ilist_clear(Evas_Object *obj)
 	if (!si) continue;
 	if (si->o_icon) evas_object_del(si->o_icon);
 	if (si->o_end) evas_object_del(si->o_end);
+        if (si->label) eina_stringshare_del(si->label);
 	evas_object_del(si->o_base);
 	E_FREE(si);
      }
@@ -571,7 +589,11 @@ e_ilist_selected_label_get(Evas_Object *obj)
    if (sd->multi_select) return NULL;
    if (sd->selected < 0) return NULL;
    si = eina_list_nth(sd->items, sd->selected);
-   if (si) return edje_object_part_text_get(si->o_base, "e.text.label");
+   if (si) 
+     {
+        if (si->label) return si->label;
+        return edje_object_part_text_get(si->o_base, "e.text.label");
+     }
    return NULL;
 }
 
@@ -679,6 +701,7 @@ e_ilist_remove_num(Evas_Object *obj, int n)
    if (sd->selected == n) sd->selected = -1;
    if (si->o_icon) evas_object_del(si->o_icon);
    if (si->o_end) evas_object_del(si->o_end);
+   if (si->label) eina_stringshare_del(si->label);
    evas_object_del(si->o_base);
    E_FREE(si);
 }
@@ -691,7 +714,11 @@ e_ilist_nth_label_get(Evas_Object *obj, int n)
    API_ENTRY return NULL;
    if (!sd->items) return NULL;
    si = eina_list_nth(sd->items, n);
-   if (si) return edje_object_part_text_get(si->o_base, "e.text.label");
+   if (si) 
+     {
+        if (si->label) return si->label;
+        return edje_object_part_text_get(si->o_base, "e.text.label");
+     }
    return NULL;
 }
 
@@ -706,7 +733,12 @@ e_ilist_nth_label_set(Evas_Object *obj, int n, const char *label)
    API_ENTRY return;
    if (!sd->items) return;
    si = eina_list_nth(sd->items, n);
-   if (si) edje_object_part_text_set(si->o_base, "e.text.label", label);
+   if (si) 
+     {
+        if (si->label) eina_stringshare_del(si->label);
+        si->label = eina_stringshare_add(label);
+        edje_object_part_text_set(si->o_base, "e.text.label", label);
+     }
 }
 
 EAPI Evas_Object *
@@ -792,14 +824,14 @@ e_ilist_nth_is_header(Evas_Object *obj, int n)
 EAPI void
 e_ilist_nth_geometry_get(Evas_Object *obj, int n, Evas_Coord *x, Evas_Coord *y, Evas_Coord *w, Evas_Coord *h)
 {
-  E_Ilist_Item *si = NULL;
+   E_Ilist_Item *si = NULL;
 
-  API_ENTRY return;
-  if (!sd->items) return;
-  if (!(si = eina_list_nth(sd->items, n))) return;
-  evas_object_geometry_get(si->o_base, x, y, w, h);
-  *x -= sd->x;
-  *y -= sd->y;
+   API_ENTRY return;
+   if (!sd->items) return;
+   if (!(si = eina_list_nth(sd->items, n))) return;
+   evas_object_geometry_get(si->o_base, x, y, w, h);
+   *x -= sd->x;
+   *y -= sd->y;
 }
 
 EAPI void 
@@ -824,6 +856,7 @@ e_ilist_icon_size_set(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 	if (si->o_end)
 	  {
 	     Evas_Coord ew = 0, eh = 0;
+
 	     evas_object_size_hint_min_get(si->o_end, &ew, &eh);
 	     if ((ew <= 0) || (eh <= 0))
 	       {
@@ -1323,9 +1356,13 @@ _e_typebuf_match(Evas_Object *obj)
    EINA_LIST_FOREACH(sd->items, l, si)
      {
 	const char *label = NULL;
+
 	if (si) 
 	  {
-	     label = edje_object_part_text_get(si->o_base, "e.text.label");
+             if (si->label) 
+               label = si->label;
+	     else 
+               label = edje_object_part_text_get(si->o_base, "e.text.label");
 
 	     if (e_util_glob_case_match(label, match))
 	       {
