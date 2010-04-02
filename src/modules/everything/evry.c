@@ -907,6 +907,15 @@ _evry_selector_update(Evry_Selector *sel)
      {
 	_evry_selector_actions_get(it);
 	_evry_selector_update(selectors[1]);
+
+	if (selector == selectors[1] && selector->state)
+	  {
+	     s = selector->state;
+	     if (s->view)
+	       s->view->update(s->view);
+	     else
+	       _evry_view_update(s, NULL); 
+	  }
      }
 }
 
