@@ -1,5 +1,6 @@
 #include "e.h"
 #include "e_mod_main.h"
+#include "e_mod_config.h"
 #include "e_mod_ind_win.h"
 
 /* local variables */
@@ -21,6 +22,15 @@ e_modapi_init(E_Module *m)
 
    /* set module directory variable */
    _ind_mod_dir = eina_stringshare_add(m->dir);
+
+   /* init config subsystem */
+   if (!il_ind_config_init()) 
+     {
+        /* clear module directory variable */
+        if (_ind_mod_dir) eina_stringshare_del(_ind_mod_dir);
+        _ind_mod_dir = NULL;
+        return NULL;
+     }
 
    /* loop through the managers (root windows) */
    EINA_LIST_FOREACH(e_manager_list(), ml, man) 
@@ -58,6 +68,9 @@ e_modapi_shutdown(E_Module *m)
    EINA_LIST_FREE(iwins, iwin)
      e_object_del(E_OBJECT(iwin));
 
+   /* shutdown config */
+   il_ind_config_shutdown();
+
    /* clear module directory variable */
    if (_ind_mod_dir) eina_stringshare_del(_ind_mod_dir);
    _ind_mod_dir = NULL;
@@ -68,5 +81,5 @@ e_modapi_shutdown(E_Module *m)
 EAPI int 
 e_modapi_save(E_Module *m) 
 {
-   return 1;
+   return il_ind_config_save();
 }

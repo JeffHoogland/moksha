@@ -1,5 +1,6 @@
 #include "e.h"
 #include "e_mod_main.h"
+#include "e_mod_config.h"
 #include "e_mod_ind_win.h"
 
 /* local function prototypes */
@@ -85,7 +86,7 @@ e_mod_ind_win_new(E_Zone *zone)
                                          iwin->o_base, "e.swallow.content");
 //   iwin->gadcon->instant_edit = 1;
    edje_extern_object_min_size_set(iwin->gadcon->o_container, zone->w, 
-                                   (32 * e_scale));
+                                   (il_ind_cfg->height * e_scale));
    edje_object_part_swallow(iwin->o_base, "e.swallow.container", 
                             iwin->gadcon->o_container);
    e_gadcon_min_size_request_callback_set(iwin->gadcon, 
@@ -117,10 +118,11 @@ e_mod_ind_win_new(E_Zone *zone)
                                               iwin));
 
    /* set minimum size of this window */
-   e_win_size_min_set(iwin->win, zone->w, (32 * e_scale));
+   e_win_size_min_set(iwin->win, zone->w, (il_ind_cfg->height * e_scale));
 
    /* position and resize this window */
-   e_win_move_resize(iwin->win, zone->x, zone->y, zone->w, (32 * e_scale));
+   e_win_move_resize(iwin->win, zone->x, zone->y, zone->w, 
+                     (il_ind_cfg->height * e_scale));
 
    /* show the window */
    e_win_show(iwin->win);
@@ -134,7 +136,8 @@ e_mod_ind_win_new(E_Zone *zone)
 
    /* tell conformant apps our position and size */
    ecore_x_e_illume_indicator_geometry_set(zone->black_win, zone->x, zone->y, 
-                                           zone->w, (32 * e_scale));
+                                           zone->w, 
+                                           (il_ind_cfg->height * e_scale));
 
    return iwin;
 }
