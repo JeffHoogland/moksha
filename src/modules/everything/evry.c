@@ -335,21 +335,21 @@ EAPI void
 evry_item_select(const Evry_State *state, Evry_Item *it)
 {
    Evry_State *s = (Evry_State *)state;
+   Evry_Selector *sel = selector;
 
    if (!s && it)
      {
-	Evry_Selector *sel = _selector_for_plugin_get(it->plugin);
+       sel = _selector_for_plugin_get(it->plugin);
 	if (sel && sel->state)
 	  s = sel->state;
-	else
-	  return;
+	else return;
      }
    
    s->plugin_auto_selected = EINA_FALSE;
    s->item_auto_selected = EINA_FALSE;
    
    _evry_item_sel(s, it);
-   _evry_selector_update(selector);
+   _evry_selector_update(sel);
 }
 
 EAPI void
@@ -1685,7 +1685,11 @@ _evry_matches_update(Evry_Selector *sel, int async)
 	       }
 	  }
 
-	if (eina_list_count(s->cur_plugins) > 0)
+	if ((eina_list_count(s->cur_plugins) > 0) &&
+	    /* dont add aggregator when there is only one plugin
+	       which wont show items in agrregator */
+	    !(eina_list_count(s->cur_plugins) == 1 &&
+	      !((Evry_Plugin *)s->cur_plugins->data)->aggregate))
 	  {
 	     s->cur_plugins = eina_list_prepend(s->cur_plugins, sel->aggregator);
 	     sel->aggregator->fetch(sel->aggregator, input);
