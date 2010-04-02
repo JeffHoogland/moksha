@@ -12,6 +12,9 @@
 #define MATCH_LAG 0.1
 #define INITIAL_MATCH_LAG 0.2
 
+/* #undef DBG
+ * #define DBG(...) ERR(__VA_ARGS__) */
+
 typedef struct _Evry_Window Evry_Window;
 typedef struct _Evry_List_Window Evry_List_Window;
 
@@ -312,15 +315,33 @@ evry_item_free(Evry_Item *it)
      E_FREE(it);
 }
 
+static Evry_Selector *
+_selector_for_plugin_get(Evry_Plugin *p)
+{
+   Evry_State *s;
+   int i;
+
+   for (i = 0; i < 3; i++)
+     {
+	s = selectors[i]->state;
+	if (s && eina_list_data_find(s->plugins, p))
+	  return selectors[i];
+     }
+
+   return NULL;
+}
+
 EAPI void
 evry_item_select(const Evry_State *state, Evry_Item *it)
 {
    Evry_State *s = (Evry_State *)state;
 
-   if (!s && it && selector && selector->state)
+   if (!s && it)
      {
-	s = selector->state;
-	if (s->plugin != it->plugin)
+	Evry_Selector *sel = _selector_for_plugin_get(it->plugin);
+	if (sel && sel->state)
+	  s = sel->state;
+	else
 	  return;
      }
    
@@ -373,20 +394,18 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
 {
    Evry_State *s;
    Evry_Plugin *agg;
-
+   Evry_Selector *sel;
+   
    if (!win) return;
 
-   s = selector->state;
-   agg = selector->aggregator;
+   DBG("plugin: %s", p->name);
 
-   /* received data from a plugin of the current selector ? */
-   if (!s || !eina_list_data_find(s->plugins, p))
-     {
-	/* if (p->type == type_action) */
-	/* TODO */
-	return;
-     }
+   sel = _selector_for_plugin_get(p);
+   if (!sel || !sel->state) return;
 
+   s = sel->state;
+   agg = sel->aggregator;
+   
    if (action == EVRY_ASYNC_UPDATE_ADD)
      {
 	if (!p->items)
@@ -411,7 +430,7 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
 	/* update aggregator */
 	if ((eina_list_count(s->cur_plugins) > 1 ) ||
 	    /* add aggregator for actions */
-	    (selector == selectors[1] &&
+	    (sel == selectors[1] &&
 	     (eina_list_count(s->cur_plugins) > 0 )))
 	  {
 	     /* add aggregator */
@@ -435,7 +454,9 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
 
 	/* plugin is visible */
 	if ((s->plugin == p) || (s->plugin == agg))
-	  _evry_selector_update(selector);
+	  {
+	     _evry_selector_update(sel);
+	  }
 
 	_evry_view_update(s, NULL);
      }
