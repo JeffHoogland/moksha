@@ -90,6 +90,8 @@ dia_grad.png \
 dia_topshad.png \
 e17_fileman_thumb_bg.png \
 e17_mini_button_shadow2.png \
+efm_toolbar_bottom.png \
+efm_toolbar_top.png \
 everything_bar.png \
 everything_border.png \
 everything_box.png \
@@ -389,9 +391,7 @@ tacho_fg.png \
 temp_base.png \
 temp_mid.png \
 temp_over.png \
-toolbar_bottom.png \
 toolbar_sel.png \
-toolbar_top.png \
 topsh.png \
 transition_vswipe.png \
 vgrad_dark.png \

@@ -1,6 +1,4 @@
 // TODO:
-//    Sort out toolbar_*.png name structures
-//    Rename e/toolbar or e/widget/toolbar 
 //    Formatting cleanup :~(
 
 //	Icons:
@@ -20143,23 +20141,23 @@ collections { /* begin the collection of edje groups that are in this file */
 /////////////////////////////////////////////////////////////////////////////
    /*** FILE MANAGER TOOLBAR ***/
 
-group { name: "e/toolbar/default/base";
+group { name: "e/fileman/toolbar/default/base";
    images {
-      image: "toolbar_top.png" COMP;
-      image: "toolbar_bottom.png" COMP;
+      image: "efm_toolbar_top.png" COMP;
+      image: "efm_toolbar_bottom.png" COMP;
    }
    parts {
       part { name: "base";
 	 mouse_events: 0;
 	 description { state: "default" 0.0;
 	    max: 99999 48;
-	    image.normal: "toolbar_top.png";
+	    image.normal: "efm_toolbar_top.png";
 	    image.border: 4 4 4 4;
 	    fill.smooth: 0;
 	 }
 	 description { state: "bottom" 0.0;
 	    inherit: "default" 0.0;
-	    image.normal: "toolbar_bottom.png";
+	    image.normal: "efm_toolbar_bottom.png";
 	 }
       }
       part { name: "e.swallow.content";
