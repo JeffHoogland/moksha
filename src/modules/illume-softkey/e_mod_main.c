@@ -1,5 +1,6 @@
 #include "e.h"
 #include "e_mod_main.h"
+#include "e_mod_config.h"
 #include "e_mod_sft_win.h"
 
 /* local variables */
@@ -21,6 +22,15 @@ e_modapi_init(E_Module *m)
 
    /* set module directory variable */
    _sft_mod_dir = eina_stringshare_add(m->dir);
+
+   /* init config subsystem */
+   if (!il_sft_config_init()) 
+     {
+        /* clear module directory variable */
+        if (_sft_mod_dir) eina_stringshare_del(_sft_mod_dir);
+        _sft_mod_dir = NULL;
+        return NULL;
+     }
 
    /* loop through the managers (root windows) */
    EINA_LIST_FOREACH(e_manager_list(), ml, man) 
@@ -62,6 +72,9 @@ e_modapi_shutdown(E_Module *m)
    ecore_x_e_illume_softkey_geometry_set(ecore_x_window_root_first_get(), 
                                          0, 0, 0, 0);
 
+   /* shutdown config */
+   il_sft_config_shutdown();
+
    /* clear module directory variable */
    if (_sft_mod_dir) eina_stringshare_del(_sft_mod_dir);
    _sft_mod_dir = NULL;
@@ -72,5 +85,5 @@ e_modapi_shutdown(E_Module *m)
 EAPI int 
 e_modapi_save(E_Module *m) 
 {
-   return 1;
+   return il_sft_config_save();
 }

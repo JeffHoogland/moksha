@@ -1,5 +1,6 @@
 #include "e.h"
 #include "e_mod_main.h"
+#include "e_mod_config.h"
 #include "e_mod_sft_win.h"
 
 /* local function prototypes */
@@ -76,11 +77,11 @@ e_mod_sft_win_new(E_Zone *zone)
    _e_mod_sft_win_create_default_buttons(swin);
 
    /* set minimum size of this window */
-   e_win_size_min_set(swin->win, zone->w, (32 * e_scale));
+   e_win_size_min_set(swin->win, zone->w, (il_sft_cfg->height * e_scale));
 
    /* position and resize this window */
    e_win_move_resize(swin->win, zone->x, (zone->y + zone->h - (32 * e_scale)), 
-                     zone->w, (32 * e_scale));
+                     zone->w, (il_sft_cfg->height * e_scale));
 
    /* show the window */
    e_win_show(swin->win);
@@ -93,8 +94,8 @@ e_mod_sft_win_new(E_Zone *zone)
 
    /* tell conformant apps our position and size */
    ecore_x_e_illume_softkey_geometry_set(zone->black_win, 
-                                         zone->x, (zone->h - (32 * e_scale)), 
-                                         zone->w, (32 * e_scale));
+                                         zone->x, (zone->h - (il_sft_cfg->height * e_scale)), 
+                                         zone->w, (il_sft_cfg->height * e_scale));
 
    return swin;
 }
@@ -165,7 +166,7 @@ _e_mod_sft_win_cb_win_prop(void *data, int type __UNUSED__, void *event)
    if (ev->atom != ATM_ENLIGHTENMENT_SCALE) return 1;
 
    /* set minimum size of this window */
-   e_win_size_min_set(swin->win, swin->zone->w, (32 * e_scale));
+   e_win_size_min_set(swin->win, swin->zone->w, (il_sft_cfg->height * e_scale));
 
    /* NB: Not sure why, but we need to tell this border to fetch icccm 
     * size position hints now :( (NOTE: This was not needed a few days ago) 
@@ -173,12 +174,12 @@ _e_mod_sft_win_cb_win_prop(void *data, int type __UNUSED__, void *event)
    swin->win->border->client.icccm.fetch.size_pos_hints = 1;
 
    /* resize this window */
-   e_win_resize(swin->win, swin->zone->w, (32 * e_scale));
+   e_win_resize(swin->win, swin->zone->w, (il_sft_cfg->height * e_scale));
 
    /* tell conformant apps our position and size */
    ecore_x_e_illume_softkey_geometry_set(swin->zone->black_win, 
                                          swin->win->x, swin->win->y, 
-                                         swin->win->w, (32 * e_scale));
+                                         swin->win->w, (il_sft_cfg->height * e_scale));
    return 1;
 }
 
@@ -193,7 +194,7 @@ _e_mod_sft_win_cb_zone_resize(void *data, int type __UNUSED__, void *event)
    if (ev->zone != swin->zone) return 1;
 
    /* set minimum size of this window */
-   e_win_size_min_set(swin->win, ev->zone->w, (32 * e_scale));
+   e_win_size_min_set(swin->win, ev->zone->w, (il_sft_cfg->height * e_scale));
 
    return 1;
 }
