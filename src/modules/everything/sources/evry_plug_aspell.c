@@ -326,6 +326,8 @@ _init(void)
 		   "accessories-dictionary", TRIGGER,
 		   NULL, _cleanup, _fetch, NULL, NULL, NULL, NULL);
 
+   EVRY_PLUGIN(p)->aggregate = EINA_FALSE;
+   
    evry_plugin_register(EVRY_PLUGIN(p), 100);
 
    plugin = p;

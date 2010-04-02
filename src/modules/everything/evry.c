@@ -317,8 +317,16 @@ evry_item_select(const Evry_State *state, Evry_Item *it)
 {
    Evry_State *s = (Evry_State *)state;
 
+   if (!s && it && selector && selector->state)
+     {
+	s = selector->state;
+	if (s->plugin != it->plugin)
+	  return;
+     }
+   
    s->plugin_auto_selected = EINA_FALSE;
    s->item_auto_selected = EINA_FALSE;
+   
    _evry_item_sel(s, it);
    _evry_selector_update(selector);
 }
@@ -401,7 +409,10 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
 	  }
 
 	/* update aggregator */
-	if (eina_list_count(s->cur_plugins) > 0)
+	if ((eina_list_count(s->cur_plugins) > 1 ) ||
+	    /* add aggregator for actions */
+	    (selector == selectors[1] &&
+	     (eina_list_count(s->cur_plugins) > 0 )))
 	  {
 	     /* add aggregator */
 	     if (!(s->cur_plugins->data == agg))
@@ -428,9 +439,10 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
 
 	_evry_view_update(s, NULL);
      }
-   else if (action == EVRY_ASYNC_UPDATE_CLEAR)
+   else if (action == EVRY_ASYNC_UPDATE_REFRESH)
      {
-	
+	_evry_view_clear(s); 
+	_evry_view_update(s, NULL);
      }
 }
 

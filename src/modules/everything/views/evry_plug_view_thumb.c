@@ -635,6 +635,8 @@ _view_clear(Evry_View *view)
    Item *it;
 
    _clear_items(v->span);
+   if (sd->items) eina_list_free(sd->items); 
+   sd->items = NULL;
    
    if (sd->idle_enter) ecore_idle_enterer_del(sd->idle_enter);
    sd->idle_enter = ecore_idle_enterer_before_add(_e_smart_reconfigure_do, v->span);
@@ -673,7 +675,7 @@ _view_update(Evry_View *view)
    Eina_List *l, *ll, *p_items, *v_remove = NULL, *v_items = NULL;
    int pos, last_pos, last_vis = 0, first_vis = 0;
    Eina_Bool update = EINA_FALSE;
-   
+
    if (!v->state->plugin)
      {
 	_view_clear(view);

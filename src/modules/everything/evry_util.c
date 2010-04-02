@@ -340,13 +340,23 @@ evry_util_exec_app(const Evry_Item *it_app, const Evry_Item *it_file)
 	if (it_file)
 	  {
 	     ITEM_FILE(file, it_file);
-	     int len;
 
-	     len = strlen(app->file) + strlen(file->uri) + 2;
+	     /* files = eina_list_append(files, file->uri);
+	      * 
+	      * e_exec(zone, NULL, app->file, files, NULL);
+	      * 
+	      * if (files)
+	      *   eina_list_free(files); */
+
+	     char *tmp;
+	     int len;
+	     tmp = eina_str_escape(file->uri);
+	     len = strlen(app->file) + strlen(tmp) + 2;
 	     exe = malloc(len);
-	     snprintf(exe, len, "%s %s", app->file, file->uri);
+	     snprintf(exe, len, "%s %s", app->file, tmp);
 	     e_exec(zone, NULL, exe, NULL, NULL);
-	     free(exe);
+	     E_FREE(exe);
+	     E_FREE(tmp);
 	  }
 	else
 	  {

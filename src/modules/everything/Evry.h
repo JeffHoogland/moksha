@@ -6,6 +6,7 @@
 
 #define EVRY_ASYNC_UPDATE_ADD 0
 #define EVRY_ASYNC_UPDATE_CLEAR 1
+#define EVRY_ASYNC_UPDATE_REFRESH 2
 
 extern int _e_module_evry_log_dom;
 
@@ -145,9 +146,6 @@ struct _Evry_Plugin
 
   const char *trigger;
 
-  /* whether the plugin uses evry_async_update to add new items */
-  int async_fetch;
-
   /* list of items visible for everything */
   Eina_List *items;
 
@@ -171,6 +169,13 @@ struct _Evry_Plugin
   Evas_Object *(*config_page) (Evry_Plugin *p);
   void (*config_apply) (Evry_Plugin *p);
 
+  /* show in aggregator. default is TRUE */
+  Eina_Bool aggregate;
+  
+  /* whether the plugin uses evry_async_update to add new
+     items. default is FALSE */
+  Eina_Bool async_fetch;
+  
   /* not to be set by plugin! */
   Plugin_Config *config;
 };
@@ -240,6 +245,8 @@ struct _Evry_Action
   /* use icon name from theme */
   const char *icon;
 
+  void *data;
+  
   int priority;
 };
 

@@ -41,9 +41,14 @@ EAPI E_Module_Api e_modapi =
 
 static Eina_Bool list_cb(Eina_Module *m, void *data)
 {
-   if (eina_module_load(m))
-     return EINA_TRUE;
+   int err;
+   
+   if ((err = eina_module_load(m)))
+     {
+	return EINA_TRUE;
+     }
 
+   ERR("loading failed (%d), %s", err, eina_module_file_get(m));
    return EINA_FALSE;
 }
 
@@ -243,7 +248,7 @@ _config_init()
 	evry_conf->scroll_animate = 0;
 	evry_conf->scroll_speed = 0.08;
 	evry_conf->hide_input = 0;
-	evry_conf->hide_list = 1;
+	evry_conf->hide_list = 0;
 	evry_conf->quick_nav = 1;
 	evry_conf->conf_subjects = NULL;
 	evry_conf->conf_actions = NULL;
@@ -396,7 +401,9 @@ evry_plugin_new(Evry_Plugin *base, const char *name, int type,
    p->action   = action;
    p->config_page  = config_page;
    p->config_apply = config_apply;
-
+   p->aggregate = EINA_TRUE;
+   p->async_fetch = EINA_FALSE;
+   
    return p;
 }
 

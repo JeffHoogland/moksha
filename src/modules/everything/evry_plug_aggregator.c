@@ -127,6 +127,8 @@ _fetch(Evry_Plugin *plugin, const char *input)
      {
 	EINA_LIST_FOREACH(lp, l, pp)
 	  {
+	     if (!pp->aggregate) continue;
+	     
 	     EINA_LIST_FOREACH(pp->items, ll, it)
 	       {
 		  if (!it->fuzzy_match)
@@ -149,6 +151,8 @@ _fetch(Evry_Plugin *plugin, const char *input)
      {
    	EINA_LIST_FOREACH(lp, l, pp)
    	  {
+	     if (!pp->aggregate) continue;
+	     
   	     for (cnt = 0, ll = pp->items; ll && cnt < 50; ll = ll->next, cnt++)
    	       {
    		  if (!eina_list_data_find_list(items, ll->data))
@@ -165,6 +169,8 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
    EINA_LIST_FOREACH(lp, l, pp)
      {
+	if (!pp->aggregate) continue;
+	
 	EINA_LIST_FOREACH(pp->items, ll, it)
 	  {
 	     if (evry_history_item_usage_set(p->selector->history, it, input, context) &&
@@ -181,13 +187,17 @@ _fetch(Evry_Plugin *plugin, const char *input)
    if (lp && ((eina_list_count(lp) == 2) || (!EVRY_PLUGIN(p)->items)))
      {
 	pp = lp->data;
-	EINA_LIST_FOREACH(pp->items, l, it)
+
+	if (pp->aggregate)
 	  {
-	     if (!eina_list_data_find_list(items, it))
+	     EINA_LIST_FOREACH(pp->items, l, it)
 	       {
-		  evry_item_ref(it);
-		  it->fuzzy_match = 0;
-		  EVRY_PLUGIN_ITEM_APPEND(p, it);
+		  if (!eina_list_data_find_list(items, it))
+		    {
+		       evry_item_ref(it);
+		       it->fuzzy_match = 0;
+		       EVRY_PLUGIN_ITEM_APPEND(p, it);
+		    }
 	       }
 	  }
      }
