@@ -636,18 +636,17 @@ _il_home_desks_populate(void)
                       (eina_list_data_find(sys, desktop))) continue;
                   if ((kbd) && (eina_list_data_find(kbd, desktop)))
                     continue;
-                  if (!desktop) continue;
-                  desks = eina_list_append(desks, desktop);
-                  efreet_desktop_ref(desktop);
                   if (desktop) 
                     {
                        char buff[PATH_MAX];
 
+                       desks = eina_list_append(desks, desktop);
+                       efreet_desktop_ref(desktop);
                        e_user_dir_snprintf(buff, sizeof(buff), 
                                            "appshadow/%04x.desktop", num);
                        ecore_file_symlink(desktop->orig_path, buff);
+                       num++;
                     }
-                  num++;
                }
           }
 	efreet_menu_free(menu);
