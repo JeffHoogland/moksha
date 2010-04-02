@@ -9,6 +9,7 @@ EXTRA_DIST = \
 	module.battery.src \
 	module.illume-home.src \
 	module.illume-keyboard.src \
+	module.illume-indicator.src \
         module.illume2.src \
         module.conf.src
 
@@ -20,6 +21,7 @@ files_DATA = \
 	module.battery.cfg \
 	module.illume-home.cfg \
         module.illume-keyboard.cfg \
+        module.illume-indicator.cfg \
         module.illume2.cfg \
         module.conf.cfg
 
