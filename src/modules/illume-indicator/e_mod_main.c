@@ -68,7 +68,7 @@ e_modapi_shutdown(E_Module *m)
    EINA_LIST_FREE(iwins, iwin)
      e_object_del(E_OBJECT(iwin));
 
-   /* reset softkey geometry for conformant apps */
+   /* reset indicator geometry for conformant apps */
    ecore_x_e_illume_indicator_geometry_set(ecore_x_window_root_first_get(), 
                                            0, 0, 0, 0);
 
