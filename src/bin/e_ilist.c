@@ -591,8 +591,13 @@ e_ilist_selected_label_get(Evas_Object *obj)
    si = eina_list_nth(sd->items, sd->selected);
    if (si) 
      {
+        if (!si->label) 
+          {
+             si->label = 
+               eina_stringshare_add(edje_object_part_text_get(si->o_base, 
+                                                              "e.text.label"));
+          }
         if (si->label) return si->label;
-        return edje_object_part_text_get(si->o_base, "e.text.label");
      }
    return NULL;
 }
@@ -716,8 +721,13 @@ e_ilist_nth_label_get(Evas_Object *obj, int n)
    si = eina_list_nth(sd->items, n);
    if (si) 
      {
+        if (!si->label) 
+          {
+             si->label = 
+               eina_stringshare_add(edje_object_part_text_get(si->o_base, 
+                                                              "e.text.label"));
+          }
         if (si->label) return si->label;
-        return edje_object_part_text_get(si->o_base, "e.text.label");
      }
    return NULL;
 }
