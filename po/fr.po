@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-04-01 10:04+0400\n"
-"PO-Revision-Date: 2010-04-01 12:17+0400\n"
+"PO-Revision-Date: 2010-04-03 08:14+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment French Team <pourunmondesansgourou@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -1533,7 +1533,7 @@ msgstr "Permettre le redimensionnement"
 #: src/bin/e_gadcon.c:1396
 #: src/modules/gadman/e_mod_gadman.c:782
 msgid "Begin move/resize this gadget"
-msgstr "Activer le déplacement/redimensionnement de ce gadget"
+msgstr "Déplacer/Redimensionner ce gadget"
 
 #: src/bin/e_gadcon.c:1404
 #: src/modules/gadman/e_mod_gadman.c:790
@@ -4367,7 +4367,7 @@ msgstr "Moteur"
 
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:49
 msgid "Run Command Settings"
-msgstr "Paramétrage de l'exécution de commande"
+msgstr "Paramétrage de la ligne de commande"
 
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:111
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:180
@@ -4466,7 +4466,7 @@ msgstr "Terminal"
 #: src/modules/exebuf/e_mod_main.c:38
 #: src/modules/exebuf/e_mod_main.c:115
 msgid "Run Command"
-msgstr "Exécuter une commande"
+msgstr "Ligne de commande"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:60
 msgid "Core"
@@ -4675,7 +4675,7 @@ msgstr "Activer les polices de secours"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:691
 msgid "Hinting / Fallbacks"
-msgstr "Optimisation / Polices de secours"
+msgstr "Optimisation/Polices de secours"
 
 #: src/modules/conf_icon_theme/e_int_config_icon_themes.c:55
 msgid "Icon Theme Settings"
@@ -6290,7 +6290,7 @@ msgstr "Sensible à la casse"
 
 #: src/modules/fileman/e_mod_config.c:248
 msgid "Use Single Click"
-msgstr "Utiliser le clic simple"
+msgstr "Utiliser le simple clic"
 
 #: src/modules/fileman/e_mod_config.c:251
 msgid "Use Alternate Selection Modifiers"
@@ -7168,7 +7168,7 @@ msgstr "Aucune erreur"
 
 #: src/modules/connman/e_mod_main.c:1773
 msgid "idle"
-msgstr "Inactif"
+msgstr "inactif"
 
 #: src/modules/connman/e_mod_main.c:1774
 msgid "association"
