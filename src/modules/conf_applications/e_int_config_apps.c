@@ -120,6 +120,7 @@ e_int_config_apps_restart(E_Container *con, const char *params __UNUSED__)
 static E_Config_Dialog *
 _create_dialog(E_Container *con, E_Config_Data *data) 
 {
+   E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
 
    if (e_config_dialog_find("E", data->dialog)) 
@@ -138,8 +139,10 @@ _create_dialog(E_Container *con, E_Config_Data *data)
    v->basic.create_widgets = _basic_create;
    v->basic.apply_cfdata = _basic_apply;
 
-   return e_config_dialog_new(con, data->title, "E", data->dialog, 
-                              data->icon, 0, v, data);
+   cfd = e_config_dialog_new(con, data->title, "E", data->dialog, 
+			     data->icon, 0, v, data);
+   e_dialog_resizable_set(cfd->dia, EINA_TRUE);
+   return cfd;
 }
 
 static void *
