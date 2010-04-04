@@ -15,18 +15,19 @@ _cb_border_remove(void *data, int type,  void *event)
 
    ev = event;
 
-   EINA_LIST_FOREACH(p->items, l, it)
-     {
-	if (it->data == ev->border)
-	  {
-	     p->items = eina_list_remove(p->items, it);
-	     if (border_hash)
-	       eina_hash_del_by_key(border_hash, ev->border);
-	     evry_item_free(it);
-	     evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_ADD);
-	     break;
-	  }
-     }
+   it = eina_hash_find(border_hash, &(ev->border));
+
+   printf("border del cb\n");
+
+   if (!it) return 1;
+
+   printf("border del cb %s\n", it->label);
+
+   eina_hash_del_by_key(border_hash, &(ev->border)); 
+
+   p->items = eina_list_remove(p->items, it);
+   evry_item_free(it);
+   evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_ADD);
 
    return 1;
 }
