@@ -93,8 +93,10 @@ struct _Evry_Selector
   /* provides collection of items from other plugins */
   Evry_Plugin *aggregator;
 
+  Evry_Plugin *actions;
+
   /* */
-  Eina_List   *actions;
+  Eina_List   *cur_actions;
 
   /* all plugins that belong to this selector*/
   Eina_List   *plugins;
@@ -105,6 +107,8 @@ struct _Evry_Selector
   Eina_Bool    do_thumb;
 
   Eina_Hash   *history;
+
+  Ecore_Timer *update_timer;
 };
 
 struct _Tab_View
@@ -141,7 +145,7 @@ void evry_hide(void);
 EAPI Evry_Plugin *evry_plug_aggregator_new(Evry_Selector *selector);
 EAPI void evry_plug_aggregator_free(Evry_Plugin *plugin);
 
-EAPI Evry_Plugin *evry_plug_actions_new(void);
+EAPI Evry_Plugin *evry_plug_actions_new(int type);
 EAPI void evry_plug_actions_free(Evry_Plugin *plugin);
 
 void evry_history_init(void);
@@ -157,5 +161,5 @@ void evry_browse_back(Evry_Selector *sel);
 EAPI extern Config *evry_conf;
 EAPI extern History *evry_hist;
 extern Evry_Selector **selectors;
-extern Evry_Plugin *action_selector;
+extern const char *action_selector;
 #endif

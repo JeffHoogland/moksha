@@ -8,11 +8,16 @@ static void
 _cleanup(Evry_Plugin *p)
 {
    Evry_Action *act;
-   Evry_Selector *sel = selectors[1];
+   Evry_Selector *sel;
+   
+   if (p->type == type_subject)
+     sel = selectors[0];
+   else
+     sel = selectors[1];
 
    EVRY_PLUGIN_ITEMS_FREE(p);
 
-   EINA_LIST_FREE(sel->actions, act)
+   EINA_LIST_FREE(sel->cur_actions, act)
      if (act->cleanup) act->cleanup(act);
 }
 
@@ -21,19 +26,30 @@ _begin(Evry_Plugin *p, const Evry_Item *it)
 {
    Evry_Action *act;
    Eina_List *l;
-   Evry_Selector *sel = selectors[1];
+   const char *type;   
+   Evry_Selector *sel;
+   
+   if (p->type == type_subject)
+     sel = selectors[0];
+   else
+     sel = selectors[1];
 
    _cleanup(p);
 
-   if (!it) return NULL;
-
-   const char *type = it->plugin->type_out;
-
-   if (!type) return NULL;
-
+   if (p->type == type_action)
+     {
+	if (!it) return NULL;
+	type = it->plugin->type_out;
+	if (!type) return NULL;
+     }
+   else
+     {
+	printf("begin %s\n", p->name);
+     }
+   
    EINA_LIST_FOREACH(evry_conf->actions, l, act)
      {
-	if (act->type_in1 && (act->type_in1 == type) &&
+	if (!act->type_in1 || (act->type_in1 == type) &&
 	    (!act->check_item || act->check_item(act, it)))
 	  {
 	     act->item1 = it;
@@ -41,12 +57,12 @@ _begin(Evry_Plugin *p, const Evry_Item *it)
 	     if (act->type_out && act->intercept && !(act->intercept(act)))
 	       continue;;
 
-	     sel->actions = eina_list_append(sel->actions, act);
+	     sel->cur_actions = eina_list_append(sel->cur_actions, act);
 	  }
      }
 
-   if (!sel->actions) return NULL;
-
+   if (!sel->cur_actions) return NULL;
+   
    return p;
 }
 
@@ -80,12 +96,17 @@ _fetch(Evry_Plugin *p, const char *input)
    Evry_Action *act;
    Eina_List *l;
    Evry_Item *it;
-   Evry_Selector *sel = selectors[1];
+   Evry_Selector *sel;
    int match = 0;
+
+   if (p->type == type_subject)
+     sel = selectors[0];
+   else
+     sel = selectors[1];
 
    EVRY_PLUGIN_ITEMS_FREE(p);
 
-   EINA_LIST_FOREACH(sel->actions, l, act)
+   EINA_LIST_FOREACH(sel->cur_actions, l, act)
      {
 	if (input)
 	  match = evry_fuzzy_match(act->name, input);
@@ -125,11 +146,11 @@ _icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 }
 
 Evry_Plugin *
-evry_plug_actions_new(void)
+evry_plug_actions_new(int type)
 {
    Evry_Plugin *p;
 
-   p = evry_plugin_new(NULL, "Select Action", type_action, "", "", 0, NULL, NULL,
+   p = evry_plugin_new(NULL, action_selector, type, "", "", 0, NULL, NULL,
 		       _begin, _cleanup, _fetch, NULL, _icon_get, NULL, NULL);
 
    evry_plugin_register(p, 2);

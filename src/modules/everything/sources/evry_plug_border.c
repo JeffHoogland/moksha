@@ -8,23 +8,15 @@ static Eina_Hash *border_hash = NULL;
 static int
 _cb_border_remove(void *data, int type,  void *event)
 {
-   Evry_Plugin *p = data;
-   E_Event_Border_Remove *ev;
-   Eina_List *l;
+   E_Event_Border_Remove *ev = event;
    Evry_Item *it;
-
-   ev = event;
+   Evry_Plugin *p = data;
 
    it = eina_hash_find(border_hash, &(ev->border));
 
-   printf("border del cb\n");
-
    if (!it) return 1;
 
-   printf("border del cb %s\n", it->label);
-
    eina_hash_del_by_key(border_hash, &(ev->border)); 
-
    p->items = eina_list_remove(p->items, it);
    evry_item_free(it);
    evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_ADD);

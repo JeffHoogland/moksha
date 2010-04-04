@@ -240,13 +240,14 @@ struct _Evry_Action
   int  (*check_item) (Evry_Action *act, const Evry_Item *it);
   int  (*intercept)  (Evry_Action *act);
   void (*cleanup)    (Evry_Action *act);
+  Eina_List *(*actions)    (Evry_Action *act);
   Evas_Object *(*icon_get) (Evry_Action *act, Evas *e);
 
   /* use icon name from theme */
   const char *icon;
 
   void *data;
-  
+
   int priority;
 };
 
