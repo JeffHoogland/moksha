@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-04-01 10:04+0400\n"
-"PO-Revision-Date: 2010-04-03 08:14+0400\n"
+"POT-Creation-Date: 2010-04-04 05:53+0400\n"
+"PO-Revision-Date: 2010-04-04 07:15+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment French Team <pourunmondesansgourou@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -1002,7 +1002,6 @@ msgstr "Sélectionner un exécutable"
 
 #: src/bin/e_entry.c:493
 #: src/bin/e_fm.c:8022
-#: src/modules/conf_applications/e_int_config_apps.c:242
 #: src/modules/conf_profiles/e_int_config_profiles.c:137
 #: src/modules/conf_shelves/e_int_config_shelf.c:81
 #: src/modules/ibar/e_mod_config.c:112
@@ -2156,6 +2155,8 @@ msgid "Main"
 msgstr "Menu Principal"
 
 #: src/bin/e_int_menus.c:117
+#: src/modules/conf_applications/e_int_config_apps.c:53
+#: src/modules/conf_applications/e_mod_main.c:23
 msgid "Favorite Applications"
 msgstr "Applications favorites"
 
@@ -3192,7 +3193,7 @@ msgid "%3.0f%%"
 msgstr "%3.0f%%"
 
 #: src/bin/e_widget_config_list.c:63
-#: src/modules/conf_applications/e_int_config_apps.c:214
+#: src/modules/conf_applications/e_int_config_apps.c:198
 #: src/modules/conf_profiles/e_int_config_profiles.c:135
 #: src/modules/conf_shelves/e_int_config_shelf.c:79
 #: src/modules/ibar/e_mod_config.c:110
@@ -3200,16 +3201,17 @@ msgid "Add"
 msgstr "Ajouter"
 
 #: src/bin/e_widget_config_list.c:69
+#: src/modules/conf_applications/e_int_config_apps.c:202
 msgid "Remove"
 msgstr "Supprimer"
 
 #: src/bin/e_widget_config_list.c:83
-#: src/modules/conf_applications/e_int_config_apps.c:231
+#: src/modules/conf_applications/e_int_config_apps.c:214
 msgid "Up"
 msgstr "Monter"
 
 #: src/bin/e_widget_config_list.c:89
-#: src/modules/conf_applications/e_int_config_apps.c:236
+#: src/modules/conf_applications/e_int_config_apps.c:218
 msgid "Down"
 msgstr "Descendre"
 
@@ -3322,7 +3324,7 @@ msgid "Auto Detect"
 msgstr "Auto-détection"
 
 #: src/modules/battery/e_mod_config.c:230
-#: src/modules/conf_applications/e_mod_main.c:39
+#: src/modules/conf_applications/e_mod_main.c:27
 #: src/modules/conf_borders/e_mod_main.c:22
 #: src/modules/conf_desk/e_mod_main.c:20
 #: src/modules/conf_wallpaper/e_mod_main.c:28
@@ -3409,54 +3411,41 @@ msgstr "Modes"
 msgid "Configuration Panel Configuration Updated"
 msgstr "Configuration de Panneau de configuration actualisée"
 
-#: src/modules/conf_applications/e_int_config_apps.c:50
-#: src/modules/conf_applications/e_mod_main.c:42
-msgid "Favorites Menu"
-msgstr "Menu des favoris"
-
-#: src/modules/conf_applications/e_int_config_apps.c:74
-#: src/modules/conf_applications/e_int_config_apps.c:89
-#: src/modules/conf_applications/e_mod_main.c:36
+#: src/modules/conf_applications/e_int_config_apps.c:68
+#: src/modules/conf_applications/e_int_config_apps.c:82
+#: src/modules/conf_applications/e_mod_main.c:24
 msgid "IBar Applications"
 msgstr "Applications dans l'IBar"
 
-#: src/modules/conf_applications/e_int_config_apps.c:105
-#: src/modules/conf_applications/e_mod_main.c:38
+#: src/modules/conf_applications/e_int_config_apps.c:97
+#: src/modules/conf_applications/e_mod_main.c:26
 msgid "Startup Applications"
 msgstr "Applications au démarrage"
 
-#: src/modules/conf_applications/e_int_config_apps.c:121
-#: src/modules/conf_applications/e_mod_main.c:37
+#: src/modules/conf_applications/e_int_config_apps.c:112
+#: src/modules/conf_applications/e_mod_main.c:25
 msgid "Restart Applications"
 msgstr "Applications à redémarrer"
 
-#: src/modules/conf_applications/e_int_config_apps.c:207
-#: src/modules/fileman/e_fwin.c:1875
-msgid "All Applications"
-msgstr "Toutes les applications"
+#: src/modules/conf_applications/e_int_config_apps.c:206
+msgid "Selection"
+msgstr "Sélection"
 
-#: src/modules/conf_applications/e_int_config_apps.c:223
-msgid "Selected Applications"
-msgstr "Applications sélectionnées"
+#: src/modules/conf_applications/e_int_config_apps.c:222
+msgid "Order"
+msgstr "Ordre"
 
-#: src/modules/conf_applications/e_mod_main.c:34
+#: src/modules/conf_applications/e_mod_main.c:21
 msgid "Apps"
 msgstr "Applis"
 
-#: src/modules/conf_applications/e_mod_main.c:35
+#: src/modules/conf_applications/e_mod_main.c:22
 msgid "New Application"
 msgstr "Nouvelle application"
 
-#: src/modules/conf_applications/e_mod_main.c:40
+#: src/modules/conf_applications/e_mod_main.c:28
 msgid "IBar Other"
 msgstr "IBar (autres)"
-
-#: src/modules/conf_applications/e_mod_main.c:41
-#: src/modules/conf_clientlist/e_mod_main.c:20
-#: src/modules/conf_menus/e_mod_main.c:20
-#: src/modules/wizard/page_030.c:81
-msgid "Menus"
-msgstr "Menus"
 
 #: src/modules/conf_borders/e_int_config_borders.c:30
 #: src/modules/conf_borders/e_int_config_borders.c:202
@@ -3577,6 +3566,12 @@ msgstr "%1.0f car."
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:168
 msgid "Captions"
 msgstr "Légendes"
+
+#: src/modules/conf_clientlist/e_mod_main.c:20
+#: src/modules/conf_menus/e_mod_main.c:20
+#: src/modules/wizard/page_030.c:81
+msgid "Menus"
+msgstr "Menus"
 
 #: src/modules/conf_clientlist/e_mod_main.c:23
 msgid "Client List Menu"
@@ -6355,6 +6350,10 @@ msgstr "Applications disponibles"
 msgid "Specific Applications"
 msgstr "Applications spécifiques"
 
+#: src/modules/fileman/e_fwin.c:1875
+msgid "All Applications"
+msgstr "Toutes les applications"
+
 #: src/modules/fileman/e_fwin.c:1898
 msgid "Custom Command"
 msgstr "Commande personnalisée"
@@ -7222,6 +7221,10 @@ msgstr "Il y a déjà une zone de notification active et seule une instance de c
 msgid "Systray"
 msgstr "Zone de notification"
 
+#~ msgid "Favorites Menu"
+#~ msgstr "Menu des favoris"
+#~ msgid "Selected Applications"
+#~ msgstr "Applications sélectionnées"
 #~ msgid "Desktop files scan done"
 #~ msgstr "Analyse des fichiers desktop terminée"
 #~ msgid "Desktop file scan"
