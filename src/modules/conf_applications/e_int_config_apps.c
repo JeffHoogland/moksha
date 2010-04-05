@@ -141,8 +141,6 @@ _create_dialog(E_Container *con, E_Config_Data *data)
 
    cfd = e_config_dialog_new(con, data->title, "E", data->dialog, 
 			     data->icon, 0, v, data);
-   e_dialog_resizable_set(cfd->dia, EINA_TRUE);
-   e_win_centered_set(cfd->dia->win, 1);
    return cfd;
 }
 
@@ -231,6 +229,9 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
                                  1, 1, 1, 1, 0.5, 0.0);
 
    e_widget_toolbook_page_show(otb, 0);
+
+   e_dialog_resizable_set(cfd->dia, 1);
+   e_win_centered_set(cfd->dia->win, 1);
    return otb;
 }
 
