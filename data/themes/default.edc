@@ -306,7 +306,7 @@ collections {
                /* nb - i am using a shortcut notation. you can use this
                 * parent.child: blah; in a key to avoid doing
                 * parent { child: blah; }
-               */
+                */
                image.normal: "vgrad_dark.png";
                /* use the vgrad_dark.png im */
                fill {
@@ -748,9 +748,9 @@ collections {
          part {
             name: "urgent";
             /* this is the urgnt part it is normally not
-              * visible, but when the window is in an
-              * urgent state (the app has set the urgency
-              * hint) then we go to the visible state */
+             * visible, but when the window is in an
+             * urgent state (the app has set the urgency
+             * hint) then we go to the visible state */
             mouse_events:  0;
             description {
                state: "default" 0.0;
@@ -765,7 +765,7 @@ collections {
             description {
                state: "visible" 0.0;
                /* and in the visible state put the
-                  * exlamation image on top of the icon */
+                * exlamation image on top of the icon */
                inherit: "default" 0.0;
                visible: 1;
                color: 255 255 255 255;
@@ -774,9 +774,9 @@ collections {
          part {
             name: "urgent2";
             /* this is another urgent element. it is actually
-               * zoomed out to be larger and faded out at the
-               * same time to give a "pulsating" look to the
-               * exclamation mark to bring attention to it */
+             * zoomed out to be larger and faded out at the
+             * same time to give a "pulsating" look to the
+             * exclamation mark to bring attention to it */
             mouse_events:  0;
             description {
                state: "default" 0.0;
@@ -806,7 +806,7 @@ collections {
          part {
             name: "e.text.title";
             /* this is a text part - the black
-                   * text on the white title top image */
+             * text on the white title top image */
             type: TEXT;
             mouse_events: 0;
             scale: 1;
@@ -821,24 +821,24 @@ collections {
                   offset: 9 2;
                   to_x: "icon_area";
                   /* relative to the right side of the icon
-                  * area but 9 pixels away */
+                   * area but 9 pixels away */
                }
                rel2 {
                   relative: 1.0 0.0;
                   /* and the bottom right is inset by 8
-                  * pixels from the right of "title_base"
-                  * but as its aligned to the top we can
-                  * keep this at 2 pixels from the top of
-                  * the whole edje object and let alignment
-                  * make it extend downward from that point
-                  * with the text size defining the min size
-                  * vertically below */
+                   * pixels from the right of "title_base"
+                   * but as its aligned to the top we can
+                   * keep this at 2 pixels from the top of
+                   * the whole edje object and let alignment
+                   * make it extend downward from that point
+                   * with the text size defining the min size
+                   * vertically below */
                   offset: -8 2;
                   to_x: "title_base";
                }
                color_class: "border_title";
                /* give it a color class so people
-                    * can re-color it if they want */
+                * can re-color it if they want */
                text {
                   font: "Sans:style=Bold";
                   /* Use the Bold style
@@ -848,11 +848,11 @@ collections {
                   /* size in pixels - 10 */
                   min: 0 1;
                   /* the text will not determine minimum horizontal
-              * size but WILL determine minimal vertical size
-              * (thus 0 1 - horiz then vert flags) */
+                   * size but WILL determine minimal vertical size
+                   * (thus 0 1 - horiz then vert flags) */
                   align: 0.0 0.0;
                   /* align text to top-left of the region
-               * given */
+                   * given */
                   text_class: "title_bar";
                   /* text class - so font and size
                    * can be changed by users */
@@ -861,8 +861,8 @@ collections {
             description {
                state: "focused" 0.0;
                /* when the border is focused
-                   * then make the text fade out
-                   * and vanish */
+                * then make the text fade out
+                * and vanish */
                inherit: "default" 0.0;
                visible: 0;
                color: 0 0 0 0;
@@ -877,14 +877,14 @@ collections {
                align: 1.0 0.5;
                min: 22 22;
                /* min and max size are the same, so never
-             * resize this */
+                * resize this */
                max: 22 22;
                aspect: 1.0 1.0;
                /* square - always */
                aspect_preference: VERTICAL;
                /* the vetical axis controls size
-                    * when applying the aspect ratio
-                    * hint above */
+                * when applying the aspect ratio
+                * hint above */
                rel1 {
                   relative: 1.0 0.0;
                   offset: -2 1;
@@ -959,7 +959,7 @@ collections {
          part {
             name: "top_hilight";
             /* an overlayed image to give the top of
-                  * a border a shiny look - very subtle */
+             * a border a shiny look - very subtle */
             mouse_events: 0;
             description {
                state: "default" 0.0;
@@ -983,12 +983,12 @@ collections {
          part {
             name: "buttons_unfoc";
             /* this is a rect part used to clip &
-               * thus control the visibility of a group
-               * of other parts (the images for the
-               * buttons themselves) with just 1 part
-               * doing the control as it acts as a
-               * master switch for all things clipped
-               * to this part */
+             * thus control the visibility of a group
+             * of other parts (the images for the
+             * buttons themselves) with just 1 part
+             * doing the control as it acts as a
+             * master switch for all things clipped
+             * to this part */
             type: RECT;
             description {
                state: "default" 0.0;
@@ -1009,8 +1009,8 @@ collections {
             mouse_events: 0;
             clip_to: "buttons_unfoc";
             /* clipping (thus visible region and
-                   * color + alpah is controlled by the
-                   * clip object */
+             * color + alpah is controlled by the
+             * clip object */
             description {
                state: "default" 0.0;
                rel1.to: "bt_close";
@@ -1129,7 +1129,7 @@ collections {
          part {
             name: "title_base";
             /* an invisible rect part/object used for
-                 * layout purposes */
+             * layout purposes */
             type: RECT;
             mouse_events:  0;
             description {
@@ -1196,7 +1196,7 @@ collections {
             scale: 1;
             effect: SOFT_SHADOW;
             /* different style to before - because its
-              * focused */
+             * focused */
             description {
                state: "default" 0.0;
                visible: 0;
@@ -1217,8 +1217,8 @@ collections {
                text {
                   text_source: "e.text.title";
                   /* and here is the magic. tell
-                  * the text to be sourced from
-                  * another part */
+                   * the text to be sourced from
+                   * another part */
                   font: "Sans:style=Bold";
                   size: 10;
                   align: 0.0 0.0;
@@ -1300,8 +1300,8 @@ collections {
          part {
             name: "e.swallow.client";
             /* this determines where the actual
-                  * client window will be placed in
-                  * the border design */
+             * client window will be placed in
+             * the border design */
             type: SWALLOW;
             description {
                state: "default" 0.0;
@@ -1341,14 +1341,14 @@ collections {
             }
          }
          /* these transparent rect parts are used for catching events in a way
-           * here objects for design don't affect the events. these parts
-           * are named speciifcally because E has config listening for specific
-           * signals (events) coming from these named parts and based on those
-           * will perform certain actions. these are actually all configurable
-           * by the user, so if they want, clicking the logical "titlebar" could
-           * close the window, not move it, and so on. the user decides this.
-           * the theme designer simply indicates the "logcal" use of the theme
-           * elements they have created */
+          * here objects for design don't affect the events. these parts
+          * are named speciifcally because E has config listening for specific
+          * signals (events) coming from these named parts and based on those
+          * will perform certain actions. these are actually all configurable
+          * by the user, so if they want, clicking the logical "titlebar" could
+          * close the window, not move it, and so on. the user decides this.
+          * the theme designer simply indicates the "logcal" use of the theme
+          * elements they have created */
          part {
             name: "e.event.titlebar";
             type: RECT;
@@ -1532,31 +1532,31 @@ collections {
          program {
             name: "focus_in";
             /* name of the program. must be unique
-            * within the list of programs attached
-            * to a group of parts */
+             * within the list of programs attached
+             * to a group of parts */
             signal: "e,state,focused";
             /* what signal triggers this program,
-            * if any. this can also be a glob like
-            * "mouse,down,*" for example. note
-            * that globs are slower to match
-            * and empty strings are literal matches
-            * too */
+             * if any. this can also be a glob like
+             * "mouse,down,*" for example. note
+             * that globs are slower to match
+             * and empty strings are literal matches
+             * too */
             source: "e";
             /* the source of the signal - this must also match for
-            * the program to be run */
+             * the program to be run */
             action: STATE_SET "focused" 0.0;
             /* the action the program will
-                     * perform. in this case
-                     * it will set the state to
-                     * "focused" @ value 0.0 */
+             * perform. in this case
+             * it will set the state to
+             * "focused" @ value 0.0 */
             transition: LINEAR 0.2;
             /* the time for the transition of the
-                 * action - it's a linear interpolation
-                 * of states here over 0.2 seconds */
+             * action - it's a linear interpolation
+             * of states here over 0.2 seconds */
             target: "title_back";
             /* these are the targets for the action.
-               * i.e. which parts will have their state
-               * set to "focused" over 0.2 seconds */
+             * i.e. which parts will have their state
+             * set to "focused" over 0.2 seconds */
             target: "title2";
             target: "title_over";
             target: "buttons_foc";
@@ -1566,7 +1566,7 @@ collections {
          program {
             name: "focus_out";
             /* this program is run when focus is
-                   * removed from a window border */
+             * removed from a window border */
             signal: "e,state,unfocused";
             source: "e";
             action: STATE_SET "default" 0.0;
@@ -1581,24 +1581,24 @@ collections {
          program {
             name: "urgent";
             /* this program is run when the border is
-                * meant to display an "urgent" state
-                * (the application has something
-                * important to show the user) */
+             * meant to display an "urgent" state
+             * (the application has something
+             * important to show the user) */
             signal: "e,state,urgent";
             source: "e";
             action: STATE_SET "visible" 0.0;
             transition: DECELERATE 0.5;
             /* instead of a linear transition
-                * this will vary from state A to B
-                * but slow down towards the end */
+             * this will vary from state A to B
+             * but slow down towards the end */
             target: "urgent";
             target: "urgent2";
             after: "urgent2";
             /* when this program and its transition are
-                * finished then chain (run) the "urgent2"
-                * program below. this way a series of actions
-                * and trnasitions can be chained together one
-                * after the other */
+             * finished then chain (run) the "urgent2"
+             * program below. this way a series of actions
+             * and trnasitions can be chained together one
+             * after the other */
          }
          program {
             name: "urgent2";
@@ -1612,14 +1612,14 @@ collections {
             action: STATE_SET "visible" 0.0;
             target: "urgent2";
             /* notice - no transition. when not specified
-            * it is assumed that the action should happen
-            * immediately with no transition over time */
+             * it is assumed that the action should happen
+             * immediately with no transition over time */
             after: "urgent2";
          }
          program {
             name: "urgentw0";
             /* these ae a list of icon "wobble"
-                  * programs to indicate urgency */
+             * programs to indicate urgency */
             signal: "e,state,urgent";
             source: "e";
             action: STATE_SET "default" 0.0;
@@ -1658,13 +1658,13 @@ collections {
          program {
             name: "not_urgent";
             /* run when the window stops being
-               * urgent */
+             * urgent */
             signal: "e,state,not_urgent";
             source: "e";
             action: ACTION_STOP;
             /* this action will stop other running programs
-              * that are currently active. the programs to
-              * stop are named in the targets below */
+             * that are currently active. the programs to
+             * stop are named in the targets below */
             target: "urgentw0";
             target: "urgentw1";
             target: "urgentw2";
@@ -1685,7 +1685,7 @@ collections {
          program {
             name: "hung";
             /* run when an app is known to be hung/not
-              * responding to ping requests */
+             * responding to ping requests */
             signal: "e,state,hung";
             source: "e";
             action: STATE_SET "shrunk" 0.0;
@@ -1695,7 +1695,7 @@ collections {
          program {
             name: "unhung";
             /* when an app was hung but has started to
-                * respond again, this is run */
+             * respond again, this is run */
             signal: "e,state,unhung";
             source: "e";
             action: ACTION_STOP;
@@ -1713,8 +1713,8 @@ collections {
          program {
             name: "busy_anim";
             /* multiple programs can be triggered
-                   * from the same signals so this is
-                   * also run when an app becomes "hung" */
+             * from the same signals so this is
+             * also run when an app becomes "hung" */
             signal: "e,state,hung";
             source: "e";
             action: STATE_SET "visible" 0.0;
@@ -1768,7 +1768,7 @@ collections {
          program {
             name: "shade_end";
             /* run when the window finishes its
-                   * shading animation */
+             * shading animation */
             signal: "e,state,shaded";
             source: "e";
             action: STATE_SET "shaded" 0.0;
@@ -1784,7 +1784,7 @@ collections {
          program {
             name: "unshade_start";
             /* run when the window starts
-                  * unshading itself */
+             * unshading itself */
             signal: "e,state,unshading";
             source: "e";
             action: STATE_SET "default" 0.0;
@@ -5837,11 +5837,11 @@ collections {
          part {
             name: "glow";
             /* this overlay is used to put a white glow
-                * around the pointer, so when the pointer is
-                * idle every now and again it will pulsate
-                * with this glow to just remind you where the
-                * pointer is (if you lose a black-ish
-                * pointer on a black background) */
+             * around the pointer, so when the pointer is
+             * idle every now and again it will pulsate
+             * with this glow to just remind you where the
+             * pointer is (if you lose a black-ish
+             * pointer on a black background) */
             mouse_events: 0;
             description {
                state: "default" 0.0;
@@ -5861,10 +5861,10 @@ collections {
          part {
             name: "glint";
             /* this overlay flips a series of small images
-            * over the pointer. they look like a white
-            * light/refelection when put over the pointer
-            * base image - and produce a "glinting" effect
-            * when played back fast */
+             * over the pointer. they look like a white
+             * light/refelection when put over the pointer
+             * base image - and produce a "glinting" effect
+             * when played back fast */
             mouse_events: 0;
             description {
                state: "default" 0.0;
@@ -5894,10 +5894,10 @@ collections {
          part {
             name: "e.swallow.hotspot";
             /* this is a "fake" swallow part
-                   * that is used by e to determine
-                   * the pointer hotspot - or where
-                   * the actual mouse events get
-                   * reported from on the cursor */
+             * that is used by e to determine
+             * the pointer hotspot - or where
+             * the actual mouse events get
+             * reported from on the cursor */
             type: SWALLOW;
             description {
                state: "default" 0.0;
@@ -5920,7 +5920,7 @@ collections {
          program {
             name: "mouse_down";
             /* called every time e detects a mouse
-               * press */
+             * press */
             signal: "e,action,mouse,down";
             source: "e";
             action: STATE_SET "visible" 0.0;
@@ -5936,7 +5936,7 @@ collections {
          program {
             name: "mouse_idle";
             /* called when e thinks the mouse went
-               * idle and isn't moving */
+             * idle and isn't moving */
             signal: "e,state,mouse,idle";
             source: "e";
             action: STATE_SET "visible" 0.0;
@@ -5955,7 +5955,7 @@ collections {
          program {
             name: "mouse_active";
             /* called when e sees the mouse become
-                 * active again */
+             * active again */
             signal: "e,state,mouse,active";
             source: "e";
             action: STATE_SET "default" 0.0;
@@ -6491,8 +6491,8 @@ collections {
 /*** MENUS ***/
 
    /* this is the background for all menus. it also may optionally display a
-       * title for the menu. this is wrapped around all the menu items that are
-       * laid out in a vertical list from top to bottom */
+    * title for the menu. this is wrapped around all the menu items that are
+    * laid out in a vertical list from top to bottom */
 
    group {
       name: "e/widgets/menu/default/background";
@@ -6516,7 +6516,7 @@ collections {
                }
                fill.smooth: 0;
                /* note - a shortcut for avoiding doing
-               * fill { smooth: 0; } */
+                * fill { smooth: 0; } */
             }
          }
          part {
@@ -6574,7 +6574,7 @@ collections {
          part {
             name: "e.text.title";
             /* e sets the text of this to the title
-                      * if there is any */
+             * if there is any */
             type: TEXT;
             mouse_events: 0;
             scale: 1;
@@ -6633,8 +6633,8 @@ collections {
          part {
             name: "e.swallow.content";
             /* this swallow part determines
-                      * where in the menu the vertical
-                      * list of menu items is put */
+             * where in the menu the vertical
+             * list of menu items is put */
             type: SWALLOW;
             description {
                state: "default" 0.0;
@@ -6654,8 +6654,8 @@ collections {
          program {
             name: "on";
             /* this program is run when e emits a signal
-               * to display a title. e will also set the
-               * title text */
+             * to display a title. e will also set the
+             * title text */
             signal: "e,action,show,title";
             source: "e";
             action: STATE_SET "active" 0.0;
@@ -6676,8 +6676,8 @@ collections {
       }
    }
    /* this is placed as a horizontal separator between menu items in the
-       * vertical menu item list. it has no functionality other than being
-       * a visual separator */
+    * vertical menu item list. it has no functionality other than being
+    * a visual separator */
    group {
       name: "e/widgets/menu/default/separator";
       images {
@@ -6702,15 +6702,15 @@ collections {
       }
    }
    /* this is used for regular menu items. this is what swallows/holds the
-       * whole line of the menu item, icon, check/radio mark, label and submenu
-       * indicator, where applicable */
+    * whole line of the menu item, icon, check/radio mark, label and submenu
+    * indicator, where applicable */
    group {
       name: "e/widgets/menu/default/item_bg";
       /* this is idential to the regular menu item above, but used only for
-          * items that have a submenu. this is to allow for a possible different
-          * look for submenu holding items. here this is identical to to the
-          * normal menu item, thus we are making use of the alias directive that
-          * gives a group the ability to go by manu names */
+       * items that have a submenu. this is to allow for a possible different
+       * look for submenu holding items. here this is identical to to the
+       * normal menu item, thus we are making use of the alias directive that
+       * gives a group the ability to go by manu names */
       alias: "e/widgets/menu/default/submenu_bg";
       images {
          image: "menu_sel_bg.png" COMP;
@@ -6789,8 +6789,8 @@ collections {
          program {
             name: "sel";
             /* when the menu item is selected (hilighted)
-                * this program is run to give the whole item
-                * an overall selected look */
+             * this program is run to give the whole item
+             * an overall selected look */
             signal: "e,state,selected";
             source: "e";
             action: STATE_SET "selected" 0.0;
@@ -6801,7 +6801,7 @@ collections {
          program {
             name: "unsel";
             /* when selection is removed from the menu
-                  * item */
+             * item */
             signal: "e,state,unselected";
             source: "e";
             action: STATE_SET "default" 0.0;
@@ -6812,7 +6812,7 @@ collections {
       }
    }
    /* this group holds a menu icon. here we just use it to add padding around
-       * the icon. And to gray-out when disabled */
+    * the icon. And to gray-out when disabled */
    group {
       name: "e/widgets/menu/default/icon";
       parts {
@@ -6947,7 +6947,7 @@ collections {
       }
    }
    /* this is a small arrow on the right of the menu item to indicate that it
-       * has a submenu after it */
+    * has a submenu after it */
    group {
       name: "e/widgets/menu/default/submenu";
       images {
@@ -6997,8 +6997,8 @@ collections {
       }
    }
    /* this is placed left of the icon in a menu item (if any icon) or left
-       * of the label if no icon is present. this is a checkbox to indicate if
-       * the menu item is enabled or disabled */
+    * of the label if no icon is present. this is a checkbox to indicate if
+    * the menu item is enabled or disabled */
    group {
       name: "e/widgets/menu/default/check";
       images {
@@ -7099,7 +7099,7 @@ collections {
       }
    }
    /* for a radio menu item - same as check, but only one of a group of radio
-       * menu item can be selected at any one time */
+    * menu item can be selected at any one time */
    group {
       name: "e/widgets/menu/default/radio";
       images {
@@ -7206,13 +7206,13 @@ collections {
 /*** SHELF ***/
 
    /* Shelves are "panels" that  are placed around the edges of the screen
-       * to hold useful gadgets to control things - like switch desktops
-       * (the pager module and its gadget), launch programs, and anything else
-       * someone wants to put in there. The way to add gadgets to a shelf is to
-       * write a module that places a gadget there. This means that it might end
-       * up containing all sorts of things and the artist needs to be aware of
-       * that and make sure the shelf border and background etc. won't interfere
-       * with all manner of things that may get placed there */
+    * to hold useful gadgets to control things - like switch desktops
+    * (the pager module and its gadget), launch programs, and anything else
+    * someone wants to put in there. The way to add gadgets to a shelf is to
+    * write a module that places a gadget there. This means that it might end
+    * up containing all sorts of things and the artist needs to be aware of
+    * that and make sure the shelf border and background etc. won't interfere
+    * with all manner of things that may get placed there */
 
    group {
       name: "e/shelf/default/base";
@@ -7220,12 +7220,12 @@ collections {
          /* this tells e the shelf is shaped, not rectangular */
          //    item: "shaped" "1";
          /* this tells e the number of pixels of the shelf to leave "exposed"
-        * when auto-hiding the shelf */
+          * when auto-hiding the shelf */
          item: "hidden_state_size" "1";
          /* This makes the border hide instantly after the given amount of
-        * seconds - in this case 3 seconds. This means there will be no
-        * visible part of the shelf after this time at all as it will be
-        * totally hidden */
+          * seconds - in this case 3 seconds. This means there will be no
+          * visible part of the shelf after this time at all as it will be
+          * totally hidden */
          //    item: "instant_delay" "3.0";
       }
       images {
@@ -7333,9 +7333,9 @@ collections {
       }
    }
    /* This is put around gadgets in the shelf if they ask for an "inset" style
-       * framing. This puts some sort of bordering around them to make them look
-       * "inset" into the shelf or screen. this is meant to go with the default
-       * shelf style as implied in the group name */
+    * framing. This puts some sort of bordering around them to make them look
+    * "inset" into the shelf or screen. this is meant to go with the default
+    * shelf style as implied in the group name */
    group {
       name: "e/shelf/default/inset";
       images {
@@ -7465,8 +7465,8 @@ collections {
       }
    }
    /* Same as inset, but meant to be with no decorations that are visible. here
-       * we simply make the content swallow inset a bit from the edges to align
-       * with any plain style inset boxes */
+    * we simply make the content swallow inset a bit from the edges to align
+    * with any plain style inset boxes */
    group {
       name: "e/shelf/default/plain";
       parts {
@@ -7491,9 +7491,9 @@ collections {
       }
    }
    /* This is the "invisible" shelf. Yes. Even it has visual config in edje.
-       * The idea is that it will remain invisible, BUT will allow the designer
-       * to do some layout and padding. This gets the same signals as the
-       * default shelf and can provide the same data items */
+    * The idea is that it will remain invisible, BUT will allow the designer
+    * to do some layout and padding. This gets the same signals as the
+    * default shelf and can provide the same data items */
    group {
       name: "e/shelf/invisible/base";
       data.item: "shaped" "1";
@@ -7602,9 +7602,9 @@ collections {
       }
    }
    /* This is the alternate shelf. It provides a stylistic alternative to
-       * make the shelf more dynamic to your tastes and wallpaper. It is
-       * selected in the Shelf Configuration. More alternative shelfs can
-       * be provided by using more group names. eg, "e/shelf/black/base" */
+    * make the shelf more dynamic to your tastes and wallpaper. It is
+    * selected in the Shelf Configuration. More alternative shelfs can
+    * be provided by using more group names. eg, "e/shelf/black/base" */
    group {
       name: "e/shelf/alternate/base";
       images {
@@ -7693,8 +7693,8 @@ collections {
          }
       }
       /* Because programs can not respond to 2 different types of signals,
-          * the programs are split into individual programs that point towards
-          * the base program for its orientation. */
+       * the programs are split into individual programs that point towards
+       * the base program for its orientation. */
       programs {
          /* Left orientation */
          //     program { name: "left";
@@ -8393,10 +8393,10 @@ collections {
    }
    group {
       /* This group is interesting in that it specifies programs
-      * after the part that they effect, instead of at the
-      * end of the group. It is a good demonstation of freestyle
-      * formatting in edje.
-      */
+       * after the part that they effect, instead of at the
+       * end of the group. It is a good demonstation of freestyle
+       * formatting in edje.
+       */
       name: "e/modules/connman/tip";
       images {
          image: "inset_sunk.png" COMP;
@@ -10006,11 +10006,10 @@ collections {
 /*** MOD: CONF_EDGEBINDINGS ***/
 
 /* This group draws the edge and corners for the user to pick.
-    * XXX: Needs some love from masters of the brush! */
+ * XXX: Needs some love from masters of the brush! */
 
    group {
       name: "e/modules/conf_edgebindings/selection";
-      // for gadget
       parts {
          part {
             name: "e.swallow.background";
@@ -10260,10 +10259,10 @@ collections {
 /*** MOD: START ***/
 
    /* This is for the "start" module - i.e. a "start" button. It simply
-       * provides such a button/gadget in a shelf that pops up E's main
-       * menu - a nice familiarity feature for those from the windows world.
-       * Other than that it really does nothing, so this button can be quite
-       * imaginative as it has few functional requirements */
+    * provides such a button/gadget in a shelf that pops up E's main
+    * menu - a nice familiarity feature for those from the windows world.
+    * Other than that it really does nothing, so this button can be quite
+    * imaginative as it has few functional requirements */
 
    group {
       name: "e/modules/start/main";
@@ -12274,68 +12273,68 @@ collections {
          }
       }
       programs {
-         /*
-       program {
-          name: "next_governor";
-          signal: "mouse,down,1";
-          source: "cpu";
-          action: SIGNAL_EMIT "e,action,governor,next" "";
-       }
-       program {
-          name: "next_governor2";
-          signal: "mouse,down,1";
-          source: "cpu";
-          action: STATE_SET "clicked" 0.0;
-          target: "cpu";
-       }
-       program {
-          name: "next_governor3";
-          signal: "mouse,up,1";
-          source: "cpu";
-          action: STATE_SET "default" 0.0;
-          target: "cpu";
-       }
-       program {
-          name: "increase_frequency";
-          signal: "mouse,down,1";
-          source: "increase";
-          action: SIGNAL_EMIT "e,action,frequency,increase" "";
-       }
-       program {
-          name: "increase_frequency2";
-          signal: "mouse,down,1";
-          source: "increase";
-          action: STATE_SET "clicked" 0.0;
-          target: "increase_button";
-       }
-       program {
-          name: "increase_frequency3";
-          signal: "mouse,up,1";
-          source: "increase";
-          action: STATE_SET "default" 0.0;
-          target: "increase_button";
-       }
-       program {
-          name: "decrease_frequency";
-          signal: "mouse,down,1";
-          source: "decrease";
-          action: SIGNAL_EMIT "e,action,frequency,decrease" "";
-       }
-       program {
-          name: "decrease_frequency2";
-          signal: "mouse,down,1";
-          source: "decrease";
-          action: STATE_SET "clicked" 0.0;
-          target: "decrease_button";
-       }
-       program {
-          name: "decrease_frequency3";
-          signal: "mouse,up,1";
-          source: "decrease";
-          action: STATE_SET "default" 0.0;
-          target: "decrease_button";
-       }
-    */
+      /*
+         program {
+            name: "next_governor";
+            signal: "mouse,down,1";
+            source: "cpu";
+            action: SIGNAL_EMIT "e,action,governor,next" "";
+         }
+         program {
+            name: "next_governor2";
+            signal: "mouse,down,1";
+            source: "cpu";
+            action: STATE_SET "clicked" 0.0;
+            target: "cpu";
+         }
+         program {
+            name: "next_governor3";
+            signal: "mouse,up,1";
+            source: "cpu";
+            action: STATE_SET "default" 0.0;
+            target: "cpu";
+         }
+         program {
+            name: "increase_frequency";
+            signal: "mouse,down,1";
+            source: "increase";
+            action: SIGNAL_EMIT "e,action,frequency,increase" "";
+         }
+         program {
+            name: "increase_frequency2";
+            signal: "mouse,down,1";
+            source: "increase";
+            action: STATE_SET "clicked" 0.0;
+            target: "increase_button";
+         }
+         program {
+            name: "increase_frequency3";
+            signal: "mouse,up,1";
+            source: "increase";
+            action: STATE_SET "default" 0.0;
+            target: "increase_button";
+         }
+         program {
+            name: "decrease_frequency";
+            signal: "mouse,down,1";
+            source: "decrease";
+            action: SIGNAL_EMIT "e,action,frequency,decrease" "";
+         }
+         program {
+            name: "decrease_frequency2";
+            signal: "mouse,down,1";
+            source: "decrease";
+            action: STATE_SET "clicked" 0.0;
+            target: "decrease_button";
+         }
+         program {
+            name: "decrease_frequency3";
+            signal: "mouse,up,1";
+            source: "decrease";
+            action: STATE_SET "default" 0.0;
+            target: "decrease_button";
+         }
+         */
          program {
             name: "enabled";
             signal: "e,state,enabled";
@@ -12363,7 +12362,7 @@ collections {
       data {
          item: "raise_on_hilight" "0";
          // 1 or 0 if u want an icon holder to raise when the mouse (or keyboard) hilights it
-         //    item: "item_list" "item item2 item3";
+         // item: "item_list" "item item2 item3";
       }
       parts {
          part {
@@ -22163,8 +22162,8 @@ collections {
    }
 
 
-   /////////////////////////////////////////////////////////////////////////////
-   /*** MOVE/RESIZE BOX ***/
+/////////////////////////////////////////////////////////////////////////////
+/*** MOVE/RESIZE BOX ***/
 
    group {
       name: "e/widgets/border/default/move";
@@ -22964,7 +22963,7 @@ collections {
       }
    }
    /* for a radio menu item - same as check, but only one of a group of radio
-       * menu item can be selected at any one time */
+    * menu item can be selected at any one time */
    group {
       name: "e/widgets/radio";
       images {
@@ -23684,15 +23683,15 @@ collections {
             }
          }
          /*
-            part { name: "tst";
-          type: RECT;
-          mouse_events: 0;
-          description { state: "default" 0.0;
-             rel2.relative: 1.0 0.2;
-             color: 0 0 255 128;
-          }
-       }
-    */
+         part { name: "tst";
+            type: RECT;
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               rel2.relative: 1.0 0.2;
+               color: 0 0 255 128;
+            }
+         }
+         */
          part {
             name: "conf_over";
             mouse_events:  0;
@@ -25473,7 +25472,7 @@ collections {
       }
    }
    /* e/widgets/deskpreview is used in the Wallpaper
-           selector dialog to preview wallpapers.         */
+      selector dialog to preview wallpapers.         */
    group {
       name: "e/widgets/deskpreview/desk";
       images.image: "inset_sunk.png" COMP;
@@ -25522,7 +25521,7 @@ collections {
       }
    }
    /* color_well & gradpreview are used to display the color
-           and the gradient in the Wallpaper Gradient config dialog. */
+      and the gradient in the Wallpaper Gradient config dialog. */
    group {
       name: "e/widgets/color_well";
       alias:  "e/widgets/gradpreview";
@@ -25707,7 +25706,7 @@ collections {
       }
    }
    /* Used to display RGB/HSV values via sliders
-           in Wallpaper Gradient Dialog               */
+      in Wallpaper Gradient Dialog               */
    group {
       name: "e/widgets/cslider";
       images.image: "inset_sunk.png" COMP;
@@ -26400,7 +26399,7 @@ collections {
       }
    }
    /* e/widgets/frame is used in the Config Dialog
-           to outline the content                       */
+      to outline the content                       */
    group {
       name: "e/widgets/frame";
       images {
@@ -26570,7 +26569,7 @@ collections {
       }
    }
    /* e/widgets/textblock is used in the description
-           of modules in Module Config dialog             */
+      of modules in Module Config dialog             */
    group {
       name: "e/widgets/textblock";
       styles {
@@ -27660,27 +27659,27 @@ collections {
             target:  "vclip";
          }
          /*
-       program {
-          name:    "api_move_on";
-          signal:  "e,state,move,on";
-          source:  "e";
-       }
-       program {
-          name:    "api_move_off";
-          signal:  "e,state,move,off";
-          source:  "e";
-       }
-       program {
-          name:    "api_active";
-          signal:  "e,state,focused";
-          source:  "e";
-       }
-       program {
-          name:    "api_inactive";
-          signal:  "e,state,unfocused";
-          source:  "e";
-       }
-      */
+         program {
+            name:    "api_move_on";
+            signal:  "e,state,move,on";
+            source:  "e";
+         }
+         program {
+            name:    "api_move_off";
+            signal:  "e,state,move,off";
+            source:  "e";
+         }
+         program {
+            name:    "api_active";
+            signal:  "e,state,focused";
+            source:  "e";
+         }
+         program {
+            name:    "api_inactive";
+            signal:  "e,state,unfocused";
+            source:  "e";
+         }
+         */
          // MOVE PROGRAMS
          program {
             name: "mv_down";
@@ -29229,7 +29228,7 @@ collections {
    //Standard Status Icons
    ICON("dialog-warning","icon_warning.png",128)                   // "enlightenment/warning"
    ICON("dialog-error","icon_warning.png",128)                     // "enlightenment/error"
-   ICON("dialog-ask","icon_dummy.png",64)            // "enlightenment/unknown"
+   ICON("dialog-ask","icon_dummy.png",64)                          // "enlightenment/unknown"
    ICON("unknown","icon_dummy.png",64)                      // *** // "enlightenment/unknown"
    //Standard Application Icons
    ICON("preferences-desktop","icon_desktops.png",64)                         // "enlightenment/desktops"
@@ -29318,7 +29317,7 @@ collections {
    ICON("application-exit","icon_logout.png",64)                                      // "enlightenment/exit"
    ICON("enlightenment","logo_white_128.png",64)                               // *** // "enlightenment/e"
    //Standard Emblem Icons
-   ICON("emblem-symbolic-link","icon_dummy.png",64)                // EFMBUTTON("symlink"
+   ICON("emblem-symbolic-link","icon_dummy.png",64)                // EFMBUTTON("symlink")
    //Standard Place Icons
    ICON("folder","icon_efm_folder.png",64)                         // "fileman/folder"
    ICON("user-home","icon_efm_home.png",64)                        // "fileman/home"
@@ -29336,6 +29335,9 @@ collections {
    ICON("drive-removable-media","icon_efm_usbmedia.png", 128);
    ICON("media-eject","icon_efm_eject.png", 64)
    /* End of FreeDesktop.Org icons */
+   //E Specific icons
+   ICON("everything-launch","icon_advanced.png",64)
+   //EFM Mime icons
    ICONMIME("inode/chardevice","icon_efm_file.png",128)
    ICONMIME("inode/blockdevice","icon_efm_file.png",128)
    ICONMIME("inode/directory-locked","icon_efm_file.png",128)
@@ -29417,6 +29419,8 @@ collections {
    //EFMICON("desktop","icon_efm_desktop.png", 128)
    //EFMICON("hdd","icon_efm_hdd.png", 128)
    //EFMICON("hd","icon_efm_hdd.png", 128)
+   
+   
    // EFM Mime type icons //
 
    #define MIMEICON(NAME, FILE, SIZE)                 \
@@ -29459,6 +29463,7 @@ collections {
    MIMEICON("application/x-ms-dos-executable","icon_mime_executable_generic.png", 128);
    MIMEICON("application/x-7z-compressed","icon_mime_package.png", 128);
    MIMEICON("application/vnd.ms-cab-compressed","icon_mime_package.png", 128);
+   
    // Dynamic MIME Icons //
    #define MIMEBASE(MIME, FILE, NAME, SIZE)           \
    group {                                            \
@@ -29904,8 +29909,8 @@ collections {
 /*** INIT SPLASH ***/
 
    /* this first group is used for the primary screen (or only screen) so in
-       * a multi-monitor setup whichever is first (screen 0) will get this
-       * splash on it */
+    * a multi-monitor setup whichever is first (screen 0) will get this
+    * splash on it */
 
    group {
       name: "e/init/splash";
@@ -30878,7 +30883,7 @@ collections {
          program {
             name: "done1";
             /* when e tells the splash screen it is done
-                                      * starting up, the init splash gets this signal */
+             * starting up, the init splash gets this signal */
             signal: "e,state,done";
             source: "e";
             script {
@@ -30892,9 +30897,9 @@ collections {
       }
    }
    /* this group is used for other screens/xinerama zones etc. other than
-       * the primary as only the primary shows the full splash - this just
-       * shows the below image. it can animate etc. but not display status
-       * etc. */
+    * the primary as only the primary shows the full splash - this just
+    * shows the below image. it can animate etc. but not display status
+    * etc. */
    group {
       name: "e/init/extra_screen";
       parts {
@@ -32609,7 +32614,6 @@ collections {
 /////////////////////////////////////////////////////////////////////////////
 /*** MOD: EVERYTHING ***/
 
-   ICON("everything-launch","icon_advanced.png",64)
    group {
       name: "e/modules/everything/main";
       images {
@@ -34555,15 +34559,16 @@ collections {
          image: "sb_runnerv.png" COMP;
       }
       parts {
-         //    part { name: "clipper";
-         //       type: RECT;
-         //       mouse_events: 0;
-         //       description { state: "default" 0.0;
-         //       }
-         //    }
+         /* 
+         part { name: "clipper";
+            type: RECT;
+            mouse_events: 0;
+            description { state: "default" 0.0; }
+         }
+         */
          part {
             name: "e.swallow.content";
-            //       clip_to: "clipper";
+            // clip_to: "clipper";
             type: SWALLOW;
             description {
                state: "default" 0.0;
