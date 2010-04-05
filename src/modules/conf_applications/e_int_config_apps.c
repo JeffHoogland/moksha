@@ -142,6 +142,7 @@ _create_dialog(E_Container *con, E_Config_Data *data)
    cfd = e_config_dialog_new(con, data->title, "E", data->dialog, 
 			     data->icon, 0, v, data);
    e_dialog_resizable_set(cfd->dia, EINA_TRUE);
+   e_win_centered_set(cfd->dia->win, 1);
    return cfd;
 }
 
@@ -189,6 +190,7 @@ static Evas_Object *
 _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
    Evas_Object *otb, *ot;
+   int mw;
 
    otb = e_widget_toolbook_add(evas, 24, 24);
 
@@ -197,6 +199,9 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    cfdata->o_list = e_widget_ilist_add(evas, 24, 24, NULL);
    e_widget_ilist_multi_select_set(cfdata->o_list, EINA_TRUE);
    _fill_apps_list(cfdata);
+   e_widget_size_min_get(cfdata->o_list, &mw, NULL);
+   if (mw < (200 * e_scale)) mw = (200 * e_scale);
+   e_widget_size_min_set(cfdata->o_list, mw, (75 * e_scale));
    e_widget_table_object_append(ot, cfdata->o_list, 0, 0, 2, 1, 1, 1, 1, 1);
    cfdata->o_add = e_widget_button_add(evas, _("Add"), "list-add", 
                                        _cb_add, cfdata, NULL);
