@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-04-04 05:53+0400\n"
-"PO-Revision-Date: 2010-04-04 07:15+0400\n"
+"POT-Creation-Date: 2010-04-07 10:44+0400\n"
+"PO-Revision-Date: 2010-04-07 10:59+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment French Team <pourunmondesansgourou@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -1751,7 +1751,6 @@ msgstr "Toujours au-dessus"
 #: src/bin/e_int_border_menu.c:869
 #: src/modules/conf_fonts/e_int_config_fonts.c:101
 #: src/modules/conf_fonts/e_int_config_fonts.c:265
-#: src/modules/temperature/e_mod_config.c:251
 msgid "Normal"
 msgstr "Normal"
 
@@ -3193,7 +3192,7 @@ msgid "%3.0f%%"
 msgstr "%3.0f%%"
 
 #: src/bin/e_widget_config_list.c:63
-#: src/modules/conf_applications/e_int_config_apps.c:198
+#: src/modules/conf_applications/e_int_config_apps.c:204
 #: src/modules/conf_profiles/e_int_config_profiles.c:135
 #: src/modules/conf_shelves/e_int_config_shelf.c:79
 #: src/modules/ibar/e_mod_config.c:110
@@ -3201,17 +3200,17 @@ msgid "Add"
 msgstr "Ajouter"
 
 #: src/bin/e_widget_config_list.c:69
-#: src/modules/conf_applications/e_int_config_apps.c:202
+#: src/modules/conf_applications/e_int_config_apps.c:208
 msgid "Remove"
 msgstr "Supprimer"
 
 #: src/bin/e_widget_config_list.c:83
-#: src/modules/conf_applications/e_int_config_apps.c:214
+#: src/modules/conf_applications/e_int_config_apps.c:220
 msgid "Up"
 msgstr "Monter"
 
 #: src/bin/e_widget_config_list.c:89
-#: src/modules/conf_applications/e_int_config_apps.c:218
+#: src/modules/conf_applications/e_int_config_apps.c:224
 msgid "Down"
 msgstr "Descendre"
 
@@ -3279,7 +3278,7 @@ msgstr "Contrôler tous les :"
 
 #: src/modules/battery/e_mod_config.c:188
 #: src/modules/conf_performance/e_int_config_performance.c:121
-#: src/modules/temperature/e_mod_config.c:369
+#: src/modules/temperature/e_mod_config.c:200
 #, c-format
 msgid "%1.0f ticks"
 msgstr "%1.0f tics"
@@ -3427,11 +3426,11 @@ msgstr "Applications au démarrage"
 msgid "Restart Applications"
 msgstr "Applications à redémarrer"
 
-#: src/modules/conf_applications/e_int_config_apps.c:206
+#: src/modules/conf_applications/e_int_config_apps.c:212
 msgid "Selection"
 msgstr "Sélection"
 
-#: src/modules/conf_applications/e_int_config_apps.c:222
+#: src/modules/conf_applications/e_int_config_apps.c:228
 msgid "Order"
 msgstr "Ordre"
 
@@ -6797,113 +6796,57 @@ msgstr "Contrôle du système"
 msgid "System Controls"
 msgstr "Contrôles du système"
 
-#: src/modules/temperature/e_mod_config.c:62
+#: src/modules/temperature/e_mod_config.c:54
 msgid "Temperature Settings"
 msgstr "Paramétrage de Température"
 
-#: src/modules/temperature/e_mod_config.c:239
-#: src/modules/temperature/e_mod_config.c:342
-msgid "Display Units"
-msgstr "Afficher les unités"
-
-#: src/modules/temperature/e_mod_config.c:241
-#: src/modules/temperature/e_mod_config.c:344
-msgid "Celsius"
-msgstr "Celsius"
-
-#: src/modules/temperature/e_mod_config.c:243
-#: src/modules/temperature/e_mod_config.c:346
-msgid "Fahrenheit"
-msgstr "Fahrenheit"
-
-#: src/modules/temperature/e_mod_config.c:247
-#: src/modules/temperature/e_mod_config.c:368
-msgid "Check Interval"
-msgstr "Intervalle des vérifications"
-
-#: src/modules/temperature/e_mod_config.c:249
-msgid "Fast"
-msgstr "Rapide"
-
-#: src/modules/temperature/e_mod_config.c:253
-msgid "Slow"
-msgstr "Lent"
-
-#: src/modules/temperature/e_mod_config.c:255
-msgid "Very Slow"
-msgstr "Très lent"
-
-#: src/modules/temperature/e_mod_config.c:261
-#: src/modules/temperature/e_mod_config.c:285
-#: src/modules/temperature/e_mod_config.c:386
-#: src/modules/temperature/e_mod_config.c:398
-msgid "High Temperature"
-msgstr "Température élevée"
-
-#: src/modules/temperature/e_mod_config.c:264
-msgid "200 F"
-msgstr "200 °F"
-
-#: src/modules/temperature/e_mod_config.c:266
-msgid "150 F"
-msgstr "150 °F"
-
-#: src/modules/temperature/e_mod_config.c:268
-#: src/modules/temperature/e_mod_config.c:277
-msgid "110 F"
-msgstr "110 °F"
-
-#: src/modules/temperature/e_mod_config.c:272
-#: src/modules/temperature/e_mod_config.c:296
-#: src/modules/temperature/e_mod_config.c:391
-#: src/modules/temperature/e_mod_config.c:403
-msgid "Low Temperature"
-msgstr "Température basse"
-
-#: src/modules/temperature/e_mod_config.c:275
-msgid "130 F"
-msgstr "130 °F"
-
-#: src/modules/temperature/e_mod_config.c:279
-msgid "90 F"
-msgstr "90 °F"
-
-#: src/modules/temperature/e_mod_config.c:288
-msgid "93 C"
-msgstr "93 °C"
-
-#: src/modules/temperature/e_mod_config.c:290
-msgid "65 C"
-msgstr "65 °C"
-
-#: src/modules/temperature/e_mod_config.c:292
-#: src/modules/temperature/e_mod_config.c:301
-msgid "43 C"
-msgstr "43 °C"
-
-#: src/modules/temperature/e_mod_config.c:299
-msgid "55 C"
-msgstr "55 °C"
-
-#: src/modules/temperature/e_mod_config.c:303
-msgid "32 C"
-msgstr "32 °C"
-
-#: src/modules/temperature/e_mod_config.c:357
+#: src/modules/temperature/e_mod_config.c:184
 msgid "Sensors"
 msgstr "Capteurs"
 
-#: src/modules/temperature/e_mod_config.c:387
-#: src/modules/temperature/e_mod_config.c:392
+#: src/modules/temperature/e_mod_config.c:190
+msgid "Celcius"
+msgstr "Celsius"
+
+#: src/modules/temperature/e_mod_config.c:193
+msgid "Fahrenheit"
+msgstr "Fahrenheit"
+
+#: src/modules/temperature/e_mod_config.c:196
+msgid "Display Units"
+msgstr "Afficher les unités"
+
+#: src/modules/temperature/e_mod_config.c:203
+msgid "Check Interval"
+msgstr "Intervalle des vérifications"
+
+#: src/modules/temperature/e_mod_config.c:207
+msgid "High Temperature"
+msgstr "Température élevée"
+
+#: src/modules/temperature/e_mod_config.c:211
+#: src/modules/temperature/e_mod_config.c:223
+#: src/modules/temperature/e_mod_config.c:269
+#: src/modules/temperature/e_mod_config.c:270
 #, c-format
 msgid "%1.0f F"
 msgstr "%1.0f °F"
 
-#: src/modules/temperature/e_mod_config.c:399
-#: src/modules/temperature/e_mod_config.c:404
+#: src/modules/temperature/e_mod_config.c:215
+#: src/modules/temperature/e_mod_config.c:227
+#: src/modules/temperature/e_mod_config.c:280
+#: src/modules/temperature/e_mod_config.c:281
 #, c-format
 msgid "%1.0f C"
 msgstr "%1.0f °C"
+
+#: src/modules/temperature/e_mod_config.c:219
+msgid "Low Temperature"
+msgstr "Température basse"
+
+#: src/modules/temperature/e_mod_config.c:231
+msgid "Temperatures"
+msgstr "Températures"
 
 #: src/modules/temperature/e_mod_main.c:142
 msgid "Temperature"
@@ -7221,6 +7164,32 @@ msgstr "Il y a déjà une zone de notification active et seule une instance de c
 msgid "Systray"
 msgstr "Zone de notification"
 
+#~ msgid "Fast"
+#~ msgstr "Rapide"
+#~ msgid "Slow"
+#~ msgstr "Lent"
+#~ msgid "Very Slow"
+#~ msgstr "Très lent"
+#~ msgid "200 F"
+#~ msgstr "200 °F"
+#~ msgid "150 F"
+#~ msgstr "150 °F"
+#~ msgid "110 F"
+#~ msgstr "110 °F"
+#~ msgid "130 F"
+#~ msgstr "130 °F"
+#~ msgid "90 F"
+#~ msgstr "90 °F"
+#~ msgid "93 C"
+#~ msgstr "93 °C"
+#~ msgid "65 C"
+#~ msgstr "65 °C"
+#~ msgid "43 C"
+#~ msgstr "43 °C"
+#~ msgid "55 C"
+#~ msgstr "55 °C"
+#~ msgid "32 C"
+#~ msgstr "32 °C"
 #~ msgid "Favorites Menu"
 #~ msgstr "Menu des favoris"
 #~ msgid "Selected Applications"
