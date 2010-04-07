@@ -1,3 +1,6 @@
+#ifndef EVRY_H
+#define EVRY_H
+
 #include "e.h"
 
 #define EVRY_ACTION_OTHER 0
@@ -94,6 +97,8 @@ struct _Evry_Item
   /* item can be browsed, e.g. folders */
   Eina_Bool browseable;
 
+  Eina_Bool selected;
+
   /* for internally use by plugins */
   void *data;
 
@@ -129,7 +134,8 @@ struct _Evry_Item_App
 struct _Evry_Item_File
 {
   Evry_Item base;
-  const char *uri;
+  const char *url;
+  const char *path;
   const char *mime;
 };
 
@@ -169,6 +175,8 @@ struct _Evry_Plugin
   Evas_Object *(*config_page) (Evry_Plugin *p);
   void (*config_apply) (Evry_Plugin *p);
 
+  int  (*cb_key_down)  (Evry_Plugin *p, const Ecore_Event_Key *ev);
+  
   /* show in aggregator. default is TRUE */
   Eina_Bool aggregate;
   
@@ -269,6 +277,8 @@ EAPI Evas_Object *evry_icon_theme_get(const char *icon, Evas *e);
 EAPI int  evry_fuzzy_match(const char *str, const char *match);
 EAPI Eina_List *evry_fuzzy_match_sort(Eina_List *items);
 EAPI int evry_util_exec_app(const Evry_Item *it_app, const Evry_Item *it_file);
+EAPI char *evry_util_unescape(const char *string, int length);
+
 
 /* e_mod_main.c */
 EAPI void evry_plugin_register(Evry_Plugin *p, int priority);
@@ -303,3 +313,15 @@ EAPI Evry_Action *evry_action_new(const char *name, const char *type_in1,
 
 EAPI void evry_action_free(Evry_Action *act);
 
+typedef struct _Evry_Event_Item_Changed Evry_Event_Item_Changed;
+
+struct _Evry_Event_Item_Changed
+{
+  Evry_Item *item;
+};
+
+extern EAPI int EVRY_EVENT_ITEM_SELECT;
+extern EAPI int EVRY_EVENT_ITEM_CHANGED;
+extern EAPI int EVRY_EVENT_ITEMS_UPDATE;
+
+#endif

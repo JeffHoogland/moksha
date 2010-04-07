@@ -313,12 +313,12 @@ evry_util_exec_app(const Evry_Item *it_app, const Evry_Item *it_file)
 
 	     if (open_folder)
 	       {
-		  path = ecore_file_dir_get(file->uri);
+		  path = ecore_file_dir_get(file->path);
 		  files = eina_list_append(files, path);
 	       }
 	     else
 	       {
-		  files = eina_list_append(files, file->uri);
+		  files = eina_list_append(files, file->path);
 	       }
 
 	     e_exec(zone, app->desktop, NULL, files, NULL);
@@ -341,7 +341,7 @@ evry_util_exec_app(const Evry_Item *it_app, const Evry_Item *it_file)
 	  {
 	     ITEM_FILE(file, it_file);
 
-	     /* files = eina_list_append(files, file->uri);
+	     /* files = eina_list_append(files, file->path);
 	      * 
 	      * e_exec(zone, NULL, app->file, files, NULL);
 	      * 
@@ -350,7 +350,7 @@ evry_util_exec_app(const Evry_Item *it_app, const Evry_Item *it_file)
 
 	     char *tmp;
 	     int len;
-	     tmp = eina_str_escape(file->uri);
+	     tmp = eina_str_escape(file->path);
 	     len = strlen(app->file) + strlen(tmp) + 2;
 	     exe = malloc(len);
 	     snprintf(exe, len, "%s %s", app->file, tmp);
@@ -367,3 +367,55 @@ evry_util_exec_app(const Evry_Item *it_app, const Evry_Item *it_file)
 
    return 1;
 }
+
+/* taken from curl:
+ *
+ * Copyright (C) 1998 - 2010, Daniel Stenberg, <daniel@haxx.se>, et
+ * al.
+ *
+ * Unescapes the given URL escaped string of given length. Returns a
+ * pointer to a malloced string with length given in *olen.
+ * If length == 0, the length is assumed to be strlen(string).
+ * If olen == NULL, no output length is stored.
+ */
+#define ISXDIGIT(x) (isxdigit((int) ((unsigned char)x)))
+
+EAPI char *
+evry_util_unescape(const char *string, int length)
+{
+   int alloc = (length?length:(int)strlen(string))+1;
+   char *ns = malloc(alloc);
+   unsigned char in;
+   int strindex=0;
+   unsigned long hex;
+
+   if( !ns )
+     return NULL;
+
+   while(--alloc > 0) {
+      in = *string;
+      if(('%' == in) && ISXDIGIT(string[1]) && ISXDIGIT(string[2])) {
+	 /* this is two hexadecimal digits following a '%' */
+	 char hexstr[3];
+	 char *ptr;
+	 hexstr[0] = string[1];
+	 hexstr[1] = string[2];
+	 hexstr[2] = 0;
+
+	 hex = strtoul(hexstr, &ptr, 16);
+	 in = (unsigned char)(hex & (unsigned long) 0xFF);
+	 // in = ultouc(hex); /* this long is never bigger than 255 anyway */
+
+	 string+=2;
+	 alloc-=2;
+      }
+
+      ns[strindex++] = in;
+      string++;
+   }
+   ns[strindex]=0; /* terminate it */
+
+   return ns;
+}
+
+#undef ISXDIGIT

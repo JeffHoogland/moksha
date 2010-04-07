@@ -183,7 +183,7 @@ _action(Evry_Plugin *plugin, const Evry_Item *item)
 	Item *it = (Item*) item;
 	import = E_NEW(Import, 1);
 	import->method = it->method;
-	import->file = p->prev->file->uri;
+	import->file = p->prev->file->path;
 	import->quality = 100;
 	import->external = 0;
 	_import_edj_gen(import);

@@ -1,5 +1,5 @@
 #include "Evry.h"
-
+// TODO - show error when input not parseable
 
 static int  _cb_data(void *data, int type, void *event);
 static int  _cb_error(void *data, int type, void *event);
@@ -97,7 +97,7 @@ static int
 _action(Evry_Plugin *p, const Evry_Item *it)
 {
    Eina_List *l;
-   Evry_Item *it2;
+   Evry_Item *it2, *it_old;
 
    /* remove duplicates */
    if (p->items->next)
@@ -118,9 +118,10 @@ _action(Evry_Plugin *p, const Evry_Item *it)
 	  }
      }
 
-   it = p->items->data;
-
-   it2 = evry_item_new(NULL, p, it->label, NULL);
+   it_old = p->items->data;
+   it_old->selected = EINA_FALSE;
+   
+   it2 = evry_item_new(NULL, p, it_old->label, NULL);
    p->items = eina_list_prepend(p->items, it2);
 
    evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_ADD);
@@ -155,26 +156,39 @@ _fetch(Evry_Plugin *p, const char *input)
    return 1;
 }
 
+
+static void
+_cb_free_item_changed(void *data, void *event)
+{
+   Evry_Event_Item_Changed *ev = event;
+
+   evry_item_free(ev->item);
+   E_FREE(ev);
+}
+
 static int
 _cb_data(void *data, int type __UNUSED__, void *event)
 {
    Ecore_Exe_Event_Data *ev = event;
    Evry_Plugin *p = data;
    Evry_Item *it;
-
+   
    if (ev->exe != exe) return 1;
 
    if (ev->lines)
-     {
+     {	
 	it = p->items->data;
-	p->items = eina_list_remove(p->items, it);
-	evry_item_free(it);
-
-	it = evry_item_new(NULL, p, ev->lines->line, NULL);
-	p->items = eina_list_prepend(p->items, it);
+	eina_stringshare_del(it->label);
+	it->label = eina_stringshare_add(ev->lines->line);
+	
+	if (it)
+   	  {
+	     Evry_Event_Item_Changed *ev = E_NEW(Evry_Event_Item_Changed, 1);
+   	     ev->item = it;
+   	     evry_item_ref(it);
+   	     ecore_event_add(EVRY_EVENT_ITEM_CHANGED, ev, _cb_free_item_changed, NULL); 
+   	  }
      }
-
-   evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_ADD);
 
    return 1;
 }

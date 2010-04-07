@@ -31,6 +31,9 @@ int _e_module_evry_log_dom = -1;
 
 EAPI Config *evry_conf = NULL;
 
+EAPI int EVRY_EVENT_ITEM_SELECT;
+EAPI int EVRY_EVENT_ITEM_CHANGED;
+EAPI int EVRY_EVENT_ITEMS_UPDATE;
 
 /* module setup */
 EAPI E_Module_Api e_modapi =
@@ -131,6 +134,13 @@ e_modapi_init(E_Module *m)
 				 evry_config_dialog);
    evry_init();
 
+   if (!EVRY_EVENT_ITEMS_UPDATE)
+     EVRY_EVENT_ITEMS_UPDATE = ecore_event_type_new();
+   if (!EVRY_EVENT_ITEM_SELECT)
+     EVRY_EVENT_ITEM_SELECT = ecore_event_type_new();
+   if (!EVRY_EVENT_ITEM_CHANGED)
+     EVRY_EVENT_ITEM_CHANGED = ecore_event_type_new();
+   
    e_module_delayed_set(m, 1);
 
    return m;

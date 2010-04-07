@@ -17,6 +17,8 @@ struct _View
   int          iw, ih;
   int          zoom;
   int         list_mode;
+
+  Eina_List *handlers;
 };
 
 /* smart object based on wallpaper module */
@@ -84,7 +86,7 @@ _check_item(const Evry_Item *it)
 
    ITEM_FILE(file, it);
 
-   if (!file->uri || !file->mime) return 0;
+   if (!file->path || !file->mime) return 0;
 
    if (!strncmp(file->mime, "image/", 6))
      return 1;
@@ -127,7 +129,7 @@ _thumb_idler(void *data)
 
 	     evas_object_smart_callback_add(it->thumb, "e_thumb_gen", _thumb_gen, it);
 
-	     e_thumb_icon_file_set(it->thumb, file->uri, NULL);
+	     e_thumb_icon_file_set(it->thumb, file->path, NULL);
 	     e_thumb_icon_size_set(it->thumb, it->w, it->h);
 	     e_thumb_icon_begin(it->thumb);
 	     it->do_thumb = EINA_TRUE;
@@ -285,17 +287,20 @@ _e_smart_reconfigure_do(void *data)
           {
 	     if (!it->visible)
 	       {
-		  it->frame = edje_object_add(sd->view->evas);
-		  if (sd->view->list_mode)
-		    e_theme_edje_object_set(it->frame, "base/theme/widgets",
-					    "e/modules/everything/thumbview/item/list");
-		  else
-		    e_theme_edje_object_set(it->frame, "base/theme/widgets",
-					    "e/modules/everything/thumbview/item/thumb");
+		  if (!it->frame)
+		    {
+		       it->frame = edje_object_add(sd->view->evas);
+		       if (sd->view->list_mode)
+			 e_theme_edje_object_set(it->frame, "base/theme/widgets",
+						 "e/modules/everything/thumbview/item/list");
+		       else
+			 e_theme_edje_object_set(it->frame, "base/theme/widgets",
+						 "e/modules/everything/thumbview/item/thumb");
 
-		  evas_object_smart_member_add(it->frame, obj);
-		  evas_object_clip_set(it->frame, evas_object_clip_get(obj));
-
+		       evas_object_smart_member_add(it->frame, obj);
+		       evas_object_clip_set(it->frame, evas_object_clip_get(obj));
+		    }
+		  
 		  edje_object_part_text_set(it->frame, "e.text.label", it->item->label);
 		  evas_object_show(it->frame);
 
@@ -702,7 +707,8 @@ _view_update(Evry_View *view)
 		  v_it->pos = pos;
 
 		  /* set selected state -> TODO remove*/
-		  if (p_it == v->state->cur_item)
+		  /* if (p_it == v->state->cur_item) */
+		  if (p_it->selected)
 		    {
 		       sd->cur_item = v_it;
 		       v_it->selected = EINA_TRUE;
@@ -760,7 +766,8 @@ _view_update(Evry_View *view)
 	     v_it->pos = pos;
 
 	     /* TODO no needed */
-	     if (p_it == v->state->cur_item)
+	     /* if (p_it == v->state->cur_item) */
+	     if (p_it->selected)
 	       {
 		  sd->cur_item = v_it;
 		  v_it->selected = EINA_TRUE;
@@ -926,6 +933,41 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
  end:
    return 1;
 }
+static int
+_cb_item_changed(void *data, int type, void *event)
+{
+   Evry_Event_Item_Changed *ev = event;
+   View *v = data;
+   Eina_List *l;
+   Item *it;
+   Smart_Data *sd = evas_object_smart_data_get(v->span);
+   
+   EINA_LIST_FOREACH(sd->items, l, it)
+     if (it->item == ev->item)
+       {
+	  if (!it->visible) break;
+
+	  edje_object_part_text_set(it->frame, "e.text.label", it->item->label);
+	  
+	  if (it->do_thumb) e_thumb_icon_end(it->thumb);
+	  if (it->thumb) evas_object_del(it->thumb);
+	  if (it->image) evas_object_del(it->image);
+
+	  it->thumb = NULL;
+	  it->image = NULL;
+
+	  it->have_thumb = EINA_FALSE;
+	  it->do_thumb = EINA_FALSE;
+	  
+	  if (!eina_list_data_find(sd->queue, it))
+	    sd->queue = eina_list_append(sd->queue, it);
+	  
+	  if (!sd->thumb_idler)
+	    sd->thumb_idler = ecore_idle_enterer_before_add(_thumb_idler, sd);
+       }
+
+   return 1;
+}
 
 static Evry_View *
 _view_create(Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
@@ -933,6 +975,7 @@ _view_create(Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
    VIEW(parent, view);
 
    View *v;
+   Ecore_Event_Handler *h;
 
    if (!s->plugin)
      return NULL;
@@ -972,6 +1015,9 @@ _view_create(Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
    v->tabs = evry_tab_view_new(s, v->evas);
    v->view.o_bar = v->tabs->o_tabs;
 
+   h = ecore_event_handler_add(EVRY_EVENT_ITEM_CHANGED, _cb_item_changed, v);
+   v->handlers = eina_list_append(v->handlers, h); 
+   
    return EVRY_VIEW(v);
 }
 
@@ -980,12 +1026,18 @@ _view_destroy(Evry_View *view)
 {
    VIEW(v, view);
 
+   Ecore_Event_Handler *h;
+   
    evas_object_del(v->bg);
    evas_object_del(v->sframe);
    evas_object_del(v->span);
 
    evry_tab_view_free(v->tabs);
 
+   EINA_LIST_FREE(v->handlers, h)
+     ecore_event_handler_del(h);
+   
+     
    E_FREE(v);
 }
 
@@ -1001,7 +1053,6 @@ _init(void)
    v->view.update = &_view_update;
    v->view.clear = &_view_clear;
    v->view.cb_key_down = &_cb_key_down;
-
    v->list_mode = -1;
    
    evry_view_register(EVRY_VIEW(v), 1);

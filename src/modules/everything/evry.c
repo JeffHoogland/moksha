@@ -110,6 +110,27 @@ evry_shutdown(void)
    return 1;
 }
 
+static int
+_evry_cb_item_changed(void *data, int type, void *event)
+{
+   Evry_Event_Item_Changed *ev = event;
+   Evry_Selector *sel;
+   int i;
+
+   for (i = 0; i < 3; i++)
+     {
+	sel = selectors[i];
+
+	if (sel->state && sel->state->cur_item == ev->item)
+	  {
+	     _evry_selector_update(sel); 
+	     break;
+	  }
+     }
+
+   return 1;
+}
+
 int
 evry_show(E_Zone *zone, const char *params)
 {
@@ -170,6 +191,10 @@ evry_show(E_Zone *zone, const char *params)
      (handlers, ecore_event_handler_add
       (ECORE_X_EVENT_SELECTION_NOTIFY,
        _evry_cb_selection_notify, win));
+   handlers = eina_list_append
+     (handlers, ecore_event_handler_add
+      (EVRY_EVENT_ITEM_CHANGED,
+       _evry_cb_item_changed, NULL));
 
    e_popup_layer_set(list->popup, 255);
    e_popup_layer_set(win->popup, 255);
@@ -333,19 +358,29 @@ evry_item_select(const Evry_State *state, Evry_Item *it)
    Evry_State *s = (Evry_State *)state;
    Evry_Selector *sel = selector;
 
-   if (!s && it)
-     {
-       sel = _selector_for_plugin_get(it->plugin);
-	if (sel && sel->state)
-	  s = sel->state;
-	else return;
-     }
-   
+   /* if (!s && it)
+    *   {
+    *     sel = _selector_for_plugin_get(it->plugin);
+    * 	if (sel && sel->state)
+    * 	  s = sel->state;
+    * 	else return;
+    * 
+    * 	if (s->plugin != it->plugin)
+    * 	  {
+    * 	     it->selected = EINA_TRUE;
+    * 	     return;
+    * 	  }
+    *   } */
+
    s->plugin_auto_selected = EINA_FALSE;
    s->item_auto_selected = EINA_FALSE;
    
    _evry_item_sel(s, it);
-   _evry_selector_update(sel);
+
+   if (s == sel->state)
+     {
+	_evry_selector_update(sel);
+     }
 }
 
 EAPI void
@@ -790,14 +825,14 @@ _evry_selector_thumb(Evry_Selector *sel, const Evry_Item *it)
 
    ITEM_FILE(file, it);
 
-   if (!file->uri || !file->mime) return 0;
+   if (!file->path || !file->mime) return 0;
 
    if (!strncmp(file->mime, "image/", 6))
      {
    	sel->o_thumb = e_thumb_icon_add(win->popup->evas);
    	evas_object_smart_callback_add(sel->o_thumb, "e_thumb_gen", _evry_selector_thumb_gen, sel);
    	edje_object_part_geometry_get(sel->o_main, "e.swallow.thumb", NULL, NULL, &w, &h);
-   	e_thumb_icon_file_set(sel->o_thumb, file->uri, NULL);
+   	e_thumb_icon_file_set(sel->o_thumb, file->path, NULL);
    	e_thumb_icon_size_set(sel->o_thumb, w, h);
    	e_thumb_icon_begin(sel->o_thumb);
    	sel->do_thumb = EINA_TRUE;
@@ -900,10 +935,27 @@ _evry_selector_update(Evry_Selector *sel)
 
 	if (s->plugin && (!it || s->item_auto_selected))
 	  {
+	     Eina_List *l;
+	     it = NULL;
+
+	     /* get first selected item */
+	     /* EINA_LIST_FOREACH(s->plugin->items, l, it)
+	      *   {
+	      * 	  if (it->selected)
+	      * 	    {
+	      * 	       s->item_auto_selected = EINA_FALSE;
+	      * 	       break;
+	      * 	    }
+	      *   } */
+	     
 	     /* get first item */
-	     if (s->plugin->items)
+	     if (!it && s->plugin->items)
 	       {
 		  it = s->plugin->items->data;
+	       }
+
+	     if (it)
+	       {
 		  s->item_auto_selected = EINA_TRUE;
 		  _evry_item_sel(s, it);
 	       }
@@ -1309,6 +1361,11 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	else if (_evry_view_key_press(s, ev))
 	  goto end;
      }
+   /* let plugin intercept keypress */
+   else if (s->plugin && s->plugin->cb_key_down &&
+	    s->plugin->cb_key_down(s->plugin, ev))
+     goto end;
+   /* let view intercept keypress */
    else if (_evry_view_key_press(s, ev))
      goto end;
    else if (!strcmp(key, "Right"))
@@ -1743,8 +1800,11 @@ static void
 _evry_item_desel(Evry_State *s, Evry_Item *it)
 {
    if (s->cur_item)
-     evry_item_free(s->cur_item);
-
+     {
+	s->cur_item->selected = EINA_FALSE;	
+	evry_item_free(s->cur_item);
+     }
+   
    s->cur_item = NULL;
 }
 
@@ -1756,6 +1816,9 @@ _evry_item_sel(Evry_State *s, Evry_Item *it)
    _evry_item_desel(s, NULL);
 
    evry_item_ref(it);
+
+   it->selected = EINA_TRUE;
+   
    s->cur_item = it;
 }
 
@@ -1772,7 +1835,16 @@ _evry_plugin_select(Evry_State *s, Evry_Plugin *p)
    else s->plugin_auto_selected = EINA_FALSE;
 
    if (s->plugin != p)
-     _evry_item_desel(s, NULL);
+     {
+	_evry_item_desel(s, NULL);
+	/* if (s->cur_item)
+	 *   {
+	 *      /\* s->cur_item->selected = EINA_FALSE;	 *\/
+	 *      evry_item_free(s->cur_item);
+	 *   }
+   	 * 
+	 * s->cur_item = NULL; */
+     }
 
    s->plugin = p;
 }

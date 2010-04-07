@@ -27,7 +27,7 @@ _check_item(const Evry_Item *it)
 
    ITEM_FILE(file, it);
 
-   if (!file->uri || !file->mime) return 0;
+   if (!file->path || !file->mime) return 0;
 
    if (!strncmp(file->mime, "image/", 6))
      return 1;
@@ -77,7 +77,7 @@ _show_item(Image_View *v, const Evry_Item_File *file, int dir)
      }
 
    v->o_thumb[1] = e_thumb_icon_add(v->evas);
-   e_thumb_icon_file_set(v->o_thumb[1], file->uri, NULL);
+   e_thumb_icon_file_set(v->o_thumb[1], file->path, NULL);
    evas_object_smart_callback_add(v->o_thumb[1], "e_thumb_gen", _cb_preview_thumb_gen, v);
    edje_object_part_geometry_get(v->o_main, "e.swallow.icon2", NULL, NULL, &w, &h);
    e_thumb_icon_size_set(v->o_thumb[1], w, h);

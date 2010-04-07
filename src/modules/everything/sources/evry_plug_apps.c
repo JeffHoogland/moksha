@@ -66,10 +66,10 @@ _begin_open_with(Evry_Plugin *plugin, const Evry_Item *item)
    ITEM_FILE(file, item);
    Efreet_Desktop *desktop;
 
-   if (!file->uri) return NULL;
+   if (!file->path) return NULL;
 
    if (!file->mime)
-     mime = efreet_mime_type_get(file->uri);
+     mime = efreet_mime_type_get(file->path);
    else
      mime = file->mime;
 

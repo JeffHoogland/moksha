@@ -42,10 +42,6 @@ _begin(Evry_Plugin *p, const Evry_Item *it)
 	type = it->plugin->type_out;
 	if (!type) return NULL;
      }
-   else
-     {
-	printf("begin %s\n", p->name);
-     }
    
    EINA_LIST_FOREACH(evry_conf->actions, l, act)
      {

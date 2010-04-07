@@ -47,7 +47,7 @@ _item_fill(Evry_Item_File *file)
 
    if (file->mime) return;
 
-   if ((mime = efreet_mime_type_get(file->uri)))
+   if ((mime = efreet_mime_type_get(file->path)))
      {
 	file->mime = eina_stringshare_add(mime);
 	EVRY_ITEM(file)->context = eina_stringshare_ref(file->mime);
@@ -85,7 +85,7 @@ static void
 _item_free(Evry_Item *it)
 {
    ITEM_FILE(file, it);
-   if (file->uri) eina_stringshare_del(file->uri);
+   if (file->path) eina_stringshare_del(file->path);
    if (file->mime) eina_stringshare_del(file->mime);
 
    E_FREE(file);
@@ -123,9 +123,9 @@ _scan_func(void *data)
 	EVRY_ITEM(file)->data = filename;
 
 	snprintf(buf, sizeof(buf), "%s/%s", p->directory, filename);
-	file->uri = strdup(buf);
+	file->path = strdup(buf);
 	
-	if (ecore_file_is_dir(file->uri))
+	if (ecore_file_is_dir(file->path))
 	  EVRY_ITEM(file)->browseable = EINA_TRUE;
 
 	d->files = eina_list_append(d->files, file);
@@ -153,10 +153,10 @@ _append_file(Plugin *p, Evry_Item_File *file)
 }
 
 static const char *
-_item_id(const char *uri)
+_item_id(const char *path)
 {
    const char *s1, *s2, *s3;
-   s1 = s2 = s3 = uri;
+   s1 = s2 = s3 = path;
    
    while (s1 && ++s1 && (s1 = strchr(s1, '/')))
      {
@@ -174,7 +174,7 @@ _scan_end_func(void *data)
    Plugin *p = d->plugin;
    int cnt = 0;
    Evry_Item *item;
-   char *filename, *uri;
+   char *filename, *path;
 
    if (d->id != thread_last)
      {
@@ -193,12 +193,12 @@ _scan_end_func(void *data)
 	ITEM_FILE(file, item);
 
 	filename = item->data;
-	uri = (char *) file->uri;
-	file->uri = eina_stringshare_add(uri);
-	item->id = eina_stringshare_add(_item_id(uri));
+	path = (char *) file->path;
+	file->path = eina_stringshare_add(path);
+	item->id = eina_stringshare_add(_item_id(path));
 	item->label = eina_stringshare_add(filename);
 	free(filename);
-	free(uri);
+	free(path);
 
 	p->files = eina_list_append(p->files, file);
 
@@ -242,14 +242,14 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
      {
 	ITEM_FILE(file, it);
 
-	if (!file->uri || !ecore_file_is_dir(file->uri))
+	if (!file->path || !ecore_file_is_dir(file->path))
 	  return NULL;
 
 	p = E_NEW(Plugin, 1);
 	p->base = *plugin;
 	p->base.items = NULL;
 
-	p->directory = eina_stringshare_add(file->uri);
+	p->directory = eina_stringshare_add(file->path);
      }
    else
      {
@@ -295,7 +295,7 @@ _folder_item_add(Plugin *p, const char *path)
    if (!file) return;
 
    evry_item_new(EVRY_ITEM(file), EVRY_PLUGIN(p), path, _item_free);
-   file->uri = eina_stringshare_add(path);
+   file->path = eina_stringshare_add(path);
    file->mime = eina_stringshare_ref(mime_folder);
    EVRY_ITEM(file)->browseable = EINA_TRUE;
    EVRY_PLUGIN_ITEM_APPEND(p, file);
@@ -419,14 +419,14 @@ _open_folder_action(Evry_Action *act)
 
    if (!act->item1->browseable)
      {
-	path = ecore_file_dir_get(file->uri);
+	path = ecore_file_dir_get(file->path);
 	if (!path) return 0;
 	action->func.go(E_OBJECT(m->data), path);
 	free(path);
      }
    else
      {
-	action->func.go(E_OBJECT(m->data), file->uri);
+	action->func.go(E_OBJECT(m->data), file->path);
      }
 
    return 1;
@@ -442,9 +442,9 @@ _open_term_action(Evry_Action *act)
    int ret = 0;
 
    if (act->item1->browseable)
-     dir = strdup(file->uri);
+     dir = strdup(file->path);
    else
-     dir = ecore_file_dir_get(file->uri);
+     dir = ecore_file_dir_get(file->path);
 
    if (dir)
      {
