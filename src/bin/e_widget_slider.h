@@ -11,6 +11,9 @@ EAPI int e_widget_slider_value_double_set(Evas_Object *slider, double dval);
 EAPI int e_widget_slider_value_int_set(Evas_Object *slider, int ival);
 EAPI int e_widget_slider_value_double_get(Evas_Object *slider, double *dval);
 EAPI int e_widget_slider_value_int_get(Evas_Object *slider, int *ival);
+EAPI void e_widget_slider_value_format_display_set(Evas_Object *slider, const char *format);
+EAPI void e_widget_slider_value_range_set(Evas_Object *slider, double min, double max);
+EAPI void e_widget_slider_value_step_size_set(Evas_Object *slider, double step_size);
 
 EAPI void e_widget_slider_special_value_add(Evas_Object *obj, double value, double error, const char *label);
 

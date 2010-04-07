@@ -147,6 +147,33 @@ e_widget_slider_value_int_get(Evas_Object *slider, int *ival)
    return 1; 
 }
 
+EAPI void 
+e_widget_slider_value_format_display_set(Evas_Object *slider, const char *format) 
+{
+   E_Widget_Data *wd;
+
+   wd = e_widget_data_get(slider);
+   e_slider_value_format_display_set(wd->o_slider, format);
+}
+
+EAPI void 
+e_widget_slider_value_range_set(Evas_Object *slider, double min, double max) 
+{
+   E_Widget_Data *wd;
+
+   wd = e_widget_data_get(slider);
+   e_slider_value_range_set(wd->o_slider, min, max);
+}
+
+EAPI void 
+e_widget_slider_value_step_size_set(Evas_Object *slider, double step_size) 
+{
+   E_Widget_Data *wd;
+
+   wd = e_widget_data_get(slider);
+   e_slider_value_step_size_set(wd->o_slider, step_size);
+}
+
 EAPI void
 e_widget_slider_special_value_add(Evas_Object *obj, double value, double error, const char *label)
 {

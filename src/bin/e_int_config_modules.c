@@ -151,8 +151,8 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    cfdata->l_modules = ol;
 
    e_widget_size_min_get(cfdata->l_modules, &w, NULL);
-   if (w < 200 * e_scale) w = 200 * e_scale;
-   e_widget_size_min_set(cfdata->l_modules, w, 150 * e_scale);
+   if (w < 200 * e_scale) w = (200 * e_scale);
+   e_widget_size_min_set(cfdata->l_modules, w, (100 * e_scale));
 
    e_widget_ilist_multi_select_set(ol, EINA_TRUE);
    e_widget_on_change_hook_set(ol, _widget_list_selection_changed, cfdata);
