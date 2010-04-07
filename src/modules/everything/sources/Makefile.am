@@ -34,13 +34,6 @@ evry_plug_dir_browse_la_LIBADD       = @e_libs@  ../libfoo.la
 evry_plug_dir_browse_la_LDFLAGS      = -module -avoid-version
 evry_plug_dir_browse_la_LIBTOOLFLAGS = --tag=disable-static
 
-evry_plug_trackerdir = $(plugindir)
-evry_plug_tracker_LTLIBRARIES = evry_plug_tracker.la
-evry_plug_tracker_la_SOURCES =  evry_plug_tracker.c
-evry_plug_tracker_la_LIBADD       = @e_libs@  ../libfoo.la
-evry_plug_tracker_la_LDFLAGS      = -module -avoid-version
-evry_plug_tracker_la_LIBTOOLFLAGS = --tag=disable-static
-
 evry_plug_calcdir = $(plugindir)
 evry_plug_calc_LTLIBRARIES = evry_plug_calc.la
 evry_plug_calc_la_SOURCES =  evry_plug_calc.c
