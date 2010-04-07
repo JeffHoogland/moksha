@@ -8,14 +8,13 @@ e_config_descriptor_new(const char *name, int size)
 {
    Eet_Data_Descriptor_Class eddc;
 
-   if (!eet_eina_file_data_descriptor_class_set(&eddc, name, size))
+   if (!eet_eina_stream_data_descriptor_class_set(&eddc, name, size))
      return NULL;
 
-   /* FIXME: We can directly map string inside an Eet_File as we
-      need to change every config destructor in E for that. */
-   eddc.func.str_direct_alloc = NULL;
-   eddc.func.str_direct_free = NULL;
+   /* FIXME: We can directly map string inside an Eet_File and reuse it.
+      But this need a break in all user of config every where in E.
+   */
 
-   return (E_Config_DD *) eet_data_descriptor_file_new(&eddc);
+   return (E_Config_DD *) eet_data_descriptor_stream_new(&eddc);
 }
 
