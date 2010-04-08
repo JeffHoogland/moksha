@@ -982,6 +982,7 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
           (cw->win, ECORE_X_DAMAGE_REPORT_DELTA_RECTANGLES);
         eina_hash_add(damages, e_util_winid_str_get(cw->damage), cw);
         cw->shobj = edje_object_add(c->evas);
+        // use different shadow objects/group per window type?
         // fimxe: make shadow object configurable - use theme first
         if (_comp_mod->conf->shadow_file)
           {
