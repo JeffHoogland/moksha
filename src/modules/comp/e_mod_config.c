@@ -109,7 +109,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 //   ob = e_widget_check_add(evas, _("Limit framerate"), &(cfdata->lock_fps));
 //   e_widget_list_object_append(ol, ob, 1, 1, 0.5);
 // FIXME: ability to choose "shadow" edje file
-   e_widget_list_object_append(ol, of, 1, 1, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Effects"), ol, 0, 0, 0, 0, 0.5, 0.0);
    
    ///////////////////////////////////////////
