@@ -166,6 +166,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
      {
 	eina_module_list_free(plugins);
 	eina_array_free(plugins);
+	plugins = NULL;
      }
 
 
