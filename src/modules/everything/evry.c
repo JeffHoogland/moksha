@@ -138,12 +138,12 @@ _cb_show_timer(void *data)
 {
    if (evry_conf->views && selector->state)
      {
-	Evry_View *view =evry_conf->views->data;
-	Evry_State *s = selector->state;
-
-	s->view = view->create(view, s, list->o_main);
-
-	_evry_view_show(s->view);
+   	Evry_View *view =evry_conf->views->data;
+   	Evry_State *s = selector->state;
+   
+   	s->view = view->create(view, s, list->o_main);
+   
+   	_evry_view_show(s->view);
      }
    else return 0;
 
@@ -190,20 +190,6 @@ evry_show(E_Zone *zone, const char *params)
    _evry_selector_subjects_get(params);
    _evry_selector_activate(selectors[0]);
    
-   if (evry_conf->views && selector->state)
-     {
-   	Evry_View *view =evry_conf->views->data;
-   	Evry_State *s = selector->state;
-   
-   	s->view = view->create(view, s, list->o_main);
-   
-   	_evry_view_show(s->view);
-     }
-   else goto error3;
-
-   /* selectors[0]->update_timer =
-    *   ecore_timer_add(INITIAL_MATCH_LAG, _evry_cb_update_timer, selectors[0]); */
-
    if (!evry_conf->hide_input)
      edje_object_signal_emit(list->o_main, "e,state,entry_show", "e");
    
@@ -232,7 +218,6 @@ evry_show(E_Zone *zone, const char *params)
 
    if (!evry_conf->hide_list)
      _show_timer = ecore_timer_add(0.08, _cb_show_timer, NULL);
-   /* _evry_list_win_show(); */
    
    return 1;
 
