@@ -61,7 +61,6 @@ e_modapi_init(E_Module *m)
    Eina_List *files;
    char buf[4096], dir[4096];
    char *file;
-   E_Action *act;
 
    /* snprintf(buf, sizeof(buf), "%s/.e/e/config/%s/module.everything",
     * 	    e_user_homedir_get(), e_config_profile_get());
@@ -80,9 +79,6 @@ e_modapi_init(E_Module *m)
    _config_init();
    evry_history_init();
       
-   /* search for plugins */
-   eina_init();
-
    snprintf(dir, sizeof(dir), "%s/enlightenment/everything_plugins",
 	    e_prefix_lib_get());
    files = ecore_file_ls(dir);
@@ -172,7 +168,6 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 	eina_array_free(plugins);
      }
 
-   eina_shutdown();
 
    while ((cfd = e_config_dialog_get("E", "_config_everything_dialog")))
      e_object_del(E_OBJECT(cfd));
