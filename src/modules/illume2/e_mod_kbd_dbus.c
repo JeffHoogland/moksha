@@ -155,7 +155,6 @@ _e_mod_kbd_dbus_cb_input_kbd_is(void *data, void *reply, DBusError *err)
    if (dbus_error_is_set(err)) 
      {
         dbus_error_free(err);
-        if (udi) free(udi);
         return;
      }
 
@@ -166,7 +165,6 @@ _e_mod_kbd_dbus_cb_input_kbd_is(void *data, void *reply, DBusError *err)
           {
              _e_mod_kbd_dbus_kbd_add(udi);
              _e_mod_kbd_dbus_kbd_eval();
-             free(udi);
           }
      }
 }
