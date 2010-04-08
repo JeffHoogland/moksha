@@ -24,16 +24,7 @@ struct _Config
    int              max_unmapped_pixels;
    int              max_unmapped_time;
    int              min_unmapped_time;
-   unsigned char    effect_fade;
-   unsigned char    effect_zoom;
-   unsigned char    effect_wobble;
-   unsigned char    effect_rotate;
 };
-
-#define EFFECT_NONE 0
-#define EFFECT_FADE 1
-#define EFFECT_ZOOM 0
-#define EFFECT_ZOOM 0
 
 struct _Mod
 {

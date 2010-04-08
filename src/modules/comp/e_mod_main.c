@@ -61,10 +61,6 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, max_unmapped_pixels, INT);
    E_CONFIG_VAL(D, T, max_unmapped_time, INT);
    E_CONFIG_VAL(D, T, min_unmapped_time, INT);
-   E_CONFIG_VAL(D, T, effect_fade, UCHAR);
-   E_CONFIG_VAL(D, T, effect_zoom, UCHAR);
-   E_CONFIG_VAL(D, T, effect_rotate, UCHAR);
-   E_CONFIG_VAL(D, T, effect_wobble, UCHAR);
    
    mod->conf = e_config_domain_load("module.comp", mod->conf_edd);
    if (!mod->conf)
@@ -75,25 +71,21 @@ e_modapi_init(E_Module *m)
         mod->conf->engine = E_EVAS_ENGINE_SOFTWARE_X11;
         mod->conf->indirect = 0;
         mod->conf->texture_from_pixmap = 0; 
-        mod->conf->lock_fps = 1;
+        mod->conf->lock_fps = 0;
         mod->conf->efl_sync = 1;
         mod->conf->loose_sync = 1;
         mod->conf->grab = 0;
         mod->conf->vsync = 1;
         mod->conf->keep_unmapped = 1;
-        mod->conf->send_flush = 1;
-        mod->conf->send_dump = 0;
-        mod->conf->nocomp_fs = 0;
-        mod->conf->max_unmapped_pixels =  32 * 1024;
-        mod->conf->max_unmapped_time = 10 * 3600;
-        mod->conf->min_unmapped_time = 5 * 60;
-        mod->conf->effect_fade = 0;
-        mod->conf->effect_zoom = 0;
-        mod->conf->effect_wobble = 0;
-        mod->conf->effect_rotate = 0;
+        mod->conf->send_flush = 1; // implement
+        mod->conf->send_dump = 0; // implement
+        mod->conf->nocomp_fs = 0; // buggy
+        mod->conf->max_unmapped_pixels =  32 * 1024; // implement
+        mod->conf->max_unmapped_time = 10 * 3600; // implement
+        mod->conf->min_unmapped_time = 5 * 60; // implement
      }
    
-   mod->conf->effect_fade = 0; // OOOFFF!!!
+   mod->conf->lock_fps = 0; // OOOFFF!!!
    
    _comp_mod = mod;
 

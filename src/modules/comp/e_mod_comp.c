@@ -50,6 +50,9 @@ struct _E_Comp_Win
    E_Popup              *pop; // if its a popup - later
    E_Menu               *menu; // if it is a menu - later
    int                   x, y, w, h; // geometry
+   struct {
+      int                x, y, w, h; // hidden geometry (used when its unmapped and re-instated on map)
+   } hidden;
    int                   pw, ph; // pixmap w/h
    int                   border; // border width
    Ecore_X_Pixmap        pixmap; // the compositing pixmap
@@ -67,13 +70,16 @@ struct _E_Comp_Win
    Ecore_X_Rectangle    *rects; // shape rects... if shaped :(
    int                   rects_num; // num rects above
    
-   Eina_List            *effects; // list of effects attached to this window currently
-
    Ecore_X_Pixmap        cache_pixmap; // the cached pixmap (1/nth the dimensions)
    int                   cache_w, cache_h; // cached pixmap size
    int                   update_count; // how many updates have happend to this win
    double                last_visible_time; // last time window was visible
    double                last_draw_time; // last time window was damaged
+   
+   Eina_Bool             animating : 1; // it's busy animating - defer hides/dels
+   Eina_Bool             force : 1; // force del/hide even if animating
+   Eina_Bool             defer_hide : 1; // flag to get hide to work on deferred hide
+   Eina_Bool             delete_me : 1; // delete me!
    
    Eina_Bool             visible : 1; // is visible
    Eina_Bool             input_only : 1; // is input_only
@@ -86,8 +92,6 @@ struct _E_Comp_Win
    Eina_Bool             native : 1; // native
    Eina_Bool             drawme : 1; // drawme flag fo syncing rendering
    Eina_Bool             invalid : 1; // invalid depth used - just use as marker
-   Eina_Bool             defer_hide : 1; // flag to get hide to work on deferred hide
-   Eina_Bool             delete_me : 1; // delete me!
    Eina_Bool             nocomp : 1; // nocomp applied
 };
 
@@ -96,165 +100,6 @@ static Eina_List *compositors = NULL;
 static Eina_Hash *windows = NULL;
 static Eina_Hash *borders = NULL;
 static Eina_Hash *damages = NULL;
-
-//////////////////////////////////////////////////////////////////////////
-// not working yet.
-typedef struct _Effect Effect;
-
-struct _Effect
-{
-   E_Comp_Win *cw;
-   Ecore_Animator *animator;
-   double start, len;
-   double src, dst;
-   int type;
-};
-
-#define EFFECT_SHOW 1
-#define EFFECT_HIDE 2
-#define EFFECT_MOVE 3
-
-static Effect *
-_e_mod_comp_effect_add(E_Comp_Win *cw, int (*func) (void *data), double len, int type)
-{
-   Effect *ef;
-   
-   ef = calloc(1, sizeof(Effect));
-   ef->animator = ecore_animator_add(func, ef);
-   ef->start = ecore_loop_time_get();
-   ef->len = len;
-   ef->cw = cw;
-   ef->type = type;
-   cw->effects = eina_list_append(cw->effects, ef);
-   return ef;
-}
-
-static void
-_e_mod_comp_effect_del(Effect *ef)
-{
-   ef->cw->effects = eina_list_remove(ef->cw->effects, ef);
-   ecore_animator_del(ef->animator);
-   free(ef);
-}
-
-static Effect *
-_e_mod_comp_win_effect_find(E_Comp_Win *cw, int type)
-{
-   Eina_List *l;
-   Effect *ef;
-   
-   // fixme: use hash if compositors list > 4
-   EINA_LIST_FOREACH(cw->effects, l, ef)
-     {
-        if (ef->type == type) return ef;
-     }
-   return NULL;
-}
-
-static void _e_mod_comp_win_hide(E_Comp_Win *cw); // quick and dirty
-static void _e_mod_comp_win_del(E_Comp_Win *cw); // quick and dirty
-static void _e_mod_comp_win_render_queue(E_Comp_Win *cw); // quick and dirty
-
-static int
-_e_mod_comp_ef_cb_fade_to(void *data)
-{
-   Effect *ef = data;
-   double t = (ecore_loop_time_get() - ef->start) / ef->len;
-   E_Comp_Win *cw = ef->cw;
-   double v;
-   int col;
-   if (t > 1.0) t = 1.0;
-   
-   v = ef->src + ((ef->dst - ef->src) * t);
-   col = 255.0 * v;
-   evas_object_color_set(cw->obj, col, col, col, col);
-   if (ef->cw->shobj)
-     evas_object_color_set(cw->shobj, col, col, col, col);
-   if (t >= 1.0)
-     {
-        evas_object_color_set(cw->obj, 255, 255, 255, 255);
-        _e_mod_comp_effect_del(ef);
-        _e_mod_comp_win_render_queue(cw);
-        if (!cw->effects)
-          {
-             if (cw->defer_hide)
-               {
-                  cw->defer_hide = 0;
-                  _e_mod_comp_win_hide(cw);
-               }
-             if (cw->delete_me)
-               _e_mod_comp_win_del(cw);
-          }
-        return 0;
-     }
-   return 1;
-}
-
-static void
-_e_mod_comp_win_show_effects_add(E_Comp_Win *cw)
-{
-   Effect *ef;
-   
-   do
-     {
-        ef = _e_mod_comp_win_effect_find(cw, EFFECT_SHOW);
-        if (ef) _e_mod_comp_effect_del(ef);
-     }
-   while (ef);
-   
-   do
-     {
-        ef = _e_mod_comp_win_effect_find(cw, EFFECT_HIDE);
-        if (ef) _e_mod_comp_effect_del(ef);
-     }
-   while (ef);
-   
-   if (_comp_mod->conf->effect_fade)
-     {
-        ef = _e_mod_comp_effect_add(cw, _e_mod_comp_ef_cb_fade_to, 0.2, EFFECT_SHOW);
-        ef->src = 0.0;
-        ef->dst = 1.0;
-        cw->defer_hide = 0;
-        _e_mod_comp_ef_cb_fade_to(ef);
-     }
-}
-
-static void
-_e_mod_comp_win_hide_effects_add(E_Comp_Win *cw)
-{
-   Effect *ef;
-   
-   do
-     {
-        ef = _e_mod_comp_win_effect_find(cw, EFFECT_SHOW);
-        if (ef) _e_mod_comp_effect_del(ef);
-     }
-   while (ef);
-   
-   do
-     {
-        ef = _e_mod_comp_win_effect_find(cw, EFFECT_HIDE);
-        if (ef) _e_mod_comp_effect_del(ef);
-     }
-   while (ef);
-   
-   if (_comp_mod->conf->effect_fade)
-     {
-        int a;
-        
-        ef = _e_mod_comp_effect_add(cw, _e_mod_comp_ef_cb_fade_to, 0.2, EFFECT_HIDE);
-        evas_object_color_get(cw->obj, NULL, NULL, NULL, &a);
-        ef->src = (double)a / 255.0;
-        ef->dst = 0.0;
-        cw->defer_hide = 1;
-        _e_mod_comp_ef_cb_fade_to(ef);
-     }
-}
-
-static void
-_e_mod_comp_win_move_effects_add(E_Comp_Win *cw)
-{
-}
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -266,6 +111,10 @@ _e_mod_comp_win_move_effects_add(E_Comp_Win *cw)
 
 static void _e_mod_comp_render_queue(E_Comp *c);
 static void _e_mod_comp_win_damage(E_Comp_Win *cw, int x, int y, int w, int h, Eina_Bool dmg);
+static void _e_mod_comp_win_render_queue(E_Comp_Win *cw);
+static void _e_mod_comp_win_del(E_Comp_Win *cw);
+static void _e_mod_comp_win_hide(E_Comp_Win *cw);
+static void _e_mod_comp_win_configure(E_Comp_Win *cw, int x, int y, int w, int h, int border);
 
 static E_Comp_Win *
 _e_mod_comp_fullscreen_check(E_Comp *c)
@@ -417,7 +266,7 @@ _e_mod_comp_win_shape_rectangles_apply(E_Comp_Win *cw, const Ecore_X_Rectangle *
           }
         // dont need to fix alpha chanel as blending 
         // should be totally off here regardless of
-        // alpha channe; content
+        // alpha channel content
      }
 }
 
@@ -426,6 +275,7 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
 {
    E_Update_Rect *r;
    int i;
+   int pshaped = cw->shaped;
 
    if (_comp_mod->conf->grab) ecore_x_grab();
    cw->update = 0;
@@ -518,20 +368,10 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
         return;
      }
 
-   evas_object_move(cw->obj, cw->x, cw->y);
-   if (cw->shobj)
-     {
-        evas_object_move(cw->shobj, cw->x, cw->y);
-     }
-   evas_object_resize(cw->obj, 
+   evas_object_move(cw->shobj, cw->x, cw->y);
+   evas_object_resize(cw->shobj, 
                       cw->pw + (cw->border * 2), 
                       cw->ph + (cw->border * 2));
-   if (cw->shobj)
-     {
-        evas_object_resize(cw->shobj, 
-                           cw->pw + (cw->border * 2),
-                           cw->ph + (cw->border * 2));
-     }
 
    if ((cw->c->gl) && (_comp_mod->conf->texture_from_pixmap) &&
        (!cw->shaped) && (!cw->rects)/* && (!cw->shape_changed)*/)
@@ -626,15 +466,22 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
      }
    if ((!cw->update) && (cw->visible) && (cw->dmg_updates > 0))
      {
-        if (!evas_object_visible_get(cw->obj))
+        if (!evas_object_visible_get(cw->shobj))
           {
-             evas_object_show(cw->obj);
-             if (cw->shobj) evas_object_show(cw->shobj);
+             evas_object_show(cw->shobj);
+             edje_object_signal_emit(cw->shobj, "e,state,visible,on", "e");
+             cw->animating = 1;
           }
      }
-   if (cw->shobj)
+   if ((cw->shobj) && (cw->obj))
      {
-        if (cw->shaped) evas_object_hide(cw->shobj);
+        if (pshaped != cw->shaped)
+          {
+             if (cw->shaped)
+               edje_object_signal_emit(cw->shobj, "e,state,shadow,off", "e"); 
+            else
+               edje_object_signal_emit(cw->shobj, "e,state,shadow,on", "e");
+          }
      }
 
    if (_comp_mod->conf->grab) ecore_x_ungrab();
@@ -855,8 +702,8 @@ _e_mod_comp_cb_update(E_Comp *c)
 //                  _e_mod_comp_win_damage(cw, 0, 0, cw->w, cw->h, 0);
                   if (cw->visible)
                     {
-                       evas_object_show(cw->obj);
-                       if (cw->shobj) evas_object_show(cw->shobj);
+                       evas_object_show(cw->shobj);
+                       // no need for effect
                     }
                   _e_mod_comp_win_render_queue(cw);
                   if (cw->counter)
@@ -1025,6 +872,31 @@ _e_mod_comp_object_del(void *data, void *obj)
 }
 
 static void
+_e_mod_comp_done_defer(E_Comp_Win *cw)
+{
+   cw->animating = 0;
+   cw->force = 1;
+   if (cw->defer_hide) _e_mod_comp_win_hide(cw);
+   cw->force = 1;
+   if (cw->delete_me) _e_mod_comp_win_del(cw);
+   else cw->force = 0;
+}
+
+static void
+_e_mod_comp_show_done(void *data, Evas_Object *obj, const char *emission, const char *source)
+{
+   E_Comp_Win *cw = data;
+   _e_mod_comp_done_defer(cw);
+}
+
+static void
+_e_mod_comp_hide_done(void *data, Evas_Object *obj, const char *emission, const char *source)
+{
+   E_Comp_Win *cw = data;
+   _e_mod_comp_done_defer(cw);
+}
+
+static void
 _e_mod_comp_win_sync_setup(E_Comp_Win *cw, Ecore_X_Window win)
 {
    if (!_comp_mod->conf->efl_sync) return;
@@ -1103,13 +975,42 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
    if ((!cw->input_only) && (!cw->invalid))
      {
         Ecore_X_Rectangle *rects;
-        int num;
+        int num, ok = 0;
+        char buf[PATH_MAX];
         
         cw->damage = ecore_x_damage_new
           (cw->win, ECORE_X_DAMAGE_REPORT_DELTA_RECTANGLES);
         eina_hash_add(damages, e_util_winid_str_get(cw->damage), cw);
         cw->shobj = edje_object_add(c->evas);
+        // fimxe: make shadow object configurable - use theme first
+        if (_comp_mod->conf->shadow_file)
+          {
+             ok = 1;
+             if (!edje_object_file_set(cw->shobj, _comp_mod->conf->shadow_file,
+                                       "shadow"))
+               ok = 0;
+          }
+        if (!ok)
+          {
+             ok = 1;
+             if (!e_theme_edje_object_set(cw->shobj, "base/theme/borders",
+                                          "e/shadow/box"))
+               ok = 0;
+          }
+        if (!ok)
+          {
+             snprintf(buf, sizeof(buf), "%s/shadow.edj", 
+                      e_module_dir_get(_comp_mod->module));
+             edje_object_file_set(cw->shobj, buf, "shadow");
+          }
+        edje_object_signal_callback_add(cw->shobj, "e,action,show,done", "e",
+                                        _e_mod_comp_show_done, cw);
+        edje_object_signal_callback_add(cw->shobj, "e,action,hide,done", "e",
+                                        _e_mod_comp_hide_done, cw);
         cw->obj = evas_object_image_filled_add(c->evas);
+        evas_object_image_smooth_scale_set(cw->obj, 0);
+        edje_object_part_swallow(cw->shobj, "e.swallow.content", cw->obj);
+        evas_object_show(cw->obj);
         evas_object_image_colorspace_set(cw->obj, EVAS_COLORSPACE_ARGB8888);
         if (cw->argb) evas_object_image_alpha_set(cw->obj, 1);
         else evas_object_image_alpha_set(cw->obj, 0);
@@ -1142,8 +1043,8 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
      }
    else
      {
-        cw->obj = evas_object_rectangle_add(c->evas);
-        evas_object_color_set(cw->obj, 0, 0, 0, 64);
+        cw->shobj = evas_object_rectangle_add(c->evas);
+        evas_object_color_set(cw->shobj, 0, 0, 0, 64);
      }
    c->wins = eina_inlist_append(c->wins, EINA_INLIST_GET(cw));
    cw->up = e_mod_comp_update_new();
@@ -1169,7 +1070,6 @@ _e_mod_comp_win_del(E_Comp_Win *cw)
 {
    e_mod_comp_update_free(cw->up);
    DBG("  [0x%x] del\n", cw->win);
-   while (cw->effects) _e_mod_comp_effect_del(cw->effects->data);
    if (cw->rects)
      {
         free(cw->rects);
@@ -1253,6 +1153,7 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
    if (cw->visible) return;
    cw->visible = 1;
    DBG("  [0x%x] sho ++++++++++\n", cw->win);
+   _e_mod_comp_win_configure(cw, cw->hidden.x, cw->hidden.y, cw->w, cw->h, cw->border);
    if ((cw->input_only) || (cw->invalid)) return;
    if (cw->pixmap) ecore_x_pixmap_free(cw->pixmap);
    evas_object_image_size_set(cw->obj, cw->pw, cw->ph);
@@ -1311,76 +1212,54 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
         cw->redirected = 1;
         cw->dmg_updates = 0;
      }
-   if (cw->shobj)
+   if ((cw->shobj) && (cw->obj))
      {
         if (_comp_mod->conf->use_shadow)
           {
              if (_e_mod_comp_win_do_shadow(cw))
-               {
-                  int ok = 0;
-                  char buf[PATH_MAX];
-                  
-                  // fimxe: make shadow object configurable - use theme first
-                  if (_comp_mod->conf->shadow_file)
-                    {
-                       ok = 1;
-                       if (!edje_object_file_set(cw->shobj, 
-                                                 _comp_mod->conf->shadow_file,
-                                                 "shadow"))
-                         ok = 0;
-                    }
-                  if (!ok)
-                    {
-                       ok = 1;
-                       if (!e_theme_edje_object_set(cw->shobj,
-                                                    "base/theme/borders",
-                                                    "e/shadow/box"))
-                         ok = 0;
-                   }
-                  if (!ok)
-                    {
-                       snprintf(buf, sizeof(buf), "%s/shadow.edj", 
-                                e_module_dir_get(_comp_mod->module)
-                                );
-                       edje_object_file_set(cw->shobj, buf, "shadow");
-                    }
-               }
+               edje_object_signal_emit(cw->shobj, "e,state,shadow,on", "e");
+             else
+               edje_object_signal_emit(cw->shobj, "e,state,shadow,off", "e");
           }
      }
    if (cw->dmg_updates > 0)
      {
-        evas_object_show(cw->obj);
-        if (cw->shobj) evas_object_show(cw->shobj);
+        cw->defer_hide = 0;
+        evas_object_show(cw->shobj);
+        edje_object_signal_emit(cw->shobj, "e,state,visible,on", "e");
+        cw->animating = 1;
      }
    _e_mod_comp_win_render_queue(cw);
-   _e_mod_comp_win_show_effects_add(cw);
 }
 
 static void
 _e_mod_comp_win_hide(E_Comp_Win *cw)
 {
-   if (!cw->defer_hide)
-     {
-        if (!cw->visible) return;
-     }
+   if (!cw->visible) return;
    cw->defer_hide = 0;
    cw->visible = 0;
    if ((cw->input_only) || (cw->invalid)) return;
    DBG("  [0x%x] hid --\n", cw->win);
-   _e_mod_comp_win_hide_effects_add(cw);
-   if (cw->effects)
+//   if (cw->effects)
+//     {
+//        cw->defer_hide = 1;
+//        return; // defer rest of hide
+//     }
+   if (!cw->force)
      {
         cw->defer_hide = 1;
-        return; // defer rest of hide
+        edje_object_signal_emit(cw->shobj, "e,state,visible,off", "e");
+        cw->animating = 1;
+        return;
      }
+   cw->force = 0;
+   evas_object_hide(cw->shobj);
+  
    if (cw->update_timeout)
      {
         ecore_timer_del(cw->update_timeout);
         cw->update_timeout = NULL;
      }
-   evas_object_hide(cw->obj);
-   if (cw->shobj) evas_object_hide(cw->shobj);
-
    if (_comp_mod->conf->keep_unmapped)
      {
         // fixme: ask the x homies. why does this need to be done?
@@ -1464,11 +1343,7 @@ _e_mod_comp_win_raise_above(E_Comp_Win *cw, E_Comp_Win *cw2)
    cw->c->wins = eina_inlist_append_relative(cw->c->wins, 
                                              EINA_INLIST_GET(cw), 
                                              EINA_INLIST_GET(cw2));
-   evas_object_stack_above(cw->obj, cw2->obj);
-   if (cw->shobj)
-     {
-        evas_object_stack_below(cw->shobj, cw->obj);
-     }
+   evas_object_stack_above(cw->shobj, cw2->shobj);
    _e_mod_comp_win_render_queue(cw);
 }
 
@@ -1478,11 +1353,7 @@ _e_mod_comp_win_raise(E_Comp_Win *cw)
    DBG("  [0x%x] rai\n", cw->win);
    cw->c->wins = eina_inlist_remove(cw->c->wins, EINA_INLIST_GET(cw));
    cw->c->wins = eina_inlist_append(cw->c->wins, EINA_INLIST_GET(cw));
-   evas_object_raise(cw->obj);
-   if (cw->shobj)
-     {
-        evas_object_stack_below(cw->shobj, cw->obj);
-     }
+   evas_object_raise(cw->shobj);
    _e_mod_comp_win_render_queue(cw);
 }
 
@@ -1492,11 +1363,7 @@ _e_mod_comp_win_lower(E_Comp_Win *cw)
    DBG("  [0x%x] low\n", cw->win);
    cw->c->wins = eina_inlist_remove(cw->c->wins, EINA_INLIST_GET(cw));
    cw->c->wins = eina_inlist_prepend(cw->c->wins, EINA_INLIST_GET(cw));
-   evas_object_lower(cw->obj);
-   if (cw->shobj)
-     {
-        evas_object_stack_below(cw->shobj, cw->obj);
-     }
+   evas_object_lower(cw->shobj);
    _e_mod_comp_win_render_queue(cw);
 }
 
@@ -1505,17 +1372,22 @@ _e_mod_comp_win_configure(E_Comp_Win *cw, int x, int y, int w, int h, int border
 {
    Eina_Bool moved = 0;
    
-   if (!((x == cw->x) && (y == cw->y)))
+   if (!cw->visible)
      {
-        DBG("  [0x%x] mov %4i %4i\n", cw->win, x, y);
-        cw->x = x;
-        cw->y = y;
-        evas_object_move(cw->obj, cw->x, cw->y);
-        if (cw->shobj)
+        cw->hidden.x = x;
+        cw->hidden.y = y;
+        cw->border = border;
+     }
+   else
+     {
+        if (!((x == cw->x) && (y == cw->y)))
           {
+             DBG("  [0x%x] mov %4i %4i\n", cw->win, x, y);
+             cw->x = x;
+             cw->y = y;
              evas_object_move(cw->shobj, cw->x, cw->y);
+             moved = 1;
           }
-        moved = 1;
      }
    if (!((w == cw->w) && (h == cw->h)))
      {
@@ -1531,15 +1403,9 @@ _e_mod_comp_win_configure(E_Comp_Win *cw, int x, int y, int w, int h, int border
           }
         cw->w = w;
         cw->h = h;
-        evas_object_resize(cw->obj, 
+        evas_object_resize(cw->shobj, 
                            cw->w + (cw->border * 2), 
                            cw->h + (cw->border * 2));
-        if (cw->shobj)
-          {
-             evas_object_resize(cw->shobj, 
-                                cw->w + (cw->border * 2),
-                                cw->h + (cw->border * 2));
-          }
         if (cw->xim)
           {
              evas_object_image_data_set(cw->obj, NULL);
@@ -1550,20 +1416,15 @@ _e_mod_comp_win_configure(E_Comp_Win *cw, int x, int y, int w, int h, int border
      }
    if (cw->border != border)
      {
-        cw->border = border;
-        evas_object_resize(cw->obj, 
+        cw->border = border; 
+        evas_object_resize(cw->shobj, 
                            cw->w + (cw->border * 2), 
                            cw->h + (cw->border * 2));
-        if (cw->shobj)
-          {
-             evas_object_resize(cw->shobj, 
-                                cw->w + (cw->border * 2),
-                                cw->h + (cw->border * 2));
-          }
      }
+   cw->hidden.w = cw->w;
+   cw->hidden.h = cw->h;
    if ((cw->input_only) || (cw->invalid)) return;
    _e_mod_comp_win_render_queue(cw);
-   if (moved) _e_mod_comp_win_move_effects_add(cw);
 }
 
 static void
@@ -1637,7 +1498,7 @@ _e_mod_comp_destroy(void *data, int type, void *event)
    Ecore_X_Event_Window_Destroy *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->win);
    if (!cw) return 1;
-   if (cw->effects) cw->delete_me = 1;
+   if (cw->animating) cw->delete_me = 1;
    else _e_mod_comp_win_del(cw);
    return 1;
 }
@@ -2174,43 +2035,17 @@ e_mod_comp_shadow_set(void)
         ecore_evas_manual_render_set(c->ee, _comp_mod->conf->lock_fps);
         EINA_INLIST_FOREACH(c->wins, cw)
           {
-             if (evas_object_visible_get(cw->obj) && (cw->shobj))
+             if ((cw->shobj) && (cw->obj))
                {
                   if (_comp_mod->conf->use_shadow)
                     {
                        if (_e_mod_comp_win_do_shadow(cw))
-                         {
-                            int ok = 0;
-                            char buf[PATH_MAX];
-                            
-                            if (_comp_mod->conf->shadow_file)
-                              {
-                                 ok = 1;
-                                 if (!edje_object_file_set(cw->shobj, 
-                                                           _comp_mod->conf->shadow_file,
-                                                           "shadow"))
-                                   ok = 0;
-                              }
-                            if (!ok)
-                              {
-                                 ok = 1;
-                                 if (!e_theme_edje_object_set(cw->shobj,
-                                                              "base/theme/borders",
-                                                              "e/shadow/box"))
-                                   ok = 0;
-                              }
-                            if (!ok)
-                              {
-                                 snprintf(buf, sizeof(buf), "%s/shadow.edj", 
-                                          e_module_dir_get(_comp_mod->module)
-                                          );
-                                 edje_object_file_set(cw->shobj, buf, "shadow");
-                              }
-                            evas_object_show(cw->shobj);
-                         }
+                         edje_object_signal_emit(cw->shobj, "e,state,shadow,on", "e");
+                       else
+                         edje_object_signal_emit(cw->shobj, "e,state,shadow,off", "e");
                     }
                   else
-                    evas_object_hide(cw->shobj);
+                    edje_object_signal_emit(cw->shobj, "e,state,shadow,off", "e");
                }
           }
      }

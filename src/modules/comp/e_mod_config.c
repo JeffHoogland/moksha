@@ -10,7 +10,7 @@ struct _E_Config_Dialog_Data
    int engine;
    int indirect;
    int texture_from_pixmap;
-   int lock_fps;
+   int lock_fps; //
    int efl_sync;
    int loose_sync;
    int grab;
@@ -23,11 +23,6 @@ struct _E_Config_Dialog_Data
    int send_flush;
    int send_dump;
    int nocomp_fs;
-   
-   int effect_fade;
-   int effect_zoom;
-   int effect_wobble;
-   int effect_rotate;
 };
 
 /* Protos */
@@ -76,7 +71,7 @@ _create_data(E_Config_Dialog *cfd)
      cfdata->engine = E_EVAS_ENGINE_SOFTWARE_X11;
    cfdata->indirect = _comp_mod->conf->indirect;
    cfdata->texture_from_pixmap = _comp_mod->conf->texture_from_pixmap;
-   cfdata->lock_fps = _comp_mod->conf->lock_fps;
+//   cfdata->lock_fps = _comp_mod->conf->lock_fps;
    cfdata->efl_sync = _comp_mod->conf->efl_sync;
    cfdata->loose_sync = _comp_mod->conf->loose_sync;
    cfdata->grab = _comp_mod->conf->grab;
@@ -89,11 +84,6 @@ _create_data(E_Config_Dialog *cfd)
    cfdata->send_flush = _comp_mod->conf->send_flush;
    cfdata->send_dump = _comp_mod->conf->send_dump;
    cfdata->nocomp_fs = _comp_mod->conf->nocomp_fs;
-   
-   cfdata->effect_fade = _comp_mod->conf->effect_fade;
-   cfdata->effect_zoom = _comp_mod->conf->effect_zoom;
-   cfdata->effect_wobble = _comp_mod->conf->effect_wobble;
-   cfdata->effect_rotate = _comp_mod->conf->effect_rotate;
    return cfdata;
 }
 
@@ -116,19 +106,9 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    ol = e_widget_list_add(evas, 0, 0);
    ob = e_widget_check_add(evas, _("Shadows"), &(cfdata->use_shadow));
    e_widget_list_object_append(ol, ob, 1, 1, 0.5);
-   ob = e_widget_check_add(evas, _("Limit framerate"), &(cfdata->lock_fps));
-   e_widget_list_object_append(ol, ob, 1, 1, 0.5);
-   of = e_widget_framelist_add(evas, _("Show/hide"), 0);
-   e_widget_framelist_content_align_set(of, 0.5, 0.0);
-   ob = e_widget_check_add(evas, _("Fade"), &(cfdata->effect_fade));
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_check_add(evas, _("Zoom"), &(cfdata->effect_zoom));
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_check_add(evas, _("Wobble"), &(cfdata->effect_wobble));
-   e_widget_framelist_object_append(of, ob);
-// implement much later   
-//   ob = e_widget_check_add(evas, _("Rotate"), &(cfdata->effect_rotate));
-//   e_widget_framelist_object_append(of, ob);
+//   ob = e_widget_check_add(evas, _("Limit framerate"), &(cfdata->lock_fps));
+//   e_widget_list_object_append(ol, ob, 1, 1, 0.5);
+// FIXME: ability to choose "shadow" edje file
    e_widget_list_object_append(ol, of, 1, 1, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Effects"), ol, 0, 0, 0, 0, 0.5, 0.0);
    
@@ -249,16 +229,14 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    // FIXME: save new config options as they are implemented.
    if ((_comp_mod->conf->use_shadow != cfdata->use_shadow) ||
-       (cfdata->lock_fps != _comp_mod->conf->lock_fps) ||
+//       (cfdata->lock_fps != _comp_mod->conf->lock_fps) ||
        (cfdata->grab != _comp_mod->conf->grab) ||
-       (cfdata->effect_fade != _comp_mod->conf->effect_fade) ||
        (cfdata->keep_unmapped != _comp_mod->conf->keep_unmapped) ||
        (cfdata->nocomp_fs != _comp_mod->conf->nocomp_fs))
      {
         _comp_mod->conf->use_shadow = cfdata->use_shadow;
-        _comp_mod->conf->lock_fps = cfdata->lock_fps;
+//        _comp_mod->conf->lock_fps = cfdata->lock_fps;
         _comp_mod->conf->grab = cfdata->grab;
-        _comp_mod->conf->effect_fade = cfdata->effect_fade;
         _comp_mod->conf->keep_unmapped = cfdata->keep_unmapped;
         _comp_mod->conf->nocomp_fs = cfdata->nocomp_fs;
         e_mod_comp_shadow_set();
