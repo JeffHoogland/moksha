@@ -221,6 +221,9 @@ _cb_del(void *data __UNUSED__, int type __UNUSED__, void *event)
 static Eina_Bool
 _init(void)
 {
+   if (!evry_api_version_check(EVRY_API_VERSION))
+     return EINA_FALSE;
+
    p1 = evry_plugin_new(NULL, "Calculator", type_subject, NULL, "TEXT", 1, "accessories-calculator", "=",
 			_begin, _cleanup, _fetch, _action, NULL, NULL, NULL);
 

@@ -115,6 +115,9 @@ _action(Evry_Action *act)
 static Eina_Bool
 _init(void)
 {
+   if (!evry_api_version_check(EVRY_API_VERSION))
+     return EINA_FALSE;
+
    p = evry_plugin_new(NULL, "Settings", type_subject, NULL, "E_SETTINGS", 0, NULL, NULL,
 		       NULL, _cleanup, _fetch, NULL, _item_icon_get, NULL, NULL);
 

@@ -237,6 +237,9 @@ _item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 static Eina_Bool
 _init(void)
 {
+   if (!evry_api_version_check(EVRY_API_VERSION))
+     return EINA_FALSE;
+
    plugin = evry_plugin_new(NULL, "Windows", type_subject, NULL, "BORDER", 0, NULL, NULL,
 		       _begin, _cleanup, _fetch, NULL, _item_icon_get, NULL, NULL);
 

@@ -466,6 +466,9 @@ _open_term_action(Evry_Action *act)
 static Eina_Bool
 _init(void)
 {
+   if (!evry_api_version_check(EVRY_API_VERSION))
+     return EINA_FALSE;
+
    p1 = evry_plugin_new(NULL, "Files", type_subject, "FILE", "FILE", 0, NULL, NULL,
 			_begin, _cleanup, _fetch, NULL, _icon_get,
 			NULL, NULL);

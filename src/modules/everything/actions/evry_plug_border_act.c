@@ -247,6 +247,9 @@ _exec_border_cleanup(Evry_Action *act)
 static Eina_Bool
 _init(void)
 {
+   if (!evry_api_version_check(EVRY_API_VERSION))
+     return EINA_FALSE;
+
    plugin = evry_plugin_new(NULL, "Window Action", type_action, "BORDER", NULL, 0, NULL, NULL,
 		       _begin, _cleanup, _fetch, _action, _item_icon_get, NULL, NULL);
 

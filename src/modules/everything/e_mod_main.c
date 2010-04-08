@@ -370,6 +370,18 @@ _e_mod_menu_add(void *data __UNUSED__, E_Menu *m)
 }
 
 
+
+
+EAPI int evry_api_version_check(int version)
+{
+   if (EVRY_API_VERSION == version)
+     return 1;
+
+   ERR("module API is %d, required is %d", version, EVRY_API_VERSION);
+
+   return 0;
+}
+
 static int
 _evry_cb_plugin_sort(const void *data1, const void *data2)
 {
@@ -469,6 +481,8 @@ evry_action_free(Evry_Action *act)
    E_FREE(act);
 }
 
+
+/* TODO make int return */
 void
 evry_plugin_register(Evry_Plugin *p, int priority)
 {
@@ -496,6 +510,7 @@ evry_plugin_register(Evry_Plugin *p, int priority)
 	pc->priority = priority ? priority : 100;;
 
 	confs = eina_list_append(confs, pc);
+	/* return NULL */
      }
 
    /* if (plugin->trigger && !pc->trigger)

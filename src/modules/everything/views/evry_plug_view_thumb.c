@@ -1044,6 +1044,9 @@ _view_destroy(Evry_View *view)
 static Eina_Bool
 _init(void)
 {
+   if (!evry_api_version_check(EVRY_API_VERSION))
+     return EINA_FALSE;
+
    View *v = E_NEW(View, 1);
    
    v->view.id = EVRY_VIEW(v);

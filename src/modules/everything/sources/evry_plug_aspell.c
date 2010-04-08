@@ -321,6 +321,9 @@ _init(void)
 {
    Plugin *p;
 
+   if (!evry_api_version_check(EVRY_API_VERSION))
+     return EINA_FALSE;
+
    p = E_NEW(Plugin, 1);
    evry_plugin_new(EVRY_PLUGIN(p), "Spell Checker", type_subject, "", "TEXT", 1,
 		   "accessories-dictionary", TRIGGER,

@@ -197,6 +197,9 @@ _action(Evry_Plugin *plugin, const Evry_Item *item)
 static Eina_Bool
 _init(void)
 {
+   if (!evry_api_version_check(EVRY_API_VERSION))
+     return EINA_FALSE;
+
    plugin = evry_plugin_new(NULL, "Wallpaper", type_action, "FILE", "",
 			    0, "preferences-desktop-wallpaper", NULL,
 			    _begin, _cleanup, _fetch, _action, _icon_get,

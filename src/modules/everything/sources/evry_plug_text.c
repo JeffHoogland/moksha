@@ -33,6 +33,9 @@ _fetch(Evry_Plugin *p, const char *input)
 static Eina_Bool
 _init(void)
 {
+   if (!evry_api_version_check(EVRY_API_VERSION))
+     return EINA_FALSE;
+
    p1 = evry_plugin_new(NULL, "Text", type_subject, NULL, "TEXT", 1, "accessories-text-editor", NULL,
 			NULL, _cleanup, _fetch, NULL, NULL, NULL, NULL);
 

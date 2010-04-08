@@ -3,6 +3,9 @@
 
 #include "e.h"
 
+#define EVRY_API_VERSION 1
+
+
 #define EVRY_ACTION_OTHER 0
 #define EVRY_ACTION_FINISHED 1
 #define EVRY_ACTION_CONTINUE 2
@@ -312,6 +315,8 @@ EAPI Evry_Action *evry_action_new(const char *name, const char *type_in1,
 				  Evas_Object *(*icon_get) (Evry_Action *act, Evas *e));
 
 EAPI void evry_action_free(Evry_Action *act);
+
+EAPI int evry_api_version_check(int version);
 
 typedef struct _Evry_Event_Item_Changed Evry_Event_Item_Changed;
 

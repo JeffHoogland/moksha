@@ -235,6 +235,9 @@ _view_destroy(Evry_View *view)
 static Eina_Bool
 _init(void)
 {
+   if (!evry_api_version_check(EVRY_API_VERSION))
+     return EINA_FALSE;
+
    view = E_NEW(Evry_View, 1);
    view->id = view;
    view->name = "Image Viewer";

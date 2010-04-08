@@ -719,6 +719,9 @@ _new_app_action(Evry_Action *act)
 static Eina_Bool
 _init(void)
 {
+   if (!evry_api_version_check(EVRY_API_VERSION))
+     return EINA_FALSE;
+
    p1 = E_NEW(Plugin, 1);
    evry_plugin_new(EVRY_PLUGIN(p1), "Applications", type_subject, "", "APPLICATION", 0, NULL, NULL,
 		   _begin, _cleanup, _fetch, NULL, _icon_get, NULL, NULL);
