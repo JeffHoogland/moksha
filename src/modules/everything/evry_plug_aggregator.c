@@ -93,6 +93,18 @@ _cb_sort(const void *data1, const void *data2)
    return strcasecmp(it1->label, it2->label);
 }
 
+static int refs = 0;
+
+static inline Eina_List *
+_add_item(Plugin *p, Eina_List *items, Evry_Item *it)
+{
+   evry_item_ref(it);
+   items = eina_list_append(items, it);
+   EVRY_PLUGIN_ITEM_APPEND(p, it);
+
+   return items;
+}
+
 static int
 _fetch(Evry_Plugin *plugin, const char *input)
 {
@@ -104,9 +116,9 @@ _fetch(Evry_Plugin *plugin, const char *input)
    int i, cnt = 0;
    Eina_List *items = NULL;
    const char *context = NULL;
-   
-   EVRY_PLUGIN_ITEMS_FREE(p);
 
+   EVRY_PLUGIN_ITEMS_FREE(p);
+   
    s = p->selector->state;
 
    if (!s || !s->cur_plugins || !s->cur_plugins->next)
@@ -137,11 +149,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 		    it->fuzzy_match = evry_fuzzy_match(it->label, input);
 
 		  if (it->fuzzy_match || p->selector == selectors[2])
-		    {
-		       evry_item_ref(it);
-		       items = eina_list_append(items, it);
-		       EVRY_PLUGIN_ITEM_APPEND(p, it);
-		    }
+		    items = _add_item(p, items, it);
 	       }
 	  }
      }
@@ -160,10 +168,8 @@ _fetch(Evry_Plugin *plugin, const char *input)
    		  if (!eina_list_data_find_list(items, ll->data))
    		    {
    		       it = ll->data;
-   		       evry_item_ref(it);
    		       it->fuzzy_match = 0;
-		       items = eina_list_append(items, it);
-   		       EVRY_PLUGIN_ITEM_APPEND(p, it);
+		       items = _add_item(p, items, it);
    		    }
    	       }
    	  }
@@ -178,9 +184,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	     if (evry_history_item_usage_set(p->selector->history, it, input, context) &&
 		 (!eina_list_data_find_list(items, it)))
 	       {
-		  evry_item_ref(it);
-		  items = eina_list_append(items, it);
-		  EVRY_PLUGIN_ITEM_APPEND(p, it);
+		  items = _add_item(p, items, it);
 		  continue;
 	       }
 	  }
@@ -196,9 +200,8 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	       {
 		  if (!eina_list_data_find_list(items, it))
 		    {
-		       evry_item_ref(it);
 		       it->fuzzy_match = 0;
-		       EVRY_PLUGIN_ITEM_APPEND(p, it);
+		       items = _add_item(p, items, it);
 		    }
 	       }
 	  }

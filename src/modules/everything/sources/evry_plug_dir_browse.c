@@ -18,6 +18,8 @@ struct _Plugin
   Eina_Bool command;
 
   const char *input;
+
+  Ecore_Thread *thread;
 };
 
 struct _Data
@@ -34,8 +36,8 @@ static Evry_Plugin *p2 = NULL;
 static Evry_Action *act1 = NULL;
 static Evry_Action *act2 = NULL;
 
-static long thread_cnt = 0;
-static long thread_last = 0;
+/* static long thread_cnt = 0;
+ * static long thread_last = 0; */
 
 static const char *mime_folder;
 
@@ -166,6 +168,34 @@ _item_id(const char *path)
    
    return s3;
 }
+static void
+_scan_cancel_func(void *data)
+{
+   Data *d = data;
+   Plugin *p = d->plugin;
+   int cnt = 0;
+   Evry_Item *item;
+   char *filename, *path;
+   Evry_Item_File *file;
+   
+   EINA_LIST_FREE(d->files, item)
+     {
+	filename = item->data;
+	free(filename);
+	evry_item_free(item);
+     }
+   E_FREE(d);
+
+   if (p->directory)
+     eina_stringshare_del(p->directory);
+
+   EINA_LIST_FREE(p->files, file)
+     evry_item_free(EVRY_ITEM(file));
+
+   EVRY_PLUGIN_ITEMS_CLEAR(p);
+
+   E_FREE(p);
+}
 
 static void
 _scan_end_func(void *data)
@@ -176,18 +206,8 @@ _scan_end_func(void *data)
    Evry_Item *item;
    char *filename, *path;
 
-   if (d->id != thread_last)
-     {
-	EINA_LIST_FREE(d->files, item)
-	  {
-	     filename = item->data;
-	     free(filename);
-	     evry_item_free(item);
-	  }
-	E_FREE(d);
-	return;
-     }
-
+   p->thread = NULL;
+   
    EINA_LIST_FREE(d->files, item)
      {
 	ITEM_FILE(file, item);
@@ -217,19 +237,19 @@ _scan_end_func(void *data)
 	EVRY_PLUGIN_ITEMS_SORT(p, _cb_sort);
 	evry_plugin_async_update(EVRY_PLUGIN(p), EVRY_ASYNC_UPDATE_ADD);
      }
-
+   
    E_FREE(d);
 }
 
 static void
 _read_directory(Plugin *p)
 {
-   thread_last = ++thread_cnt;
+   /* thread_last = ++thread_cnt; */
 
    Data *d = E_NEW(Data, 1);
    d->plugin = p;
-   d->id = thread_cnt;
-   ecore_thread_run(_scan_func, _scan_end_func, NULL, d);
+   /* d->id = thread_cnt; */
+   p->thread = ecore_thread_run(_scan_func, _scan_end_func, _scan_cancel_func, d);
 }
 
 static Evry_Plugin *
@@ -274,17 +294,25 @@ _cleanup(Evry_Plugin *plugin)
    /* if a thread for this plugin returns
       it will free its data if its id is smaller
       than thread_last */
-   thread_last = ++thread_cnt;
+   /* thread_last = ++thread_cnt; */
 
-   if (p->directory)
-     eina_stringshare_del(p->directory);
+   if (p->thread)
+     {
+	
+	ecore_thread_cancel(p->thread);
+     }
+   else
+     {
+	if (p->directory)
+	  eina_stringshare_del(p->directory);
 
-   EINA_LIST_FREE(p->files, file)
-     evry_item_free(EVRY_ITEM(file));
+	EINA_LIST_FREE(p->files, file)
+	  evry_item_free(EVRY_ITEM(file));
 
-   EVRY_PLUGIN_ITEMS_CLEAR(p);
+	EVRY_PLUGIN_ITEMS_CLEAR(p);
 
-   E_FREE(p);
+	E_FREE(p);
+     }
 }
 
 static void

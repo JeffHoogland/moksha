@@ -275,27 +275,27 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, c
 	if (evry_conf->history_sort_mode == 0)
 	  {
 	     
-	if (!input || !hi->input)
-	  {
-	     it->usage += hi->usage * hi->count;
-	  }
-	else
-	  {
-	     /* higher priority for exact matches */
-	     if (!strncmp(input, hi->input, strlen(input)))
+	     if (!input || !hi->input)
 	       {
 		  it->usage += hi->usage * hi->count;
 	       }
-	     if (!strncmp(input, hi->input, strlen(hi->input)))
+	     else
 	       {
-		  it->usage += hi->usage * hi->count;
+		  /* higher priority for exact matches */
+		  if (!strncmp(input, hi->input, strlen(input)))
+		    {
+		       it->usage += hi->usage * hi->count;
+		    }
+		  if (!strncmp(input, hi->input, strlen(hi->input)))
+		    {
+		       it->usage += hi->usage * hi->count;
+		    }
 	       }
-	  }
-	if (hi->context && ctxt)
-	  {
-	     if (hi->context == ctxt)
-	       it->usage += hi->usage * hi->count * 2;
-	  }
+	     if (hi->context && ctxt)
+	       {
+		  if (hi->context == ctxt)
+		    it->usage += hi->usage * hi->count * 2;
+	       }
 	  }
 	else if (evry_conf->history_sort_mode == 1)
 	  {

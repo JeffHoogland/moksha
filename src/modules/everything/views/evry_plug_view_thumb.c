@@ -640,8 +640,12 @@ _view_clear(Evry_View *view)
    Item *it;
 
    _clear_items(v->span);
-   if (sd->items) eina_list_free(sd->items); 
-   sd->items = NULL;
+     
+   EINA_LIST_FREE(sd->items, it)
+     {
+	evry_item_free(it->item);
+	E_FREE(it);
+     }
    
    if (sd->idle_enter) ecore_idle_enterer_del(sd->idle_enter);
    sd->idle_enter = ecore_idle_enterer_before_add(_e_smart_reconfigure_do, v->span);
