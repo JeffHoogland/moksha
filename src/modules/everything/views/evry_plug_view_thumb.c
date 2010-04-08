@@ -937,6 +937,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
  end:
    return 1;
 }
+
 static int
 _cb_item_changed(void *data, int type, void *event)
 {
@@ -945,6 +946,8 @@ _cb_item_changed(void *data, int type, void *event)
    Eina_List *l;
    Item *it;
    Smart_Data *sd = evas_object_smart_data_get(v->span);
+
+   if (!sd) return 0;
    
    EINA_LIST_FOREACH(sd->items, l, it)
      if (it->item == ev->item)
@@ -1040,8 +1043,7 @@ _view_destroy(Evry_View *view)
 
    EINA_LIST_FREE(v->handlers, h)
      ecore_event_handler_del(h);
-   
-     
+        
    E_FREE(v);
 }
 

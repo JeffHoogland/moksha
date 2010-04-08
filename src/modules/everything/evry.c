@@ -131,6 +131,29 @@ _evry_cb_item_changed(void *data, int type, void *event)
    return 1;
 }
 
+static Ecore_Timer *_show_timer = NULL;
+
+static int
+_cb_show_timer(void *data)
+{
+   if (evry_conf->views && selector->state)
+     {
+	Evry_View *view =evry_conf->views->data;
+	Evry_State *s = selector->state;
+
+	s->view = view->create(view, s, list->o_main);
+
+	_evry_view_show(s->view);
+     }
+   else return 0;
+
+   _evry_list_win_show();
+
+   _show_timer = NULL;
+   
+   return 0;
+}
+
 int
 evry_show(E_Zone *zone, const char *params)
 {
@@ -169,12 +192,12 @@ evry_show(E_Zone *zone, const char *params)
    
    if (evry_conf->views && selector->state)
      {
-	Evry_View *view =evry_conf->views->data;
-	Evry_State *s = selector->state;
-
-	s->view = view->create(view, s, list->o_main);
-
-	_evry_view_show(s->view);
+   	Evry_View *view =evry_conf->views->data;
+   	Evry_State *s = selector->state;
+   
+   	s->view = view->create(view, s, list->o_main);
+   
+   	_evry_view_show(s->view);
      }
    else goto error3;
 
@@ -208,7 +231,8 @@ evry_show(E_Zone *zone, const char *params)
      }
 
    if (!evry_conf->hide_list)
-     _evry_list_win_show();
+     _show_timer = ecore_timer_add(0.08, _cb_show_timer, NULL);
+   /* _evry_list_win_show(); */
    
    return 1;
 
@@ -245,7 +269,11 @@ evry_hide(void)
    if (!win) return;
 
    /* _evry_view_clear(selector->state); */
-
+   if (_show_timer)
+     ecore_timer_del(_show_timer); 
+   _show_timer = NULL;
+   
+   
    list->visible = EINA_FALSE;
    _evry_selector_free(selectors[0]);
    _evry_selector_free(selectors[1]);
@@ -1536,20 +1564,32 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 {
    Evry_State *s_subject, *s_action, *s_object;
 
+   if (selectors[0]->update_timer)
+     {
+	_evry_matches_update(selectors[0], 0);
+	_evry_selector_update(selectors[0]);
+     }
+
    s_subject = selectors[0]->state;
+   
+   if (!s_subject || !s_subject->cur_item)
+     return;
+   
+   if (selector == selectors[0] &&
+       selectors[1]->update_timer)
+     {
+	_evry_selector_actions_get(s_subject->cur_item);
+
+	if (!selectors[1]->state)
+	  return;
+	
+	_evry_selector_update(selectors[1]);
+     }
+
    s_action  = selectors[1]->state;
    s_object = NULL;
 
-   if (!s_subject || !s_action)
-     return;
-
-   if (selector->update_timer)
-     {
-	_evry_matches_update(selector, 0);
-	_evry_selector_update(selector);
-     }
-
-   if (!s_subject->cur_item || !s_action->cur_item)
+   if (!s_action || !s_action->cur_item)
      return;
 
    /* FIXME */
