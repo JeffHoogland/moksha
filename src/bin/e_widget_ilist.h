@@ -40,6 +40,7 @@ EAPI const char  *e_widget_ilist_item_label_get(const E_Ilist_Item *it);
 EAPI Evas_Object *e_widget_ilist_item_icon_get(const E_Ilist_Item *it);
 EAPI Evas_Object *e_widget_ilist_item_end_get(const E_Ilist_Item *it);
 EAPI void        *e_widget_ilist_item_data_get(const E_Ilist_Item *it);
+EAPI const char  *e_widget_ilist_item_value_get(const E_Ilist_Item *it);
 
 EAPI void         e_widget_ilist_nth_show(Evas_Object *obj, int n, int top);
 EAPI void         e_widget_ilist_selected_set(Evas_Object *obj, int n);

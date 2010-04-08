@@ -677,6 +677,13 @@ e_widget_ilist_item_data_get(const E_Ilist_Item *it)
    return wcb->data;
 }
 
+EAPI const char *
+e_widget_ilist_item_value_get(const E_Ilist_Item *it) 
+{
+   E_Widget_Callback *wcb = it->data2;
+   return wcb->value;
+}
+
 /**
  * Show the nth element of an ilist
  * @param obj the ilist
