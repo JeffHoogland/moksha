@@ -245,7 +245,7 @@ evry_history_add(Eina_Hash *hist, Evry_State *s, const char *ctxt)
 	hi->count += (hi->transient ? 2:1);
 	if (ctxt && !hi->context)
 	  hi->context = eina_stringshare_ref(ctxt);
-	
+
 	if (s->input)
 	  {
 	     if (hi->input)
@@ -272,6 +272,9 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, c
      {
 	if (hi->plugin != it->plugin->name)
 	  continue;
+	if (ctxt != hi->context)
+	  continue;
+
 	if (evry_conf->history_sort_mode == 0)
 	  {
 	     
@@ -291,11 +294,10 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, c
 		       it->usage += hi->usage * hi->count;
 		    }
 	       }
-	     if (hi->context && ctxt)
-	       {
-		  if (hi->context == ctxt)
-		    it->usage += hi->usage * hi->count * 2;
-	       }
+
+	     if (ctxt && hi->context &&
+		 (hi->context == ctxt))
+	       it->usage += hi->usage * hi->count * 10;
 	  }
 	else if (evry_conf->history_sort_mode == 1)
 	  {

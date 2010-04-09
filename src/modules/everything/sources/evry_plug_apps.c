@@ -78,6 +78,22 @@ _begin_open_with(Evry_Plugin *plugin, const Evry_Item *item)
    p->candidate = item;
    
    p->apps_mime = efreet_util_desktop_mime_list(mime);
+
+   if (strcmp(mime, "text/plain") &&
+       !strncmp(mime, "text/", 5))
+     {
+	Eina_List *tmp;
+	tmp = efreet_util_desktop_mime_list("text/plain");
+
+	EINA_LIST_FREE(tmp, desktop)
+	  {
+	     if (!eina_list_data_find_list(p->apps_mime, desktop))
+	       p->apps_mime = eina_list_append(p->apps_mime, desktop);
+	     else
+	       efreet_desktop_free(desktop); 
+	  }
+     }
+   
    desktop = e_exehist_mime_desktop_get(mime);
    if (desktop)
      p->apps_mime = eina_list_prepend(p->apps_mime, desktop);
