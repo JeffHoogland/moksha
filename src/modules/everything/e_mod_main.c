@@ -26,7 +26,7 @@ static Eina_Array  *plugins = NULL;
 static E_Config_DD *conf_edd = NULL;
 static E_Config_DD *conf_item_edd = NULL;
 
-int _e_module_evry_log_dom = -1;
+EAPI int _e_module_evry_log_dom = -1;
 
 
 EAPI Config *evry_conf = NULL;
