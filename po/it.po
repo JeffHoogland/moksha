@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-04-07 12:33+0200\n"
-"PO-Revision-Date: 2010-04-07 12:36+0200\n"
+"POT-Creation-Date: 2010-04-09 13:04+0200\n"
+"PO-Revision-Date: 2010-04-09 13:05+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -2047,34 +2047,36 @@ msgstr "Nessun modulo selezionato."
 msgid "More than one module selected."
 msgstr "Più di un modulo selezionati."
 
-#: src/bin/e_int_gadcon_config.c:36
+#: src/bin/e_int_gadcon_config.c:27
 msgid "Shelf Contents"
 msgstr "Contenuti della mensola"
 
-#: src/bin/e_int_gadcon_config.c:42
+#: src/bin/e_int_gadcon_config.c:33
 msgid "Toolbar Contents"
 msgstr "Contenuti della barra strumenti"
 
-#: src/bin/e_int_gadcon_config.c:120 src/modules/gadman/e_mod_config.c:107
-msgid "Available Gadgets"
-msgstr "Gadget disponibili"
-
-#: src/bin/e_int_gadcon_config.c:127 src/modules/gadman/e_mod_config.c:118
+#: src/bin/e_int_gadcon_config.c:101 src/modules/gadman/e_mod_config.c:118
 msgid "Add Gadget"
 msgstr "Aggiungi gadget"
 
-#: src/bin/e_int_gadcon_config.c:133
-msgid "Selected Gadgets"
-msgstr "Gadget selezionati"
-
-#: src/bin/e_int_gadcon_config.c:140
+#: src/bin/e_int_gadcon_config.c:106
 msgid "Remove Gadget"
 msgstr "Elimina gadget"
 
-#: src/bin/e_int_gadcon_config.c:148 src/bin/e_int_gadcon_config.c:183
-#: src/bin/e_int_gadcon_config.c:205
+#: src/bin/e_int_gadcon_config.c:112 src/bin/e_int_gadcon_config.c:227
+#: src/bin/e_int_gadcon_config.c:245 src/bin/e_int_gadcon_config.c:246
+#: src/bin/e_int_gadcon_config.c:248 src/bin/e_int_gadcon_config.c:250
 msgid "Description: Unavailable"
 msgstr "Descrizione: non disponibile"
+
+#: src/bin/e_int_gadcon_config.c:230
+msgid "More than one gadget selected."
+msgstr "Più di un gadget selezionati."
+
+#: src/bin/e_int_gadcon_config.c:232 src/bin/e_int_gadcon_config.c:287
+#: src/bin/e_int_gadcon_config.c:327
+msgid "No gadget selected."
+msgstr "Nessun gadget selezionato."
 
 #: src/bin/e_int_toolbar_config.c:30 src/bin/e_toolbar.c:335
 msgid "Toolbar Settings"
@@ -2104,7 +2106,7 @@ msgid "Main"
 msgstr "Principale"
 
 #: src/bin/e_int_menus.c:117
-#: src/modules/conf_applications/e_int_config_apps.c:53
+#: src/modules/conf_applications/e_int_config_apps.c:55
 #: src/modules/conf_applications/e_mod_main.c:23
 msgid "Favorite Applications"
 msgstr "Applicazioni preferite"
@@ -3254,7 +3256,7 @@ msgid "%3.0f%%"
 msgstr "%3.0f%%"
 
 #: src/bin/e_widget_config_list.c:63
-#: src/modules/conf_applications/e_int_config_apps.c:204
+#: src/modules/conf_applications/e_int_config_apps.c:207
 #: src/modules/conf_profiles/e_int_config_profiles.c:135
 #: src/modules/conf_shelves/e_int_config_shelf.c:79
 #: src/modules/ibar/e_mod_config.c:110
@@ -3262,17 +3264,17 @@ msgid "Add"
 msgstr "Aggiungi"
 
 #: src/bin/e_widget_config_list.c:69
-#: src/modules/conf_applications/e_int_config_apps.c:208
+#: src/modules/conf_applications/e_int_config_apps.c:211
 msgid "Remove"
 msgstr "Elimina"
 
 #: src/bin/e_widget_config_list.c:83
-#: src/modules/conf_applications/e_int_config_apps.c:220
+#: src/modules/conf_applications/e_int_config_apps.c:223
 msgid "Up"
 msgstr "Su"
 
 #: src/bin/e_widget_config_list.c:89
-#: src/modules/conf_applications/e_int_config_apps.c:224
+#: src/modules/conf_applications/e_int_config_apps.c:227
 msgid "Down"
 msgstr "Giù"
 
@@ -3495,27 +3497,27 @@ msgstr "Modalità"
 msgid "Configuration Panel Configuration Updated"
 msgstr "Impostazioni del pannello di configurazioni aggiornate"
 
-#: src/modules/conf_applications/e_int_config_apps.c:68
-#: src/modules/conf_applications/e_int_config_apps.c:82
+#: src/modules/conf_applications/e_int_config_apps.c:70
+#: src/modules/conf_applications/e_int_config_apps.c:84
 #: src/modules/conf_applications/e_mod_main.c:24
 msgid "IBar Applications"
 msgstr "Applicazioni di IBar"
 
-#: src/modules/conf_applications/e_int_config_apps.c:97
+#: src/modules/conf_applications/e_int_config_apps.c:99
 #: src/modules/conf_applications/e_mod_main.c:26
 msgid "Startup Applications"
 msgstr "Applicazioni per l'avvio"
 
-#: src/modules/conf_applications/e_int_config_apps.c:112
+#: src/modules/conf_applications/e_int_config_apps.c:114
 #: src/modules/conf_applications/e_mod_main.c:25
 msgid "Restart Applications"
 msgstr "Applicazioni per il riavvio"
 
-#: src/modules/conf_applications/e_int_config_apps.c:212
+#: src/modules/conf_applications/e_int_config_apps.c:215
 msgid "Selection"
 msgstr "Selezione"
 
-#: src/modules/conf_applications/e_int_config_apps.c:228
+#: src/modules/conf_applications/e_int_config_apps.c:231
 msgid "Order"
 msgstr "Ordine"
 
@@ -6676,6 +6678,10 @@ msgstr "Info operazioni EFM"
 #: src/modules/gadman/e_mod_config.c:58
 msgid "Gadgets Manager"
 msgstr "Gestore gadget"
+
+#: src/modules/gadman/e_mod_config.c:107
+msgid "Available Gadgets"
+msgstr "Gadget disponibili"
 
 #: src/modules/gadman/e_mod_config.c:155
 msgid "Background Mode"

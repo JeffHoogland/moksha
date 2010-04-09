@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-04-07 10:44+0400\n"
-"PO-Revision-Date: 2010-04-07 10:59+0400\n"
+"POT-Creation-Date: 2010-04-09 06:08+0400\n"
+"PO-Revision-Date: 2010-04-09 07:08+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment French Team <pourunmondesansgourou@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -2098,37 +2098,41 @@ msgstr "Aucun module sélectionné."
 msgid "More than one module selected."
 msgstr "Plus d'un module sélectionné."
 
-#: src/bin/e_int_gadcon_config.c:36
+#: src/bin/e_int_gadcon_config.c:27
 msgid "Shelf Contents"
 msgstr "Contenu du rack"
 
-#: src/bin/e_int_gadcon_config.c:42
+#: src/bin/e_int_gadcon_config.c:33
 msgid "Toolbar Contents"
 msgstr "Contenu de la barre d'outils"
 
-#: src/bin/e_int_gadcon_config.c:120
-#: src/modules/gadman/e_mod_config.c:107
-msgid "Available Gadgets"
-msgstr "Gadgets disponibles"
-
-#: src/bin/e_int_gadcon_config.c:127
+#: src/bin/e_int_gadcon_config.c:101
 #: src/modules/gadman/e_mod_config.c:118
 msgid "Add Gadget"
 msgstr "Ajouter un gadget"
 
-#: src/bin/e_int_gadcon_config.c:133
-msgid "Selected Gadgets"
-msgstr "Gadgets sélectionnés"
-
-#: src/bin/e_int_gadcon_config.c:140
+#: src/bin/e_int_gadcon_config.c:106
 msgid "Remove Gadget"
 msgstr "Supprimer ce gadget"
 
-#: src/bin/e_int_gadcon_config.c:148
-#: src/bin/e_int_gadcon_config.c:183
-#: src/bin/e_int_gadcon_config.c:205
+#: src/bin/e_int_gadcon_config.c:112
+#: src/bin/e_int_gadcon_config.c:227
+#: src/bin/e_int_gadcon_config.c:245
+#: src/bin/e_int_gadcon_config.c:246
+#: src/bin/e_int_gadcon_config.c:248
+#: src/bin/e_int_gadcon_config.c:250
 msgid "Description: Unavailable"
 msgstr "Description : non disponible"
+
+#: src/bin/e_int_gadcon_config.c:230
+msgid "More than one gadget selected."
+msgstr "Plus d'un gadget sélectionné."
+
+#: src/bin/e_int_gadcon_config.c:232
+#: src/bin/e_int_gadcon_config.c:287
+#: src/bin/e_int_gadcon_config.c:327
+msgid "No gadget selected."
+msgstr "Aucun gadget sélectionné."
 
 #: src/bin/e_int_toolbar_config.c:30
 #: src/bin/e_toolbar.c:335
@@ -6460,6 +6464,10 @@ msgstr "Informations EFM"
 msgid "Gadgets Manager"
 msgstr "Gestionnaire de gadgets"
 
+#: src/modules/gadman/e_mod_config.c:107
+msgid "Available Gadgets"
+msgstr "Gadgets disponibles"
+
 #: src/modules/gadman/e_mod_config.c:155
 msgid "Background Mode"
 msgstr "Type de fond"
@@ -7164,6 +7172,8 @@ msgstr "Il y a déjà une zone de notification active et seule une instance de c
 msgid "Systray"
 msgstr "Zone de notification"
 
+#~ msgid "Selected Gadgets"
+#~ msgstr "Gadgets sélectionnés"
 #~ msgid "Fast"
 #~ msgstr "Rapide"
 #~ msgid "Slow"
