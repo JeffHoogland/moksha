@@ -184,15 +184,6 @@ evry_show(E_Zone *zone, const char *params)
    selectors[1] = _evry_selector_new(type_action);
    selectors[2] = _evry_selector_new(type_object);
 
-   if (params)
-     win->plugin_dedicated = EINA_TRUE;
-
-   _evry_selector_subjects_get(params);
-   _evry_selector_activate(selectors[0]);
-
-   if (!evry_conf->hide_input)
-     edje_object_signal_emit(list->o_main, "e,state,entry_show", "e");
-
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
       (ECORE_EVENT_KEY_DOWN, _evry_cb_key_down, NULL));
@@ -210,14 +201,22 @@ evry_show(E_Zone *zone, const char *params)
    e_popup_show(win->popup);
    e_popup_show(list->popup);
 
+   if (params)
+     win->plugin_dedicated = EINA_TRUE;
+
+   _evry_selector_subjects_get(params);
+   _evry_selector_update(selectors[0]);
+   _evry_selector_activate(selectors[0]);
+   
    if (!evry_conf->hide_input)
      {
 	edje_object_part_text_set(win->o_main, "e.text.label", "Search:");
 	edje_object_part_text_set(list->o_main, "e.text.label", "Search:");
+	edje_object_signal_emit(list->o_main, "e,state,entry_show", "e");
      }
 
    if (!evry_conf->hide_list)
-     _show_timer = ecore_timer_add(0.08, _cb_show_timer, NULL);
+     _show_timer = ecore_timer_add(0.04, _cb_show_timer, NULL);
 
    return 1;
 
