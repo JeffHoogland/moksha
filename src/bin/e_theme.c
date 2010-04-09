@@ -15,7 +15,7 @@ struct _E_Theme_Result
 
 static Eina_Bool _e_theme_mappings_free_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata);
 static Eina_Bool _e_theme_mappings_quickfind_free_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata);
-static void      _e_theme_category_register(const char *category);
+static void _e_theme_category_register(const char *category);
 static Eina_List *_e_theme_collection_item_register(Eina_List *list, const char *name);
 static Eina_List *_e_theme_collection_items_find(const char *base, const char *collname);
 
