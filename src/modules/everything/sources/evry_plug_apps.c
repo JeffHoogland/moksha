@@ -49,7 +49,6 @@ static int _scan_idler(void *data);
 static void _hash_free(void *data)
 {
    ITEM_APP(app, data);
-
    evry_item_free(EVRY_ITEM(app));
 }
 
@@ -64,7 +63,7 @@ _begin_open_with(Evry_Plugin *plugin, const Evry_Item *item)
    if (!item) return 0;
 
    ITEM_FILE(file, item);
-   Efreet_Desktop *desktop;
+   Efreet_Desktop *d, *d2;
 
    if (!file->path) return NULL;
 
@@ -85,19 +84,27 @@ _begin_open_with(Evry_Plugin *plugin, const Evry_Item *item)
 	Eina_List *tmp;
 	tmp = efreet_util_desktop_mime_list("text/plain");
 
-	EINA_LIST_FREE(tmp, desktop)
+	EINA_LIST_FREE(tmp, d)
 	  {
-	     if (!eina_list_data_find_list(p->apps_mime, desktop))
-	       p->apps_mime = eina_list_append(p->apps_mime, desktop);
+	     if (!eina_list_data_find_list(p->apps_mime, d))
+	       p->apps_mime = eina_list_append(p->apps_mime, d);
 	     else
-	       efreet_desktop_free(desktop); 
+	       efreet_desktop_free(d); 
 	  }
      }
    
-   desktop = e_exehist_mime_desktop_get(mime);
-   if (desktop)
-     p->apps_mime = eina_list_prepend(p->apps_mime, desktop);
-
+   d = e_exehist_mime_desktop_get(mime);
+   if (d)
+     {
+	if (d2 = eina_list_data_find(p->apps_mime, d))
+	  {
+	     p->apps_mime = eina_list_remove(p->apps_mime, d2);
+	     efreet_desktop_free(d2);
+	  }
+	
+	p->apps_mime = eina_list_prepend(p->apps_mime, d);
+     }
+   
    p->added = eina_hash_string_small_new(_hash_free);
 
    return plugin;
@@ -217,7 +224,7 @@ _item_add(Plugin *p, Efreet_Desktop *desktop, char *file, int match)
    Efreet_Desktop *d2;
    int already_refd = 0;
    char *exe;
-
+   
    if (file)
      {
 	Eina_List *l;
@@ -357,41 +364,27 @@ _cb_sort(const void *data1, const void *data2)
 {
    const Evry_Item *it1 = data1;
    const Evry_Item *it2 = data2;
-   const char *e1, *e2;
-   double t1, t2;
 
-   ITEM_APP(app1, it1);
-   ITEM_APP(app2, it2);
-
-   if (app1->desktop)
-     e1 = app1->desktop->exec;
-   else
-     e1 = app1->file;
-
-   if (app2->desktop)
-     e2 = app2->desktop->exec;
-   else
-     e2 = app2->file;
-
-   t1 = e_exehist_newest_run_get(e1);
-   t2 = e_exehist_newest_run_get(e2);
-
-   if (it1->fuzzy_match && !it2->fuzzy_match)
+   if (it1->usage && it2->usage)
+     return (it1->usage > it2->usage ? -1 : 1);
+   if (it1->usage && !it2->usage)
      return -1;
-
-   if (!it1->fuzzy_match && it2->fuzzy_match)
+   if (it2->usage && !it1->usage)
      return 1;
 
-   t1 = t1 / (double)it1->fuzzy_match;
-   t2 = t2 / (double)it2->fuzzy_match;
+   if (it1->fuzzy_match || it2->fuzzy_match)
+     {
+	if (it1->fuzzy_match && !it2->fuzzy_match)
+	  return -1;
 
-   if ((int)(t2 - t1))
-     return (int)(t2 - t1);
+	if (!it1->fuzzy_match && it2->fuzzy_match)
+	  return 1;
 
-   if (it1->fuzzy_match - it2->fuzzy_match)
-     return (it1->fuzzy_match - it2->fuzzy_match);
-
-   else return 0;
+	if (it1->fuzzy_match - it2->fuzzy_match)
+	  return (it1->fuzzy_match - it2->fuzzy_match);
+     }
+   
+   return 0;
 }
 
 static Eina_Bool
@@ -403,12 +396,12 @@ _hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fda
   Efreet_Desktop *d;
   Eina_List *l;
   Evry_Item_App *app;
-  
+
   EINA_LIST_FOREACH(he->items, l, hi)
     {
       if (hi->plugin != p->base.name)
 	continue;
-      
+
       if ((d = efreet_util_desktop_exec_find(key)))
 	{
 	   app = _item_add(p, d, NULL, 1);
@@ -421,7 +414,11 @@ _hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fda
 	}
       
       if (app && app->desktop)
-	p->apps_hist = eina_list_append(p->apps_hist, app->desktop); 
+	{
+	   p->apps_hist = eina_list_append(p->apps_hist, app->desktop);
+	}
+
+      if (app) break;
     }
   return EINA_TRUE;
 }
@@ -511,11 +508,19 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
    if (!plugin->items) return 0;
 
+   if (plugin->type == type_action)
+     {
+	EINA_LIST_FOREACH(plugin->items, l, it)
+	  evry_history_item_usage_set(evry_hist->actions, it, input, NULL); 
+     }
+   else
+     {
+	EINA_LIST_FOREACH(plugin->items, l, it)
+	  evry_history_item_usage_set(evry_hist->subjects, it, input, NULL); 
+     }
+   
    if (plugin->type != type_action || input)
      EVRY_PLUGIN_ITEMS_SORT(plugin, _cb_sort);
-
-   EINA_LIST_FOREACH(plugin->items, l, it)
-     it->priority = prio++;
 
    return 1;
 }

@@ -256,7 +256,7 @@ evry_history_add(Eina_Hash *hist, Evry_State *s, const char *ctxt)
      }   
 }
 
-int
+EAPI int
 evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, const char *ctxt)
 {
    History_Entry *he;
