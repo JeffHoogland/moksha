@@ -44,6 +44,7 @@ e_int_shelf_config(E_Shelf *es)
      e_config_dialog_new(es->zone->container, _("Shelf Settings"), 
                          "E", "_shelf_config_dialog", 
                          "preferences-desktop-shelf", 0, v, es);
+   e_win_centered_set(es->config_dialog->dia->win, EINA_TRUE);
 }
 
 /* local functions */
