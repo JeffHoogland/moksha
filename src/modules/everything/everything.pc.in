@@ -2,7 +2,7 @@ prefix=@prefix@
 exec_prefix=@exec_prefix@
 libdir=@libdir@
 includedir=@includedir@/@PACKAGE@
-plugindir=@libdir@/enlightenment/everything_plugins
+plugindir=@libdir@/enlightenment/modules/everything/plugins
 
 Name: e17-everything
 Description: Everything Module for E17

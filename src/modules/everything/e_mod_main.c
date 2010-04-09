@@ -79,7 +79,7 @@ e_modapi_init(E_Module *m)
    _config_init();
    evry_history_init();
       
-   snprintf(dir, sizeof(dir), "%s/enlightenment/everything_plugins",
+   snprintf(dir, sizeof(dir), "%s/enlightenment/modules/everything/plugins",
 	    e_prefix_lib_get());
    files = ecore_file_ls(dir);
 
@@ -93,7 +93,7 @@ e_modapi_init(E_Module *m)
 	free(file);
      }
 
-   snprintf(dir, sizeof(dir), "%s/.e/e/everything_plugins",
+   snprintf(dir, sizeof(dir), "%s/.e/e/modules/everything/plugins",
 	    e_user_homedir_get());
    files = ecore_file_ls(dir);
 

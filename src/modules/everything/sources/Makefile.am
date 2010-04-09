@@ -10,8 +10,7 @@ INCLUDES               = -I.. \
                          -I$(top_srcdir)/src/modules \
                          @e_cflags@
 
-
-plugindir              = $(libdir)/enlightenment/everything_plugins/core/$(MODULE_ARCH)
+plugindir              = $(libdir)/enlightenment/modules/$(MODULE)/plugins/core/$(MODULE_ARCH)
 
 evry_plug_appsdir = $(plugindir)
 evry_plug_apps_LTLIBRARIES = evry_plug_apps.la

@@ -10,7 +10,7 @@ INCLUDES               = -I.. \
                          -I$(top_srcdir)/src/modules \
                          @e_cflags@
 
-plugindir              = $(libdir)/enlightenment/everything_plugins/core/$(MODULE_ARCH)
+plugindir              = $(libdir)/enlightenment/modules/$(MODULE)/plugins/core/$(MODULE_ARCH)
 
 evry_plug_border_actdir = $(plugindir)
 evry_plug_border_act_LTLIBRARIES = evry_plug_border_act.la

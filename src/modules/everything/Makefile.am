@@ -53,4 +53,3 @@ pkgconfig_DATA = everything.pc
 
 uninstall-local:
 	rm -rf $(DESTDIR)$(libdir)/enlightenment/modules/$(MODULE)
-	rm -rf $(DESTDIR)$(libdir)/enlightenment/everything_plugins/core/
