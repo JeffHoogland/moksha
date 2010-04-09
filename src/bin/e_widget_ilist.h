@@ -34,6 +34,7 @@ EAPI Evas_Object *e_widget_ilist_nth_icon_get(Evas_Object *obj, int n);
 EAPI void         e_widget_ilist_nth_end_set(Evas_Object *obj, int n, Evas_Object *end);
 EAPI Evas_Object *e_widget_ilist_nth_end_get(Evas_Object *obj, int n);
 EAPI void        *e_widget_ilist_nth_data_get(Evas_Object *obj, int n);
+EAPI const char  *e_widget_ilist_nth_value_get(Evas_Object *obj, int n);
 
 EAPI Eina_Bool    e_widget_ilist_item_is_header(const E_Ilist_Item *it);
 EAPI const char  *e_widget_ilist_item_label_get(const E_Ilist_Item *it);

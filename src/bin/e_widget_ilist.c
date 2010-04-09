@@ -604,6 +604,21 @@ e_widget_ilist_nth_data_get(Evas_Object *obj, int n)
      return wcb->data;
 }
 
+EAPI const char *
+e_widget_ilist_nth_value_get(Evas_Object *obj, int n)
+{
+   E_Widget_Data *wd;
+   E_Widget_Callback *wcb;
+
+   wd = e_widget_data_get(obj);
+   wcb = eina_list_nth(wd->callbacks, n);
+
+   if (!wcb)
+     return NULL;
+   else
+     return wcb->value;
+}
+
 /**
  * Return if the given item returned by e_widget_ilist_items_get()
  * is a header.
@@ -674,14 +689,22 @@ EAPI void *
 e_widget_ilist_item_data_get(const E_Ilist_Item *it)
 {
    E_Widget_Callback *wcb = it->data2;
-   return wcb->data;
+
+   if (!wcb)
+     return NULL;
+   else
+     return wcb->data;
 }
 
 EAPI const char *
 e_widget_ilist_item_value_get(const E_Ilist_Item *it) 
 {
    E_Widget_Callback *wcb = it->data2;
-   return wcb->value;
+
+   if (!wcb)
+     return NULL;
+   else
+     return wcb->value;
 }
 
 /**
