@@ -788,6 +788,21 @@ e_widget_ilist_selected_count_get(Evas_Object *obj)
    return e_ilist_selected_count_get(wd->o_ilist);
 }
 
+EAPI const char *
+e_widget_ilist_selected_value_get(Evas_Object *obj) 
+{
+   E_Widget_Data *wd;
+   E_Widget_Callback *wcb;
+
+   wd = e_widget_data_get(obj);
+   wcb = eina_list_nth(wd->callbacks, e_ilist_selected_get(wd->o_ilist));
+
+   if (!wcb)
+     return NULL;
+   else
+     return wcb->value;
+}
+
 EAPI void
 e_widget_ilist_unselect(Evas_Object *obj)
 {

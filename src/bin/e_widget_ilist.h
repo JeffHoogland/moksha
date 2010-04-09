@@ -50,6 +50,8 @@ EAPI const char  *e_widget_ilist_selected_label_get(Evas_Object *obj);
 EAPI Evas_Object *e_widget_ilist_selected_icon_get(Evas_Object *obj);
 EAPI Evas_Object *e_widget_ilist_selected_end_get(Evas_Object *obj);
 EAPI int          e_widget_ilist_selected_count_get(Evas_Object *obj);
+EAPI const char  *e_widget_ilist_selected_value_get(Evas_Object *obj);
+
 EAPI void         e_widget_ilist_unselect(Evas_Object *obj);
 EAPI void         e_widget_ilist_remove_num(Evas_Object *obj, int n);
 EAPI void         e_widget_ilist_multi_select_set(Evas_Object *obj, Eina_Bool multi);
