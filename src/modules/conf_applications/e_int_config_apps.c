@@ -11,6 +11,7 @@ struct _E_Config_Dialog_Data
    Evas_Object *o_list, *o_add, *o_del;
    Evas_Object *o_order, *o_up, *o_down;
    Eina_List *apps;
+   Ecore_Timer *fill_delay;
 };
 
 /* local function prototypes */
@@ -32,6 +33,7 @@ static void _cb_add(void *data, void *data2 __UNUSED__);
 static void _cb_del(void *data, void *data2 __UNUSED__);
 static void _cb_up(void *data, void *data2 __UNUSED__);
 static void _cb_down(void *data, void *data2 __UNUSED__);
+static int _cb_fill_delay(void *data);
 
 E_Config_Dialog *
 e_int_config_apps_add(E_Container *con, const char *params __UNUSED__) 
@@ -171,6 +173,8 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    E_Config_Data *data;
    Efreet_Desktop *desk;
 
+   if (cfdata->fill_delay) ecore_timer_del(cfdata->fill_delay);
+
    if (data = cfdata->data) 
      {
         if (data->title) eina_stringshare_del(data->title);
@@ -196,7 +200,6 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    ot = e_widget_table_add(evas, EINA_FALSE);
    cfdata->o_list = e_widget_ilist_add(evas, 24, 24, NULL);
    e_widget_ilist_multi_select_set(cfdata->o_list, EINA_TRUE);
-   _fill_apps_list(cfdata);
    e_widget_size_min_get(cfdata->o_list, &mw, NULL);
    if (mw < (200 * e_scale)) mw = (200 * e_scale);
    e_widget_size_min_set(cfdata->o_list, mw, (75 * e_scale));
@@ -229,6 +232,9 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
                                  1, 1, 1, 1, 0.5, 0.0);
 
    e_widget_toolbook_page_show(otb, 0);
+
+   if (cfdata->fill_delay) ecore_timer_del(cfdata->fill_delay);
+   cfdata->fill_delay = ecore_timer_add(0.2, _cb_fill_delay, cfdata);
 
    e_dialog_resizable_set(cfd->dia, 1);
    e_win_centered_set(cfd->dia->win, 1);
@@ -598,4 +604,19 @@ _cb_down(void *data, void *data2 __UNUSED__)
    e_widget_ilist_thaw(cfdata->o_order);
    edje_thaw();
    evas_event_thaw(evas);
+}
+
+static int 
+_cb_fill_delay(void *data) 
+{
+   E_Config_Dialog_Data *cfdata;
+   int mw;
+
+   if (!(cfdata = data)) return 1;
+   _fill_apps_list(cfdata);
+   e_widget_size_min_get(cfdata->o_list, &mw, NULL);
+   if (mw < (200 * e_scale)) mw = (200 * e_scale);
+   e_widget_size_min_set(cfdata->o_list, mw, (75 * e_scale));
+   cfdata->fill_delay = NULL;
+   return 0;
 }
