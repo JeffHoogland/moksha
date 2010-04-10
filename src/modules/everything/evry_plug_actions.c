@@ -147,7 +147,7 @@ evry_plug_actions_new(int type)
    Evry_Plugin *p;
 
    p = evry_plugin_new(NULL, action_selector, type, "", "", 0, NULL, NULL,
-		       _begin, _cleanup, _fetch, NULL, _icon_get, NULL, NULL);
+		       _begin, _cleanup, _fetch, NULL, _icon_get, NULL);
 
    evry_plugin_register(p, 2);
 

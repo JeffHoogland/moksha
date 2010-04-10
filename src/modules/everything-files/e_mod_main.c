@@ -485,6 +485,14 @@ _open_term_action(Evry_Action *act)
    return ret;
 }
 
+static void
+_free_plugin(Evry_Plugin *plugin)
+{
+   PLUGIN(p, plugin);
+
+   E_FREE(p);
+}
+
 static Eina_Bool
 module_init(void)
 {
@@ -492,23 +500,21 @@ module_init(void)
      return EINA_FALSE;
 
    p1 = evry_plugin_new(NULL, "Files", type_subject, "FILE", "FILE", 0, NULL, NULL,
-			_begin, _cleanup, _fetch, NULL, _icon_get,
-			NULL, NULL);
+			_begin, _cleanup, _fetch, NULL, _icon_get, _free_plugin);
 
    p2 = evry_plugin_new(NULL, "Files", type_object, "FILE", "FILE", 0, NULL, NULL,
-			_begin, _cleanup, _fetch, NULL, _icon_get,
-			NULL, NULL);
+			_begin, _cleanup, _fetch, NULL, _icon_get, _free_plugin);
    
    evry_plugin_register(p1, 3);
    evry_plugin_register(p2, 1);
 
    act1 = evry_action_new("Open Folder (EFM)", "FILE", NULL, NULL, "folder-open",
-			  _open_folder_action, _open_folder_check, NULL, NULL, NULL);   
+			  _open_folder_action, _open_folder_check, NULL, NULL, NULL, NULL);
    evry_action_register(act1, 0);
 
    act2 = evry_action_new("Open Terminal here", "FILE", NULL, NULL,
    			  "system-run",
-   			  _open_term_action, NULL, NULL, NULL, NULL);
+   			  _open_term_action, NULL, NULL, NULL, NULL, NULL);
    evry_action_register(act2, 2);
 
    return EINA_TRUE;

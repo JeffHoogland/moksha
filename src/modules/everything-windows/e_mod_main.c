@@ -489,18 +489,18 @@ module_init(void)
      return EINA_FALSE;
 
    plugin = evry_plugin_new(NULL, "Windows", type_subject, NULL, "BORDER", 0, NULL, NULL,
-			    _begin, _cleanup, _fetch, NULL, _item_icon_get, NULL, NULL);
+			    _begin, _cleanup, _fetch, NULL, _item_icon_get, NULL);
    evry_plugin_register(plugin, 2);
 
    
    plugin2 = evry_plugin_new(NULL, "Window Action", type_action, "BORDER", NULL, 0, NULL, NULL,
-			     _act_begin, _act_cleanup, _act_fetch, _act_action, _act_item_icon_get, NULL, NULL);
+			     _act_begin, _act_cleanup, _act_fetch, _act_action, _act_item_icon_get, NULL);
    evry_plugin_register(plugin2, 1);
 
    act = evry_action_new("Open File...", "BORDER", "FILE", "APPLICATION",
 			 "everything-launch",
 			 _exec_border_action, _exec_border_check_item,
-			 _exec_border_cleanup, _exec_border_intercept, NULL);
+			 _exec_border_cleanup, _exec_border_intercept, NULL, NULL);
    evry_action_register(act, 10);
 
    return EINA_TRUE;

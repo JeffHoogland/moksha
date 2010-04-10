@@ -124,10 +124,10 @@ module_init(void)
      return EINA_FALSE;
 
    p = evry_plugin_new(NULL, "Settings", type_subject, NULL, "E_SETTINGS", 0, NULL, NULL,
-		       NULL, _cleanup, _fetch, NULL, _item_icon_get, NULL, NULL);
+		       NULL, _cleanup, _fetch, NULL, _item_icon_get, NULL);
 
    act = evry_action_new("Show Dialog", "E_SETTINGS", NULL, NULL, "preferences-advanced",
-			 _action, NULL, NULL, NULL, NULL);
+			 _action, NULL, NULL, NULL, NULL, NULL);
 
    evry_plugin_register(p, 10);
 

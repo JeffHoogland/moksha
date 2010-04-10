@@ -252,6 +252,14 @@ _icon_get(Evry_Plugin *plugin, const Evry_Item *it, Evas *e)
    return o;
 }
 
+static void
+_plugin_free(Evry_Plugin *plugin)
+{
+   PLUGIN(p, plugin);
+
+   E_FREE(p);
+}
+
 Evry_Plugin *
 evry_plug_aggregator_new(Evry_Selector *selector)
 {
@@ -260,8 +268,7 @@ evry_plug_aggregator_new(Evry_Selector *selector)
 
    p = E_NEW(Plugin, 1);
    evry_plugin_new(EVRY_PLUGIN(p), "All", 0, "", "", 0, NULL, NULL,
-		   NULL, _cleanup, _fetch, _action, _icon_get,
-		   NULL, NULL);
+		   NULL, _cleanup, _fetch, _action, _icon_get, _plugin_free);
 
    pc = E_NEW(Plugin_Config, 1);
    pc->enabled = 1;
@@ -271,11 +278,4 @@ evry_plug_aggregator_new(Evry_Selector *selector)
    p->selector = selector;
 
    return EVRY_PLUGIN(p);
-}
-
-void
-evry_plug_aggregator_free(Evry_Plugin *plugin)
-{
-   PLUGIN(p, plugin);
-   EVRY_PLUGIN_FREE(p);
 }

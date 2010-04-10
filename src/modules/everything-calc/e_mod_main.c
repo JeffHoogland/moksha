@@ -230,7 +230,7 @@ module_init(void)
      return EINA_FALSE;
 
    p1 = evry_plugin_new(NULL, "Calculator", type_subject, NULL, "TEXT", 1, "accessories-calculator", "=",
-			_begin, _cleanup, _fetch, _action, NULL, NULL, NULL);
+			_begin, _cleanup, _fetch, _action, NULL, NULL);
 
    p1->aggregate = EINA_FALSE;
    

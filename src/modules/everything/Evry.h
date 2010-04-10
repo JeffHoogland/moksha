@@ -70,6 +70,9 @@ typedef struct _Config Evry_Config;
   EVRY_PLUGIN(_p)->items =					\
     eina_list_append(EVRY_PLUGIN(_p)->items, EVRY_ITEM(_item))	\
 
+/* if you extended a plugin struct and you are sure
+   not to have any data lying around after cleanup you
+   can use this */
 #define EVRY_PLUGIN_FREE(_p)			\
   evry_plugin_free(EVRY_PLUGIN(_p), 0);		\
   E_FREE(_p);
@@ -179,10 +182,10 @@ struct _Evry_Plugin
   /* only used when plugin is of type_action */
   int  (*action) (Evry_Plugin *p, const Evry_Item *item);
 
-  Evas_Object *(*config_page) (Evry_Plugin *p);
-  void (*config_apply) (Evry_Plugin *p);
-
   int  (*cb_key_down)  (Evry_Plugin *p, const Ecore_Event_Key *ev);
+
+  /* optional: use this when you extend the plugin struct */
+  void (*free) (Evry_Plugin *p);
   
   /* show in aggregator. default is TRUE */
   Eina_Bool aggregate;
@@ -301,6 +304,9 @@ struct _Evry_Action
   Eina_List *(*actions)    (Evry_Action *act);
   Evas_Object *(*icon_get) (Evry_Action *act, Evas *e);
 
+  /* optional: use this when you keep stuff in 'data' */
+  void (*free) (Evry_Action *act);
+  
   /* use icon name from theme */
   const char *icon;
 
@@ -375,8 +381,7 @@ EAPI Evry_Plugin *evry_plugin_new(Evry_Plugin *base, const char *name, int type,
 				  int  (*fetch)   (Evry_Plugin *p, const char *input),
 				  int  (*action)  (Evry_Plugin *p, const Evry_Item *item),
 				  Evas_Object *(*icon_get) (Evry_Plugin *p, const Evry_Item *it, Evas *e),
-				  Evas_Object *(*config_page) (Evry_Plugin *p),
-				  void (*config_apply) (Evry_Plugin *p));
+				  void (*free) (Evry_Plugin *p));
 
 EAPI void evry_plugin_free(Evry_Plugin *p, int free_pointer);
 
@@ -388,7 +393,8 @@ EAPI Evry_Action *evry_action_new(const char *name, const char *type_in1,
 				  int  (*check_item) (Evry_Action *act, const Evry_Item *it),
 				  void (*cleanup)    (Evry_Action *act),
 				  int  (*intercept)  (Evry_Action *act),
-				  Evas_Object *(*icon_get) (Evry_Action *act, Evas *e));
+				  Evas_Object *(*icon_get) (Evry_Action *act, Evas *e),
+				  void (*free) (Evry_Action *p));
 
 EAPI void evry_action_free(Evry_Action *act);
 

@@ -734,6 +734,15 @@ _new_app_action(Evry_Action *act)
 
 //#define TIME_FACTOR(_now) (1.0 - (evry_hist->begin / _now)) / 1000000000000000.0
 
+static void
+_free_plugin(Evry_Plugin *plugin)
+{
+   PLUGIN(p, plugin);
+
+   E_FREE(p);
+}
+
+
 static Eina_Bool
 module_init(void)
 {
@@ -742,12 +751,12 @@ module_init(void)
 
    p1 = E_NEW(Plugin, 1);
    evry_plugin_new(EVRY_PLUGIN(p1), "Applications", type_subject, "", "APPLICATION", 0, NULL, NULL,
-		   _begin, _cleanup, _fetch, NULL, _icon_get, NULL, NULL);
+		   _begin, _cleanup, _fetch, NULL, _icon_get, _free_plugin);
 
    p2 = E_NEW(Plugin, 1);
    evry_plugin_new(EVRY_PLUGIN(p2), "Open With...", type_action, "FILE", "", 0, NULL, NULL,
 		   _begin_open_with, _cleanup, _fetch, _open_with_action,
-		   _icon_get, NULL, NULL);
+		   _icon_get, _free_plugin);
 
    evry_plugin_register(EVRY_PLUGIN(p1), 1);
    evry_plugin_register(EVRY_PLUGIN(p2), 1);
@@ -755,31 +764,31 @@ module_init(void)
    act = evry_action_new("Launch", "APPLICATION", NULL, NULL,
 			 "everything-launch",
 			 _exec_app_action, _exec_app_check_item,
-			 NULL, NULL,NULL);
+			 NULL, NULL, NULL, NULL);
 
    act1 = evry_action_new("Open File...", "APPLICATION", "FILE", "APPLICATION",
 			  "document-open",
 			  _exec_app_action, _exec_app_check_item,
-			  NULL, NULL, NULL);
+			  NULL, NULL, NULL, NULL);
 
    act2 = evry_action_new("Run in Terminal", "APPLICATION", NULL, NULL,
 			  "system-run",
 			  _exec_term_action, _exec_term_check_item,
-			  NULL, NULL, NULL);
+			  NULL, NULL, NULL, NULL);
 
    act3 = evry_action_new("Edit Application Entry", "APPLICATION", NULL, NULL,
 			  "everything-launch",
 			  _edit_app_action, _edit_app_check_item,
-			  NULL, NULL, NULL);
+			  NULL, NULL, NULL, NULL);
 
    act4 = evry_action_new("New Application Entry", "APPLICATION", NULL, NULL,
 			  "everything-launch",
 			  _new_app_action, _new_app_check_item,
-			  NULL, NULL, NULL);
+			  NULL, NULL, NULL, NULL);
 
    act5 = evry_action_new("Run with Sudo", "APPLICATION", NULL, NULL,
 			  "system-run",
-			  _exec_sudo_action, NULL, NULL, NULL, NULL);
+			  _exec_sudo_action, NULL, NULL, NULL, NULL, NULL);
 
    evry_action_register(act,  0);
    evry_action_register(act1, 1);

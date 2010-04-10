@@ -119,7 +119,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    E_Config_Dialog *cfd;
    Evry_Plugin *p;
-   Evry_Action *act;
+   Evry_Action *a;
    
    evry_shutdown();
 
@@ -144,8 +144,8 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    EINA_LIST_FREE(evry_conf->plugins, p)
      evry_plugin_free(p, 1); 
 
-   EINA_LIST_FREE(evry_conf->actions, act)
-     evry_action_free(act); 
+   EINA_LIST_FREE(evry_conf->actions, a)
+     evry_action_free(a); 
 
    while ((cfd = e_config_dialog_get("E", "_config_everything_dialog")))
      e_object_del(E_OBJECT(cfd));
@@ -375,8 +375,7 @@ evry_plugin_new(Evry_Plugin *base, const char *name, int type,
 		int  (*fetch) (Evry_Plugin *p, const char *input),
 		int  (*action) (Evry_Plugin *p, const Evry_Item *item),
 		Evas_Object *(*icon_get) (Evry_Plugin *p, const Evry_Item *it, Evas *e),
-		Evas_Object *(*config_page) (Evry_Plugin *p),
-		void (*config_apply) (Evry_Plugin *p))
+		void (*cb_free) (Evry_Plugin *p))
 {
    Evry_Plugin *p;
 
@@ -397,11 +396,10 @@ evry_plugin_new(Evry_Plugin *base, const char *name, int type,
    p->fetch    = fetch;
    p->icon_get = icon_get;
    p->action   = action;
-   p->config_page  = config_page;
-   p->config_apply = config_apply;
    p->aggregate = EINA_TRUE;
    p->async_fetch = EINA_FALSE;
-
+   p->free   = cb_free;
+   
    DBG("%s", p->name);
    
    return p;
@@ -420,7 +418,11 @@ evry_plugin_free(Evry_Plugin *p, int free_pointer)
    if (p->trigger)  eina_stringshare_del(p->trigger);
    if (p->icon)     eina_stringshare_del(p->icon);
 
-   if (free_pointer)
+   if (!free_pointer)
+     return;
+   else if (p->free)
+     p->free(p);
+   else
      E_FREE(p);
 }
 
@@ -431,7 +433,8 @@ evry_action_new(const char *name, const char *type_in1, const char *type_in2,
 		int (*check_item) (Evry_Action *act, const Evry_Item *it),
 		void (*cleanup)    (Evry_Action *act),
 		int  (*intercept)  (Evry_Action *act),
-		Evas_Object *(*icon_get) (Evry_Action *act, Evas *e))
+		Evas_Object *(*icon_get) (Evry_Action *act, Evas *e),
+		void (*cb_free) (Evry_Action *p))
 {
    Evry_Action *act = E_NEW(Evry_Action, 1);
    act->name = eina_stringshare_add(name);
@@ -442,6 +445,7 @@ evry_action_new(const char *name, const char *type_in1, const char *type_in2,
    act->check_item = check_item;
    act->intercept = intercept;
    act->cleanup = cleanup;
+   act->free = cb_free;
    act->icon = (icon ? eina_stringshare_add(icon) : NULL);
 
    DBG("%s", name);
@@ -460,7 +464,10 @@ evry_action_free(Evry_Action *act)
    if (act->type_out) eina_stringshare_del(act->type_out);
    if (act->icon)     eina_stringshare_del(act->icon);
 
-   E_FREE(act);
+   if (act->free)
+     act->free(act);
+   else
+     E_FREE(act);
 }
 
 

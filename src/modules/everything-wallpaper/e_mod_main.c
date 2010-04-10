@@ -208,7 +208,7 @@ module_init(void)
    plugin = evry_plugin_new(NULL, "Wallpaper", type_action, "FILE", "",
 			    0, "preferences-desktop-wallpaper", NULL,
 			    _begin, _cleanup, _fetch, _action, _icon_get,
-			    NULL, NULL);
+			    NULL);
 
    evry_plugin_register(plugin, 10);
    

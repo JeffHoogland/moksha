@@ -321,6 +321,14 @@ _cleanup(Evry_Plugin *plugin)
      }
 }
 
+static void
+_free_plugin(Evry_Plugin *plugin)
+{
+   PLUGIN(p, plugin);
+
+   E_FREE(p);
+}
+
 static Eina_Bool
 module_init(void)
 {
@@ -332,7 +340,7 @@ module_init(void)
    p = E_NEW(Plugin, 1);
    evry_plugin_new(EVRY_PLUGIN(p), "Spell Checker", type_subject, "", "TEXT", 1,
 		   "accessories-dictionary", TRIGGER,
-		   NULL, _cleanup, _fetch, NULL, NULL, NULL, NULL);
+		   NULL, _cleanup, _fetch, NULL, NULL, _free_plugin);
 
    EVRY_PLUGIN(p)->aggregate = EINA_FALSE;
    

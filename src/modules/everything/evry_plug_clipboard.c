@@ -31,7 +31,7 @@ evry_plug_clipboard_init(void)
    if (!win) return EINA_FALSE;
 
    act = evry_action_new("Copy to Clipboard", "TEXT", NULL, NULL, "edit-copy",
-			 _action, _check_item, NULL, NULL, NULL);
+			 _action, _check_item, NULL, NULL, NULL, NULL);
 
    evry_action_register(act, 10);
 
