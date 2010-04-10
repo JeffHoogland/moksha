@@ -106,11 +106,11 @@ _tabs_update(Tab_View *v)
 
 	if (eina_list_count(s->cur_plugins) == 2)
 	  e_box_pack_options_set(o, 1, 1, 0, 0, 0.0, 0.5,
-				 120, 10, 120, 9999);
+				 140, 10, 140, 9999);
 	else
 	  e_box_pack_options_set(o, 1, 1, 1, 0, 0.0, 0.5,
 				 (tab->mw < tab->cw ? tab->cw : tab->mw), 10,
-				 (w ? w/3 : 120), 9999);
+				 (w ? w/3 : 140), 9999);
 	if (s->plugin == p)
 	  edje_object_signal_emit(o, "e,state,selected", "e");
 	else
@@ -243,7 +243,7 @@ _tabs_key_down(Tab_View *v, const Ecore_Event_Key *ev)
 	_plugin_prev(v);
 	return 1;
      }
-     else if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
+   else if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
      {
 	if (!strcmp(key, "Left"))
 	  {

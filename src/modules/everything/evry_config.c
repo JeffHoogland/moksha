@@ -241,8 +241,15 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    			   &(cfdata->hide_list));
    e_widget_framelist_object_append(of, ob);
 
-   ob = e_widget_check_add(evas, _("Quick Navigation (ALT + h,j,k,l,n,p,m,i)"),
-   			   &(cfdata->quick_nav));
+   ob = e_widget_label_add(evas, _("Quick Navigation"));
+   e_widget_framelist_object_append(of, ob);
+   
+   rg = e_widget_radio_group_new(&cfdata->quick_nav);
+   ob = e_widget_radio_add(evas, _("Off"), 0, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, _("Emacs style (ALT + n,p,f,b,m,i)"), 3, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, _("Vi style (ALT + h,j,k,l,n,p,m,i)"), 1, rg);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    

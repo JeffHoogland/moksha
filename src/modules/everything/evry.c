@@ -1335,7 +1335,8 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 
    old = ev->key;
 
-   if (evry_conf->quick_nav && (ev->modifiers & ECORE_EVENT_MODIFIER_ALT))
+   if (((evry_conf->quick_nav == 1) && (ev->modifiers & ECORE_EVENT_MODIFIER_ALT)) ||
+       ((evry_conf->quick_nav == 2) && (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)))
      {
 	if (!strcmp(ev->key, "k") || (!strcmp(ev->key, "K")))
 	  key = eina_stringshare_add("Up");
@@ -1358,7 +1359,32 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 
 	ev->key = key;
      }
+   else if (((evry_conf->quick_nav == 3) && (ev->modifiers & ECORE_EVENT_MODIFIER_ALT)) ||
+	    ((evry_conf->quick_nav == 4) && (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)))
+     {
+	if (!strcmp(ev->key, "p") || (!strcmp(ev->key, "P")))
+	  key = eina_stringshare_add("Up");
+	else if (!strcmp(ev->key, "n") || (!strcmp(ev->key, "N")))
+	  key = eina_stringshare_add("Down");
+	/* else if (!strcmp(ev->key, "f") || (!strcmp(ev->key, "f")))
+	 *   key = eina_stringshare_add("Next");
+	 * else if (!strcmp(ev->key, "b") || (!strcmp(ev->key, "B")))
+	 *   key = eina_stringshare_add("Prior"); */
+	else if (!strcmp(ev->key, "f") || (!strcmp(ev->key, "F")))
+	  key = eina_stringshare_add("Right");
+	else if (!strcmp(ev->key, "b") || (!strcmp(ev->key, "B")))
+	  key = eina_stringshare_add("Left");
+	else if (!strcmp(ev->key, "i") || (!strcmp(ev->key, "I")))
+	  key = eina_stringshare_add("Tab");
+	else if (!strcmp(ev->key, "m") || (!strcmp(ev->key, "M")))
+	  key = eina_stringshare_add("Return");
+	else
+	  key = eina_stringshare_add(ev->key);
+
+	ev->key = key;
+     }
    else
+
      {
 	key = eina_stringshare_add(ev->key);
 	ev->key = key;
