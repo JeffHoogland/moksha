@@ -31,7 +31,6 @@ _cb_border_remove(void *data, int type,  void *event)
 static void _hash_free(void *data)
 {
    Evry_Item *it = data;
-
    evry_item_free(it);
 }
 
@@ -96,7 +95,7 @@ _item_add(Evry_Plugin *p, E_Border *bd, int match, int *prio)
    *prio += 1;
 
    eina_hash_add(border_hash, &bd, it);
-   
+
    EVRY_PLUGIN_ITEM_APPEND(p, it);
 }
 
@@ -377,7 +376,7 @@ _act_fetch(Evry_Plugin *p, const char *input)
    zone = e_util_zone_current_get(e_manager_current_get());
    desk = e_desk_current_get(zone);
 
-   _cleanup(p);
+   _act_cleanup(p);
 
    _act_item_add(p, _("Switch to Window"),
 		 _act_cb_border_switch_to,
@@ -491,12 +490,11 @@ module_init(void)
 
    plugin = evry_plugin_new(NULL, "Windows", type_subject, NULL, "BORDER", 0, NULL, NULL,
 			    _begin, _cleanup, _fetch, NULL, _item_icon_get, NULL, NULL);
-
    evry_plugin_register(plugin, 2);
 
+   
    plugin2 = evry_plugin_new(NULL, "Window Action", type_action, "BORDER", NULL, 0, NULL, NULL,
 			     _act_begin, _act_cleanup, _act_fetch, _act_action, _act_item_icon_get, NULL, NULL);
-
    evry_plugin_register(plugin2, 1);
    inst = E_NEW(Inst, 1);
 
