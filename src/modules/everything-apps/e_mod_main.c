@@ -870,9 +870,6 @@ module_shutdown(void)
    evry_action_free(act3);
    evry_action_free(act4);
    evry_action_free(act5);
-
-   E_CONFIG_DD_FREE(exelist_edd);
-   E_CONFIG_DD_FREE(exelist_exe_edd);
 }
 
 /* taken from e_exebuf.c */
@@ -1026,6 +1023,9 @@ e_modapi_shutdown(E_Module *m)
    if (active && e_datastore_get("everything_loaded"))
      module_shutdown();
 
+   E_CONFIG_DD_FREE(exelist_edd);
+   E_CONFIG_DD_FREE(exelist_exe_edd);
+   
    module = NULL;
    
    return 1;

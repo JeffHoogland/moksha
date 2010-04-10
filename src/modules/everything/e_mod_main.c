@@ -118,6 +118,8 @@ EAPI int
 e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    E_Config_Dialog *cfd;
+   Evry_Plugin *p;
+   Evry_Action *act;
    
    evry_shutdown();
 
@@ -139,7 +141,12 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    view_help_shutdown();
    evry_plug_clipboard_shutdown();
 
-   
+   EINA_LIST_FREE(evry_conf->plugins, p)
+     evry_plugin_free(p, 1); 
+
+   EINA_LIST_FREE(evry_conf->actions, act)
+     evry_action_free(act); 
+
    while ((cfd = e_config_dialog_get("E", "_config_everything_dialog")))
      e_object_del(E_OBJECT(cfd));
 

@@ -510,8 +510,6 @@ module_init(void)
    			  "system-run",
    			  _open_term_action, NULL, NULL, NULL, NULL);
    evry_action_register(act2, 2);
-   
-   mime_folder = eina_stringshare_add("inode/directory");
 
    return EINA_TRUE;
 }
@@ -521,8 +519,6 @@ module_shutdown(void)
 {
    EVRY_PLUGIN_FREE(p1);
    EVRY_PLUGIN_FREE(p2);
-
-   eina_stringshare_del(mime_folder);
 
    evry_action_free(act1);
    evry_action_free(act2);
@@ -551,9 +547,11 @@ e_modapi_init(E_Module *m)
 
    if (e_datastore_get("everything_loaded"))
      active = module_init();
+
+   mime_folder = eina_stringshare_add("inode/directory");
    
    e_module_delayed_set(m, 1); 
-
+   
    return m;
 }
 
@@ -563,6 +561,8 @@ e_modapi_shutdown(E_Module *m)
    if (active && e_datastore_get("everything_loaded"))
      module_shutdown();
 
+   eina_stringshare_del(mime_folder);
+   
    module = NULL;
    
    return 1;

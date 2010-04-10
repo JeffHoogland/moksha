@@ -242,11 +242,6 @@ module_init(void)
 static void
 module_shutdown(void)
 {
-   char *result;
-
-   EINA_LIST_FREE(history, result)
-     eina_stringshare_del(result);
-
    EVRY_PLUGIN_FREE(p1);
 }
 
@@ -283,8 +278,13 @@ e_modapi_init(E_Module *m)
 EAPI int
 e_modapi_shutdown(E_Module *m)
 {
+   char *result;
+   
    if (active && e_datastore_get("everything_loaded"))
      module_shutdown();
+
+   EINA_LIST_FREE(history, result)
+     eina_stringshare_del(result);
 
    module = NULL;
    

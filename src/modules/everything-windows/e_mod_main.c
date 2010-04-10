@@ -496,7 +496,6 @@ module_init(void)
    plugin2 = evry_plugin_new(NULL, "Window Action", type_action, "BORDER", NULL, 0, NULL, NULL,
 			     _act_begin, _act_cleanup, _act_fetch, _act_action, _act_item_icon_get, NULL, NULL);
    evry_plugin_register(plugin2, 1);
-   inst = E_NEW(Inst, 1);
 
    act = evry_action_new("Open File...", "BORDER", "FILE", "APPLICATION",
 			 "everything-launch",
@@ -512,8 +511,7 @@ module_shutdown(void)
 {
    EVRY_PLUGIN_FREE(plugin);
    EVRY_PLUGIN_FREE(plugin2);
-   E_FREE(inst);
-   
+
    evry_action_free(act);
 }
 
@@ -543,6 +541,8 @@ e_modapi_init(E_Module *m)
    
    e_module_delayed_set(m, 1); 
 
+   inst = E_NEW(Inst, 1);
+   
    return m;
 }
 
@@ -552,6 +552,8 @@ e_modapi_shutdown(E_Module *m)
    if (active && e_datastore_get("everything_loaded"))
      module_shutdown();
 
+   E_FREE(inst);
+   
    module = NULL;
    
    return 1;
