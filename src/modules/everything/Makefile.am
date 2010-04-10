@@ -1,8 +1,6 @@
 MAINTAINERCLEANFILES = Makefile.in everything.pc
 MODULE = everything
 
-SUBDIRS = . sources actions views
-
 # data files for the module
 filesdir = $(libdir)/enlightenment/modules/$(MODULE)
 files_DATA = \
@@ -21,7 +19,7 @@ INCLUDES               = -I. \
 
 pkgdir                 = $(libdir)/enlightenment/modules/$(MODULE)/$(MODULE_ARCH)
 pkg_LTLIBRARIES        = module.la
-noinst_LTLIBRARIES      = libfoo.la
+# noinst_LTLIBRARIES      = libfoo.la
 
 EVRYHEADERS = Evry.h
 
@@ -34,7 +32,11 @@ module_la_SOURCES      = $(EVRYHEADERS) \
 	                 evry_history.c \
 			 evry_plug_aggregator.c \
 			 evry_plug_actions.c \
-			 evry_view_plugin_tabs.c
+			 evry_view_plugin_tabs.c \
+			 evry_plug_view_thumb.c \
+			 evry_plug_preview.c \
+			 evry_plug_view_help.c \
+			 evry_plug_clipboard.c
 
 module_la_LIBADD       = @e_libs@ @dlopen_libs@
 module_la_LDFLAGS      = -module -avoid-version
@@ -43,10 +45,10 @@ module_la_DEPENDENCIES = $(top_builddir)/config.h
 installed_headersdir = $(prefix)/include/@PACKAGE@
 installed_headers_DATA = $(EVRYHEADERS)
 
-libfoo_la_SOURCES = evry.c e_mod_main.h evry_util.c evry_config.c evry_history.c evry_view_plugin_tabs.c
-libfoo_la_LIBADD       = @e_libs@ @dlopen_libs@
-libfoo_la_LDFLAGS      = -avoid-version
-libfoo_la_DEPENDENCIES = $(top_builddir)/config.h
+# libfoo_la_SOURCES = evry.c e_mod_main.h evry_util.c evry_config.c evry_history.c evry_view_plugin_tabs.c
+# libfoo_la_LIBADD       = @e_libs@ @dlopen_libs@
+# libfoo_la_LDFLAGS      = -avoid-version
+# libfoo_la_DEPENDENCIES = $(top_builddir)/config.h
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = everything.pc

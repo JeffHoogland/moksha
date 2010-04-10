@@ -1,3 +1,8 @@
+/*
+ * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
+ */
+
+#include "Evry.h"
 #include "e_mod_main.h"
 
 #define MAX_ITEMS 100
@@ -35,9 +40,6 @@ static Evry_Plugin *p1 = NULL;
 static Evry_Plugin *p2 = NULL;
 static Evry_Action *act1 = NULL;
 static Evry_Action *act2 = NULL;
-
-/* static long thread_cnt = 0;
- * static long thread_last = 0; */
 
 static const char *mime_folder;
 
@@ -244,11 +246,9 @@ _scan_end_func(void *data)
 static void
 _read_directory(Plugin *p)
 {
-   /* thread_last = ++thread_cnt; */
-
    Data *d = E_NEW(Data, 1);
    d->plugin = p;
-   /* d->id = thread_cnt; */
+
    p->thread = ecore_thread_run(_scan_func, _scan_end_func, _scan_cancel_func, d);
 }
 
@@ -291,14 +291,8 @@ _cleanup(Evry_Plugin *plugin)
 
    Evry_Item_File *file;
 
-   /* if a thread for this plugin returns
-      it will free its data if its id is smaller
-      than thread_last */
-   /* thread_last = ++thread_cnt; */
-
    if (p->thread)
-     {
-	
+     {	
 	ecore_thread_cancel(p->thread);
      }
    else
@@ -492,7 +486,7 @@ _open_term_action(Evry_Action *act)
 }
 
 static Eina_Bool
-_init(void)
+module_init(void)
 {
    if (!evry_api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
@@ -509,16 +503,13 @@ _init(void)
    evry_plugin_register(p2, 1);
 
    act1 = evry_action_new("Open Folder (EFM)", "FILE", NULL, NULL, "folder-open",
-			 _open_folder_action, _open_folder_check, NULL, NULL, NULL);   
+			  _open_folder_action, _open_folder_check, NULL, NULL, NULL);   
    evry_action_register(act1, 0);
 
    act2 = evry_action_new("Open Terminal here", "FILE", NULL, NULL,
-			  "system-run",
-			  _open_term_action, NULL, NULL, NULL, NULL);
+   			  "system-run",
+   			  _open_term_action, NULL, NULL, NULL, NULL);
    evry_action_register(act2, 2);
-
-
-   
    
    mime_folder = eina_stringshare_add("inode/directory");
 
@@ -526,7 +517,7 @@ _init(void)
 }
 
 static void
-_shutdown(void)
+module_shutdown(void)
 {
    EVRY_PLUGIN_FREE(p1);
    EVRY_PLUGIN_FREE(p2);
@@ -537,5 +528,52 @@ _shutdown(void)
    evry_action_free(act2);
 }
 
-EINA_MODULE_INIT(_init);
-EINA_MODULE_SHUTDOWN(_shutdown);
+/***************************************************************************/
+/**/
+/* actual module specifics */
+
+static E_Module *module = NULL;
+static Eina_Bool active = EINA_FALSE;
+
+/***************************************************************************/
+/**/
+/* module setup */
+EAPI E_Module_Api e_modapi = 
+{
+   E_MODULE_API_VERSION,
+   "everything-files"
+};
+
+EAPI void *
+e_modapi_init(E_Module *m)
+{
+   module = m;
+
+   if (e_datastore_get("everything_loaded"))
+     active = module_init();
+   
+   e_module_delayed_set(m, 1); 
+
+   return m;
+}
+
+EAPI int
+e_modapi_shutdown(E_Module *m)
+{
+   if (active && e_datastore_get("everything_loaded"))
+     module_shutdown();
+
+   module = NULL;
+   
+   return 1;
+}
+
+EAPI int
+e_modapi_save(E_Module *m)
+{
+   return 1;
+}
+
+/**/
+/***************************************************************************/
+

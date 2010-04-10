@@ -1,4 +1,9 @@
+/*
+ * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
+ */
+
 #include "Evry.h"
+#include "e_mod_main.h"
 #include <ctype.h>
 
 static const char TRIGGER[] = "aspell ";
@@ -9,16 +14,16 @@ typedef struct _Plugin Plugin;
 
 struct _Plugin
 {
-   Evry_Plugin base;
-   struct
-   {
-      Ecore_Event_Handler *data;
-      Ecore_Event_Handler *del;
-   } handler;
-   Ecore_Exe *exe;
-   const char *lang;
-   const char *input;
-   Eina_Bool is_first;
+  Evry_Plugin base;
+  struct
+  {
+    Ecore_Event_Handler *data;
+    Ecore_Event_Handler *del;
+  } handler;
+  Ecore_Exe *exe;
+  const char *lang;
+  const char *input;
+  Eina_Bool is_first;
 };
 
 static Plugin *plugin = NULL;
@@ -288,11 +293,11 @@ _cleanup(Evry_Plugin *plugin)
 
    EVRY_PLUGIN_ITEMS_FREE(p)
 
-   if (p->handler.data)
-     {
-	ecore_event_handler_del(p->handler.data);
-	p->handler.data = NULL;
-     }
+     if (p->handler.data)
+       {
+	  ecore_event_handler_del(p->handler.data);
+	  p->handler.data = NULL;
+       }
    if (p->handler.del)
      {
 	ecore_event_handler_del(p->handler.del);
@@ -317,7 +322,7 @@ _cleanup(Evry_Plugin *plugin)
 }
 
 static Eina_Bool
-_init(void)
+module_init(void)
 {
    Plugin *p;
 
@@ -338,10 +343,57 @@ _init(void)
 }
 
 static void
-_shutdown(void)
+module_shutdown(void)
 {
    EVRY_PLUGIN_FREE(plugin);
 }
 
-EINA_MODULE_INIT(_init);
-EINA_MODULE_SHUTDOWN(_shutdown);
+/***************************************************************************/
+/**/
+/* actual module specifics */
+
+static E_Module *module = NULL;
+static Eina_Bool active = EINA_FALSE;
+
+/***************************************************************************/
+/**/
+/* module setup */
+EAPI E_Module_Api e_modapi = 
+{
+   E_MODULE_API_VERSION,
+   "everything-aspell"
+};
+
+EAPI void *
+e_modapi_init(E_Module *m)
+{
+   module = m;
+
+   if (e_datastore_get("everything_loaded"))
+     active = module_init();
+   
+   e_module_delayed_set(m, 1); 
+
+   return m;
+}
+
+EAPI int
+e_modapi_shutdown(E_Module *m)
+{
+   if (active && e_datastore_get("everything_loaded"))
+     module_shutdown();
+
+   module = NULL;
+   
+   return 1;
+}
+
+EAPI int
+e_modapi_save(E_Module *m)
+{
+   return 1;
+}
+
+/**/
+/***************************************************************************/
+

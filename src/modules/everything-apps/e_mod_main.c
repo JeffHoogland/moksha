@@ -1,5 +1,9 @@
-#include "e_mod_main.h"
+/*
+ * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
+ */
 
+#include "Evry.h"
+#include "e_mod_main.h"
 
 typedef struct _Plugin Plugin;
 
@@ -290,13 +294,13 @@ _item_add(Plugin *p, Efreet_Desktop *desktop, char *file, int match)
    
    if (desktop)
      {
-       evry_item_new(EVRY_ITEM(app), EVRY_PLUGIN(p), desktop->name, _item_free);
-       EVRY_ITEM(app)->id = eina_stringshare_add(desktop->exec);
+	evry_item_new(EVRY_ITEM(app), EVRY_PLUGIN(p), desktop->name, _item_free);
+	EVRY_ITEM(app)->id = eina_stringshare_add(desktop->exec);
      }
    else
      {
-       evry_item_new(EVRY_ITEM(app), EVRY_PLUGIN(p), file, _item_free);
-       EVRY_ITEM(app)->id = eina_stringshare_add(file);
+	evry_item_new(EVRY_ITEM(app), EVRY_PLUGIN(p), file, _item_free);
+	EVRY_ITEM(app)->id = eina_stringshare_add(file);
      }
    
    app->desktop = desktop;
@@ -390,37 +394,37 @@ _cb_sort(const void *data1, const void *data2)
 static Eina_Bool
 _hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata)
 {
-  History_Entry *he = data;
-  History_Item *hi;
-  Plugin *p = fdata;
-  Efreet_Desktop *d;
-  Eina_List *l;
-  Evry_Item_App *app;
+   History_Entry *he = data;
+   History_Item *hi;
+   Plugin *p = fdata;
+   Efreet_Desktop *d;
+   Eina_List *l;
+   Evry_Item_App *app;
 
-  EINA_LIST_FOREACH(he->items, l, hi)
-    {
-      if (hi->plugin != p->base.name)
-	continue;
+   EINA_LIST_FOREACH(he->items, l, hi)
+     {
+	if (hi->plugin != p->base.name)
+	  continue;
 
-      if ((d = efreet_util_desktop_exec_find(key)))
-	{
-	   app = _item_add(p, d, NULL, 1);
-	}
-      else
-	{
-	   app = _item_add(p, NULL, (char *) key, 1);
-	   if (app && app->desktop)
-	     efreet_desktop_ref(app->desktop);
-	}
+	if ((d = efreet_util_desktop_exec_find(key)))
+	  {
+	     app = _item_add(p, d, NULL, 1);
+	  }
+	else
+	  {
+	     app = _item_add(p, NULL, (char *) key, 1);
+	     if (app && app->desktop)
+	       efreet_desktop_ref(app->desktop);
+	  }
       
-      if (app && app->desktop)
-	{
-	   p->apps_hist = eina_list_append(p->apps_hist, app->desktop);
-	}
+	if (app && app->desktop)
+	  {
+	     p->apps_hist = eina_list_append(p->apps_hist, app->desktop);
+	  }
 
-      if (app) break;
-    }
-  return EINA_TRUE;
+	if (app) break;
+     }
+   return EINA_TRUE;
 }
 
 static int
@@ -731,7 +735,7 @@ _new_app_action(Evry_Action *act)
 //#define TIME_FACTOR(_now) (1.0 - (evry_hist->begin / _now)) / 1000000000000000.0
 
 static Eina_Bool
-_init(void)
+module_init(void)
 {
    if (!evry_api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
@@ -785,56 +789,56 @@ _init(void)
    evry_action_register(act5, 5);
 
    /*
-   Eina_List *l, *ll;
-   const char *file, *name;
-   History_Entry *he;
-   History_Item *hi;
-   name = EVRY_PLUGIN(p1)->name;
-   double t;
-   int found = 0;
+     Eina_List *l, *ll;
+     const char *file, *name;
+     History_Entry *he;
+     History_Item *hi;
+     name = EVRY_PLUGIN(p1)->name;
+     double t;
+     int found = 0;
 
-   evry_history_load();
+     evry_history_load();
    
-   EINA_LIST_FOREACH(e_exehist_list_get(), l, file)
+     EINA_LIST_FOREACH(e_exehist_list_get(), l, file)
      {
-	t = e_exehist_newest_run_get(file);
-	he = eina_hash_find(evry_hist->subjects, file);
+     t = e_exehist_newest_run_get(file);
+     he = eina_hash_find(evry_hist->subjects, file);
 
-	if (!he)
-	  {
-	     he = E_NEW(History_Entry, 1);
-	     eina_hash_add(evry_hist->subjects, file, he);
-	  }
-	else
-	  {
-	     EINA_LIST_FOREACH(he->items, ll, hi)
-	       {
-		  if (hi->plugin != name) continue;
-
-		  if (t > hi->last_used - 1.0)
-		    {
-		       hi->last_used = t;
-		       hi->usage += TIME_FACTOR(hi->last_used);
-		       hi->count = e_exehist_popularity_get(file);
-		    }
-		  found = 1;
-		  break;
-	       }
-
-	  }
-	
-	if (!found)
-	  {
-	     hi = E_NEW(History_Item, 1);
-	     hi->plugin = eina_stringshare_ref(name);
-	     hi->last_used = t;
-	     hi->count = e_exehist_popularity_get(file);
-	     hi->usage += TIME_FACTOR(hi->last_used);
-	     he->items = eina_list_append(he->items, hi);
-	  }
-	found = 0;
+     if (!he)
+     {
+     he = E_NEW(History_Entry, 1);
+     eina_hash_add(evry_hist->subjects, file, he);
      }
-   evry_history_unload();
+     else
+     {
+     EINA_LIST_FOREACH(he->items, ll, hi)
+     {
+     if (hi->plugin != name) continue;
+
+     if (t > hi->last_used - 1.0)
+     {
+     hi->last_used = t;
+     hi->usage += TIME_FACTOR(hi->last_used);
+     hi->count = e_exehist_popularity_get(file);
+     }
+     found = 1;
+     break;
+     }
+
+     }
+	
+     if (!found)
+     {
+     hi = E_NEW(History_Item, 1);
+     hi->plugin = eina_stringshare_ref(name);
+     hi->last_used = t;
+     hi->count = e_exehist_popularity_get(file);
+     hi->usage += TIME_FACTOR(hi->last_used);
+     he->items = eina_list_append(he->items, hi);
+     }
+     found = 0;
+     }
+     evry_history_unload();
    */
    /* taken from e_exebuf.c */
    exelist_exe_edd = E_CONFIG_DD_NEW("E_Exe", E_Exe);
@@ -855,7 +859,7 @@ _init(void)
 }
 
 static void
-_shutdown(void)
+module_shutdown(void)
 {
    EVRY_PLUGIN_FREE(p1);
    EVRY_PLUGIN_FREE(p2);
@@ -870,10 +874,6 @@ _shutdown(void)
    E_CONFIG_DD_FREE(exelist_edd);
    E_CONFIG_DD_FREE(exelist_exe_edd);
 }
-
-EINA_MODULE_INIT(_init);
-EINA_MODULE_SHUTDOWN(_shutdown);
-
 
 /* taken from e_exebuf.c */
 static int
@@ -990,3 +990,53 @@ _scan_idler(void *data)
    /* we have mroe scannign to do */
    return 1;
 }
+
+/***************************************************************************/
+/**/
+/* actual module specifics */
+
+static E_Module *module = NULL;
+static Eina_Bool active = EINA_FALSE;
+
+/***************************************************************************/
+/**/
+/* module setup */
+EAPI E_Module_Api e_modapi = 
+{
+   E_MODULE_API_VERSION,
+   "everything-apps"
+};
+
+EAPI void *
+e_modapi_init(E_Module *m)
+{
+   module = m;
+
+   if (e_datastore_get("everything_loaded"))
+     active = module_init();
+   
+   e_module_delayed_set(m, 1); 
+
+   return m;
+}
+
+EAPI int
+e_modapi_shutdown(E_Module *m)
+{
+   if (active && e_datastore_get("everything_loaded"))
+     module_shutdown();
+
+   module = NULL;
+   
+   return 1;
+}
+
+EAPI int
+e_modapi_save(E_Module *m)
+{
+   return 1;
+}
+
+/**/
+/***************************************************************************/
+

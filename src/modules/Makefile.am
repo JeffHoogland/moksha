@@ -258,6 +258,38 @@ if USE_MODULE_EVERYTHING
 SUBDIRS += everything
 endif
 
+if USE_MODULE_EVERYTHING_FILES
+SUBDIRS += everything-files
+endif
+
+if USE_MODULE_EVERYTHING_APPS
+SUBDIRS += everything-apps
+endif
+
+if USE_MODULE_EVERYTHING_FILES
+SUBDIRS += everything-calc
+endif
+
+if USE_MODULE_EVERYTHING_ASPELL
+SUBDIRS += everything-aspell
+endif
+
+if USE_MODULE_EVERYTHING_SETTINGS
+SUBDIRS += everything-settings
+endif
+
+if USE_MODULE_EVERYTHING_WALLPAPER
+SUBDIRS += everything-wallpaper
+endif
+
+if USE_MODULE_EVERYTHING_CALC
+SUBDIRS += everything-calc
+endif
+
+if USE_MODULE_EVERYTHING_CALC
+SUBDIRS += everything-windows
+endif
+
 if USE_MODULE_SYSTRAY
 SUBDIRS += systray
 endif
@@ -342,6 +374,7 @@ illume-kbd-toggle \
 illume-mode-toggle \
 syscon \
 everything \
+everything-files \
 systray \
 comp \
 ofono

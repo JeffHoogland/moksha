@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Link
+Name=Everything Settings
+Icon=e-module
+X-Enlightenment-ModuleType=system
+Comment=Quickly open e17 settings dialogs.

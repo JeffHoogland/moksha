@@ -38,6 +38,10 @@ typedef struct _Evry_Action    Evry_Action;
 typedef struct _Evry_State     Evry_State;
 typedef struct _Evry_View      Evry_View;
 typedef struct _Plugin_Config  Plugin_Config;
+typedef struct _History Evry_History;
+typedef struct _History_Entry History_Entry;
+typedef struct _History_Item   History_Item;
+typedef struct _Config Evry_Config;
 
 #define EVRY_ITEM(_item) ((Evry_Item *)_item)
 #define EVRY_PLUGIN(_plugin) ((Evry_Plugin *) _plugin)
@@ -218,6 +222,49 @@ struct _Evry_State
   Evry_View *view;
 };
 
+struct _Config
+{
+  int version;
+  /* position */
+  double rel_x, rel_y;
+  /* size */
+  int width, height;
+
+  Eina_List *modules;
+  
+  /* generic plugin config */
+  Eina_List *conf_subjects;
+  Eina_List *conf_actions;
+  Eina_List *conf_objects;
+  Eina_List *conf_views;
+
+  int scroll_animate;
+  double scroll_speed;
+
+  int hide_input;
+  int hide_list;
+
+  int quick_nav;
+
+  const char *cmd_terminal;
+  const char *cmd_sudo;
+
+  int view_mode;
+  int view_zoom;
+
+  int history_sort_mode;
+  
+  /* use up/down keys for prev/next in thumb view */
+  int cycle_mode;
+
+  /* not saved data */
+  Eina_List *plugins;
+  Eina_List *actions;
+  Eina_List *views;
+
+  int min_w, min_h;
+};
+
 struct _Evry_View
 {
   Evry_View  *id;
@@ -262,6 +309,30 @@ struct _Evry_Action
   int priority;
 };
 
+struct _History_Entry
+{
+  Eina_List *items;
+};
+
+struct _History
+{
+  int version;
+  Eina_Hash *subjects;
+  Eina_Hash *actions;
+  double begin;
+};
+
+struct _History_Item
+{
+  const char *plugin;
+  const char *context;
+  const char *input;
+  double last_used;
+  double usage;
+  int count;
+  int transient;
+};
+
 /* evry.c */
 EAPI void evry_item_select(const Evry_State *s, Evry_Item *it);
 EAPI void evry_item_mark(const Evry_State *state, Evry_Item *it, Eina_Bool mark);
@@ -290,6 +361,11 @@ EAPI void evry_action_register(Evry_Action *act, int priority);
 EAPI void evry_action_unregister(Evry_Action *act);
 EAPI void evry_view_register(Evry_View *view, int priority);
 EAPI void evry_view_unregister(Evry_View *view);
+
+EAPI void evry_history_load(void);
+EAPI void evry_history_unload(void);
+EAPI void evry_history_add(Eina_Hash *hist, Evry_State *s, const char *ctxt);
+EAPI int  evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, const char *ctxt);
 
 EAPI Evry_Plugin *evry_plugin_new(Evry_Plugin *base, const char *name, int type,
 				  const char *type_in, const char *type_out,
@@ -328,5 +404,8 @@ struct _Evry_Event_Item_Changed
 extern EAPI int EVRY_EVENT_ITEM_SELECT;
 extern EAPI int EVRY_EVENT_ITEM_CHANGED;
 extern EAPI int EVRY_EVENT_ITEMS_UPDATE;
+
+EAPI extern Evry_History *evry_hist;
+EAPI extern Evry_Config *evry_conf;
 
 #endif

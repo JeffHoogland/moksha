@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Link
+Name=Everything Aspell
+Icon=e-module
+X-Enlightenment-ModuleType=system
+Comment=Aspell Frontend, use 'aspell ' as trigger

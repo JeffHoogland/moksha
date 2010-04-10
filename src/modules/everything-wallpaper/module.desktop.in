@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Link
+Name=Everything Wallpaper
+Icon=e-module
+X-Enlightenment-ModuleType=system
+Comment=Provides action to set image as wallpaper.

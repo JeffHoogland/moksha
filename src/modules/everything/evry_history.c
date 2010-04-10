@@ -20,7 +20,7 @@ static E_Config_DD *hist_entry_edd = NULL;
 static E_Config_DD *hist_item_edd = NULL;
 static E_Config_DD *hist_edd = NULL;
 
-History *evry_hist = NULL;
+Evry_History *evry_hist = NULL;
 
 void
 evry_history_init(void)
@@ -45,8 +45,8 @@ evry_history_init(void)
    E_CONFIG_LIST(D, T, items, hist_item_edd);
 #undef T
 #undef D
-   hist_edd = E_CONFIG_DD_NEW("History", History);
-#define T History
+   hist_edd = E_CONFIG_DD_NEW("History", Evry_History);
+#define T Evry_History
 #define D hist_edd
    E_CONFIG_VAL(D, T,  version,  INT);
    E_CONFIG_VAL(D, T,  begin,    DOUBLE);
@@ -177,7 +177,7 @@ evry_history_load(void)
 
    if (!evry_hist)
      {
-	evry_hist = E_NEW(History, 1);
+	evry_hist = E_NEW(Evry_History, 1);
 	evry_hist->version = HISTORY_VERSION;
 	evry_hist->begin = ecore_time_get();
      }

@@ -532,6 +532,13 @@ AC_E_OPTIONAL_MODULE([illume], true)
 AC_E_OPTIONAL_MODULE([illume2], true)
 AC_E_OPTIONAL_MODULE([syscon], true)
 AC_E_OPTIONAL_MODULE([everything], true)
+AC_E_OPTIONAL_MODULE([everything-files], true)
+AC_E_OPTIONAL_MODULE([everything-apps], true)
+AC_E_OPTIONAL_MODULE([everything-calc], true)
+AC_E_OPTIONAL_MODULE([everything-aspell], true)
+AC_E_OPTIONAL_MODULE([everything-wallpaper], true)
+AC_E_OPTIONAL_MODULE([everything-settings], true)
+AC_E_OPTIONAL_MODULE([everything-windows], true)
 AC_E_OPTIONAL_MODULE([systray], true)
 AC_E_OPTIONAL_MODULE([comp], true)
 
@@ -697,11 +704,22 @@ src/modules/illume2/policies/illume/Makefile
 src/modules/syscon/Makefile
 src/modules/syscon/module.desktop
 src/modules/everything/Makefile
-src/modules/everything/sources/Makefile
-src/modules/everything/actions/Makefile
-src/modules/everything/views/Makefile
 src/modules/everything/module.desktop
 src/modules/everything/everything.pc
+src/modules/everything-files/Makefile
+src/modules/everything-files/module.desktop
+src/modules/everything-apps/Makefile
+src/modules/everything-apps/module.desktop
+src/modules/everything-windows/Makefile
+src/modules/everything-windows/module.desktop
+src/modules/everything-settings/Makefile
+src/modules/everything-settings/module.desktop
+src/modules/everything-calc/Makefile
+src/modules/everything-calc/module.desktop
+src/modules/everything-aspell/Makefile
+src/modules/everything-aspell/module.desktop
+src/modules/everything-wallpaper/Makefile
+src/modules/everything-wallpaper/module.desktop
 src/modules/systray/Makefile
 src/modules/systray/module.desktop
 src/modules/comp/Makefile

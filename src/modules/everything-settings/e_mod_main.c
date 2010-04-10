@@ -1,4 +1,9 @@
+/*
+ * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
+ */
+
 #include "Evry.h"
+#include "e_mod_main.h"
 
 static Evry_Plugin *p;
 static Evry_Action *act;
@@ -113,7 +118,7 @@ _action(Evry_Action *act)
 }
 
 static Eina_Bool
-_init(void)
+module_init(void)
 {
    if (!evry_api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
@@ -132,12 +137,60 @@ _init(void)
 }
 
 static void
-_shutdown(void)
+module_shutdown(void)
 {
    EVRY_PLUGIN_FREE(p);
 
    evry_action_free(act);
 }
 
-EINA_MODULE_INIT(_init);
-EINA_MODULE_SHUTDOWN(_shutdown);
+
+/***************************************************************************/
+/**/
+/* actual module specifics */
+
+static E_Module *module = NULL;
+static Eina_Bool active = EINA_FALSE;
+
+/***************************************************************************/
+/**/
+/* module setup */
+EAPI E_Module_Api e_modapi = 
+{
+   E_MODULE_API_VERSION,
+   "everything-settings"
+};
+
+EAPI void *
+e_modapi_init(E_Module *m)
+{
+   module = m;
+
+   if (e_datastore_get("everything_loaded"))
+     active = module_init();
+   
+   e_module_delayed_set(m, 1); 
+
+   return m;
+}
+
+EAPI int
+e_modapi_shutdown(E_Module *m)
+{
+   if (active && e_datastore_get("everything_loaded"))
+     module_shutdown();
+
+   module = NULL;
+   
+   return 1;
+}
+
+EAPI int
+e_modapi_save(E_Module *m)
+{
+   return 1;
+}
+
+/**/
+/***************************************************************************/
+
