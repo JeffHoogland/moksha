@@ -7871,8 +7871,10 @@ collections {
                new strength;
                strength = getarg(2);
                if (strength >= 65)
-                  run_program(PROGRAM:"strength,good"); else if (strength >= 35)
-                  run_program(PROGRAM:"strength,medium"); else
+                  run_program(PROGRAM:"strength,good"); 
+               else if (strength >= 35)
+                  run_program(PROGRAM:"strength,medium"); 
+               else
                   run_program(PROGRAM:"strength,bad");
             }
          }
@@ -7969,8 +7971,10 @@ collections {
                new strength;
                strength = getarg(2);
                if (strength >= 65)
-                  run_program(PROGRAM:"strength,good"); else if (strength >= 35)
-                  run_program(PROGRAM:"strength,medium"); else
+                  run_program(PROGRAM:"strength,good"); 
+               else if (strength >= 35)
+                  run_program(PROGRAM:"strength,medium"); 
+               else
                   run_program(PROGRAM:"strength,bad");
             }
          }
@@ -8370,7 +8374,8 @@ collections {
                   new x, y, w, h;
                   get_geometry(PART:"eventarea", x, y, w, h);
                   if (w <= 32)
-                     set_state(PART:"e.text.name", "hidden", 0.0); else
+                     set_state(PART:"e.text.name", "hidden", 0.0); 
+                  else
                      set_state(PART:"e.text.name", "default", 0.0);
                }
             }
@@ -8423,11 +8428,14 @@ collections {
                   set_text(PART:"strength", buf);
                   set_drag(PART:"strength_gauge_knob", val, 0.0);
                   run_program(PROGRAM:"strength,show");
-               } else
-                  run_program(PROGRAM:"strength,hide");
+               } 
+               else run_program(PROGRAM:"strength,hide");
+               
                if (strength >= 65)
-                  run_program(PROGRAM:"strength,good"); else if (strength >= 35)
-                  run_program(PROGRAM:"strength,medium"); else
+                  run_program(PROGRAM:"strength,good"); 
+               else if (strength >= 35)
+                  run_program(PROGRAM:"strength,medium"); 
+               else
                   run_program(PROGRAM:"strength,bad");
             }
          }
@@ -9328,7 +9336,8 @@ collections {
                   get_geometry(PART:"eventarea", x, y, w, h);
                   get_geometry(PART:"e.text.name", tx, ty, tw, th);
                   if ((w <= 32) || (tw >= w))
-                     set_state(PART:"e.text.name", "hidden", 0.0); else
+                     set_state(PART:"e.text.name", "hidden", 0.0); 
+                  else
                      set_state(PART:"e.text.name", "default", 0.0);
                }
             }
@@ -9680,7 +9689,8 @@ collections {
                   new x, y, w, h;
                   get_geometry(PART:"eventarea", x, y, w, h);
                   if (w <= 32)
-                     set_state(PART:"e.text.name", "hidden", 0.0); else
+                     set_state(PART:"e.text.name", "hidden", 0.0); 
+                  else
                      set_state(PART:"e.text.name", "default", 0.0);
                }
             }
@@ -11042,7 +11052,8 @@ collections {
                      val2 = val2 / 0.125;
                      g = round(val2 * 255.0, ROUND);
                      b = 0;
-               } else {
+               } 
+               else {
                   r = 0;
                   g = 255;
                   b = 0;
@@ -11795,45 +11806,68 @@ collections {
 #ifdef CLOCK_SECONDS
             v = round(second);
             timer(1.0 - (second - v), "clock_cb", 1);
+            
             custom_state(PART:"seconds", "default", 0.0);
             set_state_val(PART:"seconds", STATE_MAP_ROT_Z, (v * 360.0) / 60.0);
-            if      (h < 22) set_state_val(PART:"seconds", STATE_IMAGE, IMAGE:"ch-s1-3.png");
-            else if (h < 44) set_state_val(PART:"seconds", STATE_IMAGE, IMAGE:"ch-s1-2.png");
-            else              set_state_val(PART:"seconds", STATE_IMAGE, IMAGE:"ch-s1.png");
+            if (h < 22) 
+               set_state_val(PART:"seconds", STATE_IMAGE, IMAGE:"ch-s1-3.png");
+            else if (h < 44) 
+               set_state_val(PART:"seconds", STATE_IMAGE, IMAGE:"ch-s1-2.png");
+            else 
+               set_state_val(PART:"seconds", STATE_IMAGE, IMAGE:"ch-s1.png");
             set_state(PART:"seconds", "custom", 0.0);
+
             custom_state(PART:"seconds-sh", "default", 0.0);
             set_state_val(PART:"seconds-sh", STATE_MAP_ROT_Z, (v * 360.0) / 60.0);
-            if      (h < 22) set_state_val(PART:"seconds-sh", STATE_IMAGE, IMAGE:"ch-s2-3.png");
-            else if (h < 44) set_state_val(PART:"seconds-sh", STATE_IMAGE, IMAGE:"ch-s2-2.png");
-            else              set_state_val(PART:"seconds-sh", STATE_IMAGE, IMAGE:"ch-s2.png");
+            if (h < 22) 
+               set_state_val(PART:"seconds-sh", STATE_IMAGE, IMAGE:"ch-s2-3.png");
+            else if (h < 44) 
+               set_state_val(PART:"seconds-sh", STATE_IMAGE, IMAGE:"ch-s2-2.png");
+            else 
+               set_state_val(PART:"seconds-sh", STATE_IMAGE, IMAGE:"ch-s2.png");
             set_state(PART:"seconds-sh", "custom", 0.0);
 #else
             timer(60.0 - (second), "clock_cb", 1);
 #endif
+
             custom_state(PART:"minutes", "default", 0.0);
             set_state_val(PART:"minutes", STATE_MAP_ROT_Z, (float(minute) * 360.0) / 60.0);
-            if      (h < 22) set_state_val(PART:"minutes", STATE_IMAGE, IMAGE:"ch-m1-3.png");
-            else if (h < 44) set_state_val(PART:"minutes", STATE_IMAGE, IMAGE:"ch-m1-2.png");
-            else              set_state_val(PART:"minutes", STATE_IMAGE, IMAGE:"ch-m1.png");
+            if (h < 22) 
+               set_state_val(PART:"minutes", STATE_IMAGE, IMAGE:"ch-m1-3.png");
+            else if (h < 44) 
+               set_state_val(PART:"minutes", STATE_IMAGE, IMAGE:"ch-m1-2.png");
+            else 
+               set_state_val(PART:"minutes", STATE_IMAGE, IMAGE:"ch-m1.png");
             set_state(PART:"minutes", "custom", 0.0);
+
             custom_state(PART:"minutes-sh", "default", 0.0);
             set_state_val(PART:"minutes-sh", STATE_MAP_ROT_Z, (float(minute) * 360.0) / 60.0);
-            if      (h < 22) set_state_val(PART:"minutes-sh", STATE_IMAGE, IMAGE:"ch-m2-3.png");
-            else if (h < 44) set_state_val(PART:"minutes-sh", STATE_IMAGE, IMAGE:"ch-m2-2.png");
-            else              set_state_val(PART:"minutes-sh", STATE_IMAGE, IMAGE:"ch-m2.png");
+            if (h < 22) 
+               set_state_val(PART:"minutes-sh", STATE_IMAGE, IMAGE:"ch-m2-3.png");
+            else if (h < 44) 
+               set_state_val(PART:"minutes-sh", STATE_IMAGE, IMAGE:"ch-m2-2.png");
+            else 
+               set_state_val(PART:"minutes-sh", STATE_IMAGE, IMAGE:"ch-m2.png");
             set_state(PART:"minutes-sh", "custom", 0.0);
 
             custom_state(PART:"hour", "default", 0.0);
             set_state_val(PART:"hour", STATE_MAP_ROT_Z, ((float(hour) + (float(minute) / 60.0)) * 360.0) / 12.0);
-            if      (h < 22) set_state_val(PART:"hour", STATE_IMAGE, IMAGE:"ch-h1-3.png");
-            else if (h < 44) set_state_val(PART:"hour", STATE_IMAGE, IMAGE:"ch-h1-2.png");
-            else              set_state_val(PART:"hour", STATE_IMAGE, IMAGE:"ch-h1.png");
+            if (h < 22) 
+               set_state_val(PART:"hour", STATE_IMAGE, IMAGE:"ch-h1-3.png");
+            else if (h < 44) 
+               set_state_val(PART:"hour", STATE_IMAGE, IMAGE:"ch-h1-2.png");
+            else 
+               set_state_val(PART:"hour", STATE_IMAGE, IMAGE:"ch-h1.png");
             set_state(PART:"hour", "custom", 0.0);
+            
             custom_state(PART:"hour-sh", "default", 0.0);
             set_state_val(PART:"hour-sh", STATE_MAP_ROT_Z, ((float(hour) + (float(minute) / 60.0)) * 360.0) / 12.0);
-            if      (h < 22) set_state_val(PART:"hour-sh", STATE_IMAGE, IMAGE:"ch-h2-3.png");
-            else if (h < 44) set_state_val(PART:"hour-sh", STATE_IMAGE, IMAGE:"ch-h2-2.png");
-            else              set_state_val(PART:"hour-sh", STATE_IMAGE, IMAGE:"ch-h2.png");
+            if (h < 22) 
+               set_state_val(PART:"hour-sh", STATE_IMAGE, IMAGE:"ch-h2-3.png");
+            else if (h < 44) 
+               set_state_val(PART:"hour-sh", STATE_IMAGE, IMAGE:"ch-h2-2.png");
+            else 
+               set_state_val(PART:"hour-sh", STATE_IMAGE, IMAGE:"ch-h2.png");
             set_state(PART:"hour-sh", "custom", 0.0);
          }
       }
@@ -12060,7 +12094,8 @@ collections {
                for (new i = 2; i < numargs(); i++) {
                   append_int(available_frequencies, getarg(i));
                }
-            } else if ((type == MSG_STRING_SET) && (id == 2)) {
+            } 
+            else if ((type == MSG_STRING_SET) && (id == 2)) {
                new text[100];
                while (count(available_governors) > 0) {
                   remove(available_governors, 0);
@@ -12069,7 +12104,8 @@ collections {
                   snprintf(text, 100, "%s", getarg(i));
                   append_str(available_governors, text);
                }
-            } else if ((type == MSG_INT_SET) && (id == 3)) {
+            } 
+            else if ((type == MSG_INT_SET) && (id == 3)) {
                new f = getarg(2);
                new use_buttons = getarg(3);
                new Float:freq, Float:min_freq, Float:max_freq;
@@ -12082,7 +12118,8 @@ collections {
                set_state(PART:"meter", "default", freq);
                if (f < 1000000) {
                   snprintf(text, 100, "%i", f / 1000);
-               } else {
+               } 
+               else {
                   snprintf(text, 100, "%i.%i", f / 1000000,
                             (f % 1000000) / 100000);
                }
@@ -12092,13 +12129,15 @@ collections {
                   //      set_state(PART:"decrease_button", "inactive", 0.0);
                   //      set_state(PART:"increase", "inactive", 0.0);
                   //      set_state(PART:"decrease", "inactive", 0.0);
-               } else {
+               } 
+               else {
                   //      set_state(PART:"increase_button", "default", 0.0);
                   //      set_state(PART:"decrease_button", "default", 0.0);
                   //      set_state(PART:"increase", "default", 0.0);
                   //      set_state(PART:"decrease", "default", 0.0);
                }
-            } else if((type == MSG_STRING) && (id == 4)) {
+            } 
+            else if((type == MSG_STRING) && (id == 4)) {
                new text[100];
                snprintf(text, 100, "%s", getarg(2));
             }
@@ -15100,17 +15139,26 @@ collections {
                left = getarg(3);
                right = getarg(4);
                if (mute)
-                  run_program(PROGRAM:"mute"); else
+                  run_program(PROGRAM:"mute"); 
+               else
                   run_program(PROGRAM:"unmute");
+               
                if (left <= 0)
-                  run_program(PROGRAM:"left_none"); else if (left < 33)
-                  run_program(PROGRAM:"left_low"); else if (left < 66)
-                  run_program(PROGRAM:"left_medium"); else if (left >= 66)
+                  run_program(PROGRAM:"left_none"); 
+               else if (left < 33)
+                  run_program(PROGRAM:"left_low"); 
+               else if (left < 66)
+                  run_program(PROGRAM:"left_medium"); 
+               else if (left >= 66)
                   run_program(PROGRAM:"left_high");
+               
                if (right <= 0)
-                  run_program(PROGRAM:"right_none"); else if (right < 33)
-                  run_program(PROGRAM:"right_low"); else if (right < 66)
-                  run_program(PROGRAM:"right_medium"); else if (right >= 66)
+                  run_program(PROGRAM:"right_none"); 
+               else if (right < 33)
+                  run_program(PROGRAM:"right_low"); 
+               else if (right < 66)
+                  run_program(PROGRAM:"right_medium"); 
+               else if (right >= 66)
                   run_program(PROGRAM:"right_high");
             }
          }
@@ -30876,7 +30924,8 @@ collections {
                new val;
                val = get_int(do_end);
                if (val == 1)
-                  run_program(PROGRAM:"exit1"); else
+                  run_program(PROGRAM:"exit1"); 
+               else
                   set_int(is_ready, 1);
             }
          }
@@ -30890,7 +30939,8 @@ collections {
                new val;
                val = get_int(is_ready);
                if (val == 1)
-                  run_program(PROGRAM:"exit1"); else
+                  run_program(PROGRAM:"exit1"); 
+               else
                   set_int(do_end, 1);
             }
          }
