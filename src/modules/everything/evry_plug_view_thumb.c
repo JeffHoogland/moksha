@@ -329,15 +329,6 @@ _e_smart_reconfigure_do(void *data)
 	     
 	     evas_object_move(it->frame, xx, yy);
 	     evas_object_resize(it->frame, it->w, it->h);
-
-
-	     /* if (sd->update || it->changed)
-	      *   {
-	      * 	  if (it->selected) 
-	      * 	    edje_object_signal_emit(it->frame, "e,state,selected", "e");
-	      * 	  else
-	      * 	    edje_object_signal_emit(it->frame, "e,state,unselected", "e");
-	      *   } */
           }
         else if (it->visible)
 	  {

@@ -63,6 +63,7 @@ static const CFTypes _types[] =
   _CFT("fileman", N_("File Manager"), "system-file-manager"),
   _CFT("shelf", N_("Shelf"), "preferences-desktop-shelf"),
   _CFT("system", N_("System"), "system"),
+  _CFT("everything", N_("Everything Launcher"), "system-run"),
 #undef _CFT
   {0, NULL, NULL, NULL}
 };

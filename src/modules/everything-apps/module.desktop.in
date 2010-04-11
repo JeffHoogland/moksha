@@ -2,4 +2,4 @@
 Type=Link
 Name=Everything Applications
 Icon=e-module
-X-Enlightenment-ModuleType=system
+X-Enlightenment-ModuleType=everything

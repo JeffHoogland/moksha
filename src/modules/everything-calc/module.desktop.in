@@ -2,5 +2,5 @@
 Type=Link
 Name=Everything Calculator
 Icon=e-module
-X-Enlightenment-ModuleType=system
+X-Enlightenment-ModuleType=everything
 Comment=Frontend for bc. Use '=' as trigger. 

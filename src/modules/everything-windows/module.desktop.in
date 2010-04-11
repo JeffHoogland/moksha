@@ -2,5 +2,5 @@
 Type=Link
 Name=Everything Windows
 Icon=e-module
-X-Enlightenment-ModuleType=system
+X-Enlightenment-ModuleType=everything
 Comment=Window actions

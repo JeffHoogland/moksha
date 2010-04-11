@@ -2,5 +2,5 @@
 Type=Link
 Name=Everything Aspell
 Icon=e-module
-X-Enlightenment-ModuleType=system
+X-Enlightenment-ModuleType=everything
 Comment=Aspell Frontend, use 'aspell ' as trigger
