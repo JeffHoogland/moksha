@@ -1,5 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Everything Applications
+Name[it]=Pannello di esecuzione - Applicazioni
 Icon=e-module
 X-Enlightenment-ModuleType=everything
+Comment[it]=Azioni con le applicazioni.

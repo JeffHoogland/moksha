@@ -1,6 +1,8 @@
 [Desktop Entry]
 Type=Link
 Name=Everything Settings
+Name[it]=Pannello di esecuzione - Impostazioni
 Icon=e-module
 X-Enlightenment-ModuleType=everything
 Comment=Quickly open e17 settings dialogs.
+Comment[it]=Apre rapidamente il pannello impostazioni di e17.

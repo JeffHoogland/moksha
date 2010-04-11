@@ -1,5 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Everything Files
+Name[it]=Pannello di esecuzione - File
 Icon=e-module
 X-Enlightenment-ModuleType=everything
+Comment[it]=Azioni sui file.

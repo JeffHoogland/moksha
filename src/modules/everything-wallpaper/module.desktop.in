@@ -1,6 +1,8 @@
 [Desktop Entry]
 Type=Link
 Name=Everything Wallpaper
+Name[it]=Pannello di esecuzione - Sfondo
 Icon=e-module
 X-Enlightenment-ModuleType=everything
 Comment=Provides action to set image as wallpaper.
+Comment[it]=Fornisce un'azione per impostare un'immagine come sfondo.

@@ -1,6 +1,8 @@
 [Desktop Entry]
 Type=Link
 Name=Everything Windows
+Name[it]=Pannello di esecuzione - Finestre
 Icon=e-module
 X-Enlightenment-ModuleType=everything
 Comment=Window actions
+Comment[it]=Azioni sulle finestre.

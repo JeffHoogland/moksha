@@ -1,6 +1,8 @@
 [Desktop Entry]
 Type=Link
 Name=Everything Calculator
+Name[it]=Pannello di esecuzione - Calcolatrice
 Icon=e-module
 X-Enlightenment-ModuleType=everything
-Comment=Frontend for bc. Use '=' as trigger. 
+Comment=Frontend for bc. Use '=' as trigger.
+Comment[it]=Frontend per bc. Usa '=' come richiamo.
