@@ -34537,6 +34537,7 @@ collections {
             source:  "e";
             action:  STATE_SET "selected" 0.0;
             target:  "bg";
+            transition: ACCELERATE 0.05;
             /* target:  "clip"; */
          }
          program {
@@ -34544,7 +34545,7 @@ collections {
             signal:  "e,state,unselected";
             source:  "e";
             action:  STATE_SET "default" 0.0;
-            transition: SINUSOIDAL 0.1;
+            /* transition: LINEAR 0.1; */
             target:  "bg";
             /* target:  "clip"; */
          }
