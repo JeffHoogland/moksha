@@ -3,7 +3,7 @@
 
 /* local function prototypes */
 static int _e_mod_quickpanel_cb_client_message(void *data __UNUSED__, int type __UNUSED__, void *event);
-static int _e_mod_quickpanel_cb_mouse_down(void *data __UNUSED__, int type __UNUSED__, void *event);
+static int _e_mod_quickpanel_cb_mouse_up(void *data, int type __UNUSED__, void *event);
 static int _e_mod_quickpanel_cb_border_add(void *data __UNUSED__, int type __UNUSED__, void *event);
 static int _e_mod_quickpanel_cb_border_resize(void *data __UNUSED__, int type __UNUSED__, void *event);
 static void _e_mod_quickpanel_cb_post_fetch(void *data __UNUSED__, void *data2);
@@ -17,7 +17,6 @@ static void _e_mod_quickpanel_position_update(E_Illume_Quickpanel *qp);
 /* local variables */
 static Eina_List *_qp_hdls = NULL;
 static E_Border_Hook *_qp_hook = NULL;
-static Ecore_X_Window _qp_input_win = 0;
 
 int 
 e_mod_quickpanel_init(void) 
@@ -27,11 +26,6 @@ e_mod_quickpanel_init(void)
      eina_list_append(_qp_hdls, 
                       ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE, 
                                               _e_mod_quickpanel_cb_client_message, 
-                                              NULL));
-   _qp_hdls = 
-     eina_list_append(_qp_hdls, 
-                      ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_DOWN, 
-                                              _e_mod_quickpanel_cb_mouse_down, 
                                               NULL));
    _qp_hdls = 
      eina_list_append(_qp_hdls, 
@@ -81,6 +75,12 @@ e_mod_quickpanel_new(E_Zone *zone)
    /* set quickpanel zone */
    qp->zone = zone;
 
+   qp->clickwin = ecore_x_window_input_new(qp->zone->container->win, 
+                                           qp->zone->x, qp->zone->y, 
+                                           qp->zone->w, qp->zone->h);
+   qp->mouse_hdl = ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP, 
+                                           _e_mod_quickpanel_cb_mouse_up, qp);
+
    return qp;
 }
 
@@ -105,23 +105,11 @@ e_mod_quickpanel_show(E_Illume_Quickpanel *qp)
    cz = e_illume_zone_config_get(qp->zone->id);
    qp->ih = cz->indicator.size;
 
-   if (!_qp_input_win) 
-     {
-        /* create a new input window to catch clicks */
-        _qp_input_win = 
-          ecore_x_window_input_new(qp->zone->container->win, 
-                                   qp->zone->x, qp->zone->y, 
-                                   qp->zone->w, qp->zone->h);
-        ecore_x_window_show(_qp_input_win);
-
-        /* grab mouse */
-        if (!e_grabinput_get(_qp_input_win, 1, _qp_input_win)) 
-          {
-             ecore_x_window_free(_qp_input_win);
-             _qp_input_win = 0;
-             return;
-          }
-     }
+   ecore_x_window_move(qp->clickwin, qp->zone->x, 
+                       qp->zone->y + cz->indicator.size + qp->h);
+   ecore_x_window_resize(qp->clickwin, qp->zone->w, 
+                         qp->zone->h - (qp->zone->y + cz->indicator.size + qp->h));
+   ecore_x_window_show(qp->clickwin);
 
    /* check animation duration */
    if (duration <= 0) 
@@ -177,6 +165,25 @@ _e_mod_quickpanel_cb_client_message(void *data __UNUSED__, int type __UNUSED__, 
                }
           }
      }
+   else if (ev->message_type == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_STATE_TOGGLE) 
+     {
+        E_Zone *zone;
+
+        if (zone = e_util_zone_window_find(ev->win)) 
+          {
+             E_Illume_Quickpanel *qp;
+
+             if (qp = e_illume_quickpanel_by_zone_get(zone)) 
+               {
+                  if (qp->visible) 
+                    ecore_x_e_illume_quickpanel_state_send(zone->black_win, 
+                                                           ECORE_X_ILLUME_QUICKPANEL_STATE_OFF);
+                  else 
+                    ecore_x_e_illume_quickpanel_state_send(zone->black_win, 
+                                                           ECORE_X_ILLUME_QUICKPANEL_STATE_ON);
+               }
+          }
+     }
    else if (ev->message_type == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_POSITION_UPDATE) 
      {
         E_Border *bd;
@@ -191,18 +198,17 @@ _e_mod_quickpanel_cb_client_message(void *data __UNUSED__, int type __UNUSED__, 
 }
 
 static int 
-_e_mod_quickpanel_cb_mouse_down(void *data __UNUSED__, int type __UNUSED__, void *event) 
+_e_mod_quickpanel_cb_mouse_up(void *data, int type __UNUSED__, void *event) 
 {
    Ecore_Event_Mouse_Button *ev;
-   Eina_List *l;
    E_Illume_Quickpanel *qp;
 
    ev = event;
-   if (ev->event_window != _qp_input_win) return 1;
-   EINA_LIST_FOREACH(_e_illume_qps, l, qp) 
-     if (qp->visible) 
-       ecore_x_e_illume_quickpanel_state_send(qp->zone->black_win, 
-                                              ECORE_X_ILLUME_QUICKPANEL_STATE_OFF);
+   qp = data;
+   if (ev->event_window != qp->clickwin) return 1;
+   if (qp->visible) 
+     ecore_x_e_illume_quickpanel_state_send(qp->zone->black_win, 
+                                            ECORE_X_ILLUME_QUICKPANEL_STATE_OFF);
 
    return 1;
 }
@@ -295,6 +301,14 @@ _e_mod_quickpanel_cb_free(E_Illume_Quickpanel *qp)
    if (qp->timer) ecore_timer_del(qp->timer);
    qp->timer = NULL;
 
+   /* delete the clickwin */
+   if (qp->clickwin) ecore_x_window_free(qp->clickwin);
+   qp->clickwin = 0;
+
+   /* delete the mouse handler */
+   if (qp->mouse_hdl) ecore_event_handler_del(qp->mouse_hdl);
+   qp->mouse_hdl = NULL;
+
    /* set the borders of this quickpanel to not stolen */
    EINA_LIST_FREE(qp->borders, bd)
      bd->stolen = 0;
@@ -338,18 +352,13 @@ _e_mod_quickpanel_hide(E_Illume_Quickpanel *qp)
    if (qp->timer) ecore_timer_del(qp->timer);
    qp->timer = NULL;
 
+   /* hide the input window */
+   if (qp->clickwin) ecore_x_window_hide(qp->clickwin);
+
    /* if it's not visible, we can't hide it */
    if (!qp->visible) return;
 
    duration = _e_illume_cfg->animation.quickpanel.duration;
-
-   /* destroy the input window */
-   if (_qp_input_win) 
-     {
-        ecore_x_window_free(_qp_input_win);
-        e_grabinput_release(_qp_input_win, _qp_input_win);
-        _qp_input_win = 0;
-     }
 
    if (duration <= 0) 
      {

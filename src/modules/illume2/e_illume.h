@@ -320,6 +320,8 @@ struct _E_Illume_Quickpanel
    /**< a list of borders that this quickpanel contains */
    Ecore_Timer *timer;
    Ecore_Animator *animator;
+   Ecore_X_Window clickwin;
+   Ecore_Event_Handler *mouse_hdl;
    double start, len;
    int h, ih, adjust, adjust_start, adjust_end;
    unsigned char visible : 1;
