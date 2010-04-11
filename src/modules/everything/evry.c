@@ -754,11 +754,12 @@ _evry_selector_free(Evry_Selector *sel)
 
    if (list->visible && (sel == selector))
      _evry_view_clear(sel->state);
-
-   evry_plugin_free(sel->aggregator, 1);
    
    while (sel->states)
      _evry_state_pop(sel);
+
+   if (sel->aggregator)
+     evry_plugin_free(sel->aggregator, 1);
 
    if (sel->actions)
      evry_plug_actions_free(sel->actions);

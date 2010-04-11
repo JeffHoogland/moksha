@@ -233,7 +233,9 @@ _action(Evry_Plugin *plugin, const Evry_Item *it)
 static void
 _cleanup(Evry_Plugin *plugin)
 {
-   EVRY_PLUGIN_ITEMS_FREE(plugin);
+   Evry_Item *it;
+   EINA_LIST_FREE(plugin->items, it)
+     evry_item_free(it);
 }
 
 static Evas_Object *
@@ -257,6 +259,7 @@ _plugin_free(Evry_Plugin *plugin)
 {
    PLUGIN(p, plugin);
 
+   E_FREE(plugin->config);
    E_FREE(p);
 }
 

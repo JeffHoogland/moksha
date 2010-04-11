@@ -424,10 +424,10 @@ evry_plugin_free(Evry_Plugin *p, int free_pointer)
    if (p->trigger)  eina_stringshare_del(p->trigger);
    if (p->icon)     eina_stringshare_del(p->icon);
 
-   if (!free_pointer)
-     return;
-   else if (p->free)
+   if (p->free)
      p->free(p);
+   else if (!free_pointer)
+     return;
    else
      E_FREE(p);
 }
