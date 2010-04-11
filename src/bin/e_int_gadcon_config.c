@@ -1,68 +1,66 @@
 #include "e.h"
 
-/* local function protos */
-static void _e_int_gadcon_config(E_Gadcon *gc, const char *title, void *(*data_func)(E_Config_Dialog*));
-static void *_create_data(E_Config_Dialog *cfd);
-static void *_create_data_shelf(E_Config_Dialog *cfd);
-static void *_create_data_toolbar(E_Config_Dialog *cfd);
-static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static int _cb_mod_update(void *data, int type, void *event);
-static void _avail_list_cb_change(void *data, Evas_Object *obj);
-static void _sel_list_cb_change(void *data, Evas_Object *obj);
-static void _load_avail_gadgets(void *data);
-static void _load_sel_gadgets(void *data);
-static void _cb_add(void *data, void *data2);
-static void _cb_del(void *data, void *data2);
-static void _set_description(void *data, const char *name);
-//static int _gad_list_sort(void *data1, void *data2);
+typedef struct _CFGadget CFGadget;
+struct _CFGadget 
+{
+   const char *name, *id;
+};
 
 struct _E_Config_Dialog_Data 
 {
-   E_Gadcon_Site site;
-   
-   Evas_Object *o_avail, *o_sel;
-   Evas_Object *o_add, *o_del;
-   Evas_Object *o_desc;
-
    E_Gadcon *gc;
-   Ecore_Event_Handler *hdl;
+   E_Gadcon_Site site;
+
+   Evas_Object *o_list, *o_add, *o_del;
+   Ecore_Timer *load_timer;
+   Eina_Hash *gadget_hash;
 };
 
-/* externals */
+/* local function prototypes */
+static void _create_dialog(E_Gadcon *gc, const char *title);
+static void *_create_data(E_Config_Dialog *cfd);
+static void _fill_data(E_Config_Dialog_Data *cfdata);
+static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static Eina_Bool _free_gadgets(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__);
+static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static int _cb_load_timer(void *data);
+static void _fill_list(E_Config_Dialog_Data *cfdata);
+static void _cb_list_selected(void *data);
+static void _cb_add(void *data, void *data2 __UNUSED__);
+static void _cb_del(void *data, void *data2 __UNUSED__);
+static CFGadget *_search_hash(E_Config_Dialog_Data *cfdata, const char *name);
+
 EAPI void 
 e_int_gadcon_config_shelf(E_Gadcon *gc) 
 {
-   _e_int_gadcon_config(gc, _("Shelf Contents"), _create_data_shelf);
+   _create_dialog(gc, _("Shelf Contents"));
 }
 
 EAPI void 
 e_int_gadcon_config_toolbar(E_Gadcon *gc) 
 {
-   _e_int_gadcon_config(gc, _("Toolbar Contents"), _create_data_toolbar);
+   _create_dialog(gc, _("Toolbar Contents"));
 }
 
-/* local functions */
+/* local function prototypes */
 static void 
-_e_int_gadcon_config(E_Gadcon *gc, const char *title, void *(*data_func)(E_Config_Dialog*)) 
+_create_dialog(E_Gadcon *gc, const char *title) 
 {
-   E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
    E_Container *con;
 
-   v = E_NEW(E_Config_Dialog_View, 1);
-   if (!v) return;
+   if (!(v = E_NEW(E_Config_Dialog_View, 1))) return;
 
-   con = e_container_current_get(e_manager_current_get());
-
-   v->create_cfdata = data_func ? data_func : _create_data;
+   v->create_cfdata = _create_data;
    v->free_cfdata = _free_data;
    v->basic.create_widgets = _basic_create;
 
-   cfd = e_config_dialog_new(con, title, "E", "_gadcon_config_dialog", 
-                             "preferences-desktop-shelf", 0, v, gc);
-   gc->config_dialog = cfd;
-   e_dialog_resizable_set(cfd->dia, 1);
+   con = e_container_current_get(e_manager_current_get());
+   gc->config_dialog = 
+     e_config_dialog_new(con, title, "E", "_gadcon_config_dialog", 
+                         "preferences-desktop-shelf", 0, v, gc);
+   e_dialog_resizable_set(gc->config_dialog->dia, EINA_TRUE);
+   e_win_centered_set(gc->config_dialog->dia->win, EINA_TRUE);
 }
 
 static void *
@@ -71,252 +69,216 @@ _create_data(E_Config_Dialog *cfd)
    E_Config_Dialog_Data *cfdata;
 
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
-   cfdata->site = E_GADCON_SITE_UNKNOWN;
+   cfdata->gadget_hash = eina_hash_string_superfast_new(NULL);
    cfdata->gc = cfd->data;
+   if (cfdata->gc->shelf)
+     cfdata->site = E_GADCON_SITE_SHELF;
+   else if (cfdata->gc->toolbar)
+     cfdata->site = E_GADCON_SITE_EFM_TOOLBAR;
+   else
+     cfdata->site = E_GADCON_SITE_UNKNOWN;
+   _fill_data(cfdata);
    return cfdata;
 }
 
-static void *
-_create_data_shelf(E_Config_Dialog *cfd) 
+static void 
+_fill_data(E_Config_Dialog_Data *cfdata) 
 {
-   E_Config_Dialog_Data *cfdata;
+   Eina_List *l;
+   E_Config_Gadcon_Client *cgc;
 
-   cfdata = E_NEW(E_Config_Dialog_Data, 1);
-   cfdata->site = E_GADCON_SITE_SHELF;
-   cfdata->gc = cfd->data;
-   return cfdata;
-}
+   EINA_LIST_FOREACH(cfdata->gc->cf->clients, l, cgc) 
+     {
+        CFGadget *gad;
 
-static void *
-_create_data_toolbar(E_Config_Dialog *cfd) 
-{
-   E_Config_Dialog_Data *cfdata;
-
-   cfdata = E_NEW(E_Config_Dialog_Data, 1);
-   cfdata->site = E_GADCON_SITE_EFM_TOOLBAR;
-   cfdata->gc = cfd->data;
-   return cfdata;
+        if (!cgc->id) continue;
+        gad = E_NEW(CFGadget, 1);
+        gad->name = eina_stringshare_add(cgc->name);
+        gad->id = eina_stringshare_add(cgc->id);
+        eina_hash_direct_add(cfdata->gadget_hash, gad->id, gad);
+     }
 }
 
 static void 
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
-   E_Gadcon *gc = NULL;
+   E_Gadcon *gc;
 
-   if (cfdata->hdl) ecore_event_handler_del(cfdata->hdl);
-   E_FREE(cfdata);
+   if (cfdata->load_timer) ecore_timer_del(cfdata->load_timer);
+   cfdata->load_timer = NULL;
+
+   if (cfdata->gadget_hash) 
+     {
+        eina_hash_foreach(cfdata->gadget_hash, _free_gadgets, NULL);
+        eina_hash_free(cfdata->gadget_hash);
+     }
+   cfdata->gadget_hash = NULL;
 
    if (!(gc = cfd->data)) return;
    gc->config_dialog = NULL;
 }
 
+static Eina_Bool 
+_free_gadgets(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__) 
+{
+   CFGadget *gadget;
+
+   if (!(gadget = data)) return EINA_FALSE;
+   if (gadget->name) eina_stringshare_del(gadget->name);
+   if (gadget->id) eina_stringshare_del(gadget->id);
+   E_FREE(gadget);
+
+   return EINA_TRUE;
+}
+
 static Evas_Object *
 _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
-   Evas_Object *o = NULL, *of = NULL;
-   Evas_Object *ow = NULL;
+   Evas_Object *ot;
+   int mw;
 
-   o = e_widget_table_add(evas, 0);
-   of = e_widget_frametable_add(evas, _("Available Gadgets"), 0);
-   ow = e_widget_ilist_add(evas, 24, 24, NULL);
-   e_widget_ilist_multi_select_set(ow, 1);
-   e_widget_on_change_hook_set(ow, _avail_list_cb_change, cfdata);
-   cfdata->o_avail = ow;
-   _load_avail_gadgets(cfdata);
-   e_widget_frametable_object_append(of, ow, 0, 0, 1, 1, 1, 1, 1, 1);
-   ow = e_widget_button_add(evas, _("Add Gadget"), NULL, _cb_add, cfdata, NULL);
-   e_widget_disabled_set(ow, 1);
-   cfdata->o_add = ow;
-   e_widget_frametable_object_append(of, ow, 0, 1, 1, 1, 1, 1, 1, 0);
-   e_widget_table_object_append(o, of, 0, 0, 1, 1, 1, 1, 1, 1);
+   ot = e_widget_table_add(evas, 0);
 
-   of = e_widget_frametable_add(evas, _("Selected Gadgets"), 0);
-   ow = e_widget_ilist_add(evas, 24, 24, NULL);
-   e_widget_ilist_multi_select_set(ow, 1);
-   e_widget_on_change_hook_set(ow, _sel_list_cb_change, cfdata);
-   cfdata->o_sel = ow;
-   _load_sel_gadgets(cfdata);
-   e_widget_frametable_object_append(of, ow, 0, 0, 1, 1, 1, 1, 1, 1);
-   ow = e_widget_button_add(evas, _("Remove Gadget"), NULL, _cb_del, cfdata, NULL);
-   e_widget_disabled_set(ow, 1);
-   cfdata->o_del = ow;
-   e_widget_frametable_object_append(of, ow, 0, 1, 1, 1, 1, 1, 1, 0);
-   e_widget_table_object_append(o, of, 1, 0, 1, 1, 1, 1, 1, 1);
+   cfdata->o_list = e_widget_ilist_add(evas, 24, 24, NULL);
+   e_widget_ilist_multi_select_set(cfdata->o_list, EINA_TRUE);
+   e_widget_size_min_get(cfdata->o_list, &mw, NULL);
+   if (mw < (200 * e_scale)) mw = (200 * e_scale);
+   e_widget_size_min_set(cfdata->o_list, mw, (160 * e_scale));
+   e_widget_table_object_append(ot, cfdata->o_list, 0, 0, 2, 1, 1, 1, 1, 1);
 
-   ow = e_widget_textblock_add(evas);
-   e_widget_size_min_set(ow, (200 * e_scale), 70);
-   e_widget_textblock_markup_set(ow, _("Description: Unavailable"));
-   cfdata->o_desc = ow;
-   e_widget_table_object_append(o, ow, 0, 1, 2, 1, 1, 1, 1, 0);
+   cfdata->o_add = 
+     e_widget_button_add(evas, _("Add Gadget"), NULL, _cb_add, cfdata, NULL);
+   e_widget_disabled_set(cfdata->o_add, EINA_TRUE);
+   e_widget_table_object_append(ot, cfdata->o_add, 0, 1, 1, 1, 1, 1, 1, 0);
 
-   if (cfdata->hdl) ecore_event_handler_del(cfdata->hdl);
-   cfdata->hdl = ecore_event_handler_add(E_EVENT_MODULE_UPDATE, 
-                                         _cb_mod_update, cfdata);
-   return o;
+   cfdata->o_del = 
+     e_widget_button_add(evas, _("Remove Gadget"), NULL, _cb_del, cfdata, NULL);
+   e_widget_disabled_set(cfdata->o_del, EINA_TRUE);
+   e_widget_table_object_append(ot, cfdata->o_del, 1, 1, 1, 1, 1, 1, 1, 0);
+
+   if (cfdata->load_timer) ecore_timer_del(cfdata->load_timer);
+   cfdata->load_timer = ecore_timer_add(0.2, _cb_load_timer, cfdata);
+
+   e_dialog_resizable_set(cfd->dia, EINA_TRUE);
+   e_win_centered_set(cfd->dia->win, EINA_TRUE);
+
+   return ot;
 }
 
 static int 
-_cb_mod_update(void *data, int type, void *event) 
+_cb_load_timer(void *data) 
 {
-   E_Config_Dialog_Data *cfdata = NULL;
+   E_Config_Dialog_Data *cfdata;
 
-   if (type != E_EVENT_MODULE_UPDATE) return 1;
    if (!(cfdata = data)) return 1;
-   _load_avail_gadgets(cfdata);
-   _load_sel_gadgets(cfdata);
-   return 1;
+   _fill_list(cfdata);
+   cfdata->load_timer = NULL;
+   return 0;
 }
 
 static void 
-_avail_list_cb_change(void *data, Evas_Object *obj) 
+_fill_list(E_Config_Dialog_Data *cfdata) 
 {
-   E_Config_Dialog_Data *cfdata = NULL;
-   const char *name;
-   int sel, count;
-
-   if (!(cfdata = data)) return;
-   e_widget_ilist_unselect(cfdata->o_sel);
-   e_widget_disabled_set(cfdata->o_del, 1);
-   e_widget_disabled_set(cfdata->o_add, 0);
-   count = e_widget_ilist_selected_count_get(cfdata->o_avail);
-   if ((count > 1) || (count == 0))
-     e_widget_textblock_markup_set(cfdata->o_desc, _("Description: Unavailable"));
-   else 
-     {
-        sel = e_widget_ilist_selected_get(cfdata->o_avail);
-        name = (char *)e_widget_ilist_nth_data_get(cfdata->o_avail, sel);
-        _set_description(cfdata, name);
-     }
-}
-
-static void 
-_sel_list_cb_change(void *data, Evas_Object *obj) 
-{
-   E_Config_Dialog_Data *cfdata = NULL;
-   const char *name;
-   int sel, count;
-
-   if (!(cfdata = data)) return;
-   e_widget_ilist_unselect(cfdata->o_avail);
-   e_widget_disabled_set(cfdata->o_add, 1);
-   e_widget_disabled_set(cfdata->o_del, 0);
-   count = e_widget_ilist_selected_count_get(cfdata->o_sel);
-   if ((count > 1) || (count == 0))
-     e_widget_textblock_markup_set(cfdata->o_desc, _("Description: Unavailable"));
-   else 
-     {
-        sel = e_widget_ilist_selected_get(cfdata->o_sel);
-        name = (char *)e_widget_ilist_nth_data_get(cfdata->o_sel, sel);
-        _set_description(cfdata, name);
-     }
-}
-
-static void 
-_load_avail_gadgets(void *data) 
-{
-   E_Config_Dialog_Data *cfdata = NULL;
-   Eina_List *l = NULL;
-   E_Gadcon_Client_Class *cc;
-   Evas *evas;
-   int w;
-
-   if (!(cfdata = data)) return;
-   evas = evas_object_evas_get(cfdata->o_avail);
-   evas_event_freeze(evas);
-   edje_freeze();
-   e_widget_ilist_freeze(cfdata->o_avail);
-   e_widget_ilist_clear(cfdata->o_avail);
-//   l = e_gadcon_provider_list();
-//   if (l) l = eina_list_sort(l, -1, _gad_list_sort);
-   EINA_LIST_FOREACH(e_gadcon_provider_list(), l, cc)
-     {
-        Evas_Object *icon = NULL;
-        const char *lbl = NULL;
-
-        if (!cc) continue;
-        // check the current site is allowed for this gadcon client
-        if ((cc->func.is_site) && (!cc->func.is_site(cfdata->site)))
-          continue;
-        if (cc->func.label) lbl = cc->func.label(cc);
-        if (!lbl) lbl = cc->name;
-        if (cc->func.icon) icon = cc->func.icon(cc, evas);
-        e_widget_ilist_append(cfdata->o_avail, icon, lbl, NULL, 
-                              (void *)cc->name, NULL);
-     }
-   e_widget_ilist_go(cfdata->o_avail);
-   e_widget_size_min_get(cfdata->o_avail, &w, NULL);
-   if (w < (200 * e_scale)) w = (200 * e_scale);
-   e_widget_size_min_set(cfdata->o_avail, w, (250 * e_scale));
-   e_widget_ilist_thaw(cfdata->o_avail);
-   edje_thaw();
-   evas_event_thaw(evas);
-}
-
-static void 
-_load_sel_gadgets(void *data) 
-{
-   E_Config_Dialog_Data *cfdata = NULL;
-   Eina_List *l = NULL, *l2 = NULL;
-   E_Config_Gadcon_Client *cgc;
+   Eina_List *l;
    E_Gadcon_Client_Class *gcc;
    Evas *evas;
-   int w;
+   int mw;
 
-   if (!(cfdata = data)) return;
-   evas = evas_object_evas_get(cfdata->o_sel);
+   evas = evas_object_evas_get(cfdata->o_list);
    evas_event_freeze(evas);
    edje_freeze();
-   e_widget_ilist_freeze(cfdata->o_sel);
-   e_widget_ilist_clear(cfdata->o_sel);
-   EINA_LIST_FOREACH(cfdata->gc->cf->clients, l, cgc)
-     {
-        if (!cgc) continue;
-	EINA_LIST_FOREACH(e_gadcon_provider_list(), l2, gcc)
-          {
-             Evas_Object *icon = NULL;
-             const char *lbl = NULL;
+   e_widget_ilist_freeze(cfdata->o_list);
+   e_widget_ilist_clear(cfdata->o_list);
 
-             if (!gcc) continue;
-             if ((cgc->name) && (gcc->name) && 
-                 (!strcmp(cgc->name, gcc->name))) 
-               {
-                  if (gcc->func.label) lbl = gcc->func.label(gcc);
-                  if (!lbl) lbl = gcc->name;
-                  if (gcc->func.icon) icon = gcc->func.icon(gcc, evas);
-                  e_widget_ilist_append(cfdata->o_sel, icon, lbl, NULL, 
-                                        (void *)gcc->name, NULL);
-               }
+   EINA_LIST_FOREACH(e_gadcon_provider_list(), l, gcc) 
+     {
+        Evas_Object *icon, *end;
+        const char *lbl;
+
+        if ((gcc->func.is_site) && (!gcc->func.is_site(cfdata->site)))
+          continue;
+        if (gcc->func.label) lbl = gcc->func.label(gcc);
+        if (!lbl) lbl = gcc->name;
+        if (gcc->func.icon) icon = gcc->func.icon(gcc, evas);
+
+        end = edje_object_add(evas);
+        if (!e_theme_edje_object_set(end, "base/theme/widgets", 
+                                     "e/widgets/ilist/toggle_end")) 
+          {
+             evas_object_del(end);
+             end = NULL;
           }
+
+        if (_search_hash(cfdata, gcc->name))
+          {
+             if (end) edje_object_signal_emit(end, "e,state,checked", "e");
+          }
+        else 
+          {
+             if (end) edje_object_signal_emit(end, "e,state,unchecked", "e");
+          }
+
+        e_widget_ilist_append_full(cfdata->o_list, icon, end, lbl, 
+                                   _cb_list_selected, cfdata, gcc->name);
      }
-   e_widget_ilist_go(cfdata->o_sel);
-   e_widget_size_min_get(cfdata->o_sel, &w, NULL);
-   if (w < (200 * e_scale)) w = (200 * e_scale);
-   e_widget_size_min_set(cfdata->o_sel, w, (250 * e_scale));
-   e_widget_ilist_thaw(cfdata->o_sel);
+
+   e_widget_ilist_go(cfdata->o_list);
+   e_widget_size_min_get(cfdata->o_list, &mw, NULL);
+   if (mw < (200 * e_scale)) mw = (200 * e_scale);
+   e_widget_size_min_set(cfdata->o_list, mw, (160 * e_scale));
+   e_widget_ilist_thaw(cfdata->o_list);
    edje_thaw();
    evas_event_thaw(evas);
 }
 
 static void 
-_cb_add(void *data, void *data2) 
+_cb_list_selected(void *data) 
 {
-   E_Config_Dialog_Data *cfdata = NULL;
-   Eina_List *l = NULL;
-   E_Ilist_Item *item = NULL;
-   int i = 0, update = 0;
+   E_Config_Dialog_Data *cfdata;
+   const E_Ilist_Item *it;
+   Eina_List *l;
+   unsigned int loaded = 0;
 
    if (!(cfdata = data)) return;
-   i = -1;
-   EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->o_avail), l, item)
+   EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->o_list), l, it) 
      {
-        const char *name = NULL;
+        const char *name;
 
-        i++;
-        if (!item) continue;
-        if (!item->selected) continue;
-        name = (char *)e_widget_ilist_nth_data_get(cfdata->o_avail, i);
-        if (!name) continue;
-        if (!e_gadcon_client_config_new(cfdata->gc, name)) continue;
+        if ((!it->selected) || (it->header)) continue;
+        if (!(name = e_widget_ilist_item_value_get(it))) continue;
+        if (_search_hash(cfdata, name)) loaded++;
+     }
+   e_widget_disabled_set(cfdata->o_add, EINA_FALSE);
+   e_widget_disabled_set(cfdata->o_del, !loaded);
+}
+
+static void 
+_cb_add(void *data, void *data2 __UNUSED__) 
+{
+   E_Config_Dialog_Data *cfdata;
+   const E_Ilist_Item *it;
+   Eina_List *l;
+   int update;
+
+   if (!(cfdata = data)) return;
+   EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->o_list), l, it) 
+     {
+        E_Config_Gadcon_Client *cgc;
+        CFGadget *gad;
+        Evas_Object *end;
+        const char *name;
+
+        if ((!it->selected) || (it->header)) continue;
+        if (!(name = e_widget_ilist_item_value_get(it))) continue;
+        if (!(cgc = e_gadcon_client_config_new(cfdata->gc, name))) continue;
+        if (end = e_widget_ilist_item_end_get(it))
+          edje_object_signal_emit(end, "e,state,checked", "e");
+
+        gad = E_NEW(CFGadget, 1);
+        gad->name = eina_stringshare_add(cgc->name);
+        gad->id = eina_stringshare_add(cgc->id);
+        eina_hash_direct_add(cfdata->gadget_hash, gad->id, gad);
+
         update = 1;
      }
    if (update) 
@@ -324,38 +286,59 @@ _cb_add(void *data, void *data2)
         e_gadcon_unpopulate(cfdata->gc);
         e_gadcon_populate(cfdata->gc);
         e_config_save_queue();
-
-        _load_sel_gadgets(cfdata);
-        e_widget_ilist_selected_set(cfdata->o_sel, i);
      }
+   e_widget_ilist_unselect(cfdata->o_list);
+   e_widget_disabled_set(cfdata->o_add, EINA_TRUE);
+   e_widget_disabled_set(cfdata->o_del, EINA_TRUE);
 }
 
 static void 
-_cb_del(void *data, void *data2) 
+_cb_del(void *data, void *data2 __UNUSED__) 
 {
-   E_Config_Dialog_Data *cfdata = NULL;
-   Eina_List *l = NULL, *g = NULL;
-   E_Ilist_Item *item = NULL;
-   E_Config_Gadcon_Client *cgc;
-   int i = -1, update = 0;
+   E_Config_Dialog_Data *cfdata;
+   const E_Ilist_Item *it;
+   Eina_List *l;
+   int update;
 
    if (!(cfdata = data)) return;
-   EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->o_sel), l, item)
+   EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->o_list), l, it) 
      {
-        const char *name = NULL;
+        E_Config_Gadcon_Client *cgc;
+        Eina_List *cl;
+        Evas_Object *end;
+        const char *name;
 
-	i++;
-        if (!item) continue;
-        if (!item->selected) continue;
-        name = (char *)e_widget_ilist_nth_data_get(cfdata->o_sel, i);
-        if (!name) continue;
-	EINA_LIST_FOREACH(cfdata->gc->cf->clients, g, cgc)
+        if ((!it->selected) || (it->header)) continue;
+        if (!(name = e_widget_ilist_item_value_get(it))) continue;
+
+        /* remove from actual gadget container */
+        EINA_LIST_FOREACH(cfdata->gc->cf->clients, cl, cgc) 
           {
-             if (!cgc) continue;
+             CFGadget *gad;
+
              if (strcmp(name, cgc->name)) continue;
+
+             /* remove from gadget hash if exists */
+             if (gad = eina_hash_find(cfdata->gadget_hash, cgc->id))
+               {
+                  eina_hash_del(cfdata->gadget_hash, gad->id, gad);
+                  if (gad->name) eina_stringshare_del(gad->name);
+                  if (gad->id) eina_stringshare_del(gad->id);
+                  E_FREE(gad);
+               }
+
+             /* set ilist end toggle if we don't have any more in the hash */
+             if (!_search_hash(cfdata, name))
+               {
+                  if (end = e_widget_ilist_item_end_get(it))
+                    edje_object_signal_emit(end, "e,state,unchecked", "e");
+               }
+
+             /* remove from gadget container */
              e_gadcon_client_config_del(cfdata->gc->cf, cgc);
+
              update = 1;
-	     break;
+             break;
           }
      }
    if (update) 
@@ -363,52 +346,29 @@ _cb_del(void *data, void *data2)
         e_gadcon_unpopulate(cfdata->gc);
         e_gadcon_populate(cfdata->gc);
         e_config_save_queue();
-
-        _load_sel_gadgets(cfdata);
-
-        /* we just default to selecting first one here as the user may have had
-         * more than one selected */
-        e_widget_ilist_selected_set(cfdata->o_sel, 0);
      }
+   e_widget_ilist_unselect(cfdata->o_list);
+   e_widget_disabled_set(cfdata->o_add, EINA_TRUE);
+   e_widget_disabled_set(cfdata->o_del, EINA_TRUE);
 }
 
-static void 
-_set_description(void *data, const char *name) 
+static CFGadget * 
+_search_hash(E_Config_Dialog_Data *cfdata, const char *name) 
 {
-   E_Config_Dialog_Data *cfdata = NULL;
-   E_Module *mod = NULL;
-   Efreet_Desktop *desk = NULL;
-   char buf[PATH_MAX];
+   Eina_Iterator *it;
+   CFGadget *gad, *ret = NULL;
 
-   if (!(cfdata = data)) return;
-   if (!name) return;
-   if (!(mod = e_module_find(name))) return;
-
-   snprintf(buf, sizeof(buf), "%s/module.desktop", e_module_dir_get(mod));
-   if (!ecore_file_exists(buf)) return;
-   if (!(desk = efreet_desktop_new(buf))) return;
-   if (desk->comment) 
-     e_widget_textblock_markup_set(cfdata->o_desc, desk->comment);
-   efreet_desktop_free(desk);
+   if (!name) return NULL;
+   if (!(it = eina_hash_iterator_data_new(cfdata->gadget_hash))) 
+     return NULL;
+   EINA_ITERATOR_FOREACH(it, gad) 
+     {
+        if ((gad->name) && (!strcmp(gad->name, name)))
+          {
+             ret = gad;
+             break;
+          }
+     }
+   eina_iterator_free(it);
+   return ret;
 }
-
-/* FIXME unused */
-#if 0
-static int 
-_gad_list_sort(void *data1, void *data2) 
-{
-   E_Gadcon_Client_Class *cc, *cc2;
-   const char *lbl1 = NULL, *lbl2 = NULL;
-
-   if (!(cc = data1)) return 1;
-   if (!(cc2 = data2)) return -1;
-
-   if (cc->func.label) lbl1 = cc->func.label(cc);
-   if (!lbl1) lbl1 = cc->name;
-   
-   if (cc2->func.label) lbl2 = cc2->func.label(cc2);
-   if (!lbl2) lbl2 = cc2->name;
-
-   return (strcmp(lbl1, lbl2));
-}
-#endif
