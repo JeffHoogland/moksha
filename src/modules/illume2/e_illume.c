@@ -1,6 +1,5 @@
 #include "e_illume_private.h"
 #include "e_mod_config.h"
-#include "e_mod_quickpanel.h"
 
 /**
  * @defgroup E_Illume_Main_Group Illume API Information
@@ -941,11 +940,9 @@ e_illume_quickpanel_by_zone_get(E_Zone *zone)
 EAPI void 
 e_illume_quickpanel_show(E_Zone *zone) 
 {
-   E_Illume_Quickpanel *qp;
-
    if (!zone) return;
-   if (!(qp = e_illume_quickpanel_by_zone_get(zone))) return;
-   e_mod_quickpanel_show(qp);
+   ecore_x_e_illume_quickpanel_state_send(zone->black_win, 
+                                          ECORE_X_ILLUME_QUICKPANEL_STATE_ON);
 }
 
 /**
@@ -960,9 +957,7 @@ e_illume_quickpanel_show(E_Zone *zone)
 EAPI void 
 e_illume_quickpanel_hide(E_Zone *zone) 
 {
-   E_Illume_Quickpanel *qp;
-
    if (!zone) return;
-   if (!(qp = e_illume_quickpanel_by_zone_get(zone))) return;
-   e_mod_quickpanel_hide(qp);
+   ecore_x_e_illume_quickpanel_state_send(zone->black_win, 
+                                          ECORE_X_ILLUME_QUICKPANEL_STATE_OFF);
 }
