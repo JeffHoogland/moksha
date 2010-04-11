@@ -377,29 +377,13 @@ evry_item_select(const Evry_State *state, Evry_Item *it)
    Evry_State *s = (Evry_State *)state;
    Evry_Selector *sel = selector;
 
-   /* if (!s && it)
-    *   {
-    *     sel = _selector_for_plugin_get(it->plugin);
-    * 	if (sel && sel->state)
-    * 	  s = sel->state;
-    * 	else return;
-    *
-    * 	if (s->plugin != it->plugin)
-    * 	  {
-    * 	     it->selected = EINA_TRUE;
-    * 	     return;
-    * 	  }
-    *   } */
-
    s->plugin_auto_selected = EINA_FALSE;
    s->item_auto_selected = EINA_FALSE;
 
    _evry_item_sel(s, it);
 
    if (s == sel->state)
-     {
-	_evry_selector_update(sel);
-     }
+     _evry_selector_update(sel);
 }
 
 EAPI void
@@ -489,7 +473,7 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
 		  s->cur_plugins = eina_list_prepend(s->cur_plugins, agg);
 
 		  if (s->plugin_auto_selected)
-		    _evry_plugin_select(s, agg);
+		    _evry_plugin_select(s, NULL);
 	       }
 	     agg->fetch(agg, s->input[0] ? s->input : NULL);
 	  }
@@ -957,16 +941,6 @@ _evry_selector_update(Evry_Selector *sel)
 	  {
 	     Eina_List *l;
 	     it = NULL;
-
-	     /* get first selected item */
-	     /* EINA_LIST_FOREACH(s->plugin->items, l, it)
-	      *   {
-	      * 	  if (it->selected)
-	      * 	    {
-	      * 	       s->item_auto_selected = EINA_FALSE;
-	      * 	       break;
-	      * 	    }
-	      *   } */
 
 	     /* get first item */
 	     if (!it && s->plugin->items)
@@ -1843,23 +1817,23 @@ _evry_matches_update(Evry_Selector *sel, int async)
 	  {
 	     s->cur_plugins = eina_list_prepend(s->cur_plugins, sel->aggregator);
 	     sel->aggregator->fetch(sel->aggregator, input);
-	     if (s->plugin_auto_selected)
-	       _evry_plugin_select(s, NULL);
+	     /* if (s->plugin_auto_selected)
+	      *   _evry_plugin_select(s, NULL); */
 	  }
 	else
 	  sel->aggregator->cleanup(sel->aggregator);
      }
 
-   if (s->plugin && !eina_list_data_find_list(s->cur_plugins, s->plugin))
-     s->plugin = NULL;
-
+   if (s->plugin_auto_selected ||
+       (s->plugin && (!eina_list_data_find(s->cur_plugins, s->plugin))))
+     _evry_plugin_select(s, NULL);
+   else
+     _evry_plugin_select(s, s->plugin);     
+   
    if (sel->update_timer)
      ecore_timer_del(sel->update_timer);
    sel->update_timer = NULL;
-
-   _evry_plugin_select(s, s->plugin);
 }
-static int ref = 0;
 
 static void
 _evry_item_desel(Evry_State *s, Evry_Item *it)
@@ -1871,8 +1845,6 @@ _evry_item_desel(Evry_State *s, Evry_Item *it)
      {
 	it->selected = EINA_FALSE;
 	evry_item_free(it);
-	/* printf("desel: %d, %s\n", --ref, it->label); */
-
      }
 
    s->cur_item = NULL;
@@ -1886,7 +1858,6 @@ _evry_item_sel(Evry_State *s, Evry_Item *it)
    _evry_item_desel(s, NULL);
 
    evry_item_ref(it);
-   /* printf("desel: %d, %s\n", ref++, it->label); */
    it->selected = EINA_TRUE;
 
    s->cur_item = it;
@@ -1902,18 +1873,14 @@ _evry_plugin_select(Evry_State *s, Evry_Plugin *p)
 	p = s->cur_plugins->data;
 	s->plugin_auto_selected = EINA_TRUE;
      }
-   else s->plugin_auto_selected = EINA_FALSE;
+   else if (p)
+     {
+	s->plugin_auto_selected = EINA_FALSE;
+     }
 
    if (s->plugin != p)
      {
 	_evry_item_desel(s, NULL);
-	/* if (s->cur_item)
-	 *   {
-	 *      /\* s->cur_item->selected = EINA_FALSE;	 *\/
-	 *      evry_item_free(s->cur_item);
-	 *   }
-   	 *
-	 * s->cur_item = NULL; */
      }
 
    s->plugin = p;
