@@ -299,14 +299,13 @@ _e_mod_ind_win_cb_mouse_up(void *data, Evas *evas __UNUSED__, Evas_Object *obj _
    if (ev->button != 1) return;
    if (!(iwin = data)) return;
 
-   /* if we are not dragging, send message to show quickpanel */
+   /* if we are not dragging, send message to toggle quickpanel state */
    if ((!iwin->drag.dnd) && (iwin->mouse_down == 1)) 
      {
         Ecore_X_Window xwin;
 
         xwin = iwin->win->border->zone->black_win;
-        ecore_x_e_illume_quickpanel_state_send
-          (xwin, ECORE_X_ILLUME_QUICKPANEL_STATE_ON);
+        ecore_x_e_illume_quickpanel_state_toggle(xwin);
      }
    else if (iwin->drag.dnd) 
      {
