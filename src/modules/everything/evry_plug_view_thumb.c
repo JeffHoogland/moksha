@@ -167,6 +167,7 @@ _e_smart_reconfigure_do(void *data)
    if (sd->cx < 0) sd->cx = 0;
    if (sd->cy < 0) sd->cy = 0;
 
+   printf("reconfigure\n", sd->ch);
    aspect_w = sd->w;
    aspect_h = sd->h;
 
@@ -595,8 +596,6 @@ _animator(void *data)
 	     sd->scroll_to = 0;
 	  }
 	e_scrollframe_child_pos_set(sd->view->sframe, 0, sd->scroll_align);
-
-	/* e_box_align_set(eap_list_object, 0.5, eap_scroll_align); */
      }
    if (sd->scroll_to) return 1;
    sd->animator = NULL;
@@ -604,7 +603,7 @@ _animator(void *data)
 }
 
 static void
-_pan_item_select(Evas_Object *obj, Item *it)
+_pan_item_select(Evas_Object *obj, Item *it, int scroll)
 {
    Smart_Data *sd = evas_object_smart_data_get(obj);
    double align = -1;
@@ -630,13 +629,13 @@ _pan_item_select(Evas_Object *obj, Item *it)
 	  align = it->y;
 
 	e_scrollframe_child_pos_get(sd->view->sframe, 0, (Evas_Coord *)&sd->scroll_align); 
-	  
+
 	if (align >= 0)
 	  {
-	     if (!evry_conf->scroll_animate)
+	     if (!scroll || !evry_conf->scroll_animate)
 	       {
-		  if (align >= 0)
-		    e_scrollframe_child_pos_set(sd->view->sframe, 0, align);
+		  sd->scroll_align = align;
+		  e_scrollframe_child_pos_set(sd->view->sframe, 0, sd->scroll_align);
 	       }
 	     else
 	       {
@@ -724,13 +723,18 @@ static int
 _update_frame(Evas_Object *obj)
 {
    Smart_Data *sd = evas_object_smart_data_get(obj);
-   /* sd->switch_mode = EINA_TRUE; */
+
+   if (sd->animator)
+     ecore_animator_del(sd->animator);
+   sd->animator = NULL;
+   
+   sd->scroll_align = 0;
+   e_scrollframe_child_pos_set(sd->view->sframe, 0, sd->scroll_align);
+   
    _e_smart_reconfigure_do(obj);
-   /* sd->switch_mode = EINA_FALSE; */
-   int tmp = evry_conf->scroll_animate;
-   evry_conf->scroll_animate = 0;
-   _pan_item_select(obj, sd->cur_item); 
-   evry_conf->scroll_animate = tmp;
+
+   _pan_item_select(obj, sd->cur_item, 0);   
+   
    return 0;
 }
 
@@ -855,8 +859,8 @@ _view_update(Evry_View *view)
    
    if (v_items) eina_list_free(v_items);
    
-   v->tabs->update(v->tabs);
-
+   v->tabs->update(v->tabs);   
+   
    sd->update_idler = NULL;
    
    return 0;
@@ -913,7 +917,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 
 	     if (it)
 	       {
-		  _pan_item_select(v->span, it);
+		  _pan_item_select(v->span, it, 1);
 		  evry_item_select(v->state, it->item);
 	       }
 	     goto end;
@@ -927,7 +931,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 
 	     if (it)
 	       {
-		  _pan_item_select(v->span, it);
+		  _pan_item_select(v->span, it, 1);
 		  evry_item_select(v->state, it->item);
 	       }
 	     goto end;
@@ -952,7 +956,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 
 	if (it)
 	  {
-	     _pan_item_select(v->span, it);
+	     _pan_item_select(v->span, it, 1);
 	     evry_item_select(v->state, it->item);
 	  }
 	goto end;
@@ -978,7 +982,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 
 	if (it)
 	  {
-	     _pan_item_select(v->span, it);
+	     _pan_item_select(v->span, it, 1);
 	     evry_item_select(v->state, it->item);
 	  }
 	goto end;
