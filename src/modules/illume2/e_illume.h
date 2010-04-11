@@ -366,5 +366,7 @@ EAPI Eina_List *e_illume_border_home_borders_get(E_Zone *zone);
 
 /* quickpanel functions */
 EAPI E_Illume_Quickpanel *e_illume_quickpanel_by_zone_get(E_Zone *zone);
+EAPI void e_illume_quickpanel_show(E_Zone *zone);
+EAPI void e_illume_quickpanel_hide(E_Zone *zone);
 
 #endif
