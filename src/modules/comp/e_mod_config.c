@@ -132,14 +132,15 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
      {
         ob = e_widget_radio_add(evas, _("OpenGL"), E_EVAS_ENGINE_GL_X11, rg);
         e_widget_list_object_append(ol, ob, 1, 1, 0.5);
+
+        of = e_widget_framelist_add(evas, _("OpenGL options"), 0);
+        e_widget_framelist_content_align_set(of, 0.5, 0.0);
+        ob = e_widget_check_add(evas, _("Texture from pixmap"), &(cfdata->texture_from_pixmap));
+        e_widget_framelist_object_append(of, ob);
+        ob = e_widget_check_add(evas, _("Indirect OpenGL"), &(cfdata->indirect));
+        e_widget_framelist_object_append(of, ob);
+        e_widget_list_object_append(ol, of, 1, 1, 0.5);
      }
-   of = e_widget_framelist_add(evas, _("OpenGL options"), 0);
-   e_widget_framelist_content_align_set(of, 0.5, 0.0);
-   ob = e_widget_check_add(evas, _("Texture from pixmap"), &(cfdata->texture_from_pixmap));
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_check_add(evas, _("Indirect OpenGL"), &(cfdata->indirect));
-   e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(ol, of, 1, 1, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Engine"), ol, 0, 0, 0, 0, 0.5, 0.0);
    
    ///////////////////////////////////////////
