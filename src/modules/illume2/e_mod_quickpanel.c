@@ -88,7 +88,7 @@ void
 e_mod_quickpanel_show(E_Illume_Quickpanel *qp) 
 {
    E_Illume_Config_Zone *cz;
-   int duration;
+   int duration, iy;
 
    /* delete the animator if it exists */
    if (qp->animator) ecore_animator_del(qp->animator);
@@ -105,10 +105,12 @@ e_mod_quickpanel_show(E_Illume_Quickpanel *qp)
    cz = e_illume_zone_config_get(qp->zone->id);
    qp->ih = cz->indicator.size;
 
+   e_illume_border_indicator_pos_get(qp->zone, NULL, &iy);
+
    ecore_x_window_move(qp->clickwin, qp->zone->x, 
-                       qp->zone->y + cz->indicator.size + qp->h);
+                       iy + cz->indicator.size + qp->h);
    ecore_x_window_resize(qp->clickwin, qp->zone->w, 
-                         qp->zone->h - (qp->zone->y + cz->indicator.size + qp->h));
+                         qp->zone->h - (iy + cz->indicator.size + qp->h));
    ecore_x_window_show(qp->clickwin);
 
    /* check animation duration */
