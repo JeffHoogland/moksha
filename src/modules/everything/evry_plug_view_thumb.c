@@ -604,44 +604,43 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
 	edje_object_signal_emit(sd->cur_item->frame, "e,state,unselected", "e");
      }
 
-   if (it)
+   if (!it) return;
+   
+   sd->update = EINA_FALSE;
+
+   sd->cur_item = it;
+   sd->cur_item->selected = EINA_TRUE;
+
+   if (sd->view->list_mode)
+     align = it->y - (double)it->y / (double)sd->ch * (sd->h - it->h);
+   else if ((it->y + it->h) - sd->cy > sd->h)
+     align = it->y - (2 - sd->view->zoom) * it->h;
+   else if (it->y < sd->cy)
+     align = it->y;
+
+   e_scrollframe_child_pos_get(sd->view->sframe, 0, (Evas_Coord *)&sd->scroll_align); 
+
+   if (align >= 0)
      {
-	sd->update = EINA_FALSE;
-
-	sd->cur_item = it;
-	sd->cur_item->selected = EINA_TRUE;
-
-	if (sd->view->list_mode)
-	  align = it->y - (double)it->y / (double)sd->ch * (sd->h - it->h);
-	else if ((it->y + it->h) - sd->cy > sd->h)
-	  align = it->y - (2 - sd->view->zoom) * it->h;
-	else if (it->y < sd->cy)
-	  align = it->y;
-
-	e_scrollframe_child_pos_get(sd->view->sframe, 0, (Evas_Coord *)&sd->scroll_align); 
-
-	if (align >= 0)
+	if (!scroll || !evry_conf->scroll_animate)
 	  {
-	     if (!scroll || !evry_conf->scroll_animate)
-	       {
-		  sd->scroll_align = align;
-		  e_scrollframe_child_pos_set(sd->view->sframe, 0, sd->scroll_align);
-	       }
-	     else
-	       {
-		  sd->scroll_align_to = align;
-		  sd->scroll_to = 1;
-		  if (!sd->animator)
-		    sd->animator = ecore_animator_add(_animator, sd);
-	       }
+	     sd->scroll_align = align;
+	     e_scrollframe_child_pos_set(sd->view->sframe, 0, sd->scroll_align);
 	  }
-	
-	if (sd->view->zoom < 2)
-	  edje_object_signal_emit(sd->cur_item->frame, "e,state,selected", "e");
-
-	if (sd->idle_enter) ecore_idle_enterer_del(sd->idle_enter);
-	sd->idle_enter = ecore_idle_enterer_before_add(_e_smart_reconfigure_do, obj);
+	else
+	  {
+	     sd->scroll_align_to = align;
+	     sd->scroll_to = 1;
+	     if (!sd->animator)
+	       sd->animator = ecore_animator_add(_animator, sd);
+	  }
      }
+	
+   if (sd->view->zoom < 2)
+     edje_object_signal_emit(sd->cur_item->frame, "e,state,selected", "e");
+
+   if (sd->idle_enter) ecore_idle_enterer_del(sd->idle_enter);
+   sd->idle_enter = ecore_idle_enterer_before_add(_e_smart_reconfigure_do, obj);
 }
 
 static void
@@ -739,6 +738,8 @@ _view_update(Evry_View *view)
    int pos, last_pos, last_vis = 0, first_vis = 0;
    Eina_Bool update = EINA_FALSE;
 
+   sd->cur_item = NULL;
+   
    if (!v->state->plugin)
      {
 	_view_clear(view);
