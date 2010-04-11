@@ -225,49 +225,6 @@ struct _Evry_State
   Evry_View *view;
 };
 
-struct _Config
-{
-  int version;
-  /* position */
-  double rel_x, rel_y;
-  /* size */
-  int width, height;
-
-  Eina_List *modules;
-  
-  /* generic plugin config */
-  Eina_List *conf_subjects;
-  Eina_List *conf_actions;
-  Eina_List *conf_objects;
-  Eina_List *conf_views;
-
-  int scroll_animate;
-  double scroll_speed;
-
-  int hide_input;
-  int hide_list;
-
-  int quick_nav;
-
-  const char *cmd_terminal;
-  const char *cmd_sudo;
-
-  int view_mode;
-  int view_zoom;
-
-  int history_sort_mode;
-  
-  /* use up/down keys for prev/next in thumb view */
-  int cycle_mode;
-
-  /* not saved data */
-  Eina_List *plugins;
-  Eina_List *actions;
-  Eina_List *views;
-
-  int min_w, min_h;
-};
-
 struct _Evry_View
 {
   Evry_View  *id;
@@ -313,6 +270,49 @@ struct _Evry_Action
   void *data;
 
   int priority;
+};
+
+struct _Config
+{
+  int version;
+  /* position */
+  double rel_x, rel_y;
+  /* size */
+  int width, height;
+
+  Eina_List *modules;
+  
+  /* generic plugin config */
+  Eina_List *conf_subjects;
+  Eina_List *conf_actions;
+  Eina_List *conf_objects;
+  Eina_List *conf_views;
+
+  int scroll_animate;
+  double scroll_speed;
+
+  int hide_input;
+  int hide_list;
+
+  int quick_nav;
+
+  const char *cmd_terminal;
+  const char *cmd_sudo;
+
+  int view_mode;
+  int view_zoom;
+
+  int history_sort_mode;
+  
+  /* use up/down keys for prev/next in thumb view */
+  int cycle_mode;
+
+  /* not saved data */
+  Eina_List *plugins;
+  Eina_List *actions;
+  Eina_List *views;
+
+  int min_w, min_h;
 };
 
 struct _History_Entry

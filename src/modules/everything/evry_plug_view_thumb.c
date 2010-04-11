@@ -30,7 +30,6 @@ struct _Smart_Data
   Ecore_Idle_Enterer *idle_enter;
   Ecore_Idle_Enterer *thumb_idler;
   Ecore_Idle_Enterer *update_idler;
-  Ecore_Animator *animator;
   Evas_Coord   x, y, w, h;
   Evas_Coord   cx, cy, cw, ch;
   Evas_Coord   sx, sy;
@@ -38,6 +37,11 @@ struct _Smart_Data
   Eina_Bool    update : 1;
   Eina_Bool    switch_mode : 1;
   Eina_List *queue;
+
+  double scroll_align;
+  double scroll_align_to;
+  int scroll_to;
+  Ecore_Animator *animator;
 };
 
 struct _Item
@@ -313,6 +317,9 @@ _e_smart_reconfigure_do(void *data)
 		    edje_object_signal_emit(it->frame, "e,state,browseable", "e");
 		  
 		  it->visible = EINA_TRUE;
+
+		  if (it->selected) 
+		    edje_object_signal_emit(it->frame, "e,state,selected", "e");
 	       }
 
 	     if (!eina_list_data_find(sd->queue, it))
@@ -323,9 +330,10 @@ _e_smart_reconfigure_do(void *data)
 	     evas_object_move(it->frame, xx, yy);
 	     evas_object_resize(it->frame, it->w, it->h);
 
+
 	     /* if (sd->update || it->changed)
 	      *   {
-	      * 	  if (it->selected && sd->view->zoom < 2)
+	      * 	  if (it->selected) 
 	      * 	    edje_object_signal_emit(it->frame, "e,state,selected", "e");
 	      * 	  else
 	      * 	    edje_object_signal_emit(it->frame, "e,state,unselected", "e");
@@ -392,7 +400,9 @@ _e_smart_del(Evas_Object *obj)
      ecore_idle_enterer_del(sd->idle_enter);
    if (sd->thumb_idler)
      ecore_idle_enterer_del(sd->thumb_idler);
-
+   if (sd->animator)
+     ecore_animator_del(sd->animator); 
+   
    // sd->view is just referenced
    // sd->child_obj is unused
    EINA_LIST_FREE(sd->items, it)
@@ -564,11 +574,40 @@ _pan_item_remove(Evas_Object *obj, Item *it)
    _e_smart_reconfigure(obj);
 }
 
+static int
+_animator(void *data)
+{
+   Smart_Data *sd = data;
+   
+   if (sd->scroll_to)
+     {
+	double da;
+
+	double spd = 10.0 / e_config->framerate;
+	
+	sd->scroll_align = (sd->scroll_align * (1.0 - spd)) + (sd->scroll_align_to * spd);
+	
+	da = sd->scroll_align - sd->scroll_align_to;
+	if (da < 0.0) da = -da;
+	if (da < 0.01)
+	  {
+	     sd->scroll_align = sd->scroll_align_to;
+	     sd->scroll_to = 0;
+	  }
+	e_scrollframe_child_pos_set(sd->view->sframe, 0, sd->scroll_align);
+
+	/* e_box_align_set(eap_list_object, 0.5, eap_scroll_align); */
+     }
+   if (sd->scroll_to) return 1;
+   sd->animator = NULL;
+   return 0;
+}
+
 static void
 _pan_item_select(Evas_Object *obj, Item *it)
 {
    Smart_Data *sd = evas_object_smart_data_get(obj);
-   int align = -1;
+   double align = -1;
 
    if (sd->cur_item)
      {
@@ -590,9 +629,24 @@ _pan_item_select(Evas_Object *obj, Item *it)
 	else if (it->y < sd->cy)
 	  align = it->y;
 
+	e_scrollframe_child_pos_get(sd->view->sframe, 0, (Evas_Coord *)&sd->scroll_align); 
+	  
 	if (align >= 0)
-	  e_scrollframe_child_pos_set(sd->view->sframe, 0, align);
-
+	  {
+	     if (!evry_conf->scroll_animate)
+	       {
+		  if (align >= 0)
+		    e_scrollframe_child_pos_set(sd->view->sframe, 0, align);
+	       }
+	     else
+	       {
+		  sd->scroll_align_to = align;
+		  sd->scroll_to = 1;
+		  if (!sd->animator)
+		    sd->animator = ecore_animator_add(_animator, sd);
+	       }
+	  }
+	
 	if (sd->view->zoom < 2)
 	  edje_object_signal_emit(sd->cur_item->frame, "e,state,selected", "e");
 
@@ -608,6 +662,10 @@ _clear_items(Evas_Object *obj)
    Eina_List *l;
    Item *it;
 
+   if (sd->animator)
+     ecore_animator_del(sd->animator);
+   sd->animator = NULL;
+   
    EINA_LIST_FOREACH(sd->items, l, it)
      {
 	if (it->do_thumb)
@@ -666,11 +724,13 @@ static int
 _update_frame(Evas_Object *obj)
 {
    Smart_Data *sd = evas_object_smart_data_get(obj);
-   //sd->switch_mode = EINA_TRUE;
+   /* sd->switch_mode = EINA_TRUE; */
    _e_smart_reconfigure_do(obj);
-   //sd->switch_mode = EINA_FALSE;
+   /* sd->switch_mode = EINA_FALSE; */
+   int tmp = evry_conf->scroll_animate;
+   evry_conf->scroll_animate = 0;
    _pan_item_select(obj, sd->cur_item); 
-
+   evry_conf->scroll_animate = tmp;
    return 0;
 }
 
@@ -1034,7 +1094,7 @@ _view_destroy(Evry_View *view)
    VIEW(v, view);
 
    Ecore_Event_Handler *h;
-   
+
    evas_object_del(v->bg);
    evas_object_del(v->sframe);
    evas_object_del(v->span);

@@ -12,7 +12,7 @@
 /* #undef DBG
  * #define DBG(...) ERR(__VA_ARGS__) */
 
-#define CONFIG_VERSION 7
+#define CONFIG_VERSION 8
 
 /* actual module specifics */
 static void _e_mod_action_cb(E_Object *obj, const char *params);
@@ -216,7 +216,13 @@ _config_init()
 #undef T
 #undef D
    evry_conf = e_config_domain_load("module.everything", conf_edd);
-   
+
+   if (evry_conf && evry_conf->version == 7)
+     {
+	evry_conf->scroll_speed = 10.0;
+	evry_conf->version = CONFIG_VERSION;
+     }
+
    if (evry_conf && evry_conf->version != CONFIG_VERSION)
      {
 	_config_free();
@@ -232,7 +238,7 @@ _config_init()
 	evry_conf->width = 0;
 	evry_conf->height = 0;
 	evry_conf->scroll_animate = 0;
-	evry_conf->scroll_speed = 0.08;
+	evry_conf->scroll_speed = 10.0;
 	evry_conf->hide_input = 0;
 	evry_conf->hide_list = 0;
 	evry_conf->quick_nav = 1;

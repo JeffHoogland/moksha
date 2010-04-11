@@ -16,7 +16,8 @@ struct _E_Config_Dialog_Data
   int width, height;
   double rel_x, rel_y;
   int scroll_animate;
-
+  double scroll_speed;
+  
   char *cmd_terminal;
   char *cmd_sudo;
 
@@ -76,6 +77,8 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    C(view_zoom);
    C(cycle_mode);
    C(history_sort_mode);
+   C(scroll_animate);
+   C(scroll_speed);
 #undef C
    
    EINA_LIST_FOREACH(evry_conf->plugins, l, p)
@@ -138,6 +141,8 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
   C(view_zoom);
   C(cycle_mode);
   C(history_sort_mode);
+  C(scroll_animate);
+  C(scroll_speed);
 #undef C
 
    evry_conf->plugins = eina_list_sort(evry_conf->plugins, -1,
@@ -260,6 +265,13 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, "Icons", 1, rg);
    e_widget_radio_toggle_set(ob, (cfdata->view_mode == 1));
+   e_widget_framelist_object_append(of, ob);
+
+   ob = e_widget_check_add(evas, _("Animate scrolling"),
+   			   &(cfdata->scroll_animate));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.1f"),
+   			    5, 20, 0.1, 0, &(cfdata->scroll_speed), NULL, 10);
    e_widget_framelist_object_append(of, ob);
    
    ob = e_widget_check_add(evas, _("Up/Down select next item in icon view"),
