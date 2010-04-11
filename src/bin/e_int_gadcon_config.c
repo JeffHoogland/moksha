@@ -12,6 +12,7 @@ struct _E_Config_Dialog_Data
    E_Gadcon_Site site;
 
    Evas_Object *o_list, *o_add, *o_del;
+   Ecore_Event_Handler *hdl;
    Ecore_Timer *load_timer;
    Eina_Hash *gadget_hash;
 };
@@ -29,6 +30,7 @@ static void _cb_list_selected(void *data);
 static void _cb_add(void *data, void *data2 __UNUSED__);
 static void _cb_del(void *data, void *data2 __UNUSED__);
 static CFGadget *_search_hash(E_Config_Dialog_Data *cfdata, const char *name);
+static int _cb_mod_update(void *data, int type, void *event __UNUSED__);
 
 EAPI void 
 e_int_gadcon_config_shelf(E_Gadcon *gc) 
@@ -104,6 +106,9 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    E_Gadcon *gc;
 
+   if (cfdata->hdl) ecore_event_handler_del(cfdata->hdl);
+   cfdata->hdl = NULL;
+
    if (cfdata->load_timer) ecore_timer_del(cfdata->load_timer);
    cfdata->load_timer = NULL;
 
@@ -155,6 +160,10 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
      e_widget_button_add(evas, _("Remove Gadget"), NULL, _cb_del, cfdata, NULL);
    e_widget_disabled_set(cfdata->o_del, EINA_TRUE);
    e_widget_table_object_append(ot, cfdata->o_del, 1, 1, 1, 1, 1, 1, 1, 0);
+
+   if (cfdata->hdl) ecore_event_handler_del(cfdata->hdl);
+   cfdata->hdl = ecore_event_handler_add(E_EVENT_MODULE_UPDATE, 
+                                         _cb_mod_update, cfdata);
 
    if (cfdata->load_timer) ecore_timer_del(cfdata->load_timer);
    cfdata->load_timer = ecore_timer_add(0.2, _cb_load_timer, cfdata);
@@ -371,4 +380,15 @@ _search_hash(E_Config_Dialog_Data *cfdata, const char *name)
      }
    eina_iterator_free(it);
    return ret;
+}
+
+static int 
+_cb_mod_update(void *data, int type, void *event __UNUSED__) 
+{
+   E_Config_Dialog_Data *cfdata;
+
+   if (type != E_EVENT_MODULE_UPDATE) return 1;
+   if (!(cfdata = data)) return 1;
+   _fill_list(cfdata);
+   return 1;
 }
