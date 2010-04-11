@@ -223,6 +223,16 @@ src/modules/cpufreq/e_mod_main.c
 src/modules/cpufreq/freqset.c
 src/modules/dropshadow/e_mod_config.c
 src/modules/dropshadow/e_mod_main.c
+src/modules/everything/e_mod_main.c
+src/modules/everything/evry.c
+src/modules/everything/evry_config.c
+src/modules/everything-apps/e_mod_main.c
+src/modules/everything-aspell/e_mod_main.c
+src/modules/everything-calc/e_mod_main.c
+src/modules/everything-files/e_mod_main.c
+src/modules/everything-settings/e_mod_main.c
+src/modules/everything-wallpaper/e_mod_main.c
+src/modules/everything-windows/e_mod_main.c
 src/modules/exebuf/e_mod_main.c
 src/modules/exebuf/e_exebuf.c
 src/modules/fileman/e_mod_main.c

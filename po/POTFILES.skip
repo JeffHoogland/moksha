@@ -40,6 +40,14 @@ src/modules/conf_window_manipulation/module.desktop.in
 src/modules/conf_winlist/module.desktop.in
 src/modules/cpufreq/module.desktop.in
 src/modules/dropshadow/module.desktop.in
+src/modules/everything/module.desktop.in
+src/modules/everything-apps/module.desktop.in
+src/modules/everything-aspell/module.desktop.in
+src/modules/everything-calc/module.desktop.in
+src/modules/everything-files/module.desktop.in
+src/modules/everything-settings/module.desktop.in
+src/modules/everything-wallpaper/module.desktop.in
+src/modules/everything-windows/module.desktop.in
 src/modules/exebuf/module.desktop.in
 src/modules/fileman/module.desktop.in
 src/modules/fileman_opinfo/module.desktop.in
@@ -52,5 +60,3 @@ src/modules/start/module.desktop.in
 src/modules/conf_wallpaper2/e_int_config_wallpaper.c
 src/modules/conf_wallpaper2/e_mod_main.c
 src/modules/conf_wallpaper2/module.desktop.in
-src/modules/everything/e_mod_main.c
-src/modules/everything/module.desktop.in
