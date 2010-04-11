@@ -167,7 +167,6 @@ _e_smart_reconfigure_do(void *data)
    if (sd->cx < 0) sd->cx = 0;
    if (sd->cy < 0) sd->cy = 0;
 
-   printf("reconfigure\n", sd->ch);
    aspect_w = sd->w;
    aspect_h = sd->h;
 
