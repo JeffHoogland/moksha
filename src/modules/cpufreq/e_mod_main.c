@@ -154,6 +154,7 @@ _gc_id_new(E_Gadcon_Client_Class *client_class)
 
    snprintf(buff, sizeof(buff), "%s.%d", _gadcon_class.name, 
             eina_list_count(cpufreq_config->instances));
+   /* TODO: Fix leak!!!! Func returns const char. */
    return strdup(buff);
 }
 
