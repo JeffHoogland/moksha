@@ -196,9 +196,9 @@ backtrace_symbols_fd(NULL, 0, 0);
    AC_MSG_RESULT([${link_execinfo}])
 fi
 
-if test "x${link_execinfo}" = "xno" ; then
+dnl if test "x${link_execinfo}" = "xno" ; then
 dnl   AC_MSG_ERROR([Cannot use backtrace_symbols_fd()])
-fi
+dnl fi
 
 
 #ALL_LINGUAS="bg de eo es fi fr ja pl pt ru zh_CN hu sl it cs da sk sv nb nl zh_TW ko"
