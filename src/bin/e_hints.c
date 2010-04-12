@@ -137,12 +137,15 @@ e_hints_init(void)
 		       if (twin != win) break;
 		       if (ecore_x_netwm_name_get(win, &name))
 			 {
-			    if (strcmp(name, "Enlightenment"))
+			    if (name)
 			      {
+				 if (strcmp(name, "Enlightenment"))
+				   {
+				      free(name);
+				      break;
+				   }
 				 free(name);
-				 break;
 			      }
-			    free(name);
 			 }
 		       ecore_x_sync();
 		       if ((ecore_time_get() - ts) > 2.0)
