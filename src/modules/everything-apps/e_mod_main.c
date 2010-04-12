@@ -533,7 +533,8 @@ _fetch(Evry_Plugin *plugin, const char *input)
 		       EVRY_ITEM(app)->label = eina_stringshare_add(input);
 		       eina_stringshare_del(app->file);
 		       app->file = eina_stringshare_add(input);
-		       EVRY_PLUGIN_ITEM_APPEND(p, app);
+		       if (!eina_list_data_find(p->base.items, app))
+			 EVRY_PLUGIN_ITEM_APPEND(p, app);
 
 		       ev = E_NEW(Evry_Event_Item_Changed, 1);
 		       evry_item_ref(EVRY_ITEM(app));
