@@ -533,7 +533,6 @@ _fetch(Evry_Plugin *plugin, const char *input)
 			      {
 				 
 				 EVRY_ITEM(app2)->label = eina_stringshare_add(app2->desktop->name);
-				 EVRY_ITEM(app2)->transient = 0;
 			      }
 			 }
 
@@ -551,8 +550,6 @@ _fetch(Evry_Plugin *plugin, const char *input)
 		       if (!eina_list_data_find(p->base.items, app))
 			 EVRY_PLUGIN_ITEM_APPEND(p, app);
 
-		       EVRY_ITEM(app)->transient = 1;
-		       
 		       ev = E_NEW(Evry_Event_Item_Changed, 1);
 		       evry_item_ref(EVRY_ITEM(app));
 		       ev->item = EVRY_ITEM(app);
@@ -590,7 +587,6 @@ _fetch(Evry_Plugin *plugin, const char *input)
 			    if (p->app_command != app)
 			      {
 				 EVRY_ITEM(app2)->label = eina_stringshare_add(file);
-				 EVRY_ITEM(app2)->transient = 0;
 			      }
 			 }
 
@@ -607,8 +603,6 @@ _fetch(Evry_Plugin *plugin, const char *input)
 		       if (!eina_list_data_find(p->base.items, app))
 			 EVRY_PLUGIN_ITEM_APPEND(p, app);
 
-		       EVRY_ITEM(app)->transient = 1;
-		       
 		       ev = E_NEW(Evry_Event_Item_Changed, 1);
 		       evry_item_ref(EVRY_ITEM(app));
 		       ev->item = EVRY_ITEM(app);
@@ -630,7 +624,6 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	app2->file = NULL;
 	eina_stringshare_del(EVRY_ITEM(app2)->label);
 	EVRY_ITEM(app2)->label = eina_stringshare_add(app2->desktop->name);
-	EVRY_ITEM(app2)->transient = 0;
 	p->app_parameter = NULL;
      }
    
@@ -650,9 +643,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
    else
      {
 	EINA_LIST_FOREACH(plugin->items, l, it)
-	  {
-	     evry_history_item_usage_set(evry_hist->subjects, it, input, NULL);
-	  }
+	  evry_history_item_usage_set(evry_hist->subjects, it, input, NULL);
      }
    
    if (plugin->type != type_action || input)
