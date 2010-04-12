@@ -150,7 +150,7 @@ _gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas)
 static const char *
 _gc_id_new(E_Gadcon_Client_Class *client_class)
 {
-   static char idbuff[PATH_MAX];
+   static char idbuff[32];
 
    snprintf(idbuff, sizeof(idbuff), "%s.%d", _gadcon_class.name, 
             eina_list_count(cpufreq_config->instances));
