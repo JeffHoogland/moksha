@@ -9,7 +9,7 @@
  * - shortcuts for plugins
  */
 #define INPUTLEN 256
-#define MATCH_LAG 0.1
+#define MATCH_LAG 0.15
 #define INITIAL_MATCH_LAG 0.2
 
 /* #undef DBG

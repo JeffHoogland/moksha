@@ -328,10 +328,15 @@ _e_mod_action_cb(E_Object *obj, const char *params)
    if (!zone) return;
 
    if (params && params[0])
-
      evry_show(zone, params);
    else
-     ecore_idle_enterer_add(_e_mod_run_defer_cb, zone);
+     evry_show(zone, NULL);
+   
+   /* FIXME popup flickers sometimes when deferes*/
+   /* if (params && params[0])
+    *   evry_show(zone, params);
+    * else
+    *   ecore_idle_enterer_add(_e_mod_run_defer_cb, zone); */
 }
 
 /* menu item callback(s) */

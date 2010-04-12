@@ -29,14 +29,14 @@ struct _Smart_Data
   Item        *cur_item;
   Ecore_Idle_Enterer *idle_enter;
   Ecore_Idle_Enterer *thumb_idler;
-  Ecore_Idle_Enterer *update_idler;
   Evas_Coord   x, y, w, h;
   Evas_Coord   cx, cy, cw, ch;
   Evas_Coord   sx, sy;
-  double       selmove;
   Eina_Bool    update : 1;
   Eina_Bool    switch_mode : 1;
-  Eina_List *queue;
+  Eina_List   *queue;
+
+  Evas_Object *selctor;
 
   double scroll_align;
   double scroll_align_to;
@@ -379,6 +379,7 @@ _e_smart_add(Evas_Object *obj)
    sd->x = sd->y = sd->w = sd->h = 0;
    sd->sx = sd->sy = -1;
    evas_object_smart_data_set(obj, sd);
+   /* sd->selctor =  */
 }
 
 static void
@@ -574,7 +575,7 @@ _animator(void *data)
      {
 	double da;
 
-	double spd = 10.0 / e_config->framerate;
+	double spd = evry_conf->scroll_speed / e_config->framerate;
 	
 	sd->scroll_align = (sd->scroll_align * (1.0 - spd)) + (sd->scroll_align_to * spd);
 	
@@ -612,7 +613,14 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
    sd->cur_item->selected = EINA_TRUE;
 
    if (sd->view->list_mode)
-     align = it->y - (double)it->y / (double)sd->ch * (sd->h - it->h);
+     {
+	if (it->y < sd->h/2)
+	  align = 0;
+	else
+	  align = it->y - sd->h/2;
+	
+	/* align = it->y  - (double)it->y / (double)sd->ch * (sd->h - it->h); */
+     }
    else if ((it->y + it->h) - sd->cy > sd->h)
      align = it->y - (2 - sd->view->zoom) * it->h;
    else if (it->y < sd->cy)
@@ -851,8 +859,6 @@ _view_update(Evry_View *view)
    if (v_items) eina_list_free(v_items);
    
    v->tabs->update(v->tabs);   
-   
-   sd->update_idler = NULL;
    
    return 0;
 }
