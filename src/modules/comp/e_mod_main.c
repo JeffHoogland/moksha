@@ -46,6 +46,7 @@ e_modapi_init(E_Module *m)
 #define D mod->conf_edd
    E_CONFIG_VAL(D, T, use_shadow, UCHAR);
    E_CONFIG_VAL(D, T, shadow_file, STR);
+   E_CONFIG_VAL(D, T, shadow_style, STR);
    E_CONFIG_VAL(D, T, engine, INT);
    E_CONFIG_VAL(D, T, indirect, UCHAR);
    E_CONFIG_VAL(D, T, texture_from_pixmap, UCHAR);
@@ -58,6 +59,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, send_flush, UCHAR);
    E_CONFIG_VAL(D, T, send_dump, UCHAR);
    E_CONFIG_VAL(D, T, nocomp_fs, UCHAR);
+   E_CONFIG_VAL(D, T, smooth_windows, UCHAR);
    E_CONFIG_VAL(D, T, max_unmapped_pixels, INT);
    E_CONFIG_VAL(D, T, max_unmapped_time, INT);
    E_CONFIG_VAL(D, T, min_unmapped_time, INT);
@@ -68,6 +70,7 @@ e_modapi_init(E_Module *m)
 	mod->conf = E_NEW(Config, 1);
         mod->conf->use_shadow = 1;
         mod->conf->shadow_file = NULL;
+        mod->conf->shadow_style = eina_stringshare_add("default");
         mod->conf->engine = E_EVAS_ENGINE_SOFTWARE_X11;
         mod->conf->indirect = 0;
         mod->conf->texture_from_pixmap = 0; 
@@ -80,12 +83,11 @@ e_modapi_init(E_Module *m)
         mod->conf->send_flush = 1; // implement
         mod->conf->send_dump = 0; // implement
         mod->conf->nocomp_fs = 0; // buggy
+        mod->conf->smooth_windows = 0;
         mod->conf->max_unmapped_pixels =  32 * 1024; // implement
         mod->conf->max_unmapped_time = 10 * 3600; // implement
         mod->conf->min_unmapped_time = 5 * 60; // implement
      }
-   
-   mod->conf->lock_fps = 0; // OOOFFF!!!
    
    _comp_mod = mod;
 
@@ -122,6 +124,7 @@ e_modapi_shutdown(E_Module *m)
         mod->config_dialog = NULL;
      }
    if (mod->conf->shadow_file) eina_stringshare_del(mod->conf->shadow_file);
+   if (mod->conf->shadow_style) eina_stringshare_del(mod->conf->shadow_style);
    free(mod->conf);
    E_CONFIG_DD_FREE(mod->conf_edd);
    free(mod);

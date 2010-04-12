@@ -9,6 +9,7 @@ struct _Config
 {
    unsigned char    use_shadow;
    const char      *shadow_file;
+   const char      *shadow_style;
    int              engine;
    unsigned char    indirect;
    unsigned char    texture_from_pixmap;
@@ -21,6 +22,7 @@ struct _Config
    unsigned char    send_flush;
    unsigned char    send_dump;
    unsigned char    nocomp_fs;
+   unsigned char    smooth_windows;
    int              max_unmapped_pixels;
    int              max_unmapped_time;
    int              min_unmapped_time;

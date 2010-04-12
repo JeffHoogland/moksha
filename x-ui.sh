@@ -14,12 +14,13 @@
 
 #Xephyr :1 -noreset -ac -br -dpi 183 -screen 960x400x16 -host-cursor &
 
-Xephyr :1 -noreset -ac -br -dpi 284 -screen 480x800 -host-cursor &
+#Xephyr :1 -noreset -ac -br -dpi 284 -screen 480x800 -host-cursor &
 #Xephyr :1 -noreset -ac -br -dpi 284 -screen 480x640 &
 #Xephyr :1 -noreset -ac -br -dpi 284 -screen 640x480 &
 #Xephyr :1 -noreset -ac -br -dpi 181 -screen 320x320 &
 #Xephyr :1 -noreset -ac -br -dpi 186 -screen 272x480 &
-#Xephyr :1 -noreset -ac -br -dpi 142 -screen 240x320 &
+Xephyr :1 -noreset -ac -br -dpi 142 -screen 240x320 &
+#Xephyr :1 -noreset -ac -br -dpi 142 -screen 240x240 -host-cursor &
 
 sleep 1
 export DISPLAY=:1

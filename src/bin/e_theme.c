@@ -28,6 +28,7 @@ static Eina_List *categories = NULL;
 static Eina_List *transitions = NULL;
 static Eina_List *borders = NULL;
 static Eina_List *shelfs = NULL;
+static Eina_List *comps = NULL;
 static E_Fm2_Mime_Handler *theme_hdl = NULL;
 
 /* externally accessible functions */
@@ -61,8 +62,8 @@ e_theme_init(void)
    transitions = _e_theme_collection_items_find("base/theme/transitions", "e/transitions");
    borders = _e_theme_collection_items_find("base/theme/borders", "e/widgets/border");
    shelfs = _e_theme_collection_items_find("base/theme/shelf", "e/shelf");
-   if (!mappings)
-      mappings = eina_hash_string_superfast_new(NULL);
+   comps = _e_theme_collection_items_find("base/theme/borders", "e/comp");
+   if (!mappings) mappings = eina_hash_string_superfast_new(NULL);
    group_cache = eina_hash_string_superfast_new(NULL);
 
    return 1;
@@ -96,6 +97,8 @@ e_theme_shutdown(void)
    EINA_LIST_FREE(borders, str)
      eina_stringshare_del(str);
    EINA_LIST_FREE(shelfs, str)
+     eina_stringshare_del(str);
+   EINA_LIST_FREE(comps, str)
      eina_stringshare_del(str);
    return 1;
 }
@@ -442,6 +445,20 @@ EAPI Eina_List *
 e_theme_shelf_list(void)
 {
    return shelfs;
+}
+
+EAPI int
+e_theme_comp_find(const char *comp)
+{
+   if (eina_list_search_sorted(comps, EINA_COMPARE_CB(strcmp), comp))
+     return 1;
+   return 0;
+}
+
+EAPI Eina_List *
+e_theme_comp_list(void)
+{
+   return comps;
 }
 
 EAPI void

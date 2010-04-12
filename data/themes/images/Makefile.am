@@ -425,4 +425,5 @@ connman-wifi-bad.png \
 connman-connecting-1.png \
 connman-connecting-2.png \
 connman-connecting-3.png \
-connman-connecting-4.png
+connman-connecting-4.png \
+comp-sh1.png

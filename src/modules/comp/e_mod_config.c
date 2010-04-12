@@ -10,11 +10,18 @@ struct _E_Config_Dialog_Data
    int engine;
    int indirect;
    int texture_from_pixmap;
-   int lock_fps; //
+   int smooth_windows;
+   int lock_fps;
    int efl_sync;
    int loose_sync;
    int grab;
    int vsync;
+
+   Evas_Object *style_ilist;
+   Ecore_Timer *style_demo_timer;
+   Eina_List *style_shadows;
+   int style_demo_state;
+   const char *shadow_style;
    
    int keep_unmapped;
    int max_unmapped_pixels;
@@ -71,11 +78,14 @@ _create_data(E_Config_Dialog *cfd)
      cfdata->engine = E_EVAS_ENGINE_SOFTWARE_X11;
    cfdata->indirect = _comp_mod->conf->indirect;
    cfdata->texture_from_pixmap = _comp_mod->conf->texture_from_pixmap;
-//   cfdata->lock_fps = _comp_mod->conf->lock_fps;
+   cfdata->smooth_windows = _comp_mod->conf->smooth_windows;
+   cfdata->lock_fps = _comp_mod->conf->lock_fps;
    cfdata->efl_sync = _comp_mod->conf->efl_sync;
    cfdata->loose_sync = _comp_mod->conf->loose_sync;
    cfdata->grab = _comp_mod->conf->grab;
    cfdata->vsync = _comp_mod->conf->vsync;
+   if (_comp_mod->conf->shadow_style)
+     cfdata->shadow_style = eina_stringshare_add(_comp_mod->conf->shadow_style);
 
    cfdata->keep_unmapped = _comp_mod->conf->keep_unmapped;
    cfdata->max_unmapped_pixels = _comp_mod->conf->max_unmapped_pixels;
@@ -91,25 +101,132 @@ static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    _comp_mod->config_dialog = NULL;
+   if (cfdata->shadow_style) eina_stringshare_del(cfdata->shadow_style);
+   if (cfdata->style_demo_timer) ecore_timer_del(cfdata->style_demo_timer);
+   if (cfdata->style_shadows) eina_list_free(cfdata->style_shadows);
    free(cfdata);
+}
+
+static int
+_demo_styles(void *data)
+{
+   E_Config_Dialog_Data *cfdata = data;
+   Eina_List *l;
+   Evas_Object *ob;
+
+   if (cfdata->style_demo_state) cfdata->style_demo_state = 0;
+   else cfdata->style_demo_state = 1;
+   
+   EINA_LIST_FOREACH(cfdata->style_shadows, l, ob)
+     {
+        if (cfdata->style_demo_state)
+          edje_object_signal_emit(ob, "e,state,visible,on", "e");
+        else
+          edje_object_signal_emit(ob, "e,state,visible,off", "e");
+     }
+   return 1;
+}
+
+static void
+_shadow_changed(void *data, Evas_Object *obj, void *event_info)
+{
+   E_Config_Dialog_Data *cfdata = data;
+   Eina_List *l;
+   Evas_Object *ob;
+
+   EINA_LIST_FOREACH(cfdata->style_shadows, l, ob)
+     {
+        if (cfdata->use_shadow)
+          edje_object_signal_emit(ob, "e,state,shadow,on", "e");
+        else
+          edje_object_signal_emit(ob, "e,state,shadow,off", "e");
+     }
 }
 
 static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
-   Evas_Object *ob, *ol, *ol2, *of, *otb;
+   Evas_Object *ob, *ol, *ol2, *of, *otb, *oi, *oly, *oo, *obd, *orec;
    E_Radio_Group *rg;
-
+   Eina_List *styles, *l;
+   char *style;
+   int n, sel;
+   Evas_Coord wmw, wmh;
+   
    otb = e_widget_toolbook_add(evas, 48 * e_scale, 48 * e_scale);
    
    ///////////////////////////////////////////
    ol = e_widget_list_add(evas, 0, 0);
    ob = e_widget_check_add(evas, _("Shadows"), &(cfdata->use_shadow));
-   e_widget_list_object_append(ol, ob, 1, 1, 0.5);
-//   ob = e_widget_check_add(evas, _("Limit framerate"), &(cfdata->lock_fps));
-//   e_widget_list_object_append(ol, ob, 1, 1, 0.5);
-// FIXME: ability to choose "shadow" edje file
-   e_widget_toolbook_page_append(otb, NULL, _("Effects"), ol, 0, 0, 0, 0, 0.5, 0.0);
+   evas_object_smart_callback_add(ob, "changed", _shadow_changed, cfdata);
+   e_widget_list_object_append(ol, ob, 1, 0, 0.5);
+   ob = e_widget_check_add(evas, _("Limit framerate"), &(cfdata->lock_fps));
+   e_widget_list_object_append(ol, ob, 1, 0, 0.5);
+   ob = e_widget_check_add(evas, _("Smooth scaling"), &(cfdata->smooth_windows));
+   e_widget_list_object_append(ol, ob, 1, 0, 0.5);
+   
+   of = e_widget_frametable_add(evas, _("Default Style"), 0);
+   e_widget_frametable_content_align_set(of, 0.5, 0.5);
+   oi = e_widget_ilist_add(evas, 80, 80, &(cfdata->shadow_style));
+   sel = 0;
+   styles = e_theme_comp_list();
+   n = 0;
+   EINA_LIST_FOREACH(styles, l, style)
+     {
+        char buf[PATH_MAX];
+        
+        ob = e_livethumb_add(evas);
+        e_livethumb_vsize_set(ob, 240, 240);
+
+        oly = e_layout_add(e_livethumb_evas_get(ob));
+        e_layout_virtual_size_set(oly, 240, 240);
+        e_livethumb_thumb_set(ob, oly);
+        evas_object_show(oly);
+
+        oo = edje_object_add(e_livethumb_evas_get(ob));
+        snprintf(buf, sizeof(buf), "e/comp/%s", style);
+        e_theme_edje_object_set(oo, "base/theme/borders", buf);
+        e_layout_pack(oly, oo);
+        e_layout_child_move(oo, 39, 39);
+        e_layout_child_resize(oo, 162, 162);
+        if (cfdata->use_shadow)
+          edje_object_signal_emit(oo, "e,state,shadow,on", "e");
+        edje_object_signal_emit(oo, "e,state,visible,on", "e");
+        cfdata->style_shadows = eina_list_append(cfdata->style_shadows, oo);
+        evas_object_show(oo);
+        
+        obd = edje_object_add(e_livethumb_evas_get(ob));
+        e_theme_edje_object_set(obd, "base/theme/borders",
+                                "e/widgets/border/default/border");
+        edje_object_part_text_set(obd, "e.text.title", _("Title"));
+        edje_object_signal_emit(obd, "e,state,focused", "e");
+        edje_object_part_swallow(oo, "e.swallow.content", obd);
+        evas_object_show(obd);
+        
+        orec = evas_object_rectangle_add(e_livethumb_evas_get(ob));
+        evas_object_color_set(orec, 255, 255, 255, 255);
+        edje_object_part_swallow(obd, "e.swallow.client", orec);
+        evas_object_show(orec);
+        
+        e_widget_ilist_append(oi, ob, style, NULL, NULL, style);
+        evas_object_show(ob);
+        if (cfdata->shadow_style)
+          {
+             if (!strcmp(cfdata->shadow_style, style)) sel = n;
+          }
+        n++;
+     }
+   cfdata->style_ilist = oi;
+   cfdata->style_demo_timer = ecore_timer_add(3.0, _demo_styles, cfdata);
+   cfdata->style_demo_state = 1;
+   e_widget_size_min_get(oi, &wmw, &wmh);
+   e_widget_size_min_set(oi, 160, 100);
+   e_widget_ilist_selected_set(oi, sel);
+   e_widget_ilist_go(oi);
+   e_widget_frametable_object_append(of, oi, 0, 0, 1, 1, 1, 1, 1, 1);
+   e_widget_list_object_append(ol, of, 1, 1, 0.5);
+   
+   e_widget_toolbook_page_append(otb, NULL, _("Effects"), ol, 1, 1, 1, 1, 0.5, 0.0);
    
    ///////////////////////////////////////////
    ol = e_widget_list_add(evas, 0, 0);
@@ -221,27 +338,46 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    
    e_widget_toolbook_page_show(otb, 0);
    
+   e_dialog_resizable_set(cfd->dia, 1);
    return otb;
 }
 
 static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
-   // FIXME: save new config options as they are implemented.
-   if ((_comp_mod->conf->use_shadow != cfdata->use_shadow) ||
-//       (cfdata->lock_fps != _comp_mod->conf->lock_fps) ||
+   if ((cfdata->use_shadow != _comp_mod->conf->use_shadow) ||
+       (cfdata->lock_fps != _comp_mod->conf->lock_fps) ||
+       (cfdata->smooth_windows != _comp_mod->conf->smooth_windows) ||
        (cfdata->grab != _comp_mod->conf->grab) ||
        (cfdata->keep_unmapped != _comp_mod->conf->keep_unmapped) ||
-       (cfdata->nocomp_fs != _comp_mod->conf->nocomp_fs))
+       (cfdata->nocomp_fs != _comp_mod->conf->nocomp_fs) ||
+       (cfdata->shadow_style != _comp_mod->conf->shadow_style) ||
+       (cfdata->max_unmapped_pixels != _comp_mod->conf->max_unmapped_pixels) ||
+       (cfdata->max_unmapped_time != _comp_mod->conf->max_unmapped_time) ||
+       (cfdata->min_unmapped_time != _comp_mod->conf->min_unmapped_time) ||
+       (cfdata->send_flush != _comp_mod->conf->send_flush) ||
+       (cfdata->send_dump != _comp_mod->conf->send_dump)
+       )
      {
         _comp_mod->conf->use_shadow = cfdata->use_shadow;
-//        _comp_mod->conf->lock_fps = cfdata->lock_fps;
+        _comp_mod->conf->lock_fps = cfdata->lock_fps;
+        _comp_mod->conf->smooth_windows = cfdata->smooth_windows;
         _comp_mod->conf->grab = cfdata->grab;
         _comp_mod->conf->keep_unmapped = cfdata->keep_unmapped;
         _comp_mod->conf->nocomp_fs = cfdata->nocomp_fs;
+        _comp_mod->conf->max_unmapped_pixels =  cfdata->max_unmapped_pixels;
+        _comp_mod->conf->max_unmapped_time = cfdata->max_unmapped_time;
+        _comp_mod->conf->min_unmapped_time = cfdata->min_unmapped_time;
+        _comp_mod->conf->send_flush = cfdata->send_flush;
+        _comp_mod->conf->send_dump = cfdata->send_dump;
+        if (_comp_mod->conf->shadow_style)
+          eina_stringshare_del(_comp_mod->conf->shadow_style);
+        _comp_mod->conf->shadow_style = NULL;
+        if (cfdata->shadow_style)
+          _comp_mod->conf->shadow_style = eina_stringshare_add(cfdata->shadow_style);
         e_mod_comp_shadow_set();
      }
-   if ((_comp_mod->conf->engine != cfdata->engine) ||
+   if ((cfdata->engine != _comp_mod->conf->engine) ||
        (cfdata->indirect != _comp_mod->conf->indirect) ||
        (cfdata->texture_from_pixmap != _comp_mod->conf->texture_from_pixmap) ||
        (cfdata->efl_sync != _comp_mod->conf->efl_sync) ||

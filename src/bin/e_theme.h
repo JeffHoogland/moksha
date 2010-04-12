@@ -26,6 +26,8 @@ EAPI int        e_theme_border_find(const char *border);
 EAPI Eina_List *e_theme_border_list(void);
 EAPI int        e_theme_shelf_find(const char *shelf);
 EAPI Eina_List *e_theme_shelf_list(void);
+EAPI int        e_theme_comp_find(const char *shelf);
+EAPI Eina_List *e_theme_comp_list(void);
 
 EAPI void e_theme_handler_set(Evas_Object *obj, const char *path, void *data);
 EAPI int e_theme_handler_test(Evas_Object *obj, const char *path, void *data);
