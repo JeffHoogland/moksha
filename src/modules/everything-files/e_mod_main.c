@@ -485,14 +485,6 @@ _open_term_action(Evry_Action *act)
    return ret;
 }
 
-static void
-_free_plugin(Evry_Plugin *plugin)
-{
-   PLUGIN(p, plugin);
-
-   E_FREE(p);
-}
-
 static Eina_Bool
 module_init(void)
 {
@@ -500,10 +492,10 @@ module_init(void)
      return EINA_FALSE;
 
    p1 = evry_plugin_new(NULL, "Files", type_subject, "FILE", "FILE", 0, NULL, NULL,
-			_begin, _cleanup, _fetch, NULL, _icon_get, _free_plugin);
+			_begin, _cleanup, _fetch, NULL, _icon_get, NULL);
 
    p2 = evry_plugin_new(NULL, "Files", type_object, "FILE", "FILE", 0, NULL, NULL,
-			_begin, _cleanup, _fetch, NULL, _icon_get, _free_plugin);
+			_begin, _cleanup, _fetch, NULL, _icon_get, NULL);
    
    evry_plugin_register(p1, 3);
    evry_plugin_register(p2, 1);
