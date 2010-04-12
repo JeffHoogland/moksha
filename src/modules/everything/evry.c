@@ -1367,6 +1367,59 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 
    if (!list->visible && (!strcmp(key, "Down")))
      _evry_list_win_show();
+   else if ((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
+	    (!strcmp(key, "Delete") || !strcmp(key, "Insert")))
+     {
+	if (!s || !s->cur_item)
+	  goto end;
+	  
+	int delete = (!strcmp(key, "Delete") && (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT));
+	int promote = (!strcmp(key, "Insert"));
+	History_Entry *he;
+	History_Item *hi;
+	Eina_List *l, *ll;
+	Evry_Item *it = s->cur_item;
+	     
+	if (!(he = eina_hash_find
+	      (selector->history, (it->id ? it->id : it->label))))
+	  goto end;
+	     
+	EINA_LIST_FOREACH_SAFE(he->items, l, ll, hi)
+	  {
+	     if (hi->plugin != it->plugin->name)
+	       continue;
+
+	     if (delete)
+	       {
+		  printf("free %s,\n", it->label);
+
+		  if (hi->input)
+		    eina_stringshare_del(hi->input);
+		  if (hi->plugin)
+		    eina_stringshare_del(hi->plugin);
+		  if (hi->context)
+		    eina_stringshare_del(hi->context);
+		  E_FREE(hi);
+
+		  he->items = eina_list_remove_list(he->items, l);
+	       }
+	     else if (promote)
+	       {
+		  printf("promote %s\n", it->label);
+		  hi->count += 5;
+	       }
+	     else
+	       {
+		  printf("demote %s\n", it->label);
+		  hi->count -= 5;
+		  if (hi->count < 0) hi->count = 1;
+	       }
+	  }
+	if (s->plugin == selector->aggregator)
+	  selector->aggregator->fetch(selector->aggregator, s->input);
+	if (s->view)
+	  s->view->update(s->view);
+     }
    else if (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)
      {
 	if (!strcmp(key, "u"))
@@ -1414,8 +1467,6 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	if (!_evry_backspace(selector))
 	  evry_browse_back(selector);
      }
-   else if (!strcmp(key, "Delete"))
-     _evry_backspace(selector);
    else if (_evry_view_key_press(s, ev))
      goto end;
    else if ((ev->compose && !(ev->modifiers & ECORE_EVENT_MODIFIER_ALT)))
@@ -1448,6 +1499,8 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
    ev->key = old;
    return 1;
 }
+
+
 
 static int
 _evry_backspace(Evry_Selector *sel)
