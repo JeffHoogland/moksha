@@ -197,7 +197,7 @@ backtrace_symbols_fd(NULL, 0, 0);
 fi
 
 if test "x${link_execinfo}" = "xno" ; then
-   AC_MSG_ERROR([Cannot use backtrace_symbols_fd()])
+dnl   AC_MSG_ERROR([Cannot use backtrace_symbols_fd()])
 fi
 
 
