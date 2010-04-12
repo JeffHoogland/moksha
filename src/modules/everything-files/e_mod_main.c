@@ -231,6 +231,7 @@ _scan_end_func(void *data)
 	  }
 	
 	if (p->command || cnt >= MAX_ITEMS) continue;
+	if (!file->mime) _item_fill(file); 
 	cnt += _append_file(p, file);
      }
 
