@@ -94,7 +94,7 @@ _e_backtrace_int(int fd, const char *msg, size_t msg_len)
    size_t size;
 
    return; // disable. causes hangs and problems
-   
+/*
    _e_write_safe_int(fd, msg, msg_len);
    _e_write_safe(fd, "\nBEGIN TRACEBACK\n");
    size = backtrace(array, 255);
@@ -107,6 +107,7 @@ _e_backtrace_int(int fd, const char *msg, size_t msg_len)
      _e_write_safe_int(fd, attachmsg, size);
 
    _e_gdb_print_backtrace(fd);
+ */
 }
 
 /* a tricky little devil, requires e and it's libs to be built
