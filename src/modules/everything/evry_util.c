@@ -332,8 +332,16 @@ evry_util_exec_app(const Evry_Item *it_app, const Evry_Item *it_file)
 	     if (open_folder && path)
 	       free(path);
 	  }
+	else if (app->file)
+	  {
+	     files = eina_list_append(files, app->file);
+	     e_exec(zone, app->desktop, NULL, files, NULL);
+	     eina_list_free(files);
+	  }
 	else
-	  e_exec(zone, app->desktop, NULL, NULL, "everything");
+	  {
+	     e_exec(zone, app->desktop, NULL, NULL, "everything");
+	  }
      }
    else if (app->file)
      {
