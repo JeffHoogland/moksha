@@ -2,6 +2,8 @@
 Type=Link
 Name=Everything Applications
 Name[it]=Pannello di esecuzione - Applicazioni
+Name[fr]=Omni - Applications
 Icon=e-module
 X-Enlightenment-ModuleType=everything
 Comment[it]=Azioni con le applicazioni.
+Comment[fr]=Actions sur les applications.

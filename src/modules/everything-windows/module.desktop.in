@@ -2,7 +2,9 @@
 Type=Link
 Name=Everything Windows
 Name[it]=Pannello di esecuzione - Finestre
+Name[fr]=Omni - Fenêtres
 Icon=e-module
 X-Enlightenment-ModuleType=everything
 Comment=Window actions
 Comment[it]=Azioni sulle finestre.
+Comment[fr]=Actions sur les fenêtres.

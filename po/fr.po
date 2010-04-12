@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-04-09 06:08+0400\n"
-"PO-Revision-Date: 2010-04-09 07:08+0400\n"
+"POT-Creation-Date: 2010-04-12 08:52+0400\n"
+"PO-Revision-Date: 2010-04-12 11:15+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment French Team <pourunmondesansgourou@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -33,6 +33,7 @@ msgstr "À propos de Enlightenment"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:848
 #: src/modules/conf_theme/e_int_config_theme_web.c:130
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:120
+#: src/modules/everything-windows/e_mod_main.c:408
 #: src/modules/fileman/e_fwin.c:1824
 #: src/modules/illume/e_mod_win.c:173
 #: src/modules/mixer/app_mixer.c:514
@@ -345,7 +346,7 @@ msgstr "Activer/Désactiver l'épinglage"
 #: src/bin/e_fm_hal.c:628
 #: src/bin/e_fm_hal.c:655
 #: src/bin/e_int_menus.c:145
-#: src/bin/e_int_shelf_config.c:724
+#: src/bin/e_int_shelf_config.c:251
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:104
 #: src/modules/fileman/e_mod_main.c:324
 #: src/modules/ibox/e_mod_config.c:165
@@ -750,9 +751,9 @@ msgstr "Sélecteur de couleurs"
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:198
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:218
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:348
-#: src/modules/cpufreq/e_mod_main.c:389
-#: src/modules/cpufreq/e_mod_main.c:416
-#: src/modules/cpufreq/e_mod_main.c:439
+#: src/modules/cpufreq/e_mod_main.c:393
+#: src/modules/cpufreq/e_mod_main.c:422
+#: src/modules/cpufreq/e_mod_main.c:447
 msgid "OK"
 msgstr "O.K."
 
@@ -849,6 +850,7 @@ msgstr "Modules"
 
 #: src/bin/e_configure.c:35
 #: src/modules/conf_shelves/e_mod_main.c:24
+#: src/modules/everything/e_mod_main.c:91
 #: src/modules/gadman/e_mod_main.c:25
 #: src/modules/mixer/e_mod_main.c:1044
 #: src/modules/connman/e_mod_main.c:1734
@@ -1543,7 +1545,7 @@ msgstr "Supprimer ce gadget"
 msgid "Stop move/resize this gadget"
 msgstr "Arrêter de déplacer/redimensionner ce gadget"
 
-#: src/bin/e_hints.c:150
+#: src/bin/e_hints.c:153
 msgid ""
 "A previous instance of Enlightenment is still active\n"
 "on this screen. Aborting startup.\n"
@@ -1593,8 +1595,7 @@ msgstr "Position"
 #: src/bin/e_int_border_locks.c:311
 #: src/bin/e_int_border_locks.c:330
 #: src/bin/e_int_border_remember.c:705
-#: src/bin/e_int_shelf_config.c:537
-#: src/bin/e_int_shelf_config.c:642
+#: src/bin/e_int_shelf_config.c:186
 #: src/modules/conf_fonts/e_int_config_fonts.c:442
 #: src/modules/conf_fonts/e_int_config_fonts.c:637
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:137
@@ -1606,7 +1607,7 @@ msgstr "Taille"
 #: src/bin/e_int_border_menu.c:587
 #: src/bin/e_int_border_prop.c:469
 #: src/bin/e_int_border_remember.c:708
-#: src/bin/e_int_shelf_config.c:577
+#: src/bin/e_int_shelf_config.c:133
 msgid "Stacking"
 msgstr "Empilement"
 
@@ -1692,6 +1693,7 @@ msgid "More..."
 msgstr "Plus…"
 
 #: src/bin/e_int_border_menu.c:197
+#: src/modules/everything-windows/e_mod_main.c:395
 msgid "Iconify"
 msgstr "Minimiser"
 
@@ -1788,6 +1790,7 @@ msgstr "Ancré"
 #: src/bin/e_int_border_prop.c:477
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:119
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:142
+#: src/modules/everything-windows/e_mod_main.c:400
 msgid "Fullscreen"
 msgstr "Plein écran"
 
@@ -1974,6 +1977,10 @@ msgid "Size, Position and Locks"
 msgstr "Taille, position et verrous"
 
 #: src/bin/e_int_border_remember.c:622
+#: src/modules/everything/e_mod_main.c:82
+#: src/modules/everything/e_mod_main.c:135
+#: src/modules/everything/e_mod_main.c:533
+#: src/modules/everything/e_mod_main.c:550
 msgid "Everything"
 msgstr "Tout"
 
@@ -2077,62 +2084,47 @@ msgstr "Gestionnaire de fichiers"
 msgid "Shelf"
 msgstr "Rack"
 
-#: src/bin/e_int_config_modules.c:97
+#: src/bin/e_int_config_modules.c:66
+msgid "Everything Launcher"
+msgstr "Lanceur Omni"
+
+#: src/bin/e_int_config_modules.c:98
 msgid "Module Settings"
 msgstr "Paramétrage des modules"
 
-#: src/bin/e_int_config_modules.c:161
+#: src/bin/e_int_config_modules.c:162
 msgid "Load"
 msgstr "Activer"
 
-#: src/bin/e_int_config_modules.c:166
+#: src/bin/e_int_config_modules.c:167
 msgid "Unload"
 msgstr "Désactiver"
 
-#: src/bin/e_int_config_modules.c:174
-#: src/bin/e_int_config_modules.c:604
+#: src/bin/e_int_config_modules.c:175
+#: src/bin/e_int_config_modules.c:605
 msgid "No modules selected."
 msgstr "Aucun module sélectionné."
 
-#: src/bin/e_int_config_modules.c:602
+#: src/bin/e_int_config_modules.c:603
 msgid "More than one module selected."
 msgstr "Plus d'un module sélectionné."
 
-#: src/bin/e_int_gadcon_config.c:27
+#: src/bin/e_int_gadcon_config.c:38
 msgid "Shelf Contents"
 msgstr "Contenu du rack"
 
-#: src/bin/e_int_gadcon_config.c:33
+#: src/bin/e_int_gadcon_config.c:44
 msgid "Toolbar Contents"
 msgstr "Contenu de la barre d'outils"
 
-#: src/bin/e_int_gadcon_config.c:101
+#: src/bin/e_int_gadcon_config.c:155
 #: src/modules/gadman/e_mod_config.c:118
 msgid "Add Gadget"
 msgstr "Ajouter un gadget"
 
-#: src/bin/e_int_gadcon_config.c:106
+#: src/bin/e_int_gadcon_config.c:160
 msgid "Remove Gadget"
 msgstr "Supprimer ce gadget"
-
-#: src/bin/e_int_gadcon_config.c:112
-#: src/bin/e_int_gadcon_config.c:227
-#: src/bin/e_int_gadcon_config.c:245
-#: src/bin/e_int_gadcon_config.c:246
-#: src/bin/e_int_gadcon_config.c:248
-#: src/bin/e_int_gadcon_config.c:250
-msgid "Description: Unavailable"
-msgstr "Description : non disponible"
-
-#: src/bin/e_int_gadcon_config.c:230
-msgid "More than one gadget selected."
-msgstr "Plus d'un gadget sélectionné."
-
-#: src/bin/e_int_gadcon_config.c:232
-#: src/bin/e_int_gadcon_config.c:287
-#: src/bin/e_int_gadcon_config.c:327
-msgid "No gadget selected."
-msgstr "Aucun gadget sélectionné."
 
 #: src/bin/e_int_toolbar_config.c:30
 #: src/bin/e_toolbar.c:335
@@ -2140,8 +2132,7 @@ msgid "Toolbar Settings"
 msgstr "Paramétrage de la barre d'outils"
 
 #: src/bin/e_int_toolbar_config.c:82
-#: src/bin/e_int_shelf_config.c:515
-#: src/bin/e_int_shelf_config.c:590
+#: src/bin/e_int_shelf_config.c:178
 msgid "Layout"
 msgstr "Présentation"
 
@@ -2158,7 +2149,7 @@ msgid "Main"
 msgstr "Menu Principal"
 
 #: src/bin/e_int_menus.c:117
-#: src/modules/conf_applications/e_int_config_apps.c:53
+#: src/modules/conf_applications/e_int_config_apps.c:55
 #: src/modules/conf_applications/e_mod_main.c:23
 msgid "Favorite Applications"
 msgstr "Applications favorites"
@@ -2211,7 +2202,7 @@ msgstr "Racks"
 
 #: src/bin/e_int_menus.c:289
 msgid "Show/Hide All Windows"
-msgstr "Afficher/Cacher les fenêtres"
+msgstr "Afficher/Masquer les fenêtres"
 
 #: src/bin/e_int_menus.c:602
 msgid "(No Applications)"
@@ -2250,107 +2241,81 @@ msgstr "Ajouter un rack"
 msgid "Delete A Shelf"
 msgstr "Supprimer un rack"
 
-#: src/bin/e_int_shelf_config.c:75
+#: src/bin/e_int_shelf_config.c:44
 #: src/bin/e_shelf.c:1683
 #: src/modules/conf_shelves/e_int_config_shelf.c:43
 msgid "Shelf Settings"
 msgstr "Paramétrage du rack"
 
-#: src/bin/e_int_shelf_config.c:539
-#: src/modules/conf_fonts/e_int_config_fonts.c:253
-msgid "Tiny"
-msgstr "Minuscule"
-
-#: src/bin/e_int_shelf_config.c:541
-#: src/modules/conf_fonts/e_int_config_fonts.c:100
-#: src/modules/conf_fonts/e_int_config_fonts.c:259
-msgid "Small"
-msgstr "Petit"
-
-#: src/bin/e_int_shelf_config.c:543
-#: src/modules/dropshadow/e_mod_config.c:126
-msgid "Medium"
-msgstr "Moyen"
-
-#: src/bin/e_int_shelf_config.c:545
-#: src/modules/conf_fonts/e_int_config_fonts.c:102
-msgid "Large"
-msgstr "Grand"
-
-#: src/bin/e_int_shelf_config.c:547
-#: src/modules/conf_fonts/e_int_config_fonts.c:283
-msgid "Huge"
-msgstr "Énorme"
-
-#: src/bin/e_int_shelf_config.c:553
-#: src/bin/e_int_shelf_config.c:680
-msgid "Set Contents..."
-msgstr "Définir le contenu…"
-
-#: src/bin/e_int_shelf_config.c:579
+#: src/bin/e_int_shelf_config.c:124
 msgid "Above Everything"
 msgstr "Au-dessus de tout"
 
-#: src/bin/e_int_shelf_config.c:581
+#: src/bin/e_int_shelf_config.c:126
 msgid "Below Windows"
 msgstr "Sous les fenêtres"
 
-#: src/bin/e_int_shelf_config.c:583
+#: src/bin/e_int_shelf_config.c:128
 msgid "Below Everything"
 msgstr "En dessous de tout"
 
-#: src/bin/e_int_shelf_config.c:585
+#: src/bin/e_int_shelf_config.c:130
 msgid "Allow windows to overlap the shelf"
 msgstr "Autoriser les fenêtres à recouvrir ce rack"
 
-#: src/bin/e_int_shelf_config.c:632
+#: src/bin/e_int_shelf_config.c:175
 msgid "Shrink to Content Size"
 msgstr "Redimensionner à la taille du contenu"
 
-#: src/bin/e_int_shelf_config.c:643
+#: src/bin/e_int_shelf_config.c:183
 #, c-format
 msgid "%3.0f pixels"
 msgstr "%3.0f pixels"
 
-#: src/bin/e_int_shelf_config.c:648
-msgid "Styles"
-msgstr "Styles"
+#: src/bin/e_int_shelf_config.c:194
+msgid "Set Contents..."
+msgstr "Définir le contenu…"
 
-#: src/bin/e_int_shelf_config.c:688
-msgid "Auto Hide"
-msgstr "Auto-masquage"
+#: src/bin/e_int_shelf_config.c:197
+#: src/modules/conf_fonts/e_int_config_fonts.c:628
+msgid "Style"
+msgstr "Style"
 
-#: src/bin/e_int_shelf_config.c:689
+#: src/bin/e_int_shelf_config.c:203
 msgid "Auto-hide the shelf"
 msgstr "Auto-masquage du rack"
 
-#: src/bin/e_int_shelf_config.c:693
+#: src/bin/e_int_shelf_config.c:208
 msgid "Show on mouse in"
 msgstr "Afficher au passage de la souris"
 
-#: src/bin/e_int_shelf_config.c:697
+#: src/bin/e_int_shelf_config.c:212
 msgid "Show on mouse click"
 msgstr "Afficher avec un clic de souris"
 
-#: src/bin/e_int_shelf_config.c:701
+#: src/bin/e_int_shelf_config.c:217
 msgid "Hide timeout"
 msgstr "Délai avant masquage"
 
-#: src/bin/e_int_shelf_config.c:705
-#: src/bin/e_int_shelf_config.c:714
+#: src/bin/e_int_shelf_config.c:221
+#: src/bin/e_int_shelf_config.c:231
 #, c-format
 msgid "%.1f seconds"
 msgstr "%.1f secondes"
 
-#: src/bin/e_int_shelf_config.c:710
+#: src/bin/e_int_shelf_config.c:227
 msgid "Hide duration"
 msgstr "Vitesse du masquage"
 
-#: src/bin/e_int_shelf_config.c:726
+#: src/bin/e_int_shelf_config.c:236
+msgid "Auto Hide"
+msgstr "Auto-masquage"
+
+#: src/bin/e_int_shelf_config.c:242
 msgid "Show on all Desktops"
 msgstr "Afficher sur tous les bureaux"
 
-#: src/bin/e_int_shelf_config.c:728
+#: src/bin/e_int_shelf_config.c:244
 msgid "Show on specified Desktops"
 msgstr "Afficher sur les bureaux spécifiés"
 
@@ -3161,21 +3126,25 @@ msgstr "Options de remplissage et d'étirage"
 
 #: src/bin/e_utils.c:1195
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:173
+#: src/modules/everything-wallpaper/e_mod_main.c:120
 msgid "Stretch"
 msgstr "Étirer"
 
 #: src/bin/e_utils.c:1196
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:178
+#: src/modules/everything-wallpaper/e_mod_main.c:122
 msgid "Center"
 msgstr "Centrer"
 
 #: src/bin/e_utils.c:1198
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:188
+#: src/modules/everything-wallpaper/e_mod_main.c:126
 msgid "Within"
 msgstr "Contenir"
 
 #: src/bin/e_utils.c:1199
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:193
+#: src/modules/everything-wallpaper/e_mod_main.c:128
 msgid "Fill"
 msgstr "Remplir"
 
@@ -3196,7 +3165,7 @@ msgid "%3.0f%%"
 msgstr "%3.0f%%"
 
 #: src/bin/e_widget_config_list.c:63
-#: src/modules/conf_applications/e_int_config_apps.c:204
+#: src/modules/conf_applications/e_int_config_apps.c:207
 #: src/modules/conf_profiles/e_int_config_profiles.c:135
 #: src/modules/conf_shelves/e_int_config_shelf.c:79
 #: src/modules/ibar/e_mod_config.c:110
@@ -3204,17 +3173,17 @@ msgid "Add"
 msgstr "Ajouter"
 
 #: src/bin/e_widget_config_list.c:69
-#: src/modules/conf_applications/e_int_config_apps.c:208
+#: src/modules/conf_applications/e_int_config_apps.c:211
 msgid "Remove"
 msgstr "Supprimer"
 
 #: src/bin/e_widget_config_list.c:83
-#: src/modules/conf_applications/e_int_config_apps.c:220
+#: src/modules/conf_applications/e_int_config_apps.c:223
 msgid "Up"
 msgstr "Monter"
 
 #: src/bin/e_widget_config_list.c:89
-#: src/modules/conf_applications/e_int_config_apps.c:224
+#: src/modules/conf_applications/e_int_config_apps.c:227
 msgid "Down"
 msgstr "Descendre"
 
@@ -3414,27 +3383,27 @@ msgstr "Modes"
 msgid "Configuration Panel Configuration Updated"
 msgstr "Configuration de Panneau de configuration actualisée"
 
-#: src/modules/conf_applications/e_int_config_apps.c:68
-#: src/modules/conf_applications/e_int_config_apps.c:82
+#: src/modules/conf_applications/e_int_config_apps.c:70
+#: src/modules/conf_applications/e_int_config_apps.c:84
 #: src/modules/conf_applications/e_mod_main.c:24
 msgid "IBar Applications"
 msgstr "Applications dans l'IBar"
 
-#: src/modules/conf_applications/e_int_config_apps.c:97
+#: src/modules/conf_applications/e_int_config_apps.c:99
 #: src/modules/conf_applications/e_mod_main.c:26
 msgid "Startup Applications"
 msgstr "Applications au démarrage"
 
-#: src/modules/conf_applications/e_int_config_apps.c:112
+#: src/modules/conf_applications/e_int_config_apps.c:114
 #: src/modules/conf_applications/e_mod_main.c:25
 msgid "Restart Applications"
 msgstr "Applications à redémarrer"
 
-#: src/modules/conf_applications/e_int_config_apps.c:212
+#: src/modules/conf_applications/e_int_config_apps.c:215
 msgid "Selection"
 msgstr "Sélection"
 
-#: src/modules/conf_applications/e_int_config_apps.c:228
+#: src/modules/conf_applications/e_int_config_apps.c:231
 msgid "Order"
 msgstr "Ordre"
 
@@ -3929,6 +3898,8 @@ msgstr "Afficher sur la zone d'écran ..."
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:192
 #: src/modules/conf_mouse/e_int_config_mouse.c:115
 #: src/modules/conf_mouse/e_int_config_mouse.c:121
+#: src/modules/everything/evry_config.c:315
+#: src/modules/everything/evry_config.c:322
 #: src/modules/fileman/e_mod_config.c:230
 #, c-format
 msgid "%1.0f"
@@ -4006,6 +3977,7 @@ msgid "Wrap desktops around when flipping"
 msgstr "Mise en boucle des bureaux adjacents"
 
 #: src/modules/conf_desks/e_int_config_desks.c:288
+#: src/modules/everything/evry_config.c:253
 msgid "Off"
 msgstr "Aucune"
 
@@ -4061,6 +4033,8 @@ msgstr "Paramétrage des boîtes de dialogue"
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:109
 #: src/modules/conf_engine/e_int_config_engine.c:94
 #: src/modules/conf_fonts/e_int_config_fonts.c:649
+#: src/modules/everything/evry_config.c:239
+#: src/modules/everything/evry_config.c:308
 #: src/modules/ibox/e_mod_config.c:99
 #: src/modules/mixer/conf_gadget.c:187
 #: src/modules/mixer/conf_module.c:89
@@ -4407,6 +4381,8 @@ msgstr "Vitesse"
 #: src/modules/conf_winlist/e_int_config_winlist.c:479
 #: src/modules/conf_winlist/e_int_config_winlist.c:490
 #: src/modules/conf_winlist/e_int_config_winlist.c:495
+#: src/modules/everything/evry_config.c:331
+#: src/modules/everything/evry_config.c:338
 #, c-format
 msgid "%1.2f"
 msgstr "%1.2f"
@@ -4582,6 +4558,15 @@ msgstr "Typebuf"
 msgid "Desktop Icon"
 msgstr "Icone de bureau"
 
+#: src/modules/conf_fonts/e_int_config_fonts.c:100
+#: src/modules/conf_fonts/e_int_config_fonts.c:259
+msgid "Small"
+msgstr "Petit"
+
+#: src/modules/conf_fonts/e_int_config_fonts.c:102
+msgid "Large"
+msgstr "Grand"
+
 #: src/modules/conf_fonts/e_int_config_fonts.c:103
 msgid "Small Styled"
 msgstr "Style petit"
@@ -4598,6 +4583,10 @@ msgstr "Style gras"
 msgid "Font Settings"
 msgstr "Paramétrage des polices"
 
+#: src/modules/conf_fonts/e_int_config_fonts.c:253
+msgid "Tiny"
+msgstr "Minuscule"
+
 #: src/modules/conf_fonts/e_int_config_fonts.c:271
 msgid "Big"
 msgstr "Gros"
@@ -4605,6 +4594,10 @@ msgstr "Gros"
 #: src/modules/conf_fonts/e_int_config_fonts.c:277
 msgid "Really Big"
 msgstr "Très gros"
+
+#: src/modules/conf_fonts/e_int_config_fonts.c:283
+msgid "Huge"
+msgstr "Énorme"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:292
 #, c-format
@@ -4637,10 +4630,6 @@ msgstr "Activer la classe de police"
 msgid "Font"
 msgstr "Police"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:628
-msgid "Style"
-msgstr "Style"
-
 #: src/modules/conf_fonts/e_int_config_fonts.c:645
 msgid "Advanced Preview Text.. 我真的会写中文"
 msgstr "Aperçu avancé du texte : 我真的会写中文"
@@ -4654,8 +4643,8 @@ msgid "Bytecode"
 msgstr "Bytecode"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:660
-#: src/modules/cpufreq/e_mod_main.c:227
-#: src/modules/cpufreq/e_mod_main.c:261
+#: src/modules/cpufreq/e_mod_main.c:226
+#: src/modules/cpufreq/e_mod_main.c:260
 msgid "Automatic"
 msgstr "Automatique"
 
@@ -5529,12 +5518,14 @@ msgstr "Options de remplissage"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:167
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:155
+#: src/modules/everything/evry_config.c:336
 #: src/modules/gadman/e_mod_gadman.c:731
 msgid "Horizontal"
 msgstr "Horizontal"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:172
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:157
+#: src/modules/everything/evry_config.c:329
 #: src/modules/gadman/e_mod_gadman.c:739
 msgid "Vertical"
 msgstr "Vertical"
@@ -5564,6 +5555,7 @@ msgid "Wallpaper settings..."
 msgstr "Paramétrage du fond d'écran…"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:183
+#: src/modules/everything-wallpaper/e_mod_main.c:124
 msgid "Tile"
 msgstr "Répéter"
 
@@ -5572,10 +5564,12 @@ msgid "Select a Picture..."
 msgstr "Choisir une image…"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:627
+#: src/modules/everything-wallpaper/e_mod_main.c:432
 msgid "Picture Import Error"
 msgstr "Erreur lors de l'importation du fichier"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:628
+#: src/modules/everything-wallpaper/e_mod_main.c:433
 msgid "Enlightenment was unable to import the picture<br>due to conversion errors."
 msgstr "Enlightenment n'a pu importer l'image<br>à cause d'erreurs de conversion."
 
@@ -5632,7 +5626,7 @@ msgstr "Positionnement intelligent"
 #: src/modules/conf_window_display/e_int_config_window_display.c:193
 #: src/modules/conf_window_display/e_int_config_window_display.c:261
 msgid "Don't hide Gadgets"
-msgstr "Ne pas cacher les gadgets"
+msgstr "Ne pas masquer les gadgets"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:196
 #: src/modules/conf_window_display/e_int_config_window_display.c:263
@@ -6051,96 +6045,96 @@ msgstr "Hauteur minimale"
 msgid "Maximum height"
 msgstr "Hauteur maximale"
 
-#: src/modules/cpufreq/e_mod_main.c:135
+#: src/modules/cpufreq/e_mod_main.c:134
 msgid "Cpufreq"
 msgstr "FréqCPU"
 
-#: src/modules/cpufreq/e_mod_main.c:182
+#: src/modules/cpufreq/e_mod_main.c:180
 msgid "Fast (4 ticks)"
 msgstr "Rapide (4 tics)"
 
-#: src/modules/cpufreq/e_mod_main.c:189
+#: src/modules/cpufreq/e_mod_main.c:187
 msgid "Medium (8 ticks)"
 msgstr "Moyenne (8 tics)"
 
-#: src/modules/cpufreq/e_mod_main.c:196
+#: src/modules/cpufreq/e_mod_main.c:194
 msgid "Normal (32 ticks)"
 msgstr "Normale (32 tics)"
 
-#: src/modules/cpufreq/e_mod_main.c:203
+#: src/modules/cpufreq/e_mod_main.c:201
 msgid "Slow (64 ticks)"
 msgstr "Lente (64 tics)"
 
-#: src/modules/cpufreq/e_mod_main.c:210
+#: src/modules/cpufreq/e_mod_main.c:208
 msgid "Very Slow (256 ticks)"
 msgstr "Très lente (256 tics)"
 
-#: src/modules/cpufreq/e_mod_main.c:225
+#: src/modules/cpufreq/e_mod_main.c:224
 msgid "Manual"
 msgstr "Manuel"
 
-#: src/modules/cpufreq/e_mod_main.c:229
-#: src/modules/cpufreq/e_mod_main.c:263
+#: src/modules/cpufreq/e_mod_main.c:228
+#: src/modules/cpufreq/e_mod_main.c:262
 msgid "Lower Power Automatic"
 msgstr "Basse consommation automatique"
 
-#: src/modules/cpufreq/e_mod_main.c:231
-#: src/modules/cpufreq/e_mod_main.c:265
+#: src/modules/cpufreq/e_mod_main.c:230
+#: src/modules/cpufreq/e_mod_main.c:264
 msgid "Minimum Speed"
 msgstr "Vitesse minimale"
 
-#: src/modules/cpufreq/e_mod_main.c:233
-#: src/modules/cpufreq/e_mod_main.c:267
+#: src/modules/cpufreq/e_mod_main.c:232
+#: src/modules/cpufreq/e_mod_main.c:266
 msgid "Maximum Speed"
 msgstr "Vitesse maximale"
 
-#: src/modules/cpufreq/e_mod_main.c:244
+#: src/modules/cpufreq/e_mod_main.c:243
 msgid "Restore CPU Power Policy"
 msgstr "Restaurer la politique CPU"
 
-#: src/modules/cpufreq/e_mod_main.c:252
+#: src/modules/cpufreq/e_mod_main.c:251
 msgid "Powersaving policy"
 msgstr "Politique de la gestion de l'énergie"
 
-#: src/modules/cpufreq/e_mod_main.c:280
+#: src/modules/cpufreq/e_mod_main.c:279
 msgid "Automatic powersaving"
 msgstr "Gestion de l'énergie automatique"
 
-#: src/modules/cpufreq/e_mod_main.c:299
+#: src/modules/cpufreq/e_mod_main.c:298
 #, c-format
 msgid "%i MHz"
 msgstr "%i MHz"
 
-#: src/modules/cpufreq/e_mod_main.c:301
+#: src/modules/cpufreq/e_mod_main.c:300
 #, c-format
 msgid "%i.%i GHz"
 msgstr "%i,%i GHz"
 
-#: src/modules/cpufreq/e_mod_main.c:318
+#: src/modules/cpufreq/e_mod_main.c:317
 msgid "Time Between Updates"
 msgstr "Périodicité des mises à jour"
 
-#: src/modules/cpufreq/e_mod_main.c:324
+#: src/modules/cpufreq/e_mod_main.c:323
 msgid "Set CPU Power Policy"
 msgstr "Définir la politique de consommation du CPU"
 
-#: src/modules/cpufreq/e_mod_main.c:331
+#: src/modules/cpufreq/e_mod_main.c:330
 msgid "Set CPU Speed"
 msgstr "Fixer la vitesse du CPU"
 
-#: src/modules/cpufreq/e_mod_main.c:337
+#: src/modules/cpufreq/e_mod_main.c:336
 msgid "Powersaving behavior"
 msgstr "Comportement de la gestion de l'énergie"
 
-#: src/modules/cpufreq/e_mod_main.c:386
+#: src/modules/cpufreq/e_mod_main.c:390
 msgid "There was an error trying to set the<br>cpu frequency governor via the module's<br>setfreq utility."
 msgstr "Une erreur s'est produite lors de la tentative<br> de changement de fréquence du CPU<br>via l'utilitaire setfreq du module."
 
-#: src/modules/cpufreq/e_mod_main.c:412
+#: src/modules/cpufreq/e_mod_main.c:418
 msgid "Your kernel does not support setting the<br>CPU frequency at all. You may be missing<br>Kernel modules or features, or your CPU<br>simply does not support this feature."
 msgstr "Votre noyau ne supporte pas le changement<br> de fréquence. Vous l'avez peut-être compilé sans cette option,<br>ou votre CPU ne supporte pas cette fonctionnalité ?"
 
-#: src/modules/cpufreq/e_mod_main.c:436
+#: src/modules/cpufreq/e_mod_main.c:444
 msgid "There was an error trying to set the<br>cpu frequency setting via the module's<br>setfreq utility."
 msgstr "Une erreur s'est produite lors de la tentative<br>de changement de fréquence du CPU<br>via l'utilitaire setfreq du module."
 
@@ -6175,6 +6169,10 @@ msgstr "Très flou"
 #: src/modules/dropshadow/e_mod_config.c:124
 msgid "Fuzzy"
 msgstr "Flou"
+
+#: src/modules/dropshadow/e_mod_config.c:126
+msgid "Medium"
+msgstr "Moyen"
 
 #: src/modules/dropshadow/e_mod_config.c:128
 msgid "Sharp"
@@ -6236,6 +6234,147 @@ msgstr "Très claire"
 msgid "Dropshadow"
 msgstr "Ombre portée"
 
+#: src/modules/everything/e_mod_main.c:83
+#: src/modules/everything/e_mod_main.c:135
+msgid "Show Everything Dialog"
+msgstr "Afficher la boîte de dialogue d'Omni"
+
+#: src/modules/everything/e_mod_main.c:95
+#: src/modules/everything/e_mod_main.c:351
+msgid "Run Everything"
+msgstr "Omni"
+
+#: src/modules/everything/evry.c:98
+msgid "Select Action"
+msgstr "Choisir une action"
+
+#: src/modules/everything/evry_config.c:56
+msgid "Everything Settings"
+msgstr "Paramétrage d'Omni"
+
+#: src/modules/everything/evry_config.c:241
+msgid "Hide input when inactive"
+msgstr "Masquer l'entrée quand inactif"
+
+#: src/modules/everything/evry_config.c:245
+msgid "Hide list"
+msgstr "Masquer la liste"
+
+#: src/modules/everything/evry_config.c:249
+msgid "Quick Navigation"
+msgstr "Navigation rapide"
+
+#: src/modules/everything/evry_config.c:255
+msgid "Emacs style (ALT + n,p,f,b,m,i)"
+msgstr "Style Emacs (Alt + n,p,f,b,m,i)"
+
+#: src/modules/everything/evry_config.c:257
+msgid "Vi style (ALT + h,j,k,l,n,p,m,i)"
+msgstr "Style VI (Alt + h,j,k,l,n,p,m,i)"
+
+#: src/modules/everything/evry_config.c:261
+msgid "Default View"
+msgstr "Affichage par défaut"
+
+#: src/modules/everything/evry_config.c:270
+msgid "Animate scrolling"
+msgstr "Défilement animé"
+
+#: src/modules/everything/evry_config.c:273
+#, c-format
+msgid "%1.1f"
+msgstr "%1.1f"
+
+#: src/modules/everything/evry_config.c:277
+msgid "Up/Down select next item in icon view"
+msgstr "Flèche haut/bas passe à l'élément suivant dans l'affichage en icones"
+
+#: src/modules/everything/evry_config.c:282
+msgid "History Sort"
+msgstr "Tri de l'historique"
+
+#: src/modules/everything/evry_config.c:295
+msgid "Commands"
+msgstr "Commandes"
+
+#: src/modules/everything/evry_config.c:296
+msgid "Terminal Command"
+msgstr "Commande du terminal"
+
+#: src/modules/everything/evry_config.c:301
+msgid "Sudo GUI"
+msgstr "Interface graphique sudo"
+
+#: src/modules/everything/evry_config.c:312
+msgid "Popup Size"
+msgstr "Taille du pop-up"
+
+#: src/modules/everything/evry_config.c:313
+msgid "Popup Width"
+msgstr "Largeur du pop-up"
+
+#: src/modules/everything/evry_config.c:320
+msgid "Popup Height"
+msgstr "Hauteur du pop-up"
+
+#: src/modules/everything/evry_config.c:328
+msgid "Popup Align"
+msgstr "alignement du pop-up"
+
+#: src/modules/everything/evry_config.c:350
+msgid "Position / Size"
+msgstr "Position/Taille"
+
+#: src/modules/everything/evry_config.c:354
+#: src/modules/everything/evry_config.c:376
+#: src/modules/everything/evry_config.c:396
+msgid "Active Plugins"
+msgstr "Greffons actifs"
+
+#: src/modules/everything/evry_config.c:360
+#: src/modules/everything/evry_config.c:381
+#: src/modules/everything/evry_config.c:401
+msgid "Move Up"
+msgstr "Monter"
+
+#: src/modules/everything/evry_config.c:365
+#: src/modules/everything/evry_config.c:386
+#: src/modules/everything/evry_config.c:406
+msgid "Move Down"
+msgstr "Descendre"
+
+#: src/modules/everything/evry_config.c:371
+msgid "Subject Plugins"
+msgstr "Greffons sujets"
+
+#: src/modules/everything/evry_config.c:392
+msgid "Action Plugins"
+msgstr "Greffons actions"
+
+#: src/modules/everything/evry_config.c:413
+msgid "Object Plugins"
+msgstr "Greffons objets"
+
+#: src/modules/everything-wallpaper/e_mod_main.c:105
+msgid "Set as Wallpaper"
+msgstr "Utiliser comme fond d'écran"
+
+#: src/modules/everything-windows/e_mod_main.c:381
+msgid "Switch to Window"
+msgstr "Aller vers la fenêtre"
+
+#: src/modules/everything-windows/e_mod_main.c:386
+msgid "Send to Deskop"
+msgstr "Envoyer sur le bureau"
+
+#: src/modules/everything-windows/e_mod_main.c:391
+msgid "Uniconify"
+msgstr "Restaurer"
+
+#: src/modules/everything-windows/e_mod_main.c:404
+msgid "Unfullscreen"
+msgstr "Sortir du plein écran"
+
 #: src/modules/exebuf/e_mod_main.c:34
 #: src/modules/exebuf/e_mod_main.c:55
 msgid "Run Command Dialog"
@@ -6296,7 +6435,7 @@ msgstr "Utiliser des critères de sélection alternatifs"
 
 #: src/modules/fileman/e_mod_config.c:255
 msgid "Show Icon Extension"
-msgstr "Montrer l'extension de l'icone"
+msgstr "Montrer l'extension des icones"
 
 #: src/modules/fileman/e_mod_config.c:258
 msgid "Show Full Path"
@@ -6518,7 +6657,7 @@ msgstr "Ajouter un autre gadget"
 #: src/modules/gadman/e_mod_main.c:84
 #: src/modules/gadman/e_mod_main.c:120
 msgid "Show/hide gadgets"
-msgstr "Afficher/Cacher les gadgets"
+msgstr "Afficher/Masquer les gadgets"
 
 #: src/modules/winlist/e_mod_main.c:34
 #: src/modules/winlist/e_mod_main.c:36
@@ -7061,7 +7200,7 @@ msgstr "O.K."
 #: src/modules/connman/e_mod_main.c:528
 #: src/modules/connman/e_mod_main.c:541
 msgid "Disconnect from network service."
-msgstr "Se déconnecter du service réseau."
+msgstr "Déconnecté du service réseau."
 
 #: src/modules/connman/e_mod_main.c:571
 #: src/modules/connman/e_mod_main.c:630
@@ -7073,7 +7212,7 @@ msgstr "Le service n'existe plus."
 #: src/modules/connman/e_mod_main.c:584
 #: src/modules/connman/e_mod_main.c:611
 msgid "Connect to network service."
-msgstr "Se connecter au service réseau."
+msgstr "Connecté au service réseau."
 
 #: src/modules/connman/e_mod_main.c:676
 msgid "Could not set service's passphrase"
@@ -7106,7 +7245,7 @@ msgstr "Non connecté"
 #: src/modules/connman/e_mod_main.c:1373
 #: src/modules/connman/e_mod_main.c:1779
 msgid "disconnect"
-msgstr "déconnecter"
+msgstr "déconnecté"
 
 #: src/modules/connman/e_mod_main.c:1396
 msgid "Unknown Name"
@@ -7172,6 +7311,14 @@ msgstr "Il y a déjà une zone de notification active et seule une instance de c
 msgid "Systray"
 msgstr "Zone de notification"
 
+#~ msgid "Description: Unavailable"
+#~ msgstr "Description : non disponible"
+#~ msgid "More than one gadget selected."
+#~ msgstr "Plus d'un gadget sélectionné."
+#~ msgid "No gadget selected."
+#~ msgstr "Aucun gadget sélectionné."
+#~ msgid "Styles"
+#~ msgstr "Styles"
 #~ msgid "Selected Gadgets"
 #~ msgstr "Gadgets sélectionnés"
 #~ msgid "Fast"
@@ -7208,8 +7355,6 @@ msgstr "Zone de notification"
 #~ msgstr "Analyse des fichiers desktop terminée"
 #~ msgid "Desktop file scan"
 #~ msgstr "Analyse des fichiers desktop"
-#~ msgid "Popup Settings"
-#~ msgstr "Paramétrage du pop-up"
 #~ msgid "Basic Settings"
 #~ msgstr "Paramètres basiques"
 #~ msgid "Maximum Number of Matched Apps to List"
@@ -7222,8 +7367,6 @@ msgstr "Zone de notification"
 #~ msgstr "Animer le défilement"
 #~ msgid "Scroll Speed"
 #~ msgstr "Vitesse du défilement"
-#~ msgid "Terminal Settings"
-#~ msgstr "Paramétrage du terminal"
 #~ msgid "Size Settings"
 #~ msgstr "Paramétrage des dimensions"
 #~ msgid "Position Settings"
@@ -7256,8 +7399,6 @@ msgstr "Zone de notification"
 #~ msgstr "Couleurs des composants graphiques"
 #~ msgid "Module Colors"
 #~ msgstr "Couleurs des modules"
-#~ msgid "Object Color"
-#~ msgstr "Couleur de l'objet"
 #~ msgid "Outline Color"
 #~ msgstr "Couleur de la bordure"
 #~ msgid "Defaults"
@@ -7494,8 +7635,6 @@ msgstr "Zone de notification"
 #~ msgstr "Profil complet"
 #~ msgid "Clone Current Profile"
 #~ msgstr "Copier le profil courant"
-#~ msgid "Defined Command"
-#~ msgstr "Commande définie"
 #~ msgid "Exit Immediately"
 #~ msgstr "Quitter immédiatement"
 #~ msgid "Shutting down of your system failed."

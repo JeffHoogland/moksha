@@ -2,6 +2,8 @@
 Type=Link
 Name=Everything Files
 Name[it]=Pannello di esecuzione - File
+Name[fr]=Omni - Fichiers
 Icon=e-module
 X-Enlightenment-ModuleType=everything
 Comment[it]=Azioni sui file.
+Comment[fr]=Actions sur les fichiers.
