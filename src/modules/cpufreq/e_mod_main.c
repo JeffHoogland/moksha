@@ -63,6 +63,7 @@ static void _cpufreq_menu_powersave_governor(void *data, E_Menu *m, E_Menu_Item 
 static void _cpufreq_menu_frequency(void *data, E_Menu *m, E_Menu_Item *mi);
 
 static E_Config_DD *conf_edd = NULL;
+static char idbuff[PATH_MAX];
 
 Config *cpufreq_config = NULL;
 
@@ -150,12 +151,9 @@ _gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas)
 static const char *
 _gc_id_new(E_Gadcon_Client_Class *client_class)
 {
-   char buff[1024];
-
-   snprintf(buff, sizeof(buff), "%s.%d", _gadcon_class.name, 
+   snprintf(idbuff, sizeof(idbuff), "%s.%d", _gadcon_class.name, 
             eina_list_count(cpufreq_config->instances));
-   /* TODO: Fix leak!!!! Func returns const char. */
-   return strdup(buff);
+   return idbuff;
 }
 
 static void
