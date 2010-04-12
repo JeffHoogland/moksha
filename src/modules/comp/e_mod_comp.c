@@ -958,6 +958,8 @@ _e_mod_comp_win_shadow_setup(E_Comp_Win *cw)
      {
         if (_e_mod_comp_win_do_shadow(cw))
           edje_object_signal_emit(cw->shobj, "e,state,shadow,on", "e");
+        else
+          edje_object_signal_emit(cw->shobj, "e,state,shadow,off", "e");
      }
    if (cw->bd)
      {
