@@ -111,11 +111,11 @@ _gc_icon(E_Gadcon_Client_Class *cc, Evas *evas)
 static const char *
 _gc_id_new(E_Gadcon_Client_Class *cc) 
 {
-   char buff[PATH_MAX];
+   static char buff[32];
 
    snprintf(buff, sizeof(buff), "%s.%d", _gc_class.name, 
             eina_list_count(instances));
-   return strdup(buff);
+   return buff;
 }
 
 static int 
