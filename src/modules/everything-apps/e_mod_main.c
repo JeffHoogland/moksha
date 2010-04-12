@@ -223,11 +223,7 @@ _cleanup(Evry_Plugin *plugin)
 	  free(str);
      }
    
-   if (p->app_command)
-     evry_item_free(EVRY_ITEM(p->app_command));
    p->app_command = NULL;
-   if (p->app_parameter)
-     evry_item_free(EVRY_ITEM(p->app_parameter));
    p->app_parameter = NULL;
 
 }
@@ -501,6 +497,9 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	  _add_desktop_list(p, p->apps_hist, NULL);
      }
 
+   int found_app = 0;
+   int found_cmd = 0;
+   
    /* add executables */
    if (input && len > 3)
      {
@@ -514,91 +513,131 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	  {
 	     if (!strncmp(file, input, len))
 	       {
-		  if ((app = _item_add(p, NULL, file, 100)))
-		    {
-		       Evry_Item_App *app2;
-		       
-		       if (!app->desktop) continue;
+		  if (!(app = _item_add(p, NULL, file, 100)))
+		    continue;
 
-		       if (!space) continue;
-		       
-		       if (!(EVRY_ITEM(app)->selected ||
-			     EVRY_ITEM(p->app_parameter)->selected))
-			 continue;
-
-		       if (!p->app_parameter)
-			 {
-			    app2 = E_NEW(Evry_Item_App, 1);
-			    snprintf(buf, sizeof(buf), "%s: %s",  app->desktop->name, space);
-			    evry_item_new(EVRY_ITEM(app2), EVRY_PLUGIN(p), buf, _item_free);
-			    
-			    app2->desktop = app->desktop;
-			    efreet_desktop_ref(app2->desktop);
-			    
-			    app2->file = eina_stringshare_add(space);
-
-			    EVRY_ITEM(app2)->transient = 1;
-			    EVRY_ITEM(app2)->priority = -1;
-			    EVRY_PLUGIN_ITEM_APPEND(p, app2);
-			    p->app_parameter = app2;
-			 }
-		       else
-			 {
-			    Evry_Event_Item_Changed *ev;
-			    app2 = p->app_parameter;
-			    efreet_desktop_free(app2->desktop);
-			    eina_stringshare_del(app2->file);
-			    eina_stringshare_del(EVRY_ITEM(app2)->label);
-			    
-			    snprintf(buf, sizeof(buf), "%s: %s",  app->desktop->name, space);
-			    EVRY_ITEM(app2)->label = eina_stringshare_add(buf);
-			    
-			    app2->desktop = app->desktop;
-			    efreet_desktop_ref(app2->desktop);
-
-			    app2->file = eina_stringshare_add(space);
-			    
-			    if (!eina_list_data_find(p->base.items, app2))
-			      EVRY_PLUGIN_ITEM_APPEND(p, app2);
-
-			    ev = E_NEW(Evry_Event_Item_Changed, 1);
-			    evry_item_ref(EVRY_ITEM(app2));
-			    ev->item = EVRY_ITEM(app2);
-			    ecore_event_add(EVRY_EVENT_ITEM_CHANGED, ev, _cb_free_item_changed, NULL); 
-			 }
-		    }
-		  
-		  if (!p->app_command)
-		    {
-		       app = E_NEW(Evry_Item_App, 1);
-
-		       snprintf(buf, sizeof(buf), "%s %s", file, space);
-		       evry_item_new(EVRY_ITEM(app), EVRY_PLUGIN(p), buf, _item_free);
-		       EVRY_ITEM(app)->id = eina_stringshare_add(input);
-		       EVRY_ITEM(app)->transient = 1;
-		       EVRY_ITEM(app)->priority = -1;
-		       EVRY_PLUGIN_ITEM_APPEND(p, app);
-		       p->app_command = app;
-		    }
-		  else
+		  if ((space) && (app->desktop))
 		    {
 		       Evry_Event_Item_Changed *ev;
-		       app = p->app_command;
-		       eina_stringshare_del(EVRY_ITEM(app)->label);
-		       snprintf(buf, sizeof(buf), "%s %s", file, space);
+		       Evry_Item_App *app2;
+		       
+		       /* restore old desktop entry */
+		       if (p->app_parameter)
+			 {
+			    app2 = p->app_parameter;
+			    eina_stringshare_del(app2->file);
+			    app2->file = NULL;
+			    eina_stringshare_del(EVRY_ITEM(app2)->label);
+
+			    if (p->app_parameter != app)
+			      {
+				 
+				 EVRY_ITEM(app2)->label = eina_stringshare_add(app2->desktop->name);
+				 EVRY_ITEM(app2)->transient = 0;
+			      }
+			 }
+
+		       if (p->app_parameter != app)
+			 eina_stringshare_del(EVRY_ITEM(app)->label);
+
+		       p->app_parameter = app;
+
+		       snprintf(buf, sizeof(buf), "%s: %s",  app->desktop->name, space);
 		       EVRY_ITEM(app)->label = eina_stringshare_add(buf);
-		       eina_stringshare_del(app->file);
-		       app->file = eina_stringshare_add(input);
+
+		       snprintf(buf, sizeof(buf), "%s %s",  file, space);
+		       app->file = eina_stringshare_add(buf);
+
 		       if (!eina_list_data_find(p->base.items, app))
 			 EVRY_PLUGIN_ITEM_APPEND(p, app);
 
+		       EVRY_ITEM(app)->transient = 1;
+		       
 		       ev = E_NEW(Evry_Event_Item_Changed, 1);
 		       evry_item_ref(EVRY_ITEM(app));
 		       ev->item = EVRY_ITEM(app);
-		       ecore_event_add(EVRY_EVENT_ITEM_CHANGED, ev, _cb_free_item_changed, NULL); 
+		       ecore_event_add(EVRY_EVENT_ITEM_CHANGED, ev, _cb_free_item_changed, NULL);
+		       found_app = 1;
+		    }
+
+		  if (space)
+		    {
+		       Evry_Event_Item_Changed *ev;
+		       Evry_Item_App *app2;
+
+		       if (app->desktop)
+			 {
+			    snprintf(buf, sizeof(buf), "_%s_", file);
+			    app = _item_add(p, NULL, buf, 100);
+			      
+			    if (!app) continue;
+			    
+			    if (app && !app->file)
+			      {
+				 eina_hash_del_by_data(p->added, app);
+				 continue;
+			      }
+			 }
+		       
+		       /* restore old desktop entry */
+		       if (p->app_command)
+			 {
+			    app2 = p->app_command;
+			    eina_stringshare_del(app2->file);
+			    app2->file = NULL;
+			    eina_stringshare_del(EVRY_ITEM(app2)->label);
+
+			    if (p->app_command != app)
+			      {
+				 EVRY_ITEM(app2)->label = eina_stringshare_add(file);
+				 EVRY_ITEM(app2)->transient = 0;
+			      }
+			 }
+
+		       if (p->app_command != app)
+			 eina_stringshare_del(EVRY_ITEM(app)->label);
+
+		       p->app_command = app;
+
+		       snprintf(buf, sizeof(buf), "%s %s", file, space);
+		       EVRY_ITEM(app)->label = eina_stringshare_add(buf);
+		       
+		       app->file = eina_stringshare_add(buf);
+
+		       if (!eina_list_data_find(p->base.items, app))
+			 EVRY_PLUGIN_ITEM_APPEND(p, app);
+
+		       EVRY_ITEM(app)->transient = 1;
+		       
+		       ev = E_NEW(Evry_Event_Item_Changed, 1);
+		       evry_item_ref(EVRY_ITEM(app));
+		       ev->item = EVRY_ITEM(app);
+		       ecore_event_add(EVRY_EVENT_ITEM_CHANGED, ev, _cb_free_item_changed, NULL);
+		       found_cmd = 1;
+
+		       break;
 		    }
 	       }
 	  }
+     }
+
+   if (!found_app && p->app_parameter)
+     {
+	/* restore old desktop entry */
+	Evry_Item_App *app2;
+	app2 = p->app_parameter;
+	eina_stringshare_del(app2->file);
+	app2->file = NULL;
+	eina_stringshare_del(EVRY_ITEM(app2)->label);
+	EVRY_ITEM(app2)->label = eina_stringshare_add(app2->desktop->name);
+	EVRY_ITEM(app2)->transient = 0;
+	p->app_parameter = NULL;
+     }
+   
+   if (!found_cmd && p->app_command)
+     {
+	eina_hash_del_by_data(p->added, p->app_command); 
+	p->app_command = NULL;
      }
 
    if (!plugin->items) return 0;
@@ -611,7 +650,9 @@ _fetch(Evry_Plugin *plugin, const char *input)
    else
      {
 	EINA_LIST_FOREACH(plugin->items, l, it)
-	  evry_history_item_usage_set(evry_hist->subjects, it, input, NULL); 
+	  {
+	     evry_history_item_usage_set(evry_hist->subjects, it, input, NULL);
+	  }
      }
    
    if (plugin->type != type_action || input)
