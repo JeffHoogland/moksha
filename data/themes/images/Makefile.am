@@ -188,6 +188,7 @@ icon_efm_view.png \
 icon_efm_vol_unmounted.png \
 icon_efm_vol_mounted.png \
 icon_efm_usbmedia.png \
+icon_evry_clipboard.png \
 icon_engine.png \
 icon_extensions.png \
 icon_favorites.png \

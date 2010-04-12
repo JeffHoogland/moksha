@@ -29385,6 +29385,7 @@ collections {
    /* End of FreeDesktop.Org icons */
    //E Specific icons
    ICON("everything-launch","icon_advanced.png",64)
+   ICON("everything-clipboard","icon_evry_clipboard.png", 256)
    //EFM Mime icons
    ICONMIME("inode/chardevice","icon_efm_file.png",128)
    ICONMIME("inode/blockdevice","icon_efm_file.png",128)
