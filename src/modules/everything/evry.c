@@ -348,6 +348,7 @@ evry_item_free(Evry_Item *it)
    if (it->label) eina_stringshare_del(it->label);
    if (it->id) eina_stringshare_del(it->id);
    if (it->context) eina_stringshare_del(it->context);
+   if (it->detail) eina_stringshare_del(it->detail);
 
    if (it->free)
      it->free(it);

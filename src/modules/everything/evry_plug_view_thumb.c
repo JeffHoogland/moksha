@@ -6,6 +6,14 @@ typedef struct _View View;
 typedef struct _Smart_Data Smart_Data;
 typedef struct _Item Item;
 
+#define MODE_LIST   0
+#define MODE_DETAIL 1
+#define MODE_THUMB  2
+
+#define SIZE_LIST 30
+#define SIZE_DETAIL 38
+
+
 struct _View
 {
   Evry_View view;
@@ -18,7 +26,7 @@ struct _View
   Evas_Object *bg, *sframe, *span;
   int          iw, ih;
   int          zoom;
-  int         list_mode;
+  int         mode;
 
   Eina_List *handlers;
 };
@@ -45,6 +53,8 @@ struct _Smart_Data
   double scroll_align;
   double scroll_align_to;
   Ecore_Animator *animator;
+
+  double last_select;
 };
 
 struct _Item
@@ -177,33 +187,42 @@ _e_smart_reconfigure_do(void *data)
    aspect_w = sd->w;
    aspect_h = sd->h;
 
-   if (sd->view->list_mode)
+   if (sd->view->mode == MODE_LIST)
      {
 	iw = sd->w;
+	hh = SIZE_LIST;
      }
-   else if (sd->view->zoom == 0)
-     {
-	int cnt = eina_list_count(sd->items);
-
-	aspect_w *= 3;
-	aspect_w /= 4;
-
-	if (cnt < 3)
-	  iw = (double)sd->w / 2.5;
-	else if (cnt < 7)
-	  iw = sd->w / 3;
-	else
-	  iw = sd->w / 4;
-     }
-   else if (sd->view->zoom == 1)
-     {
-	aspect_w *= 2;
-	aspect_w /= 3;
-	iw = sd->w / 3;
-     }
-   else /* if (sd->zoom == 2) */
+   else if (sd->view->mode == MODE_DETAIL)
      {
 	iw = sd->w;
+	hh = SIZE_DETAIL;
+     }
+   else
+     {
+	if (sd->view->zoom == 0)
+	  {
+	     int cnt = eina_list_count(sd->items);
+
+	     aspect_w *= 3;
+	     aspect_w /= 4;
+
+	     if (cnt < 3)
+	       iw = (double)sd->w / 2.5;
+	     else if (cnt < 7)
+	       iw = sd->w / 3;
+	     else
+	       iw = sd->w / 4;
+	  }
+	else if (sd->view->zoom == 1)
+	  {
+	     aspect_w *= 2;
+	     aspect_w /= 3;
+	     iw = sd->w / 3;
+	  }
+	else /* if (sd->zoom == 2) */
+	  {
+	     iw = sd->w;
+	  }
      }
 
    if (aspect_w <= 0) aspect_w = 1;
@@ -212,9 +231,8 @@ _e_smart_reconfigure_do(void *data)
    x = 0;
    y = 0;
    ww = iw;
-   if (sd->view->list_mode)
-     hh = 32;
-   else
+
+   if (sd->view->mode == MODE_THUMB)
      hh = (aspect_h * iw) / (aspect_w);
 
    mw = mh = 0;
@@ -236,16 +254,14 @@ _e_smart_reconfigure_do(void *data)
         x += ww;
      }
 
-   if (sd->view->list_mode)
-     mh += sd->h % 32;
+   if (sd->view->mode == MODE_LIST ||
+       sd->view->mode == MODE_DETAIL)
+     mh += sd->h % hh;
 
    if ((mw != sd->cw) || (mh != sd->ch))
      {
         sd->cw = mw;
         sd->ch = mh;
-
-	/* if (sd->view->list_mode)
-	 *   sd->ch += sd->h % 32; */
 
         if (sd->cx > (sd->cw - sd->w))
           {
@@ -289,10 +305,13 @@ _e_smart_reconfigure_do(void *data)
 	return 0;
      }
 
-   if (!sd->view->list_mode)
+   if (sd->view->mode == MODE_THUMB)
      {
 	if (sd->w > sd->cw) ox = (sd->w - sd->cw) / 2;
 	if (sd->h > sd->ch) oy = (sd->h - sd->ch) / 2;
+
+	if (sd->selector)
+	  evas_object_hide(sd->selector);
      }
    else
      {
@@ -329,18 +348,29 @@ _e_smart_reconfigure_do(void *data)
 		  if (!it->frame)
 		    {
 		       it->frame = edje_object_add(sd->view->evas);
-		       if (sd->view->list_mode)
-			 e_theme_edje_object_set(it->frame, "base/theme/widgets",
-						 "e/modules/everything/thumbview/item/list");
+		       if (sd->view->mode == MODE_THUMB)
+			 {
+			    e_theme_edje_object_set(it->frame, "base/theme/widgets",
+						    "e/modules/everything/thumbview/item/thumb");
+			 }
 		       else
-			 e_theme_edje_object_set(it->frame, "base/theme/widgets",
-						 "e/modules/everything/thumbview/item/thumb");
+			 {
+			    e_theme_edje_object_set(it->frame, "base/theme/widgets",
+						 "e/modules/everything/thumbview/item/list");
 
+			    if (sd->view->mode == MODE_DETAIL)
+			      edje_object_signal_emit(it->frame, "e,state,detail,show", "e");
+			 }
+		       
 		       evas_object_smart_member_add(it->frame, obj);
 		       evas_object_clip_set(it->frame, evas_object_clip_get(obj));
 		    }
 
 		  edje_object_part_text_set(it->frame, "e.text.label", it->item->label);
+
+		  if (sd->view->mode == MODE_DETAIL && it->item->detail)
+		    edje_object_part_text_set(it->frame, "e.text.detail", it->item->detail);
+		  
 		  evas_object_show(it->frame);
 
 		  if (it->changed)
@@ -605,7 +635,7 @@ _animator(void *data)
 {
    Smart_Data *sd = evas_object_smart_data_get(data);
    double da;
-   double spd = 50.0 / e_config->framerate;
+   double spd = 55.0 / e_config->framerate;
    int wait = 0;
 
    if (sd->scroll_align != sd->scroll_align_to)
@@ -648,7 +678,8 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
    Smart_Data *sd = evas_object_smart_data_get(obj);
    double align = -1;
    int prev = -1;
-
+   int align_to = -1;
+   
    if (sd->cur_item)
      {
 	prev = sd->cur_item->y / sd->cur_item->h;
@@ -665,15 +696,13 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
    sd->cur_item = it;
    sd->cur_item->selected = EINA_TRUE;
 
-   e_scrollframe_child_pos_get(sd->view->sframe, 0, (Evas_Coord *)&sd->scroll_align);
-
-   if (sd->view->list_mode)
+   if (sd->view->mode == MODE_LIST ||
+       sd->view->mode == MODE_DETAIL)
      {
 	int all  = sd->ch / it->h;
 	int rows = (sd->h < sd->ch) ? (sd->h / it->h) : all;
 	int cur  = it->y /it->h;
 	int dist = rows/2;
-	int align_to = -1;
 	int scroll = (prev > 0 ? cur - prev : 0);
 
 	if (scroll >= 0)
@@ -718,18 +747,6 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
 	       }
 	  }
 
-	if (align_to >= 0)
-	  {
-	     if (!evry_conf->scroll_animate)
-	       {
-		  sd->sel_pos = align_to * it->h;
-	       }
-	     else
-	       {
-		  sd->sel_pos_to = align_to * it->h;
-	       }
-	  }
-
 	align *= it->h;
      }
    else
@@ -743,19 +760,41 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
 	  align = it->y;
      }
 
-   if (align >= 0)
+   if (evry_conf->scroll_animate)
      {
-	if (!scroll || !evry_conf->scroll_animate)
+	double now = ecore_time_get();
+	
+	if (now - sd->last_select < 0.05)
+	  scroll = 0;
+	
+	sd->last_select = now;
+     }
+   else scroll = 0;
+   
+   if (!scroll)
+     {
+	if (align_to >= 0) 
+	  sd->sel_pos = align_to * it->h;
+
+	if (align >= 0)
 	  {
 	     sd->scroll_align = align;
 	     e_scrollframe_child_pos_set(sd->view->sframe, 0, sd->scroll_align);
 	  }
-	else
-	  {
-	     sd->scroll_align_to = align;
-	     if (!sd->animator)
-	       sd->animator = ecore_animator_add(_animator, obj);
-	  }
+	if (sd->animator)
+	  ecore_animator_del(sd->animator);
+	sd->animator = NULL;
+     }
+   else
+     {
+	if (align_to >= 0)
+	  sd->sel_pos_to = align_to * it->h;
+
+	if (align >= 0)
+	  sd->scroll_align_to = align;
+	     
+	if (!sd->animator)
+	  sd->animator = ecore_animator_add(_animator, obj);
      }
 
    if (sd->idle_enter) ecore_idle_enterer_del(sd->idle_enter);
@@ -842,7 +881,7 @@ _update_frame(Evas_Object *obj)
 
    _e_smart_reconfigure_do(obj);
 
-   if (sd->view->list_mode)
+   if (sd->view->mode)
      {
 	evas_object_show(sd->selector);
 	edje_object_signal_emit(sd->selector, "e,state,selected", "e");
@@ -999,7 +1038,11 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
    if ((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
        (!strcmp(ev->key, "2")))
      {
-	v->list_mode = v->list_mode ? EINA_FALSE : EINA_TRUE;
+	if (v->mode == MODE_LIST)
+	  v->mode = MODE_DETAIL;
+	else
+	  v->mode = MODE_LIST;
+	  
 	v->zoom = 0;
 	_clear_items(v->span);
 	_update_frame(v->span);
@@ -1009,11 +1052,19 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
        ((!strcmp(ev->key, "plus")) ||
 	(!strcmp(ev->key, "3"))))
      {
-	v->zoom++;
-	if (v->zoom > 2) v->zoom = 0;
-	if (v->zoom == 2)
-	  _clear_items(v->span);
-
+	if (v->mode != MODE_THUMB)
+	  {
+	     v->zoom = 0;
+	     v->mode = MODE_THUMB;
+	     _clear_items(v->span);
+	  }
+	else
+	  {
+	     v->zoom++;
+	     if (v->zoom > 2) v->zoom = 0;	     
+	     if (v->zoom == 2)
+	       _clear_items(v->span);	     
+	  }
 	_update_frame(v->span);
 	goto end;
      }
@@ -1027,7 +1078,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
    if (sd->items)
      l = eina_list_data_find_list(sd->items, sd->cur_item);
 
-   if (!v->list_mode && !evry_conf->cycle_mode)
+   if (!v->mode && !evry_conf->cycle_mode)
      {
 	if (!strcmp(ev->key, "Right"))
 	  {
@@ -1108,7 +1159,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
      }
    else if (!strcmp(ev->key, "Return"))
      {
-	if (!v->list_mode)
+	if (!v->mode)
 	  {
 	     if (evry_browse_item(NULL))
 	       goto end;
@@ -1175,10 +1226,10 @@ _view_create(Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
    v->state = s;
    v->evas = evas_object_evas_get(swallow);
 
-   if (parent->list_mode < 0)
-     v->list_mode = evry_conf->view_mode ? 0 : 1;
+   if (parent->mode < 0)
+     v->mode = evry_conf->view_mode;
    else
-     v->list_mode = parent->list_mode;
+     v->mode = parent->mode;
 
    v->zoom = parent->zoom;
 
@@ -1245,7 +1296,7 @@ view_thumb_init(void)
    v->view.update = &_view_update;
    v->view.clear = &_view_clear;
    v->view.cb_key_down = &_cb_key_down;
-   v->list_mode = -1;
+   v->mode = -1;
 
    evry_view_register(EVRY_VIEW(v), 1);
 

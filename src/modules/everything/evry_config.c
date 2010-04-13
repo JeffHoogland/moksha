@@ -261,10 +261,10 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    of = e_widget_framelist_add(evas, _("Default View"), 0);
    rg = e_widget_radio_group_new(&cfdata->view_mode); 
    ob = e_widget_radio_add(evas, "List", 0, rg);
-   e_widget_radio_toggle_set(ob, (cfdata->view_mode == 0));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, "Icons", 1, rg);
-   e_widget_radio_toggle_set(ob, (cfdata->view_mode == 1));
+   ob = e_widget_radio_add(evas, "Detailed", 1, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, "Icons", 2, rg);
    e_widget_framelist_object_append(of, ob);
 
    ob = e_widget_check_add(evas, _("Animate scrolling"),

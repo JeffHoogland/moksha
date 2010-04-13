@@ -216,7 +216,7 @@ evry_history_add(Eina_Hash *hist, Evry_State *s, const char *ctxt)
    if (!s) return;
 
    it = s->cur_item;
-   if (!it) return;
+   if (!it || it->no_history) return;
 
    id = (it->id ? it->id : it->label);
 
@@ -253,6 +253,7 @@ evry_history_add(Eina_Hash *hist, Evry_State *s, const char *ctxt)
 
 	if (s->input)
 	  {
+
 	     if (hi->input)
 	       eina_stringshare_del(hi->input);
 
@@ -268,8 +269,10 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, c
    History_Item *hi;
    Eina_List *l;
 
+   if (it->no_history)
+     return 0;
+   
    it->usage = 0.0;
-
    if (!(he = eina_hash_find(hist, (it->id ? it->id : it->label))))
      return 0;
    
@@ -280,6 +283,12 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, c
 	if (ctxt != hi->context)
 	  continue;
 
+	if (it->plugin->type == type_action)
+	  {
+	     if (hi->last_used > it->usage)
+	       it->usage = hi->last_used;
+	  }
+	
 	if (evry_conf->history_sort_mode == 0)
 	  {
 	     
@@ -311,7 +320,8 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, c
 	  }
 	else if (evry_conf->history_sort_mode == 2)
 	  {
-	     it->usage = hi->last_used;
+	     if (hi->last_used > it->usage)
+	       it->usage = hi->last_used;
 	  }
      }
    

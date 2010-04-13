@@ -98,8 +98,13 @@ struct _Evry_Item
 {
   /* label to show for this item */
   const char *label;
-  const char *icon;
 
+  /**/
+  const char *detail;
+  
+  /* for 'static' fdo icon name, otherwise use _icon_get */
+  const char *icon;
+  
   /* context provided by item. e.g. to remember which action
    * was performed on a file with a specific mimetype */
   const char *context;
@@ -118,14 +123,18 @@ struct _Evry_Item
   /* store value of fuzzy match with input */
   int fuzzy_match;
 
-  /* optional: plugin can set id to identify
+
+  /*** HISTORY
+   * optional: plugin can set id to identify
    * it in history otherwise label is used */
   const char *id;
-
-  /* if transient item is removed from history
-   * on shutdown */
+  
+  /* if transient item is removed from history on shutdown */
   Eina_Bool transient;
 
+  /* ignores completely from usage statistic */
+  Eina_Bool no_history;
+  
   /* do not set by plugin! */
   Evry_Item   *next;
   Evry_Plugin *plugin;
@@ -193,6 +202,9 @@ struct _Evry_Plugin
   /* whether the plugin uses evry_async_update to add new
      items. default is FALSE */
   Eina_Bool async_fetch;
+
+  /* TODO request list-view */
+  Eina_Bool show_list_view;
   
   /* not to be set by plugin! */
   Plugin_Config *config;

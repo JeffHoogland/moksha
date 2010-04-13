@@ -303,11 +303,16 @@ _item_add(Plugin *p, Efreet_Desktop *desktop, const char *file, int match)
      {
 	evry_item_new(EVRY_ITEM(app), EVRY_PLUGIN(p), desktop->name, _item_free);
 	EVRY_ITEM(app)->id = eina_stringshare_add(desktop->exec);
+	if (desktop->comment)
+	  EVRY_ITEM(app)->detail = eina_stringshare_add(desktop->comment);
+	else if (desktop->generic_name)
+	  EVRY_ITEM(app)->detail = eina_stringshare_add(desktop->generic_name);
      }
    else
      {
 	evry_item_new(EVRY_ITEM(app), EVRY_PLUGIN(p), file, _item_free);
 	EVRY_ITEM(app)->id = eina_stringshare_add(file);
+	/* EVRY_ITEM(app)->detail = eina_stringshare_add(file);	 */
      }
    
    app->desktop = desktop;
@@ -501,7 +506,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
    int found_cmd = 0;
    
    /* add executables */
-   if (input && len > 3)
+   if (input && len > 2)
      {
 	char *space;
 	Evry_Item_App *app;
