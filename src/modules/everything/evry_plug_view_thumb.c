@@ -760,16 +760,16 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
 	  align = it->y;
      }
 
-   if (evry_conf->scroll_animate)
-     {
-	double now = ecore_time_get();
-	
-	if (now - sd->last_select < 0.05)
-	  scroll = 0;
-	
-	sd->last_select = now;
-     }
-   else scroll = 0;
+   /* if (evry_conf->scroll_animate)
+    *   {
+    * 	double now = ecore_time_get();
+    * 	
+    * 	if (now - sd->last_select < 0.05)
+    * 	  scroll = 0;
+    * 	
+    * 	sd->last_select = now;
+    *   }
+    * else scroll = 0; */
    
    if (!scroll)
      {
@@ -1078,7 +1078,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
    if (sd->items)
      l = eina_list_data_find_list(sd->items, sd->cur_item);
 
-   if (!v->mode && !evry_conf->cycle_mode)
+   if (v->mode == MODE_THUMB && !evry_conf->cycle_mode)
      {
 	if (!strcmp(ev->key, "Right"))
 	  {
