@@ -698,7 +698,7 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
 		  align = 0;
 		  align_to = cur;
 	       }
-	     else if ((all >= rows) && (all - cur < rows))
+	     else if ((all >= rows) && (all - cur <= rows - dist))
 	       {
 		  /* step up end */
 		  align = (cur - dist);
