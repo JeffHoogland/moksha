@@ -162,10 +162,6 @@ _thumb_idler(void *data)
    return 0;
 }
 
-static void
-_pan_item_select(Evas_Object *obj, Item *it, int scroll);
-
-
 static int
 _e_smart_reconfigure_do(void *data)
 {
@@ -635,7 +631,7 @@ _animator(void *data)
 {
    Smart_Data *sd = evas_object_smart_data_get(data);
    double da;
-   double spd = 55.0 / e_config->framerate;
+   double spd = 25.0 / e_config->framerate;
    int wait = 0;
 
    if (sd->scroll_align != sd->scroll_align_to)
@@ -695,6 +691,22 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
 
    sd->cur_item = it;
    sd->cur_item->selected = EINA_TRUE;
+
+   if (evry_conf->scroll_animate)
+     {
+   	double now = ecore_time_get();
+
+   	if (now - sd->last_select < 0.05)
+	  {
+	     sd->scroll_align = sd->scroll_align_to;
+	     sd->sel_pos = sd->sel_pos_to;
+
+	     scroll = 0;
+	  }
+
+   	sd->last_select = now;
+     }
+   else scroll = 0;
 
    if (sd->view->mode == MODE_LIST ||
        sd->view->mode == MODE_DETAIL)
@@ -760,17 +772,6 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
 	  align = it->y;
      }
 
-   /* if (evry_conf->scroll_animate)
-    *   {
-    * 	double now = ecore_time_get();
-    *
-    * 	if (now - sd->last_select < 0.05)
-    * 	  scroll = 0;
-    *
-    * 	sd->last_select = now;
-    *   }
-    * else scroll = 0; */
-
    if (!scroll || !evry_conf->scroll_animate)
      {
 	if (align_to >= 0)
@@ -797,7 +798,7 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
 	  sd->animator = ecore_animator_add(_animator, obj);
      }
 
-   _e_smart_reconfigure(obj); 
+   _e_smart_reconfigure(obj);
 }
 
 static void
@@ -850,7 +851,7 @@ _view_clear(Evry_View *view)
 	E_FREE(it);
      }
 
-   _e_smart_reconfigure(v->span); 
+   _e_smart_reconfigure(v->span);
 
    v->tabs->clear(v->tabs);
 }
