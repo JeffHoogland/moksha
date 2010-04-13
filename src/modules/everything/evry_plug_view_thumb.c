@@ -361,7 +361,7 @@ _e_smart_reconfigure_do(void *data)
 			    if (sd->view->mode == MODE_DETAIL)
 			      edje_object_signal_emit(it->frame, "e,state,detail,show", "e");
 			 }
-		       
+
 		       evas_object_smart_member_add(it->frame, obj);
 		       evas_object_clip_set(it->frame, evas_object_clip_get(obj));
 		    }
@@ -370,7 +370,7 @@ _e_smart_reconfigure_do(void *data)
 
 		  if (sd->view->mode == MODE_DETAIL && it->item->detail)
 		    edje_object_part_text_set(it->frame, "e.text.detail", it->item->detail);
-		  
+
 		  evas_object_show(it->frame);
 
 		  if (it->changed)
@@ -679,7 +679,7 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
    double align = -1;
    int prev = -1;
    int align_to = -1;
-   
+
    if (sd->cur_item)
      {
 	prev = sd->cur_item->y / sd->cur_item->h;
@@ -763,17 +763,17 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
    /* if (evry_conf->scroll_animate)
     *   {
     * 	double now = ecore_time_get();
-    * 	
+    *
     * 	if (now - sd->last_select < 0.05)
     * 	  scroll = 0;
-    * 	
+    *
     * 	sd->last_select = now;
     *   }
     * else scroll = 0; */
-   
-   if (!scroll)
+
+   if (!scroll || !evry_conf->scroll_animate)
      {
-	if (align_to >= 0) 
+	if (align_to >= 0)
 	  sd->sel_pos = align_to * it->h;
 
 	if (align >= 0)
@@ -792,13 +792,12 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
 
 	if (align >= 0)
 	  sd->scroll_align_to = align;
-	     
+
 	if (!sd->animator)
 	  sd->animator = ecore_animator_add(_animator, obj);
      }
 
-   if (sd->idle_enter) ecore_idle_enterer_del(sd->idle_enter);
-   sd->idle_enter = ecore_idle_enterer_before_add(_e_smart_reconfigure_do, obj);
+   _e_smart_reconfigure(obj); 
 }
 
 static void
@@ -851,8 +850,7 @@ _view_clear(Evry_View *view)
 	E_FREE(it);
      }
 
-   if (sd->idle_enter) ecore_idle_enterer_del(sd->idle_enter);
-   sd->idle_enter = ecore_idle_enterer_before_add(_e_smart_reconfigure_do, v->span);
+   _e_smart_reconfigure(v->span); 
 
    v->tabs->clear(v->tabs);
 }
@@ -1042,7 +1040,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 	  v->mode = MODE_DETAIL;
 	else
 	  v->mode = MODE_LIST;
-	  
+
 	v->zoom = 0;
 	_clear_items(v->span);
 	_update_frame(v->span);
@@ -1061,9 +1059,9 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 	else
 	  {
 	     v->zoom++;
-	     if (v->zoom > 2) v->zoom = 0;	     
+	     if (v->zoom > 2) v->zoom = 0;
 	     if (v->zoom == 2)
-	       _clear_items(v->span);	     
+	       _clear_items(v->span);
 	  }
 	_update_frame(v->span);
 	goto end;
@@ -1073,6 +1071,27 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
      {
 	_view_update(view);
 	return 1;
+     }
+
+   if ((ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT) &&
+       (!strcmp(ev->key, "Up")))
+     {
+	if (!sd->items) goto end;
+	it = sd->items->data;
+
+	_pan_item_select(v->span, it, 1);
+	evry_item_select(v->state, it->item);
+	goto end;
+     }
+   else if ((ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT) &&
+	    (!strcmp(ev->key, "Down")))
+     {
+	if (!sd->items) goto end;
+
+	it = eina_list_last(sd->items)->data;
+	_pan_item_select(v->span, it, 1);
+	evry_item_select(v->state, it->item);
+	goto end;
      }
 
    if (sd->items)
