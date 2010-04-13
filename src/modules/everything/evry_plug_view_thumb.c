@@ -666,6 +666,9 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
 	int align_to = -1;
 	int scroll = (prev > 0 ? cur - prev : 0);
 
+	if (rows > all)
+	  rows = all;
+	
 	if (scroll >= 0)
 	  {
 	     if (cur <= dist || all < rows)
@@ -675,7 +678,7 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
 		  align_to = cur;
 
 	       }
-	     else if ((all > rows) && (all - cur < rows - dist))
+	     else if ((all >= rows) && (all - cur < rows - dist))
 	       {
 		  /* step down end */
 		  align = (cur - dist);
@@ -695,7 +698,7 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
 		  align = 0;
 		  align_to = cur;
 	       }
-	     else if ((all > rows) && (all - cur <= (rows - dist)))
+	     else if ((all >= rows) && (all - cur < rows))
 	       {
 		  /* step up end */
 		  align = (cur - dist);
