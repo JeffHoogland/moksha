@@ -31,20 +31,19 @@ struct _Smart_Data
   Item        *cur_item;
   Ecore_Idle_Enterer *idle_enter;
   Ecore_Idle_Enterer *thumb_idler;
-
   Evas_Coord   x, y, w, h;
   Evas_Coord   cx, cy, cw, ch;
   Evas_Coord   sx, sy;
-  Evas_Coord   sel_pos;
   Eina_Bool    update : 1;
   Eina_Bool    switch_mode : 1;
   Eina_List   *queue;
 
   Evas_Object *selector;
 
+  double sel_pos_to;
+  double sel_pos;
   double scroll_align;
   double scroll_align_to;
-  int scroll_to;
   Ecore_Animator *animator;
 };
 
@@ -312,7 +311,7 @@ _e_smart_reconfigure_do(void *data)
 	  evas_object_show(sd->selector);
 	else
 	  evas_object_hide(sd->selector);
-	
+
 	evas_object_resize(sd->selector, ww, hh);
 	evas_object_move(sd->selector, sd->x, sd->y + sd->sel_pos);
      }
@@ -604,28 +603,43 @@ _pan_item_remove(Evas_Object *obj, Item *it)
 static int
 _animator(void *data)
 {
-   Smart_Data *sd = data;
+   Smart_Data *sd = evas_object_smart_data_get(data);
+   double da;
+   double spd = 50.0 / e_config->framerate;
+   int wait = 0;
 
-   if (sd->scroll_to)
+   if (sd->scroll_align != sd->scroll_align_to)
      {
-	double da;
-
-	double spd = 30.0 / e_config->framerate;
-
 	sd->scroll_align = (sd->scroll_align * (1.0 - spd)) + (sd->scroll_align_to * spd);
 
 	da = sd->scroll_align - sd->scroll_align_to;
 	if (da < 0.0) da = -da;
-	if (da < 0.01)
-	  {
-	     sd->scroll_align = sd->scroll_align_to;
-	     sd->scroll_to = 0;
-	  }
+	if (da < 0.02)
+	  sd->scroll_align = sd->scroll_align_to;
+	else
+	  wait++;
+
 	e_scrollframe_child_pos_set(sd->view->sframe, 0, sd->scroll_align);
      }
-   if (sd->scroll_to) return 1;
+   if (sd->sel_pos != sd->sel_pos_to)
+     {
+	sd->sel_pos = (sd->sel_pos * (1.0 - spd)) + (sd->sel_pos_to * spd);
+
+	da = sd->sel_pos - sd->sel_pos_to;
+	if (da < 0.0) da = -da;
+	if (da < 0.02)
+	  sd->sel_pos = sd->sel_pos_to;
+	else
+	  wait++;
+
+	_e_smart_reconfigure(data);
+     }
+
+   if (wait) return 1;
+
    sd->animator = NULL;
    return 0;
+
 }
 
 static void
@@ -633,9 +647,6 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
 {
    Smart_Data *sd = evas_object_smart_data_get(obj);
    double align = -1;
-
-   Item *tmp;
-
    int prev = -1;
 
    if (sd->cur_item)
@@ -658,17 +669,13 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
 
    if (sd->view->list_mode)
      {
-	int rows = sd->h / it->h;
 	int all  = sd->ch / it->h;
+	int rows = (sd->h < sd->ch) ? (sd->h / it->h) : all;
 	int cur  = it->y /it->h;
-	int mid  = rows/2;
-	int dist = mid;
+	int dist = rows/2;
 	int align_to = -1;
 	int scroll = (prev > 0 ? cur - prev : 0);
 
-	if (rows > all)
-	  rows = all;
-	
 	if (scroll >= 0)
 	  {
 	     if (cur <= dist || all < rows)
@@ -692,7 +699,7 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
 	  }
 	else if (scroll < 0)
 	  {
-	     if (cur < (rows - dist))
+	     if (cur < rows - dist)
 	       {
 		  /* step up start */
 		  align = 0;
@@ -712,7 +719,16 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
 	  }
 
 	if (align_to >= 0)
-	  sd->sel_pos = align_to * it->h;
+	  {
+	     if (!evry_conf->scroll_animate)
+	       {
+		  sd->sel_pos = align_to * it->h;
+	       }
+	     else
+	       {
+		  sd->sel_pos_to = align_to * it->h;
+	       }
+	  }
 
 	align *= it->h;
      }
@@ -731,16 +747,14 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
      {
 	if (!scroll || !evry_conf->scroll_animate)
 	  {
-	     sd->scroll_align_to = align;
 	     sd->scroll_align = align;
 	     e_scrollframe_child_pos_set(sd->view->sframe, 0, sd->scroll_align);
 	  }
 	else
 	  {
 	     sd->scroll_align_to = align;
-	     sd->scroll_to = 1;
 	     if (!sd->animator)
-	       sd->animator = ecore_animator_add(_animator, sd);
+	       sd->animator = ecore_animator_add(_animator, obj);
 	  }
      }
 
