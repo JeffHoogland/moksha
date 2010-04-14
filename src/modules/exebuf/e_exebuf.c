@@ -1304,11 +1304,11 @@ _e_exebuf_hist_update(Eina_List *hist_matches)
 	if (found)
 	  {
 	     exe->desktop = found;
-	     edje_object_part_text_set(o, "e.text.title", desktop->name);
+	     edje_object_part_text_set(o, "e.text.title", exe->desktop->name);
 
 	     if (edje_object_part_exists(exe->bg_object, "e.swallow.icons"))
 	       {
-		  o = e_util_desktop_icon_add(desktop, 24, exebuf->evas);
+		  o = e_util_desktop_icon_add(exe->desktop, 24, exebuf->evas);
 		  exe->icon_object = o;
 		  edje_object_part_swallow(exe->bg_object, "e.swallow.icons", o);
 		  evas_object_show(o);
