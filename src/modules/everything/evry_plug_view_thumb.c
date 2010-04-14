@@ -634,19 +634,6 @@ _animator(void *data)
    double spd = 25.0 / e_config->framerate;
    int wait = 0;
 
-   if (sd->scroll_align != sd->scroll_align_to)
-     {
-	sd->scroll_align = (sd->scroll_align * (1.0 - spd)) + (sd->scroll_align_to * spd);
-
-	da = sd->scroll_align - sd->scroll_align_to;
-	if (da < 0.0) da = -da;
-	if (da < 0.02)
-	  sd->scroll_align = sd->scroll_align_to;
-	else
-	  wait++;
-
-	e_scrollframe_child_pos_set(sd->view->sframe, 0, sd->scroll_align);
-     }
    if (sd->sel_pos != sd->sel_pos_to)
      {
 	sd->sel_pos = (sd->sel_pos * (1.0 - spd)) + (sd->sel_pos_to * spd);
@@ -659,6 +646,20 @@ _animator(void *data)
 	  wait++;
 
 	_e_smart_reconfigure(data);
+     }
+
+   if (sd->scroll_align != sd->scroll_align_to)
+     {
+	sd->scroll_align = (sd->scroll_align * (1.0 - spd)) + (sd->scroll_align_to * spd);
+
+	da = sd->scroll_align - sd->scroll_align_to;
+	if (da < 0.0) da = -da;
+	if (da < 0.02)
+	  sd->scroll_align = sd->scroll_align_to;
+	else
+	  wait++;
+
+	e_scrollframe_child_pos_set(sd->view->sframe, 0, sd->scroll_align);
      }
 
    if (wait) return 1;
@@ -696,10 +697,9 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
      {
    	double now = ecore_time_get();
 
-   	if (now - sd->last_select < 0.05)
+   	if (now - sd->last_select < 0.05 && sd->sel_pos == sd->sel_pos_to)
 	  {
 	     sd->scroll_align = sd->scroll_align_to;
-	     sd->sel_pos = sd->sel_pos_to;
 
 	     scroll = 0;
 	  }
@@ -776,7 +776,6 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
      {
 	if (align_to >= 0)
 	  sd->sel_pos = align_to * it->h;
-
 	if (align >= 0)
 	  {
 	     sd->scroll_align = align;

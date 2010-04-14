@@ -3,6 +3,34 @@
 #define MAX_FUZZ 100
 #define MAX_WORDS 5
 
+static const char  *home_dir = NULL;
+static int home_dir_len;
+static char dir_buf[1024];
+
+EAPI void
+evry_util_file_detail_set(Evry_Item_File *file)
+{
+   const char *path;
+
+   if (!home_dir)
+     {
+	home_dir = e_user_homedir_get();
+	home_dir_len = strlen(home_dir);
+     }
+   
+   if (!EVRY_ITEM(file)->browseable)
+     path = ecore_file_dir_get(file->path);
+   else
+     path = file->path;
+	  
+   if (path && !strncmp(path, home_dir, home_dir_len))
+     {
+	snprintf(dir_buf, sizeof(dir_buf), "~%s", path + home_dir_len);
+	EVRY_ITEM(file)->detail = eina_stringshare_add(dir_buf);
+     }
+   else
+     EVRY_ITEM(file)->detail = eina_stringshare_add(path);
+}
 
 EAPI int
 evry_fuzzy_match(const char *str, const char *match)

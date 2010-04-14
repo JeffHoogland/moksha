@@ -42,8 +42,6 @@ static Evry_Action *act1 = NULL;
 static Evry_Action *act2 = NULL;
 
 static const char *mime_folder = NULL;
-static  char  *home_dir;
-static int home_dir_len;
 
   
 static void
@@ -209,7 +207,7 @@ _scan_end_func(void *data)
    int cnt = 0;
    Evry_Item *item;
    char *filename, *path;
-   char buf[1024];
+
    p->thread = NULL;
    
    EINA_LIST_FREE(d->files, item)
@@ -231,22 +229,11 @@ _scan_end_func(void *data)
 	     file->mime = eina_stringshare_ref(mime_folder);
 	     EVRY_ITEM(file)->context = eina_stringshare_ref(file->mime);
 	  }
+
+	evry_util_file_detail_set(file);
 	
 	if (p->command || cnt >= MAX_ITEMS) continue;
 	if (!file->mime) _item_fill(file);
-
-	if (!item->browseable)
-	  path = ecore_file_dir_get(file->path);
-	else
-	  path = file->path;
-	  
-	if (path && !strncmp(path, home_dir, home_dir_len))
-	  {
-	     snprintf(buf, sizeof(buf), "~%s", path + home_dir_len);
-	     EVRY_ITEM(file)->detail = eina_stringshare_add(buf);
-	  }
-	else
-	  EVRY_ITEM(file)->detail = eina_stringshare_ref(file->path);
 
 	cnt += _append_file(p, file);
      }
@@ -564,8 +551,6 @@ e_modapi_init(E_Module *m)
      active = module_init();
 
    mime_folder = eina_stringshare_add("inode/directory");
-   home_dir = e_user_homedir_get();
-   home_dir_len = strlen(home_dir);
    
    e_module_delayed_set(m, 1); 
    

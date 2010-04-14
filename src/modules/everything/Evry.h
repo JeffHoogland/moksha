@@ -370,7 +370,7 @@ EAPI int  evry_fuzzy_match(const char *str, const char *match);
 EAPI Eina_List *evry_fuzzy_match_sort(Eina_List *items);
 EAPI int evry_util_exec_app(const Evry_Item *it_app, const Evry_Item *it_file);
 EAPI char *evry_util_unescape(const char *string, int length);
-
+EAPI void evry_util_file_detail_set(Evry_Item_File *file);
 
 /* e_mod_main.c */
 EAPI void evry_plugin_register(Evry_Plugin *p, int priority);
