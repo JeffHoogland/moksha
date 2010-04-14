@@ -362,8 +362,9 @@ evry_util_exec_app(const Evry_Item *it_app, const Evry_Item *it_file)
 	  }
 	else if (app->file)
 	  {
-	     exe = (char *) app->file;
-	     e_exec(zone, NULL, exe, NULL, NULL);
+	     files = eina_list_append(files, app->file);
+	     e_exec(zone, app->desktop, NULL, files, NULL);
+	     eina_list_free(files);
 	  }
 	else
 	  {

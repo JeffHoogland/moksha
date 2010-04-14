@@ -231,8 +231,10 @@ module_init(void)
 
    p1 = evry_plugin_new(NULL, "Calculator", type_subject, NULL, "TEXT", 1, "accessories-calculator", "=",
 			_begin, _cleanup, _fetch, _action, NULL, NULL);
-
+   
+   p1->view_mode = VIEW_MODE_LIST;
    p1->aggregate = EINA_FALSE;
+   p1->history =   EINA_FALSE;
    
    evry_plugin_register(p1, 0);
 

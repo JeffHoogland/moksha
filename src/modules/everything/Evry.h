@@ -14,6 +14,10 @@
 #define EVRY_ASYNC_UPDATE_CLEAR 1
 #define EVRY_ASYNC_UPDATE_REFRESH 2
 
+#define VIEW_MODE_LIST   0
+#define VIEW_MODE_DETAIL 1
+#define VIEW_MODE_THUMB  2
+
 extern int _e_module_evry_log_dom;
 
 #ifndef EINA_LOG_DEFAULT_COLOR
@@ -99,44 +103,35 @@ struct _Evry_Item
   /* label to show for this item */
   const char *label;
 
-  /**/
+  /* optional: more information to be shown */
   const char *detail;
   
-  /* for 'static' fdo icon name, otherwise use _icon_get */
+  /* optional: for 'static' fdo icon name, otherwise use _icon_get */
   const char *icon;
   
-  /* context provided by item. e.g. to remember which action
-   * was performed on a file with a specific mimetype */
-  const char *context;
-
   /* item can be browsed, e.g. folders */
   Eina_Bool browseable;
 
-  Eina_Bool selected;
-
-  /* for internally use by plugins */
+  /* optional: for internally use by plugins */
   void *data;
 
-  /* priority hints for sorting */
+  /* optional: priority hints for sorting */
   int priority;
 
-  /* store value of fuzzy match with input */
+  /* optional: store value of fuzzy match with input */
   int fuzzy_match;
 
-
-  /*** HISTORY
-   * optional: plugin can set id to identify
+  /* optional: plugin can set id to identify
    * it in history otherwise label is used */
   const char *id;
-  
-  /* if transient item is removed from history on shutdown */
-  Eina_Bool transient;
 
-  /* ignores completely from usage statistic */
-  Eina_Bool no_history;
-  
+  /* optional: context provided by item. e.g. to remember which action
+   * was performed on a file with a specific mimetype */
+  const char *context;
+
   /* do not set by plugin! */
   Evry_Item   *next;
+  Eina_Bool    selected;
   Evry_Plugin *plugin;
   int ref;
   void (*free) (Evry_Item *item);
@@ -157,7 +152,6 @@ struct _Evry_Item_File
   const char *path;
   const char *mime;
 };
-
 
 struct _Evry_Plugin
 {
@@ -184,27 +178,36 @@ struct _Evry_Plugin
   /* run when state is removed in which this plugin is active */
   void (*cleanup) (Evry_Plugin *p);
 
+  /* get an icon for an item. will be freed automatically */
   Evas_Object *(*icon_get) (Evry_Plugin *p, const Evry_Item *it, Evas *e);
-  /* provide more information for a candidate */
-  /* int (*candidate_info) (Evas *evas, Evry_Item *item); */
-
+  
   /* only used when plugin is of type_action */
   int  (*action) (Evry_Plugin *p, const Evry_Item *item);
 
+  /* handle key events: return 1 when key is handled by plugin */
   int  (*cb_key_down)  (Evry_Plugin *p, const Ecore_Event_Key *ev);
 
   /* optional: use this when you extend the plugin struct */
   void (*free) (Evry_Plugin *p);
   
-  /* show in aggregator. default is TRUE */
+  /* show in aggregator */
+  /* default TRUE */
   Eina_Bool aggregate;
   
-  /* whether the plugin uses evry_async_update to add new
-     items. default is FALSE */
+  /* whether the plugin uses evry_async_update to add new items. */
+  /* default FALSE */
   Eina_Bool async_fetch;
 
-  /* TODO request list-view */
-  Eina_Bool show_list_view;
+  /* request VIEW_MODE for plugin */
+  int view_mode;
+
+  /* request items to be remembered for usage statistic */
+  /* default TRUE */
+  Eina_Bool history;
+
+  /* if transient, item is removed from history on shutdown */
+  /* default FALSE */
+  Eina_Bool transient;
   
   /* not to be set by plugin! */
   Plugin_Config *config;

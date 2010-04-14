@@ -343,6 +343,7 @@ module_init(void)
 		   NULL, _cleanup, _fetch, NULL, NULL, _free_plugin);
 
    EVRY_PLUGIN(p)->aggregate = EINA_FALSE;
+   EVRY_PLUGIN(p)->history = EINA_FALSE;
    
    evry_plugin_register(EVRY_PLUGIN(p), 100);
 

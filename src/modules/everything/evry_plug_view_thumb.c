@@ -6,10 +6,6 @@ typedef struct _View View;
 typedef struct _Smart_Data Smart_Data;
 typedef struct _Item Item;
 
-#define MODE_LIST   0
-#define MODE_DETAIL 1
-#define MODE_THUMB  2
-
 #define SIZE_LIST 30
 #define SIZE_DETAIL 38
 
@@ -183,12 +179,12 @@ _e_smart_reconfigure_do(void *data)
    aspect_w = sd->w;
    aspect_h = sd->h;
 
-   if (sd->view->mode == MODE_LIST)
+   if (sd->view->mode == VIEW_MODE_LIST)
      {
 	iw = sd->w;
 	hh = SIZE_LIST;
      }
-   else if (sd->view->mode == MODE_DETAIL)
+   else if (sd->view->mode == VIEW_MODE_DETAIL)
      {
 	iw = sd->w;
 	hh = SIZE_DETAIL;
@@ -228,7 +224,7 @@ _e_smart_reconfigure_do(void *data)
    y = 0;
    ww = iw;
 
-   if (sd->view->mode == MODE_THUMB)
+   if (sd->view->mode == VIEW_MODE_THUMB)
      hh = (aspect_h * iw) / (aspect_w);
 
    mw = mh = 0;
@@ -250,8 +246,8 @@ _e_smart_reconfigure_do(void *data)
         x += ww;
      }
 
-   if (sd->view->mode == MODE_LIST ||
-       sd->view->mode == MODE_DETAIL)
+   if (sd->view->mode == VIEW_MODE_LIST ||
+       sd->view->mode == VIEW_MODE_DETAIL)
      mh += sd->h % hh;
 
    if ((mw != sd->cw) || (mh != sd->ch))
@@ -301,7 +297,7 @@ _e_smart_reconfigure_do(void *data)
 	return 0;
      }
 
-   if (sd->view->mode == MODE_THUMB)
+   if (sd->view->mode == VIEW_MODE_THUMB)
      {
 	if (sd->w > sd->cw) ox = (sd->w - sd->cw) / 2;
 	if (sd->h > sd->ch) oy = (sd->h - sd->ch) / 2;
@@ -344,7 +340,7 @@ _e_smart_reconfigure_do(void *data)
 		  if (!it->frame)
 		    {
 		       it->frame = edje_object_add(sd->view->evas);
-		       if (sd->view->mode == MODE_THUMB)
+		       if (sd->view->mode == VIEW_MODE_THUMB)
 			 {
 			    e_theme_edje_object_set(it->frame, "base/theme/widgets",
 						    "e/modules/everything/thumbview/item/thumb");
@@ -354,7 +350,7 @@ _e_smart_reconfigure_do(void *data)
 			    e_theme_edje_object_set(it->frame, "base/theme/widgets",
 						 "e/modules/everything/thumbview/item/list");
 
-			    if (sd->view->mode == MODE_DETAIL)
+			    if (sd->view->mode == VIEW_MODE_DETAIL)
 			      edje_object_signal_emit(it->frame, "e,state,detail,show", "e");
 			 }
 
@@ -364,7 +360,7 @@ _e_smart_reconfigure_do(void *data)
 
 		  edje_object_part_text_set(it->frame, "e.text.label", it->item->label);
 
-		  if (sd->view->mode == MODE_DETAIL && it->item->detail)
+		  if (sd->view->mode == VIEW_MODE_DETAIL && it->item->detail)
 		    edje_object_part_text_set(it->frame, "e.text.detail", it->item->detail);
 
 		  evas_object_show(it->frame);
@@ -708,8 +704,8 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
      }
    else scroll = 0;
 
-   if (sd->view->mode == MODE_LIST ||
-       sd->view->mode == MODE_DETAIL)
+   if (sd->view->mode == VIEW_MODE_LIST ||
+       sd->view->mode == VIEW_MODE_DETAIL)
      {
 	int all  = sd->ch / it->h;
 	int rows = (sd->h < sd->ch) ? (sd->h / it->h) : all;
@@ -1036,10 +1032,10 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
    if ((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
        (!strcmp(ev->key, "2")))
      {
-	if (v->mode == MODE_LIST)
-	  v->mode = MODE_DETAIL;
+	if (v->mode == VIEW_MODE_LIST)
+	  v->mode = VIEW_MODE_DETAIL;
 	else
-	  v->mode = MODE_LIST;
+	  v->mode = VIEW_MODE_LIST;
 
 	v->zoom = 0;
 	_clear_items(v->span);
@@ -1050,10 +1046,10 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
        ((!strcmp(ev->key, "plus")) ||
 	(!strcmp(ev->key, "3"))))
      {
-	if (v->mode != MODE_THUMB)
+	if (v->mode != VIEW_MODE_THUMB)
 	  {
 	     v->zoom = 0;
-	     v->mode = MODE_THUMB;
+	     v->mode = VIEW_MODE_THUMB;
 	     _clear_items(v->span);
 	  }
 	else
@@ -1097,7 +1093,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
    if (sd->items)
      l = eina_list_data_find_list(sd->items, sd->cur_item);
 
-   if (v->mode == MODE_THUMB && !evry_conf->cycle_mode)
+   if (v->mode == VIEW_MODE_THUMB && !evry_conf->cycle_mode)
      {
 	if (!strcmp(ev->key, "Right"))
 	  {

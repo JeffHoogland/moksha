@@ -410,6 +410,9 @@ evry_plugin_new(Evry_Plugin *base, const char *name, int type,
    p->aggregate = EINA_TRUE;
    p->async_fetch = EINA_FALSE;
    p->free   = cb_free;
+
+   p->history = EINA_TRUE;
+   p->view_mode = -1;
    
    DBG("%s", p->name);
    

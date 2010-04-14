@@ -89,7 +89,6 @@ _item_add(Evry_Plugin *p, E_Border *bd, int match, int *prio)
    it->data = bd;
    it->fuzzy_match = match;
    it->priority = *prio;
-   it->transient = EINA_TRUE;
    it->id = eina_stringshare_add(e_util_winid_str_get(bd->win));
    
    *prio += 1;
@@ -490,6 +489,7 @@ module_init(void)
 
    plugin = evry_plugin_new(NULL, "Windows", type_subject, NULL, "BORDER", 0, NULL, NULL,
 			    _begin, _cleanup, _fetch, NULL, _item_icon_get, NULL);
+   plugin->transient = EINA_TRUE;
    evry_plugin_register(plugin, 2);
 
    

@@ -216,7 +216,7 @@ evry_history_add(Eina_Hash *hist, Evry_State *s, const char *ctxt)
    if (!s) return;
 
    it = s->cur_item;
-   if (!it || it->no_history) return;
+   if (!it || !it->plugin->history) return;
 
    id = (it->id ? it->id : it->label);
 
@@ -246,7 +246,7 @@ evry_history_add(Eina_Hash *hist, Evry_State *s, const char *ctxt)
 	hi->last_used = ecore_time_get();
 	hi->usage /= 4.0;
 	hi->usage += TIME_FACTOR(hi->last_used);
-	hi->transient = it->transient;
+	hi->transient = it->plugin->transient;
 	hi->count += (hi->transient ? 2:1);
 	if (ctxt && !hi->context)
 	  hi->context = eina_stringshare_ref(ctxt);
@@ -269,7 +269,7 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, c
    History_Item *hi;
    Eina_List *l;
 
-   if (it->no_history)
+   if (!it->plugin->history)
      return 0;
    
    it->usage = 0.0;
@@ -280,6 +280,7 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, c
      {
 	if (hi->plugin != it->plugin->name)
 	  continue;
+
 	if (ctxt != hi->context)
 	  continue;
 

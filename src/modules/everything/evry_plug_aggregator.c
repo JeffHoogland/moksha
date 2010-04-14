@@ -1,5 +1,6 @@
 #include "e_mod_main.h"
 
+#define MAX_ITEMS 100
 
 typedef struct _Plugin Plugin;
 
@@ -162,12 +163,14 @@ _fetch(Evry_Plugin *plugin, const char *input)
    	EINA_LIST_FOREACH(lp, l, pp)
    	  {
 	     if (!pp->aggregate) continue;
+	     cnt = 0;
 	     
-  	     for (cnt = 0, ll = pp->items; ll && cnt < 50; ll = ll->next, cnt++)
+	     EINA_LIST_FOREACH(pp->items, ll, it)
    	       {
-   		  if (!eina_list_data_find_list(items, ll->data))
+		  if (cnt++ == MAX_ITEMS) break;
+		    
+   		  if (!eina_list_data_find_list(items, it))
    		    {
-   		       it = ll->data;
    		       it->fuzzy_match = 0;
 		       items = _add_item(p, items, it);
    		    }
@@ -218,6 +221,14 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	EVRY_PLUGIN_ITEMS_SORT(p, _cb_sort_recent);
      }
 
+   cnt = 0;
+   EINA_LIST_FOREACH_SAFE(p->base.items, l, ll, it)
+     {
+	if (cnt++ < MAX_ITEMS) continue;
+	evry_item_free(it); 
+	p->base.items = eina_list_remove_list(p->base.items, l);
+     }
+   
    return 1;
 }
 
