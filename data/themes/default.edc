@@ -34639,7 +34639,7 @@ collections {
             signal:  "e,action,thumb,ungen";
             source:  "e";
             action:  STATE_SET "visible" 0.0;
-            transition: SINUSOIDAL 0.15;
+            /* transition: SINUSOIDAL 0.15; */
             target:  "base";
          }
          program {
@@ -34653,7 +34653,7 @@ collections {
          program {
             name: "thumb_show_delayed2";
             action:  STATE_SET "visible" 0.0;
-            transition: SINUSOIDAL 0.3;
+            /* transition: SINUSOIDAL 0.3; */
             target:  "base";
          }
          program {
