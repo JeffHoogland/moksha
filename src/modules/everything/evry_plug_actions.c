@@ -50,8 +50,9 @@ _begin(Evry_Plugin *p, const Evry_Item *it)
 	  {
 	     act->item1 = it;
 
-	     if (act->type_out && act->intercept && !(act->intercept(act)))
-	       continue;;
+	     /* FIXME where is this used ?*/
+	     /* if (act->type_out && act->intercept && !(act->intercept(act)))
+	      *   continue;; */
 
 	     sel->cur_actions = eina_list_append(sel->cur_actions, act);
 	  }
@@ -109,7 +110,7 @@ _fetch(Evry_Plugin *p, const char *input)
 
 	if (!input || match)
 	  {
-	     it = evry_item_new(NULL, p, act->name, NULL);
+	     it = evry_item_new(NULL, p, act->label, NULL);
 	     it->fuzzy_match = match;
 	     it->data = act;
 	     it->priority = act->priority;
@@ -146,8 +147,8 @@ evry_plug_actions_new(int type)
 {
    Evry_Plugin *p;
 
-   p = evry_plugin_new(NULL, action_selector, type, "", "", 0, NULL, NULL,
-		       _begin, _cleanup, _fetch, NULL, _icon_get, NULL);
+   p = evry_plugin_new(NULL, action_selector, _("Actions"), type, "", "",
+		       _begin, _cleanup, _fetch, _icon_get, NULL);
 
    evry_plugin_register(p, 2);
 

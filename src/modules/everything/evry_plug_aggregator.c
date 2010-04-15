@@ -294,9 +294,11 @@ evry_plug_aggregator_new(Evry_Selector *selector)
    Plugin_Config *pc;
 
    p = E_NEW(Plugin, 1);
-   evry_plugin_new(EVRY_PLUGIN(p), "All", 0, "", "", 0, NULL, NULL,
-		   NULL, _cleanup, _fetch, _action, _icon_get, _plugin_free);
+   EVRY_PLUGIN_NEW(EVRY_PLUGIN(p), "All", 0, "", "",
+		   NULL, _cleanup, _fetch, _icon_get, _plugin_free);
 
+   EVRY_PLUGIN(p)->action = &_action;
+     
    pc = E_NEW(Plugin_Config, 1);
    pc->enabled = 1;
    pc->priority = -1;

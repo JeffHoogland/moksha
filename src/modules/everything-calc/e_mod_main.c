@@ -229,12 +229,16 @@ module_init(void)
    if (!evry_api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
-   p1 = evry_plugin_new(NULL, "Calculator", type_subject, NULL, "TEXT", 1, "accessories-calculator", "=",
-			_begin, _cleanup, _fetch, _action, NULL, NULL);
-   
-   p1->view_mode = VIEW_MODE_LIST;
-   p1->aggregate = EINA_FALSE;
-   p1->history =   EINA_FALSE;
+   p1 = EVRY_PLUGIN_NEW(NULL, "Calculator", type_subject, NULL, "TEXT",
+			_begin, _cleanup, _fetch, NULL, NULL);
+
+   p1->view_mode   = VIEW_MODE_LIST;
+   p1->aggregate   = EINA_FALSE;
+   p1->history     = EINA_FALSE;
+   p1->async_fetch = EINA_TRUE;
+   p1->icon        = "accessories-calculator";
+   p1->trigger     = "=";
+   p1->action      = &_action;
    
    evry_plugin_register(p1, 0);
 

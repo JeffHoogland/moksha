@@ -3,8 +3,7 @@
 
 #include "e.h"
 
-#define EVRY_API_VERSION 2
-
+#define EVRY_API_VERSION 3
 
 #define EVRY_ACTION_OTHER 0
 #define EVRY_ACTION_FINISHED 1
@@ -18,6 +17,7 @@
 #define EVRY_COMPLETE_INPUT  1
 #define EVRY_COMPLETE_BROWSE 2
 
+#define VIEW_MODE_NONE  -1
 #define VIEW_MODE_LIST   0
 #define VIEW_MODE_DETAIL 1
 #define VIEW_MODE_THUMB  2
@@ -50,6 +50,7 @@ typedef struct _History Evry_History;
 typedef struct _History_Entry History_Entry;
 typedef struct _History_Item   History_Item;
 typedef struct _Config Evry_Config;
+
 
 #define EVRY_ITEM(_item) ((Evry_Item *)_item)
 #define EVRY_PLUGIN(_plugin) ((Evry_Plugin *) _plugin)
@@ -159,14 +160,26 @@ struct _Evry_Item_File
 
 struct _Evry_Plugin
 {
+  /* identifier */
   const char *name;
+
+  /* shown title */
+  const char *label;
+
+  /* provide default icon */
   const char *icon;
 
+  /* use plugin for first second or third part of an action 
+     if actions are no dynamical lists better use Evry_Action */
   enum { type_subject, type_action, type_object } type;
 
-  const char *type_in;
+  /* plugin provides items of this type */
   const char *type_out;
+  
+  /* plugin accepts this type in begin function */
+  const char *type_in;
 
+  /* show this plugin only when triggered */
   const char *trigger;
 
   /* list of items visible for everything */
@@ -240,9 +253,6 @@ struct _Evry_State
 
   Eina_List   *sel_items;
 
-  /* this is for the case when the current plugin was not selected
-     manually and a higher priority (async) plugin retrieves
-     candidates, the higher priority plugin is made current */
   Eina_Bool plugin_auto_selected;
   Eina_Bool item_auto_selected;
 
@@ -269,11 +279,15 @@ struct _Evry_View
 
 struct _Evry_Action
 {
+  /* identifier */
   const char *name;
 
+  /* shown title */
+  const char *label;
+
+  /* */
   const char *type_in1;
   const char *type_in2;
-  const char *type_out;
 
   const Evry_Item *item1;
   const Evry_Item *item2;
@@ -296,6 +310,8 @@ struct _Evry_Action
   int priority;
 };
 
+/* FIXME this should be exposed.
+   - add functions to retrieve this stuff */
 struct _Config
 {
   int version;
@@ -397,28 +413,28 @@ EAPI void evry_history_unload(void);
 EAPI void evry_history_add(Eina_Hash *hist, Evry_State *s, const char *ctxt);
 EAPI int  evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, const char *ctxt);
 
-EAPI Evry_Plugin *evry_plugin_new(Evry_Plugin *base, const char *name, int type,
+#define EVRY_PLUGIN_NEW(_base, _name, _type, _in, _out, _begin, _cleanup, _fetch, _icon_get, _free) \
+  evry_plugin_new(EVRY_PLUGIN(_base), _name, _(_name), _type, _in, _out, _begin, _cleanup, _fetch, _icon_get, _free) \
+
+EAPI Evry_Plugin *evry_plugin_new(Evry_Plugin *base, const char *name, const char *label, int type,
 				  const char *type_in, const char *type_out,
-				  int async_fetch, const char *icon, const char *trigger,
 				  Evry_Plugin *(*begin) (Evry_Plugin *p, const Evry_Item *item),
 				  void (*cleanup) (Evry_Plugin *p),
 				  int  (*fetch)   (Evry_Plugin *p, const char *input),
-				  int  (*action)  (Evry_Plugin *p, const Evry_Item *item),
 				  Evas_Object *(*icon_get) (Evry_Plugin *p, const Evry_Item *it, Evas *e),
 				  void (*free) (Evry_Plugin *p));
 
 EAPI void evry_plugin_free(Evry_Plugin *p, int free_pointer);
 
 
-EAPI Evry_Action *evry_action_new(const char *name, const char *type_in1,
-				  const char *type_in2, const char *type_out,
+#define EVRY_ACTION_NEW(_name, _in1, _in2, _icon, _action, _check)		\
+  evry_action_new(_name, _(_name), _in1, _in2, _icon, _action, _check)
+
+EAPI Evry_Action *evry_action_new(const char *name, const char *label,
+				  const char *type_in1, const char *type_in2,
 				  const char *icon,
 				  int  (*action)     (Evry_Action *act),
-				  int  (*check_item) (Evry_Action *act, const Evry_Item *it),
-				  void (*cleanup)    (Evry_Action *act),
-				  int  (*intercept)  (Evry_Action *act),
-				  Evas_Object *(*icon_get) (Evry_Action *act, Evas *e),
-				  void (*free) (Evry_Action *p));
+				  int  (*check_item) (Evry_Action *act, const Evry_Item *it));
 
 EAPI void evry_action_free(Evry_Action *act);
 

@@ -5,7 +5,7 @@
 #include "Evry.h"
 #include "e_mod_main.h"
 
-static Evry_Plugin *plugin;
+static Evry_Plugin *p1;
 static Eina_List *handlers = NULL;
 static Eina_Hash *border_hash = NULL;
 
@@ -244,7 +244,7 @@ struct _Inst
   E_Border *border;
 };
 
-static Evry_Plugin *plugin2 = NULL;
+static Evry_Plugin *p2 = NULL;
 static Inst *inst = NULL;
 static Evry_Action *act = NULL;
 
@@ -436,48 +436,48 @@ _act_item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 }
 
 
-static int
-_exec_border_check_item(Evry_Action *act __UNUSED__, const Evry_Item *it)
-{
-   E_Border *bd = it->data;
-   E_OBJECT_CHECK_RETURN(bd, 0);
-   E_OBJECT_TYPE_CHECK_RETURN(bd, E_BORDER_TYPE, 0);
-
-   if ((bd->desktop && bd->desktop->exec) &&
-       ((strstr(bd->desktop->exec, "%u")) ||
-	(strstr(bd->desktop->exec, "%U")) ||
-	(strstr(bd->desktop->exec, "%f")) ||
-	(strstr(bd->desktop->exec, "%F"))))
-     return 1;
-
-   return 0;
-}
-
-static int
-_exec_border_action(Evry_Action *act)
-{
-   return evry_util_exec_app(act->item1, act->item2);
-}
-
-static int
-_exec_border_intercept(Evry_Action *act)
-{
-   Evry_Item_App *app = E_NEW(Evry_Item_App, 1);
-   E_Border *bd = act->item1->data;
-
-   app->desktop = bd->desktop;
-   act->item1 = EVRY_ITEM(app);
-
-   return 1;
-}
-
-
-static void
-_exec_border_cleanup(Evry_Action *act)
-{
-   ITEM_APP(app, act->item1);
-   E_FREE(app);
-}
+/* static int
+ * _exec_border_check_item(Evry_Action *act __UNUSED__, const Evry_Item *it)
+ * {
+ *    E_Border *bd = it->data;
+ *    E_OBJECT_CHECK_RETURN(bd, 0);
+ *    E_OBJECT_TYPE_CHECK_RETURN(bd, E_BORDER_TYPE, 0);
+ * 
+ *    if ((bd->desktop && bd->desktop->exec) &&
+ *        ((strstr(bd->desktop->exec, "%u")) ||
+ * 	(strstr(bd->desktop->exec, "%U")) ||
+ * 	(strstr(bd->desktop->exec, "%f")) ||
+ * 	(strstr(bd->desktop->exec, "%F"))))
+ *      return 1;
+ * 
+ *    return 0;
+ * }
+ * 
+ * static int
+ * _exec_border_action(Evry_Action *act)
+ * {
+ *    return evry_util_exec_app(act->item1, act->item2);
+ * }
+ * 
+ * static int
+ * _exec_border_intercept(Evry_Action *act)
+ * {
+ *    Evry_Item_App *app = E_NEW(Evry_Item_App, 1);
+ *    E_Border *bd = act->item1->data;
+ * 
+ *    app->desktop = bd->desktop;
+ *    act->item1 = EVRY_ITEM(app);
+ * 
+ *    return 1;
+ * }
+ * 
+ * 
+ * static void
+ * _exec_border_cleanup(Evry_Action *act)
+ * {
+ *    ITEM_APP(app, act->item1);
+ *    E_FREE(app);
+ * } */
 
 
 
@@ -487,21 +487,24 @@ module_init(void)
    if (!evry_api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
-   plugin = evry_plugin_new(NULL, "Windows", type_subject, NULL, "BORDER", 0, NULL, NULL,
-			    _begin, _cleanup, _fetch, NULL, _item_icon_get, NULL);
-   plugin->transient = EINA_TRUE;
-   evry_plugin_register(plugin, 2);
+   p1 = EVRY_PLUGIN_NEW(NULL, "Windows", type_subject, NULL, "BORDER",
+			    _begin, _cleanup, _fetch, _item_icon_get, NULL);
+   p1->transient = EINA_TRUE;
+   evry_plugin_register(p1, 2);
 
    
-   plugin2 = evry_plugin_new(NULL, "Window Action", type_action, "BORDER", NULL, 0, NULL, NULL,
-			     _act_begin, _act_cleanup, _act_fetch, _act_action, _act_item_icon_get, NULL);
-   evry_plugin_register(plugin2, 1);
+   p2 = EVRY_PLUGIN_NEW(NULL, "Window Action", type_action, "BORDER", NULL,
+			     _act_begin, _act_cleanup, _act_fetch, _act_item_icon_get, NULL);
+   
+   EVRY_PLUGIN(p2)->action = &_act_action;
+   
+   evry_plugin_register(p2, 1);
 
-   act = evry_action_new("Open File...", "BORDER", "FILE", "APPLICATION",
-			 "everything-launch",
-			 _exec_border_action, _exec_border_check_item,
-			 _exec_border_cleanup, _exec_border_intercept, NULL, NULL);
-   evry_action_register(act, 10);
+   /* act = evry_action_new("Open File...", "BORDER", "FILE", "APPLICATION",
+    * 			 "everything-launch",
+    * 			 _exec_border_action, _exec_border_check_item,
+    * 			 _exec_border_cleanup, _exec_border_intercept, NULL, NULL);
+    * evry_action_register(act, 10); */
 
    return EINA_TRUE;
 }
@@ -509,10 +512,10 @@ module_init(void)
 static void
 module_shutdown(void)
 {
-   EVRY_PLUGIN_FREE(plugin);
-   EVRY_PLUGIN_FREE(plugin2);
+   EVRY_PLUGIN_FREE(p1);
+   EVRY_PLUGIN_FREE(p2);
 
-   evry_action_free(act);
+   /* evry_action_free(act); */
 }
 
 /***************************************************************************/

@@ -909,46 +909,37 @@ module_init(void)
      return EINA_FALSE;
 
    p1 = E_NEW(Plugin, 1);
-   evry_plugin_new(EVRY_PLUGIN(p1), "Applications", type_subject, "", "APPLICATION", 0, NULL, NULL,
-		   _begin, _cleanup, _fetch, NULL, _icon_get, _free_plugin);
+   EVRY_PLUGIN_NEW(EVRY_PLUGIN(p1), "Applications", type_subject, "", "APPLICATION",
+	      _begin, _cleanup, _fetch, _icon_get, _free_plugin);
    EVRY_PLUGIN(p1)->complete = &_complete;
    
    p2 = E_NEW(Plugin, 1);
-   evry_plugin_new(EVRY_PLUGIN(p2), "Open With...", type_action, "FILE", "", 0, NULL, NULL,
-		   _begin_open_with, _cleanup, _fetch, _open_with_action,
-		   _icon_get, _free_plugin);
+   EVRY_PLUGIN_NEW(EVRY_PLUGIN(p2), "Open With...", type_action, "FILE", "",
+	      _begin_open_with, _cleanup, _fetch,
+	      _icon_get, _free_plugin);
+
+   EVRY_PLUGIN(p2)->action = &_open_with_action;
 
    evry_plugin_register(EVRY_PLUGIN(p1), 1);
    evry_plugin_register(EVRY_PLUGIN(p2), 1);
 
-   act = evry_action_new("Launch", "APPLICATION", NULL, NULL,
-			 "everything-launch",
-			 _exec_app_action, _exec_app_check_item,
-			 NULL, NULL, NULL, NULL);
+   act = EVRY_ACTION_NEW("Launch", "APPLICATION", NULL,
+		    "everything-launch", _exec_app_action, _exec_app_check_item);
 
-   act1 = evry_action_new("Open File...", "APPLICATION", "FILE", "APPLICATION",
-			  "document-open",
-			  _exec_app_action, _exec_app_check_item,
-			  NULL, NULL, NULL, NULL);
+   act1 = EVRY_ACTION_NEW("Open File...", "APPLICATION", "FILE", "document-open",
+		     _exec_app_action, _exec_app_check_item);
 
-   act2 = evry_action_new("Run in Terminal", "APPLICATION", NULL, NULL,
-			  "system-run",
-			  _exec_term_action, _exec_term_check_item,
-			  NULL, NULL, NULL, NULL);
+   act2 = EVRY_ACTION_NEW("Run in Terminal", "APPLICATION", NULL, "system-run",
+		     _exec_term_action, _exec_term_check_item);
 
-   act3 = evry_action_new("Edit Application Entry", "APPLICATION", NULL, NULL,
-			  "everything-launch",
-			  _edit_app_action, _edit_app_check_item,
-			  NULL, NULL, NULL, NULL);
+   act3 = EVRY_ACTION_NEW("Edit Application Entry", "APPLICATION", NULL, "everything-launch",
+		     _edit_app_action, _edit_app_check_item);
 
-   act4 = evry_action_new("New Application Entry", "APPLICATION", NULL, NULL,
-			  "everything-launch",
-			  _new_app_action, _new_app_check_item,
-			  NULL, NULL, NULL, NULL);
+   act4 = EVRY_ACTION_NEW("New Application Entry", "APPLICATION", NULL, "everything-launch",
+		     _new_app_action, _new_app_check_item);
 
-   act5 = evry_action_new("Run with Sudo", "APPLICATION", NULL, NULL,
-			  "system-run",
-			  _exec_sudo_action, NULL, NULL, NULL, NULL, NULL);
+   act5 = EVRY_ACTION_NEW("Run with Sudo", "APPLICATION", NULL, "system-run",
+		     _exec_sudo_action, NULL);
 
    evry_action_register(act,  0);
    evry_action_register(act1, 1);

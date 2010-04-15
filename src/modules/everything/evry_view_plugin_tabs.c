@@ -88,7 +88,7 @@ _tabs_update(Tab_View *v)
 	     o = edje_object_add(v->evas);
 	     e_theme_edje_object_set(o, "base/theme/everything",
 				     "e/modules/everything/tab_item");
-	     edje_object_part_text_set(o, "e.text.label", p->name);
+	     edje_object_part_text_set(o, "e.text.label", p->label);
 
 	     tab->o_tab = o;
 
@@ -184,7 +184,7 @@ _plugin_next_by_name(Tab_View *v, const char *key)
 
    EINA_LIST_FOREACH(s->cur_plugins, l, p)
      {
-	if (p->name && (!strncasecmp(p->name, key, 1)))
+	if (p->label && (!strncasecmp(p->label, key, 1)))
 	  {
 	     if (!first) first = p;
 

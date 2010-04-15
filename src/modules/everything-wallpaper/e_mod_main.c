@@ -48,7 +48,7 @@ static void _import_edj_gen(Import *import);
 static int _import_cb_edje_cc_exit(void *data, int type, void *event);
 static Import *import = NULL;
 
-static Evry_Plugin *plugin;
+static Evry_Plugin *_plug;
 
 static void
 _item_free(Evry_Item *item)
@@ -205,12 +205,13 @@ module_init(void)
    if (!evry_api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
-   plugin = evry_plugin_new(NULL, "Wallpaper", type_action, "FILE", "",
-			    0, "preferences-desktop-wallpaper", NULL,
-			    _begin, _cleanup, _fetch, _action, _icon_get,
-			    NULL);
-
-   evry_plugin_register(plugin, 10);
+   _plug = EVRY_PLUGIN_NEW(NULL, "Wallpaper", type_action, "FILE", "",
+			    _begin, _cleanup, _fetch, _icon_get, NULL);
+   
+   EVRY_PLUGIN(_plug)->icon = "preferences-desktop-wallpaper";
+   EVRY_PLUGIN(_plug)->action = &_action;
+   
+   evry_plugin_register(_plug, 10);
    
    return EINA_TRUE;
 }
@@ -218,7 +219,7 @@ module_init(void)
 static void
 module_shutdown(void)
 {
-   EVRY_PLUGIN_FREE(plugin);
+   EVRY_PLUGIN_FREE(_plug);
 
    if (import)
      {

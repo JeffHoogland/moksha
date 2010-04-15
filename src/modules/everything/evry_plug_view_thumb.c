@@ -6,8 +6,8 @@ typedef struct _View View;
 typedef struct _Smart_Data Smart_Data;
 typedef struct _Item Item;
 
-#define SIZE_LIST 30
-#define SIZE_DETAIL 38
+#define SIZE_LIST 28
+#define SIZE_DETAIL 36
 
 
 struct _View
@@ -23,6 +23,7 @@ struct _View
   int          iw, ih;
   int          zoom;
   int         mode;
+  int         mode_prev;
 
   Eina_List *handlers;
 };
@@ -39,7 +40,6 @@ struct _Smart_Data
   Evas_Coord   cx, cy, cw, ch;
   Evas_Coord   sx, sy;
   Eina_Bool    update : 1;
-  Eina_Bool    switch_mode : 1;
   Eina_List   *queue;
 
   Evas_Object *selector;
@@ -282,19 +282,6 @@ _e_smart_reconfigure_do(void *data)
    	     recursion = 0;
    	  }
         changed = 1;
-     }
-
-   if (sd->switch_mode)
-     {
-	if (changed)
-	  evas_object_smart_callback_call(obj, "changed", NULL);
-
-	sd->update = EINA_TRUE;
-	sd->switch_mode = EINA_FALSE;
-
-	if (recursion == 0)
-	  sd->idle_enter = NULL;
-	return 0;
      }
 
    if (sd->view->mode == VIEW_MODE_THUMB)
@@ -897,20 +884,24 @@ _view_update(Evry_View *view)
    Smart_Data *sd = evas_object_smart_data_get(v->span);
    Item *v_it;
    Evry_Item *p_it;
-   Eina_List *l, *ll, *p_items, *v_remove = NULL, *v_items = NULL;
+   Eina_List *l, *ll, *v_remove = NULL, *v_items = NULL;
    int pos, last_pos, last_vis = 0, first_vis = 0;
    Eina_Bool update = EINA_FALSE;
-
+   Evry_Plugin *p = v->state->plugin;
+   
    sd->cur_item = NULL;
 
-   if (!v->state->plugin)
+   if (!p)
      {
 	_view_clear(view);
 	return 1;
      }
 
-   p_items = v->state->plugin->items;
-
+   v->mode = v->mode_prev;
+   
+   if (p->view_mode >= 0)
+     v->mode = p->view_mode;
+   
    /* go through current view items */
    EINA_LIST_FOREACH(sd->items, l, v_it)
      {
@@ -919,7 +910,7 @@ _view_update(Evry_View *view)
 	pos = 1;
 
 	/* go through plugins current items */
-	EINA_LIST_FOREACH(p_items, ll, p_it)
+	EINA_LIST_FOREACH(p->items, ll, p_it)
 	  {
 	     if (v_it->item == p_it)
 	       {
@@ -976,7 +967,7 @@ _view_update(Evry_View *view)
 
    /* go through plugins current items */
    pos = 1;
-   EINA_LIST_FOREACH(p_items, l, p_it)
+   EINA_LIST_FOREACH(p->items, l, p_it)
      {
 	/* item is not already in view */
 	if (!eina_list_data_find_list(v_items, p_it))
@@ -1003,9 +994,9 @@ _view_update(Evry_View *view)
 
    sd->items = eina_list_sort(sd->items, eina_list_count(sd->items), _sort_cb);
 
-   if (update || !last_vis || v->plugin != v->state->plugin)
+   if (update || !last_vis || v->plugin != p)
      {
-	v->plugin = v->state->plugin;
+	v->plugin = p;
 
 	sd->update = EINA_TRUE;
 	_update_frame(v->span);
@@ -1025,44 +1016,48 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
    Smart_Data *sd = evas_object_smart_data_get(v->span);
    Eina_List *l = NULL, *ll;
    Item *it = NULL;
-
-   if (!v->state->plugin)
+   const Evry_State *s = v->state;
+   
+   if (!s->plugin)
      return 0;
 
-   if ((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
-       (!strcmp(ev->key, "2")))
+   if (s->plugin->view_mode == VIEW_MODE_NONE)
      {
-	if (v->mode == VIEW_MODE_LIST)
-	  v->mode = VIEW_MODE_DETAIL;
-	else
-	  v->mode = VIEW_MODE_LIST;
-
-	v->zoom = 0;
-	_clear_items(v->span);
-	_update_frame(v->span);
-	goto end;
-     }
-   else if ((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
-       ((!strcmp(ev->key, "plus")) ||
-	(!strcmp(ev->key, "3"))))
-     {
-	if (v->mode != VIEW_MODE_THUMB)
+	if ((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
+	    (!strcmp(ev->key, "2")))
 	  {
+	     if (v->mode == VIEW_MODE_LIST)
+	       v->mode = VIEW_MODE_DETAIL;
+	     else
+	       v->mode = VIEW_MODE_LIST;
+
 	     v->zoom = 0;
-	     v->mode = VIEW_MODE_THUMB;
 	     _clear_items(v->span);
+	     _update_frame(v->span);
+	     goto end;
 	  }
-	else
+	else if ((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
+		 ((!strcmp(ev->key, "plus")) ||
+		  (!strcmp(ev->key, "3"))))
 	  {
-	     v->zoom++;
-	     if (v->zoom > 2) v->zoom = 0;
-	     if (v->zoom == 2)
-	       _clear_items(v->span);
+	     if (v->mode != VIEW_MODE_THUMB)
+	       {
+		  v->zoom = 0;
+		  v->mode = VIEW_MODE_THUMB;
+		  _clear_items(v->span);
+	       }
+	     else
+	       {
+		  v->zoom++;
+		  if (v->zoom > 2) v->zoom = 0;
+		  if (v->zoom == 2)
+		    _clear_items(v->span);
+	       }
+	     _update_frame(v->span);
+	     goto end;
 	  }
-	_update_frame(v->span);
-	goto end;
      }
-
+   
    if (v->tabs->key_down(v->tabs, ev))
      {
 	_view_update(view);
@@ -1076,7 +1071,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 	it = sd->items->data;
 
 	_pan_item_select(v->span, it, 1);
-	evry_item_select(v->state, it->item);
+	evry_item_select(s, it->item);
 	goto end;
      }
    else if ((ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT) &&
@@ -1086,7 +1081,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 
 	it = eina_list_last(sd->items)->data;
 	_pan_item_select(v->span, it, 1);
-	evry_item_select(v->state, it->item);
+	evry_item_select(s, it->item);
 	goto end;
      }
 
@@ -1103,7 +1098,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 	     if (it)
 	       {
 		  _pan_item_select(v->span, it, 1);
-		  evry_item_select(v->state, it->item);
+		  evry_item_select(s, it->item);
 	       }
 	     goto end;
 	  }
@@ -1117,7 +1112,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 	     if (it)
 	       {
 		  _pan_item_select(v->span, it, 1);
-		  evry_item_select(v->state, it->item);
+		  evry_item_select(s, it->item);
 	       }
 	     goto end;
 	  }
@@ -1142,7 +1137,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 	if (it)
 	  {
 	     _pan_item_select(v->span, it, 1);
-	     evry_item_select(v->state, it->item);
+	     evry_item_select(s, it->item);
 	  }
 	goto end;
      }
@@ -1168,7 +1163,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 	if (it)
 	  {
 	     _pan_item_select(v->span, it, 1);
-	     evry_item_select(v->state, it->item);
+	     evry_item_select(s, it->item);
 	  }
 	goto end;
      }
@@ -1245,7 +1240,8 @@ _view_create(Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
      v->mode = evry_conf->view_mode;
    else
      v->mode = parent->mode;
-
+   v->mode_prev = v->mode;
+   
    v->zoom = parent->zoom;
 
    v->bg = edje_object_add(v->evas);
@@ -1311,7 +1307,7 @@ view_thumb_init(void)
    v->view.update = &_view_update;
    v->view.clear = &_view_clear;
    v->view.cb_key_down = &_cb_key_down;
-   v->mode = -1;
+   v->mode = VIEW_MODE_NONE;
 
    evry_view_register(EVRY_VIEW(v), 1);
 

@@ -31,8 +31,8 @@ evry_plug_clipboard_init(void)
    if (!win) return EINA_FALSE;
 
 //FIXME: Icon name doesnt follow FDO Spec
-   act = evry_action_new("Copy to Clipboard", "TEXT", NULL, NULL, "everything-clipboard",
-			 _action, _check_item, NULL, NULL, NULL, NULL);
+   act = EVRY_ACTION_NEW("Copy to Clipboard", "TEXT", NULL, "everything-clipboard",
+		    _action, _check_item);
 
    evry_action_register(act, 10);
 

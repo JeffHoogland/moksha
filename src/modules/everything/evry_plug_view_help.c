@@ -74,7 +74,7 @@ _view_create(Evry_View *v, const Evry_State *s, const Evas_Object *swallow)
      "<hilight>&lt;ctrl+left/right&gt;</hilight>"
      "cycle through plugins<br>"
      "<hilight>&lt;ctrl+1&gt;</hilight> "
-     "choose a different view (e.g. for images)<br>";
+       "choose a different view (e.g. for images)<br>";
 
    if (v->active) return v;
 

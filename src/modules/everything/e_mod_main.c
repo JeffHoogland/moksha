@@ -378,13 +378,11 @@ _evry_cb_plugin_sort(const void *data1, const void *data2)
 }
 
 Evry_Plugin *
-evry_plugin_new(Evry_Plugin *base, const char *name, int type,
+evry_plugin_new(Evry_Plugin *base, const char *name, const char *label, int type,
 		const char *type_in, const char *type_out,
-		int async_fetch, const char *icon, const char *trigger,
 		Evry_Plugin *(*begin) (Evry_Plugin *p, const Evry_Item *item),
 		void (*cleanup) (Evry_Plugin *p),
 		int  (*fetch) (Evry_Plugin *p, const char *input),
-		int  (*action) (Evry_Plugin *p, const Evry_Item *item),
 		Evas_Object *(*icon_get) (Evry_Plugin *p, const Evry_Item *it, Evas *e),
 		void (*cb_free) (Evry_Plugin *p))
 {
@@ -396,23 +394,23 @@ evry_plugin_new(Evry_Plugin *base, const char *name, int type,
      p = E_NEW(Evry_Plugin, 1);
 
    p->name = eina_stringshare_add(name);
+   p->label = eina_stringshare_add(label);
    p->type = type;
    p->type_in  = (type_in  ? eina_stringshare_add(type_in)  : NULL);
    p->type_out = (type_out ? eina_stringshare_add(type_out) : NULL);
-   p->trigger  = (trigger  ? eina_stringshare_add(trigger)  : NULL);
-   p->icon     = (icon     ? eina_stringshare_add(icon)     : NULL);
-   p->async_fetch = async_fetch;
+   /* p->trigger  = (trigger  ? eina_stringshare_add(trigger)  : NULL); */
+   /* p->icon     = (icon     ? eina_stringshare_add(icon)     : NULL); */
    p->begin    = begin;
    p->cleanup  = cleanup;
    p->fetch    = fetch;
    p->icon_get = icon_get;
-   p->action   = action;
+   /* p->action   = action; */
    p->aggregate = EINA_TRUE;
    p->async_fetch = EINA_FALSE;
    p->free   = cb_free;
 
    p->history = EINA_TRUE;
-   p->view_mode = -1;
+   p->view_mode = VIEW_MODE_NONE;
    
    DBG("%s", p->name);
    
@@ -427,10 +425,11 @@ evry_plugin_free(Evry_Plugin *p, int free_pointer)
    DBG("%s", p->name);
    
    if (p->name)     eina_stringshare_del(p->name);
+   if (p->label)    eina_stringshare_del(p->label);
    if (p->type_in)  eina_stringshare_del(p->type_in);
    if (p->type_out) eina_stringshare_del(p->type_out);
-   if (p->trigger)  eina_stringshare_del(p->trigger);
-   if (p->icon)     eina_stringshare_del(p->icon);
+   /* if (p->trigger)  eina_stringshare_del(p->trigger); */
+   /* if (p->icon)     eina_stringshare_del(p->icon); */
 
    if (p->free)
      p->free(p);
@@ -441,25 +440,18 @@ evry_plugin_free(Evry_Plugin *p, int free_pointer)
 }
 
 Evry_Action *
-evry_action_new(const char *name, const char *type_in1, const char *type_in2,
-		const char *type_out, const char *icon,
+evry_action_new(const char *name, const char *label, const char *type_in1, const char *type_in2,
+		const char *icon,
 		int  (*action) (Evry_Action *act),
-		int (*check_item) (Evry_Action *act, const Evry_Item *it),
-		void (*cleanup)    (Evry_Action *act),
-		int  (*intercept)  (Evry_Action *act),
-		Evas_Object *(*icon_get) (Evry_Action *act, Evas *e),
-		void (*cb_free) (Evry_Action *p))
+		int (*check_item) (Evry_Action *act, const Evry_Item *it))
 {
    Evry_Action *act = E_NEW(Evry_Action, 1);
    act->name = eina_stringshare_add(name);
+   act->label = eina_stringshare_add(label);
    act->type_in1 = (type_in1 ? eina_stringshare_add(type_in1) : NULL);
    act->type_in2 = (type_in2 ? eina_stringshare_add(type_in2) : NULL);
-   act->type_out = (type_out ? eina_stringshare_add(type_out) : NULL);
    act->action = action;
    act->check_item = check_item;
-   act->intercept = intercept;
-   act->cleanup = cleanup;
-   act->free = cb_free;
    act->icon = (icon ? eina_stringshare_add(icon) : NULL);
 
    DBG("%s", name);
@@ -473,9 +465,9 @@ evry_action_free(Evry_Action *act)
    evry_action_unregister(act);
 
    if (act->name)     eina_stringshare_del(act->name);
+   if (act->label)    eina_stringshare_del(act->label);
    if (act->type_in1) eina_stringshare_del(act->type_in1);
    if (act->type_in2) eina_stringshare_del(act->type_in2);
-   if (act->type_out) eina_stringshare_del(act->type_out);
    if (act->icon)     eina_stringshare_del(act->icon);
 
    if (act->free)
@@ -588,10 +580,6 @@ _evry_cb_view_sort(const void *data1, const void *data2)
 void
 evry_view_register(Evry_View *view, int priority)
 {
-   /* XXX remove: ignore old list view, some people might
-      forget to do make uninstall */
-   if (!strcmp(view->name, "List View")) return;
-
    view->priority = priority;
 
    evry_conf->views = eina_list_append(evry_conf->views, view);

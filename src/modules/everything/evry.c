@@ -789,7 +789,7 @@ _evry_selector_activate(Evry_Selector *sel)
 
 	if (sel->state->cur_item)
 	  edje_object_part_text_set(sel->o_main, "e.text.plugin",
-				    s->cur_item->plugin->name);
+				    s->cur_item->plugin->label);
 
 	_evry_view_show(s->view);
 	_evry_list_win_update(s);
@@ -964,7 +964,7 @@ _evry_selector_update(Evry_Selector *sel)
 	edje_object_part_text_set(sel->o_main, "e.text.label", it->label);
 
 	if (sel == selector)
-	  edje_object_part_text_set(sel->o_main, "e.text.plugin", it->plugin->name);
+	  edje_object_part_text_set(sel->o_main, "e.text.plugin", it->plugin->label);
 	else
 	  edje_object_part_text_set(sel->o_main, "e.text.plugin", "");
      }
@@ -973,7 +973,7 @@ _evry_selector_update(Evry_Selector *sel)
 	/* no items for this state - clear selector */
 	edje_object_part_text_set(sel->o_main, "e.text.label", "");
 	if (sel == selector && s && s->plugin)
-	  edje_object_part_text_set(sel->o_main, "e.text.plugin", s->plugin->name);
+	  edje_object_part_text_set(sel->o_main, "e.text.plugin", s->plugin->label);
 	else
 	  edje_object_part_text_set(sel->o_main, "e.text.plugin", "");
      }
@@ -1389,7 +1389,7 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	if (action == EVRY_COMPLETE_INPUT)
 	  {
 	     snprintf(s->input, INPUTLEN, "%s", input);
-	     _evry_update_text_label(s); 
+	     _evry_update_text_label(s);
 	     _evry_cb_update_timer(selector);
 	     evry_item_select(s, it);
 	  }
@@ -1847,10 +1847,8 @@ _evry_matches_update(Evry_Selector *sel, int async)
    Eina_List *l;
    const char *input;
 
-   /* TODO cleanup plugins */
    EINA_LIST_FREE(s->cur_plugins, p);
 
-   /* if (strlen(s->input) > 0) */
    if (s->input[0])
    input = s->input;
    else

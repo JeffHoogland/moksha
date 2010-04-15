@@ -338,12 +338,15 @@ module_init(void)
      return EINA_FALSE;
 
    p = E_NEW(Plugin, 1);
-   evry_plugin_new(EVRY_PLUGIN(p), "Spell Checker", type_subject, "", "TEXT", 1,
-		   "accessories-dictionary", TRIGGER,
-		   NULL, _cleanup, _fetch, NULL, NULL, _free_plugin);
 
-   EVRY_PLUGIN(p)->aggregate = EINA_FALSE;
-   EVRY_PLUGIN(p)->history = EINA_FALSE;
+   EVRY_PLUGIN_NEW(p, "Spell Checker", type_subject, "", "TEXT",
+		   NULL, _cleanup, _fetch, NULL, _free_plugin);
+
+   EVRY_PLUGIN(p)->aggregate   = EINA_FALSE;
+   EVRY_PLUGIN(p)->history     = EINA_FALSE;
+   EVRY_PLUGIN(p)->async_fetch = EINA_TRUE;
+   EVRY_PLUGIN(p)->icon        = "accessories-dictionary";
+   EVRY_PLUGIN(p)->trigger     = TRIGGER;
    
    evry_plugin_register(EVRY_PLUGIN(p), 100);
 
