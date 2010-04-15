@@ -4,7 +4,7 @@
 #include "e.h"
 
 /*
- * TODO: Listen to EFREET_EVENT_CACHE_UPDATE
+ * TODO: Listen to EFREET_EVENT_DESKTOP_CACHE_UPDATE
  */
 
 typedef struct _Main_Data Main_Data;

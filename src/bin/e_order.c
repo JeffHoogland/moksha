@@ -18,7 +18,7 @@ static Eina_List *handlers = NULL;
 EAPI int
 e_order_init(void)
 {
-   handlers = eina_list_append(handlers, ecore_event_handler_add(EFREET_EVENT_CACHE_UPDATE, _e_order_cb_efreet_cache_update, NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add(EFREET_EVENT_DESKTOP_CACHE_UPDATE, _e_order_cb_efreet_cache_update, NULL));
    efreet_menu_file_set(e_config->default_system_menu);
    return 1;
 }

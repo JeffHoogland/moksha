@@ -40,7 +40,7 @@ e_configure_init(void)
 
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
-         (EFREET_EVENT_CACHE_UPDATE, _e_configure_cb_efreet_desktop_cache_update, NULL));
+         (EFREET_EVENT_DESKTOP_CACHE_UPDATE, _e_configure_cb_efreet_desktop_cache_update, NULL));
    //_e_configure_efreet_desktop_update();
 }
 

@@ -99,7 +99,7 @@ e_modapi_init(E_Module *m)
 
    handlers = 
      eina_list_append(handlers, 
-                      ecore_event_handler_add(EFREET_EVENT_CACHE_UPDATE, 
+                      ecore_event_handler_add(EFREET_EVENT_DESKTOP_CACHE_UPDATE, 
                                               _il_home_desktop_cache_update, 
                                               NULL));
    handlers = 

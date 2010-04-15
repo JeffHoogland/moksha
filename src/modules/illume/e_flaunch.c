@@ -264,7 +264,7 @@ e_flaunch_new(E_Zone *zone, const char *themedir)
       (E_EVENT_ZONE_MOVE_RESIZE, _e_flaunch_cb_zone_move_resize, fl));
    fl->handlers = eina_list_append
      (fl->handlers, ecore_event_handler_add
-      (EFREET_EVENT_CACHE_UPDATE, _e_flaunch_cb_cache_update, fl));
+      (EFREET_EVENT_DESKTOP_CACHE_UPDATE, _e_flaunch_cb_cache_update, fl));
    
    return fl;
 }

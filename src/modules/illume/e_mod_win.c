@@ -158,7 +158,7 @@ _e_mod_win_init(E_Module *m)
       (ECORE_EXE_EVENT_DEL, _cb_event_exe_del, NULL));
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
-      (EFREET_EVENT_CACHE_UPDATE, _cb_efreet_cache_update, NULL));
+      (EFREET_EVENT_DESKTOP_CACHE_UPDATE, _cb_efreet_cache_update, NULL));
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
       (E_EVENT_ZONE_MOVE_RESIZE, _cb_zone_move_resize, NULL));
