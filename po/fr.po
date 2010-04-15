@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-04-12 08:52+0400\n"
-"PO-Revision-Date: 2010-04-12 11:15+0400\n"
+"POT-Creation-Date: 2010-04-15 05:54+0400\n"
+"PO-Revision-Date: 2010-04-15 08:47+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment French Team <pourunmondesansgourou@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -33,7 +33,7 @@ msgstr "À propos de Enlightenment"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:848
 #: src/modules/conf_theme/e_int_config_theme_web.c:130
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:120
-#: src/modules/everything-windows/e_mod_main.c:408
+#: src/modules/everything-windows/e_mod_main.c:407
 #: src/modules/fileman/e_fwin.c:1824
 #: src/modules/illume/e_mod_win.c:173
 #: src/modules/mixer/app_mixer.c:514
@@ -107,7 +107,7 @@ msgstr "Êtes-vous sûr de vouloir quitter ?"
 
 #: src/bin/e_actions.c:1782
 msgid "You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
-msgstr "Vous avez demandé à quitter Enlightenment.<br><br>Êtes-vous sûr de vouloir quitter ?"
+msgstr "Vous avez demandé à quitter Enlightenment.<br><br>Êtes-vous sûr de vouloir le faire ?"
 
 #: src/bin/e_actions.c:1877
 msgid "Are you sure you want to log out?"
@@ -124,7 +124,7 @@ msgstr "Êtes-vous sûr de vouloir éteindre ?"
 
 #: src/bin/e_actions.c:1942
 msgid "You requested to turn off your Computer.<br><br>Are you sure you want to shut down?"
-msgstr "Vous avez demandé à éteindre votre ordinateur.<br><br>Êtes-vous sûr de vouloir l'éteindre ?"
+msgstr "Vous avez demandé à éteindre votre ordinateur.<br><br>Êtes-vous sûr de vouloir le faire ?"
 
 #: src/bin/e_actions.c:2003
 msgid "Are you sure you want to reboot?"
@@ -132,11 +132,11 @@ msgstr "Êtes-vous sûr de vouloir redémarrer ?"
 
 #: src/bin/e_actions.c:2005
 msgid "You requested to reboot your Computer.<br><br>Are you sure you want to restart it?"
-msgstr "Vous avez demandé à redémarrer votre ordinateur.<br><br>Êtes-vous sûr de vouloir le redémarrer ?"
+msgstr "Vous avez demandé à redémarrer votre ordinateur.<br><br>Êtes-vous sûr de vouloir le faire ?"
 
 #: src/bin/e_actions.c:2068
 msgid "You requested to suspend your Computer.<br><br>Are you sure you want to suspend?"
-msgstr "Vous avez demandé à mettre votre ordinateur en veille.<br><br>Êtes-vous sûr de vouloir le mettre en veille ?"
+msgstr "Vous avez demandé à mettre votre ordinateur en veille.<br><br>Êtes-vous sûr de vouloir le faire ?"
 
 #: src/bin/e_actions.c:2129
 msgid "Are you sure you want to hibernate?"
@@ -554,15 +554,15 @@ msgstr "Envoyer la souris à l'écran …"
 
 #: src/bin/e_actions.c:2770
 msgid "Send Mouse Forward 1 Screen"
-msgstr "Envoyer la souris à l'écran suivant"
+msgstr "Envoyer le curseur à l'écran suivant"
 
 #: src/bin/e_actions.c:2772
 msgid "Send Mouse Back 1 Screen"
-msgstr "Envoyer la souris à l'écran précédent"
+msgstr "Envoyer le curseur à l'écran précédent"
 
 #: src/bin/e_actions.c:2774
 msgid "Send Mouse Forward/Back Screens..."
-msgstr "Envoyer la souris … écrans plus loin"
+msgstr "Envoyer le curseur … écrans plus loin"
 
 #: src/bin/e_actions.c:2812
 #: src/bin/e_actions.c:2814
@@ -916,7 +916,7 @@ msgstr "Propriétés de la fenêtre incomplètes"
 
 #: src/bin/e_eap_editor.c:167
 msgid "The window you are creating an icon for<br>does not contain window name and class<br>properties, so the needed properties for<br>the icon so that it will be used for this<br>window cannot be guessed. You will need to<br>use the window title instead. This will only<br>work if the window title is the same at<br>the time the window starts up, and does not<br>change."
-msgstr "La fenêtre pour laquelle vous voulez créer un icone<br>n'a pas de nom ni de classe, aussi les<br>propriétés nécessaires pour cet icone ne peuvent-elles<br>être allouées. Vous devriez utiliser le titre de<br>la fenêtre à la place. Cela fonctionnera<br>seulement si le nom de la fenêtre est identique<br>à celui du démarrage, et ne change pas ensuite."
+msgstr "La fenêtre pour laquelle vous voulez créer un icone<br>n'a pas de nom, ni de classe, aussi les<br>propriétés nécessaires pour cet icone ne peuvent-elles<br>être allouées. Vous devriez utiliser le titre de<br>la fenêtre à la place. Cela fonctionnera<br>seulement si le nom de la fenêtre est identique<br>à celui du démarrage, et ne change pas ensuite."
 
 #: src/bin/e_eap_editor.c:222
 msgid "Desktop Entry Editor"
@@ -1215,7 +1215,7 @@ msgstr "Annuler"
 #: src/bin/e_fm.c:7696
 #: src/bin/e_fm.c:7856
 msgid "Inherit parent settings"
-msgstr "Hériter des propriétés du parent"
+msgstr "Hériter des options du parent"
 
 #: src/bin/e_fm.c:7705
 #: src/bin/e_fm.c:7865
@@ -1365,7 +1365,7 @@ msgstr "Ignorer"
 
 #: src/bin/e_fm.c:9083
 msgid "Ignore all"
-msgstr "Ignorer tout"
+msgstr "Tout ignorer"
 
 #: src/bin/e_fm.c:9088
 #, c-format
@@ -1693,7 +1693,7 @@ msgid "More..."
 msgstr "Plus…"
 
 #: src/bin/e_int_border_menu.c:197
-#: src/modules/everything-windows/e_mod_main.c:395
+#: src/modules/everything-windows/e_mod_main.c:394
 msgid "Iconify"
 msgstr "Minimiser"
 
@@ -1790,7 +1790,7 @@ msgstr "Ancré"
 #: src/bin/e_int_border_prop.c:477
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:119
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:142
-#: src/modules/everything-windows/e_mod_main.c:400
+#: src/modules/everything-windows/e_mod_main.c:399
 msgid "Fullscreen"
 msgstr "Plein écran"
 
@@ -1949,7 +1949,7 @@ msgstr "Les propriétés de la fenêtre sont partagées"
 
 #: src/bin/e_int_border_remember.c:310
 msgid "You are trying to ask Enlightenment to remember to apply<br>properties (such as size, location, border style etc.) to<br>a window that <hilight>does not have unique properties</hilight>.<br><br>This means it shares Name/Class, Transience, Role etc. properties<br>with more than 1 other window on the screen and remembering<br>properties for this window will apply to all other windows<br>that match these properties.<br><br>This is just a warning in case you did not intend this to happen.<br>If you did, simply press <hilight>Apply</hilight> or <hilight>OK</hilight> buttons<br>and your settings will be accepted. Press <hilight>Cancel</hilight> if you<br>are not sure and nothing will be affected."
-msgstr "Vous demandez à Enlightenment de mémoriser les<br>propriétés (telles que la taille, la position,<br>le type de bordure, etc) d'une fenêtre sans<br><hilight>propriétés distinctives</hilight>.<br><br>Ce qui signifie qu'elle partage son nom et classe, sa fugacité,<br>son rôle, etc, avec au moins une autre fenêtre à l'écran et que la<br>mémorisation des propriétés pour cette fenêtre s'appliquera à<br>toutes les autres fenêtres qui partagent les mêmes propriétés.<br><br>Ceci n'est qu'un avertissement au cas où ce<br>n'était pas ce que vous recherchiez.<br>Cliquez sur <hilight>Appliquer</hilight> ou <hilight>OK</hilight> et<br>vos paramètres seront acceptés. Cliquez<br>sur <hilight>Annuler</hilight> si vous n'êtes pas sûr<br>et rien ne sera modifié."
+msgstr "Vous demandez à Enlightenment de mémoriser les<br>propriétés (telles que la taille, la position,<br>le type de bordure, etc) d'une fenêtre sans<br><hilight>propriétés distinctives</hilight>.<br><br>Ce qui signifie qu'elle partage son nom et classe, sa fugacité,<br>son rôle, etc, avec au moins une autre fenêtre à l'écran et que la<br>mémorisation des propriétés pour cette fenêtre s'appliquera à<br>toutes les autres fenêtres qui partagent les mêmes propriétés.<br><br>Ceci n'est qu'un avertissement au cas où ce<br>n'était pas ce que vous recherchiez.<br>Cliquez sur <hilight>Appliquer</hilight> ou <hilight>O.K.</hilight> et<br>vos paramètres seront acceptés. Cliquez<br>sur <hilight>Annuler</hilight> si vous n'êtes pas sûr<br>et rien ne sera modifié."
 
 #: src/bin/e_int_border_remember.c:515
 msgid "No match properties set"
@@ -1979,8 +1979,8 @@ msgstr "Taille, position et verrous"
 #: src/bin/e_int_border_remember.c:622
 #: src/modules/everything/e_mod_main.c:82
 #: src/modules/everything/e_mod_main.c:135
-#: src/modules/everything/e_mod_main.c:533
-#: src/modules/everything/e_mod_main.c:550
+#: src/modules/everything/e_mod_main.c:541
+#: src/modules/everything/e_mod_main.c:558
 msgid "Everything"
 msgstr "Tout"
 
@@ -2261,7 +2261,7 @@ msgstr "En dessous de tout"
 
 #: src/bin/e_int_shelf_config.c:130
 msgid "Allow windows to overlap the shelf"
-msgstr "Autoriser les fenêtres à recouvrir ce rack"
+msgstr "Les fenêtres peuvent masquer ce rack"
 
 #: src/bin/e_int_shelf_config.c:175
 msgid "Shrink to Content Size"
@@ -2880,7 +2880,7 @@ msgstr "Êtes-vous sûr de vouloir supprimer ce rack ?"
 
 #: src/bin/e_shelf.c:1300
 msgid "You requested to delete this shelf.<br><br>Are you sure you want to delete it?"
-msgstr "Vous avez demandé à supprimer ce rack.<br><br>Êtes-vous sûr de vouloir le supprimer ?"
+msgstr "Vous avez demandé à supprimer ce rack.<br><br>Êtes-vous sûr de vouloir le faire ?"
 
 #: src/bin/e_shelf.c:1673
 #: src/bin/e_toolbar.c:325
@@ -3026,7 +3026,7 @@ msgstr "Mise en hibernation.<br><hilight>Veuillez patienter…</hilight>"
 msgid "About Theme"
 msgstr "À propos de ce thème"
 
-#: src/bin/e_theme.c:42
+#: src/bin/e_theme.c:43
 msgid "Set As Theme"
 msgstr "Utiliser ce thème"
 
@@ -4078,22 +4078,22 @@ msgstr "Boîtes de dialogue"
 #: src/modules/conf_display/e_int_config_display.c:129
 #, c-format
 msgid "Does this look OK? <hilight>Save</hilight> if it does, or Restore if not.<br>If you do not press a button, the old resolution of<br>%dx%d at %d Hz will be restored in %d seconds."
-msgstr "Ceci vous convient-il ? Cliquez sur <hilight>Enregistrer</hilight>si c'est le cas, ou Restaurer sinon.<br>Si vous ne cliquez pas, la précédente résolution de<br>%dx%d à %d Hz sera restaurée dans %d secondes."
+msgstr "Cela vous convient ? Cliquez sur <hilight>Enregistrer</hilight>si c'est le cas, ou Restaurer sinon.<br>Si vous ne cliquez pas, la précédente résolution de<br>%dx%d à %d Hz sera restaurée dans %d secondes."
 
 #: src/modules/conf_display/e_int_config_display.c:136
 #, c-format
 msgid "Does this look OK? <hilight>Save</hilight> if it does, or Restore if not.<br>If you do not press a button, the old resolution of<br>%dx%d will be restored in %d seconds."
-msgstr "Cela vous convient-il ? Cliquez sur <hilight>Enregistrer</hilight> si c'est le cas, sur Restaurer sinon.<br>Si vous ne cliquez pas, la précédente résolution de<br>%dx%d sera restaurée dans %d secondes."
+msgstr "Cela vous convient ? Cliquez sur <hilight>Enregistrer</hilight> si c'est le cas, sur Restaurer sinon.<br>Si vous ne cliquez pas, la précédente résolution de<br>%dx%d sera restaurée dans %d secondes."
 
 #: src/modules/conf_display/e_int_config_display.c:146
 #, c-format
 msgid "Does this look OK? <hilight>Save</hilight> if it does, or Restore if not.<br>If you do not press a button, the old resolution of<br>%dx%d at %d Hz will be restored <hilight>IMMEDIATELY</hilight>."
-msgstr "Ceci vous convient-il ? Cliquez sur <hilight>Enregistrer</hilight> si c'est le cas, sur Restaurer sinon.<br>Si vous ne cliquez pas, la précédente résolution de<br>%dx%d à %d Hz sera restaurée <hilight>IMMÉDIATEMENT</hilight>."
+msgstr "Cela vous convient ? Cliquez sur <hilight>Enregistrer</hilight> si c'est le cas, sur Restaurer sinon.<br>Si vous ne cliquez pas, la précédente résolution de<br>%dx%d à %d Hz sera restaurée <hilight>IMMÉDIATEMENT</hilight>."
 
 #: src/modules/conf_display/e_int_config_display.c:153
 #, c-format
 msgid "Does this look OK? <hilight>Save</hilight> if it does, or Restore if not.<br>If you do not press a button, the old resolution of<br>%dx%d will be restored <hilight>IMMEDIATELY</hilight>."
-msgstr "Cela vous convient-il ? Cliquez sur <hilight>Enregistrer</hilight> si c'est le cas, sur Restaurer sinon.<br>Si vous ne cliquez pas, la précédente résolution de<br>%dx%d sera restaurée <hilight>IMMÉDIATEMENT</hilight>."
+msgstr "Cela vous convient ? Cliquez sur <hilight>Enregistrer</hilight> si c'est le cas, sur Restaurer sinon.<br>Si vous ne cliquez pas, la précédente résolution de<br>%dx%d sera restaurée <hilight>IMMÉDIATEMENT</hilight>."
 
 #: src/modules/conf_display/e_int_config_display.c:190
 msgid "Resolution change"
@@ -4137,7 +4137,7 @@ msgstr "Fonctionnalités manquantes"
 
 #: src/modules/conf_display/e_int_config_display.c:637
 msgid "Your X Display Server is missing support for<br>the <hilight>XRandR</hilight> (X Resize and Rotate) extension.<br>You cannot change screen resolutions without<br>the support of this extension. It could also be<br>that at the time <hilight>ecore</hilight> was built, there<br>was no XRandR support detected."
-msgstr "Votre serveur X ne supporte pas l'extension<br><hilight>XRandR</hilight> (Redimensionnement et Rotation X).<br>Vous ne pouvez modifier la résolution de l'écran sans le<br>support de cette extension. Il se peut aussi qu'au moment de la compilation<br>de <hilight>ecore</hilight>, le support de XRandR n'ait pas été détecté."
+msgstr "Votre serveur X ne supporte pas l'extension<br><hilight>XRandR</hilight> (redimensionnement et rotation X).<br>Vous ne pouvez modifier la résolution de l'écran sans le<br>support de cette extension. Il se peut aussi qu'au moment de la compilation<br>de <hilight>ecore</hilight>, le support de XRandR n'ait pas été détecté."
 
 #: src/modules/conf_display/e_int_config_display.c:649
 msgid "No Refresh Rates Found"
@@ -4145,7 +4145,7 @@ msgstr "Aucun taux de rafraîchissement détecté"
 
 #: src/modules/conf_display/e_int_config_display.c:650
 msgid "No refresh rates were reported by your X Display Server.<br>If you are running a nested X Display Server, then<br>this is to be expected. However, if you are not, then<br>the current refresh rate will be used when setting<br>the resolution, which may cause <hilight>damage</hilight> to your screen."
-msgstr "Aucun taux de rafraîchissement n'a été rapporté par votre serveur X.<br>Si vous utilisez un serveur X imbriqué (nested), alors ceci est normal.<br>Néanmoins, si ce n'est pas le cas, le taux de rafraîchissement actuel<br>sera utilisé lors de la sélection de la résolution, ce qui pourrait<br><hilight>endommager</hilight> votre écran."
+msgstr "Aucun taux de rafraîchissement n'a été rapporté par votre serveur X.<br>Si vous utilisez un serveur X imbriqué (nested), alors cela est normal.<br>Néanmoins, si ce n'est pas le cas, le taux de rafraîchissement actuel<br>sera utilisé lors de la sélection de la résolution, ce qui pourrait<br><hilight>endommager</hilight> votre écran."
 
 #: src/modules/conf_display/e_mod_main.c:21
 msgid "Screen Resolution"
@@ -5408,7 +5408,7 @@ msgstr "En ligne…"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1003
 msgid "Theme Categories"
-msgstr "Catégories des thèmes"
+msgstr "Catégories du thème"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1021
 msgid "Assign"
@@ -5773,7 +5773,7 @@ msgstr "Rendre le focus quand il est perdu"
 
 #: src/modules/conf_window_focus/e_int_config_focus.c:255
 msgid "Slide pointer to a new focused window"
-msgstr "Déplacer le curseur automatiquement vers la nouvelle fenêtre focalisée"
+msgstr "Déplacer le curseur vers la nouvelle fenêtre focalisée"
 
 #: src/modules/conf_window_focus/e_mod_main.c:21
 #: src/modules/wizard/page_060.c:26
@@ -6240,7 +6240,7 @@ msgid "Show Everything Dialog"
 msgstr "Afficher la boîte de dialogue d'Omni"
 
 #: src/modules/everything/e_mod_main.c:95
-#: src/modules/everything/e_mod_main.c:351
+#: src/modules/everything/e_mod_main.c:356
 msgid "Run Everything"
 msgstr "Omni"
 
@@ -6359,19 +6359,19 @@ msgstr "Greffons objets"
 msgid "Set as Wallpaper"
 msgstr "Utiliser comme fond d'écran"
 
-#: src/modules/everything-windows/e_mod_main.c:381
+#: src/modules/everything-windows/e_mod_main.c:380
 msgid "Switch to Window"
 msgstr "Aller vers la fenêtre"
 
-#: src/modules/everything-windows/e_mod_main.c:386
+#: src/modules/everything-windows/e_mod_main.c:385
 msgid "Send to Deskop"
 msgstr "Envoyer sur le bureau"
 
-#: src/modules/everything-windows/e_mod_main.c:391
+#: src/modules/everything-windows/e_mod_main.c:390
 msgid "Uniconify"
 msgstr "Restaurer"
 
-#: src/modules/everything-windows/e_mod_main.c:404
+#: src/modules/everything-windows/e_mod_main.c:403
 msgid "Unfullscreen"
 msgstr "Sortir du plein écran"
 
@@ -7206,7 +7206,7 @@ msgstr "Déconnecté du service réseau."
 #: src/modules/connman/e_mod_main.c:630
 #: src/modules/connman/e_mod_main.c:654
 msgid "Service does not exist anymore"
-msgstr "Le service n'existe plus."
+msgstr "Le service n'existe plus"
 
 #: src/modules/connman/e_mod_main.c:579
 #: src/modules/connman/e_mod_main.c:584
@@ -7216,7 +7216,7 @@ msgstr "Connecté au service réseau."
 
 #: src/modules/connman/e_mod_main.c:676
 msgid "Could not set service's passphrase"
-msgstr "Impossible de définir le mot de passe du service."
+msgstr "Impossible de définir le mot de passe du service"
 
 #: src/modules/connman/e_mod_main.c:1159
 msgid "Offline mode"
@@ -7232,7 +7232,7 @@ msgstr "Serveur ConnMan introuvable"
 
 #: src/modules/connman/e_mod_main.c:1341
 msgid "Offline mode: all radios are turned off"
-msgstr "Mode hors ligne : les fonctions réseau sont désactivées."
+msgstr "Mode hors ligne : les fonctions réseau sont désactivées"
 
 #: src/modules/connman/e_mod_main.c:1366
 msgid "No Connection"
