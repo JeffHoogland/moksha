@@ -1368,6 +1368,17 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 
    if (!list->visible && (!strcmp(key, "Down")))
      _evry_list_win_show();
+   else if ((!strcmp(key, "ISO_Left_Tab") ||
+	     (((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) ||
+	       (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)) &&
+	      (!strcmp(key, "Tab")))))
+     {
+	/* int action = 0;
+	 * if (s->plugin->complete)
+	 *   action = s->plugin->complete(s->plugin, s->cur_item, &s->input); */
+
+	evry_browse_item(selector); 
+     }
    else if ((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
 	    (!strcmp(key, "Delete") || !strcmp(key, "Insert")))
      {
@@ -1392,8 +1403,6 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 
 	     if (delete)
 	       {
-		  printf("free %s,\n", it->label);
-
 		  if (hi->input)
 		    eina_stringshare_del(hi->input);
 		  if (hi->plugin)
@@ -1406,12 +1415,11 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	       }
 	     else if (promote)
 	       {
-		  printf("promote %s\n", it->label);
 		  hi->count += 5;
+		  hi->last_used = ecore_time_get();
 	       }
 	     else
 	       {
-		  printf("demote %s\n", it->label);
 		  hi->count -= 5;
 		  if (hi->count < 0) hi->count = 1;
 	       }

@@ -29,7 +29,11 @@ evry_util_file_detail_set(Evry_Item_File *file)
 	EVRY_ITEM(file)->detail = eina_stringshare_add(dir_buf);
      }
    else
-     EVRY_ITEM(file)->detail = eina_stringshare_add(path);
+     {
+	if (!strncmp(path, "//", 2)) path++;
+	
+	EVRY_ITEM(file)->detail = eina_stringshare_add(path);
+     }
 }
 
 EAPI int
