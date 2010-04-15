@@ -7736,6 +7736,115 @@ collections {
          //     }
       }
    }
+   /* This is the alternate shelf. It provides a stylistic alternative to
+    * make the shelf more dynamic to your tastes and wallpaper. It is
+    * selected in the Shelf Configuration. More alternative shelfs can
+    * be provided by using more group names. eg, "e/shelf/black/base" */
+   group { name: "e/shelf/alternate_vertical/base";
+      images {
+	 image: "shelf_alt_vert_bg.png" COMP;
+// 	 image: "shelf_alt_bg_left.png" COMP;
+// 	 image: "shelf_alt_bg_right.png" COMP;
+	 image: "shelf_alt_over.png" COMP;
+// 	 image: "shelf_alt_over_left.png" COMP;
+// 	 image: "shelf_alt_over_right.png" COMP;
+      }
+      parts {
+	 part { name: "base";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+               color_class: "shelf_base";
+	       image.normal: "shelf_alt_vert_bg.png";
+	       fill.smooth: 0;
+	    }
+// 	    description { state: "left" 0.0;
+// 	       image.normal: "shelf_alt_bg_left.png";
+// 	       fill.smooth: 0;
+// 	    }
+// 	    description { state: "right" 0.0;
+// 	       image.normal: "shelf_alt_bg_right.png";
+// 	       fill.smooth: 0;
+// 	    }
+	 }
+	 part { name: "e.swallow.content";
+	    type: SWALLOW;
+	    description { state: "default" 0.0;
+	       rel1 {
+		  relative: 0.0 0.0;
+		  offset: 3 3;
+	       }
+	       rel2 {
+		  relative: 1.0 1.0;
+		  offset: -4 -4;
+	       }
+	    }
+	 }
+	 part { name: "over";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       image.normal: "shelf_alt_over.png";
+	       image.border: 5 5 5 5;
+	       image.middle: 0;
+	       fill.smooth: 0;
+	    }
+// 	    description { state: "left" 0.0;
+// 	       image.normal: "shelf_alt_over_left.png";
+// 	       image.border: 5 5 5 5;
+// 	       image.middle: 0;
+// 	       fill.smooth: 0;
+// 	    }
+// 	    description { state: "right" 0.0;
+// 	       image.normal: "shelf_alt_over_right.png";
+// 	       image.border: 5 5 5 5;
+// 	       image.middle: 0;
+// 	       fill.smooth: 0;
+// 	    }
+	 }
+      }
+      /* Because programs can not respond to 2 different types of signals,
+       * the programs are split into individual programs that point towards
+       * the base program for its orientation. */
+      programs {
+	 /* Left orientation */
+// 	 program { name: "left";
+// 	    signal: "e,state,orientation,left";
+// 	    source: "e";
+// 	    action: STATE_SET "left" 0.0;
+// 	    target: "base";
+// 	    target: "over";
+// 	    target: "shine";
+// 	 }
+// 	 program { name: "left_top";
+// 	    signal: "e,state,orientation,left_top";
+// 	    source: "e";
+// 	    after: "left";
+// 	 }
+// 	 program { name: "left_bottom";
+// 	    signal: "e,state,orientation,left_bottom";
+// 	    source: "e";
+// 	    after: "left";
+// 	 }
+// 	 /* Right orientation */
+// 	 program { name: "right";
+// 	    signal: "e,state,orientation,right";
+// 	    source: "e";
+// 	    action: STATE_SET "right" 0.0;
+// 	    target: "base";
+// 	    target: "over";
+// 	    target: "shine";
+// 	 }
+// 	 program { name: "right_top";
+// 	    signal: "e,state,orientation,right_top";
+// 	    source: "e";
+// 	    after: "right";
+// 	 }
+// 	 program { name: "right_bottom";
+// 	    signal: "e,state,orientation,right_bottom";
+// 	    source: "e";
+// 	    after: "right";
+// 	 }
+      }
+   }
    group {
       name: "e/shelf/alternate/inset";
       images {
