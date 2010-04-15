@@ -1378,6 +1378,8 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	Evry_Item *it = s->cur_item;
 
 	evry_item_ref(it);
+
+	s->item_auto_selected = EINA_FALSE;
 	
 	if (it->plugin->complete)
 	  action = it->plugin->complete(it->plugin, it, &input);
