@@ -1373,11 +1373,28 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	       (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)) &&
 	      (!strcmp(key, "Tab")))))
      {
-	/* int action = 0;
-	 * if (s->plugin->complete)
-	 *   action = s->plugin->complete(s->plugin, s->cur_item, &s->input); */
+	int action = 0;
+	char *input = NULL;
+	Evry_Item *it = s->cur_item;
 
-	evry_browse_item(selector); 
+	evry_item_ref(it);
+	
+	if (it->plugin->complete)
+	  action = it->plugin->complete(it->plugin, it, &input);
+	else
+	  evry_browse_item(selector);
+
+	if (action == EVRY_COMPLETE_INPUT)
+	  {
+	     snprintf(s->input, INPUTLEN, "%s", input);
+	     _evry_update_text_label(s); 
+	     _evry_cb_update_timer(selector);
+	     evry_item_select(s, it);
+	  }
+
+	E_FREE(input);
+	
+	evry_item_free(it);
      }
    else if ((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
 	    (!strcmp(key, "Delete") || !strcmp(key, "Insert")))

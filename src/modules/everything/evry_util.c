@@ -194,6 +194,13 @@ evry_fuzzy_match(const char *str, const char *match)
 	  }
      }
 
+   if (sum > 0)
+     {
+	/* exact match ? */
+	if (strlen(str) != m_len)
+	  sum += 10;
+     }
+   
    return sum;
 }
 

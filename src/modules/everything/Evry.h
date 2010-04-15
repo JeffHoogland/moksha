@@ -3,7 +3,7 @@
 
 #include "e.h"
 
-#define EVRY_API_VERSION 1
+#define EVRY_API_VERSION 2
 
 
 #define EVRY_ACTION_OTHER 0
@@ -13,6 +13,10 @@
 #define EVRY_ASYNC_UPDATE_ADD 0
 #define EVRY_ASYNC_UPDATE_CLEAR 1
 #define EVRY_ASYNC_UPDATE_REFRESH 2
+
+#define EVRY_COMPLETE_NONE   0
+#define EVRY_COMPLETE_INPUT  1
+#define EVRY_COMPLETE_BROWSE 2
 
 #define VIEW_MODE_LIST   0
 #define VIEW_MODE_DETAIL 1
@@ -184,7 +188,10 @@ struct _Evry_Plugin
   /* only used when plugin is of type_action */
   int  (*action) (Evry_Plugin *p, const Evry_Item *item);
 
-  /* int  (*complete) (Evry_Plugin *p, const Evry_Item *item, char *input); */
+  /* try to complete current item:
+     return: EVRY_COMPLETE_INPUT when input was changed
+     return: EVRY_COMPLETE_BROWSE to browse item */
+  int  (*complete) (Evry_Plugin *p, const Evry_Item *item, char **input);
 
   /* handle key events: return 1 when key is handled by plugin */
   int  (*cb_key_down)  (Evry_Plugin *p, const Ecore_Event_Key *ev);

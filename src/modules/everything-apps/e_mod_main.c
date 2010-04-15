@@ -664,6 +664,30 @@ _fetch(Evry_Plugin *plugin, const char *input)
    return 1;
 }
 
+
+static int
+_complete(Evry_Plugin *plugin, const Evry_Item *it, char **input)
+{
+   ITEM_APP(app, it);
+   
+   char buf[128];
+
+   if (app->desktop)
+     {
+	char *space = strchr(app->desktop->exec, ' ');
+	
+	snprintf(buf, sizeof(buf), "%s ", app->desktop->exec);
+	if (space)
+	  buf[1 + space - app->desktop->exec] = '\0';
+     }
+   else
+     snprintf(buf, sizeof(buf), "%s ", app->file);
+
+   *input = strdup(buf);
+     
+   return EVRY_COMPLETE_INPUT;
+}
+
 static Evas_Object *
 _icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 {
@@ -887,7 +911,8 @@ module_init(void)
    p1 = E_NEW(Plugin, 1);
    evry_plugin_new(EVRY_PLUGIN(p1), "Applications", type_subject, "", "APPLICATION", 0, NULL, NULL,
 		   _begin, _cleanup, _fetch, NULL, _icon_get, _free_plugin);
-
+   EVRY_PLUGIN(p1)->complete = &_complete;
+   
    p2 = E_NEW(Plugin, 1);
    evry_plugin_new(EVRY_PLUGIN(p2), "Open With...", type_action, "FILE", "", 0, NULL, NULL,
 		   _begin_open_with, _cleanup, _fetch, _open_with_action,
