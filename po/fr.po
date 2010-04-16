@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-04-15 05:54+0400\n"
-"PO-Revision-Date: 2010-04-15 08:47+0400\n"
+"POT-Creation-Date: 2010-04-16 06:44+0400\n"
+"PO-Revision-Date: 2010-04-16 15:24+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment French Team <pourunmondesansgourou@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -876,7 +876,7 @@ msgstr "Échec du verrouillage"
 
 #: src/bin/e_desklock.c:241
 msgid "Locking the desktop failed because some application<br>has grabbed either the keyboard or the mouse or both<br>and their grab is unable to be broken."
-msgstr "Le verrouillage du bureau a échoué car une application<br>s'est accaparée le clavier ou la souris, voire les deux,<br>et il n'est pas possible d'outrepasser cette action."
+msgstr "Le verrouillage de l'écran a échoué car une application<br>s'est accaparée le clavier ou la souris, voire les deux,<br>et il n'est pas possible d'outrepasser cette action."
 
 #: src/bin/e_desklock.c:325
 msgid "Please enter your unlock password"
@@ -898,7 +898,7 @@ msgstr "Activer le mode présentation ?"
 
 #: src/bin/e_desklock.c:1022
 msgid "You unlocked desktop too fast.<br><br>Would you like to enable <b>presentation</b> mode and temporarily disable screen saver, lock and power saving?"
-msgstr "Vous avez déverrouillé le bureau trop vite.<br><br>Voulez-vous activer le mode <b>présentation</b> et désactiver temporairement l'écran de veille, le verrouillage et la gestion de l'énergie ?"
+msgstr "Vous avez déverrouillé l'écran trop vite.<br><br>Voulez-vous activer le mode <b>présentation</b> et désactiver temporairement l'écran de veille, le verrouillage et la gestion de l'énergie ?"
 
 #: src/bin/e_desklock.c:1033
 #: src/bin/e_screensaver.c:110
@@ -1979,8 +1979,8 @@ msgstr "Taille, position et verrous"
 #: src/bin/e_int_border_remember.c:622
 #: src/modules/everything/e_mod_main.c:82
 #: src/modules/everything/e_mod_main.c:135
-#: src/modules/everything/e_mod_main.c:541
-#: src/modules/everything/e_mod_main.c:558
+#: src/modules/everything/e_mod_main.c:533
+#: src/modules/everything/e_mod_main.c:550
 msgid "Everything"
 msgstr "Tout"
 
@@ -2377,17 +2377,17 @@ msgid ""
 msgstr ""
 "Options :\n"
 "\t-display DISPLAY\n"
-"\t\tSe connecter à l'affichage nommé DISPLAY\n"
+"\t\tSe connecter à l'affichage nommé DISPLAY.\n"
 "\t\tExemple : -display :1.0\n"
 "\t-fake-xinerama-screen WxH+X+Y\n"
-"\t\tAjouter un écran xinerama VIRTUEL (au lieu d'un réel)\n"
-"\t\tétant donné sa géométrie. Vous pouvez en ajouter autant\n"
-"\t\tque vous le désirez. Ils remplaceront les écrans réels\n"
-"\t\tle cas échéant. Ceci peut être utilisé pour simuler\n"
-"\t\txinerama.\n"
+"\t\tAjouter un écran xinerama VIRTUEL (au lieu d'écrans réels)\n"
+"\t\ten précisant la géométrie. Vous pouvez en ajouter autant\n"
+"\t\tque vous le désirez. Ils remplaceront les écrans xinerama réels,\n"
+"\t\tle cas échéant. On peut se servir de ça pour simuler xinerama.\n"
 "\t\tExemple : -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800+0\n"
-"\t-profile PROFIL_CONF\n"
-"\t\tUtiliser le profil de configuration PROFIL_CONF à la place du profil par défaut de l'utilisateur ou juste « default ».\n"
+"\t-profile PROFIL_CONFIG\n"
+"\t\tUtiliser le profil de configuration PROFIL_CONFIG à la place du profil par défaut choisi par\n"
+"\t\tl'utilisateur ou du simple « default » (prédéfini).\n"
 "\t-good\n"
 "\t\tGentil.\n"
 "\t-evil\n"
@@ -2395,9 +2395,9 @@ msgstr ""
 "\t-psychotic\n"
 "\t\tPsychopathe.\n"
 "\t-locked\n"
-"\t\tDémarrer avec le verrouillage du bureau activé, afin que le mot de passe soit demandé.\n"
+"\t\tDémarrer avec le verrouillage de l'écran activé, afin que le mot de passe soit demandé.\n"
 "\t-i-really-know-what-i-am-doing-and-accept-full-responsibility-for-it\n"
-"\t\tSi vous avez besoin de cette aide, c'est que vous n'avez pas besoin de cette option.\n"
+"\t\tSi vous avez besoin d'afficher l'aide, alors cette option n'est pas pour vous.\n"
 
 #: src/bin/e_main.c:388
 msgid ""
@@ -2640,7 +2640,7 @@ msgstr "Enlightenment ne peut pas configurer l'écran de veille de X."
 
 #: src/bin/e_main.c:758
 msgid "Setup Desklock"
-msgstr "Configuration du verrouillage de bureau"
+msgstr "Configuration du verrouillage d'écran"
 
 #: src/bin/e_main.c:763
 msgid "Enlightenment cannot set up its desk locking system."
@@ -4480,11 +4480,11 @@ msgstr "Texte de l'à propos"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:74
 msgid "Desklock Title"
-msgstr "Titre du verrouillage de bureau"
+msgstr "Titre du verrouillage d'écran"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:75
 msgid "Desklock Password"
-msgstr "Mot de passe de l'écran de verrouillage"
+msgstr "Mot de passe du verrouillage d'écran"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:76
 msgid "Dialog Error"
@@ -5564,12 +5564,12 @@ msgid "Select a Picture..."
 msgstr "Choisir une image…"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:627
-#: src/modules/everything-wallpaper/e_mod_main.c:432
+#: src/modules/everything-wallpaper/e_mod_main.c:433
 msgid "Picture Import Error"
 msgstr "Erreur lors de l'importation du fichier"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:628
-#: src/modules/everything-wallpaper/e_mod_main.c:433
+#: src/modules/everything-wallpaper/e_mod_main.c:434
 msgid "Enlightenment was unable to import the picture<br>due to conversion errors."
 msgstr "Enlightenment n'a pu importer l'image<br>à cause d'erreurs de conversion."
 
@@ -7228,7 +7228,7 @@ msgstr "ConnMan introuvable"
 
 #: src/modules/connman/e_mod_main.c:1328
 msgid "No ConnMan server found."
-msgstr "Serveur ConnMan introuvable"
+msgstr "Serveur ConnMan introuvable."
 
 #: src/modules/connman/e_mod_main.c:1341
 msgid "Offline mode: all radios are turned off"
