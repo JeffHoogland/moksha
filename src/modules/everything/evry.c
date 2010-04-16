@@ -512,8 +512,8 @@ _evry_list_win_new(E_Zone *zone)
    Evry_List_Window *list_win;
    E_Popup *popup;
    Evas_Object *o;
-   const char *offset_y;
-   const char *offset_x;
+   const char *tmp;
+   int offset_x, offset_y, offset_s;
 
    if (!evry_conf->views) return NULL;
 
@@ -533,18 +533,20 @@ _evry_list_win_new(E_Zone *zone)
    e_theme_edje_object_set(o, "base/theme/everything",
 			   "e/modules/everything/list");
 
+   tmp = edje_object_data_get(o, "offset_x");
+   offset_x = tmp ? atoi(tmp) : 0;
+   tmp = edje_object_data_get(o, "offset_y");
+   offset_y = tmp ? atoi(tmp) : 0;
+
    if (e_config->use_composite)
      {
 	edje_object_signal_emit(o, "e,state,composited", "e");
 	edje_object_message_signal_process(o);
 	edje_object_calc_force(o);
-	offset_x = edje_object_data_get(o, "offset_composite_x");
-	offset_y = edje_object_data_get(o, "offset_composite_y");
-     }
-   else
-     {
-	offset_x = edje_object_data_get(o, "offset_x");
-	offset_y = edje_object_data_get(o, "offset_y");
+
+	tmp = edje_object_data_get(o, "shadow_offset");
+	offset_s = tmp ? atoi(tmp) : 0;
+	offset_y -= offset_s;
      }
 
    edje_object_size_min_calc(o, &mw, &mh);
@@ -556,10 +558,11 @@ _evry_list_win_new(E_Zone *zone)
    if (evry_conf->height > mh)
      mh = evry_conf->height;
 
-   x =  win->popup->x + (offset_x ? atoi(offset_x) : 0);
-   y = (win->popup->y + win->popup->h) + (offset_y ? atoi(offset_y) : 0);
+   x =  win->popup->x + offset_x;
+   y = (win->popup->y + win->popup->h) + offset_y;
 
-   w = win->popup->w - (offset_x ? atoi(offset_x) : 0)*2;
+   w = win->popup->w - offset_x*2;
+   mh += offset_s;
    e_popup_move_resize(popup, x, y, w, mh);
 
    o = list_win->o_main;
@@ -621,7 +624,9 @@ _evry_window_new(E_Zone *zone)
    Evry_Window *win;
    E_Popup *popup;
    Evas_Object *o;
-
+   const char *tmp;
+   int offset_s = 0;
+   
    popup = e_popup_new(zone, 0, 0, 1, 1);
    if (!popup) return NULL;
 
@@ -644,15 +649,18 @@ _evry_window_new(E_Zone *zone)
 	edje_object_signal_emit(o, "e,state,composited", "e");
 	edje_object_message_signal_process(o);
 	edje_object_calc_force(o);
+
+	tmp = edje_object_data_get(o, "shadow_offset");
+	offset_s = tmp ? atoi(tmp) : 0;
      }
 
    edje_object_size_min_calc(o, &mw, &mh);
 
-   evry_conf->min_w = mw;
-
    if (evry_conf->width > mw)
      mw = evry_conf->width;
 
+   mw += offset_s*2;
+   mh += offset_s*2;
    x = (zone->w * evry_conf->rel_x) - (mw / 2);
    y = (zone->h * evry_conf->rel_y) - (mh / 2);
 

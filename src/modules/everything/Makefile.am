@@ -34,7 +34,6 @@ module_la_SOURCES      = $(EVRYHEADERS) \
 			 evry_plug_actions.c \
 			 evry_view_plugin_tabs.c \
 			 evry_plug_view_thumb.c \
-			 evry_plug_preview.c \
 			 evry_plug_view_help.c \
 			 evry_plug_clipboard.c
 

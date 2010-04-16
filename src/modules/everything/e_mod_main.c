@@ -12,7 +12,7 @@
 /* #undef DBG
  * #define DBG(...) ERR(__VA_ARGS__) */
 
-#define CONFIG_VERSION 8
+#define CONFIG_VERSION 9
 
 /* actual module specifics */
 static void _e_mod_action_cb(E_Object *obj, const char *params);
@@ -70,7 +70,6 @@ e_modapi_init(E_Module *m)
    evry_history_init();
 
    view_thumb_init();
-   view_preview_init();
    view_help_init();
    evry_plug_clipboard_init();
 
@@ -137,7 +136,6 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
      }
 
    view_thumb_shutdown();
-   view_preview_shutdown();
    view_help_shutdown();
    evry_plug_clipboard_shutdown();
 
@@ -220,6 +218,14 @@ _config_init()
    if (evry_conf && evry_conf->version == 7)
      {
 	evry_conf->scroll_speed = 10.0;
+	evry_conf->version = 8;
+     }
+
+   if (evry_conf && evry_conf->version == 8)
+     {
+	evry_conf->width = 460;
+	evry_conf->height = 310;
+	evry_conf->rel_y = 0.25;
 	evry_conf->version = CONFIG_VERSION;
      }
 
@@ -234,9 +240,9 @@ _config_init()
 	evry_conf = E_NEW(Evry_Config, 1);
 	evry_conf->version = CONFIG_VERSION;
 	evry_conf->rel_x = 0.5;
-	evry_conf->rel_y = 0.33;
-	evry_conf->width = 0;
-	evry_conf->height = 0;
+	evry_conf->rel_y = 0.25;
+	evry_conf->width = 460;
+	evry_conf->height = 310;
 	evry_conf->scroll_animate = 0;
 	evry_conf->scroll_speed = 10.0;
 	evry_conf->hide_input = 0;
@@ -253,15 +259,6 @@ _config_init()
 	evry_conf->cycle_mode = 0;
 	evry_conf->history_sort_mode = 0;
      }
-
-   /* TODO: remove - fix old configs */
-   if ((evry_conf->rel_x > 1.0) ||
-       (evry_conf->rel_x < 0.0))
-     evry_conf->rel_x = 0.5;
-
-   if ((evry_conf->rel_y > 1.0) ||
-       (evry_conf->rel_y < 0.0))
-     evry_conf->rel_y = 0.3;
 }
 
 

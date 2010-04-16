@@ -32784,6 +32784,7 @@ collections {
          image: "everything_drop.png" COMP;
       }
       data.item: "shaped" "1";
+      data.item: "shadow_offset" "50";
       parts {
          part {
             name: "win";
@@ -32792,11 +32793,6 @@ collections {
                state: "default" 0.0;
                visible: 0;
                min: 386 118;
-            }
-            description {
-               state: "composite" 0.0;
-               visible: 0;
-               min: 486 218;
             }
          }
          part {
@@ -33032,7 +33028,6 @@ collections {
             signal: "e,state,composited";
             source: "e";
             action: STATE_SET "composite" 0.0;
-            target: "win";
             target: "frame";
             target: "shadow";
             target: "bg";
@@ -33285,9 +33280,10 @@ collections {
       }
       /* offset to main popup */
       data.item: "offset_y" "-2";
-      data.item: "offset_x" "16";
-      data.item: "offset_composite_y" "-52";
-      data.item: "offset_composite_x" "16";
+      data.item: "offset_x" "12";
+      /* data.item: "offset_composite_y" "-52";
+       * data.item: "offset_composite_x" "16"; */
+      data.item: "shadow_offset" "50";
       data.item: "shaped" "1";
       parts {
          part {
@@ -33297,11 +33293,6 @@ collections {
                state: "default" 0.0;
                visible: 0;
                min: 400 255;
-            }
-            description {
-               state: "composite" 0.0;
-               visible: 0;
-               min: 500 305;
             }
          }
          part {
@@ -33814,7 +33805,6 @@ collections {
             signal: "e,state,composited";
             source: "e";
             action: STATE_SET "composite" 0.0;
-            target: "win";
             target: "shadow";
             target: "frame";
          }
