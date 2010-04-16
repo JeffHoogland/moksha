@@ -423,13 +423,12 @@ _hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fda
 	  {
 	     app = _item_add(p, d, NULL, 1);
 	  }
-
-	/* else FIXME only append files that exist
-	 *   {	     
-	 *      app = _item_add(p, NULL, (char *) key, 1);
-	 *      if (app && app->desktop)
-	 *        efreet_desktop_ref(app->desktop);
-	 *   } */
+	else
+	  {	     
+	     app = _item_add(p, NULL, (char *) key, 1);
+	     if (app && app->desktop)
+	       efreet_desktop_ref(app->desktop);
+	  }
       
 	if (app && app->desktop)
 	  {
