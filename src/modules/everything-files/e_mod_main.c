@@ -36,6 +36,7 @@ struct _Data
   int level;
   int cnt;
   Eina_List *files;
+  Eina_List *list;
 };
 
 static Evry_Plugin *p1 = NULL;
@@ -108,12 +109,16 @@ _scan_func(void *data)
    Plugin *p = d->plugin;
    Eina_List *files;
    char *filename;
+   const char *mime;
+   
    Evry_Item_File *file;
    char buf[4096];
+   int cnt = 0;
 
-   files = ecore_file_ls(p->directory);
+   if (!d->list)
+     d->list = ecore_file_ls(p->directory);
 
-   EINA_LIST_FREE(files, filename)
+   EINA_LIST_FREE(d->list, filename)
      {
 	if (filename[0] == '.')
 	  {
@@ -130,15 +135,25 @@ _scan_func(void *data)
 
 	evry_item_new(EVRY_ITEM(file), EVRY_PLUGIN(p), NULL, _item_free);
 
-	EVRY_ITEM(file)->data = filename;
+	EVRY_ITEM(file)->label = filename;
 
 	snprintf(buf, sizeof(buf), "%s/%s", p->directory, filename);
 	file->path = strdup(buf);
-	
-	if (ecore_file_is_dir(file->path))
-	  EVRY_ITEM(file)->browseable = EINA_TRUE;
 
+	if (ecore_file_is_dir(file->path))
+	  {
+	     file->mime = "inode/directory";
+	     EVRY_ITEM(file)->browseable = EINA_TRUE;
+	  }
+	else if ((mime = efreet_mime_type_get(file->path)))
+	  {
+	     file->mime = mime;
+	  }
+	
 	d->files = eina_list_append(d->files, file);
+
+	if (cnt > 100)
+	  break;
      }
 }
 
@@ -181,17 +196,19 @@ _scan_cancel_func(void *data)
 {
    Data *d = data;
    Plugin *p = d->plugin;
-   int cnt = 0;
-   Evry_Item *item;
-   char *filename, *path;
    Evry_Item_File *file;
+   char *filename;
    
-   EINA_LIST_FREE(d->files, item)
+   EINA_LIST_FREE(d->files, file)
      {
-	filename = item->data;
-	free(filename);
-	evry_item_free(item);
+	free((char *)EVRY_ITEM(file)->label);
+	free((char *)file->path);	
+	free(file);
      }
+
+   EINA_LIST_FREE(d->list, filename)
+     free(filename);     
+   
    E_FREE(d);
 
    if (p->directory)
@@ -208,45 +225,66 @@ _scan_end_func(void *data)
 {
    Data *d = data;
    Plugin *p = d->plugin;
-   int cnt = 0;
    Evry_Item *item;
-   char *filename, *path;
-
+   Evry_Item_File *f;
+   char *filename, *path, *mime;
+   int cnt = eina_list_count(p->base.items);
+   Eina_List *l;
+   
    p->thread = NULL;
+
    
    EINA_LIST_FREE(d->files, item)
      {
 	ITEM_FILE(file, item);
 
-	filename = item->data;
+	filename = (char *)item->label;
 	path = (char *) file->path;
+	mime = (char *) file->mime;
+	
 	file->path = eina_stringshare_add(path);
-	item->id = eina_stringshare_add(_item_id(path));
+
+	/* filter out files that we already have from history */
+	EINA_LIST_FOREACH(p->files, l, f)
+	  {
+	     if (f->path == file->path)
+	       {
+		  free(filename);
+		  free(path);
+		  E_FREE(file);
+		  file = NULL;
+		  break;
+	       }
+	  }
+	if (!file) continue;
+	
+	if (mime)
+	  file->mime = eina_stringshare_add(mime);
+	else
+	  file->mime = eina_stringshare_add("None");	  
+	item->context = eina_stringshare_ref(file->mime);
+	/* item->id = eina_stringshare_add(_item_id(path)); */
+	item->id = eina_stringshare_ref(file->path);
 	item->label = eina_stringshare_add(filename);
+
 	free(filename);
 	free(path);
 
 	p->files = eina_list_append(p->files, file);
 
-	if (item->browseable)
-	  {
-	     file->mime = eina_stringshare_ref(mime_folder);
-	     EVRY_ITEM(file)->context = eina_stringshare_ref(file->mime);
-	  }
-
 	evry_util_file_detail_set(file);
 	
 	if (cnt >= MAX_ITEMS) continue;
-	/* delay fetching of mimetype */
-	if (cnt < 20 && !file->mime) _item_fill(file);
 
 	cnt += _append_file(p, file);
      }
-
+   if (d->files)
+     p->thread = ecore_thread_run(_scan_func, _scan_end_func, _scan_cancel_func, d);
+   else
+     E_FREE(d);
+   
    EVRY_PLUGIN_ITEMS_SORT(p, _cb_sort);
    evry_plugin_async_update(EVRY_PLUGIN(p), EVRY_ASYNC_UPDATE_ADD);
-   
-   E_FREE(d);
 }
 
 static void
@@ -321,18 +359,48 @@ _cleanup(Evry_Plugin *plugin)
      }
 }
 
-static void
-_folder_item_add(Plugin *p, const char *path)
+static Eina_Bool
+_hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata)
 {
-   Evry_Item_File *file = E_NEW(Evry_Item_File, 1);
+   History_Entry *he = data;
+   History_Item *hi;
+   Plugin *p = fdata;
+   Eina_List *l;
+   Evry_Item_File *file;
+   const char *label;
+   
+   EINA_LIST_FOREACH(he->items, l, hi)
+     {
+	if (hi->plugin != p->base.name)
+	  continue;
 
-   if (!file) return;
+	if (!ecore_file_exists(key))
+	  continue;
 
-   evry_item_new(EVRY_ITEM(file), EVRY_PLUGIN(p), path, _item_free);
-   file->path = eina_stringshare_add(path);
-   file->mime = eina_stringshare_ref(mime_folder);
-   EVRY_ITEM(file)->browseable = EINA_TRUE;
-   EVRY_PLUGIN_ITEM_APPEND(p, file);
+	label = ecore_file_file_get(key);
+	if (!label)
+	  continue;
+	
+	file = E_NEW(Evry_Item_File, 1);
+	if (!file)
+	  continue;
+
+	evry_item_new(EVRY_ITEM(file), EVRY_PLUGIN(p), label, _item_free);
+
+	file->path = eina_stringshare_add(key); 
+	if (hi->context)
+	  file->mime = eina_stringshare_add(hi->context);
+	if (hi->context)
+	  EVRY_ITEM(file)->context = eina_stringshare_ref(file->mime);
+
+	EVRY_ITEM(file)->id = eina_stringshare_ref(file->path);
+
+	evry_util_file_detail_set(file); 
+	
+	p->files = eina_list_append(p->files, file); 
+	break;
+     }
+   return EINA_TRUE;
 }
 
 static int
@@ -350,11 +418,12 @@ _fetch(Evry_Plugin *plugin, const char *input)
      eina_stringshare_del(p->input); 
    p->input = NULL;
 
-   /* input is command ? */
    if (!p->parent && input)
      {
+	/* input is command ? */
    	if (!strcmp(input, "/"))
    	  {
+	     /* browse root */
 	     EINA_LIST_FREE(p->files, file)
 	       evry_item_free(EVRY_ITEM(file));
 
@@ -366,39 +435,11 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	     
 	     return 0;
    	  }
-   	/* else if (!strncmp(input, "..", 2))
-   	 *   {
-   	 *      char *end;
-   	 *      char dir[4096];
-   	 *      char *tmp;
-   	 *      int prio = 0;
-	 * 
-   	 *      if (p->command) return 1;
-	 *      if (strncmp(p->directory, "/", 1)) return 0;
-   	 *      if (!strcmp(p->directory, "/")) return 0;
-	 *      
-   	 *      snprintf(dir, 4096, "%s", p->directory);
-   	 *      end = strrchr(dir, '/');
-	 * 
-   	 *      while (end != dir)
-   	 *        {
-   	 * 	  tmp = strdup(dir);
-   	 * 	  snprintf(dir, (end - dir) + 1, "%s", tmp);
-	 * 
-	 * 	  _folder_item_add(p, dir);
-	 * 
-   	 * 	  end = strrchr(dir, '/');
-   	 * 	  free(tmp);
-   	 * 	  prio--;
-   	 *        }
-	 * 
-	 *      _folder_item_add(p, "/");
-	 * 
-   	 *      p->command = EINA_TRUE;
-   	 *      return 1;
-   	 *   } */
      }
 
+   if (!p->parent && !p->files)
+     eina_hash_foreach(evry_hist->subjects, _hist_items_add_cb, p);
+   
    if (!p->parent && !input && p->command)
      {
    	p->command = EINA_FALSE;

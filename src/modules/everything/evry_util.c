@@ -25,7 +25,7 @@ evry_util_file_detail_set(Evry_Item_File *file)
 	  
    if (path && !strncmp(path, home_dir, home_dir_len))
      {
-	snprintf(dir_buf, sizeof(dir_buf), "~%s", path + home_dir_len);
+	snprintf(dir_buf, sizeof(dir_buf), "~%s/", path + home_dir_len);
 	EVRY_ITEM(file)->detail = eina_stringshare_add(dir_buf);
      }
    else

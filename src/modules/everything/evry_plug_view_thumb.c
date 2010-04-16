@@ -128,7 +128,8 @@ _thumb_idler(void *data)
 		  edje_object_part_swallow(it->frame, "e.swallow.icon", it->image);
 		  evas_object_show(it->image);
 	       }
-
+	     else it->have_thumb = EINA_TRUE;
+	     
 	     /* dirbrowse fetches the mimetype for icon_get */
 	     if (!it->get_thumb && _check_item(it->item))
 	       it->get_thumb = EINA_TRUE;
