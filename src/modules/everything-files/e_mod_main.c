@@ -15,16 +15,13 @@ struct _Plugin
 {
   Evry_Plugin base;
 
+  Eina_List *files;
   const char *directory;
-  /* all files of directory */
-  Eina_List  *files;
-  /* current list of files */
-  Eina_List  *cur;
+  const char *input;
   Eina_Bool command;
   Eina_Bool parent;
-
-  const char *input;
-
+  Eina_Bool hist_added;
+  
   Ecore_Thread *thread;
   Eina_Bool cleanup;
 };
@@ -46,7 +43,6 @@ static Evry_Action *act2 = NULL;
 
 static E_Module *module = NULL;
 static Eina_Bool active = EINA_FALSE;
-static const char *mime_folder = NULL;
 
 static void _cleanup(Evry_Plugin *plugin);
 
@@ -177,20 +173,6 @@ _append_file(Plugin *p, Evry_Item_File *file)
    return 0;
 }
 
-static const char *
-_item_id(const char *path)
-{
-   const char *s1, *s2, *s3;
-   s1 = s2 = s3 = path;
-   
-   while (s1 && ++s1 && (s1 = strchr(s1, '/')))
-     {
-	s3 = s2;
-	s2 = s1;
-     }
-   
-   return s3;
-}
 static void
 _scan_cancel_func(void *data)
 {
@@ -263,7 +245,6 @@ _scan_end_func(void *data)
 	else
 	  file->mime = eina_stringshare_add("None");	  
 	item->context = eina_stringshare_ref(file->mime);
-	/* item->id = eina_stringshare_add(_item_id(path)); */
 	item->id = eina_stringshare_ref(file->path);
 	item->label = eina_stringshare_add(filename);
 
@@ -365,7 +346,7 @@ _hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fda
    History_Entry *he = data;
    History_Item *hi;
    Plugin *p = fdata;
-   Eina_List *l;
+   Eina_List *l, *ll;
    Evry_Item_File *file;
    const char *label;
    
@@ -374,6 +355,11 @@ _hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fda
 	if (hi->plugin != p->base.name)
 	  continue;
 
+	/* filter out files that we already have from history */
+	EINA_LIST_FOREACH(p->files, ll, file)
+	  if (!strcmp(file->path,key))
+	    return EINA_TRUE;
+	
 	if (!ecore_file_exists(key))
 	  continue;
 
@@ -396,7 +382,10 @@ _hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fda
 	EVRY_ITEM(file)->id = eina_stringshare_ref(file->path);
 
 	evry_util_file_detail_set(file); 
-	
+
+	if (ecore_file_is_dir(file->path))
+	EVRY_ITEM(file)->browseable = EINA_TRUE;
+
 	p->files = eina_list_append(p->files, file); 
 	break;
      }
@@ -432,30 +421,32 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	     _read_directory(p);
 
 	     p->command = EINA_TRUE;
-	     
 	     return 0;
    	  }
+
+	/* add recent files */
+	if (!p->hist_added)
+	  eina_hash_foreach(evry_hist->subjects, _hist_items_add_cb, p);
+	p->hist_added = EINA_TRUE;
      }
 
-   if (!p->parent && !p->files)
-     eina_hash_foreach(evry_hist->subjects, _hist_items_add_cb, p);
-   
+   /* clear command items */
    if (!p->parent && !input && p->command)
      {
    	p->command = EINA_FALSE;
-
+	
 	EINA_LIST_FREE(p->files, file)
 	  evry_item_free(EVRY_ITEM(file));
 
 	eina_stringshare_del(p->directory); 
 	p->directory = eina_stringshare_add(e_user_homedir_get());
 	_read_directory(p);
-
 	return 0;
      }
 
    if (input)
      {
+	/* skip command prefix */
 	if (p->command)
 	  p->input = eina_stringshare_add(input + 1);
 	else
@@ -599,8 +590,7 @@ module_shutdown(void)
 
 
 /***************************************************************************/
-/**/
-/* module setup */
+
 EAPI E_Module_Api e_modapi = 
 {
    E_MODULE_API_VERSION,
@@ -615,8 +605,6 @@ e_modapi_init(E_Module *m)
    if (e_datastore_get("everything_loaded"))
      active = module_init();
 
-   mime_folder = eina_stringshare_add("inode/directory");
-   
    e_module_delayed_set(m, 1); 
    
    return m;
@@ -628,8 +616,6 @@ e_modapi_shutdown(E_Module *m)
    if (active && e_datastore_get("everything_loaded"))
      module_shutdown();
 
-   eina_stringshare_del(mime_folder);
-   
    module = NULL;
    
    return 1;
@@ -640,7 +626,3 @@ e_modapi_save(E_Module *m)
 {
    return 1;
 }
-
-/**/
-/***************************************************************************/
-
