@@ -42,7 +42,7 @@ _animator(void *data)
 }
 
 static void
-_tab_scroll_to(Tab_View *v, Evry_Plugin *p)
+_tab_scroll_to(Tab_View *v, Evry_Plugin *p, int animate)
 {
    int n, w, mw, i;
    double align;
@@ -66,7 +66,7 @@ _tab_scroll_to(Tab_View *v, Evry_Plugin *p)
    if (n > 1)
      {
 	align = (double)i / (double)(n - 1);
-	if (evry_conf->scroll_animate)
+	if (animate && evry_conf->scroll_animate)
 	  {
 	     v->align_to = align;
 
@@ -152,7 +152,7 @@ _tabs_update(Tab_View *v)
 	e_box_align_set(v->o_tabs, 0.0, 0.5);       
      }
    else if (s->plugin)
-     _tab_scroll_to(v, s->plugin);
+     _tab_scroll_to(v, s->plugin, 0);
 
    e_box_thaw(v->o_tabs);
 }
@@ -179,7 +179,7 @@ _plugin_select(Tab_View *v, Evry_Plugin *p)
    evry_plugin_select(v->state, p);
 
    _tabs_update(v);
-   _tab_scroll_to(v, p);
+   _tab_scroll_to(v, p, 1);
    /* _tabs_update(v); */
 }
 
