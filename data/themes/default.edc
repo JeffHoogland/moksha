@@ -33790,14 +33790,14 @@ collections {
             signal: "e,signal,update";
             source: "e";
             action: STATE_SET "faded" 0.0;
-            transition: SINUSOIDAL 0.35;
+            /* transition: SINUSOIDAL 0.5; */
             target: "bar_clip";
             after:  "update_list2";
          }
          program {
             name: "update_list2";
             action: STATE_SET "default" 0.0;
-            transition: SINUSOIDAL 0.15;
+            /* transition: SINUSOIDAL 0.15; */
             target: "bar_clip";
          }
          program {
@@ -33815,14 +33815,23 @@ collections {
       images {
          image: "toolbar_sel.png" COMP;
       }
-      min: 70 10;
-      max: 100 10;
+      min: 50 10;
       parts {
+         part {
+            name: "clip";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+            rel1.relative: 0.05 0.0;
+            rel2.relative: 0.95 1.0;
+            }
+         }
          part {
             name: "label2";
             type: TEXT;
             scale: 1;
-            description {
+            clip_to: "clip";
+           description {
                state: "default" 0.0;
                align: 0.5 0.5;
                fixed: 0 1;
@@ -33833,7 +33842,7 @@ collections {
                   font: "Sans:style";
                   text_source: "e.text.label";
                   size: 11;
-                  min: 1 1;
+                  min: 0 1;
                   align: 0.5 0.5;
                }
             }
@@ -33866,11 +33875,14 @@ collections {
             name: "e.text.label";
             type: TEXT;
             mouse_events:  0;
+            clip_to: "clip";
             scale: 1;
             description {
                state: "default" 0.0;
                align: 0.5 0.5;
                fixed: 0 1;
+               rel1.to:   "clip";
+               rel2.to:   "clip";
                rel1.offset:   5 3;
                rel2.offset:   -6 -1;
                visible: 0;
@@ -33878,7 +33890,7 @@ collections {
                text {
                   font: "Sans:style=Bold";
                   size: 10;
-                  min: 1 1;
+                  min: 0 1;
                   align: 0.5 0.5;
                }
             }
@@ -33898,7 +33910,7 @@ collections {
             target:  "bg";
             target:  "e.text.label";
             target:  "label2";
-            transition: LINEAR 0.3;
+            transition: LINEAR 0.1;
          }
          program {
             name: "go_passive";
@@ -33911,166 +33923,6 @@ collections {
          }
       }
    }
-
-
-/////////////////////////////////////////////////////////////////////////////
-/*** EVERYTHING PREVIEW ***/
-
-   group {
-      name: "e/modules/everything/preview";
-      parts {
-         part {
-            name: "bg";
-            type: RECT;
-            mouse_events: 0;
-            description {
-               state: "default" 0.0;
-               color: 64 64 63 255;
-               rel1 {
-                  offset: -4 -4;
-               }
-               rel2 {
-                  offset: 4 4;
-               }
-            }
-         }
-         part {
-            name: "frame";
-            type: RECT;
-            mouse_events: 0;
-            description {
-               state: "default" 0.0;
-               visible: 0;
-               align: 0 0;
-               rel1 {
-                  relative: 0.0 0.0;
-               }
-               rel2 {
-                  relative: 1.0 1.0;
-                  offset: -1 -4;
-               }
-            }
-         }
-         part {
-            name: "e.swallow.icon1";
-            type: SWALLOW;
-            description {
-               state: "default" 0.0;
-               rel1 {
-                  relative: 0.0 0.0;
-                  to: "frame";
-                  offset: 2 2;
-               }
-               rel2 {
-                  relative: 0.3333 1.0;
-                  to: "frame";
-                  offset: -3 -3;
-               }
-            }
-            description {
-               state: "right" 0.0;
-               inherit: "default" 0.0;
-               rel1.relative: 0.3333 0.0;
-               rel2.relative: 0.6666 1.0;
-            }
-            description {
-               state: "left" 0.0;
-               inherit: "default" 0.0;
-               rel1.relative: 0.0 0.0;
-               rel2.relative: 0.0 1.0;
-            }
-         }
-         part {
-            name: "e.swallow.icon2";
-            type: SWALLOW;
-            description {
-               state: "default" 0.0;
-               rel1 {
-                  relative: 0.3333 0.0;
-                  to: "frame";
-                  offset: 2 2;
-               }
-               rel2 {
-                  relative: 0.6666 1.0;
-                  to: "frame";
-                  offset: -3 -3;
-               }
-            }
-            description {
-               state: "left" 0.0;
-               inherit: "default" 0.0;
-               rel1.relative: 0.00 0.0;
-               rel2.relative: 0.3333 1.0;
-            }
-            description {
-               state: "right" 0.0;
-               inherit: "default" 0.0;
-               rel1.relative: 0.6666 0.0;
-               rel2.relative: 0.9999 1.0;
-            }
-         }
-         part {
-            name: "e.swallow.icon3";
-            type: SWALLOW;
-            description {
-               state: "default" 0.0;
-               rel1 {
-                  relative: 0.6666 0.0;
-                  to: "frame";
-                  offset: 2 2;
-               }
-               rel2 {
-                  relative: 0.9999 1.0;
-                  to: "frame";
-                  offset: -3 -3;
-               }
-            }
-            description {
-               state: "left" 0.0;
-               inherit: "default" 0.0;
-               rel1.relative: 0.3333 0.0;
-               rel2.relative: 0.6666 1.0;
-            }
-            description {
-               state: "right" 0.0;
-               inherit: "default" 0.0;
-               rel1.relative: 1.0 0.0;
-               rel2.relative: 1.0 1.0;
-            }
-         }
-      }
-      programs {
-         program {
-            name: "slide_left";
-            signal:  "e,signal,slide_left";
-            source:  "e";
-            action:  STATE_SET "right" 0.0;
-            target:  "e.swallow.icon1";
-            target:  "e.swallow.icon2";
-            target:  "e.swallow.icon3";
-            after:   "slide_middle";
-         }
-         program {
-            name: "slide_right";
-            signal:  "e,signal,slide_right";
-            source:  "e";
-            action:  STATE_SET "left" 0.0;
-            target:  "e.swallow.icon1";
-            target:  "e.swallow.icon2";
-            target:  "e.swallow.icon3";
-            after:   "slide_middle";
-         }
-         program {
-            name: "slide_middle";
-            action:  STATE_SET "default" 0.0;
-            target:  "e.swallow.icon1";
-            target:  "e.swallow.icon2";
-            target:  "e.swallow.icon3";
-            transition: LINEAR 0.25;
-         }
-      }
-   }
-
 
 /////////////////////////////////////////////////////////////////////////////
 /*** EVERYTHING THUMB VIEW ***/

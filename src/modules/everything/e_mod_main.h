@@ -52,6 +52,9 @@ struct _Tab_View
   void (*clear) (Tab_View *tv);
   int (*key_down) (Tab_View *tv, const Ecore_Event_Key *ev);
   
+  double align;
+  double align_to;
+  Ecore_Animator *animator;
 };
 
 

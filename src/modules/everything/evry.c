@@ -1001,7 +1001,8 @@ _evry_list_win_update(Evry_State *s)
    if (s != selector->state) return;
    if (!list->visible) return;
 
-   _evry_view_update(s, s->plugin);
+   if (s->changed)
+     _evry_view_update(s, s->plugin);
 }
 
 static int
@@ -1854,6 +1855,7 @@ _evry_matches_update(Evry_Selector *sel, int async)
    Evry_Plugin *p;
    Eina_List *l;
    const char *input;
+   s->changed = 1;
 
    EINA_LIST_FREE(s->cur_plugins, p);
 
@@ -1873,6 +1875,7 @@ _evry_matches_update(Evry_Selector *sel, int async)
 		 (!strncmp(s->input, p->trigger, strlen(p->trigger))))
 	       {
 		  s->cur_plugins = eina_list_append(s->cur_plugins, p);
+
 		  p->fetch(p, s->input + strlen(p->trigger));
 		  break;
 	       }
@@ -1883,16 +1886,25 @@ _evry_matches_update(Evry_Selector *sel, int async)
      {
 	EINA_LIST_FOREACH(s->plugins, l, p)
 	  {
-	     if (!win->plugin_dedicated && p->trigger) continue;
-	     if (p == sel->aggregator) continue;
+	     if (!win->plugin_dedicated && p->trigger)
+	       continue;
+	     if (p == sel->aggregator)
+	       continue;
+	     /* dont wait for async plugin. use their current items */
 	     if (!async && p->async_fetch && p->items)
 	       {
 		  s->cur_plugins = eina_list_append(s->cur_plugins, p);
 	       }
 	     else
 	       {
-		  if (p->fetch(p, input) || (sel->states->next) || (win->plugin_dedicated))
-		    s->cur_plugins = eina_list_append(s->cur_plugins, p);
+		  p->changed = EINA_TRUE;
+		  
+		  if ((p->fetch(p, input)) ||
+		      (sel->states->next)  ||
+		      (win->plugin_dedicated))
+		    {
+		       s->cur_plugins = eina_list_append(s->cur_plugins, p);
+		    }
 	       }
 	  }
 
@@ -1904,8 +1916,6 @@ _evry_matches_update(Evry_Selector *sel, int async)
 	  {
 	     s->cur_plugins = eina_list_prepend(s->cur_plugins, sel->aggregator);
 	     sel->aggregator->fetch(sel->aggregator, input);
-	     /* if (s->plugin_auto_selected)
-	      *   _evry_plugin_select(s, NULL); */
 	  }
 	else
 	  sel->aggregator->cleanup(sel->aggregator);

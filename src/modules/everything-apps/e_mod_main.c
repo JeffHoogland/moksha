@@ -435,6 +435,10 @@ _hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fda
 	if (hi->plugin != p->base.name)
 	  continue;
 	app = NULL;
+
+	/* ignore executables for parameter */
+	if (!strncmp(key, "_", 1))
+	  continue;
 	
 	if ((d = efreet_util_desktop_exec_find(key)))
 	  {
@@ -608,14 +612,18 @@ static int
 _fetch(Evry_Plugin *plugin, const char *input)
 {
    PLUGIN(p, plugin);
-   Eina_List *l;
+   Eina_List *l, *ll, *previous;
    Efreet_Desktop *desktop;
    Evry_Item *it;
    char *file;
    int prio = 0;
    int len = input ? strlen(input) : 0;
-
-   EVRY_PLUGIN_ITEMS_CLEAR(p);
+   plugin->changed = 0;
+   
+   previous = plugin->items;
+   plugin->items = NULL;
+   
+   /* EVRY_PLUGIN_ITEMS_CLEAR(p); */
 
    /* add apps for a given mimetype */
    if (plugin->type == type_action)
@@ -661,8 +669,13 @@ _fetch(Evry_Plugin *plugin, const char *input)
    /* add executables */
    _add_executables(p, input);
 
-   if (!plugin->items) return 0;
-
+   if (!plugin->items)
+     {
+	plugin->items = previous;
+	EVRY_PLUGIN_ITEMS_CLEAR(p);
+	return 0;
+     }
+   
    if (plugin->type == type_action)
      {
 	EINA_LIST_FOREACH(plugin->items, l, it)
@@ -677,6 +690,18 @@ _fetch(Evry_Plugin *plugin, const char *input)
    if (plugin->type != type_action || input)
      EVRY_PLUGIN_ITEMS_SORT(plugin, _cb_sort);
 
+   for (l = previous, ll = plugin->items; l && ll; l = l->next, ll = ll->next)
+     {
+	if (l->data != ll->data)
+	  {
+	     plugin->changed = 1;
+	     break;
+	  }
+     }
+   if (l || ll) plugin->changed = 1;
+
+   if (previous) eina_list_free(previous);
+   
    return 1;
 }
 
@@ -964,58 +989,6 @@ module_init(void)
    evry_action_register(act4, 4);
    evry_action_register(act5, 5);
 
-   /*
-     Eina_List *l, *ll;
-     const char *file, *name;
-     History_Entry *he;
-     History_Item *hi;
-     name = EVRY_PLUGIN(p1)->name;
-     double t;
-     int found = 0;
-
-     evry_history_load();
-   
-     EINA_LIST_FOREACH(e_exehist_list_get(), l, file)
-     {
-     t = e_exehist_newest_run_get(file);
-     he = eina_hash_find(evry_hist->subjects, file);
-
-     if (!he)
-     {
-     he = E_NEW(History_Entry, 1);
-     eina_hash_add(evry_hist->subjects, file, he);
-     }
-     else
-     {
-     EINA_LIST_FOREACH(he->items, ll, hi)
-     {
-     if (hi->plugin != name) continue;
-
-     if (t > hi->last_used - 1.0)
-     {
-     hi->last_used = t;
-     hi->usage += TIME_FACTOR(hi->last_used);
-     hi->count = e_exehist_popularity_get(file);
-     }
-     found = 1;
-     break;
-     }
-
-     }
-	
-     if (!found)
-     {
-     hi = E_NEW(History_Item, 1);
-     hi->plugin = eina_stringshare_ref(name);
-     hi->last_used = t;
-     hi->count = e_exehist_popularity_get(file);
-     hi->usage += TIME_FACTOR(hi->last_used);
-     he->items = eina_list_append(he->items, hi);
-     }
-     found = 0;
-     }
-     evry_history_unload();
-   */
    /* taken from e_exebuf.c */
    exelist_exe_edd = E_CONFIG_DD_NEW("E_Exe", E_Exe);
 #undef T
@@ -1165,10 +1138,7 @@ _scan_idler(void *data)
 }
 
 
-
 /***************************************************************************/
-
-
 
 static E_Config_DD *conf_edd = NULL;
 
@@ -1263,6 +1233,8 @@ static int
 _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    _conf->list_executables = cfdata->list_executables;
+   e_config_domain_save("module.everything-apps", conf_edd, _conf);
+
    e_config_save_queue();
    return 1;
 }
@@ -1270,7 +1242,7 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 /***************************************************************************/
 
 static void 
-_conf_new(void) 
+_conf_new(void)
 {
    _conf = E_NEW(Module_Config, 1);
    _conf->version = (MOD_CONFIG_FILE_EPOCH << 16);

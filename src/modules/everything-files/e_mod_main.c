@@ -359,9 +359,10 @@ _hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fda
 	EINA_LIST_FOREACH(p->files, ll, file)
 	  if (!strcmp(file->path, key))
 	    return EINA_TRUE;
-	
-	if (!ecore_file_exists(key))
-	  continue;
+
+	/* XXX this blocks ui when drive is sleeping */
+	/* if (!ecore_file_exists(key))
+	 *   continue; */
 
 	label = ecore_file_file_get(key);
 	if (!label)

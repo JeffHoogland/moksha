@@ -615,7 +615,7 @@ _animator(void *data)
 {
    Smart_Data *sd = evas_object_smart_data_get(data);
    double da;
-   double spd = 25.0 / e_config->framerate;
+   double spd = (25.0 / (double)e_config->framerate) / (double) (1 + sd->view->zoom);
    int wait = 0;
 
    if (sd->sel_pos != sd->sel_pos_to)

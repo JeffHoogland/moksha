@@ -100,6 +100,8 @@ struct _Plugin_Config
   int priority;
 
   const char *trigger;
+
+  Evry_Plugin *plugin;
 };
 
 
@@ -233,6 +235,8 @@ struct _Evry_Plugin
   
   /* not to be set by plugin! */
   Plugin_Config *config;
+
+  Eina_Bool changed;
 };
 
 
@@ -257,6 +261,8 @@ struct _Evry_State
   Eina_Bool item_auto_selected;
 
   Evry_View *view;
+
+  Eina_Bool changed;
 };
 
 struct _Evry_View

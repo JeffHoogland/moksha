@@ -128,13 +128,32 @@ _fetch(Evry_Plugin *plugin, const char *input)
    Eina_List *items = NULL;
    const char *context = NULL;
 
-   EVRY_PLUGIN_ITEMS_FREE(p);
-   
-   s = p->selector->state;
+   plugin->changed = 1;
 
+   s = p->selector->state;
+   
    if (!s || !s->cur_plugins || !s->cur_plugins->next)
      return 0;
 
+   /* first is aggregator itself */
+   lp = s->cur_plugins->next;
+
+   /* EINA_LIST_FOREACH(lp, l, pp)   
+    *   {
+    * 	if (pp->changed)
+    * 	  {
+    * 	     plugin->changed = 1;
+    * 	     break;
+    * 	  }
+    *   }
+    * 
+    * if (!plugin->changed)
+    *   return 1; */
+   /* printf("aggreator changed\n"); */
+   
+   EVRY_PLUGIN_ITEMS_FREE(p);
+
+   /* get current 'context' ... */
    for (i = 1; i < 3; i++)
      {
 	Evry_Item *item;
@@ -144,9 +163,6 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	     context = item->context;
 	  }	
      }
-
-   /* first is aggregator itself */
-   lp = s->cur_plugins->next;
 
    if (input)
      {

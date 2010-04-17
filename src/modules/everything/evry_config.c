@@ -80,15 +80,11 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    C(scroll_animate);
    C(scroll_speed);
 #undef C
-   
-   EINA_LIST_FOREACH(evry_conf->plugins, l, p)
-     if (p->type == type_subject)
-       cfdata->p_subject = eina_list_append(cfdata->p_subject, p);
-     else if (p->type == type_action)
-       cfdata->p_action = eina_list_append(cfdata->p_action, p);
-     else if (p->type == type_object)
-       cfdata->p_object = eina_list_append(cfdata->p_object, p);
 
+   cfdata->p_subject = eina_list_clone(evry_conf->conf_subjects); 
+   cfdata->p_action  = eina_list_clone(evry_conf->conf_actions); 
+   cfdata->p_object  = eina_list_clone(evry_conf->conf_objects); 
+   
    if (evry_conf->cmd_terminal)
      cfdata->cmd_terminal = strdup(evry_conf->cmd_terminal);   
 
@@ -112,6 +108,7 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    if (cfdata->p_subject) eina_list_free(cfdata->p_subject);
    if (cfdata->p_action)  eina_list_free(cfdata->p_action);
    if (cfdata->p_object)  eina_list_free(cfdata->p_object);
+
    E_FREE(cfdata->cmd_terminal);
    E_FREE(cfdata->cmd_sudo);
    E_FREE(cfdata);
@@ -130,24 +127,36 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
 
 #define C(_name) evry_conf->_name = cfdata->_name
-  C(height);
-  C(width);
-  C(hide_list);
-  C(hide_input);
-  C(quick_nav);
-  C(rel_x);
-  C(rel_y);
-  C(view_mode);
-  C(view_zoom);
-  C(cycle_mode);
-  C(history_sort_mode);
-  C(scroll_animate);
-  C(scroll_speed);
+   C(height);
+   C(width);
+   C(hide_list);
+   C(hide_input);
+   C(quick_nav);
+   C(rel_x);
+   C(rel_y);
+   C(view_mode);
+   C(view_zoom);
+   C(cycle_mode);
+   C(history_sort_mode);
+   C(scroll_animate);
+   C(scroll_speed);
 #undef C
 
-   evry_conf->plugins = eina_list_sort(evry_conf->plugins, -1,
-				       _evry_cb_plugin_sort);
+   /* evry_conf->plugins = eina_list_sort(evry_conf->plugins, -1,
+    * 				       _evry_cb_plugin_sort); */
 
+   if (evry_conf->conf_subjects) eina_list_free(evry_conf->conf_subjects);
+   if (evry_conf->conf_actions) eina_list_free(evry_conf->conf_actions);
+   if (evry_conf->conf_objects) eina_list_free(evry_conf->conf_objects);
+  
+   evry_conf->conf_subjects = cfdata->p_subject;
+   evry_conf->conf_actions = cfdata->p_action;
+   evry_conf->conf_objects = cfdata->p_object;
+
+   cfdata->p_subject = NULL;
+   cfdata->p_action  = NULL;
+   cfdata->p_object  = NULL;
+   
    if (evry_conf->cmd_terminal)
      eina_stringshare_del(evry_conf->cmd_terminal);
    evry_conf->cmd_terminal = eina_stringshare_add(cfdata->cmd_terminal);
@@ -165,7 +174,7 @@ _fill_list(Eina_List *plugins, Evas_Object *obj, int enabled __UNUSED__)
    Evas *evas;
    Evas_Coord w;
    Eina_List *l;
-   Evry_Plugin *p;
+   Plugin_Config *pc;
 
    /* freeze evas, edje, and list widget */
    evas = evas_object_evas_get(obj);
@@ -173,10 +182,10 @@ _fill_list(Eina_List *plugins, Evas_Object *obj, int enabled __UNUSED__)
    edje_freeze();
    e_widget_ilist_freeze(obj);
    e_widget_ilist_clear(obj);
-
-   EINA_LIST_FOREACH(plugins, l, p)
-     e_widget_ilist_append(obj, NULL, p->name, NULL, p, NULL);
-
+   
+   EINA_LIST_FOREACH(plugins, l, pc)
+     e_widget_ilist_append(obj, NULL, pc->name, NULL, pc, NULL);
+   
    e_widget_ilist_go(obj);
    e_widget_size_min_get(obj, &w, NULL);
    e_widget_size_min_set(obj, w > 180 ? w : 180, 200);
@@ -195,22 +204,22 @@ _plugin_move(Eina_List *plugins, Evas_Object *list, int dir)
 
    if (sel >= 0)
      {
-	Evry_Plugin *p;
+	Plugin_Config *pc;
 	int prio = 0;
 
 	l1 = eina_list_nth_list(plugins, sel);
 	l2 = eina_list_nth_list(plugins, sel + dir);
 
 	if (!l1 || !l2) return;
-	p = l1->data;
+	pc = l1->data;
 	l1->data = l2->data;
-	l2->data = p;
+	l2->data = pc;
 
 	_fill_list(plugins, list, 0);
 	e_widget_ilist_selected_set(list, sel + dir);
 
-	EINA_LIST_FOREACH(plugins, l1, p)
-	  p->config->priority = prio++;
+	EINA_LIST_FOREACH(plugins, l1, pc)
+	  pc->priority = prio++;
      }
 }
 
@@ -236,7 +245,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    o = e_widget_list_add(evas, 0, 0);
 
-   of = e_widget_framelist_add(evas, _("General Settings"), 0);
+   of = e_widget_framelist_add(evas, _("General"), 0);
 
    ob = e_widget_check_add(evas, _("Hide input when inactive"),
    			   &(cfdata->hide_input));
@@ -270,9 +279,9 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    ob = e_widget_check_add(evas, _("Animate scrolling"),
    			   &(cfdata->scroll_animate));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.1f"),
-   			    5, 20, 0.1, 0, &(cfdata->scroll_speed), NULL, 10);
-   e_widget_framelist_object_append(of, ob);
+   /* ob = e_widget_slider_add(evas, 1, 0, _("%1.1f"),
+    * 			    5, 20, 0.1, 0, &(cfdata->scroll_speed), NULL, 10);
+    * e_widget_framelist_object_append(of, ob); */
    
    ob = e_widget_check_add(evas, _("Up/Down select next item in icon view"),
    			   &(cfdata->cycle_mode));
@@ -347,7 +356,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
     * e_widget_framelist_object_append(of, ob);
     * e_widget_list_object_append(o, of, 1, 1, 0.5); */
 
-   e_widget_toolbook_page_append(otb, NULL, _("Position / Size"),
+   e_widget_toolbook_page_append(otb, NULL, _("Geometry"),
 				 o, 1, 0, 1, 0, 0.5, 0.0);
 
    ob = e_widget_list_add(evas, 1, 1);

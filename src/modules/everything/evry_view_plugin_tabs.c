@@ -11,7 +11,35 @@ struct _Tab
   int cw, mw;
 };
 
+static int
+_animator(void *data)
+{
+   Tab_View *v = data;
+   
+   double da;
+   double spd = (25.0 / (double)e_config->framerate);
+   int wait = 0;
 
+   if (v->align != v->align_to)
+     {
+	v->align = (v->align * (1.0 - spd)) + (v->align_to * spd);
+
+	da = v->align - v->align_to;
+	if (da < 0.0) da = -da;
+	if (da < 0.02)
+	  v->align = v->align_to;
+	else
+	  wait++;
+
+	e_box_align_set(v->o_tabs, 1.0 - v->align, 0.5);
+     }
+
+   if (wait) return 1;
+
+   v->animator = NULL;
+   return 0;
+
+}
 
 static void
 _tab_scroll_to(Tab_View *v, Evry_Plugin *p)
@@ -28,25 +56,25 @@ _tab_scroll_to(Tab_View *v, Evry_Plugin *p)
 
    e_box_size_min_get(v->o_tabs, &mw, NULL);
    evas_object_geometry_get(v->o_tabs, NULL, NULL, &w, NULL);
-
-   if (mw <= w + 5)
+   
+   if (mw < w)
      {
-	e_box_align_set(v->o_tabs, 0.0, 0.5);
-	return;
+   	e_box_align_set(v->o_tabs, 0.0, 0.5);
+   	return;
      }
 
    if (n > 1)
      {
 	align = (double)i / (double)(n - 1);
-	/* if (evry_conf->scroll_animate)
-	 *   {
-	 *      if (!scroll_timer)
-	 *        scroll_timer = ecore_timer_add(0.01, _evry_list_scroll_timer, NULL);
-	 *      if (!scroll_animator)
-	 *        scroll_animator = ecore_animator_add(_evry_list_animator, NULL);
-	 *   }
-	 * else */
-	e_box_align_set(v->o_tabs, 1.0 - align, 0.5);
+	if (evry_conf->scroll_animate)
+	  {
+	     v->align_to = align;
+
+	     if (!v->animator)
+	       v->animator = ecore_animator_add(_animator, v);
+	  }
+	else
+	  e_box_align_set(v->o_tabs, 1.0 - align, 0.5);
      }
    else
      e_box_align_set(v->o_tabs, 0.0, 0.5);
@@ -63,8 +91,9 @@ _tabs_update(Tab_View *v)
    Evas_Coord w;
    Evas_Object *o;
 
-   evas_object_geometry_get(v->o_tabs, NULL, NULL, &w, NULL);
-
+   /* evas_object_geometry_get(v->o_tabs, NULL, NULL, &w, NULL); */
+   w = evry_conf->width - 22;
+   
    /* remove tabs for not active plugins */
    e_box_freeze(v->o_tabs);
 
@@ -106,25 +135,26 @@ _tabs_update(Tab_View *v)
 
 	if (eina_list_count(s->cur_plugins) == 2)
 	  e_box_pack_options_set(o, 1, 1, 0, 0, 0.0, 0.5,
-				 140, 10, 140, 9999);
+				 w/4, 10, w/3, 9999);
 	else
-	  e_box_pack_options_set(o, 1, 1, 1, 0, 0.0, 0.5,
-				 (tab->mw < tab->cw ? tab->cw : tab->mw), 10,
-				 (w ? w/3 : 140), 9999);
+	  e_box_pack_options_set(o, 1, 1, 0, 0, 0.0, 0.5,
+				 w/4, 10,
+				 w/3, 9999);
 	if (s->plugin == p)
 	  edje_object_signal_emit(o, "e,state,selected", "e");
 	else
 	  edje_object_signal_emit(o, "e,state,unselected", "e");
      }
 
-   e_box_thaw(v->o_tabs);
-
    if (eina_list_count(s->cur_plugins) == 2)
      {
-       e_box_align_set(v->o_tabs, 0.0, 0.5);       
+	v->align = 0;
+	e_box_align_set(v->o_tabs, 0.0, 0.5);       
      }
    else if (s->plugin)
      _tab_scroll_to(v, s->plugin);
+
+   e_box_thaw(v->o_tabs);
 }
 
 
@@ -315,5 +345,8 @@ evry_tab_view_free(Tab_View *v)
 
    evas_object_del(v->o_tabs);   
 
+   if (v->animator)
+     ecore_animator_del(v->animator);
+   
    E_FREE(v);
 }

@@ -256,6 +256,14 @@ _config_init()
 	evry_conf->cycle_mode = 0;
 	evry_conf->history_sort_mode = 0;
      }
+
+   
+   /* if (evry_conf->conf_subjects) eina_list_free(evry_conf->conf_subjects);
+    * if (evry_conf->conf_actions) eina_list_free(evry_conf->conf_actions);
+    * if (evry_conf->conf_objects) eina_list_free(evry_conf->conf_objects);
+    * evry_conf->conf_subjects = NULL;
+    * evry_conf->conf_actions = NULL;
+    * evry_conf->conf_objects = NULL; */
 }
 
 
@@ -499,7 +507,7 @@ evry_plugin_register(Evry_Plugin *p, int priority)
 	pc->name = eina_stringshare_add(p->name);
 	pc->enabled = 1;
 	pc->priority = priority ? priority : 100;;
-
+	pc->plugin = p;
 	confs = eina_list_append(confs, pc);
 	/* return NULL */
      }
