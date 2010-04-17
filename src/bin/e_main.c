@@ -639,16 +639,6 @@ main(int argc, char **argv)
      }
    _e_main_shutdown_push(e_theme_shutdown);
 
-   e_init_status_set(_("Starting International Support"));
-   TS("intl post");
-   /* init intl system */
-   if (!e_intl_post_init())
-     {
-	e_error_message_show(_("Enlightenment cannot set up its intl system."));
-	_e_main_shutdown(-1);
-     }
-   _e_main_shutdown_push(e_intl_post_shutdown);
-
    TS("move/resize info");
    /* init move resize popup */
    e_moveresize_init();
@@ -670,6 +660,17 @@ main(int argc, char **argv)
 	e_init_show();
 	pause();
      }
+
+   e_init_status_set(_("Starting International Support"));
+   TS("intl post");
+   /* init intl system */
+   if (!e_intl_post_init())
+     {
+	e_error_message_show(_("Enlightenment cannot set up its intl system."));
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_intl_post_shutdown);
+
    if (!really_know)
      {
         e_init_status_set(_("Testing Format Support"));
