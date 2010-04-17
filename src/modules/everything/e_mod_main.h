@@ -55,6 +55,7 @@ struct _Tab_View
   double align;
   double align_to;
   Ecore_Animator *animator;
+  Ecore_Timer *timer;
 };
 
 

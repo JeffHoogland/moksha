@@ -11,6 +11,9 @@ struct _Tab
   int cw, mw;
 };
 
+
+static void _tabs_update(Tab_View *v);
+
 static int
 _animator(void *data)
 {
@@ -83,16 +86,16 @@ _tab_scroll_to(Tab_View *v, Evry_Plugin *p, int animate)
 
 static Ecore_Timer *timer = NULL;
 
-static void
-_tabs_update(Tab_View *v);
 
 
 static int
 _timer_cb(void *data)
 {
-   _tabs_update(data);
+   Tab_View *v = data;
+   
+   _tabs_update(v);
 
-   timer = NULL;
+   v->timer = NULL;
    return 0;
    
 }
@@ -367,6 +370,9 @@ evry_tab_view_free(Tab_View *v)
 
    if (v->animator)
      ecore_animator_del(v->animator);
+
+   if (v->timer)
+     ecore_timer_del(v->timer);
    
    E_FREE(v);
 }
