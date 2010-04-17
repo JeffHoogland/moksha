@@ -75,17 +75,15 @@ static void _e_main_manage_all(void);
 static int  _e_main_path_init(void);
 static int  _e_main_path_shutdown(void);
 
-static void _e_main_cb_x_fatal(void *data);
-static int  _e_main_cb_signal_exit(void *data, int ev_type, void *ev);
-static int  _e_main_cb_signal_hup(void *data, int ev_type, void *ev);
-static int  _e_main_cb_signal_user(void *data, int ev_type, void *ev);
-static int  _e_main_cb_x_flusher(void *data);
-static int  _e_main_cb_idler_before(void *data);
-static int  _e_main_cb_idler_after(void *data);
-static int  _e_main_cb_eet_cacheburst_end(void *data);
-
-static int  _e_main_cb_startup_fake_end(void *data);
-
+static void _e_main_cb_x_fatal(void *data __UNUSED__);
+static int _e_main_cb_signal_exit(void *data __UNUSED__, int ev_type __UNUSED__, void *ev __UNUSED__);
+static int _e_main_cb_signal_hup(void *data __UNUSED__, int ev_type __UNUSED__, void *ev __UNUSED__);
+static int _e_main_cb_signal_user(void *data __UNUSED__, int ev_type __UNUSED__, void *ev);
+static int _e_main_cb_x_flusher(void *data __UNUSED__);
+static int _e_main_cb_idler_before(void *data __UNUSED__);
+static int _e_main_cb_idler_after(void *data __UNUSED__);
+static int _e_main_cb_eet_cacheburst_end(void *data __UNUSED__);
+static int _e_main_cb_startup_fake_end(void *data __UNUSED__);
 static void _e_main_desk_save(void);
 static void _e_main_desk_restore(E_Manager *man, E_Container *con);
 
@@ -214,7 +212,7 @@ main(int argc, char **argv)
    else
      {
 	/* do some extra tests to see if the prefix really is right */
-	char buf[4096];
+	char buf[PATH_MAX];
 
 	e_prefix_data_concat_static(buf, "data/themes/default.edj");
 	if (!ecore_file_exists(buf))
@@ -679,7 +677,7 @@ main(int argc, char **argv)
           {
              Ecore_Evas *ee;
              Evas_Object *im, *txt;
-             char buf[4096];
+             char buf[PATH_MAX];
              Evas_Coord tw, th;
 
              ee = ecore_evas_buffer_new(1, 1);
@@ -1325,7 +1323,7 @@ _e_main_manage_all(void)
 static int
 _e_main_path_init(void)
 {
-   char buf[4096];
+   char buf[PATH_MAX];
 
    /* setup data paths */
    path_data = e_path_new();
