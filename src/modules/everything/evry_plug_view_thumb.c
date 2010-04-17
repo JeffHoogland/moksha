@@ -54,7 +54,9 @@ struct _Smart_Data
   int slide_offset;
   double slide;  
   double slide_to;  
+
   int    sliding;
+  int    clearing;
 };
 
 struct _Item
@@ -75,6 +77,10 @@ struct _Item
 
 static View *view = NULL;
 static const char *view_types = NULL;
+
+
+static void _view_clear(Evry_View *view, int slide);
+
 
 static void
 _thumb_gen(void *data, Evas_Object *obj, void *event_info)
@@ -619,7 +625,7 @@ _animator(void *data)
    Smart_Data *sd = evas_object_smart_data_get(data);
    double da;
    double spd = (25.0/(double)e_config->framerate) / (double) (1 + sd->view->zoom);
-   if (sd->sliding) spd *= 1.5;
+   /* if (sd->sliding) spd *= 1.5; */
    if (spd > 0.9) spd = 0.9;
    
    int wait = 0;
@@ -662,12 +668,18 @@ _animator(void *data)
    	  {
    	     sd->slide = sd->slide_to;
    	     sd->sliding = 0;
+
+	     if (sd->clearing)
+	       {
+		  _view_clear(EVRY_VIEW(sd->view), 0); 
+		  sd->animator = NULL;
+		  return 0;
+	       }
    	  }
-   	
    	else
    	  wait++;
 
-	evas_object_move(sd->view->span, sd->slide, sd->y); 
+	evas_object_move(sd->view->span, sd->slide, sd->y);
      }
    
    if (wait) return 1;
@@ -858,6 +870,26 @@ _view_clear(Evry_View *view, int slide)
    Smart_Data *sd = evas_object_smart_data_get(v->span);
    Item *it;
 
+   if (!sd->clearing && evry_conf->scroll_animate)
+     {
+   	if (slide)
+   	  {
+   	     if (sd->items && !sd->animator)
+   	       sd->animator = ecore_animator_add(_animator, v->span); 
+   	     sd->sliding = 1;
+   	     sd->slide = sd->x;
+   	     sd->slide_to = sd->x + sd->w * -slide;
+
+	     sd->clearing = EINA_TRUE;
+	     return;
+   	  }
+
+	if (sd->animator)
+	  ecore_animator_del(sd->animator); 
+     }
+
+   sd->clearing = EINA_FALSE;
+   
    _clear_items(v->span);
 
    EINA_LIST_FREE(sd->items, it)
@@ -1042,19 +1074,19 @@ _view_update(Evry_View *view, int slide)
 
    if (evry_conf->scroll_animate)
      {
-	if (slide)
-	  {
-	     if (sd->items && !sd->animator)
-	       sd->animator = ecore_animator_add(_animator, v->span); 
-	     sd->sliding = 1;
-	     sd->slide_to = sd->x;
-	     sd->slide = sd->x + sd->w * -slide;
-	  }
-	else if (sd->sliding)
-	  {
-	     if (!sd->animator)
-	       sd->animator = ecore_animator_add(_animator, v->span); 
-	  }
+   	if (slide)
+   	  {
+   	     if (sd->items && !sd->animator)
+   	       sd->animator = ecore_animator_add(_animator, v->span); 
+   	     sd->sliding = 1;
+   	     sd->slide_to = sd->x;
+   	     sd->slide = sd->x + sd->w * -slide;
+   	  }
+   	else if (sd->sliding)
+   	  {
+   	     if (!sd->animator)
+   	       sd->animator = ecore_animator_add(_animator, v->span); 
+   	  }
      }
    
    return 0;
@@ -1068,6 +1100,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
    Eina_List *l = NULL, *ll;
    Item *it = NULL;
    const Evry_State *s = v->state;
+   int slide;
    
    if (!s->plugin)
      return 0;
@@ -1109,8 +1142,9 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 	  }
      }
    
-   if (v->tabs->key_down(v->tabs, ev))
+   if ((slide = v->tabs->key_down(v->tabs, ev)))
      {
+	/* _view_update(view, -slide); */
 	_view_update(view, 0);
 	return 1;
      }

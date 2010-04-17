@@ -71,7 +71,7 @@ static void _evry_view_update(Evry_State *s, Evry_Plugin *plugin);
 static int  _evry_view_key_press(Evry_State *s, Ecore_Event_Key *ev);
 static int  _evry_view_toggle(Evry_State *s, const char *trigger);
 static void _evry_view_show(Evry_View *v);
-static void _evry_view_hide(Evry_View *v);
+static void _evry_view_hide(Evry_View *v, int slide);
 
 static void _evry_item_desel(Evry_State *s, Evry_Item *it);
 static void _evry_item_sel(Evry_State *s, Evry_Item *it);
@@ -770,8 +770,8 @@ _evry_selector_activate(Evry_Selector *sel)
 
 	if (s && s->view)
 	  {
-	     s->view->clear(s->view, 0);
-	     _evry_view_hide(s->view);
+	     /* s->view->clear(s->view, 0); */
+	     _evry_view_hide(s->view, 0);
 	  }
 
 	_evry_list_win_clear(evry_conf->hide_list);
@@ -1199,7 +1199,7 @@ evry_browse_item(Evry_Selector *sel)
 
    if (s->view)
      {
-	_evry_view_hide(s->view);
+	_evry_view_hide(s->view, 1);
 	view = s->view;
      }
 
@@ -1724,10 +1724,12 @@ _evry_view_show(Evry_View *v)
 }
 
 static void
-_evry_view_hide(Evry_View *v)
+_evry_view_hide(Evry_View *v, int slide)
 {
    if (!v) return;
 
+   v->clear(v, slide);
+   
    if (v->o_list)
      {
 	edje_object_part_unswallow(list->o_main, v->o_list);
@@ -1828,7 +1830,7 @@ _evry_view_toggle(Evry_State *s, const char *trigger)
 
    if (s->view)
      {
-	_evry_view_hide(s->view);
+	_evry_view_hide(s->view, 0);
 	s->view->destroy(s->view);
      }
 
@@ -1977,9 +1979,14 @@ _evry_plugin_select(Evry_State *s, Evry_Plugin *p)
 void
 evry_plugin_select(const Evry_State *s, Evry_Plugin *p)
 {
+   Evry_Selector *sel;
+   
    _evry_plugin_select((Evry_State *) s, p);
 
-   _evry_selector_update(_evry_selector_for_plugin_get(p));
+   sel = _evry_selector_for_plugin_get(p);
+   
+   if (sel)  
+     _evry_selector_update(sel);
 }
 
 static void
