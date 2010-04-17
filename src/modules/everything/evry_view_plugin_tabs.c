@@ -114,11 +114,6 @@ _tabs_update(Tab_View *v)
    if (!w && !timer)
      timer = ecore_timer_add(0.1, _timer_cb, v); 
 
-   /* if (w < evry_conf->width - 18)
-    *   w = evry_conf->width - 18; */
-   
-   printf("tabs update %d %d\n", x, w);
-
    /* remove tabs for not active plugins */
    e_box_freeze(v->o_tabs);
 
