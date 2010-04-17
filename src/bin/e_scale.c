@@ -37,7 +37,6 @@ e_scale_update(void)
 	if (e_scale > e_config->scale.max) e_scale = e_config->scale.max;
 	else if (e_scale < e_config->scale.min) e_scale = e_config->scale.min;
      }
-
    
    edje_scale_set(e_scale);
    snprintf(buf, sizeof(buf), "%1.3f", e_scale);
