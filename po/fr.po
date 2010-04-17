@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-04-16 06:44+0400\n"
-"PO-Revision-Date: 2010-04-16 15:24+0400\n"
+"POT-Creation-Date: 2010-04-17 07:39+0400\n"
+"PO-Revision-Date: 2010-04-17 09:56+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment French Team <pourunmondesansgourou@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -850,7 +850,8 @@ msgstr "Modules"
 
 #: src/bin/e_configure.c:35
 #: src/modules/conf_shelves/e_mod_main.c:24
-#: src/modules/everything/e_mod_main.c:91
+#: src/modules/everything/e_mod_main.c:90
+#: src/modules/everything-apps/e_mod_main.c:1301
 #: src/modules/gadman/e_mod_main.c:25
 #: src/modules/mixer/e_mod_main.c:1044
 #: src/modules/connman/e_mod_main.c:1734
@@ -972,6 +973,7 @@ msgstr "Fichier desktop"
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:110
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:195
 #: src/modules/conf_performance/e_int_config_performance.c:115
+#: src/modules/everything-apps/e_mod_main.c:1252
 #: src/modules/pager/e_mod_config.c:125
 #: src/modules/pager/e_mod_config.c:217
 msgid "General"
@@ -1977,10 +1979,10 @@ msgid "Size, Position and Locks"
 msgstr "Taille, position et verrous"
 
 #: src/bin/e_int_border_remember.c:622
-#: src/modules/everything/e_mod_main.c:82
-#: src/modules/everything/e_mod_main.c:135
-#: src/modules/everything/e_mod_main.c:533
-#: src/modules/everything/e_mod_main.c:550
+#: src/modules/everything/e_mod_main.c:81
+#: src/modules/everything/e_mod_main.c:134
+#: src/modules/everything/e_mod_main.c:527
+#: src/modules/everything/e_mod_main.c:544
 msgid "Everything"
 msgstr "Tout"
 
@@ -6234,13 +6236,13 @@ msgstr "Très claire"
 msgid "Dropshadow"
 msgstr "Ombre portée"
 
-#: src/modules/everything/e_mod_main.c:83
-#: src/modules/everything/e_mod_main.c:135
+#: src/modules/everything/e_mod_main.c:82
+#: src/modules/everything/e_mod_main.c:134
 msgid "Show Everything Dialog"
 msgstr "Afficher la boîte de dialogue d'Omni"
 
-#: src/modules/everything/e_mod_main.c:95
-#: src/modules/everything/e_mod_main.c:356
+#: src/modules/everything/e_mod_main.c:94
+#: src/modules/everything/e_mod_main.c:350
 msgid "Run Everything"
 msgstr "Omni"
 
@@ -6354,6 +6356,16 @@ msgstr "Greffons actions"
 #: src/modules/everything/evry_config.c:413
 msgid "Object Plugins"
 msgstr "Greffons objets"
+
+#: src/modules/everything-apps/e_mod_main.c:1213
+#: src/modules/everything-apps/e_mod_main.c:1304
+#: src/modules/everything-apps/e_mod_main.c:1323
+msgid "Everything Applications"
+msgstr "Omni applications"
+
+#: src/modules/everything-apps/e_mod_main.c:1254
+msgid "Show Executables"
+msgstr "Afficher les exécutables"
 
 #: src/modules/everything-wallpaper/e_mod_main.c:105
 msgid "Set as Wallpaper"
