@@ -368,10 +368,9 @@ _e_smart_reconfigure_do(void *data)
 		  it->visible = EINA_TRUE;
 	       }
 
+	     /* fixme */ 
 	     if (!eina_list_data_find(sd->queue, it))
-	       {
-		  sd->queue = eina_list_append(sd->queue, it);
-	       }
+	       sd->queue = eina_list_append(sd->queue, it);
 
 	     evas_object_move(it->frame, xx, yy);
 	     evas_object_resize(it->frame, it->w, it->h);
@@ -620,7 +619,7 @@ _animator(void *data)
    Smart_Data *sd = evas_object_smart_data_get(data);
    double da;
    double spd = (25.0/(double)e_config->framerate) / (double) (1 + sd->view->zoom);
-   if (sd->sliding) spd *= 2.0;
+   if (sd->sliding) spd *= 1.5;
    if (spd > 0.9) spd = 0.9;
    
    int wait = 0;
@@ -1045,7 +1044,7 @@ _view_update(Evry_View *view, int slide)
      {
 	if (slide)
 	  {
-	     if (!sd->animator)
+	     if (sd->items && !sd->animator)
 	       sd->animator = ecore_animator_add(_animator, v->span); 
 	     sd->sliding = 1;
 	     sd->slide_to = sd->x;
