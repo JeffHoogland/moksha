@@ -48,14 +48,6 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-   Eina_List *files;
-   char buf[4096], dir[4096];
-   char *file;
-
-   /* snprintf(buf, sizeof(buf), "%s/.e/e/config/%s/module.everything",
-    * 	    e_user_homedir_get(), e_config_profile_get());
-    * ecore_file_mkdir(buf); */
-
    _e_module_evry_log_dom = eina_log_domain_register
      ("e_module_everything", EINA_LOG_DEFAULT_COLOR);
 

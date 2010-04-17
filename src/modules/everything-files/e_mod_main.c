@@ -103,7 +103,6 @@ _scan_func(void *data)
 {
    Data *d = data;
    Plugin *p = d->plugin;
-   Eina_List *files;
    char *filename;
    const char *mime;
    

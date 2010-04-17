@@ -246,7 +246,6 @@ struct _Inst
 
 static Evry_Plugin *p2 = NULL;
 static Inst *inst = NULL;
-static Evry_Action *act = NULL;
 
 static void
 _act_cb_border_switch_to(E_Border *bd)

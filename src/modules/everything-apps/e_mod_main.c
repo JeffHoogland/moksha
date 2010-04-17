@@ -117,7 +117,7 @@ _begin_open_with(Evry_Plugin *plugin, const Evry_Item *item)
    d = e_exehist_mime_desktop_get(mime);
    if (d)
      {
-	if (d2 = eina_list_data_find(p->apps_mime, d))
+	if ((d2 = eina_list_data_find(p->apps_mime, d)))
 	  {
 	     p->apps_mime = eina_list_remove(p->apps_mime, d2);
 	     efreet_desktop_free(d2);
@@ -296,7 +296,7 @@ _item_add(Plugin *p, Efreet_Desktop *desktop, const char *file, int match)
 
    if (!exe) return NULL;
 
-   if (app = eina_hash_find(p->added, exe))
+   if ((app = eina_hash_find(p->added, exe)))
      {
 	if (!desktop || (!app->desktop) ||
 	    (desktop == app->desktop) ||
@@ -615,16 +615,12 @@ _fetch(Evry_Plugin *plugin, const char *input)
    Eina_List *l, *ll, *previous;
    Efreet_Desktop *desktop;
    Evry_Item *it;
-   char *file;
-   int prio = 0;
-   int len = input ? strlen(input) : 0;
+
    plugin->changed = 0;
    
    previous = plugin->items;
    plugin->items = NULL;
    
-   /* EVRY_PLUGIN_ITEMS_CLEAR(p); */
-
    /* add apps for a given mimetype */
    if (plugin->type == type_action)
      _add_desktop_list(p, p->apps_mime, input);
@@ -635,7 +631,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	if (!p->apps_all)
 	  {
 	     Eina_List *apps = NULL;
-	     Eina_List *cat_ss, *cat_app, *cat_sys, *cat_set;
+	     Eina_List *cat_ss;
 	     Eina_List *l, *ll;
 
 	     apps = efreet_util_desktop_name_glob_list("*");

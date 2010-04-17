@@ -4,8 +4,6 @@
 
 typedef struct _Plugin Plugin;
 
-static int _auto_selected;
-
 struct _Plugin
 {
   Evry_Plugin base;
@@ -51,14 +49,6 @@ _cb_sort(const void *data1, const void *data2)
 {
    const Evry_Item *it1 = data1;
    const Evry_Item *it2 = data2;
-
-   if (!_auto_selected)
-     {
-	if (it1->selected)
-	  return -1;
-	if (it2->selected)
-	  return 1;
-     }
    
    if (it1->usage && it2->usage)
      return (it1->usage > it2->usage ? -1 : 1);
@@ -103,8 +93,6 @@ _cb_sort(const void *data1, const void *data2)
 
    return strcasecmp(it1->label, it2->label);
 }
-
-static int refs = 0;
 
 static inline Eina_List *
 _add_item(Plugin *p, Eina_List *items, Evry_Item *it)
@@ -238,9 +226,6 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
    if (items) eina_list_free(items);
 
-   /* XXX workaround */
-   _auto_selected = p->selector->state->item_auto_selected;
-   
    if (input)
      {
 	EVRY_PLUGIN_ITEMS_SORT(p, _cb_sort);

@@ -17,7 +17,8 @@ _animator(void *data)
    Tab_View *v = data;
    
    double da;
-   double spd = (25.0 / (double)e_config->framerate);
+   double spd = (35.0 / (double)e_config->framerate);
+   if (spd > 0.9) spd = 0.9;
    int wait = 0;
 
    if (v->align != v->align_to)
@@ -26,7 +27,7 @@ _animator(void *data)
 
 	da = v->align - v->align_to;
 	if (da < 0.0) da = -da;
-	if (da < 0.02)
+	if (da < 0.01)
 	  v->align = v->align_to;
 	else
 	  wait++;
@@ -80,6 +81,22 @@ _tab_scroll_to(Tab_View *v, Evry_Plugin *p, int animate)
      e_box_align_set(v->o_tabs, 0.0, 0.5);
 }
 
+static Ecore_Timer *timer = NULL;
+
+static void
+_tabs_update(Tab_View *v);
+
+
+static int
+_timer_cb(void *data)
+{
+   _tabs_update(data);
+
+   timer = NULL;
+   return 0;
+   
+}
+
 static void
 _tabs_update(Tab_View *v)
 {
@@ -88,12 +105,20 @@ _tabs_update(Tab_View *v)
    Evry_Plugin *p;
    const Evry_State *s = v->state;
    Tab *tab;
-   Evas_Coord w;
+   Evas_Coord w, x;
    Evas_Object *o;
 
-   /* evas_object_geometry_get(v->o_tabs, NULL, NULL, &w, NULL); */
-   w = evry_conf->width - 22;
+   edje_object_calc_force(v->o_tabs); 
+   evas_object_geometry_get(v->o_tabs, &x, NULL, &w, NULL);
+
+   if (!w && !timer)
+     timer = ecore_timer_add(0.1, _timer_cb, v); 
+
+   /* if (w < evry_conf->width - 18)
+    *   w = evry_conf->width - 18; */
    
+   printf("tabs update %d %d\n", x, w);
+
    /* remove tabs for not active plugins */
    e_box_freeze(v->o_tabs);
 
@@ -271,14 +296,14 @@ _tabs_key_down(Tab_View *v, const Ecore_Event_Key *ev)
    else if (!strcmp(key, "Prior"))
      {
 	_plugin_prev(v);
-	return 1;
+	return -1;
      }
    else if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
      {
 	if (!strcmp(key, "Left"))
 	  {
 	     _plugin_prev(v);
-	     return 1;
+	     return -1;
 	  }
 	else if (!strcmp(key, "Right"))
 	  {
@@ -292,7 +317,7 @@ _tabs_key_down(Tab_View *v, const Ecore_Event_Key *ev)
 	if (!strcmp(key, "Left"))
 	  {
 	     _plugin_prev(v);
-	     return 1;
+	     return -1;
 	  }
 	else if (!strcmp(key, "Right"))
 	  {

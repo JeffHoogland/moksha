@@ -4,7 +4,7 @@ static Evry_View *view;
 static Evas_Object *o_text = NULL;
 
 static void
-_view_clear(Evry_View *v)
+_view_clear(Evry_View *v, int slide)
 {
    v->active = 0;
    evas_object_del(v->o_list);
@@ -14,7 +14,7 @@ _view_clear(Evry_View *v)
 
 
 static int
-_view_update(Evry_View *v)
+_view_update(Evry_View *v, int slide)
 {
    return 1;
 }

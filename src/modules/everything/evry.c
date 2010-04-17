@@ -220,16 +220,6 @@ evry_show(E_Zone *zone, const char *params)
 
    return 1;
 
- error3:
-   if (selectors && selectors[0])
-     _evry_selector_free(selectors[0]);
-   if (selectors && selectors[1])
-     _evry_selector_free(selectors[1]);
-   if (selectors && selectors[2])
-     _evry_selector_free(selectors[2]);
-
-   evry_history_unload();
-
  error2:
    if (win)
      _evry_window_free(win);
@@ -357,7 +347,7 @@ evry_item_free(Evry_Item *it)
 }
 
 static Evry_Selector *
-_selector_for_plugin_get(Evry_Plugin *p)
+_evry_selector_for_plugin_get(Evry_Plugin *p)
 {
    Evry_State *s;
    int i;
@@ -435,7 +425,7 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
 
    DBG("plugin: %s", p->name);
 
-   sel = _selector_for_plugin_get(p);
+   sel = _evry_selector_for_plugin_get(p);
    if (!sel || !sel->state) return;
 
    s = sel->state;
@@ -449,7 +439,7 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
 	     if (!eina_list_data_find(s->cur_plugins, p)) return;
 
 	     s->cur_plugins = eina_list_remove(s->cur_plugins, p);
-
+	     
 	     if (s->plugin == p)
 	       _evry_plugin_select(s, NULL);
 	  }
@@ -492,7 +482,7 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
 	  {
 	     _evry_selector_update(sel);
 	  }
-
+	
 	_evry_view_update(s, NULL);
      }
    else if (action == EVRY_ASYNC_UPDATE_REFRESH)
@@ -658,7 +648,8 @@ _evry_window_new(E_Zone *zone)
 
    if (evry_conf->width > mw)
      mw = evry_conf->width;
-
+   evry_conf->width = mw;
+   
    mw += offset_s*2;
    mh += offset_s*2;
    x = (zone->w * evry_conf->rel_x) - (mw / 2);
@@ -779,7 +770,7 @@ _evry_selector_activate(Evry_Selector *sel)
 
 	if (s && s->view)
 	  {
-	     s->view->clear(s->view);
+	     s->view->clear(s->view, 0);
 	     _evry_view_hide(s->view);
 	  }
 
@@ -920,7 +911,7 @@ _evry_timer_cb_actions_get(void *data)
      {
 	s = sel->state;
 	if (s->view)
-	  s->view->update(s->view);
+	  s->view->update(s->view, 0);
 	else
 	  _evry_view_update(s, NULL);
      }
@@ -948,7 +939,6 @@ _evry_selector_update(Evry_Selector *sel)
 
 	if (s->plugin && (!it || s->item_auto_selected))
 	  {
-	     Eina_List *l;
 	     it = NULL;
 
 	     /* get first item */
@@ -1224,7 +1214,7 @@ evry_browse_item(Evry_Selector *sel)
 	if (s->view)
 	  {
 	     _evry_view_show(s->view);
-	     s->view->update(s->view);
+	     s->view->update(s->view, -1);
 	  }
      }
 
@@ -1248,6 +1238,7 @@ evry_browse_back(Evry_Selector *sel)
    _evry_selector_update(sel);
    _evry_update_text_label(s);
    _evry_view_show(s->view);
+   s->view->update(s->view, 1);
 }
 
 static void
@@ -1455,7 +1446,7 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	if (s->plugin == selector->aggregator)
 	  selector->aggregator->fetch(selector->aggregator, s->input);
 	if (s->view)
-	  s->view->update(s->view);
+	  s->view->update(s->view, 0);
      }
    else if (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)
      {
@@ -1763,7 +1754,7 @@ _evry_view_update(Evry_State *s, Evry_Plugin *p)
      }
 
    if (s->view)
-     s->view->update(s->view);
+     s->view->update(s->view, 0);
 }
 
 static void
@@ -1771,7 +1762,7 @@ _evry_view_clear(Evry_State *s)
 {
    if (!s || !s->view) return;
 
-   s->view->clear(s->view);
+   s->view->clear(s->view, 0);
 }
 
 static int
@@ -1843,7 +1834,7 @@ _evry_view_toggle(Evry_State *s, const char *trigger)
 
    s->view = v;
    _evry_view_show(s->view);
-   view->update(s->view);
+   view->update(s->view, 0);
 
    return 1;
 }
@@ -1988,7 +1979,7 @@ evry_plugin_select(const Evry_State *s, Evry_Plugin *p)
 {
    _evry_plugin_select((Evry_State *) s, p);
 
-   _evry_selector_update(selector);
+   _evry_selector_update(_evry_selector_for_plugin_get(p));
 }
 
 static void

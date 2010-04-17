@@ -62,9 +62,6 @@ evry_config_dialog(E_Container *con, const char *params __UNUSED__)
 static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
-   Eina_List *l;
-   Evry_Plugin *p;
-
 #define C(_name) cfdata->_name = evry_conf->_name
    C(height);
    C(width);
@@ -114,13 +111,13 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    E_FREE(cfdata);
 }
 
-static int
-_evry_cb_plugin_sort(const void *data1, const void *data2)
-{
-   const Evry_Plugin *p1 = data1;
-   const Evry_Plugin *p2 = data2;
-   return p1->config->priority - p2->config->priority;
-}
+/* static int
+ * _evry_cb_plugin_sort(const void *data1, const void *data2)
+ * {
+ *    const Evry_Plugin *p1 = data1;
+ *    const Evry_Plugin *p2 = data2;
+ *    return p1->config->priority - p2->config->priority;
+ * } */
 
 static int
 _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)

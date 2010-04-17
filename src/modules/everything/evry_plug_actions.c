@@ -45,8 +45,8 @@ _begin(Evry_Plugin *p, const Evry_Item *it)
    
    EINA_LIST_FOREACH(evry_conf->actions, l, act)
      {
-	if (!act->type_in1 || (act->type_in1 == type) &&
-	    (!act->check_item || act->check_item(act, it)))
+	if ((!act->type_in1) ||
+	    ((act->type_in1 == type) && (!act->check_item || act->check_item(act, it))))
 	  {
 	     act->item1 = it;
 

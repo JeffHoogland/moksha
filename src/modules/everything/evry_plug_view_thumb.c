@@ -44,13 +44,17 @@ struct _Smart_Data
 
   Evas_Object *selector;
 
+  double last_select;
   double sel_pos_to;
   double sel_pos;
   double scroll_align;
   double scroll_align_to;
   Ecore_Animator *animator;
 
-  double last_select;
+  int slide_offset;
+  double slide;  
+  double slide_to;  
+  int    sliding;
 };
 
 struct _Item
@@ -615,7 +619,10 @@ _animator(void *data)
 {
    Smart_Data *sd = evas_object_smart_data_get(data);
    double da;
-   double spd = (25.0 / (double)e_config->framerate) / (double) (1 + sd->view->zoom);
+   double spd = (25.0/(double)e_config->framerate) / (double) (1 + sd->view->zoom);
+   if (sd->sliding) spd *= 2.0;
+   if (spd > 0.9) spd = 0.9;
+   
    int wait = 0;
 
    if (sd->sel_pos != sd->sel_pos_to)
@@ -646,6 +653,24 @@ _animator(void *data)
 	e_scrollframe_child_pos_set(sd->view->sframe, 0, sd->scroll_align);
      }
 
+   if (sd->sliding)
+     {
+   	sd->slide = (sd->slide * (1.0 - spd)) + (sd->slide_to * spd);
+   
+   	da = sd->slide - sd->slide_to;
+   	if (da < 0.0) da = -da;
+   	if (da < 0.02)
+   	  {
+   	     sd->slide = sd->slide_to;
+   	     sd->sliding = 0;
+   	  }
+   	
+   	else
+   	  wait++;
+
+	evas_object_move(sd->view->span, sd->slide, sd->y); 
+     }
+   
    if (wait) return 1;
 
    sd->animator = NULL;
@@ -758,11 +783,19 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
 
    if (!scroll || !evry_conf->scroll_animate)
      {
+	sd->scroll_align = sd->scroll_align_to;
+	sd->sel_pos = sd->sel_pos_to;
+
 	if (align_to >= 0)
-	  sd->sel_pos = align_to * it->h;
+	  {
+	     sd->sel_pos = align_to * it->h;
+	     sd->sel_pos_to = sd->sel_pos;
+	  }
+	
 	if (align >= 0)
 	  {
 	     sd->scroll_align = align;
+	     sd->scroll_align_to = align;
 	     e_scrollframe_child_pos_set(sd->view->sframe, 0, sd->scroll_align);
 	  }
 	if (sd->animator)
@@ -820,7 +853,7 @@ _clear_items(Evas_Object *obj)
 }
 
 static void
-_view_clear(Evry_View *view)
+_view_clear(Evry_View *view, int slide)
 {
    View *v = (View*) view;
    Smart_Data *sd = evas_object_smart_data_get(v->span);
@@ -879,7 +912,7 @@ _update_frame(Evas_Object *obj)
 }
 
 static int
-_view_update(Evry_View *view)
+_view_update(Evry_View *view, int slide)
 {
    VIEW(v, view);
    Smart_Data *sd = evas_object_smart_data_get(v->span);
@@ -894,7 +927,7 @@ _view_update(Evry_View *view)
 
    if (!p)
      {
-	_view_clear(view);
+	_view_clear(view, 0);
 	return 1;
      }
 
@@ -1000,6 +1033,7 @@ _view_update(Evry_View *view)
 	v->plugin = p;
 
 	sd->update = EINA_TRUE;
+
 	_update_frame(v->span);
      }
 
@@ -1007,6 +1041,23 @@ _view_update(Evry_View *view)
 
    v->tabs->update(v->tabs);
 
+   if (evry_conf->scroll_animate)
+     {
+	if (slide)
+	  {
+	     if (!sd->animator)
+	       sd->animator = ecore_animator_add(_animator, v->span); 
+	     sd->sliding = 1;
+	     sd->slide_to = sd->x;
+	     sd->slide = sd->x + sd->w * -slide;
+	  }
+	else if (sd->sliding)
+	  {
+	     if (!sd->animator)
+	       sd->animator = ecore_animator_add(_animator, v->span); 
+	  }
+     }
+   
    return 0;
 }
 
@@ -1061,7 +1112,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
    
    if (v->tabs->key_down(v->tabs, ev))
      {
-	_view_update(view);
+	_view_update(view, 0);
 	return 1;
      }
 
@@ -1260,13 +1311,14 @@ _view_create(Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
                                 _pan_set, _pan_get, _pan_max_get,
                                 _pan_child_size_get);
    edje_object_part_swallow(v->bg, "e.swallow.list", v->sframe);
+   
    evas_object_show(v->sframe);
    evas_object_show(v->span);
+   
+   v->tabs = evry_tab_view_new(s, v->evas);
 
    EVRY_VIEW(v)->o_list = v->bg;
-
-   v->tabs = evry_tab_view_new(s, v->evas);
-   v->view.o_bar = v->tabs->o_tabs;
+   EVRY_VIEW(v)->o_bar = v->tabs->o_tabs;
 
    h = ecore_event_handler_add(EVRY_EVENT_ITEM_CHANGED, _cb_item_changed, v);
    v->handlers = eina_list_append(v->handlers, h);
