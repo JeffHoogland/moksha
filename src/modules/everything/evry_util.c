@@ -18,14 +18,18 @@ evry_util_file_detail_set(Evry_Item_File *file)
 	home_dir_len = strlen(home_dir);
      }
    
-   if (!EVRY_ITEM(file)->browseable)
-     path = ecore_file_dir_get(file->path);
-   else
-     path = file->path;
+   /* if (!EVRY_ITEM(file)->browseable) */
+   path = ecore_file_dir_get(file->path);
+   /* else
+    *   path = file->path; */
 	  
    if (path && !strncmp(path, home_dir, home_dir_len))
      {
-	snprintf(dir_buf, sizeof(dir_buf), "~%s/", path + home_dir_len);
+	if (*(path + home_dir_len) == '\0')
+	  snprintf(dir_buf, sizeof(dir_buf), "~%s", path + home_dir_len);
+	else
+	  snprintf(dir_buf, sizeof(dir_buf), "~%s/", path + home_dir_len);
+	
 	EVRY_ITEM(file)->detail = eina_stringshare_add(dir_buf);
      }
    else
@@ -466,3 +470,60 @@ evry_util_unescape(const char *string, int length)
 }
 
 #undef ISXDIGIT
+
+
+
+static int
+_conf_timer(void *data)
+{
+   /* e_util_dialog_internal(title,  */
+   e_util_dialog_internal(_("Configuration Updated"), data);
+   return 0;
+}
+  
+EAPI Eina_Bool
+evry_util_module_config_check(const char *module_name, int conf, int epoch, int version)
+{
+   if ((conf >> 16) < epoch) 
+     {
+	char *too_old =
+	  _("%s Configuration data needed "
+	    "upgrading. Your old configuration<br> has been"
+	    " wiped and a new set of defaults initialized. "
+	    "This<br>will happen regularly during "
+	    "development, so don't report a<br>bug. "
+	    "This simply means the module needs "
+	    "new configuration<br>data by default for "
+	    "usable functionality that your old<br>"
+	    "configuration simply lacks. This new set of "
+	    "defaults will fix<br>that by adding it in. "
+	    "You can re-configure things now to your<br>"
+	    "liking. Sorry for the inconvenience.<br>");
+
+	char buf[4096];
+	snprintf(buf, sizeof(buf), too_old, module_name);
+	ecore_timer_add(1.0, _conf_timer, buf);
+	return EINA_FALSE;
+     }
+   else if (conf > version) 
+     {
+	char *too_new =
+	  _("Your %s Module configuration is NEWER "
+	    "than the module version. This is "
+	    "very<br>strange. This should not happen unless"
+	    " you downgraded<br>the module or "
+	    "copied the configuration from a place where"
+	    "<br>a newer version of the module "
+	    "was running. This is bad and<br>as a "
+	    "precaution your configuration has been now "
+	    "restored to<br>defaults. Sorry for the "
+	    "inconvenience.<br>");
+
+	char buf[4096];
+	snprintf(buf, sizeof(buf), too_new, module_name);
+	ecore_timer_add(1.0, _conf_timer, buf);
+	return EINA_FALSE;
+     }
+
+   return EINA_TRUE;
+}

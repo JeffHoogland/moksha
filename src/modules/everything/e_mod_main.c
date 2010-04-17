@@ -226,6 +226,7 @@ _config_init()
 	evry_conf->width = 460;
 	evry_conf->height = 310;
 	evry_conf->rel_y = 0.25;
+	evry_conf->scroll_animate = 1;
 	evry_conf->version = CONFIG_VERSION;
      }
 
@@ -243,15 +244,11 @@ _config_init()
 	evry_conf->rel_y = 0.25;
 	evry_conf->width = 460;
 	evry_conf->height = 310;
-	evry_conf->scroll_animate = 0;
+	evry_conf->scroll_animate = 1;
 	evry_conf->scroll_speed = 10.0;
 	evry_conf->hide_input = 0;
 	evry_conf->hide_list = 0;
 	evry_conf->quick_nav = 1;
-	evry_conf->conf_subjects = NULL;
-	evry_conf->conf_actions = NULL;
-	evry_conf->conf_objects = NULL;
-	evry_conf->conf_views   = NULL;
 	evry_conf->cmd_terminal = eina_stringshare_add("/usr/bin/xterm");
 	evry_conf->cmd_sudo = eina_stringshare_add("/usr/bin/gksudo --preserve-env");
 	evry_conf->view_mode = 0;

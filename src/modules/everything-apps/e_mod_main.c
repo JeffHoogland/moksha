@@ -23,6 +23,7 @@ struct _Plugin
 /* taken from exebuf module */
 typedef struct _E_Exe E_Exe;
 typedef struct _E_Exe_List E_Exe_List;
+typedef struct _Module_Config Module_Config;
 
 struct _E_Exe
 {
@@ -34,6 +35,17 @@ struct _E_Exe_List
   Eina_List *list;
 };
 
+
+struct _Module_Config 
+{  
+  int version;
+
+  unsigned char list_executables;
+
+  E_Config_Dialog *cfd;
+  E_Module *module;
+};
+
 static Plugin *p1 = NULL;
 static Plugin *p2 = NULL;
 static Evry_Action *act = NULL;
@@ -42,6 +54,8 @@ static Evry_Action *act2 = NULL;
 static Evry_Action *act3 = NULL;
 static Evry_Action *act4 = NULL;
 static Evry_Action *act5 = NULL;
+
+static Module_Config    *_conf;
 
 static Eina_List *exe_path = NULL;
 static Ecore_Idler *exe_scan_idler = NULL;
@@ -99,7 +113,7 @@ _begin_open_with(Evry_Plugin *plugin, const Evry_Item *item)
 	       efreet_desktop_free(d); 
 	  }
      }
-   
+
    d = e_exehist_mime_desktop_get(mime);
    if (d)
      {
@@ -122,6 +136,11 @@ _begin(Evry_Plugin *plugin, const Evry_Item *item)
 {
    PLUGIN(p, plugin);
 
+   p->added = eina_hash_string_small_new(_hash_free);
+
+   if (!_conf->list_executables)
+     return plugin;
+   
    /* taken from exebuf module */
    char *path, *pp, *last;
    E_Exe_List *el;
@@ -159,8 +178,6 @@ _begin(Evry_Plugin *plugin, const Evry_Item *item)
      }
 
    exe_scan_idler = ecore_idler_add(_scan_idler, NULL);
-
-   p->added = eina_hash_string_small_new(_hash_free);
 
    return plugin;
 }
@@ -1147,29 +1164,172 @@ _scan_idler(void *data)
    return 1;
 }
 
-/***************************************************************************/
-/**/
-/* actual module specifics */
 
-static E_Module *module = NULL;
+
+/***************************************************************************/
+
+
+
+static E_Config_DD *conf_edd = NULL;
+
 static Eina_Bool active = EINA_FALSE;
 
-/***************************************************************************/
-/**/
-/* module setup */
 EAPI E_Module_Api e_modapi = 
 {
    E_MODULE_API_VERSION,
    "everything-apps"
 };
 
+struct _E_Config_Dialog_Data 
+{
+  int list_executables;
+};
+
+static void *_create_data(E_Config_Dialog *cfd);
+static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static void _fill_data(E_Config_Dialog_Data *cfdata);
+static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static int _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+
+E_Config_Dialog *
+_conf_dialog(E_Container *con, const char *params) 
+{
+   E_Config_Dialog *cfd = NULL;
+   E_Config_Dialog_View *v = NULL;
+   char buf[4096];
+
+   if (e_config_dialog_find("everything-apps", "advanced/everything-apps")) return NULL;
+
+   v = E_NEW(E_Config_Dialog_View, 1);
+   if (!v) return NULL;
+
+   v->create_cfdata = _create_data;
+   v->free_cfdata = _free_data;
+   v->basic.create_widgets = _basic_create;
+   v->basic.apply_cfdata = _basic_apply;
+
+   snprintf(buf, sizeof(buf), "%s/e-module.edj", _conf->module->dir);
+
+   cfd = e_config_dialog_new(con, _("Everything Applications"), "everything-apps", 
+                             "advanced/everything-apps", buf, 0, v, NULL);
+
+   e_dialog_resizable_set(cfd->dia, 1);
+   _conf->cfd = cfd;
+   return cfd;
+}
+
+/* Local Functions */
+static void *
+_create_data(E_Config_Dialog *cfd) 
+{
+   E_Config_Dialog_Data *cfdata = NULL;
+
+   cfdata = E_NEW(E_Config_Dialog_Data, 1);
+   _fill_data(cfdata);
+   return cfdata;
+}
+
+static void 
+_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+{
+   _conf->cfd = NULL;
+   E_FREE(cfdata);
+}
+
+static void 
+_fill_data(E_Config_Dialog_Data *cfdata) 
+{
+   cfdata->list_executables = _conf->list_executables;
+}
+
+static Evas_Object *
+_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
+{
+   Evas_Object *o = NULL, *of = NULL, *ow = NULL;
+
+   o = e_widget_list_add(evas, 0, 0);
+
+   of = e_widget_framelist_add(evas, _("General"), 0);
+   e_widget_framelist_content_align_set(of, 0.0, 0.0);
+   ow = e_widget_check_add(evas, _("Show Executables"), 
+                           &(cfdata->list_executables));
+   e_widget_framelist_object_append(of, ow);
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
+
+   return o;
+}
+
+static int 
+_basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+{
+   _conf->list_executables = cfdata->list_executables;
+   e_config_save_queue();
+   return 1;
+}
+
+/***************************************************************************/
+
+static void 
+_conf_new(void) 
+{
+   _conf = E_NEW(Module_Config, 1);
+   _conf->version = (MOD_CONFIG_FILE_EPOCH << 16);
+
+#define IFMODCFG(v) if ((_conf->version & 0xffff) < v) {
+#define IFMODCFGEND }
+
+   /* setup defaults */
+   IFMODCFG(0x008d);
+   _conf->list_executables = 1;
+   IFMODCFGEND;
+
+   _conf->version = MOD_CONFIG_FILE_VERSION;
+
+   e_config_save_queue();
+}
+
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-   module = m;
-
+   char buf[4096];
+   
    if (e_datastore_get("everything_loaded"))
      active = module_init();
+
+   snprintf(buf, sizeof(buf), "%s/e-module.edj", m->dir);
+
+   e_configure_registry_category_add("extensions", 80, _("Extensions"),
+				     NULL, "preferences-extensions");
+
+   e_configure_registry_item_add("extensions/everything-apps", 110, _("Everything Applications"), 
+                                 NULL, buf, _conf_dialog);
+
+   conf_edd = E_CONFIG_DD_NEW("Module_Config", Module_Config);
+
+#undef T
+#undef D
+#define T Module_Config
+#define D conf_edd
+   E_CONFIG_VAL(D, T, version, INT);
+   E_CONFIG_VAL(D, T, list_executables, UCHAR);
+#undef T
+#undef D
+
+   _conf = e_config_domain_load("module.everything-apps", conf_edd);
+
+   if (_conf) 
+     {
+	if (!evry_util_module_config_check
+	    (_("Everything Applications"), _conf->version,
+	     MOD_CONFIG_FILE_EPOCH, MOD_CONFIG_FILE_VERSION))
+	  {
+	     E_FREE(_conf);
+	  }
+     }
+
+   if (!_conf) _conf_new();
+
+   _conf->module = m;
    
    e_module_delayed_set(m, 1); 
 
@@ -1184,9 +1344,12 @@ e_modapi_shutdown(E_Module *m)
 
    E_CONFIG_DD_FREE(exelist_edd);
    E_CONFIG_DD_FREE(exelist_exe_edd);
-   
-   module = NULL;
-   
+
+
+   E_FREE(_conf);
+
+   E_CONFIG_DD_FREE(conf_edd);
+
    return 1;
 }
 

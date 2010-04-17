@@ -5,7 +5,7 @@
 #include "Evry.h"
 #include "e_mod_main.h"
 
-#define MAX_ITEMS 100
+#define MAX_ITEMS 50
 #define TERM_ACTION_DIR "%s"
 
 typedef struct _Plugin Plugin;
@@ -148,7 +148,7 @@ _scan_func(void *data)
 	
 	d->files = eina_list_append(d->files, file);
 
-	if (cnt > 100)
+	if (cnt > MAX_ITEMS)
 	  break;
      }
 }
@@ -352,12 +352,12 @@ _hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fda
    
    EINA_LIST_FOREACH(he->items, l, hi)
      {
-	if (hi->plugin != p->base.name)
+	if (hi->type != p->base.type_out)
 	  continue;
 
 	/* filter out files that we already have from history */
 	EINA_LIST_FOREACH(p->files, ll, file)
-	  if (!strcmp(file->path,key))
+	  if (!strcmp(file->path, key))
 	    return EINA_TRUE;
 	
 	if (!ecore_file_exists(key))

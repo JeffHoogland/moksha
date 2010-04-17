@@ -1,6 +1,6 @@
 #include "e_mod_main.h"
 
-#define MAX_ITEMS 100
+#define MAX_ITEMS 50
 
 typedef struct _Plugin Plugin;
 
@@ -122,8 +122,8 @@ _fetch(Evry_Plugin *plugin, const char *input)
    Plugin *p = (Plugin *) plugin;
    Evry_Plugin *pp;
    Evry_State *s;
-   Eina_List *l, *ll, *lp;
-   Evry_Item *it;
+   Eina_List *l, *ll, *lll, *lp;
+   Evry_Item *it, *it2;
    int i, cnt = 0;
    Eina_List *items = NULL;
    const char *context = NULL;
@@ -222,7 +222,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
    if (items) eina_list_free(items);
 
-   /* XXX */
+   /* XXX workaround */
    _auto_selected = p->selector->state->item_auto_selected;
    
    if (input)
@@ -241,7 +241,24 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	evry_item_free(it); 
 	p->base.items = eina_list_remove_list(p->base.items, l);
      }
-   
+
+   /* remove duplicates provided by different plugins */
+   EINA_LIST_FOREACH_SAFE(p->base.items, l, ll, it)
+     {
+	for (lll = l->next; lll; lll = lll->next)
+	  {
+	     it2 = lll->data;
+	     if ((it->plugin->name != it2->plugin->name) &&
+		 (it->plugin->type_out == it2->plugin->type_out) &&
+		 (it->id == it2->id))
+	       {
+		  p->base.items = eina_list_remove_list(p->base.items, l);
+		  evry_item_free(it);
+		  break;
+	       }
+	  }
+     }
+
    return 1;
 }
 

@@ -37,6 +37,7 @@ evry_history_init(void)
    E_CONFIG_VAL(D, T, usage,     DOUBLE);
    E_CONFIG_VAL(D, T, count,     INT);
    E_CONFIG_VAL(D, T, transient, INT);
+   E_CONFIG_VAL(D, T, type,      STR);
 #undef T
 #undef D
    hist_entry_edd = E_CONFIG_DD_NEW("History_Entry", History_Entry);
@@ -70,6 +71,8 @@ _hist_free_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata)
 	  eina_stringshare_del(hi->plugin);
 	if (hi->context)
 	  eina_stringshare_del(hi->context);
+	if (hi->type)
+	  eina_stringshare_del(hi->type);
 	E_FREE(hi);
      }
 
@@ -109,6 +112,8 @@ _hist_cleanup_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata
 	       eina_stringshare_del(hi->plugin);
 	     if (hi->context)
 	       eina_stringshare_del(hi->context);
+	     if (hi->type)
+	       eina_stringshare_del(hi->type);
 	     E_FREE(hi);
 
 	     he->items = eina_list_remove_list(he->items, l);
@@ -238,6 +243,8 @@ evry_history_add(Eina_Hash *hist, Evry_State *s, const char *ctxt)
      {
 	hi = E_NEW(History_Item, 1);
 	hi->plugin = eina_stringshare_ref(it->plugin->name);
+	if (it->plugin->type_out)
+	  hi->type  = eina_stringshare_ref(it->plugin->type_out);
 	he->items = eina_list_append(he->items, hi);
      }
 
@@ -248,6 +255,11 @@ evry_history_add(Eina_Hash *hist, Evry_State *s, const char *ctxt)
 	hi->usage += TIME_FACTOR(hi->last_used);
 	hi->transient = it->plugin->transient;
 	hi->count += (hi->transient ? 2:1);
+
+	/* XXX can be remove just for update */
+	if (it->plugin->type_out && !hi->type)
+	  hi->type = eina_stringshare_ref(it->plugin->type_out);
+
 	if (ctxt && !hi->context)
 	  hi->context = eina_stringshare_ref(ctxt);
 
