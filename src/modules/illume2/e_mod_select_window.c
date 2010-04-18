@@ -49,7 +49,8 @@ _e_mod_illume_config_select_window_create_data(E_Config_Dialog *cfd)
 static void 
 _e_mod_illume_config_select_window_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
-
+   if (_sw_change_timer) ecore_timer_del(_sw_change_timer);
+   _sw_change_timer = NULL;
 }
 
 static Evas_Object *
@@ -113,10 +114,12 @@ _e_mod_illume_config_select_window_list_changed(void *data)
       case E_ILLUME_SELECT_WINDOW_TYPE_HOME:
         if (_e_illume_cfg->policy.home.title)
           eina_stringshare_del(_e_illume_cfg->policy.home.title);
-        if (title) _e_illume_cfg->policy.home.title = eina_stringshare_add(title);
+        if (title) 
+          _e_illume_cfg->policy.home.title = eina_stringshare_add(title);
         if (_e_illume_cfg->policy.home.class)
           eina_stringshare_del(_e_illume_cfg->policy.home.class);
-        if (class) _e_illume_cfg->policy.home.class = eina_stringshare_add(class);
+        if (class) 
+          _e_illume_cfg->policy.home.class = eina_stringshare_add(class);
         if (_e_illume_cfg->policy.home.name)
           eina_stringshare_del(_e_illume_cfg->policy.home.name);
         if (name) _e_illume_cfg->policy.home.name = eina_stringshare_add(name);
@@ -124,10 +127,12 @@ _e_mod_illume_config_select_window_list_changed(void *data)
       case E_ILLUME_SELECT_WINDOW_TYPE_VKBD:
         if (_e_illume_cfg->policy.vkbd.title)
           eina_stringshare_del(_e_illume_cfg->policy.vkbd.title);
-        if (title) _e_illume_cfg->policy.vkbd.title = eina_stringshare_add(title);
+        if (title) 
+          _e_illume_cfg->policy.vkbd.title = eina_stringshare_add(title);
         if (_e_illume_cfg->policy.vkbd.class)
           eina_stringshare_del(_e_illume_cfg->policy.vkbd.class);
-        if (class) _e_illume_cfg->policy.vkbd.class = eina_stringshare_add(class);
+        if (class) 
+          _e_illume_cfg->policy.vkbd.class = eina_stringshare_add(class);
         if (_e_illume_cfg->policy.vkbd.name)
           eina_stringshare_del(_e_illume_cfg->policy.vkbd.name);
         if (name) _e_illume_cfg->policy.vkbd.name = eina_stringshare_add(name);
@@ -135,24 +140,30 @@ _e_mod_illume_config_select_window_list_changed(void *data)
       case E_ILLUME_SELECT_WINDOW_TYPE_SOFTKEY:
         if (_e_illume_cfg->policy.softkey.title)
           eina_stringshare_del(_e_illume_cfg->policy.softkey.title);
-        if (title) _e_illume_cfg->policy.softkey.title = eina_stringshare_add(title);
+        if (title) 
+          _e_illume_cfg->policy.softkey.title = eina_stringshare_add(title);
         if (_e_illume_cfg->policy.softkey.class)
           eina_stringshare_del(_e_illume_cfg->policy.softkey.class);
-        if (class) _e_illume_cfg->policy.softkey.class = eina_stringshare_add(class);
+        if (class) 
+          _e_illume_cfg->policy.softkey.class = eina_stringshare_add(class);
         if (_e_illume_cfg->policy.softkey.name)
           eina_stringshare_del(_e_illume_cfg->policy.softkey.name);
-        if (name) _e_illume_cfg->policy.softkey.name = eina_stringshare_add(name);
+        if (name) 
+          _e_illume_cfg->policy.softkey.name = eina_stringshare_add(name);
         break;
       case E_ILLUME_SELECT_WINDOW_TYPE_INDICATOR:
         if (_e_illume_cfg->policy.indicator.title)
           eina_stringshare_del(_e_illume_cfg->policy.indicator.title);
-        if (title) _e_illume_cfg->policy.indicator.title = eina_stringshare_add(title);
+        if (title) 
+          _e_illume_cfg->policy.indicator.title = eina_stringshare_add(title);
         if (_e_illume_cfg->policy.indicator.class)
           eina_stringshare_del(_e_illume_cfg->policy.indicator.class);
-        if (class) _e_illume_cfg->policy.indicator.class = eina_stringshare_add(class);
+        if (class) 
+          _e_illume_cfg->policy.indicator.class = eina_stringshare_add(class);
         if (_e_illume_cfg->policy.indicator.name)
           eina_stringshare_del(_e_illume_cfg->policy.indicator.name);
-        if (name) _e_illume_cfg->policy.indicator.name = eina_stringshare_add(name);
+        if (name) 
+          _e_illume_cfg->policy.indicator.name = eina_stringshare_add(name);
         break;
      }
 
