@@ -58,8 +58,10 @@ _e_mod_illume_config_select_window_create(E_Config_Dialog *cfd, Evas *evas, E_Co
 {
    Evas_Object *list, *ow;
    Eina_List *bds, *l;
-   int i = 0, sel = -1;
+   E_Zone *zone;
+   int i, sel = -1;
 
+   zone = e_util_zone_current_get(e_manager_current_get());
    list = e_widget_list_add(evas, 0, 0);
    ow = e_widget_ilist_add(evas, 24, 24, NULL);
    e_widget_ilist_selector_set(ow, 1);
@@ -78,6 +80,7 @@ _e_mod_illume_config_select_window_create(E_Config_Dialog *cfd, Evas *evas, E_Co
              const char *name;
 
              if (!(bd = l->data)) continue;
+             if (bd->zone != zone) continue;
              if (e_object_is_del(E_OBJECT(bd))) continue;
              if (_e_mod_illume_config_select_window_match(bd)) sel = i;
              if (!(name = e_border_name_get(bd))) continue;
