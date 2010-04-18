@@ -248,7 +248,6 @@ _e_mod_kbd_dbus_dev_del(void *data __UNUSED__, DBusMessage *msg)
      {
         _e_mod_kbd_dbus_kbd_del(udi);
         _e_mod_kbd_dbus_kbd_eval();
-        free(udi);
      }
 }
 
@@ -269,7 +268,6 @@ _e_mod_kbd_dbus_dev_chg(void *data __UNUSED__, DBusMessage *msg)
                {
                   _e_mod_kbd_dbus_kbd_add(udi);
                   _e_mod_kbd_dbus_kbd_eval();
-                  free(udi);
                }
           }
         free(cap);
