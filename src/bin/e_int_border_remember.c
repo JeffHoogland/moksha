@@ -619,7 +619,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    ob = e_widget_radio_add(evas, _("Size, Position and Locks"), MODE_GEOMETRY_LOCKS, rg);
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
-   ob = e_widget_radio_add(evas, _("Everything"), MODE_ALL, rg);
+   ob = e_widget_radio_add(evas, _("All"), MODE_ALL, rg);
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    return o;
 }
