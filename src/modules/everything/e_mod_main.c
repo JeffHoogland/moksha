@@ -368,6 +368,9 @@ _evry_cb_plugin_sort(const void *data1, const void *data2)
 {
    const Evry_Plugin *p1 = data1;
    const Evry_Plugin *p2 = data2;
+   if (!p1->config) return -1;
+   if (!p2->config) return 1;
+   
    return p1->config->priority - p2->config->priority;
 }
 

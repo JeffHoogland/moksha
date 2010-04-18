@@ -84,10 +84,6 @@ _tab_scroll_to(Tab_View *v, Evry_Plugin *p, int animate)
      e_box_align_set(v->o_tabs, 0.0, 0.5);
 }
 
-static Ecore_Timer *timer = NULL;
-
-
-
 static int
 _timer_cb(void *data)
 {
@@ -114,9 +110,13 @@ _tabs_update(Tab_View *v)
    edje_object_calc_force(v->o_tabs); 
    evas_object_geometry_get(v->o_tabs, &x, NULL, &w, NULL);
 
-   if (!w && !timer)
-     timer = ecore_timer_add(0.1, _timer_cb, v); 
-
+   if (!w && !v->timer)
+     {
+	v->timer = ecore_timer_add(0.1, _timer_cb, v); 
+	return;
+     }
+   printf("width %d\n", w);
+   
    /* remove tabs for not active plugins */
    e_box_freeze(v->o_tabs);
 
@@ -169,12 +169,13 @@ _tabs_update(Tab_View *v)
 	  edje_object_signal_emit(o, "e,state,unselected", "e");
      }
 
-   if (eina_list_count(s->cur_plugins) == 2)
-     {
-	v->align = 0;
-	e_box_align_set(v->o_tabs, 0.0, 0.5);       
-     }
-   else if (s->plugin)
+   /* if (eina_list_count(s->cur_plugins) == 2)
+    *   {
+    * 	v->align = 0;
+    * 	e_box_align_set(v->o_tabs, 0.0, 0.5);       
+    *   } */
+   /* else */
+   if (s->plugin)
      _tab_scroll_to(v, s->plugin, 0);
 
    e_box_thaw(v->o_tabs);
