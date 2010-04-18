@@ -229,7 +229,7 @@ module_init(void)
    if (!evry_api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
-   p1 = EVRY_PLUGIN_NEW(NULL, "Calculator", type_subject, NULL, "TEXT",
+   p1 = EVRY_PLUGIN_NEW(NULL, _("Calculator"), type_subject, NULL, "TEXT",
 			_begin, _cleanup, _fetch, NULL, NULL);
 
    p1->view_mode   = VIEW_MODE_LIST;

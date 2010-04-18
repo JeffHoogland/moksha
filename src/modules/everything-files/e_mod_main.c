@@ -593,20 +593,20 @@ module_init(void)
    if (!evry_api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
-   p1 = EVRY_PLUGIN_NEW(NULL, "Files", type_subject, "FILE", "FILE",
+   p1 = EVRY_PLUGIN_NEW(NULL, _("Files"), type_subject, "FILE", "FILE",
 			_begin, _cleanup, _fetch, _icon_get, NULL);
 
-   p2 = EVRY_PLUGIN_NEW(NULL, "Files", type_object, "FILE", "FILE",
+   p2 = EVRY_PLUGIN_NEW(NULL, _("Files"), type_object, "FILE", "FILE",
 			_begin, _cleanup, _fetch, _icon_get, NULL);
    
    evry_plugin_register(p1, 3);
    evry_plugin_register(p2, 1);
 
-   act1 = EVRY_ACTION_NEW("Open Folder (EFM)", "FILE", NULL, "folder-open",
+   act1 = EVRY_ACTION_NEW(_("Open Folder (EFM)"), "FILE", NULL, "folder-open",
 			  _open_folder_action, _open_folder_check);
    evry_action_register(act1, 0);
 
-   act2 = EVRY_ACTION_NEW("Open Terminal here", "FILE", NULL, "system-run",
+   act2 = EVRY_ACTION_NEW(_("Open Terminal here"), "FILE", NULL, "system-run",
 			  _open_term_action, NULL);
    evry_action_register(act2, 2);
 

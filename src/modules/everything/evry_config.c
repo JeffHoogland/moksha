@@ -287,13 +287,13 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    of = e_widget_framelist_add(evas, _("History Sort"), 0);
    rg = e_widget_radio_group_new(&cfdata->history_sort_mode); 
-   ob = e_widget_radio_add(evas, "By usage", 0, rg);
+   ob = e_widget_radio_add(evas, _("By usage"), 0, rg);
    e_widget_radio_toggle_set(ob, (cfdata->history_sort_mode == 0));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, "Most used", 1, rg);
+   ob = e_widget_radio_add(evas, _("Most used"), 1, rg);
    e_widget_radio_toggle_set(ob, (cfdata->history_sort_mode == 1));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, "Last used", 2, rg);
+   ob = e_widget_radio_add(evas, _("Last used"), 2, rg);
    e_widget_radio_toggle_set(ob, (cfdata->history_sort_mode == 2));
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);

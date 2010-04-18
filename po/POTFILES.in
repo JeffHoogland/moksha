@@ -226,6 +226,11 @@ src/modules/dropshadow/e_mod_main.c
 src/modules/everything/e_mod_main.c
 src/modules/everything/evry.c
 src/modules/everything/evry_config.c
+src/modules/everything/evry_plug_actions.c
+src/modules/everything/evry_plug_aggregator.c
+src/modules/everything/evry_plug_clipboard.c
+src/modules/everything/evry_plug_view_help.c
+src/modules/everything/evry_util.c
 src/modules/everything-apps/e_mod_main.c
 src/modules/everything-aspell/e_mod_main.c
 src/modules/everything-calc/e_mod_main.c

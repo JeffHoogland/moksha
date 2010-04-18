@@ -62,7 +62,7 @@ _view_create(Evry_View *v, const Evry_State *s, const Evas_Object *swallow)
    int mw, mh;
 
    char *text =
-     "<title><b>Welcome!</b></title>"
+     _("<title><b>Welcome!</b></title>"
      "Ok, here comes the explanation of <hilight>everything</hilight>...<br>"
      "Just type a few letters of the thing you are looking for. <br>"
      "Use cursor <hilight>&lt;up/down&gt;</hilight> to choose from the list of things.<br>"
@@ -74,7 +74,7 @@ _view_create(Evry_View *v, const Evry_State *s, const Evas_Object *swallow)
      "<hilight>&lt;ctrl+left/right&gt;</hilight>"
      "cycle through plugins<br>"
      "<hilight>&lt;ctrl+1&gt;</hilight> "
-       "choose a different view (e.g. for images)<br>";
+       "choose a different view (e.g. for images)<br>");
 
    if (v->active) return v;
 

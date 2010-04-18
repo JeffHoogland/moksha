@@ -339,7 +339,7 @@ module_init(void)
 
    p = E_NEW(Plugin, 1);
 
-   EVRY_PLUGIN_NEW(p, "Spell Checker", type_subject, "", "TEXT",
+   EVRY_PLUGIN_NEW(p, _("Spell Checker"), type_subject, "", "TEXT",
 		   NULL, _cleanup, _fetch, NULL, _free_plugin);
 
    EVRY_PLUGIN(p)->aggregate   = EINA_FALSE;
