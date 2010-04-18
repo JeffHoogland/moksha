@@ -38,6 +38,7 @@ evry_history_init(void)
    E_CONFIG_VAL(D, T, count,     INT);
    E_CONFIG_VAL(D, T, transient, INT);
    E_CONFIG_VAL(D, T, type,      STR);
+   E_CONFIG_VAL(D, T, data,      STR);
 #undef T
 #undef D
    hist_entry_edd = E_CONFIG_DD_NEW("History_Entry", History_Entry);
@@ -73,6 +74,8 @@ _hist_free_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata)
 	  eina_stringshare_del(hi->context);
 	if (hi->type)
 	  eina_stringshare_del(hi->type);
+	if (hi->data)
+	  eina_stringshare_del(hi->data);
 	E_FREE(hi);
      }
 
@@ -114,6 +117,8 @@ _hist_cleanup_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata
 	       eina_stringshare_del(hi->context);
 	     if (hi->type)
 	       eina_stringshare_del(hi->type);
+	     if (hi->data)
+	       eina_stringshare_del(hi->data);
 	     E_FREE(hi);
 
 	     he->items = eina_list_remove_list(he->items, l);

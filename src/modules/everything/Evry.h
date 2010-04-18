@@ -384,6 +384,7 @@ struct _History_Item
   double usage;
   int count;
   int transient;
+  const char *data;
 };
 
 /* evry.c */

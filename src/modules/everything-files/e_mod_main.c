@@ -374,17 +374,21 @@ _hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fda
 	evry_item_new(EVRY_ITEM(file), EVRY_PLUGIN(p), label, _item_free);
 
 	file->path = eina_stringshare_add(key); 
-	if (hi->context)
-	  file->mime = eina_stringshare_add(hi->context);
-	if (hi->context)
+	if (hi->data)
+	  file->mime = eina_stringshare_add(hi->data);
+	if (hi->data)
 	  EVRY_ITEM(file)->context = eina_stringshare_ref(file->mime);
 
 	EVRY_ITEM(file)->id = eina_stringshare_ref(file->path);
 
 	evry_util_file_detail_set(file); 
 
-	if (ecore_file_is_dir(file->path))
-	EVRY_ITEM(file)->browseable = EINA_TRUE;
+	if ((!strcmp(file->mime, "inode/directory")) ||
+	    (!strcmp(file->mime, "inode/mount-point")))
+	  EVRY_ITEM(file)->browseable = EINA_TRUE;
+
+	/* if (ecore_file_is_dir(file->path))
+	 * EVRY_ITEM(file)->browseable = EINA_TRUE; */
 
 	p->files = eina_list_append(p->files, file); 
 	break;
@@ -552,6 +556,35 @@ _open_term_action(Evry_Action *act)
    return ret;
 }
 
+static int
+_action(Evry_Plugin *plugin, const Evry_Item *it)
+{
+   ITEM_FILE(file, it);
+   Eina_List *l;
+   History_Item *hi;
+   History_Entry *he;
+   
+   he = eina_hash_find(evry_hist->subjects, file->path);
+   printf("acn\n");
+
+   if (!he) return 0;
+   
+   EINA_LIST_FOREACH(he->items, l, hi)
+     {
+	if (hi->type != plugin->type_out)
+	  continue;
+
+	if (hi->data)
+	  eina_stringshare_del(hi->data);
+
+	printf("added\n");
+	hi->data = eina_stringshare_ref(file->mime);
+     }
+
+   return 1;
+}
+
+
 static Eina_Bool
 module_init(void)
 {
@@ -560,6 +593,8 @@ module_init(void)
 
    p1 = EVRY_PLUGIN_NEW(NULL, "Files", type_subject, "FILE", "FILE",
 			_begin, _cleanup, _fetch, _icon_get, NULL);
+
+   EVRY_PLUGIN(p1)->action = &_action;
 
    p2 = EVRY_PLUGIN_NEW(NULL, "Files", type_object, "FILE", "FILE",
 			_begin, _cleanup, _fetch, _icon_get, NULL);

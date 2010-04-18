@@ -266,7 +266,7 @@ _evry_icon_fdo_set(Evas_Object *obj, const char *icon)
    unsigned int size;
 
    if ((!icon) || (!icon[0])) return 0;
-   size = e_util_icon_size_normalize(72 * e_scale);
+   size = e_util_icon_size_normalize(128 * e_scale);
    path = efreet_icon_path_find(e_config->icon_theme, icon, size);
 
    if (!path) return 0;
