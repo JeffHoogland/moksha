@@ -70,7 +70,7 @@ e_modapi_init(E_Module *m)
    if (act)
      {
 	act->func.go = _e_mod_action_cb;
-	e_action_predef_name_set(_("Everything"),
+	e_action_predef_name_set(_("Everything Launcher"),
 				 _("Show Everything Dialog"),
 				 "everything", "", NULL, 0);
      }
@@ -123,7 +123,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    /* remove module-supplied action */
    if (act)
      {
-	e_action_predef_name_del(_("Everything"), _("Show Everything Dialog"));
+	e_action_predef_name_del(_("Everything Launcher"), _("Show Everything Dialog"));
 	e_action_del("everything");
      }
 
@@ -527,7 +527,7 @@ evry_plugin_register(Evry_Plugin *p, int priority)
 	char buf[256];
 	snprintf(buf, sizeof(buf), "Show %s Plugin", p->name);
 
-	e_action_predef_name_set(_("Everything"), buf,
+	e_action_predef_name_set(_("Everything Launcher"), buf,
 				 "everything", p->name, NULL, 1);
      }
 }
