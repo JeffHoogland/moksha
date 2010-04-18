@@ -310,6 +310,31 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
    return EVRY_PLUGIN(p);
 }
 
+static int
+_hist_add(Evry_Plugin *plugin, Evry_Item_File *file)
+{
+   Eina_List *l;
+   History_Item *hi;
+   History_Entry *he;
+   
+   he = eina_hash_find(evry_hist->subjects, file->path);
+
+   if (!he) return 0;
+   
+   EINA_LIST_FOREACH(he->items, l, hi)
+     {
+	if (hi->type != plugin->type_out)
+	  continue;
+
+	if (hi->data)
+	  eina_stringshare_del(hi->data);
+
+	hi->data = eina_stringshare_ref(file->mime);
+     }
+
+   return 1;
+}
+
 static void
 _cleanup(Evry_Plugin *plugin)
 {
@@ -328,8 +353,11 @@ _cleanup(Evry_Plugin *plugin)
 	  eina_stringshare_del(p->directory);
 
 	EINA_LIST_FREE(p->files, file)
-	  evry_item_free(EVRY_ITEM(file));
-
+	  {
+	     _hist_add(plugin, file);
+	     evry_item_free(EVRY_ITEM(file));
+	  }
+	
 	EVRY_PLUGIN_ITEMS_CLEAR(p);
 
 	if (p->input)
@@ -383,10 +411,13 @@ _hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fda
 
 	evry_util_file_detail_set(file); 
 
-	if ((!strcmp(file->mime, "inode/directory")) ||
-	    (!strcmp(file->mime, "inode/mount-point")))
-	  EVRY_ITEM(file)->browseable = EINA_TRUE;
-
+	if (file->mime)
+	  {
+	     if ((!strcmp(file->mime, "inode/directory")) ||
+		 (!strcmp(file->mime, "inode/mount-point")))
+	       EVRY_ITEM(file)->browseable = EINA_TRUE;
+	  }
+	/* else */
 	/* if (ecore_file_is_dir(file->path))
 	 * EVRY_ITEM(file)->browseable = EINA_TRUE; */
 
@@ -556,35 +587,6 @@ _open_term_action(Evry_Action *act)
    return ret;
 }
 
-static int
-_action(Evry_Plugin *plugin, const Evry_Item *it)
-{
-   ITEM_FILE(file, it);
-   Eina_List *l;
-   History_Item *hi;
-   History_Entry *he;
-   
-   he = eina_hash_find(evry_hist->subjects, file->path);
-   printf("acn\n");
-
-   if (!he) return 0;
-   
-   EINA_LIST_FOREACH(he->items, l, hi)
-     {
-	if (hi->type != plugin->type_out)
-	  continue;
-
-	if (hi->data)
-	  eina_stringshare_del(hi->data);
-
-	printf("added\n");
-	hi->data = eina_stringshare_ref(file->mime);
-     }
-
-   return 1;
-}
-
-
 static Eina_Bool
 module_init(void)
 {
@@ -593,8 +595,6 @@ module_init(void)
 
    p1 = EVRY_PLUGIN_NEW(NULL, "Files", type_subject, "FILE", "FILE",
 			_begin, _cleanup, _fetch, _icon_get, NULL);
-
-   EVRY_PLUGIN(p1)->action = &_action;
 
    p2 = EVRY_PLUGIN_NEW(NULL, "Files", type_object, "FILE", "FILE",
 			_begin, _cleanup, _fetch, _icon_get, NULL);

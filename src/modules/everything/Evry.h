@@ -396,6 +396,7 @@ EAPI void evry_list_win_hide(void);
 EAPI Evry_Item *evry_item_new(Evry_Item *base, Evry_Plugin *p, const char *label, void (*cb_free) (Evry_Item *item));
 EAPI void evry_item_free(Evry_Item *it);
 EAPI void evry_item_ref(Evry_Item *it);
+EAPI int  evry_item_type_check(const Evry_Item *it, const char *type);
 EAPI void evry_plugin_async_update(Evry_Plugin *plugin, int state);
 EAPI void evry_clear_input(void);
 

@@ -346,6 +346,15 @@ evry_item_free(Evry_Item *it)
      E_FREE(it);
 }
 
+EAPI int
+evry_item_type_check(const Evry_Item *it, const char *type)
+{
+   if (it && it->plugin && it->plugin->type_out)
+     return (!strcmp(it->plugin->type_out, type));
+
+   return 0;
+}
+
 static Evry_Selector *
 _evry_selector_for_plugin_get(Evry_Plugin *p)
 {

@@ -12,16 +12,16 @@ evry_util_file_detail_set(Evry_Item_File *file)
 {
    const char *path;
 
+   if (EVRY_ITEM(file)->detail)
+     return;
+   
    if (!home_dir)
      {
 	home_dir = e_user_homedir_get();
 	home_dir_len = strlen(home_dir);
      }
    
-   /* if (!EVRY_ITEM(file)->browseable) */
    path = ecore_file_dir_get(file->path);
-   /* else
-    *   path = file->path; */
 	  
    if (path && !strncmp(path, home_dir, home_dir_len))
      {
