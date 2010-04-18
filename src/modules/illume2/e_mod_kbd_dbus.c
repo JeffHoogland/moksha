@@ -270,6 +270,5 @@ _e_mod_kbd_dbus_dev_chg(void *data __UNUSED__, DBusMessage *msg)
                   _e_mod_kbd_dbus_kbd_eval();
                }
           }
-        free(cap);
      }
 }
