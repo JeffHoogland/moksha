@@ -205,7 +205,7 @@ module_init(void)
    if (!evry_api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
-   _plug = EVRY_PLUGIN_NEW(NULL, _("Wallpaper"), type_action, "FILE", "",
+   _plug = EVRY_PLUGIN_NEW(NULL, N_("Wallpaper"), type_action, "FILE", "",
 			    _begin, _cleanup, _fetch, _icon_get, NULL);
    
    EVRY_PLUGIN(_plug)->icon = "preferences-desktop-wallpaper";

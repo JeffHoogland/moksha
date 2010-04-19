@@ -123,12 +123,12 @@ module_init(void)
    if (!evry_api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
-   p = EVRY_PLUGIN_NEW(NULL, _("Settings"), type_subject, NULL, "E_SETTINGS",
+   p = EVRY_PLUGIN_NEW(NULL, N_("Settings"), type_subject, NULL, "E_SETTINGS",
 		       NULL, _cleanup, _fetch, _item_icon_get, NULL);
 
    evry_plugin_register(p, 10);
    
-   act = EVRY_ACTION_NEW(_("Show Dialog"), "E_SETTINGS", NULL,
+   act = EVRY_ACTION_NEW(N_("Show Dialog"), "E_SETTINGS", NULL,
 			 "preferences-advanced", _action, NULL);
 
    evry_action_register(act, 0);

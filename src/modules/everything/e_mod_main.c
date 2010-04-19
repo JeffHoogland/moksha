@@ -525,7 +525,7 @@ evry_plugin_register(Evry_Plugin *p, int priority)
    if (p->type == type_subject)
      {
 	char buf[256];
-	snprintf(buf, sizeof(buf), "Show %s Plugin", p->name);
+	snprintf(buf, sizeof(buf), _("Show %s Plugin"), p->name);
 
 	e_action_predef_name_set(_("Everything Launcher"), buf,
 				 "everything", p->name, NULL, 1);
@@ -542,7 +542,7 @@ evry_plugin_unregister(Evry_Plugin *p)
    if (p->type == type_subject)
      {
 	char buf[256];
-	snprintf(buf, sizeof(buf), "Show %s Plugin", p->name);
+	snprintf(buf, sizeof(buf), _("Show %s Plugin"), p->name);
 
 	e_action_predef_name_del(_("Everything"), buf);
      }

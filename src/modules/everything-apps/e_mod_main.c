@@ -946,12 +946,12 @@ module_init(void)
      return EINA_FALSE;
 
    p1 = E_NEW(Plugin, 1);
-   EVRY_PLUGIN_NEW(EVRY_PLUGIN(p1), _("Applications"), type_subject, "", "APPLICATION",
+   EVRY_PLUGIN_NEW(EVRY_PLUGIN(p1), N_("Applications"), type_subject, "", "APPLICATION",
 	      _begin, _cleanup, _fetch, _icon_get, _free_plugin);
    EVRY_PLUGIN(p1)->complete = &_complete;
    
    p2 = E_NEW(Plugin, 1);
-   EVRY_PLUGIN_NEW(EVRY_PLUGIN(p2), _("Open With..."), type_action, "FILE", "",
+   EVRY_PLUGIN_NEW(EVRY_PLUGIN(p2), N_("Open With..."), type_action, "FILE", "",
 	      _begin_open_with, _cleanup, _fetch,
 	      _icon_get, _free_plugin);
 
@@ -960,22 +960,22 @@ module_init(void)
    evry_plugin_register(EVRY_PLUGIN(p1), 1);
    evry_plugin_register(EVRY_PLUGIN(p2), 1);
 
-   act = EVRY_ACTION_NEW(_("Launch"), "APPLICATION", NULL,
+   act = EVRY_ACTION_NEW(N_("Launch"), "APPLICATION", NULL,
 		    "everything-launch", _exec_app_action, _exec_app_check_item);
 
-   act1 = EVRY_ACTION_NEW(_("Open File..."), "APPLICATION", "FILE", "document-open",
+   act1 = EVRY_ACTION_NEW(N_("Open File..."), "APPLICATION", "FILE", "document-open",
 		     _exec_app_action, _exec_app_check_item);
 
-   act2 = EVRY_ACTION_NEW(_("Run in Terminal"), "APPLICATION", NULL, "system-run",
+   act2 = EVRY_ACTION_NEW(N_("Run in Terminal"), "APPLICATION", NULL, "system-run",
 		     _exec_term_action, _exec_term_check_item);
 
-   act3 = EVRY_ACTION_NEW(_("Edit Application Entry"), "APPLICATION", NULL, "everything-launch",
+   act3 = EVRY_ACTION_NEW(N_("Edit Application Entry"), "APPLICATION", NULL, "everything-launch",
 		     _edit_app_action, _edit_app_check_item);
 
-   act4 = EVRY_ACTION_NEW(_("New Application Entry"), "APPLICATION", NULL, "everything-launch",
+   act4 = EVRY_ACTION_NEW(N_("New Application Entry"), "APPLICATION", NULL, "everything-launch",
 		     _new_app_action, _new_app_check_item);
 
-   act5 = EVRY_ACTION_NEW(_("Run with Sudo"), "APPLICATION", NULL, "system-run",
+   act5 = EVRY_ACTION_NEW(N_("Run with Sudo"), "APPLICATION", NULL, "system-run",
 		     _exec_sudo_action, NULL);
 
    evry_action_register(act,  0);
