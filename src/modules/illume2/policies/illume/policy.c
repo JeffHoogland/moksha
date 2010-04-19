@@ -179,7 +179,18 @@ _policy_border_show_below(E_Border *bd)
    int pos = 0, i;
 
 //   printf("Show Borders Below: %s %d %d\n", 
-//          bd->client.icccm.name, bd->x, bd->y);
+//          bd->client.icccm.class, bd->x, bd->y);
+
+   if (bd->client.icccm.transient_for) 
+     {
+        E_Border *trans;
+
+        if (trans = e_border_find_by_client_window(bd->client.icccm.transient_for)) 
+          {
+             _policy_border_set_focus(trans);
+             return;
+          }
+     }
 
    /* determine layering position */
    if (bd->layer <= 0) pos = 0;
