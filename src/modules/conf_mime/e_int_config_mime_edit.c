@@ -5,6 +5,7 @@ static void        *_create_data    (E_Config_Dialog *cfd);
 static void         _fill_data      (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static void         _free_data      (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create   (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static int          _basic_check    (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int          _basic_apply    (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static void         _cb_icon_sel    (void *data, void *data2);
 static Evas_Object *_get_icon       (void *data);
@@ -64,6 +65,7 @@ e_int_config_mime_edit(E_Config_Mime_Icon *data, void *data2)
    v->create_cfdata = _create_data;
    v->free_cfdata = _free_data;
    v->basic.create_widgets = _basic_create;
+   v->basic.check_changed = _basic_check;
    v->basic.apply_cfdata = _basic_apply;
 
    cfd = e_config_dialog_new(con, _("File Icon"), "E", 
@@ -80,7 +82,7 @@ _create_data(E_Config_Dialog *cfd)
 }
 
 static void
-_fill_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_fill_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
 {
    E_Config_Mime_Icon *mi;
 
@@ -112,7 +114,7 @@ _fill_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 }
 
 static void
-_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
 {
    if (cfdata->gui.fsel) 
      e_object_del(E_OBJECT(cfdata->gui.fsel));
@@ -135,7 +137,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 
    of = e_widget_frametable_add(evas, _("Basic Info"), 0);
    ob = e_widget_label_add(evas, _("Mime:"));
-   e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 1, 1);
+   e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 0, 1);
    ob = e_widget_entry_add(evas, &(cfdata->mime), NULL, NULL, NULL);
    e_widget_entry_readonly_set(ob, 1);
    e_widget_size_min_set(ob, 100, 1);
@@ -187,7 +189,25 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 }
 
 static int
-_basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_basic_check(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
+{
+   E_Config_Mime_Icon *mi;
+
+   mi = (E_Config_Mime_Icon *) cfdata->data;
+
+   return ((cfdata->type == DEFAULT) && (mi->icon)) ||
+	  ((cfdata->type == THUMB) &&
+	   ((!mi->icon) || strcmp(mi->icon, "THUMB"))) ||
+	  ((cfdata->type == THEME) &&
+	   ((!mi->icon) || strncmp(mi->icon, "e/icons/fileman/mime", 20))) ||
+	  (((cfdata->type == EDJ) || (cfdata->type == IMG)) &&
+	   ((!mi->icon) || !strcmp(mi->icon, "THUMB") ||
+	    !strncmp(mi->icon, "e/icons/fileman/mime", 20) ||
+	    strcmp(mi->icon, cfdata->icon)));
+}
+
+static int
+_basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
 {
    Eina_List *l;
    E_Config_Mime_Icon *mi;
@@ -226,6 +246,7 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	break;
       case EDJ:
       case IMG:
+	if (!mi->icon) return 0;
 	mi->icon = eina_stringshare_add(cfdata->file);
 	break;
       case DEFAULT:
@@ -267,9 +288,9 @@ _cb_icon_sel(void *data, void *data2)
    dia = e_dialog_new(cfd->con, "E", "_mime_icon_select_dialog");
    if (!dia) return;
    if (cfdata->type == EDJ)
-     e_dialog_title_set(dia, _("Select an Edj File"));
+     e_dialog_title_set(dia, _("Select an Edje file"));
    else if (cfdata->type == IMG)
-     e_dialog_title_set(dia, _("Select an Image"));
+     e_dialog_title_set(dia, _("Select an image"));
      
    dia->data = cfdata;
    o = e_widget_fsel_add(dia->win->evas, "~/", "/", NULL, NULL,
@@ -285,7 +306,7 @@ _cb_icon_sel(void *data, void *data2)
    e_dialog_resizable_set(dia, 1);
    e_win_centered_set(dia->win, 1);
    e_dialog_show(dia);
-   e_win_resize(dia->win, 475, 341);
+   e_dialog_border_icon_set(dia, "enlightenment/file_icons");
    
    cfdata->gui.fsel = dia;
 }
@@ -339,7 +360,7 @@ _get_icon(void *data)
 }
 
 static void 
-_cb_type(void *data, Evas_Object *obj, void *event_info) 
+_cb_type(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__) 
 {
    E_Config_Dialog_Data *cfdata;
    
@@ -358,7 +379,7 @@ _cb_type(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void 
-_cb_fsel_sel(void *data, Evas_Object *obj) 
+_cb_fsel_sel(void *data, Evas_Object *obj __UNUSED__) 
 {
    E_Config_Dialog_Data *cfdata;
    
