@@ -434,14 +434,18 @@ _e_exehist_limit(void)
 static const char *
 _e_exehist_normalize_exe(const char *exe)
 {
-   char *base, *cp, *space = NULL;
+   char *base, *buf, *cp, *space = NULL;
    const char *ret;
    Eina_Bool flag = EINA_FALSE;
 
-   base = basename((char *)exe);
-   if ((base[0] == '.') && (base[1] == '\0')) return NULL;
+   buf = strdup(exe);
+   base = basename(buf);
+   if ((base[0] == '.') && (base[1] == '\0'))
+     {
+	free(buf);
+	return NULL;
+     }
 
-   base = strdup(base);
    cp = base;
    while (*cp)
      {
@@ -469,7 +473,7 @@ _e_exehist_normalize_exe(const char *exe)
    if (space) *space = '\0';
 
    ret = eina_stringshare_add(base);
-   free(base);
+   free(buf);
 
    return ret;
 }
