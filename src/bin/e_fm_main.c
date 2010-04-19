@@ -955,6 +955,7 @@ EAPI void
 e_volume_mount(E_Volume *v)
 {
    char buf[256];
+   char buf2[256];
    char *mount_point;
    Eina_List *opt = NULL;
 
@@ -964,13 +965,31 @@ e_volume_mount(E_Volume *v)
    mount_point = v->mount_point + 7;
 //   printf("mount %s %s [fs type = %s]\n", v->udi, v->mount_point, v->fstype);
 
-   if ((!strcmp(v->fstype, "vfat")) || (!strcmp(v->fstype, "ntfs"))
-//       || (!strcmp(v->fstype, "iso9660")) || (!strcmp(v->fstype, "udf"))
+   if ((!strcmp(v->fstype, "vfat")) ||
+       (!strcmp(v->fstype, "ntfs"))
        )
      {
 	snprintf(buf, sizeof(buf), "uid=%i", (int)getuid());
 	opt = eina_list_append(opt, buf);
      }
+
+   if ((!strcmp(v->fstype, "vfat")) || 
+       (!strcmp(v->fstype, "ntfs")) ||
+       (!strcmp(v->fstype, "iso9660"))
+       )
+     {
+        snprintf(buf2, sizeof(buf2), "utf8");
+        opt = eina_list_append(opt, buf2);
+     }
+   else if ((!strcmp(v->fstype, "fat")) || 
+            (!strcmp(v->fstype, "jfs")) || 
+            (!strcmp(v->fstype, "udf"))
+            )
+     {
+        snprintf(buf2, sizeof(buf2), "iocharset=utf8");
+        opt = eina_list_append(opt, buf2);
+     }
+
    v->guard = ecore_timer_add(E_FM_MOUNT_TIMEOUT, _e_dbus_vol_mount_timeout, v);
    v->op = e_hal_device_volume_mount(_e_dbus_conn, v->udi, mount_point,
                                      v->fstype, opt, _e_dbus_cb_vol_mounted, v);
