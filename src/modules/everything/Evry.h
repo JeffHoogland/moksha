@@ -3,7 +3,7 @@
 
 #include "e.h"
 
-#define EVRY_API_VERSION 3
+#define EVRY_API_VERSION 4
 
 #define EVRY_ACTION_OTHER 0
 #define EVRY_ACTION_FINISHED 1
@@ -136,6 +136,9 @@ struct _Evry_Item
    * was performed on a file with a specific mimetype */
   const char *context;
 
+  /* optional */
+  const char *subtype;
+  
   /* do not set by plugin! */
   Evry_Item   *next;
   Eina_Bool    selected;

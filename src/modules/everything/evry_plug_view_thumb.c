@@ -717,7 +717,7 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
      {
    	double now = ecore_time_get();
 
-   	if (now - sd->last_select < 0.05 && sd->sel_pos == sd->sel_pos_to)
+   	if (now - sd->last_select < 0.1 && sd->sel_pos == sd->sel_pos_to)
 	  {
 	     sd->scroll_align = sd->scroll_align_to;
 

@@ -115,7 +115,6 @@ _tabs_update(Tab_View *v)
 	v->timer = ecore_timer_add(0.1, _timer_cb, v); 
 	return;
      }
-   printf("width %d\n", w);
    
    /* remove tabs for not active plugins */
    e_box_freeze(v->o_tabs);

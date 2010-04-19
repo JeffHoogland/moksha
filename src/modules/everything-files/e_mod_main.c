@@ -255,8 +255,8 @@ _scan_end_func(void *data)
 	evry_util_file_detail_set(file);
 	
 	if (cnt >= MAX_ITEMS) continue;
-
 	cnt += _append_file(p, file);
+	item->priority = cnt;
      }
    if (d->files)
      p->thread = ecore_thread_run(_scan_func, _scan_end_func, _scan_cancel_func, d);
@@ -264,6 +264,7 @@ _scan_end_func(void *data)
      E_FREE(d);
    
    EVRY_PLUGIN_ITEMS_SORT(p, _cb_sort);
+
    evry_plugin_async_update(EVRY_PLUGIN(p), EVRY_ASYNC_UPDATE_ADD);
 }
 
@@ -487,11 +488,14 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	else
 	  p->input = eina_stringshare_add(input);
      }
-   
+
    EINA_LIST_FOREACH(p->files, l, file)
      {
-	if (cnt >= MAX_ITEMS);
-	cnt += _append_file(p, file);
+	if (cnt <= MAX_ITEMS)
+	  {
+	     cnt += _append_file(p, file);
+	     EVRY_ITEM(file)->priority = cnt;
+	  }
      }
 
    if (!EVRY_PLUGIN(p)->items)

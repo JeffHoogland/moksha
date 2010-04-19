@@ -41,7 +41,12 @@ _cb_sort_recent(const void *data1, const void *data2)
 		  (it2->plugin->config->priority + it2->priority));
      }
 
-  return -1;
+   if (it1->plugin == it2->plugin)
+     return (it1->priority - it2->priority);
+
+   return strcmp(it1->label, it2->label);
+   
+  return 1;
 }
 
 static int
@@ -72,7 +77,7 @@ _cb_sort(const void *data1, const void *data2)
    if ((it1->plugin == it2->plugin) &&
        (it1->priority - it2->priority))
      return (it1->priority - it2->priority);
-
+   
    if (it1->fuzzy_match || it2->fuzzy_match)
      {
 	if (it1->fuzzy_match && !it2->fuzzy_match)
@@ -88,8 +93,8 @@ _cb_sort(const void *data1, const void *data2)
    if (it1->plugin->config->priority - it2->plugin->config->priority)
      return (it1->plugin->config->priority - it2->plugin->config->priority);
 
-   if (it1->priority - it2->priority)
-     return (it1->priority - it2->priority);
+   /* if (it1->priority - it2->priority)
+    *   return (it1->priority - it2->priority); */
 
    return strcasecmp(it1->label, it2->label);
 }
@@ -138,6 +143,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
     * if (!plugin->changed)
     *   return 1; */
    /* printf("aggreator changed\n"); */
+
    
    EVRY_PLUGIN_ITEMS_FREE(p);
 

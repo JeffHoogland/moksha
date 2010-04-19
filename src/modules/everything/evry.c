@@ -309,7 +309,7 @@ evry_item_new(Evry_Item *base, Evry_Plugin *p, const char *label, void (*cb_free
    it->free = cb_free;
 
    it->ref = 1;
-   it->usage = -1;
+   /* it->usage = -1; */
 
 #ifdef CHECK_REFS
    item_cnt++;
