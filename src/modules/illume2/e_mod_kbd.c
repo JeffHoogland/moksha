@@ -18,6 +18,7 @@ static E_Illume_Keyboard *_e_mod_kbd_by_border_get(E_Border *bd);
 static void _e_mod_kbd_border_adopt(E_Border *bd);
 static void _e_mod_kbd_layout_send(void);
 static void _e_mod_kbd_geometry_send(void);
+static void _e_mod_kbd_changes_send(void);
 
 /* local variables */
 static Eina_List *_kbd_hdls = NULL;
@@ -89,12 +90,13 @@ e_mod_kbd_new(void)
    E_Illume_Keyboard *kbd;
 
    /* try to allocate our new keyboard object */
-   kbd = E_OBJECT_ALLOC(E_Illume_Keyboard, E_ILLUME_KBD_TYPE, _e_mod_kbd_cb_free);
+   kbd = E_OBJECT_ALLOC(E_Illume_Keyboard, E_ILLUME_KBD_TYPE, 
+                        _e_mod_kbd_cb_free);
    if (!kbd) return NULL;
 
    /* set default layout on new keyboard */
    kbd->layout = E_ILLUME_KEYBOARD_LAYOUT_ALPHA;
-   kbd->visible = 1;
+   kbd->visible = 0;
 
    return kbd;
 }
@@ -159,17 +161,10 @@ e_mod_kbd_show(void)
              e_border_raise(_e_illume_kbd->border);
           }
         _e_illume_kbd->visible = 1;
+
         _e_mod_kbd_geometry_send();
 
-        /* tell the focused border it changed so layout gets udpated */
-        if (_focused_border) 
-          {
-             if (!e_illume_border_is_conformant(_focused_border)) 
-               {
-                  _focused_border->changes.size = 1;
-                  _focused_border->changed = 1;
-               }
-          }
+        _e_mod_kbd_changes_send();
      }
    else 
      {
@@ -190,7 +185,7 @@ void
 e_mod_kbd_hide(void) 
 {
    /* cannot hide keyboard that is not visible */
-   if (!_e_illume_kbd->visible) return;
+//   if (!_e_illume_kbd->visible) return;
 
    /* create new hide timer if it doesn't exist */
    if (!_e_illume_kbd->timer) 
@@ -445,8 +440,12 @@ _e_mod_kbd_hide(void)
    if (_e_illume_kbd->timer) ecore_timer_del(_e_illume_kbd->timer);
    _e_illume_kbd->timer = NULL;
 
-   /* can't hide keyboard if it's not visible, or disabled */
-   if ((!_e_illume_kbd->visible) || (_e_illume_kbd->disabled)) return;
+   /* destroy the animator if it exists */
+   if (_e_illume_kbd->animator) ecore_animator_del(_e_illume_kbd->animator);
+   _e_illume_kbd->animator = NULL;
+
+   /* can't hide keyboard if it's disabled */
+   if (_e_illume_kbd->disabled) return;
 
 //   _e_mod_kbd_layout_send();
 
@@ -460,27 +459,10 @@ _e_mod_kbd_hide(void)
              e_border_hide(_e_illume_kbd->border, 2);
           }
         _e_illume_kbd->visible = 0;
+
         _e_mod_kbd_geometry_send();
 
-        /* tell the previous focused border it changed so layout gets udpated */
-        if (_prev_focused_border) 
-          {
-             if (!e_illume_border_is_conformant(_prev_focused_border)) 
-               {
-                  _prev_focused_border->changes.size = 1;
-                  _prev_focused_border->changed = 1;
-               }
-          }
-
-        /* tell the focused border it changed so layout gets udpated */
-        if (_focused_border) 
-          {
-             if (!e_illume_border_is_conformant(_focused_border)) 
-               {
-                  _focused_border->changes.size = 1;
-                  _focused_border->changed = 1;
-               }
-          }
+        _e_mod_kbd_changes_send();
      }
    else  
      _e_mod_kbd_slide(0, (double)_e_illume_cfg->animation.vkbd.duration / 1000.0);
@@ -528,8 +510,7 @@ _e_mod_kbd_cb_animate(void *data __UNUSED__)
    if (t == _e_illume_kbd->len) 
      {
         _e_illume_kbd->animator = NULL;
-        if ((_e_illume_kbd->visible) && 
-            (_focused_state <= ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF))
+        if (_focused_state <= ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF)
           {
              if (_e_illume_kbd->border) 
                e_border_hide(_e_illume_kbd->border, 2);
@@ -540,25 +521,8 @@ _e_mod_kbd_cb_animate(void *data __UNUSED__)
 
         _e_mod_kbd_geometry_send();
 
-        /* tell the previous focused border it changed so layout gets udpated */
-        if (_prev_focused_border) 
-          {
-             if (!e_illume_border_is_conformant(_prev_focused_border)) 
-               {
-                  _prev_focused_border->changes.size = 1;
-                  _prev_focused_border->changed = 1;
-               }
-          }
+        _e_mod_kbd_changes_send();
 
-        /* tell the focused border it changed so layout gets udpated */
-        if (_focused_border) 
-          {
-             if (!e_illume_border_is_conformant(_focused_border)) 
-               {
-                  _focused_border->changes.size = 1;
-                  _focused_border->changed = 1;
-               }
-          }
         return 0;
      }
 
@@ -661,4 +625,35 @@ _e_mod_kbd_geometry_send(void)
                                           _e_illume_kbd->border->x, y, 
                                           _e_illume_kbd->border->w, 
                                           _e_illume_kbd->border->h);
+}
+
+static void 
+_e_mod_kbd_changes_send(void) 
+{
+   if (((_prev_focused_border) && (_focused_border)) && 
+       (_prev_focused_border != _focused_border))
+     {
+        /* tell previous focused border it changed so layout udpates */
+        if (_prev_focused_border->client.vkbd.state > 
+            ECORE_X_VIRTUAL_KEYBOARD_STATE_UNKNOWN)
+          {
+             if (!e_illume_border_is_conformant(_prev_focused_border)) 
+               {
+                  _prev_focused_border->changes.size = 1;
+                  _prev_focused_border->changed = 1;
+               }
+          }
+     }
+
+   /* tell the focused border it changed so layout gets udpated */
+   if ((_focused_border) && 
+       (_focused_border->client.vkbd.state > 
+           ECORE_X_VIRTUAL_KEYBOARD_STATE_UNKNOWN))
+     {
+        if (!e_illume_border_is_conformant(_focused_border)) 
+          {
+             _focused_border->changes.size = 1;
+             _focused_border->changed = 1;
+          }
+     }
 }

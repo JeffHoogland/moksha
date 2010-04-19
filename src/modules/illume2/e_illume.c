@@ -753,7 +753,7 @@ e_illume_border_softkey_pos_get(E_Zone *zone, int *x, int *y)
 }
 
 /**
- * Retrieve the Keyboard on a given zone.
+ * Retrieve the Keyboard.
  * 
  * @return The @ref E_Illume_Keyboard, or NULL if no keyboard exists.
  * 
