@@ -153,17 +153,11 @@ _cb_btn_click(void *data, void *data2)
    if (bd->zone != inst->gcc->gadcon->zone) return;
 
    if (bd->client.vkbd.state <= ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF) 
-     {
-        ecore_x_e_virtual_keyboard_state_set(bd->client.win, 
-                                             ECORE_X_VIRTUAL_KEYBOARD_STATE_ON);
-        _set_btn_icon(inst->o_btn, ECORE_X_VIRTUAL_KEYBOARD_STATE_ON);
-     }
+     ecore_x_e_virtual_keyboard_state_set(bd->client.win, 
+                                          ECORE_X_VIRTUAL_KEYBOARD_STATE_ON);
    else 
-     {
-        ecore_x_e_virtual_keyboard_state_set(bd->client.win, 
-                                             ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF);
-        _set_btn_icon(inst->o_btn, ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF);
-     }
+     ecore_x_e_virtual_keyboard_state_set(bd->client.win, 
+                                          ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF);
 }
 
 static int 
