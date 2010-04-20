@@ -113,9 +113,12 @@ _scan_func(void *data)
 
    if (!d->list)
      d->list = ecore_file_ls(p->directory);
-
-   EINA_LIST_FREE(d->list, filename)
+   
+   while(d->list)
      {
+	filename = d->list->data;
+	d->list = eina_list_remove_list(d->list, d->list);
+
 	if (filename[0] == '.')
 	  {
 	     free(filename);
@@ -148,7 +151,7 @@ _scan_func(void *data)
 	
 	d->files = eina_list_append(d->files, file);
 
-	if (cnt > MAX_ITEMS) break;
+	if (cnt++ > MAX_ITEMS) break;
      }
 }
 
@@ -213,7 +216,8 @@ _scan_end_func(void *data)
    Eina_List *l;
    
    p->thread = NULL;
-   
+   printf("scan end\n");
+
    EINA_LIST_FREE(d->files, item)
      {
 	ITEM_FILE(file, item);
@@ -257,7 +261,7 @@ _scan_end_func(void *data)
 	 * cnt += _append_file(p, file);
 	 * item->priority = cnt; */
      }
-   if (d->files)
+   if (d->list)
      p->thread = ecore_thread_run(_scan_func, _scan_end_func, _scan_cancel_func, d);
    else
      E_FREE(d);
