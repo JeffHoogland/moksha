@@ -4,12 +4,11 @@
 #include "e.h"
 
 /* local subsystem functions */
-static void _e_order_free       (E_Order *eo);
-static void _e_order_cb_monitor (void *data, Ecore_File_Monitor *em, Ecore_File_Event event, const char *path);
-static void _e_order_read       (E_Order *eo);
-static void _e_order_save       (E_Order *eo);
-
-static int  _e_order_cb_efreet_cache_update(void *data, int ev_type, void *ev);
+static void _e_order_free(E_Order *eo);
+static void _e_order_cb_monitor(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, const char *path);
+static void _e_order_read(E_Order *eo);
+static void _e_order_save(E_Order *eo);
+static int _e_order_cb_efreet_cache_update(void *data, int ev_type, void *ev);
 
 static Eina_List *orders = NULL;
 static Eina_List *handlers = NULL;
@@ -18,7 +17,11 @@ static Eina_List *handlers = NULL;
 EAPI int
 e_order_init(void)
 {
-   handlers = eina_list_append(handlers, ecore_event_handler_add(EFREET_EVENT_DESKTOP_CACHE_UPDATE, _e_order_cb_efreet_cache_update, NULL));
+   handlers = 
+     eina_list_append(handlers, 
+                      ecore_event_handler_add(EFREET_EVENT_DESKTOP_CACHE_UPDATE, 
+                                              _e_order_cb_efreet_cache_update, 
+                                              NULL));
    efreet_menu_file_set(e_config->default_system_menu);
    return 1;
 }
@@ -217,7 +220,8 @@ _e_order_read(E_Order *eo)
 		         desktop = efreet_desktop_get(ecore_file_file_get(buf));
 		       if (!desktop)
 			 desktop = efreet_util_desktop_file_id_find(ecore_file_file_get(buf));
-		       if (desktop) eo->desktops = eina_list_append(eo->desktops, desktop);
+		       if (desktop) 
+                         eo->desktops = eina_list_append(eo->desktops, desktop);
 		    }
 	       }
 	  }
@@ -243,13 +247,9 @@ _e_order_save(E_Order *eo)
 
 	id = efreet_util_path_to_file_id(desktop->orig_path);
 	if (id)
-	  {
-	     fprintf(f, "%s\n", id);
-	  }
+          fprintf(f, "%s\n", id);
 	else
-	  {
-	     fprintf(f, "%s\n", desktop->orig_path);
-	  }
+          fprintf(f, "%s\n", desktop->orig_path);
      }
 
    fclose(f);
