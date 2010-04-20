@@ -240,8 +240,9 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    
    otb = e_widget_toolbook_add(evas, 48 * e_scale, 48 * e_scale);
 
-   o = e_widget_list_add(evas, 0, 0);
+   o = e_widget_table_add(evas, 0);
 
+   /// GENERAL SETTNGS ///
    of = e_widget_framelist_add(evas, _("General"), 0);
 
    ob = e_widget_check_add(evas, _("Hide input when inactive"),
@@ -262,7 +263,9 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Vi style (ALT + h,j,k,l,n,p,m,i)"), 1, rg);
    e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+
+   e_widget_table_object_append(o, of, 0, 0, 1, 1, 0, 0, 0, 0); 
+
    
    of = e_widget_framelist_add(evas, _("Default View"), 0);
    rg = e_widget_radio_group_new(&cfdata->view_mode); 
@@ -283,9 +286,9 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    ob = e_widget_check_add(evas, _("Up/Down select next item in icon view"),
    			   &(cfdata->cycle_mode));
    e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_table_object_append(o, of, 1, 0, 1, 1, 0, 1, 0, 0); 
 
-   of = e_widget_framelist_add(evas, _("History Sort"), 0);
+   of = e_widget_framelist_add(evas, _("Sorting"), 0);
    rg = e_widget_radio_group_new(&cfdata->history_sort_mode); 
    ob = e_widget_radio_add(evas, _("By usage"), 0, rg);
    e_widget_radio_toggle_set(ob, (cfdata->history_sort_mode == 0));
@@ -296,7 +299,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    ob = e_widget_radio_add(evas, _("Last used"), 2, rg);
    e_widget_radio_toggle_set(ob, (cfdata->history_sort_mode == 2));
    e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+
+   e_widget_table_object_append(o, of, 0, 1, 2, 1, 1, 0, 0, 0);
    
    of = e_widget_framelist_add(evas, _("Commands"), 0);
    ob = e_widget_label_add(evas, _("Terminal Command"));
@@ -309,55 +313,12 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    ob = e_widget_entry_add(evas, &(cfdata->cmd_sudo), NULL, NULL, NULL);
    e_widget_framelist_object_append(of, ob);
 
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
-
+   e_widget_table_object_append(o, of, 0, 2, 2, 1, 1, 0, 0, 0);
+   
    e_widget_toolbook_page_append(otb, NULL, _("General Settings"),
 				 o, 1, 0, 1, 0, 0.5, 0.0);
 
-   o = e_widget_list_add(evas, 0, 0);
-   of = e_widget_framelist_add(evas, _("Popup Size"), 0);
-   ob = e_widget_label_add(evas, _("Popup Width"));
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"),
-   			    evry_conf->min_w, 800, 5, 0, NULL,
-   			    &(cfdata->width), 200);
-   e_widget_framelist_object_append(of, ob);
-   
-   ob = e_widget_label_add(evas, _("Popup Height"));
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"),
-   			    evry_conf->min_h, 800, 5, 0, NULL,
-   			    &(cfdata->height), 200);
-   e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
-
-   of = e_widget_framelist_add(evas, _("Popup Align"), 0);
-   ob = e_widget_label_add(evas, _("Vertical"));
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.2f"),
-   			    0.0, 1.0, 0.01, 0,
-   			    &(cfdata->rel_y), NULL, 200);
-   e_widget_framelist_object_append(of, ob);
-   
-   ob = e_widget_label_add(evas, _("Horizontal"));
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.2f"),
-   			    0.0, 1.0, 0.01, 0,
-   			    &(cfdata->rel_x), NULL, 200);
-   e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
-
-   /* of = e_widget_framelist_add(evas, _("Scroll Settings"), 0);
-    * ob = e_widget_check_add(evas, _("Scroll Animate"),
-    * 			   &(cfdata->scroll_animate));
-    * e_widget_framelist_object_append(of, ob);
-    * e_widget_list_object_append(o, of, 1, 1, 0.5); */
-
-   e_widget_toolbook_page_append(otb, NULL, _("Geometry"),
-				 o, 1, 0, 1, 0, 0.5, 0.0);
-
-
-
+   /// PLUGINS ///
    otb2 = e_widget_toolbook_add(evas, 48 * e_scale, 48 * e_scale);
 
    ob = e_widget_list_add(evas, 1, 1);
@@ -427,13 +388,46 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    
    e_widget_toolbook_page_append(otb, NULL, _("Plugins"),
 				 otb2, 1, 0, 1, 0, 0.5, 0.0);
+
+   /// GEOMERY ///
+   o = e_widget_list_add(evas, 0, 0);
+   of = e_widget_framelist_add(evas, _("Popup Size"), 0);
+   ob = e_widget_label_add(evas, _("Popup Width"));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"),
+   			    evry_conf->min_w, 800, 5, 0, NULL,
+   			    &(cfdata->width), 200);
+   e_widget_framelist_object_append(of, ob);
+   
+   ob = e_widget_label_add(evas, _("Popup Height"));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"),
+   			    evry_conf->min_h, 800, 5, 0, NULL,
+   			    &(cfdata->height), 200);
+   e_widget_framelist_object_append(of, ob);
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
+
+   of = e_widget_framelist_add(evas, _("Popup Align"), 0);
+   ob = e_widget_label_add(evas, _("Vertical"));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.2f"),
+   			    0.0, 1.0, 0.01, 0,
+   			    &(cfdata->rel_y), NULL, 200);
+   e_widget_framelist_object_append(of, ob);
+   
+   ob = e_widget_label_add(evas, _("Horizontal"));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.2f"),
+   			    0.0, 1.0, 0.01, 0,
+   			    &(cfdata->rel_x), NULL, 200);
+   e_widget_framelist_object_append(of, ob);
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
+
+   e_widget_toolbook_page_append(otb, NULL, _("Geometry"),
+				 o, 1, 0, 1, 0, 0.5, 0.0);
+
    
    e_widget_toolbook_page_show(otb, 0);
 
-   /* e_widget_size_min_set(otb, 350, 350); */
-   e_widget_size_min_resize(otb);
-
-   e_dialog_resizable_set(cfd->dia, 1);
-   
    return otb;
 }
