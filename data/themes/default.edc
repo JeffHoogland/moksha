@@ -33173,7 +33173,7 @@ collections {
                color3: 40 40 40 64;
                text {
                   font: "Sans:style=Bold";
-                  size: 10;
+                  size: 9;
                   min: 0 1;
                   align: 0.5 0.5;
                }
@@ -33842,7 +33842,7 @@ collections {
                text {
                   font: "Sans:style";
                   text_source: "e.text.label";
-                  size: 11;
+                  size: 10;
                   min: 0 1;
                   align: 0.5 0.5;
                }
@@ -33890,7 +33890,7 @@ collections {
                color: 224 224 224 255;
                text {
                   font: "Sans:style=Bold";
-                  size: 10;
+                  size: 9;
                   min: 0 1;
                   align: 0.5 0.5;
                }
@@ -34467,7 +34467,7 @@ collections {
                rel1 {
                   to_x: "clip";
                   to_y: "base";
-                  offset: 5 4;
+                  offset: 5 1;
                   relative: 1.0 0.5;
                }
                rel2 {
@@ -34476,8 +34476,8 @@ collections {
                   to_y: "base";
                   to_x: "arrow";
                }
-               color: 230 230 230 255;
-               color3: 0 0 0 0;
+               color: 250 250 250 255;
+               color3: 120 120 120 40;
                text {
                   font: "Sans";
                   size: 10;
@@ -34491,7 +34491,7 @@ collections {
                rel1 {
                   to_x: "clip";
                   to_y: "base";
-                  offset: 5 9;
+                  offset: 5 3;
                   relative: 1.0 0.0;
                }
                rel2 {
@@ -34500,8 +34500,8 @@ collections {
                   to_y: "base";
                   to_x: "arrow";
                }
-               color: 230 230 230 255;
-               color3: 0 0 0 0;
+               color: 250 250 250 255;
+               color3: 120 120 120 40;
 
                text {
                   font: "Sans";
@@ -34515,7 +34515,7 @@ collections {
             name: "e.text.detail";
             type: TEXT;
             clip_to: "base";
-            /* effect: SOFT_SHADOW; */
+            effect: SOFT_SHADOW;
             mouse_events: 0;
             scale: 1;
             description {
@@ -34525,7 +34525,7 @@ collections {
                rel1 {
                   to_x: "clip";
                   to_y: "base";
-                  offset: 5 2;
+                  offset: 5 6;
                   relative: 1.0 0.5;
                }
                rel2 {
@@ -34538,7 +34538,7 @@ collections {
                color3: 0 0 0 0;
                text {
                   font: "Sans";
-                  size: 9;
+                  size: 8;
                   min: 0 1;
                   align: 0.0 0.0;
                }
