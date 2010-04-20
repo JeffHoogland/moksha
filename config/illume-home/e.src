@@ -84,17 +84,17 @@ group "E_Config" struct {
         group "E_Config_Gadcon" struct {
             group "clients" list {
                 group "E_Config_Gadcon_Client" struct {
-                    value "name" string: "illume-home";
-                    value "id" string: "illume-home.0";
-                    value "geom.pos" int: 0;
-                    value "geom.size" int: 80;
-                    value "geom.res" int: 800;
+                    value "name" string: "illume-home-toggle";
+                    value "id" string: "illume-home-toggle.0";
+                    value "geom.pos" int: 41;
+                    value "geom.size" int: 41;
+                    value "geom.res" int: 474;
                     value "geom.pos_x" double: 0.0000000000000000000000000;
                     value "geom.pos_y" double: 0.0000000000000000000000000;
                     value "geom.size_w" double: 0.0000000000000000000000000;
                     value "geom.size_h" double: 0.0000000000000000000000000;
                     value "state_info.seq" int: 2;
-                    value "state_info.flags" int: 0;
+                    value "state_info.flags" int: 3;
                     value "style" string: "plain";
                     value "orient" int: 0;
                     value "autoscroll" uchar: 0;
@@ -103,15 +103,15 @@ group "E_Config" struct {
                 group "E_Config_Gadcon_Client" struct {
                     value "name" string: "illume-mode-toggle";
                     value "id" string: "illume-mode-toggle.0";
-                    value "geom.pos" int: 0;
-                    value "geom.size" int: 80;
-                    value "geom.res" int: 800;
+                    value "geom.pos" int: 82;
+                    value "geom.size" int: 41;
+                    value "geom.res" int: 474;
                     value "geom.pos_x" double: 0.0000000000000000000000000;
                     value "geom.pos_y" double: 0.0000000000000000000000000;
                     value "geom.size_w" double: 0.0000000000000000000000000;
                     value "geom.size_h" double: 0.0000000000000000000000000;
                     value "state_info.seq" int: 3;
-                    value "state_info.flags" int: 0;
+                    value "state_info.flags" int: 3;
                     value "style" string: "plain";
                     value "orient" int: 0;
                     value "autoscroll" uchar: 0;
@@ -120,15 +120,15 @@ group "E_Config" struct {
                 group "E_Config_Gadcon_Client" struct {
                     value "name" string: "illume-kbd-toggle";
                     value "id" string: "illume-kbd-toggle.0";
-                    value "geom.pos" int: 0;
-                    value "geom.size" int: 80;
-                    value "geom.res" int: 800;
+                    value "geom.pos" int: 123;
+                    value "geom.size" int: 41;
+                    value "geom.res" int: 474;
                     value "geom.pos_x" double: 0.0000000000000000000000000;
                     value "geom.pos_y" double: 0.0000000000000000000000000;
                     value "geom.size_w" double: 0.0000000000000000000000000;
                     value "geom.size_h" double: 0.0000000000000000000000000;
                     value "state_info.seq" int: 4;
-                    value "state_info.flags" int: 0;
+                    value "state_info.flags" int: 3;
                     value "style" string: "plain";
                     value "orient" int: 0;
                     value "autoscroll" uchar: 0;
@@ -193,17 +193,17 @@ group "E_Config" struct {
         group "E_Config_Gadcon" struct {
             group "clients" list {
                 group "E_Config_Gadcon_Client" struct {
-                    value "name" string: "illume-home";
-                    value "id" string: "illume-home.1";
-                    value "geom.pos" int: 0;
-                    value "geom.size" int: 80;
-                    value "geom.res" int: 800;
+                    value "name" string: "illume-home-toggle";
+                    value "id" string: "illume-home-toggle.1";
+                    value "geom.pos" int: 41;
+                    value "geom.size" int: 41;
+                    value "geom.res" int: 474;
                     value "geom.pos_x" double: 0.0000000000000000000000000;
                     value "geom.pos_y" double: 0.0000000000000000000000000;
                     value "geom.size_w" double: 0.0000000000000000000000000;
                     value "geom.size_h" double: 0.0000000000000000000000000;
                     value "state_info.seq" int: 2;
-                    value "state_info.flags" int: 0;
+                    value "state_info.flags" int: 3;
                     value "style" string: "plain";
                     value "orient" int: 0;
                     value "autoscroll" uchar: 0;
@@ -212,15 +212,15 @@ group "E_Config" struct {
                 group "E_Config_Gadcon_Client" struct {
                     value "name" string: "illume-mode-toggle";
                     value "id" string: "illume-mode-toggle.1";
-                    value "geom.pos" int: 0;
-                    value "geom.size" int: 80;
-                    value "geom.res" int: 800;
+                    value "geom.pos" int: 82;
+                    value "geom.size" int: 41;
+                    value "geom.res" int: 474;
                     value "geom.pos_x" double: 0.0000000000000000000000000;
                     value "geom.pos_y" double: 0.0000000000000000000000000;
                     value "geom.size_w" double: 0.0000000000000000000000000;
                     value "geom.size_h" double: 0.0000000000000000000000000;
                     value "state_info.seq" int: 3;
-                    value "state_info.flags" int: 0;
+                    value "state_info.flags" int: 3;
                     value "style" string: "plain";
                     value "orient" int: 0;
                     value "autoscroll" uchar: 0;
@@ -229,15 +229,15 @@ group "E_Config" struct {
                 group "E_Config_Gadcon_Client" struct {
                     value "name" string: "illume-kbd-toggle";
                     value "id" string: "illume-kbd-toggle.1";
-                    value "geom.pos" int: 0;
-                    value "geom.size" int: 80;
-                    value "geom.res" int: 800;
+                    value "geom.pos" int: 123;
+                    value "geom.size" int: 41;
+                    value "geom.res" int: 474;
                     value "geom.pos_x" double: 0.0000000000000000000000000;
                     value "geom.pos_y" double: 0.0000000000000000000000000;
                     value "geom.size_w" double: 0.0000000000000000000000000;
                     value "geom.size_h" double: 0.0000000000000000000000000;
                     value "state_info.seq" int: 4;
-                    value "state_info.flags" int: 0;
+                    value "state_info.flags" int: 3;
                     value "style" string: "plain";
                     value "orient" int: 0;
                     value "autoscroll" uchar: 0;
@@ -263,7 +263,7 @@ group "E_Config" struct {
                 group "E_Config_Gadcon_Client" struct {
                     value "name" string: "configuration";
                     value "id" string: "configuration";
-                    value "geom.pos" int: 800;
+                    value "geom.pos" int: 720;
                     value "geom.size" int: 80;
                     value "geom.res" int: 800;
                     value "geom.pos_x" double: 0.0000000000000000000000000;
@@ -1115,12 +1115,6 @@ group "E_Config" struct {
     }
     group "modules" list {
         group "E_Config_Module" struct {
-            value "name" string: "comp";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 0;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
             value "name" string: "illume2";
             value "enabled" uchar: 1;
             value "delayed" uchar: 0;
@@ -1139,6 +1133,12 @@ group "E_Config" struct {
             value "priority" int: 85;
         }
         group "E_Config_Module" struct {
+            value "name" string: "fileman";
+            value "enabled" uchar: 0;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
             value "name" string: "battery";
             value "enabled" uchar: 1;
             value "delayed" uchar: 0;
@@ -1152,6 +1152,12 @@ group "E_Config" struct {
         }
         group "E_Config_Module" struct {
             value "name" string: "illume-home";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 0;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "illume-home-toggle";
             value "enabled" uchar: 1;
             value "delayed" uchar: 0;
             value "priority" int: 0;
@@ -1227,6 +1233,18 @@ group "E_Config" struct {
             value "enabled" uchar: 1;
             value "delayed" uchar: 1;
             value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "clock";
+            value "enabled" uchar: 0;
+            value "delayed" uchar: 0;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "comp";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 0;
+            value "priority" int: -1000;
         }
     }
     value "config_version" int: 65844;
