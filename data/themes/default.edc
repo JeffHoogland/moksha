@@ -34949,9 +34949,9 @@ collections {
       styles {
          style {
             name: "everything_textblock_style";
-            base: "font=Sans font_size=11 align=left color=#000";
+            base: "font=Sans font_size=10 align=left color=#000";
             tag:  "hilight" "+ font=Sans:style=Bold color=#0c0c0c";
-            tag:  "b" "+ font=Sans:style=Bold";
+            tag:  "b" "+ font=Sans:style=Bold font_size=9";
             tag:  "br" "\n";
             tag:  "/title" "- \n \n";
          }
