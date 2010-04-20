@@ -677,6 +677,8 @@ src/modules/illume/keyboards/Makefile
 src/modules/illume/dicts/Makefile
 src/modules/illume-home/Makefile
 src/modules/illume-home/module.desktop
+src/modules/illume-home-toggle/Makefile
+src/modules/illume-home-toggle/module.desktop
 src/modules/illume-softkey/Makefile
 src/modules/illume-softkey/module.desktop
 src/modules/illume-softkey/images/Makefile
