@@ -248,14 +248,6 @@ _config_init()
 	evry_conf->cycle_mode = 0;
 	evry_conf->history_sort_mode = 0;
      }
-
-   
-   /* if (evry_conf->conf_subjects) eina_list_free(evry_conf->conf_subjects);
-    * if (evry_conf->conf_actions) eina_list_free(evry_conf->conf_actions);
-    * if (evry_conf->conf_objects) eina_list_free(evry_conf->conf_objects);
-    * evry_conf->conf_subjects = NULL;
-    * evry_conf->conf_actions = NULL;
-    * evry_conf->conf_objects = NULL; */
 }
 
 
@@ -395,13 +387,10 @@ evry_plugin_new(Evry_Plugin *base, const char *name, const char *label, int type
    p->type = type;
    p->type_in  = (type_in  ? eina_stringshare_add(type_in)  : NULL);
    p->type_out = (type_out ? eina_stringshare_add(type_out) : NULL);
-   /* p->trigger  = (trigger  ? eina_stringshare_add(trigger)  : NULL); */
-   /* p->icon     = (icon     ? eina_stringshare_add(icon)     : NULL); */
    p->begin    = begin;
    p->cleanup  = cleanup;
    p->fetch    = fetch;
    p->icon_get = icon_get;
-   /* p->action   = action; */
    p->aggregate = EINA_TRUE;
    p->async_fetch = EINA_FALSE;
    p->free   = cb_free;
@@ -425,8 +414,6 @@ evry_plugin_free(Evry_Plugin *p, int free_pointer)
    if (p->label)    eina_stringshare_del(p->label);
    if (p->type_in)  eina_stringshare_del(p->type_in);
    if (p->type_out) eina_stringshare_del(p->type_out);
-   /* if (p->trigger)  eina_stringshare_del(p->trigger); */
-   /* if (p->icon)     eina_stringshare_del(p->icon); */
 
    if (p->free)
      p->free(p);
@@ -504,11 +491,7 @@ evry_plugin_register(Evry_Plugin *p, int priority)
 	pc->priority = priority ? priority : 100;;
 	pc->plugin = p;
 	confs = eina_list_append(confs, pc);
-	/* return NULL */
      }
-
-   /* if (plugin->trigger && !pc->trigger)
-    *   pc->trigger = eina_stringshare_add(plugin->trigger); */
 
    p->config = pc;
    evry_conf->plugins = eina_list_sort(evry_conf->plugins,

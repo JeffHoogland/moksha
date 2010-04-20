@@ -1313,6 +1313,8 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
    Evry_State *s = selector->state;
    const char *key = NULL, *old;
 
+   if (!s) return 1;
+   
    win->request_selection = EINA_FALSE;
 
    ev = event;

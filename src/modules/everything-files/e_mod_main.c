@@ -6,6 +6,7 @@
 #include "e_mod_main.h"
 
 #define MAX_ITEMS 50
+#define MAX_SHOWN 500
 #define TERM_ACTION_DIR "%s"
 
 typedef struct _Plugin Plugin;
@@ -147,8 +148,7 @@ _scan_func(void *data)
 	
 	d->files = eina_list_append(d->files, file);
 
-	if (cnt > MAX_ITEMS)
-	  break;
+	if (cnt > MAX_ITEMS) break;
      }
 }
 
@@ -209,11 +209,10 @@ _scan_end_func(void *data)
    Evry_Item *item;
    Evry_Item_File *f;
    char *filename, *path, *mime;
-   int cnt = eina_list_count(p->base.items);
+   int cnt = 0;
    Eina_List *l;
    
    p->thread = NULL;
-
    
    EINA_LIST_FREE(d->files, item)
      {
@@ -254,17 +253,26 @@ _scan_end_func(void *data)
 
 	evry_util_file_detail_set(file);
 	
-	if (cnt >= MAX_ITEMS) continue;
-	cnt += _append_file(p, file);
-	item->priority = cnt;
+	/* if (cnt >= MAX_ITEMS) continue;
+	 * cnt += _append_file(p, file);
+	 * item->priority = cnt; */
      }
    if (d->files)
      p->thread = ecore_thread_run(_scan_func, _scan_end_func, _scan_cancel_func, d);
    else
      E_FREE(d);
-   
-   EVRY_PLUGIN_ITEMS_SORT(p, _cb_sort);
 
+   p->files = eina_list_sort(p->files, -1, _cb_sort); 
+
+   EVRY_PLUGIN_ITEMS_CLEAR(p);
+   
+   EINA_LIST_FOREACH(p->files, l, f)
+     {
+	if (cnt >= MAX_SHOWN) break;
+	cnt += _append_file(p, f);
+	EVRY_ITEM(f)->priority = cnt;
+     }
+   
    evry_plugin_async_update(EVRY_PLUGIN(p), EVRY_ASYNC_UPDATE_ADD);
 }
 
@@ -491,11 +499,9 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
    EINA_LIST_FOREACH(p->files, l, file)
      {
-	if (cnt <= MAX_ITEMS)
-	  {
-	     cnt += _append_file(p, file);
-	     EVRY_ITEM(file)->priority = cnt;
-	  }
+	if (cnt >= MAX_SHOWN) break;
+	cnt += _append_file(p, file);
+	EVRY_ITEM(file)->priority = cnt;
      }
 
    if (!EVRY_PLUGIN(p)->items)
@@ -524,7 +530,6 @@ _icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
 
    return o;
 }
-
 
 static int
 _open_folder_check(Evry_Action *act __UNUSED__, const Evry_Item *it)

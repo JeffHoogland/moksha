@@ -286,12 +286,12 @@ _e_smart_reconfigure_do(void *data)
              sd->cy = 0;
              redo = 1;
           }
-        if (redo)
-   	  {
-   	     recursion = 1;
-   	     _e_smart_reconfigure_do(obj);
-   	     recursion = 0;
-   	  }
+        /* if (redo)
+   	 *   {
+   	 *      recursion = 1;
+   	 *      _e_smart_reconfigure_do(obj);
+   	 *      recursion = 0;
+   	 *   } */
         changed = 1;
      }
 
@@ -778,7 +778,7 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
 		  align = (cur - dist);
 	       }
 	  }
-
+	/* edje_object_signal_emit(sd->cur_item->frame, "e,state,selected", "e"); */
 	align *= it->h;
      }
    else
