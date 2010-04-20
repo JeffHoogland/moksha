@@ -290,10 +290,15 @@ _item_add(Plugin *p, Efreet_Desktop *desktop, const char *file, int match)
      }
 
    if (desktop)
-     exe = desktop->exec;
+     {
+	file = NULL;
+	exe = desktop->exec;
+     }
    else
-     exe = file;
-
+     {
+	exe = file;
+     }
+   
    if (!exe) return NULL;
 
    if ((app = eina_hash_find(p->added, exe)))

@@ -27,7 +27,8 @@ static E_Action *act = NULL;
 
 /* static Eina_Array  *plugins = NULL; */
 static E_Config_DD *conf_edd = NULL;
-static E_Config_DD *conf_item_edd = NULL;
+static E_Config_DD *plugin_conf_edd = NULL;
+static E_Config_DD *plugin_setting_edd = NULL;
 
 EAPI int _e_module_evry_log_dom = -1;
 
@@ -147,9 +148,9 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    evry_history_free();
 
    /* Clean EET */
-   E_CONFIG_DD_FREE(conf_item_edd);
    E_CONFIG_DD_FREE(conf_edd);
-
+   E_CONFIG_DD_FREE(plugin_conf_edd);
+   E_CONFIG_DD_FREE(plugin_setting_edd);
    e_datastore_del("everything_loaded");
    
    return 1;
@@ -168,18 +169,28 @@ _config_init()
 {
 #undef T
 #undef D
+#define T Plugin_Setting
+#define D plugin_setting_edd
+   plugin_setting_edd = E_CONFIG_DD_NEW("Plugin_Setting", Plugin_Setting);
+   E_CONFIG_VAL(D, T, type, INT);
+   E_CONFIG_VAL(D, T, description, STR);
+   E_CONFIG_VAL(D, T, val, STR);
+#undef T
+#undef D
+
 #define T Plugin_Config
-#define D conf_item_edd
-   conf_item_edd = E_CONFIG_DD_NEW("Plugin_Config", Plugin_Config);
+#define D plugin_conf_edd
+   plugin_conf_edd = E_CONFIG_DD_NEW("Plugin_Config", Plugin_Config);
    E_CONFIG_VAL(D, T, name, STR);
    E_CONFIG_VAL(D, T, trigger, STR);
    E_CONFIG_VAL(D, T, min_query, INT);
    E_CONFIG_VAL(D, T, loaded, INT);
    E_CONFIG_VAL(D, T, enabled, INT);
    E_CONFIG_VAL(D, T, priority, INT);
+   E_CONFIG_HASH(D, T, settings, plugin_setting_edd);
 #undef T
 #undef D
-   
+
 #define T Evry_Config
 #define D conf_edd
    conf_edd = E_CONFIG_DD_NEW("Config", Evry_Config);
@@ -199,10 +210,10 @@ _config_init()
    E_CONFIG_VAL(D, T, view_zoom, INT);
    E_CONFIG_VAL(D, T, cycle_mode, INT);
    E_CONFIG_VAL(D, T, history_sort_mode, INT);
-   E_CONFIG_LIST(D, T, conf_subjects, conf_item_edd);
-   E_CONFIG_LIST(D, T, conf_actions, conf_item_edd);
-   E_CONFIG_LIST(D, T, conf_objects, conf_item_edd);
-   E_CONFIG_LIST(D, T, conf_views,   conf_item_edd);
+   E_CONFIG_LIST(D, T, conf_subjects, plugin_conf_edd);
+   E_CONFIG_LIST(D, T, conf_actions, plugin_conf_edd);
+   E_CONFIG_LIST(D, T, conf_objects, plugin_conf_edd);
+   E_CONFIG_LIST(D, T, conf_views,   plugin_conf_edd);
 #undef T
 #undef D
    evry_conf = e_config_domain_load("module.everything", conf_edd);

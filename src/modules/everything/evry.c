@@ -1309,16 +1309,24 @@ _evry_selectors_switch(void)
 static int
 _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
-   Ecore_Event_Key *ev;
-   Evry_State *s = selector->state;
+   Ecore_Event_Key *ev = event;
+   Evry_State *s;
    const char *key = NULL, *old;
 
-   if (!s) return 1;
-   
-   win->request_selection = EINA_FALSE;
+   if (ev->event_window != input_window)
+     return 1;
 
-   ev = event;
-   if (ev->event_window != input_window) return 1;
+   if (!strcmp(ev->key, "Escape"))
+     {
+	evry_hide();
+	return 1;
+     }
+   
+   if (!selector || !selector->state)
+     return 1;
+   s = selector->state;
+
+   win->request_selection = EINA_FALSE;
 
    old = ev->key;
 
@@ -1497,8 +1505,6 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	else /*if (!_evry_browse_item(selector))*/
 	  _evry_plugin_action(selector, 1);
      }
-   else if (!strcmp(key, "Escape"))
-     evry_hide();
    else if (!strcmp(key, "Tab"))
      _evry_selectors_switch();
    else if (!strcmp(key, "BackSpace"))

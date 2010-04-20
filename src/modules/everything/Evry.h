@@ -45,11 +45,12 @@ typedef struct _Evry_Item_File Evry_Item_File;
 typedef struct _Evry_Action    Evry_Action;
 typedef struct _Evry_State     Evry_State;
 typedef struct _Evry_View      Evry_View;
-typedef struct _Plugin_Config  Plugin_Config;
 typedef struct _History Evry_History;
 typedef struct _History_Entry History_Entry;
 typedef struct _History_Item   History_Item;
 typedef struct _Config Evry_Config;
+typedef struct _Plugin_Config  Plugin_Config;
+typedef struct _Plugin_Setting  Plugin_Setting;
 
 
 #define EVRY_ITEM(_item) ((Evry_Item *)_item)
@@ -85,25 +86,6 @@ typedef struct _Config Evry_Config;
 #define EVRY_PLUGIN_FREE(_p)			\
   evry_plugin_free(EVRY_PLUGIN(_p), 0);		\
   E_FREE(_p);
-
-
-struct _Plugin_Config
-{
-  const char *name;
-
-  int loaded;
-  int enabled;
-
-  /* minimum input chars to query this source */
-  int min_query;
-
-  int priority;
-
-  const char *trigger;
-
-  Evry_Plugin *plugin;
-};
-
 
 struct _Evry_Item
 {
@@ -362,6 +344,33 @@ struct _Config
   Eina_List *views;
 
   int min_w, min_h;
+};
+
+struct _Plugin_Config
+{
+  const char *name;
+
+  int loaded;
+  int enabled;
+
+  /* minimum input chars to query this source */
+  int min_query;
+
+  int priority;
+
+  const char *trigger;
+
+  Evry_Plugin *plugin;
+
+  Eina_Hash *settings;
+};
+
+struct _Plugin_Setting
+{
+  int type;
+  char *description;
+  
+  char *val;
 };
 
 struct _History_Entry
