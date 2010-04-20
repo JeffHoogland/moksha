@@ -520,7 +520,7 @@ _evry_list_win_new(E_Zone *zone)
    E_Popup *popup;
    Evas_Object *o;
    const char *tmp;
-   int offset_x, offset_y, offset_s;
+   int offset_x, offset_y, offset_s = 0;
 
    if (!evry_conf->views) return NULL;
 

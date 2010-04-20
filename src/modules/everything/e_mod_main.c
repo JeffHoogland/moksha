@@ -261,7 +261,7 @@ _config_init()
 	evry_conf->quick_nav = 1;
 	evry_conf->cmd_terminal = eina_stringshare_add("/usr/bin/xterm");
 	evry_conf->cmd_sudo = eina_stringshare_add("/usr/bin/gksudo --preserve-env");
-	evry_conf->view_mode = 0;
+	evry_conf->view_mode = VIEW_MODE_DETAIL;
 	evry_conf->view_zoom = 0;
 	evry_conf->cycle_mode = 0;
 	evry_conf->history_sort_mode = 0;
