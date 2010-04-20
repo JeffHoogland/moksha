@@ -428,6 +428,9 @@ _policy_zone_layout_home_single(E_Border *bd, E_Illume_Config_Zone *cz)
 {
    int ny, nh;
 
+   /* no point in adjusting size or position if it's not visible */
+   if (!bd->visible) return;
+
 //   printf("\tLayout Home Single: %s\n", bd->client.icccm.class);
 
    /* make sure it's the required width & height */
@@ -449,6 +452,9 @@ _policy_zone_layout_home_dual_top(E_Border *bd, E_Illume_Config_Zone *cz)
 {
    E_Border *home;
    int ny, nh;
+
+   /* no point in adjusting size or position if it's not visible */
+   if (!bd->visible) return;
 
    /* set some defaults */
    ny = (bd->zone->y + cz->indicator.size);
@@ -480,6 +486,9 @@ _policy_zone_layout_home_dual_custom(E_Border *bd, E_Illume_Config_Zone *cz)
    int iy, ny, nh;
 
 //   printf("\tLayout Home Dual Custom: %s\n", bd->client.icccm.class);
+
+   /* no point in adjusting size or position if it's not visible */
+   if (!bd->visible) return;
 
    /* grab indicator position */
    e_illume_border_indicator_pos_get(bd->zone, NULL, &iy);
@@ -518,6 +527,9 @@ _policy_zone_layout_home_dual_left(E_Border *bd, E_Illume_Config_Zone *cz)
    int nx, nw, nh;
 
 //   printf("\tLayout Home Dual Left: %s\n", bd->client.icccm.class);
+
+   /* no point in adjusting size or position if it's not visible */
+   if (!bd->visible) return;
 
    nh = (bd->zone->h - cz->indicator.size - cz->softkey.size);
 
@@ -569,9 +581,9 @@ _policy_zone_layout_app_single(E_Border *bd, E_Illume_Config_Zone *cz)
    E_Border *home;
    int ky, kh, ny, nh;
 
-//   printf("\tLayout App Single: %s\n", bd->client.icccm.name);
-
    if ((!bd->new_client) && (!bd->visible)) return;
+
+//   printf("\tLayout App Single: %s\n", bd->client.icccm.name);
 
    /* grab keyboard safe region */
    e_illume_keyboard_safe_app_region_get(bd->zone, NULL, &ky, NULL, &kh);
@@ -752,6 +764,9 @@ _policy_zone_layout_dialog(E_Border *bd, E_Illume_Config_Zone *cz)
    /* NB: This policy ignores any ICCCM requested positions and centers the 
     * dialog on it's parent (if it exists) or on the zone */
 
+   /* no point in adjusting size or position if it's not visible */
+   if (!bd->visible) return;
+
    /* grab minimum size */
    e_illume_border_min_get(bd, &mw, &mh);
 
@@ -811,6 +826,9 @@ _policy_zone_layout_splash(E_Border *bd, E_Illume_Config_Zone *cz)
 
    /* NB: This policy ignores any ICCCM requested positions and centers the 
     * splash screen on it's parent (if it exists) or on the zone */
+
+   /* no point in adjusting size or position if it's not visible */
+   if (!bd->visible) return;
 
    /* grab minimum size */
    e_illume_border_min_get(bd, &mw, &mh);
@@ -1172,6 +1190,8 @@ _policy_border_show(E_Border *bd)
    /* make sure we have a name so that we don't handle windows like E's root */
    if (!bd->client.icccm.name) return;
 
+//   printf("Border Show: %s\n", bd->client.icccm.class);
+
    /* trap for special windows so we can ignore hides below them */
    if (e_illume_border_is_indicator(bd)) return;
    if (e_illume_border_is_softkey(bd)) return;
@@ -1206,6 +1226,11 @@ _policy_zone_layout(E_Zone *zone)
         if ((!bd->new_client) && (!bd->changes.pos) && (!bd->changes.size) && 
             (!bd->changes.visible) && (!bd->pending_move_resize) && 
             (!bd->need_shape_export) && (!bd->need_shape_merge)) continue;
+
+//        printf("Border Changed: %s\n", bd->client.icccm.class);
+//        printf("\tVisible: %d\n", bd->changes.visible);
+//        printf("\tPos: %d\n", bd->changes.pos);
+//        printf("\tSize: %d\n", bd->changes.size);
 
         /* are we laying out an indicator ? */
         if (e_illume_border_is_indicator(bd)) 
@@ -1508,10 +1533,7 @@ _policy_focus_home(E_Zone *zone)
 
 //   printf("Focus home\n");
    if (!(bd = e_illume_border_home_get(zone))) return;
-
-   if (!bd->visible) e_border_show(bd);
-
-   e_border_raise(bd);
+   _policy_border_set_focus(bd);
 }
 
 void 
