@@ -176,6 +176,7 @@ _policy_border_hide_below(E_Border *bd)
 static void 
 _policy_border_show_below(E_Border *bd) 
 {
+   E_Border *prev;
    int pos = 0, i;
 
 //   printf("Show Borders Below: %s %d %d\n", 
@@ -183,11 +184,9 @@ _policy_border_show_below(E_Border *bd)
 
    if (bd->client.icccm.transient_for) 
      {
-        E_Border *trans;
-
-        if (trans = e_border_find_by_client_window(bd->client.icccm.transient_for)) 
+        if (prev = e_border_find_by_client_window(bd->client.icccm.transient_for)) 
           {
-             _policy_border_set_focus(trans);
+             _policy_border_set_focus(prev);
              return;
           }
      }
@@ -239,8 +238,10 @@ _policy_border_show_below(E_Border *bd)
      }
 
    /* if we reach here, then there is a problem with showing a window below
-    * this one, so show home */
-   _policy_focus_home(bd->zone);
+    * this one, so show previous window in stack */
+   prev = eina_list_data_get(eina_list_last(_pol_focus_stack));
+   if (prev) _policy_border_set_focus(prev);
+   else _policy_focus_home(bd->zone);
 }
 
 static void 
