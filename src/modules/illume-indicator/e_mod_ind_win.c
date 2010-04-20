@@ -84,6 +84,8 @@ e_mod_ind_win_new(E_Zone *zone)
    /* create our gadget container */
    iwin->gadcon = e_gadcon_swallowed_new("illume-indicator", zone->id, 
                                          iwin->o_base, "e.swallow.content");
+   edje_extern_object_min_size_set(iwin->gadcon->o_container, 
+                                   zone->w, (il_ind_cfg->height * e_scale));
    e_gadcon_min_size_request_callback_set(iwin->gadcon, 
                                           _e_mod_ind_win_cb_min_size_request, 
                                           iwin);
@@ -194,7 +196,7 @@ _e_mod_ind_win_cb_win_prop(void *data, int type __UNUSED__, void *event)
    if (ev->atom != ATM_ENLIGHTENMENT_SCALE) return 1;
 
    /* set minimum size of this window */
-   e_win_size_min_set(iwin->win, iwin->zone->w, (32 * e_scale));
+   e_win_size_min_set(iwin->win, iwin->zone->w, (il_ind_cfg->height * e_scale));
 
    /* NB: Not sure why, but we need to tell this border to fetch icccm 
     * size position hints now :( (NOTE: This was not needed a few days ago) 
@@ -202,12 +204,12 @@ _e_mod_ind_win_cb_win_prop(void *data, int type __UNUSED__, void *event)
    iwin->win->border->client.icccm.fetch.size_pos_hints = 1;
 
    /* resize this window */
-   e_win_resize(iwin->win, iwin->zone->w, (32 * e_scale));
+   e_win_resize(iwin->win, iwin->zone->w, (il_ind_cfg->height * e_scale));
 
    /* tell conformant apps our position and size */
    ecore_x_e_illume_indicator_geometry_set(iwin->zone->black_win, 
                                            iwin->win->x, iwin->win->y, 
-                                           iwin->win->w, (32 * e_scale));
+                                           iwin->win->w, (il_ind_cfg->height * e_scale));
 
    return 1;
 }
@@ -223,7 +225,7 @@ _e_mod_ind_win_cb_zone_resize(void *data, int type __UNUSED__, void *event)
    if (ev->zone != iwin->zone) return 1;
 
    /* set minimum size of this window to match zone size */
-   e_win_size_min_set(iwin->win, ev->zone->w, (32 * e_scale));
+   e_win_size_min_set(iwin->win, ev->zone->w, (il_ind_cfg->height * e_scale));
 
    return 1;
 }
@@ -236,6 +238,9 @@ _e_mod_ind_win_cb_resize(E_Win *win)
    if (!(iwin = win->data)) return;
    if (iwin->o_event) evas_object_resize(iwin->o_event, win->w, win->h);
    if (iwin->o_base) evas_object_resize(iwin->o_base, win->w, win->h);
+   if (iwin->gadcon->o_container)
+     edje_extern_object_min_size_set(iwin->gadcon->o_container, 
+                                     win->w, win->h);
 }
 
 static void 
