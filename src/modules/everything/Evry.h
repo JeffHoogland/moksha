@@ -344,6 +344,8 @@ struct _Config
   Eina_List *views;
 
   int min_w, min_h;
+
+  unsigned char first_run;
 };
 
 struct _Plugin_Config

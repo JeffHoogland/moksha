@@ -33412,8 +33412,8 @@ collections {
                   normal: "base_bg.png";
                   border: 2 2 2 2;
                }
-               fill.smooth: 0;
-               color: 205 205 205 255;
+               fill.smooth: 1;
+               color: 245 245 245 255;
             }
          }
          part {
@@ -34333,12 +34333,12 @@ collections {
                   normal: "everything_item_bg.png";
                   border: 5 5 5 5;
                }
-               color: 255 255 255 32;
+               color: 255 255 255 16;
             }
             description {
                state: "selected" 0.0;
                inherit: "default" 0.0;
-               color: 255 255 255 128;
+               color: 255 255 255 108;
             }
          }
          part {
@@ -34557,7 +34557,7 @@ collections {
             source: "e";
             action: STATE_SET "selected" 0.0;
             target: "bg";
-            transition: ACCELERATE 0.05;
+            transition: ACCELERATE 0.15;
             /* target: "clip"; */
          }
          program {
@@ -34565,7 +34565,7 @@ collections {
             signal: "e,state,unselected";
             source: "e";
             action: STATE_SET "default" 0.0;
-            /* transition: LINEAR 0.1; */
+            transition: LINEAR 0.2;
             target: "bg";
             /* target: "clip"; */
          }
@@ -34944,6 +34944,36 @@ collections {
       }
    }
 
+   group {
+      name: "e/modules/everything/textblock";
+      styles {
+         style {
+            name: "everything_textblock_style";
+            base: "font=Sans font_size=11 align=left color=#000";
+            tag:  "hilight" "+ font=Sans:style=Bold color=#0c0c0c";
+            tag:  "b" "+ font=Sans:style=Bold";
+            tag:  "br" "\n";
+            tag:  "/title" "- \n \n";
+         }
+      }
+      parts {
+         part {
+            name: "e.textblock.text";
+            type: TEXTBLOCK;
+            mouse_events: 0;
+            scale: 1;
+            description {
+               state: "default" 0.0;
+               rel1.offset: 4 4;
+               rel2.offset: -5 -5;
+               text {
+                  style: "everything_textblock_style";
+                  min: 1 1;
+               }
+            }
+         }
+      }
+   }
 
 /////////////////////////////////////////////////////////////////////////////
 /*** MOD: CONF_COLORS ***/

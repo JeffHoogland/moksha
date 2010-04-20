@@ -62,19 +62,23 @@ _view_create(Evry_View *v, const Evry_State *s, const Evas_Object *swallow)
    int mw, mh;
 
    char *text =
-     _("<title><b>Welcome!</b></title>"
-     "Ok, here comes the explanation of <hilight>everything</hilight>...<br>"
-     "Just type a few letters of the thing you are looking for. <br>"
-     "Use cursor <hilight>&lt;up/down&gt;</hilight> to choose from the list of things.<br>"
-     "Press  <hilight>&lt;tab&gt;</hilight> to select "
-     "an action, then press  <hilight>&lt;return&gt;</hilight>.<br>"
-     /* "You might want to know <br>some mo keybinding to ease your experience though.<br>" */
-     "<hilight>&lt;space&gt;&lt;?&gt;</hilight> show this page<br>"
-     "<hilight>&lt;ctrl+letter&gt;</hilight> jump to plugin beginning with 'letter'<br>"
-     "<hilight>&lt;ctrl+left/right&gt;</hilight>"
-     "cycle through plugins<br>"
-     "<hilight>&lt;ctrl+1&gt;</hilight> "
-       "choose a different view (e.g. for images)<br>");
+     _("  Ok, here comes the explanation of <hilight>everything</hilight>...<br>"
+       "  Just type a few letters of the thing you are looking for. <br>"
+       "  Use cursor <hilight>&lt;up/down&gt;</hilight> to choose from the list of things.<br>"
+       "  Press  <hilight>&lt;tab&gt;</hilight> to select"
+       " an action, then press  <hilight>&lt;return&gt;</hilight>.<br>"
+       /* "You might want to know <br>some mo keybinding to ease your experience though.<br>" */
+       "    <hilight>&lt;?&gt;</hilight> show this page<br>"
+       "    <hilight>&lt;return&gt;</hilight> run action<br>"       
+       "    <hilight>&lt;ctrl+return&gt;</hilight> run action and continue<br>"       
+       "    <hilight>&lt;tab&gt;</hilight> toggle between selectors<br>"       
+       "    <hilight>&lt;ctrl+tab&gt;</hilight> complete input (depends on plugin)<br>"       
+       "    <hilight>&lt;ctrl+'x'&gt;</hilight> jump to plugin beginning with 'x'<br>"
+       "    <hilight>&lt;ctrl+left/right&gt;</hilight> cycle through plugins<br>"
+       "    <hilight>&lt;ctrl+1&gt;</hilight> toggle view modes (exit this page ;)<br>"
+       "    <hilight>&lt;ctrl+2&gt;</hilight> toggle list view modes<br>"
+       "    <hilight>&lt;ctrl+3&gt;</hilight> toggle thumb view modes"
+       );
 
    if (v->active) return v;
 
@@ -85,7 +89,7 @@ _view_create(Evry_View *v, const Evry_State *s, const Evas_Object *swallow)
    e_box_freeze(v->o_list);
    o = edje_object_add(evas_object_evas_get(swallow));
    e_theme_edje_object_set(o, "base/theme/widgets",
-			   "e/widgets/textblock");
+			   "e/modules/everything/textblock");
 
    edje_object_part_text_set(o, "e.textblock.text", text);
    e_box_pack_start(v->o_list, o);

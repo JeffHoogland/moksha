@@ -12,7 +12,7 @@
 /* #undef DBG
  * #define DBG(...) ERR(__VA_ARGS__) */
 
-#define CONFIG_VERSION 9
+#define CONFIG_VERSION 10
 
 /* actual module specifics */
 static void _e_mod_action_cb(E_Object *obj, const char *params);
@@ -214,6 +214,7 @@ _config_init()
    E_CONFIG_LIST(D, T, conf_actions, plugin_conf_edd);
    E_CONFIG_LIST(D, T, conf_objects, plugin_conf_edd);
    E_CONFIG_LIST(D, T, conf_views,   plugin_conf_edd);
+   E_CONFIG_VAL(D, T, first_run, UCHAR);
 #undef T
 #undef D
    evry_conf = e_config_domain_load("module.everything", conf_edd);
@@ -226,13 +227,19 @@ _config_init()
 
    if (evry_conf && evry_conf->version == 8)
      {
-	evry_conf->width = 460;
+	evry_conf->width = 445;
 	evry_conf->height = 310;
 	evry_conf->rel_y = 0.25;
 	evry_conf->scroll_animate = 1;
-	evry_conf->version = CONFIG_VERSION;
+	evry_conf->version = 9;
      }
 
+   if (evry_conf && evry_conf->version == 9)
+     {
+	evry_conf->first_run = EINA_TRUE;
+	evry_conf->version = CONFIG_VERSION;
+     }
+   
    if (evry_conf && evry_conf->version != CONFIG_VERSION)
      {
 	_config_free();
@@ -245,7 +252,7 @@ _config_init()
 	evry_conf->version = CONFIG_VERSION;
 	evry_conf->rel_x = 0.5;
 	evry_conf->rel_y = 0.25;
-	evry_conf->width = 460;
+	evry_conf->width = 445;
 	evry_conf->height = 310;
 	evry_conf->scroll_animate = 1;
 	evry_conf->scroll_speed = 10.0;
@@ -258,6 +265,7 @@ _config_init()
 	evry_conf->view_zoom = 0;
 	evry_conf->cycle_mode = 0;
 	evry_conf->history_sort_mode = 0;
+	evry_conf->first_run = EINA_TRUE;
      }
 }
 

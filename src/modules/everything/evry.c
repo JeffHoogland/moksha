@@ -143,9 +143,17 @@ _cb_show_timer(void *data)
    	Evry_View *view =evry_conf->views->data;
    	Evry_State *s = selector->state;
 
-   	s->view = view->create(view, s, list->o_main);
-
-   	_evry_view_show(s->view);
+	if (evry_conf->first_run)
+	  {
+	     _evry_view_toggle(s, "?"); 
+	     evry_conf->first_run = EINA_FALSE;
+	  }
+	else
+	  {
+	     s->view = view->create(view, s, list->o_main);
+	     
+	     _evry_view_show(s->view);
+	  }
      }
    else return 0;
 
@@ -1520,16 +1528,11 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	if (len < (INPUTLEN - strlen(ev->compose)))
 	  {
 	     strcat(s->input, ev->compose);
-	     /* if ((len == 0) && isspace(s->input[0]))
-	      *   _evry_show_triggers(); */
-	     if ((len == 1) &&
-		 (isspace(s->input[0])) &&
-		 (_evry_view_toggle(s, s->input + 1)))
-	       {
-		  /* space at the beginning is trigger */
-		  _evry_update(selector, 0);
-	       }
-	     else if (isspace(*ev->compose))
+
+	     if (len == 0 && (_evry_view_toggle(s, s->input)))
+	       goto end;
+	     
+	     if (isspace(*ev->compose))
 	       {
 		  /* do not update matches on space */
 		  _evry_update(selector, 0);
@@ -1797,14 +1800,18 @@ _evry_view_toggle(Evry_State *s, const char *trigger)
 {
    Evry_View *view, *v = NULL;
    Eina_List *l, *ll;
-
+   Eina_Bool triggered = FALSE;
+   
    if (trigger)
      {
 	EINA_LIST_FOREACH(evry_conf->views, ll, view)
 	  {
 	     if (view->trigger && !strncmp(trigger, view->trigger, 1) &&
 		 (v = view->create(view, s, list->o_main)))
-	       goto found;
+	       {
+		  triggered = EINA_TRUE;
+		  goto found;
+	       }
 	  }
      }
    else
@@ -1855,7 +1862,7 @@ _evry_view_toggle(Evry_State *s, const char *trigger)
    _evry_view_show(s->view);
    view->update(s->view, 0);
 
-   return 1;
+   return triggered;
 }
 
 static void
