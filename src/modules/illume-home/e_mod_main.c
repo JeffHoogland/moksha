@@ -303,7 +303,9 @@ _il_home_win_new(Instance *inst)
 {
    Il_Home_Win *hwin;
    E_Zone *zone;
+   E_Desk *desk;
    char buff[PATH_MAX];
+   const char *bgfile;
 
    if (!inst) return;
 
@@ -327,17 +329,17 @@ _il_home_win_new(Instance *inst)
    e_win_resize_callback_set(hwin->win, _il_home_win_cb_resize);
    e_win_no_remember_set(hwin->win, EINA_TRUE);
 
-   /* don't accept focus */
-//   ecore_x_icccm_hints_set(hwin->win->evas_win, 0, 0, 0, 0, 0, 0, 0);
-
    snprintf(buff, sizeof(buff), "%s/e-module-illume-home.edj", 
             il_home_cfg->mod_dir);
 
+   desk = e_desk_current_get(zone);
+   if (desk)
+     bgfile = e_bg_file_get(zone->container->num, zone->num, desk->x, desk->y);
+   else
+     bgfile = e_bg_file_get(zone->container->num, zone->num, -1, -1);
+
    hwin->o_bg = edje_object_add(e_win_evas_get(hwin->win));
-   if (!e_theme_edje_object_set(hwin->o_bg, 
-                                "base/theme/modules/illume-home", 
-                                "modules/illume-home/window")) 
-     edje_object_file_set(hwin->o_bg, buff, "modules/illume-home/window");
+   edje_object_file_set(hwin->o_bg, bgfile, "e/desktop/background");
    evas_object_move(hwin->o_bg, 0, 0);
    evas_object_show(hwin->o_bg);
 
