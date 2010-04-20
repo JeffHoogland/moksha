@@ -1518,7 +1518,7 @@ _e_shelf_cb_hide_animator(void *data)
       case E_GADCON_ORIENT_FLOAT:
       case E_GADCON_ORIENT_HORIZ:
       case E_GADCON_ORIENT_VERT:
-	 goto end;
+	break;
      }
 
    step = (hide_max / e_config->framerate) / es->cfg->hide_duration;
