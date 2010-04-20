@@ -219,7 +219,7 @@ _scan_cancel_func(void *data)
    p->thread = NULL;
 
    if (p->cleanup)
-     _cleanup(EVRY_PLUGIN(p));
+     E_FREE(p);
 }
 
 static void
@@ -375,29 +375,28 @@ _cleanup(Evry_Plugin *plugin)
 
    Evry_Item_File *file;
 
+   if (p->directory)
+     eina_stringshare_del(p->directory);
+
+   EINA_LIST_FREE(p->files, file)
+     {
+	_hist_add(plugin, file);
+	evry_item_free(EVRY_ITEM(file));
+     }
+   
+   EVRY_PLUGIN_ITEMS_CLEAR(p);
+
+   if (p->input)
+     eina_stringshare_del(p->input);
+
    if (p->thread)
      {
 	ecore_thread_cancel(p->thread);
 	p->cleanup = EINA_TRUE;
+	return;
      }
-   else
-     {
-	if (p->directory)
-	  eina_stringshare_del(p->directory);
 
-	EINA_LIST_FREE(p->files, file)
-	  {
-	     _hist_add(plugin, file);
-	     evry_item_free(EVRY_ITEM(file));
-	  }
-
-	EVRY_PLUGIN_ITEMS_CLEAR(p);
-
-	if (p->input)
-	  eina_stringshare_del(p->input);
-
-	E_FREE(p);
-     }
+   E_FREE(p);
 }
 
 static Eina_Bool
