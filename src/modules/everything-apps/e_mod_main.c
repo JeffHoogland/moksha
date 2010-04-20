@@ -6,6 +6,9 @@
 #include "e_mod_main.h"
 
 typedef struct _Plugin Plugin;
+typedef struct _Module_Config Module_Config;
+typedef struct _E_Exe E_Exe;
+typedef struct _E_Exe_List E_Exe_List;
 
 struct _Plugin
 {
@@ -19,11 +22,6 @@ struct _Plugin
   Evry_Item_App *app_command;
   Evry_Item_App *app_parameter;
 };
-
-/* taken from exebuf module */
-typedef struct _E_Exe E_Exe;
-typedef struct _E_Exe_List E_Exe_List;
-typedef struct _Module_Config Module_Config;
 
 struct _E_Exe
 {
@@ -46,6 +44,8 @@ struct _Module_Config
   E_Module *module;
 };
 
+static Module_Config *_conf;
+
 static Plugin *p1 = NULL;
 static Plugin *p2 = NULL;
 static Evry_Action *act = NULL;
@@ -54,8 +54,6 @@ static Evry_Action *act2 = NULL;
 static Evry_Action *act3 = NULL;
 static Evry_Action *act4 = NULL;
 static Evry_Action *act5 = NULL;
-
-static Module_Config    *_conf;
 
 static Eina_List *exe_path = NULL;
 static Ecore_Idler *exe_scan_idler = NULL;
@@ -1143,14 +1141,6 @@ _scan_idler(void *data)
 
 static E_Config_DD *conf_edd = NULL;
 
-static Eina_Bool active = EINA_FALSE;
-
-EAPI E_Module_Api e_modapi = 
-{
-   E_MODULE_API_VERSION,
-   "everything-apps"
-};
-
 struct _E_Config_Dialog_Data 
 {
   int list_executables;
@@ -1162,14 +1152,14 @@ static void _fill_data(E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static int _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 
-E_Config_Dialog *
+static E_Config_Dialog *
 _conf_dialog(E_Container *con, const char *params) 
 {
    E_Config_Dialog *cfd = NULL;
    E_Config_Dialog_View *v = NULL;
    char buf[4096];
 
-   if (e_config_dialog_find("everything-apps", "advanced/everything-apps")) return NULL;
+   if (e_config_dialog_find("everything-apps", "extensions/everything-apps")) return NULL;
 
    v = E_NEW(E_Config_Dialog_View, 1);
    if (!v) return NULL;
@@ -1182,9 +1172,9 @@ _conf_dialog(E_Container *con, const char *params)
    snprintf(buf, sizeof(buf), "%s/e-module.edj", _conf->module->dir);
 
    cfd = e_config_dialog_new(con, _("Everything Applications"), "everything-apps", 
-                             "advanced/everything-apps", buf, 0, v, NULL);
+                             "extensions/everything-apps", buf, 0, v, NULL);
 
-   e_dialog_resizable_set(cfd->dia, 1);
+   /* e_dialog_resizable_set(cfd->dia, 1); */
    _conf->cfd = cfd;
    return cfd;
 }
@@ -1240,8 +1230,6 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    return 1;
 }
 
-/***************************************************************************/
-
 static void 
 _conf_new(void)
 {
@@ -1261,14 +1249,11 @@ _conf_new(void)
    e_config_save_queue();
 }
 
-EAPI void *
-e_modapi_init(E_Module *m)
+static void
+_conf_init(E_Module *m)
 {
    char buf[4096];
    
-   if (e_datastore_get("everything_loaded"))
-     active = module_init();
-
    snprintf(buf, sizeof(buf), "%s/e-module.edj", m->dir);
 
    e_configure_registry_category_add("extensions", 80, _("Extensions"),
@@ -1303,6 +1288,33 @@ e_modapi_init(E_Module *m)
    if (!_conf) _conf_new();
 
    _conf->module = m;
+}
+
+static void
+_conf_shutdown(void)
+{
+   E_FREE(_conf);
+
+   E_CONFIG_DD_FREE(conf_edd);
+}
+
+/***************************************************************************/
+
+static Eina_Bool active = EINA_FALSE;
+
+EAPI E_Module_Api e_modapi = 
+  {
+    E_MODULE_API_VERSION,
+    "everything-apps"
+  };
+
+EAPI void *
+e_modapi_init(E_Module *m)
+{   
+   if (e_datastore_get("everything_loaded"))
+     active = module_init();
+
+   _conf_init(m);
    
    e_module_delayed_set(m, 1); 
 
@@ -1315,13 +1327,10 @@ e_modapi_shutdown(E_Module *m)
    if (active && e_datastore_get("everything_loaded"))
      module_shutdown();
 
+   _conf_shutdown();
+
    E_CONFIG_DD_FREE(exelist_edd);
    E_CONFIG_DD_FREE(exelist_exe_edd);
-
-
-   E_FREE(_conf);
-
-   E_CONFIG_DD_FREE(conf_edd);
 
    return 1;
 }
@@ -1329,6 +1338,7 @@ e_modapi_shutdown(E_Module *m)
 EAPI int
 e_modapi_save(E_Module *m)
 {
+   e_config_domain_save("module.everything-apps", conf_edd, _conf);
    return 1;
 }
 

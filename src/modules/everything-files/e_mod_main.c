@@ -11,6 +11,7 @@
 
 typedef struct _Plugin Plugin;
 typedef struct _Data Data;
+typedef struct _Module_Config Module_Config;
 
 struct _Plugin
 {
@@ -21,8 +22,8 @@ struct _Plugin
   const char *input;
   Eina_Bool command;
   Eina_Bool parent;
-  Eina_Bool hist_added;
-  
+  Eina_List *hist_added;
+
   Ecore_Thread *thread;
   Eina_Bool cleanup;
 };
@@ -37,29 +38,46 @@ struct _Data
   Eina_List *list;
 };
 
+struct _Module_Config
+{
+  int version;
+
+  unsigned char show_homedir;
+  unsigned char show_recent;
+  unsigned char search_recent;
+
+  // TODO
+  int sort_by;
+  Eina_List *search_dirs;
+
+  E_Config_Dialog *cfd;
+  E_Module *module;
+};
+
+static Module_Config *_conf;
+
 static Evry_Plugin *p1 = NULL;
 static Evry_Plugin *p2 = NULL;
 static Evry_Action *act1 = NULL;
 static Evry_Action *act2 = NULL;
 
 static E_Module *module = NULL;
-static Eina_Bool active = EINA_FALSE;
 
 static void _cleanup(Evry_Plugin *plugin);
 
-  
+
 static void
 _item_fill(Evry_Item_File *file)
 {
    const char *mime;
-   
+
    if (file->mime) return;
 
    if ((mime = efreet_mime_type_get(file->path)))
      {
 	file->mime = eina_stringshare_add(mime);
 	EVRY_ITEM(file)->context = eina_stringshare_ref(file->mime);
-	
+
 	if ((!strcmp(mime, "inode/directory")) ||
 	    (!strcmp(mime, "inode/mount-point")))
 	  EVRY_ITEM(file)->browseable = EINA_TRUE;
@@ -106,14 +124,14 @@ _scan_func(void *data)
    Plugin *p = d->plugin;
    char *filename;
    const char *mime;
-   
+
    Evry_Item_File *file;
    char buf[4096];
    int cnt = 0;
 
    if (!d->list)
      d->list = ecore_file_ls(p->directory);
-   
+
    while(d->list)
      {
 	filename = d->list->data;
@@ -148,7 +166,7 @@ _scan_func(void *data)
 	  {
 	     file->mime = mime;
 	  }
-	
+
 	d->files = eina_list_append(d->files, file);
 
 	if (cnt++ > MAX_ITEMS) break;
@@ -182,24 +200,24 @@ _scan_cancel_func(void *data)
    Plugin *p = d->plugin;
    Evry_Item_File *file;
    char *filename;
-   
+
    EINA_LIST_FREE(d->files, file)
      {
 	free((char *)EVRY_ITEM(file)->label);
-	free((char *)file->path);	
+	free((char *)file->path);
 	free(file);
      }
 
    EINA_LIST_FREE(d->list, filename)
-     free(filename);     
-   
+     free(filename);
+
    E_FREE(d);
 
    if (p->directory)
      eina_stringshare_del(p->directory);
 
    p->thread = NULL;
-   
+
    if (p->cleanup)
      _cleanup(EVRY_PLUGIN(p));
 }
@@ -214,7 +232,7 @@ _scan_end_func(void *data)
    char *filename, *path, *mime;
    int cnt = 0;
    Eina_List *l;
-   
+
    p->thread = NULL;
    printf("scan end\n");
 
@@ -225,7 +243,7 @@ _scan_end_func(void *data)
 	filename = (char *)item->label;
 	path = (char *) file->path;
 	mime = (char *) file->mime;
-	
+
 	file->path = eina_stringshare_add(path);
 
 	/* filter out files that we already have from history */
@@ -241,11 +259,11 @@ _scan_end_func(void *data)
 	       }
 	  }
 	if (!file) continue;
-	
+
 	if (mime)
 	  file->mime = eina_stringshare_add(mime);
 	else
-	  file->mime = eina_stringshare_add("None");	  
+	  file->mime = eina_stringshare_add("None");
 	item->context = eina_stringshare_ref(file->mime);
 	item->id = eina_stringshare_ref(file->path);
 	item->label = eina_stringshare_add(filename);
@@ -256,7 +274,7 @@ _scan_end_func(void *data)
 	p->files = eina_list_append(p->files, file);
 
 	evry_util_file_detail_set(file);
-	
+
 	/* if (cnt >= MAX_ITEMS) continue;
 	 * cnt += _append_file(p, file);
 	 * item->priority = cnt; */
@@ -266,17 +284,17 @@ _scan_end_func(void *data)
    else
      E_FREE(d);
 
-   p->files = eina_list_sort(p->files, -1, _cb_sort); 
+   p->files = eina_list_sort(p->files, -1, _cb_sort);
 
    EVRY_PLUGIN_ITEMS_CLEAR(p);
-   
+
    EINA_LIST_FOREACH(p->files, l, f)
      {
 	if (cnt >= MAX_SHOWN) break;
 	cnt += _append_file(p, f);
 	EVRY_ITEM(f)->priority = cnt;
      }
-   
+
    evry_plugin_async_update(EVRY_PLUGIN(p), EVRY_ASYNC_UPDATE_ADD);
 }
 
@@ -314,11 +332,13 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
 	p = E_NEW(Plugin, 1);
 	p->base = *plugin;
 	p->base.items = NULL;
-	p->directory = eina_stringshare_add(e_user_homedir_get());
+	if (_conf->show_homedir)
+	  p->directory = eina_stringshare_add(e_user_homedir_get());
 	p->parent = EINA_FALSE;
      }
 
-   _read_directory(p);
+   if (p->directory)
+     _read_directory(p);
 
    return EVRY_PLUGIN(p);
 }
@@ -329,11 +349,11 @@ _hist_add(Evry_Plugin *plugin, Evry_Item_File *file)
    Eina_List *l;
    History_Item *hi;
    History_Entry *he;
-   
+
    he = eina_hash_find(evry_hist->subjects, file->path);
 
    if (!he) return 0;
-   
+
    EINA_LIST_FOREACH(he->items, l, hi)
      {
 	if (hi->type != plugin->type_out)
@@ -354,9 +374,9 @@ _cleanup(Evry_Plugin *plugin)
    PLUGIN(p, plugin);
 
    Evry_Item_File *file;
-   
+
    if (p->thread)
-     {	
+     {
 	ecore_thread_cancel(p->thread);
 	p->cleanup = EINA_TRUE;
      }
@@ -370,11 +390,11 @@ _cleanup(Evry_Plugin *plugin)
 	     _hist_add(plugin, file);
 	     evry_item_free(EVRY_ITEM(file));
 	  }
-	
+
 	EVRY_PLUGIN_ITEMS_CLEAR(p);
 
 	if (p->input)
-	  eina_stringshare_del(p->input); 
+	  eina_stringshare_del(p->input);
 
 	E_FREE(p);
      }
@@ -389,7 +409,7 @@ _hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fda
    Eina_List *l, *ll;
    Evry_Item_File *file;
    const char *label;
-   
+
    EINA_LIST_FOREACH(he->items, l, hi)
      {
 	if (hi->type != p->base.type_out)
@@ -407,14 +427,14 @@ _hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fda
 	label = ecore_file_file_get(key);
 	if (!label)
 	  continue;
-	
+
 	file = E_NEW(Evry_Item_File, 1);
 	if (!file)
 	  continue;
 
 	evry_item_new(EVRY_ITEM(file), EVRY_PLUGIN(p), label, _item_free);
 
-	file->path = eina_stringshare_add(key); 
+	file->path = eina_stringshare_add(key);
 	if (hi->data)
 	  file->mime = eina_stringshare_add(hi->data);
 	if (hi->data)
@@ -422,7 +442,7 @@ _hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fda
 
 	EVRY_ITEM(file)->id = eina_stringshare_ref(file->path);
 
-	evry_util_file_detail_set(file); 
+	evry_util_file_detail_set(file);
 
 	if (file->mime)
 	  {
@@ -434,7 +454,8 @@ _hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fda
 	/* if (ecore_file_is_dir(file->path))
 	 * EVRY_ITEM(file)->browseable = EINA_TRUE; */
 
-	p->files = eina_list_append(p->files, file); 
+	p->files = eina_list_append(p->files, file);
+	p->hist_added = eina_list_append(p->hist_added, file);
 	break;
      }
    return EINA_TRUE;
@@ -452,19 +473,19 @@ _fetch(Evry_Plugin *plugin, const char *input)
      EVRY_PLUGIN_ITEMS_CLEAR(p);
 
    if (p->input)
-     eina_stringshare_del(p->input); 
+     eina_stringshare_del(p->input);
    p->input = NULL;
 
-   if (!p->parent && input)
+   if (!p->parent)
      {
 	/* input is command ? */
-   	if (!strcmp(input, "/"))
+   	if (input && !strcmp(input, "/"))
    	  {
 	     /* browse root */
 	     EINA_LIST_FREE(p->files, file)
 	       evry_item_free(EVRY_ITEM(file));
 
-	     eina_stringshare_del(p->directory); 
+	     eina_stringshare_del(p->directory);
 	     p->directory = eina_stringshare_add("/");
 	     _read_directory(p);
 
@@ -473,20 +494,29 @@ _fetch(Evry_Plugin *plugin, const char *input)
    	  }
 
 	/* add recent files */
-	if (!p->hist_added)
-	  eina_hash_foreach(evry_hist->subjects, _hist_items_add_cb, p);
-	p->hist_added = EINA_TRUE;
+	if (!p->hist_added && (_conf->show_recent || (input && _conf->search_recent)))
+	  {
+	     eina_hash_foreach(evry_hist->subjects, _hist_items_add_cb, p);
+	  }
+	else if (p->hist_added && !input && _conf->search_recent)
+	  {
+	     EINA_LIST_FREE(p->hist_added, file)
+	       {
+		  p->files = eina_list_remove(p->files, file); 
+		  evry_item_free(EVRY_ITEM(file));
+	       }
+	  }
      }
 
    /* clear command items */
    if (!p->parent && !input && p->command)
      {
    	p->command = EINA_FALSE;
-	
+
 	EINA_LIST_FREE(p->files, file)
 	  evry_item_free(EVRY_ITEM(file));
 
-	eina_stringshare_del(p->directory); 
+	eina_stringshare_del(p->directory);
 	p->directory = eina_stringshare_add(e_user_homedir_get());
 	_read_directory(p);
 	return 0;
@@ -511,8 +541,9 @@ _fetch(Evry_Plugin *plugin, const char *input)
    if (!EVRY_PLUGIN(p)->items)
      return 0;
 
-   EVRY_PLUGIN_ITEMS_SORT(p, _cb_sort);
-   
+   if (!p->parent && _conf->show_recent)
+     EVRY_PLUGIN_ITEMS_SORT(p, _cb_sort);
+
    return 1;
 }
 
@@ -587,7 +618,7 @@ _open_term_action(Evry_Action *act)
      {
 	getcwd(cwd, sizeof(cwd));
 	chdir(dir);
-	
+
 	tmp = E_NEW(Evry_Item_App, 1);
 	tmp->file = evry_conf->cmd_terminal;
 
@@ -596,7 +627,7 @@ _open_term_action(Evry_Action *act)
 	E_FREE(dir);
 	chdir(cwd);
      }
-   
+
    return ret;
 }
 
@@ -611,7 +642,7 @@ module_init(void)
 
    p2 = EVRY_PLUGIN_NEW(NULL, N_("Files"), type_object, "FILE", "FILE",
 			_begin, _cleanup, _fetch, _icon_get, NULL);
-   
+
    evry_plugin_register(p1, 3);
    evry_plugin_register(p2, 1);
 
@@ -639,7 +670,195 @@ module_shutdown(void)
 
 /***************************************************************************/
 
-EAPI E_Module_Api e_modapi = 
+static E_Config_DD *conf_edd = NULL;
+
+struct _E_Config_Dialog_Data
+{
+  int show_homedir;
+  int show_recent;
+  int search_recent;
+};
+
+static void *_create_data(E_Config_Dialog *cfd);
+static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static void _fill_data(E_Config_Dialog_Data *cfdata);
+static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static int _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+
+static E_Config_Dialog *
+_conf_dialog(E_Container *con, const char *params)
+{
+   E_Config_Dialog *cfd = NULL;
+   E_Config_Dialog_View *v = NULL;
+   char buf[4096];
+
+   if (e_config_dialog_find("everything-files", "extensions/everything-files")) return NULL;
+
+   v = E_NEW(E_Config_Dialog_View, 1);
+   if (!v) return NULL;
+
+   v->create_cfdata = _create_data;
+   v->free_cfdata = _free_data;
+   v->basic.create_widgets = _basic_create;
+   v->basic.apply_cfdata = _basic_apply;
+
+   snprintf(buf, sizeof(buf), "%s/e-module.edj", _conf->module->dir);
+
+   cfd = e_config_dialog_new(con, _("Everything Files"), "everything-files",
+			     "extensions/everything-files", buf, 0, v, NULL);
+
+   /* e_dialog_resizable_set(cfd->dia, 1); */
+   _conf->cfd = cfd;
+   return cfd;
+}
+
+static Evas_Object *
+_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
+{
+   Evas_Object *o = NULL, *of = NULL, *ow = NULL;
+
+   o = e_widget_list_add(evas, 0, 0);
+
+   of = e_widget_framelist_add(evas, _("General"), 0);
+   e_widget_framelist_content_align_set(of, 0.0, 0.0);
+
+   ow = e_widget_check_add(evas, _("Show Home Directory"),
+			   &(cfdata->show_homedir));
+   e_widget_framelist_object_append(of, ow);
+
+   ow = e_widget_check_add(evas, _("Show Recent Files"),
+			   &(cfdata->show_recent));
+   e_widget_framelist_object_append(of, ow);
+
+   ow = e_widget_check_add(evas, _("Search Recent Files"),
+			   &(cfdata->search_recent));
+   e_widget_framelist_object_append(of, ow);
+
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   return o;
+}
+
+static void *
+_create_data(E_Config_Dialog *cfd)
+  {
+     E_Config_Dialog_Data *cfdata = NULL;
+
+     cfdata = E_NEW(E_Config_Dialog_Data, 1);
+     _fill_data(cfdata);
+     return cfdata;
+  }
+
+static void
+_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+{
+   _conf->cfd = NULL;
+   E_FREE(cfdata);
+}
+
+static void
+_fill_data(E_Config_Dialog_Data *cfdata)
+{
+#define C(_name) cfdata->_name = _conf->_name;
+   C(show_homedir);
+   C(show_recent);
+   C(search_recent);
+#undef C
+}
+
+static int
+_basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+{
+#define C(_name) _conf->_name = cfdata->_name;
+   C(show_homedir);
+   C(show_recent);
+   C(search_recent);
+#undef C
+   printf("apply\n");
+
+   e_config_domain_save("module.everything-files", conf_edd, _conf);
+   e_config_save_queue();
+   return 1;
+}
+
+static void
+_conf_new(void)
+{
+   printf("new!!!!!\n");
+   _conf = E_NEW(Module_Config, 1);
+   _conf->version = (MOD_CONFIG_FILE_EPOCH << 16);
+
+#define IFMODCFG(v) if ((_conf->version & 0xffff) < v) {
+#define IFMODCFGEND }
+
+   /* setup defaults */
+   IFMODCFG(0x008d);
+   _conf->show_recent = 0;
+   _conf->show_homedir = 1;
+   _conf->search_recent = 1;
+   IFMODCFGEND;
+
+   _conf->version = MOD_CONFIG_FILE_VERSION;
+
+   e_config_domain_save("module.everything-files", conf_edd, _conf);
+   e_config_save_queue();
+}
+
+static void
+_conf_free(void)
+{
+   E_FREE(_conf);
+}
+
+static void
+_conf_init(E_Module *m)
+{
+   char buf[4096];
+
+   snprintf(buf, sizeof(buf), "%s/e-module.edj", m->dir);
+
+   e_configure_registry_category_add("extensions", 80, _("Extensions"),
+				     NULL, "preferences-extensions");
+
+   e_configure_registry_item_add("extensions/everything-files", 110, _("Everything Files"),
+				 NULL, buf, _conf_dialog);
+
+   conf_edd = E_CONFIG_DD_NEW("Module_Config", Module_Config);
+   
+#undef T
+#undef D
+#define T Module_Config
+#define D conf_edd
+   E_CONFIG_VAL(D, T, version, INT);
+   E_CONFIG_VAL(D, T, show_homedir, UCHAR);
+   E_CONFIG_VAL(D, T, show_recent, UCHAR);
+   E_CONFIG_VAL(D, T, search_recent, UCHAR);
+#undef T
+#undef D
+
+   _conf = e_config_domain_load("module.everything-files", conf_edd);
+
+   if (_conf && !evry_util_module_config_check(_("Everything Files"), _conf->version,
+					       MOD_CONFIG_FILE_EPOCH, MOD_CONFIG_FILE_VERSION))
+	  _conf_free();
+
+   if (!_conf) _conf_new();
+
+   _conf->module = m;
+}
+
+static void
+_conf_shutdown(void)
+{
+   E_FREE(_conf);
+
+   E_CONFIG_DD_FREE(conf_edd);
+}
+
+/***************************************************************************/
+
+static Eina_Bool active = EINA_FALSE;
+
+EAPI E_Module_Api e_modapi =
 {
    E_MODULE_API_VERSION,
    "everything-files"
@@ -653,8 +872,10 @@ e_modapi_init(E_Module *m)
    if (e_datastore_get("everything_loaded"))
      active = module_init();
 
-   e_module_delayed_set(m, 1); 
-   
+   _conf_init(m);
+
+   e_module_delayed_set(m, 1);
+
    return m;
 }
 
@@ -664,13 +885,14 @@ e_modapi_shutdown(E_Module *m)
    if (active && e_datastore_get("everything_loaded"))
      module_shutdown();
 
-   module = NULL;
-   
+   _conf_shutdown();
+
    return 1;
 }
 
 EAPI int
 e_modapi_save(E_Module *m)
 {
+   e_config_domain_save("module.everything-files", conf_edd, _conf);
    return 1;
 }
