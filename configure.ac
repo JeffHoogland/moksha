@@ -476,7 +476,6 @@ AC_E_OPTIONAL_MODULE([temperature], true, [CHECK_MODULE_TEMPERATURE])
 AC_E_OPTIONAL_MODULE([cpufreq], true)
 AC_E_OPTIONAL_MODULE([ibox], true)
 AC_E_OPTIONAL_MODULE([start], true)
-AC_E_OPTIONAL_MODULE([exebuf], true)
 AC_E_OPTIONAL_MODULE([winlist], true)
 AC_E_OPTIONAL_MODULE([fileman], true)
 AC_E_OPTIONAL_MODULE([fileman_opinfo], true)
@@ -518,7 +517,6 @@ AC_E_OPTIONAL_MODULE([conf_clientlist], true)
 AC_E_OPTIONAL_MODULE([conf_dialogs], true)
 AC_E_OPTIONAL_MODULE([conf_performance], true)
 AC_E_OPTIONAL_MODULE([conf_winlist], true)
-AC_E_OPTIONAL_MODULE([conf_exebuf], true)
 AC_E_OPTIONAL_MODULE([conf_paths], true)
 AC_E_OPTIONAL_MODULE([conf_mime], true)
 AC_E_OPTIONAL_MODULE([conf_interaction], true)
@@ -567,8 +565,6 @@ src/modules/ibox/Makefile
 src/modules/ibox/module.desktop
 src/modules/start/Makefile
 src/modules/start/module.desktop
-src/modules/exebuf/Makefile
-src/modules/exebuf/module.desktop
 src/modules/winlist/Makefile
 src/modules/winlist/module.desktop
 src/modules/fileman/Makefile
@@ -651,8 +647,6 @@ src/modules/conf_performance/Makefile
 src/modules/conf_performance/module.desktop
 src/modules/conf_winlist/Makefile
 src/modules/conf_winlist/module.desktop
-src/modules/conf_exebuf/Makefile
-src/modules/conf_exebuf/module.desktop
 src/modules/conf_paths/Makefile
 src/modules/conf_paths/module.desktop
 src/modules/conf_mime/Makefile

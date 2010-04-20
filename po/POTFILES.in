@@ -156,8 +156,6 @@ src/modules/conf_edgebindings/e_int_config_edgebindings.c
 src/modules/conf_edgebindings/e_mod_main.c
 src/modules/conf_engine/e_int_config_engine.c
 src/modules/conf_engine/e_mod_main.c
-src/modules/conf_exebuf/e_int_config_exebuf.c
-src/modules/conf_exebuf/e_mod_main.c
 src/modules/conf_fonts/e_int_config_fonts.c
 src/modules/conf_fonts/e_mod_main.c
 src/modules/conf_icon_theme/e_int_config_icon_themes.c
@@ -238,8 +236,6 @@ src/modules/everything-files/e_mod_main.c
 src/modules/everything-settings/e_mod_main.c
 src/modules/everything-wallpaper/e_mod_main.c
 src/modules/everything-windows/e_mod_main.c
-src/modules/exebuf/e_mod_main.c
-src/modules/exebuf/e_exebuf.c
 src/modules/fileman/e_mod_main.c
 src/modules/fileman/e_mod_config.c
 src/modules/fileman/e_fwin.c

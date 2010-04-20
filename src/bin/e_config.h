@@ -189,19 +189,6 @@ struct _E_Config
    int         menu_favorites_show; // GUI
    int         menu_apps_show; // GUI
    int         fullscreen_policy; // GUI
-   int         exebuf_max_exe_list; // GUI
-   int         exebuf_max_eap_list; // GUI
-   int         exebuf_max_hist_list; // GUI
-   int         exebuf_scroll_animate; // GUI
-   double      exebuf_scroll_speed; // GUI
-   double      exebuf_pos_align_x; // GUI
-   double      exebuf_pos_align_y; // GUI
-   double      exebuf_pos_size_w; // GUI
-   double      exebuf_pos_size_h; // GUI
-   int         exebuf_pos_min_w; // GUI
-   int         exebuf_pos_min_h; // GUI
-   int         exebuf_pos_max_w; // GUI
-   int         exebuf_pos_max_h; // GUI
    const char *exebuf_term_cmd; // GUI
    Eina_List  *color_classes; // GUI
    int         use_app_icon; // GUI

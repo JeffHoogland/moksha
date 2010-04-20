@@ -593,19 +593,6 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, fullscreen_policy, INT); /**/
    E_CONFIG_VAL(D, T, input_method, STR); /**/
    E_CONFIG_LIST(D, T, path_append_messages, _e_config_path_append_edd); /**/
-   E_CONFIG_VAL(D, T, exebuf_max_exe_list, INT);
-   E_CONFIG_VAL(D, T, exebuf_max_eap_list, INT);
-   E_CONFIG_VAL(D, T, exebuf_max_hist_list, INT);
-   E_CONFIG_VAL(D, T, exebuf_scroll_animate, INT);
-   E_CONFIG_VAL(D, T, exebuf_scroll_speed, DOUBLE);
-   E_CONFIG_VAL(D, T, exebuf_pos_align_x, DOUBLE);
-   E_CONFIG_VAL(D, T, exebuf_pos_align_y, DOUBLE);
-   E_CONFIG_VAL(D, T, exebuf_pos_size_w, DOUBLE);
-   E_CONFIG_VAL(D, T, exebuf_pos_size_h, DOUBLE);
-   E_CONFIG_VAL(D, T, exebuf_pos_min_w, INT);
-   E_CONFIG_VAL(D, T, exebuf_pos_min_h, INT);
-   E_CONFIG_VAL(D, T, exebuf_pos_max_w, INT);
-   E_CONFIG_VAL(D, T, exebuf_pos_max_h, INT);
    E_CONFIG_VAL(D, T, exebuf_term_cmd, STR);
    E_CONFIG_LIST(D, T, color_classes, _e_config_color_class_edd);
    E_CONFIG_VAL(D, T, use_app_icon, INT);

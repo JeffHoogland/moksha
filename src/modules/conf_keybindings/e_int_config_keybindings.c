@@ -581,7 +581,7 @@ _restore_key_binding_defaults_cb(void *data, void *data2)
       	 "logout", NULL);
    CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "Escape",
       	 E_BINDING_MODIFIER_ALT, 0,
-      	 "exebuf", NULL);
+      	 "everything", NULL);
    CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "l",
       	 E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
       	 "desk_lock", NULL);

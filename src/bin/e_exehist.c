@@ -208,7 +208,6 @@ e_exehist_sorted_list_get(E_Exehist_Sort sort_type, int max)
    int count = 1;
    E_Exehist_Item *prev = NULL;
 
-   if (!max) max = e_config->exebuf_max_hist_list;
    if (!max) max = 20;
    _e_exehist_load();
    switch(sort_type)

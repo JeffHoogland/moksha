@@ -38,10 +38,6 @@ if USE_MODULE_START
 SUBDIRS += start
 endif
 
-if USE_MODULE_EXEBUF
-SUBDIRS += exebuf
-endif
-
 if USE_MODULE_WINLIST
 SUBDIRS += winlist
 endif
@@ -206,10 +202,6 @@ if USE_MODULE_CONF_WINLIST
 SUBDIRS += conf_winlist
 endif
 
-if USE_MODULE_CONF_EXEBUF
-SUBDIRS += conf_exebuf
-endif
-
 if USE_MODULE_CONF_PATHS
 SUBDIRS += conf_paths
 endif
@@ -312,7 +304,6 @@ temperature \
 cpufreq \
 ibox \
 start \
-exebuf \
 winlist \
 fileman \
 fileman_opinfo \
@@ -354,7 +345,6 @@ conf_clientlist \
 conf_dialogs \
 conf_performance \
 conf_winlist \
-conf_exebuf \
 conf_paths \
 conf_mime \
 conf_interaction \
