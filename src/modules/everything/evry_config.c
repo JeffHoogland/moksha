@@ -235,7 +235,7 @@ _plugin_move_down_cb(void *data, void *data2)
 static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   Evas_Object *o, *of, *ob, *otb;
+   Evas_Object *o, *of, *ob, *otb, *otb2;
    E_Radio_Group *rg;
    
    otb = e_widget_toolbook_add(evas, 48 * e_scale, 48 * e_scale);
@@ -356,6 +356,10 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_toolbook_page_append(otb, NULL, _("Geometry"),
 				 o, 1, 0, 1, 0, 0.5, 0.0);
 
+
+
+   otb2 = e_widget_toolbook_add(evas, 48 * e_scale, 48 * e_scale);
+
    ob = e_widget_list_add(evas, 1, 1);
    of = e_widget_framelist_add(evas, _("Active Plugins"), 0);
    o = e_widget_ilist_add(evas, 24, 24, NULL);
@@ -374,7 +378,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 			   cfdata->p_subject);
    e_widget_framelist_object_append(of, o);
    e_widget_list_object_append(ob, of, 1, 1, 0.5);
-   e_widget_toolbook_page_append(otb, NULL, _("Subject Plugins"),
+   e_widget_toolbook_page_append(otb2, NULL, _("Subject Plugins"),
 				 of, 1, 0, 1, 0, 0.5, 0.0);
 
 
@@ -395,7 +399,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 			   cfdata->p_action);
    e_widget_framelist_object_append(of, o);
    e_widget_list_object_append(ob, of, 1, 1, 0.5);
-   e_widget_toolbook_page_append(otb, NULL, _("Action Plugins"),
+   e_widget_toolbook_page_append(otb2, NULL, _("Action Plugins"),
 				 of, 1, 0, 1, 0, 0.5, 0.0);
 
    ob = e_widget_list_add(evas, 1, 1);
@@ -416,9 +420,14 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_framelist_object_append(of, o);
    e_widget_list_object_append(ob, of, 1, 1, 0.5);
 
-   e_widget_toolbook_page_append(otb, NULL, _("Object Plugins"),
+   e_widget_toolbook_page_append(otb2, NULL, _("Object Plugins"),
 				 ob, 1, 0, 1, 0, 0.5, 0.0);
 
+   e_widget_toolbook_page_show(otb2, 0);
+   
+   e_widget_toolbook_page_append(otb, NULL, _("Plugins"),
+				 otb2, 1, 0, 1, 0, 0.5, 0.0);
+   
    e_widget_toolbook_page_show(otb, 0);
 
    /* e_widget_size_min_set(otb, 350, 350); */
