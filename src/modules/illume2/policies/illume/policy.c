@@ -176,6 +176,7 @@ _policy_border_hide_below(E_Border *bd)
 static void 
 _policy_border_show_below(E_Border *bd) 
 {
+   Eina_List *l;
    E_Border *prev;
    int pos = 0, i;
 
@@ -202,7 +203,6 @@ _policy_border_show_below(E_Border *bd)
    /* Find the windows below this one */
    for (i = pos; i >= 2; i--) 
      {
-        Eina_List *l;
         E_Border *b;
 
         EINA_LIST_REVERSE_FOREACH(bd->zone->container->layers[i].clients, l, b) 
@@ -239,9 +239,15 @@ _policy_border_show_below(E_Border *bd)
 
    /* if we reach here, then there is a problem with showing a window below
     * this one, so show previous window in stack */
-   prev = eina_list_data_get(eina_list_last(_pol_focus_stack));
-   if (prev) _policy_border_set_focus(prev);
-   else _policy_focus_home(bd->zone);
+   EINA_LIST_REVERSE_FOREACH(_pol_focus_stack, l, prev) 
+     {
+        if (prev->zone != bd->zone) continue;
+        _policy_border_set_focus(prev);
+        return;
+     }
+
+   /* Fallback to focusing home if all above fails */
+   _policy_focus_home(bd->zone);
 }
 
 static void 
