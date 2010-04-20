@@ -298,25 +298,53 @@ evry_icon_theme_get(const char *icon, Evas *e)
    return NULL;
 }
 
+static Evas_Object *
+_evry_icon_mime_theme_get(const char *mime, Evas *e)
+{
+   Evas_Object *o = NULL;
+   
+   char buf[1024];
+   const char *file;
+
+   if (snprintf(buf, sizeof(buf), "e/icons/fileman/mime/%s", mime) >= sizeof(buf))
+     return NULL;
+
+   file = e_theme_edje_file_get("base/theme/icons", buf);
+   if (file && file[0])
+     {
+	o = edje_object_add(e);
+	if (!o) return NULL;
+	if (!edje_object_file_set(o, file, buf))
+	  {
+	     evas_object_del(o);
+	     return NULL;
+	  }
+	return o;
+     }
+
+   return NULL;
+}
+
 EAPI Evas_Object *
 evry_icon_mime_get(const char *mime, Evas *e)
 {
    Evas_Object *o = NULL;
    char *icon;
 
-   icon = efreet_mime_type_icon_get(mime, e_config->icon_theme, 64);
+   if (!e_config->icon_theme_overrides)
+     o = _evry_icon_mime_theme_get(mime, e);
 
+   if (o) return o;
+   
+   icon = efreet_mime_type_icon_get(mime, e_config->icon_theme, 128);
    if (icon)
      {
 	o = e_util_icon_add(icon, e);
 	free(icon);
      }
-   else
-     {
-	o = evry_icon_theme_get("none", e);
-     }
-
-   return o;
+   if (o) return o;
+   
+   return _evry_icon_mime_theme_get(mime, e);
 }
 
 EAPI int
@@ -383,7 +411,7 @@ evry_util_exec_app(const Evry_Item *it_app, const Evry_Item *it_file)
 	  }
 	else
 	  {
-	     e_exec(zone, app->desktop, NULL, NULL, "everything");
+	     e_exec(zone, app->desktop, NULL, NULL, NULL);
 	  }
      }
    else if (app->file)
