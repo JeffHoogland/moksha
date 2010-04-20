@@ -84,11 +84,6 @@ e_mod_ind_win_new(E_Zone *zone)
    /* create our gadget container */
    iwin->gadcon = e_gadcon_swallowed_new("illume-indicator", zone->id, 
                                          iwin->o_base, "e.swallow.content");
-//   iwin->gadcon->instant_edit = 1;
-   edje_extern_object_min_size_set(iwin->gadcon->o_container, zone->w, 
-                                   (il_ind_cfg->height * e_scale));
-   edje_object_part_swallow(iwin->o_base, "e.swallow.container", 
-                            iwin->gadcon->o_container);
    e_gadcon_min_size_request_callback_set(iwin->gadcon, 
                                           _e_mod_ind_win_cb_min_size_request, 
                                           iwin);
@@ -99,6 +94,7 @@ e_mod_ind_win_new(E_Zone *zone)
    e_gadcon_orient(iwin->gadcon, E_GADCON_ORIENT_FLOAT);
    e_gadcon_zone_set(iwin->gadcon, zone);
    e_gadcon_ecore_evas_set(iwin->gadcon, iwin->win->ecore_evas);
+
    e_gadcon_util_menu_attach_func_set(iwin->gadcon, 
                                       _e_mod_ind_win_cb_menu_items_append, iwin);
    e_gadcon_populate(iwin->gadcon);
@@ -240,8 +236,6 @@ _e_mod_ind_win_cb_resize(E_Win *win)
    if (!(iwin = win->data)) return;
    if (iwin->o_event) evas_object_resize(iwin->o_event, win->w, win->h);
    if (iwin->o_base) evas_object_resize(iwin->o_base, win->w, win->h);
-   if (iwin->gadcon->o_container) 
-     edje_extern_object_min_size_set(iwin->gadcon->o_container, win->w, win->h);
 }
 
 static void 
