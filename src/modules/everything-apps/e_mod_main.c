@@ -687,7 +687,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	  evry_history_item_usage_set(evry_hist->subjects, it, input, NULL);
      }
 
-   if (!input)
+   if (!input && plugin->type != type_action)
      {
 	EINA_LIST_FOREACH(e_exehist_list_get(), l, file)
 	  {

@@ -298,11 +298,11 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, c
 	if (ctxt != hi->context)
 	  continue;
 
-	if (it->plugin->type == type_action)
-	  {
-	     if (hi->last_used > it->usage)
-	       it->usage = hi->last_used;
-	  }
+	/* if (it->plugin->type == type_action)
+	 *   {
+	 *      if (hi->last_used > it->usage)
+	 *        it->usage = hi->last_used;
+	 *   } */
 	
 	if (evry_conf->history_sort_mode == 0)
 	  {
