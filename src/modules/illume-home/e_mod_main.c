@@ -74,6 +74,9 @@ e_modapi_init(E_Module *m)
 
    if (!il_home_config_init(m)) return NULL;
 
+   _il_home_apps_unpopulate();
+   _il_home_apps_populate();
+
    hdls = 
      eina_list_append(hdls, 
                       ecore_event_handler_add(EFREET_EVENT_DESKTOP_CACHE_UPDATE, 
@@ -159,8 +162,8 @@ e_modapi_shutdown(E_Module *m)
    return 1;
 }
 
-EAPI 
-int e_modapi_save(E_Module *m) 
+EAPI int 
+e_modapi_save(E_Module *m) 
 {
    return il_home_config_save();
 }
