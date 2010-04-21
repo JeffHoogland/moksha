@@ -925,37 +925,39 @@ _new_app_action(Evry_Action *act)
 	  }
 	else break;
      }
-
    free(name);
 
-   if (strlen(buf) == 0)
+   if (!buf || strlen(buf) == 0)
      return 0;
 
    if (!app->desktop)
      {
 	desktop = efreet_desktop_empty_new(buf);
-	desktop->exec = strdup(app->file);
+	desktop->exec = (char *)eina_stringshare_add(app->file);
      }
    else
      {
-	efreet_desktop_save_as(app->desktop, buf);
-	desktop = efreet_desktop_new(buf);
+	desktop = efreet_desktop_empty_new(buf);
+	if (app->desktop->name)
+	  desktop->name = strdup(app->desktop->name);
+	if (app->desktop->comment)
+	  desktop->comment = strdup(app->desktop->comment);
+	if (app->desktop->generic_name)
+	  desktop->generic_name = strdup(app->desktop->generic_name);
+	if (app->desktop->generic_name)
+	  desktop->generic_name = strdup(app->desktop->generic_name);
+	if (app->desktop->exec)
+	  desktop->exec = strdup(app->desktop->exec);
+	if (app->desktop->mime_types)
+	  desktop->mime_types = eina_list_clone(app->desktop->mime_types); 	
      }
-
-   e_desktop_edit(e_container_current_get(e_manager_current_get()), desktop);
+   if (desktop)
+     e_desktop_edit(e_container_current_get(e_manager_current_get()), desktop);
 
    return 1;
 }
 
 //#define TIME_FACTOR(_now) (1.0 - (evry_hist->begin / _now)) / 1000000000000000.0
-
-static void
-_free_plugin(Evry_Plugin *plugin)
-{
-   PLUGIN(p, plugin);
-
-   E_FREE(p);
-}
 
 
 static Eina_Bool
@@ -966,13 +968,13 @@ module_init(void)
 
    p1 = E_NEW(Plugin, 1);
    EVRY_PLUGIN_NEW(EVRY_PLUGIN(p1), N_("Applications"), type_subject, "", "APPLICATION",
-	      _begin, _cleanup, _fetch, _icon_get, _free_plugin);
+	      _begin, _cleanup, _fetch, _icon_get, NULL);
    EVRY_PLUGIN(p1)->complete = &_complete;
    
    p2 = E_NEW(Plugin, 1);
    EVRY_PLUGIN_NEW(EVRY_PLUGIN(p2), N_("Open With..."), type_action, "FILE", "",
 	      _begin_open_with, _cleanup, _fetch,
-	      _icon_get, _free_plugin);
+	      _icon_get, NULL);
 
    EVRY_PLUGIN(p2)->action = &_open_with_action;
 

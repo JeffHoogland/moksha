@@ -26,7 +26,7 @@ struct _Plugin
   Eina_Bool is_first;
 };
 
-static Plugin *plugin = NULL;
+static Plugin *_plug = NULL;
 
 static Eina_Bool
 _exe_restart(Plugin *p)
@@ -160,11 +160,11 @@ _cb_data(void *data, int type __UNUSED__, void *event)
 	switch (l->line[0])
 	  {
 	   case '*':
-	      _item_add(plugin, word, word_size, 1);
+	      _item_add(p, word, word_size, 1);
 	      break;
 	   case '&':
-	      _item_add(plugin, word, word_size, 1);
-	      _suggestions_add(plugin, l->line);
+	      _item_add(p, word, word_size, 1);
+	      _suggestions_add(p, l->line);
 	      break;
 	   case '#':
 	      break;
@@ -321,14 +321,6 @@ _cleanup(Evry_Plugin *plugin)
      }
 }
 
-static void
-_free_plugin(Evry_Plugin *plugin)
-{
-   PLUGIN(p, plugin);
-
-   E_FREE(p);
-}
-
 static Eina_Bool
 module_init(void)
 {
@@ -340,7 +332,7 @@ module_init(void)
    p = E_NEW(Plugin, 1);
 
    EVRY_PLUGIN_NEW(p, N_("Spell Checker"), type_subject, "", "TEXT",
-		   NULL, _cleanup, _fetch, NULL, _free_plugin);
+		   NULL, _cleanup, _fetch, NULL, NULL);
 
    EVRY_PLUGIN(p)->aggregate   = EINA_FALSE;
    EVRY_PLUGIN(p)->history     = EINA_FALSE;
@@ -350,14 +342,15 @@ module_init(void)
    
    evry_plugin_register(EVRY_PLUGIN(p), 100);
 
-   plugin = p;
+   _plug = p;
+
    return EINA_TRUE;
 }
 
 static void
 module_shutdown(void)
 {
-   EVRY_PLUGIN_FREE(plugin);
+   EVRY_PLUGIN_FREE(_plug);
 }
 
 /***************************************************************************/

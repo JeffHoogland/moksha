@@ -124,7 +124,7 @@ _scan_func(void *data)
    Plugin *p = d->plugin;
    char *filename;
    const char *mime;
-
+   
    Evry_Item_File *file;
    char buf[4096];
    int cnt = 0;
@@ -460,6 +460,21 @@ _hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fda
    return EINA_TRUE;
 }
 
+static void
+_folder_item_add(Plugin *p, const char *path)
+{
+   Evry_Item_File *file = E_NEW(Evry_Item_File, 1);
+
+   if (!file) return;
+
+   evry_item_new(EVRY_ITEM(file), EVRY_PLUGIN(p), path, _item_free);
+   file->path = eina_stringshare_add(path);
+   file->mime = eina_stringshare_add("inode/directory");
+   EVRY_ITEM(file)->browseable = EINA_TRUE;
+   p->files = eina_list_append(p->files, file);
+   EVRY_PLUGIN_ITEM_APPEND(p, file);
+}
+
 static int
 _fetch(Evry_Plugin *plugin, const char *input)
 {
@@ -467,7 +482,8 @@ _fetch(Evry_Plugin *plugin, const char *input)
    Evry_Item_File *file;
    Eina_List *l;
    int cnt = 0;
-
+   int cmd = 0;
+   
    if (!p->command)
      EVRY_PLUGIN_ITEMS_CLEAR(p);
 
@@ -478,52 +494,103 @@ _fetch(Evry_Plugin *plugin, const char *input)
    if (!p->parent)
      {
 	/* input is command ? */
-   	if (input && !strcmp(input, "/"))
+   	if (input && !strncmp(input, "/", 1))
    	  {
+	     if (!p->command)
+	       {
+		  /* browse root */
+		  EINA_LIST_FREE(p->files, file)
+		    evry_item_free(EVRY_ITEM(file));
+
+		  eina_stringshare_del(p->directory);
+		  p->directory = eina_stringshare_add("/");
+		  _read_directory(p);
+
+		  p->command = EINA_TRUE;
+	       }
+
+	     cmd = 1;
+	     return 0;
+   	  }
+     }
+
+   if (p->directory  && input && !strncmp(input, ".", 1))
+     {
+	if (!p->command)
+	  {
+	     char *end;
+	     char dir[4096];
+	     char *tmp;
+	     int prio = 0;
+
 	     /* browse root */
+	     EINA_LIST_FREE(p->hist_added, file)
+	       {
+		  p->files = eina_list_remove(p->files, file);
+		  evry_item_free(EVRY_ITEM(file));
+	       }
 	     EINA_LIST_FREE(p->files, file)
 	       evry_item_free(EVRY_ITEM(file));
 
-	     eina_stringshare_del(p->directory);
-	     p->directory = eina_stringshare_add("/");
-	     _read_directory(p);
+	     if (strncmp(p->directory, "/", 1)) return 0;
+	     if (!strcmp(p->directory, "/")) return 0;
+	
+	     snprintf(dir, 4096, "%s", p->directory);
+	     end = strrchr(dir, '/');
 
-	     p->command = EINA_TRUE;
-	     return 0;
-   	  }
-
-	/* add recent files */
-	if (!p->hist_added && (_conf->show_recent || (input && _conf->search_recent)))
-	  {
-	     eina_hash_foreach(evry_hist->subjects, _hist_items_add_cb, p);
-	  }
-	else if (p->hist_added && !input && _conf->search_recent)
-	  {
-	     EINA_LIST_FREE(p->hist_added, file)
+	     while (end != dir)
 	       {
-		  p->files = eina_list_remove(p->files, file); 
-		  evry_item_free(EVRY_ITEM(file));
+		  tmp = strdup(dir);
+		  snprintf(dir, (end - dir) + 1, "%s", tmp);
+
+		  _folder_item_add(p, dir);
+
+		  end = strrchr(dir, '/');
+		  free(tmp);
+		  prio--;
 	       }
+
+	     _folder_item_add(p, "/");
+	     p->command = EINA_TRUE;
 	  }
+	cmd = 1;
+	return 1;
      }
 
    /* clear command items */
-   if (!p->parent && !input && p->command)
+   if (!cmd && p->command)
      {
    	p->command = EINA_FALSE;
 
 	EINA_LIST_FREE(p->files, file)
 	  evry_item_free(EVRY_ITEM(file));
 
-	eina_stringshare_del(p->directory);
+	if (p->directory)
+	  eina_stringshare_del(p->directory);
+	
 	p->directory = eina_stringshare_add(e_user_homedir_get());
 	_read_directory(p);
 	return 0;
      }
 
+   /* add recent files */
+   if ((!p->parent && !p->command && !p->hist_added) &&
+       (_conf->show_recent || (input && _conf->search_recent)))
+     {
+        eina_hash_foreach(evry_hist->subjects, _hist_items_add_cb, p);
+     }
+   else if (p->hist_added && !input && _conf->search_recent)
+     {
+        EINA_LIST_FREE(p->hist_added, file)
+          {
+	     p->files = eina_list_remove(p->files, file);
+	     evry_item_free(EVRY_ITEM(file));
+          }
+     }
+
    if (input)
      {
-	/* skip command prefix */
+	/* skip command prefix FIXME */
 	if (p->command)
 	  p->input = eina_stringshare_add(input + 1);
 	else

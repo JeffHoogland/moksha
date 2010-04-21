@@ -962,10 +962,13 @@ _view_update(Evry_View *view, int slide)
 	return 1;
      }
 
-   v->mode = v->mode_prev;
-   
-   if (p->view_mode >= 0)
-     v->mode = p->view_mode;
+   if (p != v->plugin)
+     {
+	v->mode = v->mode_prev;
+	
+	if (p->view_mode >= 0)
+	  v->mode = p->view_mode;
+     }
    
    /* go through current view items */
    EINA_LIST_FOREACH(sd->items, l, v_it)
