@@ -1212,7 +1212,7 @@ evry_browse_item(Evry_Selector *sel)
    if (!plugins)
      return 1;
 
-   evry_history_add(sel->history, s, NULL);
+   evry_history_add(sel->history, s->cur_item, NULL, s->input);
 
    if (s->view)
      {
@@ -1710,9 +1710,11 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
      }
    else return;
 
-   evry_history_add(evry_hist->subjects, s_subject, NULL);
-   evry_history_add(evry_hist->actions, s_action, s_subject->cur_item->context);
-   evry_history_add(evry_hist->subjects, s_object, s_action->cur_item->context);
+   evry_history_add(evry_hist->subjects, s_subject->cur_item, NULL, s_subject->input);
+   if (s_action)
+   evry_history_add(evry_hist->actions,  s_action->cur_item, s_subject->cur_item->context, s_action->input);
+   if (s_object)
+   evry_history_add(evry_hist->subjects, s_object->cur_item, s_action->cur_item->context, s_object->input);
 
    /* let subject and object plugin know that an action was performed */
    if (s_subject->plugin->action)

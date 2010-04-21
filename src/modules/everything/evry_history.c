@@ -214,19 +214,15 @@ evry_history_unload(void)
    evry_hist = NULL;
 }
 
-EAPI void
-evry_history_add(Eina_Hash *hist, Evry_State *s, const char *ctxt)
+EAPI History_Item *
+evry_history_add(Eina_Hash *hist, Evry_Item *it, const char *ctxt, const char *input)
 {
    History_Entry *he;
    History_Item  *hi = NULL;
-   Evry_Item *it;
    Eina_List *l;
    const char *id;
    
-   if (!s) return;
-
-   it = s->cur_item;
-   if (!it || !it->plugin->history) return;
+   if (!it || !it->plugin->history) return NULL;
 
    id = (it->id ? it->id : it->label);
 
@@ -268,15 +264,16 @@ evry_history_add(Eina_Hash *hist, Evry_State *s, const char *ctxt)
 	if (ctxt && !hi->context)
 	  hi->context = eina_stringshare_ref(ctxt);
 
-	if (s->input)
+	if (input)
 	  {
 
 	     if (hi->input)
 	       eina_stringshare_del(hi->input);
 
-	     hi->input = eina_stringshare_add(s->input);
+	     hi->input = eina_stringshare_add(input);
 	  }
-     }   
+     }
+   return hi;
 }
 
 EAPI int

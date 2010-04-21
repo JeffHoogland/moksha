@@ -618,7 +618,8 @@ _fetch(Evry_Plugin *plugin, const char *input)
    Eina_List *l, *ll, *previous;
    Efreet_Desktop *desktop;
    Evry_Item *it;
-
+   char *file;
+   
    plugin->changed = 0;
    
    previous = plugin->items;
@@ -684,6 +685,21 @@ _fetch(Evry_Plugin *plugin, const char *input)
      {
 	EINA_LIST_FOREACH(plugin->items, l, it)
 	  evry_history_item_usage_set(evry_hist->subjects, it, input, NULL);
+     }
+
+   if (!input)
+     {
+	EINA_LIST_FOREACH(e_exehist_list_get(), l, file)
+	  {
+	     double last_used = e_exehist_newest_run_get(file);
+	     History_Item *hi;
+	     it = (Evry_Item *)_item_add(p, NULL, file, 1);
+	     if (!eina_hash_find(evry_hist->subjects, it->id))
+	       {
+		  hi = evry_history_add(evry_hist->subjects, it, NULL, NULL);
+		  if (hi) hi->last_used = last_used;
+	       }
+	  }
      }
    
    if (plugin->type != type_action || input)

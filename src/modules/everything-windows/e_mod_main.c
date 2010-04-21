@@ -372,6 +372,7 @@ _act_fetch(Evry_Plugin *p, const char *input)
    E_Desk *desk;
    Eina_List *l;
    Evry_Item *it;
+   int prio = 0;
    
    zone = e_util_zone_current_get(e_manager_current_get());
    desk = e_desk_current_get(zone);

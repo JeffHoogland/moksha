@@ -435,7 +435,7 @@ EAPI void evry_view_unregister(Evry_View *view);
 
 EAPI void evry_history_load(void);
 EAPI void evry_history_unload(void);
-EAPI void evry_history_add(Eina_Hash *hist, Evry_State *s, const char *ctxt);
+EAPI History_Item *evry_history_add(Eina_Hash *hist, Evry_Item *it, const char *ctxt, const char *input);
 EAPI int  evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, const char *ctxt);
 
 #define EVRY_PLUGIN_NEW(_base, _name, _type, _in, _out, _begin, _cleanup, _fetch, _icon_get, _free) \
