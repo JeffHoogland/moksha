@@ -370,7 +370,9 @@ _act_fetch(Evry_Plugin *p, const char *input)
 {
    E_Zone *zone;
    E_Desk *desk;
-
+   Eina_List *l;
+   Evry_Item *it;
+   
    zone = e_util_zone_current_get(e_manager_current_get());
    desk = e_desk_current_get(zone);
 
@@ -411,6 +413,9 @@ _act_fetch(Evry_Plugin *p, const char *input)
 
    EVRY_PLUGIN_ITEMS_SORT(p, _act_cb_sort);
 
+   EINA_LIST_FOREACH(p->items, l, it)
+     it->priority = prio++;
+   
    return 1;
 }
 
