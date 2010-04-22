@@ -1534,13 +1534,13 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	  {
 	     strcat(s->input, ev->compose);
 	     
-	     if (isspace(*ev->compose))
-	       {
-		  /* do not update matches on space */
-		  _evry_update(selector, 0);
-	       }
-	     else
-	       _evry_update(selector, 1);
+	     /* if (isspace(*ev->compose))
+	      *   {
+	      * 	  /\* do not update matches on space *\/
+	      * 	  _evry_update(selector, 0);
+	      *   }
+	      * else */
+	     _evry_update(selector, 1);
 	  }
      }
 
@@ -1896,7 +1896,6 @@ _evry_matches_update(Evry_Selector *sel, int async)
 		  s->cur_plugins = eina_list_append(s->cur_plugins, p);
 
 		  p->fetch(p, s->input + strlen(p->trigger));
-		  break;
 	       }
 	  }
      }
