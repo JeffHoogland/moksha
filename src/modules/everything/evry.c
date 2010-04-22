@@ -289,10 +289,11 @@ evry_clear_input(void)
 {
    Evry_State *s = selector->state;
 
-   if (s->input[0] != 0)
+   if (s->inp[0] != 0)
      {
-       	s->input[0] = 0;
+       	s->inp[0] = 0;
      }
+   s->input = s->inp;
 }
 
 //#define CHECK_REFS 1
@@ -1131,8 +1132,10 @@ static Evry_State *
 _evry_state_new(Evry_Selector *sel, Eina_List *plugins)
 {
    Evry_State *s = E_NEW(Evry_State, 1);
-   s->input = malloc(INPUTLEN);
-   s->input[0] = 0;
+   s->inp = malloc(INPUTLEN);
+   s->inp[0] = 0;
+   s->input = s->inp;
+   
    s->plugins = plugins;
 
    sel->states = eina_list_prepend(sel->states, s);
@@ -1151,7 +1154,7 @@ _evry_state_pop(Evry_Selector *sel)
 
    _evry_item_desel(s, NULL);
 
-   free(s->input);
+   free(s->inp);
 
    if (s->view)
      s->view->destroy(s->view);
@@ -1416,7 +1419,7 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 
 	if (action == EVRY_COMPLETE_INPUT)
 	  {
-	     snprintf(s->input, INPUTLEN, "%s", input);
+	     snprintf(s->inp, INPUTLEN, "%s", input);
 	     _evry_update_text_label(s);
 	     _evry_cb_update_timer(selector);
 	     evry_item_select(s, it);
@@ -1525,14 +1528,14 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
      goto end;
    else if ((ev->compose && !(ev->modifiers & ECORE_EVENT_MODIFIER_ALT)))
      {
-	int len = strlen(s->input);	
+	int len = strlen(s->inp);	
 
 	if (len == 0 && (_evry_view_toggle(s, ev->compose)))
 	  goto end;
 
 	if (len < (INPUTLEN - strlen(ev->compose)))
 	  {
-	     strcat(s->input, ev->compose);
+	     strcat(s->inp, ev->compose);
 	     
 	     /* if (isspace(*ev->compose))
 	      *   {
@@ -1556,15 +1559,16 @@ _evry_backspace(Evry_Selector *sel)
    Evry_State *s = sel->state;
    int len, val, pos;
 
-   len = strlen(s->input);
+   len = strlen(s->inp);
    if (len > 0)
      {
-	pos = evas_string_char_prev_get(s->input, len, &val);
+	pos = evas_string_char_prev_get(s->inp, len, &val);
 	if ((pos < len) && (pos >= 0))
 	  {
-	     val = *(s->input + pos);
+	     val = *(s->inp + pos);
 
-	     s->input[pos] = 0;
+	     s->inp[pos] = 0;
+	     s->input = s->inp;
 
 	     if ((pos == 0) || !isspace(val))
 	       _evry_update(sel, 1);
@@ -1581,14 +1585,14 @@ _evry_update_text_label(Evry_State *s)
 {
    if (!list->visible && evry_conf->hide_input)
      {
-	if (strlen(s->input) > 0)
+	if (strlen(s->inp) > 0)
 	  edje_object_signal_emit(list->o_main, "e,state,entry_show", "e");
 	else
 	  edje_object_signal_emit(list->o_main, "e,state,entry_hide", "e");
      }
 
-   edje_object_part_text_set(win->o_main, "e.text.label", s->input);
-   edje_object_part_text_set(list->o_main, "e.text.label", s->input);
+   edje_object_part_text_set(win->o_main, "e.text.label", s->inp);
+   edje_object_part_text_set(list->o_main, "e.text.label", s->inp);
 
 }
 
@@ -1629,17 +1633,19 @@ _evry_clear(Evry_Selector *sel)
 {
    Evry_State *s = sel->state;
 
-   if ((s->plugin && s->plugin->trigger && s->input) &&
-       (!strncmp(s->plugin->trigger, s->input,
+   if ((s->plugin && s->plugin->trigger && s->inp) &&
+       (!strncmp(s->plugin->trigger, s->inp,
 		 strlen(s->plugin->trigger))))
      {
 	s->input[strlen(s->plugin->trigger)] = 0;
 	_evry_update(sel, 1);
 	return 1;
      }
-   else if (s->input && s->input[0] != 0)
+   else if (s->inp && s->inp[0] != 0)
      {
-	s->input[0] = 0;
+	s->inp[0] = 0;
+	s->input = s->inp;
+	
 	_evry_update(sel, 1);
 	if (!list->visible && evry_conf->hide_input)
 	  edje_object_signal_emit(list->o_main, "e,state,entry_hide", "e");
@@ -1878,8 +1884,8 @@ _evry_matches_update(Evry_Selector *sel, int async)
 
    EINA_LIST_FREE(s->cur_plugins, p);
 
-   if (s->input[0])
-   input = s->input;
+   if (s->inp[0])
+     input = s->inp;
    else
      input = NULL;
 
@@ -1890,19 +1896,21 @@ _evry_matches_update(Evry_Selector *sel, int async)
 	     /* input matches plugin trigger? */
 	     if (!p->trigger) continue;
 
-	     if ((strlen(s->input) >= strlen(p->trigger)) &&
-		 (!strncmp(s->input, p->trigger, strlen(p->trigger))))
+	     if ((strlen(s->inp) >= strlen(p->trigger)) &&
+		 (!strncmp(s->inp, p->trigger, strlen(p->trigger))))
 	       {
 		  s->cur_plugins = eina_list_append(s->cur_plugins, p);
-
-		  p->fetch(p, s->input + strlen(p->trigger));
+		  s->input = s->inp + strlen(p->trigger);
+		  p->fetch(p, s->input);
 	       }
 	  }
      }
-
+   
    if (!s->cur_plugins)
      {
-	EINA_LIST_FOREACH(s->plugins, l, p)
+       s->input = s->inp;
+       
+       EINA_LIST_FOREACH(s->plugins, l, p)
 	  {
 	     if (!win->plugin_dedicated && p->trigger)
 	       continue;

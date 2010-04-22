@@ -227,7 +227,9 @@ struct _Evry_Plugin
 
 struct _Evry_State
 {
-  char *input;
+  char *inp; /* alloced input */
+
+  char *input; /* pointer to input + trigger */
   /* all available plugins for current state */
   Eina_List   *plugins;
 
