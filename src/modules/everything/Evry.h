@@ -420,6 +420,7 @@ EAPI Evas_Object *evry_icon_theme_get(const char *icon, Evas *e);
 EAPI int  evry_fuzzy_match(const char *str, const char *match);
 EAPI Eina_List *evry_fuzzy_match_sort(Eina_List *items);
 EAPI int evry_util_exec_app(const Evry_Item *it_app, const Evry_Item *it_file);
+EAPI char *evry_util_url_escape(const char *string, int inlength);
 EAPI char *evry_util_unescape(const char *string, int length);
 EAPI void evry_util_file_detail_set(Evry_Item_File *file);
 EAPI Eina_Bool evry_util_module_config_check(const char *module_name, int conf, int epoch, int version);
