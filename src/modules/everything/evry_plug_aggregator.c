@@ -78,12 +78,12 @@ _cb_sort(const void *data1, const void *data2)
        (it1->priority - it2->priority))
      return (it1->priority - it2->priority);
    
-   if (it1->fuzzy_match || it2->fuzzy_match)
+   if (it1->fuzzy_match > 0 || it2->fuzzy_match > 0)
      {
-	if (it1->fuzzy_match && !it2->fuzzy_match)
+	if (it2->fuzzy_match <= 0)
 	  return -1;
 
-	if (!it1->fuzzy_match && it2->fuzzy_match)
+	if (it1->fuzzy_match <= 0)
 	  return 1;
 
 	if (it1->fuzzy_match - it2->fuzzy_match)
@@ -92,9 +92,6 @@ _cb_sort(const void *data1, const void *data2)
 
    if (it1->plugin->config->priority - it2->plugin->config->priority)
      return (it1->plugin->config->priority - it2->plugin->config->priority);
-
-   /* if (it1->priority - it2->priority)
-    *   return (it1->priority - it2->priority); */
 
    return strcasecmp(it1->label, it2->label);
 }
@@ -166,7 +163,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	     
 	     EINA_LIST_FOREACH(pp->items, ll, it)
 	       {
-		  if (!it->fuzzy_match)
+		  if (it->fuzzy_match == 0)
 		    it->fuzzy_match = evry_fuzzy_match(it->label, input);
 
 		  if (it->fuzzy_match || p->selector == selectors[2])
