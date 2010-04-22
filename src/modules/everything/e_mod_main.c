@@ -65,6 +65,7 @@ e_modapi_init(E_Module *m)
    view_thumb_init();
    view_help_init();
    evry_plug_clipboard_init();
+   evry_plug_text_init();
 
    /* add module supplied action */
    act = e_action_add("everything");
@@ -131,7 +132,8 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    view_thumb_shutdown();
    view_help_shutdown();
    evry_plug_clipboard_shutdown();
-
+   evry_plug_text_shutdown();
+   
    EINA_LIST_FREE(evry_conf->plugins, p)
      evry_plugin_free(p, 1); 
 

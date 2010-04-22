@@ -514,7 +514,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
    	  }
      }
 
-   if (p->directory  && input && !strncmp(input, ".", 1))
+   if (p->directory  && input && !strncmp(input, "#", 1))
      {
 	if (!p->command)
 	  {

@@ -82,6 +82,9 @@ void view_preview_shutdown(void);
 Eina_Bool evry_plug_clipboard_init(void);
 void evry_plug_clipboard_shutdown(void);
 
+Eina_Bool evry_plug_text_init(void);
+void evry_plug_text_shutdown(void);
+
 int  evry_init(void);
 int  evry_shutdown(void);
 int  evry_show(E_Zone *zone, const char *params);

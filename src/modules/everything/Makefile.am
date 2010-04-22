@@ -35,7 +35,8 @@ module_la_SOURCES      = $(EVRYHEADERS) \
 			 evry_view_plugin_tabs.c \
 			 evry_plug_view_thumb.c \
 			 evry_plug_view_help.c \
-			 evry_plug_clipboard.c
+			 evry_plug_clipboard.c \
+			 evry_plug_text.c
 
 module_la_LIBADD       = @e_libs@ @dlopen_libs@
 module_la_LDFLAGS      = -module -avoid-version

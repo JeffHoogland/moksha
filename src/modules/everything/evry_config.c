@@ -255,7 +255,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    ob = e_widget_label_add(evas, _("Quick Navigation"));
    e_widget_framelist_object_append(of, ob);
-   
+    
    rg = e_widget_radio_group_new(&cfdata->quick_nav);
    ob = e_widget_radio_add(evas, _("Off"), 0, rg);
    e_widget_framelist_object_append(of, ob);
