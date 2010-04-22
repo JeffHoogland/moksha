@@ -155,8 +155,11 @@ _cb_show_timer(void *data)
 	     _evry_view_show(s->view);
 	  }
      }
-   else return 0;
-
+   else
+     {
+	return 0;
+     }
+   
    _evry_list_win_show();
 
    return 0;
@@ -224,7 +227,7 @@ evry_show(E_Zone *zone, const char *params)
      }
 
    if (!evry_conf->hide_list)
-     _show_timer = ecore_timer_add(0.04, _cb_show_timer, NULL);
+     _show_timer = ecore_timer_add(0.01, _cb_show_timer, NULL);
 
    return 1;
 
@@ -598,7 +601,6 @@ _evry_list_win_show(void)
    if (list->visible) return;
 
    list->visible = EINA_TRUE;
-
    _evry_list_win_update(selector->state);
 
    edje_object_signal_emit(list->o_main, "e,state,list_show", "e");
@@ -819,9 +821,11 @@ _evry_selector_thumb_gen(void *data, Evas_Object *obj, void *event_info)
    Evry_Selector *sel = data;
 
    if (sel->o_icon)
-     evas_object_del(sel->o_icon);
-   sel->o_icon = NULL;
-
+     {
+       evas_object_del(sel->o_icon);
+       sel->o_icon = NULL;
+     }
+   
    e_icon_size_get(sel->o_thumb, &w, &h);
    edje_extern_object_aspect_set(sel->o_thumb, EDJE_ASPECT_CONTROL_BOTH, w, h);
    edje_object_part_swallow(sel->o_main, "e.swallow.thumb", sel->o_thumb);
@@ -1274,9 +1278,6 @@ _evry_selectors_switch(void)
 	     _evry_matches_update(selector, 0);
 	     _evry_selector_update(selector);
 	  }
-
-	/* ecore_timer_del(update_timer);
-	 * update_timer = NULL; */
      }
 
    if (selector == selectors[0])
@@ -1524,13 +1525,14 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
      goto end;
    else if ((ev->compose && !(ev->modifiers & ECORE_EVENT_MODIFIER_ALT)))
      {
-	int len = strlen(s->input);
+	int len = strlen(s->input);	
+
+	if (len == 0 && (_evry_view_toggle(s, ev->compose)))
+	  goto end;
+
 	if (len < (INPUTLEN - strlen(ev->compose)))
 	  {
 	     strcat(s->input, ev->compose);
-
-	     if (len == 0 && (_evry_view_toggle(s, s->input)))
-	       goto end;
 	     
 	     if (isspace(*ev->compose))
 	       {
@@ -1547,8 +1549,6 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
    ev->key = old;
    return 1;
 }
-
-
 
 static int
 _evry_backspace(Evry_Selector *sel)
