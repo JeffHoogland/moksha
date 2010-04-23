@@ -354,28 +354,15 @@ struct _Config
 struct _Plugin_Config
 {
   const char *name;
-
-  int loaded;
   int enabled;
-
-  /* minimum input chars to query this source */
-  int min_query;
-
   int priority;
 
   const char *trigger;
+  int trigger_only;
 
-  Evry_Plugin *plugin;
-
-  Eina_Hash *settings;
-};
-
-struct _Plugin_Setting
-{
-  int type;
-  char *description;
+  int view_mode;
   
-  char *val;
+  Evry_Plugin *plugin;
 };
 
 struct _History_Entry
@@ -430,6 +417,7 @@ EAPI Eina_Bool evry_util_module_config_check(const char *module_name, int conf, 
 
 
 /* e_mod_main.c */
+/* set plugin trigger and view mode first before register !*/
 EAPI void evry_plugin_register(Evry_Plugin *p, int priority);
 EAPI void evry_plugin_unregister(Evry_Plugin *p);
 EAPI void evry_action_register(Evry_Action *act, int priority);

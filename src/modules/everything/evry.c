@@ -1901,30 +1901,38 @@ _evry_matches_update(Evry_Selector *sel, int async)
    if (!s->cur_plugins && input)
      {
 	int len_trigger = 0;
+	int len_inp = strlen(s->inp);
 	
 	EINA_LIST_FOREACH(s->plugins, l, p)
 	  {
 	     /* input matches plugin trigger? */
-	     if (!p->trigger) continue;
-	     int len = strlen(p->trigger);
+	     if (!p->config->trigger) continue;
+	     int len = strlen(p->config->trigger);
 
 	     if (len_trigger && len != len_trigger)
 	       continue;
 
-	     if ((strlen(s->inp) >= len) &&
-		 (!strncmp(s->inp, p->trigger, len)))
+	     if ((len_inp >= len) &&
+		 (!strncmp(s->inp, p->config->trigger, len)))
 	       {
 		 len_trigger = len;
 		  s->cur_plugins = eina_list_append(s->cur_plugins, p);
-		  p->fetch(p, s->input + len);
+		  if(len_inp == len)
+		    p->fetch(p, NULL);
+		  else
+		    p->fetch(p, s->input + len);
 	       }
 	  }
 	if (s->cur_plugins)
 	  {
 	     s->trigger_active = EINA_TRUE;
-	     s->inp[0] = '>';
-	     s->inp[1] = '\0';
-	     s->input = s->inp + 1;
+	     /* replace trigger with indicator */
+	     if (len_trigger > 1)
+	       {
+		  s->inp[0] = '>';
+		  s->inp[1] = '\0';
+	       }
+	     s->input = s->inp + 1;	     
 	     _evry_update_text_label(s); 
 	  }
      }
@@ -1935,7 +1943,9 @@ _evry_matches_update(Evry_Selector *sel, int async)
        
        EINA_LIST_FOREACH(s->plugins, l, p)
 	  {
-	     if (!win->plugin_dedicated && p->trigger)
+	     if ((!win->plugin_dedicated) &&
+		 (p->config->trigger_only) &&
+		 (p->config->trigger))
 	       continue;
 	     if (p == sel->aggregator)
 	       continue;

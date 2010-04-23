@@ -963,11 +963,21 @@ _view_update(Evry_View *view, int slide)
      }
 
    if (p != v->plugin)
-     {
-	v->mode = v->mode_prev;
-	
-	if (p->view_mode >= 0)
-	  v->mode = p->view_mode;
+     {	
+	if (p->config->view_mode >= 0)
+	  {
+	     if (p->config->view_mode != v->mode)
+	       _clear_items(v->span);
+	     
+	     v->mode = p->config->view_mode;
+	  }
+	else
+	  {
+	     if (v->mode_prev != v->mode)
+	       _clear_items(v->span);
+
+	     v->mode = v->mode_prev;
+	  }
      }
    
    /* go through current view items */
@@ -1328,6 +1338,7 @@ _view_create(Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
      v->mode = evry_conf->view_mode;
    else
      v->mode = parent->mode;
+
    v->mode_prev = v->mode;
    
    v->zoom = parent->zoom;

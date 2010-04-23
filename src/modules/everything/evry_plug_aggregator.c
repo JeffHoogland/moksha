@@ -323,6 +323,7 @@ evry_plug_aggregator_new(Evry_Selector *selector)
    pc = E_NEW(Plugin_Config, 1);
    pc->enabled = 1;
    pc->priority = -1;
+   pc->view_mode = -1;
    EVRY_PLUGIN(p)->config = pc;
 
    p->selector = selector;
