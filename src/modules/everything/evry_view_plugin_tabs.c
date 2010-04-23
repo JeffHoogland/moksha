@@ -286,6 +286,8 @@ _tabs_key_down(Tab_View *v, const Ecore_Event_Key *ev)
 {
    const char *key = ev->key;
 
+   if (!v->state || !v->state->cur_plugins) return 0;
+   
    if (!strcmp(key, "Next"))
      {
 	_plugin_next(v);
