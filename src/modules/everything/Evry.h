@@ -250,6 +250,7 @@ struct _Evry_State
   Evry_View *view;
 
   Eina_Bool changed;
+  Eina_Bool trigger_active;
 };
 
 struct _Evry_View

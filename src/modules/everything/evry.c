@@ -1880,29 +1880,52 @@ _evry_matches_update(Evry_Selector *sel, int async)
    Evry_Plugin *p;
    Eina_List *l;
    const char *input;
-   s->changed = 1;
-
-   EINA_LIST_FREE(s->cur_plugins, p);
-
+   s->changed = 1;   
+   
    if (s->inp[0])
      input = s->inp;
    else
      input = NULL;
 
-   if (input)
+   if (!input || !s->trigger_active)
+     {	
+	EINA_LIST_FREE(s->cur_plugins, p);
+	s->trigger_active = EINA_FALSE;
+     }
+   else
      {
+	EINA_LIST_FOREACH(s->cur_plugins, l, p)
+	  p->fetch(p, s->input);
+     }
+
+   if (!s->cur_plugins && input)
+     {
+	int len_trigger = 0;
+	
 	EINA_LIST_FOREACH(s->plugins, l, p)
 	  {
 	     /* input matches plugin trigger? */
 	     if (!p->trigger) continue;
+	     int len = strlen(p->trigger);
 
-	     if ((strlen(s->inp) >= strlen(p->trigger)) &&
-		 (!strncmp(s->inp, p->trigger, strlen(p->trigger))))
+	     if (len_trigger && len != len_trigger)
+	       continue;
+
+	     if ((strlen(s->inp) >= len) &&
+		 (!strncmp(s->inp, p->trigger, len)))
 	       {
+		 len_trigger = len;
 		  s->cur_plugins = eina_list_append(s->cur_plugins, p);
-		  s->input = s->inp + strlen(p->trigger);
-		  p->fetch(p, s->input);
+		  p->fetch(p, s->input + len);
 	       }
+	  }
+	if (s->cur_plugins)
+	  {
+	     s->trigger_active = EINA_TRUE;
+	     s->inp[0] = '>';
+	     s->inp[1] = '\0';
+	     s->input = s->inp + 1;
+	     _evry_update_text_label(s); 
 	  }
      }
    
