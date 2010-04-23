@@ -180,6 +180,7 @@ _e_powersave_mode_eval(void)
 	deferred_timer = ecore_timer_add(defer_time,
 					 _e_powersave_cb_deferred_timer,
 					 NULL);
+	defer_time = t;
      }
 }
 
