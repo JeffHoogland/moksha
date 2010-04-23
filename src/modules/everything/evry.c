@@ -50,7 +50,7 @@ static void _evry_state_pop(Evry_Selector *sel);
 static Evry_Selector *_evry_selector_new(int type);
 static void _evry_selector_free(Evry_Selector *sel);
 static void _evry_selector_activate(Evry_Selector *sel);
-static void _evry_selectors_switch(void);
+static void _evry_selectors_switch(int dir);
 static void _evry_selector_update(Evry_Selector *sel);
 static void _evry_selector_icon_set(Evry_Selector *sel);
 static int  _evry_selector_subjects_get(const char *plugin_name);
@@ -1247,13 +1247,13 @@ evry_browse_item(Evry_Selector *sel)
    return 1;
 }
 
-void
+EAPI int
 evry_browse_back(Evry_Selector *sel)
 {
    Evry_State *s = sel->state;
 
    if (!s || !sel->states->next)
-     return;
+     return 0;
 
    _evry_state_pop(sel);
 
@@ -1263,10 +1263,12 @@ evry_browse_back(Evry_Selector *sel)
    _evry_update_text_label(s);
    _evry_view_show(s->view);
    s->view->update(s->view, 1);
+
+   return 1;
 }
 
 static void
-_evry_selectors_switch(void)
+_evry_selectors_switch(int dir)
 {
    Evry_State *s = selector->state;
 
@@ -1283,12 +1285,12 @@ _evry_selectors_switch(void)
 	  }
      }
 
-   if (selector == selectors[0])
+   if (selector == selectors[0] && dir > 0)
      {
 	if (s->cur_item)
 	  _evry_selector_activate(selectors[1]);
      }
-   else if (selector == selectors[1])
+   else if (selector == selectors[1] && dir > 0)
      {
 	int next_selector = 0;
 	Evry_Action *act;
@@ -1306,7 +1308,14 @@ _evry_selectors_switch(void)
 	  }
 	_evry_selector_activate(selectors[next_selector]);
      }
-   else if (selector == selectors[2])
+   else if (selector == selectors[1] && dir < 0)
+     {
+	  _evry_selector_activate(selectors[0]);
+
+	  edje_object_signal_emit(win->o_main,
+				  "e,state,object_selector_hide", "e");
+     }
+   else if (selector == selectors[2] && dir > 0)
      {
 	while (selector->states)
 	  _evry_state_pop(selector);
@@ -1315,6 +1324,10 @@ _evry_selectors_switch(void)
 				"e,state,object_selector_hide", "e");
 
 	_evry_selector_activate(selectors[0]);
+     }
+   else if (selector == selectors[2] && dir < 0)
+     {
+	_evry_selector_activate(selectors[1]);
      }
 }
 
@@ -1507,9 +1520,16 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
    else if (_evry_view_key_press(s, ev))
      goto end;
    else if (!strcmp(key, "Right"))
-     evry_browse_item(selector);
+     {
+	if (!evry_browse_item(selector) &&
+	    (selector != selectors[2]))
+	  _evry_selectors_switch(1);
+     }
    else if (!strcmp(key, "Left"))
-     evry_browse_back(selector);
+     {
+	if (!evry_browse_back(selector))
+	  _evry_selectors_switch(-1);
+     }
    else if (!strcmp(key, "Return"))
      {
 	if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
@@ -1518,7 +1538,7 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	  _evry_plugin_action(selector, 1);
      }
    else if (!strcmp(key, "Tab"))
-     _evry_selectors_switch();
+     _evry_selectors_switch(1);
    else if (!strcmp(key, "BackSpace"))
      {
 	if (!_evry_backspace(selector))
@@ -1699,7 +1719,7 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 	if (act->type_in2 && !it_object)
 	  {
 	     if (selectors[1] == selector)
-	       _evry_selectors_switch();
+	       _evry_selectors_switch(1);
 	     return;
 	  }
 

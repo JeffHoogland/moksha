@@ -99,8 +99,8 @@ EAPI void evry_plug_actions_free(Evry_Plugin *plugin);
 void evry_history_init(void);
 void evry_history_free(void);
 
-EAPI int  evry_browse_item(Evry_Selector *sel);
-void evry_browse_back(Evry_Selector *sel);
+EAPI int evry_browse_item(Evry_Selector *sel);
+EAPI int evry_browse_back(Evry_Selector *sel);
 
 extern Evry_Selector **selectors;
 extern const char *action_selector;
