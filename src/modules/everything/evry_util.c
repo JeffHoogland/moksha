@@ -14,28 +14,28 @@ evry_util_file_detail_set(Evry_Item_File *file)
 
    if (EVRY_ITEM(file)->detail)
      return;
-   
+
    if (!home_dir)
      {
 	home_dir = e_user_homedir_get();
 	home_dir_len = strlen(home_dir);
      }
-   
+
    path = ecore_file_dir_get(file->path);
-	  
+
    if (path && !strncmp(path, home_dir, home_dir_len))
      {
 	if (*(path + home_dir_len) == '\0')
 	  snprintf(dir_buf, sizeof(dir_buf), "~%s", path + home_dir_len);
 	else
 	  snprintf(dir_buf, sizeof(dir_buf), "~%s/", path + home_dir_len);
-	
+
 	EVRY_ITEM(file)->detail = eina_stringshare_add(dir_buf);
      }
    else
      {
 	if (!strncmp(path, "//", 2)) path++;
-	
+
 	EVRY_ITEM(file)->detail = eina_stringshare_add(path);
      }
 }
@@ -204,7 +204,7 @@ evry_fuzzy_match(const char *str, const char *match)
 	if (strlen(str) != m_len)
 	  sum += 10;
      }
-   
+
    return sum;
 }
 
@@ -237,7 +237,7 @@ evry_fuzzy_match_sort(Eina_List *items)
 {
    return eina_list_sort(items, eina_list_count(items), _evry_fuzzy_match_sort_cb);
 }
- 
+
 
 /* taken from e_utils. just changed 48 to 72.. we need
    evry_icon_theme_set(Evas_Object *obj, const char *icon,
@@ -302,7 +302,7 @@ static Evas_Object *
 _evry_icon_mime_theme_get(const char *mime, Evas *e)
 {
    Evas_Object *o = NULL;
-   
+
    char buf[1024];
    const char *file;
 
@@ -335,7 +335,7 @@ evry_icon_mime_get(const char *mime, Evas *e)
      o = _evry_icon_mime_theme_get(mime, e);
 
    if (o) return o;
-   
+
    icon = efreet_mime_type_icon_get(mime, e_config->icon_theme, 128);
    if (icon)
      {
@@ -343,7 +343,7 @@ evry_icon_mime_get(const char *mime, Evas *e)
 	free(icon);
      }
    if (o) return o;
-   
+
    return _evry_icon_mime_theme_get(mime, e);
 }
 
@@ -356,7 +356,7 @@ evry_util_exec_app(const Evry_Item *it_app, const Evry_Item *it_file)
 
    if (!it_app) return 0;
    ITEM_APP(app, it_app);
-   
+
    zone = e_util_zone_current_get(e_manager_current_get());
 
    if (app->desktop)
@@ -421,9 +421,9 @@ evry_util_exec_app(const Evry_Item *it_app, const Evry_Item *it_file)
 	     ITEM_FILE(file, it_file);
 
 	     /* files = eina_list_append(files, file->path);
-	      * 
+	      *
 	      * e_exec(zone, NULL, app->file, files, NULL);
-	      * 
+	      *
 	      * if (files)
 	      *   eina_list_free(files); */
 
@@ -454,11 +454,11 @@ _conf_timer(void *data)
   e_util_dialog_internal(_("Configuration Updated"), data);
   return 0;
 }
-  
+
 EAPI Eina_Bool
 evry_util_module_config_check(const char *module_name, int conf, int epoch, int version)
 {
-  if ((conf >> 16) < epoch) 
+  if ((conf >> 16) < epoch)
     {
       char *too_old =
 	_("%s Configuration data needed "
@@ -479,7 +479,7 @@ evry_util_module_config_check(const char *module_name, int conf, int epoch, int 
       ecore_timer_add(1.0, _conf_timer, buf);
       return EINA_FALSE;
     }
-  else if (conf > version) 
+  else if (conf > version)
     {
       char *too_new =
 	_("Your %s Module configuration is NEWER "
@@ -603,15 +603,15 @@ evry_util_url_escape(const char *string, int inlength)
       /* encode it */
       newlen += 2; /* the size grows with two, since this'll become a %XX */
       if(newlen > alloc) {
-        alloc *= 2;
-        testing_ptr = realloc(ns, alloc);
-        if(!testing_ptr) {
-          free( ns );
-          return NULL;
-        }
-        else {
-          ns = testing_ptr;
-        }
+	alloc *= 2;
+	testing_ptr = realloc(ns, alloc);
+	if(!testing_ptr) {
+	  free( ns );
+	  return NULL;
+	}
+	else {
+	  ns = testing_ptr;
+	}
       }
 
       snprintf(&ns[strindex], 4, "%%%02X", in);
@@ -623,5 +623,3 @@ evry_util_url_escape(const char *string, int inlength)
   ns[strindex]=0; /* terminate it */
   return ns;
 }
-
-

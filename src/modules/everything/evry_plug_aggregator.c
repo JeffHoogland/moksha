@@ -45,7 +45,7 @@ _cb_sort_recent(const void *data1, const void *data2)
      return (it1->priority - it2->priority);
 
    return strcmp(it1->label, it2->label);
-   
+
   return 1;
 }
 
@@ -54,7 +54,7 @@ _cb_sort(const void *data1, const void *data2)
 {
    const Evry_Item *it1 = data1;
    const Evry_Item *it2 = data2;
-   
+
    if (it1->usage && it2->usage)
      return (it1->usage > it2->usage ? -1 : 1);
    if (it1->usage && !it2->usage)
@@ -77,7 +77,7 @@ _cb_sort(const void *data1, const void *data2)
    if ((it1->plugin == it2->plugin) &&
        (it1->priority - it2->priority))
      return (it1->priority - it2->priority);
-   
+
    if (it1->fuzzy_match > 0 || it2->fuzzy_match > 0)
      {
 	if (it2->fuzzy_match <= 0)
@@ -121,13 +121,13 @@ _fetch(Evry_Plugin *plugin, const char *input)
    plugin->changed = 1;
 
    s = p->selector->state;
-   
+
    if (!s || !s->cur_plugins || !s->cur_plugins->next)
      return 0;
 
    /* first is aggregator itself */
    lp = s->cur_plugins;
-   
+
    EVRY_PLUGIN_ITEMS_FREE(p);
 
    /* get current 'context' ... */
@@ -138,7 +138,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	  {
 	     item = selectors[i-1]->state->cur_item;
 	     context = item->context;
-	  }	
+	  }
      }
 
    if (input)
@@ -146,7 +146,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	EINA_LIST_FOREACH(lp, l, pp)
 	  {
 	     if (!pp->aggregate) continue;
-	     
+
 	     EINA_LIST_FOREACH(pp->items, ll, it)
 	       {
 		  if (it->fuzzy_match == 0)
@@ -167,11 +167,11 @@ _fetch(Evry_Plugin *plugin, const char *input)
    	  {
 	     if (!pp->aggregate) continue;
 	     cnt = 0;
-	     
+
 	     EINA_LIST_FOREACH(pp->items, ll, it)
    	       {
 		  if (cnt++ == MAX_ITEMS) break;
-		    
+
    		  if (!eina_list_data_find_list(items, it))
    		    {
    		       it->fuzzy_match = 0;
@@ -184,7 +184,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
    EINA_LIST_FOREACH(lp, l, pp)
      {
 	if (!pp->aggregate) continue;
-	
+
 	EINA_LIST_FOREACH(pp->items, ll, it)
 	  {
 	     if (evry_history_item_usage_set(p->selector->history, it, input, context) &&
@@ -228,7 +228,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
    EINA_LIST_FOREACH_SAFE(p->base.items, l, ll, it)
      {
 	if (cnt++ < MAX_ITEMS) continue;
-	evry_item_free(it); 
+	evry_item_free(it);
 	p->base.items = eina_list_remove_list(p->base.items, l);
      }
 
@@ -289,7 +289,7 @@ Evry_Plugin *
 evry_plug_aggregator_new(Evry_Selector *sel, int type)
 {
    Plugin *p;
-      
+
    p = E_NEW(Plugin, 1);
    EVRY_PLUGIN_NEW(EVRY_PLUGIN(p), N_("All"), type, "", "",
 		   NULL, _cleanup, _fetch, _icon_get, NULL);

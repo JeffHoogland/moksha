@@ -61,7 +61,7 @@ typedef struct _Plugin_Setting  Plugin_Setting;
 #define PLUGIN(_p, _plugin) Plugin *_p = (Plugin*) _plugin
 #define VIEW(_v, _view) View *_v = (View*) _view
 
-#define EVRY_PLUGIN_ITEMS_CLEAR(_p)       		\
+#define EVRY_PLUGIN_ITEMS_CLEAR(_p)	  		\
   if (EVRY_PLUGIN(_p)->items)				\
     eina_list_free(EVRY_PLUGIN(_p)->items); 		\
   EVRY_PLUGIN(_p)->items = NULL;
@@ -94,10 +94,10 @@ struct _Evry_Item
 
   /* optional: more information to be shown */
   const char *detail;
-  
+
   /* optional: for 'static' fdo icon name, otherwise use _icon_get */
   const char *icon;
-  
+
   /* item can be browsed, e.g. folders */
   Eina_Bool browseable;
 
@@ -120,7 +120,7 @@ struct _Evry_Item
 
   /* optional */
   const char *subtype;
-  
+
   /* do not set by plugin! */
   Evry_Item   *next;
   Eina_Bool    selected;
@@ -156,13 +156,13 @@ struct _Evry_Plugin
   /* provide default icon */
   const char *icon;
 
-  /* use plugin for first second or third part of an action 
+  /* use plugin for first second or third part of an action
      if actions are no dynamical lists better use Evry_Action */
   enum { type_subject, type_action, type_object } type;
 
   /* plugin provides items of this type */
   const char *type_out;
-  
+
   /* plugin accepts this type in begin function */
   const char *type_in;
 
@@ -184,7 +184,7 @@ struct _Evry_Plugin
 
   /* get an icon for an item. will be freed automatically */
   Evas_Object *(*icon_get) (Evry_Plugin *p, const Evry_Item *it, Evas *e);
-  
+
   /* only used when plugin is of type_action */
   int  (*action) (Evry_Plugin *p, const Evry_Item *item);
 
@@ -198,11 +198,11 @@ struct _Evry_Plugin
 
   /* optional: use this when you extend the plugin struct */
   void (*free) (Evry_Plugin *p);
-  
+
   /* show in aggregator */
   /* default TRUE */
   Eina_Bool aggregate;
-  
+
   /* whether the plugin uses evry_async_update to add new items. */
   /* default FALSE */
   Eina_Bool async_fetch;
@@ -217,7 +217,7 @@ struct _Evry_Plugin
   /* if transient, item is removed from history on shutdown */
   /* default FALSE */
   Eina_Bool transient;
-  
+
   /* not to be set by plugin! */
   Plugin_Config *config;
 
@@ -295,7 +295,7 @@ struct _Evry_Action
 
   /* optional: use this when you keep stuff in 'data' */
   void (*free) (Evry_Action *act);
-  
+
   /* use icon name from theme */
   const char *icon;
 
@@ -315,7 +315,7 @@ struct _Config
   int width, height;
 
   Eina_List *modules;
-  
+
   /* generic plugin config */
   Eina_List *conf_subjects;
   Eina_List *conf_actions;
@@ -337,16 +337,16 @@ struct _Config
   int view_zoom;
 
   int history_sort_mode;
-  
+
   /* use up/down keys for prev/next in thumb view */
   int cycle_mode;
 
   unsigned char first_run;
-  
+
   /* not saved data */
   Eina_List *actions;
   Eina_List *views;
-  
+
   int min_w, min_h;
 };
 
@@ -360,7 +360,7 @@ struct _Plugin_Config
   int trigger_only;
 
   int view_mode;
-  
+
   Evry_Plugin *plugin;
 };
 

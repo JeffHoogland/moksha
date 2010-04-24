@@ -8,7 +8,7 @@ static int
 _action(Evry_Action *act)
 {
    const Evry_Item *it = act->item1;
-   
+
    ecore_x_selection_primary_set(clipboard_win, it->label, strlen(it->label));
    ecore_x_selection_clipboard_set(clipboard_win, it->label, strlen(it->label));
 
@@ -47,4 +47,3 @@ evry_plug_clipboard_shutdown(void)
    ecore_x_window_free(clipboard_win);
    evry_action_free(act);
 }
-

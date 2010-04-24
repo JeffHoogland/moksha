@@ -18,7 +18,7 @@ static int
 _animator(void *data)
 {
    Tab_View *v = data;
-   
+
    double da;
    double spd = (5.0 / (double)e_config->framerate);
    if (spd > 0.9) spd = 0.9;
@@ -60,7 +60,7 @@ _tab_scroll_to(Tab_View *v, Evry_Plugin *p, int animate)
 
    e_box_size_min_get(v->o_tabs, &mw, NULL);
    evas_object_geometry_get(v->o_tabs, NULL, NULL, &w, NULL);
-   
+
    if (mw < w)
      {
    	e_box_align_set(v->o_tabs, 0.0, 0.5);
@@ -88,12 +88,12 @@ static int
 _timer_cb(void *data)
 {
    Tab_View *v = data;
-   
+
    _tabs_update(v);
 
    v->timer = NULL;
    return 0;
-   
+
 }
 
 static void
@@ -107,15 +107,15 @@ _tabs_update(Tab_View *v)
    Evas_Coord w, x;
    Evas_Object *o;
 
-   edje_object_calc_force(v->o_tabs); 
+   edje_object_calc_force(v->o_tabs);
    evas_object_geometry_get(v->o_tabs, &x, NULL, &w, NULL);
 
    if (!w && !v->timer)
      {
-	v->timer = ecore_timer_add(0.1, _timer_cb, v); 
+	v->timer = ecore_timer_add(0.1, _timer_cb, v);
 	return;
      }
-   
+
    /* remove tabs for not active plugins */
    e_box_freeze(v->o_tabs);
 
@@ -171,7 +171,7 @@ _tabs_update(Tab_View *v)
    /* if (eina_list_count(s->cur_plugins) == 2)
     *   {
     * 	v->align = 0;
-    * 	e_box_align_set(v->o_tabs, 0.0, 0.5);       
+    * 	e_box_align_set(v->o_tabs, 0.0, 0.5);
     *   } */
    /* else */
    if (s->plugin)
@@ -287,7 +287,7 @@ _tabs_key_down(Tab_View *v, const Ecore_Event_Key *ev)
    const char *key = ev->key;
 
    if (!v->state || !v->state->cur_plugins) return 0;
-   
+
    if (!strcmp(key, "Next"))
      {
 	_plugin_next(v);
@@ -310,7 +310,7 @@ _tabs_key_down(Tab_View *v, const Ecore_Event_Key *ev)
 	     _plugin_next(v);
 	     return 1;
 	  }
-	
+
      }
    else if (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)
      {
@@ -346,7 +346,7 @@ evry_tab_view_new(const Evry_State *s, Evas *e)
    v->clear    = &_tabs_clear;
    v->key_down = &_tabs_key_down;
    v->state = s;
-   
+
    v->evas = e;
    o = e_box_add(e);
    e_box_orientation_set(o, 1);
@@ -360,7 +360,7 @@ EAPI void
 evry_tab_view_free(Tab_View *v)
 {
    Tab *tab;
-   
+
    EINA_LIST_FREE(v->tabs, tab)
      {
 	e_box_unpack(tab->o_tab);
@@ -368,13 +368,13 @@ evry_tab_view_free(Tab_View *v)
 	E_FREE(tab);
      }
 
-   evas_object_del(v->o_tabs);   
+   evas_object_del(v->o_tabs);
 
    if (v->animator)
      ecore_animator_del(v->animator);
 
    if (v->timer)
      ecore_timer_del(v->timer);
-   
+
    E_FREE(v);
 }

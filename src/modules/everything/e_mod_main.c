@@ -96,14 +96,14 @@ e_modapi_init(E_Module *m)
      EVRY_EVENT_ITEM_SELECT = ecore_event_type_new();
    if (!EVRY_EVENT_ITEM_CHANGED)
      EVRY_EVENT_ITEM_CHANGED = ecore_event_type_new();
-   
+
    e_module_delayed_set(m, 0);
 
    /* make sure module is loaded before others */
    e_module_priority_set(m, -1000);
 
    e_datastore_set("everything_loaded", "");
-   
+
    return m;
 }
 
@@ -113,7 +113,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    E_Config_Dialog *cfd;
    Evry_Plugin *p;
    Evry_Action *a;
-   
+
    evry_shutdown();
 
    /* remove module-supplied menu additions */
@@ -133,12 +133,12 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    view_help_shutdown();
    evry_plug_clipboard_shutdown();
    evry_plug_text_shutdown();
-   
+
    /* EINA_LIST_FREE(evry_conf->plugins, p)
     *   evry_plugin_free(p, 1);  */
 
    EINA_LIST_FREE(evry_conf->actions, a)
-     evry_action_free(a); 
+     evry_action_free(a);
 
    while ((cfd = e_config_dialog_get("E", "_config_everything_dialog")))
      e_object_del(E_OBJECT(cfd));
@@ -154,7 +154,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    E_CONFIG_DD_FREE(plugin_conf_edd);
    E_CONFIG_DD_FREE(plugin_setting_edd);
    e_datastore_del("everything_loaded");
-   
+
    return 1;
 }
 
@@ -235,7 +235,7 @@ _config_init()
        Plugin_Config *pc;
        Eina_List *conf[3];
        int i;
-       
+
        conf[0] = evry_conf->conf_subjects;
        conf[1] = evry_conf->conf_actions;
        conf[2] = evry_conf->conf_objects;
@@ -252,7 +252,7 @@ _config_init()
        evry_conf->conf_subjects = NULL;
        evry_conf->conf_actions = NULL;
        evry_conf->conf_objects = NULL;
-       
+
        evry_conf->version = CONFIG_VERSION;
      }
 
@@ -261,7 +261,7 @@ _config_init()
 	_config_free();
 	evry_conf = NULL;
      }
-   
+
    if (!evry_conf)
      {
 	evry_conf = E_NEW(Evry_Config, 1);
@@ -353,7 +353,7 @@ _e_mod_action_cb(E_Object *obj, const char *params)
      evry_show(zone, params);
    else
      evry_show(zone, NULL);
-   
+
    /* FIXME popup flickers sometimes when deferes*/
    /* if (params && params[0])
     *   evry_show(zone, params);
@@ -396,7 +396,7 @@ _evry_cb_plugin_sort(const void *data1, const void *data2)
 {
    const Plugin_Config *pc1 = data1;
    const Plugin_Config *pc2 = data2;
-   
+
    return pc1->priority - pc2->priority;
 }
 
@@ -431,7 +431,7 @@ evry_plugin_new(Evry_Plugin *base, const char *name, const char *label, int type
 
    p->history = EINA_TRUE;
    p->view_mode = VIEW_MODE_NONE;
-   
+
    return p;
 }
 
@@ -469,7 +469,7 @@ evry_action_new(const char *name, const char *label, const char *type_in1, const
    act->action = action;
    act->check_item = check_item;
    act->icon = (icon ? eina_stringshare_add(icon) : NULL);
-   
+
    return act;
 }
 
@@ -499,7 +499,7 @@ evry_plugin_register(Evry_Plugin *p, int priority)
    Plugin_Config *pc;
    Eina_List *conf[3];
    int i = 0;
-   
+
    conf[0] = evry_conf->conf_subjects;
    conf[1] = evry_conf->conf_actions;
    conf[2] = evry_conf->conf_objects;
@@ -517,20 +517,20 @@ evry_plugin_register(Evry_Plugin *p, int priority)
 	pc->view_mode = p->view_mode;
 	if (p->trigger)
 	  {
-	    pc->trigger = eina_stringshare_add(p->trigger); 
+	    pc->trigger = eina_stringshare_add(p->trigger);
 	    pc->trigger_only = 1;
 	  }
 	conf[p->type] = eina_list_append(conf[p->type], pc);
      }
-   
+
    p->config = pc;
    pc->plugin = p;
-   
+
    conf[p->type] = eina_list_sort(conf[p->type], -1, _evry_cb_plugin_sort);
 
    EINA_LIST_FOREACH(conf[p->type], l, pc)
      pc->priority = i++;
-   
+
    evry_conf->conf_subjects = conf[0];
    evry_conf->conf_actions = conf[1];
    evry_conf->conf_objects = conf[2];
@@ -549,7 +549,7 @@ void
 evry_plugin_unregister(Evry_Plugin *p)
 {
    DBG("%s", p->name);
-   
+
    /* evry_conf->plugins = eina_list_remove(evry_conf->plugins, p); */
 
    if (p->type == type_subject)
@@ -604,5 +604,3 @@ evry_view_unregister(Evry_View *view)
 {
    evry_conf->views = eina_list_remove(evry_conf->views, view);
 }
-
-

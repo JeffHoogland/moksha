@@ -105,7 +105,7 @@ _hist_cleanup_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata
 	     hi->count--;
 	     hi->last_used = d->time - SEVEN_DAYS/2;
 	  }
-	
+
 	/* item is transient or too old */
 	if (!hi->count || hi->transient)
 	  {
@@ -173,7 +173,7 @@ EAPI void
 evry_history_load(void)
 {
    evry_hist = e_config_domain_load("module.everything.history", hist_edd);
-     
+
    if (evry_hist && evry_hist->version != HISTORY_VERSION)
      {
 	eina_hash_foreach(evry_hist->subjects, _hist_free_cb, NULL);
@@ -209,7 +209,7 @@ evry_history_unload(void)
    eina_hash_foreach(evry_hist->actions,  _hist_free_cb, NULL);
    eina_hash_free(evry_hist->subjects);
    eina_hash_free(evry_hist->actions);
-   
+
    E_FREE(evry_hist);
    evry_hist = NULL;
 }
@@ -221,7 +221,7 @@ evry_history_add(Eina_Hash *hist, Evry_Item *it, const char *ctxt, const char *i
    History_Item  *hi = NULL;
    Eina_List *l;
    const char *id;
-   
+
    if (!it || !it->plugin->history) return NULL;
 
    id = (it->id ? it->id : it->label);
@@ -285,11 +285,11 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, c
 
    if (!it->plugin->history)
      return 0;
-   
+
    it->usage = 0.0;
    if (!(he = eina_hash_find(hist, (it->id ? it->id : it->label))))
      return 0;
-   
+
    EINA_LIST_FOREACH(he->items, l, hi)
      {
 	if (hi->plugin != it->plugin->name)
@@ -303,10 +303,10 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, c
 	 *      if (hi->last_used > it->usage)
 	 *        it->usage = hi->last_used;
 	 *   } */
-	
+
 	if (evry_conf->history_sort_mode == 0)
 	  {
-	     
+
 	     if (!input || !hi->input)
 	       {
 		  it->usage += hi->usage * hi->count;
@@ -331,7 +331,7 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, c
 	else if (evry_conf->history_sort_mode == 1)
 	  {
 	     it->usage = hi->count * (hi->last_used / 10000000000.0);
-	     
+
 	  }
 	else if (evry_conf->history_sort_mode == 2)
 	  {
@@ -339,10 +339,9 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, c
 	       it->usage = hi->last_used;
 	  }
      }
-   
+
    if (it->usage > 0.0)
      return 1;
 
    return 0;
 }
-

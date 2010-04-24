@@ -23,7 +23,7 @@ static int
 _fetch(Evry_Plugin *p, const char *input)
 {
    Evry_Item *it;
-   
+
    EVRY_PLUGIN_ITEMS_FREE(p);
 
    if (input)
@@ -34,14 +34,14 @@ _fetch(Evry_Plugin *p, const char *input)
 
 	return 1;
      }
-   
+
    return 0;
 }
 
 Eina_Bool
 evry_plug_text_init(void)
 {
-  p1 = EVRY_PLUGIN_NEW(NULL, N_("Text"), type_subject, NULL, "TEXT", 
+  p1 = EVRY_PLUGIN_NEW(NULL, N_("Text"), type_subject, NULL, "TEXT",
 		       NULL, _cleanup, _fetch, NULL, NULL);
 
   p2 = EVRY_PLUGIN_NEW(NULL, N_("Text"), type_object,  NULL, "TEXT",
@@ -51,7 +51,7 @@ evry_plug_text_init(void)
   p2->icon = "accessories-text-editor";
   p1->trigger = ".";
   p2->trigger = ".";
-  
+
   evry_plugin_register(p1, 999);
   evry_plugin_register(p2, 999);
 
@@ -64,5 +64,3 @@ evry_plug_text_shutdown(void)
    EVRY_PLUGIN_FREE(p1);
    EVRY_PLUGIN_FREE(p2);
 }
-
-

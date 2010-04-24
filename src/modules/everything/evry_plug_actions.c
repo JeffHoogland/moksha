@@ -9,7 +9,7 @@ _cleanup(Evry_Plugin *p)
 {
    Evry_Action *act;
    Evry_Selector *sel;
-   
+
    if (p->type == type_subject)
      sel = selectors[0];
    else
@@ -26,9 +26,9 @@ _begin(Evry_Plugin *p, const Evry_Item *it)
 {
    Evry_Action *act;
    Eina_List *l;
-   const char *type;   
+   const char *type;
    Evry_Selector *sel;
-   
+
    if (p->type == type_subject)
      sel = selectors[0];
    else
@@ -42,7 +42,7 @@ _begin(Evry_Plugin *p, const Evry_Item *it)
 	type = it->plugin->type_out;
 	if (!type) return NULL;
      }
-   
+
    EINA_LIST_FOREACH(evry_conf->actions, l, act)
      {
 	if ((!act->type_in1) ||
@@ -59,7 +59,7 @@ _begin(Evry_Plugin *p, const Evry_Item *it)
      }
 
    if (!sel->cur_actions) return NULL;
-   
+
    return p;
 }
 
@@ -119,7 +119,7 @@ _fetch(Evry_Plugin *p, const char *input)
      }
 
    if (!p->items) return 0;
-   
+
    if (input)
      EVRY_PLUGIN_ITEMS_SORT(p, _cb_sort);
 

@@ -69,10 +69,10 @@ _view_create(Evry_View *v, const Evry_State *s, const Evas_Object *swallow)
        " an action, then press  <hilight>&lt;return&gt;</hilight>.<br>"
        /* "You might want to know <br>some mo keybinding to ease your experience though.<br>" */
        "    <hilight>&lt;?&gt;</hilight> show this page<br>"
-       "    <hilight>&lt;return&gt;</hilight> run action<br>"       
-       "    <hilight>&lt;ctrl+return&gt;</hilight> run action and continue<br>"       
-       "    <hilight>&lt;tab&gt;</hilight> toggle between selectors<br>"       
-       "    <hilight>&lt;ctrl+tab&gt;</hilight> complete input (depends on plugin)<br>"       
+       "    <hilight>&lt;return&gt;</hilight> run action<br>"
+       "    <hilight>&lt;ctrl+return&gt;</hilight> run action and continue<br>"
+       "    <hilight>&lt;tab&gt;</hilight> toggle between selectors<br>"
+       "    <hilight>&lt;ctrl+tab&gt;</hilight> complete input (depends on plugin)<br>"
        "    <hilight>&lt;ctrl+'x'&gt;</hilight> jump to plugin beginning with 'x'<br>"
        "    <hilight>&lt;ctrl+left/right&gt;</hilight> cycle through plugins<br>"
        "    <hilight>&lt;ctrl+1&gt;</hilight> toggle view modes (exit this page ;)<br>"
@@ -137,4 +137,3 @@ view_help_shutdown(void)
    evry_view_unregister(view);
    E_FREE(view);
 }
-
