@@ -125,9 +125,6 @@ _fetch(Evry_Plugin *plugin, const char *input)
    if (!s || !s->cur_plugins || !s->cur_plugins->next)
      return 0;
 
-   /* first is aggregator itself */
-   lp = s->cur_plugins;
-
    EVRY_PLUGIN_ITEMS_FREE(p);
 
    /* get current 'context' ... */
@@ -141,7 +138,23 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	  }
      }
 
-   if (input)
+   lp = s->cur_plugins;
+
+   if ((lp) && (eina_list_count(lp) == 1))
+     {
+       pp = lp->data;
+
+       if (pp->aggregate);
+	 {
+	   EINA_LIST_FOREACH(pp->items, l, it)
+	     {
+	       evry_history_item_usage_set(p->selector->history, it, input, context);
+	       it->fuzzy_match = evry_fuzzy_match(it->label, input);
+	       items = _add_item(p, items, it);
+	     }
+	 }
+     }
+   else if (input)
      {
 	EINA_LIST_FOREACH(lp, l, pp)
 	  {
@@ -153,64 +166,50 @@ _fetch(Evry_Plugin *plugin, const char *input)
 		    it->fuzzy_match = evry_fuzzy_match(it->label, input);
 
 		  if (it->fuzzy_match || p->selector == selectors[2])
-		    items = _add_item(p, items, it);
+		    {
+		      evry_history_item_usage_set(p->selector->history, it, input, context);
+		      items = _add_item(p, items, it);
+		    }
 	       }
 	  }
      }
-
-   /* always append items of action or object selector */
-   if ((!input) &&
-       ((p->selector == selectors[1]) ||
-	(p->selector == selectors[2])))
+   else if ((!input) &&
+	    ((p->selector == selectors[1]) ||
+	     (p->selector == selectors[2])))
      {
+       /* always append items of action or object selector */
        EINA_LIST_FOREACH(lp, l, pp)
    	  {
 	     if (!pp->aggregate) continue;
 	     cnt = 0;
-
 	     EINA_LIST_FOREACH(pp->items, ll, it)
    	       {
 		  if (cnt++ == MAX_ITEMS) break;
-
    		  if (!eina_list_data_find_list(items, it))
    		    {
-   		       it->fuzzy_match = 0;
+		      evry_history_item_usage_set(p->selector->history, it, NULL, context);
+		      it->fuzzy_match = 0;
 		       items = _add_item(p, items, it);
    		    }
    	       }
    	  }
      }
-
-   EINA_LIST_FOREACH(lp, l, pp)
+   else
      {
-	if (!pp->aggregate) continue;
+       EINA_LIST_FOREACH(lp, l, pp)
+	 {
+	   if (!pp->aggregate) continue;
 
-	EINA_LIST_FOREACH(pp->items, ll, it)
-	  {
-	     if (evry_history_item_usage_set(p->selector->history, it, input, context) &&
-		 (!eina_list_data_find_list(items, it)))
-	       {
-		  items = _add_item(p, items, it);
-		  continue;
-	       }
-	  }
-     }
-
-   if (lp && ((eina_list_count(lp) == 2) || (!EVRY_PLUGIN(p)->items)))
-     {
-	pp = lp->data;
-
-	if (pp->aggregate)
-	  {
-	     EINA_LIST_FOREACH(pp->items, l, it)
-	       {
-		  if (!eina_list_data_find_list(items, it))
-		    {
-		       it->fuzzy_match = 0;
-		       items = _add_item(p, items, it);
-		    }
-	       }
-	  }
+	   EINA_LIST_FOREACH(pp->items, ll, it)
+	     {
+	       if (evry_history_item_usage_set(p->selector->history, it, input, context) &&
+		   (!eina_list_data_find_list(items, it)))
+		 {
+		   items = _add_item(p, items, it);
+		   continue;
+		 }
+	     }
+	 }
      }
 
    if (items) eina_list_free(items);
@@ -233,21 +232,20 @@ _fetch(Evry_Plugin *plugin, const char *input)
      }
 
    /* remove duplicates provided by different plugins */
-   EINA_LIST_FOREACH_SAFE(p->base.items, l, ll, it)
-     {
-	for (lll = l->next; lll; lll = lll->next)
-	  {
-	     it2 = lll->data;
-	     if ((it->plugin->name != it2->plugin->name) &&
-		 (it->plugin->type_out == it2->plugin->type_out) &&
-		 (it->id == it2->id))
-	       {
-		  p->base.items = eina_list_remove_list(p->base.items, l);
-		  evry_item_free(it);
-		  break;
-	       }
-	  }
-     }
+   /* EINA_LIST_FOREACH_SAFE(p->base.items, l, ll, it)
+    *   {
+    *     EINA_LIST_FOREACH(l->next, lll, it2)
+    * 	  {
+    * 	     if ((it->plugin->name != it2->plugin->name) &&
+    * 		 (it->plugin->type_out == it2->plugin->type_out) &&
+    * 		 (it->id == it2->id))
+    * 	       {
+    * 		  p->base.items = eina_list_remove_list(p->base.items, l);
+    * 		  evry_item_free(it);
+    * 		  break;
+    * 	       }
+    * 	  }
+    *   } */
 
    return 1;
 }
