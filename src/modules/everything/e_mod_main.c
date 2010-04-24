@@ -12,7 +12,7 @@
 /* #undef DBG
  * #define DBG(...) ERR(__VA_ARGS__) */
 
-#define CONFIG_VERSION 12
+#define CONFIG_VERSION 13
 
 /* actual module specifics */
 static void _e_mod_action_cb(E_Object *obj, const char *params);
@@ -134,8 +134,8 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    evry_plug_clipboard_shutdown();
    evry_plug_text_shutdown();
    
-   EINA_LIST_FREE(evry_conf->plugins, p)
-     evry_plugin_free(p, 1); 
+   /* EINA_LIST_FREE(evry_conf->plugins, p)
+    *   evry_plugin_free(p, 1);  */
 
    EINA_LIST_FREE(evry_conf->actions, a)
      evry_action_free(a); 
@@ -162,7 +162,6 @@ EAPI int
 e_modapi_save(E_Module *m __UNUSED__)
 {
    e_config_domain_save("module.everything", conf_edd, evry_conf);
-
    return 1;
 }
 
@@ -231,28 +230,29 @@ _config_init()
        evry_conf->version = 11;
      }
 
-   if (evry_conf && evry_conf->version == 11)
+   if (evry_conf && evry_conf->version <= 12)
      {
        Plugin_Config *pc;
+       Eina_List *conf[3];
+       int i;
        
-       EINA_LIST_FREE(evry_conf->conf_subjects, pc)
+       conf[0] = evry_conf->conf_subjects;
+       conf[1] = evry_conf->conf_actions;
+       conf[2] = evry_conf->conf_objects;
+
+       for (i = 0; i < 3; i++)
 	 {
-	   if (pc->name) eina_stringshare_del(pc->name);
-	   if (pc->trigger) eina_stringshare_del(pc->trigger);
-	   E_FREE(pc);
+	    EINA_LIST_FREE(conf[i], pc)
+	      {
+		 if (pc->name) eina_stringshare_del(pc->name);
+		 if (pc->trigger) eina_stringshare_del(pc->trigger);
+		 E_FREE(pc);
+	      }
 	 }
-       EINA_LIST_FREE(evry_conf->conf_actions, pc)
-	 {
-	   if (pc->name) eina_stringshare_del(pc->name);
-	   if (pc->trigger) eina_stringshare_del(pc->trigger);
-	   E_FREE(pc);
-	 }
-       EINA_LIST_FREE(evry_conf->conf_objects, pc)
-	 {
-	   if (pc->name) eina_stringshare_del(pc->name);
-	   if (pc->trigger) eina_stringshare_del(pc->trigger);
-	   E_FREE(pc);
-	 }
+       evry_conf->conf_subjects = NULL;
+       evry_conf->conf_actions = NULL;
+       evry_conf->conf_objects = NULL;
+       
        evry_conf->version = CONFIG_VERSION;
      }
 
@@ -290,28 +290,29 @@ static void
 _config_free(void)
 {
    Plugin_Config *pc;
+   int i;
+   Eina_List *conf[3];
 
-   /* free config */
+   conf[0] = evry_conf->conf_subjects;
+   conf[1] = evry_conf->conf_actions;
+   conf[2] = evry_conf->conf_objects;
+
+   for (i = 0; i < 3; i++)
+     {
+	EINA_LIST_FREE(conf[i], pc)
+	  {
+	     if (pc->name) eina_stringshare_del(pc->name);
+	     if (pc->trigger) eina_stringshare_del(pc->trigger);
+	     if (pc->plugin) evry_plugin_free(pc->plugin, 1);
+	     E_FREE(pc);
+	  }
+     }
+
    if (evry_conf->cmd_terminal)
      eina_stringshare_del(evry_conf->cmd_terminal);
-   EINA_LIST_FREE(evry_conf->conf_subjects, pc)
-     {
-       if (pc->name) eina_stringshare_del(pc->name);
-       if (pc->trigger) eina_stringshare_del(pc->trigger);
-       E_FREE(pc);
-     }
-   EINA_LIST_FREE(evry_conf->conf_actions, pc)
-     {
-       if (pc->name) eina_stringshare_del(pc->name);
-       if (pc->trigger) eina_stringshare_del(pc->trigger);
-       E_FREE(pc);
-     }
-   EINA_LIST_FREE(evry_conf->conf_objects, pc)
-     {
-       if (pc->name) eina_stringshare_del(pc->name);
-       if (pc->trigger) eina_stringshare_del(pc->trigger);
-       E_FREE(pc);
-     }
+   if (evry_conf->cmd_sudo)
+     eina_stringshare_del(evry_conf->cmd_sudo);
+
    E_FREE(evry_conf);
 }
 
@@ -393,12 +394,10 @@ EAPI int evry_api_version_check(int version)
 static int
 _evry_cb_plugin_sort(const void *data1, const void *data2)
 {
-   const Evry_Plugin *p1 = data1;
-   const Evry_Plugin *p2 = data2;
-   if (!p1->config) return -1;
-   if (!p2->config) return 1;
+   const Plugin_Config *pc1 = data1;
+   const Plugin_Config *pc2 = data2;
    
-   return p1->config->priority - p2->config->priority;
+   return pc1->priority - pc2->priority;
 }
 
 Evry_Plugin *
@@ -433,8 +432,6 @@ evry_plugin_new(Evry_Plugin *base, const char *name, const char *label, int type
    p->history = EINA_TRUE;
    p->view_mode = VIEW_MODE_NONE;
    
-   DBG("%s", p->name);
-   
    return p;
 }
 
@@ -444,7 +441,7 @@ evry_plugin_free(Evry_Plugin *p, int free_pointer)
    evry_plugin_unregister(p);
 
    DBG("%s", p->name);
-   
+   if (p->config) p->config->plugin = NULL;
    if (p->name)     eina_stringshare_del(p->name);
    if (p->label)    eina_stringshare_del(p->label);
    if (p->type_in)  eina_stringshare_del(p->type_in);
@@ -472,8 +469,6 @@ evry_action_new(const char *name, const char *label, const char *type_in1, const
    act->action = action;
    act->check_item = check_item;
    act->icon = (icon ? eina_stringshare_add(icon) : NULL);
-
-   DBG("%s", name);
    
    return act;
 }
@@ -500,21 +495,16 @@ evry_action_free(Evry_Action *act)
 void
 evry_plugin_register(Evry_Plugin *p, int priority)
 {
-   Eina_List *l, *confs = NULL;
+   Eina_List *l, *confs;
    Plugin_Config *pc;
-
-   DBG("%s", p->name);
+   Eina_List *conf[3];
+   int i = 0;
    
-   evry_conf->plugins = eina_list_append(evry_conf->plugins, p);
+   conf[0] = evry_conf->conf_subjects;
+   conf[1] = evry_conf->conf_actions;
+   conf[2] = evry_conf->conf_objects;
 
-   if (p->type == type_subject)
-     confs = evry_conf->conf_subjects;
-   else if (p->type == type_action)
-     confs = evry_conf->conf_actions;
-   else if (p->type == type_object)
-     confs = evry_conf->conf_objects;
-
-   EINA_LIST_FOREACH(confs, l, pc)
+   EINA_LIST_FOREACH(conf[p->type], l, pc)
      if (pc->name && p->name && !strcmp(pc->name, p->name))
        break;
 
@@ -530,24 +520,22 @@ evry_plugin_register(Evry_Plugin *p, int priority)
 	    pc->trigger = eina_stringshare_add(p->trigger); 
 	    pc->trigger_only = 1;
 	  }
-	
-	pc->plugin = p;
-	confs = eina_list_append(confs, pc);
+	conf[p->type] = eina_list_append(conf[p->type], pc);
      }
    
    p->config = pc;
-   evry_conf->plugins = eina_list_sort(evry_conf->plugins,
-				       eina_list_count(evry_conf->plugins),
-				       _evry_cb_plugin_sort);
+   pc->plugin = p;
+   
+   conf[p->type] = eina_list_sort(conf[p->type], -1, _evry_cb_plugin_sort);
 
-   if (p->type == type_subject)
-     evry_conf->conf_subjects = confs;
-   else if (p->type == type_action)
-     evry_conf->conf_actions = confs;
-   else if (p->type == type_object)
-     evry_conf->conf_objects = confs;
+   EINA_LIST_FOREACH(conf[p->type], l, pc)
+     pc->priority = i++;
+   
+   evry_conf->conf_subjects = conf[0];
+   evry_conf->conf_actions = conf[1];
+   evry_conf->conf_objects = conf[2];
 
-   if (p->type == type_subject)
+   if (p->type == type_subject && !p->type_in)
      {
 	char buf[256];
 	snprintf(buf, sizeof(buf), _("Show %s Plugin"), p->name);
@@ -562,7 +550,7 @@ evry_plugin_unregister(Evry_Plugin *p)
 {
    DBG("%s", p->name);
    
-   evry_conf->plugins = eina_list_remove(evry_conf->plugins, p);
+   /* evry_conf->plugins = eina_list_remove(evry_conf->plugins, p); */
 
    if (p->type == type_subject)
      {

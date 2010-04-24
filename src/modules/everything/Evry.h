@@ -84,7 +84,7 @@ typedef struct _Plugin_Setting  Plugin_Setting;
    not to have any data lying around after cleanup you
    can use this */
 #define EVRY_PLUGIN_FREE(_p)			\
-  evry_plugin_free(EVRY_PLUGIN(_p), 0);		\
+  if (_p) evry_plugin_free(EVRY_PLUGIN(_p), 0);	\
   E_FREE(_p);
 
 struct _Evry_Item
@@ -341,14 +341,13 @@ struct _Config
   /* use up/down keys for prev/next in thumb view */
   int cycle_mode;
 
+  unsigned char first_run;
+  
   /* not saved data */
-  Eina_List *plugins;
   Eina_List *actions;
   Eina_List *views;
-
+  
   int min_w, min_h;
-
-  unsigned char first_run;
 };
 
 struct _Plugin_Config

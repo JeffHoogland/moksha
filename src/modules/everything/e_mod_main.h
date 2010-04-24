@@ -90,7 +90,7 @@ int  evry_shutdown(void);
 int  evry_show(E_Zone *zone, const char *params);
 void evry_hide(void);
 
-EAPI Evry_Plugin *evry_plug_aggregator_new(Evry_Selector *selector);
+EAPI Evry_Plugin *evry_plug_aggregator_new(Evry_Selector *selector, int type);
 EAPI void evry_plug_aggregator_free(Evry_Plugin *plugin);
 
 EAPI Evry_Plugin *evry_plug_actions_new(int type);

@@ -127,20 +127,6 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
    /* first is aggregator itself */
    lp = s->cur_plugins->next;
-
-   /* EINA_LIST_FOREACH(lp, l, pp)   
-    *   {
-    * 	if (pp->changed)
-    * 	  {
-    * 	     plugin->changed = 1;
-    * 	     break;
-    * 	  }
-    *   }
-    * 
-    * if (!plugin->changed)
-    *   return 1; */
-   /* printf("aggreator changed\n"); */
-
    
    EVRY_PLUGIN_ITEMS_FREE(p);
 
@@ -299,34 +285,20 @@ _icon_get(Evry_Plugin *plugin, const Evry_Item *it, Evas *e)
    return o;
 }
 
-static void
-_plugin_free(Evry_Plugin *plugin)
-{
-   PLUGIN(p, plugin);
-
-   E_FREE(plugin->config);
-   E_FREE(p);
-}
-
 Evry_Plugin *
-evry_plug_aggregator_new(Evry_Selector *selector)
+evry_plug_aggregator_new(Evry_Selector *sel, int type)
 {
    Plugin *p;
-   Plugin_Config *pc;
-
+      
    p = E_NEW(Plugin, 1);
-   EVRY_PLUGIN_NEW(EVRY_PLUGIN(p), N_("All"), 0, "", "",
-		   NULL, _cleanup, _fetch, _icon_get, _plugin_free);
+   EVRY_PLUGIN_NEW(EVRY_PLUGIN(p), N_("All"), type, "", "",
+		   NULL, _cleanup, _fetch, _icon_get, NULL);
 
    EVRY_PLUGIN(p)->action = &_action;
-     
-   pc = E_NEW(Plugin_Config, 1);
-   pc->enabled = 1;
-   pc->priority = -1;
-   pc->view_mode = -1;
-   EVRY_PLUGIN(p)->config = pc;
+   EVRY_PLUGIN(p)->history = EINA_FALSE;
 
-   p->selector = selector;
+   evry_plugin_register(EVRY_PLUGIN(p), -1);
+   p->selector = sel;
 
    return EVRY_PLUGIN(p);
 }

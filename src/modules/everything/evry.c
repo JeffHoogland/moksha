@@ -258,7 +258,6 @@ evry_hide(void)
      ecore_timer_del(_show_timer);
    _show_timer = NULL;
 
-
    list->visible = EINA_FALSE;
    _evry_selector_free(selectors[0]);
    _evry_selector_free(selectors[1]);
@@ -702,8 +701,8 @@ _evry_window_free(Evry_Window *win)
 static Evry_Selector *
 _evry_selector_new(int type)
 {
-   Evry_Plugin *p;
-   Eina_List *l;
+   Plugin_Config *pc;
+   Eina_List *l, *pcs;
    Evry_Selector *sel = E_NEW(Evry_Selector, 1);
    Evas_Object *o = edje_object_add(win->popup->evas);
    sel->o_main = o;
@@ -711,34 +710,35 @@ _evry_selector_new(int type)
 			   "e/modules/everything/selector_item");
    evas_object_show(o);
 
+   sel->aggregator = evry_plug_aggregator_new(sel, type);
+   
    if (type == type_subject)
      {
 	sel->history = evry_hist->subjects;
-	sel->actions = evry_plug_actions_new(type_subject);
+	sel->actions = evry_plug_actions_new(type);
 	edje_object_part_swallow(win->o_main, "e.swallow.subject_selector", o);
+	pcs = evry_conf->conf_subjects;
      }
    else if (type == type_action)
      {
 	sel->history = evry_hist->actions;
-	sel->actions = evry_plug_actions_new(type_action);
+	sel->actions = evry_plug_actions_new(type);
 	edje_object_part_swallow(win->o_main, "e.swallow.action_selector", o);
+	pcs = evry_conf->conf_actions;
      }
    else if (type == type_object)
      {
 	sel->history = evry_hist->subjects;
 	edje_object_part_swallow(win->o_main, "e.swallow.object_selector", o);
+	pcs = evry_conf->conf_objects;
      }
 
-   p = evry_plug_aggregator_new(sel);
-
-   sel->plugins = eina_list_append(sel->plugins, p);
-   sel->aggregator = p;
-
-   EINA_LIST_FOREACH(evry_conf->plugins, l, p)
+   EINA_LIST_FOREACH(pcs, l, pc)
      {
-	if (!p->config->enabled) continue;
-	if (p->type != type) continue;
-	sel->plugins = eina_list_append(sel->plugins, p);
+	if (!pc->enabled) continue;
+	if (!pc->plugin) continue;
+	if (pc->plugin == sel->aggregator) continue;
+	sel->plugins = eina_list_append(sel->plugins, pc->plugin);
      }
 
    return sel;
@@ -762,12 +762,9 @@ _evry_selector_free(Evry_Selector *sel)
    while (sel->states)
      _evry_state_pop(sel);
 
-   if (sel->aggregator)
-     evry_plugin_free(sel->aggregator, 1);
-
-   if (sel->actions)
-     evry_plug_actions_free(sel->actions);
-
+   EVRY_PLUGIN_FREE(sel->aggregator);
+   EVRY_PLUGIN_FREE(sel->actions);
+   
    if (sel->plugins) eina_list_free(sel->plugins);
 
    if (sel->update_timer)
@@ -1063,7 +1060,7 @@ _evry_selector_actions_get(Evry_Item *it)
 
    EINA_LIST_FOREACH(sel->plugins, l, plugin)
      {
-	if ((plugin == sel->actions) || (plugin == sel->aggregator) ||
+	if ((plugin == sel->actions) ||
 	    (plugin->type_in && type_out && plugin->type_in == type_out))
 	  {
 	     if (plugin->begin)
@@ -1162,8 +1159,7 @@ _evry_state_pop(Evry_Selector *sel)
    EINA_LIST_FREE(s->plugins, p)
      p->cleanup(p);
 
-   if (sel->aggregator)
-     sel->aggregator->cleanup(sel->aggregator);
+   sel->aggregator->cleanup(sel->aggregator);
 
    E_FREE(s);
 
@@ -1302,8 +1298,7 @@ _evry_selectors_switch(int dir)
 	  {
 	     _evry_selector_objects_get(act);
 	     _evry_selector_update(selectors[2]);
-	     edje_object_signal_emit(win->o_main,
-				     "e,state,object_selector_show", "e");
+	     edje_object_signal_emit(win->o_main, "e,state,object_selector_show", "e");
 	     next_selector = 2;
 	  }
 	_evry_selector_activate(selectors[next_selector]);
@@ -1311,18 +1306,14 @@ _evry_selectors_switch(int dir)
    else if (selector == selectors[1] && dir < 0)
      {
 	  _evry_selector_activate(selectors[0]);
-
-	  edje_object_signal_emit(win->o_main,
-				  "e,state,object_selector_hide", "e");
+	  edje_object_signal_emit(win->o_main, "e,state,object_selector_hide", "e");
      }
    else if (selector == selectors[2] && dir > 0)
      {
 	while (selector->states)
 	  _evry_state_pop(selector);
 
-	edje_object_signal_emit(win->o_main,
-				"e,state,object_selector_hide", "e");
-
+	edje_object_signal_emit(win->o_main, "e,state,object_selector_hide", "e");
 	_evry_selector_activate(selectors[0]);
      }
    else if (selector == selectors[2] && dir < 0)
@@ -1935,7 +1926,7 @@ _evry_matches_update(Evry_Selector *sel, int async)
 	     if ((len_inp >= len) &&
 		 (!strncmp(s->inp, p->config->trigger, len)))
 	       {
-		 len_trigger = len;
+		  len_trigger = len;
 		  s->cur_plugins = eina_list_append(s->cur_plugins, p);
 		  if(len_inp == len)
 		    p->fetch(p, NULL);
@@ -1959,9 +1950,9 @@ _evry_matches_update(Evry_Selector *sel, int async)
    
    if (!s->cur_plugins)
      {
-       s->input = s->inp;
+	s->input = s->inp;
        
-       EINA_LIST_FOREACH(s->plugins, l, p)
+	EINA_LIST_FOREACH(s->plugins, l, p)
 	  {
 	     if ((!win->plugin_dedicated) &&
 		 (p->config->trigger_only) &&
@@ -1987,17 +1978,8 @@ _evry_matches_update(Evry_Selector *sel, int async)
 	       }
 	  }
 
-	if ((eina_list_count(s->cur_plugins) > 0) &&
-	    /* dont add aggregator when there is only one plugin
-	       which wont show items in agrregator */
-	    !(eina_list_count(s->cur_plugins) == 1 &&
-	      !((Evry_Plugin *)s->cur_plugins->data)->aggregate))
-	  {
-	     s->cur_plugins = eina_list_prepend(s->cur_plugins, sel->aggregator);
-	     sel->aggregator->fetch(sel->aggregator, input);
-	  }
-	else
-	  sel->aggregator->cleanup(sel->aggregator);
+	if (sel->aggregator->fetch(sel->aggregator, input))
+	  _evry_plugin_list_insert(s, sel->aggregator); 	
      }
 
    if (s->plugin_auto_selected ||
@@ -2049,15 +2031,12 @@ _evry_plugin_select(Evry_State *s, Evry_Plugin *p)
 	p = s->cur_plugins->data;
 	s->plugin_auto_selected = EINA_TRUE;
      }
-   else if (p)
-     {
-	s->plugin_auto_selected = EINA_FALSE;
-     }
+
+   if (p)
+     s->plugin_auto_selected = EINA_FALSE;
 
    if (s->plugin != p)
-     {
-	_evry_item_desel(s, NULL);
-     }
+     _evry_item_desel(s, NULL);
 
    s->plugin = p;
 }

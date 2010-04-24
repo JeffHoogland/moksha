@@ -147,9 +147,6 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    C(scroll_speed);
 #undef C
 
-   /* evry_conf->plugins = eina_list_sort(evry_conf->plugins, -1,
-    * 				       _evry_cb_plugin_sort); */
-
    if (evry_conf->conf_subjects) eina_list_free(evry_conf->conf_subjects);
    if (evry_conf->conf_actions) eina_list_free(evry_conf->conf_actions);
    if (evry_conf->conf_objects) eina_list_free(evry_conf->conf_objects);

@@ -1071,7 +1071,8 @@ _view_update(Evry_View *view, int slide)
      }
 
    sd->items = eina_list_sort(sd->items, eina_list_count(sd->items), _sort_cb);
-
+   if (!sd->cur_item && sd->items) sd->cur_item = sd->items->data;
+   
    if (update || !last_vis || v->plugin != p)
      {
 	v->plugin = p;
@@ -1185,7 +1186,9 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 
    if (sd->items)
      l = eina_list_data_find_list(sd->items, sd->cur_item);
-
+   if (!l)
+     l = sd->items;
+     
    if (v->mode == VIEW_MODE_THUMB && !evry_conf->cycle_mode)
      {
 	if (!strcmp(ev->key, "Right"))
