@@ -10,8 +10,9 @@ static char dir_buf[1024];
 EAPI void
 evry_util_file_detail_set(Evry_Item_File *file)
 {
-   const char *path;
-
+   char *dir = NULL;
+   const char *tmp;
+   
    if (EVRY_ITEM(file)->detail)
      return;
 
@@ -21,23 +22,29 @@ evry_util_file_detail_set(Evry_Item_File *file)
 	home_dir_len = strlen(home_dir);
      }
 
-   path = ecore_file_dir_get(file->path);
-
-   if (path && !strncmp(path, home_dir, home_dir_len))
+   dir = ecore_file_dir_get(file->path);
+   if (!dir || !home_dir) return;
+   
+   if (!strncmp(dir, home_dir, home_dir_len))
      {
-	if (*(path + home_dir_len) == '\0')
-	  snprintf(dir_buf, sizeof(dir_buf), "~%s", path + home_dir_len);
+	tmp = dir + home_dir_len;
+	
+	if (*(tmp) == '\0')
+	  snprintf(dir_buf, sizeof(dir_buf), "~%s", tmp);
 	else
-	  snprintf(dir_buf, sizeof(dir_buf), "~%s/", path + home_dir_len);
+	  snprintf(dir_buf, sizeof(dir_buf), "~%s/", tmp);
 
 	EVRY_ITEM(file)->detail = eina_stringshare_add(dir_buf);
      }
    else
      {
-	if (!strncmp(path, "//", 2)) path++;
-
-	EVRY_ITEM(file)->detail = eina_stringshare_add(path);
+	if (!strncmp(dir, "//", 2))
+	  EVRY_ITEM(file)->detail = eina_stringshare_add(dir + 1);
+	else
+	  EVRY_ITEM(file)->detail = eina_stringshare_add(dir);
      }
+
+   E_FREE(dir);
 }
 
 EAPI int
@@ -353,7 +360,8 @@ evry_util_exec_app(const Evry_Item *it_app, const Evry_Item *it_file)
    E_Zone *zone;
    Eina_List *files = NULL;
    char *exe = NULL;
-
+   char *tmp = NULL;
+   
    if (!it_app) return 0;
    ITEM_APP(app, it_app);
 
@@ -367,7 +375,6 @@ evry_util_exec_app(const Evry_Item *it_app, const Evry_Item *it_file)
 
 	     Eina_List *l;
 	     char *mime;
-	     char *path = NULL;
 	     int open_folder = 0;
 
 	     if (!EVRY_ITEM(file)->browseable)
@@ -384,12 +391,13 @@ evry_util_exec_app(const Evry_Item *it_app, const Evry_Item *it_file)
 
 	     if (open_folder)
 	       {
-		  path = ecore_file_dir_get(file->path);
-		  files = eina_list_append(files, path);
+		  tmp = ecore_file_dir_get(file->path);
+		  files = eina_list_append(files, tmp);
 	       }
 	     else
 	       {
-		  files = eina_list_append(files, file->path);
+		  tmp = eina_str_escape(file->path);
+		  files = eina_list_append(files, tmp);
 	       }
 
 	     e_exec(zone, app->desktop, NULL, files, NULL);
@@ -400,8 +408,7 @@ evry_util_exec_app(const Evry_Item *it_app, const Evry_Item *it_file)
 	     if (files)
 	       eina_list_free(files);
 
-	     if (open_folder && path)
-	       free(path);
+	     E_FREE(tmp);
 	  }
 	else if (app->file)
 	  {
@@ -420,14 +427,6 @@ evry_util_exec_app(const Evry_Item *it_app, const Evry_Item *it_file)
 	  {
 	     ITEM_FILE(file, it_file);
 
-	     /* files = eina_list_append(files, file->path);
-	      *
-	      * e_exec(zone, NULL, app->file, files, NULL);
-	      *
-	      * if (files)
-	      *   eina_list_free(files); */
-
-	     char *tmp;
 	     int len;
 	     tmp = eina_str_escape(file->path);
 	     len = strlen(app->file) + strlen(tmp) + 2;
