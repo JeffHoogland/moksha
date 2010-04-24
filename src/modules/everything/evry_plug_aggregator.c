@@ -130,14 +130,14 @@ _fetch(Evry_Plugin *plugin, const char *input)
    /* get current 'context' ... */
    for (i = 1; i < 3; i++)
      {
-	Evry_Item *item;
 	if (p->selector == selectors[i])
 	  {
-	     item = selectors[i-1]->state->cur_item;
-	     context = item->context;
+	     it = selectors[i-1]->state->cur_item;
+	     if (it) context = it->context;
 	  }
      }
 
+   /* skip aggregator */
    if (eina_list_data_find_list(s->cur_plugins, plugin))
      lp = s->cur_plugins->next;
    else
@@ -146,6 +146,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
    if (lp && lp->data && lp->data == plugin)
      lp = s->cur_plugins->next;
 
+   /* if there is only one plugin append all items */
    if ((lp) && (!lp->next))
      {
        pp = lp->data;
@@ -160,6 +161,8 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	     }
 	 }
      }
+   /* if there is input append all items that match or have
+      fuzzy_match set to -1 */
    else if (input)
      {
        EINA_LIST_FOREACH(lp, l, pp)
@@ -179,11 +182,11 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	       }
 	  }
      }
+   /* always append items of action or object selector */
    else if ((!input) &&
 	    ((p->selector == selectors[1]) ||
 	     (p->selector == selectors[2])))
      {
-       /* always append items of action or object selector */
        EINA_LIST_FOREACH(lp, l, pp)
    	  {
 	     if (!pp->aggregate) continue;
@@ -200,6 +203,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
    	       }
    	  }
      }
+   /* no input: append all items that are in history */
    else
      {
        EINA_LIST_FOREACH(lp, l, pp)
