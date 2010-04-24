@@ -961,7 +961,7 @@ _new_app_action(Evry_Action *act)
 
 
 static Eina_Bool
-module_init(void)
+_plugins_init(void)
 {
    if (!evry_api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
@@ -1027,7 +1027,7 @@ module_init(void)
 }
 
 static void
-module_shutdown(void)
+_plugins_shutdown(void)
 {
    EVRY_PLUGIN_FREE(p1);
    EVRY_PLUGIN_FREE(p2);
@@ -1332,7 +1332,7 @@ EAPI void *
 e_modapi_init(E_Module *m)
 {   
    if (e_datastore_get("everything_loaded"))
-     active = module_init();
+     active = _plugins_init();
 
    _conf_init(m);
    
@@ -1345,7 +1345,7 @@ EAPI int
 e_modapi_shutdown(E_Module *m)
 {
    if (active && e_datastore_get("everything_loaded"))
-     module_shutdown();
+     _plugins_shutdown();
 
    _conf_shutdown();
 

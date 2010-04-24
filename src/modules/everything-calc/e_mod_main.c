@@ -224,7 +224,7 @@ _cb_del(void *data __UNUSED__, int type __UNUSED__, void *event)
 }
 
 static Eina_Bool
-module_init(void)
+_plugins_init(void)
 {
    if (!evry_api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
@@ -246,7 +246,7 @@ module_init(void)
 }
 
 static void
-module_shutdown(void)
+_plugins_shutdown(void)
 {
    EVRY_PLUGIN_FREE(p1);
 }
@@ -274,7 +274,7 @@ e_modapi_init(E_Module *m)
    module = m;
 
    if (e_datastore_get("everything_loaded"))
-     active = module_init();
+     active = _plugins_init();
    
    e_module_delayed_set(m, 1); 
 
@@ -287,7 +287,7 @@ e_modapi_shutdown(E_Module *m)
    char *result;
    
    if (active && e_datastore_get("everything_loaded"))
-     module_shutdown();
+     _plugins_shutdown();
 
    EINA_LIST_FREE(history, result)
      eina_stringshare_del(result);
