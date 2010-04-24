@@ -112,7 +112,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
    Plugin *p = (Plugin *) plugin;
    Evry_Plugin *pp;
    Evry_State *s;
-   Eina_List *l, *ll, *lll, *lp;
+   Eina_List *l, *ll, *lll, *lp = NULL;
    Evry_Item *it, *it2;
    int i, cnt = 0;
    Eina_List *items = NULL;
@@ -137,28 +137,25 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	  }
      }
 
-   /* skip aggregator */
-   if (eina_list_data_find_list(s->cur_plugins, plugin))
-     lp = s->cur_plugins->next;
-   else
-     lp = s->cur_plugins;
+   /* filter all to be shown in aggregator */
+   EINA_LIST_FOREACH(s->cur_plugins, l, pp)
+     {
+	if (!pp->aggregate || pp == plugin) continue;
+	lp = eina_list_append(lp, pp);
+     }
 
-   if (lp && lp->data && lp->data == plugin)
-     lp = s->cur_plugins->next;
-
+   if (!lp) return 0;
+   
    /* if there is only one plugin append all items */
-   if ((lp) && (!lp->next))
+   if (!lp->next)
      {
        pp = lp->data;
-
-       if (pp->aggregate);
+       
+       EINA_LIST_FOREACH(pp->items, l, it)
 	 {
-	   EINA_LIST_FOREACH(pp->items, l, it)
-	     {
-	       evry_history_item_usage_set(p->selector->history, it, input, context);
-	       it->fuzzy_match = evry_fuzzy_match(it->label, input);
-	       items = _add_item(p, items, it);
-	     }
+	    evry_history_item_usage_set(p->selector->history, it, input, context);
+	    it->fuzzy_match = evry_fuzzy_match(it->label, input);
+	    items = _add_item(p, items, it);
 	 }
      }
    /* if there is input append all items that match or have
@@ -167,8 +164,6 @@ _fetch(Evry_Plugin *plugin, const char *input)
      {
        EINA_LIST_FOREACH(lp, l, pp)
 	  {
-	     if (!pp->aggregate) continue;
-
 	     EINA_LIST_FOREACH(pp->items, ll, it)
 	       {
 		  if (it->fuzzy_match == 0)
@@ -189,17 +184,11 @@ _fetch(Evry_Plugin *plugin, const char *input)
      {
        EINA_LIST_FOREACH(lp, l, pp)
    	  {
-	     if (!pp->aggregate) continue;
-	     cnt = 0;
 	     EINA_LIST_FOREACH(pp->items, ll, it)
    	       {
-		  if (cnt++ == MAX_ITEMS) break;
-   		  if (!eina_list_data_find_list(items, it))
-   		    {
-		      evry_history_item_usage_set(p->selector->history, it, NULL, context);
-		      it->fuzzy_match = 0;
-		       items = _add_item(p, items, it);
-   		    }
+		  evry_history_item_usage_set(p->selector->history, it, NULL, context);
+		  it->fuzzy_match = 0;
+		  items = _add_item(p, items, it);
    	       }
    	  }
      }
@@ -208,20 +197,30 @@ _fetch(Evry_Plugin *plugin, const char *input)
      {
        EINA_LIST_FOREACH(lp, l, pp)
 	 {
-	   if (!pp->aggregate) continue;
-
 	   EINA_LIST_FOREACH(pp->items, ll, it)
 	     {
 	       if (evry_history_item_usage_set(p->selector->history, it, input, context) &&
 		   (!eina_list_data_find_list(items, it)))
 		 {
 		   items = _add_item(p, items, it);
-		   continue;
 		 }
 	     }
 	 }
      }
 
+   if (eina_list_count(items) <  MAX_ITEMS)
+     {
+	EINA_LIST_FOREACH(lp, l, pp)
+	  {
+	     EINA_LIST_FOREACH(pp->items, ll, it)
+	       {
+   		  if (!eina_list_data_find_list(items, it))
+		    items = _add_item(p, items, it);
+	       }
+	  }
+     }
+   
+   
    if (items) eina_list_free(items);
 
    if (input)

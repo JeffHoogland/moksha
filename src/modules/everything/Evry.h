@@ -199,6 +199,9 @@ struct _Evry_Plugin
   /* optional: use this when you extend the plugin struct */
   void (*free) (Evry_Plugin *p);
 
+  /* return an object to be embedded in list view */
+  /* Evas_Object *(*info_get) (Evry_Plugin *p, Evas *e); */
+  
   /* show in aggregator */
   /* default TRUE */
   Eina_Bool aggregate;

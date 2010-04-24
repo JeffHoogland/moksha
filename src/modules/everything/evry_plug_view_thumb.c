@@ -1167,7 +1167,8 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 	return 1;
      }
 
-   if ((ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT) &&
+   if (((ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT) ||
+	(ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)) &&
        (!strcmp(ev->key, "Up")))
      {
 	if (!sd->items) goto end;
@@ -1177,7 +1178,8 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 	evry_item_select(s, it->item);
 	goto end;
      }
-   else if ((ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT) &&
+   else if (((ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT) ||
+	     (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)) &&
 	    (!strcmp(ev->key, "Down")))
      {
 	if (!sd->items) goto end;
