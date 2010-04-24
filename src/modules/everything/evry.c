@@ -1421,9 +1421,9 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	else
 	  evry_browse_item(selector);
 
-	if (action == EVRY_COMPLETE_INPUT)
+	if (input && action == EVRY_COMPLETE_INPUT)
 	  {
-	     snprintf(s->inp, INPUTLEN, "%s", input);
+	     snprintf(s->input, INPUTLEN - 1, "%s", input);
 	     _evry_update_text_label(s);
 	     _evry_cb_update_timer(selector);
 	     evry_item_select(s, it);

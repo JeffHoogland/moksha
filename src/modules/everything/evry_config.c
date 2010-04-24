@@ -17,13 +17,15 @@ struct _Plugin_Page
   Evas_Object *o_view_list;
   Evas_Object *o_view_detail;
   Evas_Object *o_view_thumb;
-
+  Evas_Object *o_enabled;
+  
   Eina_List *configs;
 
   char *trigger;
   int trigger_only;
   int view_mode;
-
+  int enabled;
+  
   Plugin_Config *cur;
 } ;
 
@@ -130,7 +132,8 @@ static int
 _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    int i;
-
+   Plugin_Config *pc;
+   
 #define C(_name) evry_conf->_name = cfdata->_name
    C(height);
    C(width);
@@ -157,19 +160,22 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 
    for (i = 0; i < 3; i++)
      {
-	if (cfdata->page[i].cur)
+	pc = cfdata->page[i].cur;
+	
+	if (pc)
 	  {
-	     if (cfdata->page[i].cur->trigger)
-	       eina_stringshare_del(cfdata->page[i].cur->trigger);
+	     if (pc->trigger)
+	       eina_stringshare_del(pc->trigger);
 
 	     if (cfdata->page[i].trigger[i])
-	       cfdata->page[i].cur->trigger = eina_stringshare_add(cfdata->page[i].trigger);
+	       pc->trigger = eina_stringshare_add(cfdata->page[i].trigger);
 	     else
-	       cfdata->page[i].cur->trigger = NULL;
+	       pc->trigger = NULL;
 
-	     cfdata->page[i].cur->trigger_only = cfdata->page[i].trigger_only;
+	     pc->trigger_only = cfdata->page[i].trigger_only;
 
-	     cfdata->page[i].cur->view_mode = cfdata->page[i].view_mode;
+	     pc->view_mode = cfdata->page[i].view_mode;
+	     pc->enabled = cfdata->page[i].enabled;
 	  }
      }
 
@@ -281,6 +287,9 @@ _list_select_cb (void *data, Evas_Object *obj)
 	else if (pc->view_mode == 2)
 	  e_widget_radio_toggle_set(page->o_view_thumb, 1);
 
+	e_widget_check_checked_set(page->o_enabled, pc->enabled);
+	e_widget_disabled_set(page->o_enabled, 0);
+	
 	page->cur = pc;
      }
    else
@@ -292,6 +301,7 @@ _list_select_cb (void *data, Evas_Object *obj)
 	e_widget_disabled_set(page->o_view_detail, 1);
 	e_widget_disabled_set(page->o_view_list, 1);
 	e_widget_disabled_set(page->o_view_thumb, 1);
+	e_widget_disabled_set(page->o_enabled, 1);
 
 	page->cur = NULL;
      }
@@ -309,7 +319,7 @@ _create_plugin_page(E_Config_Dialog_Data *cfdata, Evas *e, Plugin_Page *page)
    E_Radio_Group *rg;
    Evas_Object *list;
 
-   of = e_widget_framelist_add(e, _("Active Plugins"), 0);
+   of = e_widget_framelist_add(e, _("Available Plugins"), 0);
    page->list = e_widget_ilist_add(e, 24, 24, NULL);
    e_widget_on_change_hook_set(page->list, _list_select_cb, page);
    /* e_widget_on_change_hook_set(ol, _avail_list_cb_change, cfdata); */
@@ -329,6 +339,18 @@ _create_plugin_page(E_Config_Dialog_Data *cfdata, Evas *e, Plugin_Page *page)
    ob = e_widget_table_add(e, 1);
    e_widget_table_object_append(ob, of, 0, 0, 1, 3, 1, 1, 1, 1);
 
+   of = e_widget_framelist_add(e, _("General"), 0);
+   o = e_widget_button_add(e, _("Configure"), NULL,
+   			   _plugin_config_cb,
+   			   page->list, page->configs);
+   e_widget_framelist_object_append(of, o);
+   o = e_widget_check_add(e, _("Enabled"),
+			  &(page->enabled));
+   e_widget_disabled_set(o, 1);
+   page->o_enabled = o;
+   e_widget_framelist_object_append(of, o);
+   e_widget_table_object_append(ob, of, 1, 0, 1, 1, 1, 0, 1, 0);
+
    of = e_widget_framelist_add(e, _("Plugin Trigger"), 0);
    o = e_widget_entry_add(e, &(page->trigger), NULL, NULL, NULL);
    e_widget_disabled_set(o, 1);
@@ -339,7 +361,7 @@ _create_plugin_page(E_Config_Dialog_Data *cfdata, Evas *e, Plugin_Page *page)
    e_widget_disabled_set(o, 1);
    page->o_trigger_only = o;
    e_widget_framelist_object_append(of, o);
-   e_widget_table_object_append(ob, of, 1, 0, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(ob, of, 1, 1, 1, 1, 1, 1, 1, 1);
 
    of = e_widget_framelist_add(e, _("Plugin View"), 0);
    rg = e_widget_radio_group_new(&page->view_mode);
@@ -359,15 +381,7 @@ _create_plugin_page(E_Config_Dialog_Data *cfdata, Evas *e, Plugin_Page *page)
    e_widget_disabled_set(o, 1);
    page->o_view_thumb = o;
    e_widget_framelist_object_append(of, o);
-   e_widget_table_object_append(ob, of, 1, 1, 1, 1, 1, 1, 1, 1);
-
-   /* of = e_widget_framelist_add(e, _("Plugin Cofiguration"), 0);
-    * o = e_widget_button_add(e, _("Configure"), NULL,
-    * 			   _plugin_config_cb,
-    * 			   cfdata->l_subject,
-    * 			   cfdata->p_subject);
-    * e_widget_framelist_object_append(of, o); */
-   /* e_widget_table_object_append(ob, of, 1, 2, 1, 1, 1, 0, 1, 0); */
+   e_widget_table_object_append(ob, of, 1, 2, 1, 1, 1, 1, 1, 1);
 
    return ob;
 }
