@@ -126,7 +126,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
      return 0;
 
    /* first is aggregator itself */
-   lp = s->cur_plugins->next;
+   lp = s->cur_plugins;
    
    EVRY_PLUGIN_ITEMS_FREE(p);
 
@@ -163,7 +163,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
        ((p->selector == selectors[1]) ||
 	(p->selector == selectors[2])))
      {
-   	EINA_LIST_FOREACH(lp, l, pp)
+       EINA_LIST_FOREACH(lp, l, pp)
    	  {
 	     if (!pp->aggregate) continue;
 	     cnt = 0;

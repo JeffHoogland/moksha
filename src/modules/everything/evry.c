@@ -1060,7 +1060,7 @@ _evry_selector_actions_get(Evry_Item *it)
 
    EINA_LIST_FOREACH(sel->plugins, l, plugin)
      {
-	if ((plugin == sel->actions) ||
+	if ((plugin == sel->actions) || 
 	    (plugin->type_in && type_out && plugin->type_in == type_out))
 	  {
 	     if (plugin->begin)
@@ -1954,7 +1954,7 @@ _evry_matches_update(Evry_Selector *sel, int async)
        
 	EINA_LIST_FOREACH(s->plugins, l, p)
 	  {
-	     if ((!win->plugin_dedicated) &&
+	     if (!(win->plugin_dedicated) &&
 		 (p->config->trigger_only) &&
 		 (p->config->trigger))
 	       continue;
@@ -1967,20 +1967,16 @@ _evry_matches_update(Evry_Selector *sel, int async)
 	       }
 	     else
 	       {
-		  p->changed = EINA_TRUE;
-		  
 		  if ((p->fetch(p, input)) ||
 		      (sel->states->next)  ||
 		      (win->plugin_dedicated))
-		    {
-		       s->cur_plugins = eina_list_append(s->cur_plugins, p);
-		    }
+		    s->cur_plugins = eina_list_append(s->cur_plugins, p);
 	       }
 	  }
-
-	if (sel->aggregator->fetch(sel->aggregator, input))
-	  _evry_plugin_list_insert(s, sel->aggregator); 	
      }
+
+   if (sel->aggregator->fetch(sel->aggregator, input))
+     _evry_plugin_list_insert(s, sel->aggregator); 	
 
    if (s->plugin_auto_selected ||
        (s->plugin && (!eina_list_data_find(s->cur_plugins, s->plugin))))
