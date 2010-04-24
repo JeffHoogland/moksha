@@ -668,6 +668,9 @@ _animator(void *data)
    	  {
    	     sd->slide = sd->slide_to;
    	     sd->sliding = 0;
+	     if (sd->view->mode == VIEW_MODE_THUMB &&
+		 sd->cur_item &&sd->cur_item->frame)
+	       edje_object_signal_emit(sd->cur_item->frame, "e,state,selected", "e");
 
 	     if (sd->clearing)
 	       {
@@ -784,7 +787,9 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
    else
      {
 	if (sd->view->zoom < 2)
-	  edje_object_signal_emit(sd->cur_item->frame, "e,state,selected", "e");
+	  {
+	     edje_object_signal_emit(sd->cur_item->frame, "e,state,selected", "e");
+	  }
 
 	if ((it->y + it->h) - sd->cy > sd->h)
 	  align = it->y - (2 - sd->view->zoom) * it->h;
@@ -1057,11 +1062,11 @@ _view_update(Evry_View *view, int slide)
 	     v_it->pos = pos;
 
 	     /* TODO no needed */
-	     /* if (p_it == v->state->cur_item) */
-	     if (p_it->selected)
+	     if (p_it == v->state->cur_item)
+	     /* if (p_it->selected) */
 	       {
-		  sd->cur_item = v_it;
-		  v_it->selected = EINA_TRUE;
+	     	  sd->cur_item = v_it;
+	     	  v_it->selected = EINA_TRUE;
 	       }
 
 	     if (pos > first_vis && pos < last_vis)
@@ -1069,20 +1074,16 @@ _view_update(Evry_View *view, int slide)
 	  }
 	pos++;
      }
+   if (v_items) eina_list_free(v_items);
 
-   sd->items = eina_list_sort(sd->items, eina_list_count(sd->items), _sort_cb);
-   if (!sd->cur_item && sd->items) sd->cur_item = sd->items->data;
+   sd->items = eina_list_sort(sd->items, -1, _sort_cb);
 
    if (update || !last_vis || v->plugin != p)
      {
 	v->plugin = p;
-
 	sd->update = EINA_TRUE;
-
 	_update_frame(v->span);
      }
-
-   if (v_items) eina_list_free(v_items);
 
    v->tabs->update(v->tabs);
 

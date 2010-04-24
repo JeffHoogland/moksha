@@ -117,15 +117,15 @@ _fetch(Evry_Plugin *plugin, const char *input)
    int i, cnt = 0;
    Eina_List *items = NULL;
    const char *context = NULL;
+   if (input && !input[0]) input = NULL;
 
    plugin->changed = 1;
 
-   s = p->selector->state;
-
-   if (!s || !s->cur_plugins || !s->cur_plugins->next)
-     return 0;
-
    EVRY_PLUGIN_ITEMS_FREE(p);
+
+   s = p->selector->state;
+   if (!s || !s->cur_plugins)
+     return 0;
 
    /* get current 'context' ... */
    for (i = 1; i < 3; i++)
@@ -138,9 +138,15 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	  }
      }
 
-   lp = s->cur_plugins;
+   if (eina_list_data_find_list(s->cur_plugins, plugin))
+     lp = s->cur_plugins->next;
+   else
+     lp = s->cur_plugins;
 
-   if ((lp) && (eina_list_count(lp) == 1))
+   if (lp && lp->data && lp->data == plugin)
+     lp = s->cur_plugins->next;
+
+   if ((lp) && (!lp->next))
      {
        pp = lp->data;
 
@@ -156,7 +162,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
      }
    else if (input)
      {
-	EINA_LIST_FOREACH(lp, l, pp)
+       EINA_LIST_FOREACH(lp, l, pp)
 	  {
 	     if (!pp->aggregate) continue;
 
