@@ -49,8 +49,8 @@ evry_plug_text_init(void)
 
   p1->icon = "accessories-text-editor";
   p2->icon = "accessories-text-editor";
-  p1->trigger = ".";
-  p2->trigger = ".";
+  p1->trigger = " ";
+  p2->trigger = " ";
 
   evry_plugin_register(p1, 999);
   evry_plugin_register(p2, 999);
