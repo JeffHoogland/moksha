@@ -970,6 +970,7 @@ module_init(void)
    EVRY_PLUGIN_NEW(EVRY_PLUGIN(p1), N_("Applications"), type_subject, "", "APPLICATION",
 	      _begin, _cleanup, _fetch, _icon_get, NULL);
    EVRY_PLUGIN(p1)->complete = &_complete;
+   EVRY_PLUGIN(p1)->config_path = "extensions/everything-apps";
    
    p2 = E_NEW(Plugin, 1);
    EVRY_PLUGIN_NEW(EVRY_PLUGIN(p2), N_("Open With..."), type_action, "FILE", "",
@@ -977,7 +978,8 @@ module_init(void)
 	      _icon_get, NULL);
 
    EVRY_PLUGIN(p2)->action = &_open_with_action;
-
+   EVRY_PLUGIN(p2)->config_path = "extensions/everything-apps";
+   
    evry_plugin_register(EVRY_PLUGIN(p1), 1);
    evry_plugin_register(EVRY_PLUGIN(p2), 1);
 

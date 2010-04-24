@@ -18,6 +18,7 @@ struct _Plugin_Page
   Evas_Object *o_view_detail;
   Evas_Object *o_view_thumb;
   Evas_Object *o_enabled;
+  Evas_Object *o_cfg_btn;
   
   Eina_List *configs;
 
@@ -289,6 +290,15 @@ _list_select_cb (void *data, Evas_Object *obj)
 
 	e_widget_check_checked_set(page->o_enabled, pc->enabled);
 	e_widget_disabled_set(page->o_enabled, 0);
+
+	if (pc->plugin && pc->plugin->config_path)
+	  {
+	     e_widget_disabled_set(page->o_cfg_btn, 0);
+	  }
+	else
+	  {
+	     e_widget_disabled_set(page->o_cfg_btn, 1);
+	  }
 	
 	page->cur = pc;
      }
@@ -302,6 +312,7 @@ _list_select_cb (void *data, Evas_Object *obj)
 	e_widget_disabled_set(page->o_view_list, 1);
 	e_widget_disabled_set(page->o_view_thumb, 1);
 	e_widget_disabled_set(page->o_enabled, 1);
+	e_widget_disabled_set(page->o_cfg_btn, 1);
 
 	page->cur = NULL;
      }
@@ -310,6 +321,13 @@ _list_select_cb (void *data, Evas_Object *obj)
 static void
 _plugin_config_cb(void *data, void *data2)
 {
+   Plugin_Page *page = data;
+   if (!page->cur->plugin)
+     return;
+   
+   e_configure_registry_call(page->cur->plugin->config_path,
+			     e_container_current_get(e_manager_current_get()),
+			     NULL);
 }
 
 static Evas_Object *
@@ -338,11 +356,13 @@ _create_plugin_page(E_Config_Dialog_Data *cfdata, Evas *e, Plugin_Page *page)
 
    ob = e_widget_table_add(e, 1);
    e_widget_table_object_append(ob, of, 0, 0, 1, 3, 1, 1, 1, 1);
-
+   e_widget_disabled_set(o, 1);
    of = e_widget_framelist_add(e, _("General"), 0);
    o = e_widget_button_add(e, _("Configure"), NULL,
    			   _plugin_config_cb,
-   			   page->list, page->configs);
+   			   page, NULL);
+   e_widget_disabled_set(o, 1);
+   page->o_cfg_btn = o;
    e_widget_framelist_object_append(of, o);
    o = e_widget_check_add(e, _("Enabled"),
 			  &(page->enabled));

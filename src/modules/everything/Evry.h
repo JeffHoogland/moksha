@@ -222,6 +222,9 @@ struct _Evry_Plugin
   Plugin_Config *config;
 
   Eina_Bool changed;
+
+  /* config path registered for the module */
+  const char *config_path;
 };
 
 

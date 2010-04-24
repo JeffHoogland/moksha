@@ -550,8 +550,6 @@ evry_plugin_unregister(Evry_Plugin *p)
 {
    DBG("%s", p->name);
 
-   /* evry_conf->plugins = eina_list_remove(evry_conf->plugins, p); */
-
    if (p->type == type_subject)
      {
 	char buf[256];
@@ -559,7 +557,6 @@ evry_plugin_unregister(Evry_Plugin *p)
 
 	e_action_predef_name_del(_("Everything"), buf);
      }
-   /* cleanup */
 }
 
 void
