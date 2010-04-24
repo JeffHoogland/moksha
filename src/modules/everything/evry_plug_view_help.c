@@ -67,7 +67,8 @@ _view_create(Evry_View *v, const Evry_State *s, const Evas_Object *swallow)
        "  Use cursor <hilight>&lt;up/down&gt;</hilight> to choose from the list of things.<br>"
        "  Press  <hilight>&lt;tab&gt;</hilight> to select"
        " an action, then press  <hilight>&lt;return&gt;</hilight>.<br>"
-       /* "You might want to know <br>some mo keybinding to ease your experience though.<br>" */
+       " This page will not show up next time you run <hilight>everything</hilight>.<br>"
+       "    <hilight>&lt;Esc&gt;</hilight> close this Dialog<br>"
        "    <hilight>&lt;?&gt;</hilight> show this page<br>"
        "    <hilight>&lt;return&gt;</hilight> run action<br>"
        "    <hilight>&lt;ctrl+return&gt;</hilight> run action and continue<br>"
@@ -75,6 +76,7 @@ _view_create(Evry_View *v, const Evry_State *s, const Evas_Object *swallow)
        "    <hilight>&lt;ctrl+tab&gt;</hilight> complete input (depends on plugin)<br>"
        "    <hilight>&lt;ctrl+'x'&gt;</hilight> jump to plugin beginning with 'x'<br>"
        "    <hilight>&lt;ctrl+left/right&gt;</hilight> cycle through plugins<br>"
+       "    <hilight>&lt;ctrl+up/down&gt;</hilight> go to first/last item<br>"
        "    <hilight>&lt;ctrl+1&gt;</hilight> toggle view modes (exit this page ;)<br>"
        "    <hilight>&lt;ctrl+2&gt;</hilight> toggle list view modes<br>"
        "    <hilight>&lt;ctrl+3&gt;</hilight> toggle thumb view modes"
