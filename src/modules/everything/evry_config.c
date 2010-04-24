@@ -218,7 +218,7 @@ _plugin_move(Eina_List *plugins, Evas_Object *list, int dir)
 
    sel = e_widget_ilist_selected_get(list);
   
-   if (sel >= 0)
+   if ((sel >= 1 && dir > 0) || (sel >= 2 && dir < 0))
      {
 	Plugin_Config *pc;
 	int prio = 0;
