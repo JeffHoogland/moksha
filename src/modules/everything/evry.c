@@ -388,6 +388,13 @@ evry_item_select(const Evry_State *state, Evry_Item *it)
    Evry_State *s = (Evry_State *)state;
    Evry_Selector *sel = selector;
 
+   if (!s && it)
+     {
+   	sel = _evry_selector_for_plugin_get(it->plugin);
+   	s = sel->state;	
+     }
+   if (!s) return;
+   
    s->plugin_auto_selected = EINA_FALSE;
    s->item_auto_selected = EINA_FALSE;
 

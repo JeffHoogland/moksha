@@ -340,7 +340,6 @@ _create_plugin_page(E_Config_Dialog_Data *cfdata, Evas *e, Plugin_Page *page)
    of = e_widget_framelist_add(e, _("Available Plugins"), 0);
    page->list = e_widget_ilist_add(e, 24, 24, NULL);
    e_widget_on_change_hook_set(page->list, _list_select_cb, page);
-   /* e_widget_on_change_hook_set(ol, _avail_list_cb_change, cfdata); */
    _fill_list(page->configs, page->list, 0);
    e_widget_framelist_object_append(of, page->list);
 
@@ -353,10 +352,8 @@ _create_plugin_page(E_Config_Dialog_Data *cfdata, Evas *e, Plugin_Page *page)
 			   _plugin_move_down_cb,
 			   page->list, page->configs);
    e_widget_framelist_object_append(of, o);
-
    ob = e_widget_table_add(e, 1);
    e_widget_table_object_append(ob, of, 0, 0, 1, 3, 1, 1, 1, 1);
-   e_widget_disabled_set(o, 1);
    of = e_widget_framelist_add(e, _("General"), 0);
    o = e_widget_button_add(e, _("Configure"), NULL,
    			   _plugin_config_cb,

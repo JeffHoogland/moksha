@@ -759,6 +759,7 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
 	       {
 		  /* align */
 		  align = (cur - dist);
+		  align_to = cur - align;
 	       }
 	  }
 	else if (scroll < 0)
@@ -779,8 +780,10 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
 	       {
 		  /* align */
 		  align = (cur - dist);
+		  align_to = cur - align;
 	       }
 	  }
+
 	/* edje_object_signal_emit(sd->cur_item->frame, "e,state,selected", "e"); */
 	align *= it->h;
      }
@@ -1298,6 +1301,9 @@ _cb_item_changed(void *data, int type, void *event)
    EINA_LIST_FOREACH(sd->items, l, it)
      if (it->item == ev->item)
        {
+	  if (it->item->selected)
+	    _pan_item_select(v->span, it, 1);
+
 	  if (!it->visible) break;
 
 	  edje_object_part_text_set(it->frame, "e.text.label", it->item->label);
