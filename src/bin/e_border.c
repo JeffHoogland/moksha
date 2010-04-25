@@ -1057,7 +1057,10 @@ _e_border_move_resize_internal(E_Border *bd, int x, int y, int w, int h, Eina_Bo
 	if (resize && bd->client.netwm.sync.request)
 	  {
 	     bd->client.netwm.sync.wait++;
-	     _e_border_pending_move_resize_add(bd, move, 1, x, y, w, h, without_border,
+	     /* Don't use x and y as supplied to this function, as it is called with 0, 0
+	      * when no move is intended.  The border geometry is set above anyways.
+	      */
+	     _e_border_pending_move_resize_add(bd, move, 1, bd->x, bd->y, bd->w, bd->h, without_border,
 					       bd->client.netwm.sync.serial);
 	     ecore_x_netwm_sync_request_send(bd->client.win,
 					     bd->client.netwm.sync.serial++);
