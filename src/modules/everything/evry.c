@@ -1785,16 +1785,25 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
      }
    else return;
 
-   evry_history_add(evry_hist->subjects, s_subject->cur_item, NULL, s_subject->input);
+   if (s_subject)
+     evry_history_add(evry_hist->subjects,
+		      s_subject->cur_item,
+		      NULL, s_subject->input);
+
    if (s_action)
-   evry_history_add(evry_hist->actions,  s_action->cur_item, s_subject->cur_item->context, s_action->input);
+     evry_history_add(evry_hist->actions,
+		      s_action->cur_item,
+		      s_subject->cur_item->context,
+		      s_action->input);
    if (s_object)
-   evry_history_add(evry_hist->subjects, s_object->cur_item, s_action->cur_item->context, s_object->input);
+     evry_history_add(evry_hist->subjects,
+		      s_object->cur_item,
+		      s_action->cur_item->context,
+		      s_object->input);
 
    /* let subject and object plugin know that an action was performed */
-   if (s_subject->plugin->action)
-     s_subject->plugin->action(s_subject->plugin, s_action->cur_item, s_subject->cur_item);
-
+   /* if (s_subject->plugin->action)
+    *   s_subject->plugin->action(s_subject->plugin, s_action->cur_item, s_subject->cur_item); */
    /* if (s_object && s_object->plugin->action)
     *   s_object->plugin->action(s_object->plugin, s_action->cur_item, s_object->cur_item); */
 
