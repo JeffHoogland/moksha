@@ -99,6 +99,18 @@ _cb_sort(const void *data1, const void *data2)
 static inline Eina_List *
 _add_item(Plugin *p, Eina_List *items, Evry_Item *it)
 {
+   Eina_List *_l;
+   Evry_Item *_it;
+   
+   /* remove duplicates provided by different plugins */
+   EINA_LIST_FOREACH(p->base.items, _l, _it)
+     {
+	if ((it->plugin->name != _it->plugin->name) &&
+	    (it->plugin->type_out == _it->plugin->type_out) &&
+	    (it->id == _it->id))
+	  return items;
+     }
+
    evry_item_ref(it);
    items = eina_list_append(items, it);
    EVRY_PLUGIN_ITEM_APPEND(p, it);
@@ -239,22 +251,6 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	evry_item_free(it);
 	p->base.items = eina_list_remove_list(p->base.items, l);
      }
-
-   /* remove duplicates provided by different plugins */
-   /* EINA_LIST_FOREACH_SAFE(p->base.items, l, ll, it)
-    *   {
-    *     EINA_LIST_FOREACH(l->next, lll, it2)
-    * 	  {
-    * 	     if ((it->plugin->name != it2->plugin->name) &&
-    * 		 (it->plugin->type_out == it2->plugin->type_out) &&
-    * 		 (it->id == it2->id))
-    * 	       {
-    * 		  p->base.items = eina_list_remove_list(p->base.items, l);
-    * 		  evry_item_free(it);
-    * 		  break;
-    * 	       }
-    * 	  }
-    *   } */
 
    return 1;
 }

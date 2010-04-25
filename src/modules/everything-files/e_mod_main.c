@@ -159,8 +159,8 @@ _scan_func(void *data)
 	    dp->d_type == DT_SOCK)
 	  continue;
 
-	if ((d->scan_dirs && (dp->d_type != DT_DIR)) ||
-	    (dp->d_type != DT_UNKNOWN))
+	if ((d->scan_dirs && (dp->d_type != DT_DIR) ||
+	     (dp->d_type == DT_UNKNOWN)))
 	  continue;
 	else if (!d->scan_dirs && (dp->d_type == DT_DIR))
 	  continue;
