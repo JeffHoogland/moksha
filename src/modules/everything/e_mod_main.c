@@ -12,7 +12,7 @@
 /* #undef DBG
  * #define DBG(...) ERR(__VA_ARGS__) */
 
-#define CONFIG_VERSION 13
+#define CONFIG_VERSION 14
 
 /* actual module specifics */
 static void _e_mod_action_cb(E_Object *obj, const char *params);
@@ -253,9 +253,15 @@ _config_init()
        evry_conf->conf_actions = NULL;
        evry_conf->conf_objects = NULL;
 
-       evry_conf->version = CONFIG_VERSION;
+       evry_conf->version = 13;
      }
 
+   if (evry_conf && evry_conf->version <= 13)
+     {
+	evry_conf->hide_list = 0;
+	evry_conf->version = CONFIG_VERSION;
+     }
+   
    if (evry_conf && evry_conf->version != CONFIG_VERSION)
      {
 	_config_free();
