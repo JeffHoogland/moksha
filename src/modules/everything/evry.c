@@ -1586,7 +1586,11 @@ _evry_backspace(Evry_Selector *sel)
 	     val = *(s->inp + pos);
 
 	     s->inp[pos] = 0;
-	     s->input = s->inp;
+	     
+	     if (s->trigger_active && s->inp[0] != 0)
+	       s->input = s->inp + 1;
+	     else
+	       s->input = s->inp;
 
 	     if ((pos == 0) || !isspace(val))
 	       _evry_update(sel, 1);

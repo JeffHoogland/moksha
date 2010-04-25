@@ -31,12 +31,14 @@ _begin(Evry_Plugin *p, const Evry_Item *item __UNUSED__)
 	EINA_LIST_FREE(history, result)
 	  {
 	     it = evry_item_new(NULL, p, result, NULL);
+	     it->context = eina_stringshare_ref(p->name); 
 	     p->items = eina_list_prepend(p->items, it);
 	     eina_stringshare_del(result);
 	  }
      }
 
    it = evry_item_new(NULL, p, "0", NULL);
+   it->context = eina_stringshare_ref(p->name); 
    p->items = eina_list_prepend(p->items, it);
 
    return p;
@@ -127,6 +129,7 @@ _action(Evry_Plugin *p, const Evry_Item *it)
    it_old->selected = EINA_FALSE;
    
    it2 = evry_item_new(NULL, p, it_old->label, NULL);
+   it2->context = eina_stringshare_ref(p->name); 
    p->items = eina_list_prepend(p->items, it2);
 
    evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_ADD);
