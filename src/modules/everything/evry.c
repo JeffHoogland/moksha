@@ -2029,14 +2029,13 @@ _evry_plugin_select(Evry_State *s, Evry_Plugin *p)
 {
    if (!s || !s->cur_plugins) return;
 
+   if (p) s->plugin_auto_selected = EINA_FALSE;
+   
    if (!p && s->cur_plugins)
      {
 	p = s->cur_plugins->data;
 	s->plugin_auto_selected = EINA_TRUE;
      }
-
-   if (p)
-     s->plugin_auto_selected = EINA_FALSE;
 
    if (s->plugin != p)
      _evry_item_desel(s, NULL);
