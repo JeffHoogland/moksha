@@ -44,7 +44,7 @@ struct _Data
   Eina_List *list;
   DIR *dirp;
   Eina_Bool finished;
-  Eina_Bool scan_files;
+  Eina_Bool scan_dirs;
 };
 
 struct _Module_Config
@@ -158,6 +158,12 @@ _scan_func(void *data)
 	    dp->d_type == DT_CHR  ||
 	    dp->d_type == DT_SOCK)
 	  continue;
+
+	if ((d->scan_dirs && (dp->d_type != DT_DIR)) ||
+	    (dp->d_type != DT_UNKNOWN))
+	  continue;
+	else if (!d->scan_dirs && (dp->d_type == DT_DIR))
+	  continue;
 #endif
 	if (!p->show_hidden)
 	  {
@@ -169,7 +175,7 @@ _scan_func(void *data)
 	     if (dp->d_name[0] != '.')
 	       continue;
 	  }
-	
+
 	file = E_NEW(Evry_Item_File, 1);
 	if (!file) break;
 
@@ -211,8 +217,17 @@ _scan_func(void *data)
 	if (cnt++ > MAX_ITEMS) return;
      }
 
-   d->finished = EINA_TRUE;
-   closedir(d->dirp);
+   if (d->scan_dirs)
+     {
+	rewinddir(d->dirp);
+	d->scan_dirs = EINA_FALSE;
+	
+     }
+   else
+     {
+	d->finished = EINA_TRUE;
+	closedir(d->dirp);
+     }
 }
 
 static int
@@ -349,6 +364,10 @@ _read_directory(Plugin *p)
    Data *d = E_NEW(Data, 1);
    d->plugin = p;
 
+#ifdef _DIRENT_HAVE_D_TYPE
+   d->scan_dirs = EINA_TRUE;
+#endif
+   
    p->thread = ecore_thread_run(_scan_func, _scan_end_func, _scan_cancel_func, d);
 }
 
