@@ -396,8 +396,7 @@ evry_util_exec_app(const Evry_Item *it_app, const Evry_Item *it_file)
 	       }
 	     else
 	       {
-		  tmp = eina_str_escape(file->path);
-		  files = eina_list_append(files, tmp);
+		  files = eina_list_append(files, file->path);
 	       }
 
 	     e_exec(zone, app->desktop, NULL, files, NULL);
