@@ -1127,7 +1127,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
    if (!s->plugin)
      return 0;
 
-   char *key = strdup(ev->key);
+   const char *key = ev->key;
    
    if (s->plugin->view_mode == VIEW_MODE_NONE)
      {
@@ -1216,7 +1216,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 	  }
 	goto end;
      }
-   else if (!strcmp(key, "comma"))
+   else if (!strcmp(key, "comma") || !strcmp(key, "semicolon"))
      {
 	if (!sd->cur_item)
 	  goto end;
@@ -1232,8 +1232,14 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 	     evry_item_mark(s, sd->cur_item->item, 0);
 	  }
 	
-	free(key);
-	key = strdup("Down");
+	if(!strcmp(key, "comma"))
+	  {
+	     key = "Down";
+	  }
+	else
+	  {
+	     key = "Up";
+	  }
      }
 
    if ((slide = v->tabs->key_down(v->tabs, ev)))
@@ -1336,11 +1342,9 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 	  }
      }
 
-   free(key);
    return 0;
 
  end:
-   free(key);
    return 1;
 }
 
