@@ -18,6 +18,7 @@
 #include <limits.h>
 
 #ifdef __FreeBSD__
+# include <sys/ioctl.h>
 # include <sys/sysctl.h>
 # ifdef __i386__
 #  include <machine/apm_bios.h>
@@ -257,6 +258,7 @@ bsd_acpi_check(void)
 }
 
 /***---***/
+# ifdef __i386__
 static void
 bsd_apm_init(void)
 {
@@ -324,6 +326,7 @@ bsd_apm_check(void)
 	time_left = time_val;
      }
 }
+# endif
 
 #elif defined(HAVE_CFBASE_H) /* OS X */
 /***---***/
@@ -1440,11 +1443,13 @@ init(void)
      }
    else
      {
+#ifdef __i386__
 	if (ecore_file_exists("/dev/apm"))
 	  {
 	     mode = CHECK_APM;
 	     bsd_apm_init();
 	  }
+#endif
      }
 #elif defined(HAVE_CFBASE_H) /* OS X */
    darwin_init();
@@ -1492,9 +1497,11 @@ poll_cb(void *data __UNUSED__)
       case CHECK_ACPI:
        bsd_acpi_check();
 	break;
+#ifdef __i386__
       case CHECK_APM:
 	bsd_apm_check();
 	break;
+#endif
       default:
 	battery_full = -1;
 	time_left = -1;
