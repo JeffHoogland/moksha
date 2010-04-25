@@ -1651,19 +1651,19 @@ _evry_clear(Evry_Selector *sel)
 {
    Evry_State *s = sel->state;
 
-   if ((s->plugin && s->plugin->trigger && s->inp) &&
-       (!strncmp(s->plugin->trigger, s->inp,
-		 strlen(s->plugin->trigger))))
+   if (s->inp && s->inp[0] != 0)
      {
-	s->input[strlen(s->plugin->trigger)] = 0;
-	_evry_update(sel, 1);
-	return 1;
-     }
-   else if (s->inp && s->inp[0] != 0)
-     {
-	s->inp[0] = 0;
-	s->input = s->inp;
-
+	if (s->trigger_active && s->inp[1] != 0)
+	  {
+	     s->inp[1] = 0;
+	     s->input = s->inp + 1;
+	  }
+	else
+	  {
+	     s->inp[0] = 0;
+	     s->input = s->inp;
+	  }
+	
 	_evry_update(sel, 1);
 	if (!list->visible && evry_conf->hide_input)
 	  edje_object_signal_emit(list->o_main, "e,state,entry_hide", "e");

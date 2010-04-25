@@ -435,8 +435,11 @@ EAPI void evry_history_unload(void);
 EAPI History_Item *evry_history_add(Eina_Hash *hist, Evry_Item *it, const char *ctxt, const char *input);
 EAPI int  evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, const char *ctxt);
 
+/* #define EVRY_PLUGIN_NEW(_base, _name, _type, _in, _out, _begin, _cleanup, _fetch, _icon_get, _free) \
+ *   evry_plugin_new(EVRY_PLUGIN(_base), _name, _(_name), _type, _in, _out, _begin, _cleanup, _fetch, _icon_get, _free) \ */
+
 #define EVRY_PLUGIN_NEW(_base, _name, _type, _in, _out, _begin, _cleanup, _fetch, _icon_get, _free) \
-  evry_plugin_new(EVRY_PLUGIN(_base), _name, _(_name), _type, _in, _out, _begin, _cleanup, _fetch, _icon_get, _free) \
+  evry_plugin_new(EVRY_PLUGIN(E_NEW(_base, 1)), _name, _(_name), _type, _in, _out, _begin, _cleanup, _fetch, _icon_get, _free) \
 
 EAPI Evry_Plugin *evry_plugin_new(Evry_Plugin *base, const char *name, const char *label, int type,
 				  const char *type_in, const char *type_out,

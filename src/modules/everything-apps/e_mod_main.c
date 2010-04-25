@@ -963,25 +963,26 @@ _new_app_action(Evry_Action *act)
 static Eina_Bool
 _plugins_init(void)
 {
+   Evry_Plugin *p;
+   
    if (!evry_api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
-   p1 = E_NEW(Plugin, 1);
-   EVRY_PLUGIN_NEW(EVRY_PLUGIN(p1), N_("Applications"), type_subject, "", "APPLICATION",
-	      _begin, _cleanup, _fetch, _icon_get, NULL);
-   EVRY_PLUGIN(p1)->complete = &_complete;
-   EVRY_PLUGIN(p1)->config_path = "extensions/everything-apps";
+   p = EVRY_PLUGIN_NEW(Plugin, N_("Applications"), type_subject, "", "APPLICATION",
+		       _begin, _cleanup, _fetch, _icon_get, NULL);
+   p->complete = &_complete;
+   p->config_path = "extensions/everything-apps";
+   evry_plugin_register(p, 1);
+   p1 = (Plugin *) p;
    
-   p2 = E_NEW(Plugin, 1);
-   EVRY_PLUGIN_NEW(EVRY_PLUGIN(p2), N_("Open With..."), type_action, "FILE", "",
-	      _begin_open_with, _cleanup, _fetch,
-	      _icon_get, NULL);
+   p = EVRY_PLUGIN_NEW(Plugin, N_("Open With..."), type_action, "FILE", "",
+		       _begin_open_with, _cleanup, _fetch,
+		       _icon_get, NULL);
 
-   EVRY_PLUGIN(p2)->action = &_open_with_action;
-   EVRY_PLUGIN(p2)->config_path = "extensions/everything-apps";
-   
-   evry_plugin_register(EVRY_PLUGIN(p1), 1);
-   evry_plugin_register(EVRY_PLUGIN(p2), 1);
+   p->action = &_open_with_action;
+   p->config_path = "extensions/everything-apps";
+   evry_plugin_register(p, 1);
+   p2 = (Plugin *) p;
 
    act = EVRY_ACTION_NEW(N_("Launch"), "APPLICATION", NULL,
 		    "everything-launch", _exec_app_action, _exec_app_check_item);

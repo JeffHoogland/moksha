@@ -321,28 +321,53 @@ _cleanup(Evry_Plugin *plugin)
      }
 }
 
+/* static int
+ * _action(Evry_Action *act)
+ * {
+ *    const Evry_Item *it = act->item2;
+ *    if (!it) return 0;
+ *    
+ *    ecore_x_selection_primary_set(clipboard_win, it->label, strlen(it->label));
+ *    ecore_x_selection_clipboard_set(clipboard_win, it->label, strlen(it->label));
+ * 
+ *    return 1;
+ * } */
+
+  
 static Eina_Bool
 _plugins_init(void)
 {
-   Plugin *p;
+   Evry_Plugin *p;
 
    if (!evry_api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
-   p = E_NEW(Plugin, 1);
-
-   EVRY_PLUGIN_NEW(p, N_("Spell Checker"), type_subject, "", "TEXT",
+   p = EVRY_PLUGIN_NEW(Plugin, N_("Spell Checker"), type_subject, "", "TEXT",
 		   NULL, _cleanup, _fetch, NULL, NULL);
 
-   EVRY_PLUGIN(p)->aggregate   = EINA_FALSE;
-   EVRY_PLUGIN(p)->history     = EINA_FALSE;
-   EVRY_PLUGIN(p)->async_fetch = EINA_TRUE;
-   EVRY_PLUGIN(p)->icon        = "accessories-dictionary";
-   EVRY_PLUGIN(p)->trigger     = TRIGGER;
+   p->aggregate   = EINA_FALSE;
+   p->history     = EINA_FALSE;
+   p->async_fetch = EINA_TRUE;
+   p->icon        = "accessories-dictionary";
+   p->trigger     = TRIGGER;
    
-   evry_plugin_register(EVRY_PLUGIN(p), 100);
+   evry_plugin_register(p, 100);
+   _plug = (Plugin *) p;
 
-   _plug = p;
+   /* TODO show spell check action for given text */
+   /* p = EVRY_PLUGIN_NEW2(Plugin, N_("Spell Checker"), type_object, "", "TEXT",
+    * 			_begin, _cleanup, _fetch, NULL, NULL);
+    * 
+    * p->aggregate   = EINA_FALSE;
+    * p->history     = EINA_FALSE;
+    * p->async_fetch = EINA_TRUE;
+    * p->icon        = "accessories-dictionary";
+    * p->trigger     = TRIGGER;
+    * 
+    * evry_plugin_register(p, 100);
+    * _plug2 = (Plugin *) p;
+    * 
+    * _act = EVRY_ACTION_NEW(N_("Spell Checker"), "TEXT", "ASPELL", _action, NULL); */
 
    return EINA_TRUE;
 }

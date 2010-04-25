@@ -41,10 +41,10 @@ _fetch(Evry_Plugin *p, const char *input)
 Eina_Bool
 evry_plug_text_init(void)
 {
-  p1 = EVRY_PLUGIN_NEW(NULL, N_("Text"), type_subject, NULL, "TEXT",
+  p1 = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Text"), type_subject, NULL, "TEXT",
 		       NULL, _cleanup, _fetch, NULL, NULL);
 
-  p2 = EVRY_PLUGIN_NEW(NULL, N_("Text"), type_object,  NULL, "TEXT",
+  p2 = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Text"), type_object,  NULL, "TEXT",
 		       NULL, _cleanup, _fetch, NULL, NULL);
 
   p1->icon = "accessories-text-editor";

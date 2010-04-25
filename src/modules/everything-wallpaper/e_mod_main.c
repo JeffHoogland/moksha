@@ -205,11 +205,11 @@ _plugins_init(void)
    if (!evry_api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
-   _plug = EVRY_PLUGIN_NEW(NULL, N_("Wallpaper"), type_action, "FILE", "",
+   _plug = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Wallpaper"), type_action, "FILE", "",
 			    _begin, _cleanup, _fetch, _icon_get, NULL);
    
-   EVRY_PLUGIN(_plug)->icon = "preferences-desktop-wallpaper";
-   EVRY_PLUGIN(_plug)->action = &_action;
+   _plug->icon = "preferences-desktop-wallpaper";
+   _plug->action = &_action;
    
    evry_plugin_register(_plug, 10);
    

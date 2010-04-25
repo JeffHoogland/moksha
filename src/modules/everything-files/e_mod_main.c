@@ -704,12 +704,12 @@ _plugins_init(void)
    if (!evry_api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
-   p1 = EVRY_PLUGIN_NEW(NULL, N_("Files"), type_subject, "FILE", "FILE",
+   p1 = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Files"), type_subject, "FILE", "FILE",
 			_begin, _cleanup, _fetch, _icon_get, NULL);
    EVRY_PLUGIN(p1)->config_path = "extensions/everything-files";
    evry_plugin_register(p1, 3);
    
-   p2 = EVRY_PLUGIN_NEW(NULL, N_("Files"), type_object, "FILE", "FILE",
+   p2 = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Files"), type_object, "FILE", "FILE",
 			_begin, _cleanup, _fetch, _icon_get, NULL);
    EVRY_PLUGIN(p2)->config_path = "extensions/everything-files";
    evry_plugin_register(p2, 1);

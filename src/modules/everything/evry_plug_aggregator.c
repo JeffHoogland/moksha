@@ -295,17 +295,17 @@ _icon_get(Evry_Plugin *plugin, const Evry_Item *it, Evas *e)
 Evry_Plugin *
 evry_plug_aggregator_new(Evry_Selector *sel, int type)
 {
-   Plugin *p;
+   Evry_Plugin *p;
 
-   p = E_NEW(Plugin, 1);
-   EVRY_PLUGIN_NEW(EVRY_PLUGIN(p), N_("All"), type, "", "",
+   p = EVRY_PLUGIN_NEW(Plugin, N_("All"), type, "", "",
 		   NULL, _cleanup, _fetch, _icon_get, NULL);
 
-   EVRY_PLUGIN(p)->action = &_action;
-   EVRY_PLUGIN(p)->history = EINA_FALSE;
+   p->action = &_action;
+   p->history = EINA_FALSE;
+   evry_plugin_register(p, -1);
+   
+   PLUGIN(pa, p);
+   pa->selector = sel;
 
-   evry_plugin_register(EVRY_PLUGIN(p), -1);
-   p->selector = sel;
-
-   return EVRY_PLUGIN(p);
+   return p;
 }

@@ -123,7 +123,7 @@ _plugins_init(void)
    if (!evry_api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
-   p = EVRY_PLUGIN_NEW(NULL, N_("Settings"), type_subject, NULL, "E_SETTINGS",
+   p = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Settings"), type_subject, NULL, "E_SETTINGS",
 		       NULL, _cleanup, _fetch, _item_icon_get, NULL);
 
    evry_plugin_register(p, 10);

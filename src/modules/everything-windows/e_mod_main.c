@@ -492,14 +492,13 @@ _plugins_init(void)
    if (!evry_api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
-   p1 = EVRY_PLUGIN_NEW(NULL, N_("Windows"), type_subject, NULL, "BORDER",
-			    _begin, _cleanup, _fetch, _item_icon_get, NULL);
+   p1 = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Windows"), type_subject, NULL, "BORDER",
+			_begin, _cleanup, _fetch, _item_icon_get, NULL);
    p1->transient = EINA_TRUE;
    evry_plugin_register(p1, 2);
 
-   
-   p2 = EVRY_PLUGIN_NEW(NULL, N_("Window Action"), type_action, "BORDER", NULL,
-			     _act_begin, _act_cleanup, _act_fetch, _act_item_icon_get, NULL);
+   p2 = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Window Action"), type_action, "BORDER", NULL,
+			_act_begin, _act_cleanup, _act_fetch, _act_item_icon_get, NULL);
    
    EVRY_PLUGIN(p2)->action = &_act_action;
    
