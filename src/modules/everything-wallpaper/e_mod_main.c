@@ -172,7 +172,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 }
 
 static int
-_action(Evry_Plugin *plugin, const Evry_Item *item)
+_action(Evry_Plugin *plugin, const Evry_Item *act, const Evry_Item *item)
 {
    PLUGIN(p, plugin);
 

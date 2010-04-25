@@ -98,19 +98,22 @@ _cb_sort(const void *data1, const void *data2)
 
 static inline Eina_List *
 _add_item(Plugin *p, Eina_List *items, Evry_Item *it)
-{
-   Eina_List *_l;
-   Evry_Item *_it;
-   
+{   
    /* remove duplicates provided by different plugins */
-   EINA_LIST_FOREACH(p->base.items, _l, _it)
+   if (it->id)
      {
-	if ((it->plugin->name != _it->plugin->name) &&
-	    (it->plugin->type_out == _it->plugin->type_out) &&
-	    (it->id == _it->id))
-	  return items;
-     }
+	Eina_List *_l;
+	Evry_Item *_it;
 
+	EINA_LIST_FOREACH(p->base.items, _l, _it)
+	  {
+	     if ((it->plugin->name != _it->plugin->name) &&
+		 (it->plugin->type_out == _it->plugin->type_out) &&
+		 (it->id == _it->id))
+	       return items;
+	  }
+     }
+   
    evry_item_ref(it);
    items = eina_list_append(items, it);
    EVRY_PLUGIN_ITEM_APPEND(p, it);
@@ -256,10 +259,10 @@ _fetch(Evry_Plugin *plugin, const char *input)
 }
 
 static int
-_action(Evry_Plugin *plugin, const Evry_Item *it)
+_action(Evry_Plugin *plugin, const Evry_Item *act, const Evry_Item *subj)
 {
-   if (it->plugin && it->plugin->action)
-     return it->plugin->action(it->plugin, it);
+   if (act->plugin && act->plugin->action)
+     return act->plugin->action(act->plugin, act, subj);
 
    return 0;
 }

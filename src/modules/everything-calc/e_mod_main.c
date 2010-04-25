@@ -101,7 +101,7 @@ _cleanup(Evry_Plugin *p)
 }
 
 static int
-_action(Evry_Plugin *p, const Evry_Item *it)
+_action(Evry_Plugin *p, const Evry_Item *act __UNUSED__, const Evry_Item *it)
 {
    Eina_List *l;
    Evry_Item *it2, *it_old;

@@ -421,12 +421,12 @@ _act_fetch(Evry_Plugin *p, const char *input)
 }
 
 static int
-_act_action(Evry_Plugin *p __UNUSED__, const Evry_Item *item)
+_act_action(Evry_Plugin *p __UNUSED__, const Evry_Item *act, const Evry_Item *item)
 {
    void (*border_action) (E_Border *bd);
-   border_action = item->data;
-   border_action(inst->border);
-
+   border_action = act->data;
+   border_action(((E_Border *)item->data));
+   
    return EVRY_ACTION_FINISHED;
 }
 

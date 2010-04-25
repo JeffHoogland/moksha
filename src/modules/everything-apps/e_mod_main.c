@@ -836,12 +836,11 @@ _exec_sudo_action(Evry_Action *act)
 }
 
 static int
-_open_with_action(Evry_Plugin *plugin, const Evry_Item *it)
+_open_with_action(Evry_Plugin *plugin, const Evry_Item *act, const Evry_Item *subj)
 {
    PLUGIN(p, plugin);
 
-   if (p->candidate)
-     return evry_util_exec_app(it, p->candidate);
+   return evry_util_exec_app(act, subj);
 
    return 0;
 }

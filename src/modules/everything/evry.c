@@ -409,15 +409,16 @@ evry_item_mark(const Evry_State *state, Evry_Item *it, Eina_Bool mark)
 {
    Evry_State *s = (Evry_State *)state;
 
-   if (mark)
-     s->sel_items = eina_list_append(s->sel_items, it);
-   else
-     s->sel_items = eina_list_remove(s->sel_items, it);
-
-   /* s->plugin_auto_selected = EINA_FALSE;
-    * s->item_auto_selected = EINA_FALSE;
-    * _evry_item_sel(s, it);
-    * _evry_selector_update(selector); */
+   if (mark && !it->marked)
+     {
+	it->marked = EINA_TRUE;
+	s->sel_items = eina_list_append(s->sel_items, it);
+     }
+   else if (it->marked)
+     {
+	it->marked = EINA_FALSE;
+	s->sel_items = eina_list_remove(s->sel_items, it);
+     }
 }
 
 EAPI void
@@ -1168,6 +1169,9 @@ _evry_state_pop(Evry_Selector *sel)
 
    sel->aggregator->cleanup(sel->aggregator);
 
+   if (s->sel_items)
+     eina_list_free(s->sel_items);
+   
    E_FREE(s);
 
    sel->states = eina_list_remove_list(sel->states, sel->states);
@@ -1680,7 +1684,9 @@ static void
 _evry_plugin_action(Evry_Selector *sel, int finished)
 {
    Evry_State *s_subject, *s_action, *s_object;
-
+   Evry_Item *it, *it_act;
+   Eina_List *l;
+   
    if (selectors[0]->update_timer)
      {
 	_evry_matches_update(selectors[0], 0);
@@ -1709,32 +1715,73 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
    if (!s_action || !s_action->cur_item)
      return;
 
-   /* FIXME */
    if (s_action->cur_item->plugin == selectors[1]->actions)
      {
-	Evry_Action *act = s_action->cur_item->data;
 	Evry_Item *it_object = NULL;
-
-	if (selectors[2] == selector)
-	  it_object = selector->state->cur_item;
-
-	if (act->type_in2 && !it_object)
+	Evry_Action *act = s_action->cur_item->data;
+	
+	/* get object item for action, when required */
+	if (act->type_in2)
 	  {
-	     if (selectors[1] == selector)
-	       _evry_selectors_switch(1);
-	     return;
+	     /* check if object is provided */
+	     if (selectors[2] == selector)
+	       {
+		  s_object = selector->state;
+		  it_object = s_object->cur_item;
+	       }
+	     
+	     if (!it_object)
+	       {
+		  if (selectors[1] == selector)
+		    _evry_selectors_switch(1);
+		  return;
+	       }
+	     
+	     act->item2 = it_object;  
 	  }
 
-	act->item2 = it_object;
-
-	if (!act->action(act))
+	if (s_subject->sel_items)
+	  {
+	     EINA_LIST_REVERSE_FOREACH(s_subject->sel_items, l, it)
+	       {
+		  if (it->plugin->type_out != act->type_in1)
+		    continue;
+		  act->item1 = it;
+		  act->action(act);
+	       }
+	  }
+	else if (s_object && s_object->sel_items)
+	  {
+	     EINA_LIST_FOREACH(s_object->sel_items, l, it)
+	       {
+		  if (it->plugin->type_out != act->type_in2)
+		    continue;
+		  act->item2 = it;
+		  act->action(act);
+	       }
+	  }
+	else if (!act->action(act))
 	  return;
      }
    else if (s_action->plugin->action)
      {
-	Evry_Item *it = s_action->cur_item;
-	if (!s_action->plugin->action(s_action->plugin, it))
-	  return;
+	it_act = s_action->cur_item;
+	
+	if (s_subject->sel_items)
+	  {
+	     EINA_LIST_REVERSE_FOREACH(s_subject->sel_items, l, it)
+	       {
+		  if (it->plugin->type_out != it_act->plugin->type_in)
+		    continue;
+		  s_action->plugin->action(s_action->plugin, it_act, it);
+	       }
+	  }
+	else
+	  {
+	     it = s_subject->cur_item;
+	     if (!s_action->plugin->action(s_action->plugin, it_act, it))
+	       return;
+	  }
      }
    else return;
 
@@ -1746,10 +1793,10 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 
    /* let subject and object plugin know that an action was performed */
    if (s_subject->plugin->action)
-     s_subject->plugin->action(s_subject->plugin, s_subject->cur_item);
+     s_subject->plugin->action(s_subject->plugin, s_action->cur_item, s_subject->cur_item);
 
-   if (s_object && s_object->plugin->action)
-     s_object->plugin->action(s_object->plugin, s_object->cur_item);
+   /* if (s_object && s_object->plugin->action)
+    *   s_object->plugin->action(s_object->plugin, s_action->cur_item, s_object->cur_item); */
 
    if (finished)
      evry_hide();
@@ -1901,7 +1948,9 @@ _evry_matches_update(Evry_Selector *sel, int async)
    Evry_State *s = sel->state;
    Evry_Plugin *p;
    Eina_List *l;
+   Evry_Item *it;
    const char *input;
+
    s->changed = 1;
 
    if (s->inp[0])
@@ -1909,6 +1958,10 @@ _evry_matches_update(Evry_Selector *sel, int async)
    else
      input = NULL;
 
+   if (s->sel_items)
+     eina_list_free(s->sel_items);
+   s->sel_items = NULL;
+   
    if (!input || !s->trigger_active)
      {
 	EINA_LIST_FREE(s->cur_plugins, p);
@@ -1998,6 +2051,13 @@ _evry_matches_update(Evry_Selector *sel, int async)
    if (sel->update_timer)
      ecore_timer_del(sel->update_timer);
    sel->update_timer = NULL;
+
+   if (s->plugin)
+     {
+	EINA_LIST_FOREACH(s->plugin->items, l, it)
+	  if (it->marked)
+	    s->sel_items = eina_list_append(s->sel_items, it);
+     }
 }
 
 static void

@@ -354,6 +354,9 @@ _e_smart_reconfigure_do(void *data)
 
 		       evas_object_smart_member_add(it->frame, obj);
 		       evas_object_clip_set(it->frame, evas_object_clip_get(obj));
+
+		       if (it->item->marked)
+			 edje_object_signal_emit(it->frame, "e,state,marked", "e");
 		    }
 
 		  edje_object_part_text_set(it->frame, "e.text.label", it->item->label);
@@ -704,7 +707,8 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
      {
 	prev = sd->cur_item->y / sd->cur_item->h;
 	sd->cur_item->selected = EINA_FALSE;
-	edje_object_signal_emit(sd->cur_item->frame, "e,state,unselected", "e");
+	if (!sd->cur_item->item->marked)
+	  edje_object_signal_emit(sd->cur_item->frame, "e,state,unselected", "e");
      }
 
    sd->cur_item = NULL;
@@ -1119,14 +1123,16 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
    Item *it = NULL;
    const Evry_State *s = v->state;
    int slide;
-
+   
    if (!s->plugin)
      return 0;
 
+   char *key = strdup(ev->key);
+   
    if (s->plugin->view_mode == VIEW_MODE_NONE)
      {
 	if ((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
-	    (!strcmp(ev->key, "2")))
+	    (!strcmp(key, "2")))
 	  {
 	     if (v->mode == VIEW_MODE_LIST)
 	       v->mode = VIEW_MODE_DETAIL;
@@ -1139,8 +1145,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 	     goto end;
 	  }
 	else if ((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
-		 ((!strcmp(ev->key, "plus")) ||
-		  (!strcmp(ev->key, "3"))))
+		  (!strcmp(key, "3")))
 	  {
 	     if (v->mode != VIEW_MODE_THUMB)
 	       {
@@ -1160,16 +1165,9 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 	  }
      }
 
-   if ((slide = v->tabs->key_down(v->tabs, ev)))
-     {
-	/* _view_update(view, -slide); */
-	_view_update(view, 0);
-	return 1;
-     }
-
    if (((ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT) ||
 	(ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)) &&
-       (!strcmp(ev->key, "Up")))
+       (!strcmp(key, "Up")))
      {
 	if (!sd->items) goto end;
 	it = sd->items->data;
@@ -1180,7 +1178,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
      }
    else if (((ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT) ||
 	     (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)) &&
-	    (!strcmp(ev->key, "Down")))
+	    (!strcmp(key, "Down")))
      {
 	if (!sd->items) goto end;
 
@@ -1190,6 +1188,61 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 	goto end;
      }
 
+   if ((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
+       (!strcmp(key, "plus")))
+     {
+	EINA_LIST_FOREACH(sd->items, ll, it)
+	  {
+	     if (!it->item->marked)
+	       {
+		  if (it->frame)
+		    edje_object_signal_emit(it->frame, "e,state,marked", "e");
+		  evry_item_mark(s, it->item, 1);
+	       }
+	  }
+	goto end;
+     }
+   else if ((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
+       (!strcmp(key, "minus")))
+     {
+	EINA_LIST_FOREACH(sd->items, ll, it)
+	  {
+	     if (it->item->marked)
+	       {
+		  if (it->frame)
+		    edje_object_signal_emit(it->frame, "e,state,unmarked", "e");
+		  evry_item_mark(s, it->item, 0);
+	       }
+	  }
+	goto end;
+     }
+   else if (!strcmp(key, "comma"))
+     {
+	if (!sd->cur_item)
+	  goto end;
+	
+	if (!sd->cur_item->item->marked)
+	  {
+	     edje_object_signal_emit(sd->cur_item->frame, "e,state,marked", "e");
+	     evry_item_mark(s, sd->cur_item->item, 1);
+	  }
+	else
+	  {
+	     edje_object_signal_emit(sd->cur_item->frame, "e,state,unmarked", "e");
+	     evry_item_mark(s, sd->cur_item->item, 0);
+	  }
+	
+	free(key);
+	key = strdup("Down");
+     }
+
+   if ((slide = v->tabs->key_down(v->tabs, ev)))
+     {
+	/* _view_update(view, -slide); */
+	_view_update(view, 0);
+	return 1;
+     }
+
    if (sd->items)
      l = eina_list_data_find_list(sd->items, sd->cur_item);
    if (!l)
@@ -1197,7 +1250,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 
    if (v->mode == VIEW_MODE_THUMB && !evry_conf->cycle_mode)
      {
-	if (!strcmp(ev->key, "Right"))
+	if (!strcmp(key, "Right"))
 	  {
 	     if (l && l->next)
 	       it = l->next->data;
@@ -1209,9 +1262,9 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 	       }
 	     goto end;
 	  }
-	else if (!strcmp(ev->key, "Left"))
+	else if (!strcmp(key, "Left"))
 	  {
-	     if (!sd->items) return 1;
+	     /* if (!sd->items) goto end; */
 
 	     if (l && l->prev)
 	       it = l->prev->data;
@@ -1224,9 +1277,9 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 	     goto end;
 	  }
      }
-   if (!strcmp(ev->key, "Down"))
+   if (!strcmp(key, "Down"))
      {
-	if (!sd->items) return 1;
+	/* if (!sd->items) goto end; */
 
 	if (!evry_conf->cycle_mode)
 	  {
@@ -1248,9 +1301,9 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 	  }
 	goto end;
      }
-   else if (!strcmp(ev->key, "Up"))
+   else if (!strcmp(key, "Up"))
      {
-	if (!sd->items) return 1;
+	/* if (!sd->items) goto end; */
 
 	if (!evry_conf->cycle_mode)
 	  {
@@ -1274,18 +1327,20 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 	  }
 	goto end;
      }
-   else if (!strcmp(ev->key, "Return"))
+   else if (!strcmp(key, "Return"))
      {
-	if (!v->mode)
+	if (v->mode == VIEW_MODE_THUMB)
 	  {
 	     if (evry_browse_item(NULL))
 	       goto end;
 	  }
      }
 
+   free(key);
    return 0;
 
  end:
+   free(key);
    return 1;
 }
 

@@ -4,6 +4,7 @@
 
 #include "Evry.h"
 #include "e_mod_main.h"
+#include <Efreet_Trash.h>
 
 #define MAX_ITEMS 50
 #define MAX_SHOWN 300
@@ -31,6 +32,7 @@ struct _Plugin
   Eina_Bool show_hidden;
   
   Ecore_Thread *thread;
+  Ecore_File_Monitor *dir_mon;
   Eina_Bool cleanup;
 };
 
@@ -359,6 +361,34 @@ _scan_end_func(void *data)
 }
 
 static void
+_dir_watcher(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, const char *path)
+{
+   Plugin *p = data;
+   Evry_Item_File *file;
+   
+   if (p->thread)
+     {
+	ecore_thread_cancel(p->thread);	
+     }
+
+   EINA_LIST_FREE(p->files, file)
+     evry_item_free(EVRY_ITEM(file));
+   
+   EVRY_PLUGIN_ITEMS_CLEAR(p);
+
+   if (event == ECORE_FILE_EVENT_DELETED_SELF)
+     {
+	evry_plugin_async_update(EVRY_PLUGIN(p), EVRY_ASYNC_UPDATE_ADD);
+	return;
+     }
+
+   Data *d = E_NEW(Data, 1);
+   d->plugin = p;
+
+   p->thread = ecore_thread_run(_scan_func, _scan_end_func, _scan_cancel_func, d);
+}
+
+static void
 _read_directory(Plugin *p)
 {
    Data *d = E_NEW(Data, 1);
@@ -369,6 +399,11 @@ _read_directory(Plugin *p)
 #endif
    
    p->thread = ecore_thread_run(_scan_func, _scan_end_func, _scan_cancel_func, d);
+
+   if (p->dir_mon)
+     ecore_file_monitor_del(p->dir_mon);
+
+   p->dir_mon = ecore_file_monitor_add(p->directory, _dir_watcher, p); 
 }
 
 static Evry_Plugin *
@@ -452,6 +487,9 @@ _cleanup(Evry_Plugin *plugin)
 
    if (p->input)
      eina_stringshare_del(p->input);
+
+   if (p->dir_mon)
+     ecore_file_monitor_del(p->dir_mon);
 
    if (p->thread)
      {
@@ -564,7 +602,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	       {
 		  if (p->thread)
 		    ecore_thread_cancel(p->thread);
-
+		  
 		  /* browse root */
 		  EINA_LIST_FREE(p->files, file)
 		    evry_item_free(EVRY_ITEM(file));
@@ -593,7 +631,11 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
 	     if (p->thread)
 	       ecore_thread_cancel(p->thread);
-
+	     
+	     if (p->dir_mon)
+	       ecore_file_monitor_del(p->dir_mon);
+	     p->dir_mon = NULL;
+	     
 	     /* browse root */
 	     EINA_LIST_FREE(p->hist_added, file)
 	       {
@@ -634,7 +676,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	  {	     
 	     if (p->thread)
 	       ecore_thread_cancel(p->thread);
-
+	     
 	     EINA_LIST_FREE(p->files, file)
 	       evry_item_free(EVRY_ITEM(file));
 
@@ -798,6 +840,35 @@ _open_term_action(Evry_Action *act)
    return ret;
 }
 
+
+static int
+_file_trash_action(Evry_Action *act)
+{
+   Efreet_Uri *uri;
+   
+   ITEM_FILE(file, act->item1);
+
+   if (!file->url)
+     {
+	/* efreet_uri_decode could be a litle less picky imo */
+	char buf[4096];
+	snprintf(buf, sizeof(buf), "file://%s", file->path);
+	uri = efreet_uri_decode(buf); 
+     }
+   else
+     {
+	uri = efreet_uri_decode(file->url); 
+     }
+   
+   if (uri)
+     {
+	efreet_trash_delete_uri(uri, 0);
+	efreet_uri_free(uri); 
+     }
+
+   return 1;
+}
+
 static Eina_Bool
 _plugins_init(void)
 {
@@ -820,6 +891,10 @@ _plugins_init(void)
 
    act2 = EVRY_ACTION_NEW(N_("Open Terminal here"), "FILE", NULL, "system-run",
 			  _open_term_action, NULL);
+   evry_action_register(act2, 2);
+
+   act2 = EVRY_ACTION_NEW(N_("Move to Trash"), "FILE", NULL, "system-run",
+			  _file_trash_action, NULL);
    evry_action_register(act2, 2);
 
    return EINA_TRUE;

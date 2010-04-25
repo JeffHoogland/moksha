@@ -123,7 +123,8 @@ struct _Evry_Item
 
   /* do not set by plugin! */
   Evry_Item   *next;
-  Eina_Bool    selected;
+  Eina_Bool selected;
+  Eina_Bool marked;
   Evry_Plugin *plugin;
   int ref;
   void (*free) (Evry_Item *item);
@@ -186,7 +187,7 @@ struct _Evry_Plugin
   Evas_Object *(*icon_get) (Evry_Plugin *p, const Evry_Item *it, Evas *e);
 
   /* only used when plugin is of type_action */
-  int  (*action) (Evry_Plugin *p, const Evry_Item *item);
+  int  (*action) (Evry_Plugin *p, const Evry_Item *act, const Evry_Item *subj);
 
   /* try to complete current item:
      return: EVRY_COMPLETE_INPUT when input was changed

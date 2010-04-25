@@ -319,6 +319,7 @@ PKG_CHECK_MODULES(E, [
   edje
   efreet
   efreet-mime
+  efreet-trash
   eina-0
   dbus-1
   edbus
