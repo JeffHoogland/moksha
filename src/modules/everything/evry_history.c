@@ -295,15 +295,6 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, c
 	if (hi->plugin != it->plugin->name)
 	  continue;
 
-	if (ctxt != hi->context)
-	  continue;
-
-	/* if (it->plugin->type == type_action)
-	 *   {
-	 *      if (hi->last_used > it->usage)
-	 *        it->usage = hi->last_used;
-	 *   } */
-
 	if (evry_conf->history_sort_mode == 0)
 	  {
 
@@ -338,6 +329,10 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, c
 	     if (hi->last_used > it->usage)
 	       it->usage = hi->last_used;
 	  }
+
+	if (ctxt != hi->context)
+	  it->usage /= 2.0;
+
      }
 
    if (it->usage > 0.0)

@@ -946,13 +946,13 @@ _evry_timer_cb_actions_get(void *data)
    return 0;
 }
 
-
 static void
 _evry_selector_update(Evry_Selector *sel)
 {
    Evry_State *s = sel->state;
    Evry_Item *it = NULL;
-
+   Eina_Bool item_changed = EINA_FALSE;;
+   
    if (s)
      {
 	it = s->cur_item;
@@ -967,7 +967,8 @@ _evry_selector_update(Evry_Selector *sel)
 	if (s->plugin && (!it || s->item_auto_selected))
 	  {
 	     it = NULL;
-
+	     item_changed = EINA_TRUE;
+	     
 	     /* get first item */
 	     if (!it && s->plugin->items)
 	       {
@@ -1003,7 +1004,7 @@ _evry_selector_update(Evry_Selector *sel)
 	  edje_object_part_text_set(sel->o_main, "e.text.plugin", "");
      }
 
-   if (sel == selectors[0])
+   if (item_changed && sel == selectors[0])
      {
 	sel = selectors[1];
 	if (sel->update_timer)
