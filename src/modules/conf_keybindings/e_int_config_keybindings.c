@@ -1017,7 +1017,7 @@ _grab_key_down_cb(void *data, int type, void *event)
 	     if (cfdata->locals.add)
 	       {
 		  found = 0;
-		  for (l = cfdata->binding.key; l && !found; l = l->next)
+		  for (l = cfdata->binding.key, n = 0; l && !found; l = l->next, n++)
 		    {
 		       bi = l->data;
 		       if (bi->modifiers == mod && !strcmp(bi->key, ev->keyname))
@@ -1032,7 +1032,7 @@ _grab_key_down_cb(void *data, int type, void *event)
 		       sscanf(cfdata->locals.cur, "k%d", &n);
 		       bi = eina_list_nth(cfdata->binding.key, n);
 
-		       for (l = cfdata->binding.key; l && !found; l = l->next)
+		       for (l = cfdata->binding.key, n = 0; l && !found; l = l->next, n++)
 			 {
 			    bi2 = l->data;
 			    if (bi == bi2) continue;
@@ -1131,7 +1131,12 @@ _grab_key_down_cb(void *data, int type, void *event)
 				       " is already used by <br>" 
 				       "<hilight>%s</hilight> action.<br>" 
 				       "Please choose another binding key sequence."), 
-				     label ? label : _("Unknown")); 
+				     label ? label : _("Unknown"));
+		  
+		  
+		  e_widget_ilist_nth_show(cfdata->gui.o_binding_list, n-1, 1);
+		  e_widget_ilist_selected_set(cfdata->gui.o_binding_list, n-1); 
+		  
 	       }
 	     _grab_wnd_hide(cfdata);
 	  }
