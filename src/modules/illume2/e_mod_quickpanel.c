@@ -13,6 +13,8 @@ static void _e_mod_quickpanel_slide(E_Illume_Quickpanel *qp, int visible, double
 static void _e_mod_quickpanel_hide(E_Illume_Quickpanel *qp);
 static int _e_mod_quickpanel_cb_animate(void *data);
 static void _e_mod_quickpanel_position_update(E_Illume_Quickpanel *qp);
+static void _e_mod_quickpanel_animate_down(E_Illume_Quickpanel *qp);
+static void _e_mod_quickpanel_animate_up(E_Illume_Quickpanel *qp);
 
 /* local variables */
 static Eina_List *_qp_hdls = NULL;
@@ -74,6 +76,7 @@ e_mod_quickpanel_new(E_Zone *zone)
 
    /* set quickpanel zone */
    qp->zone = zone;
+   qp->dir = 0;
 
    qp->clickwin = ecore_x_window_input_new(qp->zone->container->win, 
                                            qp->zone->x, qp->zone->y, 
@@ -88,7 +91,8 @@ void
 e_mod_quickpanel_show(E_Illume_Quickpanel *qp) 
 {
    E_Illume_Config_Zone *cz;
-   int duration, iy;
+   E_Border *ind;
+   int duration;
 
    /* delete the animator if it exists */
    if (qp->animator) ecore_animator_del(qp->animator);
@@ -102,15 +106,19 @@ e_mod_quickpanel_show(E_Illume_Quickpanel *qp)
    if ((qp->visible) || (!qp->borders)) return;
 
    duration = _e_illume_cfg->animation.quickpanel.duration;
+
+   /* grab the height of the indicator */
    cz = e_illume_zone_config_get(qp->zone->id);
    qp->ih = cz->indicator.size;
 
-   e_illume_border_indicator_pos_get(qp->zone, NULL, &iy);
+   /* grab the indicator border for clickwin stacking */
+   ind = e_illume_border_indicator_get(qp->zone);
 
-   ecore_x_window_move(qp->clickwin, qp->zone->x, 
-                       iy + cz->indicator.size + qp->h);
-   ecore_x_window_resize(qp->clickwin, qp->zone->w, 
-                         qp->zone->h - (iy + cz->indicator.size + qp->h));
+   ecore_x_window_configure(qp->clickwin, 
+			    ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING | 
+			    ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE, 
+			    0, 0, 0, 0, 0, 
+			    ind->win, ECORE_X_WINDOW_STACK_BELOW);
    ecore_x_window_show(qp->clickwin);
 
    /* check animation duration */
@@ -120,14 +128,23 @@ e_mod_quickpanel_show(E_Illume_Quickpanel *qp)
         E_Border *bd;
         int ny = 0;
 
-        ny = qp->ih;
+	ny = qp->ih;
+	if (qp->dir == 1) ny = 0;
 
         /* if we are not animating, just show the borders */
         EINA_LIST_FOREACH(qp->borders, l, bd) 
           {
              if (!bd->visible) e_illume_border_show(bd);
-             e_border_fx_offset(bd, 0, ny);
-             ny += bd->h;
+             if (qp->dir == 0) 
+	       {
+		  e_border_fx_offset(bd, 0, ny);
+		  ny += bd->h;
+	       }
+	     else 
+	       {
+		  ny -= bd->h;
+		  e_border_fx_offset(bd, 0, ny);
+	       }
           }
         qp->visible = 1;
      }
@@ -336,7 +353,15 @@ _e_mod_quickpanel_slide(E_Illume_Quickpanel *qp, int visible, double len)
    qp->len = len;
    qp->adjust_start = qp->adjust;
    qp->adjust_end = 0;
-   if (visible) qp->adjust_end = qp->h;
+   if (qp->dir == 0) 
+     {
+	if (visible) qp->adjust_end = qp->h;
+     }
+   else 
+     {
+	if (visible) qp->adjust_end = -qp->h;
+     }
+
    if (!qp->animator) 
      qp->animator = ecore_animator_add(_e_mod_quickpanel_cb_animate, qp);
 }
@@ -383,9 +408,6 @@ static int
 _e_mod_quickpanel_cb_animate(void *data) 
 {
    E_Illume_Quickpanel *qp;
-   Eina_List *l;
-   E_Border *bd;
-   int pbh = 0;
    double t, v = 1.0;
 
    if (!(qp = data)) return 0;
@@ -403,29 +425,8 @@ _e_mod_quickpanel_cb_animate(void *data)
 
    qp->adjust = (qp->adjust_end * v) + (qp->adjust_start * (1.0 - v));
 
-   pbh = (qp->ih - qp->h);
-   EINA_LIST_FOREACH(qp->borders, l, bd) 
-     {
-        /* don't adjust borders that are being deleted */
-        if (e_object_is_del(E_OBJECT(bd))) continue;
-        if (bd->fx.y != (qp->adjust + pbh)) 
-          e_border_fx_offset(bd, 0, (qp->adjust + pbh));
-        pbh += bd->h;
-        if (!qp->visible) 
-          {
-             if (bd->fx.y > 0) 
-               {
-                  if (!bd->visible) e_illume_border_show(bd);
-               }
-          }
-        else 
-          {
-             if (bd->fx.y <= 10) 
-               {
-                  if (bd->visible) e_illume_border_hide(bd);
-               }
-          }
-     }
+   if (qp->dir == 0) _e_mod_quickpanel_animate_down(qp);
+   else _e_mod_quickpanel_animate_up(qp);
 
    if (t == qp->len) 
      {
@@ -449,4 +450,73 @@ _e_mod_quickpanel_position_update(E_Illume_Quickpanel *qp)
    e_illume_border_indicator_pos_get(qp->zone, NULL, &iy);
    EINA_LIST_FOREACH(qp->borders, l, bd) 
      e_border_move(bd, qp->zone->x, iy);
+
+   qp->dir = 0;
+   if ((iy + qp->ih + qp->h) > qp->zone->h) qp->dir = 1;
+}
+
+static void 
+_e_mod_quickpanel_animate_down(E_Illume_Quickpanel *qp) 
+{
+   Eina_List *l;
+   E_Border *bd;
+   int pbh = 0;
+
+   pbh = (qp->ih - qp->h);
+   EINA_LIST_FOREACH(qp->borders, l, bd) 
+     {
+        /* don't adjust borders that are being deleted */
+        if (e_object_is_del(E_OBJECT(bd))) continue;
+	if (bd->fx.y != (qp->adjust + pbh)) 
+	  e_border_fx_offset(bd, 0, (qp->adjust + pbh));
+	pbh += bd->h;
+
+        if (!qp->visible) 
+          {
+             if (bd->fx.y > 0) 
+               {
+                  if (!bd->visible) e_illume_border_show(bd);
+               }
+          }
+        else 
+          {
+             if (bd->fx.y <= 10) 
+               {
+                  if (bd->visible) e_illume_border_hide(bd);
+               }
+          }
+     }
+}
+
+static void 
+_e_mod_quickpanel_animate_up(E_Illume_Quickpanel *qp) 
+{
+   Eina_List *l;
+   E_Border *bd;
+   int pbh = 0;
+
+   pbh = qp->h;
+   EINA_LIST_FOREACH(qp->borders, l, bd) 
+     {
+        /* don't adjust borders that are being deleted */
+        if (e_object_is_del(E_OBJECT(bd))) continue;
+	pbh -= bd->h;
+	if (bd->fx.y != (qp->adjust + pbh)) 
+	  e_border_fx_offset(bd, 0, (qp->adjust + pbh));
+
+        if (!qp->visible) 
+          {
+             if (bd->fx.y < 0) 
+               {
+                  if (!bd->visible) e_illume_border_show(bd);
+               }
+          }
+        else 
+          {
+             if (bd->fx.y >= -10) 
+               {
+                  if (bd->visible) e_illume_border_hide(bd);
+               }
+          }
+     }
 }
