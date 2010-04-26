@@ -3,7 +3,7 @@
 
 #include "e.h"
 
-#define EVRY_API_VERSION 4
+#define EVRY_API_VERSION 5
 
 #define EVRY_ACTION_OTHER 0
 #define EVRY_ACTION_FINISHED 1
@@ -57,6 +57,7 @@ typedef struct _Plugin_Setting  Plugin_Setting;
 #define EVRY_PLUGIN(_plugin) ((Evry_Plugin *) _plugin)
 #define EVRY_VIEW(_view) ((Evry_View *) _view)
 #define ITEM_FILE(_file, _item) Evry_Item_File *_file = (Evry_Item_File *) _item
+#define ACTION_GET(_act, _item) Evry_Action *_act = (Evry_Action *) _item
 #define ITEM_APP(_app, _item)   Evry_Item_App *_app = (Evry_Item_App *) _item
 #define PLUGIN(_p, _plugin) Plugin *_p = (Plugin*) _plugin
 #define VIEW(_v, _view) View *_v = (View*) _view
@@ -129,6 +130,29 @@ struct _Evry_Item
   int ref;
   void (*free) (Evry_Item *item);
   double usage;
+};
+
+struct _Evry_Action
+{
+  Evry_Item base;
+
+  /* identifier */
+  const char *name;
+
+  const char *type_in1;
+  const char *type_in2;
+
+  const Evry_Item *item1;
+  const Evry_Item *item2;
+
+  int  (*action)     (Evry_Action *act);
+  int  (*check_item) (Evry_Action *act, const Evry_Item *it);
+  int  (*intercept)  (Evry_Action *act);
+  void (*cleanup)    (Evry_Action *act);
+  Eina_List *(*actions)    (Evry_Action *act);
+  Evas_Object *(*icon_get) (Evry_Action *act, Evas *e);
+
+  void *data;
 };
 
 struct _Evry_Item_App
@@ -278,38 +302,6 @@ struct _Evry_View
   int priority;
 };
 
-struct _Evry_Action
-{
-  /* identifier */
-  const char *name;
-
-  /* shown title */
-  const char *label;
-
-  /* */
-  const char *type_in1;
-  const char *type_in2;
-
-  const Evry_Item *item1;
-  const Evry_Item *item2;
-
-  int  (*action)     (Evry_Action *act);
-  int  (*check_item) (Evry_Action *act, const Evry_Item *it);
-  int  (*intercept)  (Evry_Action *act);
-  void (*cleanup)    (Evry_Action *act);
-  Eina_List *(*actions)    (Evry_Action *act);
-  Evas_Object *(*icon_get) (Evry_Action *act, Evas *e);
-
-  /* optional: use this when you keep stuff in 'data' */
-  void (*free) (Evry_Action *act);
-
-  /* use icon name from theme */
-  const char *icon;
-
-  void *data;
-
-  int priority;
-};
 
 /* FIXME this should be exposed.
    - add functions to retrieve this stuff */
@@ -397,6 +389,12 @@ struct _History_Item
   const char *data;
 };
 
+#define EVRY_PLUGIN_NEW(_base, _name, _type, _in, _out, _begin, _cleanup, _fetch, _icon_get, _free) \
+  evry_plugin_new(EVRY_PLUGIN(E_NEW(_base, 1)), _name, _(_name), _type, _in, _out, _begin, _cleanup, _fetch, _icon_get, _free) \
+
+#define EVRY_ACTION_NEW(_name, _in1, _in2, _icon, _action, _check)	\
+  evry_action_new(_name, _(_name), _in1, _in2, _icon, _action, _check)
+
 /* evry.c */
 EAPI void evry_item_select(const Evry_State *s, Evry_Item *it);
 EAPI void evry_item_mark(const Evry_State *state, Evry_Item *it, Eina_Bool mark);
@@ -436,12 +434,6 @@ EAPI void evry_history_unload(void);
 EAPI History_Item *evry_history_add(Eina_Hash *hist, Evry_Item *it, const char *ctxt, const char *input);
 EAPI int  evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, const char *ctxt);
 
-/* #define EVRY_PLUGIN_NEW(_base, _name, _type, _in, _out, _begin, _cleanup, _fetch, _icon_get, _free) \
- *   evry_plugin_new(EVRY_PLUGIN(_base), _name, _(_name), _type, _in, _out, _begin, _cleanup, _fetch, _icon_get, _free) \ */
-
-#define EVRY_PLUGIN_NEW(_base, _name, _type, _in, _out, _begin, _cleanup, _fetch, _icon_get, _free) \
-  evry_plugin_new(EVRY_PLUGIN(E_NEW(_base, 1)), _name, _(_name), _type, _in, _out, _begin, _cleanup, _fetch, _icon_get, _free) \
-
 EAPI Evry_Plugin *evry_plugin_new(Evry_Plugin *base, const char *name, const char *label, int type,
 				  const char *type_in, const char *type_out,
 				  Evry_Plugin *(*begin) (Evry_Plugin *p, const Evry_Item *item),
@@ -451,10 +443,6 @@ EAPI Evry_Plugin *evry_plugin_new(Evry_Plugin *base, const char *name, const cha
 				  void (*free) (Evry_Plugin *p));
 
 EAPI void evry_plugin_free(Evry_Plugin *p, int free_pointer);
-
-
-#define EVRY_ACTION_NEW(_name, _in1, _in2, _icon, _action, _check)		\
-  evry_action_new(_name, _(_name), _in1, _in2, _icon, _action, _check)
 
 EAPI Evry_Action *evry_action_new(const char *name, const char *label,
 				  const char *type_in1, const char *type_in2,

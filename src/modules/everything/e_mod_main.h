@@ -25,7 +25,7 @@ struct _Evry_Selector
   Evry_Plugin *actions;
 
   /* */
-  Eina_List   *cur_actions;
+  /* Eina_List   *cur_actions; */
 
   /* all plugins that belong to this selector*/
   Eina_List   *plugins;
@@ -67,8 +67,8 @@ EAPI int   e_modapi_shutdown (E_Module *m);
 EAPI int   e_modapi_save     (E_Module *m);
 EAPI E_Config_Dialog *evry_config_dialog(E_Container *con, const char *params);
 
-EAPI Tab_View *evry_tab_view_new(const Evry_State *s, Evas *e);
-EAPI void evry_tab_view_free(Tab_View *v);
+Tab_View *evry_tab_view_new(const Evry_State *s, Evas *e);
+void evry_tab_view_free(Tab_View *v);
 
 Eina_Bool view_thumb_init(void);
 void view_thumb_shutdown(void);
@@ -90,11 +90,8 @@ int  evry_shutdown(void);
 int  evry_show(E_Zone *zone, const char *params);
 void evry_hide(void);
 
-EAPI Evry_Plugin *evry_plug_aggregator_new(Evry_Selector *selector, int type);
-EAPI void evry_plug_aggregator_free(Evry_Plugin *plugin);
-
-EAPI Evry_Plugin *evry_plug_actions_new(int type);
-EAPI void evry_plug_actions_free(Evry_Plugin *plugin);
+Evry_Plugin *evry_plug_aggregator_new(Evry_Selector *selector, int type);
+Evry_Plugin *evry_plug_actions_new(Evry_Selector *selector, int type);
 
 void evry_history_init(void);
 void evry_history_free(void);

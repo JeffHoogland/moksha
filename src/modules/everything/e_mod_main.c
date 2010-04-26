@@ -111,7 +111,6 @@ EAPI int
 e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    E_Config_Dialog *cfd;
-   Evry_Plugin *p;
    Evry_Action *a;
 
    evry_shutdown();
@@ -461,47 +460,11 @@ evry_plugin_free(Evry_Plugin *p, int free_pointer)
      E_FREE(p);
 }
 
-Evry_Action *
-evry_action_new(const char *name, const char *label, const char *type_in1, const char *type_in2,
-		const char *icon,
-		int  (*action) (Evry_Action *act),
-		int (*check_item) (Evry_Action *act, const Evry_Item *it))
-{
-   Evry_Action *act = E_NEW(Evry_Action, 1);
-   act->name = eina_stringshare_add(name);
-   act->label = eina_stringshare_add(label);
-   act->type_in1 = (type_in1 ? eina_stringshare_add(type_in1) : NULL);
-   act->type_in2 = (type_in2 ? eina_stringshare_add(type_in2) : NULL);
-   act->action = action;
-   act->check_item = check_item;
-   act->icon = (icon ? eina_stringshare_add(icon) : NULL);
-
-   return act;
-}
-
-void
-evry_action_free(Evry_Action *act)
-{
-   evry_action_unregister(act);
-
-   if (act->name)     eina_stringshare_del(act->name);
-   if (act->label)    eina_stringshare_del(act->label);
-   if (act->type_in1) eina_stringshare_del(act->type_in1);
-   if (act->type_in2) eina_stringshare_del(act->type_in2);
-   if (act->icon)     eina_stringshare_del(act->icon);
-
-   if (act->free)
-     act->free(act);
-   else
-     E_FREE(act);
-}
-
-
 /* TODO make int return */
 void
 evry_plugin_register(Evry_Plugin *p, int priority)
 {
-   Eina_List *l, *confs;
+   Eina_List *l;
    Plugin_Config *pc;
    Eina_List *conf[3];
    int i = 0;
@@ -565,20 +528,6 @@ evry_plugin_unregister(Evry_Plugin *p)
      }
 }
 
-void
-evry_action_register(Evry_Action *action, int priority)
-{
-   action->priority = priority;
-   evry_conf->actions = eina_list_append(evry_conf->actions, action);
-   /* TODO sorting, initialization, etc */
-}
-
-void
-evry_action_unregister(Evry_Action *action)
-{
-   evry_conf->actions = eina_list_remove(evry_conf->actions, action);
-   /* cleanup */
-}
 
 
 static int

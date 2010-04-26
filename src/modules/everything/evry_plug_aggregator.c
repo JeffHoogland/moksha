@@ -127,8 +127,8 @@ _fetch(Evry_Plugin *plugin, const char *input)
    Plugin *p = (Plugin *) plugin;
    Evry_Plugin *pp;
    Evry_State *s;
-   Eina_List *l, *ll, *lll, *lp = NULL;
-   Evry_Item *it, *it2;
+   Eina_List *l, *ll, *lp = NULL;
+   Evry_Item *it;
    int i, cnt = 0;
    Eina_List *items = NULL;
    const char *context = NULL;

@@ -10,15 +10,6 @@ _cleanup(Evry_Plugin *p)
    EVRY_PLUGIN_ITEMS_FREE(p);
 }
 
-static void
-_cb_free_item_changed(void *data, void *event)
-{
-  Evry_Event_Item_Changed *ev = event;
-
-  evry_item_free(ev->item);
-  E_FREE(ev);
-}
-
 static int
 _fetch(Evry_Plugin *p, const char *input)
 {

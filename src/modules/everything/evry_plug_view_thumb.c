@@ -627,7 +627,8 @@ _animator(void *data)
 {
    Smart_Data *sd = evas_object_smart_data_get(data);
    double da;
-   double spd = (25.0/(double)e_config->framerate) / (double) (1 + sd->view->zoom);
+   double spd = ((25.0/ (double)e_config->framerate) /
+		 (double) (1 + sd->view->zoom));
    /* if (sd->sliding) spd *= 1.5; */
    if (spd > 0.9) spd = 0.9;
 
@@ -635,7 +636,8 @@ _animator(void *data)
 
    if (sd->sel_pos != sd->sel_pos_to)
      {
-	sd->sel_pos = (sd->sel_pos * (1.0 - spd)) + (sd->sel_pos_to * spd);
+	sd->sel_pos = ((sd->sel_pos * (1.0 - spd)) +
+		       (sd->sel_pos_to * spd));
 
 	da = sd->sel_pos - sd->sel_pos_to;
 	if (da < 0.0) da = -da;
@@ -649,7 +651,8 @@ _animator(void *data)
 
    if (sd->scroll_align != sd->scroll_align_to)
      {
-	sd->scroll_align = (sd->scroll_align * (1.0 - spd)) + (sd->scroll_align_to * spd);
+	sd->scroll_align = ((sd->scroll_align * (1.0 - spd)) +
+			    (sd->scroll_align_to * spd));
 
 	da = sd->scroll_align - sd->scroll_align_to;
 	if (da < 0.0) da = -da;
@@ -658,12 +661,14 @@ _animator(void *data)
 	else
 	  wait++;
 
-	e_scrollframe_child_pos_set(sd->view->sframe, 0, sd->scroll_align);
+	e_scrollframe_child_pos_set(sd->view->sframe,
+				    0, sd->scroll_align);
      }
 
    if (sd->sliding)
      {
-   	sd->slide = (sd->slide * (1.0 - spd)) + (sd->slide_to * spd);
+   	sd->slide = ((sd->slide * (1.0 - spd)) +
+		     (sd->slide_to * spd));
 
    	da = sd->slide - sd->slide_to;
    	if (da < 0.0) da = -da;
@@ -673,7 +678,9 @@ _animator(void *data)
    	     sd->sliding = 0;
 	     if (sd->view->mode == VIEW_MODE_THUMB &&
 		 sd->cur_item &&sd->cur_item->frame)
-	       edje_object_signal_emit(sd->cur_item->frame, "e,state,selected", "e");
+	       edje_object_signal_emit(sd->cur_item->frame,
+				       "e,state,selected", "e");
+
 
 	     if (sd->clearing)
 	       {
@@ -708,7 +715,8 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
 	prev = sd->cur_item->y / sd->cur_item->h;
 	sd->cur_item->selected = EINA_FALSE;
 	if (!sd->cur_item->item->marked)
-	  edje_object_signal_emit(sd->cur_item->frame, "e,state,unselected", "e");
+	  edje_object_signal_emit(sd->cur_item->frame,
+				  "e,state,unselected", "e");
      }
 
    sd->cur_item = NULL;
@@ -788,14 +796,16 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
 	       }
 	  }
 
-	/* edje_object_signal_emit(sd->cur_item->frame, "e,state,selected", "e"); */
+	/* edje_object_signal_emit(sd->cur_item->frame,
+	 * 			"e,state,selected", "e"); */
 	align *= it->h;
      }
    else
      {
 	if (sd->view->zoom < 2)
 	  {
-	     edje_object_signal_emit(sd->cur_item->frame, "e,state,selected", "e");
+	     edje_object_signal_emit(sd->cur_item->frame,
+				     "e,state,selected", "e");
 	  }
 
 	if ((it->y + it->h) - sd->cy > sd->h)
@@ -819,7 +829,8 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
 	  {
 	     sd->scroll_align = align;
 	     sd->scroll_align_to = align;
-	     e_scrollframe_child_pos_set(sd->view->sframe, 0, sd->scroll_align);
+	     e_scrollframe_child_pos_set(sd->view->sframe,
+					 0, sd->scroll_align);
 	  }
 	if (sd->animator)
 	  ecore_animator_del(sd->animator);
@@ -1009,8 +1020,6 @@ _view_update(Evry_View *view, int slide)
 
 		  v_it->pos = pos;
 
-		  /* set selected state -> TODO remove*/
-		  /* if (p_it == v->state->cur_item) */
 		  if (p_it->selected)
 		    {
 		       sd->cur_item = v_it;
@@ -1021,7 +1030,6 @@ _view_update(Evry_View *view, int slide)
 		       v_it->selected = EINA_FALSE;
 		       edje_object_signal_emit(v_it->frame, "e,state,unselected", "e");
 		    }
-
 		  break;
 	       }
 	     pos++;
@@ -1068,9 +1076,7 @@ _view_update(Evry_View *view, int slide)
 
 	     v_it->pos = pos;
 
-	     /* TODO no needed */
 	     if (p_it == v->state->cur_item)
-	     /* if (p_it->selected) */
 	       {
 	     	  sd->cur_item = v_it;
 	     	  v_it->selected = EINA_TRUE;
@@ -1100,9 +1106,17 @@ _view_update(Evry_View *view, int slide)
    	  {
    	     if (sd->items && !sd->animator)
    	       sd->animator = ecore_animator_add(_animator, v->span);
-   	     sd->sliding = 1;
-   	     sd->slide_to = sd->x;
-   	     sd->slide = sd->x + sd->w * -slide;
+
+	     sd->clearing = EINA_FALSE;
+
+	     if (!sd->sliding)
+	       sd->slide_to = sd->x;
+	     else
+	       sd->slide_to += sd->w;
+
+	     sd->slide = sd->x + sd->w * -slide;
+
+	     sd->sliding = 1;
    	  }
    	else if (sd->sliding)
    	  {
@@ -1123,12 +1137,12 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
    Item *it = NULL;
    const Evry_State *s = v->state;
    int slide;
-   
+
    if (!s->plugin)
      return 0;
 
    const char *key = ev->key;
-   
+
    if (s->plugin->view_mode == VIEW_MODE_NONE)
      {
 	if ((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
@@ -1220,7 +1234,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
      {
 	if (!sd->cur_item)
 	  goto end;
-	
+
 	if (!sd->cur_item->item->marked)
 	  {
 	     edje_object_signal_emit(sd->cur_item->frame, "e,state,marked", "e");
@@ -1231,7 +1245,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 	     edje_object_signal_emit(sd->cur_item->frame, "e,state,unmarked", "e");
 	     evry_item_mark(s, sd->cur_item->item, 0);
 	  }
-	
+
 	if(!strcmp(key, "comma"))
 	  {
 	     key = "Down";
@@ -1270,8 +1284,6 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 	  }
 	else if (!strcmp(key, "Left"))
 	  {
-	     /* if (!sd->items) goto end; */
-
 	     if (l && l->prev)
 	       it = l->prev->data;
 
@@ -1285,8 +1297,6 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
      }
    if (!strcmp(key, "Down"))
      {
-	/* if (!sd->items) goto end; */
-
 	if (!evry_conf->cycle_mode)
 	  {
 	     EINA_LIST_FOREACH(l, ll, it)
@@ -1309,8 +1319,6 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
      }
    else if (!strcmp(key, "Up"))
      {
-	/* if (!sd->items) goto end; */
-
 	if (!evry_conf->cycle_mode)
 	  {
 	     for(ll = l; ll; ll = ll->prev)

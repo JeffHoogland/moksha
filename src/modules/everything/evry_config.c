@@ -333,9 +333,8 @@ _plugin_config_cb(void *data, void *data2)
 static Evas_Object *
 _create_plugin_page(E_Config_Dialog_Data *cfdata, Evas *e, Plugin_Page *page)
 {
-   Evas_Object *ot, *o, *of, *ob;
+   Evas_Object *o, *of, *ob;
    E_Radio_Group *rg;
-   Evas_Object *list;
 
    of = e_widget_framelist_add(e, _("Available Plugins"), 0);
    page->list = e_widget_ilist_add(e, 24, 24, NULL);
@@ -406,7 +405,7 @@ _create_plugin_page(E_Config_Dialog_Data *cfdata, Evas *e, Plugin_Page *page)
 static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdata)
 {
-   Evas_Object *ot, *o, *of, *ob, *otb, *otb2;
+   Evas_Object *o, *of, *ob, *otb, *otb2;
    E_Radio_Group *rg;
 
    otb = e_widget_toolbook_add(e, 48 * e_scale, 48 * e_scale);

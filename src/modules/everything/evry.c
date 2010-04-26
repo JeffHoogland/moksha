@@ -125,6 +125,7 @@ _evry_cb_item_changed(void *data, int type, void *event)
 	if (sel->state && sel->state->cur_item == ev->item)
 	  {
 	     _evry_selector_update(sel);
+	     _evry_selector_update_actions(sel);
 	     break;
 	  }
      }
@@ -410,16 +411,11 @@ _evry_timer_cb_actions_get(void *data)
 static void
 _evry_selector_update_actions(Evry_Selector *sel)
 {  
-   if (!sel->state) return;
-   
-   if (sel == selectors[0])
-     {
-	Evry_Item *it = sel->state->cur_item;
-	sel = selectors[1];
-	if (sel->update_timer)
-	  ecore_timer_del(sel->update_timer);
-	sel->update_timer = ecore_timer_add(0.1, _evry_timer_cb_actions_get, it);
-     }
+   Evry_Item *it = sel->state->cur_item;
+   sel = selectors[1];
+   if (sel->update_timer)
+     ecore_timer_del(sel->update_timer);
+   sel->update_timer = ecore_timer_add(0.1, _evry_timer_cb_actions_get, it);
 }
 
 EAPI void
@@ -443,7 +439,8 @@ evry_item_select(const Evry_State *state, Evry_Item *it)
    if (s == sel->state)
      {	
 	_evry_selector_update(sel);
-	_evry_selector_update_actions(sel);
+	if (selector ==  selectors[0])
+	  _evry_selector_update_actions(sel);
      }
 }
 
@@ -770,14 +767,14 @@ _evry_selector_new(int type)
    if (type == type_subject)
      {
 	sel->history = evry_hist->subjects;
-	sel->actions = evry_plug_actions_new(type);
+	sel->actions = evry_plug_actions_new(sel, type);
 	edje_object_part_swallow(win->o_main, "e.swallow.subject_selector", o);
 	pcs = evry_conf->conf_subjects;
      }
    else if (type == type_action)
      {
 	sel->history = evry_hist->actions;
-	sel->actions = evry_plug_actions_new(type);
+	sel->actions = evry_plug_actions_new(sel, type);
 	edje_object_part_swallow(win->o_main, "e.swallow.action_selector", o);
 	pcs = evry_conf->conf_actions;
      }
@@ -1030,10 +1027,6 @@ _evry_selector_update(Evry_Selector *sel)
    if (item_changed && sel == selectors[0])
      {
 	_evry_selector_update_actions(sel);
-	/* sel = selectors[1];
-	 * if (sel->update_timer)
-	 *   ecore_timer_del(sel->update_timer);
-	 * sel->update_timer = ecore_timer_add(0.1, _evry_timer_cb_actions_get, it); */
      }
 }
 
@@ -1325,17 +1318,19 @@ _evry_selectors_switch(int dir)
    else if (selector == selectors[1] && dir > 0)
      {
 	int next_selector = 0;
-	Evry_Action *act;
-
-	if ((s->cur_item) &&
-	    (s->cur_item->plugin == selector->actions) &&
-	    (act = s->cur_item->data) &&
-	    (act->type_in2))
+	Evry_Item *it;
+	
+	if ((it = s->cur_item) &&
+	    (it->plugin == selector->actions))
 	  {
-	     _evry_selector_objects_get(act);
-	     _evry_selector_update(selectors[2]);
-	     edje_object_signal_emit(win->o_main, "e,state,object_selector_show", "e");
-	     next_selector = 2;
+	     ACTION_GET(act,it);
+	     if (act->type_in2)
+	       {
+		  _evry_selector_objects_get(act);
+		  _evry_selector_update(selectors[2]);
+		  edje_object_signal_emit(win->o_main, "e,state,object_selector_show", "e");
+		  next_selector = 2;
+	       }
 	  }
 	_evry_selector_activate(selectors[next_selector]);
      }
@@ -1580,12 +1575,6 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	  {
 	     strcat(s->inp, ev->compose);
 
-	     /* if (isspace(*ev->compose))
-	      *   {
-	      * 	  /\* do not update matches on space *\/
-	      * 	  _evry_update(selector, 0);
-	      *   }
-	      * else */
 	     _evry_update(selector, 1);
 	  }
      }
@@ -1704,8 +1693,8 @@ _evry_clear(Evry_Selector *sel)
 static void
 _evry_plugin_action(Evry_Selector *sel, int finished)
 {
-   Evry_State *s_subject, *s_action, *s_object;
-   Evry_Item *it, *it_act;
+   Evry_State *s_subj, *s_act, *s_obj = NULL;
+   Evry_Item *it_subj, *it_act, *it_obj, *it;
    Eina_List *l;
    
    if (selectors[0]->update_timer)
@@ -1714,15 +1703,16 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 	_evry_selector_update(selectors[0]);
      }
 
-   s_subject = selectors[0]->state;
+   if (!(s_subj = selectors[0]->state))
+     return;
 
-   if (!s_subject || !s_subject->cur_item)
+   if (!(it_subj = s_subj->cur_item))
      return;
 
    if (selector == selectors[0] &&
        selectors[1]->update_timer)
      {
-	_evry_selector_actions_get(s_subject->cur_item);
+	_evry_selector_actions_get(it_subj);
 
 	if (!selectors[1]->state)
 	  return;
@@ -1730,40 +1720,39 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 	_evry_selector_update(selectors[1]);
      }
 
-   s_action  = selectors[1]->state;
-   s_object = NULL;
-
-   if (!s_action || !s_action->cur_item)
+   if (!(s_act = selectors[1]->state))
      return;
 
-   if (s_action->cur_item->plugin == selectors[1]->actions)
+   if (!(it_act = s_act->cur_item))
+     return;
+     
+   if (it_act->plugin == selectors[1]->actions)
      {
-	Evry_Item *it_object = NULL;
-	Evry_Action *act = s_action->cur_item->data;
+	ACTION_GET(act, it_act);
 	
 	/* get object item for action, when required */
 	if (act->type_in2)
 	  {
 	     /* check if object is provided */
-	     if (selectors[2] == selector)
+	     if (selectors[2]->state)
 	       {
-		  s_object = selector->state;
-		  it_object = s_object->cur_item;
+		  s_obj = selectors[2]->state;
+		  it_obj = s_obj->cur_item;
 	       }
 	     
-	     if (!it_object)
+	     if (!it_obj)
 	       {
 		  if (selectors[1] == selector)
 		    _evry_selectors_switch(1);
 		  return;
 	       }
 	     
-	     act->item2 = it_object;  
+	     act->item2 = it_obj;  
 	  }
 
-	if (s_subject->sel_items)
+	if (s_subj->sel_items)
 	  {
-	     EINA_LIST_REVERSE_FOREACH(s_subject->sel_items, l, it)
+	     EINA_LIST_REVERSE_FOREACH(s_subj->sel_items, l, it)
 	       {
 		  if (it->plugin->type_out != act->type_in1)
 		    continue;
@@ -1771,9 +1760,9 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 		  act->action(act);
 	       }
 	  }
-	else if (s_object && s_object->sel_items)
+	else if (s_obj && s_obj->sel_items)
 	  {
-	     EINA_LIST_FOREACH(s_object->sel_items, l, it)
+	     EINA_LIST_FOREACH(s_obj->sel_items, l, it)
 	       {
 		  if (it->plugin->type_out != act->type_in2)
 		    continue;
@@ -1781,52 +1770,45 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 		  act->action(act);
 	       }
 	  }
-	else if (!act->action(act))
-	  return;
-     }
-   else if (s_action->plugin->action)
-     {
-	it_act = s_action->cur_item;
-	
-	if (s_subject->sel_items)
+	else
 	  {
-	     EINA_LIST_REVERSE_FOREACH(s_subject->sel_items, l, it)
+	     if (!act->action(act))
+	       return;
+	  }
+     }
+   else if (s_act->plugin->action)
+     {
+	if (s_subj->sel_items)
+	  {
+	     EINA_LIST_REVERSE_FOREACH(s_subj->sel_items, l, it)
 	       {
 		  if (it->plugin->type_out != it_act->plugin->type_in)
 		    continue;
-		  s_action->plugin->action(s_action->plugin, it_act, it);
+		  s_act->plugin->action(s_act->plugin, it_act, it);
 	       }
 	  }
 	else
 	  {
-	     it = s_subject->cur_item;
-	     if (!s_action->plugin->action(s_action->plugin, it_act, it))
+	     if (!s_act->plugin->action(s_act->plugin, it_act, it_subj))
 	       return;
 	  }
      }
    else return;
 
-   if (s_subject)
-     evry_history_add(evry_hist->subjects,
-		      s_subject->cur_item,
-		      NULL, s_subject->input);
+   if (s_subj && it_subj)
+     evry_history_add(evry_hist->subjects, it_subj, NULL, s_subj->input);
 
-   if (s_action)
-     evry_history_add(evry_hist->actions,
-		      s_action->cur_item,
-		      s_subject->cur_item->context,
-		      s_action->input);
-   if (s_object)
-     evry_history_add(evry_hist->subjects,
-		      s_object->cur_item,
-		      s_action->cur_item->context,
-		      s_object->input);
+   if (s_act && it_act)
+     evry_history_add(evry_hist->actions, it_act, it_subj->context, s_act->input);
+
+   if (s_obj && it_obj)
+     evry_history_add(evry_hist->subjects, it_obj, it_act->context, s_obj->input);
 
    /* let subject and object plugin know that an action was performed */
-   /* if (s_subject->plugin->action)
-    *   s_subject->plugin->action(s_subject->plugin, s_action->cur_item, s_subject->cur_item); */
-   /* if (s_object && s_object->plugin->action)
-    *   s_object->plugin->action(s_object->plugin, s_action->cur_item, s_object->cur_item); */
+   /* if (s_subj->plugin->action)
+    *   s_subj->plugin->action(s_subj->plugin, s_act->cur_item, s_subj->cur_item); */
+   /* if (s_object && s_obj->plugin->action)
+    *   s_object->plugin->action(s_obj->plugin, s_act->cur_item, s_obj->cur_item); */
 
    if (finished)
      evry_hide();

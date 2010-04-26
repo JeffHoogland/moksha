@@ -838,8 +838,6 @@ _exec_sudo_action(Evry_Action *act)
 static int
 _open_with_action(Evry_Plugin *plugin, const Evry_Item *act, const Evry_Item *subj)
 {
-   PLUGIN(p, plugin);
-
    return evry_util_exec_app(act, subj);
 
    return 0;
@@ -926,7 +924,7 @@ _new_app_action(Evry_Action *act)
      }
    free(name);
 
-   if (!buf || strlen(buf) == 0)
+   if (strlen(buf) == 0)
      return 0;
 
    if (!app->desktop)
@@ -955,9 +953,6 @@ _new_app_action(Evry_Action *act)
 
    return 1;
 }
-
-//#define TIME_FACTOR(_now) (1.0 - (evry_hist->begin / _now)) / 1000000000000000.0
-
 
 static Eina_Bool
 _plugins_init(void)
