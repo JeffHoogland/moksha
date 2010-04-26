@@ -175,7 +175,7 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 
    if (cfdata->fill_delay) ecore_timer_del(cfdata->fill_delay);
 
-   if (data = cfdata->data) 
+   if ((data = cfdata->data))
      {
         if (data->title) eina_stringshare_del(data->title);
         if (data->dialog) eina_stringshare_del(data->dialog);
@@ -393,7 +393,7 @@ _fill_apps_list(E_Config_Dialog_Data *cfdata)
 static void 
 _fill_order_list(E_Config_Dialog_Data *cfdata) 
 {
-   Eina_List *l = NULL, *desks = NULL;
+   Eina_List *l = NULL;
    Efreet_Desktop *desk = NULL;
    Evas *evas;
 
@@ -549,7 +549,7 @@ _cb_up(void *data, void *data2 __UNUSED__)
 
    sel = e_widget_ilist_selected_get(cfdata->o_order);
    lbl = e_widget_ilist_selected_label_get(cfdata->o_order);
-   if (desk = efreet_util_desktop_name_find(lbl))
+   if ((desk = efreet_util_desktop_name_find(lbl)))
      {
         Evas_Object *icon = NULL;
 
@@ -586,7 +586,7 @@ _cb_down(void *data, void *data2 __UNUSED__)
 
    sel = e_widget_ilist_selected_get(cfdata->o_order);
    lbl = e_widget_ilist_selected_label_get(cfdata->o_order);
-   if (desk = efreet_util_desktop_name_find(lbl))
+   if ((desk = efreet_util_desktop_name_find(lbl)))
      {
         Evas_Object *icon = NULL;
 

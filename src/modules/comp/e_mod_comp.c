@@ -2178,4 +2178,5 @@ e_mod_comp_win_evas_object_get(E_Comp_Win *cw)
 Evas_Object *
 e_mod_comp_win_mirror_object_add(Evas *e, E_Comp_Win *cw)
 {
+   return NULL;
 }

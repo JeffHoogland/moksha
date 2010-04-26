@@ -94,7 +94,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
           {
              Eina_List *l;
 
-             if (l = ecore_file_ls("/proc/acpi/thermal_zone")) 
+             if ((l = ecore_file_ls("/proc/acpi/thermal_zone")))
                {
                   char *name;
                   int n = 0;
@@ -122,7 +122,7 @@ _fill_sensors(E_Config_Dialog_Data *cfdata, const char *name)
    char *n;
 
    if (!name) return;
-   if (therms = temperature_get_bus_files(name)) 
+   if ((therms = temperature_get_bus_files(name)))
      {
         char path[PATH_MAX];
 
