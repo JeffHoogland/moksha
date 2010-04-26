@@ -1010,27 +1010,54 @@ main(int argc, char **argv)
    /* load modules */
    e_init_status_set(_("Load Modules"));
    TS("load modules");
-   if (!safe_mode)
-     e_module_all_load();
-   else
+   if (safe_mode)
      {
-	e_int_config_modules(e_container_current_get(e_manager_current_get()), NULL);
-	e_error_message_show
-	  (_("Enlightenment crashed early on start and has<br>"
-	     "been restarted. All modules have been disabled<br>"
-	     "and will not be loaded to help remove any problem<br>"
-	     "modules from your configuration. The module<br>"
-	     "configuration dialog should let you select your<br>"
-	     "modules again."));
-	e_util_dialog_show
-	  (_("Enlightenment crashed early on start and has been restarted"),
-	   _("Enlightenment crashed early on start and has been restarted.<br>"
-	     "All modules have been disabled and will not be loaded to help<br>"
-	     "remove any problem modules from your configuration.<br><br>"
-	     "The module configuration dialog should let you select your<br>"
-	     "modules again."));
-	e_config_save_queue();
+	   E_Module *m; 
+	   char *crashmodule;
+
+	   crashmodule = getenv("E_MODULE_LOAD");
+	   if (crashmodule) m = e_module_new(crashmodule);
+
+	   if (crashmodule && m)
+	     {
+		    e_module_disable(m);
+			e_object_del(E_OBJECT(m));
+			e_config_save_queue();
+
+			e_int_config_modules(e_container_current_get(e_manager_current_get()), NULL);
+			e_error_message_show
+			  (_("Enlightenment crashed early on start and has<br>"
+				 "been restarted. There was an error loading<br>"
+				 "module named: %s. This module has been disabled<br>"
+				 "and will not be loaded."), crashmodule);
+			e_util_dialog_show
+			  (_("Enlightenment crashed early on start and has been restarted"),
+			   _("Enlightenment crashed early on start and has been restarted.<br>"
+				 "There was an error loading module named: %s<br><br>"
+				 "This module has been disabled and will not be loaded."), crashmodule);
+     		e_module_all_load();
+		 }
+	   else
+		 {	
+			e_int_config_modules(e_container_current_get(e_manager_current_get()), NULL);
+			e_error_message_show
+			  (_("Enlightenment crashed early on start and has<br>"
+				 "been restarted. All modules have been disabled<br>"
+				 "and will not be loaded to help remove any problem<br>"
+				 "modules from your configuration. The module<br>"
+				 "configuration dialog should let you select your<br>"
+				 "modules again."));
+			e_util_dialog_show
+			  (_("Enlightenment crashed early on start and has been restarted"),
+			   _("Enlightenment crashed early on start and has been restarted.<br>"
+				 "All modules have been disabled and will not be loaded to help<br>"
+				 "remove any problem modules from your configuration.<br><br>"
+				 "The module configuration dialog should let you select your<br>"
+				 "modules again."));
+		}
      }
+   else
+     e_module_all_load();
 
    TS("init properites");
    if (!nostartup)

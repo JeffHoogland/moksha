@@ -69,6 +69,7 @@ e_module_all_load(void)
 {
    Eina_List *l;
    E_Config_Module *em;
+   char buf[128];
 
    e_config->modules = eina_list_sort(e_config->modules,
                                       eina_list_count(e_config->modules),
@@ -89,7 +90,13 @@ e_module_all_load(void)
 	else if (em->enabled)
 	  {
 	     m = NULL;
-	     if (em->name) m = e_module_new(em->name);
+		 if (!em->name) continue;
+
+		 setenv("E_MODULE_LOAD", em->name, 1);
+		 snprintf (buf, sizeof(buf), _("Loading Module: %s"), em->name);
+		 e_init_status_set(em->name);
+
+	     m = e_module_new(em->name);
 	     if (m) e_module_enable(m);
 	  }
      }
@@ -98,6 +105,7 @@ e_module_all_load(void)
      {
 	ecore_event_add(E_EVENT_MODULE_INIT_END, NULL, NULL, NULL);
      }
+   unsetenv("E_MODULE_LOAD");
 }
 
 EAPI E_Module *
