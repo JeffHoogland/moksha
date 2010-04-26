@@ -51,8 +51,7 @@ e_module_shutdown(void)
    while (_e_modules)
      {
 	m = _e_modules->data;
-	
-	if (m && m->enabled && !m->error)
+	if ((m) && (m->enabled) && !(m->error))
 	  {
 	     m->func.save(m);
 	     m->func.shutdown(m);
@@ -71,13 +70,11 @@ e_module_all_load(void)
    E_Config_Module *em;
    char buf[128];
 
-   e_config->modules = eina_list_sort(e_config->modules,
-                                      eina_list_count(e_config->modules),
-                                      _e_module_sort_priority);
+   e_config->modules = 
+     eina_list_sort(e_config->modules, 0, _e_module_sort_priority);
+
    EINA_LIST_FOREACH(e_config->modules, l, em)
      {
-	E_Module *m;
-
 	if (!em) continue;
 	if ((em->delayed) && (em->enabled))
 	  {
@@ -89,22 +86,22 @@ e_module_all_load(void)
 	  }
 	else if (em->enabled)
 	  {
-	     m = NULL;
-		 if (!em->name) continue;
+	     E_Module *m;
 
-		 setenv("E_MODULE_LOAD", em->name, 1);
-		 snprintf (buf, sizeof(buf), _("Loading Module: %s"), em->name);
-		 e_init_status_set(em->name);
+	     if (!em->name) continue;
+
+	     setenv("E_MODULE_LOAD", em->name, 1);
+	     snprintf (buf, sizeof(buf), _("Loading Module: %s"), em->name);
+	     e_init_status_set(em->name);
 
 	     m = e_module_new(em->name);
 	     if (m) e_module_enable(m);
 	  }
      }
-   
+
    if (!_e_modules_delayed)
-     {
-	ecore_event_add(E_EVENT_MODULE_INIT_END, NULL, NULL, NULL);
-     }
+     ecore_event_add(E_EVENT_MODULE_INIT_END, NULL, NULL, NULL);
+
    unsetenv("E_MODULE_LOAD");
 }
 
@@ -112,8 +109,8 @@ EAPI E_Module *
 e_module_new(const char *name)
 {
    E_Module *m;
-   char buf[4096];
-   char body[4096], title[1024];
+   char buf[PATH_MAX];
+   char body[PATH_MAX], title[1024];
    const char *modpath;
    char *s;
    Eina_List *l;
@@ -131,10 +128,10 @@ e_module_new(const char *name)
      modpath = eina_stringshare_add(name);
    if (!modpath)
      {
-	snprintf(body, sizeof(body), _("There was an error loading module named: %s<br>"
-				       "No module named %s could be found in the<br>"
-				       "module search directories.<br>"),
-				     name, buf);
+	snprintf(body, sizeof(body), 
+		 _("There was an error loading module named: %s<br>"
+		   "No module named %s could be found in the<br>"
+		   "module search directories.<br>"), name, buf);
 	_e_module_dialog_disable_show(_("Error loading Module"), body, m);
 	m->error = 1;
 	goto init_done;
@@ -142,12 +139,12 @@ e_module_new(const char *name)
    m->handle = dlopen(modpath, RTLD_NOW | RTLD_GLOBAL);
    if (!m->handle)
      {
-	snprintf(body, sizeof(body), _("There was an error loading module named: %s<br>"
-				       "The full path to this module is:<br>"
-				       "%s<br>"
-				       "The error reported was:<br>"
-				       "%s<br>"),
-				     name, buf, dlerror());
+	snprintf(body, sizeof(body), 
+		 _("There was an error loading module named: %s<br>"
+		   "The full path to this module is:<br>"
+		   "%s<br>"
+		   "The error reported was:<br>"
+		   "%s<br>"), name, buf, dlerror());
 	_e_module_dialog_disable_show(_("Error loading Module"), body, m);
 	m->error = 1;
 	goto init_done;
@@ -159,12 +156,13 @@ e_module_new(const char *name)
 
    if ((!m->func.init) || (!m->func.shutdown) || (!m->func.save) || (!m->api))
      {
-	snprintf(body, sizeof(body), _("There was an error loading module named: %s<br>"
-				       "The full path to this module is:<br>"
-				       "%s<br>"
-				       "The error reported was:<br>"
-				       "%s<br>"),
-				     name, buf, _("Module does not contain all needed functions"));
+	snprintf(body, sizeof(body), 
+		 _("There was an error loading module named: %s<br>"
+		   "The full path to this module is:<br>"
+		   "%s<br>"
+		   "The error reported was:<br>"
+		   "%s<br>"),
+		 name, buf, _("Module does not contain all needed functions"));
 	_e_module_dialog_disable_show(_("Error loading Module"), body, m);
 	m->api = NULL;
 	m->func.init = NULL;
@@ -178,12 +176,14 @@ e_module_new(const char *name)
      }
    if (m->api->version < E_MODULE_API_VERSION)
      {
-	snprintf(body, sizeof(body), _("Module API Error<br>Error initializing Module: %s<br>"
-				       "It requires a minimum module API version of: %i.<br>"
-				       "The module API advertized by Enlightenment is: %i.<br>"), 
-				     _(m->api->name), m->api->version, E_MODULE_API_VERSION);
+	snprintf(body, sizeof(body), 
+		 _("Module API Error<br>Error initializing Module: %s<br>"
+		   "It requires a minimum module API version of: %i.<br>"
+		   "The module API advertized by Enlightenment is: %i.<br>"), 
+		 _(m->api->name), m->api->version, E_MODULE_API_VERSION);
 
-	snprintf(title, sizeof(title), _("Enlightenment %s Module"), _(m->api->name));
+	snprintf(title, sizeof(title), _("Enlightenment %s Module"), 
+		 _(m->api->name));
 
 	_e_module_dialog_disable_show(title, body, m);
 	m->api = NULL;
@@ -377,7 +377,8 @@ e_module_dialog_show(E_Module *m, const char *title, const char *body)
    char buf[PATH_MAX];
    char *icon = NULL;
 
-   dia = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_module_dialog");
+   dia = e_dialog_new(e_container_current_get(e_manager_current_get()), 
+		      "E", "_module_dialog");
    if (!dia) return;
 
    e_dialog_title_set(dia, title);
@@ -406,7 +407,7 @@ e_module_dialog_show(E_Module *m, const char *title, const char *body)
      }
    else
      e_dialog_icon_set(dia, "preferences-plugin", 64);
-   
+
    e_dialog_text_set(dia, body);
    e_dialog_button_add(dia, _("OK"), NULL, NULL, NULL);
    e_dialog_button_focus_num(dia, 0);
@@ -424,7 +425,7 @@ e_module_delayed_set(E_Module *m, int delayed)
 {
    Eina_List *l;
    E_Config_Module *em;
-   
+
    EINA_LIST_FOREACH(e_config->modules, l, em)
      {
 	if (!em) continue;
@@ -470,7 +471,7 @@ _e_module_free(E_Module *m)
 {
    E_Config_Module *em;
    Eina_List *l;
-   
+
    EINA_LIST_FOREACH(e_config->modules, l, em)
      {
 	if (!em) continue;
@@ -499,10 +500,11 @@ static void
 _e_module_dialog_disable_show(const char *title, const char *body, E_Module *m)
 {
    E_Dialog *dia;
-   char buf[4096];
+   char buf[PATH_MAX];
 
    printf("MODULE ERR:\n%s\n", body);
-   dia = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_module_unload_dialog");
+   dia = e_dialog_new(e_container_current_get(e_manager_current_get()), 
+		      "E", "_module_unload_dialog");
    if (!dia) return;
 
    snprintf(buf, sizeof(buf), "%s<br>%s", body,
@@ -538,7 +540,8 @@ _e_module_cb_idler(void *data)
 	E_Module *m;
 
 	name = eina_list_data_get(_e_modules_delayed);
-	_e_modules_delayed = eina_list_remove_list(_e_modules_delayed, _e_modules_delayed);
+	_e_modules_delayed = 
+	  eina_list_remove_list(_e_modules_delayed, _e_modules_delayed);
 	m = NULL;
 	if (name) m = e_module_new(name);
 	if (m) e_module_enable(m);
@@ -546,8 +549,8 @@ _e_module_cb_idler(void *data)
      }
    if (_e_modules_delayed)
      {
-       e_util_wakeup();
-       return 1;
+	e_util_wakeup();
+	return 1;
      }
 
    ecore_event_add(E_EVENT_MODULE_INIT_END, NULL, NULL, NULL);
@@ -571,7 +574,7 @@ static void
 _e_module_event_update_free(void *data, void *event) 
 {
    E_Event_Module_Update *ev;
-   
+
    if (!(ev = event)) return;
    E_FREE(ev->name);
    E_FREE(ev);
