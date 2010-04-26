@@ -227,10 +227,10 @@ _config_init()
    if (evry_conf && evry_conf->version == 9)
      {
        evry_conf->first_run = EINA_TRUE;
-       evry_conf->version = 11;
+       evry_conf->version = 12;
      }
 
-   if (evry_conf && evry_conf->version <= 12)
+   if (evry_conf && evry_conf->version == 12)
      {
        Plugin_Config *pc;
        Eina_List *conf[3];
@@ -250,13 +250,13 @@ _config_init()
 	      }
 	 }
        evry_conf->conf_subjects = NULL;
-       evry_conf->conf_actions = NULL;
-       evry_conf->conf_objects = NULL;
+       evry_conf->conf_actions  = NULL;
+       evry_conf->conf_objects  = NULL;
 
        evry_conf->version = 13;
      }
 
-   if (evry_conf && evry_conf->version <= 13)
+   if (evry_conf && evry_conf->version == 13)
      {
 	evry_conf->hide_list = 0;
 	evry_conf->version = CONFIG_VERSION;

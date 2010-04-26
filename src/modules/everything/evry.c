@@ -191,6 +191,9 @@ evry_show(E_Zone *zone, const char *params)
 
    evry_history_load();
 
+   if (params)
+     win->plugin_dedicated = EINA_TRUE;
+
    selectors = E_NEW(Evry_Selector*, 3);
    selectors[0] = _evry_selector_new(type_subject);
    selectors[1] = _evry_selector_new(type_action);
@@ -212,9 +215,6 @@ evry_show(E_Zone *zone, const char *params)
    e_popup_layer_set(win->popup, 255);
    e_popup_show(win->popup);
    e_popup_show(list->popup);
-
-   if (params)
-     win->plugin_dedicated = EINA_TRUE;
 
    _evry_selector_subjects_get(params);
    _evry_selector_update(selectors[0]);
@@ -548,6 +548,10 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
 	       }
 	  }
 
+	if (s->sel_items)
+	  eina_list_free(s->sel_items);
+	s->sel_items = NULL;
+	
 	/* plugin is visible */
 	if ((s->plugin == p) || (s->plugin == agg))
 	  {
@@ -786,7 +790,7 @@ _evry_selector_new(int type)
 
    EINA_LIST_FOREACH(pcs, l, pc)
      {
-	if (!pc->enabled) continue;
+	if (!pc->enabled && !win->plugin_dedicated) continue;
 	if (!pc->plugin) continue;
 	if (pc->plugin == sel->aggregator) continue;
 	sel->plugins = eina_list_append(sel->plugins, pc->plugin);
@@ -1409,10 +1413,6 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	  key = eina_stringshare_add("Up");
 	else if (!strcmp(ev->key, "n") || (!strcmp(ev->key, "N")))
 	  key = eina_stringshare_add("Down");
-	/* else if (!strcmp(ev->key, "f") || (!strcmp(ev->key, "f")))
-	 *   key = eina_stringshare_add("Next");
-	 * else if (!strcmp(ev->key, "b") || (!strcmp(ev->key, "B")))
-	 *   key = eina_stringshare_add("Prior"); */
 	else if (!strcmp(ev->key, "f") || (!strcmp(ev->key, "F")))
 	  key = eina_stringshare_add("Right");
 	else if (!strcmp(ev->key, "b") || (!strcmp(ev->key, "B")))
