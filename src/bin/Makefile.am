@@ -17,8 +17,7 @@ INCLUDES = -I$(top_srcdir) \
 bin_PROGRAMS = \
 enlightenment \
 enlightenment_imc \
-enlightenment_start \
-enlightenment_fm_open
+enlightenment_start
 
 internal_bindir = $(libdir)/enlightenment/utils
 internal_bin_PROGRAMS = \
@@ -349,13 +348,6 @@ e_fm_op.c
 
 enlightenment_fm_op_LDADD = @E_FM_OP_LIBS@
 enlightenment_fm_op_CFLAGS = $(INCLUDES)
-
-enlightenment_fm_open_SOURCES = \
-e_fm_open.c \
-e_ipc_codec.c
-
-enlightenment_fm_open_LDADD = @E_FM_OPEN_LIBS@
-enlightenment_fm_open_CFLAGS = $(INCLUDES)
 
 enlightenment_sys_SOURCES = \
 e_sys_main.c
