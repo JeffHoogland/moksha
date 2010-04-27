@@ -169,9 +169,12 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
                             free(d);
                          }
                        
-                       E_FREE(req->str1);
-                       E_FREE(req->str2);
-                       E_FREE(req);
+                       if (req)
+                         {
+                            E_FREE(req->str1);
+                            E_FREE(req->str2);
+                            E_FREE(req);
+                         }
                     }
                }
              break;
