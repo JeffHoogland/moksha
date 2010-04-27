@@ -921,6 +921,7 @@ _e_desktop_editor_icon_update(E_Config_Dialog_Data *cfdata)
 
    /* NB this takes care of freeing any previous icon object */
    e_widget_button_icon_set(cfdata->editor->img_widget, o);
+   e_widget_change(cfdata->editor->img_widget);
 }
 
 static void
