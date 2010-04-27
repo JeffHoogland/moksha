@@ -276,6 +276,7 @@ check(void)
    char buf[PATH_MAX];
 #ifdef __FreeBSD__
    int len;
+   size_t ftemp = 0;
 #endif
               
    /* TODO: Make standard parser. Seems to be two types of temperature string:
@@ -290,9 +291,9 @@ check(void)
       case SENSOR_TYPE_FREEBSD:
 #ifdef __FreeBSD__
 	len = sizeof(temp);
-	if (sysctl(mib, 5, &temp, &len, NULL, 0) != -1)
+	if (sysctl(mib, 5, &ftemp, &len, NULL, 0) != -1)
 	  {
-	     temp = (temp - 2732) / 10;
+	     temp = (ftemp - 2732) / 10;
 	     ret = 1;
 	  }
 	else
