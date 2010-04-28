@@ -3,7 +3,7 @@
 
 #include "e.h"
 
-#define EVRY_API_VERSION 8
+#define EVRY_API_VERSION 9
 
 #define EVRY_ACTION_OTHER 0
 #define EVRY_ACTION_FINISHED 1
@@ -43,24 +43,30 @@ extern int _e_module_evry_log_dom;
 #define WRN(...) EINA_LOG_DOM_WARN(_e_module_evry_log_dom , __VA_ARGS__)
 #define ERR(...) EINA_LOG_DOM_ERR(_e_module_evry_log_dom , __VA_ARGS__)
 
-typedef struct _Evry_Plugin    Evry_Plugin;
-typedef struct _Evry_Item      Evry_Item;
-typedef struct _Evry_Item_App  Evry_Item_App;
-typedef struct _Evry_Item_File Evry_Item_File;
-typedef struct _Evry_Action    Evry_Action;
-typedef struct _Evry_State     Evry_State;
-typedef struct _Evry_View      Evry_View;
-typedef struct _History Evry_History;
-typedef struct _History_Entry History_Entry;
-typedef struct _History_Item   History_Item;
-typedef struct _Config Evry_Config;
-typedef struct _Plugin_Config  Plugin_Config;
-typedef struct _Plugin_Setting  Plugin_Setting;
+typedef struct _Evry_Plugin		Evry_Plugin;
+typedef struct _Evry_Item		Evry_Item;
+typedef struct _Evry_Item_App		Evry_Item_App;
+typedef struct _Evry_Item_File		Evry_Item_File;
+typedef struct _Evry_Action		Evry_Action;
+typedef struct _Evry_State		Evry_State;
+typedef struct _Evry_View		Evry_View;
+typedef struct _History			Evry_History;
+typedef struct _History_Entry		History_Entry;
+typedef struct _History_Item		History_Item;
+typedef struct _Config			Evry_Config;
+typedef struct _Plugin_Config		Plugin_Config;
+typedef struct _Plugin_Setting		Plugin_Setting;
+typedef struct _Evry_Event_Item_Changed Evry_Event_Item_Changed;
+
+typedef int Evry_Type;
 
 #define EVRY_ITEM(_item) ((Evry_Item *)_item)
 #define EVRY_ACTN(_item) ((Evry_Action *) _item)
 #define EVRY_PLUGIN(_plugin) ((Evry_Plugin *) _plugin)
 #define EVRY_VIEW(_view) ((Evry_View *) _view)
+
+#define CHECK_TYPE(_item, _type) (((Evry_Item *)_item)->type == _type)
+#define CHECK_SUBTYPE(_item, _type) (((Evry_Item *)_item)->subtype == _type)
 
 #define GET_APP(_app, _item) Evry_Item_App *_app = (Evry_Item_App *) _item
 #define GET_FILE(_file, _item) Evry_Item_File *_file = (Evry_Item_File *) _item
@@ -142,10 +148,11 @@ struct _Evry_Item
    * was performed on a file with a specific mimetype */
   const char *context;
 
-  const char *type;
+  /* is set to type of Evry_Plugin by default */
+  Evry_Type type;
 
   /* optional */
-  const char *subtype;
+  Evry_Type subtype;
 
   Eina_List *items;
 
@@ -170,15 +177,15 @@ struct _Evry_Action
   struct 
   {
     const Evry_Item *item;
-    const char *type;
-    const char *subtype;
+    Evry_Type type;
+    Evry_Type subtype;
   } it1;
 
   struct 
   {
     const Evry_Item *item;
-    const char *type;
-    const char *subtype;
+    Evry_Type type;
+    Evry_Type subtype;
   } it2;
 
   int  (*action)     (Evry_Action *act);
@@ -310,6 +317,10 @@ struct _Evry_View
   int priority;
 };
 
+struct _Evry_Event_Item_Changed
+{
+  Evry_Item *item;
+};
 
 /* FIXME this should be exposed.
    - add functions to retrieve this stuff */
@@ -409,7 +420,7 @@ EAPI Evry_Item *evry_item_new(Evry_Item *base, Evry_Plugin *p, const char *label
 			      void (*cb_free) (Evry_Item *item));
 EAPI void evry_item_free(Evry_Item *it);
 EAPI void evry_item_ref(Evry_Item *it);
-EAPI int  evry_item_type_check(const Evry_Item *it, const char *type, const char *subtype);
+
 EAPI void evry_plugin_async_update(Evry_Plugin *plugin, int state);
 EAPI void evry_clear_input(Evry_Plugin *p);
 
@@ -440,7 +451,7 @@ EAPI History_Item *evry_history_add(Eina_Hash *hist, Evry_Item *it, const char *
 EAPI int  evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, const char *ctxt);
 
 EAPI Evry_Plugin *evry_plugin_new(Evry_Plugin *base, const char *name, const char *label, const char *icon,
-				  const char *item_type,
+				  Evry_Type item_type,
 				  Evry_Plugin *(*begin) (Evry_Plugin *p, const Evry_Item *item),
 				  void (*cleanup) (Evry_Plugin *p),
 				  int  (*fetch)   (Evry_Plugin *p, const char *input),
@@ -449,7 +460,7 @@ EAPI Evry_Plugin *evry_plugin_new(Evry_Plugin *base, const char *name, const cha
 EAPI void evry_plugin_free(Evry_Plugin *p);
 
 EAPI Evry_Action *evry_action_new(const char *name, const char *label,
-				  const char *type_in1, const char *type_in2,
+				  Evry_Type type1, Evry_Type type2,
 				  const char *icon,
 				  int  (*action)     (Evry_Action *act),
 				  int  (*check_item) (Evry_Action *act, const Evry_Item *it));
@@ -458,24 +469,20 @@ EAPI void evry_action_free(Evry_Action *act);
 
 EAPI int evry_api_version_check(int version);
 
-typedef struct _Evry_Event_Item_Changed Evry_Event_Item_Changed;
-
-struct _Evry_Event_Item_Changed
-{
-  Evry_Item *item;
-};
+EAPI Evry_Type evry_type_register(const char *type);
+EAPI const char *evry_type_get(Evry_Type type);
 
 EAPI extern int EVRY_EVENT_ITEM_SELECT;
 EAPI extern int EVRY_EVENT_ITEM_CHANGED;
 EAPI extern int EVRY_EVENT_ITEMS_UPDATE;
 
-EAPI extern const char *EVRY_TYPE_FILE;
-EAPI extern const char *EVRY_TYPE_APP;
-EAPI extern const char *EVRY_TYPE_ACTION;
-EAPI extern const char *EVRY_TYPE_PLUGIN;
-EAPI extern const char *EVRY_TYPE_NONE;
-EAPI extern const char *EVRY_TYPE_BORDER;
-EAPI extern const char *EVRY_TYPE_TEXT;
+EAPI extern Evry_Type EVRY_TYPE_NONE;
+EAPI extern Evry_Type EVRY_TYPE_FILE;
+EAPI extern Evry_Type EVRY_TYPE_APP;
+EAPI extern Evry_Type EVRY_TYPE_ACTION;
+EAPI extern Evry_Type EVRY_TYPE_PLUGIN;
+EAPI extern Evry_Type EVRY_TYPE_BORDER;
+EAPI extern Evry_Type EVRY_TYPE_TEXT;
 
 EAPI extern Evry_History *evry_hist;
 EAPI extern Evry_Config *evry_conf;

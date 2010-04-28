@@ -20,7 +20,7 @@ _animator(void *data)
    Tab_View *v = data;
 
    double da;
-   double spd = (5.0 / (double)e_config->framerate);
+   double spd = (8.0 / (double)e_config->framerate);
    if (spd > 0.9) spd = 0.9;
    int wait = 0;
 

@@ -439,7 +439,7 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
    Plugin *p = NULL;
 
    /* is FILE ? */
-   if (it && evry_item_type_check(it, EVRY_TYPE_FILE, NULL))
+   if (it && CHECK_TYPE(it, EVRY_TYPE_FILE))
      {
 	GET_FILE(file, it);
 
@@ -486,7 +486,7 @@ _hist_add(Evry_Plugin *plugin, Evry_Item_File *file)
 
    EINA_LIST_FOREACH(he->items, l, hi)
      {
-	if (hi->type != EVRY_TYPE_FILE)
+	if (hi->type != evry_type_get(EVRY_TYPE_FILE))
 	  continue;
 
 	if (hi->data)
@@ -620,7 +620,7 @@ _hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fda
 
    EINA_LIST_FOREACH(he->items, l, hi)
      {
-	if (hi->type != EVRY_TYPE_FILE)
+	if (hi->type != evry_type_get(EVRY_TYPE_FILE))
 	  continue;
 
 	/* filter out files that we already have from history */
@@ -998,23 +998,23 @@ _plugins_init(void)
    p2->config_path = "extensions/everything-files";
    evry_plugin_register(p2, EVRY_PLUGIN_OBJECT, 1);
 
-   act = EVRY_ACTION_NEW(N_("Open Folder (EFM)"), EVRY_TYPE_FILE, NULL, "folder-open",
+   act = EVRY_ACTION_NEW(N_("Open Folder (EFM)"), EVRY_TYPE_FILE, 0, "folder-open",
 			  _open_folder_action, _open_folder_check);
    evry_action_register(act, 0);
    _actions = eina_list_append(_actions, act);
 
-   act = EVRY_ACTION_NEW(N_("Open Terminal here"), EVRY_TYPE_FILE, NULL, "system-run",
+   act = EVRY_ACTION_NEW(N_("Open Terminal here"), EVRY_TYPE_FILE, 0, "system-run",
 			  _open_term_action, NULL);
    evry_action_register(act, 2);
    _actions = eina_list_append(_actions, act);
 
-   act = EVRY_ACTION_NEW(N_("Move to Trash"), EVRY_TYPE_FILE, NULL, "edit-delete",
+   act = EVRY_ACTION_NEW(N_("Move to Trash"), EVRY_TYPE_FILE, 0, "edit-delete",
 			  _file_trash_action, NULL);
    EVRY_ITEM_DATA_INT_SET(act, ACT_TRASH);
    evry_action_register(act, 2);
    _actions = eina_list_append(_actions, act);
 
-   act = EVRY_ACTION_NEW(N_("Delete"), EVRY_TYPE_FILE, NULL, "list-remove",
+   act = EVRY_ACTION_NEW(N_("Delete"), EVRY_TYPE_FILE, 0, "list-remove",
 			 _file_trash_action, NULL);
    EVRY_ITEM_DATA_INT_SET(act, ACT_DELETE);
    evry_action_register(act, 2);

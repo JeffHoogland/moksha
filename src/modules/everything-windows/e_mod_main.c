@@ -343,7 +343,7 @@ _plugins_init(void)
    if (!evry_api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
-   p1 = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Windows"), NULL, "BORDER",
+   p1 = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Windows"), NULL, EVRY_TYPE_BORDER,
 			_begin, _cleanup, _fetch, NULL);
 
    p1->transient = EINA_TRUE;
@@ -351,7 +351,7 @@ _plugins_init(void)
 
 
    act = EVRY_ACTION_NEW(_("Switch to Window"),
-			 "BORDER", NULL, "go-next",
+			 EVRY_TYPE_BORDER, 0, "go-next",
 			 _act_border, _check_border);
    EVRY_ITEM_DATA_INT_SET(act, BORDER_SHOW);
    evry_action_register(act, 1);
@@ -359,28 +359,28 @@ _plugins_init(void)
    _actions = eina_list_append(_actions, act);
 
    act = EVRY_ACTION_NEW(_("Iconify"),
-			 "BORDER", NULL, "iconic",
+			 EVRY_TYPE_BORDER, 0, "iconic",
 			 _act_border, _check_border);
    EVRY_ITEM_DATA_INT_SET(act, BORDER_HIDE);
    _actions = eina_list_append(_actions, act);
    evry_action_register(act, 2);
 
    act = EVRY_ACTION_NEW(_("Toggle Fullscreen"),
-			 "BORDER", NULL, "view-fullscreen",
+			 EVRY_TYPE_BORDER, 0, "view-fullscreen",
 			 _act_border, _check_border);
    EVRY_ITEM_DATA_INT_SET(act, BORDER_FULLSCREEN);
    _actions = eina_list_append(_actions, act);
    evry_action_register(act, 4);
 
    act = EVRY_ACTION_NEW(_("Close"),
-			 "BORDER", NULL, "view-fullscreen",
+			 EVRY_TYPE_BORDER, 0, "view-fullscreen",
 			 _act_border, _check_border);
    EVRY_ITEM_DATA_INT_SET(act, BORDER_CLOSE);
    _actions = eina_list_append(_actions, act);
    evry_action_register(act, 3);
 
    act = EVRY_ACTION_NEW(_("Send to Desktop"),
-			 "BORDER", NULL, "go-previous",
+			 EVRY_TYPE_BORDER, 0, "go-previous",
 			 _act_border, _check_border);
    EVRY_ITEM_DATA_INT_SET(act, BORDER_TODESK);
    _actions = eina_list_append(_actions, act);

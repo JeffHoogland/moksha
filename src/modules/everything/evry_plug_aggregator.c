@@ -269,7 +269,7 @@ evry_plug_aggregator_new(Evry_Selector *sel, int type)
 {
    Evry_Plugin *p;
 
-   p = EVRY_PLUGIN_NEW(Plugin, N_("All"), NULL, NULL, NULL, _finish, _fetch, NULL);
+   p = EVRY_PLUGIN_NEW(Plugin, N_("All"), NULL, 0, NULL, _finish, _fetch, NULL);
 
    p->history = EINA_FALSE;
    evry_plugin_register(p, type, -1);

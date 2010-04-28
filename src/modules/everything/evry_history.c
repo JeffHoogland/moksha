@@ -245,7 +245,7 @@ evry_history_add(Eina_Hash *hist, Evry_Item *it, const char *ctxt, const char *i
 	hi = E_NEW(History_Item, 1);
 	hi->plugin = eina_stringshare_ref(it->plugin->name);
 	if (it->type)
-	  hi->type  = eina_stringshare_ref(it->type);
+	  hi->type  = eina_stringshare_ref(evry_type_get(it->type));
 	he->items = eina_list_append(he->items, hi);
      }
 
@@ -256,10 +256,6 @@ evry_history_add(Eina_Hash *hist, Evry_Item *it, const char *ctxt, const char *i
 	hi->usage += TIME_FACTOR(hi->last_used);
 	hi->transient = it->plugin->transient;
 	hi->count += (hi->transient ? 2:1);
-
-	/* XXX can be remove just for update */
-	if (it->type && !hi->type)
-	  hi->type = eina_stringshare_ref(it->type);
 
 	if (ctxt && !hi->context)
 	  hi->context = eina_stringshare_ref(ctxt);

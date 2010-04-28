@@ -323,7 +323,8 @@ evry_item_new(Evry_Item *base, Evry_Plugin *p, const char *label,
      }
 
    if (p && EVRY_ITEM(p)->subtype)
-     it->type = eina_stringshare_ref(EVRY_ITEM(p)->subtype);
+     it->type = EVRY_ITEM(p)->subtype;
+
    it->plugin = p;
 
    if (label) it->label = eina_stringshare_add(label);
@@ -331,7 +332,6 @@ evry_item_new(Evry_Item *base, Evry_Plugin *p, const char *label,
    it->icon_get = icon_get;
 
    it->ref = 1;
-   /* it->usage = -1; */
 
 #ifdef CHECK_REFS
    item_cnt++;
@@ -361,35 +361,11 @@ evry_item_free(Evry_Item *it)
    if (it->id) eina_stringshare_del(it->id);
    if (it->context) eina_stringshare_del(it->context);
    if (it->detail) eina_stringshare_del(it->detail);
-   if (it->type) eina_stringshare_del(it->type);
 
    if (it->free)
      it->free(it);
    else
      E_FREE(it);
-}
-
-EAPI int
-evry_item_type_check(const Evry_Item *it, const char *type, const char *subtype)
-{
-   int ok = 0;
-
-   if (it)
-     {
-	if (type)
-	  {
-	     if (it->type && type)
-	       ok = (!strcmp(it->type, type));
-	  }
-
-	if (!(type && !ok) || subtype)
-	  {
-	     if (it->subtype && subtype)
-	       ok = (!strcmp(it->subtype, subtype));
-	  }
-     }
-
-   return ok;
 }
 
 static Evry_Selector *
@@ -1144,7 +1120,7 @@ _evry_selector_objects_get(Evry_Action *act)
 
    EINA_LIST_FOREACH(sel->plugins, l, p)
      {
-	if (!evry_item_type_check(EVRY_ITEM(p), NULL, act->it2.type))
+	if (!CHECK_SUBTYPE(p, act->it2.type))
 	  continue;
 
 	if (p->begin)
@@ -1734,8 +1710,8 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
    if (!(it_act = s_act->cur_item))
      return;
 
-   if (evry_item_type_check(it_act, EVRY_TYPE_ACTION, NULL) ||
-       evry_item_type_check(it_act, NULL, EVRY_TYPE_ACTION))
+   if (CHECK_TYPE(it_act, EVRY_TYPE_ACTION) ||
+       CHECK_SUBTYPE(it_act, EVRY_TYPE_ACTION))
      {
 	GET_ACTION(act, it_act);
 

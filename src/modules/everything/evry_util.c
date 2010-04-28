@@ -382,7 +382,7 @@ evry_util_icon_get(Evry_Item *it, Evas *e)
    if (!o && it->icon)
      o = evry_icon_theme_get(it->icon, e);
 
-   if (evry_item_type_check(it, EVRY_TYPE_FILE, NULL))
+   if (CHECK_TYPE(it, EVRY_TYPE_FILE))
      o = _file_icon_get(it, e);
    
    /* TODO default type: files, apps */

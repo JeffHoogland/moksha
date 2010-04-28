@@ -75,7 +75,7 @@ _begin_open_with(Evry_Plugin *plugin, const Evry_Item *item)
 
    const char *mime;
 
-   if (!evry_item_type_check(item, EVRY_TYPE_FILE, NULL))
+   if (!CHECK_TYPE(item, EVRY_TYPE_FILE))
      return 0;
    
    GET_FILE(file, item);
@@ -746,7 +746,7 @@ _complete(Evry_Plugin *plugin, const Evry_Item *it, char **input)
 static int
 _exec_app_check_item(Evry_Action *act, const Evry_Item *it)
 {
-   /* if (!evry_item_type_check(it, EVRY_TYPE_APP, NULL)) return 0; */
+   /* if (!CHECK_TYPE(it, EVRY_TYPE_APP, NULL)) return 0; */
    
    /* ITEM_APP(app, it); */
 
@@ -958,7 +958,7 @@ _plugins_init(void)
    plug_action = p;
 
    act = EVRY_ACTION_NEW(N_("Launch"),
-			 EVRY_TYPE_APP, NULL,
+			 EVRY_TYPE_APP, 0,
 			 "everything-launch",
 			 _exec_app_action,
 			 _exec_app_check_item);
@@ -972,28 +972,28 @@ _plugins_init(void)
    _actions = eina_list_append(_actions, act); 
    
    act = EVRY_ACTION_NEW(N_("Run in Terminal"),
-			 EVRY_TYPE_APP, NULL,
+			 EVRY_TYPE_APP, 0,
 			 "system-run",
 			 _exec_term_action,
 			 _exec_term_check_item);
    _actions = eina_list_append(_actions, act); 
    
    act = EVRY_ACTION_NEW(N_("Edit Application Entry"),
-			 EVRY_TYPE_APP, NULL,
+			 EVRY_TYPE_APP, 0,
 			 "everything-launch",
 			 _edit_app_action,
 			 _edit_app_check_item);
    _actions = eina_list_append(_actions, act);
    
    act = EVRY_ACTION_NEW(N_("New Application Entry"),
-			 EVRY_TYPE_APP, NULL,
+			 EVRY_TYPE_APP, 0,
 			 "everything-launch",
 			 _new_app_action,
 			 _new_app_check_item);
    _actions = eina_list_append(_actions, act);
    
    act = EVRY_ACTION_NEW(N_("Run with Sudo"),
-			 EVRY_TYPE_APP, NULL,
+			 EVRY_TYPE_APP, 0,
 			 "system-run",
 			 _exec_sudo_action, NULL);
    _actions = eina_list_append(_actions, act);

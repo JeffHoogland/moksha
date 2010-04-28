@@ -39,13 +39,13 @@ EAPI int EVRY_EVENT_ITEM_SELECT;
 EAPI int EVRY_EVENT_ITEM_CHANGED;
 EAPI int EVRY_EVENT_ITEMS_UPDATE;
 
-EAPI const char *EVRY_TYPE_FILE;
-EAPI const char *EVRY_TYPE_APP;
-EAPI const char *EVRY_TYPE_ACTION;
-EAPI const char *EVRY_TYPE_PLUGIN;
-EAPI const char *EVRY_TYPE_NONE;
-EAPI const char *EVRY_TYPE_BORDER;
-EAPI const char *EVRY_TYPE_TEXT;
+EAPI Evry_Type EVRY_TYPE_FILE;
+EAPI Evry_Type EVRY_TYPE_APP;
+EAPI Evry_Type EVRY_TYPE_ACTION;
+EAPI Evry_Type EVRY_TYPE_PLUGIN;
+EAPI Evry_Type EVRY_TYPE_NONE;
+EAPI Evry_Type EVRY_TYPE_BORDER;
+EAPI Evry_Type EVRY_TYPE_TEXT;
 
 /* module setup */
 EAPI E_Module_Api e_modapi =
@@ -53,6 +53,42 @@ EAPI E_Module_Api e_modapi =
     E_MODULE_API_VERSION,
     "Everything"
   };
+
+static Eina_List *_evry_types = NULL;
+
+EAPI Evry_Type
+evry_type_register(const char *type)
+{
+   const char *t = eina_stringshare_add(type);
+   Evry_Type ret = 0;
+   const char *i;
+   Eina_List *l;
+   
+   EINA_LIST_FOREACH(_evry_types, l, i)
+     {
+	if (i == t) break;
+	ret++;
+     }
+
+   if(!l)
+     {
+	_evry_types = eina_list_append(_evry_types, t);
+	return ret;
+     }
+   eina_stringshare_del(t);
+   
+   return ret;
+}
+
+EAPI const char *
+evry_type_get(Evry_Type type)
+{
+   const char *ret = eina_list_nth(_evry_types, type - 1);
+   if (!ret)
+     return eina_stringshare_add(""); 
+
+   return ret;
+}
 
 EAPI void *
 e_modapi_init(E_Module *m)
@@ -66,6 +102,14 @@ e_modapi_init(E_Module *m)
 	  ("impossible to create a log domain for everything module");
 	return NULL;
      }
+
+   EVRY_TYPE_NONE   = evry_type_register("NONE");
+   EVRY_TYPE_FILE   = evry_type_register("FILE");
+   EVRY_TYPE_APP    = evry_type_register("APPLICATION");
+   EVRY_TYPE_ACTION = evry_type_register("ACTION");
+   EVRY_TYPE_PLUGIN = evry_type_register("PLUGIN");
+   EVRY_TYPE_BORDER = evry_type_register("BORDER");
+   EVRY_TYPE_TEXT   = evry_type_register("TEXT");
 
    _config_init();
    evry_history_init();
@@ -106,14 +150,6 @@ e_modapi_init(E_Module *m)
    if (!EVRY_EVENT_ITEM_CHANGED)
      EVRY_EVENT_ITEM_CHANGED = ecore_event_type_new();
 
-   EVRY_TYPE_FILE   = eina_stringshare_add("EVRY_FILE");
-   EVRY_TYPE_APP    = eina_stringshare_add("EVRY_APP");
-   EVRY_TYPE_ACTION = eina_stringshare_add("EVRY_ACTN");
-   EVRY_TYPE_PLUGIN = eina_stringshare_add("EVRY_PLUG");
-   EVRY_TYPE_NONE   = eina_stringshare_add("EVRY_NONE");
-   EVRY_TYPE_BORDER = eina_stringshare_add("EVRY_BORDER");
-   EVRY_TYPE_TEXT   = eina_stringshare_add("EVRY_TEXT");
-
    e_module_delayed_set(m, 0);
 
    /* make sure module is loaded before others */
@@ -128,6 +164,8 @@ EAPI int
 e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    E_Config_Dialog *cfd;
+   const char *t;
+   
    evry_shutdown();
 
    view_thumb_shutdown();
@@ -139,13 +177,8 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    _config_free();
    evry_history_free();
 
-   eina_stringshare_del(EVRY_TYPE_FILE);
-   eina_stringshare_del(EVRY_TYPE_APP);
-   eina_stringshare_del(EVRY_TYPE_ACTION);
-   eina_stringshare_del(EVRY_TYPE_PLUGIN);
-   eina_stringshare_del(EVRY_TYPE_NONE);
-   eina_stringshare_del(EVRY_TYPE_BORDER);
-   eina_stringshare_del(EVRY_TYPE_TEXT);
+   EINA_LIST_FREE(_evry_types, t)
+     eina_stringshare_del(t);
    
    e_configure_registry_item_del("extensions/run_everything");
    e_configure_registry_category_del("extensions");
@@ -445,7 +478,7 @@ _evry_plugin_free(Evry_Item *it)
 
 Evry_Plugin *
 evry_plugin_new(Evry_Plugin *base, const char *name, const char *label,
-		const char *icon, const char *item_type,
+		const char *icon, Evry_Type item_type,
 		Evry_Plugin *(*begin) (Evry_Plugin *p, const Evry_Item *item),
 		void (*finish) (Evry_Plugin *p),
 		int  (*fetch) (Evry_Plugin *p, const char *input),
@@ -461,10 +494,10 @@ evry_plugin_new(Evry_Plugin *base, const char *name, const char *label,
    evry_item_new(EVRY_ITEM(p), NULL, label, NULL, _evry_plugin_free);
 
    p->base.icon  = icon;
-   p->base.type  = eina_stringshare_ref(EVRY_TYPE_PLUGIN);
+   p->base.type  = EVRY_TYPE_PLUGIN;
 
    if (item_type)
-     p->base.subtype = eina_stringshare_add(item_type);
+     p->base.subtype = item_type;
 
    p->name = eina_stringshare_add(name);
    p->begin  = begin;
