@@ -168,11 +168,19 @@ struct _Evry_Action
   /* identifier */
   const char *name;
 
-  const char *type_in1;
-  const char *type_in2;
+  struct 
+  {
+    const Evry_Item *item;
+    const char *type;
+    const char *subtype;
+  } it1;
 
-  const Evry_Item *item1;
-  const Evry_Item *item2;
+  struct 
+  {
+    const Evry_Item *item;
+    const char *type;
+    const char *subtype;
+  } it2;
 
   int  (*action)     (Evry_Action *act);
   int  (*check_item) (Evry_Action *act, const Evry_Item *it);

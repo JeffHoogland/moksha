@@ -286,7 +286,7 @@ _act_border(Evry_Action *act)
 {
    int action = EVRY_ITEM_DATA_INT_GET(act);
 
-   E_Border *bd = act->item1->data;
+   E_Border *bd = act->it1.item->data;
    E_Zone *zone = e_util_zone_current_get(e_manager_current_get());
 
    int focus = 0;

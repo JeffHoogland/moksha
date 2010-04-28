@@ -1203,8 +1203,6 @@ _evry_state_pop(Evry_Selector *sel)
    EINA_LIST_FREE(s->plugins, p)
      p->finish(p);
 
-   /* sel->aggregator->finish(sel->aggregator); */
-
    if (s->sel_items)
      eina_list_free(s->sel_items);
 

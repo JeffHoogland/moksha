@@ -7,7 +7,7 @@ static Ecore_X_Window clipboard_win = 0;
 static int
 _action(Evry_Action *act)
 {
-   const Evry_Item *it = act->item1;
+   const Evry_Item *it = act->it1.item;
 
    ecore_x_selection_primary_set(clipboard_win, it->label, strlen(it->label));
    ecore_x_selection_clipboard_set(clipboard_win, it->label, strlen(it->label));

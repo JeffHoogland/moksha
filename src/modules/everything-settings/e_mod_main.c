@@ -91,7 +91,7 @@ _action(Evry_Action *act)
    char buf[1024];
    int found = 0;
 
-   eci = act->item1->data;
+   eci = act->it1.item->data;
    con = e_container_current_get(e_manager_current_get());
 
    EINA_LIST_FOREACH(e_configure_registry, l, ecat)

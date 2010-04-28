@@ -65,8 +65,8 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
 
    EINA_LIST_FOREACH(evry_conf->actions, l, act)
      {
-	if ((!act->type_in1) ||
-	    ((act->type_in1 == type) &&
+	if ((!act->it1.type) ||
+	    ((act->it1.type == type) &&
 	     (!act->check_item || act->check_item(act, it))))
 	  {
 	     act->base.plugin = plugin;
@@ -193,8 +193,8 @@ _action_free_cb(Evry_Item *it)
    GET_ACTION(act, it);
 
    if (act->name)     eina_stringshare_del(act->name);
-   if (act->type_in1) eina_stringshare_del(act->type_in1);
-   if (act->type_in2) eina_stringshare_del(act->type_in2);
+   if (act->it1.type) eina_stringshare_del(act->it1.type);
+   if (act->it2.type) eina_stringshare_del(act->it2.type);
 
    E_FREE(act);
 }
@@ -214,8 +214,8 @@ evry_action_new(const char *name, const char *label,
 
    act->name = eina_stringshare_add(name);
 
-   act->type_in1 = (type_in1 ? eina_stringshare_add(type_in1) : NULL);
-   act->type_in2 = (type_in2 ? eina_stringshare_add(type_in2) : NULL);
+   act->it1.type = (type_in1 ? eina_stringshare_add(type_in1) : NULL);
+   act->it2.type = (type_in2 ? eina_stringshare_add(type_in2) : NULL);
 
    act->action = action;
    act->check_item = check_item;

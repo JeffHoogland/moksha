@@ -112,8 +112,6 @@ EAPI int
 e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    E_Config_Dialog *cfd;
-   printf("________________________________________________\n");
-
    evry_shutdown();
 
    view_thumb_shutdown();
@@ -148,7 +146,6 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    E_CONFIG_DD_FREE(plugin_conf_edd);
    E_CONFIG_DD_FREE(plugin_setting_edd);
    e_datastore_del("everything_loaded");
-   printf("________________________________________________\n");
    return 1;
 }
 
@@ -500,6 +497,11 @@ evry_plugin_register(Evry_Plugin *p, int type, int priority)
 	  }
 	conf[type] = eina_list_append(conf[type], pc);
      }
+   if (pc->trigger && strlen(pc->trigger) == 0)
+     {
+	eina_stringshare_del(pc->trigger);
+	pc->trigger = NULL;
+     }
 
    p->config = pc;
    pc->plugin = p;
@@ -531,10 +533,10 @@ evry_plugin_unregister(Evry_Plugin *p)
 
    if (l && eina_list_data_find_list(l, p->config))
      {
-	/* char buf[256];
-   	 * snprintf(buf, sizeof(buf), _("Show %s Plugin"), p->name);
-   	 * 
-   	 * e_action_predef_name_del(_("Everything"), buf); */
+	char buf[256];
+   	snprintf(buf, sizeof(buf), _("Show %s Plugin"), p->name);
+   	
+   	e_action_predef_name_del(_("Everything"), buf);
      }
 }
 

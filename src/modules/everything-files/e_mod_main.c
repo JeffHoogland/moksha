@@ -859,9 +859,9 @@ _open_folder_action(Evry_Action *act)
 
    m = e_manager_list();
 
-   GET_FILE(file, act->item1);
+   GET_FILE(file, act->it1.item);
 
-   if (!act->item1->browseable)
+   if (!act->it1.item->browseable)
      {
 	path = ecore_file_dir_get(file->path);
 	if (!path) return 0;
@@ -879,13 +879,13 @@ _open_folder_action(Evry_Action *act)
 static int
 _open_term_action(Evry_Action *act)
 {
-   GET_FILE(file, act->item1);
+   GET_FILE(file, act->it1.item);
    Evry_Item_App *tmp;
    char cwd[4096];
    char *dir;
    int ret = 0;
 
-   if (act->item1->browseable)
+   if (act->it1.item->browseable)
      dir = strdup(file->path);
    else
      dir = ecore_file_dir_get(file->path);
@@ -919,7 +919,7 @@ _file_trash_action(Evry_Action *act)
    char buf[PATH_MAX];
    int force = (EVRY_ITEM_DATA_INT_GET(act) == ACT_DELETE);
 
-   GET_FILE(file, act->item1);
+   GET_FILE(file, act->it1.item);
 
    if (!file->url)
      {
@@ -948,8 +948,8 @@ _file_trash_action(Evry_Action *act)
 static int
 _file_copy_action(Evry_Action *act)
 {
-   GET_FILE(file, act->item1);
-   GET_FILE(dst, act->item2);
+   GET_FILE(file, act->it1.item);
+   GET_FILE(dst, act->it2.item);
 
    char *path;
    char buf[PATH_MAX];
@@ -962,7 +962,7 @@ _file_copy_action(Evry_Action *act)
 
    if (!path) return 0;
 
-   snprintf(buf, sizeof(buf), "%s/%s", path, act->item1->label);
+   snprintf(buf, sizeof(buf), "%s/%s", path, act->it1.item->label);
    free(path);
 
    if (EVRY_ITEM_DATA_INT_GET(act) == ACT_COPY)

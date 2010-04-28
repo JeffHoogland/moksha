@@ -36,10 +36,10 @@ static Evry_Action *_act;
 static int
 _action(Evry_Action *act)
 {
-   if (!evry_item_type_check(act->item1, "FILE", NULL))
+   if (!evry_item_type_check(act->it1.item, "FILE", NULL))
      return 0;
 
-   GET_FILE(file, act->item1);
+   GET_FILE(file, act->it1.item);
 
    if (import)
      {

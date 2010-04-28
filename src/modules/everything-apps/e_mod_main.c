@@ -230,14 +230,7 @@ _finish(Evry_Plugin *plugin)
 static int
 _exec_open_file_action(Evry_Action *act)
 {
-   printf("exec\n");
-
-   printf("exec %p %p\n", act, act->item1);
-
-   printf("exec %s\n", EVRY_ITEM(act)->label);
-   printf("exec %s\n", act->item1->label);
-   
-   return evry_util_exec_app(EVRY_ITEM(act), act->item1);
+   return evry_util_exec_app(EVRY_ITEM(act), act->it1.item);
 }
 
 static Evas_Object *
@@ -770,13 +763,13 @@ _exec_app_check_item(Evry_Action *act, const Evry_Item *it)
 static int
 _exec_app_action(Evry_Action *act)
 {
-   return evry_util_exec_app(act->item1, act->item2);
+   return evry_util_exec_app(act->it1.item, act->it2.item);
 }
 
 static int
 _exec_term_action(Evry_Action *act)
 {
-   GET_APP(app, act->item1);
+   GET_APP(app, act->it1.item);
    Evry_Item_App *tmp;
    char buf[1024];
    int ret;
@@ -812,7 +805,7 @@ _exec_term_check_item(Evry_Action *act __UNUSED__, const Evry_Item *it)
 static int
 _exec_sudo_action(Evry_Action *act)
 {
-   GET_APP(app, act->item1);
+   GET_APP(app, act->it1.item);
    Evry_Item_App *tmp;
    char buf[1024];
    int ret;
@@ -847,7 +840,7 @@ static int
 _edit_app_action(Evry_Action *act)
 {
    Efreet_Desktop *desktop;
-   GET_APP(app, act->item1);
+   GET_APP(app, act->it1.item);
 
    if (app->desktop)
      desktop = app->desktop;
@@ -891,7 +884,7 @@ _new_app_action(Evry_Action *act)
    Efreet_Desktop *desktop;
    int i;
 
-   GET_APP(app, act->item1);
+   GET_APP(app, act->it1.item);
 
    if (app->desktop)
      name = strdup(app->desktop->name);
