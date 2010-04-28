@@ -39,6 +39,14 @@ EAPI int EVRY_EVENT_ITEM_SELECT;
 EAPI int EVRY_EVENT_ITEM_CHANGED;
 EAPI int EVRY_EVENT_ITEMS_UPDATE;
 
+EAPI const char *EVRY_TYPE_FILE;
+EAPI const char *EVRY_TYPE_APP;
+EAPI const char *EVRY_TYPE_ACTION;
+EAPI const char *EVRY_TYPE_PLUGIN;
+EAPI const char *EVRY_TYPE_NONE;
+EAPI const char *EVRY_TYPE_BORDER;
+EAPI const char *EVRY_TYPE_TEXT;
+
 /* module setup */
 EAPI E_Module_Api e_modapi =
   {
@@ -98,6 +106,14 @@ e_modapi_init(E_Module *m)
    if (!EVRY_EVENT_ITEM_CHANGED)
      EVRY_EVENT_ITEM_CHANGED = ecore_event_type_new();
 
+   EVRY_TYPE_FILE   = eina_stringshare_add("EVRY_FILE");
+   EVRY_TYPE_APP    = eina_stringshare_add("EVRY_APP");
+   EVRY_TYPE_ACTION = eina_stringshare_add("EVRY_ACTN");
+   EVRY_TYPE_PLUGIN = eina_stringshare_add("EVRY_PLUG");
+   EVRY_TYPE_NONE   = eina_stringshare_add("EVRY_NONE");
+   EVRY_TYPE_BORDER = eina_stringshare_add("EVRY_BORDER");
+   EVRY_TYPE_TEXT   = eina_stringshare_add("EVRY_TEXT");
+
    e_module_delayed_set(m, 0);
 
    /* make sure module is loaded before others */
@@ -123,6 +139,14 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    _config_free();
    evry_history_free();
 
+   eina_stringshare_del(EVRY_TYPE_FILE);
+   eina_stringshare_del(EVRY_TYPE_APP);
+   eina_stringshare_del(EVRY_TYPE_ACTION);
+   eina_stringshare_del(EVRY_TYPE_PLUGIN);
+   eina_stringshare_del(EVRY_TYPE_NONE);
+   eina_stringshare_del(EVRY_TYPE_BORDER);
+   eina_stringshare_del(EVRY_TYPE_TEXT);
+   
    e_configure_registry_item_del("extensions/run_everything");
    e_configure_registry_category_del("extensions");
 
@@ -437,7 +461,7 @@ evry_plugin_new(Evry_Plugin *base, const char *name, const char *label,
    evry_item_new(EVRY_ITEM(p), NULL, label, NULL, _evry_plugin_free);
 
    p->base.icon  = icon;
-   p->base.type  = eina_stringshare_add("PLUGIN");
+   p->base.type  = eina_stringshare_ref(EVRY_TYPE_PLUGIN);
 
    if (item_type)
      p->base.subtype = eina_stringshare_add(item_type);

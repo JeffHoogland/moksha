@@ -3,7 +3,7 @@
 
 #include "e.h"
 
-#define EVRY_API_VERSION 7
+#define EVRY_API_VERSION 8
 
 #define EVRY_ACTION_OTHER 0
 #define EVRY_ACTION_FINISHED 1
@@ -56,7 +56,6 @@ typedef struct _History_Item   History_Item;
 typedef struct _Config Evry_Config;
 typedef struct _Plugin_Config  Plugin_Config;
 typedef struct _Plugin_Setting  Plugin_Setting;
-
 
 #define EVRY_ITEM(_item) ((Evry_Item *)_item)
 #define EVRY_ACTN(_item) ((Evry_Action *) _item)
@@ -466,9 +465,17 @@ struct _Evry_Event_Item_Changed
   Evry_Item *item;
 };
 
-extern EAPI int EVRY_EVENT_ITEM_SELECT;
-extern EAPI int EVRY_EVENT_ITEM_CHANGED;
-extern EAPI int EVRY_EVENT_ITEMS_UPDATE;
+EAPI extern int EVRY_EVENT_ITEM_SELECT;
+EAPI extern int EVRY_EVENT_ITEM_CHANGED;
+EAPI extern int EVRY_EVENT_ITEMS_UPDATE;
+
+EAPI extern const char *EVRY_TYPE_FILE;
+EAPI extern const char *EVRY_TYPE_APP;
+EAPI extern const char *EVRY_TYPE_ACTION;
+EAPI extern const char *EVRY_TYPE_PLUGIN;
+EAPI extern const char *EVRY_TYPE_NONE;
+EAPI extern const char *EVRY_TYPE_BORDER;
+EAPI extern const char *EVRY_TYPE_TEXT;
 
 EAPI extern Evry_History *evry_hist;
 EAPI extern Evry_Config *evry_conf;

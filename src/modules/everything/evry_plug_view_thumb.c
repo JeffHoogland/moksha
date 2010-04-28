@@ -76,8 +76,6 @@ struct _Item
 };
 
 static View *view = NULL;
-static const char *view_types = NULL;
-
 
 static void _view_clear(Evry_View *view, int slide);
 
@@ -105,7 +103,7 @@ _thumb_gen(void *data, Evas_Object *obj, void *event_info)
 static int
 _check_item(const Evry_Item *it)
 {
-   if (it->type != view_types) return 0;
+   if (it->type != EVRY_TYPE_FILE) return 0;
 
    GET_FILE(file, it);
 
@@ -1489,15 +1487,12 @@ view_thumb_init(void)
 
    view = v;
 
-   view_types = eina_stringshare_add("FILE");
-
    return EINA_TRUE;
 }
 
 void
 view_thumb_shutdown(void)
 {
-   eina_stringshare_del(view_types);
    evry_view_unregister(EVRY_VIEW(view));
    E_FREE(view);
 }

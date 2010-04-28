@@ -88,7 +88,6 @@ static Ecore_X_Window input_window = 0;
 static Eina_List   *handlers = NULL;
 
 static Evry_Selector *selector = NULL;
-static const char *thumb_types = NULL;
 
 Evry_Selector **selectors = NULL;
 
@@ -96,7 +95,6 @@ Evry_Selector **selectors = NULL;
 int
 evry_init(void)
 {
-   thumb_types = eina_stringshare_add("FILE");
    return 1;
 }
 
@@ -105,7 +103,6 @@ evry_shutdown(void)
 {
    evry_hide();
 
-   eina_stringshare_del(thumb_types);
    return 1;
 }
 
@@ -925,7 +922,7 @@ _evry_selector_thumb(Evry_Selector *sel, const Evry_Item *it)
      evas_object_del(sel->o_thumb);
    sel->o_thumb = NULL;
 
-   if (it->type != thumb_types) return 0;
+   if (it->type != EVRY_TYPE_FILE) return 0;
 
    GET_FILE(file, it);
 
@@ -1147,7 +1144,7 @@ _evry_selector_objects_get(Evry_Action *act)
 
    EINA_LIST_FOREACH(sel->plugins, l, p)
      {
-	if (!evry_item_type_check(EVRY_ITEM(p), NULL, act->type_in2))
+	if (!evry_item_type_check(EVRY_ITEM(p), NULL, act->it2.type))
 	  continue;
 
 	if (p->begin)
@@ -1335,7 +1332,7 @@ _evry_selectors_switch(int dir)
 	    (it->plugin == selector->actions))
 	  {
 	     GET_ACTION(act,it);
-	     if (act->type_in2)
+	     if (act->it2.type)
 	       {
 		  _evry_selector_objects_get(act);
 		  _evry_selector_update(selectors[2]);
@@ -1737,8 +1734,8 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
    if (!(it_act = s_act->cur_item))
      return;
 
-   if (evry_item_type_check(it_act, "ACTION", NULL) ||
-       evry_item_type_check(it_act, NULL, "ACTION"))
+   if (evry_item_type_check(it_act, EVRY_TYPE_ACTION, NULL) ||
+       evry_item_type_check(it_act, NULL, EVRY_TYPE_ACTION))
      {
 	GET_ACTION(act, it_act);
 
@@ -1746,7 +1743,7 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 	  return;
 
 	/* get object item for action, when required */
-	if (act->type_in2)
+	if (act->it2.type)
 	  {
 	     /* check if object is provided */
 	     if (selectors[2]->state)
@@ -1762,16 +1759,16 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 		  return;
 	       }
 
-	     act->item2 = it_obj;
+	     act->it2.item = it_obj;
 	  }
 
 	if (s_subj->sel_items)
 	  {
 	     EINA_LIST_REVERSE_FOREACH(s_subj->sel_items, l, it)
 	       {
-		  if (it->type != act->type_in1)
+		  if (it->type != act->it1.type)
 		    continue;
-		  act->item1 = it;
+		  act->it1.item = it;
 		  act->action(act);
 	       }
 	  }
@@ -1779,36 +1776,19 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 	  {
 	     EINA_LIST_FOREACH(s_obj->sel_items, l, it)
 	       {
-		  if (it->type != act->type_in2)
+		  if (it->type != act->it2.type)
 		    continue;
-		  act->item2 = it;
+		  act->it2.item = it;
 		  act->action(act);
 	       }
 	  }
 	else
 	  {
-	     act->item1 = it_subj;
+	     act->it1.item = it_subj;
 	     if (!act->action(act))
 	       return;
 	  }
      }
-   /* else if (s_act->plugin->action)
-    *   {
-    * 	if (s_subj->sel_items)
-    * 	  {
-    * 	     EINA_LIST_REVERSE_FOREACH(s_subj->sel_items, l, it)
-    * 	       {
-    * 		  if (it->plugin->type_out != it_act->plugin->type_in)
-    * 		    continue;
-    * 		  s_act->plugin->action(s_act->plugin, it_act, it);
-    * 	       }
-    * 	  }
-    * 	else
-    * 	  {
-    * 	     if (!s_act->plugin->action(s_act->plugin, it_act, it_subj))
-    * 	       return;
-    * 	  }
-    *   } */
    else return;
 
    if (s_subj && it_subj)

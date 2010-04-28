@@ -329,8 +329,8 @@ _plugins_init(void)
    if (!evry_api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
-   p = EVRY_PLUGIN_NEW(Plugin, N_("Spell Checker"), "accessories-dictionary", "TEXT",
-		   NULL, _cleanup, _fetch, NULL);
+   p = EVRY_PLUGIN_NEW(Plugin, N_("Spell Checker"),"accessories-dictionary",
+		       EVRY_TYPE_TEXT, NULL, _cleanup, _fetch, NULL);
 
    p->aggregate   = EINA_FALSE;
    p->history     = EINA_FALSE;

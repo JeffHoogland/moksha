@@ -36,7 +36,7 @@ static Evry_Action *_act;
 static int
 _action(Evry_Action *act)
 {
-   if (!evry_item_type_check(act->it1.item, "FILE", NULL))
+   if (!evry_item_type_check(act->it1.item, EVRY_TYPE_FILE, NULL))
      return 0;
 
    GET_FILE(file, act->it1.item);
@@ -73,7 +73,7 @@ static void
 _item_add(Evry_Item *it, const char *name, int method, const char *icon)
 {
    Evry_Action *act;
-   act = EVRY_ACTION_NEW(name, "FILE", NULL, icon, _action, NULL);
+   act = EVRY_ACTION_NEW(name, EVRY_TYPE_FILE, NULL, icon, _action, NULL);
 
    EVRY_ITEM_DATA_INT_SET(act, method);
    EVRY_ITEM(act)->subtype = eina_stringshare_add("WALLPAPER");
@@ -104,7 +104,7 @@ _plugins_init(void)
      return EINA_FALSE;
 
    _act = EVRY_ACTION_NEW(_("Set as Wallpaper"),
-			  "FILE", NULL,
+			  EVRY_TYPE_FILE, NULL,
 			  "preferences-desktop-wallpaper",
 			  NULL, _check);
    _act->fetch = _fetch;

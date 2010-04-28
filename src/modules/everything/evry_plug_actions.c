@@ -210,7 +210,7 @@ evry_action_new(const char *name, const char *label,
 
    evry_item_new(EVRY_ITEM(act), _base_plug, label, NULL, _action_free_cb);
    act->base.icon = icon;
-   act->base.type = eina_stringshare_add("ACTION");
+   act->base.type = eina_stringshare_ref(EVRY_TYPE_ACTION);
 
    act->name = eina_stringshare_add(name);
 

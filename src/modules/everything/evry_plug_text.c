@@ -33,11 +33,11 @@ Eina_Bool
 evry_plug_text_init(void)
 {
    p1 = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Text"),
-			"accessories-text-editor", "TEXT",
+			"accessories-text-editor", EVRY_TYPE_TEXT,
 			NULL, _cleanup, _fetch, NULL);
 
    p2 = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Text"),
-			"accessories-text-editor", "TEXT",
+			"accessories-text-editor", EVRY_TYPE_TEXT,
 			NULL, _cleanup, _fetch, NULL);
    p1->trigger = " ";
    p2->trigger = " ";

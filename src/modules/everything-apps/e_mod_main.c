@@ -75,7 +75,7 @@ _begin_open_with(Evry_Plugin *plugin, const Evry_Item *item)
 
    const char *mime;
 
-   if (!evry_item_type_check(item, "FILE", NULL))
+   if (!evry_item_type_check(item, EVRY_TYPE_FILE, NULL))
      return 0;
    
    GET_FILE(file, item);
@@ -341,7 +341,7 @@ _item_add(Plugin *p, Efreet_Desktop *desktop, const char *file, int match)
 
 	EVRY_ACTN(app)->action = &_exec_open_file_action;
 	EVRY_ITEM(app)->id = eina_stringshare_add(desktop->exec);
-	EVRY_ITEM(app)->subtype = eina_stringshare_add("ACTION");
+	EVRY_ITEM(app)->subtype = EVRY_TYPE_ACTION;
 	
 	if (desktop->comment)
 	  EVRY_ITEM(app)->detail = eina_stringshare_add(desktop->comment);
@@ -353,7 +353,7 @@ _item_add(Plugin *p, Efreet_Desktop *desktop, const char *file, int match)
 	app = EVRY_ITEM_NEW(Evry_Item_App, p, file, _icon_get, _item_free);
 	EVRY_ITEM(app)->id = eina_stringshare_add(file);
 	EVRY_ACTN(app)->action = &_exec_open_file_action;
-	EVRY_ITEM(app)->subtype = eina_stringshare_add("ACTION");
+	EVRY_ITEM(app)->subtype = EVRY_TYPE_ACTION;
      }
    
    app->desktop = desktop;
@@ -746,7 +746,7 @@ _complete(Evry_Plugin *plugin, const Evry_Item *it, char **input)
 static int
 _exec_app_check_item(Evry_Action *act, const Evry_Item *it)
 {
-   /* if (!evry_item_type_check(it, "APPLICATION", NULL)) return 0; */
+   /* if (!evry_item_type_check(it, EVRY_TYPE_APP, NULL)) return 0; */
    
    /* ITEM_APP(app, it); */
 
@@ -792,8 +792,6 @@ _exec_term_action(Evry_Action *act)
 static int
 _exec_term_check_item(Evry_Action *act __UNUSED__, const Evry_Item *it)
 {
-   /* if (!evry_item_type_check(it, NULL, "APPLICATION")) return 0; */
-   
    GET_APP(app, it);
 
    if (app->file)
@@ -826,8 +824,6 @@ _exec_sudo_action(Evry_Action *act)
 static int
 _edit_app_check_item(Evry_Action *act __UNUSED__, const Evry_Item *it)
 {
-   /* if (!evry_item_type_check(it, NULL, "APPLICATION")) return 0; */
-   
    GET_APP(app, it);
 
    if (app->desktop)
@@ -862,8 +858,6 @@ _edit_app_action(Evry_Action *act)
 static int
 _new_app_check_item(Evry_Action *act __UNUSED__, const Evry_Item *it)
 {
-   /* if (!evry_item_type_check(it, NULL, "APPLICATION")) return 0; */
-   
    GET_APP(app, it);
 
    if (app->desktop)
@@ -949,43 +943,59 @@ _plugins_init(void)
    if (!evry_api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
-   p = EVRY_PLUGIN_NEW(Plugin, N_("Applications"), NULL, "APPLICATION",
+   p = EVRY_PLUGIN_NEW(Plugin, N_("Applications"), NULL, EVRY_TYPE_APP,
 		       _begin, _finish, _fetch, NULL);
    p->complete = &_complete;
    p->config_path = "extensions/everything-apps";
    evry_plugin_register(p, EVRY_PLUGIN_SUBJECT, 1);
    plug_apps = p;
    
-   p = EVRY_PLUGIN_NEW(Plugin, N_("Open With..."), NULL, "APPLICATION",
+   p = EVRY_PLUGIN_NEW(Plugin, N_("Open With..."), NULL, EVRY_TYPE_APP,
 		       _begin_open_with, _finish, _fetch, NULL);
 
-   /* p->action = &_open_with_action; */
    p->config_path = "extensions/everything-apps";
    evry_plugin_register(p, EVRY_PLUGIN_ACTION, 1);
    plug_action = p;
 
-   act = EVRY_ACTION_NEW(N_("Launch"), "APPLICATION", NULL,
-		    "everything-launch", _exec_app_action, _exec_app_check_item);
+   act = EVRY_ACTION_NEW(N_("Launch"),
+			 EVRY_TYPE_APP, NULL,
+			 "everything-launch",
+			 _exec_app_action,
+			 _exec_app_check_item);
    _actions = eina_list_append(_actions, act); 
    
-   act = EVRY_ACTION_NEW(N_("Open File..."), "APPLICATION", "FILE", "document-open",
-		     _exec_app_action, _exec_app_check_item);
+   act = EVRY_ACTION_NEW(N_("Open File..."),
+			 EVRY_TYPE_APP, EVRY_TYPE_FILE,
+			 "document-open",
+			 _exec_app_action,
+			 _exec_app_check_item);
    _actions = eina_list_append(_actions, act); 
    
-   act = EVRY_ACTION_NEW(N_("Run in Terminal"), "APPLICATION", NULL, "system-run",
-		     _exec_term_action, _exec_term_check_item);
+   act = EVRY_ACTION_NEW(N_("Run in Terminal"),
+			 EVRY_TYPE_APP, NULL,
+			 "system-run",
+			 _exec_term_action,
+			 _exec_term_check_item);
    _actions = eina_list_append(_actions, act); 
    
-   act = EVRY_ACTION_NEW(N_("Edit Application Entry"), "APPLICATION", NULL, "everything-launch",
-		     _edit_app_action, _edit_app_check_item);
+   act = EVRY_ACTION_NEW(N_("Edit Application Entry"),
+			 EVRY_TYPE_APP, NULL,
+			 "everything-launch",
+			 _edit_app_action,
+			 _edit_app_check_item);
    _actions = eina_list_append(_actions, act);
    
-   act = EVRY_ACTION_NEW(N_("New Application Entry"), "APPLICATION", NULL, "everything-launch",
-		     _new_app_action, _new_app_check_item);
+   act = EVRY_ACTION_NEW(N_("New Application Entry"),
+			 EVRY_TYPE_APP, NULL,
+			 "everything-launch",
+			 _new_app_action,
+			 _new_app_check_item);
    _actions = eina_list_append(_actions, act);
    
-   act = EVRY_ACTION_NEW(N_("Run with Sudo"), "APPLICATION", NULL, "system-run",
-		     _exec_sudo_action, NULL);
+   act = EVRY_ACTION_NEW(N_("Run with Sudo"),
+			 EVRY_TYPE_APP, NULL,
+			 "system-run",
+			 _exec_sudo_action, NULL);
    _actions = eina_list_append(_actions, act);
    
    EINA_LIST_FOREACH(_actions, l, act)

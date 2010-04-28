@@ -75,8 +75,6 @@ static Eina_List *_actions = NULL;
 static void _cleanup(Evry_Plugin *plugin);
 
 static const char *_mime_dir;
-static const char *_type_file;
-
 
 static void
 _item_fill(Evry_Item_File *file)
@@ -441,7 +439,7 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
    Plugin *p = NULL;
 
    /* is FILE ? */
-   if (it && evry_item_type_check(it, "FILE", NULL))
+   if (it && evry_item_type_check(it, EVRY_TYPE_FILE, NULL))
      {
 	GET_FILE(file, it);
 
@@ -488,7 +486,7 @@ _hist_add(Evry_Plugin *plugin, Evry_Item_File *file)
 
    EINA_LIST_FOREACH(he->items, l, hi)
      {
-	if (hi->type != _type_file)
+	if (hi->type != EVRY_TYPE_FILE)
 	  continue;
 
 	if (hi->data)
@@ -622,7 +620,7 @@ _hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fda
 
    EINA_LIST_FOREACH(he->items, l, hi)
      {
-	if (hi->type != _type_file)
+	if (hi->type != EVRY_TYPE_FILE)
 	  continue;
 
 	/* filter out files that we already have from history */
@@ -991,45 +989,45 @@ _plugins_init(void)
    if (!evry_api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
-   p1 = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Files"), NULL, "FILE", _begin, _cleanup, _fetch, NULL);
+   p1 = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Files"), NULL, EVRY_TYPE_FILE, _begin, _cleanup, _fetch, NULL);
    p1->config_path = "extensions/everything-files";
    evry_plugin_register(p1, EVRY_PLUGIN_SUBJECT, 3);
    /* p1->complete = &_complete; */
 
-   p2 = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Files"), NULL, "FILE", _begin, _cleanup, _fetch, NULL);
+   p2 = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Files"), NULL, EVRY_TYPE_FILE, _begin, _cleanup, _fetch, NULL);
    p2->config_path = "extensions/everything-files";
    evry_plugin_register(p2, EVRY_PLUGIN_OBJECT, 1);
 
-   act = EVRY_ACTION_NEW(N_("Open Folder (EFM)"), "FILE", NULL, "folder-open",
+   act = EVRY_ACTION_NEW(N_("Open Folder (EFM)"), EVRY_TYPE_FILE, NULL, "folder-open",
 			  _open_folder_action, _open_folder_check);
    evry_action_register(act, 0);
    _actions = eina_list_append(_actions, act);
 
-   act = EVRY_ACTION_NEW(N_("Open Terminal here"), "FILE", NULL, "system-run",
+   act = EVRY_ACTION_NEW(N_("Open Terminal here"), EVRY_TYPE_FILE, NULL, "system-run",
 			  _open_term_action, NULL);
    evry_action_register(act, 2);
    _actions = eina_list_append(_actions, act);
 
-   act = EVRY_ACTION_NEW(N_("Move to Trash"), "FILE", NULL, "edit-delete",
+   act = EVRY_ACTION_NEW(N_("Move to Trash"), EVRY_TYPE_FILE, NULL, "edit-delete",
 			  _file_trash_action, NULL);
    EVRY_ITEM_DATA_INT_SET(act, ACT_TRASH);
    evry_action_register(act, 2);
    _actions = eina_list_append(_actions, act);
 
-   act = EVRY_ACTION_NEW(N_("Delete"), "FILE", NULL, "list-remove",
+   act = EVRY_ACTION_NEW(N_("Delete"), EVRY_TYPE_FILE, NULL, "list-remove",
 			 _file_trash_action, NULL);
    EVRY_ITEM_DATA_INT_SET(act, ACT_DELETE);
    evry_action_register(act, 2);
 
    _actions = eina_list_append(_actions, act);
 
-   act = EVRY_ACTION_NEW(N_("Copy To ..."), "FILE", "FILE", "go-next",
+   act = EVRY_ACTION_NEW(N_("Copy To ..."), EVRY_TYPE_FILE, EVRY_TYPE_FILE, "go-next",
 			 _file_copy_action, NULL);
    EVRY_ITEM_DATA_INT_SET(act, ACT_COPY);
    evry_action_register(act, 2);
    _actions = eina_list_append(_actions, act);
 
-   act = EVRY_ACTION_NEW(N_("Move To ..."), "FILE", "FILE", "go-next",
+   act = EVRY_ACTION_NEW(N_("Move To ..."), EVRY_TYPE_FILE, EVRY_TYPE_FILE, "go-next",
 			 _file_copy_action, NULL);
    EVRY_ITEM_DATA_INT_SET(act, ACT_MOVE);
    evry_action_register(act, 2);
@@ -1253,7 +1251,6 @@ e_modapi_init(E_Module *m)
    _conf_init(m);
 
    _mime_dir = eina_stringshare_add("inode/directory");
-   _type_file = eina_stringshare_add("FILE");
 
    e_module_delayed_set(m, 1);
 
@@ -1267,7 +1264,6 @@ e_modapi_shutdown(E_Module *m)
      _plugins_shutdown();
 
    eina_stringshare_del(_mime_dir);
-   eina_stringshare_del(_type_file);
 
    _conf_shutdown();
 
