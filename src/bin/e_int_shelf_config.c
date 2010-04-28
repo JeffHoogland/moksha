@@ -74,7 +74,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
      cfdata->layer = 2;
    cfdata->overlap = cfdata->escfg->overlap;
 
-   /* layout */
+   /* position */
    cfdata->orient = cfdata->escfg->orient;
    cfdata->fit_along = cfdata->escfg->fit_along;
 
@@ -133,7 +133,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    e_widget_toolbook_page_append(otb, NULL, _("Stacking"), ol, 
                                  1, 0, 1, 0, 0.5, 0.0);
 
-   /* layout */
+   /* position */
    ol = e_widget_table_add(evas, 1);
    rg = e_widget_radio_group_new(&(cfdata->orient));
    ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-left", 
@@ -172,16 +172,16 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-right-bottom", 
                                 24, 24, E_GADCON_ORIENT_CORNER_RB, rg);
    e_widget_table_object_append(ol, ow, 2, 3, 1, 1, 1, 1, 1, 1);
-   ow = e_widget_check_add(evas, _("Shrink to Content Size"), 
-                           &(cfdata->fit_along));
-   e_widget_table_object_append(ol, ow, 0, 5, 3, 1, 1, 1, 1, 1);
-   e_widget_toolbook_page_append(otb, NULL, _("Layout"), ol, 
+   e_widget_toolbook_page_append(otb, NULL, _("Position"), ol, 
                                  1, 0, 1, 0, 0.5, 0.0);
 
    /* size */
    ol = e_widget_list_add(evas, 0, 0);
-   ow = e_widget_slider_add(evas, 1, 0, _("%3.0f pixels"), 4, 120, 4, 0, 
+   ow = e_widget_slider_add(evas, 1, 0, _("Height (%3.0f pixels)"), 4, 120, 4, 0, 
                             NULL, &(cfdata->size), 100);
+   e_widget_list_object_append(ol, ow, 1, 1, 0.5);
+   ow = e_widget_check_add(evas, _("Shrink to Content Width"), 
+                           &(cfdata->fit_along));
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Size"), ol, 
                                  1, 0, 1, 0, 0.5, 0.0);
@@ -191,9 +191,6 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    ow = e_widget_ilist_add(evas, 60, 20, &(cfdata->style));
    _fill_styles(cfdata, ow);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
-   ow = e_widget_button_add(evas, _("Set Contents..."), "configure", 
-                            _cb_set_contents, cfdata, NULL);
-   e_widget_list_object_append(ol, ow, 0, 0, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Style"), ol, 
                                  1, 0, 1, 0, 0.5, 0.0);
 
