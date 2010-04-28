@@ -1292,7 +1292,9 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
      }
    if (!strcmp(key, "Down"))
      {
-	if (!evry_conf->cycle_mode)
+	if (v->mode == VIEW_MODE_THUMB &&
+	    (!evry_conf->cycle_mode) && 
+	    (sd->cur_item))
 	  {
 	     EINA_LIST_FOREACH(l, ll, it)
 	       {
@@ -1314,7 +1316,9 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
      }
    else if (!strcmp(key, "Up"))
      {
-	if (!evry_conf->cycle_mode)
+	if (v->mode == VIEW_MODE_THUMB &&
+	    (!evry_conf->cycle_mode) &&
+	    (sd->cur_item))
 	  {
 	     for(ll = l; ll; ll = ll->prev)
 	       {
