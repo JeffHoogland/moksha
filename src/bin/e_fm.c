@@ -4196,6 +4196,14 @@ _e_fm2_uri_parse(const char *val)
    char hostname[PATH_MAX], path[PATH_MAX];
    int i = 0;
 
+   /* if value is a raw path: /path/to/blah just return it */
+   if (val[0] == '/')
+     {
+        uri = E_NEW(E_Fm2_Uri, 1);
+        uri->hostname = NULL;
+        uri->path = eina_stringshare_add(val);
+        return uri;
+     }
    /* The shortest possible path is file:///
     * anything smaller than that can't be a valid uri
     */
@@ -4278,7 +4286,6 @@ _e_fm2_uri_icon_list_get(Eina_List *uri)
 	E_Fm2_Icon *ic;
 
 	ic = NULL;
-
 	fm = _e_fm2_file_fm2_find(path);
 	if (fm)
 	  {
