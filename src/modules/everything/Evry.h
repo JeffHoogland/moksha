@@ -3,7 +3,7 @@
 
 #include "e.h"
 
-#define EVRY_API_VERSION 5
+#define EVRY_API_VERSION 7
 
 #define EVRY_ACTION_OTHER 0
 #define EVRY_ACTION_FINISHED 1
@@ -21,6 +21,11 @@
 #define VIEW_MODE_LIST   0
 #define VIEW_MODE_DETAIL 1
 #define VIEW_MODE_THUMB  2
+
+#define EVRY_PLUGIN_SUBJECT 0
+#define EVRY_PLUGIN_ACTION  1
+#define EVRY_PLUGIN_OBJECT  2
+
 
 extern int _e_module_evry_log_dom;
 
@@ -54,39 +59,58 @@ typedef struct _Plugin_Setting  Plugin_Setting;
 
 
 #define EVRY_ITEM(_item) ((Evry_Item *)_item)
+#define EVRY_ACTN(_item) ((Evry_Action *) _item)
 #define EVRY_PLUGIN(_plugin) ((Evry_Plugin *) _plugin)
 #define EVRY_VIEW(_view) ((Evry_View *) _view)
-#define ITEM_FILE(_file, _item) Evry_Item_File *_file = (Evry_Item_File *) _item
-#define ACTION_GET(_act, _item) Evry_Action *_act = (Evry_Action *) _item
-#define ITEM_APP(_app, _item)   Evry_Item_App *_app = (Evry_Item_App *) _item
-#define PLUGIN(_p, _plugin) Plugin *_p = (Plugin*) _plugin
-#define VIEW(_v, _view) View *_v = (View*) _view
 
-#define EVRY_PLUGIN_ITEMS_CLEAR(_p)	  		\
-  if (EVRY_PLUGIN(_p)->items)				\
-    eina_list_free(EVRY_PLUGIN(_p)->items); 		\
+#define GET_APP(_app, _item) Evry_Item_App *_app = (Evry_Item_App *) _item
+#define GET_FILE(_file, _item) Evry_Item_File *_file = (Evry_Item_File *) _item
+#define GET_EVRY_PLUGIN(_p, _plugin) Evry_Plugin *_p = (Evry_Plugin*) _plugin
+#define GET_VIEW(_v, _view) View *_v = (View*) _view
+#define GET_ACTION(_act, _item) Evry_Action *_act = (Evry_Action *) _item
+#define GET_PLUGIN(_p, _plugin) Plugin *_p = (Plugin*) _plugin
+
+#define EVRY_ITEM_DATA_INT_SET(_item, _data) ((Evry_Item *)_item)->data = (void*)(long) _data
+#define EVRY_ITEM_DATA_INT_GET(_item) (long) ((Evry_Item *)_item)->data
+#define EVRY_ITEM_ICON_SET(_item, _icon) ((Evry_Item *)_item)->icon = _icon
+
+
+#define EVRY_ITEM_NEW(_base, _plugin, _label, _icon_get, _free)		\
+  (_base *) evry_item_new(EVRY_ITEM(E_NEW(_base, 1)), EVRY_PLUGIN(_plugin), _label, _icon_get, _free);
+
+
+#define EVRY_PLUGIN_NEW(_base, _name, _icon, _item_type, _begin, _cleanup, _fetch, _free) \
+  evry_plugin_new(EVRY_PLUGIN(E_NEW(_base, 1)), _name, _(_name), _icon, _item_type, _begin, _cleanup, _fetch, _free) \
+
+
+#define EVRY_ACTION_NEW(_name, _in1, _in2, _icon, _action, _check)	\
+  evry_action_new(_name, _(_name), _in1, _in2, _icon, _action, _check)
+
+
+#define EVRY_PLUGIN_FREE(_p) \
+  if (_p) evry_plugin_free(EVRY_PLUGIN(_p));
+
+
+#define EVRY_PLUGIN_ITEMS_CLEAR(_p) \
+  if (EVRY_PLUGIN(_p)->items) \
+    eina_list_free(EVRY_PLUGIN(_p)->items); \
   EVRY_PLUGIN(_p)->items = NULL;
 
-#define EVRY_PLUGIN_ITEMS_FREE(_p)			\
-  Evry_Item *evryitem;					\
-  EINA_LIST_FREE(EVRY_PLUGIN(_p)->items, evryitem)	\
-    evry_item_free(evryitem);
 
-#define EVRY_PLUGIN_ITEMS_SORT(_p, _sortcb)		\
-  EVRY_PLUGIN(_p)->items = eina_list_sort		\
-    (EVRY_PLUGIN(_p)->items,				\
-     eina_list_count(EVRY_PLUGIN(_p)->items), _sortcb);	\
+#define EVRY_PLUGIN_ITEMS_FREE(_p) \
+  Evry_Item	*evryitem; \
+  EINA_LIST_FREE(EVRY_PLUGIN(_p)->items, evryitem) \
+    evry_item_free(evryitem)
 
-#define EVRY_PLUGIN_ITEM_APPEND(_p, _item)			\
-  EVRY_PLUGIN(_p)->items =					\
-    eina_list_append(EVRY_PLUGIN(_p)->items, EVRY_ITEM(_item))	\
 
-/* if you extended a plugin struct and you are sure
-   not to have any data lying around after cleanup you
-   can use this */
-#define EVRY_PLUGIN_FREE(_p)			\
-  if (_p) evry_plugin_free(EVRY_PLUGIN(_p), 0);	\
-  E_FREE(_p);
+#define EVRY_PLUGIN_ITEMS_SORT(_p, _sortcb) \
+  EVRY_PLUGIN(_p)->items = eina_list_sort \
+    (EVRY_PLUGIN(_p)->items, eina_list_count(EVRY_PLUGIN(_p)->items), _sortcb)
+
+#define EVRY_PLUGIN_ITEM_APPEND(_p, _item) \
+  EVRY_PLUGIN(_p)->items = eina_list_append(EVRY_PLUGIN(_p)->items, EVRY_ITEM(_item))
+
+
 
 struct _Evry_Item
 {
@@ -119,16 +143,21 @@ struct _Evry_Item
    * was performed on a file with a specific mimetype */
   const char *context;
 
+  const char *type;
+
   /* optional */
   const char *subtype;
 
+  Eina_List *items;
+
+  Evas_Object *(*icon_get) (Evry_Item *it, Evas *e);
+  void (*free) (Evry_Item *item);
+
   /* do not set by plugin! */
-  Evry_Item   *next;
   Eina_Bool selected;
   Eina_Bool marked;
   Evry_Plugin *plugin;
   int ref;
-  void (*free) (Evry_Item *item);
   double usage;
 };
 
@@ -147,17 +176,14 @@ struct _Evry_Action
 
   int  (*action)     (Evry_Action *act);
   int  (*check_item) (Evry_Action *act, const Evry_Item *it);
-  int  (*intercept)  (Evry_Action *act);
-  void (*cleanup)    (Evry_Action *act);
-  Eina_List *(*actions)    (Evry_Action *act);
-  Evas_Object *(*icon_get) (Evry_Action *act, Evas *e);
-
-  void *data;
+  void (*free)       (Evry_Action *act);
+  /* when action is browseable */
+  Eina_List *(*fetch) (Evry_Action *act);
 };
 
 struct _Evry_Item_App
 {
-  Evry_Item base;
+  Evry_Action base;
   const char *file;
   Efreet_Desktop *desktop;
 };
@@ -172,32 +198,18 @@ struct _Evry_Item_File
 
 struct _Evry_Plugin
 {
+  Evry_Item base;
+
   /* identifier */
   const char *name;
-
-  /* shown title */
-  const char *label;
-
-  /* provide default icon */
-  const char *icon;
-
-  /* use plugin for first second or third part of an action
-     if actions are no dynamical lists better use Evry_Action */
-  enum { type_subject, type_action, type_object } type;
-
-  /* plugin provides items of this type */
-  const char *type_out;
-
-  /* plugin accepts this type in begin function */
-  const char *type_in;
 
   /* show this plugin only when triggered */
   const char *trigger;
 
-  /* list of items visible for everything */
+  /* list of items visible for everything after fetch */
   Eina_List *items;
 
-  /* run when plugin is activated. when returns positve it is added
+  /* run when plugin is activated. when returns plugin it is added
      to the list of current plugins and queried for results */
   Evry_Plugin *(*begin) (Evry_Plugin *p, const Evry_Item *item);
 
@@ -205,13 +217,7 @@ struct _Evry_Plugin
   int  (*fetch) (Evry_Plugin *p, const char *input);
 
   /* run when state is removed in which this plugin is active */
-  void (*cleanup) (Evry_Plugin *p);
-
-  /* get an icon for an item. will be freed automatically */
-  Evas_Object *(*icon_get) (Evry_Plugin *p, const Evry_Item *it, Evas *e);
-
-  /* only used when plugin is of type_action */
-  int  (*action) (Evry_Plugin *p, const Evry_Item *act, const Evry_Item *subj);
+  void (*finish) (Evry_Plugin *p);
 
   /* try to complete current item:
      return: EVRY_COMPLETE_INPUT when input was changed
@@ -224,9 +230,6 @@ struct _Evry_Plugin
   /* optional: use this when you extend the plugin struct */
   void (*free) (Evry_Plugin *p);
 
-  /* return an object to be embedded in list view */
-  /* Evas_Object *(*info_get) (Evry_Plugin *p, Evas *e); */
-  
   /* show in aggregator */
   /* default TRUE */
   Eina_Bool aggregate;
@@ -248,8 +251,6 @@ struct _Evry_Plugin
 
   /* not to be set by plugin! */
   Plugin_Config *config;
-
-  Eina_Bool changed;
 
   /* config path registered for the module */
   const char *config_path;
@@ -389,11 +390,6 @@ struct _History_Item
   const char *data;
 };
 
-#define EVRY_PLUGIN_NEW(_base, _name, _type, _in, _out, _begin, _cleanup, _fetch, _icon_get, _free) \
-  evry_plugin_new(EVRY_PLUGIN(E_NEW(_base, 1)), _name, _(_name), _type, _in, _out, _begin, _cleanup, _fetch, _icon_get, _free) \
-
-#define EVRY_ACTION_NEW(_name, _in1, _in2, _icon, _action, _check)	\
-  evry_action_new(_name, _(_name), _in1, _in2, _icon, _action, _check)
 
 /* evry.c */
 EAPI void evry_item_select(const Evry_State *s, Evry_Item *it);
@@ -401,12 +397,14 @@ EAPI void evry_item_mark(const Evry_State *state, Evry_Item *it, Eina_Bool mark)
 EAPI void evry_plugin_select(const Evry_State *s, Evry_Plugin *p);
 EAPI int  evry_list_win_show(void);
 EAPI void evry_list_win_hide(void);
-EAPI Evry_Item *evry_item_new(Evry_Item *base, Evry_Plugin *p, const char *label, void (*cb_free) (Evry_Item *item));
+EAPI Evry_Item *evry_item_new(Evry_Item *base, Evry_Plugin *p, const char *label,
+			      Evas_Object *(*icon_get) (Evry_Item *it, Evas *e),
+			      void (*cb_free) (Evry_Item *item));
 EAPI void evry_item_free(Evry_Item *it);
 EAPI void evry_item_ref(Evry_Item *it);
-EAPI int  evry_item_type_check(const Evry_Item *it, const char *type);
+EAPI int  evry_item_type_check(const Evry_Item *it, const char *type, const char *subtype);
 EAPI void evry_plugin_async_update(Evry_Plugin *plugin, int state);
-EAPI void evry_clear_input(void);
+EAPI void evry_clear_input(Evry_Plugin *p);
 
 /* evry_util.c */
 EAPI Evas_Object *evry_icon_mime_get(const char *mime, Evas *e);
@@ -418,11 +416,11 @@ EAPI char *evry_util_url_escape(const char *string, int inlength);
 EAPI char *evry_util_unescape(const char *string, int length);
 EAPI void evry_util_file_detail_set(Evry_Item_File *file);
 EAPI Eina_Bool evry_util_module_config_check(const char *module_name, int conf, int epoch, int version);
-
+EAPI Evas_Object *evry_util_icon_get(Evry_Item *it, Evas *e);
 
 /* e_mod_main.c */
 /* set plugin trigger and view mode first before register !*/
-EAPI void evry_plugin_register(Evry_Plugin *p, int priority);
+EAPI void evry_plugin_register(Evry_Plugin *p, int type, int priority);
 EAPI void evry_plugin_unregister(Evry_Plugin *p);
 EAPI void evry_action_register(Evry_Action *act, int priority);
 EAPI void evry_action_unregister(Evry_Action *act);
@@ -434,15 +432,14 @@ EAPI void evry_history_unload(void);
 EAPI History_Item *evry_history_add(Eina_Hash *hist, Evry_Item *it, const char *ctxt, const char *input);
 EAPI int  evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, const char *ctxt);
 
-EAPI Evry_Plugin *evry_plugin_new(Evry_Plugin *base, const char *name, const char *label, int type,
-				  const char *type_in, const char *type_out,
+EAPI Evry_Plugin *evry_plugin_new(Evry_Plugin *base, const char *name, const char *label, const char *icon,
+				  const char *item_type,
 				  Evry_Plugin *(*begin) (Evry_Plugin *p, const Evry_Item *item),
 				  void (*cleanup) (Evry_Plugin *p),
 				  int  (*fetch)   (Evry_Plugin *p, const char *input),
-				  Evas_Object *(*icon_get) (Evry_Plugin *p, const Evry_Item *it, Evas *e),
 				  void (*free) (Evry_Plugin *p));
 
-EAPI void evry_plugin_free(Evry_Plugin *p, int free_pointer);
+EAPI void evry_plugin_free(Evry_Plugin *p);
 
 EAPI Evry_Action *evry_action_new(const char *name, const char *label,
 				  const char *type_in1, const char *type_in2,

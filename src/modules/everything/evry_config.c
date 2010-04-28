@@ -19,14 +19,14 @@ struct _Plugin_Page
   Evas_Object *o_view_thumb;
   Evas_Object *o_enabled;
   Evas_Object *o_cfg_btn;
-  
+
   Eina_List *configs;
 
   char *trigger;
   int trigger_only;
   int view_mode;
   int enabled;
-  
+
   Plugin_Config *cur;
 } ;
 
@@ -134,7 +134,7 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    int i;
    Plugin_Config *pc;
-   
+
 #define C(_name) evry_conf->_name = cfdata->_name
    C(height);
    C(width);
@@ -162,7 +162,7 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    for (i = 0; i < 3; i++)
      {
 	pc = cfdata->page[i].cur;
-	
+
 	if (pc)
 	  {
 	     if (pc->trigger)
@@ -299,7 +299,7 @@ _list_select_cb (void *data, Evas_Object *obj)
 	  {
 	     e_widget_disabled_set(page->o_cfg_btn, 1);
 	  }
-	
+
 	page->cur = pc;
      }
    else
@@ -324,7 +324,7 @@ _plugin_config_cb(void *data, void *data2)
    Plugin_Page *page = data;
    if (!page->cur->plugin)
      return;
-   
+
    e_configure_registry_call(page->cur->plugin->config_path,
 			     e_container_current_get(e_manager_current_get()),
 			     NULL);

@@ -98,7 +98,7 @@ _cb_sort(const void *data1, const void *data2)
 
 static inline Eina_List *
 _add_item(Plugin *p, Eina_List *items, Evry_Item *it)
-{   
+{
    /* remove duplicates provided by different plugins */
    if (it->id)
      {
@@ -108,12 +108,12 @@ _add_item(Plugin *p, Eina_List *items, Evry_Item *it)
 	EINA_LIST_FOREACH(p->base.items, _l, _it)
 	  {
 	     if ((it->plugin->name != _it->plugin->name) &&
-		 (it->plugin->type_out == _it->plugin->type_out) &&
+		 (it->type == _it->type) &&
 		 (it->id == _it->id))
 	       return items;
 	  }
      }
-   
+
    evry_item_ref(it);
    items = eina_list_append(items, it);
    EVRY_PLUGIN_ITEM_APPEND(p, it);
@@ -133,8 +133,6 @@ _fetch(Evry_Plugin *plugin, const char *input)
    Eina_List *items = NULL;
    const char *context = NULL;
    if (input && !input[0]) input = NULL;
-
-   plugin->changed = 1;
 
    EVRY_PLUGIN_ITEMS_FREE(p);
 
@@ -160,12 +158,12 @@ _fetch(Evry_Plugin *plugin, const char *input)
      }
 
    if (!lp) return 0;
-   
+
    /* if there is only one plugin append all items */
    if (!lp->next)
      {
        pp = lp->data;
-       
+
        EINA_LIST_FOREACH(pp->items, l, it)
 	 {
 	    evry_history_item_usage_set(p->selector->history, it, input, context);
@@ -234,8 +232,8 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	       }
 	  }
      }
-   
-   
+
+
    if (items) eina_list_free(items);
 
    if (input)
@@ -258,37 +256,12 @@ _fetch(Evry_Plugin *plugin, const char *input)
    return 1;
 }
 
-static int
-_action(Evry_Plugin *plugin, const Evry_Item *act, const Evry_Item *subj)
-{
-   if (act->plugin && act->plugin->action)
-     return act->plugin->action(act->plugin, act, subj);
-
-   return 0;
-}
-
 static void
-_cleanup(Evry_Plugin *plugin)
+_finish(Evry_Plugin *plugin)
 {
    Evry_Item *it;
    EINA_LIST_FREE(plugin->items, it)
      evry_item_free(it);
-}
-
-static Evas_Object *
-_icon_get(Evry_Plugin *plugin, const Evry_Item *it, Evas *e)
-{
-   Evas_Object *o = NULL;
-
-   if (it->plugin)
-     {
-	if (it->plugin->icon_get)
-	  o = it->plugin->icon_get(it->plugin, it, e);
-	else if  (it->plugin->icon)
-	  o = evry_icon_theme_get(it->plugin->icon, e);
-     }
-
-   return o;
 }
 
 Evry_Plugin *
@@ -296,14 +269,12 @@ evry_plug_aggregator_new(Evry_Selector *sel, int type)
 {
    Evry_Plugin *p;
 
-   p = EVRY_PLUGIN_NEW(Plugin, N_("All"), type, "", "",
-		   NULL, _cleanup, _fetch, _icon_get, NULL);
+   p = EVRY_PLUGIN_NEW(Plugin, N_("All"), NULL, NULL, NULL, _finish, _fetch, NULL);
 
-   p->action = &_action;
    p->history = EINA_FALSE;
-   evry_plugin_register(p, -1);
-   
-   PLUGIN(pa, p);
+   evry_plugin_register(p, type, -1);
+
+   GET_PLUGIN(pa, p);
    pa->selector = sel;
 
    return p;

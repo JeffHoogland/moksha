@@ -91,6 +91,9 @@ int  evry_show(E_Zone *zone, const char *params);
 void evry_hide(void);
 
 Evry_Plugin *evry_plug_aggregator_new(Evry_Selector *selector, int type);
+
+int evry_plug_actions_init();
+void evry_plug_actions_shutdown();
 Evry_Plugin *evry_plug_actions_new(Evry_Selector *selector, int type);
 
 void evry_history_init(void);

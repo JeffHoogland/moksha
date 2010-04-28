@@ -354,6 +354,43 @@ evry_icon_mime_get(const char *mime, Evas *e)
    return _evry_icon_mime_theme_get(mime, e);
 }
 
+static Evas_Object *
+_file_icon_get(const Evry_Item *it, Evas *e)
+{
+   Evas_Object *o = NULL;
+   GET_FILE(file, it);
+
+   if (it->browseable)
+     o = evry_icon_theme_get("folder", e);
+   else if (file->mime)
+     o = evry_icon_mime_get(file->mime, e);
+
+   if (!o)
+     o = evry_icon_mime_get("unknown", e);
+
+   return o;
+}
+
+Evas_Object *
+evry_util_icon_get(Evry_Item *it, Evas *e)
+{
+   Evas_Object *o = NULL;
+   
+   if (it->icon_get)
+     o = it->icon_get(it, e);
+
+   if (!o && it->icon)
+     o = evry_icon_theme_get(it->icon, e);
+
+   if (evry_item_type_check(it, "FILE", NULL))
+     o = _file_icon_get(it, e);
+   
+   /* TODO default type: files, apps */
+
+   return o;
+}
+
+
 EAPI int
 evry_util_exec_app(const Evry_Item *it_app, const Evry_Item *it_file)
 {
@@ -363,7 +400,7 @@ evry_util_exec_app(const Evry_Item *it_app, const Evry_Item *it_file)
    char *tmp = NULL;
    
    if (!it_app) return 0;
-   ITEM_APP(app, it_app);
+   GET_APP(app, it_app);
 
    zone = e_util_zone_current_get(e_manager_current_get());
 
@@ -371,7 +408,7 @@ evry_util_exec_app(const Evry_Item *it_app, const Evry_Item *it_file)
      {
 	if (it_file)
 	  {
-	     ITEM_FILE(file, it_file);
+	     GET_FILE(file, it_file);
 
 	     Eina_List *l;
 	     char *mime;
@@ -424,7 +461,7 @@ evry_util_exec_app(const Evry_Item *it_app, const Evry_Item *it_file)
      {
 	if (it_file)
 	  {
-	     ITEM_FILE(file, it_file);
+	     GET_FILE(file, it_file);
 
 	     int len;
 	     tmp = eina_str_escape(file->path);

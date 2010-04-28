@@ -75,6 +75,7 @@ static Eina_List *_actions = NULL;
 static void _cleanup(Evry_Plugin *plugin);
 
 static const char *_mime_dir;
+static const char *_type_file;
 
 
 static void
@@ -121,7 +122,7 @@ _cb_sort(const void *data1, const void *data2)
 static void
 _item_free(Evry_Item *it)
 {
-   ITEM_FILE(file, it);
+   GET_FILE(file, it);
    if (file->path) eina_stringshare_del(file->path);
    if (file->mime) eina_stringshare_del(file->mime);
 
@@ -172,10 +173,8 @@ _scan_func(void *data)
 		    continue;
 	       }
 
-	     file = E_NEW(Evry_Item_File, 1);
-	     if (!file) break;
+	     file = EVRY_ITEM_NEW(Evry_Item_File, p, NULL, NULL, _item_free);
 
-	     evry_item_new(EVRY_ITEM(file), EVRY_PLUGIN(p), NULL, _item_free);
 	     filename = strdup(dp->d_name);
 	     EVRY_ITEM(file)->label = filename;
 	     d->files = eina_list_append(d->files, file);
@@ -296,7 +295,7 @@ _scan_end_func(void *data)
 
    EINA_LIST_FREE(d->files, item)
      {
-	ITEM_FILE(file, item);
+	GET_FILE(file, item);
 
 	filename = (char *)item->label;
 	path = (char *) file->path;
@@ -376,12 +375,10 @@ _dir_watcher(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, const c
 
       case ECORE_FILE_EVENT_CREATED_DIRECTORY:
       case ECORE_FILE_EVENT_CREATED_FILE:
-	 file = E_NEW(Evry_Item_File, 1);
-	 if (!file) break;
 
 	 label = ecore_file_file_get(path);
 
-	 evry_item_new(EVRY_ITEM(file), EVRY_PLUGIN(p), label, _item_free);
+	 file = EVRY_ITEM_NEW(Evry_Item_File, p, label, NULL, _item_free);
 	 file->path = eina_stringshare_add(path);
 
 	 evry_util_file_detail_set(file);
@@ -444,9 +441,9 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
    Plugin *p = NULL;
 
    /* is FILE ? */
-   if (it && (it->plugin->type_out == plugin->type_in))
+   if (it && evry_item_type_check(it, "FILE", NULL))
      {
-	ITEM_FILE(file, it);
+	GET_FILE(file, it);
 
 	if (!file->path || !ecore_file_is_dir(file->path))
 	  return NULL;
@@ -458,7 +455,7 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
 	p->directory = eina_stringshare_add(file->path);
 	p->parent = EINA_TRUE;
      }
-   else
+   else if (!it)
      {
 	p = E_NEW(Plugin, 1);
 	p->base = *plugin;
@@ -466,6 +463,10 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
 	if (_conf->show_homedir)
 	  p->directory = eina_stringshare_add(e_user_homedir_get());
 	p->parent = EINA_FALSE;
+     }
+   else
+     {
+	return NULL;
      }
 
    if (p->directory)
@@ -487,7 +488,7 @@ _hist_add(Evry_Plugin *plugin, Evry_Item_File *file)
 
    EINA_LIST_FOREACH(he->items, l, hi)
      {
-	if (hi->type != plugin->type_out)
+	if (hi->type != _type_file)
 	  continue;
 
 	if (hi->data)
@@ -502,7 +503,7 @@ _hist_add(Evry_Plugin *plugin, Evry_Item_File *file)
 static void
 _cleanup(Evry_Plugin *plugin)
 {
-   PLUGIN(p, plugin);
+   GET_PLUGIN(p, plugin);
 
    Evry_Item_File *file;
 
@@ -554,6 +555,15 @@ _hist_func(void *data)
      {
 	if (!ecore_file_exists(file->path))
 	  p->hist_added = eina_list_remove_list(p->hist_added, l);
+
+	if (!file->mime)
+	  {
+	     file->mime = eina_stringshare_add(efreet_mime_type_get(file->path));
+
+	     if ((!strcmp(file->mime, "inode/directory")) ||
+		 (!strcmp(file->mime, "inode/mount-point")))
+	       EVRY_ITEM(file)->browseable = EINA_TRUE;
+	  }
      }
 }
 
@@ -612,7 +622,7 @@ _hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fda
 
    EINA_LIST_FOREACH(he->items, l, hi)
      {
-	if (hi->type != p->base.type_out)
+	if (hi->type != _type_file)
 	  continue;
 
 	/* filter out files that we already have from history */
@@ -620,19 +630,11 @@ _hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fda
 	  if (!strcmp(file->path, key))
 	    return EINA_TRUE;
 
-	/* XXX this blocks ui when drive is sleeping */
-	/* if (!ecore_file_exists(key))
-	 *   continue; */
-
 	label = ecore_file_file_get(key);
 	if (!label)
 	  continue;
 
-	file = E_NEW(Evry_Item_File, 1);
-	if (!file)
-	  continue;
-
-	evry_item_new(EVRY_ITEM(file), EVRY_PLUGIN(p), label, _item_free);
+	file = EVRY_ITEM_NEW(Evry_Item_File, p, label, NULL, _item_free);
 
 	file->path = eina_stringshare_add(key);
 	if (hi->data)
@@ -651,7 +653,6 @@ _hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fda
 	       EVRY_ITEM(file)->browseable = EINA_TRUE;
 	  }
 
-	/* p->files = eina_list_append(p->files, file); */
 	p->hist_added = eina_list_append(p->hist_added, file);
 	break;
      }
@@ -661,11 +662,9 @@ _hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fda
 static void
 _folder_item_add(Plugin *p, const char *path)
 {
-   Evry_Item_File *file = E_NEW(Evry_Item_File, 1);
+   Evry_Item_File *file;
 
-   if (!file) return;
-
-   evry_item_new(EVRY_ITEM(file), EVRY_PLUGIN(p), path, _item_free);
+   file = EVRY_ITEM_NEW(Evry_Item_File, p, path, NULL, _item_free);
    file->path = eina_stringshare_add(path);
    file->mime = eina_stringshare_ref(_mime_dir);
    EVRY_ITEM(file)->browseable = EINA_TRUE;
@@ -700,7 +699,7 @@ _free_files(Plugin *p)
 static int
 _fetch(Evry_Plugin *plugin, const char *input)
 {
-   PLUGIN(p, plugin);
+   GET_PLUGIN(p, plugin);
    Evry_Item_File *file;
 
    if (!p->command)
@@ -712,18 +711,39 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
    if (!p->parent && input && !strncmp(input, "/", 1))
      {
-	if (p->command != CMD_SHOW_ROOT)
+	char *path = NULL;
+
+	if ((p->command != CMD_SHOW_ROOT) ||
+	    ((ecore_file_is_dir(input) ? (path = strdup(input)) : 0) ||
+	     ((path = ecore_file_dir_get(input)) &&
+	      (strcmp(p->directory, path)))))
 	  {
 	     _free_files(p);
 
 	     eina_stringshare_del(p->directory);
-	     p->directory = eina_stringshare_add("/");
+
+	     printf("scan %s - %s\n", path, p->directory);
+
+	     if (path)
+	       {
+		  p->directory = eina_stringshare_add(path);
+		  free(path);
+	       }
+	     else
+	       {
+		  p->directory = eina_stringshare_add("/");
+	       }
+
 	     _read_directory(p);
 
 	     p->command = CMD_SHOW_ROOT;
 
 	     return 0;
 	  }
+	int len = strlen(p->directory);
+	len = (len == 1) ? len : len+1;
+
+	p->input = eina_stringshare_add(input + len);
      }
    else if (p->directory && input && !strncmp(input, "..", 2))
      {
@@ -763,6 +783,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	     p->command = CMD_SHOW_HIDDEN;
 	     return 0;
 	  }
+	p->input = eina_stringshare_add(input + 1);
      }
    else if (p->command)
      {
@@ -802,13 +823,8 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	  }
      }
 
-   if (input)
-     {
-	if (p->command)
-	  p->input = eina_stringshare_add(input + 1);
-	else
-	  p->input = eina_stringshare_add(input);
-     }
+   if (input && !p->command)
+     p->input = eina_stringshare_add(input);
 
    _append_files(p);
 
@@ -821,27 +837,10 @@ _fetch(Evry_Plugin *plugin, const char *input)
    return 1;
 }
 
-static Evas_Object *
-_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
-{
-   Evas_Object *o = NULL;
-   ITEM_FILE(file, it);
-
-   if (!file->mime)
-     _item_fill(file);
-
-   if (!file->mime) return NULL;
-
-   if (it->browseable)
-     o = evry_icon_theme_get("folder", e);
-   else
-     o = evry_icon_mime_get(file->mime, e);
-
-   if (!o)
-     o = evry_icon_mime_get("unknown", e);
-
-   return o;
-}
+#define ACT_TRASH	1
+#define ACT_DELETE	2
+#define ACT_COPY	3
+#define ACT_MOVE	4
 
 static int
 _open_folder_check(Evry_Action *act __UNUSED__, const Evry_Item *it)
@@ -860,7 +859,7 @@ _open_folder_action(Evry_Action *act)
 
    m = e_manager_list();
 
-   ITEM_FILE(file, act->item1);
+   GET_FILE(file, act->item1);
 
    if (!act->item1->browseable)
      {
@@ -880,7 +879,7 @@ _open_folder_action(Evry_Action *act)
 static int
 _open_term_action(Evry_Action *act)
 {
-   ITEM_FILE(file, act->item1);
+   GET_FILE(file, act->item1);
    Evry_Item_App *tmp;
    char cwd[4096];
    char *dir;
@@ -918,9 +917,9 @@ _file_trash_action(Evry_Action *act)
    Efreet_Uri *uri;
    int ok = 0;
    char buf[PATH_MAX];
-   int force = !strcmp(act->data, "delete");
+   int force = (EVRY_ITEM_DATA_INT_GET(act) == ACT_DELETE);
 
-   ITEM_FILE(file, act->item1);
+   GET_FILE(file, act->item1);
 
    if (!file->url)
      {
@@ -949,8 +948,8 @@ _file_trash_action(Evry_Action *act)
 static int
 _file_copy_action(Evry_Action *act)
 {
-   ITEM_FILE(file, act->item1);
-   ITEM_FILE(dst, act->item2);
+   GET_FILE(file, act->item1);
+   GET_FILE(dst, act->item2);
 
    char *path;
    char buf[PATH_MAX];
@@ -966,11 +965,11 @@ _file_copy_action(Evry_Action *act)
    snprintf(buf, sizeof(buf), "%s/%s", path, act->item1->label);
    free(path);
 
-   if (!strcmp((char *)act->data, "cp"))
+   if (EVRY_ITEM_DATA_INT_GET(act) == ACT_COPY)
      {
 	ret = ecore_file_cp(file->path, buf);
      }
-   else if (!strcmp((char *)act->data, "mv"))
+   else if (EVRY_ITEM_DATA_INT_GET(act) == ACT_MOVE)
      {
 	ret = ecore_file_mv(file->path, buf);
      }
@@ -978,6 +977,11 @@ _file_copy_action(Evry_Action *act)
    return ret;
 }
 
+/* static int
+ * _complete(Evry_Plugin *p, const Evry_Item *item, char **input)
+ * {
+ *    return 0;
+ * } */
 
 static Eina_Bool
 _plugins_init(void)
@@ -987,15 +991,14 @@ _plugins_init(void)
    if (!evry_api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
-   p1 = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Files"), type_subject, "FILE", "FILE",
-			_begin, _cleanup, _fetch, _icon_get, NULL);
-   EVRY_PLUGIN(p1)->config_path = "extensions/everything-files";
-   evry_plugin_register(p1, 3);
+   p1 = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Files"), NULL, "FILE", _begin, _cleanup, _fetch, NULL);
+   p1->config_path = "extensions/everything-files";
+   evry_plugin_register(p1, EVRY_PLUGIN_SUBJECT, 3);
+   /* p1->complete = &_complete; */
 
-   p2 = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Files"), type_object, "FILE", "FILE",
-			_begin, _cleanup, _fetch, _icon_get, NULL);
-   EVRY_PLUGIN(p2)->config_path = "extensions/everything-files";
-   evry_plugin_register(p2, 1);
+   p2 = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Files"), NULL, "FILE", _begin, _cleanup, _fetch, NULL);
+   p2->config_path = "extensions/everything-files";
+   evry_plugin_register(p2, EVRY_PLUGIN_OBJECT, 1);
 
    act = EVRY_ACTION_NEW(N_("Open Folder (EFM)"), "FILE", NULL, "folder-open",
 			  _open_folder_action, _open_folder_check);
@@ -1009,26 +1012,26 @@ _plugins_init(void)
 
    act = EVRY_ACTION_NEW(N_("Move to Trash"), "FILE", NULL, "edit-delete",
 			  _file_trash_action, NULL);
-   act->data = "trash";
+   EVRY_ITEM_DATA_INT_SET(act, ACT_TRASH);
    evry_action_register(act, 2);
    _actions = eina_list_append(_actions, act);
 
    act = EVRY_ACTION_NEW(N_("Delete"), "FILE", NULL, "list-remove",
 			 _file_trash_action, NULL);
-   act->data = "delete";
+   EVRY_ITEM_DATA_INT_SET(act, ACT_DELETE);
    evry_action_register(act, 2);
 
    _actions = eina_list_append(_actions, act);
 
    act = EVRY_ACTION_NEW(N_("Copy To ..."), "FILE", "FILE", "go-next",
 			 _file_copy_action, NULL);
-   act->data = "cp";
+   EVRY_ITEM_DATA_INT_SET(act, ACT_COPY);
    evry_action_register(act, 2);
    _actions = eina_list_append(_actions, act);
 
    act = EVRY_ACTION_NEW(N_("Move To ..."), "FILE", "FILE", "go-next",
 			 _file_copy_action, NULL);
-   act->data = "mv";
+   EVRY_ITEM_DATA_INT_SET(act, ACT_MOVE);
    evry_action_register(act, 2);
    _actions = eina_list_append(_actions, act);
 
@@ -1250,6 +1253,7 @@ e_modapi_init(E_Module *m)
    _conf_init(m);
 
    _mime_dir = eina_stringshare_add("inode/directory");
+   _type_file = eina_stringshare_add("FILE");
 
    e_module_delayed_set(m, 1);
 
@@ -1263,6 +1267,7 @@ e_modapi_shutdown(E_Module *m)
      _plugins_shutdown();
 
    eina_stringshare_del(_mime_dir);
+   eina_stringshare_del(_type_file);
 
    _conf_shutdown();
 

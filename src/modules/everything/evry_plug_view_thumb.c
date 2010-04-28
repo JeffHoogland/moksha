@@ -105,9 +105,9 @@ _thumb_gen(void *data, Evas_Object *obj, void *event_info)
 static int
 _check_item(const Evry_Item *it)
 {
-   if (it->plugin->type_out != view_types) return 0;
+   if (it->type != view_types) return 0;
 
-   ITEM_FILE(file, it);
+   GET_FILE(file, it);
 
    if (!file->path || !file->mime) return 0;
 
@@ -126,12 +126,9 @@ _thumb_idler(void *data)
 
    EINA_LIST_FOREACH_SAFE(sd->queue, l, ll, it)
      {
-	if (!it->image && !it->have_thumb &&
-	    sd->view->state->plugin &&
-	    sd->view->state->plugin->icon_get)
+	if (!it->image && !it->have_thumb)
 	  {
-	     it->image = sd->view->state->plugin->icon_get
-	       (it->item->plugin, it->item, sd->view->evas);
+	     it->image = evry_util_icon_get(it->item, sd->view->evas);
 
 	     if (it->image)
 	       {
@@ -149,7 +146,7 @@ _thumb_idler(void *data)
 	  {
 	     it->thumb = e_thumb_icon_add(sd->view->evas);
 
-	     ITEM_FILE(file, it->item);
+	     GET_FILE(file, it->item);
 
 	     evas_object_smart_callback_add(it->thumb, "e_thumb_gen", _thumb_gen, it);
 
@@ -968,7 +965,7 @@ _update_frame(Evas_Object *obj)
 static int
 _view_update(Evry_View *view, int slide)
 {
-   VIEW(v, view);
+   GET_VIEW(v, view);
    Smart_Data *sd = evas_object_smart_data_get(v->span);
    Item *v_it;
    Evry_Item *p_it;
@@ -1400,7 +1397,7 @@ _cb_item_changed(void *data, int type, void *event)
 static Evry_View *
 _view_create(Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
 {
-   VIEW(parent, view);
+   GET_VIEW(parent, view);
 
    View *v;
    Ecore_Event_Handler *h;
@@ -1455,7 +1452,7 @@ _view_create(Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
 static void
 _view_destroy(Evry_View *view)
 {
-   VIEW(v, view);
+   GET_VIEW(v, view);
 
    Ecore_Event_Handler *h;
 

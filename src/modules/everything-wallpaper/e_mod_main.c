@@ -11,17 +11,7 @@
 #define IMPORT_SCALE_ASPECT_IN 3
 #define IMPORT_SCALE_ASPECT_OUT 4
 
-typedef struct _Plugin Plugin;
 typedef struct _Import Import;
-typedef struct _Item Item;
-
-struct _Plugin
-{
-  Evry_Plugin base;
-  Plugin *prev;
-  Eina_List *items;
-  const Evry_Item_File *file;
-};
 
 struct _Import
 {
@@ -36,167 +26,75 @@ struct _Import
   char *fdest;
 };
 
-struct _Item
-{
-  Evry_Item base;
-  const char *icon;
-  int method;
-};
-
 
 static void _import_edj_gen(Import *import);
 static int _import_cb_edje_cc_exit(void *data, int type, void *event);
 static Import *import = NULL;
 
-static Evry_Plugin *_plug;
-
-static void
-_item_free(Evry_Item *item)
-{
-   Item *it = (Item*) item;
-   E_FREE(it);
-}
-
-static void
-_item_add(Plugin *p, const char *name, int method, const char *icon)
-{
-   Item *item = E_NEW(Item, 1);
-   evry_item_new(EVRY_ITEM(item), EVRY_PLUGIN(p), name, _item_free);
-
-   item->icon = icon;
-   item->method = method;
-
-   p->items = eina_list_append(p->items, EVRY_ITEM(item));
-}
-
-static Evas_Object *
-_item_icon_get(Evry_Plugin *plugin, const Evry_Item *item, Evas *e)
-{
-   return evry_icon_theme_get(((Item*)item)->icon, e);
-}
-
-static Evas_Object *
-_icon_get(Evry_Plugin *plugin, const Evry_Item *it, Evas *e)
-{
-   return evry_icon_theme_get("preferences-desktop-wallpaper", e);
-}
-
-static Evry_Plugin *
-_begin(Evry_Plugin *plugin, const Evry_Item *item)
-{
-   PLUGIN(p, plugin);
-
-   if (!item) return NULL;
-   
-   /* is FILE ? */
-   if (item->plugin->type_out == plugin->type_in)
-     {
-	Evry_Item *it;
-	ITEM_FILE(file, item);
-
-	if (!file->mime || (strncmp(file->mime, "image/", 6)))
-	  return NULL;
-
-	p = E_NEW(Plugin, 1);
-	p->base = *plugin;
-	p->base.items = NULL;
-	p->file = file;
-
-	it = evry_item_new(NULL, EVRY_PLUGIN(p), _("Set as Wallpaper"), NULL);
-	it->browseable = EINA_TRUE;
-
-	p->items = eina_list_append(p->items, it);
-
-	return EVRY_PLUGIN(p);
-     }
-   else if (item->plugin->type_out == plugin->type_out)
-     {
-	p = E_NEW(Plugin, 1);
-	p->base = *plugin;
-	p->base.items = NULL;
-	p->base.icon_get = &_item_icon_get;
-	p->prev = (Plugin*) item->plugin;
-
-	_item_add(p, _("Stretch"), IMPORT_STRETCH,
-		  "enlightenment/wallpaper_stretch");
-	_item_add(p, _("Center"), IMPORT_CENTER,
-		  "enlightenment/wallpaper_center");
-	_item_add(p, _("Tile"), IMPORT_TILE,
-		  "enlightenment/wallpaper_tile");
-	_item_add(p, _("Within"), IMPORT_SCALE_ASPECT_IN,
-		  "enlightenment/wallpaper_scale_aspect_in");
-	_item_add(p, _("Fill"), IMPORT_SCALE_ASPECT_OUT,
-		  "enlightenment/wallpaper_stretch");
-
-	return EVRY_PLUGIN(p);
-     }
-
-   return NULL;
-}
-
-static void
-_cleanup(Evry_Plugin *plugin)
-{
-   PLUGIN(p, plugin);
-   Evry_Item *it;
-
-   EVRY_PLUGIN_ITEMS_CLEAR(p);
-
-   EINA_LIST_FREE(p->items, it)
-     evry_item_free(it);
-
-   E_FREE(p);
-}
+static Evry_Action *_act;
 
 static int
-_fetch(Evry_Plugin *plugin, const char *input)
+_action(Evry_Action *act)
 {
-   PLUGIN(p, plugin);
-   Evry_Item *it = NULL;
-   Eina_List *l;
-   int match = 0;
+   if (!evry_item_type_check(act->item1, "FILE", NULL))
+     return 0;
 
-   EVRY_PLUGIN_ITEMS_CLEAR(p);
+   GET_FILE(file, act->item1);
 
-   EINA_LIST_FOREACH(p->items, l, it)
-     if (!input || (match = evry_fuzzy_match(it->label, input)))
-       {
-	  it->fuzzy_match = match;
-	  EVRY_PLUGIN_ITEM_APPEND(p, it);
-       }
+   if (import)
+     {
+	if (import->exe_handler)
+	  ecore_event_handler_del(import->exe_handler);
+	E_FREE(import);
+     }
 
-   if (input)
-     plugin->items = evry_fuzzy_match_sort(plugin->items);
+   import = E_NEW(Import, 1);
+   import->method = EVRY_ITEM_DATA_INT_GET(act);
+   import->file = file->path;
+   import->quality = 100;
+   import->external = 0;
+   _import_edj_gen(import);
 
    return 1;
 }
 
 static int
-_action(Evry_Plugin *plugin, const Evry_Item *act, const Evry_Item *item)
+_check(Evry_Action *act, const Evry_Item *it)
 {
-   PLUGIN(p, plugin);
+   GET_FILE(file, it);
 
-   if (p->prev && p->prev->file)
-     {
-	if (import)
-	  {
-	     if (import->exe_handler)
-	       ecore_event_handler_del(import->exe_handler);
-	     E_FREE(import);
-	  }
-
-	Item *it = (Item*) item;
-	import = E_NEW(Import, 1);
-	import->method = it->method;
-	import->file = p->prev->file->path;
-	import->quality = 100;
-	import->external = 0;
-	_import_edj_gen(import);
-
-	return 1;
-     }
+   if (file->mime && (!strncmp(file->mime, "image/", 6)))
+     return 1;
 
    return 0;
+}
+
+static void
+_item_add(Evry_Item *it, const char *name, int method, const char *icon)
+{
+   Evry_Action *act;
+   act = EVRY_ACTION_NEW(name, "FILE", NULL, icon, _action, NULL);
+
+   EVRY_ITEM_DATA_INT_SET(act, method);
+   EVRY_ITEM(act)->subtype = eina_stringshare_add("WALLPAPER");
+
+   it->items = eina_list_append(it->items, act);
+}
+
+static Eina_List *
+_fetch(Evry_Action *act)
+{
+   Evry_Item *it = (Evry_Item *) act;
+
+   it->items = NULL;
+
+   _item_add(it, _("Stretch"), IMPORT_STRETCH, "enlightenment/wallpaper_stretch");
+   _item_add(it, _("Center"),  IMPORT_CENTER,  "enlightenment/wallpaper_center");
+   _item_add(it, _("Tile"),    IMPORT_TILE,    "enlightenment/wallpaper_tile");
+   _item_add(it, _("Within"),  IMPORT_SCALE_ASPECT_IN,  "enlightenment/wallpaper_scale_aspect_in");
+   _item_add(it, _("Fill"),    IMPORT_SCALE_ASPECT_OUT, "enlightenment/wallpaper_stretch");
+
+   return it->items;
 }
 
 static Eina_Bool
@@ -205,28 +103,22 @@ _plugins_init(void)
    if (!evry_api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
-   _plug = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Wallpaper"), type_action, "FILE", "",
-			    _begin, _cleanup, _fetch, _icon_get, NULL);
-   
-   _plug->icon = "preferences-desktop-wallpaper";
-   _plug->action = &_action;
-   
-   evry_plugin_register(_plug, 10);
-   
+   _act = EVRY_ACTION_NEW(_("Set as Wallpaper"),
+			  "FILE", NULL,
+			  "preferences-desktop-wallpaper",
+			  NULL, _check);
+   _act->fetch = _fetch;
+   EVRY_ITEM(_act)->browseable = EINA_TRUE;
+
+   evry_action_register(_act, 2);
+
    return EINA_TRUE;
 }
 
 static void
 _plugins_shutdown(void)
 {
-   EVRY_PLUGIN_FREE(_plug);
-
-   if (import)
-     {
-	if (import->exe_handler)
-	  ecore_event_handler_del(import->exe_handler);
-	E_FREE(import);
-     }
+   evry_action_free(_act);
 }
 
 /* taken from e_int_config_wallpaper_import.c */
@@ -288,7 +180,7 @@ _import_edj_gen(Import *import)
    ecore_evas_free(ee);
 
    printf("w%d h%d\n", w, h);
-   
+
    if (import->external)
      {
 	fstrip = strdup(e_util_filename_escape(import->file));
@@ -425,7 +317,7 @@ _import_cb_edje_cc_exit(void *data, int type, void *event)
    import = data;
 
    if (!ev->exe) return 1;
-     
+
    if (ev->exe != import->exe) return 1;
 
    if (ev->exit_code != 0)
@@ -450,16 +342,11 @@ _import_cb_edje_cc_exit(void *data, int type, void *event)
 }
 
 /***************************************************************************/
-/**/
-/* actual module specifics */
 
 static E_Module *module = NULL;
 static Eina_Bool active = EINA_FALSE;
 
-/***************************************************************************/
-/**/
-/* module setup */
-EAPI E_Module_Api e_modapi = 
+EAPI E_Module_Api e_modapi =
 {
    E_MODULE_API_VERSION,
    "everything-wallpaper"
@@ -472,8 +359,8 @@ e_modapi_init(E_Module *m)
 
    if (e_datastore_get("everything_loaded"))
      active = _plugins_init();
-   
-   e_module_delayed_set(m, 1); 
+
+   e_module_delayed_set(m, 1);
 
    return m;
 }
@@ -484,8 +371,15 @@ e_modapi_shutdown(E_Module *m)
    if (active && e_datastore_get("everything_loaded"))
      _plugins_shutdown();
 
+   if (import)
+     {
+	if (import->exe_handler)
+	  ecore_event_handler_del(import->exe_handler);
+	E_FREE(import);
+     }
+
    module = NULL;
-   
+
    return 1;
 }
 
@@ -495,6 +389,4 @@ e_modapi_save(E_Module *m)
    return 1;
 }
 
-/**/
 /***************************************************************************/
-

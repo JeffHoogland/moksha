@@ -30,15 +30,15 @@ _begin(Evry_Plugin *p, const Evry_Item *item __UNUSED__)
 
 	EINA_LIST_FREE(history, result)
 	  {
-	     it = evry_item_new(NULL, p, result, NULL);
-	     it->context = eina_stringshare_ref(p->name); 
+	     it = EVRY_ITEM_NEW(Evry_Item, p, result, NULL, NULL);
+	     it->context = eina_stringshare_ref(p->name);
 	     p->items = eina_list_prepend(p->items, it);
 	     eina_stringshare_del(result);
 	  }
      }
 
-   it = evry_item_new(NULL, p, "0", NULL);
-   it->context = eina_stringshare_ref(p->name); 
+   it = EVRY_ITEM_NEW(Evry_Item, p, "0", NULL, NULL);
+   it->context = eina_stringshare_ref(p->name);
    p->items = eina_list_prepend(p->items, it);
 
    return p;
@@ -100,42 +100,42 @@ _cleanup(Evry_Plugin *p)
      }
 }
 
-static int
-_action(Evry_Plugin *p, const Evry_Item *act __UNUSED__, const Evry_Item *it)
-{
-   Eina_List *l;
-   Evry_Item *it2, *it_old;
-
-   /* remove duplicates */
-   if (p->items->next)
-     {
-	it = p->items->data;
-
-	EINA_LIST_FOREACH(p->items->next, l, it2)
-	  {
-	     if (!strcmp(it->label, it2->label))
-	       break;
-	     it2 = NULL;
-	  }
-
-	if (it2)
-	  {
-	     p->items = eina_list_remove(p->items, it2);
-	     evry_item_free(it2);
-	  }
-     }
-
-   it_old = p->items->data;
-   it_old->selected = EINA_FALSE;
-   
-   it2 = evry_item_new(NULL, p, it_old->label, NULL);
-   it2->context = eina_stringshare_ref(p->name); 
-   p->items = eina_list_prepend(p->items, it2);
-
-   evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_ADD);
-
-   return EVRY_ACTION_FINISHED;
-}
+/* static int
+ * _action(Evry_Plugin *p, const Evry_Item *act __UNUSED__, const Evry_Item *it)
+ * {
+ *    Eina_List *l;
+ *    Evry_Item *it2, *it_old;
+ *
+ *    /\* remove duplicates *\/
+ *    if (p->items->next)
+ *      {
+ * 	it = p->items->data;
+ *
+ * 	EINA_LIST_FOREACH(p->items->next, l, it2)
+ * 	  {
+ * 	     if (!strcmp(it->label, it2->label))
+ * 	       break;
+ * 	     it2 = NULL;
+ * 	  }
+ *
+ * 	if (it2)
+ * 	  {
+ * 	     p->items = eina_list_remove(p->items, it2);
+ * 	     evry_item_free(it2);
+ * 	  }
+ *      }
+ *
+ *    it_old = p->items->data;
+ *    it_old->selected = EINA_FALSE;
+ *
+ *    it2 = evry_item_new(NULL, p, it_old->label, NULL);
+ *    it2->context = eina_stringshare_ref(p->name);
+ *    p->items = eina_list_prepend(p->items, it2);
+ *
+ *    evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_ADD);
+ *
+ *    return EVRY_ACTION_FINISHED;
+ * } */
 
 static int
 _fetch(Evry_Plugin *p, const char *input)
@@ -180,21 +180,21 @@ _cb_data(void *data, int type __UNUSED__, void *event)
    Ecore_Exe_Event_Data *ev = event;
    Evry_Plugin *p = data;
    Evry_Item *it;
-   
+
    if (ev->exe != exe) return 1;
 
    if (ev->lines)
-     {	
+     {
 	it = p->items->data;
 	eina_stringshare_del(it->label);
 	it->label = eina_stringshare_add(ev->lines->line);
-	
+
 	if (it)
    	  {
 	     Evry_Event_Item_Changed *ev = E_NEW(Evry_Event_Item_Changed, 1);
    	     ev->item = it;
    	     evry_item_ref(it);
-   	     ecore_event_add(EVRY_EVENT_ITEM_CHANGED, ev, _cb_free_item_changed, NULL); 
+   	     ecore_event_add(EVRY_EVENT_ITEM_CHANGED, ev, _cb_free_item_changed, NULL);
    	  }
      }
 
@@ -232,18 +232,16 @@ _plugins_init(void)
    if (!evry_api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
-   p1 = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Calculator"), type_subject, NULL, "TEXT",
-			_begin, _cleanup, _fetch, NULL, NULL);
+   p1 = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Calculator"), "accessories-calculator", "TEXT",
+			_begin, _cleanup, _fetch, NULL);
 
    p1->view_mode   = VIEW_MODE_LIST;
    p1->aggregate   = EINA_FALSE;
    p1->history     = EINA_FALSE;
    p1->async_fetch = EINA_TRUE;
-   p1->icon        = "accessories-calculator";
    p1->trigger     = "=";
-   p1->action      = &_action;
-   
-   evry_plugin_register(p1, 0);
+
+   evry_plugin_register(p1, EVRY_PLUGIN_SUBJECT, 0);
 
    return EINA_TRUE;
 }
@@ -265,7 +263,7 @@ static Eina_Bool active = EINA_FALSE;
 /***************************************************************************/
 /**/
 /* module setup */
-EAPI E_Module_Api e_modapi = 
+EAPI E_Module_Api e_modapi =
 {
    E_MODULE_API_VERSION,
    "everything-calc"
@@ -278,8 +276,8 @@ e_modapi_init(E_Module *m)
 
    if (e_datastore_get("everything_loaded"))
      active = _plugins_init();
-   
-   e_module_delayed_set(m, 1); 
+
+   e_module_delayed_set(m, 1);
 
    return m;
 }
@@ -288,7 +286,7 @@ EAPI int
 e_modapi_shutdown(E_Module *m)
 {
    char *result;
-   
+
    if (active && e_datastore_get("everything_loaded"))
      _plugins_shutdown();
 
@@ -296,7 +294,7 @@ e_modapi_shutdown(E_Module *m)
      eina_stringshare_del(result);
 
    module = NULL;
-   
+
    return 1;
 }
 
@@ -308,4 +306,3 @@ e_modapi_save(E_Module *m)
 
 /**/
 /***************************************************************************/
-

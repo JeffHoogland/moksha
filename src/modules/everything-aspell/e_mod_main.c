@@ -86,7 +86,7 @@ _item_add(Plugin *p, const char *word, int word_size, int prio)
 {
    Evry_Item *it;
 
-   it = evry_item_new(NULL, EVRY_PLUGIN(p), NULL, NULL);
+   it = EVRY_ITEM_NEW(Evry_Item, p, NULL, NULL, NULL);
    if (!it) return;
    it->priority = prio;
    it->label = eina_stringshare_add_length(word, word_size);
@@ -131,7 +131,7 @@ _suggestions_add(Plugin *p, const char *line)
 static int
 _cb_data(void *data, int type __UNUSED__, void *event)
 {
-   PLUGIN(p, data);
+   GET_PLUGIN(p, data);
    Ecore_Exe_Event_Data *e = event;
    Ecore_Exe_Event_Data_Line *l;
    const char *word;
@@ -204,7 +204,7 @@ _cb_del(void *data, int type __UNUSED__, void *event)
 static int
 _begin(Evry_Plugin *plugin, const Evry_Item *it __UNUSED__)
 {
-   PLUGIN(p, plugin);
+   GET_PLUGIN(p, plugin);
 
    if (!p->handler.data)
      p->handler.data = ecore_event_handler_add
@@ -219,7 +219,7 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it __UNUSED__)
 static int
 _fetch(Evry_Plugin *plugin, const char *input)
 {
-   PLUGIN(p, plugin);
+   GET_PLUGIN(p, plugin);
    const char *s;
    int len;
 
@@ -289,15 +289,15 @@ _fetch(Evry_Plugin *plugin, const char *input)
 static void
 _cleanup(Evry_Plugin *plugin)
 {
-   PLUGIN(p, plugin);
+   GET_PLUGIN(p, plugin);
 
-   EVRY_PLUGIN_ITEMS_FREE(p)
+   EVRY_PLUGIN_ITEMS_FREE(p);
 
-     if (p->handler.data)
-       {
-	  ecore_event_handler_del(p->handler.data);
-	  p->handler.data = NULL;
-       }
+   if (p->handler.data)
+     {
+	ecore_event_handler_del(p->handler.data);
+	p->handler.data = NULL;
+     }
    if (p->handler.del)
      {
 	ecore_event_handler_del(p->handler.del);
@@ -321,19 +321,6 @@ _cleanup(Evry_Plugin *plugin)
      }
 }
 
-/* static int
- * _action(Evry_Action *act)
- * {
- *    const Evry_Item *it = act->item2;
- *    if (!it) return 0;
- *    
- *    ecore_x_selection_primary_set(clipboard_win, it->label, strlen(it->label));
- *    ecore_x_selection_clipboard_set(clipboard_win, it->label, strlen(it->label));
- * 
- *    return 1;
- * } */
-
-  
 static Eina_Bool
 _plugins_init(void)
 {
@@ -342,32 +329,16 @@ _plugins_init(void)
    if (!evry_api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
-   p = EVRY_PLUGIN_NEW(Plugin, N_("Spell Checker"), type_subject, "", "TEXT",
-		   NULL, _cleanup, _fetch, NULL, NULL);
+   p = EVRY_PLUGIN_NEW(Plugin, N_("Spell Checker"), "accessories-dictionary", "TEXT",
+		   NULL, _cleanup, _fetch, NULL);
 
    p->aggregate   = EINA_FALSE;
    p->history     = EINA_FALSE;
    p->async_fetch = EINA_TRUE;
-   p->icon        = "accessories-dictionary";
    p->trigger     = TRIGGER;
-   
-   evry_plugin_register(p, 100);
-   _plug = (Plugin *) p;
 
-   /* TODO show spell check action for given text */
-   /* p = EVRY_PLUGIN_NEW2(Plugin, N_("Spell Checker"), type_object, "", "TEXT",
-    * 			_begin, _cleanup, _fetch, NULL, NULL);
-    * 
-    * p->aggregate   = EINA_FALSE;
-    * p->history     = EINA_FALSE;
-    * p->async_fetch = EINA_TRUE;
-    * p->icon        = "accessories-dictionary";
-    * p->trigger     = TRIGGER;
-    * 
-    * evry_plugin_register(p, 100);
-    * _plug2 = (Plugin *) p;
-    * 
-    * _act = EVRY_ACTION_NEW(N_("Spell Checker"), "TEXT", "ASPELL", _action, NULL); */
+   evry_plugin_register(p, EVRY_PLUGIN_SUBJECT, 100);
+   _plug = (Plugin *) p;
 
    return EINA_TRUE;
 }
@@ -379,16 +350,11 @@ _plugins_shutdown(void)
 }
 
 /***************************************************************************/
-/**/
-/* actual module specifics */
 
 static E_Module *module = NULL;
 static Eina_Bool active = EINA_FALSE;
 
-/***************************************************************************/
-/**/
-/* module setup */
-EAPI E_Module_Api e_modapi = 
+EAPI E_Module_Api e_modapi =
 {
    E_MODULE_API_VERSION,
    "everything-aspell"
@@ -401,8 +367,8 @@ e_modapi_init(E_Module *m)
 
    if (e_datastore_get("everything_loaded"))
      active = _plugins_init();
-   
-   e_module_delayed_set(m, 1); 
+
+   e_module_delayed_set(m, 1);
 
    return m;
 }
@@ -414,7 +380,7 @@ e_modapi_shutdown(E_Module *m)
      _plugins_shutdown();
 
    module = NULL;
-   
+
    return 1;
 }
 
@@ -424,6 +390,4 @@ e_modapi_save(E_Module *m)
    return 1;
 }
 
-/**/
 /***************************************************************************/
-

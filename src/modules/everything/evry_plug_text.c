@@ -19,7 +19,7 @@ _fetch(Evry_Plugin *p, const char *input)
 
    if (input)
      {
-	it = evry_item_new(NULL, p, input, NULL);
+	it = evry_item_new(NULL, p, input, NULL, NULL);
 	it->fuzzy_match = 999;
 	EVRY_PLUGIN_ITEM_APPEND(p, it);
 
@@ -32,21 +32,20 @@ _fetch(Evry_Plugin *p, const char *input)
 Eina_Bool
 evry_plug_text_init(void)
 {
-  p1 = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Text"), type_subject, NULL, "TEXT",
-		       NULL, _cleanup, _fetch, NULL, NULL);
+   p1 = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Text"),
+			"accessories-text-editor", "TEXT",
+			NULL, _cleanup, _fetch, NULL);
 
-  p2 = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Text"), type_object,  NULL, "TEXT",
-		       NULL, _cleanup, _fetch, NULL, NULL);
+   p2 = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Text"),
+			"accessories-text-editor", "TEXT",
+			NULL, _cleanup, _fetch, NULL);
+   p1->trigger = " ";
+   p2->trigger = " ";
 
-  p1->icon = "accessories-text-editor";
-  p2->icon = "accessories-text-editor";
-  p1->trigger = " ";
-  p2->trigger = " ";
+   evry_plugin_register(p1, EVRY_PLUGIN_OBJECT,999);
+   evry_plugin_register(p2, EVRY_PLUGIN_SUBJECT, 999);
 
-  evry_plugin_register(p1, 999);
-  evry_plugin_register(p2, 999);
-
-  return EINA_TRUE;
+   return EINA_TRUE;
 }
 
 void

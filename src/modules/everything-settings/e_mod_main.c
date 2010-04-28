@@ -15,12 +15,29 @@ _cleanup(Evry_Plugin *p)
    EVRY_PLUGIN_ITEMS_FREE(p);
 }
 
+static Evas_Object *
+_icon_get(Evry_Item *it, Evas *e)
+{
+   Evas_Object *o = NULL;
+   E_Configure_It *eci = it->data;
+
+   if (eci->icon)
+     {
+	if (!(o = evry_icon_theme_get(eci->icon, e)))
+	  {
+	     o = e_util_icon_add(eci->icon, e);
+	  }
+     }
+
+   return o;
+}
+
 static void
 _item_add(Evry_Plugin *p, E_Configure_It *eci, int match, int prio)
 {
    Evry_Item *it;
 
-   it = evry_item_new(NULL, p, eci->label, NULL);
+   it = EVRY_ITEM_NEW(Evry_Item, p, eci->label, _icon_get, NULL);
    it->data = eci;
    it->priority = prio;
    it->fuzzy_match = match;
@@ -62,23 +79,6 @@ _fetch(Evry_Plugin *p, const char *input)
      }
 
    return 0;
-}
-
-static Evas_Object *
-_item_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
-{
-   Evas_Object *o = NULL;
-   E_Configure_It *eci = it->data;
-
-   if (eci->icon)
-     {
-	if (!(o = evry_icon_theme_get(eci->icon, e)))
-	  {
-	     o = e_util_icon_add(eci->icon, e);
-	  }
-     }
-
-   return o;
 }
 
 static int
@@ -123,11 +123,11 @@ _plugins_init(void)
    if (!evry_api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
-   p = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Settings"), type_subject, NULL, "E_SETTINGS",
-		       NULL, _cleanup, _fetch, _item_icon_get, NULL);
+   p = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Settings"), NULL, "E_SETTINGS",
+		       NULL, _cleanup, _fetch, NULL);
 
-   evry_plugin_register(p, 10);
-   
+   evry_plugin_register(p, EVRY_PLUGIN_SUBJECT, 10);
+
    act = EVRY_ACTION_NEW(N_("Show Dialog"), "E_SETTINGS", NULL,
 			 "preferences-advanced", _action, NULL);
 
@@ -146,16 +146,11 @@ _plugins_shutdown(void)
 
 
 /***************************************************************************/
-/**/
-/* actual module specifics */
 
 static E_Module *module = NULL;
 static Eina_Bool active = EINA_FALSE;
 
-/***************************************************************************/
-/**/
-/* module setup */
-EAPI E_Module_Api e_modapi = 
+EAPI E_Module_Api e_modapi =
 {
    E_MODULE_API_VERSION,
    "everything-settings"
@@ -168,8 +163,8 @@ e_modapi_init(E_Module *m)
 
    if (e_datastore_get("everything_loaded"))
      active = _plugins_init();
-   
-   e_module_delayed_set(m, 1); 
+
+   e_module_delayed_set(m, 1);
 
    return m;
 }
@@ -181,7 +176,7 @@ e_modapi_shutdown(E_Module *m)
      _plugins_shutdown();
 
    module = NULL;
-   
+
    return 1;
 }
 
@@ -191,6 +186,4 @@ e_modapi_save(E_Module *m)
    return 1;
 }
 
-/**/
 /***************************************************************************/
-

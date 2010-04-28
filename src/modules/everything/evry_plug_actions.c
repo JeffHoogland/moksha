@@ -10,57 +10,79 @@ struct _Plugin
   Evry_Plugin base;
   Evry_Selector *selector;
   Eina_List *actions;
+  Eina_Bool parent;
+  Evry_Action *action;
+
 };
 
+static Evry_Plugin *_base_plug = NULL;
 
 static void
-_cleanup(Evry_Plugin *plugin)
+_finish(Evry_Plugin *plugin)
 {
-   PLUGIN(p, plugin);
+   GET_PLUGIN(p, plugin);
    Evry_Action *act;
 
-   EINA_LIST_FREE(p->actions, act)
-     if (act->cleanup) act->cleanup(act);
+   if (p->parent)
+     {
+	EINA_LIST_FREE(p->actions, act);
+	E_FREE(p);
+     }
+   else
+     {
+	EINA_LIST_FREE(p->actions, act);
+     }
 }
 
 static Evry_Plugin *
 _begin(Evry_Plugin *plugin, const Evry_Item *it)
 {
-   PLUGIN(p, plugin);
+   GET_PLUGIN(p, plugin);
    Evry_Action *act;
    Eina_List *l;
    const char *type;
-   int changed = 0;
-   
-   if (plugin->type == type_action)
+
+   if (!it || !it->type) return NULL;
+
+   type = it->type;
+
+
+   if (it->browseable)
      {
-	if (!it) return NULL;
-	type = it->plugin->type_out;
-	if (!type) return NULL;
+	EINA_LIST_FOREACH(evry_conf->actions, l, act)
+	  {
+	     if (act == EVRY_ACTN(it))
+	       {
+		  p = E_NEW(Plugin, 1);
+		  p->base = *plugin;
+		  p->base.items = NULL;
+		  p->actions = act->fetch(act);
+		  p->parent = EINA_TRUE;
+		  p->action = act;
+		  return EVRY_PLUGIN(p);
+	       }
+	  }
      }
 
    EINA_LIST_FOREACH(evry_conf->actions, l, act)
      {
-	if ((!act->type_in1) || ((act->type_in1 == type) &&
-				 (!act->check_item || act->check_item(act, it))))
+	if ((!act->type_in1) ||
+	    ((act->type_in1 == type) &&
+	     (!act->check_item || act->check_item(act, it))))
 	  {
-	     act->item1 = it;
-
 	     act->base.plugin = plugin;
-	     
+
 	     if (!eina_list_data_find_list(p->actions, act))
 	       {
-		  changed = 1;
 		  p->actions = eina_list_append(p->actions, act);
 	       }
 	     continue;
 	  }
-	changed = 1;
 	p->actions = eina_list_remove(p->actions, act);
      }
 
    if (!p->actions) return NULL;
-   
+
    return plugin;
 }
 
@@ -91,7 +113,7 @@ _cb_sort(const void *data1, const void *data2)
 static int
 _fetch(Evry_Plugin *plugin, const char *input)
 {
-   PLUGIN(p, plugin);
+   GET_PLUGIN(p, plugin);
    Eina_List *l;
    Evry_Item *it;
    int match;
@@ -116,41 +138,34 @@ _fetch(Evry_Plugin *plugin, const char *input)
    return 1;
 }
 
-static Evas_Object *
-_icon_get(Evry_Plugin *p __UNUSED__, const Evry_Item *it, Evas *e)
-{
-   ACTION_GET(act, it);
-   Evas_Object *o = NULL;
-
-   if (act->icon_get)
-     {
-	o = act->icon_get(act, e);
-     }
-
-   if ((!o) && it->icon)
-     {
-	o = evry_icon_theme_get(it->icon, e);
-     }
-
-   return o;
-}
-
 Evry_Plugin *
 evry_plug_actions_new(Evry_Selector *sel, int type)
 {
    Evry_Plugin *plugin;
 
-   plugin = EVRY_PLUGIN_NEW(Plugin, N_("Actions"), type, "", "",
-		       _begin, _cleanup, _fetch, _icon_get, NULL);
+   plugin = EVRY_PLUGIN_NEW(Plugin, N_("Actions"), NULL, NULL, _begin, _finish, _fetch, NULL);
 
-   PLUGIN(p, plugin);
+   GET_PLUGIN(p, plugin);
    p->selector = sel;
-     
-   evry_plugin_register(plugin, 2);
+
+   evry_plugin_register(plugin, type, 2);
    return plugin;
 }
 
 /***************************************************************************/
+
+int evry_plug_actions_init()
+{
+   _base_plug = evry_plugin_new(NULL, _("Actions"), NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+   return 1;
+}
+
+void evry_plug_actions_shutdown()
+{
+   evry_plugin_free(_base_plug);
+}
+
 
 EAPI void
 evry_action_register(Evry_Action *act, int priority)
@@ -165,14 +180,14 @@ EAPI void
 evry_action_unregister(Evry_Action *act)
 {
    evry_conf->actions = eina_list_remove(evry_conf->actions, act);
-   /* cleanup */
+   /* finish */
 }
 
 static void
 _action_free_cb(Evry_Item *it)
 {
-   ACTION_GET(act, it);
-   
+   GET_ACTION(act, it);
+
    if (act->name)     eina_stringshare_del(act->name);
    if (act->type_in1) eina_stringshare_del(act->type_in1);
    if (act->type_in2) eina_stringshare_del(act->type_in2);
@@ -189,11 +204,14 @@ evry_action_new(const char *name, const char *label,
 {
    Evry_Action *act = E_NEW(Evry_Action, 1);
 
-   evry_item_new(EVRY_ITEM(act), NULL, label, _action_free_cb);
+   evry_item_new(EVRY_ITEM(act), _base_plug, label, NULL, _action_free_cb);
    act->base.icon = icon;
+   act->base.type = eina_stringshare_add("ACTION");
+
+   printf("icon %s\n", act->base.icon);
 
    act->name = eina_stringshare_add(name);
-   
+
    act->type_in1 = (type_in1 ? eina_stringshare_add(type_in1) : NULL);
    act->type_in2 = (type_in2 ? eina_stringshare_add(type_in2) : NULL);
 
