@@ -12,7 +12,6 @@ struct _Plugin
   Eina_List *actions;
   Eina_Bool parent;
   Evry_Action *action;
-
 };
 
 static Evry_Plugin *_base_plug = NULL;
@@ -163,7 +162,12 @@ int evry_plug_actions_init()
 
 void evry_plug_actions_shutdown()
 {
+   Evry_Action *a;
+
    evry_plugin_free(_base_plug);
+
+   EINA_LIST_FREE(evry_conf->actions, a)
+     evry_action_free(a);
 }
 
 
@@ -207,8 +211,6 @@ evry_action_new(const char *name, const char *label,
    evry_item_new(EVRY_ITEM(act), _base_plug, label, NULL, _action_free_cb);
    act->base.icon = icon;
    act->base.type = eina_stringshare_add("ACTION");
-
-   printf("icon %s\n", act->base.icon);
 
    act->name = eina_stringshare_add(name);
 

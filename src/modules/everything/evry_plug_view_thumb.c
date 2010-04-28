@@ -457,10 +457,10 @@ _e_smart_del(Evas_Object *obj)
 	evry_item_free(it->item);
 	free(it);
      }
+   evas_object_del(sd->selector);
+   
    free(sd);
    evas_object_smart_data_set(obj, NULL);
-
-   evas_object_del(sd->selector);
 }
 
 static void

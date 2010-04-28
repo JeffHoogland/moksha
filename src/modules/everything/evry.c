@@ -91,13 +91,11 @@ static Evry_Selector *selector = NULL;
 static const char *thumb_types = NULL;
 
 Evry_Selector **selectors = NULL;
-const char *action_selector;
 
 /* externally accessible functions */
 int
 evry_init(void)
 {
-   action_selector = eina_stringshare_add(_("Select Action"));
    thumb_types = eina_stringshare_add("FILE");
    return 1;
 }
@@ -108,7 +106,6 @@ evry_shutdown(void)
    evry_hide();
 
    eina_stringshare_del(thumb_types);
-   eina_stringshare_del(action_selector);
    return 1;
 }
 
@@ -446,8 +443,8 @@ _evry_selector_update_actions(Evry_Selector *sel)
    if (sel->update_timer)
      ecore_timer_del(sel->update_timer);
 
-   _evry_timer_cb_actions_get(it);
-   /* sel->update_timer = ecore_timer_add(0.1, _evry_timer_cb_actions_get, it); */
+   /* _evry_timer_cb_actions_get(it); */
+   sel->update_timer = ecore_timer_add(0.1, _evry_timer_cb_actions_get, it);
 }
 
 EAPI void
@@ -1142,8 +1139,6 @@ _evry_selector_objects_get(Evry_Action *act)
    Evry_Plugin *p, *pp;
    Evry_Selector *sel = selectors[2];
    Evry_Item *it;
-   /* required type */
-   /* const char *type_in = act->type_in2; */
 
    while (sel->state)
      _evry_state_pop(sel);
@@ -1152,8 +1147,6 @@ _evry_selector_objects_get(Evry_Action *act)
 
    EINA_LIST_FOREACH(sel->plugins, l, p)
      {
-	printf("check %s %s\n", EVRY_ITEM(p)->subtype, act->type_in2);
-
 	if (!evry_item_type_check(EVRY_ITEM(p), NULL, act->type_in2))
 	  continue;
 

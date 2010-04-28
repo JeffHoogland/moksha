@@ -10,11 +10,11 @@ struct _Plugin
   Evry_Selector *selector;
 };
 
-inline static int
-_is_action(const Evry_Item *it)
-{
-   return (it->plugin->name == action_selector);
-}
+/* inline static int
+ * _is_action(const Evry_Item *it)
+ * {
+ *    return (it->plugin->name == action_selector);
+ * } */
 
 static int
 _cb_sort_recent(const void *data1, const void *data2)
@@ -29,17 +29,17 @@ _cb_sort_recent(const void *data1, const void *data2)
    if (it2->usage && !it1->usage)
      return 1;
 
-   if (_is_action(it1) || _is_action(it2))
-     {
-	if (_is_action(it1) && _is_action(it2))
-	  return (it1->priority - it2->priority);
-	else if (_is_action(it1))
-	  return ((it1->plugin->config->priority + it1->priority) -
-		  (it2->plugin->config->priority));
-	else
-	  return ((it1->plugin->config->priority) -
-		  (it2->plugin->config->priority + it2->priority));
-     }
+   /* if (_is_action(it1) || _is_action(it2))
+    *   {
+    * 	if (_is_action(it1) && _is_action(it2))
+    * 	  return (it1->priority - it2->priority);
+    * 	else if (_is_action(it1))
+    * 	  return ((it1->plugin->config->priority + it1->priority) -
+    * 		  (it2->plugin->config->priority));
+    * 	else
+    * 	  return ((it1->plugin->config->priority) -
+    * 		  (it2->plugin->config->priority + it2->priority));
+    *   } */
 
    if (it1->plugin == it2->plugin)
      return (it1->priority - it2->priority);
@@ -62,17 +62,17 @@ _cb_sort(const void *data1, const void *data2)
    if (it2->usage && !it1->usage)
      return 1;
 
-   if (_is_action(it1) || _is_action(it2))
-     {
-	if (_is_action(it1) && _is_action(it2))
-	  return (it1->priority - it2->priority);
-	else if (_is_action(it1))
-	  return ((it1->plugin->config->priority + it1->priority)
-		  - it2->plugin->config->priority);
-	else
-	  return (it1->plugin->config->priority -
-		  (it1->plugin->config->priority + it2->priority));
-     }
+   /* if (_is_action(it1) || _is_action(it2))
+    *   {
+    * 	if (_is_action(it1) && _is_action(it2))
+    * 	  return (it1->priority - it2->priority);
+    * 	else if (_is_action(it1))
+    * 	  return ((it1->plugin->config->priority + it1->priority)
+    * 		  - it2->plugin->config->priority);
+    * 	else
+    * 	  return (it1->plugin->config->priority -
+    * 		  (it1->plugin->config->priority + it2->priority));
+    *   } */
 
    if ((it1->plugin == it2->plugin) &&
        (it1->priority - it2->priority))

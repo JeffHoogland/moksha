@@ -112,49 +112,43 @@ EAPI int
 e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    E_Config_Dialog *cfd;
-   Evry_Action *a;
+   printf("________________________________________________\n");
 
    evry_shutdown();
-
-   /* remove module-supplied menu additions */
-   if (maug)
-     {
-   	e_int_menus_menu_augmentation_del("main/1", maug);
-   	maug = NULL;
-     }
-   /* remove module-supplied action */
-   if (act)
-     {
-	e_action_predef_name_del(_("Everything Launcher"), _("Show Everything Dialog"));
-	e_action_del("everything");
-     }
 
    view_thumb_shutdown();
    view_help_shutdown();
    evry_plug_clipboard_shutdown();
    evry_plug_text_shutdown();
    evry_plug_actions_shutdown();
-   /* EINA_LIST_FREE(evry_conf->plugins, p)
-    *   evry_plugin_free(p, 1);  */
 
-   EINA_LIST_FREE(evry_conf->actions, a)
-     evry_action_free(a);
-
-   while ((cfd = e_config_dialog_get("E", "_config_everything_dialog")))
-     e_object_del(E_OBJECT(cfd));
+   _config_free();
+   evry_history_free();
 
    e_configure_registry_item_del("extensions/run_everything");
    e_configure_registry_category_del("extensions");
 
-   _config_free();
-   evry_history_free();
+   while ((cfd = e_config_dialog_get("E", "_config_everything_dialog")))
+     e_object_del(E_OBJECT(cfd));
+
+   if (act)
+     {
+	e_action_predef_name_del(_("Everything Launcher"), _("Show Everything Dialog"));
+	e_action_del("everything");
+     }
+
+   if (maug)
+     {
+   	e_int_menus_menu_augmentation_del("main/1", maug);
+   	maug = NULL;
+     }
 
    /* Clean EET */
    E_CONFIG_DD_FREE(conf_edd);
    E_CONFIG_DD_FREE(plugin_conf_edd);
    E_CONFIG_DD_FREE(plugin_setting_edd);
    e_datastore_del("everything_loaded");
-
+   printf("________________________________________________\n");
    return 1;
 }
 
@@ -296,29 +290,34 @@ static void
 _config_free(void)
 {
    Plugin_Config *pc;
-   int i;
-   Eina_List *conf[3];
 
-   conf[0] = evry_conf->conf_subjects;
-   conf[1] = evry_conf->conf_actions;
-   conf[2] = evry_conf->conf_objects;
-
-   for (i = 0; i < 3; i++)
+   EINA_LIST_FREE(evry_conf->conf_subjects, pc)
      {
-	EINA_LIST_FREE(conf[i], pc)
-	  {
-	     if (pc->name) eina_stringshare_del(pc->name);
-	     if (pc->trigger) eina_stringshare_del(pc->trigger);
-	     if (pc->plugin) evry_plugin_free(pc->plugin);
-	     E_FREE(pc);
-	  }
+	if (pc->name) eina_stringshare_del(pc->name);
+	if (pc->trigger) eina_stringshare_del(pc->trigger);
+	if (pc->plugin) evry_plugin_free(pc->plugin);
+	E_FREE(pc);
+     }
+   EINA_LIST_FREE(evry_conf->conf_actions, pc)
+     {
+	if (pc->name) eina_stringshare_del(pc->name);
+	if (pc->trigger) eina_stringshare_del(pc->trigger);
+	if (pc->plugin) evry_plugin_free(pc->plugin);
+	E_FREE(pc);
+     }
+   EINA_LIST_FREE(evry_conf->conf_objects, pc)
+     {
+	if (pc->name) eina_stringshare_del(pc->name);
+	if (pc->trigger) eina_stringshare_del(pc->trigger);
+	if (pc->plugin) evry_plugin_free(pc->plugin);
+	E_FREE(pc);
      }
 
    if (evry_conf->cmd_terminal)
      eina_stringshare_del(evry_conf->cmd_terminal);
    if (evry_conf->cmd_sudo)
      eina_stringshare_del(evry_conf->cmd_sudo);
-
+   
    E_FREE(evry_conf);
 }
 
@@ -464,8 +463,6 @@ evry_plugin_new(Evry_Plugin *base, const char *name, const char *label,
 void
 evry_plugin_free(Evry_Plugin *p)
 {
-   evry_plugin_unregister(p);
-
    evry_item_free(EVRY_ITEM(p));
 }
 
@@ -530,13 +527,14 @@ void
 evry_plugin_unregister(Evry_Plugin *p)
 {
    DBG("%s", p->name);
+   Eina_List *l = evry_conf->conf_subjects;
 
-   if (eina_list_data_find_list(evry_conf->conf_subjects, p->config))
+   if (l && eina_list_data_find_list(l, p->config))
      {
-	char buf[256];
-	snprintf(buf, sizeof(buf), _("Show %s Plugin"), p->name);
-
-	e_action_predef_name_del(_("Everything"), buf);
+	/* char buf[256];
+   	 * snprintf(buf, sizeof(buf), _("Show %s Plugin"), p->name);
+   	 * 
+   	 * e_action_predef_name_del(_("Everything"), buf); */
      }
 }
 

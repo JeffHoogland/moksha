@@ -103,6 +103,5 @@ EAPI int evry_browse_item(Evry_Selector *sel);
 EAPI int evry_browse_back(Evry_Selector *sel);
 
 extern Evry_Selector **selectors;
-extern const char *action_selector;
 
 #endif
