@@ -764,7 +764,7 @@ _e_drag_update(Ecore_X_Window root, int x, int y, Ecore_X_Atom action)
 	     /* A little bit of caching to avoid trips to X. */
 	     cache.win = root;
 // wtf - get root of root window? pointless!             
-//	     cache.root = ecore_x_window_root_get(root);
+	     cache.root = ecore_x_window_root_get(root);
 	     cache.root = root;
 	  }
 	win = ecore_x_window_shadow_tree_at_xy_with_skip_get(cache.root, x, y, ignore_win, 2);
@@ -1389,7 +1389,7 @@ _e_dnd_cb_event_dnd_selection(void *data, int type, void *event)
 	  {
 	     /* TODO: Check if hostname is in file:// uri */
 	     if (!strncmp(files->files[i], "file://", 7))
-	       l = eina_list_append(l, files->files[i] + 7);
+	       l = eina_list_append(l, files->files[i]);
 	     /* TODO: download files
 	     else if (!strncmp(files->files[i], "http://", 7))
 	     else if (!strncmp(files->files[i], "ftp://", 6))
