@@ -257,17 +257,7 @@ e_winlist_hide(void)
 
    EINA_LIST_FREE(handlers, handler)
      ecore_event_handler_del(handler);
-/*
-   while (handlers)
-     {
-	ecore_event_handler_del(handlers->data);
-	handlers = eina_list_remove_list(handlers, handlers);
-     }
-*/
 
-   ecore_x_window_free(input_window);
-   e_grabinput_release(input_window, input_window);
-   input_window = 0;
    if (warp_timer)
      {
 	ecore_timer_del(warp_timer);
@@ -301,6 +291,7 @@ e_winlist_hide(void)
 	  }
 	if (!bd->lock_user_stacking)
 	  e_border_raise(bd);
+
 	if (!bd->lock_focus_out)
 	  {
 	     e_border_focus_set(bd, 1, 1);
@@ -310,8 +301,13 @@ e_winlist_hide(void)
 	    (e_config->winlist_warp_at_end) ||
 	    (e_config->winlist_warp_while_selecting))
 	  ecore_x_pointer_warp(bd->zone->container->win, warp_to_x, warp_to_y);
+
 	e_object_unref(E_OBJECT(bd));
      }
+
+   ecore_x_window_free(input_window);
+   e_grabinput_release(input_window, input_window);
+   input_window = 0;
 }
 
 void
