@@ -22,25 +22,32 @@ _cb_sort_recent(const void *data1, const void *data2)
    const Evry_Item *it1 = data1;
    const Evry_Item *it2 = data2;
 
+   /* sort actions matching the subtype always before those matching type*/
+   if ((it1->type == EVRY_TYPE_ACTION) &&
+       (it2->type == EVRY_TYPE_ACTION))
+     {
+	const Evry_Action *act1 = data1;
+	const Evry_Action *act2 = data2;
+	
+	if (act1->it1.item && act2->it1.item)
+	  {
+	     if ((act1->it1.type == act1->it1.item->type) &&
+		 (act2->it1.type != act2->it1.item->type))
+	       return -1;
+
+	     if ((act1->it1.type != act1->it1.item->type) &&
+		 (act2->it1.type == act2->it1.item->type))
+	       return 1;
+	  }
+     }
+
    if (it1->usage && it2->usage)
      return (it1->usage > it2->usage ? -1 : 1);
    if (it1->usage && !it2->usage)
      return -1;
    if (it2->usage && !it1->usage)
      return 1;
-
-   /* if (_is_action(it1) || _is_action(it2))
-    *   {
-    * 	if (_is_action(it1) && _is_action(it2))
-    * 	  return (it1->priority - it2->priority);
-    * 	else if (_is_action(it1))
-    * 	  return ((it1->plugin->config->priority + it1->priority) -
-    * 		  (it2->plugin->config->priority));
-    * 	else
-    * 	  return ((it1->plugin->config->priority) -
-    * 		  (it2->plugin->config->priority + it2->priority));
-    *   } */
-
+   
    if (it1->plugin == it2->plugin)
      return (it1->priority - it2->priority);
 
@@ -55,25 +62,32 @@ _cb_sort(const void *data1, const void *data2)
    const Evry_Item *it1 = data1;
    const Evry_Item *it2 = data2;
 
+   /* sort actions matching the subtype always before those matching type*/
+   if ((it1->type == EVRY_TYPE_ACTION) &&
+       (it2->type == EVRY_TYPE_ACTION))
+     {
+	const Evry_Action *act1 = data1;
+	const Evry_Action *act2 = data2;
+	
+	if (act1->it1.item && act2->it1.item)
+	  {
+	     if ((act1->it1.type == act1->it1.item->type) &&
+		 (act2->it1.type != act2->it1.item->type))
+	       return -1;
+
+	     if ((act1->it1.type != act1->it1.item->type) &&
+		 (act2->it1.type == act2->it1.item->type))
+	       return 1;
+	  }
+     }
+
    if (it1->usage && it2->usage)
      return (it1->usage > it2->usage ? -1 : 1);
    if (it1->usage && !it2->usage)
      return -1;
    if (it2->usage && !it1->usage)
      return 1;
-
-   /* if (_is_action(it1) || _is_action(it2))
-    *   {
-    * 	if (_is_action(it1) && _is_action(it2))
-    * 	  return (it1->priority - it2->priority);
-    * 	else if (_is_action(it1))
-    * 	  return ((it1->plugin->config->priority + it1->priority)
-    * 		  - it2->plugin->config->priority);
-    * 	else
-    * 	  return (it1->plugin->config->priority -
-    * 		  (it1->plugin->config->priority + it2->priority));
-    *   } */
-
+   
    if ((it1->plugin == it2->plugin) &&
        (it1->priority - it2->priority))
      return (it1->priority - it2->priority);

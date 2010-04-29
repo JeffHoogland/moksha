@@ -81,6 +81,7 @@ typedef unsigned int Evry_Type;
 #define GET_VIEW(_v, _view) View *_v = (View*) _view
 #define GET_ACTION(_act, _item) Evry_Action *_act = (Evry_Action *) _item
 #define GET_PLUGIN(_p, _plugin) Plugin *_p = (Plugin*) _plugin
+#define GET_ITEM(_it, _any) Evry_Item *_it = (Evry_Item *) _any
 
 #define EVRY_ITEM_DATA_INT_SET(_item, _data) ((Evry_Item *)_item)->data = (void*)(long) _data
 #define EVRY_ITEM_DATA_INT_GET(_item) (long) ((Evry_Item *)_item)->data

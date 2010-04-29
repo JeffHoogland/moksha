@@ -1063,14 +1063,14 @@ _plugins_init(void)
    evry_action_register(act, 2);
    _actions = eina_list_append(_actions, act);
 
-   act = EVRY_ACTION_NEW(N_("Delete"),
-			 EVRY_TYPE_FILE, 0,
-			 "list-remove",
-			 _file_trash_action, NULL);
-   EVRY_ITEM_DATA_INT_SET(act, ACT_DELETE);
-   evry_action_register(act, 2);
-
-   _actions = eina_list_append(_actions, act);
+   /* TODO ask if really want to delete !*/
+   /* act = EVRY_ACTION_NEW(N_("Delete"),
+    * 			 EVRY_TYPE_FILE, 0,
+    * 			 "list-remove",
+    * 			 _file_trash_action, NULL);
+    * EVRY_ITEM_DATA_INT_SET(act, ACT_DELETE);
+    * evry_action_register(act, 2);
+    * _actions = eina_list_append(_actions, act); */
 
    act = EVRY_ACTION_NEW(N_("Copy To ..."),
 			 EVRY_TYPE_FILE, EVRY_TYPE_FILE,
