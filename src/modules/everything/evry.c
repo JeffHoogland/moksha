@@ -300,7 +300,7 @@ evry_clear_input(Evry_Plugin *p)
    _evry_update_text_label(s);
 }
 
-//#define CHECK_REFS 1
+//#define CHECK_REFS
 
 #ifdef CHECK_REFS
 static int item_cnt = 0;
@@ -335,6 +335,7 @@ evry_item_new(Evry_Item *base, Evry_Plugin *p, const char *label,
 
 #ifdef CHECK_REFS
    item_cnt++;
+   printf("%d, %d\t new : %s\n", it->ref, item_cnt, it->label);
 #endif
 
    return it;

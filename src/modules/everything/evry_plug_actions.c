@@ -176,12 +176,13 @@ int evry_plug_actions_init()
 
 void evry_plug_actions_shutdown()
 {
-   Evry_Action *a;
+   Evry_Item *it;
 
    evry_plugin_free(_base_plug);
 
-   EINA_LIST_FREE(evry_conf->actions, a)
-     evry_action_free(a);
+   /* bypass unregister, because it modifies the list */
+   EINA_LIST_FREE(evry_conf->actions, it)
+     evry_item_free(it);
 }
 
 
