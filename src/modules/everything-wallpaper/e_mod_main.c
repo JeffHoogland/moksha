@@ -41,6 +41,9 @@ _action(Evry_Action *act)
 
    GET_FILE(file, act->it1.item);
 
+   if (!(evry_file_path_get(file)))
+     return 0;
+   
    if (import)
      {
 	if (import->exe_handler)

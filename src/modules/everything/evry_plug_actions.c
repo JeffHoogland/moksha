@@ -70,6 +70,7 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
 
 	     if (!eina_list_data_find_list(p->actions, act))
 	       {
+		  act->it1.item = it;
 		  p->actions = eina_list_append(p->actions, act);
 	       }
 	     continue;
@@ -87,7 +88,22 @@ _cb_sort(const void *data1, const void *data2)
 {
    const Evry_Item *it1 = data1;
    const Evry_Item *it2 = data2;
+   const Evry_Action *act1 = data1;
+   const Evry_Action *act2 = data2;
 
+   if (act1->it1.item && act2->it1.item)
+     {
+	if ((act1->it1.type == act1->it1.item->type) &&
+	    (act2->it1.type != act2->it1.item->type))
+	  return -1;
+
+	if ((act1->it1.type != act1->it1.item->type) &&
+	    (act2->it1.type == act2->it1.item->type))
+	  return 1;
+     }
+   
+   if (it1->fuzzy_match || it2->fuzzy_match)
+   
    if (it1->fuzzy_match || it2->fuzzy_match)
      {
 	if (it1->fuzzy_match && !it2->fuzzy_match)

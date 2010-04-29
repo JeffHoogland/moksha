@@ -58,7 +58,7 @@ typedef struct _Plugin_Config		Plugin_Config;
 typedef struct _Plugin_Setting		Plugin_Setting;
 typedef struct _Evry_Event_Item_Changed Evry_Event_Item_Changed;
 
-typedef int Evry_Type;
+typedef unsigned int Evry_Type;
 
 #define EVRY_ITEM(_item) ((Evry_Item *)_item)
 #define EVRY_ACTN(_item) ((Evry_Action *) _item)
@@ -71,6 +71,9 @@ typedef int Evry_Type;
 
 #define CHECK_SUBTYPE(_item, _type) \
   (((Evry_Item *)_item)->subtype && ((Evry_Item *)_item)->subtype == _type)
+
+#define IS_BROWSEABLE(_item) \
+  ((Evry_Item *)_item)->browseable
 
 #define GET_APP(_app, _item) Evry_Item_App *_app = (Evry_Item_App *) _item
 #define GET_FILE(_file, _item) Evry_Item_File *_file = (Evry_Item_File *) _item
@@ -439,7 +442,8 @@ EAPI char *evry_util_unescape(const char *string, int length);
 EAPI void evry_util_file_detail_set(Evry_Item_File *file);
 EAPI Eina_Bool evry_util_module_config_check(const char *module_name, int conf, int epoch, int version);
 EAPI Evas_Object *evry_util_icon_get(Evry_Item *it, Evas *e);
-EAPI const char *evry_file_path_get(Evry_Item *it);
+EAPI const char *evry_file_path_get(Evry_Item_File *file);
+EAPI const char *evry_file_uri_get(Evry_Item_File *file);
 
 /* e_mod_main.c */
 /* set plugin trigger and view mode first before register !*/

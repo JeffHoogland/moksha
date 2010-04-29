@@ -12,12 +12,12 @@ typedef struct _E_Exe_List E_Exe_List;
 
 struct _Plugin
 {
-  Evry_Plugin base;
-  Eina_List *apps_mime;
-  Eina_List *apps_all;
-  Eina_List *apps_hist;
-  const Evry_Item *candidate;
-  Eina_Hash *added;
+  Evry_Plugin	 base;
+  Eina_List	*apps_mime;
+  Eina_List	*apps_all;
+  Eina_List	*apps_hist;
+
+  Eina_Hash	*added;
 
   Evry_Item_App *app_command;
   Evry_Item_App *app_parameter;
@@ -25,48 +25,44 @@ struct _Plugin
 
 struct _E_Exe
 {
-  const char *path;
+  const char	*path;
 };
 
 struct _E_Exe_List
 {
-  Eina_List *list;
+  Eina_List	*list;
 };
-
 
 struct _Module_Config 
 {  
-  int version;
-
-  unsigned char list_executables;
-
-  E_Config_Dialog *cfd;
-  E_Module *module;
+  int			 version;
+  unsigned char		 list_executables;
+  E_Config_Dialog	*cfd;
+  E_Module		*module;
 };
 
-static Module_Config *_conf;
+static Module_Config	*_conf;
+static Evry_Plugin	*plug_apps	 = NULL;
+static Evry_Plugin	*plug_apps2	 = NULL;
+static Evry_Plugin	*plug_action	 = NULL;
+static Eina_List	*_actions	 = NULL;
+static Evry_Item	*_act_open_with  = NULL;
+static Eina_List	*exe_path	 = NULL;
+static Ecore_Idler	*exe_scan_idler	 = NULL;
+static E_Config_DD	*exelist_exe_edd = NULL;
+static E_Config_DD	*exelist_edd	 = NULL;
+static DIR		*exe_dir	 = NULL;
+static Eina_List	*exe_list	 = NULL;
+static Eina_List	*exe_list2	 = NULL;
 
-static Evry_Plugin *plug_apps = NULL;
-static Evry_Plugin *plug_action = NULL;
+static void _scan_executables();
 
-static Eina_List *exe_path = NULL;
-static Ecore_Idler *exe_scan_idler = NULL;
-static E_Config_DD *exelist_exe_edd = NULL;
-static E_Config_DD *exelist_edd = NULL;
-static DIR       *exe_dir = NULL;
-static Eina_List *exe_list = NULL;
-static Eina_List *exe_list2 = NULL;
-
-static Eina_List *_actions = NULL;
-
-static int _scan_idler(void *data);
 
 static void _hash_free(void *data)
 {
    GET_APP(app, data);
    evry_item_free(EVRY_ITEM(app));
 }
-
 
 static Evry_Plugin *
 _begin_open_with(Evry_Plugin *plugin, const Evry_Item *item)
@@ -75,23 +71,24 @@ _begin_open_with(Evry_Plugin *plugin, const Evry_Item *item)
 
    const char *mime;
 
-   if (!CHECK_TYPE(item, EVRY_TYPE_FILE))
+   if (!CHECK_TYPE(item, EVRY_TYPE_FILE) &&
+       !CHECK_SUBTYPE(item, EVRY_TYPE_FILE))
      return 0;
    
    GET_FILE(file, item);
    Efreet_Desktop *d, *d2;
 
-   if (!file->path) return NULL;
+   if (!evry_file_path_get(file))
+     return NULL;
 
    if (!file->mime)
      mime = efreet_mime_type_get(file->path);
    else
      mime = file->mime;
 
-   if (!mime) return NULL;
+   if (!mime)
+     return NULL;
 
-   p->candidate = item;
-   
    p->apps_mime = efreet_util_desktop_mime_list(mime);
 
    if (strcmp(mime, "text/plain") &&
@@ -131,58 +128,27 @@ _begin(Evry_Plugin *plugin, const Evry_Item *item)
 {
    GET_PLUGIN(p, plugin);
 
+   DBG("begin %p %p\n", item, _act_open_with);
+   
+   if (item && (item != _act_open_with))
+     return NULL;
+   
    p->added = eina_hash_string_small_new(_hash_free);
 
-   if (!_conf->list_executables)
-     return plugin;
+   if (_conf->list_executables)
+     _scan_executables();
    
-   /* taken from exebuf module */
-   char *path, *pp, *last;
-   E_Exe_List *el;
-
-   el = e_config_domain_load("exebuf_exelist_cache", exelist_edd);
-   if (el)
-     {
-	E_Exe *ee;
-
-	EINA_LIST_FREE(el->list, ee)
-	  {
-	     exe_list = eina_list_append(exe_list, strdup(ee->path));
-	     eina_stringshare_del(ee->path);
-	     free(ee);
-	  }
-	free(el);
-     }
-   path = getenv("PATH");
-   if (path)
-     {
-	path = strdup(path);
-	last = path;
-	for (pp = path; pp[0]; pp++)
-	  {
-	     if (pp[0] == ':') pp[0] = '\0';
-	     if (pp[0] == 0)
-	       {
-		  exe_path = eina_list_append(exe_path, strdup(last));
-		  last = pp + 1;
-	       }
-	  }
-	if (pp > last)
-	  exe_path = eina_list_append(exe_path, strdup(last));
-	free(path);
-     }
-
-   exe_scan_idler = ecore_idler_add(_scan_idler, NULL);
-
    return plugin;
 }
+
 
 static void
 _finish(Evry_Plugin *plugin)
 {
    GET_PLUGIN(p, plugin);
    Efreet_Desktop *desktop;
-
+   char *str;
+   
    if (p->added)
      eina_hash_free(p->added);
 
@@ -193,16 +159,9 @@ _finish(Evry_Plugin *plugin)
 
    EINA_LIST_FREE(p->apps_hist, desktop)
      efreet_desktop_free(desktop);
-   
-   if (plugin == plug_action)
+
+   if (_conf->list_executables)
      {
-	EINA_LIST_FREE(p->apps_mime, desktop)
-	  efreet_desktop_free(desktop);
-     }
-   else
-     {
-	char *str;
-	
 	if (exe_dir)
 	  {
 	     closedir(exe_dir);
@@ -225,6 +184,21 @@ _finish(Evry_Plugin *plugin)
    p->app_command = NULL;
    p->app_parameter = NULL;
 
+}
+
+static void
+_finish_mime(Evry_Plugin *plugin)
+{
+   GET_PLUGIN(p, plugin);
+   Efreet_Desktop *desktop;
+
+   if (p->added)
+     eina_hash_free(p->added);
+
+   EVRY_PLUGIN_ITEMS_CLEAR(p);
+
+   EINA_LIST_FREE(p->apps_mime, desktop)
+     efreet_desktop_free(desktop);
 }
 
 static int
@@ -631,6 +605,26 @@ _add_executables(Plugin *p, const char *input)
      }
 }
 
+static int
+_fetch_mime(Evry_Plugin *plugin, const char *input)
+{
+   GET_PLUGIN(p, plugin);
+   Eina_List *l;
+   Evry_Item *it;
+
+   EVRY_PLUGIN_ITEMS_CLEAR(p);
+   
+   /* add apps for a given mimetype */
+   _add_desktop_list(p, p->apps_mime, input);
+
+   EINA_LIST_FOREACH(plugin->items, l, it)
+     evry_history_item_usage_set(evry_hist->actions, it, input, NULL);
+
+   if (input)
+     EVRY_PLUGIN_ITEMS_SORT(plugin, _cb_sort);
+
+   return 1;
+}
 
 static int
 _fetch(Evry_Plugin *plugin, const char *input)
@@ -639,82 +633,67 @@ _fetch(Evry_Plugin *plugin, const char *input)
    Eina_List *l;
    Efreet_Desktop *desktop;
    Evry_Item *it;
-   char *file;
+   /* char *file; */
 
-   EVRY_PLUGIN_ITEMS_CLEAR(p)
-   
-   /* add apps for a given mimetype */
-   if (plugin == plug_action)
-     _add_desktop_list(p, p->apps_mime, input);
+   EVRY_PLUGIN_ITEMS_CLEAR(p);
 
-   /* add apps matching input */
-   if (input)
+   if (input && !(p->apps_all))
      {
-	if (!p->apps_all)
+	Eina_List *apps = NULL;
+	Eina_List *cat_ss;
+	Eina_List *l, *ll;
+
+	apps = efreet_util_desktop_name_glob_list("*");
+
+	/* remove screensaver */
+	cat_ss = efreet_util_desktop_category_list("Screensaver");
+	EINA_LIST_FOREACH(cat_ss, l, desktop)
 	  {
-	     Eina_List *apps = NULL;
-	     Eina_List *cat_ss;
-	     Eina_List *l, *ll;
-
-	     apps = efreet_util_desktop_name_glob_list("*");
-
-	     /* remove screensaver */
-	     cat_ss = efreet_util_desktop_category_list("Screensaver");
-	     EINA_LIST_FOREACH(cat_ss, l, desktop)
+	     if ((ll = eina_list_data_find_list(apps, desktop)))
 	       {
-		  if ((ll = eina_list_data_find_list(apps, desktop)))
-		    {
-		       efreet_desktop_free(desktop);
-		       apps = eina_list_remove_list(apps, ll);
-		    }
 		  efreet_desktop_free(desktop);
+		  apps = eina_list_remove_list(apps, ll);
 	       }
-
-	     p->apps_all = apps;
+	     efreet_desktop_free(desktop);
 	  }
 
-	_add_desktop_list(p, p->apps_all, input);
+	p->apps_all = apps;
      }
+
+   /* .desktop files */
+   _add_desktop_list(p, p->apps_all, input);
+
+   /* add executables */
+   _add_executables(p, input);
+
+   /* FIXME update last used from exehist */
+   /* EINA_LIST_FOREACH(e_exehist_list_get(), l, file)
+    *   {
+    * 	double last_used = e_exehist_newest_run_get(file);
+    * 	History_Item *hi;
+    * 	it = (Evry_Item *)_item_add(p, NULL, file, 1);
+    * 	if (!eina_hash_find(evry_hist->subjects, it->id))
+    * 	  {
+    * 	     hi = evry_history_add(evry_hist->subjects, it, NULL, NULL);
+    * 	     if (hi) hi->last_used = last_used;
+    * 	  }
+    *   } */
+
    /* add exe history items */
-   else if (!plugin->items)
+   if (!plugin->items)
      {
 	if (!p->apps_hist)
 	  eina_hash_foreach(evry_hist->subjects, _hist_items_add_cb, p);
 	else
 	  _add_desktop_list(p, p->apps_hist, NULL);
      }
-   
-   /* add executables */
-   _add_executables(p, input);
-
-   if (plugin == plug_action)
-     {
-	EINA_LIST_FOREACH(plugin->items, l, it)
-	  evry_history_item_usage_set(evry_hist->actions, it, input, NULL); 
-     }
    else
      {
 	EINA_LIST_FOREACH(plugin->items, l, it)
 	  evry_history_item_usage_set(evry_hist->subjects, it, input, NULL);
-     }
 
-   if (!input && plugin != plug_action)
-     {
-	EINA_LIST_FOREACH(e_exehist_list_get(), l, file)
-	  {
-	     double last_used = e_exehist_newest_run_get(file);
-	     History_Item *hi;
-	     it = (Evry_Item *)_item_add(p, NULL, file, 1);
-	     if (!eina_hash_find(evry_hist->subjects, it->id))
-	       {
-		  hi = evry_history_add(evry_hist->subjects, it, NULL, NULL);
-		  if (hi) hi->last_used = last_used;
-	       }
-	  }
+	EVRY_PLUGIN_ITEMS_SORT(plugin, _cb_sort);
      }
-   
-   if (plugin != plug_action || input)
-     EVRY_PLUGIN_ITEMS_SORT(plugin, _cb_sort);
    
    return 1;
 }
@@ -764,6 +743,12 @@ static int
 _exec_app_action(Evry_Action *act)
 {
    return evry_util_exec_app(act->it1.item, act->it2.item);
+}
+
+static int
+_exec_file_action(Evry_Action *act)
+{
+   return evry_util_exec_app(act->it2.item, act->it1.item);
 }
 
 static int
@@ -949,9 +934,16 @@ _plugins_init(void)
    p->config_path = "extensions/everything-apps";
    evry_plugin_register(p, EVRY_PLUGIN_SUBJECT, 1);
    plug_apps = p;
+
+   p = EVRY_PLUGIN_NEW(Plugin, N_("Applications"), NULL, EVRY_TYPE_APP,
+		       _begin, _finish, _fetch, NULL);
+   p->complete = &_complete;
+   p->config_path = "extensions/everything-apps";
+   evry_plugin_register(p, EVRY_PLUGIN_OBJECT, 1);
+   plug_apps2 = p;
    
    p = EVRY_PLUGIN_NEW(Plugin, N_("Open With..."), NULL, EVRY_TYPE_APP,
-		       _begin_open_with, _finish, _fetch, NULL);
+		       _begin_open_with, _finish_mime, _fetch_mime, NULL);
 
    p->config_path = "extensions/everything-apps";
    evry_plugin_register(p, EVRY_PLUGIN_ACTION, 1);
@@ -997,6 +989,13 @@ _plugins_init(void)
 			 "system-run",
 			 _exec_sudo_action, NULL);
    _actions = eina_list_append(_actions, act);
+
+   act = EVRY_ACTION_NEW(N_("Open with..."),
+			 EVRY_TYPE_FILE, EVRY_TYPE_APP,
+			 "everything-launch",
+			 _exec_file_action, NULL);
+   _act_open_with = EVRY_ITEM(act);
+   _actions = eina_list_append(_actions, act);
    
    EINA_LIST_FOREACH(_actions, l, act)
      evry_action_register(act,  prio++);
@@ -1010,6 +1009,7 @@ _plugins_shutdown(void)
    Evry_Action *act;
    
    EVRY_PLUGIN_FREE(plug_apps);
+   EVRY_PLUGIN_FREE(plug_apps2);
    EVRY_PLUGIN_FREE(plug_action);
 
    EINA_LIST_FREE(_actions, act)
@@ -1236,7 +1236,6 @@ e_modapi_save(E_Module *m)
    return 1;
 }
 
-/**/
 /***************************************************************************/
 
 
@@ -1354,4 +1353,46 @@ _scan_idler(void *data)
      }
    /* we have mroe scannign to do */
    return 1;
+}
+
+static void
+_scan_executables()
+{
+   /* taken from exebuf module */
+   char *path, *pp, *last;
+   E_Exe_List *el;
+
+   el = e_config_domain_load("exebuf_exelist_cache", exelist_edd);
+   if (el)
+     {
+	E_Exe *ee;
+
+	EINA_LIST_FREE(el->list, ee)
+	  {
+	     exe_list = eina_list_append(exe_list, strdup(ee->path));
+	     eina_stringshare_del(ee->path);
+	     free(ee);
+	  }
+	free(el);
+     }
+   path = getenv("PATH");
+   if (path)
+     {
+	path = strdup(path);
+	last = path;
+	for (pp = path; pp[0]; pp++)
+	  {
+	     if (pp[0] == ':') pp[0] = '\0';
+	     if (pp[0] == 0)
+	       {
+		  exe_path = eina_list_append(exe_path, strdup(last));
+		  last = pp + 1;
+	       }
+	  }
+	if (pp > last)
+	  exe_path = eina_list_append(exe_path, strdup(last));
+	free(path);
+     }
+
+   exe_scan_idler = ecore_idler_add(_scan_idler, NULL);
 }

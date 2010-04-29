@@ -401,26 +401,30 @@ evry_util_exec_app(const Evry_Item *it_app, const Evry_Item *it_file)
    
    if (!it_app) return 0;
    GET_APP(app, it_app);
-
+   GET_FILE(file, it_file);
+   
    zone = e_util_zone_current_get(e_manager_current_get());
 
    if (app->desktop)
      {
-	if (it_file)
+	if (file && evry_file_path_get(file))
 	  {
-	     GET_FILE(file, it_file);
-
 	     Eina_List *l;
 	     char *mime;
 	     int open_folder = 0;
 
-	     if (!EVRY_ITEM(file)->browseable)
+	     /* when the file is no a directory and the app
+		opens folders, pass only the dir */
+	     if (!IS_BROWSEABLE(file))
 	       {
 		  EINA_LIST_FOREACH(app->desktop->mime_types, l, mime)
 		    {
 		       if (!strcmp(mime, "x-directory/normal"))
+			 open_folder = 1;
+
+		       if (file->mime && !strcmp(mime, file->mime))
 			 {
-			    open_folder = 1;
+			    open_folder = 0;
 			    break;
 			 }
 		    }
@@ -459,10 +463,8 @@ evry_util_exec_app(const Evry_Item *it_app, const Evry_Item *it_file)
      }
    else if (app->file)
      {
-	if (it_file)
+	if (file && evry_file_path_get(file))
 	  {
-	     GET_FILE(file, it_file);
-
 	     int len;
 	     tmp = eina_str_escape(file->path);
 	     len = strlen(app->file) + strlen(tmp) + 2;
@@ -611,6 +613,8 @@ _isalnum(unsigned char in)
   }
   return EINA_FALSE;
 }
+
+/* FIXME option to not escape '/' */
 EAPI char *
 evry_util_url_escape(const char *string, int inlength)
 {
@@ -660,25 +664,47 @@ evry_util_url_escape(const char *string, int inlength)
 }
 
 EAPI const char*
-evry_file_path_get(Evry_Item *it)
+evry_file_path_get(Evry_Item_File *file)
 {
    const char *tmp;
    char *path;
    
-   GET_FILE(file, it);
-
    if (file->path)
      return file->path;
-   
+
+   if (!file->url)
+     return NULL;
+
    if (!strncmp(file->url, "file://", 7))
      tmp = file->url + 7;
    else return NULL;
    
    if (!(path = evry_util_unescape(tmp, 0)))
      return NULL;
+   
    file->path = eina_stringshare_add(path);
 
    E_FREE(path);
    
    return file->path;
+}
+
+EAPI const char*
+evry_file_uri_get(Evry_Item_File *file)
+{
+   char buf[PATH_MAX];
+   
+   if (file->url)
+     return file->url;
+
+   if (!file->path)
+     return NULL;
+   
+   snprintf(buf, sizeof(buf), "file://%s", file->path);
+
+   /* FIXME escape ? */
+   
+   file->url = eina_stringshare_add(buf);
+
+   return file->url;
 }

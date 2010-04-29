@@ -107,7 +107,7 @@ _check_item(const Evry_Item *it)
 
    GET_FILE(file, it);
 
-   if (!file->path || !file->mime) return 0;
+   if (!evry_file_path_get(file) || !file->mime) return 0;
 
    if (!strncmp(file->mime, "image/", 6))
      return 1;
@@ -588,8 +588,8 @@ _pan_item_add(Evas_Object *obj, Evry_Item *item)
    it->item = item;
    it->changed = EINA_TRUE;
 
-   if (_check_item(item))
-     it->get_thumb = EINA_TRUE;
+   /* if (_check_item(item))
+    *   it->get_thumb = EINA_TRUE; */
 
    evry_item_ref(item);
 
@@ -1042,8 +1042,8 @@ _view_update(Evry_View *view, int slide)
 	  {
 	     v_items = eina_list_append(v_items, v_it->item);
 
-	     if (_check_item(v_it->item))
-	       v_it->get_thumb = EINA_TRUE;
+	     /* if (_check_item(v_it->item))
+	      *   v_it->get_thumb = EINA_TRUE; */
 
 	     if (v_it->visible && v_it->changed)
 	       update = EINA_TRUE;

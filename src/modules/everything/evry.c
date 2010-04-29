@@ -890,7 +890,7 @@ static int
 _evry_selector_thumb(Evry_Selector *sel, const Evry_Item *it)
 {
    Evas_Coord w, h;
-
+   
    if (sel->do_thumb)
      e_thumb_icon_end(sel->o_thumb);
 
@@ -902,7 +902,11 @@ _evry_selector_thumb(Evry_Selector *sel, const Evry_Item *it)
 
    GET_FILE(file, it);
 
-   if (!file->path || !file->mime) return 0;
+   if (!file->mime)
+     return 0;
+   
+   if (!(evry_file_path_get(file)))
+     return 0;
 
    if (!strncmp(file->mime, "image/", 6))
      {
@@ -1116,16 +1120,18 @@ _evry_selector_objects_get(Evry_Action *act)
    while (sel->state)
      _evry_state_pop(sel);
 
-   it = selectors[0]->state->cur_item;
+   it = selectors[1]->state->cur_item;
 
    EINA_LIST_FOREACH(sel->plugins, l, p)
      {
+	DBG("p %s %d %d\n", p->name, EVRY_ITEM(p)->subtype, act->it2.type);
+
 	if (!CHECK_SUBTYPE(p, act->it2.type))
 	  continue;
 
 	if (p->begin)
 	  {
-	     if ((pp = p->begin(p, it)) || (pp = p->begin(p, NULL)))
+	     if ((pp = p->begin(p, it)))
 	       plugins = eina_list_append(plugins, pp);
 	  }
 	else
