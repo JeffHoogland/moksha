@@ -393,7 +393,7 @@ _battery_hal_battery_props(void *data, void *reply_data, DBusError *error __UNUS
 {
    E_Hal_Properties *ret = reply_data;
    int err = 0;
-   char *str;
+   const char *str;
    Hal_Battery *hbat;
    
    hbat = data;
@@ -410,7 +410,7 @@ _battery_hal_battery_props(void *data, void *reply_data, DBusError *error __UNUS
    if (str) \
      { \
         hbat->val = eina_stringshare_add(str); \
-        free(str); \
+        eina_stringshare_del(str); \
      }
    
    GET_BOOL(present, "battery.present");
@@ -438,7 +438,7 @@ _battery_hal_ac_adapter_props(void *data, void *reply_data, DBusError *error __U
 {
    E_Hal_Properties *ret = reply_data;
    int err = 0;
-   char *str;
+   const char *str;
    Hal_Ac_Adapter *hac;
 
    hac = data;
@@ -455,7 +455,7 @@ _battery_hal_ac_adapter_props(void *data, void *reply_data, DBusError *error __U
    if (str) \
      { \
         hac->val = eina_stringshare_add(str); \
-        free(str); \
+        eina_stringshare_del(str); \
      }
    
    GET_BOOL(present, "ac_adapter.present");
@@ -627,7 +627,7 @@ _battery_hal_is_battery(void *user_data, void *reply_data, DBusError *err)
      }
    if (ret && ret->boolean) _battery_hal_battery_add(udi);
    error:
-   free(udi);
+   eina_stringshare_del(udi);
 }
 
 static void
@@ -645,7 +645,7 @@ _battery_hal_is_ac_adapter(void *user_data, void *reply_data, DBusError *err)
      }
    if (ret && ret->boolean) _battery_hal_ac_adapter_add(udi);
    error:
-   free(udi);
+   eina_stringshare_del(udi);
 }
 
 static void
@@ -662,9 +662,9 @@ _battery_hal_dev_add(void *data __UNUSED__, DBusMessage *msg)
    if (!conn) return;
    // FIXME: e_dbus doesnt allow us to track this pending call
    e_hal_device_query_capability(conn, udi, "battery",
-                                 _battery_hal_is_battery, strdup(udi));
+                                 _battery_hal_is_battery, eina_stringshare_add(udi));
    e_hal_device_query_capability(conn, udi, "ac_adapter",
-                                 _battery_hal_is_ac_adapter, strdup(udi));
+                                 _battery_hal_is_ac_adapter, eina_stringshare_add(udi));
 }
 
 static void

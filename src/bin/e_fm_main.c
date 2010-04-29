@@ -354,9 +354,9 @@ _e_dbus_cb_dev_all(void *user_data, void *reply_data, DBusError *error)
      {
 //	printf("DB INIT DEV+: %s\n", udi);
 	e_hal_device_query_capability(_e_dbus_conn, udi, "storage",
-	      _e_dbus_cb_store_is, strdup(udi));
+	      _e_dbus_cb_store_is, eina_stringshare_add(udi));
 	e_hal_device_query_capability(_e_dbus_conn, udi, "volume", 
-	      _e_dbus_cb_vol_is, strdup(udi));
+	      _e_dbus_cb_vol_is, eina_stringshare_add(udi));
      }
 }
 
@@ -423,7 +423,7 @@ _e_dbus_cb_store_is(void *user_data, void *reply_data, DBusError *error)
      }
    
    error:
-   free(udi);
+   eina_stringshare_del(udi);
 }
 
 static void
@@ -445,7 +445,7 @@ _e_dbus_cb_vol_is(void *user_data, void *reply_data, DBusError *error)
      }
    
    error:
-   free(udi);
+   eina_stringshare_del(udi);
 }
 
 static void
@@ -458,9 +458,9 @@ _e_dbus_cb_dev_add(void *data, DBusMessage *msg)
    dbus_message_get_args(msg, &err, DBUS_TYPE_STRING, &udi, DBUS_TYPE_INVALID);
    if (!udi) return;
    e_hal_device_query_capability(_e_dbus_conn, udi, "storage", 
-				       _e_dbus_cb_store_is, strdup(udi));
+				       _e_dbus_cb_store_is, eina_stringshare_add(udi));
    e_hal_device_query_capability(_e_dbus_conn, udi, "volume",
-				 _e_dbus_cb_vol_is, strdup(udi));
+				 _e_dbus_cb_vol_is, eina_stringshare_add(udi));
 }
 
 static void
@@ -622,7 +622,7 @@ e_storage_add(const char *udi)
    if (e_storage_find(udi)) return NULL;
    s = calloc(1, sizeof(E_Storage));
    if (!s) return NULL;
-   s->udi = strdup(udi);
+   s->udi = eina_stringshare_del(udi);
    _e_stores = eina_list_append(_e_stores, s);
    e_hal_device_get_all_properties(_e_dbus_conn, s->udi,
 				   _e_dbus_cb_store_prop, s);
@@ -668,7 +668,7 @@ _e_dbus_cb_vol_prop(void *data, void *reply_data, DBusError *error)
    E_Storage *s = NULL;
    E_Hal_Device_Get_All_Properties_Return *ret = reply_data;
    int err = 0;
-   char *str = NULL;
+   const char *str = NULL;
 
    if (!ret) goto error;
    if (dbus_error_is_set(error))
@@ -685,7 +685,7 @@ _e_dbus_cb_vol_prop(void *data, void *reply_data, DBusError *error)
    str = e_hal_property_string_get(ret, "volume.fsusage", &err);
    if (err || !str) goto error;
    if (strcmp(str, "filesystem")) goto error;
-   free(str);
+   eina_stringshare_del(str);
    str = NULL;
    
    v->uuid = e_hal_property_string_get(ret, "volume.uuid", &err);
@@ -801,7 +801,7 @@ _e_dbus_cb_vol_prop_mount_modified(void *data, void *reply_data, DBusError *erro
    v->mounted = e_hal_property_bool_get(ret, "volume.is_mounted", &err);
    if (err) printf("HAL Error : can't get volume.is_mounted property");
    
-   if (v->mount_point) free(v->mount_point);
+   if (v->mount_point) eina_stringshare_del(v->mount_point);
    v->mount_point = e_hal_property_string_get(ret, "volume.mount_point", &err);
    if (err) printf("HAL Error : can't get volume.is_mount_point property");
    
@@ -840,7 +840,7 @@ e_volume_add(const char *udi, char first_time)
    v = calloc(1, sizeof(E_Volume));
    if (!v) return NULL;
 //   printf("VOL+ %s\n", udi);
-   v->udi = strdup(udi);
+   v->udi = eina_stringshare_del(udi);
    v->icon = NULL;
    v->first_time = first_time;
    _e_vols = eina_list_append(_e_vols, v);
@@ -1603,8 +1603,8 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	       {
 		  if (mountpoint[0])
 		    {
-		       if (v->mount_point) free(v->mount_point);
-		       v->mount_point = strdup(mountpoint);
+		       if (v->mount_point) eina_stringshare_del(v->mount_point);
+		       v->mount_point = eina_stringshare_add(mountpoint);
 		    }
 //		  printf("REQ M\n");
 		  e_volume_mount(v);

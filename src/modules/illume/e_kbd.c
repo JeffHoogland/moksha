@@ -115,7 +115,7 @@ _e_kbd_free(E_Kbd *kbd)
 //   if (kbd->border) kbd->border->stolen = 0;
    EINA_LIST_FREE(kbd->waiting_borders, bd)
 	bd->stolen = 0;
-   free(kbd);
+   eina_stringshare_del(kbd);
 }
 
 static void
@@ -758,7 +758,7 @@ _e_kbd_dbus_cb_input_keyboard_is(void *user_data, void *reply_data, DBusError *e
      }
    
    error:
-   free(udi);
+   eina_stringshare_del(udi);
 }
 
 static void
@@ -769,10 +769,10 @@ _e_kbd_dbus_cb_dev_add(void *data, DBusMessage *msg)
         
    dbus_error_init(&err);
    dbus_message_get_args(msg, &err, DBUS_TYPE_STRING, &udi, DBUS_TYPE_INVALID);
-   udi = strdup(udi);
+   udi = eina_stringshare_add(udi);
    e_hal_device_query_capability(_e_kbd_dbus_conn, udi, "input.keyboard",
                                        _e_kbd_dbus_cb_input_keyboard_is, 
-				       strdup(udi));
+				       eina_stringshare_add(udi));
 }
      
 static void

@@ -1311,7 +1311,7 @@ e_fm2_parent_go(Evas_Object *obj)
    if (!evas_object_type_get(obj)) return; // safety
    if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
    if (!sd->path) return;
-   path = strdup(sd->path);
+   path = eina_stringshare_add(sd->path);
    if (!path) return;
    if ((p = strrchr(path, '/'))) *p = 0;
    if (*path == 0)
@@ -1319,7 +1319,7 @@ e_fm2_parent_go(Evas_Object *obj)
    else
      e_fm2_path_set(obj, sd->dev, path);
 
-   free(path);
+   eina_stringshare_del(path);
 }
 
 EAPI void
@@ -2014,7 +2014,7 @@ _e_fm2_icon_mime_fdo_get(Evas *evas, const E_Fm2_Icon *ic, const char **type_ret
      {
         Evas_Object *o;
         o =  _e_fm2_icon_explicit_get(evas, ic, icon, type_ret);
-        free((char *) icon);
+        free(icon);
         return o;
      }
    return NULL;
@@ -9698,7 +9698,7 @@ _e_fm2_volume_mount(void *data, E_Menu *m, E_Menu_Item *mi)
    
    mp = e_fm2_hal_volume_mountpoint_get(v);
    _e_fm2_client_mount(v->udi, mp);
-   free(mp);
+   eina_stringshare_del(mp);
 }
 
 static void 

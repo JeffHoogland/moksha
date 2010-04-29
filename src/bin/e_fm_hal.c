@@ -138,7 +138,7 @@ e_fm2_hal_volume_add(E_Volume *v)
    /* Check mount point */
    if ((!v->mount_point) || (v->mount_point[0] == 0))
      {
-	if (v->mount_point) free(v->mount_point);
+	if (v->mount_point) eina_stringshare_del(v->mount_point);
 	v->mount_point = NULL;
 	v->mount_point = e_fm2_hal_volume_mountpoint_get(v);
 	if ((!v->mount_point) || (v->mount_point[0] == 0))
@@ -146,7 +146,7 @@ e_fm2_hal_volume_add(E_Volume *v)
 	     char buf[PATH_MAX];
 	     char *id;
 	     
-	     if (v->mount_point) free(v->mount_point);
+	     if (v->mount_point) eina_stringshare_del(v->mount_point);
 	     v->mount_point = NULL;
 	     id = "disk";
 	     if ((v->uuid) && (v->uuid[0])) id = v->uuid;
@@ -158,7 +158,7 @@ e_fm2_hal_volume_add(E_Volume *v)
 	       snprintf(buf, sizeof(buf), "/tmp/%s", id);
 	     else
 	       buf[0] = 0;
-	     v->mount_point = strdup(buf);
+	     v->mount_point = eina_stringshare_add(buf);
 	  }
      }
 
@@ -223,8 +223,8 @@ e_fm2_hal_volume_add(E_Volume *v)
 
 	if (label[0])
 	  {
-	     if (v->label) free(v->label);
-	     v->label = strdup(label);
+	     if (v->label) eina_stringshare_del(v->label);
+	     v->label = eina_stringshare_add(label);
 	  }
 
 	/* Choose the icon */
@@ -254,8 +254,8 @@ e_fm2_hal_volume_add(E_Volume *v)
 	  }
 	if (icon)
 	  {
-	     if (v->icon) free(v->icon);
-	     v->icon = strdup(icon);
+	     if (v->icon) eina_stringshare_del(v->icon);
+	     v->icon = eina_stringshare_add(icon);
 	  }
 
 	if ((!v->mount_point) ||
@@ -387,7 +387,7 @@ e_fm2_hal_volume_mountpoint_get(E_Volume *v)
    if (v->mount_point)
      {
 //	printf("GET MOUNTPOINT = %s\n", v->mount_point);
-	return strdup(v->mount_point);
+	return eina_stringshare_add(v->mount_point);
      }
    
    if (v->label && v->label[0] != '\0')
@@ -402,7 +402,7 @@ e_fm2_hal_volume_mountpoint_get(E_Volume *v)
 	snprintf(buf, sizeof(buf) - 1, "/media/unknown-%i", mount_count++);
      }
 //   printf("GET MOUNTPOINT = %s\n", buf);
-   return strdup(buf);
+   return eina_stringshare_add(buf);
 }
 
 EAPI void
@@ -415,8 +415,8 @@ e_fm2_hal_mount_add(E_Volume *v, const char *mountpoint)
    if (mountpoint && (*mountpoint != 0))
      {
         if (v->mount_point) 
-           free(v->mount_point);
-        v->mount_point = strdup(mountpoint);
+           eina_stringshare_del(v->mount_point);
+        v->mount_point = eina_stringshare_add(mountpoint);
      }
 
    EINA_LIST_FOREACH(v->mounts, l, m)
@@ -434,7 +434,7 @@ e_fm2_hal_mount_del(E_Volume *v)
    v->mounted = 0;
    if (v->mount_point) 
      {
-        free(v->mount_point);
+        eina_stringshare_del(v->mount_point);
         v->mount_point = NULL;
      }
 
@@ -521,7 +521,7 @@ e_fm2_hal_mount_fail(E_Volume *v)
    v->mounted = 0;
    if (v->mount_point) 
      {
-        free(v->mount_point);
+        eina_stringshare_del(v->mount_point);
         v->mount_point = NULL;
      }
 
