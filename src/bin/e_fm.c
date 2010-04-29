@@ -2005,7 +2005,7 @@ _e_fm2_icon_mime_size_normalize(const E_Fm2_Icon *ic)
 static Evas_Object *
 _e_fm2_icon_mime_fdo_get(Evas *evas, const E_Fm2_Icon *ic, const char **type_ret)
 {
-   const char *icon;
+   char *icon;
    unsigned int size;
 
    size = _e_fm2_icon_mime_size_normalize(ic);

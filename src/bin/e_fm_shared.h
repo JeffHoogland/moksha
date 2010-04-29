@@ -9,10 +9,10 @@ typedef struct _E_Fm2_Mount  E_Fm2_Mount;
 struct _E_Storage
 {
    int type;
-   char *udi, *bus;
-   char *drive_type;
+   const char *udi, *bus;
+   const char *drive_type;
 
-   char *model, *vendor, *serial;
+   const char *model, *vendor, *serial;
 
    char removable, media_available;
    unsigned long long media_size;
@@ -34,17 +34,17 @@ struct _E_Storage
 struct _E_Volume
 {
    int type;
-   char *udi, *uuid;
-   char *label, *icon, *fstype;
+   const char *udi, *uuid;
+   const char *label, *icon, *fstype;
    unsigned long long size;
 
    char partition;
    int partition_number;
-   char *partition_label;
+   const char *partition_label;
    char mounted;
-   char *mount_point;
+   const char *mount_point;
 
-   char *parent;
+   const char *parent;
    E_Storage *storage;
    void *prop_handler;
    Eina_List *mounts;
@@ -87,14 +87,14 @@ _e_volume_free(E_Volume *v)
 	v->storage->volumes = eina_list_remove(v->storage->volumes, v);
 	v->storage = NULL;
      }
-   if (v->udi) free(v->udi);
-   if (v->uuid) free(v->uuid);
-   if (v->label) free(v->label);
-   if (v->icon) free(v->icon);
-   if (v->fstype) free(v->fstype);
-   if (v->partition_label) free(v->partition_label);
-   if (v->mount_point) free(v->mount_point);
-   if (v->parent) free(v->parent);
+   if (v->udi) eina_stringshare_del(v->udi);
+   if (v->uuid) eina_stringshare_del(v->uuid);
+   if (v->label) eina_stringshare_del(v->label);
+   if (v->icon) eina_stringshare_del(v->icon);
+   if (v->fstype) eina_stringshare_del(v->fstype);
+   if (v->partition_label) eina_stringshare_del(v->partition_label);
+   if (v->mount_point) eina_stringshare_del(v->mount_point);
+   if (v->parent) eina_stringshare_del(v->parent);
    free(v);
 }
 
@@ -106,14 +106,14 @@ _e_storage_free(E_Storage *s)
      {
 	_e_volume_free(v);
      }
-   if (s->udi) free(s->udi);
-   if (s->bus) free(s->bus);
-   if (s->drive_type) free(s->drive_type);
-   if (s->model) free(s->model);
-   if (s->vendor) free(s->vendor);
-   if (s->serial) free(s->serial);
-   if (s->icon.drive) free(s->icon.drive);
-   if (s->icon.volume) free(s->icon.volume);
+   if (s->udi) eina_stringshare_del(s->udi);
+   if (s->bus) eina_stringshare_del(s->bus);
+   if (s->drive_type) eina_stringshare_del(s->drive_type);
+   if (s->model) eina_stringshare_del(s->model);
+   if (s->vendor) eina_stringshare_del(s->vendor);
+   if (s->serial) eina_stringshare_del(s->serial);
+   if (s->icon.drive) eina_stringshare_del(s->icon.drive);
+   if (s->icon.volume) eina_stringshare_del(s->icon.volume);
    free(s);
 }
 

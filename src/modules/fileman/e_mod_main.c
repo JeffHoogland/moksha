@@ -296,7 +296,7 @@ _e_mod_fileman_parse_gtk_bookmarks(E_Menu *m, Eina_Bool need_separator)
 					    ecore_file_file_get(uri->path));
 		      e_util_menu_item_theme_icon_set(mi, "folder");
 		      e_menu_item_callback_set(mi, _e_mod_menu_gtk_cb,
-					       eina_stringshare_del(uri->path));
+					       eina_stringshare_add(uri->path));
 		   }
 	      }
 	    if (uri) efreet_uri_free(uri);

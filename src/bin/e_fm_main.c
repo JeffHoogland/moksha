@@ -354,9 +354,9 @@ _e_dbus_cb_dev_all(void *user_data, void *reply_data, DBusError *error)
      {
 //	printf("DB INIT DEV+: %s\n", udi);
 	e_hal_device_query_capability(_e_dbus_conn, udi, "storage",
-	      _e_dbus_cb_store_is, eina_stringshare_add(udi));
+	      _e_dbus_cb_store_is, (void*)eina_stringshare_add(udi));
 	e_hal_device_query_capability(_e_dbus_conn, udi, "volume", 
-	      _e_dbus_cb_vol_is, eina_stringshare_add(udi));
+	      _e_dbus_cb_vol_is, (void*)eina_stringshare_add(udi));
      }
 }
 
@@ -458,9 +458,9 @@ _e_dbus_cb_dev_add(void *data, DBusMessage *msg)
    dbus_message_get_args(msg, &err, DBUS_TYPE_STRING, &udi, DBUS_TYPE_INVALID);
    if (!udi) return;
    e_hal_device_query_capability(_e_dbus_conn, udi, "storage", 
-				       _e_dbus_cb_store_is, eina_stringshare_add(udi));
+				       _e_dbus_cb_store_is, (void*)eina_stringshare_add(udi));
    e_hal_device_query_capability(_e_dbus_conn, udi, "volume",
-				 _e_dbus_cb_vol_is, eina_stringshare_add(udi));
+				 _e_dbus_cb_vol_is, (void*)eina_stringshare_add(udi));
 }
 
 static void
@@ -622,7 +622,7 @@ e_storage_add(const char *udi)
    if (e_storage_find(udi)) return NULL;
    s = calloc(1, sizeof(E_Storage));
    if (!s) return NULL;
-   s->udi = eina_stringshare_del(udi);
+   s->udi = eina_stringshare_add(udi);
    _e_stores = eina_list_append(_e_stores, s);
    e_hal_device_get_all_properties(_e_dbus_conn, s->udi,
 				   _e_dbus_cb_store_prop, s);
@@ -840,7 +840,7 @@ e_volume_add(const char *udi, char first_time)
    v = calloc(1, sizeof(E_Volume));
    if (!v) return NULL;
 //   printf("VOL+ %s\n", udi);
-   v->udi = eina_stringshare_del(udi);
+   v->udi = eina_stringshare_add(udi);
    v->icon = NULL;
    v->first_time = first_time;
    _e_vols = eina_list_append(_e_vols, v);
