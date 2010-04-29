@@ -1140,8 +1140,8 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 
    if (s->plugin->view_mode == VIEW_MODE_NONE)
      {
-	if ((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
-	    (!strcmp(key, "2")))
+	if (((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
+	     (!strcmp(key, "2"))) || !strcmp(key, "XF86Back"))
 	  {
 	     if (v->mode == VIEW_MODE_LIST)
 	       v->mode = VIEW_MODE_DETAIL;
@@ -1153,8 +1153,8 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 	     _update_frame(v->span);
 	     goto end;
 	  }
-	else if ((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
-		  (!strcmp(key, "3")))
+	else if (((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
+		  (!strcmp(key, "3"))) || !strcmp(key, "XF86Forward"))
 	  {
 	     if (v->mode != VIEW_MODE_THUMB)
 	       {

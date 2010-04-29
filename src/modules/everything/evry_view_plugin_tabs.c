@@ -20,7 +20,7 @@ _animator(void *data)
    Tab_View *v = data;
 
    double da;
-   double spd = (8.0 / (double)e_config->framerate);
+   double spd = (15.0 / (double)e_config->framerate);
    if (spd > 0.9) spd = 0.9;
    int wait = 0;
 
@@ -288,17 +288,18 @@ _tabs_key_down(Tab_View *v, const Ecore_Event_Key *ev)
 
    if (!v->state || !v->state->cur_plugins) return 0;
 
-   if (!strcmp(key, "Next"))
-     {
-	_plugin_next(v);
-	return 1;
-     }
-   else if (!strcmp(key, "Prior"))
-     {
-	_plugin_prev(v);
-	return -1;
-     }
-   else if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
+   /* if (!strcmp(key, "Next"))
+    *   {
+    * 	_plugin_next(v);
+    * 	return 1;
+    *   }
+    * else if (!strcmp(key, "Prior"))
+    *   {
+    * 	_plugin_prev(v);
+    * 	return -1;
+    *   }
+    * else */
+   if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
      {
 	if (!strcmp(key, "Left"))
 	  {

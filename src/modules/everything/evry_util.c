@@ -658,3 +658,27 @@ evry_util_url_escape(const char *string, int inlength)
   ns[strindex]=0; /* terminate it */
   return ns;
 }
+
+EAPI const char*
+evry_file_path_get(Evry_Item *it)
+{
+   const char *tmp;
+   char *path;
+   
+   GET_FILE(file, it);
+
+   if (file->path)
+     return file->path;
+   
+   if (!strncmp(file->url, "file://", 7))
+     tmp = file->url + 7;
+   else return NULL;
+   
+   if (!(path = evry_util_unescape(tmp, 0)))
+     return NULL;
+   file->path = eina_stringshare_add(path);
+
+   E_FREE(path);
+   
+   return file->path;
+}

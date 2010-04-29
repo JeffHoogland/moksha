@@ -64,9 +64,13 @@ typedef int Evry_Type;
 #define EVRY_ACTN(_item) ((Evry_Action *) _item)
 #define EVRY_PLUGIN(_plugin) ((Evry_Plugin *) _plugin)
 #define EVRY_VIEW(_view) ((Evry_View *) _view)
+#define EVRY_FILE(_it) ((Evry_Item_File *) _it)
 
-#define CHECK_TYPE(_item, _type) (((Evry_Item *)_item)->type == _type)
-#define CHECK_SUBTYPE(_item, _type) (((Evry_Item *)_item)->subtype == _type)
+#define CHECK_TYPE(_item, _type) \
+  (((Evry_Item *)_item)->type && ((Evry_Item *)_item)->type == _type)
+
+#define CHECK_SUBTYPE(_item, _type) \
+  (((Evry_Item *)_item)->subtype && ((Evry_Item *)_item)->subtype == _type)
 
 #define GET_APP(_app, _item) Evry_Item_App *_app = (Evry_Item_App *) _item
 #define GET_FILE(_file, _item) Evry_Item_File *_file = (Evry_Item_File *) _item
@@ -435,6 +439,7 @@ EAPI char *evry_util_unescape(const char *string, int length);
 EAPI void evry_util_file_detail_set(Evry_Item_File *file);
 EAPI Eina_Bool evry_util_module_config_check(const char *module_name, int conf, int epoch, int version);
 EAPI Evas_Object *evry_util_icon_get(Evry_Item *it, Evas *e);
+EAPI const char *evry_file_path_get(Evry_Item *it);
 
 /* e_mod_main.c */
 /* set plugin trigger and view mode first before register !*/

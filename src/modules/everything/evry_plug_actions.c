@@ -39,11 +39,8 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
    GET_PLUGIN(p, plugin);
    Evry_Action *act;
    Eina_List *l;
-   Evry_Type type;
 
    if (!it || !it->type) return NULL;
-
-   type = it->type;
 
    if (it->browseable)
      {
@@ -64,9 +61,10 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
 
    EINA_LIST_FOREACH(evry_conf->actions, l, act)
      {
-	if ((!act->it1.type) ||
-	    ((act->it1.type == type) &&
-	     (!act->check_item || act->check_item(act, it))))
+	if (((!act->it1.type) ||              
+	     (CHECK_TYPE(it, act->it1.type)) || 
+	     (CHECK_SUBTYPE(it, act->it1.type))) && 
+	    (!act->check_item || act->check_item(act, it)))
 	  {
 	     act->base.plugin = plugin;
 
