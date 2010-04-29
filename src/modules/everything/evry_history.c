@@ -221,8 +221,11 @@ evry_history_add(Eina_Hash *hist, Evry_Item *it, const char *ctxt, const char *i
    History_Item  *hi = NULL;
    Eina_List *l;
    const char *id;
+   const char *type;
 
    if (!it || !it->plugin->history) return NULL;
+
+   type = evry_type_get(it->type);
 
    id = (it->id ? it->id : it->label);
 
@@ -236,7 +239,8 @@ evry_history_add(Eina_Hash *hist, Evry_Item *it, const char *ctxt, const char *i
      {
 	EINA_LIST_FOREACH(he->items, l, hi)
 	  if ((hi->plugin == it->plugin->name) &&
-	      (ctxt == hi->context))
+	      (ctxt == hi->context) &&
+	      (type == hi->type))
 	    break;
      }
 

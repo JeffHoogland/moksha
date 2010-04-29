@@ -71,8 +71,8 @@ _begin_open_with(Evry_Plugin *plugin, const Evry_Item *item)
 
    const char *mime;
 
-   if (!CHECK_TYPE(item, EVRY_TYPE_FILE) &&
-       !CHECK_SUBTYPE(item, EVRY_TYPE_FILE))
+   if (!CHECK_TYPE(item, EVRY_TYPE_FILE))
+     /* && !CHECK_SUBTYPE(item, EVRY_TYPE_FILE)) */
      return 0;
    
    GET_FILE(file, item);
@@ -680,7 +680,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
     *   } */
 
    /* add exe history items */
-   if (!plugin->items)
+   if (!input && !plugin->items)
      {
 	if (!p->apps_hist)
 	  eina_hash_foreach(evry_hist->subjects, _hist_items_add_cb, p);

@@ -40,6 +40,7 @@ EAPI int EVRY_EVENT_ITEM_CHANGED;
 EAPI int EVRY_EVENT_ITEMS_UPDATE;
 
 EAPI Evry_Type EVRY_TYPE_FILE;
+EAPI Evry_Type EVRY_TYPE_DIR;
 EAPI Evry_Type EVRY_TYPE_APP;
 EAPI Evry_Type EVRY_TYPE_ACTION;
 EAPI Evry_Type EVRY_TYPE_PLUGIN;
@@ -105,6 +106,7 @@ e_modapi_init(E_Module *m)
 
    EVRY_TYPE_NONE   = evry_type_register("NONE");
    EVRY_TYPE_FILE   = evry_type_register("FILE");
+   EVRY_TYPE_DIR    = evry_type_register("DIRECTORY");
    EVRY_TYPE_APP    = evry_type_register("APPLICATION");
    EVRY_TYPE_ACTION = evry_type_register("ACTION");
    EVRY_TYPE_PLUGIN = evry_type_register("PLUGIN");

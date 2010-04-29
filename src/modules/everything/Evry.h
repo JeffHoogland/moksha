@@ -487,6 +487,7 @@ EAPI extern int EVRY_EVENT_ITEMS_UPDATE;
 
 EAPI extern Evry_Type EVRY_TYPE_NONE;
 EAPI extern Evry_Type EVRY_TYPE_FILE;
+EAPI extern Evry_Type EVRY_TYPE_DIR;
 EAPI extern Evry_Type EVRY_TYPE_APP;
 EAPI extern Evry_Type EVRY_TYPE_ACTION;
 EAPI extern Evry_Type EVRY_TYPE_PLUGIN;

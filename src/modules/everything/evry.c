@@ -148,7 +148,6 @@ _cb_show_timer(void *data)
 	else
 	  {
 	     s->view = view->create(view, s, list->o_main);
-
 	     _evry_view_show(s->view);
 	  }
      }
