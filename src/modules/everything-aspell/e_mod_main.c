@@ -360,7 +360,7 @@ _plugins_init(void)
 		       "accessories-dictionary",
 		       EVRY_TYPE_TEXT,
 		       NULL, _cleanup, _fetch, NULL);
-
+   p->config_path = _config_path;
    p->aggregate   = EINA_FALSE;
    p->history     = EINA_FALSE;
    p->async_fetch = EINA_TRUE;
