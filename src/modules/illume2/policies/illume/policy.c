@@ -1523,7 +1523,48 @@ _policy_focus_back(E_Zone *zone)
 void 
 _policy_focus_forward(E_Zone *zone) 
 {
-//   printf("Focus forward\n");
+   Eina_List *l, *fl = NULL;
+   E_Border *bd, *fbd;
+
+   if (eina_list_count(_pol_focus_stack) < 1) return;
+
+   //   printf("Focus forward\n");
+
+   EINA_LIST_FOREACH(_pol_focus_stack, l, bd) 
+     {
+        if (bd->zone != zone) continue;
+        fl = eina_list_append(fl, bd);
+     }
+
+   fbd = e_border_focused_get();
+   if (fbd) 
+     {
+        if (fbd->parent) return;
+     }
+
+   EINA_LIST_FOREACH(fl, l, bd) 
+     {
+        if ((fbd) && (bd == fbd))
+          {
+             E_Border *b;
+
+             if ((l->next) && (b = l->next->data)) 
+               {
+                  _policy_border_set_focus(b);
+                  break;
+               }
+             else 
+               {
+                  /* we've reached the end of the list. Set focus to first */
+                  if (b = eina_list_nth(fl, 0)) 
+                    {
+                       _policy_border_set_focus(b);
+                       break;
+                    }
+               }
+          }
+     }
+   eina_list_free(fl);
 }
 
 void 
