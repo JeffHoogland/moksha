@@ -67,7 +67,7 @@ struct _E_Config_Dialog_Data
         int desktop;
         int auto_mount;
         int auto_open;
-     } hal;
+     } dbus;
 
    E_Config_Dialog *cfd;
 };
@@ -126,9 +126,9 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->selection.windows_modifiers = fileman_config->selection.windows_modifiers;
    cfdata->list.sort.dirs.first = fileman_config->list.sort.dirs.first;
    cfdata->list.sort.case_sen = !(fileman_config->list.sort.no_case);
-   cfdata->hal.desktop = e_config->hal_desktop;
-   cfdata->hal.auto_mount = e_config->hal_auto_mount;
-   cfdata->hal.auto_open = e_config->hal_auto_open;
+   cfdata->dbus.desktop = e_config->dbus_desktop;
+   cfdata->dbus.auto_mount = e_config->dbus_auto_mount;
+   cfdata->dbus.auto_open = e_config->dbus_auto_open;
 }
 
 static void 
@@ -159,14 +159,14 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    fileman_config->list.sort.dirs.last = !(cfdata->list.sort.dirs.first);
    fileman_config->list.sort.no_case = !(cfdata->list.sort.case_sen);
 
-   e_config->hal_desktop = cfdata->hal.desktop;
-   if(e_config->hal_desktop) 
-     e_fm2_hal_show_desktop_icons();
+   e_config->dbus_desktop = cfdata->dbus.desktop;
+   if(e_config->dbus_desktop) 
+     e_fm2_dbus_show_desktop_icons();
    else
-     e_fm2_hal_hide_desktop_icons();
+     e_fm2_dbus_hide_desktop_icons();
 
-   e_config->hal_auto_mount = cfdata->hal.auto_mount;
-   e_config->hal_auto_open = cfdata->hal.auto_open;
+   e_config->dbus_auto_mount = cfdata->dbus.auto_mount;
+   e_config->dbus_auto_open = cfdata->dbus.auto_open;
    
    e_config_save_queue();
    
@@ -192,9 +192,9 @@ _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
       (fileman_config->list.sort.dirs.first != cfdata->list.sort.dirs.first) ||
       (fileman_config->list.sort.dirs.last != !(cfdata->list.sort.dirs.first)) ||
       (fileman_config->list.sort.no_case != !(cfdata->list.sort.case_sen)) ||
-      (e_config->hal_desktop != cfdata->hal.desktop) ||
-      (e_config->hal_auto_mount != cfdata->hal.auto_mount) ||
-      (e_config->hal_auto_open != cfdata->hal.auto_open));
+      (e_config->dbus_desktop != cfdata->dbus.desktop) ||
+      (e_config->dbus_auto_mount != cfdata->dbus.auto_mount) ||
+      (e_config->dbus_auto_open != cfdata->dbus.auto_open));
 }
 
 static Evas_Object *
@@ -268,14 +268,18 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_toolbook_page_append(otb, NULL, _("Behavior"), o, 0, 0, 0, 0, 0.5, 0.0);
 
    o = e_widget_list_add(evas, 2, 0);
+#ifdef HAVE_EUKIT
+   ob = e_widget_check_add(evas, _("Show UDisks icons on desktop"), 
+#else
    ob = e_widget_check_add(evas, _("Show HAL icons on desktop"), 
-                           &(cfdata->hal.desktop));
+#endif
+                           &(cfdata->dbus.desktop));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    ob = e_widget_check_add(evas, _("Mount volumes on insert"), 
-                           &(cfdata->hal.auto_mount));
+                           &(cfdata->dbus.auto_mount));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    ob = e_widget_check_add(evas, _("Open filemanager on mount"),
-                           &(cfdata->hal.auto_open));
+                           &(cfdata->dbus.auto_open));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    
    e_widget_toolbook_page_append(otb, NULL, _("HAL"), o, 0, 0, 0, 0, 0.5, 0.0);

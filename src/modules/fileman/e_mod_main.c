@@ -347,7 +347,7 @@ _e_mod_menu_generate(void *data, E_Menu *m)
 
    /* Volumes */
    Eina_Bool volumes_visible = 0;
-   EINA_LIST_FOREACH(e_fm2_hal_volume_list_get(), l, vol)
+   EINA_LIST_FOREACH(e_fm2_dbus_volume_list_get(), l, vol)
      {
 	if (vol->mount_point && !strcmp(vol->mount_point, "/")) continue;
 

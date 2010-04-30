@@ -9,19 +9,19 @@
 
 static void _e_fm2_volume_write(E_Volume *v) EINA_ARG_NONNULL(1);
 static void _e_fm2_volume_erase(E_Volume *v) EINA_ARG_NONNULL(1);
-static void _e_fm2_hal_mount_free(E_Fm2_Mount *m); EINA_ARG_NONNULL(1);
-static void _e_fm2_hal_mount_ok(E_Fm2_Mount *m) EINA_ARG_NONNULL(1);
-static void _e_fm2_hal_mount_fail(E_Fm2_Mount *m) EINA_ARG_NONNULL(1);
-static void _e_fm2_hal_unmount_ok(E_Fm2_Mount *m) EINA_ARG_NONNULL(1);
-static void _e_fm2_hal_unmount_fail(E_Fm2_Mount *m) EINA_ARG_NONNULL(1);
+static void _e_fm2_dbus_mount_free(E_Fm2_Mount *m); EINA_ARG_NONNULL(1);
+static void _e_fm2_dbus_mount_ok(E_Fm2_Mount *m) EINA_ARG_NONNULL(1);
+static void _e_fm2_dbus_mount_fail(E_Fm2_Mount *m) EINA_ARG_NONNULL(1);
+static void _e_fm2_dbus_unmount_ok(E_Fm2_Mount *m) EINA_ARG_NONNULL(1);
+static void _e_fm2_dbus_unmount_fail(E_Fm2_Mount *m) EINA_ARG_NONNULL(1);
 
 static Eina_List *_e_stores = NULL;
 static Eina_List *_e_vols   = NULL;
 
 EAPI void
-e_fm2_hal_storage_add(E_Storage *s)
+e_fm2_dbus_storage_add(E_Storage *s)
 {
-   if (e_fm2_hal_storage_find(s->udi)) return;
+   if (e_fm2_dbus_storage_find(s->udi)) return;
 
    s->validated = 1;
    _e_stores = eina_list_append(_e_stores, s);
@@ -73,7 +73,7 @@ e_fm2_hal_storage_add(E_Storage *s)
 }
 
 EAPI void
-e_fm2_hal_storage_del(E_Storage *s)
+e_fm2_dbus_storage_del(E_Storage *s)
 {
 //   printf("STO- %s\n", s->udi);
    _e_stores = eina_list_remove(_e_stores, s);
@@ -81,7 +81,7 @@ e_fm2_hal_storage_del(E_Storage *s)
 }
 
 EAPI E_Storage *
-e_fm2_hal_storage_find(const char *udi)
+e_fm2_dbus_storage_find(const char *udi)
 {
    Eina_List *l;
    E_Storage  *s;
@@ -101,11 +101,11 @@ e_fm2_hal_storage_find(const char *udi)
 #define KIBIBYTE_SIZE 1024
 
 EAPI void
-e_fm2_hal_volume_add(E_Volume *v)
+e_fm2_dbus_volume_add(E_Volume *v)
 {
    E_Storage *s;
 
-   if (e_fm2_hal_volume_find(v->udi)) return;
+   if (e_fm2_dbus_volume_find(v->udi)) return;
 
    v->validated = 1;
    _e_vols = eina_list_append(_e_vols, v);
@@ -140,7 +140,7 @@ e_fm2_hal_volume_add(E_Volume *v)
      {
 	if (v->mount_point) eina_stringshare_del(v->mount_point);
 	v->mount_point = NULL;
-	v->mount_point = e_fm2_hal_volume_mountpoint_get(v);
+	v->mount_point = e_fm2_dbus_volume_mountpoint_get(v);
 	if ((!v->mount_point) || (v->mount_point[0] == 0))
 	  {
 	     char buf[PATH_MAX];
@@ -163,7 +163,7 @@ e_fm2_hal_volume_add(E_Volume *v)
      }
 
    /* Search parent storage */
-   if ((s = e_fm2_hal_storage_find(v->parent)))
+   if ((s = e_fm2_dbus_storage_find(v->parent)))
      {
 	v->storage = s;
 	s->volumes = eina_list_append(s->volumes, v);
@@ -267,7 +267,7 @@ e_fm2_hal_volume_add(E_Volume *v)
 }
 
 EAPI void
-e_fm2_hal_volume_del(E_Volume *v)
+e_fm2_dbus_volume_del(E_Volume *v)
 {
    Eina_List *l, *l_nxt;
    E_Fm2_Mount *m;
@@ -279,9 +279,9 @@ e_fm2_hal_volume_del(E_Volume *v)
    _e_fm2_volume_erase(v);
    EINA_LIST_FOREACH_SAFE(v->mounts, l, l_nxt, m)
      {
-        _e_fm2_hal_unmount_ok(m);
+        _e_fm2_dbus_unmount_ok(m);
         v->mounts = eina_list_remove_list(v->mounts, l);
-        _e_fm2_hal_mount_free(m);
+        _e_fm2_dbus_mount_free(m);
      }
    _e_volume_free(v);
 }
@@ -321,7 +321,7 @@ _e_fm2_volume_write(E_Volume *v)
 		v->udi);
 	fclose(f);
 
-	if (e_config->hal_desktop)
+	if (e_config->dbus_desktop)
 	  {
 	     e_user_homedir_snprintf(buf2, sizeof(buf2),
 				     "%s/|%s_%d.desktop",
@@ -353,7 +353,7 @@ _e_fm2_volume_erase(E_Volume *v)
    ecore_file_unlink(buf);
    _e_fm2_file_force_update(buf);
 
-   if (e_config->hal_desktop)
+   if (e_config->dbus_desktop)
      {
 	e_user_dir_snprintf(buf, sizeof(buf),
 			    "fileman/favorites/|%s_%d.desktop",
@@ -364,7 +364,7 @@ _e_fm2_volume_erase(E_Volume *v)
 }
 
 EAPI E_Volume *
-e_fm2_hal_volume_find(const char *udi)
+e_fm2_dbus_volume_find(const char *udi)
 {
    Eina_List *l;
    E_Volume *v;
@@ -379,7 +379,7 @@ e_fm2_hal_volume_find(const char *udi)
 }
 
 EAPI const char *
-e_fm2_hal_volume_mountpoint_get(E_Volume *v)
+e_fm2_dbus_volume_mountpoint_get(E_Volume *v)
 {
    char buf[PATH_MAX] = {0};
 
@@ -406,7 +406,7 @@ e_fm2_hal_volume_mountpoint_get(E_Volume *v)
 }
 
 EAPI void
-e_fm2_hal_mount_add(E_Volume *v, const char *mountpoint)
+e_fm2_dbus_mount_add(E_Volume *v, const char *mountpoint)
 {
    Eina_List *l;
    E_Fm2_Mount *m;
@@ -420,13 +420,13 @@ e_fm2_hal_mount_add(E_Volume *v, const char *mountpoint)
      }
 
    EINA_LIST_FOREACH(v->mounts, l, m)
-     _e_fm2_hal_mount_ok(m);
+     _e_fm2_dbus_mount_ok(m);
 
 //   printf("MOUNT %s %s\n", v->udi, v->mount_point);
 }
 
 EAPI void
-e_fm2_hal_mount_del(E_Volume *v)
+e_fm2_dbus_mount_del(E_Volume *v)
 {
    Eina_List *l, *l_nxt;
    E_Fm2_Mount *m;
@@ -440,14 +440,14 @@ e_fm2_hal_mount_del(E_Volume *v)
 
    EINA_LIST_FOREACH_SAFE(v->mounts, l, l_nxt, m)
      {
-        _e_fm2_hal_unmount_ok(m);
+        _e_fm2_dbus_unmount_ok(m);
         v->mounts = eina_list_remove_list(v->mounts, l);
-        _e_fm2_hal_mount_free(m);
+        _e_fm2_dbus_mount_free(m);
      }
 }
 
 EAPI void
-_e_fm2_hal_mount_free(E_Fm2_Mount *m)
+_e_fm2_dbus_mount_free(E_Fm2_Mount *m)
 {
    if (!m) return;
 
@@ -458,7 +458,7 @@ _e_fm2_hal_mount_free(E_Fm2_Mount *m)
 }
 
 EAPI E_Fm2_Mount *
-e_fm2_hal_mount_find(const char *path)
+e_fm2_dbus_mount_find(const char *path)
 {
    Eina_List *l;
    E_Volume *v;
@@ -474,7 +474,7 @@ e_fm2_hal_mount_find(const char *path)
 }
 
 EAPI E_Fm2_Mount *
-e_fm2_hal_mount(E_Volume *v, 
+e_fm2_dbus_mount(E_Volume *v, 
 	       void (*mount_ok) (void *data), void (*mount_fail) (void *data), 
 	       void (*unmount_ok) (void *data), void (*unmount_fail) (void *data), 
 	       void *data)
@@ -513,7 +513,7 @@ e_fm2_hal_mount(E_Volume *v,
 }
 
 EAPI void
-e_fm2_hal_mount_fail(E_Volume *v)
+e_fm2_dbus_mount_fail(E_Volume *v)
 {
    Eina_List *l, *l_nxt;
    E_Fm2_Mount *m;
@@ -527,27 +527,27 @@ e_fm2_hal_mount_fail(E_Volume *v)
 
    EINA_LIST_FOREACH_SAFE(v->mounts, l, l_nxt, m)
      {
-        _e_fm2_hal_mount_fail(m);
+        _e_fm2_dbus_mount_fail(m);
         v->mounts = eina_list_remove_list(v->mounts, l);
-        _e_fm2_hal_mount_free(m);
+        _e_fm2_dbus_mount_free(m);
      }
 }
 
 EAPI void
-e_fm2_hal_unmount(E_Fm2_Mount *m)
+e_fm2_dbus_unmount(E_Fm2_Mount *m)
 {
    E_Volume *v;
 
    if (!(v = m->volume)) return;
    v->mounts = eina_list_remove(v->mounts, m);
-   _e_fm2_hal_mount_free(m);
+   _e_fm2_dbus_mount_free(m);
 
    if (v->auto_unmount && v->mounted && !eina_list_count(v->mounts))
      _e_fm2_client_unmount(v->udi);
 }
 
 EAPI void
-e_fm2_hal_unmount_fail(E_Volume *v)
+e_fm2_dbus_unmount_fail(E_Volume *v)
 {
    Eina_List *l;
    E_Fm2_Mount *m;
@@ -555,11 +555,11 @@ e_fm2_hal_unmount_fail(E_Volume *v)
    v->mounted = 1;
 
    EINA_LIST_FOREACH(v->mounts, l, m)
-     _e_fm2_hal_unmount_fail(m);
+     _e_fm2_dbus_unmount_fail(m);
 }
 
 static void
-_e_fm2_hal_mount_ok(E_Fm2_Mount *m)
+_e_fm2_dbus_mount_ok(E_Fm2_Mount *m)
 {
    m->mounted = 1;
    if (m->volume) 
@@ -570,7 +570,7 @@ _e_fm2_hal_mount_ok(E_Fm2_Mount *m)
 }
 
 static void
-_e_fm2_hal_mount_fail(E_Fm2_Mount *m)
+_e_fm2_dbus_mount_fail(E_Fm2_Mount *m)
 {
    m->mounted = 0;
    if (m->mount_point)
@@ -583,7 +583,7 @@ _e_fm2_hal_mount_fail(E_Fm2_Mount *m)
 }
 
 static void
-_e_fm2_hal_unmount_ok(E_Fm2_Mount *m)
+_e_fm2_dbus_unmount_ok(E_Fm2_Mount *m)
 {
    m->mounted = 0;
    if (m->mount_point)
@@ -596,7 +596,7 @@ _e_fm2_hal_unmount_ok(E_Fm2_Mount *m)
 }
 
 static void
-_e_fm2_hal_unmount_fail(E_Fm2_Mount *m)
+_e_fm2_dbus_unmount_fail(E_Fm2_Mount *m)
 {
    m->mounted = 1;
    if (m->unmount_fail) 
@@ -604,7 +604,7 @@ _e_fm2_hal_unmount_fail(E_Fm2_Mount *m)
 }
 
 EAPI void
-e_fm2_hal_show_desktop_icons(void)
+e_fm2_dbus_show_desktop_icons(void)
 {
    Eina_List *l;
    E_Volume *v;
@@ -636,7 +636,7 @@ e_fm2_hal_show_desktop_icons(void)
 }
 
 EAPI void
-e_fm2_hal_hide_desktop_icons(void)
+e_fm2_dbus_hide_desktop_icons(void)
 {
    Eina_List *l;
    E_Volume *v;
@@ -663,7 +663,7 @@ e_fm2_hal_hide_desktop_icons(void)
 }
 
 EAPI Eina_List*
-e_fm2_hal_volume_list_get(void)
+e_fm2_dbus_volume_list_get(void)
 {
    return _e_vols;
 }

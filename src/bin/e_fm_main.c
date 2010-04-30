@@ -304,17 +304,17 @@ main(int argc, char **argv)
 	e_hal_manager_find_device_by_capability(_e_dbus_conn, "volume",
 						_e_dbus_cb_dev_vol, NULL);
 	
-	e_dbus_signal_handler_add(_e_dbus_conn, "org.freedesktop.Hal",
-				  "/org/freedesktop/Hal/Manager",
-				  "org.freedesktop.Hal.Manager",
+	e_dbus_signal_handler_add(_e_dbus_conn, E_HAL_SENDER,
+				  E_HAL_MANAGER_PATH,
+				  E_HAL_MANAGER_INTERFACE,
 				  "DeviceAdded", _e_dbus_cb_dev_add, NULL);
-	e_dbus_signal_handler_add(_e_dbus_conn, "org.freedesktop.Hal",
-				  "/org/freedesktop/Hal/Manager",
-				  "org.freedesktop.Hal.Manager",
+	e_dbus_signal_handler_add(_e_dbus_conn, E_HAL_SENDER,
+				  E_HAL_MANAGER_PATH,
+				  E_HAL_MANAGER_INTERFACE,
 				  "DeviceRemoved", _e_dbus_cb_dev_del, NULL);
-	e_dbus_signal_handler_add(_e_dbus_conn, "org.freedesktop.Hal",
-				  "/org/freedesktop/Hal/Manager",
-				  "org.freedesktop.Hal.Manager",
+	e_dbus_signal_handler_add(_e_dbus_conn, E_HAL_SENDER,
+				  E_HAL_MANAGER_PATH,
+				  E_HAL_MANAGER_INTERFACE,
 				  "NewCapability", _e_dbus_cb_cap_add, NULL);
      }
    
@@ -850,9 +850,9 @@ e_volume_add(const char *udi, char first_time)
    _e_vols = eina_list_append(_e_vols, v);
    e_hal_device_get_all_properties(_e_dbus_conn, v->udi,
 				   _e_dbus_cb_vol_prop, v);
-   v->prop_handler = e_dbus_signal_handler_add(_e_dbus_conn, "org.freedesktop.Hal",
+   v->prop_handler = e_dbus_signal_handler_add(_e_dbus_conn, E_HAL_SENDER,
 					       udi,
-					       "org.freedesktop.Hal.Device",
+					       E_HAL_DEVICE_INTERFACE,
 					       "PropertyModified", _e_dbus_cb_prop_modified, v);
    v->guard = NULL;
    

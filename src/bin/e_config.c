@@ -696,9 +696,9 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, thumbscroll_momentum_threshhold, DOUBLE);
    E_CONFIG_VAL(D, T, thumbscroll_friction, DOUBLE);
    
-   E_CONFIG_VAL(D, T, hal_desktop, INT);
-   E_CONFIG_VAL(D, T, hal_auto_mount, INT);
-   E_CONFIG_VAL(D, T, hal_auto_open, INT);
+   E_CONFIG_VAL(D, T, dbus_desktop, INT);
+   E_CONFIG_VAL(D, T, dbus_auto_mount, INT);
+   E_CONFIG_VAL(D, T, dbus_auto_open, INT);
 
    E_CONFIG_VAL(D, T, border_keyboard.timeout, DOUBLE);
    E_CONFIG_VAL(D, T, border_keyboard.move.dx, UCHAR);
