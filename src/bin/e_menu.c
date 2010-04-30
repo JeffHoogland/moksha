@@ -1763,7 +1763,8 @@ _e_menu_unrealize(E_Menu *m)
    ecore_evas_free(m->ecore_evas);
    m->ecore_evas = NULL;
    m->evas = NULL;
-   eina_hash_del(_e_menu_hash, e_util_winid_str_get(m->evas_win), m);
+   if (_e_menu_hash)
+     eina_hash_del(_e_menu_hash, e_util_winid_str_get(m->evas_win), m);
    m->evas_win = 0;
 }
 
