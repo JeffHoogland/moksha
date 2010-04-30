@@ -499,6 +499,12 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
    if (!sel || !sel->state) return;
 
    s = sel->state;
+
+   DBG("update %d %d %s", s->request, p->request, p->name);
+
+   if (s->request != p->request)
+     return;
+   
    agg = sel->aggregator;
 
    if (action == EVRY_ASYNC_UPDATE_ADD)
@@ -1948,11 +1954,15 @@ _evry_matches_update(Evry_Selector *sel, int async)
    else
      input = NULL;
 
+   s->request++;
+   DBG("matches update %d", s->request);
+
    if (s->sel_items)
      eina_list_free(s->sel_items);
    s->sel_items = NULL;
 
-   if (!input || !s->trigger_active)
+   if ((!input || !s->trigger_active) &&
+       (!win->plugin_dedicated))
      {
 	EINA_LIST_FREE(s->cur_plugins, p);
 	s->trigger_active = EINA_FALSE;
@@ -1960,9 +1970,13 @@ _evry_matches_update(Evry_Selector *sel, int async)
    else
      {
 	EINA_LIST_FOREACH(s->cur_plugins, l, p)
-	  p->fetch(p, s->input);
+	  {
+	     p->request = s->request;     
+	     p->fetch(p, s->input);
+	  }
      }
 
+   /* check if input matches plugin trigger */
    if (!s->cur_plugins && input)
      {
 	int len_trigger = 0;
@@ -1970,7 +1984,6 @@ _evry_matches_update(Evry_Selector *sel, int async)
 
 	EINA_LIST_FOREACH(s->plugins, l, p)
 	  {
-	     /* input matches plugin trigger? */
 	     if (!p->config->trigger) continue;
 	     int len = strlen(p->config->trigger);
 
@@ -1982,6 +1995,7 @@ _evry_matches_update(Evry_Selector *sel, int async)
 	       {
 		  len_trigger = len;
 		  s->cur_plugins = eina_list_append(s->cur_plugins, p);
+		  p->request = s->request;
 		  if(len_inp == len)
 		    p->fetch(p, NULL);
 		  else
@@ -2008,23 +2022,24 @@ _evry_matches_update(Evry_Selector *sel, int async)
 
 	EINA_LIST_FOREACH(s->plugins, l, p)
 	  {
-	     if (!(win->plugin_dedicated) &&
-		 (p->config->trigger_only) &&
-		 (p->config->trigger))
+	     if ((p->config->trigger) && (p->config->trigger_only))
 	       continue;
+
 	     if (p == sel->aggregator)
 	       continue;
+
 	     /* dont wait for async plugin. use their current items */
 	     if (!async && p->async_fetch && p->items)
 	       {
 		  s->cur_plugins = eina_list_append(s->cur_plugins, p);
+		  continue;
 	       }
-	     else
+	     
+	     p->request = s->request;
+
+	     if ((p->fetch(p, input)) || (sel->states->next))
 	       {
-		  if ((p->fetch(p, input)) ||
-		      (sel->states->next)  ||
-		      (win->plugin_dedicated))
-		    s->cur_plugins = eina_list_append(s->cur_plugins, p);
+		  s->cur_plugins = eina_list_append(s->cur_plugins, p);
 	       }
 	  }
      }

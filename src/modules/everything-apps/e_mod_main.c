@@ -923,6 +923,8 @@ _new_app_action(Evry_Action *act)
 	  desktop->generic_name = strdup(app->desktop->generic_name);
 	if (app->desktop->exec)
 	  desktop->exec = strdup(app->desktop->exec);
+	if (app->desktop->icon)
+	  desktop->icon = strdup(app->desktop->icon);
 	if (app->desktop->mime_types)
 	  desktop->mime_types = eina_list_clone(app->desktop->mime_types); 	
      }

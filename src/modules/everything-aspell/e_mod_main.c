@@ -240,7 +240,8 @@ _cb_data(void *data, int type __UNUSED__, void *event)
 	evry_list_win_show();
      }
 
-   evry_plugin_async_update(EVRY_PLUGIN(p), EVRY_ASYNC_UPDATE_ADD);
+   if (p->base.items)
+     evry_plugin_async_update(EVRY_PLUGIN(p), EVRY_ASYNC_UPDATE_ADD);
 
    return 1;
 }
@@ -395,7 +396,8 @@ _plugins_init(void)
    p->history     = EINA_FALSE;
    p->async_fetch = EINA_TRUE;
    p->trigger     = TRIGGER;
-
+   p->view_mode   = VIEW_MODE_LIST;
+   
    evry_plugin_register(p, EVRY_PLUGIN_SUBJECT, 100);
    _plug = (Plugin *) p;
 

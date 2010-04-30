@@ -379,17 +379,16 @@ _dir_watcher(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, const c
    const char *label;
    Eina_List *ll, *l;
 
-   EVRY_PLUGIN_ITEMS_CLEAR(p);
-
    switch (event)
      {
       case ECORE_FILE_EVENT_DELETED_SELF:
-	EINA_LIST_FREE(p->files, file)
+	 EINA_LIST_FREE(p->files, file)
 	  evry_item_free(EVRY_ITEM(file));
 	break;
 
       case ECORE_FILE_EVENT_CREATED_DIRECTORY:
       case ECORE_FILE_EVENT_CREATED_FILE:
+	 DBG("added %s", path);
 
 	 label = ecore_file_file_get(path);
 
@@ -408,18 +407,25 @@ _dir_watcher(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, const c
 	      _item_fill(file);
 	   }
 	 p->files = eina_list_append(p->files, file);
+
 	 break;
 
       case ECORE_FILE_EVENT_DELETED_FILE:
       case ECORE_FILE_EVENT_DELETED_DIRECTORY:
 	 label = eina_stringshare_add(path);
+	 DBG("delete %s", path);
 
 	 EINA_LIST_FOREACH_SAFE(p->files, l, ll, file)
 	   {
 	      if (file->path != label) continue;
 
 	      p->files = eina_list_remove_list(p->files, l);
-	      p->hist_added = eina_list_remove(p->hist_added, file);
+	      if (eina_list_data_find_list(p->hist_added, file))
+		{
+		   p->hist_added = eina_list_remove(p->hist_added, file);
+		   evry_item_free(EVRY_ITEM(file));
+		}
+
 	      evry_item_free(EVRY_ITEM(file));
 	      break;
 	   }
@@ -476,14 +482,14 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
    else if (it && CHECK_TYPE(it, EVRY_TYPE_ACTION))
      {
 	/* provide object */
-	GET_ACTION(act, it);
+	/* GET_ACTION(act, it); */
 
 	p = E_NEW(Plugin, 1);
 	p->base = *plugin;
 	p->base.items = NULL;
 
-	if (act->it2.subtype == EVRY_TYPE_DIR)
-	  p->dirs_only = EINA_TRUE;
+	/* if (act->it2.subtype == EVRY_TYPE_DIR)
+	 *   p->dirs_only = EINA_TRUE; */
 
 	p->directory = eina_stringshare_add(e_user_homedir_get());
 	p->parent = EINA_FALSE;
@@ -499,7 +505,7 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
 	  p->directory = eina_stringshare_add(e_user_homedir_get());
 
 	/* p->show_recent = (_conf->show_recent || _conf->search_recent); */
-	p->show_recent = EINA_TRUE;	
+	p->show_recent = EINA_TRUE;
 	p->parent = EINA_FALSE;
      }
    else
@@ -875,7 +881,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	       }
 	  }
      }
-   
+
    if (input && !p->command)
      p->input = eina_stringshare_add(input);
 

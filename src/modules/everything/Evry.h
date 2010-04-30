@@ -3,7 +3,7 @@
 
 #include "e.h"
 
-#define EVRY_API_VERSION 9
+#define EVRY_API_VERSION 10
 
 #define EVRY_ACTION_OTHER 0
 #define EVRY_ACTION_FINISHED 1
@@ -276,6 +276,9 @@ struct _Evry_Plugin
 
   /* config path registered for the module */
   const char *config_path;
+
+  /* do not set by plugin! */
+  unsigned int request;
 };
 
 
@@ -305,6 +308,8 @@ struct _Evry_State
 
   Eina_Bool changed;
   Eina_Bool trigger_active;
+
+  unsigned int request;
 };
 
 struct _Evry_View
