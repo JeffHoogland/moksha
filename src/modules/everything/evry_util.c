@@ -103,7 +103,8 @@ evry_fuzzy_match(const char *str, const char *match)
 	last = 0;
 	min = 1;
 	first = 0;
-
+	/* m_len = 0; */
+	
 	/* match current word of string against current match */
 	for (p = next; *next != 0; p++)
 	  {
@@ -137,6 +138,8 @@ evry_fuzzy_match(const char *str, const char *match)
 		  else
 		    offset += 3;
 
+		  /* m_len++; */
+		  
 		  if (offset <= m_len * 3)
 		    continue;
 	       }
@@ -208,7 +211,7 @@ evry_fuzzy_match(const char *str, const char *match)
    if (sum > 0)
      {
 	/* exact match ? */
-	if (strlen(str) != m_len)
+	if (strcmp(match, str))
 	  sum += 10;
      }
 

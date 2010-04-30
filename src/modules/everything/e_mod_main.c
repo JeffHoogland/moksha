@@ -140,7 +140,7 @@ e_modapi_init(E_Module *m)
 				     NULL, "preferences-extensions");
 
    e_configure_registry_item_add("extensions/run_everything", 40,
-				 _("Run Everything"),
+				 _("Everything Configuration"),
 				 NULL, "system-run",
 				 evry_config_dialog);
    evry_init();
