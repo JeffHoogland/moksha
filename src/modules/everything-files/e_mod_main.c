@@ -487,6 +487,7 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
 
 	p->directory = eina_stringshare_add(e_user_homedir_get());
 	p->parent = EINA_FALSE;
+	p->show_recent = EINA_TRUE;
      }
    else if (!it)
      {
@@ -496,6 +497,9 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
 	p->base.items = NULL;
 	if (_conf->show_homedir)
 	  p->directory = eina_stringshare_add(e_user_homedir_get());
+
+	/* p->show_recent = (_conf->show_recent || _conf->search_recent); */
+	p->show_recent = EINA_TRUE;	
 	p->parent = EINA_FALSE;
      }
    else
@@ -647,7 +651,9 @@ _hist_end_func(void *data)
 	  it->label = eina_stringshare_add(file->path);
 
 	evry_item_ref(it);
-	p->files = eina_list_append(p->files, it);
+
+	if (!p->dirs_only || it->browseable)
+	  p->files = eina_list_append(p->files, it);
      }
 
    p->thread2 = NULL;
@@ -850,23 +856,26 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	return 0;
      }
 
-   /* add recent files */
-   if ((!p->parent && !p->command && !p->hist_added) &&
-       ((_conf->search_recent && input && strlen(input) > 1) ||
-	(_conf->show_recent)))
+   /* add recent files if not object plugin (p2) */
+   if (p->show_recent)
      {
-	eina_hash_foreach(evry_hist->subjects, _hist_items_add_cb, p);
-	p->thread2 = ecore_thread_run(_hist_func, _hist_end_func, _hist_cancel_func, p);
-     }
-   else if (p->hist_added && !input && _conf->search_recent)
-     {
-	EINA_LIST_FREE(p->hist_added, file)
+	if ((!p->parent && !p->command && !p->hist_added) &&
+	    ((_conf->search_recent && input && strlen(input) > 1) ||
+	     (_conf->show_recent)))
 	  {
-	     p->files = eina_list_remove(p->files, file);
-	     evry_item_free(EVRY_ITEM(file));
+	     eina_hash_foreach(evry_hist->subjects, _hist_items_add_cb, p);
+	     p->thread2 = ecore_thread_run(_hist_func, _hist_end_func, _hist_cancel_func, p);
+	  }
+	else if (p->hist_added && !input && _conf->search_recent)
+	  {
+	     EINA_LIST_FREE(p->hist_added, file)
+	       {
+		  p->files = eina_list_remove(p->files, file);
+		  evry_item_free(EVRY_ITEM(file));
+	       }
 	  }
      }
-
+   
    if (input && !p->command)
      p->input = eina_stringshare_add(input);
 
