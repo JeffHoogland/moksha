@@ -1247,7 +1247,7 @@ group "E_Config" struct {
             value "priority" int: -1000;
         }
     }
-    value "config_version" int: 65844;
+    value "config_version" int: 65845;
     value "show_splash" int: 1;
     value "init_default_theme" string: "default.edj";
     value "desktop_default_name" string: "Desktop %i, %i";
@@ -1427,9 +1427,9 @@ group "E_Config" struct {
     value "thumbscroll_threshhold" int: 8;
     value "thumbscroll_momentum_threshhold" double: 100.0000000000000000000000000;
     value "thumbscroll_friction" double: 1.0000000000000000000000000;
-    value "hal_desktop" int: 1;
-    value "hal_auto_mount" int: 0;
-    value "hal_auto_open" int: 0;
+    value "dbus_desktop" int: 1;
+    value "dbus_auto_mount" int: 0;
+    value "dbus_auto_open" int: 0;
     value "border_keyboard.timeout" double: 5.0000000000000000000000000;
     value "border_keyboard.move.dx" uchar: 5;
     value "border_keyboard.move.dy" uchar: 5;
