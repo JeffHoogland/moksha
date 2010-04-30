@@ -273,8 +273,8 @@ msgstr "Състояние на забождане"
 #: src/bin/e_actions.c:2745 src/bin/e_actions.c:2747 src/bin/e_actions.c:2749
 #: src/bin/e_actions.c:2751 src/bin/e_actions.c:2899 src/bin/e_actions.c:2904
 #: src/bin/e_fm.c:3197 src/bin/e_fm.c:3202 src/bin/e_fm.c:9751
-#: src/bin/e_fm_hal.c:328 src/bin/e_fm_hal.c:352 src/bin/e_fm_hal.c:628
-#: src/bin/e_fm_hal.c:655 src/bin/e_int_menus.c:134
+#: src/bin/e_fm_dbus.c:328 src/bin/e_fm_dbus.c:352 src/bin/e_fm_dbus.c:628
+#: src/bin/e_fm_dbus.c:655 src/bin/e_int_menus.c:134
 #: src/bin/e_int_shelf_config.c:724
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:104
 #: src/modules/fileman/e_mod_main.c:324 src/modules/ibox/e_mod_config.c:165
@@ -1372,37 +1372,37 @@ msgstr "Информация за връзката"
 msgid "Select an Image"
 msgstr "Избиране на изображение"
 
-#: src/bin/e_fm_hal.c:183
+#: src/bin/e_fm_dbus.c:183
 #, c-format
 msgid "%llu TiB"
 msgstr "%llu TiB"
 
-#: src/bin/e_fm_hal.c:185
+#: src/bin/e_fm_dbus.c:185
 #, c-format
 msgid "%llu GiB"
 msgstr "%llu GiB"
 
-#: src/bin/e_fm_hal.c:187
+#: src/bin/e_fm_dbus.c:187
 #, c-format
 msgid "%llu MiB"
 msgstr "%llu MiB"
 
-#: src/bin/e_fm_hal.c:189
+#: src/bin/e_fm_dbus.c:189
 #, c-format
 msgid "%llu KiB"
 msgstr "%llu KiB"
 
-#: src/bin/e_fm_hal.c:191
+#: src/bin/e_fm_dbus.c:191
 #, c-format
 msgid "%llu B"
 msgstr "%llu B"
 
-#: src/bin/e_fm_hal.c:222
+#: src/bin/e_fm_dbus.c:222
 #, c-format
 msgid "Unknown Volume"
 msgstr "Непознат дял"
 
-#: src/bin/e_fm_hal.c:320
+#: src/bin/e_fm_dbus.c:320
 msgid "Removable Device"
 msgstr "Сменяемо устройство"
 

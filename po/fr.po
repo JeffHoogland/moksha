@@ -341,10 +341,10 @@ msgstr "Activer/Désactiver l'épinglage"
 #: src/bin/e_fm.c:3197
 #: src/bin/e_fm.c:3202
 #: src/bin/e_fm.c:9751
-#: src/bin/e_fm_hal.c:328
-#: src/bin/e_fm_hal.c:352
-#: src/bin/e_fm_hal.c:628
-#: src/bin/e_fm_hal.c:655
+#: src/bin/e_fm_dbus.c:328
+#: src/bin/e_fm_dbus.c:352
+#: src/bin/e_fm_dbus.c:628
+#: src/bin/e_fm_dbus.c:655
 #: src/bin/e_int_menus.c:145
 #: src/bin/e_int_shelf_config.c:251
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:104
@@ -1476,37 +1476,37 @@ msgstr "Information sur le lien"
 msgid "Select an Image"
 msgstr "Sélectionner une image"
 
-#: src/bin/e_fm_hal.c:183
+#: src/bin/e_fm_dbus.c:183
 #, c-format
 msgid "%llu TiB"
 msgstr "%llu Tio"
 
-#: src/bin/e_fm_hal.c:185
+#: src/bin/e_fm_dbus.c:185
 #, c-format
 msgid "%llu GiB"
 msgstr "%llu Gio"
 
-#: src/bin/e_fm_hal.c:187
+#: src/bin/e_fm_dbus.c:187
 #, c-format
 msgid "%llu MiB"
 msgstr "%llu Mio"
 
-#: src/bin/e_fm_hal.c:189
+#: src/bin/e_fm_dbus.c:189
 #, c-format
 msgid "%llu KiB"
 msgstr "%llu Kio"
 
-#: src/bin/e_fm_hal.c:191
+#: src/bin/e_fm_dbus.c:191
 #, c-format
 msgid "%llu B"
 msgstr "%llu o"
 
-#: src/bin/e_fm_hal.c:222
+#: src/bin/e_fm_dbus.c:222
 #, c-format
 msgid "Unknown Volume"
 msgstr "Volume inconnu"
 
-#: src/bin/e_fm_hal.c:320
+#: src/bin/e_fm_dbus.c:320
 msgid "Removable Device"
 msgstr "Périphérique amovible"
 
