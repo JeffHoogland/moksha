@@ -830,8 +830,8 @@ _connman_default_service_changed(E_Connman_Module_Context *ctxt)
 
    if (!e_connman_manager_technology_default_get(&tech))
      tech = NULL;
-   eina_stringshare_replace(&ctxt->technology, tech);
-   DBG("Manager technology is '%s'", tech);
+   if (eina_stringshare_replace(&ctxt->technology, tech))
+     DBG("Manager technology is '%s'", tech);
 
    if (!e_connman_manager_offline_mode_get(&ctxt->offline_mode))
      ctxt->offline_mode = EINA_FALSE;
