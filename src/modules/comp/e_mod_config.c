@@ -4,6 +4,12 @@
 #include "e_mod_comp.h"
 #include "config.h"
 
+typedef struct _E_Demo_Style_Item
+{
+   Evas_Object *preview;
+   Evas_Object *frame;
+} E_Demo_Style_Item;
+
 struct _E_Config_Dialog_Data
 {
    int use_shadow;
@@ -100,10 +106,19 @@ _create_data(E_Config_Dialog *cfd)
 static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
+   E_Demo_Style_Item *ds_it;
+
    _comp_mod->config_dialog = NULL;
    if (cfdata->shadow_style) eina_stringshare_del(cfdata->shadow_style);
    if (cfdata->style_demo_timer) ecore_timer_del(cfdata->style_demo_timer);
-   if (cfdata->style_shadows) eina_list_free(cfdata->style_shadows);
+
+   EINA_LIST_FREE(cfdata->style_shadows, ds_it)
+     {
+	evas_object_del(ds_it->preview);
+	evas_object_del(ds_it->frame);
+	free(ds_it);
+     }
+
    free(cfdata);
 }
 
@@ -111,18 +126,36 @@ static int
 _demo_styles(void *data)
 {
    E_Config_Dialog_Data *cfdata = data;
-   Eina_List *l;
-   Evas_Object *ob;
+   const E_Demo_Style_Item *it;
+   const Eina_List *l;
 
-   if (cfdata->style_demo_state) cfdata->style_demo_state = 0;
-   else cfdata->style_demo_state = 1;
-   
-   EINA_LIST_FOREACH(cfdata->style_shadows, l, ob)
+   cfdata->style_demo_state = (cfdata->style_demo_state + 1) % 4;
+   EINA_LIST_FOREACH(cfdata->style_shadows, l, it)
      {
-        if (cfdata->style_demo_state)
-          edje_object_signal_emit(ob, "e,state,visible,on", "e");
-        else
-          edje_object_signal_emit(ob, "e,state,visible,off", "e");
+	Evas_Object *ob = it->preview;
+	Evas_Object *of = it->frame;
+	switch (cfdata->style_demo_state)
+	  {
+	   case 0:
+	      edje_object_signal_emit(ob, "e,state,visible,on", "e");
+	      edje_object_signal_emit(ob, "e,state,focus,on", "e");
+	      edje_object_part_text_set(of, "e.text.label", _("Visible"));
+	      break;
+	   case 1:
+	      edje_object_signal_emit(ob, "e,state,focus,off", "e");
+	      edje_object_part_text_set(of, "e.text.label", _("Focus-Out"));
+	      break;
+	   case 2:
+	      edje_object_signal_emit(ob, "e,state,focus,on", "e");
+	      edje_object_part_text_set(of, "e.text.label", _("Focus-In"));
+	      break;
+	   case 3:
+	      edje_object_signal_emit(ob, "e,state,visible,off", "e");
+	      edje_object_part_text_set(of, "e.text.label", _("Hidden"));
+	      break;
+	   default:
+	      break;
+	  }
      }
    return 1;
 }
@@ -131,15 +164,15 @@ static void
 _shadow_changed(void *data, Evas_Object *obj, void *event_info)
 {
    E_Config_Dialog_Data *cfdata = data;
-   Eina_List *l;
-   Evas_Object *ob;
+   const E_Demo_Style_Item *it;
+   const Eina_List *l;
 
-   EINA_LIST_FOREACH(cfdata->style_shadows, l, ob)
+   EINA_LIST_FOREACH(cfdata->style_shadows, l, it)
      {
-        if (cfdata->use_shadow)
-          edje_object_signal_emit(ob, "e,state,shadow,on", "e");
-        else
-          edje_object_signal_emit(ob, "e,state,shadow,off", "e");
+	if (cfdata->use_shadow)
+	  edje_object_signal_emit(it->preview, "e,state,shadow,on", "e");
+	else
+	  edje_object_signal_emit(it->preview, "e,state,shadow,off", "e");
      }
 }
 
@@ -173,8 +206,9 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    n = 0;
    EINA_LIST_FOREACH(styles, l, style)
      {
+	E_Demo_Style_Item *ds_it;
         char buf[PATH_MAX];
-        
+
         ob = e_livethumb_add(evas);
         e_livethumb_vsize_set(ob, 240, 240);
 
@@ -192,8 +226,16 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
         if (cfdata->use_shadow)
           edje_object_signal_emit(oo, "e,state,shadow,on", "e");
         edje_object_signal_emit(oo, "e,state,visible,on", "e");
-        cfdata->style_shadows = eina_list_append(cfdata->style_shadows, oo);
         evas_object_show(oo);
+
+	ds_it = malloc(sizeof(E_Demo_Style_Item));
+	ds_it->preview = oo;
+	ds_it->frame = edje_object_add(evas);
+	e_theme_edje_object_set
+	  (ds_it->frame, "base/theme/modules/comp", "e/modules/comp/preview");
+	edje_object_part_swallow(ds_it->frame, "e.swallow.preview", ob);
+	evas_object_show(ds_it->frame);
+        cfdata->style_shadows = eina_list_append(cfdata->style_shadows, ds_it);
         
         obd = edje_object_add(e_livethumb_evas_get(ob));
         e_theme_edje_object_set(obd, "base/theme/borders",
@@ -208,7 +250,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
         edje_object_part_swallow(obd, "e.swallow.client", orec);
         evas_object_show(orec);
         
-        e_widget_ilist_append(oi, ob, style, NULL, NULL, style);
+        e_widget_ilist_append(oi, ds_it->frame, style, NULL, NULL, style);
         evas_object_show(ob);
         if (cfdata->shadow_style)
           {

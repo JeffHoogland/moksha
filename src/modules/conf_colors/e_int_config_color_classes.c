@@ -125,6 +125,7 @@ static const CFColor_Class_Description _color_classes_widgets[] =
 static const CFColor_Class_Description _color_classes_modules[] =
 {
   CCDESC_T("module_label", N_("Module Label")),
+  CCDESC_S("comp_focus-out_color", N_("Composite Focus-out Color")),
   {NULL, 0, NULL, COLOR_CLASS_UNKNOWN}
 };
 #undef CCDESC_S
