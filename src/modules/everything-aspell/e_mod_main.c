@@ -47,9 +47,11 @@ static Plugin *_plug = NULL;
 
 static char *commands[] =
   {
-    "aspell -a --encoding=UTF-8 %s%s",
-    "hunspell -a -d %s%s"
+    "aspell -a --encoding=UTF-8 %s %s",
+    "hunspell -a -i utf-8 %s %s"
   };
+#define CMD_ASPELL   1
+#define CMD_HUNSPELL 2
 
 static Eina_Bool
 _exe_restart(Plugin *p)
@@ -60,20 +62,46 @@ _exe_restart(Plugin *p)
 
    if (p->lang && (p->lang[0] != '\0'))
      {
-	lang_opt = "-l";
-	lang_val = p->lang;
+	if (_conf->command == CMD_ASPELL)
+	  {
+	     lang_opt = "-l";
+	     lang_val = p->lang;
+	  }
+	else if (_conf->command == CMD_HUNSPELL)
+	  {
+	     lang_opt = "-d";
+	     lang_val = p->lang;
+	  }
+	else
+	  {
+	     lang_opt = "";
+	     lang_val = "";
+	  }
      }
    else if (_conf->lang)
      {
-	lang_opt = _conf->lang;
-	lang_val = "";
+	if (_conf->command == CMD_ASPELL)
+	  {
+	     lang_opt = "-l";
+	     lang_val = _conf->lang;
+	  }
+	else if (_conf->command == CMD_HUNSPELL)
+	  {
+	     lang_opt = "-d";
+	     lang_val = _conf->lang;
+	  }
+	else
+	  {
+	     lang_opt = "";
+	     lang_val = "";
+	  }
      }
    else
      {
 	lang_opt = "";
 	lang_val = "";
      }
-   
+
    len = snprintf(cmd, sizeof(cmd),
 		  commands[_conf->command - 1],
 		  lang_opt, lang_val);
@@ -250,7 +278,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
    const char *s;
    int len;
 
-   if (!input) return 0;
+   if (!input) return 1;
 
    if (!p->handler.data && !_begin(plugin, NULL)) return 0;
 
@@ -279,7 +307,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	  {
 	     p->lang = lang;
 	     if (!_exe_restart(p))
-	       return 0;
+	       return 1;
 	  }
 
 	if (*s == '\0')
