@@ -54,7 +54,11 @@ void *alloca (size_t);
 #include <Efreet.h>
 #include <Eet.h>
 #include <E_DBus.h>
+#ifdef HAVE_EUKIT
+#include <E_Ukit.h>
+#else
 #include <E_Hal.h>
+#endif
 #include <eina_stringshare.h>
 
 #define E_TYPEDEFS
