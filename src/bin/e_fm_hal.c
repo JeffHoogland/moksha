@@ -144,7 +144,7 @@ e_fm2_hal_volume_add(E_Volume *v)
 	if ((!v->mount_point) || (v->mount_point[0] == 0))
 	  {
 	     char buf[PATH_MAX];
-	     char *id;
+	     const char *id;
 	     
 	     if (v->mount_point) eina_stringshare_del(v->mount_point);
 	     v->mount_point = NULL;
@@ -378,7 +378,7 @@ e_fm2_hal_volume_find(const char *udi)
    return NULL;
 }
 
-EAPI char *
+EAPI const char *
 e_fm2_hal_volume_mountpoint_get(E_Volume *v)
 {
    char buf[PATH_MAX] = {0};

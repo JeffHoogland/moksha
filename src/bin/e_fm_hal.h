@@ -14,7 +14,7 @@ EAPI E_Storage   *e_fm2_hal_storage_find(const char *udi);
 EAPI void         e_fm2_hal_volume_add(E_Volume *s);
 EAPI void         e_fm2_hal_volume_del(E_Volume *s);
 EAPI E_Volume    *e_fm2_hal_volume_find(const char *udi);
-EAPI char        *e_fm2_hal_volume_mountpoint_get(E_Volume *v);
+EAPI const char  *e_fm2_hal_volume_mountpoint_get(E_Volume *v);
 
 EAPI void         e_fm2_hal_mount_add(E_Volume *v, const char *mountpoint);
 EAPI void         e_fm2_hal_mount_del(E_Volume *v);

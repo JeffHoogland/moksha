@@ -22,7 +22,7 @@ struct _E_Storage
 
    struct 
      {
-        char *drive, *volume;
+        const char *drive, *volume;
      } icon;
 
    Eina_List *volumes;

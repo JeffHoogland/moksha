@@ -956,7 +956,7 @@ e_volume_mount(E_Volume *v)
 {
    char buf[256];
    char buf2[256];
-   char *mount_point;
+   const char *mount_point;
    Eina_List *opt = NULL;
 
    if (!v || v->guard || !v->mount_point || strncmp(v->mount_point, "/media/", 7))

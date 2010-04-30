@@ -1304,7 +1304,8 @@ EAPI void
 e_fm2_parent_go(Evas_Object *obj)
 {
    E_Fm2_Smart_Data *sd;
-   char *path, *p;
+   char *p;
+   const char *path;
 
    sd = evas_object_smart_data_get(obj);
    if (!sd) return; // safety
@@ -9691,7 +9692,7 @@ static void
 _e_fm2_volume_mount(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Volume *v;
-   char *mp;
+   const char *mp;
    
    v = data;
    if (!v) return;
