@@ -76,14 +76,14 @@ struct _Module_Config
 };
 
 static Module_Config *_conf;
-
+static char _module_icon[] = "system-file-manager";
 static Evry_Plugin *p1 = NULL;
 static Evry_Plugin *p2 = NULL;
 static Eina_List *_actions = NULL;
+static const char *_mime_dir;
 
 static void _cleanup(Evry_Plugin *plugin);
 
-static const char *_mime_dir;
 
 static void
 _item_fill(Evry_Item_File *file)
@@ -1137,7 +1137,6 @@ _conf_dialog(E_Container *con, const char *params)
 {
    E_Config_Dialog *cfd = NULL;
    E_Config_Dialog_View *v = NULL;
-   char buf[4096];
 
    if (e_config_dialog_find("everything-files", "extensions/everything-files")) return NULL;
 
@@ -1149,10 +1148,8 @@ _conf_dialog(E_Container *con, const char *params)
    v->basic.create_widgets = _basic_create;
    v->basic.apply_cfdata = _basic_apply;
 
-   snprintf(buf, sizeof(buf), "%s/e-module.edj", _conf->module->dir);
-
    cfd = e_config_dialog_new(con, _("Everything Files"), "everything-files",
-			     "extensions/everything-files", buf, 0, v, NULL);
+			     "extensions/everything-files", _module_icon, 0, v, NULL);
 
    _conf->cfd = cfd;
    return cfd;
@@ -1256,15 +1253,11 @@ _conf_free(void)
 static void
 _conf_init(E_Module *m)
 {
-   char buf[4096];
-
-   snprintf(buf, sizeof(buf), "%s/e-module.edj", m->dir);
-
    e_configure_registry_category_add("extensions", 80, _("Extensions"),
 				     NULL, "preferences-extensions");
 
    e_configure_registry_item_add("extensions/everything-files", 110, _("Everything Files"),
-				 NULL, buf, _conf_dialog);
+				 NULL, _module_icon, _conf_dialog);
 
    conf_edd = E_CONFIG_DD_NEW("Module_Config", Module_Config);
 

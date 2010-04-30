@@ -33,6 +33,8 @@ static Import *import = NULL;
 
 static Evry_Action *_act;
 
+static char _module_icon[] = "preferences-desktop-wallpaper";
+
 static int
 _action(Evry_Action *act)
 {
@@ -106,7 +108,7 @@ _plugins_init(void)
 
    _act = EVRY_ACTION_NEW(_("Set as Wallpaper"),
 			  EVRY_TYPE_FILE, 0,
-			  "preferences-desktop-wallpaper",
+			  _module_icon,
 			  NULL, _check);
    _act->fetch = _fetch;
    EVRY_ITEM(_act)->browseable = EINA_TRUE;

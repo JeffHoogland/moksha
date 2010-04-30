@@ -15,6 +15,8 @@ typedef struct _Module_Config Module_Config;
 static Module_Config *_conf;
 static char _config_path[] =  "extensions/everthing-aspell";
 static char _config_domain[] = "module.everyhing-aspell";
+static char _module_icon[] = "accessories-dictionary";
+
 static E_Config_DD *_conf_edd = NULL;
 
 struct _Plugin
@@ -385,7 +387,7 @@ _plugins_init(void)
      return EINA_FALSE;
 
    p = EVRY_PLUGIN_NEW(Plugin, N_("Spell Checker"),
-		       "accessories-dictionary",
+		       _module_icon,
 		       EVRY_TYPE_TEXT,
 		       NULL, _cleanup, _fetch, NULL);
    p->config_path = _config_path;
@@ -426,7 +428,6 @@ _conf_dialog(E_Container *con, const char *params)
 {
    E_Config_Dialog *cfd = NULL;
    E_Config_Dialog_View *v = NULL;
-   char buf[4096];
 
    if (e_config_dialog_find(_config_path, _config_path))
      return NULL;
@@ -439,10 +440,8 @@ _conf_dialog(E_Container *con, const char *params)
    v->basic.create_widgets = _basic_create;
    v->basic.apply_cfdata = _basic_apply;
 
-   snprintf(buf, sizeof(buf), "%s/e-module.edj", _conf->module->dir);
-
    cfd = e_config_dialog_new(con, _("Everything Aspell"),
-			     _config_path, _config_path, buf, 0, v, NULL);
+			     _config_path, _config_path, _module_icon, 0, v, NULL);
 
    _conf->cfd = cfd;
    return cfd;
@@ -575,11 +574,8 @@ _conf_free(void)
 static void
 _conf_init(E_Module *m)
 {
-   char buf[4096];
-   snprintf(buf, sizeof(buf), "%s/e-module.edj", m->dir);
-
    e_configure_registry_item_add(_config_path, 110, _("Everything Aspell"),
-				 NULL, buf, _conf_dialog);
+				 NULL, _module_icon, _conf_dialog);
 
    _conf_edd = E_CONFIG_DD_NEW("Module_Config", Module_Config);
 

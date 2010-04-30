@@ -17,6 +17,7 @@ static Eina_List *handlers = NULL;
 
 static int error = 0;
 
+static char _module_icon[] = "accessories-calculator";
 
 
 static Evry_Plugin *
@@ -233,7 +234,7 @@ _plugins_init(void)
      return EINA_FALSE;
 
    p1 = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Calculator"),
-			"accessories-calculator",
+			_module_icon,
 			EVRY_TYPE_TEXT,
 			_begin, _cleanup, _fetch, NULL);
 

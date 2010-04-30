@@ -16,6 +16,8 @@ static Eina_List *handlers = NULL;
 static Eina_Hash *border_hash = NULL;
 static Eina_List *_actions = NULL;
 
+/* static char _module_icon[] = "preferences-winlist"; */
+
 static int
 _cb_border_remove(void *data, int type,  void *event)
 {

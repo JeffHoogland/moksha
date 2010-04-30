@@ -4,7 +4,7 @@ MODULE = everything-wallpaper
 # data files for the module
 filesdir = $(libdir)/enlightenment/modules/$(MODULE)
 files_DATA = \
-e-module.edj module.desktop
+module.desktop
 
 EXTRA_DIST = $(files_DATA)
 
