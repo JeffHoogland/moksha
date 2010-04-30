@@ -69,24 +69,33 @@ _begin_open_with(Evry_Plugin *plugin, const Evry_Item *item)
 {
    GET_PLUGIN(p, plugin);
 
-   const char *mime;
-
-   if (!CHECK_TYPE(item, EVRY_TYPE_FILE))
-     /* && !CHECK_SUBTYPE(item, EVRY_TYPE_FILE)) */
-     return 0;
-   
-   GET_FILE(file, item);
    Efreet_Desktop *d, *d2;
+   const char *mime;
+   const char *path;
+   
+   if (CHECK_TYPE(item, EVRY_TYPE_ACTION))
+     {
+	GET_ACTION(act, item);
+	GET_FILE(file, act->it1.item);
 
-   if (!evry_file_path_get(file))
-     return NULL;
+	if (!evry_file_path_get(file))
+	  return NULL;
 
-   if (!file->mime)
-     mime = efreet_mime_type_get(file->path);
-   else
-     mime = file->mime;
+	path = file->path;
+	mime = file->mime;
+     }
+   else if (CHECK_TYPE(item, EVRY_TYPE_FILE))
+     {
+	GET_FILE(file, item);
 
-   if (!mime)
+	if (!evry_file_path_get(file))
+	  return NULL;
+
+	path = file->path;
+	mime = file->mime;
+     }
+
+   if (!mime && !(mime = efreet_mime_type_get(path)))
      return NULL;
 
    p->apps_mime = efreet_util_desktop_mime_list(mime);
@@ -158,6 +167,9 @@ _finish(Evry_Plugin *plugin)
      efreet_desktop_free(desktop);
 
    EINA_LIST_FREE(p->apps_hist, desktop)
+     efreet_desktop_free(desktop);
+
+   EINA_LIST_FREE(p->apps_mime, desktop)
      efreet_desktop_free(desktop);
 
    if (_conf->list_executables)
@@ -666,6 +678,9 @@ _fetch(Evry_Plugin *plugin, const char *input)
    /* add executables */
    _add_executables(p, input);
 
+   if (!input)
+     _add_desktop_list(p, p->apps_mime, input);
+   
    /* FIXME update last used from exehist */
    /* EINA_LIST_FOREACH(e_exehist_list_get(), l, file)
     *   {
@@ -936,7 +951,7 @@ _plugins_init(void)
    plug_apps = p;
 
    p = EVRY_PLUGIN_NEW(Plugin, N_("Applications"), NULL, EVRY_TYPE_APP,
-		       _begin, _finish, _fetch, NULL);
+		       _begin_open_with, _finish, _fetch, NULL);
    p->complete = &_complete;
    p->config_path = "extensions/everything-apps";
    evry_plugin_register(p, EVRY_PLUGIN_OBJECT, 1);
@@ -944,7 +959,6 @@ _plugins_init(void)
    
    p = EVRY_PLUGIN_NEW(Plugin, N_("Open With..."), NULL, EVRY_TYPE_APP,
 		       _begin_open_with, _finish_mime, _fetch_mime, NULL);
-
    p->config_path = "extensions/everything-apps";
    evry_plugin_register(p, EVRY_PLUGIN_ACTION, 1);
    plug_action = p;
