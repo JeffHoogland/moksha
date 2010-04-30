@@ -133,7 +133,7 @@ e_entry_dialog.h \
 e_fm.h \
 e_fm_op.h \
 e_fm_op_registry.h \
-e_fm_hal.h \
+e_fm_dbus.h \
 e_widget_scrollframe.h \
 e_sha1.h \
 e_widget_fsel.h \
@@ -272,7 +272,7 @@ e_confirm_dialog.c \
 e_int_border_prop.c \
 e_entry_dialog.c \
 e_fm.c \
-e_fm_hal.c \
+e_fm_dbus.c \
 e_fm_op_registry.c \
 e_widget_scrollframe.c \
 e_sha1.c \
