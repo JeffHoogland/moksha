@@ -577,6 +577,7 @@ _switches_page_create(Evas *evas, E_Config_Dialog_Data *cfdata)
    ui = &cfdata->switches;
    ui->vlayout = e_widget_list_add(evas, 0, 0);
    ui->type_frame = e_widget_framelist_add(evas, _("Network types"), 0);
+   ui->offline_mode = ctxt->offline_mode;
 
    _switches_page_create_technologies(evas, ctxt, ui);
 
