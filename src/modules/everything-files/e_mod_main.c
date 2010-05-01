@@ -6,7 +6,7 @@
 #include "e_mod_main.h"
 #include <Efreet_Trash.h>
 
-#define MAX_ITEMS 50
+#define MAX_ITEMS 10
 #define MAX_SHOWN 300
 #define TERM_ACTION_DIR "%s"
 
@@ -56,7 +56,7 @@ struct _Data
   Eina_List *files;
   Eina_List *list;
   DIR *dirp;
-  Eina_Bool second_run;
+  int run_cnt;
 };
 
 struct _Module_Config
@@ -224,10 +224,6 @@ _scan_func(void *data)
 
 	if (!EVRY_ITEM(file)->browseable)
 	  {
-#if _BSD_SOURCE || _XOPEN_SOURCE >= 500
-	     /* let main process do its thing while reading mimetypes */
-	     usleep(1000);
-#endif
 	     if ((mime = efreet_mime_type_get(file->path)))
 	       {
 		  file->mime = mime;
@@ -237,8 +233,9 @@ _scan_func(void *data)
 		    EVRY_ITEM(file)->browseable = EINA_TRUE;
 	       }
 	  }
-	if (cnt++ > MAX_ITEMS) break;
+	if (cnt++ > MAX_ITEMS * (d->run_cnt + 1)) break;
      }
+   d->run_cnt++;
 }
 
 static int
@@ -355,7 +352,6 @@ _scan_end_func(void *data)
 
    if (d->files)
      {
-	d->second_run = EINA_TRUE;
 	p->thread = ecore_thread_run(_scan_func, _scan_end_func, _scan_cancel_func, d);
      }
    else
