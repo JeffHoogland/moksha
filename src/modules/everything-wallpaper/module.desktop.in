@@ -1,10 +1,10 @@
 [Desktop Entry]
 Type=Link
 Name=Everything Wallpaper
-Name[it]=Pannello di esecuzione - Sfondo
 Name[fr]=Omni - Fond d'écran
+Name[it]=Everything - Sfondo
 Icon=preferences-desktop-wallpaper
 X-Enlightenment-ModuleType=everything
 Comment=Provides action to set image as wallpaper.
-Comment[it]=Fornisce un'azione per impostare un'immagine come sfondo.
 Comment[fr]=Fournit un moyen de définir une image comme fond d'écran.
+Comment[it]=Fornisce un'azione per impostare un'immagine come sfondo.

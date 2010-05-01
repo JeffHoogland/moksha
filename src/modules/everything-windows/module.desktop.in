@@ -1,10 +1,10 @@
 [Desktop Entry]
 Type=Link
 Name=Everything Windows
-Name[it]=Pannello di esecuzione - Finestre
 Name[fr]=Omni - Fenêtres
+Name[it]=Everything - Finestre
 Icon=preferences-system-windows
 X-Enlightenment-ModuleType=everything
 Comment=Window actions
-Comment[it]=Azioni sulle finestre.
 Comment[fr]=Actions sur les fenêtres.
+Comment[it]=Azioni sulle finestre.

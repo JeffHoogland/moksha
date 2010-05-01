@@ -1,10 +1,10 @@
 [Desktop Entry]
 Type=Link
 Name=Everything Aspell
-Name[it]=Pannello di esecuzione - Aspell
 Name[fr]=Omni - Aspell
+Name[it]=Everything - Aspell
 Icon=accessories-dictionary
 X-Enlightenment-ModuleType=everything
 Comment=Aspell Frontend, use 'aspell ' as trigger.
-Comment[it]=Frontend, usa 'aspell' come richiamo.
 Comment[fr]=Frontal pour Aspell, utilise « aspell » comme déclencheur.
+Comment[it]=Frontend, usa 'aspell' come richiamo.

@@ -1,10 +1,10 @@
 [Desktop Entry]
 Type=Link
 Name=Everything Settings
-Name[it]=Pannello di esecuzione - Impostazioni
 Name[fr]=Omni - Configuration
+Name[it]=Everything - Impostazioni
 Icon=preferences-desktop
 X-Enlightenment-ModuleType=everything
 Comment=Quickly open e17 settings dialogs.
-Comment[it]=Apre rapidamente il pannello impostazioni di e17.
 Comment[fr]=Accès rapide au panneau de configuration de E17.
+Comment[it]=Apre rapidamente il pannello impostazioni di e17.
