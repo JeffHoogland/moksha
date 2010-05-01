@@ -307,17 +307,21 @@ _act_border(Evry_Action *act)
 
       case BORDER_HIDE:
 	 e_border_iconify(bd);
-
+	 break;
+	 
       case BORDER_FULLSCREEN:
 	 if (!bd->fullscreen)
 	   e_border_fullscreen(bd, E_FULLSCREEN_RESIZE);
 	 else
 	   e_border_unfullscreen(bd);
-
+	 break;
+	 
       case BORDER_TODESK:
 	 if (bd->desk != (e_desk_current_get(zone)))
 	   e_border_desk_set(bd, e_desk_current_get(zone));
 	 focus = 1;
+	 break;
+      default:
      }
 
    if (focus)
@@ -329,7 +333,7 @@ _act_border(Evry_Action *act)
 	  e_border_uniconify(bd);
 	else
 	  e_border_raise(bd);
-
+need
 	e_border_focus_set_with_pointer(bd);
      }
 
