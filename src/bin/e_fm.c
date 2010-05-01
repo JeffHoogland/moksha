@@ -1304,15 +1304,14 @@ EAPI void
 e_fm2_parent_go(Evas_Object *obj)
 {
    E_Fm2_Smart_Data *sd;
-   char *p;
-   const char *path;
+   char *p, *path;
 
    sd = evas_object_smart_data_get(obj);
    if (!sd) return; // safety
    if (!evas_object_type_get(obj)) return; // safety
    if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
    if (!sd->path) return;
-   path = eina_stringshare_add(sd->path);
+   path = strdup(sd->path);
    if (!path) return;
    if ((p = strrchr(path, '/'))) *p = 0;
    if (*path == 0)
@@ -1320,7 +1319,7 @@ e_fm2_parent_go(Evas_Object *obj)
    else
      e_fm2_path_set(obj, sd->dev, path);
 
-   eina_stringshare_del(path);
+   free(path);
 }
 
 EAPI void
