@@ -21,6 +21,7 @@ static void _e_mod_run_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_mod_menu_add(void *data, E_Menu *m);
 static void _config_init(void);
 static void _config_free(void);
+static int _cleanup_history(void *data);
 
 static E_Int_Menu_Augmentation *maug = NULL;
 static E_Action *act = NULL;
@@ -29,6 +30,8 @@ static E_Action *act = NULL;
 static E_Config_DD *conf_edd = NULL;
 static E_Config_DD *plugin_conf_edd = NULL;
 static E_Config_DD *plugin_setting_edd = NULL;
+
+static Ecore_Timer *cleanup_timer;
 
 EAPI int _e_module_evry_log_dom = -1;
 
@@ -56,6 +59,7 @@ EAPI E_Module_Api e_modapi =
   };
 
 static Eina_List *_evry_types = NULL;
+
 
 EAPI Evry_Type
 evry_type_register(const char *type)
@@ -158,6 +162,9 @@ e_modapi_init(E_Module *m)
 
    e_datastore_set("everything_loaded", "");
 
+   /* cleanup every hour :) */
+   cleanup_timer = ecore_timer_add(3600, _cleanup_history, NULL); 
+
    return m;
 }
 
@@ -205,6 +212,10 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    E_CONFIG_DD_FREE(plugin_conf_edd);
    E_CONFIG_DD_FREE(plugin_setting_edd);
    e_datastore_del("everything_loaded");
+
+   if (cleanup_timer)
+     ecore_timer_del(cleanup_timer);
+   
    return 1;
 }
 
@@ -212,6 +223,16 @@ EAPI int
 e_modapi_save(E_Module *m __UNUSED__)
 {
    e_config_domain_save("module.everything", conf_edd, evry_conf);
+   return 1;
+}
+
+static int
+_cleanup_history(void *data)
+{
+   /* cleanup old entries */
+   evry_history_free();
+   evry_history_init();
+
    return 1;
 }
 

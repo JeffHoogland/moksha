@@ -211,6 +211,8 @@ evry_history_free(void)
 EAPI void
 evry_history_load(void)
 {
+   if (evry_hist) return;
+   
    evry_hist = e_config_domain_load("module.everything.history", hist_edd);
 
    if (evry_hist && evry_hist->version != HISTORY_VERSION)
@@ -298,7 +300,7 @@ evry_history_add(Eina_Hash *hist, Evry_Item *it, const char *ctxt, const char *i
 	hi->usage /= 4.0;
 	hi->usage += TIME_FACTOR(hi->last_used);
 	hi->transient = it->plugin->transient;
-	hi->count += (hi->transient ? 2:1);
+	/* hi->count += (hi->transient ? 2:1); */
 
 	if (ctxt && !hi->context)
 	  hi->context = eina_stringshare_ref(ctxt);
