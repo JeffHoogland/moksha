@@ -764,6 +764,16 @@ main(int argc, char **argv)
      }
    _e_main_shutdown_push(e_desklock_shutdown);
 
+   e_init_status_set(_("Setup Popups"));
+   TS("popup");
+   /* init popup system */
+   if (!e_popup_init())
+     {
+	e_error_message_show(_("Enlightenment cannot set up its popup system."));
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_popup_shutdown);
+
    if (locked && ((!e_config->show_splash) && (!after_restart)))
      e_desklock_show();
 
@@ -959,15 +969,6 @@ main(int argc, char **argv)
      }
    _e_main_shutdown_push(e_bindings_shutdown);
 
-   e_init_status_set(_("Setup Popups"));
-   TS("popup");
-   /* init popup system */
-   if (!e_popup_init())
-     {
-	e_error_message_show(_("Enlightenment cannot set up its popup system."));
-	_e_main_shutdown(-1);
-     }
-   _e_main_shutdown_push(e_popup_shutdown);
 
    e_init_status_set(_("Setup Shelves"));
    TS("shelves");
