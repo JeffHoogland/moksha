@@ -138,6 +138,11 @@ _hist_cleanup_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata
 		  if (hi->type) eina_stringshare_del(hi->type);
 		  hi->type = eina_stringshare_add("E_SETTINGS");
 	       }
+	     else if (!strcmp(hi->plugin, "Actions"))
+	       {
+		  if (hi->type) eina_stringshare_del(hi->type);
+		  hi->type = eina_stringshare_add("ACTION");
+	       }
 	  }
 	
 	/* item is transient or too old */

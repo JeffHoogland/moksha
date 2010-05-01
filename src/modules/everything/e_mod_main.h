@@ -88,7 +88,7 @@ void evry_plug_text_shutdown(void);
 int  evry_init(void);
 int  evry_shutdown(void);
 int  evry_show(E_Zone *zone, const char *params);
-void evry_hide(void);
+void evry_hide(int clear);
 
 Evry_Plugin *evry_plug_aggregator_new(Evry_Selector *selector, int type);
 

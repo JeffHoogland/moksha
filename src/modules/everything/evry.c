@@ -101,7 +101,7 @@ evry_init(void)
 int
 evry_shutdown(void)
 {
-   evry_hide();
+   evry_hide(0);
 
    return 1;
 }
@@ -164,8 +164,26 @@ _cb_show_timer(void *data)
 int
 evry_show(E_Zone *zone, const char *params)
 {
-   if (win) return 0;
+   if (win)
+     {
+	Eina_List *l;
+	Evry_Plugin *p;
 
+	if (!(params && eina_list_count(selectors[0]->states) == 1))
+	  evry_hide(1);
+
+	if (selector && params)
+	  {
+	     EINA_LIST_FOREACH(selectors[0]->plugins, l, p)
+	       if (!strcmp(params, p->name)) break;
+
+	     _evry_plugin_select(selector->state, p);
+	     _evry_selector_update(selector);
+	     _evry_view_update(selector->state, p);
+	  }
+	return 1;
+     }
+   
    E_OBJECT_CHECK_RETURN(zone, 0);
    E_OBJECT_TYPE_CHECK_RETURN(zone, E_ZONE_TYPE, 0);
 
@@ -243,12 +261,35 @@ evry_show(E_Zone *zone, const char *params)
 }
 
 void
-evry_hide(void)
+evry_hide(int clear)
 {
    Ecore_Event_Handler *ev;
 
    if (!win) return;
 
+   if (clear && selector && eina_list_count(selectors[0]->states) > 1)
+     {
+	if (selector == selectors[1])
+	  _evry_selectors_switch(-1);
+	else if (selector == selectors[2])
+	  _evry_selectors_switch(1);
+
+	/* just to be sure */
+	selector = selectors[0];
+
+	while (selector->states->next)
+	  _evry_state_pop(selector);
+
+	Evry_State *s = selector->state;
+	selector->aggregator->fetch(selector->aggregator, s->input);
+	_evry_selector_update(selector);
+	_evry_update_text_label(s);
+	_evry_view_show(s->view);
+	s->view->update(s->view, 1);
+
+	return;
+     }
+   
    /* _evry_view_clear(selector->state); */
    if (_show_timer)
      ecore_timer_del(_show_timer);
@@ -1060,21 +1101,21 @@ static int
 _evry_selector_subjects_get(const char *plugin_name)
 {
    Eina_List *l, *plugins = NULL;
-   Evry_Plugin *p, *plugin;
+   Evry_Plugin *p, *pp;
    Evry_Selector *sel = selectors[0];
 
-   EINA_LIST_FOREACH(sel->plugins, l, plugin)
+   EINA_LIST_FOREACH(sel->plugins, l, p)
      {
-	if (plugin_name && strcmp(plugin_name, plugin->name))
+	if (plugin_name && strcmp(plugin_name, p->name))
 	  continue;
 
-	if (plugin->begin)
+	if (p->begin)
 	  {
-	     if ((p = plugin->begin(plugin, NULL)))
-	       plugins = eina_list_append(plugins, p);
+	     if ((pp = p->begin(p, NULL)))
+	       plugins = eina_list_append(plugins, pp);
 	  }
 	else
-	  plugins = eina_list_append(plugins, plugin);
+	  plugins = eina_list_append(plugins, p);
      }
 
    if (!plugins) return 0;
@@ -1361,19 +1402,56 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 
    if (!strcmp(ev->key, "Escape"))
      {
-	evry_hide();
+	evry_hide(0);
 	return 1;
      }
+   else if (ev->modifiers)
+     {
+	E_Action *act;
+	Eina_List *l;
+	E_Config_Binding_Key *bind;
+	E_Binding_Modifier mod;
 
+	for (l = e_config->key_bindings; l; l = l->next)
+	  {
+	     bind = l->data;
+
+	     if (bind->action && strcmp(bind->action, "everything")) continue;
+
+	     mod = 0;
+
+	     if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT) 
+	       mod |= E_BINDING_MODIFIER_SHIFT;
+	     if (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) 
+	       mod |= E_BINDING_MODIFIER_CTRL;
+	     if (ev->modifiers & ECORE_EVENT_MODIFIER_ALT) 
+	       mod |= E_BINDING_MODIFIER_ALT;
+	     if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN) 
+	       mod |= E_BINDING_MODIFIER_WIN;
+
+	     if (bind->key && (!strcmp(bind->key, ev->keyname)) &&
+		 ((bind->modifiers == mod) || (bind->any_mod))) 
+	       {
+		  if (!(act = e_action_find(bind->action))) continue;
+
+		  if (act->func.go)
+		    act->func.go(E_OBJECT(win->popup->zone), bind->params);
+	       }
+	  }
+     }
+   
    if (!selector || !selector->state)
      return 1;
-   s = selector->state;
 
    win->request_selection = EINA_FALSE;
-
+   s = selector->state;
    old = ev->key;
 
-   if (((evry_conf->quick_nav == 1) && (ev->modifiers & ECORE_EVENT_MODIFIER_ALT)) ||
+   if (!strcmp(ev->key, "KP_Enter"))
+     {
+	key = eina_stringshare_add("Return");
+     }
+   else if (((evry_conf->quick_nav == 1) && (ev->modifiers & ECORE_EVENT_MODIFIER_ALT)) ||
        ((evry_conf->quick_nav == 2) && (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)))
      {
 	if (!strcmp(ev->key, "k") || (!strcmp(ev->key, "K")))
@@ -1418,7 +1496,6 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	ev->key = key;
      }
    else
-
      {
 	key = eina_stringshare_add(ev->key);
 	ev->key = key;
@@ -1795,7 +1872,7 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
     *   s_object->plugin->action(s_obj->plugin, s_act->cur_item, s_obj->cur_item); */
 
    if (finished)
-     evry_hide();
+     evry_hide(0);
 }
 
 static void

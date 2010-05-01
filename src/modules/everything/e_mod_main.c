@@ -127,22 +127,21 @@ e_modapi_init(E_Module *m)
    if (act)
      {
 	act->func.go = _e_mod_action_cb;
-	e_action_predef_name_set(_("Everything Launcher"),
-				 _("Show Everything Dialog"),
-				 "everything", "", NULL, 0);
+	e_action_predef_name_set
+	  (_("Everything Launcher"),
+	   _("Show Everything Dialog"),
+	   "everything", "", NULL, 0);
      }
 
-   maug = e_int_menus_menu_augmentation_add("main/1",
-					    _e_mod_menu_add,
-					    NULL, NULL, NULL);
+   maug = e_int_menus_menu_augmentation_add
+     ("main/1", _e_mod_menu_add, NULL, NULL, NULL);
 
-   e_configure_registry_category_add("extensions", 80, _("Extensions"),
-				     NULL, "preferences-extensions");
+   e_configure_registry_category_add
+     ("extensions", 80, _("Extensions"), NULL, "preferences-extensions");
 
-   e_configure_registry_item_add("extensions/run_everything", 40,
-				 _("Everything Configuration"),
-				 NULL, "system-run",
-				 evry_config_dialog);
+   e_configure_registry_item_add
+     ("extensions/run_everything", 40, _("Everything Configuration"),
+      NULL, "system-run", evry_config_dialog);
    evry_init();
 
    if (!EVRY_EVENT_ITEMS_UPDATE)
@@ -190,7 +189,8 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 
    if (act)
      {
-	e_action_predef_name_del(_("Everything Launcher"), _("Show Everything Dialog"));
+	e_action_predef_name_del(_("Everything Launcher"),
+				 _("Show Everything Dialog"));
 	e_action_del("everything");
      }
 
