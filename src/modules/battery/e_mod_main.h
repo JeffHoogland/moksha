@@ -29,19 +29,26 @@ struct _Config
    Ecore_Event_Handler *batget_data_handler;
    Ecore_Event_Handler *batget_del_handler;
    Ecore_Timer         *alert_timer;
-   int                  have_hal;
+   int                  have_dbus;
+#ifdef HAVE_EUKIT
+   double               full;
+   int64_t            time_left;
+   int64_t            time_full;
+#else
    int                  full;
    int                  time_left;
+   int                  time_full;
+#endif
    int                  have_battery;
    int                  have_power;
    struct {
-      // FIXME: on bat_conf del dbus_pending_call_cancel(hal.have);
-      //        then set hal.have to NULL
+      // FIXME: on bat_conf del dbus_pending_call_cancel(dbus.have);
+      //        then set dbus.have to NULL
       DBusPendingCall       *have;
       // FIXME: on bat_conf del e_dbus_signal_handler_del() these
       E_DBus_Signal_Handler *dev_add;
       E_DBus_Signal_Handler *dev_del;
-   } hal;
+   } dbus;
 };
 
 EAPI extern E_Module_Api e_modapi;

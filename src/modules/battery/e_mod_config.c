@@ -9,7 +9,7 @@ struct _E_Config_Dialog_Data
    int alert_percent;
    int dismiss_alert;
    int alert_timeout;
-   int force_mode; // 0 == auto, 1 == batget, 2 == hal
+   int force_mode; // 0 == auto, 1 == batget, 2 == dbus
    struct 
      {
         Evas_Object *show_alert_label;
@@ -229,7 +229,11 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
    e_widget_list_object_append(o, ob, 1, 0, 0.0);
    ob = e_widget_radio_add(evas, _("Internal"), 1, rg);
    e_widget_list_object_append(o, ob, 1, 0, 0.0);
+#ifdef HAVE_EUKIT
+   ob = e_widget_radio_add(evas, _("UPower"), 2, rg);
+#else
    ob = e_widget_radio_add(evas, _("HAL"), 2, rg);
+#endif
    e_widget_list_object_append(o, ob, 1, 0, 0.0);
 
    e_widget_toolbook_page_append(otb, NULL, _("Hardware"), o, 1, 0, 1, 0, 
