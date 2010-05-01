@@ -171,12 +171,6 @@ e_menu_shutdown(void)
 {
    E_Menu *m;
 
-   if (_e_menu_hash)
-     {
-        eina_hash_free(_e_menu_hash);
-        _e_menu_hash = NULL;
-     }
-   
    E_FN_DEL(ecore_event_handler_del, _e_menu_key_down_handler);
    E_FN_DEL(ecore_event_handler_del, _e_menu_key_up_handler);
    E_FN_DEL(ecore_event_handler_del, _e_menu_mouse_down_handler);
@@ -198,6 +192,12 @@ e_menu_shutdown(void)
 	eina_hash_foreach(_e_menu_categories, _e_menu_categories_free_cb, NULL);
 	eina_hash_free(_e_menu_categories);
 	_e_menu_categories = NULL;
+     }
+
+   if (_e_menu_hash)
+     {
+        eina_hash_free(_e_menu_hash);
+        _e_menu_hash = NULL;
      }
 
    return 1;
@@ -1763,8 +1763,7 @@ _e_menu_unrealize(E_Menu *m)
    ecore_evas_free(m->ecore_evas);
    m->ecore_evas = NULL;
    m->evas = NULL;
-   if (_e_menu_hash)
-     eina_hash_del(_e_menu_hash, e_util_winid_str_get(m->evas_win), m);
+   eina_hash_del(_e_menu_hash, e_util_winid_str_get(m->evas_win), m);
    m->evas_win = 0;
 }
 
