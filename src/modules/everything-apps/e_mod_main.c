@@ -95,7 +95,7 @@ _begin_open_with(Evry_Plugin *plugin, const Evry_Item *item)
 	mime = file->mime;
      }
 
-   if (!mime && !(mime = efreet_mime_type_get(path)))
+   if (!mime || !(mime = efreet_mime_type_get(path)))
      return NULL;
 
    p->apps_mime = efreet_util_desktop_mime_list(mime);
