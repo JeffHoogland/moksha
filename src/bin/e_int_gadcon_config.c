@@ -280,7 +280,7 @@ _cb_add(void *data, void *data2 __UNUSED__)
         if ((!it->selected) || (it->header)) continue;
         if (!(name = e_widget_ilist_item_value_get(it))) continue;
         if (!(cgc = e_gadcon_client_config_new(cfdata->gc, name))) continue;
-        if (end = e_widget_ilist_item_end_get(it))
+        if ((end = e_widget_ilist_item_end_get(it)))
           edje_object_signal_emit(end, "e,state,checked", "e");
 
         gad = E_NEW(CFGadget, 1);
@@ -328,7 +328,7 @@ _cb_del(void *data, void *data2 __UNUSED__)
              if (strcmp(name, cgc->name)) continue;
 
              /* remove from gadget hash if exists */
-             if (gad = eina_hash_find(cfdata->gadget_hash, cgc->id))
+             if ((gad = eina_hash_find(cfdata->gadget_hash, cgc->id)))
                {
                   eina_hash_del(cfdata->gadget_hash, gad->id, gad);
                   if (gad->name) eina_stringshare_del(gad->name);
@@ -339,7 +339,7 @@ _cb_del(void *data, void *data2 __UNUSED__)
              /* set ilist end toggle if we don't have any more in the hash */
              if (!_search_hash(cfdata, name))
                {
-                  if (end = e_widget_ilist_item_end_get(it))
+                  if ((end = e_widget_ilist_item_end_get(it)))
                     edje_object_signal_emit(end, "e,state,unchecked", "e");
                }
 

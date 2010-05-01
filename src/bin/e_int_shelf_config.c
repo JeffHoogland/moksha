@@ -334,7 +334,7 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
    if (cfdata->desk_show_mode) 
      {
-        Eina_List *l, *dl;
+        Eina_List *l;
         const E_Ilist_Item *it;
         int idx = -1;
 
