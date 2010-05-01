@@ -2490,6 +2490,7 @@ _pager_popup_cb_action_show(E_Object *obj, const char *params, Ecore_Event_Key *
 static void
 _pager_popup_cb_action_switch(E_Object *obj, const char *params, Ecore_Event_Key *ev)
 {
+   int max_x,max_y, desk_x, desk_y;
    int x = 0;
    int y = 0;
 
@@ -2500,6 +2501,11 @@ _pager_popup_cb_action_switch(E_Object *obj, const char *params, Ecore_Event_Key
 	else
 	  return;
      }
+
+   e_zone_desk_count_get(act_popup->pager->zone, &max_x, &max_y);
+   desk_x = current_desk->x + x;
+   desk_y = current_desk->y + y;
+
    if (!strcmp(params, "left"))
      x = -1;
    else if (!strcmp(params, "right"))
@@ -2508,7 +2514,19 @@ _pager_popup_cb_action_switch(E_Object *obj, const char *params, Ecore_Event_Key
      y = -1;
    else if (!strcmp(params, "down"))
      y = 1;
-
+   else if (!strcmp(params, "next"))
+     {
+	x = 1;
+	if (desk_x == max_x - 1)
+	  y = 1;
+     }
+   else if (!strcmp(params, "prev"))
+     {
+	x = -1;
+	if (desk_x == 0)
+	  y = -1;
+     }
+   
    _pager_popup_desk_switch(x, y);
 }
 
@@ -2831,6 +2849,10 @@ e_modapi_init(E_Module *m)
                                  "pager_switch", "up",    NULL, 0);
 	e_action_predef_name_set(N_("Pager"), N_("Popup Desk Down"),  
                                  "pager_switch", "down",  NULL, 0);
+	e_action_predef_name_set(N_("Pager"), N_("Popup Desk Next"),    
+                                 "pager_switch", "next",    NULL, 0);
+	e_action_predef_name_set(N_("Pager"), N_("Popup Desk Previous"),  
+                                 "pager_switch", "prev",  NULL, 0);
      }
 
    return m;
@@ -2866,6 +2888,8 @@ e_modapi_shutdown(E_Module *m)
    e_action_predef_name_del(N_("Pager"), N_("Popup Desk Left"));
    e_action_predef_name_del(N_("Pager"), N_("Popup Desk Up"));
    e_action_predef_name_del(N_("Pager"), N_("Popup Desk Down"));
+   e_action_predef_name_del(N_("Pager"), N_("Popup Desk Next"));
+   e_action_predef_name_del(N_("Pager"), N_("Popup Desk Previous"));
 
    E_FREE(pager_config);
    E_CONFIG_DD_FREE(conf_edd);
