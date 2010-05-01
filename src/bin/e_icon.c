@@ -9,6 +9,7 @@ struct _E_Smart_Data
 {
    Evas_Coord   x, y, w, h;
    Evas_Object *obj;
+   Evas_Object *eventarea;
    int          size;
    unsigned char fill_inside : 1;
    unsigned char scale_up : 1;
@@ -323,6 +324,8 @@ _e_icon_smart_reconfigure(E_Smart_Data *sd)
 	y = sd->y;
 	evas_object_move(sd->obj, x, y);
 	evas_object_resize(sd->obj, w, h);
+	evas_object_move(sd->eventarea, x, y);
+	evas_object_resize(sd->eventarea, w, h);
      }
    else
      {
@@ -365,6 +368,8 @@ _e_icon_smart_reconfigure(E_Smart_Data *sd)
 	evas_object_move(sd->obj, x, y);
 	evas_object_image_fill_set(sd->obj, 0, 0, w, h);
 	evas_object_resize(sd->obj, w, h);
+	evas_object_move(sd->eventarea, x, y);
+	evas_object_resize(sd->eventarea, w, h);
      }
 }
 
@@ -404,6 +409,11 @@ _e_icon_smart_add(Evas_Object *obj)
 {
    E_Smart_Data *sd = calloc(1, sizeof(E_Smart_Data));
    if (!sd) return;
+
+   sd->eventarea = evas_object_rectangle_add(evas_object_evas_get(obj));
+   evas_object_color_set(sd->eventarea, 0, 0, 0, 0);
+   evas_object_smart_member_add(sd->eventarea, obj);
+
    sd->obj = evas_object_image_add(evas_object_evas_get(obj));
    evas_object_event_callback_add(sd->obj, EVAS_CALLBACK_IMAGE_PRELOADED,
                                   _e_icon_preloaded, obj);
@@ -424,6 +434,7 @@ _e_icon_smart_del(Evas_Object *obj)
    E_Smart_Data *sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    evas_object_del(sd->obj);
+   evas_object_del(sd->eventarea);
    free(sd);
 }
 
@@ -456,6 +467,7 @@ _e_icon_smart_show(Evas_Object *obj)
    if (!sd) return;
    if (!((sd->preload) && (sd->loading)))
      evas_object_show(sd->obj);
+   evas_object_show(sd->eventarea);
 }
 
 static void
@@ -464,6 +476,7 @@ _e_icon_smart_hide(Evas_Object *obj)
    E_Smart_Data *sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    evas_object_hide(sd->obj);
+   evas_object_hide(sd->eventarea);
 }
 
 static void
@@ -480,6 +493,7 @@ _e_icon_smart_clip_set(Evas_Object *obj, Evas_Object * clip)
    E_Smart_Data *sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    evas_object_clip_set(sd->obj, clip);
+   evas_object_clip_set(sd->eventarea, clip);
 }
 
 static void
@@ -488,4 +502,5 @@ _e_icon_smart_clip_unset(Evas_Object *obj)
    E_Smart_Data *sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    evas_object_clip_unset(sd->obj);
+   evas_object_clip_unset(sd->eventarea);
 }
