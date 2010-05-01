@@ -322,6 +322,7 @@ _act_border(Evry_Action *act)
 	 focus = 1;
 	 break;
       default:
+	 break;
      }
 
    if (focus)
@@ -333,7 +334,7 @@ _act_border(Evry_Action *act)
 	  e_border_uniconify(bd);
 	else
 	  e_border_raise(bd);
-need
+
 	e_border_focus_set_with_pointer(bd);
      }
 
