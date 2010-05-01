@@ -926,7 +926,8 @@ _e_bindings_wheel_free(E_Binding_Wheel *bind)
 static int
 _e_bindings_context_match(E_Binding_Context bctxt, E_Binding_Context ctxt)
 {
-   if (bctxt == E_BINDING_CONTEXT_ANY) return 1;
+   if (bctxt == E_BINDING_CONTEXT_ANY &&
+       !(ctxt == E_BINDING_CONTEXT_ZONE)) return 1;
    if (ctxt == E_BINDING_CONTEXT_UNKNOWN) return 0;
    if (bctxt == ctxt) return 1;
    return 0;
