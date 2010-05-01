@@ -224,9 +224,10 @@ _scan_func(void *data)
 
 	if (!EVRY_ITEM(file)->browseable)
 	  {
-	     if (d->second_run)
-	       usleep(2500);
-
+#if _BSD_SOURCE || _XOPEN_SOURCE >= 500
+	     /* let main process do its thing while reading mimetypes */
+	     usleep(1000);
+#endif
 	     if ((mime = efreet_mime_type_get(file->path)))
 	       {
 		  file->mime = mime;
@@ -692,6 +693,8 @@ _hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fda
    if (!hi)
      return EINA_TRUE;
 
+   DBG("add %s %s %s", hi->type, type, (char *) key);
+   
    EINA_LIST_FOREACH(p->files, ll, file)
      if (!strcmp(file->path, key))
        return EINA_TRUE;

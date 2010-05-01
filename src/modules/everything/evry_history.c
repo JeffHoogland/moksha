@@ -106,6 +106,40 @@ _hist_cleanup_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata
 	     hi->last_used = d->time - SEVEN_DAYS/2;
 	  }
 
+	/* XXX fix history - remove later */
+	if (!hi->type || !strcmp(hi->type, "NONE") || !strcmp(hi->type, ""))
+	  {
+	     hi->count = 0;
+	  }
+	if (hi->count && hi->plugin)
+	  {
+	     if (!strcmp(hi->plugin, "Files"))
+	       {
+		  if (hi->type) eina_stringshare_del(hi->type);
+		  hi->type = eina_stringshare_add("FILE");
+	       }
+	     else if (!strcmp(hi->plugin, "Tracker"))
+	       {
+		  if (hi->type) eina_stringshare_del(hi->type);
+		  hi->type = eina_stringshare_add("FILE");
+	       }
+	     else if (!strcmp(hi->plugin, "Applications"))
+	       {
+		  if (hi->type) eina_stringshare_del(hi->type);
+		  hi->type = eina_stringshare_add("APPLICATION");
+	       }
+	     else if (!strcmp(hi->plugin, "Open With..."))
+	       {
+		  if (hi->type) eina_stringshare_del(hi->type);
+		  hi->type = eina_stringshare_add("APPLICATION");
+	       }
+	     else if (!strcmp(hi->plugin, "Settings"))
+	       {
+		  if (hi->type) eina_stringshare_del(hi->type);
+		  hi->type = eina_stringshare_add("E_SETTINGS");
+	       }
+	  }
+	
 	/* item is transient or too old */
 	if (!hi->count || hi->transient)
 	  {

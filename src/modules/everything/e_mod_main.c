@@ -84,7 +84,7 @@ evry_type_register(const char *type)
 EAPI const char *
 evry_type_get(Evry_Type type)
 {
-   const char *ret = eina_list_nth(_evry_types, type - 1);
+   const char *ret = eina_list_nth(_evry_types, type);
    if (!ret)
      return eina_stringshare_add(""); 
 
