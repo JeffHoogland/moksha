@@ -268,8 +268,8 @@ evry_hide(int clear)
    if (!win) return;
 
    if ((clear && selector) &&
-       (eina_list_count(selectors[0]->states) > 1) ||
-       (selectors[0]->state && selectors[0]->state->input[0]))
+       ((eina_list_count(selectors[0]->states) > 1) ||
+	(selectors[0]->state && selectors[0]->state->input[0])))
      {
 	int slide = 0;
 	if (selector != selectors[0])
