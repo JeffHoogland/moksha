@@ -44,26 +44,30 @@ _cb_sort_recent(const void *data1, const void *data2)
      }
 
    if (it1->usage > 0 || it2->usage > 0)
-     {	
+     {
 	return (it1->usage > it2->usage ? -1 : 1);
      }
 
    if (it1->type != EVRY_TYPE_ACTION &&
        it2->type != EVRY_TYPE_ACTION)
      {
+	int prio1, prio2;
+
 	if ((it1->plugin == it2->plugin) &&
 	    (it1->priority - it2->priority))
 	  {
 	     return (it1->priority - it2->priority);
 	  }
-	else if (it1->plugin->config->priority -
-		 it2->plugin->config->priority)
+	else if ((prio1 = it1->plugin->config->priority) -
+		 (prio2 = it2->plugin->config->priority))
 	  {
-	     return (it1->plugin->config->priority -
-		     it2->plugin->config->priority);
+	     return (prio1 < prio2 ? -1 : 1);
 	  }
      }
-   
+
+   if (it1->priority - it2->priority)
+     return (it1->priority < it2->priority ? -1 : 1);
+
    return strcmp(it1->label, it2->label);
 
   return 1;
@@ -114,10 +118,10 @@ _cb_sort(const void *data1, const void *data2)
      }
 
    if (it1->usage > 0 || it2->usage > 0)
-     {	
+     {
 	return (it1->usage > it2->usage ? -1 : 1);
      }
-   
+
    if (it1->fuzzy_match > 0 || it2->fuzzy_match > 0)
      {
 	if (it2->fuzzy_match <= 0)
@@ -131,19 +135,23 @@ _cb_sort(const void *data1, const void *data2)
    if (it1->type != EVRY_TYPE_ACTION &&
        it2->type != EVRY_TYPE_ACTION)
      {
+	int prio1, prio2;
+
 	if ((it1->plugin == it2->plugin) &&
 	    (it1->priority - it2->priority))
 	  {
 	     return (it1->priority - it2->priority);
 	  }
-	else if (it1->plugin->config->priority -
-		 it2->plugin->config->priority)
+	else if ((prio1 = it1->plugin->config->priority) -
+		 (prio2 = it2->plugin->config->priority))
 	  {
-	     return (it1->plugin->config->priority -
-		     it2->plugin->config->priority);
+	     return (prio1 < prio2 ? -1 : 1);
 	  }
      }
-   
+
+   if (it1->priority - it2->priority)
+     return (it1->priority < it2->priority ? -1 : 1);
+
    return strcasecmp(it1->label, it2->label);
 }
 
@@ -325,7 +333,7 @@ static void
 _free(Evry_Plugin *plugin)
 {
    GET_PLUGIN(p, plugin);
-   
+
    _finish(plugin);
 
    free(p);
