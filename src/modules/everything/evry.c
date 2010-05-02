@@ -267,25 +267,36 @@ evry_hide(int clear)
 
    if (!win) return;
 
-   if (clear && selector && eina_list_count(selectors[0]->states) > 1)
+   if ((clear && selector) &&
+       (eina_list_count(selectors[0]->states) > 1) ||
+       (selectors[0]->state && selectors[0]->state->input[0]))
      {
-	if (selector == selectors[1])
-	  _evry_selectors_switch(-1);
-	else if (selector == selectors[2])
-	  _evry_selectors_switch(1);
-
+	int slide = 0;
+	if (selector != selectors[0])
+	  {
+	     if (selector == selectors[1])
+	       _evry_selectors_switch(-1);
+	     else if (selector == selectors[2])
+	       _evry_selectors_switch(1);
+	  }
+	
 	/* just to be sure */
 	selector = selectors[0];
 
 	while (selector->states->next)
-	  _evry_state_pop(selector);
-
+	  {
+	     slide = 1;
+	     _evry_state_pop(selector);
+	  }
+	
+	_evry_clear(selector); 
+	_evry_clear(selector); 
 	Evry_State *s = selector->state;
 	selector->aggregator->fetch(selector->aggregator, s->input);
 	_evry_selector_update(selector);
 	_evry_update_text_label(s);
 	_evry_view_show(s->view);
-	s->view->update(s->view, 1);
+	s->view->update(s->view, slide);
 
 	return;
      }
@@ -1829,7 +1840,7 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 
 	if (s_subj->sel_items)
 	  {
-	     EINA_LIST_REVERSE_FOREACH(s_subj->sel_items, l, it)
+	     EINA_LIST_FOREACH(s_subj->sel_items, l, it)
 	       {
 		  if (it->type != act->it1.type)
 		    continue;

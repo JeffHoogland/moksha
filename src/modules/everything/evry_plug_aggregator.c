@@ -35,12 +35,10 @@ _cb_sort_recent(const void *data1, const void *data2)
 	  }
      }
 
-   if (it1->usage && it2->usage)
-     return (it1->usage > it2->usage ? -1 : 1);
-   if (it1->usage && !it2->usage)
-     return -1;
-   if (it2->usage && !it1->usage)
-     return 1;
+   if (it1->usage > 0 || it2->usage > 0)
+     {	
+	return (it1->usage > it2->usage ? -1 : 1);
+     }
 
    if (it1->type != EVRY_TYPE_ACTION &&
        it2->type != EVRY_TYPE_ACTION)
@@ -99,23 +97,19 @@ _cb_sort(const void *data1, const void *data2)
 	  return (it1->fuzzy_match - it2->fuzzy_match);
      }
 
-   if (it1->usage && it2->usage)
-     return (it1->usage > it2->usage ? -1 : 1);
-   if (it1->usage && !it2->usage)
-     return -1;
-   if (it2->usage && !it1->usage)
-     return 1;
-
+   if (it1->usage > 0 || it2->usage > 0)
+     {	
+	return (it1->usage > it2->usage ? -1 : 1);
+     }
+   
    if (it1->fuzzy_match > 0 || it2->fuzzy_match > 0)
      {
 	if (it2->fuzzy_match <= 0)
 	  return -1;
-
 	if (it1->fuzzy_match <= 0)
 	  return 1;
 
-	if (it1->fuzzy_match - it2->fuzzy_match)
-	  return (it1->fuzzy_match - it2->fuzzy_match);
+	return (it1->fuzzy_match - it2->fuzzy_match);
      }
 
    if (it1->type != EVRY_TYPE_ACTION &&
@@ -207,7 +201,8 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
        EINA_LIST_FOREACH(pp->items, l, it)
 	 {
-	    evry_history_item_usage_set(p->selector->history, it, input, context);
+	    if (it->usage >= 0)
+	      evry_history_item_usage_set(p->selector->history, it, input, context);
 	    it->fuzzy_match = evry_fuzzy_match(it->label, input);
 	    items = _add_item(p, items, it);
 	 }
@@ -225,8 +220,10 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
 		  if (it->fuzzy_match || p->selector == selectors[2])
 		    {
-		      evry_history_item_usage_set(p->selector->history, it, input, context);
-		      items = _add_item(p, items, it);
+		       if (it->usage >= 0)
+			 evry_history_item_usage_set(p->selector->history, it, input, context);
+
+		       items = _add_item(p, items, it);
 		    }
 	       }
 	  }
@@ -240,7 +237,8 @@ _fetch(Evry_Plugin *plugin, const char *input)
    	  {
 	     EINA_LIST_FOREACH(pp->items, ll, it)
    	       {
-		  evry_history_item_usage_set(p->selector->history, it, NULL, context);
+		  if (it->usage >= 0)
+		    evry_history_item_usage_set(p->selector->history, it, NULL, context);
 		  it->fuzzy_match = 0;
 		  items = _add_item(p, items, it);
    	       }
@@ -253,8 +251,9 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	 {
 	   EINA_LIST_FOREACH(pp->items, ll, it)
 	     {
-	       if (evry_history_item_usage_set(p->selector->history, it, input, context) &&
-		   (!eina_list_data_find_list(items, it)))
+		if ((it->usage >= 0) &&
+		    (evry_history_item_usage_set(p->selector->history, it, input, context)) &&
+		    (!eina_list_data_find_list(items, it)))
 		 {
 		   items = _add_item(p, items, it);
 		 }

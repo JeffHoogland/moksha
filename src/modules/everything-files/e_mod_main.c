@@ -20,7 +20,7 @@
 #define ACT_COPY	3
 #define ACT_MOVE	4
 
-#define ONE_DAY 86400
+#define ONE_DAY 86400.0
 #define TIME_FACTOR(_now) (1.0 - (evry_hist->begin / _now)) / 1000000000000000.0
 
 typedef struct _Plugin Plugin;
@@ -372,6 +372,9 @@ _scan_end_func(void *data)
 			    file->mime = eina_stringshare_ref(hi->data);
 			    DBG("cached: %s %s", file->mime, file->path);
 			    hi->transient = 0;
+
+			    if (hi->count == 1)
+			      item->usage = -1;
 			    break;
 			 }
 		    }
@@ -419,9 +422,10 @@ _scan_end_func(void *data)
 		  hi = evry_history_add(evry_hist->subjects, item, NULL, NULL);
 		  if (hi)
 		    {
-		       hi->last_used -= (ONE_DAY * 6) + (d->run_cnt * MAX_ITEMS) + (10 + cnt++);
+		       hi->last_used -= (ONE_DAY * 6.0);
 		       hi->usage = TIME_FACTOR(hi->last_used);
 		       hi->data = eina_stringshare_ref(file->mime);
+		       item->usage = -1;
 		    }
 	       }
 
@@ -772,11 +776,11 @@ _hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fda
    if (clear_cache)
      {
 	/* transient marks them for deletion */
-	if (hi->last_used < ecore_time_get() - (6 * ONE_DAY))
-	  hi->transient = 1;
+	if (hi->count && (hi->last_used < ecore_time_get() - (5 * ONE_DAY)))
+	  hi->count--;
      }
 
-   if (hi->transient)
+   if (!hi->count)
      return EINA_TRUE;
 
    DBG("add %s %s %s", hi->type, type, (char *) key);

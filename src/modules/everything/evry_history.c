@@ -300,7 +300,7 @@ evry_history_add(Eina_Hash *hist, Evry_Item *it, const char *ctxt, const char *i
 	hi->usage /= 4.0;
 	hi->usage += TIME_FACTOR(hi->last_used);
 	hi->transient = it->plugin->transient;
-	/* hi->count += (hi->transient ? 2:1); */
+	hi->count += 1;
 
 	if (ctxt && !hi->context)
 	  hi->context = eina_stringshare_ref(ctxt);
