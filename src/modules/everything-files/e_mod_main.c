@@ -377,23 +377,22 @@ _scan_end_func(void *data)
 	     if (!file) continue;
 
 	     if (item->browseable)
-	       {
-		  file->mime = eina_stringshare_ref(_mime_dir);
-	       }
+	       file->mime = eina_stringshare_ref(_mime_dir);
 	     
 	     /* check if we can grab the mimetype from history */
-	     if ((!file->mime && _conf->cache_dirs && ht) &&
+	     if ((_conf->cache_dirs && ht) &&
 		 (he = eina_hash_find(ht->types, file->path)))
 	       {
 		  EINA_LIST_FOREACH(he->items, lll, hi)
 		    {
 		       if (hi->data)
 			 {
-			    file->mime = eina_stringshare_ref(hi->data);
+			    if (!file->mime)
+			      file->mime = eina_stringshare_ref(hi->data);
+
 			    DBG("cached: %s %s", file->mime, file->path);
 			    hi->transient = 0;
 			    item->usage = -1;
-			    item->hi = hi;
 			    break;
 			 }
 		    }
@@ -458,8 +457,8 @@ _scan_end_func(void *data)
 	       {
 		  GET_FILE(file, item);
 		  
-		  if (!item->usage && (hi = evry_history_add(evry_hist->subjects,
-							     item, NULL, NULL)))
+		  if (!item->usage &&
+		      (hi = evry_history_add(evry_hist->subjects, item, NULL, NULL)))
 		    {
 		       hi->last_used = SIX_DAYS_AGO + (0.001 * (double) cnt++);
 		       hi->usage = TIME_FACTOR(hi->last_used);
@@ -472,6 +471,8 @@ _scan_end_func(void *data)
 		       item->hi->last_used = SIX_DAYS_AGO + (0.001 * (double) cnt++);
 		       item->hi->usage = TIME_FACTOR(hi->last_used);
 		    }
+
+		  item->usage = 0;
 	       }
 	  }
 	
