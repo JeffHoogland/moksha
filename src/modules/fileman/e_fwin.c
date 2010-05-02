@@ -1906,7 +1906,7 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page, Eina_List *files, int always)
    evas_object_event_callback_add(ot, EVAS_CALLBACK_KEY_DOWN, _e_fwin_file_open_dialog_cb_key_down, page);
    e_dialog_show(dia);
    e_dialog_border_icon_set(dia, "preferences-applications");
-   e_widget_focus_set(fad->o_entry, 0);
+   e_widget_focus_steal(fad->o_entry);
 }
 
 static void
