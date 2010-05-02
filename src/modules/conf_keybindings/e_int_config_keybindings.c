@@ -8,6 +8,7 @@
 				  "or <hilight>Escape</hilight> to abort.")
 
 #define TEXT_NO_PARAMS _("<None>")
+#define TEXT_NO_MODIFIER_HEADER _("Single key")
 
 static void	    *_create_data(E_Config_Dialog *cfd);
 static void	    _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
@@ -34,6 +35,7 @@ static void _add_key_binding_cb(void *data, void *data2);
 static void _modify_key_binding_cb(void *data, void *data2);
 
 /********* Helper *************************/
+static char *_key_binding_header_get(int modifiers);
 static char *_key_binding_text_get(E_Config_Binding_Key *bi);
 static void _auto_apply_changes(E_Config_Dialog_Data *cfdata);
 static void _find_key_binding_action(const char *action, const char *params, int *g, int *a, int *n);
@@ -225,14 +227,14 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    cfdata->gui.o_binding_list = ob;   
    e_widget_size_min_set(ob, 200, 200);
    e_widget_frametable_object_append(of, ob, 0, 0, 2, 1, 1, 1, 1, 1);
-   ob = e_widget_button_add(evas, _("Add Key"), NULL, _add_key_binding_cb, cfdata, NULL);
+   ob = e_widget_button_add(evas, _("Add Binding"), "list-add", _add_key_binding_cb, cfdata, NULL);
    cfdata->gui.o_add = ob;
    e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 0, 1, 0);
-   ob = e_widget_button_add(evas, _("Delete Key"), NULL, _delete_key_binding_cb, cfdata, NULL);
+   ob = e_widget_button_add(evas, _("Delete Binding"), "list-remove", _delete_key_binding_cb, cfdata, NULL);
    cfdata->gui.o_del = ob;
    e_widget_disabled_set(ob, 1);
    e_widget_frametable_object_append(of, ob, 1, 1, 1, 1, 1, 0, 1, 0);
-   ob = e_widget_button_add(evas, _("Modify Key"), NULL, _modify_key_binding_cb, cfdata, NULL);
+   ob = e_widget_button_add(evas, _("Modify Binding"), NULL, _modify_key_binding_cb, cfdata, NULL);
    cfdata->gui.o_mod = ob;
    e_widget_disabled_set(ob, 1);
    e_widget_frametable_object_append(of, ob, 0, 2, 1, 1, 1, 0, 1, 0);
@@ -801,6 +803,7 @@ _update_key_binding_list(E_Config_Dialog_Data *cfdata)
    char *b, b2[64];
    Eina_List *l;
    E_Config_Binding_Key *bi;
+   int modifiers = -1;
 
    evas_event_freeze(evas_object_evas_get(cfdata->gui.o_binding_list));
    edje_freeze();
@@ -817,18 +820,21 @@ _update_key_binding_list(E_Config_Dialog_Data *cfdata)
 
    for (l = cfdata->binding.key, i = 0; l; l = l->next, i++)
      {
-	Evas_Object *ic;
-
 	bi = l->data;
+
+	if (modifiers != bi->modifiers)
+	  {
+	     modifiers = bi->modifiers;
+	     b = _key_binding_header_get(modifiers);
+	     e_widget_ilist_header_append(cfdata->gui.o_binding_list, NULL, b);
+	     free(b);
+	  }
 
 	b = _key_binding_text_get(bi);
 	if (!b) continue;
 
-	ic = e_icon_add(cfdata->evas);
-	e_util_icon_theme_set(ic, "preferences-desktop-keyboard-shortcuts");
-
 	snprintf(b2, sizeof(b2), "k%d", i);
-	e_widget_ilist_append(cfdata->gui.o_binding_list, ic, b,
+	e_widget_ilist_append(cfdata->gui.o_binding_list, NULL, b,
 			      _binding_change_cb, cfdata, b2);
 	free(b);
      }
@@ -916,7 +922,7 @@ _grab_wnd_show(E_Config_Dialog_Data *cfdata)
 				     "E", "_keybind_getkey_dialog");
    if (!cfdata->locals.dia) return;
    e_dialog_title_set(cfdata->locals.dia, _("Key Binding Sequence"));
-   e_dialog_icon_set(cfdata->locals.dia, "preferences-desktop-keyboard", 48);
+   e_dialog_icon_set(cfdata->locals.dia, "preferences-desktop-keyboard-shortcuts", 48);
    e_dialog_text_set(cfdata->locals.dia, TEXT_PRESS_KEY_SEQUENCE);
    e_win_centered_set(cfdata->locals.dia->win, 1);
    e_win_borderless_set(cfdata->locals.dia->win, 1);
@@ -1268,6 +1274,36 @@ _find_key_binding_action(const char *action, const char *params, int *g, int *a,
 	if (a) *a = -1;
 	if (n) *n = -1;
      }
+}
+
+static char *
+_key_binding_header_get(int modifiers)
+{
+   char b[256] ="";
+
+   if (modifiers & E_BINDING_MODIFIER_CTRL)
+     strcat(b, _("CTRL"));
+
+   if (modifiers & E_BINDING_MODIFIER_ALT)
+     {
+	if (b[0]) strcat(b, " + ");
+	strcat(b, _("ALT"));
+     }
+
+   if (modifiers & E_BINDING_MODIFIER_SHIFT)
+     {
+	if (b[0]) strcat(b, " + ");
+	strcat(b, _("SHIFT"));
+     }
+
+   if (modifiers & E_BINDING_MODIFIER_WIN)
+     {
+	if (b[0]) strcat(b, " + ");
+	strcat(b, _("WIN"));
+     }
+
+   if (!b[0]) return strdup(TEXT_NO_MODIFIER_HEADER);
+   return strdup(b);
 }
 
 static char *
