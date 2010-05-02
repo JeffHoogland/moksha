@@ -826,8 +826,11 @@ _update_key_binding_list(E_Config_Dialog_Data *cfdata)
 	  {
 	     modifiers = bi->modifiers;
 	     b = _key_binding_header_get(modifiers);
-	     e_widget_ilist_header_append(cfdata->gui.o_binding_list, NULL, b);
-	     free(b);
+	     if (b)
+	       {
+		  e_widget_ilist_header_append(cfdata->gui.o_binding_list, NULL, b);
+		  free(b);
+	       }
 	  }
 
 	b = _key_binding_text_get(bi);
