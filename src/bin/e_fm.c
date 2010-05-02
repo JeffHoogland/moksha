@@ -5334,7 +5334,7 @@ _e_fm2_icon_sel_down(Evas_Object *obj)
 	  }
 	else if (ic->y > y)
 	  {
-	     dist = (abs(ic->x - x));
+	     dist = (abs(ic->x - x)) + (ic->y - y) * 2;
 	     if (dist < min)
 	       {
 		  min = dist;
@@ -5409,7 +5409,7 @@ _e_fm2_icon_sel_up(Evas_Object *obj)
 	  }
 	else if (ic->y < y)
 	  {
-	     dist = (abs(ic->x - x));
+	     dist = (abs(ic->x - x)) + (y - ic->y) * 2;
 	     if (dist < min)
 	       {
 		  min = dist;
