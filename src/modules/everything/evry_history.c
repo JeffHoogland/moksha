@@ -264,11 +264,20 @@ evry_history_add(Eina_Hash *hist, Evry_Item *it, const char *ctxt, const char *i
    const char *id;
    const char *type;
 
-   if (!it || !it->plugin->history) return NULL;
+   int rem_ctxt = 1;
+   
+   if (!it) return NULL;
 
    type = evry_type_get(it->type);
 
    id = (it->id ? it->id : it->label);
+
+   if (it->type == EVRY_TYPE_ACTION)
+     {
+	GET_ACTION(act, it);
+	if (!act->remember_context)
+	  rem_ctxt = 0;
+     }
 
    he = eina_hash_find(hist, id);
    if (!he)
@@ -280,7 +289,7 @@ evry_history_add(Eina_Hash *hist, Evry_Item *it, const char *ctxt, const char *i
      {
 	EINA_LIST_FOREACH(he->items, l, hi)
 	  if ((hi->plugin == it->plugin->name) &&
-	      (ctxt == hi->context) &&
+	      (!rem_ctxt || (ctxt == hi->context)) &&
 	      (type == hi->type))
 	    break;
      }
@@ -302,8 +311,10 @@ evry_history_add(Eina_Hash *hist, Evry_Item *it, const char *ctxt, const char *i
 	hi->transient = it->plugin->transient;
 	hi->count += 1;
 
-	if (ctxt && !hi->context)
-	  hi->context = eina_stringshare_ref(ctxt);
+	if (ctxt && !hi->context && rem_ctxt)
+	  {
+	     hi->context = eina_stringshare_ref(ctxt);
+	  }
 
 	if (input)
 	  {
@@ -323,7 +334,8 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, c
    History_Entry *he;
    History_Item *hi;
    Eina_List *l;
-
+   int rem_ctxt = 1;
+   
    if (!it->plugin->history)
      return 0;
 
@@ -331,6 +343,13 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, c
    if (!(he = eina_hash_find(hist, (it->id ? it->id : it->label))))
      return 0;
 
+   if (it->type == EVRY_TYPE_ACTION)
+     {
+	GET_ACTION(act, it);
+	if (!act->remember_context)
+	  rem_ctxt = 0;
+     }
+   
    EINA_LIST_FOREACH(he->items, l, hi)
      {
 	if (hi->plugin != it->plugin->name)
@@ -371,6 +390,13 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, c
 	       it->usage = hi->last_used;
 	  }
 
+	/* XXX remopve just for update */
+	if (!rem_ctxt && hi->context)
+	  {
+	     eina_stringshare_del(hi->context);
+	     hi->context = NULL;
+	  }
+	
 	if (ctxt != hi->context)
 	  it->usage /= 2.0;
 

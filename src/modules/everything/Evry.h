@@ -200,6 +200,10 @@ struct _Evry_Action
     Eina_List *items;
   } it2;
 
+  /* this action is specific for a context. e.g. copy for file-type
+     is not, image viewer is. default is TRUE */
+  Eina_Bool remember_context;
+  
   int  (*action)     (Evry_Action *act);
   int  (*check_item) (Evry_Action *act, const Evry_Item *it);
   void (*free)       (Evry_Action *act);
@@ -396,6 +400,9 @@ struct _Plugin_Config
 
   int view_mode;
 
+  int min_query;
+  int aggregate;
+  
   Evry_Plugin *plugin;
 };
 

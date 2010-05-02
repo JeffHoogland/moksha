@@ -89,6 +89,83 @@ static Eina_Bool clear_cache = EINA_FALSE;
 static void _cleanup(Evry_Plugin *plugin);
 static Eina_Bool _hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata);
 
+/* static E_Config_DD *cache_item_edd = NULL;
+ * static E_Config_DD *cache_edd = NULL;
+ * 
+ * static void
+ * _cache_init(void)
+ * {
+ * #undef T
+ * #undef D
+ *    cache_item_edd = E_CONFIG_DD_NEW("Cache_Item", Cache_Item);
+ * #define T History_Item
+ * #define D hist_item_edd
+ *    E_CONFIG_VAL(D, T, last_used, DOUBLE);
+ *    E_CONFIG_VAL(D, T, mime,      STR);
+ * #undef T
+ * #undef D
+ *    cache_edd = E_CONFIG_DD_NEW("File_Cache", File_Cache);
+ * #define T Evry_History
+ * #define D hist_edd
+ *    E_CONFIG_VAL(D, T,  version,  INT);
+ *    E_CONFIG_HASH(D, T, files, hist_item_edd);
+ * #undef T
+ * #undef D
+ * }
+ * 
+ * static Eina_Bool
+ * _cache_free_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata)
+ * {
+ *    Cache_Item *ci = data;
+ * 
+ *    eina_stringshare_del(ci->mime);
+ *    E_FREE(ci);
+ * 
+ *    return 1;
+ * }
+ * 
+ * static void
+ * _cache_free(void)
+ * {
+ *    Cleanup_Data *d;
+ *    char *key;
+ * 
+ *    _cache = e_config_domain_load("module.everything.filecache", cache_edd);
+ * 
+ *    if (_cache)
+ *      {
+ * 	Eina_List *keys = NULL
+ * 	if (_cache->files)
+ * 	  {
+ * 	     eina_hash_foreach(_cache->items, _cache_cleanup_cb, &keys);
+ * 	     EINA_LIST_FREE(keys, key)
+ * 	       eina_hash_del_by_key(evry_hist->subjects, key);
+ * 	  }
+ * 
+ * 	_cache_unload();
+ *      }
+ * 
+ *    E_CONFIG_DD_FREE(cache_item_edd);
+ *    E_CONFIG_DD_FREE(cache_edd);
+ * }
+ * 
+ * static void
+ * _cache_load(void)
+ * {
+ *    if (_cache) return;
+ *    
+ *    _cache = e_config_domain_load("module.everything.filecache", cache_edd);
+ * 
+ *    if (!_cache)
+ *      {
+ * 	_cache = E_NEW(File_Cache, 1);
+ * 	evry_hist->version = 1;
+ *      }
+ *    if (!_cache->files)
+ *      _cache->files = eina_hash_string_superfast_new(NULL);
+ * } */
+
+
 
 static void
 _item_fill(Evry_Item_File *file)
@@ -1192,6 +1269,7 @@ _plugins_init(void)
 			 EVRY_TYPE_FILE, 0,
 			 "system-run",
 			  _open_term_action, NULL);
+   act->remember_context = EINA_FALSE;
    evry_action_register(act, 2);
    _actions = eina_list_append(_actions, act);
 
@@ -1199,6 +1277,7 @@ _plugins_init(void)
 			 EVRY_TYPE_FILE, 0,
 			 "edit-delete",
 			  _file_trash_action, NULL);
+   act->remember_context = EINA_FALSE;
    EVRY_ITEM_DATA_INT_SET(act, ACT_TRASH);
    evry_action_register(act, 2);
    _actions = eina_list_append(_actions, act);
@@ -1217,6 +1296,7 @@ _plugins_init(void)
 			 "go-next",
 			 _file_copy_action, NULL);
    act->it2.subtype = EVRY_TYPE_DIR;
+   act->remember_context = EINA_FALSE;
    EVRY_ITEM_DATA_INT_SET(act, ACT_COPY);
    evry_action_register(act, 2);
    _actions = eina_list_append(_actions, act);
@@ -1226,6 +1306,7 @@ _plugins_init(void)
 			 "go-next",
 			 _file_copy_action, NULL);
    act->it2.subtype = EVRY_TYPE_DIR;
+   act->remember_context = EINA_FALSE;
    EVRY_ITEM_DATA_INT_SET(act, ACT_MOVE);
    evry_action_register(act, 2);
    _actions = eina_list_append(_actions, act);
