@@ -309,8 +309,6 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	p->base.items = eina_list_remove_list(p->base.items, l);
      }
 
-   evry_hist->changed = EINA_FALSE;
-   
    return 1;
 }
 

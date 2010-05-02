@@ -236,8 +236,6 @@ evry_action_new(const char *name, const char *label,
    act->it1.type = type_in1;
    act->it2.type = type_in2;
 
-   act->remember_context = EINA_TRUE;
-   
    act->action = action;
    act->check_item = check_item;
 

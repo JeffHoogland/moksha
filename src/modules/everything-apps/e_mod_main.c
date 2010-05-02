@@ -326,6 +326,7 @@ _item_add(Plugin *p, Efreet_Desktop *desktop, const char *file, int match)
 	app = EVRY_ITEM_NEW(Evry_Item_App, p, desktop->name, _icon_get, _item_free);
 
 	EVRY_ACTN(app)->action = &_exec_open_file_action;
+	EVRY_ACTN(app)->remember_context = EINA_TRUE;
 	EVRY_ITEM(app)->id = eina_stringshare_add(desktop->exec);
 	EVRY_ITEM(app)->subtype = EVRY_TYPE_ACTION;
 	
@@ -337,8 +338,9 @@ _item_add(Plugin *p, Efreet_Desktop *desktop, const char *file, int match)
    else
      {
 	app = EVRY_ITEM_NEW(Evry_Item_App, p, file, _icon_get, _item_free);
-	EVRY_ITEM(app)->id = eina_stringshare_add(file);
 	EVRY_ACTN(app)->action = &_exec_open_file_action;
+	EVRY_ACTN(app)->remember_context = EINA_TRUE;
+	EVRY_ITEM(app)->id = eina_stringshare_add(file);
 	EVRY_ITEM(app)->subtype = EVRY_TYPE_ACTION;
      }
    
