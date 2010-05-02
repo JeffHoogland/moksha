@@ -35,7 +35,7 @@ struct _Smart_Data
   Eina_List   *items;
   Item        *cur_item;
   Ecore_Idle_Enterer *idle_enter;
-  Ecore_Idle_Enterer *thumb_idler;
+  Ecore_Timer *thumb_idler;
   Evas_Coord   x, y, w, h;
   Evas_Coord   cx, cy, cw, ch;
   Evas_Coord   sx, sy;
@@ -155,7 +155,6 @@ _thumb_idler(void *data)
 	  }
 
 	sd->queue = eina_list_remove_list(sd->queue, l);
-	e_util_wakeup();
 	return 1;
      }
 
@@ -402,7 +401,7 @@ _e_smart_reconfigure_do(void *data)
      evas_object_smart_callback_call(obj, "changed", NULL);
 
    if (!sd->thumb_idler)
-     sd->thumb_idler = ecore_idle_enterer_before_add(_thumb_idler, sd);
+     sd->thumb_idler = ecore_timer_add(0.01, _thumb_idler, sd);
 
    sd->update = EINA_TRUE;
 
@@ -440,7 +439,7 @@ _e_smart_del(Evas_Object *obj)
    if (sd->idle_enter)
      ecore_idle_enterer_del(sd->idle_enter);
    if (sd->thumb_idler)
-     ecore_idle_enterer_del(sd->thumb_idler);
+     ecore_timer_del(sd->thumb_idler);
    if (sd->animator)
      ecore_animator_del(sd->animator);
 
@@ -877,7 +876,7 @@ _clear_items(Evas_Object *obj)
    sd->queue = NULL;
 
    if (sd->thumb_idler)
-     ecore_idle_enterer_del(sd->thumb_idler);
+     ecore_timer_del(sd->thumb_idler);
    sd->thumb_idler = NULL;
 }
 
@@ -1390,7 +1389,7 @@ _cb_item_changed(void *data, int type, void *event)
 	    sd->queue = eina_list_append(sd->queue, it);
 
 	  if (!sd->thumb_idler)
-	    sd->thumb_idler = ecore_idle_enterer_before_add(_thumb_idler, sd);
+	    sd->thumb_idler = ecore_timer_add(0.01,_thumb_idler, sd);
        }
 
    return 1;

@@ -92,84 +92,6 @@ static Eina_Bool clear_cache = EINA_FALSE;
 static void _cleanup(Evry_Plugin *plugin);
 static Eina_Bool _hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata);
 
-/* static E_Config_DD *cache_item_edd = NULL;
- * static E_Config_DD *cache_edd = NULL;
- * 
- * static void
- * _cache_init(void)
- * {
- * #undef T
- * #undef D
- *    cache_item_edd = E_CONFIG_DD_NEW("Cache_Item", Cache_Item);
- * #define T History_Item
- * #define D hist_item_edd
- *    E_CONFIG_VAL(D, T, last_used, DOUBLE);
- *    E_CONFIG_VAL(D, T, mime,      STR);
- * #undef T
- * #undef D
- *    cache_edd = E_CONFIG_DD_NEW("File_Cache", File_Cache);
- * #define T Evry_History
- * #define D hist_edd
- *    E_CONFIG_VAL(D, T,  version,  INT);
- *    E_CONFIG_HASH(D, T, files, hist_item_edd);
- * #undef T
- * #undef D
- * }
- * 
- * static Eina_Bool
- * _cache_free_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata)
- * {
- *    Cache_Item *ci = data;
- * 
- *    eina_stringshare_del(ci->mime);
- *    E_FREE(ci);
- * 
- *    return 1;
- * }
- * 
- * static void
- * _cache_free(void)
- * {
- *    Cleanup_Data *d;
- *    char *key;
- * 
- *    _cache = e_config_domain_load("module.everything.filecache", cache_edd);
- * 
- *    if (_cache)
- *      {
- * 	Eina_List *keys = NULL
- * 	if (_cache->files)
- * 	  {
- * 	     eina_hash_foreach(_cache->items, _cache_cleanup_cb, &keys);
- * 	     EINA_LIST_FREE(keys, key)
- * 	       eina_hash_del_by_key(evry_hist->subjects, key);
- * 	  }
- * 
- * 	_cache_unload();
- *      }
- * 
- *    E_CONFIG_DD_FREE(cache_item_edd);
- *    E_CONFIG_DD_FREE(cache_edd);
- * }
- * 
- * static void
- * _cache_load(void)
- * {
- *    if (_cache) return;
- *    
- *    _cache = e_config_domain_load("module.everything.filecache", cache_edd);
- * 
- *    if (!_cache)
- *      {
- * 	_cache = E_NEW(File_Cache, 1);
- * 	evry_hist->version = 1;
- *      }
- *    if (!_cache->files)
- *      _cache->files = eina_hash_string_superfast_new(NULL);
- * } */
-
-
-
 static void
 _item_fill(Evry_Item_File *file)
 {
@@ -332,29 +254,32 @@ _append_files(Plugin *p)
 {
    int match;
    int cnt = 0;
-   Evry_Item_File *file;
+   Evry_Item *it;
    Eina_List *l;
 
    EVRY_PLUGIN_ITEMS_CLEAR(p);
 
-   EINA_LIST_FOREACH(p->files, l, file)
+   EINA_LIST_FOREACH(p->files, l, it)
      {
 	if (cnt >= MAX_SHOWN) break;
 
-	if (p->dirs_only && !EVRY_ITEM(file)->browseable)
+	if (p->dirs_only && !it->browseable)
 	  continue;
 	
-	if (p->input && (match = evry_fuzzy_match(EVRY_ITEM(file)->label, p->input)))
+	if (p->input && (match = evry_fuzzy_match(it->label, p->input)))
 	  {
-	     EVRY_ITEM(file)->fuzzy_match = match;
-	     EVRY_ITEM(file)->priority = cnt++;
-	     EVRY_PLUGIN_ITEM_APPEND(p, file);
-
+	     it->fuzzy_match = match;
+	     if (!it->browseable)
+	       it->priority = 1;
+	     EVRY_PLUGIN_ITEM_APPEND(p, it);
+	     cnt++;
 	  }
 	else if (!p->input)
 	  {
-	     EVRY_ITEM(file)->priority = cnt++;
-	     EVRY_PLUGIN_ITEM_APPEND(p, file);
+	     if (!it->browseable)
+	       it->priority = 1;
+	     EVRY_PLUGIN_ITEM_APPEND(p, it);
+	     cnt++;
 	  }
      }
    return cnt;
@@ -416,9 +341,12 @@ _scan_end_func(void *data)
    Eina_List *l, *ll, *lll;
    History_Item *hi;
    History_Entry *he;
-   const char *type = evry_type_get(EVRY_TYPE_FILE);
+   History_Types *ht = NULL;
    int cnt = 0;
 
+   if (_conf->cache_dirs)
+     ht = evry_history_types_get(evry_hist->subjects, EVRY_TYPE_FILE);
+   
    if (!d->run_cnt)
      {
 	EINA_LIST_FOREACH_SAFE(d->files, l, ll, item)
@@ -451,13 +379,11 @@ _scan_end_func(void *data)
 	       file->mime = eina_stringshare_ref(_mime_dir);
 
 	     /* check if we can grab the mimetype from history */
-	     if ((_conf->cache_dirs && !file->mime) &&
-		 (he = eina_hash_find(evry_hist->subjects, file->path)))
+	     if ((!file->mime && _conf->cache_dirs && ht) &&
+		 (he = eina_hash_find(ht->types, file->path)))
 	       {
 		  EINA_LIST_FOREACH(he->items, lll, hi)
 		    {
-		       if (hi->type != type) continue;
-
 		       if (hi->data)
 			 {
 			    file->mime = eina_stringshare_ref(hi->data);
@@ -490,7 +416,9 @@ _scan_end_func(void *data)
 	  {
 	     d->run_cnt++;
 	     d->files = eina_list_sort(d->files, -1, _cb_sort);
-	     p->thread = ecore_thread_run(_scan_mime_func, _scan_end_func, _scan_cancel_func, d);
+	     p->thread = ecore_thread_run(_scan_mime_func,
+					  _scan_end_func,
+					  _scan_cancel_func, d);
 	     return;
 	  }
      }
@@ -513,28 +441,36 @@ _scan_end_func(void *data)
 	if (d->files)
 	  {
 	     d->run_cnt++;
-	     p->thread = ecore_thread_run(_scan_mime_func, _scan_end_func, _scan_cancel_func, d);
+	     p->thread = ecore_thread_run(_scan_mime_func,
+					  _scan_end_func,
+					  _scan_cancel_func, d);
 	  }
      }
 
    if (!d->files)
      {
+	p->files = eina_list_sort(p->files, -1, _cb_sort);
+
 	if (_conf->cache_dirs)
 	  {
-	     EINA_LIST_REVERSE_FOREACH(p->files, l, item)
+	     EINA_LIST_FOREACH(p->files, l, item)
 	       {
 		  GET_FILE(file, item);
 		  
-		  if (!item->usage && (hi = evry_history_add(evry_hist->subjects, item, NULL, NULL)))
+		  if (!item->usage && (hi = evry_history_add(evry_hist->subjects,
+							     item, NULL, NULL)))
 		    {
-		       hi->last_used -= (ONE_DAY * 6.0);
+		       hi->last_used = ecore_time_get() -
+			 ((ONE_DAY * 6.0) + (0.001 * (double) cnt++));
 		       hi->usage = TIME_FACTOR(hi->last_used);
 		       hi->data = eina_stringshare_ref(file->mime);
 		       item->hi = hi;
 		    }
 		  else if (item->hi && item->hi->count == 1)
 		    {
-		       item->hi->last_used = ecore_time_get() - (ONE_DAY * 6.0);
+		       item->hi->last_used = ecore_time_get() -
+			 ((ONE_DAY * 6.0) + (0.001 * (double) cnt++));
+		       item->hi->usage = TIME_FACTOR(hi->last_used);
 		    }
 	       }
 	  }
@@ -543,8 +479,6 @@ _scan_end_func(void *data)
 	E_FREE(d);
 	p->thread = NULL;
      }
-
-   p->files = eina_list_sort(p->files, -1, _cb_sort);
 
    _append_files(p);
 
@@ -690,7 +624,11 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
 
 	if (clear_cache)
 	  {
-	     eina_hash_foreach(evry_hist->subjects, _hist_items_add_cb, p);
+	     History_Types *ht = evry_history_types_get(evry_hist->subjects, EVRY_TYPE_FILE);
+	     if (ht)
+	       {
+		  eina_hash_foreach(ht->types, _hist_items_add_cb, p);
+	       }
 	     clear_cache = EINA_FALSE;
 	  }
      }
@@ -863,14 +801,10 @@ _hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fda
    Plugin *p = fdata;
    Eina_List *l, *ll;
    Evry_Item_File *file;
-   const char *type = evry_type_get(EVRY_TYPE_FILE);
    double last_used = 0.0;
 
    EINA_LIST_FOREACH(he->items, l, hi2)
      {
-	if (hi2->type != type)
-	  continue;
-
 	if (hi2->last_used > last_used)
 	  hi = hi2;
      }
@@ -880,9 +814,15 @@ _hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fda
 
    if (clear_cache)
      {
+	printf("clear item %s\n", (char *)key);
+
 	/* transient marks them for deletion */
 	if (hi->count && (hi->last_used < ecore_time_get() - (5 * ONE_DAY)))
-	  hi->count--;
+	  {
+	     hi->transient = 1;
+	     hi->count--;
+	  }
+	
 	return EINA_TRUE;
      }
 
@@ -896,7 +836,7 @@ _hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fda
      }
    
    
-   DBG("add %s %s %s", hi->type, type, (char *) key);
+   DBG("add %s", (char *) key);
 
    EINA_LIST_FOREACH(p->files, ll, file)
      if (!strcmp(file->path, key))
@@ -1075,8 +1015,13 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	      (input && strlen(input) > 2)) ||
 	     (_conf->show_recent)))
 	  {
-	     eina_hash_foreach(evry_hist->subjects, _hist_items_add_cb, p);
-	     p->thread2 = ecore_thread_run(_hist_func, _hist_end_func, _hist_cancel_func, p);
+	     History_Types *ht = evry_history_types_get(evry_hist->subjects, EVRY_TYPE_FILE);
+	     if (ht)
+	       {
+		  eina_hash_foreach(ht->types, _hist_items_add_cb, p);
+		  p->thread2 = ecore_thread_run(_hist_func, _hist_end_func,
+						_hist_cancel_func, p);
+	       }
 	  }
 	else if ((_conf->search_recent || _conf->search_cache) && 
 		 (p->hist_added && (!input || (strlen(input) < 3))))

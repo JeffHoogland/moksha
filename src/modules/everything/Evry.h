@@ -3,7 +3,7 @@
 
 #include "e.h"
 
-#define EVRY_API_VERSION 11
+#define EVRY_API_VERSION 12
 
 #define EVRY_ACTION_OTHER 0
 #define EVRY_ACTION_FINISHED 1
@@ -52,6 +52,7 @@ typedef struct _Evry_State		Evry_State;
 typedef struct _Evry_View		Evry_View;
 typedef struct _History			Evry_History;
 typedef struct _History_Entry		History_Entry;
+typedef struct _History_Types		History_Types;
 typedef struct _History_Item		History_Item;
 typedef struct _Config			Evry_Config;
 typedef struct _Plugin_Config		Plugin_Config;
@@ -412,6 +413,11 @@ struct _History_Entry
   Eina_List *items;
 };
 
+struct _History_Types
+{
+  Eina_Hash *types;
+};
+
 struct _History
 {
   int version;
@@ -425,7 +431,6 @@ struct _History
 struct _History_Item
 {
   const char *plugin;
-  const char *type;
   const char *context;
   const char *input;
   double last_used;
@@ -478,6 +483,7 @@ EAPI void evry_history_load(void);
 EAPI void evry_history_unload(void);
 EAPI History_Item *evry_history_add(Eina_Hash *hist, Evry_Item *it, const char *ctxt, const char *input);
 EAPI int  evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, const char *ctxt);
+EAPI History_Types *evry_history_types_get(Eina_Hash *hist, Evry_Type type);
 
 EAPI Evry_Plugin *evry_plugin_new(Evry_Plugin *base, const char *name, const char *label, const char *icon,
 				  Evry_Type item_type,

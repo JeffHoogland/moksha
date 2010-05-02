@@ -448,8 +448,6 @@ _hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fda
 
    EINA_LIST_FOREACH(he->items, l, hi)
      {
-	if (hi->plugin != p->base.name)
-	  continue;
 	app = NULL;
 
 	/* ignore executables for parameter */
@@ -704,7 +702,12 @@ _fetch(Evry_Plugin *plugin, const char *input)
    if (!input && !plugin->items)
      {
 	if (!p->apps_hist)
-	  eina_hash_foreach(evry_hist->subjects, _hist_items_add_cb, p);
+	  {
+	     History_Types *ht;
+	     ht = evry_history_types_get(evry_hist->subjects, EVRY_TYPE_APP);
+	     if (ht)
+	       eina_hash_foreach(ht->types, _hist_items_add_cb, p);
+	  }
 	else
 	  _add_desktop_list(p, p->apps_hist, NULL);
      }
