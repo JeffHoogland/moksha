@@ -29401,6 +29401,7 @@ collections {
    ICON("preferences-desktop-screensaver","icon_screensaver.png",64)          // "enlightenment/screensaver"
    ICON("preferences-desktop-display","icon_screen_setup.png",64)             // "enlightenment/screen_setup"
    ICON("preferences-desktop-keyboard","icon_keys.png",64)                    // "enlightenment/keys"
+   ICON("preferences-desktop-keyboard-shortcuts","icon_keys.png",64)           // "enlightenment/keys"
    ICON("preferences-desktop-pointer","icon_mouse.png",64)             // *** // "enlightenment/mouse"
    ICON("preferences-desktop-mouse","icon_mouse_clean.png",64)                // "enlightenment/mouse_clean"
    ICON("preferences-desktop-mouse-left","icon_mouse_left.png",64)     // *** // "enlightenment/mouse_left"

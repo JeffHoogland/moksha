@@ -91,7 +91,7 @@ e_int_config_keybindings(E_Container *con, const char *params)
 
    cfd = e_config_dialog_new(con, _("Key Binding Settings"), "E", 
 			     "keyboard_and_mouse/key_bindings",
-			     "preferences-desktop-keyboard", 0, v, NULL);
+			     "preferences-desktop-keyboard-shortcuts", 0, v, NULL);
    if ((params) && (params[0]))
      {
 	cfd->cfdata->params = strdup(params);
@@ -825,7 +825,7 @@ _update_key_binding_list(E_Config_Dialog_Data *cfdata)
 	if (!b) continue;
 
 	ic = e_icon_add(cfdata->evas);
-	e_util_icon_theme_set(ic, "preferences-desktop-keyboard");
+	e_util_icon_theme_set(ic, "preferences-desktop-keyboard-shortcuts");
 
 	snprintf(b2, sizeof(b2), "k%d", i);
 	e_widget_ilist_append(cfdata->gui.o_binding_list, ic, b,
