@@ -2958,20 +2958,20 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 	     mountpoint = udi + strlen(udi) + 1;
 	     v = e_fm2_dbus_volume_find(udi);
 	     if (v) 
-	        {
-	           e_fm2_dbus_mount_add(v, mountpoint);
-	           _e_fm2_volume_icon_update(v);
-	           if (e_config->dbus_auto_open && !eina_list_count(v->mounts))
-	             {
-	                E_Action *a;
-	                Eina_List *m;
-
-	                a = e_action_find("fileman");
-	                m = e_manager_list();
-	                if (a && a->func.go && m && eina_list_data_get(m))
-	                   a->func.go(E_OBJECT(eina_list_data_get(m)), mountpoint);
-	             }
-	        }
+               {
+                  e_fm2_dbus_mount_add(v, mountpoint);
+                  _e_fm2_volume_icon_update(v);
+                  if (e_config->dbus_auto_open && !eina_list_count(v->mounts))
+                    {
+                       E_Action *a;
+                       Eina_List *m;
+                       
+                       a = e_action_find("fileman");
+                       m = e_manager_list();
+                       if (a && a->func.go && m && eina_list_data_get(m))
+                         a->func.go(E_OBJECT(eina_list_data_get(m)), mountpoint);
+                    }
+               }
 	  }
 	break;
 
@@ -2984,10 +2984,10 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 	     udi = e->data;
 	     v = e_fm2_dbus_volume_find(udi);
 	     if (v) 
-	        {
-	           e_fm2_dbus_mount_del(v);
-	           _e_fm2_volume_icon_update(v);
-	        }
+               {
+                  e_fm2_dbus_mount_del(v);
+                  _e_fm2_volume_icon_update(v);
+               }
 	  }
 	break;
 

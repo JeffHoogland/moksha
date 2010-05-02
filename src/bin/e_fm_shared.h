@@ -104,6 +104,7 @@ _e_storage_free(E_Storage *s)
    E_Volume *v;
    EINA_LIST_FREE(s->volumes, v)
      {
+        v->storage = NULL;
 	_e_volume_free(v);
      }
    if (s->udi) eina_stringshare_del(s->udi);
@@ -126,8 +127,8 @@ _e_volume_edd_new(void)
    if (!eet_eina_stream_data_descriptor_class_set(&eddc, "e_volume", sizeof (E_Volume)))
      return NULL;
 
-   eddc.func.str_alloc = (char *(*)(const char *)) strdup;
-   eddc.func.str_free = (void (*)(const char *)) free;
+//   eddc.func.str_alloc = (char *(*)(const char *)) strdup;
+//   eddc.func.str_free = (void (*)(const char *)) free;
 
    edd = eet_data_descriptor_stream_new(&eddc);
 #define DAT(x, y, z) EET_DATA_DESCRIPTOR_ADD_BASIC(edd, E_Volume, x, y, z)
@@ -157,8 +158,8 @@ _e_storage_edd_new(void)
    if (!eet_eina_stream_data_descriptor_class_set(&eddc, "e_storage", sizeof (E_Storage)))
      return NULL;
 
-   eddc.func.str_alloc = (char *(*)(const char *)) strdup;
-   eddc.func.str_free = (void (*)(const char *)) free;
+//   eddc.func.str_alloc = (char *(*)(const char *)) strdup;
+//   eddc.func.str_free = (void (*)(const char *)) free;
 
    edd = eet_data_descriptor_stream_new(&eddc);
 #define DAT(x, y, z) EET_DATA_DESCRIPTOR_ADD_BASIC(edd, E_Storage, x, y, z)

@@ -269,18 +269,19 @@ e_fm2_dbus_volume_add(E_Volume *v)
 EAPI void
 e_fm2_dbus_volume_del(E_Volume *v)
 {
-   Eina_List *l, *l_nxt;
    E_Fm2_Mount *m;
-   
+
 //   printf("VOL- %s\n", v->udi);
-   if (v->storage) 
-     v->storage->volumes = eina_list_remove(v->storage->volumes, v);
    _e_vols = eina_list_remove(_e_vols, v);
    _e_fm2_volume_erase(v);
-   EINA_LIST_FOREACH_SAFE(v->mounts, l, l_nxt, m)
+   if (v->storage) 
+     {
+        v->storage->volumes = eina_list_remove(v->storage->volumes, v);
+        v->storage = NULL;
+     }
+   EINA_LIST_FREE(v->mounts, m)
      {
         _e_fm2_dbus_unmount_ok(m);
-        v->mounts = eina_list_remove_list(v->mounts, l);
         _e_fm2_dbus_mount_free(m);
      }
    _e_volume_free(v);
@@ -302,8 +303,6 @@ _e_fm2_volume_write(E_Volume *v)
    f = fopen(buf, "w");
    if (f)
      {
-
-	
 	fprintf(f,
 		"[Desktop Entry]\n"
 		"Encoding=UTF-8\n"
@@ -373,7 +372,7 @@ e_fm2_dbus_volume_find(const char *udi)
 
    EINA_LIST_FOREACH(_e_vols, l, v)
      {
-	if (!strcmp(udi, v->udi)) return v;
+	if ((v->udi) && (!strcmp(udi, v->udi))) return v;
      }
    return NULL;
 }
@@ -428,7 +427,6 @@ e_fm2_dbus_mount_add(E_Volume *v, const char *mountpoint)
 EAPI void
 e_fm2_dbus_mount_del(E_Volume *v)
 {
-   Eina_List *l, *l_nxt;
    E_Fm2_Mount *m;
    
    v->mounted = 0;
@@ -437,11 +435,10 @@ e_fm2_dbus_mount_del(E_Volume *v)
         eina_stringshare_del(v->mount_point);
         v->mount_point = NULL;
      }
-
-   EINA_LIST_FOREACH_SAFE(v->mounts, l, l_nxt, m)
+   
+   EINA_LIST_FREE(v->mounts, m)
      {
         _e_fm2_dbus_unmount_ok(m);
-        v->mounts = eina_list_remove_list(v->mounts, l);
         _e_fm2_dbus_mount_free(m);
      }
 }
@@ -515,7 +512,6 @@ e_fm2_dbus_mount(E_Volume *v,
 EAPI void
 e_fm2_dbus_mount_fail(E_Volume *v)
 {
-   Eina_List *l, *l_nxt;
    E_Fm2_Mount *m;
 
    v->mounted = 0;
@@ -525,10 +521,9 @@ e_fm2_dbus_mount_fail(E_Volume *v)
         v->mount_point = NULL;
      }
 
-   EINA_LIST_FOREACH_SAFE(v->mounts, l, l_nxt, m)
+   EINA_LIST_FREE(v->mounts, m)
      {
-        _e_fm2_dbus_mount_fail(m);
-        v->mounts = eina_list_remove_list(v->mounts, l);
+        _e_fm2_dbus_unmount_ok(m);
         _e_fm2_dbus_mount_free(m);
      }
 }
@@ -561,6 +556,7 @@ e_fm2_dbus_unmount_fail(E_Volume *v)
 static void
 _e_fm2_dbus_mount_ok(E_Fm2_Mount *m)
 {
+   if (m->mounted) return;
    m->mounted = 1;
    if (m->volume) 
       m->mount_point = eina_stringshare_add(m->volume->mount_point);
@@ -572,6 +568,7 @@ _e_fm2_dbus_mount_ok(E_Fm2_Mount *m)
 static void
 _e_fm2_dbus_mount_fail(E_Fm2_Mount *m)
 {
+   if (!m->mounted) return;
    m->mounted = 0;
    if (m->mount_point)
      {
@@ -585,6 +582,7 @@ _e_fm2_dbus_mount_fail(E_Fm2_Mount *m)
 static void
 _e_fm2_dbus_unmount_ok(E_Fm2_Mount *m)
 {
+   if (!m->mounted) return;
    m->mounted = 0;
    if (m->mount_point)
      {
@@ -598,6 +596,7 @@ _e_fm2_dbus_unmount_ok(E_Fm2_Mount *m)
 static void
 _e_fm2_dbus_unmount_fail(E_Fm2_Mount *m)
 {
+   if (m->mounted) return;
    m->mounted = 1;
    if (m->unmount_fail) 
      m->unmount_fail(m->data);
