@@ -187,6 +187,8 @@ struct _Evry_Action
     const Evry_Item *item;
     Evry_Type type;
     Evry_Type subtype;
+    Eina_Bool accept_list;
+    Eina_List *items;
   } it1;
 
   struct 
@@ -194,6 +196,8 @@ struct _Evry_Action
     const Evry_Item *item;
     Evry_Type type;
     Evry_Type subtype;
+    Eina_Bool accept_list;
+    Eina_List *items;
   } it2;
 
   int  (*action)     (Evry_Action *act);

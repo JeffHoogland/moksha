@@ -1849,17 +1849,7 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 	     act->it2.item = it_obj;
 	  }
 
-	if (s_subj->sel_items)
-	  {
-	     EINA_LIST_FOREACH(s_subj->sel_items, l, it)
-	       {
-		  if (it->type != act->it1.type)
-		    continue;
-		  act->it1.item = it;
-		  act->action(act);
-	       }
-	  }
-	else if (s_obj && s_obj->sel_items)
+	if (s_obj && s_obj->sel_items  && !(act->it2.accept_list))
 	  {
 	     EINA_LIST_FOREACH(s_obj->sel_items, l, it)
 	       {
@@ -1869,9 +1859,24 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 		  act->action(act);
 	       }
 	  }
-	else
+	else if (s_subj->sel_items && !(act->it1.accept_list))
+	  {
+	     EINA_LIST_FOREACH(s_subj->sel_items, l, it)
+	       {
+		  if (it->type != act->it1.type)
+		    continue;
+		  act->it1.item = it;
+		  act->action(act);
+	       }
+	  }
+	else 
 	  {
 	     act->it1.item = it_subj;
+	     act->it1.items = s_subj->sel_items;
+
+	     if (s_obj)
+	       act->it2.items = s_obj->sel_items;
+
 	     if (!act->action(act))
 	       return;
 	  }
