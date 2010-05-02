@@ -87,6 +87,7 @@ static const char *_mime_dir;
 static Eina_Bool clear_cache = EINA_FALSE;
 
 static void _cleanup(Evry_Plugin *plugin);
+static Eina_Bool _hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata);
 
 
 static void
@@ -225,8 +226,6 @@ _scan_mime_func(void *data)
    const char *mime;
    int cnt = 0;
 
-   d->run_cnt++;
-
    EINA_LIST_FOREACH(d->files, l, file)
      {
 	if (!EVRY_ITEM(file)->browseable)
@@ -286,19 +285,27 @@ _scan_cancel_func(void *data)
    Evry_Item_File *file;
    Evry_Item *item;
 
-   if (d->run_cnt == 1)
+   if (!d->run_cnt)
      {
 	EINA_LIST_FREE(d->files, file)
 	  {
-	     if (file->base.label) free((char *)file->base.label);
+	     if (file->base.label) free((char *)(file->base.label));
 	     if (file->path) free((char *)file->path);
 	     free(file);
 	  }
      }
    else
      {
-	EINA_LIST_FREE(d->files, item)
-	  evry_item_free(item);
+	EINA_LIST_FREE(d->files, file)
+	  {
+	     if (file->path)
+	       eina_stringshare_del(file->path);
+	     if (EVRY_ITEM(file)->label)
+	       eina_stringshare_del(EVRY_ITEM(file)->label);
+	     if (EVRY_ITEM(file)->detail)
+	       eina_stringshare_del(EVRY_ITEM(file)->detail);
+	     free(file);
+	  }
      }
 
    free(d->directory);
@@ -374,8 +381,11 @@ _scan_end_func(void *data)
 			    DBG("cached: %s %s", file->mime, file->path);
 			    hi->transient = 0;
 
+			    /* remember that item was found */
 			    if (hi->count == 1)
-			      item->usage = -1;
+			      {
+				 item->usage = -1;
+			      }
 			    break;
 			 }
 		    }
@@ -399,6 +409,7 @@ _scan_end_func(void *data)
 
 	if (d->files)
 	  {
+	     d->run_cnt++;
 	     d->files = eina_list_sort(d->files, -1, _cb_sort);
 	     p->thread = ecore_thread_run(_scan_mime_func, _scan_end_func, _scan_cancel_func, d);
 	     return;
@@ -417,30 +428,37 @@ _scan_end_func(void *data)
 	     file->mime = eina_stringshare_add(mime);
 	     item->context = eina_stringshare_ref(file->mime);
 
-	     if (_conf->cache_dirs)
-	       {
-		  /* remember files for one day */
-		  hi = evry_history_add(evry_hist->subjects, item, NULL, NULL);
-		  if (hi)
-		    {
-		       hi->last_used -= (ONE_DAY * 6.0);
-		       hi->usage = TIME_FACTOR(hi->last_used);
-		       hi->data = eina_stringshare_ref(file->mime);
-		       item->usage = -1;
-		    }
-	       }
-
 	     p->files = eina_list_append(p->files, file);
 	  }
 
 	if (d->files)
 	  {
+	     d->run_cnt++;
 	     p->thread = ecore_thread_run(_scan_mime_func, _scan_end_func, _scan_cancel_func, d);
 	  }
      }
 
    if (!d->files)
      {
+	if (_conf->cache_dirs)
+	  {
+	     EINA_LIST_REVERSE_FOREACH(p->files, l, item)
+	       {
+		  GET_FILE(file, item);
+		  
+		  if (!item->usage && (hi = evry_history_add(evry_hist->subjects, item, NULL, NULL)))
+		    {
+		       hi->last_used -= (ONE_DAY * 6.0);
+		       hi->usage = TIME_FACTOR(hi->last_used);
+		       hi->data = eina_stringshare_ref(file->mime);
+		    }
+		  else
+		    {
+		       item->usage = 0;
+		    }
+	       }
+	  }
+	
 	free(d->directory);
 	E_FREE(d);
 	p->thread = NULL;
@@ -589,6 +607,12 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
 	/* p->show_recent = (_conf->show_recent || _conf->search_recent); */
 	p->show_recent = EINA_TRUE;
 	p->parent = EINA_FALSE;
+
+	if (clear_cache)
+	  {
+	     eina_hash_foreach(evry_hist->subjects, _hist_items_add_cb, p);
+	     clear_cache = EINA_FALSE;
+	  }
      }
    else
      {
@@ -779,6 +803,7 @@ _hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fda
 	/* transient marks them for deletion */
 	if (hi->count && (hi->last_used < ecore_time_get() - (5 * ONE_DAY)))
 	  hi->count--;
+	return EINA_TRUE;
      }
 
    if (!hi->count)
@@ -963,22 +988,16 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	return 0;
      }
 
-   if (clear_cache)
+   if (p->show_recent && input)
      {
-	eina_hash_foreach(evry_hist->subjects, _hist_items_add_cb, p);
-	clear_cache = EINA_FALSE;
-     }
-   else if (p->show_recent)
-     {
-	/* add recent files if not object plugin (p2) */
 	if ((!p->parent && !p->command && !p->hist_added) &&
-	    (((_conf->search_recent  || _conf->search_cache) && input && strlen(input) > 1) ||
+	    (((_conf->search_recent  || _conf->search_cache) && strlen(input) > 2) ||
 	     (_conf->show_recent)))
 	  {
 	     eina_hash_foreach(evry_hist->subjects, _hist_items_add_cb, p);
 	     p->thread2 = ecore_thread_run(_hist_func, _hist_end_func, _hist_cancel_func, p);
 	  }
-	else if (p->hist_added && !input && (_conf->search_recent || _conf->search_cache))
+	else if (p->hist_added && (strlen(input) < 3) && (_conf->search_recent || _conf->search_cache))
 	  {
 	     EINA_LIST_FREE(p->hist_added, file)
 	       {
