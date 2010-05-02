@@ -68,6 +68,7 @@ struct _Module_Config
   unsigned char show_recent;
   unsigned char search_recent;
   unsigned char cache_dirs;
+  unsigned char search_cache;
 
   // TODO
   int sort_by;
@@ -783,6 +784,13 @@ _hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fda
    if (!hi->count)
      return EINA_TRUE;
 
+   if (!_conf->search_cache)
+     {
+	if ((hi->count == 1) && (hi->last_used < ecore_time_get() - (5 * ONE_DAY)))
+	  return EINA_TRUE;
+     }
+   
+   
    DBG("add %s %s %s", hi->type, type, (char *) key);
 
    EINA_LIST_FOREACH(p->files, ll, file)
@@ -964,13 +972,13 @@ _fetch(Evry_Plugin *plugin, const char *input)
      {
 	/* add recent files if not object plugin (p2) */
 	if ((!p->parent && !p->command && !p->hist_added) &&
-	    ((_conf->search_recent && input && strlen(input) > 1) ||
+	    (((_conf->search_recent  || _conf->search_cache) && input && strlen(input) > 1) ||
 	     (_conf->show_recent)))
 	  {
 	     eina_hash_foreach(evry_hist->subjects, _hist_items_add_cb, p);
 	     p->thread2 = ecore_thread_run(_hist_func, _hist_end_func, _hist_cancel_func, p);
 	  }
-	else if (p->hist_added && !input && _conf->search_recent)
+	else if (p->hist_added && !input && (_conf->search_recent || _conf->search_cache))
 	  {
 	     EINA_LIST_FREE(p->hist_added, file)
 	       {
@@ -1228,6 +1236,7 @@ struct _E_Config_Dialog_Data
   int show_homedir;
   int show_recent;
   int search_recent;
+  int search_cache;
   int cache_dirs;
 };
 
@@ -1288,6 +1297,10 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 			   &(cfdata->search_recent));
    e_widget_framelist_object_append(of, ow);
 
+   ow = e_widget_check_add(evas, _("Search cached files"),
+			   &(cfdata->search_cache));
+   e_widget_framelist_object_append(of, ow);
+
    ow = e_widget_check_add(evas, _("Cache visited directories"),
 			   &(cfdata->cache_dirs));
    e_widget_framelist_object_append(of, ow);
@@ -1326,6 +1339,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    C(show_homedir);
    C(show_recent);
    C(search_recent);
+   C(search_cache);
    C(cache_dirs);
 #undef C
 }
@@ -1337,6 +1351,7 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    C(show_homedir);
    C(show_recent);
    C(search_recent);
+   C(search_cache);
    C(cache_dirs);
 #undef C
 
@@ -1360,6 +1375,7 @@ _conf_new(void)
    _conf->show_homedir = 1;
    _conf->search_recent = 1;
    _conf->cache_dirs = 0;
+   _conf->search_cache = 0;
    IFMODCFGEND;
 
    _conf->version = MOD_CONFIG_FILE_VERSION;
@@ -1393,6 +1409,7 @@ _conf_init(E_Module *m)
    E_CONFIG_VAL(D, T, show_homedir, UCHAR);
    E_CONFIG_VAL(D, T, show_recent, UCHAR);
    E_CONFIG_VAL(D, T, search_recent, UCHAR);
+   E_CONFIG_VAL(D, T, search_cache, UCHAR);
    E_CONFIG_VAL(D, T, cache_dirs, UCHAR);
 #undef T
 #undef D
