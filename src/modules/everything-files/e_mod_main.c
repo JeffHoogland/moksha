@@ -20,7 +20,8 @@
 #define ACT_COPY	3
 #define ACT_MOVE	4
 
-#define ONE_DAY 86400.0
+#define ONE_DAY  86400.0
+#define SIX_DAYS_AGO (ecore_time_get() - 518400.0)
 #define TIME_FACTOR(_now) (1.0 - (evry_hist->begin / _now)) / 1000000000000000.0
 
 /* #undef DBG
@@ -376,8 +377,10 @@ _scan_end_func(void *data)
 	     if (!file) continue;
 
 	     if (item->browseable)
-	       file->mime = eina_stringshare_ref(_mime_dir);
-
+	       {
+		  file->mime = eina_stringshare_ref(_mime_dir);
+	       }
+	     
 	     /* check if we can grab the mimetype from history */
 	     if ((!file->mime && _conf->cache_dirs && ht) &&
 		 (he = eina_hash_find(ht->types, file->path)))
@@ -389,8 +392,8 @@ _scan_end_func(void *data)
 			    file->mime = eina_stringshare_ref(hi->data);
 			    DBG("cached: %s %s", file->mime, file->path);
 			    hi->transient = 0;
+			    item->usage = -1;
 			    item->hi = hi;
-
 			    break;
 			 }
 		    }
@@ -449,27 +452,24 @@ _scan_end_func(void *data)
 
    if (!d->files)
      {
-	p->files = eina_list_sort(p->files, -1, _cb_sort);
-
 	if (_conf->cache_dirs)
 	  {
-	     EINA_LIST_FOREACH(p->files, l, item)
+	     EINA_LIST_REVERSE_FOREACH(p->files, l, item)
 	       {
 		  GET_FILE(file, item);
 		  
 		  if (!item->usage && (hi = evry_history_add(evry_hist->subjects,
 							     item, NULL, NULL)))
 		    {
-		       hi->last_used = ecore_time_get() -
-			 ((ONE_DAY * 6.0) + (0.001 * (double) cnt++));
+		       hi->last_used = SIX_DAYS_AGO + (0.001 * (double) cnt++);
 		       hi->usage = TIME_FACTOR(hi->last_used);
 		       hi->data = eina_stringshare_ref(file->mime);
 		       item->hi = hi;
 		    }
-		  else if (item->hi && item->hi->count == 1)
+		  else if (item->hi && (item->hi->count == 1) &&
+			   (item->hi->last_used < SIX_DAYS_AGO))
 		    {
-		       item->hi->last_used = ecore_time_get() -
-			 ((ONE_DAY * 6.0) + (0.001 * (double) cnt++));
+		       item->hi->last_used = SIX_DAYS_AGO + (0.001 * (double) cnt++);
 		       item->hi->usage = TIME_FACTOR(hi->last_used);
 		    }
 	       }
@@ -479,7 +479,9 @@ _scan_end_func(void *data)
 	E_FREE(d);
 	p->thread = NULL;
      }
-
+   
+   p->files = eina_list_sort(p->files, -1, _cb_sort);
+   
    _append_files(p);
 
    evry_plugin_async_update(EVRY_PLUGIN(p), EVRY_ASYNC_UPDATE_ADD);
@@ -817,7 +819,7 @@ _hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fda
 	printf("clear item %s\n", (char *)key);
 
 	/* transient marks them for deletion */
-	if (hi->count && (hi->last_used < ecore_time_get() - (5 * ONE_DAY)))
+	if (hi->count && (hi->last_used < SIX_DAYS_AGO))
 	  {
 	     hi->transient = 1;
 	     hi->count--;
@@ -831,7 +833,7 @@ _hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fda
 
    if (!_conf->search_cache)
      {
-	if ((hi->count == 1) && (hi->last_used < ecore_time_get() - (5 * ONE_DAY)))
+	if ((hi->count == 1) && (hi->last_used < SIX_DAYS_AGO))
 	  return EINA_TRUE;
      }
    

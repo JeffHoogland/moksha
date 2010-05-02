@@ -1,6 +1,6 @@
 #include "e_mod_main.h"
 
-#define HISTORY_VERSION 10
+#define HISTORY_VERSION 2
 
 #define SEVEN_DAYS 604800.0
 
