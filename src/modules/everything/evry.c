@@ -1091,10 +1091,20 @@ _evry_selector_update(Evry_Selector *sel)
 	else
 	  edje_object_part_text_set(sel->o_main, "e.text.plugin", "");
      }
-
-   if (item_changed && sel == selectors[0])
+   
+   if (sel == selectors[0])
      {
-	_evry_selector_update_actions(sel);
+	if (item_changed)  
+	  {
+	     _evry_selector_update_actions(sel);
+	  }
+	else
+	  {
+	     sel = selectors[1];
+	     if (sel->update_timer)
+	       ecore_timer_del(sel->update_timer);
+	     sel->update_timer = NULL; 
+	  }
      }
 }
 
@@ -1194,7 +1204,7 @@ _evry_selector_objects_get(Evry_Action *act)
 	  }
 	else
 	  {
-	     plugins = eina_list_append(plugins, pp);
+	     plugins = eina_list_append(plugins, p);
 	  }
      }
 
@@ -1292,7 +1302,8 @@ evry_browse_item(Evry_Selector *sel)
    if (!plugins)
      return 0;
 
-   evry_history_add(sel->history, s->cur_item, NULL, s->input);
+   if (it->plugin->history)
+     evry_history_add(sel->history, s->cur_item, NULL, s->input);
 
    if (s->view)
      {
@@ -1867,13 +1878,13 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
      }
    else return;
 
-   if (s_subj && it_subj)
+   if (s_subj && it_subj && it_subj->plugin->history)
      evry_history_add(evry_hist->subjects, it_subj, NULL, s_subj->input);
 
-   if (s_act && it_act)
+   if (s_act && it_act && it_act->plugin->history)
      evry_history_add(evry_hist->actions, it_act, it_subj->context, s_act->input);
 
-   if (s_obj && it_obj)
+   if (s_obj && it_obj && it_obj->plugin->history)
      evry_history_add(evry_hist->subjects, it_obj, it_act->context, s_obj->input);
 
    /* let subject and object plugin know that an action was performed */
@@ -2110,9 +2121,12 @@ _evry_matches_update(Evry_Selector *sel, int async)
 
 	EINA_LIST_FOREACH(s->plugins, l, p)
 	  {
-	     if ((p->config->trigger) && (p->config->trigger_only))
-	       continue;
-
+	     if (sel == selectors[0])
+	       {
+		  if ((p->config->trigger) && (p->config->trigger_only))
+		    continue;
+	       }
+	     
 	     if (p == sel->aggregator)
 	       continue;
 
