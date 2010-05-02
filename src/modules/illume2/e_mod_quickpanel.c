@@ -78,7 +78,7 @@ e_mod_quickpanel_new(E_Zone *zone)
    qp->zone = zone;
    qp->dir = 0;
 
-   qp->clickwin = ecore_x_window_input_new(qp->zone->container->win, 
+   qp->clickwin = ecore_x_window_input_new(qp->zone->black_win, 
                                            qp->zone->x, qp->zone->y, 
                                            qp->zone->w, qp->zone->h);
    qp->mouse_hdl = ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP, 
