@@ -464,11 +464,7 @@ _scan_end_func(void *data)
 			    DBG("cached: %s %s", file->mime, file->path);
 			    hi->transient = 0;
 			    item->hi = hi;
-			    /* remember that item was found */
-			    if (hi->count == 1)
-			      {
-				 item->usage = -1;
-			      }
+
 			    break;
 			 }
 		    }
@@ -536,9 +532,9 @@ _scan_end_func(void *data)
 		       hi->data = eina_stringshare_ref(file->mime);
 		       item->hi = hi;
 		    }
-		  else
+		  else if (item->hi && item->hi->count == 1)
 		    {
-		       item->usage = 0;
+		       item->hi->last_used = ecore_time_get() - (ONE_DAY * 6.0);
 		    }
 	       }
 	  }

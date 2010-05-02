@@ -418,6 +418,8 @@ struct _History
   Eina_Hash *subjects;
   Eina_Hash *actions;
   double begin;
+
+  Eina_Bool changed;
 };
 
 struct _History_Item

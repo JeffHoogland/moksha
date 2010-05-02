@@ -91,6 +91,15 @@ _cb_sort(const void *data1, const void *data2)
    const Evry_Action *act1 = data1;
    const Evry_Action *act2 = data2;
 
+   if (act1->remember_context || act2->remember_context)
+     {
+	if (act1->remember_context && !act2->remember_context)
+	  return -1;
+	if (!act1->remember_context && act2->remember_context)
+	  return 1;
+     }
+
+   /* sort type match before subtype match */
    if (act1->it1.item && act2->it1.item)
      {
 	if ((act1->it1.type == act1->it1.item->type) &&
@@ -101,7 +110,7 @@ _cb_sort(const void *data1, const void *data2)
 	    (act2->it1.type == act2->it1.item->type))
 	  return 1;
      }
-   
+
    if (it1->fuzzy_match || it2->fuzzy_match)
    
    if (it1->fuzzy_match || it2->fuzzy_match)

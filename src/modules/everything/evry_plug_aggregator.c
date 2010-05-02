@@ -22,7 +22,15 @@ _cb_sort_recent(const void *data1, const void *data2)
      {
 	const Evry_Action *act1 = data1;
 	const Evry_Action *act2 = data2;
-	
+
+	if (act1->remember_context || act2->remember_context)
+	  {
+	     if (act1->remember_context && !act2->remember_context)
+	       return -1;
+	     if (!act1->remember_context && act2->remember_context)
+	       return 1;
+	  }
+
 	if (act1->it1.item && act2->it1.item)
 	  {
 	     if ((act1->it1.type == act1->it1.item->type) &&
@@ -72,7 +80,15 @@ _cb_sort(const void *data1, const void *data2)
      {
 	const Evry_Action *act1 = data1;
 	const Evry_Action *act2 = data2;
-	
+
+	if (act1->remember_context || act2->remember_context)
+	  {
+	     if (act1->remember_context && !act2->remember_context)
+	       return -1;
+	     if (!act1->remember_context && act2->remember_context)
+	       return 1;
+	  }
+
 	if (act1->it1.item && act2->it1.item)
 	  {
 	     if ((act1->it1.type == act1->it1.item->type) &&
@@ -293,6 +309,8 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	p->base.items = eina_list_remove_list(p->base.items, l);
      }
 
+   evry_hist->changed = EINA_FALSE;
+   
    return 1;
 }
 

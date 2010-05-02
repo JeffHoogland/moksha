@@ -236,6 +236,8 @@ evry_history_load(void)
      evry_hist->subjects = eina_hash_string_superfast_new(NULL);
    if (!evry_hist->actions)
      evry_hist->actions  = eina_hash_string_superfast_new(NULL);
+
+   evry_hist->changed = EINA_FALSE;
 }
 
 
@@ -268,6 +270,8 @@ evry_history_add(Eina_Hash *hist, Evry_Item *it, const char *ctxt, const char *i
    
    if (!it) return NULL;
 
+   evry_hist->changed = EINA_TRUE;
+   
    type = evry_type_get(it->type);
 
    id = (it->id ? it->id : it->label);
@@ -345,6 +349,9 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, c
    if (!it->plugin->history)
      return 0;
 
+   if (evry_hist->changed)
+     it->hi = NULL;
+     
    if (!it->hi)
      {
 	if (!(he = eina_hash_find(hist, (it->id ? it->id : it->label))))
