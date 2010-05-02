@@ -71,7 +71,7 @@ _begin_open_with(Evry_Plugin *plugin, const Evry_Item *item)
 
    Efreet_Desktop *d, *d2;
    const char *mime;
-   const char *path;
+   const char *path = NULL;
    
    if (CHECK_TYPE(item, EVRY_TYPE_ACTION))
      {
@@ -94,8 +94,12 @@ _begin_open_with(Evry_Plugin *plugin, const Evry_Item *item)
 	path = file->path;
 	mime = file->mime;
      }
+   else
+     {
+	return NULL;
+     }
 
-   if (!mime || !(mime = efreet_mime_type_get(path)))
+   if (!path || !mime || !(mime = efreet_mime_type_get(path)))
      return NULL;
 
    p->apps_mime = efreet_util_desktop_mime_list(mime);
