@@ -316,14 +316,18 @@ evry_history_add(Eina_Hash *hist, Evry_Item *it, const char *ctxt, const char *i
 	     hi->context = eina_stringshare_ref(ctxt);
 	  }
 
-	if (input)
+	if (input && hi->input)
 	  {
-
-	     if (hi->input)
-	       eina_stringshare_del(hi->input);
-
-	     hi->input = eina_stringshare_add(input);
+	     if (strncmp(hi->input, input, strlen(input)))
+	       {
+		  eina_stringshare_del(hi->input);
+		  hi->input = eina_stringshare_add(input);
+	       }
 	  }
+	else if (input)
+	  {
+	     hi->input = eina_stringshare_add(input);
+	  }	
      }
    return hi;
 }
@@ -332,78 +336,96 @@ EAPI int
 evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, const char *ctxt)
 {
    History_Entry *he;
-   History_Item *hi;
+   History_Item *hi = NULL;
    Eina_List *l;
    int rem_ctxt = 1;
+   it->usage = 0.0;
+   const char *type;
    
    if (!it->plugin->history)
      return 0;
 
-   it->usage = 0.0;
-   if (!(he = eina_hash_find(hist, (it->id ? it->id : it->label))))
-     return 0;
-
-   if (it->type == EVRY_TYPE_ACTION)
+   if (!it->hi)
      {
-	GET_ACTION(act, it);
-	if (!act->remember_context)
-	  rem_ctxt = 0;
-     }
-   
-   EINA_LIST_FOREACH(he->items, l, hi)
-     {
-	if (hi->plugin != it->plugin->name)
-	  continue;
+	if (!(he = eina_hash_find(hist, (it->id ? it->id : it->label))))
+	  return 0;
 
-	if (evry_conf->history_sort_mode == 0)
+	type = evry_type_get(it->type);
+
+	if (it->type == EVRY_TYPE_ACTION)
 	  {
+	     GET_ACTION(act, it);
+	     if (!act->remember_context)
+	       rem_ctxt = 0;
+	  }
+   
+	EINA_LIST_FOREACH(he->items, l, hi)
+	  {
+	     if (hi->plugin != it->plugin->name)
+	       continue;
 
-	     if (!input || !hi->input)
+	     if (hi->type != type)
+	       continue;
+
+	     if (rem_ctxt && ctxt && (hi->context != ctxt))
+	       {
+		 it->hi = hi;
+		  continue;
+	       }
+
+	     it->hi = hi;
+	     break;
+	  }
+     }
+
+   if (!it->hi)
+     return 0;
+   
+   hi = it->hi;
+   
+   if (evry_conf->history_sort_mode == 0)
+     {
+	if (!input || !hi->input)
+	  {
+	     it->usage += hi->usage * hi->count;
+	  }
+	else
+	  {
+	     /* higher priority for exact matches */
+	     if (!strncmp(input, hi->input, strlen(input)))
 	       {
 		  it->usage += hi->usage * hi->count;
 	       }
-	     else
+	     if (!strncmp(input, hi->input, strlen(hi->input)))
 	       {
-		  /* higher priority for exact matches */
-		  if (!strncmp(input, hi->input, strlen(input)))
-		    {
-		       it->usage += hi->usage * hi->count;
-		    }
-		  if (!strncmp(input, hi->input, strlen(hi->input)))
-		    {
-		       it->usage += hi->usage * hi->count;
-		    }
+		  it->usage += hi->usage * hi->count;
 	       }
-
-	     if (ctxt && hi->context &&
-		 (hi->context == ctxt))
-	       it->usage += hi->usage * hi->count * 10;
 	  }
-	else if (evry_conf->history_sort_mode == 1)
+
+	if (ctxt && hi->context && (hi->context == ctxt))
 	  {
-	     it->usage = hi->count * (hi->last_used / 10000000000.0);
-
+	     it->usage += hi->usage * hi->count * 10;
 	  }
-	else if (evry_conf->history_sort_mode == 2)
-	  {
-	     if (hi->last_used > it->usage)
-	       it->usage = hi->last_used;
-	  }
-
-	/* XXX remopve just for update */
-	if (!rem_ctxt && hi->context)
-	  {
-	     eina_stringshare_del(hi->context);
-	     hi->context = NULL;
-	  }
-	
-	if (ctxt != hi->context)
-	  it->usage /= 2.0;
-
      }
+   else if (evry_conf->history_sort_mode == 1)
+     {
+	it->usage = hi->count * (hi->last_used / 10000000000.0);
 
+	if (ctxt && hi->context && (hi->context == ctxt))
+	  {
+	     it->usage += hi->usage * hi->count * 10;
+	  }
+     }
+   else if (evry_conf->history_sort_mode == 2)
+     {
+	if (hi->last_used > it->usage)
+	  it->usage = hi->last_used;
+     }
+	
    if (it->usage > 0.0)
      return 1;
 
+   it->usage = -1;
+   
    return 0;
 }

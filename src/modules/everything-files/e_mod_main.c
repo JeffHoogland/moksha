@@ -23,6 +23,9 @@
 #define ONE_DAY 86400.0
 #define TIME_FACTOR(_now) (1.0 - (evry_hist->begin / _now)) / 1000000000000000.0
 
+/* #undef DBG
+ * #define DBG(...) ERR(__VA_ARGS__) */
+
 typedef struct _Plugin Plugin;
 typedef struct _Data Data;
 typedef struct _Module_Config Module_Config;
@@ -338,6 +341,9 @@ _append_files(Plugin *p)
      {
 	if (cnt >= MAX_SHOWN) break;
 
+	if (p->dirs_only && !EVRY_ITEM(file)->browseable)
+	  continue;
+	
 	if (p->input && (match = evry_fuzzy_match(EVRY_ITEM(file)->label, p->input)))
 	  {
 	     EVRY_ITEM(file)->fuzzy_match = match;
@@ -457,7 +463,7 @@ _scan_end_func(void *data)
 			    file->mime = eina_stringshare_ref(hi->data);
 			    DBG("cached: %s %s", file->mime, file->path);
 			    hi->transient = 0;
-
+			    item->hi = hi;
 			    /* remember that item was found */
 			    if (hi->count == 1)
 			      {
@@ -528,6 +534,7 @@ _scan_end_func(void *data)
 		       hi->last_used -= (ONE_DAY * 6.0);
 		       hi->usage = TIME_FACTOR(hi->last_used);
 		       hi->data = eina_stringshare_ref(file->mime);
+		       item->hi = hi;
 		    }
 		  else
 		    {
@@ -819,6 +826,7 @@ _hist_end_func(void *data)
 	if (!it->data)
 	  {
 	     p->hist_added = eina_list_remove_list(p->hist_added, l);
+	     evry_item_free(it);
 	     continue;
 	  }
 
@@ -841,8 +849,7 @@ _hist_end_func(void *data)
 
 	evry_item_ref(it);
 
-	if (!p->dirs_only || it->browseable)
-	  p->files = eina_list_append(p->files, it);
+	p->files = eina_list_append(p->files, it);
      }
 
    p->thread2 = NULL;
@@ -999,7 +1006,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	  }
 	int len = strlen(p->directory);
 	len = (len == 1) ? len : len+1;
-
+	
 	p->input = eina_stringshare_add(input + len);
      }
    else if (p->directory && input && !strncmp(input, "..", 2))
@@ -1040,9 +1047,10 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	     _read_directory(p);
 
 	     p->command = CMD_SHOW_HIDDEN;
+
 	     return 0;
 	  }
-	p->input = eina_stringshare_add(input + 1);
+	p->input = eina_stringshare_add(input);
      }
    else if (p->command)
      {
@@ -1062,23 +1070,25 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	_read_directory(p);
 
 	p->command = CMD_NONE;
-	return 0;
      }
 
-   if (p->show_recent && input)
+   if (p->show_recent)
      {
 	if ((!p->parent && !p->command && !p->hist_added) &&
-	    (((_conf->search_recent  || _conf->search_cache) && strlen(input) > 2) ||
+	    (((_conf->search_recent  || _conf->search_cache) &&
+	      (input && strlen(input) > 2)) ||
 	     (_conf->show_recent)))
 	  {
 	     eina_hash_foreach(evry_hist->subjects, _hist_items_add_cb, p);
 	     p->thread2 = ecore_thread_run(_hist_func, _hist_end_func, _hist_cancel_func, p);
 	  }
-	else if (p->hist_added && (strlen(input) < 3) && (_conf->search_recent || _conf->search_cache))
+	else if ((_conf->search_recent || _conf->search_cache) && 
+		 (p->hist_added && (!input || (strlen(input) < 3))))
 	  {
 	     EINA_LIST_FREE(p->hist_added, file)
 	       {
 		  p->files = eina_list_remove(p->files, file);
+		  evry_item_free(EVRY_ITEM(file));
 		  evry_item_free(EVRY_ITEM(file));
 	       }
 	  }
@@ -1090,7 +1100,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
    _append_files(p);
 
    if (!EVRY_PLUGIN(p)->items)
-     return 0;
+     return 1;
 
    if (!p->parent && _conf->show_recent)
      EVRY_PLUGIN_ITEMS_SORT(p, _cb_sort);

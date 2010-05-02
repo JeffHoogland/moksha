@@ -3,7 +3,7 @@
 
 #include "e.h"
 
-#define EVRY_API_VERSION 10
+#define EVRY_API_VERSION 11
 
 #define EVRY_ACTION_OTHER 0
 #define EVRY_ACTION_FINISHED 1
@@ -173,6 +173,7 @@ struct _Evry_Item
   Evry_Plugin *plugin;
   int ref;
   double usage;
+  History_Item *hi;
 };
 
 struct _Evry_Action
