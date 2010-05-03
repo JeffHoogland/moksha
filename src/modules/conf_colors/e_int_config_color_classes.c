@@ -601,7 +601,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	  (ot, o, 0, 3, 3, 1, 0, 0, 0, 0, 0.5, 0.5, mw, mh, 9999, 9999);
      }
 
-   o = e_widget_label_add(evas, _("Colors depends on theme capabilities."));
+   o = e_widget_label_add(evas, _("Colors depend on theme capabilities."));
    e_widget_frametable_object_append_full
      (ot, o, 0, 4, 3, 1, 0, 0, 0, 0, 0.0, 0.5, mw, mh, 9999, 9999);
 

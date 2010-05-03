@@ -102,7 +102,7 @@ e_int_config_edgebindings(E_Container *con, const char *params)
    v->basic.create_widgets = _basic_create_widgets;
    v->override_auto_apply = 1;
 
-   cfd = e_config_dialog_new(con, _("Edge Binding Settings"), "E", 
+   cfd = e_config_dialog_new(con, _("Edge Bindings Settings"), "E", 
 			     "keyboard_and_mouse/edge_bindings",
 			     "enlightenment/edges", 0, v, NULL);
    if ((params) && (params[0]))
@@ -260,14 +260,14 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    cfdata->gui.o_binding_list = ob;   
    e_widget_size_min_set(ob, 200, 160);
    e_widget_frametable_object_append(of, ob, 0, 0, 2, 1, 1, 1, 1, 1);
-   ob = e_widget_button_add(evas, _("Add Edge"), NULL, _add_edge_binding_cb, cfdata, NULL);
+   ob = e_widget_button_add(evas, _("Add Binding"), NULL, _add_edge_binding_cb, cfdata, NULL);
    cfdata->gui.o_add = ob;
    e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 0, 1, 0);
-   ob = e_widget_button_add(evas, _("Delete Edge"), NULL, _delete_edge_binding_cb, cfdata, NULL);
+   ob = e_widget_button_add(evas, _("Delete Binding"), NULL, _delete_edge_binding_cb, cfdata, NULL);
    cfdata->gui.o_del = ob;
    e_widget_disabled_set(ob, 1);
    e_widget_frametable_object_append(of, ob, 1, 1, 1, 1, 1, 0, 1, 0);
-   ob = e_widget_button_add(evas, _("Modify Edge"), NULL, _modify_edge_binding_cb, cfdata, NULL);
+   ob = e_widget_button_add(evas, _("Modify Binding"), NULL, _modify_edge_binding_cb, cfdata, NULL);
    cfdata->gui.o_mod = ob;
    e_widget_disabled_set(ob, 1);
    e_widget_frametable_object_append(of, ob, 0, 2, 1, 1, 1, 0, 1, 0);

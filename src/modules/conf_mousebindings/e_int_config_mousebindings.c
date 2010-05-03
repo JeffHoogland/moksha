@@ -109,7 +109,7 @@ e_int_config_mousebindings(E_Container *con, const char *params __UNUSED__)
    v->override_auto_apply = 0;
    
    cfd = e_config_dialog_new(con,
-			     _("Mouse Binding Settings"),
+			     _("Mouse Bindings Settings"),
 			     "E", "keyboard_and_mouse/mouse_bindings",
 			     "preferences-desktop-mouse", 0, v, NULL);
    return cfd;
@@ -292,7 +292,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    cfdata->gui.o_del_all = ob;
    e_widget_disabled_set(ob, 1);
    e_widget_frametable_object_append(ot, ob, 1, 2, 1, 1, 1, 0, 1, 0);
-   ob = e_widget_button_add(evas, _("Restore Mouse and Wheel Binding Defaults"), "enlightenment",
+   ob = e_widget_button_add(evas, _("Restore Default Bindings"), "enlightenment",
 			    _restore_mouse_binding_defaults_cb, cfdata, NULL);
    e_widget_frametable_object_append(ot, ob, 0, 3, 2, 1, 1, 0, 1, 0);
    e_widget_list_object_append(o, ot, 1, 1, 0.5);

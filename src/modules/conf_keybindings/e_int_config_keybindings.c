@@ -91,7 +91,7 @@ e_int_config_keybindings(E_Container *con, const char *params)
    v->basic.create_widgets = _basic_create_widgets;
    v->override_auto_apply = 1;
 
-   cfd = e_config_dialog_new(con, _("Key Binding Settings"), "E", 
+   cfd = e_config_dialog_new(con, _("Key Bindings Settings"), "E", 
 			     "keyboard_and_mouse/key_bindings",
 			     "preferences-desktop-keyboard-shortcuts", 0, v, NULL);
    if ((params) && (params[0]))
