@@ -34,36 +34,40 @@ _finish(Evry_Plugin *plugin)
 }
 
 static Evry_Plugin *
+_browse(Evry_Plugin *plugin, const Evry_Item *it)
+{
+   Evry_Action *act;
+   Plugin *p;
+   Eina_List *l;
+
+   if (!CHECK_TYPE(it, EVRY_TYPE_ACTION))
+     return NULL;
+
+   act = EVRY_ACTN(it);
+
+   p = E_NEW(Plugin, 1);
+   p->base = *plugin;
+   p->base.items = NULL;
+   p->actions = act->fetch(act);
+   p->parent = EINA_TRUE;
+   p->action = act;
+
+   return EVRY_PLUGIN(p);
+}
+
+static Evry_Plugin *
 _begin(Evry_Plugin *plugin, const Evry_Item *it)
 {
-   GET_PLUGIN(p, plugin);
    Evry_Action *act;
    Eina_List *l;
 
-   if (!it || !it->type) return NULL;
-
-   if (it->browseable)
-     {
-	EINA_LIST_FOREACH(evry_conf->actions, l, act)
-	  {
-	     if (act == EVRY_ACTN(it))
-	       {
-		  p = E_NEW(Plugin, 1);
-		  p->base = *plugin;
-		  p->base.items = NULL;
-		  p->actions = act->fetch(act);
-		  p->parent = EINA_TRUE;
-		  p->action = act;
-		  return EVRY_PLUGIN(p);
-	       }
-	  }
-     }
+   GET_PLUGIN(p, plugin);
 
    EINA_LIST_FOREACH(evry_conf->actions, l, act)
      {
-	if (((!act->it1.type) ||              
-	     (CHECK_TYPE(it, act->it1.type)) || 
-	     (CHECK_SUBTYPE(it, act->it1.type))) && 
+	if (((!act->it1.type) ||
+	     (CHECK_TYPE(it, act->it1.type)) ||
+	     (CHECK_SUBTYPE(it, act->it1.type))) &&
 	    (!act->check_item || act->check_item(act, it)))
 	  {
 	     act->base.plugin = plugin;
@@ -112,7 +116,7 @@ _cb_sort(const void *data1, const void *data2)
      }
 
    if (it1->fuzzy_match || it2->fuzzy_match)
-   
+
    if (it1->fuzzy_match || it2->fuzzy_match)
      {
 	if (it1->fuzzy_match && !it2->fuzzy_match)
@@ -164,7 +168,17 @@ evry_plug_actions_new(Evry_Selector *sel, int type)
 {
    Evry_Plugin *plugin;
 
-   plugin = EVRY_PLUGIN_NEW(Plugin, N_("Actions"), NULL, 0, _begin, _finish, _fetch, NULL);
+   if (type == EVRY_PLUGIN_SUBJECT)
+     {
+	plugin = EVRY_PLUGIN_NEW(Plugin, N_("Actions"), NULL, 0, NULL, _finish, _fetch, NULL);
+     }
+   else if (type == EVRY_PLUGIN_ACTION)
+     {
+	plugin = EVRY_PLUGIN_NEW(Plugin, N_("Actions"), NULL, 0, _begin, _finish, _fetch, NULL);
+     }
+   else return NULL;
+
+   plugin->browse = &_browse;
 
    GET_PLUGIN(p, plugin);
    p->selector = sel;

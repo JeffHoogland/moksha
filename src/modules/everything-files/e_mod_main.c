@@ -453,14 +453,14 @@ _scan_end_func(void *data)
      {
 	if (_conf->cache_dirs)
 	  {
-	     EINA_LIST_REVERSE_FOREACH(p->files, l, item)
+	     EINA_LIST_FOREACH(p->files, l, item)
 	       {
 		  GET_FILE(file, item);
 		  
 		  if (!item->usage &&
 		      (hi = evry_history_add(evry_hist->subjects, item, NULL, NULL)))
 		    {
-		       hi->last_used = SIX_DAYS_AGO + (0.001 * (double) cnt++);
+		       hi->last_used = SIX_DAYS_AGO - (0.001 * (double) cnt++);
 		       hi->usage = TIME_FACTOR(hi->last_used);
 		       hi->data = eina_stringshare_ref(file->mime);
 		       item->hi = hi;
@@ -468,7 +468,7 @@ _scan_end_func(void *data)
 		  else if (item->hi && (item->hi->count == 1) &&
 			   (item->hi->last_used < SIX_DAYS_AGO))
 		    {
-		       item->hi->last_used = SIX_DAYS_AGO + (0.001 * (double) cnt++);
+		       item->hi->last_used = SIX_DAYS_AGO - (0.001 * (double) cnt++);
 		       item->hi->usage = TIME_FACTOR(hi->last_used);
 		    }
 
@@ -574,10 +574,10 @@ _read_directory(Plugin *p)
 }
 
 static Evry_Plugin *
-_begin(Evry_Plugin *plugin, const Evry_Item *it)
+_browse(Evry_Plugin *plugin, const Evry_Item *it)
 {
    Plugin *p = NULL;
-
+   
    if (it && CHECK_TYPE(it, EVRY_TYPE_FILE))
      {
 	/* browsing */
@@ -594,9 +594,22 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
 
 	p->directory = eina_stringshare_add(file->path);
 	p->parent = EINA_TRUE;
-	p->dirs_only = parent->dirs_only;
+	/* p->dirs_only = parent->dirs_only; */
+
+	_read_directory(p);
+
+	return EVRY_PLUGIN(p);
      }
-   else if (it && CHECK_TYPE(it, EVRY_TYPE_ACTION))
+
+   return NULL;
+}
+
+static Evry_Plugin *
+_begin(Evry_Plugin *plugin, const Evry_Item *it)
+{
+   Plugin *p = NULL;
+
+   if (it && CHECK_TYPE(it, EVRY_TYPE_ACTION))
      {
 	/* provide object */
 	/* GET_ACTION(act, it); */
@@ -611,6 +624,9 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
 	p->directory = eina_stringshare_add(e_user_homedir_get());
 	p->parent = EINA_FALSE;
 	p->show_recent = EINA_TRUE;
+	_read_directory(p);
+	
+	return EVRY_PLUGIN(p);
      }
    else if (!it)
      {
@@ -621,10 +637,11 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
 	if (_conf->show_homedir)
 	  p->directory = eina_stringshare_add(e_user_homedir_get());
 
-	/* p->show_recent = (_conf->show_recent || _conf->search_recent); */
 	p->show_recent = EINA_TRUE;
 	p->parent = EINA_FALSE;
 
+	_read_directory(p);
+	
 	if (clear_cache)
 	  {
 	     History_Types *ht = evry_history_types_get(evry_hist->subjects, EVRY_TYPE_FILE);
@@ -634,16 +651,11 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
 	       }
 	     clear_cache = EINA_FALSE;
 	  }
-     }
-   else
-     {
-	return NULL;
+
+	return EVRY_PLUGIN(p);
      }
 
-   if (p->directory)
-     _read_directory(p);
-
-   return EVRY_PLUGIN(p);
+   return NULL;
 }
 
 static void
@@ -1201,6 +1213,7 @@ _plugins_init(void)
    p1 = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Files"), NULL,
 			EVRY_TYPE_FILE,
 			_begin, _cleanup, _fetch, NULL);
+   p1->browse = &_browse;
    p1->config_path = "extensions/everything-files";
    evry_plugin_register(p1, EVRY_PLUGIN_SUBJECT, 3);
    /* p1->complete = &_complete; */
@@ -1208,14 +1221,17 @@ _plugins_init(void)
    p2 = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Files"), NULL,
 			EVRY_TYPE_FILE,
 			_begin, _cleanup, _fetch, NULL);
+   p2->browse = &_browse;
    p2->config_path = "extensions/everything-files";
    evry_plugin_register(p2, EVRY_PLUGIN_OBJECT, 1);
 
+   
    act = EVRY_ACTION_NEW(N_("Open Folder (EFM)"),
 			 EVRY_TYPE_FILE, 0,
 			 "folder-open",
 			  _open_folder_action,
 			 _open_folder_check);
+   act->remember_context = EINA_TRUE;
    evry_action_register(act, 0);
    _actions = eina_list_append(_actions, act);
 
@@ -1223,7 +1239,6 @@ _plugins_init(void)
 			 EVRY_TYPE_FILE, 0,
 			 "system-run",
 			  _open_term_action, NULL);
-   act->remember_context = EINA_FALSE;
    evry_action_register(act, 2);
    _actions = eina_list_append(_actions, act);
 
@@ -1231,7 +1246,6 @@ _plugins_init(void)
 			 EVRY_TYPE_FILE, 0,
 			 "edit-delete",
 			  _file_trash_action, NULL);
-   act->remember_context = EINA_FALSE;
    EVRY_ITEM_DATA_INT_SET(act, ACT_TRASH);
    evry_action_register(act, 2);
    _actions = eina_list_append(_actions, act);
@@ -1250,7 +1264,6 @@ _plugins_init(void)
 			 "go-next",
 			 _file_copy_action, NULL);
    act->it2.subtype = EVRY_TYPE_DIR;
-   act->remember_context = EINA_FALSE;
    EVRY_ITEM_DATA_INT_SET(act, ACT_COPY);
    evry_action_register(act, 2);
    _actions = eina_list_append(_actions, act);
@@ -1260,7 +1273,6 @@ _plugins_init(void)
 			 "go-next",
 			 _file_copy_action, NULL);
    act->it2.subtype = EVRY_TYPE_DIR;
-   act->remember_context = EINA_FALSE;
    EVRY_ITEM_DATA_INT_SET(act, ACT_MOVE);
    evry_action_register(act, 2);
    _actions = eina_list_append(_actions, act);

@@ -183,7 +183,7 @@ evry_show(E_Zone *zone, const char *params)
 	  }
 	return 1;
      }
-   
+
    E_OBJECT_CHECK_RETURN(zone, 0);
    E_OBJECT_TYPE_CHECK_RETURN(zone, E_ZONE_TYPE, 0);
 
@@ -279,7 +279,7 @@ evry_hide(int clear)
 	     else if (selector == selectors[2])
 	       _evry_selectors_switch(1);
 	  }
-	
+
 	/* just to be sure */
 	selector = selectors[0];
 
@@ -288,9 +288,9 @@ evry_hide(int clear)
 	     slide = 1;
 	     _evry_state_pop(selector);
 	  }
-	
-	_evry_clear(selector); 
-	_evry_clear(selector); 
+
+	_evry_clear(selector);
+	_evry_clear(selector);
 	Evry_State *s = selector->state;
 	selector->aggregator->fetch(selector->aggregator, s->input);
 	_evry_selector_update(selector);
@@ -300,7 +300,7 @@ evry_hide(int clear)
 
 	return;
      }
-   
+
    /* _evry_view_clear(selector->state); */
    if (_show_timer)
      ecore_timer_del(_show_timer);
@@ -556,7 +556,7 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
 
    if (s->request != p->request)
      return;
-   
+
    agg = sel->aggregator;
 
    if (action == EVRY_ASYNC_UPDATE_ADD)
@@ -948,7 +948,7 @@ static int
 _evry_selector_thumb(Evry_Selector *sel, const Evry_Item *it)
 {
    Evas_Coord w, h;
-   
+
    if (sel->do_thumb)
      e_thumb_icon_end(sel->o_thumb);
 
@@ -962,7 +962,7 @@ _evry_selector_thumb(Evry_Selector *sel, const Evry_Item *it)
 
    if (!file->mime)
      return 0;
-   
+
    if (!(evry_file_path_get(file)))
      return 0;
 
@@ -1091,10 +1091,10 @@ _evry_selector_update(Evry_Selector *sel)
 	else
 	  edje_object_part_text_set(sel->o_main, "e.text.plugin", "");
      }
-   
+
    if (sel == selectors[0])
      {
-	if (item_changed)  
+	if (item_changed)
 	  {
 	     _evry_selector_update_actions(sel);
 	  }
@@ -1103,7 +1103,7 @@ _evry_selector_update(Evry_Selector *sel)
 	     sel = selectors[1];
 	     if (sel->update_timer)
 	       ecore_timer_del(sel->update_timer);
-	     sel->update_timer = NULL; 
+	     sel->update_timer = NULL;
 	  }
      }
 }
@@ -1281,23 +1281,22 @@ evry_browse_item(Evry_Selector *sel)
    if (!it || !it->browseable)
      return 0;
 
-   if (it->plugin->begin && (pp = it->plugin->begin(it->plugin, it)))
-     plugins = eina_list_append(plugins, pp);
-
-   if (!plugins)
+   EINA_LIST_FOREACH(sel->plugins, l, p)
      {
-	EINA_LIST_FOREACH(sel->plugins, l, p)
-	  {
-	     if (p == it->plugin)
-	       continue;
+	if (p == it->plugin)
+	  continue;
 
-	     if (!p->begin)
-	       continue;
+	if (!p->browse)
+	  continue;
 
-	     if ((pp = p->begin(p, it)))
-	       plugins = eina_list_append(plugins, pp);
-	  }
+	if ((pp = p->browse(p, it)))
+	  plugins = eina_list_append(plugins, pp);
      }
+
+   /* FIXME this is a special case for actions */
+   if ((!plugins && it->plugin->browse) &&
+       (pp = it->plugin->browse(it->plugin, it)))
+     plugins = eina_list_append(plugins, pp);
 
    if (!plugins)
      return 0;
@@ -1442,17 +1441,17 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 
 	     mod = 0;
 
-	     if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT) 
+	     if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
 	       mod |= E_BINDING_MODIFIER_SHIFT;
-	     if (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) 
+	     if (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)
 	       mod |= E_BINDING_MODIFIER_CTRL;
-	     if (ev->modifiers & ECORE_EVENT_MODIFIER_ALT) 
+	     if (ev->modifiers & ECORE_EVENT_MODIFIER_ALT)
 	       mod |= E_BINDING_MODIFIER_ALT;
-	     if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN) 
+	     if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN)
 	       mod |= E_BINDING_MODIFIER_WIN;
 
 	     if (bind->key && (!strcmp(bind->key, ev->keyname)) &&
-		 ((bind->modifiers == mod) || (bind->any_mod))) 
+		 ((bind->modifiers == mod) || (bind->any_mod)))
 	       {
 		  if (!(act = e_action_find(bind->action))) continue;
 
@@ -1461,7 +1460,7 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	       }
 	  }
      }
-   
+
    if (!selector || !selector->state)
      return 1;
 
@@ -1869,7 +1868,7 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 		  act->action(act);
 	       }
 	  }
-	else 
+	else
 	  {
 	     act->it1.item = it_subj;
 	     act->it1.items = s_subj->sel_items;
@@ -2075,7 +2074,7 @@ _evry_matches_update(Evry_Selector *sel, int async)
      {
 	EINA_LIST_FOREACH(s->cur_plugins, l, p)
 	  {
-	     p->request = s->request;     
+	     p->request = s->request;
 	     p->fetch(p, s->input);
 	  }
      }
@@ -2131,7 +2130,7 @@ _evry_matches_update(Evry_Selector *sel, int async)
 		  if ((p->config->trigger) && (p->config->trigger_only))
 		    continue;
 	       }
-	     
+
 	     if (p == sel->aggregator)
 	       continue;
 
@@ -2141,7 +2140,7 @@ _evry_matches_update(Evry_Selector *sel, int async)
 		  s->cur_plugins = eina_list_append(s->cur_plugins, p);
 		  continue;
 	       }
-	     
+
 	     p->request = s->request;
 
 	     if ((p->fetch(p, input)) || (sel->states->next))

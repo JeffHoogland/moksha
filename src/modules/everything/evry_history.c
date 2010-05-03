@@ -132,7 +132,6 @@ _hist_entry_cleanup_cb(const Eina_Hash *hash, const void *key, void *data, void 
 	     if (hi->data)
 	       eina_stringshare_del(hi->data);
 	     E_FREE(hi);
-	     printf("remove %s\n", (char *) key);
 
 	     he->items = eina_list_remove_list(he->items, l);
 	  }
