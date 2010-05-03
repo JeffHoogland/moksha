@@ -905,6 +905,9 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    inst->conf->instance = NULL;
    ctxt->instances = eina_list_remove(ctxt->instances, inst);
 
+   if (ctxt->default_instance == inst)
+     ctxt->default_instance = NULL;
+
    E_FREE(inst);
 }
 
