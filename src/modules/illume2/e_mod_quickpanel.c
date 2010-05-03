@@ -398,7 +398,6 @@ static int
 _e_mod_quickpanel_cb_animate(void *data) 
 {
    E_Illume_Quickpanel *qp;
-   E_Border *ind;
    double t, v = 1.0;
 
    if (!(qp = data)) return 0;
