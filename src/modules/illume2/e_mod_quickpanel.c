@@ -15,6 +15,8 @@ static int _e_mod_quickpanel_cb_animate(void *data);
 static void _e_mod_quickpanel_position_update(E_Illume_Quickpanel *qp);
 static void _e_mod_quickpanel_animate_down(E_Illume_Quickpanel *qp);
 static void _e_mod_quickpanel_animate_up(E_Illume_Quickpanel *qp);
+static void _e_mod_quickpanel_clickwin_show(E_Illume_Quickpanel *qp);
+static void _e_mod_quickpanel_clickwin_hide(E_Illume_Quickpanel *qp);
 
 /* local variables */
 static Eina_List *_qp_hdls = NULL;
@@ -78,9 +80,6 @@ e_mod_quickpanel_new(E_Zone *zone)
    qp->zone = zone;
    qp->dir = 0;
 
-   qp->clickwin = ecore_x_window_input_new(qp->zone->black_win, 
-                                           qp->zone->x, qp->zone->y, 
-                                           qp->zone->w, qp->zone->h);
    qp->mouse_hdl = ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP, 
                                            _e_mod_quickpanel_cb_mouse_up, qp);
 
@@ -91,7 +90,6 @@ void
 e_mod_quickpanel_show(E_Illume_Quickpanel *qp) 
 {
    E_Illume_Config_Zone *cz;
-   E_Border *ind;
    int duration;
 
    /* delete the animator if it exists */
@@ -110,16 +108,6 @@ e_mod_quickpanel_show(E_Illume_Quickpanel *qp)
    /* grab the height of the indicator */
    cz = e_illume_zone_config_get(qp->zone->id);
    qp->ih = cz->indicator.size;
-
-   /* grab the indicator border for clickwin stacking */
-   ind = e_illume_border_indicator_get(qp->zone);
-
-   ecore_x_window_configure(qp->clickwin, 
-			    ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING | 
-			    ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE, 
-			    0, 0, 0, 0, 0, 
-			    ind->win, ECORE_X_WINDOW_STACK_BELOW);
-   ecore_x_window_show(qp->clickwin);
 
    /* check animation duration */
    if (duration <= 0) 
@@ -147,6 +135,7 @@ e_mod_quickpanel_show(E_Illume_Quickpanel *qp)
 	       }
           }
         qp->visible = 1;
+	_e_mod_quickpanel_clickwin_show(qp);
      }
    else 
      _e_mod_quickpanel_slide(qp, 1, (double)duration / 1000.0);
@@ -380,7 +369,7 @@ _e_mod_quickpanel_hide(E_Illume_Quickpanel *qp)
    qp->timer = NULL;
 
    /* hide the input window */
-   if (qp->clickwin) ecore_x_window_hide(qp->clickwin);
+   _e_mod_quickpanel_clickwin_hide(qp);
 
    /* if it's not visible, we can't hide it */
    if (!qp->visible) return;
@@ -399,6 +388,7 @@ _e_mod_quickpanel_hide(E_Illume_Quickpanel *qp)
              if (bd->visible) e_illume_border_hide(bd);
           }
         qp->visible = 0;
+	_e_mod_quickpanel_clickwin_hide(qp);
      }
    else
      _e_mod_quickpanel_slide(qp, 0, (double)duration / 1000.0);
@@ -408,6 +398,7 @@ static int
 _e_mod_quickpanel_cb_animate(void *data) 
 {
    E_Illume_Quickpanel *qp;
+   E_Border *ind;
    double t, v = 1.0;
 
    if (!(qp = data)) return 0;
@@ -433,6 +424,10 @@ _e_mod_quickpanel_cb_animate(void *data)
         qp->animator = NULL;
         if (qp->visible) qp->visible = 0;
         else qp->visible = 1;
+	if (qp->visible)
+	  _e_mod_quickpanel_clickwin_show(qp);
+	else
+	  _e_mod_quickpanel_clickwin_hide(qp);
         return 0;
      }
 
@@ -519,4 +514,32 @@ _e_mod_quickpanel_animate_up(E_Illume_Quickpanel *qp)
                }
           }
      }
+}
+
+static void 
+_e_mod_quickpanel_clickwin_show(E_Illume_Quickpanel *qp) 
+{
+   E_Border *ind;
+
+   if (!qp->borders) return;
+   if (!(ind = eina_list_nth(qp->borders, 0))) return;
+   qp->clickwin = ecore_x_window_input_new(qp->zone->container->win, 
+					   qp->zone->x, qp->zone->y, 
+					   qp->zone->w, qp->zone->h);
+
+   ecore_x_window_configure(qp->clickwin, 
+			    ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING | 
+			    ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE, 
+			    qp->zone->x, qp->zone->y, 
+			    qp->zone->w, qp->zone->h, 0, 
+			    ind->win, ECORE_X_WINDOW_STACK_BELOW);
+
+   ecore_x_window_show(qp->clickwin);
+}
+
+static void 
+_e_mod_quickpanel_clickwin_hide(E_Illume_Quickpanel *qp) 
+{
+   if (qp->clickwin) ecore_x_window_free(qp->clickwin);
+   qp->clickwin = 0;
 }
