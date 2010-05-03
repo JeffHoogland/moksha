@@ -986,8 +986,8 @@ e_volume_mount(E_Volume *v)
         opt = eina_list_append(opt, buf2);
      }
    else if ((!strcmp(v->fstype, "fat")) || 
-            (!strcmp(v->fstype, "jfs")) || 
-            (!strcmp(v->fstype, "udf"))
+            (!strcmp(v->fstype, "jfs")) 
+//            (!strcmp(v->fstype, "udf"))
             )
      {
         snprintf(buf2, sizeof(buf2), "iocharset=utf8");
