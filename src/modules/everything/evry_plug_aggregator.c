@@ -134,8 +134,13 @@ _fetch(Evry_Plugin *plugin, const char *input)
    s = p->selector->state;
    if (!s || !s->cur_plugins)
      {
-	evry_item_ref(p->warning);
-	EVRY_PLUGIN_ITEM_APPEND(p, p->warning);
+	/* 'text' and 'actions' are always loaded */
+	if ((p->selector == selectors[0]) &&
+	    (eina_list_count(s->plugins) == 2))
+	  {
+	     evry_item_ref(p->warning);
+	     EVRY_PLUGIN_ITEM_APPEND(p, p->warning);
+	  }
 	return 1;
      }
 
