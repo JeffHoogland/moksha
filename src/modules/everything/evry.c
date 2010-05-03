@@ -1891,12 +1891,6 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
    if (s_obj && it_obj && it_obj->plugin->history)
      evry_history_add(evry_hist->subjects, it_obj, it_act->context, s_obj->input);
 
-   /* let subject and object plugin know that an action was performed */
-   /* if (s_subj->plugin->action)
-    *   s_subj->plugin->action(s_subj->plugin, s_act->cur_item, s_subj->cur_item); */
-   /* if (s_object && s_obj->plugin->action)
-    *   s_object->plugin->action(s_obj->plugin, s_act->cur_item, s_obj->cur_item); */
-
    if (finished)
      evry_hide(0);
 }

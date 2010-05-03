@@ -8,6 +8,8 @@ struct _Plugin
 {
   Evry_Plugin base;
   Evry_Selector *selector;
+
+  Evry_Item *warning;
 };
 
 static int
@@ -131,7 +133,11 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
    s = p->selector->state;
    if (!s || !s->cur_plugins)
-     return 0;
+     {
+	evry_item_ref(p->warning);
+	EVRY_PLUGIN_ITEM_APPEND(p, p->warning);
+	return 1;
+     }
 
    /* get current 'context' ... */
    for (i = 1; i < 3; i++)
@@ -272,6 +278,8 @@ _free(Evry_Plugin *plugin)
 
    _finish(plugin);
 
+   evry_item_free(p->warning);
+
    free(p);
 }
 
@@ -287,6 +295,9 @@ evry_plug_aggregator_new(Evry_Selector *sel, int type)
 
    GET_PLUGIN(pa, p);
    pa->selector = sel;
+
+   pa->warning = evry_item_new(NULL, p, N_("No plugins loaded"), NULL, NULL);
+   pa->warning->type = EVRY_TYPE_NONE;
 
    return p;
 }
