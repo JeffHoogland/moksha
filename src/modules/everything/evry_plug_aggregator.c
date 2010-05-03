@@ -26,14 +26,8 @@ _cb_sort(const void *data1, const void *data2)
 	const Evry_Action *act1 = data1;
 	const Evry_Action *act2 = data2;
 
-	if (act1->remember_context || act2->remember_context)
-	  {
-	     if (act1->remember_context && !act2->remember_context)
-	       return -1;
-	     if (!act1->remember_context && act2->remember_context)
-	       return 1;
-	  }
-
+	/* sort actions that match the specific type before
+	   those matching general type */
 	if (act1->it1.item && act2->it1.item)
 	  {
 	     if ((act1->it1.type == act1->it1.item->type) &&
@@ -44,8 +38,20 @@ _cb_sort(const void *data1, const void *data2)
 		 (act2->it1.type == act2->it1.item->type))
 	       return 1;
 	  }
+
+	/* sort context specific actions before
+	   general actions */
+	if (act1->remember_context || act2->remember_context)
+	  {
+	     if (act1->remember_context && !act2->remember_context)
+	       return -1;
+	     if (!act1->remember_context && act2->remember_context)
+	       return 1;
+	  }
      }
 
+   /* sort items which match input or which
+      match much better first */
    if (it1->fuzzy_match > 0 || it2->fuzzy_match > 0)
      {
 	if (it2->fuzzy_match <= 0)
@@ -58,26 +64,25 @@ _cb_sort(const void *data1, const void *data2)
 	  return (it1->fuzzy_match - it2->fuzzy_match);
      }
 
+   /* sort recently/most frequently used items first */
    if (it1->usage > 0 || it2->usage > 0)
      {
 	return (it1->usage > it2->usage ? -1 : 1);
      }
 
+   /* sort items which match input better first */
    if (it1->fuzzy_match > 0 || it2->fuzzy_match > 0)
      {
-	if (it2->fuzzy_match <= 0)
-	  return -1;
-	if (it1->fuzzy_match <= 0)
-	  return 1;
-
 	if (it1->fuzzy_match - it2->fuzzy_match)
 	  return (it1->fuzzy_match - it2->fuzzy_match);
      }
 
+   /* sort itemswith higher priority first */
    if ((it1->plugin == it2->plugin) &&
        (it1->priority - it2->priority))
      return (it1->priority - it2->priority);
 
+   /* sort items with higher plugin priority first */
    if (it1->type != EVRY_TYPE_ACTION &&
        it2->type != EVRY_TYPE_ACTION)
      {
@@ -132,7 +137,9 @@ _fetch(Evry_Plugin *plugin, const char *input)
    EVRY_PLUGIN_ITEMS_FREE(p);
 
    s = p->selector->state;
-   if (!s || !s->cur_plugins)
+   if (!s) return 0;
+
+   if (!s->cur_plugins)
      {
 	/* 'text' and 'actions' are always loaded */
 	if ((p->selector == selectors[0]) &&
@@ -144,7 +151,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	return 1;
      }
 
-   /* get current 'context' ... */
+   /* get current items' context ... */
    for (i = 1; i < 3; i++)
      {
 	if (p->selector == selectors[i])
@@ -256,7 +263,6 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
    EVRY_PLUGIN_ITEMS_SORT(p, _cb_sort);
 
-   cnt = 0;
    EINA_LIST_FOREACH_SAFE(p->base.items, l, ll, it)
      {
 	if (cnt++ < MAX_ITEMS) continue;

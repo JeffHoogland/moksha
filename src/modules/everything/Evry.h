@@ -3,7 +3,7 @@
 
 #include "e.h"
 
-#define EVRY_API_VERSION 13
+#define EVRY_API_VERSION 14
 
 #define EVRY_ACTION_OTHER 0
 #define EVRY_ACTION_FINISHED 1
@@ -185,31 +185,42 @@ struct _Evry_Action
   const char *name;
 
   struct
-  {
-    const Evry_Item *item;
+  {    
+    /* requested type for action */
     Evry_Type type;
     Evry_Type subtype;
+    /* handle multiple items */
     Eina_Bool accept_list;
+
+    /* do not set ! */
+    const Evry_Item *item;
     Eina_List *items;
   } it1;
 
   struct
   {
-    const Evry_Item *item;
     Evry_Type type;
     Evry_Type subtype;
     Eina_Bool accept_list;
+
+    /* do not set ! */
+    const Evry_Item *item;
     Eina_List *items;
   } it2;
 
-  /* this action is specific for a context. e.g. copy for file-type
-     is not, image viewer is. default is TRUE */
+  
+  /* optional: this action is specific for a item 'context'.
+     e.g. 'copy' for file mime-type is not, 'image viewer' is.
+     default is FALSE */
   Eina_Bool remember_context;
 
   int  (*action)     (Evry_Action *act);
+
+  /* optional */
   int  (*check_item) (Evry_Action *act, const Evry_Item *it);
+  /* optional */
   void (*free)       (Evry_Action *act);
-  /* when action is browseable */
+  /* optional: when action is browseable */
   Eina_List *(*fetch) (Evry_Action *act);
 };
 
