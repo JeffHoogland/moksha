@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-05-03 12:57+0200\n"
-"PO-Revision-Date: 2010-05-03 13:00+0200\n"
+"POT-Creation-Date: 2010-05-04 17:40+0200\n"
+"PO-Revision-Date: 2010-05-04 17:47+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -823,8 +823,8 @@ msgstr "Moduli"
 #: src/bin/e_configure.c:35 src/modules/conf_shelves/e_mod_main.c:24
 #: src/modules/everything/e_mod_main.c:144
 #: src/modules/everything-apps/e_mod_main.c:1163
-#: src/modules/everything-files/e_mod_main.c:1450
-#: src/modules/gadman/e_mod_main.c:25 src/modules/mixer/e_mod_main.c:1044
+#: src/modules/everything-files/e_mod_main.c:1463
+#: src/modules/gadman/e_mod_main.c:25 src/modules/mixer/e_mod_main.c:1047
 #: src/modules/connman/e_mod_main.c:1734
 msgid "Extensions"
 msgstr "Estensioni"
@@ -970,7 +970,7 @@ msgstr "File desktop"
 #: src/modules/everything/evry_config.c:418
 #: src/modules/everything-apps/e_mod_main.c:1117
 #: src/modules/everything-aspell/e_mod_main.c:459
-#: src/modules/everything-files/e_mod_main.c:1339
+#: src/modules/everything-files/e_mod_main.c:1352
 #: src/modules/pager/e_mod_config.c:125 src/modules/pager/e_mod_config.c:217
 msgid "General"
 msgstr "Impostazioni generali"
@@ -1947,7 +1947,7 @@ msgstr "Dimensione, posizione e blocchi"
 
 #: src/bin/e_int_border_remember.c:622 src/modules/conf/e_mod_main.c:218
 #: src/modules/conf_window_focus/e_int_config_focus.c:222
-#: src/modules/everything/evry_plug_aggregator.c:278
+#: src/modules/everything/evry_plug_aggregator.c:303
 msgid "All"
 msgstr "Tutto"
 
@@ -3898,7 +3898,7 @@ msgid "Text with applied colors."
 msgstr "Testo con colore applicato."
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:604
-msgid "Colors depends on theme capabilities."
+msgid "Colors depend on theme capabilities."
 msgstr "I colori dipendono dalle funzionalità del tema."
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:843
@@ -4378,7 +4378,7 @@ msgstr ""
 "mouse sul bordo:"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:105
-msgid "Edge Binding Settings"
+msgid "Edge Bindings Settings"
 msgstr "Configurazione azioni sui bordi dello schermo"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:258
@@ -4387,16 +4387,22 @@ msgid "Edge Bindings"
 msgstr "Bordi dello schermo"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:263
-msgid "Add Edge"
-msgstr "Aggiungi bordo"
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:230
+#: src/modules/conf_mousebindings/e_int_config_mousebindings.c:281
+msgid "Add Binding"
+msgstr "Aggiungi combinazione"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:266
-msgid "Delete Edge"
-msgstr "Elimina bordo"
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:233
+#: src/modules/conf_mousebindings/e_int_config_mousebindings.c:283
+msgid "Delete Binding"
+msgstr "Elimina combinazione"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:270
-msgid "Modify Edge"
-msgstr "Modifica bordo"
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:237
+#: src/modules/conf_mousebindings/e_int_config_mousebindings.c:287
+msgid "Modify Binding"
+msgstr "Modifica combinazione"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:274
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:241
@@ -4406,6 +4412,7 @@ msgstr "Cancella tutto"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:278
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:245
+#: src/modules/conf_mousebindings/e_int_config_mousebindings.c:295
 msgid "Restore Default Bindings"
 msgstr "Ripristina associazioni predefinite"
 
@@ -4905,28 +4912,13 @@ msgid "Single key"
 msgstr "Tasto singolo"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:94
-msgid "Key Binding Settings"
-msgstr "Scorciatoie associate alla tastiera"
+msgid "Key Bindings Settings"
+msgstr "Configurazione combinazioni della tastiera"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:225
 #: src/modules/conf_keybindings/e_mod_main.c:21
 msgid "Key Bindings"
 msgstr "Combinazioni della tastiera"
-
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:230
-#: src/modules/conf_mousebindings/e_int_config_mousebindings.c:281
-msgid "Add Binding"
-msgstr "Aggiungi combinazione"
-
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:233
-#: src/modules/conf_mousebindings/e_int_config_mousebindings.c:283
-msgid "Delete Binding"
-msgstr "Elimina combinazione"
-
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:237
-#: src/modules/conf_mousebindings/e_int_config_mousebindings.c:287
-msgid "Modify Binding"
-msgstr "Modifica combinazione"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:927
 msgid "Key Binding Sequence"
@@ -5082,8 +5074,8 @@ msgid "Select an Edj File"
 msgstr "Seleziona file edj"
 
 #: src/modules/conf_mime/e_mod_main.c:20
-#: src/modules/everything-files/e_mod_main.c:1201
-#: src/modules/everything-files/e_mod_main.c:1208
+#: src/modules/everything-files/e_mod_main.c:1214
+#: src/modules/everything-files/e_mod_main.c:1222
 #: src/modules/fileman/e_mod_main.c:49 src/modules/fileman/e_mod_main.c:67
 #: src/modules/fileman/e_mod_main.c:385
 msgid "Files"
@@ -5100,17 +5092,13 @@ msgstr ""
 "<hilight>Escape</highlight> per abortire."
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:112
-msgid "Mouse Binding Settings"
-msgstr "Scorciatoie associate al mouse"
+msgid "Mouse Bindings Settings"
+msgstr "Configurazione combinazioni del mouse"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:275
 #: src/modules/conf_mousebindings/e_mod_main.c:21
 msgid "Mouse Bindings"
 msgstr "Combinazioni del mouse"
-
-#: src/modules/conf_mousebindings/e_int_config_mousebindings.c:295
-msgid "Restore Mouse and Wheel Binding Defaults"
-msgstr "Ripristina associazioni predefinite"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:315
 msgid "Action Context"
@@ -5673,12 +5661,12 @@ msgid "Select a Picture..."
 msgstr "Selezionare un'immmagine..."
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:627
-#: src/modules/everything-wallpaper/e_mod_main.c:328
+#: src/modules/everything-wallpaper/e_mod_main.c:329
 msgid "Picture Import Error"
 msgstr "Errore importazione immagine"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:628
-#: src/modules/everything-wallpaper/e_mod_main.c:329
+#: src/modules/everything-wallpaper/e_mod_main.c:330
 msgid ""
 "Enlightenment was unable to import the picture<br>due to conversion errors."
 msgstr ""
@@ -6553,10 +6541,15 @@ msgstr "Altezza popup"
 msgid "Popup Align"
 msgstr "Allineamento popup"
 
-#: src/modules/everything/evry_plug_actions.c:167
-#: src/modules/everything/evry_plug_actions.c:180
+#: src/modules/everything/evry_plug_actions.c:174
+#: src/modules/everything/evry_plug_actions.c:178
+#: src/modules/everything/evry_plug_actions.c:195
 msgid "Actions"
 msgstr "Azioni"
+
+#: src/modules/everything/evry_plug_aggregator.c:311
+msgid "No plugins loaded"
+msgstr "Nessun plugin caricato"
 
 #: src/modules/everything/evry_plug_clipboard.c:34
 msgid "Copy to Clipboard"
@@ -6708,53 +6701,53 @@ msgstr "Comando personalizzato"
 msgid "Calculator"
 msgstr "Calcolatrice"
 
-#: src/modules/everything-files/e_mod_main.c:1214
+#: src/modules/everything-files/e_mod_main.c:1230
 msgid "Open Folder (EFM)"
 msgstr "Apri cartella (EFM)"
 
-#: src/modules/everything-files/e_mod_main.c:1222
+#: src/modules/everything-files/e_mod_main.c:1239
 msgid "Open Terminal here"
 msgstr "Apri terminale qui"
 
-#: src/modules/everything-files/e_mod_main.c:1230
+#: src/modules/everything-files/e_mod_main.c:1246
 msgid "Move to Trash"
 msgstr "Sposta nel cestino"
 
-#: src/modules/everything-files/e_mod_main.c:1248
+#: src/modules/everything-files/e_mod_main.c:1263
 msgid "Copy To ..."
 msgstr "Copia in ..."
 
-#: src/modules/everything-files/e_mod_main.c:1258
+#: src/modules/everything-files/e_mod_main.c:1272
 msgid "Move To ..."
 msgstr "Sposta in ..."
 
-#: src/modules/everything-files/e_mod_main.c:1319
-#: src/modules/everything-files/e_mod_main.c:1453
-#: src/modules/everything-files/e_mod_main.c:1473
+#: src/modules/everything-files/e_mod_main.c:1332
+#: src/modules/everything-files/e_mod_main.c:1466
+#: src/modules/everything-files/e_mod_main.c:1486
 msgid "Everything Files"
 msgstr "Modulo file di Everything"
 
-#: src/modules/everything-files/e_mod_main.c:1342
+#: src/modules/everything-files/e_mod_main.c:1355
 msgid "Show home directory"
 msgstr "Mostra directory home"
 
-#: src/modules/everything-files/e_mod_main.c:1346
+#: src/modules/everything-files/e_mod_main.c:1359
 msgid "Show recent files"
 msgstr "Mostra file recenti"
 
-#: src/modules/everything-files/e_mod_main.c:1350
+#: src/modules/everything-files/e_mod_main.c:1363
 msgid "Search recent files"
 msgstr "Cerca file recenti"
 
-#: src/modules/everything-files/e_mod_main.c:1354
+#: src/modules/everything-files/e_mod_main.c:1367
 msgid "Search cached files"
 msgstr "Cerca file in cache"
 
-#: src/modules/everything-files/e_mod_main.c:1358
+#: src/modules/everything-files/e_mod_main.c:1371
 msgid "Cache visited directories"
 msgstr "Cache per directory visitate"
 
-#: src/modules/everything-files/e_mod_main.c:1362
+#: src/modules/everything-files/e_mod_main.c:1375
 msgid "Clear cache"
 msgstr "Svuota cache"
 
@@ -7579,7 +7572,7 @@ msgstr "Impostazioni di Mixer aggiornate"
 msgid "Controls"
 msgstr "Controlli"
 
-#: src/modules/mixer/e_mod_main.c:1122
+#: src/modules/mixer/e_mod_main.c:1125
 msgid ""
 "Mixer Module Settings data changed.<br>Your old configuration has been "
 "replaced with new default.<br>Sorry for the inconvenience."
