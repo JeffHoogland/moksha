@@ -218,8 +218,6 @@ evry_history_load(void)
      evry_hist->subjects = eina_hash_string_superfast_new(NULL);
    if (!evry_hist->actions)
      evry_hist->actions  = eina_hash_string_superfast_new(NULL);
-
-   evry_hist->changed = EINA_FALSE;
 }
 
 
@@ -276,12 +274,6 @@ evry_history_add(Eina_Hash *hist, Evry_Item *it, const char *ctxt, const char *i
    
    if (!it) return NULL;
 
-   evry_hist->changed = EINA_TRUE;
-   
-   type = evry_type_get(it->type);
-
-   id = (it->id ? it->id : it->label);
-
    if (it->type == EVRY_TYPE_ACTION)
      {
 	GET_ACTION(act, it);
@@ -289,20 +281,32 @@ evry_history_add(Eina_Hash *hist, Evry_Item *it, const char *ctxt, const char *i
 	  rem_ctxt = 0;
      }
 
-   ht = evry_history_types_get(hist, it->type);
-
-   he = eina_hash_find(ht->types, id);
-   if (!he)
+   if (it->hi)
      {
-	he = E_NEW(History_Entry, 1);
-	eina_hash_add(ht->types, id, he);
+	/* keep hi when context didnt change */
+	if ((!rem_ctxt) || (!it->hi->context && !ctxt) ||
+	    (it->hi->context && ctxt && !strcmp(it->hi->context, ctxt)))
+	  hi = it->hi;
      }
-   else
+
+   if (!hi)
      {
-	EINA_LIST_FOREACH(he->items, l, hi)
-	  if ((hi->plugin == it->plugin->name) &&
-	      (!rem_ctxt || (ctxt == hi->context)))
-	    break;
+	id = (it->id ? it->id : it->label);
+	ht = evry_history_types_get(hist, it->type);
+	he = eina_hash_find(ht->types, id);
+
+	if (!he)
+	  {
+	     he = E_NEW(History_Entry, 1);
+	     eina_hash_add(ht->types, id, he);
+	  }
+	else
+	  {
+	     EINA_LIST_FOREACH(he->items, l, hi)
+	       if ((hi->plugin == it->plugin->name) &&
+		   (!rem_ctxt || (ctxt == hi->context)))
+		 break;
+	  }
      }
 
    if (!hi)
@@ -314,6 +318,8 @@ evry_history_add(Eina_Hash *hist, Evry_Item *it, const char *ctxt, const char *i
 
    if (hi)
      {
+	it->hi = hi;
+
 	hi->last_used = ecore_time_get();
 	hi->usage /= 4.0;
 	hi->usage += TIME_FACTOR(hi->last_used);
@@ -338,6 +344,10 @@ evry_history_add(Eina_Hash *hist, Evry_Item *it, const char *ctxt, const char *i
 	     hi->input = eina_stringshare_add(input);
 	  }	
      }
+
+   /* reset usage */
+   it->usage = 0.0;
+   
    return hi;
 }
 
@@ -355,18 +365,18 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, c
    if (!it->plugin->history)
      return 0;
 
-   if (evry_hist->changed)
-     it->hi = NULL;
-     
-   if (!it->hi)
+   if (it->hi)
+     {
+	/* keep hi when context didnt change */
+	if ((!rem_ctxt) || (!it->hi->context && !ctxt) ||
+	    (it->hi->context && ctxt && !strcmp(it->hi->context, ctxt)))
+	  hi = it->hi;
+     }
+
+   if (!hi)
      {
 	ht = evry_history_types_get(hist, it->type);
 	
-	type = evry_type_get(it->type);
-	
-	if (!(ht = eina_hash_find(hist, type)))
-	  return 0;
-
 	if (!(he = eina_hash_find(ht->types, (it->id ? it->id : it->label))))
 	  return 0;
 
@@ -393,10 +403,8 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, c
 	  }
      }
 
-   if (!it->hi)
-     return 0;
-   
-   hi = it->hi;
+   if (!hi) return 0;
+
    
    if (evry_conf->history_sort_mode == 0)
      {
@@ -440,7 +448,7 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, c
    if (it->usage > 0.0)
      return 1;
 
-   it->usage = -1;
+   it->usage = -1.0;
    
    return 0;
 }

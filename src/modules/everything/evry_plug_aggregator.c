@@ -54,14 +54,14 @@ _cb_sort(const void *data1, const void *data2)
       match much better first */
    if (it1->fuzzy_match > 0 || it2->fuzzy_match > 0)
      {
-	if (it2->fuzzy_match <= 0)
-	  return -1;
-
-	if (it1->fuzzy_match <= 0)
-	  return 1;
-
-	if (abs (it1->fuzzy_match - it2->fuzzy_match) > 5)
-	  return (it1->fuzzy_match - it2->fuzzy_match);
+   	if (it2->fuzzy_match <= 0)
+   	  return -1;
+   
+   	if (it1->fuzzy_match <= 0)
+   	  return 1;
+   
+   	if (abs (it1->fuzzy_match - it2->fuzzy_match) > 5)
+   	  return (it1->fuzzy_match - it2->fuzzy_match);
      }
 
    /* sort recently/most frequently used items first */
@@ -181,6 +181,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	      evry_history_item_usage_set(p->selector->history,
 					  it, input, context);
 	    it->fuzzy_match = evry_fuzzy_match(it->label, input);
+
 	    items = _add_item(p, items, it);
 	 }
      }

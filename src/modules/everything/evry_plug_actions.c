@@ -75,6 +75,7 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
 	     if (!eina_list_data_find_list(p->actions, act))
 	       {
 		  act->it1.item = it;
+		  EVRY_ITEM(act)->hi = NULL;
 		  p->actions = eina_list_append(p->actions, act);
 	       }
 	     continue;

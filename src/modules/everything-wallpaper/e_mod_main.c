@@ -111,6 +111,7 @@ _plugins_init(void)
 			  _module_icon,
 			  NULL, _check);
    _act->fetch = _fetch;
+   _act->remember_context = EINA_TRUE;
    EVRY_ITEM(_act)->browseable = EINA_TRUE;
 
    evry_action_register(_act, 2);

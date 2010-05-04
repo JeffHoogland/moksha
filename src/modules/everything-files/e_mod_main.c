@@ -2,6 +2,8 @@
  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
 
+/* TODO option for maximum items to cache */
+
 #include "Evry.h"
 #include "e_mod_main.h"
 #include <Efreet_Trash.h>
@@ -464,15 +466,16 @@ _scan_end_func(void *data)
 		       hi->usage = TIME_FACTOR(hi->last_used);
 		       hi->data = eina_stringshare_ref(file->mime);
 		       item->hi = hi;
+		       item->usage = -1;
 		    }
 		  else if (item->hi && (item->hi->count == 1) &&
 			   (item->hi->last_used < SIX_DAYS_AGO))
 		    {
 		       item->hi->last_used = SIX_DAYS_AGO - (0.001 * (double) cnt++);
 		       item->hi->usage = TIME_FACTOR(hi->last_used);
+		       item->usage = -1;
 		    }
-
-		  item->usage = 0;
+		  /* item->usage = 0; */
 	       }
 	  }
 	
@@ -715,25 +718,12 @@ _hist_func(void *data)
 	if (!ecore_file_exists(file->path))
 	  goto clear;
 
-	if (!file->mime)
-	  file->mime = eina_stringshare_add(efreet_mime_type_get(file->path));
-
-	if (!file->mime)
-	  file->mime = eina_stringshare_add("unknown");
-
-	if ((!strcmp(file->mime, "inode/directory")) ||
-	    (!strcmp(file->mime, "inode/mount-point")))
-	  EVRY_ITEM(file)->browseable = EINA_TRUE;
-
-	evry_util_file_detail_set(file);
-
 	continue;
-
      clear:
 
-	hi = EVRY_ITEM(file)->data;
+	hi = EVRY_ITEM(file)->hi;
 	hi->last_used -= ONE_DAY;
-	EVRY_ITEM(file)->data = NULL;
+	EVRY_ITEM(file)->hi = NULL;
      }
 }
 
@@ -767,12 +757,11 @@ _hist_end_func(void *data)
    Plugin *p = data;
    Eina_List *l, *ll;
    Evry_Item *it;
-   History_Item *hi;
    const char *label;
 
    EINA_LIST_FOREACH_SAFE(p->hist_added, l, ll, it)
      {
-	if (!it->data)
+	if (!it->hi)
 	  {
 	     p->hist_added = eina_list_remove_list(p->hist_added, l);
 	     evry_item_free(it);
@@ -781,13 +770,23 @@ _hist_end_func(void *data)
 
 	GET_FILE(file, it);
 
+	if (!file->mime)
+	  file->mime = eina_stringshare_add(efreet_mime_type_get(file->path));
+
+	if (!file->mime)
+	  file->mime = eina_stringshare_add("unknown");
+
+	if ((!strcmp(file->mime, "inode/directory")) ||
+	    (!strcmp(file->mime, "inode/mount-point")))
+	  EVRY_ITEM(file)->browseable = EINA_TRUE;
+
+	evry_util_file_detail_set(file);
+
 	/* remember mimetype */
 	if (it->data && file->mime)
 	  {
-	     hi = it->data;
-
-	     if (!hi->data)
-	       hi->data = eina_stringshare_ref(file->mime);
+	     if (!it->hi->data)
+	       it->hi->data = eina_stringshare_ref(file->mime);
 	  }
 
 	label = ecore_file_file_get(file->path);
@@ -797,12 +796,14 @@ _hist_end_func(void *data)
 	  it->label = eina_stringshare_add(file->path);
 
 	evry_item_ref(it);
-
+	
 	p->files = eina_list_append(p->files, it);
      }
 
    p->thread2 = NULL;
 
+   p->files = eina_list_sort(p->files, -1, _cb_sort);
+   
    _append_files(p);
 
    evry_plugin_async_update(EVRY_PLUGIN(p), EVRY_ASYNC_UPDATE_ADD);
@@ -864,7 +865,7 @@ _hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fda
    if (hi->data)
      file->mime = eina_stringshare_add(hi->data);
 
-   EVRY_ITEM(file)->data = hi;
+   EVRY_ITEM(file)->hi = hi;
 
    if (file->mime)
      EVRY_ITEM(file)->context = eina_stringshare_ref(file->mime);
