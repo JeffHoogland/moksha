@@ -25,6 +25,7 @@ e_mod_illume_config_select_window(E_Illume_Select_Window_Type type)
    v = E_NEW(E_Config_Dialog_View, 1);
    if (!v) return;
 
+   stype = type;
    v->create_cfdata = _e_mod_illume_config_select_window_create_data;
    v->free_cfdata = _e_mod_illume_config_select_window_free_data;
    v->basic.create_widgets = _e_mod_illume_config_select_window_create;
@@ -37,7 +38,6 @@ e_mod_illume_config_select_window(E_Illume_Select_Window_Type type)
                              "enlightenment/windows", 0, v, NULL);
    if (!cfd) return;
    e_dialog_resizable_set(cfd->dia, 1);
-   stype = type;
 }
 
 static void *
@@ -71,8 +71,7 @@ _e_mod_illume_config_select_window_create(E_Config_Dialog *cfd, Evas *evas, E_Co
    e_widget_ilist_clear(ow);
    e_widget_ilist_go(ow);
 
-   bds = e_border_client_list();
-   if (bds)
+   if (bds = e_border_client_list())
      {
         for (i = 0, l = bds; l; l = l->next, i++) 
           {
@@ -82,8 +81,8 @@ _e_mod_illume_config_select_window_create(E_Config_Dialog *cfd, Evas *evas, E_Co
              if (!(bd = l->data)) continue;
              if (bd->zone != zone) continue;
              if (e_object_is_del(E_OBJECT(bd))) continue;
-             if (_e_mod_illume_config_select_window_match(bd)) sel = i;
              if (!(name = e_border_name_get(bd))) continue;
+             if (_e_mod_illume_config_select_window_match(bd)) sel = i;
              e_widget_ilist_append(ow, NULL, name, 
                                    _e_mod_illume_config_select_window_list_changed, 
                                    bd, name);
@@ -172,19 +171,16 @@ _e_mod_illume_config_select_window_match(E_Border *bd)
           {
              if ((title) && (!strcmp(title, _e_illume_cfg->policy.home.title)))
                match = 1;
-             break;
           }
         if (_e_illume_cfg->policy.home.match.name) 
           {
              if ((name) && (!strcmp(name, _e_illume_cfg->policy.home.name)))
                match = 1;
-             break;
           }
         if (_e_illume_cfg->policy.home.match.class) 
           {
              if ((class) && (!strcmp(class, _e_illume_cfg->policy.home.class)))
                match = 1;
-             break;
           }
         break;
       case E_ILLUME_SELECT_WINDOW_TYPE_VKBD:
@@ -192,19 +188,16 @@ _e_mod_illume_config_select_window_match(E_Border *bd)
           {
              if ((title) && (!strcmp(title, _e_illume_cfg->policy.vkbd.title)))
                match = 1;
-             break;
           }
         if (_e_illume_cfg->policy.vkbd.match.name) 
           {
              if ((name) && (!strcmp(name, _e_illume_cfg->policy.vkbd.name)))
                match = 1;
-             break;
           }
         if (_e_illume_cfg->policy.vkbd.match.class) 
           {
              if ((class) && (!strcmp(class, _e_illume_cfg->policy.vkbd.class)))
                match = 1;
-             break;
           }
         break;
       case E_ILLUME_SELECT_WINDOW_TYPE_SOFTKEY:
@@ -212,19 +205,16 @@ _e_mod_illume_config_select_window_match(E_Border *bd)
           {
              if ((title) && (!strcmp(title, _e_illume_cfg->policy.softkey.title)))
                match = 1;
-             break;
           }
         if (_e_illume_cfg->policy.softkey.match.name) 
           {
              if ((name) && (!strcmp(name, _e_illume_cfg->policy.softkey.name)))
                match = 1;
-             break;
           }
         if (_e_illume_cfg->policy.softkey.match.class) 
           {
              if ((class) && (!strcmp(class, _e_illume_cfg->policy.softkey.class)))
                match = 1;
-             break;
           }
         break;
       case E_ILLUME_SELECT_WINDOW_TYPE_INDICATOR:
@@ -232,19 +222,16 @@ _e_mod_illume_config_select_window_match(E_Border *bd)
           {
              if ((title) && (!strcmp(title, _e_illume_cfg->policy.indicator.title)))
                match = 1;
-             break;
           }
         if (_e_illume_cfg->policy.indicator.match.name) 
           {
              if ((name) && (!strcmp(name, _e_illume_cfg->policy.indicator.name)))
                match = 1;
-             break;
           }
         if (_e_illume_cfg->policy.indicator.match.class) 
           {
              if ((class) && (!strcmp(class, _e_illume_cfg->policy.indicator.class)))
                match = 1;
-             break;
           }
         break;
      }
