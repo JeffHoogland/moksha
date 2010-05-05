@@ -184,11 +184,9 @@ _e_mod_quickpanel_cb_client_message(void *data __UNUSED__, int type __UNUSED__, 
              if (qp = e_illume_quickpanel_by_zone_get(zone)) 
                {
                   if (qp->visible) 
-                    ecore_x_e_illume_quickpanel_state_send(zone->black_win, 
-                                                           ECORE_X_ILLUME_QUICKPANEL_STATE_OFF);
+		    e_mod_quickpanel_hide(qp);
                   else 
-                    ecore_x_e_illume_quickpanel_state_send(zone->black_win, 
-                                                           ECORE_X_ILLUME_QUICKPANEL_STATE_ON);
+		    e_mod_quickpanel_show(qp);
                }
           }
      }
@@ -368,9 +366,6 @@ _e_mod_quickpanel_hide(E_Illume_Quickpanel *qp)
    if (qp->timer) ecore_timer_del(qp->timer);
    qp->timer = NULL;
 
-   /* hide the input window */
-   _e_mod_quickpanel_clickwin_hide(qp);
-
    /* if it's not visible, we can't hide it */
    if (!qp->visible) return;
 
@@ -421,12 +416,16 @@ _e_mod_quickpanel_cb_animate(void *data)
    if (t == qp->len) 
      {
         qp->animator = NULL;
-        if (qp->visible) qp->visible = 0;
-        else qp->visible = 1;
-	if (qp->visible)
-	  _e_mod_quickpanel_clickwin_show(qp);
-	else
-	  _e_mod_quickpanel_clickwin_hide(qp);
+        if (qp->visible) 
+	  {
+	     qp->visible = 0;
+	     _e_mod_quickpanel_clickwin_hide(qp);
+	  }
+        else 
+	  {
+	     qp->visible = 1;
+	     _e_mod_quickpanel_clickwin_show(qp);
+	  }
         return 0;
      }
 
