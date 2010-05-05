@@ -248,10 +248,9 @@ _il_home_desks_populate(void)
 
              if (sm->type != EFREET_MENU_ENTRY_DESKTOP) continue;
              if (!(desktop = sm->desktop)) continue;
-             if ((settings) && (eina_list_data_find(settings, desktop)))
-               continue;
-             if ((sys) && (eina_list_data_find(sys, desktop))) 
-               continue;
+	     if ((settings) && (sys) && 
+		 (eina_list_data_find(settings, desktop)) && 
+		 (eina_list_data_find(sys, desktop))) continue;
              if ((kbd) && (eina_list_data_find(kbd, desktop))) 
                continue;
              efreet_desktop_ref(desktop);
