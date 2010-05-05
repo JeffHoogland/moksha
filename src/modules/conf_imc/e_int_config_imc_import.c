@@ -13,10 +13,10 @@ struct _Import
    Evas_Object *content_obj;
    Evas_Object *event_obj;
    Evas_Object *fsel_obj;
-   
+
    Evas_Object *ok_obj;
    Evas_Object *cancel_obj;
-   
+
    E_Win *win;
 };
 
@@ -45,10 +45,11 @@ e_int_config_imc_import(E_Config_Dialog *parent)
    E_Config_Dialog_Data *cfdata;
    Evas_Modifier_Mask mask;
    Evas_Coord w, h;
-   
+   Eina_Bool kg;
+
    import = E_NEW(Import, 1);
    if (!import) return NULL;
-   
+
    win = e_win_new(parent->con);
    if (!win) 
      {
@@ -57,12 +58,12 @@ e_int_config_imc_import(E_Config_Dialog *parent)
      }
 
    evas = e_win_evas_get(win);
-   
+
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    import->cfdata = cfdata;
    import->win = win;
    import->parent = parent;
-   
+
    e_win_title_set(win, _("Select an Input Method Settings..."));
    e_win_delete_callback_set(win, _imc_import_cb_delete);
    e_win_resize_callback_set(win, _imc_import_cb_resize);
@@ -83,31 +84,39 @@ e_int_config_imc_import(E_Config_Dialog *parent)
    o = evas_object_rectangle_add(evas);
    import->event_obj = o;
    mask = 0;
-   evas_object_key_grab(o, "Tab", mask, ~mask, 0);
+   kg = evas_object_key_grab(o, "Tab", mask, ~mask, 0);
+   if (!kg)
+     fprintf(stderr,"ERROR: unable to redirect \"Tab\" key events to object %p.\n", o);
    mask = evas_key_modifier_mask_get(evas, "Shift");
-   evas_object_key_grab(o, "Tab", mask, ~mask, 0);
+   kg = evas_object_key_grab(o, "Tab", mask, ~mask, 0);
+   if (!kg)
+     fprintf(stderr,"ERROR: unable to redirect \"Tab\" key events to object %p.\n", o);
    mask = 0;
-   evas_object_key_grab(o, "Return", mask, ~mask, 0);
+   kg = evas_object_key_grab(o, "Return", mask, ~mask, 0);
+   if (!kg)
+     fprintf(stderr,"ERROR: unable to redirect \"Return\" key events to object %p.\n", o);
    mask = 0;
-   evas_object_key_grab(o, "KP_Enter", mask, ~mask, 0);
+   kg = evas_object_key_grab(o, "KP_Enter", mask, ~mask, 0);
+   if (!kg)
+     fprintf(stderr,"ERROR: unable to redirect \"KP_Enter\" key events to object %p.\n", o);
    evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN, 
 				  _imc_import_cb_key_down, import);
 
    o = e_widget_list_add(evas, 0, 0);
    import->content_obj = o;
-   
+
    ofm = e_widget_fsel_add(evas, e_user_homedir_get(), "/",
 			   NULL, NULL, 
 			   _imc_import_cb_selected, import,
 			   _imc_import_cb_changed, import, 1);
    import->fsel_obj = ofm;
    e_widget_list_object_append(o, ofm, 1, 1, 0.5);
-   
+
    e_widget_size_min_get(o, &w, &h);
    edje_extern_object_min_size_set(o, w, h);
    edje_object_part_swallow(import->bg_obj, "e.swallow.content", o);
    evas_object_show(o);
-   
+
    import->ok_obj = e_widget_button_add(evas, _("OK"), NULL, 
 					_imc_import_cb_ok, win, cfdata);
    e_widget_list_object_append(import->box_obj, import->ok_obj, 1, 0, 0.5);
@@ -118,14 +127,13 @@ e_int_config_imc_import(E_Config_Dialog *parent)
    e_widget_list_object_append(import->box_obj, import->cancel_obj, 1, 0, 0.5);
 
    e_widget_disabled_set(import->ok_obj, 1);
-   
    e_win_centered_set(win, 1);
-   
+
    o = import->box_obj;
    e_widget_size_min_get(o, &w, &h);
    edje_extern_object_min_size_set(o, w, h);
    edje_object_part_swallow(import->bg_obj, "e.swallow.buttons", o);
-   
+
    edje_object_size_min_calc(import->bg_obj, &w, &h);
    evas_object_resize(import->bg_obj, w, h);
    e_win_resize(win, w, h);
@@ -133,9 +141,9 @@ e_int_config_imc_import(E_Config_Dialog *parent)
    e_win_size_max_set(win, 99999, 99999);
    e_win_show(win);
    e_win_border_icon_set(win, "preferences-imc");
-   
+
    win->data = import;
-   
+
    return win;
 }
 
@@ -143,16 +151,16 @@ void
 e_int_config_imc_import_del(E_Win *win) 
 {
    Import *import;
-   
+
    import = win->data;
-   
+
    e_object_del(E_OBJECT(import->win));
    e_int_config_imc_import_done(import->parent);
-     
+
    E_FREE(import->cfdata->file);
    E_FREE(import->cfdata);
    E_FREE(import);
-   
+
    return;
 }
 
@@ -166,9 +174,8 @@ static void
 _imc_import_cb_resize(E_Win *win) 
 {
    Import *import;
-   
-   import = win->data;
-   if (!import) return;
+
+   if (!(import = win->data)) return;
    evas_object_resize(import->bg_obj, win->w, win->h);
 }
 
@@ -176,7 +183,7 @@ static void
 _imc_import_cb_wid_focus(void *data, Evas_Object *obj) 
 {
    Import *import;
-   
+
    import = data;
    if (obj == import->content_obj)
      e_widget_focused_object_clear(import->box_obj);
@@ -188,7 +195,7 @@ static void
 _imc_import_cb_selected(void *data, Evas_Object *obj) 
 {
    Import *import;
-   
+
    import = data;
    _imc_import_cb_ok(import->win, NULL);
 }
@@ -199,11 +206,10 @@ _imc_import_cb_changed(void *data, Evas_Object *obj)
    Import *import;
    const char *path;
    const char *file;
-   
-   import = data;
-   if (!import) return;
+
+   if (!(import = data)) return;
    if (!import->fsel_obj) return;
-   
+
    path = e_widget_fsel_selection_path_get(import->fsel_obj);
    E_FREE(import->cfdata->file);
    if (path)
@@ -212,7 +218,7 @@ _imc_import_cb_changed(void *data, Evas_Object *obj)
    if (import->cfdata->file) 
      {
 	char *strip;
-	
+
 	file = ecore_file_file_get(import->cfdata->file);
 	strip = ecore_file_strip_ext(file);
 	if (!strip) 
@@ -243,27 +249,24 @@ _imc_import_cb_ok(void *data, void *data2)
    const char *file;
 
    win = data;
-   import = win->data;
-   if (!import) return;
- 
+   if (!(import = win->data)) return;
+
    path = e_widget_fsel_selection_path_get(import->fsel_obj);
    E_FREE(import->cfdata->file);
    if (path)
      import->cfdata->file = strdup(path);
-   
+
    if (import->cfdata->file) 
      {
 	Eet_File *ef;
 	E_Input_Method_Config *imc;
 	char *strip;
-	
+
 	file = ecore_file_file_get(import->cfdata->file);
 
-	strip = ecore_file_strip_ext(file);
-	if (!strip) 
-	  return;
+	if (!(strip = ecore_file_strip_ext(file))) return;
 	free(strip);
-	
+
 	if (!e_util_glob_case_match(file, "*.imc")) 
 	  return;
 
@@ -274,7 +277,7 @@ _imc_import_cb_ok(void *data, void *data2)
 	     imc = e_intl_input_method_config_read(ef);
 	     eet_close(ef);
 	  }
-	
+
 	if (!imc)
 	  {
 	     e_util_dialog_show(_("Input Method Config Import Error"),
@@ -285,10 +288,11 @@ _imc_import_cb_ok(void *data, void *data2)
 	  }
 	else 
 	  {
-	     char buf[4096];
+	     char buf[PATH_MAX];
 
 	     e_intl_input_method_config_free(imc);
-	     snprintf(buf, sizeof(buf), "%s/%s", e_intl_imc_personal_path_get(), file);
+	     snprintf(buf, sizeof(buf), "%s/%s", 
+		      e_intl_imc_personal_path_get(), file);
 
 	     if (!ecore_file_cp(import->cfdata->file, buf)) 
 	       {
@@ -309,7 +313,7 @@ static void
 _imc_import_cb_close(void *data, void *data2) 
 {
    E_Win *win;
-   
+
    win = data;
    e_int_config_imc_import_del(win);
 }
@@ -364,7 +368,7 @@ _imc_import_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event)
 	     (!strcmp(ev->keyname, "space"))))
      {
 	Evas_Object *o = NULL;
-	
+
 	if ((import->content_obj) && (e_widget_focus_get(import->content_obj)))
 	  o = e_widget_focused_object_get(import->content_obj);
 	else
