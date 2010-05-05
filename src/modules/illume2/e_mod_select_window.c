@@ -82,7 +82,6 @@ _e_mod_illume_config_select_window_create(E_Config_Dialog *cfd, Evas *evas, E_Co
              if (!(bd = l->data)) continue;
              if (bd->zone != zone) continue;
              if (e_object_is_del(E_OBJECT(bd))) continue;
-	     if (bd->stolen) continue;
              if (_e_mod_illume_config_select_window_match(bd)) sel = i;
              if (!(name = e_border_name_get(bd))) continue;
              e_widget_ilist_append(ow, NULL, name, 
