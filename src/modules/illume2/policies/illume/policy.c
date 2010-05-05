@@ -55,7 +55,7 @@ _policy_border_set_focus(E_Border *bd)
                (e_config->focus_setting == E_FOCUS_NEW_DIALOG_IF_OWNER_FOCUSED))))) 
           {
              /* if the border was hidden due to layout, we need to unhide */
-             if (!bd->visible) e_border_show(bd);
+	     if (!bd->visible) e_illume_border_show(bd);
 
              /* if the border is iconified then uniconify */
              if (bd->iconic) 
@@ -159,14 +159,14 @@ _policy_border_hide_below(E_Border *bd)
 
              if ((bd->fullscreen) || (bd->need_fullscreen)) 
                {
-                  if (b->visible) e_border_hide(b, 2);
+		  if (b->visible) e_illume_border_hide(b);
                }
              else 
                {
                   /* we need to check x/y position */
                   if (E_CONTAINS(bd->x, bd->y, bd->w, bd->h, b->x, b->y, b->w, b->h))
                     {
-                       if (b->visible) e_border_hide(b, 2);
+		       if (b->visible) e_illume_border_hide(b);
                     }
                }
           }
@@ -1005,7 +1005,7 @@ _policy_border_add(E_Border *bd)
         if (ind = e_illume_border_indicator_get(bd->zone)) 
           {
              /* we have the indicator, hide it if needed */
-             if (ind->visible) e_border_hide(ind, 2);
+	     if (ind->visible) e_illume_border_hide(ind);
           }
      }
 
@@ -1033,7 +1033,7 @@ _policy_border_del(E_Border *bd)
         if (ind = e_illume_border_indicator_get(bd->zone)) 
           {
              /* we have the indicator, show it if needed */
-             if (!ind->visible) e_border_show(ind);
+	     if (!ind->visible) e_illume_border_show(ind);
           }
      }
 
@@ -1082,16 +1082,15 @@ _policy_border_activate(E_Border *bd)
    if (bd->stolen) return;
 
    /* conformant windows hide the softkey */
-   sft = e_illume_border_softkey_get(bd->zone);
-   if (sft) 
+   if (sft = e_illume_border_softkey_get(bd->zone))
      {
         if (e_illume_border_is_conformant(bd)) 
           {
-             if (sft->visible) e_border_hide(sft, 2);
+	     if (sft->visible) e_illume_border_hide(sft);
           }
         else 
           {
-             if (!sft->visible) e_border_show(sft);
+	     if (!sft->visible) e_illume_border_show(sft);
           }
      }
 
@@ -1226,11 +1225,6 @@ _policy_zone_layout(E_Zone *zone)
         if ((!bd->new_client) && (!bd->changes.pos) && (!bd->changes.size) && 
             (!bd->changes.visible) && (!bd->pending_move_resize) && 
             (!bd->need_shape_export) && (!bd->need_shape_merge)) continue;
-
-//        printf("Border Changed: %s\n", bd->client.icccm.class);
-//        printf("\tVisible: %d\n", bd->changes.visible);
-//        printf("\tPos: %d\n", bd->changes.pos);
-//        printf("\tSize: %d\n", bd->changes.size);
 
         /* are we laying out an indicator ? */
         if (e_illume_border_is_indicator(bd)) 
@@ -1610,11 +1604,11 @@ _policy_property_change(Ecore_X_Event_Window_Property *event)
          * but we save ourselves a function call this way */
         if ((bd->fullscreen) || (bd->need_fullscreen)) 
           {
-             if (ind->visible) e_border_hide(ind, 2);
+	     if (ind->visible) e_illume_border_hide(ind);
           }
         else 
           {
-             if (!ind->visible) e_border_show(ind);
+	     if (!ind->visible) e_illume_border_show(ind);
           }
      }
    else if (event->atom == ECORE_X_ATOM_E_ILLUME_INDICATOR_GEOMETRY) 
