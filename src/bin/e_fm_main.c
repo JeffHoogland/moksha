@@ -567,15 +567,20 @@ _e_dbus_cb_store_prop(void *data, void *reply_data, DBusError *error)
 
    s->bus = e_hal_property_string_get(ret, "storage.bus", &err);
    if (err) goto error;
+   s->bus = eina_stringshare_add(s->bus);
    s->drive_type = e_hal_property_string_get(ret, "storage.drive_type", &err);
    if (err) goto error;
+   s->drive_type = eina_stringshare_add(s->drive_type);
    s->model = e_hal_property_string_get(ret, "storage.model", &err);
    if (err) goto error;
+   s->model = eina_stringshare_add(s->model);
    s->vendor = e_hal_property_string_get(ret, "storage.vendor", &err);
    if (err) goto error;
+   s->vendor = eina_stringshare_add(s->vendor);
    s->serial = e_hal_property_string_get(ret, "storage.serial", &err);
 //   if (err) goto error;
    if (err) printf("Error getting serial for %s\n", s->udi);
+   s->serial = eina_stringshare_add(s->serial);
 
    s->removable = e_hal_property_bool_get(ret, "storage.removable", &err);
    
@@ -590,7 +595,9 @@ _e_dbus_cb_store_prop(void *data, void *reply_data, DBusError *error)
    s->media_check_enabled = e_hal_property_bool_get(ret, "storage.media_check_enabled", &err);
    
    s->icon.drive = e_hal_property_string_get(ret, "storage.icon.drive", &err);
+   s->icon.drive = eina_stringshare_add(s->icon.drive);
    s->icon.volume = e_hal_property_string_get(ret, "storage.icon.volume", &err);
+   s->icon.volume = eina_stringshare_add(s->icon.volume);
    
 //   printf("++STO:\n  udi: %s\n  bus: %s\n  drive_type: %s\n  model: %s\n  vendor: %s\n  serial: %s\n  icon.drive: %s\n  icon.volume: %s\n\n", s->udi, s->bus, s->drive_type, s->model, s->vendor, s->serial, s->icon.drive, s->icon.volume);
    s->validated = 1;
@@ -689,17 +696,19 @@ _e_dbus_cb_vol_prop(void *data, void *reply_data, DBusError *error)
    str = e_hal_property_string_get(ret, "volume.fsusage", &err);
    if (err || !str) goto error;
    if (strcmp(str, "filesystem")) goto error;
-   eina_stringshare_del(str);
    str = NULL;
    
    v->uuid = e_hal_property_string_get(ret, "volume.uuid", &err);
    if (err) goto error;
+   v->uuid = eina_stringshare_add(v->uuid);
    
    v->label = e_hal_property_string_get(ret, "volume.label", &err);
 //   if (err) goto error;
+   v->label = eina_stringshare_add(v->label);
    
    v->fstype = e_hal_property_string_get(ret, "volume.fstype", &err);
 //   if (err) goto error;
+   v->fstype = eina_stringshare_add(v->fstype);
 
    v->size = e_hal_property_uint64_get(ret, "volume.size", &err);
    
@@ -711,11 +720,13 @@ _e_dbus_cb_vol_prop(void *data, void *reply_data, DBusError *error)
 
    v->mount_point = e_hal_property_string_get(ret, "volume.mount_point", &err);
    if (err) goto error;
+   v->mount_point = eina_stringshare_add(v->mount_point);
    
    if (v->partition)
      {
 	v->partition_number = e_hal_property_int_get(ret, "volume.partition.number", NULL);
 	v->partition_label = e_hal_property_string_get(ret, "volume.partition.label", NULL);
+	v->partition_label = eina_stringshare_add(v->partition_label);
      }
    
    v->parent = e_hal_property_string_get(ret, "info.parent", &err);
@@ -728,6 +739,7 @@ _e_dbus_cb_vol_prop(void *data, void *reply_data, DBusError *error)
 	     s->volumes = eina_list_append(s->volumes, v);
 	  }
      }
+   v->parent = eina_stringshare_add(v->parent);
    
 //   printf("++VOL:\n  udi: %s\n  uuid: %s\n  fstype: %s\n  size: %llu\n label: %s\n  partition: %d\n  partition_number: %d\n partition_label: %s\n  mounted: %d\n  mount_point: %s\n", v->udi, v->uuid, v->fstype, v->size, v->label, v->partition, v->partition_number, v->partition ? v->partition_label : "(not a partition)", v->mounted, v->mount_point);
 //   if (s) printf("  for storage: %s\n", s->udi);
@@ -808,6 +820,7 @@ _e_dbus_cb_vol_prop_mount_modified(void *data, void *reply_data, DBusError *erro
    if (v->mount_point) eina_stringshare_del(v->mount_point);
    v->mount_point = e_hal_property_string_get(ret, "volume.mount_point", &err);
    if (err) printf("HAL Error : can't get volume.is_mount_point property");
+   v->mount_point = eina_stringshare_add(v->mount_point);
    
 //   printf("**VOL udi: %s mount_point: %s mounted: %d\n", v->udi, v->mount_point, v->mounted);
      {
