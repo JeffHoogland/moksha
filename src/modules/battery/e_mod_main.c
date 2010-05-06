@@ -543,7 +543,7 @@ _battery_dbus_battery_props(void *data, void *reply_data, DBusError *error __UNU
    str = e_hal_property_string_get(ret, s, &err); \
    if (str) \
      { \
-        hbat->val = str; \
+        hbat->val = eina_stringshare_add(str); \
      }
    
    GET_BOOL(present, "battery.present");
@@ -613,7 +613,7 @@ _battery_dbus_ac_adapter_props(void *data, void *reply_data, DBusError *error __
    str = e_hal_property_string_get(ret, s, &err); \
    if (str) \
      { \
-        hac->val = str; \
+        hac->val = eina_stringshare_add(str); \
      }
    
    GET_BOOL(present, "ac_adapter.present");
