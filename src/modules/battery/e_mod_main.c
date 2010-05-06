@@ -886,7 +886,7 @@ _battery_dbus_is_battery(void *user_data, void *reply_data, DBusError *err)
         dbus_error_free(err);
         goto error;
      }
-   if (!ret) return;
+   if (!ret) goto error;
 #ifdef HAVE_EUKIT
    if (ret->val.u == E_UPOWER_SOURCE_BATTERY)
 #else
@@ -894,7 +894,7 @@ _battery_dbus_is_battery(void *user_data, void *reply_data, DBusError *err)
 #endif
      _battery_dbus_battery_add(udi);
    error:
-   eina_stringshare_del(udi);
+   free(udi);
 }
 
 static void
@@ -913,7 +913,7 @@ _battery_dbus_is_ac_adapter(void *user_data, void *reply_data, DBusError *err)
         dbus_error_free(err);
         goto error;
      }
-   if (!ret) return;
+   if (!ret) goto error;
 #ifdef HAVE_EUKIT
    if (ret->val.u == E_UPOWER_SOURCE_AC)
 #else
@@ -921,7 +921,7 @@ _battery_dbus_is_ac_adapter(void *user_data, void *reply_data, DBusError *err)
 #endif
      _battery_dbus_ac_adapter_add(udi);
    error:
-   eina_stringshare_del(udi);
+   free(udi);
 }
 
 static void
