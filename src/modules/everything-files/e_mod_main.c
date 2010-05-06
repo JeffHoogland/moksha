@@ -382,7 +382,7 @@ _scan_end_func(void *data)
 			    if (!file->mime)
 			      file->mime = eina_stringshare_ref(hi->data);
 
-			    DBG("cached: %s %s", file->mime, file->path);
+			    /* DBG("cached: %s %s", file->mime, file->path); */
 			    hi->transient = 0;
 			    break;
 			 }
@@ -502,7 +502,7 @@ _dir_watcher(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, const c
 
       case ECORE_FILE_EVENT_CREATED_DIRECTORY:
       case ECORE_FILE_EVENT_CREATED_FILE:
-	 DBG("added %s", path);
+	 /* DBG("added %s", path); */
 
 	 label = ecore_file_file_get(path);
 
@@ -521,7 +521,7 @@ _dir_watcher(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, const c
       case ECORE_FILE_EVENT_DELETED_FILE:
       case ECORE_FILE_EVENT_DELETED_DIRECTORY:
 	 label = eina_stringshare_add(path);
-	 DBG("delete %s", path);
+	 /* DBG("delete %s", path); */
 
 	 EINA_LIST_FOREACH_SAFE(p->files, l, ll, file)
 	   {
@@ -797,41 +797,68 @@ _fetch(Evry_Plugin *plugin, const char *input)
 /* recent files */
 
 static int
+_cb_sort_recent(const void *data1, const void *data2)
+{
+   const Evry_Item *it1 = data1;
+   const Evry_Item *it2 = data2;
+
+   if (it1->browseable && !it2->browseable)
+     return -1;
+
+   if (!it1->browseable && it2->browseable)
+     return 1;
+
+   if (it1->hi && it2->hi)
+     return (it1->hi->last_used > it2->hi->last_used ? -1 : 1);
+
+   if (it1->fuzzy_match && it2->fuzzy_match)
+     if (it1->fuzzy_match - it2->fuzzy_match)
+       return (it1->fuzzy_match - it2->fuzzy_match);
+
+   return strcasecmp(it1->label, it2->label);
+}
+
+static int
 _recentf_append_files(Plugin *p)
 {
    int match;
    int cnt = 0;
    Evry_Item *it;
-   Eina_List *l;
+   Eina_List *l, *new = NULL;
 
    EVRY_PLUGIN_ITEMS_CLEAR(p);
 
    EINA_LIST_FOREACH(p->files, l, it)
      {
-	if (cnt >= MAX_SHOWN) break;
-
 	if (p->dirs_only && !it->browseable)
 	  continue;
 
-	if (it->fuzzy_match < 0)
+	if (it->fuzzy_match <= 0)
 	  {
 	     if ((match = evry_fuzzy_match(it->label, p->input)) ||
 		 (match = evry_fuzzy_match(EVRY_FILE(it)->path, p->input)))
 	       it->fuzzy_match = match;
 	     else
 	       it->fuzzy_match = 0;
+
+	     DBG("check match %d %s", it->fuzzy_match, it->label);
 	  }
 
 	if (_conf->show_recent || it->fuzzy_match)
 	  {
 	     if (!it->browseable)
 	       it->priority = 1;
-	     EVRY_PLUGIN_ITEM_APPEND(p, it);
-	     cnt++;
+	     new = eina_list_append(new, it);
 	  }
      }
 
-   p->files = eina_list_sort(p->files, -1, _cb_sort);
+   new = eina_list_sort(new, -1, _cb_sort_recent);
+
+   EINA_LIST_FREE(new, it)
+     {
+	if (cnt++ < MAX_SHOWN);
+	EVRY_PLUGIN_ITEM_APPEND(p, it);
+     }
 
    return cnt;
 }
@@ -966,7 +993,7 @@ _recentf_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *
      {
 	if (file->path == path)
 	  {
-	     DBG("already added %s", path);
+	     /* DBG("already added %s", path); */
 	     eina_stringshare_del(path);
 	     EVRY_ITEM(file)->fuzzy_match = -1;
 	     return EINA_TRUE;
@@ -976,7 +1003,7 @@ _recentf_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *
    /* searching subdirs */
    if (p->directory && strncmp(path, p->directory, strlen(p->directory)))
      {
-	DBG("not in dir %s", path);
+	/* DBG("not in dir %s", path); */
 	eina_stringshare_del(path);
 	return EINA_TRUE;
      }
@@ -984,7 +1011,7 @@ _recentf_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *
    if (!(match = evry_fuzzy_match(label, p->input)) &&
        !(match = evry_fuzzy_match(path, p->input)))
      {
-	DBG("not matched %s", path);
+	/* DBG("not matched %s", path); */
 	eina_stringshare_del(path);
 	return EINA_TRUE;
      }
@@ -1075,9 +1102,14 @@ _recentf_fetch(Evry_Plugin *plugin, const char *input)
    History_Types *ht;
    int len = (input ? strlen(input) : 0);
 
-   EVRY_PLUGIN_ITEMS_CLEAR(p);
-
    IF_RELEASE(p->input);
+
+   if (p->thread)
+     ecore_thread_cancel(p->thread);
+   p->thread = NULL;
+
+   if (input && isspace(input[len - 1]))
+     return !!(plugin->items);
 
    if (len >= plugin->config->min_query)
      {
@@ -1087,6 +1119,9 @@ _recentf_fetch(Evry_Plugin *plugin, const char *input)
 	if (input)
 	  p->input = eina_stringshare_add(input);
 
+	EINA_LIST_FOREACH(p->files, l, it)
+	  it->fuzzy_match = -1;
+
 	if ((ht = evry_history_types_get(evry_hist->subjects, EVRY_TYPE_FILE)))
 	  {
 	     Data *d = E_NEW(Data, 1);
@@ -1095,12 +1130,10 @@ _recentf_fetch(Evry_Plugin *plugin, const char *input)
 	     p->thread = ecore_thread_run(_recentf_func, _recentf_end_func,
 					  _recentf_cancel_func, d);
 	  }
-
-	EINA_LIST_FOREACH(p->files, l, it)
-	  it->fuzzy_match = -1;
-
-	return _recentf_append_files(p);
+	return !!(plugin->items);
      }
+
+   EVRY_PLUGIN_ITEMS_CLEAR(p);
 
    return 0;
 }
