@@ -18,15 +18,20 @@ struct _Plugin_Page
   Evas_Object *o_view_detail;
   Evas_Object *o_view_thumb;
   Evas_Object *o_enabled;
+  Evas_Object *o_aggregate;
+  Evas_Object *o_top_level;
   Evas_Object *o_cfg_btn;
+  Evas_Object *o_min_query;
 
   Eina_List *configs;
 
   char *trigger;
   int trigger_only;
   int view_mode;
+  int aggregate;
+  int top_level;
   int enabled;
-
+  int min_query;
   Plugin_Config *cur;
 } ;
 
@@ -152,12 +157,12 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 #undef C
 
    if (evry_conf->conf_subjects) eina_list_free(evry_conf->conf_subjects);
-   if (evry_conf->conf_actions) eina_list_free(evry_conf->conf_actions);
-   if (evry_conf->conf_objects) eina_list_free(evry_conf->conf_objects);
+   if (evry_conf->conf_actions)  eina_list_free(evry_conf->conf_actions);
+   if (evry_conf->conf_objects)  eina_list_free(evry_conf->conf_objects);
 
    evry_conf->conf_subjects = eina_list_clone(cfdata->page[0].configs);
-   evry_conf->conf_actions = eina_list_clone(cfdata->page[1].configs);
-   evry_conf->conf_objects = eina_list_clone(cfdata->page[2].configs);
+   evry_conf->conf_actions  = eina_list_clone(cfdata->page[1].configs);
+   evry_conf->conf_objects  = eina_list_clone(cfdata->page[2].configs);
 
    for (i = 0; i < 3; i++)
      {
@@ -174,9 +179,11 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 	       pc->trigger = NULL;
 
 	     pc->trigger_only = cfdata->page[i].trigger_only;
-
-	     pc->view_mode = cfdata->page[i].view_mode;
-	     pc->enabled = cfdata->page[i].enabled;
+	     pc->view_mode    = cfdata->page[i].view_mode;
+	     pc->enabled      = cfdata->page[i].enabled;
+	     pc->aggregate    = cfdata->page[i].aggregate;
+	     pc->top_level    = cfdata->page[i].top_level;
+	     pc->min_query    = cfdata->page[i].min_query;
 	  }
      }
 
@@ -213,7 +220,7 @@ _fill_list(Eina_List *plugins, Evas_Object *obj, int enabled __UNUSED__)
    
    e_widget_ilist_go(obj);
    e_widget_size_min_get(obj, &w, NULL);
-   e_widget_size_min_set(obj, w > 180 ? w : 180, 200);
+   e_widget_size_min_set(obj, w > 180 ? w : 180, 260);
    e_widget_ilist_thaw(obj);
    edje_thaw();
    evas_event_thaw(evas);
@@ -292,7 +299,13 @@ _list_select_cb (void *data, Evas_Object *obj)
 
 	e_widget_check_checked_set(page->o_enabled, pc->enabled);
 	e_widget_disabled_set(page->o_enabled, 0);
-
+	e_widget_check_checked_set(page->o_aggregate, pc->aggregate);
+	e_widget_disabled_set(page->o_aggregate, 0);
+	e_widget_check_checked_set(page->o_top_level, pc->top_level);
+	e_widget_disabled_set(page->o_top_level, 0);
+	e_widget_slider_value_int_set(page->o_min_query, pc->min_query); 
+	e_widget_disabled_set(page->o_min_query, 0);
+	
 	if (pc->plugin && pc->plugin->config_path)
 	  {
 	     e_widget_disabled_set(page->o_cfg_btn, 0);
@@ -314,7 +327,10 @@ _list_select_cb (void *data, Evas_Object *obj)
 	e_widget_disabled_set(page->o_view_list, 1);
 	e_widget_disabled_set(page->o_view_thumb, 1);
 	e_widget_disabled_set(page->o_enabled, 1);
+	e_widget_disabled_set(page->o_aggregate, 1);
+	e_widget_disabled_set(page->o_top_level, 1);
 	e_widget_disabled_set(page->o_cfg_btn, 1);
+	e_widget_disabled_set(page->o_min_query, 1);
 
 	page->cur = NULL;
      }
@@ -353,8 +369,9 @@ _create_plugin_page(E_Config_Dialog_Data *cfdata, Evas *e, Plugin_Page *page)
 			   _plugin_move_down_cb,
 			   page->list, page->configs);
    e_widget_framelist_object_append(of, o);
-   ob = e_widget_table_add(e, 1);
-   e_widget_table_object_append(ob, of, 0, 0, 1, 3, 1, 1, 1, 1);
+   ob = e_widget_table_add(e, 0);
+   e_widget_table_object_append(ob, of, 0, 0, 1, 3, 1, 1, 1, 0);
+
    of = e_widget_framelist_add(e, _("General"), 0);
    o = e_widget_button_add(e, _("Configure"), NULL,
    			   _plugin_config_cb,
@@ -362,12 +379,32 @@ _create_plugin_page(E_Config_Dialog_Data *cfdata, Evas *e, Plugin_Page *page)
    e_widget_disabled_set(o, 1);
    page->o_cfg_btn = o;
    e_widget_framelist_object_append(of, o);
+
    o = e_widget_check_add(e, _("Enabled"),
 			  &(page->enabled));
    e_widget_disabled_set(o, 1);
    page->o_enabled = o;
    e_widget_framelist_object_append(of, o);
-   e_widget_table_object_append(ob, of, 1, 0, 1, 1, 1, 0, 1, 0);
+
+   o = e_widget_check_add(e, _("Show in \"All\""),
+			  &(page->aggregate));
+   e_widget_disabled_set(o, 1);
+   page->o_aggregate = o;
+   e_widget_framelist_object_append(of, o);
+
+   o = e_widget_check_add(e, _("Show in top-level"),
+			  &(page->top_level));
+   e_widget_disabled_set(o, 1);
+   page->o_top_level = o;
+   e_widget_framelist_object_append(of, o);
+
+   o = e_widget_label_add(e, _("Minimum characters for search"));
+   e_widget_framelist_object_append(of, o);
+   o = e_widget_slider_add(e, 1, 0, _("%1.0f"), 0, 5, 1.0, 0, NULL, &(page->min_query), 10);
+   page->o_min_query = o;
+   e_widget_framelist_object_append(of, o);
+   
+   e_widget_table_object_append(ob, of, 1, 0, 1, 1, 1, 1, 1, 0);
 
    of = e_widget_framelist_add(e, _("Plugin Trigger"), 0);
    o = e_widget_entry_add(e, &(page->trigger), NULL, NULL, NULL);
@@ -379,7 +416,7 @@ _create_plugin_page(E_Config_Dialog_Data *cfdata, Evas *e, Plugin_Page *page)
    e_widget_disabled_set(o, 1);
    page->o_trigger_only = o;
    e_widget_framelist_object_append(of, o);
-   e_widget_table_object_append(ob, of, 1, 1, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(ob, of, 1, 1, 1, 1, 1, 1, 1, 0);
 
    of = e_widget_framelist_add(e, _("Plugin View"), 0);
    rg = e_widget_radio_group_new(&page->view_mode);
@@ -399,7 +436,7 @@ _create_plugin_page(E_Config_Dialog_Data *cfdata, Evas *e, Plugin_Page *page)
    e_widget_disabled_set(o, 1);
    page->o_view_thumb = o;
    e_widget_framelist_object_append(of, o);
-   e_widget_table_object_append(ob, of, 1, 2, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(ob, of, 1, 2, 1, 1, 1, 1, 1, 0);
 
    return ob;
 }

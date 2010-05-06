@@ -649,7 +649,6 @@ _fetch(Evry_Plugin *plugin, const char *input)
    Eina_List *l;
    Efreet_Desktop *desktop;
    Evry_Item *it;
-   /* char *file; */
 
    EVRY_PLUGIN_ITEMS_CLEAR(p);
 
@@ -676,31 +675,29 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	p->apps_all = apps;
      }
 
-   /* .desktop files */
-   _add_desktop_list(p, p->apps_all, input);
+   if (input)
+     {
+	/* .desktop files */	
+	_add_desktop_list(p, p->apps_all, input);
 
-   /* add executables */
-   _add_executables(p, input);
+	/* add executables */
+	_add_executables(p, input);
+     }
+   else
+     {
+	/* add matching items */
+	_add_desktop_list(p, p->apps_mime, input);
+     }
 
-   if (!input)
-     _add_desktop_list(p, p->apps_mime, input);
-   
-   /* FIXME update last used from exehist */
-   /* EINA_LIST_FOREACH(e_exehist_list_get(), l, file)
-    *   {
-    * 	double last_used = e_exehist_newest_run_get(file);
-    * 	History_Item *hi;
-    * 	it = (Evry_Item *)_item_add(p, NULL, file, 1);
-    * 	if (!eina_hash_find(evry_hist->subjects, it->id))
-    * 	  {
-    * 	     hi = evry_history_add(evry_hist->subjects, it, NULL, NULL);
-    * 	     if (hi) hi->last_used = last_used;
-    * 	  }
-    *   } */
+   EINA_LIST_FOREACH(plugin->items, l, it)
+     evry_history_item_usage_set(evry_hist->subjects, it, input, NULL);
 
-   /* add exe history items */
+   EVRY_PLUGIN_ITEMS_SORT(plugin, _cb_sort);
+
    if (!input && !plugin->items)
      {
+	
+	/* add history items */
 	if (!p->apps_hist)
 	  {
 	     History_Types *ht;
@@ -711,17 +708,9 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	else
 	  _add_desktop_list(p, p->apps_hist, NULL);
      }
-   else
-     {
-	EINA_LIST_FOREACH(plugin->items, l, it)
-	  evry_history_item_usage_set(evry_hist->subjects, it, input, NULL);
-
-	EVRY_PLUGIN_ITEMS_SORT(plugin, _cb_sort);
-     }
    
-   return 1;
+   return !!(plugin->items);
 }
-
 
 static int
 _complete(Evry_Plugin *plugin, const Evry_Item *it, char **input)
@@ -749,17 +738,6 @@ _complete(Evry_Plugin *plugin, const Evry_Item *it, char **input)
 static int
 _exec_app_check_item(Evry_Action *act, const Evry_Item *it)
 {
-   /* if (!CHECK_TYPE(it, EVRY_TYPE_APP, NULL)) return 0; */
-   
-   /* ITEM_APP(app, it); */
-
-   /* if (app->desktop)
-    *   return 1; */
-
-   /* run in terminal or do a .desktop entry! it's easy now */
-   /* if (app->file && strlen(app->file) > 0)
-    *   return 1; */
-
    return 1;
 }
 

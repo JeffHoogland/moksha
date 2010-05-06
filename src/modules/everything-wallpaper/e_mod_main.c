@@ -99,7 +99,7 @@ _fetch(Evry_Action *act)
 
    return it->items;
 }
-
+/* XXX free it->items list! */
 static Eina_Bool
 _plugins_init(void)
 {

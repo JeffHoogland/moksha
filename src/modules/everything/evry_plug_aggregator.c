@@ -12,90 +12,6 @@ struct _Plugin
   Evry_Item *warning;
 };
 
-static int
-_cb_sort(const void *data1, const void *data2)
-{
-   const Evry_Item *it1 = data1;
-   const Evry_Item *it2 = data2;
-
-   if ((it1->type == EVRY_TYPE_ACTION ||
-	it1->subtype == EVRY_TYPE_ACTION) &&
-       (it2->type == EVRY_TYPE_ACTION ||
-	it2->subtype == EVRY_TYPE_ACTION))
-     {
-	const Evry_Action *act1 = data1;
-	const Evry_Action *act2 = data2;
-
-	/* sort actions that match the specific type before
-	   those matching general type */
-	if (act1->it1.item && act2->it1.item)
-	  {
-	     if ((act1->it1.type == act1->it1.item->type) &&
-		 (act2->it1.type != act2->it1.item->type))
-	       return -1;
-
-	     if ((act1->it1.type != act1->it1.item->type) &&
-		 (act2->it1.type == act2->it1.item->type))
-	       return 1;
-	  }
-
-	/* sort context specific actions before
-	   general actions */
-	if (act1->remember_context || act2->remember_context)
-	  {
-	     if (act1->remember_context && !act2->remember_context)
-	       return -1;
-	     if (!act1->remember_context && act2->remember_context)
-	       return 1;
-	  }
-     }
-
-   /* sort items which match input or which
-      match much better first */
-   if (it1->fuzzy_match > 0 || it2->fuzzy_match > 0)
-     {
-   	if (it2->fuzzy_match <= 0)
-   	  return -1;
-   
-   	if (it1->fuzzy_match <= 0)
-   	  return 1;
-   
-   	if (abs (it1->fuzzy_match - it2->fuzzy_match) > 5)
-   	  return (it1->fuzzy_match - it2->fuzzy_match);
-     }
-
-   /* sort recently/most frequently used items first */
-   if (it1->usage > 0 || it2->usage > 0)
-     {
-	return (it1->usage > it2->usage ? -1 : 1);
-     }
-
-   /* sort items which match input better first */
-   if (it1->fuzzy_match > 0 || it2->fuzzy_match > 0)
-     {
-	if (it1->fuzzy_match - it2->fuzzy_match)
-	  return (it1->fuzzy_match - it2->fuzzy_match);
-     }
-
-   /* sort itemswith higher priority first */
-   if ((it1->plugin == it2->plugin) &&
-       (it1->priority - it2->priority))
-     return (it1->priority - it2->priority);
-
-   /* sort items with higher plugin priority first */
-   if (it1->type != EVRY_TYPE_ACTION &&
-       it2->type != EVRY_TYPE_ACTION)
-     {
-	int prio1 = it1->plugin->config->priority;
-	int prio2 = it2->plugin->config->priority;
-
-	if (prio1 - prio2)
-	  return (prio1 - prio2);
-     }
-
-   return strcasecmp(it1->label, it2->label);
-}
-
 static inline Eina_List *
 _add_item(Plugin *p, Eina_List *items, Evry_Item *it)
 {
@@ -132,17 +48,20 @@ _fetch(Evry_Plugin *plugin, const char *input)
    int i, cnt = 0;
    Eina_List *items = NULL;
    const char *context = NULL;
+   char buf[128];
+   Evry_Selector *sel = p->selector;
+
    if (input && !input[0]) input = NULL;
 
    EVRY_PLUGIN_ITEMS_FREE(p);
 
-   s = p->selector->state;
+   s = sel->state;
    if (!s) return 0;
 
    if (!s->cur_plugins)
      {
 	/* 'text' and 'actions' are always loaded */
-	if ((p->selector == selectors[0]) &&
+	if ((sel == selectors[0]) &&
 	    (eina_list_count(s->plugins) == 2))
 	  {
 	     evry_item_ref(p->warning);
@@ -154,7 +73,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
    /* get current items' context ... */
    for (i = 1; i < 3; i++)
      {
-	if (p->selector == selectors[i])
+	if (sel == selectors[i])
 	  {
 	     it = selectors[i-1]->state->cur_item;
 	     if (it) context = it->context;
@@ -164,24 +83,54 @@ _fetch(Evry_Plugin *plugin, const char *input)
    /* filter all to be shown in aggregator */
    EINA_LIST_FOREACH(s->cur_plugins, l, pp)
      {
-	if (!pp->aggregate || pp == plugin) continue;
+	if (!pp->config->aggregate || pp == plugin)
+	  continue;
+	if (!sel->states->next && !pp->config->top_level)
+	  continue;
 	lp = eina_list_append(lp, pp);
      }
 
-   if (!lp) return 0;
+   /* show non-top-level plugins as item */
+   if (!s->trigger_active && !sel->states->next)
+     {
+	EINA_LIST_FOREACH(s->plugins, l, pp)
+	  {
+	     GET_ITEM(it, pp);
+
+	     if (pp->config->top_level || pp == plugin)
+	       continue;
+
+	     if (!pp->items)
+	       continue;
+
+	     it->fuzzy_match = evry_fuzzy_match(it->label, input);
+
+	     it->hi = NULL;
+	     evry_history_item_usage_set(sel->history, it, NULL, NULL);
+
+	     snprintf(buf, sizeof(buf), "%d %s", eina_list_count(pp->items), _("Items"));
+	     if (it->detail)
+	       eina_stringshare_del(it->detail);
+	     it->detail = eina_stringshare_add(buf);
+
+	     items = _add_item(p, items, it);
+	  }
+     }
+
+   if (!lp && !items) return 0;
 
    /* if there is only one plugin append all items */
-   if (!lp->next)
+   if (lp && !lp->next)
      {
        pp = lp->data;
 
        EINA_LIST_FOREACH(pp->items, l, it)
 	 {
 	    if (it->usage >= 0)
-	      evry_history_item_usage_set(p->selector->history,
+	      evry_history_item_usage_set(sel->history,
 					  it, input, context);
-	    it->fuzzy_match = evry_fuzzy_match(it->label, input);
-
+	    if (it->fuzzy_match == 0)
+	      it->fuzzy_match = evry_fuzzy_match(it->label, input);
 	    items = _add_item(p, items, it);
 	 }
      }
@@ -196,10 +145,10 @@ _fetch(Evry_Plugin *plugin, const char *input)
 		  if (it->fuzzy_match == 0)
 		    it->fuzzy_match = evry_fuzzy_match(it->label, input);
 
-		  if (it->fuzzy_match || p->selector == selectors[2])
+		  if (it->fuzzy_match || sel == selectors[2])
 		    {
 		       if (it->usage >= 0)
-			 evry_history_item_usage_set(p->selector->history,
+			 evry_history_item_usage_set(sel->history,
 						     it, input, context);
 
 		       items = _add_item(p, items, it);
@@ -209,15 +158,15 @@ _fetch(Evry_Plugin *plugin, const char *input)
      }
    /* always append items of action or object selector */
    else if ((!input) &&
-	    ((p->selector == selectors[1]) ||
-	     (p->selector == selectors[2])))
+	    ((sel == selectors[1]) ||
+	     (sel == selectors[2])))
      {
        EINA_LIST_FOREACH(lp, l, pp)
    	  {
 	     EINA_LIST_FOREACH(pp->items, ll, it)
    	       {
 		  if (it->usage >= 0)
-		    evry_history_item_usage_set(p->selector->history,
+		    evry_history_item_usage_set(sel->history,
 						it, NULL, context);
 		  it->fuzzy_match = 0;
 		  items = _add_item(p, items, it);
@@ -232,7 +181,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	   EINA_LIST_FOREACH(pp->items, ll, it)
 	     {
 		if ((it->usage >= 0) &&
-		    (evry_history_item_usage_set(p->selector->history,
+		    (evry_history_item_usage_set(sel->history,
 						 it, input, context)) &&
 		    (!eina_list_data_find_list(items, it)))
 		 {
@@ -243,7 +192,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	 }
      }
 
-   if (eina_list_count(items) <  MAX_ITEMS)
+   if (lp && lp->next && eina_list_count(items) <  MAX_ITEMS)
      {
 	EINA_LIST_FOREACH(lp, l, pp)
 	  {
@@ -252,17 +201,22 @@ _fetch(Evry_Plugin *plugin, const char *input)
    		  if (!eina_list_data_find_list(items, it))
 		    {
 		       it->usage = 0;
-		       it->fuzzy_match = 0;
+		       if (it->fuzzy_match == 0)
+			 it->fuzzy_match = evry_fuzzy_match(it->label, input);
+
 		       items = _add_item(p, items, it);
 		    }
 	       }
 	  }
      }
 
+   /* EINA_LIST_FOREACH(items, l, it)
+    *   printf("%d %1.20f %s\n", it->fuzzy_match, it->usage, it->label); */
 
    if (items) eina_list_free(items);
+   if (lp) eina_list_free(lp);
 
-   EVRY_PLUGIN_ITEMS_SORT(p, _cb_sort);
+   EVRY_PLUGIN_ITEMS_SORT(p, evry_items_sort_func);
 
    EINA_LIST_FOREACH_SAFE(p->base.items, l, ll, it)
      {
@@ -275,13 +229,10 @@ _fetch(Evry_Plugin *plugin, const char *input)
 }
 
 static void
-_finish(Evry_Plugin *plugin)
+_finish(Evry_Plugin *p)
 {
-   Evry_Item *it;
-   EINA_LIST_FREE(plugin->items, it)
-     evry_item_free(it);
+   EVRY_PLUGIN_ITEMS_FREE(p);
 }
-
 
 static void
 _free(Evry_Plugin *plugin)
@@ -301,7 +252,6 @@ evry_plug_aggregator_new(Evry_Selector *sel, int type)
    Evry_Plugin *p;
 
    p = EVRY_PLUGIN_NEW(Plugin, N_("All"), NULL, 0, NULL, _finish, _fetch, _free);
-
    p->history = EINA_FALSE;
    evry_plugin_register(p, type, -1);
 

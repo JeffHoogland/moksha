@@ -39,12 +39,19 @@ evry_plug_text_init(void)
    p2 = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Text"),
 			"accessories-text-editor", EVRY_TYPE_TEXT,
 			NULL, _cleanup, _fetch, NULL);
-   p1->trigger = " ";
-   p2->trigger = " ";
 
-   evry_plugin_register(p1, EVRY_PLUGIN_OBJECT,999);
-   evry_plugin_register(p2, EVRY_PLUGIN_SUBJECT, 999);
-
+   if (evry_plugin_register(p1, EVRY_PLUGIN_OBJECT,999))
+     {
+	p1->config->trigger_only = 1;
+	p1->config->trigger = eina_stringshare_add(" ");	
+     }
+   
+   if (evry_plugin_register(p2, EVRY_PLUGIN_SUBJECT, 999))
+     {
+	p2->config->trigger_only = 1;
+	p2->config->trigger = eina_stringshare_add(" ");
+     }
+   
    return EINA_TRUE;
 }
 

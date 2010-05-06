@@ -2,15 +2,13 @@
 #include "e_mod_main.h"
 
 /* TODO */
-/* - animations
- * - mouse handlers
- * - show item descriptions
+/* - mouse handlers
  * - keybinding configuration
- * - shortcuts for plugins
  */
+
 #define INPUTLEN 256
-#define MATCH_LAG 0.15
-#define INITIAL_MATCH_LAG 0.2
+#define MATCH_LAG 0.25
+#define INITIAL_MATCH_LAG 0.3
 
 /* #undef DBG
  * #define DBG(...) ERR(__VA_ARGS__) */
@@ -1130,6 +1128,9 @@ _evry_selector_subjects_get(const char *plugin_name)
 	if (plugin_name && strcmp(plugin_name, p->name))
 	  continue;
 
+	/* if (!p->config->top_level)
+	 *   continue; */
+
 	if (p->begin)
 	  {
 	     if ((pp = p->begin(p, NULL)))
@@ -1161,6 +1162,9 @@ _evry_selector_actions_get(Evry_Item *it)
 
    EINA_LIST_FOREACH(sel->plugins, l, p)
      {
+	/* if (!p->config->top_level)
+	 *   continue; */
+
 	if (p->begin)
 	  {
 	     if ((pp = p->begin(p, it)))
@@ -1193,6 +1197,9 @@ _evry_selector_objects_get(Evry_Action *act)
    EINA_LIST_FOREACH(sel->plugins, l, p)
      {
 	DBG("p %s %d %d\n", p->name, EVRY_ITEM(p)->subtype, act->it2.type);
+
+	/* if (!p->config->top_level)
+	 *   continue; */
 
 	if (!CHECK_SUBTYPE(p, act->it2.type))
 	  continue;
@@ -1237,6 +1244,7 @@ _evry_state_pop(Evry_Selector *sel)
 {
    Evry_Plugin *p;
    Evry_State *s;
+   Evry_State *prev = NULL;
 
    s = sel->state;
 
@@ -1247,33 +1255,40 @@ _evry_state_pop(Evry_Selector *sel)
    if (s->view)
      s->view->destroy(s->view);
 
+   sel->states = eina_list_remove_list(sel->states, sel->states);
+   
+   if (sel->states)
+     prev = sel->states->data;
+   
    EINA_LIST_FREE(s->plugins, p)
-     p->finish(p);
-
+     {
+	/* XXX skip non top-level plugins */
+	if (prev && eina_list_data_find(prev->plugins, p))
+	  continue;
+	
+       p->finish(p);
+     }
+   
    if (s->sel_items)
      eina_list_free(s->sel_items);
 
    E_FREE(s);
 
-   sel->states = eina_list_remove_list(sel->states, sel->states);
-
-   if (sel->states)
-     sel->state = sel->states->data;
-   else
-     sel->state = NULL;
+   sel->state = prev;
 }
 
 int
 evry_browse_item(Evry_Selector *sel)
 {
    if (!sel) sel = selector;
-   Evry_State *s = sel->state;
+   Evry_State *s, *new_state;
    Evry_Item *it;
    Eina_List *l, *plugins = NULL;
    Evry_Plugin *p, *pp;
    Evry_View *view = NULL;
-
-   if (!s)
+   int browse_aggregator = 0;
+   
+   if (!(s = sel->state))
      return 0;
 
    it = s->cur_item;
@@ -1298,24 +1313,46 @@ evry_browse_item(Evry_Selector *sel)
        (pp = it->plugin->browse(it->plugin, it)))
      plugins = eina_list_append(plugins, pp);
 
+   if (!plugins && CHECK_TYPE(it, EVRY_TYPE_PLUGIN))
+     {
+	browse_aggregator = 1;
+	plugins = eina_list_append(plugins, it);
+     }
+   
    if (!plugins)
      return 0;
 
-   if (it->plugin->history)
-     evry_history_add(sel->history, s->cur_item, NULL, s->input);
-
+   if (!(new_state = _evry_state_new(sel, plugins)))
+     return 0;
+   
    if (s->view)
      {
 	_evry_view_hide(s->view, 1);
 	view = s->view;
      }
 
-   _evry_state_new(sel, plugins);
-   _evry_matches_update(sel, 1);
-   _evry_selector_update(sel);
-   s = sel->state;
+   if (browse_aggregator)
+     {
+	evry_history_add(sel->history, s->cur_item, NULL, NULL);
+	snprintf(sel->state->input, INPUTLEN, "%s", s->input);
 
-   if (view && list->visible && s)
+	s = new_state;
+	/* if (sel->aggregator->fetch(sel->aggregator, input))
+	 *   _evry_plugin_list_insert(s, sel->aggregator); */
+	s->cur_plugins = eina_list_append(s->cur_plugins, it);
+	_evry_plugin_select(s, EVRY_PLUGIN(it));
+     }
+   else	if (it->plugin->history)
+     {
+	evry_history_add(sel->history, s->cur_item, NULL, s->input);
+	_evry_matches_update(sel, 1);
+	s = new_state;
+     }
+
+   _evry_selector_update(sel);
+
+
+   if (view && list->visible)
      {
 	s->view = view->create(view, s, list->o_main);
 	if (s->view)
@@ -1740,8 +1777,8 @@ _evry_update(Evry_Selector *sel, int fetch)
 
 	sel->update_timer = ecore_timer_add(MATCH_LAG, _evry_cb_update_timer, sel);
 
-	if (s->plugin && !s->plugin->trigger)
-	  edje_object_signal_emit(list->o_main, "e,signal,update", "e");
+	/* if (s->plugin && !s->plugin->trigger) */
+	edje_object_signal_emit(list->o_main, "e,signal,update", "e");
      }
 }
 
@@ -2119,7 +2156,7 @@ _evry_matches_update(Evry_Selector *sel, int async)
 
 	EINA_LIST_FOREACH(s->plugins, l, p)
 	  {
-	     if (sel == selectors[0])
+	     if ((p->config->top_level) && (sel == selectors[0]))
 	       {
 		  if ((p->config->trigger) && (p->config->trigger_only))
 		    continue;

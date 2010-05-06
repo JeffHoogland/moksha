@@ -12,7 +12,7 @@ evry_util_file_detail_set(Evry_Item_File *file)
 {
    char *dir = NULL;
    const char *tmp;
-   
+
    if (EVRY_ITEM(file)->detail)
      return;
 
@@ -24,11 +24,11 @@ evry_util_file_detail_set(Evry_Item_File *file)
 
    dir = ecore_file_dir_get(file->path);
    if (!dir || !home_dir) return;
-   
+
    if (!strncmp(dir, home_dir, home_dir_len))
      {
 	tmp = dir + home_dir_len;
-	
+
 	if (*(tmp) == '\0')
 	  snprintf(dir_buf, sizeof(dir_buf), "~%s", tmp);
 	else
@@ -104,7 +104,7 @@ evry_fuzzy_match(const char *str, const char *match)
 	min = 1;
 	first = 0;
 	/* m_len = 0; */
-	
+
 	/* match current word of string against current match */
 	for (p = next; *next != 0; p++)
 	  {
@@ -139,7 +139,7 @@ evry_fuzzy_match(const char *str, const char *match)
 		    offset += 3;
 
 		  /* m_len++; */
-		  
+
 		  if (offset <= m_len * 3)
 		    continue;
 	       }
@@ -245,9 +245,138 @@ _evry_fuzzy_match_sort_cb(const void *data1, const void *data2)
 EAPI Eina_List *
 evry_fuzzy_match_sort(Eina_List *items)
 {
-   return eina_list_sort(items, eina_list_count(items), _evry_fuzzy_match_sort_cb);
+   return eina_list_sort(items, -1, _evry_fuzzy_match_sort_cb);
 }
 
+EAPI int
+evry_items_sort_func(const void *data1, const void *data2)
+{
+   const Evry_Item *it1 = data1;
+   const Evry_Item *it2 = data2;
+
+   if ((it1->type == EVRY_TYPE_ACTION ||
+	it1->subtype == EVRY_TYPE_ACTION) &&
+       (it2->type == EVRY_TYPE_ACTION ||
+	it2->subtype == EVRY_TYPE_ACTION))
+     {
+	const Evry_Action *act1 = data1;
+	const Evry_Action *act2 = data2;
+
+	/* sort actions that match the specific type before
+	   those matching general type */
+	if (act1->it1.item && act2->it1.item)
+	  {
+	     if ((act1->it1.type == act1->it1.item->type) &&
+		 (act2->it1.type != act2->it1.item->type))
+	       return -1;
+
+	     if ((act1->it1.type != act1->it1.item->type) &&
+		 (act2->it1.type == act2->it1.item->type))
+	       return 1;
+	  }
+
+	/* sort context specific actions before
+	   general actions */
+	if (act1->remember_context && !act2->remember_context)
+	  return -1;
+	if (!act1->remember_context && act2->remember_context)
+	  return 1;
+     }
+
+   /* if (it1->type == EVRY_TYPE_PLUGIN &&
+    *     it2->type != EVRY_TYPE_PLUGIN)
+    *   {
+    * 	return (it1->usage > it2->usage ? -1 : 1);
+    *   }
+    * else if (it2->type == EVRY_TYPE_PLUGIN &&
+    * 	    it1->type != EVRY_TYPE_PLUGIN)
+    *   {
+    * 	return (it1->usage > it2->usage ? -1 : 1);
+    *   } */
+
+   /* sort items which match input or which
+      match much better first */
+   if (it1->fuzzy_match > 0 || it2->fuzzy_match > 0)
+     {
+   	if (it2->fuzzy_match <= 0)
+   	  return -1;
+
+   	if (it1->fuzzy_match <= 0)
+   	  return 1;
+
+   	if (abs (it1->fuzzy_match - it2->fuzzy_match) > 5)
+   	  return (it1->fuzzy_match - it2->fuzzy_match);
+     }
+
+   /* sort recently/most frequently used items first */
+   if (it1->usage > 0.0 || it2->usage > 0.0)
+     {
+	return (it1->usage > it2->usage ? -1 : 1);
+     }
+
+   /* sort items which match input better first */
+   if (it1->fuzzy_match > 0 || it2->fuzzy_match > 0)
+     {
+	if (it1->fuzzy_match - it2->fuzzy_match)
+	  return (it1->fuzzy_match - it2->fuzzy_match);
+     }
+
+   /* sort itemswith higher priority first */
+   if ((it1->plugin == it2->plugin) &&
+       (it1->priority - it2->priority))
+     return (it1->priority - it2->priority);
+
+   /* sort items with higher plugin priority first */
+   if (it1->type != EVRY_TYPE_ACTION &&
+       it2->type != EVRY_TYPE_ACTION)
+     {
+	int prio1 = it1->plugin->config->priority;
+	int prio2 = it2->plugin->config->priority;
+
+	if (prio1 - prio2)
+	  return (prio1 - prio2);
+     }
+
+   return strcasecmp(it1->label, it2->label);
+}
+
+EAPI int
+evry_util_plugin_items_add(Evry_Plugin *p, Eina_List *items, const char *input,
+		      int match_detail, int set_usage)
+{
+   Eina_List *l, *cur = NULL;
+   Evry_Item *it;
+   int match = 0;
+
+   if (p->items)
+     {
+	ERR("items not cleared");
+	return 1;
+     }
+
+   EINA_LIST_FOREACH(items, l, it)
+     {
+	it->fuzzy_match = evry_fuzzy_match(it->label, input);
+
+	if (match_detail)
+	  match = evry_fuzzy_match(it->detail, input);
+
+	if (match && match < it->fuzzy_match)
+	  it->fuzzy_match = match;
+
+	if (it->fuzzy_match)
+	  {
+	     if (set_usage)
+	       evry_history_item_usage_set(evry_hist->subjects, it, input, NULL);
+
+	     p->items = eina_list_append(p->items, it);
+	  }
+     }
+
+   p->items = eina_list_sort(p->items, -1, evry_items_sort_func);
+
+   return !!(p->items);
+}
 
 /* taken from e_utils. just changed 48 to 72.. we need
    evry_icon_theme_set(Evas_Object *obj, const char *icon,
@@ -378,7 +507,7 @@ Evas_Object *
 evry_util_icon_get(Evry_Item *it, Evas *e)
 {
    Evas_Object *o = NULL;
-   
+
    if (it->icon_get)
      o = it->icon_get(it, e);
 
@@ -387,7 +516,7 @@ evry_util_icon_get(Evry_Item *it, Evas *e)
 
    if (CHECK_TYPE(it, EVRY_TYPE_FILE))
      o = _file_icon_get(it, e);
-   
+
    /* TODO default type: files, apps */
 
    return o;
@@ -401,11 +530,11 @@ evry_util_exec_app(const Evry_Item *it_app, const Evry_Item *it_file)
    Eina_List *files = NULL;
    char *exe = NULL;
    char *tmp = NULL;
-   
+
    if (!it_app) return 0;
    GET_APP(app, it_app);
    GET_FILE(file, it_file);
-   
+
    zone = e_util_zone_current_get(e_manager_current_get());
 
    if (app->desktop)
@@ -671,7 +800,7 @@ evry_file_path_get(Evry_Item_File *file)
 {
    const char *tmp;
    char *path;
-   
+
    if (file->path)
      return file->path;
 
@@ -681,14 +810,14 @@ evry_file_path_get(Evry_Item_File *file)
    if (!strncmp(file->url, "file://", 7))
      tmp = file->url + 7;
    else return NULL;
-   
+
    if (!(path = evry_util_unescape(tmp, 0)))
      return NULL;
-   
+
    file->path = eina_stringshare_add(path);
 
    E_FREE(path);
-   
+
    return file->path;
 }
 
@@ -696,17 +825,17 @@ EAPI const char*
 evry_file_uri_get(Evry_Item_File *file)
 {
    char buf[PATH_MAX];
-   
+
    if (file->url)
      return file->url;
 
    if (!file->path)
      return NULL;
-   
+
    snprintf(buf, sizeof(buf), "file://%s", file->path);
 
    /* FIXME escape ? */
-   
+
    file->url = eina_stringshare_add(buf);
 
    return file->url;

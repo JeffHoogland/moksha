@@ -63,6 +63,9 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
 
    GET_PLUGIN(p, plugin);
 
+   if (CHECK_TYPE(it, EVRY_TYPE_PLUGIN))
+     return NULL;
+   
    EINA_LIST_FOREACH(evry_conf->actions, l, act)
      {
 	if (((!act->it1.type) ||

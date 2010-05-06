@@ -238,13 +238,16 @@ _plugins_init(void)
 			EVRY_TYPE_TEXT,
 			_begin, _cleanup, _fetch, NULL);
 
-   p1->view_mode   = VIEW_MODE_LIST;
-   p1->aggregate   = EINA_FALSE;
    p1->history     = EINA_FALSE;
    p1->async_fetch = EINA_TRUE;
-   p1->trigger     = "=";
 
-   evry_plugin_register(p1, EVRY_PLUGIN_SUBJECT, 0);
+   if (evry_plugin_register(p1, EVRY_PLUGIN_SUBJECT, 0))
+     {
+	Plugin_Config *pc = p1->config;
+	pc->view_mode = VIEW_MODE_LIST;
+	pc->aggregate = EINA_FALSE;
+	pc->trigger = eina_stringshare_add("=");
+     }
 
    return EINA_TRUE;
 }

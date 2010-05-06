@@ -283,6 +283,12 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
    if (!input) return 1;
 
+   if (strlen(input) < plugin->config->min_query)
+     {
+	EVRY_PLUGIN_ITEMS_FREE(p);
+	return 0;
+     }
+
    if (!p->handler.data && !_begin(plugin, NULL)) return 0;
 
    len = sizeof(LANG_MODIFIER) - 1;
@@ -392,13 +398,20 @@ _plugins_init(void)
 		       EVRY_TYPE_TEXT,
 		       NULL, _cleanup, _fetch, NULL);
    p->config_path = _config_path;
-   p->aggregate   = EINA_FALSE;
    p->history     = EINA_FALSE;
    p->async_fetch = EINA_TRUE;
-   p->trigger     = TRIGGER;
-   p->view_mode   = VIEW_MODE_LIST;
    
-   evry_plugin_register(p, EVRY_PLUGIN_SUBJECT, 100);
+   if (evry_plugin_register(p, EVRY_PLUGIN_SUBJECT, 100))
+     {
+	Plugin_Config *pc = p->config;
+	pc->view_mode = VIEW_MODE_LIST;
+	pc->aggregate = EINA_FALSE;
+	pc->top_level = EINA_FALSE;
+	pc->trigger = eina_stringshare_add(TRIGGER);
+	pc->trigger_only = EINA_TRUE;
+	pc->min_query = 2;
+     }
+   
    _plug = (Plugin *) p;
 
    return EINA_TRUE;

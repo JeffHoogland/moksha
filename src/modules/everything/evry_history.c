@@ -95,12 +95,12 @@ _hist_free_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata)
 
    if (ht->types)
      {
-	eina_hash_foreach(ht->types, _hist_entry_free_cb, NULL);   
+	eina_hash_foreach(ht->types, _hist_entry_free_cb, NULL);
 	eina_hash_free(ht->types);
      }
-   
+
    E_FREE(ht);
-   
+
    return EINA_TRUE;
 }
 
@@ -119,7 +119,7 @@ _hist_entry_cleanup_cb(const Eina_Hash *hash, const void *key, void *data, void 
 	     hi->count--;
 	     hi->last_used = d->time - SEVEN_DAYS/2.0;
 	  }
-	
+
 	/* item is transient or too old */
 	if (!hi->count || hi->transient)
 	  {
@@ -151,12 +151,15 @@ _hist_cleanup_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata
 {
    History_Types *ht = data;
    Cleanup_Data *d = fdata;
-   
-   eina_hash_foreach(ht->types, _hist_entry_cleanup_cb, fdata);   
 
-   EINA_LIST_FREE(d->keys, key)
-     eina_hash_del_by_key(ht->types, key);
-   
+   if (ht->types)
+     {
+	eina_hash_foreach(ht->types, _hist_entry_cleanup_cb, fdata);
+
+	EINA_LIST_FREE(d->keys, key)
+	  eina_hash_del_by_key(ht->types, key);
+     }
+
    return EINA_TRUE;
 }
 void
@@ -172,14 +175,14 @@ evry_history_free(void)
 	d->time = ecore_time_get();
 
 	if (evry_hist->subjects)
-	  {	     
+	  {
 	     eina_hash_foreach(evry_hist->subjects, _hist_cleanup_cb, d);
 	  }
 	if (evry_hist->actions)
 	  {
 	     eina_hash_foreach(evry_hist->actions, _hist_cleanup_cb, d);
 	  }
-	
+
 	E_FREE(d);
 	evry_history_unload();
      }
@@ -194,7 +197,7 @@ EAPI void
 evry_history_load(void)
 {
    if (evry_hist) return;
-   
+
    evry_hist = e_config_domain_load("module.everything.cache", hist_edd);
 
    if (evry_hist && evry_hist->version != HISTORY_VERSION)
@@ -245,7 +248,7 @@ evry_history_types_get(Eina_Hash *hist, Evry_Type _type)
 
    if (!type)
      return NULL;
-   
+
    ht = eina_hash_find(hist, type);
 
    if (!ht)
@@ -255,8 +258,8 @@ evry_history_types_get(Eina_Hash *hist, Evry_Type _type)
      }
 
    if (!ht->types)
-     ht->types = eina_hash_string_superfast_new(NULL); 
-   
+     ht->types = eina_hash_string_superfast_new(NULL);
+
    return ht;
 }
 
@@ -271,7 +274,7 @@ evry_history_add(Eina_Hash *hist, Evry_Item *it, const char *ctxt, const char *i
    const char *type;
 
    int rem_ctxt = 1;
-   
+
    if (!it) return NULL;
 
    if (it->type == EVRY_TYPE_ACTION)
@@ -342,12 +345,12 @@ evry_history_add(Eina_Hash *hist, Evry_Item *it, const char *ctxt, const char *i
 	else if (input)
 	  {
 	     hi->input = eina_stringshare_add(input);
-	  }	
+	  }
      }
 
    /* reset usage */
    it->usage = 0.0;
-   
+
    return hi;
 }
 
@@ -361,7 +364,7 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, c
    int rem_ctxt = 1;
    it->usage = 0.0;
    const char *type;
-   
+
    if (!it->plugin->history)
      return 0;
 
@@ -376,7 +379,7 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, c
    if (!hi)
      {
 	ht = evry_history_types_get(hist, it->type);
-	
+
 	if (!(he = eina_hash_find(ht->types, (it->id ? it->id : it->label))))
 	  return 0;
 
@@ -386,7 +389,7 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, c
 	     if (!act->remember_context)
 	       rem_ctxt = 0;
 	  }
-   
+
 	EINA_LIST_FOREACH(he->items, l, hi)
 	  {
 	     if (hi->plugin != it->plugin->name)
@@ -405,7 +408,7 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, c
 
    if (!hi) return 0;
 
-   
+
    if (evry_conf->history_sort_mode == 0)
      {
 	if (!input || !hi->input)
@@ -444,11 +447,11 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, c
 	if (hi->last_used > it->usage)
 	  it->usage = hi->last_used;
      }
-	
+
    if (it->usage > 0.0)
      return 1;
 
    it->usage = -1.0;
-   
+
    return 0;
 }

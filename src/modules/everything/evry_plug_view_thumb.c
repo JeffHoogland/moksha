@@ -1137,40 +1137,37 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 
    const char *key = ev->key;
 
-   if (s->plugin->view_mode == VIEW_MODE_NONE)
+   if (((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
+	(!strcmp(key, "2"))) || !strcmp(key, "XF86Back"))
      {
-	if (((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
-	     (!strcmp(key, "2"))) || !strcmp(key, "XF86Back"))
-	  {
-	     if (v->mode == VIEW_MODE_LIST)
-	       v->mode = VIEW_MODE_DETAIL;
-	     else
-	       v->mode = VIEW_MODE_LIST;
+	if (v->mode == VIEW_MODE_LIST)
+	  v->mode = VIEW_MODE_DETAIL;
+	else
+	  v->mode = VIEW_MODE_LIST;
 
-	     v->zoom = 0;
-	     _clear_items(v->span);
-	     _update_frame(v->span);
-	     goto end;
-	  }
-	else if (((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
-		  (!strcmp(key, "3"))) || !strcmp(key, "XF86Forward"))
+	v->zoom = 0;
+	_clear_items(v->span);
+	_update_frame(v->span);
+	goto end;
+     }
+   else if (((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
+	     (!strcmp(key, "3"))) || !strcmp(key, "XF86Forward"))
+     {
+	if (v->mode != VIEW_MODE_THUMB)
 	  {
-	     if (v->mode != VIEW_MODE_THUMB)
-	       {
-		  v->zoom = 0;
-		  v->mode = VIEW_MODE_THUMB;
-		  _clear_items(v->span);
-	       }
-	     else
-	       {
-		  v->zoom++;
-		  if (v->zoom > 2) v->zoom = 0;
-		  if (v->zoom == 2)
-		    _clear_items(v->span);
-	       }
-	     _update_frame(v->span);
-	     goto end;
+	     v->zoom = 0;
+	     v->mode = VIEW_MODE_THUMB;
+	     _clear_items(v->span);
 	  }
+	else
+	  {
+	     v->zoom++;
+	     if (v->zoom > 2) v->zoom = 0;
+	     if (v->zoom == 2)
+	       _clear_items(v->span);
+	  }
+	_update_frame(v->span);
+	goto end;
      }
 
    if (((ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT) ||
@@ -1211,7 +1208,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 	goto end;
      }
    else if ((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
-       (!strcmp(key, "minus")))
+	    (!strcmp(key, "minus")))
      {
 	EINA_LIST_FOREACH(sd->items, ll, it)
 	  {
