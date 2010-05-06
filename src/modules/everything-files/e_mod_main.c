@@ -1001,11 +1001,18 @@ _recentf_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *
      }
 
    /* searching subdirs */
-   if (p->directory && strncmp(path, p->directory, strlen(p->directory)))
+   if (p->directory)
      {
-	/* DBG("not in dir %s", path); */
-	eina_stringshare_del(path);
-	return EINA_TRUE;
+	/* dont show recent files from same dir */
+	int len = strlen(p->directory);
+	char *end = strrchr(path, '/');
+	if (strncmp(path, p->directory, len) ||
+	    (end - path) <= len)
+	  {
+	     /* DBG("not in dir %s", path); */
+	     eina_stringshare_del(path);
+	     return EINA_TRUE;
+	  }
      }
 
    if (!(match = evry_fuzzy_match(label, p->input)) &&
