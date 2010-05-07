@@ -894,7 +894,7 @@ _battery_dbus_is_battery(void *user_data, void *reply_data, DBusError *err)
 #endif
      _battery_dbus_battery_add(udi);
    error:
-   eina_stringshare_add(udi);
+   eina_stringshare_del(udi);
 }
 
 static void
@@ -921,7 +921,7 @@ _battery_dbus_is_ac_adapter(void *user_data, void *reply_data, DBusError *err)
 #endif
      _battery_dbus_ac_adapter_add(udi);
    error:
-   eina_stringshare_add(udi);
+   eina_stringshare_del(udi);
 }
 
 static void
