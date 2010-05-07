@@ -543,7 +543,7 @@ _battery_dbus_battery_props(void *data, void *reply_data, DBusError *error __UNU
    str = e_hal_property_string_get(ret, s, &err); \
    if (str) \
      { \
-        hbat->val = eina_stringshare_add(str); \
+        hbat->val = str; \
      }
    
    GET_BOOL(present, "battery.present");
@@ -613,7 +613,7 @@ _battery_dbus_ac_adapter_props(void *data, void *reply_data, DBusError *error __
    str = e_hal_property_string_get(ret, s, &err); \
    if (str) \
      { \
-        hac->val = eina_stringshare_add(str); \
+        hac->val = str; \
      }
    
    GET_BOOL(present, "ac_adapter.present");
@@ -832,7 +832,7 @@ _battery_dbus_find_battery(void *user_data __UNUSED__, void *reply_data, DBusErr
    EINA_LIST_FOREACH(ret->strings, l, device)
 #ifdef HAVE_EUKIT
    e_upower_get_property(conn, device, "Type",
-     _battery_dbus_is_battery, strdup(device));
+     _battery_dbus_is_battery, eina_stringshare_add(device));
 #else
      _battery_dbus_battery_add(device);
 #endif
@@ -864,7 +864,7 @@ _battery_dbus_find_ac(void *user_data __UNUSED__, void *reply_data, DBusError *e
    EINA_LIST_FOREACH(ret->strings, l, device)
 #ifdef HAVE_EUKIT
    e_upower_get_property(conn, device, "Type",
-     _battery_dbus_is_ac_adapter, strdup(device));
+     _battery_dbus_is_ac_adapter, eina_stringshare_add(device));
 #else
      _battery_dbus_ac_adapter_add(device);
 #endif
@@ -894,7 +894,7 @@ _battery_dbus_is_battery(void *user_data, void *reply_data, DBusError *err)
 #endif
      _battery_dbus_battery_add(udi);
    error:
-   free(udi);
+   eina_stringshare_add(udi);
 }
 
 static void
@@ -921,7 +921,7 @@ _battery_dbus_is_ac_adapter(void *user_data, void *reply_data, DBusError *err)
 #endif
      _battery_dbus_ac_adapter_add(udi);
    error:
-   free(udi);
+   eina_stringshare_add(udi);
 }
 
 static void
@@ -939,14 +939,14 @@ _battery_dbus_dev_add(void *data __UNUSED__, DBusMessage *msg)
    // FIXME: e_dbus doesnt allow us to track this pending call
 #ifdef HAVE_EUKIT
    e_upower_get_property(conn, udi, "Type",
-                                 _battery_dbus_is_battery, strdup(udi));
+                                 _battery_dbus_is_battery, eina_stringshare_add(udi));
    e_upower_get_property(conn, udi, "Type",
-                                 _battery_dbus_is_ac_adapter, strdup(udi));
+                                 _battery_dbus_is_ac_adapter, eina_stringshare_add(udi));
 #else
    e_hal_device_query_capability(conn, udi, "battery",
-                                 _battery_dbus_is_battery, strdup(udi));
+                                 _battery_dbus_is_battery, eina_stringshare_add(udi));
    e_hal_device_query_capability(conn, udi, "ac_adapter",
-                                 _battery_dbus_is_ac_adapter, strdup(udi));
+                                 _battery_dbus_is_ac_adapter, eina_stringshare_add(udi));
 #endif
 }
 
