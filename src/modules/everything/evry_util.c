@@ -1,4 +1,5 @@
 #include "Evry.h"
+#include "md5.h"
 
 #define MAX_FUZZ 100
 #define MAX_WORDS 5
@@ -839,4 +840,51 @@ evry_file_uri_get(Evry_Item_File *file)
    file->url = eina_stringshare_add(buf);
 
    return file->url;
+}
+
+static void
+_cb_free_item_changed(void *data, void *event)
+{
+   Evry_Event_Item_Changed *ev = event;
+
+   evry_item_free(ev->item);
+   E_FREE(ev);
+}
+
+
+EAPI void
+evry_event_item_changed(Evry_Item *it, int icon, int selected)
+{
+   Evry_Event_Item_Changed *ev;
+   ev = E_NEW(Evry_Event_Item_Changed, 1);
+   ev->item = it;
+   ev->changed_selection = selected;
+   ev->changed_icon = icon;
+   evry_item_ref(it);
+   ecore_event_add(EVRY_EVENT_ITEM_CHANGED, ev, _cb_free_item_changed, NULL);
+}
+
+static char thumb_buf[4096];
+static const char hex[] = "0123456789abcdef";
+
+EAPI char *
+evry_util_md5_sum(const char *str)
+{
+   MD5_CTX ctx;
+   unsigned char hash[MD5_HASHBYTES];
+   int n;
+   char md5out[(2 * MD5_HASHBYTES) + 1];
+   MD5Init (&ctx);
+   MD5Update (&ctx, (unsigned char const*)str,
+	      (unsigned)strlen (str));
+   MD5Final (hash, &ctx);
+
+   for (n = 0; n < MD5_HASHBYTES; n++)
+     {
+	md5out[2 * n] = hex[hash[n] >> 4];
+	md5out[2 * n + 1] = hex[hash[n] & 0x0f];
+     }
+   md5out[2 * n] = '\0';
+
+   return strdup(md5out);
 }

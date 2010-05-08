@@ -92,7 +92,13 @@ typedef unsigned int Evry_Type;
   if (EVRY_ITEM(_it)->detail) eina_stringshare_del(EVRY_ITEM(_it)->detail); \
   EVRY_ITEM(_it)->detail = eina_stringshare_add(_detail);
 
+#define EVRY_ITEM_LABEL_SET(_it, _label)				\
+  if (EVRY_ITEM(_it)->label) eina_stringshare_del(EVRY_ITEM(_it)->label); \
+  EVRY_ITEM(_it)->label = eina_stringshare_add(_label);
 
+#define EVRY_ITEM_CONTEXT_SET(_it, _context)				\
+  if (EVRY_ITEM(_it)->context) eina_stringshare_del(EVRY_ITEM(_it)->context); \
+  EVRY_ITEM(_it)->context = eina_stringshare_add(_context);
 
 #define EVRY_ITEM_NEW(_base, _plugin, _label, _icon_get, _free)	\
   (_base *) evry_item_new(EVRY_ITEM(E_NEW(_base, 1)), EVRY_PLUGIN(_plugin), \
@@ -372,6 +378,8 @@ struct _Evry_View
 struct _Evry_Event_Item_Changed
 {
   Evry_Item *item;
+  int changed_selection;
+  int changed_icon;
 };
 
 /* FIXME this should be exposed.
@@ -523,6 +531,8 @@ EAPI Eina_Bool evry_util_module_config_check(const char *module_name, int conf, 
 EAPI Evas_Object *evry_util_icon_get(Evry_Item *it, Evas *e);
 EAPI int evry_util_plugin_items_add(Evry_Plugin *p, Eina_List *items, const char *input, int match_detail, int set_usage);
 EAPI int evry_items_sort_func(const void *data1, const void *data2);
+EAPI void evry_event_item_changed(Evry_Item *it, int change_icon, int change_selected);
+EAPI char *evry_util_md5_sum(const char *str);
 
 EAPI const char *evry_file_path_get(Evry_Item_File *file);
 EAPI const char *evry_file_uri_get(Evry_Item_File *file);

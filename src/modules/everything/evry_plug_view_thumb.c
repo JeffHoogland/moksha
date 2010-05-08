@@ -1365,28 +1365,36 @@ _cb_item_changed(void *data, int type, void *event)
    EINA_LIST_FOREACH(sd->items, l, it)
      if (it->item == ev->item)
        {
-	  if (it->item->selected)
-	    _pan_item_select(v->span, it, 1);
+	  if (ev->changed_selection)
+	    {
+	       if (it->item->selected)
+		 _pan_item_select(v->span, it, 1);
+	    }
 
 	  if (!it->visible) break;
 
 	  edje_object_part_text_set(it->frame, "e.text.label", it->item->label);
 
-	  if (it->do_thumb) e_thumb_icon_end(it->thumb);
-	  if (it->thumb) evas_object_del(it->thumb);
-	  if (it->image) evas_object_del(it->image);
+	  if (ev->changed_icon)
+	    {
+	       if (it->do_thumb) e_thumb_icon_end(it->thumb);
+	       if (it->thumb) evas_object_del(it->thumb);
+	       if (it->image) evas_object_del(it->image);
 
-	  it->thumb = NULL;
-	  it->image = NULL;
+	       it->thumb = NULL;
+	       it->image = NULL;
 
-	  it->have_thumb = EINA_FALSE;
-	  it->do_thumb = EINA_FALSE;
+	       it->have_thumb = EINA_FALSE;
+	       it->do_thumb = EINA_FALSE;
 
-	  if (!eina_list_data_find(sd->queue, it))
-	    sd->queue = eina_list_append(sd->queue, it);
+	       if (!eina_list_data_find(sd->queue, it))
+		 sd->queue = eina_list_append(sd->queue, it);
 
-	  if (!sd->thumb_idler)
-	    sd->thumb_idler = ecore_timer_add(0.01,_thumb_idler, sd);
+	       if (!sd->thumb_idler)
+		 sd->thumb_idler = ecore_timer_add(0.01,_thumb_idler, sd);
+	    }
+	  
+	  break;
        }
 
    return 1;
