@@ -546,6 +546,8 @@ EAPI void evry_action_register(Evry_Action *act, int priority);
 EAPI void evry_action_unregister(Evry_Action *act);
 EAPI void evry_view_register(Evry_View *view, int priority);
 EAPI void evry_view_unregister(Evry_View *view);
+EAPI Evry_Action *evry_action_find(const char *name);
+
 
 EAPI void evry_history_load(void);
 EAPI void evry_history_unload(void);

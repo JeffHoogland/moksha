@@ -267,3 +267,23 @@ evry_action_free(Evry_Action *act)
 
    evry_item_free(EVRY_ITEM(act));
 }
+
+
+/* TODO assign actions to plugins othersie there will be too liitle
+   names soon */
+EAPI Evry_Action *
+evry_action_find(const char *name)
+{
+   Evry_Action *act = NULL; 
+   Eina_List *l;
+   
+   const char *n = eina_stringshare_add(name);
+
+   EINA_LIST_FOREACH(evry_conf->actions, l, act)
+     if (act->name == n)
+       break;
+
+   eina_stringshare_del(n);
+   
+   return act;
+}
