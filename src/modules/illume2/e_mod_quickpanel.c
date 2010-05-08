@@ -167,7 +167,7 @@ _e_mod_quickpanel_cb_client_message(void *data __UNUSED__, int type __UNUSED__, 
              if (qp = e_illume_quickpanel_by_zone_get(zone)) 
                {
                   if (ev->data.l[0] == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_OFF)
-                    e_mod_quickpanel_hide(qp);
+                    _e_mod_quickpanel_hide(qp);
                   else
                     e_mod_quickpanel_show(qp);
                }
@@ -184,7 +184,7 @@ _e_mod_quickpanel_cb_client_message(void *data __UNUSED__, int type __UNUSED__, 
              if (qp = e_illume_quickpanel_by_zone_get(zone)) 
                {
                   if (qp->visible) 
-		    e_mod_quickpanel_hide(qp);
+		    _e_mod_quickpanel_hide(qp);
                   else 
 		    e_mod_quickpanel_show(qp);
                }
@@ -212,10 +212,7 @@ _e_mod_quickpanel_cb_mouse_up(void *data, int type __UNUSED__, void *event)
    ev = event;
    qp = data;
    if (ev->event_window != qp->clickwin) return 1;
-   if (qp->visible) 
-     ecore_x_e_illume_quickpanel_state_send(qp->zone->black_win, 
-                                            ECORE_X_ILLUME_QUICKPANEL_STATE_OFF);
-
+   if (qp->visible) e_mod_quickpanel_hide(qp);
    return 1;
 }
 
@@ -367,7 +364,7 @@ _e_mod_quickpanel_hide(E_Illume_Quickpanel *qp)
    qp->timer = NULL;
 
    /* if it's not visible, we can't hide it */
-   if (!qp->visible) return;
+   if ((!qp->visible) || (!qp->borders)) return;
 
    duration = _e_illume_cfg->animation.quickpanel.duration;
 
@@ -439,7 +436,7 @@ _e_mod_quickpanel_position_update(E_Illume_Quickpanel *qp)
    E_Border *bd;
    int iy = 0;
 
-   e_mod_quickpanel_hide(qp);
+   _e_mod_quickpanel_hide(qp);
    e_illume_border_indicator_pos_get(qp->zone, NULL, &iy);
    EINA_LIST_FOREACH(qp->borders, l, bd) 
      e_border_move(bd, qp->zone->x, iy);
