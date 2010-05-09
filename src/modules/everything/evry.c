@@ -7,7 +7,7 @@
  */
 
 #define INPUTLEN 256
-#define MATCH_LAG 0.25
+#define MATCH_LAG 0.15
 #define INITIAL_MATCH_LAG 0.3
 
 /* #undef DBG
@@ -559,7 +559,7 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
 
    if (action == EVRY_ASYNC_UPDATE_ADD)
      {
-	if (!p->items)
+	if (!p->items && !s->trigger_active)
 	  {
 	     /* remove plugin */
 	     if (!eina_list_data_find(s->cur_plugins, p)) return;
@@ -2101,7 +2101,8 @@ _evry_matches_update(Evry_Selector *sel, int async)
 	EINA_LIST_FREE(s->cur_plugins, p);
 	s->trigger_active = EINA_FALSE;
      }
-   else
+
+   if (s->trigger_active)
      {
 	EINA_LIST_FOREACH(s->cur_plugins, l, p)
 	  {
@@ -2152,8 +2153,6 @@ _evry_matches_update(Evry_Selector *sel, int async)
 
    if (!s->cur_plugins)
      {
-	s->input = s->inp;
-
 	EINA_LIST_FOREACH(s->plugins, l, p)
 	  {
 	     if ((p->config->top_level) && (sel == selectors[0]))
