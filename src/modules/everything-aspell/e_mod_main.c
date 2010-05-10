@@ -2,8 +2,9 @@
  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
 
-#include "Evry.h"
+#include "e.h"
 #include "e_mod_main.h"
+#include "evry_api.h"
 #include <ctype.h>
 
 static const char TRIGGER[] = "s ";
@@ -12,6 +13,9 @@ static const char LANG_MODIFIER[] = "lang=";
 typedef struct _Plugin Plugin;
 typedef struct _Module_Config Module_Config;
 
+static const Evry_API *evry = NULL;
+static Evry_Module *evry_module = NULL;
+static Eina_Bool active = EINA_FALSE;
 static Module_Config *_conf;
 static char _config_path[] =  "extensions/everthing-aspell";
 static char _config_domain[] = "module.everyhing-aspell";
@@ -235,10 +239,10 @@ _cb_data(void *data, int type __UNUSED__, void *event)
 	  word = _space_skip(word_end + 1);
      }
 
-   if (EVRY_PLUGIN(p)->items)
-     {
-	evry_list_win_show();
-     }
+   /* if (EVRY_PLUGIN(p)->items)
+    *   {
+    * 	evry_list_win_show();
+    *   } */
 
    if (p->base.items)
      EVRY_PLUGIN_UPDATE(p, EVRY_UPDATE_ADD);
@@ -385,12 +389,17 @@ _cleanup(Evry_Plugin *plugin)
      }
 }
 
-static Eina_Bool
-_plugins_init(void)
+static int
+_plugins_init(const Evry_API *_api)
 {
    Evry_Plugin *p;
 
-   if (!evry_api_version_check(EVRY_API_VERSION))
+   if (active)
+     return EINA_TRUE;
+
+   evry = _api;
+
+   if (!evry->api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
    p = EVRY_PLUGIN_NEW(Plugin, N_("Spell Checker"),
@@ -400,8 +409,8 @@ _plugins_init(void)
    p->config_path = _config_path;
    p->history     = EINA_FALSE;
    p->async_fetch = EINA_TRUE;
-   
-   if (evry_plugin_register(p, EVRY_PLUGIN_SUBJECT, 100))
+
+   if (evry->plugin_register(p, EVRY_PLUGIN_SUBJECT, 100))
      {
 	Plugin_Config *pc = p->config;
 	pc->view_mode = VIEW_MODE_LIST;
@@ -411,8 +420,10 @@ _plugins_init(void)
 	pc->trigger_only = EINA_TRUE;
 	pc->min_query = 2;
      }
-   
+
    _plug = (Plugin *) p;
+
+   active = EINA_TRUE;
 
    return EINA_TRUE;
 }
@@ -420,7 +431,11 @@ _plugins_init(void)
 static void
 _plugins_shutdown(void)
 {
+   if (!active) return;
+
    EVRY_PLUGIN_FREE(_plug);
+
+   active = EINA_FALSE;
 }
 
 /***************************************************************************/
@@ -607,8 +622,9 @@ _conf_init(E_Module *m)
 
    _conf = e_config_domain_load(_config_domain, _conf_edd);
 
-   if (_conf && !evry_util_module_config_check(_("Everything Aspell"), _conf->version,
-					       MOD_CONFIG_FILE_EPOCH, MOD_CONFIG_FILE_VERSION))
+   if (_conf && !e_util_module_config_check
+       (_("Everything Aspell"), _conf->version,
+	MOD_CONFIG_FILE_EPOCH, MOD_CONFIG_FILE_VERSION))
      _conf_free();
 
    if (!_conf) _conf_new();
@@ -626,8 +642,6 @@ _conf_shutdown(void)
 
 /***************************************************************************/
 
-static Eina_Bool active = EINA_FALSE;
-
 EAPI E_Module_Api e_modapi =
 {
    E_MODULE_API_VERSION,
@@ -637,10 +651,20 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-   if (e_datastore_get("everything_loaded"))
-     active = _plugins_init();
+   Eina_List *l;
 
    _conf_init(m);
+
+   if ((evry = e_datastore_get("everything_loaded")))
+     _plugins_init(evry);
+
+   evry_module = E_NEW(Evry_Module, 1);
+   evry_module->init     = &_plugins_init;
+   evry_module->shutdown = &_plugins_shutdown;
+
+   l = e_datastore_get("everything_modules");
+   l = eina_list_append(l, evry_module);
+   e_datastore_set("everything_modules", l);
 
    e_module_delayed_set(m, 1);
 
@@ -650,10 +674,18 @@ e_modapi_init(E_Module *m)
 EAPI int
 e_modapi_shutdown(E_Module *m)
 {
-   if (active && e_datastore_get("everything_loaded"))
-     _plugins_shutdown();
+   Eina_List *l;
 
    _conf_shutdown();
+
+   if (e_datastore_get("everything_loaded"))
+     _plugins_shutdown();
+
+   l = e_datastore_get("everything_modules");
+   l = eina_list_remove(l, evry_module);
+   e_datastore_set("everything_modules", l);
+
+   E_FREE(evry_module);
 
    return 1;
 }

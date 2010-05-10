@@ -170,6 +170,7 @@ e_modapi_init(E_Module *m)
    e_module_priority_set(m, -1000);
 
    _api = E_NEW(Evry_API, 1);
+   _api->log_dom = _e_module_evry_log_dom;
 #define SET(func) (_api->func = &evry_##func);
    SET(api_version_check);
    SET(item_new);

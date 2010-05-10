@@ -2,8 +2,9 @@
  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
 
-#include "Evry.h"
+#include "e.h"
 #include "e_mod_main.h"
+#include "evry_api.h"
 
 #define IMPORT_STRETCH 0
 #define IMPORT_TILE 1
@@ -26,13 +27,15 @@ struct _Import
   char *fdest;
 };
 
-
 static void _import_edj_gen(Import *import);
 static int _import_cb_edje_cc_exit(void *data, int type, void *event);
+
+static const Evry_API *evry = NULL;
+static Evry_Module *evry_module = NULL;
+static Eina_Bool active = EINA_FALSE;
+
 static Import *import = NULL;
-
 static Evry_Action *_act;
-
 static char _module_icon[] = "preferences-desktop-wallpaper";
 
 static int
@@ -43,7 +46,7 @@ _action(Evry_Action *act)
 
    GET_FILE(file, act->it1.item);
 
-   if (!(evry_file_path_get(file)))
+   if (!(evry->file_path_get(file)))
      return 0;
    
    if (import)
@@ -99,11 +102,19 @@ _fetch(Evry_Action *act)
 
    return it->items;
 }
-/* XXX free it->items list! */
-static Eina_Bool
-_plugins_init(void)
+
+
+static int
+_plugins_init(const Evry_API *_api)
 {
-   if (!evry_api_version_check(EVRY_API_VERSION))
+   Evry_Plugin *p;
+
+   if (active)
+     return EINA_TRUE;
+
+   evry = _api;
+
+   if (!evry->api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
    _act = EVRY_ACTION_NEW(_("Set as Wallpaper"),
@@ -114,15 +125,21 @@ _plugins_init(void)
    _act->remember_context = EINA_TRUE;
    EVRY_ITEM(_act)->browseable = EINA_TRUE;
 
-   evry_action_register(_act, 2);
+   evry->action_register(_act, 2);
 
+   active = EINA_TRUE;
+   
    return EINA_TRUE;
 }
 
 static void
 _plugins_shutdown(void)
 {
-   evry_action_free(_act);
+   if (!active) return;   
+
+   evry->action_free(_act);
+
+   active = EINA_FALSE;
 }
 
 /* taken from e_int_config_wallpaper_import.c */
@@ -347,9 +364,6 @@ _import_cb_edje_cc_exit(void *data, int type, void *event)
 
 /***************************************************************************/
 
-static E_Module *module = NULL;
-static Eina_Bool active = EINA_FALSE;
-
 EAPI E_Module_Api e_modapi =
 {
    E_MODULE_API_VERSION,
@@ -359,10 +373,18 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-   module = m;
+   Eina_List *l;
 
-   if (e_datastore_get("everything_loaded"))
-     active = _plugins_init();
+   if ((evry = e_datastore_get("everything_loaded")))
+     _plugins_init(evry);
+
+   evry_module = E_NEW(Evry_Module, 1);
+   evry_module->init     = &_plugins_init;
+   evry_module->shutdown = &_plugins_shutdown;
+
+   l = e_datastore_get("everything_modules");
+   l = eina_list_append(l, evry_module);
+   e_datastore_set("everything_modules", l);
 
    e_module_delayed_set(m, 1);
 
@@ -372,17 +394,16 @@ e_modapi_init(E_Module *m)
 EAPI int
 e_modapi_shutdown(E_Module *m)
 {
-   if (active && e_datastore_get("everything_loaded"))
+   Eina_List *l;
+
+   if (e_datastore_get("everything_loaded"))
      _plugins_shutdown();
 
-   if (import)
-     {
-	if (import->exe_handler)
-	  ecore_event_handler_del(import->exe_handler);
-	E_FREE(import);
-     }
+   l = e_datastore_get("everything_modules");
+   l = eina_list_remove(l, evry_module);
+   e_datastore_set("everything_modules", l);
 
-   module = NULL;
+   E_FREE(evry_module);
 
    return 1;
 }

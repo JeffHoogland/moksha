@@ -26,6 +26,16 @@
 #define EVRY_PLUGIN_SUBJECT  0
 #define EVRY_PLUGIN_ACTION   1
 #define EVRY_PLUGIN_OBJECT   2
+
+EAPI extern Evry_Type EVRY_TYPE_NONE;
+EAPI extern Evry_Type EVRY_TYPE_FILE;
+EAPI extern Evry_Type EVRY_TYPE_DIR;
+EAPI extern Evry_Type EVRY_TYPE_APP;
+EAPI extern Evry_Type EVRY_TYPE_ACTION;
+EAPI extern Evry_Type EVRY_TYPE_PLUGIN;
+EAPI extern Evry_Type EVRY_TYPE_BORDER;
+EAPI extern Evry_Type EVRY_TYPE_TEXT;
+
 #endif
 
 typedef struct _Evry_API Evry_API;
@@ -106,6 +116,8 @@ struct _Evry_API
 
   const char *(*file_path_get)(Evry_Item_File *file);
   const char *(*file_url_get)(Evry_Item_File *file);
+
+  int log_dom;
 };
 
 #ifndef EVRY_H
@@ -186,5 +198,26 @@ struct _Evry_API
 // should be renamed to ITEMS_FILTER
 #define EVRY_PLUGIN_ITEMS_ADD(_plugin, _items, _input, _match_detail, _set_usage) \
   evry->util_plugin_items_add(EVRY_PLUGIN(_plugin), _items, _input, _match_detail, _set_usage)
+
+#define EVRY_PLUGIN_UPDATE(_p, _action)	\
+  if (_p) evry->plugin_update(EVRY_PLUGIN(_p), _action)
+
+
+
+#ifndef EINA_LOG_DEFAULT_COLOR
+#define EINA_LOG_DEFAULT_COLOR EINA_COLOR_CYAN
+#endif
+
+#undef DBG
+#undef INF
+#undef WRN
+#undef ERR
+
+#define DBG(...) EINA_LOG_DOM_DBG(evry->log_dom , __VA_ARGS__)
+#define INF(...) EINA_LOG_DOM_INFO(evry->log_dom , __VA_ARGS__)
+#define WRN(...) EINA_LOG_DOM_WARN(evry->log_dom , __VA_ARGS__)
+#define ERR(...) EINA_LOG_DOM_ERR(evry->log_dom , __VA_ARGS__)
+
 #endif
 #endif
+

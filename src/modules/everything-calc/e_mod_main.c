@@ -2,23 +2,26 @@
  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
 
-#include "Evry.h"
+#include "e.h"
 #include "e_mod_main.h"
+#include "evry_api.h"
 // TODO - show error when input not parseable
 
 static int  _cb_data(void *data, int type, void *event);
 static int  _cb_error(void *data, int type, void *event);
 static int  _cb_del(void *data, int type, void *event);
 
+static const Evry_API *evry = NULL;
+static Evry_Module *evry_module = NULL;
+static Eina_Bool active = EINA_FALSE;
 static Evry_Plugin *p1;
+
 static Ecore_Exe *exe = NULL;
 static Eina_List *history = NULL;
 static Eina_List *handlers = NULL;
-
 static int error = 0;
 
 static char _module_icon[] = "accessories-calculator";
-
 
 static Evry_Plugin *
 _begin(Evry_Plugin *p, const Evry_Item *item __UNUSED__)
@@ -78,7 +81,7 @@ _cleanup(Evry_Plugin *p)
 
    if (p->items)
      {
-	evry_item_free(p->items->data);
+	evry->item_free(p->items->data);
 	p->items = eina_list_remove_list(p->items, p->items);
      }
 
@@ -87,7 +90,7 @@ _cleanup(Evry_Plugin *p)
 	if (items-- > 0)
 	  history = eina_list_prepend(history, eina_stringshare_add(it->label));
 
-	evry_item_free(it);
+	evry->item_free(it);
      }
 
    EINA_LIST_FREE(handlers, h)
@@ -165,16 +168,6 @@ _fetch(Evry_Plugin *p, const char *input)
    return 1;
 }
 
-
-static void
-_cb_free_item_changed(void *data, void *event)
-{
-   Evry_Event_Item_Changed *ev = event;
-
-   evry_item_free(ev->item);
-   E_FREE(ev);
-}
-
 static int
 _cb_data(void *data, int type __UNUSED__, void *event)
 {
@@ -190,13 +183,7 @@ _cb_data(void *data, int type __UNUSED__, void *event)
 	eina_stringshare_del(it->label);
 	it->label = eina_stringshare_add(ev->lines->line);
 
-	if (it)
-   	  {
-	     Evry_Event_Item_Changed *ev = E_NEW(Evry_Event_Item_Changed, 1);
-   	     ev->item = it;
-   	     evry_item_ref(it);
-   	     ecore_event_add(EVRY_EVENT_ITEM_CHANGED, ev, _cb_free_item_changed, NULL);
-   	  }
+	if (it) evry->event_item_changed(it, 0, 0);
      }
 
    return 1;
@@ -227,12 +214,19 @@ _cb_del(void *data __UNUSED__, int type __UNUSED__, void *event)
    return 1;
 }
 
-static Eina_Bool
-_plugins_init(void)
-{
-   if (!evry_api_version_check(EVRY_API_VERSION))
+static int
+_plugins_init(const Evry_API *_api)
+{   
+   if (active) 
+     return EINA_TRUE;
+
+   evry = _api;
+
+   if (!evry->api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
+   EVRY_TYPE_TEXT = evry->type_register("TEXT");
+   
    p1 = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Calculator"),
 			_module_icon,
 			EVRY_TYPE_TEXT,
@@ -241,7 +235,7 @@ _plugins_init(void)
    p1->history     = EINA_FALSE;
    p1->async_fetch = EINA_TRUE;
 
-   if (evry_plugin_register(p1, EVRY_PLUGIN_SUBJECT, 0))
+   if (evry->plugin_register(p1, EVRY_PLUGIN_SUBJECT, 0))
      {
 	Plugin_Config *pc = p1->config;
 	pc->view_mode = VIEW_MODE_LIST;
@@ -249,26 +243,23 @@ _plugins_init(void)
 	pc->trigger = eina_stringshare_add("=");
      }
 
+   active = EINA_TRUE;
+   
    return EINA_TRUE;
 }
 
 static void
 _plugins_shutdown(void)
 {
+   if (!active) return;
+
    EVRY_PLUGIN_FREE(p1);
+
+   active = EINA_FALSE;
 }
 
-
 /***************************************************************************/
-/**/
-/* actual module specifics */
 
-static E_Module *module = NULL;
-static Eina_Bool active = EINA_FALSE;
-
-/***************************************************************************/
-/**/
-/* module setup */
 EAPI E_Module_Api e_modapi =
 {
    E_MODULE_API_VERSION,
@@ -278,29 +269,38 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-   module = m;
+   Eina_List *l;
 
-   if (e_datastore_get("everything_loaded"))
-     active = _plugins_init();
+   if ((evry = e_datastore_get("everything_loaded")))
+     _plugins_init(evry);
+   
+   evry_module = E_NEW(Evry_Module, 1);
+   evry_module->init     = &_plugins_init;
+   evry_module->shutdown = &_plugins_shutdown;
+   
+   l = e_datastore_get("everything_modules");
+   l = eina_list_append(l, evry_module);
+   e_datastore_set("everything_modules", l);
 
    e_module_delayed_set(m, 1);
-
+   
    return m;
 }
 
 EAPI int
 e_modapi_shutdown(E_Module *m)
 {
-   char *result;
-
-   if (active && e_datastore_get("everything_loaded"))
+   Eina_List *l;
+   
+   if (e_datastore_get("everything_loaded"))
      _plugins_shutdown();
 
-   EINA_LIST_FREE(history, result)
-     eina_stringshare_del(result);
+   l = e_datastore_get("everything_modules");
+   l = eina_list_remove(l, evry_module);
+   e_datastore_set("everything_modules", l);
 
-   module = NULL;
-
+   E_FREE(evry_module);
+   
    return 1;
 }
 
@@ -310,5 +310,4 @@ e_modapi_save(E_Module *m)
    return 1;
 }
 
-/**/
 /***************************************************************************/

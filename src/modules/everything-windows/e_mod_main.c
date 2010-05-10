@@ -2,14 +2,19 @@
  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
 
-#include "Evry.h"
+#include "e.h"
 #include "e_mod_main.h"
+#include "evry_api.h"
 
 #define BORDER_SHOW		1
 #define BORDER_HIDE		2
 #define BORDER_FULLSCREEN	3
 #define BORDER_TODESK		4
 #define BORDER_CLOSE		5
+
+static const Evry_API *evry = NULL;
+static Evry_Module *evry_module = NULL;
+static Eina_Bool active = EINA_FALSE;
 
 static Evry_Plugin *p1;
 static Eina_List *handlers = NULL;
@@ -40,7 +45,7 @@ _cb_border_remove(void *data, int type,  void *event)
 static void _hash_free(void *data)
 {
    Evry_Item *it = data;
-   evry_item_free(it);
+   evry->item_free(it);
 }
 
 static Evry_Plugin *
@@ -215,18 +220,18 @@ _fetch(Evry_Plugin *p, const char *input)
 	       _item_add(p, bd, 0, &prio);
 	     else
 	       {
-		  m1 = evry_fuzzy_match(e_border_name_get(bd), input);
+		  m1 = evry->fuzzy_match(e_border_name_get(bd), input);
 
 		  if (bd->client.icccm.name)
 		    {
-		       m2 = evry_fuzzy_match(bd->client.icccm.name, input);
+		       m2 = evry->fuzzy_match(bd->client.icccm.name, input);
 		       if (!m1 || (m2 && m2 < m1))
 			 m1 = m2;
 		    }
 
 		  if (bd->desktop)
 		    {
-		       m2 = evry_fuzzy_match(bd->desktop->name, input);
+		       m2 = evry->fuzzy_match(bd->desktop->name, input);
 		       if (!m1 || (m2 && m2 < m1))
 			 m1 = m2;
 		    }
@@ -341,27 +346,32 @@ _act_border(Evry_Action *act)
    return 1;
 }
 
-
-static Eina_Bool
-_plugins_init(void)
+static int
+_plugins_init(const Evry_API *_api)
 {
+   Evry_Plugin *p;
    Evry_Action *act;
+   
+   if (active)
+     return EINA_TRUE;
 
-   if (!evry_api_version_check(EVRY_API_VERSION))
+   evry = _api;
+
+   if (!evry->api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
    p1 = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Windows"), NULL, EVRY_TYPE_BORDER,
 			_begin, _cleanup, _fetch, NULL);
 
    p1->transient = EINA_TRUE;
-   evry_plugin_register(p1, EVRY_PLUGIN_SUBJECT, 2);
+   evry->plugin_register(p1, EVRY_PLUGIN_SUBJECT, 2);
 
 
    act = EVRY_ACTION_NEW(_("Switch to Window"),
 			 EVRY_TYPE_BORDER, 0, "go-next",
 			 _act_border, _check_border);
    EVRY_ITEM_DATA_INT_SET(act, BORDER_SHOW);
-   evry_action_register(act, 1);
+   evry->action_register(act, 1);
 
    _actions = eina_list_append(_actions, act);
 
@@ -370,29 +380,31 @@ _plugins_init(void)
 			 _act_border, _check_border);
    EVRY_ITEM_DATA_INT_SET(act, BORDER_HIDE);
    _actions = eina_list_append(_actions, act);
-   evry_action_register(act, 2);
+   evry->action_register(act, 2);
 
    act = EVRY_ACTION_NEW(_("Toggle Fullscreen"),
 			 EVRY_TYPE_BORDER, 0, "view-fullscreen",
 			 _act_border, _check_border);
    EVRY_ITEM_DATA_INT_SET(act, BORDER_FULLSCREEN);
    _actions = eina_list_append(_actions, act);
-   evry_action_register(act, 4);
+   evry->action_register(act, 4);
 
    act = EVRY_ACTION_NEW(_("Close"),
 			 EVRY_TYPE_BORDER, 0, "view-fullscreen",
 			 _act_border, _check_border);
    EVRY_ITEM_DATA_INT_SET(act, BORDER_CLOSE);
    _actions = eina_list_append(_actions, act);
-   evry_action_register(act, 3);
+   evry->action_register(act, 3);
 
    act = EVRY_ACTION_NEW(_("Send to Desktop"),
 			 EVRY_TYPE_BORDER, 0, "go-previous",
 			 _act_border, _check_border);
    EVRY_ITEM_DATA_INT_SET(act, BORDER_TODESK);
    _actions = eina_list_append(_actions, act);
-   evry_action_register(act, 3);
+   evry->action_register(act, 3);
 
+   active = EINA_TRUE;
+   
    return EINA_TRUE;
 }
 
@@ -401,16 +413,18 @@ _plugins_shutdown(void)
 {
    Evry_Action *act;
 
+   if (!active) return;
+
    EVRY_PLUGIN_FREE(p1);
 
    EINA_LIST_FREE(_actions, act)
-     evry_action_free(act);
+     evry->action_free(act);
+
+   active = EINA_FALSE;
 }
 
 /***************************************************************************/
 
-static E_Module *module = NULL;
-static Eina_Bool active = EINA_FALSE;
 
 EAPI E_Module_Api e_modapi =
 {
@@ -421,10 +435,18 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-   module = m;
+   Eina_List *l;
 
-   if (e_datastore_get("everything_loaded"))
-     active = _plugins_init();
+   if ((evry = e_datastore_get("everything_loaded")))
+     _plugins_init(evry);
+
+   evry_module = E_NEW(Evry_Module, 1);
+   evry_module->init     = &_plugins_init;
+   evry_module->shutdown = &_plugins_shutdown;
+
+   l = e_datastore_get("everything_modules");
+   l = eina_list_append(l, evry_module);
+   e_datastore_set("everything_modules", l);
 
    e_module_delayed_set(m, 1);
 
@@ -434,10 +456,16 @@ e_modapi_init(E_Module *m)
 EAPI int
 e_modapi_shutdown(E_Module *m)
 {
-   if (active && e_datastore_get("everything_loaded"))
+   Eina_List *l;
+
+   if (e_datastore_get("everything_loaded"))
      _plugins_shutdown();
 
-   module = NULL;
+   l = e_datastore_get("everything_modules");
+   l = eina_list_remove(l, evry_module);
+   e_datastore_set("everything_modules", l);
+
+   E_FREE(evry_module);
 
    return 1;
 }

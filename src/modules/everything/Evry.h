@@ -292,7 +292,7 @@ EAPI int evry_util_exec_app(const Evry_Item *it_app, const Evry_Item *it_file);
 EAPI char *evry_util_url_escape(const char *string, int inlength);
 EAPI char *evry_util_url_unescape(const char *string, int length);
 EAPI void evry_util_file_detail_set(Evry_Item_File *file);
-EAPI Eina_Bool evry_util_module_config_check(const char *module_name, int conf, int epoch, int version);
+EAPI int evry_util_module_config_check(const char *module_name, int conf, int epoch, int version);
 EAPI Evas_Object *evry_util_icon_get(Evry_Item *it, Evas *e);
 EAPI int evry_util_plugin_items_add(Evry_Plugin *p, Eina_List *items, const char *input, int match_detail, int set_usage);
 EAPI int evry_items_sort_func(const void *data1, const void *data2);
