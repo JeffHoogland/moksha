@@ -1475,3 +1475,69 @@ _e_util_image_import_handle_free(E_Util_Image_Import_Handle *handle)
    E_FREE(handle);
 }
 
+static int
+_e_util_conf_timer_old(void *data)
+{
+   char *module_name = data;
+   char buf[4096];
+   char *msg =
+     _("Configuration data needed "
+       "upgrading. Your old configuration<br> has been"
+       " wiped and a new set of defaults initialized. "
+       "This<br>will happen regularly during "
+       "development, so don't report a<br>bug. "
+       "This simply means the module needs "
+       "new configuration<br>data by default for "
+       "usable functionality that your old<br>"
+       "configuration simply lacks. This new set of "
+       "defaults will fix<br>that by adding it in. "
+       "You can re-configure things now to your<br>"
+       "liking. Sorry for the inconvenience.<br>");
+
+   snprintf(buf, sizeof(buf),N_("%s Configuration Updated"), module_name);
+   e_util_dialog_internal(buf, msg);
+   E_FREE(module_name);
+
+   return 0;
+}
+
+static int
+_e_util_conf_timer_new(void *data)
+{
+   char *module_name = data;
+   char buf[4096];
+   char *msg =
+     _("Your module configuration is NEWER "
+       "than the module version. This is "
+       "very<br>strange. This should not happen unless"
+       " you downgraded<br>the module or "
+       "copied the configuration from a place where"
+       "<br>a newer version of the module "
+       "was running. This is bad and<br>as a "
+       "precaution your configuration has been now "
+       "restored to<br>defaults. Sorry for the "
+       "inconvenience.<br>");
+
+   snprintf(buf, sizeof(buf),N_("%s Configuration Updated"), module_name);
+   e_util_dialog_internal(buf, msg);
+   E_FREE(module_name);
+
+   return 0;
+}
+
+EAPI Eina_Bool
+e_util_module_config_check(const char *module_name, int conf, int epoch, int version)
+{
+   if ((conf >> 16) < epoch)
+     {
+	ecore_timer_add(1.0, _e_util_conf_timer_old, strdup(module_name));
+	return EINA_FALSE;
+     }
+   else if (conf > version)
+     {
+	ecore_timer_add(1.0, _e_util_conf_timer_new, strdup(module_name));
+	return EINA_FALSE;
+     }
+
+   return EINA_TRUE;
+}
