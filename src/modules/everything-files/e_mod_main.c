@@ -482,7 +482,7 @@ _scan_end_func(void *data)
 
    _append_files(p);
 
-   evry_plugin_async_update(EVRY_PLUGIN(p), EVRY_ASYNC_UPDATE_ADD);
+   EVRY_PLUGIN_UPDATE(p, EVRY_UPDATE_ADD);
 }
 
 static void
@@ -541,7 +541,7 @@ _dir_watcher(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, const c
 
    _append_files(p);
 
-   evry_plugin_async_update(EVRY_PLUGIN(p), EVRY_ASYNC_UPDATE_ADD);
+   EVRY_PLUGIN_UPDATE(p, EVRY_UPDATE_ADD);
 }
 
 static void
@@ -930,7 +930,7 @@ _recentf_end_func(void *data)
 
    _recentf_append_files(p);
 
-   evry_plugin_async_update(EVRY_PLUGIN(p), EVRY_ASYNC_UPDATE_ADD);
+   EVRY_PLUGIN_UPDATE(p, EVRY_UPDATE_ADD);
 
    p->thread = NULL;
    E_FREE(d);
@@ -1233,7 +1233,7 @@ _file_trash_action(Evry_Action *act)
 
    GET_FILE(file, act->it1.item);
 
-   if (!(evry_file_uri_get(file)))
+   if (!(evry_file_url_get(file)))
      return 0;
 
    euri = efreet_uri_decode(file->url);

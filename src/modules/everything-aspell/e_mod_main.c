@@ -241,7 +241,7 @@ _cb_data(void *data, int type __UNUSED__, void *event)
      }
 
    if (p->base.items)
-     evry_plugin_async_update(EVRY_PLUGIN(p), EVRY_ASYNC_UPDATE_ADD);
+     EVRY_PLUGIN_UPDATE(p, EVRY_UPDATE_ADD);
 
    return 1;
 }

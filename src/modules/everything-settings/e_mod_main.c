@@ -2,8 +2,9 @@
  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
 
-#include "Evry.h"
+#include "e.h"
 #include "e_mod_main.h"
+#include "evry_api.h"
 
 typedef struct _Settings_Item Settings_Item;
 
@@ -15,10 +16,13 @@ struct _Settings_Item
   E_Configure_It *eci;  
 };
 
+
+static const Evry_API *evry = NULL;
+static Evry_Module *evry_module = NULL;
+static Eina_Bool active = EINA_FALSE;
 static Evry_Plugin *p;
 static Evry_Action *act;
 static Eina_List *items = NULL;
-
 
 static void
 _finish(Evry_Plugin *p)
@@ -28,7 +32,7 @@ _finish(Evry_Plugin *p)
    EVRY_PLUGIN_ITEMS_CLEAR(p);
    
    EINA_LIST_FREE(items, it)
-     evry_item_free(it);
+     evry->item_free(it);
 }
 
 static Evas_Object *
@@ -38,7 +42,7 @@ _icon_get(Evry_Item *item, Evas *e)
    Settings_Item *it = (Settings_Item *) item;
    
    if (it->eci->icon &&
-       ((o = evry_icon_theme_get(it->eci->icon, e)) ||
+       ((o = evry->icon_theme_get(it->eci->icon, e)) ||
 	(o = e_util_icon_add(it->eci->icon, e))))
      return o;
 
@@ -98,23 +102,30 @@ _action(Evry_Action *act)
    return EVRY_ACTION_FINISHED;
 }
 
-static Eina_Bool
-_plugins_init(void)
-{
-   if (!evry_api_version_check(EVRY_API_VERSION))
+static int
+_plugins_init(const Evry_API *_api)
+{   
+   if (active) 
+     return EINA_TRUE;
+
+   evry = _api;
+   
+   if (!evry->api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
    p = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Settings"), "preferences-desktop",
-		       evry_type_register("E_SETTINGS"),
+		       evry->type_register("E_SETTINGS"),
 		       _begin, _finish, _fetch, NULL);
 
-   evry_plugin_register(p, EVRY_PLUGIN_SUBJECT, 10);
+   evry->plugin_register(p, EVRY_PLUGIN_SUBJECT, 10);
 
    act = EVRY_ACTION_NEW(N_("Show Dialog"),
-			 evry_type_register("E_SETTINGS"), 0,
+			 evry->type_register("E_SETTINGS"), 0,
 			 "preferences-advanced", _action, NULL);
 
-   evry_action_register(act, 0);
+   evry->action_register(act, 0);
+
+   active = EINA_TRUE;
 
    return EINA_TRUE;
 }
@@ -122,16 +133,17 @@ _plugins_init(void)
 static void
 _plugins_shutdown(void)
 {
+   if (!active) return;
+   
    EVRY_PLUGIN_FREE(p);
 
-   evry_action_free(act);
+   evry->action_free(act);
+
+   active = EINA_FALSE;
 }
 
 
 /***************************************************************************/
-
-static E_Module *module = NULL;
-static Eina_Bool active = EINA_FALSE;
 
 EAPI E_Module_Api e_modapi =
 {
@@ -142,24 +154,38 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-   module = m;
+   Eina_List *l;
 
-   if (e_datastore_get("everything_loaded"))
-     active = _plugins_init();
+   if ((evry = e_datastore_get("everything_loaded")))
+     _plugins_init(evry);
+   
+   evry_module = E_NEW(Evry_Module, 1);
+   evry_module->init     = &_plugins_init;
+   evry_module->shutdown = &_plugins_shutdown;
+   
+   l = e_datastore_get("everything_modules");
+   l = eina_list_append(l, evry_module);
+   e_datastore_set("everything_modules", l);
 
    e_module_delayed_set(m, 1);
-
+   
    return m;
 }
 
 EAPI int
 e_modapi_shutdown(E_Module *m)
 {
-   if (active && e_datastore_get("everything_loaded"))
+   Eina_List *l;
+   
+   if (e_datastore_get("everything_loaded"))
      _plugins_shutdown();
 
-   module = NULL;
+   l = e_datastore_get("everything_modules");
+   l = eina_list_remove(l, evry_module);
+   e_datastore_set("everything_modules", l);
 
+   E_FREE(evry_module);
+   
    return 1;
 }
 

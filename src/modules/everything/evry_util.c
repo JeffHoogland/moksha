@@ -685,7 +685,7 @@ evry_util_module_config_check(const char *module_name, int conf, int epoch, int 
 #define ISXDIGIT(x) (isxdigit((int) ((unsigned char)x)))
 
 EAPI char *
-evry_util_unescape(const char *string, int length)
+evry_util_url_unescape(const char *string, int length)
 {
    int alloc = (length?length:(int)strlen(string))+1;
    char *ns = malloc(alloc);
@@ -812,7 +812,7 @@ evry_file_path_get(Evry_Item_File *file)
      tmp = file->url + 7;
    else return NULL;
 
-   if (!(path = evry_util_unescape(tmp, 0)))
+   if (!(path = evry_util_url_unescape(tmp, 0)))
      return NULL;
 
    file->path = eina_stringshare_add(path);
@@ -823,7 +823,7 @@ evry_file_path_get(Evry_Item_File *file)
 }
 
 EAPI const char*
-evry_file_uri_get(Evry_Item_File *file)
+evry_file_url_get(Evry_Item_File *file)
 {
    char buf[PATH_MAX];
 

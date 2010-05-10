@@ -21,7 +21,7 @@ pkgdir                 = $(libdir)/enlightenment/modules/$(MODULE)/$(MODULE_ARCH
 pkg_LTLIBRARIES        = module.la
 # noinst_LTLIBRARIES      = libfoo.la
 
-EVRYHEADERS = Evry.h
+EVRYHEADERS = Evry.h evry_api.h evry_types.h
 
 module_la_SOURCES      = $(EVRYHEADERS) \
 			 e_mod_main.c \

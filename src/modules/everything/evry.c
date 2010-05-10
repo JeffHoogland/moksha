@@ -535,7 +535,7 @@ evry_list_win_hide(void)
 }
 
 EAPI void
-evry_plugin_async_update(Evry_Plugin *p, int action)
+evry_plugin_update(Evry_Plugin *p, int action)
 {
    Evry_State *s;
    Evry_Plugin *agg;
@@ -557,7 +557,7 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
 
    agg = sel->aggregator;
 
-   if (action == EVRY_ASYNC_UPDATE_ADD)
+   if (action == EVRY_UPDATE_ADD)
      {
 	if (!p->items && !s->trigger_active)
 	  {
@@ -615,7 +615,7 @@ evry_plugin_async_update(Evry_Plugin *p, int action)
 
 	_evry_view_update(s, NULL);
      }
-   else if (action == EVRY_ASYNC_UPDATE_REFRESH)
+   else if (action == EVRY_UPDATE_REFRESH)
      {
 	_evry_view_clear(s);
 	_evry_view_update(s, NULL);

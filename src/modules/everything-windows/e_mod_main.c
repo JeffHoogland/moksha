@@ -32,7 +32,7 @@ _cb_border_remove(void *data, int type,  void *event)
    p->items = eina_list_remove(p->items, it);
    eina_hash_del_by_key(border_hash, &(ev->border));
 
-   evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_ADD);
+   EVRY_PLUGIN_UPDATE(p, EVRY_UPDATE_ADD);
 
    return 1;
 }

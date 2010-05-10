@@ -2,29 +2,30 @@
 #define EVRY_H
 
 #include "e.h"
+#include "evry_types.h"
 
-#define EVRY_API_VERSION 16
+#define EVRY_API_VERSION 17
 
-#define EVRY_ACTION_OTHER 0
+#define EVRY_ACTION_OTHER    0
 #define EVRY_ACTION_FINISHED 1
 #define EVRY_ACTION_CONTINUE 2
 
-#define EVRY_ASYNC_UPDATE_ADD 0
-#define EVRY_ASYNC_UPDATE_CLEAR 1
-#define EVRY_ASYNC_UPDATE_REFRESH 2
+#define EVRY_UPDATE_ADD	     0
+#define EVRY_UPDATE_CLEAR    1
+#define EVRY_UPDATE_REFRESH  2
 
 #define EVRY_COMPLETE_NONE   0
 #define EVRY_COMPLETE_INPUT  1
 #define EVRY_COMPLETE_BROWSE 2
 
-#define VIEW_MODE_NONE  -1
-#define VIEW_MODE_LIST   0
-#define VIEW_MODE_DETAIL 1
-#define VIEW_MODE_THUMB  2
+#define VIEW_MODE_NONE	    -1
+#define VIEW_MODE_LIST	     0
+#define VIEW_MODE_DETAIL     1
+#define VIEW_MODE_THUMB	     2
 
-#define EVRY_PLUGIN_SUBJECT 0
-#define EVRY_PLUGIN_ACTION  1
-#define EVRY_PLUGIN_OBJECT  2
+#define EVRY_PLUGIN_SUBJECT  0
+#define EVRY_PLUGIN_ACTION   1
+#define EVRY_PLUGIN_OBJECT   2
 
 
 extern int _e_module_evry_log_dom;
@@ -43,23 +44,13 @@ extern int _e_module_evry_log_dom;
 #define WRN(...) EINA_LOG_DOM_WARN(_e_module_evry_log_dom , __VA_ARGS__)
 #define ERR(...) EINA_LOG_DOM_ERR(_e_module_evry_log_dom , __VA_ARGS__)
 
-typedef struct _Evry_Plugin		Evry_Plugin;
-typedef struct _Evry_Item		Evry_Item;
-typedef struct _Evry_Item_App		Evry_Item_App;
-typedef struct _Evry_Item_File		Evry_Item_File;
-typedef struct _Evry_Action		Evry_Action;
 typedef struct _Evry_State		Evry_State;
 typedef struct _Evry_View		Evry_View;
 typedef struct _History			Evry_History;
 typedef struct _History_Entry		History_Entry;
 typedef struct _History_Types		History_Types;
-typedef struct _History_Item		History_Item;
 typedef struct _Config			Evry_Config;
-typedef struct _Plugin_Config		Plugin_Config;
-typedef struct _Plugin_Setting		Plugin_Setting;
 typedef struct _Evry_Event_Item_Changed Evry_Event_Item_Changed;
-
-typedef unsigned int Evry_Type;
 
 #define EVRY_ITEM(_item) ((Evry_Item *)_item)
 #define EVRY_ACTN(_item) ((Evry_Action *) _item)
@@ -118,6 +109,9 @@ typedef unsigned int Evry_Type;
 #define EVRY_PLUGIN_FREE(_p) \
   if (_p) evry_plugin_free(EVRY_PLUGIN(_p))
 
+#define EVRY_PLUGIN_UPDATE(_p, _action)	\
+  if (_p) evry_plugin_update(EVRY_PLUGIN(_p), _action)
+
 
 #define EVRY_PLUGIN_ITEMS_CLEAR(_p) { \
      Evry_Item *it;				\
@@ -146,183 +140,6 @@ typedef unsigned int Evry_Type;
      }									\
      (x) = NULL;							\
   } while (0)
-
-struct _Evry_Item
-{
-  /* label to show for this item */
-  const char *label;
-
-  /* optional: more information to be shown */
-  const char *detail;
-
-  /* optional: for 'static' fdo icon name, otherwise use _icon_get */
-  const char *icon;
-
-  /* item can be browsed, e.g. folders */
-  Eina_Bool browseable;
-
-  /* optional: for internally use by plugins */
-  void *data;
-
-  /* optional: priority hints for sorting */
-  int priority;
-
-  /* optional: store value of fuzzy match with input */
-  int fuzzy_match;
-
-  /* optional: plugin can set id to identify
-   * it in history otherwise label is used */
-  const char *id;
-
-  /* optional: context provided by item. e.g. to remember which action
-   * was performed on a file with a specific mimetype */
-  const char *context;
-
-  /* is set to type of Evry_Plugin by default */
-  Evry_Type type;
-
-  /* optional */
-  Evry_Type subtype;
-
-  /* do not set! */
-  Eina_List *items;
-
-  Evas_Object *(*icon_get) (Evry_Item *it, Evas *e);
-  void (*free) (Evry_Item *item);
-
-  /* do not set by plugin! */
-  Eina_Bool selected;
-  Eina_Bool marked;
-  Evry_Plugin *plugin;
-  int ref;
-  double usage;
-  History_Item *hi;
-};
-
-struct _Evry_Action
-{
-  Evry_Item base;
-
-  /* identifier */
-  const char *name;
-
-  struct
-  {
-    /* requested type for action */
-    Evry_Type type;
-    Evry_Type subtype;
-    /* handle multiple items */
-    Eina_Bool accept_list;
-
-    /* do not set ! */
-    const Evry_Item *item;
-    Eina_List *items;
-  } it1;
-
-  struct
-  {
-    Evry_Type type;
-    Evry_Type subtype;
-    Eina_Bool accept_list;
-
-    /* do not set ! */
-    const Evry_Item *item;
-    Eina_List *items;
-  } it2;
-
-
-  /* optional: this action is specific for a item 'context'.
-     e.g. 'copy' for file mime-type is not, 'image viewer' is.
-     default is FALSE */
-  Eina_Bool remember_context;
-
-  int  (*action)     (Evry_Action *act);
-
-  /* optional: check whether action fits to chosen item */
-  int  (*check_item) (Evry_Action *act, const Evry_Item *it);
-  /* optional */
-  void (*free)       (Evry_Action *act);
-  /* optional: must be defined when  action is browseable */
-  Eina_List *(*fetch) (Evry_Action *act);
-};
-
-struct _Evry_Item_App
-{
-  Evry_Action base;
-  const char *file;
-  Efreet_Desktop *desktop;
-};
-
-struct _Evry_Item_File
-{
-  Evry_Item base;
-  const char *url;
-  const char *path;
-  const char *mime;
-};
-
-struct _Evry_Plugin
-{
-  Evry_Item base;
-
-  /* identifier */
-  const char *name;
-
-  /* list of items visible for everything after fetch */
-  Eina_List *items;
-
-  /* required: get candidates matching string, fill 'items' list */
-  int  (*fetch) (Evry_Plugin *p, const char *input);
-
-  /* required: run when state is removed in which this plugin is
-     active. free 'items' here */
-  void (*finish) (Evry_Plugin *p);
-
-  /* optional: plugin is added to the list of current plugins and
-     queried for results when not returning NULL. The previos
-     selectors item is passed, i.e. a plugin registered as action
-     receives the subject, a plugin registered as object receives the
-     action item. here you can check wheter the plugin can be queried,
-     for given context (provided by item) */
-  Evry_Plugin *(*begin) (Evry_Plugin *p, const Evry_Item *item);
-
-  /* optional: provide a list of subitems of 'item'. this function
-     must return a new instance which must be freed in 'finish' */
-  Evry_Plugin *(*browse) (Evry_Plugin *p, const Evry_Item *item);
-
-  /* optional: try to complete current item:
-     return: EVRY_COMPLETE_INPUT when input was changed
-     return: EVRY_COMPLETE_BROWSE to browse item */
-  int  (*complete) (Evry_Plugin *p, const Evry_Item *item, char **input);
-
-  /* optional: handle key events: return positive when key was
-     handled */
-  int  (*cb_key_down)  (Evry_Plugin *p, const Ecore_Event_Key *ev);
-
-  /* optional: use this when begin returned a new instance or you
-     have extended plugin struct */
-  void (*free) (Evry_Plugin *p);
-
-  /* optional: whether the plugin uses evry_async_update to add new items */
-  /* default FALSE */
-  Eina_Bool async_fetch;
-
-  /* optional: request items to be remembered for usage statistic */
-  /* default TRUE */
-  Eina_Bool history;
-
-  /* optional: if transient, item is removed from history on cleanup */
-  /* default FALSE */
-  Eina_Bool transient;
-
-  /* optional: config path registered for the module, to show
-     'configure' button in everything config */
-  const char *config_path;
-
-  /* not to be set by plugin! */
-  Plugin_Config *config;
-  unsigned int request;
-};
 
 
 struct _Evry_State
@@ -430,47 +247,6 @@ struct _Config
   int min_w, min_h;
 };
 
-struct _Plugin_Config
-{
-  /* do not set! */
-  const char *name;
-  int enabled;
-
-  /* request initial sort order of this plugin */
-  int priority;
-
-  /* trigger to show plugin exclusively */
-  const char *trigger;
-
-  /* only show plugin when triggered */
-  int trigger_only;
-
-  /* preffered view mode */
-  int view_mode;
-
-  /* minimum input char to start query items,
-     this must be handled by plugin */
-  int min_query;
-
-  /* show items of plugin in aggregator */
-  int aggregate;
-
-  /* if not top-level the plugin is shown in aggregator
-     instead of the items  */
-  int top_level;
-
-  /* Eina_Hash *settings; */
-
-  /* do not set! */
-  Evry_Plugin *plugin;
-};
-
-/* struct _Plugin_Config_Setting
- * {
- *   const char *str;
- *   double num;
- * }; */
-
 struct _History_Entry
 {
   Eina_List *items;
@@ -491,17 +267,6 @@ struct _History
   Eina_Bool changed;
 };
 
-struct _History_Item
-{
-  const char *plugin;
-  const char *context;
-  const char *input;
-  double last_used;
-  double usage;
-  int count;
-  int transient;
-  const char *data;
-};
 
 /* evry.c */
 EAPI void evry_item_select(const Evry_State *s, Evry_Item *it);
@@ -515,7 +280,7 @@ EAPI Evry_Item *evry_item_new(Evry_Item *base, Evry_Plugin *p, const char *label
 EAPI void evry_item_free(Evry_Item *it);
 EAPI void evry_item_ref(Evry_Item *it);
 
-EAPI void evry_plugin_async_update(Evry_Plugin *plugin, int state);
+EAPI void evry_plugin_update(Evry_Plugin *plugin, int state);
 EAPI void evry_clear_input(Evry_Plugin *p);
 
 /* evry_util.c */
@@ -525,7 +290,7 @@ EAPI int  evry_fuzzy_match(const char *str, const char *match);
 EAPI Eina_List *evry_fuzzy_match_sort(Eina_List *items);
 EAPI int evry_util_exec_app(const Evry_Item *it_app, const Evry_Item *it_file);
 EAPI char *evry_util_url_escape(const char *string, int inlength);
-EAPI char *evry_util_unescape(const char *string, int length);
+EAPI char *evry_util_url_unescape(const char *string, int length);
 EAPI void evry_util_file_detail_set(Evry_Item_File *file);
 EAPI Eina_Bool evry_util_module_config_check(const char *module_name, int conf, int epoch, int version);
 EAPI Evas_Object *evry_util_icon_get(Evry_Item *it, Evas *e);
@@ -535,7 +300,7 @@ EAPI void evry_event_item_changed(Evry_Item *it, int change_icon, int change_sel
 EAPI char *evry_util_md5_sum(const char *str);
 
 EAPI const char *evry_file_path_get(Evry_Item_File *file);
-EAPI const char *evry_file_uri_get(Evry_Item_File *file);
+EAPI const char *evry_file_url_get(Evry_Item_File *file);
 
 /* e_mod_main.c */
 /* returns 1 when a new plugin config was created. in this case you can

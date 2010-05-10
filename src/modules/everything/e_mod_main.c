@@ -8,6 +8,7 @@
  */
 
 #include "e_mod_main.h"
+#include "evry_api.h"
 
 /* #undef DBG
  * #define DBG(...) ERR(__VA_ARGS__) */
@@ -24,6 +25,8 @@ static void _config_free(void);
 static void _plugin_config_free(void);
 static int _cleanup_history(void *data);
 
+static Evry_API *_api = NULL;
+
 static E_Int_Menu_Augmentation *maug = NULL;
 static E_Action *act = NULL;
 
@@ -33,7 +36,6 @@ static E_Config_DD *plugin_conf_edd = NULL;
 static E_Config_DD *plugin_setting_edd = NULL;
 
 static Ecore_Timer *cleanup_timer;
-
 static int _update = 0;
 
 
@@ -102,6 +104,9 @@ evry_type_get(Evry_Type type)
 EAPI void *
 e_modapi_init(E_Module *m)
 {
+   Eina_List *l;
+   Evry_Module *em;
+   
    _e_module_evry_log_dom = eina_log_domain_register
      ("e_module_everything", EINA_LOG_DEFAULT_COLOR);
 
@@ -164,8 +169,44 @@ e_modapi_init(E_Module *m)
    /* make sure module is loaded before others */
    e_module_priority_set(m, -1000);
 
-   e_datastore_set("everything_loaded", "");
+   _api = E_NEW(Evry_API, 1);
+#define SET(func) (_api->func = &evry_##func);
+   SET(api_version_check);
+   SET(item_new);
+   SET(item_free);
+   SET(item_ref);
+   SET(plugin_new);
+   SET(plugin_free);
+   SET(plugin_register);
+   SET(plugin_unregister);
+   SET(plugin_update);
+   SET(action_new);
+   SET(action_free);
+   SET(action_register);
+   SET(action_unregister);
+   SET(api_version_check);
+   SET(type_register);
+   SET(icon_mime_get);
+   SET(icon_theme_get);
+   SET(fuzzy_match);
+   SET(util_exec_app);
+   SET(util_url_escape);
+   SET(util_url_unescape);
+   SET(util_file_detail_set);
+   SET(util_plugin_items_add);
+   SET(util_md5_sum);
+   SET(util_icon_get);
+   SET(items_sort_func);
+   SET(event_item_changed);
+   SET(file_path_get);
+   SET(file_url_get);
+#undef SET
+   
+   e_datastore_set("everything_loaded", _api);
 
+   EINA_LIST_FOREACH(e_datastore_get("everything_modules"), l, em)
+     em->init(_api);
+   
    /* cleanup every hour :) */
    cleanup_timer = ecore_timer_add(3600, _cleanup_history, NULL);
 
@@ -177,7 +218,15 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    E_Config_Dialog *cfd;
    const char *t;
+   Eina_List *l;
+   Evry_Module *em;
+   
+   EINA_LIST_FOREACH(e_datastore_get("everything_modules"), l, em)
+     em->shutdown();
 
+   e_datastore_del("everything_loaded");
+   E_FREE(_api);
+   
    evry_shutdown();
 
    view_thumb_shutdown();
@@ -215,7 +264,6 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    E_CONFIG_DD_FREE(conf_edd);
    E_CONFIG_DD_FREE(plugin_conf_edd);
    E_CONFIG_DD_FREE(plugin_setting_edd);
-   e_datastore_del("everything_loaded");
 
    if (cleanup_timer)
      ecore_timer_del(cleanup_timer);
