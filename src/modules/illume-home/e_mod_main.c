@@ -55,6 +55,7 @@ static int _il_home_cb_exe_del(void *data __UNUSED__, int type __UNUSED__, void 
 static int _il_home_cb_exe_timeout(void *data);
 static int _il_home_cb_client_message(void *data __UNUSED__, int type __UNUSED__, void *event);
 static int _il_home_cb_prop_change(void *data __UNUSED__, int type __UNUSED__, void *event);
+static int _il_home_cb_bg_change(void *data __UNUSED__, int type __UNUSED__, void *event);
 
 /* local variables */
 static Eina_List *hwins = NULL;
@@ -104,6 +105,10 @@ e_modapi_init(E_Module *m)
                       ecore_event_handler_add(ECORE_X_EVENT_WINDOW_PROPERTY, 
                                               _il_home_cb_prop_change, 
                                               NULL));
+   hdls = 
+     eina_list_append(hdls, 
+                      ecore_event_handler_add(E_EVENT_BG_UPDATE, 
+                                              _il_home_cb_bg_change, NULL));
 
    EINA_LIST_FOREACH(e_manager_list(), ml, man) 
      {
@@ -720,6 +725,32 @@ _il_home_cb_prop_change(void *data __UNUSED__, int type __UNUSED__, void *event)
           _il_home_fmc_set(hwin->o_fm);
           e_fm2_refresh(hwin->o_fm);
        }
+
+   return 1;
+}
+
+static int 
+_il_home_cb_bg_change(void *data __UNUSED__, int type __UNUSED__, void *event) 
+{
+   Il_Home_Win *hwin;
+   Eina_List *l;
+
+   if (type != E_EVENT_BG_UPDATE) return 1;
+
+   EINA_LIST_FOREACH(hwins, l, hwin) 
+     {
+	E_Zone *zone;
+	E_Desk *desk;
+	const char *bgfile;
+
+	zone = hwin->zone;
+	desk = e_desk_current_get(zone);
+	if (desk)
+	  bgfile = e_bg_file_get(zone->container->num, zone->num, desk->x, desk->y);
+	else
+	  bgfile = e_bg_file_get(zone->container->num, zone->num, -1, -1);
+	edje_object_file_set(hwin->o_bg, bgfile, "e/desktop/background");
+     }
 
    return 1;
 }
