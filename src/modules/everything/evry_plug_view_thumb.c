@@ -231,7 +231,7 @@ _e_smart_reconfigure_do(void *data)
    Smart_Data *sd = evas_object_smart_data_get(obj);
    Eina_List *l;
    Item *it;
-   int iw;
+   int iw, changed = 0;
    Evas_Coord x, y, xx, yy, ww, hh, mw, mh, ox = 0, oy = 0;
    Evas_Coord aspect_w, aspect_h;
 
@@ -328,9 +328,7 @@ _e_smart_reconfigure_do(void *data)
 	  sd->cx = 0;
 	if (sd->cy < 0)
 	  sd->cy = 0;
-
-	evas_object_smart_callback_call(obj, "changed", NULL);
-	return 1;
+	changed = 1;
      }
 
    if (sd->view->mode == VIEW_MODE_THUMB)
@@ -389,6 +387,8 @@ _e_smart_reconfigure_do(void *data)
 	it->changed = EINA_FALSE;
      }
 
+   if (changed)
+     evas_object_smart_callback_call(obj, "changed", NULL);
 
    if (!sd->thumb_idler)
      sd->thumb_idler = ecore_timer_add(0.01, _thumb_idler, sd);
