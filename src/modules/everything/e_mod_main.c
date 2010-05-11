@@ -185,6 +185,7 @@ e_modapi_init(E_Module *m)
    SET(action_free);
    SET(action_register);
    SET(action_unregister);
+   SET(action_find);
    SET(api_version_check);
    SET(type_register);
    SET(icon_mime_get);
@@ -223,8 +224,11 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    Evry_Module *em;
    
    EINA_LIST_FOREACH(e_datastore_get("everything_modules"), l, em)
-     em->shutdown();
-
+     {
+	printf("call shutdown\n");
+	em->shutdown();
+     }
+   
    e_datastore_del("everything_loaded");
    E_FREE(_api);
    

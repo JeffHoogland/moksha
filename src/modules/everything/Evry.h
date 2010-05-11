@@ -4,7 +4,7 @@
 #include "e.h"
 #include "evry_types.h"
 
-#define EVRY_API_VERSION 17
+#define EVRY_API_VERSION 18
 
 #define EVRY_ACTION_OTHER    0
 #define EVRY_ACTION_FINISHED 1

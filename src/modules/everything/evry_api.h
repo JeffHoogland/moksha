@@ -4,7 +4,7 @@
 #ifndef EVRY_H
 #include "evry_types.h"
 
-#define EVRY_API_VERSION 17
+#define EVRY_API_VERSION 18
 
 #define EVRY_ACTION_OTHER    0
 #define EVRY_ACTION_FINISHED 1
@@ -97,7 +97,7 @@ struct _Evry_API
   void (*action_free)(Evry_Action *act);
   void (*action_register)(Evry_Action *act, int priority);
   void (*action_unregister)(Evry_Action *act);
-  
+  Evry_Action *(*action_find)(const char *name);
   Evry_Type (*type_register)(const char *type);
 
   /* evry_util.c */
@@ -202,6 +202,22 @@ struct _Evry_API
 #define EVRY_PLUGIN_UPDATE(_p, _action)	\
   if (_p) evry->plugin_update(EVRY_PLUGIN(_p), _action)
 
+#define IF_RELEASE(x) do {						\
+     if (x) {								\
+	const char *__tmp; __tmp = (x); (x) = NULL; eina_stringshare_del(__tmp); \
+     }									\
+     (x) = NULL;							\
+  } while (0)
+
+#define EVRY_MODULE_REGISTER(_module) { \
+     Eina_List *l = e_datastore_get("everything_modules");	\
+     l = eina_list_append(l, _module);				\
+     e_datastore_set("everything_modules", l); }
+
+#define EVRY_MODULE_UNREGISTER(_module) { \
+     Eina_List *l = e_datastore_get("everything_modules");	\
+     l = eina_list_remove(l, _module);				\
+     e_datastore_set("everything_modules", l); }
 
 
 #ifndef EINA_LOG_DEFAULT_COLOR

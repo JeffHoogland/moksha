@@ -435,18 +435,13 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-   Eina_List *l;
-
    if ((evry = e_datastore_get("everything_loaded")))
      _plugins_init(evry);
 
    evry_module = E_NEW(Evry_Module, 1);
    evry_module->init     = &_plugins_init;
    evry_module->shutdown = &_plugins_shutdown;
-
-   l = e_datastore_get("everything_modules");
-   l = eina_list_append(l, evry_module);
-   e_datastore_set("everything_modules", l);
+   EVRY_MODULE_REGISTER(evry_module);
 
    e_module_delayed_set(m, 1);
 
@@ -456,16 +451,10 @@ e_modapi_init(E_Module *m)
 EAPI int
 e_modapi_shutdown(E_Module *m)
 {
-   Eina_List *l;
-
-   if (e_datastore_get("everything_loaded"))
-     _plugins_shutdown();
-
-   l = e_datastore_get("everything_modules");
-   l = eina_list_remove(l, evry_module);
-   e_datastore_set("everything_modules", l);
-
+   EVRY_MODULE_UNREGISTER(evry_module);
    E_FREE(evry_module);
+
+   _plugins_shutdown();
 
    return 1;
 }
