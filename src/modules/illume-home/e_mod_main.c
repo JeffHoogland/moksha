@@ -78,11 +78,14 @@ e_modapi_init(E_Module *m)
    _il_home_apps_unpopulate();
    _il_home_apps_populate();
 
+   /*
    hdls = 
      eina_list_append(hdls, 
                       ecore_event_handler_add(EFREET_EVENT_DESKTOP_CACHE_UPDATE, 
                                               _il_home_desktop_cache_update, 
                                               NULL));
+    */
+
    hdls = 
      eina_list_append(hdls, 
                       ecore_event_handler_add(E_EVENT_BORDER_ADD, 
