@@ -691,14 +691,14 @@ _fetch(Evry_Plugin *plugin, const char *input)
      {
 	char *path = NULL;
 
-	if ((p->command != CMD_SHOW_ROOT) ||
-	    ((ecore_file_is_dir(input) ? (path = strdup(input)) : 0) ||
-	     ((path = ecore_file_dir_get(input)) &&
-	      (strcmp(p->directory, path)))))
+	if (p->command != CMD_SHOW_ROOT)
+	    /* ((ecore_file_is_dir(input) ? (path = strdup(input)) : 0) ||
+	     *  ((path = ecore_file_dir_get(input)) &&
+	     *   (strcmp(p->directory, path))))) */
 	  {
 	     _free_files(p);
 
-	     eina_stringshare_del(p->directory);
+	     IF_RELEASE(p->directory);
 
 	     if (path)
 	       {
@@ -767,21 +767,18 @@ _fetch(Evry_Plugin *plugin, const char *input)
    else if (p->command)
      {
 	/* clear command items */
-	EINA_LIST_FREE(p->files, file)
-	  evry_item_free(EVRY_ITEM(file));
+	_free_files(p);
 
 	if (p->command == CMD_SHOW_ROOT)
 	  {
-	     if (p->directory)
-	       eina_stringshare_del(p->directory);
-
+	     IF_RELEASE(p->directory);
 	     p->directory = eina_stringshare_add(e_user_homedir_get());
 	  }
 
-	p->show_hidden = EINA_FALSE;
-	_read_directory(p);
-
 	p->command = CMD_NONE;
+	p->show_hidden = EINA_FALSE;
+
+	_read_directory(p);
      }
 
    if (input && !p->command)
