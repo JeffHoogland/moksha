@@ -8,6 +8,8 @@ typedef struct _Evry_Item_App		Evry_Item_App;
 typedef struct _Evry_Item_File		Evry_Item_File;
 typedef struct _Evry_Action		Evry_Action;
 typedef struct _History_Item		History_Item;
+typedef struct _History_Entry		History_Entry;
+typedef struct _History_Types		History_Types;
 
 typedef unsigned int Evry_Type;
 
@@ -235,6 +237,16 @@ struct _History_Item
   int count;
   int transient;
   const char *data;
+};
+
+struct _History_Entry
+{
+  Eina_List *items;
+};
+
+struct _History_Types
+{
+  Eina_Hash *types;
 };
 
 #endif

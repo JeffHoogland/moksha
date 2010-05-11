@@ -8,7 +8,6 @@
  */
 
 #include "e_mod_main.h"
-#include "evry_api.h"
 
 /* #undef DBG
  * #define DBG(...) ERR(__VA_ARGS__) */
@@ -199,9 +198,12 @@ e_modapi_init(E_Module *m)
    SET(util_md5_sum);
    SET(util_icon_get);
    SET(items_sort_func);
-   SET(event_item_changed);
+   SET(item_changed);
    SET(file_path_get);
    SET(file_url_get);
+   SET(history_item_add);
+   SET(history_types_get);
+   SET(history_item_usage_set);
 #undef SET
    
    e_datastore_set("everything_loaded", _api);
@@ -325,8 +327,6 @@ _config_init()
    E_CONFIG_VAL(D, T, hide_input, INT);
    E_CONFIG_VAL(D, T, hide_list, INT);
    E_CONFIG_VAL(D, T, quick_nav, INT);
-   E_CONFIG_VAL(D, T, cmd_terminal, STR);
-   E_CONFIG_VAL(D, T, cmd_sudo, STR);
    E_CONFIG_VAL(D, T, view_mode, INT);
    E_CONFIG_VAL(D, T, view_zoom, INT);
    E_CONFIG_VAL(D, T, cycle_mode, INT);
@@ -395,8 +395,6 @@ _config_init()
 	evry_conf->hide_input = 0;
 	evry_conf->hide_list = 0;
 	evry_conf->quick_nav = 1;
-	evry_conf->cmd_terminal = eina_stringshare_add("/usr/bin/xterm");
-	evry_conf->cmd_sudo = eina_stringshare_add("/usr/bin/gksudo --preserve-env");
 	evry_conf->view_mode = VIEW_MODE_DETAIL;
 	evry_conf->view_zoom = 0;
 	evry_conf->cycle_mode = 0;
@@ -437,11 +435,6 @@ static void
 _config_free(void)
 {
    _plugin_config_free();
-
-   if (evry_conf->cmd_terminal)
-     eina_stringshare_del(evry_conf->cmd_terminal);
-   if (evry_conf->cmd_sudo)
-     eina_stringshare_del(evry_conf->cmd_sudo);
 
    E_FREE(evry_conf);
 }

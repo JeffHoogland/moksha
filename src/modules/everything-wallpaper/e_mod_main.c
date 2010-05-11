@@ -32,7 +32,6 @@ static int _import_cb_edje_cc_exit(void *data, int type, void *event);
 
 static const Evry_API *evry = NULL;
 static Evry_Module *evry_module = NULL;
-static Eina_Bool active = EINA_FALSE;
 
 static Import *import = NULL;
 static Evry_Action *_act;
@@ -109,7 +108,7 @@ _plugins_init(const Evry_API *_api)
 {
    Evry_Plugin *p;
 
-   if (active)
+   if (evry_module->active)
      return EINA_TRUE;
 
    evry = _api;
@@ -127,7 +126,7 @@ _plugins_init(const Evry_API *_api)
 
    evry->action_register(_act, 2);
 
-   active = EINA_TRUE;
+   evry_module->active = EINA_TRUE;
    
    return EINA_TRUE;
 }
@@ -135,11 +134,11 @@ _plugins_init(const Evry_API *_api)
 static void
 _plugins_shutdown(void)
 {
-   if (!active) return;   
+   if (!evry_module->active) return;   
 
    evry->action_free(_act);
 
-   active = EINA_FALSE;
+   evry_module->active = EINA_FALSE;
 }
 
 /* taken from e_int_config_wallpaper_import.c */
@@ -373,15 +372,13 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-   Eina_List *l;
-
-   if ((evry = e_datastore_get("everything_loaded")))
-     _plugins_init(evry);
-
    evry_module = E_NEW(Evry_Module, 1);
    evry_module->init     = &_plugins_init;
    evry_module->shutdown = &_plugins_shutdown;
    EVRY_MODULE_REGISTER(evry_module);
+
+   if ((evry = e_datastore_get("everything_loaded")))
+     _plugins_init(evry);
 
    e_module_delayed_set(m, 1);
 
@@ -391,12 +388,10 @@ e_modapi_init(E_Module *m)
 EAPI int
 e_modapi_shutdown(E_Module *m)
 {
-   Eina_List *l;
-
+   _plugins_shutdown();
+   
    EVRY_MODULE_UNREGISTER(evry_module);
    E_FREE(evry_module);
-   
-   _plugins_shutdown();
 
    return 1;
 }

@@ -47,9 +47,6 @@ struct _E_Config_Dialog_Data
   int scroll_animate;
   double scroll_speed;
 
-  char *cmd_terminal;
-  char *cmd_sudo;
-
   int view_mode;
   int view_zoom;
   int cycle_mode;
@@ -104,12 +101,6 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->page[0].configs = eina_list_clone(evry_conf->conf_subjects);
    cfdata->page[1].configs = eina_list_clone(evry_conf->conf_actions);
    cfdata->page[2].configs = eina_list_clone(evry_conf->conf_objects);
-
-   if (evry_conf->cmd_terminal)
-     cfdata->cmd_terminal = strdup(evry_conf->cmd_terminal);
-
-   if (evry_conf->cmd_sudo)
-     cfdata->cmd_sudo = strdup(evry_conf->cmd_sudo);
 }
 
 static void *
@@ -129,8 +120,6 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    if (cfdata->page[1].configs) eina_list_free(cfdata->page[1].configs);
    if (cfdata->page[2].configs) eina_list_free(cfdata->page[2].configs);
 
-   E_FREE(cfdata->cmd_terminal);
-   E_FREE(cfdata->cmd_sudo);
    E_FREE(cfdata);
 }
 
@@ -186,13 +175,6 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 	     pc->min_query    = cfdata->page[i].min_query;
 	  }
      }
-
-   if (evry_conf->cmd_terminal)
-     eina_stringshare_del(evry_conf->cmd_terminal);
-   evry_conf->cmd_terminal = eina_stringshare_add(cfdata->cmd_terminal);
-   if (evry_conf->cmd_sudo)
-     eina_stringshare_del(evry_conf->cmd_sudo);
-   evry_conf->cmd_sudo = eina_stringshare_add(cfdata->cmd_sudo);
 
    e_config_save_queue();
    return 1;
@@ -510,18 +492,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdat
 
    e_widget_table_object_append(o, of, 0, 1, 2, 1, 1, 0, 0, 0);
 
-   of = e_widget_framelist_add(e, _("Commands"), 0);
-   ob = e_widget_label_add(e, _("Terminal Command"));
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_entry_add(e, &(cfdata->cmd_terminal), NULL, NULL, NULL);
-   e_widget_framelist_object_append(of, ob);
-
-   ob = e_widget_label_add(e, _("Sudo GUI"));
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_entry_add(e, &(cfdata->cmd_sudo), NULL, NULL, NULL);
-   e_widget_framelist_object_append(of, ob);
-
-   e_widget_table_object_append(o, of, 0, 2, 2, 1, 1, 0, 0, 0);
 
    e_widget_toolbook_page_append(otb, NULL, _("General Settings"),
 				 o, 1, 0, 1, 0, 0.5, 0.0);

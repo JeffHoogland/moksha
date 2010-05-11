@@ -13,7 +13,6 @@ static int  _cb_del(void *data, int type, void *event);
 
 static const Evry_API *evry = NULL;
 static Evry_Module *evry_module = NULL;
-static Eina_Bool active = EINA_FALSE;
 static Evry_Plugin *p1;
 
 static Ecore_Exe *exe = NULL;
@@ -183,7 +182,7 @@ _cb_data(void *data, int type __UNUSED__, void *event)
 	eina_stringshare_del(it->label);
 	it->label = eina_stringshare_add(ev->lines->line);
 
-	if (it) evry->event_item_changed(it, 0, 0);
+	if (it) evry->item_changed(it, 0, 0);
      }
 
    return 1;
@@ -217,7 +216,7 @@ _cb_del(void *data __UNUSED__, int type __UNUSED__, void *event)
 static int
 _plugins_init(const Evry_API *_api)
 {   
-   if (active) 
+   if (evry_module->active) 
      return EINA_TRUE;
 
    evry = _api;
@@ -243,7 +242,7 @@ _plugins_init(const Evry_API *_api)
 	pc->trigger = eina_stringshare_add("=");
      }
 
-   active = EINA_TRUE;
+   evry_module->active = EINA_TRUE;
    
    return EINA_TRUE;
 }
@@ -251,12 +250,12 @@ _plugins_init(const Evry_API *_api)
 static void
 _plugins_shutdown(void)
 {
-   if (!active) return;
+   if (!evry_module->active) return;
    printf("calc shut down\n");
 
    EVRY_PLUGIN_FREE(p1);
 
-   active = EINA_FALSE;
+   evry_module->active = EINA_FALSE;
 }
 
 /***************************************************************************/
@@ -269,14 +268,14 @@ EAPI E_Module_Api e_modapi =
 
 EAPI void *
 e_modapi_init(E_Module *m)
-{
-   if ((evry = e_datastore_get("everything_loaded")))
-     _plugins_init(evry);
-   
+{   
    evry_module = E_NEW(Evry_Module, 1);
    evry_module->init     = &_plugins_init;
    evry_module->shutdown = &_plugins_shutdown;
    EVRY_MODULE_REGISTER(evry_module);
+
+   if ((evry = e_datastore_get("everything_loaded")))
+     _plugins_init(evry);
 
    e_module_delayed_set(m, 1);
    
@@ -286,10 +285,10 @@ e_modapi_init(E_Module *m)
 EAPI int
 e_modapi_shutdown(E_Module *m)
 {
+   _plugins_shutdown();
+   
    EVRY_MODULE_UNREGISTER(evry_module);
    E_FREE(evry_module);
-
-   _plugins_shutdown();
 
    return 1;
 }

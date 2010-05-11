@@ -2,31 +2,8 @@
 #define EVRY_H
 
 #include "e.h"
+#include "evry_api.h"
 #include "evry_types.h"
-
-#define EVRY_API_VERSION 18
-
-#define EVRY_ACTION_OTHER    0
-#define EVRY_ACTION_FINISHED 1
-#define EVRY_ACTION_CONTINUE 2
-
-#define EVRY_UPDATE_ADD	     0
-#define EVRY_UPDATE_CLEAR    1
-#define EVRY_UPDATE_REFRESH  2
-
-#define EVRY_COMPLETE_NONE   0
-#define EVRY_COMPLETE_INPUT  1
-#define EVRY_COMPLETE_BROWSE 2
-
-#define VIEW_MODE_NONE	    -1
-#define VIEW_MODE_LIST	     0
-#define VIEW_MODE_DETAIL     1
-#define VIEW_MODE_THUMB	     2
-
-#define EVRY_PLUGIN_SUBJECT  0
-#define EVRY_PLUGIN_ACTION   1
-#define EVRY_PLUGIN_OBJECT   2
-
 
 extern int _e_module_evry_log_dom;
 
@@ -47,8 +24,6 @@ extern int _e_module_evry_log_dom;
 typedef struct _Evry_State		Evry_State;
 typedef struct _Evry_View		Evry_View;
 typedef struct _History			Evry_History;
-typedef struct _History_Entry		History_Entry;
-typedef struct _History_Types		History_Types;
 typedef struct _Config			Evry_Config;
 typedef struct _Evry_Event_Item_Changed Evry_Event_Item_Changed;
 
@@ -226,9 +201,6 @@ struct _Config
   /* quick navigation mode */
   int quick_nav;
 
-  const char *cmd_terminal;
-  const char *cmd_sudo;
-
   /* default view mode */
   int view_mode;
   int view_zoom;
@@ -247,21 +219,10 @@ struct _Config
   int min_w, min_h;
 };
 
-struct _History_Entry
-{
-  Eina_List *items;
-};
-
-struct _History_Types
-{
-  Eina_Hash *types;
-};
-
 struct _History
 {
   int version;
   Eina_Hash *subjects;
-  Eina_Hash *actions;
   double begin;
 
   Eina_Bool changed;
@@ -296,7 +257,7 @@ EAPI int evry_util_module_config_check(const char *module_name, int conf, int ep
 EAPI Evas_Object *evry_util_icon_get(Evry_Item *it, Evas *e);
 EAPI int evry_util_plugin_items_add(Evry_Plugin *p, Eina_List *items, const char *input, int match_detail, int set_usage);
 EAPI int evry_items_sort_func(const void *data1, const void *data2);
-EAPI void evry_event_item_changed(Evry_Item *it, int change_icon, int change_selected);
+EAPI void evry_item_changed(Evry_Item *it, int change_icon, int change_selected);
 EAPI char *evry_util_md5_sum(const char *str);
 
 EAPI const char *evry_file_path_get(Evry_Item_File *file);
@@ -316,9 +277,9 @@ EAPI Evry_Action *evry_action_find(const char *name);
 
 EAPI void evry_history_load(void);
 EAPI void evry_history_unload(void);
-EAPI History_Item *evry_history_add(Eina_Hash *hist, Evry_Item *it, const char *ctxt, const char *input);
-EAPI int  evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, const char *ctxt);
-EAPI History_Types *evry_history_types_get(Eina_Hash *hist, Evry_Type type);
+EAPI History_Item *evry_history_item_add(Evry_Item *it, const char *ctxt, const char *input);
+EAPI int  evry_history_item_usage_set(Evry_Item *it, const char *input, const char *ctxt);
+EAPI History_Types *evry_history_types_get(Evry_Type type);
 
 EAPI Evry_Plugin *evry_plugin_new(Evry_Plugin *base, const char *name, const char *label, const char *icon,
 				  Evry_Type item_type,
@@ -342,18 +303,6 @@ EAPI int evry_api_version_check(int version);
 EAPI Evry_Type evry_type_register(const char *type);
 EAPI const char *evry_type_get(Evry_Type type);
 
-EAPI extern int EVRY_EVENT_ITEM_SELECT;
-EAPI extern int EVRY_EVENT_ITEM_CHANGED;
-EAPI extern int EVRY_EVENT_ITEMS_UPDATE;
-
-EAPI extern Evry_Type EVRY_TYPE_NONE;
-EAPI extern Evry_Type EVRY_TYPE_FILE;
-EAPI extern Evry_Type EVRY_TYPE_DIR;
-EAPI extern Evry_Type EVRY_TYPE_APP;
-EAPI extern Evry_Type EVRY_TYPE_ACTION;
-EAPI extern Evry_Type EVRY_TYPE_PLUGIN;
-EAPI extern Evry_Type EVRY_TYPE_BORDER;
-EAPI extern Evry_Type EVRY_TYPE_TEXT;
 
 EAPI extern Evry_History *evry_hist;
 EAPI extern Evry_Config *evry_conf;

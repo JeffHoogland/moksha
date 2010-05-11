@@ -35,8 +35,6 @@ struct _Evry_Selector
   Evas_Object *o_thumb;
   Eina_Bool    do_thumb;
 
-  Eina_Hash   *history;
-
   Ecore_Timer *update_timer;
 };
 

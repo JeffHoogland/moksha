@@ -15,7 +15,6 @@ typedef struct _Module_Config Module_Config;
 
 static const Evry_API *evry = NULL;
 static Evry_Module *evry_module = NULL;
-static Eina_Bool active = EINA_FALSE;
 static Module_Config *_conf;
 static char _config_path[] =  "extensions/everthing-aspell";
 static char _config_domain[] = "module.everyhing-aspell";
@@ -394,7 +393,7 @@ _plugins_init(const Evry_API *_api)
 {
    Evry_Plugin *p;
 
-   if (active)
+   if (evry_module->active)
      return EINA_TRUE;
 
    evry = _api;
@@ -423,7 +422,7 @@ _plugins_init(const Evry_API *_api)
 
    _plug = (Plugin *) p;
 
-   active = EINA_TRUE;
+   evry_module->active = EINA_TRUE;
 
    return EINA_TRUE;
 }
@@ -431,11 +430,11 @@ _plugins_init(const Evry_API *_api)
 static void
 _plugins_shutdown(void)
 {
-   if (!active) return;
+   if (!evry_module->active) return;
 
    EVRY_PLUGIN_FREE(_plug);
 
-   active = EINA_FALSE;
+   evry_module->active = EINA_FALSE;
 }
 
 /***************************************************************************/
@@ -653,14 +652,14 @@ e_modapi_init(E_Module *m)
 {
    _conf_init(m);
 
-   if ((evry = e_datastore_get("everything_loaded")))
-     _plugins_init(evry);
-
    evry_module = E_NEW(Evry_Module, 1);
    evry_module->init     = &_plugins_init;
    evry_module->shutdown = &_plugins_shutdown;
    EVRY_MODULE_REGISTER(evry_module);
-   
+
+   if ((evry = e_datastore_get("everything_loaded")))
+     _plugins_init(evry);
+
    e_module_delayed_set(m, 1);
 
    return m;
@@ -669,10 +668,11 @@ e_modapi_init(E_Module *m)
 EAPI int
 e_modapi_shutdown(E_Module *m)
 {
+   _plugins_shutdown();
+   
    EVRY_MODULE_UNREGISTER(evry_module);
    E_FREE(evry_module);
-
-   _plugins_shutdown();
+   
    _conf_shutdown();
 
    return 1;

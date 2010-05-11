@@ -368,7 +368,7 @@ evry_util_plugin_items_add(Evry_Plugin *p, Eina_List *items, const char *input,
 	if (it->fuzzy_match)
 	  {
 	     if (set_usage)
-	       evry_history_item_usage_set(evry_hist->subjects, it, input, NULL);
+	       evry_history_item_usage_set(it, input, NULL);
 
 	     p->items = eina_list_append(p->items, it);
 	  }
@@ -798,7 +798,7 @@ _cb_free_item_changed(void *data, void *event)
 
 
 EAPI void
-evry_event_item_changed(Evry_Item *it, int icon, int selected)
+evry_item_changed(Evry_Item *it, int icon, int selected)
 {
    Evry_Event_Item_Changed *ev;
    ev = E_NEW(Evry_Event_Item_Changed, 1);

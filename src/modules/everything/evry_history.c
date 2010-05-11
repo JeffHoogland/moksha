@@ -58,8 +58,7 @@ evry_history_init(void)
 #define D hist_edd
    E_CONFIG_VAL(D, T,  version,  INT);
    E_CONFIG_VAL(D, T,  begin,    DOUBLE);
-   E_CONFIG_HASH(D, T, subjects, hist_types_edd);
-   E_CONFIG_HASH(D, T, actions,  hist_types_edd);
+   E_CONFIG_HASH(D, T, subjects,  hist_types_edd);
 #undef T
 #undef D
 }
@@ -178,10 +177,6 @@ evry_history_free(void)
 	  {
 	     eina_hash_foreach(evry_hist->subjects, _hist_cleanup_cb, d);
 	  }
-	if (evry_hist->actions)
-	  {
-	     eina_hash_foreach(evry_hist->actions, _hist_cleanup_cb, d);
-	  }
 
 	E_FREE(d);
 	evry_history_unload();
@@ -203,9 +198,7 @@ evry_history_load(void)
    if (evry_hist && evry_hist->version != HISTORY_VERSION)
      {
 	eina_hash_foreach(evry_hist->subjects, _hist_free_cb, NULL);
-	eina_hash_foreach(evry_hist->actions,  _hist_free_cb, NULL);
 	eina_hash_free(evry_hist->subjects);
-	eina_hash_free(evry_hist->actions);
 
 	E_FREE(evry_hist);
 	evry_hist = NULL;
@@ -219,8 +212,6 @@ evry_history_load(void)
      }
    if (!evry_hist->subjects)
      evry_hist->subjects = eina_hash_string_superfast_new(NULL);
-   if (!evry_hist->actions)
-     evry_hist->actions  = eina_hash_string_superfast_new(NULL);
 }
 
 
@@ -232,29 +223,30 @@ evry_history_unload(void)
    e_config_domain_save("module.everything.cache", hist_edd, evry_hist);
 
    eina_hash_foreach(evry_hist->subjects, _hist_free_cb, NULL);
-   eina_hash_foreach(evry_hist->actions,  _hist_free_cb, NULL);
    eina_hash_free(evry_hist->subjects);
-   eina_hash_free(evry_hist->actions);
 
    E_FREE(evry_hist);
    evry_hist = NULL;
 }
 
 EAPI History_Types *
-evry_history_types_get(Eina_Hash *hist, Evry_Type _type)
+evry_history_types_get(Evry_Type _type)
 {
    History_Types *ht;
    const char *type = evry_type_get(_type);
-
+   
+   if (!evry_hist)
+     return NULL;
+   
    if (!type)
      return NULL;
 
-   ht = eina_hash_find(hist, type);
+   ht = eina_hash_find(evry_hist->subjects, type);
 
    if (!ht)
      {
 	ht = E_NEW(History_Types, 1);
-	eina_hash_add(hist, type, ht);
+	eina_hash_add(evry_hist->subjects, type, ht);
      }
 
    if (!ht->types)
@@ -264,7 +256,7 @@ evry_history_types_get(Eina_Hash *hist, Evry_Type _type)
 }
 
 EAPI History_Item *
-evry_history_add(Eina_Hash *hist, Evry_Item *it, const char *ctxt, const char *input)
+evry_history_item_add(Evry_Item *it, const char *ctxt, const char *input)
 {
    History_Entry *he;
    History_Types *ht;
@@ -275,7 +267,11 @@ evry_history_add(Eina_Hash *hist, Evry_Item *it, const char *ctxt, const char *i
 
    int rem_ctxt = 1;
 
-   if (!it) return NULL;
+   if (!evry_hist)
+     return NULL;
+
+   if (!it)
+     return NULL;
 
    if (it->type == EVRY_TYPE_ACTION)
      {
@@ -295,7 +291,7 @@ evry_history_add(Eina_Hash *hist, Evry_Item *it, const char *ctxt, const char *i
    if (!hi)
      {
 	id = (it->id ? it->id : it->label);
-	ht = evry_history_types_get(hist, it->type);
+	ht = evry_history_types_get(it->type);
 	he = eina_hash_find(ht->types, id);
 
 	if (!he)
@@ -355,7 +351,7 @@ evry_history_add(Eina_Hash *hist, Evry_Item *it, const char *ctxt, const char *i
 }
 
 EAPI int
-evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, const char *ctxt)
+evry_history_item_usage_set(Evry_Item *it, const char *input, const char *ctxt)
 {
    History_Entry *he;
    History_Types *ht;
@@ -378,7 +374,7 @@ evry_history_item_usage_set(Eina_Hash *hist, Evry_Item *it, const char *input, c
 
    if (!hi)
      {
-	ht = evry_history_types_get(hist, it->type);
+	ht = evry_history_types_get(it->type);
 
 	if (!(he = eina_hash_find(ht->types, (it->id ? it->id : it->label))))
 	  return 0;

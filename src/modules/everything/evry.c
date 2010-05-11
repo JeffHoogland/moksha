@@ -824,21 +824,18 @@ _evry_selector_new(int type)
 
    if (type == EVRY_PLUGIN_SUBJECT)
      {
-	sel->history = evry_hist->subjects;
 	sel->actions = evry_plug_actions_new(sel, type);
 	edje_object_part_swallow(win->o_main, "e.swallow.subject_selector", o);
 	pcs = evry_conf->conf_subjects;
      }
    else if (type == EVRY_PLUGIN_ACTION)
      {
-	sel->history = evry_hist->actions;
 	sel->actions = evry_plug_actions_new(sel, type);
 	edje_object_part_swallow(win->o_main, "e.swallow.action_selector", o);
 	pcs = evry_conf->conf_actions;
      }
    else if (type == EVRY_PLUGIN_OBJECT)
      {
-	sel->history = evry_hist->subjects;
 	edje_object_part_swallow(win->o_main, "e.swallow.object_selector", o);
 	pcs = evry_conf->conf_objects;
      }
@@ -1333,7 +1330,7 @@ evry_browse_item(Evry_Selector *sel)
 
    if (browse_aggregator)
      {
-	evry_history_add(sel->history, s->cur_item, NULL, NULL);
+	evry_history_item_add(s->cur_item, NULL, NULL);
 	snprintf(sel->state->input, INPUTLEN, "%s", s->input);
 
 	s = new_state;
@@ -1344,7 +1341,7 @@ evry_browse_item(Evry_Selector *sel)
      }
    else	if (it->plugin->history)
      {
-	evry_history_add(sel->history, s->cur_item, NULL, s->input);
+	evry_history_item_add(s->cur_item, NULL, s->input);
 	_evry_matches_update(sel, 1);
 	s = new_state;
      }
@@ -1604,8 +1601,7 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	Eina_List *l, *ll;
 	Evry_Item *it = s->cur_item;
 
-	if (!(he = eina_hash_find
-	      (selector->history, (it->id ? it->id : it->label))))
+	if (!(he = eina_hash_find(evry_hist->subjects, (it->id ? it->id : it->label))))
 	  goto end;
 
 	EINA_LIST_FOREACH_SAFE(he->items, l, ll, hi)
@@ -1920,13 +1916,13 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
    else return;
 
    if (s_subj && it_subj && it_subj->plugin->history)
-     evry_history_add(evry_hist->subjects, it_subj, NULL, s_subj->input);
+     evry_history_item_add(it_subj, NULL, s_subj->input);
 
    if (s_act && it_act && it_act->plugin->history)
-     evry_history_add(evry_hist->actions, it_act, it_subj->context, s_act->input);
+     evry_history_item_add(it_act, it_subj->context, s_act->input);
 
    if (s_obj && it_obj && it_obj->plugin->history)
-     evry_history_add(evry_hist->subjects, it_obj, it_act->context, s_obj->input);
+     evry_history_item_add(it_obj, it_act->context, s_obj->input);
 
    if (finished)
      evry_hide(0);

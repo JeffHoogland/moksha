@@ -19,7 +19,6 @@ struct _Settings_Item
 
 static const Evry_API *evry = NULL;
 static Evry_Module *evry_module = NULL;
-static Eina_Bool active = EINA_FALSE;
 static Evry_Plugin *p;
 static Evry_Action *act;
 static Eina_List *items = NULL;
@@ -105,7 +104,7 @@ _action(Evry_Action *act)
 static int
 _plugins_init(const Evry_API *_api)
 {   
-   if (active) 
+   if (evry_module->active) 
      return EINA_TRUE;
 
    evry = _api;
@@ -125,7 +124,7 @@ _plugins_init(const Evry_API *_api)
 
    evry->action_register(act, 0);
 
-   active = EINA_TRUE;
+   evry_module->active = EINA_TRUE;
 
    return EINA_TRUE;
 }
@@ -133,13 +132,13 @@ _plugins_init(const Evry_API *_api)
 static void
 _plugins_shutdown(void)
 {
-   if (!active) return;
+   if (!evry_module->active) return;
    
    EVRY_PLUGIN_FREE(p);
 
    evry->action_free(act);
 
-   active = EINA_FALSE;
+   evry_module->active = EINA_FALSE;
 }
 
 
@@ -153,15 +152,15 @@ EAPI E_Module_Api e_modapi =
 
 EAPI void *
 e_modapi_init(E_Module *m)
-{
-   if ((evry = e_datastore_get("everything_loaded")))
-     _plugins_init(evry);
-   
+{   
    evry_module = E_NEW(Evry_Module, 1);
    evry_module->init     = &_plugins_init;
    evry_module->shutdown = &_plugins_shutdown;
    EVRY_MODULE_REGISTER(evry_module);
-   
+
+   if ((evry = e_datastore_get("everything_loaded")))
+     _plugins_init(evry);
+
    e_module_delayed_set(m, 1);
    
    return m;
@@ -170,10 +169,10 @@ e_modapi_init(E_Module *m)
 EAPI int
 e_modapi_shutdown(E_Module *m)
 {
+   _plugins_shutdown();
+   
    EVRY_MODULE_UNREGISTER(evry_module);
    E_FREE(evry_module);
-
-   _plugins_shutdown();
    
    return 1;
 }
