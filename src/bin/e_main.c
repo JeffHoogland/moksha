@@ -782,7 +782,7 @@ main(int argc, char **argv)
    if (e_msgbus_init())
      _e_main_shutdown_push(e_msgbus_shutdown);
 
-   e_init_status_set(_("Setting up Paths"));
+   e_init_status_set(_("Setup Paths"));
    TS("efreet paths");
      {
 	Eina_List **list;
@@ -930,7 +930,7 @@ main(int argc, char **argv)
        _e_main_shutdown(-1);
      }
 
-   e_init_status_set(_("Set Up Powersave modes"));
+   e_init_status_set(_("Setup Powersave modes"));
    TS("powersave");
    if (!e_powersave_init())
      {
@@ -990,7 +990,7 @@ main(int argc, char **argv)
     }
    _e_main_shutdown_push(e_thumb_shutdown);
 
-   e_init_status_set(_("Set Up File Ordering"));
+   e_init_status_set(_("Setup File Ordering"));
    TS("order");
    if (!e_order_init())
      {
