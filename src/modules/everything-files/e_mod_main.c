@@ -1267,8 +1267,6 @@ _plugins_init(const Evry_API *api)
    _mime_dir = eina_stringshare_add("inode/directory");
    _mime_mount = eina_stringshare_add("inode/mountpoint");
 
-   evry_module->active = EINA_TRUE;
-   
 #define PLUGIN_NEW(_name, _icon, _begin, _finish, _fetch) \
    p = EVRY_PLUGIN_NEW(Evry_Plugin, _name, _icon, EVRY_TYPE_FILE, \
 		       _begin, _finish, _fetch, NULL);	\
@@ -1579,7 +1577,7 @@ e_modapi_init(E_Module *m)
    EVRY_MODULE_REGISTER(evry_module);
 
    if ((evry = e_datastore_get("everything_loaded")))
-     _plugins_init(evry);
+     evry_module->active = _plugins_init(evry);
       
    e_module_delayed_set(m, 1);
    

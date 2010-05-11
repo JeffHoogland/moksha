@@ -966,8 +966,6 @@ _plugins_init(const Evry_API *api)
    if (!evry->api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
-   evry_module->active = EINA_TRUE;
-
    p = EVRY_PLUGIN_NEW(Plugin, N_("Applications"), NULL, EVRY_TYPE_APP,
 		       _begin, _finish, _fetch, NULL);
    p->complete = &_complete;
@@ -1298,7 +1296,7 @@ e_modapi_init(E_Module *m)
    EVRY_MODULE_REGISTER(evry_module);
 
    if ((evry = e_datastore_get("everything_loaded")))
-     _plugins_init(evry);
+     evry_module->active = _plugins_init(evry);
 
    /* taken from e_exebuf.c */
    exelist_exe_edd = E_CONFIG_DD_NEW("E_Exe", E_Exe);

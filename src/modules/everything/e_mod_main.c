@@ -209,7 +209,7 @@ e_modapi_init(E_Module *m)
    e_datastore_set("everything_loaded", _api);
 
    EINA_LIST_FOREACH(e_datastore_get("everything_modules"), l, em)
-     em->init(_api);
+     em->active = em->init(_api);
    
    /* cleanup every hour :) */
    cleanup_timer = ecore_timer_add(3600, _cleanup_history, NULL);

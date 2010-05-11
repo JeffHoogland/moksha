@@ -402,8 +402,6 @@ _plugins_init(const Evry_API *_api)
    _actions = eina_list_append(_actions, act);
    evry->action_register(act, 3);
 
-   evry_module->active = EINA_TRUE;
-   
    return EINA_TRUE;
 }
 
@@ -440,7 +438,7 @@ e_modapi_init(E_Module *m)
    EVRY_MODULE_REGISTER(evry_module);
 
    if ((evry = e_datastore_get("everything_loaded")))
-     _plugins_init(evry);
+     evry_module->active = _plugins_init(evry);
 
    e_module_delayed_set(m, 1);
 
