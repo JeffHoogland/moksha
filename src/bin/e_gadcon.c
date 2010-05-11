@@ -781,7 +781,7 @@ e_gadcon_client_config_new(E_Gadcon *gc, const char *name)
    if (!cf_gcc) return NULL;
    cf_gcc->name = eina_stringshare_add(name);
    cf_gcc->id = eina_stringshare_add(cc->func.id_new(cc));
-   cf_gcc->geom.res = 800;
+   cf_gcc->geom.res = gc->zone->w;
    cf_gcc->geom.size = 80;
    cf_gcc->geom.pos = cf_gcc->geom.res - cf_gcc->geom.size;
    cf_gcc->style = NULL;
