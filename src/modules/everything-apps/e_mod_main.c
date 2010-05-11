@@ -1159,7 +1159,7 @@ _conf_init(E_Module *m)
 
    if (_conf) 
      {
-	if (!evry_util_module_config_check
+	if (!e_util_module_config_check
 	    (_("Everything Applications"), _conf->version,
 	     MOD_CONFIG_FILE_EPOCH, MOD_CONFIG_FILE_VERSION))
 	  {

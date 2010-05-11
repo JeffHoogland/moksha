@@ -1564,8 +1564,9 @@ _conf_init(E_Module *m)
 
    _conf = e_config_domain_load("module.everything-files", conf_edd);
 
-   if (_conf && !evry_util_module_config_check(_("Everything Files"), _conf->version,
-					       MOD_CONFIG_FILE_EPOCH, MOD_CONFIG_FILE_VERSION))
+   if (_conf && !e_util_module_config_check
+       (_("Everything Files"), _conf->version,
+	MOD_CONFIG_FILE_EPOCH, MOD_CONFIG_FILE_VERSION))
 	  _conf_free();
 
    if (!_conf) _conf_new();

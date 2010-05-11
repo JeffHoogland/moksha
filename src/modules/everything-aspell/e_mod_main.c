@@ -693,6 +693,7 @@ e_modapi_shutdown(E_Module *m)
 EAPI int
 e_modapi_save(E_Module *m)
 {
+   e_config_domain_save(_config_domain, _conf_edd, _conf);
    return 1;
 }
 
