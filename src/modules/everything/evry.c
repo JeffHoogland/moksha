@@ -1256,19 +1256,19 @@ _evry_state_pop(Evry_Selector *sel)
      s->view->destroy(s->view);
 
    sel->states = eina_list_remove_list(sel->states, sel->states);
-   
+
    if (sel->states)
      prev = sel->states->data;
-   
+
    EINA_LIST_FREE(s->plugins, p)
      {
 	/* XXX skip non top-level plugins */
 	if (prev && eina_list_data_find(prev->plugins, p))
 	  continue;
-	
+
        p->finish(p);
      }
-   
+
    if (s->sel_items)
      eina_list_free(s->sel_items);
 
@@ -1287,7 +1287,7 @@ evry_browse_item(Evry_Selector *sel)
    Evry_Plugin *p, *pp;
    Evry_View *view = NULL;
    int browse_aggregator = 0;
-   
+
    if (!(s = sel->state))
      return 0;
 
@@ -1318,13 +1318,13 @@ evry_browse_item(Evry_Selector *sel)
 	browse_aggregator = 1;
 	plugins = eina_list_append(plugins, it);
      }
-   
+
    if (!plugins)
      return 0;
 
    if (!(new_state = _evry_state_new(sel, plugins)))
      return 0;
-   
+
    if (s->view)
      {
 	_evry_view_hide(s->view, 1);
@@ -1723,25 +1723,25 @@ _evry_backspace(Evry_Selector *sel)
    int len, val, pos;
 
    len = strlen(s->inp);
-   if (len > 0)
+   if (len == 0)
+     return 0;
+
+   pos = evas_string_char_prev_get(s->inp, len, &val);
+   if ((pos < len) && (pos >= 0))
      {
-	pos = evas_string_char_prev_get(s->inp, len, &val);
-	if ((pos < len) && (pos >= 0))
-	  {
-	     val = *(s->inp + pos);
+	val = *(s->inp + pos);
 
-	     s->inp[pos] = 0;
+	s->inp[pos] = 0;
 
-	     if (s->trigger_active && s->inp[0] != 0)
-	       s->input = s->inp + 1;
-	     else
-	       s->input = s->inp;
+	if (s->trigger_active && s->inp[0] != 0)
+	  s->input = s->inp + 1;
+	else
+	  s->input = s->inp;
 
-	     if ((pos == 0) || !isspace(val))
-	       _evry_update(sel, 1);
+	if ((pos == 0) || !isspace(val))
+	  _evry_update(sel, 1);
 
-	     return 1;
-	  }
+	return 1;
      }
 
    return 0;
@@ -2014,6 +2014,7 @@ _evry_view_toggle(Evry_State *s, const char *trigger)
 	EINA_LIST_FOREACH(evry_conf->views, ll, view)
 	  {
 	     if (view->trigger && !strncmp(trigger, view->trigger, 1) &&
+		 (view->id != s->view->id) &&
 		 (v = view->create(view, s, list->o_main)))
 	       {
 		  triggered = EINA_TRUE;
@@ -2040,15 +2041,7 @@ _evry_view_toggle(Evry_State *s, const char *trigger)
 	EINA_LIST_FOREACH(l, ll, view)
 	  {
 	     if ((!view->trigger) &&
-		 ((view == s->view->id) ||
-		  (v = view->create(view, s, list->o_main))))
-	       goto found;
-	  }
-
-	EINA_LIST_FOREACH(evry_conf->views, ll, view)
-	  {
-	     if ((!view->trigger) &&
-		 ((view == s->view->id) ||
+		 ((view->id != s->view->id) &&
 		  (v = view->create(view, s, list->o_main))))
 	       goto found;
 	  }
