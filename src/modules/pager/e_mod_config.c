@@ -181,11 +181,6 @@ _adv_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *c
    ow = e_widget_check_add(evas, _("Show desktop names"), 
                            &(cfdata->show_desk_names));
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
-   ow = e_widget_label_add(evas, _("Keyaction popup height"));
-   e_widget_list_object_append(ol, ow, 1, 0, 0.5);
-   ow = e_widget_slider_add(evas, 1, 0, _("%.0f px"), 20.0, 200.0, 1.0, 0, NULL, 
-                            &(cfdata->popup.act_height), 100);
-   e_widget_list_object_append(ol, ow, 1, 0, 0.5);
    ow = e_widget_label_add(evas, _("Resistance to dragging"));
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
    ow = e_widget_slider_add(evas, 1, 0, _("%.0f px"), 0.0, 10.0, 1.0, 0, NULL, 
@@ -244,6 +239,11 @@ _adv_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *c
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
    e_widget_on_change_hook_set(pc, _cb_disable_check_list, 
                                cfdata->gui.popup_list);
+   ow = e_widget_label_add(evas, _("Pager action popup height"));
+   e_widget_list_object_append(ol, ow, 1, 0, 0.5);
+   ow = e_widget_slider_add(evas, 1, 0, _("%.0f px"), 20.0, 200.0, 1.0, 0, NULL, 
+                            &(cfdata->popup.act_height), 100);
+   e_widget_list_object_append(ol, ow, 1, 0, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Popup"), ol, 1, 0, 1, 0, 
                                  0.5, 0.0);
 
