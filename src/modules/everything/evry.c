@@ -50,7 +50,7 @@ static void _evry_selector_free(Evry_Selector *sel);
 static void _evry_selector_activate(Evry_Selector *sel);
 static void _evry_selectors_switch(int dir);
 static void _evry_selector_update(Evry_Selector *sel);
-static void _evry_selector_icon_set(Evry_Selector *sel);
+static void _evry_selector_item_set(Evry_Selector *sel);
 static int  _evry_selector_subjects_get(const char *plugin_name);
 static int  _evry_selector_actions_get(Evry_Item *it);
 static int  _evry_selector_objects_get(Evry_Action *act);
@@ -412,7 +412,7 @@ evry_item_free(Evry_Item *it)
    IF_RELEASE(it->context);
    IF_RELEASE(it->detail);
    IF_RELEASE(it->icon);
-   
+
    if (it->free)
      it->free(it);
    else
@@ -427,6 +427,9 @@ _evry_selector_for_plugin_get(Evry_Plugin *p)
 
    for (i = 0; i < 3; i++)
      {
+	if (p == selectors[i]->aggregator)
+	  return selectors[i];
+
 	s = selectors[i]->state;
 	if (s && eina_list_data_find(s->plugins, p))
 	  return selectors[i];
@@ -541,10 +544,9 @@ evry_plugin_update(Evry_Plugin *p, int action)
    Evry_State *s;
    Evry_Plugin *agg;
    Evry_Selector *sel;
+   int update_agg = 0;
 
    if (!win) return;
-
-   printf("plugin: %s\n", p->name);
 
    sel = _evry_selector_for_plugin_get(p);
    if (!sel || !sel->state) return;
@@ -605,14 +607,15 @@ evry_plugin_update(Evry_Plugin *p, int action)
 		       s->cur_plugins = eina_list_remove(s->cur_plugins, agg);
 		    }
 	       }
+	     update_agg = 1;
 	  }
-	
+
 	if (s->sel_items)
 	  eina_list_free(s->sel_items);
 	s->sel_items = NULL;
 
 	/* plugin is visible */
-	if ((s->plugin == p) || (s->plugin == agg))
+	if ((s->plugin == p) || (update_agg && s->plugin == agg))
 	  {
 	     _evry_selector_update(sel);
 	  }
@@ -968,8 +971,10 @@ _evry_selector_thumb(Evry_Selector *sel, const Evry_Item *it)
    if (!strncmp(file->mime, "image/", 6))
      {
    	sel->o_thumb = e_thumb_icon_add(win->popup->evas);
-   	evas_object_smart_callback_add(sel->o_thumb, "e_thumb_gen", _evry_selector_thumb_gen, sel);
-   	edje_object_part_geometry_get(sel->o_main, "e.swallow.thumb", NULL, NULL, &w, &h);
+   	evas_object_smart_callback_add(sel->o_thumb, "e_thumb_gen",
+				       _evry_selector_thumb_gen, sel);
+   	edje_object_part_geometry_get(sel->o_main, "e.swallow.thumb",
+				      NULL, NULL, &w, &h);
    	e_thumb_icon_file_set(sel->o_thumb, file->path, NULL);
    	e_thumb_icon_size_set(sel->o_thumb, w, h);
    	e_thumb_icon_begin(sel->o_thumb);
@@ -981,10 +986,10 @@ _evry_selector_thumb(Evry_Selector *sel, const Evry_Item *it)
 }
 
 static void
-_evry_selector_icon_set(Evry_Selector *sel)
+_evry_selector_item_update(Evry_Selector *sel)
 {
    Evry_State *s = sel->state;
-   Evry_Item *it;
+   Evry_Item *it = NULL;
    Evas_Object *o;
 
    if (!edje_object_part_exists(sel->o_main, "e.swallow.icons")) return;
@@ -995,12 +1000,29 @@ _evry_selector_icon_set(Evry_Selector *sel)
 	sel->o_icon = NULL;
      }
 
-   if (!s) return;
+   if (!s || !(it = s->cur_item))
+     {
+	/* no items for this state - clear selector */
+	edje_object_part_text_set(sel->o_main, "e.text.label", "");
+	if (sel == selector && s && s->plugin)
+	  edje_object_part_text_set(sel->o_main, "e.text.plugin",
+				    EVRY_ITEM(s->plugin)->label);
+	else
+	  edje_object_part_text_set(sel->o_main, "e.text.plugin", "");
 
-   it = s->cur_item;
+	if (!s) return;
+     }
 
    if (it)
      {
+	edje_object_part_text_set(sel->o_main, "e.text.label", it->label);
+
+	if (sel == selector)
+	  edje_object_part_text_set(sel->o_main, "e.text.plugin",
+				    EVRY_ITEM(it->plugin)->label);
+	else
+	  edje_object_part_text_set(sel->o_main, "e.text.plugin", "");
+
 	if (!_evry_selector_thumb(sel, it))
 	  {
 	     o = evry_util_icon_get(it, win->popup->evas);
@@ -1016,12 +1038,8 @@ _evry_selector_icon_set(Evry_Selector *sel)
 	       }
 	  }
      }
-   else if (it)
-     {
-   	_evry_selector_thumb(sel, it);
-     }
 
-   if (!sel->o_icon && s->plugin && EVRY_ITEM(s->plugin)->icon)
+   if (!(sel->o_icon) && (EVRY_ITEM(s->plugin)->icon))
      {
 	o = evry_icon_theme_get(EVRY_ITEM(s->plugin)->icon, win->popup->evas);
 	if (o)
@@ -1039,6 +1057,8 @@ _evry_selector_update(Evry_Selector *sel)
    Evry_State *s = sel->state;
    Evry_Item *it = NULL;
    Eina_Bool item_changed = EINA_FALSE;
+
+   DBG("%p", sel);
 
    if (s)
      {
@@ -1070,26 +1090,8 @@ _evry_selector_update(Evry_Selector *sel)
 	  }
      }
 
-   _evry_selector_icon_set(sel);
+   _evry_selector_item_update(sel);
 
-   if (it)
-     {
-	edje_object_part_text_set(sel->o_main, "e.text.label", it->label);
-
-	if (sel == selector)
-	  edje_object_part_text_set(sel->o_main, "e.text.plugin", EVRY_ITEM(it->plugin)->label);
-	else
-	  edje_object_part_text_set(sel->o_main, "e.text.plugin", "");
-     }
-   else
-     {
-	/* no items for this state - clear selector */
-	edje_object_part_text_set(sel->o_main, "e.text.label", "");
-	if (sel == selector && s && s->plugin)
-	  edje_object_part_text_set(sel->o_main, "e.text.plugin", EVRY_ITEM(s->plugin)->label);
-	else
-	  edje_object_part_text_set(sel->o_main, "e.text.plugin", "");
-     }
 
    if (sel == selectors[0])
      {
@@ -1113,8 +1115,8 @@ _evry_list_win_update(Evry_State *s)
    if (s != selector->state) return;
    if (!list->visible) return;
 
-   if (s->changed)
-     _evry_view_update(s, s->plugin);
+   /* if (s->changed) */
+   _evry_view_update(s, s->plugin);
 }
 
 static int
@@ -1662,8 +1664,8 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	  goto end;
      }
    /* let plugin intercept keypress */
-   else if (s->plugin && s->plugin->cb_key_down &&
-	    s->plugin->cb_key_down(s->plugin, ev))
+   if (s->plugin && s->plugin->cb_key_down &&
+       s->plugin->cb_key_down(s->plugin, ev))
      goto end;
    /* let view intercept keypress */
    else if (_evry_view_key_press(s, ev))

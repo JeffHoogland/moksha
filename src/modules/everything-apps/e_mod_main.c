@@ -279,7 +279,6 @@ _item_add(Plugin *p, Efreet_Desktop *desktop, const char *file, int match)
 	     if (!eina_list_data_find_list(EVRY_PLUGIN(p)->items, app))
 	       {
 		  EVRY_ITEM(app)->fuzzy_match = match;
-		  EVRY_ITEM(app)->plugin = EVRY_PLUGIN(p);
 		  EVRY_PLUGIN_ITEM_APPEND(p, app);
 	       }
 	     return app;
@@ -324,7 +323,6 @@ _item_add(Plugin *p, Efreet_Desktop *desktop, const char *file, int match)
 	     if (!eina_list_data_find_list(EVRY_PLUGIN(p)->items, app))
 	       {
 		  EVRY_ITEM(app)->fuzzy_match = match;
-		  EVRY_ITEM(app)->plugin = EVRY_PLUGIN(p);
 		  EVRY_PLUGIN_ITEM_APPEND(p, app);
 	       }
 	     return app;
@@ -341,7 +339,7 @@ _item_add(Plugin *p, Efreet_Desktop *desktop, const char *file, int match)
 	EVRY_ACTN(app)->remember_context = EINA_TRUE;
 	EVRY_ITEM(app)->id = eina_stringshare_add(desktop->exec);
 	EVRY_ITEM(app)->subtype = EVRY_TYPE_ACTION;
-
+	EVRY_ITEM(app)->fuzzy_match = match;
 	if (desktop->comment)
 	  EVRY_ITEM(app)->detail = eina_stringshare_add(desktop->comment);
 	else if (desktop->generic_name)
@@ -354,6 +352,7 @@ _item_add(Plugin *p, Efreet_Desktop *desktop, const char *file, int match)
 	EVRY_ACTN(app)->remember_context = EINA_TRUE;
 	EVRY_ITEM(app)->id = eina_stringshare_add(file);
 	EVRY_ITEM(app)->subtype = EVRY_TYPE_ACTION;
+	EVRY_ITEM(app)->fuzzy_match = match;
      }
 
    app->desktop = desktop;
@@ -464,11 +463,11 @@ _hist_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fda
 
 	if ((d = efreet_util_desktop_exec_find(key)))
 	  {
-	     app = _item_add(p, d, NULL, 1);
+	     app = _item_add(p, d, NULL, 0);
 	  }
 	else
 	  {
-	     app = _item_add(p, NULL, (char *) key, 1);
+	     app = _item_add(p, NULL, (char *) key, 0);
 	     if (app && app->desktop)
 	       efreet_desktop_ref(app->desktop);
 	  }

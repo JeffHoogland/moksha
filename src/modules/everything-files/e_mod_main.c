@@ -220,7 +220,11 @@ _scan_func(void *data)
 	EVRY_ITEM(file)->browseable = is_dir;
 	d->files = eina_list_append(d->files, file);
 
-	snprintf(buf, sizeof(buf), "%s/%s", d->directory, filename);
+	if (d->directory[1])
+	  snprintf(buf, sizeof(buf), "%s/%s", d->directory, filename);
+	else
+	  snprintf(buf, sizeof(buf), "/%s", filename);
+	
 	file->path = strdup(buf);
      }
    closedir(d->dirp);
@@ -426,6 +430,10 @@ _scan_end_func(void *data)
 					  _scan_cancel_func, d);
 	     return;
 	  }
+	else
+	  {
+	     p->files = eina_list_sort(p->files, -1, _cb_sort);
+	  }
      }
    else
      {
@@ -456,23 +464,23 @@ _scan_end_func(void *data)
      {
 	if (!(p->command == CMD_SHOW_HIDDEN) &&  _conf->cache_dirs)
 	  {
-	     EINA_LIST_FOREACH(p->files, l, item)
+	     EINA_LIST_REVERSE_FOREACH(p->files, l, item)
 	       {
 		  GET_FILE(file, item);
 
 		  if (!item->usage &&
 		      (hi = evry->history_item_add(item, NULL, NULL)))
 		    {
-		       hi->last_used = SIX_DAYS_AGO - (0.001 * (double) cnt++);
-		       hi->usage = MIN_USAGE;
+		       hi->last_used = SIX_DAYS_AGO;
+		       hi->usage = MIN_USAGE * (double) cnt++;
 		       hi->data = eina_stringshare_ref(file->mime);
 		       item->hi = hi;
 		    }
 		  else if (item->hi && (item->hi->count == 1) &&
 			   (item->hi->last_used < SIX_DAYS_AGO))
 		    {
-		       item->hi->last_used = SIX_DAYS_AGO - (0.001 * (double) cnt++);
-		       item->hi->usage = MIN_USAGE;
+		       item->hi->last_used = SIX_DAYS_AGO;
+		       item->hi->usage = MIN_USAGE * (double) cnt++;
 		    }
 	       }
 	  }
@@ -481,8 +489,6 @@ _scan_end_func(void *data)
 	E_FREE(d);
 	p->thread = NULL;
      }
-
-   p->files = eina_list_sort(p->files, -1, _cb_sort);
 
    _append_files(p);
 
@@ -1297,7 +1303,10 @@ _plugins_init(const Evry_API *api)
 		   _recentf_begin, _finish, _recentf_fetch);
 	p->browse = &_recentf_browse;
 	if (evry->plugin_register(p, EVRY_PLUGIN_OBJECT, 3))
-	  p->config->min_query = 3;
+	  {
+	     p->config->top_level = EINA_FALSE;
+	     p->config->min_query = 3;
+	  }
      }
 
 #undef PLUGIN_NEW

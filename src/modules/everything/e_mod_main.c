@@ -503,7 +503,6 @@ _e_mod_menu_add(void *data __UNUSED__, E_Menu *m)
    e_menu_item_callback_set(mi, _e_mod_run_cb, NULL);
 }
 
-
 EAPI int evry_api_version_check(int version)
 {
    if (EVRY_API_VERSION == version)

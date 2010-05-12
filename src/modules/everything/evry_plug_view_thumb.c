@@ -846,6 +846,10 @@ _clear_items(Evas_Object *obj)
    if (sd->thumb_idler)
      ecore_timer_del(sd->thumb_idler);
    sd->thumb_idler = NULL;
+
+   if (sd->selector)
+     evas_object_del(sd->selector); 
+   sd->selector = NULL;
 }
 
 static void
@@ -876,7 +880,7 @@ _view_clear(Evry_View *view, int slide)
    sd->clearing = EINA_FALSE;
 
    _clear_items(v->span);
-
+   
    EINA_LIST_FREE(sd->items, it)
      {
 	evry_item_free(it->item);
@@ -1101,8 +1105,8 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 
    const char *key = ev->key;
 
-   if (((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
-	(!strcmp(key, "2"))) || !strcmp(key, "XF86Back"))
+   if ((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
+	(!strcmp(key, "2")))
      {
 	if (v->mode == VIEW_MODE_LIST)
 	  v->mode = VIEW_MODE_DETAIL;
@@ -1130,6 +1134,23 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 	     if (v->zoom == 2)
 	       _clear_items(v->span);
 	  }
+	_update_frame(v->span);
+	goto end;
+     }
+   else if (!strcmp(key, "XF86Back"))
+     {
+	if (v->mode == VIEW_MODE_LIST ||
+	    v->mode == VIEW_MODE_DETAIL)
+	  {
+	     v->zoom = 0;
+	     v->mode = VIEW_MODE_THUMB;
+	  }
+	else
+	  {
+	     v->mode = VIEW_MODE_DETAIL;
+	  }
+	
+	_clear_items(v->span);
 	_update_frame(v->span);
 	goto end;
      }

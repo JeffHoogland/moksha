@@ -168,12 +168,6 @@ _tabs_update(Tab_View *v)
 	  edje_object_signal_emit(o, "e,state,unselected", "e");
      }
 
-   /* if (eina_list_count(s->cur_plugins) == 2)
-    *   {
-    * 	v->align = 0;
-    * 	e_box_align_set(v->o_tabs, 0.0, 0.5);
-    *   } */
-   /* else */
    if (s->plugin)
      _tab_scroll_to(v, s->plugin, 0);
 
@@ -288,30 +282,15 @@ _tabs_key_down(Tab_View *v, const Ecore_Event_Key *ev)
 
    if (!v->state || !v->state->cur_plugins) return 0;
 
-   /* if (!strcmp(key, "Next"))
-    *   {
-    * 	_plugin_next(v);
-    * 	return 1;
-    *   }
-    * else if (!strcmp(key, "Prior"))
-    *   {
-    * 	_plugin_prev(v);
-    * 	return -1;
-    *   }
-    * else */
-   if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
+   if (!strcmp(key, "Next"))
      {
-	if (!strcmp(key, "Left"))
-	  {
-	     _plugin_prev(v);
-	     return -1;
-	  }
-	else if (!strcmp(key, "Right"))
-	  {
-	     _plugin_next(v);
-	     return 1;
-	  }
-
+   	_plugin_next(v);
+   	return 1;
+     }
+   else if (!strcmp(key, "Prior"))
+     {
+   	_plugin_prev(v);
+   	return -1;
      }
    else if (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)
      {

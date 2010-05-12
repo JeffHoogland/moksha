@@ -73,6 +73,7 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
 	     (CHECK_SUBTYPE(it, act->it1.type))) &&
 	    (!act->check_item || act->check_item(act, it)))
 	  {
+	     /* if (act->base.plugin) */
 	     act->base.plugin = plugin;
 
 	     if (!eina_list_data_find_list(p->actions, act))
