@@ -100,13 +100,14 @@ static void
 _tabs_update(Tab_View *v)
 {
 
-   Eina_List *l, *ll;
+   Eina_List *l, *ll, *plugins;
    Evry_Plugin *p;
    const Evry_State *s = v->state;
    Tab *tab;
    Evas_Coord w, x;
    Evas_Object *o;
-
+   int cur, i = 0;
+   
    edje_object_calc_force(v->o_tabs);
    evas_object_geometry_get(v->o_tabs, &x, NULL, &w, NULL);
 
@@ -125,8 +126,23 @@ _tabs_update(Tab_View *v)
 	evas_object_hide(tab->o_tab);
      }
 
+   for(cur = 0, l = s->cur_plugins; l; l = l->next, cur++)
+     if (l->data == s->plugin) break;
+
+   if (cur > 2)
+     {
+	if ((cur + 1) == eina_list_count(s->cur_plugins))	  
+	  plugins = eina_list_nth_list(s->cur_plugins, cur - 3);
+	else
+	  plugins = eina_list_nth_list(s->cur_plugins, cur - 2);
+     }
+   else
+     {
+	plugins = s->cur_plugins;
+     }
+   
    /* show/update tabs of active plugins */
-   EINA_LIST_FOREACH(s->cur_plugins, l, p)
+   EINA_LIST_FOREACH(plugins, l, p)
      {
 	EINA_LIST_FOREACH(v->tabs, ll, tab)
 	  if (tab->plugin == p) break;
@@ -166,10 +182,13 @@ _tabs_update(Tab_View *v)
 	  edje_object_signal_emit(o, "e,state,selected", "e");
 	else
 	  edje_object_signal_emit(o, "e,state,unselected", "e");
+
+	if (++i > 3) break;	
      }
 
-   if (s->plugin)
-     _tab_scroll_to(v, s->plugin, 0);
+   /* if (s->plugin)
+    *   _tab_scroll_to(v, s->plugin, 0); */
+   e_box_align_set(v->o_tabs, 0.0, 0.5);
 
    e_box_thaw(v->o_tabs);
 }
@@ -196,7 +215,7 @@ _plugin_select(Tab_View *v, Evry_Plugin *p)
    evry_plugin_select(v->state, p);
 
    _tabs_update(v);
-   _tab_scroll_to(v, p, 1);
+   /* _tab_scroll_to(v, p, 1); */
    /* _tabs_update(v); */
 }
 
