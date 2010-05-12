@@ -1100,7 +1100,6 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
      l = e_border_client_list();
    EINA_LIST_FOREACH(l, l, border)
      {
-	if (border->client.netwm.state.skip_taskbar) continue;
 	if (border->user_skip_winlist) continue;
 	if ((border->zone == zone) || (border->iconic) ||
 	    (border->zone != zone && e_config->clientlist_include_all_zones))
