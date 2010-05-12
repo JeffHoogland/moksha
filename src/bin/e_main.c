@@ -385,7 +385,7 @@ main(int argc, char **argv)
      {
 	e_error_message_show(_("Enlightenment cannot Initialize Ecore!\n"
 			       "Perhaps you are out of memory?"));
-	exit(-1);
+	_e_main_shutdown(-1);
      }
 #ifdef HAVE_ECORE_IMF
    ecore_imf_init();
@@ -468,7 +468,7 @@ main(int argc, char **argv)
 		     "will handle setting up environment variables, paths,\n"
 		     "and launching any other required services etc.\n"
 		     "before enlightenment itself begins running.\n");
-	exit(-1);
+	_e_main_shutdown(-1);
      }
 
    TS("ecore_con");
@@ -969,7 +969,6 @@ main(int argc, char **argv)
      }
    _e_main_shutdown_push(e_bindings_shutdown);
 
-
    e_init_status_set(_("Setup Shelves"));
    TS("shelves");
    /* setup shelves */
@@ -994,8 +993,8 @@ main(int argc, char **argv)
    TS("order");
    if (!e_order_init())
      {
-       e_error_message_show(_("Enlightenment cannot set up its order file system."));
-       _e_main_shutdown(-1);
+	e_error_message_show(_("Enlightenment cannot set up its order file system."));
+	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_order_shutdown);
 
@@ -1013,49 +1012,48 @@ main(int argc, char **argv)
    TS("load modules");
    if (safe_mode)
      {
-	   E_Module *m; 
-	   char *crashmodule;
+	E_Module *m; 
+	char *crashmodule;
 
-	   crashmodule = getenv("E_MODULE_LOAD");
-	   if (crashmodule) m = e_module_new(crashmodule);
+	crashmodule = getenv("E_MODULE_LOAD");
+	if (crashmodule) m = e_module_new(crashmodule);
 
-	   if (crashmodule && m)
-	     {
-		    e_module_disable(m);
-			e_object_del(E_OBJECT(m));
-			e_config_save_queue();
+	if ((crashmodule) && (m))
+	  {
+	     e_module_disable(m);
+	     e_object_del(E_OBJECT(m));
 
-			e_int_config_modules(e_container_current_get(e_manager_current_get()), NULL);
-			e_error_message_show
-			  (_("Enlightenment crashed early on start and has<br>"
-				 "been restarted. There was an error loading<br>"
-				 "module named: %s. This module has been disabled<br>"
-				 "and will not be loaded."), crashmodule);
-			e_util_dialog_show
-			  (_("Enlightenment crashed early on start and has been restarted"),
-			   _("Enlightenment crashed early on start and has been restarted.<br>"
-				 "There was an error loading module named: %s<br><br>"
-				 "This module has been disabled and will not be loaded."), crashmodule);
-     		e_module_all_load();
-		 }
-	   else
-		 {	
-			e_int_config_modules(e_container_current_get(e_manager_current_get()), NULL);
-			e_error_message_show
-			  (_("Enlightenment crashed early on start and has<br>"
-				 "been restarted. All modules have been disabled<br>"
-				 "and will not be loaded to help remove any problem<br>"
-				 "modules from your configuration. The module<br>"
-				 "configuration dialog should let you select your<br>"
-				 "modules again."));
-			e_util_dialog_show
-			  (_("Enlightenment crashed early on start and has been restarted"),
-			   _("Enlightenment crashed early on start and has been restarted.<br>"
-				 "All modules have been disabled and will not be loaded to help<br>"
-				 "remove any problem modules from your configuration.<br><br>"
-				 "The module configuration dialog should let you select your<br>"
-				 "modules again."));
-		}
+	     e_int_config_modules(e_container_current_get(e_manager_current_get()), NULL);
+	     e_error_message_show
+	       (_("Enlightenment crashed early on start and has<br>"
+		  "been restarted. There was an error loading<br>"
+		  "module named: %s. This module has been disabled<br>"
+		  "and will not be loaded."), crashmodule);
+	     e_util_dialog_show
+	       (_("Enlightenment crashed early on start and has been restarted"),
+		   _("Enlightenment crashed early on start and has been restarted.<br>"
+		     "There was an error loading module named: %s<br><br>"
+		     "This module has been disabled and will not be loaded."), crashmodule);
+	     e_module_all_load();
+	  }
+	else
+	  {	
+	     e_int_config_modules(e_container_current_get(e_manager_current_get()), NULL);
+	     e_error_message_show
+	       (_("Enlightenment crashed early on start and has<br>"
+		  "been restarted. All modules have been disabled<br>"
+		  "and will not be loaded to help remove any problem<br>"
+		  "modules from your configuration. The module<br>"
+		  "configuration dialog should let you select your<br>"
+		  "modules again."));
+	     e_util_dialog_show
+	       (_("Enlightenment crashed early on start and has been restarted"),
+		   _("Enlightenment crashed early on start and has been restarted.<br>"
+		     "All modules have been disabled and will not be loaded to help<br>"
+		     "remove any problem modules from your configuration.<br><br>"
+		     "The module configuration dialog should let you select your<br>"
+		     "modules again."));
+	  }
      }
    else
      e_module_all_load();
@@ -1070,7 +1068,6 @@ main(int argc, char **argv)
    if (!((!e_config->show_splash) || (after_restart)))
      {
 	ecore_timer_add(16.0, _e_main_cb_startup_fake_end, NULL);
-
 	if (locked) e_desklock_show();
      }
 
