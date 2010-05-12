@@ -345,7 +345,7 @@ main(int argc, char **argv)
 		  "\t\tIf you need this help, you don't need this option.\n"
 		  )
 		);
-	     exit(0);
+	     _e_main_shutdown(0);
 	  }
      }
 
