@@ -6825,6 +6825,7 @@ collections {
             name: "clip";
             type: RECT;
             description {
+               min: 10 10;
                state: "default" 0.0;
                color: 255 255 255 255;
             }
@@ -6840,6 +6841,9 @@ collections {
             clip_to: "clip";
             description {
                state: "default" 0.0;
+               min: 16 16;
+               max: 24 24;
+               fixed: 1 1;
                rel1 {
                   relative: 0.0 0.0;
                   offset: 2 2;
@@ -33179,7 +33183,7 @@ collections {
                text {
                   font: "Sans:style=Bold";
                   size: 9;
-                  min: 0 1;
+                  min: 0 0;
                   align: 0.5 0.5;
                }
             }
