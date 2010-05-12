@@ -107,7 +107,7 @@ _tabs_update(Tab_View *v)
    Evas_Coord w, x;
    Evas_Object *o;
    int cur, i = 0;
-   
+
    edje_object_calc_force(v->o_tabs);
    evas_object_geometry_get(v->o_tabs, &x, NULL, &w, NULL);
 
@@ -131,7 +131,7 @@ _tabs_update(Tab_View *v)
 
    if (cur > 2)
      {
-	if ((cur + 1) == eina_list_count(s->cur_plugins))	  
+	if ((cur + 1) == eina_list_count(s->cur_plugins))
 	  plugins = eina_list_nth_list(s->cur_plugins, cur - 3);
 	else
 	  plugins = eina_list_nth_list(s->cur_plugins, cur - 2);
@@ -140,7 +140,7 @@ _tabs_update(Tab_View *v)
      {
 	plugins = s->cur_plugins;
      }
-   
+
    /* show/update tabs of active plugins */
    EINA_LIST_FOREACH(plugins, l, p)
      {
@@ -183,7 +183,7 @@ _tabs_update(Tab_View *v)
 	else
 	  edje_object_signal_emit(o, "e,state,unselected", "e");
 
-	if (++i > 3) break;	
+	if (++i > 3) break;
      }
 
    /* if (s->plugin)
@@ -250,6 +250,9 @@ _plugin_next_by_name(Tab_View *v, const char *key)
 
    EINA_LIST_FOREACH(s->cur_plugins, l, p)
      {
+	/* FIXME how can this happen ? */
+	if (!p) continue;
+	
 	if (EVRY_ITEM(p)->label && (!strncasecmp(EVRY_ITEM(p)->label, key, 1)))
 	  {
 	     if (!first) first = p;
