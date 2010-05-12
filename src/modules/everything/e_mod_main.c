@@ -559,14 +559,13 @@ evry_plugin_new(Evry_Plugin *base, const char *name, const char *label,
    it = evry_item_new(EVRY_ITEM(p), NULL, label, NULL, _evry_plugin_free);
    it->plugin = p;
    it->browseable = EINA_TRUE;
-
-   p->base.icon  = icon;
-   p->base.type  = EVRY_TYPE_PLUGIN;
-
+   it->type  = EVRY_TYPE_PLUGIN;
    if (item_type)
-     p->base.subtype = item_type;
+     it->subtype = item_type;
+   if (icon)
+     it->icon = eina_stringshare_add(icon);
 
-   p->name = eina_stringshare_add(name);
+   p->name   = eina_stringshare_add(name);
    p->begin  = begin;
    p->finish = finish;
    p->fetch  = fetch;

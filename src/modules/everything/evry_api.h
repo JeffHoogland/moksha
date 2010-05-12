@@ -3,7 +3,7 @@
 
 #include "evry_types.h"
 
-#define EVRY_API_VERSION 19
+#define EVRY_API_VERSION 20
 
 #define EVRY_ACTION_OTHER    0
 #define EVRY_ACTION_FINISHED 1
@@ -167,7 +167,6 @@ struct _Evry_API
 
 #define EVRY_ITEM_DATA_INT_SET(_item, _data) ((Evry_Item *)_item)->data = (void*)(long) _data
 #define EVRY_ITEM_DATA_INT_GET(_item) (long) ((Evry_Item *)_item)->data
-#define EVRY_ITEM_ICON_SET(_item, _icon) ((Evry_Item *)_item)->icon = _icon
 
 #define EVRY_ITEM_DETAIL_SET(_it, _detail)				\
   if (EVRY_ITEM(_it)->detail) eina_stringshare_del(EVRY_ITEM(_it)->detail); \
@@ -180,6 +179,10 @@ struct _Evry_API
 #define EVRY_ITEM_CONTEXT_SET(_it, _context)				\
   if (EVRY_ITEM(_it)->context) eina_stringshare_del(EVRY_ITEM(_it)->context); \
   EVRY_ITEM(_it)->context = eina_stringshare_add(_context);
+
+#define EVRY_ITEM_ICON_SET(_it, _icon)				\
+  if (EVRY_ITEM(_it)->icon) eina_stringshare_del(EVRY_ITEM(_it)->icon); \
+  EVRY_ITEM(_it)->icon = eina_stringshare_add(_icon);
 
 #define CHECK_TYPE(_item, _type)					\
   (((Evry_Item *)_item)->type && ((Evry_Item *)_item)->type == _type)

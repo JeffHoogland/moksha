@@ -292,6 +292,9 @@ evry_history_item_add(Evry_Item *it, const char *ctxt, const char *input)
      {
 	id = (it->id ? it->id : it->label);
 	ht = evry_history_types_get(it->type);
+	if (!ht)
+	  return NULL;
+	
 	he = eina_hash_find(ht->types, id);
 
 	if (!he)
@@ -376,6 +379,9 @@ evry_history_item_usage_set(Evry_Item *it, const char *input, const char *ctxt)
      {
 	ht = evry_history_types_get(it->type);
 
+	if (!ht)
+	  return 0;
+	
 	if (!(he = eina_hash_find(ht->types, (it->id ? it->id : it->label))))
 	  return 0;
 
@@ -403,7 +409,6 @@ evry_history_item_usage_set(Evry_Item *it, const char *input, const char *ctxt)
      }
 
    if (!hi) return 0;
-
 
    if (evry_conf->history_sort_mode == 0)
      {

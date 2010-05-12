@@ -187,6 +187,9 @@ struct _Evry_Plugin
      'configure' button in everything config */
   const char *config_path;
 
+  /* set theme file to fetch icons from */
+  const char *theme_path;
+  
   /* not to be set by plugin! */
   Plugin_Config *config;
   unsigned int request;

@@ -30,7 +30,6 @@ _add_item(Plugin *p, Eina_List *items, Evry_Item *it)
 	  }
      }
 
-   evry_item_ref(it);
    items = eina_list_append(items, it);
    EVRY_PLUGIN_ITEM_APPEND(p, it);
 
@@ -207,8 +206,11 @@ _fetch(Evry_Plugin *plugin, const char *input)
      }
 
    /* EINA_LIST_FOREACH(items, l, it)
-    *   printf("%d %1.20f %s\n", it->fuzzy_match, it->usage, it->label); */
-
+    *   {
+    * 	if(CHECK_TYPE(it, EVRY_TYPE_FILE))
+    * 	  printf("%d %1.20f %s\n", it->fuzzy_match, it->usage, it->label);
+    *   } */
+   
    if (items) eina_list_free(items);
    if (lp) eina_list_free(lp);
 
@@ -216,8 +218,11 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
    EINA_LIST_FOREACH_SAFE(p->base.items, l, ll, it)
      {
-	if (cnt++ < MAX_ITEMS) continue;
-	evry_item_free(it);
+	if (cnt++ < MAX_ITEMS)
+	  {
+	     evry_item_ref(it);
+	     continue;
+	  }
 	p->base.items = eina_list_remove_list(p->base.items, l);
      }
 

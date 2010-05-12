@@ -407,11 +407,12 @@ evry_item_free(Evry_Item *it)
    item_cnt--;
 #endif
 
-   if (it->label) eina_stringshare_del(it->label);
-   if (it->id) eina_stringshare_del(it->id);
-   if (it->context) eina_stringshare_del(it->context);
-   if (it->detail) eina_stringshare_del(it->detail);
-
+   IF_RELEASE(it->label);
+   IF_RELEASE(it->id);
+   IF_RELEASE(it->context);
+   IF_RELEASE(it->detail);
+   IF_RELEASE(it->icon);
+   
    if (it->free)
      it->free(it);
    else
@@ -543,7 +544,7 @@ evry_plugin_update(Evry_Plugin *p, int action)
 
    if (!win) return;
 
-   DBG("plugin: %s", p->name);
+   printf("plugin: %s\n", p->name);
 
    sel = _evry_selector_for_plugin_get(p);
    if (!sel || !sel->state) return;
@@ -578,31 +579,34 @@ evry_plugin_update(Evry_Plugin *p, int action)
 	       _evry_plugin_select(s, NULL);
 	  }
 
-	/* update aggregator */
-	if ((eina_list_count(s->cur_plugins) > 1 ) ||
-	    /* add aggregator for actions */
-	    (sel == selectors[1] &&
-	     (eina_list_count(s->cur_plugins) > 0 )))
+	if (!p->config || p->config->aggregate)
 	  {
-	     /* add aggregator */
-	     if (!(s->cur_plugins->data == agg))
+	     /* update aggregator */
+	     if ((eina_list_count(s->cur_plugins) > 1 ) ||
+		 /* add aggregator for actions */
+		 (sel == selectors[1] &&
+		  (eina_list_count(s->cur_plugins) > 0 )))
 	       {
-		  s->cur_plugins = eina_list_prepend(s->cur_plugins, agg);
+		  /* add aggregator */
+		  if (!(s->cur_plugins->data == agg))
+		    {
+		       s->cur_plugins = eina_list_prepend(s->cur_plugins, agg);
 
-		  if (s->plugin_auto_selected)
-		    _evry_plugin_select(s, NULL);
+		       if (s->plugin_auto_selected)
+			 _evry_plugin_select(s, NULL);
+		    }
+		  agg->fetch(agg, s->input[0] ? s->input : NULL);
 	       }
-	     agg->fetch(agg, s->input[0] ? s->input : NULL);
-	  }
-	else
-	  {
-	     if (s->cur_plugins && s->cur_plugins->data == agg)
+	     else
 	       {
-		  agg->finish(agg);
-		  s->cur_plugins = eina_list_remove(s->cur_plugins, agg);
+		  if (s->cur_plugins && s->cur_plugins->data == agg)
+		    {
+		       agg->finish(agg);
+		       s->cur_plugins = eina_list_remove(s->cur_plugins, agg);
+		    }
 	       }
 	  }
-
+	
 	if (s->sel_items)
 	  eina_list_free(s->sel_items);
 	s->sel_items = NULL;

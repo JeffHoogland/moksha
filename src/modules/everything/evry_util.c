@@ -7,6 +7,7 @@
 static const char  *home_dir = NULL;
 static int home_dir_len;
 static char dir_buf[1024];
+static char thumb_buf[4096];
 
 EAPI void
 evry_util_file_detail_set(Evry_Item_File *file)
@@ -68,7 +69,8 @@ evry_fuzzy_match(const char *str, const char *match)
    unsigned int m_min[MAX_WORDS];
    unsigned int m_len = 0;
 
-   if (!match || !str) return 0;
+   if (!match || !str || !match[0] || !str[0])
+     return 0;
 
    /* remove white spaces at the beginning */
    for (; (*match != 0) && isspace(*match); match++);
@@ -270,7 +272,7 @@ evry_items_sort_func(const void *data1, const void *data2)
 	     if ((act1->it1.type == act1->it1.item->type) &&
 		 (act2->it1.type != act2->it1.item->type))
 	       return -1;
-
+	
 	     if ((act1->it1.type != act1->it1.item->type) &&
 		 (act2->it1.type == act2->it1.item->type))
 	       return 1;
@@ -278,10 +280,16 @@ evry_items_sort_func(const void *data1, const void *data2)
 
 	/* sort context specific actions before
 	   general actions */
-	if (act1->remember_context && !act2->remember_context)
-	  return -1;
-	if (!act1->remember_context && act2->remember_context)
-	  return 1;
+	if (act1->remember_context)
+	  {
+	     if (!act2->remember_context)
+	       return -1;
+	  }
+	else
+	  {
+	     if (act2->remember_context)
+	       return 1;
+	  }
      }
 
    /* if (it1->type == EVRY_TYPE_PLUGIN &&
@@ -488,14 +496,46 @@ evry_icon_mime_get(const char *mime, Evas *e)
 }
 
 static Evas_Object *
-_file_icon_get(const Evry_Item *it, Evas *e)
+_file_icon_get(Evry_Item *it, Evas *e)
 {
    Evas_Object *o = NULL;
    GET_FILE(file, it);
 
    if (it->browseable)
-     o = evry_icon_theme_get("folder", e);
-   else if (file->mime)
+     {
+	return evry_icon_theme_get("folder", e);
+     }
+   
+   if (it->icon)
+     {
+	o = e_icon_add(e);
+	if (!e_icon_file_set(o, it->icon))
+	  {
+	     evas_object_del(o);
+	     o = NULL;
+	  }
+     }
+   
+   if ((!o) && (!it->icon) && file->mime &&
+       ((!strncmp(file->mime, "image/", 6)) ||
+	(!strncmp(file->mime, "video/", 6)) ||
+	(!strncmp(file->mime, "application/pdf", 15))) &&
+       (evry_file_url_get(file)))
+     {
+	char *sum = evry_util_md5_sum(file->url);
+
+	snprintf(thumb_buf, sizeof(thumb_buf),
+		 "%s/.thumbnails/normal/%s.png",
+		 e_user_homedir_get(), sum);
+	free(sum);
+	
+	if (ecore_file_exists(thumb_buf))
+	  it->icon = eina_stringshare_add(thumb_buf);
+	else
+	  it->icon = eina_stringshare_add("");
+     }
+   
+   if ((!o) && file->mime)
      o = evry_icon_mime_get(file->mime, e);
 
    if (!o)
@@ -509,16 +549,16 @@ evry_util_icon_get(Evry_Item *it, Evas *e)
 {
    Evas_Object *o = NULL;
 
-   if (it->icon_get)
-     o = it->icon_get(it, e);
-
-   if (!o && it->icon)
-     o = evry_icon_theme_get(it->icon, e);
-
    if (CHECK_TYPE(it, EVRY_TYPE_FILE))
      o = _file_icon_get(it, e);
+   else
+     {
+	if (!o && it->icon_get)
+	  o = it->icon_get(it, e);
 
-   /* TODO default type: files, apps */
+	if (!o && it->icon)
+	  o = evry_icon_theme_get(it->icon, e);
+     }
 
    return o;
 }
@@ -641,27 +681,29 @@ evry_util_url_unescape(const char *string, int length)
    if( !ns )
      return NULL;
 
-   while(--alloc > 0) {
-      in = *string;
-      if(('%' == in) && ISXDIGIT(string[1]) && ISXDIGIT(string[2])) {
-	 /* this is two hexadecimal digits following a '%' */
-	 char hexstr[3];
-	 char *ptr;
-	 hexstr[0] = string[1];
-	 hexstr[1] = string[2];
-	 hexstr[2] = 0;
+   while(--alloc > 0)
+     {
+	in = *string;
+	if(('%' == in) && ISXDIGIT(string[1]) && ISXDIGIT(string[2]))
+	  {
+	     /* this is two hexadecimal digits following a '%' */
+	     char hexstr[3];
+	     char *ptr;
+	     hexstr[0] = string[1];
+	     hexstr[1] = string[2];
+	     hexstr[2] = 0;
 
-	 hex = strtoul(hexstr, &ptr, 16);
-	 in = (unsigned char)(hex & (unsigned long) 0xFF);
-	 // in = ultouc(hex); /* this long is never bigger than 255 anyway */
+	     hex = strtoul(hexstr, &ptr, 16);
+	     in = (unsigned char)(hex & (unsigned long) 0xFF);
+	     // in = ultouc(hex); /* this long is never bigger than 255 anyway */
 
-	 string+=2;
-	 alloc-=2;
-      }
+	     string+=2;
+	     alloc-=2;
+	  }
 
-      ns[strindex++] = in;
-      string++;
-   }
+	ns[strindex++] = in;
+	string++;
+     }
    ns[strindex]=0; /* terminate it */
 
    return ns;
@@ -692,54 +734,66 @@ _isalnum(unsigned char in)
   return EINA_FALSE;
 }
 
-/* FIXME option to not escape '/' */
+char *
+_evry_util_url_escape(const char *string, int inlength, int path)
+{
+   size_t alloc = (inlength?(size_t)inlength:strlen(string))+1;
+   char *ns;
+   char *testing_ptr = NULL;
+   unsigned char in; /* we need to treat the characters unsigned */
+   size_t newlen = alloc;
+   int strindex=0;
+   size_t length;
+
+   ns = malloc(alloc);
+   if(!ns)
+     return NULL;
+
+   length = alloc-1;
+   while(length--)
+     {
+	in = *string;
+
+	if (_isalnum(in) ||
+	    (path && ispunct(in)))
+	  {
+	     /* just copy this */
+	     ns[strindex++]=in;
+	  }
+	else {
+	   /* encode it */
+	   newlen += 2; /* the size grows with two, since this'll become a %XX */
+	   if(newlen > alloc)
+	     {
+		alloc *= 2;
+		testing_ptr = realloc(ns, alloc);
+		if(!testing_ptr)
+		  {
+		     free( ns );
+		     return NULL;
+		  }
+		else
+		  {
+		     ns = testing_ptr;
+		  }
+	     }
+
+	   snprintf(&ns[strindex], 4, "%%%02X", in);
+
+	   strindex+=3;
+	}
+	string++;
+     }
+   ns[strindex]=0; /* terminate it */
+   return ns;
+}
+
 EAPI char *
 evry_util_url_escape(const char *string, int inlength)
 {
-  size_t alloc = (inlength?(size_t)inlength:strlen(string))+1;
-  char *ns;
-  char *testing_ptr = NULL;
-  unsigned char in; /* we need to treat the characters unsigned */
-  size_t newlen = alloc;
-  int strindex=0;
-  size_t length;
-
-  ns = malloc(alloc);
-  if(!ns)
-    return NULL;
-
-  length = alloc-1;
-  while(length--) {
-    in = *string;
-
-    if (_isalnum(in)) {
-      /* just copy this */
-      ns[strindex++]=in;
-    }
-    else {
-      /* encode it */
-      newlen += 2; /* the size grows with two, since this'll become a %XX */
-      if(newlen > alloc) {
-	alloc *= 2;
-	testing_ptr = realloc(ns, alloc);
-	if(!testing_ptr) {
-	  free( ns );
-	  return NULL;
-	}
-	else {
-	  ns = testing_ptr;
-	}
-      }
-
-      snprintf(&ns[strindex], 4, "%%%02X", in);
-
-      strindex+=3;
-    }
-    string++;
-  }
-  ns[strindex]=0; /* terminate it */
-  return ns;
+   _evry_util_url_escape(string, inlength, 0);
 }
+
 
 EAPI const char*
 evry_file_path_get(Evry_Item_File *file)
@@ -771,20 +825,27 @@ EAPI const char*
 evry_file_url_get(Evry_Item_File *file)
 {
    char buf[PATH_MAX];
-
+   char *escaped;
+   
    if (file->url)
      return file->url;
 
    if (!file->path)
      return NULL;
 
-   snprintf(buf, sizeof(buf), "file://%s", file->path);
+   escaped = _evry_util_url_escape(file->path, 0, 1);
 
-   /* FIXME escape ? */
+   if (escaped)
+     {
+	snprintf(buf, sizeof(buf), "file://%s", escaped);
+	E_FREE(escaped);
 
-   file->url = eina_stringshare_add(buf);
+	file->url = eina_stringshare_add(buf);
 
-   return file->url;
+	return file->url;
+     }
+   
+   return NULL;
 }
 
 static void

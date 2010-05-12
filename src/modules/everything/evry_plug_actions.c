@@ -247,7 +247,9 @@ evry_action_new(const char *name, const char *label,
 		int (*check_item) (Evry_Action *act, const Evry_Item *it))
 {
    Evry_Action *act = EVRY_ITEM_NEW(Evry_Action, _base_plug, label, NULL, _action_free_cb);
-   act->base.icon = icon;
+
+   if (icon)
+     act->base.icon = eina_stringshare_add(icon);
 
    act->name = eina_stringshare_add(name);
 

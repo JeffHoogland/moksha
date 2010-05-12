@@ -101,8 +101,6 @@ _thumb_gen(void *data, Evas_Object *obj, void *event_info)
 static int
 _check_item(const Evry_Item *it)
 {
-   if (it->type != EVRY_TYPE_FILE) return 0;
-
    GET_FILE(file, it);
 
    if (!evry_file_path_get(file) || !file->mime) return 0;
@@ -132,21 +130,26 @@ _thumb_idler(void *data)
 		  evas_object_show(it->image);
 	       }
 	     else it->have_thumb = EINA_TRUE;
-
-	     /* dirbrowse fetches the mimetype for icon_get */
-	     if (!it->get_thumb && _check_item(it->item))
-	       it->get_thumb = EINA_TRUE;
 	  }
 
-	if (it->get_thumb && !it->thumb && !(it->have_thumb || it->do_thumb))
+	if ((CHECK_TYPE(it->item, EVRY_TYPE_FILE)) &&
+	    ((!it->thumb && !(it->have_thumb || it->do_thumb)) &&
+	    (it->get_thumb || _check_item(it->item) ||
+	     (it->item->icon && it->item->icon[0]))))
 	  {
+	     it->get_thumb = EINA_TRUE;
+	     
 	     it->thumb = e_thumb_icon_add(sd->view->evas);
 
 	     GET_FILE(file, it->item);
 
 	     evas_object_smart_callback_add(it->thumb, "e_thumb_gen", _thumb_gen, it);
 
-	     e_thumb_icon_file_set(it->thumb, file->path, NULL);
+	     if (it->item->icon && it->item->icon[0])
+	       e_thumb_icon_file_set(it->thumb, it->item->icon, NULL);
+	     else
+	       e_thumb_icon_file_set(it->thumb, file->path, NULL);
+	     
 	     e_thumb_icon_size_set(it->thumb, it->w, it->h);
 	     e_thumb_icon_begin(it->thumb);
 	     it->do_thumb = EINA_TRUE;
@@ -570,9 +573,6 @@ _pan_item_add(Evas_Object *obj, Evry_Item *item)
    it->obj = obj;
    it->item = item;
    it->changed = EINA_TRUE;
-
-   /* if (_check_item(item))
-    *   it->get_thumb = EINA_TRUE; */
 
    evry_item_ref(item);
 
@@ -1008,9 +1008,6 @@ _view_update(Evry_View *view, int slide)
 	if (v_it->pos)
 	  {
 	     v_items = eina_list_append(v_items, v_it->item);
-
-	     /* if (_check_item(v_it->item))
-	      *   v_it->get_thumb = EINA_TRUE; */
 
 	     if (v_it->visible && v_it->changed)
 	       update = EINA_TRUE;
