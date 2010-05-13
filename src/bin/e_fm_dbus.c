@@ -173,7 +173,7 @@ e_fm2_dbus_volume_add(E_Volume *v)
      {
 	char label[1024] = {0};
 	char size[256] = {0};
-	char *icon = NULL;
+	const char *icon = NULL;
 	unsigned long long sz;
 
 	/* Compute the size in a readable form */

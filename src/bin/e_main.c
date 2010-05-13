@@ -797,6 +797,7 @@ main(int argc, char **argv)
 	  }
      }
    efreet_icon_extension_add(".edj");
+   efreet_icon_extension_add(".svg");
    TS("efreet paths done");
 
    e_init_status_set(_("Setup System Controls"));
