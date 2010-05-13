@@ -359,6 +359,12 @@ _scan_end_func(void *data)
    History_Types *ht = NULL;
    int cnt = 0;
 
+   /* if (!p->thread)
+    *   {
+    * 	_scan_cancel_func(d);
+    * 	return;
+    *   } */
+   
    if (_conf->cache_dirs)
      ht = evry->history_types_get(EVRY_TYPE_FILE);
 
@@ -740,6 +746,8 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	     if (strncmp(p->directory, "/", 1))
 	       return 0;
 
+	     EVRY_PLUGIN_ITEMS_CLEAR(p);
+	     
 	     _free_files(p);
 
 	     strncpy(buf, p->directory, PATH_MAX);
