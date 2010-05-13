@@ -592,6 +592,9 @@ evry_util_exec_app(const Evry_Item *it_app, const Evry_Item *it_file)
 	       {
 		  EINA_LIST_FOREACH(app->desktop->mime_types, l, mime)
 		    {
+		       if (!mime)
+			 continue;
+		       
 		       if (!strcmp(mime, "x-directory/normal"))
 			 open_folder = 1;
 
