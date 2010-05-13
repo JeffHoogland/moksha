@@ -238,11 +238,6 @@ _cb_data(void *data, int type __UNUSED__, void *event)
 	  word = _space_skip(word_end + 1);
      }
 
-   /* if (EVRY_PLUGIN(p)->items)
-    *   {
-    * 	evry_list_win_show();
-    *   } */
-
    if (p->base.items)
      EVRY_PLUGIN_UPDATE(p, EVRY_UPDATE_ADD);
 
@@ -284,7 +279,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
    const char *s;
    int len;
 
-   if (!input) return 1;
+   if (!input) return 0;
 
    if (strlen(input) < plugin->config->min_query)
      {
@@ -307,7 +302,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	    break;
 
 	if (*s == '\0') /* just apply language on ' ' or ';' */
-	  return 1;
+	  return 0;
 
 	if (s - input > 0)
 	  lang = eina_stringshare_add_length(input, s - input);
@@ -323,7 +318,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	  }
 
 	if (*s == '\0')
-	  return 1;
+	  return 0;
 
 	input = s + 1;
      }
@@ -337,20 +332,19 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
    len = s - input + 1;
    if (len < 1)
-     return 1;
+     return 0;
    input = eina_stringshare_add_length(input, len);
-   if (p->input) eina_stringshare_del(p->input);
+   IF_RELEASE(p->input);
    if (p->input == input)
-     return 1;
+     return 0;
 
    p->input = input;
-   if (!p->exe)
-     return 1;
+   if (!p->exe) return 0;
 
    ecore_exe_send(p->exe, (char *)p->input, len);
    ecore_exe_send(p->exe, "\n", 1);
 
-   return 1;
+   return 0;
 }
 
 static void
@@ -376,16 +370,9 @@ _cleanup(Evry_Plugin *plugin)
 	ecore_exe_free(p->exe);
 	p->exe = NULL;
      }
-   if (p->lang)
-     {
-	eina_stringshare_del(p->lang);
-	p->lang = NULL;
-     }
-   if (p->input)
-     {
-	eina_stringshare_del(p->input);
-	p->input = NULL;
-     }
+
+   IF_RELEASE(p->lang);
+   IF_RELEASE(p->input);
 }
 
 static int
