@@ -605,7 +605,7 @@ _battery_dbus_ac_adapter_props(void *data, void *reply_data, DBusError *error __
    str = e_ukit_property_string_get(ret, s, &err); \
    if (str) \
      { \
-        hac->val = str; \
+        hac->val = eina_stringshare_add(str); \
      }
    
    GET_BOOL(present, "IsPresent");
