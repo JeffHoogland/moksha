@@ -35,7 +35,7 @@ struct _Smart_Data
   Eina_List   *items;
   Item        *cur_item;
   Ecore_Idle_Enterer *idle_enter;
-  Ecore_Timer *thumb_idler;
+  Ecore_Idle_Enterer *thumb_idler;
   Evas_Coord   x, y, w, h;
   Evas_Coord   cx, cy, cw, ch;
   Evas_Coord   sx, sy;
@@ -394,7 +394,7 @@ _e_smart_reconfigure_do(void *data)
      evas_object_smart_callback_call(obj, "changed", NULL);
 
    if (!sd->thumb_idler)
-     sd->thumb_idler = ecore_timer_add(0.01, _thumb_idler, sd);
+     sd->thumb_idler = ecore_idle_enterer_add(_thumb_idler, sd);
 
    sd->idle_enter = NULL;
 
@@ -429,7 +429,7 @@ _e_smart_del(Evas_Object *obj)
    if (sd->idle_enter)
      ecore_idle_enterer_del(sd->idle_enter);
    if (sd->thumb_idler)
-     ecore_timer_del(sd->thumb_idler);
+     ecore_idle_enterer_del(sd->thumb_idler);
    if (sd->animator)
      ecore_animator_del(sd->animator);
 
@@ -844,7 +844,7 @@ _clear_items(Evas_Object *obj)
    sd->queue = NULL;
 
    if (sd->thumb_idler)
-     ecore_timer_del(sd->thumb_idler);
+     ecore_idle_enterer_del(sd->thumb_idler);
    sd->thumb_idler = NULL;
 
    if (sd->selector)
@@ -1097,10 +1097,10 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
    Smart_Data *sd = evas_object_smart_data_get(v->span);
    Eina_List *l = NULL, *ll;
    Item *it = NULL;
-   const Evry_State *s = v->state;
+   const Evry_State *s;
    int slide;
 
-   if (!s->plugin)
+   if (!sd || !(s = v->state) || !(s->plugin))
      return 0;
 
    const char *key = ev->key;
@@ -1382,7 +1382,7 @@ _cb_item_changed(void *data, int type, void *event)
 	  sd->queue = eina_list_append(sd->queue, it);
 
 	if (!sd->thumb_idler)
-	  sd->thumb_idler = ecore_timer_add(0.01,_thumb_idler, sd);
+	  sd->thumb_idler = ecore_idle_enterer_add(_thumb_idler, sd);
      }
 
    return 1;

@@ -116,7 +116,7 @@ _tabs_update(Tab_View *v)
 	v->timer = ecore_timer_add(0.1, _timer_cb, v);
 	return;
      }
-
+   
    /* remove tabs for not active plugins */
    e_box_freeze(v->o_tabs);
 
@@ -170,7 +170,7 @@ _tabs_update(Tab_View *v)
 	o = tab->o_tab;
 	evas_object_show(o);
 	e_box_pack_end(v->o_tabs, o);
-
+	w++;
 	if (eina_list_count(s->cur_plugins) == 2)
 	  e_box_pack_options_set(o, 1, 1, 0, 0, 0.0, 0.5,
 				 w/4, 10, w/3, 9999);

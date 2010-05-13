@@ -226,10 +226,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    Evry_Module *em;
    
    EINA_LIST_FOREACH(e_datastore_get("everything_modules"), l, em)
-     {
-	printf("call shutdown\n");
-	em->shutdown();
-     }
+     em->shutdown();
    
    e_datastore_del("everything_loaded");
    E_FREE(_api);
@@ -288,6 +285,10 @@ e_modapi_save(E_Module *m __UNUSED__)
 static int
 _cleanup_history(void *data)
 {
+   /* evrything is active */
+   if (evry_hist)
+     return 1;
+
    /* cleanup old entries */
    evry_history_free();
    evry_history_init();
@@ -340,67 +341,39 @@ _config_init()
 #undef D
    evry_conf = e_config_domain_load("module.everything", conf_edd);
 
-   if (evry_conf)
-     {
-	if (evry_conf->version <= 7)
-	  {
-	     evry_conf->scroll_speed = 10.0;
-	     evry_conf->version = 8;
-	  }
+   if (evry_conf && !e_util_module_config_check
+       (_("Everything Files"), evry_conf->version,
+	MOD_CONFIG_FILE_EPOCH, MOD_CONFIG_FILE_VERSION))
+     _config_free();
 
-	if (evry_conf->version <= 8)
-	  {
-	     evry_conf->width = 445;
-	     evry_conf->height = 310;
-	     evry_conf->rel_y = 0.25;
-	     evry_conf->scroll_animate = 1;
-	     evry_conf->version = 9;
-	  }
-
-	if (evry_conf->version <= 9)
-	  {
-	     evry_conf->first_run = EINA_TRUE;
-	     evry_conf->version = 13;
-	  }
-
-	if (evry_conf->version <= 13)
-	  {
-	     evry_conf->hide_list = 0;
-	     evry_conf->version = 14;
-	  }
-
-	if (evry_conf->version <= 14)
-	  {
-	     _plugin_config_free();
-	     evry_conf->version = CONFIG_VERSION;
-	  }
-
-	if (evry_conf->version != CONFIG_VERSION)
-	  {
-	     _config_free();
-	     evry_conf = NULL;
-	  }
-     }
-   
    if (!evry_conf)
      {
 	evry_conf = E_NEW(Evry_Config, 1);
-	evry_conf->version = CONFIG_VERSION;
-	evry_conf->rel_x = 0.5;
-	evry_conf->rel_y = 0.25;
-	evry_conf->width = 445;
-	evry_conf->height = 310;
-	evry_conf->scroll_animate = 1;
-	evry_conf->scroll_speed = 10.0;
-	evry_conf->hide_input = 0;
-	evry_conf->hide_list = 0;
-	evry_conf->quick_nav = 1;
-	evry_conf->view_mode = VIEW_MODE_DETAIL;
-	evry_conf->view_zoom = 0;
-	evry_conf->cycle_mode = 0;
-	evry_conf->history_sort_mode = 0;
-	evry_conf->first_run = EINA_TRUE;
+	evry_conf->version = (MOD_CONFIG_FILE_EPOCH << 16);
      }
+   
+#define IFMODCFG(v) if ((evry_conf->version & 0xffff) < v) {
+#define IFMODCFGEND }
+
+   /* setup defaults */
+   IFMODCFG(0x0001);
+   evry_conf->rel_x = 0.5;
+   evry_conf->rel_y = 0.32;
+   evry_conf->width = 445;
+   evry_conf->height = 300;
+   evry_conf->scroll_animate = 1;
+   evry_conf->scroll_speed = 10.0;
+   evry_conf->hide_input = 0;
+   evry_conf->hide_list = 0;
+   evry_conf->quick_nav = 1;
+   evry_conf->view_mode = VIEW_MODE_DETAIL;
+   evry_conf->view_zoom = 0;
+   evry_conf->cycle_mode = 0;
+   evry_conf->history_sort_mode = 0;
+   evry_conf->first_run = EINA_TRUE;
+   IFMODCFGEND;
+
+   evry_conf->version = MOD_CONFIG_FILE_VERSION;
 }
 
 static void
@@ -435,7 +408,6 @@ static void
 _config_free(void)
 {
    _plugin_config_free();
-
    E_FREE(evry_conf);
 }
 

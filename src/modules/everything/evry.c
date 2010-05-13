@@ -1375,6 +1375,8 @@ evry_browse_back(Evry_Selector *sel)
 {
    Evry_State *s = sel->state;
 
+   DBG("%p", sel);
+   
    if (!s || !sel->states->next)
      return 0;
 
@@ -1449,6 +1451,83 @@ _evry_selectors_switch(int dir)
      {
 	_evry_selector_activate(selectors[1]);
      }
+}
+static int
+_evry_input_complete(Evry_State *s)
+{
+   int action = 0;
+   char *input = NULL;
+   Evry_Item *it = s->cur_item;
+
+   evry_item_ref(it);
+
+   s->item_auto_selected = EINA_FALSE;
+
+   if (it->plugin->complete)
+     action = it->plugin->complete(it->plugin, it, &input);
+   else
+     evry_browse_item(selector);
+
+   if (input && action == EVRY_COMPLETE_INPUT)
+     {
+	snprintf(s->input, INPUTLEN - 1, "%s", input);
+	_evry_update_text_label(s);
+	_evry_cb_update_timer(selector);
+	evry_item_select(s, it);
+     }
+
+   evry_item_free(it);
+   E_FREE(input);
+   
+   return 1;
+}
+
+static int
+_evry_cheat_history(Evry_State *s, int promote, int delete)
+{
+	  
+   History_Entry *he;
+   History_Item *hi;
+   Eina_List *l, *ll;
+   Evry_Item *it = s->cur_item;
+   
+   if (!(he = eina_hash_find(evry_hist->subjects, (it->id ? it->id : it->label))))
+     return 1;
+   
+   EINA_LIST_FOREACH_SAFE(he->items, l, ll, hi)
+     {
+	if (hi->plugin != it->plugin->name)
+	  continue;
+   
+	if (delete)
+	  {
+	     if (hi->input)
+	       eina_stringshare_del(hi->input);
+	     if (hi->plugin)
+	       eina_stringshare_del(hi->plugin);
+	     if (hi->context)
+	       eina_stringshare_del(hi->context);
+	     E_FREE(hi);
+   
+	     he->items = eina_list_remove_list(he->items, l);
+	  }
+	else if (promote)
+	  {
+	     hi->count += 5;
+	     hi->last_used = ecore_time_get();
+	  }
+	else /* demote */
+	  {
+	     hi->count -= 5;
+	     if (hi->count < 0) hi->count = 1;
+	  }
+     }
+   if (s->plugin == selector->aggregator)
+     selector->aggregator->fetch(selector->aggregator, s->input);
+   if (s->view)
+     s->view->update(s->view, 0);
+
+   return 1;
 }
 
 static int
@@ -1563,85 +1642,27 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
      }
 
    if (!list->visible && (!strcmp(key, "Down")))
-     _evry_list_win_show();
+     {
+	_evry_list_win_show();
+     }
    else if ((!strcmp(key, "ISO_Left_Tab") ||
 	     (((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) ||
 	       (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)) &&
 	      (!strcmp(key, "Tab")))))
      {
-	int action = 0;
-	char *input = NULL;
-	Evry_Item *it = s->cur_item;
-
-	evry_item_ref(it);
-
-	s->item_auto_selected = EINA_FALSE;
-
-	if (it->plugin->complete)
-	  action = it->plugin->complete(it->plugin, it, &input);
-	else
-	  evry_browse_item(selector);
-
-	if (input && action == EVRY_COMPLETE_INPUT)
-	  {
-	     snprintf(s->input, INPUTLEN - 1, "%s", input);
-	     _evry_update_text_label(s);
-	     _evry_cb_update_timer(selector);
-	     evry_item_select(s, it);
-	  }
-
-	E_FREE(input);
-
-	evry_item_free(it);
+	_evry_input_complete(s);
      }
    else if ((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
-	    (!strcmp(key, "Delete") || !strcmp(key, "Insert")))
+   	    (!strcmp(key, "Delete") || !strcmp(key, "Insert")))
      {
-	if (!s || !s->cur_item)
-	  goto end;
+   	if (!s->cur_item)
+   	  goto end;
 
 	int delete = (!strcmp(key, "Delete") && (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT));
-	int promote = (!strcmp(key, "Insert"));
-	History_Entry *he;
-	History_Item *hi;
-	Eina_List *l, *ll;
-	Evry_Item *it = s->cur_item;
+   	int promote = (!strcmp(key, "Insert"));
 
-	if (!(he = eina_hash_find(evry_hist->subjects, (it->id ? it->id : it->label))))
-	  goto end;
-
-	EINA_LIST_FOREACH_SAFE(he->items, l, ll, hi)
-	  {
-	     if (hi->plugin != it->plugin->name)
-	       continue;
-
-	     if (delete)
-	       {
-		  if (hi->input)
-		    eina_stringshare_del(hi->input);
-		  if (hi->plugin)
-		    eina_stringshare_del(hi->plugin);
-		  if (hi->context)
-		    eina_stringshare_del(hi->context);
-		  E_FREE(hi);
-
-		  he->items = eina_list_remove_list(he->items, l);
-	       }
-	     else if (promote)
-	       {
-		  hi->count += 5;
-		  hi->last_used = ecore_time_get();
-	       }
-	     else
-	       {
-		  hi->count -= 5;
-		  if (hi->count < 0) hi->count = 1;
-	       }
-	  }
-	if (s->plugin == selector->aggregator)
-	  selector->aggregator->fetch(selector->aggregator, s->input);
-	if (s->view)
-	  s->view->update(s->view, 0);
+	_evry_cheat_history(s, promote, delete);
+	
      }
    else if (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)
      {
@@ -1649,6 +1670,7 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	  {
 	     if (!_evry_clear(selector))
 	       evry_browse_back(selector);
+	     goto end;
 	  }
 	else if (!strcmp(key, "1"))
 	  _evry_view_toggle(s, NULL);
@@ -1777,9 +1799,9 @@ _evry_update(Evry_Selector *sel, int fetch)
 	if (sel->update_timer)
 	  ecore_timer_del(sel->update_timer);
 
-	sel->update_timer = ecore_timer_add(MATCH_LAG, _evry_cb_update_timer, sel);
+	sel->update_timer =
+	  ecore_timer_add(MATCH_LAG, _evry_cb_update_timer, sel);
 
-	/* if (s->plugin && !s->plugin->trigger) */
 	edje_object_signal_emit(list->o_main, "e,signal,update", "e");
      }
 }
@@ -1802,25 +1824,26 @@ _evry_clear(Evry_Selector *sel)
 {
    Evry_State *s = sel->state;
 
-   if (s->inp && s->inp[0] != 0)
-     {
-	if (s->trigger_active && s->inp[1] != 0)
-	  {
-	     s->inp[1] = 0;
-	     s->input = s->inp + 1;
-	  }
-	else
-	  {
-	     s->inp[0] = 0;
-	     s->input = s->inp;
-	  }
+   if (!(s->inp) || (s->inp[0] == 0))
+     return 0;
 
-	_evry_update(sel, 1);
-	if (!list->visible && evry_conf->hide_input)
-	  edje_object_signal_emit(list->o_main, "e,state,entry_hide", "e");
-	return 1;
+   if (s->trigger_active && s->inp[1] != 0)
+     {
+	s->inp[1] = 0;
+	s->input = s->inp + 1;
      }
-   return 0;
+   else
+     {
+	s->inp[0] = 0;
+	s->input = s->inp;
+     }
+
+   _evry_update(sel, 1);
+
+   if (!list->visible && evry_conf->hide_input)
+     edje_object_signal_emit(list->o_main, "e,state,entry_hide", "e");
+	
+   return 1;
 }
 
 static void
@@ -2016,7 +2039,7 @@ _evry_view_toggle(Evry_State *s, const char *trigger)
 	EINA_LIST_FOREACH(evry_conf->views, ll, view)
 	  {
 	     if (view->trigger && !strncmp(trigger, view->trigger, 1) &&
-		 (view->id != s->view->id) &&
+		 (!s->view || (view->id != s->view->id)) &&
 		 (v = view->create(view, s, list->o_main)))
 	       {
 		  triggered = EINA_TRUE;
@@ -2043,7 +2066,7 @@ _evry_view_toggle(Evry_State *s, const char *trigger)
 	EINA_LIST_FOREACH(l, ll, view)
 	  {
 	     if ((!view->trigger) &&
-		 ((view->id != s->view->id) &&
+		 ((!s->view || (view->id != s->view->id)) &&
 		  (v = view->create(view, s, list->o_main))))
 	       goto found;
 	  }

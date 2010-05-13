@@ -97,7 +97,7 @@ struct _Evry_API
 
   void (*plugin_free)(Evry_Plugin *p);
   /* when a new plugin config was created return val is 1. in this
-     case you can set defaults of p->config otherwise zero */
+     case you can set defaults of p->config */
   int  (*plugin_register)(Evry_Plugin *p, int type, int priority);
   void (*plugin_unregister)(Evry_Plugin *p);
   void (*plugin_update)(Evry_Plugin *plugin, int state);

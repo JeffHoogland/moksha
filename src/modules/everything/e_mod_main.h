@@ -3,6 +3,11 @@
 #ifndef E_MOD_MAIN_H
 #define E_MOD_MAIN_H
 
+#define MOD_CONFIG_FILE_EPOCH 0x0001
+#define MOD_CONFIG_FILE_GENERATION 0x0001
+#define MOD_CONFIG_FILE_VERSION					\
+  ((MOD_CONFIG_FILE_EPOCH << 16) | MOD_CONFIG_FILE_GENERATION)
+
 
 typedef struct _Evry_Selector Evry_Selector;
 typedef struct _Tab_View Tab_View;
