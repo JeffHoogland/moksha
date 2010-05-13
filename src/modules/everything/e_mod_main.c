@@ -342,7 +342,7 @@ _config_init()
    evry_conf = e_config_domain_load("module.everything", conf_edd);
 
    if (evry_conf && !e_util_module_config_check
-       (_("Everything Files"), evry_conf->version,
+       (_("Everything Module"), evry_conf->version,
 	MOD_CONFIG_FILE_EPOCH, MOD_CONFIG_FILE_VERSION))
      _config_free();
 

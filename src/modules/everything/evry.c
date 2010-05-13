@@ -232,11 +232,7 @@ evry_show(E_Zone *zone, const char *params)
    _evry_selector_activate(selectors[0]);
 
    if (!evry_conf->hide_input)
-     {
-	edje_object_part_text_set(win->o_main, "e.text.label", "Search:");
-	edje_object_part_text_set(list->o_main, "e.text.label", "Search:");
-	edje_object_signal_emit(list->o_main, "e,state,entry_show", "e");
-     }
+     edje_object_signal_emit(list->o_main, "e,state,entry_show", "e");
 
    if (!evry_conf->hide_list)
      _show_timer = ecore_timer_add(0.01, _cb_show_timer, NULL);

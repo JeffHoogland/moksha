@@ -25,7 +25,7 @@
 
 #define ONE_DAY  86400.0
 #define SIX_DAYS_AGO (ecore_time_get() - ONE_DAY * 6)
-#define MIN_USAGE 0.000000000000000000001
+#define MIN_USAGE 0.0
 
 /* #undef DBG
  * #define DBG(...) ERR(__VA_ARGS__) */
@@ -385,15 +385,15 @@ _scan_end_func(void *data)
 	       {
 		  EINA_LIST_FOREACH(he->items, lll, hi)
 		    {
-		       if (hi->data)
-			 {
-			    if (!file->mime)
-			      file->mime = eina_stringshare_ref(hi->data);
+		       if (!hi->data)
+			 continue;
+		       
+		       if (!file->mime)
+			 file->mime = eina_stringshare_ref(hi->data);
 
-			    /* DBG("cached: %s %s", file->mime, file->path); */
-			    hi->transient = 0;
-			    break;
-			 }
+		       hi->transient = 0;
+		       item->hi = hi;
+		       break;
 		    }
 	       }
 
@@ -468,8 +468,7 @@ _scan_end_func(void *data)
 	       {
 		  GET_FILE(file, item);
 
-		  if (!item->usage &&
-		      (hi = evry->history_item_add(item, NULL, NULL)))
+		  if ((!(item->hi) && (hi = evry->history_item_add(item, NULL, NULL))))
 		    {
 		       hi->last_used = SIX_DAYS_AGO;
 		       hi->usage = MIN_USAGE * (double) cnt++;
@@ -971,9 +970,10 @@ _recentf_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *
 	DBG("clear %s", (char *)key);
 
 	/* transient marks them for deletion */
-	if ((hi->count == 1) && (hi->last_used < SIX_DAYS_AGO))
+	if (hi->count == 1)
 	  {
 	     hi->usage = 0;
+	     hi->count = 0;
 	     hi->transient = 1;
 	  }
 
@@ -1512,9 +1512,6 @@ _conf_new(void)
    IFMODCFGEND;
 
    _conf->version = MOD_CONFIG_FILE_VERSION;
-
-   e_config_domain_save("module.everything-files", conf_edd, _conf);
-   e_config_save_queue();
 }
 
 static void
