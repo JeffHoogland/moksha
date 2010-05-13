@@ -87,6 +87,7 @@ e_mod_sft_win_new(E_Zone *zone)
    e_win_show(swin->win);
 
    e_border_zone_set(swin->win->border, zone);
+   swin->win->border->user_skip_winlist = 1;
 
    /* set this window to be a dock window. This needs to be done after show 
     * as E will sometimes reset the window type */
