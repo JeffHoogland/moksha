@@ -1242,7 +1242,6 @@ e_hints_window_size_get(E_Border *bd)
 EAPI void
 e_hints_window_maximized_set(E_Border *bd, int horizontal, int vertical)
 {
-
    if ((horizontal) && (!bd->client.netwm.state.maximized_h))
      {
 	bd->client.netwm.update.state = 1;
