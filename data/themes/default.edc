@@ -33430,12 +33430,12 @@ collections {
                rel1 {
                   relative: 0.0 1.0;
                   to: "base";
-                  offset: 0 -27;
+                  offset: 0 -26;
                }
                rel2 {
                   relative: 1.0 1.0;
                   to: "base";
-                  offset: -1 -1;
+                  offset: -1 -2;
                }
             }
          }
@@ -33446,11 +33446,11 @@ collections {
                state: "default" 0.0;
                rel1 {
                   to: "bar_base";
-                  offset: 2 3;
+                  offset: 2 2;
                }
                rel2 {
                   to: "bar_base";
-                  offset: -2 -3;
+                  offset: -2 -2;
                }
             }
             description {
