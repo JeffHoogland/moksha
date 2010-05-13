@@ -1724,6 +1724,8 @@ e_kbd_int_new(const char *themedir, const char *syskbds, const char *sysdicts)
      (E_EVENT_BORDER_MOVE, _e_kbd_int_cb_border_move, ki);
 
    e_win_show(ki->win);
+   ki->win->border->user_skip_winlist = 1;
+
    return ki;
 }
 
