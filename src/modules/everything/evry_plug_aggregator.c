@@ -254,7 +254,10 @@ evry_plug_aggregator_new(Evry_Selector *sel, int type)
 
    p = EVRY_PLUGIN_NEW(Plugin, N_("All"), NULL, 0, NULL, _finish, _fetch, _free);
    p->history = EINA_FALSE;
-   evry_plugin_register(p, type, -1);
+   if (evry_plugin_register(p, type, -1))
+     {
+	p->config->view_mode = VIEW_MODE_THUMB;
+     }
 
    GET_PLUGIN(pa, p);
    pa->selector = sel;

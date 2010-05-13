@@ -690,9 +690,8 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
      {
 	prev = sd->cur_item->y / sd->cur_item->h;
 	sd->cur_item->selected = EINA_FALSE;
-	if (!sd->cur_item->item->marked)
-	  edje_object_signal_emit(sd->cur_item->frame,
-				  "e,state,unselected", "e");
+	edje_object_signal_emit(sd->cur_item->frame,
+				"e,state,unselected", "e");
      }
 
    sd->cur_item = NULL;
