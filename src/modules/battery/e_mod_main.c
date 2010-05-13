@@ -412,12 +412,18 @@ _battery_dbus_shutdown(void)
      {
         e_dbus_signal_handler_del(conn, hac->prop_change);
         eina_stringshare_del(hac->udi);
+	eina_stringshare_del(hac->product);
         free(hac);
      }
    EINA_LIST_FREE(dbus_batteries, hbat)
      {
         e_dbus_signal_handler_del(conn, hbat->prop_change);
         eina_stringshare_del(hbat->udi);
+	eina_stringshare_del(hbat->technology);
+	eina_stringshare_del(hbat->type);
+	eina_stringshare_del(hbat->charge_units);
+	eina_stringshare_del(hbat->model);
+	eina_stringshare_del(hbat->vendor);
         free(hbat);
      }
 }
