@@ -1846,7 +1846,7 @@ static void
 _evry_plugin_action(Evry_Selector *sel, int finished)
 {
    Evry_State *s_subj, *s_act, *s_obj = NULL;
-   Evry_Item *it_subj, *it_act, *it_obj, *it;
+   Evry_Item *it, *it_subj, *it_act, *it_obj = NULL;
    Eina_List *l;
 
    if (selectors[0]->update_timer)
@@ -1890,9 +1890,8 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 	if (act->it2.type)
 	  {
 	     /* check if object is provided */
-	     if (selectors[2]->state)
+	     if ((s_obj = selectors[2]->state))
 	       {
-		  s_obj = selectors[2]->state;
 		  it_obj = s_obj->cur_item;
 	       }
 
