@@ -43,8 +43,8 @@ module_la_SOURCES = \
                   e_mod_config_animation.c \
                   e_mod_quickpanel.h \
                   e_mod_quickpanel.c \
-                  e_mod_kbd_dbus.h \
-                  e_mod_kbd_dbus.c \
+                  e_mod_kbd_device.h \
+                  e_mod_kbd_device.c \
                   e_mod_kbd.h \
                   e_mod_kbd.c \
                   e_mod_policy.h \
