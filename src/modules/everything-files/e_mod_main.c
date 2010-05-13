@@ -1305,8 +1305,11 @@ _plugins_init(const Evry_API *api)
 		   _recentf_begin, _finish, _recentf_fetch);
 	p->browse = &_recentf_browse;
 	if (evry->plugin_register(p, EVRY_PLUGIN_SUBJECT, 3))
-	  p->config->min_query = 3;
-
+	  {
+	     p->config->top_level = EINA_FALSE;
+	     p->config->min_query = 3;
+	  }
+	
 	PLUGIN_NEW(N_("Recent Files"), _module_icon,
 		   _recentf_begin, _finish, _recentf_fetch);
 	p->browse = &_recentf_browse;

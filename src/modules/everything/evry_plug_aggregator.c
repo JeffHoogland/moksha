@@ -102,11 +102,17 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	     if (!pp->items)
 	       continue;
 
-	     it->fuzzy_match = evry_fuzzy_match(it->label, input);
-
 	     it->hi = NULL;
-	     evry_history_item_usage_set(it, NULL, NULL);
-
+	     it->usage = 0;
+	     it->fuzzy_match = 0;
+	     
+	     if (input)
+	       {
+		  evry_history_item_usage_set(it, NULL, NULL);
+		  it->usage /= 2.0;
+		  it->fuzzy_match = 5;
+	       }
+	     
 	     snprintf(buf, sizeof(buf), "%d %s", eina_list_count(pp->items), _("Items"));
 	     if (it->detail)
 	       eina_stringshare_del(it->detail);
@@ -253,7 +259,7 @@ evry_plug_aggregator_new(Evry_Selector *sel, int type)
    Evry_Plugin *p;
 
    p = EVRY_PLUGIN_NEW(Plugin, N_("All"), NULL, 0, NULL, _finish, _fetch, _free);
-   p->history = EINA_FALSE;
+
    if (evry_plugin_register(p, type, -1))
      {
 	p->config->view_mode = VIEW_MODE_THUMB;
