@@ -586,7 +586,7 @@ _battery_dbus_ac_adapter_props(void *data, void *reply_data, DBusError *error __
 #endif
    Dbus_Ac_Adapter *hac = data;
    int err = 0;
-   char *str;
+   const char *str;
 
    if (dbus_error_is_set(error))
      {
