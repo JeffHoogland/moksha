@@ -1,6 +1,6 @@
 #include "e_illume_private.h"
 #include "e_mod_kbd.h"
-#include "e_mod_kbd_dbus.h"
+#include "e_mod_kbd_device.h"
 
 /* local function prototypes */
 static int _e_mod_kbd_cb_client_message(void *data __UNUSED__, int type __UNUSED__, void *event);
