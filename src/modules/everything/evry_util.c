@@ -860,7 +860,6 @@ _cb_free_item_changed(void *data, void *event)
    E_FREE(ev);
 }
 
-
 EAPI void
 evry_item_changed(Evry_Item *it, int icon, int selected)
 {

@@ -1843,6 +1843,46 @@ _evry_clear(Evry_Selector *sel)
 }
 
 static void
+_evry_cb_free_action_performed(void *data, void *event)
+{
+   Evry_Event_Action_Performed *ev = event;
+
+   if (ev->it1)
+     EVRY_ITEM_FREE(ev->it1);
+   if (ev->it2)
+     EVRY_ITEM_FREE(ev->it2);
+
+   IF_RELEASE(ev->action);
+
+   E_FREE(ev);
+}
+
+static int
+_evry_action_do(Evry_Action *act)
+{
+   Evry_Event_Action_Performed *ev;
+   
+   if (act->action(act))
+     {
+	ev = E_NEW(Evry_Event_Action_Performed, 1);
+	ev->action = eina_stringshare_ref(act->name);
+	ev->it1 = act->it1.item;
+	ev->it2 = act->it2.item;
+	
+	if (ev->it1)
+	  EVRY_ITEM_REF(ev->it1);
+	if (ev->it2)
+	  EVRY_ITEM_REF(ev->it2);
+
+	ecore_event_add(EVRY_EVENT_ACTION_PERFORMED, ev,
+			_evry_cb_free_action_performed, NULL);
+
+	return 1;
+     }
+   return 0;
+}
+
+static void
 _evry_plugin_action(Evry_Selector *sel, int finished)
 {
    Evry_State *s_subj, *s_act, *s_obj = NULL;
@@ -1912,7 +1952,8 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 		  if (it->type != act->it2.type)
 		    continue;
 		  act->it2.item = it;
-		  act->action(act);
+
+		  _evry_action_do(act);
 	       }
 	  }
 	else if (s_subj->sel_items && !(act->it1.accept_list))
@@ -1922,7 +1963,8 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 		  if (it->type != act->it1.type)
 		    continue;
 		  act->it1.item = it;
-		  act->action(act);
+
+		  _evry_action_do(act);
 	       }
 	  }
 	else
@@ -1933,7 +1975,7 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 	     if (s_obj)
 	       act->it2.items = s_obj->sel_items;
 
-	     if (!act->action(act))
+	     if (!_evry_action_do(act))
 	       return;
 	  }
      }

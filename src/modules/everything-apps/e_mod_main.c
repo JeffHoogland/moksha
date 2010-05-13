@@ -160,8 +160,6 @@ _begin(Evry_Plugin *plugin, const Evry_Item *item)
 {
    GET_PLUGIN(p, plugin);
 
-   DBG("begin %p %p\n", item, _act_open_with);
-
    if (item && (item != _act_open_with))
      return NULL;
 

@@ -46,6 +46,7 @@ EAPI Evry_Config *evry_conf = NULL;
 EAPI int EVRY_EVENT_ITEM_SELECT;
 EAPI int EVRY_EVENT_ITEM_CHANGED;
 EAPI int EVRY_EVENT_ITEMS_UPDATE;
+EAPI int EVRY_EVENT_ACTION_PERFORMED;
 
 EAPI Evry_Type EVRY_TYPE_FILE;
 EAPI Evry_Type EVRY_TYPE_DIR;
@@ -162,6 +163,8 @@ e_modapi_init(E_Module *m)
      EVRY_EVENT_ITEM_SELECT = ecore_event_type_new();
    if (!EVRY_EVENT_ITEM_CHANGED)
      EVRY_EVENT_ITEM_CHANGED = ecore_event_type_new();
+   if (!EVRY_EVENT_ACTION_PERFORMED)
+     EVRY_EVENT_ACTION_PERFORMED = ecore_event_type_new();
 
    e_module_delayed_set(m, 0);
 

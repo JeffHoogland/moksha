@@ -12,30 +12,6 @@ struct _Plugin
   Evry_Item *warning;
 };
 
-static inline Eina_List *
-_add_item(Plugin *p, Eina_List *items, Evry_Item *it)
-{
-   /* remove duplicates provided by different plugins */
-   if (it->id)
-     {
-	Eina_List *_l;
-	Evry_Item *_it;
-
-	EINA_LIST_FOREACH(p->base.items, _l, _it)
-	  {
-	     if ((it->plugin->name != _it->plugin->name) &&
-		 (it->type == _it->type) &&
-		 (it->id == _it->id))
-	       return items;
-	  }
-     }
-
-   items = eina_list_append(items, it);
-   EVRY_PLUGIN_ITEM_APPEND(p, it);
-
-   return items;
-}
-
 static int
 _fetch(Evry_Plugin *plugin, const char *input)
 {
@@ -43,7 +19,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
    Evry_Plugin *pp;
    Evry_State *s;
    Eina_List *l, *ll, *lp = NULL;
-   Evry_Item *it;
+   Evry_Item *it, *it2;
    int i, cnt = 0;
    Eina_List *items = NULL;
    const char *context = NULL;
@@ -105,20 +81,20 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	     it->hi = NULL;
 	     it->usage = 0;
 	     it->fuzzy_match = 0;
-	     
+
 	     if (input)
 	       {
 		  evry_history_item_usage_set(it, NULL, NULL);
-		  it->usage /= 2.0;
-		  it->fuzzy_match = 5;
+		  it->usage /= 100.0;
+		  it->fuzzy_match = 6;
 	       }
-	     
+
 	     snprintf(buf, sizeof(buf), "%d %s", eina_list_count(pp->items), _("Items"));
 	     if (it->detail)
 	       eina_stringshare_del(it->detail);
 	     it->detail = eina_stringshare_add(buf);
 
-	     items = _add_item(p, items, it);
+	     items = eina_list_append(items, it);
 	  }
      }
 
@@ -135,7 +111,8 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	      evry_history_item_usage_set(it, input, context);
 	    if (it->fuzzy_match == 0)
 	      it->fuzzy_match = evry_fuzzy_match(it->label, input);
-	    items = _add_item(p, items, it);
+
+	    items = eina_list_append(items, it);
 	 }
      }
    /* if there is input append all items that match or have
@@ -154,7 +131,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 		       if (it->usage >= 0)
 			 evry_history_item_usage_set(it, input, context);
 
-		       items = _add_item(p, items, it);
+		       items = eina_list_append(items, it);
 		    }
 	       }
 	  }
@@ -171,7 +148,8 @@ _fetch(Evry_Plugin *plugin, const char *input)
 		  if (it->usage >= 0)
 		    evry_history_item_usage_set(it, NULL, context);
 		  it->fuzzy_match = 0;
-		  items = _add_item(p, items, it);
+
+		  items = eina_list_append(items, it);
    	       }
    	  }
      }
@@ -187,7 +165,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 		    (!eina_list_data_find_list(items, it)))
 		 {
 		    it->fuzzy_match = 0;
-		    items = _add_item(p, items, it);
+		    items = eina_list_append(items, it);
 		 }
 	     }
 	 }
@@ -205,32 +183,45 @@ _fetch(Evry_Plugin *plugin, const char *input)
 		       if (it->fuzzy_match == 0)
 			 it->fuzzy_match = evry_fuzzy_match(it->label, input);
 
-		       items = _add_item(p, items, it);
+		       items = eina_list_append(items, it);
 		    }
 	       }
 	  }
      }
 
-   /* EINA_LIST_FOREACH(items, l, it)
+   items = eina_list_sort(items, -1, evry_items_sort_func);
+
+   EINA_LIST_FOREACH(items, l, it)
+     {
+	/* remove duplicates provided by different plugins */
+	if (it->id)
+	  {
+	     EINA_LIST_FOREACH(p->base.items, ll, it2)
+	       {
+		  if ((it->plugin->name != it2->plugin->name) &&
+		      (it->type == it2->type) &&
+		      (it->id == it2->id))
+		  continue;
+	       }
+	  }
+
+	evry_item_ref(it);
+	EVRY_PLUGIN_ITEM_APPEND(p, it);
+
+	if (cnt++ > MAX_ITEMS)
+	  break;
+
+     }
+
+   if (items) eina_list_free(items);
+   if (lp) eina_list_free(lp);
+
+
+   /* EINA_LIST_FOREACH(p->base.items, l, it)
     *   {
     * 	if(CHECK_TYPE(it, EVRY_TYPE_FILE))
     * 	  printf("%d %1.20f %s\n", it->fuzzy_match, it->usage, it->label);
     *   } */
-   
-   if (items) eina_list_free(items);
-   if (lp) eina_list_free(lp);
-
-   EVRY_PLUGIN_ITEMS_SORT(p, evry_items_sort_func);
-
-   EINA_LIST_FOREACH_SAFE(p->base.items, l, ll, it)
-     {
-	if (cnt++ < MAX_ITEMS)
-	  {
-	     evry_item_ref(it);
-	     continue;
-	  }
-	p->base.items = eina_list_remove_list(p->base.items, l);
-     }
 
    return 1;
 }

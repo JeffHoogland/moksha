@@ -25,7 +25,6 @@ typedef struct _Evry_State		Evry_State;
 typedef struct _Evry_View		Evry_View;
 typedef struct _History			Evry_History;
 typedef struct _Config			Evry_Config;
-typedef struct _Evry_Event_Item_Changed Evry_Event_Item_Changed;
 
 #define EVRY_ITEM(_item) ((Evry_Item *)_item)
 #define EVRY_ACTN(_item) ((Evry_Action *) _item)
@@ -71,6 +70,7 @@ typedef struct _Evry_Event_Item_Changed Evry_Event_Item_Changed;
 			  _label, _icon_get, _free)
 
 #define EVRY_ITEM_FREE(_item) evry_item_free((Evry_Item *)_item)
+#define EVRY_ITEM_REF(_item) evry_item_ref((Evry_Item *)_item)
 
 #define EVRY_PLUGIN_NEW(_base, _name, _icon, _item_type, _begin, _cleanup, _fetch, _free) \
   evry_plugin_new(EVRY_PLUGIN(E_NEW(_base, 1)), _name, _(_name), _icon, _item_type, \
@@ -165,13 +165,6 @@ struct _Evry_View
   void (*clear)        (Evry_View *view, int slide);
 
   int priority;
-};
-
-struct _Evry_Event_Item_Changed
-{
-  Evry_Item *item;
-  int changed_selection;
-  int changed_icon;
 };
 
 /* FIXME this should be exposed.

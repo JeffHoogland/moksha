@@ -38,9 +38,13 @@ EAPI extern Evry_Type EVRY_TYPE_TEXT;
 EAPI extern int EVRY_EVENT_ITEM_SELECT;
 EAPI extern int EVRY_EVENT_ITEM_CHANGED;
 EAPI extern int EVRY_EVENT_ITEMS_UPDATE;
+EAPI extern int EVRY_EVENT_ACTION_PERFORMED;
 
 typedef struct _Evry_API Evry_API;
 typedef struct _Evry_Module Evry_Module;
+
+typedef struct _Evry_Event_Item_Changed     Evry_Event_Item_Changed;
+typedef struct _Evry_Event_Action_Performed Evry_Event_Action_Performed;
 
 /***************************************************
 
@@ -135,6 +139,20 @@ struct _Evry_API
   int  (*history_item_usage_set)(Evry_Item *it, const char *input, const char *ctxt);
 
   int log_dom;
+};
+
+struct _Evry_Event_Item_Changed
+{
+  Evry_Item *item;
+  int changed_selection;
+  int changed_icon;
+};
+
+struct _Evry_Event_Action_Performed
+{
+  const char *action;
+  const Evry_Item *it1;
+  const Evry_Item *it2;
 };
 
 #ifndef EVRY_H

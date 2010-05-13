@@ -54,7 +54,7 @@ struct _Evry_Item
   Eina_List *items;
 
   Evas_Object *(*icon_get) (Evry_Item *it, Evas *e);
-  void (*free) (Evry_Item *item);
+  void (*free) (Evry_Item *it);
 
   /* do not set by plugin! */
   Eina_Bool selected;
@@ -189,7 +189,7 @@ struct _Evry_Plugin
 
   /* set theme file to fetch icons from */
   const char *theme_path;
-  
+
   /* not to be set by plugin! */
   Plugin_Config *config;
   unsigned int request;

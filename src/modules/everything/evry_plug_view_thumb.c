@@ -1221,13 +1221,19 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 	     evry_item_mark(s, sd->cur_item->item, 0);
 	  }
 
-	if(!strcmp(key, "comma"))
+	if (v->mode == VIEW_MODE_THUMB)
 	  {
-	     key = "Down";
+	     if (!strcmp(key, "comma"))
+	       key = "Right";
+	     else
+	       key = "Left";
 	  }
 	else
 	  {
-	     key = "Up";
+	     if (!strcmp(key, "comma"))
+	       key = "Down";
+	     else
+	       key = "Up";
 	  }
      }
 

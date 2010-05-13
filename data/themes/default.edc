@@ -34262,7 +34262,7 @@ collections {
                }
                rel2.offset: -2 -4;
                color: 250 250 250 255;
-               color3: 20 20 20 40;
+               color3: 20 20 20 20;
                text {
                   font: "Sans";
                   size: 10;
