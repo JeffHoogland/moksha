@@ -80,7 +80,8 @@ _begin_open_with(Evry_Plugin *plugin, const Evry_Item *item)
    Efreet_Desktop *d, *d2;
    const char *mime;
    const char *path = NULL;
-
+   Eina_List *l;
+   
    if (CHECK_TYPE(item, EVRY_TYPE_ACTION))
      {
 	GET_ACTION(act, item);
@@ -112,13 +113,11 @@ _begin_open_with(Evry_Plugin *plugin, const Evry_Item *item)
 
    p->apps_mime = efreet_util_desktop_mime_list(mime);
 
-   if (strcmp(mime, "text/plain") &&
-       !strncmp(mime, "text/", 5))
+   if (strcmp(mime, "text/plain") && (!strncmp(mime, "text/", 5)))
      {
-	Eina_List *tmp;
-	tmp = efreet_util_desktop_mime_list("text/plain");
+	l = efreet_util_desktop_mime_list("text/plain");
 
-	EINA_LIST_FREE(tmp, d)
+	EINA_LIST_FREE(l, d)
 	  {
 	     if (!eina_list_data_find_list(p->apps_mime, d))
 	       p->apps_mime = eina_list_append(p->apps_mime, d);
@@ -127,18 +126,30 @@ _begin_open_with(Evry_Plugin *plugin, const Evry_Item *item)
 	  }
      }
 
-   d = e_exehist_mime_desktop_get(mime);
-   if (d)
+   if (item->browseable && strcmp(mime, "x-directory/normal"))
+     {
+	l = efreet_util_desktop_mime_list("x-directory/normal");
+
+	EINA_LIST_FREE(l, d)
+	  {
+	     if (!eina_list_data_find_list(p->apps_mime, d))
+	       p->apps_mime = eina_list_append(p->apps_mime, d);
+	     else
+	       efreet_desktop_free(d);
+	  }
+     }
+
+   if ((d = e_exehist_mime_desktop_get(mime)))
      {
 	if ((d2 = eina_list_data_find(p->apps_mime, d)))
 	  {
 	     p->apps_mime = eina_list_remove(p->apps_mime, d2);
 	     efreet_desktop_free(d2);
 	  }
-
 	p->apps_mime = eina_list_prepend(p->apps_mime, d);
      }
 
+   
    p->added = eina_hash_string_small_new(_hash_free);
 
    return plugin;
