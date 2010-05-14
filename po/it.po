@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-05-07 22:54+0200\n"
+"POT-Creation-Date: 2010-05-14 23:58+1000\n"
 "PO-Revision-Date: 2010-05-07 22:59+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
@@ -25,7 +25,7 @@ msgstr "Informazioni su Enlightenment"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:848
 #: src/modules/conf_theme/e_int_config_theme_web.c:130
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:120
-#: src/modules/everything-windows/e_mod_main.c:382
+#: src/modules/everything-windows/e_mod_main.c:391
 #: src/modules/fileman/e_fwin.c:1824 src/modules/illume/e_mod_win.c:173
 #: src/modules/mixer/app_mixer.c:514
 msgid "Close"
@@ -550,7 +550,7 @@ msgstr "Mostra menù..."
 
 #: src/bin/e_actions.c:2843 src/bin/e_actions.c:2848
 #: src/modules/conf/e_mod_main.c:237 src/modules/conf/e_mod_main.c:340
-#: src/modules/everything-apps/e_mod_main.c:955
+#: src/modules/everything-apps/e_mod_main.c:997
 #: src/modules/fileman/e_mod_main.c:63 src/modules/fileman/e_mod_main.c:146
 msgid "Launch"
 msgstr "Lancia"
@@ -631,7 +631,7 @@ msgstr "Iberna"
 msgid "Lock"
 msgstr "Blocca"
 
-#: src/bin/e_actions.c:2907 src/bin/e_int_menus.c:1152
+#: src/bin/e_actions.c:2907 src/bin/e_int_menus.c:1151
 msgid "Cleanup Windows"
 msgstr "Ordina Finestre"
 
@@ -796,7 +796,7 @@ msgstr ""
 msgid "Enlightenment Settings Write Problems"
 msgstr "Problemi scrittura configurazione di Enlightenment"
 
-#: src/bin/e_config_dialog.c:210 src/modules/battery/e_mod_main.c:1390
+#: src/bin/e_config_dialog.c:210 src/modules/battery/e_mod_main.c:1396
 #: src/modules/conf/e_mod_main.c:248 src/modules/conf_engine/e_mod_main.c:20
 #: src/modules/conf_paths/e_mod_main.c:20
 #: src/modules/conf_performance/e_mod_main.c:20
@@ -821,9 +821,9 @@ msgid "Modules"
 msgstr "Moduli"
 
 #: src/bin/e_configure.c:35 src/modules/conf_shelves/e_mod_main.c:24
-#: src/modules/everything/e_mod_main.c:148
-#: src/modules/everything-apps/e_mod_main.c:1141
-#: src/modules/everything-files/e_mod_main.c:1544
+#: src/modules/everything/e_mod_main.c:153
+#: src/modules/everything-apps/e_mod_main.c:1245
+#: src/modules/everything-files/e_mod_main.c:1537
 #: src/modules/gadman/e_mod_main.c:25 src/modules/mixer/e_mod_main.c:1047
 #: src/modules/connman/e_mod_main.c:1734
 msgid "Extensions"
@@ -966,12 +966,12 @@ msgstr "File desktop"
 
 #: src/bin/e_eap_editor.c:717
 #: src/modules/conf_performance/e_int_config_performance.c:115
-#: src/modules/everything/evry_config.c:375
-#: src/modules/everything/evry_config.c:455
-#: src/modules/everything-apps/e_mod_main.c:1095
-#: src/modules/everything-aspell/e_mod_main.c:472
-#: src/modules/everything-files/e_mod_main.c:1433
-#: src/modules/pager/e_mod_config.c:125 src/modules/pager/e_mod_config.c:217
+#: src/modules/everything/evry_config.c:357
+#: src/modules/everything/evry_config.c:437
+#: src/modules/everything-apps/e_mod_main.c:1144
+#: src/modules/everything-aspell/e_mod_main.c:471
+#: src/modules/everything-files/e_mod_main.c:1429
+#: src/modules/pager/e_mod_config.c:125 src/modules/pager/e_mod_config.c:212
 msgid "General"
 msgstr "Impostazioni generali"
 
@@ -979,7 +979,7 @@ msgstr "Impostazioni generali"
 msgid "Startup Notify"
 msgstr "Notifica avvio"
 
-#: src/bin/e_eap_editor.c:723 src/modules/everything-apps/e_mod_main.c:969
+#: src/bin/e_eap_editor.c:723 src/modules/everything-apps/e_mod_main.c:1011
 msgid "Run in Terminal"
 msgstr "Esegui in terminale"
 
@@ -1260,8 +1260,8 @@ msgstr "Icone"
 msgid "Custom Icons"
 msgstr "Icone personalizzabile"
 
-#: src/bin/e_fm.c:8353 src/modules/everything/evry_config.c:427
-#: src/modules/everything/evry_config.c:480
+#: src/bin/e_fm.c:8353 src/modules/everything/evry_config.c:409
+#: src/modules/everything/evry_config.c:462
 #: src/modules/fileman/e_mod_config.c:224
 msgid "List"
 msgstr "Elenco"
@@ -1450,7 +1450,7 @@ msgstr "Anteprima"
 #: src/bin/e_fm_prop.c:429
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:183
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:196
-#: src/modules/everything/evry_config.c:423
+#: src/modules/everything/evry_config.c:405
 msgid "Default"
 msgstr "Predefinito"
 
@@ -1460,7 +1460,7 @@ msgstr "Miniatura"
 
 #: src/bin/e_fm_prop.c:435
 #: src/modules/conf_desklock/e_int_config_desklock.c:425
-#: src/modules/everything-aspell/e_mod_main.c:486
+#: src/modules/everything-aspell/e_mod_main.c:485
 msgid "Custom"
 msgstr "Personalizzata"
 
@@ -1633,7 +1633,7 @@ msgid "Create Icon"
 msgstr "Crea icona"
 
 #: src/bin/e_int_border_menu.c:101
-#: src/modules/everything-windows/e_mod_main.c:389
+#: src/modules/everything-windows/e_mod_main.c:398
 msgid "Send to Desktop"
 msgstr "Invia al desktop"
 
@@ -1650,7 +1650,7 @@ msgid "More..."
 msgstr "Altro..."
 
 #: src/bin/e_int_border_menu.c:197
-#: src/modules/everything-windows/e_mod_main.c:368
+#: src/modules/everything-windows/e_mod_main.c:377
 msgid "Iconify"
 msgstr "Iconifica"
 
@@ -1947,7 +1947,7 @@ msgstr "Dimensione, posizione e blocchi"
 
 #: src/bin/e_int_border_remember.c:622 src/modules/conf/e_mod_main.c:218
 #: src/modules/conf_window_focus/e_int_config_focus.c:222
-#: src/modules/everything/evry_plug_aggregator.c:254
+#: src/modules/everything/evry_plug_aggregator.c:252
 msgid "All"
 msgstr "Tutto"
 
@@ -2025,7 +2025,7 @@ msgstr "Avvia questo programma al login"
 #: src/modules/conf_dialogs/e_mod_main.c:20
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:133
 #: src/modules/conf_profiles/e_mod_main.c:20
-#: src/modules/everything-settings/e_mod_main.c:107
+#: src/modules/everything-settings/e_mod_main.c:115
 #: src/modules/ibar/e_mod_main.c:314 src/modules/ibar/e_mod_main.c:824
 #: src/modules/ibox/e_mod_main.c:313 src/modules/ibox/e_mod_main.c:708
 #: src/modules/pager/e_mod_main.c:808 src/modules/temperature/e_mod_main.c:276
@@ -2043,9 +2043,9 @@ msgstr "File manager"
 msgid "Shelf"
 msgstr "Mensola"
 
-#: src/bin/e_int_config_modules.c:66 src/modules/everything/e_mod_main.c:139
-#: src/modules/everything/e_mod_main.c:203
-#: src/modules/everything/e_mod_main.c:599
+#: src/bin/e_int_config_modules.c:66 src/modules/everything/e_mod_main.c:144
+#: src/modules/everything/e_mod_main.c:259
+#: src/modules/everything/e_mod_main.c:624
 msgid "Everything Launcher"
 msgstr "Pannello di Everything"
 
@@ -2121,23 +2121,23 @@ msgstr "Applicazioni preferite"
 #: src/bin/e_int_menus.c:128 src/modules/conf_menus/e_int_config_menus.c:90
 #: src/modules/conf_menus/e_int_config_menus.c:138
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:194
-#: src/modules/everything-apps/e_mod_main.c:935
-#: src/modules/everything-apps/e_mod_main.c:942
+#: src/modules/everything-apps/e_mod_main.c:977
+#: src/modules/everything-apps/e_mod_main.c:984
 #: src/modules/wizard/page_070.c:203
 msgid "Applications"
 msgstr "Applicazioni"
 
-#: src/bin/e_int_menus.c:152 src/bin/e_int_menus.c:1111
+#: src/bin/e_int_menus.c:152 src/bin/e_int_menus.c:1110
 #: src/modules/conf_window_display/e_mod_main.c:20
 #: src/modules/conf_window_focus/e_mod_main.c:20
 #: src/modules/conf_window_manipulation/e_mod_main.c:20
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/conf_winlist/e_mod_main.c:20
-#: src/modules/everything-windows/e_mod_main.c:353
+#: src/modules/everything-windows/e_mod_main.c:362
 msgid "Windows"
 msgstr "Finestre"
 
-#: src/bin/e_int_menus.c:160 src/bin/e_int_menus.c:1165
+#: src/bin/e_int_menus.c:160 src/bin/e_int_menus.c:1164
 msgid "Lost Windows"
 msgstr "Finestre perse"
 
@@ -2175,28 +2175,28 @@ msgstr "(Nessuna Applicazione)"
 msgid "Set Virtual Desktops"
 msgstr "Imposta desktop virtuali"
 
-#: src/bin/e_int_menus.c:1117 src/bin/e_int_menus.c:1301
+#: src/bin/e_int_menus.c:1116 src/bin/e_int_menus.c:1300
 msgid "(No Windows)"
 msgstr "(Nessuna Finestra)"
 
-#: src/bin/e_int_menus.c:1211 src/bin/e_int_menus.c:1313
+#: src/bin/e_int_menus.c:1210 src/bin/e_int_menus.c:1312
 msgid "No name!!"
 msgstr "Nessun nome!!"
 
-#: src/bin/e_int_menus.c:1404
+#: src/bin/e_int_menus.c:1403
 msgid "(No Shelves)"
 msgstr "(Nessuna mensola)"
 
-#: src/bin/e_int_menus.c:1416 src/bin/e_shelf.c:166 src/bin/e_shelf.c:1171
+#: src/bin/e_int_menus.c:1415 src/bin/e_shelf.c:166 src/bin/e_shelf.c:1171
 #: src/modules/conf_shelves/e_int_config_shelf.c:132
 msgid "Shelf #"
 msgstr "Mensola #"
 
-#: src/bin/e_int_menus.c:1469
+#: src/bin/e_int_menus.c:1468
 msgid "Add A Shelf"
 msgstr "Aggiungi mensola"
 
-#: src/bin/e_int_menus.c:1476
+#: src/bin/e_int_menus.c:1475
 msgid "Delete A Shelf"
 msgstr "Elimina mensola"
 
@@ -2632,7 +2632,8 @@ msgstr ""
 "sistema di popup."
 
 #: src/bin/e_main.c:785
-msgid "Setting up Paths"
+#, fuzzy
+msgid "Setup Paths"
 msgstr "Impostazione percorsi"
 
 #: src/bin/e_main.c:802
@@ -2754,7 +2755,8 @@ msgstr ""
 "impostazioni DPMS."
 
 #: src/bin/e_main.c:933
-msgid "Set Up Powersave modes"
+#, fuzzy
+msgid "Setup Powersave modes"
 msgstr "Imposta modi risparmio energetico"
 
 #: src/bin/e_main.c:937
@@ -2793,41 +2795,42 @@ msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di binding (associazioni)."
 
-#: src/bin/e_main.c:973
+#: src/bin/e_main.c:972
 msgid "Setup Shelves"
 msgstr "Impostazione mensole porta-gadget"
 
-#: src/bin/e_main.c:978
+#: src/bin/e_main.c:977
 msgid "Enlightenment cannot set up its shelf system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di mensole porta-gadget."
 
-#: src/bin/e_main.c:983
+#: src/bin/e_main.c:982
 msgid "Setup Thumbnailer"
 msgstr "Generatore miniature"
 
-#: src/bin/e_main.c:988
+#: src/bin/e_main.c:987
 msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di thumbnailing (anteprime).\n"
 
-#: src/bin/e_main.c:993
-msgid "Set Up File Ordering"
+#: src/bin/e_main.c:992
+#, fuzzy
+msgid "Setup File Ordering"
 msgstr "Ordinamento dei file"
 
-#: src/bin/e_main.c:997
+#: src/bin/e_main.c:996
 msgid "Enlightenment cannot set up its order file system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di ordinamento file."
 
-#: src/bin/e_main.c:1012
+#: src/bin/e_main.c:1011
 msgid "Load Modules"
 msgstr "Carica moduli"
 
-#: src/bin/e_main.c:1030
+#: src/bin/e_main.c:1028
 #, c-format
 msgid ""
 "Enlightenment crashed early on start and has<br>been restarted. There was an "
@@ -2838,11 +2841,11 @@ msgstr ""
 "C'è stato un errore nel<br>caricamento del modulo: %s. Questo modulo è "
 "stato<br>disabilitato e non verrà caricato."
 
-#: src/bin/e_main.c:1035 src/bin/e_main.c:1052
+#: src/bin/e_main.c:1033 src/bin/e_main.c:1050
 msgid "Enlightenment crashed early on start and has been restarted"
 msgstr "Enlightenment è andato subito in crash ed è stato riavviato"
 
-#: src/bin/e_main.c:1036
+#: src/bin/e_main.c:1034
 #, c-format
 msgid ""
 "Enlightenment crashed early on start and has been restarted.<br>There was an "
@@ -2853,7 +2856,7 @@ msgstr ""
 "<br>C'è stato un errore nel caricamento del modulo: %s.<br><br>Questo modulo "
 "è stato disabilitato e non verrà caricato."
 
-#: src/bin/e_main.c:1045
+#: src/bin/e_main.c:1043
 msgid ""
 "Enlightenment crashed early on start and has<br>been restarted. All modules "
 "have been disabled<br>and will not be loaded to help remove any "
@@ -2866,7 +2869,7 @@ msgstr ""
 "finestra di configurazione<br>dei moduli dovrebbe permettervi di "
 "selezionare<br>nuovamente i vostri moduli."
 
-#: src/bin/e_main.c:1053
+#: src/bin/e_main.c:1051
 msgid ""
 "Enlightenment crashed early on start and has been restarted.<br>All modules "
 "have been disabled and will not be loaded to help<br>remove any problem "
@@ -2879,11 +2882,11 @@ msgstr ""
 "finestra di configurazione<br>dei moduli dovrebbe permettervi di "
 "selezionare<br>nuovamente i vostri moduli."
 
-#: src/bin/e_main.c:1083
+#: src/bin/e_main.c:1080
 msgid "Configure Shelves"
 msgstr "Configura mensole porta-gadget"
 
-#: src/bin/e_main.c:1094
+#: src/bin/e_main.c:1091
 msgid "Almost Done"
 msgstr "Quasi fatto"
 
@@ -3230,25 +3233,25 @@ msgstr "Opzioni di riempimento e stiramento"
 
 #: src/bin/e_utils.c:1195
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:173
-#: src/modules/everything-wallpaper/e_mod_main.c:94
+#: src/modules/everything-wallpaper/e_mod_main.c:96
 msgid "Stretch"
 msgstr "Stirata"
 
 #: src/bin/e_utils.c:1196
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:178
-#: src/modules/everything-wallpaper/e_mod_main.c:95
+#: src/modules/everything-wallpaper/e_mod_main.c:97
 msgid "Center"
 msgstr "Centrata"
 
 #: src/bin/e_utils.c:1198
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:188
-#: src/modules/everything-wallpaper/e_mod_main.c:97
+#: src/modules/everything-wallpaper/e_mod_main.c:99
 msgid "Within"
 msgstr "All'interno"
 
 #: src/bin/e_utils.c:1199
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:193
-#: src/modules/everything-wallpaper/e_mod_main.c:98
+#: src/modules/everything-wallpaper/e_mod_main.c:100
 msgid "Fill"
 msgstr "Riempimento"
 
@@ -3267,6 +3270,49 @@ msgstr "Usa file originale"
 #, c-format
 msgid "%3.0f%%"
 msgstr "%3.0f%%"
+
+#: src/bin/e_utils.c:1484
+#, fuzzy
+msgid ""
+"Configuration data needed upgrading. Your old configuration<br> has been "
+"wiped and a new set of defaults initialized. This<br>will happen regularly "
+"during development, so don't report a<br>bug. This simply means the module "
+"needs new configuration<br>data by default for usable functionality that "
+"your old<br>configuration simply lacks. This new set of defaults will "
+"fix<br>that by adding it in. You can re-configure things now to "
+"your<br>liking. Sorry for the inconvenience.<br>"
+msgstr ""
+"La configurazione del modulo %s aveva bisogno di essere aggiornata.<br>La "
+"vecchia configurazione è stata sostituita con un nuovo set di impostazioni "
+"predefinite.<br>Questo avverrà spesso durante lo sviluppo, quindi non "
+"riportate bug in proposito. Significa<br>semplicemente che il modulo ha "
+"bisogno di nuovi dati di configurazione da usare per<br>funzionalità che non "
+"erano presenti nella vecchia configurazione. Questo nuovo set "
+"di<br>impostazioni predefinite sistemerà il tutto aggiungendo le nuove "
+"funzionalità. Adesso è<br>possibile riconfigurare le cose a proprio "
+"piacimento. Ci scusiamo per il disagio.<br>"
+
+#: src/bin/e_utils.c:1497 src/bin/e_utils.c:1521
+#, fuzzy, c-format
+msgid "%s Configuration Updated"
+msgstr "Configurazione aggiornata"
+
+#: src/bin/e_utils.c:1510
+#, fuzzy
+msgid ""
+"Your module configuration is NEWER than the module version. This is "
+"very<br>strange. This should not happen unless you downgraded<br>the module "
+"or copied the configuration from a place where<br>a newer version of the "
+"module was running. This is bad and<br>as a precaution your configuration "
+"has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
+msgstr ""
+"La vostra configurazione del modulo %s è più NUOVA di Enlightenment."
+"<br>Questo è molto strano. Non dovrebbe accadere a meno che si sia passati "
+"ad una versione<br>precedente del modulo o si abbia copiato la "
+"configurazione da una macchina su cui<br>gira una versione più recente del "
+"modulo. Questo è male, quindi la vostra<br>configurazione è stata "
+"ripristinata a scopo precauzionale ai valori predefiniti. Ci scusiamo<br>per "
+"l'inconveniente.<br>"
 
 #: src/bin/e_widget_config_list.c:63
 #: src/modules/conf_applications/e_int_config_apps.c:207
@@ -3422,24 +3468,24 @@ msgstr "Hardware"
 msgid "Battery"
 msgstr "Battery"
 
-#: src/modules/battery/e_mod_main.c:1135
+#: src/modules/battery/e_mod_main.c:1141
 msgid "Your battery is low!"
 msgstr "Basso livello batteria!"
 
-#: src/modules/battery/e_mod_main.c:1137
+#: src/modules/battery/e_mod_main.c:1143
 msgid "AC power is recommended."
 msgstr "Consigliata alimentazione AC."
 
-#: src/modules/battery/e_mod_main.c:1212
+#: src/modules/battery/e_mod_main.c:1218
 msgid "N/A"
 msgstr "N/D"
 
-#: src/modules/battery/e_mod_main.c:1289 src/modules/battery/e_mod_main.c:1291
-#: src/modules/battery/e_mod_main.c:1298 src/modules/battery/e_mod_main.c:1300
+#: src/modules/battery/e_mod_main.c:1295 src/modules/battery/e_mod_main.c:1297
+#: src/modules/battery/e_mod_main.c:1304 src/modules/battery/e_mod_main.c:1306
 msgid "ERROR"
 msgstr "ERRORE"
 
-#: src/modules/battery/e_mod_main.c:1392
+#: src/modules/battery/e_mod_main.c:1398
 msgid "Battery Meter"
 msgstr "Indicatore di carica"
 
@@ -4021,9 +4067,9 @@ msgstr "Mostra sulla zona #:"
 #: src/modules/conf_desks/e_int_config_desks.c:269
 #: src/modules/conf_mouse/e_int_config_mouse.c:115
 #: src/modules/conf_mouse/e_int_config_mouse.c:121
-#: src/modules/everything/evry_config.c:403
-#: src/modules/everything/evry_config.c:554
-#: src/modules/everything/evry_config.c:561
+#: src/modules/everything/evry_config.c:385
+#: src/modules/everything/evry_config.c:524
+#: src/modules/everything/evry_config.c:531
 #: src/modules/fileman/e_mod_config.c:230
 #, c-format
 msgid "%1.0f"
@@ -4101,7 +4147,7 @@ msgid "Wrap desktops around when flipping"
 msgstr "Passa al desktop opposto quando oltrepassi gli estremi"
 
 #: src/modules/conf_desks/e_int_config_desks.c:288
-#: src/modules/everything/evry_config.c:469
+#: src/modules/everything/evry_config.c:451
 msgid "Off"
 msgstr "Disattivata"
 
@@ -4157,7 +4203,7 @@ msgstr "Impostazioni finestre di dialogo"
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:109
 #: src/modules/conf_engine/e_int_config_engine.c:94
 #: src/modules/conf_fonts/e_int_config_fonts.c:649
-#: src/modules/everything/evry_config.c:526 src/modules/ibox/e_mod_config.c:99
+#: src/modules/everything/evry_config.c:496 src/modules/ibox/e_mod_config.c:99
 #: src/modules/mixer/conf_gadget.c:187 src/modules/mixer/conf_module.c:89
 msgid "General Settings"
 msgstr "Impostazioni generali"
@@ -4832,7 +4878,7 @@ msgstr ""
 "errore di copia."
 
 #: src/modules/conf_imc/e_mod_main.c:20 src/modules/conf_intl/e_mod_main.c:20
-#: src/modules/everything-aspell/e_mod_main.c:497
+#: src/modules/everything-aspell/e_mod_main.c:496
 #: src/modules/wizard/page_010.c:142
 msgid "Language"
 msgstr "Lingua"
@@ -5075,8 +5121,8 @@ msgid "Select an Edj File"
 msgstr "Seleziona file edj"
 
 #: src/modules/conf_mime/e_mod_main.c:20
-#: src/modules/everything-files/e_mod_main.c:1306
-#: src/modules/everything-files/e_mod_main.c:1312
+#: src/modules/everything-files/e_mod_main.c:1291
+#: src/modules/everything-files/e_mod_main.c:1297
 #: src/modules/fileman/e_mod_main.c:49 src/modules/fileman/e_mod_main.c:67
 #: src/modules/fileman/e_mod_main.c:385
 msgid "Files"
@@ -5193,8 +5239,8 @@ msgid "Themes"
 msgstr "Temi"
 
 #: src/modules/conf_paths/e_int_config_paths.c:81
-#: src/modules/everything/evry_config.c:435
-#: src/modules/everything/evry_config.c:484
+#: src/modules/everything/evry_config.c:417
+#: src/modules/everything/evry_config.c:466
 msgid "Icons"
 msgstr "Icone"
 
@@ -5616,14 +5662,14 @@ msgstr "Opzioni di riempimento"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:167
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:155
-#: src/modules/everything/evry_config.c:575
+#: src/modules/everything/evry_config.c:545
 #: src/modules/gadman/e_mod_gadman.c:731
 msgid "Horizontal"
 msgstr "Orizzontale"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:172
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:157
-#: src/modules/everything/evry_config.c:568
+#: src/modules/everything/evry_config.c:538
 #: src/modules/gadman/e_mod_gadman.c:739
 msgid "Vertical"
 msgstr "Verticale"
@@ -5653,7 +5699,7 @@ msgid "Wallpaper settings..."
 msgstr "Impostazioni sfondo..."
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:183
-#: src/modules/everything-wallpaper/e_mod_main.c:96
+#: src/modules/everything-wallpaper/e_mod_main.c:98
 msgid "Tile"
 msgstr "Affiancata"
 
@@ -5662,12 +5708,12 @@ msgid "Select a Picture..."
 msgstr "Selezionare un'immmagine..."
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:627
-#: src/modules/everything-wallpaper/e_mod_main.c:329
+#: src/modules/everything-wallpaper/e_mod_main.c:343
 msgid "Picture Import Error"
 msgstr "Errore importazione immagine"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:628
-#: src/modules/everything-wallpaper/e_mod_main.c:330
+#: src/modules/everything-wallpaper/e_mod_main.c:344
 msgid ""
 "Enlightenment was unable to import the picture<br>due to conversion errors."
 msgstr ""
@@ -6135,8 +6181,8 @@ msgstr "Velocità invio"
 #: src/modules/conf_winlist/e_int_config_winlist.c:479
 #: src/modules/conf_winlist/e_int_config_winlist.c:490
 #: src/modules/conf_winlist/e_int_config_winlist.c:495
-#: src/modules/everything/evry_config.c:570
-#: src/modules/everything/evry_config.c:577
+#: src/modules/everything/evry_config.c:540
+#: src/modules/everything/evry_config.c:547
 #, c-format
 msgid "%1.2f"
 msgstr "%1.2f"
@@ -6182,7 +6228,7 @@ msgid "Maximum height"
 msgstr "Altezza massima"
 
 #: src/modules/conf_winlist/e_int_config_winlist.c:524
-#: src/modules/everything/evry_config.c:583
+#: src/modules/everything/evry_config.c:553
 msgid "Geometry"
 msgstr "Geometria"
 
@@ -6386,185 +6432,178 @@ msgstr "Molto chiara"
 msgid "Dropshadow"
 msgstr "Dropshadow"
 
-#: src/modules/everything/e_mod_main.c:140
-#: src/modules/everything/e_mod_main.c:204
+#: src/modules/everything/e_mod_main.c:145
+#: src/modules/everything/e_mod_main.c:260
 msgid "Show Everything Dialog"
 msgstr "Mostra finestra di dialogo di Everything"
 
-#: src/modules/everything/e_mod_main.c:151
+#: src/modules/everything/e_mod_main.c:156
 msgid "Everything Configuration"
 msgstr "Configurazione di Everything"
 
-#: src/modules/everything/e_mod_main.c:455
+#: src/modules/everything/e_mod_main.c:348
+#, fuzzy
+msgid "Everything Module"
+msgstr "Modulo file di Everything"
+
+#: src/modules/everything/e_mod_main.c:482
 msgid "Run Everything"
 msgstr "Pannello di Everything"
 
-#: src/modules/everything/e_mod_main.c:597
-#: src/modules/everything/e_mod_main.c:615
+#: src/modules/everything/e_mod_main.c:622
+#: src/modules/everything/e_mod_main.c:640
 #, c-format
 msgid "Show %s Plugin"
 msgstr "Mostra plugin %s"
 
-#: src/modules/everything/e_mod_main.c:617
+#: src/modules/everything/e_mod_main.c:642
 msgid "Everything"
 msgstr "Everything"
 
-#: src/modules/everything/evry_config.c:79
+#: src/modules/everything/evry_config.c:76
 msgid "Everything Settings"
 msgstr "Impostazioni di Everything"
 
-#: src/modules/everything/evry_config.c:357
+#: src/modules/everything/evry_config.c:339
 msgid "Available Plugins"
 msgstr "Plugin disponibili"
 
-#: src/modules/everything/evry_config.c:363
+#: src/modules/everything/evry_config.c:345
 msgid "Move Up"
 msgstr "Sposta su"
 
-#: src/modules/everything/evry_config.c:368
+#: src/modules/everything/evry_config.c:350
 msgid "Move Down"
 msgstr "Sposta giù"
 
-#: src/modules/everything/evry_config.c:376
+#: src/modules/everything/evry_config.c:358
 msgid "Configure"
 msgstr "Configura"
 
-#: src/modules/everything/evry_config.c:383
+#: src/modules/everything/evry_config.c:365
 msgid "Enabled"
 msgstr "Abilitato"
 
-#: src/modules/everything/evry_config.c:389
+#: src/modules/everything/evry_config.c:371
 msgid "Show in \"All\""
 msgstr "Mostra in \"Tutti\""
 
-#: src/modules/everything/evry_config.c:395
+#: src/modules/everything/evry_config.c:377
 msgid "Show in top-level"
 msgstr "Mostra al livello più alto"
 
-#: src/modules/everything/evry_config.c:401
+#: src/modules/everything/evry_config.c:383
 msgid "Minimum characters for search"
 msgstr "Caratteri minimi per la ricerca"
 
-#: src/modules/everything/evry_config.c:409
+#: src/modules/everything/evry_config.c:391
 msgid "Plugin Trigger"
 msgstr "Richiamo per il plugin"
 
-#: src/modules/everything/evry_config.c:414
+#: src/modules/everything/evry_config.c:396
 msgid "Show only when triggered"
 msgstr "Mostra solo se richiamato"
 
-#: src/modules/everything/evry_config.c:421
+#: src/modules/everything/evry_config.c:403
 msgid "Plugin View"
 msgstr "Visualizzazione plugin"
 
-#: src/modules/everything/evry_config.c:431
-#: src/modules/everything/evry_config.c:482
+#: src/modules/everything/evry_config.c:413
+#: src/modules/everything/evry_config.c:464
 msgid "Detailed"
 msgstr "Dettagliata"
 
-#: src/modules/everything/evry_config.c:457
+#: src/modules/everything/evry_config.c:439
 msgid "Hide input when inactive"
 msgstr "Nascondi input se inattivo"
 
-#: src/modules/everything/evry_config.c:461
+#: src/modules/everything/evry_config.c:443
 msgid "Hide list"
 msgstr "Nascondi elenco"
 
-#: src/modules/everything/evry_config.c:465
+#: src/modules/everything/evry_config.c:447
 msgid "Quick Navigation"
 msgstr "Navigazione veloce"
 
-#: src/modules/everything/evry_config.c:471
+#: src/modules/everything/evry_config.c:453
 msgid "Emacs style (ALT + n,p,f,b,m,i)"
 msgstr "Stile Emacs (ALT + n,p,f,b,m,i)"
 
-#: src/modules/everything/evry_config.c:473
+#: src/modules/everything/evry_config.c:455
 msgid "Vi style (ALT + h,j,k,l,n,p,m,i)"
 msgstr "Stile Vi (ALT + h,j,k,l,n,p,m,i)"
 
-#: src/modules/everything/evry_config.c:478
+#: src/modules/everything/evry_config.c:460
 msgid "Default View"
 msgstr "Vista predefinita"
 
-#: src/modules/everything/evry_config.c:487
+#: src/modules/everything/evry_config.c:469
 msgid "Animate scrolling"
 msgstr "Scorrimento animato"
 
-#: src/modules/everything/evry_config.c:494
+#: src/modules/everything/evry_config.c:476
 msgid "Up/Down select next item in icon view"
 msgstr "Su/Giù seleziona oggetto successivo in vista icone"
 
-#: src/modules/everything/evry_config.c:499
+#: src/modules/everything/evry_config.c:481
 msgid "Sorting"
 msgstr "Ordinamento"
 
-#: src/modules/everything/evry_config.c:501
+#: src/modules/everything/evry_config.c:483
 msgid "By usage"
 msgstr "In base all'uso"
 
-#: src/modules/everything/evry_config.c:504
+#: src/modules/everything/evry_config.c:486
 msgid "Most used"
 msgstr "Più usati"
 
-#: src/modules/everything/evry_config.c:507
+#: src/modules/everything/evry_config.c:489
 msgid "Last used"
 msgstr "Usati per ultimi"
 
-#: src/modules/everything/evry_config.c:513
-msgid "Commands"
-msgstr "Comandi"
-
-#: src/modules/everything/evry_config.c:514
-msgid "Terminal Command"
-msgstr "Comando terminale"
-
-#: src/modules/everything/evry_config.c:519
-msgid "Sudo GUI"
-msgstr "Interfaccia sudo"
-
-#: src/modules/everything/evry_config.c:533
+#: src/modules/everything/evry_config.c:503
 msgid "Subject Plugins"
 msgstr "Plugin soggetto"
 
-#: src/modules/everything/evry_config.c:537
+#: src/modules/everything/evry_config.c:507
 msgid "Action Plugins"
 msgstr "Plugin azione"
 
-#: src/modules/everything/evry_config.c:541
+#: src/modules/everything/evry_config.c:511
 msgid "Object Plugins"
 msgstr "Plugin oggetto"
 
-#: src/modules/everything/evry_config.c:544
+#: src/modules/everything/evry_config.c:514
 msgid "Plugins"
 msgstr "Plugin"
 
-#: src/modules/everything/evry_config.c:551
+#: src/modules/everything/evry_config.c:521
 msgid "Popup Size"
 msgstr "Dimensione popup"
 
-#: src/modules/everything/evry_config.c:552
+#: src/modules/everything/evry_config.c:522
 msgid "Popup Width"
 msgstr "Larghezza popup"
 
-#: src/modules/everything/evry_config.c:559
+#: src/modules/everything/evry_config.c:529
 msgid "Popup Height"
 msgstr "Altezza popup"
 
-#: src/modules/everything/evry_config.c:567
+#: src/modules/everything/evry_config.c:537
 msgid "Popup Align"
 msgstr "Allineamento popup"
 
-#: src/modules/everything/evry_plug_actions.c:177
-#: src/modules/everything/evry_plug_actions.c:181
-#: src/modules/everything/evry_plug_actions.c:198
+#: src/modules/everything/evry_plug_actions.c:178
+#: src/modules/everything/evry_plug_actions.c:182
+#: src/modules/everything/evry_plug_actions.c:199
 msgid "Actions"
 msgstr "Azioni"
 
-#: src/modules/everything/evry_plug_aggregator.c:111
+#: src/modules/everything/evry_plug_aggregator.c:92
 msgid "Items"
 msgstr "Elementi"
 
-#: src/modules/everything/evry_plug_aggregator.c:261
+#: src/modules/everything/evry_plug_aggregator.c:262
 msgid "No plugins loaded"
 msgstr "Nessun plugin caricato"
 
@@ -6610,182 +6649,152 @@ msgstr ""
 "visualizzazione a elenco<br>    <hilight>&lt;ctrl+3&gt;</hilight> cambia "
 "visualizzazione a miniature"
 
-#: src/modules/everything/evry_util.c:623
-msgid "Configuration Updated"
-msgstr "Configurazione aggiornata"
-
-#: src/modules/everything/evry_util.c:633
-#, c-format
-msgid ""
-"%s Configuration data needed upgrading. Your old configuration<br> has been "
-"wiped and a new set of defaults initialized. This<br>will happen regularly "
-"during development, so don't report a<br>bug. This simply means the module "
-"needs new configuration<br>data by default for usable functionality that "
-"your old<br>configuration simply lacks. This new set of defaults will "
-"fix<br>that by adding it in. You can re-configure things now to "
-"your<br>liking. Sorry for the inconvenience.<br>"
-msgstr ""
-"La configurazione del modulo %s aveva bisogno di essere aggiornata.<br>La "
-"vecchia configurazione è stata sostituita con un nuovo set di impostazioni "
-"predefinite.<br>Questo avverrà spesso durante lo sviluppo, quindi non "
-"riportate bug in proposito. Significa<br>semplicemente che il modulo ha "
-"bisogno di nuovi dati di configurazione da usare per<br>funzionalità che non "
-"erano presenti nella vecchia configurazione. Questo nuovo set "
-"di<br>impostazioni predefinite sistemerà il tutto aggiungendo le nuove "
-"funzionalità. Adesso è<br>possibile riconfigurare le cose a proprio "
-"piacimento. Ci scusiamo per il disagio.<br>"
-
-#: src/modules/everything/evry_util.c:654
-#, c-format
-msgid ""
-"Your %s Module configuration is NEWER than the module version. This is "
-"very<br>strange. This should not happen unless you downgraded<br>the module "
-"or copied the configuration from a place where<br>a newer version of the "
-"module was running. This is bad and<br>as a precaution your configuration "
-"has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
-msgstr ""
-"La vostra configurazione del modulo %s è più NUOVA di Enlightenment."
-"<br>Questo è molto strano. Non dovrebbe accadere a meno che si sia passati "
-"ad una versione<br>precedente del modulo o si abbia copiato la "
-"configurazione da una macchina su cui<br>gira una versione più recente del "
-"modulo. Questo è male, quindi la vostra<br>configurazione è stata "
-"ripristinata a scopo precauzionale ai valori predefiniti. Ci scusiamo<br>per "
-"l'inconveniente.<br>"
-
-#: src/modules/everything-apps/e_mod_main.c:949
+#: src/modules/everything-apps/e_mod_main.c:991
 msgid "Open With..."
 msgstr "Apri con..."
 
-#: src/modules/everything-apps/e_mod_main.c:962
+#: src/modules/everything-apps/e_mod_main.c:1004
 msgid "Open File..."
 msgstr "Apri file..."
 
-#: src/modules/everything-apps/e_mod_main.c:976
+#: src/modules/everything-apps/e_mod_main.c:1018
 msgid "Edit Application Entry"
 msgstr "Modifica applicazione"
 
-#: src/modules/everything-apps/e_mod_main.c:983
+#: src/modules/everything-apps/e_mod_main.c:1025
 msgid "New Application Entry"
 msgstr "Nuova applicazione"
 
-#: src/modules/everything-apps/e_mod_main.c:990
+#: src/modules/everything-apps/e_mod_main.c:1032
 msgid "Run with Sudo"
 msgstr "Esegui con Sudo"
 
-#: src/modules/everything-apps/e_mod_main.c:996
+#: src/modules/everything-apps/e_mod_main.c:1038
 #: src/modules/fileman/e_fwin.c:1500 src/modules/fileman/e_fwin.c:1820
 msgid "Open with..."
 msgstr "Apri con..."
 
-#: src/modules/everything-apps/e_mod_main.c:1056
-#: src/modules/everything-apps/e_mod_main.c:1144
-#: src/modules/everything-apps/e_mod_main.c:1163
+#: src/modules/everything-apps/e_mod_main.c:1045
+msgid "Open Terminal here"
+msgstr "Apri terminale qui"
+
+#: src/modules/everything-apps/e_mod_main.c:1111
+#: src/modules/everything-apps/e_mod_main.c:1250
+#: src/modules/everything-apps/e_mod_main.c:1270
 msgid "Everything Applications"
 msgstr "Modulo applicazioni di Everything"
 
-#: src/modules/everything-apps/e_mod_main.c:1097
+#: src/modules/everything-apps/e_mod_main.c:1146
 msgid "Show Executables"
 msgstr "Mostra eseguibili"
 
-#: src/modules/everything-aspell/e_mod_main.c:396
+#: src/modules/everything-apps/e_mod_main.c:1152
+msgid "Commands"
+msgstr "Comandi"
+
+#: src/modules/everything-apps/e_mod_main.c:1153
+msgid "Terminal Command"
+msgstr "Comando terminale"
+
+#: src/modules/everything-apps/e_mod_main.c:1158
+msgid "Sudo GUI"
+msgstr "Interfaccia sudo"
+
+#: src/modules/everything-aspell/e_mod_main.c:391
 msgid "Spell Checker"
 msgstr "Controllo ortografico"
 
-#: src/modules/everything-aspell/e_mod_main.c:458
-#: src/modules/everything-aspell/e_mod_main.c:592
+#: src/modules/everything-aspell/e_mod_main.c:457
+#: src/modules/everything-aspell/e_mod_main.c:591
 #: src/modules/everything-aspell/e_mod_main.c:610
 msgid "Everything Aspell"
 msgstr "Modulo Aspell di Everything"
 
-#: src/modules/everything-aspell/e_mod_main.c:477
+#: src/modules/everything-aspell/e_mod_main.c:476
 msgid "Spell checker"
 msgstr "Controllo ortografico"
 
-#: src/modules/everything-aspell/e_mod_main.c:480
+#: src/modules/everything-aspell/e_mod_main.c:479
 msgid "Aspell"
 msgstr "Aspell"
 
-#: src/modules/everything-aspell/e_mod_main.c:483
+#: src/modules/everything-aspell/e_mod_main.c:482
 msgid "Hunspell"
 msgstr "Hunspell"
 
-#: src/modules/everything-aspell/e_mod_main.c:490
+#: src/modules/everything-aspell/e_mod_main.c:489
 #: src/modules/fileman/e_fwin.c:1898
 msgid "Custom Command"
 msgstr "Comando personalizzato"
 
-#: src/modules/everything-calc/e_mod_main.c:236
+#: src/modules/everything-calc/e_mod_main.c:229
 msgid "Calculator"
 msgstr "Calcolatrice"
 
-#: src/modules/everything-files/e_mod_main.c:1319
-#: src/modules/everything-files/e_mod_main.c:1325
+#: src/modules/everything-files/e_mod_main.c:1304
+#: src/modules/everything-files/e_mod_main.c:1313
 msgid "Recent Files"
 msgstr "File recenti"
 
-#: src/modules/everything-files/e_mod_main.c:1339
+#: src/modules/everything-files/e_mod_main.c:1330
 msgid "Copy To ..."
 msgstr "Copia in ..."
 
-#: src/modules/everything-files/e_mod_main.c:1344
+#: src/modules/everything-files/e_mod_main.c:1335
 msgid "Move To ..."
 msgstr "Sposta in ..."
 
-#: src/modules/everything-files/e_mod_main.c:1349
+#: src/modules/everything-files/e_mod_main.c:1340
 msgid "Move to Trash"
 msgstr "Sposta nel cestino"
 
-#: src/modules/everything-files/e_mod_main.c:1353
+#: src/modules/everything-files/e_mod_main.c:1344
 msgid "Open Folder (EFM)"
 msgstr "Apri cartella (EFM)"
 
-#: src/modules/everything-files/e_mod_main.c:1357
-msgid "Open Terminal here"
-msgstr "Apri terminale qui"
-
-#: src/modules/everything-files/e_mod_main.c:1413
-#: src/modules/everything-files/e_mod_main.c:1547
-#: src/modules/everything-files/e_mod_main.c:1567
+#: src/modules/everything-files/e_mod_main.c:1409
+#: src/modules/everything-files/e_mod_main.c:1540
+#: src/modules/everything-files/e_mod_main.c:1561
 msgid "Everything Files"
 msgstr "Modulo file di Everything"
 
-#: src/modules/everything-files/e_mod_main.c:1436
+#: src/modules/everything-files/e_mod_main.c:1432
 msgid "Show home directory"
 msgstr "Mostra directory home"
 
-#: src/modules/everything-files/e_mod_main.c:1440
+#: src/modules/everything-files/e_mod_main.c:1436
 msgid "Show recent files"
 msgstr "Mostra file recenti"
 
-#: src/modules/everything-files/e_mod_main.c:1444
+#: src/modules/everything-files/e_mod_main.c:1440
 msgid "Search recent files"
 msgstr "Cerca file recenti"
 
-#: src/modules/everything-files/e_mod_main.c:1448
+#: src/modules/everything-files/e_mod_main.c:1444
 msgid "Search cached files"
 msgstr "Cerca file in cache"
 
-#: src/modules/everything-files/e_mod_main.c:1452
+#: src/modules/everything-files/e_mod_main.c:1448
 msgid "Cache visited directories"
 msgstr "Cache per directory visitate"
 
-#: src/modules/everything-files/e_mod_main.c:1456
+#: src/modules/everything-files/e_mod_main.c:1452
 msgid "Clear cache"
 msgstr "Svuota cache"
 
-#: src/modules/everything-settings/e_mod_main.c:113
+#: src/modules/everything-settings/e_mod_main.c:121
 msgid "Show Dialog"
 msgstr "Mostra finestra di dialogo"
 
-#: src/modules/everything-wallpaper/e_mod_main.c:109
+#: src/modules/everything-wallpaper/e_mod_main.c:119
 msgid "Set as Wallpaper"
 msgstr "Imposta come sfondo"
 
-#: src/modules/everything-windows/e_mod_main.c:360
+#: src/modules/everything-windows/e_mod_main.c:369
 msgid "Switch to Window"
 msgstr "Vai alla finestra"
 
-#: src/modules/everything-windows/e_mod_main.c:375
+#: src/modules/everything-windows/e_mod_main.c:384
 msgid "Toggle Fullscreen"
 msgstr "A tutto schermo"
 
@@ -7234,7 +7243,7 @@ msgstr "Cambia desktop con la rotella del mouse"
 msgid "Show desktop names"
 msgstr "Mostra nomi dei desktop"
 
-#: src/modules/pager/e_mod_config.c:135 src/modules/pager/e_mod_config.c:222
+#: src/modules/pager/e_mod_config.c:135 src/modules/pager/e_mod_config.c:217
 msgid "Show popup on desktop change"
 msgstr "Mostra popup al cambio di desktop"
 
@@ -7243,50 +7252,51 @@ msgid "Show popup for urgent windows"
 msgstr "Mostra popup con finestre urgenti"
 
 #: src/modules/pager/e_mod_config.c:184
-msgid "Keyaction popup height"
-msgstr "Altezza popup da tastiera"
+msgid "Resistance to dragging"
+msgstr "Resistenza al trascinamento"
 
-#: src/modules/pager/e_mod_config.c:186 src/modules/pager/e_mod_config.c:191
-#: src/modules/pager/e_mod_config.c:230
+#: src/modules/pager/e_mod_config.c:186 src/modules/pager/e_mod_config.c:225
+#: src/modules/pager/e_mod_config.c:244
 #, c-format
 msgid "%.0f px"
 msgstr "%.0f px"
 
-#: src/modules/pager/e_mod_config.c:189
-msgid "Resistance to dragging"
-msgstr "Resistenza al trascinamento"
-
-#: src/modules/pager/e_mod_config.c:196
+#: src/modules/pager/e_mod_config.c:191
 msgid "Select and Slide button"
 msgstr "Selezione e trasferimento"
 
-#: src/modules/pager/e_mod_config.c:198 src/modules/pager/e_mod_config.c:206
-#: src/modules/pager/e_mod_config.c:212 src/modules/pager/e_mod_config.c:324
+#: src/modules/pager/e_mod_config.c:193 src/modules/pager/e_mod_config.c:201
+#: src/modules/pager/e_mod_config.c:207 src/modules/pager/e_mod_config.c:324
 #: src/modules/pager/e_mod_config.c:329 src/modules/pager/e_mod_config.c:333
 #, c-format
 msgid "Click to set"
 msgstr "Clicca per impostare"
 
-#: src/modules/pager/e_mod_config.c:204
+#: src/modules/pager/e_mod_config.c:199
 msgid "Drag and Drop button"
 msgstr "Bottone per trascinamento e rilascio"
 
-#: src/modules/pager/e_mod_config.c:210
+#: src/modules/pager/e_mod_config.c:205
 msgid "Drag whole desktop"
 msgstr "Trascina l'intero desktop"
 
-#: src/modules/pager/e_mod_config.c:226
+#: src/modules/pager/e_mod_config.c:221
 msgid "Popup pager height"
 msgstr "Altezza del pager"
 
-#: src/modules/pager/e_mod_config.c:236
+#: src/modules/pager/e_mod_config.c:231
 msgid "Popup speed"
 msgstr "Velocità del popup"
 
-#: src/modules/pager/e_mod_config.c:240 src/modules/pager/e_mod_config.c:264
+#: src/modules/pager/e_mod_config.c:235 src/modules/pager/e_mod_config.c:264
 #, c-format
 msgid "%1.1f seconds"
 msgstr "%1.1f secondi"
+
+#: src/modules/pager/e_mod_config.c:242
+#, fuzzy
+msgid "Pager action popup height"
+msgstr "Altezza popup da tastiera"
 
 #: src/modules/pager/e_mod_config.c:252
 msgid "Show popup on urgent window"

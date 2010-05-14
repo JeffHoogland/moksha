@@ -427,4 +427,5 @@ connman-connecting-1.png \
 connman-connecting-2.png \
 connman-connecting-3.png \
 connman-connecting-4.png \
-comp-sh1.png
+comp-sh1.png \
+shelf_alt_vert_bg.png
