@@ -141,7 +141,7 @@ evry_show(E_Zone *zone, const char *params)
 	if (!(params && eina_list_count(win->selectors[0]->states) == 1))
 	  evry_hide(1);
 
-	if (win->selector && params)
+	if (win && win->selector && params)
 	  {
 	     EINA_LIST_FOREACH(win->selectors[0]->plugins, l, p)
 	       if (!strcmp(params, p->name)) break;
@@ -1418,6 +1418,7 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Event_Key *ev = event;
    Evry_State *s;
+   Evry_Selector *sel;
    const char *key = NULL, *old;
 
    if (ev->event_window != input_window)
@@ -1457,18 +1458,16 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	       {
 		  if (!(act = e_action_find(bind->action))) continue;
 
-		  if (act->func.go)
-		    act->func.go(E_OBJECT(win->popup->zone), bind->params);
+		  if (!act->func.go) continue;
+
+		  act->func.go(E_OBJECT(win->popup->zone), bind->params);
+		  return 1;
 	       }
 	  }
      }
 
-   if (!win->selector || !win->selector->state)
-     return 1;
-
-   win->request_selection = EINA_FALSE;
-   s = win->selector->state;
    old = ev->key;
+   win->request_selection = EINA_FALSE;
 
    if (!strcmp(ev->key, "KP_Enter"))
      {
@@ -1524,6 +1523,18 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	ev->key = key;
      }
 
+   if (!win || !(sel = win->selector))
+     goto end;
+
+   if (!ev->modifiers && !strcmp(key, "Tab"))
+     {
+	_evry_selectors_switch(1);
+	goto end;
+     }
+
+   if (!(s = sel->state))
+     goto end;
+
    if (!win->visible && (!strcmp(key, "Down")))
      {
 	_evry_list_win_show();
@@ -1551,14 +1562,14 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
      {
 	if (!strcmp(key, "u"))
 	  {
-	     if (!_evry_clear(win->selector))
-	       evry_browse_back(win->selector);
+	     if (!_evry_clear(sel))
+	       evry_browse_back(sel);
 	     goto end;
 	  }
 	else if (!strcmp(key, "1"))
 	  _evry_view_toggle(s, NULL);
 	else if (!strcmp(key, "Return"))
-	  _evry_plugin_action(win->selector, 0);
+	  _evry_plugin_action(sel, 0);
 	else if (!strcmp(key, "v"))
 	  {
 	     win->request_selection = EINA_TRUE;
@@ -1577,28 +1588,26 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
      goto end;
    else if (!strcmp(key, "Right"))
      {
-	if (!evry_browse_item(win->selector) &&
-	    (win->selector != win->selectors[2]))
+	if (!evry_browse_item(sel) &&
+	    (sel != win->selectors[2]))
 	  _evry_selectors_switch(1);
      }
    else if (!strcmp(key, "Left"))
      {
-	if (!evry_browse_back(win->selector))
+	if (!evry_browse_back(sel))
 	  _evry_selectors_switch(-1);
      }
    else if (!strcmp(key, "Return"))
      {
 	if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
-	  _evry_plugin_action(win->selector, 0);
-	else /*if (!_evry_browse_item(win->selector))*/
-	  _evry_plugin_action(win->selector, 1);
+	  _evry_plugin_action(sel, 0);
+	else /*if (!_evry_browse_item(sel))*/
+	  _evry_plugin_action(sel, 1);
      }
-   else if (!strcmp(key, "Tab"))
-     _evry_selectors_switch(1);
    else if (!strcmp(key, "BackSpace"))
      {
-	if (!_evry_backspace(win->selector))
-	  evry_browse_back(win->selector);
+	if (!_evry_backspace(sel))
+	  evry_browse_back(sel);
      }
    else if (_evry_view_key_press(s, ev))
      goto end;
@@ -1613,7 +1622,7 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	  {
 	     strcat(s->inp, ev->compose);
 
-	     _evry_update(win->selector, 1);
+	     _evry_update(sel, 1);
 	  }
      }
 
