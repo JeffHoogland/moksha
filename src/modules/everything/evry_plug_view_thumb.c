@@ -1326,7 +1326,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 	  }
 	goto end;
      }
-   else if (!strcmp(key, "Return"))
+   else if (!ev->modifiers && !strcmp(key, "Return"))
      {
 	if (v->mode == VIEW_MODE_THUMB)
 	  {

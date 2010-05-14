@@ -7,14 +7,13 @@
  */
 
 #define INPUTLEN 256
-#define MATCH_LAG 0.15
-#define INITIAL_MATCH_LAG 0.3
+#define MATCH_LAG 0.25
+#define INITIAL_MATCH_LAG 0.4
 
 /* #undef DBG
  * #define DBG(...) ERR(__VA_ARGS__) */
 
 typedef struct _Evry_Window Evry_Window;
-typedef struct _Evry_List_Window Evry_List_Window;
 
 struct _Evry_Window
 {
@@ -23,13 +22,8 @@ struct _Evry_Window
 
   Eina_Bool request_selection;
   Eina_Bool plugin_dedicated;
-};
 
-struct _Evry_List_Window
-{
-  E_Popup     *popup;
-  Evas_Object *o_main;
-  Eina_Bool    visible;
+  Eina_Bool visible;
 };
 
 static void _evry_matches_update(Evry_Selector *sel, int async);
@@ -59,9 +53,6 @@ static Evry_Selector *_evry_selector_for_plugin_get(Evry_Plugin *p);
 
 static Evry_Window *_evry_window_new(E_Zone *zone);
 static void _evry_window_free(Evry_Window *win);
-
-static Evry_List_Window *_evry_list_win_new(E_Zone *zone);
-static void _evry_list_win_free(Evry_List_Window *win);
 static void _evry_list_win_show(void);
 static void _evry_list_win_update(Evry_State *s);
 static void _evry_list_win_clear(int hide);
@@ -81,11 +72,11 @@ static int  _evry_cb_selection_notify(void *data, int type, void *event);
 
 /* local subsystem globals */
 static Evry_Window *win = NULL;
-static Evry_List_Window *list = NULL;
 static Ecore_X_Window input_window = 0;
 static Eina_List   *handlers = NULL;
 
 static Evry_Selector *selector = NULL;
+static Ecore_Timer *show_timer = NULL;
 
 Evry_Selector **selectors = NULL;
 
@@ -126,12 +117,10 @@ _evry_cb_item_changed(void *data, int type, void *event)
    return 1;
 }
 
-static Ecore_Timer *_show_timer = NULL;
-
 static int
 _cb_show_timer(void *data)
 {
-   _show_timer = NULL;
+   show_timer = NULL;
 
    if (evry_conf->views && selector->state)
      {
@@ -145,7 +134,7 @@ _cb_show_timer(void *data)
 	  }
 	else
 	  {
-	     s->view = view->create(view, s, list->o_main);
+	     s->view = view->create(view, s, win->o_main);
 	     _evry_view_show(s->view);
 	  }
      }
@@ -162,6 +151,9 @@ _cb_show_timer(void *data)
 int
 evry_show(E_Zone *zone, const char *params)
 {
+   E_OBJECT_CHECK_RETURN(zone, 0);
+   E_OBJECT_TYPE_CHECK_RETURN(zone, E_ZONE_TYPE, 0);
+
    if (win)
      {
 	Eina_List *l;
@@ -182,23 +174,24 @@ evry_show(E_Zone *zone, const char *params)
 	return 1;
      }
 
-   E_OBJECT_CHECK_RETURN(zone, 0);
-   E_OBJECT_TYPE_CHECK_RETURN(zone, E_ZONE_TYPE, 0);
-
    input_window = ecore_x_window_input_new(zone->container->win,
 					   zone->x, zone->y,
 					   zone->w, zone->h);
    ecore_x_window_show(input_window);
    if (!e_grabinput_get(input_window, 1, input_window))
-     goto error1;
-
+     {
+	return 0;
+     }
+   
    win = _evry_window_new(zone);
-   if (!win) goto error2;
+   if (!win) 
+     {
+	ecore_x_window_free(input_window);
+	input_window = 0;
+	return 0;
+     }
 
-   list = _evry_list_win_new(zone);
-   if (!list) goto error2;
-
-   list->visible = EINA_FALSE;
+   win->visible = EINA_FALSE;
 
    evry_history_load();
 
@@ -222,36 +215,20 @@ evry_show(E_Zone *zone, const char *params)
       (EVRY_EVENT_ITEM_CHANGED,
        _evry_cb_item_changed, NULL));
 
-   e_popup_layer_set(list->popup, 255);
    e_popup_layer_set(win->popup, 255);
    e_popup_show(win->popup);
-   e_popup_show(list->popup);
 
    _evry_selector_subjects_get(params);
    _evry_selector_update(selectors[0]);
    _evry_selector_activate(selectors[0]);
 
    if (!evry_conf->hide_input)
-     edje_object_signal_emit(list->o_main, "e,state,entry_show", "e");
+     edje_object_signal_emit(win->o_main, "e,state,entry_show", "e");
 
    if (!evry_conf->hide_list)
-     _show_timer = ecore_timer_add(0.01, _cb_show_timer, NULL);
+     show_timer = ecore_timer_add(0.01, _cb_show_timer, NULL);
 
    return 1;
-
- error2:
-   if (win)
-     _evry_window_free(win);
-   if (list)
-     _evry_list_win_free(list);
-   win = NULL;
-   list = NULL;
-
- error1:
-   ecore_x_window_free(input_window);
-   input_window = 0;
-
-   return 0;
 }
 
 void
@@ -295,12 +272,11 @@ evry_hide(int clear)
 	return;
      }
 
-   /* _evry_view_clear(selector->state); */
-   if (_show_timer)
-     ecore_timer_del(_show_timer);
-   _show_timer = NULL;
+   if (show_timer)
+     ecore_timer_del(show_timer);
+   show_timer = NULL;
 
-   list->visible = EINA_FALSE;
+   win->visible = EINA_FALSE;
    _evry_selector_free(selectors[0]);
    _evry_selector_free(selectors[1]);
    _evry_selector_free(selectors[2]);
@@ -308,9 +284,6 @@ evry_hide(int clear)
 
    selectors = NULL;
    selector = NULL;
-
-   _evry_list_win_free(list);
-   list = NULL;
 
    _evry_window_free(win);
    win = NULL;
@@ -466,7 +439,6 @@ _evry_selector_update_actions(Evry_Selector *sel)
    if (sel->update_timer)
      ecore_timer_del(sel->update_timer);
 
-   /* _evry_timer_cb_actions_get(it); */
    sel->update_timer = ecore_timer_add(0.1, _evry_timer_cb_actions_get, it);
 }
 
@@ -522,7 +494,7 @@ evry_item_ref(Evry_Item *it)
 EAPI int
 evry_list_win_show(void)
 {
-   if (list->visible) return 0;
+   if (win->visible) return 0;
 
    _evry_list_win_show();
    return 1;
@@ -628,114 +600,34 @@ evry_plugin_update(Evry_Plugin *p, int action)
 
 /* local subsystem functions */
 
-static Evry_List_Window *
-_evry_list_win_new(E_Zone *zone)
-{
-   int x, y, w, mw, mh;
-   Evry_List_Window *list_win;
-   E_Popup *popup;
-   Evas_Object *o;
-   const char *tmp;
-   int offset_x, offset_y, offset_s = 0;
-
-   if (!evry_conf->views) return NULL;
-
-   popup = e_popup_new(zone, 0, 0, 1, 1);
-   if (!popup) return NULL;
-
-   list_win = E_NEW(Evry_List_Window, 1);
-   if (!list_win)
-     {
-	e_object_del(E_OBJECT(popup));
-	return NULL;
-     }
-   list_win->popup = popup;
-
-   o = edje_object_add(popup->evas);
-   list_win->o_main = o;
-   e_theme_edje_object_set(o, "base/theme/everything",
-			   "e/modules/everything/list");
-
-   tmp = edje_object_data_get(o, "offset_x");
-   offset_x = tmp ? atoi(tmp) : 0;
-   tmp = edje_object_data_get(o, "offset_y");
-   offset_y = tmp ? atoi(tmp) : 0;
-
-   if (e_config->use_composite)
-     {
-	edje_object_signal_emit(o, "e,state,composited", "e");
-	edje_object_message_signal_process(o);
-	edje_object_calc_force(o);
-
-	tmp = edje_object_data_get(o, "shadow_offset");
-	offset_s = tmp ? atoi(tmp) : 0;
-	offset_y -= offset_s;
-     }
-
-   edje_object_size_min_calc(o, &mw, &mh);
-
-   if (mh == 0) mh = 200;
-   if (mw == 0) mw = win->popup->w / 2;
-
-   evry_conf->min_h = mh;
-   if (evry_conf->height > mh)
-     mh = evry_conf->height;
-
-   x =  win->popup->x + offset_x;
-   y = (win->popup->y + win->popup->h) + offset_y;
-
-   w = win->popup->w - offset_x*2;
-   mh += offset_s;
-   e_popup_move_resize(popup, x, y, w, mh);
-
-   o = list_win->o_main;
-   evas_object_move(o, 0, 0);
-   evas_object_resize(o, list_win->popup->w, list_win->popup->h);
-   evas_object_show(o);
-   e_popup_edje_bg_object_set(popup, o);
-
-   return list_win;
-}
-
-static void
-_evry_list_win_free(Evry_List_Window *list_win)
-{
-   e_popup_hide(list_win->popup);
-   evas_event_freeze(list_win->popup->evas);
-   evas_object_del(list_win->o_main);
-   e_object_del(E_OBJECT(list_win->popup));
-
-   E_FREE(list_win);
-}
-
 static void
 _evry_list_win_show(void)
 {
-   if (list->visible) return;
+   if (win->visible) return;
 
-   list->visible = EINA_TRUE;
+   win->visible = EINA_TRUE;
    _evry_list_win_update(selector->state);
 
-   edje_object_signal_emit(list->o_main, "e,state,list_show", "e");
-   edje_object_signal_emit(list->o_main, "e,state,entry_show", "e");
+   edje_object_signal_emit(win->o_main, "e,state,list_show", "e");
+   edje_object_signal_emit(win->o_main, "e,state,entry_show", "e");
 }
 
 static void
 _evry_list_win_clear(int hide)
 {
-   if (!list->visible) return;
+   if (!win->visible) return;
 
    if (selector->state)
      _evry_view_clear(selector->state);
 
    if (hide)
      {
-	list->visible = EINA_FALSE;
-	edje_object_signal_emit(list->o_main, "e,state,list_hide", "e");
+	win->visible = EINA_FALSE;
+	edje_object_signal_emit(win->o_main, "e,state,list_hide", "e");
 	if (evry_conf->hide_input &&
 	    (!selector->state || !selector->state->input ||
 	     strlen(selector->state->input) == 0))
-	  edje_object_signal_emit(list->o_main, "e,state,entry_hide", "e");
+	  edje_object_signal_emit(win->o_main, "e,state,entry_hide", "e");
      }
 }
 
@@ -781,6 +673,10 @@ _evry_window_new(E_Zone *zone)
    if (evry_conf->width > mw)
      mw = evry_conf->width;
    evry_conf->width = mw;
+
+   evry_conf->min_h = mh;
+   if (evry_conf->height > mh)
+     mh = evry_conf->height;
 
    mw += offset_s*2;
    mh += offset_s*2;
@@ -866,7 +762,7 @@ _evry_selector_free(Evry_Selector *sel)
    if (sel->o_main)
      evas_object_del(sel->o_main);
 
-   if (list->visible && (sel == selector))
+   if (win->visible && (sel == selector))
      _evry_view_clear(sel->state);
 
    while (sel->states)
@@ -1110,7 +1006,7 @@ static void
 _evry_list_win_update(Evry_State *s)
 {
    if (s != selector->state) return;
-   if (!list->visible) return;
+   if (!win->visible) return;
 
    /* if (s->changed) */
    _evry_view_update(s, s->plugin);
@@ -1360,9 +1256,9 @@ evry_browse_item(Evry_Selector *sel)
    _evry_selector_update(sel);
 
 
-   if (view && list->visible)
+   if (view && win->visible)
      {
-	s->view = view->create(view, s, list->o_main);
+	s->view = view->create(view, s, win->o_main);
 	if (s->view)
 	  {
 	     _evry_view_show(s->view);
@@ -1402,7 +1298,7 @@ _evry_selectors_switch(int dir)
 {
    Evry_State *s = selector->state;
 
-   if (_show_timer)
+   if (show_timer)
      _cb_show_timer(NULL);
 
    if (selector->update_timer)
@@ -1646,7 +1542,7 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	ev->key = key;
      }
 
-   if (!list->visible && (!strcmp(key, "Down")))
+   if (!win->visible && (!strcmp(key, "Down")))
      {
 	_evry_list_win_show();
      }
@@ -1779,17 +1675,15 @@ _evry_backspace(Evry_Selector *sel)
 static void
 _evry_update_text_label(Evry_State *s)
 {
-   if (!list->visible && evry_conf->hide_input)
+   if (!win->visible && evry_conf->hide_input)
      {
 	if (strlen(s->inp) > 0)
-	  edje_object_signal_emit(list->o_main, "e,state,entry_show", "e");
+	  edje_object_signal_emit(win->o_main, "e,state,entry_show", "e");
 	else
-	  edje_object_signal_emit(list->o_main, "e,state,entry_hide", "e");
+	  edje_object_signal_emit(win->o_main, "e,state,entry_hide", "e");
      }
 
    edje_object_part_text_set(win->o_main, "e.text.label", s->inp);
-   edje_object_part_text_set(list->o_main, "e.text.label", s->inp);
-
 }
 
 static void
@@ -1807,7 +1701,7 @@ _evry_update(Evry_Selector *sel, int fetch)
 	sel->update_timer =
 	  ecore_timer_add(MATCH_LAG, _evry_cb_update_timer, sel);
 
-	edje_object_signal_emit(list->o_main, "e,signal,update", "e");
+	edje_object_signal_emit(win->o_main, "e,signal,update", "e");
      }
 }
 
@@ -1845,8 +1739,8 @@ _evry_clear(Evry_Selector *sel)
 
    _evry_update(sel, 1);
 
-   if (!list->visible && evry_conf->hide_input)
-     edje_object_signal_emit(list->o_main, "e,state,entry_hide", "e");
+   if (!win->visible && evry_conf->hide_input)
+     edje_object_signal_emit(win->o_main, "e,state,entry_hide", "e");
 
    return 1;
 }
@@ -2010,13 +1904,13 @@ _evry_view_show(Evry_View *v)
 
    if (v->o_list)
      {
-	edje_object_part_swallow(list->o_main, "e.swallow.list", v->o_list);
+	edje_object_part_swallow(win->o_main, "e.swallow.list", v->o_list);
 	evas_object_show(v->o_list);
      }
 
    if (v->o_bar)
      {
-	edje_object_part_swallow(list->o_main, "e.swallow.bar", v->o_bar);
+	edje_object_part_swallow(win->o_main, "e.swallow.bar", v->o_bar);
 	evas_object_show(v->o_bar);
      }
 }
@@ -2030,13 +1924,13 @@ _evry_view_hide(Evry_View *v, int slide)
 
    if (v->o_list)
      {
-	edje_object_part_unswallow(list->o_main, v->o_list);
+	edje_object_part_unswallow(win->o_main, v->o_list);
 	evas_object_hide(v->o_list);
      }
 
    if (v->o_bar)
      {
-	edje_object_part_unswallow(list->o_main, v->o_bar);
+	edje_object_part_unswallow(win->o_main, v->o_bar);
 	evas_object_hide(v->o_bar);
      }
 }
@@ -2044,12 +1938,12 @@ _evry_view_hide(Evry_View *v, int slide)
 static void
 _evry_view_update(Evry_State *s, Evry_Plugin *p)
 {
-   if (!list->visible) return;
+   if (!win->visible) return;
 
    if (!s->view)
      {
 	Evry_View *view = evry_conf->views->data;
-	s->view = view->create(view, s, list->o_main);
+	s->view = view->create(view, s, win->o_main);
 	_evry_view_show(s->view);
      }
 
@@ -2086,7 +1980,7 @@ _evry_view_toggle(Evry_State *s, const char *trigger)
 	  {
 	     if (view->trigger && !strncmp(trigger, view->trigger, 1) &&
 		 (!s->view || (view->id != s->view->id)) &&
-		 (v = view->create(view, s, list->o_main)))
+		 (v = view->create(view, s, win->o_main)))
 	       {
 		  triggered = EINA_TRUE;
 		  goto found;
@@ -2100,7 +1994,7 @@ _evry_view_toggle(Evry_State *s, const char *trigger)
 	else
 	  {
 	     view = evry_conf->views->data;
-	     v = view->create(view, s, list->o_main);
+	     v = view->create(view, s, win->o_main);
 	     goto found;
 	  }
 
@@ -2113,7 +2007,7 @@ _evry_view_toggle(Evry_State *s, const char *trigger)
 	  {
 	     if ((!view->trigger) &&
 		 ((!s->view || (view->id != s->view->id)) &&
-		  (v = view->create(view, s, list->o_main))))
+		  (v = view->create(view, s, win->o_main))))
 	       goto found;
 	  }
      }
