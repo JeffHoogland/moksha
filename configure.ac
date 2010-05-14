@@ -240,20 +240,20 @@ AC_ARG_ENABLE([device-hal],
    AS_HELP_STRING([--enable-device-hal],[enable hal device backend @<:@default=enabled@:>@]),
    [e_cv_want_device_hal=$enableval]
    AC_CACHE_VAL([e_cv_want_device_hal], [e_cv_want_device_hal=yes]))
-AS_IF(
-   [test "x$e_cv_want_device_hal" != "xno"],
-     [PKG_CHECK_EXISTS([ehal], e_cv_want_device_hal=yes,e_cv_want_device_hal=no)],
-   [e_cv_want_device_hal=no]
-)
+if test "x$e_cv_want_device_hal" != "xno";then
+  PKG_CHECK_EXISTS([ehal], e_cv_want_device_hal=yes,e_cv_want_device_hal=no)
+else
+  e_cv_want_device_hal=no
+fi
 AC_ARG_ENABLE([device-udev],
    AS_HELP_STRING([--enable-device-udev],[enable udev support @<:@default=disabled@:>@]),
    [e_cv_want_device_udev=$enableval],
    AC_CACHE_VAL([e_cv_want_device_udev], [e_cv_want_device_udev=no]))
-AS_IF(
-   [test "x$e_cv_want_device_udev" = "xyes"],
-     [PKG_CHECK_EXISTS([eeze_udev], e_cv_want_device_udev=yes,e_cv_want_device_udev=no)],
-   [e_cv_want_device_udev=no]
-)
+if test "x$e_cv_want_device_udev" = "xyes";then
+  PKG_CHECK_EXISTS([eeze_udev], e_cv_want_device_udev=yes,e_cv_want_device_udev=no)
+else
+  e_cv_want_device_udev=no
+fi
 AS_IF(
    [test "x$e_cv_want_device_hal" = "xyes" && test "x$e_cv_want_device_udev" != "xyes"],
       [device_backend="ehal"],
