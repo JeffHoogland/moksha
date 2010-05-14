@@ -670,14 +670,14 @@ _evry_window_new(E_Zone *zone)
 
    edje_object_size_min_calc(o, &mw, &mh);
 
+   evry_conf->min_w = mw;
    if (evry_conf->width > mw)
      mw = evry_conf->width;
-   evry_conf->width = mw;
 
    evry_conf->min_h = mh;
    if (evry_conf->height > mh)
      mh = evry_conf->height;
-
+     
    mw += offset_s*2;
    mh += offset_s*2;
    x = (zone->w * evry_conf->rel_x) - (mw / 2);

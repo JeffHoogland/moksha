@@ -362,8 +362,8 @@ _config_init()
    IFMODCFG(0x0001);
    evry_conf->rel_x = 0.5;
    evry_conf->rel_y = 0.32;
-   evry_conf->width = 445;
-   evry_conf->height = 300;
+   evry_conf->width = 435;
+   evry_conf->height = 415;
    evry_conf->scroll_animate = 1;
    evry_conf->scroll_speed = 10.0;
    evry_conf->hide_input = 0;
@@ -375,7 +375,13 @@ _config_init()
    evry_conf->history_sort_mode = 0;
    evry_conf->first_run = EINA_TRUE;
    IFMODCFGEND;
-
+   
+   IFMODCFG(0x0002);
+   evry_conf->width = 435;
+   evry_conf->height = 415;
+   evry_conf->rel_y = 0.40;
+   IFMODCFGEND;
+   
    evry_conf->version = MOD_CONFIG_FILE_VERSION;
 }
 

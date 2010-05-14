@@ -32806,14 +32806,13 @@ collections {
 	    description {
 	       state: "default" 0.0;
 	       visible: 0;
-	       min: 386 118;
+	       min: 286 118;
 	       rel2.relative: 1.0 0.0;
 	       rel2.offset: -1 118;
 	    }
 	    description {
 	       state: "composite" 0.0;
 	       visible: 0;
-	       min: 486 218;
 	       rel2.relative: 1.0 0.0;
 	       rel2.offset: -1 218;
 	    }
@@ -33035,7 +33034,7 @@ collections {
             description {
                state: "default" 0.0;
                visible: 0;
-               min: 400 255;
+               min: 300 155;
                rel1 {
                   to_y: "frame";
                   offset: 10 -3;
