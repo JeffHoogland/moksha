@@ -32800,231 +32800,6 @@ collections {
       data.item: "shaped" "1";
       data.item: "shadow_offset" "50";
       parts {
-	 part {
-	    name: "win";
-	    type: RECT;
-	    description {
-	       state: "default" 0.0;
-	       visible: 0;
-	       min: 286 118;
-	       rel2.relative: 1.0 0.0;
-	       rel2.offset: -1 118;
-	    }
-	    description {
-	       state: "composite" 0.0;
-	       visible: 0;
-	       rel2.relative: 1.0 0.0;
-	       rel2.offset: -1 218;
-	    }
-	 }
-	 part {
-	    name: "frame";
-	    type: RECT;
-	    description {
-	       state: "default" 0.0;
-	       visible: 0;
-	       rel1.to: "win";
-	       rel2.to: "win";
-	    }
-	    description {
-	       state: "composite" 0.0;
-	       inherit: "default" 0.0;
-	       rel1.offset: 50 50;
-	       rel2.offset: -50 -51;
-	    }
-	 }
-	 part {
-	    name: "shadow";
-	    description {
-	       state: "default" 0.0;
-	       visible: 0;
-	       image {
-		  normal: "everything_drop.png";
-		  middle: 0;
-		  border: 50 50 50 50;
-	       }
-	       rel1.to: "win";
-	       rel2.to: "win";
-
-	       rel1.offset: 4 4;
-	       rel2.offset: -5 -5;
-	       fill.smooth: 1;
-	       color: 255 255 255 255;
-	    }
-	    description {
-	       state: "composite" 0.0;
-	       inherit: "default" 0.0;
-	       visible: 1;
-	    }
-	 }
-	 part {
-	    name: "bg";
-	    description {
-	       state: "default" 0.0;
-               max: 999 118;
-               rel1.to: "frame";
-               rel2.to: "frame";
-               image {
-                  normal: "bt_base2.png";
-                  border: 7 7 5 5;
-               }
-            }
-         }
-         part {
-            name: "border_bg";
-            mouse_events: 0;
-            description {
-               state: "default" 0.0;
-               color: 255 255 255 66;
-               rel1.to: "bg";
-               rel1.offset: 2 4;
-               rel2.to: "bg";
-               rel2.offset: -3 -3;
-               image {
-                  normal: "everything_item_bg.png";
-                  border: 5 5 5 5;
-               }
-            }
-         }
-         part {
-            name: "selector_frame";
-            type: RECT;
-            description {
-               state: "default" 0.0;
-               color: 255 255 255 255;
-               rel1 {
-                  offset: 8 5;
-                  to: "bg";
-               }
-               rel2 {
-                  offset: -9 -6;
-                  to: "bg";
-               }
-            }
-         }
-         part {
-            name: "e.swallow.subject_selector";
-            type: SWALLOW;
-            clip_to: "selector_frame";
-            description {
-               state: "default" 0.0;
-               rel1 {
-                  relative: 0.0 0.0;
-                  offset: 0 2;
-                  to: "selector_frame";
-               }
-               rel2 {
-                  relative: 0.5 1.0;
-                  offset: -1 -2;
-                  to_y: "selector_frame";
-               }
-            }
-            description {
-               state: "wide" 0;
-               inherit: "default" 0.0;
-               visible: 0;
-               rel1 {
-                  relative: -0.5 0.0;
-                  offset: 0 2;
-               }
-               rel2 {
-                  relative: 0.0 1.0;
-                  offset: 0 -2;
-               }
-            }
-         }
-         part {
-            name: "e.swallow.action_selector";
-            type: SWALLOW;
-            clip_to: "selector_frame";
-            description {
-               state: "default" 0.0;
-               rel1 {
-                  relative: 0.5 0.0;
-                  offset: 0 2;
-                  to: "selector_frame";
-               }
-               rel2 {
-                  relative: 1.0 1.0;
-                  offset: -1 -2;
-                  to: "selector_frame";
-               }
-            }
-            description {
-               state: "wide" 0;
-               inherit: "default" 0.0;
-               rel1 {
-                  relative: 0.0 0.0;
-                  offset: 0 2;
-               }
-               rel2 {
-                  relative: 0.5 1.0;
-                  offset: -1 -2;
-               }
-            }
-         }
-         part {
-            name: "e.swallow.object_selector";
-            type: SWALLOW;
-            clip_to: "selector_frame";
-            description {
-               state: "default" 0.0;
-               visible: 0;
-               rel1 {
-                  relative: 1.0 0.0;
-                  offset: 0 2;
-                  to: "selector_frame";
-               }
-               rel2 {
-                  relative: 1.5 1.0;
-                  offset: -1 -2;
-                  to: "selector_frame";
-               }
-            }
-            description {
-               state: "wide" 0;
-               inherit: "default" 0.0;
-               visible: 1;
-               rel1 {
-                  relative: 0.5 0.0;
-                  offset: 0 2;
-               }
-               rel2 {
-                  relative: 1.0 1.0;
-                  offset: -1 -2;
-               }
-            }
-         }
-         part {
-            name: "over1";
-            mouse_events: 0;
-            description {
-               state: "default" 0.0;
-               rel1.to: "bg";
-               rel2.to: "bg";
-               rel2.relative: 1.0 0.5;
-               image {
-                  normal: "bt_hilight.png";
-                  border: 7 7 7 0;
-               }
-               color: 255 255 255 220;
-            }
-         }
-         part {
-            name: "over2";
-            mouse_events: 0;
-            description {
-               state: "default" 0.0;
-               rel1.to: "bg";
-               rel2.to: "bg";
-               rel2.offset: -1 40;
-               image {
-                  normal: "bt_shine.png";
-                  border: 7 7 7 0;
-               }
-            }
-         }
-
 
          /*************** list ***************/
          
@@ -33492,7 +33267,231 @@ collections {
                color: 255 255 255 255;
             }
          }
-      }
+	 part {
+	    name: "win";
+	    type: RECT;
+	    description {
+	       state: "default" 0.0;
+	       visible: 0;
+	       min: 286 118;
+	       rel2.relative: 1.0 0.0;
+	       rel2.offset: -1 118;
+	    }
+	    description {
+	       state: "composite" 0.0;
+	       visible: 0;
+	       rel2.relative: 1.0 0.0;
+	       rel2.offset: -1 218;
+	    }
+	 }
+	 part {
+	    name: "frame";
+	    type: RECT;
+	    description {
+	       state: "default" 0.0;
+	       visible: 0;
+	       rel1.to: "win";
+	       rel2.to: "win";
+	    }
+	    description {
+	       state: "composite" 0.0;
+	       inherit: "default" 0.0;
+	       rel1.offset: 50 50;
+	       rel2.offset: -50 -51;
+	    }
+	 }
+	 part {
+	    name: "shadow";
+	    description {
+	       state: "default" 0.0;
+	       visible: 0;
+	       image {
+		  normal: "everything_drop.png";
+		  middle: 0;
+		  border: 50 50 50 50;
+	       }
+	       rel1.to: "win";
+	       rel2.to: "win";
+
+	       rel1.offset: 4 4;
+	       rel2.offset: -5 -5;
+	       fill.smooth: 1;
+	       color: 255 255 255 255;
+	    }
+	    description {
+	       state: "composite" 0.0;
+	       inherit: "default" 0.0;
+	       visible: 1;
+	    }
+	 }
+	 part {
+	    name: "bg";
+	    description {
+	       state: "default" 0.0;
+               max: 999 118;
+               rel1.to: "frame";
+               rel2.to: "frame";
+               image {
+                  normal: "bt_base2.png";
+                  border: 7 7 5 5;
+               }
+            }
+         }
+         part {
+            name: "border_bg";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               color: 255 255 255 66;
+               rel1.to: "bg";
+               rel1.offset: 2 4;
+               rel2.to: "bg";
+               rel2.offset: -3 -3;
+               image {
+                  normal: "everything_item_bg.png";
+                  border: 5 5 5 5;
+               }
+            }
+         }
+         part {
+            name: "selector_frame";
+            type: RECT;
+            description {
+               state: "default" 0.0;
+               color: 255 255 255 255;
+               rel1 {
+                  offset: 8 5;
+                  to: "bg";
+               }
+               rel2 {
+                  offset: -9 -6;
+                  to: "bg";
+               }
+            }
+         }
+         part {
+            name: "e.swallow.subject_selector";
+            type: SWALLOW;
+            clip_to: "selector_frame";
+            description {
+               state: "default" 0.0;
+               rel1 {
+                  relative: 0.0 0.0;
+                  offset: 0 2;
+                  to: "selector_frame";
+               }
+               rel2 {
+                  relative: 0.5 1.0;
+                  offset: -1 -2;
+                  to_y: "selector_frame";
+               }
+            }
+            description {
+               state: "wide" 0;
+               inherit: "default" 0.0;
+               visible: 0;
+               rel1 {
+                  relative: -0.5 0.0;
+                  offset: 0 2;
+               }
+               rel2 {
+                  relative: 0.0 1.0;
+                  offset: 0 -2;
+               }
+            }
+         }
+         part {
+            name: "e.swallow.action_selector";
+            type: SWALLOW;
+            clip_to: "selector_frame";
+            description {
+               state: "default" 0.0;
+               rel1 {
+                  relative: 0.5 0.0;
+                  offset: 0 2;
+                  to: "selector_frame";
+               }
+               rel2 {
+                  relative: 1.0 1.0;
+                  offset: -1 -2;
+                  to: "selector_frame";
+               }
+            }
+            description {
+               state: "wide" 0;
+               inherit: "default" 0.0;
+               rel1 {
+                  relative: 0.0 0.0;
+                  offset: 0 2;
+               }
+               rel2 {
+                  relative: 0.5 1.0;
+                  offset: -1 -2;
+               }
+            }
+         }
+         part {
+            name: "e.swallow.object_selector";
+            type: SWALLOW;
+            clip_to: "selector_frame";
+            description {
+               state: "default" 0.0;
+               visible: 0;
+               rel1 {
+                  relative: 1.0 0.0;
+                  offset: 0 2;
+                  to: "selector_frame";
+               }
+               rel2 {
+                  relative: 1.5 1.0;
+                  offset: -1 -2;
+                  to: "selector_frame";
+               }
+            }
+            description {
+               state: "wide" 0;
+               inherit: "default" 0.0;
+               visible: 1;
+               rel1 {
+                  relative: 0.5 0.0;
+                  offset: 0 2;
+               }
+               rel2 {
+                  relative: 1.0 1.0;
+                  offset: -1 -2;
+               }
+            }
+         }
+         part {
+            name: "over1";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               rel1.to: "bg";
+               rel2.to: "bg";
+               rel2.relative: 1.0 0.5;
+               image {
+                  normal: "bt_hilight.png";
+                  border: 7 7 7 0;
+               }
+               color: 255 255 255 220;
+            }
+         }
+         part {
+            name: "over2";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               rel1.to: "bg";
+               rel2.to: "bg";
+               rel2.offset: -1 40;
+               image {
+                  normal: "bt_shine.png";
+                  border: 7 7 7 0;
+               }
+            }
+         }
+      }	
       programs {
          program {
             name: "object_selector_hide";
