@@ -60,8 +60,8 @@ e_mod_kbd_init(void)
    _kbd_hook = e_border_hook_add(E_BORDER_HOOK_EVAL_PRE_POST_FETCH, 
                                  _e_mod_kbd_cb_border_pre_post_fetch, NULL);
 
-   /* initialize the dbus subsystem */
-   e_mod_kbd_dbus_init();
+   /* initialize the device subsystem */
+   e_mod_kbd_device_init();
 
    return 1;
 }
@@ -71,8 +71,8 @@ e_mod_kbd_shutdown(void)
 {
    Ecore_Event_Handler *hdl;
 
-   /* shutdown the dbus subsystem */
-   e_mod_kbd_dbus_shutdown();
+   /* shutdown the device subsystem */
+   e_mod_kbd_device_shutdown();
 
    /* destroy the hook */
    e_border_hook_del(_kbd_hook);

@@ -234,6 +234,36 @@ if test "[${e_cv_enable_files}]" = yes; then
 fi
 AC_MSG_RESULT([$e_cv_enable_files])
 
+device_backend="ehal"
+AC_MSG_CHECKING([which device backend to use])
+AC_ARG_ENABLE([device-hal],
+   AS_HELP_STRING([--enable-device-hal],[enable hal device backend @<:@default=enabled@:>@]),
+   [e_cv_want_device_hal=$enableval]
+   AC_CACHE_VAL([e_cv_want_device_hal], [e_cv_want_device_hal=yes]))
+AS_IF(
+   [test "x$e_cv_want_device_hal" != "xno"],
+     [PKG_CHECK_EXISTS([ehal], e_cv_want_device_hal=yes,e_cv_want_device_hal=no)],
+   [e_cv_want_device_hal=no]
+)
+AC_ARG_ENABLE([device-udev],
+   AS_HELP_STRING([--enable-device-udev],[enable udev support @<:@default=disabled@:>@]),
+   [e_cv_want_device_udev=$enableval],
+   AC_CACHE_VAL([e_cv_want_device_udev], [e_cv_want_device_udev=no]))
+AS_IF(
+   [test "x$e_cv_want_device_udev" = "xyes"],
+     [PKG_CHECK_EXISTS([eeze_udev], e_cv_want_device_udev=yes,e_cv_want_device_udev=no)],
+   [e_cv_want_device_udev=no]
+)
+AS_IF(
+   [test "x$e_cv_want_device_hal" = "xyes" && test "x$e_cv_want_device_udev" != "xyes"],
+      [device_backend="ehal"],
+   [test "x$e_cv_want_device_udev" = "xyes"],
+      [device_backend="eeze_udev"]
+      AC_DEFINE_UNQUOTED([HAVE_EEZE_UDEV],[1],[enable udev support]),
+   AC_MSG_ERROR(No usable device backend (eeze_udev/ehal) found!)
+)
+AC_MSG_RESULT($device_backend)
+
 # doxygen program for documentation building
 
 EFL_CHECK_DOXYGEN([build_doc="yes"], [build_doc="no"])
@@ -324,8 +354,9 @@ PKG_CHECK_MODULES(E, [
   dbus-1
   edbus
   ehal
+  $device_backend
 ])
-requirements_e="evas ecore ecore-x ecore-evas ecore-con ecore-ipc ecore-file eet edje efreet efreet-mime eina-0 dbus-1 edbus ehal"
+requirements_e="evas ecore ecore-x ecore-evas ecore-con ecore-ipc ecore-file eet edje efreet efreet-mime eina-0 dbus-1 edbus ehal $device_backend"
 
 AC_E_CHECK_PKG(ECORE_IMF, [ecore-imf ecore-imf-evas], [], [:])
 
@@ -747,6 +778,10 @@ config/illume-home/Makefile
 po/Makefile.in
 ])
 
+if test "$device_backend" = "eeze_udev";then
+  device_backend+=" (EXPERIMENTAL!)"
+fi
+
 # report
 txt_strip() {
         echo "[$]@" | sed -e 's/^[[ \t]]*\([[^ \t]]*\)[[ \t]]*$/\1/g'
@@ -760,6 +795,11 @@ Summary:
  * CFLAGS..........: $(txt_strip $CFLAGS)
  * LDFLAGS.........: $(txt_strip $LDFLAGS)
 SUMMARY_EOF
+echo
+cat << DEVICE_EOF
+Preferred Backends:
+ * device..........: $device_backend
+DEVICE_EOF
 echo
 
 UNUSED_MODS=""

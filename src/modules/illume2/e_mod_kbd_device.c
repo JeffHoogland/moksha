@@ -2,93 +2,108 @@
 #include "e_mod_kbd_device.h"
 
 /* local function prototypes */
-static void _e_mod_kbd_dbus_ignore_load(void);
-static void _e_mod_kbd_dbus_ignore_load_file(const char *file);
-static void _e_mod_kbd_dbus_cb_input_kbd(void *data __UNUSED__, void *reply, DBusError *err);
-static void _e_mod_kbd_dbus_cb_input_kbd_is(void *data, void *reply, DBusError *err);
-static void _e_mod_kbd_dbus_kbd_add(const char *udi);
-static void _e_mod_kbd_dbus_kbd_del(const char *udi);
-static void _e_mod_kbd_dbus_kbd_eval(void);
-static void _e_mod_kbd_dbus_dev_add(void *data __UNUSED__, DBusMessage *msg);
-static void _e_mod_kbd_dbus_dev_del(void *data __UNUSED__, DBusMessage *msg);
-static void _e_mod_kbd_dbus_dev_chg(void *data __UNUSED__, DBusMessage *msg);
+static void _e_mod_kbd_device_ignore_load(void);
+static void _e_mod_kbd_device_ignore_load_file(const char *file);
+static void _e_mod_kbd_device_kbd_add(const char *udi);
+static void _e_mod_kbd_device_kbd_del(const char *udi);
+static void _e_mod_kbd_device_kbd_eval(void);
+#ifdef HAVE_EEZE_UDEV
+static void _e_mod_kbd_device_udev_event(const char *device, const char *event, void *data __UNUSED__, Eeze_Udev_Watch *watch __UNUSED__);
+#else
+static void _e_mod_kbd_device_cb_input_kbd(void *data __UNUSED__, void *reply, DBusError *err);
+static void _e_mod_kbd_device_cb_input_kbd_is(void *data, void *reply, DBusError *err);
+static void _e_mod_kbd_device_dbus_add(void *data __UNUSED__, DBusMessage *msg);
+static void _e_mod_kbd_device_dbus_del(void *data __UNUSED__, DBusMessage *msg);
+static void _e_mod_kbd_device_dbus_chg(void *data __UNUSED__, DBusMessage *msg);
+#endif
 
 /* local variables */
 static int have_real_kbd = 0;
+#ifdef HAVE_EEZE_UDEV
+static Eeze_Udev_Watch *watch;
+#else
 static E_DBus_Connection *_dbus_conn = NULL;
 static E_DBus_Signal_Handler *_dev_add = NULL;
 static E_DBus_Signal_Handler *_dev_del = NULL;
 static E_DBus_Signal_Handler *_dev_chg = NULL;
-static Eina_List *_dbus_kbds = NULL, *_ignore_kbds = NULL;
+#endif
+static Eina_List *_device_kbds = NULL, *_ignore_kbds = NULL;
 
 void 
-e_mod_kbd_dbus_init(void) 
+e_mod_kbd_device_init(void) 
 {
    /* load the 'ignored' keyboard file */
-   _e_mod_kbd_dbus_ignore_load();
-
+   _e_mod_kbd_device_ignore_load();
+#ifdef HAVE_EEZE_UDEV
+   watch = eeze_udev_watch_add(EEZE_UDEV_TYPE_KEYBOARD, 
+			    _e_mod_kbd_device_udev_event, NULL);
+#else
    /* try to attach to the system dbus */
    if (!(_dbus_conn = e_dbus_bus_get(DBUS_BUS_SYSTEM))) return;
 
    /* ask HAL for any input keyboards */
    e_hal_manager_find_device_by_capability(_dbus_conn, "input.keyboard", 
-                                           _e_mod_kbd_dbus_cb_input_kbd, NULL);
+                                           _e_mod_kbd_device_cb_input_kbd, NULL);
 
    /* setup dbus signal handlers for when a device gets added/removed/changed */
    _dev_add = 
      e_dbus_signal_handler_add(_dbus_conn, "org.freedesktop.Hal", 
                                "/org/freedesktop/Hal/Manager", 
                                "org.freedesktop.Hal.Manager", 
-                               "DeviceAdded", _e_mod_kbd_dbus_dev_add, NULL);
+                               "DeviceAdded", _e_mod_kbd_device_dbus_add, NULL);
    _dev_del = 
      e_dbus_signal_handler_add(_dbus_conn, "org.freedesktop.Hal", 
                                "/org/freedesktop/Hal/Manager", 
                                "org.freedesktop.Hal.Manager", 
-                               "DeviceRemoved", _e_mod_kbd_dbus_dev_del, NULL);
+                               "DeviceRemoved", _e_mod_kbd_device_dbus_del, NULL);
    _dev_chg = 
      e_dbus_signal_handler_add(_dbus_conn, "org.freedesktop.Hal", 
                                "/org/freedesktop/Hal/Manager", 
                                "org.freedesktop.Hal.Manager", 
-                               "NewCapability", _e_mod_kbd_dbus_dev_chg, NULL);
+                               "NewCapability", _e_mod_kbd_device_dbus_chg, NULL);
+#endif
 }
 
 void 
-e_mod_kbd_dbus_shutdown(void) 
+e_mod_kbd_device_shutdown(void) 
 {
    char *str;
 
+#ifdef HAVE_EEZE_UDEV
+   if (watch) eeze_udev_watch_del(watch);
+#else
    /* remove the dbus signal handlers if we can */
    if (_dev_add) e_dbus_signal_handler_del(_dbus_conn, _dev_add);
    if (_dev_del) e_dbus_signal_handler_del(_dbus_conn, _dev_del);
    if (_dev_chg) e_dbus_signal_handler_del(_dbus_conn, _dev_chg);
-
+#endif
    /* free the list of ignored keyboards */
    EINA_LIST_FREE(_ignore_kbds, str)
      eina_stringshare_del(str);
 
    /* free the list of keyboards */
-   EINA_LIST_FREE(_dbus_kbds, str)
+   EINA_LIST_FREE(_device_kbds, str)
      eina_stringshare_del(str);
 }
 
 /* local functions */
 static void 
-_e_mod_kbd_dbus_ignore_load(void) 
+_e_mod_kbd_device_ignore_load(void) 
 {
    char buff[PATH_MAX];
 
    /* load the 'ignore' file from the user's home dir */
    e_user_dir_concat_static(buff, "keyboards/ignore_built_in_keyboards");
-   _e_mod_kbd_dbus_ignore_load_file(buff);
+   _e_mod_kbd_device_ignore_load_file(buff);
 
    /* load the 'ignore' file from the system/module dir */
    snprintf(buff, sizeof(buff), 
             "%s/ignore_built_in_keyboards", _e_illume_mod_dir);
-   _e_mod_kbd_dbus_ignore_load_file(buff);
+   _e_mod_kbd_device_ignore_load_file(buff);
 }
 
 static void 
-_e_mod_kbd_dbus_ignore_load_file(const char *file) 
+_e_mod_kbd_device_ignore_load_file(const char *file) 
 {
    char buff[PATH_MAX];
    FILE *f;
@@ -113,16 +128,30 @@ _e_mod_kbd_dbus_ignore_load_file(const char *file)
 
         /* append this kbd to the ignore list */
 	if (*p) 
-          {
-             _ignore_kbds = 
-               eina_list_append(_ignore_kbds, eina_stringshare_add(p));
-          }
+	  {
+	     _ignore_kbds = 
+	       eina_list_append(_ignore_kbds, eina_stringshare_add(p));
+	  }
      }
    fclose(f);
 }
 
+#ifdef HAVE_EEZE_UDEV
 static void 
-_e_mod_kbd_dbus_cb_input_kbd(void *data __UNUSED__, void *reply, DBusError *err) 
+_e_mod_kbd_device_udev_event(const char *device, const char *event, void *data __UNUSED__, Eeze_Udev_Watch *watch __UNUSED__)
+{
+   if ((!device) || (!event)) return;
+
+   if ((!strcmp(event, "add")) || (!strcmp(event, "online")))
+     _e_mod_kbd_device_kbd_add(device);
+   else if ((!strcmp(event, "remove")) || (!strcmp(event, "offline")))
+     _e_mod_kbd_device_kbd_del(device);
+
+   _e_mod_kbd_device_kbd_eval();
+}
+#else
+static void 
+_e_mod_kbd_device_cb_input_kbd(void *data __UNUSED__, void *reply, DBusError *err) 
 {
    E_Hal_Manager_Find_Device_By_Capability_Return *ret = reply;
    Eina_List *l;
@@ -140,13 +169,13 @@ _e_mod_kbd_dbus_cb_input_kbd(void *data __UNUSED__, void *reply, DBusError *err)
    /* for each returned keyboard, add it and evaluate it */
    EINA_LIST_FOREACH(ret->strings, l, dev) 
      {
-        _e_mod_kbd_dbus_kbd_add(dev);
-        _e_mod_kbd_dbus_kbd_eval();
+        _e_mod_kbd_device_kbd_add(dev);
+        _e_mod_kbd_device_kbd_eval();
      }
 }
 
 static void 
-_e_mod_kbd_dbus_cb_input_kbd_is(void *data, void *reply, DBusError *err) 
+_e_mod_kbd_device_cb_input_kbd_is(void *data, void *reply, DBusError *err) 
 {
    E_Hal_Device_Query_Capability_Return *ret = reply;
    char *udi = data;
@@ -163,69 +192,14 @@ _e_mod_kbd_dbus_cb_input_kbd_is(void *data, void *reply, DBusError *err)
      {
         if (udi) 
           {
-             _e_mod_kbd_dbus_kbd_add(udi);
-             _e_mod_kbd_dbus_kbd_eval();
+             _e_mod_kbd_device_kbd_add(udi);
+             _e_mod_kbd_device_kbd_eval();
           }
      }
 }
 
 static void 
-_e_mod_kbd_dbus_kbd_add(const char *udi) 
-{
-   const char *str;
-   Eina_List *l;
-
-   if (!udi) return;
-   EINA_LIST_FOREACH(_dbus_kbds, l, str)
-     if (!strcmp(str, udi)) return;
-   _dbus_kbds = eina_list_append(_dbus_kbds, eina_stringshare_add(udi));
-}
-
-static void 
-_e_mod_kbd_dbus_kbd_del(const char *udi) 
-{
-   const char *str;
-   Eina_List *l;
-
-   if (!udi) return;
-   EINA_LIST_FOREACH(_dbus_kbds, l, str)
-     if (!strcmp(str, udi)) 
-       {
-          eina_stringshare_del(str);
-          _dbus_kbds = eina_list_remove_list(_dbus_kbds, l);
-          return;
-       }
-}
-
-static void 
-_e_mod_kbd_dbus_kbd_eval(void) 
-{
-   Eina_List *l, *ll;
-   const char *g, *gg;
-   int have_real = 0;
-
-   have_real = eina_list_count(_dbus_kbds);
-   EINA_LIST_FOREACH(_dbus_kbds, l, g)
-     EINA_LIST_FOREACH(_ignore_kbds, ll, gg)
-       if (e_util_glob_match(g, gg)) 
-         {
-            have_real--;
-            break;
-         }
-
-   if (have_real != have_real_kbd) 
-     {
-        have_real_kbd = have_real;
-#if 0
-//        if (have_real_kbd) e_kbd_all_disable();
-        else
-#endif
-//          e_kbd_all_enable();
-     }
-}
-
-static void 
-_e_mod_kbd_dbus_dev_add(void *data __UNUSED__, DBusMessage *msg) 
+_e_mod_kbd_device_dbus_add(void *data __UNUSED__, DBusMessage *msg) 
 {
    DBusError err;
    char *udi;
@@ -233,11 +207,11 @@ _e_mod_kbd_dbus_dev_add(void *data __UNUSED__, DBusMessage *msg)
    dbus_error_init(&err);
    dbus_message_get_args(msg, &err, DBUS_TYPE_STRING, &udi, DBUS_TYPE_INVALID);
    e_hal_device_query_capability(_dbus_conn, udi, "input.keyboard", 
-                                 _e_mod_kbd_dbus_cb_input_kbd_is, udi);
+                                 _e_mod_kbd_device_cb_input_kbd_is, udi);
 }
 
 static void 
-_e_mod_kbd_dbus_dev_del(void *data __UNUSED__, DBusMessage *msg) 
+_e_mod_kbd_device_dbus_del(void *data __UNUSED__, DBusMessage *msg) 
 {
    DBusError err;
    char *udi;
@@ -246,13 +220,13 @@ _e_mod_kbd_dbus_dev_del(void *data __UNUSED__, DBusMessage *msg)
    dbus_message_get_args(msg, &err, DBUS_TYPE_STRING, &udi, DBUS_TYPE_INVALID);
    if (udi) 
      {
-        _e_mod_kbd_dbus_kbd_del(udi);
-        _e_mod_kbd_dbus_kbd_eval();
+        _e_mod_kbd_device_kbd_del(udi);
+        _e_mod_kbd_device_kbd_eval();
      }
 }
 
 static void 
-_e_mod_kbd_dbus_dev_chg(void *data __UNUSED__, DBusMessage *msg) 
+_e_mod_kbd_device_dbus_chg(void *data __UNUSED__, DBusMessage *msg) 
 {
    DBusError err;
    char *udi, *cap;
@@ -266,9 +240,65 @@ _e_mod_kbd_dbus_dev_chg(void *data __UNUSED__, DBusMessage *msg)
           {
              if (udi) 
                {
-                  _e_mod_kbd_dbus_kbd_add(udi);
-                  _e_mod_kbd_dbus_kbd_eval();
+                  _e_mod_kbd_device_kbd_add(udi);
+                  _e_mod_kbd_device_kbd_eval();
                }
           }
+     }
+}
+#endif
+
+static void 
+_e_mod_kbd_device_kbd_add(const char *udi) 
+{
+   const char *str;
+   Eina_List *l;
+
+   if (!udi) return;
+   EINA_LIST_FOREACH(_device_kbds, l, str)
+     if (!strcmp(str, udi)) return;
+   _device_kbds = eina_list_append(_device_kbds, eina_stringshare_add(udi));
+}
+
+static void 
+_e_mod_kbd_device_kbd_del(const char *udi) 
+{
+   const char *str;
+   Eina_List *l;
+
+   if (!udi) return;
+   EINA_LIST_FOREACH(_device_kbds, l, str)
+     if (!strcmp(str, udi)) 
+       {
+          eina_stringshare_del(str);
+          _device_kbds = eina_list_remove_list(_device_kbds, l);
+          break;
+       }
+}
+
+static void 
+_e_mod_kbd_device_kbd_eval(void) 
+{
+   Eina_List *l, *ll;
+   const char *g, *gg;
+   int have_real = 0;
+
+   have_real = eina_list_count(_device_kbds);
+   EINA_LIST_FOREACH(_device_kbds, l, g)
+     EINA_LIST_FOREACH(_ignore_kbds, ll, gg)
+       if (e_util_glob_match(g, gg)) 
+         {
+            have_real--;
+            break;
+         }
+
+   if (have_real != have_real_kbd) 
+     {
+        have_real_kbd = have_real;
+#if 0
+//        if (have_real_kbd) e_mod_kbd_disable();
+        else
+#endif
+//          e_mod_kbd_enable();
      }
 }

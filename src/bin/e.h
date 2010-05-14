@@ -97,6 +97,9 @@ void *alloca (size_t);
 #else
 #include <E_Hal.h>
 #endif
+#ifdef HAVE_EEZE_UDEV
+#include <Eeze_Udev.h>
+#endif
 
 #ifdef EAPI
 #undef EAPI
