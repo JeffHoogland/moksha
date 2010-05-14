@@ -1,4 +1,4 @@
-#include "Evry.h"
+#include "e_mod_main.h"
 
 
 static Evry_Action *act;

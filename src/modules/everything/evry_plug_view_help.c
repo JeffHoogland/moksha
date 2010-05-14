@@ -1,4 +1,4 @@
-#include "Evry.h"
+#include "e_mod_main.h"
 
 static Evry_View *view;
 static Evas_Object *o_text = NULL;

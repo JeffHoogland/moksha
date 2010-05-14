@@ -7,8 +7,9 @@ typedef struct _Plugin Plugin;
 struct _Plugin
 {
   Evry_Plugin base;
-  Evry_Selector *selector;
-
+  int type;
+  Evry_Selector **selectors;
+  
   Evry_Item *warning;
 };
 
@@ -24,7 +25,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
    Eina_List *items = NULL;
    const char *context = NULL;
    char buf[128];
-   Evry_Selector *sel = p->selector;
+   Evry_Selector *sel = p->selectors[p->type];
 
    if (input && !input[0]) input = NULL;
 
@@ -36,7 +37,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
    if (!s->cur_plugins)
      {
 	/* 'text' and 'actions' are always loaded */
-	if ((sel == selectors[0]) &&
+	if ((sel == p->selectors[0]) &&
 	    (eina_list_count(s->plugins) == 2))
 	  {
 	     evry_item_ref(p->warning);
@@ -48,9 +49,9 @@ _fetch(Evry_Plugin *plugin, const char *input)
    /* get current items' context ... */
    for (i = 1; i < 3; i++)
      {
-	if (sel == selectors[i])
+	if (sel == p->selectors[i])
 	  {
-	     it = selectors[i-1]->state->cur_item;
+	     it = p->selectors[i-1]->state->cur_item;
 	     if (it) context = it->context;
 	  }
      }
@@ -126,7 +127,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 		  if (it->fuzzy_match == 0)
 		    it->fuzzy_match = evry_fuzzy_match(it->label, input);
 
-		  if (it->fuzzy_match || sel == selectors[2])
+		  if (it->fuzzy_match || sel == p->selectors[2])
 		    {
 		       if (it->usage >= 0)
 			 evry_history_item_usage_set(it, input, context);
@@ -138,8 +139,8 @@ _fetch(Evry_Plugin *plugin, const char *input)
      }
    /* always append items of action or object selector */
    else if ((!input) &&
-	    ((sel == selectors[1]) ||
-	     (sel == selectors[2])))
+	    ((sel == p->selectors[1]) ||
+	     (sel == p->selectors[2])))
      {
        EINA_LIST_FOREACH(lp, l, pp)
    	  {
@@ -245,7 +246,7 @@ _free(Evry_Plugin *plugin)
 }
 
 Evry_Plugin *
-evry_plug_aggregator_new(Evry_Selector *sel, int type)
+evry_aggregator_new(Evry_Window *win, int type)
 {
    Evry_Plugin *p;
 
@@ -257,10 +258,17 @@ evry_plug_aggregator_new(Evry_Selector *sel, int type)
      }
 
    GET_PLUGIN(pa, p);
-   pa->selector = sel;
-
+   pa->selectors = win->selectors;
+   pa->type = type;
+   
    pa->warning = evry_item_new(NULL, p, N_("No plugins loaded"), NULL, NULL);
    pa->warning->type = EVRY_TYPE_NONE;
 
    return p;
+}
+
+int
+evry_aggregator_fetch(Evry_Plugin *p, const char *input)
+{
+   return p->fetch(p, input);
 }

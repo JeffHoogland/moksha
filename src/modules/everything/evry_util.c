@@ -1,4 +1,4 @@
-#include "Evry.h"
+#include "e_mod_main.h"
 #include "md5.h"
 
 #define MAX_FUZZ 100
