@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-05-14 23:58+1000\n"
-"PO-Revision-Date: 2010-05-07 22:59+0200\n"
+"POT-Creation-Date: 2010-05-14 18:43+0200\n"
+"PO-Revision-Date: 2010-05-14 18:51+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -2632,7 +2632,6 @@ msgstr ""
 "sistema di popup."
 
 #: src/bin/e_main.c:785
-#, fuzzy
 msgid "Setup Paths"
 msgstr "Impostazione percorsi"
 
@@ -2755,9 +2754,8 @@ msgstr ""
 "impostazioni DPMS."
 
 #: src/bin/e_main.c:933
-#, fuzzy
 msgid "Setup Powersave modes"
-msgstr "Imposta modi risparmio energetico"
+msgstr "Modi risparmio energetico"
 
 #: src/bin/e_main.c:937
 msgid "Enlightenment cannot set up its powersave modes."
@@ -2816,7 +2814,6 @@ msgstr ""
 "sistema di thumbnailing (anteprime).\n"
 
 #: src/bin/e_main.c:992
-#, fuzzy
 msgid "Setup File Ordering"
 msgstr "Ordinamento dei file"
 
@@ -3272,7 +3269,6 @@ msgid "%3.0f%%"
 msgstr "%3.0f%%"
 
 #: src/bin/e_utils.c:1484
-#, fuzzy
 msgid ""
 "Configuration data needed upgrading. Your old configuration<br> has been "
 "wiped and a new set of defaults initialized. This<br>will happen regularly "
@@ -3282,23 +3278,22 @@ msgid ""
 "fix<br>that by adding it in. You can re-configure things now to "
 "your<br>liking. Sorry for the inconvenience.<br>"
 msgstr ""
-"La configurazione del modulo %s aveva bisogno di essere aggiornata.<br>La "
+"I dati di configurazione avevano bisogno di essere aggiornati.<br>La "
 "vecchia configurazione è stata sostituita con un nuovo set di impostazioni "
 "predefinite.<br>Questo avverrà spesso durante lo sviluppo, quindi non "
 "riportate bug in proposito. Significa<br>semplicemente che il modulo ha "
-"bisogno di nuovi dati di configurazione da usare per<br>funzionalità che non "
-"erano presenti nella vecchia configurazione. Questo nuovo set "
-"di<br>impostazioni predefinite sistemerà il tutto aggiungendo le nuove "
-"funzionalità. Adesso è<br>possibile riconfigurare le cose a proprio "
+"bisogno di nuovi dati di configurazione predefinita da usare<br>per "
+"funzionalità che non erano presenti nella vecchia configurazione. Questo "
+"nuovo set di<br>impostazioni predefinite sistemerà il tutto aggiungendo le "
+"nuove funzionalità. Adesso è<br>possibile riconfigurare le cose a proprio "
 "piacimento. Ci scusiamo per il disagio.<br>"
 
 #: src/bin/e_utils.c:1497 src/bin/e_utils.c:1521
-#, fuzzy, c-format
+#, c-format
 msgid "%s Configuration Updated"
-msgstr "Configurazione aggiornata"
+msgstr "Configurazione %s aggiornata"
 
 #: src/bin/e_utils.c:1510
-#, fuzzy
 msgid ""
 "Your module configuration is NEWER than the module version. This is "
 "very<br>strange. This should not happen unless you downgraded<br>the module "
@@ -3306,13 +3301,12 @@ msgid ""
 "module was running. This is bad and<br>as a precaution your configuration "
 "has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr ""
-"La vostra configurazione del modulo %s è più NUOVA di Enlightenment."
-"<br>Questo è molto strano. Non dovrebbe accadere a meno che si sia passati "
-"ad una versione<br>precedente del modulo o si abbia copiato la "
-"configurazione da una macchina su cui<br>gira una versione più recente del "
-"modulo. Questo è male, quindi la vostra<br>configurazione è stata "
-"ripristinata a scopo precauzionale ai valori predefiniti. Ci scusiamo<br>per "
-"l'inconveniente.<br>"
+"La vostra configurazione del modulo è più NUOVA di Enlightenment.<br>Questo "
+"è molto strano. Non dovrebbe accadere a meno che si sia passati ad una "
+"versione<br>precedente del modulo o si abbia copiato la configurazione da "
+"una macchina su cui<br>gira una versione più recente del modulo. Questo è "
+"male, quindi la vostra<br>configurazione è stata ripristinata a scopo "
+"precauzionale ai valori predefiniti. Ci scusiamo<br>per l'inconveniente.<br>"
 
 #: src/bin/e_widget_config_list.c:63
 #: src/modules/conf_applications/e_int_config_apps.c:207
@@ -6442,9 +6436,8 @@ msgid "Everything Configuration"
 msgstr "Configurazione di Everything"
 
 #: src/modules/everything/e_mod_main.c:348
-#, fuzzy
 msgid "Everything Module"
-msgstr "Modulo file di Everything"
+msgstr "Modulo Everything"
 
 #: src/modules/everything/e_mod_main.c:482
 msgid "Run Everything"
@@ -7294,9 +7287,8 @@ msgid "%1.1f seconds"
 msgstr "%1.1f secondi"
 
 #: src/modules/pager/e_mod_config.c:242
-#, fuzzy
 msgid "Pager action popup height"
-msgstr "Altezza popup da tastiera"
+msgstr "Altezza popup azioni del pager"
 
 #: src/modules/pager/e_mod_config.c:252
 msgid "Show popup on urgent window"
