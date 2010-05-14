@@ -272,7 +272,7 @@ evry_items_sort_func(const void *data1, const void *data2)
 	     if ((act1->it1.type == act1->it1.item->type) &&
 		 (act2->it1.type != act2->it1.item->type))
 	       return -1;
-	
+
 	     if ((act1->it1.type != act1->it1.item->type) &&
 		 (act2->it1.type == act2->it1.item->type))
 	       return 1;
@@ -505,7 +505,7 @@ _file_icon_get(Evry_Item *it, Evas *e)
      {
 	return evry_icon_theme_get("folder", e);
      }
-   
+
    if (it->icon)
      {
 	o = e_icon_add(e);
@@ -515,7 +515,7 @@ _file_icon_get(Evry_Item *it, Evas *e)
 	     o = NULL;
 	  }
      }
-   
+
    if ((!o) && (!it->icon) && file->mime &&
        ((!strncmp(file->mime, "image/", 6)) ||
 	(!strncmp(file->mime, "video/", 6)) ||
@@ -528,13 +528,13 @@ _file_icon_get(Evry_Item *it, Evas *e)
 		 "%s/.thumbnails/normal/%s.png",
 		 e_user_homedir_get(), sum);
 	free(sum);
-	
+
 	if (ecore_file_exists(thumb_buf))
 	  it->icon = eina_stringshare_add(thumb_buf);
 	else
 	  it->icon = eina_stringshare_add("");
      }
-   
+
    if ((!o) && file->mime)
      o = evry_icon_mime_get(file->mime, e);
 
@@ -594,7 +594,7 @@ evry_util_exec_app(const Evry_Item *it_app, const Evry_Item *it_file)
 		    {
 		       if (!mime)
 			 continue;
-		       
+
 		       if (!strcmp(mime, "x-directory/normal"))
 			 open_folder = 1;
 
@@ -717,24 +717,45 @@ evry_util_url_unescape(const char *string, int length)
 static Eina_Bool
 _isalnum(unsigned char in)
 {
-  switch (in) {
-  case '0': case '1': case '2': case '3': case '4':
-  case '5': case '6': case '7': case '8': case '9':
-  case 'a': case 'b': case 'c': case 'd': case 'e':
-  case 'f': case 'g': case 'h': case 'i': case 'j':
-  case 'k': case 'l': case 'm': case 'n': case 'o':
-  case 'p': case 'q': case 'r': case 's': case 't':
-  case 'u': case 'v': case 'w': case 'x': case 'y': case 'z':
-  case 'A': case 'B': case 'C': case 'D': case 'E':
-  case 'F': case 'G': case 'H': case 'I': case 'J':
-  case 'K': case 'L': case 'M': case 'N': case 'O':
-  case 'P': case 'Q': case 'R': case 'S': case 'T':
-  case 'U': case 'V': case 'W': case 'X': case 'Y': case 'Z':
-    return EINA_TRUE;
-  default:
-    break;
-  }
-  return EINA_FALSE;
+   switch (in)
+     {
+      case '0': case '1': case '2': case '3': case '4':
+      case '5': case '6': case '7': case '8': case '9':
+      case 'a': case 'b': case 'c': case 'd': case 'e':
+      case 'f': case 'g': case 'h': case 'i': case 'j':
+      case 'k': case 'l': case 'm': case 'n': case 'o':
+      case 'p': case 'q': case 'r': case 's': case 't':
+      case 'u': case 'v': case 'w': case 'x': case 'y': case 'z':
+      case 'A': case 'B': case 'C': case 'D': case 'E':
+      case 'F': case 'G': case 'H': case 'I': case 'J':
+      case 'K': case 'L': case 'M': case 'N': case 'O':
+      case 'P': case 'Q': case 'R': case 'S': case 'T':
+      case 'U': case 'V': case 'W': case 'X': case 'Y': case 'Z':
+	 return EINA_TRUE;
+      default:
+	 break;
+     }
+   return EINA_FALSE;
+}
+/* FIXME there seem to be too many ways of not following a standard.
+   find out which is the most popular */
+static Eina_Bool
+_isuric(unsigned char in)
+{
+   switch (in)
+     {
+      case '/': case '.': case '(': case ')': case '-':
+      case '~': case '\'': case '_': case '@': case '+':
+      /* case ';': case ':':
+       * case '&': case '=':  case '$': case ',':
+       *   case '.': case '!':
+       * case '\'':  */
+
+	 return EINA_TRUE;
+      default:
+	 break;
+     }
+   return EINA_FALSE;
 }
 
 char *
@@ -758,7 +779,7 @@ _evry_util_url_escape(const char *string, int inlength, int path)
 	in = *string;
 
 	if (_isalnum(in) ||
-	    (path && ispunct(in)))
+	    (path && _isuric(in)))
 	  {
 	     /* just copy this */
 	     ns[strindex++]=in;
@@ -829,7 +850,7 @@ evry_file_url_get(Evry_Item_File *file)
 {
    char buf[PATH_MAX];
    char *escaped;
-   
+
    if (file->url)
      return file->url;
 
@@ -847,7 +868,7 @@ evry_file_url_get(Evry_Item_File *file)
 
 	return file->url;
      }
-   
+
    return NULL;
 }
 

@@ -1035,7 +1035,8 @@ _evry_selector_item_update(Evry_Selector *sel)
 	  }
      }
 
-   if (!(sel->o_icon) && (EVRY_ITEM(s->plugin)->icon))
+   if (!(sel->o_icon) && s->plugin &&
+       (EVRY_ITEM(s->plugin)->icon))
      {
 	o = evry_icon_theme_get(EVRY_ITEM(s->plugin)->icon, win->popup->evas);
 	if (o)
@@ -1304,7 +1305,10 @@ evry_browse_item(Evry_Selector *sel)
 	  continue;
 
 	if ((pp = p->browse(p, it)))
-	  plugins = eina_list_append(plugins, pp);
+	  {
+	     plugins = eina_list_append(plugins, pp);
+	  }
+
      }
 
    /* FIXME this is a special case for actions */
@@ -1347,6 +1351,11 @@ evry_browse_item(Evry_Selector *sel)
 	_evry_matches_update(sel, 1);
 	s = new_state;
      }
+   else
+     {
+	_evry_matches_update(sel, 1);
+	s = new_state;
+     }
 
    _evry_selector_update(sel);
 
@@ -1372,7 +1381,7 @@ evry_browse_back(Evry_Selector *sel)
    Evry_State *s = sel->state;
 
    DBG("%p", sel);
-   
+
    if (!s || !sel->states->next)
      return 0;
 
@@ -1474,27 +1483,27 @@ _evry_input_complete(Evry_State *s)
 
    evry_item_free(it);
    E_FREE(input);
-   
+
    return 1;
 }
 
 static int
 _evry_cheat_history(Evry_State *s, int promote, int delete)
 {
-	  
+
    History_Entry *he;
    History_Item *hi;
    Eina_List *l, *ll;
    Evry_Item *it = s->cur_item;
-   
+
    if (!(he = eina_hash_find(evry_hist->subjects, (it->id ? it->id : it->label))))
      return 1;
-   
+
    EINA_LIST_FOREACH_SAFE(he->items, l, ll, hi)
      {
 	if (hi->plugin != it->plugin->name)
 	  continue;
-   
+
 	if (delete)
 	  {
 	     if (hi->input)
@@ -1504,7 +1513,7 @@ _evry_cheat_history(Evry_State *s, int promote, int delete)
 	     if (hi->context)
 	       eina_stringshare_del(hi->context);
 	     E_FREE(hi);
-   
+
 	     he->items = eina_list_remove_list(he->items, l);
 	  }
 	else if (promote)
@@ -1658,7 +1667,7 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
    	int promote = (!strcmp(key, "Insert"));
 
 	_evry_cheat_history(s, promote, delete);
-	
+
      }
    else if (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)
      {
@@ -1838,7 +1847,7 @@ _evry_clear(Evry_Selector *sel)
 
    if (!list->visible && evry_conf->hide_input)
      edje_object_signal_emit(list->o_main, "e,state,entry_hide", "e");
-	
+
    return 1;
 }
 
@@ -1861,14 +1870,14 @@ static int
 _evry_action_do(Evry_Action *act)
 {
    Evry_Event_Action_Performed *ev;
-   
+
    if (act->action(act))
      {
 	ev = E_NEW(Evry_Event_Action_Performed, 1);
 	ev->action = eina_stringshare_ref(act->name);
 	ev->it1 = act->it1.item;
 	ev->it2 = act->it2.item;
-	
+
 	if (ev->it1)
 	  EVRY_ITEM_REF(ev->it1);
 	if (ev->it2)
