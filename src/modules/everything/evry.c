@@ -154,13 +154,12 @@ evry_show(E_Zone *zone, const char *params)
      }
 
    input_window = ecore_x_window_input_new(zone->container->win, 0, 0, 1, 1);
-
    ecore_x_window_show(input_window);
    if (!e_grabinput_get(input_window, 0, input_window))
-     {
-	return 0;
-     }
+     return 0;
 
+   ecore_x_sync();
+   
    win = _evry_window_new(zone);
    if (!win)
      {
