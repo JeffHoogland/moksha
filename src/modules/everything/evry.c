@@ -1302,7 +1302,7 @@ _evry_selectors_switch(int dir)
 	int next_selector = 0;
 	Evry_Item *it;
 
-	if ((it = s->cur_item) &&
+	if (s && (it = s->cur_item) &&
 	    (it->plugin == win->selector->actions))
 	  {
 	     GET_ACTION(act,it);
