@@ -260,7 +260,7 @@ AS_IF(
    [test "x$e_cv_want_device_udev" = "xyes"],
       [device_backend="eeze_udev"]
       AC_DEFINE_UNQUOTED([HAVE_EEZE_UDEV],[1],[enable udev support]),
-   AC_MSG_ERROR(No usable device backend (eeze_udev/ehal) found!)
+   AC_MSG_ERROR(No usable device backend (eeze_udev/ehal) found, or attempted to disable hal support!)
 )
 AC_MSG_RESULT($device_backend)
 
