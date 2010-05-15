@@ -655,6 +655,8 @@ _free_files(Plugin *p)
 {
    Evry_Item_File *file;
 
+   EVRY_PLUGIN_ITEMS_CLEAR(p);
+   
    if (p->thread)
      ecore_thread_cancel(p->thread);
    p->thread = NULL;
@@ -681,8 +683,6 @@ _finish(Evry_Plugin *plugin)
 	p->wait_finish = 1;
 	p->thread = NULL;
      }
-
-   EVRY_PLUGIN_ITEMS_CLEAR(p);
 
    _free_files(p);
 
@@ -745,8 +745,6 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
 	     if (strncmp(p->directory, "/", 1))
 	       return 0;
-
-	     EVRY_PLUGIN_ITEMS_CLEAR(p);
 	     
 	     _free_files(p);
 
