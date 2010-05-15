@@ -4,6 +4,7 @@
 typedef struct _Config        Config;
 typedef struct _Mod           Mod;
 
+typedef struct _Match         Match;
 
 struct _Config
 {
@@ -26,6 +27,13 @@ struct _Config
    int              max_unmapped_pixels;
    int              max_unmapped_time;
    int              min_unmapped_time;
+
+   struct {
+      Eina_List       *popups; // used for e popups
+      Eina_List       *borders; // used for borders
+      Eina_List       *overrides; // used for client menus, tooltips etc.
+      Eina_List       *menus; // used for e menus
+   } match;
 };
 
 struct _Mod
@@ -33,9 +41,30 @@ struct _Mod
    E_Module        *module;
    
    E_Config_DD     *conf_edd;
+   E_Config_DD     *conf_match_edd;
    Config          *conf;
    
    E_Config_Dialog *config_dialog;
+};
+
+struct _Match
+{
+   const char *title; // glob - used for borders, NULL if not to be used
+   const char *name; // glob - used for borders, overrides, popups, NULL if not to be used
+   const char *clas; // glob - used for borders, overrides, NULL if not to be used
+   const char *role; // glob - used for borders
+   
+   int         primary_type; // Ecore_X_Window_Type - used for borders, overrides, first one found - ECORE_X_WINDOW_TYPE_UNKNOWN if not to be used
+   char        borderless; // used for borders, 0 == dont use, 1 == borderless, -1 == not borderless
+   char        dialog; // used for borders, 0 == don't use, 1 == dialog, -1 == not dialog
+   char        accepts_focus; // used for borders, 0 == don't use, 1 == accepts focus, -1 == does not accept focus
+   char        vkbd; // used for borders, 0 == don't use, 1 == is vkbd, -1 == not vkbd
+   char        quickpanel; // used for borders, 0 == don't use, 1 == is quickpanel, -1 == not quickpanel
+   char        argb; // used for borders, overrides, popups, 0 == don't use, 1 == is argb, -1 == not argb
+   char        fullscreen; // used for borders, 0 == don't use, 1 == is fullscreen, -1 == not fullscreen
+   char        modal; // used for borders, 0 == don't use, 1 == is modal, -1 == not modal
+   
+   const char *shadow_style; // shadow style to use
 };
 
 extern Mod *_comp_mod;

@@ -77,6 +77,9 @@ struct _E_Comp_Win
    double                last_visible_time; // last time window was visible
    double                last_draw_time; // last time window was damaged
    
+   char                 *title, *name, *clas, *role; // fetched for override-redirect windowa
+   Ecore_X_Window_Type   primary_type; // fetched for override-redirect windowa
+   
    Eina_Bool             animating : 1; // it's busy animating - defer hides/dels
    Eina_Bool             force : 1; // force del/hide even if animating
    Eina_Bool             defer_hide : 1; // flag to get hide to work on deferred hide
@@ -928,12 +931,159 @@ _e_mod_comp_win_shadow_setup(E_Comp_Win *cw)
 {
    int ok = 0;
    char buf[PATH_MAX];
+   Eina_List *list = NULL, *l;
+   Match *m;
+   const char *title = NULL, *name = NULL, *clas = NULL, *role = NULL;
+   Ecore_X_Window_Type primary_type = ECORE_X_WINDOW_TYPE_UNKNOWN;
    
    evas_object_image_smooth_scale_set(cw->obj, _comp_mod->conf->smooth_windows);
+   if (cw->bd)
+     {
+        list = _comp_mod->conf->match.borders;
+        title = cw->bd->client.icccm.title;
+        if (cw->bd->client.netwm.name) title = cw->bd->client.netwm.name;
+        name = cw->bd->client.icccm.name;
+        clas = cw->bd->client.icccm.class;
+        role = cw->bd->client.icccm.window_role;
+        primary_type = cw->bd->client.netwm.type;
+     }
+   else if (cw->pop)
+     {
+        // FIXME: i only added "shelf" as a name for popups that are shelves
+        // ... need more nmes like for pager popup, evertything, exebuf
+        // etc. etc.
+        list = _comp_mod->conf->match.popups;
+        name = cw->pop->name;
+     }
+   else if (cw->menu)
+     {
+        // FIXME: e has no way to tell e menus apart... need naming
+        list = _comp_mod->conf->match.menus;
+     }
+   else
+     {
+        list = _comp_mod->conf->match.overrides;
+        title = cw->title;
+        name = cw->name;
+        clas = cw->clas;
+        role = cw->role;
+        primary_type = cw->primary_type;
+     }
+   
+   EINA_LIST_FOREACH(list, l, m)
+     {
+        if (((m->title) && (!title)) ||
+            ((title) && (m->title) && (!e_util_glob_match(title, m->title))))
+          continue;
+        if (((m->name) && (!name)) ||
+            ((name) && (m->name) && (!e_util_glob_match(name, m->name))))
+          continue;
+        if (((m->clas) && (!clas)) ||
+            ((clas) && (m->clas) && (!e_util_glob_match(clas, m->clas))))
+          continue;
+        if (((m->role) && (!role)) ||
+            ((role) && (m->role) && (!e_util_glob_match(role, m->role))))
+          continue;
+        if ((primary_type != ECORE_X_WINDOW_TYPE_UNKNOWN) &&
+            (m->primary_type != ECORE_X_WINDOW_TYPE_UNKNOWN) &&
+            (primary_type != m->primary_type))
+          continue;
+        if (cw->bd)
+          {
+             if (m->borderless != 0)
+               {
+                  int borderless = 0;
+                  
+                  if ((cw->bd->client.mwm.borderless) || (cw->bd->borderless))
+                    borderless = 1;
+                  if (!(((m->borderless == -1) && (!borderless)) ||
+                        ((m->borderless ==  1) && ( borderless))))
+                    continue;
+               }
+             if (m->dialog != 0)
+               {
+                  int dialog = 0;
+                  
+                  if (((cw->bd->client.icccm.transient_for != 0) ||
+                       (cw->bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DIALOG)))
+                    dialog = 1;
+                  if (!(((m->dialog == -1) && (!dialog)) ||
+                        ((m->dialog ==  1) && ( dialog))))
+                    continue;
+               }
+             if (m->accepts_focus != 0)
+               {
+                  int accepts_focus = 0;
+                  
+                  if (cw->bd->client.icccm.accepts_focus)
+                    accepts_focus = 1;
+                  if (!(((m->accepts_focus == -1) && (!accepts_focus)) ||
+                        ((m->accepts_focus ==  1) && ( accepts_focus))))
+                    continue;
+               }
+             if (m->vkbd != 0)
+               {
+                  int vkbd = 0;
+                  
+                  if (cw->bd->client.vkbd.vkbd)
+                    vkbd = 1;
+                  if (!(((m->vkbd == -1) && (!vkbd)) ||
+                        ((m->vkbd ==  1) && ( vkbd))))
+                    continue;
+               }
+             if (m->quickpanel != 0)
+               {
+                  int quickpanel = 0;
+                  
+                  if (cw->bd->client.illume.quickpanel.quickpanel)
+                    quickpanel = 1;
+                  if (!(((m->quickpanel == -1) && (!quickpanel)) ||
+                        ((m->quickpanel ==  1) && ( quickpanel))))
+                    continue;
+               }
+             if (m->argb != 0)
+               {
+                  if (!(((m->argb == -1) && (!cw->argb)) ||
+                        ((m->argb ==  1) && ( cw->argb))))
+                    continue;
+               }
+             if (m->fullscreen != 0)
+               {
+                  int fullscreen = 0;
+                  
+                  if (cw->bd->client.netwm.state.fullscreen)
+                    fullscreen = 1;
+                  if (!(((m->fullscreen == -1) && (!fullscreen)) ||
+                        ((m->fullscreen ==  1) && ( fullscreen))))
+                    continue;
+               }
+             if (m->modal != 0)
+               {
+                  int modal = 0;
+                  
+                  if (cw->bd->client.netwm.state.modal)
+                    modal = 1;
+                  if (!(((m->modal == -1) && (!modal)) ||
+                        ((m->modal ==  1) && ( modal))))
+                    continue;
+               }
+          }
+        if (m->shadow_style)
+          {
+             snprintf(buf, sizeof(buf), "e/comp/%s",
+                      m->shadow_style);
+             ok = e_theme_edje_object_set(cw->shobj, "base/theme/borders",
+                                          buf);
+             if (ok) break;
+          }
+     }
    // use different shadow objects/group per window type?
-   if (_comp_mod->conf->shadow_file)
-     ok = edje_object_file_set(cw->shobj, _comp_mod->conf->shadow_file,
-                               "shadow");
+   if (!ok)
+     {
+        if (_comp_mod->conf->shadow_file)
+          ok = edje_object_file_set(cw->shobj, _comp_mod->conf->shadow_file,
+                                    "shadow");
+     }
    if (!ok)
      {
         if (_comp_mod->conf->shadow_style)
@@ -1001,6 +1151,21 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
              if (cw->menu)
                cw->dfn = e_object_delfn_add(E_OBJECT(cw->menu), 
                                             _e_mod_comp_object_del, cw);
+             else
+               {
+                  char *netwm_title = NULL;
+                  
+                  cw->title = ecore_x_icccm_title_get(cw->win);
+                  if (ecore_x_netwm_name_get(cw->win, &netwm_title))
+                    {
+                       if (cw->title) free(cw->title);
+                       cw->title = netwm_title;
+                    }
+                  ecore_x_icccm_name_class_get(cw->win, &cw->name, &cw->clas);
+                  cw->role = ecore_x_icccm_window_role_get(cw->win);
+                  if (!ecore_x_netwm_window_type_get(cw->win, &cw->primary_type))
+                    cw->primary_type = ECORE_X_WINDOW_TYPE_UNKNOWN;
+               }
           }
         _e_mod_comp_win_sync_setup(cw, cw->win);
      }
@@ -1174,6 +1339,10 @@ _e_mod_comp_win_del(E_Comp_Win *cw)
         ecore_x_damage_free(cw->damage);
         cw->damage = 0;
      }
+   if (cw->title) free(cw->title);
+   if (cw->name) free(cw->name);
+   if (cw->clas) free(cw->clas);
+   if (cw->role) free(cw->role);
    cw->c->wins = eina_inlist_remove(cw->c->wins, EINA_INLIST_GET(cw));
    free(cw);
 }

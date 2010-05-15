@@ -39,6 +39,26 @@ e_modapi_init(E_Module *m)
    e_configure_registry_category_add("appearance", 10, _("Look"), NULL, "preferences-appearance");
    e_configure_registry_item_add("appearance/comp", 120, _("Composite"), NULL, buf, e_int_config_comp_module);
    
+   mod->conf_match_edd = E_CONFIG_DD_NEW("Comp_Match", Match);
+#undef T
+#undef D
+#define T Match
+#define D mod->conf_match_edd
+   E_CONFIG_VAL(D, T, title, STR);
+   E_CONFIG_VAL(D, T, name, STR);
+   E_CONFIG_VAL(D, T, clas, STR);
+   E_CONFIG_VAL(D, T, role, STR);
+   E_CONFIG_VAL(D, T, primary_type, INT);
+   E_CONFIG_VAL(D, T, borderless, CHAR);
+   E_CONFIG_VAL(D, T, dialog, CHAR);
+   E_CONFIG_VAL(D, T, accepts_focus, CHAR);
+   E_CONFIG_VAL(D, T, vkbd, CHAR);
+   E_CONFIG_VAL(D, T, quickpanel, CHAR);
+   E_CONFIG_VAL(D, T, argb, CHAR);
+   E_CONFIG_VAL(D, T, fullscreen, CHAR);
+   E_CONFIG_VAL(D, T, modal, CHAR);
+   E_CONFIG_VAL(D, T, shadow_style, STR);
+   
    mod->conf_edd = E_CONFIG_DD_NEW("Comp_Config", Config);
 #undef T
 #undef D
@@ -63,6 +83,10 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, max_unmapped_pixels, INT);
    E_CONFIG_VAL(D, T, max_unmapped_time, INT);
    E_CONFIG_VAL(D, T, min_unmapped_time, INT);
+   E_CONFIG_LIST(D, T, match.popups,    mod->conf_match_edd);
+   E_CONFIG_LIST(D, T, match.borders,   mod->conf_match_edd);
+   E_CONFIG_LIST(D, T, match.overrides, mod->conf_match_edd);
+   E_CONFIG_LIST(D, T, match.menus,     mod->conf_match_edd);
    
    mod->conf = e_config_domain_load("module.comp", mod->conf_edd);
    if (!mod->conf)
@@ -87,6 +111,8 @@ e_modapi_init(E_Module *m)
         mod->conf->max_unmapped_pixels =  32 * 1024; // implement
         mod->conf->max_unmapped_time = 10 * 3600; // implement
         mod->conf->min_unmapped_time = 5 * 60; // implement
+        
+        // FIXME: add some default matches
      }
    
    _comp_mod = mod;
@@ -108,6 +134,22 @@ e_modapi_init(E_Module *m)
    return mod;
 }
 
+static void
+_match_list_free(Eina_List *list)
+{
+   Match *m;
+   
+   EINA_LIST_FREE(list, m)
+     {
+        if (m->title) eina_stringshare_del(m->title);
+        if (m->name) eina_stringshare_del(m->name);
+        if (m->clas) eina_stringshare_del(m->clas);
+        if (m->role) eina_stringshare_del(m->role);
+        if (m->shadow_style) eina_stringshare_del(m->shadow_style);
+        free(m);
+     }
+}
+
 EAPI int
 e_modapi_shutdown(E_Module *m)
 {
@@ -125,7 +167,14 @@ e_modapi_shutdown(E_Module *m)
      }
    if (mod->conf->shadow_file) eina_stringshare_del(mod->conf->shadow_file);
    if (mod->conf->shadow_style) eina_stringshare_del(mod->conf->shadow_style);
+
+   _match_list_free(mod->conf->match.popups);
+   _match_list_free(mod->conf->match.borders);
+   _match_list_free(mod->conf->match.overrides);
+   _match_list_free(mod->conf->match.menus);
+   
    free(mod->conf);
+   E_CONFIG_DD_FREE(mod->conf_match_edd);
    E_CONFIG_DD_FREE(mod->conf_edd);
    free(mod);
    
