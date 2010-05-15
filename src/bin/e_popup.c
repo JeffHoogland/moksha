@@ -72,6 +72,13 @@ e_popup_new(E_Zone *zone, int x, int y, int w, int h)
 }
 
 EAPI void
+e_popup_name_set(E_Popup *pop, const char *name)
+{
+   if (eina_stringshare_replace(&pop->name, name))
+     ecore_evas_name_class_set(pop->ecore_evas, "E", pop->name);
+}
+
+EAPI void
 e_popup_show(E_Popup *pop)
 {
    E_OBJECT_CHECK(pop);
@@ -303,6 +310,7 @@ _e_popup_free(E_Popup *pop)
    pop->zone->popups = eina_list_remove(pop->zone->popups, pop);
    _e_popup_list = eina_list_remove(_e_popup_list, pop);
    eina_hash_del(_e_popup_hash, e_util_winid_str_get(pop->evas_win), pop);
+   if (pop->name) eina_stringshare_del(pop->name);
    free(pop);
 }
 

@@ -26,6 +26,7 @@ struct _E_Popup
    Ecore_X_Window       evas_win;
    E_Container_Shape   *shape;
    E_Zone              *zone;
+   const char          *name;
    int                  shape_rects_num;
    Ecore_X_Rectangle   *shape_rects;
    Ecore_Idle_Enterer  *idle_enterer;
@@ -35,6 +36,7 @@ EAPI int         e_popup_init(void);
 EAPI int         e_popup_shutdown(void);
 
 EAPI E_Popup    *e_popup_new(E_Zone *zone, int x, int y, int w, int h);
+EAPI void        e_popup_name_set(E_Popup *pop, const char *name);
 EAPI void        e_popup_show(E_Popup *pop);
 EAPI void        e_popup_hide(E_Popup *pop);
 EAPI void        e_popup_move(E_Popup *pop, int x, int y);

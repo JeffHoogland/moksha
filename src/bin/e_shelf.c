@@ -111,6 +111,7 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
    if (popup)
      {
 	es->popup = e_popup_new(zone, es->x, es->y, es->w, es->h);
+        e_popup_name_set(es->popup, "shelf");
 	e_popup_layer_set(es->popup, layer);
 	es->ee = es->popup->ecore_evas;
 	es->evas = es->popup->evas;
@@ -684,6 +685,7 @@ e_shelf_popup_set(E_Shelf *es, int popup)
    if (popup) 
      {
 	es->popup = e_popup_new(es->zone, es->x, es->y, es->w, es->h);
+        e_popup_name_set(es->popup, "shelf");
 	e_popup_layer_set(es->popup, es->cfg->layer);
 
 	es->ee = es->popup->ecore_evas;
