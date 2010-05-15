@@ -115,6 +115,65 @@ e_modapi_init(E_Module *m)
         // FIXME: add some default matches
      }
    
+   mod->conf->match.popups = NULL;
+   mod->conf->match.borders = NULL;
+   mod->conf->match.overrides = NULL;
+   mod->conf->match.menus = NULL;
+   
+   if (!mod->conf->match.popups)
+     {
+        Match *m;
+        
+        m = E_NEW(Match, 1);
+        mod->conf->match.popups = eina_list_append(mod->conf->match.popups, m);
+        m->name = eina_stringshare_add("shelf");
+        m->shadow_style = eina_stringshare_add("still");
+        m = E_NEW(Match, 1);
+        mod->conf->match.popups = eina_list_append(mod->conf->match.popups, m);
+        m->shadow_style = eina_stringshare_add("popup");
+     }
+   if (!mod->conf->match.borders)
+     {
+        // just fall abck to default ont
+     }
+   if (!mod->conf->match.overrides)
+     {
+        Match *m;
+        
+        m = E_NEW(Match, 1);
+        mod->conf->match.overrides = eina_list_append(mod->conf->match.overrides, m);
+        m->name = eina_stringshare_add("E");
+        m->clas = eina_stringshare_add("Background_Window");
+        m->shadow_style = eina_stringshare_add("none");
+        m = E_NEW(Match, 1);
+        mod->conf->match.overrides = eina_list_append(mod->conf->match.overrides, m);
+        m->primary_type = ECORE_X_WINDOW_TYPE_DROPDOWN_MENU;
+        m->shadow_style = eina_stringshare_add("menu");
+        m = E_NEW(Match, 1);
+        mod->conf->match.overrides = eina_list_append(mod->conf->match.overrides, m);
+        m->primary_type = ECORE_X_WINDOW_TYPE_POPUP_MENU;
+        m->shadow_style = eina_stringshare_add("menu");
+        m = E_NEW(Match, 1);
+        mod->conf->match.overrides = eina_list_append(mod->conf->match.overrides, m);
+        m->primary_type = ECORE_X_WINDOW_TYPE_COMBO;
+        m->shadow_style = eina_stringshare_add("menu");
+        m = E_NEW(Match, 1);
+        mod->conf->match.overrides = eina_list_append(mod->conf->match.overrides, m);
+        m->primary_type = ECORE_X_WINDOW_TYPE_TOOLTIP;
+        m->shadow_style = eina_stringshare_add("menu");
+        m = E_NEW(Match, 1);
+        mod->conf->match.overrides = eina_list_append(mod->conf->match.overrides, m);
+        m->shadow_style = eina_stringshare_add("popup");
+     }
+   if (!mod->conf->match.menus)
+     {
+        Match *m;
+        
+        m = E_NEW(Match, 1);
+        mod->conf->match.menus = eina_list_append(mod->conf->match.menus, m);
+        m->shadow_style = eina_stringshare_add("menu");
+     }
+   
    _comp_mod = mod;
 
 //   if (e_init_count_get() <= 0)

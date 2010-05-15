@@ -35185,9 +35185,29 @@ collections {
          image: "bt_glow.png" COMP;
       }
       parts {
+         part { name: "focus-clipper";
+            type: RECT;
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               color: 255 255 255 220;
+               rel1 {
+                  relative: -1.0  -1.0;
+                  offset: -9999 -9999;
+               }
+               rel2 {
+                  relative: 2.0   2.0;
+                  offset: 9999  9999;
+               }
+            }
+            description { state: "focused" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+         }
          part { name: "clipper";
             type: RECT;
             mouse_events: 0;
+            clip_to: "focus-clipper";
             description { state: "default" 0.0;
                visible: 0;
                color: 255 255 255 0;
@@ -35356,6 +35376,20 @@ collections {
          program { name: "hide2";
             action: SIGNAL_EMIT "e,action,hide,done" "e";
          }
+         program { name: "focus";
+            signal: "e,state,focus,on";
+            source: "e";
+            action: STATE_SET "focused" 0.0;
+            transition: SINUSOIDAL 0.2;
+            target: "focus-clipper";
+         }
+         program { name: "unfocus";
+            signal: "e,state,focus,off";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            transition: SINUSOIDAL 0.5;
+            target: "focus-clipper";
+         }
          program { name: "focus1";
             signal: "e,state,focus,on";
             source: "e";
@@ -35409,6 +35443,355 @@ collections {
       }
    }
 //----
+   group { name: "e/comp/none";
+      parts {
+         part { name: "e.swallow.content";
+            type: SWALLOW;
+            mouse_events: 0;
+            description { state: "default" 0.0;
+            }
+         }
+      }
+      programs {
+         program { name: "show1";
+            signal: "e,state,visible,on";
+            source: "e";
+            action: SIGNAL_EMIT "e,action,show,done" "e";
+         }
+         program { name: "hide1";
+            signal: "e,state,visible,off";
+            source: "e";
+            action: SIGNAL_EMIT "e,action,hide,done" "e";
+         }
+      }
+   }
+//----
+   group { name: "e/comp/still";
+      images {
+         image: "comp-sh1.png" COMP;
+      }
+      parts {
+         part { name: "shadow";
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               image {
+                  normal: "comp-sh1.png";
+                  border: 18 18 18 18;
+                  middle: 0;
+               }
+               fill {
+                  smooth: 0;
+               }
+               rel1 {
+                  to: "e.swallow.content";
+                  relative: 0.0  0.0;
+                  offset: -16  -14;
+               }
+               rel2 {
+                  to: "e.swallow.content";
+                  relative: 1.0  1.0;
+                  offset: 15   17;
+               }
+            }
+            description { state: "hidden" 0.0;
+               inherit: "default" 0.0;
+               visible: 0;
+            }
+         }
+         part { name: "e.swallow.content";
+            type: SWALLOW;
+            mouse_events: 0;
+            description { state: "default" 0.0;
+            }
+         }
+      }
+      programs {
+         program { name: "shadow-on";
+            signal: "e,state,shadow,on";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "shadow";
+         }
+         program { name: "shadow-off";
+            signal: "e,state,shadow,off";
+            source: "e";
+            action: STATE_SET "hidden" 0.0;
+            target: "shadow";
+         }
+         program { name: "show1";
+            signal: "e,state,visible,on";
+            source: "e";
+            action: SIGNAL_EMIT "e,action,show,done" "e";
+         }
+         program { name: "hide1";
+            signal: "e,state,visible,off";
+            source: "e";
+            action: SIGNAL_EMIT "e,action,hide,done" "e";
+         }
+      }
+   }
+//----
+   group { name: "e/comp/popup";
+      images {
+         image: "comp-sh1.png" COMP;
+      }
+      parts {
+         part { name: "clipper";
+            type: RECT;
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               visible: 0;
+               color: 255 255 255 0;
+               rel1 {
+                  relative: -1.0  -1.0;
+                  offset: -9999 -9999;
+               }
+               rel2 {
+                  relative: 2.0   2.0;
+                  offset: 9999  9999;
+               }
+            }
+            description { state: "visible" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+               color: 255 255 255 255;
+            }
+         }
+         part { name: "shadow";
+            mouse_events: 0;
+            clip_to: "clipper";
+            description { state: "default" 0.0;
+               image {
+                  normal: "comp-sh1.png";
+                  border: 18 18 18 18;
+                  middle: 0;
+               }
+               fill.smooth: 0;
+               rel1 {
+                  to: "e.swallow.content";
+                  relative: 0.0  0.0;
+                  offset: -16  -14;
+               }
+               rel2 {
+                  to: "e.swallow.content";
+                  relative: 1.0  1.0;
+                  offset: 15   17;
+               }
+            }
+            description { state: "hidden" 0.0;
+               inherit: "default" 0.0;
+               visible: 0;
+            }
+         }
+         part { name: "shower";
+            type: RECT;
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               visible: 0;
+               rel1 {
+                  relative: 0.05  0.05;
+                  offset: 0    0;
+               }
+               rel2 {
+                  relative: 0.95  0.95;
+                  offset: -1   -1;
+               }
+            }
+            description { state: "visible" 0.0;
+               inherit: "default" 0.0;
+               rel1 {
+                  relative: 0.0  0.0;
+               }
+               rel2 {
+                  relative: 1.0  1.0;
+               }
+            }
+         }
+         part { name: "e.swallow.content";
+            type: SWALLOW;
+            clip_to: "clipper";
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               rel1 {
+                  to: "shower";
+               }
+               rel2 {
+                  to: "shower";
+               }
+            }
+         }
+      }
+      programs {
+         program { name: "shadow-on";
+            signal: "e,state,shadow,on";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "shadow";
+         }
+         program { name: "shadow-off";
+            signal: "e,state,shadow,off";
+            source: "e";
+            action: STATE_SET "hidden" 0.0;
+            target: "shadow";
+         }
+         program { name: "show1";
+            signal: "e,state,visible,on";
+            source: "e";
+            action: STATE_SET "visible" 0.0;
+            transition: DECELERATE 0.15;
+            target: "clipper";
+            target: "shower";
+            after: "show2";
+         }
+         program { name: "show2";
+            action: SIGNAL_EMIT "e,action,show,done" "e";
+         }
+         program { name: "hide1";
+            signal: "e,state,visible,off";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            transition: DECELERATE 0.30;
+            target: "clipper";
+            target: "shower";
+            after: "hide2";
+         }
+         program { name: "hide2";
+            action: SIGNAL_EMIT "e,action,hide,done" "e";
+         }
+      }
+   }
+//----
+   group { name: "e/comp/menu";
+      images {
+         image: "comp-sh1.png" COMP;
+      }
+      parts {
+         part { name: "clipper";
+            type: RECT;
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               visible: 0;
+               color: 255 255 255 0;
+               rel1 {
+                  relative: -1.0  -1.0;
+                  offset: -9999 -9999;
+               }
+               rel2 {
+                  relative: 2.0   2.0;
+                  offset: 9999  9999;
+               }
+            }
+            description { state: "visible" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+               color: 255 255 255 255;
+            }
+         }
+         part { name: "shadow";
+            mouse_events: 0;
+            clip_to: "clipper";
+            description { state: "default" 0.0;
+               image {
+                  normal: "comp-sh1.png";
+                  border: 18 18 18 18;
+                  middle: 0;
+               }
+               fill.smooth: 0;
+               rel1 {
+                  to: "e.swallow.content";
+                  relative: 0.0  0.0;
+                  offset: -16  -14;
+               }
+               rel2 {
+                  to: "e.swallow.content";
+                  relative: 1.0  1.0;
+                  offset: 15   17;
+               }
+            }
+            description { state: "hidden" 0.0;
+               inherit: "default" 0.0;
+               visible: 0;
+            }
+         }
+         part { name: "shower";
+            type: RECT;
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               visible: 0;
+               rel1 {
+                  relative: 0.1  0.0;
+                  offset: 0    0;
+               }
+               rel2 {
+                  relative: 0.9  0.8;
+                  offset: -1   -1;
+               }
+            }
+            description { state: "visible" 0.0;
+               inherit: "default" 0.0;
+               rel1 {
+                  relative: 0.0  0.0;
+               }
+               rel2 {
+                  relative: 1.0  1.0;
+               }
+            }
+         }
+         part { name: "e.swallow.content";
+            type: SWALLOW;
+            clip_to: "clipper";
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               rel1 {
+                  to: "shower";
+               }
+               rel2 {
+                  to: "shower";
+               }
+            }
+         }
+      }
+      programs {
+         program { name: "shadow-on";
+            signal: "e,state,shadow,on";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "shadow";
+         }
+         program { name: "shadow-off";
+            signal: "e,state,shadow,off";
+            source: "e";
+            action: STATE_SET "hidden" 0.0;
+            target: "shadow";
+         }
+         program { name: "show1";
+            signal: "e,state,visible,on";
+            source: "e";
+            action: STATE_SET "visible" 0.0;
+            transition: DECELERATE 0.15;
+            target: "clipper";
+            target: "shower";
+            after: "show2";
+         }
+         program { name: "show2";
+            action: SIGNAL_EMIT "e,action,show,done" "e";
+         }
+         program { name: "hide1";
+            signal: "e,state,visible,off";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            transition: DECELERATE 0.30;
+            target: "clipper";
+            target: "shower";
+            after: "hide2";
+         }
+         program { name: "hide2";
+            action: SIGNAL_EMIT "e,action,hide,done" "e";
+         }
+      }
+   }
+//----
+/*
    group { name: "e/comp/slow";
       images {
          image: "comp-sh1.png" COMP;
@@ -35733,8 +36116,8 @@ collections {
             }
             description { state: "unfocus" 0.0;
                inherit: "default" 0.0;
-               color: 180 180 180 255;
-               color_class: "comp_focus-out_color";
+               color: 255 255 255 200;
+//               color_class: "comp_focus-out_color";
             }
          }
          part { name: "e.swallow.content";
@@ -35852,5 +36235,5 @@ collections {
          }
       }
    }
+ */
 }
-
