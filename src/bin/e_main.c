@@ -86,6 +86,7 @@ static int _e_main_cb_eet_cacheburst_end(void *data __UNUSED__);
 static int _e_main_cb_startup_fake_end(void *data __UNUSED__);
 static void _e_main_desk_save(void);
 static void _e_main_desk_restore(E_Manager *man, E_Container *con);
+static void _e_main_test_svg_loader(void);
 
 /* local subsystem globals */
 #define MAX_LEVEL 64
@@ -796,6 +797,7 @@ main(int argc, char **argv)
 	     *list = eina_list_prepend(*list, (void *)eina_stringshare_add(buf));
 	  }
      }
+   _e_main_test_svg_loader();
    efreet_icon_extension_add(".edj");
    TS("efreet paths done");
 
@@ -1661,5 +1663,36 @@ _e_main_desk_restore(E_Manager *man, E_Container *con)
 	desk = e_desk_at_xy_get(zone, desk_x, desk_y);
 	if (!desk) continue;
 	e_desk_show(desk);
+     }
+}
+
+static void
+_e_main_test_svg_loader(void)
+{
+   Evas_Imaging_Image *tmp;
+   char file[] = "/tmp/e17-1341234234.svg";
+   FILE *fp = fopen(file, "w");
+   if (!fp) return;
+
+   fputs("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>"
+	 "<svg xmlns:svg=\"http://www.w3.org/2000/svg\""
+	 " xmlns=\"http://www.w3.org/2000/svg\""
+	 " xmlns:xlink=\"http://www.w3.org/1999/xlink\""
+	 " version=\"1.0\""
+	 " width=\"128\""
+	 " height=\"128\""
+	 " id=\"svg3486\">"
+	 "</svg>", fp);
+   fclose(fp);
+
+   tmp = evas_imaging_image_load (file, NULL);
+   ecore_file_remove(file);
+
+   if (tmp)
+     {
+	evas_imaging_image_free(tmp);
+	efreet_icon_extension_add(".svg");
+	/* prefer png over svg */
+	efreet_icon_extension_add(".png");
      }
 }
