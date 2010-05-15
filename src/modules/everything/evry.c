@@ -1579,8 +1579,11 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	     ecore_x_selection_primary_request
 	       (win->popup->evas_win, ECORE_X_SELECTION_TARGET_UTF8_STRING);
 	  }
-	else if (_evry_view_key_press(s, ev))
-	  goto end;
+	else
+	  {
+	     _evry_view_key_press(s, ev);
+	  }
+	goto end;
      }
    /* let plugin intercept keypress */
    if (s->plugin && s->plugin->cb_key_down &&
@@ -1773,7 +1776,6 @@ _evry_action_do(Evry_Action *act)
 
 	ecore_event_add(EVRY_EVENT_ACTION_PERFORMED, ev,
 			_evry_cb_free_action_performed, NULL);
-
 	return 1;
      }
    return 0;
