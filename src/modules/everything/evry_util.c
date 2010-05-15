@@ -353,7 +353,7 @@ EAPI int
 evry_util_plugin_items_add(Evry_Plugin *p, Eina_List *items, const char *input,
 		      int match_detail, int set_usage)
 {
-   Eina_List *l, *cur = NULL;
+   Eina_List *l;
    Evry_Item *it;
    int match = 0;
 
@@ -411,11 +411,9 @@ static int
 _evry_icon_fdo_set(Evas_Object *obj, const char *icon)
 {
    char *path = NULL;
-   unsigned int size;
 
    if ((!icon) || (!icon[0])) return 0;
-   size = e_util_icon_size_normalize(128 * e_scale);
-   path = efreet_icon_path_find(e_config->icon_theme, icon, size);
+   path = efreet_icon_path_find(e_config->icon_theme, icon, 128);
 
    if (!path) return 0;
    e_icon_file_set(obj, path);
@@ -815,7 +813,7 @@ _evry_util_url_escape(const char *string, int inlength, int path)
 EAPI char *
 evry_util_url_escape(const char *string, int inlength)
 {
-   _evry_util_url_escape(string, inlength, 0);
+   return _evry_util_url_escape(string, inlength, 0);
 }
 
 

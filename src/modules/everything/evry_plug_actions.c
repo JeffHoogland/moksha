@@ -38,7 +38,6 @@ _browse(Evry_Plugin *plugin, const Evry_Item *it)
 {
    Evry_Action *act;
    Plugin *p;
-   Eina_List *l;
 
    if (!CHECK_TYPE(it, EVRY_TYPE_ACTION))
      return NULL;

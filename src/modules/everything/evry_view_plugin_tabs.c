@@ -14,6 +14,7 @@ struct _Tab
 
 static void _tabs_update(Tab_View *v);
 
+#if 0
 static int
 _animator(void *data)
 {
@@ -83,6 +84,7 @@ _tab_scroll_to(Tab_View *v, Evry_Plugin *p, int animate)
    else
      e_box_align_set(v->o_tabs, 0.0, 0.5);
 }
+#endif
 
 static int
 _timer_cb(void *data)

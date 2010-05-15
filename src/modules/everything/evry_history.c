@@ -165,7 +165,6 @@ void
 evry_history_free(void)
 {
    Cleanup_Data *d;
-   char *key;
 
    evry_hist = e_config_domain_load("module.everything.cache", hist_edd);
    if (evry_hist)
@@ -262,10 +261,8 @@ evry_history_item_add(Evry_Item *it, const char *ctxt, const char *input)
    History_Types *ht;
    History_Item  *hi = NULL;
    Eina_List *l;
-   const char *id;
-   const char *type;
-
    int rem_ctxt = 1;
+   const char *id;
 
    if (!evry_hist)
      return NULL;
@@ -362,7 +359,6 @@ evry_history_item_usage_set(Evry_Item *it, const char *input, const char *ctxt)
    Eina_List *l;
    int rem_ctxt = 1;
    it->usage = 0.0;
-   const char *type;
 
    if (!it->plugin->history)
      return 0;

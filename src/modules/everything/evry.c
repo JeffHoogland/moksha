@@ -31,11 +31,11 @@ static void _evry_selector_free(Evry_Selector *sel);
 static void _evry_selector_activate(Evry_Selector *sel);
 static void _evry_selectors_switch(int dir);
 static void _evry_selector_update(Evry_Selector *sel);
-static void _evry_selector_item_set(Evry_Selector *sel);
 static int  _evry_selector_subjects_get(const char *plugin_name);
 static int  _evry_selector_actions_get(Evry_Item *it);
 static int  _evry_selector_objects_get(Evry_Action *act);
 static void _evry_selector_update_actions(Evry_Selector *sel);
+static void _evry_selector_item_update(Evry_Selector *sel);
 static Evry_Selector *_evry_selector_for_plugin_get(Evry_Plugin *p);
 
 static Evry_Window *_evry_window_new(E_Zone *zone);
@@ -967,7 +967,6 @@ _evry_selector_update(Evry_Selector *sel)
 
    _evry_selector_item_update(sel);
 
-
    if (sel == win->selectors[0])
      {
 	if (item_changed)
@@ -1371,10 +1370,14 @@ _evry_cheat_history(Evry_State *s, int promote, int delete)
 
    History_Entry *he;
    History_Item *hi;
+   History_Types *ht;
    Eina_List *l, *ll;
    Evry_Item *it = s->cur_item;
 
-   if (!(he = eina_hash_find(evry_hist->subjects, (it->id ? it->id : it->label))))
+   if (!(ht = evry_history_types_get(it->type)))
+     return 1;
+   
+   if (!(he = eina_hash_find(ht->types, (it->id ? it->id : it->label))))
      return 1;
 
    EINA_LIST_FOREACH_SAFE(he->items, l, ll, hi)

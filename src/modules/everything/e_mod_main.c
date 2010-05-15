@@ -35,8 +35,6 @@ static E_Config_DD *plugin_conf_edd = NULL;
 static E_Config_DD *plugin_setting_edd = NULL;
 
 static Ecore_Timer *cleanup_timer;
-static int _update = 0;
-
 
 EAPI int _e_module_evry_log_dom = -1;
 
