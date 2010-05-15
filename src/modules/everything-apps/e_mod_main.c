@@ -345,10 +345,8 @@ _item_add(Plugin *p, Efreet_Desktop *desktop, const char *file, int match)
 	app = EVRY_ITEM_NEW(Evry_Item_App, p, desktop->name, _icon_get, _item_free);
 
 	EVRY_ACTN(app)->action = &_exec_open_file_action;
-	EVRY_ACTN(app)->remember_context = EINA_TRUE;
 	EVRY_ITEM(app)->id = eina_stringshare_add(desktop->exec);
-	EVRY_ITEM(app)->subtype = EVRY_TYPE_ACTION;
-	EVRY_ITEM(app)->fuzzy_match = match;
+
 	if (desktop->comment)
 	  EVRY_ITEM(app)->detail = eina_stringshare_add(desktop->comment);
 	else if (desktop->generic_name)
@@ -358,10 +356,7 @@ _item_add(Plugin *p, Efreet_Desktop *desktop, const char *file, int match)
      {
 	app = EVRY_ITEM_NEW(Evry_Item_App, p, file, _icon_get, _item_free);
 	EVRY_ACTN(app)->action = &_exec_open_file_action;
-	EVRY_ACTN(app)->remember_context = EINA_TRUE;
 	EVRY_ITEM(app)->id = eina_stringshare_add(file);
-	EVRY_ITEM(app)->subtype = EVRY_TYPE_ACTION;
-	EVRY_ITEM(app)->fuzzy_match = match;
      }
 
    app->desktop = desktop;
@@ -389,8 +384,11 @@ _item_add(Plugin *p, Efreet_Desktop *desktop, const char *file, int match)
 	     eina_hash_add(p->added, file, app);
 	  }
      }
-
+   
+   EVRY_ACTN(app)->remember_context = EINA_TRUE;
+   EVRY_ITEM(app)->subtype = EVRY_TYPE_ACTION;
    EVRY_ITEM(app)->fuzzy_match = match;
+
    EVRY_PLUGIN_ITEM_APPEND(p, app);
 
    return app;
@@ -402,25 +400,41 @@ _add_desktop_list(Plugin *p, Eina_List *apps, const char *input)
    Efreet_Desktop *desktop;
    Eina_List *l;
    int m1, m2;
-
+   const char *exec, *end;
+   char buf[PATH_MAX];
+   
    EINA_LIST_FOREACH(apps, l, desktop)
      {
 	if (eina_list_count(EVRY_PLUGIN(p)->items) > 199) break;
 	if (!desktop->name || !desktop->exec) continue;
-
+	
 	if (input)
 	  {
-	     char *exec = strrchr(desktop->exec, '/');
-	     if (!exec++ || !exec) exec = desktop->exec;
-
-	     m1 = evry->fuzzy_match(exec, input);
+	     m1 = m2 = 0;
+	     
+	     exec = ecore_file_file_get(desktop->exec);
+	     if (exec && (end = strchr(exec, '%')))
+	       {
+		  strncpy(buf, exec, end - exec - 1);
+		  buf[end - exec] = 0;
+		  m1 = evry->fuzzy_match(buf, input);
+	       }
+	     else
+	       {
+		  m1 = evry->fuzzy_match(exec, input);
+	       }
+	     
 	     m2 = evry->fuzzy_match(desktop->name, input);
 
 	     if (!m1 || (m2 && m2 < m1))
 	       m1 = m2;
-	  }
 
-	if (!input || m1) _item_add(p, desktop, NULL, m1);
+	     if (m1) _item_add(p, desktop, NULL, m1);
+	  }
+	else
+	  {
+	     _item_add(p, desktop, NULL, 0);
+	  }
      }
 }
 
@@ -1284,8 +1298,6 @@ _conf_shutdown(void)
 }
 
 /***************************************************************************/
-
-static Eina_Bool active = EINA_FALSE;
 
 EAPI E_Module_Api e_modapi =
   {
