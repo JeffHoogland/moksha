@@ -326,12 +326,10 @@ PKG_CHECK_MODULES(E_SYS, [
 PKG_CHECK_MODULES(E_INIT, [
   evas
   ecore
-  ecore-file
   ecore-evas
   ecore-x
   edje
   ecore-ipc
-  eet >= 1.2.3
   eina-0
 ])
 
