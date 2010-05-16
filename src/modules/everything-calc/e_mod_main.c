@@ -13,7 +13,8 @@ static int  _cb_del(void *data, int type, void *event);
 
 static const Evry_API *evry = NULL;
 static Evry_Module *evry_module = NULL;
-static Evry_Plugin *p1;
+static Evry_Plugin *_plug;
+static Ecore_Event_Handler *action_handler = NULL;
 
 static Ecore_Exe *exe = NULL;
 static Eina_List *history = NULL;
@@ -103,42 +104,47 @@ _cleanup(Evry_Plugin *p)
      }
 }
 
-/* static int
- * _action(Evry_Plugin *p, const Evry_Item *act __UNUSED__, const Evry_Item *it)
- * {
- *    Eina_List *l;
- *    Evry_Item *it2, *it_old;
- *
- *    /\* remove duplicates *\/
- *    if (p->items->next)
- *      {
- * 	it = p->items->data;
- *
- * 	EINA_LIST_FOREACH(p->items->next, l, it2)
- * 	  {
- * 	     if (!strcmp(it->label, it2->label))
- * 	       break;
- * 	     it2 = NULL;
- * 	  }
- *
- * 	if (it2)
- * 	  {
- * 	     p->items = eina_list_remove(p->items, it2);
- * 	     evry_item_free(it2);
- * 	  }
- *      }
- *
- *    it_old = p->items->data;
- *    it_old->selected = EINA_FALSE;
- *
- *    it2 = evry_item_new(NULL, p, it_old->label, NULL);
- *    it2->context = eina_stringshare_ref(p->name);
- *    p->items = eina_list_prepend(p->items, it2);
- *
- *    evry_plugin_async_update(p, EVRY_ASYNC_UPDATE_ADD);
- *
- *    return EVRY_ACTION_FINISHED;
- * } */
+static int
+_cb_action_performed(void *data, int type, void *event)
+{
+   Eina_List *l;
+   Evry_Item *it, *it2, *it_old;
+   Evry_Event_Action_Performed *ev = event;
+   Evry_Plugin *p = _plug;
+
+   if (!ev->it1 || !(ev->it1->plugin == p))
+     return 1;
+
+   /* remove duplicates */
+   if (p->items->next)
+     {
+	it = p->items->data;
+
+	EINA_LIST_FOREACH(p->items->next, l, it2)
+	  {
+	     if (!strcmp(it->label, it2->label))
+	       break;
+	     it2 = NULL;
+	  }
+
+	if (it2)
+	  {
+	     p->items = eina_list_remove(p->items, it2);
+	     EVRY_ITEM_FREE(it2);
+	  }
+     }
+
+   it_old = p->items->data;
+   it_old->selected = EINA_FALSE;
+
+   it2 = EVRY_ITEM_NEW(Evry_Item, p, it_old->label, NULL, NULL);
+   it2->context = eina_stringshare_ref(p->name);
+   p->items = eina_list_prepend(p->items, it2);
+
+   EVRY_PLUGIN_UPDATE(p, EVRY_UPDATE_ADD);
+
+   return 1;
+}
 
 static int
 _fetch(Evry_Plugin *p, const char *input)
@@ -215,8 +221,8 @@ _cb_del(void *data __UNUSED__, int type __UNUSED__, void *event)
 
 static int
 _plugins_init(const Evry_API *_api)
-{   
-   if (evry_module->active) 
+{
+   if (evry_module->active)
      return EINA_TRUE;
 
    evry = _api;
@@ -225,21 +231,24 @@ _plugins_init(const Evry_API *_api)
      return EINA_FALSE;
 
    EVRY_TYPE_TEXT = evry->type_register("TEXT");
-   
-   p1 = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Calculator"),
+
+   action_handler = ecore_event_handler_add(EVRY_EVENT_ACTION_PERFORMED,
+					    _cb_action_performed, NULL);
+
+   _plug = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Calculator"),
 			_module_icon,
 			EVRY_TYPE_TEXT,
 			_begin, _cleanup, _fetch, NULL);
 
-   p1->history     = EINA_FALSE;
-   p1->async_fetch = EINA_TRUE;
+   _plug->history     = EINA_FALSE;
+   _plug->async_fetch = EINA_TRUE;
 
-   if (evry->plugin_register(p1, EVRY_PLUGIN_SUBJECT, 0))
+   if (evry->plugin_register(_plug, EVRY_PLUGIN_SUBJECT, 0))
      {
-	Plugin_Config *pc = p1->config;
+	Plugin_Config *pc = _plug->config;
 	pc->view_mode = VIEW_MODE_LIST;
-	pc->aggregate = EINA_FALSE;
 	pc->trigger = eina_stringshare_add("=");
+	pc->trigger_only = EINA_TRUE;
      }
 
    return EINA_TRUE;
@@ -249,9 +258,11 @@ static void
 _plugins_shutdown(void)
 {
    if (!evry_module->active) return;
-   printf("calc shut down\n");
 
-   EVRY_PLUGIN_FREE(p1);
+   ecore_event_handler_del(action_handler);
+   action_handler = NULL;
+
+   EVRY_PLUGIN_FREE(_plug);
 
    evry_module->active = EINA_FALSE;
 }
@@ -266,7 +277,7 @@ EAPI E_Module_Api e_modapi =
 
 EAPI void *
 e_modapi_init(E_Module *m)
-{   
+{
    evry_module = E_NEW(Evry_Module, 1);
    evry_module->init     = &_plugins_init;
    evry_module->shutdown = &_plugins_shutdown;
@@ -276,7 +287,7 @@ e_modapi_init(E_Module *m)
      evry_module->active = _plugins_init(evry);
 
    e_module_delayed_set(m, 1);
-   
+
    return m;
 }
 
@@ -284,7 +295,7 @@ EAPI int
 e_modapi_shutdown(E_Module *m)
 {
    _plugins_shutdown();
-   
+
    EVRY_MODULE_UNREGISTER(evry_module);
    E_FREE(evry_module);
 
