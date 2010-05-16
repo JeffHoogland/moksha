@@ -1522,7 +1522,7 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
    Ecore_Event_Key *ev = event;
    Evry_State *s;
    Evry_Selector *sel;
-   const char *key = NULL, *old;
+   const char *old;
 
    if (ev->event_window != input_window)
      return 1;
@@ -1574,62 +1574,51 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 
    if (!strcmp(ev->key, "KP_Enter"))
      {
-	key = eina_stringshare_add("Return");
+	ev->key = "Return";
      }
    else if (((evry_conf->quick_nav == 1) && (ev->modifiers & ECORE_EVENT_MODIFIER_ALT)) ||
        ((evry_conf->quick_nav == 2) && (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)))
      {
 	if (!strcmp(ev->key, "k") || (!strcmp(ev->key, "K")))
-	  key = eina_stringshare_add("Up");
+	  ev->key = "Up";
 	else if (!strcmp(ev->key, "j") || (!strcmp(ev->key, "J")))
-	  key = eina_stringshare_add("Down");
+	  ev->key = "Down";
 	else if (!strcmp(ev->key, "n") || (!strcmp(ev->key, "N")))
-	  key = eina_stringshare_add("Next");
+	  ev->key = "Next";
 	else if (!strcmp(ev->key, "p") || (!strcmp(ev->key, "P")))
-	  key = eina_stringshare_add("Prior");
+	  ev->key = "Prior";
 	else if (!strcmp(ev->key, "l") || (!strcmp(ev->key, "L")))
-	  key = eina_stringshare_add("Right");
+	  ev->key = "Right";
 	else if (!strcmp(ev->key, "h") || (!strcmp(ev->key, "H")))
-	  key = eina_stringshare_add("Left");
+	  ev->key = "Left";
 	else if (!strcmp(ev->key, "i") || (!strcmp(ev->key, "I")))
-	  key = eina_stringshare_add("Tab");
+	  ev->key = "Tab";
 	else if (!strcmp(ev->key, "m") || (!strcmp(ev->key, "M")))
-	  key = eina_stringshare_add("Return");
-	else
-	  key = eina_stringshare_add(ev->key);
-
-	ev->key = key;
+	  ev->key = "Return";
      }
    else if (((evry_conf->quick_nav == 3) && (ev->modifiers & ECORE_EVENT_MODIFIER_ALT)) ||
 	    ((evry_conf->quick_nav == 4) && (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)))
      {
 	if (!strcmp(ev->key, "p") || (!strcmp(ev->key, "P")))
-	  key = eina_stringshare_add("Up");
+	  ev->key = "Up";
 	else if (!strcmp(ev->key, "n") || (!strcmp(ev->key, "N")))
-	  key = eina_stringshare_add("Down");
+	  ev->key = "Down";
 	else if (!strcmp(ev->key, "f") || (!strcmp(ev->key, "F")))
-	  key = eina_stringshare_add("Right");
+	  ev->key = "Right";
 	else if (!strcmp(ev->key, "b") || (!strcmp(ev->key, "B")))
-	  key = eina_stringshare_add("Left");
+	  ev->key = "Left";
 	else if (!strcmp(ev->key, "i") || (!strcmp(ev->key, "I")))
-	  key = eina_stringshare_add("Tab");
+	  ev->key = "Tab";
 	else if (!strcmp(ev->key, "m") || (!strcmp(ev->key, "M")))
-	  key = eina_stringshare_add("Return");
-	else
-	  key = eina_stringshare_add(ev->key);
-
-	ev->key = key;
-     }
-   else
-     {
-	key = eina_stringshare_add(ev->key);
-	ev->key = key;
+	  ev->key = "Return";
      }
 
    if (!win || !(sel = win->selector))
      goto end;
 
-   if (!ev->modifiers && !strcmp(key, "Tab"))
+   if (!strcmp(ev->key, "Tab") &&
+       !((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) ||
+	 (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)))
      {
 	_evry_selectors_switch(1);
 	goto end;
@@ -1638,42 +1627,42 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
    if (!(s = sel->state))
      goto end;
 
-   if (!win->visible && (!strcmp(key, "Down")))
+   if (!win->visible && (!strcmp(ev->key, "Down")))
      {
 	_evry_list_win_show();
      }
-   else if ((!strcmp(key, "ISO_Left_Tab") ||
+   else if ((!strcmp(ev->key, "ISO_Left_Tab") ||
 	     (((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) ||
 	       (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)) &&
-	      (!strcmp(key, "Tab")))))
+	      (!strcmp(ev->key, "Tab")))))
      {
 	_evry_input_complete(s);
      }
    else if ((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
-   	    (!strcmp(key, "Delete") || !strcmp(key, "Insert")))
+   	    (!strcmp(ev->key, "Delete") || !strcmp(ev->key, "Insert")))
      {
    	if (!s->cur_item)
    	  goto end;
 
-	int delete = (!strcmp(key, "Delete") && (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT));
-   	int promote = (!strcmp(key, "Insert"));
+	int delete = (!strcmp(ev->key, "Delete") && (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT));
+   	int promote = (!strcmp(ev->key, "Insert"));
 
 	_evry_cheat_history(s, promote, delete);
 
      }
    else if (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)
      {
-	if (!strcmp(key, "u"))
+	if (!strcmp(ev->key, "u"))
 	  {
 	     if (!_evry_clear(sel))
 	       evry_browse_back(sel);
 	     goto end;
 	  }
-	else if (!strcmp(key, "1"))
+	else if (!strcmp(ev->key, "1"))
 	  _evry_view_toggle(s, NULL);
-	else if (!strcmp(key, "Return"))
+	else if (!strcmp(ev->key, "Return"))
 	  _evry_plugin_action(sel, 0);
-	else if (!strcmp(key, "v"))
+	else if (!strcmp(ev->key, "v"))
 	  {
 	     win->request_selection = EINA_TRUE;
 	     ecore_x_selection_primary_request
@@ -1692,25 +1681,25 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
    /* let view intercept keypress */
    else if (_evry_view_key_press(s, ev))
      goto end;
-   else if (!strcmp(key, "Right"))
+   else if (!strcmp(ev->key, "Right"))
      {
 	if (!evry_browse_item(sel) &&
 	    (sel != win->selectors[2]))
 	  _evry_selectors_switch(1);
      }
-   else if (!strcmp(key, "Left"))
+   else if (!strcmp(ev->key, "Left"))
      {
 	if (!evry_browse_back(sel))
 	  _evry_selectors_switch(-1);
      }
-   else if (!strcmp(key, "Return"))
+   else if (!strcmp(ev->key, "Return"))
      {
 	if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
 	  _evry_plugin_action(sel, 0);
 	else /*if (!_evry_browse_item(sel))*/
 	  _evry_plugin_action(sel, 1);
      }
-   else if (!strcmp(key, "BackSpace"))
+   else if (!strcmp(ev->key, "BackSpace"))
      {
 	if (!_evry_backspace(sel))
 	  evry_browse_back(sel);
@@ -1733,7 +1722,6 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
      }
 
  end:
-   eina_stringshare_del(ev->key);
    ev->key = old;
    return 1;
 }
