@@ -26,6 +26,7 @@ static int  _evry_cb_update_timer(void *data);
 static Evry_State *_evry_state_new(Evry_Selector *sel, Eina_List *plugins);
 static void _evry_state_pop(Evry_Selector *sel);
 
+static int _evry_selectors_shift(int dir);
 static Evry_Selector *_evry_selector_new(Evry_Window *win, int type);
 static void _evry_selector_free(Evry_Selector *sel);
 static void _evry_selector_activate(Evry_Selector *sel);
@@ -56,6 +57,7 @@ static void _evry_item_sel(Evry_State *s, Evry_Item *it);
 
 static int  _evry_cb_key_down(void *data, int type, void *event);
 static int  _evry_cb_selection_notify(void *data, int type, void *event);
+
 
 /* local subsystem globals */
 static Evry_Window *win = NULL;
@@ -125,46 +127,6 @@ _cb_show_timer(void *data)
      }
 
    return 0;
-}
-
-static int
-_evry_selectors_shift()
-{
-   void *new_sel;
-   Evry_Selector *sel;
-   Evry_State *s;
-
-   if ((new_sel = realloc(win->sel_list, sizeof(Evry_Selector*) * 6)))
-     {
-	win->sel_list = new_sel;
-
-	edje_object_part_unswallow(win->o_main, win->sel_list[0]->o_main);
-	evas_object_hide(win->sel_list[0]->o_main);
-	edje_object_part_unswallow(win->o_main, win->sel_list[1]->o_main);
-	evas_object_hide(win->sel_list[1]->o_main);
-	edje_object_part_unswallow(win->o_main, win->sel_list[2]->o_main);
-
-	edje_object_signal_emit(win->o_main, "e,state,object_selector_hide", "e");
-
-	win->sel_list[5] = NULL;
-	win->selectors = win->sel_list + 2;
-	_evry_selector_new(win, EVRY_PLUGIN_ACTION);
-	_evry_selector_new(win, EVRY_PLUGIN_OBJECT);
-
-	win->selector = win->selectors[0];
-	sel = win->selector;
-
-	edje_object_part_swallow(win->o_main, "e.swallow.subject_selector",
-				 sel->o_main);
-
-	edje_object_signal_emit(sel->o_main, "e,state,selected", "e");
-	/* was checked before. anyway */
-	if ((s = sel->state) && (s->cur_item))
-	  _evry_selector_update_actions(sel);
-
-	win->level++;
-     }
-   return 1;
 }
 
 int
@@ -307,37 +269,8 @@ evry_hide(int clear)
 	return;
      }
 
-   if (win->level > 0)
+   if (_evry_selectors_shift(-1))
      {
-	Evry_Selector *sel;
-
-	_evry_selector_free(win->selectors[1]);
-	_evry_selector_free(win->selectors[2]);
-
-	edje_object_part_unswallow(win->o_main, win->selectors[0]->o_main);
-	win->selectors = win->sel_list; //-= 2;
-	win->sel_list[3] = NULL;
-	win->selector = NULL;
-
-	edje_object_signal_emit(win->o_main,
-				"e,state,object_selector_show", "e");
-
-	edje_object_part_swallow(win->o_main,
-				 "e.swallow.subject_selector",
-				 win->selectors[0]->o_main);
-	evas_object_show(win->selectors[0]->o_main);
-
-	edje_object_part_swallow(win->o_main,
-				 "e.swallow.action_selector",
-				 win->selectors[1]->o_main);
-	evas_object_show(win->selectors[1]->o_main);
-
-	_evry_selector_activate(win->selectors[2]);
-
-	edje_object_part_swallow(win->o_main,
-				 "e.swallow.object_selector",
-				 win->selectors[2]->o_main);
-	win->level = 0;
 	return;
      }
 
@@ -362,6 +295,85 @@ evry_hide(int clear)
    input_window = 0;
 
    evry_history_unload();
+}
+
+static int
+_evry_selectors_shift(int dir)
+{
+   if (dir > 0)
+     {
+	void *new_sel;
+	Evry_Selector *sel;
+	Evry_State *s;
+
+	if (!(new_sel = realloc(win->sel_list, sizeof(Evry_Selector*) * 6)))
+	  return 0;
+
+	win->sel_list = new_sel;
+
+	edje_object_part_unswallow(win->o_main, win->sel_list[0]->o_main);
+	evas_object_hide(win->sel_list[0]->o_main);
+	edje_object_part_unswallow(win->o_main, win->sel_list[1]->o_main);
+	evas_object_hide(win->sel_list[1]->o_main);
+	edje_object_part_unswallow(win->o_main, win->sel_list[2]->o_main);
+
+	edje_object_signal_emit(win->o_main, "e,state,object_selector_hide", "e");
+
+	win->sel_list[5] = NULL;
+	win->selectors = win->sel_list + 2;
+	_evry_selector_new(win, EVRY_PLUGIN_ACTION);
+	_evry_selector_new(win, EVRY_PLUGIN_OBJECT);
+
+	win->selector = win->selectors[0];
+	sel = win->selector;
+
+	edje_object_part_swallow(win->o_main, "e.swallow.subject_selector",
+				 sel->o_main);
+
+	edje_object_signal_emit(sel->o_main, "e,state,selected", "e");
+	/* was checked before. anyway */
+	if ((s = sel->state) && (s->cur_item))
+	  _evry_selector_update_actions(sel);
+
+	win->level++;
+
+	return 1;
+     }
+   else if ((dir < 0) && (win->level > 0))
+     {
+
+	_evry_selector_free(win->selectors[1]);
+	_evry_selector_free(win->selectors[2]);
+
+	edje_object_part_unswallow(win->o_main, win->selectors[0]->o_main);
+	win->selectors = win->sel_list;
+	win->sel_list[3] = NULL;
+	win->selector = NULL;
+
+	edje_object_signal_emit(win->o_main,
+				"e,state,object_selector_show", "e");
+
+	edje_object_part_swallow(win->o_main,
+				 "e.swallow.subject_selector",
+				 win->selectors[0]->o_main);
+	evas_object_show(win->selectors[0]->o_main);
+
+	edje_object_part_swallow(win->o_main,
+				 "e.swallow.action_selector",
+				 win->selectors[1]->o_main);
+	evas_object_show(win->selectors[1]->o_main);
+
+	_evry_selector_activate(win->selectors[2]);
+
+	edje_object_part_swallow(win->o_main,
+				 "e.swallow.object_selector",
+				 win->selectors[2]->o_main);
+	win->level = 0;
+
+	return 1;
+     }
+
+   return 0;
 }
 
 EAPI void
