@@ -33,6 +33,9 @@ struct _Evry_Window
 
   Evry_Selector  *selector;
   Evry_Selector **selectors;
+  Evry_Selector **sel_list;
+
+  int level;
 };
 
 struct _Evry_Selector

@@ -75,13 +75,15 @@ static void _hash_free(void *data)
 static Evry_Plugin *
 _begin_open_with(Evry_Plugin *plugin, const Evry_Item *item)
 {
-   GET_PLUGIN(p, plugin);
+   Plugin *p = NULL;
+
+   /* GET_PLUGIN(p, plugin); */
 
    Efreet_Desktop *d, *d2;
    const char *mime;
    const char *path = NULL;
    Eina_List *l;
-   
+
    if (CHECK_TYPE(item, EVRY_TYPE_ACTION))
      {
 	GET_ACTION(act, item);
@@ -110,6 +112,10 @@ _begin_open_with(Evry_Plugin *plugin, const Evry_Item *item)
 
    if (!path || !mime || !(mime = efreet_mime_type_get(path)))
      return NULL;
+
+   p = E_NEW(Plugin, 1);
+   p->base = *plugin;
+   p->base.items = NULL;
 
    p->apps_mime = efreet_util_desktop_mime_list(mime);
 
@@ -149,16 +155,20 @@ _begin_open_with(Evry_Plugin *plugin, const Evry_Item *item)
 	p->apps_mime = eina_list_prepend(p->apps_mime, d);
      }
 
-   
+
    p->added = eina_hash_string_small_new(_hash_free);
 
-   return plugin;
+   return EVRY_PLUGIN(p);
 }
 
 static Evry_Plugin *
 _begin(Evry_Plugin *plugin, const Evry_Item *item)
 {
-   GET_PLUGIN(p, plugin);
+   Plugin *p;
+
+   p = E_NEW(Plugin, 1);
+   p->base = *plugin;
+   p->base.items = NULL;
 
    if (item && (item != _act_open_with))
      return NULL;
@@ -168,7 +178,7 @@ _begin(Evry_Plugin *plugin, const Evry_Item *item)
    if (_conf->list_executables)
      _scan_executables();
 
-   return plugin;
+   return EVRY_PLUGIN(p);
 }
 
 
@@ -217,6 +227,7 @@ _finish(Evry_Plugin *plugin)
    p->app_command = NULL;
    p->app_parameter = NULL;
 
+   E_FREE(p);
 }
 
 static void
@@ -384,7 +395,7 @@ _item_add(Plugin *p, Efreet_Desktop *desktop, const char *file, int match)
 	     eina_hash_add(p->added, file, app);
 	  }
      }
-   
+
    EVRY_ACTN(app)->remember_context = EINA_TRUE;
    EVRY_ITEM(app)->subtype = EVRY_TYPE_ACTION;
    EVRY_ITEM(app)->fuzzy_match = match;
@@ -402,16 +413,16 @@ _add_desktop_list(Plugin *p, Eina_List *apps, const char *input)
    int m1, m2;
    const char *exec, *end;
    char buf[PATH_MAX];
-   
+
    EINA_LIST_FOREACH(apps, l, desktop)
      {
 	if (eina_list_count(EVRY_PLUGIN(p)->items) > 199) break;
 	if (!desktop->name || !desktop->exec) continue;
-	
+
 	if (input)
 	  {
 	     m1 = m2 = 0;
-	     
+
 	     exec = ecore_file_file_get(desktop->exec);
 	     if (exec && (end = strchr(exec, '%')))
 	       {
@@ -423,7 +434,7 @@ _add_desktop_list(Plugin *p, Eina_List *apps, const char *input)
 	       {
 		  m1 = evry->fuzzy_match(exec, input);
 	       }
-	     
+
 	     m2 = evry->fuzzy_match(desktop->name, input);
 
 	     if (!m1 || (m2 && m2 < m1))

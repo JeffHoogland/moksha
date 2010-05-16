@@ -127,6 +127,46 @@ _cb_show_timer(void *data)
    return 0;
 }
 
+static int
+_evry_selectors_shift()
+{
+   void *new_sel;
+   Evry_Selector *sel;
+   Evry_State *s;
+
+   if ((new_sel = realloc(win->sel_list, sizeof(Evry_Selector*) * 6)))
+     {
+	win->sel_list = new_sel;
+
+	edje_object_part_unswallow(win->o_main, win->sel_list[0]->o_main);
+	evas_object_hide(win->sel_list[0]->o_main);
+	edje_object_part_unswallow(win->o_main, win->sel_list[1]->o_main);
+	evas_object_hide(win->sel_list[1]->o_main);
+	edje_object_part_unswallow(win->o_main, win->sel_list[2]->o_main);
+
+	edje_object_signal_emit(win->o_main, "e,state,object_selector_hide", "e");
+
+	win->sel_list[5] = NULL;
+	win->selectors = win->sel_list + 2;
+	_evry_selector_new(win, EVRY_PLUGIN_ACTION);
+	_evry_selector_new(win, EVRY_PLUGIN_OBJECT);
+
+	win->selector = win->selectors[0];
+	sel = win->selector;
+
+	edje_object_part_swallow(win->o_main, "e.swallow.subject_selector",
+				 sel->o_main);
+
+	edje_object_signal_emit(sel->o_main, "e,state,selected", "e");
+	/* was checked before. anyway */
+	if ((s = sel->state) && (s->cur_item))
+	  _evry_selector_update_actions(sel);
+
+	win->level++;
+     }
+   return 1;
+}
+
 int
 evry_show(E_Zone *zone, const char *params)
 {
@@ -137,6 +177,14 @@ evry_show(E_Zone *zone, const char *params)
      {
 	Eina_List *l;
 	Evry_Plugin *p;
+
+	if (!(win->level) && !(params) &&
+	    (win->selector == win->selectors[2]) &&
+	    (win->selector->state && win->selector->state->cur_item))
+	  {
+	     _evry_selectors_shift(1);
+	     return 1;
+	  }
 
 	if (!(params && eina_list_count(win->selectors[0]->states) == 1))
 	  evry_hide(1);
@@ -159,7 +207,7 @@ evry_show(E_Zone *zone, const char *params)
      return 0;
 
    ecore_x_sync();
-   
+
    win = _evry_window_new(zone);
    if (!win)
      {
@@ -175,7 +223,9 @@ evry_show(E_Zone *zone, const char *params)
    if (params)
      win->plugin_dedicated = EINA_TRUE;
 
-   win->selectors = E_NEW(Evry_Selector*, 3);
+   win->sel_list = E_NEW(Evry_Selector*, 4);
+   win->sel_list[3] = NULL;
+   win->selectors = win->sel_list;
    _evry_selector_new(win, EVRY_PLUGIN_SUBJECT);
    _evry_selector_new(win, EVRY_PLUGIN_ACTION);
    _evry_selector_new(win, EVRY_PLUGIN_OBJECT);
@@ -212,6 +262,7 @@ void
 evry_hide(int clear)
 {
    Ecore_Event_Handler *ev;
+   int i;
 
    if (!win) return;
 
@@ -256,17 +307,49 @@ evry_hide(int clear)
 	return;
      }
 
+   if (win->level > 0)
+     {
+	Evry_Selector *sel;
+
+	_evry_selector_free(win->selectors[1]);
+	_evry_selector_free(win->selectors[2]);
+
+	edje_object_part_unswallow(win->o_main, win->selectors[0]->o_main);
+	win->selectors = win->sel_list; //-= 2;
+	win->sel_list[3] = NULL;
+	win->selector = NULL;
+
+	edje_object_signal_emit(win->o_main,
+				"e,state,object_selector_show", "e");
+
+	edje_object_part_swallow(win->o_main,
+				 "e.swallow.subject_selector",
+				 win->selectors[0]->o_main);
+	evas_object_show(win->selectors[0]->o_main);
+
+	edje_object_part_swallow(win->o_main,
+				 "e.swallow.action_selector",
+				 win->selectors[1]->o_main);
+	evas_object_show(win->selectors[1]->o_main);
+
+	_evry_selector_activate(win->selectors[2]);
+
+	edje_object_part_swallow(win->o_main,
+				 "e.swallow.object_selector",
+				 win->selectors[2]->o_main);
+	win->level = 0;
+	return;
+     }
+
    if (win->show_timer)
      ecore_timer_del(win->show_timer);
 
    win->visible = EINA_FALSE;
-   _evry_selector_free(win->selectors[0]);
-   _evry_selector_free(win->selectors[1]);
-   _evry_selector_free(win->selectors[2]);
-   E_FREE(win->selectors);
 
-   /* selectors = NULL;
-    * selector = NULL; */
+   for (i = 0; win->sel_list[i]; i++)
+     _evry_selector_free(win->sel_list[i]);
+
+   E_FREE(win->sel_list);
 
    EINA_LIST_FREE(win->handlers, ev)
      ecore_event_handler_del(ev);
@@ -780,6 +863,12 @@ _evry_selector_activate(Evry_Selector *sel)
 	  _evry_view_hide(sel->state->view, 0);
 
 	_evry_list_win_clear(evry_conf->hide_list);
+     }
+
+   if (!sel)
+     {
+	ERR("selector == NULL");
+	return;
      }
 
    edje_object_signal_emit(sel->o_main, "e,state,selected", "e");
@@ -1375,7 +1464,7 @@ _evry_cheat_history(Evry_State *s, int promote, int delete)
 
    if (!(ht = evry_history_types_get(it->type)))
      return 1;
-   
+
    if (!(he = eina_hash_find(ht->types, (it->id ? it->id : it->label))))
      return 1;
 

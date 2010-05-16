@@ -234,7 +234,6 @@ static void
 _scan_mime_func(void *data)
 {
    Data *d = data;
-   /* Plugin *p = d->plugin; */
    Evry_Item_File *file;
    Eina_List *l;
    const char *mime;
@@ -311,7 +310,6 @@ _scan_cancel_func(void *data)
    Data *d = data;
    Plugin *p = d->plugin;
    Evry_Item_File *file;
-   /* Evry_Item *item; */
 
    if (!d->run_cnt)
      {
@@ -351,19 +349,12 @@ _scan_end_func(void *data)
    Data *d = data;
    Plugin *p = d->plugin;
    Evry_Item *item;
-   /* Evry_Item_File *f; */
    char *filename, *path, *mime;
    Eina_List *l, *ll, *lll;
    History_Item *hi;
    History_Entry *he;
    History_Types *ht = NULL;
    int cnt = 0;
-
-   /* if (!p->thread)
-    *   {
-    * 	_scan_cancel_func(d);
-    * 	return;
-    *   } */
 
    if (_conf->cache_dirs)
      ht = evry->history_types_get(EVRY_TYPE_FILE);
@@ -517,8 +508,6 @@ _dir_watcher(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, const c
 
       case ECORE_FILE_EVENT_CREATED_DIRECTORY:
       case ECORE_FILE_EVENT_CREATED_FILE:
-	 /* DBG("added %s", path); */
-
 	 label = ecore_file_file_get(path);
 
 	 file = EVRY_ITEM_NEW(Evry_Item_File, p, label, NULL, _item_free);
@@ -528,7 +517,6 @@ _dir_watcher(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, const c
 	   file->mime = eina_stringshare_ref(_mime_dir);
 
 	 _item_fill(file);
-
 	 p->files = eina_list_append(p->files, file);
 
 	 break;
@@ -536,7 +524,6 @@ _dir_watcher(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, const c
       case ECORE_FILE_EVENT_DELETED_FILE:
       case ECORE_FILE_EVENT_DELETED_DIRECTORY:
 	 label = eina_stringshare_add(path);
-	 /* DBG("delete %s", path); */
 
 	 EINA_LIST_FOREACH_SAFE(p->files, l, ll, file)
 	   {
@@ -609,21 +596,41 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
    if (it && !CHECK_TYPE(it, EVRY_TYPE_ACTION))
      return NULL;
 
-   p = E_NEW(Plugin, 1);
-   p->base = *plugin;
-   p->base.items = NULL;
-
    if (it)
      {
 	/* provide object */
 
-	p->directory = eina_stringshare_add(e_user_homedir_get());
+	const char *dir = NULL;
+
+	GET_ACTION(act, it);
+	if (!strcmp(act->name, "Browse Folder..."))
+	  {
+	     GET_FILE(file, act->it1.item);
+	     if (!evry->file_path_get(file))
+	       return NULL;
+
+	     char *tmp = ecore_file_dir_get(file->path);
+	     dir = eina_stringshare_add(tmp);
+	     E_FREE(tmp);
+	  }
+	else
+	  {
+	     dir = eina_stringshare_add(e_user_homedir_get());
+	  }
+
+	p = E_NEW(Plugin, 1);
+	p->base = *plugin;
+	p->base.items = NULL;
+	p->directory = dir;
 	p->parent = EINA_FALSE;
 	_read_directory(p);
      }
    else
      {
 	/* provide subject */
+	p = E_NEW(Plugin, 1);
+	p->base = *plugin;
+	p->base.items = NULL;
 	p->min_query = plugin->config->min_query;
 
 	if (_conf->show_homedir)
@@ -694,7 +701,6 @@ static int
 _fetch(Evry_Plugin *plugin, const char *input)
 {
    GET_PLUGIN(p, plugin);
-   /* Evry_Item_File *file; */
    int len = (input ? strlen(input) : 0);
 
    if (!p->command)
@@ -707,9 +713,6 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	char *path = NULL;
 
 	if (p->command != CMD_SHOW_ROOT)
-	    /* ((ecore_file_is_dir(input) ? (path = strdup(input)) : 0) ||
-	     *  ((path = ecore_file_dir_get(input)) &&
-	     *   (strcmp(p->directory, path))))) */
 	  {
 	     _free_files(p);
 
@@ -1206,6 +1209,12 @@ _open_folder_action(Evry_Action *act)
 }
 
 static int
+_browse_folder_action(Evry_Action *act)
+{
+   return 0;
+}
+
+static int
 _file_trash_action(Evry_Action *act)
 {
    Efreet_Uri *euri;
@@ -1349,9 +1358,13 @@ _plugins_init(const Evry_API *api)
     * 	      _file_trash_action, NULL);
     * EVRY_ITEM_DATA_INT_SET(act, ACT_DELETE); */
 
+   ACTION_NEW(N_("Browse Folder..."), EVRY_TYPE_FILE, "folder-open",
+	      _browse_folder_action, NULL);
+
    ACTION_NEW(N_("Open Folder (EFM)"), 0, "folder-open",
 	      _open_folder_action, _open_folder_check);
    act->remember_context = EINA_TRUE;
+
 #undef ACTION_NEW
 
    return EINA_TRUE;
