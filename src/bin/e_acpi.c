@@ -100,9 +100,9 @@ _e_acpi_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
    E_Event_Acpi *acpi_event;
 
    acpi_event = E_NEW(E_Event_Acpi, 1);
-   acpi_event->device = "battery";
-   acpi_event->bus_id = "BAT0";
-   acpi_event->event_type = "BATTERY_STATUS_CHANGED"; // make these standard E_ACPI enums
+   acpi_event->device = eina_stringshare_add("battery");
+   acpi_event->bus_id = eina_stringshare_add("BAT0");
+   acpi_event->event_type = E_ACPI_BATTERY_STATUS_CHANGED; // make these standard E_ACPI enums
    acpi_event->event_data = 1; //  change to something more meaningful
    ecore_event_add(E_EVENT_ACPI_LID, acpi_event, _e_acpi_cb_event_free, NULL);
     */
@@ -113,7 +113,11 @@ _e_acpi_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 static void 
 _e_acpi_cb_event_free(void *data __UNUSED__, void *event) 
 {
-   E_FREE(event);
+   E_Event_Acpi *ev;
+
+   if (ev->device) eina_stringshare_del(ev->device);
+   if (ev->bus_id) eina_stringshare_del(ev->bus_id);
+   E_FREE(ev);
 }
 
 

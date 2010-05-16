@@ -20,8 +20,8 @@ typedef struct _E_Event_Acpi E_Event_Acpi;
 
 struct _E_Event_Acpi 
 {
-   void *data;
-   int size;
+   const char *device, *bus_id;
+   int type, data;
 };
 
 EAPI int e_acpi_init(void);
