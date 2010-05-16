@@ -1311,14 +1311,16 @@ _battery_cb_exe_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	       {
 		  int full = 0;
 		  int time_left = 0;
-    int time_full = 0;
+                  int time_full = 0;
 		  int have_battery = 0;
 		  int have_power = 0;
 		  
                   if (sscanf(ev->lines[i].line, "%i %i %i %i %i",
-                             &full, &time_left, &time_full, &have_battery, &have_power)
+                             &full, &time_left, &time_full, 
+                             &have_battery, &have_power)
 		      == 5)
-                    _battery_update(full, time_left, time_full, have_battery, have_power);
+                    _battery_update(full, time_left, time_full,
+                                    have_battery, have_power);
                   else
                     e_powersave_mode_set(E_POWERSAVE_MODE_LOW);
 	       }

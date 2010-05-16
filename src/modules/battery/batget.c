@@ -1544,8 +1544,8 @@ poll_cb(void *data __UNUSED__)
 	    ((have_battery) && (battery_full < 0)))
 	  printf("ERROR\n");
 	else
-	  printf("%i %i %i %i\n", 
-		 battery_full, time_left, have_battery, have_power);
+	  printf("%i %i %i %i %i\n", 
+		 battery_full, time_left, time_left, have_battery, have_power);
 	fflush(stdout);
      }
    return 1;
