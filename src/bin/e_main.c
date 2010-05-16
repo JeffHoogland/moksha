@@ -751,8 +751,8 @@ main(int argc, char **argv)
    /* setup screensaver */
    if (!e_screensaver_init())
      {
-       e_error_message_show(_("Enlightenment cannot configure the X screensaver."));
-       _e_main_shutdown(-1);
+	e_error_message_show(_("Enlightenment cannot configure the X screensaver."));
+	_e_main_shutdown(-1);
      }
 
    e_init_status_set(_("Setup Desklock"));
@@ -760,8 +760,8 @@ main(int argc, char **argv)
    /* setup desklock */
    if (!e_desklock_init())
      {
-       e_error_message_show(_("Enlightenment cannot set up its desk locking system."));
-       _e_main_shutdown(-1);
+	e_error_message_show(_("Enlightenment cannot set up its desk locking system."));
+	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_desklock_shutdown);
 
@@ -775,7 +775,7 @@ main(int argc, char **argv)
      }
    _e_main_shutdown_push(e_popup_shutdown);
 
-   if (locked && ((!e_config->show_splash) && (!after_restart)))
+   if ((locked) && ((!e_config->show_splash) && (!after_restart)))
      e_desklock_show();
 
    TS("msgbus");
@@ -923,21 +923,28 @@ main(int argc, char **argv)
      }
    _e_main_shutdown_push(e_gadcon_shutdown);
 
+   e_init_status_set(_("Setup ACPI"));
+   TS("acpi");
+   /* acpi init will never fail. It always returns one even if acpid 
+    * is not running, so no need to trap the return */
+   e_acpi_init();
+   _e_main_shutdown_push(e_acpi_shutdown);
+
    e_init_status_set(_("Setup DPMS"));
    TS("dpms");     
    /* setup dpms */
    if (!e_dpms_init())
      {
-       e_error_message_show(_("Enlightenment cannot configure the DPMS settings."));
-       _e_main_shutdown(-1);
+	e_error_message_show(_("Enlightenment cannot configure the DPMS settings."));
+	_e_main_shutdown(-1);
      }
 
    e_init_status_set(_("Setup Powersave modes"));
    TS("powersave");
    if (!e_powersave_init())
      {
-       e_error_message_show(_("Enlightenment cannot set up its powersave modes."));
-       _e_main_shutdown(-1);
+	e_error_message_show(_("Enlightenment cannot set up its powersave modes."));
+	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_powersave_shutdown);
 
@@ -956,8 +963,8 @@ main(int argc, char **argv)
    /* setup mouse accel */
    if (!e_mouse_init())
      {
-       e_error_message_show(_("Enlightenment cannot configure the mouse settings."));
-       _e_main_shutdown(-1);
+	e_error_message_show(_("Enlightenment cannot configure the mouse settings."));
+	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_actions_shutdown);
 
