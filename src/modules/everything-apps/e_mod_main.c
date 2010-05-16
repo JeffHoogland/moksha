@@ -258,7 +258,7 @@ _icon_get(Evry_Item *it, Evas *e)
    Evas_Object *o = NULL;
 
    if (app->desktop)
-     o = e_util_desktop_icon_add(app->desktop, 64, e);
+     o = e_util_desktop_icon_add(app->desktop, 128, e);
 
    if (!o)
      o = evry->icon_theme_get("system-run", e);

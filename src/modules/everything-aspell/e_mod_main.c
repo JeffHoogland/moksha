@@ -7,20 +7,11 @@
 #include "evry_api.h"
 #include <ctype.h>
 
-static const char TRIGGER[] = "s ";
-static const char LANG_MODIFIER[] = "lang=";
+#define CMD_ASPELL   1
+#define CMD_HUNSPELL 2
 
 typedef struct _Plugin Plugin;
 typedef struct _Module_Config Module_Config;
-
-static const Evry_API *evry = NULL;
-static Evry_Module *evry_module = NULL;
-static Module_Config *_conf;
-static char _config_path[] =  "extensions/everthing-aspell";
-static char _config_domain[] = "module.everyhing-aspell";
-static char _module_icon[] = "accessories-dictionary";
-
-static E_Config_DD *_conf_edd = NULL;
 
 struct _Plugin
 {
@@ -48,15 +39,23 @@ struct _Module_Config
   E_Module *module;
 };
 
-static Plugin *_plug = NULL;
-
 static char *commands[] =
   {
     "aspell -a --encoding=UTF-8 %s %s",
     "hunspell -a -i utf-8 %s %s"
   };
-#define CMD_ASPELL   1
-#define CMD_HUNSPELL 2
+
+static const Evry_API *evry = NULL;
+static Evry_Module *evry_module = NULL;
+static Module_Config *_conf;
+static Evry_Plugin *_plug = NULL;
+static char _config_path[] =  "extensions/everthing-aspell";
+static char _config_domain[] = "module.everyhing-aspell";
+static char _module_icon[] = "accessories-dictionary";
+static E_Config_DD *_conf_edd = NULL;
+
+static const char TRIGGER[] = "s ";
+static const char LANG_MODIFIER[] = "lang=";
 
 static Eina_Bool
 _exe_restart(Plugin *p)
@@ -378,8 +377,6 @@ _cleanup(Evry_Plugin *plugin)
 static int
 _plugins_init(const Evry_API *_api)
 {
-   Evry_Plugin *p;
-
    if (evry_module->active)
      return EINA_TRUE;
 
@@ -388,26 +385,24 @@ _plugins_init(const Evry_API *_api)
    if (!evry->api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
-   p = EVRY_PLUGIN_NEW(Plugin, N_("Spell Checker"),
+   _plug = EVRY_PLUGIN_NEW(Plugin, N_("Spell Checker"),
 		       _module_icon,
 		       EVRY_TYPE_TEXT,
 		       NULL, _cleanup, _fetch, NULL);
-   p->config_path = _config_path;
-   p->history     = EINA_FALSE;
-   p->async_fetch = EINA_TRUE;
+   _plug->config_path = _config_path;
+   _plug->history     = EINA_FALSE;
+   _plug->async_fetch = EINA_TRUE;
 
-   if (evry->plugin_register(p, EVRY_PLUGIN_SUBJECT, 100))
+   if (evry->plugin_register(_plug, EVRY_PLUGIN_SUBJECT, 100))
      {
-	Plugin_Config *pc = p->config;
+	Plugin_Config *pc = _plug->config;
 	pc->view_mode = VIEW_MODE_LIST;
-	pc->aggregate = EINA_FALSE;
+	pc->aggregate = EINA_TRUE;
 	pc->top_level = EINA_FALSE;
 	pc->trigger = eina_stringshare_add(TRIGGER);
-	pc->trigger_only = EINA_TRUE;
-	pc->min_query = 2;
+	/* pc->trigger_only = EINA_TRUE; */
+	pc->min_query = 4;
      }
-
-   _plug = (Plugin *) p;
 
    return EINA_TRUE;
 }
@@ -491,7 +486,6 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    ow = e_widget_entry_add(evas, &cfdata->custom, NULL, NULL, NULL);
    e_widget_disabled_set(ow, 1);
    e_widget_framelist_object_append(of, ow);
-
 
    ow = e_widget_label_add(evas, _("Language"));
    e_widget_framelist_object_append(of, ow);

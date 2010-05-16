@@ -34,7 +34,7 @@ evry_plug_clipboard_init(void)
 			 EVRY_TYPE_TEXT, 0,
 			 "everything-clipboard",
 			 _action, _check_item);
-
+   act->remember_context = EINA_TRUE;
    evry_action_register(act, 10);
 
    clipboard_win = win;

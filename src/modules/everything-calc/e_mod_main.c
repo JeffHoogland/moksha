@@ -115,6 +115,9 @@ _cb_action_performed(void *data, int type, void *event)
    if (!ev->it1 || !(ev->it1->plugin == p))
      return 1;
 
+   if (!p->items)
+     return 1;
+   
    /* remove duplicates */
    if (p->items->next)
      {
@@ -123,14 +126,11 @@ _cb_action_performed(void *data, int type, void *event)
 	EINA_LIST_FOREACH(p->items->next, l, it2)
 	  {
 	     if (!strcmp(it->label, it2->label))
-	       break;
-	     it2 = NULL;
-	  }
-
-	if (it2)
-	  {
-	     p->items = eina_list_remove(p->items, it2);
-	     EVRY_ITEM_FREE(it2);
+	       {
+		  p->items = eina_list_promote_list(p->items, l);
+		  EVRY_PLUGIN_UPDATE(p, EVRY_UPDATE_ADD);
+		  return 1;
+	       }
 	  }
      }
 

@@ -1644,7 +1644,8 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
    	if (!s->cur_item)
    	  goto end;
 
-	int delete = (!strcmp(ev->key, "Delete") && (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT));
+	int delete = (!strcmp(ev->key, "Delete") &&
+		      (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT));
    	int promote = (!strcmp(ev->key, "Insert"));
 
 	_evry_cheat_history(s, promote, delete);
