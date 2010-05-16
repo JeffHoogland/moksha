@@ -1116,16 +1116,6 @@ group "E_Config" struct {
       value "delay" float: 0.3000000000000000000000000;
     }
   }
-  group "edge_bindings" list {
-    group "E_Config_Binding_Edge" struct {
-      value "context" int: 3;
-      value "modifiers" int: 0;
-      value "action" string: "desk_deskshow_toggle";
-      value "edge" uchar: 6;
-      value "any_mod" uchar: 0;
-      value "delay" float: 0.3000000000000000000000000;
-    }
-  }
   group "signal_bindings" list {
     group "E_Config_Binding_Signal" struct {
       value "context" int: 2;
