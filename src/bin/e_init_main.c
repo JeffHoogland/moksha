@@ -10,9 +10,7 @@
 #include <Ecore_X.h>
 #include <Ecore_Evas.h>
 #include <Ecore_Ipc.h>
-#include <Ecore_File.h>
 #include <Evas.h>
-#include <Eet.h>
 #include <Edje.h>
 
 #define E_TYPEDEFS 1
@@ -60,7 +58,7 @@ main(int argc, char **argv)
    int i;
    char *s;
    double scale;
-   
+
    for (i = 1; i < argc; i++)
      {
 	if ((i == 1) && 
@@ -81,11 +79,10 @@ main(int argc, char **argv)
 	else if (!verstr) verstr = argv[i];
 	else fpath = eina_list_append(fpath, argv[i]);
      }
-   
+
    ecore_init();
    ecore_x_init(NULL);
    ecore_app_args_set(argc, (const char **)argv);
-   eet_init();
    evas_init();
    ecore_evas_init();
    edje_init();
@@ -94,7 +91,6 @@ main(int argc, char **argv)
    scale = 1.0;
    if (s) scale = atof(s);
    edje_scale_set(scale);
-   ecore_file_init();
    ecore_ipc_init();
 
    if (_e_ipc_init())
@@ -107,22 +103,20 @@ main(int argc, char **argv)
 	ecore_timer_add(0.2, delayed_ok, NULL);
 	ecore_main_loop_begin();
      }
-   
+
    if (_e_ipc_server)
      {
 	ecore_ipc_server_del(_e_ipc_server);
 	_e_ipc_server = NULL;
      }
-   
+
    ecore_ipc_shutdown();
-   ecore_file_shutdown();
    ecore_evas_shutdown();
    edje_shutdown();
    evas_shutdown();
-   eet_shutdown();
    ecore_x_shutdown();
    ecore_shutdown();
-   
+
    return 0;
 }
 
@@ -228,13 +222,10 @@ e_init_init(void)
    _e_init_configure_handler = 
      ecore_event_handler_add(ECORE_X_EVENT_WINDOW_CONFIGURE, 
 			     _e_init_cb_window_configure, NULL);
-   
+
    num = 0;
    roots = ecore_x_window_root_list(&num);
-   if ((!roots) || (num <= 0))
-     {
-	return 0;
-     }
+   if ((!roots) || (num <= 0)) return 0;
    root = roots[0];
    _e_init_root_win = root;
 
@@ -270,6 +261,7 @@ e_init_init(void)
    if (screens)
      {
 	E_Screen *scr;
+
 	EINA_LIST_FOREACH(screens, l, scr)
 	  {
 	     o = edje_object_add(_e_init_evas);
