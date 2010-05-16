@@ -645,7 +645,7 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
 }
 
 static void
-_folder_item_add(Plugin *p, const char *path)
+_folder_item_add(Plugin *p, const char *path, int prio)
 {
    Evry_Item_File *file;
 
@@ -653,6 +653,8 @@ _folder_item_add(Plugin *p, const char *path)
    file->path = eina_stringshare_add(path);
    file->mime = eina_stringshare_ref(_mime_dir);
    EVRY_ITEM(file)->browseable = EINA_TRUE;
+   EVRY_ITEM(file)->priority = prio;
+   EVRY_ITEM(file)->usage = -1;
    p->files = eina_list_append(p->files, file);
    EVRY_PLUGIN_ITEM_APPEND(p, file);
 }
@@ -745,6 +747,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	  {
 	     char *dir;
 	     char buf[PATH_MAX];
+	     int prio = 0;
 
 	     if (strncmp(p->directory, "/", 1))
 	       return 0;
@@ -753,13 +756,13 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
 	     strncpy(buf, p->directory, PATH_MAX);
 
-	     _folder_item_add(p, p->directory);
+	     _folder_item_add(p, p->directory, prio++);
 
 	     while (strlen(buf) > 1)
 	       {
 		  buf[PATH_MAX - 1] = 0;
 		  dir = dirname(buf);
-		  _folder_item_add(p, dir);
+		  _folder_item_add(p, dir, prio++);
 		  strncpy(buf, dir, PATH_MAX);
 	       }
 

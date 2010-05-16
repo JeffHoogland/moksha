@@ -8,7 +8,6 @@ struct _Plugin
 {
   Evry_Plugin base;
   int type;
-  /* Evry_Selector **selectors; */
   Evry_Window *win;
 
   Evry_Item *warning;
@@ -218,13 +217,6 @@ _fetch(Evry_Plugin *plugin, const char *input)
    if (items) eina_list_free(items);
    if (lp) eina_list_free(lp);
 
-
-   /* EINA_LIST_FOREACH(p->base.items, l, it)
-    *   {
-    * 	if(CHECK_TYPE(it, EVRY_TYPE_FILE))
-    * 	  printf("%d %1.20f %s\n", it->fuzzy_match, it->usage, it->label);
-    *   } */
-
    return 1;
 }
 
@@ -255,11 +247,11 @@ evry_aggregator_new(Evry_Window *win, int type)
 
    if (evry_plugin_register(p, type, -1))
      {
-	p->config->view_mode = VIEW_MODE_THUMB;
+	if (type == EVRY_PLUGIN_SUBJECT)
+	  p->config->view_mode = VIEW_MODE_THUMB;
      }
 
    GET_PLUGIN(pa, p);
-   /* pa->selectors = win->selectors; */
    pa->win = win;
    pa->type = type;
 
