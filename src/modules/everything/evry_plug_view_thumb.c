@@ -58,7 +58,8 @@ struct _Smart_Data
   int    clearing;
 
   int    mouse_act;
-  int    mouse_down;
+  int    mouse_x;
+  int    mouse_y;
   Item  *it_down;
 };
 
@@ -190,7 +191,9 @@ _item_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	  }
 	else
 	  {
-	     sd->mouse_down = ev->canvas.x;
+	     sd->mouse_x = ev->canvas.x;
+	     sd->mouse_y = ev->canvas.y;
+
 	     sd->it_down = it;
 
 	     if (sd->selector && evas_object_visible_get(sd->selector))
@@ -208,7 +211,8 @@ _item_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
    Item *it = data;
    Smart_Data *sd = evas_object_smart_data_get(it->obj);
 
-   sd->mouse_down = 0;
+   sd->mouse_x = 0;
+   sd->mouse_y = 0;
    sd->it_down = NULL;
 
    if (ev->button == 1)
@@ -938,7 +942,8 @@ _view_clear(Evry_View *view, int slide)
    Smart_Data *sd = evas_object_smart_data_get(v->span);
    Item *it;
 
-   sd->mouse_down = 0;
+   sd->mouse_x = 0;
+   sd->mouse_y = 0;
    sd->mouse_act = 0;
    sd->it_down = NULL;
 
@@ -1028,7 +1033,8 @@ _view_update(Evry_View *view, int slide)
 
    sd->cur_item = NULL;
    sd->mouse_act = 0;
-   sd->mouse_down = 0;
+   sd->mouse_x = 0;
+   sd->mouse_y = 0;
 
    if (!p)
      {
@@ -1191,7 +1197,8 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
    const char *key = ev->key;
 
    sd->mouse_act = 0;
-   sd->mouse_down = 0;
+   sd->mouse_x = 0;
+   sd->mouse_y = 0;
 
    if ((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
 	(!strcmp(key, "2")))
@@ -1501,31 +1508,44 @@ _view_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
    Evas_Event_Mouse_Move *ev = event_info;
    Smart_Data *sd = evas_object_smart_data_get(obj);
+   int diff_y;
 
-   if (!sd->mouse_down)
+   if (!sd->mouse_x)
      return ;
 
    if (!sd->it_down)
      return;
 
+   if ((diff_y = abs(ev->cur.canvas.y - sd->mouse_y) > 30))
+     goto end;
+
    if ((sd->cur_item != sd->it_down) &&
-       (abs(ev->cur.canvas.x - sd->mouse_down) > 15))
+       (abs(ev->cur.canvas.x - sd->mouse_x) > 30 - diff_y))
      {
 	evry_item_select(sd->view->state, sd->it_down->item);
 	_pan_item_select(obj, sd->it_down, 0);
 	return;
      }
 
-   if (ev->cur.canvas.x - sd->mouse_down > 150)
+   if (ev->cur.canvas.x - sd->mouse_x > 150)
      {
 	evry_browse_back(NULL);
-	sd->mouse_down = 0;
+	goto end;
      }
-   else if (sd->mouse_down - ev->cur.canvas.x > 150)
+   else if (sd->mouse_x - ev->cur.canvas.x > 150)
      {
 	evry_browse_item(NULL);
-	sd->mouse_down = 0;
+	goto end;
      }
+   else
+     {
+	return;
+     }
+
+ end:
+   sd->it_down = NULL;
+   sd->mouse_x = 0;
+   sd->mouse_y = 0;
 }
 
 static Evry_View *
