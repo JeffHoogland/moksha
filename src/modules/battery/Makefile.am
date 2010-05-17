@@ -1,6 +1,12 @@
 MAINTAINERCLEANFILES = Makefile.in
 MODULE = battery
 
+if HAVE_EEZE_UDEV
+  DEVICE_FILE = e_mod_udev.c
+else
+  DEVICE_FILE = e_mod_dbus.c
+endif
+
 # data files for the module
 filesdir = $(libdir)/enlightenment/modules/$(MODULE)
 files_DATA = \
@@ -21,7 +27,9 @@ pkgdir                 = $(libdir)/enlightenment/modules/$(MODULE)/$(MODULE_ARCH
 pkg_LTLIBRARIES        = module.la
 module_la_SOURCES      = e_mod_main.c \
                          e_mod_main.h \
-			 e_mod_config.c
+			 e_mod_config.c \
+			 $(DEVICE_FILE)
+
 module_la_LIBADD       = @e_libs@ @cf_libs@ @dlopen_libs@
 module_la_LDFLAGS      = -module -avoid-version
 module_la_DEPENDENCIES = $(top_builddir)/config.h

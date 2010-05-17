@@ -246,13 +246,16 @@ AC_ARG_ENABLE([device-udev],
    AC_CACHE_VAL([e_cv_want_device_udev], [e_cv_want_device_udev=no]))
 
 if test "x$e_cv_want_device_udev" = "xyes";then
-      device_backend=eeze_udev
-      AC_DEFINE_UNQUOTED([HAVE_EEZE_UDEV],[1],[enable udev support])
+  device_backend=eeze_udev
+  AC_DEFINE_UNQUOTED([HAVE_EEZE_UDEV],[1],[enable udev support])
 else
-      device_backend=ehal
+  device_backend=ehal
 fi
-
 AC_MSG_RESULT($device_backend)
+
+#will uncomment once this works
+#AM_CONDITIONAL([HAVE_EEZE_UDEV], [test "x${device_backend}" = "xeeze_udev"])
+AM_CONDITIONAL([HAVE_EEZE_UDEV], [test "x${device_backend}" = "x"])
 
 # doxygen program for documentation building
 
