@@ -225,7 +225,7 @@ _module_end_state_apply(CFModule *cfm)
 static CFType *
 _cftype_new(const char *key, const char *name, const char *icon)
 {
-   CFType * cft = E_NEW(CFType, 1);
+   CFType *cft = E_NEW(CFType, 1);
 
    if (!cft) return NULL;
    cft->key = eina_stringshare_add(key);
