@@ -23,6 +23,7 @@ struct _ACPIDevice
 static int _e_acpi_cb_server_del(void *data __UNUSED__, int type __UNUSED__, void *event);
 static int _e_acpi_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event);
 static void _e_acpi_cb_event_free(void *data __UNUSED__, void *event);
+static int _e_acpi_lid_status_get(const char *device, const char *bus);
 
 /* local variables */
 static Ecore_Con_Server *_e_acpid = NULL;
@@ -150,18 +151,20 @@ _e_acpi_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 
    ev = event;
 
-   /* parse out this acpi string into separate pieces */
-   if (sscanf(ev->data, "%s %4s %8d %8d", device, bus, &sig, &status) != 4)
-     return 1;
-
-   /* write out acutal acpi received data to stdout for debugging */
+   /* write out actual acpi received data to stdout for debugging */
    res = fwrite(ev->data, ev->size, 1, stdout);
 
+   /* parse out this acpi string into separate pieces */
+   if (sscanf(ev->data, "%s %4s %d %d", device, bus, &sig, &status) != 4)
+     return 1;
+
+   /*
    printf("Device: %s\n", device);
    printf("Bus: %s\n", bus);
    printf("Signal: %d\n", sig);
    printf("Status: %d\n", status);
    printf("\n");
+    */
 
    /* create new event structure to raise */
    acpi_event = E_NEW(E_Event_Acpi, 1);
@@ -195,6 +198,8 @@ _e_acpi_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	break;
       case E_ACPI_TYPE_LID:
 	event_type = E_EVENT_ACPI_LID;
+	acpi_event->status = 
+	  _e_acpi_lid_status_get(acpi_event->device, acpi_event->bus_id);
 	break;
       case E_ACPI_TYPE_POWER:
 	event_type = E_EVENT_ACPI_POWER;
@@ -230,4 +235,41 @@ _e_acpi_cb_event_free(void *data __UNUSED__, void *event)
    if (ev->device) eina_stringshare_del(ev->device);
    if (ev->bus_id) eina_stringshare_del(ev->bus_id);
    E_FREE(ev);
+}
+
+static int 
+_e_acpi_lid_status_get(const char *device, const char *bus) 
+{
+   FILE *f;
+   int i = 0;
+   char buff[PATH_MAX], *ret;
+
+   /* the acpi driver code in the kernel has a nice acpi function to return
+    * the lid status easily, but that function is not exposed for user_space
+    * so we need to check the proc fs to get the actual status */
+
+   /* make sure we have a device and bus */
+   if ((!device) || (!bus)) return E_ACPI_LID_UNKNOWN;
+
+   /* open the state file from /proc */
+   snprintf(buff, sizeof(buff), "/proc/acpi/%s/%s/state", device, bus);
+   if (!(f = fopen(buff, "r"))) return E_ACPI_LID_UNKNOWN;
+
+   /* read the line from state file */
+   buff[0] = '\0';
+   ret = fgets(buff, 1024, f);
+   fclose(f);
+
+   /* parse out state file */
+   i = 0;
+   while (buff[i] != ':') i++;
+   while (!isalnum(buff[i])) i++;
+
+   /* compare value from state file and return something sane */
+   if (!strcmp(buff, "open"))
+     return E_ACPI_LID_OPEN;
+   else if (!strcmp(buff, "closed"))
+     return E_ACPI_LID_CLOSED;
+   else
+     return E_ACPI_LID_UNKNOWN;
 }
