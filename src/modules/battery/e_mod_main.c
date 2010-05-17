@@ -354,7 +354,9 @@ _battery_config_updated(void)
      }
    if (battery_config->have_subsystem == UNKNOWN)
      {
+#ifndef HAVE_EUDEV
         if (!e_dbus_bus_get(DBUS_BUS_SYSTEM))
+#endif
           battery_config->have_subsystem = NOSUBSYSTEM;
      }
 
@@ -378,19 +380,23 @@ _battery_config_updated(void)
    else if ((battery_config->have_subsystem == UNKNOWN) ||
             (battery_config->force_mode == 2))
      {
-        E_DBus_Connection *conn;
-
         if (battery_config->batget_exe)
           {
              ecore_exe_terminate(battery_config->batget_exe);
              ecore_exe_free(battery_config->batget_exe);
              battery_config->batget_exe = NULL;
           }
+#ifdef HAVE_EUDEV
+        _battery_udev_start();
+#else
+        E_DBus_Connection *conn;
         conn = e_dbus_bus_get(DBUS_BUS_SYSTEM);
         if (conn)
           {
              battery_config->have_subsystem = SUBSYSTEM;
+
              _battery_dbus_have_dbus();
+#endif
           }
         else
           battery_config->have_subsystem = NOSUBSYSTEM;

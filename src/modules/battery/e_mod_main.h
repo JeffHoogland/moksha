@@ -42,7 +42,8 @@ struct _Config
    int                  have_power;
    int                  have_subsystem;
 #ifdef HAVE_EUDEV
-   Eeze_Udev_Watch     *watch;
+   Eeze_Udev_Watch     *acwatch;
+   Eeze_Udev_Watch     *batwatch;
 #else
    struct {
       // FIXME: on bat_conf del dbus_pending_call_cancel(dbus.have);
@@ -96,15 +97,16 @@ struct _Ac_Adapter
    const char *product;
 };
 
+Battery *_battery_battery_find(const char *udi);
+Ac_Adapter *_battery_ac_adapter_find(const char *udi);
+/* in e_mod_dbus.c */
 void _battery_dbus_battery_props(void *data, void *reply_data, DBusError *error);
 void _battery_dbus_ac_adapter_props(void *data, void *reply_data, DBusError *error);
 void _battery_dbus_battery_property_changed(void *data, DBusMessage *msg);
 void _battery_dbus_battery_add(const char *udi);
 void _battery_dbus_battery_del(const char *udi);
-Battery *_battery_battery_find(const char *udi);
 void _battery_dbus_ac_adapter_add(const char *udi);
 void _battery_dbus_ac_adapter_del(const char *udi);
-Ac_Adapter *_battery_ac_adapter_find(const char *udi);
 void _battery_dbus_find_battery(void *user_data, void *reply_data, DBusError *err);
 void _battery_dbus_find_ac(void *user_data, void *reply_data, DBusError *err);
 void _battery_dbus_is_battery(void *user_data, void *reply_data, DBusError *err);
@@ -114,7 +116,10 @@ void _battery_dbus_dev_del(void *data, DBusMessage *msg);
 void _battery_dbus_have_dbus(void);
 void _battery_dbus_shutdown(void);
 void _battery_device_update(void);
-
+/* end e_mod_dbus.c */
+/* in e_mod_udev.c */
+void _battery_udev_start(void);
+/* end e_mod_udev.c */
 Eina_List *device_batteries;
 Eina_List *device_ac_adapters;
 double init_time;
