@@ -229,8 +229,8 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
    e_widget_list_object_append(o, ob, 1, 0, 0.0);
    ob = e_widget_radio_add(evas, _("Internal"), 1, rg);
    e_widget_list_object_append(o, ob, 1, 0, 0.0);
-#ifdef HAVE_EUKIT
-   ob = e_widget_radio_add(evas, _("UPower"), 2, rg);
+#ifdef HAVE_EUDEV
+   ob = e_widget_radio_add(evas, _("udev"), 2, rg);
 #else
    ob = e_widget_radio_add(evas, _("HAL"), 2, rg);
 #endif
