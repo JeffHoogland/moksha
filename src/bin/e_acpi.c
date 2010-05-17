@@ -177,7 +177,7 @@ _e_acpi_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
      }
    else 
      {
-	acpi_event->device = eina_stringshare_add("unknown");
+	acpi_event->device = eina_stringshare_add(device);
 	acpi_event->type = E_ACPI_TYPE_UNKNOWN;
      }
 
