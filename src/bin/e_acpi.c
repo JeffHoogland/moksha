@@ -151,7 +151,7 @@ _e_acpi_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
    ev = event;
 
    /* parse out this acpi string into separate pieces */
-   if (!(sscanf(ev->data, "%s %4s %8d %8d", device, bus, &sig, &status)) == 4)
+   if (sscanf(ev->data, "%s %4s %8d %8d", device, bus, &sig, &status) != 4)
      return 1;
 
    /* write out acutal acpi received data to stdout for debugging */
