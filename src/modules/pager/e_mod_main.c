@@ -2345,6 +2345,14 @@ _pager_popup_cb_timeout(void *data)
 
    pp = data;
    _pager_popup_free(pp);
+
+   if (input_window)
+     {
+	ecore_x_window_free(input_window);
+	e_grabinput_release(input_window, input_window);
+	input_window = 0;
+     }
+   
    return 0;
 }
 
@@ -2358,7 +2366,7 @@ _pager_popup_show()
    Pager_Popup *pp;
    const char *drop[] = { "enlightenment/pager_win", "enlightenment/border", "enlightenment/vdesktop"};
 
-   if (act_popup) return 0;
+   if (act_popup || input_window) return 0;
 
    zone = e_util_zone_current_get(e_manager_current_get());
 
@@ -2422,8 +2430,6 @@ static void
 _pager_popup_hide(int switch_desk)
 {
    e_bindings_key_ungrab(E_BINDING_CONTEXT_POPUP, act_popup->popup->evas_win);
-   _pager_popup_free(act_popup);
-   act_popup = NULL;
    hold_count = 0;
    hold_mod = 0;
    while (handlers)
@@ -2431,11 +2437,12 @@ _pager_popup_hide(int switch_desk)
 	ecore_event_handler_del(handlers->data);
 	handlers = eina_list_remove_list(handlers, handlers);
      }
-   ecore_x_window_free(input_window);
-   e_grabinput_release(input_window, input_window);
-   input_window = 0;
+
+   act_popup->timer = ecore_timer_add(0.1, _pager_popup_cb_timeout, act_popup);
 
    if (switch_desk && current_desk) e_desk_show(current_desk);
+
+   act_popup = NULL;
 }
 
 static void
