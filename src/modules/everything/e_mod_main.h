@@ -36,6 +36,8 @@ struct _Evry_Window
   Evry_Selector **sel_list;
 
   int level;
+
+  int down_out;
 };
 
 struct _Evry_Selector
@@ -120,8 +122,10 @@ struct _Evry_View
 
 struct _Tab_View
 {
-  Evas *evas;
   const Evry_State *state;
+
+  Evry_View *view;
+  Evas *evas;
 
   Evas_Object *o_tabs;
   Eina_List *tabs;
@@ -259,7 +263,7 @@ Evry_Type evry_type_register(const char *type);
 const char *evry_type_get(Evry_Type type);
 
 
-Tab_View *evry_tab_view_new(const Evry_State *s, Evas *e);
+Tab_View *evry_tab_view_new(Evry_View *view, const Evry_State *s, Evas *e);
 void  evry_tab_view_free(Tab_View *v);
 
 Eina_Bool view_thumb_init(void);
@@ -294,6 +298,8 @@ void  evry_history_free(void);
 
 int   evry_browse_item(Evry_Selector *sel);
 int   evry_browse_back(Evry_Selector *sel);
+
+void evry_plugin_action(int finished);
 
 extern Evry_History *evry_hist;
 extern Evry_Config  *evry_conf;

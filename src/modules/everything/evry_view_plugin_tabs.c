@@ -5,6 +5,7 @@ typedef struct _Tab Tab;
 
 struct _Tab
 {
+  Tab_View *tab_view;
   Evry_Plugin *plugin;
   Evas_Object *o_tab;
 
@@ -13,6 +14,10 @@ struct _Tab
 
 
 static void _tabs_update(Tab_View *v);
+static void _plugin_select(Tab_View *v, Evry_Plugin *p);
+static void _plugin_next(Tab_View *v);
+static void _plugin_prev(Tab_View *v);
+
 
 #if 0
 static int
@@ -99,9 +104,45 @@ _timer_cb(void *data)
 }
 
 static void
+_tab_cb_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   /* Evas_Event_Mouse_Down *ev = event_info; */
+}
+
+static void
+_tab_cb_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   Evas_Event_Mouse_Up *ev = event_info;
+   Tab *tab = data;
+   Tab_View *v = tab->tab_view;
+
+   if (ev->button == 1)
+     {
+	_plugin_select(v, tab->plugin);
+	v->view->update(v->view, 0);
+     }
+}
+static void
+_tabs_cb_wheel(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   Evas_Event_Mouse_Wheel *ev = event_info;
+   Tab_View *v = data;
+
+   if (ev->z > 0)
+     {
+	_plugin_next(v);
+	v->view->update(v->view, 0);
+     }
+   else if (ev->z < 0)
+     {
+	_plugin_prev(v);
+	v->view->update(v->view, 0);
+     }
+}
+
+static void
 _tabs_update(Tab_View *v)
 {
-
    Eina_List *l, *ll, *plugins;
    Evry_Plugin *p;
    const Evry_State *s = v->state;
@@ -118,7 +159,7 @@ _tabs_update(Tab_View *v)
 	v->timer = ecore_timer_add(0.1, _timer_cb, v);
 	return;
      }
-   
+
    /* remove tabs for not active plugins */
    e_box_freeze(v->o_tabs);
 
@@ -153,12 +194,16 @@ _tabs_update(Tab_View *v)
 	  {
 	     tab = E_NEW(Tab, 1);
 	     tab->plugin = p;
-
+	     tab->tab_view = v;
 	     o = edje_object_add(v->evas);
 	     e_theme_edje_object_set(o, "base/theme/everything",
 				     "e/modules/everything/tab_item");
 	     edje_object_part_text_set(o, "e.text.label", EVRY_ITEM(p)->label);
 
+	     evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN,
+					    _tab_cb_down, tab);
+	     evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_UP,
+					    _tab_cb_up, tab);
 	     tab->o_tab = o;
 
 	     edje_object_size_min_calc(o, &tab->cw, NULL);
@@ -254,7 +299,7 @@ _plugin_next_by_name(Tab_View *v, const char *key)
      {
 	/* FIXME how can this happen ? */
 	if (!p) continue;
-	
+
 	if (EVRY_ITEM(p)->label && (!strncasecmp(EVRY_ITEM(p)->label, key, 1)))
 	  {
 	     if (!first) first = p;
@@ -340,7 +385,7 @@ _tabs_key_down(Tab_View *v, const Ecore_Event_Key *ev)
 
 
 EAPI Tab_View *
-evry_tab_view_new(const Evry_State *s, Evas *e)
+evry_tab_view_new(Evry_View *view, const Evry_State *s, Evas *e)
 {
    Tab_View *v;
    Evas_Object *o;
@@ -349,12 +394,16 @@ evry_tab_view_new(const Evry_State *s, Evas *e)
    v->update   = &_tabs_update;
    v->clear    = &_tabs_clear;
    v->key_down = &_tabs_key_down;
+   v->view = view;
    v->state = s;
 
    v->evas = e;
    o = e_box_add(e);
    e_box_orientation_set(o, 1);
    e_box_homogenous_set(o, 1);
+   /* evas_object_propagate_events_set(o, 1);  */
+   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_WHEEL,
+				  _tabs_cb_wheel, v);
    v->o_tabs = o;
 
    return v;
