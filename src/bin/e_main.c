@@ -1512,7 +1512,8 @@ static void
 _e_main_cb_x_fatal(void *data __UNUSED__)
 {
    e_error_message_show("Lost X connection.");
-   ecore_main_loop_quit();
+   e_sys_action_do(E_SYS_EXIT, NULL);
+//   ecore_main_loop_quit();
 }
 
 static int
