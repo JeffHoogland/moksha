@@ -34116,6 +34116,35 @@ collections {
                }
             }
          }
+	 part {
+            name: "arrow";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+                min: 12 12;
+                max: 12 12;
+                /* aspect_preference: */
+                visible: 0;
+               rel1 {
+                  to: "base";
+                  relative: 1.0 0.0;
+                  offset: -14  3;
+               }
+               rel2 {
+                  to: "base";
+                  relative: 1.0 1.0;
+                  offset: -2 -3;
+               }
+               image {
+                  normal: "icon_right_arrow.png";
+               }
+            }
+            description {
+               state: "visible" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+            }
+         }
          part {
             name: "e.text.label";
             type: TEXT;
@@ -34180,6 +34209,13 @@ collections {
             action: STATE_SET "default" 0.0;
             transition: LINEAR 0.2;
             target: "bg_mark";
+         }
+	 program {
+            name: "arrow_show";
+            signal: "e,state,browseable";
+            source: "e";
+            action: STATE_SET "visible" 0.0;
+            target: "arrow";
          }
          program {
             name: "thumb_gen";
