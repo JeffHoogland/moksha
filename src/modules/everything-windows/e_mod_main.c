@@ -15,7 +15,7 @@
 static const Evry_API *evry = NULL;
 static Evry_Module *evry_module = NULL;
 
-static Evry_Plugin *p1;
+static Evry_Plugin *_plug;
 static Eina_List *handlers = NULL;
 static Eina_Hash *border_hash = NULL;
 static Eina_List *_actions = NULL;
@@ -348,7 +348,6 @@ _act_border(Evry_Action *act)
 static int
 _plugins_init(const Evry_API *_api)
 {
-   Evry_Plugin *p;
    Evry_Action *act;
    
    if (evry_module->active)
@@ -359,12 +358,12 @@ _plugins_init(const Evry_API *_api)
    if (!evry->api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
-   p1 = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Windows"), NULL, EVRY_TYPE_BORDER,
-			_begin, _cleanup, _fetch, NULL);
-
-   p1->transient = EINA_TRUE;
-   evry->plugin_register(p1, EVRY_PLUGIN_SUBJECT, 2);
-
+   _plug = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Windows"),
+			   "preferences-system-windows",
+			   EVRY_TYPE_BORDER,
+			   _begin, _cleanup, _fetch, NULL);
+   _plug->transient = EINA_TRUE;
+   evry->plugin_register(_plug, EVRY_PLUGIN_SUBJECT, 2);
 
    act = EVRY_ACTION_NEW(_("Switch to Window"),
 			 EVRY_TYPE_BORDER, 0, "go-next",
@@ -412,7 +411,7 @@ _plugins_shutdown(void)
 
    if (!evry_module->active) return;
 
-   EVRY_PLUGIN_FREE(p1);
+   EVRY_PLUGIN_FREE(_plug);
 
    EINA_LIST_FREE(_actions, act)
      evry->action_free(act);

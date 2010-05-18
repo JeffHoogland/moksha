@@ -1486,7 +1486,10 @@ _cb_item_changed(void *data, int type, void *event)
    if (ev->changed_selection)
      {
 	if (it->item->selected)
-	  _pan_item_select(v->span, it, 1);
+	  {
+	     evry_item_select(v->state, ev->item);
+	     _pan_item_select(v->span, it, 1);
+	  }
      }
 
    if (!it->visible)
@@ -1551,7 +1554,7 @@ _view_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
    diff_x = abs(ev->cur.canvas.x - sd->mouse_x);
    diff_y = abs(ev->cur.canvas.y - sd->mouse_y);
 
-   if (diff_y > (diff_x + 10) * 2)
+   if (diff_y > 10 + (diff_x/2))
      goto end;
 
    if ((sd->cur_item != sd->it_down) && (diff_x > 10))
@@ -1563,14 +1566,14 @@ _view_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
    if ((sd->mouse_button == 1) &&
        (sd->cur_item == sd->it_down))
      {
-	if (ev->cur.canvas.x - sd->mouse_x > 150)
+	if (ev->cur.canvas.x - sd->mouse_x > 100)
 	  {
 	     sd->it_down = NULL;
 	     sd->mouse_x = 0;
 	     sd->mouse_y = 0;
 	     evry_browse_back(NULL);
 	  }
-	else if (sd->mouse_x - ev->cur.canvas.x > 150)
+	else if (sd->mouse_x - ev->cur.canvas.x > 100)
 	  {
 	     sd->it_down = NULL;
 	     sd->mouse_x = 0;

@@ -1661,6 +1661,8 @@ _evry_input_complete(Evry_State *s)
    char *input = NULL;
    Evry_Item *it = s->cur_item;
 
+   if (!it) return 0;
+     
    evry_item_ref(it);
 
    s->item_auto_selected = EINA_FALSE;
@@ -1694,6 +1696,8 @@ _evry_cheat_history(Evry_State *s, int promote, int delete)
    Eina_List *l, *ll;
    Evry_Item *it = s->cur_item;
 
+   if (!it) return 0;
+   
    if (!(ht = evry_history_types_get(it->type)))
      return 1;
 
@@ -1861,9 +1865,6 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
    else if ((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
    	    (!strcmp(ev->key, "Delete") || !strcmp(ev->key, "Insert")))
      {
-   	if (!s->cur_item)
-   	  goto end;
-
 	int delete = (!strcmp(ev->key, "Delete") &&
 		      (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT));
    	int promote = (!strcmp(ev->key, "Insert"));

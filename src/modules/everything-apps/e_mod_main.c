@@ -258,8 +258,13 @@ _icon_get(Evry_Item *it, Evas *e)
    Evas_Object *o = NULL;
 
    if (app->desktop)
-     o = e_util_desktop_icon_add(app->desktop, 128, e);
+     {
+	o = evry->icon_theme_get(app->desktop->icon, e);
 
+	if (!o)
+	  o = e_util_desktop_icon_add(app->desktop, 128, e);
+     }
+   
    if (!o)
      o = evry->icon_theme_get("system-run", e);
 
@@ -271,6 +276,7 @@ _item_free(Evry_Item *item)
 {
    GET_APP(app, item);
 
+   
    if (app->desktop)
      efreet_desktop_free(app->desktop);
    if (app->file)
@@ -426,8 +432,8 @@ _add_desktop_list(Plugin *p, Eina_List *apps, const char *input)
 	     exec = ecore_file_file_get(desktop->exec);
 	     if (exec && (end = strchr(exec, '%')))
 	       {
-		  strncpy(buf, exec, end - exec - 1);
-		  buf[end - exec] = 0;
+		  strncpy(buf, exec, (end - exec) - 1);
+		  buf[(end - exec)-1] = '\0';
 		  m1 = evry->fuzzy_match(buf, input);
 	       }
 	     else

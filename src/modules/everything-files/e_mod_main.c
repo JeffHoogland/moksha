@@ -146,9 +146,10 @@ static void
 _item_free(Evry_Item *it)
 {
    GET_FILE(file, it);
-   if (file->url) eina_stringshare_del(file->url);
-   if (file->path) eina_stringshare_del(file->path);
-   if (file->mime) eina_stringshare_del(file->mime);
+
+   IF_RELEASE(file->url);
+   IF_RELEASE(file->path);
+   IF_RELEASE(file->mime);
 
    E_FREE(file);
 }
