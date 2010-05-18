@@ -83,6 +83,7 @@ static View *view = NULL;
 
 static void _view_clear(Evry_View *view, int slide);
 static void _pan_item_select(Evas_Object *obj, Item *it, int scroll);
+static void _animator_del(Evas_Object *obj);
 
 
 
@@ -91,6 +92,9 @@ _thumb_gen(void *data, Evas_Object *obj, void *event_info)
 {
    Evas_Coord w, h;
    Item *it = data;
+   Smart_Data *sd = evas_object_smart_data_get(it->obj);
+   if (sd->clearing)
+     return;
 
    if (!it->frame) return;
 
@@ -124,6 +128,9 @@ _thumb_idler(void *data)
    Smart_Data *sd = data;
    Eina_List *l, *ll;
    Item *it;
+
+   if (!sd || sd->clearing)
+     return 1;
 
    EINA_LIST_FOREACH_SAFE(sd->queue, l, ll, it)
      {
@@ -177,8 +184,10 @@ _item_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
    Evas_Event_Mouse_Down *ev = event_info;
    Item *it = data;
    Smart_Data *sd = evas_object_smart_data_get(it->obj);
+   if (!sd || sd->clearing) return;
 
    sd->mouse_act = 1;
+   sd->it_down = it;
 
    if (ev->button == 1)
      {
@@ -194,12 +203,8 @@ _item_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	     sd->mouse_x = ev->canvas.x;
 	     sd->mouse_y = ev->canvas.y;
 
-	     sd->it_down = it;
-
 	     if (sd->selector && evas_object_visible_get(sd->selector))
-	       {
-		  evas_object_hide(sd->selector);
-	       }
+	       evas_object_hide(sd->selector);
 	  }
      }
 }
@@ -210,9 +215,13 @@ _item_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
    Evas_Event_Mouse_Up *ev = event_info;
    Item *it = data;
    Smart_Data *sd = evas_object_smart_data_get(it->obj);
+   if (!sd || sd->clearing) return;
 
    sd->mouse_x = 0;
    sd->mouse_y = 0;
+   if (!sd->it_down)
+     return;
+
    sd->it_down = NULL;
 
    if (ev->button == 1)
@@ -241,7 +250,6 @@ _item_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
 static void
 _item_show(View *v, Item *it, Evas_Object *list)
 {
-
    if (!it->frame)
      {
 	it->frame = edje_object_add(v->evas);
@@ -264,6 +272,7 @@ _item_show(View *v, Item *it, Evas_Object *list)
 	evas_object_event_callback_add(it->frame, EVAS_CALLBACK_MOUSE_UP,
 				       _item_up, it);
 	evas_object_smart_member_add(it->frame, list);
+
 	evas_object_clip_set(it->frame, evas_object_clip_get(list));
 
 	if (it->item->marked)
@@ -292,6 +301,7 @@ static void
 _item_hide(Item *it)
 {
    if (it->do_thumb) e_thumb_icon_end(it->thumb);
+
    if (it->thumb) evas_object_del(it->thumb);
    if (it->image) evas_object_del(it->image);
    if (it->frame) evas_object_del(it->frame);
@@ -409,6 +419,7 @@ _e_smart_reconfigure_do(void *data)
 	  sd->cx = 0;
 	if (sd->cy < 0)
 	  sd->cy = 0;
+
 	changed = 1;
      }
 
@@ -471,7 +482,7 @@ _e_smart_reconfigure_do(void *data)
    if (changed)
      evas_object_smart_callback_call(obj, "changed", NULL);
 
-   if (!sd->thumb_idler)
+   if (!sd->clearing && !sd->thumb_idler)
      sd->thumb_idler = ecore_idle_enterer_add(_thumb_idler, sd);
 
    sd->idle_enter = NULL;
@@ -502,24 +513,17 @@ static void
 _e_smart_del(Evas_Object *obj)
 {
    Smart_Data *sd = evas_object_smart_data_get(obj);
-   Item *it;
 
    if (sd->idle_enter)
      ecore_idle_enterer_del(sd->idle_enter);
+
    if (sd->thumb_idler)
      ecore_idle_enterer_del(sd->thumb_idler);
-   if (sd->animator)
-     ecore_animator_del(sd->animator);
 
-   // sd->view is just referenced
-   // sd->child_obj is unused
-   EINA_LIST_FREE(sd->items, it)
-     {
-	_item_hide(it);
-	evry_item_free(it->item);
-	free(it);
-     }
-   evas_object_del(sd->selector);
+   _animator_del(obj);
+
+   if (sd->selector)
+     evas_object_del(sd->selector);
 
    free(sd);
    evas_object_smart_data_set(obj, NULL);
@@ -676,10 +680,25 @@ _pan_item_remove(Evas_Object *obj, Item *it)
    E_FREE(it);
 }
 
+static void
+_animator_del(Evas_Object *obj)
+{
+   Smart_Data *sd = evas_object_smart_data_get(obj);
+   if (sd->clearing)
+     {
+	sd->clearing = EINA_FALSE;
+	_view_clear(EVRY_VIEW(sd->view), 0);
+     }
+
+   sd->animator = NULL;
+}
+
 static int
 _animator(void *data)
 {
    Smart_Data *sd = evas_object_smart_data_get(data);
+   if (!sd) return 0;
+
    double da;
    double spd = ((25.0/ (double)e_config->framerate) /
 		 (double) (1 + sd->view->zoom));
@@ -730,18 +749,12 @@ _animator(void *data)
    	  {
    	     sd->slide = sd->slide_to;
    	     sd->sliding = 0;
-	     if (sd->view->mode == VIEW_MODE_THUMB &&
-		 sd->cur_item &&sd->cur_item->frame)
+
+	     if ((sd->view->mode == VIEW_MODE_THUMB) &&
+	     	 (sd->cur_item &&
+		  sd->cur_item->frame))
 	       edje_object_signal_emit(sd->cur_item->frame,
-				       "e,state,selected", "e");
-
-
-	     if (sd->clearing)
-	       {
-		  _view_clear(EVRY_VIEW(sd->view), 0);
-		  sd->animator = NULL;
-		  return 0;
-	       }
+	     			       "e,state,selected", "e");
    	  }
    	else
    	  wait++;
@@ -749,9 +762,11 @@ _animator(void *data)
 	evas_object_move(sd->view->span, sd->slide, sd->y);
      }
 
-   if (wait) return 1;
+   if (wait)
+     return 1;
 
-   sd->animator = NULL;
+   _animator_del(data);
+
    return 0;
 
 }
@@ -766,7 +781,7 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
 
    if (sd->cur_item)
      {
-	prev = sd->cur_item->y / sd->cur_item->h;
+	prev = sd->cur_item->y / (1 + sd->cur_item->h);
 	sd->cur_item->selected = EINA_FALSE;
 	edje_object_signal_emit(sd->cur_item->frame,
 				"e,state,unselected", "e");
@@ -802,8 +817,8 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
 			     "e,state,selected", "e");
 	return;
      }
-   else if (sd->view->mode == VIEW_MODE_LIST ||
-	    sd->view->mode == VIEW_MODE_DETAIL)
+   else if (it->h && (sd->view->mode == VIEW_MODE_LIST ||
+		      sd->view->mode == VIEW_MODE_DETAIL))
      {
 	int all  = sd->ch / it->h;
 	int rows = (it->h && sd->h < sd->ch) ? (sd->h / it->h) : all;
@@ -857,12 +872,12 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
 
 	align *= it->h;
      }
-   else
+   else if (sd->view->mode == VIEW_MODE_THUMB)
      {
 	if (sd->view->zoom < 2)
 	  {
 	     edje_object_signal_emit(sd->cur_item->frame,
-				     "e,state,selected", "e");
+	     			     "e,state,selected", "e");
 	  }
 
 	if ((it->y + it->h) - sd->cy > sd->h)
@@ -889,9 +904,8 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
 	     e_scrollframe_child_pos_set(sd->view->sframe,
 					 0, sd->scroll_align);
 	  }
-	if (sd->animator)
-	  ecore_animator_del(sd->animator);
-	sd->animator = NULL;
+
+	_animator_del(obj);
      }
    else
      {
@@ -915,9 +929,7 @@ _clear_items(Evas_Object *obj)
    Eina_List *l;
    Item *it;
 
-   if (sd->animator)
-     ecore_animator_del(sd->animator);
-   sd->animator = NULL;
+   _animator_del(obj);
 
    EINA_LIST_FOREACH(sd->items, l, it)
      _item_hide(it);
@@ -941,6 +953,7 @@ _view_clear(Evry_View *view, int slide)
    View *v = (View*) view;
    Smart_Data *sd = evas_object_smart_data_get(v->span);
    Item *it;
+   if (!sd) return;
 
    sd->mouse_x = 0;
    sd->mouse_y = 0;
@@ -962,17 +975,24 @@ _view_clear(Evry_View *view, int slide)
    	  }
 
 	if (sd->animator)
-	  ecore_animator_del(sd->animator);
+	  {
+	     ecore_animator_del(sd->animator);
+	     sd->animator = NULL;
+	  }
      }
 
-   sd->clearing = EINA_FALSE;
+   if (sd->clearing)
+     return;
 
    _clear_items(v->span);
 
-   EINA_LIST_FREE(sd->items, it)
+   if (sd->items)
      {
-	evry_item_free(it->item);
-	E_FREE(it);
+	EINA_LIST_FREE(sd->items, it)
+	  {
+	     evry_item_free(it->item);
+	     E_FREE(it);
+	  }
      }
 
    _e_smart_reconfigure(v->span);
@@ -994,9 +1014,7 @@ _update_frame(Evas_Object *obj)
 {
    Smart_Data *sd = evas_object_smart_data_get(obj);
 
-   if (sd->animator)
-     ecore_animator_del(sd->animator);
-   sd->animator = NULL;
+   _animator_del(obj);
 
    sd->scroll_align = 0;
 
@@ -1032,6 +1050,7 @@ _view_update(Evry_View *view, int slide)
    Evry_Plugin *p = v->state->plugin;
 
    sd->cur_item = NULL;
+   sd->it_down = NULL;
    sd->mouse_act = 0;
    sd->mouse_x = 0;
    sd->mouse_y = 0;
@@ -1494,6 +1513,7 @@ _view_cb_mouse_wheel(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
    Evas_Event_Mouse_Wheel *ev = event_info;
    Smart_Data *sd = evas_object_smart_data_get(obj);
+   if (sd->clearing) return;
    if (ev->z)
      {
 	evas_object_hide(sd->selector);
@@ -1508,39 +1528,49 @@ _view_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
    Evas_Event_Mouse_Move *ev = event_info;
    Smart_Data *sd = evas_object_smart_data_get(obj);
-   int diff_y;
+   int diff_y, diff_x;
+   if (!sd) return;
+
+   if (sd->clearing)
+     goto end;
 
    if (!sd->mouse_x)
-     return ;
+     goto end;
 
    if (!sd->it_down)
-     return;
+     goto end;
 
-   if ((diff_y = abs(ev->cur.canvas.y - sd->mouse_y) > 30))
+   diff_x = abs(ev->cur.canvas.x - sd->mouse_x);
+   diff_y = abs(ev->cur.canvas.y - sd->mouse_y);
+
+   if (diff_y > (diff_x + 10) * 2)
      goto end;
 
    if ((sd->cur_item != sd->it_down) &&
-       (abs(ev->cur.canvas.x - sd->mouse_x) > 30 - diff_y))
+       (diff_x > 10))
      {
 	evry_item_select(sd->view->state, sd->it_down->item);
 	_pan_item_select(obj, sd->it_down, 0);
-	return;
      }
 
-   if (ev->cur.canvas.x - sd->mouse_x > 150)
+   if (sd->cur_item == sd->it_down)
      {
-	evry_browse_back(NULL);
-	goto end;
-     }
-   else if (sd->mouse_x - ev->cur.canvas.x > 150)
-     {
-	evry_browse_item(NULL);
-	goto end;
-     }
-   else
-     {
-	return;
-     }
+	if (ev->cur.canvas.x - sd->mouse_x > 150)
+	  {
+	     sd->it_down = NULL;
+	     sd->mouse_x = 0;
+	     sd->mouse_y = 0;
+	     evry_browse_back(NULL);
+	  }
+	else if (sd->mouse_x - ev->cur.canvas.x > 150)
+	  {
+	     sd->it_down = NULL;
+	     sd->mouse_x = 0;
+	     sd->mouse_y = 0;
+	     evry_browse_item(NULL);
+	  }
+   }
+   return;
 
  end:
    sd->it_down = NULL;
@@ -1612,13 +1642,15 @@ _view_create(Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
 static void
 _view_destroy(Evry_View *view)
 {
-   GET_VIEW(v, view);
-
    Ecore_Event_Handler *h;
 
+   GET_VIEW(v, view);
+
+   _view_clear(view, 0);
+
+   evas_object_del(v->span);
    evas_object_del(v->bg);
    evas_object_del(v->sframe);
-   evas_object_del(v->span);
 
    evry_tab_view_free(v->tabs);
 
