@@ -342,7 +342,6 @@ PKG_CHECK_MODULES(E, [
   eina-0
   dbus-1
   edbus
-  enotify
   ehal
   $device_backend
 ])
