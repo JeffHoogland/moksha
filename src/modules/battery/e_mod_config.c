@@ -35,6 +35,7 @@ static int _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfda
 static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static int _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int _advanced_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static void _cb_radio_changed(void *data, Evas_Object *obj __UNUSED__);
 
 E_Config_Dialog *
 e_int_config_battery_module(E_Container *con, const char *params __UNUSED__) 
@@ -180,16 +181,18 @@ _cb_dismiss_alert_changed(void *data, Evas_Object *obj __UNUSED__)
    e_widget_disabled_set(cfdata->ui.alert_timeout, !dismiss_alert);
 }
 
-#ifdef HAVE_EEZE_UDEV
-static void
-_cb_fuzzy(void *data, Evas_Object *obj __UNUSED__)
+static void 
+_cb_radio_changed(void *data, Evas_Object *obj __UNUSED__) 
 {
-   E_Config_Dialog_Data *cfdata = data;
-   Eina_Bool fuzzy = (cfdata->force_mode == SUBSYSTEM);
+   E_Config_Dialog_Data *cfdata;
+   Eina_Bool fuzzy;
 
+   if (!(cfdata = data)) return;
+   fuzzy = (cfdata->force_mode == SUBSYSTEM);
+#ifdef HAVE_EEZE_UDEV
    e_widget_disabled_set(cfdata->ui.fuzzy, !fuzzy);
-}
 #endif
+}
 
 static Evas_Object *
 _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
@@ -245,18 +248,21 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
 
    rg = e_widget_radio_group_new(&(cfdata->force_mode));
    ob = e_widget_radio_add(evas, _("Auto Detect"), UNKNOWN, rg);
+   e_widget_on_change_hook_set(ob, _cb_radio_changed, cfdata);
    e_widget_list_object_append(o, ob, 1, 0, 0.0);
    ob = e_widget_radio_add(evas, _("Internal"), NOSUBSYSTEM, rg);
+   e_widget_on_change_hook_set(ob, _cb_radio_changed, cfdata);
    e_widget_list_object_append(o, ob, 1, 0, 0.0);
 #ifdef HAVE_EEZE_UDEV
    ob = e_widget_radio_add(evas, _("udev"), SUBSYSTEM, rg);
-   e_widget_on_change_hook_set(ob, _cb_fuzzy, cfdata);
+   e_widget_on_change_hook_set(ob, _cb_radio_changed, cfdata);
    e_widget_list_object_append(o, ob, 1, 0, 0.0);
    ob = e_widget_check_add(evas, _("Fuzzy Mode"),
                            &(cfdata->fuzzy));
    cfdata->ui.fuzzy = ob;
 #else
    ob = e_widget_radio_add(evas, _("HAL"), 2, rg);
+   e_widget_on_change_hook_set(ob, _cb_radio_changed, cfdata);
 #endif
    e_widget_list_object_append(o, ob, 1, 0, 0.0);
 
