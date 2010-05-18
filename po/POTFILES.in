@@ -234,7 +234,6 @@ src/modules/everything-aspell/e_mod_main.c
 src/modules/everything-calc/e_mod_main.c
 src/modules/everything-files/e_mod_main.c
 src/modules/everything-settings/e_mod_main.c
-src/modules/everything-wallpaper/e_mod_main.c
 src/modules/everything-windows/e_mod_main.c
 src/modules/fileman/e_mod_main.c
 src/modules/fileman/e_mod_config.c
