@@ -60,6 +60,7 @@ struct _Smart_Data
   int    mouse_act;
   int    mouse_x;
   int    mouse_y;
+  int    mouse_button;
   Item  *it_down;
 };
 
@@ -113,7 +114,7 @@ static int
 _check_item(const Evry_Item *it)
 {
    char *suffix;
-   
+
    GET_FILE(file, it);
 
    if (!evry_file_path_get(file) || !file->mime) return 0;
@@ -135,7 +136,7 @@ _thumb_idler(void *data)
    Eina_List *l, *ll;
    Item *it;
    char *suffix;
-   
+
    if (!sd || sd->clearing)
      return 1;
 
@@ -197,24 +198,22 @@ _item_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 
    sd->mouse_act = 1;
    sd->it_down = it;
+   sd->mouse_button = ev->button;
 
-   if (ev->button == 1)
+   if ((ev->button == 1) && (ev->flags & EVAS_BUTTON_DOUBLE_CLICK))
      {
-	if (ev->flags & EVAS_BUTTON_DOUBLE_CLICK)
-	  {
-	     evry_item_select(sd->view->state, it->item);
-	     _pan_item_select(it->obj, it, 0);
+	evry_item_select(sd->view->state, it->item);
+	_pan_item_select(it->obj, it, 0);
 
-	     evry_plugin_action(1);
-	  }
-	else
-	  {
-	     sd->mouse_x = ev->canvas.x;
-	     sd->mouse_y = ev->canvas.y;
+	evry_plugin_action(1);
+     }
+   else
+     {
+	sd->mouse_x = ev->canvas.x;
+	sd->mouse_y = ev->canvas.y;
 
-	     if (sd->selector && evas_object_visible_get(sd->selector))
-	       evas_object_hide(sd->selector);
-	  }
+	if (sd->selector && evas_object_visible_get(sd->selector))
+	  evas_object_hide(sd->selector);
      }
 }
 
@@ -1555,14 +1554,14 @@ _view_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
    if (diff_y > (diff_x + 10) * 2)
      goto end;
 
-   if ((sd->cur_item != sd->it_down) &&
-       (diff_x > 10))
+   if ((sd->cur_item != sd->it_down) && (diff_x > 10))
      {
 	evry_item_select(sd->view->state, sd->it_down->item);
 	_pan_item_select(obj, sd->it_down, 0);
      }
 
-   if (sd->cur_item == sd->it_down)
+   if ((sd->mouse_button == 1) &&
+       (sd->cur_item == sd->it_down))
      {
 	if (ev->cur.canvas.x - sd->mouse_x > 150)
 	  {
@@ -1578,7 +1577,7 @@ _view_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	     sd->mouse_y = 0;
 	     evry_browse_item(NULL);
 	  }
-   }
+     }
    return;
 
  end:

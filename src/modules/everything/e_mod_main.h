@@ -37,7 +37,8 @@ struct _Evry_Window
 
   int level;
 
-  int down_out;
+  int mouse_out;
+  int mouse_button;
 };
 
 struct _Evry_Selector

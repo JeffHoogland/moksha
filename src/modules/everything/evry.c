@@ -801,6 +801,12 @@ _evry_window_new(E_Zone *zone)
    return win;
 }
 
+static void
+_evry_cb_drag_finished(E_Drag *drag, int dropped)
+{
+   E_FREE(drag->data);
+}
+
 static int
 _evry_cb_mouse(void *data, int type, void *event)
 {
@@ -815,6 +821,44 @@ _evry_cb_mouse(void *data, int type, void *event)
    if (type == ECORE_EVENT_MOUSE_MOVE)
      {
 	Ecore_Event_Mouse_Move *ev = event;
+	Evry_State *s;
+
+	if ((win->mouse_button == 3) &&
+	    (s = win->selector->state) && (s->cur_item) &&
+	    (CHECK_TYPE(s->cur_item, EVRY_TYPE_FILE)) &&
+	    (!E_INSIDE(ev->x, ev->y, pop->x + pop->zone->x,
+		       pop->y + pop->zone->y, pop->w, pop->h)))
+	  {
+	     const char *drag_types[] = { "text/uri-list" };
+	     E_Drag *d;
+	     Evas_Object *o;
+	     const char *uri;
+	     int s_len, sel_length = 0;
+	     char *tmp, *sel = NULL;
+
+	     GET_FILE(file, s->cur_item);
+
+	     if (!(uri = evry_file_url_get(file)))
+	       return 1;
+
+	     s_len = strlen(uri);
+	     if (!(tmp = realloc(sel, sel_length + s_len + 2 + 1)))
+	       return 1;
+	     sel = tmp;
+	     memcpy(sel + sel_length, uri, s_len);
+	     memcpy(sel + sel_length + s_len, "\r\n", 2);
+	     sel_length += s_len + 2;
+
+	     d = e_drag_new(e_container_current_get(e_manager_current_get()),
+			    ev->x, ev->y, drag_types, 1, sel, sel_length, NULL, _evry_cb_drag_finished);
+	     e_drag_resize(d, 128, 128);
+	     o = evry_util_icon_get(s->cur_item, e_drag_evas_get(d));
+	     e_drag_object_set(d, o);
+	     e_drag_xdnd_start(d, ev->x, ev->y);
+
+	     evry_hide(0);
+	     return 1;
+	  }
 
 	evas_event_feed_mouse_move
 	  (pop->evas,
@@ -824,15 +868,17 @@ _evry_cb_mouse(void *data, int type, void *event)
      }
    else if (type == ECORE_EVENT_MOUSE_BUTTON_DOWN)
      {
-	win->down_out = 0;
+	win->mouse_out = 0;
 
 	/* XXX shift triple click in flags when needed */
 	if (!E_INSIDE(ev->x, ev->y, pop->x + pop->zone->x,
 		      pop->y + pop->zone->y, pop->w, pop->h))
 	  {
-	     win->down_out = 1;
+	     win->mouse_out = 1;
 	     return 1;
 	  }
+
+	win->mouse_button = ev->buttons;
 
 	evas_event_feed_mouse_down
 	  (pop->evas,
@@ -841,7 +887,9 @@ _evry_cb_mouse(void *data, int type, void *event)
      }
    else if (type == ECORE_EVENT_MOUSE_BUTTON_UP)
      {
-	if (win->down_out &&
+	win->mouse_button = 0;
+	
+	if (win->mouse_out &&
 	    !E_INSIDE(ev->x, ev->y, pop->x + pop->zone->x,
 		      pop->y + pop->zone->y, pop->w, pop->h))
 	  {
@@ -1091,7 +1139,7 @@ _evry_selector_thumb(Evry_Selector *sel, const Evry_Item *it)
 {
    Evas_Coord w, h;
    char *suffix = NULL;
-   
+
    if (sel->do_thumb)
      e_thumb_icon_end(sel->o_thumb);
 
@@ -1108,7 +1156,7 @@ _evry_selector_thumb(Evry_Selector *sel, const Evry_Item *it)
 
    if (!(evry_file_path_get(file)))
      return 0;
-   
+
    if ((!strncmp(file->mime, "image/", 6)) ||
        ((suffix = strrchr(file->path, '.')) && (!strncmp(suffix, ".edj", 4))))
      {
@@ -1126,7 +1174,7 @@ _evry_selector_thumb(Evry_Selector *sel, const Evry_Item *it)
    	sel->do_thumb = EINA_TRUE;
    	return 1;
      }
-   
+
    return 0;
 }
 
