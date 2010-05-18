@@ -213,9 +213,16 @@ struct _Evry_Event_Action_Performed
 
 /*** Evry_Plugin macros ***/
 
-#define EVRY_PLUGIN_NEW(_base, _name, _icon, _item_type, _begin, _cleanup, _fetch, _free) \
+#define EVRY_PLUGIN_NEW(_base, _name, _icon, _item_type, _begin, _finish, _fetch, _free) \
   evry->plugin_new(EVRY_PLUGIN(E_NEW(_base, 1)), _name, _(_name), _icon, _item_type, \
-		  _begin, _cleanup, _fetch, _free)
+		  _begin, _finish, _fetch, _free)
+
+#define EVRY_PLUGIN_FREE(_p) if (_p) evry->plugin_free(EVRY_PLUGIN(_p))
+
+#define EVRY_PLUGIN_INST(_p, _type, _plugin) {	\
+  _p = E_NEW(_type, 1);				\
+  _p->base = (_type *)_plugin;			\
+  _p->base.items = NULL;			\
 
 #define EVRY_PLUGIN_ITEMS_CLEAR(_p) {		\
      Evry_Item *it;				\
@@ -247,7 +254,7 @@ struct _Evry_Event_Action_Performed
 #define EVRY_ACTION_NEW(_name, _in1, _in2, _icon, _action, _check)	\
   evry->action_new(_name, _(_name), _in1, _in2, _icon, _action, _check)
 
-#define EVRY_PLUGIN_FREE(_p) if (_p) evry->plugin_free(EVRY_PLUGIN(_p))
+#define EVRY_ACTION_FREE(_act) if (_act) evry->action_free(EVRY_ACTN(_act))
 
 
 /*** handy macros ***/

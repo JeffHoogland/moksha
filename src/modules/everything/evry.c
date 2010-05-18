@@ -1090,7 +1090,8 @@ static int
 _evry_selector_thumb(Evry_Selector *sel, const Evry_Item *it)
 {
    Evas_Coord w, h;
-
+   char *suffix = NULL;
+   
    if (sel->do_thumb)
      e_thumb_icon_end(sel->o_thumb);
 
@@ -1107,21 +1108,25 @@ _evry_selector_thumb(Evry_Selector *sel, const Evry_Item *it)
 
    if (!(evry_file_path_get(file)))
      return 0;
-
-   if (!strncmp(file->mime, "image/", 6))
+   
+   if ((!strncmp(file->mime, "image/", 6)) ||
+       ((suffix = strrchr(file->path, '.')) && (!strncmp(suffix, ".edj", 4))))
      {
    	sel->o_thumb = e_thumb_icon_add(win->popup->evas);
    	evas_object_smart_callback_add(sel->o_thumb, "e_thumb_gen",
 				       _evry_selector_thumb_gen, sel);
    	edje_object_part_geometry_get(sel->o_main, "e.swallow.thumb",
 				      NULL, NULL, &w, &h);
-   	e_thumb_icon_file_set(sel->o_thumb, file->path, NULL);
+	if (suffix)
+	  e_thumb_icon_file_set(sel->o_thumb, file->path, "e/desktop/background");
+	else
+	  e_thumb_icon_file_set(sel->o_thumb, file->path, NULL);
    	e_thumb_icon_size_set(sel->o_thumb, w, h);
    	e_thumb_icon_begin(sel->o_thumb);
    	sel->do_thumb = EINA_TRUE;
    	return 1;
      }
-
+   
    return 0;
 }
 

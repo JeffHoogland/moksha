@@ -112,12 +112,18 @@ _thumb_gen(void *data, Evas_Object *obj, void *event_info)
 static int
 _check_item(const Evry_Item *it)
 {
+   char *suffix;
+   
    GET_FILE(file, it);
 
    if (!evry_file_path_get(file) || !file->mime) return 0;
 
    if (!strncmp(file->mime, "image/", 6))
      return 1;
+
+   if ((suffix = strrchr(it->label, '.')))
+     if (!strncmp(suffix, ".edj", 4))
+       return 1;
 
    return 0;
 }
@@ -128,7 +134,8 @@ _thumb_idler(void *data)
    Smart_Data *sd = data;
    Eina_List *l, *ll;
    Item *it;
-
+   char *suffix;
+   
    if (!sd || sd->clearing)
      return 1;
 
@@ -161,6 +168,8 @@ _thumb_idler(void *data)
 
 	     if (it->item->icon && it->item->icon[0])
 	       e_thumb_icon_file_set(it->thumb, it->item->icon, NULL);
+	     else if ((suffix = strrchr(file->path, '.')) && (!strncmp(suffix, ".edj", 4)))
+	       e_thumb_icon_file_set(it->thumb, file->path, "e/desktop/background");
 	     else
 	       e_thumb_icon_file_set(it->thumb, file->path, NULL);
 
