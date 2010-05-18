@@ -41,9 +41,11 @@ struct _Config
    int                  have_battery;
    int                  have_power;
    int                  have_subsystem;
-#ifdef HAVE_EUDEV
+#ifdef HAVE_EEZE_UDEV
    Eeze_Udev_Watch     *acwatch;
    Eeze_Udev_Watch     *batwatch;
+   Eina_Bool            fuzzy;
+   int                  fuzzcount;
 #else
    struct {
       // FIXME: on bat_conf del dbus_pending_call_cancel(dbus.have);
@@ -62,14 +64,24 @@ typedef struct _Ac_Adapter Ac_Adapter;
 struct _Battery
 {
    const char *udi;
-#ifdef HAVE_EUDEV
-   Eeze_Udev_Watch *watch;
+#ifdef HAVE_EEZE_UDEV
+   Ecore_Poller *poll;
 #else
    E_DBus_Signal_Handler *prop_change;
+   Eina_Bool can_charge:1;
 #endif
    Eina_Bool present:1;
-   Eina_Bool can_charge:1;
-   int state;
+   Eina_Bool charging:1;
+#ifdef HAVE_EEZE_UDEV
+   double last_update;
+   double percent;
+   double current_charge;
+   double design_charge;
+   double last_full_charge;
+   double charge_rate;
+   double time_full;
+   double time_left;
+#else
    int percent;
    int current_charge;
    int design_charge;
@@ -77,9 +89,10 @@ struct _Battery
    int charge_rate;
    int time_full;
    int time_left;
-   const char *technology;
    const char *type;
    const char *charge_units;
+#endif
+   const char *technology;
    const char *model;
    const char *vendor;
    Eina_Bool got_prop:1;
@@ -88,9 +101,7 @@ struct _Battery
 struct _Ac_Adapter
 {
    const char *udi;
-#ifdef HAVE_EUDEV
-   Eeze_Udev_Watch *watch;
-#else
+#ifndef HAVE_EEZE_UDEV
    E_DBus_Signal_Handler *prop_change;
 #endif
    Eina_Bool present:1;
@@ -99,26 +110,14 @@ struct _Ac_Adapter
 
 Battery *_battery_battery_find(const char *udi);
 Ac_Adapter *_battery_ac_adapter_find(const char *udi);
-/* in e_mod_dbus.c */
-void _battery_dbus_battery_props(void *data, void *reply_data, DBusError *error);
-void _battery_dbus_ac_adapter_props(void *data, void *reply_data, DBusError *error);
-void _battery_dbus_battery_property_changed(void *data, DBusMessage *msg);
-void _battery_dbus_battery_add(const char *udi);
-void _battery_dbus_battery_del(const char *udi);
-void _battery_dbus_ac_adapter_add(const char *udi);
-void _battery_dbus_ac_adapter_del(const char *udi);
-void _battery_dbus_find_battery(void *user_data, void *reply_data, DBusError *err);
-void _battery_dbus_find_ac(void *user_data, void *reply_data, DBusError *err);
-void _battery_dbus_is_battery(void *user_data, void *reply_data, DBusError *err);
-void _battery_dbus_is_ac_adapter(void *user_data, void *reply_data, DBusError *err);
-void _battery_dbus_dev_add(void *data, DBusMessage *msg);
-void _battery_dbus_dev_del(void *data, DBusMessage *msg);
-void _battery_dbus_have_dbus(void);
-void _battery_dbus_shutdown(void);
 void _battery_device_update(void);
+/* in e_mod_dbus.c */
+void _battery_dbus_start(void);
+void _battery_dbus_stop(void);
 /* end e_mod_dbus.c */
 /* in e_mod_udev.c */
 void _battery_udev_start(void);
+void _battery_udev_stop(void);
 /* end e_mod_udev.c */
 Eina_List *device_batteries;
 Eina_List *device_ac_adapters;

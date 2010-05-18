@@ -79,7 +79,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    inst->warning = NULL;
    inst->popup_battery = NULL;
 
-#ifdef HAVE_EUDEV
+#ifdef HAVE_EEZE_UDEV
    eeze_udev_init();
 #else
    e_dbus_init();
@@ -100,8 +100,8 @@ _gc_shutdown(E_Gadcon_Client *gcc)
 {
    Instance *inst;
 
-#ifdef HAVE_EUDEV
-   e_udev_shutdown();
+#ifdef HAVE_EEZE_UDEV
+   eeze_udev_shutdown();
 #else
    e_hal_shutdown();
    e_dbus_shutdown();
@@ -253,8 +253,8 @@ _battery_battery_find(const char *udi)
    Eina_List *l;
    Battery *bat;
    EINA_LIST_FOREACH(device_batteries, l, bat)
-     {
-        if (!strcmp(udi, bat->udi)) return bat;
+     {/* these are always stringshared */
+        if (udi == bat->udi) return bat;
      }
 
    return NULL;     
@@ -266,8 +266,8 @@ _battery_ac_adapter_find(const char *udi)
    Eina_List *l;
    Ac_Adapter *ac;
    EINA_LIST_FOREACH(device_ac_adapters, l, ac)
-     {
-        if (!strcmp(udi, ac->udi)) return ac;
+     {/* these are always stringshared */
+        if (udi == ac->udi) return ac;
      }
 
    return NULL;     
@@ -277,40 +277,35 @@ void
 _battery_device_update(void)
 {
    Eina_List *l;
+   Battery *bat;
+   Ac_Adapter *ac;
    int full = -1;
    int time_left = -1;
    int time_full = -1;
    int have_battery = 0;
    int have_power = 0;
+   int charging = 0;
 
    int batnum = 0;
    int acnum = 0;
-   int state = 0;
    
-   for (l = device_ac_adapters; l; l = l->next)
-     {
-        Battery *ac;
-        
-        ac = l->data;
+   EINA_LIST_FOREACH(device_ac_adapters, l, ac)
         if (ac->present) acnum++;
-     }
-   for (l = device_batteries; l; l = l->next)
+
+   EINA_LIST_FOREACH(device_batteries, l, bat)
      {
-        Battery *bat;
-        
-        bat = l->data;
-	if (!bat->got_prop)
-	  continue;
+        if (!bat->got_prop)
+          continue;
         have_battery = 1;
         batnum++;
-        if (bat->state == 1) have_power = 1;
+        if (bat->charging == 1) have_power = 1;
         if (full == -1) full = 0;
-        if (bat->last_full_charge > 0)
+        if (bat->percent >= 0)
+          full += bat->percent;
+        else if (bat->last_full_charge > 0)
           full += (bat->current_charge * 100) / bat->last_full_charge;
         else if (bat->design_charge > 0)
           full += (bat->current_charge * 100) / bat->design_charge;
-        else if (bat->percent >= 0)
-          full += bat->percent;
         if (bat->time_left > 0)
           {
              if (time_left < 0) time_left = bat->time_left;
@@ -321,7 +316,7 @@ _battery_device_update(void)
              if (time_full < 0) time_full = bat->time_full;
              else time_full += bat->time_full;
           }
-        state += bat->state;
+        charging += bat->charging;
      }
 
    if ((device_batteries) && (batnum == 0))
@@ -329,7 +324,6 @@ _battery_device_update(void)
 
    if (batnum > 0) full /= batnum;
 
-   if (!state) time_left = -1;
    if (time_left < 1) time_left = -1;
    if (time_full < 1) time_full = -1;
    
@@ -342,26 +336,29 @@ _battery_device_update(void)
 void
 _battery_config_updated(void)
 {
-   Eina_List *l = NULL;
+   Eina_List *l;
+   Instance *inst;
    char buf[4096];
 
    if (!battery_config) return;
 
    if (battery_config->instances)
      {
-        for (l = battery_config->instances; l; l = l->next)
-          _battery_warning_popup_destroy(l->data);
+        EINA_LIST_FOREACH(battery_config->instances, l, inst)
+          _battery_warning_popup_destroy(inst);
      }
    if (battery_config->have_subsystem == UNKNOWN)
      {
-#ifndef HAVE_EUDEV
+#ifdef HAVE_EEZE_UDEV
+          battery_config->have_subsystem = SUBSYSTEM;
+#else
         if (!e_dbus_bus_get(DBUS_BUS_SYSTEM))
-#endif
           battery_config->have_subsystem = NOSUBSYSTEM;
+#endif
      }
 
    if ((battery_config->have_subsystem == NOSUBSYSTEM) ||
-       (battery_config->force_mode == 1))
+       (battery_config->force_mode == NOSUBSYSTEM))
      {
         if (battery_config->batget_exe)
           {
@@ -378,7 +375,7 @@ _battery_config_updated(void)
                              ECORE_EXE_NOT_LEADER, NULL);
      }
    else if ((battery_config->have_subsystem == UNKNOWN) ||
-            (battery_config->force_mode == 2))
+            (battery_config->force_mode == SUBSYSTEM))
      {
         if (battery_config->batget_exe)
           {
@@ -386,7 +383,7 @@ _battery_config_updated(void)
              ecore_exe_free(battery_config->batget_exe);
              battery_config->batget_exe = NULL;
           }
-#ifdef HAVE_EUDEV
+#ifdef HAVE_EEZE_UDEV
         _battery_udev_start();
 #else
         E_DBus_Connection *conn;
@@ -394,12 +391,11 @@ _battery_config_updated(void)
         if (conn)
           {
              battery_config->have_subsystem = SUBSYSTEM;
-
-             _battery_dbus_have_dbus();
-#endif
+             _battery_dbus_start();
           }
         else
           battery_config->have_subsystem = NOSUBSYSTEM;
+#endif
      }
 }
 
@@ -514,7 +510,7 @@ _battery_update(int full, int time_left, int time_full, Eina_Bool have_battery, 
      {
         if (have_power != battery_config->have_power)
           {
-             if (have_power)
+             if (have_power && (full < 100))
                edje_object_signal_emit(inst->o_battery, 
                                        "e,state,charging", 
                                        "e");
@@ -549,14 +545,14 @@ _battery_update(int full, int time_left, int time_full, Eina_Bool have_battery, 
                                        _("N/A"));
           }
         
-        if (time_left != battery_config->time_left && !have_power)
+        if ((time_full < 0) && (time_left != battery_config->time_left))
           {
              _battery_face_time_set(inst->o_battery, time_left);
              if (inst->popup_battery)
                _battery_face_time_set(inst->popup_battery, 
                                       time_left);
           }
-        else if (time_full != battery_config->time_full && have_power)
+        else if ((time_left < 0) && (time_full != battery_config->time_full))
           {
              _battery_face_time_set(inst->o_battery, time_full);
              if (inst->popup_battery)
@@ -602,60 +598,54 @@ static int
 _battery_cb_exe_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Exe_Event_Data *ev;
+   Instance *inst;
+   Eina_List *l;
+   int i;
 
    ev = event;
    if (ev->exe != battery_config->batget_exe) return 1;
    if ((ev->lines) && (ev->lines[0].line))
      {
-	int i;
 
-	for (i = 0; ev->lines[i].line; i++)
-	  {
-	     if (!strcmp(ev->lines[i].line, "ERROR"))
-	       {
-		  Eina_List *l;
 
-		  for (l = battery_config->instances; l; l = l->next)
-		    {
-		       Instance *inst;
-
-		       inst = l->data;
-		       edje_object_signal_emit(inst->o_battery, 
-                                               "e,state,unknown", "e");
-		       edje_object_part_text_set(inst->o_battery, 
-                                                 "e.text.reading", _("ERROR"));
-		       edje_object_part_text_set(inst->o_battery, 
-                                                 "e.text.time", _("ERROR"));
+        for (i = 0; ev->lines[i].line; i++)
+          {
+             if (!strcmp(ev->lines[i].line, "ERROR"))
+                  EINA_LIST_FOREACH(battery_config->instances, l, inst)
+                    {
+                       edje_object_signal_emit(inst->o_battery, 
+                         "e,state,unknown", "e");
+                       edje_object_part_text_set(inst->o_battery, 
+                         "e.text.reading", _("ERROR"));
+                       edje_object_part_text_set(inst->o_battery, 
+                         "e.text.time", _("ERROR"));
 
                        if (inst->popup_battery)
                          {
                             edje_object_signal_emit(inst->popup_battery, 
-                                                    "e,state,unknown", "e");
+                              "e,state,unknown", "e");
                             edje_object_part_text_set(inst->popup_battery, 
-                                                      "e.text.reading", _("ERROR"));
+                              "e.text.reading", _("ERROR"));
                             edje_object_part_text_set(inst->popup_battery, 
-                                                      "e.text.time", _("ERROR"));
+                              "e.text.time", _("ERROR"));
                          }
-		    }
-	       }
-	     else
-	       {
-		  int full = 0;
-		  int time_left = 0;
-                  int time_full = 0;
-		  int have_battery = 0;
-		  int have_power = 0;
-		  
-                  if (sscanf(ev->lines[i].line, "%i %i %i %i %i",
-                             &full, &time_left, &time_full, 
-                             &have_battery, &have_power)
-		      == 5)
+                    }
+             else
+               {
+                  int full = 0;
+                  int time_left = 0;
+                                int time_full = 0;
+                  int have_battery = 0;
+                  int have_power = 0;
+           
+                  if (sscanf(ev->lines[i].line, "%i %i %i %i %i", &full, &time_left, &time_full, 
+                                    &have_battery, &have_power) == 5)
                     _battery_update(full, time_left, time_full,
-                                    have_battery, have_power);
+                                           have_battery, have_power);
                   else
                     e_powersave_mode_set(E_POWERSAVE_MODE_LOW);
-	       }
-	  }
+               }
+          }
      }
    return 0;
 }                          
@@ -771,7 +761,11 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 	battery_config->menu = NULL;
      }
    
-   _battery_dbus_shutdown();
+#ifdef HAVE_EEZE_UDEV
+   _battery_udev_stop();
+#else
+   _battery_dbus_stop();
+#endif
    
    free(battery_config);
    battery_config = NULL;

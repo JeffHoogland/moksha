@@ -253,9 +253,7 @@ else
 fi
 AC_MSG_RESULT($device_backend)
 
-#will uncomment once this works
-#AM_CONDITIONAL([HAVE_EEZE_UDEV], [test "x${device_backend}" = "xeeze_udev"])
-AM_CONDITIONAL([HAVE_EEZE_UDEV], [test "x${device_backend}" = "x"])
+AM_CONDITIONAL([HAVE_EEZE_UDEV], [test "x${device_backend}" = "xeeze_udev"])
 
 # doxygen program for documentation building
 

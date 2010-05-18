@@ -5,11 +5,14 @@ struct _E_Config_Dialog_Data
 {
    int show_alert;
    int poll_interval;
+#ifdef HAVE_EEZE_UDEV
+   int fuzzy;
+#endif
    int alert_time;
    int alert_percent;
    int dismiss_alert;
    int alert_timeout;
-   int force_mode; // 0 == auto, 1 == batget, 2 == dbus
+   int force_mode; // 0 == auto, 1 == batget, 2 == subsystem
    struct 
      {
         Evas_Object *show_alert_label;
@@ -17,6 +20,9 @@ struct _E_Config_Dialog_Data
         Evas_Object *show_alert_percent;
         Evas_Object *dismiss_alert_label;
         Evas_Object *alert_timeout;
+#ifdef HAVE_EEZE_UDEV
+        Evas_Object *fuzzy;
+#endif
      } ui;
 };
 
@@ -65,6 +71,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->poll_interval = battery_config->poll_interval;
    cfdata->alert_timeout = battery_config->alert_timeout;
    cfdata->force_mode = battery_config->force_mode;
+   cfdata->fuzzy = battery_config->fuzzy;
 
    if ((cfdata->alert_time > 0) || (cfdata->alert_percent > 0)) 
      cfdata->show_alert = 1;
@@ -172,6 +179,17 @@ _cb_dismiss_alert_changed(void *data, Evas_Object *obj __UNUSED__)
    e_widget_disabled_set(cfdata->ui.alert_timeout, !dismiss_alert);
 }
 
+#ifdef HAVE_EEZE_UDEV
+static void
+_cb_fuzzy(void *data, Evas_Object *obj __UNUSED__)
+{
+   E_Config_Dialog_Data *cfdata = data;
+   Eina_Bool fuzzy = (cfdata->force_mode == SUBSYSTEM);
+
+   e_widget_disabled_set(cfdata->ui.fuzzy, !fuzzy);
+}
+#endif
+
 static Evas_Object *
 _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
@@ -225,12 +243,17 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
    o = e_widget_list_add(evas, 0, 0);
 
    rg = e_widget_radio_group_new(&(cfdata->force_mode));
-   ob = e_widget_radio_add(evas, _("Auto Detect"), 0, rg);
+   ob = e_widget_radio_add(evas, _("Auto Detect"), UNKNOWN, rg);
    e_widget_list_object_append(o, ob, 1, 0, 0.0);
-   ob = e_widget_radio_add(evas, _("Internal"), 1, rg);
+   ob = e_widget_radio_add(evas, _("Internal"), NOSUBSYSTEM, rg);
    e_widget_list_object_append(o, ob, 1, 0, 0.0);
-#ifdef HAVE_EUDEV
-   ob = e_widget_radio_add(evas, _("udev"), 2, rg);
+#ifdef HAVE_EEZE_UDEV
+   ob = e_widget_radio_add(evas, _("udev"), SUBSYSTEM, rg);
+   e_widget_on_change_hook_set(ob, _cb_fuzzy, cfdata);
+   e_widget_list_object_append(o, ob, 1, 0, 0.0);
+   ob = e_widget_check_add(evas, _("Fuzzy Mode"),
+                           &(cfdata->fuzzy));
+   cfdata->ui.fuzzy = ob;
 #else
    ob = e_widget_radio_add(evas, _("HAL"), 2, rg);
 #endif
@@ -249,6 +272,7 @@ _advanced_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
    if (!battery_config) return 0;
 
    battery_config->poll_interval = cfdata->poll_interval;
+   battery_config->fuzzy = cfdata->fuzzy;
 
    if (cfdata->show_alert)
      {
@@ -285,6 +309,7 @@ _advanced_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *c
 	   (cfdata->alert_percent != battery_config->alert_p) ||
 	   (cfdata->poll_interval != battery_config->poll_interval) ||
 	   (cfdata->alert_timeout != battery_config->alert_timeout) ||
+    (cfdata->fuzzy != battery_config->fuzzy) ||
 	   (cfdata->force_mode != battery_config->force_mode) ||
 	   (cfdata->show_alert != old_show_alert) ||
 	   (cfdata->dismiss_alert != old_dismiss_alert));
