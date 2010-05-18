@@ -49,6 +49,7 @@ EAPI int          e_widget_ilist_selected_get(Evas_Object *obj);
 EAPI const char  *e_widget_ilist_selected_label_get(Evas_Object *obj);
 EAPI Evas_Object *e_widget_ilist_selected_icon_get(Evas_Object *obj);
 EAPI Evas_Object *e_widget_ilist_selected_end_get(Evas_Object *obj);
+EAPI void        *e_widget_ilist_selected_data_get(Evas_Object *obj);
 EAPI int          e_widget_ilist_selected_count_get(Evas_Object *obj);
 EAPI const char  *e_widget_ilist_selected_value_get(Evas_Object *obj);
 

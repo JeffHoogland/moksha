@@ -770,6 +770,18 @@ e_widget_ilist_selected_icon_get(Evas_Object *obj)
    return e_ilist_selected_icon_get(wd->o_ilist);
 }
 
+EAPI void *
+e_widget_ilist_selected_data_get(Evas_Object *obj)
+{
+   E_Widget_Data *wd;
+   E_Widget_Callback *wcb;
+
+   wd = e_widget_data_get(obj);
+   wcb = eina_list_nth(wd->callbacks, e_ilist_selected_get(wd->o_ilist));
+
+   return wcb ? wcb->data : NULL;
+}
+
 EAPI Evas_Object *
 e_widget_ilist_selected_end_get(Evas_Object *obj)
 {
