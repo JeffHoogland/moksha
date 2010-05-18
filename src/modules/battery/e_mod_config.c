@@ -71,8 +71,9 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->poll_interval = battery_config->poll_interval;
    cfdata->alert_timeout = battery_config->alert_timeout;
    cfdata->force_mode = battery_config->force_mode;
+#ifdef HAVE_EEZE_UDEV
    cfdata->fuzzy = battery_config->fuzzy;
-
+#endif
    if ((cfdata->alert_time > 0) || (cfdata->alert_percent > 0)) 
      cfdata->show_alert = 1;
    else 
@@ -272,8 +273,9 @@ _advanced_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
    if (!battery_config) return 0;
 
    battery_config->poll_interval = cfdata->poll_interval;
+#ifdef HAVE_EEZE_UDEV
    battery_config->fuzzy = cfdata->fuzzy;
-
+#endif
    if (cfdata->show_alert)
      {
 	_ensure_alert_time(cfdata);
@@ -309,7 +311,9 @@ _advanced_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *c
 	   (cfdata->alert_percent != battery_config->alert_p) ||
 	   (cfdata->poll_interval != battery_config->poll_interval) ||
 	   (cfdata->alert_timeout != battery_config->alert_timeout) ||
-    (cfdata->fuzzy != battery_config->fuzzy) ||
+#ifdef HAVE_EEZE_UDEV
+	   (cfdata->fuzzy != battery_config->fuzzy) ||
+#endif
 	   (cfdata->force_mode != battery_config->force_mode) ||
 	   (cfdata->show_alert != old_show_alert) ||
 	   (cfdata->dismiss_alert != old_dismiss_alert));
