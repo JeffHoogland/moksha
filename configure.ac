@@ -344,6 +344,7 @@ PKG_CHECK_MODULES(E, [
   eina-0
   dbus-1
   edbus
+  enotify
   ehal
   $device_backend
 ])
@@ -557,7 +558,6 @@ AC_E_OPTIONAL_MODULE([everything-files], true)
 AC_E_OPTIONAL_MODULE([everything-apps], true)
 AC_E_OPTIONAL_MODULE([everything-calc], true)
 AC_E_OPTIONAL_MODULE([everything-aspell], true)
-AC_E_OPTIONAL_MODULE([everything-wallpaper], true)
 AC_E_OPTIONAL_MODULE([everything-settings], true)
 AC_E_OPTIONAL_MODULE([everything-windows], true)
 AC_E_OPTIONAL_MODULE([systray], true)
@@ -737,8 +737,6 @@ src/modules/everything-calc/Makefile
 src/modules/everything-calc/module.desktop
 src/modules/everything-aspell/Makefile
 src/modules/everything-aspell/module.desktop
-src/modules/everything-wallpaper/Makefile
-src/modules/everything-wallpaper/module.desktop
 src/modules/systray/Makefile
 src/modules/systray/module.desktop
 src/modules/comp/Makefile

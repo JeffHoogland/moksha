@@ -268,7 +268,7 @@ SUBDIRS += everything-apps
 endif
 
 if USE_MODULE_EVERYTHING_FILES
-SUBDIRS += everything-calc
+SUBDIRS += everything-files
 endif
 
 if USE_MODULE_EVERYTHING_ASPELL
@@ -279,15 +279,11 @@ if USE_MODULE_EVERYTHING_SETTINGS
 SUBDIRS += everything-settings
 endif
 
-if USE_MODULE_EVERYTHING_WALLPAPER
-SUBDIRS += everything-wallpaper
-endif
-
 if USE_MODULE_EVERYTHING_CALC
 SUBDIRS += everything-calc
 endif
 
-if USE_MODULE_EVERYTHING_CALC
+if USE_MODULE_EVERYTHING_WINDOWS
 SUBDIRS += everything-windows
 endif
 
