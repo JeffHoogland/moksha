@@ -365,6 +365,16 @@ evry_util_plugin_items_add(Evry_Plugin *p, Eina_List *items, const char *input,
 
    EINA_LIST_FOREACH(items, l, it)
      {
+	if (!input)
+	  {
+	     p->items = eina_list_append(p->items, it);
+
+	     if (set_usage)
+	       evry_history_item_usage_set(it, NULL, NULL);
+
+	     continue;
+	  }
+	
 	it->fuzzy_match = evry_fuzzy_match(it->label, input);
 
 	if (match_detail)
