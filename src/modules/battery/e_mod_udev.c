@@ -213,8 +213,8 @@ _battery_udev_battery_update(const char *syspath, Battery *bat)
         GET_STR(bat, model, POWER_SUPPLY_MODEL_NAME);
         GET_STR(bat, vendor, POWER_SUPPLY_MANUFACTURER);
         GET_NUM(bat, design_charge, POWER_SUPPLY_ENERGY_FULL_DESIGN);
-        GET_NUM(bat, last_full_charge, POWER_SUPPLY_ENERGY_FULL);
      }
+   GET_NUM(bat, last_full_charge, POWER_SUPPLY_ENERGY_FULL);
    test = eeze_udev_syspath_get_property(bat->udi, "POWER_SUPPLY_ENERGY_NOW");
    if (test)
      {

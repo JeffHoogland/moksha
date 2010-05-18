@@ -323,7 +323,11 @@ _battery_device_update(void)
      return; /* not ready yet, no properties received for any battery */
 
    if (batnum > 0) full /= batnum;
-
+   if ((full == 100) && have_power)
+     {
+        time_left = -1;
+        time_full = -1;
+     }
    if (time_left < 1) time_left = -1;
    if (time_full < 1) time_full = -1;
    
