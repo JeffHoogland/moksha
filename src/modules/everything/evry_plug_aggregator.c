@@ -191,7 +191,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
      }
 
    items = eina_list_sort(items, -1, evry_items_sort_func);
-
+   
    EINA_LIST_FOREACH(items, l, it)
      {
 	/* remove duplicates provided by different plugins */
@@ -202,13 +202,16 @@ _fetch(Evry_Plugin *plugin, const char *input)
 		  if ((it->plugin->name != it2->plugin->name) &&
 		      (it->type == it2->type) &&
 		      (it->id == it2->id))
-		  continue;
+		    break;
 	       }
 	  }
 
-	evry_item_ref(it);
-	EVRY_PLUGIN_ITEM_APPEND(p, it);
-
+	if (!it->id || !it2)
+	  {
+	     evry_item_ref(it);
+	     EVRY_PLUGIN_ITEM_APPEND(p, it);
+	  }
+	
 	if (cnt++ > MAX_ITEMS)
 	  break;
 
