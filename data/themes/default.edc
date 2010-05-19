@@ -34187,19 +34187,20 @@ collections {
             mouse_events: 0;
             description {
                state: "default" 0.0;
-                min: 12 12;
-                max: 12 12;
-                /* aspect_preference: */
-                visible: 0;
+               min: 12 12;
+               max: 12 12;
+               /* aspect_preference: */
+               visible: 0;
+	       align: 1.0 0.0;
                rel1 {
                   to: "base";
                   relative: 1.0 0.0;
-                  offset: -14  3;
+                  offset: -3 2;
                }
                rel2 {
                   to: "base";
-                  relative: 1.0 1.0;
-                  offset: -2 -3;
+                  relative: 1.0 0.0;
+                  offset: -3 2;
                }
                image {
                   normal: "icon_right_arrow.png";
