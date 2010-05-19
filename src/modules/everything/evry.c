@@ -993,15 +993,7 @@ _evry_selector_new(Evry_Window *win, int type)
    Plugin_Config *pc;
    Eina_List *l, *pcs;
    Evry_Selector *sel = E_NEW(Evry_Selector, 1);
-   Evas_Object *o = edje_object_add(win->popup->evas);
-
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN,
-				  _evry_selector_cb_down, sel);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_UP,
-				  _evry_selector_cb_up, sel);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_WHEEL,
-				  _evry_selector_cb_wheel, sel);
-   evas_object_show(o);
+   Evas_Object *o = NULL;
 
    sel->aggregator = evry_aggregator_new(win, type);
 
@@ -1009,15 +1001,28 @@ _evry_selector_new(Evry_Window *win, int type)
      {
 	sel->actions = evry_plug_actions_new(sel, type);
 	pcs = evry_conf->conf_subjects;
+	o = edje_object_part_swallow_get(win->o_main, "subject_selector");
      }
    else if (type == EVRY_PLUGIN_ACTION)
      {
 	sel->actions = evry_plug_actions_new(sel, type);
 	pcs = evry_conf->conf_actions;
+	o = edje_object_part_swallow_get(win->o_main, "action_selector");
      }
    else if (type == EVRY_PLUGIN_OBJECT)
      {
 	pcs = evry_conf->conf_objects;
+	o = edje_object_part_swallow_get(win->o_main, "object_selector");
+     }
+
+   if (o)
+     {
+	evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN,
+				       _evry_selector_cb_down, sel);
+	evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_UP,
+				       _evry_selector_cb_up, sel);
+	evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_WHEEL,
+				       _evry_selector_cb_wheel, sel);
      }
 
    EINA_LIST_FOREACH(pcs, l, pc)
