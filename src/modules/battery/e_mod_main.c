@@ -578,7 +578,7 @@ _battery_update(int full, int time_left, int time_full, Eina_Bool have_battery, 
                     _battery_warning_popup(inst, time_left, (double)full / 100.0);
                }
           }
-        else if (have_power)
+        else if (have_power || ((time_left / 60) > battery_config->alert))
           _battery_warning_popup_destroy(inst);
      }
    if (!have_battery)
