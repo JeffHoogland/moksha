@@ -257,9 +257,9 @@ _battery_udev_battery_update(const char *syspath, Battery *bat)
    if (test)
      {
         if (!strcmp(test, "Charging"))
-          {
+          bat->charging = 1;
+        else if ((!strcmp(test, "Unknown")) && (bat->charge_rate >= 0))
             bat->charging = 1;
-          }
         else
           bat->charging = 0;
         eina_stringshare_del(test);
