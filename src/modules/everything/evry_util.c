@@ -365,31 +365,29 @@ evry_util_plugin_items_add(Evry_Plugin *p, Eina_List *items, const char *input,
 
    EINA_LIST_FOREACH(items, l, it)
      {
+	it->fuzzy_match = 0;
+
+	if (set_usage)
+	  evry_history_item_usage_set(it, input, NULL);
+
 	if (!input)
 	  {
 	     p->items = eina_list_append(p->items, it);
-
-	     if (set_usage)
-	       evry_history_item_usage_set(it, NULL, NULL);
-
 	     continue;
 	  }
-	
+
 	it->fuzzy_match = evry_fuzzy_match(it->label, input);
 
 	if (match_detail)
-	  match = evry_fuzzy_match(it->detail, input);
+	  {
+	     match = evry_fuzzy_match(it->detail, input);
 
-	if (match && match < it->fuzzy_match)
-	  it->fuzzy_match = match;
+	     if (!(it->fuzzy_match) || (match && (match < it->fuzzy_match)))
+	       it->fuzzy_match = match;
+	  }
 
 	if (it->fuzzy_match)
-	  {
-	     if (set_usage)
-	       evry_history_item_usage_set(it, input, NULL);
-
-	     p->items = eina_list_append(p->items, it);
-	  }
+	  p->items = eina_list_append(p->items, it);
      }
 
    p->items = eina_list_sort(p->items, -1, evry_items_sort_func);

@@ -1485,11 +1485,8 @@ _cb_item_changed(void *data, int type, void *event)
 
    if (ev->changed_selection)
      {
-	if (it->item->selected)
-	  {
-	     evry_item_select(v->state, ev->item);
-	     _pan_item_select(v->span, it, 1);
-	  }
+	_pan_item_select(v->span, it, 1);
+	evry_item_select(v->state, ev->item);
      }
 
    if (!it->visible)

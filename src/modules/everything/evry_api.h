@@ -227,7 +227,7 @@ struct _Evry_Event_Action_Performed
 #define EVRY_PLUGIN_ITEMS_CLEAR(_p) {		\
      Evry_Item *it;				\
      EINA_LIST_FREE(EVRY_PLUGIN(_p)->items, it) \
-       it->fuzzy_match = 0; }
+       if (it) it->fuzzy_match = 0; }
 
 #define EVRY_PLUGIN_ITEMS_FREE(_p) {		\
      Evry_Item *it;				\
