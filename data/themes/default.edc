@@ -33378,9 +33378,10 @@ collections {
             }
          }
          part {
-            name: "e.swallow.subject_selector";
-            type: SWALLOW;
-            clip_to: "selector_frame";
+            name: "subject_selector";
+            type: GROUP;
+	    source: "e/modules/everything/selector_item";
+	    clip_to: "selector_frame";
             description {
                state: "default" 0.0;
                rel1 {
@@ -33409,8 +33410,9 @@ collections {
             }
          }
          part {
-            name: "e.swallow.action_selector";
-            type: SWALLOW;
+            name: "action_selector";
+            type: GROUP;
+	    source: "e/modules/everything/selector_item";
             clip_to: "selector_frame";
             description {
                state: "default" 0.0;
@@ -33439,8 +33441,9 @@ collections {
             }
          }
          part {
-            name: "e.swallow.object_selector";
-            type: SWALLOW;
+            name: "object_selector";
+            type: GROUP;
+	    source: "e/modules/everything/selector_item";	   
             clip_to: "selector_frame";
             description {
                state: "default" 0.0;
@@ -33507,9 +33510,9 @@ collections {
             source: "e";
             action: STATE_SET "default" 0.00;
             transition: SINUSOIDAL 0.15;
-            target: "e.swallow.object_selector";
-            target: "e.swallow.subject_selector";
-            target: "e.swallow.action_selector";
+            target: "object_selector";
+            target: "subject_selector";
+            target: "action_selector";
          }
          program {
             name: "object_selector_show";
@@ -33517,9 +33520,9 @@ collections {
             source: "e";
             action: STATE_SET "wide" 0.00;
             transition: SINUSOIDAL 0.2;
-            target: "e.swallow.object_selector";
-            target: "e.swallow.subject_selector";
-            target: "e.swallow.action_selector";
+            target: "object_selector";
+            target: "subject_selector";
+            target: "action_selector";
          }
          program {
             name: "composite_mode";

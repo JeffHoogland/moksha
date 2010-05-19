@@ -43,9 +43,6 @@ struct _Evry_Window
 
 struct _Evry_Selector
 {
-  Evas_Object *o_main;
-  Evas_Object *o_icon;
-
   /* current state */
   Evry_State  *state;
 
@@ -55,16 +52,16 @@ struct _Evry_Selector
   /* provides collection of items from other plugins */
   Evry_Plugin *aggregator;
 
+  /* action selector plugin */
   Evry_Plugin *actions;
-
-  /* */
-  /* Eina_List   *cur_actions; */
 
   /* all plugins that belong to this selector*/
   Eina_List   *plugins;
 
+  /* list view instance */
   Evry_View   *view;
 
+  Evas_Object *o_icon;
   Evas_Object *o_thumb;
   Eina_Bool    do_thumb;
 

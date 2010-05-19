@@ -38,6 +38,8 @@ static int  _evry_selector_objects_get(Evry_Action *act);
 static void _evry_selector_update_actions(Evry_Selector *sel);
 static void _evry_selector_item_update(Evry_Selector *sel);
 static Evry_Selector *_evry_selector_for_plugin_get(Evry_Plugin *p);
+static void _evry_selector_label_set(Evry_Selector *sel, const char *part, const char *label);
+static void _evry_selector_signal_emit(Evry_Selector *sel, const char *msg);
 
 static Evry_Window *_evry_window_new(E_Zone *zone);
 static void _evry_window_free(Evry_Window *win);
@@ -136,12 +138,15 @@ evry_show(E_Zone *zone, const char *params)
    E_OBJECT_CHECK_RETURN(zone, 0);
    E_OBJECT_TYPE_CHECK_RETURN(zone, E_ZONE_TYPE, 0);
 
+   if (win->level)
+     return 1;
+
    if (win)
      {
 	Eina_List *l;
 	Evry_Plugin *p;
 
-	if (!(win->level) && !(params) &&
+	if (!(params) &&
 	    (win->selector == win->selectors[2]) &&
 	    (win->selector->state && win->selector->state->cur_item))
 	  {
@@ -324,24 +329,31 @@ evry_hide(int clear)
 static int
 _evry_selectors_shift(int dir)
 {
-   if (dir > 0)
+   if ((dir > 0) && (win->level == 0))
      {
 	void *new_sel;
 	Evry_Selector *sel;
 	Evry_State *s;
+	int i;
+	for (i = 1; i < 3; i++)
+	  {
+	     if (win->selectors[i]->o_icon)
+	       evas_object_del(win->selectors[i]->o_icon);
+
+	     if (win->selectors[i]->o_thumb)
+	       evas_object_del(win->selectors[i]->o_thumb);
+
+	     win->selectors[i]->o_icon = NULL;
+	     win->selectors[i]->o_thumb = NULL;
+	  }
 
 	if (!(new_sel = realloc(win->sel_list, sizeof(Evry_Selector*) * 6)))
 	  return 0;
 
 	win->sel_list = new_sel;
 
-	edje_object_part_unswallow(win->o_main, win->sel_list[0]->o_main);
-	evas_object_hide(win->sel_list[0]->o_main);
-	edje_object_part_unswallow(win->o_main, win->sel_list[1]->o_main);
-	evas_object_hide(win->sel_list[1]->o_main);
-	edje_object_part_unswallow(win->o_main, win->sel_list[2]->o_main);
-
-	edje_object_signal_emit(win->o_main, "e,state,object_selector_hide", "e");
+	edje_object_signal_emit(win->o_main,
+				"e,state,object_selector_hide", "e");
 
 	win->sel_list[5] = NULL;
 	win->selectors = win->sel_list + 2;
@@ -351,10 +363,12 @@ _evry_selectors_shift(int dir)
 	win->selector = win->selectors[0];
 	sel = win->selector;
 
-	edje_object_part_swallow(win->o_main, "e.swallow.subject_selector",
-				 sel->o_main);
+	_evry_selector_signal_emit(sel, "e,state,selected");
 
-	edje_object_signal_emit(sel->o_main, "e,state,selected", "e");
+	_evry_selector_item_update(win->selectors[0]);
+	_evry_selector_item_update(win->selectors[1]);
+	_evry_selector_item_update(win->selectors[2]);
+
 	/* was checked before. anyway */
 	if ((s = sel->state) && (s->cur_item))
 	  _evry_selector_update_actions(sel);
@@ -365,33 +379,29 @@ _evry_selectors_shift(int dir)
      }
    else if ((dir < 0) && (win->level > 0))
      {
+	if (win->selectors[0]->o_icon)
+	  evas_object_del(win->selectors[0]->o_icon);
+
+	if (win->selectors[0]->o_thumb)
+	  evas_object_del(win->selectors[0]->o_thumb);
+
+	win->selectors[0]->o_icon = NULL;
+	win->selectors[0]->o_thumb = NULL;
 
 	_evry_selector_free(win->selectors[1]);
 	_evry_selector_free(win->selectors[2]);
 
-	edje_object_part_unswallow(win->o_main, win->selectors[0]->o_main);
 	win->selectors = win->sel_list;
 	win->sel_list[3] = NULL;
 	win->selector = NULL;
 
 	edje_object_signal_emit(win->o_main,
 				"e,state,object_selector_show", "e");
-
-	edje_object_part_swallow(win->o_main,
-				 "e.swallow.subject_selector",
-				 win->selectors[0]->o_main);
-	evas_object_show(win->selectors[0]->o_main);
-
-	edje_object_part_swallow(win->o_main,
-				 "e.swallow.action_selector",
-				 win->selectors[1]->o_main);
-	evas_object_show(win->selectors[1]->o_main);
-
+	_evry_selector_item_update(win->selectors[0]);
+	_evry_selector_item_update(win->selectors[1]);
+	_evry_selector_item_update(win->selectors[2]);
 	_evry_selector_activate(win->selectors[2]);
 
-	edje_object_part_swallow(win->o_main,
-				 "e.swallow.object_selector",
-				 win->selectors[2]->o_main);
 	win->level = 0;
 
 	return 1;
@@ -888,7 +898,7 @@ _evry_cb_mouse(void *data, int type, void *event)
    else if (type == ECORE_EVENT_MOUSE_BUTTON_UP)
      {
 	win->mouse_button = 0;
-	
+
 	if (win->mouse_out &&
 	    !E_INSIDE(ev->x, ev->y, pop->x + pop->zone->x,
 		      pop->y + pop->zone->y, pop->w, pop->h))
@@ -999,9 +1009,9 @@ _evry_selector_new(Evry_Window *win, int type)
    Eina_List *l, *pcs;
    Evry_Selector *sel = E_NEW(Evry_Selector, 1);
    Evas_Object *o = edje_object_add(win->popup->evas);
-   sel->o_main = o;
-   e_theme_edje_object_set(o, "base/theme/everything",
-			   "e/modules/everything/selector_item");
+   /* sel->o_main = o;
+    * e_theme_edje_object_set(o, "base/theme/everything",
+    * 			   "e/modules/everything/selector_item"); */
 
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN,
 				  _evry_selector_cb_down, sel);
@@ -1016,18 +1026,18 @@ _evry_selector_new(Evry_Window *win, int type)
    if (type == EVRY_PLUGIN_SUBJECT)
      {
 	sel->actions = evry_plug_actions_new(sel, type);
-	edje_object_part_swallow(win->o_main, "e.swallow.subject_selector", o);
+	/* edje_object_part_swallow(win->o_main, "e.swallow.subject_selector", o); */
 	pcs = evry_conf->conf_subjects;
      }
    else if (type == EVRY_PLUGIN_ACTION)
      {
 	sel->actions = evry_plug_actions_new(sel, type);
-	edje_object_part_swallow(win->o_main, "e.swallow.action_selector", o);
+	/* edje_object_part_swallow(win->o_main, "e.swallow.action_selector", o); */
 	pcs = evry_conf->conf_actions;
      }
    else if (type == EVRY_PLUGIN_OBJECT)
      {
-	edje_object_part_swallow(win->o_main, "e.swallow.object_selector", o);
+	/* edje_object_part_swallow(win->o_main, "e.swallow.object_selector", o); */
 	pcs = evry_conf->conf_objects;
      }
 
@@ -1053,8 +1063,8 @@ _evry_selector_free(Evry_Selector *sel)
      evas_object_del(sel->o_thumb);
    if (sel->o_icon)
      evas_object_del(sel->o_icon);
-   if (sel->o_main)
-     evas_object_del(sel->o_main);
+   /* if (sel->o_main)
+    *   evas_object_del(sel->o_main); */
 
    if (win->visible && (sel == win->selector))
      _evry_view_clear(sel->state);
@@ -1074,6 +1084,34 @@ _evry_selector_free(Evry_Selector *sel)
 }
 
 static void
+_evry_selector_signal_emit(Evry_Selector *sel, const char *msg)
+{
+   char buf[1024];
+   if (sel == win->selectors[0])
+     snprintf(buf, sizeof(buf), "subject_selector:%s", msg);
+   else if (sel == win->selectors[1])
+     snprintf(buf, sizeof(buf), "action_selector:%s", msg);
+   else if (sel == win->selectors[2])
+     snprintf(buf, sizeof(buf), "object_selector:%s", msg);
+
+   edje_object_signal_emit(win->o_main, buf, "e");
+}
+
+static void
+_evry_selector_label_set(Evry_Selector *sel, const char *part, const char *label)
+{
+   char buf[1024];
+   if (sel == win->selectors[0])
+     snprintf(buf, sizeof(buf), "subject_selector:%s", part);
+   else if (sel == win->selectors[1])
+     snprintf(buf, sizeof(buf), "action_selector:%s", part);
+   else if (sel == win->selectors[2])
+     snprintf(buf, sizeof(buf), "object_selector:%s", part);
+
+   edje_object_part_text_set(win->o_main, buf, label);
+}
+
+static void
 _evry_selector_activate(Evry_Selector *sel)
 {
    Evry_State *s;
@@ -1081,9 +1119,11 @@ _evry_selector_activate(Evry_Selector *sel)
    if (win->selector)
      {
 	Evry_Selector *sel = win->selector;
+	_evry_selector_label_set(sel, "e.text.plugin", "");
+	_evry_selector_signal_emit(sel, "e,state,unselected");
 
-	edje_object_signal_emit(sel->o_main, "e,state,unselected", "e");
-	edje_object_part_text_set(sel->o_main, "e.text.plugin", "");
+	/* edje_object_signal_emit(win->o_main, "", "e");
+	 * edje_object_part_text_set(win->o_main, "e.text.plugin", ""); */
 
 	if (sel->state && sel->state->view)
 	  _evry_view_hide(sel->state->view, 0);
@@ -1097,7 +1137,8 @@ _evry_selector_activate(Evry_Selector *sel)
 	return;
      }
 
-   edje_object_signal_emit(sel->o_main, "e,state,selected", "e");
+   _evry_selector_signal_emit(sel, "e,state,selected");
+   /* edje_object_signal_emit(sel->o_main, "e,state,selected", "e"); */
 
    win->selector = sel;
 
@@ -1106,8 +1147,10 @@ _evry_selector_activate(Evry_Selector *sel)
 	_evry_update_text_label(s);
 
 	if (s->cur_item)
-	  edje_object_part_text_set(sel->o_main, "e.text.plugin",
-				    EVRY_ITEM(s->cur_item->plugin)->label);
+	  _evry_selector_label_set(sel, "e.text.plugin",
+				   EVRY_ITEM(s->cur_item->plugin)->label);
+	  /* edje_object_part_text_set(sel->o_main, "e.text.plugin",
+	   * 			    EVRY_ITEM(s->cur_item->plugin)->label); */
 
 	_evry_view_show(s->view);
 	_evry_list_win_update(s);
@@ -1128,16 +1171,24 @@ _evry_selector_thumb_gen(void *data, Evas_Object *obj, void *event_info)
 
    e_icon_size_get(sel->o_thumb, &w, &h);
    edje_extern_object_aspect_set(sel->o_thumb, EDJE_ASPECT_CONTROL_BOTH, w, h);
-   edje_object_part_swallow(sel->o_main, "e.swallow.thumb", sel->o_thumb);
+
+   if (sel == win->selectors[0])
+     edje_object_part_swallow(win->o_main, "subject_selector:e.swallow.thumb", sel->o_thumb);
+   else if (sel == win->selectors[1])
+     edje_object_part_swallow(win->o_main, "action_selector:e.swallow.thumb", sel->o_thumb);
+   else if (sel == win->selectors[2])
+     edje_object_part_swallow(win->o_main, "object_selector:e.swallow.thumb", sel->o_thumb);
+
    evas_object_show(sel->o_thumb);
-   edje_object_signal_emit(sel->o_main, "e,action,thumb,show", "e");
+   _evry_selector_signal_emit(sel, "e,action,thumb,show");
+   /* edje_object_signal_emit(sel->o_main, "e,action,thumb,show", "e"); */
    sel->do_thumb = EINA_FALSE;
 }
 
 static int
 _evry_selector_thumb(Evry_Selector *sel, const Evry_Item *it)
 {
-   Evas_Coord w, h;
+   /* Evas_Coord w, h; */
    char *suffix = NULL;
 
    if (sel->do_thumb)
@@ -1163,13 +1214,13 @@ _evry_selector_thumb(Evry_Selector *sel, const Evry_Item *it)
    	sel->o_thumb = e_thumb_icon_add(win->popup->evas);
    	evas_object_smart_callback_add(sel->o_thumb, "e_thumb_gen",
 				       _evry_selector_thumb_gen, sel);
-   	edje_object_part_geometry_get(sel->o_main, "e.swallow.thumb",
-				      NULL, NULL, &w, &h);
+   	/* edje_object_part_geometry_get(sel->o_main, "e.swallow.thumb",
+	 * 			      NULL, NULL, &w, &h); */
 	if (suffix)
 	  e_thumb_icon_file_set(sel->o_thumb, file->path, "e/desktop/background");
 	else
 	  e_thumb_icon_file_set(sel->o_thumb, file->path, NULL);
-   	e_thumb_icon_size_set(sel->o_thumb, w, h);
+   	e_thumb_icon_size_set(sel->o_thumb, 128, 128);
    	e_thumb_icon_begin(sel->o_thumb);
    	sel->do_thumb = EINA_TRUE;
    	return 1;
@@ -1183,38 +1234,54 @@ _evry_selector_item_update(Evry_Selector *sel)
 {
    Evry_State *s = sel->state;
    Evry_Item *it = NULL;
-   Evas_Object *o;
-
-   if (!edje_object_part_exists(sel->o_main, "e.swallow.icons")) return;
+   Evas_Object *o = NULL;
 
    if (sel->o_icon)
      {
 	evas_object_del(sel->o_icon);
 	sel->o_icon = NULL;
      }
+   if (sel->o_thumb)
+     {
+	if (sel->do_thumb)
+	  e_thumb_icon_end(sel->o_thumb);
+	evas_object_del(sel->o_thumb);
+	sel->o_thumb = NULL;
+     }
 
    if (!s || !(it = s->cur_item))
      {
 	/* no items for this state - clear selector */
-	edje_object_part_text_set(sel->o_main, "e.text.label", "");
+	/* edje_object_part_text_set(sel->o_main, "e.text.label", ""); */
+	_evry_selector_label_set(sel, "e.text.label","");
+
 	if (sel == win->selector && s && s->plugin)
-	  edje_object_part_text_set(sel->o_main, "e.text.plugin",
-				    EVRY_ITEM(s->plugin)->label);
+	  _evry_selector_label_set(sel, "e.text.plugin",
+				   EVRY_ITEM(s->plugin)->label);
+
+	  /* edje_object_part_text_set(sel->o_main, "e.text.plugin",
+	   * 			    EVRY_ITEM(s->plugin)->label); */
 	else
-	  edje_object_part_text_set(sel->o_main, "e.text.plugin", "");
+	  _evry_selector_label_set(sel, "e.text.plugin", "");
+	  /* edje_object_part_text_set(sel->o_main, "e.text.plugin", ""); */
 
 	if (!s) return;
      }
 
    if (it)
      {
-	edje_object_part_text_set(sel->o_main, "e.text.label", it->label);
+	_evry_selector_label_set(sel, "e.text.label", it->label);
+	/* edje_object_part_text_set(sel->o_main, "e.text.label", it->label); */
 
 	if (sel == win->selector)
-	  edje_object_part_text_set(sel->o_main, "e.text.plugin",
-				    EVRY_ITEM(it->plugin)->label);
+	  _evry_selector_label_set(sel, "e.text.plugin",
+				   EVRY_ITEM(s->plugin)->label);
+
+	  /* edje_object_part_text_set(sel->o_main, "e.text.plugin",
+	   * 			    EVRY_ITEM(it->plugin)->label); */
 	else
-	  edje_object_part_text_set(sel->o_main, "e.text.plugin", "");
+	  _evry_selector_label_set(sel, "e.text.plugin", "");
+	  /* edje_object_part_text_set(sel->o_main, "e.text.plugin", ""); */
 
 	if (!_evry_selector_thumb(sel, it))
 	  {
@@ -1223,12 +1290,12 @@ _evry_selector_item_update(Evry_Selector *sel)
 	     if (!o && it->plugin)
 	       o = evry_util_icon_get(EVRY_ITEM(it->plugin), win->popup->evas);
 
-	     if (o)
-	       {
-		  edje_object_part_swallow(sel->o_main, "e.swallow.icons", o);
-		  evas_object_show(o);
-		  sel->o_icon = o;
-	       }
+	     /* if (o)
+	      *   {
+	      * 	  edje_object_part_swallow(sel->o_main, "e.swallow.icons", o);
+	      * 	  evas_object_show(o);
+	      * 	  sel->o_icon = o;
+	      *   } */
 	  }
      }
 
@@ -1236,12 +1303,19 @@ _evry_selector_item_update(Evry_Selector *sel)
        (EVRY_ITEM(s->plugin)->icon))
      {
 	o = evry_icon_theme_get(EVRY_ITEM(s->plugin)->icon, win->popup->evas);
-	if (o)
-	  {
-	     edje_object_part_swallow(sel->o_main, "e.swallow.icons", o);
-	     evas_object_show(o);
-	     sel->o_icon = o;
-	  }
+     }
+
+   if (o)
+     {
+	if (sel == win->selectors[0])
+	  edje_object_part_swallow(win->o_main, "subject_selector:e.swallow.icons", o);
+	else if (sel == win->selectors[1])
+	  edje_object_part_swallow(win->o_main, "action_selector:e.swallow.icons", o);
+	else if (sel == win->selectors[2])
+	  edje_object_part_swallow(win->o_main, "object_selector:e.swallow.icons", o);
+
+	sel->o_icon = o;
+	evas_object_show(o);
      }
 }
 
@@ -1662,7 +1736,7 @@ _evry_input_complete(Evry_State *s)
    Evry_Item *it = s->cur_item;
 
    if (!it) return 0;
-     
+
    evry_item_ref(it);
 
    s->item_auto_selected = EINA_FALSE;
@@ -1697,7 +1771,7 @@ _evry_cheat_history(Evry_State *s, int promote, int delete)
    Evry_Item *it = s->cur_item;
 
    if (!it) return 0;
-   
+
    if (!(ht = evry_history_types_get(it->type)))
      return 1;
 
