@@ -563,7 +563,7 @@ _battery_update(int full, int time_left, int time_full, Eina_Bool have_battery, 
                _battery_face_time_set(inst->popup_battery, 
                                       time_full);
           }
-        if (have_battery && (!have_power) && (full != 100) &&
+        if (have_battery && (!have_power) && (full < 90) &&
             (((time_left > 0) && battery_config->alert && ((time_left / 60) <= battery_config->alert)) || 
              (battery_config->alert_p && (full <= battery_config->alert_p)))
             )
