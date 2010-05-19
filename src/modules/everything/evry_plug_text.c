@@ -5,7 +5,7 @@ static Evry_Plugin *p2;
 
 
 static void
-_cleanup(Evry_Plugin *p)
+_finish(Evry_Plugin *p)
 {
    EVRY_PLUGIN_ITEMS_FREE(p);
 }
@@ -34,11 +34,11 @@ evry_plug_text_init(void)
 {
    p1 = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Text"),
 			"accessories-text-editor", EVRY_TYPE_TEXT,
-			NULL, _cleanup, _fetch, NULL);
+			NULL, _finish, _fetch, NULL);
 
    p2 = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Text"),
 			"accessories-text-editor", EVRY_TYPE_TEXT,
-			NULL, _cleanup, _fetch, NULL);
+			NULL, _finish, _fetch, NULL);
 
    if (evry_plugin_register(p1, EVRY_PLUGIN_OBJECT,999))
      {

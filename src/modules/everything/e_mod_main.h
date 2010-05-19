@@ -9,8 +9,6 @@
 #define MOD_CONFIG_FILE_VERSION					\
   ((MOD_CONFIG_FILE_EPOCH << 16) | MOD_CONFIG_FILE_GENERATION)
 
-
-typedef struct _Evry_State	Evry_State;
 typedef struct _Evry_View	Evry_View;
 typedef struct _History		Evry_History;
 typedef struct _Config		Evry_Config;
@@ -70,8 +68,8 @@ struct _Evry_Selector
 
 struct _Evry_State
 {
-  Evry_State *prev;
-  
+  Evry_Selector *selector;
+
   char *inp; /* alloced input */
 
   char *input; /* pointer to input + trigger */
@@ -195,7 +193,7 @@ struct _History
 /* evry.c */
 void  evry_item_select(const Evry_State *s, Evry_Item *it);
 void  evry_item_mark(const Evry_State *state, Evry_Item *it, Eina_Bool mark);
-void  evry_plugin_select(const Evry_State *s, Evry_Plugin *p);
+void  evry_plugin_select(Evry_Plugin *p);
 int   evry_list_win_show(void);
 void  evry_list_win_hide(void);
 Evry_Item *evry_item_new(Evry_Item *base, Evry_Plugin *p, const char *label,
@@ -286,17 +284,16 @@ int   evry_shutdown(void);
 int   evry_show(E_Zone *zone, const char *params);
 void  evry_hide(int clear);
 
-Evry_Plugin *evry_aggregator_new(Evry_Window *win, int type);
-int   evry_aggregator_fetch(Evry_Plugin *p, const char *input);
-
 int   evry_plug_actions_init();
 void  evry_plug_actions_shutdown();
 Evry_Plugin *evry_plug_actions_new(Evry_Selector *selector, int type);
 
+Evry_Plugin *evry_aggregator_new(Evry_Window *win, int type);
+
 void  evry_history_init(void);
 void  evry_history_free(void);
 
-int   evry_browse_item(Evry_Selector *sel);
+int   evry_browse_item(Evry_Item *it);
 int   evry_browse_back(Evry_Selector *sel);
 
 void evry_plugin_action(int finished);

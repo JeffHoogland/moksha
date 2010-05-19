@@ -259,7 +259,7 @@ _tabs_clear(Tab_View *v)
 static void
 _plugin_select(Tab_View *v, Evry_Plugin *p)
 {
-   evry_plugin_select(v->state, p);
+   evry_plugin_select(p);
 
    _tabs_update(v);
    /* _tab_scroll_to(v, p, 1); */

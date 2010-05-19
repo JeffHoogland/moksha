@@ -263,9 +263,3 @@ evry_aggregator_new(Evry_Window *win, int type)
 
    return p;
 }
-
-int
-evry_aggregator_fetch(Evry_Plugin *p, const char *input)
-{
-   return p->fetch(p, input);
-}

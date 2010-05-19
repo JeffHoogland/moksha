@@ -10,6 +10,7 @@ typedef struct _Evry_Action		Evry_Action;
 typedef struct _History_Item		History_Item;
 typedef struct _History_Entry		History_Entry;
 typedef struct _History_Types		History_Types;
+typedef struct _Evry_State	        Evry_State;
 
 typedef unsigned int Evry_Type;
 
@@ -193,6 +194,7 @@ struct _Evry_Plugin
   /* not to be set by plugin! */
   Plugin_Config *config;
   unsigned int request;
+  Evry_State *state;
 };
 
 struct _Plugin_Config

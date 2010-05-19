@@ -3,7 +3,7 @@
 
 #include "evry_types.h"
 
-#define EVRY_API_VERSION 20
+#define EVRY_API_VERSION 21
 
 #define EVRY_ACTION_OTHER    0
 #define EVRY_ACTION_FINISHED 1
@@ -166,6 +166,7 @@ struct _Evry_Event_Action_Performed
 #define EVRY_FILE(_it) ((Evry_Item_File *) _it)
 
 #define GET_APP(_app, _item) Evry_Item_App *_app = (Evry_Item_App *) _item
+#define GET_CMD(_app, _item) Evry_Item_App *_app = (Evry_Item_App *) _item
 #define GET_FILE(_file, _item) Evry_Item_File *_file = (Evry_Item_File *) _item
 #define GET_EVRY_PLUGIN(_p, _plugin) Evry_Plugin *_p = (Evry_Plugin*) _plugin
 #define GET_VIEW(_v, _view) View *_v = (View*) _view
@@ -219,10 +220,11 @@ struct _Evry_Event_Action_Performed
 
 #define EVRY_PLUGIN_FREE(_p) if (_p) evry->plugin_free(EVRY_PLUGIN(_p))
 
-#define EVRY_PLUGIN_INST(_p, _type, _plugin) {	\
-  _p = E_NEW(_type, 1);				\
-  _p->base = (_type *)_plugin;			\
-  _p->base.items = NULL;			\
+#define EVRY_PLUGIN_INSTANCE(_p, _plugin) {	\
+     _p = E_NEW(Plugin, 1);			\
+     _p->base = *_plugin;			\
+     _p->base.items = NULL;			\
+     _p->base.base.plugin = (Evry_Plugin*)_p; }	\
 
 #define EVRY_PLUGIN_ITEMS_CLEAR(_p) {		\
      Evry_Item *it;				\

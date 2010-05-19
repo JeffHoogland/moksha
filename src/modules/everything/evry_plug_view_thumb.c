@@ -1455,7 +1455,10 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
      {
 	if (v->mode == VIEW_MODE_THUMB)
 	  {
-	     if (evry_browse_item(NULL))
+	     if (!sd->cur_item)
+	       goto end;
+
+	     if (evry_browse_item(sd->cur_item->item))
 	       goto end;
 	  }
      }
@@ -1560,7 +1563,7 @@ _view_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	goto end;
      }
 
-   if (sd->view->state->prev)
+   if (sd->view->state->selector->states->next)
      edje_object_signal_emit(sd->view->bg, "e,action,show,back", "e");
 
    if (sd->it_down->item->browseable)
@@ -1586,10 +1589,10 @@ _view_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	  {
 	     edje_object_signal_emit(sd->view->bg, "e,action,hide,into", "e");
 	     edje_object_signal_emit(sd->view->bg, "e,action,hide,back", "e");
+	     evry_browse_item(sd->it_down->item);
 	     sd->it_down = NULL;
 	     sd->mouse_x = 0;
 	     sd->mouse_y = 0;
-	     evry_browse_item(NULL);
 	  }
      }
    return;
