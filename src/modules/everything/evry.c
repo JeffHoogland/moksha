@@ -37,6 +37,7 @@ static int  _evry_selector_actions_get(Evry_Item *it);
 static int  _evry_selector_objects_get(Evry_Action *act);
 static void _evry_selector_update_actions(Evry_Selector *sel);
 static void _evry_selector_item_update(Evry_Selector *sel);
+static void _evry_selector_item_clear(Evry_Selector *sel);
 static Evry_Selector *_evry_selector_for_plugin_get(Evry_Plugin *p);
 static void _evry_selector_label_set(Evry_Selector *sel, const char *part, const char *label);
 static void _evry_selector_signal_emit(Evry_Selector *sel, const char *msg);
@@ -138,13 +139,13 @@ evry_show(E_Zone *zone, const char *params)
    E_OBJECT_CHECK_RETURN(zone, 0);
    E_OBJECT_TYPE_CHECK_RETURN(zone, E_ZONE_TYPE, 0);
 
-   if (win->level)
-     return 1;
-
    if (win)
      {
 	Eina_List *l;
 	Evry_Plugin *p;
+
+	if (win->level > 0)
+	  return 1;
 
 	if (!(params) &&
 	    (win->selector == win->selectors[2]) &&
@@ -335,17 +336,9 @@ _evry_selectors_shift(int dir)
 	Evry_Selector *sel;
 	Evry_State *s;
 	int i;
+
 	for (i = 1; i < 3; i++)
-	  {
-	     if (win->selectors[i]->o_icon)
-	       evas_object_del(win->selectors[i]->o_icon);
-
-	     if (win->selectors[i]->o_thumb)
-	       evas_object_del(win->selectors[i]->o_thumb);
-
-	     win->selectors[i]->o_icon = NULL;
-	     win->selectors[i]->o_thumb = NULL;
-	  }
+	  _evry_selector_item_clear(win->selectors[i]);
 
 	if (!(new_sel = realloc(win->sel_list, sizeof(Evry_Selector*) * 6)))
 	  return 0;
@@ -379,15 +372,7 @@ _evry_selectors_shift(int dir)
      }
    else if ((dir < 0) && (win->level > 0))
      {
-	if (win->selectors[0]->o_icon)
-	  evas_object_del(win->selectors[0]->o_icon);
-
-	if (win->selectors[0]->o_thumb)
-	  evas_object_del(win->selectors[0]->o_thumb);
-
-	win->selectors[0]->o_icon = NULL;
-	win->selectors[0]->o_thumb = NULL;
-
+	_evry_selector_item_clear(win->selectors[0]);
 	_evry_selector_free(win->selectors[1]);
 	_evry_selector_free(win->selectors[2]);
 
@@ -1009,9 +994,6 @@ _evry_selector_new(Evry_Window *win, int type)
    Eina_List *l, *pcs;
    Evry_Selector *sel = E_NEW(Evry_Selector, 1);
    Evas_Object *o = edje_object_add(win->popup->evas);
-   /* sel->o_main = o;
-    * e_theme_edje_object_set(o, "base/theme/everything",
-    * 			   "e/modules/everything/selector_item"); */
 
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN,
 				  _evry_selector_cb_down, sel);
@@ -1026,18 +1008,15 @@ _evry_selector_new(Evry_Window *win, int type)
    if (type == EVRY_PLUGIN_SUBJECT)
      {
 	sel->actions = evry_plug_actions_new(sel, type);
-	/* edje_object_part_swallow(win->o_main, "e.swallow.subject_selector", o); */
 	pcs = evry_conf->conf_subjects;
      }
    else if (type == EVRY_PLUGIN_ACTION)
      {
 	sel->actions = evry_plug_actions_new(sel, type);
-	/* edje_object_part_swallow(win->o_main, "e.swallow.action_selector", o); */
 	pcs = evry_conf->conf_actions;
      }
    else if (type == EVRY_PLUGIN_OBJECT)
      {
-	/* edje_object_part_swallow(win->o_main, "e.swallow.object_selector", o); */
 	pcs = evry_conf->conf_objects;
      }
 
@@ -1057,14 +1036,7 @@ _evry_selector_new(Evry_Window *win, int type)
 static void
 _evry_selector_free(Evry_Selector *sel)
 {
-   if (sel->do_thumb)
-     e_thumb_icon_end(sel->o_thumb);
-   if (sel->o_thumb)
-     evas_object_del(sel->o_thumb);
-   if (sel->o_icon)
-     evas_object_del(sel->o_icon);
-   /* if (sel->o_main)
-    *   evas_object_del(sel->o_main); */
+   _evry_selector_item_clear(sel);
 
    if (win->visible && (sel == win->selector))
      _evry_view_clear(sel->state);
@@ -1230,58 +1202,56 @@ _evry_selector_thumb(Evry_Selector *sel, const Evry_Item *it)
 }
 
 static void
+_evry_selector_item_clear(Evry_Selector *sel)
+{
+   if (sel->o_icon)
+     {
+	evas_object_del(sel->o_icon);
+	sel->o_icon = NULL;
+     }
+
+   if (sel->o_thumb)
+     {
+	if (sel->do_thumb)
+	  e_thumb_icon_end(sel->o_thumb);
+
+	evas_object_del(sel->o_thumb);
+	sel->o_thumb = NULL;
+     }
+}
+
+static void
 _evry_selector_item_update(Evry_Selector *sel)
 {
    Evry_State *s = sel->state;
    Evry_Item *it = NULL;
    Evas_Object *o = NULL;
 
-   if (sel->o_icon)
-     {
-	evas_object_del(sel->o_icon);
-	sel->o_icon = NULL;
-     }
-   if (sel->o_thumb)
-     {
-	if (sel->do_thumb)
-	  e_thumb_icon_end(sel->o_thumb);
-	evas_object_del(sel->o_thumb);
-	sel->o_thumb = NULL;
-     }
+   _evry_selector_item_clear(sel);
 
-   if (!s || !(it = s->cur_item))
+   if (!(s) || !(s->cur_item))
      {
 	/* no items for this state - clear selector */
-	/* edje_object_part_text_set(sel->o_main, "e.text.label", ""); */
 	_evry_selector_label_set(sel, "e.text.label","");
 
 	if (sel == win->selector && s && s->plugin)
 	  _evry_selector_label_set(sel, "e.text.plugin",
 				   EVRY_ITEM(s->plugin)->label);
-
-	  /* edje_object_part_text_set(sel->o_main, "e.text.plugin",
-	   * 			    EVRY_ITEM(s->plugin)->label); */
 	else
 	  _evry_selector_label_set(sel, "e.text.plugin", "");
-	  /* edje_object_part_text_set(sel->o_main, "e.text.plugin", ""); */
 
 	if (!s) return;
      }
 
-   if (it)
+   if ((it = s->cur_item))
      {
 	_evry_selector_label_set(sel, "e.text.label", it->label);
-	/* edje_object_part_text_set(sel->o_main, "e.text.label", it->label); */
 
 	if (sel == win->selector)
 	  _evry_selector_label_set(sel, "e.text.plugin",
 				   EVRY_ITEM(s->plugin)->label);
-
-	  /* edje_object_part_text_set(sel->o_main, "e.text.plugin",
-	   * 			    EVRY_ITEM(it->plugin)->label); */
 	else
 	  _evry_selector_label_set(sel, "e.text.plugin", "");
-	  /* edje_object_part_text_set(sel->o_main, "e.text.plugin", ""); */
 
 	if (!_evry_selector_thumb(sel, it))
 	  {
@@ -1289,18 +1259,10 @@ _evry_selector_item_update(Evry_Selector *sel)
 
 	     if (!o && it->plugin)
 	       o = evry_util_icon_get(EVRY_ITEM(it->plugin), win->popup->evas);
-
-	     /* if (o)
-	      *   {
-	      * 	  edje_object_part_swallow(sel->o_main, "e.swallow.icons", o);
-	      * 	  evas_object_show(o);
-	      * 	  sel->o_icon = o;
-	      *   } */
 	  }
      }
 
-   if (!(sel->o_icon) && s->plugin &&
-       (EVRY_ITEM(s->plugin)->icon))
+   if (!(o) && (s->plugin && (EVRY_ITEM(s->plugin)->icon)))
      {
 	o = evry_icon_theme_get(EVRY_ITEM(s->plugin)->icon, win->popup->evas);
      }
