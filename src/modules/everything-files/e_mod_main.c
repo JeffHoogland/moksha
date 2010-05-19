@@ -567,19 +567,16 @@ _browse(Evry_Plugin *plugin, const Evry_Item *it)
 {
    Plugin *p = NULL;
 
-   if (!it || (it && !CHECK_TYPE(it, EVRY_TYPE_FILE)))
+   if (!it || !(CHECK_TYPE(it, EVRY_TYPE_FILE)))
      return NULL;
 
-   /* GET_PLUGIN(parent, plugin); */
    GET_FILE(file, it);
 
    if (!evry->file_path_get(file) ||
        !ecore_file_is_dir(file->path))
      return NULL;
 
-   p = E_NEW(Plugin, 1);
-   p->base = *plugin;
-   p->base.items = NULL;
+   EVRY_PLUGIN_INSTANCE(p, plugin);
 
    p->directory = eina_stringshare_add(file->path);
    p->parent = EINA_TRUE;
@@ -1071,7 +1068,7 @@ _recentf_browse(Evry_Plugin *plugin, const Evry_Item *it)
 {
    Plugin *p = NULL;
 
-   if (!it || (it && !CHECK_TYPE(it, EVRY_TYPE_FILE)))
+   if (!it || !CHECK_TYPE(it, EVRY_TYPE_FILE))
      return NULL;
 
    GET_FILE(file, it);
@@ -1098,9 +1095,7 @@ _recentf_begin(Evry_Plugin *plugin, const Evry_Item *it)
    if (it && !CHECK_TYPE(it, EVRY_TYPE_ACTION))
      return NULL;
 
-   p = E_NEW(Plugin, 1);
-   p->base = *plugin;
-   p->base.items = NULL;
+   EVRY_PLUGIN_INSTANCE(p, plugin);
    p->parent = EINA_FALSE;
 
    if (it)
