@@ -70,6 +70,8 @@ struct _Evry_Selector
 
 struct _Evry_State
 {
+  Evry_State *prev;
+  
   char *inp; /* alloced input */
 
   char *input; /* pointer to input + trigger */

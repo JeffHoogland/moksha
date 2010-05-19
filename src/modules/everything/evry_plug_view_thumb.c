@@ -230,6 +230,8 @@ _item_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
    if (!sd->it_down)
      return;
 
+   edje_object_signal_emit(sd->view->bg, "e,action,hide,into", "e");
+   edje_object_signal_emit(sd->view->bg, "e,action,hide,back", "e");
    sd->it_down = NULL;
 
    if (ev->button == 1)
@@ -1551,8 +1553,18 @@ _view_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
    diff_x = abs(ev->cur.canvas.x - sd->mouse_x);
    diff_y = abs(ev->cur.canvas.y - sd->mouse_y);
 
-   if (diff_y > 10 + (diff_x/2))
-     goto end;
+   if (diff_y > 15 + (diff_x/2))
+     {
+	edje_object_signal_emit(sd->view->bg, "e,action,hide,into", "e");
+	edje_object_signal_emit(sd->view->bg, "e,action,hide,back", "e");
+	goto end;
+     }
+
+   if (sd->view->state->prev)
+     edje_object_signal_emit(sd->view->bg, "e,action,show,back", "e");
+
+   if (sd->it_down->item->browseable)
+     edje_object_signal_emit(sd->view->bg, "e,action,show,into", "e");
 
    if ((sd->cur_item != sd->it_down) && (diff_x > 10))
      {
@@ -1572,6 +1584,8 @@ _view_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	  }
 	else if (sd->mouse_x - ev->cur.canvas.x > 100)
 	  {
+	     edje_object_signal_emit(sd->view->bg, "e,action,hide,into", "e");
+	     edje_object_signal_emit(sd->view->bg, "e,action,hide,back", "e");
 	     sd->it_down = NULL;
 	     sd->mouse_x = 0;
 	     sd->mouse_y = 0;

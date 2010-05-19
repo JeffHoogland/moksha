@@ -33231,29 +33231,6 @@ collections {
 	    }
 	 }
 	 part {
-	    name: "list_over2";
-	    clip_to: "base";
-	    mouse_events: 0;
-	    description {
-	       state: "default" 0.0;
-	       rel1 {
-		  offset: -1 -1;
-		  to: "list_bg";
-	       }
-	       rel2 {
-		  offset: -1 -1;
-		  to: "list_bg";
-	       }
-	       image {
-		  normal: "inset_sunk.png";
-		  border: 7 7 7 7;
-		  middle: 0;
-	       }
-	       fill.smooth : 0;
-	       color: 200 200 200 255;
-	    }
-	 }
-	 part {
 	    name: "box";
 	    mouse_events: 0;
 	    description {
@@ -33278,6 +33255,7 @@ collections {
 	 part {
 	    name: "win";
 	    type: RECT;
+	    mouse_events: 0;
 	    description {
 	       state: "default" 0.0;
 	       visible: 0;
@@ -33295,12 +33273,13 @@ collections {
 	 part {
 	    name: "frame";
 	    type: RECT;
+	    mouse_events: 0;;
 	    description {
 	       state: "default" 0.0;
 	       visible: 0;
 	       rel1.to: "win";
 	       rel2.to: "win";
-}
+	    }
             description {
                state: "composite" 0.0;
                inherit: "default" 0.0;
@@ -33310,6 +33289,7 @@ collections {
          }
          part {
             name: "shadow";
+	    mouse_events: 0;
             description {
                state: "default" 0.0;
                visible: 0;
@@ -33334,6 +33314,7 @@ collections {
          }
          part {
             name: "bg";
+	    mouse_events: 0;
             description {
                state: "default" 0.0;
                max: 999 118;
@@ -33962,6 +33943,10 @@ collections {
 
    group {
       name: "e/modules/everything/thumbview/main/window";
+      images {
+         image: "icon_left_arrow.png" COMP;
+         image: "icon_right_arrow.png" COMP;
+      }
       parts {
          part {
             name: "e.swallow.list";
@@ -33977,6 +33962,84 @@ collections {
                   offset: -3  -3;
                }
             }
+         }
+         part {
+            name: "left_arrow";
+            mouse_events: 0;
+            scale: 1;
+            description {
+               state: "default" 0.0;
+               visible: 0;
+               image.normal: "icon_left_arrow.png";
+               aspect: 1.0 1.0;
+               aspect_preference: VERTICAL;
+               align: 0.0 0.5;
+               min: 32 32;
+               max: 32 32;
+	       color: 255 255 255 0;
+            }
+            description {
+               state: "visible" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+               color: 255 255 255 255;
+            }
+         }
+         part {
+            name: "right_arrow";
+            mouse_events: 0;
+            scale: 1;
+            description {
+               state: "default" 0.0;
+               visible: 0;
+               image.normal: "icon_right_arrow.png";
+               aspect: 1.0 1.0;
+               aspect_preference: VERTICAL;
+               align: 1.0 0.5;
+               min: 32 32;
+               max: 32 32;
+	       color: 255 255 255 0;
+            }
+            description {
+               state: "visible" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+               color: 255 255 255 255;
+            }
+         }
+      }
+      programs {
+         program {
+            name: "go_into_show";
+            signal: "e,action,show,into";
+            source: "e";
+            action: STATE_SET "visible" 0.0;
+            transition: LINEAR 0.5;
+            target: "right_arrow";
+         }
+         program {
+            name: "go_into_hide";
+            signal: "e,action,hide,into";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "right_arrow";
+            transition: LINEAR 0.5;
+         }
+         program {
+            name: "go_back_show";
+            signal: "e,action,show,back";
+            source: "e";
+            action: STATE_SET "visible" 0.0;
+            transition: LINEAR 0.5;
+            target: "left_arrow";
+         }
+         program {
+            name: "go_back_hide";
+            signal: "e,action,hide,back";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "left_arrow";
+            transition: LINEAR 0.5;
          }
       }
    }

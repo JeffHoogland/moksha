@@ -1099,9 +1099,6 @@ _evry_selector_activate(Evry_Selector *sel)
 	_evry_selector_label_set(sel, "e.text.plugin", "");
 	_evry_selector_signal_emit(sel, "e,state,unselected");
 
-	/* edje_object_signal_emit(win->o_main, "", "e");
-	 * edje_object_part_text_set(win->o_main, "e.text.plugin", ""); */
-
 	if (sel->state && sel->state->view)
 	  _evry_view_hide(sel->state->view, 0);
 
@@ -1114,10 +1111,9 @@ _evry_selector_activate(Evry_Selector *sel)
 	return;
      }
 
-   _evry_selector_signal_emit(sel, "e,state,selected");
-   /* edje_object_signal_emit(sel->o_main, "e,state,selected", "e"); */
-
    win->selector = sel;
+   
+   _evry_selector_signal_emit(sel, "e,state,selected");
 
    if ((s = sel->state))
      {
@@ -1126,9 +1122,6 @@ _evry_selector_activate(Evry_Selector *sel)
 	if (s->cur_item)
 	  _evry_selector_label_set(sel, "e.text.plugin",
 				   EVRY_ITEM(s->cur_item->plugin)->label);
-	  /* edje_object_part_text_set(sel->o_main, "e.text.plugin",
-	   * 			    EVRY_ITEM(s->cur_item->plugin)->label); */
-
 	_evry_view_show(s->view);
 	_evry_list_win_update(s);
      }
@@ -1281,8 +1274,8 @@ _evry_selector_item_update(Evry_Selector *sel)
 	else if (sel == win->selectors[2])
 	  edje_object_part_swallow(win->o_main, "object_selector:e.swallow.icons", o);
 
-	sel->o_icon = o;
 	evas_object_show(o);
+	sel->o_icon = o;
      }
 }
 
@@ -1469,6 +1462,8 @@ _evry_state_new(Evry_Selector *sel, Eina_List *plugins)
    s->input = s->inp;
 
    s->plugins = plugins;
+
+   s->prev = (sel->states ? sel->states->data : NULL);
 
    sel->states = eina_list_prepend(sel->states, s);
    sel->state = s;
