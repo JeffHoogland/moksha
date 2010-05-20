@@ -12,7 +12,9 @@ struct _E_Config_Dialog_Data
      } poll;
 
    int unit_method;
-
+#ifdef HAVE_EEZE_UDEV
+   int backend;
+#endif
    struct 
      {
         int low, high;
@@ -28,7 +30,7 @@ struct _E_Config_Dialog_Data
 
 /* local function prototypes */
 static void *_create_data(E_Config_Dialog *cfd);
-static void _fill_data(E_Config_Dialog_Data *cfdata);
+static void _fill_data_tempget(E_Config_Dialog_Data *cfdata);
 static void _fill_sensors(E_Config_Dialog_Data *cfdata, const char *name);
 static void _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
@@ -63,56 +65,64 @@ _create_data(E_Config_Dialog *cfd)
 
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    cfdata->inst = cfd->data;
-   _fill_data(cfdata);
+   _fill_data_tempget(cfdata);
    return cfdata;
 }
 
 static void 
-_fill_data(E_Config_Dialog_Data *cfdata) 
+_fill_data_tempget(E_Config_Dialog_Data *cfdata) 
 {
    cfdata->unit_method = cfdata->inst->units;
    cfdata->poll.interval = cfdata->inst->poll_interval;
    cfdata->temp.low = cfdata->inst->low;
    cfdata->temp.high = cfdata->inst->high;
    cfdata->sensor = 0;
-   switch (cfdata->inst->sensor_type) 
+#ifdef HAVE_EEZE_UDEV
+   cfdata->backend = cfdata->inst->backend;
+   if (cfdata->backend == TEMPGET)
      {
-      case SENSOR_TYPE_NONE:
-      case SENSOR_TYPE_FREEBSD:
-      case SENSOR_TYPE_OMNIBOOK:
-      case SENSOR_TYPE_LINUX_MACMINI:
-      case SENSOR_TYPE_LINUX_PBOOK:
-      case SENSOR_TYPE_LINUX_INTELCORETEMP:
-        break;
-      case SENSOR_TYPE_LINUX_I2C:
-        _fill_sensors(cfdata, "i2c");
-        break;
-      case SENSOR_TYPE_LINUX_PCI:
-        _fill_sensors(cfdata, "pci");
-        break;
-      case SENSOR_TYPE_LINUX_ACPI: 
+#endif
+        switch (cfdata->inst->sensor_type) 
           {
-             Eina_List *l;
-
-             if ((l = ecore_file_ls("/proc/acpi/thermal_zone")))
+           case SENSOR_TYPE_NONE:
+           case SENSOR_TYPE_FREEBSD:
+           case SENSOR_TYPE_OMNIBOOK:
+           case SENSOR_TYPE_LINUX_MACMINI:
+           case SENSOR_TYPE_LINUX_PBOOK:
+           case SENSOR_TYPE_LINUX_INTELCORETEMP:
+             break;
+           case SENSOR_TYPE_LINUX_I2C:
+             _fill_sensors(cfdata, "i2c");
+             break;
+           case SENSOR_TYPE_LINUX_PCI:
+             _fill_sensors(cfdata, "pci");
+             break;
+           case SENSOR_TYPE_LINUX_ACPI: 
                {
-                  char *name;
-                  int n = 0;
+                  Eina_List *l;
 
-                  EINA_LIST_FREE(l, name) 
+                  if ((l = ecore_file_ls("/proc/acpi/thermal_zone")))
                     {
-                       cfdata->sensors = 
-                         eina_list_append(cfdata->sensors, name);
-                       if (!strcmp(cfdata->inst->sensor_name, name))
-                         cfdata->sensor = n;
-                       n++;
+                       char *name;
+                       int n = 0;
+
+                       EINA_LIST_FREE(l, name) 
+                         {
+                            cfdata->sensors = 
+                              eina_list_append(cfdata->sensors, name);
+                            if (!strcmp(cfdata->inst->sensor_name, name))
+                              cfdata->sensor = n;
+                            n++;
+                         }
                     }
+                  break;
                }
+           default:
              break;
           }
-      default:
-        break;
-     }
+#ifdef HAVE_EEZE_UDEV
+   }
+#endif
 }
 
 static void 
@@ -230,7 +240,16 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 
    e_widget_toolbook_page_append(otb, NULL, _("Temperatures"), ol, 
                                  1, 0, 1, 0, 0.5, 0.0);
-
+#ifdef HAVE_EEZE_UDEV
+   ol = e_widget_list_add(evas, 0, 0);
+   rg = e_widget_radio_group_new(&(cfdata->backend));
+   ow = e_widget_radio_add(evas, _("Internal"), TEMPGET, rg);
+   e_widget_list_object_append(ol, ow, 1, 1, 0.5);
+   ow = e_widget_radio_add(evas, _("udev"), UDEV, rg);
+   e_widget_list_object_append(ol, ow, 1, 1, 0.5);
+   e_widget_toolbook_page_append(otb, NULL, _("Hardware"), ol, 
+                                 0, 0, 0, 0, 0.5, 0.0);
+#endif
    e_widget_toolbook_page_show(otb, 0);
    return otb;
 }
@@ -242,6 +261,9 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    cfdata->inst->units = cfdata->unit_method;
    cfdata->inst->low = cfdata->temp.low;
    cfdata->inst->high = cfdata->temp.high;
+#ifdef HAVE_EEZE_UDEV
+   cfdata->inst->backend = cfdata->backend;
+#endif
 
    eina_stringshare_replace(&cfdata->inst->sensor_name, 
                             eina_list_nth(cfdata->sensors, cfdata->sensor));

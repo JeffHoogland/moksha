@@ -21,6 +21,11 @@ struct _Config_Face
    /* saved * loaded config values */
    int poll_interval;
    int low, high;
+#ifdef HAVE_EEZE_UDEV
+   Eina_List *tempdevs;
+   int backend;
+   Ecore_Poller    *temp_poller;
+#endif
    int sensor_type;
    const char *sensor_name;
    Unit units;
@@ -36,8 +41,7 @@ struct _Config_Face
    Ecore_Event_Handler *tempget_data_handler;
    Ecore_Event_Handler *tempget_del_handler;
 
-//   Ecore_Poller    *temperature_check_poller;
-   unsigned char have_temp;
+   Eina_Bool have_temp:1;
 #ifdef __FreeBSD__
    int mib[5];
 #endif
@@ -51,12 +55,25 @@ struct _Config
    E_Module *module;
 };
 
+#ifdef HAVE_EEZE_UDEV
+typedef enum _Backend
+{
+   TEMPGET,
+   UDEV
+} Backend;
+int temperature_udev_update_poll(void *data);
+void temperature_udev_update(void *data);
+#endif
+
 EAPI extern E_Module_Api e_modapi;
 
 EAPI void *e_modapi_init (E_Module *m);
 EAPI int e_modapi_shutdown (E_Module *m);
 EAPI int e_modapi_save (E_Module *m);
 
+int _temperature_cb_exe_data(void *data, int type, void *event);
+int _temperature_cb_exe_del(void *data, int type, void *event);
+void _temperature_face_level_set(Config_Face *inst, double level);
 void config_temperature_module(Config_Face *inst);
 void temperature_face_update_config(Config_Face *inst);
 Eina_List *temperature_get_bus_files(const char* bus);
