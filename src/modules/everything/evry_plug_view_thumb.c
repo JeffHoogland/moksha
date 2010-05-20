@@ -157,7 +157,7 @@ _thumb_idler(void *data)
 	if ((CHECK_TYPE(it->item, EVRY_TYPE_FILE)) &&
 	    ((!it->thumb && !(it->have_thumb || it->do_thumb)) &&
 	    (it->get_thumb || _check_item(it->item) ||
-	     (it->item->icon && it->item->icon[0]))))
+	     (it->item->icon && it->item->icon[0] == '/'))))
 	  {
 	     it->get_thumb = EINA_TRUE;
 

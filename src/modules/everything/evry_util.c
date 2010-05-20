@@ -422,6 +422,7 @@ _evry_icon_fdo_set(Evas_Object *obj, const char *icon)
 
    if ((!icon) || (!icon[0])) return 0;
    path = efreet_icon_path_find(e_config->icon_theme, icon, 128);
+   printf("path %s\n", path);
 
    if (!path) return 0;
    e_icon_scale_size_set(obj, 128);
@@ -508,22 +509,25 @@ _file_icon_get(Evry_Item *it, Evas *e)
    Evas_Object *o = NULL;
    GET_FILE(file, it);
 
-   if (it->browseable)
-     {
-	return evry_icon_theme_get("folder", e);
-     }
-
    if (it->icon)
      {
 	o = e_icon_add(e);
-	if (!e_icon_file_set(o, it->icon))
+
+	if (it->icon[0] == '/')
 	  {
-	     evas_object_del(o);
-	     o = NULL;
+	     if (!e_icon_file_set(o, it->icon))
+	       {
+		  evas_object_del(o);
+		  o = NULL;
+	       }
+	  }
+	else
+	  {
+	     o = evry_icon_theme_get(it->icon, e);
 	  }
      }
 
-   if ((!o) && (!it->icon) && file->mime &&
+   if (!(o) && (!it->icon) && file->mime &&
        ((!strncmp(file->mime, "image/", 6)) ||
 	(!strncmp(file->mime, "video/", 6)) ||
 	(!strncmp(file->mime, "application/pdf", 15))) &&
@@ -542,7 +546,10 @@ _file_icon_get(Evry_Item *it, Evas *e)
 	  it->icon = eina_stringshare_add("");
      }
 
-   if ((!o) && file->mime)
+   if (!(o) &&it->browseable)
+     o = evry_icon_theme_get("folder", e);
+
+   if (!(o) && file->mime)
      o = evry_icon_mime_get(file->mime, e);
 
    if (!o)
@@ -556,16 +563,16 @@ evry_util_icon_get(Evry_Item *it, Evas *e)
 {
    Evas_Object *o = NULL;
 
+   if (!o && it->icon_get)
+     o = it->icon_get(it, e);
+   if (o) return o;
+
    if (CHECK_TYPE(it, EVRY_TYPE_FILE))
      o = _file_icon_get(it, e);
-   else
-     {
-	if (!o && it->icon_get)
-	  o = it->icon_get(it, e);
+   if (o) return o;
 
-	if (!o && it->icon)
-	  o = evry_icon_theme_get(it->icon, e);
-     }
+   if (!o && it->icon)
+     o = evry_icon_theme_get(it->icon, e);
 
    return o;
 }
