@@ -750,29 +750,9 @@ _isalnum(unsigned char in)
      }
    return EINA_FALSE;
 }
-/* FIXME there seem to be too many ways of not following a standard.
-   find out which is the most popular */
-static Eina_Bool
-_isuric(unsigned char in)
-{
-   switch (in)
-     {
-      case '/': case '.': case '(': case ')': case '-':
-      case '~': case '\'': case '_': case '@': case '+':
-      /* case ';': case ':':
-       * case '&': case '=':  case '$': case ',':
-       *   case '.': case '!':
-       * case '\'':  */
-
-	 return EINA_TRUE;
-      default:
-	 break;
-     }
-   return EINA_FALSE;
-}
 
 char *
-_evry_util_url_escape(const char *string, int inlength, int path)
+evry_util_url_escape(const char *string, int inlength)
 {
    size_t alloc = (inlength?(size_t)inlength:strlen(string))+1;
    char *ns;
@@ -791,8 +771,7 @@ _evry_util_url_escape(const char *string, int inlength, int path)
      {
 	in = *string;
 
-	if (_isalnum(in) ||
-	    (path && _isuric(in)))
+	if (_isalnum(in))
 	  {
 	     /* just copy this */
 	     ns[strindex++]=in;
@@ -825,14 +804,7 @@ _evry_util_url_escape(const char *string, int inlength, int path)
    return ns;
 }
 
-EAPI char *
-evry_util_url_escape(const char *string, int inlength)
-{
-   return _evry_util_url_escape(string, inlength, 0);
-}
-
-
-EAPI const char*
+const char*
 evry_file_path_get(Evry_Item_File *file)
 {
    const char *tmp;
@@ -861,8 +833,9 @@ evry_file_path_get(Evry_Item_File *file)
 EAPI const char*
 evry_file_url_get(Evry_Item_File *file)
 {
-   char buf[PATH_MAX];
-   char *escaped;
+   char dest[PATH_MAX * 3 + 7];
+   const char *p;
+   int i;
 
    if (file->url)
      return file->url;
@@ -870,19 +843,37 @@ evry_file_url_get(Evry_Item_File *file)
    if (!file->path)
      return NULL;
 
-   escaped = _evry_util_url_escape(file->path, 0, 1);
+   memset(dest, 0, PATH_MAX * 3 + 7);
 
-   if (escaped)
+   snprintf(dest, 8, "file://");
+
+   /* Most app doesn't handle the hostname in the uri so it's put to NULL */
+   for (i = 7, p = file->path; *p != '\0'; p++, i++)
      {
-	snprintf(buf, sizeof(buf), "file://%s", escaped);
-	E_FREE(escaped);
-
-	file->url = eina_stringshare_add(buf);
-
-	return file->url;
+	if (isalnum(*p) || strchr("/$-_.+!*'()", *p))
+	  dest[i] = *p;
+	else
+	  {
+	     snprintf(&(dest[i]), 4, "%%%02X", (unsigned char)*p);
+	     i += 2;
+	  }
      }
 
-   return NULL;
+   file->url = eina_stringshare_add(dest);
+
+   return file->url;
+   
+   /* escaped = _evry_util_url_escape(file->path, 0, 1);
+    * 
+    * if (escaped)
+    *   {
+    * 	snprintf(buf, sizeof(buf), "file://%s", escaped);
+    * 	E_FREE(escaped);
+    * 
+    * 	file->url = eina_stringshare_add(buf);
+    * 
+    * 	return file->url;
+    *   } */
 }
 
 static void

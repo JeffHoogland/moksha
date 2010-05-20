@@ -591,19 +591,14 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
 {
    Plugin *p = NULL;
 
-   if (it && !CHECK_TYPE(it, EVRY_TYPE_ACTION))
-     return NULL;
-
    if (it)
      {
-	/* provide object */
-
 	const char *dir = NULL;
-
-	GET_ACTION(act, it);
-	if (!strcmp(act->name, "Browse Folder..."))
+	/* provide object */
+	if ((CHECK_TYPE(it, EVRY_TYPE_FILE)) ||
+		 (CHECK_SUBTYPE(it, EVRY_TYPE_FILE)))
 	  {
-	     GET_FILE(file, act->it1.item);
+	     GET_FILE(file, it);
 	     if (!evry->file_path_get(file))
 	       return NULL;
 
@@ -611,10 +606,10 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
 	     dir = eina_stringshare_add(tmp);
 	     E_FREE(tmp);
 	  }
-	else
-	  {
-	     dir = eina_stringshare_add(e_user_homedir_get());
-	  }
+	else return NULL;
+
+	if (!dir)
+	  dir = eina_stringshare_add(e_user_homedir_get());
 
 	p = E_NEW(Plugin, 1);
 	p->base = *plugin;
@@ -1208,12 +1203,6 @@ _open_folder_action(Evry_Action *act)
 }
 
 static int
-_browse_folder_action(Evry_Action *act)
-{
-   return 0;
-}
-
-static int
 _file_trash_action(Evry_Action *act)
 {
    Efreet_Uri *euri;
@@ -1303,6 +1292,7 @@ _plugins_init(const Evry_API *api)
    PLUGIN_NEW(N_("Files"), _module_icon,
 	      _begin, _finish, _fetch);
    p->browse = &_browse;
+   p->input_type = EVRY_TYPE_FILE;
    if (evry->plugin_register(p, EVRY_PLUGIN_SUBJECT, 2))
      p->config->min_query = 1;
 
@@ -1356,9 +1346,6 @@ _plugins_init(const Evry_API *api)
    /* ACTION_NEW(N_("Delete File"), 0, "user-trash",
     * 	      _file_trash_action, NULL);
     * EVRY_ITEM_DATA_INT_SET(act, ACT_DELETE); */
-
-   ACTION_NEW(N_("Browse Folder..."), EVRY_TYPE_FILE, "folder-open",
-	      _browse_folder_action, NULL);
 
    ACTION_NEW(N_("Open Folder (EFM)"), 0, "folder-open",
 	      _open_folder_action, _open_folder_check);

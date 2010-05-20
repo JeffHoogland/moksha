@@ -193,7 +193,8 @@ evry_plug_actions_new(Evry_Selector *sel, int type)
 
 /***************************************************************************/
 
-int evry_plug_actions_init()
+int
+evry_plug_actions_init()
 {
    _base_plug = evry_plugin_new(NULL, _("Actions"), NULL, NULL,
 				EVRY_TYPE_ACTION, NULL, NULL, NULL, NULL);
@@ -201,7 +202,8 @@ int evry_plug_actions_init()
    return 1;
 }
 
-void evry_plug_actions_shutdown()
+void
+evry_plug_actions_shutdown()
 {
    Evry_Item *it;
 
@@ -213,7 +215,7 @@ void evry_plug_actions_shutdown()
 }
 
 
-EAPI void
+void
 evry_action_register(Evry_Action *act, int priority)
 {
    EVRY_ITEM(act)->priority = priority;
@@ -222,7 +224,7 @@ evry_action_register(Evry_Action *act, int priority)
    /* TODO sorting, initialization, etc */
 }
 
-EAPI void
+void
 evry_action_unregister(Evry_Action *act)
 {
    evry_conf->actions = eina_list_remove(evry_conf->actions, act);
@@ -239,7 +241,7 @@ _action_free_cb(Evry_Item *it)
    E_FREE(act);
 }
 
-EAPI Evry_Action *
+Evry_Action *
 evry_action_new(const char *name, const char *label,
 		Evry_Type type_in1, Evry_Type type_in2,
 		const char *icon,
@@ -262,7 +264,7 @@ evry_action_new(const char *name, const char *label,
    return act;
 }
 
-EAPI void
+void
 evry_action_free(Evry_Action *act)
 {
    evry_action_unregister(act);
@@ -273,7 +275,7 @@ evry_action_free(Evry_Action *act)
 
 /* TODO assign actions to plugins othersie there will be too liitle
    names soon */
-EAPI Evry_Action *
+Evry_Action *
 evry_action_find(const char *name)
 {
    Evry_Action *act = NULL; 

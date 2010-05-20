@@ -298,47 +298,11 @@ int   evry_browse_back(Evry_Selector *sel);
 
 void evry_plugin_action(int finished);
 
+int evry_state_push(Evry_Selector *sel, Eina_List *plugins);
+void evry_selectors_switch(int dir);
+
 extern Evry_History *evry_hist;
 extern Evry_Config  *evry_conf;
-
-#define EVRY_ITEM(_item) ((Evry_Item *)_item)
-#define EVRY_ACTN(_item) ((Evry_Action *) _item)
-#define EVRY_PLUGIN(_plugin) ((Evry_Plugin *) _plugin)
-#define EVRY_VIEW(_view) ((Evry_View *) _view)
-#define EVRY_FILE(_it) ((Evry_Item_File *) _it)
-
-#define CHECK_TYPE(_item, _type)					\
-  (((Evry_Item *)_item)->type && ((Evry_Item *)_item)->type == _type)
-
-#define CHECK_SUBTYPE(_item, _type)					\
-  (((Evry_Item *)_item)->subtype && ((Evry_Item *)_item)->subtype == _type)
-
-#define IS_BROWSEABLE(_item)			\
-  ((Evry_Item *)_item)->browseable
-
-#define GET_APP(_app, _item) Evry_Item_App *_app = (Evry_Item_App *) _item
-#define GET_FILE(_file, _item) Evry_Item_File *_file = (Evry_Item_File *) _item
-#define GET_EVRY_PLUGIN(_p, _plugin) Evry_Plugin *_p = (Evry_Plugin*) _plugin
-#define GET_VIEW(_v, _view) View *_v = (View*) _view
-#define GET_ACTION(_act, _item) Evry_Action *_act = (Evry_Action *) _item
-#define GET_PLUGIN(_p, _plugin) Plugin *_p = (Plugin*) _plugin
-#define GET_ITEM(_it, _any) Evry_Item *_it = (Evry_Item *) _any
-
-#define EVRY_ITEM_DATA_INT_SET(_item, _data) ((Evry_Item *)_item)->data = (void*)(long) _data
-#define EVRY_ITEM_DATA_INT_GET(_item) (long) ((Evry_Item *)_item)->data
-#define EVRY_ITEM_ICON_SET(_item, _icon) ((Evry_Item *)_item)->icon = _icon
-
-#define EVRY_ITEM_DETAIL_SET(_it, _detail)				\
-  if (EVRY_ITEM(_it)->detail) eina_stringshare_del(EVRY_ITEM(_it)->detail); \
-  EVRY_ITEM(_it)->detail = eina_stringshare_add(_detail);
-
-#define EVRY_ITEM_LABEL_SET(_it, _label)				\
-  if (EVRY_ITEM(_it)->label) eina_stringshare_del(EVRY_ITEM(_it)->label); \
-  EVRY_ITEM(_it)->label = eina_stringshare_add(_label);
-
-#define EVRY_ITEM_CONTEXT_SET(_it, _context)				\
-  if (EVRY_ITEM(_it)->context) eina_stringshare_del(EVRY_ITEM(_it)->context); \
-  EVRY_ITEM(_it)->context = eina_stringshare_add(_context);
 
 #define EVRY_ITEM_NEW(_base, _plugin, _label, _icon_get, _free)		\
   (_base *) evry_item_new(EVRY_ITEM(E_NEW(_base, 1)), EVRY_PLUGIN(_plugin), \
@@ -351,10 +315,8 @@ extern Evry_Config  *evry_conf;
   evry_plugin_new(EVRY_PLUGIN(E_NEW(_base, 1)), _name, _(_name), _icon, _item_type, \
 		  _begin, _cleanup, _fetch, _free)
 
-
 #define EVRY_ACTION_NEW(_name, _in1, _in2, _icon, _action, _check)	\
   evry_action_new(_name, _(_name), _in1, _in2, _icon, _action, _check)
-
 
 #define EVRY_PLUGIN_FREE(_p)			\
   if (_p) evry_plugin_free(EVRY_PLUGIN(_p))
@@ -362,34 +324,14 @@ extern Evry_Config  *evry_conf;
 #define EVRY_PLUGIN_UPDATE(_p, _action)			\
   if (_p) evry_plugin_update(EVRY_PLUGIN(_p), _action)
 
-
-#define EVRY_PLUGIN_ITEMS_CLEAR(_p) {		\
-     Evry_Item *it;				\
-     EINA_LIST_FREE(EVRY_PLUGIN(_p)->items, it) \
-       it->fuzzy_match = 0; }
-
 #define EVRY_PLUGIN_ITEMS_FREE(_p) {		\
      Evry_Item *it;				\
      EINA_LIST_FREE(EVRY_PLUGIN(_p)->items, it) \
        evry_item_free(it); }
 
-
-#define EVRY_PLUGIN_ITEMS_SORT(_p, _sortcb)				\
-  EVRY_PLUGIN(_p)->items = eina_list_sort				\
-    (EVRY_PLUGIN(_p)->items, eina_list_count(EVRY_PLUGIN(_p)->items), _sortcb)
-
-#define EVRY_PLUGIN_ITEM_APPEND(_p, _item)				\
-  EVRY_PLUGIN(_p)->items = eina_list_append(EVRY_PLUGIN(_p)->items, EVRY_ITEM(_item))
-
 #define EVRY_PLUGIN_ITEMS_ADD(_plugin, _items, _input, _match_detail, _set_usage) \
   evry_util_plugin_items_add(EVRY_PLUGIN(_plugin), _items, _input, _match_detail, _set_usage)
 
-#define IF_RELEASE(x) do {						\
-     if (x) {								\
-	const char *__tmp; __tmp = (x); (x) = NULL; eina_stringshare_del(__tmp); \
-     }									\
-     (x) = NULL;							\
-  } while (0)
 
 /*** Common Logging  ***/
 extern int _e_module_evry_log_dom;

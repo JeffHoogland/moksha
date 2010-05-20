@@ -26,11 +26,9 @@ static int  _evry_cb_update_timer(void *data);
 static Evry_State *_evry_state_new(Evry_Selector *sel, Eina_List *plugins);
 static void _evry_state_pop(Evry_Selector *sel);
 
-static int _evry_selectors_shift(int dir);
 static Evry_Selector *_evry_selector_new(Evry_Window *win, int type);
 static void _evry_selector_free(Evry_Selector *sel);
 static void _evry_selector_activate(Evry_Selector *sel);
-static void _evry_selectors_switch(int dir);
 static void _evry_selector_update(Evry_Selector *sel);
 static int  _evry_selector_subjects_get(const char *plugin_name);
 static int  _evry_selector_actions_get(Evry_Item *it);
@@ -40,6 +38,7 @@ static void _evry_selector_item_update(Evry_Selector *sel);
 static void _evry_selector_item_clear(Evry_Selector *sel);
 static void _evry_selector_label_set(Evry_Selector *sel, const char *part, const char *label);
 static void _evry_selector_signal_emit(Evry_Selector *sel, const char *msg);
+static int  _evry_selectors_shift(int dir);;
 
 static Evry_Window *_evry_window_new(E_Zone *zone);
 static void _evry_window_free(Evry_Window *win);
@@ -290,9 +289,9 @@ evry_hide(int clear)
 	if (win->selector != win->selectors[0])
 	  {
 	     if (win->selector == win->selectors[1])
-	       _evry_selectors_switch(-1);
+	       evry_selectors_switch(-1);
 	     else if (win->selector == win->selectors[2])
-	       _evry_selectors_switch(1);
+	       evry_selectors_switch(1);
 	  }
 
 	/* just to be sure */
@@ -663,7 +662,7 @@ evry_plugin_update(Evry_Plugin *p, int action)
 	    (!(s->plugin) || !(s->plugin->items)) &&
 	    (win->selector == win->selectors[1]))
 	  {
-	     _evry_selectors_switch(-1);
+	     evry_selectors_switch(-1);
 	     _evry_clear(win->selectors[0]);
 	  }
      }
@@ -921,11 +920,11 @@ _evry_selector_cb_wheel(void *data, Evas *e, Evas_Object *obj, void *event_info)
      {
 	/* FIXME dont loose selector 2 state until state 0 changed: */
 	if (win->selector != win->selectors[2])
-	  _evry_selectors_switch(1);
+	  evry_selectors_switch(1);
      }
    else if (ev->z < 0)
      {
-	_evry_selectors_switch(-1);
+	evry_selectors_switch(-1);
      }
 }
 
@@ -947,22 +946,22 @@ _evry_selector_cb_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	if (sel == win->selectors[0])
 	  {
 	     if (win->selector == win->selectors[1])
-	       _evry_selectors_switch(-1);
+	       evry_selectors_switch(-1);
 	     else
-	       _evry_selectors_switch(1);
+	       evry_selectors_switch(1);
 	  }
 
 	else if (sel == win->selectors[1])
 	  {
 	     if (win->selector == win->selectors[0])
-	       _evry_selectors_switch(1);
+	       evry_selectors_switch(1);
 	     else
-	       _evry_selectors_switch(-1);
+	       evry_selectors_switch(-1);
 	  }
 	else if (sel == win->selectors[2])
 	  {
 	     if (win->selector == win->selectors[1])
-	       _evry_selectors_switch(1);
+	       evry_selectors_switch(1);
 	  }
      }
 }
@@ -1494,6 +1493,52 @@ _evry_state_pop(Evry_Selector *sel)
 }
 
 int
+evry_state_push(Evry_Selector *sel, Eina_List *plugins)
+{
+   Evry_State *s, *new_state;
+   Eina_List *l;
+   Evry_Plugin *p, *pp;
+   Evry_View *view = NULL;
+   int browse_aggregator = 0;
+
+   s = sel->state;
+
+   if (!(new_state = _evry_state_new(sel, plugins)))
+     {
+	DBG("no new state");
+	return 0;
+     }
+
+   EINA_LIST_FOREACH(plugins, l, p)
+     p->state = new_state;
+
+   if (s && s->view)
+     {
+	_evry_view_hide(s->view, 1);
+	view = s->view;
+     }
+
+   _evry_matches_update(sel, 1);
+   s = new_state;
+
+   _evry_selector_update(sel);
+
+   if (view && win->visible)
+     {
+	s->view = view->create(view, s, win->o_main);
+	if (s->view)
+	  {
+	     _evry_view_show(s->view);
+	     s->view->update(s->view, -1);
+	  }
+     }
+
+   _evry_update_text_label(sel->state);
+
+   return 1;
+}
+
+int
 evry_browse_item(Evry_Item *it)
 {
    Evry_State *s, *new_state;
@@ -1613,6 +1658,8 @@ evry_browse_back(Evry_Selector *sel)
    s = sel->state;
    _evry_aggregator_fetch(sel, s->input);
    _evry_selector_update(sel);
+   if (sel == win->selectors[0])
+     _evry_selector_update_actions(sel);
    _evry_update_text_label(s);
    _evry_view_show(s->view);
    s->view->update(s->view, 1);
@@ -1620,8 +1667,8 @@ evry_browse_back(Evry_Selector *sel)
    return 1;
 }
 
-static void
-_evry_selectors_switch(int dir)
+void
+evry_selectors_switch(int dir)
 {
    Evry_State *s = win->selector->state;
 
@@ -1870,7 +1917,7 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
        !((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) ||
 	 (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)))
      {
-	_evry_selectors_switch(1);
+	evry_selectors_switch(1);
 	goto end;
      }
 
@@ -1934,12 +1981,12 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
      {
 	if (!evry_browse_item(sel->state->cur_item) &&
 	    (sel != win->selectors[2]))
-	  _evry_selectors_switch(1);
+	  evry_selectors_switch(1);
      }
    else if (!strcmp(ev->key, "Left"))
      {
 	if (!evry_browse_back(sel))
-	  _evry_selectors_switch(-1);
+	  evry_selectors_switch(-1);
      }
    else if (!strcmp(ev->key, "Return"))
      {
@@ -2180,7 +2227,7 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 	     if (!it_obj)
 	       {
 		  if (win->selectors[1] == win->selector)
-		    _evry_selectors_switch(1);
+		    evry_selectors_switch(1);
 		  return;
 	       }
 
@@ -2395,8 +2442,8 @@ _evry_matches_update(Evry_Selector *sel, int async)
    if ((!input || !s->trigger_active) &&
        (!win->plugin_dedicated))
      {
-	EINA_LIST_FREE(s->cur_plugins, p);
-	s->trigger_active = EINA_FALSE;
+   	EINA_LIST_FREE(s->cur_plugins, p);
+   	s->trigger_active = EINA_FALSE;
      }
 
    if (s->trigger_active)
@@ -2456,11 +2503,13 @@ _evry_matches_update(Evry_Selector *sel, int async)
      {
 	EINA_LIST_FOREACH(s->plugins, l, p)
 	  {
-	     if ((p->config->top_level) && (sel == win->selectors[0]))
-	       {
-		  if ((p->config->trigger) && (p->config->trigger_only))
-		    continue;
-	       }
+	     /* skip plugins in toplevel which trigger-only */
+	     if ((!(sel->states->next)) &&
+		 (sel == win->selectors[0]) &&
+		 (p->config->top_level) &&
+		 (p->config->trigger) &&
+		 (p->config->trigger_only))
+	       continue;
 
 	     /* dont wait for async plugin. use their current items */
 	     if (!async && p->async_fetch && p->items)

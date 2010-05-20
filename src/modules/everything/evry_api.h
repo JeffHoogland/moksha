@@ -3,7 +3,7 @@
 
 #include "evry_types.h"
 
-#define EVRY_API_VERSION 21
+#define EVRY_API_VERSION     23
 
 #define EVRY_ACTION_OTHER    0
 #define EVRY_ACTION_FINISHED 1
@@ -64,7 +64,7 @@ in e_modapi_init do:
 in e_modapi_shutdown:
 
    _plugins_shutdown();
-   
+
    EVRY_MODULE_UNREGISTER(evry_module);
    E_FREE(evry_module);
 
@@ -81,7 +81,7 @@ struct _Evry_Module
 struct _Evry_API
 {
   int  (*api_version_check)(int version);
-  
+
   Evry_Item *(*item_new)(Evry_Item *base, Evry_Plugin *p, const char *label,
 			Evas_Object *(*icon_get) (Evry_Item *it, Evas *e),
 			void (*cb_free) (Evry_Item *item));
@@ -90,7 +90,7 @@ struct _Evry_API
   void (*item_ref)(Evry_Item *it);
   /* send EVRY_EVENT_ITEM_CHANGED event */
   void  (*item_changed)(Evry_Item *it, int change_icon, int change_selected);
-  
+
   Evry_Plugin *(*plugin_new)(Evry_Plugin *base, const char *name,
 				  const char *label, const char *icon,
 				  Evry_Type item_type,
@@ -105,7 +105,7 @@ struct _Evry_API
   int  (*plugin_register)(Evry_Plugin *p, int type, int priority);
   void (*plugin_unregister)(Evry_Plugin *p);
   void (*plugin_update)(Evry_Plugin *plugin, int state);
-  
+
   Evry_Action *(*action_new)(const char *name, const char *label,
 				  Evry_Type type1, Evry_Type type2,
 				  const char *icon,
@@ -155,7 +155,6 @@ struct _Evry_Event_Action_Performed
   const Evry_Item *it2;
 };
 
-#ifndef EVRY_H
 
 /*** cast default types ***/
 
@@ -174,16 +173,6 @@ struct _Evry_Event_Action_Performed
 #define GET_PLUGIN(_p, _plugin) Plugin *_p = (Plugin*) _plugin
 #define GET_ITEM(_it, _any) Evry_Item *_it = (Evry_Item *) _any
 
-
-/*** Evry_Item macros ***/
-
-#define EVRY_ITEM_NEW(_base, _plugin, _label, _icon_get, _free)		\
-  (_base *) evry->item_new(EVRY_ITEM(E_NEW(_base, 1)), EVRY_PLUGIN(_plugin), \
-			  _label, _icon_get, _free)
-
-#define EVRY_ITEM_FREE(_item) evry->item_free((Evry_Item *)_item)
-#define EVRY_ITEM_REF(_item) evry->item_ref((Evry_Item *)_item)
-
 #define EVRY_ITEM_DATA_INT_SET(_item, _data) ((Evry_Item *)_item)->data = (void*)(long) _data
 #define EVRY_ITEM_DATA_INT_GET(_item) (long) ((Evry_Item *)_item)->data
 
@@ -199,7 +188,7 @@ struct _Evry_Event_Action_Performed
   if (EVRY_ITEM(_it)->context) eina_stringshare_del(EVRY_ITEM(_it)->context); \
   EVRY_ITEM(_it)->context = eina_stringshare_add(_context);
 
-#define EVRY_ITEM_ICON_SET(_it, _icon)				\
+#define EVRY_ITEM_ICON_SET(_it, _icon)					\
   if (EVRY_ITEM(_it)->icon) eina_stringshare_del(EVRY_ITEM(_it)->icon); \
   EVRY_ITEM(_it)->icon = eina_stringshare_add(_icon);
 
@@ -211,14 +200,12 @@ struct _Evry_Event_Action_Performed
 
 #define IS_BROWSEABLE(_item) ((Evry_Item *)_item)->browseable
 
+#define EVRY_PLUGIN_ITEMS_SORT(_p, _sortcb)				\
+  EVRY_PLUGIN(_p)->items = eina_list_sort				\
+    (EVRY_PLUGIN(_p)->items, eina_list_count(EVRY_PLUGIN(_p)->items), _sortcb)
 
-/*** Evry_Plugin macros ***/
-
-#define EVRY_PLUGIN_NEW(_base, _name, _icon, _item_type, _begin, _finish, _fetch, _free) \
-  evry->plugin_new(EVRY_PLUGIN(E_NEW(_base, 1)), _name, _(_name), _icon, _item_type, \
-		  _begin, _finish, _fetch, _free)
-
-#define EVRY_PLUGIN_FREE(_p) if (_p) evry->plugin_free(EVRY_PLUGIN(_p))
+#define EVRY_PLUGIN_ITEM_APPEND(_p, _item)				\
+  EVRY_PLUGIN(_p)->items = eina_list_append(EVRY_PLUGIN(_p)->items, EVRY_ITEM(_item))
 
 #define EVRY_PLUGIN_INSTANCE(_p, _plugin) {	\
      _p = E_NEW(Plugin, 1);			\
@@ -231,33 +218,15 @@ struct _Evry_Event_Action_Performed
      EINA_LIST_FREE(EVRY_PLUGIN(_p)->items, it) \
        if (it) it->fuzzy_match = 0; }
 
-#define EVRY_PLUGIN_ITEMS_FREE(_p) {		\
-     Evry_Item *it;				\
-     EINA_LIST_FREE(EVRY_PLUGIN(_p)->items, it) \
-       evry->item_free(it); }
+#define EVRY_MODULE_REGISTER(_module) {				\
+     Eina_List *l = e_datastore_get("everything_modules");	\
+     l = eina_list_append(l, _module);				\
+     e_datastore_set("everything_modules", l); }
 
-#define EVRY_PLUGIN_ITEMS_SORT(_p, _sortcb)				\
-  EVRY_PLUGIN(_p)->items = eina_list_sort				\
-    (EVRY_PLUGIN(_p)->items, eina_list_count(EVRY_PLUGIN(_p)->items), _sortcb)
-
-#define EVRY_PLUGIN_ITEM_APPEND(_p, _item)				\
-  EVRY_PLUGIN(_p)->items = eina_list_append(EVRY_PLUGIN(_p)->items, EVRY_ITEM(_item))
-
-// should be renamed to ITEMS_FILTER
-#define EVRY_PLUGIN_ITEMS_ADD(_plugin, _items, _input, _match_detail, _set_usage) \
-  evry->util_plugin_items_add(EVRY_PLUGIN(_plugin), _items, _input, _match_detail, _set_usage)
-
-#define EVRY_PLUGIN_UPDATE(_p, _action)			\
-  if (_p) evry->plugin_update(EVRY_PLUGIN(_p), _action)
-
-
-/*** Evry_Action macros ***/
-
-#define EVRY_ACTION_NEW(_name, _in1, _in2, _icon, _action, _check)	\
-  evry->action_new(_name, _(_name), _in1, _in2, _icon, _action, _check)
-
-#define EVRY_ACTION_FREE(_act) if (_act) evry->action_free(EVRY_ACTN(_act))
-
+#define EVRY_MODULE_UNREGISTER(_module) {			\
+     Eina_List *l = e_datastore_get("everything_modules");	\
+     l = eina_list_remove(l, _module);				\
+     e_datastore_set("everything_modules", l); }
 
 /*** handy macros ***/
 
@@ -268,15 +237,45 @@ struct _Evry_Event_Action_Performed
      (x) = NULL;							\
   } while (0)
 
-#define EVRY_MODULE_REGISTER(_module) { \
-     Eina_List *l = e_datastore_get("everything_modules");	\
-     l = eina_list_append(l, _module);				\
-     e_datastore_set("everything_modules", l); }
 
-#define EVRY_MODULE_UNREGISTER(_module) { \
-     Eina_List *l = e_datastore_get("everything_modules");	\
-     l = eina_list_remove(l, _module);				\
-     e_datastore_set("everything_modules", l); }
+
+#ifndef EVRY_H
+/*** Evry_Item macros ***/
+
+#define EVRY_ITEM_NEW(_base, _plugin, _label, _icon_get, _free)		\
+  (_base *) evry->item_new(EVRY_ITEM(E_NEW(_base, 1)), EVRY_PLUGIN(_plugin), \
+			   _label, _icon_get, _free)
+
+#define EVRY_ITEM_FREE(_item) evry->item_free((Evry_Item *)_item)
+#define EVRY_ITEM_REF(_item) evry->item_ref((Evry_Item *)_item)
+
+/*** Evry_Plugin macros ***/
+
+#define EVRY_PLUGIN_NEW(_base, _name, _icon, _item_type, _begin, _finish, _fetch, _free) \
+  evry->plugin_new(EVRY_PLUGIN(E_NEW(_base, 1)), _name, _(_name), _icon, _item_type, \
+		   _begin, _finish, _fetch, _free)
+
+#define EVRY_PLUGIN_FREE(_p) if (_p) evry->plugin_free(EVRY_PLUGIN(_p))
+
+#define EVRY_PLUGIN_ITEMS_FREE(_p) {		\
+     Evry_Item *it;				\
+     EINA_LIST_FREE(EVRY_PLUGIN(_p)->items, it) \
+       evry->item_free(it); }
+
+// should be renamed to ITEMS_FILTER
+#define EVRY_PLUGIN_ITEMS_ADD(_plugin, _items, _input, _match_detail, _set_usage) \
+  evry->util_plugin_items_add(EVRY_PLUGIN(_plugin), _items, _input, _match_detail, _set_usage)
+
+#define EVRY_PLUGIN_UPDATE(_p, _action)			\
+  if (_p) evry->plugin_update(EVRY_PLUGIN(_p), _action)
+
+/*** Evry_Action macros ***/
+
+#define EVRY_ACTION_NEW(_name, _in1, _in2, _icon, _action, _check)	\
+  evry->action_new(_name, _(_name), _in1, _in2, _icon, _action, _check)
+
+#define EVRY_ACTION_FREE(_act) if (_act) evry->action_free(EVRY_ACTN(_act))
+
 
 
 #ifndef EINA_LOG_DEFAULT_COLOR
@@ -295,4 +294,3 @@ struct _Evry_Event_Action_Performed
 
 #endif
 #endif
-

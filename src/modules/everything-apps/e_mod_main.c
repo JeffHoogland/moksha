@@ -222,14 +222,14 @@ _hist_exe_get_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata
    Eina_List *l;
    Evry_Item_App *app;
    int match;
-
-   char *exe = strdup(key);
+   const char *exe = key;
 
    EINA_LIST_FOREACH(he->items, l, hi)
      {
 	app = NULL;
 
-	if (strcmp(hi->plugin, EVRY_PLUGIN(p)->name))
+	if (strcmp(hi->plugin, EVRY_PLUGIN(p)->name))	     
+
 	  continue;
 
 	if (!p->input)
@@ -241,12 +241,15 @@ _hist_exe_get_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata
 	     app = _item_exe_add(p, exe, match);
 	  }
 
-	if (app) EVRY_ITEM(app)->hi = hi;
+	if (app)
+	  {
+	     EVRY_ITEM(app)->hi = hi;
+	     evry->history_item_usage_set(EVRY_ITEM(app), p->input, NULL);
+	  }
 
 	break;
      }
 
-   free(exe);
    return EINA_TRUE;
 }
 

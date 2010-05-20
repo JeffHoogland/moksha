@@ -379,7 +379,7 @@ _plugins_init(const Evry_API *_api)
    _actions = eina_list_append(_actions, act);
 
    act = EVRY_ACTION_NEW(_("Iconify"),
-			 EVRY_TYPE_BORDER, 0, "iconic",
+			 EVRY_TYPE_BORDER, 0, "go-down",
 			 _act_border, _check_border);
    EVRY_ITEM_DATA_INT_SET(act, BORDER_HIDE);
    _actions = eina_list_append(_actions, act);
@@ -393,7 +393,7 @@ _plugins_init(const Evry_API *_api)
    evry->action_register(act, 4);
 
    act = EVRY_ACTION_NEW(_("Close"),
-			 EVRY_TYPE_BORDER, 0, "view-fullscreen",
+			 EVRY_TYPE_BORDER, 0, "list-remove",
 			 _act_border, _check_border);
    EVRY_ITEM_DATA_INT_SET(act, BORDER_CLOSE);
    _actions = eina_list_append(_actions, act);

@@ -50,18 +50,16 @@ struct _Evry_Item
 
   /* optional */
   Evry_Type subtype;
-
-  /* do not set! */
-  Eina_List *items;
-
+  
   Evas_Object *(*icon_get) (Evry_Item *it, Evas *e);
   void (*free) (Evry_Item *it);
 
   /* do not set by plugin! */
+  int ref;
+  Eina_List *items;
   Eina_Bool selected;
   Eina_Bool marked;
   Evry_Plugin *plugin;
-  int ref;
   double usage;
   History_Item *hi;
 };
@@ -171,6 +169,9 @@ struct _Evry_Plugin
   /* optional: use this when begin returned a new instance or you
      have extended plugin struct */
   void (*free) (Evry_Plugin *p);
+
+  /* optional: set type which the plugin can handle in begin */
+  Evry_Type input_type;
 
   /* optional: whether the plugin uses evry_async_update to add new items */
   /* default FALSE */
