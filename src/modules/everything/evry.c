@@ -7,8 +7,8 @@
  */
 
 #define INPUTLEN 256
-#define MATCH_LAG 0.25
-#define INITIAL_MATCH_LAG 0.4
+#define MATCH_LAG 0.15
+#define INITIAL_MATCH_LAG 0.3
 
 /* #undef DBG
  * #define DBG(...) ERR(__VA_ARGS__) */
@@ -655,9 +655,17 @@ evry_plugin_update(Evry_Plugin *p, int action)
 	     (s->plugin == sel->aggregator)))
 	  {
 	     _evry_selector_update(sel);
+	     _evry_view_update(s, NULL);
 	  }
 
-	_evry_view_update(s, NULL);
+	/* switch back to subject selector when no current items */
+	if ((sel == win->selectors[0]) &&
+	    (!(s->plugin) || !(s->plugin->items)) &&
+	    (win->selector == win->selectors[1]))
+	  {
+	     _evry_selectors_switch(-1);
+	     _evry_clear(win->selectors[0]);
+	  }
      }
    else if (action == EVRY_UPDATE_REFRESH)
      {
