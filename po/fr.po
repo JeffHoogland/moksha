@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-05-17 12:43+0400\n"
-"PO-Revision-Date: 2010-05-17 14:33+0400\n"
+"POT-Creation-Date: 2010-05-20 05:47+0400\n"
+"PO-Revision-Date: 2010-05-20 07:31+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment French Team <pourunmondesansgourou@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -33,7 +33,7 @@ msgstr "À propos de Enlightenment"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:848
 #: src/modules/conf_theme/e_int_config_theme_web.c:130
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:120
-#: src/modules/everything-windows/e_mod_main.c:391
+#: src/modules/everything-windows/e_mod_main.c:395
 #: src/modules/fileman/e_fwin.c:1824
 #: src/modules/illume/e_mod_win.c:173
 #: src/modules/mixer/app_mixer.c:514
@@ -611,7 +611,7 @@ msgstr "Afficher le menu…"
 #: src/bin/e_actions.c:2848
 #: src/modules/conf/e_mod_main.c:237
 #: src/modules/conf/e_mod_main.c:340
-#: src/modules/everything-apps/e_mod_main.c:1022
+#: src/modules/everything-apps/e_mod_main.c:980
 #: src/modules/fileman/e_mod_main.c:63
 #: src/modules/fileman/e_mod_main.c:146
 msgid "Launch"
@@ -849,8 +849,8 @@ msgstr "Modules"
 #: src/bin/e_configure.c:35
 #: src/modules/conf_shelves/e_mod_main.c:24
 #: src/modules/everything/e_mod_main.c:151
-#: src/modules/everything-apps/e_mod_main.c:1270
-#: src/modules/everything-files/e_mod_main.c:1561
+#: src/modules/everything-apps/e_mod_main.c:1213
+#: src/modules/everything-files/e_mod_main.c:1557
 #: src/modules/gadman/e_mod_main.c:25
 #: src/modules/mixer/e_mod_main.c:1047
 #: src/modules/connman/e_mod_main.c:1734
@@ -972,9 +972,8 @@ msgstr "Fichier desktop"
 #: src/modules/conf_performance/e_int_config_performance.c:115
 #: src/modules/everything/evry_config.c:357
 #: src/modules/everything/evry_config.c:437
-#: src/modules/everything-apps/e_mod_main.c:1169
 #: src/modules/everything-aspell/e_mod_main.c:466
-#: src/modules/everything-files/e_mod_main.c:1453
+#: src/modules/everything-files/e_mod_main.c:1449
 #: src/modules/pager/e_mod_config.c:125
 #: src/modules/pager/e_mod_config.c:212
 msgid "General"
@@ -985,7 +984,7 @@ msgid "Startup Notify"
 msgstr "Notification de démarrage"
 
 #: src/bin/e_eap_editor.c:723
-#: src/modules/everything-apps/e_mod_main.c:1036
+#: src/modules/everything-apps/e_mod_main.c:994
 msgid "Run in Terminal"
 msgstr "Exécuter dans un terminal"
 
@@ -1686,7 +1685,7 @@ msgid "Create Icon"
 msgstr "Créer un icone"
 
 #: src/bin/e_int_border_menu.c:101
-#: src/modules/everything-windows/e_mod_main.c:398
+#: src/modules/everything-windows/e_mod_main.c:402
 msgid "Send to Desktop"
 msgstr "Envoyer sur le bureau"
 
@@ -1703,7 +1702,7 @@ msgid "More..."
 msgstr "Plus…"
 
 #: src/bin/e_int_border_menu.c:197
-#: src/modules/everything-windows/e_mod_main.c:377
+#: src/modules/everything-windows/e_mod_main.c:381
 msgid "Iconify"
 msgstr "Minimiser"
 
@@ -1992,7 +1991,7 @@ msgstr "Taille, position et verrous"
 #: src/bin/e_int_border_remember.c:622
 #: src/modules/conf/e_mod_main.c:218
 #: src/modules/conf_window_focus/e_int_config_focus.c:222
-#: src/modules/everything/evry_plug_aggregator.c:246
+#: src/modules/everything/evry_plug_aggregator.c:249
 msgid "All"
 msgstr "Tout"
 
@@ -2174,8 +2173,8 @@ msgstr "Applications favorites"
 #: src/modules/conf_menus/e_int_config_menus.c:90
 #: src/modules/conf_menus/e_int_config_menus.c:138
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:194
-#: src/modules/everything-apps/e_mod_main.c:1002
-#: src/modules/everything-apps/e_mod_main.c:1009
+#: src/modules/everything-apps/e_mod_main.c:952
+#: src/modules/everything-apps/e_mod_main.c:968
 #: src/modules/wizard/page_070.c:203
 msgid "Applications"
 msgstr "Applications"
@@ -2187,7 +2186,7 @@ msgstr "Applications"
 #: src/modules/conf_window_manipulation/e_mod_main.c:20
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/conf_winlist/e_mod_main.c:20
-#: src/modules/everything-windows/e_mod_main.c:362
+#: src/modules/everything-windows/e_mod_main.c:366
 msgid "Windows"
 msgstr "Fenêtres"
 
@@ -3161,25 +3160,21 @@ msgstr "Options de remplissage et d'étirage"
 
 #: src/bin/e_utils.c:1195
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:173
-#: src/modules/everything-wallpaper/e_mod_main.c:96
 msgid "Stretch"
 msgstr "Étirer"
 
 #: src/bin/e_utils.c:1196
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:178
-#: src/modules/everything-wallpaper/e_mod_main.c:97
 msgid "Center"
 msgstr "Centrer"
 
 #: src/bin/e_utils.c:1198
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:188
-#: src/modules/everything-wallpaper/e_mod_main.c:99
 msgid "Within"
 msgstr "Contenir"
 
 #: src/bin/e_utils.c:1199
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:193
-#: src/modules/everything-wallpaper/e_mod_main.c:100
 msgid "Fill"
 msgstr "Remplir"
 
@@ -3286,65 +3281,65 @@ msgstr "Interdit"
 msgid "Read-Write"
 msgstr "Lecture-Écriture"
 
-#: src/modules/battery/e_mod_config.c:52
+#: src/modules/battery/e_mod_config.c:59
 msgid "Battery Monitor Settings"
 msgstr "Paramétrage du moniteur de batterie"
 
-#: src/modules/battery/e_mod_config.c:114
+#: src/modules/battery/e_mod_config.c:123
 msgid "Show alert when battery is low"
 msgstr "Afficher une alerte dès que la batterie est faible"
 
-#: src/modules/battery/e_mod_config.c:186
+#: src/modules/battery/e_mod_config.c:208
 msgid "Check every:"
 msgstr "Contrôler tous les :"
 
-#: src/modules/battery/e_mod_config.c:188
+#: src/modules/battery/e_mod_config.c:210
 #: src/modules/conf_performance/e_int_config_performance.c:121
 #: src/modules/temperature/e_mod_config.c:200
 #, c-format
 msgid "%1.0f ticks"
 msgstr "%1.0f tics"
 
-#: src/modules/battery/e_mod_config.c:191
+#: src/modules/battery/e_mod_config.c:213
 msgid "Polling"
 msgstr "Interrogation"
 
-#: src/modules/battery/e_mod_config.c:195
+#: src/modules/battery/e_mod_config.c:217
 msgid "Show low battery alert"
 msgstr "Afficher une alerte de batterie faible"
 
-#: src/modules/battery/e_mod_config.c:199
+#: src/modules/battery/e_mod_config.c:221
 msgid "Alert when at:"
 msgstr "Alerte quand le niveau est à :"
 
-#: src/modules/battery/e_mod_config.c:202
+#: src/modules/battery/e_mod_config.c:224
 #, c-format
 msgid "%1.0f min"
 msgstr "%1.0f min"
 
-#: src/modules/battery/e_mod_config.c:206
+#: src/modules/battery/e_mod_config.c:228
 #, c-format
 msgid "%1.0f %%"
 msgstr "%1.0f %%"
 
-#: src/modules/battery/e_mod_config.c:210
+#: src/modules/battery/e_mod_config.c:232
 msgid "Auto dismiss in..."
 msgstr "Éliminer automatiquement dans…"
 
-#: src/modules/battery/e_mod_config.c:215
+#: src/modules/battery/e_mod_config.c:237
 #, c-format
 msgid "%1.0f sec"
 msgstr "%1.0f s"
 
-#: src/modules/battery/e_mod_config.c:222
+#: src/modules/battery/e_mod_config.c:244
 msgid "Alert"
 msgstr "Alerte"
 
-#: src/modules/battery/e_mod_config.c:228
+#: src/modules/battery/e_mod_config.c:250
 msgid "Auto Detect"
 msgstr "Auto-détection"
 
-#: src/modules/battery/e_mod_config.c:230
+#: src/modules/battery/e_mod_config.c:253
 #: src/modules/conf_applications/e_mod_main.c:27
 #: src/modules/conf_borders/e_mod_main.c:22
 #: src/modules/conf_desk/e_mod_main.c:20
@@ -3352,16 +3347,20 @@ msgstr "Auto-détection"
 msgid "Internal"
 msgstr "Interne"
 
-#: src/modules/battery/e_mod_config.c:233
+#: src/modules/battery/e_mod_config.c:257
 msgid "udev"
 msgstr "udev"
 
-#: src/modules/battery/e_mod_config.c:235
+#: src/modules/battery/e_mod_config.c:260
+msgid "Fuzzy Mode"
+msgstr "Mode pondéré"
+
+#: src/modules/battery/e_mod_config.c:264
 #: src/modules/fileman/e_mod_config.c:285
 msgid "HAL"
 msgstr "HAL"
 
-#: src/modules/battery/e_mod_config.c:239
+#: src/modules/battery/e_mod_config.c:269
 msgid "Hardware"
 msgstr "Interface"
 
@@ -3369,22 +3368,22 @@ msgstr "Interface"
 msgid "Battery"
 msgstr "Batterie"
 
-#: src/modules/battery/e_mod_main.c:466
+#: src/modules/battery/e_mod_main.c:472
 msgid "Your battery is low!"
 msgstr "La batterie est faible !"
 
-#: src/modules/battery/e_mod_main.c:468
+#: src/modules/battery/e_mod_main.c:474
 msgid "AC power is recommended."
 msgstr "Branchement sur le secteur recommandé."
 
-#: src/modules/battery/e_mod_main.c:543
+#: src/modules/battery/e_mod_main.c:549
 msgid "N/A"
 msgstr "N/A"
 
-#: src/modules/battery/e_mod_main.c:620
-#: src/modules/battery/e_mod_main.c:622
-#: src/modules/battery/e_mod_main.c:629
-#: src/modules/battery/e_mod_main.c:631
+#: src/modules/battery/e_mod_main.c:623
+#: src/modules/battery/e_mod_main.c:625
+#: src/modules/battery/e_mod_main.c:632
+#: src/modules/battery/e_mod_main.c:634
 msgid "ERROR"
 msgstr "ERREUR"
 
@@ -4926,8 +4925,8 @@ msgid "Select an Edj File"
 msgstr "Sélectionner un fichier edj"
 
 #: src/modules/conf_mime/e_mod_main.c:20
-#: src/modules/everything-files/e_mod_main.c:1307
-#: src/modules/everything-files/e_mod_main.c:1313
+#: src/modules/everything-files/e_mod_main.c:1303
+#: src/modules/everything-files/e_mod_main.c:1309
 #: src/modules/fileman/e_mod_main.c:49
 #: src/modules/fileman/e_mod_main.c:67
 #: src/modules/fileman/e_mod_main.c:385
@@ -5488,7 +5487,6 @@ msgid "Wallpaper settings..."
 msgstr "Paramétrage du fond d'écran…"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:183
-#: src/modules/everything-wallpaper/e_mod_main.c:98
 msgid "Tile"
 msgstr "Répéter"
 
@@ -5497,12 +5495,10 @@ msgid "Select a Picture..."
 msgstr "Choisir une image…"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:627
-#: src/modules/everything-wallpaper/e_mod_main.c:343
 msgid "Picture Import Error"
 msgstr "Erreur lors de l'importation du fichier"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:628
-#: src/modules/everything-wallpaper/e_mod_main.c:344
 msgid "Enlightenment was unable to import the picture<br>due to conversion errors."
 msgstr "Enlightenment n'a pu importer l'image<br>à cause d'erreurs de conversion."
 
@@ -6370,7 +6366,7 @@ msgstr "Actions"
 msgid "Items"
 msgstr "Éléments"
 
-#: src/modules/everything/evry_plug_aggregator.c:258
+#: src/modules/everything/evry_plug_aggregator.c:261
 msgid "No plugins loaded"
 msgstr "Aucun greffon activé"
 
@@ -6382,55 +6378,55 @@ msgstr " Copier dans le presse-papiers "
 msgid "  Ok, here comes the explanation of <hilight>everything</hilight>...<br>  Just type a few letters of the thing you are looking for. <br>  Use cursor <hilight>&lt;up/down&gt;</hilight> to choose from the list of things.<br>  Press  <hilight>&lt;tab&gt;</hilight> to select an action, then press  <hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    <hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;</hilight> toggle list view modes<br>    <hilight>&lt;ctrl+3&gt;</hilight> toggle thumb view modes"
 msgstr "  Voici des éclaircissements sur <hilight>Omni</hilight>...<br>  Tapez juste les premières lettres de ce que vous recherchez. <br>  Utilisez les touches <hilight>&lt;Flèche haut/bas&gt;</hilight> pour choisir dans la liste.<br>  Appuyez sur <hilight>&lt;Tabulation&gt;</hilight> pour sélectionner une action, puis sur  <hilight>&lt;Entrée&gt;</hilight>.<br> Cette page ne s'affichera pas lors de la prochaine utilisation d' <hilight>Omni</hilight>.<br>    <hilight>&lt;Échap&gt;</hilight> ferme cette boîte de dialogue<br>    <hilight>&lt;?&gt;</hilight> affiche cette page<br>    <hilight>&lt;Entrée&gt;</hilight> exécute une action<br>    <hilight>&lt;Ctrl+Entrée&gt;</hilight> exécute une action et continue<br>    <hilight>&lt;tab&gt;</hilight> passe d'un selecteur à l'autre<br>    <hilight>&lt;Ctrl+Tabulation&gt;</hilight> détail des entrées (ça dépend du greffon)<br>    <hilight>&lt;Ctrl+« x »&gt;</hilight> va au greffon commençant par la lettre « ... »<br>    <hilight>&lt;Ctrl+Flèche gauche/droite&gt;</hilight> circule parmi les greffons<br>    <hilight>&lt;ctrl+Flèche haut/bas&gt;</hilight> va au premier/dernier élément<br>    <hilight>&lt;Ctrl+1&gt;</hilight> commute le mode d'affichage (quitter cette page ;)<br>    <hilight>&lt;Ctrl+2&gt;</hilight> commute le mode d'affichage de la liste<br>    <hilight>&lt;Ctrl+3&gt;</hilight> commute le mode d'affichage des vignettes."
 
-#: src/modules/everything-apps/e_mod_main.c:1016
+#: src/modules/everything-apps/e_mod_main.c:960
+msgid "Exebuf"
+msgstr "Ligne de commande"
+
+#: src/modules/everything-apps/e_mod_main.c:975
 msgid "Open With..."
 msgstr "Ouvrir avec…"
 
-#: src/modules/everything-apps/e_mod_main.c:1029
+#: src/modules/everything-apps/e_mod_main.c:987
 msgid "Open File..."
 msgstr "Ouvrir le fichier…"
 
-#: src/modules/everything-apps/e_mod_main.c:1043
+#: src/modules/everything-apps/e_mod_main.c:1001
 msgid "Edit Application Entry"
 msgstr "Éditer le fichier d'application"
 
-#: src/modules/everything-apps/e_mod_main.c:1050
+#: src/modules/everything-apps/e_mod_main.c:1008
 msgid "New Application Entry"
 msgstr "Nouveau fichier d'application"
 
-#: src/modules/everything-apps/e_mod_main.c:1057
+#: src/modules/everything-apps/e_mod_main.c:1015
 msgid "Run with Sudo"
 msgstr "Exécuter avec sudo"
 
-#: src/modules/everything-apps/e_mod_main.c:1063
+#: src/modules/everything-apps/e_mod_main.c:1021
 #: src/modules/fileman/e_fwin.c:1500
 #: src/modules/fileman/e_fwin.c:1820
 msgid "Open with..."
 msgstr "Ouvrir avec…"
 
-#: src/modules/everything-apps/e_mod_main.c:1070
+#: src/modules/everything-apps/e_mod_main.c:1028
 msgid "Open Terminal here"
 msgstr "Ouvrir dans un terminal"
 
-#: src/modules/everything-apps/e_mod_main.c:1136
-#: src/modules/everything-apps/e_mod_main.c:1275
-#: src/modules/everything-apps/e_mod_main.c:1295
+#: src/modules/everything-apps/e_mod_main.c:1093
+#: src/modules/everything-apps/e_mod_main.c:1218
+#: src/modules/everything-apps/e_mod_main.c:1237
 msgid "Everything Applications"
 msgstr "Omni applications"
 
-#: src/modules/everything-apps/e_mod_main.c:1171
-msgid "Show Executables"
-msgstr "Afficher les exécutables"
-
-#: src/modules/everything-apps/e_mod_main.c:1177
+#: src/modules/everything-apps/e_mod_main.c:1126
 msgid "Commands"
 msgstr "Commandes"
 
-#: src/modules/everything-apps/e_mod_main.c:1178
+#: src/modules/everything-apps/e_mod_main.c:1127
 msgid "Terminal Command"
 msgstr "Commande du terminal"
 
-#: src/modules/everything-apps/e_mod_main.c:1183
+#: src/modules/everything-apps/e_mod_main.c:1132
 msgid "Sudo GUI"
 msgstr "Interface graphique sudo"
 
@@ -6465,58 +6461,58 @@ msgstr "Commande personnalisée"
 msgid "Calculator"
 msgstr "Calculatrice"
 
-#: src/modules/everything-files/e_mod_main.c:1320
-#: src/modules/everything-files/e_mod_main.c:1329
+#: src/modules/everything-files/e_mod_main.c:1316
+#: src/modules/everything-files/e_mod_main.c:1325
 msgid "Recent Files"
 msgstr "Documents récents"
 
-#: src/modules/everything-files/e_mod_main.c:1346
+#: src/modules/everything-files/e_mod_main.c:1342
 msgid "Copy To ..."
 msgstr "Copier dans..."
 
-#: src/modules/everything-files/e_mod_main.c:1351
+#: src/modules/everything-files/e_mod_main.c:1347
 msgid "Move To ..."
 msgstr "Déplacer vers..."
 
-#: src/modules/everything-files/e_mod_main.c:1356
+#: src/modules/everything-files/e_mod_main.c:1352
 msgid "Move to Trash"
 msgstr "Mettre à la corbeille"
 
-#: src/modules/everything-files/e_mod_main.c:1364
+#: src/modules/everything-files/e_mod_main.c:1360
 msgid "Browse Folder..."
 msgstr "Parcourir un dossier..."
 
-#: src/modules/everything-files/e_mod_main.c:1367
+#: src/modules/everything-files/e_mod_main.c:1363
 msgid "Open Folder (EFM)"
 msgstr "Ouvrir un dossier avec EFM"
 
-#: src/modules/everything-files/e_mod_main.c:1433
-#: src/modules/everything-files/e_mod_main.c:1564
-#: src/modules/everything-files/e_mod_main.c:1585
+#: src/modules/everything-files/e_mod_main.c:1429
+#: src/modules/everything-files/e_mod_main.c:1560
+#: src/modules/everything-files/e_mod_main.c:1581
 msgid "Everything Files"
 msgstr "Omni fichiers"
 
-#: src/modules/everything-files/e_mod_main.c:1456
+#: src/modules/everything-files/e_mod_main.c:1452
 msgid "Show home directory"
 msgstr "Afficher le dossier personnel"
 
-#: src/modules/everything-files/e_mod_main.c:1460
+#: src/modules/everything-files/e_mod_main.c:1456
 msgid "Show recent files"
 msgstr "Afficher les documents récents"
 
-#: src/modules/everything-files/e_mod_main.c:1464
+#: src/modules/everything-files/e_mod_main.c:1460
 msgid "Search recent files"
 msgstr "Rechercher dans les documents récents"
 
-#: src/modules/everything-files/e_mod_main.c:1468
+#: src/modules/everything-files/e_mod_main.c:1464
 msgid "Search cached files"
 msgstr "Rechercher dans le cache des documents"
 
-#: src/modules/everything-files/e_mod_main.c:1472
+#: src/modules/everything-files/e_mod_main.c:1468
 msgid "Cache visited directories"
 msgstr "Mettre en cache les dossiers visités"
 
-#: src/modules/everything-files/e_mod_main.c:1476
+#: src/modules/everything-files/e_mod_main.c:1472
 msgid "Clear cache"
 msgstr "Vider le cache"
 
@@ -6524,15 +6520,11 @@ msgstr "Vider le cache"
 msgid "Show Dialog"
 msgstr "Afficher la boîte de dialogue"
 
-#: src/modules/everything-wallpaper/e_mod_main.c:119
-msgid "Set as Wallpaper"
-msgstr "Utiliser comme fond d'écran"
-
-#: src/modules/everything-windows/e_mod_main.c:369
+#: src/modules/everything-windows/e_mod_main.c:373
 msgid "Switch to Window"
 msgstr "Aller vers la fenêtre"
 
-#: src/modules/everything-windows/e_mod_main.c:384
+#: src/modules/everything-windows/e_mod_main.c:388
 msgid "Toggle Fullscreen"
 msgstr "Activer/Désactiver le plein écran"
 
@@ -7476,6 +7468,10 @@ msgstr "Il y a déjà une zone de notification active et seule une instance de c
 msgid "Systray"
 msgstr "Zone de notification"
 
+#~ msgid "Show Executables"
+#~ msgstr "Afficher les exécutables"
+#~ msgid "Set as Wallpaper"
+#~ msgstr "Utiliser comme fond d'écran"
 #~ msgid "UPower"
 #~ msgstr "UPower"
 #~ msgid "Add Edge"

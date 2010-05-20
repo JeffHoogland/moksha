@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-05-17 18:16+0200\n"
-"PO-Revision-Date: 2010-05-17 18:18+0200\n"
+"POT-Creation-Date: 2010-05-20 13:23+0200\n"
+"PO-Revision-Date: 2010-05-20 13:32+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -25,7 +25,7 @@ msgstr "Informazioni su Enlightenment"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:848
 #: src/modules/conf_theme/e_int_config_theme_web.c:130
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:120
-#: src/modules/everything-windows/e_mod_main.c:391
+#: src/modules/everything-windows/e_mod_main.c:395
 #: src/modules/fileman/e_fwin.c:1824 src/modules/illume/e_mod_win.c:173
 #: src/modules/mixer/app_mixer.c:514
 msgid "Close"
@@ -550,7 +550,7 @@ msgstr "Mostra menù..."
 
 #: src/bin/e_actions.c:2843 src/bin/e_actions.c:2848
 #: src/modules/conf/e_mod_main.c:237 src/modules/conf/e_mod_main.c:340
-#: src/modules/everything-apps/e_mod_main.c:1022
+#: src/modules/everything-apps/e_mod_main.c:980
 #: src/modules/fileman/e_mod_main.c:63 src/modules/fileman/e_mod_main.c:146
 msgid "Launch"
 msgstr "Lancia"
@@ -796,7 +796,7 @@ msgstr ""
 msgid "Enlightenment Settings Write Problems"
 msgstr "Problemi scrittura configurazione di Enlightenment"
 
-#: src/bin/e_config_dialog.c:210 src/modules/battery/e_mod_main.c:729
+#: src/bin/e_config_dialog.c:210 src/modules/battery/e_mod_main.c:723
 #: src/modules/conf/e_mod_main.c:248 src/modules/conf_engine/e_mod_main.c:20
 #: src/modules/conf_paths/e_mod_main.c:20
 #: src/modules/conf_performance/e_mod_main.c:20
@@ -822,8 +822,8 @@ msgstr "Moduli"
 
 #: src/bin/e_configure.c:35 src/modules/conf_shelves/e_mod_main.c:24
 #: src/modules/everything/e_mod_main.c:151
-#: src/modules/everything-apps/e_mod_main.c:1270
-#: src/modules/everything-files/e_mod_main.c:1561
+#: src/modules/everything-apps/e_mod_main.c:1213
+#: src/modules/everything-files/e_mod_main.c:1557
 #: src/modules/gadman/e_mod_main.c:25 src/modules/mixer/e_mod_main.c:1047
 #: src/modules/connman/e_mod_main.c:1734
 msgid "Extensions"
@@ -968,9 +968,8 @@ msgstr "File desktop"
 #: src/modules/conf_performance/e_int_config_performance.c:115
 #: src/modules/everything/evry_config.c:357
 #: src/modules/everything/evry_config.c:437
-#: src/modules/everything-apps/e_mod_main.c:1169
 #: src/modules/everything-aspell/e_mod_main.c:466
-#: src/modules/everything-files/e_mod_main.c:1453
+#: src/modules/everything-files/e_mod_main.c:1449
 #: src/modules/pager/e_mod_config.c:125 src/modules/pager/e_mod_config.c:212
 msgid "General"
 msgstr "Impostazioni generali"
@@ -979,7 +978,7 @@ msgstr "Impostazioni generali"
 msgid "Startup Notify"
 msgstr "Notifica avvio"
 
-#: src/bin/e_eap_editor.c:723 src/modules/everything-apps/e_mod_main.c:1036
+#: src/bin/e_eap_editor.c:723 src/modules/everything-apps/e_mod_main.c:994
 msgid "Run in Terminal"
 msgstr "Esegui in terminale"
 
@@ -1633,7 +1632,7 @@ msgid "Create Icon"
 msgstr "Crea icona"
 
 #: src/bin/e_int_border_menu.c:101
-#: src/modules/everything-windows/e_mod_main.c:398
+#: src/modules/everything-windows/e_mod_main.c:402
 msgid "Send to Desktop"
 msgstr "Invia al desktop"
 
@@ -1650,7 +1649,7 @@ msgid "More..."
 msgstr "Altro..."
 
 #: src/bin/e_int_border_menu.c:197
-#: src/modules/everything-windows/e_mod_main.c:377
+#: src/modules/everything-windows/e_mod_main.c:381
 msgid "Iconify"
 msgstr "Iconifica"
 
@@ -1947,7 +1946,7 @@ msgstr "Dimensione, posizione e blocchi"
 
 #: src/bin/e_int_border_remember.c:622 src/modules/conf/e_mod_main.c:218
 #: src/modules/conf_window_focus/e_int_config_focus.c:222
-#: src/modules/everything/evry_plug_aggregator.c:246
+#: src/modules/everything/evry_plug_aggregator.c:249
 msgid "All"
 msgstr "Tutto"
 
@@ -2028,7 +2027,7 @@ msgstr "Avvia questo programma al login"
 #: src/modules/everything-settings/e_mod_main.c:115
 #: src/modules/ibar/e_mod_main.c:314 src/modules/ibar/e_mod_main.c:824
 #: src/modules/ibox/e_mod_main.c:313 src/modules/ibox/e_mod_main.c:708
-#: src/modules/pager/e_mod_main.c:808 src/modules/temperature/e_mod_main.c:276
+#: src/modules/pager/e_mod_main.c:808 src/modules/temperature/e_mod_main.c:224
 #: src/modules/mixer/e_mod_main.c:641 src/modules/connman/e_mod_main.c:1228
 msgid "Settings"
 msgstr "Impostazioni"
@@ -2121,8 +2120,8 @@ msgstr "Applicazioni preferite"
 #: src/bin/e_int_menus.c:128 src/modules/conf_menus/e_int_config_menus.c:90
 #: src/modules/conf_menus/e_int_config_menus.c:138
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:194
-#: src/modules/everything-apps/e_mod_main.c:1002
-#: src/modules/everything-apps/e_mod_main.c:1009
+#: src/modules/everything-apps/e_mod_main.c:952
+#: src/modules/everything-apps/e_mod_main.c:968
 #: src/modules/wizard/page_070.c:203
 msgid "Applications"
 msgstr "Applicazioni"
@@ -2133,7 +2132,7 @@ msgstr "Applicazioni"
 #: src/modules/conf_window_manipulation/e_mod_main.c:20
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/conf_winlist/e_mod_main.c:20
-#: src/modules/everything-windows/e_mod_main.c:362
+#: src/modules/everything-windows/e_mod_main.c:366
 msgid "Windows"
 msgstr "Finestre"
 
@@ -3234,25 +3233,21 @@ msgstr "Opzioni di riempimento e stiramento"
 
 #: src/bin/e_utils.c:1195
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:173
-#: src/modules/everything-wallpaper/e_mod_main.c:96
 msgid "Stretch"
 msgstr "Stirata"
 
 #: src/bin/e_utils.c:1196
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:178
-#: src/modules/everything-wallpaper/e_mod_main.c:97
 msgid "Center"
 msgstr "Centrata"
 
 #: src/bin/e_utils.c:1198
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:188
-#: src/modules/everything-wallpaper/e_mod_main.c:99
 msgid "Within"
 msgstr "All'interno"
 
 #: src/bin/e_utils.c:1199
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:193
-#: src/modules/everything-wallpaper/e_mod_main.c:100
 msgid "Fill"
 msgstr "Riempimento"
 
@@ -3383,82 +3378,89 @@ msgstr "Proibito"
 msgid "Read-Write"
 msgstr "Lettura-scrittura"
 
-#: src/modules/battery/e_mod_config.c:52
+#: src/modules/battery/e_mod_config.c:59
 msgid "Battery Monitor Settings"
 msgstr "Impostazioni di Battery"
 
-#: src/modules/battery/e_mod_config.c:114
+#: src/modules/battery/e_mod_config.c:123
 msgid "Show alert when battery is low"
 msgstr "Allarme se il livello batteria è basso"
 
-#: src/modules/battery/e_mod_config.c:186
+#: src/modules/battery/e_mod_config.c:208
 msgid "Check every:"
 msgstr "Controlla ogni:"
 
-#: src/modules/battery/e_mod_config.c:188
+#: src/modules/battery/e_mod_config.c:210
 #: src/modules/conf_performance/e_int_config_performance.c:121
-#: src/modules/temperature/e_mod_config.c:200
+#: src/modules/temperature/e_mod_config.c:210
 #, c-format
 msgid "%1.0f ticks"
 msgstr "%1.0f tick"
 
-#: src/modules/battery/e_mod_config.c:191
+#: src/modules/battery/e_mod_config.c:213
 msgid "Polling"
 msgstr "Campionamento"
 
-#: src/modules/battery/e_mod_config.c:195
+#: src/modules/battery/e_mod_config.c:217
 msgid "Show low battery alert"
 msgstr "Mostra allarme carica bassa"
 
-#: src/modules/battery/e_mod_config.c:199
+#: src/modules/battery/e_mod_config.c:221
 msgid "Alert when at:"
 msgstr "Soglia allarme:"
 
-#: src/modules/battery/e_mod_config.c:202
+#: src/modules/battery/e_mod_config.c:224
 #, c-format
 msgid "%1.0f min"
 msgstr "%1.0f min"
 
-#: src/modules/battery/e_mod_config.c:206
+#: src/modules/battery/e_mod_config.c:228
 #, c-format
 msgid "%1.0f %%"
 msgstr "%1.0f %%"
 
-#: src/modules/battery/e_mod_config.c:210
+#: src/modules/battery/e_mod_config.c:232
 msgid "Auto dismiss in..."
 msgstr "Distacco automatico in..."
 
-#: src/modules/battery/e_mod_config.c:215
+#: src/modules/battery/e_mod_config.c:237
 #, c-format
 msgid "%1.0f sec"
 msgstr "%1.0f sec"
 
-#: src/modules/battery/e_mod_config.c:222
+#: src/modules/battery/e_mod_config.c:244
 msgid "Alert"
 msgstr "Allarme"
 
-#: src/modules/battery/e_mod_config.c:228
+#: src/modules/battery/e_mod_config.c:250
 msgid "Auto Detect"
 msgstr "Rileva automaticamente"
 
-#: src/modules/battery/e_mod_config.c:230
+#: src/modules/battery/e_mod_config.c:253
 #: src/modules/conf_applications/e_mod_main.c:27
 #: src/modules/conf_borders/e_mod_main.c:22
 #: src/modules/conf_desk/e_mod_main.c:20
 #: src/modules/conf_wallpaper/e_mod_main.c:28
+#: src/modules/temperature/e_mod_config.c:246
 msgid "Internal"
 msgstr "Interni"
 
-#: src/modules/battery/e_mod_config.c:233
+#: src/modules/battery/e_mod_config.c:257
+#: src/modules/temperature/e_mod_config.c:248
 msgid "udev"
 msgstr "udev"
 
-#: src/modules/battery/e_mod_config.c:235
+#: src/modules/battery/e_mod_config.c:260
+msgid "Fuzzy Mode"
+msgstr "Modalità ponderata"
+
+#: src/modules/battery/e_mod_config.c:264
 #: src/modules/fileman/e_mod_config.c:285
 msgid "HAL"
 msgstr "HAL"
 
-#: src/modules/battery/e_mod_config.c:239
+#: src/modules/battery/e_mod_config.c:269
+#: src/modules/temperature/e_mod_config.c:250
 msgid "Hardware"
 msgstr "Hardware"
 
@@ -3478,12 +3480,12 @@ msgstr "Consigliata alimentazione AC."
 msgid "N/A"
 msgstr "N/D"
 
-#: src/modules/battery/e_mod_main.c:626 src/modules/battery/e_mod_main.c:628
-#: src/modules/battery/e_mod_main.c:635 src/modules/battery/e_mod_main.c:637
+#: src/modules/battery/e_mod_main.c:623 src/modules/battery/e_mod_main.c:625
+#: src/modules/battery/e_mod_main.c:632 src/modules/battery/e_mod_main.c:634
 msgid "ERROR"
 msgstr "ERRORE"
 
-#: src/modules/battery/e_mod_main.c:731
+#: src/modules/battery/e_mod_main.c:725
 msgid "Battery Meter"
 msgstr "Indicatore di carica"
 
@@ -5119,8 +5121,8 @@ msgid "Select an Edj File"
 msgstr "Seleziona file edj"
 
 #: src/modules/conf_mime/e_mod_main.c:20
-#: src/modules/everything-files/e_mod_main.c:1307
-#: src/modules/everything-files/e_mod_main.c:1313
+#: src/modules/everything-files/e_mod_main.c:1303
+#: src/modules/everything-files/e_mod_main.c:1309
 #: src/modules/fileman/e_mod_main.c:49 src/modules/fileman/e_mod_main.c:67
 #: src/modules/fileman/e_mod_main.c:385
 msgid "Files"
@@ -5697,7 +5699,6 @@ msgid "Wallpaper settings..."
 msgstr "Impostazioni sfondo..."
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:183
-#: src/modules/everything-wallpaper/e_mod_main.c:98
 msgid "Tile"
 msgstr "Affiancata"
 
@@ -5706,12 +5707,10 @@ msgid "Select a Picture..."
 msgstr "Selezionare un'immmagine..."
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:627
-#: src/modules/everything-wallpaper/e_mod_main.c:343
 msgid "Picture Import Error"
 msgstr "Errore importazione immagine"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:628
-#: src/modules/everything-wallpaper/e_mod_main.c:344
 msgid ""
 "Enlightenment was unable to import the picture<br>due to conversion errors."
 msgstr ""
@@ -6600,7 +6599,7 @@ msgstr "Azioni"
 msgid "Items"
 msgstr "Elementi"
 
-#: src/modules/everything/evry_plug_aggregator.c:258
+#: src/modules/everything/evry_plug_aggregator.c:261
 msgid "No plugins loaded"
 msgstr "Nessun plugin caricato"
 
@@ -6646,54 +6645,54 @@ msgstr ""
 "visualizzazione a elenco<br>    <hilight>&lt;ctrl+3&gt;</hilight> cambia "
 "visualizzazione a miniature"
 
-#: src/modules/everything-apps/e_mod_main.c:1016
+#: src/modules/everything-apps/e_mod_main.c:960
+msgid "Exebuf"
+msgstr "Riga di comando"
+
+#: src/modules/everything-apps/e_mod_main.c:975
 msgid "Open With..."
 msgstr "Apri con..."
 
-#: src/modules/everything-apps/e_mod_main.c:1029
+#: src/modules/everything-apps/e_mod_main.c:987
 msgid "Open File..."
 msgstr "Apri file..."
 
-#: src/modules/everything-apps/e_mod_main.c:1043
+#: src/modules/everything-apps/e_mod_main.c:1001
 msgid "Edit Application Entry"
 msgstr "Modifica applicazione"
 
-#: src/modules/everything-apps/e_mod_main.c:1050
+#: src/modules/everything-apps/e_mod_main.c:1008
 msgid "New Application Entry"
 msgstr "Nuova applicazione"
 
-#: src/modules/everything-apps/e_mod_main.c:1057
+#: src/modules/everything-apps/e_mod_main.c:1015
 msgid "Run with Sudo"
 msgstr "Esegui con Sudo"
 
-#: src/modules/everything-apps/e_mod_main.c:1063
+#: src/modules/everything-apps/e_mod_main.c:1021
 #: src/modules/fileman/e_fwin.c:1500 src/modules/fileman/e_fwin.c:1820
 msgid "Open with..."
 msgstr "Apri con..."
 
-#: src/modules/everything-apps/e_mod_main.c:1070
+#: src/modules/everything-apps/e_mod_main.c:1028
 msgid "Open Terminal here"
 msgstr "Apri terminale qui"
 
-#: src/modules/everything-apps/e_mod_main.c:1136
-#: src/modules/everything-apps/e_mod_main.c:1275
-#: src/modules/everything-apps/e_mod_main.c:1295
+#: src/modules/everything-apps/e_mod_main.c:1093
+#: src/modules/everything-apps/e_mod_main.c:1218
+#: src/modules/everything-apps/e_mod_main.c:1237
 msgid "Everything Applications"
 msgstr "Modulo applicazioni di Everything"
 
-#: src/modules/everything-apps/e_mod_main.c:1171
-msgid "Show Executables"
-msgstr "Mostra eseguibili"
-
-#: src/modules/everything-apps/e_mod_main.c:1177
+#: src/modules/everything-apps/e_mod_main.c:1126
 msgid "Commands"
 msgstr "Comandi"
 
-#: src/modules/everything-apps/e_mod_main.c:1178
+#: src/modules/everything-apps/e_mod_main.c:1127
 msgid "Terminal Command"
 msgstr "Comando terminale"
 
-#: src/modules/everything-apps/e_mod_main.c:1183
+#: src/modules/everything-apps/e_mod_main.c:1132
 msgid "Sudo GUI"
 msgstr "Interfaccia sudo"
 
@@ -6728,58 +6727,58 @@ msgstr "Comando personalizzato"
 msgid "Calculator"
 msgstr "Calcolatrice"
 
-#: src/modules/everything-files/e_mod_main.c:1320
-#: src/modules/everything-files/e_mod_main.c:1329
+#: src/modules/everything-files/e_mod_main.c:1316
+#: src/modules/everything-files/e_mod_main.c:1325
 msgid "Recent Files"
 msgstr "File recenti"
 
-#: src/modules/everything-files/e_mod_main.c:1346
+#: src/modules/everything-files/e_mod_main.c:1342
 msgid "Copy To ..."
 msgstr "Copia in ..."
 
-#: src/modules/everything-files/e_mod_main.c:1351
+#: src/modules/everything-files/e_mod_main.c:1347
 msgid "Move To ..."
 msgstr "Sposta in ..."
 
-#: src/modules/everything-files/e_mod_main.c:1356
+#: src/modules/everything-files/e_mod_main.c:1352
 msgid "Move to Trash"
 msgstr "Sposta nel cestino"
 
-#: src/modules/everything-files/e_mod_main.c:1364
+#: src/modules/everything-files/e_mod_main.c:1360
 msgid "Browse Folder..."
 msgstr "Esplora cartella..."
 
-#: src/modules/everything-files/e_mod_main.c:1367
+#: src/modules/everything-files/e_mod_main.c:1363
 msgid "Open Folder (EFM)"
 msgstr "Apri cartella (EFM)"
 
-#: src/modules/everything-files/e_mod_main.c:1433
-#: src/modules/everything-files/e_mod_main.c:1564
-#: src/modules/everything-files/e_mod_main.c:1585
+#: src/modules/everything-files/e_mod_main.c:1429
+#: src/modules/everything-files/e_mod_main.c:1560
+#: src/modules/everything-files/e_mod_main.c:1581
 msgid "Everything Files"
 msgstr "Modulo file di Everything"
 
-#: src/modules/everything-files/e_mod_main.c:1456
+#: src/modules/everything-files/e_mod_main.c:1452
 msgid "Show home directory"
 msgstr "Mostra directory home"
 
-#: src/modules/everything-files/e_mod_main.c:1460
+#: src/modules/everything-files/e_mod_main.c:1456
 msgid "Show recent files"
 msgstr "Mostra file recenti"
 
-#: src/modules/everything-files/e_mod_main.c:1464
+#: src/modules/everything-files/e_mod_main.c:1460
 msgid "Search recent files"
 msgstr "Cerca file recenti"
 
-#: src/modules/everything-files/e_mod_main.c:1468
+#: src/modules/everything-files/e_mod_main.c:1464
 msgid "Search cached files"
 msgstr "Cerca file in cache"
 
-#: src/modules/everything-files/e_mod_main.c:1472
+#: src/modules/everything-files/e_mod_main.c:1468
 msgid "Cache visited directories"
 msgstr "Cache per directory visitate"
 
-#: src/modules/everything-files/e_mod_main.c:1476
+#: src/modules/everything-files/e_mod_main.c:1472
 msgid "Clear cache"
 msgstr "Svuota cache"
 
@@ -6787,15 +6786,11 @@ msgstr "Svuota cache"
 msgid "Show Dialog"
 msgstr "Mostra finestra di dialogo"
 
-#: src/modules/everything-wallpaper/e_mod_main.c:119
-msgid "Set as Wallpaper"
-msgstr "Imposta come sfondo"
-
-#: src/modules/everything-windows/e_mod_main.c:369
+#: src/modules/everything-windows/e_mod_main.c:373
 msgid "Switch to Window"
 msgstr "Vai alla finestra"
 
-#: src/modules/everything-windows/e_mod_main.c:384
+#: src/modules/everything-windows/e_mod_main.c:388
 msgid "Toggle Fullscreen"
 msgstr "A tutto schermo"
 
@@ -7386,59 +7381,59 @@ msgstr "Controllo del sistema"
 msgid "System Controls"
 msgstr "Controlli di sistema"
 
-#: src/modules/temperature/e_mod_config.c:54
+#: src/modules/temperature/e_mod_config.c:56
 msgid "Temperature Settings"
 msgstr "Impostazioni di Temperature"
 
-#: src/modules/temperature/e_mod_config.c:184
+#: src/modules/temperature/e_mod_config.c:194
 msgid "Sensors"
 msgstr "Sensori"
 
-#: src/modules/temperature/e_mod_config.c:190
+#: src/modules/temperature/e_mod_config.c:200
 msgid "Celcius"
 msgstr "Centigradi"
 
-#: src/modules/temperature/e_mod_config.c:193
+#: src/modules/temperature/e_mod_config.c:203
 msgid "Fahrenheit"
 msgstr "Fahrenheit"
 
-#: src/modules/temperature/e_mod_config.c:196
+#: src/modules/temperature/e_mod_config.c:206
 msgid "Display Units"
 msgstr "Unità di misura"
 
-#: src/modules/temperature/e_mod_config.c:203
+#: src/modules/temperature/e_mod_config.c:213
 msgid "Check Interval"
 msgstr "Frequenza di campionamento"
 
-#: src/modules/temperature/e_mod_config.c:207
+#: src/modules/temperature/e_mod_config.c:217
 msgid "High Temperature"
 msgstr "Alta temperatura"
 
-#: src/modules/temperature/e_mod_config.c:211
-#: src/modules/temperature/e_mod_config.c:223
-#: src/modules/temperature/e_mod_config.c:269
-#: src/modules/temperature/e_mod_config.c:270
+#: src/modules/temperature/e_mod_config.c:221
+#: src/modules/temperature/e_mod_config.c:233
+#: src/modules/temperature/e_mod_config.c:291
+#: src/modules/temperature/e_mod_config.c:292
 #, c-format
 msgid "%1.0f F"
 msgstr "%1.0f F"
 
-#: src/modules/temperature/e_mod_config.c:215
-#: src/modules/temperature/e_mod_config.c:227
-#: src/modules/temperature/e_mod_config.c:280
-#: src/modules/temperature/e_mod_config.c:281
+#: src/modules/temperature/e_mod_config.c:225
+#: src/modules/temperature/e_mod_config.c:237
+#: src/modules/temperature/e_mod_config.c:302
+#: src/modules/temperature/e_mod_config.c:303
 #, c-format
 msgid "%1.0f C"
 msgstr "%1.0f C"
 
-#: src/modules/temperature/e_mod_config.c:219
+#: src/modules/temperature/e_mod_config.c:229
 msgid "Low Temperature"
 msgstr "Bassa temperatura"
 
-#: src/modules/temperature/e_mod_config.c:231
+#: src/modules/temperature/e_mod_config.c:241
 msgid "Temperatures"
 msgstr "Temperature"
 
-#: src/modules/temperature/e_mod_main.c:142
+#: src/modules/temperature/e_mod_main.c:162
 msgid "Temperature"
 msgstr "Temperature"
 
