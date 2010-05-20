@@ -185,7 +185,6 @@ _battery_udev_battery_update_poll(void *data)
     if (test) \
       { \
          TYPE->VALUE = strtod(test, NULL); \
-         eina_stringshare_del(test); \
       } \
   while (0)
 
