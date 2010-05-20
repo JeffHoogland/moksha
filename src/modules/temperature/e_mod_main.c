@@ -202,7 +202,6 @@ _temperature_cb_exe_data(void *data, int type, void *event)
      }
    if (temp != -999)
      {
-	char *utf8;
 	char buf[256];
 
 	if (inst->units == FAHRENHEIT)
@@ -216,16 +215,13 @@ _temperature_cb_exe_data(void *data, int type, void *event)
 	  }
 
 	if (inst->units == FAHRENHEIT) 
-	  snprintf(buf, sizeof(buf), "%i°F", temp);
+	  snprintf(buf, sizeof(buf), "%iÂ°F", temp);
 	else
-	  snprintf(buf, sizeof(buf), "%i°C", temp);  
-	utf8 = eina_str_convert("iso-8859-1", "utf-8", buf);
-
+	  snprintf(buf, sizeof(buf), "%iÂ°C", temp);  
         _temperature_face_level_set(inst,
 				    (double)(temp - inst->low) /
 				    (double)(inst->high - inst->low));
-	edje_object_part_text_set(inst->o_temp, "e.text.reading", utf8);
-	if (utf8) free(utf8);
+	edje_object_part_text_set(inst->o_temp, "e.text.reading", buf);
      }
    else
      {
