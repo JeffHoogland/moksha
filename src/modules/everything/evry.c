@@ -2433,7 +2433,11 @@ _evry_matches_update(Evry_Selector *sel, int async)
 	     if (len_trigger > 1)
 	       {
 		  s->inp[0] = '>';
-		  s->inp[1] = '\0';
+
+		  if (s->inp + len_trigger)
+		    strcpy(s->inp + 1, s->inp + len_trigger);
+		  else
+		    s->inp[1] = 0;
 	       }
 	     s->input = s->inp + 1;
 	     _evry_update_text_label(s);
