@@ -35,7 +35,7 @@ e_mod_kbd_device_init(void)
    /* load the 'ignored' keyboard file */
    _e_mod_kbd_device_ignore_load();
 #ifdef HAVE_EEZE_UDEV
-   watch = eeze_udev_watch_add(EEZE_UDEV_TYPE_KEYBOARD, 
+   watch = eeze_udev_watch_add(EEZE_UDEV_TYPE_KEYBOARD, EEZE_UDEV_EVENT_NONE,
 			    _e_mod_kbd_device_udev_event, NULL);
 #else
    /* try to attach to the system dbus */

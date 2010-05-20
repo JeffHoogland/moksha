@@ -28,9 +28,9 @@ _battery_udev_start(void)
    eina_list_free(devices);
 
    if (!battery_config->batwatch)
-     battery_config->batwatch = eeze_udev_watch_add(EEZE_UDEV_TYPE_POWER_BAT, _battery_udev_event_battery, NULL);
+     battery_config->batwatch = eeze_udev_watch_add(EEZE_UDEV_TYPE_POWER_BAT, EEZE_UDEV_EVENT_NONE, _battery_udev_event_battery, NULL);
    if (!battery_config->batwatch)
-     battery_config->acwatch = eeze_udev_watch_add(EEZE_UDEV_TYPE_POWER_AC, _battery_udev_event_ac, NULL);
+     battery_config->acwatch = eeze_udev_watch_add(EEZE_UDEV_TYPE_POWER_AC, EEZE_UDEV_EVENT_NONE, _battery_udev_event_ac, NULL);
 
    init_time = ecore_time_get();
 }
