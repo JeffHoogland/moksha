@@ -1070,6 +1070,7 @@ _e_mod_comp_win_shadow_setup(E_Comp_Win *cw)
           }
         if (m->shadow_style)
           {
+             printf("  match %s\n", m->shadow_style);
              snprintf(buf, sizeof(buf), "e/comp/%s",
                       m->shadow_style);
              ok = e_theme_edje_object_set(cw->shobj, "base/theme/borders",

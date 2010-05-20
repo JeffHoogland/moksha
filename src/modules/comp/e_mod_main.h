@@ -29,10 +29,10 @@ struct _Config
    int              min_unmapped_time;
 
    struct {
-      Eina_List       *popups; // used for e popups
-      Eina_List       *borders; // used for borders
-      Eina_List       *overrides; // used for client menus, tooltips etc.
-      Eina_List       *menus; // used for e menus
+      Eina_List    *popups; // used for e popups
+      Eina_List    *borders; // used for borders
+      Eina_List    *overrides; // used for client menus, tooltips etc.
+      Eina_List    *menus; // used for e menus
    } match;
 };
 
@@ -60,7 +60,7 @@ struct _Match
    char        accepts_focus; // used for borders, 0 == don't use, 1 == accepts focus, -1 == does not accept focus
    char        vkbd; // used for borders, 0 == don't use, 1 == is vkbd, -1 == not vkbd
    char        quickpanel; // used for borders, 0 == don't use, 1 == is quickpanel, -1 == not quickpanel
-   char        argb; // used for borders, overrides, popups, 0 == don't use, 1 == is argb, -1 == not argb
+   char        argb; // used for borders, overrides, popups, menus, 0 == don't use, 1 == is argb, -1 == not argb
    char        fullscreen; // used for borders, 0 == don't use, 1 == is fullscreen, -1 == not fullscreen
    char        modal; // used for borders, 0 == don't use, 1 == is modal, -1 == not modal
    
