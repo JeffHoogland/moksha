@@ -422,7 +422,6 @@ _evry_icon_fdo_set(Evas_Object *obj, const char *icon)
 
    if ((!icon) || (!icon[0])) return 0;
    path = efreet_icon_path_find(e_config->icon_theme, icon, 128);
-   printf("path %s\n", path);
 
    if (!path) return 0;
    e_icon_scale_size_set(obj, 128);
