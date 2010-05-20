@@ -1879,6 +1879,7 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	      (!strcmp(ev->key, "Tab")))))
      {
 	_evry_input_complete(s);
+	goto end;
      }
    else if ((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
    	    (!strcmp(ev->key, "Delete") || !strcmp(ev->key, "Insert")))
@@ -1888,7 +1889,7 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
    	int promote = (!strcmp(ev->key, "Insert"));
 
 	_evry_cheat_history(s, promote, delete);
-
+	goto end;
      }
    else if (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)
      {
