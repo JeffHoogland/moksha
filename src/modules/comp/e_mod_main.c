@@ -237,6 +237,8 @@ e_modapi_shutdown(E_Module *m)
    E_CONFIG_DD_FREE(mod->conf_edd);
    free(mod);
    
+   if (mod == _comp_mod) _comp_mod = NULL;
+   
    return 1;
 }
 

@@ -2028,6 +2028,28 @@ _e_mod_comp_bd_property(void *data, int type, void *event)
 
 //////////////////////////////////////////////////////////////////////////
 
+static int
+_e_mod_comp_key_down(void *data, int type, void *event)
+{
+   Ecore_Event_Key *ev = event;
+   
+   if ((!strcmp(ev->keyname, "Home")) &&
+       (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT) &&
+       (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
+       (ev->modifiers & ECORE_EVENT_MODIFIER_ALT))
+     {
+        if (_comp_mod)
+          {
+             e_module_disable(_comp_mod->module);
+             e_config_save();
+             e_sys_action_do(E_SYS_RESTART, NULL);
+          }
+     }
+   return 1;
+}
+
+//////////////////////////////////////////////////////////////////////////
+
 static E_Comp *
 _e_mod_comp_add(E_Manager *man)
 {
@@ -2148,6 +2170,11 @@ _e_mod_comp_add(E_Manager *man)
         free(wins);
      }
    
+   ecore_x_window_key_grab(c->man->root,
+                           "Home", 
+                           ECORE_EVENT_MODIFIER_SHIFT |
+                           ECORE_EVENT_MODIFIER_CTRL |
+                           ECORE_EVENT_MODIFIER_ALT, 0);
    return c;
 }
 
@@ -2156,6 +2183,11 @@ _e_mod_comp_del(E_Comp *c)
 {
    E_Comp_Win *cw;
    
+   ecore_x_window_key_ungrab(c->man->root,
+                             "Home", 
+                             ECORE_EVENT_MODIFIER_SHIFT |
+                             ECORE_EVENT_MODIFIER_CTRL |
+                             ECORE_EVENT_MODIFIER_ALT, 0);
    if (c->grabbed)
      {
         c->grabbed = 0;
@@ -2212,6 +2244,8 @@ e_mod_comp_init(void)
    handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHAPE,     _e_mod_comp_shape,            NULL));
    handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_DAMAGE_NOTIFY,    _e_mod_comp_damage,           NULL));
    handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_DAMAGE,    _e_mod_comp_damage_win,       NULL));
+   
+   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_EVENT_KEY_DOWN,           _e_mod_comp_key_down,         NULL));
 
    handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_CONTAINER_RESIZE,       _e_mod_comp_randr,            NULL));
    
