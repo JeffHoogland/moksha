@@ -2040,6 +2040,9 @@ _e_mod_comp_key_down(void *data, int type, void *event)
      {
         if (_comp_mod)
           {
+             _e_mod_config_free(_comp_mod->module);
+             _e_mod_config_new(_comp_mod->module);
+             e_config_save();
              e_module_disable(_comp_mod->module);
              e_config_save();
              e_sys_action_do(E_SYS_RESTART, NULL);
