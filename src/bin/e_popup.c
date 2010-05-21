@@ -85,7 +85,7 @@ e_popup_show(E_Popup *pop)
    E_OBJECT_TYPE_CHECK(pop, E_POPUP_TYPE);
    if (pop->visible) return;
    pop->visible = 1;
-   if (pop->shaped)
+   if (pop->shaped && !e_config->use_composite)
      {
         ecore_evas_move(pop->ecore_evas,
                         pop->zone->container->manager->w,
@@ -324,8 +324,7 @@ _e_popup_idle_enterer(void *data)
 		   pop->zone->x + pop->x, 
 		   pop->zone->y + pop->y);
 
-   if (!(pop->shaped && e_config->use_composite))
-     e_container_shape_show(pop->shape);
+   e_container_shape_show(pop->shape);
    
    pop->idle_enterer = NULL;
    return 0;
