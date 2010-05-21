@@ -17,7 +17,7 @@ temperature_udev_update(void *data)
    char *syspath;
    const char *test;
    char buf[256];
-   int cpus = 0;
+   double cpus = 0;
 
    inst = data;
    temp = -999;
@@ -41,7 +41,10 @@ temperature_udev_update(void *data)
         EINA_LIST_FOREACH(inst->tempdevs, l, syspath)
           {/*FIXME: probably should make a function to count the cpus and loop this */
              if ((test = eeze_udev_syspath_get_sysattr(syspath, "temp1_input")))
-               temp += (strtod(test, NULL) / 1000); /* udev reports temp in (celcius * 1000) for some reason */
+               {
+                  temp += (strtod(test, NULL) / 1000); /* udev reports temp in (celcius * 1000) for some reason */
+                  cpus++;
+               }
              if ((test = eeze_udev_syspath_get_sysattr(syspath, "temp2_input")))
                {
                   temp += (strtod(test, NULL) / 1000); /* udev reports temp in (celcius * 1000) for some reason */
@@ -53,7 +56,7 @@ temperature_udev_update(void *data)
                   cpus++;
                }
           }
-        temp /= (double)(eina_list_count(inst->tempdevs) + cpus);
+        temp /= cpus;
      }
    if (temp != -999)
      {
