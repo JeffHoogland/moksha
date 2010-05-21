@@ -94,6 +94,12 @@ e_modapi_init(E_Module *m)
         _e_mod_config_new(m);
      }
    
+   if (!e_config->use_composite)
+     {
+        e_config->use_composite = 1;
+        e_config_save_queue();
+     }
+   
    _comp_mod = mod;
 
    if (!e_mod_comp_init())
