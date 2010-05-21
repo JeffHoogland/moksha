@@ -69,7 +69,7 @@ static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    e_config->use_composite = cfdata->use_composite;
-   e_config->evas_engine_default = cfdata->evas_engine_default;
+   e_config->evas_engine_default = E_EVAS_ENGINE_SOFTWARE_X11;
    e_config_save_queue();
    return 1;
 }
@@ -98,6 +98,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_on_change_hook_set(ob, _cb_composite_change, cfdata);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 0, 0.5);
+/*        
 
    of = e_widget_framelist_add(evas, _("Default Engine"), 0);
    rg = e_widget_radio_group_new(&(cfdata->evas_engine_default));
@@ -116,6 +117,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
         e_widget_framelist_object_append(of, ob);
      }
    e_widget_list_object_append(o, of, 1, 0, 0.5);
+ */
 
    e_dialog_resizable_set(cfd->dia, 0);
    return o;
