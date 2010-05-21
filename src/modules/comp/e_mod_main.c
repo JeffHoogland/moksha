@@ -223,7 +223,7 @@ e_modapi_shutdown(E_Module *m)
         e_object_del(E_OBJECT(mod->config_dialog));
         mod->config_dialog = NULL;
      }
-   _e_mod_config_free(mod);
+   _e_mod_config_free(m);
    
    E_CONFIG_DD_FREE(mod->conf_match_edd);
    E_CONFIG_DD_FREE(mod->conf_edd);
