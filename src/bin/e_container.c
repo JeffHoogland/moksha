@@ -91,10 +91,30 @@ e_container_new(E_Manager *man)
    con->bg_evas = ecore_evas_get(con->bg_ecore_evas);
    ecore_evas_name_class_set(con->bg_ecore_evas, "E", "Background_Window");
    ecore_evas_title_set(con->bg_ecore_evas, "Enlightenment Background");
-   if (getenv("REDRAW_DEBUG"))
-     ecore_evas_avoid_damage_set(con->bg_ecore_evas, !atoi(getenv("REDRAW_DEBUG")));
-   else
-     ecore_evas_avoid_damage_set(con->bg_ecore_evas, ECORE_EVAS_AVOID_DAMAGE_BUILT_IN);
+   if (!getenv("EVAS_RENDER_MODE"))
+     {
+        int have_comp = 0;
+        Eina_List *l;
+        E_Config_Module *em;
+        
+        // FIXME: major hack. checking in advance for comp. eventully comp
+        // will be rolled into e17 core and this won't be needed
+        EINA_LIST_FOREACH(e_config->modules, l, em)
+          {
+             if (!strcmp(em->name, "comp"))
+               {
+                  have_comp = 1;
+                  break;
+               }
+          }
+        if (!have_comp)
+          {
+             if (getenv("REDRAW_DEBUG"))
+               ecore_evas_avoid_damage_set(con->bg_ecore_evas, !atoi(getenv("REDRAW_DEBUG")));
+             else
+               ecore_evas_avoid_damage_set(con->bg_ecore_evas, ECORE_EVAS_AVOID_DAMAGE_BUILT_IN);
+          }
+     }
    ecore_x_window_lower(con->bg_win);
 
    o = evas_object_rectangle_add(con->bg_evas);
