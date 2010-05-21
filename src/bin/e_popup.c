@@ -98,7 +98,8 @@ e_popup_show(E_Popup *pop)
    else
      {
         ecore_evas_show(pop->ecore_evas);
-        e_container_shape_show(pop->shape);
+	if (!(pop->shaped && e_config->use_composite))
+	  e_container_shape_show(pop->shape);
      }
 }
 
