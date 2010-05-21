@@ -528,6 +528,7 @@ AC_E_OPTIONAL_MODULE([conf_shelves], true)
 AC_E_OPTIONAL_MODULE([conf_keybindings], true)
 AC_E_OPTIONAL_MODULE([conf_mousebindings], true)
 AC_E_OPTIONAL_MODULE([conf_edgebindings], true)
+AC_E_OPTIONAL_MODULE([conf_acpibindings], true)
 AC_E_OPTIONAL_MODULE([conf_mouse], true)
 AC_E_OPTIONAL_MODULE([conf_window_display], true)
 AC_E_OPTIONAL_MODULE([conf_window_focus], true)
@@ -653,6 +654,8 @@ src/modules/conf_mousebindings/Makefile
 src/modules/conf_mousebindings/module.desktop
 src/modules/conf_edgebindings/Makefile
 src/modules/conf_edgebindings/module.desktop
+src/modules/conf_acpibindings/Makefile
+src/modules/conf_acpibindings/module.desktop
 src/modules/conf_mouse/Makefile
 src/modules/conf_mouse/module.desktop
 src/modules/conf_window_display/Makefile
