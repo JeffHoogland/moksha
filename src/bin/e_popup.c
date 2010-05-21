@@ -18,8 +18,9 @@ static Eina_Hash *_e_popup_hash = NULL;
 EAPI int
 e_popup_init(void)
 {
-   _e_popup_window_shape_handler = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHAPE,
-							   _e_popup_cb_window_shape, NULL);
+   _e_popup_window_shape_handler = 
+     ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHAPE,
+			     _e_popup_cb_window_shape, NULL);
    if (!_e_popup_hash) _e_popup_hash = eina_hash_string_superfast_new(NULL);
    return 1;
 }
@@ -40,7 +41,7 @@ EAPI E_Popup *
 e_popup_new(E_Zone *zone, int x, int y, int w, int h)
 {
    E_Popup *pop;
-   
+
    pop = E_OBJECT_ALLOC(E_Popup, E_POPUP_TYPE, _e_popup_free);
    if (!pop) return NULL;
    pop->zone = zone;
@@ -54,7 +55,7 @@ e_popup_new(E_Zone *zone, int x, int y, int w, int h)
 				  &(pop->evas_win));
    /* avoid excess exposes when shaped - set damage avoid to 1 */
 //   ecore_evas_avoid_damage_set(pop->ecore_evas, 1);
-   
+
    e_canvas_add(pop->ecore_evas);
    pop->shape = e_container_shape_add(pop->zone->container);
    e_container_shape_move(pop->shape, pop->zone->x + pop->x, pop->zone->y + pop->y);
@@ -85,7 +86,7 @@ e_popup_show(E_Popup *pop)
    E_OBJECT_TYPE_CHECK(pop, E_POPUP_TYPE);
    if (pop->visible) return;
    pop->visible = 1;
-   if (pop->shaped && !e_config->use_composite)
+   if ((pop->shaped) && (!e_config->use_composite))
      {
         ecore_evas_move(pop->ecore_evas,
                         pop->zone->container->manager->w,
@@ -173,7 +174,7 @@ EAPI void
 e_popup_edje_bg_object_set(E_Popup *pop, Evas_Object *o)
 {
    const char *shape_option;
-   
+
    E_OBJECT_CHECK(pop);
    E_OBJECT_TYPE_CHECK(pop, E_POPUP_TYPE);
    shape_option = edje_object_data_get(o, "shaped");
@@ -210,24 +211,24 @@ e_popup_idler_before(void)
 {
    Eina_List *l;
    E_Popup *pop;
-   
+
    EINA_LIST_FOREACH(_e_popup_list, l, pop)
      {
 	if (pop->need_shape_export)
 	  {
              Ecore_X_Rectangle *rects, *orects;
 	     int num;
-	     
+
 	     rects = ecore_x_window_shape_rectangles_get(pop->evas_win, &num);
 	     if (rects)
 	       {
 		  int changed;
-		  
+
 		  changed = 1;
 		  if ((num == pop->shape_rects_num) && (pop->shape_rects))
 		    {
 		       int i;
-		       
+
 		       orects = pop->shape_rects;
 		       changed = 0;
 		       for (i = 0; i < num; i++)
@@ -286,7 +287,7 @@ EAPI E_Popup *
 e_popup_find_by_window(Ecore_X_Window win)
 {
    E_Popup *pop;
-   
+
    pop = eina_hash_find(_e_popup_hash, e_util_winid_str_get(win));
    if ((pop) && (pop->evas_win != win))
      return NULL;
@@ -318,14 +319,12 @@ static int
 _e_popup_idle_enterer(void *data)
 {
    E_Popup *pop;
-   
-   pop = (E_Popup *)data;
+
+   if (!(pop = data)) return 0;
    ecore_evas_move(pop->ecore_evas,
 		   pop->zone->x + pop->x, 
 		   pop->zone->y + pop->y);
-
    e_container_shape_show(pop->shape);
-   
    pop->idle_enterer = NULL;
    return 0;
 }
@@ -335,7 +334,7 @@ _e_popup_cb_window_shape(void *data, int ev_type, void *ev)
 {
    E_Popup *pop;
    Ecore_X_Event_Window_Shape *e;
-   
+
    e = ev;
    pop = e_popup_find_by_window(e->win);
    if (pop) pop->need_shape_export = 1;
