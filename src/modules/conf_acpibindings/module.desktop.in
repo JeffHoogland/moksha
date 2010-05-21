@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Link
+Name=Settings - ACPI Bindings
+Icon=preferences-desktop-keyboard-shortcuts
+Comment=Configure your ACPI bindings here.
+X-Enlightenment-ModuleType=config

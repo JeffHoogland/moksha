@@ -162,6 +162,10 @@ if USE_MODULE_CONF_EDGEBINDINGS
 SUBDIRS += conf_edgebindings
 endif
 
+if USE_MODULE_CONF_ACPIBINDINGS
+SUBDIRS += conf_acpibindings
+endif
+
 if USE_MODULE_CONF_MOUSE
 SUBDIRS += conf_mouse
 endif
