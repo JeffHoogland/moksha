@@ -420,6 +420,8 @@ _config_free(void)
 
 
 /* action callback */
+static Ecore_Idle_Enterer *idler = NULL;
+static const char *_params = NULL;
 
 static int
 _e_mod_run_defer_cb(void *data)
@@ -427,7 +429,7 @@ _e_mod_run_defer_cb(void *data)
    E_Zone *zone;
 
    zone = data;
-   if (zone) evry_show(zone, NULL);
+   if (zone) evry_show(zone, _params);
    return 0;
 }
 
@@ -451,16 +453,12 @@ _e_mod_action_cb(E_Object *obj, const char *params)
 
    if (!zone) return;
 
+   IF_RELEASE(_params);
    if (params && params[0])
-     evry_show(zone, params);
-   else
-     evry_show(zone, NULL);
+     _params = eina_stringshare_add(params);
 
-   /* FIXME popup flickers sometimes when deferes*/
-   /* if (params && params[0])
-    *   evry_show(zone, params);
-    * else
-    *   ecore_idle_enterer_add(_e_mod_run_defer_cb, zone); */
+   if (idler) ecore_idle_enterer_del(idler);
+   ecore_idle_enterer_add(_e_mod_run_defer_cb, zone);
 }
 
 /* menu item callback(s) */
