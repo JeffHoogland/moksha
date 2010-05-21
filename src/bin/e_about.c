@@ -2,6 +2,7 @@
  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
 #include "e.h"
+#include "svnrev.h"
 
 /* local subsystem functions */
 
@@ -19,7 +20,7 @@ e_about_new(E_Container *con)
    e_obj_dialog_obj_theme_set(od, "base/theme/about", "e/widgets/about/main");
    e_obj_dialog_obj_part_text_set(od, "e.text.label", _("Close"));
    e_obj_dialog_obj_part_text_set(od, "e.text.title", _("Enlightenment"));
-   e_obj_dialog_obj_part_text_set(od, "e.text.version", VERSION);
+   e_obj_dialog_obj_part_text_set(od, "e.text.version", VERSION"/"SVNREV);
    e_obj_dialog_obj_part_text_set
      (od, "e.textblock.about",
       _(

@@ -560,7 +560,13 @@ AC_E_OPTIONAL_MODULE([everything-windows], true)
 AC_E_OPTIONAL_MODULE([systray], true)
 AC_E_OPTIONAL_MODULE([comp], true)
 
+SVNVERSION=`which svnversion`
+SVNREV="UNKNOWN"
+if test -n "$SVNVERSION"; then SVNREV=`$SVNVERSION -n .`; fi
+AC_SUBST(SVNREV)
+
 AC_OUTPUT([
+svnrev.h
 Makefile
 enlightenment.spec
 enlightenment.pc
