@@ -34,6 +34,8 @@ e_modapi_init(E_Module *m)
    char buf[4096];
    
    mod = calloc(1, sizeof(Mod));
+   m->data = mod;
+   
    mod->module = m;
    snprintf(buf, sizeof(buf), "%s/e-module-comp.edj", e_module_dir_get(m));
    e_configure_registry_category_add("appearance", 10, _("Look"), NULL, "preferences-appearance");
@@ -89,10 +91,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_LIST(D, T, match.menus,     mod->conf_match_edd);
    
    mod->conf = e_config_domain_load("module.comp", mod->conf_edd);
-   if (!mod->conf)
-     {
-        _e_mod_config_new(m);
-     }
+   if (!mod->conf) _e_mod_config_new(m);
    
    if (!e_config->use_composite)
      {
