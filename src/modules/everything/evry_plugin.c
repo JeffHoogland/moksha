@@ -47,7 +47,7 @@ _evry_plugin_free(Evry_Item *it)
      E_FREE(p);
 }
 
-EAPI Evry_Plugin *
+Evry_Plugin *
 evry_plugin_new(Evry_Plugin *base, const char *name, const char *label,
 		const char *icon, Evry_Type item_type,
 		Evry_Plugin *(*begin) (Evry_Plugin *p, const Evry_Item *item),
@@ -85,7 +85,7 @@ evry_plugin_new(Evry_Plugin *base, const char *name, const char *label,
    return p;
 }
 
-EAPI void
+void
 evry_plugin_free(Evry_Plugin *p)
 {
    evry_item_free(EVRY_ITEM(p));
@@ -119,8 +119,7 @@ _evry_plugin_action_browse(Evry_Action *act)
    return 0;
 }
 
-/* TODO make int return */
-EAPI int
+int
 evry_plugin_register(Evry_Plugin *p, int type, int priority)
 {
    Eina_List *l;
@@ -196,7 +195,7 @@ evry_plugin_register(Evry_Plugin *p, int type, int priority)
    return new_conf;
 }
 
-EAPI void
+void
 evry_plugin_unregister(Evry_Plugin *p)
 {
    DBG("%s", p->name);

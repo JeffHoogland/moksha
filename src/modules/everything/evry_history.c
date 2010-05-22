@@ -187,7 +187,7 @@ evry_history_free(void)
    E_CONFIG_DD_FREE(hist_edd);
 }
 
-EAPI void
+void
 evry_history_load(void)
 {
    if (evry_hist) return;
@@ -214,7 +214,7 @@ evry_history_load(void)
 }
 
 
-EAPI void
+void
 evry_history_unload(void)
 {
    if (!evry_hist) return;
@@ -228,7 +228,7 @@ evry_history_unload(void)
    evry_hist = NULL;
 }
 
-EAPI History_Types *
+History_Types *
 evry_history_types_get(Evry_Type _type)
 {
    History_Types *ht;
@@ -254,7 +254,7 @@ evry_history_types_get(Evry_Type _type)
    return ht;
 }
 
-EAPI History_Item *
+History_Item *
 evry_history_item_add(Evry_Item *it, const char *ctxt, const char *input)
 {
    History_Entry *he;
@@ -350,7 +350,7 @@ evry_history_item_add(Evry_Item *it, const char *ctxt, const char *input)
    return hi;
 }
 
-EAPI int
+int
 evry_history_item_usage_set(Evry_Item *it, const char *input, const char *ctxt)
 {
    History_Entry *he;

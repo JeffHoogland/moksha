@@ -36,10 +36,9 @@ static E_Config_DD *plugin_setting_edd = NULL;
 
 static Ecore_Timer *cleanup_timer;
 
-EAPI int _e_module_evry_log_dom = -1;
+int _e_module_evry_log_dom = -1;
 
-
-EAPI Evry_Config *evry_conf = NULL;
+Evry_Config *evry_conf = NULL;
 
 EAPI int EVRY_EVENT_ITEM_SELECT;
 EAPI int EVRY_EVENT_ITEM_CHANGED;
@@ -63,41 +62,6 @@ EAPI E_Module_Api e_modapi =
   };
 
 static Eina_List *_evry_types = NULL;
-
-
-EAPI Evry_Type
-evry_type_register(const char *type)
-{
-   const char *t = eina_stringshare_add(type);
-   Evry_Type ret = 0;
-   const char *i;
-   Eina_List *l;
-
-   EINA_LIST_FOREACH(_evry_types, l, i)
-     {
-	if (i == t) break;
-	ret++;
-     }
-
-   if(!l)
-     {
-	_evry_types = eina_list_append(_evry_types, t);
-	return ret;
-     }
-   eina_stringshare_del(t);
-
-   return ret;
-}
-
-EAPI const char *
-evry_type_get(Evry_Type type)
-{
-   const char *ret = eina_list_nth(_evry_types, type);
-   if (!ret)
-     return eina_stringshare_add("");
-
-   return ret;
-}
 
 EAPI void *
 e_modapi_init(E_Module *m)
@@ -282,6 +246,82 @@ e_modapi_save(E_Module *m __UNUSED__)
    e_config_domain_save("module.everything", conf_edd, evry_conf);
    return 1;
 }
+
+/***************************************************************************/
+
+Evry_Type
+evry_type_register(const char *type)
+{
+   const char *t = eina_stringshare_add(type);
+   Evry_Type ret = 0;
+   const char *i;
+   Eina_List *l;
+
+   EINA_LIST_FOREACH(_evry_types, l, i)
+     {
+	if (i == t) break;
+	ret++;
+     }
+
+   if(!l)
+     {
+	_evry_types = eina_list_append(_evry_types, t);
+	return ret;
+     }
+   eina_stringshare_del(t);
+
+   return ret;
+}
+
+const char *
+evry_type_get(Evry_Type type)
+{
+   const char *ret = eina_list_nth(_evry_types, type);
+   if (!ret)
+     return eina_stringshare_add("");
+
+   return ret;
+}
+
+int evry_api_version_check(int version)
+{
+   if (EVRY_API_VERSION == version)
+     return 1;
+
+   ERR("module API is %d, required is %d", version, EVRY_API_VERSION);
+
+   return 0;
+}
+
+
+static int
+_evry_cb_view_sort(const void *data1, const void *data2)
+{
+   const Evry_View *v1 = data1;
+   const Evry_View *v2 = data2;
+   return v1->priority - v2->priority;
+}
+
+
+void
+evry_view_register(Evry_View *view, int priority)
+{
+   view->priority = priority;
+
+   evry_conf->views = eina_list_append(evry_conf->views, view);
+
+   evry_conf->views = eina_list_sort(evry_conf->views,
+				     eina_list_count(evry_conf->views),
+				     _evry_cb_view_sort);
+}
+
+void
+evry_view_unregister(Evry_View *view)
+{
+   evry_conf->views = eina_list_remove(evry_conf->views, view);
+}
+
+/***************************************************************************/
 
 static int
 _cleanup_history(void *data)
@@ -478,42 +518,4 @@ _e_mod_menu_add(void *data __UNUSED__, E_Menu *m)
    e_menu_item_label_set(mi, _("Run Everything"));
    e_util_menu_item_theme_icon_set(mi, "system-run");
    e_menu_item_callback_set(mi, _e_mod_run_cb, NULL);
-}
-
-EAPI int evry_api_version_check(int version)
-{
-   if (EVRY_API_VERSION == version)
-     return 1;
-
-   ERR("module API is %d, required is %d", version, EVRY_API_VERSION);
-
-   return 0;
-}
-
-
-static int
-_evry_cb_view_sort(const void *data1, const void *data2)
-{
-   const Evry_View *v1 = data1;
-   const Evry_View *v2 = data2;
-   return v1->priority - v2->priority;
-}
-
-
-EAPI void
-evry_view_register(Evry_View *view, int priority)
-{
-   view->priority = priority;
-
-   evry_conf->views = eina_list_append(evry_conf->views, view);
-
-   evry_conf->views = eina_list_sort(evry_conf->views,
-				     eina_list_count(evry_conf->views),
-				     _evry_cb_view_sort);
-}
-
-EAPI void
-evry_view_unregister(Evry_View *view)
-{
-   evry_conf->views = eina_list_remove(evry_conf->views, view);
 }

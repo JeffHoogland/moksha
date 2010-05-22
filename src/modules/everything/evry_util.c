@@ -9,7 +9,7 @@ static int home_dir_len;
 static char dir_buf[1024];
 static char thumb_buf[4096];
 
-EAPI void
+void
 evry_util_file_detail_set(Evry_Item_File *file)
 {
    char *dir = NULL;
@@ -49,7 +49,7 @@ evry_util_file_detail_set(Evry_Item_File *file)
    E_FREE(dir);
 }
 
-EAPI int
+int
 evry_fuzzy_match(const char *str, const char *match)
 {
    const char *p, *m, *next;
@@ -245,13 +245,13 @@ _evry_fuzzy_match_sort_cb(const void *data1, const void *data2)
    return 0;
 }
 
-EAPI Eina_List *
+Eina_List *
 evry_fuzzy_match_sort(Eina_List *items)
 {
    return eina_list_sort(items, -1, _evry_fuzzy_match_sort_cb);
 }
 
-EAPI int
+int
 evry_items_sort_func(const void *data1, const void *data2)
 {
    const Evry_Item *it1 = data1;
@@ -349,7 +349,7 @@ evry_items_sort_func(const void *data1, const void *data2)
    return strcasecmp(it1->label, it2->label);
 }
 
-EAPI int
+int
 evry_util_plugin_items_add(Evry_Plugin *p, Eina_List *items, const char *input,
 		      int match_detail, int set_usage)
 {
@@ -430,7 +430,7 @@ _evry_icon_fdo_set(Evas_Object *obj, const char *icon)
    return 1;
 }
 
-EAPI Evas_Object *
+Evas_Object *
 evry_icon_theme_get(const char *icon, Evas *e)
 {
    Evas_Object *o = e_icon_add(e);
@@ -480,7 +480,7 @@ _evry_icon_mime_theme_get(const char *mime, Evas *e)
    return NULL;
 }
 
-EAPI Evas_Object *
+Evas_Object *
 evry_icon_mime_get(const char *mime, Evas *e)
 {
    Evas_Object *o = NULL;
@@ -577,7 +577,7 @@ evry_util_icon_get(Evry_Item *it, Evas *e)
 }
 
 
-EAPI int
+int
 evry_util_exec_app(const Evry_Item *it_app, const Evry_Item *it_file)
 {
    E_Zone *zone;
@@ -685,7 +685,7 @@ evry_util_exec_app(const Evry_Item *it_app, const Evry_Item *it_file)
  */
 #define ISXDIGIT(x) (isxdigit((int) ((unsigned char)x)))
 
-EAPI char *
+char *
 evry_util_url_unescape(const char *string, int length)
 {
    int alloc = (length?length:(int)strlen(string))+1;
@@ -830,7 +830,7 @@ evry_file_path_get(Evry_Item_File *file)
    return file->path;
 }
 
-EAPI const char*
+const char*
 evry_file_url_get(Evry_Item_File *file)
 {
    char dest[PATH_MAX * 3 + 7];
@@ -873,7 +873,7 @@ _cb_free_item_changed(void *data, void *event)
    E_FREE(ev);
 }
 
-EAPI void
+void
 evry_item_changed(Evry_Item *it, int icon, int selected)
 {
    Evry_Event_Item_Changed *ev;
@@ -888,7 +888,7 @@ evry_item_changed(Evry_Item *it, int icon, int selected)
 static char thumb_buf[4096];
 static const char hex[] = "0123456789abcdef";
 
-EAPI char *
+char *
 evry_util_md5_sum(const char *str)
 {
    MD5_CTX ctx;

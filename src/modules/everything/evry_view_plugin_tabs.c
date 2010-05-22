@@ -384,7 +384,7 @@ _tabs_key_down(Tab_View *v, const Ecore_Event_Key *ev)
 }
 
 
-EAPI Tab_View *
+Tab_View *
 evry_tab_view_new(Evry_View *view, const Evry_State *s, Evas *e)
 {
    Tab_View *v;
@@ -409,7 +409,7 @@ evry_tab_view_new(Evry_View *view, const Evry_State *s, Evas *e)
    return v;
 }
 
-EAPI void
+void
 evry_tab_view_free(Tab_View *v)
 {
    Tab *tab;
