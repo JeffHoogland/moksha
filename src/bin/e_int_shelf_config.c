@@ -411,7 +411,7 @@ _fill_styles(E_Config_Dialog_Data *cfdata, Evas_Object *obj)
    Evas *evas;
    Eina_List *l, *styles;
    char *style;
-   int n, mw;
+   int mw, n = 0;
 
    evas = evas_object_evas_get(obj);
    evas_event_freeze(evas);
@@ -432,8 +432,8 @@ _fill_styles(E_Config_Dialog_Data *cfdata, Evas_Object *obj)
         e_theme_edje_object_set(ow, "base/theme/shelf", buff);
         e_livethumb_thumb_set(thumb, ow);
         e_widget_ilist_append(obj, thumb, style, NULL, NULL, style);
-        if (!strcmp(cfdata->es->style, style)) 
-          e_widget_ilist_selected_set(obj, n);
+        if (!strcmp(cfdata->style, style))
+	  e_widget_ilist_selected_set(obj, n);
         n++;
      }
 
