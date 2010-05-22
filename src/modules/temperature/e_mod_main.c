@@ -62,7 +62,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
         inst->sensor_type = SENSOR_TYPE_NONE;
         inst->sensor_name = NULL;
         inst->units = CELCIUS;
-#ifdef HAVE_EEZE_UDEV
+#ifdef HAVE_EEZE
         inst->backend = UDEV;
 #endif
         if (!temperature_config->faces)
@@ -74,7 +74,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    E_CONFIG_LIMIT(inst->low, 0, 100);
    E_CONFIG_LIMIT(inst->high, 0, 220);
    E_CONFIG_LIMIT(inst->units, CELCIUS, FAHRENHEIT);
-#ifdef HAVE_EEZE_UDEV
+#ifdef HAVE_EEZE
    E_CONFIG_LIMIT(inst->backend, TEMPGET, UDEV);
 #endif
 
@@ -89,7 +89,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    inst->o_temp = o;
    inst->module = temperature_config->module;
    inst->have_temp = -1;
-#ifdef HAVE_EEZE_UDEV
+#ifdef HAVE_EEZE
    if (inst->backend == TEMPGET)
      {
 #endif
@@ -99,11 +99,11 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
         inst->tempget_del_handler = 
           ecore_event_handler_add(ECORE_EXE_EVENT_DEL,
              _temperature_cb_exe_del, inst);
-#ifdef HAVE_EEZE_UDEV
+#ifdef HAVE_EEZE
      }
    else
      {
-        eeze_udev_init();
+        eeze_init();
         inst->temp_poller = ecore_poller_add(ECORE_POLLER_CORE, inst->poll_interval, temperature_udev_update_poll, inst);
         temperature_udev_update(inst);
      }
@@ -141,7 +141,7 @@ _gc_shutdown(E_Gadcon_Client *gcc)
 #ifdef HAVE_EEEZ_UDEV
    if (inst->temp_poller)
      ecore_poller_del(inst->temp_poller);
-   eeze_udev_shutdown();
+   eeze_shutdown();
 #endif
    if (inst->o_temp) evas_object_del(inst->o_temp);
    inst->o_temp = NULL;
@@ -193,7 +193,7 @@ _gc_id_new(E_Gadcon_Client_Class *client_class)
    inst->sensor_type = SENSOR_TYPE_NONE;
    inst->sensor_name = NULL;
    inst->units = CELCIUS;
-#ifdef HAVE_EEZE_UDEV
+#ifdef HAVE_EEZE
    inst->backend = TEMPGET;
 #endif
    if (!temperature_config->faces)
@@ -278,7 +278,7 @@ _temperature_face_shutdown(const Eina_Hash *hash __UNUSED__, const void *key __U
    inst = hdata;
    if (inst->sensor_name) eina_stringshare_del(inst->sensor_name);
    if (inst->id) eina_stringshare_del(inst->id);
-#ifdef HAVE_EEZE_UDEV
+#ifdef HAVE_EEZE
    if (inst->tempdevs)
      {
         const char *s;
@@ -316,7 +316,7 @@ temperature_face_update_config(Config_Face *inst)
         inst->tempget_exe = NULL;
      }
 
-#ifdef HAVE_EEZE_UDEV
+#ifdef HAVE_EEZE
    if (inst->backend == TEMPGET)
      {
         if (inst->temp_poller)
@@ -336,7 +336,7 @@ temperature_face_update_config(Config_Face *inst)
 			     ECORE_EXE_PIPE_READ | 
 			     ECORE_EXE_PIPE_READ_LINE_BUFFERED |
 			     ECORE_EXE_NOT_LEADER, inst);
-#ifdef HAVE_EEZE_UDEV
+#ifdef HAVE_EEZE
      }
    else
      {
@@ -421,7 +421,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, low, INT);
    E_CONFIG_VAL(D, T, high, INT);
    E_CONFIG_VAL(D, T, sensor_type, INT);
-#ifdef HAVE_EEZE_UDEV
+#ifdef HAVE_EEZE
    E_CONFIG_VAL(D, T, backend, INT);
 #endif
    E_CONFIG_VAL(D, T, sensor_name, STR);

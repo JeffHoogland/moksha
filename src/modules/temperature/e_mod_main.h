@@ -21,7 +21,7 @@ struct _Config_Face
    /* saved * loaded config values */
    int poll_interval;
    int low, high;
-#ifdef HAVE_EEZE_UDEV
+#ifdef HAVE_EEZE
    Eina_List *tempdevs;
    int backend;
    Ecore_Poller    *temp_poller;
@@ -55,7 +55,7 @@ struct _Config
    E_Module *module;
 };
 
-#ifdef HAVE_EEZE_UDEV
+#ifdef HAVE_EEZE
 typedef enum _Backend
 {
    TEMPGET,

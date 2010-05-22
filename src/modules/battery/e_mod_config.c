@@ -5,7 +5,7 @@ struct _E_Config_Dialog_Data
 {
    int show_alert;
    int poll_interval;
-#ifdef HAVE_EEZE_UDEV
+#ifdef HAVE_EEZE
    int fuzzy;
 #endif
    int alert_time;
@@ -20,7 +20,7 @@ struct _E_Config_Dialog_Data
         Evas_Object *show_alert_percent;
         Evas_Object *dismiss_alert_label;
         Evas_Object *alert_timeout;
-#ifdef HAVE_EEZE_UDEV
+#ifdef HAVE_EEZE
         Evas_Object *fuzzy;
 #endif
      } ui;
@@ -72,7 +72,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->poll_interval = battery_config->poll_interval;
    cfdata->alert_timeout = battery_config->alert_timeout;
    cfdata->force_mode = battery_config->force_mode;
-#ifdef HAVE_EEZE_UDEV
+#ifdef HAVE_EEZE
    cfdata->fuzzy = battery_config->fuzzy;
 #endif
 
@@ -190,7 +190,7 @@ _cb_radio_changed(void *data, Evas_Object *obj __UNUSED__)
 
    if (!(cfdata = data)) return;
    fuzzy = (cfdata->force_mode == SUBSYSTEM);
-#ifdef HAVE_EEZE_UDEV
+#ifdef HAVE_EEZE
    e_widget_disabled_set(cfdata->ui.fuzzy, !fuzzy);
 #endif
 }
@@ -254,7 +254,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
    ob = e_widget_radio_add(evas, _("Internal"), NOSUBSYSTEM, rg);
    e_widget_on_change_hook_set(ob, _cb_radio_changed, cfdata);
    e_widget_list_object_append(o, ob, 1, 0, 0.0);
-#ifdef HAVE_EEZE_UDEV
+#ifdef HAVE_EEZE
    ob = e_widget_radio_add(evas, _("udev"), SUBSYSTEM, rg);
    e_widget_on_change_hook_set(ob, _cb_radio_changed, cfdata);
    e_widget_list_object_append(o, ob, 1, 0, 0.0);
@@ -280,7 +280,7 @@ _advanced_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
    if (!battery_config) return 0;
 
    battery_config->poll_interval = cfdata->poll_interval;
-#ifdef HAVE_EEZE_UDEV
+#ifdef HAVE_EEZE
    battery_config->fuzzy = cfdata->fuzzy;
 #endif
 
@@ -319,7 +319,7 @@ _advanced_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *c
 	   (cfdata->alert_percent != battery_config->alert_p) ||
 	   (cfdata->poll_interval != battery_config->poll_interval) ||
 	   (cfdata->alert_timeout != battery_config->alert_timeout) ||
-#ifdef HAVE_EEZE_UDEV
+#ifdef HAVE_EEZE
            (cfdata->fuzzy != battery_config->fuzzy) ||
 #endif           
 	   (cfdata->force_mode != battery_config->force_mode) ||

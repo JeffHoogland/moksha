@@ -7,7 +7,7 @@ static void _e_mod_kbd_device_ignore_load_file(const char *file);
 static void _e_mod_kbd_device_kbd_add(const char *udi);
 static void _e_mod_kbd_device_kbd_del(const char *udi);
 static void _e_mod_kbd_device_kbd_eval(void);
-#ifdef HAVE_EEZE_UDEV
+#ifdef HAVE_EEZE
 static void _e_mod_kbd_device_udev_event(const char *device, const char *event, void *data __UNUSED__, Eeze_Udev_Watch *watch __UNUSED__);
 #else
 static void _e_mod_kbd_device_cb_input_kbd(void *data __UNUSED__, void *reply, DBusError *err);
@@ -19,7 +19,7 @@ static void _e_mod_kbd_device_dbus_chg(void *data __UNUSED__, DBusMessage *msg);
 
 /* local variables */
 static int have_real_kbd = 0;
-#ifdef HAVE_EEZE_UDEV
+#ifdef HAVE_EEZE
 static Eeze_Udev_Watch *watch;
 #else
 static E_DBus_Connection *_dbus_conn = NULL;
@@ -34,10 +34,13 @@ e_mod_kbd_device_init(void)
 {
    /* load the 'ignored' keyboard file */
    _e_mod_kbd_device_ignore_load();
-#ifdef HAVE_EEZE_UDEV
+#ifdef HAVE_EEZE
+   eeze_init();
    watch = eeze_udev_watch_add(EEZE_UDEV_TYPE_KEYBOARD, EEZE_UDEV_EVENT_NONE,
 			    _e_mod_kbd_device_udev_event, NULL);
 #else
+   e_dbus_init();
+   e_hal_init();
    /* try to attach to the system dbus */
    if (!(_dbus_conn = e_dbus_bus_get(DBUS_BUS_SYSTEM))) return;
 
@@ -69,13 +72,16 @@ e_mod_kbd_device_shutdown(void)
 {
    char *str;
 
-#ifdef HAVE_EEZE_UDEV
+#ifdef HAVE_EEZE
    if (watch) eeze_udev_watch_del(watch);
+   eeze_shutdown();
 #else
    /* remove the dbus signal handlers if we can */
    if (_dev_add) e_dbus_signal_handler_del(_dbus_conn, _dev_add);
    if (_dev_del) e_dbus_signal_handler_del(_dbus_conn, _dev_del);
    if (_dev_chg) e_dbus_signal_handler_del(_dbus_conn, _dev_chg);
+   e_hal_shutdown();
+   e_dbus_shutdown();
 #endif
    /* free the list of ignored keyboards */
    EINA_LIST_FREE(_ignore_kbds, str)
@@ -136,7 +142,7 @@ _e_mod_kbd_device_ignore_load_file(const char *file)
    fclose(f);
 }
 
-#ifdef HAVE_EEZE_UDEV
+#ifdef HAVE_EEZE
 static void 
 _e_mod_kbd_device_udev_event(const char *device, const char *event, void *data __UNUSED__, Eeze_Udev_Watch *watch __UNUSED__)
 {

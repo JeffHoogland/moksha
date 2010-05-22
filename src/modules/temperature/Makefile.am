@@ -1,7 +1,7 @@
 MAINTAINERCLEANFILES = Makefile.in
 MODULE = temperature
 
-if HAVE_EEZE_UDEV
+if HAVE_EEZE
   DEVICE_FILE = e_mod_udev.c
 else
   DEVICE_FILE = 

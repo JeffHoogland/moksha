@@ -246,14 +246,14 @@ AC_ARG_ENABLE([device-udev],
    AC_CACHE_VAL([e_cv_want_device_udev], [e_cv_want_device_udev=no]))
 
 if test "x$e_cv_want_device_udev" = "xyes";then
-  device_backend=eeze_udev
-  AC_DEFINE_UNQUOTED([HAVE_EEZE_UDEV],[1],[enable udev support])
+  device_backend=eeze
+  AC_DEFINE_UNQUOTED([HAVE_EEZE],[1],[enable udev support])
 else
   device_backend=ehal
 fi
 AC_MSG_RESULT($device_backend)
 
-AM_CONDITIONAL([HAVE_EEZE_UDEV], [test "x${device_backend}" = "xeeze_udev"])
+AM_CONDITIONAL([HAVE_EEZE], [test "x${device_backend}" = "xeeze"])
 
 # doxygen program for documentation building
 
@@ -773,7 +773,7 @@ config/illume-home/Makefile
 po/Makefile.in
 ])
 
-if test "$device_backend" = "eeze_udev";then
+if test "$device_backend" = "eeze";then
   device_backend+=" (EXPERIMENTAL!)"
 fi
 

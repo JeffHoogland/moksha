@@ -12,7 +12,7 @@ struct _E_Config_Dialog_Data
      } poll;
 
    int unit_method;
-#ifdef HAVE_EEZE_UDEV
+#ifdef HAVE_EEZE
    int backend;
 #endif
    struct 
@@ -77,7 +77,7 @@ _fill_data_tempget(E_Config_Dialog_Data *cfdata)
    cfdata->temp.low = cfdata->inst->low;
    cfdata->temp.high = cfdata->inst->high;
    cfdata->sensor = 0;
-#ifdef HAVE_EEZE_UDEV
+#ifdef HAVE_EEZE
    cfdata->backend = cfdata->inst->backend;
    if (cfdata->backend == TEMPGET)
      {
@@ -120,7 +120,7 @@ _fill_data_tempget(E_Config_Dialog_Data *cfdata)
            default:
              break;
           }
-#ifdef HAVE_EEZE_UDEV
+#ifdef HAVE_EEZE
    }
 #endif
 }
@@ -240,7 +240,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 
    e_widget_toolbook_page_append(otb, NULL, _("Temperatures"), ol, 
                                  1, 0, 1, 0, 0.5, 0.0);
-#ifdef HAVE_EEZE_UDEV
+#ifdef HAVE_EEZE
    ol = e_widget_list_add(evas, 0, 0);
    rg = e_widget_radio_group_new(&(cfdata->backend));
    ow = e_widget_radio_add(evas, _("Internal"), TEMPGET, rg);
@@ -261,7 +261,7 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    cfdata->inst->units = cfdata->unit_method;
    cfdata->inst->low = cfdata->temp.low;
    cfdata->inst->high = cfdata->temp.high;
-#ifdef HAVE_EEZE_UDEV
+#ifdef HAVE_EEZE
    cfdata->inst->backend = cfdata->backend;
 #endif
 

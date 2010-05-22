@@ -92,13 +92,9 @@ void *alloca (size_t);
 #include <Efreet.h>
 #include <Efreet_Mime.h>
 #include <E_DBus.h>
-#ifdef HAVE_EUKIT
-#include <E_Ukit.h>
-#else
 #include <E_Hal.h>
-#endif
-#ifdef HAVE_EEZE_UDEV
-#include <Eeze_Udev.h>
+#ifdef HAVE_EEZE
+#include <Eeze.h>
 #endif
 
 #ifdef EAPI

@@ -41,7 +41,7 @@ struct _Config
    int                  have_battery;
    int                  have_power;
    int                  have_subsystem;
-#ifdef HAVE_EEZE_UDEV
+#ifdef HAVE_EEZE
    Eeze_Udev_Watch     *acwatch;
    Eeze_Udev_Watch     *batwatch;
    Eina_Bool            fuzzy;
@@ -64,7 +64,7 @@ typedef struct _Ac_Adapter Ac_Adapter;
 struct _Battery
 {
    const char *udi;
-#ifdef HAVE_EEZE_UDEV
+#ifdef HAVE_EEZE
    Ecore_Poller *poll;
 #else
    E_DBus_Signal_Handler *prop_change;
@@ -72,7 +72,7 @@ struct _Battery
 #endif
    Eina_Bool present:1;
    Eina_Bool charging:1;
-#ifdef HAVE_EEZE_UDEV
+#ifdef HAVE_EEZE
    double last_update;
    double percent;
    double current_charge;
@@ -101,7 +101,7 @@ struct _Battery
 struct _Ac_Adapter
 {
    const char *udi;
-#ifndef HAVE_EEZE_UDEV
+#ifndef HAVE_EEZE
    E_DBus_Signal_Handler *prop_change;
 #endif
    Eina_Bool present:1;

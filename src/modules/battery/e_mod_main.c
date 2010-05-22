@@ -79,8 +79,8 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    inst->warning = NULL;
    inst->popup_battery = NULL;
 
-#ifdef HAVE_EEZE_UDEV
-   eeze_udev_init();
+#ifdef HAVE_EEZE
+   eeze_init();
 #else
    e_dbus_init();
    e_hal_init();
@@ -100,8 +100,8 @@ _gc_shutdown(E_Gadcon_Client *gcc)
 {
    Instance *inst;
 
-#ifdef HAVE_EEZE_UDEV
-   eeze_udev_shutdown();
+#ifdef HAVE_EEZE
+   eeze_shutdown();
 #else
    e_hal_shutdown();
    e_dbus_shutdown();
@@ -353,7 +353,7 @@ _battery_config_updated(void)
      }
    if (battery_config->have_subsystem == UNKNOWN)
      {
-#ifdef HAVE_EEZE_UDEV
+#ifdef HAVE_EEZE
           battery_config->have_subsystem = SUBSYSTEM;
 #else
         if (!e_dbus_bus_get(DBUS_BUS_SYSTEM))
@@ -387,7 +387,7 @@ _battery_config_updated(void)
              ecore_exe_free(battery_config->batget_exe);
              battery_config->batget_exe = NULL;
           }
-#ifdef HAVE_EEZE_UDEV
+#ifdef HAVE_EEZE
         _battery_udev_start();
 #else
         E_DBus_Connection *conn;
@@ -765,7 +765,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 	battery_config->menu = NULL;
      }
    
-#ifdef HAVE_EEZE_UDEV
+#ifdef HAVE_EEZE
    _battery_udev_stop();
 #else
    _battery_dbus_stop();
