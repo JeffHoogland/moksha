@@ -178,7 +178,7 @@ _thumb_idler(void *data)
 	     e_thumb_icon_begin(it->thumb);
 	     it->do_thumb = EINA_TRUE;
 	  }
-
+	e_util_wakeup();
 	sd->queue = eina_list_remove_list(sd->queue, l);
 	return 1;
      }
