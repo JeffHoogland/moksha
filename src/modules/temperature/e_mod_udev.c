@@ -28,7 +28,7 @@ temperature_udev_update(void *data)
         EINA_LIST_FOREACH_SAFE(inst->tempdevs, l, l2, syspath)
           {
              if ((eeze_udev_syspath_get_sysattr(syspath, "fan1_input")) ||
-               (eeze_udev_syspath_get_sysattr(syspath, "pwm1_stop_time")))
+		 (eeze_udev_syspath_get_sysattr(syspath, "pwm1_stop_time")))
                {
                   eina_stringshare_del(syspath);
                   inst->tempdevs = eina_list_remove_list(inst->tempdevs, l);
@@ -39,7 +39,8 @@ temperature_udev_update(void *data)
      {
         temp = 0;
         EINA_LIST_FOREACH(inst->tempdevs, l, syspath)
-          {/*FIXME: probably should make a function to count the cpus and loop this */
+          {
+	     /*FIXME: probably should make a function to count the cpus and loop this */
              if ((test = eeze_udev_syspath_get_sysattr(syspath, "temp1_input")))
                {
                   temp += (strtod(test, NULL) / 1000); /* udev reports temp in (celcius * 1000) for some reason */
@@ -60,8 +61,8 @@ temperature_udev_update(void *data)
      }
    if (temp != -999)
      {
-        if (inst->units == FAHRENHEIT)
-          temp = (temp * 9.0 / 5.0) + 32;
+        if (inst->units == FAHRENHEIT) 
+	  temp = (temp * 9.0 / 5.0) + 32;
 
         if (!inst->have_temp)
           {
@@ -76,8 +77,8 @@ temperature_udev_update(void *data)
           snprintf(buf, sizeof(buf), "%3.2f°C", temp);  
 
         _temperature_face_level_set(inst,
-               (double)(temp - inst->low) /
-               (double)(inst->high - inst->low));
+				    (double)(temp - inst->low) /
+				    (double)(inst->high - inst->low));
         edje_object_part_text_set(inst->o_temp, "e.text.reading", buf);
      }
    else

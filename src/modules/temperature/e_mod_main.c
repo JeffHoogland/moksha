@@ -326,24 +326,30 @@ temperature_face_update_config(Config_Face *inst)
           }
 #endif
         snprintf(buf, sizeof(buf),
-          "%s/%s/tempget %i \"%s\" %i", 
-          e_module_dir_get(temperature_config->module), MODULE_ARCH, 
-          inst->sensor_type,
-          (inst->sensor_name != NULL ? inst->sensor_name : "(null)"),
-          inst->poll_interval);
-        inst->tempget_exe = ecore_exe_pipe_run(buf, 
-            ECORE_EXE_PIPE_READ | 
-            ECORE_EXE_PIPE_READ_LINE_BUFFERED |
-            ECORE_EXE_NOT_LEADER,
-            inst);
+		 "%s/%s/tempget %i \"%s\" %i", 
+		 e_module_dir_get(temperature_config->module), MODULE_ARCH, 
+		 inst->sensor_type,
+		 (inst->sensor_name != NULL ? inst->sensor_name : "(null)"),
+		 inst->poll_interval);
+        inst->tempget_exe = 
+	  ecore_exe_pipe_run(buf, 
+			     ECORE_EXE_PIPE_READ | 
+			     ECORE_EXE_PIPE_READ_LINE_BUFFERED |
+			     ECORE_EXE_NOT_LEADER, inst);
 #ifdef HAVE_EEZE_UDEV
      }
    else
-     {/*avoid creating a new poller if possible*/
+     {
+	/*avoid creating a new poller if possible*/
         if (inst->temp_poller)
-          ecore_poller_poller_interval_set(inst->temp_poller, inst->poll_interval);
-        else
-          inst->temp_poller = ecore_poller_add(ECORE_POLLER_CORE, inst->poll_interval, temperature_udev_update_poll, inst);
+          ecore_poller_poller_interval_set(inst->temp_poller, 
+					   inst->poll_interval);
+        else 
+	  {
+	     inst->temp_poller = 
+	       ecore_poller_add(ECORE_POLLER_CORE, inst->poll_interval, 
+				temperature_udev_update_poll, inst);
+	  }
      }
 #endif
 }
@@ -369,26 +375,25 @@ temperature_get_bus_files(const char* bus)
 	       {
 		  Eina_List *files;
 		  char *file;
-		  
+
 		  /* Search each device for temp*_input, these should be 
 		   * temperature devices. */
 		  snprintf(path, sizeof(path), "%s/%s", busdir, name);
 		  files = ecore_file_ls(path);
 		  EINA_LIST_FREE(files, file)
+		    {
+		       if ((!strncmp("temp", file, 4)) && 
+			   (!strcmp("_input", &file[strlen(file) - 6])))
 			 {
-			    if ((!strncmp("temp", file, 4)) && 
-				(!strcmp("_input", &file[strlen(file) - 6])))
-			      {
-				 char *f;
+			    char *f;
 
-				 snprintf(path, sizeof(path),
-					  "%s/%s/%s", busdir, name, file);
-				 f = strdup(path);
+			    snprintf(path, sizeof(path),
+				     "%s/%s/%s", busdir, name, file);
+			    f = strdup(path);
 			    if (f) result = eina_list_append(result, f);
 			 }
 		       free(file);
 		    }
-
 		  free(name);
 	       }
 	  }
