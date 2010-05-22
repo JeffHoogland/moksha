@@ -161,7 +161,7 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 	  {
 	     if (pc->trigger)
 	       eina_stringshare_del(pc->trigger);
-	     
+
 	     if (cfdata->page[i].trigger[0])
 	       pc->trigger = eina_stringshare_add(cfdata->page[i].trigger);
 	     else
@@ -197,9 +197,26 @@ _fill_list(Eina_List *plugins, Evas_Object *obj, int enabled __UNUSED__)
 
    EINA_LIST_FOREACH(plugins, l, pc)
      {
-	e_widget_ilist_append(obj, NULL, pc->name, NULL, pc, NULL);
+	Evas_Object *end = edje_object_add(evas);
+
+	if (!end)
+	  continue;
+
+	if (e_theme_edje_object_set(end, "base/theme/widgets",
+				    "e/widgets/ilist/toggle_end"))
+	  {
+	     char *sig = pc->plugin ? "e,state,checked" : "e,state,unchecked";
+	     edje_object_signal_emit(end, sig, "e");
+	  }
+	else
+	  {
+	     EINA_LOG_ERR("your theme misses 'e/widgets/ilist/toggle_end'!");
+	     evas_object_del(end);
+	     end = NULL;
+	  }
+	e_widget_ilist_append_full(obj, NULL, end, pc->name, NULL, pc, NULL);
      }
-   
+
    e_widget_ilist_go(obj);
    e_widget_size_min_get(obj, &w, NULL);
    e_widget_size_min_set(obj, w > 180 ? w : 180, 260);
@@ -253,12 +270,11 @@ static void
 _list_select_cb (void *data, Evas_Object *obj)
 {
    int sel = e_widget_ilist_selected_get(obj);
-   Plugin_Config *pc;
+   Plugin_Config *pc = NULL;
    Plugin_Page *page = data;
 
-   if (sel >= 0)
+   if (sel >= 0 && (pc = eina_list_nth(page->configs, sel)) && pc->plugin)
      {
-	pc = eina_list_nth(page->configs, sel);
 	e_widget_entry_text_set(page->o_trigger, pc->trigger);
 	e_widget_disabled_set(page->o_trigger, 0);
 
@@ -285,9 +301,9 @@ _list_select_cb (void *data, Evas_Object *obj)
 	e_widget_disabled_set(page->o_aggregate, 0);
 	e_widget_check_checked_set(page->o_top_level, pc->top_level);
 	e_widget_disabled_set(page->o_top_level, 0);
-	e_widget_slider_value_int_set(page->o_min_query, pc->min_query); 
+	e_widget_slider_value_int_set(page->o_min_query, pc->min_query);
 	e_widget_disabled_set(page->o_min_query, 0);
-	
+
 	if (pc->plugin && pc->plugin->config_path)
 	  {
 	     e_widget_disabled_set(page->o_cfg_btn, 0);
@@ -385,7 +401,7 @@ _create_plugin_page(E_Config_Dialog_Data *cfdata, Evas *e, Plugin_Page *page)
    o = e_widget_slider_add(e, 1, 0, _("%1.0f"), 0, 5, 1.0, 0, NULL, &(page->min_query), 10);
    page->o_min_query = o;
    e_widget_framelist_object_append(of, o);
-   
+
    e_widget_table_object_append(ob, of, 1, 0, 1, 1, 1, 1, 1, 0);
 
    of = e_widget_framelist_add(e, _("Plugin Trigger"), 0);
