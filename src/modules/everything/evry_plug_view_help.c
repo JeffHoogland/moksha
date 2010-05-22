@@ -31,9 +31,10 @@ _cb_key_down(Evry_View *v, const Ecore_Event_Key *ev)
      {
 	o = v->o_list;
 	evas_object_geometry_get(o, NULL, NULL, NULL, &h);
+	if (!h) h = 1;
 	e_box_align_get(o, NULL, &align);
 
-	align = align - (double)10/(double)h;
+	align = align - 10.0/(double)h;
 	if (align < 0.0) align = 0.0;
 
 	e_box_align_set(v->o_list, 0.5, align);
@@ -44,16 +45,17 @@ _cb_key_down(Evry_View *v, const Ecore_Event_Key *ev)
      {
 	o = v->o_list;
 	evas_object_geometry_get(o, NULL, NULL, NULL, &h);
+	if (!h) h = 1;
 	e_box_align_get(o, NULL, &align);
 
-	align = align + (double)10/(double)h;
+	align = align + 10.0/(double)h;
 	if (align > 1.0) align = 1.0;
 
 	e_box_align_set(v->o_list, 0.5, align);
 	return 1;
      }
-   
-   evry_view_toggle(state, NULL);
+
+   evry_view_toggle((Evry_State *)state, NULL);
    return 1;
 }
 
@@ -105,7 +107,7 @@ _view_create(Evry_View *v, const Evry_State *s, const Evas_Object *swallow)
 
    v->active = 1;
    state = s;
-   
+
    return v;
 }
 
