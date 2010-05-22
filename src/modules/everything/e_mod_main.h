@@ -4,7 +4,7 @@
 #include "e.h"
 #include "evry_api.h"
 
-#define MOD_CONFIG_FILE_EPOCH 0x0001
+#define MOD_CONFIG_FILE_EPOCH 0x0002
 #define MOD_CONFIG_FILE_GENERATION 0x0002
 #define MOD_CONFIG_FILE_VERSION					\
   ((MOD_CONFIG_FILE_EPOCH << 16) | MOD_CONFIG_FILE_GENERATION)
@@ -209,7 +209,6 @@ void  evry_clear_input(Evry_Plugin *p);
 Evas_Object *evry_icon_mime_get(const char *mime, Evas *e);
 Evas_Object *evry_icon_theme_get(const char *icon, Evas *e);
 int   evry_fuzzy_match(const char *str, const char *match);
-int   evry_fuzzy_match_len(const char *str, const char *match, int len);
 Eina_List *evry_fuzzy_match_sort(Eina_List *items);
 int   evry_util_exec_app(const Evry_Item *it_app, const Evry_Item *it_file);
 char *evry_util_url_escape(const char *string, int inlength);
