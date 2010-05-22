@@ -63,7 +63,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
         inst->sensor_name = NULL;
         inst->units = CELCIUS;
 #ifdef HAVE_EEZE_UDEV
-        inst->backend = TEMPGET;
+        inst->backend = UDEV;
 #endif
         if (!temperature_config->faces)
           temperature_config->faces = eina_hash_string_superfast_new(NULL);
@@ -103,6 +103,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
      }
    else
      {
+        eeze_udev_init();
         inst->temp_poller = ecore_poller_add(ECORE_POLLER_CORE, inst->poll_interval, temperature_udev_update_poll, inst);
         temperature_udev_update(inst);
      }
@@ -140,6 +141,7 @@ _gc_shutdown(E_Gadcon_Client *gcc)
 #ifdef HAVE_EEEZ_UDEV
    if (inst->temp_poller)
      ecore_poller_del(inst->temp_poller);
+   eeze_udev_shutdown();
 #endif
    if (inst->o_temp) evas_object_del(inst->o_temp);
    inst->o_temp = NULL;
