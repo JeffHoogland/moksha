@@ -128,6 +128,7 @@ _cb_action_performed(void *data, int type, void *event)
 	     if (!strcmp(it->label, it2->label))
 	       {
 		  p->items = eina_list_promote_list(p->items, l);
+		  evry->item_changed(it, 0, 1);
 		  EVRY_PLUGIN_UPDATE(p, EVRY_UPDATE_ADD);
 		  return 1;
 	       }
@@ -140,7 +141,7 @@ _cb_action_performed(void *data, int type, void *event)
    it2 = EVRY_ITEM_NEW(Evry_Item, p, it_old->label, NULL, NULL);
    it2->context = eina_stringshare_ref(p->name);
    p->items = eina_list_prepend(p->items, it2);
-
+   evry->item_changed(it2, 0, 1);
    EVRY_PLUGIN_UPDATE(p, EVRY_UPDATE_ADD);
 
    return 1;
@@ -248,7 +249,10 @@ _plugins_init(const Evry_API *_api)
 	Plugin_Config *pc = _plug->config;
 	pc->view_mode = VIEW_MODE_LIST;
 	pc->trigger = eina_stringshare_add("=");
-	pc->trigger_only = EINA_TRUE;
+	/* pc->trigger_only = EINA_TRUE; */
+	pc->aggregate = EINA_FALSE;
+	pc->top_level = EINA_FALSE;
+	pc->min_query = 3;
      }
 
    return EINA_TRUE;

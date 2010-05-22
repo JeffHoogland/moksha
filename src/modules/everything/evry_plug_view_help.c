@@ -2,6 +2,7 @@
 
 static Evry_View *view;
 static Evas_Object *o_text = NULL;
+static const Evry_State *state = NULL;
 
 static void
 _view_clear(Evry_View *v, int slide)
@@ -51,8 +52,9 @@ _cb_key_down(Evry_View *v, const Ecore_Event_Key *ev)
 	e_box_align_set(v->o_list, 0.5, align);
 	return 1;
      }
-
-   return 0;
+   
+   evry_view_toggle(state, NULL);
+   return 1;
 }
 
 static Evry_View *
@@ -102,7 +104,8 @@ _view_create(Evry_View *v, const Evry_State *s, const Evas_Object *swallow)
    o_text = o;
 
    v->active = 1;
-
+   state = s;
+   
    return v;
 }
 

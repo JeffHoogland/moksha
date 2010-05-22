@@ -182,19 +182,24 @@ _item_exe_add(Plugin *p, const char *exe, int match)
    return app;
 }
 
-static void
+static int
 _add_executables(Plugin *p, const char *input)
 {
    Eina_List *l;
    char *file, *space;
-   int len, match, cnt = 0;
+   int len = 0, match, cnt = 0, found = 0;
 
    if (input)
      {
 	if ((space = strchr(input, ' ')))
-	  len = (space - input);
+	  {
+	     input = eina_stringshare_add_length(input, (space - input));
+	  }
 	else
-	  len = strlen(input);
+	  {
+	     input = eina_stringshare_add(input);
+	  }
+	len = strlen(input);
      }
 
    EINA_LIST_FOREACH(exe_list, l, file)
@@ -207,10 +212,17 @@ _add_executables(Plugin *p, const char *input)
 	else if ((match = evry->fuzzy_match(file, input)))
 	  {
 	     _item_exe_add(p, file, match);
+	     if (!strncmp(input, file, len))
+	       found = 1;
+
 	     cnt++;
 	  }
-	if (cnt > 100) break;
+	if (cnt > 50) break;
      }
+
+   IF_RELEASE(input);
+
+   return found;
 }
 
 static Eina_Bool
@@ -228,7 +240,7 @@ _hist_exe_get_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata
      {
 	app = NULL;
 
-	if (strcmp(hi->plugin, EVRY_PLUGIN(p)->name))	     
+	if (strcmp(hi->plugin, EVRY_PLUGIN(p)->name))
 
 	  continue;
 
@@ -277,15 +289,16 @@ _fetch_exe(Evry_Plugin *plugin, const char *input)
 
    if (input)
      {
-	GET_ITEM(it, p->command);
-	EVRY_ITEM_LABEL_SET(it, input);
-	IF_RELEASE(it->id);
-	it->id = eina_stringshare_ref(it->label);
-	p->command->file = eina_stringshare_ref(it->id);
-	it->fuzzy_match = 15;
-	EVRY_PLUGIN_ITEM_APPEND(p, it);
-	evry->item_changed(it, 0, 0);
-	_add_executables(p, input);
+	if (_add_executables(p, input))
+	  {
+	    GET_ITEM(it, p->command);
+	    EVRY_ITEM_LABEL_SET(it, input);
+	    IF_RELEASE(p->command->file);
+	    p->command->file = eina_stringshare_ref(it->label);
+	    it->fuzzy_match = 1;
+	    EVRY_PLUGIN_ITEM_APPEND(p, it);
+	    evry->item_changed(it, 0, 0);
+	  }
      }
 
    EINA_LIST_FOREACH(plugin->items, l, it)
@@ -965,7 +978,7 @@ _plugins_init(const Evry_API *api)
    p->complete = &_complete;
    p->config_path = "extensions/everything-apps";
    _plugins = eina_list_append(_plugins, p);
-   if (evry->plugin_register(p, EVRY_PLUGIN_SUBJECT, 1))
+   if (evry->plugin_register(p, EVRY_PLUGIN_SUBJECT, 3))
      p->config->min_query = 5;
 
    p = EVRY_PLUGIN_NEW(Plugin, N_("Applications"), NULL, EVRY_TYPE_APP,

@@ -862,18 +862,6 @@ evry_file_url_get(Evry_Item_File *file)
    file->url = eina_stringshare_add(dest);
 
    return file->url;
-   
-   /* escaped = _evry_util_url_escape(file->path, 0, 1);
-    * 
-    * if (escaped)
-    *   {
-    * 	snprintf(buf, sizeof(buf), "file://%s", escaped);
-    * 	E_FREE(escaped);
-    * 
-    * 	file->url = eina_stringshare_add(buf);
-    * 
-    * 	return file->url;
-    *   } */
 }
 
 static void

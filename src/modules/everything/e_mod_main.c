@@ -359,7 +359,7 @@ _config_init()
    /* setup defaults */
    IFMODCFG(0x0001);
    evry_conf->rel_x = 0.5;
-   evry_conf->rel_y = 0.32;
+   evry_conf->rel_y = 0.33;
    evry_conf->width = 435;
    evry_conf->height = 415;
    evry_conf->scroll_animate = 1;
@@ -372,9 +372,6 @@ _config_init()
    evry_conf->cycle_mode = 0;
    evry_conf->history_sort_mode = 0;
    evry_conf->first_run = EINA_TRUE;
-   IFMODCFGEND;
-
-   IFMODCFG(0x0002);
    evry_conf->width = 435;
    evry_conf->height = 415;
    evry_conf->rel_y = 0.40;
@@ -420,7 +417,7 @@ _config_free(void)
 
 
 /* action callback */
-static Ecore_Idle_Enterer *idler = NULL;
+static Ecore_Idle_Enterer *_idler = NULL;
 static const char *_params = NULL;
 
 static int
@@ -430,6 +427,8 @@ _e_mod_run_defer_cb(void *data)
 
    zone = data;
    if (zone) evry_show(zone, _params);
+
+   _idler = NULL;
    return 0;
 }
 
@@ -456,9 +455,10 @@ _e_mod_action_cb(E_Object *obj, const char *params)
    IF_RELEASE(_params);
    if (params && params[0])
      _params = eina_stringshare_add(params);
+   /* if (zone) evry_show(zone, _params); */
 
-   if (idler) ecore_idle_enterer_del(idler);
-   ecore_idle_enterer_add(_e_mod_run_defer_cb, zone);
+   if (_idler) ecore_idle_enterer_del(_idler);
+   _idler = ecore_idle_enterer_add(_e_mod_run_defer_cb, zone);
 }
 
 /* menu item callback(s) */

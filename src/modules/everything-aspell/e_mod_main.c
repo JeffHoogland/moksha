@@ -397,10 +397,10 @@ _plugins_init(const Evry_API *_api)
      {
 	Plugin_Config *pc = _plug->config;
 	pc->view_mode = VIEW_MODE_LIST;
-	pc->aggregate = EINA_TRUE;
-	pc->top_level = EINA_FALSE;
+	pc->aggregate = EINA_FALSE;
+	/* pc->top_level = EINA_FALSE; */
 	pc->trigger = eina_stringshare_add(TRIGGER);
-	/* pc->trigger_only = EINA_TRUE; */
+	pc->trigger_only = EINA_TRUE;
 	pc->min_query = 4;
      }
 

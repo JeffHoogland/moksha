@@ -49,7 +49,6 @@ static void _evry_list_win_clear(int hide);
 static void _evry_view_clear(Evry_State *s);
 static void _evry_view_update(Evry_State *s, Evry_Plugin *plugin);
 static int  _evry_view_key_press(Evry_State *s, Ecore_Event_Key *ev);
-static int  _evry_view_toggle(Evry_State *s, const char *trigger);
 static void _evry_view_show(Evry_View *v);
 static void _evry_view_hide(Evry_View *v, int slide);
 
@@ -59,6 +58,30 @@ static void _evry_item_sel(Evry_State *s, Evry_Item *it);
 static int  _evry_cb_key_down(void *data, int type, void *event);
 static int  _evry_cb_selection_notify(void *data, int type, void *event);
 static int  _evry_cb_mouse(void *data, int type, void *event);
+
+/* local subsystem globals */
+static Evry_Window *win = NULL;
+static Ecore_X_Window input_window = 0;
+
+#define SUBJ_SEL win->selectors[0]
+#define ACTN_SEL win->selectors[1]
+#define OBJ_SEL  win->selectors[2]
+#define CUR_SEL  win->selector
+
+/* externally accessible functions */
+int
+evry_init(void)
+{
+   return 1;
+}
+
+int
+evry_shutdown(void)
+{
+   evry_hide(0);
+
+   return 1;
+}
 
 static int
 _evry_aggregator_fetch(Evry_Selector *sel, const char *input)
@@ -77,25 +100,6 @@ _evry_aggregator_fetch(Evry_Selector *sel, const char *input)
      s->cur_plugins = eina_list_prepend(s->cur_plugins, sel->aggregator);
 
    sel->aggregator->state = s;
-
-   return 1;
-}
-
-/* local subsystem globals */
-static Evry_Window *win = NULL;
-static Ecore_X_Window input_window = 0;
-
-/* externally accessible functions */
-int
-evry_init(void)
-{
-   return 1;
-}
-
-int
-evry_shutdown(void)
-{
-   evry_hide(0);
 
    return 1;
 }
@@ -126,7 +130,7 @@ static int
 _cb_show_timer(void *data)
 {
    Evry_Window *win = data;
-   Evry_Selector *sel = win->selector;
+   Evry_Selector *sel = CUR_SEL;
 
    win->show_timer = NULL;
 
@@ -137,7 +141,7 @@ _cb_show_timer(void *data)
 
 	if (evry_conf->first_run)
 	  {
-	     _evry_view_toggle(s, "?");
+	     evry_view_toggle(s, "?");
 	     evry_conf->first_run = EINA_FALSE;
 	  }
 	else
@@ -167,24 +171,24 @@ evry_show(E_Zone *zone, const char *params)
 	  return 1;
 
 	if (!(params) &&
-	    (win->selector == win->selectors[2]) &&
-	    (win->selector->state && win->selector->state->cur_item))
+	    (CUR_SEL == OBJ_SEL) &&
+	    ((CUR_SEL)->state && (CUR_SEL)->state->cur_item))
 	  {
 	     _evry_selectors_shift(1);
 	     return 1;
 	  }
 
-	if (!(params && eina_list_count(win->selectors[0]->states) == 1))
+	if (!(params && eina_list_count((SUBJ_SEL)->states) == 1))
 	  evry_hide(1);
 
-	if (win && win->selector && params)
+	if (win && CUR_SEL && params)
 	  {
-	     EINA_LIST_FOREACH(win->selectors[0]->plugins, l, p)
+	     EINA_LIST_FOREACH((SUBJ_SEL)->plugins, l, p)
 	       if (!strcmp(params, p->name)) break;
 
-	     _evry_plugin_select(win->selector->state, p);
-	     _evry_selector_update(win->selector);
-	     _evry_view_update(win->selector->state, p);
+	     _evry_plugin_select((CUR_SEL)->state, p);
+	     _evry_selector_update(CUR_SEL);
+	     _evry_view_update((CUR_SEL)->state, p);
 	  }
 	return 1;
      }
@@ -257,8 +261,8 @@ evry_show(E_Zone *zone, const char *params)
    e_popup_show(win->popup);
 
    _evry_selector_subjects_get(params);
-   _evry_selector_update(win->selectors[0]);
-   _evry_selector_activate(win->selectors[0]);
+   _evry_selector_update(SUBJ_SEL);
+   _evry_selector_activate(SUBJ_SEL);
 
    if (!evry_conf->hide_input)
      edje_object_signal_emit(win->o_main, "e,state,entry_show", "e");
@@ -277,33 +281,33 @@ evry_hide(int clear)
 
    if (!win) return;
 
-   if ((clear && win->selector) &&
-       ((eina_list_count(win->selectors[0]->states) > 1) ||
-	((win->selectors[0]->state) &&
-	 (win->selectors[0]->state->input[0]))))
+   if ((clear && CUR_SEL) &&
+       ((eina_list_count((SUBJ_SEL)->states) > 1) ||
+	(((SUBJ_SEL)->state) &&
+	 ((SUBJ_SEL)->state->input[0]))))
      {
 	int slide = 0;
 	Evry_Selector *sel;
 	Evry_State *s;
 
-	if (win->selector != win->selectors[0])
+	if (CUR_SEL != SUBJ_SEL)
 	  {
-	     if (win->selector == win->selectors[1])
+	     if (CUR_SEL == ACTN_SEL)
 	       evry_selectors_switch(-1);
-	     else if (win->selector == win->selectors[2])
+	     else if (CUR_SEL == OBJ_SEL)
 	       evry_selectors_switch(1);
 	  }
 
 	/* just to be sure */
-	win->selector = win->selectors[0];
+	CUR_SEL = SUBJ_SEL;
 
-	while (win->selector->states->next)
+	while ((CUR_SEL)->states->next)
 	  {
 	     slide = 1;
-	     _evry_state_pop(win->selector);
+	     _evry_state_pop(CUR_SEL);
 	  }
 
-	sel = win->selector;
+	sel = CUR_SEL;
 	s = sel->state;
 
 	_evry_clear(sel);
@@ -372,14 +376,14 @@ _evry_selectors_shift(int dir)
 	_evry_selector_new(win, EVRY_PLUGIN_ACTION);
 	_evry_selector_new(win, EVRY_PLUGIN_OBJECT);
 
-	win->selector = win->selectors[0];
-	sel = win->selector;
+	CUR_SEL = SUBJ_SEL;
+	sel = CUR_SEL;
 
 	_evry_selector_signal_emit(sel, "e,state,selected");
 
-	_evry_selector_item_update(win->selectors[0]);
-	_evry_selector_item_update(win->selectors[1]);
-	_evry_selector_item_update(win->selectors[2]);
+	_evry_selector_item_update(SUBJ_SEL);
+	_evry_selector_item_update(ACTN_SEL);
+	_evry_selector_item_update(OBJ_SEL);
 
 	/* was checked before. anyway */
 	if ((s = sel->state) && (s->cur_item))
@@ -391,20 +395,20 @@ _evry_selectors_shift(int dir)
      }
    else if ((dir < 0) && (win->level > 0))
      {
-	_evry_selector_item_clear(win->selectors[0]);
-	_evry_selector_free(win->selectors[1]);
-	_evry_selector_free(win->selectors[2]);
+	_evry_selector_item_clear(SUBJ_SEL);
+	_evry_selector_free(ACTN_SEL);
+	_evry_selector_free(OBJ_SEL);
 
 	win->selectors = win->sel_list;
 	win->sel_list[3] = NULL;
-	win->selector = NULL;
+	CUR_SEL = NULL;
 
 	edje_object_signal_emit(win->o_main,
 				"e,state,object_selector_show", "e");
-	_evry_selector_item_update(win->selectors[0]);
-	_evry_selector_item_update(win->selectors[1]);
-	_evry_selector_item_update(win->selectors[2]);
-	_evry_selector_activate(win->selectors[2]);
+	_evry_selector_item_update(SUBJ_SEL);
+	_evry_selector_item_update(ACTN_SEL);
+	_evry_selector_item_update(OBJ_SEL);
+	_evry_selector_activate(OBJ_SEL);
 
 	win->level = 0;
 
@@ -422,7 +426,7 @@ evry_clear_input(Evry_Plugin *p)
    if (!(s = p->state))
      return;
 
-   if (s->selector != win->selector) return;
+   if (s->selector != CUR_SEL) return;
 
    if (s->inp[0] != 0)
      {
@@ -517,7 +521,7 @@ static int
 _evry_timer_cb_actions_get(void *data)
 {
    Evry_Item *it = data;
-   Evry_Selector *sel = win->selectors[1];
+   Evry_Selector *sel = ACTN_SEL;
    Evry_State *s;
 
    sel->update_timer = NULL;
@@ -525,7 +529,7 @@ _evry_timer_cb_actions_get(void *data)
    _evry_selector_actions_get(it);
    _evry_selector_update(sel);
 
-   if (win->selector == sel && win->selector->state)
+   if (CUR_SEL == sel && (CUR_SEL)->state)
      {
 	s = sel->state;
 	if (s->view)
@@ -541,7 +545,7 @@ static void
 _evry_selector_update_actions(Evry_Selector *sel)
 {
    Evry_Item *it = sel->state->cur_item;
-   sel = win->selectors[1];
+   sel = ACTN_SEL;
    if (sel->update_timer)
      ecore_timer_del(sel->update_timer);
 
@@ -565,7 +569,7 @@ evry_item_select(const Evry_State *state, Evry_Item *it)
    if (s == sel->state)
      {
 	_evry_selector_update(sel);
-	if (win->selector ==  win->selectors[0])
+	if (CUR_SEL ==  SUBJ_SEL)
 	  _evry_selector_update_actions(sel);
      }
 }
@@ -658,12 +662,12 @@ evry_plugin_update(Evry_Plugin *p, int action)
 	  }
 
 	/* switch back to subject selector when no current items */
-	if ((sel == win->selectors[0]) &&
+	if ((sel == SUBJ_SEL) &&
 	    (!(s->plugin) || !(s->plugin->items)) &&
-	    (win->selector == win->selectors[1]))
+	    (CUR_SEL == ACTN_SEL))
 	  {
 	     evry_selectors_switch(-1);
-	     _evry_clear(win->selectors[0]);
+	     _evry_clear(SUBJ_SEL);
 	  }
      }
    else if (action == EVRY_UPDATE_REFRESH)
@@ -682,7 +686,7 @@ _evry_list_win_show(void)
    if (win->visible) return;
 
    win->visible = EINA_TRUE;
-   _evry_list_win_update(win->selector->state);
+   _evry_list_win_update((CUR_SEL)->state);
 
    edje_object_signal_emit(win->o_main, "e,state,list_show", "e");
    edje_object_signal_emit(win->o_main, "e,state,entry_show", "e");
@@ -691,18 +695,19 @@ _evry_list_win_show(void)
 static void
 _evry_list_win_clear(int hide)
 {
+   Evry_Selector *sel = CUR_SEL;
+
    if (!win->visible) return;
 
-   if (win->selector->state)
-     _evry_view_clear(win->selector->state);
+   if (sel->state)
+     _evry_view_clear(sel->state);
 
    if (hide)
      {
 	win->visible = EINA_FALSE;
 	edje_object_signal_emit(win->o_main, "e,state,list_hide", "e");
-	if (evry_conf->hide_input &&
-	    (!win->selector->state || !win->selector->state->input ||
-	     strlen(win->selector->state->input) == 0))
+
+	if (evry_conf->hide_input && (!(sel->state) || (sel->state->input[0])))
 	  edje_object_signal_emit(win->o_main, "e,state,entry_hide", "e");
      }
 }
@@ -798,7 +803,7 @@ _evry_cb_mouse(void *data, int type, void *event)
 	Evry_State *s;
 
 	if ((win->mouse_button == 3) &&
-	    (s = win->selector->state) && (s->cur_item) &&
+	    (s = (CUR_SEL)->state) && (s->cur_item) &&
 	    (CHECK_TYPE(s->cur_item, EVRY_TYPE_FILE)) &&
 	    (!E_INSIDE(ev->x, ev->y, pop->x + pop->zone->x,
 		       pop->y + pop->zone->y, pop->w, pop->h)))
@@ -893,7 +898,6 @@ _evry_window_free(Evry_Window *win)
    e_popup_hide(win->popup);
    evas_event_freeze(win->popup->evas);
    evas_object_del(win->o_main);
-   /* evas_event_thaw(win->popup->evas); */
    e_object_del(E_OBJECT(win->popup));
    E_FREE(win);
 }
@@ -919,7 +923,7 @@ _evry_selector_cb_wheel(void *data, Evas *e, Evas_Object *obj, void *event_info)
    if (ev->z > 0)
      {
 	/* FIXME dont loose selector 2 state until state 0 changed: */
-	if (win->selector != win->selectors[2])
+	if (CUR_SEL != OBJ_SEL)
 	  evry_selectors_switch(1);
      }
    else if (ev->z < 0)
@@ -934,7 +938,7 @@ _evry_selector_cb_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
    Evas_Event_Mouse_Up *ev = event_info;
    Evry_Selector *sel = data;
 
-   if (sel == win->selector)
+   if (sel == CUR_SEL)
      return;
 
    if (ev->button == 3)
@@ -943,24 +947,24 @@ _evry_selector_cb_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
      }
    else if (ev->button == 1)
      {
-	if (sel == win->selectors[0])
+	if (sel == SUBJ_SEL)
 	  {
-	     if (win->selector == win->selectors[1])
+	     if (CUR_SEL == ACTN_SEL)
 	       evry_selectors_switch(-1);
 	     else
 	       evry_selectors_switch(1);
 	  }
 
-	else if (sel == win->selectors[1])
+	else if (sel == ACTN_SEL)
 	  {
-	     if (win->selector == win->selectors[0])
+	     if (CUR_SEL == SUBJ_SEL)
 	       evry_selectors_switch(1);
 	     else
 	       evry_selectors_switch(-1);
 	  }
-	else if (sel == win->selectors[2])
+	else if (sel == OBJ_SEL)
 	  {
-	     if (win->selector == win->selectors[1])
+	     if (CUR_SEL == ACTN_SEL)
 	       evry_selectors_switch(1);
 	  }
      }
@@ -1022,7 +1026,7 @@ _evry_selector_free(Evry_Selector *sel)
 {
    _evry_selector_item_clear(sel);
 
-   if (win->visible && (sel == win->selector))
+   if (win->visible && (sel == CUR_SEL))
      _evry_view_clear(sel->state);
 
    while (sel->states)
@@ -1043,11 +1047,11 @@ static void
 _evry_selector_signal_emit(Evry_Selector *sel, const char *msg)
 {
    char buf[1024];
-   if (sel == win->selectors[0])
+   if (sel == SUBJ_SEL)
      snprintf(buf, sizeof(buf), "subject_selector:%s", msg);
-   else if (sel == win->selectors[1])
+   else if (sel == ACTN_SEL)
      snprintf(buf, sizeof(buf), "action_selector:%s", msg);
-   else if (sel == win->selectors[2])
+   else if (sel == OBJ_SEL)
      snprintf(buf, sizeof(buf), "object_selector:%s", msg);
 
    edje_object_signal_emit(win->o_main, buf, "e");
@@ -1057,11 +1061,11 @@ static void
 _evry_selector_label_set(Evry_Selector *sel, const char *part, const char *label)
 {
    char buf[1024];
-   if (sel == win->selectors[0])
+   if (sel == SUBJ_SEL)
      snprintf(buf, sizeof(buf), "subject_selector:%s", part);
-   else if (sel == win->selectors[1])
+   else if (sel == ACTN_SEL)
      snprintf(buf, sizeof(buf), "action_selector:%s", part);
-   else if (sel == win->selectors[2])
+   else if (sel == OBJ_SEL)
      snprintf(buf, sizeof(buf), "object_selector:%s", part);
 
    edje_object_part_text_set(win->o_main, buf, label);
@@ -1072,14 +1076,13 @@ _evry_selector_activate(Evry_Selector *sel)
 {
    Evry_State *s;
 
-   if (win->selector)
+   if (CUR_SEL)
      {
-	Evry_Selector *sel = win->selector;
-	_evry_selector_label_set(sel, "e.text.plugin", "");
-	_evry_selector_signal_emit(sel, "e,state,unselected");
+	Evry_Selector *cur = CUR_SEL;
+	_evry_selector_signal_emit(cur, "e,state,unselected");
 
-	if (sel->state && sel->state->view)
-	  _evry_view_hide(sel->state->view, 0);
+	if (cur->state && cur->state->view)
+	  _evry_view_hide(cur->state->view, 0);
 
 	_evry_list_win_clear(evry_conf->hide_list);
      }
@@ -1090,7 +1093,7 @@ _evry_selector_activate(Evry_Selector *sel)
 	return;
      }
 
-   win->selector = sel;
+   CUR_SEL = sel;
 
    _evry_selector_signal_emit(sel, "e,state,selected");
 
@@ -1121,11 +1124,11 @@ _evry_selector_thumb_gen(void *data, Evas_Object *obj, void *event_info)
    e_icon_size_get(sel->o_thumb, &w, &h);
    edje_extern_object_aspect_set(sel->o_thumb, EDJE_ASPECT_CONTROL_BOTH, w, h);
 
-   if (sel == win->selectors[0])
+   if (sel == SUBJ_SEL)
      edje_object_part_swallow(win->o_main, "subject_selector:e.swallow.thumb", sel->o_thumb);
-   else if (sel == win->selectors[1])
+   else if (sel == ACTN_SEL)
      edje_object_part_swallow(win->o_main, "action_selector:e.swallow.thumb", sel->o_thumb);
-   else if (sel == win->selectors[2])
+   else if (sel == OBJ_SEL)
      edje_object_part_swallow(win->o_main, "object_selector:e.swallow.thumb", sel->o_thumb);
 
    evas_object_show(sel->o_thumb);
@@ -1211,7 +1214,7 @@ _evry_selector_item_update(Evry_Selector *sel)
 	/* no items for this state - clear selector */
 	_evry_selector_label_set(sel, "e.text.label","");
 
-	if (sel == win->selector && s && s->plugin)
+	if (sel == CUR_SEL && s && s->plugin)
 	  _evry_selector_label_set(sel, "e.text.plugin",
 				   EVRY_ITEM(s->plugin)->label);
 	else
@@ -1224,11 +1227,8 @@ _evry_selector_item_update(Evry_Selector *sel)
      {
 	_evry_selector_label_set(sel, "e.text.label", it->label);
 
-	if (sel == win->selector)
-	  _evry_selector_label_set(sel, "e.text.plugin",
-				   EVRY_ITEM(s->plugin)->label);
-	else
-	  _evry_selector_label_set(sel, "e.text.plugin", "");
+	_evry_selector_label_set(sel, "e.text.plugin",
+				 EVRY_ITEM(it->plugin)->label);
 
 	if (!_evry_selector_thumb(sel, it))
 	  {
@@ -1246,11 +1246,11 @@ _evry_selector_item_update(Evry_Selector *sel)
 
    if (o)
      {
-	if (sel == win->selectors[0])
+	if (sel == SUBJ_SEL)
 	  edje_object_part_swallow(win->o_main, "subject_selector:e.swallow.icons", o);
-	else if (sel == win->selectors[1])
+	else if (sel == ACTN_SEL)
 	  edje_object_part_swallow(win->o_main, "action_selector:e.swallow.icons", o);
-	else if (sel == win->selectors[2])
+	else if (sel == OBJ_SEL)
 	  edje_object_part_swallow(win->o_main, "object_selector:e.swallow.icons", o);
 
 	evas_object_show(o);
@@ -1299,7 +1299,7 @@ _evry_selector_update(Evry_Selector *sel)
 
    _evry_selector_item_update(sel);
 
-   if (sel == win->selectors[0])
+   if (sel == SUBJ_SEL)
      {
 	if (item_changed)
 	  {
@@ -1307,7 +1307,7 @@ _evry_selector_update(Evry_Selector *sel)
 	  }
 	else
 	  {
-	     sel = win->selectors[1];
+	     sel = ACTN_SEL;
 	     if (sel->update_timer)
 	       ecore_timer_del(sel->update_timer);
 	     sel->update_timer = NULL;
@@ -1318,7 +1318,7 @@ _evry_selector_update(Evry_Selector *sel)
 static void
 _evry_list_win_update(Evry_State *s)
 {
-   if (s != win->selector->state) return;
+   if (s != (CUR_SEL)->state) return;
    if (!win->visible) return;
 
    /* if (s->changed) */
@@ -1330,7 +1330,7 @@ _evry_selector_subjects_get(const char *plugin_name)
 {
    Eina_List *l, *plugins = NULL;
    Evry_Plugin *p, *pp;
-   Evry_Selector *sel = win->selectors[0];
+   Evry_Selector *sel = SUBJ_SEL;
 
    EINA_LIST_FOREACH(sel->plugins, l, p)
      {
@@ -1364,7 +1364,7 @@ _evry_selector_actions_get(Evry_Item *it)
 {
    Eina_List *l, *plugins = NULL;
    Evry_Plugin *p, *pp;
-   Evry_Selector *sel = win->selectors[1];
+   Evry_Selector *sel = ACTN_SEL;
 
    while (sel->state)
      _evry_state_pop(sel);
@@ -1398,13 +1398,13 @@ _evry_selector_objects_get(Evry_Action *act)
 {
    Eina_List *l, *plugins = NULL;
    Evry_Plugin *p, *pp;
-   Evry_Selector *sel = win->selectors[2];
+   Evry_Selector *sel = OBJ_SEL;
    Evry_Item *it;
 
    while (sel->state)
      _evry_state_pop(sel);
 
-   it = win->selectors[1]->state->cur_item;
+   it = (ACTN_SEL)->state->cur_item;
 
    EINA_LIST_FOREACH(sel->plugins, l, p)
      {
@@ -1645,7 +1645,7 @@ evry_browse_item(Evry_Item *it)
 int
 evry_browse_back(Evry_Selector *sel)
 {
-   if (!sel) sel = win->selector;
+   if (!sel) sel = CUR_SEL;
    Evry_State *s = sel->state;
 
    DBG("%p", sel);
@@ -1658,7 +1658,7 @@ evry_browse_back(Evry_Selector *sel)
    s = sel->state;
    _evry_aggregator_fetch(sel, s->input);
    _evry_selector_update(sel);
-   if (sel == win->selectors[0])
+   if (sel == SUBJ_SEL)
      _evry_selector_update_actions(sel);
    _evry_update_text_label(s);
    _evry_view_show(s->view);
@@ -1670,61 +1670,62 @@ evry_browse_back(Evry_Selector *sel)
 void
 evry_selectors_switch(int dir)
 {
-   Evry_State *s = win->selector->state;
+   Evry_State *s = (CUR_SEL)->state;
 
    if (win->show_timer)
      _cb_show_timer(NULL);
 
-   if (win->selector->update_timer)
+   if ((CUR_SEL)->update_timer)
      {
-	if ((win->selector == win->selectors[0]) ||
-	    (win->selector == win->selectors[1]))
+	if ((CUR_SEL == SUBJ_SEL) ||
+	    (CUR_SEL == ACTN_SEL))
 	  {
-	     _evry_matches_update(win->selector, 0);
-	     _evry_selector_update(win->selector);
+	     _evry_matches_update(CUR_SEL, 0);
+	     _evry_selector_update(CUR_SEL);
 	  }
      }
 
-   if (win->selector == win->selectors[0] && dir > 0)
+   if (CUR_SEL == SUBJ_SEL && dir > 0)
      {
 	if (s->cur_item)
-	  _evry_selector_activate(win->selectors[1]);
+	  _evry_selector_activate(ACTN_SEL);
      }
-   else if (win->selector == win->selectors[1] && dir > 0)
+   else if (CUR_SEL == ACTN_SEL && dir > 0)
      {
 	int next_selector = 0;
 	Evry_Item *it;
 
 	if (s && (it = s->cur_item) &&
-	    (it->plugin == win->selector->actions))
+	    (it->plugin == (CUR_SEL)->actions))
 	  {
 	     GET_ACTION(act,it);
 	     if (act->it2.type)
 	       {
 		  _evry_selector_objects_get(act);
-		  _evry_selector_update(win->selectors[2]);
-		  edje_object_signal_emit(win->o_main, "e,state,object_selector_show", "e");
+		  _evry_selector_update(OBJ_SEL);
+		  edje_object_signal_emit
+		    (win->o_main, "e,state,object_selector_show", "e");
 		  next_selector = 2;
 	       }
 	  }
 	_evry_selector_activate(win->selectors[next_selector]);
      }
-   else if (win->selector == win->selectors[1] && dir < 0)
+   else if (CUR_SEL == ACTN_SEL && dir < 0)
      {
-	  _evry_selector_activate(win->selectors[0]);
-	  edje_object_signal_emit(win->o_main, "e,state,object_selector_hide", "e");
+	_evry_selector_activate(SUBJ_SEL);
+	edje_object_signal_emit(win->o_main, "e,state,object_selector_hide", "e");
      }
-   else if (win->selector == win->selectors[2] && dir > 0)
+   else if (CUR_SEL == OBJ_SEL && dir > 0)
      {
-	while (win->selector->states)
-	  _evry_state_pop(win->selector);
+	while ((CUR_SEL)->states)
+	  _evry_state_pop(CUR_SEL);
 
 	edje_object_signal_emit(win->o_main, "e,state,object_selector_hide", "e");
-	_evry_selector_activate(win->selectors[0]);
+	_evry_selector_activate(SUBJ_SEL);
      }
-   else if (win->selector == win->selectors[2] && dir < 0)
+   else if (CUR_SEL == OBJ_SEL && dir < 0)
      {
-	_evry_selector_activate(win->selectors[1]);
+	_evry_selector_activate(ACTN_SEL);
      }
 }
 static int
@@ -1749,7 +1750,7 @@ _evry_input_complete(Evry_State *s)
      {
 	strncpy(s->input, input, INPUTLEN - 1);
 	_evry_update_text_label(s);
-	_evry_cb_update_timer(win->selector);
+	_evry_cb_update_timer(CUR_SEL);
 	evry_item_select(s, it);
      }
 
@@ -1910,7 +1911,7 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	  ev->key = "Return";
      }
 
-   if (!win || !(sel = win->selector))
+   if (!win || !(sel = CUR_SEL))
      goto end;
 
    if (!strcmp(ev->key, "Tab") &&
@@ -1927,6 +1928,7 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
    if (!win->visible && (!strcmp(ev->key, "Down")))
      {
 	_evry_list_win_show();
+	goto end;
      }
    else if ((!strcmp(ev->key, "ISO_Left_Tab") ||
 	     (((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) ||
@@ -1955,7 +1957,7 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	     goto end;
 	  }
 	else if (!strcmp(ev->key, "1"))
-	  _evry_view_toggle(s, NULL);
+	  evry_view_toggle(s, NULL);
 	else if (!strcmp(ev->key, "Return"))
 	  _evry_plugin_action(sel, 0);
 	else if (!strcmp(ev->key, "v"))
@@ -1980,7 +1982,7 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
    else if (!strcmp(ev->key, "Right"))
      {
 	if (!evry_browse_item(sel->state->cur_item) &&
-	    (sel != win->selectors[2]))
+	    (sel != OBJ_SEL))
 	  evry_selectors_switch(1);
      }
    else if (!strcmp(ev->key, "Left"))
@@ -2006,7 +2008,7 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
      {
 	int len = strlen(s->inp);
 
-	if (len == 0 && (_evry_view_toggle(s, ev->compose)))
+	if (len == 0 && (evry_view_toggle(s, ev->compose)))
 	  goto end;
 
 	if (len < (INPUTLEN - strlen(ev->compose)))
@@ -2168,7 +2170,7 @@ _evry_action_do(Evry_Action *act)
 void
 evry_plugin_action(int finished)
 {
-   _evry_plugin_action(win->selector, finished);
+   _evry_plugin_action(CUR_SEL, finished);
 }
 
 static void
@@ -2178,30 +2180,30 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
    Evry_Item *it, *it_subj, *it_act, *it_obj = NULL;
    Eina_List *l;
 
-   if (win->selectors[0]->update_timer)
+   if ((SUBJ_SEL)->update_timer)
      {
-	_evry_matches_update(win->selectors[0], 0);
-	_evry_selector_update(win->selectors[0]);
+	_evry_matches_update(SUBJ_SEL, 0);
+	_evry_selector_update(SUBJ_SEL);
      }
 
-   if (!(s_subj = win->selectors[0]->state))
+   if (!(s_subj = (SUBJ_SEL)->state))
      return;
 
    if (!(it_subj = s_subj->cur_item))
      return;
 
-   if (win->selector == win->selectors[0] &&
-       win->selectors[1]->update_timer)
+   if (CUR_SEL == SUBJ_SEL &&
+       (ACTN_SEL)->update_timer)
      {
 	_evry_selector_actions_get(it_subj);
 
-	if (!win->selectors[1]->state)
+	if (!(ACTN_SEL)->state)
 	  return;
 
-	_evry_selector_update(win->selectors[1]);
+	_evry_selector_update(ACTN_SEL);
      }
 
-   if (!(s_act = win->selectors[1]->state))
+   if (!(s_act = (ACTN_SEL)->state))
      return;
 
    if (!(it_act = s_act->cur_item))
@@ -2219,14 +2221,14 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 	if (act->it2.type)
 	  {
 	     /* check if object is provided */
-	     if ((s_obj = win->selectors[2]->state))
+	     if ((s_obj = (OBJ_SEL)->state))
 	       {
 		  it_obj = s_obj->cur_item;
 	       }
 
 	     if (!it_obj)
 	       {
-		  if (win->selectors[1] == win->selector)
+		  if (ACTN_SEL == CUR_SEL)
 		    evry_selectors_switch(1);
 		  return;
 	       }
@@ -2353,8 +2355,8 @@ _evry_view_key_press(Evry_State *s, Ecore_Event_Key *ev)
    return s->view->cb_key_down(s->view, ev);
 }
 
-static int
-_evry_view_toggle(Evry_State *s, const char *trigger)
+int
+evry_view_toggle(Evry_State *s, const char *trigger)
 {
    Evry_View *view, *v = NULL;
    Eina_List *l, *ll;
@@ -2423,17 +2425,17 @@ _evry_matches_update(Evry_Selector *sel, int async)
    Evry_Plugin *p;
    Eina_List *l;
    Evry_Item *it;
-   const char *input;
+   const char *input = NULL;
+   int len_inp = 0;
 
    s->changed = 1;
+   s->request++;
 
    if (s->inp[0])
-     input = s->inp;
-   else
-     input = NULL;
-
-   s->request++;
-   DBG("matches update %d", s->request);
+     {
+	len_inp = strlen(s->inp);
+	input = s->inp;
+     }
 
    if (s->sel_items)
      eina_list_free(s->sel_items);
@@ -2459,7 +2461,6 @@ _evry_matches_update(Evry_Selector *sel, int async)
    if (!s->cur_plugins && input)
      {
 	int len_trigger = 0;
-	int len_inp = strlen(s->inp);
 
 	EINA_LIST_FOREACH(s->plugins, l, p)
 	  {
@@ -2503,13 +2504,20 @@ _evry_matches_update(Evry_Selector *sel, int async)
      {
 	EINA_LIST_FOREACH(s->plugins, l, p)
 	  {
-	     /* skip plugins in toplevel which trigger-only */
-	     if ((!(sel->states->next)) &&
-		 (sel == win->selectors[0]) &&
-		 (p->config->top_level) &&
-		 (p->config->trigger) &&
-		 (p->config->trigger_only))
-	       continue;
+	    if (!sel->states->next)
+	      {
+		 /* skip plugins in toplevel which trigger-only */
+		 if ((sel == SUBJ_SEL) &&
+		     (p->config->top_level) &&
+		     (p->config->trigger) &&
+		     (p->config->trigger_only))
+		   continue;
+
+		 /* skip non-toplevel plugins when input < min_query */
+		 if ((!p->config->top_level) &&
+		     (p->config->min_query > len_inp))
+		   continue;
+	      }
 
 	     /* dont wait for async plugin. use their current items */
 	     if (!async && p->async_fetch && p->items)
@@ -2628,7 +2636,7 @@ _evry_cb_selection_notify(void *data, int type, void *event)
 {
    Ecore_X_Event_Selection_Notify *ev;
    /* FIXME Evry_Selector *sel = data; */
-   Evry_State *s = win->selector->state;
+   Evry_State *s = (CUR_SEL)->state;
 
    if (!s || (data != win)) return 1;
    if (!win->request_selection) return 1;
@@ -2646,7 +2654,7 @@ _evry_cb_selection_notify(void *data, int type, void *event)
 	     text_data = ev->data;
 
 	     strncat(s->input, text_data->text, (INPUTLEN - strlen(s->input)) - 1);
-	     _evry_update(win->selector, 1);
+	     _evry_update(CUR_SEL, 1);
 	  }
      }
 

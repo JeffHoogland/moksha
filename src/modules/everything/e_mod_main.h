@@ -209,6 +209,7 @@ void  evry_clear_input(Evry_Plugin *p);
 Evas_Object *evry_icon_mime_get(const char *mime, Evas *e);
 Evas_Object *evry_icon_theme_get(const char *icon, Evas *e);
 int   evry_fuzzy_match(const char *str, const char *match);
+int   evry_fuzzy_match_len(const char *str, const char *match, int len);
 Eina_List *evry_fuzzy_match_sort(Eina_List *items);
 int   evry_util_exec_app(const Evry_Item *it_app, const Evry_Item *it_file);
 char *evry_util_url_escape(const char *string, int inlength);
@@ -296,10 +297,11 @@ void  evry_history_free(void);
 int   evry_browse_item(Evry_Item *it);
 int   evry_browse_back(Evry_Selector *sel);
 
-void evry_plugin_action(int finished);
+void  evry_plugin_action(int finished);
 
-int evry_state_push(Evry_Selector *sel, Eina_List *plugins);
-void evry_selectors_switch(int dir);
+int   evry_state_push(Evry_Selector *sel, Eina_List *plugins);
+void  evry_selectors_switch(int dir);
+int   evry_view_toggle(Evry_State *s, const char *trigger);
 
 extern Evry_History *evry_hist;
 extern Evry_Config  *evry_conf;

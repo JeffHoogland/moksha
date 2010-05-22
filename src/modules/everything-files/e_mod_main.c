@@ -2,7 +2,10 @@
  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
 
-/* TODO option for maximum items to cache */
+/***************************************************
+  TODO option for maximum items to cache 
+  TODO keep common list for recent file instances
+*/
 
 #include "e.h"
 #include "e_mod_main.h"
@@ -466,7 +469,8 @@ _scan_end_func(void *data)
 	       {
 		  GET_FILE(file, item);
 
-		  if ((!(item->hi) && (hi = evry->history_item_add(item, NULL, NULL))))
+		  if (!(item->hi) &&
+		      (hi = evry->history_item_add(item, NULL, NULL)))
 		    {
 		       hi->last_used = SIX_DAYS_AGO;
 		       hi->usage = MIN_USAGE * (double) cnt++;
@@ -594,26 +598,37 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
    if (it)
      {
 	const char *dir = NULL;
-	/* provide object */
+
 	if ((CHECK_TYPE(it, EVRY_TYPE_FILE)) ||
-		 (CHECK_SUBTYPE(it, EVRY_TYPE_FILE)))
+	    (CHECK_SUBTYPE(it, EVRY_TYPE_FILE)))
 	  {
+	     /* browse */
 	     GET_FILE(file, it);
 	     if (!evry->file_path_get(file))
 	       return NULL;
 
-	     char *tmp = ecore_file_dir_get(file->path);
-	     dir = eina_stringshare_add(tmp);
-	     E_FREE(tmp);
+	     if (!ecore_file_is_dir(file->path))
+	       {
+		  char *tmp = ecore_file_dir_get(file->path);
+		  dir = eina_stringshare_add(tmp);
+		  E_FREE(tmp);
+	       }
+	     else
+	       {
+		  dir = eina_stringshare_add(file->path);
+	       }
 	  }
-	else return NULL;
+	else
+	  {
+	     /* provide object */
+	     if (!CHECK_TYPE(it, EVRY_TYPE_ACTION))
+	       return NULL;
+	  }
 
 	if (!dir)
 	  dir = eina_stringshare_add(e_user_homedir_get());
 
-	p = E_NEW(Plugin, 1);
-	p->base = *plugin;
-	p->base.items = NULL;
+	EVRY_PLUGIN_INSTANCE(p, plugin);
 	p->directory = dir;
 	p->parent = EINA_FALSE;
 	_read_directory(p);
@@ -621,9 +636,7 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
    else
      {
 	/* provide subject */
-	p = E_NEW(Plugin, 1);
-	p->base = *plugin;
-	p->base.items = NULL;
+	EVRY_PLUGIN_INSTANCE(p, plugin);
 	p->min_query = plugin->config->min_query;
 
 	if (_conf->show_homedir)
@@ -1072,10 +1085,7 @@ _recentf_browse(Evry_Plugin *plugin, const Evry_Item *it)
        !ecore_file_is_dir(file->path))
      return NULL;
 
-   p = E_NEW(Plugin, 1);
-   p->base = *plugin;
-   p->base.items = NULL;
-
+   EVRY_PLUGIN_INSTANCE(p, plugin);
    p->directory = eina_stringshare_add(file->path);
    p->parent = EINA_TRUE;
 
@@ -1282,30 +1292,27 @@ _plugins_init(const Evry_API *api)
    _mime_dir = eina_stringshare_add("inode/directory");
    _mime_mount = eina_stringshare_add("inode/mountpoint");
 
-#define PLUGIN_NEW(_name, _icon, _begin, _finish, _fetch) \
-   p = EVRY_PLUGIN_NEW(Evry_Plugin, _name, _icon, EVRY_TYPE_FILE, \
-		       _begin, _finish, _fetch, NULL);	\
-   p->config_path = "extensions/everything-files";	\
-   _plugins = eina_list_append(_plugins, p);		\
+#define PLUGIN_NEW(_name, _icon, _begin, _finish, _fetch, _browse) \
+   p = EVRY_PLUGIN_NEW(Evry_Plugin, _name, _icon, EVRY_TYPE_FILE,  \
+		       _begin, _finish, _fetch, NULL);		   \
+   p->browse = &_browse;					   \
+   p->config_path = "extensions/everything-files";		   \
+   _plugins = eina_list_append(_plugins, p);			   \
 
 
-   PLUGIN_NEW(N_("Files"), _module_icon,
-	      _begin, _finish, _fetch);
-   p->browse = &_browse;
+   PLUGIN_NEW(N_("Files"), _module_icon, _begin, _finish, _fetch, _browse);
    p->input_type = EVRY_TYPE_FILE;
    if (evry->plugin_register(p, EVRY_PLUGIN_SUBJECT, 2))
      p->config->min_query = 1;
 
-   PLUGIN_NEW(N_("Files"), _module_icon,
-	      _begin, _finish, _fetch);
-   p->browse = &_browse;
+   PLUGIN_NEW(N_("Files"), _module_icon, _begin, _finish, _fetch, _browse);
    evry->plugin_register(p, EVRY_PLUGIN_OBJECT, 2);
 
    if (_conf->show_recent || _conf->search_recent)
      {
 	PLUGIN_NEW(N_("Recent Files"), _module_icon,
-		   _recentf_begin, _finish, _recentf_fetch);
-	p->browse = &_recentf_browse;
+		   _recentf_begin, _finish, _recentf_fetch, _recentf_browse);
+
 	if (evry->plugin_register(p, EVRY_PLUGIN_SUBJECT, 3))
 	  {
 	     p->config->top_level = EINA_FALSE;
@@ -1313,8 +1320,8 @@ _plugins_init(const Evry_API *api)
 	  }
 
 	PLUGIN_NEW(N_("Recent Files"), _module_icon,
-		   _recentf_begin, _finish, _recentf_fetch);
-	p->browse = &_recentf_browse;
+		   _recentf_begin, _finish, _recentf_fetch, _recentf_browse);
+
 	if (evry->plugin_register(p, EVRY_PLUGIN_OBJECT, 3))
 	  {
 	     p->config->top_level = EINA_FALSE;
