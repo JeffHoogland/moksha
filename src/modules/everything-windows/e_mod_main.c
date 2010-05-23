@@ -344,7 +344,31 @@ _act_border(Evry_Action *act)
 	else
 	  e_border_raise(bd);
 
-	e_border_focus_set_with_pointer(bd);
+	if (!bd->lock_focus_out)
+	  {
+	     e_border_focus_set(bd, 1, 1);
+	     e_border_focus_latest_set(bd);
+	  }
+
+	if ((e_config->focus_policy != E_FOCUS_CLICK) ||
+	    (e_config->winlist_warp_at_end) ||
+	    (e_config->winlist_warp_while_selecting))
+	  {
+	     int warp_to_x = bd->x + (bd->w / 2);
+	     if (warp_to_x < (bd->zone->x + 1))
+	       warp_to_x = bd->zone->x + ((bd->x + bd->w - bd->zone->x) / 2);
+	     else if (warp_to_x >= (bd->zone->x + bd->zone->w - 1))
+	       warp_to_x = (bd->zone->x + bd->zone->w + bd->x) / 2;
+
+	     int warp_to_y = bd->y + (bd->h / 2);
+	     if (warp_to_y < (bd->zone->y + 1))
+	       warp_to_y = bd->zone->y + ((bd->y + bd->h - bd->zone->y) / 2);
+	     else if (warp_to_y >= (bd->zone->y + bd->zone->h - 1))
+	       warp_to_y = (bd->zone->y + bd->zone->h + bd->y) / 2;
+
+	     ecore_x_pointer_warp(bd->zone->container->win, warp_to_x, warp_to_y);
+	  }
+	/* e_border_focus_set_with_pointer(bd); */
      }
 
    return 1;
