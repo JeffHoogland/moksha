@@ -159,6 +159,7 @@ _create_data(E_Config_Dialog *cfd)
      {
         m2 = E_NEW(Match_Config, 1);
         _match_dup(m, m2);
+	m2->cfd = cfd;
         cfdata->match.overrides = eina_list_append(cfdata->match.overrides, m2);
      }
    
@@ -531,7 +532,7 @@ _edit_ok(void *d1, void *d2)
    m->match.argb = m->argb;
    m->match.fullscreen = m->fullscreen;
    m->match.modal = m->modal;
-   
+
    il = m->cfd->cfdata->edit_il;
    n = e_widget_ilist_selected_get(il);
    e_widget_ilist_nth_label_set(il, n, _match_label_get(m));
