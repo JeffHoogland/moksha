@@ -23,24 +23,13 @@ temperature_udev_update(void *data)
    temp = -999;
 
    if (!inst->tempdevs)
-     {
         inst->tempdevs = eeze_udev_find_by_type(EEZE_UDEV_TYPE_IS_IT_HOT_OR_IS_IT_COLD_SENSOR, NULL);
-        EINA_LIST_FOREACH_SAFE(inst->tempdevs, l, l2, syspath)
-          {
-             if ((eeze_udev_syspath_get_sysattr(syspath, "fan1_input")) ||
-		 (eeze_udev_syspath_get_sysattr(syspath, "pwm1_stop_time")))
-               {
-                  eina_stringshare_del(syspath);
-                  inst->tempdevs = eina_list_remove_list(inst->tempdevs, l);
-               }
-          }
-     }
    if (eina_list_count(inst->tempdevs))
      {
         temp = 0;
         EINA_LIST_FOREACH(inst->tempdevs, l, syspath)
           {
-	     /*FIXME: probably should make a function to count the cpus and loop this */
+	     /*FIXME: probably should make a function to count the cpus and loop this or something? */
              if ((test = eeze_udev_syspath_get_sysattr(syspath, "temp1_input")))
                {
                   temp += (strtod(test, NULL) / 1000); /* udev reports temp in (celcius * 1000) for some reason */
@@ -52,6 +41,11 @@ temperature_udev_update(void *data)
                   cpus++;
                }
              if ((test = eeze_udev_syspath_get_sysattr(syspath, "temp3_input")))
+               {
+                  temp += (strtod(test, NULL) / 1000); /* udev reports temp in (celcius * 1000) for some reason */
+                  cpus++;
+               }
+             if ((test = eeze_udev_syspath_get_sysattr(syspath, "temp4_input")))
                {
                   temp += (strtod(test, NULL) / 1000); /* udev reports temp in (celcius * 1000) for some reason */
                   cpus++;
