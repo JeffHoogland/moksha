@@ -25,7 +25,7 @@ static void on_move(void *data, Evas_Object *o, const char *em, const char *src)
 static void on_frame_click(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void on_bg_click(void *data, Evas_Object *o, const char *em, const char *src);
 static void on_hide_stop(void *data __UNUSED__, Evas_Object *o __UNUSED__,
-        const char *em __UNUSED__, const char *src __UNUSED__);
+			 const char *em __UNUSED__, const char *src __UNUSED__);
 
 static void on_menu_style_plain(void *data, E_Menu *m, E_Menu_Item *mi);
 static void on_menu_style_inset(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -69,7 +69,9 @@ gadman_init(E_Module *m)
    e_container_shape_change_callback_add(Man->container, on_shape_change, NULL);
 
    /* create and register "desktop" location */
-   location = e_gadcon_location_new ("Desktop", E_GADCON_SITE_DESKTOP, _e_gadman_client_add, NULL, _e_gadman_client_remove, NULL);
+   location = e_gadcon_location_new ("Desktop", E_GADCON_SITE_DESKTOP, 
+				     _e_gadman_client_add, NULL, 
+				     _e_gadman_client_remove, NULL);
    e_gadcon_location_set_icon_name(location, "preferences-desktop");
    e_gadcon_location_register(location);
 
@@ -81,7 +83,9 @@ gadman_init(E_Module *m)
 
 	for (layer = 0; layer < GADMAN_LAYER_COUNT; layer++)
 	  {
-	     E_Gadcon *gc = _gadman_gadcon_new(layer_name[layer], layer, zone, location);
+	     E_Gadcon *gc;
+
+	     gc = _gadman_gadcon_new(layer_name[layer], layer, zone, location);
 	     Man->gadcons[layer] = eina_list_append(Man->gadcons[layer], gc);
 	  }
      }
@@ -205,7 +209,7 @@ gadman_gadget_place(E_Config_Gadcon_Client *cf, Gadman_Layer_Type layer, E_Zone 
 
    /* Call the client orientation function */
    if (cc->func.orient)
-       cc->func.orient(gcc, gcc->cf->orient);
+     cc->func.orient(gcc, gcc->cf->orient);
 
    _apply_widget_position(gcc);
 
@@ -225,19 +229,24 @@ gadman_gadget_add(const E_Gadcon_Client_Class *cc, Gadman_Layer_Type layer)
    E_Gadcon *gc;
    int w, h;
 
-   gc = gadman_gadcon_get
-     (e_util_zone_current_get(e_manager_current_get()), layer);
+   gc = gadman_gadcon_get(e_util_zone_current_get(e_manager_current_get()), 
+			  layer);
 
    /* Create Config_Gadcon_Client */
    cf = e_gadcon_client_config_new(gc, cc->name);
-   cf->style = eina_stringshare_add(cc->default_style);
-   cf->geom.pos_x = DEFAULT_POS_X;
-   cf->geom.pos_y = DEFAULT_POS_Y;
-   cf->geom.size_w = DEFAULT_SIZE_W;
-   cf->geom.size_h = DEFAULT_SIZE_H;
+   if (cf) 
+     {
+	cf->style = eina_stringshare_add(cc->default_style);
+	cf->geom.pos_x = DEFAULT_POS_X;
+	cf->geom.pos_y = DEFAULT_POS_Y;
+	cf->geom.size_w = DEFAULT_SIZE_W;
+	cf->geom.size_h = DEFAULT_SIZE_H;
+     }
 
    /* Place the new gadget */
-   gcc = gadman_gadget_place(cf, layer, gc->zone);
+   if (cf)
+     gcc = gadman_gadget_place(cf, layer, gc->zone);
+   if (!gcc) return NULL;
 
    /* Respect Aspect */
    evas_object_geometry_get(gcc->o_frame, NULL, NULL, &w, &h);
@@ -260,10 +269,7 @@ gadman_gadget_remove(E_Gadcon_Client *gcc, Gadman_Layer_Type layer)
 {
    Man->gadgets[layer] = eina_list_remove(Man->gadgets[layer], gcc);
 
-   edje_object_part_unswallow(gcc->o_frame, gcc->o_base);
-   evas_object_del(gcc->o_frame);
-
-   gcc->gadcon->clients = eina_list_remove(gcc->gadcon->clients, gcc);
+//   edje_object_part_unswallow(gcc->o_frame, gcc->o_base);
 
    e_object_del(E_OBJECT(gcc));
    current = NULL;
@@ -275,13 +281,10 @@ gadman_gadget_del(E_Gadcon_Client *gcc)
    Gadman_Layer_Type layer = gcc->gadcon->id - ID_GADMAN_LAYER_BASE;
    Man->gadgets[layer] = eina_list_remove(Man->gadgets[layer], gcc);
 
-   edje_object_part_unswallow(gcc->o_frame, gcc->o_base);
-   evas_object_del(gcc->o_frame);
+//   edje_object_part_unswallow(gcc->o_frame, gcc->o_base);
 
-   e_gadcon_client_config_del(current->gadcon->cf, gcc->cf);
-   gcc->gadcon->clients = eina_list_remove(gcc->gadcon->clients, gcc);
+   if (gcc->cf) e_gadcon_client_config_del(gcc->gadcon->cf, gcc->cf);
    e_object_del(E_OBJECT(gcc));
-
    current = NULL;
 }
 
@@ -482,11 +485,11 @@ _gadman_gadcon_new(const char* name, Gadman_Layer_Type layer, E_Zone *zone, E_Ga
    if (layer > GADMAN_LAYER_BG)
      {
         if (!Man->top_ee)
-        {
-          Man->top_ee = e_canvas_new(e_config->evas_engine_popups,
-                                     Man->container->win, 0, 0, 0, 0, 1, 1,
-                                     &(Man->top_win));
-        }
+	  {
+	     Man->top_ee = e_canvas_new(e_config->evas_engine_popups,
+					Man->container->win, 0, 0, 0, 0, 1, 1,
+					&(Man->top_win));
+	  }
 
         if (Man->use_composite)
           {
@@ -549,7 +552,7 @@ _gadman_gadcon_new(const char* name, Gadman_Layer_Type layer, E_Zone *zone, E_Ga
    gc->cf = NULL;
    EINA_LIST_FOREACH(e_config->gadcons, l, cg)
      {
-        if (!strcmp(cg->name, name) && (cg->zone == zone->id))
+        if ((!strcmp(cg->name, name)) && (cg->zone == zone->id))
           {
              gc->cf = cg;
              break;
@@ -676,8 +679,10 @@ _apply_widget_position(E_Gadcon_Client *gcc)
    if (x > (zone->x + zone->w)) x = zone->x;
    if (y > (zone->y + zone->h)) y = zone->y;
 
-   if ((y + h) > (zone->y + zone->h + MIN_VISIBLE_MARIGIN)) h = ((zone->y + zone->h + MIN_VISIBLE_MARIGIN) - y);
-   if ((x + w) > (zone->x + zone->w + MIN_VISIBLE_MARIGIN)) w = ((zone->x + zone->w + MIN_VISIBLE_MARIGIN) - x);
+   if ((y + h) > (zone->y + zone->h + MIN_VISIBLE_MARIGIN)) 
+     h = ((zone->y + zone->h + MIN_VISIBLE_MARIGIN) - y);
+   if ((x + w) > (zone->x + zone->w + MIN_VISIBLE_MARIGIN)) 
+     w = ((zone->x + zone->w + MIN_VISIBLE_MARIGIN) - x);
 
    evas_object_move(gcc->o_frame, x, y);
    evas_object_resize(gcc->o_frame, w, h);
@@ -1357,21 +1362,19 @@ on_bg_click(void *data, Evas_Object *o, const char *em, const char *src)
 }
 
 static void
-on_hide_stop(void *data __UNUSED__, Evas_Object *o __UNUSED__,
-        const char *em __UNUSED__, const char *src __UNUSED__)
+on_hide_stop(void *data __UNUSED__, Evas_Object *o __UNUSED__, const char *em __UNUSED__, const char *src __UNUSED__)
 {
    ecore_evas_hide(Man->top_ee);
 }
 
 static int 
-_e_gadman_client_add (void *data __UNUSED__, const E_Gadcon_Client_Class *cc)
+_e_gadman_client_add(void *data __UNUSED__, const E_Gadcon_Client_Class *cc)
 {
    return !!gadman_gadget_add(cc, GADMAN_LAYER_BG);
 }
 
 static void 
-_e_gadman_client_remove (void *data __UNUSED__, E_Gadcon_Client *gcc)
+_e_gadman_client_remove(void *data __UNUSED__, E_Gadcon_Client *gcc)
 {
    gadman_gadget_del(gcc);
 }
-
