@@ -13,11 +13,10 @@ temperature_udev_update(void *data)
 {
    Config_Face *inst;
    Eina_List *l, *l2;
-   double temp;
+   double cur, temp, cpus = 0;
    char *syspath;
    const char *test;
    char buf[256];
-   double cpus = 0;
 
    inst = data;
    temp = -999;
@@ -32,23 +31,39 @@ temperature_udev_update(void *data)
 	     /*FIXME: probably should make a function to count the cpus and loop this or something? */
              if ((test = eeze_udev_syspath_get_sysattr(syspath, "temp1_input")))
                {
-                  temp += (strtod(test, NULL) / 1000); /* udev reports temp in (celcius * 1000) for some reason */
-                  cpus++;
+                  cur = strtod(test, NULL);
+                  if (cur > -1000)
+                    {
+                       temp += (cur / 1000); /* udev reports temp in (celcius * 1000) for some reason */
+                       cpus++;
+                    }
                }
              if ((test = eeze_udev_syspath_get_sysattr(syspath, "temp2_input")))
                {
-                  temp += (strtod(test, NULL) / 1000); /* udev reports temp in (celcius * 1000) for some reason */
-                  cpus++;
+                  cur = strtod(test, NULL);
+                  if (cur > -1000)
+                    {
+                       temp += (cur / 1000); /* udev reports temp in (celcius * 1000) for some reason */
+                       cpus++;
+                    }
                }
              if ((test = eeze_udev_syspath_get_sysattr(syspath, "temp3_input")))
                {
-                  temp += (strtod(test, NULL) / 1000); /* udev reports temp in (celcius * 1000) for some reason */
-                  cpus++;
+                  cur = strtod(test, NULL);
+                  if (cur > -1000)
+                    {
+                       temp += (cur / 1000); /* udev reports temp in (celcius * 1000) for some reason */
+                       cpus++;
+                    }
                }
              if ((test = eeze_udev_syspath_get_sysattr(syspath, "temp4_input")))
                {
-                  temp += (strtod(test, NULL) / 1000); /* udev reports temp in (celcius * 1000) for some reason */
-                  cpus++;
+                  cur = strtod(test, NULL);
+                  if (cur > -1000)
+                    {
+                       temp += (cur / 1000); /* udev reports temp in (celcius * 1000) for some reason */
+                       cpus++;
+                    }
                }
           }
         temp /= cpus;
