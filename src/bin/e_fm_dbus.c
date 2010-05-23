@@ -523,7 +523,7 @@ e_fm2_dbus_mount_fail(E_Volume *v)
 
    EINA_LIST_FREE(v->mounts, m)
      {
-        _e_fm2_dbus_unmount_ok(m);
+        _e_fm2_dbus_mount_fail(m);
         _e_fm2_dbus_mount_free(m);
      }
 }
@@ -568,7 +568,6 @@ _e_fm2_dbus_mount_ok(E_Fm2_Mount *m)
 static void
 _e_fm2_dbus_mount_fail(E_Fm2_Mount *m)
 {
-   if (!m->mounted) return;
    m->mounted = 0;
    if (m->mount_point)
      {
