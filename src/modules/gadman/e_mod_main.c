@@ -107,7 +107,7 @@ e_modapi_shutdown(E_Module *m)
    if (Man->maug)
      e_int_menus_menu_augmentation_del("config/1", Man->maug);
 
-   e_configure_registry_item_del("extensions/deskman");
+   e_configure_registry_item_del("extensions/gadman");
    e_configure_registry_category_del("extensions");
 
    if (Man->config_dialog)
