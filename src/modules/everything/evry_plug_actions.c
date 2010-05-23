@@ -86,6 +86,22 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
 	p->actions = eina_list_remove(p->actions, act);
      }
 
+   /* FIXME this requires plugins to always provide an item..*/
+   if (it->plugin)
+     {
+	EINA_LIST_FOREACH(it->plugin->actions, l, act)
+	  {
+	     act->base.plugin = plugin;
+
+	     if (!eina_list_data_find_list(p->actions, act))
+	       {
+		  act->it1.item = EVRY_ITEM(it->plugin);
+		  EVRY_ITEM(act)->hi = NULL;
+		  p->actions = eina_list_append(p->actions, act);
+	       }
+	  }
+     }
+   
    if (!p->actions) return NULL;
 
    return plugin;

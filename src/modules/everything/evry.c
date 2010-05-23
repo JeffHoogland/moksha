@@ -1874,41 +1874,61 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
      {
 	ev->key = "Return";
      }
-   else if (((evry_conf->quick_nav == 1) && (ev->modifiers & ECORE_EVENT_MODIFIER_ALT)) ||
-       ((evry_conf->quick_nav == 2) && (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)))
+   else if (ev->modifiers & ECORE_EVENT_MODIFIER_ALT)
      {
-	if (!strcmp(ev->key, "k") || (!strcmp(ev->key, "K")))
-	  ev->key = "Up";
-	else if (!strcmp(ev->key, "j") || (!strcmp(ev->key, "J")))
-	  ev->key = "Down";
-	else if (!strcmp(ev->key, "n") || (!strcmp(ev->key, "N")))
-	  ev->key = "Next";
-	else if (!strcmp(ev->key, "p") || (!strcmp(ev->key, "P")))
-	  ev->key = "Prior";
-	else if (!strcmp(ev->key, "l") || (!strcmp(ev->key, "L")))
-	  ev->key = "Right";
-	else if (!strcmp(ev->key, "h") || (!strcmp(ev->key, "H")))
-	  ev->key = "Left";
-	else if (!strcmp(ev->key, "i") || (!strcmp(ev->key, "I")))
-	  ev->key = "Tab";
-	else if (!strcmp(ev->key, "m") || (!strcmp(ev->key, "M")))
-	  ev->key = "Return";
-     }
-   else if (((evry_conf->quick_nav == 3) && (ev->modifiers & ECORE_EVENT_MODIFIER_ALT)) ||
-	    ((evry_conf->quick_nav == 4) && (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)))
-     {
-	if (!strcmp(ev->key, "p") || (!strcmp(ev->key, "P")))
-	  ev->key = "Up";
-	else if (!strcmp(ev->key, "n") || (!strcmp(ev->key, "N")))
-	  ev->key = "Down";
-	else if (!strcmp(ev->key, "f") || (!strcmp(ev->key, "F")))
-	  ev->key = "Right";
-	else if (!strcmp(ev->key, "b") || (!strcmp(ev->key, "B")))
-	  ev->key = "Left";
-	else if (!strcmp(ev->key, "i") || (!strcmp(ev->key, "I")))
-	  ev->key = "Tab";
-	else if (!strcmp(ev->key, "m") || (!strcmp(ev->key, "M")))
-	  ev->key = "Return";
+	if (!strcmp(ev->key, "Tab"))
+	  {
+	     ev->key = "Down";
+	  }
+	else if (!strcmp(ev->key, "ISO_Left_Tab") || (!strcmp(ev->key, "Tab") &&
+		  (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)))
+	  {
+	     ev->key = "Up";
+	     ev->modifiers = 0;
+	  }
+	else if (!strcmp(ev->key, "q"))
+	  {
+	     evry_hide(0);
+	     return 1;
+	  }
+	else if (!strcmp(ev->key, "w"))
+	  {
+	     ev->key = "Return";
+	  }
+	else if (evry_conf->quick_nav == 1)
+	  {
+	     if (!strcmp(ev->key, "k") || (!strcmp(ev->key, "K")))
+	       ev->key = "Up";
+	     else if (!strcmp(ev->key, "j") || (!strcmp(ev->key, "J")))
+	       ev->key = "Down";
+	     else if (!strcmp(ev->key, "n") || (!strcmp(ev->key, "N")))
+	       ev->key = "Next";
+	     else if (!strcmp(ev->key, "p") || (!strcmp(ev->key, "P")))
+	       ev->key = "Prior";
+	     else if (!strcmp(ev->key, "l") || (!strcmp(ev->key, "L")))
+	       ev->key = "Right";
+	     else if (!strcmp(ev->key, "h") || (!strcmp(ev->key, "H")))
+	       ev->key = "Left";
+	     else if (!strcmp(ev->key, "i") || (!strcmp(ev->key, "I")))
+	       ev->key = "Tab";
+	     else if (!strcmp(ev->key, "m") || (!strcmp(ev->key, "M")))
+	       ev->key = "Return";
+	  }
+	else if (evry_conf->quick_nav == 3)
+	  {
+	     if (!strcmp(ev->key, "p") || (!strcmp(ev->key, "P")))
+	       ev->key = "Up";
+	     else if (!strcmp(ev->key, "n") || (!strcmp(ev->key, "N")))
+	       ev->key = "Down";
+	     else if (!strcmp(ev->key, "f") || (!strcmp(ev->key, "F")))
+	       ev->key = "Right";
+	     else if (!strcmp(ev->key, "b") || (!strcmp(ev->key, "B")))
+	       ev->key = "Left";
+	     else if (!strcmp(ev->key, "i") || (!strcmp(ev->key, "I")))
+	       ev->key = "Tab";
+	     else if (!strcmp(ev->key, "m") || (!strcmp(ev->key, "M")))
+	       ev->key = "Return";
+	  }
      }
 
    if (!win || !(sel = CUR_SEL))
@@ -2238,6 +2258,9 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 
 	if (s_obj && s_obj->sel_items  && !(act->it2.accept_list))
 	  {
+	     if (!(act->it1.item && CHECK_TYPE(act->it1.item, EVRY_TYPE_PLUGIN)))
+	       act->it1.item = it_subj;
+
 	     EINA_LIST_FOREACH(s_obj->sel_items, l, it)
 	       {
 		  if (it->type != act->it2.type)
@@ -2260,8 +2283,11 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 	  }
 	else
 	  {
-	     act->it1.item = it_subj;
-	     act->it1.items = s_subj->sel_items;
+	     if (!(act->it1.item && CHECK_TYPE(act->it1.item, EVRY_TYPE_PLUGIN)))
+	       {
+		  act->it1.item = it_subj;
+		  act->it1.items = s_subj->sel_items;
+	       }
 
 	     if (s_obj)
 	       act->it2.items = s_obj->sel_items;

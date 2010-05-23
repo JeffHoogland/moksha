@@ -191,7 +191,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
      }
 
    items = eina_list_sort(items, -1, evry_items_sort_func);
-   
+
    EINA_LIST_FOREACH(items, l, it)
      {
 	/* remove duplicates provided by different plugins */
@@ -211,7 +211,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	     evry_item_ref(it);
 	     EVRY_PLUGIN_ITEM_APPEND(p, it);
 	  }
-	
+
 	if (cnt++ > MAX_ITEMS)
 	  break;
 

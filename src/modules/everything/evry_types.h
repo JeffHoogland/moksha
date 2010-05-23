@@ -109,6 +109,8 @@ struct _Evry_Action
   void (*free)       (Evry_Action *act);
   /* optional: must be defined when  action is browseable */
   Eina_List *(*fetch) (Evry_Action *act);
+
+  /* int method; */
 };
 
 struct _Evry_Item_App
@@ -126,6 +128,8 @@ struct _Evry_Item_File
   const char *url;
   const char *path;
   const char *mime;
+
+  unsigned int modified;
 };
 
 struct _Evry_Plugin

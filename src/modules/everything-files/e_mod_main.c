@@ -3,7 +3,7 @@
  */
 
 /***************************************************
-  TODO option for maximum items to cache 
+  TODO option for maximum items to cache
   TODO keep common list for recent file instances
 */
 
@@ -25,6 +25,8 @@
 #define ACT_DELETE	2
 #define ACT_COPY	3
 #define ACT_MOVE	4
+#define ACT_SORT_DATE	5
+#define ACT_SORT_NAME	6
 
 #define ONE_DAY  86400.0
 #define SIX_DAYS_AGO (ecore_time_get() - ONE_DAY * 6)
@@ -50,6 +52,7 @@ struct _Plugin
   Eina_Bool show_hidden;
   Eina_Bool dirs_only;
   Eina_Bool show_recent;
+  Eina_Bool sort_by_date;
 
   Ecore_Thread *thread;
   Ecore_File_Monitor *dir_mon;
@@ -143,6 +146,15 @@ _cb_sort(const void *data1, const void *data2)
        return (it1->fuzzy_match - it2->fuzzy_match);
 
    return strcasecmp(it1->label, it2->label);
+}
+
+static int
+_cb_sort_date(const void *data1, const void *data2)
+{
+   const Evry_Item_File *it1 = data1;
+   const Evry_Item_File *it2 = data2;
+
+   return it2->modified - it1->modified;
 }
 
 static void
@@ -1275,9 +1287,50 @@ _file_copy_action(Evry_Action *act)
 }
 
 static int
+_file_sort_action(Evry_Action *act)
+{
+   Eina_List *l;
+   Evry_Item_File *file;
+   struct stat s;
+
+   if (EVRY_ITEM_DATA_INT_GET(act) == ACT_SORT_DATE)
+     {
+	GET_PLUGIN(p, act->it1.item);
+	if (!p) return 0;
+
+	EINA_LIST_FOREACH(p->files, l, file)
+	  {
+	     if (file->modified)
+	       continue;
+
+	     if (lstat(file->path, &s) == 0)
+	       file->modified = s.st_mtime;
+	  }
+
+	p->files = eina_list_sort(p->files, -1, _cb_sort_date);
+	_append_files(p);
+
+	EVRY_PLUGIN_UPDATE(p, EVRY_UPDATE_ADD);
+     }
+   else
+     {
+	GET_PLUGIN(p, act->it1.item);
+	if (!p) return 0;
+
+	p->files = eina_list_sort(p->files, -1, _cb_sort);
+	_append_files(p);
+
+	EVRY_PLUGIN_UPDATE(p, EVRY_UPDATE_ADD);
+     }
+
+   return 0;
+}
+
+
+static int
 _plugins_init(const Evry_API *api)
 {
-   Evry_Action *act;
+   Evry_Action *act, *act_sort_date, *act_sort_name;
    Evry_Plugin *p;
    int prio = 0;
 
@@ -1292,6 +1345,41 @@ _plugins_init(const Evry_API *api)
    _mime_dir = eina_stringshare_add("inode/directory");
    _mime_mount = eina_stringshare_add("inode/mountpoint");
 
+#define ACTION_NEW(_name, _type2, _icon, _act, _check, _register)	\
+   act = EVRY_ACTION_NEW(_name, EVRY_TYPE_FILE, _type2, _icon, _act, _check); \
+   if (_register) evry->action_register(act, prio++);			\
+   _actions = eina_list_append(_actions, act);				\
+
+   ACTION_NEW(N_("Copy To ..."), EVRY_TYPE_FILE, "go-next",
+	      _file_copy_action, NULL, 1);
+   act->it2.subtype = EVRY_TYPE_DIR;
+   EVRY_ITEM_DATA_INT_SET(act, ACT_COPY);
+
+   ACTION_NEW(N_("Move To ..."), EVRY_TYPE_FILE, "go-next",
+	      _file_copy_action, NULL, 1);
+   act->it2.subtype = EVRY_TYPE_DIR;
+   EVRY_ITEM_DATA_INT_SET(act, ACT_MOVE);
+
+   ACTION_NEW(N_("Move to Trash"), 0, "user-trash",
+	      _file_trash_action, NULL, 1);
+   EVRY_ITEM_DATA_INT_SET(act, ACT_TRASH);
+
+   ACTION_NEW(N_("Open Folder (EFM)"), 0, "folder-open",
+	      _open_folder_action, _open_folder_check, 1);
+   act->remember_context = EINA_TRUE;
+
+   ACTION_NEW(N_("Sort by Date"), 0, "go-up",
+	      _file_sort_action, NULL, 0);
+   EVRY_ITEM_DATA_INT_SET(act, ACT_SORT_DATE);
+   act_sort_date = act;
+
+   ACTION_NEW(N_("Sort by Name"), 0, "go-up",
+	      _file_sort_action, NULL, 0);
+   EVRY_ITEM_DATA_INT_SET(act, ACT_SORT_NAME);
+   act_sort_name = act;
+
+#undef ACTION_NEW
+
 #define PLUGIN_NEW(_name, _icon, _begin, _finish, _fetch, _browse) \
    p = EVRY_PLUGIN_NEW(Evry_Plugin, _name, _icon, EVRY_TYPE_FILE,  \
 		       _begin, _finish, _fetch, NULL);		   \
@@ -1302,10 +1390,15 @@ _plugins_init(const Evry_API *api)
 
    PLUGIN_NEW(N_("Files"), _module_icon, _begin, _finish, _fetch, _browse);
    p->input_type = EVRY_TYPE_FILE;
+   p->actions = eina_list_append(p->actions, act_sort_date);
+   p->actions = eina_list_append(p->actions, act_sort_name);
    if (evry->plugin_register(p, EVRY_PLUGIN_SUBJECT, 2))
      p->config->min_query = 1;
 
+
    PLUGIN_NEW(N_("Files"), _module_icon, _begin, _finish, _fetch, _browse);
+   p->actions = eina_list_append(p->actions, act_sort_date);
+   p->actions = eina_list_append(p->actions, act_sort_name);
    evry->plugin_register(p, EVRY_PLUGIN_OBJECT, 2);
 
    if (_conf->show_recent || _conf->search_recent)
@@ -1331,35 +1424,6 @@ _plugins_init(const Evry_API *api)
 
 #undef PLUGIN_NEW
 
-#define ACTION_NEW(_name, _type2, _icon, _act, _check)	\
-   act = EVRY_ACTION_NEW(_name, EVRY_TYPE_FILE, _type2, _icon, _act, _check); \
-   evry->action_register(act, prio++);			\
-   _actions = eina_list_append(_actions, act);		\
-
-   ACTION_NEW(N_("Copy To ..."), EVRY_TYPE_FILE, "go-next",
-	      _file_copy_action, NULL);
-   act->it2.subtype = EVRY_TYPE_DIR;
-   EVRY_ITEM_DATA_INT_SET(act, ACT_COPY);
-
-   ACTION_NEW(N_("Move To ..."), EVRY_TYPE_FILE, "go-next",
-	      _file_copy_action, NULL);
-   act->it2.subtype = EVRY_TYPE_DIR;
-   EVRY_ITEM_DATA_INT_SET(act, ACT_MOVE);
-
-   ACTION_NEW(N_("Move to Trash"), 0, "user-trash",
-	      _file_trash_action, NULL);
-   EVRY_ITEM_DATA_INT_SET(act, ACT_TRASH);
-
-   /* ACTION_NEW(N_("Delete File"), 0, "user-trash",
-    * 	      _file_trash_action, NULL);
-    * EVRY_ITEM_DATA_INT_SET(act, ACT_DELETE); */
-
-   ACTION_NEW(N_("Open Folder (EFM)"), 0, "folder-open",
-	      _open_folder_action, _open_folder_check);
-   act->remember_context = EINA_TRUE;
-
-#undef ACTION_NEW
-
    return EINA_TRUE;
 }
 
@@ -1376,7 +1440,11 @@ _plugins_shutdown(void)
    eina_stringshare_del(_mime_mount);
 
    EINA_LIST_FREE(_plugins, p)
-     evry->plugin_free(p);
+     {
+	if (p->actions)
+	  eina_list_free(p->actions);
+	EVRY_PLUGIN_FREE(p);
+     }
 
    EINA_LIST_FREE(_actions, act)
      evry->action_free(act);
