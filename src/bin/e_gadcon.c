@@ -781,7 +781,10 @@ e_gadcon_client_config_new(E_Gadcon *gc, const char *name)
    if (!cf_gcc) return NULL;
    cf_gcc->name = eina_stringshare_add(name);
    cf_gcc->id = eina_stringshare_add(cc->func.id_new(cc));
-   cf_gcc->geom.res = gc->zone->w;
+   if (gc->zone)
+     cf_gcc->geom.res = gc->zone->w;
+   else
+     cf_gcc->geom.res = 800;
    cf_gcc->geom.size = 80;
    cf_gcc->geom.pos = cf_gcc->geom.res - cf_gcc->geom.size;
    cf_gcc->style = NULL;
@@ -5043,13 +5046,13 @@ e_gadcon_location_free(E_Gadcon_Location *loc)
 }
 
 EAPI void
-e_gadcon_location_register (E_Gadcon_Location * loc)
+e_gadcon_location_register(E_Gadcon_Location * loc)
 {
    gadcon_locations = eina_list_append(gadcon_locations, loc);
 }
 
 EAPI void
-e_gadcon_location_unregister (E_Gadcon_Location * loc)
+e_gadcon_location_unregister(E_Gadcon_Location * loc)
 {
    gadcon_locations = eina_list_remove(gadcon_locations, loc);
 }
