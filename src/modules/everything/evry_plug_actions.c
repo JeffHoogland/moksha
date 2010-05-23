@@ -62,31 +62,33 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
 
    GET_PLUGIN(p, plugin);
 
-   if (CHECK_TYPE(it, EVRY_TYPE_PLUGIN))
-     return NULL;
-   
-   EINA_LIST_FOREACH(evry_conf->actions, l, act)
+   if (!(CHECK_TYPE(it, EVRY_TYPE_PLUGIN)))
      {
-	if (((!act->it1.type) ||
-	     (CHECK_TYPE(it, act->it1.type)) ||
-	     (CHECK_SUBTYPE(it, act->it1.type))) &&
-	    (!act->check_item || act->check_item(act, it)))
+	EINA_LIST_FOREACH(evry_conf->actions, l, act)
 	  {
-	     /* if (act->base.plugin) */
+	     if (!((!act->it1.type) ||
+		   (CHECK_TYPE(it, act->it1.type)) ||
+		   (CHECK_SUBTYPE(it, act->it1.type))))
+	       {
+		  p->actions = eina_list_remove(p->actions, act);
+		  continue;
+	       }
+
+	     if (act->check_item && !(act->check_item(act, it)))
+	       {
+		  p->actions = eina_list_remove(p->actions, act);
+		  continue;
+	       }
+
 	     act->base.plugin = plugin;
+	     act->it1.item = it;
+	     EVRY_ITEM(act)->hi = NULL;
 
 	     if (!eina_list_data_find_list(p->actions, act))
-	       {
-		  act->it1.item = it;
-		  EVRY_ITEM(act)->hi = NULL;
-		  p->actions = eina_list_append(p->actions, act);
-	       }
-	     continue;
+	       p->actions = eina_list_append(p->actions, act);
 	  }
-	p->actions = eina_list_remove(p->actions, act);
      }
 
-   /* FIXME this requires plugins to always provide an item..*/
    if (it->plugin)
      {
 	EINA_LIST_FOREACH(it->plugin->actions, l, act)
@@ -101,7 +103,7 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
 	       }
 	  }
      }
-   
+
    if (!p->actions) return NULL;
 
    return plugin;
@@ -294,9 +296,9 @@ evry_action_free(Evry_Action *act)
 Evry_Action *
 evry_action_find(const char *name)
 {
-   Evry_Action *act = NULL; 
+   Evry_Action *act = NULL;
    Eina_List *l;
-   
+
    const char *n = eina_stringshare_add(name);
 
    EINA_LIST_FOREACH(evry_conf->actions, l, act)
@@ -304,6 +306,6 @@ evry_action_find(const char *name)
        break;
 
    eina_stringshare_del(n);
-   
+
    return act;
 }

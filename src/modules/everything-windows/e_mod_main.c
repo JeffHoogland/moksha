@@ -261,6 +261,12 @@ _check_border(Evry_Action *act, const Evry_Item *it)
    E_Border *bd = bi->border;
    E_Zone *zone = e_util_zone_current_get(e_manager_current_get());
 
+   if (!bd)
+     {
+	ERR("no border");
+	return 0;
+     }
+
    switch (action)
      {
       case BORDER_CLOSE:
@@ -302,6 +308,12 @@ _act_border(Evry_Action *act)
    E_Zone *zone = e_util_zone_current_get(e_manager_current_get());
    int focus = 0;
 
+   if (!bd)
+     {
+	ERR("no border");
+	return 0;
+     }
+   
    switch (action)
      {
       case BORDER_CLOSE:

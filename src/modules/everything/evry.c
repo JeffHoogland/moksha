@@ -1677,8 +1677,7 @@ evry_selectors_switch(int dir)
 
    if ((CUR_SEL)->update_timer)
      {
-	if ((CUR_SEL == SUBJ_SEL) ||
-	    (CUR_SEL == ACTN_SEL))
+	if ((CUR_SEL == SUBJ_SEL) || (CUR_SEL == ACTN_SEL))
 	  {
 	     _evry_matches_update(CUR_SEL, 0);
 	     _evry_selector_update(CUR_SEL);
@@ -1894,6 +1893,7 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	else if (!strcmp(ev->key, "w"))
 	  {
 	     ev->key = "Return";
+	     ev->modifiers = 0;
 	  }
 	else if (evry_conf->quick_nav == 1)
 	  {
