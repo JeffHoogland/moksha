@@ -187,7 +187,8 @@ _fill_list(Eina_List *plugins, Evas_Object *obj, int enabled __UNUSED__)
    Evas_Coord w;
    Eina_List *l;
    Plugin_Config *pc;
-
+   Evas_Object *end;
+   
    /* freeze evas, edje, and list widget */
    evas = evas_object_evas_get(obj);
    evas_event_freeze(evas);
@@ -197,10 +198,7 @@ _fill_list(Eina_List *plugins, Evas_Object *obj, int enabled __UNUSED__)
 
    EINA_LIST_FOREACH(plugins, l, pc)
      {
-	Evas_Object *end = edje_object_add(evas);
-
-	if (!end)
-	  continue;
+	if (!(end = edje_object_add(evas))) break;
 
 	if (e_theme_edje_object_set(end, "base/theme/widgets",
 				    "e/widgets/ilist/toggle_end"))
@@ -210,7 +208,6 @@ _fill_list(Eina_List *plugins, Evas_Object *obj, int enabled __UNUSED__)
 	  }
 	else
 	  {
-	     EINA_LOG_ERR("your theme misses 'e/widgets/ilist/toggle_end'!");
 	     evas_object_del(end);
 	     end = NULL;
 	  }

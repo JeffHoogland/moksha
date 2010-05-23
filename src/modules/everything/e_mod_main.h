@@ -302,8 +302,11 @@ int   evry_state_push(Evry_Selector *sel, Eina_List *plugins);
 void  evry_selectors_switch(int dir);
 int   evry_view_toggle(Evry_State *s, const char *trigger);
 
+Ecore_Event_Handler *evry_event_handler_add(int type, int (*func) (void *data, int type, void *event), const void *data);
+
 extern Evry_History *evry_hist;
 extern Evry_Config  *evry_conf;
+extern int  _evry_events[4];
 
 #define EVRY_ITEM_NEW(_base, _plugin, _label, _icon_get, _free)		\
   (_base *) evry_item_new(EVRY_ITEM(E_NEW(_base, 1)), EVRY_PLUGIN(_plugin), \

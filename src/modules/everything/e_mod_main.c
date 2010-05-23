@@ -2,19 +2,9 @@
  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
 
-/* TODO
-   - watch plugin directories
-   - get plugins from ~/.e/e/everything_plugins
- */
-
 #include "e_mod_main.h"
 
-/* #undef DBG
- * #define DBG(...) ERR(__VA_ARGS__) */
 
-#define CONFIG_VERSION 15
-
-/* actual module specifics */
 static void _e_mod_action_cb(E_Object *obj, const char *params);
 static int  _e_mod_run_defer_cb(void *data);
 static void _e_mod_run_cb(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -22,37 +12,23 @@ static void _e_mod_menu_add(void *data, E_Menu *m);
 static void _config_init(void);
 static void _config_free(void);
 static void _plugin_config_free(void);
-static int _cleanup_history(void *data);
+static int  _cleanup_history(void *data);
+static void _evry_type_init(const char *type);
 
 static Evry_API *_api = NULL;
-
+static Eina_List *_evry_types = NULL;
 static E_Int_Menu_Augmentation *maug = NULL;
 static E_Action *act = NULL;
+static Ecore_Timer *cleanup_timer;
 
-/* static Eina_Array  *plugins = NULL; */
 static E_Config_DD *conf_edd = NULL;
 static E_Config_DD *plugin_conf_edd = NULL;
 static E_Config_DD *plugin_setting_edd = NULL;
 
-static Ecore_Timer *cleanup_timer;
-
+Evry_Config *evry_conf = NULL;
+int _evry_events[4];
 int _e_module_evry_log_dom = -1;
 
-Evry_Config *evry_conf = NULL;
-
-EAPI int EVRY_EVENT_ITEM_SELECT;
-EAPI int EVRY_EVENT_ITEM_CHANGED;
-EAPI int EVRY_EVENT_ITEMS_UPDATE;
-EAPI int EVRY_EVENT_ACTION_PERFORMED;
-
-EAPI Evry_Type EVRY_TYPE_FILE;
-EAPI Evry_Type EVRY_TYPE_DIR;
-EAPI Evry_Type EVRY_TYPE_APP;
-EAPI Evry_Type EVRY_TYPE_ACTION;
-EAPI Evry_Type EVRY_TYPE_PLUGIN;
-EAPI Evry_Type EVRY_TYPE_NONE;
-EAPI Evry_Type EVRY_TYPE_BORDER;
-EAPI Evry_Type EVRY_TYPE_TEXT;
 
 /* module setup */
 EAPI E_Module_Api e_modapi =
@@ -61,7 +37,6 @@ EAPI E_Module_Api e_modapi =
     "Everything"
   };
 
-static Eina_List *_evry_types = NULL;
 
 EAPI void *
 e_modapi_init(E_Module *m)
@@ -79,14 +54,14 @@ e_modapi_init(E_Module *m)
 	return NULL;
      }
 
-   EVRY_TYPE_NONE   = evry_type_register("NONE");
-   EVRY_TYPE_FILE   = evry_type_register("FILE");
-   EVRY_TYPE_DIR    = evry_type_register("DIRECTORY");
-   EVRY_TYPE_APP    = evry_type_register("APPLICATION");
-   EVRY_TYPE_ACTION = evry_type_register("ACTION");
-   EVRY_TYPE_PLUGIN = evry_type_register("PLUGIN");
-   EVRY_TYPE_BORDER = evry_type_register("BORDER");
-   EVRY_TYPE_TEXT   = evry_type_register("TEXT");
+   _evry_type_init("NONE");
+   _evry_type_init("FILE");
+   _evry_type_init("DIRECTORY");
+   _evry_type_init("APPLICATION");
+   _evry_type_init("ACTION");
+   _evry_type_init("PLUGIN");
+   _evry_type_init("BORDER");
+   _evry_type_init("TEXT");
 
    _config_init();
    evry_history_init();
@@ -119,14 +94,11 @@ e_modapi_init(E_Module *m)
       NULL, "system-run", evry_config_dialog);
    evry_init();
 
-   if (!EVRY_EVENT_ITEMS_UPDATE)
-     EVRY_EVENT_ITEMS_UPDATE = ecore_event_type_new();
-   if (!EVRY_EVENT_ITEM_SELECT)
-     EVRY_EVENT_ITEM_SELECT = ecore_event_type_new();
-   if (!EVRY_EVENT_ITEM_CHANGED)
-     EVRY_EVENT_ITEM_CHANGED = ecore_event_type_new();
-   if (!EVRY_EVENT_ACTION_PERFORMED)
-     EVRY_EVENT_ACTION_PERFORMED = ecore_event_type_new();
+
+   _evry_events[EVRY_EVENT_ITEMS_UPDATE]     = ecore_event_type_new();
+   _evry_events[EVRY_EVENT_ITEM_SELECTED]      = ecore_event_type_new();
+   _evry_events[EVRY_EVENT_ITEM_CHANGED]     = ecore_event_type_new();
+   _evry_events[EVRY_EVENT_ACTION_PERFORMED] = ecore_event_type_new();
 
    e_module_delayed_set(m, 0);
 
@@ -169,6 +141,7 @@ e_modapi_init(E_Module *m)
    SET(history_item_add);
    SET(history_types_get);
    SET(history_item_usage_set);
+   SET(event_handler_add);
 #undef SET
 
    e_datastore_set("everything_loaded", _api);
@@ -249,11 +222,18 @@ e_modapi_save(E_Module *m __UNUSED__)
 
 /***************************************************************************/
 
+Ecore_Event_Handler *
+evry_event_handler_add(int type, int (*func) (void *data, int type, void *event), const void *data)
+{
+   return ecore_event_handler_add(_evry_events[type], func, data);
+}
+
+
 Evry_Type
 evry_type_register(const char *type)
 {
    const char *t = eina_stringshare_add(type);
-   Evry_Type ret = 0;
+   Evry_Type ret = NUM_EVRY_TYPES;
    const char *i;
    Eina_List *l;
 
@@ -271,6 +251,13 @@ evry_type_register(const char *type)
    eina_stringshare_del(t);
 
    return ret;
+}
+
+static void
+_evry_type_init(const char *type)
+{
+   const char *t = eina_stringshare_add(type);
+   _evry_types = eina_list_append(_evry_types, t);
 }
 
 const char *
@@ -455,8 +442,9 @@ _config_free(void)
    E_FREE(evry_conf);
 }
 
-
+/***************************************************************************/
 /* action callback */
+
 static Ecore_Idle_Enterer *_idler = NULL;
 static const char *_params = NULL;
 
@@ -505,6 +493,7 @@ _e_mod_action_cb(E_Object *obj, const char *params)
 static void
 _e_mod_run_cb(void *data __UNUSED__, E_Menu *m, E_Menu_Item *mi __UNUSED__)
 {
+   IF_RELEASE(_params);
    ecore_idle_enterer_add(_e_mod_run_defer_cb, m->zone);
 }
 

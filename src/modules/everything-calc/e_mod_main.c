@@ -231,9 +231,7 @@ _plugins_init(const Evry_API *_api)
    if (!evry->api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
-   EVRY_TYPE_TEXT = evry->type_register("TEXT");
-
-   action_handler = ecore_event_handler_add(EVRY_EVENT_ACTION_PERFORMED,
+   action_handler = evry->event_handler_add(EVRY_EVENT_ACTION_PERFORMED,
 					    _cb_action_performed, NULL);
 
    _plug = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Calculator"),

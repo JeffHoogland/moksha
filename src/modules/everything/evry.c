@@ -233,7 +233,7 @@ evry_show(E_Zone *zone, const char *params)
        _evry_cb_selection_notify, win));
 
    win->handlers = eina_list_append
-     (win->handlers, ecore_event_handler_add
+     (win->handlers, evry_event_handler_add
       (EVRY_EVENT_ITEM_CHANGED,
        _evry_cb_item_changed, NULL));
 
@@ -2160,7 +2160,7 @@ _evry_action_do(Evry_Action *act)
 	if (ev->it2)
 	  EVRY_ITEM_REF(ev->it2);
 
-	ecore_event_add(EVRY_EVENT_ACTION_PERFORMED, ev,
+	ecore_event_add(_evry_events[EVRY_EVENT_ACTION_PERFORMED], ev,
 			_evry_cb_free_action_performed, NULL);
 	return 1;
      }

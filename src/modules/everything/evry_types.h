@@ -170,6 +170,9 @@ struct _Evry_Plugin
      have extended plugin struct */
   void (*free) (Evry_Plugin *p);
 
+  /* optiona: actions only used with this plugin, dont require */
+  Eina_List *actions;
+  
   /* optional: set type which the plugin can handle in begin */
   Evry_Type input_type;
 

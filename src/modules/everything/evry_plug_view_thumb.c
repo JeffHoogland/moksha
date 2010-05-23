@@ -1658,7 +1658,7 @@ _view_create(Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
    EVRY_VIEW(v)->o_list = v->bg;
    EVRY_VIEW(v)->o_bar = v->tabs->o_tabs;
 
-   h = ecore_event_handler_add(EVRY_EVENT_ITEM_CHANGED, _cb_item_changed, v);
+   h = evry_event_handler_add(EVRY_EVENT_ITEM_CHANGED, _cb_item_changed, v);
    v->handlers = eina_list_append(v->handlers, h);
 
    return EVRY_VIEW(v);

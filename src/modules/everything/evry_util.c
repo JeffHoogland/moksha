@@ -882,7 +882,7 @@ evry_item_changed(Evry_Item *it, int icon, int selected)
    ev->changed_selection = selected;
    ev->changed_icon = icon;
    evry_item_ref(it);
-   ecore_event_add(EVRY_EVENT_ITEM_CHANGED, ev, _cb_free_item_changed, NULL);
+   ecore_event_add(_evry_events[EVRY_EVENT_ITEM_CHANGED], ev, _cb_free_item_changed, NULL);
 }
 
 static char thumb_buf[4096];

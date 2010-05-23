@@ -3,7 +3,7 @@
 
 #include "evry_types.h"
 
-#define EVRY_API_VERSION     23
+#define EVRY_API_VERSION     25
 
 #define EVRY_ACTION_OTHER    0
 #define EVRY_ACTION_FINISHED 1
@@ -26,19 +26,20 @@
 #define EVRY_PLUGIN_ACTION   1
 #define EVRY_PLUGIN_OBJECT   2
 
-EAPI extern Evry_Type EVRY_TYPE_NONE;
-EAPI extern Evry_Type EVRY_TYPE_FILE;
-EAPI extern Evry_Type EVRY_TYPE_DIR;
-EAPI extern Evry_Type EVRY_TYPE_APP;
-EAPI extern Evry_Type EVRY_TYPE_ACTION;
-EAPI extern Evry_Type EVRY_TYPE_PLUGIN;
-EAPI extern Evry_Type EVRY_TYPE_BORDER;
-EAPI extern Evry_Type EVRY_TYPE_TEXT;
+#define EVRY_TYPE_NONE	     0
+#define EVRY_TYPE_FILE	     1
+#define EVRY_TYPE_DIR	     2
+#define EVRY_TYPE_APP	     3
+#define EVRY_TYPE_ACTION     4
+#define EVRY_TYPE_PLUGIN     5
+#define EVRY_TYPE_BORDER     6
+#define EVRY_TYPE_TEXT	     7
+#define NUM_EVRY_TYPES	     8
 
-EAPI extern int EVRY_EVENT_ITEM_SELECT;
-EAPI extern int EVRY_EVENT_ITEM_CHANGED;
-EAPI extern int EVRY_EVENT_ITEMS_UPDATE;
-EAPI extern int EVRY_EVENT_ACTION_PERFORMED;
+#define EVRY_EVENT_ITEM_SELECTED       	0
+#define EVRY_EVENT_ITEM_CHANGED		1
+#define EVRY_EVENT_ITEMS_UPDATE		2
+#define EVRY_EVENT_ACTION_PERFORMED	3
 
 typedef struct _Evry_API Evry_API;
 typedef struct _Evry_Module Evry_Module;
@@ -46,29 +47,6 @@ typedef struct _Evry_Module Evry_Module;
 typedef struct _Evry_Event_Item_Changed     Evry_Event_Item_Changed;
 typedef struct _Evry_Event_Action_Performed Evry_Event_Action_Performed;
 
-/***************************************************
-
-static Evry_Module *evry_module;
-static const Evry_API evry;
-
-in e_modapi_init do:
-
-   evry_module = E_NEW(Evry_Module, 1);
-   evry_module->init     = &_plugins_init;
-   evry_module->shutdown = &_plugins_shutdown;
-   EVRY_MODULE_REGISTER(evry_module);
-
-   if ((evry = e_datastore_get("everything_loaded")))
-     _plugins_init(evry);
-
-in e_modapi_shutdown:
-
-   _plugins_shutdown();
-
-   EVRY_MODULE_UNREGISTER(evry_module);
-   E_FREE(evry_module);
-
-***************************************************/
 
 struct _Evry_Module
 {
@@ -138,6 +116,8 @@ struct _Evry_API
   History_Types *(*history_types_get)(Evry_Type type);
   int  (*history_item_usage_set)(Evry_Item *it, const char *input, const char *ctxt);
 
+  Ecore_Event_Handler *(*event_handler_add)(int type, int (*func) (void *data, int type, void *event), const void *data);
+
   int log_dom;
 };
 
@@ -157,7 +137,6 @@ struct _Evry_Event_Action_Performed
 
 
 /*** cast default types ***/
-
 #define EVRY_ITEM(_item) ((Evry_Item *)_item)
 #define EVRY_ACTN(_item) ((Evry_Action *) _item)
 #define EVRY_PLUGIN(_plugin) ((Evry_Plugin *) _plugin)
@@ -168,55 +147,100 @@ struct _Evry_Event_Action_Performed
 #define GET_CMD(_app, _item) Evry_Item_App *_app = (Evry_Item_App *) _item
 #define GET_FILE(_file, _item) Evry_Item_File *_file = (Evry_Item_File *) _item
 #define GET_EVRY_PLUGIN(_p, _plugin) Evry_Plugin *_p = (Evry_Plugin*) _plugin
+#define GET_PLUGIN(_p, _plugin) Plugin *_p = (Plugin*) _plugin
 #define GET_VIEW(_v, _view) View *_v = (View*) _view
 #define GET_ACTION(_act, _item) Evry_Action *_act = (Evry_Action *) _item
-#define GET_PLUGIN(_p, _plugin) Plugin *_p = (Plugin*) _plugin
 #define GET_ITEM(_it, _any) Evry_Item *_it = (Evry_Item *) _any
 
-#define EVRY_ITEM_DATA_INT_SET(_item, _data) ((Evry_Item *)_item)->data = (void*)(long) _data
-#define EVRY_ITEM_DATA_INT_GET(_item) (long) ((Evry_Item *)_item)->data
+/*** Evry_Item macros ***/
+#ifndef EVRY_H
+#define EVRY_ITEM_NEW(_base, _plugin, _label, _icon_get, _free) \
+  (_base *) evry->item_new(EVRY_ITEM(E_NEW(_base, 1)),		\
+			   EVRY_PLUGIN(_plugin),		\
+			   _label, _icon_get, _free)
 
-#define EVRY_ITEM_DETAIL_SET(_it, _detail)				\
-  if (EVRY_ITEM(_it)->detail) eina_stringshare_del(EVRY_ITEM(_it)->detail); \
+#define EVRY_ITEM_FREE(_item) evry->item_free((Evry_Item *)_item)
+#define EVRY_ITEM_REF(_item) evry->item_ref((Evry_Item *)_item)
+#endif
+
+#define EVRY_ITEM_DATA_INT_SET(_item, _data) \
+  ((Evry_Item *)_item)->data = (void*)(long) _data
+
+#define EVRY_ITEM_DATA_INT_GET(_item) (long) \
+  ((Evry_Item *)_item)->data
+
+#define EVRY_ITEM_DETAIL_SET(_it, _detail)			\
+  if (EVRY_ITEM(_it)->detail)					\
+    eina_stringshare_del(EVRY_ITEM(_it)->detail);		\
   EVRY_ITEM(_it)->detail = eina_stringshare_add(_detail);
 
-#define EVRY_ITEM_LABEL_SET(_it, _label)				\
-  if (EVRY_ITEM(_it)->label) eina_stringshare_del(EVRY_ITEM(_it)->label); \
+#define EVRY_ITEM_LABEL_SET(_it, _label)			\
+  if (EVRY_ITEM(_it)->label)					\
+    eina_stringshare_del(EVRY_ITEM(_it)->label);		\
   EVRY_ITEM(_it)->label = eina_stringshare_add(_label);
 
-#define EVRY_ITEM_CONTEXT_SET(_it, _context)				\
-  if (EVRY_ITEM(_it)->context) eina_stringshare_del(EVRY_ITEM(_it)->context); \
+#define EVRY_ITEM_CONTEXT_SET(_it, _context)			\
+  if (EVRY_ITEM(_it)->context)					\
+    eina_stringshare_del(EVRY_ITEM(_it)->context);		\
   EVRY_ITEM(_it)->context = eina_stringshare_add(_context);
 
-#define EVRY_ITEM_ICON_SET(_it, _icon)					\
-  if (EVRY_ITEM(_it)->icon) eina_stringshare_del(EVRY_ITEM(_it)->icon); \
+#define EVRY_ITEM_ICON_SET(_it, _icon)				\
+  if (EVRY_ITEM(_it)->icon)					\
+    eina_stringshare_del(EVRY_ITEM(_it)->icon);			\
   EVRY_ITEM(_it)->icon = eina_stringshare_add(_icon);
 
-#define CHECK_TYPE(_item, _type)					\
+#define CHECK_TYPE(_item, _type) \
   (((Evry_Item *)_item)->type && ((Evry_Item *)_item)->type == _type)
 
-#define CHECK_SUBTYPE(_item, _type)					\
+#define CHECK_SUBTYPE(_item, _type) \
   (((Evry_Item *)_item)->subtype && ((Evry_Item *)_item)->subtype == _type)
 
 #define IS_BROWSEABLE(_item) ((Evry_Item *)_item)->browseable
 
-#define EVRY_PLUGIN_ITEMS_SORT(_p, _sortcb)				\
-  EVRY_PLUGIN(_p)->items = eina_list_sort				\
+/*** Evry_Plugin macros ***/
+#ifndef EVRY_H
+#define EVRY_PLUGIN_NEW(_base, _name, _icon, _item_type, _begin, _finish, _fetch, _free) \
+  evry->plugin_new(EVRY_PLUGIN(E_NEW(_base, 1)), _name, _(_name), _icon, _item_type,     \
+		   _begin, _finish, _fetch, _free)
+
+#define EVRY_PLUGIN_FREE(_p) if (_p) evry->plugin_free(EVRY_PLUGIN(_p))
+
+#define EVRY_PLUGIN_ITEMS_FREE(_p) {				\
+     Evry_Item *it;						\
+     EINA_LIST_FREE(EVRY_PLUGIN(_p)->items, it)			\
+       evry->item_free(it); }
+
+#define EVRY_PLUGIN_ITEMS_ADD(_plugin, _items, _input, _match_detail, _set_usage) \
+  evry->util_plugin_items_add(EVRY_PLUGIN(_plugin), _items, _input, _match_detail, _set_usage)
+
+#define EVRY_PLUGIN_UPDATE(_p, _action)	\
+  if (_p) evry->plugin_update(EVRY_PLUGIN(_p), _action)
+#endif
+#define EVRY_PLUGIN_ITEMS_SORT(_p, _sortcb)			\
+  EVRY_PLUGIN(_p)->items = eina_list_sort			\
     (EVRY_PLUGIN(_p)->items, eina_list_count(EVRY_PLUGIN(_p)->items), _sortcb)
 
-#define EVRY_PLUGIN_ITEM_APPEND(_p, _item)				\
+#define EVRY_PLUGIN_ITEM_APPEND(_p, _item) \
   EVRY_PLUGIN(_p)->items = eina_list_append(EVRY_PLUGIN(_p)->items, EVRY_ITEM(_item))
 
-#define EVRY_PLUGIN_INSTANCE(_p, _plugin) {	\
-     _p = E_NEW(Plugin, 1);			\
-     _p->base = *_plugin;			\
-     _p->base.items = NULL;			\
-     _p->base.base.plugin = (Evry_Plugin*)_p; }	\
+#define EVRY_PLUGIN_INSTANCE(_p, _plugin) {			\
+     _p = E_NEW(Plugin, 1);					\
+     _p->base = *_plugin;					\
+     _p->base.items = NULL;					\
+     _p->base.base.plugin = (Evry_Plugin*)_p; }			\
 
-#define EVRY_PLUGIN_ITEMS_CLEAR(_p) {		\
-     Evry_Item *it;				\
-     EINA_LIST_FREE(EVRY_PLUGIN(_p)->items, it) \
+#define EVRY_PLUGIN_ITEMS_CLEAR(_p) {				\
+     Evry_Item *it;						\
+     EINA_LIST_FREE(EVRY_PLUGIN(_p)->items, it)			\
        if (it) it->fuzzy_match = 0; }
+
+/*** Evry_Action macros ***/
+#ifndef EVRY_H
+#define EVRY_ACTION_NEW(_name, _in1, _in2, _icon, _action, _check) \
+  evry->action_new(_name, _(_name), _in1, _in2, _icon, _action, _check)
+
+#define EVRY_ACTION_FREE(_act) if (_act) evry->action_free(EVRY_ACTN(_act))
+#endif
 
 #define EVRY_MODULE_REGISTER(_module) {				\
      Eina_List *l = e_datastore_get("everything_modules");	\
@@ -230,53 +254,16 @@ struct _Evry_Event_Action_Performed
 
 /*** handy macros ***/
 
-#define IF_RELEASE(x) do {						\
-     if (x) {								\
-	const char *__tmp; __tmp = (x); (x) = NULL; eina_stringshare_del(__tmp); \
-     }									\
-     (x) = NULL;							\
+#define IF_RELEASE(x) do {					\
+     if (x) {							\
+	const char *__tmp; __tmp = (x);				\
+	(x) = NULL; eina_stringshare_del(__tmp);		\
+     }								\
+     (x) = NULL;						\
   } while (0)
 
 
-
 #ifndef EVRY_H
-/*** Evry_Item macros ***/
-
-#define EVRY_ITEM_NEW(_base, _plugin, _label, _icon_get, _free)		\
-  (_base *) evry->item_new(EVRY_ITEM(E_NEW(_base, 1)), EVRY_PLUGIN(_plugin), \
-			   _label, _icon_get, _free)
-
-#define EVRY_ITEM_FREE(_item) evry->item_free((Evry_Item *)_item)
-#define EVRY_ITEM_REF(_item) evry->item_ref((Evry_Item *)_item)
-
-/*** Evry_Plugin macros ***/
-
-#define EVRY_PLUGIN_NEW(_base, _name, _icon, _item_type, _begin, _finish, _fetch, _free) \
-  evry->plugin_new(EVRY_PLUGIN(E_NEW(_base, 1)), _name, _(_name), _icon, _item_type, \
-		   _begin, _finish, _fetch, _free)
-
-#define EVRY_PLUGIN_FREE(_p) if (_p) evry->plugin_free(EVRY_PLUGIN(_p))
-
-#define EVRY_PLUGIN_ITEMS_FREE(_p) {		\
-     Evry_Item *it;				\
-     EINA_LIST_FREE(EVRY_PLUGIN(_p)->items, it) \
-       evry->item_free(it); }
-
-// should be renamed to ITEMS_FILTER
-#define EVRY_PLUGIN_ITEMS_ADD(_plugin, _items, _input, _match_detail, _set_usage) \
-  evry->util_plugin_items_add(EVRY_PLUGIN(_plugin), _items, _input, _match_detail, _set_usage)
-
-#define EVRY_PLUGIN_UPDATE(_p, _action)			\
-  if (_p) evry->plugin_update(EVRY_PLUGIN(_p), _action)
-
-/*** Evry_Action macros ***/
-
-#define EVRY_ACTION_NEW(_name, _in1, _in2, _icon, _action, _check)	\
-  evry->action_new(_name, _(_name), _in1, _in2, _icon, _action, _check)
-
-#define EVRY_ACTION_FREE(_act) if (_act) evry->action_free(EVRY_ACTN(_act))
-
-
 
 #ifndef EINA_LOG_DEFAULT_COLOR
 #define EINA_LOG_DEFAULT_COLOR EINA_COLOR_CYAN
