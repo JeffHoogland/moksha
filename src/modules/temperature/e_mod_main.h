@@ -24,7 +24,7 @@ struct _Config_Face
 #ifdef HAVE_EEZE
    Eina_List *tempdevs;
    int backend;
-   Ecore_Poller    *temp_poller;
+   Ecore_Poller *temp_poller;
 #endif
    int sensor_type;
    const char *sensor_name;
@@ -61,15 +61,16 @@ typedef enum _Backend
    TEMPGET,
    UDEV
 } Backend;
+
 int temperature_udev_update_poll(void *data);
 void temperature_udev_update(void *data);
 #endif
 
 EAPI extern E_Module_Api e_modapi;
 
-EAPI void *e_modapi_init (E_Module *m);
-EAPI int e_modapi_shutdown (E_Module *m);
-EAPI int e_modapi_save (E_Module *m);
+EAPI void *e_modapi_init(E_Module *m);
+EAPI int e_modapi_shutdown(E_Module *m);
+EAPI int e_modapi_save(E_Module *m);
 
 int _temperature_cb_exe_data(void *data, int type, void *event);
 int _temperature_cb_exe_del(void *data, int type, void *event);
