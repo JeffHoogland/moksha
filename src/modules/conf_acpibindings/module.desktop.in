@@ -1,6 +1,10 @@
 [Desktop Entry]
 Type=Link
 Name=Settings - ACPI Bindings
+Name[fr]=Configuration - Raccourcis ACPI
+Name[it]=Configurazione - Associazioni ACPI
 Icon=preferences-desktop-keyboard-shortcuts
 Comment=Configure your ACPI bindings here.
+Comment[fr]=Permet de configurer vos raccourcis ACPI.
+Comment[it]=Configurate qui le vostre associazioni con ACPI.
 X-Enlightenment-ModuleType=config
