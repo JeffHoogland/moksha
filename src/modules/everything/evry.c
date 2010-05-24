@@ -51,7 +51,7 @@ static void _evry_view_update(Evry_State *s, Evry_Plugin *plugin);
 static int  _evry_view_key_press(Evry_State *s, Ecore_Event_Key *ev);
 static void _evry_view_show(Evry_View *v, int slide);
 static void _evry_view_hide(Evry_View *v, int slide);
-static void _evry_view_slide_clear(void);
+static void _evry_view_slide_clear(Evry_View *v);
 
 static void _evry_item_desel(Evry_State *s, Evry_Item *it);
 static void _evry_item_sel(Evry_State *s, Evry_Item *it);
@@ -283,7 +283,8 @@ evry_hide(int clear)
 
    if (!win) return;
 
-   _evry_view_slide_clear();
+   _evry_view_slide_clear(win->view_freeing);
+   _evry_view_slide_clear(win->view_clearing);
 
    if ((clear && CUR_SEL) &&
        ((eina_list_count((SUBJ_SEL)->states) > 1) ||
@@ -2362,58 +2363,33 @@ _evry_view_show(Evry_View *v, int slide)
 static int
 _clear_timer(void *data)
 {
-   Evry_View *v = data;
-
-   v->clear(v);
-
-   if (v->o_list)
-     {
-	edje_object_part_unswallow(win->o_main, v->o_list);
-	evas_object_hide(v->o_list);
-     }
-
-   v->clear_timer = NULL;
-   win->view_clearing = NULL;
-
-   return 0;
-}
-
-static int
-_free_timer(void *data)
-{
-   Evry_View *v = data;
-   v->destroy(v);
-   win->view_freeing = NULL;
-
+   _evry_view_slide_clear(data);
    return 0;
 }
 
 static void
-_evry_view_slide_clear(void)
+_evry_view_slide_clear(Evry_View *v)
 {
-   if (win->view_freeing)
-     {
-	Evry_View *vv = win->view_freeing;
+   if (!v) return;
 
-	ecore_timer_del(vv->clear_timer);
-	vv->destroy(vv);
+   if (v == win->view_freeing)
+     {
+	ecore_timer_del(v->clear_timer);
+	v->destroy(v);
 	win->view_freeing = NULL;
      }
 
-   if (win->view_clearing)
+   else if (v == win->view_clearing)
      {
-	Evry_View *vv = win->view_clearing;
+	ecore_timer_del(v->clear_timer);
+	v->clear_timer = NULL;
+	v->clear(v);
 
-	ecore_timer_del(vv->clear_timer);
-	vv->clear_timer = NULL;
-	vv->clear(vv);
-
-	if (vv->o_list)
+	if (v->o_list)
 	  {
-	     edje_object_part_unswallow(win->o_main, vv->o_list);
-	     evas_object_hide(vv->o_list);
+	     edje_object_part_unswallow(win->o_main, v->o_list);
+	     evas_object_hide(v->o_list);
 	  }
-
 	win->view_clearing = NULL;
      }
 }
@@ -2421,7 +2397,10 @@ _evry_view_slide_clear(void)
 static void
 _evry_view_hide(Evry_View *v, int slide)
 {
-   if (!v || v->clear_timer) return;
+   _evry_view_slide_clear(win->view_freeing);
+   _evry_view_slide_clear(win->view_clearing);
+
+   if (!v) return;
 
    if (slide && v->o_list)
      {
@@ -2432,7 +2411,7 @@ _evry_view_hide(Evry_View *v, int slide)
 
 	     edje_object_part_swallow(win->o_main, "list:e.swallow.list2", v->o_list);
 	     evas_object_show(v->o_list);
-	     v->clear_timer = ecore_timer_add(0.2, _free_timer, v);
+	     v->clear_timer = ecore_timer_add(0.2, _clear_timer, v);
 
 	     win->view_freeing = v;
 	  }
