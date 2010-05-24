@@ -8,7 +8,7 @@ static void _e_mod_kbd_device_kbd_add(const char *udi);
 static void _e_mod_kbd_device_kbd_del(const char *udi);
 static void _e_mod_kbd_device_kbd_eval(void);
 #ifdef HAVE_EEZE
-static void _e_mod_kbd_device_udev_event(const char *device, const char *event, void *data __UNUSED__, Eeze_Udev_Watch *watch __UNUSED__);
+static void _e_mod_kbd_device_udev_event(const char *device, int event, void *data __UNUSED__, Eeze_Udev_Watch *watch __UNUSED__);
 #else
 static void _e_mod_kbd_device_cb_input_kbd(void *data __UNUSED__, void *reply, DBusError *err);
 static void _e_mod_kbd_device_cb_input_kbd_is(void *data, void *reply, DBusError *err);
@@ -144,13 +144,15 @@ _e_mod_kbd_device_ignore_load_file(const char *file)
 
 #ifdef HAVE_EEZE
 static void 
-_e_mod_kbd_device_udev_event(const char *device, const char *event, void *data __UNUSED__, Eeze_Udev_Watch *watch __UNUSED__)
+_e_mod_kbd_device_udev_event(const char *device, int event, void *data __UNUSED__, Eeze_Udev_Watch *watch __UNUSED__)
 {
    if ((!device) || (!event)) return;
 
-   if ((!strcmp(event, "add")) || (!strcmp(event, "online")))
+   if (((event & EEZE_UDEV_EVENT_ADD) == EEZE_UDEV_EVENT_ADD) ||
+     ((event & EEZE_UDEV_EVENT_ONLINE) == EEZE_UDEV_EVENT_ONLINE))
      _e_mod_kbd_device_kbd_add(device);
-   else if ((!strcmp(event, "remove")) || (!strcmp(event, "offline")))
+   else if (((event & EEZE_UDEV_EVENT_REMOVE) == EEZE_UDEV_EVENT_REMOVE) ||
+     ((event & EEZE_UDEV_EVENT_OFFLINE) == EEZE_UDEV_EVENT_OFFLINE))
      _e_mod_kbd_device_kbd_del(device);
 
    _e_mod_kbd_device_kbd_eval();
