@@ -434,6 +434,7 @@ Evas_Object *
 evry_icon_theme_get(const char *icon, Evas *e)
 {
    Evas_Object *o = e_icon_add(e);
+   e_icon_preload_set(o, 1);
 
    if (e_config->icon_theme_overrides)
      {
@@ -510,10 +511,11 @@ _file_icon_get(Evry_Item *it, Evas *e)
 
    if (it->icon)
      {
-	o = e_icon_add(e);
-
 	if (it->icon[0] == '/')
 	  {
+	     o = e_icon_add(e);
+	     e_icon_preload_set(o, 1);
+
 	     if (!e_icon_file_set(o, it->icon))
 	       {
 		  evas_object_del(o);
@@ -527,7 +529,7 @@ _file_icon_get(Evry_Item *it, Evas *e)
      }
 
    if (!(o) && (!it->icon) && file->mime &&
-       ((!strncmp(file->mime, "image/", 6)) ||
+       (/* (!strncmp(file->mime, "image/", 6)) || */
 	(!strncmp(file->mime, "video/", 6)) ||
 	(!strncmp(file->mime, "application/pdf", 15))) &&
        (evry_file_url_get(file)))
@@ -569,6 +571,18 @@ evry_util_icon_get(Evry_Item *it, Evas *e)
    if (CHECK_TYPE(it, EVRY_TYPE_FILE))
      o = _file_icon_get(it, e);
    if (o) return o;
+
+   if (!o && it->icon && it->icon[0] == '/')
+     {
+	o = e_icon_add(e);
+	e_icon_preload_set(o, 1);
+
+	if (!e_icon_file_set(o, it->icon))
+	  {
+	     evas_object_del(o);
+	     o = NULL;
+	  }
+     }
 
    if (!o && it->icon)
      o = evry_icon_theme_get(it->icon, e);

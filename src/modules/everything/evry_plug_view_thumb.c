@@ -103,6 +103,8 @@ _thumb_gen(void *data, Evas_Object *obj, void *event_info)
    edje_extern_object_aspect_set(it->thumb, EDJE_ASPECT_CONTROL_BOTH, w, h);
    edje_object_part_swallow(it->frame, "e.swallow.thumb", it->thumb);
    evas_object_show(it->thumb);
+   edje_object_signal_emit(it->frame, "e,action,thumb,show_delayed", "e");
+   edje_object_message_signal_process(it->frame); 
    it->have_thumb = EINA_TRUE;
    it->do_thumb = EINA_FALSE;
 
@@ -129,6 +131,13 @@ _check_item(const Evry_Item *it)
    return 0;
 }
 
+static int _sort_pos_cb(const void *d1, const void *d2)
+{
+   const Item *it1 = d1;
+   const Item *it2 = d2;
+   return ((it1->x + it1->y * 4) - (it2->x + it2->y * 4));
+}
+
 static int
 _thumb_idler(void *data)
 {
@@ -136,10 +145,13 @@ _thumb_idler(void *data)
    Eina_List *l, *ll;
    Item *it;
    char *suffix;
-
+   int w, h;
+   
    if (!sd || sd->clearing)
      return 1;
 
+   sd->queue = eina_list_sort(sd->queue, -1, _sort_pos_cb);
+   
    EINA_LIST_FOREACH_SAFE(sd->queue, l, ll, it)
      {
 	if (!it->image && !it->have_thumb)
@@ -148,6 +160,10 @@ _thumb_idler(void *data)
 
 	     if (it->image)
 	       {
+		  e_icon_size_get(it->image, &w, &h);
+		  if (w && h)
+		    edje_extern_object_aspect_set(it->thumb, EDJE_ASPECT_CONTROL_BOTH, w, h);
+
 		  edje_object_part_swallow(it->frame, "e.swallow.icon", it->image);
 		  evas_object_show(it->image);
 	       }
@@ -177,7 +193,16 @@ _thumb_idler(void *data)
 	     e_thumb_icon_size_set(it->thumb, it->w, it->h);
 	     e_thumb_icon_begin(it->thumb);
 	     it->do_thumb = EINA_TRUE;
+
+	     if (it->image)
+	       edje_object_signal_emit(it->frame, "e,action,thumb,show_delayed", "e");
 	  }
+	else
+	  {
+	     edje_object_signal_emit(it->frame, "e,action,thumb,show", "e");
+	  }
+	
+	
 	e_util_wakeup();
 	sd->queue = eina_list_remove_list(sd->queue, l);
 	return 1;
@@ -296,10 +321,9 @@ _item_show(View *v, Item *it, Evas_Object *list)
 
    evas_object_show(it->frame);
 
-   if (it->changed)
-     edje_object_signal_emit(it->frame, "e,action,thumb,show_delayed", "e");
-   else
-     edje_object_signal_emit(it->frame, "e,action,thumb,show", "e");
+   /* if (it->changed)
+    *   edje_object_signal_emit(it->frame, "e,action,thumb,show_delayed", "e");
+    * else */
 
    if (it->item->browseable)
      edje_object_signal_emit(it->frame, "e,state,browseable", "e");
@@ -1073,19 +1097,14 @@ _view_update(Evry_View *view, int slide)
 
    if (p != v->plugin)
      {
-	if (p->config->view_mode >= 0)
+	if (p->config->view_mode != v->mode)
 	  {
-	     if (p->config->view_mode != v->mode)
-	       _clear_items(v->span);
+	     _clear_items(v->span);
 
-	     v->mode = p->config->view_mode;
-	  }
-	else
-	  {
-	     if (v->mode_prev != v->mode)
-	       _clear_items(v->span);
-
-	     v->mode = v->mode_prev;
+	     if (p->config->view_mode < 0)
+	       v->mode = evry_conf->view_mode;
+	     else
+	       v->mode = p->config->view_mode;
 	  }
      }
 
@@ -1610,7 +1629,7 @@ _view_create(Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
 
    View *v;
    Ecore_Event_Handler *h;
-
+   
    if (!s->plugin)
      return NULL;
 
@@ -1619,11 +1638,17 @@ _view_create(Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
    v->state = s;
    v->evas = evas_object_evas_get(swallow);
 
-   if (parent->mode < 0)
-     v->mode = evry_conf->view_mode;
-   else
+   if ((s->selector->states->next) &&
+       ((s->plugin->config->view_mode < 0) ||
+	(!strcmp(s->plugin->name, N_("All")))))
      v->mode = parent->mode;
+   else if (s->plugin->config->view_mode >= 0)
+     v->mode = s->plugin->config->view_mode;
+   else
+     v->mode = evry_conf->view_mode;
 
+   v->plugin = s->plugin;
+   
    v->mode_prev = v->mode;
 
    v->zoom = parent->zoom;
