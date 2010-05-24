@@ -37,10 +37,15 @@ struct _Evry_Window
 
   int mouse_out;
   int mouse_button;
+
+  Evry_View *view_clearing;
+  Evry_View *view_freeing;
 };
 
 struct _Evry_Selector
 {
+  Evry_Window *win;
+  
   /* current state */
   Evry_State  *state;
 
@@ -112,9 +117,11 @@ struct _Evry_View
   Evry_View *(*create) (Evry_View *view, const Evry_State *s, const Evas_Object *swallow);
   void (*destroy)      (Evry_View *view);
   int  (*cb_key_down)  (Evry_View *view, const Ecore_Event_Key *ev);
-  int  (*update)       (Evry_View *view, int slide);
-  void (*clear)        (Evry_View *view, int slide);
+  int  (*update)       (Evry_View *view);
+  void (*clear)        (Evry_View *view);
 
+  Ecore_Timer *clear_timer;
+  
   int priority;
 };
 

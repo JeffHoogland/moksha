@@ -119,7 +119,7 @@ _tab_cb_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
    if (ev->button == 1)
      {
 	_plugin_select(v, tab->plugin);
-	v->view->update(v->view, 0);
+	v->view->update(v->view);
      }
 }
 static void
@@ -131,12 +131,12 @@ _tabs_cb_wheel(void *data, Evas *e, Evas_Object *obj, void *event_info)
    if (ev->z > 0)
      {
 	_plugin_next(v);
-	v->view->update(v->view, 0);
+	v->view->update(v->view);
      }
    else if (ev->z < 0)
      {
 	_plugin_prev(v);
-	v->view->update(v->view, 0);
+	v->view->update(v->view);
      }
 }
 

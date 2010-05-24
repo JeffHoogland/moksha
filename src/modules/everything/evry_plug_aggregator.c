@@ -180,7 +180,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	       {
    		  if (!eina_list_data_find_list(items, it))
 		    {
-		       it->usage = 0;
+		       it->usage = -1;
 		       if (it->fuzzy_match == 0)
 			 it->fuzzy_match = evry_fuzzy_match(it->label, input);
 

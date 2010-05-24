@@ -55,8 +55,6 @@ struct _Smart_Data
   double slide_to;
 
   int    sliding;
-  int    clearing;
-
   int    mouse_act;
   int    mouse_x;
   int    mouse_y;
@@ -82,11 +80,10 @@ struct _Item
 
 static View *view = NULL;
 
-static void _view_clear(Evry_View *view, int slide);
+static void _view_clear(Evry_View *view);
 static void _pan_item_select(Evas_Object *obj, Item *it, int scroll);
 static void _animator_del(Evas_Object *obj);
-
-
+static int _animator(void *data);
 
 static void
 _thumb_gen(void *data, Evas_Object *obj, void *event_info)
@@ -94,8 +91,6 @@ _thumb_gen(void *data, Evas_Object *obj, void *event_info)
    Evas_Coord w, h;
    Item *it = data;
    Smart_Data *sd = evas_object_smart_data_get(it->obj);
-   if (sd->clearing)
-     return;
 
    if (!it->frame) return;
 
@@ -104,7 +99,7 @@ _thumb_gen(void *data, Evas_Object *obj, void *event_info)
    edje_object_part_swallow(it->frame, "e.swallow.thumb", it->thumb);
    evas_object_show(it->thumb);
    edje_object_signal_emit(it->frame, "e,action,thumb,show_delayed", "e");
-   edje_object_message_signal_process(it->frame); 
+   edje_object_message_signal_process(it->frame);
    it->have_thumb = EINA_TRUE;
    it->do_thumb = EINA_FALSE;
 
@@ -146,12 +141,9 @@ _thumb_idler(void *data)
    Item *it;
    char *suffix;
    int w, h;
-   
-   if (!sd || sd->clearing)
-     return 1;
 
    sd->queue = eina_list_sort(sd->queue, -1, _sort_pos_cb);
-   
+
    EINA_LIST_FOREACH_SAFE(sd->queue, l, ll, it)
      {
 	if (!it->image && !it->have_thumb)
@@ -201,8 +193,8 @@ _thumb_idler(void *data)
 	  {
 	     edje_object_signal_emit(it->frame, "e,action,thumb,show", "e");
 	  }
-	
-	
+
+
 	e_util_wakeup();
 	sd->queue = eina_list_remove_list(sd->queue, l);
 	return 1;
@@ -219,7 +211,7 @@ _item_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
    Evas_Event_Mouse_Down *ev = event_info;
    Item *it = data;
    Smart_Data *sd = evas_object_smart_data_get(it->obj);
-   if (!sd || sd->clearing) return;
+   if (!sd) return;
 
    sd->mouse_act = 1;
    sd->it_down = it;
@@ -248,7 +240,7 @@ _item_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
    Evas_Event_Mouse_Up *ev = event_info;
    Item *it = data;
    Smart_Data *sd = evas_object_smart_data_get(it->obj);
-   if (!sd || sd->clearing) return;
+   if (!sd) return;
 
    sd->mouse_x = 0;
    sd->mouse_y = 0;
@@ -310,6 +302,9 @@ _item_show(View *v, Item *it, Evas_Object *list)
 
 	evas_object_clip_set(it->frame, evas_object_clip_get(list));
 
+	if (it->selected)
+	  edje_object_signal_emit(it->frame, "e,state,selected", "e");
+
 	if (it->item->marked)
 	  edje_object_signal_emit(it->frame, "e,state,marked", "e");
      }
@@ -320,10 +315,6 @@ _item_show(View *v, Item *it, Evas_Object *list)
      edje_object_part_text_set(it->frame, "e.text.detail", it->item->detail);
 
    evas_object_show(it->frame);
-
-   /* if (it->changed)
-    *   edje_object_signal_emit(it->frame, "e,action,thumb,show_delayed", "e");
-    * else */
 
    if (it->item->browseable)
      edje_object_signal_emit(it->frame, "e,state,browseable", "e");
@@ -516,7 +507,7 @@ _e_smart_reconfigure_do(void *data)
    if (changed)
      evas_object_smart_callback_call(obj, "changed", NULL);
 
-   if (!sd->clearing && !sd->thumb_idler)
+   if (!sd->thumb_idler)
      sd->thumb_idler = ecore_idle_enterer_add(_thumb_idler, sd);
 
    sd->idle_enter = NULL;
@@ -569,6 +560,8 @@ _e_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
    Smart_Data *sd = evas_object_smart_data_get(obj);
    sd->x = x;
    sd->y = y;
+   /* printf("move %p %d %d\n", sd, x, y); */
+
    _e_smart_reconfigure(obj);
 }
 
@@ -718,11 +711,6 @@ static void
 _animator_del(Evas_Object *obj)
 {
    Smart_Data *sd = evas_object_smart_data_get(obj);
-   if (sd->clearing)
-     {
-	sd->clearing = EINA_FALSE;
-	_view_clear(EVRY_VIEW(sd->view), 0);
-     }
 
    sd->animator = NULL;
 }
@@ -770,30 +758,6 @@ _animator(void *data)
 
 	e_scrollframe_child_pos_set(sd->view->sframe,
 				    0, sd->scroll_align);
-     }
-
-   if (sd->sliding)
-     {
-   	sd->slide = ((sd->slide * (1.0 - spd)) +
-		     (sd->slide_to * spd));
-
-   	da = sd->slide - sd->slide_to;
-   	if (da < 0.0) da = -da;
-   	if (da < 0.02)
-   	  {
-   	     sd->slide = sd->slide_to;
-   	     sd->sliding = 0;
-
-	     if ((sd->view->mode == VIEW_MODE_THUMB) &&
-	     	 (sd->cur_item &&
-		  sd->cur_item->frame))
-	       edje_object_signal_emit(sd->cur_item->frame,
-	     			       "e,state,selected", "e");
-   	  }
-   	else
-   	  wait++;
-
-	evas_object_move(sd->view->span, sd->slide, sd->y);
      }
 
    if (wait)
@@ -982,7 +946,7 @@ _clear_items(Evas_Object *obj)
 }
 
 static void
-_view_clear(Evry_View *view, int slide)
+_view_clear(Evry_View *view)
 {
    View *v = (View*) view;
    Smart_Data *sd = evas_object_smart_data_get(v->span);
@@ -993,30 +957,6 @@ _view_clear(Evry_View *view, int slide)
    sd->mouse_y = 0;
    sd->mouse_act = 0;
    sd->it_down = NULL;
-
-   if (!sd->clearing && evry_conf->scroll_animate)
-     {
-   	if (slide)
-   	  {
-   	     if (sd->items && !sd->animator)
-   	       sd->animator = ecore_animator_add(_animator, v->span);
-   	     sd->sliding = 1;
-   	     sd->slide = sd->x;
-   	     sd->slide_to = sd->x + sd->w * -slide;
-
-	     sd->clearing = EINA_TRUE;
-	     return;
-   	  }
-
-	if (sd->animator)
-	  {
-	     ecore_animator_del(sd->animator);
-	     sd->animator = NULL;
-	  }
-     }
-
-   if (sd->clearing)
-     return;
 
    _clear_items(v->span);
 
@@ -1072,7 +1012,7 @@ _update_frame(Evas_Object *obj)
 }
 
 static int
-_view_update(Evry_View *view, int slide)
+_view_update(Evry_View *view)
 {
    GET_VIEW(v, view);
    Smart_Data *sd = evas_object_smart_data_get(v->span);
@@ -1091,7 +1031,7 @@ _view_update(Evry_View *view, int slide)
 
    if (!p)
      {
-	_view_clear(view, 0);
+	_view_clear(view);
 	return 1;
      }
 
@@ -1129,6 +1069,8 @@ _view_update(Evry_View *view, int slide)
 		    {
 		       sd->cur_item = v_it;
 		       v_it->selected = EINA_TRUE;
+		       if (v->mode == VIEW_MODE_THUMB)
+			 edje_object_signal_emit(v_it->frame, "e,state,selected", "e");
 		    }
 		  else
 		    {
@@ -1200,31 +1142,6 @@ _view_update(Evry_View *view, int slide)
      }
 
    v->tabs->update(v->tabs);
-
-   if (evry_conf->scroll_animate)
-     {
-   	if (slide)
-   	  {
-   	     if (sd->items && !sd->animator)
-   	       sd->animator = ecore_animator_add(_animator, v->span);
-
-	     sd->clearing = EINA_FALSE;
-
-	     if (!sd->sliding)
-	       sd->slide_to = sd->x;
-	     else
-	       sd->slide_to += sd->w;
-
-	     sd->slide = sd->x + sd->w * -slide;
-
-	     sd->sliding = 1;
-   	  }
-   	else if (sd->sliding)
-   	  {
-   	     if (!sd->animator)
-   	       sd->animator = ecore_animator_add(_animator, v->span);
-   	  }
-     }
 
    return 0;
 }
@@ -1384,7 +1301,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
    if ((slide = v->tabs->key_down(v->tabs, ev)))
      {
 	/* _view_update(view, -slide); */
-	_view_update(view, 0);
+	_view_update(view);
 	return 1;
      }
 
@@ -1545,7 +1462,7 @@ _view_cb_mouse_wheel(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
    Evas_Event_Mouse_Wheel *ev = event_info;
    Smart_Data *sd = evas_object_smart_data_get(obj);
-   if (sd->clearing) return;
+
    if (ev->z)
      {
 	evas_object_hide(sd->selector);
@@ -1562,9 +1479,6 @@ _view_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
    Smart_Data *sd = evas_object_smart_data_get(obj);
    int diff_y, diff_x;
    if (!sd) return;
-
-   if (sd->clearing)
-     goto end;
 
    if (!sd->mouse_x)
      goto end;
@@ -1629,12 +1543,13 @@ _view_create(Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
 
    View *v;
    Ecore_Event_Handler *h;
-   
+
    if (!s->plugin)
      return NULL;
 
    v = E_NEW(View, 1);
    v->view = *view;
+   v->view.clear_timer = NULL;
    v->state = s;
    v->evas = evas_object_evas_get(swallow);
 
@@ -1648,7 +1563,7 @@ _view_create(Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
      v->mode = evry_conf->view_mode;
 
    v->plugin = s->plugin;
-   
+
    v->mode_prev = v->mode;
 
    v->zoom = parent->zoom;
@@ -1696,7 +1611,7 @@ _view_destroy(Evry_View *view)
 
    GET_VIEW(v, view);
 
-   _view_clear(view, 0);
+   _view_clear(view);
 
    evas_object_del(v->span);
    evas_object_del(v->bg);

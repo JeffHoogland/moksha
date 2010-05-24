@@ -24,7 +24,7 @@ static int  _evry_clear(Evry_Selector *sel);
 static int  _evry_cb_update_timer(void *data);
 
 static Evry_State *_evry_state_new(Evry_Selector *sel, Eina_List *plugins);
-static void _evry_state_pop(Evry_Selector *sel);
+static void _evry_state_pop(Evry_Selector *sel, int immediate);
 
 static Evry_Selector *_evry_selector_new(Evry_Window *win, int type);
 static void _evry_selector_free(Evry_Selector *sel);
@@ -49,7 +49,7 @@ static void _evry_list_win_clear(int hide);
 static void _evry_view_clear(Evry_State *s);
 static void _evry_view_update(Evry_State *s, Evry_Plugin *plugin);
 static int  _evry_view_key_press(Evry_State *s, Ecore_Event_Key *ev);
-static void _evry_view_show(Evry_View *v);
+static void _evry_view_show(Evry_View *v, int slide);
 static void _evry_view_hide(Evry_View *v, int slide);
 
 static void _evry_item_desel(Evry_State *s, Evry_Item *it);
@@ -99,7 +99,7 @@ _evry_aggregator_fetch(Evry_Selector *sel, const char *input)
      {
 	s->cur_plugins = eina_list_prepend(s->cur_plugins, sel->aggregator);
      }
-   
+
    sel->aggregator->state = s;
 
    return 1;
@@ -148,7 +148,7 @@ _cb_show_timer(void *data)
 	else
 	  {
 	     s->view = view->create(view, s, win->o_main);
-	     _evry_view_show(s->view);
+	     _evry_view_show(s->view, 0);
 	  }
 
 	_evry_list_win_show();
@@ -266,7 +266,7 @@ evry_show(E_Zone *zone, const char *params)
    _evry_selector_activate(SUBJ_SEL);
 
    if (!evry_conf->hide_input)
-     edje_object_signal_emit(win->o_main, "e,state,entry_show", "e");
+     edje_object_signal_emit(win->o_main, "list:e,state,entry_show", "e");
 
    if (!evry_conf->hide_list)
      win->show_timer = ecore_timer_add(0.01, _cb_show_timer, win);
@@ -305,7 +305,7 @@ evry_hide(int clear)
 	while ((CUR_SEL)->states->next)
 	  {
 	     slide = 1;
-	     _evry_state_pop(CUR_SEL);
+	     _evry_state_pop(CUR_SEL, 1);
 	  }
 
 	sel = CUR_SEL;
@@ -317,8 +317,8 @@ evry_hide(int clear)
 	_evry_aggregator_fetch(sel, s->input);
 	_evry_selector_update(sel);
 	_evry_update_text_label(s);
-	_evry_view_show(s->view);
-	s->view->update(s->view, slide);
+	_evry_view_show(s->view, slide);
+	s->view->update(s->view);
 
 	return;
      }
@@ -534,7 +534,7 @@ _evry_timer_cb_actions_get(void *data)
      {
 	s = sel->state;
 	if (s->view)
-	  s->view->update(s->view, 0);
+	  s->view->update(s->view);
 	else
 	  _evry_view_update(s, NULL);
      }
@@ -689,8 +689,8 @@ _evry_list_win_show(void)
    win->visible = EINA_TRUE;
    _evry_list_win_update((CUR_SEL)->state);
 
-   edje_object_signal_emit(win->o_main, "e,state,list_show", "e");
-   edje_object_signal_emit(win->o_main, "e,state,entry_show", "e");
+   edje_object_signal_emit(win->o_main, "list:e,state,list_show", "e");
+   edje_object_signal_emit(win->o_main, "list:e,state,entry_show", "e");
 }
 
 static void
@@ -706,10 +706,10 @@ _evry_list_win_clear(int hide)
    if (hide)
      {
 	win->visible = EINA_FALSE;
-	edje_object_signal_emit(win->o_main, "e,state,list_hide", "e");
+	edje_object_signal_emit(win->o_main, "list:e,state,list_hide", "e");
 
 	if (evry_conf->hide_input && (!(sel->state) || (sel->state->input[0])))
-	  edje_object_signal_emit(win->o_main, "e,state,entry_hide", "e");
+	  edje_object_signal_emit(win->o_main, "list:e,state,entry_hide", "e");
      }
 }
 
@@ -743,6 +743,7 @@ _evry_window_new(E_Zone *zone)
    if (e_config->use_composite)
      {
 	edje_object_signal_emit(o, "e,state,composited", "e");
+	edje_object_signal_emit(o, "list:e,state,composited", "e");
 	edje_object_message_signal_process(o);
 	edje_object_calc_force(o);
 
@@ -1018,6 +1019,7 @@ _evry_selector_new(Evry_Window *win, int type)
      }
 
    win->selectors[type] = sel;
+   sel->win = win;
 
    return sel;
 }
@@ -1031,7 +1033,7 @@ _evry_selector_free(Evry_Selector *sel)
      _evry_view_clear(sel->state);
 
    while (sel->states)
-     _evry_state_pop(sel);
+     _evry_state_pop(sel, 1);
 
    EVRY_PLUGIN_FREE(sel->aggregator);
    EVRY_PLUGIN_FREE(sel->actions);
@@ -1105,7 +1107,7 @@ _evry_selector_activate(Evry_Selector *sel)
 	if (s->cur_item)
 	  _evry_selector_label_set(sel, "e.text.plugin",
 				   EVRY_ITEM(s->cur_item->plugin)->label);
-	_evry_view_show(s->view);
+	_evry_view_show(s->view, 0);
 	_evry_list_win_update(s);
      }
 }
@@ -1368,7 +1370,7 @@ _evry_selector_actions_get(Evry_Item *it)
    Evry_Selector *sel = ACTN_SEL;
 
    while (sel->state)
-     _evry_state_pop(sel);
+     _evry_state_pop(sel, 1);
 
    if (!it) return 0;
 
@@ -1403,7 +1405,7 @@ _evry_selector_objects_get(Evry_Action *act)
    Evry_Item *it;
 
    while (sel->state)
-     _evry_state_pop(sel);
+     _evry_state_pop(sel, 1);
 
    it = (ACTN_SEL)->state->cur_item;
 
@@ -1452,7 +1454,7 @@ _evry_state_new(Evry_Selector *sel, Eina_List *plugins)
 }
 
 static void
-_evry_state_pop(Evry_Selector *sel)
+_evry_state_pop(Evry_Selector *sel, int immediate)
 {
    Evry_Plugin *p;
    Evry_State *s;
@@ -1465,7 +1467,12 @@ _evry_state_pop(Evry_Selector *sel)
    free(s->inp);
 
    if (s->view)
-     s->view->destroy(s->view);
+     {
+	if (immediate)
+	  s->view->destroy(s->view);
+	else
+	  _evry_view_hide(s->view, -1);
+     }
 
    if (s->sel_items)
      eina_list_free(s->sel_items);
@@ -1529,8 +1536,8 @@ evry_state_push(Evry_Selector *sel, Eina_List *plugins)
 	s->view = view->create(view, s, win->o_main);
 	if (s->view)
 	  {
-	     _evry_view_show(s->view);
-	     s->view->update(s->view, -1);
+	     _evry_view_show(s->view, -1);
+	     s->view->update(s->view);
 	  }
      }
 
@@ -1633,8 +1640,8 @@ evry_browse_item(Evry_Item *it)
 	s->view = view->create(view, s, win->o_main);
 	if (s->view)
 	  {
-	     _evry_view_show(s->view);
-	     s->view->update(s->view, -1);
+	     _evry_view_show(s->view, -1);
+	     s->view->update(s->view);
 	  }
      }
 
@@ -1654,7 +1661,7 @@ evry_browse_back(Evry_Selector *sel)
    if (!s || !sel->states->next)
      return 0;
 
-   _evry_state_pop(sel);
+   _evry_state_pop(sel, 0);
 
    s = sel->state;
    _evry_aggregator_fetch(sel, s->input);
@@ -1662,8 +1669,8 @@ evry_browse_back(Evry_Selector *sel)
    if (sel == SUBJ_SEL)
      _evry_selector_update_actions(sel);
    _evry_update_text_label(s);
-   _evry_view_show(s->view);
-   s->view->update(s->view, 1);
+   _evry_view_show(s->view, 1);
+   s->view->update(s->view);
 
    return 1;
 }
@@ -1718,7 +1725,7 @@ evry_selectors_switch(int dir)
    else if (CUR_SEL == OBJ_SEL && dir > 0)
      {
 	while ((CUR_SEL)->states)
-	  _evry_state_pop(CUR_SEL);
+	  _evry_state_pop(CUR_SEL, 1);
 
 	edje_object_signal_emit(win->o_main, "e,state,object_selector_hide", "e");
 	_evry_selector_activate(SUBJ_SEL);
@@ -1809,7 +1816,7 @@ _evry_cheat_history(Evry_State *s, int promote, int delete)
    if (s->plugin == s->selector->aggregator)
      _evry_aggregator_fetch(s->selector, s->input);
    if (s->view)
-     s->view->update(s->view, 0);
+     s->view->update(s->view);
 
    return 1;
 }
@@ -1870,7 +1877,17 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
    old = ev->key;
    win->request_selection = EINA_FALSE;
 
-   if (!strcmp(ev->key, "KP_Enter"))
+   if (!strcmp(ev->key, "F1"))
+     {
+	edje_object_signal_emit(win->o_main, "list:e,action,slide,left", "e");
+	goto end;
+     }
+   else if (!strcmp(ev->key, "F2"))
+     {
+	edje_object_signal_emit(win->o_main, "list:e,action,slide,right", "e");
+	goto end;
+     }
+   else if (!strcmp(ev->key, "KP_Enter"))
      {
 	ev->key = "Return";
      }
@@ -2082,12 +2099,12 @@ _evry_update_text_label(Evry_State *s)
    if (!win->visible && evry_conf->hide_input)
      {
 	if (strlen(s->inp) > 0)
-	  edje_object_signal_emit(win->o_main, "e,state,entry_show", "e");
+	  edje_object_signal_emit(win->o_main, "list:e,state,entry_show", "e");
 	else
-	  edje_object_signal_emit(win->o_main, "e,state,entry_hide", "e");
+	  edje_object_signal_emit(win->o_main, "list:e,state,entry_hide", "e");
      }
 
-   edje_object_part_text_set(win->o_main, "e.text.label", s->inp);
+   edje_object_part_text_set(win->o_main, "list:e.text.label", s->inp);
 }
 
 static void
@@ -2105,7 +2122,7 @@ _evry_update(Evry_Selector *sel, int fetch)
 	sel->update_timer =
 	  ecore_timer_add(MATCH_LAG, _evry_cb_update_timer, sel);
 
-	edje_object_signal_emit(win->o_main, "e,signal,update", "e");
+	edje_object_signal_emit(win->o_main, "list:e,signal,update", "e");
      }
 }
 
@@ -2144,7 +2161,7 @@ _evry_clear(Evry_Selector *sel)
    _evry_update(sel, 1);
 
    if (!win->visible && evry_conf->hide_input)
-     edje_object_signal_emit(win->o_main, "e,state,entry_hide", "e");
+     edje_object_signal_emit(win->o_main, "list:e,state,entry_hide", "e");
 
    return 1;
 }
@@ -2313,29 +2330,137 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 }
 
 static void
-_evry_view_show(Evry_View *v)
+_evry_view_show(Evry_View *v, int slide)
 {
    if (!v) return;
 
-   if (v->o_list)
-     {
-	edje_object_part_swallow(win->o_main, "e.swallow.list", v->o_list);
-	evas_object_show(v->o_list);
-     }
-
    if (v->o_bar)
      {
-	edje_object_part_swallow(win->o_main, "e.swallow.bar", v->o_bar);
+	edje_object_part_swallow(win->o_main, "list:e.swallow.bar", v->o_bar);
 	evas_object_show(v->o_bar);
      }
+
+   if (!v->o_list)
+     return;
+
+   if (slide < 0)
+     {
+	edje_object_part_swallow(win->o_main, "list:e.swallow.list2", v->o_list);
+	evas_object_show(v->o_list);
+
+	edje_object_signal_emit(win->o_main, "list:e,action,slide,left", "e");
+     }
+   else if (slide > 0)
+     {
+	edje_object_part_swallow(win->o_main, "list:e.swallow.list", v->o_list);
+	evas_object_show(v->o_list);
+
+	edje_object_signal_emit(win->o_main, "list:e,action,slide,right", "e");
+     }
+   else
+     {
+	edje_object_part_swallow(win->o_main, "list:e.swallow.list", v->o_list);
+	evas_object_show(v->o_list);
+
+	edje_object_signal_emit(win->o_main, "list:e,action,slide,default", "e");
+     }
+}
+
+static int
+_clear_timer(void *data)
+{
+   Evry_View *v = data;
+
+   v->clear(v);
+
+   if (v->o_list)
+     {
+	edje_object_part_unswallow(win->o_main, v->o_list);
+	evas_object_hide(v->o_list);
+     }
+
+   v->clear_timer = NULL;
+   win->view_clearing = NULL;
+
+   return 0;
+}
+
+static int
+_free_timer(void *data)
+{
+   Evry_View *v = data;
+   v->destroy(v);
+   win->view_freeing = NULL;
+
+   return 0;
 }
 
 static void
 _evry_view_hide(Evry_View *v, int slide)
 {
-   if (!v) return;
+   if (win->view_freeing)
+     {
+	Evry_View *vv = win->view_freeing;
 
-   v->clear(v, slide);
+	ecore_timer_del(vv->clear_timer);
+	vv->destroy(vv);
+	win->view_freeing = NULL;
+     }
+
+   if (win->view_clearing)
+     {
+	Evry_View *vv = win->view_clearing;
+
+	ecore_timer_del(vv->clear_timer);
+	vv->clear_timer = NULL;
+	vv->clear(vv);
+
+	if (vv->o_list)
+	  {
+	     edje_object_part_unswallow(win->o_main, vv->o_list);
+	     evas_object_hide(vv->o_list);
+	  }
+
+	win->view_clearing = NULL;
+     }
+
+   if (!v || v->clear_timer) return;
+
+   if (slide && v->o_list)
+     {
+	if (slide < 0)
+	  {
+	     evas_object_hide(v->o_list);
+	     edje_object_part_unswallow(win->o_main, v->o_list);
+
+	     edje_object_part_swallow(win->o_main, "list:e.swallow.list2", v->o_list);
+	     evas_object_show(v->o_list);
+	     v->clear_timer = ecore_timer_add(0.2, _free_timer, v);
+
+	     win->view_freeing = v;
+	  }
+	else
+	  {
+	     evas_object_hide(v->o_list);
+	     edje_object_part_unswallow(win->o_main, v->o_list);
+
+	     edje_object_part_swallow(win->o_main, "list:e.swallow.list", v->o_list);
+	     evas_object_show(v->o_list);
+
+	     v->clear_timer = ecore_timer_add(0.2, _clear_timer, v);
+	     win->view_clearing = v;
+	  }
+
+	if (v->o_bar)
+	  {
+	     edje_object_part_unswallow(win->o_main, v->o_bar);
+	     evas_object_hide(v->o_bar);
+	  }
+
+	return;
+     }
+
+   v->clear(v);
 
    if (v->o_list)
      {
@@ -2359,11 +2484,11 @@ _evry_view_update(Evry_State *s, Evry_Plugin *p)
      {
 	Evry_View *view = evry_conf->views->data;
 	s->view = view->create(view, s, win->o_main);
-	_evry_view_show(s->view);
+	_evry_view_show(s->view, 0);
      }
 
    if (s->view)
-     s->view->update(s->view, 0);
+     s->view->update(s->view);
 }
 
 static void
@@ -2371,7 +2496,7 @@ _evry_view_clear(Evry_State *s)
 {
    if (!s || !s->view) return;
 
-   s->view->clear(s->view, 0);
+   s->view->clear(s->view);
 }
 
 static int
@@ -2439,8 +2564,8 @@ evry_view_toggle(Evry_State *s, const char *trigger)
      }
 
    s->view = v;
-   _evry_view_show(s->view);
-   view->update(s->view, 0);
+   _evry_view_show(s->view, 0);
+   view->update(s->view);
 
    return triggered;
 }
