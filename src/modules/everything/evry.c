@@ -51,6 +51,7 @@ static void _evry_view_update(Evry_State *s, Evry_Plugin *plugin);
 static int  _evry_view_key_press(Evry_State *s, Ecore_Event_Key *ev);
 static void _evry_view_show(Evry_View *v, int slide);
 static void _evry_view_hide(Evry_View *v, int slide);
+static void _evry_view_slide_clear(void);
 
 static void _evry_item_desel(Evry_State *s, Evry_Item *it);
 static void _evry_item_sel(Evry_State *s, Evry_Item *it);
@@ -281,6 +282,8 @@ evry_hide(int clear)
    int i;
 
    if (!win) return;
+
+   _evry_view_slide_clear();
 
    if ((clear && CUR_SEL) &&
        ((eina_list_count((SUBJ_SEL)->states) > 1) ||
@@ -2396,7 +2399,7 @@ _free_timer(void *data)
 }
 
 static void
-_evry_view_hide(Evry_View *v, int slide)
+_evry_view_slide_clear(void)
 {
    if (win->view_freeing)
      {
@@ -2423,7 +2426,11 @@ _evry_view_hide(Evry_View *v, int slide)
 
 	win->view_clearing = NULL;
      }
+}
 
+static void
+_evry_view_hide(Evry_View *v, int slide)
+{
    if (!v || v->clear_timer) return;
 
    if (slide && v->o_list)
