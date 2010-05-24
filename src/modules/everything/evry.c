@@ -1880,17 +1880,7 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
    old = ev->key;
    win->request_selection = EINA_FALSE;
 
-   if (!strcmp(ev->key, "F1"))
-     {
-	edje_object_signal_emit(win->o_main, "list:e,action,slide,left", "e");
-	goto end;
-     }
-   else if (!strcmp(ev->key, "F2"))
-     {
-	edje_object_signal_emit(win->o_main, "list:e,action,slide,right", "e");
-	goto end;
-     }
-   else if (!strcmp(ev->key, "KP_Enter"))
+   if (!strcmp(ev->key, "KP_Enter"))
      {
 	ev->key = "Return";
      }
