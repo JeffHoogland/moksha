@@ -271,14 +271,11 @@ const char *evry_type_get(Evry_Type type);
 Tab_View *evry_tab_view_new(Evry_View *view, const Evry_State *s, Evas *e);
 void  evry_tab_view_free(Tab_View *v);
 
-Eina_Bool view_thumb_init(void);
-void  view_thumb_shutdown(void);
+Eina_Bool evry_view_init(void);
+void  evry_view_shutdown(void);
 
-Eina_Bool view_help_init(void);
-void  view_help_shutdown(void);
-
-Eina_Bool view_preview_init(void);
-void  view_preview_shutdown(void);
+Eina_Bool evry_view_help_init(void);
+void  evry_view_help_shutdown(void);
 
 Eina_Bool evry_plug_clipboard_init(void);
 void  evry_plug_clipboard_shutdown(void);

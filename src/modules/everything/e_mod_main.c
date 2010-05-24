@@ -67,10 +67,10 @@ e_modapi_init(E_Module *m)
    evry_history_init();
 
    evry_plug_actions_init();
-   view_thumb_init();
-   view_help_init();
    evry_plug_clipboard_init();
    evry_plug_text_init();
+   evry_view_init();
+   evry_view_help_init();
 
    /* add module supplied action */
    act = e_action_add("everything");
@@ -171,8 +171,8 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 
    evry_shutdown();
 
-   view_thumb_shutdown();
-   view_help_shutdown();
+   evry_view_shutdown();
+   evry_view_help_shutdown();
    evry_plug_clipboard_shutdown();
    evry_plug_text_shutdown();
    evry_plug_actions_shutdown();

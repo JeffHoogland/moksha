@@ -302,7 +302,7 @@ _item_show(View *v, Item *it, Evas_Object *list)
 
 	evas_object_clip_set(it->frame, evas_object_clip_get(list));
 
-	if (it->selected)
+	if (it->selected && v->mode == VIEW_MODE_THUMB)
 	  edje_object_signal_emit(it->frame, "e,state,selected", "e");
 
 	if (it->item->marked)
@@ -1626,7 +1626,7 @@ _view_destroy(Evry_View *view)
 }
 
 Eina_Bool
-view_thumb_init(void)
+evry_view_init(void)
 {
    if (!evry_api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
@@ -1650,7 +1650,7 @@ view_thumb_init(void)
 }
 
 void
-view_thumb_shutdown(void)
+evry_view_shutdown(void)
 {
    evry_view_unregister(EVRY_VIEW(view));
    E_FREE(view);

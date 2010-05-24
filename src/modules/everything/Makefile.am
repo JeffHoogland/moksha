@@ -33,9 +33,9 @@ module_la_SOURCES      = $(EVRYHEADERS) \
 	                 evry_plugin.c \
 			 evry_plug_aggregator.c \
 			 evry_plug_actions.c \
-			 evry_view_plugin_tabs.c \
-			 evry_plug_view_thumb.c \
-			 evry_plug_view_help.c \
+			 evry_view.c \
+			 evry_view_tabs.c \
+			 evry_view_help.c \
 			 evry_plug_clipboard.c \
 			 evry_plug_text.c \
 			 md5.h \

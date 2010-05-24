@@ -118,7 +118,7 @@ _view_destroy(Evry_View *v)
 }
 
 Eina_Bool
-view_help_init(void)
+evry_view_help_init(void)
 {
    if (!evry_api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
@@ -139,7 +139,7 @@ view_help_init(void)
 }
 
 void
-view_help_shutdown(void)
+evry_view_help_shutdown(void)
 {
    evry_view_unregister(view);
    E_FREE(view);
