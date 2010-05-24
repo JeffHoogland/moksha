@@ -96,9 +96,10 @@ _evry_aggregator_fetch(Evry_Selector *sel, const char *input)
 
    if ((sel->aggregator->fetch(sel->aggregator, input)) &&
        (!eina_list_data_find(s->cur_plugins, sel->aggregator)))
-
-     s->cur_plugins = eina_list_prepend(s->cur_plugins, sel->aggregator);
-
+     {
+	s->cur_plugins = eina_list_prepend(s->cur_plugins, sel->aggregator);
+     }
+   
    sel->aggregator->state = s;
 
    return 1;

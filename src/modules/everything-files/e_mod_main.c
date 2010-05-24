@@ -1286,41 +1286,78 @@ _file_copy_action(Evry_Action *act)
    return 0;
 }
 
-static int
-_file_sort_action(Evry_Action *act)
+static void
+_sort_by_date(Plugin *p)
 {
    Eina_List *l;
    Evry_Item_File *file;
    struct stat s;
 
+   EINA_LIST_FOREACH(p->files, l, file)
+     {
+	if (file->modified)
+	  continue;
+
+	if (lstat(file->path, &s) == 0)
+	  file->modified = s.st_mtime;
+
+	EVRY_ITEM(file)->usage = -1;
+     }
+
+   p->files = eina_list_sort(p->files, -1, _cb_sort_date);
+   _append_files(p);
+
+   EVRY_PLUGIN_UPDATE(p, EVRY_UPDATE_ADD);
+
+}
+static void
+_sort_by_name(Plugin *p)
+{
+   Eina_List *l;
+   Evry_Item *it;
+
+   EINA_LIST_FOREACH(p->files, l, it)
+     it->usage = 0;
+
+   p->files = eina_list_sort(p->files, -1, _cb_sort);
+   _append_files(p);
+
+   EVRY_PLUGIN_UPDATE(p, EVRY_UPDATE_ADD);
+
+}
+
+static int
+_file_sort_action(Evry_Action *act)
+{
+   GET_PLUGIN(p, act->it1.item);
+   if (!p) return 0;
+
    if (EVRY_ITEM_DATA_INT_GET(act) == ACT_SORT_DATE)
      {
-	GET_PLUGIN(p, act->it1.item);
-	if (!p) return 0;
-
-	EINA_LIST_FOREACH(p->files, l, file)
-	  {
-	     if (file->modified)
-	       continue;
-
-	     if (lstat(file->path, &s) == 0)
-	       file->modified = s.st_mtime;
-	  }
-
-	p->files = eina_list_sort(p->files, -1, _cb_sort_date);
-	_append_files(p);
-
-	EVRY_PLUGIN_UPDATE(p, EVRY_UPDATE_ADD);
+	_sort_by_date(p);
      }
    else
      {
-	GET_PLUGIN(p, act->it1.item);
-	if (!p) return 0;
+	_sort_by_name(p);
+     }
 
-	p->files = eina_list_sort(p->files, -1, _cb_sort);
-	_append_files(p);
+   return 0;
+}
 
-	EVRY_PLUGIN_UPDATE(p, EVRY_UPDATE_ADD);
+static int
+_cb_key_down(Evry_Plugin *plugin, const Ecore_Event_Key *ev)
+{
+   GET_PLUGIN(p, plugin);
+
+   if (!strcmp(ev->key, "F1"))
+     {
+	_sort_by_name(p);
+	return 1;
+     }
+   if (!strcmp(ev->key, "F2"))
+     {
+	_sort_by_date(p);
+	return 1;
      }
 
    return 0;
@@ -1390,6 +1427,7 @@ _plugins_init(const Evry_API *api)
 
    PLUGIN_NEW(N_("Files"), _module_icon, _begin, _finish, _fetch, _browse);
    p->input_type = EVRY_TYPE_FILE;
+   p->cb_key_down = &_cb_key_down;
    p->actions = eina_list_append(p->actions, act_sort_date);
    p->actions = eina_list_append(p->actions, act_sort_name);
    if (evry->plugin_register(p, EVRY_PLUGIN_SUBJECT, 2))
@@ -1397,6 +1435,7 @@ _plugins_init(const Evry_API *api)
 
 
    PLUGIN_NEW(N_("Files"), _module_icon, _begin, _finish, _fetch, _browse);
+   p->cb_key_down = &_cb_key_down;
    p->actions = eina_list_append(p->actions, act_sort_date);
    p->actions = eina_list_append(p->actions, act_sort_name);
    evry->plugin_register(p, EVRY_PLUGIN_OBJECT, 2);
