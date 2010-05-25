@@ -270,7 +270,7 @@ _list_select_cb (void *data, Evas_Object *obj)
    Plugin_Config *pc = NULL;
    Plugin_Page *page = data;
 
-   if (sel >= 0 && (pc = eina_list_nth(page->configs, sel)) && pc->plugin)
+   if (sel >= 0 && (pc = eina_list_nth(page->configs, sel)))
      {
 	e_widget_entry_text_set(page->o_trigger, pc->trigger);
 	e_widget_disabled_set(page->o_trigger, 0);
