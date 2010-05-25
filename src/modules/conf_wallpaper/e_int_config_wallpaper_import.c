@@ -450,12 +450,18 @@ _import_edj_gen(Import *import)
    len = e_user_dir_snprintf(buf, sizeof(buf), "backgrounds/%s.edj", fstrip);
    if (len >= sizeof(buf)) return;
    off = len - (sizeof(".edj") - 1);
-   while (ecore_file_exists(buf))
+   for (num = 1; ecore_file_exists(buf) && num < 100; num++)
      {
 	snprintf(buf + off, sizeof(buf) - off, "-%d.edj", num);
-	num++;
      }
    free(fstrip);
+
+   if (num == 100)
+     {
+	printf("Couldn't come up with another filename for %s\n", buf);
+	return;
+     }
+
    strcpy(tmpn, "/tmp/e_bgdlg_new.edc-tmp-XXXXXX");
    fd = mkstemp(tmpn);
    if (fd < 0) 

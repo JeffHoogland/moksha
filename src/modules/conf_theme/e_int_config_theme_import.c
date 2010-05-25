@@ -267,6 +267,9 @@ _theme_import_cb_ok(void *data, void *data2)
 	file = ecore_file_file_get(import->cfdata->file);
 	e_user_dir_snprintf(buf, sizeof(buf), "themes/%s", file);
 
+	if (ecore_file_exists(buf))
+	  ecore_file_unlink(buf);
+
 	strip = ecore_file_strip_ext(file);
 	if (!strip) 
 	  return;
