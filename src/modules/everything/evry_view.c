@@ -282,12 +282,12 @@ _item_show(View *v, Item *it, Evas_Object *list)
 	it->frame = edje_object_add(v->evas);
 	if (v->mode == VIEW_MODE_THUMB)
 	  {
-	     e_theme_edje_object_set(it->frame, "base/theme/widgets",
+	     e_theme_edje_object_set(it->frame, "base/theme/everything",
 				     "e/modules/everything/thumbview/item/thumb");
 	  }
 	else
 	  {
-	     e_theme_edje_object_set(it->frame, "base/theme/widgets",
+	     e_theme_edje_object_set(it->frame, "base/theme/everything",
 				     "e/modules/everything/thumbview/item/list");
 
 	     if (v->mode == VIEW_MODE_DETAIL)
@@ -461,7 +461,7 @@ _e_smart_reconfigure_do(void *data)
 	if (!sd->selector)
 	  {
 	     sd->selector = edje_object_add(sd->view->evas);
-	     e_theme_edje_object_set(sd->selector, "base/theme/widgets",
+	     e_theme_edje_object_set(sd->selector, "base/theme/everything",
 				     "e/modules/everything/thumbview/item/list");
 
 	     evas_object_smart_member_add(sd->selector, obj);
@@ -1569,7 +1569,7 @@ _view_create(Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
    v->zoom = parent->zoom;
 
    v->bg = edje_object_add(v->evas);
-   e_theme_edje_object_set(v->bg, "base/theme/widgets",
+   e_theme_edje_object_set(v->bg, "base/theme/everything",
 			   "e/modules/everything/thumbview/main/window");
    // scrolled thumbs
    v->span = _pan_add(v->evas);
@@ -1581,7 +1581,7 @@ _view_create(Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
 
    // the scrollframe holding the scrolled thumbs
    v->sframe = e_scrollframe_add(v->evas);
-   e_scrollframe_custom_theme_set(v->sframe, "base/theme/widgets",
+   e_scrollframe_custom_theme_set(v->sframe, "base/theme/everything",
 				  "e/modules/everything/thumbview/main/scrollframe");
    e_scrollframe_thumbscroll_force(v->sframe, 1);
 

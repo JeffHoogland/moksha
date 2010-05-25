@@ -33081,6 +33081,38 @@ collections {
             }
          }
          part {
+            name: "cursor";
+            type: RECT;
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               min: 1 12;
+               max: 1 12;
+               align: 0.0 0.5;
+               fixed: 1 1;
+               rel1 {
+                  relative: 1.0  0.0;
+                  offset: 0    -2;
+                  to: "e.text.label";
+               }
+               rel2 {
+                  relative: 1.0  1.0;
+                  offset: 0    -1;
+                  to: "e.text.label";
+               }
+               /* image {
+	        * normal: "icon_right_arrow.png";
+                * } */
+
+               color: 20 20 20 250;
+            }
+            description {
+               state: "faded" 0.0;
+               inherit: "default" 0.0;
+               color: 20 20 20 0;
+            }
+         }
+         part {
             name: "input_over2";
             mouse_events: 0;
             clip_to: "input_base";
@@ -33294,6 +33326,22 @@ collections {
          }
       }
       programs {
+         program {
+            name: "blink_off";
+            signal: "show";
+            source: "";
+            action: STATE_SET "faded" 0.0;
+            transition: SINUSOIDAL 0.6;
+            target: "cursor";
+            after: "blink_on";
+         }
+         program {
+            name: "blink_on";
+            action: STATE_SET "default" 0.0;
+            transition: SINUSOIDAL 0.35;
+            target: "cursor";
+            after: "blink_off";
+         }
          program {
             name: "composite_mode";
             signal: "e,state,composited";
