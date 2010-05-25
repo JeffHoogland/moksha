@@ -152,6 +152,7 @@ e_int_menus_main_new(void)
    e_menu_item_label_set(mi, _("Windows"));
    e_util_menu_item_theme_icon_set(mi, "preferences-system-windows");
    e_menu_item_submenu_set(mi, subm);
+   e_object_data_set(E_OBJECT(subm), dat);
 
    subm = e_int_menus_lost_clients_new();
    e_object_data_set(E_OBJECT(subm), dat);   
