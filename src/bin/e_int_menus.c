@@ -154,6 +154,7 @@ e_int_menus_main_new(void)
    e_menu_item_submenu_set(mi, subm);
    e_object_data_set(E_OBJECT(subm), dat);
 
+#if 0 // lost windows already handled inside "Windows" from main menu.
    subm = e_int_menus_lost_clients_new();
    e_object_data_set(E_OBJECT(subm), dat);   
    dat->lost_clients = subm;
@@ -161,6 +162,7 @@ e_int_menus_main_new(void)
    e_menu_item_label_set(mi, _("Lost Windows"));
    e_util_menu_item_theme_icon_set(mi, "preferences-windows-lost");
    e_menu_item_submenu_set(mi, subm);
+#endif
 
    l = _e_int_menus_augmentation_find("main/3");
    if (l) _e_int_menus_augmentation_add(m, l);
