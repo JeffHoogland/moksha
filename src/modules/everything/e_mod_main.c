@@ -371,7 +371,7 @@ _config_init()
    E_CONFIG_VAL(D, T, first_run, UCHAR);
 #undef T
 #undef D
-   evry_conf = e_config_domain_load("module.everything", conf_edd);
+   /* evry_conf = e_config_domain_load("module.everything", conf_edd); */
 
    if (evry_conf && !e_util_module_config_check
        (_("Everything Module"), evry_conf->version,
@@ -391,8 +391,8 @@ _config_init()
    IFMODCFG(0x0001);
    evry_conf->rel_x = 0.5;
    evry_conf->rel_y = 0.33;
-   evry_conf->width = 450;
-   evry_conf->height = 315;
+   evry_conf->width = 435;
+   evry_conf->height = 385;
    evry_conf->scroll_animate = 1;
    evry_conf->scroll_speed = 10.0;
    evry_conf->hide_input = 0;
@@ -402,14 +402,11 @@ _config_init()
    evry_conf->view_zoom = 0;
    evry_conf->cycle_mode = 0;
    evry_conf->history_sort_mode = 0;
+   evry_conf->edge_width = 390;
+   evry_conf->edge_height = 495;
    evry_conf->first_run = EINA_TRUE;
-   evry_conf->width = 390;
-   evry_conf->height = 495;
-   evry_conf->rel_y = 0.40;
-   evry_conf->edge_width = 450;
-   evry_conf->edge_height = 515;   
    IFMODCFGEND;
-   
+
    evry_conf->version = MOD_CONFIG_FILE_VERSION;
 }
 
