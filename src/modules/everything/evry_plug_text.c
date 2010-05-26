@@ -46,17 +46,19 @@ evry_plug_text_init(void)
 
    if (evry_plugin_register(p1, EVRY_PLUGIN_OBJECT,999))
      {
-	p1->config->trigger_only = 1;
+	/* p1->config->trigger_only = 1; */
 	p1->config->trigger = eina_stringshare_add(" ");
 	p1->config->aggregate = EINA_FALSE;
+	p1->config->top_level = EINA_FALSE;
 	p1->config->view_mode = VIEW_MODE_LIST;
      }
 
    if (evry_plugin_register(p2, EVRY_PLUGIN_SUBJECT, 999))
      {
-	p2->config->trigger_only = 1;
+	/* p2->config->trigger_only = 1; */
 	p2->config->trigger = eina_stringshare_add(" ");
 	p2->config->aggregate = EINA_FALSE;
+	p2->config->top_level = EINA_FALSE;
 	p2->config->view_mode = VIEW_MODE_LIST;
      }
 

@@ -6,6 +6,7 @@
 
 
 static void _e_mod_action_cb(E_Object *obj, const char *params);
+static void _e_mod_action_cb_edge(E_Object *obj, const char *params, E_Event_Zone_Edge *ev);
 static int  _e_mod_run_defer_cb(void *data);
 static void _e_mod_run_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_mod_menu_add(void *data, E_Menu *m);
@@ -77,6 +78,7 @@ e_modapi_init(E_Module *m)
    if (act)
      {
 	act->func.go = _e_mod_action_cb;
+	act->func.go_edge = _e_mod_action_cb_edge;
 	e_action_predef_name_set
 	  (_("Everything Launcher"),
 	   _("Show Everything Dialog"),
@@ -96,7 +98,7 @@ e_modapi_init(E_Module *m)
 
 
    _evry_events[EVRY_EVENT_ITEMS_UPDATE]     = ecore_event_type_new();
-   _evry_events[EVRY_EVENT_ITEM_SELECTED]      = ecore_event_type_new();
+   _evry_events[EVRY_EVENT_ITEM_SELECTED]    = ecore_event_type_new();
    _evry_events[EVRY_EVENT_ITEM_CHANGED]     = ecore_event_type_new();
    _evry_events[EVRY_EVENT_ACTION_PERFORMED] = ecore_event_type_new();
 
@@ -349,6 +351,8 @@ _config_init()
    E_CONFIG_VAL(D, T, version, INT);
    E_CONFIG_VAL(D, T, width, INT);
    E_CONFIG_VAL(D, T, height, INT);
+   E_CONFIG_VAL(D, T, edge_width, INT);
+   E_CONFIG_VAL(D, T, edge_height, INT);
    E_CONFIG_VAL(D, T, rel_x, DOUBLE);
    E_CONFIG_VAL(D, T, rel_y, DOUBLE);
    E_CONFIG_VAL(D, T, scroll_animate, INT);
@@ -388,7 +392,7 @@ _config_init()
    evry_conf->rel_x = 0.5;
    evry_conf->rel_y = 0.33;
    evry_conf->width = 450;
-   evry_conf->height = 415;
+   evry_conf->height = 315;
    evry_conf->scroll_animate = 1;
    evry_conf->scroll_speed = 10.0;
    evry_conf->hide_input = 0;
@@ -399,11 +403,13 @@ _config_init()
    evry_conf->cycle_mode = 0;
    evry_conf->history_sort_mode = 0;
    evry_conf->first_run = EINA_TRUE;
-   evry_conf->width = 435;
-   evry_conf->height = 415;
+   evry_conf->width = 390;
+   evry_conf->height = 495;
    evry_conf->rel_y = 0.40;
+   evry_conf->edge_width = 450;
+   evry_conf->edge_height = 515;   
    IFMODCFGEND;
-
+   
    evry_conf->version = MOD_CONFIG_FILE_VERSION;
 }
 
@@ -454,7 +460,7 @@ _e_mod_run_defer_cb(void *data)
    E_Zone *zone;
 
    zone = data;
-   if (zone) evry_show(zone, _params);
+   if (zone) evry_show(zone, E_ZONE_EDGE_NONE, _params);
 
    _idler = NULL;
    return 0;
@@ -487,6 +493,18 @@ _e_mod_action_cb(E_Object *obj, const char *params)
 
    if (_idler) ecore_idle_enterer_del(_idler);
    _idler = ecore_idle_enterer_add(_e_mod_run_defer_cb, zone);
+}
+
+static void
+_e_mod_action_cb_edge(E_Object *obj, const char *params, E_Event_Zone_Edge *ev)
+{
+   IF_RELEASE(_params);
+   if (params && params[0])
+     _params = eina_stringshare_add(params);
+
+   if (_idler) ecore_idle_enterer_del(_idler);
+
+   evry_show(ev->zone, ev->edge, _params);
 }
 
 /* menu item callback(s) */

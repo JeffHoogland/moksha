@@ -40,7 +40,7 @@ static void _evry_selector_label_set(Evry_Selector *sel, const char *part, const
 static void _evry_selector_signal_emit(Evry_Selector *sel, const char *msg);
 static int  _evry_selectors_shift(int dir);;
 
-static Evry_Window *_evry_window_new(E_Zone *zone);
+static Evry_Window *_evry_window_new(E_Zone *zone, E_Zone_Edge edge);
 static void _evry_window_free(Evry_Window *win);
 static void _evry_list_win_show(void);
 static void _evry_list_win_update(Evry_State *s);
@@ -59,6 +59,8 @@ static void _evry_item_sel(Evry_State *s, Evry_Item *it);
 static int  _evry_cb_key_down(void *data, int type, void *event);
 static int  _evry_cb_selection_notify(void *data, int type, void *event);
 static int  _evry_cb_mouse(void *data, int type, void *event);
+static int  _evry_cb_mouse_in(void *data, int type, void *event);
+static int  _evry_cb_mouse_out(void *data, int type, void *event);
 
 /* local subsystem globals */
 static Evry_Window *win = NULL;
@@ -158,8 +160,17 @@ _cb_show_timer(void *data)
    return 0;
 }
 
+static int
+_cb_hide_timer(void *data)
+{
+   win->hide_timer = NULL;
+
+   evry_hide(0);
+   return 0;
+}
+
 int
-evry_show(E_Zone *zone, const char *params)
+evry_show(E_Zone *zone, E_Zone_Edge edge, const char *params)
 {
    E_OBJECT_CHECK_RETURN(zone, 0);
    E_OBJECT_TYPE_CHECK_RETURN(zone, E_ZONE_TYPE, 0);
@@ -180,7 +191,7 @@ evry_show(E_Zone *zone, const char *params)
 	     return 1;
 	  }
 
-	if (!(params && eina_list_count((SUBJ_SEL)->states) == 1))
+	if (eina_list_count((SUBJ_SEL)->states) < 2)
 	  evry_hide(1);
 
 	if (win && CUR_SEL && params)
@@ -197,15 +208,18 @@ evry_show(E_Zone *zone, const char *params)
 
    input_window = ecore_x_window_input_new(zone->container->win, 0, 0, 1, 1);
    ecore_x_window_show(input_window);
-   if (!e_grabinput_get(input_window, 0, input_window))
-     return 0;
 
-   ecore_x_sync();
+   if (edge == E_ZONE_EDGE_NONE)
+     {
+	if (!e_grabinput_get(input_window, 0, input_window))
+	  return 0;
+     }
 
-   win = _evry_window_new(zone);
+   win = _evry_window_new(zone, edge);
    if (!win)
      {
 	ecore_x_window_free(input_window);
+	e_grabinput_release(input_window, input_window);
 	input_window = 0;
 	return 0;
      }
@@ -259,17 +273,30 @@ evry_show(E_Zone *zone, const char *params)
       (ECORE_EVENT_MOUSE_WHEEL,
        _evry_cb_mouse, win));
 
+   if (edge)
+     {
+	win->handlers = eina_list_append
+	  (win->handlers, ecore_event_handler_add
+	   (ECORE_X_EVENT_MOUSE_IN,
+	    _evry_cb_mouse_in, win));
+
+	win->handlers = eina_list_append
+	  (win->handlers, ecore_event_handler_add
+	   (ECORE_X_EVENT_MOUSE_OUT,
+	    _evry_cb_mouse_out, win));
+     }
+
    e_popup_layer_set(win->popup, 255);
    e_popup_show(win->popup);
-
+   ecore_x_window_raise(input_window);
    _evry_selector_subjects_get(params);
    _evry_selector_update(SUBJ_SEL);
    _evry_selector_activate(SUBJ_SEL);
 
-   if (!evry_conf->hide_input)
+   if (!evry_conf->hide_input || edge)
      edje_object_signal_emit(win->o_main, "list:e,state,entry_show", "e");
 
-   if (!evry_conf->hide_list)
+   if (!evry_conf->hide_list || edge)
      win->show_timer = ecore_timer_add(0.01, _cb_show_timer, win);
 
    return 1;
@@ -334,6 +361,8 @@ evry_hide(int clear)
 
    if (win->show_timer)
      ecore_timer_del(win->show_timer);
+   if (win->hide_timer)
+     ecore_timer_del(win->hide_timer);
 
    win->visible = EINA_FALSE;
 
@@ -348,9 +377,12 @@ evry_hide(int clear)
    _evry_window_free(win);
    win = NULL;
 
-   ecore_x_window_free(input_window);
-   e_grabinput_release(input_window, input_window);
-   input_window = 0;
+   if (input_window)
+     {
+	ecore_x_window_free(input_window);
+	e_grabinput_release(input_window, input_window);
+	input_window = 0;
+     }
 
    evry_history_unload();
 }
@@ -718,9 +750,9 @@ _evry_list_win_clear(int hide)
 }
 
 static Evry_Window *
-_evry_window_new(E_Zone *zone)
+_evry_window_new(E_Zone *zone, E_Zone_Edge edge)
 {
-   int x, y, mw, mh;
+   int x, y, mw, mh, h, w;
    Evry_Window *win;
    E_Popup *popup;
    Evas_Object *o;
@@ -757,18 +789,65 @@ _evry_window_new(E_Zone *zone)
 
    edje_object_size_min_calc(o, &mw, &mh);
 
+   if (edge == E_ZONE_EDGE_NONE)
+     {
+	w = evry_conf->width;
+	h = evry_conf->height;
+     }
+   else
+     {
+	w = evry_conf->edge_width;
+	h = evry_conf->edge_height;
+     }
+
    evry_conf->min_w = mw;
-   if (evry_conf->width > mw)
-     mw = evry_conf->width;
+   if (w > mw) mw = w;
 
    evry_conf->min_h = mh;
-   if (evry_conf->height > mh)
-     mh = evry_conf->height;
+   if (h > mh) mh = h;
 
-   mw += offset_s*2;
-   mh += offset_s*2;
-   x = (zone->w * evry_conf->rel_x) - (mw / 2);
-   y = (zone->h * evry_conf->rel_y) - (mh / 2);
+   if (edge == E_ZONE_EDGE_NONE)
+     {
+	mw += offset_s*2;
+	mh += offset_s*2;
+
+	x = (zone->w * evry_conf->rel_x) - (mw / 2);
+	y = (zone->h * evry_conf->rel_y) - (mh / 2);
+     }
+   else
+     {
+	switch (edge)
+	  {
+	   case E_ZONE_EDGE_TOP_LEFT:
+	      x = 3 - offset_s;
+	      y = 3 - offset_s;
+	      break;
+	   case E_ZONE_EDGE_TOP_RIGHT:
+	      x = zone->w - (mw + offset_s + 3);
+	      y = 3 - offset_s;
+	      break;
+	   case E_ZONE_EDGE_BOTTOM_RIGHT:
+	      x = zone->w - (mw + offset_s + 3);
+	      y = zone->h - (mh + offset_s + 3);
+	      break;
+	   case E_ZONE_EDGE_BOTTOM_LEFT:
+	      x = 3 - offset_s;
+	      y = zone->h - (mh + offset_s + 3);
+	      break;
+
+	   default:
+	      mw += offset_s*2;
+	      mh += offset_s*2;
+	      x = (zone->w * evry_conf->rel_x) - (mw / 2);
+	      y = (zone->h * evry_conf->rel_y) - (mh / 2);
+	      break;
+	  }
+
+	mw += offset_s*2;
+	mh += offset_s*2;
+     }
+
+   ecore_x_window_move_resize(input_window, x, y, mw, mh);
 
    e_popup_move_resize(popup, x, y, mw, mh);
 
@@ -793,13 +872,50 @@ _evry_cb_drag_finished(E_Drag *drag, int dropped)
 }
 
 static int
+_evry_cb_mouse_in(void *data, int type, void *event)
+{
+   Ecore_X_Event_Mouse_In *ev = event;
+
+   if (ev->event_win != input_window)
+     return 1;
+
+   e_grabinput_get(input_window, 0, input_window);
+
+   if (win && win->hide_timer)
+     {
+	ecore_timer_del(win->hide_timer);
+	win->hide_timer = NULL;
+     }
+
+   return 1;
+}
+
+static int
+_evry_cb_mouse_out(void *data, int type, void *event)
+{
+   Ecore_X_Event_Mouse_In *ev = event;
+
+   if (!win || (ev->event_win != input_window))
+     return 1;
+
+   if (win->hide_timer)
+     return 1;
+
+   win->hide_timer = ecore_timer_add(0.3, _cb_hide_timer, win);
+
+   return 1;
+}
+
+static int
 _evry_cb_mouse(void *data, int type, void *event)
 {
    Ecore_Event_Mouse_Button *ev;
    E_Popup *pop;
 
    ev = event;
-   if (ev->window != input_window) return 1;
+
+   if (ev->event_window != input_window)
+     return 1;
 
    pop = win->popup;
 
@@ -811,8 +927,7 @@ _evry_cb_mouse(void *data, int type, void *event)
 	if ((win->mouse_button == 3) &&
 	    (s = (CUR_SEL)->state) && (s->cur_item) &&
 	    (CHECK_TYPE(s->cur_item, EVRY_TYPE_FILE)) &&
-	    (!E_INSIDE(ev->x, ev->y, pop->x + pop->zone->x,
-		       pop->y + pop->zone->y, pop->w, pop->h)))
+	    (!E_INSIDE(ev->x, ev->y, pop->zone->x, pop->zone->y, pop->w, pop->h)))
 	  {
 	     const char *drag_types[] = { "text/uri-list" };
 	     E_Drag *d;
@@ -847,8 +962,8 @@ _evry_cb_mouse(void *data, int type, void *event)
 
 	evas_event_feed_mouse_move
 	  (pop->evas,
-	   ev->x - pop->x + pop->zone->x,
-	   ev->y - pop->y + pop->zone->y,
+	   ev->x - pop->zone->x,
+	   ev->y - pop->zone->y,
 	   ev->timestamp, NULL);
      }
    else if (type == ECORE_EVENT_MOUSE_BUTTON_DOWN)
@@ -856,8 +971,7 @@ _evry_cb_mouse(void *data, int type, void *event)
 	win->mouse_out = 0;
 
 	/* XXX shift triple click in flags when needed */
-	if (!E_INSIDE(ev->x, ev->y, pop->x + pop->zone->x,
-		      pop->y + pop->zone->y, pop->w, pop->h))
+	if (!E_INSIDE(ev->x, ev->y, pop->zone->x, pop->zone->y, pop->w, pop->h))
 	  {
 	     win->mouse_out = 1;
 	     return 1;
@@ -875,8 +989,7 @@ _evry_cb_mouse(void *data, int type, void *event)
 	win->mouse_button = 0;
 
 	if (win->mouse_out &&
-	    !E_INSIDE(ev->x, ev->y, pop->x + pop->zone->x,
-		      pop->y + pop->zone->y, pop->w, pop->h))
+	    !E_INSIDE(ev->x, ev->y, pop->zone->x, pop->zone->y, pop->w, pop->h))
 	  {
 	     evry_hide(0);
 	     return 1;
@@ -2343,6 +2456,7 @@ _evry_view_show(Evry_View *v, int slide)
 	evas_object_show(v->o_list);
 
 	edje_object_signal_emit(win->o_main, "list:e,action,slide,left", "e");
+	edje_object_signal_emit(v->o_list, "e,action,show,list", "e");
      }
    else if (slide > 0)
      {
@@ -2350,6 +2464,7 @@ _evry_view_show(Evry_View *v, int slide)
 	evas_object_show(v->o_list);
 
 	edje_object_signal_emit(win->o_main, "list:e,action,slide,right", "e");
+	edje_object_signal_emit(v->o_list, "e,action,show,list", "e");
      }
    else
      {
@@ -2357,6 +2472,7 @@ _evry_view_show(Evry_View *v, int slide)
 	evas_object_show(v->o_list);
 
 	edje_object_signal_emit(win->o_main, "list:e,action,slide,default", "e");
+	edje_object_signal_emit(v->o_list, "e,action,show,list", "e");
      }
 }
 
@@ -2411,8 +2527,9 @@ _evry_view_hide(Evry_View *v, int slide)
 
 	     edje_object_part_swallow(win->o_main, "list:e.swallow.list2", v->o_list);
 	     evas_object_show(v->o_list);
-	     v->clear_timer = ecore_timer_add(0.2, _clear_timer, v);
-
+	     edje_object_signal_emit(v->o_list, "e,action,hide,list", "e");
+	     edje_object_signal_emit(v->o_list, "e.swallow.list:e,action,hide,list", "e");
+	     v->clear_timer = ecore_timer_add(0.3, _clear_timer, v);
 	     win->view_freeing = v;
 	  }
 	else
@@ -2422,8 +2539,9 @@ _evry_view_hide(Evry_View *v, int slide)
 
 	     edje_object_part_swallow(win->o_main, "list:e.swallow.list", v->o_list);
 	     evas_object_show(v->o_list);
-
-	     v->clear_timer = ecore_timer_add(0.2, _clear_timer, v);
+	     edje_object_signal_emit(v->o_list, "e,action,hide,list", "e");
+	     edje_object_signal_emit(v->o_list, "e.swallow.list:e,action,hide,list", "e");
+	     v->clear_timer = ecore_timer_add(0.3, _clear_timer, v);
 	     win->view_clearing = v;
 	  }
 

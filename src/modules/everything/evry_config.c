@@ -43,6 +43,7 @@ struct _E_Config_Dialog_Data
   int quick_nav;
 
   int width, height;
+  int edge_width, edge_height;
   double rel_x, rel_y;
   int scroll_animate;
   double scroll_speed;
@@ -85,6 +86,8 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 #define C(_name) cfdata->_name = evry_conf->_name
    C(height);
    C(width);
+   C(edge_height);
+   C(edge_width);
    C(hide_list);
    C(hide_input);
    C(quick_nav);
@@ -132,6 +135,8 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 #define C(_name) evry_conf->_name = cfdata->_name
    C(height);
    C(width);
+   C(edge_height);
+   C(edge_width);
    C(hide_list);
    C(hide_input);
    C(quick_nav);
@@ -563,6 +568,23 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdat
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
+   of = e_widget_framelist_add(e, _("Edge Popup Size"), 0);
+   ob = e_widget_label_add(e, _("Popup Width"));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_slider_add(e, 1, 0, _("%1.0f"),
+   			    evry_conf->min_w, 800, 5, 0, NULL,
+   			    &(cfdata->edge_width), 200);
+   e_widget_framelist_object_append(of, ob);
+
+   ob = e_widget_label_add(e, _("Popup Height"));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_slider_add(e, 1, 0, _("%1.0f"),
+   			    evry_conf->min_h, 800, 5, 0, NULL,
+   			    &(cfdata->edge_height), 200);
+   e_widget_framelist_object_append(of, ob);
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
+
+   
    e_widget_toolbook_page_append(otb, NULL, _("Geometry"),
 				 o, 1, 0, 1, 0, 0.5, 0.0);
 

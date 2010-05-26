@@ -163,8 +163,8 @@ evry_plugin_register(Evry_Plugin *p, int type, int priority)
 
    conf[type] = eina_list_sort(conf[type], -1, _evry_cb_plugin_sort);
 
-   EINA_LIST_FOREACH(conf[type], l, pc)
-     pc->priority = i++;
+   /* EINA_LIST_FOREACH(conf[type], l, pc)
+    *   pc->priority = i++; */
 
    evry_conf->conf_subjects = conf[0];
    evry_conf->conf_actions = conf[1];

@@ -41,11 +41,7 @@ struct _Smart_Data
   Evas_Coord   sx, sy;
   Eina_List   *queue;
 
-  Evas_Object *selector;
-
   double last_select;
-  double sel_pos_to;
-  double sel_pos;
   double scroll_align;
   double scroll_align_to;
   Ecore_Animator *animator;
@@ -228,9 +224,6 @@ _item_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
      {
 	sd->mouse_x = ev->canvas.x;
 	sd->mouse_y = ev->canvas.y;
-
-	if (sd->selector && evas_object_visible_get(sd->selector))
-	  evas_object_hide(sd->selector);
      }
 }
 
@@ -255,18 +248,12 @@ _item_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
      {
 	if (!(ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD))
 	  {
-	     if (sd->selector)
-	       evas_object_hide(sd->selector);
-
 	     evry_item_select(sd->view->state, it->item);
 	     _pan_item_select(it->obj, it, 0);
 	  }
      }
    else if (ev->button == 3)
      {
-	if (sd->selector)
-	  evas_object_hide(sd->selector);
-
 	evry_item_select(sd->view->state, it->item);
 	_pan_item_select(it->obj, it, 0);
 
@@ -302,7 +289,7 @@ _item_show(View *v, Item *it, Evas_Object *list)
 
 	evas_object_clip_set(it->frame, evas_object_clip_get(list));
 
-	if (it->selected && v->mode == VIEW_MODE_THUMB)
+	if (it->selected)
 	  edje_object_signal_emit(it->frame, "e,state,selected", "e");
 
 	if (it->item->marked)
@@ -372,30 +359,30 @@ _e_smart_reconfigure_do(void *data)
      }
    else
      {
+	int size;
+	int cnt = eina_list_count(sd->items);
+	double col;
+
 	if (sd->view->zoom == 0)
-	  {
-	     int cnt = eina_list_count(sd->items);
-
-	     aspect_w *= 3;
-	     aspect_w /= 4;
-
-	     if (cnt < 3)
-	       iw = (double)sd->w / 2.5;
-	     else if (cnt < 7)
-	       iw = sd->w / 3;
-	     else
-	       iw = sd->w / 4;
-	  }
+	  size = 96;
 	else if (sd->view->zoom == 1)
-	  {
-	     aspect_w *= 2;
-	     aspect_w /= 3;
-	     iw = sd->w / 3;
-	  }
-	else /* if (sd->zoom == 2) */
-	  {
-	     iw = sd->w;
-	  }
+	  size = 128;
+	else if (sd->view->zoom == 2)
+	  size = 256;
+
+	aspect_w *= 1 + (sd->h / size);
+
+	if (cnt < 3)
+	  col = 2;
+	else if (cnt < 7)
+	  col = 3;
+	else
+	  col = sd->w / size;
+
+	if (col < 1) col = 1;
+
+	iw = sd->w / col;
+	aspect_w /= col;
      }
 
    if (aspect_w <= 0) aspect_w = 1;
@@ -452,30 +439,6 @@ _e_smart_reconfigure_do(void *data)
      {
 	if (sd->w > sd->cw) ox = (sd->w - sd->cw) / 2;
 	if (sd->h > sd->ch) oy = (sd->h - sd->ch) / 2;
-
-	if (sd->selector)
-	  evas_object_hide(sd->selector);
-     }
-   else if (!sd->mouse_act)
-     {
-	if (!sd->selector)
-	  {
-	     sd->selector = edje_object_add(sd->view->evas);
-	     e_theme_edje_object_set(sd->selector, "base/theme/everything",
-				     "e/modules/everything/thumbview/item/list");
-
-	     evas_object_smart_member_add(sd->selector, obj);
-	     evas_object_clip_set(sd->selector, evas_object_clip_get(obj));
-	     edje_object_signal_emit(sd->selector, "e,state,selected", "e");
-	  }
-
-	if (sd->cur_item)
-	  evas_object_show(sd->selector);
-	else
-	  evas_object_hide(sd->selector);
-
-	evas_object_resize(sd->selector, ww, hh);
-	evas_object_move(sd->selector, sd->x, sd->y + sd->sel_pos);
      }
 
    EINA_LIST_FOREACH(sd->items, l, it)
@@ -546,9 +509,6 @@ _e_smart_del(Evas_Object *obj)
      ecore_idle_enterer_del(sd->thumb_idler);
 
    _animator_del(obj);
-
-   if (sd->selector)
-     evas_object_del(sd->selector);
 
    free(sd);
    evas_object_smart_data_set(obj, NULL);
@@ -724,25 +684,9 @@ _animator(void *data)
    double da;
    double spd = ((25.0/ (double)e_config->framerate) /
 		 (double) (1 + sd->view->zoom));
-   /* if (sd->sliding) spd *= 1.5; */
    if (spd > 0.9) spd = 0.9;
 
    int wait = 0;
-
-   if (sd->sel_pos != sd->sel_pos_to)
-     {
-	sd->sel_pos = ((sd->sel_pos * (1.0 - spd)) +
-		       (sd->sel_pos_to * spd));
-
-	da = sd->sel_pos - sd->sel_pos_to;
-	if (da < 0.0) da = -da;
-	if (da < 0.02)
-	  sd->sel_pos = sd->sel_pos_to;
-	else
-	  wait++;
-
-	_e_smart_reconfigure(data);
-     }
 
    if (sd->scroll_align != sd->scroll_align_to)
      {
@@ -769,6 +713,31 @@ _animator(void *data)
 
 }
 
+static int
+_child_region_get(Evas_Object *obj, Evas_Coord y, Evas_Coord h)
+{
+   Smart_Data *sd = evas_object_smart_data_get(obj);
+   Evas_Coord my = 0, ch = 0, py = 0, ny;
+
+   py = sd->cy;
+   ch = sd->ch;
+
+   if (sd->h < sd->ch)
+     my = sd->ch - sd->h;
+   else
+     my = 0;
+
+   ny = py;
+   if (y < py) ny = y;
+   else if ((y + h) > (py + (ch - my)))
+     {
+	ny = y + h - (ch - my);
+	if (ny > y) ny = y;
+     }
+
+   return ny;
+}
+
 static void
 _pan_item_select(Evas_Object *obj, Item *it, int scroll)
 {
@@ -776,6 +745,7 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
    double align = -1;
    int prev = -1;
    int align_to = -1;
+   int cur_pos, new_pos;
 
    if (sd->cur_item)
      {
@@ -783,23 +753,24 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
 	sd->cur_item->selected = EINA_FALSE;
 	edje_object_signal_emit(sd->cur_item->frame,
 				"e,state,unselected", "e");
+	sd->cur_item = NULL;
      }
-
-   sd->cur_item = NULL;
 
    if (!it) return;
 
    sd->cur_item = it;
-   sd->cur_item->selected = EINA_TRUE;
+   it->selected = EINA_TRUE;
+
+   edje_object_signal_emit(sd->cur_item->frame,
+			   "e,state,selected", "e");
 
    if (evry_conf->scroll_animate)
      {
    	double now = ecore_time_get();
 
-   	if (now - sd->last_select < 0.1 && sd->sel_pos == sd->sel_pos_to)
+   	if (now - sd->last_select < 0.08)
 	  {
 	     sd->scroll_align = sd->scroll_align_to;
-
 	     scroll = 0;
 	  }
 
@@ -810,90 +781,30 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
    if (sd->mouse_act &&
        ((sd->view->mode == VIEW_MODE_LIST ||
 	 sd->view->mode == VIEW_MODE_DETAIL)))
-     {
-	edje_object_signal_emit(sd->cur_item->frame,
-			     "e,state,selected", "e");
-	return;
-     }
-   else if (it->h && (sd->view->mode == VIEW_MODE_LIST ||
-		      sd->view->mode == VIEW_MODE_DETAIL))
-     {
-	int all  = sd->ch / it->h;
-	int rows = (it->h && sd->h < sd->ch) ? (sd->h / it->h) : all;
-	int cur  = it->h ? it->y /it->h : 1;
-	int dist = rows/2;
-	int scroll = (prev > 0 ? cur - prev : 0);
+     return;
 
-	if (scroll >= 0)
-	  {
-	     if (cur <= dist || all < rows)
-	       {
-		  /* step down start */
-		  align = 0;
-		  align_to = cur;
-
-	       }
-	     else if ((all >= rows) && (all - cur < rows - dist))
-	       {
-		  /* step down end */
-		  align = (cur - dist);
-		  align_to = rows - (all - cur);
-	       }
-	     else
-	       {
-		  /* align */
-		  align = (cur - dist);
-		  align_to = cur - align;
-	       }
-	  }
-	else if (scroll < 0)
-	  {
-	     if (cur < rows - dist)
-	       {
-		  /* step up start */
-		  align = 0;
-		  align_to = cur;
-	       }
-	     else if ((all >= rows) && (all - cur <= rows - dist))
-	       {
-		  /* step up end */
-		  align = (cur - dist);
-		  align_to = rows - (all - cur);
-	       }
-	     else
-	       {
-		  /* align */
-		  align = (cur - dist);
-		  align_to = cur - align;
-	       }
-	  }
-
-	align *= it->h;
-     }
-   else if (sd->view->mode == VIEW_MODE_THUMB)
+   if (sd->view->mode == VIEW_MODE_THUMB)
      {
 	if (sd->view->zoom < 2)
-	  {
-	     edje_object_signal_emit(sd->cur_item->frame,
-	     			     "e,state,selected", "e");
-	  }
-
-	if ((it->y + it->h) - sd->cy > sd->h)
-	  align = it->y - (2 - sd->view->zoom) * it->h;
-	else if (it->y < sd->cy)
-	  align = it->y;
+	  align = _child_region_get(obj, it->y - it->h, it->h * 3);
+	else
+	  align = _child_region_get(obj, it->y, it->h);
+     }
+   else
+     {
+	align = _child_region_get(obj, it->y - it->h*2, it->h * 5);
      }
 
-   if (!scroll || !evry_conf->scroll_animate)
+   if (scroll && evry_conf->scroll_animate)
+     {
+	sd->scroll_align_to = align;
+
+	if (align != sd->cy && !sd->animator)
+	  sd->animator = ecore_animator_add(_animator, obj);
+     }
+   else
      {
 	sd->scroll_align = sd->scroll_align_to;
-	sd->sel_pos = sd->sel_pos_to;
-
-	if (align_to >= 0)
-	  {
-	     sd->sel_pos = align_to * it->h;
-	     sd->sel_pos_to = sd->sel_pos;
-	  }
 
 	if (align >= 0)
 	  {
@@ -904,17 +815,6 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
 	  }
 
 	_animator_del(obj);
-     }
-   else
-     {
-	if (align_to >= 0)
-	  sd->sel_pos_to = align_to * it->h;
-
-	if (align >= 0)
-	  sd->scroll_align_to = align;
-
-	if (!sd->animator)
-	  sd->animator = ecore_animator_add(_animator, obj);
      }
 
    _e_smart_reconfigure(obj);
@@ -939,10 +839,6 @@ _clear_items(Evas_Object *obj)
    if (sd->thumb_idler)
      ecore_idle_enterer_del(sd->thumb_idler);
    sd->thumb_idler = NULL;
-
-   if (sd->selector)
-     evas_object_del(sd->selector);
-   sd->selector = NULL;
 }
 
 static void
@@ -995,14 +891,6 @@ _update_frame(Evas_Object *obj)
    e_scrollframe_child_pos_set(sd->view->sframe, 0, sd->scroll_align);
 
    _e_smart_reconfigure_do(obj);
-
-   if (sd->view->mode)
-     {
-	evas_object_show(sd->selector);
-	edje_object_signal_emit(sd->selector, "e,state,selected", "e");
-     }
-   else
-     evas_object_hide(sd->selector);
 
    _pan_item_select(obj, sd->cur_item, 0);
 
@@ -1465,7 +1353,6 @@ _view_cb_mouse_wheel(void *data, Evas *e, Evas_Object *obj, void *event_info)
 
    if (ev->z)
      {
-	evas_object_hide(sd->selector);
 	if (sd->cur_item)
 	  edje_object_signal_emit(sd->cur_item->frame, "e,state,selected", "e");
 	sd->mouse_act = 1;

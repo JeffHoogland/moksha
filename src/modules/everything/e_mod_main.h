@@ -4,8 +4,8 @@
 #include "e.h"
 #include "evry_api.h"
 
-#define MOD_CONFIG_FILE_EPOCH 0x0002
-#define MOD_CONFIG_FILE_GENERATION 0x0002
+#define MOD_CONFIG_FILE_EPOCH 0x0003
+#define MOD_CONFIG_FILE_GENERATION 0x0001
 #define MOD_CONFIG_FILE_VERSION					\
   ((MOD_CONFIG_FILE_EPOCH << 16) | MOD_CONFIG_FILE_GENERATION)
 
@@ -26,6 +26,7 @@ struct _Evry_Window
 
   Eina_Bool visible;
   Ecore_Timer *show_timer;
+  Ecore_Timer *hide_timer;
 
   Eina_List *handlers;
 
@@ -152,6 +153,7 @@ struct _Config
   double rel_x, rel_y;
   /* size */
   int width, height;
+  int edge_width, edge_height;
 
   Eina_List *modules;
 
@@ -285,7 +287,7 @@ void  evry_plug_text_shutdown(void);
 
 int   evry_init(void);
 int   evry_shutdown(void);
-int   evry_show(E_Zone *zone, const char *params);
+int   evry_show(E_Zone *zone, E_Zone_Edge edge, const char *params);
 void  evry_hide(int clear);
 
 int   evry_plug_actions_init();

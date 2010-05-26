@@ -444,7 +444,11 @@ evry_history_item_usage_set(Evry_Item *it, const char *input, const char *ctxt)
 	if (hi->last_used > it->usage)
 	  it->usage = hi->last_used;
      }
-
+   if (it->fuzzy_match > 0)
+     it->usage /= (double) it->fuzzy_match;
+   else
+     it->usage /= 100.0;
+   
    if (it->usage > 0.0)
      return 1;
 

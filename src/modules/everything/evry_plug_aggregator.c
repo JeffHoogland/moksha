@@ -83,12 +83,12 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	     it->usage = 0;
 	     it->fuzzy_match = 0;
 
-	     if (input)
-	       {
-		  evry_history_item_usage_set(it, NULL, NULL);
-		  it->usage /= 100.0;
-		  it->fuzzy_match = 6;
-	       }
+	     /* if (input)
+	      *   {
+	      * 	  evry_history_item_usage_set(it, NULL, NULL);
+	      * 	  it->usage /= 100.0;
+	      * 	  it->fuzzy_match = ;
+	      *   } */
 
 	     snprintf(buf, sizeof(buf), "%d %s", eina_list_count(pp->items), _("Items"));
 	     if (it->detail)
@@ -96,6 +96,12 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	     it->detail = eina_stringshare_add(buf);
 
 	     items = eina_list_append(items, it);
+	  }
+	/* only one plugin: show items */
+	if (eina_list_count(s->cur_plugins) == 1 && items)
+	  {
+	     lp = items;
+	     items = NULL;
 	  }
      }
 
