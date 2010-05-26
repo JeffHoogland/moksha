@@ -211,7 +211,7 @@ _add_executables(Plugin *p, const char *input)
 	  }
 	else if ((match = evry->fuzzy_match(file, input)))
 	  {
-	     _item_exe_add(p, file, match);
+	     _item_exe_add(p, file, match + 11);
 	     if (!strncmp(input, file, len))
 	       found = 1;
 
@@ -295,7 +295,7 @@ _fetch_exe(Evry_Plugin *plugin, const char *input)
 	    EVRY_ITEM_LABEL_SET(it, input);
 	    IF_RELEASE(p->command->file);
 	    p->command->file = eina_stringshare_ref(it->label);
-	    it->fuzzy_match = 1;
+	    it->fuzzy_match = 10;
 	    EVRY_PLUGIN_ITEM_APPEND(p, it);
 	    evry->item_changed(it, 0, 0);
 	  }
