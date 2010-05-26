@@ -97,11 +97,23 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
 	     items = eina_list_append(items, it);
 	  }
+
 	/* only one plugin: show items */
 	if (eina_list_count(s->cur_plugins) == 1 && items)
 	  {
-	     lp = items;
+	     pp = eina_list_data_get(items);
+	     eina_list_free(items);
 	     items = NULL;
+	     
+	     EINA_LIST_FOREACH(pp->items, l, it)
+	       {
+		  if (it->usage >= 0)
+		    evry_history_item_usage_set(it, input, context);
+		  if (it->fuzzy_match == 0)
+		    it->fuzzy_match = evry_fuzzy_match(it->label, input);
+
+		  items = eina_list_append(items, it);
+	       }
 	  }
      }
 

@@ -1,7 +1,5 @@
 #include "e_mod_main.h"
 
-/* TODO cleanup !!! */
-
 typedef struct _View View;
 typedef struct _Smart_Data Smart_Data;
 typedef struct _Item Item;
@@ -1396,8 +1394,8 @@ _view_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
    if (sd->view->state->selector->states->next)
      edje_object_signal_emit(sd->view->bg, "e,action,show,back", "e");
 
-   if (sd->it_down->item->browseable)
-     edje_object_signal_emit(sd->view->bg, "e,action,show,into", "e");
+   /* if (sd->it_down->item->browseable) */
+   edje_object_signal_emit(sd->view->bg, "e,action,show,into", "e");
 
    if ((sd->cur_item != sd->it_down) && (diff_x > 10))
      {
@@ -1413,13 +1411,20 @@ _view_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	     sd->it_down = NULL;
 	     sd->mouse_x = 0;
 	     sd->mouse_y = 0;
-	     evry_browse_back(NULL);
+	     if (sd->view->state->selector->states->next)
+	       evry_browse_back(NULL);
+	     else
+	       evry_selectors_switch(-1);
 	  }
 	else if (sd->mouse_x - ev->cur.canvas.x > 100)
 	  {
 	     edje_object_signal_emit(sd->view->bg, "e,action,hide,into", "e");
 	     edje_object_signal_emit(sd->view->bg, "e,action,hide,back", "e");
-	     evry_browse_item(sd->it_down->item);
+	     if (sd->it_down->item->browseable)
+	       evry_browse_item(sd->it_down->item);
+	     else
+	       evry_selectors_switch(1);
+	     
 	     sd->it_down = NULL;
 	     sd->mouse_x = 0;
 	     sd->mouse_y = 0;
