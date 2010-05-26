@@ -151,11 +151,12 @@ _e_acpi_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 
    ev = event;
 
-   /* write out actual acpi received data to stdout for debugging */
+   /* write out actual acpi received data to stdout for debugging
    res = fwrite(ev->data, ev->size, 1, stdout);
+    */
 
    /* parse out this acpi string into separate pieces */
-   if (sscanf(ev->data, "%s %4s %d %d", device, bus, &sig, &status) != 4)
+   if (sscanf(ev->data, "%s %s %d %d", device, bus, &sig, &status) != 4)
      return 1;
 
    /*
