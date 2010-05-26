@@ -106,7 +106,7 @@ _evry_plugin_action_browse(Evry_Action *act)
    
    sel = it->plugin->state->selector;
 
-   evry_selectors_switch(-1);
+   evry_selectors_switch(-1, EINA_TRUE);
    
    if ((p = pp->begin(pp, it)))
      {

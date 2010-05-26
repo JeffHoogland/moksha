@@ -923,6 +923,8 @@ _view_update(Evry_View *view)
    Eina_Bool update = EINA_FALSE;
    Evry_Plugin *p = v->state->plugin;
 
+   if (!sd) return 0;
+
    sd->cur_item = NULL;
    sd->it_down = NULL;
    sd->mouse_act = 0;
@@ -1387,6 +1389,7 @@ _view_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
    if (!sd->it_down)
      goto end;
 
+   sel = sd->view->state->selector;
    diff_x = abs(ev->cur.canvas.x - sd->mouse_x);
    diff_y = abs(ev->cur.canvas.y - sd->mouse_y);
 
@@ -1396,12 +1399,13 @@ _view_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	edje_object_signal_emit(sd->view->bg, "e,action,hide,back", "e");
 	goto end;
      }
-   sel = sd->view->state->selector;
+
    if (sel->states->next)
      edje_object_signal_emit(sd->view->bg, "e,action,show,back", "e");
 
-   /* if (sd->it_down->item->browseable) */
-   edje_object_signal_emit(sd->view->bg, "e,action,show,into", "e");
+   if ((sd->it_down->item->browseable) ||
+       (sel != sel->win->selectors[2]))
+     edje_object_signal_emit(sd->view->bg, "e,action,show,into", "e");
 
    if ((sd->cur_item != sd->it_down) && (diff_x > 10))
      {
@@ -1420,17 +1424,26 @@ _view_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	     if (sel->states->next)
 	       evry_browse_back(NULL);
 	     else
-	       evry_selectors_switch(-1);
+	       evry_selectors_switch(-1, EINA_TRUE);
 	  }
 	else if (sd->mouse_x - ev->cur.canvas.x > 100)
 	  {
 	     edje_object_signal_emit(sd->view->bg, "e,action,hide,into", "e");
 	     edje_object_signal_emit(sd->view->bg, "e,action,hide,back", "e");
-	     if (sd->it_down->item->browseable)
-	       evry_browse_item(sd->it_down->item);
-	     else if (sel != sel->win->selectors[2])
-	       evry_selectors_switch(1);
 
+	     if (sd->it_down->item->browseable)
+	       {
+		  evry_browse_item(sd->it_down->item);
+	       }
+	     else
+	       {
+		  if ((sel != sel->win->selectors[2]) &&
+		      /* dont jump out of sub-action */
+		      (!((sel == sel->win->selectors[1]) &&
+			 (sel->states->next))))
+		    evry_selectors_switch(1, EINA_TRUE);
+	       }
+	     
 	     sd->it_down = NULL;
 	     sd->mouse_x = 0;
 	     sd->mouse_y = 0;

@@ -9,6 +9,9 @@
 #define MOD_CONFIG_FILE_VERSION					\
   ((MOD_CONFIG_FILE_EPOCH << 16) | MOD_CONFIG_FILE_GENERATION)
 
+#define SLIDE_LEFT   1
+#define SLIDE_RIGHT -1
+
 typedef struct _Evry_View	Evry_View;
 typedef struct _History		Evry_History;
 typedef struct _Config		Evry_Config;
@@ -70,6 +73,7 @@ struct _Evry_Selector
   Eina_Bool    do_thumb;
 
   Ecore_Timer *update_timer;
+  Ecore_Timer *action_timer;
 };
 
 struct _Evry_State
@@ -203,8 +207,8 @@ struct _History
 void  evry_item_select(const Evry_State *s, Evry_Item *it);
 void  evry_item_mark(const Evry_State *state, Evry_Item *it, Eina_Bool mark);
 void  evry_plugin_select(Evry_Plugin *p);
-int   evry_list_win_show(void);
-void  evry_list_win_hide(void);
+/* int   evry_list_win_show(void);
+ * void  evry_list_win_hide(void); */
 Evry_Item *evry_item_new(Evry_Item *base, Evry_Plugin *p, const char *label,
 			      Evas_Object *(*icon_get) (Evry_Item *it, Evas *e),
 			      void (*cb_free) (Evry_Item *item));
@@ -305,7 +309,7 @@ int   evry_browse_back(Evry_Selector *sel);
 void  evry_plugin_action(int finished);
 
 int   evry_state_push(Evry_Selector *sel, Eina_List *plugins);
-void  evry_selectors_switch(int dir);
+void  evry_selectors_switch(int dir, int slide);
 int   evry_view_toggle(Evry_State *s, const char *trigger);
 
 Ecore_Event_Handler *evry_event_handler_add(int type, int (*func) (void *data, int type, void *event), const void *data);
