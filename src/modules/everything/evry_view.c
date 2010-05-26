@@ -361,17 +361,17 @@ _e_smart_reconfigure_do(void *data)
 	int cnt = eina_list_count(sd->items);
 	double col = 1;
 
-	if (cnt < 3)
+	if (cnt < 5)
 	  {
 	     col = 2;
 	     aspect_w = sd->w * 2;
 	  }
-	else if (cnt < 7)
+	else if (cnt < 10)
 	  {
 	     col = 3;
 	     aspect_w = sd->w * 3;
 	  }
-	if (sd->view->zoom == 0)
+	else if (sd->view->zoom == 0)
 	  {
 	     size = 96;
 	     aspect_w *= 1 + (sd->h / size);
