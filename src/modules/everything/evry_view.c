@@ -364,13 +364,23 @@ _e_smart_reconfigure_do(void *data)
 	double col;
 
 	if (sd->view->zoom == 0)
+	  {
+	     
 	  size = 96;
+	  aspect_w *= 1 + (sd->h / size);
+	  }
+	
 	else if (sd->view->zoom == 1)
-	  size = 128;
-	else if (sd->view->zoom == 2)
-	  size = 256;
-
-	aspect_w *= 1 + (sd->h / size);
+	  {
+	     size = 128;
+	     aspect_w *= 1 + (sd->h / size);
+	  }
+	
+	else /* if (sd->view->zoom == 2) */
+	  {
+	     size = 256;
+	     aspect_w *= (sd->h / size);     
+	  }
 
 	if (cnt < 3)
 	  col = 2;
