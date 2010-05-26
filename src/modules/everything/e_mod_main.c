@@ -371,7 +371,7 @@ _config_init()
    E_CONFIG_VAL(D, T, first_run, UCHAR);
 #undef T
 #undef D
-   /* evry_conf = e_config_domain_load("module.everything", conf_edd); */
+   evry_conf = e_config_domain_load("module.everything", conf_edd);
 
    if (evry_conf && !e_util_module_config_check
        (_("Everything Module"), evry_conf->version,
