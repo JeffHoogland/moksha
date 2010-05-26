@@ -599,7 +599,6 @@ src/modules/fileman/module.desktop
 src/modules/fileman_opinfo/Makefile
 src/modules/fileman_opinfo/module.desktop
 src/modules/wizard/Makefile
-src/modules/wizard/module.desktop
 src/modules/conf/Makefile
 src/modules/conf/module.desktop
 src/modules/conf_wallpaper/Makefile
