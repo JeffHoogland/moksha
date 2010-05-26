@@ -359,33 +359,37 @@ _e_smart_reconfigure_do(void *data)
      {
 	int size;
 	int cnt = eina_list_count(sd->items);
-	double col;
+	double col = 1;
 
+	if (cnt < 3)
+	  {
+	     col = 2;
+	     aspect_w = sd->w * 2;
+	  }
+	else if (cnt < 7)
+	  {
+	     col = 3;
+	     aspect_w = sd->w * 3;
+	  }
 	if (sd->view->zoom == 0)
 	  {
-	     
-	  size = 96;
-	  aspect_w *= 1 + (sd->h / size);
+	     size = 96;
+	     aspect_w *= 1 + (sd->h / size);
+	     col = sd->w / size;
 	  }
-	
 	else if (sd->view->zoom == 1)
 	  {
 	     size = 128;
+	     col = sd->w / size;
 	     aspect_w *= 1 + (sd->h / size);
 	  }
-	
+
 	else /* if (sd->view->zoom == 2) */
 	  {
 	     size = 256;
-	     aspect_w *= (sd->h / size);     
+	     col = sd->w / size;
+	     aspect_w *= (sd->h / size);
 	  }
-
-	if (cnt < 3)
-	  col = 2;
-	else if (cnt < 7)
-	  col = 3;
-	else
-	  col = sd->w / size;
 
 	if (col < 1) col = 1;
 
@@ -1372,7 +1376,9 @@ _view_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
    Evas_Event_Mouse_Move *ev = event_info;
    Smart_Data *sd = evas_object_smart_data_get(obj);
+   Evry_Selector *sel;
    int diff_y, diff_x;
+
    if (!sd) return;
 
    if (!sd->mouse_x)
@@ -1390,8 +1396,8 @@ _view_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	edje_object_signal_emit(sd->view->bg, "e,action,hide,back", "e");
 	goto end;
      }
-
-   if (sd->view->state->selector->states->next)
+   sel = sd->view->state->selector;
+   if (sel->states->next)
      edje_object_signal_emit(sd->view->bg, "e,action,show,back", "e");
 
    /* if (sd->it_down->item->browseable) */
@@ -1411,7 +1417,7 @@ _view_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	     sd->it_down = NULL;
 	     sd->mouse_x = 0;
 	     sd->mouse_y = 0;
-	     if (sd->view->state->selector->states->next)
+	     if (sel->states->next)
 	       evry_browse_back(NULL);
 	     else
 	       evry_selectors_switch(-1);
@@ -1422,9 +1428,9 @@ _view_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	     edje_object_signal_emit(sd->view->bg, "e,action,hide,back", "e");
 	     if (sd->it_down->item->browseable)
 	       evry_browse_item(sd->it_down->item);
-	     else
+	     else if (sel != sel->win->selectors[2])
 	       evry_selectors_switch(1);
-	     
+
 	     sd->it_down = NULL;
 	     sd->mouse_x = 0;
 	     sd->mouse_y = 0;
