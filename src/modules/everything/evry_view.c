@@ -1373,6 +1373,8 @@ _view_cb_mouse_wheel(void *data, Evas *e, Evas_Object *obj, void *event_info)
      }
 }
 
+#define SLIDE_RESISTANCE 80
+
 static void
 _view_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
@@ -1416,7 +1418,7 @@ _view_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
    if ((sd->mouse_button == 1) &&
        (sd->cur_item == sd->it_down))
      {
-	if (ev->cur.canvas.x - sd->mouse_x > 100)
+	if (ev->cur.canvas.x - sd->mouse_x > SLIDE_RESISTANCE)
 	  {
 	     sd->it_down = NULL;
 	     sd->mouse_x = 0;
@@ -1426,7 +1428,7 @@ _view_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	     else
 	       evry_selectors_switch(-1, EINA_TRUE);
 	  }
-	else if (sd->mouse_x - ev->cur.canvas.x > 100)
+	else if (sd->mouse_x - ev->cur.canvas.x > SLIDE_RESISTANCE)
 	  {
 	     edje_object_signal_emit(sd->view->bg, "e,action,hide,into", "e");
 	     edje_object_signal_emit(sd->view->bg, "e,action,hide,back", "e");

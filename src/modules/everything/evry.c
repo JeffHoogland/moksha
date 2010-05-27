@@ -207,7 +207,7 @@ evry_show(E_Zone *zone, E_Zone_Edge edge, const char *params)
    input_window = ecore_x_window_input_new(zone->container->win, 0, 0, 1, 1);
    ecore_x_window_show(input_window);
 
-   if (edge == E_ZONE_EDGE_NONE)
+   /* if (edge == E_ZONE_EDGE_NONE) */
      {
 	if (!e_grabinput_get(input_window, 0, input_window))
 	  return 0;
@@ -271,7 +271,7 @@ evry_show(E_Zone *zone, E_Zone_Edge edge, const char *params)
       (ECORE_EVENT_MOUSE_WHEEL,
        _evry_cb_mouse, win));
 
-   if (edge)
+   if (0) /* (edge) */
      {
 	win->handlers = eina_list_append
 	  (win->handlers, ecore_event_handler_add
