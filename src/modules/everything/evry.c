@@ -111,18 +111,16 @@ _evry_cb_item_changed(void *data, int type, void *event)
 {
    Evry_Event_Item_Changed *ev = event;
    Evry_Selector *sel;
-   int i;
+   Evry_Item *it = ev->item;
 
-   for (i = 0; i < 3; i++)
+   if (!it || !it->plugin || !it->plugin->state)
+     return 1;
+
+   sel = it->plugin->state->selector;
+
+   if (sel->state && sel->state->cur_item == it)
      {
-	sel = win->selectors[i];
-
-	if (sel->state && sel->state->cur_item == ev->item)
-	  {
-	     _evry_selector_update(sel);
-	     _evry_selector_update_actions(sel);
-	     break;
-	  }
+	_evry_selector_update(sel);
      }
 
    return 1;
@@ -554,20 +552,37 @@ evry_item_ref(Evry_Item *it)
 }
 
 static int
-_evry_timer_cb_actions_get(void *data)
+_evry_selector_update_actions_do(Evry_Selector *sel)
 {
-   Evry_Item *it = data;
-   Evry_Selector *sel = ACTN_SEL;
    Evry_State *s;
 
-   sel->action_timer = NULL;
+   if (sel->action_timer)
+     {
+	ecore_timer_del(sel->action_timer);
+	sel->action_timer = NULL;
+     }
 
-   _evry_selector_actions_get(it);
+   if ((s = (SUBJ_SEL)->state))
+     {
+	_evry_selector_actions_get(s->cur_item);
+     }
+
    _evry_selector_update(sel);
 
-   if (CUR_SEL == sel && (CUR_SEL)->state)
+   return 1;
+}
+
+
+static int
+_evry_timer_cb_actions_get(void *data)
+{
+   Evry_Selector *sel = data;
+   Evry_State *s;
+
+   _evry_selector_update_actions_do(sel);
+
+   if ((CUR_SEL == sel) && (s = sel->state))
      {
-	s = sel->state;
 	if (s->view)
 	  s->view->update(s->view);
 	else
@@ -580,12 +595,10 @@ _evry_timer_cb_actions_get(void *data)
 static void
 _evry_selector_update_actions(Evry_Selector *sel)
 {
-   Evry_Item *it = sel->state->cur_item;
-   sel = ACTN_SEL;
    if (sel->action_timer)
      ecore_timer_del(sel->action_timer);
 
-   sel->action_timer = ecore_timer_add(0.1, _evry_timer_cb_actions_get, it);
+   sel->action_timer = ecore_timer_add(0.1, _evry_timer_cb_actions_get, sel);
 }
 
 void
@@ -606,7 +619,7 @@ evry_item_select(const Evry_State *state, Evry_Item *it)
      {
 	_evry_selector_update(sel);
 	if (CUR_SEL ==  SUBJ_SEL)
-	  _evry_selector_update_actions(sel);
+	  _evry_selector_update_actions(ACTN_SEL);
      }
 }
 
@@ -1208,18 +1221,9 @@ _evry_selector_activate(Evry_Selector *sel, int slide)
 
    _evry_selector_signal_emit(sel, "e,state,selected");
 
-   /* do delayed fetch actions now */
+   /* do delayed actions fetch now */
    if (sel->action_timer)
-     {
-	ecore_timer_del(sel->action_timer);
-	sel->action_timer = NULL;
-
-	if ((SUBJ_SEL)->state)
-	  {
-	     _evry_selector_actions_get((SUBJ_SEL)->state->cur_item);
-	     _evry_selector_update(sel);
-	  }
-     }
+     _evry_selector_update_actions_do(sel);
 
    if ((s = sel->state))
      {
@@ -1437,17 +1441,12 @@ _evry_selector_update(Evry_Selector *sel)
      {
 	if (item_changed)
 	  {
-	     _evry_selector_update_actions(sel);
+	     _evry_selector_update_actions(ACTN_SEL);
 	  }
-	else
+	else if ((ACTN_SEL)->update_timer)
 	  {
-	     sel = ACTN_SEL;
-
-	     if (sel->update_timer)
-	       {
-		  ecore_timer_del(sel->update_timer);
-		  sel->update_timer = NULL;
-	       }
+	     ecore_timer_del((ACTN_SEL)->update_timer);
+	     (ACTN_SEL)->update_timer = NULL;
 	  }
      }
 }
@@ -1803,7 +1802,7 @@ evry_browse_back(Evry_Selector *sel)
    _evry_aggregator_fetch(sel, s->input);
    _evry_selector_update(sel);
    if (sel == SUBJ_SEL)
-     _evry_selector_update_actions(sel);
+     _evry_selector_update_actions(ACTN_SEL);
    _evry_update_text_label(s);
    _evry_view_show(s->view, SLIDE_RIGHT);
    s->view->update(s->view);
@@ -2380,6 +2379,10 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 	_evry_matches_update(SUBJ_SEL, 0);
 	_evry_selector_update(SUBJ_SEL);
      }
+
+   /* do delayed fetch actions now */
+   if ((ACTN_SEL)->action_timer)
+     _evry_selector_update_actions_do(ACTN_SEL);
 
    if (!(s_subj = (SUBJ_SEL)->state))
      return;
