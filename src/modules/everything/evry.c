@@ -1,7 +1,7 @@
 #include "e.h"
 #include "e_mod_main.h"
 
-/* TODO 
+/* TODO
  * - keybinding configuration
  */
 
@@ -38,7 +38,7 @@ static void _evry_selector_item_clear(Evry_Selector *sel);
 static void _evry_selector_label_set(Evry_Selector *sel, const char *part, const char *label);
 static void _evry_selector_signal_emit(Evry_Selector *sel, const char *msg);
 static int  _evry_selectors_shift(int dir);
-static void _evry_selectors_switch(int dir);
+static int  _evry_selectors_switch(int dir);
 
 static Evry_Window *_evry_window_new(E_Zone *zone, E_Zone_Edge edge);
 static void _evry_window_free(Evry_Window *win);
@@ -1491,6 +1491,8 @@ _evry_selector_subjects_get(const char *plugin_name)
    EINA_LIST_FOREACH(plugins, l, p)
      p->state = sel->state;
 
+   DBG("%s", plugin_name);
+
    _evry_matches_update(sel, 1);
 
    return 1;
@@ -1809,7 +1811,7 @@ evry_browse_back(Evry_Selector *sel)
    return 1;
 }
 
-void
+int
 evry_selectors_switch(int dir, int slide)
 {
    Evry_State *s = (CUR_SEL)->state;
@@ -1826,55 +1828,62 @@ evry_selectors_switch(int dir, int slide)
 	  }
      }
 
+   if (CUR_SEL != SUBJ_SEL && dir == 0)
+     {
+   	edje_object_signal_emit(win->o_main, "e,state,object_selector_hide", "e");
+   	_evry_selector_activate(SUBJ_SEL, (slide * SLIDE_RIGHT));
+   	return 1;
+     }
    if (CUR_SEL == SUBJ_SEL && dir > 0)
      {
 	if (s->cur_item)
-	  _evry_selector_activate(ACTN_SEL, slide * SLIDE_LEFT);
+	  {
+	     _evry_selector_activate(ACTN_SEL, slide * SLIDE_LEFT);
+	     return 1;
+	  }
      }
    else if (CUR_SEL == ACTN_SEL && dir > 0)
      {
-	int next_selector = 0;
 	Evry_Item *it;
 
-	if (s && (it = s->cur_item) &&
-	    (it->plugin == (CUR_SEL)->actions))
-	  {
-	     GET_ACTION(act,it);
-	     if (act->it2.type)
-	       {
-		  _evry_selector_objects_get(act);
-		  _evry_selector_update(OBJ_SEL);
-		  edje_object_signal_emit
-		    (win->o_main, "e,state,object_selector_show", "e");
-		  next_selector = 2;
-	       }
-	  }
-	_evry_selector_activate(win->selectors[next_selector],
-				slide * (next_selector ? SLIDE_LEFT : SLIDE_RIGHT));
+	if (!s || !(it = s->cur_item) || !(it->plugin == (CUR_SEL)->actions))
+	  return 0;
+	
+	GET_ACTION(act,it);
+	if (!act->it2.type)
+	  return 0;
+
+	_evry_selector_objects_get(act);
+	_evry_selector_update(OBJ_SEL);
+	edje_object_signal_emit(win->o_main, "e,state,object_selector_show", "e");
+
+	_evry_selector_activate(OBJ_SEL, (slide * SLIDE_LEFT));
+	return 1;
      }
    else if (CUR_SEL == ACTN_SEL && dir < 0)
      {
 	_evry_selector_activate(SUBJ_SEL, (slide * SLIDE_RIGHT));
 	edje_object_signal_emit(win->o_main, "e,state,object_selector_hide", "e");
+	return 1;
      }
-   else if (CUR_SEL == OBJ_SEL && dir > 0)
-     {
-	/* while ((CUR_SEL)->states)
-	 *   _evry_state_pop(CUR_SEL, 1); */
-
-	edje_object_signal_emit(win->o_main, "e,state,object_selector_hide", "e");
-	_evry_selector_activate(SUBJ_SEL, (slide * SLIDE_LEFT));
-     }
+   /* else if (CUR_SEL == OBJ_SEL && dir > 0)
+    *   {
+    * 	edje_object_signal_emit(win->o_main, "e,state,object_selector_hide", "e");
+    * 	_evry_selector_activate(SUBJ_SEL, (slide * SLIDE_LEFT));
+    * 	return 1;
+    *   } */
    else if (CUR_SEL == OBJ_SEL && dir < 0)
      {
 	_evry_selector_activate(ACTN_SEL, (slide * SLIDE_RIGHT));
+	return 1;
      }
+   return 0;
 }
 
-static void
+static int
 _evry_selectors_switch(int dir)
 {
-   evry_selectors_switch(dir, 0);
+   return evry_selectors_switch(dir, 0);
 }
 
 static int
@@ -2088,7 +2097,8 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
        !((ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) ||
 	 (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)))
      {
-	_evry_selectors_switch(1);
+	if (!_evry_selectors_switch(1))
+	  _evry_selectors_switch(0);
 	goto end;
      }
 
@@ -2142,38 +2152,47 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	  }
 	goto end;
      }
-   /* let plugin intercept keypress */
-   if (s->plugin && s->plugin->cb_key_down &&
-       s->plugin->cb_key_down(s->plugin, ev))
-     goto end;
-   /* let view intercept keypress */
+   if ((s->plugin && s->plugin->cb_key_down) &&
+       (s->plugin->cb_key_down(s->plugin, ev)))
+     {
+	/* let plugin intercept keypress */
+	goto end;
+     }
    else if (_evry_view_key_press(s, ev))
-     goto end;
+     {
+	/* let view intercept keypress */
+	goto end;
+     }
    else if (!strcmp(ev->key, "Right"))
      {
-	if (!evry_browse_item(sel->state->cur_item) &&
-	    (sel != OBJ_SEL))
-	  _evry_selectors_switch(1);
+	if (!evry_browse_item(sel->state->cur_item))
+	  evry_selectors_switch(1, EINA_TRUE);
      }
    else if (!strcmp(ev->key, "Left"))
      {
 	if (!evry_browse_back(sel))
-	  _evry_selectors_switch(-1);
+	  evry_selectors_switch(-1, EINA_TRUE);
      }
    else if (!strcmp(ev->key, "Return"))
      {
 	if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
-	  _evry_plugin_action(sel, 0);
+	  {
+	     _evry_plugin_action(sel, 0);
+	  }
+	else if (s->cur_item && s->cur_item->browseable)
+	  {
+	     evry_browse_item(sel->state->cur_item);
+	  }
 	else
-	  _evry_plugin_action(sel, 1);
+	  {
+	     _evry_plugin_action(sel, 1);
+	  }
      }
    else if (!strcmp(ev->key, "BackSpace"))
      {
 	if (!_evry_backspace(sel))
 	  evry_browse_back(sel);
      }
-   else if (_evry_view_key_press(s, ev))
-     goto end;
    else if ((ev->compose && !(ev->modifiers & ECORE_EVENT_MODIFIER_ALT)))
      {
 	int len = strlen(s->inp);
@@ -2215,6 +2234,9 @@ _evry_backspace(Evry_Selector *sel)
 	  s->input = s->inp + 1;
 	else
 	  s->input = s->inp;
+
+	if (pos == 0)
+	  s->trigger_active = EINA_FALSE;
 
 	if ((pos == 0) || !isspace(val))
 	  _evry_update(sel, 1);
@@ -2263,6 +2285,8 @@ _evry_cb_update_timer(void *data)
 {
    Evry_Selector *sel = data;
 
+   DBG("%s", sel->state->input);
+
    _evry_matches_update(sel, 1);
    _evry_selector_update(sel);
    _evry_list_win_update(sel->state);
@@ -2288,6 +2312,7 @@ _evry_clear(Evry_Selector *sel)
      {
 	s->inp[0] = 0;
 	s->input = s->inp;
+	s->trigger_active = EINA_FALSE;
      }
 
    _evry_update(sel, 1);
@@ -2708,34 +2733,41 @@ _evry_matches_update(Evry_Selector *sel, int async)
    s->changed = 1;
    s->request++;
 
+   if (sel->update_timer)
+     {
+	ecore_timer_del(sel->update_timer);
+	sel->update_timer = NULL;
+     }
+
+   if (s->sel_items)
+     {
+	eina_list_free(s->sel_items);
+	s->sel_items = NULL;
+     }
+
    if (s->inp[0])
      {
 	len_inp = strlen(s->inp);
 	input = s->inp;
      }
 
-   if (s->sel_items)
-     eina_list_free(s->sel_items);
-   s->sel_items = NULL;
-
-   if ((!input || !s->trigger_active) &&
-       (!win->plugin_dedicated))
-     {
-   	EINA_LIST_FREE(s->cur_plugins, p);
-   	s->trigger_active = EINA_FALSE;
-     }
-
+   /* use current plugins */
    if (s->trigger_active)
      {
+	s->plugin_auto_selected = EINA_FALSE;
+
 	EINA_LIST_FOREACH(s->cur_plugins, l, p)
 	  {
 	     p->request = s->request;
 	     p->fetch(p, s->input);
 	  }
+	goto found;
      }
 
+   EINA_LIST_FREE(s->cur_plugins, p);
+
    /* check if input matches plugin trigger */
-   if (!s->cur_plugins && input)
+   if (input)
      {
 	int len_trigger = 0;
 
@@ -2765,7 +2797,7 @@ _evry_matches_update(Evry_Selector *sel, int async)
 	     /* replace trigger with indicator */
 	     if (len_trigger > 1)
 	       {
-		  s->inp[0] = '>';
+		  s->inp[0] = ':';
 
 		  if (s->inp + len_trigger)
 		    strcpy(s->inp + 1, s->inp + len_trigger);
@@ -2774,44 +2806,45 @@ _evry_matches_update(Evry_Selector *sel, int async)
 	       }
 	     s->input = s->inp + 1;
 	     _evry_update_text_label(s);
+
+	     goto found;
 	  }
      }
 
-   if (!s->cur_plugins)
+   /* query all other plugins for this state */
+   EINA_LIST_FOREACH(s->plugins, l, p)
      {
-	EINA_LIST_FOREACH(s->plugins, l, p)
+	if (!sel->states->next)
 	  {
-	    if (!sel->states->next)
-	      {
-		 /* skip plugins in toplevel which trigger-only */
-		 if ((sel == SUBJ_SEL) &&
-		     (p->config->top_level) &&
-		     (p->config->trigger) &&
-		     (p->config->trigger_only))
-		   continue;
+	     /* skip plugins in toplevel which trigger-only */
+	     if ((sel == SUBJ_SEL) &&
+		 (p->config->top_level) &&
+		 (p->config->trigger) &&
+		 (p->config->trigger_only))
+	       continue;
 
-		 /* skip non-toplevel plugins when input < min_query */
-		 if ((!p->config->top_level) &&
-		     (p->config->min_query > len_inp))
-		   continue;
-	      }
+	     /* skip non-toplevel plugins when input < min_query */
+	     if ((!p->config->top_level) &&
+		 (p->config->min_query > len_inp))
+	       continue;
+	  }
 
-	     /* dont wait for async plugin. use their current items */
-	     if (!async && p->async_fetch && p->items)
-	       {
-		  s->cur_plugins = eina_list_append(s->cur_plugins, p);
-		  continue;
-	       }
+	/* dont wait for async plugin. use their current items */
+	if (!async && p->async_fetch && p->items)
+	  {
+	     s->cur_plugins = eina_list_append(s->cur_plugins, p);
+	     continue;
+	  }
 
-	     p->request = s->request;
+	p->request = s->request;
 
-	     if ((p->fetch(p, input)) || (sel->states->next))
-	       {
-		  s->cur_plugins = eina_list_append(s->cur_plugins, p);
-	       }
+	if ((p->fetch(p, input)) || (sel->states->next))
+	  {
+	     s->cur_plugins = eina_list_append(s->cur_plugins, p);
 	  }
      }
 
+ found:
    _evry_aggregator_fetch(sel, input);
 
    if (s->plugin_auto_selected ||
@@ -2819,12 +2852,6 @@ _evry_matches_update(Evry_Selector *sel, int async)
      _evry_plugin_select(s, NULL);
    else
      _evry_plugin_select(s, s->plugin);
-
-   if (sel->update_timer)
-     {
-	ecore_timer_del(sel->update_timer);
-	sel->update_timer = NULL;
-     }
 
    if (s->plugin)
      {

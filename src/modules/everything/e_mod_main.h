@@ -309,7 +309,7 @@ int   evry_browse_back(Evry_Selector *sel);
 void  evry_plugin_action(int finished);
 
 int   evry_state_push(Evry_Selector *sel, Eina_List *plugins);
-void  evry_selectors_switch(int dir, int slide);
+int   evry_selectors_switch(int dir, int slide);
 int   evry_view_toggle(Evry_State *s, const char *trigger);
 
 Ecore_Event_Handler *evry_event_handler_add(int type, int (*func) (void *data, int type, void *event), const void *data);

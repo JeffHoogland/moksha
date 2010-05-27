@@ -104,7 +104,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	     pp = eina_list_data_get(items);
 	     eina_list_free(items);
 	     items = NULL;
-	     
+
 	     EINA_LIST_FOREACH(pp->items, l, it)
 	       {
 		  if (it->usage >= 0)
