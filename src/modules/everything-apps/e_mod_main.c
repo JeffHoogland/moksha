@@ -154,7 +154,7 @@ _cb_sort(const void *data1, const void *data2)
 	  return (it1->fuzzy_match - it2->fuzzy_match);
      }
 
-   return 0;
+   return strcasecmp(it1->label, it2->label);
 }
 
 /***************************************************************************/
@@ -557,11 +557,6 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	_desktop_list_add(p, p->apps_mime, input);
      }
 
-   EINA_LIST_FOREACH(plugin->items, l, it)
-     evry->history_item_usage_set(it, input, NULL);
-
-   EVRY_PLUGIN_ITEMS_SORT(p, _cb_sort);
-
    if (!input && !(plugin->items))
      {
 	if (!p->apps_hist)
@@ -572,6 +567,11 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
 	_desktop_list_add(p, p->apps_hist, NULL);
      }
+
+   EINA_LIST_FOREACH(plugin->items, l, it)
+     evry->history_item_usage_set(it, input, NULL);
+
+   EVRY_PLUGIN_ITEMS_SORT(p, _cb_sort);
 
    return !!(plugin->items);
 }
