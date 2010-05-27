@@ -758,7 +758,7 @@ _evry_window_new(E_Zone *zone, E_Zone_Edge edge)
 
    o = edje_object_add(popup->evas);
    win->o_main = o;
-   e_theme_edje_object_set(o, "base/theme/everything",
+   e_theme_edje_object_set(o, "base/theme/modules/everything",
 			   "e/modules/everything/main");
 
    if (e_config->use_composite)
@@ -1848,7 +1848,7 @@ evry_selectors_switch(int dir, int slide)
 
 	if (!s || !(it = s->cur_item) || !(it->plugin == (CUR_SEL)->actions))
 	  return 0;
-	
+
 	GET_ACTION(act,it);
 	if (!act->it2.type)
 	  return 0;
@@ -2557,6 +2557,10 @@ _evry_view_slide_clear(Evry_View *v)
 	     evas_object_hide(v->o_list);
 	  }
 	win->view_clearing = NULL;
+
+	/* replay mouse down to allow direct sliding back */
+	if (win->mouse_button)
+	  evas_event_feed_mouse_down(win->popup->evas, win->mouse_button, 0, 0, NULL);
      }
 }
 
@@ -2570,6 +2574,10 @@ _evry_view_hide(Evry_View *v, int slide, int destroy)
 
    if (slide && v->o_list)
      {
+	/* replay mouse up to allow direct sliding back */
+	if (win->mouse_button)
+	  evas_event_feed_mouse_up(win->popup->evas, win->mouse_button, 0, 0, NULL);
+
 	if (slide == SLIDE_RIGHT)
 	  {
 	     evas_object_hide(v->o_list);

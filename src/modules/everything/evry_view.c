@@ -267,12 +267,12 @@ _item_show(View *v, Item *it, Evas_Object *list)
 	it->frame = edje_object_add(v->evas);
 	if (v->mode == VIEW_MODE_THUMB)
 	  {
-	     e_theme_edje_object_set(it->frame, "base/theme/everything",
+	     e_theme_edje_object_set(it->frame, "base/theme/modules/everything",
 				     "e/modules/everything/thumbview/item/thumb");
 	  }
 	else
 	  {
-	     e_theme_edje_object_set(it->frame, "base/theme/everything",
+	     e_theme_edje_object_set(it->frame, "base/theme/modules/everything",
 				     "e/modules/everything/thumbview/item/list");
 
 	     if (v->mode == VIEW_MODE_DETAIL)
@@ -971,13 +971,10 @@ _view_update(Evry_View *view)
 		    {
 		       sd->cur_item = v_it;
 		       v_it->selected = EINA_TRUE;
-		       if (v->mode == VIEW_MODE_THUMB)
-			 edje_object_signal_emit(v_it->frame, "e,state,selected", "e");
 		    }
 		  else
 		    {
 		       v_it->selected = EINA_FALSE;
-		       edje_object_signal_emit(v_it->frame, "e,state,unselected", "e");
 		    }
 		  break;
 	       }
@@ -986,8 +983,7 @@ _view_update(Evry_View *view)
 
 	if (v_it->visible)
 	  {
-	     if (!first_vis)
-	       first_vis = v_it->pos;
+	     if (!first_vis) first_vis = v_it->pos;
 	     last_vis = v_it->pos;
 	  }
 
@@ -1315,9 +1311,7 @@ _cb_item_changed(void *data, int type, void *event)
    Eina_List *l;
    Item *it;
    Smart_Data *sd = evas_object_smart_data_get(v->span);
-
-   if (!sd)
-     return 1;
+   if (!sd) return 1;
 
    EINA_LIST_FOREACH(sd->items, l, it)
      if (it->item == ev->item)
@@ -1364,7 +1358,7 @@ _view_cb_mouse_wheel(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
    Evas_Event_Mouse_Wheel *ev = event_info;
    Smart_Data *sd = evas_object_smart_data_get(obj);
-
+   if (!sd) return;
    if (ev->z)
      {
 	if (sd->cur_item)
@@ -1373,13 +1367,38 @@ _view_cb_mouse_wheel(void *data, Evas *e, Evas_Object *obj, void *event_info)
      }
 }
 
+static void
+_view_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   Evas_Event_Mouse_Down *ev = event_info;
+   Smart_Data *sd = evas_object_smart_data_get(data);
+   if (!sd) return;
+   sd->mouse_act = 1;
+   sd->mouse_button = ev->button;
+   sd->mouse_x = ev->canvas.x;
+   sd->mouse_y = ev->canvas.y;
+}
+
+static void
+_view_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   Evas_Event_Mouse_Up *ev = event_info;
+   Smart_Data *sd = evas_object_smart_data_get(data);
+   if (!sd) return;
+   sd->mouse_x = 0;
+   sd->mouse_y = 0;
+   sd->mouse_button = 0;
+   edje_object_signal_emit(sd->view->bg, "e,action,hide,into", "e");
+   edje_object_signal_emit(sd->view->bg, "e,action,hide,back", "e");
+}
+
 #define SLIDE_RESISTANCE 80
 
 static void
 _view_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
    Evas_Event_Mouse_Move *ev = event_info;
-   Smart_Data *sd = evas_object_smart_data_get(obj);
+   Smart_Data *sd = evas_object_smart_data_get(data);
    Evry_Selector *sel;
    int diff_y, diff_x;
 
@@ -1388,10 +1407,8 @@ _view_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
    if (!sd->mouse_x)
      goto end;
 
-   if (!sd->it_down)
-     goto end;
-
    sel = sd->view->state->selector;
+
    diff_x = abs(ev->cur.canvas.x - sd->mouse_x);
    diff_y = abs(ev->cur.canvas.y - sd->mouse_y);
 
@@ -1402,21 +1419,23 @@ _view_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	goto end;
      }
 
-   if (sel->states->next)
+   if (sel->states->next || (sel != sel->win->selectors[0]))
      edje_object_signal_emit(sd->view->bg, "e,action,show,back", "e");
 
-   if ((sd->it_down->item->browseable) ||
-       (sel != sel->win->selectors[2]))
-     edje_object_signal_emit(sd->view->bg, "e,action,show,into", "e");
-
-   if ((sd->cur_item != sd->it_down) && (diff_x > 10))
+   if (sd->it_down)
      {
-	evry_item_select(sd->view->state, sd->it_down->item);
-	_pan_item_select(obj, sd->it_down, 0);
+	if ((sd->it_down->item->browseable) ||
+	    (sel != sel->win->selectors[2]))
+	  edje_object_signal_emit(sd->view->bg, "e,action,show,into", "e");
+
+	if ((sd->cur_item != sd->it_down) && (diff_x > 10))
+	  {
+	     evry_item_select(sd->view->state, sd->it_down->item);
+	     _pan_item_select(data, sd->it_down, 0);
+	  }
      }
 
-   if ((sd->mouse_button == 1) &&
-       (sd->cur_item == sd->it_down))
+   if (sd->mouse_button == 1)
      {
 	if (ev->cur.canvas.x - sd->mouse_x > SLIDE_RESISTANCE)
 	  {
@@ -1428,7 +1447,8 @@ _view_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	     else
 	       evry_selectors_switch(-1, EINA_TRUE);
 	  }
-	else if (sd->mouse_x - ev->cur.canvas.x > SLIDE_RESISTANCE)
+	else if ((sd->it_down && (sd->cur_item == sd->it_down)) &&
+		 (sd->mouse_x - ev->cur.canvas.x > SLIDE_RESISTANCE))
 	  {
 	     edje_object_signal_emit(sd->view->bg, "e,action,hide,into", "e");
 	     edje_object_signal_emit(sd->view->bg, "e,action,hide,back", "e");
@@ -1439,13 +1459,9 @@ _view_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	       }
 	     else
 	       {
-		  if ((sel != sel->win->selectors[2]) &&
-		      /* dont jump out of sub-action */
-		      (!((sel == sel->win->selectors[1]) &&
-			 (sel->states->next))))
-		    evry_selectors_switch(1, EINA_TRUE);
+		  evry_selectors_switch(1, EINA_TRUE);
 	       }
-	     
+
 	     sd->it_down = NULL;
 	     sd->mouse_x = 0;
 	     sd->mouse_y = 0;
@@ -1492,19 +1508,24 @@ _view_create(Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
    v->zoom = parent->zoom;
 
    v->bg = edje_object_add(v->evas);
-   e_theme_edje_object_set(v->bg, "base/theme/everything",
+   e_theme_edje_object_set(v->bg, "base/theme/modules/everything",
 			   "e/modules/everything/thumbview/main/window");
    // scrolled thumbs
    v->span = _pan_add(v->evas);
    _pan_view_set(v->span, v);
    evas_object_event_callback_add(v->span, EVAS_CALLBACK_MOUSE_WHEEL,
 				  _view_cb_mouse_wheel, NULL);
-   evas_object_event_callback_add(v->span, EVAS_CALLBACK_MOUSE_MOVE,
-				  _view_cb_mouse_move, NULL);
+
+   evas_object_event_callback_add(v->bg, EVAS_CALLBACK_MOUSE_MOVE,
+				  _view_cb_mouse_move, v->span);
+   evas_object_event_callback_add(v->bg, EVAS_CALLBACK_MOUSE_DOWN,
+				  _view_cb_mouse_down, v->span);
+   evas_object_event_callback_add(v->bg, EVAS_CALLBACK_MOUSE_UP,
+				  _view_cb_mouse_up, v->span);
 
    // the scrollframe holding the scrolled thumbs
    v->sframe = e_scrollframe_add(v->evas);
-   e_scrollframe_custom_theme_set(v->sframe, "base/theme/everything",
+   e_scrollframe_custom_theme_set(v->sframe, "base/theme/modules/everything",
 				  "e/modules/everything/thumbview/main/scrollframe");
    e_scrollframe_thumbscroll_force(v->sframe, 1);
 

@@ -196,7 +196,7 @@ _tabs_update(Tab_View *v)
 	     tab->plugin = p;
 	     tab->tab_view = v;
 	     o = edje_object_add(v->evas);
-	     e_theme_edje_object_set(o, "base/theme/everything",
+	     e_theme_edje_object_set(o, "base/theme/modules/everything",
 				     "e/modules/everything/tab_item");
 	     edje_object_part_text_set(o, "e.text.label", EVRY_ITEM(p)->label);
 
