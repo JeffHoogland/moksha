@@ -2563,6 +2563,9 @@ _e_fm2_client_mount(const char *udi, const char *mountpoint)
    char *d;
    int l, l1, l2;
 
+   if (!udi || !mountpoint)
+     return 0;
+
    l1 = strlen(udi);
    l2 = strlen(mountpoint);
    l = l1 + 1 + l2 + 1;
@@ -2579,6 +2582,9 @@ _e_fm2_client_unmount(const char *udi)
    char *d;
    int l, l1;
 
+   if (!udi)
+     return 0;
+
    l1 = strlen(udi);
    l = l1 + 1;
    d = alloca(l);
@@ -2594,6 +2600,9 @@ _e_fm2_client_eject(const char *udi)
 {
    char *data;
    int size;
+
+   if (!udi)
+     return 0;
 
    size = strlen(udi) + 1;
    data = alloca(size);

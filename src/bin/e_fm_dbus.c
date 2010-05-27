@@ -463,6 +463,7 @@ e_fm2_dbus_mount_find(const char *path)
    EINA_LIST_FOREACH(_e_vols, l, v)
      {
 	if (v->mounted
+	    && v->mount_point
 	    && !strncmp(path, v->mount_point, strlen(v->mount_point))
 	    && v->mounts) 
 	  return eina_list_data_get(v->mounts);
