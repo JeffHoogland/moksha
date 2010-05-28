@@ -23,7 +23,7 @@ struct _E_Desk
    E_Zone              *zone;
    const char          *name;
    int                  x, y;
-   char                 visible : 1;
+   unsigned char        visible : 1;
    unsigned int         deskshow_toggle : 1;
    int                  fullscreen_borders;
 
