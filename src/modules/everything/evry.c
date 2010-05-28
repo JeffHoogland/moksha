@@ -1619,14 +1619,19 @@ _evry_state_pop(Evry_Selector *sel, int immediate)
 
    EINA_LIST_FREE(s->plugins, p)
      {
+	/* FIXME use it->free cb also for plugin instances*/
+	
 	/* skip non top-level plugins */
 	if (prev && eina_list_data_find(prev->plugins, p))
 	  {
 	     p->state = prev;
 	     continue;
 	  }
-
-       p->finish(p);
+	
+	if (EVRY_ITEM(p)->ref == 0)
+	  p->finish(p);
+	else
+	  p->state = NULL;
      }
 
 
@@ -1709,6 +1714,8 @@ evry_browse_item(Evry_Item *it)
      {
 	if ((p->browse) && (pp = p->browse(p, it)))
 	  {
+	     printf("append %s\n", pp->name);
+
 	     plugins = eina_list_append(plugins, pp);
 	  }
      }
@@ -1717,6 +1724,7 @@ evry_browse_item(Evry_Item *it)
    if ((!(plugins) && (it->plugin->browse)) &&
        (pp = it->plugin->browse(it->plugin, it)))
      {
+	printf("append 2%s\n", pp->name);
 	plugins = eina_list_append(plugins, pp);
      }
 

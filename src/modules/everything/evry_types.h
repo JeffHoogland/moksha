@@ -238,6 +238,8 @@ struct _Plugin_Config
 
   /* do not set! */
   Evry_Plugin *plugin;
+
+  Eina_List *plugins;
 };
 
 struct _History_Item

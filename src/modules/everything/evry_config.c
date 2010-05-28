@@ -33,7 +33,7 @@ struct _Plugin_Page
   int enabled;
   int min_query;
   Plugin_Config *cur;
-} ;
+};
 
 struct _E_Config_Dialog_Data
 {
@@ -193,7 +193,7 @@ _fill_list(Eina_List *plugins, Evas_Object *obj, int enabled __UNUSED__)
    Eina_List *l;
    Plugin_Config *pc;
    Evas_Object *end;
-   
+
    /* freeze evas, edje, and list widget */
    evas = evas_object_evas_get(obj);
    evas_event_freeze(evas);
@@ -584,7 +584,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdat
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
-   
+
    e_widget_toolbook_page_append(otb, NULL, _("Geometry"),
 				 o, 1, 0, 1, 0, 0.5, 0.0);
 
@@ -593,3 +593,149 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdat
 
    return otb;
 }
+
+
+/***************************************************************************/
+
+#if 0
+static void *_cat_create_data(E_Config_Dialog *cfd);
+static void _cat_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static Evas_Object *_cat_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static int _cat_basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+
+static E_Config_Dialog *
+evry_categories_conf_dialog(E_Container *con, const char *params)
+{
+   E_Config_Dialog *cfd = NULL;
+   E_Config_Dialog_View *v = NULL;
+   char buf[4096];
+
+   if (e_config_dialog_find(_config_path, _config_path))
+     return NULL;
+
+   v = E_NEW(E_Config_Dialog_View, 1);
+   if (!v) return NULL;
+
+   v->create_cfdata = _create_data;
+   v->free_cfdata = _free_data;
+   v->basic.create_widgets = _basic_create_widgets;
+   v->basic.apply_cfdata = _basic_apply;
+
+   snprintf(buf, sizeof(buf), "%s/e-module.edj", _conf->module->dir);
+
+   cfd = e_config_dialog_new(con, _("Everything Categories"),
+			     _config_path, _config_path, buf, 0, v, NULL);
+
+   _conf->cfd = cfd;
+   return cfd;
+}
+
+static void *
+_cat_create_data(E_Config_Dialog *cfd)
+{
+   E_Config_Dialog_Data *cfdata = NULL;
+   cfdata = E_NEW(E_Config_Dialog_Data, 1);
+
+   cfdata->page[0].configs = eina_list_clone(_conf->plugins);
+
+   /* #define CP(_name) cfdata->_name = strdup(_conf->_name);
+    * #define C(_name) cfdata->_name = _conf->_name;
+    *
+    * #undef CP
+    * #undef C */
+   return cfdata;
+}
+
+static void
+_cat_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+{
+   if (cfdata->page[0].configs) eina_list_free(cfdata->page[0].configs);
+
+   _conf->cfd = NULL;
+   E_FREE(cfdata);
+}
+
+static int
+_cat_basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+{
+   int i = 0;
+   Plugin_Config *pc;
+
+   _conf->plugins = eina_list_clone(cfdata->page[0].configs);
+
+   pc = cfdata->page[i].cur;
+
+   if (pc)
+     {
+	if (pc->trigger)
+	  eina_stringshare_del(pc->trigger);
+
+	if (cfdata->page[i].trigger[0])
+	  pc->trigger = eina_stringshare_add(cfdata->page[i].trigger);
+	else
+	  pc->trigger = NULL;
+
+	pc->trigger_only = cfdata->page[i].trigger_only;
+	pc->view_mode    = cfdata->page[i].view_mode;
+	pc->enabled      = cfdata->page[i].enabled;
+	pc->aggregate    = cfdata->page[i].aggregate;
+	pc->top_level    = cfdata->page[i].top_level;
+	pc->min_query    = cfdata->page[i].min_query;
+     }
+
+   /* #define CP(_name)					\
+    *    if (_conf->_name)					\
+    *      eina_stringshare_del(_conf->_name);		\
+    *    _conf->_name = eina_stringshare_add(cfdata->_name);
+    * #define C(_name) _conf->_name = cfdata->_name;
+    *
+    * #undef CP
+    * #undef C */
+
+   e_config_domain_save(_config_domain, _conf_edd, _conf);
+   e_config_save_queue();
+   return 1;
+}
+
+static void
+_cat_plugin_move(Eina_List *plugins, Evas_Object *list, int dir)
+{
+   int sel;
+   Eina_List *l1, *l2;
+
+   sel = e_widget_ilist_selected_get(list);
+
+   Plugin_Config *pc;
+   int prio = 0;
+
+   l1 = eina_list_nth_list(plugins, sel);
+   l2 = eina_list_nth_list(plugins, sel + dir);
+
+   if (!l1 || !l2) return;
+   pc = l1->data;
+   l1->data = l2->data;
+   l2->data = pc;
+
+   _fill_list(plugins, list, 0);
+   e_widget_ilist_selected_set(list, sel + dir);
+
+   EINA_LIST_FOREACH(plugins, l1, pc)
+     pc->priority = prio++;
+}
+
+static Evas_Object *
+_cat_basic_create_widgets(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdata)
+{
+   Evas_Object *o, *of, *ob, *otb;
+
+   otb = e_widget_toolbook_add(e, 48 * e_scale, 48 * e_scale);
+
+   ob = _create_plugin_page(cfdata, e, &cfdata->page[0]);
+   e_widget_toolbook_page_append(otb, NULL, _("Plugins"),
+				 ob, 1, 0, 1, 0, 0.5, 0.0);
+
+   e_widget_toolbook_page_show(otb, 0);
+
+   return otb;
+}
+#endif

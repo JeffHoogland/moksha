@@ -4,7 +4,7 @@
 #include "e.h"
 #include "evry_api.h"
 
-#define MOD_CONFIG_FILE_EPOCH 0x0003
+#define MOD_CONFIG_FILE_EPOCH 0x0004
 #define MOD_CONFIG_FILE_GENERATION 0x0001
 #define MOD_CONFIG_FILE_VERSION					\
   ((MOD_CONFIG_FILE_EPOCH << 16) | MOD_CONFIG_FILE_GENERATION)
@@ -166,6 +166,7 @@ struct _Config
   Eina_List *conf_actions;
   Eina_List *conf_objects;
   Eina_List *conf_views;
+  Eina_List *collections;
 
   int scroll_animate;
   double scroll_speed;
@@ -239,6 +240,7 @@ const char *evry_file_url_get(Evry_Item_File *file);
 
 int   evry_plugin_register(Evry_Plugin *p, int type, int priority);
 void  evry_plugin_unregister(Evry_Plugin *p);
+Evry_Plugin *evry_plugin_find(const char *name);
 void  evry_action_register(Evry_Action *act, int priority);
 void  evry_action_unregister(Evry_Action *act);
 void  evry_view_register(Evry_View *view, int priority);
@@ -288,6 +290,9 @@ void  evry_plug_clipboard_shutdown(void);
 
 Eina_Bool evry_plug_text_init(void);
 void  evry_plug_text_shutdown(void);
+
+Eina_Bool evry_plug_collection_init(void);
+void  evry_plug_collection_shutdown(void);
 
 int   evry_init(void);
 int   evry_shutdown(void);

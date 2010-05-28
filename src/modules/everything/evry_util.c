@@ -357,12 +357,6 @@ evry_util_plugin_items_add(Evry_Plugin *p, Eina_List *items, const char *input,
    Evry_Item *it;
    int match = 0;
 
-   if (p->items)
-     {
-	ERR("items not cleared");
-	return 1;
-     }
-
    EINA_LIST_FOREACH(items, l, it)
      {
 	it->fuzzy_match = 0;
@@ -589,7 +583,6 @@ evry_util_icon_get(Evry_Item *it, Evas *e)
 
    return o;
 }
-
 
 int
 evry_util_exec_app(const Evry_Item *it_app, const Evry_Item *it_file)

@@ -3,7 +3,7 @@
 
 #include "evry_types.h"
 
-#define EVRY_API_VERSION     25
+#define EVRY_API_VERSION     26
 
 #define EVRY_ACTION_OTHER    0
 #define EVRY_ACTION_FINISHED 1
@@ -83,7 +83,8 @@ struct _Evry_API
   int  (*plugin_register)(Evry_Plugin *p, int type, int priority);
   void (*plugin_unregister)(Evry_Plugin *p);
   void (*plugin_update)(Evry_Plugin *plugin, int state);
-
+  Evry_Plugin *(*plugin_find)(const char *name);
+  
   Evry_Action *(*action_new)(const char *name, const char *label,
 				  Evry_Type type1, Evry_Type type2,
 				  const char *icon,

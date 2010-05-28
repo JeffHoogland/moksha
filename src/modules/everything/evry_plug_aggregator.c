@@ -90,9 +90,8 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	      * 	  it->fuzzy_match = ;
 	      *   } */
 
+	     IF_RELEASE(it->detail);
 	     snprintf(buf, sizeof(buf), "%d %s", eina_list_count(pp->items), _("Items"));
-	     if (it->detail)
-	       eina_stringshare_del(it->detail);
 	     it->detail = eina_stringshare_add(buf);
 
 	     items = eina_list_append(items, it);

@@ -12,7 +12,6 @@ static void _e_mod_run_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_mod_menu_add(void *data, E_Menu *m);
 static void _config_init(void);
 static void _config_free(void);
-static void _plugin_config_free(void);
 static int  _cleanup_history(void *data);
 static void _evry_type_init(const char *type);
 
@@ -24,7 +23,7 @@ static Ecore_Timer *cleanup_timer;
 
 static E_Config_DD *conf_edd = NULL;
 static E_Config_DD *plugin_conf_edd = NULL;
-static E_Config_DD *plugin_setting_edd = NULL;
+static E_Config_DD *collection_conf_edd = NULL;
 
 Evry_Config *evry_conf = NULL;
 int _evry_events[4];
@@ -68,10 +67,12 @@ e_modapi_init(E_Module *m)
    evry_history_init();
 
    evry_plug_actions_init();
+   evry_plug_collection_init();
    evry_plug_clipboard_init();
    evry_plug_text_init();
    evry_view_init();
    evry_view_help_init();
+
 
    /* add module supplied action */
    act = e_action_add("everything");
@@ -119,6 +120,7 @@ e_modapi_init(E_Module *m)
    SET(plugin_register);
    SET(plugin_unregister);
    SET(plugin_update);
+   SET(plugin_find);
    SET(action_new);
    SET(action_free);
    SET(action_register);
@@ -177,6 +179,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    evry_view_help_shutdown();
    evry_plug_clipboard_shutdown();
    evry_plug_text_shutdown();
+   evry_plug_collection_shutdown();
    evry_plug_actions_shutdown();
 
    _config_free();
@@ -207,7 +210,6 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    /* Clean EET */
    E_CONFIG_DD_FREE(conf_edd);
    E_CONFIG_DD_FREE(plugin_conf_edd);
-   E_CONFIG_DD_FREE(plugin_setting_edd);
 
    if (cleanup_timer)
      ecore_timer_del(cleanup_timer);
@@ -329,6 +331,8 @@ _cleanup_history(void *data)
 static void
 _config_init()
 {
+   Plugin_Config *pc, *pcc;
+
 #undef T
 #undef D
 #define T Plugin_Config
@@ -343,6 +347,7 @@ _config_init()
    E_CONFIG_VAL(D, T, aggregate, INT);
    E_CONFIG_VAL(D, T, top_level, INT);
    E_CONFIG_VAL(D, T, min_query, INT);
+   E_CONFIG_LIST(D, T, plugins, plugin_conf_edd);
 #undef T
 #undef D
 #define T Evry_Config
@@ -368,6 +373,7 @@ _config_init()
    E_CONFIG_LIST(D, T, conf_actions, plugin_conf_edd);
    E_CONFIG_LIST(D, T, conf_objects, plugin_conf_edd);
    E_CONFIG_LIST(D, T, conf_views,   plugin_conf_edd);
+   E_CONFIG_LIST(D, T, collections,  plugin_conf_edd);
    E_CONFIG_VAL(D, T, first_run, UCHAR);
 #undef T
 #undef D
@@ -402,46 +408,87 @@ _config_init()
    evry_conf->view_zoom = 0;
    evry_conf->cycle_mode = 0;
    evry_conf->history_sort_mode = 0;
-   evry_conf->edge_width = 390;
-   evry_conf->edge_height = 495;
+   evry_conf->edge_width = 370;
+   evry_conf->edge_height = 435;
    evry_conf->first_run = EINA_TRUE;
+
+   pcc = E_NEW(Plugin_Config, 1);
+   pcc->name = eina_stringshare_add("Start");
+   pcc->enabled = EINA_FALSE;
+   pcc->aggregate = EINA_FALSE;
+   pcc->top_level = EINA_TRUE;
+   pcc->view_mode = VIEW_MODE_THUMB;
+   evry_conf->collections = eina_list_append(evry_conf->collections, pcc);
+
+   pc = E_NEW(Plugin_Config, 1);
+   pc->name = eina_stringshare_add("Windows");
+   pc->enabled = EINA_TRUE;
+   pc->view_mode = VIEW_MODE_NONE;
+   pcc->plugins = eina_list_append(pcc->plugins, pc);
+
+   pc = E_NEW(Plugin_Config, 1);
+   pc->name = eina_stringshare_add("Settings");
+   pc->enabled = EINA_TRUE;
+   pc->view_mode = VIEW_MODE_NONE;
+   pcc->plugins = eina_list_append(pcc->plugins, pc);
+
+   pc = E_NEW(Plugin_Config, 1);
+   pc->name = eina_stringshare_add("Files");
+   pc->enabled = EINA_TRUE;
+   pc->view_mode = VIEW_MODE_NONE;
+   pcc->plugins = eina_list_append(pcc->plugins, pc);
+
+   pc = E_NEW(Plugin_Config, 1);
+   pc->name = eina_stringshare_add("Applications");
+   pc->enabled = EINA_TRUE;
+   pc->view_mode = VIEW_MODE_NONE;
+   pcc->plugins = eina_list_append(pcc->plugins, pc);
    IFMODCFGEND;
 
    evry_conf->version = MOD_CONFIG_FILE_VERSION;
 }
 
 static void
-_plugin_config_free(void)
+_config_free(void)
 {
-   Plugin_Config *pc;
+   Plugin_Config *pc, *pc2;
+
+   EINA_LIST_FREE(evry_conf->collections, pc)
+     {
+	EINA_LIST_FREE(pc->plugins, pc2)
+	  {
+	     IF_RELEASE(pc2->name);
+	     IF_RELEASE(pc2->trigger);
+	     E_FREE(pc2);
+	  }
+     }
 
    EINA_LIST_FREE(evry_conf->conf_subjects, pc)
      {
-	if (pc->name) eina_stringshare_del(pc->name);
-	if (pc->trigger) eina_stringshare_del(pc->trigger);
-	if (pc->plugin) evry_plugin_free(pc->plugin);
+	IF_RELEASE(pc->name);
+	IF_RELEASE(pc->trigger);
+	if (pc->plugin)
+	  evry_plugin_free(pc->plugin);
 	E_FREE(pc);
      }
    EINA_LIST_FREE(evry_conf->conf_actions, pc)
      {
-	if (pc->name) eina_stringshare_del(pc->name);
-	if (pc->trigger) eina_stringshare_del(pc->trigger);
-	if (pc->plugin) evry_plugin_free(pc->plugin);
+	IF_RELEASE(pc->name);
+	IF_RELEASE(pc->trigger);
+	if (pc->plugin)
+	  evry_plugin_free(pc->plugin);
 	E_FREE(pc);
      }
    EINA_LIST_FREE(evry_conf->conf_objects, pc)
      {
-	if (pc->name) eina_stringshare_del(pc->name);
-	if (pc->trigger) eina_stringshare_del(pc->trigger);
-	if (pc->plugin) evry_plugin_free(pc->plugin);
+	IF_RELEASE(pc->name);
+	IF_RELEASE(pc->trigger);
+	if (pc->plugin)
+	  evry_plugin_free(pc->plugin);
 	E_FREE(pc);
      }
-}
 
-static void
-_config_free(void)
-{
-   _plugin_config_free();
+
    E_FREE(evry_conf);
 }
 

@@ -62,6 +62,8 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
 
    GET_PLUGIN(p, plugin);
 
+   EINA_LIST_FREE(p->actions, act);
+
    if (!(CHECK_TYPE(it, EVRY_TYPE_PLUGIN)))
      {
 	EINA_LIST_FOREACH(evry_conf->actions, l, act)
@@ -69,23 +71,16 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
 	     if (!((!act->it1.type) ||
 		   (CHECK_TYPE(it, act->it1.type)) ||
 		   (CHECK_SUBTYPE(it, act->it1.type))))
-	       {
-		  p->actions = eina_list_remove(p->actions, act);
-		  continue;
-	       }
+	       continue;
 
 	     if (act->check_item && !(act->check_item(act, it)))
-	       {
-		  p->actions = eina_list_remove(p->actions, act);
-		  continue;
-	       }
+	       continue;
 
 	     act->base.plugin = plugin;
 	     act->it1.item = it;
 	     EVRY_ITEM(act)->hi = NULL;
 
-	     if (!eina_list_data_find_list(p->actions, act))
-	       p->actions = eina_list_append(p->actions, act);
+	     p->actions = eina_list_append(p->actions, act);
 	  }
      }
 
@@ -95,12 +90,9 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
 	  {
 	     act->base.plugin = plugin;
 
-	     if (!eina_list_data_find_list(p->actions, act))
-	       {
-		  act->it1.item = EVRY_ITEM(it->plugin);
-		  EVRY_ITEM(act)->hi = NULL;
-		  p->actions = eina_list_append(p->actions, act);
-	       }
+	     act->it1.item = EVRY_ITEM(it->plugin);
+	     EVRY_ITEM(act)->hi = NULL;
+	     p->actions = eina_list_append(p->actions, act);
 	  }
      }
 
@@ -192,11 +184,13 @@ evry_plug_actions_new(Evry_Selector *sel, int type)
 
    if (type == EVRY_PLUGIN_SUBJECT)
      {
-	plugin = EVRY_PLUGIN_NEW(Plugin, N_("Actions"), NULL, 0, NULL, _finish, _fetch, NULL);
+	plugin = EVRY_PLUGIN_NEW(Plugin, N_("Actions"), NULL, 0,
+				 NULL, _finish, _fetch, NULL);
      }
    else if (type == EVRY_PLUGIN_ACTION)
      {
-	plugin = EVRY_PLUGIN_NEW(Plugin, N_("Actions"), NULL, 0, _begin, _finish, _fetch, NULL);
+	plugin = EVRY_PLUGIN_NEW(Plugin, N_("Actions"), NULL, 0,
+				 _begin, _finish, _fetch, NULL);
      }
    else return NULL;
 

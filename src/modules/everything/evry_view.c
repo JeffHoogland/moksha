@@ -216,7 +216,10 @@ _item_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	evry_item_select(sd->view->state, it->item);
 	_pan_item_select(it->obj, it, 0);
 
-	evry_plugin_action(1);
+	if (it->item->browseable)
+	  evry_browse_item(it->item);
+	else
+	  evry_plugin_action(1);
      }
    else
      {
@@ -360,40 +363,46 @@ _e_smart_reconfigure_do(void *data)
 	int size;
 	int cnt = eina_list_count(sd->items);
 	double col = 1;
-
+	int width = sd->w - 8;
+	
 	if (cnt < 5)
 	  {
 	     col = 2;
-	     aspect_w = sd->w * 2;
+	     aspect_w = width * 2;
+	  }
+	else if ((cnt < 9) && (sd->h > sd->w))
+	  {
+	     col = 2;
+	     aspect_w = width * 3;
 	  }
 	else if (cnt < 10)
 	  {
 	     col = 3;
-	     aspect_w = sd->w * 3;
+	     aspect_w = width * 3;
 	  }
 	else if (sd->view->zoom == 0)
 	  {
 	     size = 96;
-	     aspect_w *= 1 + (sd->h / size);
-	     col = sd->w / size;
+	     aspect_w = width  * (1 + (sd->h / size));
+	     col = width / size;
 	  }
 	else if (sd->view->zoom == 1)
 	  {
 	     size = 128;
-	     col = sd->w / size;
-	     aspect_w *= 1 + (sd->h / size);
+	     col = width / size;
+	     aspect_w = width  * (1 + (sd->h / size));
 	  }
 
 	else /* if (sd->view->zoom == 2) */
 	  {
-	     size = 256;
-	     col = sd->w / size;
-	     aspect_w *= (sd->h / size);
+	     size = 192;
+	     col = width / size;
+	     aspect_w = width * (sd->h / size);
 	  }
 
 	if (col < 1) col = 1;
 
-	iw = sd->w / col;
+	iw = width / col;
 	aspect_w /= col;
      }
 
@@ -1408,7 +1417,9 @@ _view_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
      goto end;
 
    sel = sd->view->state->selector;
-
+   if (!sel || !sel->states)
+     return;
+   
    diff_x = abs(ev->cur.canvas.x - sd->mouse_x);
    diff_y = abs(ev->cur.canvas.y - sd->mouse_y);
 
@@ -1419,7 +1430,7 @@ _view_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	goto end;
      }
 
-   if (sel->states->next || (sel != sel->win->selectors[0]))
+   if ((sel->states->next) || (sel != sel->win->selectors[0]))
      edje_object_signal_emit(sd->view->bg, "e,action,show,back", "e");
 
    if (sd->it_down)

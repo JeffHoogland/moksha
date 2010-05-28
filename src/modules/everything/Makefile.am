@@ -38,6 +38,7 @@ module_la_SOURCES      = $(EVRYHEADERS) \
 			 evry_view_help.c \
 			 evry_plug_clipboard.c \
 			 evry_plug_text.c \
+			 evry_plug_collection.c \
 			 md5.h \
 			 md5.c
 
