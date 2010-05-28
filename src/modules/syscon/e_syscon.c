@@ -135,7 +135,7 @@ e_syscon_show(E_Zone *zone, const char *defact)
         E_Action *a;
         int disabled;
 
-        sca = l->data;
+        if (!(sca = l->data)) continue;
         if (!sca->action) continue;
         a = e_action_find(sca->action);
         if (!a) continue;
