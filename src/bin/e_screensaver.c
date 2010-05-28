@@ -5,8 +5,11 @@
 
 static Ecore_Event_Handler *_e_screensaver_handler_config_mode = NULL;
 static Ecore_Event_Handler *_e_screensaver_handler_screensaver_notify = NULL;
+static Ecore_Event_Handler *_e_screensaver_handler_border_fullscreen = NULL;
+static Ecore_Event_Handler *_e_screensaver_handler_border_unfullscreen = NULL;
 static E_Dialog *_e_screensaver_ask_presentation_dia = NULL;
 static int _e_screensaver_ask_presentation_count = 0;
+static int _e_screensaver_fullscreen_count = 0;
 
 static int
 _e_screensaver_handler_config_mode_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
@@ -149,6 +152,23 @@ _e_screensaver_handler_screensaver_notify_cb(void *data __UNUSED__, int type __U
    return 1;
 }
 
+static int
+_e_screensaver_handler_border_fullscreen_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
+{
+   _e_screensaver_fullscreen_count++;
+   if (_e_screensaver_fullscreen_count == 1) e_screensaver_init();
+   return 1;
+}
+
+static int
+_e_screensaver_handler_border_unfullscreen_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
+{
+   _e_screensaver_fullscreen_count--;
+   if (_e_screensaver_fullscreen_count == 0) e_screensaver_init();
+   else if (_e_screensaver_fullscreen_count < 0) _e_screensaver_fullscreen_count = 0;
+   return 1;
+}
+
 EAPI int
 e_screensaver_init(void)
 {
@@ -162,7 +182,16 @@ e_screensaver_init(void)
      _e_screensaver_handler_screensaver_notify = ecore_event_handler_add
        (ECORE_X_EVENT_SCREENSAVER_NOTIFY, _e_screensaver_handler_screensaver_notify_cb, NULL);
 
-   if ((e_config->screensaver_enable) && (!e_config->mode.presentation))
+   if (!_e_screensaver_handler_border_fullscreen)
+     _e_screensaver_handler_border_fullscreen = ecore_event_handler_add
+       (E_EVENT_BORDER_FULLSCREEN, _e_screensaver_handler_border_fullscreen_cb, NULL);
+
+   if (!_e_screensaver_handler_border_unfullscreen)
+     _e_screensaver_handler_border_unfullscreen = ecore_event_handler_add
+       (E_EVENT_BORDER_UNFULLSCREEN, _e_screensaver_handler_border_unfullscreen_cb, NULL);
+
+   if ((e_config->screensaver_enable) && (!e_config->mode.presentation) &&
+       (_e_screensaver_fullscreen_count <= 0))
      timeout = e_config->screensaver_timeout;
    
    interval = e_config->screensaver_interval;

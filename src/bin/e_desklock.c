@@ -64,6 +64,9 @@ static int _e_desklock_user_idle = 0;
 static double _e_desklock_autolock_time = 0.0;
 static E_Dialog *_e_desklock_ask_presentation_dia = NULL;
 static int _e_desklock_ask_presentation_count = 0;
+static Ecore_Event_Handler *_e_desklock_handler_border_fullscreen = NULL;
+static Ecore_Event_Handler *_e_desklock_handler_border_unfullscreen = NULL;
+static int _e_desklock_fullscreen_count = 0;
 
 /***********************************************************************/
 
@@ -93,6 +96,8 @@ static char *_desklock_auth_get_current_host(void);
 #endif
 
 static void _e_desklock_ask_presentation_mode(void);
+static int _e_desklock_handler_border_fullscreen_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__);
+static int _e_desklock_handler_border_unfullscreen_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__);
 
 EAPI int E_EVENT_DESKLOCK = 0;
 
@@ -102,6 +107,14 @@ e_desklock_init(void)
    /* A poller to tick every 256 ticks, watching for an idle user */
    _e_desklock_idle_poller = ecore_poller_add(ECORE_POLLER_CORE, 256,
 					      _e_desklock_cb_idle_poller, NULL);
+
+   if (!_e_desklock_handler_border_fullscreen)
+     _e_desklock_handler_border_fullscreen = ecore_event_handler_add
+       (E_EVENT_BORDER_FULLSCREEN, _e_desklock_handler_border_fullscreen_cb, NULL);
+
+   if (!_e_desklock_handler_border_unfullscreen)
+     _e_desklock_handler_border_unfullscreen = ecore_event_handler_add
+       (E_EVENT_BORDER_UNFULLSCREEN, _e_desklock_handler_border_unfullscreen_cb, NULL);
 
    if (e_config->desklock_background)
      e_filereg_register(e_config->desklock_background);
@@ -114,6 +127,18 @@ e_desklock_init(void)
 EAPI int
 e_desklock_shutdown(void)
 {
+   if (_e_desklock_handler_border_fullscreen)
+     {
+	ecore_event_handler_del(_e_desklock_handler_border_fullscreen);
+	_e_desklock_handler_border_fullscreen = NULL;
+     }
+
+   if (_e_desklock_handler_border_unfullscreen)
+     {
+	ecore_event_handler_del(_e_desklock_handler_border_unfullscreen);
+	_e_desklock_handler_border_unfullscreen = NULL;
+     }
+
    e_desklock_hide();
    if (e_config->desklock_background)
      e_filereg_deregister(e_config->desklock_background);
@@ -141,6 +166,7 @@ _user_wallpaper_get(void)
 EAPI int
 e_desklock_show_autolocked(void)
 {
+   if (_e_desklock_fullscreen_count > 0) return 0;
    if (_e_desklock_autolock_time < 1.0)
      _e_desklock_autolock_time = ecore_loop_time_get();
    return e_desklock_show();
@@ -900,7 +926,8 @@ _e_desklock_cb_custom_desklock_exit(void *data __UNUSED__, int type __UNUSED__, 
 static int
 _e_desklock_cb_idle_poller(void *data __UNUSED__)
 {
-   if ((e_config->desklock_autolock_idle) && (!e_config->mode.presentation))
+   if ((e_config->desklock_autolock_idle) && (!e_config->mode.presentation) &&
+       (_e_desklock_fullscreen_count <= 0))
      {
 	double idle, max;
 
@@ -1046,4 +1073,21 @@ _e_desklock_ask_presentation_mode(void)
       _e_desklock_ask_presentation_key_down, dia);
 
    _e_desklock_ask_presentation_dia = dia;
+}
+
+static int
+_e_desklock_handler_border_fullscreen_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
+{
+   _e_desklock_fullscreen_count++;
+   if (_e_desklock_fullscreen_count == 1) e_desklock_init();
+   return 1;
+}
+
+static int
+_e_desklock_handler_border_unfullscreen_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
+{
+   _e_desklock_fullscreen_count--;
+   if (_e_desklock_fullscreen_count == 0) e_desklock_init();
+   else if (_e_desklock_fullscreen_count < 0) _e_desklock_fullscreen_count = 0;
+   return 1;
 }
