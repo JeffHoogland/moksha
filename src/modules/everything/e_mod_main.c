@@ -396,9 +396,9 @@ _config_init()
    /* setup defaults */
    IFMODCFG(0x0001);
    evry_conf->rel_x = 0.5;
-   evry_conf->rel_y = 0.33;
-   evry_conf->width = 435;
-   evry_conf->height = 385;
+   evry_conf->rel_y = 0.43;
+   evry_conf->width = 455;
+   evry_conf->height = 430;
    evry_conf->scroll_animate = 1;
    evry_conf->scroll_speed = 10.0;
    evry_conf->hide_input = 0;

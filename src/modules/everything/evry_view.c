@@ -397,7 +397,7 @@ _e_smart_reconfigure_do(void *data)
 	  {
 	     size = 192;
 	     col = width / size;
-	     aspect_w = width * (sd->h / size);
+	     aspect_w = width * (1 + (sd->h / size));
 	  }
 
 	if (col < 1) col = 1;

@@ -15,7 +15,7 @@ void
 evry_plugins_shutdown(void)
 {
    Evry_Action *act;
-   
+
    EINA_LIST_FREE(actions, act)
      evry_action_free(act);
 }
@@ -97,17 +97,17 @@ _evry_plugin_action_browse(Evry_Action *act)
    Evry_Plugin *p;
    Eina_List *plugins = NULL;
    Evry_Selector *sel;
-   
+
    GET_ITEM(it, act->it1.item);
    GET_EVRY_PLUGIN(pp, EVRY_ITEM(act)->data);
-   
+
    if (!it->plugin || !it->plugin->state)
      return 0;
-   
+
    sel = it->plugin->state->selector;
 
    evry_selectors_switch(-1, EINA_TRUE);
-   
+
    if ((p = pp->begin(pp, it)))
      {
 	plugins = eina_list_append(plugins, p);
@@ -115,7 +115,7 @@ _evry_plugin_action_browse(Evry_Action *act)
 	if (!evry_state_push(sel, plugins))
 	  eina_list_free(plugins);
      }
-   
+
    return 0;
 }
 
@@ -146,7 +146,7 @@ evry_plugin_register(Evry_Plugin *p, int type, int priority)
 	Evry_Action *act;
 	char buf[256];
 	snprintf(buf, sizeof(buf), _("Browse %s"), EVRY_ITEM(p)->label);
-	
+
 	act = EVRY_ACTION_NEW(buf, p->input_type, 0, EVRY_ITEM(p)->icon,
 			      _evry_plugin_action_browse, NULL);
 	EVRY_ITEM(act)->data = p;
@@ -158,49 +158,47 @@ evry_plugin_register(Evry_Plugin *p, int type, int priority)
    conf[1] = evry_conf->conf_actions;
    conf[2] = evry_conf->conf_objects;
 
+   EINA_LIST_FOREACH(conf[type], l, pc)
+     if (pc->name && p->name && !strcmp(pc->name, p->name))
+       break;
+
    /* collection plugin sets its own config */
-   if (p->config)
+   if (!pc && p->config)
      {
 	conf[type] = eina_list_append(conf[type], p->config);
+	pc = p->config;
      }
-   else
+   else if (!pc)
      {
-	EINA_LIST_FOREACH(conf[type], l, pc)
-	  if (pc->name && p->name && !strcmp(pc->name, p->name))
-	    break;
+	new_conf = 1;
+	pc = E_NEW(Plugin_Config, 1);
+	pc->name = eina_stringshare_add(p->name);
+	pc->enabled = 1;
+	pc->priority = priority ? priority : 100;
+	pc->view_mode = VIEW_MODE_NONE;
+	pc->aggregate = EINA_TRUE;
+	pc->top_level = EINA_TRUE;
 
-	if (!pc)
-	  {
-	     new_conf = 1;
-	     pc = E_NEW(Plugin_Config, 1);
-	     pc->name = eina_stringshare_add(p->name);
-	     pc->enabled = 1;
-	     pc->priority = priority ? priority : 100;
-	     pc->view_mode = VIEW_MODE_NONE;
-	     pc->aggregate = EINA_TRUE;
-	     pc->top_level = EINA_TRUE;
-
-	     conf[type] = eina_list_append(conf[type], pc);
-	  }
-	if (pc->trigger && strlen(pc->trigger) == 0)
-	  {
-	     eina_stringshare_del(pc->trigger);
-	     pc->trigger = NULL;
-	  }
-
-	p->config = pc;
-	pc->plugin = p;
-
-	conf[type] = eina_list_sort(conf[type], -1, _evry_cb_plugin_sort);
-
-	/* EINA_LIST_FOREACH(conf[type], l, pc)
-	 *   pc->priority = i++; */
+	conf[type] = eina_list_append(conf[type], pc);
      }
+   if (pc->trigger && strlen(pc->trigger) == 0)
+     {
+	eina_stringshare_del(pc->trigger);
+	pc->trigger = NULL;
+     }
+
+   p->config = pc;
+   pc->plugin = p;
+
+   conf[type] = eina_list_sort(conf[type], -1, _evry_cb_plugin_sort);
+
+   /* EINA_LIST_FOREACH(conf[type], l, pc)
+    *   pc->priority = i++; */
 
    evry_conf->conf_subjects = conf[0];
    evry_conf->conf_actions = conf[1];
    evry_conf->conf_objects = conf[2];
-   
+
    return new_conf;
 }
 
@@ -233,10 +231,10 @@ evry_plugin_find(const char *name)
 	if (pc->name == n)
 	  break;
      }
-   
+
    eina_stringshare_del(n);
 
    if (!pc) return NULL;
-   
+
    return pc->plugin;
 }
