@@ -700,6 +700,11 @@ e_border_desk_set(E_Border *bd, E_Desk *desk)
    E_OBJECT_TYPE_CHECK(desk, E_DESK_TYPE);
    if (bd->desk == desk) return;
    ecore_x_window_shadow_tree_flush();
+   if (bd->fullscreen)
+     {
+	bd->desk->fullscreen_borders--;
+	desk->fullscreen_borders++;
+     }
    bd->desk = desk;
    e_border_zone_set(bd, desk->zone);
 
