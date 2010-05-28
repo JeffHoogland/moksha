@@ -1692,7 +1692,7 @@ evry_browse_item(Evry_Item *it)
    Evry_State *s, *new_state;
    Evry_Selector *sel;
    Eina_List *l, *plugins = NULL;
-   Evry_Plugin *p, *pp;
+   Evry_Plugin *p, *pp, *pref = NULL;
    Evry_View *view = NULL;
    int browse_aggregator = 0;
 
@@ -1710,19 +1710,21 @@ evry_browse_item(Evry_Item *it)
 
    sel = s->selector;
 
+   if ((it->plugin->browse) &&
+       (pp = it->plugin->browse(it->plugin, it)))
+     {
+	plugins = eina_list_append(plugins, pp);
+	pref = pp;
+     }
+
    EINA_LIST_FOREACH(sel->plugins, l, p)
      {
 	if ((p->browse) && (pp = p->browse(p, it)))
 	  {
+	     if (!strcmp(pp->name, pref->name))
+	       continue;
 	     plugins = eina_list_append(plugins, pp);
 	  }
-     }
-
-   /* actions */
-   if ((!(plugins) && (it->plugin->browse)) &&
-       (pp = it->plugin->browse(it->plugin, it)))
-     {
-	plugins = eina_list_append(plugins, pp);
      }
 
    /* aggregator */

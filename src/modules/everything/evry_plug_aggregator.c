@@ -237,7 +237,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
    if (items) eina_list_free(items);
    if (lp) eina_list_free(lp);
 
-   return 1;
+   return !!(p->base.items);
 }
 
 static void

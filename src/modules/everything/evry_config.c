@@ -405,7 +405,8 @@ _create_plugin_page(E_Config_Dialog_Data *cfdata, Evas *e, Plugin_Page *page)
 
    o = e_widget_label_add(e, _("Minimum characters for search"));
    e_widget_framelist_object_append(of, o);
-   o = e_widget_slider_add(e, 1, 0, _("%1.0f"), 0, 5, 1.0, 0, NULL, &(page->min_query), 10);
+   o = e_widget_slider_add(e, 1, 0, _("%1.0f"), 0, 5, 1.0, 0, NULL,
+			   &(page->min_query), 10);
    page->o_min_query = o;
    e_widget_framelist_object_append(of, o);
 
@@ -604,7 +605,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdat
 
 static void *_cat_create_data(E_Config_Dialog *cfd);
 static void _cat_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static Evas_Object *_cat_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static Evas_Object *_cat_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas,
+					      E_Config_Dialog_Data *cfdata);
 static int _cat_basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 
 EAPI E_Config_Dialog *
