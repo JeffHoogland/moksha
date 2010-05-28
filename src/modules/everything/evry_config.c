@@ -33,6 +33,8 @@ struct _Plugin_Page
   int enabled;
   int min_query;
   Plugin_Config *cur;
+
+  Eina_Bool collection;
 };
 
 struct _E_Config_Dialog_Data
@@ -228,30 +230,31 @@ _fill_list(Eina_List *plugins, Evas_Object *obj, int enabled __UNUSED__)
 }
 
 static void
-_plugin_move(Eina_List *plugins, Evas_Object *list, int dir)
+_plugin_move(Plugin_Page *page, int dir)
 {
+   Evas_Object *list;
    int sel;
-   Eina_List *l1, *l2;
+   Eina_List *plugins, *l1, *l2;
 
-   sel = e_widget_ilist_selected_get(list);
+   sel = e_widget_ilist_selected_get(page->list);
 
-   if ((sel >= 1 && dir > 0) || (sel >= 2 && dir < 0))
+   if ((page->collection) || (sel >= 1 && dir > 0) || (sel >= 2 && dir < 0))
      {
 	Plugin_Config *pc;
 	int prio = 0;
 
-	l1 = eina_list_nth_list(plugins, sel);
-	l2 = eina_list_nth_list(plugins, sel + dir);
+	l1 = eina_list_nth_list(page->configs, sel);
+	l2 = eina_list_nth_list(page->configs, sel + dir);
 
 	if (!l1 || !l2) return;
 	pc = l1->data;
 	l1->data = l2->data;
 	l2->data = pc;
 
-	_fill_list(plugins, list, 0);
-	e_widget_ilist_selected_set(list, sel + dir);
+	_fill_list(page->configs, page->list, 0);
+	e_widget_ilist_selected_set(page->list, sel + dir);
 
-	EINA_LIST_FOREACH(plugins, l1, pc)
+	EINA_LIST_FOREACH(page->configs, l1, pc)
 	  pc->priority = prio++;
      }
 }
@@ -259,13 +262,13 @@ _plugin_move(Eina_List *plugins, Evas_Object *list, int dir)
 static void
 _plugin_move_up_cb(void *data, void *data2)
 {
-   _plugin_move(data2, data, -1);
+   _plugin_move(data, -1);
 }
 
 static void
 _plugin_move_down_cb(void *data, void *data2)
 {
-   _plugin_move(data2, data, 1);
+   _plugin_move(data, 1);
 }
 
 static void
@@ -340,12 +343,14 @@ static void
 _plugin_config_cb(void *data, void *data2)
 {
    Plugin_Page *page = data;
-   if (!page->cur->plugin)
-     return;
+   Evry_Plugin *p = page->cur->plugin;
+   
+   if (!p) return;
+   printf(" %s\n", p->name);
 
-   e_configure_registry_call(page->cur->plugin->config_path,
+   e_configure_registry_call(p->config_path,
 			     e_container_current_get(e_manager_current_get()),
-			     NULL);
+			     p->name);
 }
 
 static Evas_Object *
@@ -362,12 +367,12 @@ _create_plugin_page(E_Config_Dialog_Data *cfdata, Evas *e, Plugin_Page *page)
 
    o = e_widget_button_add(e, _("Move Up"), NULL,
 			   _plugin_move_up_cb,
-			   page->list, page->configs);
+			   page, NULL);
    e_widget_framelist_object_append(of, o);
 
    o = e_widget_button_add(e, _("Move Down"), NULL,
 			   _plugin_move_down_cb,
-			   page->list, page->configs);
+			   page, NULL);
    e_widget_framelist_object_append(of, o);
    ob = e_widget_table_add(e, 0);
    e_widget_table_object_append(ob, of, 0, 0, 1, 3, 1, 1, 1, 0);
@@ -597,36 +602,40 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdat
 
 /***************************************************************************/
 
-#if 0
 static void *_cat_create_data(E_Config_Dialog *cfd);
 static void _cat_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_cat_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static int _cat_basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 
-static E_Config_Dialog *
-evry_categories_conf_dialog(E_Container *con, const char *params)
+EAPI E_Config_Dialog *
+evry_collection_conf_dialog(E_Container *con, const char *params)
 {
    E_Config_Dialog *cfd = NULL;
    E_Config_Dialog_View *v = NULL;
-   char buf[4096];
+   Evry_Plugin *p;
+   char title[4096];
 
-   if (e_config_dialog_find(_config_path, _config_path))
+   if (!(p = evry_plugin_find(params)))
+     return NULL;
+
+   if (e_config_dialog_find(p->config_path, p->config_path))
      return NULL;
 
    v = E_NEW(E_Config_Dialog_View, 1);
    if (!v) return NULL;
 
-   v->create_cfdata = _create_data;
-   v->free_cfdata = _free_data;
-   v->basic.create_widgets = _basic_create_widgets;
-   v->basic.apply_cfdata = _basic_apply;
+   v->create_cfdata = _cat_create_data;
+   v->free_cfdata = _cat_free_data;
+   v->basic.create_widgets = _cat_basic_create_widgets;
+   v->basic.apply_cfdata = _cat_basic_apply;
 
-   snprintf(buf, sizeof(buf), "%s/e-module.edj", _conf->module->dir);
+   snprintf(title, sizeof(title), "%s: %s", _("Everything Collection"), p->name);
+   
+   cfd = e_config_dialog_new(con, title, p->config_path, p->config_path,
+			     EVRY_ITEM(p)->icon, 0, v, p);
 
-   cfd = e_config_dialog_new(con, _("Everything Categories"),
-			     _config_path, _config_path, buf, 0, v, NULL);
-
-   _conf->cfd = cfd;
+   /* FIXME free dialogs on shutdown
+      _conf->cfd = cfd; */
    return cfd;
 }
 
@@ -634,15 +643,11 @@ static void *
 _cat_create_data(E_Config_Dialog *cfd)
 {
    E_Config_Dialog_Data *cfdata = NULL;
+   Evry_Plugin *p = cfd->data;
+   
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
-
-   cfdata->page[0].configs = eina_list_clone(_conf->plugins);
-
-   /* #define CP(_name) cfdata->_name = strdup(_conf->_name);
-    * #define C(_name) cfdata->_name = _conf->_name;
-    *
-    * #undef CP
-    * #undef C */
+   cfdata->page[0].collection = EINA_TRUE;
+   cfdata->page[0].configs = eina_list_clone(p->config->plugins);
    return cfdata;
 }
 
@@ -651,7 +656,7 @@ _cat_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    if (cfdata->page[0].configs) eina_list_free(cfdata->page[0].configs);
 
-   _conf->cfd = NULL;
+   /* _conf->cfd = NULL; */
    E_FREE(cfdata);
 }
 
@@ -660,8 +665,12 @@ _cat_basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    int i = 0;
    Plugin_Config *pc;
+   Evry_Plugin *p = cfd->data;
 
-   _conf->plugins = eina_list_clone(cfdata->page[0].configs);
+   if (p->config->plugins)
+     eina_list_free(p->config->plugins);
+   
+   p->config->plugins = eina_list_clone(cfdata->page[0].configs);
 
    pc = cfdata->page[i].cur;
 
@@ -683,16 +692,6 @@ _cat_basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	pc->min_query    = cfdata->page[i].min_query;
      }
 
-   /* #define CP(_name)					\
-    *    if (_conf->_name)					\
-    *      eina_stringshare_del(_conf->_name);		\
-    *    _conf->_name = eina_stringshare_add(cfdata->_name);
-    * #define C(_name) _conf->_name = cfdata->_name;
-    *
-    * #undef CP
-    * #undef C */
-
-   e_config_domain_save(_config_domain, _conf_edd, _conf);
    e_config_save_queue();
    return 1;
 }
@@ -738,4 +737,3 @@ _cat_basic_create_widgets(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *c
 
    return otb;
 }
-#endif

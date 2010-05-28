@@ -226,7 +226,6 @@ evry_plugin_find(const char *name)
 
    EINA_LIST_FOREACH(evry_conf->conf_subjects, l, pc)
      {
-	if (!pc->enabled) continue;
 	if (!pc->plugin) continue;
 	if (pc->name == n)
 	  break;

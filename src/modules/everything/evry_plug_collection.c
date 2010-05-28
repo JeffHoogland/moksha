@@ -50,8 +50,8 @@ _begin(Evry_Plugin *plugin, const Evry_Item *item)
    Evry_Plugin *pp;
    Plugin_Config *pc;
    Evry_Item *it;
-   Plugin *p;
    Eina_List *l;
+   Plugin *p;
 
    EVRY_PLUGIN_INSTANCE(p, plugin);
 
@@ -103,8 +103,13 @@ evry_plug_collection_init(void)
    Evry_Plugin *p;
    Plugin_Config *pc, *pcc;
    Eina_List *l;
+   char path[4096];
+   char title[4096];
 
    COLLECTION_PLUGIN = evry_type_register("COLLECTION_PLUGIN");
+
+   e_configure_registry_category_add
+     ("extensions", 80, _("Extensions"), NULL, "preferences-extensions");
 
    EINA_LIST_FOREACH(evry_conf->collections, l, pc)
      {
@@ -118,6 +123,16 @@ evry_plug_collection_init(void)
 	  {
 	     p->config->aggregate = EINA_FALSE;
 	  }
+
+	snprintf(path, sizeof(path), "extensions/everything-%s", p->name);
+
+	snprintf(title, sizeof(title), "Everything %s", p->name);
+	
+	e_configure_registry_item_add
+	  (path, 110, title, NULL, NULL/*icon*/, evry_collection_conf_dialog);
+
+	p->config_path = eina_stringshare_add(path);
+	
 	plugins = eina_list_append(plugins, p);
      }
 
@@ -128,7 +143,12 @@ void
 evry_plug_collection_shutdown(void)
 {
    Evry_Plugin *p;
-
+   
    EINA_LIST_FREE(plugins, p)
-     EVRY_PLUGIN_FREE(p);
+     {
+	e_configure_registry_item_del(p->config_path);
+	eina_stringshare_del(p->config_path);
+	EVRY_PLUGIN_FREE(p);
+     }
+   
 }

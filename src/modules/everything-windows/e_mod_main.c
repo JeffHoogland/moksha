@@ -131,8 +131,17 @@ _get_borderlist(Plugin *p)
      _border_item_add(p, bd);
 }
 
+static Evry_Plugin *
+_begin(Evry_Plugin *plugin, const Evry_Item *item __UNUSED__)
+{
+   Plugin *p;
+   EVRY_PLUGIN_INSTANCE(p, plugin);
+
+   return EVRY_PLUGIN(p);
+}
+
 static void
-_cleanup(Evry_Plugin *plugin)
+_finish(Evry_Plugin *plugin)
 {
    Ecore_Event_Handler *h;
    Border_Item *bi;
@@ -148,6 +157,8 @@ _cleanup(Evry_Plugin *plugin)
 
    EINA_LIST_FREE(p->handlers, h)
      ecore_event_handler_del(h);
+
+   E_FREE(p);
 }
 
 static int
@@ -402,7 +413,7 @@ _plugins_init(const Evry_API *_api)
    _plug = EVRY_PLUGIN_NEW(Plugin, N_("Windows"),
 			   "preferences-system-windows",
 			   EVRY_TYPE_BORDER,
-			   NULL, _cleanup, _fetch, NULL);
+			   _begin, _finish, _fetch, NULL);
    _plug->transient = EINA_TRUE;
    if (evry->plugin_register(_plug, EVRY_PLUGIN_SUBJECT, 2))
      {

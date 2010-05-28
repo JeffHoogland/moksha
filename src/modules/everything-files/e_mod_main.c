@@ -649,8 +649,8 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
      {
 	/* provide subject */
 	EVRY_PLUGIN_INSTANCE(p, plugin);
-	p->min_query = plugin->config->min_query;
-
+	p->parent = EINA_FALSE;
+	
 	if (_conf->show_homedir)
 	  p->directory = eina_stringshare_add(e_user_homedir_get());
 
@@ -823,6 +823,9 @@ _fetch(Evry_Plugin *plugin, const char *input)
    if (input && !p->command)
      p->input = eina_stringshare_add(input);
 
+   if (!p->parent)
+     p->min_query = plugin->config->min_query;
+   
    if ((p->command) || (!p->min_query) || (len >= p->min_query))
      _append_files(p);
 

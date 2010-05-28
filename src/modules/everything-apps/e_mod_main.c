@@ -965,7 +965,8 @@ _plugins_init(const Evry_API *api)
    if (!evry->api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
-   p = EVRY_PLUGIN_NEW(Plugin, N_("Applications"), NULL, EVRY_TYPE_APP,
+   p = EVRY_PLUGIN_NEW(Plugin, N_("Applications"),
+		       "system-run", EVRY_TYPE_APP,
 		       _begin, _finish, _fetch, NULL);
    p->complete = &_complete;
    p->config_path = "extensions/everything-apps";
@@ -973,7 +974,8 @@ _plugins_init(const Evry_API *api)
    _plugins = eina_list_append(_plugins, p);
 
 
-   p = EVRY_PLUGIN_NEW(Plugin, N_("Exebuf"), NULL, EVRY_TYPE_APP,
+   p = EVRY_PLUGIN_NEW(Plugin, N_("Exebuf"),
+		       "system-run", EVRY_TYPE_APP,
 		       _begin_exe, _finish_exe, _fetch_exe, NULL);
    p->complete = &_complete;
    p->config_path = "extensions/everything-apps";
@@ -981,14 +983,16 @@ _plugins_init(const Evry_API *api)
    if (evry->plugin_register(p, EVRY_PLUGIN_SUBJECT, 3))
      p->config->min_query = 5;
 
-   p = EVRY_PLUGIN_NEW(Plugin, N_("Applications"), NULL, EVRY_TYPE_APP,
+   p = EVRY_PLUGIN_NEW(Plugin, N_("Applications"),
+		       "system-run", EVRY_TYPE_APP,
 		       _begin_mime, _finish, _fetch, NULL);
    p->complete = &_complete;
    p->config_path = "extensions/everything-apps";
    evry->plugin_register(p, EVRY_PLUGIN_OBJECT, 1);
    _plugins = eina_list_append(_plugins, p);
 
-   p = EVRY_PLUGIN_NEW(Plugin, N_("Open With..."), NULL, EVRY_TYPE_APP,
+   p = EVRY_PLUGIN_NEW(Plugin, N_("Open With..."),
+		       "system-run", EVRY_TYPE_APP,
 		       _begin_mime, _finish_mime, _fetch_mime, NULL);
    p->config_path = "extensions/everything-apps";
    evry->plugin_register(p, EVRY_PLUGIN_ACTION, 1);

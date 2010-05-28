@@ -1714,8 +1714,6 @@ evry_browse_item(Evry_Item *it)
      {
 	if ((p->browse) && (pp = p->browse(p, it)))
 	  {
-	     printf("append %s\n", pp->name);
-
 	     plugins = eina_list_append(plugins, pp);
 	  }
      }
@@ -1724,7 +1722,6 @@ evry_browse_item(Evry_Item *it)
    if ((!(plugins) && (it->plugin->browse)) &&
        (pp = it->plugin->browse(it->plugin, it)))
      {
-	printf("append 2%s\n", pp->name);
 	plugins = eina_list_append(plugins, pp);
      }
 

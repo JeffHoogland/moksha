@@ -374,6 +374,7 @@ EAPI void *e_modapi_init     (E_Module *m);
 EAPI int   e_modapi_shutdown (E_Module *m);
 EAPI int   e_modapi_save     (E_Module *m);
 EAPI E_Config_Dialog *evry_config_dialog(E_Container *con, const char *params);
+EAPI E_Config_Dialog *evry_collection_conf_dialog(E_Container *con, const char *params);
 
 EAPI extern E_Module_Api e_modapi;
 
