@@ -85,6 +85,8 @@ static void _e_border_event_border_uniconify_free(void *data, void *ev);
 static void _e_border_event_border_stick_free(void *data, void *ev);
 static void _e_border_event_border_unstick_free(void *data, void *ev);
 static void _e_border_event_border_property_free(void *data, void *ev);
+static void _e_border_event_border_fullscreen_free(void *data, void *ev);
+static void _e_border_event_border_unfullscreen_free(void *data, void *ev);
 
 static void _e_border_zone_update(E_Border *bd);
 
@@ -153,6 +155,8 @@ EAPI int E_EVENT_BORDER_URGENT_CHANGE = 0;
 EAPI int E_EVENT_BORDER_FOCUS_IN = 0;
 EAPI int E_EVENT_BORDER_FOCUS_OUT = 0;
 EAPI int E_EVENT_BORDER_PROPERTY = 0;
+EAPI int E_EVENT_BORDER_FULLSCREEN = 0;
+EAPI int E_EVENT_BORDER_UNFULLSCREEN = 0;
 
 #define GRAV_SET(bd, grav) \
 ecore_x_window_gravity_set(bd->bg_win, grav); \
@@ -208,6 +212,8 @@ e_border_init(void)
    E_EVENT_BORDER_FOCUS_IN = ecore_event_type_new();
    E_EVENT_BORDER_FOCUS_OUT = ecore_event_type_new();
    E_EVENT_BORDER_PROPERTY = ecore_event_type_new();
+   E_EVENT_BORDER_FULLSCREEN = ecore_event_type_new();
+   E_EVENT_BORDER_UNFULLSCREEN = ecore_event_type_new();
 
 //   e_init_undone();
    
@@ -2285,6 +2291,8 @@ e_border_unmaximize(E_Border *bd, E_Maximize max)
 EAPI void
 e_border_fullscreen(E_Border *bd, E_Fullscreen policy)
 {
+   E_Event_Border_Fullscreen *ev;
+
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
 
@@ -2373,12 +2381,21 @@ e_border_fullscreen(E_Border *bd, E_Fullscreen policy)
 	bd->client.border.changed = 1;
 	bd->changed = 1;
      }
+
+   ev = E_NEW(E_Event_Border_Fullscreen, 1);
+   ev->border = bd;
+   e_object_ref(E_OBJECT(bd));
+//   e_object_breadcrumb_add(E_OBJECT(bd), "border_fullscreen_event");
+   ecore_event_add(E_EVENT_BORDER_FULLSCREEN, ev, _e_border_event_border_fullscreen_free, NULL);
+
    e_remember_update(bd);
 }
 
 EAPI void
 e_border_unfullscreen(E_Border *bd)
 {
+   E_Event_Border_Unfullscreen *ev;
+
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if ((bd->shaded) || (bd->shading)) return;
@@ -2407,6 +2424,13 @@ e_border_unfullscreen(E_Border *bd)
 	bd->client.border.changed = 1;
 	bd->changed = 1;
      }
+
+   ev = E_NEW(E_Event_Border_Unfullscreen, 1);
+   ev->border = bd;
+   e_object_ref(E_OBJECT(bd));
+//   e_object_breadcrumb_add(E_OBJECT(bd), "border_unfullscreen_event");
+   ecore_event_add(E_EVENT_BORDER_UNFULLSCREEN, ev, _e_border_event_border_unfullscreen_free, NULL);
+
    e_remember_update(bd);
 }
 
@@ -7483,6 +7507,28 @@ _e_border_event_border_property_free(void *data, void *ev)
    E_Event_Border_Property *e;
 
    e = ev;
+   e_object_unref(E_OBJECT(e->border));
+   E_FREE(e);
+}
+
+static void
+_e_border_event_border_fullscreen_free(void *data, void *ev)
+{
+   E_Event_Border_Fullscreen *e;
+
+   e = ev;
+//   e_object_breadcrumb_del(E_OBJECT(e->border), "border_fullscreen_event");
+   e_object_unref(E_OBJECT(e->border));
+   E_FREE(e);
+}
+
+static void
+_e_border_event_border_unfullscreen_free(void *data, void *ev)
+{
+   E_Event_Border_Unfullscreen *e;
+
+   e = ev;
+//   e_object_breadcrumb_del(E_OBJECT(e->border), "border_unfullscreen_event");
    e_object_unref(E_OBJECT(e->border));
    E_FREE(e);
 }

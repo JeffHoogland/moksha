@@ -120,6 +120,8 @@ typedef struct _E_Event_Border_Simple        E_Event_Border_Urgent_Change;
 typedef struct _E_Event_Border_Simple	     E_Event_Border_Focus_In;
 typedef struct _E_Event_Border_Simple        E_Event_Border_Focus_Out;
 typedef struct _E_Event_Border_Simple        E_Event_Border_Property;
+typedef struct _E_Event_Border_Simple        E_Event_Border_Fullscreen;
+typedef struct _E_Event_Border_Simple        E_Event_Border_Unfullscreen;
 
 #else
 #ifndef E_BORDER_H
@@ -718,6 +720,8 @@ extern EAPI int E_EVENT_BORDER_URGENT_CHANGE;
 extern EAPI int E_EVENT_BORDER_FOCUS_IN;
 extern EAPI int E_EVENT_BORDER_FOCUS_OUT;
 extern EAPI int E_EVENT_BORDER_PROPERTY;
+extern EAPI int E_EVENT_BORDER_FULLSCREEN;
+extern EAPI int E_EVENT_BORDER_UNFULLSCREEN;
 
 #endif
 #endif
