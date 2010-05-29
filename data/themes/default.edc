@@ -33355,22 +33355,6 @@ collections {
             }
          }
          part {
-            name: "frame";
-            mouse_events: 0;;
-            description {
-               state: "default" 0.0;
-               rel1.to: "win";
-               rel2.to: "win";
-               image {
-                  normal: "everything_box.png";
-                  border: 4 4 4 4;
-                  middle: 0;
-               }
-               fill.smooth : 1;
-              /* color: 0 0 0 0; */
-            }
-         }
-         part {
             name: "list";
             source: "e/modules/everything/list";
             type: GROUP;
@@ -33424,6 +33408,22 @@ collections {
                   border: 4 4 4 4;
                }
                color: 255 255 255 255;
+            }
+         }
+         part {
+            name: "frame";
+            mouse_events: 0;;
+            description {
+               state: "default" 0.0;
+               rel1.to: "win";
+               rel2.to: "win";
+               image {
+                  normal: "everything_box.png";
+                  border: 4 4 4 4;
+                  middle: 0;
+               }
+               fill.smooth : 1;
+              color: 215 215 215 255;
             }
          }
          part {
