@@ -1721,7 +1721,7 @@ evry_browse_item(Evry_Item *it)
      {
 	if ((p->browse) && (pp = p->browse(p, it)))
 	  {
-	     if (!strcmp(pp->name, pref->name))
+	     if (pref && !strcmp(pp->name, pref->name))
 	       continue;
 	     plugins = eina_list_append(plugins, pp);
 	  }
