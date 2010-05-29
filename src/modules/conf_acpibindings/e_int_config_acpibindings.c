@@ -1,5 +1,12 @@
 #include "e.h"
 
+/**
+ * TODO: 
+ * Maybe add buttons for Add/Remove of acpi bindings ??
+ * Maybe use a toolbook widget instead of 2 lists ??
+ * Maybe add a way to restore default acpi bindings ??
+ */
+
 /* local config structure */
 struct _E_Config_Dialog_Data 
 {
