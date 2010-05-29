@@ -97,8 +97,13 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    Eina_List *l;
 
    EINA_LIST_FREE(e_config->acpi_bindings, bind) 
-     e_bindings_acpi_del(bind->context, bind->type, bind->status, 
-			 bind->action, bind->params);
+     {
+	e_bindings_acpi_del(bind->context, bind->type, bind->status, 
+			    bind->action, bind->params);
+	if (bind->action) eina_stringshare_del(bind->action);
+	if (bind->params) eina_stringshare_del(bind->params);
+	E_FREE(bind);
+     }
 
    EINA_LIST_FOREACH(cfdata->bindings, l, bind) 
      {
