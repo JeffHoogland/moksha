@@ -32784,21 +32784,9 @@ collections {
 /////////////////////////////////////////////////////////////////////////////
 /*** MOD: EVERYTHING ***/
 ///////////////////////////////////////////////////////////////////////////////
+
    group {
       name: "e/modules/everything/list";
-      images {
-         image: "base_bg.png" COMP;
-         image: "inset_sunk.png" COMP;
-         image: "menu_sel_bg.png" COMP;
-         image: "menu_sel_fg.png" COMP;
-         image: "everything_drop.png" COMP;
-         image: "everything_bar.png" COMP;
-         image: "everything_box.png" COMP;
-         image: "vgrad_dark.png" COMP;
-
-      }
-      data.item: "shaped" "1";
-      data.item: "shadow_offset" "50";
       parts {
          part {
             name: "list_frame";
@@ -32806,55 +32794,6 @@ collections {
             description {
                state: "default" 0.0;
                visible: 0;
-                /* rel1.to: "list_win";
-                 * rel2.to: "list_win"; */
-            }
-            description {
-               state: "composite" 0.0;
-               inherit: "default" 0.0;
-               rel1.offset: 50 0;
-               rel2.offset: -51 -40;
-            }
-         }
-         part {
-            name: "shadow_clip";
-            type: RECT;
-            description {
-               state: "default" 0.0;
-               rel1.to: "list_shadow";
-               rel2.to: "list_shadow";
-               color: 255 255 255 0;
-            }
-            description {
-               state: "visible" 0.0;
-               inherit: "default" 0.0;
-               color: 255 255 255 255;
-            }
-         }
-         part {
-            name: "list_shadow";
-            clip_to: "shadow_clip";
-            description {
-               state: "default" 0.0;
-               visible: 0;
-               /* rel1.to: "list_win"; */
-               rel1.offset: 0 -50;
-               rel2 {
-                  relative: 1.0 1.0;
-                  to: "base";
-                  offset: 47 40;
-               }
-               image {
-                  normal: "everything_drop.png";
-                  middle: 0;
-                  border: 50 50 50 50;
-               }
-               fill.smooth: 1;
-            }
-            description {
-               state: "composite" 0.0;
-               inherit: "default" 0.0;
-               visible: 1;
             }
          }
          part {
@@ -32887,21 +32826,19 @@ collections {
             description {
                state: "default" 0.0;
               rel1 {
-              /* to_y: "list_win"; */
               to_x: "base";
               }
 
-               rel2 {
+              rel2 {
                   relative: 1.0 0.0;
-              /* to_y: "list_win"; */
                to_x: "base";
                offset: -1 1;
-               }
+              }
             }
             description {
                state: "visible" 0.0;
                inherit: "default" 0.0;
-               rel2.offset: -1 24;
+               rel2.offset: -1 28;
             }
          }
          part {
@@ -32913,8 +32850,8 @@ collections {
                rel1.to_y: "input_base";
 
                rel2.to: "base";
-               rel2.offset: -1 -3;
-               color: 225 225 225 255;
+               /* rel2.offset: -1 -3; */
+               color: 245 245 245 255;
             }
          }
          part {
@@ -32932,7 +32869,7 @@ collections {
                rel2 {
                   relative: 1.0 1.0;
                   to: "base";
-                  offset: -1 -2;
+                  offset: -1 -1;
                }
             }
          }
@@ -32971,14 +32908,14 @@ collections {
                   to: "bar_base";
                }
                rel2 {
-                  offset: -1 -5;
+                  offset: -1 -3;
                   to: "bar_base";
                }
                image {
-                  normal: "everything_bar.png";
+                  normal: "bt_dis_base.png";
                   border: 4 4 4 4;
                }
-               color: 240 240 240 255;
+               color: 255 255 255 255;
             }
          }
          part {
@@ -33034,14 +32971,14 @@ collections {
             description {
                state: "default" 0.0;
                fixed: 1 1;
-               min: 32 28;
-               max: 9999 28;
+               min: 32 32;
+               max: 9999 32;
                rel1 {
-                  offset: -3 0;
+                  offset: -1 0;
                   to: "input_base";
                }
                rel2 {
-                  offset: 1 0;
+                  /* offset: 1 0; */
                   to: "input_base";
                }
                image {
@@ -33062,19 +32999,20 @@ collections {
                fixed: 0 1;
                align: 0.0 0.5;
                rel1 {
-                  offset: 10  7;
+                  offset: 10  8;
                   to: "input_bg";
                }
                rel2 {
-                  relative: 0.0 1.0;
-                  offset: 10  -5;
                   to: "input_bg";
+                  relative: 0.0 1.0;
+                  offset: 10  -4;
+
                }
-               color: 0 0 0 255;
-               color3: 255 255 255 128;
+               color: 60 60 60 255;
+               color3: 255 255 255 68;
                text {
                   font: "Sans:style=Bold";
-                  size: 12;
+                  size: 11;
                   align: 0.0 0.5;
                   min: 1 1;
                }
@@ -33082,79 +33020,34 @@ collections {
          }
          part {
             name: "cursor";
-            type: RECT;
+            /* type: RECT; */
             mouse_events: 0;
             description {
                state: "default" 0.0;
-               min: 1 12;
-               max: 1 12;
+               min: 10 10;
+               max: 10 10;
                align: 0.0 0.5;
                fixed: 1 1;
                rel1 {
                   relative: 1.0  0.0;
-                  offset: 0    -2;
+                  offset: -2    -2;
                   to: "e.text.label";
                }
                rel2 {
                   relative: 1.0  1.0;
-                  offset: 0    -1;
+                  offset: -2    -1;
                   to: "e.text.label";
                }
-               /* image {
-	        * normal: "icon_right_arrow.png";
-                * } */
+               image {
+               normal: "icon_right_arrow.png";
+               }
 
                color: 20 20 20 250;
             }
             description {
                state: "faded" 0.0;
                inherit: "default" 0.0;
-               color: 20 20 20 0;
-            }
-         }
-         part {
-            name: "input_over2";
-            mouse_events: 0;
-            clip_to: "input_base";
-            description {
-               state: "default" 0.0;
-               visible: 0;
-               rel1.to: "input_bg";
-               rel2.to: "input_bg";
-               image {
-                  normal: "bt_dis_shine.png";
-                  border: 4 4 4 4;
-               }
-               color: 255 255 255 180;
-            }
-            description {
-               state: "visible" 0.0;
-               inherit: "default" 0.0;
-               visible: 1;
-            }
-         }
-         part {
-            name: "input_over1";
-            mouse_events: 0;
-            clip_to: "input_base";
-            description {
-               state: "default" 0.0;
-               visible: 0;
-               rel1.to: "input_bg";
-               rel1.offset: -1 0;
-               rel2.to: "input_bg";
-               rel2.offset: -1 4;
-               rel2.relative: 1.0 0.5;
-               image {
-                  normal: "bt_dis_hilight.png";
-                  border: 4 4 4 0;
-               }
-               color: 255 255 255 100;
-            }
-            description {
-               state: "visible" 0.0;
-               inherit: "default" 0.0;
-               visible: 1;
+               color: 20 20 20 100;
             }
          }
          part {
@@ -33181,6 +33074,7 @@ collections {
          part {
             name: "list_bg";
             clip_to: "base";
+            /* type: RECT; */
             description {
                state: "default" 0.0;
                image.normal: "vgrad_dark.png";
@@ -33193,6 +33087,7 @@ collections {
                   offset: 0  0;
                }
                fill.smooth: 0;
+              color: 235 235 235 255;
             }
          }
          part {
@@ -33277,30 +33172,7 @@ collections {
                   middle: 0;
                }
                fill.smooth : 0;
-               color: 200 200 200 255;
-            }
-         }
-         part {
-            name: "list_over2";
-            clip_to: "base";
-            mouse_events: 0;
-            description {
-               state: "default" 0.0;
-               rel1 {
-                  offset: -1 -1;
-                  to: "list_bg";
-               }
-               rel2 {
-                  offset: -1 -1;
-                  to: "list_bg";
-               }
-               image {
-                  normal: "inset_sunk.png";
-                  border: 7 7 7 7;
-                  middle: 0;
-               }
-               fill.smooth : 0;
-               color: 200 200 200 255;
+               /* color: 200 200 200 255; */
             }
          }
          part {
@@ -33309,11 +33181,12 @@ collections {
             description {
                state: "default" 0.0;
                rel1 {
-                  to: "base";
+                  to: "input_base";
+               offset: 1 0;
                }
                rel2 {
                   to: "base";
-               offset: -1 -1;
+               offset: -2 -1;
                }
                image {
                   normal: "everything_box.png";
@@ -33321,7 +33194,7 @@ collections {
                   middle: 0;
                }
                fill.smooth : 1;
-               color: 255 255 255 255;
+               /* color: 255 245 245 255; */
             }
          }
       }
@@ -33342,22 +33215,13 @@ collections {
             target: "cursor";
             after: "blink_off";
          }
-         program {
-            name: "composite_mode";
-            signal: "e,state,composited";
-            source: "e";
-            action: STATE_SET "composite" 0.0;
-            target: "list_frame";
-            target: "list_shadow";
-        }
         program {
             name: "show_list";
             signal: "e,state,list_show";
             source: "e";
             action: STATE_SET "visible" 0.0;
-            transition: DECELERATE 0.1;
+            /* transition: DECELERATE 0.1; */
             target: "base";
-            target: "shadow_clip";
          }
          program {
             name: "hide_list";
@@ -33366,7 +33230,6 @@ collections {
             action: STATE_SET "default" 0.0;
             transition: ACCELERATE 0.08;
             target: "base";
-            target: "shadow_clip";
          }
          program {
             name: "show_entry";
@@ -33374,8 +33237,8 @@ collections {
             source: "e";
             action: STATE_SET "visible" 0.0;
             transition: SINUSOIDAL 0.08;
-            target: "input_over1";
-            target: "input_over2";
+            /* target: "input_over1";
+             * target: "input_over2"; */
             target: "input_base";
          }
          program {
@@ -33384,8 +33247,8 @@ collections {
             source: "e";
             action: STATE_SET "default" 0.0;
             transition: SINUSOIDAL 0.08;
-            target: "input_over1";
-            target: "input_over2";
+            /* target: "input_over1";
+             * target: "input_over2"; */
             target: "input_base";
          }
          program {
@@ -33452,133 +33315,117 @@ collections {
             target: "e.swallow.list";
             target: "e.swallow.list2";
          }
-      }      
+      }
    }
    group {
       name: "e/modules/everything/main";
       images {
-	 image: "base_bg.png" COMP;
-	 image: "inset_sunk.png" COMP;
-	 image: "menu_sel_bg.png" COMP;
-	 image: "menu_sel_fg.png" COMP;
-	 image: "everything_drop.png" COMP;
-	 image: "everything_bar.png" COMP;
-	 image: "everything_box.png" COMP;
-	 image: "vgrad_dark.png" COMP;
-
+         image: "inset_sunk.png" COMP;
+         image: "everything_box.png" COMP;
+         image: "everything_item_bg.png" COMP;
+         image: "vgrad_dark.png" COMP;
+         image: "bt_dis_hilight.png" COMP;
+         image: "bt_dis_shine.png" COMP;
+         image: "bt_dis_base.png" COMP;
+         image: "bt_base2.png" COMP;
+         image: "outline.png" COMP;
+         image: "icon_left_arrow.png" COMP;
+         image: "icon_right_arrow.png" COMP;
+         image: "toolbar_sel.png" COMP;
+         image: "icon_right_arrow.png" COMP;
+         image: "bt_sm_base1.png" COMP;
+         image: "bt_sm_base2.png" COMP;
+         image: "bt_sm_shine.png" COMP;
+         image: "bt_sm_hilight.png" COMP;
+         image: "sb_runnerv.png" COMP;
       }
-      data.item: "shaped" "1";
-      data.item: "shadow_offset" "50";
       parts {
 
-	 part {
-	    name: "list";
-	    source: "e/modules/everything/list";
-	    type: GROUP;
-	    description {
-	       state: "default" 0.0;
-	       visible: 1;
-	       min: 300 155;
-	       rel1 {
-		  to_y: "frame";
-		  offset: 10 -3;
-		  relative: 0.0 1.0;
-	      }
-	      rel2 {
-		 offset: -11 -1;
-	       }
-	    }
-	 }
-
-	 /*************** top ***************/
-	 part {
-	    name: "win";
-	    type: RECT;
-	    mouse_events: 0;
-	    description {
-	       state: "default" 0.0;
-	       visible: 0;
-	       min: 286 118;
-	       rel2.relative: 1.0 0.0;
-	       rel2.offset: -1 118;
-	    }
-	    description {
-	       state: "composite" 0.0;
-	       visible: 0;
-	       rel2.relative: 1.0 0.0;
-	       rel2.offset: -1 218;
-	    }
-	 }
-	 part {
-	    name: "frame";
-	    type: RECT;
-	    mouse_events: 0;;
-	    description {
-	       state: "default" 0.0;
-	       visible: 0;
-	       rel1.to: "win";
-	       rel2.to: "win";
-	    }
-            description {
-               state: "composite" 0.0;
-               inherit: "default" 0.0;
-               rel1.offset: 50 50;
-               rel2.offset: -50 -51;
-            }
-         }
+         /*************** top ***************/
          part {
-            name: "shadow";
-	    mouse_events: 0;
-            description {
-               state: "default" 0.0;
-               visible: 0;
-               image {
-                  normal: "everything_drop.png";
-                  middle: 0;
-                  border: 50 50 50 50;
-               }
-               rel1.to: "win";
-               rel2.to: "win";
-
-               rel1.offset: 4 4;
-               rel2.offset: -5 -5;
-               fill.smooth: 0;
-            }
-            description {
-               state: "composite" 0.0;
-               inherit: "default" 0.0;
-               visible: 1;
-               color: 255 255 255 200;
-            }
-         }
-         part {
-            name: "bg";
-	    mouse_events: 0;
-            description {
-               state: "default" 0.0;
-               max: 999 118;
-               rel1.to: "frame";
-               rel2.to: "frame";
-               image {
-                  normal: "bt_base2.png";
-                  border: 7 7 5 5;
-               }
-            }
-         }
-         part {
-            name: "border_bg";
+            name: "win";
+            type: RECT;
             mouse_events: 0;
             description {
                state: "default" 0.0;
-               color: 255 255 255 66;
-               rel1.to: "bg";
-               rel1.offset: 2 4;
-               rel2.to: "bg";
-               rel2.offset: -3 -3;
+               visible: 0;
+               min: 286 48;
+               rel2.relative: 1.0 0.0;
+               rel2.offset: -1 48;
+            }
+         }
+         part {
+            name: "frame";
+            mouse_events: 0;;
+            description {
+               state: "default" 0.0;
+               rel1.to: "win";
+               rel2.to: "win";
                image {
-                  normal: "everything_item_bg.png";
-                  border: 5 5 5 5;
+                  normal: "everything_box.png";
+                  border: 4 4 4 4;
+                  middle: 0;
                }
+               fill.smooth : 1;
+              /* color: 0 0 0 0; */
+            }
+         }
+         part {
+            name: "list";
+            source: "e/modules/everything/list";
+            type: GROUP;
+            description {
+               state: "default" 0.0;
+               visible: 1;
+               min: 300 155;
+               rel1 {
+                  to_y: "frame";
+                  offset: -1 -3;
+                  relative: 0.0 1.0;
+              }
+              rel2 {
+                 offset: 0 -1;
+               }
+            }
+         }
+         part {
+            name: "bar_base";
+            type: RECT;
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               rel1 {
+                  to: "frame";
+                  /* offset: 2 2; */
+               }
+               rel2 {
+                  to: "frame";
+                  /* offset: -2 -1; */
+               }
+            }
+         }
+         part {
+            name: "bar_bg";
+            /* clip_to: "base"; */
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               /* min: 32 50;
+                * max: 9999 50; */
+               fixed: 1 1;
+               rel1 {
+                  offset: -2 -1;
+                  to: "bar_base";
+               }
+               rel2 {
+                  offset: 1 -1;
+                  to: "bar_base";
+               }
+               image {
+                  normal: "bt_dis_base.png";
+                  border: 4 4 4 4;
+               }
+               color: 255 255 255 255;
             }
          }
          part {
@@ -33588,22 +33435,23 @@ collections {
                state: "default" 0.0;
                color: 255 255 255 255;
                rel1 {
-                  offset: 8 5;
-                  to: "bg";
+                  /* offset: 8 5; */
+                  to: "frame";
                }
                rel2 {
-                  offset: -9 -6;
-                  to: "bg";
+                  offset: -2 -2;
+                  to: "frame";
                }
             }
          }
          part {
             name: "subject_selector";
             type: GROUP;
-	    source: "e/modules/everything/selector_item";
-	    clip_to: "selector_frame";
+            source: "e/modules/everything/selector_item";
+            clip_to: "selector_frame";
             description {
                state: "default" 0.0;
+               /* visible: 0; */
                rel1 {
                   relative: 0.0 0.0;
                   offset: 0 2;
@@ -33611,7 +33459,7 @@ collections {
                }
                rel2 {
                   relative: 0.5 1.0;
-                  offset: -1 -2;
+                  offset: -1 -1;
                   to_y: "selector_frame";
                }
             }
@@ -33625,17 +33473,18 @@ collections {
                }
                rel2 {
                   relative: 0.0 1.0;
-                  offset: 0 -2;
+                  offset: 0 -1;
                }
             }
          }
          part {
             name: "action_selector";
             type: GROUP;
-	    source: "e/modules/everything/selector_item";
+            source: "e/modules/everything/selector_item";
             clip_to: "selector_frame";
             description {
                state: "default" 0.0;
+               /* visible: 0; */
                rel1 {
                   relative: 0.5 0.0;
                   offset: 0 2;
@@ -33643,7 +33492,7 @@ collections {
                }
                rel2 {
                   relative: 1.0 1.0;
-                  offset: -1 -2;
+                  offset: -1 -1;
                   to: "selector_frame";
                }
             }
@@ -33656,14 +33505,14 @@ collections {
                }
                rel2 {
                   relative: 0.5 1.0;
-                  offset: -1 -2;
+                  offset: -1 -1;
                }
             }
          }
          part {
             name: "object_selector";
             type: GROUP;
-	    source: "e/modules/everything/selector_item";	   
+            source: "e/modules/everything/selector_item";
             clip_to: "selector_frame";
             description {
                state: "default" 0.0;
@@ -33675,7 +33524,7 @@ collections {
                }
                rel2 {
                   relative: 1.5 1.0;
-                  offset: -1 -2;
+                  offset: -1 -1;
                   to: "selector_frame";
                }
             }
@@ -33689,40 +33538,47 @@ collections {
                }
                rel2 {
                   relative: 1.0 1.0;
-                  offset: -1 -2;
+                  offset: -1 -1;
                }
             }
          }
+
          part {
-            name: "over1";
+            name: "bar_over2";
+            clip_to: "bar_base";
             mouse_events: 0;
             description {
                state: "default" 0.0;
-               rel1.to: "bg";
-               rel2.to: "bg";
-               rel2.relative: 1.0 0.5;
+               rel1.to: "bar_bg";
+               rel1.offset: -2 -2;
+               rel2.to: "bar_bg";
+               rel2.offset: 1 2;
                image {
-                  normal: "bt_hilight.png";
-                  border: 7 7 7 0;
+                  normal: "bt_dis_shine.png";
+                  border: 4 4 4 4;
                }
-               color: 255 255 255 220;
+               color: 255 255 255 225;
             }
          }
          part {
-            name: "over2";
+            name: "bar_over1";
+            clip_to: "bar_base";
             mouse_events: 0;
             description {
                state: "default" 0.0;
-               rel1.to: "bg";
-               rel2.to: "bg";
-               rel2.offset: -1 40;
+               rel1.to: "bar_bg";
+               rel1.offset: -2 -2;
+               rel2.to: "bar_bg";
+               rel2.offset: 1 2;
+               rel2.relative: 1.0 0.45;
                image {
-                  normal: "bt_shine.png";
-                  border: 7 7 7 0;
+                  normal: "bt_dis_hilight.png";
+                  border: 4 4 4 0;
                }
+               color: 255 255 255 188;
             }
          }
-      } 
+      }
       programs {
          program {
             name: "object_selector_hide";
@@ -33744,23 +33600,10 @@ collections {
             target: "subject_selector";
             target: "action_selector";
          }
-         program {
-            name: "composite_mode";
-            signal: "e,state,composited";
-            source: "e";
-            action: STATE_SET "composite" 0.0;
-            target: "win";
-            target: "frame";
-            target: "shadow";
-         }
       }
    }
    group {
       name: "e/modules/everything/selector_item";
-      images {
-         image: "everything_border.png" COMP;
-         image: "everything_item_bg.png" COMP;
-      }
       parts {
          part {
             name: "clip";
@@ -33771,60 +33614,41 @@ collections {
             }
          }
          part {
-            name: "border_bg";
-            clip_to: "clip";
+            name: "bg";
             mouse_events: 0;
             description {
                state: "default" 0.0;
-               color: 255 255 255 10;
-               //32;
-               rel1.offset: 2 2;
-               rel2.offset: -3 -3;
+               color: 255 255 255 0;
                image {
-                  normal: "everything_item_bg.png";
-                  border: 5 5 5 5;
+                  normal: "toolbar_sel.png";
+                  border: 3 3 2 2;
                }
+               fill.smooth: 1;
+               rel1.offset: 0 -1;
+               rel2.offset: 2 -1;
             }
             description {
                state: "selected" 0.0;
                inherit: "default" 0.0;
-               color: 255 255 255 36;
-            }
-         }
-         part {
-            name: "border";
-            clip_to: "clip";
-            mouse_events: 0;
-            description {
-               state: "default" 0.0;
-               color: 255 255 255 80;
-               image {
-                  normal: "everything_border.png";
-                  border: 10 10 10 10;
-               }
-            }
-            description {
-               state: "selected" 0.0;
-               inherit: "default" 0.0;
-               color: 255 255 255 160;
+               color: 255 255 255 255;
             }
          }
          part {
             name: "inner_clip";
             type: RECT;
             clip_to: "clip";
-            mouse_events: 0;       
+            mouse_events: 0;
             description {
                state: "default" 0.0;
-               rel1.offset: 10   10;
-               rel2.offset: -11   -11;
+               rel1.offset: 6   2;
+               rel2.offset: -5   -5;
             }
          }
          part {
             name: "icon_clip";
             type: RECT;
             clip_to: "inner_clip";
-            mouse_events: 0;       
+            mouse_events: 0;
             description {
                state: "default" 0.0;
                color: 255 255 255 255;
@@ -33838,21 +33662,19 @@ collections {
             name: "e.swallow.icons";
             type: SWALLOW;
             clip_to: "icon_clip";
-            mouse_events: 0;       
+            mouse_events: 0;
             description {
                state: "default" 0.0;
-               min: 64 64;
-               max: 64 64;
+               min: 50 44;
+               max: 50 44;
                aspect: 1.0 1.0;
                align: 0.0 0.5;
                aspect_preference: VERTICAL;
                rel1 {
-                  relative: 0.0 0.0;
-                  offset: 15   15;
+                  offset: 5   5;
                }
                rel2 {
-                  relative: 0.0 0.0;
-                  offset: 79  79;
+                  offset: -1  -8;
                }
             }
          }
@@ -33860,52 +33682,53 @@ collections {
             name: "e.swallow.thumb";
             type: SWALLOW;
             clip_to: "icon_clip";
-            mouse_events: 0;       
+            mouse_events: 0;
             description {
                state: "default" 0.0;
-               min: 86 64;
-               max: 86 64;
+               min: 50 44;
+               max: 50 44;
                aspect: 1.0 1.0;
                align: 0.0 0.5;
                aspect_preference: VERTICAL;
                rel1 {
-                  relative: 0.0 0.0;
-                  offset: 15   15;
+                  offset: 5   5;
                }
                rel2 {
-                  relative: 0.0 0.0;
-                  offset: 100  79;
+                  offset: -1  -8;
                }
-               color: 255 255 255 0;
             }
          }
+
          part {
             name: "e.text.label";
             type: TEXT;
-            clip_to: "inner_clip";
-            effect: SOFT_SHADOW;
             mouse_events: 0;
+            clip_to: "clip";
             scale: 1;
+            mouse_events: 0;
             description {
                state: "default" 0.0;
-               rel1 {
-                  offset: 20 6;
-                  relative: 0.0 0.6;
-               }
-               rel2.offset: -11 -2;
-               color: 205 205 205 255;
-               color3: 40 40 40 64;
+               align: 0.0 1.0;
+               fixed: 0 1;
+               rel1.to:   "e.swallow.icons";
+               rel1.relative:  1.0 0.0;
+               rel2.to:   "clip";
+               rel1.offset:   2 3;
+               rel2.offset:   -6 -7;
+               /* visible: 0; */
+               color: 24 24 24 255;
                text {
                   font: "Sans:style=Bold";
                   size: 9;
-                  min: 0 0;
-                  align: 0.5 0.5;
+                  min: 0 1;
+                  align: 0.0 1.0;
                }
             }
             description {
                state: "selected" 0.0;
                inherit: "default" 0.0;
-               color: 255 255 255 255;
+               color: 244 244 244 255;
+               /* visible: 1; */
             }
          }
          part {
@@ -33917,20 +33740,26 @@ collections {
             scale: 1;
             description {
                state: "default" 0.0;
+               align: 1.0 0.0;
                rel1 {
-                  offset: 6 12;
-                  relative: 1.0 0.0;
-                  to_x: "e.swallow.icons";
+                  offset: 6 6;
+                  /* to_x: "e.swallow.icons"; */
                }
-               rel2.offset: -13 -2;
-               color: 210 210 210 255;
+               rel2.offset: -10 -1;
+               color: 20 20 20 255;
                color3: 0 0 0 0;
                text {
                   font: "Sans";
-                  size: 10;
+                  size: 9;
                   min: 0 1;
                   align: 1.0 0.0;
                }
+            }
+            description {
+               state: "selected" 0.0;
+               inherit: "default" 0.0;
+
+               color: 240 240 240 255;
             }
          }
          part {
@@ -33949,9 +33778,11 @@ collections {
             source: "e";
             action: STATE_SET "selected" 0.0;
             transition: SINUSOIDAL 0.2;
-            target: "border";
-            target: "border_bg";
+            /* target: "border";
+             * target: "border_bg"; */
+            target: "bg";
             target: "e.text.label";
+            target: "e.text.plugin";
          }
          program {
             name: "unsel";
@@ -33959,9 +33790,11 @@ collections {
             source: "e";
             action: STATE_SET "default" 0.0;
             transition: SINUSOIDAL 0.3;
-            target: "border";
-            target: "border_bg";
+            /* target: "border";
+             * target: "border_bg"; */
+            target: "bg";
             target: "e.text.label";
+            target: "e.text.plugin";
          }
          program {
             name: "update";
@@ -33998,9 +33831,6 @@ collections {
 
    group {
       name: "e/modules/everything/tab_item";
-      images {
-         image: "toolbar_sel.png" COMP;
-      }
       min: 50 10;
       parts {
          part {
@@ -34017,7 +33847,7 @@ collections {
             type: TEXT;
             scale: 1;
             clip_to: "clip";
-            mouse_events: 0;       
+            mouse_events: 0;
             description {
                state: "default" 0.0;
                align: 0.5 0.5;
@@ -34064,7 +33894,7 @@ collections {
             mouse_events: 0;
             clip_to: "clip";
             scale: 1;
-            mouse_events: 0;       
+            mouse_events: 0;
             description {
                state: "default" 0.0;
                align: 0.5 0.5;
@@ -34124,122 +33954,7 @@ collections {
 /*** EVERYTHING THUMB VIEW ***/
 
    group {
-      name: "e/modules/everything/thumbview/main/window";
-      images {
-         image: "icon_left_arrow.png" COMP;
-         image: "icon_right_arrow.png" COMP;
-      }
-      parts {
-         part {
-            name: "e.swallow.list";
-            type: SWALLOW;
-            description {
-               state: "default" 0.0;
-               rel1 {
-                  relative: 0.0 0.0;
-                  offset: 6   1;
-               }
-               rel2 {
-                  relative: 1.0 1.0;
-                  offset: -3  -3;
-               }
-            }
-         }
-         part {
-            name: "left_arrow";
-            mouse_events: 0;
-            scale: 1;
-            description {
-               state: "default" 0.0;
-               visible: 0;
-               image.normal: "icon_left_arrow.png";
-               aspect: 1.0 1.0;
-               aspect_preference: VERTICAL;
-               align: 0.0 0.5;
-               min: 32 32;
-               max: 32 32;
-               color: 255 255 255 0;
-            }
-            description {
-               state: "visible" 0.0;
-               inherit: "default" 0.0;
-               visible: 1;
-               color: 255 255 255 255;
-            }
-         }
-         part {
-            name: "right_arrow";
-            mouse_events: 0;
-            scale: 1;
-            description {
-               state: "default" 0.0;
-               visible: 0;
-               image.normal: "icon_right_arrow.png";
-               aspect: 1.0 1.0;
-               aspect_preference: VERTICAL;
-               align: 1.0 0.5;
-               min: 32 32;
-               max: 32 32;
-               color: 255 255 255 0;
-            }
-            description {
-               state: "visible" 0.0;
-               inherit: "default" 0.0;
-               visible: 1;
-               color: 255 255 255 255;
-            }
-         }
-	 part {
-            name: "event";
-	    repeat_events: 1;
-	    type: RECT;
-            description {
-               state: "default" 0.0;
-               color: 0 0 0 0;
-            }
-         }
-      }
-      programs {
-         program {
-            name: "go_into_show";
-            signal: "e,action,show,into";
-            source: "e";
-            action: STATE_SET "visible" 0.0;
-            transition: LINEAR 0.5;
-            target: "right_arrow";
-         }
-         program {
-            name: "go_into_hide";
-            signal: "e,action,hide,into";
-            source: "e";
-            action: STATE_SET "default" 0.0;
-            target: "right_arrow";
-            transition: LINEAR 0.5;
-         }
-         program {
-            name: "go_back_show";
-            signal: "e,action,show,back";
-            source: "e";
-            action: STATE_SET "visible" 0.0;
-            transition: LINEAR 0.5;
-            target: "left_arrow";
-         }
-         program {
-            name: "go_back_hide";
-            signal: "e,action,hide,back";
-            source: "e";
-            action: STATE_SET "default" 0.0;
-            target: "left_arrow";
-            transition: LINEAR 0.5;
-         }
-      }
-   }
-   group {
       name: "e/modules/everything/thumbview/item/thumb";
-      images {
-         image: "e17_mini_button_shadow2.png" COMP;
-         image: "everything_item_bg.png" COMP;
-      }
       parts {
          part {
             name: "bg";
@@ -34259,12 +33974,12 @@ collections {
                   normal: "everything_item_bg.png";
                   border: 5 5 5 5;
                }
-               color: 255 255 255 32;
+               color: 255 255 255 30;
             }
             description {
                state: "selected" 0.0;
                inherit: "default" 0.0;
-               color: 255 255 255 128;
+               color: 255 255 255 100;
             }
          }
          part {
@@ -34274,25 +33989,50 @@ collections {
                state: "default" 0.0;
                visible: 0;
                rel1 {
-                  to: "base";
-                  offset: -1 -3;
+                  to: "bg";
                }
                rel2 {
-                  to: "base";
-                  offset: -2 2;
+                  to: "bg";
                }
                fill.smooth: 0;
                image {
-                  normal: "everything_item_bg.png";
+                  normal: "outline.png";
                   border: 5 5 5 5;
                }
+            color: 255 255 255 0;
             }
             description {
                state: "marked" 0.0;
                inherit: "default" 0.0;
                visible: 1;
-               color: 255 255 255 48;
+               color: 155 155 155 255;
             }
+         }
+         part {
+            name: "outline";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               /* visible: 0; */
+               rel1 {
+                  to: "bg";
+               }
+               rel2 {
+                  to: "bg";
+               }
+
+               image {
+                  normal: "outline.png";
+                  border: 5 5 5 5;
+               }
+               color: 20 20 20 100;
+            }
+            description {
+            state: "selected" 0.0;
+               inherit: "default" 0.0;
+               color: 20 20 20 200;
+            }
+
          }
          part {
             name: "base";
@@ -34340,7 +34080,7 @@ collections {
                rel1 {
                   to: "base";
                   relative: 0.0 0.0;
-                  offset: 2   0;
+                  offset: 4   0;
                }
                rel2 {
                   to: "base";
@@ -34356,15 +34096,15 @@ collections {
             mouse_events: 0;
             description {
                state: "default" 0.0;
+               aspect: 1.0 1.0;
+               aspect_preference: VERTICAL;
                rel1 {
                   to: "base";
-                  relative: 0.0 0.0;
-                  offset: 5   3;
+                  offset: 6   6;
                }
                rel2 {
                   to: "base";
-                  relative: 1.0 1.0;
-                  offset: -6  -13;
+                  offset: -5  -20;
                }
             }
          }
@@ -34412,6 +34152,22 @@ collections {
                   relative: 0.0 1.0;
                }
                rel2.offset: -2 -4;
+               color3: 20 20 20 20;
+               color: 250 250 250 255;
+               text {
+                  font: "Sans";
+                  size: 10;
+                  min: 0 1;
+                  align: 0.5 0.0;
+               }
+            }
+            description {
+               state: "selected" 0.0;
+               rel1 {
+                  offset: 2 -12;
+                  relative: 0.0 1.0;
+               }
+               rel2.offset: -2 -4;
                color: 250 250 250 255;
                color3: 20 20 20 20;
                text {
@@ -34438,6 +34194,8 @@ collections {
             source: "e";
             action: STATE_SET "selected" 0.0;
             target: "bg";
+            target: "outline";
+            target: "e.text.label";
          }
          program {
             name: "unsel";
@@ -34446,6 +34204,8 @@ collections {
             action: STATE_SET "default" 0.0;
             transition: SINUSOIDAL 0.1;
             target: "bg";
+            target: "outline";
+            target: "e.text.label";
          }
          program {
             name: "mark";
@@ -34492,17 +34252,12 @@ collections {
             name: "thumb_show2";
             action: STATE_SET "visible" 0.0;
             transition: ACCELERATE 0.05;
-            target: "base";
+    target: "base";
          }
       }
    }
    group {
       name: "e/modules/everything/thumbview/item/list";
-      images {
-         image: "e17_mini_button_shadow2.png" COMP;
-         image: "everything_item_bg.png" COMP;
-         image: "icon_right_arrow.png" COMP;
-      }
       parts {
          part {
             name: "bg";
@@ -34511,7 +34266,7 @@ collections {
                state: "default" 0.0;
                rel1 {
                   to: "base";
-                  offset: -1 -3;
+                  offset: -1 -1;
                }
                rel2 {
                   to: "base";
@@ -34522,12 +34277,12 @@ collections {
                   normal: "everything_item_bg.png";
                   border: 5 5 5 5;
                }
-               color: 255 255 255 16;
+               color: 255 255 255 30;
             }
             description {
                state: "selected" 0.0;
                inherit: "default" 0.0;
-               color: 255 255 255 108;
+               color: 255 255 255 100;
             }
          }
          part {
@@ -34537,25 +34292,48 @@ collections {
                state: "default" 0.0;
                visible: 0;
                rel1 {
-                  to: "base";
-                  offset: -1 -3;
+                  to: "bg";
                }
                rel2 {
-                  to: "base";
-                  offset: -2 2;
+                  to: "bg";
                }
                fill.smooth: 0;
                image {
-                  normal: "everything_item_bg.png";
+                  normal: "outline.png";
                   border: 5 5 5 5;
                }
-               color: 255 255 255 16;
+            color: 255 255 255 0;
             }
             description {
                state: "marked" 0.0;
                inherit: "default" 0.0;
                visible: 1;
-               color: 255 255 255 148;
+               color: 255 255 255 180;
+            }
+         }
+         part {
+            name: "outline";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               /* visible: 0; */
+               rel1 {
+                  to: "bg";
+               }
+               rel2 {
+                  to: "bg";
+               }
+
+               image {
+                  normal: "outline.png";
+                  border: 5 5 5 5;
+               }
+               color: 20 20 20 100;
+            }
+             description {
+               state: "selected" 0.0;
+               inherit: "default" 0.0;
+               color: 10 10 10 200;
             }
          }
          part {
@@ -34592,7 +34370,7 @@ collections {
                rel1 {
                   to: "base";
                   relative: 0.0 0.0;
-                  offset: 2   0;
+                  offset: 2   2;
                }
                rel2 {
                   to: "base";
@@ -34624,6 +34402,8 @@ collections {
             mouse_events: 0;
             description {
                state: "default" 0.0;
+               aspect: 1.0 1.0;
+               aspect_preference: VERTICAL;
                rel1 {
                   to: "clip";
                }
@@ -34689,7 +34469,7 @@ collections {
                   to_x: "arrow";
                }
                color: 250 250 250 255;
-               color3: 120 120 120 40;
+               color3: 20 20 20 20;
                text {
                   font: "Sans";
                   size: 10;
@@ -34713,7 +34493,7 @@ collections {
                   to_x: "arrow";
                }
                color: 250 250 250 255;
-               color3: 120 120 120 40;
+               color3: 20 20 20 20;
 
                text {
                   font: "Sans";
@@ -34733,7 +34513,7 @@ collections {
             description {
                state: "default" 0.0;
                visible: 0;
-              
+
                rel1 {
                   to_x: "clip";
                   to_y: "base";
@@ -34777,6 +34557,7 @@ collections {
             source: "e";
             action: STATE_SET "selected" 0.0;
             target: "bg";
+            target: "outline";
             transition: ACCELERATE 0.15;
          }
          program {
@@ -34786,6 +34567,7 @@ collections {
             action: STATE_SET "default" 0.0;
             transition: LINEAR 0.2;
             target: "bg";
+            target: "outline";
          }
          program {
             name: "mark";
@@ -34831,7 +34613,7 @@ collections {
             signal: "e,state,detail,show";
             source: "e";
             action: STATE_SET "detail" 0.0;
-            transition: ACCELERATE 0.08;
+            /* transition: ACCELERATE 0.08; */
             target: "e.text.label";
             target: "e.text.detail";
          }
@@ -34842,6 +34624,144 @@ collections {
             action: STATE_SET "default" 0.0;
             target: "e.text.label";
             target: "e.text.detail";
+         }
+      }
+   }
+
+   group {
+      name: "e/modules/everything/thumbview/main/window";
+      parts {
+         part {
+            name: "clip";
+            type: RECT;
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               color: 255 255 255 0;
+            }
+          description {
+               state: "visible" 0.0;
+               color: 255 255 255 255;
+            }
+        }
+        part {
+            name: "e.swallow.list";
+            type: SWALLOW;
+          clip_to: "clip";
+            description {
+               state: "default" 0.0;
+               rel1 {
+                  relative: 0.0 0.0;
+                  offset: 6   1;
+               }
+               rel2 {
+                  relative: 1.0 1.0;
+                  offset: -3  -3;
+               }
+            }
+         }
+         part {
+            name: "left_arrow";
+            mouse_events: 0;
+            scale: 1;
+            description {
+               state: "default" 0.0;
+               visible: 0;
+               image.normal: "icon_left_arrow.png";
+               aspect: 1.0 1.0;
+               aspect_preference: VERTICAL;
+               align: 0.0 0.5;
+               min: 32 32;
+               max: 32 32;
+               color: 255 255 255 0;
+            }
+            description {
+               state: "visible" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+               color: 255 255 255 255;
+            }
+         }
+         part {
+            name: "right_arrow";
+            mouse_events: 0;
+            scale: 1;
+            description {
+               state: "default" 0.0;
+               visible: 0;
+               image.normal: "icon_right_arrow.png";
+               aspect: 1.0 1.0;
+               aspect_preference: VERTICAL;
+               align: 1.0 0.5;
+               min: 32 32;
+               max: 32 32;
+               color: 255 255 255 0;
+            }
+            description {
+               state: "visible" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+               color: 255 255 255 255;
+            }
+         }
+         part {
+            name: "event";
+            repeat_events: 1;
+            type: RECT;
+            description {
+               state: "default" 0.0;
+               color: 0 0 0 0;
+            }
+         }
+      }
+      programs {
+         program {
+            name: "go_into_show";
+            signal: "e,action,show,into";
+            source: "e";
+            action: STATE_SET "visible" 0.0;
+            transition: LINEAR 0.5;
+            target: "right_arrow";
+         }
+         program {
+            name: "go_into_hide";
+            signal: "e,action,hide,into";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "right_arrow";
+            transition: LINEAR 0.5;
+         }
+         program {
+            name: "go_back_show";
+            signal: "e,action,show,back";
+            source: "e";
+            action: STATE_SET "visible" 0.0;
+            transition: LINEAR 0.5;
+            target: "left_arrow";
+         }
+         program {
+            name: "go_back_hide";
+            signal: "e,action,hide,back";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "left_arrow";
+            transition: LINEAR 0.5;
+         }
+         program {
+            name: "hiding";
+            signal: "e,action,hide,list";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "clip";
+            transition: LINEAR 0.25;
+         }
+         program {
+            name: "showing";
+            signal: "e,action,show,list";
+            source: "e";
+            action: STATE_SET "visible" 0.0;
+            target: "clip";
+            transition: LINEAR 0.15;
          }
       }
    }
@@ -34875,7 +34795,7 @@ collections {
             scale: 1;
             description {
                state: "default" 0.0;
-               min: 7 17;
+               min: 9 17;
                align: 1.0 0.0;
                rel1 {
                   relative: 1.0 0.0;
@@ -34985,7 +34905,7 @@ collections {
             }
             description {
                state: "default" 0.0;
-               min: 7 17;
+               min: 9 17;
                rel1 {
                   relative: 0.5  0.5;
                   offset: -1    0;
@@ -35020,6 +34940,7 @@ collections {
                   normal: "bt_sm_hilight.png";
                   border: 6 6 6 0;
                }
+            color: 180 180 180 255;
             }
          }
          part {
@@ -35034,6 +34955,7 @@ collections {
                   normal: "bt_sm_shine.png";
                   border: 6 6 6 0;
                }
+            color: 180 180 180 255;
             }
          }
          part {
@@ -35043,7 +34965,7 @@ collections {
             mouse_events: 1;
             description {
                state: "default" 0.0;
-               min: 7 17;
+               min: 9 17;
                align: 0.5 0.0;
                /* aspect: 1.0 1.0; */
                aspect_preference: HORIZONTAL;
@@ -35067,7 +34989,7 @@ collections {
             mouse_events: 1;
             description {
                state: "default" 0.0;
-               min: 7 17;
+               min: 9 17;
                align: 0.5 1.0;
                /* aspect: 1.0 1.0; */
                aspect_preference: HORIZONTAL;
