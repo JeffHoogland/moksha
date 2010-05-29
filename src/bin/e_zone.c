@@ -794,8 +794,9 @@ e_zone_edge_new(E_Zone_Edge edge)
 			if (!zone->corner.bottom_right)
 			  {
 			     zone->corner.bottom_right = ecore_x_window_input_new(con->win,
-										  zone->x + 1,
+										  zone->x + zone->w - cw - 2,
 										  zone->y + zone->h - 1, cw, 1);
+
 			     ecore_x_window_show(zone->corner.bottom_right);
 			  }
 			break;
@@ -803,7 +804,7 @@ e_zone_edge_new(E_Zone_Edge edge)
 			if (!zone->corner.bottom_left)
 			  {
 			     zone->corner.bottom_left = ecore_x_window_input_new(con->win,
-										 zone->x + zone->w - cw - 2,
+										 zone->x + 1,
 										 zone->y + zone->h - 1, cw, 1);
 			     ecore_x_window_show(zone->corner.bottom_left);
 			  }
