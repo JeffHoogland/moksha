@@ -5,7 +5,6 @@ includedir=@includedir@/@PACKAGE@
 modules=@libdir@/@PACKAGE@/modules
 config_apps=@prefix@/share/@PACKAGE@/config-apps
 release=@release@
-svnrev=@SVNREV@
 
 Name: enlightenment
 Description: Enlightenmnt Window Manager

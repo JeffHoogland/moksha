@@ -7,7 +7,7 @@ MAINTAINERCLEANFILES = Makefile.in aclocal.m4 config.guess \
 		       enlightenment.spec enlightenment.pc ABOUT-NLS* \
                        $(PACKAGE_TARNAME)-$(PACKAGE_VERSION)-doc.tar.bz2
 
-EXTRA_DIST = svnrev.h.in config.rpath  README AUTHORS COPYING COPYING-PLAIN \
+EXTRA_DIST = config.rpath  README AUTHORS COPYING COPYING-PLAIN \
              enlightenment.spec.in enlightenment.spec enlightenment.pc
 
 filesdir = $(datadir)/enlightenment/
