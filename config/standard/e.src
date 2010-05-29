@@ -512,6 +512,14 @@ group "E_Config" struct {
       value "priority" int: 0;
     }
   }
+  group "modules" list {
+    group "E_Config_Module" struct {
+      value "name" string: "conf_acpibindings";
+      value "enabled" uchar: 1;
+      value "delayed" uchar: 1;
+      value "priority" int: 0;
+    }
+  }
   group "themes" list {
     group "E_Config_Theme" struct {
       value "category" string: "theme";
@@ -1538,6 +1546,38 @@ group "E_Config" struct {
       value "params" string: "1";
     }
   }
+    group "acpi_bindings" list {
+        group "E_Config_Binding_Acpi" struct {
+            value "context" int: 0;
+            value "type" int: 1;
+            value "status" int: 0;
+            value "action" string: "dim_screen";
+        }
+        group "E_Config_Binding_Acpi" struct {
+            value "context" int: 0;
+            value "type" int: 1;
+            value "status" int: 1;
+            value "action" string: "undim_screen";
+        }
+        group "E_Config_Binding_Acpi" struct {
+            value "context" int: 0;
+            value "type" int: 5;
+            value "status" int: 0;
+            value "action" string: "suspend";
+        }
+        group "E_Config_Binding_Acpi" struct {
+            value "context" int: 0;
+            value "type" int: 6;
+            value "status" int: 0;
+            value "action" string: "halt_now";
+        }
+        group "E_Config_Binding_Acpi" struct {
+            value "context" int: 0;
+            value "type" int: 8;
+            value "status" int: 0;
+            value "action" string: "suspend";
+        }
+    }
   value "window_placement_policy" int: 0;
   value "focus_policy" int: 2;
   value "focus_setting" int: 3;
