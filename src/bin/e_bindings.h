@@ -35,6 +35,7 @@ typedef struct _E_Binding_Key    E_Binding_Key;
 typedef struct _E_Binding_Edge   E_Binding_Edge;
 typedef struct _E_Binding_Signal E_Binding_Signal;
 typedef struct _E_Binding_Wheel  E_Binding_Wheel;
+typedef struct _E_Binding_Acpi   E_Binding_Acpi;
 
 #else
 #ifndef E_BINDINGS_H
@@ -95,6 +96,13 @@ struct _E_Binding_Wheel
    const char *params;
 };
 
+struct _E_Binding_Acpi 
+{
+   E_Binding_Context ctxt;
+   int type, status;
+   const char *action, *params;
+};
+
 EAPI int         e_bindings_init(void);
 EAPI int         e_bindings_shutdown(void);
 
@@ -134,6 +142,11 @@ EAPI void        e_bindings_wheel_grab(E_Binding_Context ctxt, Ecore_X_Window wi
 EAPI void        e_bindings_wheel_ungrab(E_Binding_Context ctxt, Ecore_X_Window win);
 EAPI E_Action   *e_bindings_wheel_find(E_Binding_Context ctxt, E_Object *obj, Ecore_Event_Mouse_Wheel *ev, E_Binding_Wheel **bind_ret);
 EAPI E_Action   *e_bindings_wheel_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_Event_Mouse_Wheel *ev);
+
+EAPI void e_bindings_acpi_add(E_Binding_Context ctxt, int type, int status, const char *action, const char *params);
+EAPI void e_bindings_acpi_del(E_Binding_Context ctxt, int type, int status, const char *action, const char *params);
+EAPI E_Action *e_bindings_acpi_find(E_Binding_Context ctxt, E_Object *obj, E_Event_Acpi *ev, E_Binding_Acpi **bind_ret);
+EAPI E_Action *e_bindings_acpi_event_handle(E_Binding_Context ctxt, E_Object *obj, E_Event_Acpi *ev);
 
 #endif
 #endif

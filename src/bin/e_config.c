@@ -16,8 +16,9 @@ static int _e_config_revisions = 0;
 /* local subsystem functions */
 static void _e_config_save_cb(void *data);
 static void _e_config_free(E_Config *cfg);
-static int  _e_config_cb_timer(void *data);
-static int  _e_config_eet_close_handle(Eet_File *ef, char *file);
+static int _e_config_cb_timer(void *data);
+static int _e_config_eet_close_handle(Eet_File *ef, char *file);
+static void _e_config_acpi_bindings_add(void);
 
 /* local subsystem globals */
 static int _e_config_save_block = 0;
@@ -34,6 +35,7 @@ static E_Config_DD *_e_config_bindings_key_edd = NULL;
 static E_Config_DD *_e_config_bindings_edge_edd = NULL;
 static E_Config_DD *_e_config_bindings_signal_edd = NULL;
 static E_Config_DD *_e_config_bindings_wheel_edd = NULL;
+static E_Config_DD *_e_config_bindings_acpi_edd = NULL;
 static E_Config_DD *_e_config_path_append_edd = NULL;
 static E_Config_DD *_e_config_desktop_bg_edd = NULL;
 static E_Config_DD *_e_config_desktop_name_edd = NULL;
@@ -358,6 +360,18 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, action, STR);
    E_CONFIG_VAL(D, T, params, STR);
 
+   _e_config_bindings_acpi_edd = E_CONFIG_DD_NEW("E_Config_Binding_Acpi", 
+						 E_Config_Binding_Acpi);
+#undef T
+#undef D
+#define T E_Config_Binding_Acpi
+#define D _e_config_bindings_acpi_edd
+   E_CONFIG_VAL(D, T, context, INT);
+   E_CONFIG_VAL(D, T, type, INT);
+   E_CONFIG_VAL(D, T, status, INT);
+   E_CONFIG_VAL(D, T, action, STR);
+   E_CONFIG_VAL(D, T, params, STR);
+
    _e_config_remember_edd = E_CONFIG_DD_NEW("E_Remember", E_Remember);
 #undef T
 #undef D
@@ -512,6 +526,7 @@ e_config_init(void)
    E_CONFIG_LIST(D, T, edge_bindings, _e_config_bindings_edge_edd); /**/
    E_CONFIG_LIST(D, T, signal_bindings, _e_config_bindings_signal_edd); /**/
    E_CONFIG_LIST(D, T, wheel_bindings, _e_config_bindings_wheel_edd); /**/
+   E_CONFIG_LIST(D, T, acpi_bindings, _e_config_bindings_acpi_edd); /**/
    E_CONFIG_LIST(D, T, path_append_data, _e_config_path_append_edd); /**/
    E_CONFIG_LIST(D, T, path_append_images, _e_config_path_append_edd); /**/
    E_CONFIG_LIST(D, T, path_append_fonts, _e_config_path_append_edd); /**/
@@ -754,6 +769,7 @@ e_config_shutdown(void)
    E_CONFIG_DD_FREE(_e_config_bindings_edge_edd);
    E_CONFIG_DD_FREE(_e_config_bindings_signal_edd);
    E_CONFIG_DD_FREE(_e_config_bindings_wheel_edd);
+   E_CONFIG_DD_FREE(_e_config_bindings_acpi_edd);
    E_CONFIG_DD_FREE(_e_config_path_append_edd);
    E_CONFIG_DD_FREE(_e_config_desktop_bg_edd);
    E_CONFIG_DD_FREE(_e_config_desktop_name_edd);
@@ -978,6 +994,10 @@ e_config_load(void)
         COPYVAL(exec.show_run_dialog);
         COPYVAL(exec.show_exit_dialog);
         IFCFGEND;
+
+	IFCFG(0x0136);
+	_e_config_acpi_bindings_add();
+	IFCFGEND;
 
         e_config->config_version = E_CONFIG_FILE_VERSION;   
         _e_config_free(tcfg);
@@ -1582,7 +1602,7 @@ e_config_binding_wheel_match(E_Config_Binding_Wheel *eb_in)
 {
    Eina_List *l;
    E_Config_Binding_Wheel *eb;
-  
+
    EINA_LIST_FOREACH(e_config->wheel_bindings, l, eb)
      {
 	if ((eb->context == eb_in->context) &&
@@ -1591,9 +1611,31 @@ e_config_binding_wheel_match(E_Config_Binding_Wheel *eb_in)
 	    (eb->modifiers == eb_in->modifiers) &&
 	    (eb->any_mod == eb_in->any_mod) &&
 	    (((eb->action) && (eb_in->action) && (!strcmp(eb->action, eb_in->action))) ||
-	     ((!eb->action) && (!eb_in->action))) &&
+		((!eb->action) && (!eb_in->action))) &&
 	    (((eb->params) && (eb_in->params) && (!strcmp(eb->params, eb_in->params))) ||
-	     ((!eb->params) && (!eb_in->params))))
+		((!eb->params) && (!eb_in->params))))
+	  return eb;
+     }
+   return NULL;
+}
+
+EAPI E_Config_Binding_Acpi *
+e_config_binding_acpi_match(E_Config_Binding_Acpi *eb_in) 
+{
+   Eina_List *l;
+   E_Config_Binding_Acpi *eb;
+
+   EINA_LIST_FOREACH(e_config->acpi_bindings, l, eb)
+     {
+	if ((eb->context == eb_in->context) &&
+	    (eb->type == eb_in->type) && 
+	    (eb->status == eb_in->status) && 
+	    (((eb->action) && (eb_in->action) && 
+	      (!strcmp(eb->action, eb_in->action))) ||
+		((!eb->action) && (!eb_in->action))) &&
+	    (((eb->params) && (eb_in->params) && 
+	      (!strcmp(eb->params, eb_in->params))) ||
+		((!eb->params) && (!eb_in->params))))
 	  return eb;
      }
    return NULL;
@@ -1624,6 +1666,7 @@ _e_config_free(E_Config *ecf)
    E_Config_Syscon_Action *sca;
    E_Config_Binding_Key *ebk;
    E_Config_Binding_Edge *ebe;
+   E_Config_Binding_Acpi *eba;
    E_Font_Fallback *eff;
    E_Config_Module *em;
    E_Font_Default *efd;
@@ -1688,6 +1731,12 @@ _e_config_free(E_Config *ecf)
         if (ebw->action) eina_stringshare_del(ebw->action);
         if (ebw->params) eina_stringshare_del(ebw->params);
         E_FREE(ebw);
+     }
+   EINA_LIST_FREE(ecf->acpi_bindings, eba)
+     {
+        if (eba->action) eina_stringshare_del(eba->action);
+        if (eba->params) eina_stringshare_del(eba->params);
+        E_FREE(eba);
      }
    EINA_LIST_FREE(ecf->path_append_data, epd)
      {
@@ -1889,4 +1938,50 @@ _e_config_eet_close_handle(Eet_File *ef, char *file)
 	return 0;
      }
    return 1;
+}
+
+static void 
+_e_config_acpi_bindings_add(void) 
+{
+   E_Config_Binding_Acpi *bind;
+
+   bind = E_NEW(E_Config_Binding_Acpi, 1);
+   bind->context = E_BINDING_CONTEXT_NONE;
+   bind->type = E_ACPI_TYPE_AC_ADAPTER;
+   bind->status = 0;
+   bind->action = eina_stringshare_add("dim_screen");
+   bind->params = NULL;
+   e_config->acpi_bindings = eina_list_append(e_config->acpi_bindings, bind);
+
+   bind = E_NEW(E_Config_Binding_Acpi, 1);
+   bind->context = E_BINDING_CONTEXT_NONE;
+   bind->type = E_ACPI_TYPE_AC_ADAPTER;
+   bind->status = 1;
+   bind->action = eina_stringshare_add("undim_screen");
+   bind->params = NULL;
+   e_config->acpi_bindings = eina_list_append(e_config->acpi_bindings, bind);
+
+   bind = E_NEW(E_Config_Binding_Acpi, 1);
+   bind->context = E_BINDING_CONTEXT_NONE;
+   bind->type = E_ACPI_TYPE_LID;
+   bind->status = 0;
+   bind->action = eina_stringshare_add("suspend");
+   bind->params = eina_stringshare_add("now");
+   e_config->acpi_bindings = eina_list_append(e_config->acpi_bindings, bind);
+
+   bind = E_NEW(E_Config_Binding_Acpi, 1);
+   bind->context = E_BINDING_CONTEXT_NONE;
+   bind->type = E_ACPI_TYPE_POWER;
+   bind->status = 0;
+   bind->action = eina_stringshare_add("halt_now");
+   bind->params = eina_stringshare_add("now");
+   e_config->acpi_bindings = eina_list_append(e_config->acpi_bindings, bind);
+
+   bind = E_NEW(E_Config_Binding_Acpi, 1);
+   bind->context = E_BINDING_CONTEXT_NONE;
+   bind->type = E_ACPI_TYPE_SLEEP;
+   bind->status = 0;
+   bind->action = eina_stringshare_add("suspend");
+   bind->params = eina_stringshare_add("now");
+   e_config->acpi_bindings = eina_list_append(e_config->acpi_bindings, bind);
 }

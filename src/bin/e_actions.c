@@ -71,6 +71,13 @@
    }
 #define ACT_FN_END_KEY(act) \
    static void _e_actions_act_##act##_end_key(E_Object *obj, const char *params, Ecore_Event_Key *ev)
+#define ACT_GO_ACPI(name) \
+   { \
+      act = e_action_add(#name); \
+      if (act) act->func.go_acpi = _e_actions_act_##name##_go_acpi; \
+   }
+#define ACT_FN_GO_ACPI(act) \
+   static void _e_actions_act_##act##_go_acpi(E_Object *obj, const char *params, E_Event_Acpi *ev)
 
 /* local subsystem functions */
 static void _e_action_free(E_Action *act);
@@ -2497,6 +2504,16 @@ ACT_FN_END_MOUSE(delayed_action)
    _delayed_action_mouse_del(obj, params, ev);
 }
 
+ACT_FN_GO_ACPI(dim_screen) 
+{
+   printf("Dim Screen\n");
+}
+
+ACT_FN_GO_ACPI(undim_screen) 
+{
+   printf("Undim Screen\n");
+}
+
 /* local subsystem globals */
 static Eina_Hash *actions = NULL;
 static Eina_List *action_list = NULL;
@@ -2914,6 +2931,14 @@ e_actions_init(void)
    ACT_GO_MOUSE(delayed_action);
    ACT_END_KEY(delayed_action);
    ACT_END_MOUSE(delayed_action);
+
+   ACT_GO_ACPI(dim_screen);
+   e_action_predef_name_set(_("Acpi"), _("Dim Screen"), "dim_screen", 
+			    NULL, NULL, 0);
+
+   ACT_GO_ACPI(undim_screen);
+   e_action_predef_name_set(_("Acpi"), _("Undim Screen"), "undim_screen", 
+			    NULL, NULL, 0);
 
    return 1;
 }

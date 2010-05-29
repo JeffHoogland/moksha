@@ -24,6 +24,7 @@ static int _e_acpi_cb_server_del(void *data __UNUSED__, int type __UNUSED__, voi
 static int _e_acpi_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event);
 static void _e_acpi_cb_event_free(void *data __UNUSED__, void *event);
 static int _e_acpi_lid_status_get(const char *device, const char *bus);
+static int _e_acpi_cb_event(void *data __UNUSED__, int type __UNUSED__, void *event);
 
 /* local variables */
 static Ecore_Con_Server *_e_acpid = NULL;
@@ -98,6 +99,24 @@ e_acpi_init(void)
      eina_list_append(_e_acpid_hdls, 
 		      ecore_event_handler_add(ECORE_CON_EVENT_SERVER_DATA, 
 					      _e_acpi_cb_server_data, NULL));
+
+   /* Add handlers for standard acpi events */
+   _e_acpid_hdls = 
+     eina_list_append(_e_acpid_hdls, 
+		      ecore_event_handler_add(E_EVENT_ACPI_AC_ADAPTER, 
+					      _e_acpi_cb_event, NULL));
+   _e_acpid_hdls = 
+     eina_list_append(_e_acpid_hdls, 
+		      ecore_event_handler_add(E_EVENT_ACPI_LID, 
+					      _e_acpi_cb_event, NULL));
+   _e_acpid_hdls = 
+     eina_list_append(_e_acpid_hdls, 
+		      ecore_event_handler_add(E_EVENT_ACPI_POWER, 
+					      _e_acpi_cb_event, NULL));
+   _e_acpid_hdls = 
+     eina_list_append(_e_acpid_hdls, 
+		      ecore_event_handler_add(E_EVENT_ACPI_SLEEP, 
+					      _e_acpi_cb_event, NULL));
    return 1;
 }
 
@@ -273,4 +292,14 @@ _e_acpi_lid_status_get(const char *device, const char *bus)
      return E_ACPI_LID_CLOSED;
    else
      return E_ACPI_LID_UNKNOWN;
+}
+
+static int 
+_e_acpi_cb_event(void *data __UNUSED__, int type __UNUSED__, void *event) 
+{
+   E_Event_Acpi *ev;
+
+   ev = event;
+   e_bindings_acpi_event_handle(E_BINDING_CONTEXT_NONE, NULL, ev);
+   return 1;
 }
