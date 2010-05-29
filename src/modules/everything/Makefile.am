@@ -1,4 +1,4 @@
-MAINTAINERCLEANFILES = Makefile.in everything.pc
+MAINTAINERCLEANFILES = Makefile.in everything.pc module.desktop
 MODULE = everything
 
 # data files for the module
@@ -6,7 +6,7 @@ filesdir = $(libdir)/enlightenment/modules/$(MODULE)
 files_DATA = \
 e-module-$(MODULE).edj module.desktop
 
-EXTRA_DIST = $(files_DATA) $(EVRYHEADERS) everything.pc.in
+EXTRA_DIST = $(files_DATA) everything.pc.in module.desktop.in
 
 # the module .so file
 INCLUDES               = -I. \
@@ -19,9 +19,8 @@ INCLUDES               = -I. \
 
 pkgdir                 = $(libdir)/enlightenment/modules/$(MODULE)/$(MODULE_ARCH)
 pkg_LTLIBRARIES        = module.la
-# noinst_LTLIBRARIES      = libfoo.la
 
-EVRYHEADERS = evry_api.h evry_types.h
+EVRYHEADERS            = evry_api.h evry_types.h
 
 module_la_SOURCES      = $(EVRYHEADERS) \
 			 e_mod_main.c \
@@ -46,16 +45,15 @@ module_la_LIBADD       = @e_libs@ @dlopen_libs@
 module_la_LDFLAGS      = -module -avoid-version
 module_la_DEPENDENCIES = $(top_builddir)/config.h
 
-installed_headersdir = $(prefix)/include/@PACKAGE@
-installed_headers_DATA = $(EVRYHEADERS)
-
-# libfoo_la_SOURCES = evry.c e_mod_main.h evry_util.c evry_config.c evry_history.c evry_view_plugin_tabs.c
-# libfoo_la_LIBADD       = @e_libs@ @dlopen_libs@
-# libfoo_la_LDFLAGS      = -avoid-version
-# libfoo_la_DEPENDENCIES = $(top_builddir)/config.h
+installed_headersdir   = $(includedir)/enlightenment
+dist_installed_headers_DATA = $(EVRYHEADERS)
 
 pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = everything.pc
+dist_pkgconfig_DATA = everything.pc
 
-uninstall-local:
+uninstall:
 	rm -rf $(DESTDIR)$(libdir)/enlightenment/modules/$(MODULE)
+	rm -f $(DESTDIR)$(includedir)/enlightenment/evry_api.h
+	rm -f $(DESTDIR)$(includedir)/enlightenment/evry_types.h
+	rm -f $(DESTDIR)$(libdir)/pkgconfig/everything.pc
+        
