@@ -16,11 +16,11 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-   e_configure_registry_category_add("keyboard_and_mouse", 40, 
-				     _("Input"), NULL, "preferences-behavior");
-   e_configure_registry_item_add("keyboard_and_mouse/acpi_bindings", 10, 
+   e_configure_registry_category_add("system", 1000, 
+				     _("System"), NULL, "preferences-system");
+   e_configure_registry_item_add("system/acpi_bindings", 10, 
 				 _("ACPI Bindings"), NULL, 
-				 "preferences-desktop-keyboard-shortcuts", 
+				 "preferences-system-power-management", 
 				 e_int_config_acpibindings);
    conf_module = m;
    e_module_delayed_set(m, 1);
@@ -32,10 +32,10 @@ e_modapi_shutdown(E_Module *m)
 {
    E_Config_Dialog *cfd;
 
-   if (cfd = e_config_dialog_get("E", "keyboard_and_mouse/acpi_bindings"))
+   if (cfd = e_config_dialog_get("E", "system/acpi_bindings"))
      e_object_del(E_OBJECT(cfd));
-   e_configure_registry_item_del("keyboard_and_mouse/acpi_bindings");
-   e_configure_registry_category_del("keyboard_and_mouse");
+   e_configure_registry_item_del("system/acpi_bindings");
+   e_configure_registry_category_del("system");
    conf_module = NULL;
    return 1;
 }
