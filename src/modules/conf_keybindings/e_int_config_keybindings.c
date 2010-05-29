@@ -181,6 +181,9 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      {
 	e_bindings_key_del(bi->context, bi->key, bi->modifiers, bi->any_mod, 
 			   bi->action, bi->params);
+	if (bi->key) eina_stringshare_del(bi->key);
+	if (bi->action) eina_stringshare_del(bi->action);
+	if (bi->params) eina_stringshare_del(bi->params);
 	E_FREE(bi);
      }
 
