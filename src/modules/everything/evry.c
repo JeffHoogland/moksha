@@ -1628,10 +1628,10 @@ _evry_state_pop(Evry_Selector *sel, int immediate)
 	     continue;
 	  }
 	
-	if (EVRY_ITEM(p)->ref == 0)
-	  p->finish(p);
-	else
-	  p->state = NULL;
+	/* if (EVRY_ITEM(p)->ref == 0) */
+	p->finish(p);
+	/* else
+	 *   p->state = NULL; */
      }
 
 
