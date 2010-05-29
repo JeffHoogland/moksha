@@ -77,20 +77,20 @@ _cleanup(Evry_Plugin *p)
 {
    Ecore_Event_Handler *h;
    Evry_Item *it;
-   int items = 10;
+   /* int items = 10; */
 
-   if (p->items)
-     {
-	evry->item_free(p->items->data);
-	p->items = eina_list_remove_list(p->items, p->items);
-     }
+   /* if (p->items)
+    *   {
+    * 	EVRY_ITEM_FREE(p->items->data);
+    * 	p->items = eina_list_remove_list(p->items, p->items);
+    *   } */
 
    EINA_LIST_FREE(p->items, it)
      {
-	if (items-- > 0)
-	  history = eina_list_prepend(history, eina_stringshare_add(it->label));
+	/* if (items-- > 1)
+	 *   history = eina_list_prepend(history, eina_stringshare_add(it->label)); */
 
-	evry->item_free(it);
+	EVRY_ITEM_FREE(it);
      }
 
    EINA_LIST_FREE(handlers, h)
@@ -247,10 +247,10 @@ _plugins_init(const Evry_API *_api)
 	Plugin_Config *pc = _plug->config;
 	pc->view_mode = VIEW_MODE_LIST;
 	pc->trigger = eina_stringshare_add("=");
-	/* pc->trigger_only = EINA_TRUE; */
+	pc->trigger_only = EINA_TRUE;
 	pc->aggregate = EINA_FALSE;
-	pc->top_level = EINA_FALSE;
-	pc->min_query = 3;
+	/* pc->top_level = EINA_FALSE; */
+	/* pc->min_query = 3; */
      }
 
    return EINA_TRUE;
