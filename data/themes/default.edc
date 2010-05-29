@@ -33396,17 +33396,15 @@ collections {
                state: "default" 0.0;
                rel1 {
                   to: "frame";
-                  /* offset: 2 2; */
                }
                rel2 {
                   to: "frame";
-                  /* offset: -2 -1; */
                }
             }
          }
          part {
             name: "bar_bg";
-            /* clip_to: "base"; */
+            clip_to: "bar_base";
             mouse_events: 0;
             description {
                state: "default" 0.0;
@@ -33418,7 +33416,7 @@ collections {
                   to: "bar_base";
                }
                rel2 {
-                  offset: 1 -1;
+                  offset: 1 0;
                   to: "bar_base";
                }
                image {
@@ -33435,11 +33433,10 @@ collections {
                state: "default" 0.0;
                color: 255 255 255 255;
                rel1 {
-                  /* offset: 8 5; */
                   to: "frame";
                }
                rel2 {
-                  offset: -2 -2;
+                  offset: -2 -1;
                   to: "frame";
                }
             }
@@ -33904,7 +33901,7 @@ collections {
                rel1.offset:   5 3;
                rel2.offset:   -6 -1;
                visible: 0;
-               color: 224 224 224 255;
+               color: 245 245 245 255;
                text {
                   font: "Sans:style=Bold";
                   size: 9;
