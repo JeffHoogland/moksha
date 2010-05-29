@@ -92,10 +92,8 @@ e17_fileman_thumb_bg.png \
 e17_mini_button_shadow2.png \
 efm_toolbar_bottom.png \
 efm_toolbar_top.png \
-everything_bar.png \
-everything_border.png \
 everything_box.png \
-everything_drop.png \
+outline.png \
 everything_item_bg.png \
 exclam.png \
 frame_1.png \

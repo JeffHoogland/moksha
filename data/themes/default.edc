@@ -33423,7 +33423,7 @@ collections {
                   middle: 0;
                }
                fill.smooth : 1;
-              color: 215 215 215 255;
+              color: 195 195 195 255;
             }
          }
          part {
