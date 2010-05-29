@@ -672,6 +672,15 @@ _e_int_menus_apps_run(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
+apps_drag_finished(E_Drag *drag, int dropped)
+{
+   Efreet_Desktop *desktop;
+   
+   desktop = drag->data;
+   efreet_desktop_free(desktop);
+}
+
+static void
 _e_int_menus_apps_drag(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    Efreet_Desktop *desktop;
@@ -688,13 +697,14 @@ _e_int_menus_apps_drag(void *data, E_Menu *m, E_Menu_Item *mi)
 	 const char *drag_types[] = { "enlightenment/desktop" };
 
 	 evas_object_geometry_get(mi->icon_object, &x, &y, &w, &h);
+         efreet_desktop_ref(desktop);
 	 drag = e_drag_new(m->zone->container, x, y, drag_types, 1, desktop, -1,
 			   NULL, NULL);
 
 	 size = MIN(w, h);
-	  o = e_util_desktop_icon_add(desktop, size, e_drag_evas_get(drag));
+         o = e_util_desktop_icon_add(desktop, size, e_drag_evas_get(drag));
 	 e_drag_object_set(drag, o);
-	  e_drag_resize(drag, w, h);
+         e_drag_resize(drag, w, h);
 	 e_drag_start(drag, mi->drag.x + w, mi->drag.y + h);
       }
 }
