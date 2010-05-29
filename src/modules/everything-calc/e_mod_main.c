@@ -77,18 +77,18 @@ _cleanup(Evry_Plugin *p)
 {
    Ecore_Event_Handler *h;
    Evry_Item *it;
-   /* int items = 10; */
+   int items = 10;
 
-   /* if (p->items)
-    *   {
-    * 	EVRY_ITEM_FREE(p->items->data);
-    * 	p->items = eina_list_remove_list(p->items, p->items);
-    *   } */
+   if (p->items)
+     {
+   	EVRY_ITEM_FREE(p->items->data);
+   	p->items = eina_list_remove_list(p->items, p->items);
+     }
 
    EINA_LIST_FREE(p->items, it)
      {
-	/* if (items-- > 1)
-	 *   history = eina_list_prepend(history, eina_stringshare_add(it->label)); */
+	if (items-- > 1)
+	  history = eina_list_prepend(history, eina_stringshare_add(it->label));
 
 	EVRY_ITEM_FREE(it);
      }
@@ -117,7 +117,7 @@ _cb_action_performed(void *data, int type, void *event)
 
    if (!p->items)
      return 1;
-   
+
    /* remove duplicates */
    if (p->items->next)
      {
