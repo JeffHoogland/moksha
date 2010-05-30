@@ -597,6 +597,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdat
 
    e_widget_toolbook_page_show(otb, 0);
 
+   e_dialog_resizable_set(cfd->dia, 1);
    return otb;
 }
 

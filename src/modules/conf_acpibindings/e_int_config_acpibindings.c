@@ -152,6 +152,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_framelist_object_append(of, ow);
    e_widget_list_object_append(ol, of, 1, 1, 0.5);
 
+   e_dialog_resizable_set(cfd->dia, 1);
    return ol;
 }
 

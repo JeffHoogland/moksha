@@ -237,6 +237,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_toolbook_page_append(otb, NULL, _("Background Options"), ft, 0, 0, 0, 0, 0.5, 0.0);
    e_widget_toolbook_page_show(otb, 0);
    
+   e_dialog_resizable_set(cfd->dia, 1);
    return otb;
 }
 
