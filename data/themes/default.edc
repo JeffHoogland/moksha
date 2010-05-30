@@ -33407,7 +33407,6 @@ collections {
                   normal: "bt_dis_base.png";
                   border: 4 4 4 4;
                }
-               color: 255 255 255 255;
             }
          }
          part {
@@ -33423,7 +33422,7 @@ collections {
                   middle: 0;
                }
                fill.smooth : 1;
-              color: 195 195 195 255;
+              color: 215 215 215 255;
             }
          }
          part {
@@ -33554,7 +33553,6 @@ collections {
                   normal: "bt_dis_shine.png";
                   border: 4 4 4 4;
                }
-               color: 255 255 255 225;
             }
          }
          part {
@@ -33572,7 +33570,7 @@ collections {
                   normal: "bt_dis_hilight.png";
                   border: 4 4 4 0;
                }
-               color: 255 255 255 188;
+               color: 255 255 255 235;
             }
          }
       }
