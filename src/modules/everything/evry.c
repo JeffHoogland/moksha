@@ -1713,9 +1713,13 @@ evry_browse_item(Evry_Item *it)
 
 	EINA_LIST_FOREACH(sel->plugins, l, p)
 	  {
-	     if (pref && !strcmp(p->name, pref->name))
-	       continue;
-
+	     if (pref)
+	       {
+		  if ((!strcmp(p->name, pref->name)) ||
+		      (!strcmp(p->name, it->plugin->name)))
+		    continue;
+	       }
+	
 	     if ((p->browse) && (pp = p->browse(p, it)))
 	       {
 		  plugins = eina_list_append(plugins, pp);
@@ -1850,7 +1854,7 @@ evry_selectors_switch(int dir, int slide)
      {
 	Evry_Item *it;
 
-	if (!s || !(it = s->cur_item) || !(it->plugin == (CUR_SEL)->actions))
+	if (!s || !(it = s->cur_item) || !(CHECK_TYPE(it, EVRY_TYPE_ACTION)))
 	  return 0;
 
 	GET_ACTION(act,it);
