@@ -87,16 +87,24 @@ evry_shutdown(void)
 static int
 _evry_aggregator_fetch(Evry_State *s)
 {
+   Eina_List *l;
+
    if (!s)
      {
 	ERR("no state");
    	return 0;
      }
 
-   if ((s->aggregator->fetch(s->aggregator, s->input)) &&
-       (!eina_list_data_find(s->cur_plugins, s->aggregator)))
+   if (s->aggregator->fetch(s->aggregator, s->input))
      {
-	s->cur_plugins = eina_list_prepend(s->cur_plugins, s->aggregator);
+	if (!(l = eina_list_data_find_list(s->cur_plugins, s->aggregator)))
+	  s->cur_plugins = eina_list_prepend(s->cur_plugins, s->aggregator);
+	else
+	  s->cur_plugins = eina_list_promote_list(s->cur_plugins, l);
+     }
+   else
+     {
+	s->cur_plugins = eina_list_remove(s->cur_plugins, s->aggregator);
      }
 
    return 1;
@@ -2585,7 +2593,7 @@ _evry_view_hide(Evry_View *v, int slide, int destroy)
 				      win->mouse_button,
 				      0, 0, NULL);
 	  }
-	
+
 	evas_object_hide(v->o_list);
 	edje_object_part_unswallow(win->o_main, v->o_list);
 
@@ -2602,11 +2610,11 @@ _evry_view_hide(Evry_View *v, int slide, int destroy)
 	     edje_object_part_swallow(win->o_main, "list:e.swallow.list", v->o_list);
 	     win->view_clearing = v;
 	  }
-	
+
 	evas_object_show(v->o_list);
 	edje_object_signal_emit(v->o_list, "e,action,hide,list", "e");
 	v->clear_timer = ecore_timer_add(0.3, _clear_timer, v);
-	
+
 	if (v->o_bar)
 	  {
 	     edje_object_part_unswallow(win->o_main, v->o_bar);
