@@ -1972,7 +1972,7 @@ _e_config_acpi_bindings_add(void)
    bind = E_NEW(E_Config_Binding_Acpi, 1);
    bind->context = E_BINDING_CONTEXT_NONE;
    bind->type = E_ACPI_TYPE_POWER;
-   bind->status = 0;
+   bind->status = -1;
    bind->action = eina_stringshare_add("halt_now");
    bind->params = eina_stringshare_add("now");
    e_config->acpi_bindings = eina_list_append(e_config->acpi_bindings, bind);
@@ -1980,7 +1980,7 @@ _e_config_acpi_bindings_add(void)
    bind = E_NEW(E_Config_Binding_Acpi, 1);
    bind->context = E_BINDING_CONTEXT_NONE;
    bind->type = E_ACPI_TYPE_SLEEP;
-   bind->status = 0;
+   bind->status = -1;
    bind->action = eina_stringshare_add("suspend");
    bind->params = eina_stringshare_add("now");
    e_config->acpi_bindings = eina_list_append(e_config->acpi_bindings, bind);
