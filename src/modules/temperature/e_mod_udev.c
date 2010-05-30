@@ -17,6 +17,7 @@ temperature_udev_update(void *data)
    char *syspath;
    const char *test;
    char buf[256];
+   int x, y;
 
    inst = data;
    temp = -999;
@@ -28,42 +29,23 @@ temperature_udev_update(void *data)
         temp = 0;
         EINA_LIST_FOREACH(inst->tempdevs, l, syspath)
           {
-	     /*FIXME: probably should make a function to count the cpus and loop this or something? */
-             if ((test = eeze_udev_syspath_get_sysattr(syspath, "temp1_input")))
+             for (x = 1, y = 0;x < 15;x++)
                {
-                  cur = strtod(test, NULL);
-                  if (cur > -1000)
+                  if (y >= 2)
+                    break;
+                  sprintf(buf, "temp%d_input", x);
+                  if ((test = eeze_udev_syspath_get_sysattr(syspath, buf)))
                     {
-                       temp += (cur / 1000); /* udev reports temp in (celcius * 1000) for some reason */
-                       cpus++;
+                       y = 0;
+                       cur = strtod(test, NULL);
+                       if (cur > 0)
+                         {
+                            temp += (cur / 1000); /* udev reports temp in (celcius * 1000) for some reason */
+                            cpus++;
+                         }
                     }
-               }
-             if ((test = eeze_udev_syspath_get_sysattr(syspath, "temp2_input")))
-               {
-                  cur = strtod(test, NULL);
-                  if (cur > -1000)
-                    {
-                       temp += (cur / 1000); /* udev reports temp in (celcius * 1000) for some reason */
-                       cpus++;
-                    }
-               }
-             if ((test = eeze_udev_syspath_get_sysattr(syspath, "temp3_input")))
-               {
-                  cur = strtod(test, NULL);
-                  if (cur > -1000)
-                    {
-                       temp += (cur / 1000); /* udev reports temp in (celcius * 1000) for some reason */
-                       cpus++;
-                    }
-               }
-             if ((test = eeze_udev_syspath_get_sysattr(syspath, "temp4_input")))
-               {
-                  cur = strtod(test, NULL);
-                  if (cur > -1000)
-                    {
-                       temp += (cur / 1000); /* udev reports temp in (celcius * 1000) for some reason */
-                       cpus++;
-                    }
+                  /* keep checking for temp sensors until we get 2 in a row that don't exist */
+                  else y++;
                }
           }
         temp /= cpus;
@@ -71,7 +53,7 @@ temperature_udev_update(void *data)
    if (temp != -999)
      {
         if (inst->units == FAHRENHEIT) 
-	  temp = (temp * 9.0 / 5.0) + 32;
+   temp = (temp * 9.0 / 5.0) + 32;
 
         if (!inst->have_temp)
           {
@@ -86,8 +68,8 @@ temperature_udev_update(void *data)
           snprintf(buf, sizeof(buf), "%3.2f°C", temp);  
 
         _temperature_face_level_set(inst,
-				    (double)(temp - inst->low) /
-				    (double)(inst->high - inst->low));
+        (double)(temp - inst->low) /
+        (double)(inst->high - inst->low));
         edje_object_part_text_set(inst->o_temp, "e.text.reading", buf);
      }
    else
