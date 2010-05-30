@@ -924,8 +924,14 @@ e_bindings_acpi_find(E_Binding_Context ctxt, E_Object *obj, E_Event_Acpi *ev, E_
 
    EINA_LIST_FOREACH(acpi_bindings, l, bind)
      {
-	if ((bind->type == ev->type) && (bind->status == ev->status))
+	if (bind->type == ev->type)
 	  {
+	     /* if binding status is -1, then we don't compare event status */
+	     if (bind->status != -1) 
+	       {
+		  /* binding status is set to something, compare event status */
+		  if (bind->status != ev->status) continue;
+	       }
 	     if (_e_bindings_context_match(bind->ctxt, ctxt))
 	       {
 		  E_Action *act;
