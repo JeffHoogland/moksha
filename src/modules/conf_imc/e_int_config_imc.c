@@ -336,7 +336,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
 	     if ((imc) && (imc->e_im_name))
 	       {
-		  Evas_Object *icon;
+		  Evas_Object *icon = NULL;
 
 		  if (imc->e_im_setup_exec)
 		    {
