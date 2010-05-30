@@ -102,7 +102,6 @@ _item_free(Evry_Item *item)
 {
    GET_APP(app, item);
 
-
    if (app->desktop)
      efreet_desktop_free(app->desktop);
    if (app->file)
@@ -120,7 +119,6 @@ _item_new(Plugin *p, const char *label, const char *id)
    EVRY_ACTN(app)->action = &_exec_open_file_action;
    EVRY_ITEM(app)->id = eina_stringshare_add(id);
 
-   EVRY_ITEM_REF(EVRY_ITEM(app));
    eina_hash_add(p->added, id, app);
 
    EVRY_ACTN(app)->remember_context = EINA_TRUE;
@@ -344,10 +342,11 @@ _finish_exe(Evry_Plugin *plugin)
    GET_PLUGIN(p, plugin);
    char *str;
 
+   EVRY_PLUGIN_ITEMS_CLEAR(p);
+   EVRY_ITEM_FREE(p->command);
+
    if (p->added)
      eina_hash_free(p->added);
-
-   EVRY_PLUGIN_ITEMS_CLEAR(p);
 
    if (exe_dir)
      {
@@ -366,8 +365,6 @@ _finish_exe(Evry_Plugin *plugin)
      free(str);
    EINA_LIST_FREE(exe_list2, str)
      free(str);
-
-   EVRY_ITEM_FREE(p->command);
 
    E_FREE(p);
 }
@@ -388,6 +385,7 @@ _item_desktop_add(Plugin *p, Efreet_Desktop *desktop, int match)
    if (!app)
      {
 	app = _item_new(p, desktop->name, desktop->exec);
+	efreet_desktop_ref(desktop);
 	app->desktop = desktop;
 
 	if (desktop->comment)
@@ -488,7 +486,7 @@ _hist_items_get_cb(const Eina_Hash *hash, const void *key, void *data, void *fda
 
 	if (!(d))
 	  {
-	     printf("app not found %s\n", (char *)key);
+	     DBG("app not found %s\n", (char *)key);
 	     break;
 	  }
 
@@ -519,10 +517,10 @@ _finish(Evry_Plugin *plugin)
    GET_PLUGIN(p, plugin);
    Efreet_Desktop *desktop;
 
+   EVRY_PLUGIN_ITEMS_CLEAR(p);
+
    if (p->added)
      eina_hash_free(p->added);
-
-   EVRY_PLUGIN_ITEMS_CLEAR(p);
 
    EINA_LIST_FREE(p->apps_all, desktop)
      efreet_desktop_free(desktop);
@@ -648,14 +646,16 @@ _begin_mime(Evry_Plugin *plugin, const Evry_Item *item)
 
    if ((d = e_exehist_mime_desktop_get(mime)))
      {
-	if ((d2 = eina_list_data_find(p->apps_mime, d)))
+	if ((l = eina_list_data_find_list(p->apps_mime, d)))
 	  {
-	     p->apps_mime = eina_list_remove(p->apps_mime, d2);
-	     efreet_desktop_free(d2);
+	     p->apps_mime = eina_list_promote_list(p->apps_mime, l);
+	     efreet_desktop_free(d);
 	  }
-	p->apps_mime = eina_list_prepend(p->apps_mime, d);
+	else
+	  {
+	     p->apps_mime = eina_list_prepend(p->apps_mime, d);
+	  }
      }
-
 
    p->added = eina_hash_string_small_new(_hash_free);
 
@@ -668,13 +668,15 @@ _finish_mime(Evry_Plugin *plugin)
    GET_PLUGIN(p, plugin);
    Efreet_Desktop *desktop;
 
+   EVRY_PLUGIN_ITEMS_CLEAR(p);
+
    if (p->added)
      eina_hash_free(p->added);
 
-   EVRY_PLUGIN_ITEMS_CLEAR(p);
-
    EINA_LIST_FREE(p->apps_mime, desktop)
      efreet_desktop_free(desktop);
+
+   E_FREE(p);
 }
 
 static int
@@ -996,6 +998,7 @@ _plugins_init(const Evry_API *api)
 		       _begin_mime, _finish_mime, _fetch_mime, NULL);
    p->config_path = "extensions/everything-apps";
    evry->plugin_register(p, EVRY_PLUGIN_ACTION, 1);
+   _plugins = eina_list_append(_plugins, p);
 
    act = EVRY_ACTION_NEW(N_("Launch"),
 			 EVRY_TYPE_APP, 0,
@@ -1070,7 +1073,7 @@ _plugins_shutdown(void)
      EVRY_PLUGIN_FREE(p);
 
    EINA_LIST_FREE(_actions, act)
-     evry->action_free(act);
+     EVRY_ACTION_FREE(act);
 
    evry_module->active = EINA_FALSE;
 }
