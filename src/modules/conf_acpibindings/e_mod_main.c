@@ -16,9 +16,9 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-   e_configure_registry_category_add("system", 1000, 
+   e_configure_registry_category_add("advanced", 1000, 
 				     _("System"), NULL, "preferences-system");
-   e_configure_registry_item_add("system/acpi_bindings", 10, 
+   e_configure_registry_item_add("advanced/acpi_bindings", 10, 
 				 _("ACPI Bindings"), NULL, 
 				 "preferences-system-power-management", 
 				 e_int_config_acpibindings);
@@ -32,10 +32,10 @@ e_modapi_shutdown(E_Module *m)
 {
    E_Config_Dialog *cfd;
 
-   if (cfd = e_config_dialog_get("E", "system/acpi_bindings"))
+   if (cfd = e_config_dialog_get("E", "advanced/acpi_bindings"))
      e_object_del(E_OBJECT(cfd));
-   e_configure_registry_item_del("system/acpi_bindings");
-   e_configure_registry_category_del("system");
+   e_configure_registry_item_del("advanced/acpi_bindings");
+   e_configure_registry_category_del("advanced");
    conf_module = NULL;
    return 1;
 }
