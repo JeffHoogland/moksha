@@ -34,7 +34,7 @@ e_int_config_acpibindings(E_Container *con, const char *params __UNUSED__)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
 
-   if (e_config_dialog_find("E", "system/acpi_bindings")) 
+   if (e_config_dialog_find("E", "advanced/acpi_bindings")) 
      return NULL;
 
    v = E_NEW(E_Config_Dialog_View, 1);
@@ -44,7 +44,7 @@ e_int_config_acpibindings(E_Container *con, const char *params __UNUSED__)
    v->basic.create_widgets = _basic_create;
 
    cfd = e_config_dialog_new(con, _("ACPI Bindings"), "E", 
-			     "system/acpi_bindings", 
+			     "advanced/acpi_bindings", 
 			     "preferences-system-power-management", 
 			     0, v, NULL);
 

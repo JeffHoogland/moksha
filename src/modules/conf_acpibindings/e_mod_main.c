@@ -16,8 +16,8 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-   e_configure_registry_category_add("advanced", 1000, 
-				     _("System"), NULL, "preferences-system");
+   e_configure_registry_category_add("advanced", 80, 
+				     _("Advanced"), NULL, "preferences-advanced");
    e_configure_registry_item_add("advanced/acpi_bindings", 10, 
 				 _("ACPI Bindings"), NULL, 
 				 "preferences-system-power-management", 
