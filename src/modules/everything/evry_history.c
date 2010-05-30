@@ -270,6 +270,9 @@ evry_history_item_add(Evry_Item *it, const char *ctxt, const char *input)
    if (!it)
      return NULL;
 
+   if ((!it->plugin->history) && (!CHECK_TYPE(it, EVRY_TYPE_PLUGIN)))
+       return NULL;
+
    if (it->type == EVRY_TYPE_ACTION)
      {
 	GET_ACTION(act, it);
@@ -360,7 +363,7 @@ evry_history_item_usage_set(Evry_Item *it, const char *input, const char *ctxt)
    int rem_ctxt = 1;
    it->usage = 0.0;
 
-   if (!it->plugin->history)
+   if ((!it->plugin->history) && (!CHECK_TYPE(it, EVRY_TYPE_PLUGIN)))
      return 0;
 
    if (it->hi)

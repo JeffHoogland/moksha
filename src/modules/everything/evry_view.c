@@ -364,7 +364,7 @@ _e_smart_reconfigure_do(void *data)
 	int cnt = eina_list_count(sd->items);
 	double col = 1;
 	int width = sd->w - 8;
-	
+
 	if (cnt < 5)
 	  {
 	     col = 2;
@@ -1422,7 +1422,7 @@ _view_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
    sel = sd->view->state->selector;
    if (!sel || !sel->states)
      return;
-   
+
    diff_x = abs(ev->cur.canvas.x - sd->mouse_x);
    diff_y = abs(ev->cur.canvas.y - sd->mouse_y);
 

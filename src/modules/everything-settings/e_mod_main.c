@@ -14,6 +14,7 @@ struct _Plugin
   Evry_Plugin base;
   Eina_List  *items;
   Eina_List  *categories;
+  Eina_Bool   parent;
 };
 
 struct _Settings_Item
@@ -79,6 +80,7 @@ _browse(Evry_Plugin *plugin, const Evry_Item *item)
    it = (Settings_Item *) item;
      
    EVRY_PLUGIN_INSTANCE(p, plugin);
+   p->parent = EINA_TRUE;
    
    GET_PLUGIN(parent, item->plugin);
    
@@ -113,7 +115,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
    EVRY_PLUGIN_ITEMS_CLEAR(p);
    
-   if (len < plugin->config->min_query)
+   if ((!p->parent) && (len < plugin->config->min_query))
      return 0;
    
    if (!p->categories && !p->items)
@@ -149,7 +151,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
    EVRY_PLUGIN_ITEMS_ADD(p, p->categories, input, 1, 1);
 
-   if (input || !p->categories)
+   if (input || p->parent)
      return EVRY_PLUGIN_ITEMS_ADD(p, p->items, input, 1, 1);
 }
 

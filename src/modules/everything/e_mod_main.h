@@ -92,6 +92,9 @@ struct _Evry_State
   /* active plugin */
   Evry_Plugin *plugin;
 
+  /* aggregator instance */
+  Evry_Plugin *aggregator;
+
   /* selected item */
   Evry_Item   *cur_item;
 
@@ -301,7 +304,6 @@ void  evry_hide(int clear);
 
 int   evry_plug_actions_init();
 void  evry_plug_actions_shutdown();
-Evry_Plugin *evry_plug_actions_new(Evry_Selector *selector, int type);
 
 Evry_Plugin *evry_aggregator_new(Evry_Window *win, int type);
 
@@ -377,5 +379,11 @@ EAPI E_Config_Dialog *evry_config_dialog(E_Container *con, const char *params);
 EAPI E_Config_Dialog *evry_collection_conf_dialog(E_Container *con, const char *params);
 
 EAPI extern E_Module_Api e_modapi;
+
+/* #define CHECK_REFS */
+
+#ifdef CHECK_REFS
+extern Eina_List *refd;
+#endif
 
 #endif

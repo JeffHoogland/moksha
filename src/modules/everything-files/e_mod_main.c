@@ -283,6 +283,7 @@ _append_files(Plugin *p)
    int cnt = 0;
    Evry_Item *it;
    Eina_List *l;
+   int len = p->input ? strlen(p->input) : 0;
 
    EVRY_PLUGIN_ITEMS_CLEAR(p);
 
@@ -290,7 +291,7 @@ _append_files(Plugin *p)
      {
 	if (!p->input)
 	  return 0;
-	if (strlen(p->input) < p->min_query)
+	if (len < p->min_query)
 	  return 0;
      }
 
@@ -301,7 +302,7 @@ _append_files(Plugin *p)
 	if (p->dirs_only && !it->browseable)
 	  continue;
 
-	if (p->input && (match = evry->fuzzy_match(it->label, p->input)))
+	if (len && (match = evry->fuzzy_match(it->label, p->input)))
 	  {
 	     it->fuzzy_match = match;
 	     if (!it->browseable)
@@ -309,7 +310,7 @@ _append_files(Plugin *p)
 	     EVRY_PLUGIN_ITEM_APPEND(p, it);
 	     cnt++;
 	  }
-	else if (!p->input)
+	else if (len == 0)
 	  {
 	     if (!it->browseable)
 	       it->priority = 1;
@@ -650,7 +651,7 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
 	/* provide subject */
 	EVRY_PLUGIN_INSTANCE(p, plugin);
 	p->parent = EINA_FALSE;
-	
+
 	if (_conf->show_homedir)
 	  p->directory = eina_stringshare_add(e_user_homedir_get());
 
@@ -825,7 +826,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
    if (!p->parent)
      p->min_query = plugin->config->min_query;
-   
+
    if ((p->command) || (!p->min_query) || (len >= p->min_query))
      _append_files(p);
 

@@ -8,13 +8,12 @@ typedef struct _Plugin Plugin;
 struct _Plugin
 {
   Evry_Plugin base;
-  Evry_Selector *selector;
   Eina_List *actions;
   Eina_Bool parent;
   Evry_Action *action;
 };
 
-static Evry_Plugin *_base_plug = NULL;
+static Evry_Plugin *_plug = NULL;
 
 static void
 _finish(Evry_Plugin *plugin)
@@ -22,15 +21,8 @@ _finish(Evry_Plugin *plugin)
    GET_PLUGIN(p, plugin);
    Evry_Action *act;
 
-   if (p->parent)
-     {
-	EINA_LIST_FREE(p->actions, act);
-	E_FREE(p);
-     }
-   else
-     {
-	EINA_LIST_FREE(p->actions, act);
-     }
+   EINA_LIST_FREE(p->actions, act);
+   E_FREE(p);
 }
 
 static Evry_Plugin *
@@ -44,9 +36,7 @@ _browse(Evry_Plugin *plugin, const Evry_Item *it)
 
    act = EVRY_ACTN(it);
 
-   p = E_NEW(Plugin, 1);
-   p->base = *plugin;
-   p->base.items = NULL;
+   EVRY_PLUGIN_INSTANCE(p, plugin);
    p->actions = act->fetch(act);
    p->parent = EINA_TRUE;
    p->action = act;
@@ -59,10 +49,9 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
 {
    Evry_Action *act;
    Eina_List *l;
+   Plugin *p;
 
-   GET_PLUGIN(p, plugin);
-
-   EINA_LIST_FREE(p->actions, act);
+   EVRY_PLUGIN_INSTANCE(p, plugin);
 
    if (!(CHECK_TYPE(it, EVRY_TYPE_PLUGIN)))
      {
@@ -76,7 +65,7 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
 	     if (act->check_item && !(act->check_item(act, it)))
 	       continue;
 
-	     act->base.plugin = plugin;
+	     act->base.plugin = EVRY_PLUGIN(p);
 	     act->it1.item = it;
 	     EVRY_ITEM(act)->hi = NULL;
 
@@ -88,7 +77,7 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
      {
 	EINA_LIST_FOREACH(it->plugin->actions, l, act)
 	  {
-	     act->base.plugin = plugin;
+	     act->base.plugin = EVRY_PLUGIN(p);
 
 	     act->it1.item = EVRY_ITEM(it->plugin);
 	     EVRY_ITEM(act)->hi = NULL;
@@ -96,9 +85,7 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
 	  }
      }
 
-   if (!p->actions) return NULL;
-
-   return plugin;
+   return EVRY_PLUGIN(p);
 }
 
 static int
@@ -177,39 +164,18 @@ _fetch(Evry_Plugin *plugin, const char *input)
    return 1;
 }
 
-Evry_Plugin *
-evry_plug_actions_new(Evry_Selector *sel, int type)
-{
-   Evry_Plugin *plugin;
-
-   if (type == EVRY_PLUGIN_SUBJECT)
-     {
-	plugin = EVRY_PLUGIN_NEW(Plugin, N_("Actions"), NULL, 0,
-				 NULL, _finish, _fetch, NULL);
-     }
-   else if (type == EVRY_PLUGIN_ACTION)
-     {
-	plugin = EVRY_PLUGIN_NEW(Plugin, N_("Actions"), NULL, 0,
-				 _begin, _finish, _fetch, NULL);
-     }
-   else return NULL;
-
-   plugin->browse = &_browse;
-
-   GET_PLUGIN(p, plugin);
-   p->selector = sel;
-
-   evry_plugin_register(plugin, type, 2);
-   return plugin;
-}
-
 /***************************************************************************/
 
 int
 evry_plug_actions_init()
 {
-   _base_plug = evry_plugin_new(NULL, _("Actions"), NULL, NULL,
-				EVRY_TYPE_ACTION, NULL, NULL, NULL, NULL);
+   _plug = EVRY_PLUGIN_NEW(Plugin, N_("Actions"), NULL,
+			   EVRY_TYPE_ACTION,
+			   _begin, _finish, _fetch, NULL);
+
+   _plug->browse = &_browse;
+
+   evry_plugin_register(_plug, EVRY_PLUGIN_ACTION, 2);
 
    return 1;
 }
@@ -219,7 +185,7 @@ evry_plug_actions_shutdown()
 {
    Evry_Item *it;
 
-   evry_plugin_free(_base_plug);
+   evry_plugin_free(_plug);
 
    /* bypass unregister, because it modifies the list */
    EINA_LIST_FREE(evry_conf->actions, it)
@@ -248,7 +214,7 @@ _action_free_cb(Evry_Item *it)
 {
    GET_ACTION(act, it);
 
-   if (act->name)     eina_stringshare_del(act->name);
+   IF_RELEASE(act->name);
 
    E_FREE(act);
 }
@@ -260,8 +226,8 @@ evry_action_new(const char *name, const char *label,
 		int  (*action) (Evry_Action *act),
 		int (*check_item) (Evry_Action *act, const Evry_Item *it))
 {
-   Evry_Action *act = EVRY_ITEM_NEW(Evry_Action, _base_plug, label, NULL, _action_free_cb);
-
+   Evry_Action *act = EVRY_ITEM_NEW(Evry_Action, _plug, label,
+				    NULL, _action_free_cb);
    if (icon)
      act->base.icon = eina_stringshare_add(icon);
 

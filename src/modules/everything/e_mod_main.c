@@ -64,8 +64,8 @@ e_modapi_init(E_Module *m)
    _evry_type_init("TEXT");
 
    _config_init();
-   evry_history_init();
 
+   evry_history_init();
    evry_plug_actions_init();
    evry_plug_collection_init();
    evry_plug_clipboard_init();
@@ -213,6 +213,16 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 
    if (cleanup_timer)
      ecore_timer_del(cleanup_timer);
+
+#ifdef CHECK_REFS
+   Evry_Item *it;
+   printf("___________________________________________\n");
+
+   EINA_LIST_FREE(refd, it)
+     printf("%d %s\n", it->ref, it->label);
+
+#endif
+
 
    return 1;
 }
@@ -454,40 +464,31 @@ _config_free(void)
    Plugin_Config *pc, *pc2;
 
    EINA_LIST_FREE(evry_conf->collections, pc)
+     EINA_LIST_FREE(pc->plugins, pc2)
      {
-	EINA_LIST_FREE(pc->plugins, pc2)
-	  {
-	     IF_RELEASE(pc2->name);
-	     IF_RELEASE(pc2->trigger);
-	     E_FREE(pc2);
-	  }
+	IF_RELEASE(pc2->name);
+	IF_RELEASE(pc2->trigger);
+	E_FREE(pc2);
      }
 
    EINA_LIST_FREE(evry_conf->conf_subjects, pc)
      {
 	IF_RELEASE(pc->name);
 	IF_RELEASE(pc->trigger);
-	if (pc->plugin)
-	  evry_plugin_free(pc->plugin);
 	E_FREE(pc);
      }
    EINA_LIST_FREE(evry_conf->conf_actions, pc)
      {
 	IF_RELEASE(pc->name);
 	IF_RELEASE(pc->trigger);
-	if (pc->plugin)
-	  evry_plugin_free(pc->plugin);
 	E_FREE(pc);
      }
    EINA_LIST_FREE(evry_conf->conf_objects, pc)
      {
 	IF_RELEASE(pc->name);
 	IF_RELEASE(pc->trigger);
-	if (pc->plugin)
-	  evry_plugin_free(pc->plugin);
 	E_FREE(pc);
      }
-
 
    E_FREE(evry_conf);
 }
@@ -536,7 +537,7 @@ _e_mod_action_cb(E_Object *obj, const char *params)
    /* if (zone) evry_show(zone, _params); */
 
    if (_idler) ecore_idle_enterer_del(_idler);
-   _idler = ecore_idle_enterer_add(_e_mod_run_defer_cb, zone);
+  _idler = ecore_idle_enterer_add(_e_mod_run_defer_cb, zone);
 }
 
 static void

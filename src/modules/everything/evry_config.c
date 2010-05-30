@@ -413,11 +413,14 @@ _create_plugin_page(E_Config_Dialog_Data *cfdata, Evas *e, Plugin_Page *page)
    e_widget_table_object_append(ob, of, 1, 0, 1, 1, 1, 1, 1, 0);
 
    of = e_widget_framelist_add(e, _("Plugin Trigger"), 0);
+   o = e_widget_label_add(e, _("Default is plugin name"));
+   e_widget_framelist_object_append(of, o);
+
    o = e_widget_entry_add(e, &(page->trigger), NULL, NULL, NULL);
    e_widget_disabled_set(o, 1);
    page->o_trigger = o;
    e_widget_framelist_object_append(of, o);
-   o = e_widget_check_add(e, _("Show only when triggered"),
+   o = e_widget_check_add(e, _("Search only when triggered"),
 			  &(page->trigger_only));
    e_widget_disabled_set(o, 1);
    page->o_trigger_only = o;

@@ -49,8 +49,8 @@ static const Evry_API *evry = NULL;
 static Evry_Module *evry_module = NULL;
 static Module_Config *_conf;
 static Evry_Plugin *_plug = NULL;
-static char _config_path[] =  "extensions/everthing-aspell";
-static char _config_domain[] = "module.everyhing-aspell";
+static char _config_path[] =  "extensions/everything-aspell";
+static char _config_domain[] = "module.everything-aspell";
 static char _module_icon[] = "accessories-dictionary";
 static E_Config_DD *_conf_edd = NULL;
 

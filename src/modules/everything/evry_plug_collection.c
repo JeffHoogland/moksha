@@ -10,8 +10,6 @@ typedef struct _Plugin Plugin;
 struct _Plugin
 {
   Evry_Plugin base;
-  const char *input;
-  Eina_List *items;
 };
 
 static Eina_List *plugins = NULL;
@@ -44,34 +42,61 @@ _browse(Evry_Plugin *plugin, const Evry_Item *item)
    return NULL;
 }
 
+static Evry_Item *
+_add_item(Plugin *p, Plugin_Config *pc)
+{
+   Evry_Plugin *pp;
+   Evry_Item *it = NULL;
+
+   if (pc->enabled && (pp = evry_plugin_find(pc->name)))
+     {
+	pc->plugin = pp;
+
+	GET_ITEM(itp, pp);
+	it = EVRY_ITEM_NEW(Evry_Item, EVRY_PLUGIN(p), itp->label, NULL, NULL);
+	if (itp->icon) it->icon = eina_stringshare_ref(itp->icon);
+	it->icon_get = itp->icon_get;
+	it->data = pc;
+	it->browseable = EINA_TRUE;
+	p->base.items = eina_list_append(p->base.items, it);
+     }
+   return it;
+}
+
 static Evry_Plugin *
 _begin(Evry_Plugin *plugin, const Evry_Item *item)
 {
-   Evry_Plugin *pp;
    Plugin_Config *pc;
-   Evry_Item *it;
    Eina_List *l;
    Plugin *p;
 
    EVRY_PLUGIN_INSTANCE(p, plugin);
 
    EINA_LIST_FOREACH(plugin->config->plugins, l, pc)
+     _add_item(p, pc);
+   
+   return EVRY_PLUGIN(p);
+}
+
+static Evry_Plugin *
+_begin_all(Evry_Plugin *plugin, const Evry_Item *item)
+{
+   Plugin_Config *pc;
+   Eina_List *l;
+   Plugin *p;
+
+   EVRY_PLUGIN_INSTANCE(p, plugin);
+
+   EINA_LIST_FOREACH(evry_conf->conf_subjects, l, pc)
      {
-	if (!pc->enabled)
+	if (!strcmp(pc->name, "All") ||
+	    !strcmp(pc->name, "Actions") ||
+	    !strcmp(pc->name, "Plugins"))
 	  continue;
-
-	if ((pp = evry_plugin_find(pc->name)))
-	  {
-	     GET_ITEM(itp, pp);
-	     it = EVRY_ITEM_NEW(Evry_Item, EVRY_PLUGIN(p), itp->label, NULL, NULL);
-	     if (itp->icon) it->icon = eina_stringshare_ref(itp->icon);
-	     pc->plugin = pp;
-	     it->data = pc;
-	     it->browseable = EINA_TRUE;
-	     p->base.items = eina_list_append(p->base.items, it);
-	  }
+	
+     _add_item(p, pc);
      }
-
+   
    return EVRY_PLUGIN(p);
 }
 
@@ -83,8 +108,6 @@ _finish(Evry_Plugin *plugin)
    GET_PLUGIN(p, plugin);
 
    EVRY_PLUGIN_ITEMS_FREE(p);
-
-   IF_RELEASE(p->input);
 
    E_FREE(p);
 }
@@ -111,6 +134,19 @@ evry_plug_collection_init(void)
    e_configure_registry_category_add
      ("extensions", 80, _("Extensions"), NULL, "preferences-extensions");
 
+   
+   p = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Plugins"),
+		       _module_icon, COLLECTION_PLUGIN,
+		       _begin_all, _finish, _fetch, NULL);
+   p->browse = &_browse;
+   if (evry_plugin_register(p, EVRY_PLUGIN_SUBJECT, 1))
+     {
+	p->config->enabled   = EINA_FALSE;
+	p->config->aggregate = EINA_FALSE;
+     }
+   plugins = eina_list_append(plugins, p);   
+
+   
    EINA_LIST_FOREACH(evry_conf->collections, l, pc)
      {
 	p = EVRY_PLUGIN_NEW(Evry_Plugin, N_(pc->name),
@@ -135,7 +171,7 @@ evry_plug_collection_init(void)
 	
 	plugins = eina_list_append(plugins, p);
      }
-
+   
    return EINA_TRUE;
 }
 
@@ -146,9 +182,12 @@ evry_plug_collection_shutdown(void)
    
    EINA_LIST_FREE(plugins, p)
      {
-	e_configure_registry_item_del(p->config_path);
-	eina_stringshare_del(p->config_path);
+	if (p->config_path)
+	  {
+	     e_configure_registry_item_del(p->config_path);
+	     eina_stringshare_del(p->config_path);
+	  }
+	
 	EVRY_PLUGIN_FREE(p);
      }
-   
 }

@@ -149,6 +149,7 @@ evry_plugin_register(Evry_Plugin *p, int type, int priority)
 
 	act = EVRY_ACTION_NEW(buf, p->input_type, 0, EVRY_ITEM(p)->icon,
 			      _evry_plugin_action_browse, NULL);
+	EVRY_ITEM(act)->icon_get = EVRY_ITEM(p)->icon_get;
 	EVRY_ITEM(act)->data = p;
 	evry_action_register(act, 1);
 	actions = eina_list_append(actions, act);
