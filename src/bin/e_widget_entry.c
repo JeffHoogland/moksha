@@ -254,7 +254,7 @@ _e_wid_changed_cb(void *data, Evas_Object *obj, void *event_info)
    
    if (wd->text_location)
      {
-        text = e_widget_entry_text_get(entry);
+        text = e_entry_text_get(wd->o_entry);
         free(*wd->text_location);
         *wd->text_location = text ? strdup(text) : NULL;
      }
