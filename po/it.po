@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-05-31 12:02+1000\n"
-"PO-Revision-Date: 2010-05-24 17:41+0200\n"
+"POT-Creation-Date: 2010-05-31 18:26+0200\n"
+"PO-Revision-Date: 2010-05-31 18:45+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -590,7 +590,7 @@ msgstr "Commuta modalità disconnessa"
 #: src/bin/e_actions.c:2891 src/bin/e_actions.c:2895 src/bin/e_actions.c:2899
 #: src/bin/e_actions.c:2903 src/bin/e_actions.c:2907 src/bin/e_actions.c:2911
 #: src/bin/e_configure.c:151 src/bin/e_int_config_modules.c:65
-#: src/modules/conf_desklock/e_int_config_desklock.c:301
+#: src/modules/conf_desklock/e_int_config_desklock.c:309
 #: src/modules/conf_imc/e_int_config_imc.c:811
 #: src/modules/conf_startup/e_int_config_startup.c:259
 #: src/modules/conf_theme/e_int_config_theme.c:400
@@ -644,19 +644,16 @@ msgid "Delayed Action"
 msgstr "Azione ritardata"
 
 #: src/bin/e_actions.c:2936 src/bin/e_actions.c:2940
-#, fuzzy
 msgid "Acpi"
-msgstr "Azione"
+msgstr "Acpi"
 
 #: src/bin/e_actions.c:2936
-#, fuzzy
 msgid "Dim Screen"
-msgstr "Questo schermo"
+msgstr "Oscura schermo"
 
 #: src/bin/e_actions.c:2940
-#, fuzzy
 msgid "Undim Screen"
-msgstr "Questo schermo"
+msgstr "Illumina schermo"
 
 #: src/bin/e_bg.c:53
 msgid "Set As Background"
@@ -666,7 +663,7 @@ msgstr "Imposta come sfondo"
 msgid "Color Selector"
 msgstr "Selettore colore"
 
-#: src/bin/e_color_dialog.c:50 src/bin/e_config.c:1930
+#: src/bin/e_color_dialog.c:50 src/bin/e_config.c:1935
 #: src/bin/e_config_dialog.c:262 src/bin/e_eap_editor.c:798
 #: src/bin/e_eap_editor.c:862 src/bin/e_entry_dialog.c:62 src/bin/e_exec.c:365
 #: src/bin/e_fm.c:8536 src/bin/e_fm.c:9174 src/bin/e_fm_prop.c:510
@@ -700,7 +697,7 @@ msgstr "OK"
 msgid "Cancel"
 msgstr "Annulla"
 
-#: src/bin/e_config.c:804 src/bin/e_config.c:837
+#: src/bin/e_config.c:805 src/bin/e_config.c:838
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -720,7 +717,7 @@ msgstr ""
 "funzionalità.<br>Adesso è possibile riconfigurare le cose a proprio "
 "piacimento.<br>Ci scusiamo per il disagio.<br>"
 
-#: src/bin/e_config.c:821
+#: src/bin/e_config.c:822
 msgid ""
 "Your settings are NEWER than Enlightenment. This is very<br>strange. This "
 "should not happen unless you downgraded<br>Enlightenment or copied the "
@@ -735,11 +732,11 @@ msgstr ""
 "male, quindi la vostra configurazione è<br>stata ripristinata a scopo "
 "precauzionale ai valori predefiniti. Ci<br>scusiamo per l'inconveniente.<br>"
 
-#: src/bin/e_config.c:1831
+#: src/bin/e_config.c:1836
 msgid "Settings Upgraded"
 msgstr "Impostazioni aggiornate"
 
-#: src/bin/e_config.c:1854
+#: src/bin/e_config.c:1859
 #, c-format
 msgid ""
 "An error occured while saving Enlightenment's<br>settings to disk. The error "
@@ -751,7 +748,7 @@ msgstr ""
 "dove è avvenuto l'errore è:<br>%s<br><br>Questo file è stato cancellato per "
 "evitare<br>corruzione di dati.<br>"
 
-#: src/bin/e_config.c:1865
+#: src/bin/e_config.c:1870
 #, c-format
 msgid ""
 "Enlightenment's settings files are too big<br>for the file system they are "
@@ -767,7 +764,7 @@ msgstr ""
 "avvenuto l'errore è:<br>%s<br><br>Questo file è stato cancellato per "
 "evitare<br>corruzione di dati.<br>"
 
-#: src/bin/e_config.c:1878
+#: src/bin/e_config.c:1883
 #, c-format
 msgid ""
 "An output error occured when writing the settings<br>files for "
@@ -781,7 +778,7 @@ msgstr ""
 "l'errore è:<br>%s<br><br>Questo file è stato cancellato per "
 "evitare<br>corruzione di dati.<br>"
 
-#: src/bin/e_config.c:1889
+#: src/bin/e_config.c:1894
 #, c-format
 msgid ""
 "Enlightenment cannot write its settings file<br>because it ran out of space "
@@ -795,7 +792,7 @@ msgstr ""
 "l'errore è:<br>%s<br><br>Questo file è stato cancellato per "
 "evitare<br>corruzione di dati.<br>"
 
-#: src/bin/e_config.c:1901
+#: src/bin/e_config.c:1906
 #, c-format
 msgid ""
 "Enlightenment unexpectedly had the settings file<br>it was writing closed on "
@@ -807,7 +804,7 @@ msgstr ""
 "avvenuto l'errore è:<br>%s<br><br>Questo file è stato cancellato per "
 "evitare<br>corruzione di dati.<br>"
 
-#: src/bin/e_config.c:1926
+#: src/bin/e_config.c:1931
 msgid "Enlightenment Settings Write Problems"
 msgstr "Problemi scrittura configurazione di Enlightenment"
 
@@ -1473,7 +1470,7 @@ msgid "Thumbnail"
 msgstr "Miniatura"
 
 #: src/bin/e_fm_prop.c:435
-#: src/modules/conf_desklock/e_int_config_desklock.c:425
+#: src/modules/conf_desklock/e_int_config_desklock.c:433
 #: src/modules/everything-aspell/e_mod_main.c:480
 msgid "Custom"
 msgstr "Personalizzata"
@@ -3122,19 +3119,19 @@ msgstr "Riavvio"
 msgid "Resetting.<br><hilight>Please wait.</hilight>"
 msgstr "Riavvio in corso.<br><hilight>Attendere prego.</hilight>"
 
-#: src/bin/e_sys.c:634
+#: src/bin/e_sys.c:636
 msgid "Suspending"
 msgstr "Sospensione"
 
-#: src/bin/e_sys.c:637
+#: src/bin/e_sys.c:639
 msgid "Suspending.<br><hilight>Please wait.</hilight>"
 msgstr "Sospensione in corso.<br><hilight>Attendere prego.</hilight>"
 
-#: src/bin/e_sys.c:660
+#: src/bin/e_sys.c:664
 msgid "Hibernating"
 msgstr "Ibernazione in corso"
 
-#: src/bin/e_sys.c:663
+#: src/bin/e_sys.c:667
 msgid "Hibernating.<br><hilight>Please wait.</hilight>"
 msgstr "Ibernazione in corso.<br><hilight>Attendere prego.</hilight>"
 
@@ -3349,7 +3346,7 @@ msgid "Add to Favorites"
 msgstr "Aggiungi ai preferiti"
 
 #: src/bin/e_widget_fsel.c:298
-#: src/modules/conf_desklock/e_int_config_desklock.c:305
+#: src/modules/conf_desklock/e_int_config_desklock.c:313
 #: src/modules/conf_imc/e_int_config_imc.c:818
 #: src/modules/conf_startup/e_int_config_startup.c:267
 #: src/modules/conf_theme/e_int_config_theme.c:407
@@ -4002,43 +3999,47 @@ msgstr "Imposta"
 msgid "Desk"
 msgstr "Desktop"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:96
+#: src/modules/conf_desklock/e_int_config_desklock.c:97
 msgid "Screen Lock Settings"
 msgstr "Impostazioni bloccaschermo"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:199
+#: src/modules/conf_desklock/e_int_config_desklock.c:201
 msgid "Automatic Locking"
 msgstr "Blocco automatico"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:201
+#: src/modules/conf_desklock/e_int_config_desklock.c:203
 msgid "Lock when Enlightenment starts"
 msgstr "Blocca all'avvio di Enlightenment"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:205
+#: src/modules/conf_desklock/e_int_config_desklock.c:207
+msgid "Lock on Suspend"
+msgstr "Blocca alla sospensione"
+
+#: src/modules/conf_desklock/e_int_config_desklock.c:211
 msgid "Lock when X screensaver activates"
 msgstr "Blocca all'attivazione dello screensaver di X"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:210
+#: src/modules/conf_desklock/e_int_config_desklock.c:216
 msgid "Time after screensaver activated"
 msgstr "Tempo dopo attivazione screensaver"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:213
-#: src/modules/conf_desklock/e_int_config_desklock.c:443
+#: src/modules/conf_desklock/e_int_config_desklock.c:219
+#: src/modules/conf_desklock/e_int_config_desklock.c:451
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:153
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:167
 #, c-format
 msgid "%1.0f seconds"
 msgstr "%1.0f secondi"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:218
+#: src/modules/conf_desklock/e_int_config_desklock.c:224
 msgid "Lock when idle time exceeded"
 msgstr "Blocca al superamento del tempo massimo"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:222
+#: src/modules/conf_desklock/e_int_config_desklock.c:228
 msgid "Idle time to exceed"
 msgstr "Tempo massimo per bloccaschermo"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:225
+#: src/modules/conf_desklock/e_int_config_desklock.c:231
 #: src/modules/conf_dpms/e_int_config_dpms.c:218
 #: src/modules/conf_dpms/e_int_config_dpms.c:230
 #: src/modules/conf_dpms/e_int_config_dpms.c:242
@@ -4047,7 +4048,7 @@ msgstr "Tempo massimo per bloccaschermo"
 msgid "%1.0f minutes"
 msgstr "%1.0f minuti"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:298
+#: src/modules/conf_desklock/e_int_config_desklock.c:306
 #: src/modules/conf_imc/e_int_config_imc.c:806
 #: src/modules/conf_startup/e_int_config_startup.c:254
 #: src/modules/conf_theme/e_int_config_theme.c:396
@@ -4058,23 +4059,23 @@ msgstr "%1.0f minuti"
 msgid "Personal"
 msgstr "Personali"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:391
+#: src/modules/conf_desklock/e_int_config_desklock.c:399
 msgid "Login Box Settings"
 msgstr "Finestra di login"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:394
+#: src/modules/conf_desklock/e_int_config_desklock.c:402
 msgid "Show on all screen zones"
 msgstr "Mostra su tutte le zone"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:398
+#: src/modules/conf_desklock/e_int_config_desklock.c:406
 msgid "Show on current screen zone"
 msgstr "Mostra sulla zona corrente"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:402
+#: src/modules/conf_desklock/e_int_config_desklock.c:410
 msgid "Show on screen zone #:"
 msgstr "Mostra sulla zona #:"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:406
+#: src/modules/conf_desklock/e_int_config_desklock.c:414
 #: src/modules/conf_desks/e_int_config_desks.c:232
 #: src/modules/conf_desks/e_int_config_desks.c:237
 #: src/modules/conf_desks/e_int_config_desks.c:265
@@ -4091,40 +4092,40 @@ msgstr "Mostra sulla zona #:"
 msgid "%1.0f"
 msgstr "%1.0f"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:414
+#: src/modules/conf_desklock/e_int_config_desklock.c:422
 msgid "Wallpaper Mode"
 msgstr "Modalità sfondo"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:416
+#: src/modules/conf_desklock/e_int_config_desklock.c:424
 #: src/modules/gadman/e_mod_config.c:143
 msgid "Theme Defined"
 msgstr "Definita dal tema"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:419
+#: src/modules/conf_desklock/e_int_config_desklock.c:427
 msgid "Theme Wallpaper"
 msgstr "Sfondo del tema"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:422
+#: src/modules/conf_desklock/e_int_config_desklock.c:430
 msgid "User Wallpaper"
 msgstr "Sfondo dell'utente"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:433
+#: src/modules/conf_desklock/e_int_config_desklock.c:441
 msgid "Enter Presentation Mode"
 msgstr "Attivazione modalità presentazione"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:435
+#: src/modules/conf_desklock/e_int_config_desklock.c:443
 msgid "Suggest entering presentation mode"
 msgstr "Suggerisci modalita' presentazione"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:439
+#: src/modules/conf_desklock/e_int_config_desklock.c:447
 msgid "If deactivated before"
 msgstr "Se disattivato prima di"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:457
+#: src/modules/conf_desklock/e_int_config_desklock.c:465
 msgid "Custom Screenlock"
 msgstr "Bloccaschermo personalizzato"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:458
+#: src/modules/conf_desklock/e_int_config_desklock.c:466
 msgid "Use custom screenlock"
 msgstr "Usa bloccaschermo personalizzato"
 
@@ -6499,14 +6500,12 @@ msgid "Plugin Trigger"
 msgstr "Richiamo per il plugin"
 
 #: src/modules/everything/evry_config.c:416
-#, fuzzy
 msgid "Default is plugin name"
-msgstr "Modo predefinito finestre di dialogo"
+msgstr "Il predefinito è il nome del plugin"
 
 #: src/modules/everything/evry_config.c:423
-#, fuzzy
 msgid "Search only when triggered"
-msgstr "Mostra solo se richiamato"
+msgstr "Cerca solo se richiamato"
 
 #: src/modules/everything/evry_config.c:430
 msgid "Plugin View"
@@ -6601,14 +6600,12 @@ msgid "Popup Align"
 msgstr "Allineamento popup"
 
 #: src/modules/everything/evry_config.c:580
-#, fuzzy
 msgid "Edge Popup Size"
-msgstr "Dimensione popup"
+msgstr "Dimensione popup bordo"
 
 #: src/modules/everything/evry_config.c:638
-#, fuzzy
 msgid "Everything Collection"
-msgstr "Modulo applicazioni di Everything"
+msgstr "Raccolta di Everything"
 
 #: src/modules/everything/evry_plug_actions.c:172
 msgid "Actions"
