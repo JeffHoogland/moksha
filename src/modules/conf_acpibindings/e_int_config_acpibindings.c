@@ -11,7 +11,8 @@
 struct _E_Config_Dialog_Data 
 {
    Eina_List *bindings;
-   Evas_Object *o_bindings, *o_actions;
+   Evas_Object *o_bindings, *o_actions, *o_params;
+   const char *bindex;
 };
 
 /* local function prototypes */
@@ -27,6 +28,7 @@ static E_Action_Description *_selected_action_get(E_Config_Dialog_Data *cfdata);
 static const char *_binding_get_label(E_Config_Binding_Acpi *bind);
 static void _cb_bindings_changed(void *data);
 static void _cb_actions_changed(void *data);
+static void _cb_entry_changed(void *data, void *data2 __UNUSED__);
 
 E_Config_Dialog *
 e_int_config_acpibindings(E_Container *con, const char *params __UNUSED__) 
@@ -134,23 +136,33 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
-   Evas_Object *ol, *of, *ow;
+   Evas_Object *ol, *of, *ow, *ot;
 
    ol = e_widget_list_add(evas, 0, 1);
 
-   of = e_widget_frametable_add(evas, _("ACPI Bindings"), 0);
-   ow = e_widget_ilist_add(evas, (24 * e_scale), (24 * e_scale), NULL);
+   of = e_widget_framelist_add(evas, _("ACPI Bindings"), 0);
+   ow = e_widget_ilist_add(evas, (24 * e_scale), (24 * e_scale), 
+			   &(cfdata->bindex));
    cfdata->o_bindings = ow;
    _fill_bindings(cfdata);
-   e_widget_frametable_object_append(of, ow, 0, 0, 2, 1, 1, 1, 1, 1);
+   e_widget_framelist_object_append(of, ow);
    e_widget_list_object_append(ol, of, 1, 1, 0.5);
 
-   of = e_widget_framelist_add(evas, _("Actions"), 0);
+   ot = e_widget_table_add(evas, 0);
+   of = e_widget_framelist_add(evas, _("Action"), 0);
    ow = e_widget_ilist_add(evas, (24 * e_scale), (24 * e_scale), NULL);
    cfdata->o_actions = ow;
    _fill_actions(cfdata);
    e_widget_framelist_object_append(of, ow);
-   e_widget_list_object_append(ol, of, 1, 1, 0.5);
+   e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
+
+   ow = e_widget_framelist_add(evas, _("Action Params"), 0);
+   cfdata->o_params = 
+     e_widget_entry_add(evas, NULL, _cb_entry_changed, cfdata, NULL);
+   e_widget_disabled_set(cfdata->o_params, EINA_TRUE);
+   e_widget_framelist_object_append(ow, cfdata->o_params);
+   e_widget_table_object_append(ot, ow, 0, 1, 1, 1, 1, 0, 1, 0);
+   e_widget_list_object_append(ol, ot, 1, 1, 0.5);
 
    e_dialog_resizable_set(cfd->dia, 1);
    return ol;
@@ -210,7 +222,8 @@ _fill_actions(E_Config_Dialog_Data *cfdata)
      {
 	if (!grp->acts) continue;
 	if ((strcmp(grp->act_grp, "Acpi")) && 
-	    (strcmp(grp->act_grp, "System"))) continue;
+	    (strcmp(grp->act_grp, "System")) && 
+	    (strcmp(grp->act_grp, "Launch"))) continue;
 	e_widget_ilist_header_append(cfdata->o_actions, NULL, grp->act_grp);
 	EINA_LIST_FOREACH(grp->acts, ll, dsc) 
 	  e_widget_ilist_append(cfdata->o_actions, NULL, dsc->act_name, 
@@ -230,16 +243,10 @@ static E_Config_Binding_Acpi *
 _selected_binding_get(E_Config_Dialog_Data *cfdata) 
 {
    E_Config_Binding_Acpi *bind;
-   int sel;
-   const char *index;
 
    if (!cfdata) return NULL;
-   sel = e_widget_ilist_selected_get(cfdata->o_bindings);
-   if (sel < 0) return NULL;
-   if (!(index = e_widget_ilist_nth_value_get(cfdata->o_bindings, sel))) 
+   if (!(bind = eina_list_nth(cfdata->bindings, atoi(cfdata->bindex)))) 
      return NULL;
-   sel = atoi(index);
-   if (!(bind = eina_list_nth(cfdata->bindings, sel))) return NULL;
    return bind;
 }
 
@@ -262,7 +269,8 @@ _selected_action_get(E_Config_Dialog_Data *cfdata)
      {
 	if (!grp->acts) continue;
 	if ((strcmp(grp->act_grp, "Acpi")) && 
-	    (strcmp(grp->act_grp, "System"))) continue;
+	    (strcmp(grp->act_grp, "System")) && 
+	    (strcmp(grp->act_grp, "Launch"))) continue;
 	EINA_LIST_FOREACH(grp->acts, ll, dsc) 
 	  {
 	     if ((dsc->act_name) && (!strcmp(dsc->act_name, lbl))) 
@@ -270,7 +278,7 @@ _selected_action_get(E_Config_Dialog_Data *cfdata)
 	  }
      }
 
-   return NULL;
+   return dsc;
 }
 
 static const char *
@@ -314,7 +322,13 @@ _cb_bindings_changed(void *data)
    int i = -1;
 
    if (!(cfdata = data)) return;
-   if (!(bind = _selected_binding_get(cfdata))) return;
+   if (!(bind = _selected_binding_get(cfdata))) 
+     {
+	e_widget_entry_clear(cfdata->o_params);
+	e_widget_disabled_set(cfdata->o_params, EINA_TRUE);
+	return;
+     }
+
    e_widget_ilist_unselect(cfdata->o_actions);
    EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->o_actions), items, item) 
      {
@@ -336,8 +350,46 @@ _cb_actions_changed(void *data)
    E_Action_Description *dsc;
 
    if (!(cfdata = data)) return;
-   if (!(bind = _selected_binding_get(cfdata))) return;
-   if (!(dsc = _selected_action_get(cfdata))) return;
+   if (!(bind = _selected_binding_get(cfdata))) 
+     {
+	e_widget_entry_clear(cfdata->o_params);
+	e_widget_disabled_set(cfdata->o_params, EINA_TRUE);
+	return;
+     }
+   if (!(dsc = _selected_action_get(cfdata))) 
+     {
+	e_widget_entry_clear(cfdata->o_params);
+	e_widget_disabled_set(cfdata->o_params, EINA_TRUE);
+	return;
+     }
+
    eina_stringshare_replace(&bind->action, dsc->act_cmd);
-   eina_stringshare_replace(&bind->params, dsc->act_params);
+   e_widget_disabled_set(cfdata->o_params, !(dsc->editable));
+
+   if ((!dsc->editable) && (dsc->act_params))
+     e_widget_entry_text_set(cfdata->o_params, dsc->act_params); 
+   else if (bind->params)
+     e_widget_entry_text_set(cfdata->o_params, bind->params); 
+   else 
+     {
+	if ((!dsc->param_example) || (!dsc->param_example[0]))
+	  e_widget_entry_text_set(cfdata->o_params, _("<None>"));
+	else
+	  e_widget_entry_text_set(cfdata->o_params, dsc->param_example);
+     }
+}
+
+static void 
+_cb_entry_changed(void *data, void *data2 __UNUSED__)
+{
+   E_Config_Dialog_Data *cfdata;
+   E_Config_Binding_Acpi *bind;
+   E_Action_Description *dsc;
+
+   if (!(cfdata = data)) return;
+   if (!(dsc = _selected_action_get(cfdata))) return;
+   if (!dsc->editable) return;
+   if (!(bind = _selected_binding_get(cfdata))) return;
+   eina_stringshare_replace(&bind->params, 
+			    e_widget_entry_text_get(cfdata->o_params));
 }
