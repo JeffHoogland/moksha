@@ -43,6 +43,7 @@ struct _E_Config_Dialog_Data
 
    /* Basic props */
    int start_locked;
+   int lock_on_suspend;
    int auto_lock;
    int screensaver_lock;
    double idle_time;
@@ -129,6 +130,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
      cfdata->custom_lock_cmd = strdup(e_config->desklock_custom_desklock_cmd);
 
    cfdata->start_locked = e_config->desklock_start_locked;
+   cfdata->lock_on_suspend = e_config->desklock_on_suspend;
    cfdata->auto_lock = e_config->desklock_autolock_idle;
    cfdata->screensaver_lock = e_config->desklock_autolock_screensaver;
    cfdata->idle_time = e_config->desklock_autolock_idle_timeout / 60;
@@ -202,6 +204,10 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 			   &cfdata->start_locked);
    e_widget_disabled_set(ow, !cfdata->use_xscreensaver);
    e_widget_framelist_object_append(of, ow);
+   ow = e_widget_check_add(evas, _("Lock on Suspend"),
+			   &cfdata->lock_on_suspend);
+   e_widget_disabled_set(ow, !cfdata->use_xscreensaver);
+   e_widget_framelist_object_append(of, ow);
    ow = e_widget_check_add(evas, _("Lock when X screensaver activates"),
 			   &cfdata->screensaver_lock);
    e_widget_on_change_hook_set(ow, _basic_screensaver_lock_cb_changed, cfdata);
@@ -239,6 +245,7 @@ static int
 _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    e_config->desklock_start_locked = cfdata->start_locked;
+   e_config->desklock_on_suspend = cfdata->lock_on_suspend;
    e_config->desklock_autolock_idle = cfdata->auto_lock;
    e_config->desklock_autolock_screensaver = cfdata->screensaver_lock;
    e_config->desklock_post_screensaver_time = cfdata->post_screensaver_time;
@@ -252,6 +259,7 @@ _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    return
      ((e_config->desklock_start_locked != cfdata->start_locked) ||
+      (e_config->desklock_on_suspend != cfdata->lock_on_suspend) ||
       (e_config->desklock_autolock_idle != cfdata->auto_lock) ||
       (e_config->desklock_autolock_screensaver != cfdata->screensaver_lock) ||
       (e_config->desklock_post_screensaver_time != cfdata->post_screensaver_time) ||
@@ -473,6 +481,7 @@ static int
 _adv_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    e_config->desklock_start_locked = cfdata->start_locked;
+   e_config->desklock_on_suspend = cfdata->lock_on_suspend;
    e_config->desklock_autolock_idle = cfdata->auto_lock;
    e_config->desklock_autolock_screensaver = cfdata->screensaver_lock;
    e_config->desklock_autolock_idle_timeout = cfdata->idle_time * 60;

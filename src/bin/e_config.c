@@ -622,6 +622,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, desklock_auth_method, INT);
    E_CONFIG_VAL(D, T, desklock_login_box_zone, INT);
    E_CONFIG_VAL(D, T, desklock_start_locked, INT);
+   E_CONFIG_VAL(D, T, desklock_on_suspend, INT);
    E_CONFIG_VAL(D, T, desklock_autolock_screensaver, INT);
    E_CONFIG_VAL(D, T, desklock_post_screensaver_time, DOUBLE);
    E_CONFIG_VAL(D, T, desklock_autolock_idle, INT);
@@ -999,6 +1000,10 @@ e_config_load(void)
 	_e_config_acpi_bindings_add();
 	IFCFGEND;
 
+        IFCFG(0x0137);
+        COPYVAL(desklock_on_suspend);
+        IFCFGEND;
+        
         e_config->config_version = E_CONFIG_FILE_VERSION;   
         _e_config_free(tcfg);
      }

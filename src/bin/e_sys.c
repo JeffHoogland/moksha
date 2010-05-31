@@ -629,6 +629,8 @@ _e_sys_action_do(E_Sys_Action a, char *param)
 	  }
 	else
 	  {
+             if (e_config->desklock_on_suspend) e_desklock_show();
+             
 	     _e_sys_exe = ecore_exe_run(buf, NULL);
 	     od = e_obj_dialog_new(e_container_current_get(e_manager_current_get()),
 				   _("Suspending"), "E", "_sys_suspend");
@@ -655,6 +657,8 @@ _e_sys_action_do(E_Sys_Action a, char *param)
 	  }
 	else
 	  {
+             if (e_config->desklock_on_suspend) e_desklock_show();
+             
 	     _e_sys_exe = ecore_exe_run(buf, NULL);
 	     od = e_obj_dialog_new(e_container_current_get(e_manager_current_get()),
 				   _("Hibernating"), "E", "_sys_hibernate");
