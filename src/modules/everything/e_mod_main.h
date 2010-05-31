@@ -383,7 +383,7 @@ EAPI extern E_Module_Api e_modapi;
 /* #define CHECK_REFS */
 
 #ifdef CHECK_REFS
-extern Eina_List *refd;
+extern Eina_List *_refd;
 #endif
 
 #endif

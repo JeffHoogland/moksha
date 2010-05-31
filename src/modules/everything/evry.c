@@ -53,7 +53,7 @@ static void _evry_view_show(Evry_View *v, int slide);
 static void _evry_view_hide(Evry_View *v, int slide, int destroy);
 static void _evry_view_slide_clear(Evry_View *v);
 
-static void _evry_item_desel(Evry_State *s, Evry_Item *it);
+static void _evry_item_desel(Evry_State *s);
 static void _evry_item_sel(Evry_State *s, Evry_Item *it);
 
 static int  _evry_cb_key_down(void *data, int type, void *event);
@@ -97,10 +97,12 @@ _evry_aggregator_fetch(Evry_State *s)
 
    if (s->aggregator->fetch(s->aggregator, s->input))
      {
-	if (!(l = eina_list_data_find_list(s->cur_plugins, s->aggregator)))
-	  s->cur_plugins = eina_list_prepend(s->cur_plugins, s->aggregator);
-	else
+	l = eina_list_data_find_list(s->cur_plugins, s->aggregator);
+
+	if (l && l->prev)
 	  s->cur_plugins = eina_list_promote_list(s->cur_plugins, l);
+	else if (!l)
+	  s->cur_plugins = eina_list_prepend(s->cur_plugins, s->aggregator);
      }
    else
      {
@@ -383,6 +385,16 @@ evry_hide(int clear)
      }
 
    evry_history_unload();
+
+#ifdef CHECK_REFS
+   Evry_Item *_it;
+   int _cnt = eina_list_count(_refd);
+   Eina_List *_l;
+   printf("__________________________");
+   EINA_LIST_FOREACH(_refd, _l, _it)
+     printf("%d %s\n", _it->ref, _it->label);
+   printf("sum: %d", _cnt);
+#endif
 }
 
 static int
@@ -473,8 +485,8 @@ evry_clear_input(Evry_Plugin *p)
 }
 
 #ifdef CHECK_REFS
-static int item_cnt = 0;
-Eina_List *refd = NULL;
+static int _item_cnt = 0;
+Eina_List *_refd = NULL;
 #endif
 
 Evry_Item *
@@ -505,11 +517,12 @@ evry_item_new(Evry_Item *base, Evry_Plugin *p, const char *label,
    it->ref = 1;
 
 #ifdef CHECK_REFS
-   item_cnt++;
-   refd = eina_list_append(refd, it);
-   printf("%d, %d\t new : %s\n", it->ref, item_cnt, it->label);
+   _item_cnt++;
+   _refd = eina_list_append(_refd, it);
 #endif
-
+#ifdef PRINT_REFS
+   printf("%d, %d\t new : %s\n", it->ref, _item_cnt, it->label);
+#endif
    return it;
 }
 
@@ -520,15 +533,15 @@ evry_item_free(Evry_Item *it)
 
    it->ref--;
 
-#ifdef CHECK_REFS
-    printf("%d, %d\t unref: %s\n", it->ref, item_cnt - 1, it->label);
+#ifdef PRINT_REFS
+    printf("%d, %d\t unref: %s\n", it->ref, _item_cnt - 1, it->label);
 #endif
 
    if (it->ref > 0) return;
 
 #ifdef CHECK_REFS
-   item_cnt--;
-   refd = eina_list_remove(refd, it);
+   _item_cnt--;
+   _refd = eina_list_remove(_refd, it);
 #endif
 
    IF_RELEASE(it->label);
@@ -547,8 +560,8 @@ void
 evry_item_ref(Evry_Item *it)
 {
    it->ref++;
-#ifdef CHECK_REFS
-   printf("%d, %d\t ref : %s\n", it->ref, item_cnt, it->label);
+#ifdef PRINT_REFS
+   printf("%d, %d\t ref : %s\n", it->ref, _item_cnt, it->label);
 #endif
 
 }
@@ -659,41 +672,43 @@ evry_plugin_update(Evry_Plugin *p, int action)
    if (!(sel = s->selector))
      return;
 
-   DBG("update %d %d %s", s->request, p->request, p->name);
-
    if (s->request != p->request)
      return;
 
+   DBG("update %d %d %s", s->request, p->request, p->name);
+
    if (action == EVRY_UPDATE_ADD)
      {
+	/* clear marked items */
 	if (s->sel_items)
 	  {
 	     eina_list_free(s->sel_items);
 	     s->sel_items = NULL;
 	  }
 
-	if (!p->items && !s->trigger_active)
+	if ((!p->items) && (!s->trigger_active))
 	  {
 	     /* remove plugin */
-	     if (!eina_list_data_find(s->cur_plugins, p)) return;
+	     if (!(eina_list_data_find(s->cur_plugins, p)))
+	       return;
 
 	     s->cur_plugins = eina_list_remove(s->cur_plugins, p);
 
-	     _evry_aggregator_fetch(s);
-
-	     if (s->plugin == p)
+	     if (p == s->plugin)
 	       _evry_plugin_select(s, NULL);
 	  }
 	else
 	  {
 	     /* add plugin to current plugins*/
 	     _evry_plugin_list_insert(s, p);
+	  }
 
-	     _evry_aggregator_fetch(s);
+	_evry_aggregator_fetch(s);
 
-	     if ((!s->plugin) || (s->plugin_auto_selected) ||
-		 (!eina_list_data_find_list(s->cur_plugins, s->plugin)))
-	       _evry_plugin_select(s, NULL);
+	/* select first plugin */
+	if ((!s->plugin) || (s->plugin_auto_selected))
+	  {
+	     _evry_plugin_select(s, NULL);
 	  }
 
 	/* plugin is visible */
@@ -702,6 +717,7 @@ evry_plugin_update(Evry_Plugin *p, int action)
 	     (s->plugin == s->aggregator)))
 	  {
 	     _evry_selector_update(sel);
+
 	     if (_evry_view_update(s))
 	       _evry_view_show(s->view, 0);
 
@@ -1412,50 +1428,34 @@ _evry_selector_update(Evry_Selector *sel)
 
    DBG("%p", sel);
 
-   if (s)
+   if (!s)
      {
-	it = s->cur_item;
+	_evry_selector_item_update(sel);
+	return;
+     }
 
-	if (!s->plugin && it)
-	  _evry_item_desel(s, NULL);
-	else if (it && !eina_list_data_find_list(s->plugin->items, it))
-	  _evry_item_desel(s, NULL);
+   if ((it = s->cur_item))
+     {
+	if (!s->plugin || !eina_list_data_find_list(s->plugin->items, it))
+	  _evry_item_desel(s);
 
-	it = s->cur_item;
+	item_changed = EINA_TRUE;
+     }
 
-	if (s->plugin && (!it || s->item_auto_selected))
-	  {
-	     it = NULL;
+   /* get first item */
+   if (s->plugin && ((!s->cur_item) || s->item_auto_selected))
+     {
+	it = eina_list_data_get(s->plugin->items);
+	s->item_auto_selected = EINA_TRUE;
+	_evry_item_sel(s, it);
 
-	     /* get first item */
-	     if (!it && s->plugin->items)
-	       {
-		  it = s->plugin->items->data;
-	       }
-
-	     if (it)
-	       {
-		  s->item_auto_selected = EINA_TRUE;
-		  _evry_item_sel(s, it);
-	       }
-	     item_changed = EINA_TRUE;
-	  }
+	item_changed = EINA_TRUE;
      }
 
    _evry_selector_item_update(sel);
 
-   if (sel == SUBJ_SEL)
-     {
-	if (item_changed)
-	  {
-	     _evry_selector_update_actions(ACTN_SEL);
-	  }
-	else if ((ACTN_SEL)->update_timer)
-	  {
-	     ecore_timer_del((ACTN_SEL)->update_timer);
-	     (ACTN_SEL)->update_timer = NULL;
-	  }
-     }
+   if ((sel == SUBJ_SEL) && (item_changed))
+     _evry_selector_update_actions(ACTN_SEL);
 }
 
 static void
@@ -1592,7 +1592,7 @@ _evry_state_pop(Evry_Selector *sel, int immediate)
 
    s = sel->state;
 
-   _evry_item_desel(s, NULL);
+   _evry_item_desel(s);
 
    if (s->view)
      {
@@ -1713,17 +1713,14 @@ evry_browse_item(Evry_Item *it)
 
 	EINA_LIST_FOREACH(sel->plugins, l, p)
 	  {
-	     if (pref)
-	       {
-		  if ((!strcmp(p->name, pref->name)) ||
-		      (!strcmp(p->name, it->plugin->name)))
-		    continue;
-	       }
-	
-	     if ((p->browse) && (pp = p->browse(p, it)))
-	       {
-		  plugins = eina_list_append(plugins, pp);
-	       }
+	     if (!p->browse)
+	       continue;
+
+	     if ((pref) && (!strcmp(p->name, pref->name)))
+	       continue;
+
+	     if (pp = p->browse(p, it))
+	       plugins = eina_list_append(plugins, pp);
 	  }
      }
 
@@ -1874,12 +1871,6 @@ evry_selectors_switch(int dir, int slide)
 	edje_object_signal_emit(win->o_main, "e,state,object_selector_hide", "e");
 	return 1;
      }
-   /* else if (CUR_SEL == OBJ_SEL && dir > 0)
-    *   {
-    * 	edje_object_signal_emit(win->o_main, "e,state,object_selector_hide", "e");
-    * 	_evry_selector_activate(SUBJ_SEL, (slide * SLIDE_LEFT));
-    * 	return 1;
-    *   } */
    else if (CUR_SEL == OBJ_SEL && dir < 0)
      {
 	_evry_selector_activate(ACTN_SEL, (slide * SLIDE_RIGHT));
@@ -2227,8 +2218,7 @@ _evry_backspace(Evry_Selector *sel)
    Evry_State *s = sel->state;
    int len, val, pos;
 
-   len = strlen(s->inp);
-   if (len == 0)
+   if (!(len = strlen(s->inp)))
      return 0;
 
    pos = evas_string_char_prev_get(s->inp, len, &val);
@@ -2292,8 +2282,6 @@ static int
 _evry_cb_update_timer(void *data)
 {
    Evry_Selector *sel = data;
-
-   DBG("%s", sel->state->input);
 
    _evry_matches_update(sel, 1);
    _evry_selector_update(sel);
@@ -2603,7 +2591,8 @@ _evry_view_hide(Evry_View *v, int slide, int destroy)
 
 	if (slide == SLIDE_RIGHT)
 	  {
-	     edje_object_part_swallow(win->o_main, "list:e.swallow.list2", v->o_list);
+	     edje_object_part_swallow(win->o_main, "list:e.swallow.list2",
+				      v->o_list);
 	     if (destroy)
 	       win->view_freeing = v;
 	     else
@@ -2611,7 +2600,8 @@ _evry_view_hide(Evry_View *v, int slide, int destroy)
 	  }
 	else /* if (slide == SLIDE_LEFT) */
 	  {
-	     edje_object_part_swallow(win->o_main, "list:e.swallow.list", v->o_list);
+	     edje_object_part_swallow(win->o_main, "list:e.swallow.list",
+				      v->o_list);
 	     win->view_clearing = v;
 	  }
 
@@ -2839,66 +2829,64 @@ _evry_matches_update(Evry_Selector *sel, int async)
      {
 	p->request = s->request;
 
+	if (p == s->aggregator)
+	  goto next;
+
 	/* dont wait for async plugin. use their current items */
 	if (!async && p->async_fetch && p->items)
 	  {
 	     s->cur_plugins = eina_list_append(s->cur_plugins, p);
-	     continue;
+	     goto next;
 	  }
 
-	if ((sel->states->next) ||
-	    ((CUR_SEL == SUBJ_SEL) && (win->plugin_dedicated)))
+	if (!((sel->states->next) ||
+	      ((CUR_SEL == SUBJ_SEL) &&
+	       (win->plugin_dedicated))))
 	  {
-	     p->fetch(p, input);
-	     s->cur_plugins = eina_list_append(s->cur_plugins, p);
-	     continue;
+	     /* skip plugins in toplevel which trigger-only */
+	     if ((sel == SUBJ_SEL) &&
+		 (p->config->top_level) &&
+		 (p->config->trigger_only))
+	       goto next;
+
+	     /* skip non-toplevel plugins when input < min_query */
+	     if ((!p->config->top_level) &&
+		 (p->config->min_query > len_inp))
+	       goto next;
 	  }
-
-	/* skip plugins in toplevel which trigger-only */
-	if ((sel == SUBJ_SEL) &&
-	    (p->config->top_level) &&
-	    (p->config->trigger) &&
-	    (p->config->trigger_only))
-	  continue;
-
-	/* skip non-toplevel plugins when input < min_query */
-	if ((!p->config->top_level) &&
-	    (p->config->min_query > len_inp))
-	  continue;
 
 	if (p->fetch(p, input))
-	  {
-	     if (p == s->aggregator)
-	       s->cur_plugins = eina_list_prepend(s->cur_plugins, p);
-	     else
-	       s->cur_plugins = eina_list_append(s->cur_plugins, p);
-	  }
+	  s->cur_plugins = eina_list_append(s->cur_plugins, p);
+
+	continue;
+
+     next:
+	if (s->plugin == p)
+	  s->plugin = NULL;
      }
 
  found:
-   /* _evry_aggregator_fetch(s); */
+   _evry_aggregator_fetch(s);
 
-   if (s->plugin_auto_selected ||
-       (s->plugin && (!eina_list_data_find(s->cur_plugins, s->plugin))))
-     _evry_plugin_select(s, NULL);
-   else
-     _evry_plugin_select(s, s->plugin);
+   if (s->plugin_auto_selected)
+     s->plugin = NULL;
 
-   if (s->plugin)
-     {
-	EINA_LIST_FOREACH(s->plugin->items, l, it)
-	  if (it->marked)
-	    s->sel_items = eina_list_append(s->sel_items, it);
-     }
+   _evry_plugin_select(s, s->plugin);
+
+   if (!s->plugin)
+     return;
+
+   EINA_LIST_FOREACH(s->plugin->items, l, it)
+     if (it->marked)
+       s->sel_items = eina_list_append(s->sel_items, it);
 }
 
 static void
-_evry_item_desel(Evry_State *s, Evry_Item *it)
+_evry_item_desel(Evry_State *s)
 {
-   if (!it)
-     it = s->cur_item;
+   Evry_Item *it = s->cur_item;
 
-   if (s->cur_item)
+   if (it)
      {
 	it->selected = EINA_FALSE;
 	evry_item_free(it);
@@ -2912,7 +2900,7 @@ _evry_item_sel(Evry_State *s, Evry_Item *it)
 {
    if (s->cur_item == it) return;
 
-   _evry_item_desel(s, NULL);
+   _evry_item_desel(s);
 
    evry_item_ref(it);
    it->selected = EINA_TRUE;
@@ -2923,18 +2911,17 @@ _evry_item_sel(Evry_State *s, Evry_Item *it)
 static void
 _evry_plugin_select(Evry_State *s, Evry_Plugin *p)
 {
-   if (!s || !s->cur_plugins) return;
+   if (!s) return;
 
-   if (p) s->plugin_auto_selected = EINA_FALSE;
-
-   if (!p && s->cur_plugins)
+   if (p)
      {
-	p = s->cur_plugins->data;
+	s->plugin_auto_selected = EINA_FALSE;
+     }
+   else
+     {
+	p = eina_list_data_get(s->cur_plugins);
 	s->plugin_auto_selected = EINA_TRUE;
      }
-
-   if (s->plugin != p)
-     _evry_item_desel(s, NULL);
 
    s->plugin = p;
 }
@@ -2943,6 +2930,12 @@ void
 evry_plugin_select(Evry_Plugin *p)
 {
    if (!p) return;
+
+   if (!p->state)
+     {
+	ERR("no state!");
+	return;
+     }
 
    _evry_plugin_select(p->state, p);
 
@@ -2953,14 +2946,16 @@ static void
 _evry_plugin_list_insert(Evry_State *s, Evry_Plugin *p)
 {
    Eina_List *l;
-   Evry_Plugin *plugin;
+   Evry_Plugin *p2;
 
-   EINA_LIST_FOREACH(s->cur_plugins, l, plugin)
-     if (p == plugin)
-       return;
-     else
-       if (p->config->priority < plugin->config->priority)
-       break;
+   EINA_LIST_FOREACH(s->cur_plugins, l, p2)
+     {
+	if (p == p2)
+	  return;
+
+	if (p->config->priority < p2->config->priority)
+	  break;
+     }
 
    if (l)
      s->cur_plugins = eina_list_prepend_relative_list(s->cur_plugins, p, l);

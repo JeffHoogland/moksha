@@ -218,11 +218,10 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    Evry_Item *it;
    printf("___________________________________________\n");
 
-   EINA_LIST_FREE(refd, it)
+   EINA_LIST_FREE(_refd, it)
      printf("%d %s\n", it->ref, it->label);
 
 #endif
-
 
    return 1;
 }
