@@ -220,10 +220,14 @@ static void _e_dbus_cb_vol_unmounted_before_eject(void *user_data, void *method_
 static int  _e_dbus_vb_vol_ejecting_after_unmount(void *data);
 static void _e_dbus_cb_vol_ejected(void *user_data, void *method_return, DBusError *error);
 static int  _e_dbus_format_error_msg(char **buf, E_Volume *v, DBusError *error);
+static void _hal_test(void *data, DBusMessage *msg, DBusError *error);
+static int  _e_hal_poll(void *data);
 
 static int  _e_dbus_vol_mount_timeout(void *data);
 static int  _e_dbus_vol_unmount_timeout(void *data);
 static int  _e_dbus_vol_eject_timeout(void *data);
+
+
 
 EAPI E_Storage *e_storage_add(const char *udi);
 EAPI void       e_storage_del(const char *udi);
@@ -239,7 +243,7 @@ EAPI void      e_volume_eject(E_Volume *v);
 
 /* local subsystem globals */
 static Ecore_Ipc_Server *_e_ipc_server = NULL;
-
+static Ecore_Poller *_hal_poll = NULL;
 static Eina_List *_e_dirs = NULL;
 static Eina_List *_e_fops = NULL;
 static int _e_sync_num = 0;
@@ -285,58 +289,83 @@ main(int argc, char **argv)
    ecore_init();
    eina_init();
    ecore_app_args_set(argc, (const char **)argv);
-   ecore_file_init();
-   ecore_ipc_init();
 
-   ecore_event_handler_add(ECORE_EXE_EVENT_DATA, _e_fm_slave_data_cb, NULL);
-   ecore_event_handler_add(ECORE_EXE_EVENT_ERROR, _e_fm_slave_error_cb, NULL);
-   ecore_event_handler_add(ECORE_EXE_EVENT_DEL, _e_fm_slave_del_cb, NULL);
-
-   _e_storage_volume_edd_init();
    e_dbus_init();
    e_hal_init();
    _e_dbus_conn = e_dbus_bus_get(DBUS_BUS_SYSTEM);
+   /* previously, this assumed that if dbus was running, hal was running. */
    if (_e_dbus_conn)
-     {
-	e_hal_manager_get_all_devices(_e_dbus_conn, _e_dbus_cb_dev_all, NULL);
-	e_hal_manager_find_device_by_capability(_e_dbus_conn, "storage",
-						_e_dbus_cb_dev_store, NULL);
-	e_hal_manager_find_device_by_capability(_e_dbus_conn, "volume",
-						_e_dbus_cb_dev_vol, NULL);
-	
-	e_dbus_signal_handler_add(_e_dbus_conn, E_HAL_SENDER,
-				  E_HAL_MANAGER_PATH,
-				  E_HAL_MANAGER_INTERFACE,
-				  "DeviceAdded", _e_dbus_cb_dev_add, NULL);
-	e_dbus_signal_handler_add(_e_dbus_conn, E_HAL_SENDER,
-				  E_HAL_MANAGER_PATH,
-				  E_HAL_MANAGER_INTERFACE,
-				  "DeviceRemoved", _e_dbus_cb_dev_del, NULL);
-	e_dbus_signal_handler_add(_e_dbus_conn, E_HAL_SENDER,
-				  E_HAL_MANAGER_PATH,
-				  E_HAL_MANAGER_INTERFACE,
-				  "NewCapability", _e_dbus_cb_cap_add, NULL);
-     }
+     e_dbus_introspect(_e_dbus_conn, E_HAL_SENDER, E_HAL_MANAGER_PATH, _hal_test, NULL);
+
+   ecore_file_init();
+   ecore_ipc_init();
+   _e_storage_volume_edd_init();
+   _e_ipc_init();
    
-   if (_e_ipc_init()) ecore_main_loop_begin();
+   ecore_event_handler_add(ECORE_EXE_EVENT_DATA, _e_fm_slave_data_cb, NULL);
+   ecore_event_handler_add(ECORE_EXE_EVENT_ERROR, _e_fm_slave_error_cb, NULL);
+   ecore_event_handler_add(ECORE_EXE_EVENT_DEL, _e_fm_slave_del_cb, NULL);
    
+   ecore_main_loop_begin();
+  
    if (_e_ipc_server)
      {
-	ecore_ipc_server_del(_e_ipc_server);
-	_e_ipc_server = NULL;
+        ecore_ipc_server_del(_e_ipc_server);
+        _e_ipc_server = NULL;
      }
 
-   if (_e_dbus_conn) e_dbus_connection_close(_e_dbus_conn);
-   e_hal_shutdown();
-   e_dbus_shutdown();
+   if (_e_dbus_conn)
+     e_dbus_connection_close(_e_dbus_conn);
    _e_storage_volume_edd_shutdown();
    
    ecore_ipc_shutdown();
    ecore_file_shutdown();
+   e_hal_shutdown();
+   e_dbus_shutdown();
    eina_shutdown();
    ecore_shutdown();
+}
+
+static int
+_e_hal_poll(void *data)
+{
+   e_dbus_introspect(_e_dbus_conn, E_HAL_SENDER, E_HAL_MANAGER_PATH, _hal_test, NULL);
+   return 1;
+}
+
+static void
+_hal_test(void *data, DBusMessage *msg, DBusError *error)
+{
+
+   if (dbus_error_is_set(error))
+     {
+       dbus_error_free(error);
+       if (!_hal_poll)
+         _hal_poll = ecore_poller_add(ECORE_POLLER_CORE, 256, _e_hal_poll, NULL);
+       return;
+     }
+   if (_hal_poll)
+     _hal_poll = ecore_poller_del(_hal_poll);
+
+
+   e_hal_manager_get_all_devices(_e_dbus_conn, _e_dbus_cb_dev_all, NULL);
+   e_hal_manager_find_device_by_capability(_e_dbus_conn, "storage",
+        _e_dbus_cb_dev_store, NULL);
+   e_hal_manager_find_device_by_capability(_e_dbus_conn, "volume",
+        _e_dbus_cb_dev_vol, NULL);
    
-   return 0;
+   e_dbus_signal_handler_add(_e_dbus_conn, E_HAL_SENDER,
+        E_HAL_MANAGER_PATH,
+        E_HAL_MANAGER_INTERFACE,
+        "DeviceAdded", _e_dbus_cb_dev_add, NULL);
+   e_dbus_signal_handler_add(_e_dbus_conn, E_HAL_SENDER,
+        E_HAL_MANAGER_PATH,
+        E_HAL_MANAGER_INTERFACE,
+        "DeviceRemoved", _e_dbus_cb_dev_del, NULL);
+   e_dbus_signal_handler_add(_e_dbus_conn, E_HAL_SENDER,
+        E_HAL_MANAGER_PATH,
+        E_HAL_MANAGER_INTERFACE,
+        "NewCapability", _e_dbus_cb_cap_add, NULL);
 }
 
 static void
@@ -1187,17 +1216,17 @@ _e_ipc_init(void)
    sdir = getenv("E_IPC_SOCKET");
    if (!sdir)
      {
-	printf("The E_IPC_SOCKET environment variable is not set. This is\n"
-	       "exported by Enlightenment to all processes it launches.\n"
-	       "This environment variable must be set and must point to\n"
-	       "Enlightenment's IPC socket file (minus port number).\n");
-	return 0;
+        printf("The E_IPC_SOCKET environment variable is not set. This is\n"
+               "exported by Enlightenment to all processes it launches.\n"
+               "This environment variable must be set and must point to\n"
+               "Enlightenment's IPC socket file (minus port number).\n");
+        return 0;
      }
    _e_ipc_server = ecore_ipc_server_connect(ECORE_IPC_LOCAL_SYSTEM, sdir, 0, NULL);
    if (!_e_ipc_server)
      {
-	printf("Cannot connect to enlightenment - abort\n");
-	return 0;
+        printf("Cannot connect to enlightenment - abort\n");
+        return 0;
      }
    
    ecore_event_handler_add(ECORE_IPC_EVENT_SERVER_ADD, _e_ipc_cb_server_add, NULL);
