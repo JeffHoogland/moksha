@@ -2871,9 +2871,10 @@ _evry_matches_update(Evry_Selector *sel, int async)
 	  }
 
 	if (p->fetch(p, input))
-	  s->cur_plugins = eina_list_append(s->cur_plugins, p);
-
-	continue;
+	  {
+	     s->cur_plugins = eina_list_append(s->cur_plugins, p);
+	     continue;
+	  }
 
      next:
 	if (s->plugin == p)
