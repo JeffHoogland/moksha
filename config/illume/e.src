@@ -9,7 +9,7 @@ group "E_Config" struct {
   value "border_shade_animate" int: 1;
   value "border_shade_transition" int: 3;
   value "border_shade_speed" double: 3000.0000000000000000000000000;
-  value "framerate" double: 30.0000000000000000000000000;
+  value "framerate" double: 60.0000000000000000000000000;
   value "priority" int: 1;
   value "image_cache" int: 2048;
   value "font_cache" int: 512;

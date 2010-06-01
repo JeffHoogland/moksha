@@ -8,6 +8,7 @@ struct _E_Config_Dialog_Data
    double scroll_speed, fast_mouse_move_threshhold;
    double click_drag_timeout;
    int autoscroll_margin, autoscroll_cursor_margin;
+   const char *default_system_menu;
 };
 
 /* local function prototypes */
@@ -58,6 +59,11 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
 static void
 _fill_data(E_Config_Dialog_Data *cfdata __UNUSED__)
 {
+   if (e_config->default_system_menu)
+     cfdata->default_system_menu = 
+     eina_stringshare_add(e_config->default_system_menu);
+   else
+     cfdata->default_system_menu = NULL;
    cfdata->show_favs = e_config->menu_favorites_show;
    cfdata->show_apps = e_config->menu_apps_show;
    cfdata->show_name = e_config->menu_eap_name_show;
@@ -74,6 +80,8 @@ _fill_data(E_Config_Dialog_Data *cfdata __UNUSED__)
 static void
 _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
+   if (cfdata->default_system_menu) 
+     eina_stringshare_del(cfdata->default_system_menu);
    E_FREE(cfdata);
 }
 
@@ -125,6 +133,148 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
 	   (e_config->menu_eap_comment_show != cfdata->show_comment));
 }
 
+static void
+check_menu_dir(const char *dir, Eina_List **menus)
+{
+   char buf[PATH_MAX], *file;
+   Eina_List *files;
+   
+   snprintf(buf, sizeof(buf), "%s/menus", dir);
+   files = ecore_file_ls(buf);
+   EINA_LIST_FREE(files, file)
+     {
+        if (e_util_glob_match(file, "*.menu"))
+          {
+             snprintf(buf, sizeof(buf), "%s/menus/%s", dir, file);
+             *menus = eina_list_append(*menus, strdup(buf));
+          }
+        free(file);
+     }
+}
+                            
+void
+get_menus(Eina_List **menus)
+{
+   char buf[PATH_MAX];
+   const char *dirs[] =
+     {
+        "/etc/xdg",
+        "/usr/etc/xdg",
+        "/usr/local/etc/xdg",
+        "/usr/opt/etc/xdg",
+        "/usr/opt/xdg",
+        "/usr/local/opt/etc/xdg",
+        "/usr/local/opt/xdg",
+        "/opt/etc/xdg",
+        "/opt/xdg",
+        // FIXME: add more "known locations"
+        NULL
+     };
+   int i, newdir;
+   
+   for (i = 0; dirs[i]; i++)
+     check_menu_dir(dirs[i], menus);
+   newdir = 1;
+   snprintf(buf, sizeof(buf), "%s/etc/xdg", e_prefix_get());
+   for (i = 0; dirs[i]; i++)
+     {
+        if (!strcmp(dirs[i], buf))
+          {
+             newdir = 0;
+             break;
+          }
+     }
+   if (newdir) check_menu_dir(buf, menus);
+}
+
+static Evas_Object *
+_create_menus_list(Evas *evas, E_Config_Dialog_Data *cfdata)
+{
+   Eina_List *menus = NULL;
+   Evas_Object *ob;
+   char *file;
+   int sel = -1, i = 0;
+   
+   get_menus(&menus);
+   ob = e_widget_ilist_add(evas, 32 * e_scale, 32 * e_scale, 
+                           &(cfdata->default_system_menu));
+   e_widget_size_min_set(ob, 200 * e_scale, 200 * e_scale);
+   e_widget_ilist_freeze(ob);
+   
+   EINA_LIST_FREE(menus, file)
+     {
+        char buf[PATH_MAX], *p, *p2, *tlabel, *tdesc;
+        const char *label;
+        
+        label = file;
+        tlabel = NULL;
+        tdesc = NULL;
+        if (!strcmp("/etc/xdg/menus/applications.menu", file))
+          {
+             label = _("System Default");
+             if (!cfdata->default_system_menu) sel = i;
+          }
+        else
+          {
+             p = strrchr(file, '/');
+             if (p)
+               {
+                  p++;
+                  p2 = strchr(p, '-');
+                  if (!p2) p2 = strrchr(p, '.');
+                  if (p2)
+                    {
+                       tlabel = malloc(p2 - p + 1);
+                       if (tlabel)
+                         {
+                            eina_strlcpy(tlabel, p, p2 - p + 1);
+                            tlabel[0] = toupper(tlabel[0]);
+                            if (*p2 == '-')
+                              {
+                                 p2++;
+                                 p = strrchr(p2, '.');
+                                 if (p)
+                                   {
+                                      tdesc = malloc(p - p2 + 1);
+                                      if (tdesc)
+                                        {
+                                           eina_strlcpy(tdesc, p2, p - p2 + 1);
+                                           tdesc[0] = toupper(tdesc[0]);
+                                           snprintf(buf, sizeof(buf), "%s (%s)", tlabel, tdesc);
+                                        }
+                                      else
+                                        snprintf(buf, sizeof(buf), "%s", tlabel);
+                                   }
+                                 else
+                                   snprintf(buf, sizeof(buf), "%s", tlabel);
+                              }
+                            else
+                              snprintf(buf, sizeof(buf), "%s", tlabel);
+                            label = buf;
+                         }
+                    }
+                  else
+                    label = p;
+               }
+             if (cfdata->default_system_menu)
+               {
+                  if (!strcmp(cfdata->default_system_menu, file)) sel = i;
+               }
+          }
+        e_widget_ilist_append(ob, NULL, label, NULL, NULL, file);
+        if (tlabel) free(tlabel);
+        if (tdesc) free(tdesc);
+        free(file);
+        i++;
+     }
+   e_widget_ilist_go(ob);
+   e_widget_ilist_thaw(ob);
+   
+   if (sel >= 0) e_widget_ilist_selected_set(ob, sel);
+   
+   return ob;
+}
+
 static Evas_Object *
 _adv_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
@@ -138,6 +288,10 @@ _adv_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *c
    ow = e_widget_check_add(evas, _("Applications"), &(cfdata->show_apps));
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Main Menu"), ol, 1, 0, 1, 0, 
+                                 0.5, 0.0);
+
+   ol = _create_menus_list(evas, cfdata);
+   e_widget_toolbook_page_append(otb, NULL, _("System"), ol, 1, 0, 1, 0, 
                                  0.5, 0.0);
 
    ol = e_widget_list_add(evas, 0, 0);
@@ -209,6 +363,19 @@ _adv_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    e_config->menus_click_drag_timeout = cfdata->click_drag_timeout;
    e_config->menu_autoscroll_margin = cfdata->autoscroll_margin;
    e_config->menu_autoscroll_cursor_margin = cfdata->autoscroll_cursor_margin;
+   if (cfdata->default_system_menu)
+     {
+        if (e_config->default_system_menu)
+          eina_stringshare_del(e_config->default_system_menu);
+        e_config->default_system_menu = 
+          eina_stringshare_add(cfdata->default_system_menu);
+     }
+   else
+     {
+        if (e_config->default_system_menu)
+          eina_stringshare_del(e_config->default_system_menu);
+        e_config->default_system_menu = NULL;
+     }
    e_config_save_queue();
    return 1;
 }
@@ -237,5 +404,9 @@ _adv_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata
 	   (e_config->menu_autoscroll_margin != cfdata->autoscroll_margin) ||
 	   (e_config->menu_autoscroll_cursor_margin != cfdata->autoscroll_cursor_margin) ||
 	   (e_config->menus_scroll_speed != scroll_speed) ||
-	   (e_config->menus_fast_mouse_move_threshhold != move_threshold));
+	   (e_config->menus_fast_mouse_move_threshhold != move_threshold) ||
+           (!((cfdata->default_system_menu) &&
+              (e_config->default_system_menu) &&
+              (!strcmp(cfdata->default_system_menu,
+                       e_config->default_system_menu)))));
 }
