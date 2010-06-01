@@ -344,7 +344,7 @@ _plugin_config_cb(void *data, void *data2)
 {
    Plugin_Page *page = data;
    Evry_Plugin *p = page->cur->plugin;
-   
+
    if (!p) return;
    printf(" %s\n", p->name);
 
@@ -636,7 +636,7 @@ evry_collection_conf_dialog(E_Container *con, const char *params)
    v->basic.apply_cfdata = _cat_basic_apply;
 
    snprintf(title, sizeof(title), "%s: %s", _("Everything Collection"), p->name);
-   
+
    cfd = e_config_dialog_new(con, title, p->config_path, p->config_path,
 			     EVRY_ITEM(p)->icon, 0, v, p);
 
@@ -650,10 +650,40 @@ _cat_create_data(E_Config_Dialog *cfd)
 {
    E_Config_Dialog_Data *cfdata = NULL;
    Evry_Plugin *p = cfd->data;
-   
+   Plugin_Config *pc, *pc2;
+   Eina_List *l, *ll;
+
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    cfdata->page[0].collection = EINA_TRUE;
+
+   EINA_LIST_FOREACH(evry_conf->conf_subjects, l, pc)
+     {
+	if (pc->name == p->name)
+	  continue;
+
+	if (!strcmp(pc->name, "All") ||
+	    !strcmp(pc->name, "Actions") ||
+	    !strcmp(pc->name, "Text") ||
+	    !strcmp(pc->name, "Calculator") ||
+	    !strcmp(pc->name, "Spell Checker") ||
+	    !strcmp(pc->name, "Plugins"))
+	  continue;
+
+	EINA_LIST_FOREACH(p->config->plugins, ll, pc2)
+	  if (pc->name == pc2->name)
+	    break;
+
+	if (pc2)
+	  continue;
+
+	pc2 = E_NEW(Plugin_Config, 1);
+	pc2->name = eina_stringshare_ref(pc->name);
+	pc2->view_mode = VIEW_MODE_NONE;
+	p->config->plugins = eina_list_append(p->config->plugins, pc2);
+     }
+
    cfdata->page[0].configs = eina_list_clone(p->config->plugins);
+
    return cfdata;
 }
 
@@ -675,7 +705,7 @@ _cat_basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
    if (p->config->plugins)
      eina_list_free(p->config->plugins);
-   
+
    p->config->plugins = eina_list_clone(cfdata->page[0].configs);
 
    pc = cfdata->page[i].cur;
@@ -700,32 +730,6 @@ _cat_basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
    e_config_save_queue();
    return 1;
-}
-
-static void
-_cat_plugin_move(Eina_List *plugins, Evas_Object *list, int dir)
-{
-   int sel;
-   Eina_List *l1, *l2;
-
-   sel = e_widget_ilist_selected_get(list);
-
-   Plugin_Config *pc;
-   int prio = 0;
-
-   l1 = eina_list_nth_list(plugins, sel);
-   l2 = eina_list_nth_list(plugins, sel + dir);
-
-   if (!l1 || !l2) return;
-   pc = l1->data;
-   l1->data = l2->data;
-   l2->data = pc;
-
-   _fill_list(plugins, list, 0);
-   e_widget_ilist_selected_set(list, sel + dir);
-
-   EINA_LIST_FOREACH(plugins, l1, pc)
-     pc->priority = prio++;
 }
 
 static Evas_Object *
