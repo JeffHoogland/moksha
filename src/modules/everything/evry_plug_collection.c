@@ -151,7 +151,7 @@ evry_plug_collection_init(void)
    plugin_config.min_query = 0;
    plugin_config.top_level = EINA_TRUE;
    plugin_config.aggregate = EINA_FALSE;
-   plugin_config.view_mode = VIEW_MODE_NONE;
+   plugin_config.view_mode = VIEW_MODE_DETAIL;
 
    COLLECTION_PLUGIN = evry_type_register("COLLECTION_PLUGIN");
 

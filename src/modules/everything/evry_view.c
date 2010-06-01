@@ -541,7 +541,6 @@ _e_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
    Smart_Data *sd = evas_object_smart_data_get(obj);
    sd->x = x;
    sd->y = y;
-   /* printf("move %p %d %d\n", sd, x, y); */
 
    _e_smart_reconfigure(obj);
 }
@@ -1497,23 +1496,30 @@ _view_create(Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
    View *v;
    Ecore_Event_Handler *h;
 
-   if (!s->plugin)
-     return NULL;
-
    v = E_NEW(View, 1);
    v->view = *view;
    v->view.clear_timer = NULL;
    v->state = s;
    v->evas = evas_object_evas_get(swallow);
 
-   if ((s->selector->states->next) &&
-       ((s->plugin->config->view_mode < 0) ||
-	(!strcmp(s->plugin->name, N_("All")))))
-     v->mode = parent->mode;
-   else if (s->plugin->config->view_mode >= 0)
-     v->mode = s->plugin->config->view_mode;
+   if (s->plugin)
+     {
+	if ((s->selector->states->next) &&
+	    ((s->plugin->config->view_mode < 0) ||
+	     (!strcmp(s->plugin->name, N_("All")))))
+	  v->mode = parent->mode;
+	else if (s->plugin->config->view_mode >= 0)
+	  v->mode = s->plugin->config->view_mode;
+	else
+	  v->mode = evry_conf->view_mode;
+     }
    else
-     v->mode = evry_conf->view_mode;
+     {
+	if (s->selector->states->next)
+	  v->mode = parent->mode;
+	else
+	  v->mode = evry_conf->view_mode;
+     }
 
    v->plugin = s->plugin;
 

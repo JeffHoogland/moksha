@@ -711,16 +711,18 @@ evry_plugin_update(Evry_Plugin *p, int action)
 	     _evry_plugin_select(s, NULL);
 	  }
 
-	/* plugin is visible */
-	if ((sel->state == s) &&
+	if ((s->plugin && sel->state == s) &&
+	    /* plugin is current */
 	    ((s->plugin == p) ||
-	     (s->plugin == s->aggregator)))
+	     /* plugin items are shown in aggregator */
+	     ((s->plugin == s->aggregator) && p->config->aggregate)))
 	  {
 	     _evry_selector_update(sel);
 
 	     if (_evry_view_update(s))
+	       /* XXX when there is a case where view disappears
+		  check this one! is swallow always visible ? */
 	       _evry_view_show(s->view, 0);
-
 	  }
 
 	/* switch back to subject selector when no current items */
@@ -842,23 +844,25 @@ _evry_window_new(E_Zone *zone, E_Zone_Edge edge)
      }
    else
      {
+	int to_side = 0;
+
 	switch (edge)
 	  {
 	   case E_ZONE_EDGE_TOP_LEFT:
-	      x = 3 - offset_s;
-	      y = 3 - offset_s;
+	      x = to_side - offset_s;
+	      y = to_side - offset_s;
 	      break;
 	   case E_ZONE_EDGE_TOP_RIGHT:
-	      x = zone->w - (mw + offset_s + 3);
-	      y = 3 - offset_s;
+	      x = zone->w - (mw + offset_s + to_side);
+	      y = to_side - offset_s;
 	      break;
 	   case E_ZONE_EDGE_BOTTOM_RIGHT:
-	      x = zone->w - (mw + offset_s + 3);
-	      y = zone->h - (mh + offset_s + 3);
+	      x = zone->w - (mw + offset_s + to_side);
+	      y = zone->h - (mh + offset_s + to_side);
 	      break;
 	   case E_ZONE_EDGE_BOTTOM_LEFT:
-	      x = 3 - offset_s;
-	      y = zone->h - (mh + offset_s + 3);
+	      x = to_side - offset_s;
+	      y = zone->h - (mh + offset_s + to_side);
 	      break;
 
 	   default:
