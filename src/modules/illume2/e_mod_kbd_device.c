@@ -50,19 +50,19 @@ e_mod_kbd_device_init(void)
 
    /* setup dbus signal handlers for when a device gets added/removed/changed */
    _dev_add = 
-     e_dbus_signal_handler_add(_dbus_conn, "org.freedesktop.Hal", 
-                               "/org/freedesktop/Hal/Manager", 
-                               "org.freedesktop.Hal.Manager", 
+     e_dbus_signal_handler_add(_dbus_conn, E_HAL_SENDER, 
+                               E_HAL_MANAGER_PATH, 
+                               E_HAL_MANAGER_INTERFACE, 
                                "DeviceAdded", _e_mod_kbd_device_dbus_add, NULL);
    _dev_del = 
-     e_dbus_signal_handler_add(_dbus_conn, "org.freedesktop.Hal", 
-                               "/org/freedesktop/Hal/Manager", 
-                               "org.freedesktop.Hal.Manager", 
+     e_dbus_signal_handler_add(_dbus_conn, E_HAL_SENDER, 
+                               E_HAL_MANAGER_PATH, 
+                               E_HAL_MANAGER_INTERFACE, 
                                "DeviceRemoved", _e_mod_kbd_device_dbus_del, NULL);
    _dev_chg = 
-     e_dbus_signal_handler_add(_dbus_conn, "org.freedesktop.Hal", 
-                               "/org/freedesktop/Hal/Manager", 
-                               "org.freedesktop.Hal.Manager", 
+     e_dbus_signal_handler_add(_dbus_conn, E_HAL_SENDER, 
+                               E_HAL_MANAGER_PATH, 
+                               E_HAL_MANAGER_INTERFACE, 
                                "NewCapability", _e_mod_kbd_device_dbus_chg, NULL);
 #endif
 }

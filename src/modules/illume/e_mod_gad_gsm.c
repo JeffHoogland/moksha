@@ -140,9 +140,9 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    if (conn)
      {
 	namech_h = e_dbus_signal_handler_add(conn,
-					     "org.freedesktop.DBus",
-					     "/org/freedesktop/DBus",
-					     "org.freedesktop.DBus",
+					     E_DBUS_FDO_BUS,
+					     E_DBUS_FDO_PATH,
+					     E_DBUS_FDO_INTERFACE,
 					     "NameOwnerChanged",
 					     name_changed, inst);
 	changed_h = e_dbus_signal_handler_add(conn,
@@ -161,9 +161,9 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    if (conn_system)
      {
 	namech_system_h = e_dbus_signal_handler_add(conn_system,
-						    "org.freedesktop.DBus",
-						    "/org/freedesktop/DBus",
-						    "org.freedesktop.DBus",
+						    E_DBUS_FDO_BUS,
+						    E_DBUS_FDO_PATH,
+						    E_DBUS_FDO_INTERFACE,
 						    "NameOwnerChanged",
 						    name_changed, inst);
 	changed_fso_h = e_dbus_signal_handler_add(conn_system,
