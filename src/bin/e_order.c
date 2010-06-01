@@ -211,9 +211,8 @@ _e_order_read(E_Order *eo)
 		    }
 		  if (len > 0)
 		    {
-		       Efreet_Desktop *desktop;
+		       Efreet_Desktop *desktop = NULL;
 		       
-		       desktop = NULL;
 		       if (buf[0] == '/')
 		         desktop = efreet_desktop_get(buf);
 		       if (!desktop)
