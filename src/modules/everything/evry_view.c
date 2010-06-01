@@ -370,7 +370,7 @@ _e_smart_reconfigure_do(void *data)
 	     col = 2;
 	     aspect_w = width * 2;
 	  }
-	else if ((cnt < 9) && (sd->h > sd->w))
+	else if ((cnt < 9) && (sd->w < (double)sd->h * 1.5))
 	  {
 	     col = 2;
 	     aspect_w = width * 3;
@@ -947,7 +947,7 @@ _view_update(Evry_View *view)
 	return 1;
      }
 
-   if (p != v->plugin)
+   if (p != v->plugin && (v->plugin || (v->mode == VIEW_MODE_NONE)))
      {
 	if (p->config->view_mode != v->mode)
 	  {
