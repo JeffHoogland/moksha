@@ -72,7 +72,7 @@ e_modapi_init(E_Module *m)
    evry_plug_text_init();
    evry_view_init();
    evry_view_help_init();
-
+   evry_gadget_init();
 
    /* add module supplied action */
    act = e_action_add("everything");
@@ -173,8 +173,8 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    e_datastore_del("everything_loaded");
    E_FREE(_api);
 
+   evry_gadget_shutdown();
    evry_shutdown();
-
    evry_view_shutdown();
    evry_view_help_shutdown();
    evry_plug_clipboard_shutdown();

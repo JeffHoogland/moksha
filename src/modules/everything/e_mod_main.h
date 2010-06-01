@@ -299,7 +299,7 @@ void  evry_plug_collection_shutdown(void);
 
 int   evry_init(void);
 int   evry_shutdown(void);
-int   evry_show(E_Zone *zone, E_Zone_Edge edge, const char *params);
+Evry_Window *evry_show(E_Zone *zone, E_Zone_Edge edge, const char *params);
 void  evry_hide(int clear);
 
 int   evry_plug_actions_init();
@@ -318,6 +318,10 @@ void  evry_plugin_action(int finished);
 int   evry_state_push(Evry_Selector *sel, Eina_List *plugins);
 int   evry_selectors_switch(int dir, int slide);
 int   evry_view_toggle(Evry_State *s, const char *trigger);
+
+int evry_gadget_init(void);
+void evry_gadget_shutdown(void);
+
 
 Ecore_Event_Handler *evry_event_handler_add(int type, int (*func) (void *data, int type, void *event), const void *data);
 

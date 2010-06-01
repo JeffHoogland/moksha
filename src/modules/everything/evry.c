@@ -168,7 +168,7 @@ _cb_hide_timer(void *data)
    return 0;
 }
 
-int
+Evry_Window *
 evry_show(E_Zone *zone, E_Zone_Edge edge, const char *params)
 {
    E_OBJECT_CHECK_RETURN(zone, 0);
@@ -180,14 +180,14 @@ evry_show(E_Zone *zone, E_Zone_Edge edge, const char *params)
 	Evry_Plugin *p;
 
 	if (win->level > 0)
-	  return 1;
+	  return win;
 
 	if (!(params) &&
 	    (CUR_SEL == OBJ_SEL) &&
 	    ((CUR_SEL)->state && (CUR_SEL)->state->cur_item))
 	  {
 	     _evry_selectors_shift(1);
-	     return 1;
+	     return win;
 	  }
 
 	evry_hide(1);
@@ -201,7 +201,7 @@ evry_show(E_Zone *zone, E_Zone_Edge edge, const char *params)
 	     _evry_selector_update(CUR_SEL);
 	     _evry_view_update((CUR_SEL)->state);
 	  }
-	return 1;
+	return win;
      }
 
    input_window = ecore_x_window_input_new(zone->container->win, 0, 0, 1, 1);
@@ -210,7 +210,7 @@ evry_show(E_Zone *zone, E_Zone_Edge edge, const char *params)
    /* if (edge == E_ZONE_EDGE_NONE) */
      {
 	if (!e_grabinput_get(input_window, 0, input_window))
-	  return 0;
+	  return NULL;
      }
 
    win = _evry_window_new(zone, edge);
@@ -219,7 +219,7 @@ evry_show(E_Zone *zone, E_Zone_Edge edge, const char *params)
 	ecore_x_window_free(input_window);
 	e_grabinput_release(input_window, input_window);
 	input_window = 0;
-	return 0;
+	return NULL;
      }
 
    win->visible = EINA_FALSE;
@@ -286,7 +286,6 @@ evry_show(E_Zone *zone, E_Zone_Edge edge, const char *params)
 
    e_popup_layer_set(win->popup, 255);
    e_popup_show(win->popup);
-   ecore_x_window_raise(input_window);
    _evry_selector_subjects_get(params);
    _evry_selector_update(SUBJ_SEL);
 
@@ -298,7 +297,7 @@ evry_show(E_Zone *zone, E_Zone_Edge edge, const char *params)
    else
      _evry_selector_activate(SUBJ_SEL, 0);
 
-   return 1;
+   return win;
 }
 
 void
@@ -877,7 +876,8 @@ _evry_window_new(E_Zone *zone, E_Zone_Edge edge)
 	mh += offset_s*2;
      }
 
-   ecore_x_window_move_resize(input_window, x, y, mw, mh);
+   /* ecore_x_window_reparent(input_window, popup->evas_win, 0,0);
+    * ecore_x_window_resize(input_window, mw, mh); */
 
    e_popup_move_resize(popup, x, y, mw, mh);
 
@@ -958,7 +958,10 @@ _evry_cb_mouse(void *data, int type, void *event)
 	if ((win->mouse_button == 3) &&
 	    (s = (CUR_SEL)->state) && (s->cur_item) &&
 	    (CHECK_TYPE(s->cur_item, EVRY_TYPE_FILE)) &&
-	    (!E_INSIDE(ev->x, ev->y, pop->zone->x, pop->zone->y, pop->w, pop->h)))
+	    (!E_INSIDE(ev->x, ev->y,
+		       pop->x + pop->zone->x,
+		       pop->y + pop->zone->y,
+		       pop->w, pop->h)))
 	  {
 	     const char *drag_types[] = { "text/uri-list" };
 	     E_Drag *d;
@@ -981,12 +984,14 @@ _evry_cb_mouse(void *data, int type, void *event)
 	     sel_length += s_len + 2;
 
 	     d = e_drag_new(e_container_current_get(e_manager_current_get()),
-			    ev->x, ev->y, drag_types, 1, sel, sel_length, NULL,
+			    ev->x + pop->x,
+			    ev->y + pop->y,
+			    drag_types, 1, sel, sel_length, NULL,
 			    _evry_cb_drag_finished);
 	     e_drag_resize(d, 128, 128);
 	     o = evry_util_icon_get(s->cur_item, e_drag_evas_get(d));
 	     e_drag_object_set(d, o);
-	     e_drag_xdnd_start(d, ev->x, ev->y);
+	     e_drag_xdnd_start(d, ev->x + pop->x, ev->y + pop->y);
 
 	     evry_hide(0);
 	     return 1;
@@ -994,8 +999,8 @@ _evry_cb_mouse(void *data, int type, void *event)
 
 	evas_event_feed_mouse_move
 	  (pop->evas,
-	   ev->x - pop->zone->x,
-	   ev->y - pop->zone->y,
+	   ev->x - (pop->x + pop->zone->x),
+	   ev->y - (pop->y + pop->zone->y),
 	   ev->timestamp, NULL);
      }
    else if (type == ECORE_EVENT_MOUSE_BUTTON_DOWN)
@@ -1003,7 +1008,10 @@ _evry_cb_mouse(void *data, int type, void *event)
 	win->mouse_out = 0;
 
 	/* XXX shift triple click in flags when needed */
-	if (!E_INSIDE(ev->x, ev->y, pop->zone->x, pop->zone->y, pop->w, pop->h))
+	if (!E_INSIDE(ev->x, ev->y,
+		      pop->x + pop->zone->x,
+		      pop->y + pop->zone->y,
+		      pop->w, pop->h))
 	  {
 	     win->mouse_out = 1;
 	     return 1;
@@ -1021,7 +1029,10 @@ _evry_cb_mouse(void *data, int type, void *event)
 	win->mouse_button = 0;
 
 	if (win->mouse_out &&
-	    !E_INSIDE(ev->x, ev->y, pop->zone->x, pop->zone->y, pop->w, pop->h))
+	    !E_INSIDE(ev->x, ev->y,
+		      pop->x + pop->zone->x,
+		      pop->y + pop->zone->y,
+		      pop->w, pop->h))
 	  {
 	     evry_hide(0);
 	     return 1;
