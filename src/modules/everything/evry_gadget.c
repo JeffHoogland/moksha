@@ -128,6 +128,7 @@ static void _del_func(void *data, void *obj)
    e_object_delfn_del(E_OBJECT(inst->win->popup), inst->del_fn);
    inst->del_fn = NULL;
    inst->win = NULL;
+   edje_object_signal_emit(inst->o_button, "e,state,unfocused", "e");
 }
 
 static void

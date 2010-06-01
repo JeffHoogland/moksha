@@ -755,6 +755,8 @@ _child_region_get(Evas_Object *obj, Evas_Coord y, Evas_Coord h)
 	if (ny > y) ny = y;
      }
 
+   if (ny < 0) ny = 0;
+
    return ny;
 }
 
@@ -1292,6 +1294,35 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 	if (it)
 	  {
 	     _pan_item_select(v->span, it, 1);
+	     evry_item_select(s, it->item);
+	  }
+	goto end;
+     }
+   else if ((!strcmp(key, "Prior") || (!strcmp(key, "Next"))))
+     {
+	int cur = 0;
+	int next = (!strcmp(key, "Next"));
+	if (sd->cur_item)
+	  cur = sd->cur_item->y;
+
+	EINA_LIST_FOREACH(sd->items, l, it)
+	  {
+	     if (next)
+	       {
+		  if (it->y >= cur + sd->h) break;
+	       }
+	     else
+	       {
+		  if (it->y >= cur - sd->h) break;
+	       }
+
+	     if (!l->next)
+	       break;
+	  }
+
+	if (it)
+	  {
+	     _pan_item_select(v->span, it, 0);
 	     evry_item_select(s, it->item);
 	  }
 	goto end;

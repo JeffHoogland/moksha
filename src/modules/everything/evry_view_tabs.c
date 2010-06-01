@@ -351,22 +351,25 @@ _tabs_key_down(Tab_View *v, const Ecore_Event_Key *ev)
 
    if (!v->state || !v->state->cur_plugins) return 0;
 
-   if (!strcmp(key, "Next"))
+   if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
      {
-   	_plugin_next(v);
-   	return 1;
-     }
-   else if (!strcmp(key, "Prior"))
-     {
-   	_plugin_prev(v);
-   	return -1;
+	if (!strcmp(key, "Next"))
+	  {
+	     _plugin_next(v);
+	     return 1;
+	  }
+	else if (!strcmp(key, "Prior"))
+	  {
+	     _plugin_prev(v);
+	     return 1;
+	  }
      }
    else if (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)
      {
 	if (!strcmp(key, "Left"))
 	  {
 	     _plugin_prev(v);
-	     return -1;
+	     return 1;
 	  }
 	else if (!strcmp(key, "Right"))
 	  {
