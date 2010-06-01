@@ -114,8 +114,10 @@ _e_kbd_free(E_Kbd *kbd)
 // FIXME: thought right - on shutdoiwn, this might point to freed data
 //   if (kbd->border) kbd->border->stolen = 0;
    EINA_LIST_FREE(kbd->waiting_borders, bd)
-	bd->stolen = 0;
-   eina_stringshare_del(kbd);
+	    bd->stolen = 0;
+
+   //I think this is right? someone who knows illume should probably verify
+   free(kbd);
 }
 
 static void
@@ -769,10 +771,9 @@ _e_kbd_dbus_cb_dev_add(void *data, DBusMessage *msg)
         
    dbus_error_init(&err);
    dbus_message_get_args(msg, &err, DBUS_TYPE_STRING, &udi, DBUS_TYPE_INVALID);
-   udi = eina_stringshare_add(udi);
-   e_hal_device_query_capability(_e_kbd_dbus_conn, udi, "input.keyboard",
+   e_hal_device_query_capability(_e_kbd_dbus_conn, eina_stringshare_add(udi), "input.keyboard",
                                        _e_kbd_dbus_cb_input_keyboard_is, 
-				       eina_stringshare_add(udi));
+				                                   (void*)eina_stringshare_add(udi));
 }
      
 static void
@@ -856,19 +857,19 @@ _e_kbd_dbus_real_kbd_init(void)
 						_e_kbd_dbus_cb_dev_input_keyboard, NULL);
 
 	_e_kbd_dbus_handler_dev_add =
-	  e_dbus_signal_handler_add(_e_kbd_dbus_conn, "org.freedesktop.Hal",
-				    "/org/freedesktop/Hal/Manager",
-				    "org.freedesktop.Hal.Manager",
+	  e_dbus_signal_handler_add(_e_kbd_dbus_conn, E_HAL_SENDER,
+				    E_HAL_MANAGER_PATH,
+				    E_HAL_MANAGER_INTERFACE,
 				    "DeviceAdded", _e_kbd_dbus_cb_dev_add, NULL);
 	_e_kbd_dbus_handler_dev_del =
-	  e_dbus_signal_handler_add(_e_kbd_dbus_conn, "org.freedesktop.Hal",
-				    "/org/freedesktop/Hal/Manager",
-				    "org.freedesktop.Hal.Manager",
+	  e_dbus_signal_handler_add(_e_kbd_dbus_conn, E_HAL_SENDER,
+				    E_HAL_MANAGER_PATH,
+				    E_HAL_MANAGER_INTERFACE,
 				    "DeviceRemoved", _e_kbd_dbus_cb_dev_del, NULL);
 	_e_kbd_dbus_handler_dev_chg =
-	  e_dbus_signal_handler_add(_e_kbd_dbus_conn, "org.freedesktop.Hal",
-				    "/org/freedesktop/Hal/Manager",
-				    "org.freedesktop.Hal.Manager",
+	  e_dbus_signal_handler_add(_e_kbd_dbus_conn, E_HAL_SENDER,
+				    E_HAL_MANAGER_PATH,
+				    E_HAL_MANAGER_INTERFACE,
 				    "NewCapability", _e_kbd_dbus_cb_cap_add, NULL);
      }
 }
