@@ -217,9 +217,9 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
 
    of = e_widget_framelist_add(evas, _("New Window Focus"), 0);
    rg = e_widget_radio_group_new(&(cfdata->focus_setting));
-   ob = e_widget_radio_add(evas, _("None"), E_FOCUS_NONE, rg);
+   ob = e_widget_radio_add(evas, _("No window"), E_FOCUS_NONE, rg);
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("All"), E_FOCUS_NEW_WINDOW, rg);
+   ob = e_widget_radio_add(evas, _("All windows"), E_FOCUS_NEW_WINDOW, rg);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Only dialogs"), E_FOCUS_NEW_DIALOG, rg);
    e_widget_framelist_object_append(of, ob);
