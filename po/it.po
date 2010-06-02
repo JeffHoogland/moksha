@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-05-31 18:26+0200\n"
-"PO-Revision-Date: 2010-05-31 18:45+0200\n"
+"POT-Creation-Date: 2010-06-02 11:09+0200\n"
+"PO-Revision-Date: 2010-06-02 11:11+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -592,6 +592,7 @@ msgstr "Commuta modalità disconnessa"
 #: src/bin/e_configure.c:151 src/bin/e_int_config_modules.c:65
 #: src/modules/conf_desklock/e_int_config_desklock.c:309
 #: src/modules/conf_imc/e_int_config_imc.c:811
+#: src/modules/conf_menus/e_int_config_menus.c:294
 #: src/modules/conf_startup/e_int_config_startup.c:259
 #: src/modules/conf_theme/e_int_config_theme.c:400
 #: src/modules/conf_theme/e_int_config_theme.c:793
@@ -936,8 +937,8 @@ msgstr "Editor file desktop"
 
 #: src/bin/e_eap_editor.c:633 src/bin/e_int_border_prop.c:420
 #: src/bin/e_int_border_prop.c:467 src/modules/conf_imc/e_int_config_imc.c:894
-#: src/modules/conf_menus/e_int_config_menus.c:95
-#: src/modules/conf_menus/e_int_config_menus.c:144
+#: src/modules/conf_menus/e_int_config_menus.c:103
+#: src/modules/conf_menus/e_int_config_menus.c:298
 msgid "Name"
 msgstr "Nome"
 
@@ -1957,7 +1958,6 @@ msgid "Size, Position and Locks"
 msgstr "Dimensione, posizione e blocchi"
 
 #: src/bin/e_int_border_remember.c:622 src/modules/conf/e_mod_main.c:218
-#: src/modules/conf_window_focus/e_int_config_focus.c:222
 #: src/modules/everything/evry_plug_aggregator.c:333
 msgid "All"
 msgstr "Tutto"
@@ -2128,8 +2128,8 @@ msgstr "Principale"
 msgid "Favorite Applications"
 msgstr "Applicazioni preferite"
 
-#: src/bin/e_int_menus.c:128 src/modules/conf_menus/e_int_config_menus.c:90
-#: src/modules/conf_menus/e_int_config_menus.c:138
+#: src/bin/e_int_menus.c:128 src/modules/conf_menus/e_int_config_menus.c:98
+#: src/modules/conf_menus/e_int_config_menus.c:288
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:194
 #: src/modules/everything-apps/e_mod_main.c:970
 #: src/modules/everything-apps/e_mod_main.c:988
@@ -3649,7 +3649,6 @@ msgstr "Criterio di raggruppamento"
 #: src/modules/conf_transitions/e_int_config_transitions.c:152
 #: src/modules/conf_transitions/e_int_config_transitions.c:203
 #: src/modules/conf_transitions/e_int_config_transitions.c:235
-#: src/modules/conf_window_focus/e_int_config_focus.c:220
 msgid "None"
 msgstr "Nessuno"
 
@@ -4997,24 +4996,24 @@ msgstr ""
 "La combinazione di tasti che avete scelto è già usata<br>dall'azione "
 "<hilight>%s</hilight>.<br>Si prega di scegliere una combinazione diversa."
 
-#: src/modules/conf_menus/e_int_config_menus.c:42
+#: src/modules/conf_menus/e_int_config_menus.c:43
 #: src/modules/conf_menus/e_mod_main.c:21
 msgid "Menu Settings"
 msgstr "Impostazioni del menù"
 
-#: src/modules/conf_menus/e_int_config_menus.c:87
-#: src/modules/conf_menus/e_int_config_menus.c:140
+#: src/modules/conf_menus/e_int_config_menus.c:95
+#: src/modules/conf_menus/e_int_config_menus.c:290
 msgid "Main Menu"
 msgstr "Menù principale"
 
-#: src/modules/conf_menus/e_int_config_menus.c:88
-#: src/modules/conf_menus/e_int_config_menus.c:136
+#: src/modules/conf_menus/e_int_config_menus.c:96
+#: src/modules/conf_menus/e_int_config_menus.c:286
 #: src/modules/fileman/e_mod_main.c:330
 msgid "Favorites"
 msgstr "Preferiti"
 
-#: src/modules/conf_menus/e_int_config_menus.c:94
-#: src/modules/conf_menus/e_int_config_menus.c:150
+#: src/modules/conf_menus/e_int_config_menus.c:102
+#: src/modules/conf_menus/e_int_config_menus.c:304
 #: src/modules/conf_window_display/e_int_config_window_display.c:179
 #: src/modules/conf_window_display/e_int_config_window_display.c:251
 #: src/modules/conf_winlist/e_int_config_winlist.c:259
@@ -5022,22 +5021,27 @@ msgstr "Preferiti"
 msgid "Display"
 msgstr "Visualizzazioni"
 
-#: src/modules/conf_menus/e_int_config_menus.c:97
-#: src/modules/conf_menus/e_int_config_menus.c:146
+#: src/modules/conf_menus/e_int_config_menus.c:105
+#: src/modules/conf_menus/e_int_config_menus.c:300
 msgid "Generic"
 msgstr "Nome generico"
 
-#: src/modules/conf_menus/e_int_config_menus.c:99
-#: src/modules/conf_menus/e_int_config_menus.c:148
+#: src/modules/conf_menus/e_int_config_menus.c:107
+#: src/modules/conf_menus/e_int_config_menus.c:302
 msgid "Comments"
 msgstr "Commenti"
 
-#: src/modules/conf_menus/e_int_config_menus.c:154
+#: src/modules/conf_menus/e_int_config_menus.c:214
+#: src/modules/wizard/page_030.c:124
+msgid "System Default"
+msgstr "Predefinito dal sistema"
+
+#: src/modules/conf_menus/e_int_config_menus.c:308
 msgid "Margin"
 msgstr "Margine"
 
-#: src/modules/conf_menus/e_int_config_menus.c:156
-#: src/modules/conf_menus/e_int_config_menus.c:161
+#: src/modules/conf_menus/e_int_config_menus.c:310
+#: src/modules/conf_menus/e_int_config_menus.c:315
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:132
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:141
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:150
@@ -5047,43 +5051,43 @@ msgstr "Margine"
 msgid "%2.0f pixels"
 msgstr "%2.0f pixel"
 
-#: src/modules/conf_menus/e_int_config_menus.c:159
+#: src/modules/conf_menus/e_int_config_menus.c:313
 msgid "Cursor Margin"
 msgstr "Margine cursore"
 
-#: src/modules/conf_menus/e_int_config_menus.c:164
+#: src/modules/conf_menus/e_int_config_menus.c:318
 msgid "Autoscroll"
 msgstr "Autoscorrimento"
 
-#: src/modules/conf_menus/e_int_config_menus.c:168
+#: src/modules/conf_menus/e_int_config_menus.c:322
 msgid "Menu Scroll Speed"
 msgstr "Velocità di scorrimento menù"
 
-#: src/modules/conf_menus/e_int_config_menus.c:170
+#: src/modules/conf_menus/e_int_config_menus.c:324
 #, c-format
 msgid "%5.0f pixels/sec"
 msgstr "%5.0f pixel/sec"
 
-#: src/modules/conf_menus/e_int_config_menus.c:173
+#: src/modules/conf_menus/e_int_config_menus.c:327
 msgid "Fast Mouse Move Threshhold"
 msgstr "Soglia movimento veloce del mouse"
 
-#: src/modules/conf_menus/e_int_config_menus.c:175
+#: src/modules/conf_menus/e_int_config_menus.c:329
 #: src/modules/conf_window_display/e_int_config_window_display.c:279
 #, c-format
 msgid "%4.0f pixels/sec"
 msgstr "%4.0f pixel/sec"
 
-#: src/modules/conf_menus/e_int_config_menus.c:178
+#: src/modules/conf_menus/e_int_config_menus.c:332
 msgid "Click Drag Timeout"
 msgstr "Timeout del trascinamento"
 
-#: src/modules/conf_menus/e_int_config_menus.c:180
+#: src/modules/conf_menus/e_int_config_menus.c:334
 #, c-format
 msgid "%2.2f sec"
 msgstr "%2.2f sec"
 
-#: src/modules/conf_menus/e_int_config_menus.c:183
+#: src/modules/conf_menus/e_int_config_menus.c:337
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:208
 msgid "Miscellaneous"
 msgstr "Opzioni varie"
@@ -5905,7 +5909,15 @@ msgstr "Segue finestre"
 
 #: src/modules/conf_window_focus/e_int_config_focus.c:218
 msgid "New Window Focus"
-msgstr "Fuoco delle finestre nuove"
+msgstr "Fuoco alle finestre nuove"
+
+#: src/modules/conf_window_focus/e_int_config_focus.c:220
+msgid "No window"
+msgstr "Nessuna finestra"
+
+#: src/modules/conf_window_focus/e_int_config_focus.c:222
+msgid "All windows"
+msgstr "Tutte le finestre"
 
 #: src/modules/conf_window_focus/e_int_config_focus.c:224
 msgid "Only dialogs"
@@ -6451,11 +6463,11 @@ msgstr "Mostra finestra di dialogo di Everything"
 msgid "Everything Configuration"
 msgstr "Configurazione di Everything"
 
-#: src/modules/everything/e_mod_main.c:393
+#: src/modules/everything/e_mod_main.c:392
 msgid "Everything Module"
 msgstr "Modulo Everything"
 
-#: src/modules/everything/e_mod_main.c:570
+#: src/modules/everything/e_mod_main.c:569
 msgid "Run Everything"
 msgstr "Pannello di Everything"
 
@@ -6577,7 +6589,7 @@ msgid "Object Plugins"
 msgstr "Plugin oggetto"
 
 #: src/modules/everything/evry_config.c:541
-#: src/modules/everything/evry_config.c:739
+#: src/modules/everything/evry_config.c:743
 msgid "Plugins"
 msgstr "Plugin"
 
@@ -7486,10 +7498,6 @@ msgstr ""
 #: src/modules/wizard/page_030.c:107
 msgid "Select application menu"
 msgstr "Selezionare menù applicazioni"
-
-#: src/modules/wizard/page_030.c:124
-msgid "System Default"
-msgstr "Predefinito dal sistema"
 
 #: src/modules/wizard/page_040.c:25
 msgid "Launcher Bar"
