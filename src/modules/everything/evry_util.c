@@ -662,13 +662,11 @@ evry_util_exec_app(const Evry_Item *it_app, const Evry_Item *it_file)
 	if (file && evry_file_path_get(file))
 	  {
 	     int len;
-	     tmp = eina_str_escape(file->path);
-	     len = strlen(app->file) + strlen(tmp) + 2;
+	     len = strlen(app->file) + strlen(file->path) + 4;
 	     exe = malloc(len);
-	     snprintf(exe, len, "%s %s", app->file, tmp);
+	     snprintf(exe, len, "%s \'%s\'", app->file, file->path);
 	     e_exec(zone, NULL, exe, NULL, NULL);
 	     E_FREE(exe);
-	     E_FREE(tmp);
 	  }
 	else
 	  {
