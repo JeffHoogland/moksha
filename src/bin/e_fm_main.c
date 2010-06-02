@@ -221,7 +221,7 @@ static int  _e_dbus_vb_vol_ejecting_after_unmount(void *data);
 static void _e_dbus_cb_vol_ejected(void *user_data, void *method_return, DBusError *error);
 static int  _e_dbus_format_error_msg(char **buf, E_Volume *v, DBusError *error);
 static void _hal_test(void *data, DBusMessage *msg, DBusError *error);
-static int  _e_hal_poll(void *data);
+static void _e_hal_poll(void *data, DBusMessage *msg);
 
 static int  _e_dbus_vol_mount_timeout(void *data);
 static int  _e_dbus_vol_unmount_timeout(void *data);
@@ -243,7 +243,7 @@ EAPI void      e_volume_eject(E_Volume *v);
 
 /* local subsystem globals */
 static Ecore_Ipc_Server *_e_ipc_server = NULL;
-static Ecore_Poller *_hal_poll = NULL;
+static E_DBus_Signal_Handler *_hal_poll = NULL;
 static Eina_List *_e_dirs = NULL;
 static Eina_List *_e_fops = NULL;
 static int _e_sync_num = 0;
@@ -295,7 +295,7 @@ main(int argc, char **argv)
    _e_dbus_conn = e_dbus_bus_get(DBUS_BUS_SYSTEM);
    /* previously, this assumed that if dbus was running, hal was running. */
    if (_e_dbus_conn)
-     e_dbus_introspect(_e_dbus_conn, E_HAL_SENDER, E_HAL_MANAGER_PATH, _hal_test, NULL);
+     e_dbus_get_name_owner(_e_dbus_conn, E_HAL_SENDER, _hal_test, NULL);
 
    ecore_file_init();
    ecore_ipc_init();
@@ -326,26 +326,40 @@ main(int argc, char **argv)
    ecore_shutdown();
 }
 
-static int
-_e_hal_poll(void *data)
+static void
+_e_hal_poll(void *data, DBusMessage *msg)
 {
-   e_dbus_introspect(_e_dbus_conn, E_HAL_SENDER, E_HAL_MANAGER_PATH, _hal_test, NULL);
-   return 1;
+   DBusError err;
+   const char *name, *from, *to;
+
+   dbus_error_init(&err);
+   if (!dbus_message_get_args(msg, &err,
+       DBUS_TYPE_STRING, &name,
+       DBUS_TYPE_STRING, &from,
+       DBUS_TYPE_STRING, &to,
+       DBUS_TYPE_INVALID))
+     dbus_error_free(&err);
+   
+   printf("name: %s\nfrom: %s\nto: %s\n", name, from, to);
+   if ((name) && !strcmp(name, E_HAL_SENDER))
+     _hal_test(NULL, NULL, NULL);
 }
 
 static void
 _hal_test(void *data, DBusMessage *msg, DBusError *error)
 {
 
-   if (dbus_error_is_set(error))
+   if ((error) && (dbus_error_is_set(error)))
      {
        dbus_error_free(error);
        if (!_hal_poll)
-         _hal_poll = ecore_poller_add(ECORE_POLLER_CORE, 256, _e_hal_poll, NULL);
+         _hal_poll = e_dbus_signal_handler_add(_e_dbus_conn, 
+                     E_DBUS_FDO_BUS, E_DBUS_FDO_PATH, E_DBUS_FDO_INTERFACE,
+                     "NameOwnerChanged", _e_hal_poll, NULL);
        return;
      }
    if (_hal_poll)
-     _hal_poll = ecore_poller_del(_hal_poll);
+     e_dbus_signal_handler_del(_e_dbus_conn, _hal_poll);
 
 
    e_hal_manager_get_all_devices(_e_dbus_conn, _e_dbus_cb_dev_all, NULL);
