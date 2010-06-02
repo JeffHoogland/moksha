@@ -322,12 +322,11 @@ int   evry_view_toggle(Evry_State *s, const char *trigger);
 int evry_gadget_init(void);
 void evry_gadget_shutdown(void);
 
-
 Ecore_Event_Handler *evry_event_handler_add(int type, int (*func) (void *data, int type, void *event), const void *data);
 
 extern Evry_History *evry_hist;
 extern Evry_Config  *evry_conf;
-extern int  _evry_events[4];
+extern int  _evry_events[NUM_EVRY_EVENTS];
 
 #define EVRY_ITEM_NEW(_base, _plugin, _label, _icon_get, _free)		\
   (_base *) evry_item_new(EVRY_ITEM(E_NEW(_base, 1)), EVRY_PLUGIN(_plugin), \

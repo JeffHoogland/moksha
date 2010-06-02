@@ -26,7 +26,7 @@ static E_Config_DD *plugin_conf_edd = NULL;
 static E_Config_DD *collection_conf_edd = NULL;
 
 Evry_Config *evry_conf = NULL;
-int _evry_events[4];
+int _evry_events[NUM_EVRY_EVENTS];
 int _e_module_evry_log_dom = -1;
 
 
@@ -102,6 +102,7 @@ e_modapi_init(E_Module *m)
    _evry_events[EVRY_EVENT_ITEM_SELECTED]    = ecore_event_type_new();
    _evry_events[EVRY_EVENT_ITEM_CHANGED]     = ecore_event_type_new();
    _evry_events[EVRY_EVENT_ACTION_PERFORMED] = ecore_event_type_new();
+   _evry_events[EVRY_EVENT_PLUGIN_SELECTED]  = ecore_event_type_new();
 
    e_module_delayed_set(m, 0);
 
@@ -216,11 +217,8 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 
 #ifdef CHECK_REFS
    Evry_Item *it;
-   printf("___________________________________________\n");
-
    EINA_LIST_FREE(_refd, it)
      printf("%d %s\n", it->ref, it->label);
-
 #endif
 
    return 1;
@@ -417,8 +415,8 @@ _config_init()
    evry_conf->view_zoom = 0;
    evry_conf->cycle_mode = 0;
    evry_conf->history_sort_mode = 0;
-   evry_conf->edge_width = 370;
-   evry_conf->edge_height = 435;
+   evry_conf->edge_width = 340;
+   evry_conf->edge_height = 385;
    evry_conf->first_run = EINA_TRUE;
 
    pcc = E_NEW(Plugin_Config, 1);

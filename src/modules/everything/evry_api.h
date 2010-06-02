@@ -40,11 +40,14 @@
 #define EVRY_EVENT_ITEM_CHANGED		1
 #define EVRY_EVENT_ITEMS_UPDATE		2
 #define EVRY_EVENT_ACTION_PERFORMED	3
+#define EVRY_EVENT_PLUGIN_SELECTED	4
+#define NUM_EVRY_EVENTS	                5
 
 typedef struct _Evry_API Evry_API;
 typedef struct _Evry_Module Evry_Module;
 
 typedef struct _Evry_Event_Item_Changed     Evry_Event_Item_Changed;
+typedef struct _Evry_Event_Item_Selected    Evry_Event_Item_Selected;
 typedef struct _Evry_Event_Action_Performed Evry_Event_Action_Performed;
 
 
@@ -127,6 +130,11 @@ struct _Evry_Event_Item_Changed
   Evry_Item *item;
   int changed_selection;
   int changed_icon;
+};
+
+struct _Evry_Event_Item_Selected
+{
+  Evry_Item *item;
 };
 
 struct _Evry_Event_Action_Performed

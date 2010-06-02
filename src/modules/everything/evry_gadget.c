@@ -154,6 +154,14 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 					  &cx, &cy, NULL, NULL);
 	x += cx;
 	y += cy;
+	/* evas_object_resize(win->o_main,
+	 * 		   evry_conf->edge_width,
+	 * 		   evry_conf->edge_height);
+	 * 
+	 * e_popup_resize(win->popup,
+	 * 	       evry_conf->edge_width,
+	 * 	       evry_conf->edge_height); */
+
 	pw = win->popup->w;
 	ph = win->popup->h;
 

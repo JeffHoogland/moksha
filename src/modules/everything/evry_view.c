@@ -370,7 +370,7 @@ _e_smart_reconfigure_do(void *data)
 	     col = 2;
 	     aspect_w = width * 2;
 	  }
-	else if ((cnt < 9) && (sd->w < (double)sd->h * 1.5))
+	else if ((cnt < 9) && (sd->w < (double)sd->h * 1.2))
 	  {
 	     col = 2;
 	     aspect_w = width * 3;

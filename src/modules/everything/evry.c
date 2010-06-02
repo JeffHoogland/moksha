@@ -1452,9 +1452,10 @@ _evry_selector_update(Evry_Selector *sel)
    if ((it = s->cur_item))
      {
 	if (!s->plugin || !eina_list_data_find_list(s->plugin->items, it))
-	  _evry_item_desel(s);
-
-	item_changed = EINA_TRUE;
+	  {
+	     _evry_item_desel(s);
+	     item_changed = EINA_TRUE;
+	  }
      }
 
    /* get first item */
@@ -1462,9 +1463,10 @@ _evry_selector_update(Evry_Selector *sel)
      {
 	it = eina_list_data_get(s->plugin->items);
 	s->item_auto_selected = EINA_TRUE;
+	if (!s->cur_plugins || (it != s->cur_item))
+	  item_changed = EINA_TRUE;
+	
 	_evry_item_sel(s, it);
-
-	item_changed = EINA_TRUE;
      }
 
    _evry_selector_item_update(sel);
@@ -1543,19 +1545,17 @@ _evry_selector_objects_get(Evry_Action *act)
    Eina_List *l, *plugins = NULL;
    Evry_Plugin *p, *pp;
    Evry_Selector *sel = OBJ_SEL;
-   Evry_Item *it;
 
    while (sel->state)
      _evry_state_pop(sel, 1);
 
-   it = (ACTN_SEL)->state->cur_item;
-
    EINA_LIST_FOREACH(sel->plugins, l, p)
      {
+	/* plugin provides items matching object for action*/
 	if (!CHECK_SUBTYPE(p, act->it2.type))
 	  continue;
 
-	if (p->begin && (pp = p->begin(p, it)))
+	if (p->begin && (pp = p->begin(p, EVRY_ITEM(act))))
 	  plugins = eina_list_append(plugins, pp);
 
 	if (!p->begin)
@@ -2942,9 +2942,20 @@ _evry_plugin_select(Evry_State *s, Evry_Plugin *p)
    s->plugin = p;
 }
 
+static void
+_evry_cb_free_plugin_selected(void *data, void *event)
+{
+   Evry_Event_Item_Selected *ev = event;
+
+   evry_item_free(ev->item);
+   E_FREE(ev);
+}
+
 void
 evry_plugin_select(Evry_Plugin *p)
 {
+   Evry_Event_Item_Selected *ev;
+   
    if (!p) return;
 
    if (!p->state)
@@ -2954,8 +2965,13 @@ evry_plugin_select(Evry_Plugin *p)
      }
 
    _evry_plugin_select(p->state, p);
-
    _evry_selector_update(p->state->selector);
+
+   ev = E_NEW(Evry_Event_Item_Selected, 1);
+   ev->item = EVRY_ITEM(p);
+   EVRY_ITEM_REF(p);
+   ecore_event_add(_evry_events[EVRY_EVENT_PLUGIN_SELECTED], ev,
+		   _evry_cb_free_plugin_selected, NULL);
 }
 
 static void
