@@ -26,6 +26,7 @@ struct _E_Config_Dialog_Data
 
    char *orig_path; /* informational only */
    Evas_Object *orig_path_entry; /* to set when info changes */
+   Evas_Object *icon_entry; /* to set when icon changes */
 
    /* speed up check_changed tests */
    Eina_Bool changed_categories;
@@ -54,6 +55,7 @@ static void         _e_desktop_edit_cb_exec_select_ok(void *data, E_Dialog *dia)
 static void         _e_desktop_edit_cb_exec_select_cancel(void *data, E_Dialog *dia);
 static void         _e_desktop_editor_exec_update(E_Config_Dialog_Data *cfdata);
 static void         _e_desktop_edit_select_cb(void *data, Evas_Object *obj);
+static void         _e_desktop_editor_icon_entry_changed(void *data, Evas_Object *obj);
 
 #define IFADD(src, dst) if (src) dst = eina_stringshare_add(src); else dst = NULL
 #define IFDEL(src) if (src) eina_stringshare_del(src);  src = NULL;
@@ -611,6 +613,13 @@ _e_desktop_editor_categories_changed(void *data, Evas_Object *obj __UNUSED__)
 }
 
 static void
+_e_desktop_editor_icon_entry_changed(void *data, Evas_Object *obj __UNUSED__)
+{
+   E_Config_Dialog_Data *cfdata = data;
+   _e_desktop_editor_icon_update(cfdata);
+}
+
+static void
 _e_desktop_editor_mimes_changed(void *data, Evas_Object *obj __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata = data;
@@ -665,17 +674,28 @@ _e_desktop_edit_basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas
    e_widget_toolbook_page_append
      (otb, NULL, _("Basic"), ol, 1, 0, 1, 0, 0.5, 0.0);
 
-   e_widget_size_min_get(ol, &mw, &mh);
+   /* e_widget_size_min_get(ol, &mw, &mh); */
 
+   ol = e_widget_list_add(evas, 0, 0);
+   
    editor->img_widget = e_widget_button_add
      (evas, "", NULL, _e_desktop_editor_cb_icon_select, cfdata, editor);
    _e_desktop_editor_icon_update(cfdata);
-   e_widget_size_min_set(editor->img_widget, 128, 128);
+   e_widget_size_min_set(editor->img_widget, 192, 192);
+
+   e_widget_list_object_append(ol, editor->img_widget, 1, 0, 0.0);
+
+   o = e_widget_label_add(evas, _("Icon"));
+   e_widget_list_object_append(ol, o, 1, 0, 0.0);
+
+   o = e_widget_entry_add(evas, &(cfdata->icon), NULL, NULL, NULL);
+   cfdata->icon_entry = o;
+   e_widget_on_change_hook_set(o, _e_desktop_editor_icon_entry_changed, cfdata);
+   e_widget_list_object_append(ol, o, 1, 0, 0.0);
 
    e_widget_toolbook_page_append
-     (otb, NULL, _("Icon"), editor->img_widget, 0, 0, 0, 0, 0.5, 0.5);
-
-
+     (otb, NULL, _("Icon"), ol, 0, 0, 0, 0, 0.5, 0.5);
+   
    ol = e_widget_list_add(evas, 0, 0);
 
    o = e_widget_label_add(evas, _("Generic Name"));
@@ -896,6 +916,7 @@ _e_desktop_edit_cb_icon_select_ok(void *data, E_Dialog *dia)
 
    IFFREE(cfdata->icon);
    IFDUP(file, cfdata->icon);
+   e_widget_entry_text_set(cfdata->icon_entry, cfdata->icon);
 
    _e_desktop_edit_cb_icon_select_cancel(data, dia);
 }
@@ -917,7 +938,7 @@ _e_desktop_editor_icon_update(E_Config_Dialog_Data *cfdata)
    Evas_Object *o;
 
    if (!cfdata->editor->img_widget) return;
-   o = e_util_icon_theme_icon_add(cfdata->icon, 32, cfdata->editor->evas);
+   o = e_util_icon_theme_icon_add(cfdata->icon, 128, cfdata->editor->evas);
 
    /* NB this takes care of freeing any previous icon object */
    e_widget_button_icon_set(cfdata->editor->img_widget, o);
