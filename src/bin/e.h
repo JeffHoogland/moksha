@@ -62,6 +62,7 @@ void *alloca (size_t);
 #include <libintl.h>
 #include <errno.h>
 #include <signal.h>
+#include <inttypes.h>
 
 #ifndef _POSIX_HOST_NAME_MAX
 #define _POSIX_HOST_NAME_MAX 255

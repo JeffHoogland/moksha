@@ -640,7 +640,7 @@ _e_fm2_op_registry_entry_print(const E_Fm2_Op_Registry_Entry *ere)
      status = status_strings[0];
 
    printf("id: %8d, op: %2d [%s] finished: %hhu, needs_attention: %hhu\n"
-	  "    %3d%% (%lld/%lld), start_time: %10.0f, eta: %5ds, xwin: %#x\n"
+	  "    %3d%% (%"PRIi64"/%"PRIi64"), start_time: %10.0f, eta: %5ds, xwin: %#x\n"
 	  "    src=[%s]\n"
 	  "    dst=[%s]\n",
 	  ere->id, ere->op, status, ere->finished, ere->needs_attention,
