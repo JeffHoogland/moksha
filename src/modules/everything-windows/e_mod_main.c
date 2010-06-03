@@ -96,6 +96,11 @@ _cb_border_add(void *data, int type,  void *event)
    E_Event_Border_Add *ev = event;
    Plugin *p = data;
 
+   if (bd->skip_taskbar)
+     return 1;
+   if (bd->skip_pager)
+     return 1;
+
    _border_item_add(p, ev->border);
 
    EVRY_PLUGIN_ITEMS_CLEAR(p);
@@ -324,7 +329,7 @@ _act_border(Evry_Action *act)
 	ERR("no border");
 	return 0;
      }
-   
+
    switch (action)
      {
       case BORDER_CLOSE:
