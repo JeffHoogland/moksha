@@ -12,84 +12,10 @@ struct _Tab
   int cw, mw;
 };
 
-
 static void _tabs_update(Tab_View *v);
 static void _plugin_select(Tab_View *v, Evry_Plugin *p);
 static void _plugin_next(Tab_View *v);
 static void _plugin_prev(Tab_View *v);
-
-
-#if 0
-static int
-_animator(void *data)
-{
-   Tab_View *v = data;
-
-   double da;
-   double spd = (15.0 / (double)e_config->framerate);
-   if (spd > 0.9) spd = 0.9;
-   int wait = 0;
-
-   if (v->align != v->align_to)
-     {
-	v->align = (v->align * (1.0 - spd)) + (v->align_to * spd);
-
-	da = v->align - v->align_to;
-	if (da < 0.0) da = -da;
-	if (da < 0.01)
-	  v->align = v->align_to;
-	else
-	  wait++;
-
-	e_box_align_set(v->o_tabs, 1.0 - v->align, 0.5);
-     }
-
-   if (wait) return 1;
-
-   v->animator = NULL;
-   return 0;
-
-}
-
-static void
-_tab_scroll_to(Tab_View *v, Evry_Plugin *p, int animate)
-{
-   int n, w, mw, i;
-   double align;
-   Eina_List *l;
-   const Evry_State *s = v->state;
-
-   for(i = 0, l = s->cur_plugins; l; l = l->next, i++)
-     if (l->data == p) break;
-
-   n = eina_list_count(s->cur_plugins);
-
-   e_box_size_min_get(v->o_tabs, &mw, NULL);
-   evas_object_geometry_get(v->o_tabs, NULL, NULL, &w, NULL);
-
-   if (mw < w)
-     {
-   	e_box_align_set(v->o_tabs, 0.0, 0.5);
-   	return;
-     }
-
-   if (n > 1)
-     {
-	align = (double)i / (double)(n - 1);
-	if (animate && evry_conf->scroll_animate)
-	  {
-	     v->align_to = align;
-
-	     if (!v->animator)
-	       v->animator = ecore_animator_add(_animator, v);
-	  }
-	else
-	  e_box_align_set(v->o_tabs, 1.0 - align, 0.5);
-     }
-   else
-     e_box_align_set(v->o_tabs, 0.0, 0.5);
-}
-#endif
 
 static int
 _timer_cb(void *data)
@@ -219,7 +145,6 @@ _tabs_update(Tab_View *v)
 	     o = tab->o_tab;
 	     evas_object_show(o);
 	     e_box_pack_end(v->o_tabs, o);
-
 	     e_box_pack_options_set(o, 1, 1, 0, 0, 0.0, 0.5, w/4, 10, w/3, 9999);
 	  }
      }
@@ -251,8 +176,6 @@ _tabs_update(Tab_View *v)
 	o = tab->o_tab;
 	evas_object_show(o);
 	e_box_pack_end(v->o_tabs, o);
-	w++;
-
 	e_box_pack_options_set(o, 1, 1, 0, 0, 0.0, 0.5, w/4, 10, w/3, 9999);
 
 	if (s->plugin == p)
@@ -263,10 +186,7 @@ _tabs_update(Tab_View *v)
 	if (++i > 3) break;
      }
 
-   /* if (s->plugin)
-    *   _tab_scroll_to(v, s->plugin, 0); */
    e_box_align_set(v->o_tabs, 0.0, 0.5);
-
    e_box_thaw(v->o_tabs);
 }
 
@@ -295,8 +215,6 @@ _plugin_select(Tab_View *v, Evry_Plugin *p)
    evry_plugin_select(p);
 
    _tabs_update(v);
-   /* _tab_scroll_to(v, p, 1); */
-   /* _tabs_update(v); */
 }
 
 static void
@@ -330,8 +248,12 @@ _plugin_next_by_name(Tab_View *v, const char *key)
 
    EINA_LIST_FOREACH(s->cur_plugins, l, p)
      {
-	/* FIXME how can this happen ? */
-	if (!p) continue;
+	/* if (!p)
+	 *   {
+	 *      // FIXME how can this happen?
+	 *      ERR("plugin == NULL");
+	 *      continue;
+	 *   } */
 
 	if (EVRY_ITEM(p)->label && (!strncasecmp(EVRY_ITEM(p)->label, key, 1)))
 	  {
@@ -437,7 +359,6 @@ evry_tab_view_new(Evry_View *view, const Evry_State *s, Evas *e)
    o = e_box_add(e);
    e_box_orientation_set(o, 1);
    e_box_homogenous_set(o, 1);
-   /* evas_object_propagate_events_set(o, 1);  */
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_WHEEL,
 				  _tabs_cb_wheel, v);
    v->o_tabs = o;
