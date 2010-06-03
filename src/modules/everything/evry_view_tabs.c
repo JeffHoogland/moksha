@@ -116,10 +116,17 @@ _tab_cb_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
    Tab *tab = data;
    Tab_View *v = tab->tab_view;
 
-   if (ev->button == 1)
+   if (ev->button != 1)
+     return;
+
+   if (tab->plugin)
      {
 	_plugin_select(v, tab->plugin);
 	v->view->update(v->view);
+     }
+   else
+     {
+	evry_browse_back(v->state->selector);
      }
 }
 static void
@@ -139,6 +146,34 @@ _tabs_cb_wheel(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	v->view->update(v->view);
      }
 }
+static Tab *
+_add_tab(Tab_View *v, Evry_Plugin *p)
+{
+   Evas_Object *o;
+   Tab *tab = E_NEW(Tab, 1);
+   tab->plugin = p;
+   tab->tab_view = v;
+   o = edje_object_add(v->evas);
+   e_theme_edje_object_set(o, "base/theme/modules/everything",
+			   "e/modules/everything/tab_item");
+   if (p)
+     edje_object_part_text_set(o, "e.text.label", EVRY_ITEM(p)->label);
+   else
+     edje_object_part_text_set(o, "e.text.label", _("<<"));
+
+   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN,
+				  _tab_cb_down, tab);
+   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_UP,
+				  _tab_cb_up, tab);
+   tab->o_tab = o;
+
+   edje_object_size_min_calc(o, &tab->cw, NULL);
+   edje_object_size_min_get(o,  &tab->mw, NULL);
+
+   v->tabs = eina_list_append(v->tabs, tab);
+
+   return tab;
+}
 
 static void
 _tabs_update(Tab_View *v)
@@ -149,7 +184,7 @@ _tabs_update(Tab_View *v)
    Tab *tab;
    Evas_Coord w, x;
    Evas_Object *o;
-   int cur, i = 0;
+   int cur = 0, i = 0;
 
    edje_object_calc_force(v->o_tabs);
    evas_object_geometry_get(v->o_tabs, &x, NULL, &w, NULL);
@@ -165,11 +200,31 @@ _tabs_update(Tab_View *v)
 
    EINA_LIST_FOREACH(v->tabs, l, tab)
      {
+	if (!tab->plugin)
+	  continue;
+
 	e_box_unpack(tab->o_tab);
 	evas_object_hide(tab->o_tab);
      }
 
-   for(cur = 0, l = s->cur_plugins; l; l = l->next, cur++)
+   if (s->selector->states->next)
+     {
+	cur++;
+	i++;
+
+	if (!(tab = eina_list_data_get(v->tabs)))
+	  {
+	     tab = _add_tab(v, NULL);
+
+	     o = tab->o_tab;
+	     evas_object_show(o);
+	     e_box_pack_end(v->o_tabs, o);
+
+	     e_box_pack_options_set(o, 1, 1, 0, 0, 0.0, 0.5, w/4, 10, w/3, 9999);
+	  }
+     }
+
+   for(l = s->cur_plugins; l; l = l->next, cur++)
      if (l->data == s->plugin) break;
 
    if (cur > 2)
@@ -190,41 +245,16 @@ _tabs_update(Tab_View *v)
 	EINA_LIST_FOREACH(v->tabs, ll, tab)
 	  if (tab->plugin == p) break;
 
-	if (!tab)
-	  {
-	     tab = E_NEW(Tab, 1);
-	     tab->plugin = p;
-	     tab->tab_view = v;
-	     o = edje_object_add(v->evas);
-	     e_theme_edje_object_set(o, "base/theme/modules/everything",
-				     "e/modules/everything/tab_item");
-	     edje_object_part_text_set(o, "e.text.label", EVRY_ITEM(p)->label);
-
-	     evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN,
-					    _tab_cb_down, tab);
-	     evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_UP,
-					    _tab_cb_up, tab);
-	     tab->o_tab = o;
-
-	     edje_object_size_min_calc(o, &tab->cw, NULL);
-	     edje_object_size_min_get(o,  &tab->mw, NULL);
-
-	     v->tabs = eina_list_append(v->tabs, tab);
-	  }
-
-	if (!tab) continue;
+	if (!tab && !(tab = _add_tab(v, p)))
+	  continue;
 
 	o = tab->o_tab;
 	evas_object_show(o);
 	e_box_pack_end(v->o_tabs, o);
 	w++;
-	if (eina_list_count(s->cur_plugins) == 2)
-	  e_box_pack_options_set(o, 1, 1, 0, 0, 0.0, 0.5,
-				 w/4, 10, w/3, 9999);
-	else
-	  e_box_pack_options_set(o, 1, 1, 0, 0, 0.0, 0.5,
-				 w/4, 10,
-				 w/3, 9999);
+
+	e_box_pack_options_set(o, 1, 1, 0, 0, 0.0, 0.5, w/4, 10, w/3, 9999);
+
 	if (s->plugin == p)
 	  edje_object_signal_emit(o, "e,state,selected", "e");
 	else
@@ -250,6 +280,9 @@ _tabs_clear(Tab_View *v)
    e_box_freeze(v->o_tabs);
    EINA_LIST_FOREACH(v->tabs, l, tab)
      {
+	if (!tab->plugin)
+	  continue;
+
 	e_box_unpack(tab->o_tab);
 	evas_object_hide(tab->o_tab);
      }
