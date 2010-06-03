@@ -2,7 +2,6 @@
 
 /**
  * TODO: 
- * Maybe add buttons for Add/Remove of acpi bindings ??
  * Maybe use a toolbook widget instead of 2 lists ??
  * Maybe add a way to restore default acpi bindings ??
  */
@@ -12,7 +11,10 @@ struct _E_Config_Dialog_Data
 {
    Eina_List *bindings;
    Evas_Object *o_bindings, *o_actions, *o_params;
+   Evas_Object *o_add, *o_del;
    const char *bindex;
+
+   E_Config_Dialog *cfd;
 };
 
 /* local function prototypes */
@@ -25,10 +27,19 @@ static void _fill_bindings(E_Config_Dialog_Data *cfdata);
 static void _fill_actions(E_Config_Dialog_Data *cfdata);
 static E_Config_Binding_Acpi *_selected_binding_get(E_Config_Dialog_Data *cfdata);
 static E_Action_Description *_selected_action_get(E_Config_Dialog_Data *cfdata);
-static const char *_binding_get_label(E_Config_Binding_Acpi *bind);
+static const char *_binding_label_get(E_Config_Binding_Acpi *bind);
 static void _cb_bindings_changed(void *data);
 static void _cb_actions_changed(void *data);
 static void _cb_entry_changed(void *data, void *data2 __UNUSED__);
+static void _cb_add_binding(void *data, void *data2 __UNUSED__);
+static void _cb_del_binding(void *data, void *data2 __UNUSED__);
+static int _cb_grab_key_down(void *data, int type __UNUSED__, void *event);
+static int _cb_acpi_event(void *data, int type, void *event);
+
+/* local variables */
+static E_Dialog *grab_dlg = NULL;
+static Ecore_X_Window grab_win = 0;
+static Eina_List *grab_hdls = NULL;
 
 E_Config_Dialog *
 e_int_config_acpibindings(E_Container *con, const char *params __UNUSED__) 
@@ -61,6 +72,7 @@ _create_data(E_Config_Dialog *cfd)
 
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    _fill_data(cfdata);
+   cfdata->cfd = cfd;
    return cfdata;
 }
 
@@ -88,6 +100,7 @@ static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    E_Config_Binding_Acpi *bind;
+   Ecore_Event_Handler *hdl;
 
    EINA_LIST_FREE(cfdata->bindings, bind) 
      {
@@ -95,6 +108,24 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	if (bind->params) eina_stringshare_del(bind->params);
 	E_FREE(bind);
      }
+
+   /* free the handlers */
+   EINA_LIST_FREE(grab_hdls, hdl)
+     ecore_event_handler_del(hdl);
+
+   if (grab_win) 
+     {
+	e_grabinput_release(grab_win, grab_win);
+	ecore_x_window_free(grab_win);
+     }
+   grab_win = 0;
+
+   if (grab_dlg) 
+     {
+	e_object_del(E_OBJECT(grab_dlg));
+	e_acpi_events_thaw();
+     }
+   grab_dlg = NULL;
 
    E_FREE(cfdata);
 }
@@ -140,12 +171,22 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 
    ol = e_widget_list_add(evas, 0, 1);
 
-   of = e_widget_framelist_add(evas, _("ACPI Bindings"), 0);
+   of = e_widget_frametable_add(evas, _("ACPI Bindings"), 0);
    ow = e_widget_ilist_add(evas, (24 * e_scale), (24 * e_scale), 
 			   &(cfdata->bindex));
    cfdata->o_bindings = ow;
    _fill_bindings(cfdata);
-   e_widget_framelist_object_append(of, ow);
+   e_widget_frametable_object_append(of, ow, 0, 0, 2, 1, 1, 1, 1, 1);
+
+   ow = e_widget_button_add(evas, _("Add Binding"), "list-add", 
+			    _cb_add_binding, cfdata, NULL);
+   cfdata->o_add = ow;
+   e_widget_frametable_object_append(of, ow, 0, 1, 1, 1, 1, 0, 1, 0);
+   ow = e_widget_button_add(evas, _("Delete Binding"), "list-remove", 
+			    _cb_del_binding, cfdata, NULL);
+   cfdata->o_del = ow;
+   e_widget_disabled_set(ow, EINA_TRUE);
+   e_widget_frametable_object_append(of, ow, 1, 1, 1, 1, 1, 0, 1, 0);
    e_widget_list_object_append(ol, of, 1, 1, 0.5);
 
    ot = e_widget_table_add(evas, 0);
@@ -188,7 +229,7 @@ _fill_bindings(E_Config_Dialog_Data *cfdata)
 	char buff[32];
 
 	i++;
-	if (!(lbl = _binding_get_label(bind))) continue;
+	if (!(lbl = _binding_label_get(bind))) continue;
 	snprintf(buff, sizeof(buff), "%d", i);
 	e_widget_ilist_append(cfdata->o_bindings, NULL, lbl, 
 			      _cb_bindings_changed, cfdata, buff);
@@ -282,7 +323,7 @@ _selected_action_get(E_Config_Dialog_Data *cfdata)
 }
 
 static const char *
-_binding_get_label(E_Config_Binding_Acpi *bind) 
+_binding_label_get(E_Config_Binding_Acpi *bind) 
 {
    char *ret;
 
@@ -326,10 +367,13 @@ _cb_bindings_changed(void *data)
      {
 	e_widget_entry_clear(cfdata->o_params);
 	e_widget_disabled_set(cfdata->o_params, EINA_TRUE);
+	e_widget_disabled_set(cfdata->o_del, EINA_TRUE);
 	return;
      }
 
+   e_widget_disabled_set(cfdata->o_del, EINA_FALSE);
    e_widget_ilist_unselect(cfdata->o_actions);
+
    EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->o_actions), items, item) 
      {
 	const char *val;
@@ -354,6 +398,7 @@ _cb_actions_changed(void *data)
      {
 	e_widget_entry_clear(cfdata->o_params);
 	e_widget_disabled_set(cfdata->o_params, EINA_TRUE);
+	e_widget_disabled_set(cfdata->o_del, EINA_TRUE);
 	return;
      }
    if (!(dsc = _selected_action_get(cfdata))) 
@@ -392,4 +437,204 @@ _cb_entry_changed(void *data, void *data2 __UNUSED__)
    if (!(bind = _selected_binding_get(cfdata))) return;
    eina_stringshare_replace(&bind->params, 
 			    e_widget_entry_text_get(cfdata->o_params));
+}
+
+static void 
+_cb_add_binding(void *data, void *data2 __UNUSED__) 
+{
+   E_Config_Dialog_Data *cfdata;
+   E_Manager *man;
+
+   if (grab_win != 0) return;
+   if (!(cfdata = data)) return;
+   man = e_manager_current_get();
+   grab_dlg = e_dialog_new(e_container_current_get(man), "E", 
+			   "_acpibind_getbind_dialog");
+   if (!grab_dlg) return;
+   e_dialog_title_set(grab_dlg, _("ACPI Binding"));
+   e_dialog_icon_set(grab_dlg, "preferences-system-power-management", 48);
+   e_dialog_text_set(grab_dlg, 
+		     _("Please trigger the ACPI event you wish to bind to, "
+		       "<br><br>or <hilight>Escape</hilight> to abort."));
+   e_win_centered_set(grab_dlg->win, EINA_TRUE);
+   e_win_borderless_set(grab_dlg->win, EINA_TRUE);
+
+   grab_win = ecore_x_window_input_new(man->root, 0, 0, 1, 1);
+   ecore_x_window_show(grab_win);
+   e_grabinput_get(grab_win, 0, grab_win);
+
+   grab_hdls = 
+     eina_list_append(grab_hdls, 
+		      ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, 
+					      _cb_grab_key_down, cfdata));
+   grab_hdls = 
+     eina_list_append(grab_hdls, 
+		      ecore_event_handler_add(E_EVENT_ACPI_AC_ADAPTER, 
+					      _cb_acpi_event, cfdata));
+   grab_hdls = 
+     eina_list_append(grab_hdls, 
+		      ecore_event_handler_add(E_EVENT_ACPI_BATTERY, 
+					      _cb_acpi_event, cfdata));
+   grab_hdls = 
+     eina_list_append(grab_hdls, 
+		      ecore_event_handler_add(E_EVENT_ACPI_FAN, 
+					      _cb_acpi_event, cfdata));
+   grab_hdls = 
+     eina_list_append(grab_hdls, 
+		      ecore_event_handler_add(E_EVENT_ACPI_LID, 
+					      _cb_acpi_event, cfdata));
+   grab_hdls = 
+     eina_list_append(grab_hdls, 
+		      ecore_event_handler_add(E_EVENT_ACPI_POWER, 
+					      _cb_acpi_event, cfdata));
+   grab_hdls = 
+     eina_list_append(grab_hdls, 
+		      ecore_event_handler_add(E_EVENT_ACPI_SLEEP, 
+					      _cb_acpi_event, cfdata));
+   grab_hdls = 
+     eina_list_append(grab_hdls, 
+		      ecore_event_handler_add(E_EVENT_ACPI_VIDEO, 
+					      _cb_acpi_event, cfdata));
+   grab_hdls = 
+     eina_list_append(grab_hdls, 
+		      ecore_event_handler_add(E_EVENT_ACPI_WIFI, 
+					      _cb_acpi_event, cfdata));
+
+   /* freeze all incoming acpi events */
+   e_acpi_events_freeze();
+
+   e_dialog_show(grab_dlg);
+   ecore_x_icccm_transient_for_set(grab_dlg->win->evas_win, 
+				   cfdata->cfd->dia->win->evas_win);
+}
+
+static void 
+_cb_del_binding(void *data, void *data2 __UNUSED__) 
+{
+   E_Config_Dialog_Data *cfdata;
+   E_Config_Binding_Acpi *bind, *bind2;
+   Eina_List *l;
+
+   if (!(cfdata = data)) return;
+   if (!(bind = _selected_binding_get(cfdata))) return;
+
+   /* delete from e_config */
+   EINA_LIST_FOREACH(e_config->acpi_bindings, l, bind2) 
+     {
+	if ((bind->context == bind2->context) && (bind->type == bind2->type) && 
+	    (((bind->action) && (bind2->action) && 
+	      (!strcmp(bind->action, bind2->action))) || 
+		((!bind->action) && (!bind2->action))) && 
+	    (((bind->params) && (bind2->params) && 
+	      (!strcmp(bind->params, bind2->params))) || 
+		((!bind->params) && (!bind2->params)))) 
+	  {
+	     if (bind2->action) eina_stringshare_del(bind2->action);
+	     if (bind2->params) eina_stringshare_del(bind2->params);
+	     E_FREE(bind2);
+	     e_config->acpi_bindings = 
+	       eina_list_remove_list(e_config->acpi_bindings, l);
+	     e_config_save_queue();
+	     break;
+	  }
+     }
+
+   /* delete from e_bindings */
+   e_bindings_acpi_del(bind->context, bind->type, bind->status, 
+		       bind->action, bind->params);
+
+   /* delete from dialog list */
+   EINA_LIST_FOREACH(cfdata->bindings, l, bind2) 
+     {
+	if ((bind->context == bind2->context) && (bind->type == bind2->type) && 
+	    (((bind->action) && (bind2->action) && 
+	      (!strcmp(bind->action, bind2->action))) || 
+		((!bind->action) && (!bind2->action))) && 
+	    (((bind->params) && (bind2->params) && 
+	      (!strcmp(bind->params, bind2->params))) || 
+		((!bind->params) && (!bind2->params)))) 
+	  {
+	     if (bind2->action) eina_stringshare_del(bind2->action);
+	     if (bind2->params) eina_stringshare_del(bind2->params);
+	     E_FREE(bind2);
+	     cfdata->bindings = eina_list_remove_list(cfdata->bindings, l);
+	     break;
+	  }
+     }
+
+   /* reset gui */
+   e_widget_entry_clear(cfdata->o_params);
+   e_widget_disabled_set(cfdata->o_params, EINA_TRUE);
+   e_widget_ilist_unselect(cfdata->o_actions);
+   e_widget_disabled_set(cfdata->o_del, EINA_TRUE);
+   _fill_bindings(cfdata);
+}
+
+static int 
+_cb_grab_key_down(void *data, int type __UNUSED__, void *event) 
+{
+   E_Config_Dialog_Data *cfdata;
+   Ecore_Event_Key *ev;
+
+   ev = event;
+   if (ev->window != grab_win) return 1;
+   if (!(cfdata = data)) return 1;
+   if (!strcmp(ev->keyname, "Escape")) 
+     {
+	Ecore_Event_Handler *hdl;
+
+	/* free the handlers */
+	EINA_LIST_FREE(grab_hdls, hdl)
+	  ecore_event_handler_del(hdl);
+
+	/* kill the dialog window */
+	e_grabinput_release(grab_win, grab_win);
+	ecore_x_window_free(grab_win);
+	grab_win = 0;
+	e_object_del(E_OBJECT(grab_dlg));
+	grab_dlg = NULL;
+
+	/* unfreeze acpi events */
+	e_acpi_events_thaw();
+     }
+   return 1;
+}
+
+static int 
+_cb_acpi_event(void *data, int type, void *event) 
+{
+   E_Event_Acpi *ev;
+   E_Config_Dialog_Data *cfdata;
+   E_Config_Binding_Acpi *bind;
+   Ecore_Event_Handler *hdl;
+
+   ev = event;
+   if (!(cfdata = data)) return 1;
+
+   /* free the handlers */
+   EINA_LIST_FREE(grab_hdls, hdl)
+     ecore_event_handler_del(hdl);
+
+   /* kill the dialog window */
+   e_grabinput_release(grab_win, grab_win);
+   ecore_x_window_free(grab_win);
+   grab_win = 0;
+   e_object_del(E_OBJECT(grab_dlg));
+   grab_dlg = NULL;
+
+   /* unfreeze acpi events */
+   e_acpi_events_thaw();
+
+   /* NB: This may need more testing/parsing for event status */
+   bind = E_NEW(E_Config_Binding_Acpi, 1);
+   bind->context = E_BINDING_CONTEXT_NONE;
+   bind->type = ev->type;
+   bind->status = ev->status;
+   bind->action = eina_stringshare_add("dim_screen");
+   bind->params = NULL;
+   e_config->acpi_bindings = eina_list_append(e_config->acpi_bindings, bind);
+
+   cfdata->bindings = eina_list_append(cfdata->bindings, bind);
+   _fill_bindings(cfdata);
+   return 0;
 }
