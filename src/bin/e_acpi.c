@@ -150,6 +150,7 @@ EAPI void
 e_acpi_events_thaw(void) 
 {
    _e_acpi_events_frozen--;
+   if (_e_acpi_events_frozen < 0) _e_acpi_events_frozen = 0;
 }
 
 /* local functions */
