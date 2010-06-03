@@ -8,7 +8,6 @@
  * Find someone with a WIFI that actually emits ACPI events and add/debug the 
  * E_EVENT_ACPI for wifi.
  * 
- * Add e_actions for bindings.
  */
 
 /* local structures */
@@ -33,7 +32,7 @@ static Eina_List *_e_acpid_hdls = NULL;
 static Eina_Hash *_e_acpid_devices = NULL;
 static ACPIDevice _devices[] = 
 {
-   /* DO NOT TRANSLATE THESE. */
+   /* NB: DO NOT TRANSLATE THESE. */
    /* standardized ACPI device name, corresponding E_ACPI_TYPE */
    {"ac_adapter", E_ACPI_TYPE_AC_ADAPTER},
    {"battery", E_ACPI_TYPE_BATTERY},
