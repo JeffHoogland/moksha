@@ -50,6 +50,8 @@ struct _E_Event_Acpi
 
 EAPI int e_acpi_init(void);
 EAPI int e_acpi_shutdown(void);
+EAPI void e_acpi_events_freeze(void);
+EAPI void e_acpi_events_thaw(void);
 
 extern EAPI int E_EVENT_ACPI_UNKNOWN;
 extern EAPI int E_EVENT_ACPI_AC_ADAPTER;

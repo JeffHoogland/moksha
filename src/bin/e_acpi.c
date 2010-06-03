@@ -27,6 +27,7 @@ static int _e_acpi_lid_status_get(const char *device, const char *bus);
 static int _e_acpi_cb_event(void *data __UNUSED__, int type __UNUSED__, void *event);
 
 /* local variables */
+static int _e_acpi_events_frozen = 0;
 static Ecore_Con_Server *_e_acpid = NULL;
 static Eina_List *_e_acpid_hdls = NULL;
 static Eina_Hash *_e_acpid_devices = NULL;
@@ -139,6 +140,18 @@ e_acpi_shutdown(void)
    return 1;
 }
 
+EAPI void 
+e_acpi_events_freeze(void) 
+{
+   _e_acpi_events_frozen++;
+}
+
+EAPI void 
+e_acpi_events_thaw(void) 
+{
+   _e_acpi_events_frozen--;
+}
+
 /* local functions */
 static int 
 _e_acpi_cb_server_del(void *data __UNUSED__, int type __UNUSED__, void *event) 
@@ -177,14 +190,6 @@ _e_acpi_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
    /* parse out this acpi string into separate pieces */
    if (sscanf(ev->data, "%s %s %d %d", device, bus, &sig, &status) != 4)
      return 1;
-
-   /*
-   printf("Device: %s\n", device);
-   printf("Bus: %s\n", bus);
-   printf("Signal: %d\n", sig);
-   printf("Status: %d\n", status);
-   printf("\n");
-    */
 
    /* create new event structure to raise */
    acpi_event = E_NEW(E_Event_Acpi, 1);
@@ -300,6 +305,7 @@ _e_acpi_cb_event(void *data __UNUSED__, int type __UNUSED__, void *event)
    E_Event_Acpi *ev;
 
    ev = event;
+   if (_e_acpi_events_frozen > 0) return 1;
    e_bindings_acpi_event_handle(E_BINDING_CONTEXT_NONE, NULL, ev);
    return 1;
 }
