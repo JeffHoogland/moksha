@@ -99,6 +99,7 @@ static Eina_List *_plugins = NULL;
 static Eina_List *_actions = NULL;
 static const char *_mime_dir;
 static const char *_mime_mount;
+static const char *_mime_unknown;
 static Eina_Bool clear_cache = EINA_FALSE;
 
 /***************************************************************************/
@@ -271,9 +272,7 @@ _scan_mime_func(void *data)
 		    EVRY_ITEM(file)->browseable = EINA_TRUE;
 	       }
 	     else
-	       {
-		  file->mime = "unknown";
-	       }
+	       file->mime = _mime_unknown;
 	  }
 	if (cnt++ > MAX_ITEMS * d->run_cnt) break;
      }
@@ -1388,6 +1387,7 @@ _plugins_init(const Evry_API *api)
 
    _mime_dir = eina_stringshare_add("inode/directory");
    _mime_mount = eina_stringshare_add("inode/mountpoint");
+   _mime_mount = eina_stringshare_add("unknown");
 
 #define ACTION_NEW(_name, _type2, _icon, _act, _check, _register)	\
    act = EVRY_ACTION_NEW(_name, EVRY_TYPE_FILE, _type2, _icon, _act, _check); \
@@ -1484,6 +1484,7 @@ _plugins_shutdown(void)
 
    eina_stringshare_del(_mime_dir);
    eina_stringshare_del(_mime_mount);
+   eina_stringshare_del(_mime_unknown);
 
    EINA_LIST_FREE(_plugins, p)
      {
