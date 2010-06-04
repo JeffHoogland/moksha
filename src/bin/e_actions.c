@@ -825,27 +825,35 @@ ACT_FN_GO(window_move_to)
    if (params)
      {
 	E_Border *bd;
-	int x, y;
+	int x, y, zx, zy, zw, zh;
 	char cx, cy;
 
 	bd = (E_Border *)obj;
+	e_zone_useful_geometry_get(bd->zone, &zx, &zy, &zw, &zh);
+
 	if (sscanf(params, "%c%i %c%i", &cx, &x, &cy, &y) == 4)
 	  {
-	     /* Nothing, both x and y is updated. */
+	     x += zx;
+	     y += zy;
 	  }
 	else if (sscanf(params, "* %c%i", &cy, &y) == 2)
 	  {
-	     /* Updated y, reset x. */
+	     /* Updated y, keep x. */
+	     y += zy;
 	     x = bd->x;
+	     cx = 0;
 	  }
 	else if (sscanf(params, "%c%i *", &cx, &x) == 2)
 	  {
-	     /* Updated x, reset y. */
+	     /* Updated x, keep y. */
+	     x += zx;
 	     y = bd->y;
+	     cy = 0;
 	  }
+	else return;
 
-	if (cx == '-') x = bd->zone->w - bd->w - x;
-	if (cy == '-') y = bd->zone->h - bd->h - y;
+	if (cx == '-') x = zw - bd->w - x + 2 * zx; /* compensate x with zx */
+	if (cy == '-') y = zh - bd->h - y + 2 * zy; /* compensate y with zy */
 
 	if ((x != bd->x) || (y != bd->y))
 	  {
@@ -936,7 +944,7 @@ ACT_FN_GO(window_push)
         E_Border *bd, *cur;
         E_Border_List *bd_list;
         E_Direction dir;
-        int x, y;
+        int x, y, zx, zy, zw, zh;
 
         if (strcmp(params, "left") == 0)
           dir = E_DIRECTION_LEFT;
@@ -950,19 +958,20 @@ ACT_FN_GO(window_push)
           return;
 
         bd = (E_Border *)obj;
+        e_zone_useful_geometry_get(bd->zone, &zx, &zy, &zw, &zh);
 
         /* Target x and y. */
         x = bd->x;
         y = bd->y;
 
         if (dir == E_DIRECTION_LEFT)
-          x = bd->zone->x;
+          x = zx;
         else if (dir == E_DIRECTION_RIGHT)
-          x = bd->zone->x + bd->zone->w - bd->w;
+          x = zx + zw - bd->w;
         else if (dir == E_DIRECTION_UP)
-          y = bd->zone->y;
+          y = zy;
         else /* dir == E_DIRECTION_DOWN */
-          y = bd->zone->y + bd->zone->h - bd->h;
+          y = zy + zh - bd->h;
 
         bd_list = e_container_border_list_first(bd->zone->container);
         cur = e_container_border_list_next(bd_list);
@@ -978,7 +987,7 @@ ACT_FN_GO(window_push)
                   else if ((dir == E_DIRECTION_RIGHT)
                            && (cur->x > bd->x + bd->w)
                            && (E_SPANS_COMMON(bd->y, bd->h, cur->y, cur->h)))
-                    x = MIN(x, bd->zone->x + cur->x - bd->w);
+                    x = MIN(x, zx + cur->x - bd->w);
                   else if ((dir == E_DIRECTION_UP)
                            && (cur->y + cur->h < bd->y)
                            && (E_SPANS_COMMON(bd->x, bd->w, cur->x, cur->w)))
@@ -986,7 +995,7 @@ ACT_FN_GO(window_push)
                   else if ((dir == E_DIRECTION_DOWN)
                            && (cur->y > bd->y + bd->h)
                            && (E_SPANS_COMMON(bd->x, bd->w, cur->x, cur->w)))
-                    y = MIN(y, bd->zone->y + cur->y - bd->h);
+                    y = MIN(y, zy + cur->y - bd->h);
                }
              cur = e_container_border_list_next(bd_list);
           }
@@ -2800,7 +2809,7 @@ e_actions_init(void)
    ACT_GO(window_move_to);
    e_action_predef_name_set(_("Window : Actions"), "Move To...", 
 			    "window_move_to", NULL,
-			    "syntax: [ ,-]X [ ,-]Y or * [ ,-]Y or [ , -]X *, example: -1 1", 1);
+			    "syntax: [+,-]X [+,-]Y or * [+,-]Y or [+,-]X *, example: -1 +1", 1);
    /* window_move_by */
    ACT_GO(window_move_by);
    e_action_predef_name_set(_("Window : Actions"), "Move By...", 
