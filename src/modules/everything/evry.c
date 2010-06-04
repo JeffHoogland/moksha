@@ -77,11 +77,8 @@ evry_init(void)
 int
 evry_shutdown(void)
 {
-   Eina_List *l;
-   Evry_Window *win;
-
-   EINA_LIST_FOREACH(windows, l, win)
-     evry_hide(win, 0);
+   while(windows)
+     evry_hide(windows->data, 0);
 
    return 1;
 }

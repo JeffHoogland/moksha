@@ -24,7 +24,6 @@ struct _Evry_Window
   E_Win *ewin;
   Evas *evas;
   E_Zone *zone;
-  Ecore_X_Window input_window;
 
   Evas_Object *o_main;
 
