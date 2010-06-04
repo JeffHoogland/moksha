@@ -5,6 +5,7 @@
 /***************************************************
   TODO option for maximum items to cache
   TODO keep common list for recent file instances
+FIXME
 */
 
 #include "e.h"
@@ -175,7 +176,6 @@ _scan_func(void *data)
 {
    Data *d = data;
    Plugin *p = d->plugin;
-   char *filename;
    struct dirent *dp;
    Evry_Item_File *file;
    char buf[4096];
@@ -186,6 +186,8 @@ _scan_func(void *data)
 
    while ((dp = readdir(d->dirp)))
      {
+	is_dir = EINA_FALSE;
+
 	if ((dp->d_name[0] == '.') &&
 	    ((dp->d_name[1] == '\0') ||
 	     ((dp->d_name[1] == '.') &&
@@ -209,8 +211,6 @@ _scan_func(void *data)
 	     if (dp->d_name[0] != '.')
 	       continue;
 	  }
-
-	is_dir = EINA_FALSE;
 
 	if (d->directory[1])
 	  snprintf(buf, sizeof(buf), "%s/%s",
@@ -239,13 +239,10 @@ _scan_func(void *data)
 
 	file = EVRY_ITEM_NEW(Evry_Item_File, p,
 			     NULL, NULL, _item_free);
-
-	filename = strdup(dp->d_name);
-	EVRY_ITEM(file)->label = filename;
+	file->path = strdup(buf);
+	EVRY_ITEM(file)->label = strdup(dp->d_name);
 	EVRY_ITEM(file)->browseable = is_dir;
 	d->files = eina_list_append(d->files, file);
-
-	file->path = strdup(buf);
      }
    closedir(d->dirp);
 }
@@ -266,8 +263,7 @@ _scan_mime_func(void *data)
 		 ecore_file_is_dir(file->path))
 	       EVRY_ITEM(file)->browseable = EINA_TRUE;
 	  }
-
-	if (!file->mime)
+	else
 	  file->mime = _mime_unknown;
 
 	if (cnt++ > MAX_ITEMS * d->run_cnt) break;
@@ -1383,9 +1379,9 @@ _plugins_init(const Evry_API *api)
    if (!evry->api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
-   _mime_dir = eina_stringshare_add("inode/directory");
-   _mime_mount = eina_stringshare_add("inode/mountpoint");
-   _mime_mount = eina_stringshare_add("unknown");
+   _mime_dir     = eina_stringshare_add("inode/directory");
+   _mime_mount   = eina_stringshare_add("inode/mountpoint");
+   _mime_unknown = eina_stringshare_add("unknown");
 
 #define ACTION_NEW(_name, _type2, _icon, _act, _check, _register)	\
    act = EVRY_ACTION_NEW(_name, EVRY_TYPE_FILE, _type2, _icon, _act, _check); \
