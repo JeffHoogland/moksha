@@ -95,17 +95,18 @@ _cb_border_add(void *data, int type,  void *event)
 {
    E_Event_Border_Add *ev = event;
    Plugin *p = data;
+   int min;
 
-   if (bd->skip_taskbar)
+   if (ev->border->client.netwm.state.skip_taskbar)
      return 1;
-   if (bd->skip_pager)
+   if (ev->border->client.netwm.state.skip_pager)
      return 1;
 
    _border_item_add(p, ev->border);
 
    EVRY_PLUGIN_ITEMS_CLEAR(p);
 
-   int min = EVRY_PLUGIN(p)->config->min_query;
+   min = EVRY_PLUGIN(p)->config->min_query;
 
    if ((!p->input && min == 0) ||
        (p->input && (strlen(p->input) >= min)))
