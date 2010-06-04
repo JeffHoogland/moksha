@@ -256,24 +256,20 @@ _scan_mime_func(void *data)
    Data *d = data;
    Evry_Item_File *file;
    Eina_List *l;
-   const char *mime;
    int cnt = 0;
 
    EINA_LIST_FOREACH(d->files, l, file)
      {
-	if (!EVRY_ITEM(file)->browseable)
+	if ((file->mime = efreet_mime_type_get(file->path)))
 	  {
-	     if ((mime = efreet_mime_type_get(file->path)))
-	       {
-		  file->mime = mime;
-
-		  if (!strncmp(file->mime, "inode/", 6) &&
-		      ecore_file_is_dir(file->path))
-		    EVRY_ITEM(file)->browseable = EINA_TRUE;
-	       }
-	     else
-	       file->mime = _mime_unknown;
+	     if (!strncmp(file->mime, "inode/", 6) &&
+		 ecore_file_is_dir(file->path))
+	       EVRY_ITEM(file)->browseable = EINA_TRUE;
 	  }
+
+	if (!file->mime)
+	  file->mime = _mime_unknown;
+
 	if (cnt++ > MAX_ITEMS * d->run_cnt) break;
      }
 }
@@ -430,11 +426,10 @@ _scan_end_func(void *data)
 	     continue;
 
 	  next:
-	     E_FREE(filename);
-	     E_FREE(path);
-	     if (file->path) eina_stringshare_del(file->path);
 	     d->files = eina_list_remove(d->files, file);
 	     E_FREE(file);
+	     E_FREE(filename);
+	     E_FREE(path);
 	  }
 
 	if (d->files)
@@ -457,22 +452,25 @@ _scan_end_func(void *data)
 	  {
 	     GET_FILE(file, item);
 
-	     mime = (char *) file->mime;
+	     if (!file->mime) break;
 
-	     if (!mime) break;
-
-	     file->mime = eina_stringshare_ref(mime);
-	     item->context = eina_stringshare_ref(mime);
+	     file->mime = eina_stringshare_ref(file->mime);
+	     item->context = eina_stringshare_ref(file->mime);
 
 	     p->files = eina_list_append(p->files, file);
 	  }
 
-	if (d->files)
+	if (d->files && d->run_cnt < 100)
 	  {
 	     d->run_cnt++;
 	     p->thread = ecore_thread_run(_scan_mime_func,
 					  _scan_end_func,
 					  _scan_cancel_func, d);
+	  }
+	else
+	  {
+	     EINA_LIST_FREE(d->files, item)
+	       EVRY_ITEM_FREE(item);
 	  }
      }
 
