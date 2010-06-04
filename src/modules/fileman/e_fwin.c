@@ -179,6 +179,7 @@ e_fwin_zone_new(E_Zone *zone, const char *dev, const char *path)
    E_Fwin *fwin;
    E_Fwin_Page *page;
    Evas_Object *o;
+   int x, y, w, h;
 
    fwin = E_OBJECT_ALLOC(E_Fwin, E_FWIN_TYPE, _e_fwin_free);
    if (!fwin) return;
@@ -249,8 +250,10 @@ e_fwin_zone_new(E_Zone *zone, const char *dev, const char *path)
 				_e_fwin_pan_child_size_get);
    evas_object_propagate_events_set(page->fm_obj, 0);
    page->scrollframe_obj = o;
-   evas_object_move(o, fwin->zone->x, fwin->zone->y);
-   evas_object_resize(o, fwin->zone->w, fwin->zone->h);
+
+   e_zone_useful_geometry_get(zone, &x, &y, &w, &h);
+   evas_object_move(o, x, y);
+   evas_object_resize(o, w, h);
    evas_object_show(o);
 
    e_fm2_window_object_set(page->fm_obj, E_OBJECT(fwin->zone));
@@ -1375,8 +1378,10 @@ _e_fwin_zone_move_resize(void *data, int type, void *event)
      }
    if (fwin->cur_page->scrollframe_obj) 
      {
-	evas_object_move(fwin->cur_page->scrollframe_obj, ev->zone->x, ev->zone->y);
-	evas_object_resize(fwin->cur_page->scrollframe_obj, ev->zone->w, ev->zone->h);
+	int x, y, w, h;
+	e_zone_useful_geometry_get(ev->zone, &x, &y, &w, &h);
+	evas_object_move(fwin->cur_page->scrollframe_obj, x, y);
+	evas_object_resize(fwin->cur_page->scrollframe_obj, w, h);
      }
    return 1;
 }

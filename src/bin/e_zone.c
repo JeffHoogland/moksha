@@ -1005,8 +1005,15 @@ e_zone_useful_geometry_get(E_Zone *zone, int *x, int *y, int *w, int *h)
 EAPI void
 e_zone_useful_geometry_dirty(E_Zone *zone)
 {
+   E_Event_Zone_Move_Resize *ev;
+
    E_OBJECT_CHECK(zone);
    E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
+
+   ev = E_NEW(E_Event_Zone_Move_Resize, 1);
+   ev->zone = zone;
+   e_object_ref(E_OBJECT(ev->zone));
+   ecore_event_add(E_EVENT_ZONE_MOVE_RESIZE, ev, _e_zone_event_move_resize_free, NULL);
 
    zone->useful_geometry.dirty = 1;
    zone->useful_geometry.x = -1;
