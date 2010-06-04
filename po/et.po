@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-05-31 12:02+1000\n"
+"POT-Creation-Date: 2010-06-04 11:02+1000\n"
 "PO-Revision-Date: 2010-01-07 07:56+0000\n"
 "Last-Translator: René Pärts <Unknown>\n"
 "Language-Team: Estonian <et@li.org>\n"
@@ -28,7 +28,7 @@ msgstr "Teave Enlightment'ist"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:848
 #: src/modules/conf_theme/e_int_config_theme_web.c:130
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:120
-#: src/modules/everything-windows/e_mod_main.c:445
+#: src/modules/everything-windows/e_mod_main.c:450
 #: src/modules/fileman/e_fwin.c:1824 src/modules/illume/e_mod_win.c:173
 #: src/modules/mixer/app_mixer.c:514
 msgid "Close"
@@ -578,8 +578,9 @@ msgstr ""
 #: src/bin/e_actions.c:2891 src/bin/e_actions.c:2895 src/bin/e_actions.c:2899
 #: src/bin/e_actions.c:2903 src/bin/e_actions.c:2907 src/bin/e_actions.c:2911
 #: src/bin/e_configure.c:151 src/bin/e_int_config_modules.c:65
-#: src/modules/conf_desklock/e_int_config_desklock.c:301
+#: src/modules/conf_desklock/e_int_config_desklock.c:309
 #: src/modules/conf_imc/e_int_config_imc.c:811
+#: src/modules/conf_menus/e_int_config_menus.c:294
 #: src/modules/conf_startup/e_int_config_startup.c:259
 #: src/modules/conf_theme/e_int_config_theme.c:400
 #: src/modules/conf_theme/e_int_config_theme.c:793
@@ -651,9 +652,9 @@ msgstr ""
 msgid "Color Selector"
 msgstr ""
 
-#: src/bin/e_color_dialog.c:50 src/bin/e_config.c:1930
-#: src/bin/e_config_dialog.c:262 src/bin/e_eap_editor.c:798
-#: src/bin/e_eap_editor.c:862 src/bin/e_entry_dialog.c:62 src/bin/e_exec.c:365
+#: src/bin/e_color_dialog.c:50 src/bin/e_config.c:1935
+#: src/bin/e_config_dialog.c:262 src/bin/e_eap_editor.c:818
+#: src/bin/e_eap_editor.c:882 src/bin/e_entry_dialog.c:62 src/bin/e_exec.c:365
 #: src/bin/e_fm.c:8536 src/bin/e_fm.c:9174 src/bin/e_fm_prop.c:510
 #: src/bin/e_int_border_remember.c:324 src/bin/e_int_border_remember.c:524
 #: src/bin/e_module.c:412 src/bin/e_sys.c:487 src/bin/e_sys.c:533
@@ -671,8 +672,8 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: src/bin/e_color_dialog.c:51 src/bin/e_eap_editor.c:800
-#: src/bin/e_eap_editor.c:864 src/bin/e_entry_dialog.c:63 src/bin/e_fm.c:8538
+#: src/bin/e_color_dialog.c:51 src/bin/e_eap_editor.c:820
+#: src/bin/e_eap_editor.c:884 src/bin/e_entry_dialog.c:63 src/bin/e_fm.c:8538
 #: src/bin/e_fm_prop.c:511 src/bin/e_utils.c:1172
 #: src/modules/conf_imc/e_int_config_imc_import.c:124
 #: src/modules/conf_mime/e_int_config_mime_edit.c:284
@@ -685,7 +686,7 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: src/bin/e_config.c:804 src/bin/e_config.c:837
+#: src/bin/e_config.c:805 src/bin/e_config.c:838
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -696,7 +697,7 @@ msgid ""
 "the hiccup in your settings.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:821
+#: src/bin/e_config.c:822
 msgid ""
 "Your settings are NEWER than Enlightenment. This is very<br>strange. This "
 "should not happen unless you downgraded<br>Enlightenment or copied the "
@@ -705,11 +706,11 @@ msgid ""
 "to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:1831
+#: src/bin/e_config.c:1836
 msgid "Settings Upgraded"
 msgstr ""
 
-#: src/bin/e_config.c:1854
+#: src/bin/e_config.c:1859
 #, c-format
 msgid ""
 "An error occured while saving Enlightenment's<br>settings to disk. The error "
@@ -717,7 +718,7 @@ msgid ""
 "%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:1865
+#: src/bin/e_config.c:1870
 #, c-format
 msgid ""
 "Enlightenment's settings files are too big<br>for the file system they are "
@@ -727,7 +728,7 @@ msgid ""
 "been deleted to avoid corrupt data.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:1878
+#: src/bin/e_config.c:1883
 #, c-format
 msgid ""
 "An output error occured when writing the settings<br>files for "
@@ -736,7 +737,7 @@ msgid ""
 "file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:1889
+#: src/bin/e_config.c:1894
 #, c-format
 msgid ""
 "Enlightenment cannot write its settings file<br>because it ran out of space "
@@ -745,7 +746,7 @@ msgid ""
 "s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:1901
+#: src/bin/e_config.c:1906
 #, c-format
 msgid ""
 "Enlightenment unexpectedly had the settings file<br>it was writing closed on "
@@ -753,7 +754,7 @@ msgid ""
 "s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:1926
+#: src/bin/e_config.c:1931
 msgid "Enlightenment Settings Write Problems"
 msgstr ""
 
@@ -764,7 +765,7 @@ msgstr ""
 msgid "Advanced"
 msgstr ""
 
-#: src/bin/e_config_dialog.c:239 src/bin/e_eap_editor.c:666
+#: src/bin/e_config_dialog.c:239 src/bin/e_eap_editor.c:675
 msgid "Basic"
 msgstr ""
 
@@ -849,11 +850,11 @@ msgstr ""
 msgid "No, and stop asking"
 msgstr ""
 
-#: src/bin/e_eap_editor.c:166
+#: src/bin/e_eap_editor.c:168
 msgid "Incomplete Window Properties"
 msgstr ""
 
-#: src/bin/e_eap_editor.c:167
+#: src/bin/e_eap_editor.c:169
 msgid ""
 "The window you are creating an icon for<br>does not contain window name and "
 "class<br>properties, so the needed properties for<br>the icon so that it "
@@ -862,53 +863,53 @@ msgid ""
 "same at<br>the time the window starts up, and does not<br>change."
 msgstr ""
 
-#: src/bin/e_eap_editor.c:222
+#: src/bin/e_eap_editor.c:224
 msgid "Desktop Entry Editor"
 msgstr ""
 
-#: src/bin/e_eap_editor.c:633 src/bin/e_int_border_prop.c:420
+#: src/bin/e_eap_editor.c:642 src/bin/e_int_border_prop.c:420
 #: src/bin/e_int_border_prop.c:467 src/modules/conf_imc/e_int_config_imc.c:894
-#: src/modules/conf_menus/e_int_config_menus.c:95
-#: src/modules/conf_menus/e_int_config_menus.c:144
+#: src/modules/conf_menus/e_int_config_menus.c:103
+#: src/modules/conf_menus/e_int_config_menus.c:298
 msgid "Name"
 msgstr ""
 
-#: src/bin/e_eap_editor.c:644
+#: src/bin/e_eap_editor.c:653
 msgid "Executable"
 msgstr ""
 
-#: src/bin/e_eap_editor.c:659
+#: src/bin/e_eap_editor.c:668
 msgid "Comment"
 msgstr ""
 
-#: src/bin/e_eap_editor.c:676 src/bin/e_fm_prop.c:397
-#: src/modules/conf_fonts/e_int_config_fonts.c:96
+#: src/bin/e_eap_editor.c:688 src/bin/e_eap_editor.c:697
+#: src/bin/e_fm_prop.c:397 src/modules/conf_fonts/e_int_config_fonts.c:96
 #: src/modules/conf_mime/e_int_config_mime_edit.c:145
 msgid "Icon"
 msgstr ""
 
-#: src/bin/e_eap_editor.c:681
+#: src/bin/e_eap_editor.c:701
 msgid "Generic Name"
 msgstr ""
 
-#: src/bin/e_eap_editor.c:687
+#: src/bin/e_eap_editor.c:707
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:106
 msgid "Window Class"
 msgstr ""
 
-#: src/bin/e_eap_editor.c:693 src/modules/conf_mime/e_int_config_mime.c:179
+#: src/bin/e_eap_editor.c:713 src/modules/conf_mime/e_int_config_mime.c:179
 msgid "Categories"
 msgstr ""
 
-#: src/bin/e_eap_editor.c:700
+#: src/bin/e_eap_editor.c:720
 msgid "Mime Types"
 msgstr ""
 
-#: src/bin/e_eap_editor.c:707
+#: src/bin/e_eap_editor.c:727
 msgid "Desktop file"
 msgstr ""
 
-#: src/bin/e_eap_editor.c:717
+#: src/bin/e_eap_editor.c:737
 #: src/modules/conf_performance/e_int_config_performance.c:115
 #: src/modules/everything/evry_config.c:380
 #: src/modules/everything/evry_config.c:464
@@ -918,27 +919,27 @@ msgstr ""
 msgid "General"
 msgstr ""
 
-#: src/bin/e_eap_editor.c:721
+#: src/bin/e_eap_editor.c:741
 msgid "Startup Notify"
 msgstr ""
 
-#: src/bin/e_eap_editor.c:723 src/modules/everything-apps/e_mod_main.c:1017
+#: src/bin/e_eap_editor.c:743 src/modules/everything-apps/e_mod_main.c:1017
 msgid "Run in Terminal"
 msgstr ""
 
-#: src/bin/e_eap_editor.c:725
+#: src/bin/e_eap_editor.c:745
 msgid "Show in Menus"
 msgstr ""
 
-#: src/bin/e_eap_editor.c:728 src/bin/e_int_border_remember.c:751
+#: src/bin/e_eap_editor.c:748 src/bin/e_int_border_remember.c:751
 msgid "Options"
 msgstr ""
 
-#: src/bin/e_eap_editor.c:758
+#: src/bin/e_eap_editor.c:778
 msgid "Select an Icon"
 msgstr ""
 
-#: src/bin/e_eap_editor.c:827
+#: src/bin/e_eap_editor.c:847
 msgid "Select an Executable"
 msgstr ""
 
@@ -1396,7 +1397,7 @@ msgid "Thumbnail"
 msgstr ""
 
 #: src/bin/e_fm_prop.c:435
-#: src/modules/conf_desklock/e_int_config_desklock.c:425
+#: src/modules/conf_desklock/e_int_config_desklock.c:433
 #: src/modules/everything-aspell/e_mod_main.c:480
 msgid "Custom"
 msgstr ""
@@ -1568,7 +1569,7 @@ msgid "Create Icon"
 msgstr ""
 
 #: src/bin/e_int_border_menu.c:101
-#: src/modules/everything-windows/e_mod_main.c:452
+#: src/modules/everything-windows/e_mod_main.c:457
 msgid "Send to Desktop"
 msgstr ""
 
@@ -1585,7 +1586,7 @@ msgid "More..."
 msgstr ""
 
 #: src/bin/e_int_border_menu.c:197
-#: src/modules/everything-windows/e_mod_main.c:431
+#: src/modules/everything-windows/e_mod_main.c:436
 msgid "Iconify"
 msgstr ""
 
@@ -1866,7 +1867,6 @@ msgid "Size, Position and Locks"
 msgstr ""
 
 #: src/bin/e_int_border_remember.c:622 src/modules/conf/e_mod_main.c:218
-#: src/modules/conf_window_focus/e_int_config_focus.c:222
 #: src/modules/everything/evry_plug_aggregator.c:333
 msgid "All"
 msgstr ""
@@ -1964,7 +1964,7 @@ msgid "Shelf"
 msgstr ""
 
 #: src/bin/e_int_config_modules.c:66 src/modules/everything/e_mod_main.c:84
-#: src/modules/everything/e_mod_main.c:199
+#: src/modules/everything/e_mod_main.c:200
 msgid "Everything Launcher"
 msgstr ""
 
@@ -2034,8 +2034,8 @@ msgstr ""
 msgid "Favorite Applications"
 msgstr ""
 
-#: src/bin/e_int_menus.c:128 src/modules/conf_menus/e_int_config_menus.c:90
-#: src/modules/conf_menus/e_int_config_menus.c:138
+#: src/bin/e_int_menus.c:128 src/modules/conf_menus/e_int_config_menus.c:98
+#: src/modules/conf_menus/e_int_config_menus.c:288
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:194
 #: src/modules/everything-apps/e_mod_main.c:970
 #: src/modules/everything-apps/e_mod_main.c:988
@@ -2049,7 +2049,7 @@ msgstr ""
 #: src/modules/conf_window_manipulation/e_mod_main.c:20
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/conf_winlist/e_mod_main.c:20
-#: src/modules/everything-windows/e_mod_main.c:413
+#: src/modules/everything-windows/e_mod_main.c:418
 msgid "Windows"
 msgstr ""
 
@@ -2842,19 +2842,19 @@ msgstr ""
 msgid "Resetting.<br><hilight>Please wait.</hilight>"
 msgstr ""
 
-#: src/bin/e_sys.c:634
+#: src/bin/e_sys.c:636
 msgid "Suspending"
 msgstr ""
 
-#: src/bin/e_sys.c:637
+#: src/bin/e_sys.c:639
 msgid "Suspending.<br><hilight>Please wait.</hilight>"
 msgstr ""
 
-#: src/bin/e_sys.c:660
+#: src/bin/e_sys.c:664
 msgid "Hibernating"
 msgstr ""
 
-#: src/bin/e_sys.c:663
+#: src/bin/e_sys.c:667
 msgid "Hibernating.<br><hilight>Please wait.</hilight>"
 msgstr ""
 
@@ -3051,7 +3051,7 @@ msgid "Add to Favorites"
 msgstr ""
 
 #: src/bin/e_widget_fsel.c:298
-#: src/modules/conf_desklock/e_int_config_desklock.c:305
+#: src/modules/conf_desklock/e_int_config_desklock.c:313
 #: src/modules/conf_imc/e_int_config_imc.c:818
 #: src/modules/conf_startup/e_int_config_startup.c:267
 #: src/modules/conf_theme/e_int_config_theme.c:407
@@ -3338,7 +3338,6 @@ msgstr ""
 #: src/modules/conf_transitions/e_int_config_transitions.c:152
 #: src/modules/conf_transitions/e_int_config_transitions.c:203
 #: src/modules/conf_transitions/e_int_config_transitions.c:235
-#: src/modules/conf_window_focus/e_int_config_focus.c:220
 msgid "None"
 msgstr ""
 
@@ -3688,43 +3687,47 @@ msgstr ""
 msgid "Desk"
 msgstr ""
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:96
+#: src/modules/conf_desklock/e_int_config_desklock.c:97
 msgid "Screen Lock Settings"
 msgstr ""
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:199
+#: src/modules/conf_desklock/e_int_config_desklock.c:201
 msgid "Automatic Locking"
 msgstr ""
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:201
+#: src/modules/conf_desklock/e_int_config_desklock.c:203
 msgid "Lock when Enlightenment starts"
 msgstr ""
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:205
+#: src/modules/conf_desklock/e_int_config_desklock.c:207
+msgid "Lock on Suspend"
+msgstr ""
+
+#: src/modules/conf_desklock/e_int_config_desklock.c:211
 msgid "Lock when X screensaver activates"
 msgstr ""
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:210
+#: src/modules/conf_desklock/e_int_config_desklock.c:216
 msgid "Time after screensaver activated"
 msgstr ""
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:213
-#: src/modules/conf_desklock/e_int_config_desklock.c:443
+#: src/modules/conf_desklock/e_int_config_desklock.c:219
+#: src/modules/conf_desklock/e_int_config_desklock.c:451
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:153
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:167
 #, c-format
 msgid "%1.0f seconds"
 msgstr ""
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:218
+#: src/modules/conf_desklock/e_int_config_desklock.c:224
 msgid "Lock when idle time exceeded"
 msgstr ""
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:222
+#: src/modules/conf_desklock/e_int_config_desklock.c:228
 msgid "Idle time to exceed"
 msgstr ""
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:225
+#: src/modules/conf_desklock/e_int_config_desklock.c:231
 #: src/modules/conf_dpms/e_int_config_dpms.c:218
 #: src/modules/conf_dpms/e_int_config_dpms.c:230
 #: src/modules/conf_dpms/e_int_config_dpms.c:242
@@ -3733,7 +3736,7 @@ msgstr ""
 msgid "%1.0f minutes"
 msgstr ""
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:298
+#: src/modules/conf_desklock/e_int_config_desklock.c:306
 #: src/modules/conf_imc/e_int_config_imc.c:806
 #: src/modules/conf_startup/e_int_config_startup.c:254
 #: src/modules/conf_theme/e_int_config_theme.c:396
@@ -3744,23 +3747,23 @@ msgstr ""
 msgid "Personal"
 msgstr ""
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:391
+#: src/modules/conf_desklock/e_int_config_desklock.c:399
 msgid "Login Box Settings"
 msgstr ""
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:394
+#: src/modules/conf_desklock/e_int_config_desklock.c:402
 msgid "Show on all screen zones"
 msgstr ""
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:398
+#: src/modules/conf_desklock/e_int_config_desklock.c:406
 msgid "Show on current screen zone"
 msgstr ""
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:402
+#: src/modules/conf_desklock/e_int_config_desklock.c:410
 msgid "Show on screen zone #:"
 msgstr ""
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:406
+#: src/modules/conf_desklock/e_int_config_desklock.c:414
 #: src/modules/conf_desks/e_int_config_desks.c:232
 #: src/modules/conf_desks/e_int_config_desks.c:237
 #: src/modules/conf_desks/e_int_config_desks.c:265
@@ -3777,40 +3780,40 @@ msgstr ""
 msgid "%1.0f"
 msgstr ""
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:414
+#: src/modules/conf_desklock/e_int_config_desklock.c:422
 msgid "Wallpaper Mode"
 msgstr ""
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:416
+#: src/modules/conf_desklock/e_int_config_desklock.c:424
 #: src/modules/gadman/e_mod_config.c:143
 msgid "Theme Defined"
 msgstr ""
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:419
+#: src/modules/conf_desklock/e_int_config_desklock.c:427
 msgid "Theme Wallpaper"
 msgstr ""
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:422
+#: src/modules/conf_desklock/e_int_config_desklock.c:430
 msgid "User Wallpaper"
 msgstr ""
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:433
+#: src/modules/conf_desklock/e_int_config_desklock.c:441
 msgid "Enter Presentation Mode"
 msgstr ""
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:435
+#: src/modules/conf_desklock/e_int_config_desklock.c:443
 msgid "Suggest entering presentation mode"
 msgstr ""
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:439
+#: src/modules/conf_desklock/e_int_config_desklock.c:447
 msgid "If deactivated before"
 msgstr ""
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:457
+#: src/modules/conf_desklock/e_int_config_desklock.c:465
 msgid "Custom Screenlock"
 msgstr ""
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:458
+#: src/modules/conf_desklock/e_int_config_desklock.c:466
 msgid "Use custom screenlock"
 msgstr ""
 
@@ -4641,24 +4644,24 @@ msgid ""
 "s</hilight> action.<br>Please choose another binding key sequence."
 msgstr ""
 
-#: src/modules/conf_menus/e_int_config_menus.c:42
+#: src/modules/conf_menus/e_int_config_menus.c:43
 #: src/modules/conf_menus/e_mod_main.c:21
 msgid "Menu Settings"
 msgstr ""
 
-#: src/modules/conf_menus/e_int_config_menus.c:87
-#: src/modules/conf_menus/e_int_config_menus.c:140
+#: src/modules/conf_menus/e_int_config_menus.c:95
+#: src/modules/conf_menus/e_int_config_menus.c:290
 msgid "Main Menu"
 msgstr ""
 
-#: src/modules/conf_menus/e_int_config_menus.c:88
-#: src/modules/conf_menus/e_int_config_menus.c:136
+#: src/modules/conf_menus/e_int_config_menus.c:96
+#: src/modules/conf_menus/e_int_config_menus.c:286
 #: src/modules/fileman/e_mod_main.c:330
 msgid "Favorites"
 msgstr ""
 
-#: src/modules/conf_menus/e_int_config_menus.c:94
-#: src/modules/conf_menus/e_int_config_menus.c:150
+#: src/modules/conf_menus/e_int_config_menus.c:102
+#: src/modules/conf_menus/e_int_config_menus.c:304
 #: src/modules/conf_window_display/e_int_config_window_display.c:179
 #: src/modules/conf_window_display/e_int_config_window_display.c:251
 #: src/modules/conf_winlist/e_int_config_winlist.c:259
@@ -4666,22 +4669,27 @@ msgstr ""
 msgid "Display"
 msgstr ""
 
-#: src/modules/conf_menus/e_int_config_menus.c:97
-#: src/modules/conf_menus/e_int_config_menus.c:146
+#: src/modules/conf_menus/e_int_config_menus.c:105
+#: src/modules/conf_menus/e_int_config_menus.c:300
 msgid "Generic"
 msgstr ""
 
-#: src/modules/conf_menus/e_int_config_menus.c:99
-#: src/modules/conf_menus/e_int_config_menus.c:148
+#: src/modules/conf_menus/e_int_config_menus.c:107
+#: src/modules/conf_menus/e_int_config_menus.c:302
 msgid "Comments"
 msgstr ""
 
-#: src/modules/conf_menus/e_int_config_menus.c:154
+#: src/modules/conf_menus/e_int_config_menus.c:214
+#: src/modules/wizard/page_030.c:124
+msgid "System Default"
+msgstr ""
+
+#: src/modules/conf_menus/e_int_config_menus.c:308
 msgid "Margin"
 msgstr ""
 
-#: src/modules/conf_menus/e_int_config_menus.c:156
-#: src/modules/conf_menus/e_int_config_menus.c:161
+#: src/modules/conf_menus/e_int_config_menus.c:310
+#: src/modules/conf_menus/e_int_config_menus.c:315
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:132
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:141
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:150
@@ -4691,43 +4699,43 @@ msgstr ""
 msgid "%2.0f pixels"
 msgstr ""
 
-#: src/modules/conf_menus/e_int_config_menus.c:159
+#: src/modules/conf_menus/e_int_config_menus.c:313
 msgid "Cursor Margin"
 msgstr ""
 
-#: src/modules/conf_menus/e_int_config_menus.c:164
+#: src/modules/conf_menus/e_int_config_menus.c:318
 msgid "Autoscroll"
 msgstr ""
 
-#: src/modules/conf_menus/e_int_config_menus.c:168
+#: src/modules/conf_menus/e_int_config_menus.c:322
 msgid "Menu Scroll Speed"
 msgstr ""
 
-#: src/modules/conf_menus/e_int_config_menus.c:170
+#: src/modules/conf_menus/e_int_config_menus.c:324
 #, c-format
 msgid "%5.0f pixels/sec"
 msgstr ""
 
-#: src/modules/conf_menus/e_int_config_menus.c:173
+#: src/modules/conf_menus/e_int_config_menus.c:327
 msgid "Fast Mouse Move Threshhold"
 msgstr ""
 
-#: src/modules/conf_menus/e_int_config_menus.c:175
+#: src/modules/conf_menus/e_int_config_menus.c:329
 #: src/modules/conf_window_display/e_int_config_window_display.c:279
 #, c-format
 msgid "%4.0f pixels/sec"
 msgstr ""
 
-#: src/modules/conf_menus/e_int_config_menus.c:178
+#: src/modules/conf_menus/e_int_config_menus.c:332
 msgid "Click Drag Timeout"
 msgstr ""
 
-#: src/modules/conf_menus/e_int_config_menus.c:180
+#: src/modules/conf_menus/e_int_config_menus.c:334
 #, c-format
 msgid "%2.2f sec"
 msgstr ""
 
-#: src/modules/conf_menus/e_int_config_menus.c:183
+#: src/modules/conf_menus/e_int_config_menus.c:337
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:208
 msgid "Miscellaneous"
 msgstr ""
@@ -5534,6 +5542,14 @@ msgstr ""
 msgid "New Window Focus"
 msgstr ""
 
+#: src/modules/conf_window_focus/e_int_config_focus.c:220
+msgid "No window"
+msgstr ""
+
+#: src/modules/conf_window_focus/e_int_config_focus.c:222
+msgid "All windows"
+msgstr ""
+
 #: src/modules/conf_window_focus/e_int_config_focus.c:224
 msgid "Only dialogs"
 msgstr ""
@@ -6063,7 +6079,7 @@ msgid "Dropshadow"
 msgstr ""
 
 #: src/modules/everything/e_mod_main.c:85
-#: src/modules/everything/e_mod_main.c:200
+#: src/modules/everything/e_mod_main.c:201
 msgid "Show Everything Dialog"
 msgstr ""
 
@@ -6071,11 +6087,11 @@ msgstr ""
 msgid "Everything Configuration"
 msgstr ""
 
-#: src/modules/everything/e_mod_main.c:393
+#: src/modules/everything/e_mod_main.c:390
 msgid "Everything Module"
 msgstr ""
 
-#: src/modules/everything/e_mod_main.c:570
+#: src/modules/everything/e_mod_main.c:567
 msgid "Run Everything"
 msgstr ""
 
@@ -6197,7 +6213,7 @@ msgid "Object Plugins"
 msgstr ""
 
 #: src/modules/everything/evry_config.c:541
-#: src/modules/everything/evry_config.c:739
+#: src/modules/everything/evry_config.c:743
 msgid "Plugins"
 msgstr ""
 
@@ -6409,11 +6425,11 @@ msgstr ""
 msgid "Show Dialog"
 msgstr ""
 
-#: src/modules/everything-windows/e_mod_main.c:423
+#: src/modules/everything-windows/e_mod_main.c:428
 msgid "Switch to Window"
 msgstr ""
 
-#: src/modules/everything-windows/e_mod_main.c:438
+#: src/modules/everything-windows/e_mod_main.c:443
 msgid "Toggle Fullscreen"
 msgstr ""
 
@@ -7062,10 +7078,6 @@ msgstr ""
 
 #: src/modules/wizard/page_030.c:107
 msgid "Select application menu"
-msgstr ""
-
-#: src/modules/wizard/page_030.c:124
-msgid "System Default"
 msgstr ""
 
 #: src/modules/wizard/page_040.c:25
