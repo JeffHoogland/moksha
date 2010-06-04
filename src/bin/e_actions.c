@@ -943,35 +943,62 @@ ACT_FN_GO(window_push)
      {
         E_Border *bd, *cur;
         E_Border_List *bd_list;
-        E_Direction dir;
+        int hdir, vdir;
         int x, y, zx, zy, zw, zh;
 
         if (strcmp(params, "left") == 0)
-          dir = E_DIRECTION_LEFT;
+	  {
+	     hdir = -1;
+	     vdir = 0;
+	  }
         else if (strcmp(params, "right") == 0)
-          dir = E_DIRECTION_RIGHT;
+	  {
+	     hdir = +1;
+	     vdir = 0;
+	  }
         else if (strcmp(params, "up") == 0)
-          dir = E_DIRECTION_UP;
+	  {
+	     hdir = 0;
+	     vdir = -1;
+	  }
         else if (strcmp(params, "down") == 0)
-          dir = E_DIRECTION_DOWN;
+	  {
+	     hdir = 0;
+	     vdir = +1;
+	  }
+        else if (strcmp(params, "up-left") == 0)
+	  {
+	     hdir = -1;
+	     vdir = -1;
+	  }
+        else if (strcmp(params, "up-right") == 0)
+	  {
+	     hdir = +1;
+	     vdir = -1;
+	  }
+        else if (strcmp(params, "down-left") == 0)
+	  {
+	     hdir = -1;
+	     vdir = +1;
+	  }
+        else if (strcmp(params, "down-right") == 0)
+	  {
+	     hdir = +1;
+	     vdir = +1;
+	  }
         else
           return;
 
         bd = (E_Border *)obj;
         e_zone_useful_geometry_get(bd->zone, &zx, &zy, &zw, &zh);
 
-        /* Target x and y. */
-        x = bd->x;
-        y = bd->y;
+	if (hdir < 0)      x = zx;
+	else if (hdir > 0) x = zx + zw - bd->w;
+	else               x = bd->x;
 
-        if (dir == E_DIRECTION_LEFT)
-          x = zx;
-        else if (dir == E_DIRECTION_RIGHT)
-          x = zx + zw - bd->w;
-        else if (dir == E_DIRECTION_UP)
-          y = zy;
-        else /* dir == E_DIRECTION_DOWN */
-          y = zy + zh - bd->h;
+	if (vdir < 0)      y = zy;
+	else if (vdir > 0) y = zy + zh - bd->h;
+	else               y = bd->y;
 
         bd_list = e_container_border_list_first(bd->zone->container);
         cur = e_container_border_list_next(bd_list);
@@ -980,22 +1007,23 @@ ACT_FN_GO(window_push)
           {
             if ((bd->desk == cur->desk) && (bd != cur) && (!cur->iconic))
                {
-                  if ((dir == E_DIRECTION_LEFT)
-                      && (cur->x + cur->w < bd->x)
-                      && (E_SPANS_COMMON(bd->y, bd->h, cur->y, cur->h)))
-                    x = MAX(x, cur->x + cur->w);
-                  else if ((dir == E_DIRECTION_RIGHT)
-                           && (cur->x > bd->x + bd->w)
-                           && (E_SPANS_COMMON(bd->y, bd->h, cur->y, cur->h)))
-                    x = MIN(x, zx + cur->x - bd->w);
-                  else if ((dir == E_DIRECTION_UP)
-                           && (cur->y + cur->h < bd->y)
-                           && (E_SPANS_COMMON(bd->x, bd->w, cur->x, cur->w)))
-                    y = MAX(y, cur->y + cur->h);
-                  else if ((dir == E_DIRECTION_DOWN)
-                           && (cur->y > bd->y + bd->h)
-                           && (E_SPANS_COMMON(bd->x, bd->w, cur->x, cur->w)))
-                    y = MIN(y, zy + cur->y - bd->h);
+		  if ((hdir < 0)
+		      && (cur->x + cur->w < bd->x)
+		      && (E_SPANS_COMMON(bd->y, bd->h, cur->y, cur->h)))
+		    x = MAX(x, cur->x + cur->w);
+		  else if ((hdir > 0)
+			   && (cur->x > bd->x + bd->w)
+			   && (E_SPANS_COMMON(bd->y, bd->h, cur->y, cur->h)))
+		    x = MIN(x, zx + cur->x - bd->w);
+
+		  if ((vdir < 0)
+		      && (cur->y + cur->h < bd->y)
+		      && (E_SPANS_COMMON(bd->x, bd->w, cur->x, cur->w)))
+		    y = MAX(y, cur->y + cur->h);
+		  else if ((vdir > 0)
+			   && (cur->y > bd->y + bd->h)
+			   && (E_SPANS_COMMON(bd->x, bd->w, cur->x, cur->w)))
+		    y = MIN(y, zy + cur->y - bd->h);
                }
              cur = e_container_border_list_next(bd_list);
           }
@@ -2826,7 +2854,7 @@ e_actions_init(void)
    ACT_GO(window_push);
    e_action_predef_name_set(_("Window : Actions"), "Push in Direction...", 
 			    "window_push", NULL,
-			    "syntax: direction, example: up, down, left, right", 1);
+			    "syntax: direction, example: up, down, left, right, up-left, up-right, bottom-left, bottom-right", 1);
 
    /* window_drag_icon */
    ACT_GO(window_drag_icon);
