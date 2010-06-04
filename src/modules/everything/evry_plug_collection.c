@@ -67,6 +67,7 @@ _add_item(Plugin *p, Plugin_Config *pc)
 	it->icon_get = itp->icon_get;
 	it->data = pc;
 	it->browseable = EINA_TRUE;
+	it->detail = eina_stringshare_ref(EVRY_ITEM(p)->label);
 	p->plugins = eina_list_append(p->plugins, it);
      }
    return it;
@@ -100,9 +101,7 @@ _begin_all(Evry_Plugin *plugin, const Evry_Item *item)
      {
 	if (!strcmp(pc->name, "All") ||
 	    !strcmp(pc->name, "Actions") ||
-	    !strcmp(pc->name, "Text") ||
 	    !strcmp(pc->name, "Calculator") ||
-	    !strcmp(pc->name, "Spell Checker") ||
 	    !strcmp(pc->name, "Plugins"))
 	  continue;
 
@@ -139,14 +138,38 @@ _fetch(Evry_Plugin *plugin, const char *input)
    return !!(plugin->items);
 }
 
+static Evry_Plugin *
+_add_plugin(const char *name)
+{
+   Evry_Plugin *p;
+   char path[4096];
+   char title[4096];
+
+   p = EVRY_PLUGIN_NEW(Evry_Plugin, N_(name),
+		       _module_icon, COLLECTION_PLUGIN,
+		       _begin, _finish, _fetch, NULL);
+   p->browse = &_browse;
+
+   snprintf(path, sizeof(path), "extensions/everything-%s", p->name);
+
+   snprintf(title, sizeof(title), "Everything %s", p->name);
+
+   e_configure_registry_item_add
+     (path, 110, title, NULL, NULL/*icon*/, evry_collection_conf_dialog);
+
+   p->config_path = eina_stringshare_add(path);
+
+   plugins = eina_list_append(plugins, p);
+
+   return p;
+}
+
 Eina_Bool
 evry_plug_collection_init(void)
 {
    Evry_Plugin *p;
-   Plugin_Config *pc, *pcc;
+   Plugin_Config *pc;
    Eina_List *l;
-   char path[4096];
-   char title[4096];
 
    plugin_config.min_query = 0;
    plugin_config.top_level = EINA_TRUE;
@@ -158,43 +181,23 @@ evry_plug_collection_init(void)
    e_configure_registry_category_add
      ("extensions", 80, _("Extensions"), NULL, "preferences-extensions");
 
-
-   p = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Plugins"),
-		       _module_icon, COLLECTION_PLUGIN,
-		       _begin_all, _finish, _fetch, NULL);
-   p->browse = &_browse;
+   p = _add_plugin("Plugins");
+   p->begin = &_begin_all;
    if (evry_plugin_register(p, EVRY_PLUGIN_SUBJECT, 100))
      {
 	p->config->aggregate = EINA_TRUE;
 	p->config->top_level = EINA_TRUE;
 	p->config->view_mode = VIEW_MODE_THUMB;
      }
-   plugins = eina_list_append(plugins, p);
-
 
    EINA_LIST_FOREACH(evry_conf->collections, l, pc)
      {
-	p = EVRY_PLUGIN_NEW(Evry_Plugin, N_(pc->name),
-			    _module_icon, COLLECTION_PLUGIN,
-			    _begin, _finish, _fetch, NULL);
-	p->browse = &_browse;
+	p = _add_plugin(pc->name); 
 	p->config = pc;
 	pc->plugin = p;
+
 	if (evry_plugin_register(p, EVRY_PLUGIN_SUBJECT, 1))
-	  {
-	     p->config->aggregate = EINA_FALSE;
-	  }
-
-	snprintf(path, sizeof(path), "extensions/everything-%s", p->name);
-
-	snprintf(title, sizeof(title), "Everything %s", p->name);
-
-	e_configure_registry_item_add
-	  (path, 110, title, NULL, NULL/*icon*/, evry_collection_conf_dialog);
-
-	p->config_path = eina_stringshare_add(path);
-
-	plugins = eina_list_append(plugins, p);
+	  p->config->aggregate = EINA_FALSE;
      }
 
    return EINA_TRUE;

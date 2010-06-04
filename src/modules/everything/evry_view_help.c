@@ -2,7 +2,6 @@
 
 static Evry_View *view;
 static Evas_Object *o_text = NULL;
-static const Evry_State *state = NULL;
 
 static void
 _view_clear(Evry_View *v)
@@ -12,7 +11,6 @@ _view_clear(Evry_View *v)
    evas_object_del(o_text);
    o_text = NULL;
 }
-
 
 static int
 _view_update(Evry_View *v)
@@ -55,7 +53,7 @@ _cb_key_down(Evry_View *v, const Ecore_Event_Key *ev)
 	return 1;
      }
 
-   evry_view_toggle((Evry_State *)state, NULL);
+   evry_view_toggle(v->state, NULL);
    return 1;
 }
 
@@ -64,7 +62,7 @@ _view_create(Evry_View *v, const Evry_State *s, const Evas_Object *swallow)
 {
    Evas_Object *o;
    int mw, mh;
-
+   
    char *text =
      _("  Ok, here comes the explanation of <hilight>everything</hilight>...<br>"
        "  Just type a few letters of the thing you are looking for. <br>"
@@ -106,7 +104,6 @@ _view_create(Evry_View *v, const Evry_State *s, const Evas_Object *swallow)
    o_text = o;
 
    v->active = 1;
-   state = s;
 
    return v;
 }

@@ -26,7 +26,6 @@ _timer_cb(void *data)
 
    v->timer = NULL;
    return 0;
-
 }
 
 static void
@@ -117,7 +116,8 @@ _tabs_update(Tab_View *v)
 
    if (!w && !v->timer)
      {
-	v->timer = ecore_timer_add(0.1, _timer_cb, v);
+	v->timer = ecore_idle_exiter_add(_timer_cb, v); 
+	e_util_wakeup();
 	return;
      }
 
@@ -384,7 +384,7 @@ evry_tab_view_free(Tab_View *v)
      ecore_animator_del(v->animator);
 
    if (v->timer)
-     ecore_timer_del(v->timer);
+     ecore_idle_exiter_del(v->timer); 
 
    E_FREE(v);
 }

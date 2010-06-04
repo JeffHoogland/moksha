@@ -21,7 +21,11 @@ typedef struct _Evry_Window	Evry_Window;
 
 struct _Evry_Window
 {
-  E_Popup *popup;
+  E_Win *ewin;
+  Evas *evas;
+  E_Zone *zone;
+  Ecore_X_Window input_window;
+
   Evas_Object *o_main;
 
   Eina_Bool request_selection;
@@ -37,19 +41,20 @@ struct _Evry_Window
   Evry_Selector **selectors;
   Evry_Selector **sel_list;
 
-  int level;
+  unsigned int level;
 
-  int mouse_out;
-  int mouse_button;
+  unsigned int mouse_out;
+  unsigned int mouse_button;
 
-  Evry_View *view_clearing;
-  Evry_View *view_freeing;
+  unsigned int grab;
+
+  Evry_State *state_clearing;
 };
 
 struct _Evry_Selector
 {
   Evry_Window *win;
-  
+
   /* current state */
   Evry_State  *state;
 
@@ -74,6 +79,8 @@ struct _Evry_Selector
 
   Ecore_Timer *update_timer;
   Ecore_Timer *action_timer;
+
+  const char *edje_part;
 };
 
 struct _Evry_State
@@ -111,6 +118,10 @@ struct _Evry_State
   Eina_Bool trigger_active;
 
   unsigned int request;
+
+  Ecore_Timer *clear_timer;
+
+  Eina_Bool delete_me;
 };
 
 struct _Evry_View
@@ -128,9 +139,9 @@ struct _Evry_View
   int  (*update)       (Evry_View *view);
   void (*clear)        (Evry_View *view);
 
-  Ecore_Timer *clear_timer;
-  
   int priority;
+
+  Evry_State *state;
 };
 
 struct _Tab_View
@@ -150,7 +161,7 @@ struct _Tab_View
   double align;
   double align_to;
   Ecore_Animator *animator;
-  Ecore_Timer *timer;
+  Ecore_Idle_Exiter *timer;
 };
 
 struct _Config
@@ -203,16 +214,12 @@ struct _History
   int version;
   Eina_Hash *subjects;
   double begin;
-
-  Eina_Bool changed;
 };
 
-/* evry.c */
+/*** Evry_Api functions ***/
 void  evry_item_select(const Evry_State *s, Evry_Item *it);
 void  evry_item_mark(const Evry_State *state, Evry_Item *it, Eina_Bool mark);
 void  evry_plugin_select(Evry_Plugin *p);
-/* int   evry_list_win_show(void);
- * void  evry_list_win_hide(void); */
 Evry_Item *evry_item_new(Evry_Item *base, Evry_Plugin *p, const char *label,
 			      Evas_Object *(*icon_get) (Evry_Item *it, Evas *e),
 			      void (*cb_free) (Evry_Item *item));
@@ -278,7 +285,7 @@ int   evry_api_version_check(int version);
 Evry_Type evry_type_register(const char *type);
 const char *evry_type_get(Evry_Type type);
 
-
+/*** internal ***/
 Tab_View *evry_tab_view_new(Evry_View *view, const Evry_State *s, Evas *e);
 void  evry_tab_view_free(Tab_View *v);
 
@@ -300,7 +307,7 @@ void  evry_plug_collection_shutdown(void);
 int   evry_init(void);
 int   evry_shutdown(void);
 Evry_Window *evry_show(E_Zone *zone, E_Zone_Edge edge, const char *params);
-void  evry_hide(int clear);
+void  evry_hide(Evry_Window *win, int clear);
 
 int   evry_plug_actions_init();
 void  evry_plug_actions_shutdown();
@@ -313,10 +320,10 @@ void  evry_history_free(void);
 int   evry_browse_item(Evry_Item *it);
 int   evry_browse_back(Evry_Selector *sel);
 
-void  evry_plugin_action(int finished);
+void  evry_plugin_action(Evry_Window *win, int finished);
 
 int   evry_state_push(Evry_Selector *sel, Eina_List *plugins);
-int   evry_selectors_switch(int dir, int slide);
+int   evry_selectors_switch(Evry_Window *win,int dir, int slide);
 int   evry_view_toggle(Evry_State *s, const char *trigger);
 
 int evry_gadget_init(void);
@@ -369,10 +376,10 @@ extern int _e_module_evry_log_dom;
 #undef WRN
 #undef ERR
 
-#define DBG(...) EINA_LOG_DOM_DBG(_e_module_evry_log_dom , __VA_ARGS__)
-#define INF(...) EINA_LOG_DOM_INFO(_e_module_evry_log_dom , __VA_ARGS__)
-#define WRN(...) EINA_LOG_DOM_WARN(_e_module_evry_log_dom , __VA_ARGS__)
-#define ERR(...) EINA_LOG_DOM_ERR(_e_module_evry_log_dom , __VA_ARGS__)
+#define DBG(...) EINA_LOG_DOM_DBG(_e_module_evry_log_dom, __VA_ARGS__)
+#define INF(...) EINA_LOG_DOM_INFO(_e_module_evry_log_dom, __VA_ARGS__)
+#define WRN(...) EINA_LOG_DOM_WARN(_e_module_evry_log_dom, __VA_ARGS__)
+#define ERR(...) EINA_LOG_DOM_ERR(_e_module_evry_log_dom, __VA_ARGS__)
 
 /*** E Module ***/
 EAPI void *e_modapi_init     (E_Module *m);

@@ -149,8 +149,8 @@ struct _Evry_Plugin
      active. free 'items' here */
   void (*finish) (Evry_Plugin *p);
 
-  /* optional: plugin is added to the list of current plugins and
-     queried for results when not returning NULL. The previos
+  /* plugin is added to the list of current plugins and
+     queried for results when not returning NULL. The previous
      selectors item is passed, i.e. a plugin registered as action
      receives the subject, a plugin registered as object receives the
      action item. here you can check wheter the plugin can be queried,

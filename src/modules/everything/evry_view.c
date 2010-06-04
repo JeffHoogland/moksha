@@ -205,21 +205,27 @@ _item_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
    Evas_Event_Mouse_Down *ev = event_info;
    Item *it = data;
    Smart_Data *sd = evas_object_smart_data_get(it->obj);
+   const Evry_State *s;
    if (!sd) return;
 
    sd->mouse_act = 1;
    sd->it_down = it;
    sd->mouse_button = ev->button;
 
+   s = sd->view->state;
+
    if ((ev->button == 1) && (ev->flags & EVAS_BUTTON_DOUBLE_CLICK))
      {
-	evry_item_select(sd->view->state, it->item);
-	_pan_item_select(it->obj, it, 0);
+	if (it != sd->cur_item)
+	  {
+	     evry_item_select(s, it->item);
+	     _pan_item_select(it->obj, it, 0);
+	  }
 
 	if (it->item->browseable)
 	  evry_browse_item(it->item);
 	else
-	  evry_plugin_action(1);
+	  evry_plugin_action(s->selector->win, 1);
      }
    else
      {
@@ -234,6 +240,7 @@ _item_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
    Evas_Event_Mouse_Up *ev = event_info;
    Item *it = data;
    Smart_Data *sd = evas_object_smart_data_get(it->obj);
+   const Evry_State *s;
    if (!sd) return;
 
    sd->mouse_x = 0;
@@ -245,20 +252,23 @@ _item_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
    edje_object_signal_emit(sd->view->bg, "e,action,hide,back", "e");
    sd->it_down = NULL;
 
+   s = sd->view->state;
+
    if (ev->button == 1)
      {
-	if (!(ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD))
+	if (!(ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD) &&
+	    (it != sd->cur_item))
 	  {
-	     evry_item_select(sd->view->state, it->item);
+	     evry_item_select(s, it->item);
 	     _pan_item_select(it->obj, it, 0);
 	  }
      }
    else if (ev->button == 3)
      {
-	evry_item_select(sd->view->state, it->item);
+	evry_item_select(s, it->item);
 	_pan_item_select(it->obj, it, 0);
 
-	evry_plugin_action(0);
+	evry_plugin_action(s->selector->win, 0);
      }
 }
 
@@ -1313,7 +1323,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
 	       }
 	     else
 	       {
-		  if (it->y >= cur - sd->h) break;
+		  if (it->y + it->h >= cur - sd->h) break;
 	       }
 
 	     if (!l->next)
@@ -1487,9 +1497,9 @@ _view_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	     sd->mouse_x = 0;
 	     sd->mouse_y = 0;
 	     if (sel->states->next)
-	       evry_browse_back(NULL);
+	       evry_browse_back(sel);
 	     else
-	       evry_selectors_switch(-1, EINA_TRUE);
+	       evry_selectors_switch(sel->win, -1, EINA_TRUE);
 	  }
 	else if ((sd->it_down && (sd->cur_item == sd->it_down)) &&
 		 (sd->mouse_x - ev->cur.canvas.x > SLIDE_RESISTANCE))
@@ -1503,7 +1513,7 @@ _view_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	       }
 	     else
 	       {
-		  evry_selectors_switch(1, EINA_TRUE);
+		  evry_selectors_switch(sel->win, 1, EINA_TRUE);
 	       }
 
 	     sd->it_down = NULL;
@@ -1529,7 +1539,6 @@ _view_create(Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
 
    v = E_NEW(View, 1);
    v->view = *view;
-   v->view.clear_timer = NULL;
    v->state = s;
    v->evas = evas_object_evas_get(swallow);
 

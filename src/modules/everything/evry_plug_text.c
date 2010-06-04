@@ -3,6 +3,12 @@
 static Evry_Plugin *p1;
 static Evry_Plugin *p2;
 
+static Evry_Plugin *
+_begin(Evry_Plugin *p, const Evry_Item *it)
+{
+   return p;
+}
+
 static void
 _finish(Evry_Plugin *p)
 {
@@ -38,11 +44,11 @@ evry_plug_text_init(void)
 {
    p1 = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Text"),
 			"accessories-text-editor", EVRY_TYPE_TEXT,
-			NULL, _finish, _fetch, NULL);
+			_begin, _finish, _fetch, NULL);
 
    p2 = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Text"),
 			"accessories-text-editor", EVRY_TYPE_TEXT,
-			NULL, _finish, _fetch, NULL);
+			_begin, _finish, _fetch, NULL);
 
    if (evry_plugin_register(p1, EVRY_PLUGIN_OBJECT,999))
      {

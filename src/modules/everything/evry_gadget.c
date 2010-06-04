@@ -69,7 +69,7 @@ _gc_shutdown(E_Gadcon_Client *gcc)
 
    inst = gcc->data;
    if (inst->del_fn && inst->win)
-     e_object_delfn_del(E_OBJECT(inst->win->popup), inst->del_fn);
+     e_object_delfn_del(E_OBJECT(inst->win->ewin), inst->del_fn);
 
    evas_object_del(inst->o_button);
    free(inst);
@@ -125,7 +125,7 @@ static void _del_func(void *data, void *obj)
    Instance *inst = data;
 
    e_gadcon_locked_set(inst->gcc->gadcon, 0);
-   e_object_delfn_del(E_OBJECT(inst->win->popup), inst->del_fn);
+   e_object_delfn_del(E_OBJECT(inst->win->ewin), inst->del_fn);
    inst->del_fn = NULL;
    inst->win = NULL;
    edje_object_signal_emit(inst->o_button, "e,state,unfocused", "e");
@@ -162,8 +162,8 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	 * 	       evry_conf->edge_width,
 	 * 	       evry_conf->edge_height); */
 
-	pw = win->popup->w;
-	ph = win->popup->h;
+	pw = win->ewin->w;
+	ph = win->ewin->h;
 
 	switch (inst->gcc->gadcon->orient)
 	  {
@@ -171,22 +171,22 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	   case E_GADCON_ORIENT_TOP:
 	   case E_GADCON_ORIENT_CORNER_TL:
 	   case E_GADCON_ORIENT_CORNER_TR:
-	      e_popup_move(win->popup, x, y + h);
+	      e_win_move(win->ewin, x, y + h);
 	      break;
 	   case E_GADCON_ORIENT_BOTTOM:
 	   case E_GADCON_ORIENT_CORNER_BR:
 	   case E_GADCON_ORIENT_CORNER_BL:
-	      e_popup_move(win->popup, x, y - ph);
+	      e_win_move(win->ewin, x, y - ph);
 	      break;
 	   case E_GADCON_ORIENT_LEFT:
 	   case E_GADCON_ORIENT_CORNER_LT:
 	   case E_GADCON_ORIENT_CORNER_LB:
-	      e_popup_move(win->popup, x + w, y);
+	      e_win_move(win->ewin, x + w, y);
 	      break;
 	   case E_GADCON_ORIENT_RIGHT:
 	   case E_GADCON_ORIENT_CORNER_RT:
 	   case E_GADCON_ORIENT_CORNER_RB:
-	      e_popup_move(win->popup, x - pw, y);
+	      e_win_move(win->ewin, x - pw, y);
 	      break;
 	   case E_GADCON_ORIENT_FLOAT:
 	   case E_GADCON_ORIENT_HORIZ:
@@ -197,15 +197,15 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 
 	inst->win = win;
 
-	if (win->popup->x + pw > win->popup->zone->w)
-	  e_popup_move(win->popup, win->popup->zone->w - pw, win->popup->y);
+	if (win->ewin->x + pw > win->zone->w)
+	  e_win_move(win->ewin, win->zone->w - pw, win->ewin->y);
 
-	if (win->popup->y + ph > win->popup->zone->h)
-	  e_popup_move(win->popup, win->popup->x, win->popup->zone->h - ph);
+	if (win->ewin->y + ph > win->zone->h)
+	  e_win_move(win->ewin, win->ewin->x, win->zone->h - ph);
 
 	e_gadcon_locked_set(inst->gcc->gadcon, 1);
 
-	inst->del_fn = e_object_delfn_add(E_OBJECT(win->popup), _del_func, inst);
+	inst->del_fn = e_object_delfn_add(E_OBJECT(win->ewin), _del_func, inst);
 
 	edje_object_signal_emit(inst->o_button, "e,state,focused", "e");
      }
