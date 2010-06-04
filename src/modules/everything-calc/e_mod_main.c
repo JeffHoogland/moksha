@@ -20,13 +20,16 @@ static Ecore_Exe *exe = NULL;
 static Eina_List *history = NULL;
 static Eina_List *handlers = NULL;
 static int error = 0;
-
+static Eina_Bool active = EINA_FALSE;
 static char _module_icon[] = "accessories-calculator";
 
 static Evry_Plugin *
 _begin(Evry_Plugin *p, const Evry_Item *item __UNUSED__)
 {
    Evry_Item *it;
+
+   if (active)
+     return NULL;
 
    if (history)
      {
@@ -45,6 +48,7 @@ _begin(Evry_Plugin *p, const Evry_Item *item __UNUSED__)
    it->context = eina_stringshare_ref(p->name);
    p->items = eina_list_prepend(p->items, it);
 
+   active = EINA_TRUE;
    return p;
 }
 
@@ -71,9 +75,8 @@ _run_bc(Evry_Plugin *p)
    return !!exe;
 }
 
-
 static void
-_cleanup(Evry_Plugin *p)
+_finish(Evry_Plugin *p)
 {
    Ecore_Event_Handler *h;
    Evry_Item *it;
@@ -102,6 +105,7 @@ _cleanup(Evry_Plugin *p)
 	ecore_exe_free(exe);
 	exe = NULL;
      }
+   active = EINA_FALSE;
 }
 
 static int
@@ -237,7 +241,7 @@ _plugins_init(const Evry_API *_api)
    _plug = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Calculator"),
 			_module_icon,
 			EVRY_TYPE_TEXT,
-			_begin, _cleanup, _fetch, NULL);
+			_begin, _finish, _fetch, NULL);
 
    _plug->history     = EINA_FALSE;
    _plug->async_fetch = EINA_TRUE;

@@ -287,6 +287,9 @@ _fetch_exe(Evry_Plugin *plugin, const char *input)
 
    if (input)
      {
+	if (!(exe_list) && !(exe_scan_idler))
+	  _scan_executables();
+
 	if (_add_executables(p, input))
 	  {
 	    GET_ITEM(it, p->command);
@@ -324,8 +327,6 @@ _begin_exe(Evry_Plugin *plugin, const Evry_Item *item)
    EVRY_PLUGIN_INSTANCE(p, plugin)
 
    p->added = eina_hash_string_small_new(_hash_free);
-
-   _scan_executables();
 
    app = EVRY_ITEM_NEW(Evry_Item_App, p, NULL, _icon_get, _item_free);
    EVRY_ACTN(app)->action = &_exec_open_file_action;

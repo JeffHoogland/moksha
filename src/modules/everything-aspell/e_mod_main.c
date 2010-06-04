@@ -25,6 +25,8 @@ struct _Plugin
   const char *lang;
   const char *input;
   Eina_Bool is_first;
+
+  unsigned int instances;
 };
 
 struct _Module_Config
@@ -256,19 +258,16 @@ _cb_del(void *data, int type __UNUSED__, void *event)
    return 1;
 }
 
-static int
+static Evry_Plugin *
 _begin(Evry_Plugin *plugin, const Evry_Item *it __UNUSED__)
 {
    GET_PLUGIN(p, plugin);
+   p->instances++;
 
-   if (!p->handler.data)
-     p->handler.data = ecore_event_handler_add
-       (ECORE_EXE_EVENT_DATA, _cb_data, p);
-   if (!p->handler.del)
-     p->handler.del = ecore_event_handler_add
-       (ECORE_EXE_EVENT_DEL, _cb_del, p);
-
-   return _exe_restart(p);
+   if (p->instances > 1)
+     return NULL;
+   
+   return EVRY_PLUGIN(p);
 }
 
 static int
@@ -286,7 +285,18 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	return 0;
      }
 
-   if (!p->handler.data && !_begin(plugin, NULL)) return 0;
+   if (!p->handler.data)
+     {
+	if (!p->handler.data)
+	  p->handler.data = ecore_event_handler_add
+	    (ECORE_EXE_EVENT_DATA, _cb_data, p);
+	if (!p->handler.del)
+	  p->handler.del = ecore_event_handler_add
+	    (ECORE_EXE_EVENT_DEL, _cb_del, p);
+
+	if (!_exe_restart(p))
+	  return 0;
+     }
 
    len = sizeof(LANG_MODIFIER) - 1;
    if (strncmp(input, LANG_MODIFIER, len) == 0)
@@ -347,12 +357,17 @@ _fetch(Evry_Plugin *plugin, const char *input)
 }
 
 static void
-_cleanup(Evry_Plugin *plugin)
+_finish(Evry_Plugin *plugin)
 {
    GET_PLUGIN(p, plugin);
 
    EVRY_PLUGIN_ITEMS_FREE(p);
 
+   p->instances--;
+
+   if (p->instances > 0)
+     return;
+   
    if (p->handler.data)
      {
 	ecore_event_handler_del(p->handler.data);
@@ -388,7 +403,7 @@ _plugins_init(const Evry_API *_api)
    _plug = EVRY_PLUGIN_NEW(Plugin, N_("Spell Checker"),
 		       _module_icon,
 		       EVRY_TYPE_TEXT,
-		       NULL, _cleanup, _fetch, NULL);
+		       _begin, _finish, _fetch, NULL);
    _plug->config_path = _config_path;
    _plug->history     = EINA_FALSE;
    _plug->async_fetch = EINA_TRUE;
