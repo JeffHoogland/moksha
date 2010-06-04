@@ -859,16 +859,22 @@ _bluez_edje_view_update(E_Bluez_Instance *inst, Evas_Object *o)
    E_Bluez_Module_Context *ctxt = inst->ctxt;
    const char *name;
 
-   if ((!ctxt->has_manager) || (!inst->adapter))
+   if (!ctxt->has_manager)
+     {
+	edje_object_part_text_set(o, "e.text.powered", "");
+	edje_object_part_text_set(o, "e.text.status", "");
+	edje_object_signal_emit(o, "e,changed,service,none", "e");
+        edje_object_part_text_set(o, "e.text.name", _("No Bluetooth daemon"));
+	edje_object_signal_emit(o, "e,changed,name", "e");
+	return;
+     }
+
+   if (!inst->adapter)
      {
 	edje_object_part_text_set(o, "e.text.powered", "");
 	edje_object_part_text_set(o, "e.text.status", "");
 	edje_object_signal_emit(o, "e,changed,off", "e");
-	if (!ctxt->has_manager)
-	  edje_object_part_text_set(o, "e.text.name", _("No Bluetooth daemon"));
-	else
-	  edje_object_part_text_set(o, "e.text.name",
-				    _("No Bluetooth adapter"));
+        edje_object_part_text_set(o, "e.text.name", _("No Bluetooth adapter"));
 	edje_object_signal_emit(o, "e,changed,name", "e");
 	return;
      }

@@ -171,6 +171,7 @@ e_dialog_icon_set(E_Dialog *dia, const char *icon, Evas_Coord size)
    e_util_icon_theme_set(dia->icon_object, icon);
    edje_extern_object_min_size_set(dia->icon_object, size * e_scale, size * e_scale);
    edje_object_part_swallow(dia->bg_object, "e.swallow.icon", dia->icon_object);
+   edje_object_signal_emit(dia->bg_object, "e,state,icon", "e");
    evas_object_show(dia->icon_object);
 }
 
@@ -210,11 +211,13 @@ e_dialog_resizable_set(E_Dialog *dia, int resizable)
 	  {
 	     e_win_size_max_set(dia->win, 99999, 99999);
              e_util_win_auto_resize_fill(dia->win);
+	     edje_object_signal_emit(dia->bg_object, "e,state,resizeble", "e");
 	  }
 	else
 	  {
 	     e_win_resize(dia->win, dia->min_w, dia->min_h);
 	     e_win_size_max_set(dia->win, dia->min_w, dia->min_h);
+	     edje_object_signal_emit(dia->bg_object, "e,state,no_resizeble", "e");
 	  }
      }
 }

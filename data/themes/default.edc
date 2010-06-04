@@ -9395,6 +9395,12 @@ collections {
          }
          programs {
             program {
+               signal: "e,changed,service,none";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "state";
+            }
+            program {
                signal: "e,changed,off";
                source: "e";
                action: STATE_SET "default" 0.0;
