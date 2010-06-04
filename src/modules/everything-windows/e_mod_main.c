@@ -50,11 +50,16 @@ _border_item_free(Evry_Item *it)
    E_FREE(bi);
 }
 
-static void
+static int
 _border_item_add(Plugin *p, E_Border *bd)
 {
    Border_Item *bi;
    char buf[1024];
+
+   if (bd->client.netwm.state.skip_taskbar)
+     return 0;
+   if (bd->client.netwm.state.skip_pager)
+     return 0;
 
    bi = EVRY_ITEM_NEW(Border_Item, p, e_border_name_get(bd), _icon_get, _border_item_free);
    snprintf(buf, sizeof(buf), "%d:%d %s",
@@ -66,6 +71,8 @@ _border_item_add(Plugin *p, E_Border *bd)
    e_object_ref(E_OBJECT(bd));
 
    p->borders = eina_list_append(p->borders, bi);
+
+   return 1;
 }
 
 static int
@@ -97,18 +104,14 @@ _cb_border_add(void *data, int type,  void *event)
    Plugin *p = data;
    int min;
 
-   if (ev->border->client.netwm.state.skip_taskbar)
+   if (!_border_item_add(p, ev->border))
      return 1;
-   if (ev->border->client.netwm.state.skip_pager)
-     return 1;
-
-   _border_item_add(p, ev->border);
 
    EVRY_PLUGIN_ITEMS_CLEAR(p);
 
    min = EVRY_PLUGIN(p)->config->min_query;
 
-   if ((!p->input && min == 0) ||
+   if ((!p->input && (min == 0)) ||
        (p->input && (strlen(p->input) >= min)))
      {
 	EVRY_PLUGIN_ITEMS_ADD(p, p->borders, p->input, 1, 0);
