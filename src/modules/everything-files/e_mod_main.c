@@ -211,11 +211,19 @@ _scan_func(void *data)
 
 	is_dir = EINA_FALSE;
 
+	if (d->directory[1])
+	  snprintf(buf, sizeof(buf), "%s/%s",
+		   d->directory,
+		   dp->d_name);
+	else
+	  snprintf(buf, sizeof(buf), "/%s",
+		   dp->d_name);
+
 #ifdef _DIRENT_HAVE_D_TYPE
 	if (dp->d_type & DT_UNKNOWN)
 	  {
 #endif
-	     if (ecore_file_is_dir(file->path))
+	     if (ecore_file_is_dir(buf))
 	       is_dir = EINA_TRUE;
 
 #ifdef _DIRENT_HAVE_D_TYPE
@@ -225,21 +233,16 @@ _scan_func(void *data)
 	     is_dir = EINA_TRUE;
 	  }
 #endif
-
 	if (p->dirs_only && !is_dir)
 	  continue;
 
-	file = EVRY_ITEM_NEW(Evry_Item_File, p, NULL, NULL, _item_free);
+	file = EVRY_ITEM_NEW(Evry_Item_File, p,
+			     NULL, NULL, _item_free);
 
 	filename = strdup(dp->d_name);
 	EVRY_ITEM(file)->label = filename;
 	EVRY_ITEM(file)->browseable = is_dir;
 	d->files = eina_list_append(d->files, file);
-
-	if (d->directory[1])
-	  snprintf(buf, sizeof(buf), "%s/%s", d->directory, filename);
-	else
-	  snprintf(buf, sizeof(buf), "/%s", filename);
 
 	file->path = strdup(buf);
      }
