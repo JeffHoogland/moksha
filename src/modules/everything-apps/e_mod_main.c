@@ -190,13 +190,9 @@ _add_executables(Plugin *p, const char *input)
    if (input)
      {
 	if ((space = strchr(input, ' ')))
-	  {
-	     input = eina_stringshare_add_length(input, (space - input));
-	  }
+	  input = eina_stringshare_add_length(input, (space - input));
 	else
-	  {
-	     input = eina_stringshare_add(input);
-	  }
+	  input = eina_stringshare_add(input);
 	len = strlen(input);
      }
 
@@ -279,6 +275,50 @@ _fetch_exe(Evry_Plugin *plugin, const char *input)
    ht = evry->history_types_get(EVRY_TYPE_APP);
    if (ht) eina_hash_foreach(ht->types, _hist_exe_get_cb, p);
 
+   if (input)
+     {
+	const char *tmp, *file;
+	int min = 0, end = len, tmp_len;
+
+	if ((tmp = strchr(input, ' ')))
+	  end = tmp - input;
+
+	if (!(exe_list) && !(exe_scan_idler))
+	  _scan_executables();
+
+	EINA_LIST_FOREACH(exe_list, l, tmp)
+	  {
+	     tmp_len = strlen(tmp);
+
+	     if ((end < len) &&  (tmp_len > end))
+	       continue;
+
+	     if (!strncmp(input, tmp, end))
+	       {
+		  if (!min || strlen(tmp) < min)
+		    file = tmp;
+
+		  if (tmp_len == len)
+		    break;
+	       }
+	  }
+
+	if (file)
+	  {
+	     GET_ITEM(it, p->command);
+
+	     if (strlen(file) < len)
+	       file = input;
+
+	     EVRY_ITEM_LABEL_SET(it, file);
+	     IF_RELEASE(p->command->file);
+	     p->command->file = eina_stringshare_ref(it->label);
+	     it->fuzzy_match = 10;
+	     EVRY_PLUGIN_ITEM_APPEND(p, it);
+	     evry->item_changed(it, 0, 0);
+	  }
+     }
+
    if (len < plugin->config->min_query)
      {
 	EVRY_PLUGIN_ITEMS_SORT(p, _cb_sort);
@@ -287,19 +327,7 @@ _fetch_exe(Evry_Plugin *plugin, const char *input)
 
    if (input)
      {
-	if (!(exe_list) && !(exe_scan_idler))
-	  _scan_executables();
-
-	if (_add_executables(p, input))
-	  {
-	    GET_ITEM(it, p->command);
-	    EVRY_ITEM_LABEL_SET(it, input);
-	    IF_RELEASE(p->command->file);
-	    p->command->file = eina_stringshare_ref(it->label);
-	    it->fuzzy_match = 10;
-	    EVRY_PLUGIN_ITEM_APPEND(p, it);
-	    evry->item_changed(it, 0, 0);
-	  }
+	_add_executables(p, input);
      }
 
    EINA_LIST_FOREACH(plugin->items, l, it)
