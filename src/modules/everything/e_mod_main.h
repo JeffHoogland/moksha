@@ -24,7 +24,7 @@ struct _Evry_Window
   E_Win *ewin;
   Evas *evas;
   E_Zone *zone;
-
+  Eina_Bool shaped;
   Evas_Object *o_main;
 
   Eina_Bool request_selection;
@@ -42,10 +42,10 @@ struct _Evry_Window
 
   unsigned int level;
 
-  unsigned int mouse_out;
   unsigned int mouse_button;
-
-  unsigned int grab;
+  Eina_Bool mouse_out;
+  
+  Eina_Bool grab;
 
   Evry_State *state_clearing;
 };
@@ -389,7 +389,7 @@ EAPI E_Config_Dialog *evry_collection_conf_dialog(E_Container *con, const char *
 
 EAPI extern E_Module_Api e_modapi;
 
-/* #define CHECK_REFS */
+//#define CHECK_REFS
 
 #ifdef CHECK_REFS
 extern Eina_List *_refd;

@@ -752,6 +752,7 @@ _evry_window_new(E_Zone *zone, E_Zone_Edge edge)
    Evas_Object *o;
    const char *tmp;
    int offset_s = 0;
+   const char *shape_option;
 
    win = E_NEW(Evry_Window, 1);
    win->ewin = e_win_new(zone->container);
@@ -767,15 +768,25 @@ _evry_window_new(E_Zone *zone, E_Zone_Edge edge)
    e_theme_edje_object_set(o, "base/theme/modules/everything",
 			   "e/modules/everything/main");
 
-   if (e_config->use_composite)
+   if ((shape_option = edje_object_data_get(o, "shaped")) &&
+       (!strcmp(shape_option, "1")))
      {
-	edje_object_signal_emit(o, "e,state,composited", "e");
-	edje_object_signal_emit(o, "list:e,state,composited", "e");
-	edje_object_message_signal_process(o);
-	edje_object_calc_force(o);
+	win->shaped = EINA_TRUE;
+	
+	if (e_config->use_composite)
+	  {
+	     ecore_evas_alpha_set(win->ewin->ecore_evas, 1);
+	     win->ewin->evas_win = ecore_evas_software_x11_window_get(win->ewin->ecore_evas);
+	     edje_object_signal_emit(o, "e,state,composited", "e");
+	     edje_object_signal_emit(o, "list:e,state,composited", "e");
+	     edje_object_message_signal_process(o);
+	     edje_object_calc_force(o);
 
-	tmp = edje_object_data_get(o, "shadow_offset");
-	offset_s = tmp ? atoi(tmp) : 0;
+	     tmp = edje_object_data_get(o, "shadow_offset");
+	     offset_s = tmp ? atoi(tmp) : 0;
+	  }
+	else
+	  ecore_evas_shaped_set(win->ewin->ecore_evas, 1);
      }
 
    edje_object_size_min_calc(o, &mw, &mh);
@@ -1927,7 +1938,8 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	E_Win *ewin = win->ewin;
 
 	e_grabinput_release(ewin->evas_win, ewin->evas_win);
-	e_win_borderless_set(ewin, 0);
+	if (!win->shaped)
+	  e_win_borderless_set(ewin, 0);
 	ecore_evas_lower(ewin->ecore_evas);
 	ewin->border = e_border_new(ewin->container, ewin->evas_win, 1, 1);
 	// dont need this - special stuff - here it is needed
