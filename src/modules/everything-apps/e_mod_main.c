@@ -180,45 +180,6 @@ _item_exe_add(Plugin *p, const char *exe, int match)
    return app;
 }
 
-static int
-_add_executables(Plugin *p, const char *input)
-{
-   Eina_List *l;
-   char *file, *space;
-   int len = 0, match, cnt = 0, found = 0;
-
-   if (input)
-     {
-	if ((space = strchr(input, ' ')))
-	  input = eina_stringshare_add_length(input, (space - input));
-	else
-	  input = eina_stringshare_add(input);
-	len = strlen(input);
-     }
-
-   EINA_LIST_FOREACH(exe_list, l, file)
-     {
-	if (!input)
-	  {
-	     _item_exe_add(p, file, 0);
-	     cnt++;
-	  }
-	else if ((match = evry->fuzzy_match(file, input)))
-	  {
-	     _item_exe_add(p, file, match + 11);
-	     if (!strncmp(input, file, len))
-	       found = 1;
-
-	     cnt++;
-	  }
-	if (cnt > 50) break;
-     }
-
-   IF_RELEASE(input);
-
-   return found;
-}
-
 static Eina_Bool
 _hist_exe_get_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata)
 {
@@ -235,7 +196,6 @@ _hist_exe_get_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata
 	app = NULL;
 
 	if (strcmp(hi->plugin, EVRY_PLUGIN(p)->name))
-
 	  continue;
 
 	if (!p->input)
@@ -268,6 +228,9 @@ _fetch_exe(Evry_Plugin *plugin, const char *input)
    History_Types *ht;
    int len = (input ? strlen(input) : 0);
    double max = 0.0;
+   const char *tmp, *file = NULL;
+   int min = 0, cnt = 0, end = len, tmp_len;
+   int query = (len >= plugin->config->min_query);
    EVRY_PLUGIN_ITEMS_CLEAR(p);
 
    p->input = input;
@@ -277,9 +240,6 @@ _fetch_exe(Evry_Plugin *plugin, const char *input)
 
    if (input)
      {
-	const char *tmp, *file;
-	int min = 0, end = len, tmp_len;
-
 	if ((tmp = strchr(input, ' ')))
 	  end = tmp - input;
 
@@ -295,10 +255,15 @@ _fetch_exe(Evry_Plugin *plugin, const char *input)
 
 	     if (!strncmp(input, tmp, end))
 	       {
-		  if (!min || strlen(tmp) < min)
-		    file = tmp;
+		  if (query && (cnt++ < 50) && (len != tmp_len))
+		    _item_exe_add(p, tmp, 15);
 
-		  if (tmp_len == len)
+		  if (!min || tmp_len < min)
+		    {
+		       min = tmp_len;
+		       file = tmp;
+		    }
+		  if ((!query) && (tmp_len == len))
 		    break;
 	       }
 	  }
@@ -317,17 +282,6 @@ _fetch_exe(Evry_Plugin *plugin, const char *input)
 	     EVRY_PLUGIN_ITEM_APPEND(p, it);
 	     evry->item_changed(it, 0, 0);
 	  }
-     }
-
-   if (len < plugin->config->min_query)
-     {
-	EVRY_PLUGIN_ITEMS_SORT(p, _cb_sort);
-	return !!(plugin->items);
-     }
-
-   if (input)
-     {
-	_add_executables(p, input);
      }
 
    EINA_LIST_FOREACH(plugin->items, l, it)
@@ -741,12 +695,12 @@ _complete(Evry_Plugin *plugin, const Evry_Item *it, char **input)
      {
 	char *space = strchr(app->desktop->exec, ' ');
 
-	snprintf(buf, sizeof(buf), "%s ", app->desktop->exec);
+	snprintf(buf, sizeof(buf), "%s", app->desktop->exec);
 	if (space)
 	  buf[1 + space - app->desktop->exec] = '\0';
      }
    else
-     snprintf(buf, sizeof(buf), "%s ", app->file);
+     snprintf(buf, sizeof(buf), "%s", app->file);
 
    *input = strdup(buf);
 
