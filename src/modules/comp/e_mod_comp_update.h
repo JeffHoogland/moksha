@@ -16,6 +16,15 @@ struct _E_Update_Rect
    int x, y, w, h;
 };
 
+struct _E_Update
+{
+   int w, h;
+   int tw, th;
+   int tsw, tsh;
+   unsigned char *tiles;
+   E_Update_Policy pol;
+};
+
 E_Update      *e_mod_comp_update_new           (void);
 void           e_mod_comp_update_free          (E_Update *up);
 void           e_mod_comp_update_policy_set    (E_Update *up, E_Update_Policy pol);

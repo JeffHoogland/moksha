@@ -5,14 +5,6 @@
 
 //////////////////////////////////////////////////////////////////////////
 
-struct _E_Update
-{
-   int w, h;
-   int tw, th;
-   int tsw, tsh;
-   unsigned char *tiles;
-   E_Update_Policy pol;
-};
 
 static void
 _e_mod_comp_tiles_alloc(E_Update *up)

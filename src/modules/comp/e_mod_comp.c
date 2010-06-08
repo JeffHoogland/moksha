@@ -33,6 +33,7 @@ struct _E_Comp
    Eina_List      *updates;
    Ecore_Animator *render_animator;
    Ecore_Job      *update_job;
+   Ecore_Timer    *new_up_timer;
    int             animating;
    int             render_overflow;
 
@@ -281,6 +282,7 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
    int i;
    int pshaped = cw->shaped;
 
+   DBG("UPDATE [0x%x] pm = %x\n", cw->win, cw->pixmap);
    if (_comp_mod->conf->grab) ecore_x_grab();
    cw->update = 0;
    
@@ -363,6 +365,7 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
              cw->ph = 0;
           }
         cw->native = 0;
+        DBG("  [0x%x] up resize %ix%i\n", cw->win, cw->pw, cw->ph);
         e_mod_comp_update_resize(cw->up, cw->pw, cw->ph);
         e_mod_comp_update_add(cw->up, 0, 0, cw->pw, cw->ph);
      }
@@ -439,6 +442,7 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
                        w = r[i].w; h = r[i].h;
                        if (!ecore_x_image_get(cw->xim, cw->pixmap, x, y, x, y, w, h))
                          {
+                            DBG("UPDATE [0x%x] %i %i %ix%i FAIL!!!!!!!!!!!!!!!!!\n", cw->win, x, y, w, h);
                             e_mod_comp_update_add(cw->up, x, y, w, h);
                             cw->update = 1;
                          }
@@ -466,9 +470,12 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
              cw->shape_changed = 0;
           }
         else
-          cw->update = 1;
+          {
+             DBG("UPDATE [0x%x] NO RECTS!!! %i %i - %i %i\n", cw->win, cw->up->w, cw->up->h, cw->up->tw, cw->up->th);
+             cw->update = 1;
+          }
      }
-   if ((!cw->update) && (cw->visible) && (cw->dmg_updates > 0))
+   if ((!cw->update) && (cw->visible) && (cw->dmg_updates >= 0))
      {
         if (!evas_object_visible_get(cw->shobj))
           {
@@ -509,6 +516,15 @@ _e_mod_comp_pre_swap(void *data, Evas *e)
 }
 
 static int
+_e_mod_comp_cb_delayed_update_timer(void *data)
+{
+   E_Comp *c = data;
+   _e_mod_comp_render_queue(c);
+   c->new_up_timer = NULL;
+   return 0;
+}
+
+static int
 _e_mod_comp_cb_update(E_Comp *c)
 {
    E_Comp_Win *cw;
@@ -517,6 +533,7 @@ _e_mod_comp_cb_update(E_Comp *c)
    static int doframeinfo = -1;
 
    c->update_job = NULL;
+   DBG("UPDATE ALL\n");
    if (c->nocomp) goto nocomp;
    if (_comp_mod->conf->grab)
      {
@@ -544,7 +561,10 @@ _e_mod_comp_cb_update(E_Comp *c)
           new_updates = eina_list_append(new_updates, cw);
      }
    if (_comp_mod->conf->lock_fps)
-     ecore_evas_manual_render(c->ee);
+     {
+        DBG("MANUAL RENDER...\n");
+        ecore_evas_manual_render(c->ee);
+     }
    if (_comp_mod->conf->efl_sync)
      {  
         EINA_LIST_FREE(update_done, cw)
@@ -560,7 +580,14 @@ _e_mod_comp_cb_update(E_Comp *c)
              ecore_x_ungrab();
           }
      }
-   if (new_updates) _e_mod_comp_render_queue(c);
+   if (new_updates)
+     {
+        DBG("JOB1...\n");
+        if (c->new_up_timer) ecore_timer_del(c->new_up_timer);
+        c->new_up_timer = 
+          ecore_timer_add(0.001, _e_mod_comp_cb_delayed_update_timer, c);
+//        _e_mod_comp_render_queue(c);
+     }
    c->updates = new_updates;
    if (!c->animating) c->render_overflow--;
    
@@ -655,6 +682,7 @@ _e_mod_comp_cb_update(E_Comp *c)
                     }
 //                  ecore_x_window_hide(cw->win);
 //                  ecore_x_window_show(cw->win);
+                  DBG("JOB2...\n");
                   _e_mod_comp_render_queue(c);
                }
           }
@@ -704,6 +732,9 @@ _e_mod_comp_cb_update(E_Comp *c)
                          }
                        cw->redirected = 1;
                        cw->dmg_updates = 0;
+                       DBG("  [0x%x] up resize2 %ix%i\n", cw->win, cw->pw, cw->ph);
+                       e_mod_comp_update_resize(cw->up, cw->pw, cw->ph);
+                       e_mod_comp_update_add(cw->up, 0, 0, cw->pw, cw->ph);
                     }
 //                  _e_mod_comp_win_damage(cw, 0, 0, cw->w, cw->h, 0);
                   if (cw->visible)
@@ -723,8 +754,10 @@ _e_mod_comp_cb_update(E_Comp *c)
           }
      }
    
-   if (c->render_overflow == 0)
+   DBG("UPDATE ALL DONE: overlow = %i\n", c->render_overflow);
+   if (c->render_overflow <= 0)
      {
+        c->render_overflow = 0;
         if (c->render_animator) c->render_animator = NULL;
         return 0;
      }
@@ -734,6 +767,7 @@ _e_mod_comp_cb_update(E_Comp *c)
 static void
 _e_mod_comp_cb_job(void *data)
 {
+   DBG("UPDATE ALL JOB...\n");
    _e_mod_comp_cb_update(data);
 }
 
@@ -759,10 +793,12 @@ _e_mod_comp_render_queue(E_Comp *c)
      {
         if (c->update_job)
           {
+             DBG("UPDATE JOB DEL...\n");
              ecore_job_del(c->update_job);
              c->update_job = NULL;
              c->render_overflow = 0;
           }
+        DBG("UPDATE JOB ADD...\n");
         c->update_job = ecore_job_add(_e_mod_comp_cb_job, c);
      }
 }
@@ -770,6 +806,7 @@ _e_mod_comp_render_queue(E_Comp *c)
 static void
 _e_mod_comp_win_render_queue(E_Comp_Win *cw)
 {
+   DBG("JOB3...\n");
    _e_mod_comp_render_queue(cw->c);
 }
 
@@ -1411,6 +1448,9 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
           }
         cw->redirected = 1;
         cw->dmg_updates = 0;
+        DBG("  [0x%x] up resize %ix%i\n", cw->win, cw->pw, cw->ph);
+        e_mod_comp_update_resize(cw->up, cw->pw, cw->ph);
+        e_mod_comp_update_add(cw->up, 0, 0, cw->pw, cw->ph);
      }
 /* don't need  
    if ((cw->shobj) && (cw->obj))
@@ -1424,7 +1464,7 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
           }
      }
  */
-   if (cw->dmg_updates > 0)
+   if (cw->dmg_updates >= 0)
      {
         cw->defer_hide = 0;
         evas_object_show(cw->shobj);
@@ -1505,6 +1545,9 @@ _e_mod_comp_win_hide(E_Comp_Win *cw)
                   DBG("NATIVE SHOW1 [0x%x] %x %ix%i\n", cw->win, cw->pixmap, cw->pw, cw->ph);
                   cw->native = 1;
                }
+             DBG("  [0x%x] up resize %ix%i\n", cw->win, cw->pw, cw->ph);
+             e_mod_comp_update_resize(cw->up, cw->pw, cw->ph);
+             e_mod_comp_update_add(cw->up, 0, 0, cw->pw, cw->ph);
              cw->dmg_updates = 0;
           }
         if (_comp_mod->conf->send_flush)
@@ -1883,6 +1926,7 @@ _e_mod_comp_damage_win(void *data, int type, void *event)
         if (ev->win == c->ee_win)
           {
              // expose on comp win - init win or some other bypass win did it
+             DBG("JOB4...\n");
              _e_mod_comp_render_queue(c);
              break;
           }
@@ -2216,6 +2260,7 @@ _e_mod_comp_del(E_Comp *c)
    ecore_x_composite_render_window_disable(c->win);
    if (c->man->num == 0) e_alert_composite_win = 0;
    if (c->render_animator) ecore_animator_del(c->render_animator);
+   if (c->new_up_timer) ecore_timer_del(c->new_up_timer);
    if (c->update_job) ecore_job_del(c->update_job);
    
    ecore_x_e_comp_sync_supported_set(c->man->root, 0);
