@@ -262,7 +262,6 @@ _policy_zone_layout_update(E_Zone *zone)
         if (bd->zone != zone) continue;
 
         /* skip special windows */
-        if (e_illume_border_is_softkey(bd)) continue;
         if (e_illume_border_is_keyboard(bd)) continue;
         if (e_illume_border_is_quickpanel(bd)) continue;
 
@@ -1013,8 +1012,16 @@ _policy_border_add(E_Border *bd)
    if ((bd->client.icccm.accepts_focus) || (bd->client.icccm.take_focus)) 
      _pol_focus_stack = eina_list_append(_pol_focus_stack, bd);
 
-   /* set focus on new border if we can */
-   _policy_border_set_focus(bd);
+   if ((e_illume_border_is_softkey(bd)) ||
+       (e_illume_border_is_indicator(bd)))
+     {
+	_policy_zone_layout_update(bd->zone);
+     }
+   else 
+     {
+	/* set focus on new border if we can */
+	_policy_border_set_focus(bd);
+     }
 }
 
 void 
@@ -1041,8 +1048,29 @@ _policy_border_del(E_Border *bd)
    if ((bd->client.icccm.accepts_focus) || (bd->client.icccm.take_focus)) 
      _pol_focus_stack = eina_list_remove(_pol_focus_stack, bd);
 
-   /* show the border below this one */
-   _policy_border_show_below(bd);
+   if (e_illume_border_is_softkey(bd)) 
+     {
+	E_Illume_Config_Zone *cz;
+
+	/* get the config for this zone */
+	cz = e_illume_zone_config_get(bd->zone->id);
+	cz->softkey.size = 0;
+	_policy_zone_layout_update(bd->zone);
+     }
+   else if (e_illume_border_is_indicator(bd)) 
+     {
+	E_Illume_Config_Zone *cz;
+
+	/* get the config for this zone */
+	cz = e_illume_zone_config_get(bd->zone->id);
+	cz->indicator.size = 0;
+	_policy_zone_layout_update(bd->zone);
+     }
+   else 
+     {
+	/* show the border below this one */
+	_policy_border_show_below(bd);
+     }
 }
 
 void 
