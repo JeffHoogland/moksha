@@ -151,10 +151,6 @@ _e_mod_ind_win_cb_free(Ind_Win *iwin)
    EINA_LIST_FREE(iwin->hdls, hdl)
      ecore_event_handler_del(hdl);
 
-   /* delete the border hook */
-   if (iwin->hook) e_border_hook_del(iwin->hook);
-   iwin->hook = NULL;
-
    /* delete the menu */
    if (iwin->menu) 
      {
