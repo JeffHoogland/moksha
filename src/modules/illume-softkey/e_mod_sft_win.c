@@ -112,10 +112,6 @@ _e_mod_sft_win_cb_free(Sft_Win *swin)
    EINA_LIST_FREE(swin->hdls, hdl)
      ecore_event_handler_del(hdl);
 
-   /* delete the border hook */
-   if (swin->hook) e_border_hook_del(swin->hook);
-   swin->hook = NULL;
-
    if (box = edje_object_part_object_get(swin->o_base, "e.box.buttons")) 
      {
         Evas_Object *btn;

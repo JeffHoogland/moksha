@@ -11,7 +11,6 @@ struct _Sft_Win
    E_Object e_obj_inherit;
 
    E_Zone *zone;
-   E_Border_Hook *hook;
    Eina_List *hdls;
 
    E_Win *win;
