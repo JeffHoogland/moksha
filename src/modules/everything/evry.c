@@ -189,7 +189,7 @@ evry_show(E_Zone *zone, E_Zone_Edge edge, const char *params)
    if (e_grabinput_get(win->ewin->evas_win, 0, win->ewin->evas_win))
      win->grab = 1;
    else
-     ERR("could aquire grab");
+     ERR("could not aquire grab");
 
    evry_history_load();
 
@@ -248,7 +248,6 @@ evry_show(E_Zone *zone, E_Zone_Edge edge, const char *params)
       (ECORE_X_EVENT_MOUSE_OUT,
        _evry_cb_mouse_out, win));
 #endif
-
    _evry_selector_plugins_get(SUBJ_SEL, NULL, params);
    _evry_selector_update(SUBJ_SEL);
 
@@ -521,9 +520,7 @@ _evry_selector_update_actions_do(Evry_Selector *sel)
      }
 
    if ((s = (SUBJ_SEL)->state))
-     {
-	_evry_selector_plugins_get(sel, s->cur_item, NULL);
-     }
+     _evry_selector_plugins_get(sel, s->cur_item, NULL);
 
    _evry_selector_update(sel);
 
@@ -759,6 +756,7 @@ _evry_window_new(E_Zone *zone, E_Zone_Edge edge)
    e_win_borderless_set(win->ewin, 1);
    e_win_no_remember_set(win->ewin, 1);
    e_win_placed_set(win->ewin, 1);
+   ecore_evas_override_set(win->ewin->ecore_evas, 1); 
    win->evas = e_win_evas_get(win->ewin);
    win->zone = zone;
    win->ewin->data = win;
