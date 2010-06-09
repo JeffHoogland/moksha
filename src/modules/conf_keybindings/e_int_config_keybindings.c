@@ -20,7 +20,7 @@ static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas,
 static void _fill_actions_list(E_Config_Dialog_Data *cfdata);
 
 /**************** Updates ***********/
-static void _update_key_binding_list(E_Config_Dialog_Data *cfdata);
+static int  _update_key_binding_list(E_Config_Dialog_Data *cfdata, E_Config_Binding_Key *bi);
 static void _update_action_list(E_Config_Dialog_Data *cfdata);
 static void _update_action_params(E_Config_Dialog_Data *cfdata);
 static void _update_buttons(E_Config_Dialog_Data *cfdata);
@@ -261,7 +261,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_table_object_append(ot, of, 0, 1, 1, 1, 1, 1, 1, 0);
    e_widget_list_object_append(o, ot, 1, 1, 0.5);
 
-   _update_key_binding_list(cfdata);
+   _update_key_binding_list(cfdata, NULL);
    _fill_actions_list(cfdata);
 
    e_dialog_resizable_set(cfd->dia, 1);
@@ -420,11 +420,13 @@ _delete_key_binding_cb(void *data, void *data2)
 	  }
      }
 
-   _update_key_binding_list(cfdata);
+   _update_key_binding_list(cfdata, NULL);
 
+   /* FIXME this wont work here as the list will be created when ilist queue is
+      done an ilist_count will always return 0 here */
    if (sel >= e_widget_ilist_count(cfdata->gui.o_binding_list))
      sel = e_widget_ilist_count(cfdata->gui.o_binding_list) - 1;
-
+   
    eina_stringshare_del(cfdata->locals.cur);
    cfdata->locals.cur = NULL; 
    
@@ -611,7 +613,7 @@ _restore_key_binding_defaults_cb(void *data, void *data2)
    eina_stringshare_del(cfdata->locals.cur);
    cfdata->locals.cur = NULL;
 
-   _update_key_binding_list(cfdata);
+   _update_key_binding_list(cfdata, NULL);
    _update_buttons(cfdata);
 
    e_widget_ilist_unselect(cfdata->gui.o_action_list);
@@ -795,15 +797,17 @@ _update_action_params(E_Config_Dialog_Data *cfdata)
      KB_EXAMPLE_PARAMS;
 }
 
-static void
-_update_key_binding_list(E_Config_Dialog_Data *cfdata)
+static int
+_update_key_binding_list(E_Config_Dialog_Data *cfdata, E_Config_Binding_Key *bi_new)
 {
    int i;
    char *b, b2[64];
    Eina_List *l;
    E_Config_Binding_Key *bi;
    int modifiers = -1;
-
+   int bi_pos = 0;
+   int ret = -1;
+   
    evas_event_freeze(evas_object_evas_get(cfdata->gui.o_binding_list));
    edje_freeze();
    e_widget_ilist_freeze(cfdata->gui.o_binding_list);
@@ -820,13 +824,16 @@ _update_key_binding_list(E_Config_Dialog_Data *cfdata)
    for (l = cfdata->binding.key, i = 0; l; l = l->next, i++)
      {
 	bi = l->data;
-
+	if (bi == bi_new) ret = bi_pos;
+	if (ret < 0) bi_pos++;
+	
 	if (modifiers != bi->modifiers)
 	  {
 	     modifiers = bi->modifiers;
 	     b = _key_binding_header_get(modifiers);
 	     if (b)
 	       {
+		  if (ret < 0) bi_pos++;
 		  e_widget_ilist_header_append(cfdata->gui.o_binding_list, NULL, b);
 		  free(b);
 	       }
@@ -850,6 +857,8 @@ _update_key_binding_list(E_Config_Dialog_Data *cfdata)
      e_widget_disabled_set(cfdata->gui.o_del_all, 0);
    else
      e_widget_disabled_set(cfdata->gui.o_del_all, 1);
+
+   return ret;
 }
 
 static void
@@ -1080,12 +1089,8 @@ _grab_key_down_cb(void *data, int type, void *event)
 
 		  if (cfdata->locals.add) 
 		    { 
-		       _update_key_binding_list(cfdata);
+		       n = _update_key_binding_list(cfdata, bi);
 
-		       for (l = cfdata->binding.key, n = 0; l; l = l->next, n++)
-			 {
-			    if (l->data == bi) break;
-			 }
 		       e_widget_ilist_selected_set(cfdata->gui.o_binding_list, n);
 		       e_widget_ilist_unselect(cfdata->gui.o_action_list);
 		       eina_stringshare_del(cfdata->locals.action);
@@ -1110,6 +1115,7 @@ _grab_key_down_cb(void *data, int type, void *event)
 		    }
 		  else
 		    {
+		       printf("blub\n");
 		       char *label;
 
 		       label = _key_binding_text_get(bi);
@@ -1118,12 +1124,19 @@ _grab_key_down_cb(void *data, int type, void *event)
 		    }
 	       }
 	     else
-	       { 
+	       {
+		  int i = 0;
+		  E_Ilist_Item *it;
+#if 0
+		  /* this advice is rather irritating as one sees that the
+		     key is bound to an action. if you want to set a
+		     keybinding you dont care about whether there is
+		     sth else set to it. */
 		  int g, a, j;
 		  const char *label = NULL;
 		  E_Action_Group *actg = NULL;
 		  E_Action_Description *actd = NULL;
-
+		  
 		  if (cfdata->locals.add) 
 		    _find_key_binding_action(bi->action, bi->params, &g, &a, &j);
 		  else
@@ -1140,8 +1153,13 @@ _grab_key_down_cb(void *data, int type, void *event)
 				       "<hilight>%s</hilight> action.<br>" 
 				       "Please choose another binding key sequence."), 
 				     label ? label : _("Unknown"));
-		  
-		  
+#endif
+		  EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->gui.o_binding_list), l, it)
+		    {
+		       if (i++ >= n) break;
+		       if (it->header) n++;
+		    }
+		  		  
 		  e_widget_ilist_nth_show(cfdata->gui.o_binding_list, n-1, 1);
 		  e_widget_ilist_selected_set(cfdata->gui.o_binding_list, n-1); 
 		  
