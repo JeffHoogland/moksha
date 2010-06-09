@@ -475,7 +475,7 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
              cw->update = 1;
           }
      }
-   if ((!cw->update) && (cw->visible) && (cw->dmg_updates >= 0))
+   if ((!cw->update) && (cw->visible) && (cw->dmg_updates >= 1))
      {
         if (!evas_object_visible_get(cw->shobj))
           {
@@ -1464,7 +1464,7 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
           }
      }
  */
-   if (cw->dmg_updates >= 0)
+   if (cw->dmg_updates >= 1)
      {
         cw->defer_hide = 0;
         evas_object_show(cw->shobj);
