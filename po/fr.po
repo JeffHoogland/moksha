@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-06-07 01:26+1000\n"
-"PO-Revision-Date: 2010-06-09 13:44+0400\n"
+"POT-Creation-Date: 2010-06-10 09:20+0400\n"
+"PO-Revision-Date: 2010-06-10 14:44+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment French Team <pourunmondesansgourou@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -63,7 +63,7 @@ msgstr "<title>Notre Équipe</title>"
 #: src/bin/e_actions.c:360
 #, c-format
 msgid "You are about to kill %s.<br><br>Please keep in mind that all data of this window,<br>which has not been saved yet will be lost!<br><br>Are you sure you want to kill this window?"
-msgstr "Vous êtes sur le point de tuer %s.<br><br>Toutes les informations non encore enregistrées<br>contenues dans cette fenêtre seront perdues !<br><br>Êtes-vous sûr de vouloir tuer cette fenêtre ?"
+msgstr "Vous êtes sur le point de tuer %s.<br><br>Toutes les informations non encore enregistrées<br>contenues dans cette fenêtre seront perdues !<br><br>Voulez-vous vraiment tuer cette fenêtre ?"
 
 #: src/bin/e_actions.c:372
 msgid "Are you sure you want to kill this window?"
@@ -107,7 +107,7 @@ msgstr "Êtes-vous sûr de vouloir quitter ?"
 
 #: src/bin/e_actions.c:1826
 msgid "You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
-msgstr "Vous avez demandé à quitter Enlightenment.<br><br>Êtes-vous sûr de vouloir le faire ?"
+msgstr "Vous avez demandé à quitter Enlightenment.<br><br>Voulez-vous vraiment le faire ?"
 
 #: src/bin/e_actions.c:1921
 msgid "Are you sure you want to log out?"
@@ -115,7 +115,7 @@ msgstr "Êtes-vous sûr de vouloir fermer votre session ?"
 
 #: src/bin/e_actions.c:1923
 msgid "You are about to log out.<br><br>Are you sure you want to do this?"
-msgstr "Vous êtes sur le point de fermer votre session.<br><br>Êtes-vous sûr de vouloir le faire ?"
+msgstr "Vous êtes sur le point de fermer votre session.<br><br>Voulez-vous vraiment le faire ?"
 
 #: src/bin/e_actions.c:1984
 #: src/bin/e_actions.c:2110
@@ -124,7 +124,7 @@ msgstr "Êtes-vous sûr de vouloir éteindre ?"
 
 #: src/bin/e_actions.c:1986
 msgid "You requested to turn off your Computer.<br><br>Are you sure you want to shut down?"
-msgstr "Vous avez demandé à éteindre votre ordinateur.<br><br>Êtes-vous sûr de vouloir le faire ?"
+msgstr "Vous avez demandé à éteindre votre ordinateur.<br><br>Voulez-vous vraiment le faire ?"
 
 #: src/bin/e_actions.c:2047
 msgid "Are you sure you want to reboot?"
@@ -132,19 +132,19 @@ msgstr "Êtes-vous sûr de vouloir redémarrer ?"
 
 #: src/bin/e_actions.c:2049
 msgid "You requested to reboot your Computer.<br><br>Are you sure you want to restart it?"
-msgstr "Vous avez demandé à redémarrer votre ordinateur.<br><br>Êtes-vous sûr de vouloir le faire ?"
+msgstr "Vous avez demandé à relancer votre ordinateur.<br><br>Voulez-vous vraiment redémarrer ?"
 
 #: src/bin/e_actions.c:2112
 msgid "You requested to suspend your Computer.<br><br>Are you sure you want to suspend?"
-msgstr "Vous avez demandé à mettre votre ordinateur en veille.<br><br>Êtes-vous sûr de vouloir le faire ?"
+msgstr "Vous avez demandé à mettre votre ordinateur en veille.<br><br>Voulez-vous vraiment le faire ?"
 
 #: src/bin/e_actions.c:2173
 msgid "Are you sure you want to hibernate?"
-msgstr "Êtes-vous sûr de vouloir mettre votre ordinateur en hibernation ?"
+msgstr "Êtes-vous sûr de vouloir mettre votre ordinateur en sommeil (STD) ?"
 
 #: src/bin/e_actions.c:2175
 msgid "You requested to hibernate your Computer.<br><br>Are you sure you want to suspend to disk?"
-msgstr "Vous avez demandé à mettre votre ordinateur en hibernation.<br><br>Êtes-vous sûr de vouloir le mettre en veille prolongée ?"
+msgstr "Vous avez demandé à mettre votre ordinateur en sommeil (STD).<br><br>Voulez-vous vraiment le mettre en état d'hibernation  ?"
 
 #: src/bin/e_actions.c:2569
 #: src/bin/e_actions.c:2580
@@ -679,31 +679,31 @@ msgstr "Système"
 
 #: src/bin/e_actions.c:2928
 msgid "Log Out"
-msgstr "Déconnecter"
+msgstr "Sortie"
 
 #: src/bin/e_actions.c:2932
 msgid "Power Off Now"
-msgstr "Éteindre à l'instant"
+msgstr "Arrêt direct"
 
 #: src/bin/e_actions.c:2936
 msgid "Power Off"
-msgstr "Éteindre"
+msgstr "Arrêt"
 
 #: src/bin/e_actions.c:2940
 msgid "Reboot"
-msgstr "Redémarrer"
+msgstr "Relance"
 
 #: src/bin/e_actions.c:2944
 msgid "Suspend"
-msgstr "Mettre en veille"
+msgstr "Veille"
 
 #: src/bin/e_actions.c:2948
 msgid "Hibernate"
-msgstr "Hiberner"
+msgstr "Sommeil"
 
 #: src/bin/e_actions.c:2956
 msgid "Lock"
-msgstr "Verrouiller"
+msgstr "Verrou"
 
 #: src/bin/e_actions.c:2961
 #: src/bin/e_int_menus.c:1164
@@ -2927,7 +2927,7 @@ msgstr "Êtes-vous sûr de vouloir supprimer ce rack ?"
 
 #: src/bin/e_shelf.c:1302
 msgid "You requested to delete this shelf.<br><br>Are you sure you want to delete it?"
-msgstr "Vous avez demandé à supprimer ce rack.<br><br>Êtes-vous sûr de vouloir le faire ?"
+msgstr "Vous avez demandé à supprimer ce rack.<br><br>Voulez-vous vraiment le faire ?"
 
 #: src/bin/e_shelf.c:1675
 #: src/bin/e_toolbar.c:325
@@ -3006,7 +3006,7 @@ msgstr "Extinction du système en cours.<br>Vous ne pouvez pas effectuer d'autre
 
 #: src/bin/e_sys.c:462
 msgid "Resetting.<br>You cannot do any other system actions<br>once a reboot has begun."
-msgstr "Redémarrage en cours.<br>Vous ne pouvez pas effectuer d'autres actions système<br>lorsqu'un redémarrage est amorcé."
+msgstr "Relance en cours.<br>Vous ne pouvez pas effectuer d'autres actions système<br>lorsqu'un redémarrage est amorcé."
 
 #: src/bin/e_sys.c:469
 msgid "Suspending.<br>Until suspend is complete you cannot perform<br>any other system actions."
@@ -3035,7 +3035,7 @@ msgstr "Échec de la mise en veille."
 
 #: src/bin/e_sys.c:524
 msgid "Hibernate failed."
-msgstr "Échec de la mise en hibernation."
+msgstr "Échec de la mise en sommeil."
 
 #: src/bin/e_sys.c:581
 msgid "Power off"
@@ -3151,7 +3151,7 @@ msgstr "il y a %li minutes"
 
 #: src/bin/e_utils.c:912
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1180
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1142
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1155
 #: src/modules/conf_profiles/e_int_config_profiles.c:274
 #: src/modules/wizard/page_020.c:22
 #: src/modules/wizard/page_020.c:30
@@ -4256,15 +4256,15 @@ msgstr "Activer la gestion de l'énergie"
 
 #: src/modules/conf_dpms/e_int_config_dpms.c:214
 msgid "Standby time"
-msgstr "Délai avant mise en veille"
+msgstr "Délai avant la mise en attente"
 
 #: src/modules/conf_dpms/e_int_config_dpms.c:226
 msgid "Suspend time"
-msgstr "Délai avant hibernation"
+msgstr "Délai avant l'état suspendu"
 
 #: src/modules/conf_dpms/e_int_config_dpms.c:238
 msgid "Off time"
-msgstr "Délai avant extinction"
+msgstr "Délai avant la mise hors tension"
 
 #: src/modules/conf_dpms/e_mod_main.c:21
 msgid "Power Management"
@@ -4364,29 +4364,29 @@ msgid "The binding key sequence, that you choose, is already used by <br><hiligh
 msgstr "La séquence de raccourci que vous avez choisie est déjà utilisée<br>par l'action <hilight>%s</hilight>.<br>Veuillez choisir une autre séquence pour le raccourci des bords."
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1313
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1287
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1319
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1305
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1337
 #: src/modules/gadman/e_mod_gadman.c:819
 msgid "CTRL"
 msgstr "Ctrl"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1318
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1292
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1324
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1310
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1342
 #: src/modules/gadman/e_mod_gadman.c:824
 msgid "ALT"
 msgstr "Alt"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1324
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1298
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1330
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1316
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1348
 #: src/modules/gadman/e_mod_gadman.c:830
 msgid "SHIFT"
 msgstr "Majuscule"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1330
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1304
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1336
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1322
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1354
 #: src/modules/gadman/e_mod_gadman.c:836
 msgid "WIN"
 msgstr "Logo"
@@ -4415,7 +4415,7 @@ msgstr "Activer le support de l'extension composite ?"
 
 #: src/modules/conf_engine/e_int_config_engine.c:139
 msgid "You have chosen to enable composite support,<br>but your current screen does not support composite.<br><br>Are you sure you wish to enable composite support ?"
-msgstr "Vous avez choisi d'activer l'extension composite,<br>mais votre écran actuel ne la prend pas en charge.<br><br>Êtes-vous sûr de vouloir activer cette extension ?"
+msgstr "Vous avez choisi d'activer l'extension composite,<br>mais votre écran actuel ne la prend pas en charge.<br><br>Voulez-vous tout de même activer cette extension ?"
 
 #: src/modules/conf_engine/e_mod_main.c:21
 msgid "Engine"
@@ -4709,7 +4709,7 @@ msgstr "Erreur d'importation de la méthode de saisie"
 
 #: src/modules/conf_imc/e_int_config_imc_import.c:284
 msgid "Enlightenment was unable to import the configuration.<br><br>Are you sure this is really a valid configuration?"
-msgstr "Enlightenment n'a pas pu importer la configuration.<br><br>Êtes-vous sûr que cette configuration est valide ?"
+msgstr "Enlightenment n'a pu importer la configuration.<br><br>Êtes-vous sûr que cette configuration est valide ?"
 
 #: src/modules/conf_imc/e_int_config_imc_import.c:300
 msgid "Enlightenment was unable to import the configuration<br>due to a copy error."
@@ -4803,15 +4803,15 @@ msgstr "Paramétrage des raccourcis clavier"
 msgid "Key Bindings"
 msgstr "Raccourcis clavier"
 
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:926
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:935
 msgid "Key Binding Sequence"
 msgstr "Séquence de raccourci clavier"
 
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1137
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1150
 msgid "Binding Key Error"
 msgstr "Erreur de raccourci clavier"
 
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1138
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1151
 #, c-format
 msgid "The binding key sequence, that you choose, is already used by <br><hilight>%s</hilight> action.<br>Please choose another binding key sequence."
 msgstr "La séquence de raccourci clavier que vous avez choisie est déjà utilisée<br>par l'action <hilight>%s</hilight>.<br>Veuillez choisir une autre séquence de raccourci clavier."
@@ -5336,7 +5336,7 @@ msgstr "Configurer"
 #: src/modules/conf_shelves/e_int_config_shelf.c:277
 #, c-format
 msgid "You requested to delete \"%s\".<br><br>Are you sure you want to delete this shelf?"
-msgstr "Vous avez demandé à supprimer « %s ».<br><br>Êtes-vous sûr de vouloir supprimer ce rack ?"
+msgstr "Vous avez demandé à supprimer « %s ».<br><br>Voulez-vous vraiment supprimer ce rack ?"
 
 #: src/modules/conf_startup/e_int_config_startup.c:39
 msgid "Startup Settings"
@@ -6900,7 +6900,7 @@ msgstr "Entrer un nom pour cette nouvelle source :"
 #: src/modules/ibar/e_mod_config.c:183
 #, c-format
 msgid "You requested to delete \"%s\".<br><br>Are you sure you want to delete this bar source?"
-msgstr "Vous avez demandé à supprimer « %s ».<br><br>Êtes-vous sûr de vouloir supprimer cette source ?"
+msgstr "Vous avez demandé à supprimer « %s ».<br><br>Voulez-vous vraiment supprimer cette source ?"
 
 #: src/modules/ibar/e_mod_config.c:187
 msgid "Are you sure you want to delete this bar source?"
@@ -7398,7 +7398,7 @@ msgstr "Le service n'existe plus"
 #: src/modules/connman/e_mod_main.c:584
 #: src/modules/connman/e_mod_main.c:611
 msgid "Connect to network service."
-msgstr "Connecté au service réseau."
+msgstr "Connexion au service réseau."
 
 #: src/modules/connman/e_mod_main.c:676
 msgid "Could not set service's passphrase"
