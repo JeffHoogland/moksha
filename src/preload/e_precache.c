@@ -1,7 +1,6 @@
 #include "config.h"
 #include "e_precache.h"
 
-
 static void *lib_evas = NULL;
 static void *lib_ecore_file = NULL;
 static void *lib_eet = NULL;
@@ -139,7 +138,7 @@ ecore_file_size(const char *file)
    return (*func) (file);
 }
 
-int
+Eina_Bool
 ecore_file_exists(const char *file)
 {
    static int (*func) (const char *file) = NULL;
@@ -150,7 +149,7 @@ ecore_file_exists(const char *file)
    return (*func) (file);
 }
 
-int
+Eina_Bool
 ecore_file_is_dir(const char *file)
 {
    static int (*func) (const char *file) = NULL;
@@ -161,7 +160,7 @@ ecore_file_is_dir(const char *file)
    return (*func) (file);
 }
 
-int
+Eina_Bool
 ecore_file_can_read(const char *file)
 {
    static int (*func) (const char *file) = NULL;
@@ -172,7 +171,7 @@ ecore_file_can_read(const char *file)
    return (*func) (file);
 }
 
-int
+Eina_Bool
 ecore_file_can_write(const char *file)
 {
    static int (*func) (const char *file) = NULL;
@@ -183,7 +182,7 @@ ecore_file_can_write(const char *file)
    return (*func) (file);
 }
 
-int
+Eina_Bool
 ecore_file_can_exec(const char *file)
 {
    static int (*func) (const char *file) = NULL;

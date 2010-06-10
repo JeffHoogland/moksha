@@ -11,6 +11,7 @@
 #ifdef HAVE_ALLOCA_H
 #include <alloca.h>
 #endif
+#include <Eina.h>
 #include <Evas.h>
 #include <Ecore.h>
 #include <Ecore_File.h>
