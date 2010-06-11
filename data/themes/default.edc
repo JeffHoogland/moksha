@@ -34005,7 +34005,7 @@ collections {
             description {
             state: "selected" 0.0;
                inherit: "default" 0.0;
-               color: 20 20 20 200;
+               color: 220 220 220 200;
             }
 
          }
@@ -34308,7 +34308,7 @@ collections {
              description {
                state: "selected" 0.0;
                inherit: "default" 0.0;
-               color: 10 10 10 200;
+               color: 220 220 220 200;
             }
          }
          part {
