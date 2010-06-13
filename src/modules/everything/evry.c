@@ -756,7 +756,7 @@ _evry_window_new(E_Zone *zone, E_Zone_Edge edge)
    e_win_borderless_set(win->ewin, 1);
    e_win_no_remember_set(win->ewin, 1);
    e_win_placed_set(win->ewin, 1);
-   ecore_evas_override_set(win->ewin->ecore_evas, 1); 
+   ecore_evas_override_set(win->ewin->ecore_evas, 1);
    win->evas = e_win_evas_get(win->ewin);
    win->zone = zone;
    win->ewin->data = win;
@@ -770,7 +770,7 @@ _evry_window_new(E_Zone *zone, E_Zone_Edge edge)
        (!strcmp(shape_option, "1")))
      {
 	win->shaped = EINA_TRUE;
-	
+
 	if (e_config->use_composite)
 	  {
 	     ecore_evas_alpha_set(win->ewin->ecore_evas, 1);
@@ -2531,23 +2531,28 @@ _clear_timer(void *data)
 static void
 _evry_state_clear(Evry_Window *win)
 {
+   Evry_State *s;
+   Evry_View *v;
+
    if (!win->state_clearing)
      return;
 
-   Evry_State *s = win->state_clearing;
-   Evry_View *v = s->view;
+   s = win->state_clearing;
+   win->state_clearing = NULL;
+
    ecore_timer_del(s->clear_timer);
+   s->clear_timer = NULL;
 
    if (s->delete_me)
      {
-	v->destroy(v);
+	if (s->view)
+	  s->view->destroy(s->view);
 	s->clear_timer = NULL;
 	E_FREE(s->inp);
 	E_FREE(s);
      }
-   else
+   else if ((v = s->view))
      {
-	s->clear_timer = NULL;
 	v->clear(v);
 
 	if (v->o_list)
@@ -2556,8 +2561,6 @@ _evry_state_clear(Evry_Window *win)
 	     evas_object_hide(v->o_list);
 	  }
      }
-
-   win->state_clearing = NULL;
 
    /* replay mouse down to allow direct sliding back */
    if (win->mouse_button)
@@ -2592,7 +2595,8 @@ _evry_view_hide(Evry_Window *win, Evry_View *v, int slide)
 
 	evas_object_show(v->o_list);
 	edje_object_signal_emit(v->o_list, "e,action,hide,list", "e");
-	v->state->clear_timer = ecore_timer_add(0.3, _clear_timer, win);
+	/* FIXME get signal from theme when anim finished */
+	v->state->clear_timer = ecore_timer_add(0.5, _clear_timer, win);
 
 	if (v->o_bar)
 	  {

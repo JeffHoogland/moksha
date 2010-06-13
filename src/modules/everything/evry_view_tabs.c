@@ -111,6 +111,9 @@ _tabs_update(Tab_View *v)
    Evas_Object *o;
    int cur = 0, i = 0;
 
+   if (s->delete_me)
+     return;
+   
    edje_object_calc_force(v->o_tabs);
    evas_object_geometry_get(v->o_tabs, &x, NULL, &w, NULL);
 
