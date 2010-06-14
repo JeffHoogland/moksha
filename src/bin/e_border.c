@@ -6471,7 +6471,7 @@ _e_border_eval(E_Border *bd)
 		     * This code ensures that even if app windows like to open
 		     * in stupid places (e.g. below shelfes) it moves them smart away
 		     */
-		    {
+		    /*{
 			Eina_List *skiplist = NULL;
 			int new_x, new_y;
 		
@@ -6482,7 +6482,7 @@ _e_border_eval(E_Border *bd)
 			eina_list_free(skiplist);
 			bd->x += new_x;
 			bd->y += new_y;
-		    }
+		    }*/
 		 
 		  if (e_container_zone_at_point_get(bd->zone->container, bd->x, bd->y))
 		    {
