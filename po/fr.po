@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-06-10 09:20+0400\n"
-"PO-Revision-Date: 2010-06-10 14:44+0400\n"
+"PO-Revision-Date: 2010-06-15 10:26+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment French Team <pourunmondesansgourou@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -4256,7 +4256,7 @@ msgstr "Activer la gestion de l'énergie"
 
 #: src/modules/conf_dpms/e_int_config_dpms.c:214
 msgid "Standby time"
-msgstr "Délai avant la mise en attente"
+msgstr "Délai avant la mise en veille"
 
 #: src/modules/conf_dpms/e_int_config_dpms.c:226
 msgid "Suspend time"
@@ -5298,7 +5298,7 @@ msgstr "Délai d'alternance"
 
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:181
 msgid "Blanking"
-msgstr "Éteindre (blanking)"
+msgstr "Extinction de l'écran"
 
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:186
 msgid "Preferred"
