@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-06-10 09:20+0400\n"
-"PO-Revision-Date: 2010-06-15 10:26+0400\n"
+"PO-Revision-Date: 2010-06-16 08:55+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment French Team <pourunmondesansgourou@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -792,7 +792,7 @@ msgstr "Annuler"
 #: src/bin/e_config.c:805
 #: src/bin/e_config.c:838
 msgid "Settings data needed upgrading. Your old settings have<br>been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means Enlightenment needs new settings<br>data by default for usable functionality that your old<br>settings simply lack. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the hiccup in your settings.<br>"
-msgstr "Les données de configuration ont dû être mises à jour. Votre ancienne<br>configuration a été supprimée et de nouveaux paramètres par<br>défaut sont en place. Ceci risque d'arriver en phase de<br>développement, aussi est-il inutile de faire un rapport de bogue.<br>Cela signifie simplement que Enlightenment a besoin<br>de cette mise à niveau pour être à nouveau fonctionnel.<br>Vous pouvez maintenant tout reconfigurer selon votre goût.<br>Désolé pour la gêne occasionnée.<br>"
+msgstr "Les données de configuration ont dû être mises à jour. Votre ancienne<br>configuration a été supprimée et de nouveaux paramètres par<br>défaut sont en place. Cela risque d'arriver en phase de<br>développement, aussi est-il inutile de faire un rapport de bogue.<br>Cela signifie simplement que Enlightenment a besoin<br>de cette mise à niveau pour être à nouveau fonctionnel.<br>Vous pouvez maintenant tout reconfigurer selon votre goût.<br>Désolé pour la gêne occasionnée.<br>"
 
 #: src/bin/e_config.c:822
 msgid "Your settings are NEWER than Enlightenment. This is very<br>strange. This should not happen unless you downgraded<br>Enlightenment or copied the settings from a place where<br>a newer version of Enlightenment was running. This is bad and<br>as a precaution your settings have been now restored to<br>defaults. Sorry for the inconvenience.<br>"
@@ -1578,7 +1578,7 @@ msgstr ""
 #: src/bin/e_int_border_locks.c:67
 #: src/bin/e_int_border_menu.c:615
 msgid "Window Locks"
-msgstr "Verrous de fenêtre"
+msgstr "Verrous de la fenêtre"
 
 #: src/bin/e_int_border_locks.c:285
 msgid "Generic Locks"
@@ -1677,7 +1677,7 @@ msgstr "M'empêcher de :"
 
 #: src/bin/e_int_border_locks.c:349
 msgid "Closing the window"
-msgstr "Fermeture de la fenêtre"
+msgstr "Fermer cette fenêtre"
 
 #: src/bin/e_int_border_locks.c:351
 msgid "Exiting my login with this window open"
@@ -2241,7 +2241,7 @@ msgstr "(Aucune application)"
 
 #: src/bin/e_int_menus.c:749
 msgid "Set Virtual Desktops"
-msgstr "Configurer les bureaux virtuels"
+msgstr "Paramétrer les bureaux virtuels"
 
 #: src/bin/e_int_menus.c:1129
 #: src/bin/e_int_menus.c:1313
@@ -3209,7 +3209,7 @@ msgstr "%3.0f%%"
 
 #: src/bin/e_utils.c:1484
 msgid "Configuration data needed upgrading. Your old configuration<br> has been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means the module needs new configuration<br>data by default for usable functionality that your old<br>configuration simply lacks. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the inconvenience.<br>"
-msgstr "La configuration a dû être mise à jour. Votre ancienne configuration<br>a été supprimée et de nouveaux paramètres par défaut sont en place.<br>Ceci risque d'arriver en phase de développement, aussi est-il inutile<br> de faire un rapport de bogue. Cela signifie simplement que le module a besoin<br>de cette mise à niveau pour être à nouveau fonctionnel.<br>Vous pouvez maintenant tout reconfigurer selon votre goût.<br>Désolé pour la gêne occasionnée.<br>"
+msgstr "La configuration a dû être mise à jour. Votre ancienne configuration<br>a été supprimée et de nouveaux paramètres par défaut sont en place.<br>Cela risque d'arriver en phase de développement, aussi est-il inutile<br> de faire un rapport de bogue. Cela signifie simplement que le module a besoin<br>de cette mise à niveau pour être à nouveau fonctionnel.<br>Vous pouvez maintenant tout reconfigurer selon votre goût.<br>Désolé pour la gêne occasionnée.<br>"
 
 #: src/bin/e_utils.c:1497
 #: src/bin/e_utils.c:1521
@@ -3423,7 +3423,7 @@ msgstr "Panneau de configuration"
 
 #: src/modules/conf/e_mod_main.c:268
 msgid "Configuration Panel Module Configuration data needed upgrading. Your old configuration<br> has been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means the module needs new configuration<br>data by default for usable functionality that your old<br>configuration simply lacks. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the inconvenience.<br>"
-msgstr "La configuration du module Panneau de configuration a dû être mise à jour. <br>Votre ancienne configuration a été supprimée et de nouveaux paramètres<br>par défaut sont en place. Ceci risque d'arriver en phase de<br>développement, aussi est-il inutile de faire un rapport de bogue.<br>Cela signifie simplement que le module Panneau de configuration a besoin<br>de cette mise à niveau pour être à nouveau fonctionnel.<br>Vous pouvez maintenant tout reconfigurer selon votre goût.<br>Désolé pour la gêne occasionnée.<br>"
+msgstr "La configuration du module Panneau de configuration a dû être mise à jour. <br>Votre ancienne configuration a été supprimée et de nouveaux paramètres<br>par défaut sont en place. Cela risque d'arriver en phase de<br>développement, aussi est-il inutile de faire un rapport de bogue.<br>Cela signifie simplement que le module Panneau de configuration a besoin<br>de cette mise à niveau pour être à nouveau fonctionnel.<br>Vous pouvez maintenant tout reconfigurer selon votre goût.<br>Désolé pour la gêne occasionnée.<br>"
 
 #: src/modules/conf/e_mod_main.c:285
 msgid "Your Configuration Panel Module configuration is NEWER than the module version. This is very<br>strange. This should not happen unless you downgraded<br>the module or copied the configuration from a place where<br>a newer version of the module was running. This is bad and<br>as a precaution your configuration has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
@@ -5754,7 +5754,7 @@ msgstr "Résistance aux obstacles"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:128
 msgid "Other windows"
-msgstr "Autres Fenêtres"
+msgstr "Autres fenêtres"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:137
 msgid "Edge of the screen"
@@ -6572,7 +6572,7 @@ msgstr "Racine"
 
 #: src/modules/fileman/e_mod_main.c:439
 msgid "Fileman Module Settings data needed upgrading. Your old configuration<br>has been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means Fileman module needs new configuration<br>data by default for usable functionality that your old<br>configuration simply lacks. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the hiccup in your configuration.<br>"
-msgstr "La configuration du module Gestionnaire de fichiers a dû être mise à jour. <br>Votre ancienne configuration a été supprimée et de nouveaux paramètres<br>par défaut sont en place. Ceci risque d'arriver en phase de<br>développement, aussi est-il inutile de faire un rapport de bogue.<br>Cela signifie simplement que le module Gestionnaire de fichiers a besoin<br>de cette mise à niveau pour être à nouveau fonctionnel.<br>Vous pouvez maintenant tout reconfigurer selon votre goût.<br>Désolé pour la gêne occasionnée.<br>"
+msgstr "La configuration du module Gestionnaire de fichiers a dû être mise à jour. <br>Votre ancienne configuration a été supprimée et de nouveaux paramètres<br>par défaut sont en place. Cela risque d'arriver en phase de<br>développement, aussi est-il inutile de faire un rapport de bogue.<br>Cela signifie simplement que le module Gestionnaire de fichiers a besoin<br>de cette mise à niveau pour être à nouveau fonctionnel.<br>Vous pouvez maintenant tout reconfigurer selon votre goût.<br>Désolé pour la gêne occasionnée.<br>"
 
 #: src/modules/fileman/e_mod_main.c:452
 msgid "Your Fileman Module configuration is NEWER than Fileman Module version. This is very<br>strange. This should not happen unless you downgraded<br>the Fileman Module or copied the configuration from a place where<br>a newer version of the Fileman Module was running. This is bad and<br>as a precaution your configuration has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
