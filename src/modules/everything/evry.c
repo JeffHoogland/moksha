@@ -988,10 +988,7 @@ _evry_cb_mouse(void *data, int type, void *event)
      {
 	win->mouse_out = 0;
 
-	if (!E_INSIDE(ev->x, ev->y,
-		      win->zone->x,
-		      win->zone->y,
-		      w->w, w->h))
+	if (!E_INSIDE(ev->x, ev->y, 0, 0, w->w, w->h))
 	  {
 	     win->mouse_out = 1;
 	     return 1;
@@ -1004,10 +1001,7 @@ _evry_cb_mouse(void *data, int type, void *event)
 	win->mouse_button = 0;
 
 	if (win->mouse_out &&
-	    !E_INSIDE(ev->x, ev->y,
-		      win->zone->x,
-		      win->zone->y,
-		      w->w, w->h))
+	    !E_INSIDE(ev->x, ev->y, 0, 0, w->w, w->h))
 	  {
 	     evry_hide(win, 0);
 	     return 1;
