@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-06-10 09:20+0400\n"
-"PO-Revision-Date: 2010-06-16 08:55+0400\n"
+"PO-Revision-Date: 2010-06-18 11:39+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment French Team <pourunmondesansgourou@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -471,7 +471,7 @@ msgstr "Se déplacer linéairement de … bureaux (tous les écrans)"
 
 #: src/bin/e_actions.c:2779
 msgid "Flip Desktop In Direction..."
-msgstr "Basculer le bureau en direction "
+msgstr "Basculer le bureau en direction de ..."
 
 #: src/bin/e_actions.c:2784
 msgid "Switch To Desktop 0 (All Screens)"
@@ -601,7 +601,7 @@ msgstr "Afficher le menu des applications"
 
 #: src/bin/e_actions.c:2888
 msgid "Show Clients Menu"
-msgstr "Afficher le menu détaillé"
+msgstr "Afficher la liste des fenêtres"
 
 #: src/bin/e_actions.c:2890
 msgid "Show Menu..."
@@ -1918,7 +1918,7 @@ msgstr "Transition pour"
 
 #: src/bin/e_int_border_prop.c:437
 msgid "Client Leader"
-msgstr "Fenêtre leader"
+msgstr "Fenêtre parente"
 
 #: src/bin/e_int_border_prop.c:438
 msgid "Gravity"
@@ -3514,7 +3514,7 @@ msgstr "Bordures"
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:39
 msgid "Client List Settings"
-msgstr "Paramétrage des fenêtres filles"
+msgstr "Paramétrage de la liste des fenêtres"
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:100
 msgid "Group By"
@@ -3608,7 +3608,7 @@ msgstr "Menus"
 
 #: src/modules/conf_clientlist/e_mod_main.c:23
 msgid "Client List Menu"
-msgstr "Menu des fenêtres filles"
+msgstr "Menu de la liste des fenêtres"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:78
 msgid "Border Title"
@@ -3897,7 +3897,7 @@ msgstr "Verrouiller à la mise en veille"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:220
 msgid "Login Box Settings"
-msgstr "Paramétrage de la boîte de connexion"
+msgstr "Configuration de la boîte de connexion"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:223
 msgid "Show on all screen zones"
@@ -6620,7 +6620,7 @@ msgstr "Montrer l'extension des icones"
 
 #: src/modules/fileman/e_mod_config.c:258
 msgid "Show Full Path"
-msgstr "Montrer le chemin complet"
+msgstr "Montrer le chemin d'accès complet"
 
 #: src/modules/fileman/e_mod_config.c:261
 msgid "Show Desktop Icons"
@@ -7094,12 +7094,12 @@ msgstr "Afficher le pop-up du Pager"
 #: src/modules/pager/e_mod_main.c:2851
 #: src/modules/pager/e_mod_main.c:2894
 msgid "Popup Desk Right"
-msgstr "Pop-up du bureau droit"
+msgstr "Pop-up du bureau à droite"
 
 #: src/modules/pager/e_mod_main.c:2853
 #: src/modules/pager/e_mod_main.c:2895
 msgid "Popup Desk Left"
-msgstr "Pop-up du bureau gauche"
+msgstr "Pop-up du bureau à gauche"
 
 #: src/modules/pager/e_mod_main.c:2855
 #: src/modules/pager/e_mod_main.c:2896
@@ -7386,7 +7386,7 @@ msgstr "O.K."
 #: src/modules/connman/e_mod_main.c:528
 #: src/modules/connman/e_mod_main.c:541
 msgid "Disconnect from network service."
-msgstr "Déconnecté du service réseau."
+msgstr "Déconnexion du service réseau."
 
 #: src/modules/connman/e_mod_main.c:571
 #: src/modules/connman/e_mod_main.c:630
