@@ -812,8 +812,8 @@ _evry_window_new(E_Zone *zone, E_Zone_Edge edge)
 	mw += offset_s*2;
 	mh += offset_s*2;
 
-	x = (zone->w * evry_conf->rel_x) - (mw / 2);
-	y = (zone->h * evry_conf->rel_y) - (mh / 2);
+	x = (zone->x + (zone->w * evry_conf->rel_x)) - (mw / 2);
+	y = (zone->y + (zone->h * evry_conf->rel_y)) - (mh / 2);
      }
    else
      {
@@ -846,6 +846,9 @@ _evry_window_new(E_Zone *zone, E_Zone_Edge edge)
 	      break;
 	  }
 
+	x += zone->x;
+	y += zone->y;
+	
 	mw += offset_s*2;
 	mh += offset_s*2;
      }
