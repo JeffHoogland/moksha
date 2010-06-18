@@ -308,6 +308,20 @@ e_icon_scale_size_get(const Evas_Object *obj)
    return sd->size;
 }
 
+EAPI void
+e_icon_selected_set(const Evas_Object *obj, Eina_Bool selected)
+{
+   E_Smart_Data *sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
+   if (strcmp(evas_object_type_get(sd->obj), "edje"))
+     return;
+
+   if (selected)
+     edje_object_signal_emit(sd->obj, "e,state,selected", "e");
+   else
+     edje_object_signal_emit(sd->obj, "e,state,unselected", "e");
+}
+
 /* local subsystem globals */
 static void
 _e_icon_smart_reconfigure(E_Smart_Data *sd)

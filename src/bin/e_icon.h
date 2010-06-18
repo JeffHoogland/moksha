@@ -27,6 +27,7 @@ EAPI void         e_icon_data_set         (Evas_Object *obj, void *data, int w, 
 EAPI void        *e_icon_data_get         (const Evas_Object *obj, int *w, int *h);
 EAPI void         e_icon_scale_size_set   (Evas_Object *obj, int size);
 EAPI int          e_icon_scale_size_get   (const Evas_Object *obj);
+EAPI void         e_icon_selected_set	  (const Evas_Object *obj, Eina_Bool selected);
 
 #endif
 #endif
