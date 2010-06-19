@@ -11,6 +11,10 @@ static int _battery_udev_battery_update_poll(void *data);
 static void _battery_udev_battery_update(const char *syspath, Battery *bat);
 static void _battery_udev_ac_update(const char *syspath, Ac_Adapter *ac);
 
+extern Eina_List *device_batteries;
+extern Eina_List *device_ac_adapters;
+extern double init_time;
+
 void 
 _battery_udev_start(void)
 {

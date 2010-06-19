@@ -111,17 +111,17 @@ struct _Ac_Adapter
 Battery *_battery_battery_find(const char *udi);
 Ac_Adapter *_battery_ac_adapter_find(const char *udi);
 void _battery_device_update(void);
-/* in e_mod_dbus.c */
-void _battery_dbus_start(void);
-void _battery_dbus_stop(void);
-/* end e_mod_dbus.c */
+#ifdef HAVE_EEZE
 /* in e_mod_udev.c */
 void _battery_udev_start(void);
 void _battery_udev_stop(void);
 /* end e_mod_udev.c */
-Eina_List *device_batteries;
-Eina_List *device_ac_adapters;
-double init_time;
+#else
+/* in e_mod_dbus.c */
+void _battery_dbus_start(void);
+void _battery_dbus_stop(void);
+/* end e_mod_dbus.c */
+#endif
 
 EAPI extern E_Module_Api e_modapi;
 

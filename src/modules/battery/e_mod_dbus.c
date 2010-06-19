@@ -15,6 +15,11 @@ static void _battery_dbus_is_ac_adapter(void *user_data, void *reply_data, DBusE
 static void _battery_dbus_dev_add(void *data, DBusMessage *msg);
 static void _battery_dbus_dev_del(void *data, DBusMessage *msg);
 
+extern Eina_List *device_batteries;
+extern Eina_List *device_ac_adapters;
+extern double init_time;
+
+
 void
 _battery_dbus_start(void)
 {
