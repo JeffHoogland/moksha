@@ -59,10 +59,13 @@ void *alloca (size_t);
 #include <grp.h>
 #include <glob.h>
 #include <locale.h>
-#include <libintl.h>
 #include <errno.h>
 #include <signal.h>
 #include <inttypes.h>
+
+#ifdef HAVE_GETTEXT
+# include <libintl.h>
+#endif
 
 #ifndef _POSIX_HOST_NAME_MAX
 #define _POSIX_HOST_NAME_MAX 255

@@ -242,8 +242,18 @@ dnl fi
 ALL_LINGUAS="bg ca cs da de el eo es fi fr fr_CH he hu it ja ko nb nl pl pt_BR ru sk sl sv tr zh_CN zh_TW"
 AC_SUBST(ALL_LINGUAS)
 
-AM_GNU_GETTEXT([external])
+m4_ifdef([AM_GNU_GETTEXT_VERSION], [
 AM_GNU_GETTEXT_VERSION([0.12.1])
+])
+
+m4_ifdef([AM_GNU_GETTEXT], [
+AM_GNU_GETTEXT([external])
+po_makefile_in=po/Makefile.in
+AM_CONDITIONAL([HAVE_PO], [true])
+],[
+AM_CONDITIONAL([HAVE_PO], [false])
+])
+AC_SUBST(LTLIBINTL)
 if test "x$LIBINTL" = "x"; then
   LIBINTL="$INTLLIBS"
 fi
@@ -798,7 +808,7 @@ config/scaleable/Makefile
 config/netbook/Makefile
 config/illume/Makefile
 config/illume-home/Makefile
-po/Makefile.in
+$po_makefile_in
 ])
 
 if test "$device_backend" = "eeze";then

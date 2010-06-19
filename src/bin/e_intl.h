@@ -4,8 +4,13 @@
 #ifdef E_TYPEDEFS
 
 #if E_INTERNAL
+#ifdef HAVE_GETTEXT
 #define _(str) gettext(str)
 #define d_(str, dom) dgettext(PACKAGE dom, str)
+#else
+#define _(str) (str)
+#define d_(str, dom) (str)
+#endif
 #endif
 
 /* This macro is used to just mark string for translation, this is useful
