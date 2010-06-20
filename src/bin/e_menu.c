@@ -853,10 +853,13 @@ e_menu_item_active_set(E_Menu_Item *mi, int active)
 	  edje_object_signal_emit(mi->toggle_object, "e,state,selected", "e");
 	if (mi->icon_key)
 	  {
-	     if (strcmp(evas_object_type_get(mi->icon_object), "e_icon"))
-	       edje_object_signal_emit(mi->icon_object, "e,state,selected", "e");
-	     else
-	       e_icon_selected_set(mi->icon_object, EINA_TRUE);
+             if (mi->icon_object)
+               {
+                  if (strcmp(evas_object_type_get(mi->icon_object), "e_icon"))
+                    edje_object_signal_emit(mi->icon_object, "e,state,selected", "e");
+                  else
+                    e_icon_selected_set(mi->icon_object, EINA_TRUE);
+               }
 	  }
 	edje_object_signal_emit(mi->menu->bg_object, "e,state,selected", "e");
 	_e_menu_submenu_activate(mi);
@@ -877,10 +880,13 @@ e_menu_item_active_set(E_Menu_Item *mi, int active)
 	  edje_object_signal_emit(mi->toggle_object, "e,state,unselected", "e");
 	if (mi->icon_key)
 	  {
-	     if (strcmp(evas_object_type_get(mi->icon_object), "e_icon"))
-	       edje_object_signal_emit(mi->icon_object, "e,state,unselected", "e");
-	     else
-	       e_icon_selected_set(mi->icon_object, EINA_FALSE);
+             if (mi->icon_object)
+               {
+                  if (strcmp(evas_object_type_get(mi->icon_object), "e_icon"))
+                    edje_object_signal_emit(mi->icon_object, "e,state,unselected", "e");
+                  else
+                    e_icon_selected_set(mi->icon_object, EINA_FALSE);
+               }
 	  }
 	edje_object_signal_emit(mi->menu->bg_object, "e,state,unselected", "e");
 	_e_menu_submenu_deactivate(mi);
