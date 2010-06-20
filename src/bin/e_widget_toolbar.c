@@ -158,7 +158,7 @@ e_widget_toolbar_item_remove(Evas_Object *obj, int num)
    if (it)
      {
 	evas_object_del(it->o_base);
-	evas_object_del(it->o_icon);
+	if (it->o_icon) evas_object_del(it->o_icon);
 	wd->items = eina_list_remove(wd->items, it);
 	E_FREE(it);
      }
@@ -263,7 +263,7 @@ e_widget_toolbar_clear(Evas_Object *obj)
    EINA_LIST_FREE(wd->items, it)
      {
         evas_object_del(it->o_base);
-        evas_object_del(it->o_icon);
+        if (it->o_icon) evas_object_del(it->o_icon);
         E_FREE(it);
      }
 }
@@ -296,7 +296,7 @@ _e_wid_del_hook(Evas_Object *obj)
    EINA_LIST_FREE(wd->items, it)
      {
         evas_object_del(it->o_base);
-        evas_object_del(it->o_icon);
+        if (it->o_icon) evas_object_del(it->o_icon);
         E_FREE(it);
      }
    E_FREE(wd);
@@ -525,10 +525,13 @@ _item_select(Item *it)
 {
    it->selected = EINA_TRUE;
    edje_object_signal_emit(it->o_base, "e,state,selected", "e");
-   if (strcmp(evas_object_type_get(it->o_icon), "e_icon"))
-     edje_object_signal_emit(it->o_icon, "e,state,selected", "e");
-   else
-     e_icon_selected_set(it->o_icon, EINA_TRUE);
+   if (it->o_icon)
+     {
+        if (strcmp(evas_object_type_get(it->o_icon), "e_icon"))
+          edje_object_signal_emit(it->o_icon, "e,state,selected", "e");
+        else
+          e_icon_selected_set(it->o_icon, EINA_TRUE);
+     }
    _item_show(it);
    if (it->func) it->func((void *)it->data1, (void *)it->data2);
 }
@@ -538,8 +541,11 @@ _item_unselect(Item *it)
 {
    it->selected = EINA_FALSE;
    edje_object_signal_emit(it->o_base, "e,state,unselected", "e");
-   if (strcmp(evas_object_type_get(it->o_icon), "e_icon"))
-     edje_object_signal_emit(it->o_icon, "e,state,unselected", "e");
-   else
-     e_icon_selected_set(it->o_icon, EINA_FALSE);
+   if (it->o_icon)
+     {
+        if (strcmp(evas_object_type_get(it->o_icon), "e_icon"))
+          edje_object_signal_emit(it->o_icon, "e,state,unselected", "e");
+        else
+          e_icon_selected_set(it->o_icon, EINA_FALSE);
+     }
 }
