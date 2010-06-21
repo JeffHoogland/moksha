@@ -690,16 +690,22 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, alert_p, INT);
    E_CONFIG_VAL(D, T, alert_timeout, INT);
    E_CONFIG_VAL(D, T, force_mode, INT);
+#ifdef HAVE_EEZE
+   E_CONFIG_VAL(D, T, fuzzy, INT);
+#endif
 
    battery_config = e_config_domain_load("module.battery", conf_edd);
    if (!battery_config)
      {
-       battery_config = E_NEW(Config, 1);
-       battery_config->poll_interval = 512;
-       battery_config->alert = 30;
-       battery_config->alert_p = 10;
-       battery_config->alert_timeout = 0;
-       battery_config->force_mode = 0;
+	battery_config = E_NEW(Config, 1);
+	battery_config->poll_interval = 512;
+	battery_config->alert = 30;
+	battery_config->alert_p = 10;
+	battery_config->alert_timeout = 0;
+	battery_config->force_mode = 0;
+#ifdef HAVE_EEZE
+	battery_config->fuzzy = 0;
+#endif
      }
    E_CONFIG_LIMIT(battery_config->poll_interval, 4, 4096);
    E_CONFIG_LIMIT(battery_config->alert, 0, 60);
