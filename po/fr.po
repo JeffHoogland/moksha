@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-06-10 09:20+0400\n"
-"PO-Revision-Date: 2010-06-18 11:39+0400\n"
+"POT-Creation-Date: 2010-06-21 06:00+0400\n"
+"PO-Revision-Date: 2010-06-21 09:46+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment French Team <pourunmondesansgourou@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -832,7 +832,7 @@ msgid "Enlightenment Settings Write Problems"
 msgstr "Problèmes d'écriture de la configuration de Enlightenment"
 
 #: src/bin/e_config_dialog.c:210
-#: src/modules/battery/e_mod_main.c:723
+#: src/modules/battery/e_mod_main.c:727
 #: src/modules/conf/e_mod_main.c:248
 #: src/modules/conf_engine/e_mod_main.c:20
 #: src/modules/conf_paths/e_mod_main.c:20
@@ -2079,7 +2079,7 @@ msgstr "Démarrer ce programme à l'ouverture de session"
 
 #: src/bin/e_int_config_modules.c:62
 #: src/bin/e_int_menus.c:224
-#: src/modules/battery/e_mod_main.c:185
+#: src/modules/battery/e_mod_main.c:189
 #: src/modules/conf/e_conf.c:121
 #: src/modules/conf/e_conf.c:131
 #: src/modules/conf/e_mod_main.c:88
@@ -2567,7 +2567,7 @@ msgstr "Enlightenment ne peut pas initialiser son système de redimensionnement.
 
 #: src/bin/e_main.c:600
 msgid "Enlightenment cannot set up the pointer system."
-msgstr "Enlightenment ne peut pas initialiser son système de curseur."
+msgstr "Enlightenment ne peut pas initialiser son système de pointage."
 
 #: src/bin/e_main.c:609
 msgid ""
@@ -3379,30 +3379,30 @@ msgstr "HAL"
 msgid "Hardware"
 msgstr "Interface"
 
-#: src/modules/battery/e_mod_main.c:144
+#: src/modules/battery/e_mod_main.c:148
 msgid "Battery"
 msgstr "Batterie"
 
-#: src/modules/battery/e_mod_main.c:472
+#: src/modules/battery/e_mod_main.c:476
 msgid "Your battery is low!"
 msgstr "La batterie est faible !"
 
-#: src/modules/battery/e_mod_main.c:474
+#: src/modules/battery/e_mod_main.c:478
 msgid "AC power is recommended."
 msgstr "Branchement sur le secteur recommandé."
 
-#: src/modules/battery/e_mod_main.c:549
+#: src/modules/battery/e_mod_main.c:553
 msgid "N/A"
 msgstr "N/A"
 
-#: src/modules/battery/e_mod_main.c:623
-#: src/modules/battery/e_mod_main.c:625
-#: src/modules/battery/e_mod_main.c:632
-#: src/modules/battery/e_mod_main.c:634
+#: src/modules/battery/e_mod_main.c:627
+#: src/modules/battery/e_mod_main.c:629
+#: src/modules/battery/e_mod_main.c:636
+#: src/modules/battery/e_mod_main.c:638
 msgid "ERROR"
 msgstr "ERREUR"
 
-#: src/modules/battery/e_mod_main.c:725
+#: src/modules/battery/e_mod_main.c:729
 msgid "Battery Meter"
 msgstr "Surveillance de la batterie"
 
@@ -6082,7 +6082,7 @@ msgstr "Restaurer la politique CPU"
 
 #: src/modules/cpufreq/e_mod_main.c:251
 msgid "Powersaving policy"
-msgstr "Politique de la gestion de l'énergie"
+msgstr "Stratégie"
 
 #: src/modules/cpufreq/e_mod_main.c:279
 msgid "Automatic powersaving"
@@ -7151,7 +7151,7 @@ msgstr "Fahrenheit"
 
 #: src/modules/temperature/e_mod_config.c:206
 msgid "Display Units"
-msgstr "Afficher les unités"
+msgstr "Affichage des unités"
 
 #: src/modules/temperature/e_mod_config.c:213
 msgid "Check Interval"
@@ -7208,7 +7208,7 @@ msgstr "Profil"
 
 #: src/modules/wizard/page_030.c:91
 msgid "No menu files were<br>found on your system.<br>Please see the<br>documentation on<br>www.enlightenment.org<br>for more details on<br>how to get your<br>application menus<br>working."
-msgstr "Aucun fichier de menus<br>n'a été détecté.<br>Veuillez consulter la<br>documentation disponible<br>sur www.enlightenment.org<br>pour savoir comment<br>générer les menus<br>d'applications."
+msgstr "Aucun fichier de menus<br>n'a été détecté.<br>Veuillez consulter la<br>documentation disponible<br>sur wiki.enlightenment.org<br>pour savoir comment<br>générer les menus<br>d'applications."
 
 #: src/modules/wizard/page_030.c:107
 msgid "Select application menu"
