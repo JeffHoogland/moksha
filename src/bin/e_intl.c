@@ -251,9 +251,11 @@ e_intl_language_set(const char *lang)
 	       }
 	     else
 	       {
+#ifdef HAVE_GETTEXT
 		  bindtextdomain(PACKAGE, locale_path);
 		  textdomain(PACKAGE);
 		  bind_textdomain_codeset(PACKAGE, "UTF-8");
+#endif
 		  free(locale_path);
                }
 	  }
@@ -285,7 +287,7 @@ e_intl_language_list(void)
    EINA_LIST_FOREACH(dir_list, next, epd)
      {
 	Eina_List *dir_languages;
-	     char *language;
+	char *language;
 
 	dir_languages = _e_intl_language_dir_scan(epd->dir);
 
@@ -310,11 +312,10 @@ _e_intl_language_list_find(Eina_List *language_list, char *language)
    Eina_List *l;
    char *lang;
 
-   if (!language_list) return 0;
-   if (!language) return 0;
+   if ((!language_list) || (!language)) return 0;
 
    EINA_LIST_FOREACH(language_list, l, lang)
-	if (!strcmp(lang, language)) return 1;
+     if (!strcmp(lang, language)) return 1;
 
    return 0;
 }
@@ -360,7 +361,6 @@ e_intl_input_method_set(const char *imc_path)
 			   (!ecore_exe_pid_get(_e_intl_input_method_exec)))
 			 e_util_dialog_show(_("Input Method Error"),
 					    _( "Error starting the input method executable<br><br>"
-
 					       "please make sure that your input<br>"
 					       "method configuration is correct and<br>"
 					       "that your configuration's<br>"
@@ -425,7 +425,7 @@ _e_intl_cb_exit(void *data, int type, void *event)
    if (!ev->exe) return 1;
 
    if (!(ecore_exe_tag_get(ev->exe) &&
-	(!strcmp(ecore_exe_tag_get(ev->exe), "E/im_exec")))) return 1;
+	 (!strcmp(ecore_exe_tag_get(ev->exe), "E/im_exec")))) return 1;
 
    _e_intl_input_method_exec = NULL;
    return 1;
@@ -501,7 +501,7 @@ _e_intl_language_path_find(char *language)
    e_path_dir_list_free(dir_list);
 
    EINA_LIST_FREE(search_list, data)
-	free(data);
+     free(data);
 
    return directory;
 }
@@ -525,7 +525,7 @@ _e_intl_language_dir_scan(const char *dir)
 	     char file_path[PATH_MAX];
 
 	     snprintf(file_path, sizeof(file_path),"%s/%s/LC_MESSAGES/%s.mo",
-		   dir, file, PACKAGE);
+		      dir, file, PACKAGE);
 	     if (ecore_file_exists(file_path) && !ecore_file_is_dir(file_path))
 	       languages = eina_list_append(languages, file);
 	     else
