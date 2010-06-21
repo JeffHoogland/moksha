@@ -63,9 +63,9 @@ temperature_udev_update(void *data)
           }
 
         if (inst->units == FAHRENHEIT) 
-          snprintf(buf, sizeof(buf), "%3.0f °F", temp);
+          snprintf(buf, sizeof(buf), "%3.0f°F", temp);
         else
-          snprintf(buf, sizeof(buf), "%3.0f °C", temp);  
+          snprintf(buf, sizeof(buf), "%3.0f°C", temp);  
 
         _temperature_face_level_set(inst,
         (double)(temp - inst->low) /
