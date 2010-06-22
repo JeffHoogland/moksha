@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-06-21 06:00+0400\n"
-"PO-Revision-Date: 2010-06-21 09:46+0400\n"
+"POT-Creation-Date: 2010-06-22 05:29+0400\n"
+"PO-Revision-Date: 2010-06-22 11:56+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment French Team <pourunmondesansgourou@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -348,7 +348,7 @@ msgstr "Activer/Désactiver l'épinglage"
 #: src/bin/e_int_menus.c:145
 #: src/bin/e_int_shelf_config.c:248
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:104
-#: src/modules/fileman/e_mod_main.c:324
+#: src/modules/fileman/e_mod_main.c:326
 #: src/modules/ibox/e_mod_config.c:165
 msgid "Desktop"
 msgstr "Bureau"
@@ -810,12 +810,12 @@ msgstr "Une erreur est survenue lors de l'enregistrement de<br>la configuration 
 #: src/bin/e_config.c:1870
 #, c-format
 msgid "Enlightenment's settings files are too big<br>for the file system they are being saved to.<br>This error is very strange as the files should<br>be extremely small. Please check the settings<br>for your home directory.<br><br>The file where the error occured was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
-msgstr "Les fichiers de configuration de Enlightenment sont trop<br>gros pour le système de fichiers où ils doivent être<br>enregistrés. Une erreur tout à fait étonnante car<br>ils devraient être vraiment très petits.<br> Veuillez vérifier les paramètres de<br>votre dossier personnel.<br><br>Le fichier incriminé était :<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption<br>des données.<br>"
+msgstr "Les fichiers de configuration de Enlightenment sont trop<br>gros pour le système de fichiers où ils doivent être<br>enregistrés. Une erreur tout à fait étonnante car<br>ils devraient être vraiment très petits.<br>Veuillez vérifier les paramètres de<br>votre dossier personnel.<br><br>Le fichier incriminé était :<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption<br>des données.<br>"
 
 #: src/bin/e_config.c:1883
 #, c-format
 msgid "An output error occured when writing the settings<br>files for Enlightenment. Your disk is having troubles<br>and possibly needs replacement.<br><br>The file where the error occured was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
-msgstr "Une erreur d'entrée/sortie est survenue lors de l'écriture<br>des fichiers de configuration de Enlightenment. Votre disque dur<br> est en cause et devra vraisemblablement être remplacé.<br><br>Le fichier incriminé était :<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption<br>des données.<br>"
+msgstr "Une erreur d'entrée/sortie est survenue lors de l'écriture<br>des fichiers de configuration de Enlightenment. Votre disque dur<br>est en cause et devra vraisemblablement être remplacé.<br><br>Le fichier incriminé était :<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption<br>des données.<br>"
 
 #: src/bin/e_config.c:1894
 #, c-format
@@ -825,14 +825,14 @@ msgstr "Enlightenment n'a pu écrire son fichier de configuration<br>car il n'y 
 #: src/bin/e_config.c:1906
 #, c-format
 msgid "Enlightenment unexpectedly had the settings file<br>it was writing closed on it. This is very unusual.<br><br>The file where the error occured was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
-msgstr "Le fichier de configuration dans lequel Enlightenment était en train<br>d'écrire s'est fermé de façon inattendue. C'est exceptionnel.<br><br> Le fichier incriminé était :<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption des données.<br>"
+msgstr "Le fichier de configuration dans lequel Enlightenment était en train<br>d'écrire s'est fermé de façon inattendue. C'est exceptionnel.<br><br>Le fichier incriminé était :<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption des données.<br>"
 
 #: src/bin/e_config.c:1931
 msgid "Enlightenment Settings Write Problems"
 msgstr "Problèmes d'écriture de la configuration de Enlightenment"
 
 #: src/bin/e_config_dialog.c:210
-#: src/modules/battery/e_mod_main.c:727
+#: src/modules/battery/e_mod_main.c:733
 #: src/modules/conf/e_mod_main.c:248
 #: src/modules/conf_engine/e_mod_main.c:20
 #: src/modules/conf_paths/e_mod_main.c:20
@@ -903,7 +903,7 @@ msgstr "Erreur du système d'authentification"
 #: src/bin/e_desklock.c:714
 #, c-format
 msgid "Authentication via PAM had errors setting up the<br>authentication session. The error code was <hilight>%i</hilight>.<br>This is bad and should not be happening. Please report this bug."
-msgstr "L'authentification via PAM a rencontré une erreur lors de<br>la session d'authentification. Le code de l'erreur est <hilight>%i</hilight>.<br>Cette erreur ne devrait pas se produire.<br> Merci de faire un rapport de bogue."
+msgstr "L'authentification via PAM a rencontré une erreur lors de<br>la session d'authentification. Le code de l'erreur est <hilight>%i</hilight>.<br>Cette erreur ne devrait pas se produire.<br>Merci de faire un rapport de bogue."
 
 #: src/bin/e_desklock.c:1045
 #: src/bin/e_screensaver.c:98
@@ -977,7 +977,7 @@ msgstr "Catégories"
 
 #: src/bin/e_eap_editor.c:720
 msgid "Mime Types"
-msgstr "Types mime"
+msgstr "Types MIME"
 
 #: src/bin/e_eap_editor.c:727
 msgid "Desktop file"
@@ -1377,7 +1377,7 @@ msgstr "Avertissement"
 #: src/bin/e_fm.c:9025
 #, c-format
 msgid "File already exists, overwrite?<br><hilight>%s</hilight>"
-msgstr "Le fichier existe déjà, écraser <br><hilight>%s</hilight> ?"
+msgstr "Le fichier existe déjà, écraser<br><hilight>%s</hilight> ?"
 
 #: src/bin/e_fm.c:9098
 msgid "Ignore this"
@@ -2164,11 +2164,11 @@ msgstr "Paramétrage de la barre d'outils"
 msgid "Layout"
 msgstr "Présentation"
 
-#: src/bin/e_intl.c:361
+#: src/bin/e_intl.c:362
 msgid "Input Method Error"
 msgstr "Erreur du système de saisie"
 
-#: src/bin/e_intl.c:362
+#: src/bin/e_intl.c:363
 msgid "Error starting the input method executable<br><br>please make sure that your input<br>method configuration is correct and<br>that your configuration's<br>executable is in your PATH<br>"
 msgstr "Erreur lors du démarrage du système de saisie.<br><br>Veuillez vérifier que la configuration du système<br>de saisie est correcte et que l'exécutable est<br>dans votre PATH.<br>"
 
@@ -2533,7 +2533,7 @@ msgid ""
 msgstr ""
 "Enlightenment a détecté que ecore_evas ne supportait pas le moteur de\n"
 "rendu graphique logiciel en mémoire dans Evas. Veuillez vérifier vos\n"
-"installations de Evas et Ecore et vérifier qu'ils supportent le\n"
+"installations de Evas et Ecore et vous assurer qu'elles supportent le\n"
 "moteur de rendu logiciel en mémoire."
 
 #: src/bin/e_main.c:545
@@ -2862,7 +2862,7 @@ msgstr "Enlightenment a planté au démarrage et a été redémarré.<br>L'erreu
 
 #: src/bin/e_main.c:1052
 msgid "Enlightenment crashed early on start and has<br>been restarted. All modules have been disabled<br>and will not be loaded to help remove any problem<br>modules from your configuration. The module<br>configuration dialog should let you select your<br>modules again."
-msgstr "Enlightenment a planté au démarrage et a<br> été redémarré. Tous les modules ont été désactivés<br>et ne seront pas chargés pour vous aider à supprimer<br>les modules problématiques de votre configuration.<br>Le dialogue de configuration des modules vous permettra<br>de recharger vos modules."
+msgstr "Enlightenment a planté au démarrage et a<br>été redémarré. Tous les modules ont été désactivés<br>et ne seront pas chargés pour vous aider à supprimer<br>les modules problématiques de votre configuration.<br>Le dialogue de configuration des modules vous permettra<br>de recharger vos modules."
 
 #: src/bin/e_main.c:1060
 msgid "Enlightenment crashed early on start and has been restarted.<br>All modules have been disabled and will not be loaded to help<br>remove any problem modules from your configuration.<br><br>The module configuration dialog should let you select your<br>modules again."
@@ -2896,7 +2896,7 @@ msgstr "Erreur de chargement du module"
 #: src/bin/e_module.c:160
 #, c-format
 msgid "There was an error loading module named: %s<br>The full path to this module is:<br>%s<br>The error reported was:<br>%s<br>"
-msgstr "Erreur lors du chargement du module nommé : %s<br>Le chemin d'accès de ce module est <br>%s<br>L'erreur retournée est :<br>%s<br>"
+msgstr "Erreur lors du chargement du module nommé %s<br>Le chemin d'accès de ce module est :<br>%s<br>L'erreur retournée est :<br>%s<br>"
 
 #: src/bin/e_module.c:165
 msgid "Module does not contain all needed functions"
@@ -3209,7 +3209,7 @@ msgstr "%3.0f%%"
 
 #: src/bin/e_utils.c:1484
 msgid "Configuration data needed upgrading. Your old configuration<br> has been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means the module needs new configuration<br>data by default for usable functionality that your old<br>configuration simply lacks. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the inconvenience.<br>"
-msgstr "La configuration a dû être mise à jour. Votre ancienne configuration<br>a été supprimée et de nouveaux paramètres par défaut sont en place.<br>Cela risque d'arriver en phase de développement, aussi est-il inutile<br> de faire un rapport de bogue. Cela signifie simplement que le module a besoin<br>de cette mise à niveau pour être à nouveau fonctionnel.<br>Vous pouvez maintenant tout reconfigurer selon votre goût.<br>Désolé pour la gêne occasionnée.<br>"
+msgstr "La configuration a dû être mise à jour. Votre ancienne configuration<br>a été supprimée et de nouveaux paramètres par défaut sont en place.<br>Cela risque d'arriver en phase de développement, aussi est-il inutile<br>de faire un rapport de bogue. Cela signifie simplement que le module a besoin<br>de cette mise à niveau pour être à nouveau fonctionnel.<br>Vous pouvez maintenant tout reconfigurer selon votre goût.<br>Désolé pour la gêne occasionnée.<br>"
 
 #: src/bin/e_utils.c:1497
 #: src/bin/e_utils.c:1521
@@ -3219,7 +3219,7 @@ msgstr "Configuration de %s actualisée"
 
 #: src/bin/e_utils.c:1510
 msgid "Your module configuration is NEWER than the module version. This is very<br>strange. This should not happen unless you downgraded<br>the module or copied the configuration from a place where<br>a newer version of the module was running. This is bad and<br>as a precaution your configuration has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
-msgstr "Votre configuration du module est PLUS RÉCENTE que la version du<br>module actuelle. C'est vraiment étonnant. Cela ne devrait pas se produire<br>à moins que vous n'ayez installé une version antérieure ou copié<br>la configuration du module depuis une machine sur laquelle une<br>version plus récente était installée. Ce n'est pas bon et, par<br> mesure de précaution, votre configuration a été remise à zéro.<br> Désolé pour le désagrément.<br>"
+msgstr "Votre configuration du module est PLUS RÉCENTE que la version du<br>module actuelle. C'est vraiment étonnant. Cela ne devrait pas se produire<br>à moins que vous n'ayez installé une version antérieure ou copié<br>la configuration du module depuis une machine sur laquelle une<br>version plus récente était installée. Ce n'est pas bon et, par<br>mesure de précaution, votre configuration a été remise à zéro.<br>Désolé pour le désagrément.<br>"
 
 #: src/bin/e_widget_config_list.c:63
 #: src/modules/conf_applications/e_int_config_apps.c:207
@@ -3402,7 +3402,7 @@ msgstr "N/A"
 msgid "ERROR"
 msgstr "ERREUR"
 
-#: src/modules/battery/e_mod_main.c:729
+#: src/modules/battery/e_mod_main.c:735
 msgid "Battery Meter"
 msgstr "Surveillance de la batterie"
 
@@ -3427,7 +3427,7 @@ msgstr "La configuration du module Panneau de configuration a dû être mise à 
 
 #: src/modules/conf/e_mod_main.c:285
 msgid "Your Configuration Panel Module configuration is NEWER than the module version. This is very<br>strange. This should not happen unless you downgraded<br>the module or copied the configuration from a place where<br>a newer version of the module was running. This is bad and<br>as a precaution your configuration has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
-msgstr "Votre configuration du module Panneau de configuration est PLUS RÉCENTE que la version du<br>module actuelle. C'est vraiment étonnant. Cela ne devrait pas se produire<br>à moins que vous n'ayez installé une version antérieure ou copié<br>la configuration du module depuis une machine sur laquelle une<br>version plus récente était installée. Ce n'est pas bon et, par<br> mesure de précaution, votre configuration a été remise à zéro.<br> Désolé pour le désagrément.<br>"
+msgstr "Votre configuration du module Panneau de configuration est PLUS RÉCENTE que la version du<br>module actuelle. C'est vraiment étonnant. Cela ne devrait pas se produire<br>à moins que vous n'ayez installé une version antérieure ou copié<br>la configuration du module depuis une machine sur laquelle une<br>version plus récente était installée. Ce n'est pas bon et, par<br>mesure de précaution, votre configuration a été remise à zéro.<br>Désolé pour le désagrément.<br>"
 
 #: src/modules/conf/e_mod_main.c:416
 msgid "Presentation"
@@ -3811,7 +3811,7 @@ msgstr "Classes de couleurs identiques %u sélectionnées"
 #: src/modules/conf_colors/e_int_config_color_classes.c:286
 #: src/modules/conf_colors/e_int_config_color_classes.c:545
 msgid "No selected color class"
-msgstr "classes de couleur sélectionnée"
+msgstr "Aucune classe de couleur sélectionnée"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:548
 msgid "Custom colors"
@@ -4053,7 +4053,7 @@ msgstr "Bureaux"
 
 #: src/modules/conf_desks/e_int_config_desks.c:277
 msgid "Flip when dragging objects to the screen edge"
-msgstr "Basculer lors du déplacement d'objets au bord de l'écran"
+msgstr "Basculer lors du glissement d'objets au bord de l'écran"
 
 #: src/modules/conf_desks/e_int_config_desks.c:280
 msgid "Wrap desktops around when flipping"
@@ -4792,7 +4792,7 @@ msgstr "Veuillez composer votre séquence au clavier,<br><br>ou <hilight>Échap<
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:11
 msgid "Single key"
-msgstr "Clé simple"
+msgstr "Touche unique"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:94
 msgid "Key Bindings Settings"
@@ -4828,7 +4828,7 @@ msgstr "Menu principal"
 
 #: src/modules/conf_menus/e_int_config_menus.c:96
 #: src/modules/conf_menus/e_int_config_menus.c:286
-#: src/modules/fileman/e_mod_main.c:330
+#: src/modules/fileman/e_mod_main.c:332
 msgid "Favorites"
 msgstr "Favoris"
 
@@ -4919,7 +4919,7 @@ msgstr "Icones des fichiers"
 
 #: src/modules/conf_mime/e_int_config_mime.c:186
 msgid "File Types"
-msgstr "Types Mime"
+msgstr "Types de fichiers"
 
 #: src/modules/conf_mime/e_int_config_mime_edit.c:69
 msgid "File Icon"
@@ -4927,11 +4927,11 @@ msgstr "Icone du fichier"
 
 #: src/modules/conf_mime/e_int_config_mime_edit.c:136
 msgid "Basic Info"
-msgstr "Informations basiques"
+msgstr "Info basique"
 
 #: src/modules/conf_mime/e_int_config_mime_edit.c:137
 msgid "Mime:"
-msgstr "Mime :"
+msgstr "MIME :"
 
 #: src/modules/conf_mime/e_int_config_mime_edit.c:147
 msgid "Use Generated Thumbnail"
@@ -4962,7 +4962,7 @@ msgstr "Sélectionner un fichier edj"
 #: src/modules/everything-files/e_mod_main.c:1438
 #: src/modules/fileman/e_mod_main.c:49
 #: src/modules/fileman/e_mod_main.c:67
-#: src/modules/fileman/e_mod_main.c:385
+#: src/modules/fileman/e_mod_main.c:387
 msgid "Files"
 msgstr "Fichiers"
 
@@ -6116,11 +6116,11 @@ msgstr "Comportement de la gestion de l'énergie"
 
 #: src/modules/cpufreq/e_mod_main.c:390
 msgid "There was an error trying to set the<br>cpu frequency governor via the module's<br>setfreq utility."
-msgstr "Une erreur s'est produite lors de la tentative<br> de changement de fréquence du CPU<br>via l'utilitaire setfreq du module."
+msgstr "Une erreur s'est produite lors de la tentative<br>de changement de fréquence du CPU<br>via l'utilitaire setfreq du module."
 
 #: src/modules/cpufreq/e_mod_main.c:418
 msgid "Your kernel does not support setting the<br>CPU frequency at all. You may be missing<br>Kernel modules or features, or your CPU<br>simply does not support this feature."
-msgstr "Votre noyau ne supporte pas le changement<br> de fréquence. Vous l'avez peut-être compilé sans cette option,<br>ou votre CPU ne supporte pas cette fonctionnalité ?"
+msgstr "Votre noyau ne supporte pas le changement<br>de fréquence. Vous l'avez peut-être compilé sans cette option,<br>ou votre CPU ne supporte pas cette fonctionnalité ?"
 
 #: src/modules/cpufreq/e_mod_main.c:444
 msgid "There was an error trying to set the<br>cpu frequency setting via the module's<br>setfreq utility."
@@ -6561,24 +6561,24 @@ msgstr "Aller vers la fenêtre"
 msgid "Toggle Fullscreen"
 msgstr "Activer/Désactiver le plein écran"
 
-#: src/modules/fileman/e_mod_main.c:318
+#: src/modules/fileman/e_mod_main.c:320
 #: src/modules/illume/e_mod_win.c:176
 msgid "Home"
 msgstr "Dossier personnel"
 
-#: src/modules/fileman/e_mod_main.c:342
+#: src/modules/fileman/e_mod_main.c:344
 msgid "Root"
 msgstr "Racine"
 
-#: src/modules/fileman/e_mod_main.c:439
+#: src/modules/fileman/e_mod_main.c:441
 msgid "Fileman Module Settings data needed upgrading. Your old configuration<br>has been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means Fileman module needs new configuration<br>data by default for usable functionality that your old<br>configuration simply lacks. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the hiccup in your configuration.<br>"
 msgstr "La configuration du module Gestionnaire de fichiers a dû être mise à jour. <br>Votre ancienne configuration a été supprimée et de nouveaux paramètres<br>par défaut sont en place. Cela risque d'arriver en phase de<br>développement, aussi est-il inutile de faire un rapport de bogue.<br>Cela signifie simplement que le module Gestionnaire de fichiers a besoin<br>de cette mise à niveau pour être à nouveau fonctionnel.<br>Vous pouvez maintenant tout reconfigurer selon votre goût.<br>Désolé pour la gêne occasionnée.<br>"
 
-#: src/modules/fileman/e_mod_main.c:452
+#: src/modules/fileman/e_mod_main.c:454
 msgid "Your Fileman Module configuration is NEWER than Fileman Module version. This is very<br>strange. This should not happen unless you downgraded<br>the Fileman Module or copied the configuration from a place where<br>a newer version of the Fileman Module was running. This is bad and<br>as a precaution your configuration has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
-msgstr "Votre configuration du module Gestionnaire de fichiers est PLUS RÉCENTE que la version du<br>module actuelle. C'est vraiment étonnant. Cela ne devrait pas se produire<br>à moins que vous n'ayez installé une version antérieure ou copié<br>la configuration du module depuis une machine sur laquelle une<br>version plus récente était installée. Ce n'est pas bon et, par<br> mesure de précaution, votre configuration a été remise à zéro.<br> Désolé pour le désagrément.<br>"
+msgstr "Votre configuration du module Gestionnaire de fichiers est PLUS RÉCENTE que la version du<br>module actuelle. C'est vraiment étonnant. Cela ne devrait pas se produire<br>à moins que vous n'ayez installé une version antérieure ou copié<br>la configuration du module depuis une machine sur laquelle une<br>version plus récente était installée. Ce n'est pas bon et, par<br>mesure de précaution, votre configuration a été remise à zéro.<br>Désolé pour le désagrément.<br>"
 
-#: src/modules/fileman/e_mod_main.c:521
+#: src/modules/fileman/e_mod_main.c:523
 msgid "Fileman Settings Updated"
 msgstr "Configuration de EFM à jour"
 
@@ -7077,7 +7077,7 @@ msgstr "Bouton de capture du Pager"
 
 #: src/modules/pager/e_mod_config.c:360
 msgid "Please press a mouse button<br>Press <hilight>Escape</hilight> to abort.<br>Or <hilight>Del</hilight> to reset the button."
-msgstr "Veuillez cliquer sur un bouton de la souris.<br>Pressez <hilight>Échap</hilight> pour annuler.<br>Ou <br><hilight>Suppr</hilight> pour réinitialiser le bouton."
+msgstr "Veuillez cliquer sur un bouton de la souris.<br>Pressez  <hilight>Échap</hilight> pour annuler.<br>Ou<br><hilight>Suppr</hilight> pour réinitialiser le bouton."
 
 #: src/modules/pager/e_mod_config.c:415
 msgid "Attetion"
@@ -7085,7 +7085,7 @@ msgstr "Attention"
 
 #: src/modules/pager/e_mod_config.c:416
 msgid "You cannot use the right mouse button in the<br>shelf for this as it is already taken by internal<br>code for context menus. <br>This button only works in the Popup"
-msgstr "Vous ne pouvez pas utiliser le bouton droit de la souris dans le rack<br>pour cette action car il est déjà utilisé par le code interne<br>pour les menus contextuels. <br>Ce bouton fonctionne uniquement dans le pop-up."
+msgstr "Vous ne pouvez pas utiliser le bouton droit de la souris dans le rack<br>pour cette action car il est déjà utilisé par le code interne<br>pour les menus contextuels.<br>Ce bouton fonctionne uniquement dans le pop-up."
 
 #: src/modules/pager/e_mod_main.c:2844
 msgid "Show Pager Popup"
@@ -7373,7 +7373,7 @@ msgstr "ConnMan requiert un mot de passe"
 #: src/modules/connman/e_mod_main.c:244
 #, c-format
 msgid "Connection Manager needs your passphrase for <br>the service <hilight>%s</hilight>"
-msgstr "Le gestionnaire de connexion requiert un mot de passe pour <br>le service <hilight>%s</hilight>"
+msgstr "Le gestionnaire de connexion requiert un mot de passe pour<br>le service <hilight>%s</hilight>"
 
 #: src/modules/connman/e_mod_main.c:268
 msgid "Show passphrase as clear text"
