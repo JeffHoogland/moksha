@@ -432,7 +432,7 @@ e_kbd_dict_save(E_Kbd_Dict *kd)
    if (_e_kbd_dict_open(kd)) _e_kbd_dict_lookup_build(kd);
 }
 
-static int
+static Eina_Bool 
 _e_kbd_dict_cb_save_flush(void *data)
 {
    E_Kbd_Dict *kd;
@@ -440,10 +440,10 @@ _e_kbd_dict_cb_save_flush(void *data)
    kd = data;
    if ((kd->matches.list) || (kd->word.letters) || (kd->matches.deadends) ||
        (kd->matches.leads))
-     return 1;
+     return EINA_TRUE;
    kd->changed.flush_timer = NULL;
    e_kbd_dict_save(kd);
-   return 0;
+   return EINA_FALSE;
 }
 
 static void
