@@ -7,7 +7,7 @@ static void _battery_udev_battery_add(const char *syspath);
 static void _battery_udev_ac_add(const char *syspath);
 static void _battery_udev_battery_del(const char *syspath);
 static void _battery_udev_ac_del(const char *syspath);
-static int _battery_udev_battery_update_poll(void *data);
+static Eina_Bool _battery_udev_battery_update_poll(void *data);
 static void _battery_udev_battery_update(const char *syspath, Battery *bat);
 static void _battery_udev_ac_update(const char *syspath, Ac_Adapter *ac);
 
@@ -111,7 +111,9 @@ _battery_udev_battery_add(const char *syspath)
      }
    bat->last_update = ecore_time_get();
    bat->udi = eina_stringshare_add(syspath);
-   bat->poll = ecore_poller_add(ECORE_POLLER_CORE, battery_config->poll_interval, _battery_udev_battery_update_poll, bat);
+   bat->poll = ecore_poller_add(ECORE_POLLER_CORE, 
+				battery_config->poll_interval, 
+				_battery_udev_battery_update_poll, bat);
    device_batteries = eina_list_append(device_batteries, bat);
    _battery_udev_battery_update(syspath, bat);
 }
@@ -180,12 +182,12 @@ _battery_udev_ac_del(const char *syspath)
    device_ac_adapters = eina_list_remove_list(device_ac_adapters, l);
 }
 
-static int
+static Eina_Bool 
 _battery_udev_battery_update_poll(void *data)
 {
    _battery_udev_battery_update(NULL, data);
 
-   return 1;
+   return EINA_TRUE;
 }
 
 #define GET_NUM(TYPE, VALUE, PROP) test = eeze_udev_syspath_get_property(TYPE->udi, #PROP); \
