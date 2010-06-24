@@ -35,7 +35,7 @@ struct _E_Slider_Special_Value
 };
 
 /* local subsystem functions */
-static int  _e_smart_set_timer(void *data);
+static Eina_Bool _e_smart_set_timer(void *data);
 static void _e_smart_value_update(E_Smart_Data *sd);
 static void _e_smart_value_update_now(E_Smart_Data *sd);
 static void _e_smart_value_fetch(E_Smart_Data *sd);
@@ -245,7 +245,7 @@ e_slider_special_value_add(Evas_Object *obj, double value, double error, const c
 }
 
 /* local subsystem functions */
-static int
+static Eina_Bool
 _e_smart_set_timer(void *data)
 {
    E_Smart_Data *sd = data;
@@ -257,7 +257,7 @@ _e_smart_set_timer(void *data)
    if (sd->reversed) pos = 1.0 - pos;
    edje_object_part_drag_value_set(sd->edje_obj, "e.dragable.slider", pos, pos);
    sd->set_timer = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void

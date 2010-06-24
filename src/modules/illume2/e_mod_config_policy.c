@@ -6,7 +6,7 @@ static void *_e_mod_illume_config_policy_create(E_Config_Dialog *cfd);
 static void _e_mod_illume_config_policy_free(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_e_mod_illume_config_policy_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static void _e_mod_illume_config_policy_list_changed(void *data);
-static int _e_mod_illume_config_policy_change_timeout(void *data);
+static Eina_Bool _e_mod_illume_config_policy_change_timeout(void *data);
 static Evas_Object *_e_mod_illume_config_policy_settings_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static Eina_List *_e_mod_illume_config_policy_policies_get(void);
 static void _e_mod_illume_config_policy_policy_free(E_Illume_Policy *p);
@@ -109,13 +109,13 @@ _e_mod_illume_config_policy_list_changed(void *data)
      ecore_timer_add(0.5, _e_mod_illume_config_policy_change_timeout, data);
 }
 
-static int 
+static Eina_Bool
 _e_mod_illume_config_policy_change_timeout(void *data) 
 {
    e_config_save_queue();
    _policy_change_timer = NULL;
    ecore_event_add(E_ILLUME_POLICY_EVENT_CHANGE, NULL, NULL, NULL);
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static Eina_List *

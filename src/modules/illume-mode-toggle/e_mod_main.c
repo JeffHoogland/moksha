@@ -18,7 +18,7 @@ static char *_gc_label(E_Gadcon_Client_Class *cc);
 static Evas_Object *_gc_icon(E_Gadcon_Client_Class *cc, Evas *evas);
 static const char *_gc_id_new(E_Gadcon_Client_Class *cc);
 static void _cb_btn_click(void *data, void *data2);
-static int _cb_event_client_message(void *data, int type, void *event);
+static Eina_Bool _cb_event_client_message(void *data, int type, void *event);
 static void _set_icon(Instance *inst);
 
 /* local variables */
@@ -147,17 +147,17 @@ _cb_btn_click(void *data, void *data2)
    ecore_x_e_illume_mode_send(xwin, mode);
 }
 
-static int 
-_cb_event_client_message(void *data, int type, void *event) 
+static Eina_Bool
+_cb_event_client_message(void *data, __UNUSED__ int type, void *event)
 {
    Ecore_X_Event_Client_Message *ev;
    Instance *inst;
 
    ev = event;
-   if (ev->message_type != ECORE_X_ATOM_E_ILLUME_MODE) return 1;
-   if (!(inst = data)) return 1;
+   if (ev->message_type != ECORE_X_ATOM_E_ILLUME_MODE) return ECORE_CALLBACK_PASS_ON;
+   if (!(inst = data)) return ECORE_CALLBACK_PASS_ON;
    _set_icon(inst);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static void 

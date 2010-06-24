@@ -4,7 +4,7 @@
 #include "e.h"
 
 static void _e_configure_efreet_desktop_update(void);
-static int _e_configure_cb_efreet_desktop_cache_update(void *data, int type, void *event);
+static Eina_Bool _e_configure_cb_efreet_desktop_cache_update(void *data, int type, void *event);
 static void _e_configure_registry_item_full_add(const char *path, int pri, const char *label, const char *icon_file, const char *icon, E_Config_Dialog *(*func) (E_Container *con, const char *params), void (*generic_func) (E_Container *con, const char *params), Efreet_Desktop *desktop);
 
 EAPI Eina_List *e_configure_registry = NULL;
@@ -177,8 +177,8 @@ _e_configure_efreet_desktop_update(void)
       efreet_desktop_free(desktop);
 }
 
-static int
-_e_configure_cb_efreet_desktop_cache_update(void *data, int type, void *event)
+static Eina_Bool
+_e_configure_cb_efreet_desktop_cache_update(__UNUSED__ void *data, __UNUSED__ int type, __UNUSED__ void *event)
 {
    _e_configure_efreet_desktop_update();
    return 1;

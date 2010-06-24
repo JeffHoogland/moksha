@@ -36,12 +36,12 @@ static const E_Gadcon_Client_Class _gadcon_class = {
 
 /********************   PROTOS   *******************************************/
 
-static int  _opinfo_op_registry_entry_add_cb     (void *data, int type, void *event);
-static int  _opinfo_op_registry_entry_del_cb     (void *data, int type, void *event);
+static Eina_Bool  _opinfo_op_registry_entry_add_cb     (void *data, int type, void *event);
+static Eina_Bool  _opinfo_op_registry_entry_del_cb     (void *data, int type, void *event);
 static void _opinfo_op_registry_update_all       (Instance *inst);
 static void _opinfo_op_registry_listener         (void *data, const E_Fm2_Op_Registry_Entry *ere);
 static void _opinfo_op_registry_free_data        (void *data);
-static int  _opinfo_op_registry_free_data_delayed(void *data);
+static Eina_Bool  _opinfo_op_registry_free_data_delayed(void *data);
 static void _opinfo_op_registry_abort_cb         (void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _opinfo_op_registry_summary_cb       (void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _opinfo_op_registry_detailed_cb      (void *data, Evas_Object *obj, const char *emission, const char *source);
@@ -170,7 +170,7 @@ _opinfo_op_registry_free_data(void *data)
    ecore_timer_add(5.0, _opinfo_op_registry_free_data_delayed, data);
 }
 
-static int 
+static Eina_Bool
 _opinfo_op_registry_free_data_delayed(void *data)
 {
    Evas_Object *o = data;
@@ -251,8 +251,8 @@ _opinfo_op_registry_window_jump_cb(void *data, Evas_Object *obj, const char *emi
       e_border_pointer_warp_to_center(win->border);
 }
 
-static int
-_opinfo_op_registry_entry_add_cb(void *data, int type, void *event)
+static Eina_Bool
+_opinfo_op_registry_entry_add_cb(void *data, __UNUSED__ int type, void *event)
 {
    E_Fm2_Op_Registry_Entry *ere = event;
    Instance *inst = data;
@@ -290,8 +290,8 @@ _opinfo_op_registry_entry_add_cb(void *data, int type, void *event)
    return ECORE_CALLBACK_RENEW;
 }
 
-static int
-_opinfo_op_registry_entry_del_cb(void *data, int type, void *event)
+static Eina_Bool
+_opinfo_op_registry_entry_del_cb(void *data, __UNUSED__ int type, __UNUSED__ void *event)
 {
    Instance *inst = data;
    

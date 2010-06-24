@@ -20,7 +20,7 @@ static E_Remember  *_e_remember_find(E_Border *bd, int check_usable);
 static void _e_remember_cb_hook_pre_post_fetch(void *data, void *bd);
 static void _e_remember_cb_hook_eval_post_new_border(void *data, void *bd);
 static void _e_remember_init_edd(void);
-static int _e_remember_restore_cb(void *data, int type, void *event);
+static Eina_Bool _e_remember_restore_cb(void *data, int type, void *event);
 
 /* local subsystem globals */
 static Eina_List *hooks = NULL;
@@ -126,8 +126,8 @@ e_remember_internal_save(void)
    e_config_domain_save("e_remember_restart", e_remember_list_edd, remembers);
 }
 
-static int
-_e_remember_restore_cb(void *data, int type, void *event)
+static Eina_Bool
+_e_remember_restore_cb(__UNUSED__ void *data, __UNUSED__ int type, __UNUSED__ void *event)
 {
    E_Remember *rem;
    Eina_List *l;
@@ -189,7 +189,7 @@ _e_remember_restore_cb(void *data, int type, void *event)
    if (handlers) eina_list_free(handlers);
    handlers = NULL;
    
-   return 0;
+   return ECORE_CALLBACK_DONE;
 }
 
 EAPI E_Remember *
@@ -530,7 +530,7 @@ _e_remember_find(E_Border *bd, int check_usable)
             !e_util_both_str_empty(rem->role, bd->client.icccm.window_role))
           continue;
         if (rem->match & E_REMEMBER_MATCH_TYPE &&
-            rem->type != bd->client.netwm.type)
+            rem->type != (int) bd->client.netwm.type)
           continue;
         if (rem->match & E_REMEMBER_MATCH_TRANSIENT &&
             !(rem->transient && bd->client.icccm.transient_for != 0) &&
@@ -598,7 +598,7 @@ _e_remember_cb_hook_eval_post_new_border(void *data, void *border)
 }
 
 static void
-_e_remember_cb_hook_pre_post_fetch(void *data, void *border)
+_e_remember_cb_hook_pre_post_fetch(__UNUSED__ void *data, void *border)
 {
    E_Border *bd = border;
    E_Remember *rem = NULL;

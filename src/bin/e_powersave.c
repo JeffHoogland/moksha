@@ -11,7 +11,7 @@ struct _E_Powersave_Deferred_Action
 };
 
 /* local subsystem functions */
-static int _e_powersave_cb_deferred_timer(void *data);
+static Eina_Bool _e_powersave_cb_deferred_timer(void *data);
 static void _e_powersave_mode_eval(void);
 static void _e_powersave_event_update_free(void *data __UNUSED__, void *event);
 
@@ -131,7 +131,7 @@ e_powersave_mode_get(void)
 
 /* local subsystem functions */
 
-static int
+static Eina_Bool
 _e_powersave_cb_deferred_timer(void *data)
 {
    E_Powersave_Deferred_Action *pa;
@@ -144,7 +144,7 @@ _e_powersave_cb_deferred_timer(void *data)
      }
    walking_deferred_actions--;
    if (!deferred_actions) deferred_timer = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void

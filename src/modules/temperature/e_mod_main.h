@@ -62,7 +62,7 @@ typedef enum _Backend
    UDEV
 } Backend;
 
-int temperature_udev_update_poll(void *data);
+Eina_Bool temperature_udev_update_poll(void *data);
 void temperature_udev_update(void *data);
 #endif
 
@@ -72,8 +72,8 @@ EAPI void *e_modapi_init(E_Module *m);
 EAPI int e_modapi_shutdown(E_Module *m);
 EAPI int e_modapi_save(E_Module *m);
 
-int _temperature_cb_exe_data(void *data, int type, void *event);
-int _temperature_cb_exe_del(void *data, int type, void *event);
+Eina_Bool _temperature_cb_exe_data(void *data, int type, void *event);
+Eina_Bool _temperature_cb_exe_del(void *data, int type, void *event);
 void _temperature_face_level_set(Config_Face *inst, double level);
 void config_temperature_module(Config_Face *inst);
 void temperature_face_update_config(Config_Face *inst);

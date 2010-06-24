@@ -5,8 +5,8 @@
 
 /* local function prototypes */
 static void _e_mod_ind_win_cb_free(Ind_Win *iwin);
-static int _e_mod_ind_win_cb_win_prop(void *data, int type __UNUSED__, void *event);
-static int _e_mod_ind_win_cb_zone_resize(void *data, int type __UNUSED__, void *event);
+static Eina_Bool _e_mod_ind_win_cb_win_prop(void *data, int type __UNUSED__, void *event);
+static Eina_Bool _e_mod_ind_win_cb_zone_resize(void *data, int type __UNUSED__, void *event);
 static void _e_mod_ind_win_cb_resize(E_Win *win);
 static void _e_mod_ind_win_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event);
 static void _e_mod_ind_win_cb_mouse_up(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event);
@@ -180,7 +180,7 @@ _e_mod_ind_win_cb_free(Ind_Win *iwin)
    E_FREE(iwin);
 }
 
-static int 
+static Eina_Bool
 _e_mod_ind_win_cb_win_prop(void *data, int type __UNUSED__, void *event) 
 {
    Ind_Win *iwin;
@@ -188,9 +188,9 @@ _e_mod_ind_win_cb_win_prop(void *data, int type __UNUSED__, void *event)
 
    ev = event;
 
-   if (!(iwin = data)) return 1;
-   if (ev->win != iwin->win->container->manager->root) return 1;
-   if (ev->atom != ATM_ENLIGHTENMENT_SCALE) return 1;
+   if (!(iwin = data)) return ECORE_CALLBACK_PASS_ON;
+   if (ev->win != iwin->win->container->manager->root) return ECORE_CALLBACK_PASS_ON;
+   if (ev->atom != ATM_ENLIGHTENMENT_SCALE) return ECORE_CALLBACK_PASS_ON;
 
    /* set minimum size of this window */
    e_win_size_min_set(iwin->win, iwin->zone->w, (il_ind_cfg->height * e_scale));
@@ -208,23 +208,23 @@ _e_mod_ind_win_cb_win_prop(void *data, int type __UNUSED__, void *event)
                                            iwin->win->x, iwin->win->y, 
                                            iwin->win->w, (il_ind_cfg->height * e_scale));
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int 
+static Eina_Bool
 _e_mod_ind_win_cb_zone_resize(void *data, int type __UNUSED__, void *event) 
 {
    Ind_Win *iwin;
    E_Event_Zone_Move_Resize *ev;
 
    ev = event;
-   if (!(iwin = data)) return 1;
-   if (ev->zone != iwin->zone) return 1;
+   if (!(iwin = data)) return ECORE_CALLBACK_PASS_ON;
+   if (ev->zone != iwin->zone) return ECORE_CALLBACK_PASS_ON;
 
    /* set minimum size of this window to match zone size */
    e_win_size_min_set(iwin->win, ev->zone->w, (il_ind_cfg->height * e_scale));
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static void 

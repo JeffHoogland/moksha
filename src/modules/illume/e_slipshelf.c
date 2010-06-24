@@ -19,15 +19,15 @@ static void _e_slipshelf_cb_keyboard(void *data, Evas_Object *obj, const char *e
 static void _e_slipshelf_cb_app_next(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_slipshelf_cb_app_prev(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_slipshelf_cb_item_sel(void *data, E_Border *bd);
-static int _e_slipshelf_cb_animate(void *data);
+static Eina_Bool _e_slipshelf_cb_animate(void *data);
 static void _e_slipshelf_slide(E_Slipshelf *ess, int out, double len);
-static int _e_slipshelf_cb_mouse_up(void *data, int type, void *event);
-static int _e_slipshelf_cb_zone_move_resize(void *data, int type, void *event);
+static Eina_Bool _e_slipshelf_cb_mouse_up(void *data, int type, void *event);
+static Eina_Bool _e_slipshelf_cb_zone_move_resize(void *data, int type, void *event);
 static void _e_slipshelf_event_simple_free(void *data, void *ev);
 static void _e_slipshelf_object_del_attach(void *o);
-static int _e_slipshelf_cb_border_focus_in(void *data, int type, void *event);
-static int _e_slipshelf_cb_border_focus_out(void *data, int type, void *event);
-static int _e_slipshelf_cb_border_property(void *data, int type, void *event);
+static Eina_Bool _e_slipshelf_cb_border_focus_in(void *data, int type, void *event);
+static Eina_Bool _e_slipshelf_cb_border_focus_out(void *data, int type, void *event);
+static Eina_Bool _e_slipshelf_cb_border_property(void *data, int type, void *event);
 static void _e_slipshelf_title_update(E_Slipshelf *ess);
 static void _e_slipshelf_cb_gadcon_min_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h);
 static Evas_Object *_e_slipshelf_cb_gadcon_frame_request(void *data, E_Gadcon_Client *gcc, const char *style);
@@ -556,7 +556,7 @@ _e_slipshelf_cb_app_prev(void *data, Evas_Object *obj, const char *emission, con
    _e_slipshelf_slide(ess, 0, (double)illume_cfg->sliding.slipshelf.duration / 1000.0);
 }
 
-static int
+static Eina_Bool
 _e_slipshelf_cb_slide_down_delay(void *data)
 {
    E_Slipshelf *ess;
@@ -564,7 +564,7 @@ _e_slipshelf_cb_slide_down_delay(void *data)
    ess = data;
    _e_slipshelf_slide(ess, 0, (double)illume_cfg->sliding.slipshelf.duration / 1000.0);
    ess->slide_down_timer = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void
@@ -652,7 +652,7 @@ _e_slipshelf_applist_update(E_Slipshelf *ess)
    evas_object_resize(ess->base_obj, ess->popup->w, ess->popup->h);
 }
 
-static int
+static Eina_Bool
 _e_slipshelf_cb_animate(void *data)
 {
    E_Slipshelf *ess;
@@ -690,9 +690,9 @@ _e_slipshelf_cb_animate(void *data)
 	     edje_object_signal_emit(ess->control_obj, "e,state,in,end", "e");
 	     edje_object_signal_emit(ess->base_obj, "e,state,in,end", "e");
 	  }
-	return 0;
+	return ECORE_CALLBACK_CANCEL;
      }
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
 static void
@@ -733,8 +733,8 @@ _e_slipshelf_slide(E_Slipshelf *ess, int out, double len)
      ess->animator = ecore_animator_add(_e_slipshelf_cb_animate, ess);
 }
 
-static int
-_e_slipshelf_cb_mouse_up(void *data, int type, void *event)
+static Eina_Bool
+_e_slipshelf_cb_mouse_up(void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Event_Mouse_Button *ev;
    E_Slipshelf *ess;
@@ -748,11 +748,11 @@ _e_slipshelf_cb_mouse_up(void *data, int type, void *event)
 	if (ess->out) _e_slipshelf_slide(ess, 0, (double)illume_cfg->sliding.slipshelf.duration / 1000.0);
 	else _e_slipshelf_slide(ess, 1, (double)illume_cfg->sliding.slipshelf.duration / 1000.0);
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_slipshelf_cb_zone_move_resize(void *data, int type, void *event)
+static Eina_Bool
+_e_slipshelf_cb_zone_move_resize(void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Zone_Move_Resize *ev;
    E_Slipshelf *ess;
@@ -770,11 +770,11 @@ _e_slipshelf_cb_zone_move_resize(void *data, int type, void *event)
 			    ess->zone->w, ess->popup->h);
 	evas_object_resize(ess->base_obj, ess->popup->w, ess->popup->h);
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static void
-_e_slipshelf_event_simple_free(void *data, void *ev)
+_e_slipshelf_event_simple_free(__UNUSED__ void *data, void *ev)
 {
    struct _E_Event_Slipshelf_Simple *e;
    
@@ -797,9 +797,9 @@ _e_slipshelf_object_del_attach(void *o)
 /*    ecore_event_add(E_EVENT_SLIPSHELF_DEL, ev,  */
 /* 		   _e_slipshelf_event_simple_free, NULL); */
 }
-    
-static int
-_e_slipshelf_cb_border_focus_in(void *data, int type, void *event)
+
+static Eina_Bool
+_e_slipshelf_cb_border_focus_in(void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Focus_In *ev;
    E_Slipshelf *ess;
@@ -808,11 +808,11 @@ _e_slipshelf_cb_border_focus_in(void *data, int type, void *event)
    ess = data;
    ess->focused_border = ev->border;
    _e_slipshelf_title_update(ess);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_slipshelf_cb_border_focus_out(void *data, int type, void *event)
+static Eina_Bool
+_e_slipshelf_cb_border_focus_out(void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Focus_Out *ev;
    E_Slipshelf *ess;
@@ -822,11 +822,11 @@ _e_slipshelf_cb_border_focus_out(void *data, int type, void *event)
    if (ess->focused_border == ev->border)
      ess->focused_border = NULL;
    _e_slipshelf_title_update(ess);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_slipshelf_cb_border_property(void *data, int type, void *event)
+static Eina_Bool
+_e_slipshelf_cb_border_property(void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Property *ev;
    E_Slipshelf *ess;
@@ -835,7 +835,7 @@ _e_slipshelf_cb_border_property(void *data, int type, void *event)
    ess = data;
    if (ess->focused_border == ev->border)
      _e_slipshelf_title_update(ess);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static void

@@ -515,16 +515,16 @@ _e_mod_comp_pre_swap(void *data, Evas *e)
      }
 }
 
-static int
+static Eina_Bool
 _e_mod_comp_cb_delayed_update_timer(void *data)
 {
    E_Comp *c = data;
    _e_mod_comp_render_queue(c);
    c->new_up_timer = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
-static int
+static Eina_Bool
 _e_mod_comp_cb_update(E_Comp *c)
 {
    E_Comp_Win *cw;
@@ -759,9 +759,9 @@ _e_mod_comp_cb_update(E_Comp *c)
      {
         c->render_overflow = 0;
         if (c->render_animator) c->render_animator = NULL;
-        return 0;
+        return ECORE_CALLBACK_CANCEL;
      }
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
 static void
@@ -771,7 +771,7 @@ _e_mod_comp_cb_job(void *data)
    _e_mod_comp_cb_update(data);
 }
 
-static int
+static Eina_Bool
 _e_mod_comp_cb_animator(void *data)
 {
    return _e_mod_comp_cb_update(data);
@@ -863,7 +863,7 @@ _e_mod_comp_win_do_shadow(E_Comp_Win *cw)
    return 1;
 }
 
-static int
+static Eina_Bool
 _e_mod_comp_win_damage_timeout(void *data)
 {
    E_Comp_Win *cw = data;
@@ -881,7 +881,7 @@ _e_mod_comp_win_damage_timeout(void *data)
    cw->drawme = 1;
    _e_mod_comp_win_render_queue(cw);
    cw->update_timeout = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void
@@ -1748,72 +1748,72 @@ _e_mod_comp_win_reshape(E_Comp_Win *cw)
 
 //////////////////////////////////////////////////////////////////////////
 
-static int
-_e_mod_comp_create(void *data, int type, void *event)
+static Eina_Bool
+_e_mod_comp_create(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_X_Event_Window_Create *ev = event;
    E_Comp_Win *cw;
    E_Comp *c = _e_mod_comp_find(ev->parent);
-   if (!c) return 1;
-   if (_e_mod_comp_win_find(ev->win)) return 1;
-   if (c->win == ev->win) return 1;
-   if (c->ee_win == ev->win) return 1;
+   if (!c) return ECORE_CALLBACK_PASS_ON;
+   if (_e_mod_comp_win_find(ev->win)) return ECORE_CALLBACK_PASS_ON;
+   if (c->win == ev->win) return ECORE_CALLBACK_PASS_ON;
+   if (c->ee_win == ev->win) return ECORE_CALLBACK_PASS_ON;
    cw = _e_mod_comp_win_add(c, ev->win);
    if (cw) _e_mod_comp_win_configure(cw, ev->x, ev->y, ev->w, ev->h, ev->border);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_mod_comp_destroy(void *data, int type, void *event)
+static Eina_Bool
+_e_mod_comp_destroy(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_X_Event_Window_Destroy *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->win);
-   if (!cw) return 1;
+   if (!cw) return ECORE_CALLBACK_PASS_ON;
    if (cw->animating) cw->delete_me = 1;
    else _e_mod_comp_win_del(cw);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_mod_comp_show(void *data, int type, void *event)
+static Eina_Bool
+_e_mod_comp_show(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_X_Event_Window_Show *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->win);
-   if (!cw) return 1;
-   if (cw->visible) return 1;
+   if (!cw) return ECORE_CALLBACK_PASS_ON;
+   if (cw->visible) return ECORE_CALLBACK_PASS_ON;
    _e_mod_comp_win_show(cw);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_mod_comp_hide(void *data, int type, void *event)
+static Eina_Bool
+_e_mod_comp_hide(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_X_Event_Window_Hide *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->win);
-   if (!cw) return 1;
-   if (!cw->visible) return 1;
+   if (!cw) return ECORE_CALLBACK_PASS_ON;
+   if (!cw->visible) return ECORE_CALLBACK_PASS_ON;
    _e_mod_comp_win_hide(cw);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_mod_comp_reparent(void *data, int type, void *event)
+static Eina_Bool
+_e_mod_comp_reparent(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_X_Event_Window_Reparent *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->win);
-   if (!cw) return 1;
+   if (!cw) return ECORE_CALLBACK_PASS_ON;
    DBG("== repar [0x%x] to [0x%x]\n", ev->win, ev->parent);
    if (ev->parent != cw->c->man->root)
      _e_mod_comp_win_del(cw);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_mod_comp_configure(void *data, int type, void *event)
+static Eina_Bool
+_e_mod_comp_configure(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_X_Event_Window_Configure *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->win);
-   if (!cw) return 1;
+   if (!cw) return ECORE_CALLBACK_PASS_ON;
 
    if (ev->abovewin == 0)
      {
@@ -1838,38 +1838,38 @@ _e_mod_comp_configure(void *data, int type, void *event)
      {
         _e_mod_comp_win_configure(cw, ev->x, ev->y, ev->w, ev->h, ev->border);
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_mod_comp_stack(void *data, int type, void *event)
+static Eina_Bool
+_e_mod_comp_stack(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_X_Event_Window_Stack *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->win);
-   if (!cw) return 1;
+   if (!cw) return ECORE_CALLBACK_PASS_ON;
    if (ev->detail == ECORE_X_WINDOW_STACK_ABOVE) _e_mod_comp_win_raise(cw);
    else _e_mod_comp_win_lower(cw);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_mod_comp_property(void *data, int type, void *event)
+static Eina_Bool
+_e_mod_comp_property(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_X_Event_Window_Property *ev = event;
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_mod_comp_message(void *data, int type, void *event)
+static Eina_Bool
+_e_mod_comp_message(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_X_Event_Client_Message *ev = event;
    E_Comp_Win *cw = NULL;
    if ((ev->message_type != ECORE_X_ATOM_E_COMP_SYNC_DRAW_DONE) ||
-       (ev->format != 32)) return 1;
+       (ev->format != 32)) return ECORE_CALLBACK_PASS_ON;
    cw = _e_mod_comp_border_client_find(ev->data.l[0]);
-   if (!cw) return 1;
-   if (!cw->bd) return 1;
-   if (ev->data.l[0] != cw->bd->client.win) return 1;
+   if (!cw) return ECORE_CALLBACK_PASS_ON;
+   if (!cw->bd) return ECORE_CALLBACK_PASS_ON;
+   if (ev->data.l[0] != cw->bd->client.win) return ECORE_CALLBACK_PASS_ON;
    if (cw->bd)
      {
         if (cw->counter)
@@ -1888,33 +1888,33 @@ _e_mod_comp_message(void *data, int type, void *event)
              _e_mod_comp_win_render_queue(cw);
           }
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_mod_comp_shape(void *data, int type, void *event)
+static Eina_Bool
+_e_mod_comp_shape(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_X_Event_Window_Shape *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->win);
-   if (!cw) return 1;
+   if (!cw) return ECORE_CALLBACK_PASS_ON;
    _e_mod_comp_win_reshape(cw);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_mod_comp_damage(void *data, int type, void *event)
+static Eina_Bool
+_e_mod_comp_damage(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_X_Event_Damage *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_damage_find(ev->damage);
-   if (!cw) return 1;
+   if (!cw) return ECORE_CALLBACK_PASS_ON;
    _e_mod_comp_win_damage(cw, 
                           ev->area.x, ev->area.y, 
                           ev->area.width, ev->area.height, 1); 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_mod_comp_damage_win(void *data, int type, void *event)
+static Eina_Bool
+_e_mod_comp_damage_win(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_X_Event_Window_Damage *ev = event;
    Eina_List *l;
@@ -1931,11 +1931,11 @@ _e_mod_comp_damage_win(void *data, int type, void *event)
              break;
           }
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_mod_comp_randr(void *data, int type, void *event)
+static Eina_Bool
+_e_mod_comp_randr(__UNUSED__ void *data, __UNUSED__ int type, __UNUSED__ void *event)
 {
    Eina_List *l;
    E_Comp *c;
@@ -1944,136 +1944,136 @@ _e_mod_comp_randr(void *data, int type, void *event)
      {
         ecore_evas_resize(c->ee, c->man->w, c->man->h);
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_mod_comp_bd_add(void *data, int type, void *event)
+static Eina_Bool
+_e_mod_comp_bd_add(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Add *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
-   if (!cw) return 1;
+   if (!cw) return ECORE_CALLBACK_PASS_ON;
    // fimxe: add/enable compositing here not in show event for borders
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_mod_comp_bd_del(void *data, int type, void *event)
+static Eina_Bool
+_e_mod_comp_bd_del(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Remove *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
-   if (!cw) return 1;
+   if (!cw) return ECORE_CALLBACK_PASS_ON;
    if (cw->bd == ev->border) _e_mod_comp_object_del(cw, ev->border);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_mod_comp_bd_show(void *data, int type, void *event)
+static Eina_Bool
+_e_mod_comp_bd_show(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Show *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
-   if (!cw) return 1;
+   if (!cw) return ECORE_CALLBACK_PASS_ON;
    // fimxe: show compwin here
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_mod_comp_bd_hide(void *data, int type, void *event)
+static Eina_Bool
+_e_mod_comp_bd_hide(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Hide *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
-   if (!cw) return 1;
+   if (!cw) return ECORE_CALLBACK_PASS_ON;
    // fimxe: hide compwin here
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_mod_comp_bd_move(void *data, int type, void *event)
+static Eina_Bool
+_e_mod_comp_bd_move(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Move *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
-   if (!cw) return 1;
+   if (!cw) return ECORE_CALLBACK_PASS_ON;
    // fimxe: do move here for composited bd
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_mod_comp_bd_resize(void *data, int type, void *event)
+static Eina_Bool
+_e_mod_comp_bd_resize(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Resize *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
-   if (!cw) return 1;
+   if (!cw) return ECORE_CALLBACK_PASS_ON;
    // fimxe: do resize here instead of conf notify
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_mod_comp_bd_iconify(void *data, int type, void *event)
+static Eina_Bool
+_e_mod_comp_bd_iconify(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Iconify *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
-   if (!cw) return 1;
+   if (!cw) return ECORE_CALLBACK_PASS_ON;
    // fimxe: special iconfiy anim
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_mod_comp_bd_uniconify(void *data, int type, void *event)
+static Eina_Bool
+_e_mod_comp_bd_uniconify(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Uniconify *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
-   if (!cw) return 1;
+   if (!cw) return ECORE_CALLBACK_PASS_ON;
    // fimxe: special uniconfiy anim
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_mod_comp_bd_urgent_change(void *data, int type, void *event)
+static Eina_Bool
+_e_mod_comp_bd_urgent_change(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Urgent_Change *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
-   if (!cw) return 1;
+   if (!cw) return ECORE_CALLBACK_PASS_ON;
    if (cw->bd->client.icccm.urgent)
      edje_object_signal_emit(cw->shobj, "e,state,urgent,on", "e");
    else
      edje_object_signal_emit(cw->shobj, "e,state,urgent,off", "e");
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_mod_comp_bd_focus_in(void *data, int type, void *event)
+static Eina_Bool
+_e_mod_comp_bd_focus_in(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Focus_In *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
-   if (!cw) return 1;
+   if (!cw) return ECORE_CALLBACK_PASS_ON;
    edje_object_signal_emit(cw->shobj, "e,state,focus,on", "e");
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_mod_comp_bd_focus_out(void *data, int type, void *event)
+static Eina_Bool
+_e_mod_comp_bd_focus_out(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Focus_Out *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
-   if (!cw) return 1;
+   if (!cw) return ECORE_CALLBACK_PASS_ON;
    edje_object_signal_emit(cw->shobj, "e,state,focus,off", "e");
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_mod_comp_bd_property(void *data, int type, void *event)
+static Eina_Bool
+_e_mod_comp_bd_property(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Property *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
-   if (!cw) return 1;
+   if (!cw) return ECORE_CALLBACK_PASS_ON;
    // fimxe: other properties?
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 //////////////////////////////////////////////////////////////////////////
 
-static int
-_e_mod_comp_key_down(void *data, int type, void *event)
+static Eina_Bool
+_e_mod_comp_key_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Event_Key *ev = event;
    
@@ -2092,7 +2092,7 @@ _e_mod_comp_key_down(void *data, int type, void *event)
              e_sys_action_do(E_SYS_RESTART, NULL);
           }
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 //////////////////////////////////////////////////////////////////////////

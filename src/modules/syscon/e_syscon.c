@@ -5,16 +5,16 @@
 #include "e_mod_main.h"
 
 /* local subsystem functions */
-static int _cb_key_down(void *data, int type, void *event);
-static int _cb_mouse_down(void *data, int type, void *event);
-static int _cb_mouse_up(void *data, int type, void *event);
-static int _cb_mouse_move(void *data, int type, void *event);
-static int _cb_mouse_wheel(void *data, int type, void *event);
+static Eina_Bool _cb_key_down(void *data, int type, void *event);
+static Eina_Bool _cb_mouse_down(void *data, int type, void *event);
+static Eina_Bool _cb_mouse_up(void *data, int type, void *event);
+static Eina_Bool _cb_mouse_move(void *data, int type, void *event);
+static Eina_Bool _cb_mouse_wheel(void *data, int type, void *event);
 static void _cb_signal_close(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _cb_signal_syscon(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _cb_signal_action(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _cb_signal_action_extra(void *data, Evas_Object *obj, const char *emission, const char *source);
-static int _cb_timeout_defaction(void *data);
+static Eina_Bool _cb_timeout_defaction(void *data);
 
 /* local subsystem globals */
 static E_Popup *popup = NULL;
@@ -307,13 +307,13 @@ e_syscon_hide(void)
 }
 
 /* local subsystem functions */
-static int
-_cb_key_down(void *data, int type, void *event)
+static Eina_Bool
+_cb_key_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Event_Key *ev;
 
    ev = event;
-   if (ev->event_window != input_window) return 1;
+   if (ev->event_window != input_window) return ECORE_CALLBACK_PASS_ON;
    if (!strcmp(ev->key, "Escape"))
      e_syscon_hide();
    else if (!strcmp(ev->key, "Up"))
@@ -321,48 +321,48 @@ _cb_key_down(void *data, int type, void *event)
         // FIXME: implement focus and key control... eventually
      }
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_cb_mouse_down(void *data, int type, void *event)
+static Eina_Bool
+_cb_mouse_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Event_Mouse_Button *ev;
    Evas_Button_Flags flags = EVAS_BUTTON_NONE;
 
    ev = event;
-   if (ev->event_window != input_window) return 1;
+   if (ev->event_window != input_window) return ECORE_CALLBACK_PASS_ON;
    if (ev->double_click) flags |= EVAS_BUTTON_DOUBLE_CLICK;
    if (ev->triple_click) flags |= EVAS_BUTTON_TRIPLE_CLICK;
    if ((ev->x < popup->x) || (ev->x >= (popup->x + popup->w)) ||
        (ev->y < popup->y) || (ev->y >= (popup->y + popup->h)))
      {
         e_syscon_hide();
-        return 1;
+        return ECORE_CALLBACK_PASS_ON;
      }
    evas_event_feed_mouse_down(popup->evas, ev->buttons, flags, ev->timestamp, NULL);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_cb_mouse_up(void *data, int type, void *event)
+static Eina_Bool
+_cb_mouse_up(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Event_Mouse_Button *ev;
 
    ev = event;
-   if (ev->event_window != input_window) return 1;
+   if (ev->event_window != input_window) return ECORE_CALLBACK_PASS_ON;
    evas_event_feed_mouse_up(popup->evas, ev->buttons, EVAS_BUTTON_NONE,
                             ev->timestamp, NULL);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_cb_mouse_move(void *data, int type, void *event)
+static Eina_Bool
+_cb_mouse_move(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Event_Mouse_Move *ev;
 
    ev = event;
-   if (ev->event_window != input_window) return 1;
+   if (ev->event_window != input_window) return ECORE_CALLBACK_PASS_ON;
    if (!inevas)
      {
         evas_event_feed_mouse_in(popup->evas, ev->timestamp, NULL);
@@ -370,19 +370,19 @@ _cb_mouse_move(void *data, int type, void *event)
      }
    evas_event_feed_mouse_move(popup->evas, ev->x - popup->x, ev->y - popup->y,
                               ev->timestamp, NULL);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_cb_mouse_wheel(void *data, int type, void *event)
+static Eina_Bool
+_cb_mouse_wheel(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Event_Mouse_Wheel *ev;
 
    ev = event;
-   if (ev->event_window != input_window) return 1;
+   if (ev->event_window != input_window) return ECORE_CALLBACK_PASS_ON;
    evas_event_feed_mouse_wheel(popup->evas, ev->direction, ev->z, 
                                ev->timestamp, NULL);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static void
@@ -445,12 +445,12 @@ _cb_signal_action_extra(void *data, Evas_Object *obj, const char *emission, cons
    if (sca->func) sca->func((void *)sca->data);
 }
 
-static int
+static Eina_Bool
 _cb_timeout_defaction(void *data)
 {
    deftimer = NULL;
-   if (!do_defact) return 0;
+   if (!do_defact) return ECORE_CALLBACK_CANCEL;
    e_syscon_hide();
    _do_action_name(do_defact);
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }

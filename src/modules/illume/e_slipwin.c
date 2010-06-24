@@ -16,11 +16,11 @@ EAPI int E_EVENT_SLIPWIN_DEL = 0;
 
 E_Slipwin *_e_slipwin_new(E_Zone *zone, const char *themedir);
 static void _e_slipwin_free(E_Slipwin *ess);
-static int _e_slipwin_cb_animate(void *data);
+static Eina_Bool _e_slipwin_cb_animate(void *data);
 static void _e_slipwin_slide(E_Slipwin *ess, int out, double len);
-static int _e_slipwin_cb_mouse_up(void *data, int type, void *event);
-static int _e_slipwin_cb_zone_move_resize(void *data, int type, void *event);
-static int _e_slipwin_cb_zone_del(void *data, int type, void *event);
+static Eina_Bool _e_slipwin_cb_mouse_up(void *data, int type, void *event);
+static Eina_Bool _e_slipwin_cb_zone_move_resize(void *data, int type, void *event);
+static Eina_Bool _e_slipwin_cb_zone_del(void *data, int type, void *event);
 static void _e_slipwin_event_simple_free(void *data, void *ev);
 static void _e_slipwin_object_del_attach(void *o);
 static void _e_slipwin_cb_item_sel(void *data);
@@ -223,7 +223,7 @@ _e_slipwin_free(E_Slipwin *esw)
    free(esw);
 }
 
-static int
+static Eina_Bool
 _e_slipwin_cb_animate(void *data)
 {
    E_Slipwin *esw;
@@ -262,9 +262,9 @@ _e_slipwin_cb_animate(void *data)
 	     e_widget_ilist_clear(esw->ilist_obj);
 	     e_widget_ilist_thaw(esw->ilist_obj);
 	  }
-	return 0;
+	return ECORE_CALLBACK_CANCEL;
      }
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
 static void
@@ -298,8 +298,8 @@ _e_slipwin_slide(E_Slipwin *esw, int out, double len)
      }
 }
 
-static int
-_e_slipwin_cb_mouse_up(void *data, int type, void *event)
+static Eina_Bool
+_e_slipwin_cb_mouse_up(void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Event_Mouse_Button *ev;
    E_Slipwin *esw;
@@ -311,11 +311,11 @@ _e_slipwin_cb_mouse_up(void *data, int type, void *event)
 	if (esw->out) _e_slipwin_slide(esw, 0, 1.0);
 	else _e_slipwin_slide(esw, 1, 1.0);
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_slipwin_cb_zone_move_resize(void *data, int type, void *event)
+static Eina_Bool
+_e_slipwin_cb_zone_move_resize(void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Zone_Move_Resize *ev;
    E_Slipwin *esw;
@@ -326,11 +326,11 @@ _e_slipwin_cb_zone_move_resize(void *data, int type, void *event)
      {
 	/* FIXME: handle new size pants */
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_slipwin_cb_zone_del(void *data, int type, void *event)
+static Eina_Bool
+_e_slipwin_cb_zone_del(void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Zone_Del *ev;
    E_Slipwin *esw;
@@ -341,7 +341,7 @@ _e_slipwin_cb_zone_del(void *data, int type, void *event)
      {
 	e_object_del(E_OBJECT(esw));
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 				       
 static void

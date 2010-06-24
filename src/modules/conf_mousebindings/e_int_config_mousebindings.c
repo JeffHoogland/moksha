@@ -47,9 +47,9 @@ static int _wheel_binding_sort_cb(const void *d1, const void *d2);
 /********* grab window **********/
 static void _grab_wnd_show(E_Config_Dialog_Data *cfdata);
 static void _grab_wnd_hide(E_Config_Dialog_Data *cfdata);
-static int _grab_mouse_down_cb(void *data, int type, void *event);
-static int _grab_mouse_wheel_cb(void *data, int type, void *event);
-static int _grab_key_down_cb(void *data, int type, void *event);
+static Eina_Bool _grab_mouse_down_cb(void *data, int type, void *event);
+static Eina_Bool _grab_mouse_wheel_cb(void *data, int type, void *event);
+static Eina_Bool _grab_key_down_cb(void *data, int type, void *event);
 
 struct _E_Config_Dialog_Data
 {
@@ -1314,8 +1314,8 @@ _grab_wnd_hide(E_Config_Dialog_Data *cfdata)
    cfdata->locals.dia = NULL;
 }
 
-static int
-_grab_mouse_down_cb(void *data, int type, void *event)
+static Eina_Bool
+_grab_mouse_down_cb(void *data, __UNUSED__ int type, void *event)
 {
    Eina_List *l;
    E_Config_Dialog_Data *cfdata;
@@ -1328,7 +1328,7 @@ _grab_mouse_down_cb(void *data, int type, void *event)
    ev = event;
    cfdata = data;
 
-   if (ev->window != cfdata->locals.bind_win) return 1; 
+   if (ev->window != cfdata->locals.bind_win) return ECORE_CALLBACK_PASS_ON;
 
    if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
      mod |= E_BINDING_MODIFIER_SHIFT;
@@ -1413,11 +1413,11 @@ _grab_mouse_down_cb(void *data, int type, void *event)
    _update_buttons(cfdata);
    _grab_wnd_hide(cfdata);
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int 
-_grab_mouse_wheel_cb(void *data, int type, void *event)
+static Eina_Bool
+_grab_mouse_wheel_cb(void *data, __UNUSED__ int type, void *event)
 {
    Eina_List *l;
    E_Config_Binding_Wheel *bw = NULL;
@@ -1429,7 +1429,7 @@ _grab_mouse_wheel_cb(void *data, int type, void *event)
    ev = event;
    cfdata = data;
 
-   if (ev->window != cfdata->locals.bind_win) return 1;
+   if (ev->window != cfdata->locals.bind_win) return ECORE_CALLBACK_PASS_ON;
 
    if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
      mod |= E_BINDING_MODIFIER_SHIFT;
@@ -1528,18 +1528,18 @@ _grab_mouse_wheel_cb(void *data, int type, void *event)
    _update_buttons(cfdata);
 
    _grab_wnd_hide(cfdata);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_grab_key_down_cb(void *data, int type, void *event)
+static Eina_Bool
+_grab_key_down_cb(void *data, __UNUSED__ int type, void *event)
 {
    E_Config_Dialog_Data *cfdata;
    Ecore_Event_Key *ev = event;
 
    cfdata = data;
 
-   if (ev->window != cfdata->locals.bind_win) return 1;
+   if (ev->window != cfdata->locals.bind_win) return ECORE_CALLBACK_PASS_ON;
 
    if (!strcmp(ev->keyname, "Escape") &&
        !(ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT) &&
@@ -1549,5 +1549,5 @@ _grab_key_down_cb(void *data, int type, void *event)
      { 
 	_grab_wnd_hide(cfdata);
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }

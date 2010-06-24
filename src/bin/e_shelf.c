@@ -19,13 +19,13 @@ static void _e_shelf_cb_menu_items_append(void *data, E_Gadcon_Client *gcc, E_Me
 static void _e_shelf_cb_locked_set(void *data, int lock);
 static void _e_shelf_cb_urgent_show(void *data);
 static void _e_shelf_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info);
-static int _e_shelf_cb_mouse_in(void *data, int type, void *event);
-static int _e_shelf_cb_mouse_out(void *data, int type, void *event);
+static Eina_Bool _e_shelf_cb_mouse_in(void *data, int type, void *event);
+static Eina_Bool _e_shelf_cb_mouse_out(void *data, int type, void *event);
 static int _e_shelf_cb_id_sort(const void *data1, const void *data2);
-static int _e_shelf_cb_hide_animator(void *data);
-static int _e_shelf_cb_hide_animator_timer(void *data);
-static int _e_shelf_cb_hide_urgent_timer(void *data);
-static int _e_shelf_cb_instant_hide_timer(void *data);
+static Eina_Bool _e_shelf_cb_hide_animator(void *data);
+static Eina_Bool _e_shelf_cb_hide_animator_timer(void *data);
+static Eina_Bool _e_shelf_cb_hide_urgent_timer(void *data);
+static Eina_Bool _e_shelf_cb_instant_hide_timer(void *data);
 static void _e_shelf_menu_pre_cb(void *data, E_Menu *m);
 static void _e_shelf_gadcon_client_remove(void *data, E_Gadcon_Client *gcc);
 static int _e_shelf_gadcon_client_add(void *data, const E_Gadcon_Client_Class *cc);
@@ -1349,13 +1349,13 @@ _e_shelf_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_inf
      }
 }
 
-static int
+static Eina_Bool
 _e_shelf_cb_mouse_in(void *data, int type, void *event)
 {
    E_Shelf *es;
 
    es = data;
-   if (es->cfg->autohide_show_action) return 1;
+   if (es->cfg->autohide_show_action) return ECORE_CALLBACK_PASS_ON;
 
    if (type == E_EVENT_ZONE_EDGE_MOVE)
      {
@@ -1363,7 +1363,7 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
 	int show = 0;
 
 	ev = event;
-	if (es->zone != ev->zone) return 1;
+	if (es->zone != ev->zone) return ECORE_CALLBACK_PASS_ON;
 	switch (es->gadcon->orient)
 	  {
 	   case E_GADCON_ORIENT_FLOAT:
@@ -1422,7 +1422,7 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
 	Ecore_X_Event_Mouse_In *ev;
 
 	ev = event;
-	if (!es->popup) return 1;
+	if (!es->popup) return ECORE_CALLBACK_PASS_ON;
 	if (ev->win == es->popup->evas_win)
 	  {
 	     edje_object_signal_emit(es->o_base, "e,state,focused", "e");
@@ -1434,17 +1434,17 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
 	Ecore_Event_Mouse_Move *ev;
 
 	ev = event;
-	if (!es->popup) return 1;
+	if (!es->popup) return ECORE_CALLBACK_PASS_ON;
 	if (ev->event_window == es->popup->evas_win)
 	  {
 	     edje_object_signal_emit(es->o_base, "e,state,focused", "e");
 	     e_shelf_toggle(es, 1);
 	  }
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _e_shelf_cb_mouse_out(void *data, int type, void *event)
 {
    E_Shelf *es;
@@ -1460,7 +1460,7 @@ _e_shelf_cb_mouse_out(void *data, int type, void *event)
 
 	if (es->popup) win = es->popup->evas_win;
 	else win = es->zone->container->event_win;
-	if (ev->win != win) return 1;
+	if (ev->win != win) return ECORE_CALLBACK_PASS_ON;
 
 	/*
 	 * ECORE_X_EVENT_DETAIL_INFERIOR means focus went to children windows
@@ -1471,11 +1471,11 @@ _e_shelf_cb_mouse_out(void *data, int type, void *event)
 	 * not get mouse out itself, so it will stay visible and
 	 * autohide will fail.
 	 */
-	if (ev->detail == ECORE_X_EVENT_DETAIL_INFERIOR) return 1;
+	if (ev->detail == ECORE_X_EVENT_DETAIL_INFERIOR) return ECORE_CALLBACK_PASS_ON;
 
 	e_shelf_toggle(es, 0);
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static int
@@ -1490,7 +1490,7 @@ _e_shelf_cb_id_sort(const void *data1, const void *data2)
    return 0;
 }
 
-static int
+static Eina_Bool
 _e_shelf_cb_hide_animator(void *data)
 {
    E_Shelf *es;
@@ -1577,7 +1577,7 @@ _e_shelf_cb_hide_animator(void *data)
 	 break;
      }
 
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 
 end:
    es->hide_animator = NULL;
@@ -1587,10 +1587,10 @@ end:
      e_shelf_toggle(es, 0);
    else
      _e_shelf_toggle_border_fix(es);
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
-static int
+static Eina_Bool
 _e_shelf_cb_hide_animator_timer(void *data)
 {
    E_Shelf *es;
@@ -1599,10 +1599,10 @@ _e_shelf_cb_hide_animator_timer(void *data)
    if (!es->hide_animator)
      es->hide_animator = ecore_animator_add(_e_shelf_cb_hide_animator, es);
    es->hide_timer = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
-static int
+static Eina_Bool
 _e_shelf_cb_hide_urgent_timer(void *data)
 {
    E_Shelf *es;
@@ -1610,10 +1610,10 @@ _e_shelf_cb_hide_urgent_timer(void *data)
    es = data;
    es->hide_timer = NULL;
    if (es->urgent_show) e_shelf_toggle(es, 0);
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
-static int
+static Eina_Bool
 _e_shelf_cb_instant_hide_timer(void *data)
 {
    E_Shelf *es;
@@ -1658,7 +1658,7 @@ _e_shelf_cb_instant_hide_timer(void *data)
      }
    es->instant_timer = NULL;
    _e_shelf_toggle_border_fix(es);
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void 

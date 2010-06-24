@@ -189,21 +189,21 @@ _bluez_cb_toggle_powered(E_Object *obj __UNUSED__, const char *params __UNUSED__
 
 static void _bluez_popup_del(E_Bluez_Instance *inst);
 
-static int
+static Eina_Bool
 _bluez_popup_input_window_mouse_up_cb(void *data, int type __UNUSED__, void *event)
 {
    Ecore_Event_Mouse_Button *ev = event;
    E_Bluez_Instance *inst = data;
 
    if (ev->window != inst->ui.input.win)
-     return 1;
+     return ECORE_CALLBACK_PASS_ON;
 
    _bluez_popup_del(inst);
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _bluez_popup_input_window_key_down_cb(void *data, int type __UNUSED__, void *event)
 {
    Ecore_Event_Key *ev = event;
@@ -211,13 +211,13 @@ _bluez_popup_input_window_key_down_cb(void *data, int type __UNUSED__, void *eve
    const char *keysym;
 
    if (ev->window != inst->ui.input.win)
-     return 1;
+     return ECORE_CALLBACK_PASS_ON;
 
    keysym = ev->key;
    if (strcmp(keysym, "Escape") == 0)
      _bluez_popup_del(inst);
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static void
@@ -549,7 +549,7 @@ _bluez_popup_device_selected(void *data)
      }
 }
 
-static int
+static Eina_Bool
 _bluez_event_devicefound(void *data, int type __UNUSED__, void *event __UNUSED__)
 {
    E_Bluez_Module_Context *ctxt = data;
@@ -1096,7 +1096,7 @@ _bluez_actions_unregister(E_Bluez_Module_Context *ctxt)
      }
 }
 
-static int
+static Eina_Bool
 _bluez_manager_changed_do(void *data)
 {
    E_Bluez_Module_Context *ctxt = data;
@@ -1104,7 +1104,7 @@ _bluez_manager_changed_do(void *data)
    //FIXME: reload the default adapter maybe?
 
    ctxt->poller.manager_changed = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void
@@ -1178,7 +1178,7 @@ _default_adapter_callback(void *data, DBusMessage *msg, DBusError *err __UNUSED_
      }
 }
 
-static int
+static Eina_Bool
 _bluez_event_manager_in(void *data, int type __UNUSED__, void *event __UNUSED__)
 {
    E_Bluez_Module_Context *ctxt = data;
@@ -1188,14 +1188,14 @@ _bluez_event_manager_in(void *data, int type __UNUSED__, void *event __UNUSED__)
 
    element = e_bluez_manager_get();
    if (!e_bluez_manager_default_adapter(_default_adapter_callback, ctxt))
-     return 0;
+     return ECORE_CALLBACK_DONE;
 
    e_bluez_element_listener_add(element, _bluez_manager_changed, ctxt, NULL);
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _bluez_event_manager_out(void *data, int type __UNUSED__, void *event __UNUSED__)
 {
    E_Bluez_Module_Context *ctxt = data;
@@ -1203,10 +1203,10 @@ _bluez_event_manager_out(void *data, int type __UNUSED__, void *event __UNUSED__
    ctxt->has_manager = EINA_FALSE;
    eina_stringshare_replace(&ctxt->default_adapter, NULL);
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _bluez_event_element_updated(void *data, int type __UNUSED__, void *event __UNUSED__)
 {
    E_Bluez_Module_Context *ctxt = data;
@@ -1215,7 +1215,7 @@ _bluez_event_element_updated(void *data, int type __UNUSED__, void *event __UNUS
    E_Bluez_Instance *inst;
    Eina_List *l;
 
-   if (!e_bluez_element_is_adapter(element)) return 1;
+   if (!e_bluez_element_is_adapter(element)) return ECORE_CALLBACK_PASS_ON;
 
    if (!e_bluez_adapter_powered_get(element, &powered))
      powered = EINA_FALSE;
@@ -1236,7 +1236,7 @@ _bluez_event_element_updated(void *data, int type __UNUSED__, void *event __UNUS
 	_bluez_gadget_update(inst);
      }
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static void

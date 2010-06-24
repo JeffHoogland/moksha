@@ -42,20 +42,20 @@ static void _il_home_win_new(E_Zone *zone);
 static void _il_home_win_cb_free(Il_Home_Win *hwin);
 static void _il_home_win_cb_resize(E_Win *win);
 static void _il_home_fmc_set(Evas_Object *obj);
-static int _il_home_update_deferred(void *data __UNUSED__);
+static Eina_Bool _il_home_update_deferred(void *data __UNUSED__);
 static void _il_home_pan_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y);
 static void _il_home_pan_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y);
 static void _il_home_pan_max_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y);
 static void _il_home_pan_child_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h);
 static void _il_home_cb_selected(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED__);
-static int _il_home_desktop_cache_update(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__);
-static int _il_home_cb_border_add(void *data __UNUSED__, int type __UNUSED__, void *event);
-static int _il_home_cb_border_del(void *data __UNUSED__, int type __UNUSED__, void *event);
-static int _il_home_cb_exe_del(void *data __UNUSED__, int type __UNUSED__, void *event);
-static int _il_home_cb_exe_timeout(void *data);
-static int _il_home_cb_client_message(void *data __UNUSED__, int type __UNUSED__, void *event);
-static int _il_home_cb_prop_change(void *data __UNUSED__, int type __UNUSED__, void *event);
-static int _il_home_cb_bg_change(void *data __UNUSED__, int type __UNUSED__, void *event);
+static Eina_Bool _il_home_desktop_cache_update(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__);
+static Eina_Bool _il_home_cb_border_add(void *data __UNUSED__, int type __UNUSED__, void *event);
+static Eina_Bool _il_home_cb_border_del(void *data __UNUSED__, int type __UNUSED__, void *event);
+static Eina_Bool _il_home_cb_exe_del(void *data __UNUSED__, int type __UNUSED__, void *event);
+static Eina_Bool _il_home_cb_exe_timeout(void *data);
+static Eina_Bool _il_home_cb_client_message(void *data __UNUSED__, int type __UNUSED__, void *event);
+static Eina_Bool _il_home_cb_prop_change(void *data __UNUSED__, int type __UNUSED__, void *event);
+static Eina_Bool _il_home_cb_bg_change(void *data __UNUSED__, int type __UNUSED__, void *event);
 
 /* local variables */
 static Eina_List *hwins = NULL;
@@ -508,13 +508,13 @@ _il_home_fmc_set(Evas_Object *obj)
    e_fm2_config_set(obj, &fmc);
 }
 
-static int 
+static Eina_Bool
 _il_home_update_deferred(void *data __UNUSED__) 
 {
    _il_home_apps_unpopulate();
    _il_home_apps_populate();
    defer = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void 
@@ -560,15 +560,15 @@ _il_home_cb_selected(void *data, Evas_Object *obj __UNUSED__, void *event __UNUS
      }
 }
 
-static int 
+static Eina_Bool
 _il_home_desktop_cache_update(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__) 
 {
    if (defer) ecore_timer_del(defer);
    defer = ecore_timer_add(0.5, _il_home_update_deferred, NULL);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int 
+static Eina_Bool
 _il_home_cb_border_add(void *data __UNUSED__, int type __UNUSED__, void *event) 
 {
    E_Event_Border_Add *ev;
@@ -603,10 +603,10 @@ _il_home_cb_border_add(void *data __UNUSED__, int type __UNUSED__, void *event)
         if (exe->timeout) ecore_timer_del(exe->timeout);
         exe->timeout = NULL;
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int 
+static Eina_Bool
 _il_home_cb_border_del(void *data __UNUSED__, int type __UNUSED__, void *event) 
 {
    E_Event_Border_Remove *ev;
@@ -628,10 +628,10 @@ _il_home_cb_border_del(void *data __UNUSED__, int type __UNUSED__, void *event)
              break;
           }
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int 
+static Eina_Bool
 _il_home_cb_exe_del(void *data __UNUSED__, int type __UNUSED__, void *event) 
 {
    Il_Home_Exec *exe;
@@ -655,15 +655,15 @@ _il_home_cb_exe_del(void *data __UNUSED__, int type __UNUSED__, void *event)
              break;
           }
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int 
+static Eina_Bool
 _il_home_cb_exe_timeout(void *data) 
 {
    Il_Home_Exec *exe;
 
-   if (!(exe = data)) return 1;
+   if (!(exe = data)) return ECORE_CALLBACK_CANCEL;
    if (exe->handle) e_busycover_pop(exe->cover, exe->handle);
    exe->handle = NULL;
    if (!exe->border) 
@@ -671,13 +671,13 @@ _il_home_cb_exe_timeout(void *data)
         exes = eina_list_remove(exes, exe);
         if (exe->desktop) efreet_desktop_free(exe->desktop);
         E_FREE(exe);
-        return 0;
+        return ECORE_CALLBACK_CANCEL;
      }
    exe->timeout = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
-static int 
+static Eina_Bool
 _il_home_cb_client_message(void *data __UNUSED__, int type __UNUSED__, void *event) 
 {
    Ecore_X_Event_Client_Message *ev;
@@ -688,7 +688,7 @@ _il_home_cb_client_message(void *data __UNUSED__, int type __UNUSED__, void *eve
         E_Zone *zone;
 
         zone = e_util_zone_window_find(ev->win);
-        if (zone->black_win != ev->win) return 1;
+        if (zone->black_win != ev->win) return ECORE_CALLBACK_PASS_ON;
         _il_home_win_new(zone);
      }
    else if (ev->message_type == ECORE_X_ATOM_E_ILLUME_HOME_DEL) 
@@ -697,7 +697,7 @@ _il_home_cb_client_message(void *data __UNUSED__, int type __UNUSED__, void *eve
         Eina_List *l;
         Il_Home_Win *hwin;
 
-        if (!(bd = e_border_find_by_client_window(ev->win))) return 1;
+        if (!(bd = e_border_find_by_client_window(ev->win))) return ECORE_CALLBACK_PASS_ON;
         EINA_LIST_FOREACH(hwins, l, hwin) 
           {
              if (hwin->win->border == bd) 
@@ -708,10 +708,10 @@ _il_home_cb_client_message(void *data __UNUSED__, int type __UNUSED__, void *eve
                }
           }
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int 
+static Eina_Bool
 _il_home_cb_prop_change(void *data __UNUSED__, int type __UNUSED__, void *event) 
 {
    Ecore_X_Event_Window_Property *ev;
@@ -719,7 +719,7 @@ _il_home_cb_prop_change(void *data __UNUSED__, int type __UNUSED__, void *event)
    Eina_List *l;
 
    ev = event;
-   if (ev->atom != ATM_ENLIGHTENMENT_SCALE) return 1;
+   if (ev->atom != ATM_ENLIGHTENMENT_SCALE) return ECORE_CALLBACK_PASS_ON;
    EINA_LIST_FOREACH(hwins, l, hwin) 
      if (hwin->o_fm) 
        {
@@ -727,16 +727,16 @@ _il_home_cb_prop_change(void *data __UNUSED__, int type __UNUSED__, void *event)
           e_fm2_refresh(hwin->o_fm);
        }
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int 
+static Eina_Bool
 _il_home_cb_bg_change(void *data __UNUSED__, int type __UNUSED__, void *event) 
 {
    Il_Home_Win *hwin;
    Eina_List *l;
 
-   if (type != E_EVENT_BG_UPDATE) return 1;
+   if (type != E_EVENT_BG_UPDATE) return ECORE_CALLBACK_PASS_ON;
 
    EINA_LIST_FOREACH(hwins, l, hwin) 
      {
@@ -753,5 +753,5 @@ _il_home_cb_bg_change(void *data __UNUSED__, int type __UNUSED__, void *event)
 	edje_object_file_set(hwin->o_bg, bgfile, "e/desktop/background");
      }
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }

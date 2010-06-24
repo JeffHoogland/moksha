@@ -50,7 +50,7 @@ static void 		 _e_intl_locale_hash_free(Eina_Hash *language_hash);
 static Eina_Bool 	 _e_intl_locale_hash_free_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata);
 
 /* Input Method Configuration and Management */
-static int 		 _e_intl_cb_exit(void *data, int type, void *event);
+static Eina_Bool	 _e_intl_cb_exit(void *data, int type, void *event);
 static Eina_List 	*_e_intl_imc_dir_scan(const char *dir);
 
 EAPI int
@@ -416,19 +416,19 @@ e_intl_imc_system_path_get(void)
    return _e_intl_imc_system_path;
 }
 
-static int
-_e_intl_cb_exit(void *data, int type, void *event)
+static Eina_Bool
+_e_intl_cb_exit(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Exe_Event_Del *ev;
 
    ev = event;
-   if (!ev->exe) return 1;
+   if (!ev->exe) return ECORE_CALLBACK_PASS_ON;
 
    if (!(ecore_exe_tag_get(ev->exe) &&
 	 (!strcmp(ecore_exe_tag_get(ev->exe), "E/im_exec")))) return 1;
 
    _e_intl_input_method_exec = NULL;
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static void
@@ -547,7 +547,7 @@ _e_intl_locale_alias_get(const char *language)
    Eina_Hash *alias_hash;
    char *alias;
    char *lower_language;
-   int i;
+   unsigned int i;
 
    if ((language == NULL) || (!strncmp(language, "POSIX", strlen("POSIX"))))
      return strdup("C");
@@ -639,7 +639,7 @@ e_intl_locale_parts_get(const char *locale)
 
    /* Parse State */
    int   state = 0; /* start out looking for the language */
-   int   locale_idx;
+   unsigned int locale_idx;
    int   tmp_idx = 0;
 
    /* Parse Loop - Seperators are _ . @ */

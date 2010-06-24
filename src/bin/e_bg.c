@@ -6,7 +6,7 @@
 /* local subsystem functions */
 static void _e_bg_signal(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_bg_event_bg_update_free(void *data, void *event);
-static int  _e_bg_slide_animator(void *data);
+static Eina_Bool  _e_bg_slide_animator(void *data);
 
 static void _e_bg_image_import_dialog_done(void *data, const char *path, Eina_Bool ok, Eina_Bool external, int quality, E_Image_Import_Mode mode);
 static void _e_bg_image_import_done(void *data, Eina_Bool ok, const char *image_path, const char *edje_path);
@@ -710,7 +710,7 @@ _e_bg_event_bg_update_free(void *data __UNUSED__, void *event)
    free(event);
 }
 
-static int
+static Eina_Bool
 _e_bg_slide_animator(void *data)
 {
    E_Bg_Anim_Params *params;
@@ -773,9 +773,9 @@ _e_bg_slide_animator(void *data)
 	evas_object_data_del(zone->bg_object, "switch_animator");
 	evas_object_data_del(zone->bg_object, "switch_animator_params");
 	E_FREE(params);
-	return 0;
+	return ECORE_CALLBACK_CANCEL;
      }
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
 static void

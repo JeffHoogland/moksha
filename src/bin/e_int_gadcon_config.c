@@ -24,13 +24,13 @@ static void _fill_data(E_Config_Dialog_Data *cfdata);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Eina_Bool _free_gadgets(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__);
 static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static int _cb_load_timer(void *data);
+static Eina_Bool _cb_load_timer(void *data);
 static void _fill_list(E_Config_Dialog_Data *cfdata);
 static void _cb_list_selected(void *data);
 static void _cb_add(void *data, void *data2 __UNUSED__);
 static void _cb_del(void *data, void *data2 __UNUSED__);
 static CFGadget *_search_hash(E_Config_Dialog_Data *cfdata, const char *name);
-static int _cb_mod_update(void *data, int type, void *event __UNUSED__);
+static Eina_Bool _cb_mod_update(void *data, int type, void *event __UNUSED__);
 
 EAPI void 
 e_int_gadcon_config_shelf(E_Gadcon *gc) 
@@ -174,15 +174,15 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    return ot;
 }
 
-static int 
-_cb_load_timer(void *data) 
+static Eina_Bool
+_cb_load_timer(void *data)
 {
    E_Config_Dialog_Data *cfdata;
 
-   if (!(cfdata = data)) return 1;
+   if (!(cfdata = data)) return ECORE_CALLBACK_RENEW;
    _fill_list(cfdata);
    cfdata->load_timer = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void 
@@ -382,13 +382,13 @@ _search_hash(E_Config_Dialog_Data *cfdata, const char *name)
    return ret;
 }
 
-static int 
-_cb_mod_update(void *data, int type, void *event __UNUSED__) 
+static Eina_Bool
+_cb_mod_update(void *data, int type, void *event __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
 
-   if (type != E_EVENT_MODULE_UPDATE) return 1;
-   if (!(cfdata = data)) return 1;
+   if (type != E_EVENT_MODULE_UPDATE) return ECORE_CALLBACK_PASS_ON;
+   if (!(cfdata = data)) return ECORE_CALLBACK_PASS_ON;
    _fill_list(cfdata);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }

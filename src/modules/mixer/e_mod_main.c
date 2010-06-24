@@ -117,11 +117,11 @@ _mixer_gadget_configuration_free_foreach(const Eina_Hash *hash __UNUSED__, const
    return 1;
 }
 
-static int
+static Eina_Bool
 _mixer_module_configuration_alert(void *data)
 {
    e_util_dialog_show(_("Mixer Settings Updated"), "%s", (char *)data);
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static E_Mixer_Module_Config *
@@ -393,21 +393,21 @@ _mixer_app_cb_del(E_Dialog *dialog __UNUSED__, void *data)
 
 static void _mixer_popup_del(E_Mixer_Instance *inst);
 
-static int
+static Eina_Bool
 _mixer_popup_input_window_mouse_up_cb(void *data, int type __UNUSED__, void *event)
 {
    Ecore_Event_Mouse_Button *ev = event;
    E_Mixer_Instance *inst = data;
 
    if (ev->window != inst->ui.input.win)
-      return 1;
+      return ECORE_CALLBACK_PASS_ON;
 
    _mixer_popup_del(inst);
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _mixer_popup_input_window_key_down_cb(void *data, int type __UNUSED__, void *event)
 {
    Ecore_Event_Key *ev = event;
@@ -415,7 +415,7 @@ _mixer_popup_input_window_key_down_cb(void *data, int type __UNUSED__, void *eve
    const char *keysym;
 
    if (ev->window != inst->ui.input.win)
-      return 1;
+      return ECORE_CALLBACK_PASS_ON;
 
    keysym = ev->key;
    if (strcmp(keysym, "Escape") == 0)
@@ -430,7 +430,7 @@ _mixer_popup_input_window_key_down_cb(void *data, int type __UNUSED__, void *eve
    else
       _mixer_popup_del(inst); /* XXX really? */
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static void

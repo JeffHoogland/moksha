@@ -5,7 +5,7 @@ static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static void _cb_config(void *data, void *data2);
-static int _cb_bg_change(void *data, int type, void *event);
+static Eina_Bool _cb_bg_change(void *data, int type, void *event);
 
 struct _E_Config_Dialog_Data 
 {
@@ -184,26 +184,26 @@ _cb_config(void *data, void *data2)
    e_configure_registry_call("internal/wallpaper_desk", e_container_current_get(e_manager_current_get()), buf);
 }
 
-static int
-_cb_bg_change(void *data, int type, void *event) 
+static Eina_Bool
+_cb_bg_change(void *data, int type, void *event)
 {
    E_Event_Bg_Update *ev;
    E_Config_Dialog_Data *cfdata;
    const char *file;
    
-   if (type != E_EVENT_BG_UPDATE) return 1;
+   if (type != E_EVENT_BG_UPDATE) return ECORE_CALLBACK_PASS_ON;
    
    cfdata = data;
    ev = event;
-   if (ev->container != cfdata->con_num) return 1;
-   if (ev->zone != cfdata->zone_num) return 1;
-   if (ev->desk_x != cfdata->desk_x) return 1;
-   if (ev->desk_y != cfdata->desk_y) return 1;
+   if (ev->container != cfdata->con_num) return ECORE_CALLBACK_PASS_ON;
+   if (ev->zone != cfdata->zone_num) return ECORE_CALLBACK_PASS_ON;
+   if (ev->desk_x != cfdata->desk_x) return ECORE_CALLBACK_PASS_ON;
+   if (ev->desk_y != cfdata->desk_y) return ECORE_CALLBACK_PASS_ON;
    
    file = e_bg_file_get(cfdata->con_num, cfdata->zone_num, cfdata->desk_x, cfdata->desk_y);
    E_FREE(cfdata->bg);
    cfdata->bg = strdup(file);
    e_widget_preview_edje_set(cfdata->preview, cfdata->bg, "e/desktop/background");
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }

@@ -6,14 +6,14 @@
 /* local subsystem functions */
 static void _e_manager_free(E_Manager *man);
 
-static int _e_manager_cb_window_show_request(void *data, int ev_type, void *ev);
-static int _e_manager_cb_window_configure(void *data, int ev_type, void *ev);
-static int _e_manager_cb_key_up(void *data, int ev_type, void *ev);
-static int _e_manager_cb_key_down(void *data, int ev_type, void *ev);
-static int _e_manager_cb_frame_extents_request(void *data, int ev_type, void *ev);
-static int _e_manager_cb_ping(void *data, int ev_type, void *ev);
-static int _e_manager_cb_screensaver_notify(void *data, int ev_type, void *ev);
-static int _e_manager_cb_client_message(void *data, int ev_type, void *ev);
+static Eina_Bool _e_manager_cb_window_show_request(void *data, int ev_type, void *ev);
+static Eina_Bool _e_manager_cb_window_configure(void *data, int ev_type, void *ev);
+static Eina_Bool _e_manager_cb_key_up(void *data, int ev_type, void *ev);
+static Eina_Bool _e_manager_cb_key_down(void *data, int ev_type, void *ev);
+static Eina_Bool _e_manager_cb_frame_extents_request(void *data, int ev_type, void *ev);
+static Eina_Bool _e_manager_cb_ping(void *data, int ev_type, void *ev);
+static Eina_Bool _e_manager_cb_screensaver_notify(void *data, int ev_type, void *ev);
+static Eina_Bool _e_manager_cb_client_message(void *data, int ev_type, void *ev);
 
 static Eina_Bool _e_manager_frame_extents_free_cb(const Eina_Hash *hash __UNUSED__,
 						  const void *key __UNUSED__,
@@ -540,22 +540,22 @@ _e_manager_free(E_Manager *man)
    free(man);
 }
 
-static int
+static Eina_Bool
 _e_manager_cb_window_show_request(void *data, int ev_type __UNUSED__, void *ev)
 {
    E_Manager *man;
    Ecore_X_Event_Window_Show_Request *e;
-   
+
    man = data;
    e = ev;
    if (e_stolen_win_get(e->win)) return 1;
    if (ecore_x_window_parent_get(e->win) != man->root)
-     return 1;  /* try other handlers for this */
-   
+     return ECORE_CALLBACK_PASS_ON;  /* try other handlers for this */
+
      {
 	E_Container *con;
 	E_Border *bd;
-	
+
 	con = e_container_current_get(man);
 	if (!e_border_find_by_client_window(e->win))
 	  {
@@ -564,10 +564,10 @@ _e_manager_cb_window_show_request(void *data, int ev_type __UNUSED__, void *ev)
 	       ecore_x_window_show(e->win);
 	  }
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _e_manager_cb_window_configure(void *data, int ev_type __UNUSED__, void *ev)
 {
    E_Manager *man;
@@ -575,12 +575,12 @@ _e_manager_cb_window_configure(void *data, int ev_type __UNUSED__, void *ev)
    
    man = data;
    e = ev;
-   if (e->win != man->root) return 1;
+   if (e->win != man->root) return ECORE_CALLBACK_PASS_ON;
    e_manager_resize(man, e->w, e->h);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _e_manager_cb_key_down(void *data, int ev_type __UNUSED__, void *ev)
 {
    E_Manager *man;
@@ -589,14 +589,14 @@ _e_manager_cb_key_down(void *data, int ev_type __UNUSED__, void *ev)
    man = data;
    e = ev;
 
-   if (e->event_window != man->root) return 1;
+   if (e->event_window != man->root) return ECORE_CALLBACK_PASS_ON;
    if (e->root_window != man->root) man = _e_manager_get_for_root(e->root_window);
    if (e_bindings_key_down_event_handle(E_BINDING_CONTEXT_MANAGER, E_OBJECT(man), ev))
-     return 0;
-   return 1;
+     return ECORE_CALLBACK_DONE;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _e_manager_cb_key_up(void *data, int ev_type __UNUSED__, void *ev)
 {
    E_Manager *man;
@@ -605,14 +605,14 @@ _e_manager_cb_key_up(void *data, int ev_type __UNUSED__, void *ev)
    man = data;
    e = ev;
 
-   if (e->event_window != man->root) return 1;
+   if (e->event_window != man->root) return ECORE_CALLBACK_PASS_ON;
    if (e->root_window != man->root) man = _e_manager_get_for_root(e->root_window);
    if (e_bindings_key_up_event_handle(E_BINDING_CONTEXT_MANAGER, E_OBJECT(man), ev))
-     return 0;
-   return 1;
+     return ECORE_CALLBACK_DONE;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _e_manager_cb_frame_extents_request(void *data, int ev_type __UNUSED__, void *ev)
 {
    E_Manager *man;
@@ -630,7 +630,7 @@ _e_manager_cb_frame_extents_request(void *data, int ev_type __UNUSED__, void *ev
    con = e_container_current_get(man);
    e = ev;
 
-   if (ecore_x_window_parent_get(e->win) != man->root) return 1;
+   if (ecore_x_window_parent_get(e->win) != man->root) return ECORE_CALLBACK_PASS_ON;
 
    /* TODO:
     * * We need to check if we remember this window, and border locking is set
@@ -745,10 +745,10 @@ _e_manager_cb_frame_extents_request(void *data, int ev_type __UNUSED__, void *ev
    if (extents)
      ecore_x_netwm_frame_size_set(e->win, extents->l, extents->r, extents->t, extents->b);
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _e_manager_cb_ping(void *data, int ev_type __UNUSED__, void *ev)
 {
    E_Manager *man;
@@ -758,24 +758,24 @@ _e_manager_cb_ping(void *data, int ev_type __UNUSED__, void *ev)
    man = data;
    e = ev;
 
-   if (e->win != man->root) return 1;
+   if (e->win != man->root) return ECORE_CALLBACK_PASS_ON;
 
    bd = e_border_find_by_client_window(e->event_win);
-   if (!bd) return 1;
+   if (!bd) return ECORE_CALLBACK_PASS_ON;
 
    bd->ping_ok = 1;
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _e_manager_cb_timer_post_screensaver_lock(void *data __UNUSED__)
 {
    e_desklock_show_autolocked();
    timer_post_screensaver_lock = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
-static int
+static Eina_Bool
 _e_manager_cb_screensaver_notify(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
 {
    Ecore_X_Event_Screensaver_Notify *e = ev;
@@ -802,11 +802,11 @@ _e_manager_cb_screensaver_notify(void *data __UNUSED__, int ev_type __UNUSED__, 
 	       }
 	  }
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_manager_cb_client_message(void *data, int ev_type, void *ev)
+static Eina_Bool
+_e_manager_cb_client_message(__UNUSED__ void *data, __UNUSED__ int ev_type, void *ev)
 {
    Ecore_X_Event_Client_Message *e;
    E_Border *bd;
@@ -859,7 +859,7 @@ _e_manager_cb_client_message(void *data, int ev_type, void *ev)
 	  }
      }
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool
@@ -867,7 +867,7 @@ _e_manager_frame_extents_free_cb(const Eina_Hash *hash __UNUSED__, const void *k
 				 void *data, void *fdata __UNUSED__)
 {
    free(data);
-   return 1;
+   return EINA_TRUE;
 }
 
 static E_Manager *

@@ -6,7 +6,7 @@
 /* local function prototypes */
 static void _il_kbd_stop(void);
 static void _il_kbd_start(void);
-static int _il_kbd_cb_exit(void *data, int type, void *event);
+static Eina_Bool _il_kbd_cb_exit(void *data, int type, void *event);
 
 /* local variables */
 static E_Kbd_Int *ki = NULL;
@@ -114,12 +114,12 @@ _il_kbd_start(void)
      }
 }
 
-static int 
+static Eina_Bool
 _il_kbd_cb_exit(void *data, int type, void *event) 
 {
    Ecore_Exe_Event_Del *ev;
 
    ev = event;
    if (ev->exe == _kbd_exe) _kbd_exe = NULL;
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }

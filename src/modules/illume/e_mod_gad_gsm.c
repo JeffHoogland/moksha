@@ -50,7 +50,7 @@ static const E_Gadcon_Client_Class _gadcon_class =
 };
 static E_Module *mod = NULL;
 
-static int try_again(void *data);
+static Eina_Bool try_again(void *data);
 static void *signal_unmarhsall(DBusMessage *msg, DBusError *err);
 static void *operator_unmarhsall(DBusMessage *msg, DBusError *err);
 static void signal_callback_qtopia(void *data, void *ret, DBusError *err);
@@ -66,14 +66,14 @@ static void operator_changed(void *data, DBusMessage *msg);
 static void fso_operator_changed(void *data, DBusMessage *msg);
 static void name_changed(void *data, DBusMessage *msg);
 
-static int
+static Eina_Bool
 try_again(void *data)
 {
 //   printf("GSM-gadget: Try again called\n");
    get_signal(data);
    get_operator(data);
    try_again_timer = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 /* called from the module core */

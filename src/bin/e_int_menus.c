@@ -1189,7 +1189,7 @@ _e_int_menus_clients_title_abbrv(const char *title)
    int max_len;
 
    max_len = e_config->clientlist_max_caption_len;
-   if ((e_config->clientlist_limit_caption_len) && (strlen(title) > max_len))
+   if ((e_config->clientlist_limit_caption_len) && ((int) strlen(title) > max_len))
      {
 	char *abbv;
 	const char *left, *right;
@@ -1422,7 +1422,7 @@ _e_int_menus_shelves_pre_cb(void *data, E_Menu *m)
 
 	if (!s) continue;
 	if (s->zone->num != zone->num) continue;
-	if (s->cfg->container != con->num) continue;
+	if (s->cfg->container != (int) con->num) continue;
 
 	name = s->name;
 	if (!name) name = _("Shelf #");	

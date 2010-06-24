@@ -69,7 +69,7 @@ _e_startup(void)
 }
 
 static void
-_e_startup_next_cb(void *data)
+_e_startup_next_cb(__UNUSED__ void *data)
 {
    _e_startup();
 }

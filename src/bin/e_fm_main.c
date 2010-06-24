@@ -153,9 +153,9 @@ struct _E_Fm_Task
 
 /* local subsystem functions */
 static int _e_ipc_init(void);
-static int _e_ipc_cb_server_add(void *data, int type, void *event);
-static int _e_ipc_cb_server_del(void *data, int type, void *event);
-static int _e_ipc_cb_server_data(void *data, int type, void *event);
+static Eina_Bool _e_ipc_cb_server_add(void *data, int type, void *event);
+static Eina_Bool _e_ipc_cb_server_del(void *data, int type, void *event);
+static Eina_Bool _e_ipc_cb_server_data(void *data, int type, void *event);
 
 static void _e_fm_monitor_start(int id, const char *path);
 static void _e_fm_monitor_start_try(E_Fm_Task *task);
@@ -172,12 +172,12 @@ static int _e_client_send(int id, E_Fm_Op_Type type, void *data, int size);
 static int _e_fm_slave_run(E_Fm_Op_Type type, const char *args, int id);
 static E_Fm_Slave *_e_fm_slave_get(int id);
 static int _e_fm_slave_send(E_Fm_Slave *slave, E_Fm_Op_Type type, void *data, int size);
-static int _e_fm_slave_data_cb(void *data, int type, void *event);
-static int _e_fm_slave_error_cb(void *data, int type, void *event);
-static int _e_fm_slave_del_cb(void *data, int type, void *event);
+static Eina_Bool _e_fm_slave_data_cb(void *data, int type, void *event);
+static Eina_Bool _e_fm_slave_error_cb(void *data, int type, void *event);
+static Eina_Bool _e_fm_slave_del_cb(void *data, int type, void *event);
 
 static void _e_cb_file_monitor(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, const char *path);
-static int _e_cb_recent_clean(void *data);
+static Eina_Bool _e_cb_recent_clean(void *data);
 
 static void _e_file_add_mod(E_Dir *ed, const char *path, E_Fm_Op_Type op, int listing);
 static void _e_file_add(E_Dir *ed, const char *path, int listing);
@@ -186,8 +186,8 @@ static void _e_file_mod(E_Dir *ed, const char *path);
 static void _e_file_mon_dir_del(E_Dir *ed, const char *path);
 static void _e_file_mon_list_sync(E_Dir *ed);
 
-static int _e_cb_file_mon_list_idler(void *data);
-static int _e_cb_fop_trash_idler(void *data);
+static Eina_Bool _e_cb_file_mon_list_idler(void *data);
+static Eina_Bool _e_cb_fop_trash_idler(void *data);
 static char *_e_str_list_remove(Eina_List **list, char *str);
 static void _e_fm_reorder(const char *file, const char *dst, const char *relative, int after);
 static void _e_dir_del(E_Dir *ed);
@@ -217,15 +217,15 @@ static void _e_dbus_cb_vol_prop_mount_modified(void *data, void *reply_data, DBu
 static void _e_dbus_cb_vol_mounted(void *user_data, void *method_return, DBusError *error);
 static void _e_dbus_cb_vol_unmounted(void *user_data, void *method_return, DBusError *error);
 static void _e_dbus_cb_vol_unmounted_before_eject(void *user_data, void *method_return, DBusError *error);
-static int  _e_dbus_vb_vol_ejecting_after_unmount(void *data);
+static Eina_Bool  _e_dbus_vb_vol_ejecting_after_unmount(void *data);
 static void _e_dbus_cb_vol_ejected(void *user_data, void *method_return, DBusError *error);
 static int  _e_dbus_format_error_msg(char **buf, E_Volume *v, DBusError *error);
 static void _hal_test(void *data, DBusMessage *msg, DBusError *error);
 static void _e_hal_poll(void *data, DBusMessage *msg);
 
-static int  _e_dbus_vol_mount_timeout(void *data);
-static int  _e_dbus_vol_unmount_timeout(void *data);
-static int  _e_dbus_vol_eject_timeout(void *data);
+static Eina_Bool _e_dbus_vol_mount_timeout(void *data);
+static Eina_Bool _e_dbus_vol_unmount_timeout(void *data);
+static Eina_Bool _e_dbus_vol_eject_timeout(void *data);
 
 
 
@@ -954,7 +954,7 @@ e_volume_find(const char *udi)
    return NULL;
 }
 
-static int
+static Eina_Bool
 _e_dbus_vol_mount_timeout(void *data)
 {
    E_Volume *v = data;
@@ -971,7 +971,7 @@ _e_dbus_vol_mount_timeout(void *data)
                          0, 0, 0, buf, size);
    free(buf);
    
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void
@@ -1056,7 +1056,7 @@ e_volume_mount(E_Volume *v)
    eina_list_free(opt);
 }
 
-static int
+static Eina_Bool
 _e_dbus_vol_unmount_timeout(void *data)
 {
    E_Volume *v = data;
@@ -1073,7 +1073,7 @@ _e_dbus_vol_unmount_timeout(void *data)
                          0, 0, 0, buf, size);
    free(buf);
    
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void
@@ -1124,7 +1124,7 @@ e_volume_unmount(E_Volume *v)
                                        _e_dbus_cb_vol_unmounted, v);
 }
 
-static int
+static Eina_Bool
 _e_dbus_vol_eject_timeout(void *data)
 {
    E_Volume *v = data;
@@ -1141,10 +1141,10 @@ _e_dbus_vol_eject_timeout(void *data)
                          0, 0, 0, buf, size);
    free(buf);
    
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
-static int
+static Eina_Bool
 _e_dbus_vb_vol_ejecting_after_unmount(void *data)
 {
    E_Volume *v = data;
@@ -1153,7 +1153,7 @@ _e_dbus_vb_vol_ejecting_after_unmount(void *data)
    v->op = e_hal_device_volume_eject(_e_dbus_conn, v->udi, NULL,
                                      _e_dbus_cb_vol_ejected, v);
    
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void
@@ -1250,8 +1250,8 @@ _e_ipc_init(void)
    return 1;
 }
 
-static int
-_e_ipc_cb_server_add(void *data, int type, void *event)
+static Eina_Bool
+_e_ipc_cb_server_add(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Ipc_Event_Server_Add *e;
    
@@ -1260,15 +1260,15 @@ _e_ipc_cb_server_add(void *data, int type, void *event)
 			 6/*E_IPC_DOMAIN_FM*/,
 			 E_FM_OP_HELLO, 
 			 0, 0, 0, NULL, 0); /* send hello */
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_ipc_cb_server_del(void *data, int type, void *event)
+static Eina_Bool
+_e_ipc_cb_server_del(__UNUSED__ void *data, __UNUSED__ int type, __UNUSED__ void *event)
 {
    /* quit now */
    ecore_main_loop_quit();
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static void
@@ -1583,13 +1583,13 @@ _e_fm_handle_error_response(int id, E_Fm_Op_Type type)
 }
 
 
-static int
+static Eina_Bool
 _e_ipc_cb_server_data(void *data, int type, void *event)
 {
    Ecore_Ipc_Event_Server_Data *e;
    
    e = event;
-   if (e->major != 6/*E_IPC_DOMAIN_FM*/) return 1;
+   if (e->major != 6/*E_IPC_DOMAIN_FM*/) return ECORE_CALLBACK_PASS_ON;
    switch (e->minor)
      {
       case E_FM_OP_MONITOR_START: /* monitor dir (and implicitly list) */
@@ -1782,7 +1782,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 			 6/*E_IPC_DOMAIN_FM*/,
 			 E_FM_OP_OK,
 			 0, e->ref, 0, NULL, 0);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static int _e_client_send(int id, E_Fm_Op_Type type, void *data, int size)
@@ -1854,7 +1854,8 @@ static int _e_fm_slave_send(E_Fm_Slave *slave, E_Fm_Op_Type type, void *data, in
    return result;
 }
 
-static int _e_fm_slave_data_cb(void *data, int type, void *event)
+static Eina_Bool
+_e_fm_slave_data_cb(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Exe_Event_Data *e = event;
    E_Fm_Slave *slave;
@@ -1862,7 +1863,7 @@ static int _e_fm_slave_data_cb(void *data, int type, void *event)
    char *sdata;
    int ssize;
 
-   if (!e) return 1;
+   if (!e) return ECORE_CALLBACK_PASS_ON;
 
    slave = ecore_exe_data_get(e->exe);
 
@@ -1902,10 +1903,11 @@ static int _e_fm_slave_data_cb(void *data, int type, void *event)
 	ssize -= size;
      }
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int _e_fm_slave_error_cb(void *data, int type, void *event)
+static Eina_Bool
+_e_fm_slave_error_cb(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Exe_Event_Data *e = event;
    E_Fm_Slave *slave;
@@ -1919,8 +1921,8 @@ static int _e_fm_slave_error_cb(void *data, int type, void *event)
    return 1;
 }
 
-static int 
-_e_fm_slave_del_cb(void *data, int type, void *event)
+static Eina_Bool
+_e_fm_slave_del_cb(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Exe_Event_Del *e = event;
    E_Fm_Slave *slave;
@@ -2012,7 +2014,7 @@ _e_cb_file_monitor(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, c
    free(dir);
 }
 
-static int
+static Eina_Bool
 _e_cb_recent_clean(void *data)
 {
    E_Dir *ed;
@@ -2032,9 +2034,9 @@ _e_cb_recent_clean(void *data)
 	     free(m);
 	  }
    ed->cleaning = 0;
-   if (ed->recent_mods) return 1;
+   if (ed->recent_mods) return ECORE_CALLBACK_RENEW;
    ed->recent_clean = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 			       
 
@@ -2181,7 +2183,7 @@ _e_file_mon_list_sync(E_Dir *ed)
 			 0, ed->id, ed->sync, NULL, 0);
 }
 
-static int
+static Eina_Bool
 _e_cb_file_mon_list_idler(void *data)
 {
    E_Dir *ed;
@@ -2217,10 +2219,10 @@ _e_cb_file_mon_list_idler(void *data)
    ed->sync_time = 0.0;
    ed->idler = NULL;
    if (!ed->fq) _e_file_add(ed, "", 2);
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
-static int
+static Eina_Bool
 _e_cb_fop_trash_idler(void *data)
 {
    E_Fop *fop = NULL;
@@ -2270,7 +2272,7 @@ _e_cb_fop_trash_idler(void *data)
 	  {
 	     /* Move failed. Spec says delete files that can't be trashed */
 	     ecore_file_unlink(fop->src);
-	     return 0;
+	     return ECORE_CALLBACK_CANCEL;
 	  }
      }
 
@@ -2300,7 +2302,7 @@ _e_cb_fop_trash_idler(void *data)
    eina_stringshare_del(fop->dst);
    free(fop);
    _e_fops = eina_list_remove(_e_fops, fop);
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static char *

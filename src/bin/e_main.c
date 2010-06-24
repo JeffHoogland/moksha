@@ -76,14 +76,14 @@ static int  _e_main_path_init(void);
 static int  _e_main_path_shutdown(void);
 
 static void _e_main_cb_x_fatal(void *data __UNUSED__);
-static int _e_main_cb_signal_exit(void *data __UNUSED__, int ev_type __UNUSED__, void *ev __UNUSED__);
-static int _e_main_cb_signal_hup(void *data __UNUSED__, int ev_type __UNUSED__, void *ev __UNUSED__);
-static int _e_main_cb_signal_user(void *data __UNUSED__, int ev_type __UNUSED__, void *ev);
-static int _e_main_cb_x_flusher(void *data __UNUSED__);
-static int _e_main_cb_idler_before(void *data __UNUSED__);
-static int _e_main_cb_idler_after(void *data __UNUSED__);
-static int _e_main_cb_eet_cacheburst_end(void *data __UNUSED__);
-static int _e_main_cb_startup_fake_end(void *data __UNUSED__);
+static Eina_Bool _e_main_cb_signal_exit(void *data __UNUSED__, int ev_type __UNUSED__, void *ev __UNUSED__);
+static Eina_Bool _e_main_cb_signal_hup(void *data __UNUSED__, int ev_type __UNUSED__, void *ev __UNUSED__);
+static Eina_Bool _e_main_cb_signal_user(void *data __UNUSED__, int ev_type __UNUSED__, void *ev);
+static Eina_Bool _e_main_cb_x_flusher(void *data __UNUSED__);
+static Eina_Bool _e_main_cb_idler_before(void *data __UNUSED__);
+static Eina_Bool _e_main_cb_idler_after(void *data __UNUSED__);
+static Eina_Bool _e_main_cb_eet_cacheburst_end(void *data __UNUSED__);
+static Eina_Bool _e_main_cb_startup_fake_end(void *data __UNUSED__);
 static void _e_main_desk_save(void);
 static void _e_main_desk_restore(E_Manager *man, E_Container *con);
 static void _e_main_test_svg_loader(void);
@@ -115,13 +115,17 @@ static double t0, t1, t2;
 #define TS(x)
 #endif
 
-static int 
+#undef DBG_EINA_STRINGSHARE
+
+#ifdef DBG_EINA_STRINGSHARE
+static Eina_Bool
 stdbg(void *data __UNUSED__)
 {
-// enable to debug eina stringshare usage   
-//   eina_stringshare_dump();
-   return 0;
+// enable to debug eina stringshare usage
+   eina_stringshare_dump();
+   return ECORE_CALLBACK_CANCEL;
 }
+#endif
 
 /* externally accessible functions */
 int
@@ -1103,8 +1107,10 @@ main(int argc, char **argv)
    starting = 0;
    /* start our main loop */
 
+#ifdef DBG_EINA_STRINGSHARE
    // enable to debug eina stringshare usage
-//   ecore_timer_add(5.0, stdbg, NULL);
+   ecore_timer_add(5.0, stdbg, NULL);
+#endif
 
    ecore_main_loop_begin();
 
@@ -1516,22 +1522,22 @@ _e_main_cb_x_fatal(void *data __UNUSED__)
 //   ecore_main_loop_quit();
 }
 
-static int
+static Eina_Bool
 _e_main_cb_signal_exit(void *data __UNUSED__, int ev_type __UNUSED__, void *ev __UNUSED__)
 {
    /* called on ctrl-c, kill (pid) (also SIGINT, SIGTERM and SIGQIT) */
    e_sys_action_do(E_SYS_EXIT, NULL);
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
-static int
+static Eina_Bool
 _e_main_cb_signal_hup(void *data __UNUSED__, int ev_type __UNUSED__, void *ev __UNUSED__)
 {
    e_sys_action_do(E_SYS_RESTART, NULL);
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
-static int
+static Eina_Bool
 _e_main_cb_signal_user(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
 {
    Ecore_Event_Signal_User *e = ev;
@@ -1545,18 +1551,18 @@ _e_main_cb_signal_user(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
      {
         // FIXME: another core util for doing things with e
      }
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
-static int
+static Eina_Bool
 _e_main_cb_x_flusher(void *data __UNUSED__)
 {
    eet_clearcache();
    ecore_x_flush();
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
-static int
+static Eina_Bool
 _e_main_cb_idler_before(void *data __UNUSED__)
 {
    Eina_List *l, *pl;
@@ -1587,10 +1593,10 @@ _e_main_cb_idler_before(void *data __UNUSED__)
    _e_cacheburst--;
 /* eet_cacheburst(_e_cacheburst); */
    edje_thaw();
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
-static int
+static Eina_Bool
 _e_main_cb_idler_after(void *data __UNUSED__)
 {
    edje_freeze();
@@ -1606,22 +1612,22 @@ _e_main_cb_idler_after(void *data __UNUSED__)
 	     e_precache_end = 1;
 	  }
      }
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
-static int
+static Eina_Bool
 _e_main_cb_eet_cacheburst_end(void *data __UNUSED__)
 {
    _e_cacheburst--;
 /* eet_cacheburst(_e_cacheburst); */
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
-static int
+static Eina_Bool
 _e_main_cb_startup_fake_end(void *data __UNUSED__)
 {
    e_init_hide();
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void

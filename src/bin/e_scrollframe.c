@@ -71,7 +71,7 @@ static void _e_smart_pan_changed_hook(void *data, Evas_Object *obj, void *event_
 static void _e_smart_pan_pan_changed_hook(void *data, Evas_Object *obj, void *event_info);
 static void _e_smart_event_wheel(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_smart_event_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static int  _e_smart_momentum_animator(void *data);
+static Eina_Bool _e_smart_momentum_animator(void *data);
 static void _e_smart_event_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_smart_event_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_smart_event_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
@@ -493,7 +493,7 @@ _e_smart_event_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
      }
 }
 
-static int
+static Eina_Bool
 _e_smart_momentum_animator(void *data)
 {
    E_Smart_Data *sd;
@@ -516,10 +516,10 @@ _e_smart_momentum_animator(void *data)
 	if (dt >= 1.0)
 	  {
 	     sd->down.momentum_animator = NULL;
-	     return 0;
+	     return ECORE_CALLBACK_CANCEL;
 	  }
      }
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
 static void
@@ -1121,7 +1121,7 @@ _e_smart_init(void)
 	       _e_smart_color_set,
 	       _e_smart_clip_set,
 	       _e_smart_clip_unset,
-	       NULL, NULL, NULL, NULL
+	       NULL, NULL, NULL, NULL, NULL, NULL, NULL
 	  };
 	_e_smart = evas_smart_class_new(&sc);
      }

@@ -15,8 +15,8 @@ static void  _e_mod_menu_volume_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void  _e_mod_menu_add(void *data, E_Menu *m);
 static void  _e_mod_fileman_config_load(void);
 static void  _e_mod_fileman_config_free(void);
-static int   _e_mod_cb_config_timer(void *data);
-static int   _e_mod_zone_add(void *data, int type, void *event);
+static Eina_Bool _e_mod_cb_config_timer(void *data);
+static Eina_Bool _e_mod_zone_add(void *data, int type, void *event);
 
 static E_Module *conf_module = NULL;
 static E_Action *act = NULL;
@@ -517,23 +517,23 @@ _e_mod_fileman_config_free(void)
    E_FREE(fileman_config);   
 }
 
-static int 
-_e_mod_cb_config_timer(void *data) 
+static Eina_Bool
+_e_mod_cb_config_timer(void *data)
 {
    e_util_dialog_show(_("Fileman Settings Updated"), "%s", (char *)data);
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
-static int
-_e_mod_zone_add(void *data, int type, void *event)
+static Eina_Bool
+_e_mod_zone_add(__UNUSED__ void *data, int type, void *event)
 {
    E_Event_Zone_Add *ev;
    E_Zone *zone;
    
-   if (type != E_EVENT_ZONE_ADD) return 1;
+   if (type != E_EVENT_ZONE_ADD) return ECORE_CALLBACK_PASS_ON;
    ev = event;
    zone = ev->zone;
-   if (e_fwin_zone_find(zone)) return 1;
+   if (e_fwin_zone_find(zone)) return ECORE_CALLBACK_PASS_ON;
    if ((zone->container->num == 0) && (zone->num == 0) && 
        (fileman_config->view.show_desktop_icons))
      e_fwin_zone_new(zone, "desktop", "/");
@@ -548,5 +548,5 @@ _e_mod_zone_add(void *data, int type, void *event)
 	     e_fwin_zone_new(zone, "desktop", buf);
 	  }
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }

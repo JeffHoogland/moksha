@@ -16,7 +16,7 @@ static int _e_config_revisions = 0;
 /* local subsystem functions */
 static void _e_config_save_cb(void *data);
 static void _e_config_free(E_Config *cfg);
-static int _e_config_cb_timer(void *data);
+static Eina_Bool _e_config_cb_timer(void *data);
 static int _e_config_eet_close_handle(Eet_File *ef, char *file);
 static void _e_config_acpi_bindings_add(void);
 
@@ -1830,7 +1830,7 @@ _e_config_free(E_Config *ecf)
    E_FREE(ecf);
 }
 
-static int
+static Eina_Bool
 _e_config_cb_timer(void *data)
 {
    e_util_dialog_show(_("Settings Upgraded"), "%s", (char *)data);

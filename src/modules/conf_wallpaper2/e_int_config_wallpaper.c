@@ -127,7 +127,7 @@ static void _item_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _item_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static int _sort_cb(const void *d1, const void *d2);
 
-static int
+static Eina_Bool
 _e_smart_reconfigure_do(void *data)
 {
    Evas_Object *obj = data;
@@ -138,7 +138,7 @@ _e_smart_reconfigure_do(void *data)
    static int recursion = 0;
    Evas_Coord x, y, xx, yy, ww, hh, mw, mh, ox, oy, dd;
 
-   if (!sd) return 0;
+   if (!sd) return ECORE_CALLBACK_CANCEL;
    if (sd->cx > (sd->cw - sd->w)) sd->cx = sd->cw - sd->w;
    if (sd->cy > (sd->ch - sd->h)) sd->cy = sd->ch - sd->h;
    if (sd->cx < 0) sd->cx = 0;
@@ -415,7 +415,7 @@ _e_smart_reconfigure_do(void *data)
    if (changed)
      evas_object_smart_callback_call(obj, "changed", NULL);
    if (recursion == 0) sd->idle_enter = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void
@@ -549,7 +549,7 @@ _pan_info_set(Evas_Object *obj, Info *info)
 }
 
 
-static int
+static Eina_Bool
 _sel_anim(void *data)
 {
    Evas_Object *obj = data;
@@ -603,17 +603,17 @@ _sel_anim(void *data)
              sd->selin = EINA_TRUE;
              sd->selout = EINA_FALSE;
              sd->seltime = ecore_loop_time_get();
-             return 1;
+             return ECORE_CALLBACK_RENEW;
           }
         sd->selout = EINA_FALSE;
         sd->selin = EINA_FALSE;
         sd->animator = NULL;
-        return 0;
+        return ECORE_CALLBACK_CANCEL;
      }
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
-static int
+static Eina_Bool
 _sel_timer(void *data)
 {
    Evas_Object *obj = data;
@@ -625,7 +625,7 @@ _sel_timer(void *data)
         sd->selin = EINA_FALSE;
      }
    sd->seltimer = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void
@@ -1025,7 +1025,7 @@ _wp_changed(void *data, Evas_Object *obj, void *event_info)
 
 static void _scan(Info *info);
 
-static int
+static Eina_Bool
 _idler(void *data)
 {
    struct dirent *dp;
@@ -1035,7 +1035,7 @@ _idler(void *data)
    if (!info->dir)
      {
         info->idler = NULL;
-        return 0;
+        return ECORE_CALLBACK_CANCEL;
      }
    dp = readdir(info->dir);
    if (!dp)
@@ -1046,23 +1046,23 @@ _idler(void *data)
         info->dir = NULL;
         info->idler = NULL;
         _scan(info);
-        return 0;
+        return ECORE_CALLBACK_CANCEL;
      }
    if ((!strcmp(dp->d_name, ".")) || (!strcmp(dp->d_name, "..")))
-     return 1;
+     return ECORE_CALLBACK_RENEW;
    if (dp->d_name[0] == '.')
-     return 1;
+     return ECORE_CALLBACK_RENEW;
    snprintf(buf, sizeof(buf), "%s/%s", info->curdir, dp->d_name);
    if (ecore_file_is_dir(buf))
      {
         info->dirs = eina_list_append(info->dirs, strdup(buf));
-        return 1;
+        return ECORE_CALLBACK_RENEW;
      }
    info->scans++;
    _pan_file_add(info->span, buf, 0, 0);
    
    e_util_wakeup();
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
 static void

@@ -1,16 +1,16 @@
 #include "e.h"
 #include "e_mod_main.h"
 
-int
-_temperature_cb_exe_data(void *data, int type, void *event)
-{    
+Eina_Bool
+_temperature_cb_exe_data(void *data, __UNUSED__ int type, void *event)
+{
    Ecore_Exe_Event_Data *ev;
    Config_Face *inst;
    int temp;
 
    ev = event;
    inst = data;
-   if (ev->exe != inst->tempget_exe) return 1;
+   if (ev->exe != inst->tempget_exe) return ECORE_CALLBACK_PASS_ON;
    temp = -999;
    if ((ev->lines) && (ev->lines[0].line))
      {
@@ -59,18 +59,18 @@ _temperature_cb_exe_data(void *data, int type, void *event)
              inst->have_temp = 0;
           }
      }
-   return 0;
+   return ECORE_CALLBACK_DONE;
 }
 
-int
-_temperature_cb_exe_del(void *data, int type, void *event)
+Eina_Bool
+_temperature_cb_exe_del(void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Exe_Event_Del *ev;
    Config_Face *inst;
 
    ev = event;
    inst = data;
-   if (ev->exe != inst->tempget_exe) return 1;
+   if (ev->exe != inst->tempget_exe) return ECORE_CALLBACK_PASS_ON;
    inst->tempget_exe = NULL;
-   return 0;
+   return ECORE_CALLBACK_DONE;
 }

@@ -47,10 +47,10 @@ struct _E_Thumb
 
 /* local subsystem functions */
 static int _e_ipc_init(void);
-static int _e_ipc_cb_server_add(void *data, int type, void *event);
-static int _e_ipc_cb_server_del(void *data, int type, void *event);
-static int _e_ipc_cb_server_data(void *data, int type, void *event);
-static int _e_cb_timer(void *data);
+static Eina_Bool _e_ipc_cb_server_add(void *data, int type, void *event);
+static Eina_Bool _e_ipc_cb_server_del(void *data, int type, void *event);
+static Eina_Bool _e_ipc_cb_server_data(void *data, int type, void *event);
+static Eina_Bool _e_cb_timer(void *data);
 static void _e_thumb_generate(E_Thumb *eth);
 static char *_e_thumb_file_id(char *file, char *key);
 
@@ -144,8 +144,8 @@ _e_ipc_init(void)
    return 1;
 }
 
-static int
-_e_ipc_cb_server_add(void *data, int type, void *event)
+static Eina_Bool
+_e_ipc_cb_server_add(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Ipc_Event_Server_Add *e;
    
@@ -154,19 +154,19 @@ _e_ipc_cb_server_add(void *data, int type, void *event)
 			 5/*E_IPC_DOMAIN_THUMB*/, 
 			 1/*hello*/, 
 			 0, 0, 0, NULL, 0); /* send hello */
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_ipc_cb_server_del(void *data, int type, void *event)
+static Eina_Bool
+_e_ipc_cb_server_del(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    /* quit now */
    ecore_main_loop_quit();
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_ipc_cb_server_data(void *data, int type, void *event)
+static Eina_Bool
+_e_ipc_cb_server_data(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Ipc_Event_Server_Data *e;
    E_Thumb *eth;
@@ -175,7 +175,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
    char *key = NULL;
    
    e = event;
-   if (e->major != 5/*E_IPC_DOMAIN_THUMB*/) return 1;
+   if (e->major != 5/*E_IPC_DOMAIN_THUMB*/) return ECORE_CALLBACK_PASS_ON;
    switch (e->minor)
      {
       case 1:
@@ -223,10 +223,10 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
       default:
 	break;
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _e_cb_timer(void *data)
 {
    E_Thumb *eth;
@@ -249,7 +249,7 @@ _e_cb_timer(void *data)
      }
    else
      _timer = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 typedef struct _Color Color;

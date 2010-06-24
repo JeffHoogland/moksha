@@ -75,8 +75,8 @@ _border_item_add(Plugin *p, E_Border *bd)
    return 1;
 }
 
-static int
-_cb_border_remove(void *data, int type,  void *event)
+static Eina_Bool
+_cb_border_remove(void *data, __UNUSED__ int type,  void *event)
 {
    E_Event_Border_Remove *ev = event;
    Border_Item *bi;
@@ -87,7 +87,7 @@ _cb_border_remove(void *data, int type,  void *event)
      if (bi->border == ev->border)
        break;
 
-   if (!bi) return 1;
+   if (!bi) return ECORE_CALLBACK_PASS_ON;
 
    p->borders = eina_list_remove(p->borders, bi);
    p->base.items = eina_list_remove(p->base.items, bi);
@@ -95,17 +95,17 @@ _cb_border_remove(void *data, int type,  void *event)
 
    EVRY_PLUGIN_UPDATE(p, EVRY_UPDATE_ADD);
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
-static int
-_cb_border_add(void *data, int type,  void *event)
+static Eina_Bool
+_cb_border_add(void *data, __UNUSED__ int type,  void *event)
 {
    E_Event_Border_Add *ev = event;
    Plugin *p = data;
    int min;
 
    if (!_border_item_add(p, ev->border))
-     return 1;
+     return ECORE_CALLBACK_PASS_ON;
 
    EVRY_PLUGIN_ITEMS_CLEAR(p);
 
@@ -119,7 +119,7 @@ _cb_border_add(void *data, int type,  void *event)
 	EVRY_PLUGIN_UPDATE(p, EVRY_UPDATE_ADD);
      }
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static void

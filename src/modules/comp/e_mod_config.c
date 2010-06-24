@@ -236,7 +236,7 @@ _shadow_changed(void *data, Evas_Object *obj, void *event_info)
      }
 }
 
-static int
+static Eina_Bool
 _style_demo(void *data)
 {
    Eina_List *style_shadows, *l;
@@ -276,7 +276,7 @@ _style_demo(void *data)
 	      break;
 	  }
      }
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
 static void

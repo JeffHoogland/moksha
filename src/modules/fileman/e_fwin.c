@@ -125,8 +125,8 @@ static void _e_fwin_pan_child_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coo
 static void _e_fwin_pan_scroll_update(E_Fwin_Page *page);
 
 static void _e_fwin_zone_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info);
-static int  _e_fwin_zone_move_resize(void *data, int type, void *event);
-static int  _e_fwin_zone_del(void *data, int type, void *event);
+static Eina_Bool  _e_fwin_zone_move_resize(void *data, int type, void *event);
+static Eina_Bool  _e_fwin_zone_del(void *data, int type, void *event);
 static void _e_fwin_config_set(E_Fwin_Page *page);
 static void _e_fwin_window_title_set(E_Fwin_Page *page);
 static void _e_fwin_page_resize(E_Fwin_Page *page);
@@ -135,7 +135,7 @@ static int _e_fwin_dlg_cb_desk_sort(const void *p1, const void *p2);
 static int _e_fwin_dlg_cb_desk_list_sort(const void *data1, const void *data2);
 
 static void _e_fwin_op_registry_listener_cb(void *data, const E_Fm2_Op_Registry_Entry *ere);
-static int _e_fwin_op_registry_entry_add_cb(void *data, int type, void *event);
+static Eina_Bool _e_fwin_op_registry_entry_add_cb(void *data, int type, void *event);
 static void _e_fwin_op_registry_entry_iter(E_Fwin_Page *page);
 static void _e_fwin_op_registry_abort_cb(void *data, Evas_Object *obj, const char *emission, const char *source);
 
@@ -1360,17 +1360,17 @@ _e_fwin_zone_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event
    e_fwin_all_unsel(fwin);
 }
 
-static int 
+static Eina_Bool
 _e_fwin_zone_move_resize(void *data, int type, void *event) 
 {
    E_Event_Zone_Move_Resize *ev;
    E_Fwin *fwin;
 
-   if (type != E_EVENT_ZONE_MOVE_RESIZE) return 1;
+   if (type != E_EVENT_ZONE_MOVE_RESIZE) return ECORE_CALLBACK_PASS_ON;
    fwin = data;
    ev = event;
-   if (!fwin) return 1;
-   if (fwin->zone != ev->zone) return 1;
+   if (!fwin) return ECORE_CALLBACK_PASS_ON;
+   if (fwin->zone != ev->zone) return ECORE_CALLBACK_PASS_ON;
    if (fwin->bg_obj) 
      {
 	evas_object_move(fwin->bg_obj, ev->zone->x, ev->zone->y);
@@ -1383,22 +1383,22 @@ _e_fwin_zone_move_resize(void *data, int type, void *event)
 	evas_object_move(fwin->cur_page->scrollframe_obj, x, y);
 	evas_object_resize(fwin->cur_page->scrollframe_obj, w, h);
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int 
+static Eina_Bool
 _e_fwin_zone_del(void *data, int type, void *event) 
 {
    E_Event_Zone_Del *ev;
    E_Fwin *fwin;
 
-   if (type != E_EVENT_ZONE_DEL) return 1;
+   if (type != E_EVENT_ZONE_DEL) return ECORE_CALLBACK_PASS_ON;
    fwin = data;
    ev = event;
-   if (!fwin) return 1;
-   if (fwin->zone != ev->zone) return 1;
+   if (!fwin) return ECORE_CALLBACK_PASS_ON;
+   if (fwin->zone != ev->zone) return ECORE_CALLBACK_PASS_ON;
    e_object_del(E_OBJECT(fwin));
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 
@@ -2216,7 +2216,7 @@ _e_fwin_op_registry_listener_cb(void *data, const E_Fm2_Op_Registry_Entry *ere)
       edje_object_signal_emit(o, "e,action,set,normal", "e");
 }
 
-static int
+static Eina_Bool
 _e_fwin_op_registry_free_data_delayed(void *data)
 {
    evas_object_del((Evas_Object*)data);
@@ -2229,8 +2229,8 @@ _e_fwin_op_registry_free_data(void *data)
    ecore_timer_add(5.0, _e_fwin_op_registry_free_data_delayed, data);
 }
 
-static int
-_e_fwin_op_registry_entry_add_cb(void *data, int type, void *event)
+static Eina_Bool
+_e_fwin_op_registry_entry_add_cb(void *data, __UNUSED__ int type, void *event)
 {
    E_Fm2_Op_Registry_Entry *ere = (E_Fm2_Op_Registry_Entry *)event;
    E_Fwin_Page *page = data;

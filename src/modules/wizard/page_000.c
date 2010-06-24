@@ -18,12 +18,12 @@ wizard_page_shutdown(E_Wizard_Page *pg)
    return 1;
 }
 
-static int
-_next_page(void *data)
+static Eina_Bool
+_next_page(__UNUSED__ void *data)
 {
    e_wizard_button_next_enable_set(1);
    e_wizard_next();
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 EAPI int

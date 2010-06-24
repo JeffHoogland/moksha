@@ -856,7 +856,7 @@ _connman_services_reload(E_Connman_Module_Context *ctxt)
    _connman_default_service_changed(ctxt);
 }
 
-static int
+static Eina_Bool
 _connman_default_service_changed_delayed_do(void *data)
 {
    E_Connman_Module_Context *ctxt = data;
@@ -864,7 +864,7 @@ _connman_default_service_changed_delayed_do(void *data)
 
    ctxt->poller.default_service_changed = NULL;
    _connman_default_service_changed(ctxt);
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void
@@ -881,21 +881,21 @@ _connman_default_service_changed_delayed(E_Connman_Module_Context *ctxt)
 
 static void _connman_popup_del(E_Connman_Instance *inst);
 
-static int
+static Eina_Bool
 _connman_popup_input_window_mouse_up_cb(void *data, int type __UNUSED__, void *event)
 {
    Ecore_Event_Mouse_Button *ev = event;
    E_Connman_Instance *inst = data;
 
    if (ev->window != inst->ui.input.win)
-     return 1;
+     return ECORE_CALLBACK_PASS_ON;
 
    _connman_popup_del(inst);
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _connman_popup_input_window_key_down_cb(void *data, int type __UNUSED__, void *event)
 {
    Ecore_Event_Key *ev = event;
@@ -903,13 +903,13 @@ _connman_popup_input_window_key_down_cb(void *data, int type __UNUSED__, void *e
    const char *keysym;
 
    if (ev->window != inst->ui.input.win)
-     return 1;
+     return ECORE_CALLBACK_PASS_ON;
 
    keysym = ev->key;
    if (strcmp(keysym, "Escape") == 0)
      _connman_popup_del(inst);
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static void
@@ -1635,7 +1635,7 @@ _connman_actions_unregister(E_Connman_Module_Context *ctxt)
      }
 }
 
-static int
+static Eina_Bool
 _connman_manager_changed_do(void *data)
 {
    E_Connman_Module_Context *ctxt = data;
@@ -1644,7 +1644,7 @@ _connman_manager_changed_do(void *data)
    _connman_services_reload(ctxt);
 
    ctxt->poller.manager_changed = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void
@@ -1657,7 +1657,7 @@ _connman_manager_changed(void *data, const E_Connman_Element *element __UNUSED__
      (ECORE_POLLER_CORE, 1, _connman_manager_changed_do, ctxt);
 }
 
-static int
+static Eina_Bool
 _connman_event_manager_in(void *data, int type __UNUSED__, void *event __UNUSED__)
 {
    E_Connman_Module_Context *ctxt = data;
@@ -1671,10 +1671,10 @@ _connman_event_manager_in(void *data, int type __UNUSED__, void *event __UNUSED_
 
    _connman_services_reload(ctxt);
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _connman_event_manager_out(void *data, int type __UNUSED__, void *event __UNUSED__)
 {
    E_Connman_Module_Context *ctxt = data;
@@ -1685,16 +1685,16 @@ _connman_event_manager_out(void *data, int type __UNUSED__, void *event __UNUSED
    _connman_services_free(ctxt);
    _connman_default_service_changed(ctxt);
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _connman_event_mode_changed(void *data, int type __UNUSED__, void *event __UNUSED__)
 {
    E_Connman_Module_Context *ctxt = data;
    if ((ctxt->offline_mode == e_config->mode.offline) ||
        (!ctxt->has_manager))
-     return 1;
+     return ECORE_CALLBACK_PASS_ON;
    if (!ctxt->offline_mode_pending)
      {
 	if (!e_connman_manager_offline_mode_set(e_config->mode.offline,
@@ -1704,7 +1704,7 @@ _connman_event_mode_changed(void *data, int type __UNUSED__, void *event __UNUSE
    else
      ctxt->offline_mode_pending = EINA_FALSE;
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static E_Config_Dialog *

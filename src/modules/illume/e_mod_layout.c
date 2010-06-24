@@ -23,20 +23,20 @@ struct _Effect
 };
 
 /* internal calls */
-static int _e_mod_layout_cb_effect_animator(void *data);
+static Eina_Bool _e_mod_layout_cb_effect_animator(void *data);
 static void _e_mod_layout_effect_slide_out(E_Border *bd, double in, int post);
 static void _e_mod_layout_effect_slide_in(E_Border *bd, double in, int post);
 static void _e_mod_layout_cb_hook_post_fetch(void *data, void *data2);
 static void _e_mod_layout_post_border_assign(E_Border *bd, int not_new);
 static void _e_mod_layout_cb_hook_post_border_assign(void *data, void *data2);
 static void _e_mod_layout_cb_hook_end(void *data, void *data2);
-static int _cb_event_border_add(void *data, int type, void *event);
-static int _cb_event_border_remove(void *data, int type, void *event);
-static int _cb_event_border_focus_in(void *data, int type, void *event);
-static int _cb_event_border_focus_out(void *data, int type, void *event);
-static int _cb_event_border_show(void *data, int type, void *event);
-static int _cb_event_border_hide(void *data, int type, void *event);
-static int _cb_event_zone_move_resize(void *data, int type, void *event);
+static Eina_Bool _cb_event_border_add(void *data, int type, void *event);
+static Eina_Bool _cb_event_border_remove(void *data, int type, void *event);
+static Eina_Bool _cb_event_border_focus_in(void *data, int type, void *event);
+static Eina_Bool _cb_event_border_focus_out(void *data, int type, void *event);
+static Eina_Bool _cb_event_border_show(void *data, int type, void *event);
+static Eina_Bool _cb_event_border_hide(void *data, int type, void *event);
+static Eina_Bool _cb_event_zone_move_resize(void *data, int type, void *event);
 
 /* state */
 static E_Border_Hook *hook1 = NULL;
@@ -206,7 +206,7 @@ _e_mod_layout_apply_all(void)
 }
 
 /* internal calls */
-static int
+static Eina_Bool
 _e_mod_layout_cb_effect_animator(void *data)
 {
    Effect *ef;
@@ -255,9 +255,9 @@ _e_mod_layout_cb_effect_animator(void *data)
 	e_border_fx_offset(ef->border, 0, 0);
 	effects = eina_list_remove(effects, ef);
 	free(ef);
-	return 0;
+	return ECORE_CALLBACK_CANCEL;
      }
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
 static void
@@ -313,13 +313,13 @@ _e_mod_layout_effect_slide_in(E_Border *bd, double in, int post)
 
 static Ecore_Timer *_dockwin_hide_timer = NULL;
 
-static int
+static Eina_Bool
 _e_mod_layout_cb_docwin_hide(void *data)
 {
    _dockwin_hide_timer = NULL;
-   if (!dockwin) return 0;
+   if (!dockwin) return ECORE_CALLBACK_CANCEL;
    e_border_hide(dockwin, 2);
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void
@@ -692,24 +692,24 @@ _e_mod_layout_cb_hook_end(void *data, void *data2)
      _e_mod_layout_dockwin_hide();
 }
 
-static int
-_cb_event_border_add(void *data, int type, void *event)
+static Eina_Bool
+_cb_event_border_add(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Add *ev;
 
    ev = event;
-   if (ev->border->stolen) return 1;
-   return 1;
+   if (ev->border->stolen) return ECORE_CALLBACK_PASS_ON; /* FIXME: Woot ? */
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_cb_event_border_remove(void *data, int type, void *event)
+static Eina_Bool
+_cb_event_border_remove(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Remove *ev;
    Eina_List *l, *pl;
 
    ev = event;
-   if (ev->border->stolen) return 1;
+   if (ev->border->stolen) return ECORE_CALLBACK_PASS_ON;
    if (ev->border == dockwin)
      {
 	unsigned int area[4];
@@ -742,17 +742,17 @@ _cb_event_border_remove(void *data, int type, void *event)
 	     free(ef);
 	  }
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_cb_event_border_focus_in(void *data, int type, void *event)
+static Eina_Bool
+_cb_event_border_focus_in(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Focus_In *ev;
    E_Border *bd;
 
    ev = event;
-   if (ev->border->stolen) return 1;
+   if (ev->border->stolen) return ECORE_CALLBACK_PASS_ON;
    bd = ev->border;
    if (bd != dockwin)
      {
@@ -767,17 +767,17 @@ _cb_event_border_focus_in(void *data, int type, void *event)
 	       _e_mod_layout_dockwin_hide();
 	  }
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_cb_event_border_focus_out(void *data, int type, void *event)
+static Eina_Bool
+_cb_event_border_focus_out(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Focus_Out *ev;
    E_Border *bd;
 
    ev = event;
-   if (ev->border->stolen) return 1;
+   if (ev->border->stolen) return ECORE_CALLBACK_PASS_ON;
    bd = ev->border;
    if (bd != dockwin)
      {
@@ -787,33 +787,33 @@ _cb_event_border_focus_out(void *data, int type, void *event)
 	       _e_mod_layout_dockwin_hide();
 	  }
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_cb_event_border_show(void *data, int type, void *event)
+static Eina_Bool
+_cb_event_border_show(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Show *ev;
 
    ev = event;
-   if (ev->border->stolen) return 1;
-   return 1;
+   if (ev->border->stolen) return ECORE_CALLBACK_PASS_ON; /* FIXME: woot ?*/
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_cb_event_border_hide(void *data, int type, void *event)
+static Eina_Bool
+_cb_event_border_hide(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Hide *ev;
 
    ev = event;
-   if (ev->border->stolen) return 1;
-   return 1;
+   if (ev->border->stolen) return ECORE_CALLBACK_PASS_ON; /* FIXME: woot ? */
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_cb_event_zone_move_resize(void *data, int type, void *event)
+static Eina_Bool
+_cb_event_zone_move_resize(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    _e_mod_layout_apply_all();
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 

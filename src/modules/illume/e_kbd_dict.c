@@ -443,7 +443,7 @@ e_kbd_dict_save(E_Kbd_Dict *kd)
      _e_kbd_dict_lookup_build(kd);
 }
 
-static int
+static Eina_Bool
 _e_kbd_dict_cb_save_flush(void *data)
 {
    E_Kbd_Dict *kd;
@@ -453,10 +453,10 @@ _e_kbd_dict_cb_save_flush(void *data)
        (kd->word.letters) ||
        (kd->matches.deadends) ||
        (kd->matches.leads))
-     return 1;
+     return ECORE_CALLBACK_RENEW;
    kd->changed.flush_timer = NULL;
    e_kbd_dict_save(kd);
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void

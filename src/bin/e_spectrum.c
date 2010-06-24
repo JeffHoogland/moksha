@@ -20,7 +20,7 @@ struct _E_Spectrum
   Ecore_Timer *draw_timer;
 };
 
-static int _e_spectrum_redraw(void *d);
+static Eina_Bool _e_spectrum_redraw(void *d);
 
 static void
 _e_spectrum_smart_add(Evas_Object *o)
@@ -170,6 +170,9 @@ _e_spectrum_smart_init(void)
 	       NULL,
 	       NULL,
 	       NULL,
+	       NULL,
+	       NULL,
+	       NULL,
 	       NULL
 	  };
         _e_spectrum_smart = evas_smart_class_new(&sc);
@@ -263,7 +266,7 @@ _e_spectrum_2d_color_at(E_Spectrum *sp, int x, int y, int *r, int *g, int *b)
   if (b) *b = bb;
 }
 
-static int
+static Eina_Bool
 _e_spectrum_redraw(void *d)
 {
   E_Spectrum *sp = d;
@@ -276,7 +279,7 @@ _e_spectrum_redraw(void *d)
   if (!data) 
     {
        sp->draw_timer = NULL;
-       return 0;
+       return ECORE_CALLBACK_CANCEL;
     }
 
   switch (sp->mode)
@@ -321,7 +324,7 @@ _e_spectrum_redraw(void *d)
   evas_object_image_data_set(sp->o_spectrum, data);
   evas_object_image_data_update_add(sp->o_spectrum, 0, 0, sp->iw, sp->ih);
   sp->draw_timer = NULL;
-  return 0;
+  return ECORE_CALLBACK_CANCEL;
 }
 
 static void

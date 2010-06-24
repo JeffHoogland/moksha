@@ -70,13 +70,13 @@ static int _e_desklock_fullscreen_count = 0;
 
 /***********************************************************************/
 
-static int _e_desklock_cb_key_down(void *data, int type, void *event);
-static int _e_desklock_cb_mouse_down(void *data, int type, void *event);
-static int _e_desklock_cb_mouse_up(void *data, int type, void *event);
-static int _e_desklock_cb_mouse_wheel(void *data, int type, void *event);
-static int _e_desklock_cb_mouse_move(void *data, int type, void *event);
-static int _e_desklock_cb_custom_desklock_exit(void *data, int type, void *event);
-static int _e_desklock_cb_idle_poller(void *data);
+static Eina_Bool _e_desklock_cb_key_down(void *data, int type, void *event);
+static Eina_Bool _e_desklock_cb_mouse_down(void *data, int type, void *event);
+static Eina_Bool _e_desklock_cb_mouse_up(void *data, int type, void *event);
+static Eina_Bool _e_desklock_cb_mouse_wheel(void *data, int type, void *event);
+static Eina_Bool _e_desklock_cb_mouse_move(void *data, int type, void *event);
+static Eina_Bool _e_desklock_cb_custom_desklock_exit(void *data, int type, void *event);
+static Eina_Bool _e_desklock_cb_idle_poller(void *data);
 
 static void _e_desklock_null(void);
 static void _e_desklock_passwd_update(void);
@@ -87,7 +87,7 @@ static int _e_desklock_check_auth(void);
 static void _e_desklock_state_set(int state);
 
 #ifdef HAVE_PAM
-static int _e_desklock_cb_exit(void *data, int type, void *event);
+static Eina_Bool _e_desklock_cb_exit(void *data, int type, void *event);
 static int _desklock_auth(char *passwd);
 static int _desklock_pam_init(E_Desklock_Auth *da);
 static int _desklock_auth_pam_conv(int num_msg, const struct pam_message **msg, struct pam_response **resp, void *appdata_ptr);
@@ -96,8 +96,8 @@ static char *_desklock_auth_get_current_host(void);
 #endif
 
 static void _e_desklock_ask_presentation_mode(void);
-static int _e_desklock_handler_border_fullscreen_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__);
-static int _e_desklock_handler_border_unfullscreen_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__);
+static Eina_Bool _e_desklock_handler_border_fullscreen_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__);
+static Eina_Bool _e_desklock_handler_border_unfullscreen_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__);
 
 EAPI int E_EVENT_DESKLOCK = 0;
 
@@ -479,7 +479,7 @@ e_desklock_hide(void)
      }
 }
 
-static int
+static Eina_Bool
 _e_desklock_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Event_Key *ev = event;
@@ -510,28 +510,28 @@ _e_desklock_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	  }
      }
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _e_desklock_cb_mouse_down(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _e_desklock_cb_mouse_up(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _e_desklock_cb_mouse_wheel(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _e_desklock_cb_mouse_move(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    E_Desklock_Popup_Data *edp;
@@ -541,7 +541,7 @@ _e_desklock_cb_mouse_move(void *data __UNUSED__, int type __UNUSED__, void *even
    current_zone = e_zone_current_get(e_container_current_get(e_manager_current_get()));
 
    if (current_zone == last_active_zone)
-     return 1;
+     return ECORE_CALLBACK_PASS_ON;
 
    EINA_LIST_FOREACH(edd->elock_wnd_list, l, edp)
      {
@@ -553,7 +553,7 @@ _e_desklock_cb_mouse_move(void *data __UNUSED__, int type __UNUSED__, void *even
 	  evas_object_show(edp->login_box);
      }
    last_active_zone = current_zone;
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static void
@@ -690,7 +690,7 @@ _e_desklock_state_set(int state)
 
 
 #ifdef HAVE_PAM
-static int
+static Eina_Bool
 _e_desklock_cb_exit(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Exe_Event_Del *ev = event;
@@ -726,7 +726,7 @@ _e_desklock_cb_exit(void *data __UNUSED__, int type __UNUSED__, void *event)
 	if (_e_desklock_exit_handler) ecore_event_handler_del(_e_desklock_exit_handler);
 	_e_desklock_exit_handler = NULL;
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static int
@@ -907,11 +907,11 @@ _desklock_auth_get_current_host(void)
 }
 #endif
 
-static int
+static Eina_Bool
 _e_desklock_cb_custom_desklock_exit(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Exe_Event_Del *ev = event;
-   if (ev->exe != _e_custom_desklock_exe) return 1;
+   if (ev->exe != _e_custom_desklock_exe) return ECORE_CALLBACK_PASS_ON;
 
    if (ev->exit_code != 0)
      {
@@ -920,10 +920,10 @@ _e_desklock_cb_custom_desklock_exit(void *data __UNUSED__, int type __UNUSED__, 
 
    e_desklock_hide();
 
-   return 0;
+   return ECORE_CALLBACK_DONE;
 }
 
-static int
+static Eina_Bool
 _e_desklock_cb_idle_poller(void *data __UNUSED__)
 {
    if ((e_config->desklock_autolock_idle) && (!e_config->mode.presentation) &&
@@ -932,7 +932,7 @@ _e_desklock_cb_idle_poller(void *data __UNUSED__)
 	double idle, max;
 
 	/* If a desklock is already up, bail */
-        if ((_e_custom_desklock_exe) || (edd)) return 1;
+        if ((_e_custom_desklock_exe) || (edd)) return ECORE_CALLBACK_RENEW;
 
 	idle = ecore_x_screensaver_idle_time_get();
 	max = e_config->desklock_autolock_idle_timeout;
@@ -962,7 +962,7 @@ _e_desklock_cb_idle_poller(void *data __UNUSED__)
      }
 
    /* Make sure our poller persists. */
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
 static void
@@ -1075,19 +1075,19 @@ _e_desklock_ask_presentation_mode(void)
    _e_desklock_ask_presentation_dia = dia;
 }
 
-static int
+static Eina_Bool
 _e_desklock_handler_border_fullscreen_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    _e_desklock_fullscreen_count++;
    if (_e_desklock_fullscreen_count == 1) e_desklock_init();
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _e_desklock_handler_border_unfullscreen_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    _e_desklock_fullscreen_count--;
    if (_e_desklock_fullscreen_count == 0) e_desklock_init();
    else if (_e_desklock_fullscreen_count < 0) _e_desklock_fullscreen_count = 0;
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }

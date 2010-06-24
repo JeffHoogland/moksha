@@ -36,21 +36,21 @@ e_ofono_theme_path(void)
 
 static void _ofono_popup_del(E_Ofono_Instance *inst);
 
-static int
+static Eina_Bool
 _ofono_popup_input_window_mouse_up_cb(void *data, int type __UNUSED__, void *event)
 {
    Ecore_Event_Mouse_Button *ev = event;
    E_Ofono_Instance *inst = data;
 
    if (ev->window != inst->ui.input.win)
-      return 1;
+      return ECORE_CALLBACK_PASS_ON;
 
    _ofono_popup_del(inst);
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _ofono_popup_input_window_key_down_cb(void *data, int type __UNUSED__, void *event)
 {
    Ecore_Event_Key *ev = event;
@@ -58,13 +58,13 @@ _ofono_popup_input_window_key_down_cb(void *data, int type __UNUSED__, void *eve
    const char *keysym;
 
    if (ev->window != inst->ui.input.win)
-      return 1;
+      return ECORE_CALLBACK_PASS_ON;
 
    keysym = ev->key;
    if (!strcmp(keysym, "Escape"))
       _ofono_popup_del(inst);
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static void
@@ -530,13 +530,13 @@ static const E_Gadcon_Client_Class _gc_class =
 
 EAPI E_Module_Api e_modapi = {E_MODULE_API_VERSION, _e_ofono_Name};
 
-static int
+static Eina_Bool
 _ofono_manager_changed_do(void *data)
 {
    E_Ofono_Module_Context *ctxt = data;
 
    ctxt->poller.manager_changed = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void
@@ -549,7 +549,7 @@ _ofono_manager_changed(void *data, const E_Ofono_Element *element __UNUSED__)
      (ECORE_POLLER_CORE, 1, _ofono_manager_changed_do, ctxt);
 }
 
-static int
+static Eina_Bool
 _ofono_event_manager_in(void *data, int type __UNUSED__, void *event __UNUSED__)
 {
    E_Ofono_Element *element;
@@ -567,10 +567,10 @@ _ofono_event_manager_in(void *data, int type __UNUSED__, void *event __UNUSED__)
    EINA_LIST_FOREACH(ctxt->instances, l, inst)
        _ofono_gadget_update(inst);
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _ofono_event_manager_out(void *data, int type __UNUSED__, void *event __UNUSED__)
 {
    E_Ofono_Module_Context *ctxt = data;
@@ -584,10 +584,10 @@ _ofono_event_manager_out(void *data, int type __UNUSED__, void *event __UNUSED__
    EINA_LIST_FOREACH(ctxt->instances, l, inst)
       _ofono_gadget_update(inst);
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _eofono_event_element_add(void *data, int type __UNUSED__, void *info)
 {
    E_Ofono_Element *element = info;
@@ -619,7 +619,7 @@ _eofono_event_element_add(void *data, int type __UNUSED__, void *info)
 
    /* if still orphan, do nothing */
    if (!have_inst)
-     return ECORE_CALLBACK_RENEW;
+     return ECORE_CALLBACK_PASS_ON;
 
    if (e_ofono_element_is_modem(element))
      inst->modem_element = element;
@@ -628,10 +628,10 @@ _eofono_event_element_add(void *data, int type __UNUSED__, void *info)
 
    _ofono_gadget_update(inst);
 
-   return ECORE_CALLBACK_RENEW;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _eofono_event_element_del(void *data, int type __UNUSED__, void *info)
 {
    E_Ofono_Element *element = info;
@@ -650,7 +650,7 @@ _eofono_event_element_del(void *data, int type __UNUSED__, void *info)
 	}
 
    if (!inst_found)
-     return ECORE_CALLBACK_RENEW;
+     return ECORE_CALLBACK_PASS_ON;
 
    if (e_ofono_element_is_modem(element))
      {
@@ -668,10 +668,10 @@ _eofono_event_element_del(void *data, int type __UNUSED__, void *info)
 
    _ofono_gadget_update(inst);
 
-   return ECORE_CALLBACK_RENEW;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _eofono_event_element_updated(void *data, int type __UNUSED__, void *event_info)
 {
    E_Ofono_Element *element = event_info;
@@ -691,7 +691,7 @@ _eofono_event_element_updated(void *data, int type __UNUSED__, void *event_info)
 	}
 
    if (!inst_found)
-     return ECORE_CALLBACK_RENEW;
+     return ECORE_CALLBACK_PASS_ON;
 
    if (e_ofono_element_is_modem(element))
      {
@@ -725,7 +725,7 @@ _eofono_event_element_updated(void *data, int type __UNUSED__, void *event_info)
 
    _ofono_gadget_update(inst);
 
-   return ECORE_CALLBACK_RENEW;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static void

@@ -544,7 +544,7 @@ _systray_activate(Instance *inst)
    return 1;
 }
 
-static int
+static Eina_Bool
 _systray_activate_retry(void *data)
 {
    Instance *inst = data;
@@ -559,10 +559,10 @@ _systray_activate_retry(void *data)
 	     RETRY_TIMEOUT);
 
    if (!ret)
-     return 1;
+     return ECORE_CALLBACK_RENEW;
 
    inst->timer.retry = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void
@@ -573,7 +573,7 @@ _systray_retry(Instance *inst)
      (RETRY_TIMEOUT, _systray_activate_retry, inst);
 }
 
-static int
+static Eina_Bool
 _systray_activate_retry_first(void *data)
 {
    Instance *inst = data;
@@ -585,7 +585,7 @@ _systray_activate_retry_first(void *data)
      {
 	fputs("SYSTRAY: activate success!\n", stderr);
 	inst->timer.retry = NULL;
-	return 0;
+	return ECORE_CALLBACK_CANCEL;
      }
 
    edje_object_signal_emit(inst->ui.gadget, _sig_disable, _sig_source);
@@ -595,7 +595,7 @@ _systray_activate_retry_first(void *data)
 
    inst->timer.retry = NULL;
    _systray_retry(inst);
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void
@@ -695,7 +695,7 @@ _systray_handle_xembed(Instance *inst __UNUSED__, Ecore_X_Event_Client_Message *
      }
 }
 
-static int
+static Eina_Bool
 _systray_cb_client_message(void *data, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Client_Message *ev = event;
@@ -708,10 +708,10 @@ _systray_cb_client_message(void *data, int type __UNUSED__, void *event)
    else if (ev->message_type == _atom_xembed)
      _systray_handle_xembed(inst, ev);
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _systray_cb_window_destroy(void *data, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Window_Destroy *ev = event;
@@ -726,10 +726,10 @@ _systray_cb_window_destroy(void *data, int type __UNUSED__, void *event)
 	  break;
        }
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _systray_cb_window_show(void *data, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Window_Show *ev = event;
@@ -744,10 +744,10 @@ _systray_cb_window_show(void *data, int type __UNUSED__, void *event)
 	  break;
        }
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _systray_cb_window_configure(void *data, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Window_Configure *ev = event;
@@ -762,10 +762,10 @@ _systray_cb_window_configure(void *data, int type __UNUSED__, void *event)
 	  break;
        }
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _systray_cb_reparent_notify(void *data, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Window_Reparent *ev = event;
@@ -780,10 +780,10 @@ _systray_cb_reparent_notify(void *data, int type __UNUSED__, void *event)
 	  break;
        }
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _systray_cb_selection_clear(void *data, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Selection_Clear *ev = event;
@@ -803,7 +803,7 @@ _systray_cb_selection_clear(void *data, int type __UNUSED__, void *event)
 	inst->win.base = None;
 	_systray_retry(inst);
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static void

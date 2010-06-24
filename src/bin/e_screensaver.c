@@ -11,11 +11,11 @@ static E_Dialog *_e_screensaver_ask_presentation_dia = NULL;
 static int _e_screensaver_ask_presentation_count = 0;
 static int _e_screensaver_fullscreen_count = 0;
 
-static int
+static Eina_Bool
 _e_screensaver_handler_config_mode_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    e_screensaver_init();
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static void
@@ -128,7 +128,7 @@ _e_screensaver_ask_presentation_mode(void)
    _e_screensaver_ask_presentation_dia = dia;
 }
 
-static int
+static Eina_Bool
 _e_screensaver_handler_screensaver_notify_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Screensaver_Notify *e = event;
@@ -149,24 +149,24 @@ _e_screensaver_handler_screensaver_notify_cb(void *data __UNUSED__, int type __U
    else if (_e_screensaver_ask_presentation_count)
      _e_screensaver_ask_presentation_count = 0;
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _e_screensaver_handler_border_fullscreen_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    _e_screensaver_fullscreen_count++;
    if (_e_screensaver_fullscreen_count == 1) e_screensaver_init();
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _e_screensaver_handler_border_unfullscreen_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    _e_screensaver_fullscreen_count--;
    if (_e_screensaver_fullscreen_count == 0) e_screensaver_init();
    else if (_e_screensaver_fullscreen_count < 0) _e_screensaver_fullscreen_count = 0;
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 EAPI int

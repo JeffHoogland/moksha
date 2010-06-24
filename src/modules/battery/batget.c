@@ -52,7 +52,7 @@
 #define CHECK_SYS_CLASS_POWER_SUPPLY  4
 
 static void init(void);
-static int poll_cb(void *data);
+static Eina_Bool poll_cb(void *data);
 
 static int poll_interval = 512;
 static Ecore_Poller *poller = NULL;
@@ -423,7 +423,7 @@ darwin_check(void)
 /* new linux power class api to get power info - brand new and this code
  * may have bugs, but it is a good attempt to get it right */
 #if 0
-static int linux_sys_class_power_supply_cb_event_fd_active(void *data, Ecore_Fd_Handler *fd_handler);
+static Eina_Bool linux_sys_class_power_supply_cb_event_fd_active(void *data, Ecore_Fd_Handler *fd_handler);
 static void linux_sys_class_power_supply_check(void);
 #endif
 static void linux_sys_class_power_supply_init(void);
@@ -455,18 +455,18 @@ static Eina_List *events = NULL;
 #if 0
 static Ecore_Timer *sys_class_delay_check = NULL;
 
-static int
+static Eina_Bool
 linux_sys_class_power_supply_cb_delay_check(void *data)
 {
    linux_sys_class_power_supply_init();
    poll_cb(NULL);
    sys_class_delay_check = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static Ecore_Timer *re_init_timer = NULL;
 
-static int
+static Eina_Bool
 linux_sys_class_power_supply_cb_re_init(void *data)
 {
    Sys_Class_Power_Supply_Uevent *sysev;
@@ -484,10 +484,10 @@ linux_sys_class_power_supply_cb_re_init(void *data)
      }
    linux_sys_class_power_supply_init();
    re_init_timer = NULL;
-   return 0;
-}     
+   return ECORE_CALLBACK_CANCEL;
+}
 
-static int
+static Eina_Bool
 linux_sys_class_power_supply_cb_event_fd_active(void *data, Ecore_Fd_Handler *fd_handler)
 {
    Sys_Class_Power_Supply_Uevent *sysev;
@@ -531,7 +531,7 @@ linux_sys_class_power_supply_cb_event_fd_active(void *data, Ecore_Fd_Handler *fd
 	     sys_class_delay_check = ecore_timer_add(0.2, linux_sys_class_power_supply_cb_delay_check, NULL);
 	  }
      }
-   return 1;
+   return ECORE_CALLBACK_CANCEL;
 }
 #endif
 static void
@@ -870,9 +870,9 @@ linux_sys_class_power_supply_check(void)
  * linux_sys_class_power_supply_init/check() though as this is the new
  * power class api to poll for power stuff
  */
-static int linux_acpi_cb_acpid_add(void *data, int type, void *event);
-static int linux_acpi_cb_acpid_del(void *data, int type, void *event);
-static int linux_acpi_cb_acpid_data(void *data, int type, void *event);
+static Eina_Bool linux_acpi_cb_acpid_add(void *data, int type, void *event);
+static Eina_Bool linux_acpi_cb_acpid_del(void *data, int type, void *event);
+static Eina_Bool linux_acpi_cb_acpid_data(void *data, int type, void *event);
 static void linux_acpi_init(void);
 static void linux_acpi_check(void);
 
@@ -886,22 +886,22 @@ static Ecore_Timer *delay_check = NULL;
 static int event_fd = -1;
 static Ecore_Fd_Handler *event_fd_handler = NULL;
 
-static int
+static Eina_Bool
 linux_acpi_cb_delay_check(void *data __UNUSED__)
 {
    linux_acpi_init();
    poll_cb(NULL);
    delay_check = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
-static int
+static Eina_Bool
 linux_acpi_cb_acpid_add(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 linux_acpi_cb_acpid_del(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    ecore_con_server_del(acpid);
@@ -912,18 +912,18 @@ linux_acpi_cb_acpid_del(void *data __UNUSED__, int type __UNUSED__, void *event 
    acpid_handler_del = NULL;
    if (acpid_handler_data) ecore_event_handler_del(acpid_handler_data);
    acpid_handler_data = NULL;
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 linux_acpi_cb_acpid_data(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    if (delay_check) ecore_timer_del(delay_check);
    delay_check = ecore_timer_add(0.2, linux_acpi_cb_delay_check, NULL);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 linux_acpi_cb_event_fd_active(void *data __UNUSED__, Ecore_Fd_Handler *fd_handler)
 {
    if (ecore_main_fd_handler_active_get(fd_handler, ECORE_FD_READ))
@@ -957,7 +957,7 @@ linux_acpi_cb_event_fd_active(void *data __UNUSED__, Ecore_Fd_Handler *fd_handle
 	     delay_check = ecore_timer_add(0.2, linux_acpi_cb_delay_check, NULL);
 	  }
      }
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
 static void
@@ -1478,7 +1478,7 @@ init(void)
 #endif
 }
 
-static int
+static Eina_Bool
 poll_cb(void *data __UNUSED__)
 {
    int ptime_left;
@@ -1511,7 +1511,7 @@ poll_cb(void *data __UNUSED__)
      }
 #elif defined(HAVE_CFBASE_H) /* OS X */
    darwin_check();
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 #else
    switch (mode)
      {
@@ -1548,7 +1548,7 @@ poll_cb(void *data __UNUSED__)
 		 battery_full, time_left, time_left, have_battery, have_power);
 	fflush(stdout);
      }
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
 int

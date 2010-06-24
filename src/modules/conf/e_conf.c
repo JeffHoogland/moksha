@@ -57,7 +57,7 @@ static void _e_configure_item_cb(void *data);
 static void _e_configure_focus_cb(void *data, Evas_Object *obj);
 static void _e_configure_keydown_cb(void *data, Evas *e, Evas_Object *obj, void *event);
 static void _e_configure_fill_cat_list(void *data);
-static int  _e_configure_module_update_cb(void *data, int type, void *event);
+static Eina_Bool  _e_configure_module_update_cb(void *data, int type, void *event);
 
 static E_Configure *_e_configure = NULL;
 
@@ -513,16 +513,16 @@ _e_configure_fill_cat_list(void *data)
    evas_event_thaw(evas_object_evas_get(eco->cat_list));
 }
 
-static int
+static Eina_Bool
 _e_configure_module_update_cb(void *data, int type __UNUSED__, void *event __UNUSED__)
 {
    E_Configure *eco;
    int sel = 0;
 
-   if (!(eco = data)) return 1;
-   if (!eco->cat_list) return 1;
+   if (!(eco = data)) return ECORE_CALLBACK_PASS_ON;
+   if (!eco->cat_list) return ECORE_CALLBACK_PASS_ON;
    sel = e_widget_toolbar_item_selected_get(eco->cat_list);
    _e_configure_fill_cat_list(eco);
    e_widget_toolbar_item_select(eco->cat_list, sel);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }

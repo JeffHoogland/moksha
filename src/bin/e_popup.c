@@ -5,8 +5,8 @@
 
 /* local subsystem functions */
 static void _e_popup_free(E_Popup *pop);
-static int  _e_popup_idle_enterer(void *data);
-static int  _e_popup_cb_window_shape(void *data, int ev_type, void *ev);
+static Eina_Bool _e_popup_idle_enterer(void *data);
+static Eina_Bool _e_popup_cb_window_shape(void *data, int ev_type, void *ev);
 
 /* local subsystem globals */
 static Ecore_Event_Handler *_e_popup_window_shape_handler = NULL;
@@ -239,14 +239,14 @@ e_popup_idler_before(void)
 				 rects[i].width -= rects[i].x;
 				 rects[i].x = 0;
 			      }
-			    if ((rects[i].x + rects[i].width) > pop->w)
+			    if ((rects[i].x + (int) rects[i].width) > pop->w)
 			      rects[i].width = rects[i].width - rects[i].x;
 			    if (rects[i].y < 0)
 			      {
 				 rects[i].height -= rects[i].y;
 				 rects[i].y = 0;
 			      }
-			    if ((rects[i].y + rects[i].height) > pop->h)
+			    if ((rects[i].y + (int) rects[i].height) > pop->h)
 			      rects[i].height = rects[i].height - rects[i].y;
 			    
 			    if ((orects[i].x != rects[i].x) ||
@@ -316,22 +316,22 @@ _e_popup_free(E_Popup *pop)
    free(pop);
 }
 
-static int
+static Eina_Bool
 _e_popup_idle_enterer(void *data)
 {
    E_Popup *pop;
 
-   if (!(pop = data)) return 0;
+   if (!(pop = data)) return ECORE_CALLBACK_CANCEL;
    ecore_evas_move(pop->ecore_evas,
 		   pop->zone->x + pop->x, 
 		   pop->zone->y + pop->y);
    e_container_shape_show(pop->shape);
    pop->idle_enterer = NULL;
-   return 0;
+   return ECORE_CALLBACK_RENEW;
 }
 
-static int
-_e_popup_cb_window_shape(void *data, int ev_type, void *ev)
+static Eina_Bool
+_e_popup_cb_window_shape(__UNUSED__ void *data, __UNUSED__ int ev_type, void *ev)
 {
    E_Popup *pop;
    Ecore_X_Event_Window_Shape *e;
@@ -339,5 +339,5 @@ _e_popup_cb_window_shape(void *data, int ev_type, void *ev)
    e = ev;
    pop = e_popup_find_by_window(e->win);
    if (pop) pop->need_shape_export = 1;
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }

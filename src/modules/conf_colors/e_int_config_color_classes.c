@@ -140,8 +140,8 @@ static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Co
 static void _config_color_class_free(CFColor_Class *ccc);
 static void _config_color_class_icon_state_apply(CFColor_Class *ccc);
 static void _config_color_class_end_state_apply(CFColor_Class *ccc);
-static int _fill_data_delayed(void *data);
-static int _color_changed_delay(void *data);
+static Eina_Bool _fill_data_delayed(void *data);
+static Eina_Bool _color_changed_delay(void *data);
 
 E_Config_Dialog *
 e_int_config_color_classes(E_Container *con, const char *params __UNUSED__)
@@ -192,7 +192,7 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    E_FREE(cfdata);
 }
 
-static int
+static Eina_Bool
 _color_class_list_selection_idler(void *data)
 {
    E_Config_Dialog_Data *cfdata = data;
@@ -316,7 +316,7 @@ _color_class_list_selection_idler(void *data)
 
    cfdata->populating = EINA_FALSE;
    cfdata->selection_idler = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void
@@ -456,7 +456,7 @@ _custom_color_cb_change(void *data, Evas_Object *obj)
    _color_class_list_selection_changed(cfdata, NULL);
 }
 
-static int
+static Eina_Bool
 _color_changed_delay(void *data)
 {
    E_Config_Dialog_Data *cfdata = data;
@@ -475,7 +475,7 @@ _color_changed_delay(void *data)
       col[2].r, col[2].g, col[2].b, col[2].a);
 
    cfdata->delay_color_timer = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void
@@ -880,11 +880,11 @@ _fill_data(E_Config_Dialog_Data *cfdata)
      }
 }
 
-static int
+static Eina_Bool
 _fill_data_delayed(void *data)
 {
    E_Config_Dialog_Data *cfdata = data;
    cfdata->delay_load_timer = NULL;
    _fill_data(cfdata);
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }

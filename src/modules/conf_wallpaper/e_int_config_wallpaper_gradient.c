@@ -48,7 +48,7 @@ struct _E_Config_Dialog_Data
 };
 
 static void _import_edj_gen(Import *import);
-static int _import_cb_edje_cc_exit(void *data, int type, void *event);
+static Eina_Bool _import_cb_edje_cc_exit(void *data, int type, void *event);
 static void _import_cb_close(void *data, E_Dialog *dia);
 static void _import_cb_ok(void *data, E_Dialog *dia);
 static void _import_config_save(Import *import);
@@ -352,15 +352,15 @@ _import_edj_gen(Import *import)
    import->exe = ecore_exe_run(cmd, NULL);   
 }
 
-static int
-_import_cb_edje_cc_exit(void *data, int type, void *event)
+static Eina_Bool
+_import_cb_edje_cc_exit(void *data, __UNUSED__ int type, void *event)
 {
    Import *import;
    Ecore_Exe_Event_Del *ev;
   
    ev = event;
    import = data;
-   if (ev->exe != import->exe) return 1;
+   if (ev->exe != import->exe) return ECORE_CALLBACK_PASS_ON;
 
    if (ev->exit_code != 0)
      {
@@ -371,7 +371,7 @@ _import_cb_edje_cc_exit(void *data, int type, void *event)
    e_int_config_wallpaper_update(import->parent, import->fdest);
 
    e_int_config_wallpaper_gradient_del(import->dia);
-   return 0;
+   return ECORE_CALLBACK_DONE;
 }
 
 static void 

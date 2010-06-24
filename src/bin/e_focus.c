@@ -4,7 +4,7 @@
 #include "e.h"
 
 /* local subsystem functions */
-static int _e_focus_raise_timer(void* data);
+static Eina_Bool _e_focus_raise_timer(void* data);
 
 /* local subsystem globals */
 
@@ -205,14 +205,13 @@ e_focus_setdown(E_Border *bd)
 
 
 /* local subsystem functions */
-     
-static int
+static Eina_Bool
 _e_focus_raise_timer(void* data)
 {
    E_Border *bd;
-   
+
    bd = data;
    if (!bd->lock_user_stacking) e_border_raise(bd);
    bd->raise_timer = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }

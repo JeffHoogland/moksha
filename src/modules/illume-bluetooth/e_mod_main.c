@@ -17,7 +17,7 @@ static void _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient);
 static char *_gc_label(E_Gadcon_Client_Class *cc);
 static Evas_Object *_gc_icon(E_Gadcon_Client_Class *cc, Evas *evas);
 static const char *_gc_id_new(E_Gadcon_Client_Class *cc);
-static int _cb_poll(void *data);
+static Eina_Bool _cb_poll(void *data);
 static int _get_interface_class(int iclass);
 
 /* local variables */
@@ -118,7 +118,7 @@ _gc_id_new(E_Gadcon_Client_Class *cc)
    return buff;
 }
 
-static int 
+static Eina_Bool
 _cb_poll(void *data) 
 {
    Instance *inst;
@@ -134,7 +134,7 @@ _cb_poll(void *data)
         else
           edje_object_signal_emit(inst->obj, "e,state,passive", "e");
      }
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
 static int 

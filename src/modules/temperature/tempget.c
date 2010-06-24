@@ -32,7 +32,7 @@ static int ptemp = 0;
 
 static void init(void);
 static int check(void);
-static int poll_cb(void *data);
+static Eina_Bool poll_cb(void *data);
 
 Eina_List *
 temperature_get_bus_files(const char* bus)
@@ -411,7 +411,7 @@ check(void)
    return -999;
 }
 
-static int
+static Eina_Bool
 poll_cb(void *data)
 {
    int t;
@@ -445,7 +445,7 @@ poll_cb(void *data)
 	fflush(stdout);
      }
    ptemp = t;
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
 int

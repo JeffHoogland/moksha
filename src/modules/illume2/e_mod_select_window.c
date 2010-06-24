@@ -6,7 +6,7 @@ static void *_e_mod_illume_config_select_window_create_data(E_Config_Dialog *cfd
 static void _e_mod_illume_config_select_window_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_e_mod_illume_config_select_window_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static void _e_mod_illume_config_select_window_list_changed(void *data);
-static int _e_mod_illume_config_select_window_change_timeout(void *data);
+static Eina_Bool _e_mod_illume_config_select_window_change_timeout(void *data);
 static int _e_mod_illume_config_select_window_match(E_Border *bd);
 
 /* local variables */
@@ -144,12 +144,12 @@ _e_mod_illume_config_select_window_list_changed(void *data)
      ecore_timer_add(0.5, _e_mod_illume_config_select_window_change_timeout, data);
 }
 
-static int 
-_e_mod_illume_config_select_window_change_timeout(void *data) 
+static Eina_Bool
+_e_mod_illume_config_select_window_change_timeout(__UNUSED__ void *data)
 {
    e_config_save_queue();
    _sw_change_timer = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static int 

@@ -5,7 +5,7 @@
 /* internal calls */
 static void _system_req_state(const char *state);
 static void _system_unreq_state(void);
-static int _cb_saver(void *data, int ev_type, void *ev);
+static Eina_Bool _cb_saver(void *data, int ev_type, void *ev);
     
 /* state */
 static Ecore_Event_Handler *save_handler = NULL;
@@ -121,7 +121,7 @@ _system_unreq_state(void)
 }
 
 /* internal calls */
-static int
+static Eina_Bool
 _cb_suspend(void *data)
 {
    suspended = 1;
@@ -134,10 +134,10 @@ _cb_suspend(void *data)
 //	ecore_exe_run("apm -s", NULL);
      }
    suspend_timer = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
-static int
+static Eina_Bool
 _cb_saver(void *data, int ev_type, void *ev)
 {
    Ecore_X_Event_Screensaver_Notify *event;
@@ -193,5 +193,5 @@ _cb_saver(void *data, int ev_type, void *ev)
 	     suspended = 0;
 	  }
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }

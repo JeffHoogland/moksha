@@ -33,7 +33,7 @@ static void _cb_add(void *data, void *data2 __UNUSED__);
 static void _cb_del(void *data, void *data2 __UNUSED__);
 static void _cb_up(void *data, void *data2 __UNUSED__);
 static void _cb_down(void *data, void *data2 __UNUSED__);
-static int _cb_fill_delay(void *data);
+static Eina_Bool _cb_fill_delay(void *data);
 
 E_Config_Dialog *
 e_int_config_apps_add(E_Container *con, const char *params __UNUSED__) 
@@ -606,17 +606,17 @@ _cb_down(void *data, void *data2 __UNUSED__)
    evas_event_thaw(evas);
 }
 
-static int 
-_cb_fill_delay(void *data) 
+static Eina_Bool
+_cb_fill_delay(void *data)
 {
    E_Config_Dialog_Data *cfdata;
    int mw;
 
-   if (!(cfdata = data)) return 1;
+   if (!(cfdata = data)) return ECORE_CALLBACK_RENEW;
    _fill_apps_list(cfdata);
    e_widget_size_min_get(cfdata->o_list, &mw, NULL);
    if (mw < (200 * e_scale)) mw = (200 * e_scale);
    e_widget_size_min_set(cfdata->o_list, mw, (75 * e_scale));
    cfdata->fill_delay = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }

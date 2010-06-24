@@ -39,7 +39,7 @@ static void _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *e
 static void _menu_cb_post(void *data, E_Menu *m);
 static void _cpufreq_set_governor(const char *governor);
 static void _cpufreq_set_frequency(int frequency);
-static int _cpufreq_cb_check(void *data);
+static Eina_Bool _cpufreq_cb_check(void *data);
 static Status *_cpufreq_status_new();
 static void _cpufreq_status_free(Status *s);
 static int _cpufreq_status_check_available(Status *s);
@@ -49,7 +49,7 @@ static void _cpufreq_face_update_available(Instance *inst);
 static void _cpufreq_face_update_current(Instance *inst);
 static void _cpufreq_face_cb_set_frequency(void *data, Evas_Object *o, const char *emission, const char *source);
 static void _cpufreq_face_cb_set_governor(void *data, Evas_Object *o, const char *emission, const char *source);
-static int _cpufreq_event_cb_powersave(void *data __UNUSED__, int type, void *event);
+static Eina_Bool _cpufreq_event_cb_powersave(void *data __UNUSED__, int type, void *event);
 
 static void _cpufreq_menu_fast(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _cpufreq_menu_medium(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -450,14 +450,14 @@ _cpufreq_set_frequency(int frequency)
      }
 }
 
-static int
+static Eina_Bool
 _cpufreq_cb_check(void *data)
 {
    Instance *inst;
    Eina_List *l;
    int active;
 
-   if (cpufreq_config->menu_poll) return 1;
+   if (cpufreq_config->menu_poll) return ECORE_CALLBACK_RENEW;
    active = cpufreq_config->status->active;
    if (_cpufreq_status_check_current(cpufreq_config->status))
      {
@@ -479,7 +479,7 @@ _cpufreq_cb_check(void *data)
 	  }
      }
 
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
 static Status *
@@ -815,7 +815,7 @@ _cpufreq_face_cb_set_governor(void *data, Evas_Object *obj, const char *emission
    if (next_governor != NULL) _cpufreq_set_governor(next_governor);
 }
 
-static int
+static Eina_Bool
 _cpufreq_event_cb_powersave(void *data __UNUSED__, int type, void *event)
 {
    E_Event_Powersave_Update *ev;
@@ -823,8 +823,8 @@ _cpufreq_event_cb_powersave(void *data __UNUSED__, int type, void *event)
    Eina_Bool has_powersave = EINA_FALSE;
    Eina_Bool has_conservative = EINA_FALSE;
 
-   if (type != E_EVENT_POWERSAVE_UPDATE) return 1;
-   if (!cpufreq_config->auto_powersave) return 1;
+   if (type != E_EVENT_POWERSAVE_UPDATE) return ECORE_CALLBACK_PASS_ON;
+   if (!cpufreq_config->auto_powersave) return ECORE_CALLBACK_PASS_ON;
 
    ev = event;
    if (!cpufreq_config->status->orig_governor)
@@ -862,7 +862,7 @@ _cpufreq_event_cb_powersave(void *data __UNUSED__, int type, void *event)
 	 break;
      }
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static void

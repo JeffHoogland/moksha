@@ -28,13 +28,13 @@ static void _e_pointer_stack_free(E_Pointer_Stack *elem);
 static void  _e_pointer_type_set(E_Pointer *p, const char *type);
 static void _e_pointer_active_handle(E_Pointer *p);
 
-static int _e_pointer_cb_mouse_down(void *data, int type, void *event);
-static int _e_pointer_cb_mouse_up(void *data, int type, void *event);
-static int _e_pointer_cb_mouse_move(void *data, int type, void *event);
-static int _e_pointer_cb_mouse_wheel(void *data, int type, void *event);
-static int _e_pointer_cb_idle_timer_pre(void *data);
-static int _e_pointer_cb_idle_timer_wait(void *data);
-static int _e_pointer_cb_idle_poller(void *data);
+static Eina_Bool _e_pointer_cb_mouse_down(void *data, int type, void *event);
+static Eina_Bool _e_pointer_cb_mouse_up(void *data, int type, void *event);
+static Eina_Bool _e_pointer_cb_mouse_move(void *data, int type, void *event);
+static Eina_Bool _e_pointer_cb_mouse_wheel(void *data, int type, void *event);
+static Eina_Bool _e_pointer_cb_idle_timer_pre(void *data);
+static Eina_Bool _e_pointer_cb_idle_timer_wait(void *data);
+static Eina_Bool _e_pointer_cb_idle_poller(void *data);
 
 /* externally accessible functions */
 EAPI int
@@ -297,7 +297,7 @@ _e_pointer_canvas_del(E_Pointer *p)
 }
 
 static void
-_e_pointer_cb_move(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event_info)
+_e_pointer_cb_move(void *data, Evas *e __UNUSED__, __UNUSED__ Evas_Object *obj, __UNUSED__ void *event_info)
 {
    E_Pointer *p;
    Evas_Coord x, y;
@@ -456,8 +456,8 @@ _e_pointer_active_handle(E_Pointer *p)
    p->idle_timer = ecore_timer_loop_add(1.0, _e_pointer_cb_idle_timer_pre, p);
 }
 
-static int
-_e_pointer_cb_mouse_down(void *data, int type, void *event)
+static Eina_Bool
+_e_pointer_cb_mouse_down(__UNUSED__ void *data, __UNUSED__ int type, __UNUSED__ void *event)
 {
    Eina_List *l;
    E_Pointer *p;
@@ -472,11 +472,11 @@ _e_pointer_cb_mouse_down(void *data, int type, void *event)
                                        "e,action,mouse,down", "e");
 	  }
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_pointer_cb_mouse_up(void *data, int type, void *event)
+static Eina_Bool
+_e_pointer_cb_mouse_up(__UNUSED__ void *data, __UNUSED__ int type, __UNUSED__ void *event)
 {
    Eina_List *l;
    E_Pointer *p;
@@ -491,11 +491,11 @@ _e_pointer_cb_mouse_up(void *data, int type, void *event)
                                        "e,action,mouse,up", "e");
 	  }
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_pointer_cb_mouse_move(void *data, int type, void *event)
+static Eina_Bool
+_e_pointer_cb_mouse_move(__UNUSED__ void *data, __UNUSED__ int type, __UNUSED__ void *event)
 {
    Eina_List *l;
    E_Pointer *p;
@@ -510,11 +510,11 @@ _e_pointer_cb_mouse_move(void *data, int type, void *event)
                                        "e,action,mouse,move", "e");
 	  }
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_pointer_cb_mouse_wheel(void *data, int type, void *event)
+static Eina_Bool
+_e_pointer_cb_mouse_wheel(__UNUSED__ void *data, __UNUSED__ int type, __UNUSED__ void *event)
 {
    Eina_List *l;
    E_Pointer *p;
@@ -529,10 +529,10 @@ _e_pointer_cb_mouse_wheel(void *data, int type, void *event)
                                        "e,action,mouse,wheel", "e");
 	  }
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _e_pointer_cb_idle_timer_pre(void *data)
 {
    E_Pointer *p;
@@ -543,10 +543,10 @@ _e_pointer_cb_idle_timer_pre(void *data)
    p->x = x;
    p->y = y;
    p->idle_timer = ecore_timer_loop_add(4.0, _e_pointer_cb_idle_timer_wait, p);
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
-static int
+static Eina_Bool
 _e_pointer_cb_idle_timer_wait(void *data)
 {
    E_Pointer *p;
@@ -558,16 +558,16 @@ _e_pointer_cb_idle_timer_wait(void *data)
 	if (p->idle_poller) ecore_poller_del(p->idle_poller);
 	p->idle_poller = NULL;
 	p->idle_timer = NULL;
-	return 0;
+	return ECORE_CALLBACK_CANCEL;
      }
    if (!p->idle_poller)
      p->idle_poller = ecore_poller_add(ECORE_POLLER_CORE, 64,
 				       _e_pointer_cb_idle_poller, p);
    p->idle_timer = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
-static int
+static Eina_Bool
 _e_pointer_cb_idle_poller(void *data)
 {
    E_Pointer *p;
@@ -578,7 +578,7 @@ _e_pointer_cb_idle_poller(void *data)
        (!e_config->idle_cursor))
      {
 	p->idle_poller = NULL;
-	return 0;
+	return ECORE_CALLBACK_CANCEL;
      }
    /* check if pointer actually moved since the 1 second post-mouse move idle
     * pre-timer that fetches the position */
@@ -597,7 +597,7 @@ _e_pointer_cb_idle_poller(void *data)
 	     p->idle = 0;
 	  }
 	/* use poller to check from now on */
-	return 1;
+	return ECORE_CALLBACK_RENEW;
      }
    /* we are idle - report it if not idle before */
    if (!p->idle)
@@ -606,5 +606,5 @@ _e_pointer_cb_idle_poller(void *data)
 	  edje_object_signal_emit(p->pointer_object, "e,state,mouse,idle", "e");
 	p->idle = 1;
      }
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }

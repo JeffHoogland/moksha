@@ -6,7 +6,7 @@
 EAPI int E_EVENT_INIT_DONE = 0;
 
 /* local function prototypes */
-static int _e_init_cb_exe_event_del(void *data __UNUSED__, int type __UNUSED__, void *event);
+static Eina_Bool _e_init_cb_exe_event_del(void *data __UNUSED__, int type __UNUSED__, void *event);
 
 /* local variables */
 static const char *title = NULL;
@@ -210,7 +210,7 @@ e_init_count_get(void)
 }
 
 /* local functions */
-static int
+static Eina_Bool
 _e_init_cb_exe_event_del(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Exe_Event_Del *ev;
@@ -222,5 +222,5 @@ _e_init_cb_exe_event_del(void *data __UNUSED__, int type __UNUSED__, void *event
 //	ecore_exe_free(init_exe);
 	init_exe = NULL;
      }
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }

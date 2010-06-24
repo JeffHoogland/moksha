@@ -1324,7 +1324,7 @@ e_modapi_save(E_Module *m)
 
 
 /* taken from e_exebuf.c */
-static int
+static Eina_Bool
 _scan_idler(void *data)
 {
    struct stat st;
@@ -1387,7 +1387,7 @@ _scan_idler(void *data)
 	       }
 	  }
 	exe_scan_idler = NULL;
-	return 0;
+	return ECORE_CALLBACK_CANCEL;
      }
    /* no dir is open - open the first path item */
    if (!exe_dir)
@@ -1436,7 +1436,7 @@ _scan_idler(void *data)
 	exe_path = eina_list_remove_list(exe_path, exe_path);
      }
    /* we have mroe scannign to do */
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
 static void

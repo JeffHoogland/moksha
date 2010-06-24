@@ -22,7 +22,7 @@ static int  _evry_backspace(Evry_Selector *sel);
 static void _evry_update(Evry_Selector *sel, int fetch);
 static void _evry_update_text_label(Evry_State *s);
 static int  _evry_clear(Evry_Selector *sel);
-static int  _evry_cb_update_timer(void *data);
+static Eina_Bool  _evry_cb_update_timer(void *data);
 
 static Evry_State *_evry_state_new(Evry_Selector *sel, Eina_List *plugins);
 static void _evry_state_pop(Evry_Selector *sel, int immediate);
@@ -57,9 +57,9 @@ static void _evry_view_hide(Evry_Window *win, Evry_View *v, int slide);
 static void _evry_item_desel(Evry_State *s);
 static void _evry_item_sel(Evry_State *s, Evry_Item *it);
 
-static int  _evry_cb_key_down(void *data, int type, void *event);
-static int  _evry_cb_selection_notify(void *data, int type, void *event);
-static int  _evry_cb_mouse(void *data, int type, void *event);
+static Eina_Bool  _evry_cb_key_down(void *data, int type, void *event);
+static Eina_Bool  _evry_cb_selection_notify(void *data, int type, void *event);
+static Eina_Bool  _evry_cb_mouse(void *data, int type, void *event);
 
 static Eina_List *windows = NULL;
 
@@ -111,15 +111,15 @@ _evry_aggregator_fetch(Evry_State *s)
    return 1;
 }
 
-static int
-_evry_cb_item_changed(void *data, int type, void *event)
+static Eina_Bool
+_evry_cb_item_changed(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Evry_Event_Item_Changed *ev = event;
    Evry_Selector *sel;
    Evry_Item *it = ev->item;
 
    if (!it || !it->plugin || !it->plugin->state)
-     return 1;
+     return ECORE_CALLBACK_PASS_ON;
 
    sel = it->plugin->state->selector;
 
@@ -128,10 +128,10 @@ _evry_cb_item_changed(void *data, int type, void *event)
 	_evry_selector_update(sel);
      }
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _cb_show_timer(void *data)
 {
    Evry_Window *win = data;
@@ -155,10 +155,10 @@ _cb_show_timer(void *data)
 	win->visible = EINA_TRUE;
      }
 
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
-static int
+static Eina_Bool
 _cb_hide_timer(void *data)
 {
    Evry_Window *win = data;
@@ -166,7 +166,7 @@ _cb_hide_timer(void *data)
    win->hide_timer = NULL;
    evry_hide(win, 0);
 
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 Evry_Window *
@@ -527,7 +527,7 @@ _evry_selector_update_actions_do(Evry_Selector *sel)
    return 1;
 }
 
-static int
+static Eina_Bool
 _evry_timer_cb_actions_get(void *data)
 {
    Evry_Selector *sel = data;
@@ -542,7 +542,7 @@ _evry_timer_cb_actions_get(void *data)
 	  _evry_view_show(win, s->view, 0);
      }
 
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void
@@ -878,13 +878,13 @@ _evry_cb_drag_finished(E_Drag *drag, int dropped)
 }
 
 #if 0
-static int
-_evry_cb_mouse_in(void *data, int type, void *event)
+static Eina_Bool
+_evry_cb_mouse_in(__UNUSED__ void *data, int type, void *event)
 {
    Ecore_X_Event_Mouse_In *ev = event;
 
    if (ev->event_win != input_window)
-     return 1;
+     return ECORE_CALLBACK_PASS_ON;
 
    e_grabinput_get(input_window, 0, input_window);
 
@@ -894,27 +894,27 @@ _evry_cb_mouse_in(void *data, int type, void *event)
 	win->hide_timer = NULL;
      }
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_evry_cb_mouse_out(void *data, int type, void *event)
+static Eina_Bool
+_evry_cb_mouse_out(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_X_Event_Mouse_In *ev = event;
 
    if (!win || (ev->event_win != input_window))
-     return 1;
+     return ECORE_CALLBACK_PASS_ON;
 
    if (win->hide_timer)
-     return 1;
+     return ECORE_CALLBACK_PASS_ON;
 
    win->hide_timer = ecore_timer_add(0.3, _cb_hide_timer, win);
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 #endif
 
-static int
+static Eina_Bool
 _evry_cb_mouse(void *data, int type, void *event)
 {
    Ecore_Event_Mouse_Button *ev;
@@ -924,10 +924,10 @@ _evry_cb_mouse(void *data, int type, void *event)
    ev = event;
 
    if (!win->grab)
-     return 1;
+     return ECORE_CALLBACK_PASS_ON;
 
    if (ev->event_window != win->ewin->evas_win)
-     return 1;
+     return ECORE_CALLBACK_PASS_ON;
 
    w = win->ewin;
 
@@ -955,11 +955,11 @@ _evry_cb_mouse(void *data, int type, void *event)
 	     GET_FILE(file, s->cur_item);
 
 	     if (!(uri = evry_file_url_get(file)))
-	       return 1;
+	       return ECORE_CALLBACK_PASS_ON;
 
 	     s_len = strlen(uri);
 	     if (!(tmp = realloc(sel, sel_length + s_len + 2 + 1)))
-	       return 1;
+	       return ECORE_CALLBACK_PASS_ON;
 	     sel = tmp;
 	     memcpy(sel + sel_length, uri, s_len);
 	     memcpy(sel + sel_length + s_len, "\r\n", 2);
@@ -975,7 +975,7 @@ _evry_cb_mouse(void *data, int type, void *event)
 	     e_drag_xdnd_start(d, ev->x, ev->y);
 
 	     evry_hide(win, 0);
-	     return 1;
+	     return ECORE_CALLBACK_PASS_ON;
 	  }
      }
    else if (type == ECORE_EVENT_MOUSE_WHEEL)
@@ -991,7 +991,7 @@ _evry_cb_mouse(void *data, int type, void *event)
 	if (!E_INSIDE(ev->x, ev->y, 0, 0, w->w, w->h))
 	  {
 	     win->mouse_out = 1;
-	     return 1;
+	     return ECORE_CALLBACK_PASS_ON;
 	  }
 
 	win->mouse_button = ev->buttons;
@@ -1004,11 +1004,11 @@ _evry_cb_mouse(void *data, int type, void *event)
 	    !E_INSIDE(ev->x, ev->y, 0, 0, w->w, w->h))
 	  {
 	     evry_hide(win, 0);
-	     return 1;
+	     return ECORE_CALLBACK_PASS_ON;
 	  }
      }
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static void
@@ -1910,7 +1910,7 @@ _evry_cheat_history(Evry_State *s, int promote, int delete)
    return 1;
 }
 
-static int
+static Eina_Bool
 _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Event_Key *ev = event;
@@ -1920,12 +1920,12 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
    const char *old;
 
    if (ev->event_window != win->ewin->evas_win)
-     return 1;
+     return ECORE_CALLBACK_PASS_ON;
 
    if (!strcmp(ev->key, "Escape"))
      {
 	evry_hide(win, 0);
-	return 1;
+	return ECORE_CALLBACK_PASS_ON;
      }
 #ifdef DRAG_OFF_WINDOW
    else if (win->grab && !strcmp(ev->key, "F1"))
@@ -1945,7 +1945,7 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	e_border_show(ewin->border);
 
 	win->grab = 0;
-	return 1;
+	return ECORE_CALLBACK_PASS_ON;
      }
 #endif
    else if (ev->modifiers)
@@ -1977,14 +1977,14 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	       continue;
 
 	     if (win->level > 0)
-	       return 1;
+	       return ECORE_CALLBACK_PASS_ON;
 
 	     if (!(bind->params) &&
 		 (CUR_SEL == OBJ_SEL) &&
 		 ((CUR_SEL)->state && (CUR_SEL)->state->cur_item))
 	       {
 		  _evry_selectors_shift(win, 1);
-		  return 1;
+		  return ECORE_CALLBACK_PASS_ON;
 	       }
 
 	     evry_hide(win, 1);
@@ -2005,7 +2005,7 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 		    }
 	       }
 
-	     return 1;
+	     return ECORE_CALLBACK_PASS_ON;
 	  }
      }
 
@@ -2194,7 +2194,7 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 
  end:
    ev->key = old;
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static int
@@ -2266,7 +2266,7 @@ _evry_update(Evry_Selector *sel, int fetch)
      }
 }
 
-static int
+static Eina_Bool
 _evry_cb_update_timer(void *data)
 {
    Evry_Selector *sel = data;
@@ -2276,7 +2276,7 @@ _evry_cb_update_timer(void *data)
    _evry_list_win_update(sel->state);
    sel->update_timer = NULL;
 
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static int
@@ -2517,12 +2517,12 @@ _evry_view_show(Evry_Window *win, Evry_View *v, int slide)
      }
 }
 
-static int
+static Eina_Bool
 _clear_timer(void *data)
 {
    _evry_state_clear(data);
 
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void
@@ -2970,15 +2970,15 @@ _evry_plugin_list_insert(Evry_State *s, Evry_Plugin *p)
      s->cur_plugins = eina_list_append(s->cur_plugins, p);
 }
 
-static int
+static Eina_Bool
 _evry_cb_selection_notify(void *data, int type, void *event)
 {
    Ecore_X_Event_Selection_Notify *ev;
    Evry_Window *win = data;
    Evry_State *s = (CUR_SEL)->state;
 
-   if (!s || (data != win)) return 1;
-   if (!win->request_selection) return 1;
+   if (!s || (data != win)) return ECORE_CALLBACK_PASS_ON;
+   if (!win->request_selection) return ECORE_CALLBACK_PASS_ON;
 
    win->request_selection = EINA_FALSE;
 
@@ -2997,5 +2997,5 @@ _evry_cb_selection_notify(void *data, int type, void *event)
 	  }
      }
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }

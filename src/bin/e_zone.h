@@ -30,7 +30,7 @@ typedef struct _E_Event_Zone_Edge               E_Event_Zone_Edge;
 #ifndef E_ZONE_H
 #define E_ZONE_H
 
-#define E_ZONE_TYPE 0xE0b0100d
+#define E_ZONE_TYPE (int) 0xE0b0100d
 
 struct _E_Zone
 {

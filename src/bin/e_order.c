@@ -8,7 +8,7 @@ static void _e_order_free(E_Order *eo);
 static void _e_order_cb_monitor(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, const char *path);
 static void _e_order_read(E_Order *eo);
 static void _e_order_save(E_Order *eo);
-static int _e_order_cb_efreet_cache_update(void *data, int ev_type, void *ev);
+static Eina_Bool _e_order_cb_efreet_cache_update(void *data, int ev_type, void *ev);
 
 static Eina_List *orders = NULL;
 static Eina_List *handlers = NULL;
@@ -161,7 +161,7 @@ _e_order_free(E_Order *eo)
    free(eo);
 }
 
-static int
+static Eina_Bool
 _e_order_cb_monitor_delay(void *data)
 {
    E_Order *eo = data;
@@ -170,7 +170,7 @@ _e_order_cb_monitor_delay(void *data)
    _e_order_read(eo);
    if (eo->cb.update) eo->cb.update(eo->cb.data, eo);
    eo->delay = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void
@@ -254,8 +254,8 @@ _e_order_save(E_Order *eo)
    fclose(f);
 }
 
-static int
-_e_order_cb_efreet_cache_update(void *data, int ev_type, void *ev)
+static Eina_Bool
+_e_order_cb_efreet_cache_update(__UNUSED__ void *data, __UNUSED__ int ev_type, __UNUSED__ void *ev)
 {
    Eina_List *l;
    E_Order *eo;
@@ -266,5 +266,5 @@ _e_order_cb_efreet_cache_update(void *data, int ev_type, void *ev)
 	_e_order_read(eo);
 	if (eo->cb.update) eo->cb.update(eo->cb.data, eo);
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }

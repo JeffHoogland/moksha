@@ -14,7 +14,7 @@ static void _e_bindings_acpi_free(E_Binding_Acpi *bind);
 static int _e_bindings_context_match(E_Binding_Context bctxt, E_Binding_Context ctxt);
 static E_Binding_Modifier _e_bindings_modifiers(unsigned int modifiers);
 static int _e_ecore_modifiers(E_Binding_Modifier modifiers);
-static int _e_bindings_edge_cb_timer(void *data);
+static Eina_Bool _e_bindings_edge_cb_timer(void *data);
 
 /* local subsystem globals */
 
@@ -190,7 +190,7 @@ e_bindings_mouse_down_find(E_Binding_Context ctxt, E_Object *obj, Ecore_Event_Mo
    mod = _e_bindings_modifiers(ev->modifiers);
    EINA_LIST_FOREACH(mouse_bindings, l, bind)
      {
-	if ((bind->button == ev->buttons) &&
+	if ((bind->button == (int) ev->buttons) &&
 	    ((bind->any_mod) || (bind->mod == mod)))
 	  {
 	     if (_e_bindings_context_match(bind->ctxt, ctxt))
@@ -234,7 +234,7 @@ e_bindings_mouse_up_find(E_Binding_Context ctxt, E_Object *obj, Ecore_Event_Mous
    mod = _e_bindings_modifiers(ev->modifiers);
    EINA_LIST_FOREACH(mouse_bindings, l, bind)
      {
-	if ((bind->button == ev->buttons) &&
+	if ((bind->button == (int) ev->buttons) &&
 	    ((bind->any_mod) || (bind->mod == mod)))
 	  {
 	     if (_e_bindings_context_match(bind->ctxt, ctxt))
@@ -1078,7 +1078,7 @@ _e_ecore_modifiers(E_Binding_Modifier modifiers)
    return mod;
 }
 
-static int
+static Eina_Bool
 _e_bindings_edge_cb_timer(void *data)
 {
    E_Binding_Edge_Data *ed;
@@ -1105,6 +1105,6 @@ _e_bindings_edge_cb_timer(void *data)
    /* Duplicate event */
    E_FREE(ev);
 
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 

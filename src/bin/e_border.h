@@ -127,7 +127,7 @@ typedef struct _E_Event_Border_Simple        E_Event_Border_Unfullscreen;
 #ifndef E_BORDER_H
 #define E_BORDER_H
 
-#define E_BORDER_TYPE 0xE0b01002
+#define E_BORDER_TYPE (int) 0xE0b01002
 
 struct _E_Border
 {

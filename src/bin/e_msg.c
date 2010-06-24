@@ -21,7 +21,7 @@ struct _E_Msg_Event
 };
 
 /* local subsystem functions */
-static int _e_msg_event_cb(void *data, int ev_type, void *ev);
+static Eina_Bool _e_msg_event_cb(void *data, int ev_type, void *ev);
 static void _e_msg_event_free(void *data, void *ev);
 
 /* local subsystem globals */
@@ -110,8 +110,8 @@ e_msg_handler_del(E_Msg_Handler *emsgh)
 
 /* local subsystem functions */
 
-static int
-_e_msg_event_cb(void *data, int ev_type, void *ev)
+static Eina_Bool
+_e_msg_event_cb(__UNUSED__ void *data, __UNUSED__ int ev_type, void *ev)
 {
    E_Msg_Event *e;
    Eina_List *l;
@@ -133,7 +133,7 @@ _e_msg_event_cb(void *data, int ev_type, void *ev)
 }
 
 static void
-_e_msg_event_free(void *data, void *ev)
+_e_msg_event_free(__UNUSED__ void *data, void *ev)
 {
    E_Msg_Event *e;
 

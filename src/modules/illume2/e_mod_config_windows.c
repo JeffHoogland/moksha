@@ -8,7 +8,7 @@ static void _e_mod_illume_config_windows_free(E_Config_Dialog *cfd, E_Config_Dia
 static Evas_Object *_e_mod_illume_config_windows_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static void _e_mod_illume_config_windows_check_changed(void *data, Evas_Object *obj, void *event);
 static void _e_mod_illume_config_windows_change(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED__);
-static int _e_mod_illume_config_windows_change_timeout(void *data __UNUSED__);
+static Eina_Bool _e_mod_illume_config_windows_change_timeout(void *data __UNUSED__);
 static void _e_mod_illume_config_windows_select_home(void *data __UNUSED__, void *data2 __UNUSED__);
 static void _e_mod_illume_config_windows_select_vkbd(void *data __UNUSED__, void *data2 __UNUSED__);
 static void _e_mod_illume_config_windows_select_softkey(void *data __UNUSED__, void *data2 __UNUSED__);
@@ -184,12 +184,12 @@ _e_mod_illume_config_windows_change(void *data, Evas_Object *obj __UNUSED__, voi
      ecore_timer_add(0.5, _e_mod_illume_config_windows_change_timeout, data);
 }
 
-static int 
+static Eina_Bool
 _e_mod_illume_config_windows_change_timeout(void *data __UNUSED__) 
 {
    e_config_save_queue();
    _windows_change_timer = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void 

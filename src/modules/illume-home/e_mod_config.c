@@ -8,7 +8,7 @@ static void _il_home_config_free(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfd
 static Evas_Object *_il_home_config_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static void _il_home_config_changed(void *data, Evas_Object *obj, void *event);
 static void _il_home_config_click_changed(void *data, Evas_Object *obj, void *event);
-static int _il_home_config_change_timeout(void *data);
+static Eina_Bool _il_home_config_change_timeout(void *data);
 
 /* local variables */
 EAPI Il_Home_Config *il_home_cfg = NULL;
@@ -194,11 +194,11 @@ _il_home_config_click_changed(void *data, Evas_Object *obj, void *event)
    _il_home_config_changed(data, obj, event);
 }
 
-static int 
+static Eina_Bool
 _il_home_config_change_timeout(void *data) 
 {
    il_home_win_cfg_update();
    e_config_save_queue();
    _il_home_config_change_timer = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }

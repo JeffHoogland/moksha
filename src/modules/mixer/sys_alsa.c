@@ -21,7 +21,7 @@ static int _mixer_callback_add(E_Mixer_System *self, int (*func)(void *data, E_M
 static int _mixer_callback_del(E_Mixer_System *self, struct e_mixer_callback_desc *desc);
 
 
-static int
+static Eina_Bool
 _cb_dispatch(void *data)
 {
    struct e_mixer_callback_desc *desc;
@@ -35,10 +35,10 @@ _cb_dispatch(void *data)
    if (!r)
      _mixer_callback_del(desc->self, desc); /* desc is invalid then. */
 
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
-static int
+static Eina_Bool
 _cb_fd_handler(void *data, Ecore_Fd_Handler *fd_handler)
 {
    struct e_mixer_callback_desc *desc;
@@ -60,12 +60,12 @@ _cb_fd_handler(void *data, Ecore_Fd_Handler *fd_handler)
 	     _mixer_callback_del(s, desc);
 	     _mixer_callback_add(s, f, d);
 	  }
-	return 0;
+	return ECORE_CALLBACK_CANCEL;
      }
 
    if (!desc->idler)
      desc->idler = ecore_idler_add(_cb_dispatch, desc);
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
 static int

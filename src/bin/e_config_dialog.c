@@ -6,7 +6,7 @@
 /* local subsystem functions */
 static void _e_config_dialog_free(E_Config_Dialog *cfd);
 static void _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type);
-static int  _e_config_dialog_cb_auto_apply_timer(void *data);
+static Eina_Bool _e_config_dialog_cb_auto_apply_timer(void *data);
 static void _e_config_dialog_cb_dialog_del(void *obj);
 static void _e_config_dialog_cb_ok(void *data, E_Dialog *dia);
 static void _e_config_dialog_cb_apply(void *data, E_Dialog *dia);
@@ -285,7 +285,7 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
    if (cfd->icon) e_dialog_border_icon_set(cfd->dia, cfd->icon);
 }
 
-static int
+static Eina_Bool
 _e_config_dialog_cb_auto_apply_timer(void *data)
 {
    E_Config_Dialog *cfd;
@@ -305,7 +305,7 @@ _e_config_dialog_cb_auto_apply_timer(void *data)
 	if (cfd->view->advanced.apply_cfdata)
 	  cfd->view->advanced.apply_cfdata(cfd, cfd->cfdata);
      }
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void

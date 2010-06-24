@@ -17,7 +17,7 @@ static void _plugin_select(Tab_View *v, Evry_Plugin *p);
 static void _plugin_next(Tab_View *v);
 static void _plugin_prev(Tab_View *v);
 
-static int
+static Eina_Bool
 _timer_cb(void *data)
 {
    Tab_View *v = data;
@@ -25,7 +25,7 @@ _timer_cb(void *data)
    _tabs_update(v);
 
    v->timer = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void

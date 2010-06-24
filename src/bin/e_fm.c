@@ -288,8 +288,8 @@ static void _e_fm2_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *ev
 static void _e_fm2_cb_scroll_job(void *data);
 static void _e_fm2_cb_resize_job(void *data);
 static int _e_fm2_cb_icon_sort(const void *data1, const void *data2);
-static int _e_fm2_cb_scan_timer(void *data);
-static int _e_fm2_cb_sort_idler(void *data);
+static Eina_Bool _e_fm2_cb_scan_timer(void *data);
+static Eina_Bool _e_fm2_cb_sort_idler(void *data);
 
 static void _e_fm2_obj_icons_place(E_Fm2_Smart_Data *sd);
 
@@ -383,8 +383,8 @@ static void _e_fm2_live_file_changed(Evas_Object *obj, const char *file, E_Fm2_F
 static void _e_fm2_live_process_begin(Evas_Object *obj);
 static void _e_fm2_live_process_end(Evas_Object *obj);
 static void _e_fm2_live_process(Evas_Object *obj);
-static int _e_fm2_cb_live_idler(void *data);
-static int _e_fm2_cb_live_timer(void *data);
+static Eina_Bool _e_fm2_cb_live_idler(void *data);
+static Eina_Bool _e_fm2_cb_live_timer(void *data);
 
 static int _e_fm2_theme_edje_object_set(E_Fm2_Smart_Data *sd, Evas_Object *o, const char *category, const char *group);
 static int _e_fm2_theme_edje_icon_object_set(E_Fm2_Smart_Data *sd, Evas_Object *o, const char *category, const char *group);
@@ -565,18 +565,18 @@ _e_fm2_icon_h_get(const E_Fm2_Smart_Data *sd)
    return sd->config->icon.list.h;
 }
 
-static int
+static Eina_Bool
 _e_fm2_mime_flush_cb(void *data __UNUSED__)
 {
    efreet_mime_type_cache_flush();
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
-static int
+static Eina_Bool
 _e_fm2_mime_clear_cb(void *data __UNUSED__)
 {
    efreet_mime_type_cache_clear();
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
 static void
@@ -649,16 +649,16 @@ _e_fm2_op_registry_entry_print(const E_Fm2_Op_Registry_Entry *ere)
 	  ere->src, ere->dst);
 }
 
-static int
-_e_fm2_op_registry_entry_add_cb(void *data, int type, void *event)
+static Eina_Bool
+_e_fm2_op_registry_entry_add_cb(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    const E_Fm2_Op_Registry_Entry *ere = event;
    printf("E FM OPERATION STARTED: id=%d, op=%d\n", ere->id, ere->op);
    return ECORE_CALLBACK_RENEW;
 }
 
-static int
-_e_fm2_op_registry_entry_del_cb(void *data, int type, void *event)
+static Eina_Bool
+_e_fm2_op_registry_entry_del_cb(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    const E_Fm2_Op_Registry_Entry *ere = event;
    puts("E FM OPERATION FINISHED:");
@@ -667,8 +667,8 @@ _e_fm2_op_registry_entry_del_cb(void *data, int type, void *event)
    return ECORE_CALLBACK_RENEW;
 }
 
-static int
-_e_fm2_op_registry_entry_changed_cb(void *data, int type, void *event)
+static Eina_Bool
+_e_fm2_op_registry_entry_changed_cb(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    const E_Fm2_Op_Registry_Entry *ere = event;
    puts("E FM OPERATION CHANGED:");
@@ -710,6 +710,9 @@ e_fm2_init(void)
 	       _e_fm2_smart_color_set, /* color_set */
 	       _e_fm2_smart_clip_set, /* clip_set */
 	       _e_fm2_smart_clip_unset, /* clip_unset */
+	       NULL,
+	       NULL,
+	       NULL,
 	       NULL,
 	       NULL,
 	       NULL,
@@ -2125,7 +2128,7 @@ _e_fm2_icon_imc_get(Evas *evas, const E_Fm2_Icon *ic, const char **type_ret)
    E_Input_Method_Config *imc;
    Efreet_Desktop *desktop;
    Eet_File *imc_ef;
-   Evas_Object *o;
+   Evas_Object *o = NULL;
    char buf[PATH_MAX];
 
    if (!ic->info.file)
@@ -5546,22 +5549,22 @@ _e_fm2_typebuf_match_func(E_Fm2_Icon *ic, void* data)
 	    (e_util_glob_case_match(ic->info.file, tb))));
 }
 
-static int
+static Eina_Bool
 _e_fm_typebuf_timer_cb(void *data)
 {
    Evas_Object *obj = data;
    E_Fm2_Smart_Data *sd;
 
-   if (!data) return 0;
+   if (!data) return ECORE_CALLBACK_CANCEL;
    sd = evas_object_smart_data_get(obj);
-   if (!sd) return 0;
+   if (!sd) return ECORE_CALLBACK_CANCEL;
 
-   if (!sd->typebuf_visible) return 0;
+   if (!sd->typebuf_visible) return ECORE_CALLBACK_CANCEL;
 
    _e_fm2_typebuf_hide(obj);
    sd->typebuf.timer = NULL;
 
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void
@@ -7352,19 +7355,19 @@ _e_fm2_cb_icon_sort(const void *data1, const void *data2)
    return strcmp(l1, l2);
 }
 
-static int
+static Eina_Bool
 _e_fm2_cb_scan_timer(void *data)
 {
    E_Fm2_Smart_Data *sd;
 
    sd = evas_object_smart_data_get(data);
-   if (!sd) return 0;
+   if (!sd) return ECORE_CALLBACK_CANCEL;
    _e_fm2_queue_process(data);
    sd->scan_timer = NULL;
    if (!sd->listing)
      {
 	_e_fm2_client_monitor_list_end(data);
-	return 0;
+	return ECORE_CALLBACK_CANCEL;
      }
    if (sd->busy_count > 0)
      sd->scan_timer = ecore_timer_add(0.2, _e_fm2_cb_scan_timer, sd->obj);
@@ -7373,24 +7376,24 @@ _e_fm2_cb_scan_timer(void *data)
 	if (!sd->sort_idler)
 	  sd->sort_idler = ecore_idler_add(_e_fm2_cb_sort_idler, data);
      }
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
-static int
+static Eina_Bool
 _e_fm2_cb_sort_idler(void *data)
 {
    E_Fm2_Smart_Data *sd;
 
    sd = evas_object_smart_data_get(data);
-   if (!sd) return 0;
+   if (!sd) return ECORE_CALLBACK_CANCEL;
    _e_fm2_queue_process(data);
    if (!sd->listing)
      {
 	sd->sort_idler = NULL;
         _e_fm2_client_monitor_list_end(data);
-	return 0;
+	return ECORE_CALLBACK_CANCEL;
      }
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
 /**************************/
@@ -9587,14 +9590,14 @@ _e_fm2_live_process(Evas_Object *obj)
    free(a);
 }
 
-static int
+static Eina_Bool
 _e_fm2_cb_live_idler(void *data)
 {
    E_Fm2_Smart_Data *sd;
    double t;
 
    sd = evas_object_smart_data_get(data);
-   if (!sd) return 0;
+   if (!sd) return ECORE_CALLBACK_CANCEL;
    t = ecore_time_get();
    do
      {
@@ -9602,7 +9605,7 @@ _e_fm2_cb_live_idler(void *data)
 	_e_fm2_live_process(data);
      }
    while ((ecore_time_get() - t) > 0.02);
-   if (sd->live.actions) return 1;
+   if (sd->live.actions) return ECORE_CALLBACK_RENEW;
    _e_fm2_live_process_end(data);
    _e_fm2_cb_live_timer(data);
    if ((sd->order_file) || (sd->config->view.always_order))
@@ -9610,16 +9613,16 @@ _e_fm2_cb_live_idler(void *data)
 	e_fm2_refresh(data);
      }
    sd->live.idler = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
-static int
+static Eina_Bool
 _e_fm2_cb_live_timer(void *data)
 {
    E_Fm2_Smart_Data *sd;
 
    sd = evas_object_smart_data_get(data);
-   if (!sd) return 0;
+   if (!sd) return ECORE_CALLBACK_CANCEL;
    if (sd->queue) _e_fm2_queue_process(data);
    else if (sd->iconlist_changed)
      {
@@ -9637,9 +9640,9 @@ _e_fm2_cb_live_timer(void *data)
      }
    sd->live.deletions = 0;
    sd->live.timer = NULL;
-   if ((!sd->queue) && (!sd->live.idler)) return 0;
+   if ((!sd->queue) && (!sd->live.idler)) return ECORE_CALLBACK_CANCEL;
    sd->live.timer = ecore_timer_add(0.2, _e_fm2_cb_live_timer, data);
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static int

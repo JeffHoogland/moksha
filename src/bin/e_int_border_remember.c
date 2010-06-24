@@ -156,7 +156,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	       }
 	     for (j = 0; bd->client.icccm.command.argv[i][j]; j++)
 	       {
-		  if (k >= (sizeof(buf) - 10))
+		  if (k >= (int) (sizeof(buf) - 10))
 		    {
 		       buf[k] = 0;
 		       goto done;
@@ -357,7 +357,7 @@ _check_matches(E_Remember *rem, int update)
 	  match &= ~E_REMEMBER_MATCH_ROLE;
 
 	if ((match & E_REMEMBER_MATCH_TYPE) &&
-	    (rem->type == bd->client.netwm.type))
+	    (rem->type == (int) bd->client.netwm.type))
 	  match &= ~E_REMEMBER_MATCH_TYPE;
 
 	if ((match & E_REMEMBER_MATCH_TRANSIENT) &&

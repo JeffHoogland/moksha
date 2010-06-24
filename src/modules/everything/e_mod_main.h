@@ -328,7 +328,7 @@ int   evry_view_toggle(Evry_State *s, const char *trigger);
 int evry_gadget_init(void);
 void evry_gadget_shutdown(void);
 
-Ecore_Event_Handler *evry_event_handler_add(int type, int (*func) (void *data, int type, void *event), const void *data);
+Ecore_Event_Handler *evry_event_handler_add(int type, Eina_Bool (*func) (void *data, int type, void *event), const void *data);
 
 extern Evry_History *evry_hist;
 extern Evry_Config  *evry_conf;

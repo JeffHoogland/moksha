@@ -3,17 +3,17 @@
 #include "e_mod_kbd_device.h"
 
 /* local function prototypes */
-static int _e_mod_kbd_cb_client_message(void *data __UNUSED__, int type __UNUSED__, void *event);
-static int _e_mod_kbd_cb_border_remove(void *data __UNUSED__, int type __UNUSED__, void *event);
-static int _e_mod_kbd_cb_border_focus_in(void *data __UNUSED__, int type __UNUSED__, void *event);
-static int _e_mod_kbd_cb_border_focus_out(void *data __UNUSED__, int type __UNUSED__, void *event);
-static int _e_mod_kbd_cb_border_property(void *data __UNUSED__, int type __UNUSED__, void *event);
+static Eina_Bool _e_mod_kbd_cb_client_message(void *data __UNUSED__, int type __UNUSED__, void *event);
+static Eina_Bool _e_mod_kbd_cb_border_remove(void *data __UNUSED__, int type __UNUSED__, void *event);
+static Eina_Bool _e_mod_kbd_cb_border_focus_in(void *data __UNUSED__, int type __UNUSED__, void *event);
+static Eina_Bool _e_mod_kbd_cb_border_focus_out(void *data __UNUSED__, int type __UNUSED__, void *event);
+static Eina_Bool _e_mod_kbd_cb_border_property(void *data __UNUSED__, int type __UNUSED__, void *event);
 static void _e_mod_kbd_cb_border_pre_post_fetch(void *data __UNUSED__, void *data2);
 static void _e_mod_kbd_cb_free(E_Illume_Keyboard *kbd);
-static int _e_mod_kbd_cb_delay_hide(void *data __UNUSED__);
+static Eina_Bool _e_mod_kbd_cb_delay_hide(void *data __UNUSED__);
 static void _e_mod_kbd_hide(void);
 static void _e_mod_kbd_slide(int visible, double len);
-static int _e_mod_kbd_cb_animate(void *data __UNUSED__);
+static Eina_Bool _e_mod_kbd_cb_animate(void *data __UNUSED__);
 static E_Illume_Keyboard *_e_mod_kbd_by_border_get(E_Border *bd);
 static void _e_mod_kbd_border_adopt(E_Border *bd);
 static void _e_mod_kbd_layout_send(void);
@@ -217,13 +217,13 @@ e_mod_kbd_layout_set(E_Illume_Keyboard_Layout layout)
 }
 
 /* local functions */
-static int 
+static Eina_Bool
 _e_mod_kbd_cb_client_message(void *data __UNUSED__, int type __UNUSED__, void *event) 
 {
    Ecore_X_Event_Client_Message *ev;
 
    ev = event;
-   if (ev->win != ecore_x_window_root_first_get()) return 1;
+   if (ev->win != ecore_x_window_root_first_get()) return ECORE_CALLBACK_PASS_ON;
 
    /* legacy illume 1 code */
    if ((ev->message_type == ecore_x_atom_get("_MB_IM_INVOKER_COMMAND")) || 
@@ -233,10 +233,10 @@ _e_mod_kbd_cb_client_message(void *data __UNUSED__, int type __UNUSED__, void *e
         else if (ev->data.l[0] == 2) e_mod_kbd_hide();
         else if (ev->data.l[0] == 3) e_mod_kbd_toggle();
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int 
+static Eina_Bool
 _e_mod_kbd_cb_border_remove(void *data __UNUSED__, int type __UNUSED__, void *event) 
 {
    E_Event_Border_Remove *ev;
@@ -250,11 +250,11 @@ _e_mod_kbd_cb_border_remove(void *data __UNUSED__, int type __UNUSED__, void *ev
         e_mod_kbd_hide();
         _focused_border = NULL;
         _focused_state = 0;
-        return 1;
+        return ECORE_CALLBACK_PASS_ON;
      }
 
    /* try to find the keyboard for this border */
-   if (!(kbd = _e_mod_kbd_by_border_get(ev->border))) return 1;
+   if (!(kbd = _e_mod_kbd_by_border_get(ev->border))) return ECORE_CALLBACK_PASS_ON;
 
    if ((kbd->border) && (kbd->border == ev->border)) 
      {
@@ -278,16 +278,16 @@ _e_mod_kbd_cb_border_remove(void *data __UNUSED__, int type __UNUSED__, void *ev
    else if (!kbd->border) 
      kbd->waiting_borders = eina_list_remove(kbd->waiting_borders, ev->border);
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int 
+static Eina_Bool
 _e_mod_kbd_cb_border_focus_in(void *data __UNUSED__, int type __UNUSED__, void *event) 
 {
    E_Event_Border_Focus_In *ev;
 
    ev = event;
-   if (_e_mod_kbd_by_border_get(ev->border)) return 1;
+   if (_e_mod_kbd_by_border_get(ev->border)) return ECORE_CALLBACK_PASS_ON;
 
 //   printf("Kbd Focus in: %s\n", ev->border->client.icccm.name);
 
@@ -300,16 +300,16 @@ _e_mod_kbd_cb_border_focus_in(void *data __UNUSED__, int type __UNUSED__, void *
    else 
      e_mod_kbd_show();
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int 
+static Eina_Bool
 _e_mod_kbd_cb_border_focus_out(void *data __UNUSED__, int type __UNUSED__, void *event) 
 {
    E_Event_Border_Focus_Out *ev;
 
    ev = event;
-   if (_e_mod_kbd_by_border_get(ev->border)) return 1;
+   if (_e_mod_kbd_by_border_get(ev->border)) return ECORE_CALLBACK_PASS_ON;
 
 //   printf("Kbd Focus Out: %s\n", ev->border->client.icccm.name);
 
@@ -332,10 +332,10 @@ _e_mod_kbd_cb_border_focus_out(void *data __UNUSED__, int type __UNUSED__, void 
    _focused_border = NULL;
    _focused_state = 0;
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int 
+static Eina_Bool
 _e_mod_kbd_cb_border_property(void *data __UNUSED__, int type __UNUSED__, void *event) 
 {
    Ecore_X_Event_Window_Property *ev;
@@ -345,15 +345,15 @@ _e_mod_kbd_cb_border_property(void *data __UNUSED__, int type __UNUSED__, void *
    ev = event;
 
    /* only interested in vkbd state changes here */
-   if (ev->atom != ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE) return 1;
+   if (ev->atom != ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE) return ECORE_CALLBACK_PASS_ON;
 
    /* make sure we have a border */
-   if (!(bd = e_border_find_by_client_window(ev->win))) return 1;
+   if (!(bd = e_border_find_by_client_window(ev->win))) return ECORE_CALLBACK_PASS_ON;
 
 //   printf("Kbd Border Property Change: %s\n", bd->client.icccm.name);
 
    /* if it's not focused, we don't care */
-   if ((!bd->focused) || (_e_mod_kbd_by_border_get(bd))) return 1;
+   if ((!bd->focused) || (_e_mod_kbd_by_border_get(bd))) return ECORE_CALLBACK_PASS_ON;
 
    /* NB: Not sure why, but we seem to need to fetch kbd state here. This could 
     * be a result of filtering the container_hook_layout. Not real happy 
@@ -364,7 +364,7 @@ _e_mod_kbd_cb_border_property(void *data __UNUSED__, int type __UNUSED__, void *
    if ((_focused_border) && (_focused_border == bd)) 
      {
         /* if focused state is the same, get out */
-        if (_focused_state == bd->client.vkbd.state) return 1;
+        if (_focused_state == bd->client.vkbd.state) return ECORE_CALLBACK_PASS_ON;
      }
 
    /* set our variables */
@@ -381,7 +381,7 @@ _e_mod_kbd_cb_border_property(void *data __UNUSED__, int type __UNUSED__, void *
    else 
      e_mod_kbd_show();
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static void 
@@ -426,11 +426,11 @@ _e_mod_kbd_cb_free(E_Illume_Keyboard *kbd)
    E_FREE(kbd);
 }
 
-static int 
+static Eina_Bool
 _e_mod_kbd_cb_delay_hide(void *data __UNUSED__) 
 {
    _e_mod_kbd_hide();
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void 
@@ -481,7 +481,7 @@ _e_mod_kbd_slide(int visible, double len)
      _e_illume_kbd->animator = ecore_animator_add(_e_mod_kbd_cb_animate, NULL);
 }
 
-static int 
+static Eina_Bool
 _e_mod_kbd_cb_animate(void *data __UNUSED__) 
 {
    double t, v;
@@ -523,10 +523,10 @@ _e_mod_kbd_cb_animate(void *data __UNUSED__)
 
         _e_mod_kbd_changes_send();
 
-        return 0;
+        return ECORE_CALLBACK_CANCEL;
      }
 
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
 static E_Illume_Keyboard *

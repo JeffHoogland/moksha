@@ -7,9 +7,9 @@
 #include "evry_api.h"
 // TODO - show error when input not parseable
 
-static int  _cb_data(void *data, int type, void *event);
-static int  _cb_error(void *data, int type, void *event);
-static int  _cb_del(void *data, int type, void *event);
+static Eina_Bool  _cb_data(void *data, int type, void *event);
+static Eina_Bool  _cb_error(void *data, int type, void *event);
+static Eina_Bool  _cb_del(void *data, int type, void *event);
 
 static const Evry_API *evry = NULL;
 static Evry_Module *evry_module = NULL;
@@ -108,8 +108,8 @@ _finish(Evry_Plugin *p)
    active = EINA_FALSE;
 }
 
-static int
-_cb_action_performed(void *data, int type, void *event)
+static Eina_Bool
+_cb_action_performed(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Eina_List *l;
    Evry_Item *it, *it2, *it_old;
@@ -117,10 +117,10 @@ _cb_action_performed(void *data, int type, void *event)
    Evry_Plugin *p = _plug;
 
    if (!ev->it1 || !(ev->it1->plugin == p))
-     return 1;
+     return ECORE_CALLBACK_PASS_ON;
 
    if (!p->items)
-     return 1;
+     return ECORE_CALLBACK_PASS_ON;
 
    /* remove duplicates */
    if (p->items->next)
@@ -134,7 +134,7 @@ _cb_action_performed(void *data, int type, void *event)
 		  p->items = eina_list_promote_list(p->items, l);
 		  evry->item_changed(it, 0, 1);
 		  EVRY_PLUGIN_UPDATE(p, EVRY_UPDATE_ADD);
-		  return 1;
+		  return ECORE_CALLBACK_PASS_ON;
 	       }
 	  }
      }
@@ -148,7 +148,7 @@ _cb_action_performed(void *data, int type, void *event)
    evry->item_changed(it2, 0, 1);
    EVRY_PLUGIN_UPDATE(p, EVRY_UPDATE_ADD);
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static int
@@ -178,14 +178,14 @@ _fetch(Evry_Plugin *p, const char *input)
    return 1;
 }
 
-static int
+static Eina_Bool
 _cb_data(void *data, int type __UNUSED__, void *event)
 {
    Ecore_Exe_Event_Data *ev = event;
    Evry_Plugin *p = data;
    Evry_Item *it;
 
-   if (ev->exe != exe) return 1;
+   if (ev->exe != exe) return ECORE_CALLBACK_PASS_ON;
 
    if (ev->lines)
      {
@@ -196,32 +196,32 @@ _cb_data(void *data, int type __UNUSED__, void *event)
 	if (it) evry->item_changed(it, 0, 0);
      }
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _cb_error(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Exe_Event_Data *ev = event;
 
    if (ev->exe != exe)
-     return 1;
+     return ECORE_CALLBACK_PASS_ON;
 
    error = 1;
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _cb_del(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Exe_Event_Del *e = event;
 
    if (e->exe != exe)
-     return 1;
+     return ECORE_CALLBACK_PASS_ON;
 
    exe = NULL;
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static int

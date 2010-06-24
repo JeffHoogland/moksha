@@ -6,7 +6,7 @@ static void *_e_mod_illume_config_animation_create(E_Config_Dialog *cfd);
 static void _e_mod_illume_config_animation_free(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_e_mod_illume_config_animation_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static void _e_mod_illume_config_animation_change(void *data, Evas_Object *obj, void *event);
-static int _e_mod_illume_config_animation_timeout(void *data);
+static Eina_Bool _e_mod_illume_config_animation_timeout(void *data);
 
 /* local variables */
 Ecore_Timer *_anim_change_timer = NULL;
@@ -118,10 +118,10 @@ _e_mod_illume_config_animation_change(void *data, Evas_Object *obj, void *event)
      ecore_timer_add(0.5, _e_mod_illume_config_animation_timeout, data);
 }
 
-static int 
+static Eina_Bool
 _e_mod_illume_config_animation_timeout(void *data) 
 {
    e_config_save_queue();
    _anim_change_timer = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }

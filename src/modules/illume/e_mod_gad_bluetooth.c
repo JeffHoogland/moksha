@@ -30,7 +30,7 @@ static const E_Gadcon_Client_Class _gadcon_class =
 };
 static E_Module *mod = NULL;
 
-static int _cb_poll(void *data);
+static Eina_Bool _cb_poll(void *data);
 
 /* called from the module core */
 void
@@ -189,7 +189,7 @@ _find_interface_class(int iclass)
    return 0;
 }
 
-static int
+static Eina_Bool
 _cb_poll(void *data)
 {
    Instance *inst;
@@ -206,5 +206,5 @@ _cb_poll(void *data)
 	else
 	  edje_object_signal_emit(inst->obj, "e,state,passive", "e");
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }

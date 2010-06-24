@@ -24,7 +24,7 @@ static void _e_wid_del_hook(Evas_Object *obj);
 static void _e_wid_reconfigure(E_Widget_Data *wd);
 static void _e_wid_desk_cb_config(void *data, Evas *evas, Evas_Object *obj, void *event);
 static void _e_wid_cb_resize(void *data, Evas *evas, Evas_Object *obj, void *event);
-static int _e_wid_cb_bg_update(void *data, int type, void *event);
+static Eina_Bool _e_wid_cb_bg_update(void *data, int type, void *event);
 
 EAPI Evas_Object *
 e_widget_deskpreview_add(Evas *evas, int nx, int ny) 
@@ -224,16 +224,16 @@ _e_wid_cb_resize(void *data, Evas *evas, Evas_Object *obj, void *event)
    _e_wid_reconfigure(wd);
 }
 
-static int 
-_e_wid_cb_bg_update(void *data, int type, void *event) 
+static Eina_Bool
+_e_wid_cb_bg_update(void *data, int type, void *event)
 {
    E_Event_Bg_Update *ev;
    E_Widget_Data *wd;
    Eina_List *l;
    Evas_Object *o;
 
-   if (type != E_EVENT_BG_UPDATE) return 1;
-   if (!(wd = data)) return 1;
+   if (type != E_EVENT_BG_UPDATE) return ECORE_CALLBACK_PASS_ON;
+   if (!(wd = data)) return ECORE_CALLBACK_PASS_ON;
    ev = event;
 
    EINA_LIST_FOREACH(wd->desks, l, o) 
@@ -253,5 +253,5 @@ _e_wid_cb_bg_update(void *data, int type, void *event)
           }
      }
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }

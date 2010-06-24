@@ -57,13 +57,13 @@ struct _E_Util_Image_Import_Handle
 };
 
 /* local subsystem functions */
-static int _e_util_cb_delayed_del(void *data);
-static int _e_util_wakeup_cb(void *data);
+static Eina_Bool _e_util_cb_delayed_del(void *data);
+static Eina_Bool _e_util_wakeup_cb(void *data);
 
 static void _e_util_image_import_settings_do(void *data, E_Dialog *dia);
 static void _e_util_image_import_settings_del(void *obj);
 
-static int _e_util_image_import_exit(void *data, int type __UNUSED__, void *event);
+static Eina_Bool _e_util_image_import_exit(void *data, int type __UNUSED__, void *event);
 static void _e_util_image_import_handle_free(E_Util_Image_Import_Handle *handle);
 
 /* local subsystem globals */
@@ -1409,18 +1409,18 @@ e_util_image_import_cancel(E_Util_Image_Import_Handle *handle)
 }
 
 /* local subsystem functions */
-static int
+static Eina_Bool
 _e_util_cb_delayed_del(void *data)
 {
    e_object_del(E_OBJECT(data));
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
-static int
-_e_util_wakeup_cb(void *data)
+static Eina_Bool
+_e_util_wakeup_cb(__UNUSED__ void *data)
 {
    _e_util_dummy_timer = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void
@@ -1445,14 +1445,14 @@ _e_util_image_import_settings_del(void *obj)
    E_FREE(ctxt);
 }
 
-static int
+static Eina_Bool
 _e_util_image_import_exit(void *data, int type __UNUSED__, void *event)
 {
    E_Util_Image_Import_Handle *handle = data;
    Ecore_Exe_Event_Del *ev = event;
    Eina_Bool ok;
 
-   if (ev->exe != handle->exe) return 1;
+   if (ev->exe != handle->exe) return ECORE_CALLBACK_PASS_ON;
 
    ok = (ev->exit_code == 0);
 
@@ -1461,7 +1461,7 @@ _e_util_image_import_exit(void *data, int type __UNUSED__, void *event)
 
    _e_util_image_import_handle_free(handle);
 
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void
@@ -1475,7 +1475,7 @@ _e_util_image_import_handle_free(E_Util_Image_Import_Handle *handle)
    E_FREE(handle);
 }
 
-static int
+static Eina_Bool
 _e_util_conf_timer_old(void *data)
 {
    char *module_name = data;
@@ -1498,10 +1498,10 @@ _e_util_conf_timer_old(void *data)
    e_util_dialog_internal(buf, msg);
    E_FREE(module_name);
 
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
-static int
+static Eina_Bool
 _e_util_conf_timer_new(void *data)
 {
    char *module_name = data;
@@ -1522,7 +1522,7 @@ _e_util_conf_timer_new(void *data)
    e_util_dialog_internal(buf, msg);
    E_FREE(module_name);
 
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 EAPI Eina_Bool

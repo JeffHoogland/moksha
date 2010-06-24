@@ -73,7 +73,7 @@ struct _E_Config_Dialog_Data
 
 static void _fsel_path_save(FSel *fsel);
 static void _import_edj_gen(Import *import);
-static int _import_cb_edje_cc_exit(void *data, int type, void *event);
+static Eina_Bool _import_cb_edje_cc_exit(void *data, int type, void *event);
 static void _import_cb_delete(E_Win *win);
 static void _import_cb_resize(E_Win *win);
 static void _import_cb_close(void *data, void *data2);
@@ -615,8 +615,8 @@ _import_edj_gen(Import *import)
    import->exe = ecore_exe_run(cmd, NULL);   
 }
 
-static int
-_import_cb_edje_cc_exit(void *data, int type, void *event)
+static Eina_Bool
+_import_cb_edje_cc_exit(void *data, __UNUSED__ int type, void *event)
 {
    Import *import;
    FSel *fsel;
@@ -626,7 +626,7 @@ _import_cb_edje_cc_exit(void *data, int type, void *event)
 
    ev = event;
    import = data;
-   if (ev->exe != import->exe) return 1;
+   if (ev->exe != import->exe) return ECORE_CALLBACK_PASS_ON;
 
    if (ev->exit_code != 0)
      {
@@ -655,7 +655,7 @@ _import_cb_edje_cc_exit(void *data, int type, void *event)
      }
    E_FREE(fdest);
 
-   return 0;
+   return ECORE_CALLBACK_DONE;
 }
 
 static void 

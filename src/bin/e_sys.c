@@ -4,12 +4,12 @@
 #include "e.h"
 
 /* local subsystem functions */
-static int _e_sys_cb_timer(void *data);
-static int _e_sys_cb_exit(void *data, int type, void *event);
+static Eina_Bool _e_sys_cb_timer(void *data);
+static Eina_Bool _e_sys_cb_exit(void *data, int type, void *event);
 static void _e_sys_cb_logout_logout(void *data, E_Dialog *dia);
 static void _e_sys_cb_logout_wait(void *data, E_Dialog *dia);
 static void _e_sys_cb_logout_abort(void *data, E_Dialog *dia);
-static int _e_sys_cb_logout_timer(void *data);
+static Eina_Bool _e_sys_cb_logout_timer(void *data);
 static void _e_sys_logout_after(void);
 static void _e_sys_logout_begin(E_Sys_Action a_after);
 static void _e_sys_current_action(void);
@@ -163,8 +163,8 @@ e_sys_con_extra_action_list_get(void)
 }
 
 /* local subsystem functions */
-static int
-_e_sys_cb_timer(void *data)
+static Eina_Bool
+_e_sys_cb_timer(__UNUSED__ void *data)
 {
    /* exec out sys helper and ask it to test if we are allowed to do these
     * things
@@ -180,10 +180,10 @@ _e_sys_cb_timer(void *data)
    _e_sys_suspend_check_exe = ecore_exe_run(buf, NULL);
    snprintf(buf, sizeof(buf), "%s/enlightenment/utils/enlightenment_sys -t hibernate", e_prefix_lib_get());
    _e_sys_hibernate_check_exe = ecore_exe_run(buf, NULL);
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
-static int
+static Eina_Bool
 _e_sys_cb_exit(void *data, int type, void *event)
 {
    Ecore_Exe_Event_Del *ev;
@@ -205,7 +205,7 @@ _e_sys_cb_exit(void *data, int type, void *event)
 	  }
 	_e_sys_action_current = E_SYS_NONE;
 	_e_sys_exe = NULL;
-	return 1;
+	return ECORE_CALLBACK_RENEW;
      }
    if ((_e_sys_halt_check_exe) && (ev->exe == _e_sys_halt_check_exe))
      {
@@ -245,7 +245,7 @@ _e_sys_cb_exit(void *data, int type, void *event)
 	     _e_sys_hibernate_check_exe = NULL;
 	  }
      }
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
 static void
@@ -316,7 +316,7 @@ _e_sys_logout_confirm_dialog_update(int remaining)
    e_dialog_text_set(_e_sys_logout_confirm_dialog, txt);
 }
 
-static int
+static Eina_Bool
 _e_sys_cb_logout_timer(void *data)
 {
    Eina_List *l;
@@ -344,12 +344,12 @@ _e_sys_cb_logout_timer(void *data)
 	if (remaining > 0)
 	  {
 	     _e_sys_logout_confirm_dialog_update(remaining);
-	     return 1;
+	     return ECORE_CALLBACK_RENEW;
 	  }
 	else
 	  {
 	     _e_sys_cb_logout_logout(NULL, _e_sys_logout_confirm_dialog);
-	     return 0;
+	     return ECORE_CALLBACK_CANCEL;
 	  }
      }
    else
@@ -377,14 +377,14 @@ _e_sys_cb_logout_timer(void *data)
 		  e_dialog_show(dia);
 		  _e_sys_logout_begin_time = now;
 	       }
-	     return 1;
+	     return ECORE_CALLBACK_RENEW;
 	  }
      }
-   return 1;
+   return ECORE_CALLBACK_RENEW;
    after:
    _e_sys_logout_after();
    _e_sys_logout_timer = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void

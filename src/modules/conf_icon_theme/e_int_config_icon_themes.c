@@ -156,7 +156,7 @@ struct _fill_icon_themes_data
    Eina_Bool themes_loaded;
 };
 
-static int
+static Eina_Bool
 _fill_icon_themes(void *data)
 {
    struct _fill_icon_themes_data *d = data;
@@ -179,7 +179,7 @@ _fill_icon_themes(void *data)
 	d->l = d->cfdata->icon_themes;
 	d->i = 0;
 	d->themes_loaded = 1;
-	return 1;
+	return ECORE_CALLBACK_RENEW;
      }
 
    if (!d->l)
@@ -189,7 +189,7 @@ _fill_icon_themes(void *data)
 	d->cfdata->populating = EINA_FALSE;
 	_populate_preview(d->cfdata);
 	free(d);
-	return 0;
+	return ECORE_CALLBACK_CANCEL;
      }
 
    theme = d->l->data;
@@ -217,7 +217,7 @@ _fill_icon_themes(void *data)
 
    d->i++;
    d->l = d->l->next;
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
 static void

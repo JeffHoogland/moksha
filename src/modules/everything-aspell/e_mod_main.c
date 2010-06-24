@@ -189,7 +189,7 @@ _suggestions_add(Plugin *p, const char *line)
      }
 }
 
-static int
+static Eina_Bool
 _cb_data(void *data, int type __UNUSED__, void *event)
 {
    GET_PLUGIN(p, data);
@@ -198,7 +198,7 @@ _cb_data(void *data, int type __UNUSED__, void *event)
    const char *word;
 
    if (e->exe != p->exe)
-     return 1;
+     return ECORE_CALLBACK_PASS_ON;
 
    EVRY_PLUGIN_ITEMS_FREE(p);
 
@@ -242,20 +242,20 @@ _cb_data(void *data, int type __UNUSED__, void *event)
    if (p->base.items)
      EVRY_PLUGIN_UPDATE(p, EVRY_UPDATE_ADD);
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _cb_del(void *data, int type __UNUSED__, void *event)
 {
    Plugin *p = data;
    Ecore_Exe_Event_Del *e = event;
 
    if (e->exe != p->exe)
-     return 1;
+     return ECORE_CALLBACK_PASS_ON;
 
    p->exe = NULL;
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static Evry_Plugin *

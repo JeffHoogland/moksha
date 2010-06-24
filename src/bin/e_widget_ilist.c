@@ -49,12 +49,12 @@ static void _e_wid_cb_item_hilight(void *data, void *data2);
 static void _e_wid_cb_selected(void *data, Evas_Object *obj, void *event_info);
 static void _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *event_info);
 
-static int _queue_timer(void *data);
+static Eina_Bool _queue_timer(void *data);
 static void _queue_queue(Evas_Object *obj);
 static void _queue_append(Evas_Object *obj, int command, Evas_Object *icon, Evas_Object *end, const char *label, int header, void (*func) (void *data), void *data, const char *val, int relative, int use_relative, int item);
 static void _queue_remove(Evas_Object *obj, E_Widget_Queue_Item *qi, int del);
 
-static int
+static Eina_Bool
 _queue_timer(void *data)
 {
    Evas_Object *obj;
@@ -180,7 +180,7 @@ _queue_timer(void *data)
    e_widget_ilist_thaw(obj);
    e_widget_ilist_go(obj);
    _queue_queue(obj);
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void

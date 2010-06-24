@@ -20,7 +20,7 @@ static void _e_kbd_int_zoomkey_down(E_Kbd_Int *ki);
 static void _e_kbd_int_matches_update(void *data);
 static void _e_kbd_int_dictlist_down(E_Kbd_Int *ki);
 static void _e_kbd_int_matchlist_down(E_Kbd_Int *ki);
-static int _e_kbd_int_cb_border_move(void *data, int type, void *event);
+static Eina_Bool _e_kbd_int_cb_border_move(void *data, int type, void *event);
 
 static void
 _e_kbd_int_cb_resize(E_Win *win)
@@ -644,7 +644,7 @@ _e_kbd_int_zoomkey_update(E_Kbd_Int *ki)
      }
 }
 
-static int
+static Eina_Bool
 _e_kbd_int_cb_hold_timeout(void *data)
 {
    E_Kbd_Int *ki;
@@ -661,7 +661,7 @@ _e_kbd_int_cb_hold_timeout(void *data)
      }
    _e_kbd_int_zoomkey_up(ki);
    _e_kbd_int_zoomkey_update(ki);
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void
@@ -1283,8 +1283,8 @@ _e_kbd_int_layout_next(E_Kbd_Int *ki)
    _e_kbd_int_layout_select(ki, kil);
 }
 
-static int
-_e_kbd_int_cb_client_message(void *data, int type, void *event)
+static Eina_Bool
+_e_kbd_int_cb_client_message(void *data, __UNUSED__ int type, void *event)
 {
    Ecore_X_Event_Client_Message *ev;
    E_Kbd_Int *ki;
@@ -1335,7 +1335,7 @@ _e_kbd_int_cb_client_message(void *data, int type, void *event)
 
         if (kil) _e_kbd_int_layout_select(ki, kil);
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static void
@@ -1768,17 +1768,17 @@ _theme_obj_new(Evas *e, const char *custom_dir, const char *group)
    return o;
 }
 
-static int 
+static Eina_Bool
 _e_kbd_int_cb_border_move(void *data, int type, void *event) 
 {
    E_Event_Border_Move *ev;
    E_Kbd_Int *ki;
 
    ev = event;
-   if (!(ki = data)) return 1;
-   if (ki->win->border != ev->border) return 1;
+   if (!(ki = data)) return ECORE_CALLBACK_PASS_ON;
+   if (ki->win->border != ev->border) return ECORE_CALLBACK_PASS_ON;
    _e_kbd_int_zoomkey_down(ki);
    _e_kbd_int_matchlist_down(ki);
    _e_kbd_int_dictlist_down(ki);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }

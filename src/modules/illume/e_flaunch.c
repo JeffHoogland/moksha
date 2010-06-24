@@ -166,8 +166,8 @@ _e_flaunch_free(E_Flaunch *fl)
    free(fl);
 }
 
-static int
-_e_flaunch_cb_zone_move_resize(void *data, int type, void *event)
+static Eina_Bool
+_e_flaunch_cb_zone_move_resize(void *data, __UNUSED__ int type, void *event)
 {       
    E_Event_Zone_Move_Resize *ev;
    E_Flaunch *fl;
@@ -179,10 +179,10 @@ _e_flaunch_cb_zone_move_resize(void *data, int type, void *event)
 	evas_object_move(fl->box_obj, fl->zone->x, fl->zone->y + fl->zone->h - fl->height);
 	evas_object_resize(fl->box_obj, fl->zone->w, fl->height);
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _e_flaunch_cb_delayed_repopulate(void *data)
 {
    E_Flaunch *fl;
@@ -191,18 +191,18 @@ _e_flaunch_cb_delayed_repopulate(void *data)
    _e_flaunch_apps_clear(fl);
    _e_flaunch_apps_populate(fl);
    fl->repopulate_timer = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
-static int
-_e_flaunch_cb_cache_update(void *data, int type, void *event)
-{       
+static Eina_Bool
+_e_flaunch_cb_cache_update(void *data, __UNUSED__ int type, void *event)
+{
    E_Flaunch *fl;
    
    fl = data;
    if (fl->repopulate_timer) ecore_timer_del(fl->repopulate_timer);
    fl->repopulate_timer = ecore_timer_add(0.5, _e_flaunch_cb_delayed_repopulate, fl);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 EAPI int

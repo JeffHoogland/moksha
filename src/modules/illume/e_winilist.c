@@ -42,12 +42,12 @@ static void _cb_object_resize(void *data, Evas *e, Evas_Object *obj, void *event
 
 static void _refill(Data *d);
 
-static int _cb_border_add(void *data, int ev_type, void *ev);
-static int _cb_border_remove(void *data, int ev_type, void *ev);
-static int _cb_border_show(void *data, int ev_type, void *ev);
-static int _cb_border_hide(void *data, int ev_type, void *ev);
-static int _cb_border_property(void *data, int ev_type, void *ev);
-static int _cb_desk_show(void *data, int ev_type, void *event);
+static Eina_Bool _cb_border_add(void *data, int ev_type, void *ev);
+static Eina_Bool _cb_border_remove(void *data, int ev_type, void *ev);
+static Eina_Bool _cb_border_show(void *data, int ev_type, void *ev);
+static Eina_Bool _cb_border_hide(void *data, int ev_type, void *ev);
+static Eina_Bool _cb_border_property(void *data, int ev_type, void *ev);
+static Eina_Bool _cb_desk_show(void *data, int ev_type, void *event);
 
 /* state */
 static Eina_List *handlers = NULL;
@@ -414,57 +414,57 @@ _refill(Data *d)
    d->optimal_size.h = lh + (h - vh);
 }
 
-static int
-_cb_border_add(void *data, int ev_type, void *event)
+static Eina_Bool
+_cb_border_add(__UNUSED__ void *data, __UNUSED__ int ev_type, __UNUSED__ void *event)
 {
    Eina_List *l;
 	
    for (l = winilists; l; l = l->next) _refill(l->data);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_cb_border_remove(void *data, int ev_type, void *event)
+static Eina_Bool
+_cb_border_remove(__UNUSED__ void *data, __UNUSED__ int ev_type, __UNUSED__ void *event)
 {
    Eina_List *l;
 	
    for (l = winilists; l; l = l->next) _refill(l->data);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_cb_border_show(void *data, int ev_type, void *event)
+static Eina_Bool
+_cb_border_show(__UNUSED__ void *data, __UNUSED__ int ev_type, __UNUSED__ void *event)
 {
    Eina_List *l;
 	
    for (l = winilists; l; l = l->next) _refill(l->data);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_cb_border_hide(void *data, int ev_type, void *event)
+static Eina_Bool
+_cb_border_hide(__UNUSED__ void *data, __UNUSED__ int ev_type, __UNUSED__ void *event)
 {
    Eina_List *l;
 	
    for (l = winilists; l; l = l->next) _refill(l->data);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_cb_border_property(void *data, int ev_type, void *event)
+static Eina_Bool
+_cb_border_property(__UNUSED__ void *data, __UNUSED__ int ev_type, __UNUSED__ void *event)
 {
    Eina_List *l;
 	
    for (l = winilists; l; l = l->next) _refill(l->data);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_cb_desk_show(void *data, int ev_type, void *event)
+static Eina_Bool
+_cb_desk_show(__UNUSED__ void *data, __UNUSED__ int ev_type, __UNUSED__ void *event)
 {
    Eina_List *l;
 	
    for (l = winilists; l; l = l->next) _refill(l->data);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 

@@ -29,9 +29,9 @@ EAPI void e_init_done(void);
 
 /* local subsystem functions */
 static int _e_ipc_init(void);
-static int _e_ipc_cb_server_add(void *data, int type, void *event);
-static int _e_ipc_cb_server_del(void *data, int type, void *event);
-static int _e_ipc_cb_server_data(void *data, int type, void *event);
+static Eina_Bool _e_ipc_cb_server_add(void *data, int type, void *event);
+static Eina_Bool _e_ipc_cb_server_del(void *data, int type, void *event);
+static Eina_Bool _e_ipc_cb_server_data(void *data, int type, void *event);
 
 /* local subsystem globals */
 static Ecore_Ipc_Server *_e_ipc_server = NULL;
@@ -45,11 +45,11 @@ static Ecore_X_Window *initwins = NULL;
 static int initwins_num = 0;
 static Ecore_Ipc_Server *server = NULL;
 
-static int
+static Eina_Bool
 delayed_ok(void *data)
 {
    kill(getppid(), SIGUSR2);
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 int
@@ -145,8 +145,8 @@ _e_ipc_init(void)
    return 1;
 }
 
-static int
-_e_ipc_cb_server_add(void *data, int type, void *event)
+static Eina_Bool
+_e_ipc_cb_server_add(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Ipc_Event_Server_Add *e;
 
@@ -158,24 +158,24 @@ _e_ipc_cb_server_add(void *data, int type, void *event)
 			 0, 0, 0,
 			 initwins, initwins_num * sizeof(Ecore_X_Window));
    ecore_ipc_server_flush(server);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_ipc_cb_server_del(void *data, int type, void *event)
+static Eina_Bool
+_e_ipc_cb_server_del(__UNUSED__ void *data, __UNUSED__ int type, __UNUSED__ void *event)
 {
    /* quit now */
    ecore_main_loop_quit();
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_ipc_cb_server_data(void *data, int type, void *event)
+static Eina_Bool
+_e_ipc_cb_server_data(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Ipc_Event_Server_Data *e;
 
    e = event;
-   if (e->major != 7/*E_IPC_DOMAIN_INIT*/) return 1;
+   if (e->major != 7/*E_IPC_DOMAIN_INIT*/) return ECORE_CALLBACK_PASS_ON;
    switch (e->minor)
      {
       case 1:
@@ -188,14 +188,14 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
       default:
 	break;
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static void _e_init_cb_signal_disable(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_init_cb_signal_enable(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_init_cb_signal_done_ok(void *data, Evas_Object *obj, const char *emission, const char *source);
-static int _e_init_cb_window_configure(void *data, int ev_type, void *ev);
-static int _e_init_cb_timeout(void *data);
+static Eina_Bool _e_init_cb_window_configure(void *data, int ev_type, void *ev);
+static Eina_Bool _e_init_cb_timeout(void *data);
 static Ecore_Evas *_e_init_evas_new(Ecore_X_Window root, int w, int h, Ecore_X_Window *winret);
 
 /* local subsystem globals */
@@ -399,27 +399,27 @@ _e_init_cb_signal_done_ok(void *data, Evas_Object *obj, const char *emission, co
    ecore_main_loop_quit();
 }
 
-static int
-_e_init_cb_window_configure(void *data, int ev_type, void *ev)
+static Eina_Bool
+_e_init_cb_window_configure(__UNUSED__ void *data, __UNUSED__ int ev_type, void *ev)
 {
    Ecore_X_Event_Window_Configure *e;
 
    e = ev;
    /* really simple - don't handle xinerama - because this event will only
     * happen in single head */
-   if (e->win != _e_init_root_win) return 1;
+   if (e->win != _e_init_root_win) return ECORE_CALLBACK_PASS_ON;
    ecore_evas_resize(_e_init_ecore_evas, e->w, e->h);
    evas_object_resize(_e_init_object, e->w, e->h);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _e_init_cb_timeout(void *data)
 {
    e_init_hide();
    _e_init_timeout_timer = NULL;
    ecore_main_loop_quit();
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static Ecore_Evas *

@@ -1,11 +1,11 @@
 #include "e.h"
 #include "e_mod_main.h"
 
-int
+Eina_Bool
 temperature_udev_update_poll(void *data)
 {
    temperature_udev_update(data);
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
 void

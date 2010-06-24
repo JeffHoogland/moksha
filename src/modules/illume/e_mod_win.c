@@ -31,15 +31,15 @@ static void _app_close(E_Border *bd);
 
 static void _cb_cfg_exec(const void *data, E_Container *con, const char *params, Efreet_Desktop *desktop);
 static void _desktop_run(Efreet_Desktop *desktop);
-static int _cb_zone_move_resize(void *data, int type, void *event);
+static Eina_Bool _cb_zone_move_resize(void *data, int type, void *event);
 static void _cb_resize(void);
 static void _cb_run(void *data);
-static int _cb_event_border_add(void *data, int type, void *event);
-static int _cb_event_border_remove(void *data, int type, void *event);
-static int _cb_event_border_focus_in(void *data, int type, void *event);
-static int _cb_event_border_focus_out(void *data, int type, void *event);
-static int _cb_event_exe_del(void *data, int type, void *event);
-static int _cb_run_timeout(void *data);
+static Eina_Bool _cb_event_border_add(void *data, int type, void *event);
+static Eina_Bool _cb_event_border_remove(void *data, int type, void *event);
+static Eina_Bool _cb_event_border_focus_in(void *data, int type, void *event);
+static Eina_Bool _cb_event_border_focus_out(void *data, int type, void *event);
+static Eina_Bool _cb_event_exe_del(void *data, int type, void *event);
+static Eina_Bool _cb_run_timeout(void *data);
 static int _have_borders(void);
 static void _cb_slipshelf_home(const void *data, E_Slipshelf *ess, E_Slipshelf_Action action);
 static void _cb_slipshelf_close(const void *data, E_Slipshelf *ess, E_Slipshelf_Action action);
@@ -51,10 +51,10 @@ static void _cb_slipwin_border_select(void *data, E_Slipwin *esw, E_Border *bd);
 static void _cb_slipshelf_border_select(void *data, E_Slipshelf *ess, E_Border *bd);
 static void _cb_slipshelf_border_home2(void *data, E_Slipshelf *ess, E_Border *pbd);
 static void _cb_selected(void *data, Evas_Object *obj, void *event_info);
-static int _cb_efreet_cache_update(void *data, int type, void *event);
+static Eina_Bool _cb_efreet_cache_update(void *data, int type, void *event);
 static void _apps_unpopulate(void);
 static void _apps_populate(void);
-static int _cb_update_deferred(void *data);
+static Eina_Bool _cb_update_deferred(void *data);
 static void _cb_sys_con_close(void *data);
 static void _cb_sys_con_home(void *data);
 
@@ -231,14 +231,14 @@ _e_mod_win_shutdown(void)
 static Ecore_Exe           *_kbd_exe = NULL;
 static Ecore_Event_Handler *_kbd_exe_exit_handler = NULL;
 
-static int
-_e_mod_win_win_cfg_kbd_cb_exit(void *data, int type, void *event)
+static Eina_Bool
+_e_mod_win_win_cfg_kbd_cb_exit(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Exe_Event_Del *ev;
 
    ev = event;
    if (ev->exe ==_kbd_exe) _kbd_exe = NULL;
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
   
 void
@@ -545,11 +545,11 @@ _app_close(E_Border *bd)
 
 /////////
 
-static int
-_cb_zone_move_resize(void *data, int type, void *event)
+static Eina_Bool
+_cb_zone_move_resize(__UNUSED__ void *data, __UNUSED__ int type, __UNUSED__ void *event)
 {
    _cb_resize();
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static void
@@ -698,8 +698,8 @@ _cb_run(void *data)
    _desktop_run(desktop);
 }
 
-static int 
-_cb_event_border_add(void *data, int type, void *event)
+static Eina_Bool
+_cb_event_border_add(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Add *ev;
    Instance *ins;
@@ -729,14 +729,14 @@ _cb_event_border_add(void *data, int type, void *event)
 		  if (ins->timeout) ecore_timer_del(ins->timeout);
 		  ins->timeout = NULL;
 		  // FIXME; if gadget is disabled, enable it
-		  return 1;
+		  return ECORE_CALLBACK_PASS_ON;
 	       }
 	  }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int 
-_cb_event_border_remove(void *data, int type, void *event)
+static Eina_Bool
+_cb_event_border_remove(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Remove *ev;
    Instance *ins;
@@ -760,13 +760,13 @@ _cb_event_border_remove(void *data, int type, void *event)
 		  ins->handle = NULL;
 	       }
 	     ins->border = NULL;
-	     return 1;
+	     return ECORE_CALLBACK_PASS_ON;
 	  }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int 
-_cb_event_border_focus_in(void *data, int type, void *event)
+static Eina_Bool
+_cb_event_border_focus_in(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Focus_In *ev;
    
@@ -776,11 +776,11 @@ _cb_event_border_focus_in(void *data, int type, void *event)
      sys_con_act_close->disabled = 0;
    if (sys_con_act_home)
      sys_con_act_home->disabled = 0;
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int 
-_cb_event_border_focus_out(void *data, int type, void *event)
+static Eina_Bool
+_cb_event_border_focus_out(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Focus_Out *ev;
    
@@ -790,11 +790,11 @@ _cb_event_border_focus_out(void *data, int type, void *event)
      sys_con_act_close->disabled = 1;
    if (sys_con_act_home)
      sys_con_act_home->disabled = 1;
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_cb_event_exe_del(void *data, int type, void *event)
+static Eina_Bool
+_cb_event_exe_del(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Exe_Event_Del *ev;
    Instance *ins;
@@ -814,13 +814,13 @@ _cb_event_exe_del(void *data, int type, void *event)
 	     instances = eina_list_remove_list(instances, l);
 	     if (ins->timeout) ecore_timer_del(ins->timeout);
 	     free(ins);
-	     return 1;
+	     return ECORE_CALLBACK_PASS_ON;
 	  }
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _cb_run_timeout(void *data)
 {
    Instance *ins;
@@ -836,10 +836,10 @@ _cb_run_timeout(void *data)
      {
 	instances = eina_list_remove(instances, ins);
 	free(ins);
-	return 0;
+	return ECORE_CALLBACK_CANCEL;
      }
    ins->timeout = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static int
@@ -1204,8 +1204,8 @@ _cb_selected(void *data, Evas_Object *obj, void *event_info)
      }
 }
 
-static int
-_cb_efreet_cache_update(void *data, int type, void *event)
+static Eina_Bool
+_cb_efreet_cache_update(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Efreet_Desktop *desktop;
 
@@ -1217,7 +1217,7 @@ _cb_efreet_cache_update(void *data, int type, void *event)
    return 1;
 }
 
-static int
+static Eina_Bool
 _cb_update_deferred(void *data)
 {
    _apps_unpopulate();
@@ -1225,7 +1225,7 @@ _cb_update_deferred(void *data)
    e_mod_win_cfg_kbd_update();
    e_pwr_init_done();
    defer = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void

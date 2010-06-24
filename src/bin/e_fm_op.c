@@ -60,13 +60,13 @@ static E_Fm_Op_Task *_e_fm_op_task_new();
 static void _e_fm_op_task_free(void *t);
 
 static void _e_fm_op_remove_link_task(E_Fm_Op_Task *task);
-static int _e_fm_op_stdin_data(void *data, Ecore_Fd_Handler * fd_handler);
+static Eina_Bool _e_fm_op_stdin_data(void *data, Ecore_Fd_Handler * fd_handler);
 static void _e_fm_op_set_up_idlers();
 static void _e_fm_op_delete_idler(int *mark);
 static int _e_fm_op_idler_handle_error(int *mark, Eina_List **queue, Eina_List **node, E_Fm_Op_Task *task);
 
-static int _e_fm_op_work_idler(void *data);
-static int _e_fm_op_scan_idler(void *data);
+static Eina_Bool _e_fm_op_work_idler(void *data);
+static Eina_Bool _e_fm_op_scan_idler(void *data);
 
 static void _e_fm_op_send_error(E_Fm_Op_Task * task, E_Fm_Op_Type type, const char *fmt, ...);
 static void _e_fm_op_rollback(E_Fm_Op_Task * task);
@@ -413,7 +413,7 @@ _e_fm_op_remove_link_task(E_Fm_Op_Task *task)
  * variable _e_fm_op_stdin_buffer to deal with a situation, when read() 
  * did not actually read enough data.
  */
-static int
+static Eina_Bool
 _e_fm_op_stdin_data(void *data, Ecore_Fd_Handler * fd_handler)
 {
    int fd;
@@ -509,7 +509,7 @@ _e_fm_op_stdin_data(void *data, Ecore_Fd_Handler * fd_handler)
         buf = _e_fm_op_stdin_buffer + length;
      }
 
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
 static void 
@@ -640,7 +640,7 @@ _e_fm_op_idler_handle_error(int *mark, Eina_List **queue, Eina_List **node, E_Fm
  * If we have an abort (_e_fm_op_abort = 1), then _atom() should recognize it and do smth. 
  * After this, just finish everything.
  */
-static int
+static Eina_Bool
 _e_fm_op_work_idler(void *data)
 {
    /* E_Fm_Op_Task is marked static here because _e_fm_op_work_queue can be populated with another
@@ -673,18 +673,18 @@ _e_fm_op_work_idler(void *data)
              /* You may want to look at the comment in _e_fm_op_scan_atom() about this separator thing. */
              _e_fm_op_work_queue = eina_list_remove_list(_e_fm_op_work_queue, _e_fm_op_separator);
              node = NULL;
-             return 1;
+             return ECORE_CALLBACK_RENEW;
           }
 
         if ((_e_fm_op_scan_idler_p == NULL) && (!_e_fm_op_work_error) && 
             (!_e_fm_op_scan_error))
           ecore_main_loop_quit();
 
-        return 1;
+        return ECORE_CALLBACK_RENEW;
      }
 
    if (_e_fm_op_idler_handle_error(&_e_fm_op_work_error, &_e_fm_op_work_queue, &node, task)) 
-     return 1;
+     return ECORE_CALLBACK_RENEW;
 
    task->started = 1;
 
@@ -708,17 +708,17 @@ _e_fm_op_work_idler(void *data)
      {
 	/* So, _atom did what it whats in case of abort. Now to idler. */
 	ecore_main_loop_quit();
-	return 0;
+	return ECORE_CALLBACK_CANCEL;
      }
 
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
 /* This works pretty much the same as _e_fm_op_work_idler(), except that 
  * if this is a dir, then look into its contents and create a task 
  * for those files. And we don't have _e_fm_op_separator here.
  */
-int
+Eina_Bool
 _e_fm_op_scan_idler(void *data)
 {
    static Eina_List *node = NULL;
@@ -739,17 +739,17 @@ _e_fm_op_scan_idler(void *data)
    if (!task)
      {
 	_e_fm_op_scan_idler_p = NULL;
-	return 0;
+	return ECORE_CALLBACK_CANCEL;
      }
 
    if (_e_fm_op_idler_handle_error(&_e_fm_op_scan_error, &_e_fm_op_scan_queue, &node, task)) 
-     return 1;
+     return ECORE_CALLBACK_RENEW;
 
    if (_e_fm_op_abort)
      {
 	/* We're marked for abortion. */
 	ecore_main_loop_quit();
-	return 0;
+	return ECORE_CALLBACK_CANCEL;
      }
 
    if (task->type == E_FM_OP_COPY_STAT_INFO)
@@ -809,11 +809,11 @@ _e_fm_op_scan_idler(void *data)
              closedir(dir);
              dir = NULL;
              node = NULL;
-             return 1;
+             return ECORE_CALLBACK_RENEW;
           }
 
         if ((!strcmp(de->d_name, ".") || (!strcmp(de->d_name, ".."))))
-          return 1;
+          return ECORE_CALLBACK_RENEW;
 
         ntask = _e_fm_op_task_new();
         ntask->type = task->type;
@@ -845,7 +845,7 @@ _e_fm_op_scan_idler(void *data)
           }
      }
 
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
 /* Packs and sends an error to STDOUT.

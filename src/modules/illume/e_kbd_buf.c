@@ -220,7 +220,7 @@ _e_kbd_buf_matches_update(E_Kbd_Buf *kb)
      }
 }
 
-static int
+static Eina_Bool
 _e_kbd_buf_cb_data_dict_reload(void *data)
 {
    E_Kbd_Buf *kb;
@@ -232,7 +232,7 @@ _e_kbd_buf_cb_data_dict_reload(void *data)
    if (kb->dict.data) e_kbd_dict_free(kb->dict.data);
    e_user_dir_concat_static(buf, "dicts-dynamic/data.dic");
    kb->dict.data = e_kbd_dict_new(buf);
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void
@@ -536,7 +536,7 @@ e_kbd_buf_word_use(E_Kbd_Buf *kb, const char *word)
 }
 
 // FIXME: just faking delayed lookup with timer
-static int
+static Eina_Bool
 _e_kbd_buf_cb_faket(void *data)
 {
    E_Kbd_Buf *kb;
@@ -546,7 +546,7 @@ _e_kbd_buf_cb_faket(void *data)
    kb->lookup.func(kb->lookup.data);
    kb->lookup.func = NULL;
    kb->lookup.data = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 EAPI void

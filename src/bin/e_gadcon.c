@@ -11,8 +11,8 @@ static void _e_gadcon_free(E_Gadcon *gc);
 static void _e_gadcon_client_free(E_Gadcon_Client *gcc);
 
 static void _e_gadcon_moveresize_handle(E_Gadcon_Client *gcc);
-static int _e_gadcon_cb_client_scroll_timer(void *data);
-static int _e_gadcon_cb_client_scroll_animator(void *data);
+static Eina_Bool _e_gadcon_cb_client_scroll_timer(void *data);
+static Eina_Bool _e_gadcon_cb_client_scroll_animator(void *data);
 static void _e_gadcon_cb_client_frame_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_gadcon_cb_client_frame_moveresize(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_gadcon_client_save(E_Gadcon_Client *gcc);
@@ -79,8 +79,8 @@ static void e_gadcon_layout_pack_aspect_pad_set(Evas_Object *obj, int w, int h);
 static void e_gadcon_layout_unpack(Evas_Object *obj);
 static void _e_gadcon_provider_populate_request(const E_Gadcon_Client_Class *cc);
 static void _e_gadcon_provider_populate_unrequest(const E_Gadcon_Client_Class *cc);
-static int  _e_gadcon_provider_populate_idler(void *data);
-static int  _e_gadcon_custom_populate_idler(void *data);
+static Eina_Bool  _e_gadcon_provider_populate_idler(void *data);
+static Eina_Bool  _e_gadcon_custom_populate_idler(void *data);
 
 static int _e_gadcon_location_change(E_Gadcon_Client * gcc, E_Gadcon_Location *src, E_Gadcon_Location *dst);
 /********************/
@@ -1618,7 +1618,7 @@ _e_gadcon_moveresize_handle(E_Gadcon_Client *gcc)
 			    );
 }
 
-static int
+static Eina_Bool
 _e_gadcon_cb_client_scroll_timer(void *data)
 {
    E_Gadcon_Client *gcc;
@@ -1631,14 +1631,14 @@ _e_gadcon_cb_client_scroll_timer(void *data)
      {
 	gcc->scroll_pos =  gcc->scroll_wanted;
 	gcc->scroll_timer = NULL;
-	return 0;
+	return ECORE_CALLBACK_CANCEL;
      }
    v = 0.05;
    gcc->scroll_pos = (gcc->scroll_pos * (1.0 - v)) + (gcc->scroll_wanted * v);
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
-static int
+static Eina_Bool
 _e_gadcon_cb_client_scroll_animator(void *data)
 {
    E_Gadcon_Client *gcc;
@@ -1651,13 +1651,13 @@ _e_gadcon_cb_client_scroll_animator(void *data)
    if (!gcc->scroll_timer)
      {
 	gcc->scroll_animator = NULL;
-	return 0;
+	return ECORE_CALLBACK_CANCEL;
      }
 
    if (gcc->scroll_cb.func)
      gcc->scroll_cb.func(gcc->scroll_cb.data);
 
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
 static void
@@ -2512,7 +2512,7 @@ _e_gadcon_client_cb_menu_post(void *data, E_Menu *m)
    gcc->menu = NULL;
 }
 
-static int
+static Eina_Bool
 _e_gadcon_client_cb_instant_edit_timer(void *data)
 {
    E_Gadcon_Client *gcc;
@@ -2521,7 +2521,7 @@ _e_gadcon_client_cb_instant_edit_timer(void *data)
    e_gadcon_client_edit_begin(gcc);
    _e_gadcon_client_move_start(gcc);
    gcc->instant_edit_timer = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void
@@ -4932,7 +4932,7 @@ _e_gadcon_layout_smart_restore_gadcons_position_before_move(E_Smart_Data *sd, E_
      }
 }
 
-static int
+static Eina_Bool
 _e_gadcon_custom_populate_idler(void *data)
 {
    const E_Gadcon_Client_Class *cc;
@@ -4953,10 +4953,10 @@ _e_gadcon_custom_populate_idler(void *data)
      }
 
    custom_populate_idler = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
-static int
+static Eina_Bool
 _e_gadcon_provider_populate_idler(void *data __UNUSED__)
 {
    const E_Gadcon_Client_Class *cc;
@@ -4981,7 +4981,7 @@ _e_gadcon_provider_populate_idler(void *data __UNUSED__)
      e_gadcon_layout_thaw(gc->o_container);
 
    populate_idler = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void

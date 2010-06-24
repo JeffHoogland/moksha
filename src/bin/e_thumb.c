@@ -26,8 +26,8 @@ static void _e_thumb_hash_del(int objid);
 static Evas_Object *_e_thumb_hash_find(int objid);
 static void _e_thumb_thumbnailers_kill(void);
 static void _e_thumb_thumbnailers_kill_cancel(void);
-static int _e_thumb_cb_kill(void *data);
-static int _e_thumb_cb_exe_event_del(void *data, int type, void *event);
+static Eina_Bool _e_thumb_cb_kill(void *data);
+static Eina_Bool _e_thumb_cb_exe_event_del(void *data, int type, void *event);
 
 /* local subsystem globals */
 static Eina_List *_thumbnailers = NULL;
@@ -137,7 +137,7 @@ e_thumb_icon_begin(Evas_Object *obj)
    if (!eth->file) return;
    if (!_thumbnailers)
      {
-	while (eina_list_count(_thumbnailers_exe) < _num_thumbnailers)
+	while ((int) eina_list_count(_thumbnailers_exe) < _num_thumbnailers)
 	  {
 	     Ecore_Exe *exe;
 
@@ -394,8 +394,8 @@ _e_thumb_thumbnailers_kill_cancel(void)
    _kill_timer = NULL;
 }
 
-static int
-_e_thumb_cb_kill(void *data)
+static Eina_Bool
+_e_thumb_cb_kill(__UNUSED__ void *data)
 {
    Eina_List *l;
    Ecore_Exe *exe;
@@ -403,11 +403,11 @@ _e_thumb_cb_kill(void *data)
    EINA_LIST_FOREACH(_thumbnailers_exe, l, exe)
      ecore_exe_terminate(exe);
    _kill_timer = NULL;
-   return 0;
+   return ECORE_CALLBACK_DONE;
 }
 
-static int
-_e_thumb_cb_exe_event_del(void *data, int type, void *event)
+static Eina_Bool
+_e_thumb_cb_exe_event_del(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Exe_Event_Del *ev;
    Ecore_Exe *exe;
@@ -422,5 +422,5 @@ _e_thumb_cb_exe_event_del(void *data, int type, void *event)
 	     break;
 	  }
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }

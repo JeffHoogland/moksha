@@ -33,8 +33,8 @@ static void _cb_actions_changed(void *data);
 static void _cb_entry_changed(void *data, void *data2 __UNUSED__);
 static void _cb_add_binding(void *data, void *data2 __UNUSED__);
 static void _cb_del_binding(void *data, void *data2 __UNUSED__);
-static int _cb_grab_key_down(void *data, int type __UNUSED__, void *event);
-static int _cb_acpi_event(void *data, int type, void *event);
+static Eina_Bool _cb_grab_key_down(void *data, int type __UNUSED__, void *event);
+static Eina_Bool _cb_acpi_event(void *data, int type, void *event);
 
 /* local variables */
 static E_Dialog *grab_dlg = NULL;
@@ -570,15 +570,15 @@ _cb_del_binding(void *data, void *data2 __UNUSED__)
    _fill_bindings(cfdata);
 }
 
-static int 
+static Eina_Bool
 _cb_grab_key_down(void *data, int type __UNUSED__, void *event) 
 {
    E_Config_Dialog_Data *cfdata;
    Ecore_Event_Key *ev;
 
    ev = event;
-   if (ev->window != grab_win) return 1;
-   if (!(cfdata = data)) return 1;
+   if (ev->window != grab_win) return ECORE_CALLBACK_PASS_ON;
+   if (!(cfdata = data)) return ECORE_CALLBACK_PASS_ON;
    if (!strcmp(ev->keyname, "Escape")) 
      {
 	Ecore_Event_Handler *hdl;
@@ -597,11 +597,11 @@ _cb_grab_key_down(void *data, int type __UNUSED__, void *event)
 	/* unfreeze acpi events */
 	e_acpi_events_thaw();
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int 
-_cb_acpi_event(void *data, int type, void *event) 
+static Eina_Bool
+_cb_acpi_event(void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Acpi *ev;
    E_Config_Dialog_Data *cfdata;
@@ -609,7 +609,7 @@ _cb_acpi_event(void *data, int type, void *event)
    Ecore_Event_Handler *hdl;
 
    ev = event;
-   if (!(cfdata = data)) return 1;
+   if (!(cfdata = data)) return ECORE_CALLBACK_PASS_ON;
 
    /* free the handlers */
    EINA_LIST_FREE(grab_hdls, hdl)
@@ -637,5 +637,5 @@ _cb_acpi_event(void *data, int type, void *event)
 
    cfdata->bindings = eina_list_append(cfdata->bindings, bind);
    _fill_bindings(cfdata);
-   return 0;
+   return ECORE_CALLBACK_DONE;
 }

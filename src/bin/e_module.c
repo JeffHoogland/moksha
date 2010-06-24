@@ -15,7 +15,7 @@ static void _e_module_free(E_Module *m);
 static void _e_module_dialog_disable_show(const char *title, const char *body, E_Module *m);
 static void _e_module_cb_dialog_disable(void *data, E_Dialog *dia);
 static void _e_module_event_update_free(void *data, void *event);
-static int _e_module_cb_idler(void *data);
+static Eina_Bool _e_module_cb_idler(void *data);
 static int _e_module_sort_priority(const void *d1, const void *d2);
 
 /* local subsystem globals */
@@ -531,8 +531,8 @@ _e_module_cb_dialog_disable(void *data, E_Dialog *dia)
    e_config_save_queue();
 }
 
-static int
-_e_module_cb_idler(void *data)
+static Eina_Bool
+_e_module_cb_idler(__UNUSED__ void *data)
 {
    if (_e_modules_delayed)
      {
@@ -550,13 +550,13 @@ _e_module_cb_idler(void *data)
    if (_e_modules_delayed)
      {
 	e_util_wakeup();
-	return 1;
+	return ECORE_CALLBACK_RENEW;
      }
 
    ecore_event_add(E_EVENT_MODULE_INIT_END, NULL, NULL, NULL);
 
    _e_module_idler = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static int
@@ -571,7 +571,7 @@ _e_module_sort_priority(const void *d1, const void *d2)
 
 
 static void 
-_e_module_event_update_free(void *data, void *event) 
+_e_module_event_update_free(__UNUSED__ void *data, void *event) 
 {
    E_Event_Module_Update *ev;
 

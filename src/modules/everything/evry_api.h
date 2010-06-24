@@ -120,7 +120,7 @@ struct _Evry_API
   History_Types *(*history_types_get)(Evry_Type type);
   int  (*history_item_usage_set)(Evry_Item *it, const char *input, const char *ctxt);
 
-  Ecore_Event_Handler *(*event_handler_add)(int type, int (*func) (void *data, int type, void *event), const void *data);
+  Ecore_Event_Handler *(*event_handler_add)(int type, Eina_Bool (*func) (void *data, int type, void *event), const void *data);
 
   int log_dom;
 };

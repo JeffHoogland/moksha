@@ -305,7 +305,7 @@ _e_layout_smart_disown(Evas_Object *obj)
 }
 
 static void
-_e_layout_smart_item_del_hook(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_e_layout_smart_item_del_hook(__UNUSED__ void *data, __UNUSED__ Evas *e, Evas_Object *obj, __UNUSED__ void *event_info)
 {
    e_layout_unpack(obj);
 }
@@ -356,6 +356,9 @@ _e_layout_smart_init(void)
 	       _e_layout_smart_color_set,
 	       _e_layout_smart_clip_set,
 	       _e_layout_smart_clip_unset,
+	       NULL,
+	       NULL,
+	       NULL,
 	       NULL,
 	       NULL,
 	       NULL,

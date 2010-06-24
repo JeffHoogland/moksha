@@ -15,12 +15,12 @@ static void _e_container_free(E_Container *con);
 
 static E_Container *_e_container_find_by_event_window(Ecore_X_Window win);
 
-static int  _e_container_cb_mouse_in(void *data, int type, void *event);
-static int  _e_container_cb_mouse_out(void *data, int type, void *event);
-static int  _e_container_cb_mouse_down(void *data, int type, void *event);
-static int  _e_container_cb_mouse_up(void *data, int type, void *event);
-static int  _e_container_cb_mouse_move(void *data, int type, void *event);
-static int  _e_container_cb_mouse_wheel(void *data, int type, void *event);
+static Eina_Bool  _e_container_cb_mouse_in(void *data, int type, void *event);
+static Eina_Bool  _e_container_cb_mouse_out(void *data, int type, void *event);
+static Eina_Bool  _e_container_cb_mouse_down(void *data, int type, void *event);
+static Eina_Bool  _e_container_cb_mouse_up(void *data, int type, void *event);
+static Eina_Bool  _e_container_cb_mouse_move(void *data, int type, void *event);
+static Eina_Bool  _e_container_cb_mouse_wheel(void *data, int type, void *event);
 
 static void _e_container_shape_del(E_Container_Shape *es);
 static void _e_container_shape_free(E_Container_Shape *es);
@@ -247,7 +247,7 @@ e_container_number_get(E_Manager *man, int num)
    E_OBJECT_TYPE_CHECK_RETURN(man, E_MANAGER_TYPE, NULL);
    EINA_LIST_FOREACH(man->containers, l, con)
      {
-	if (con->num == num) return con;
+	if ((int) con->num == num) return con;
      }
    return NULL;
 }
@@ -338,7 +338,7 @@ e_container_zone_number_get(E_Container *con, int num)
    E_OBJECT_TYPE_CHECK_RETURN(con, E_CONTAINER_TYPE, NULL);
    EINA_LIST_FOREACH(con->zones, l, zone)
      {
-	if (zone->num == num) return zone;
+	if ((int) zone->num == num) return zone;
      }
    return NULL;
 }
@@ -503,8 +503,8 @@ e_container_shape_rects_set(E_Container_Shape *es, Ecore_X_Rectangle *rects, int
    if ((rects) && (num == 1) &&
        (rects[0].x == 0) &&
        (rects[0].y == 0) &&
-       (rects[0].width == es->w) &&
-       (rects[0].height == es->h))
+       ((int) rects[0].width == es->w) &&
+       ((int) rects[0].height == es->h))
      {
 	/* do nothing */
      }
@@ -968,8 +968,8 @@ _e_container_find_by_event_window(Ecore_X_Window win)
    return NULL;
 }
 
-static int
-_e_container_cb_mouse_in(void *data, int type, void *event)
+static Eina_Bool
+_e_container_cb_mouse_in(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_X_Event_Mouse_In *ev;
    E_Border *bd;
@@ -984,11 +984,11 @@ _e_container_cb_mouse_in(void *data, int type, void *event)
 	ecore_event_evas_modifier_lock_update(con->bg_evas, ev->modifiers);
 	evas_event_feed_mouse_in(con->bg_evas, ev->time, NULL);
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_container_cb_mouse_out(void *data, int type, void *event)
+static Eina_Bool
+_e_container_cb_mouse_out(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_X_Event_Mouse_Out *ev;
    E_Container *con;
@@ -1002,11 +1002,11 @@ _e_container_cb_mouse_out(void *data, int type, void *event)
 	  evas_event_feed_mouse_cancel(con->bg_evas, ev->time, NULL);
         evas_event_feed_mouse_out(con->bg_evas, ev->time, NULL);
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_container_cb_mouse_down(void *data, int type, void *event)
+static Eina_Bool
+_e_container_cb_mouse_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Event_Mouse_Button *ev;
    E_Container *con;
@@ -1024,11 +1024,11 @@ _e_container_cb_mouse_down(void *data, int type, void *event)
 	ecore_event_evas_modifier_lock_update(con->bg_evas, ev->modifiers);
 	evas_event_feed_mouse_down(con->bg_evas, ev->buttons, flags, ev->timestamp, NULL);
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_container_cb_mouse_up(void *data, int type, void *event)
+static Eina_Bool
+_e_container_cb_mouse_up(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Event_Mouse_Button *ev;
    E_Container *con;
@@ -1042,11 +1042,11 @@ _e_container_cb_mouse_up(void *data, int type, void *event)
 	e_bindings_mouse_up_event_handle(E_BINDING_CONTEXT_CONTAINER,
 					 E_OBJECT(con), ev);
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_container_cb_mouse_move(void *data, int type, void *event)
+static Eina_Bool
+_e_container_cb_mouse_move(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Event_Mouse_Move *ev;
    E_Container *con;
@@ -1061,8 +1061,8 @@ _e_container_cb_mouse_move(void *data, int type, void *event)
    return 1;
 }
 
-static int
-_e_container_cb_mouse_wheel(void *data, int type, void *event)
+static Eina_Bool
+_e_container_cb_mouse_wheel(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Event_Mouse_Wheel *ev;
    E_Container *con;
@@ -1078,7 +1078,7 @@ _e_container_cb_mouse_wheel(void *data, int type, void *event)
 	     evas_event_feed_mouse_wheel(con->bg_evas, ev->direction, ev->z, ev->timestamp, NULL);
 	  }
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static void
@@ -1228,7 +1228,7 @@ _e_container_resize_handle(E_Container *con)
 }
 
 static void
-_e_container_event_container_resize_free(void *data, void *ev)
+_e_container_event_container_resize_free(__UNUSED__ void *data, void *ev)
 {
    E_Event_Container_Resize *e;
 

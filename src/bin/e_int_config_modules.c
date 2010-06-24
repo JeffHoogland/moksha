@@ -390,7 +390,7 @@ _types_list_sort(const void *data1, const void *data2)
    return strcmp(t1->name, t2->name);
 }
 
-static int
+static Eina_Bool
 _fill_data_loader_iterate(void *data)
 {
    E_Config_Dialog_Data *cfdata = data;
@@ -420,20 +420,20 @@ _fill_data_loader_iterate(void *data)
      {
 	_widget_list_populate(cfdata);
 	cfdata->data_loader = NULL;
-	return 0;
+	return ECORE_CALLBACK_CANCEL;
      }
 
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
-static int
+static Eina_Bool
 _fill_data_delayed(void *data)
 {
    E_Config_Dialog_Data *cfdata = data;
 
    cfdata->data_loader = ecore_idler_add(_fill_data_loader_iterate, cfdata);
    cfdata->data_delay = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static Eina_Bool
@@ -560,7 +560,7 @@ _widget_list_populate(E_Config_Dialog_Data *cfdata)
    evas_event_thaw(cfdata->evas);
 }
 
-static int
+static Eina_Bool
 _widget_list_item_selected_postponed(void *data)
 {
    E_Config_Dialog_Data *cfdata = data;
@@ -607,7 +607,7 @@ _widget_list_item_selected_postponed(void *data)
    e_widget_textblock_markup_set(cfdata->o_desc, description);
 
    cfdata->selected.idler = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void

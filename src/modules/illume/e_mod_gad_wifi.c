@@ -39,8 +39,8 @@ static E_Module *mod = NULL;
 
 static void _wifiget_spawn(Instance *inst);
 static void _wifiget_kill(Instance *inst);
-static int _wifiget_cb_exe_data(void *data, int type, void *event);
-static int _wifiget_cb_exe_del(void *data, int type, void *event);
+static Eina_Bool _wifiget_cb_exe_data(void *data, int type, void *event);
+static Eina_Bool _wifiget_cb_exe_del(void *data, int type, void *event);
 
 /* called from the module core */
 void
@@ -199,8 +199,8 @@ _wifiget_kill(Instance *inst)
    inst->wifiget_del_handler = NULL;
 }
 
-static int
-_wifiget_cb_exe_data(void *data, int type, void *event)
+static Eina_Bool
+_wifiget_cb_exe_data(void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Exe_Event_Data *ev;
    Instance *inst;
@@ -208,7 +208,7 @@ _wifiget_cb_exe_data(void *data, int type, void *event)
    
    inst = data;
    ev = event;
-   if (ev->exe != inst->wifiget_exe) return 1;
+   if (ev->exe != inst->wifiget_exe) return ECORE_CALLBACK_PASS_ON;
    pstrength = inst->strength;
    if ((ev->lines) && (ev->lines[0].line))
      {
@@ -234,18 +234,18 @@ _wifiget_cb_exe_data(void *data, int type, void *event)
 	msg.val = level;
 	edje_object_message_send(inst->obj, EDJE_MESSAGE_FLOAT, 1, &msg);
      }
-   return 0;
+   return ECORE_CALLBACK_DONE;
 }
 
-static int 
-_wifiget_cb_exe_del(void *data, int type, void *event)
+static Eina_Bool
+_wifiget_cb_exe_del(void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Exe_Event_Del *ev;
    Instance *inst;
   
    inst = data;
    ev = event;
-   if (ev->exe != inst->wifiget_exe) return 1;
+   if (ev->exe != inst->wifiget_exe) return ECORE_CALLBACK_PASS_ON;
    inst->wifiget_exe = NULL;
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }

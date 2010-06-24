@@ -42,8 +42,8 @@ struct _E_Config_Dialog_Data
 
 /* local subsystem functions */
 static E_Exec_Instance *_e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining);
-static int _e_exec_cb_expire_timer(void *data);
-static int _e_exec_cb_exit(void *data, int type, void *event);
+static Eina_Bool _e_exec_cb_expire_timer(void *data);
+static Eina_Bool _e_exec_cb_exit(void *data, int type, void *event);
 
 static Eina_Bool _e_exec_startup_id_pid_find(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *value, void *data);
 
@@ -120,7 +120,7 @@ e_exec(E_Zone *zone, Efreet_Desktop *desktop, const char *exec,
 	  inst = _e_exec_cb_exec(launch, NULL, strdup(exec), 0);
 	else 
           inst = efreet_desktop_command_get(desktop, files, 
-                                            _e_exec_cb_exec, launch);
+                                            (Efreet_Desktop_Command_Cb) _e_exec_cb_exec, launch);
      }
    else
      inst = _e_exec_cb_exec(launch, NULL, strdup(exec), 0);
@@ -279,7 +279,7 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
    return inst;
 }
 
-static int
+static Eina_Bool
 _e_exec_cb_expire_timer(void *data)
 {
    E_Exec_Instance *inst;
@@ -287,7 +287,7 @@ _e_exec_cb_expire_timer(void *data)
    inst = data;
    e_exec_start_pending = eina_list_remove(e_exec_start_pending, inst->desktop);
    inst->expire_timer = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void
@@ -316,28 +316,28 @@ _e_exec_instance_free(E_Exec_Instance *inst)
 
 
 
-static int
+static Eina_Bool
 _e_exec_cb_instance_finish(void *data)
 {
    _e_exec_instance_free(data);
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 
-static int
-_e_exec_cb_exit(void *data, int type, void *event)
+static Eina_Bool
+_e_exec_cb_exit(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Exe_Event_Del *ev;
    E_Exec_Instance *inst;
 
    ev = event;
-   if (!ev->exe) return 1;
+   if (!ev->exe) return ECORE_CALLBACK_PASS_ON;
 //   if (ecore_exe_tag_get(ev->exe)) printf("  tag %s\n", ecore_exe_tag_get(ev->exe));
-   if (!(ecore_exe_tag_get(ev->exe) && 
+   if (!(ecore_exe_tag_get(ev->exe) &&
 	 (!strcmp(ecore_exe_tag_get(ev->exe), "E/exec"))))
-     return 1;
+     return ECORE_CALLBACK_PASS_ON;
    inst = ecore_exe_data_get(ev->exe);
-   if (!inst) return 1;
+   if (!inst) return ECORE_CALLBACK_PASS_ON;
 
    /* /bin/sh uses this if cmd not found */
    if ((ev->exited) &&
@@ -400,7 +400,7 @@ _e_exec_cb_exit(void *data, int type, void *event)
    else
      _e_exec_instance_free(inst);
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool

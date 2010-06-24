@@ -8,28 +8,28 @@ static Ecore_Event_Handler *_e_dpms_handler_border_fullscreen = NULL;
 static Ecore_Event_Handler *_e_dpms_handler_border_unfullscreen = NULL;
 static int _e_dpms_fullscreen_count = 0;
 
-static int
+static Eina_Bool
 _e_dpms_handler_config_mode_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    e_dpms_init();
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _e_dpms_handler_border_fullscreen_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    _e_dpms_fullscreen_count++;
    if (_e_dpms_fullscreen_count == 1) e_dpms_init();
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _e_dpms_handler_border_unfullscreen_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    _e_dpms_fullscreen_count--;
    if (_e_dpms_fullscreen_count == 0) e_dpms_init();
    else if (_e_dpms_fullscreen_count < 0) _e_dpms_fullscreen_count = 0;
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 EAPI int

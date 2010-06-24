@@ -23,7 +23,7 @@ static void _cb_button_click(void *data, void *data2);
 
 static void _conf_new(void);
 static void _conf_free(void);
-static int _conf_timer(void *data);
+static Eina_Bool _conf_timer(void *data);
 
 static E_Module *conf_module = NULL;
 static E_Action *act = NULL;
@@ -477,10 +477,10 @@ _conf_free(void)
    E_FREE(conf);
 }
 
-static int
-_conf_timer(void *data)
+static Eina_Bool
+_conf_timer(__UNUSED__ void *data)
 {
    e_util_dialog_show(_("Configuration Panel Configuration Updated"),
 		      "%s", (char *)data);
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }

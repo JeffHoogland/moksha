@@ -2,16 +2,16 @@
 #include "e_mod_quickpanel.h"
 
 /* local function prototypes */
-static int _e_mod_quickpanel_cb_client_message(void *data __UNUSED__, int type __UNUSED__, void *event);
-static int _e_mod_quickpanel_cb_mouse_up(void *data, int type __UNUSED__, void *event);
-static int _e_mod_quickpanel_cb_border_add(void *data __UNUSED__, int type __UNUSED__, void *event);
-static int _e_mod_quickpanel_cb_border_resize(void *data __UNUSED__, int type __UNUSED__, void *event);
+static Eina_Bool _e_mod_quickpanel_cb_client_message(void *data __UNUSED__, int type __UNUSED__, void *event);
+static Eina_Bool _e_mod_quickpanel_cb_mouse_up(void *data, int type __UNUSED__, void *event);
+static Eina_Bool _e_mod_quickpanel_cb_border_add(void *data __UNUSED__, int type __UNUSED__, void *event);
+static Eina_Bool _e_mod_quickpanel_cb_border_resize(void *data __UNUSED__, int type __UNUSED__, void *event);
 static void _e_mod_quickpanel_cb_post_fetch(void *data __UNUSED__, void *data2);
 static void _e_mod_quickpanel_cb_free(E_Illume_Quickpanel *qp);
-static int _e_mod_quickpanel_cb_delay_hide(void *data);
+static Eina_Bool _e_mod_quickpanel_cb_delay_hide(void *data);
 static void _e_mod_quickpanel_slide(E_Illume_Quickpanel *qp, int visible, double len);
 static void _e_mod_quickpanel_hide(E_Illume_Quickpanel *qp);
-static int _e_mod_quickpanel_cb_animate(void *data);
+static Eina_Bool _e_mod_quickpanel_cb_animate(void *data);
 static void _e_mod_quickpanel_position_update(E_Illume_Quickpanel *qp);
 static void _e_mod_quickpanel_animate_down(E_Illume_Quickpanel *qp);
 static void _e_mod_quickpanel_animate_up(E_Illume_Quickpanel *qp);
@@ -150,7 +150,7 @@ e_mod_quickpanel_hide(E_Illume_Quickpanel *qp)
 }
 
 /* local functions */
-static int 
+static Eina_Bool
 _e_mod_quickpanel_cb_client_message(void *data __UNUSED__, int type __UNUSED__, void *event) 
 {
    Ecore_X_Event_Client_Message *ev;
@@ -195,15 +195,15 @@ _e_mod_quickpanel_cb_client_message(void *data __UNUSED__, int type __UNUSED__, 
         E_Border *bd;
         E_Illume_Quickpanel *qp;
 
-        if (!(bd = e_border_find_by_client_window(ev->win))) return 1;
-        if (!(qp = e_illume_quickpanel_by_zone_get(bd->zone))) return 1;
+        if (!(bd = e_border_find_by_client_window(ev->win))) return ECORE_CALLBACK_PASS_ON;
+        if (!(qp = e_illume_quickpanel_by_zone_get(bd->zone))) return ECORE_CALLBACK_PASS_ON;
         _e_mod_quickpanel_position_update(qp);
      }
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int 
+static Eina_Bool
 _e_mod_quickpanel_cb_mouse_up(void *data, int type __UNUSED__, void *event) 
 {
    Ecore_Event_Mouse_Button *ev;
@@ -211,12 +211,12 @@ _e_mod_quickpanel_cb_mouse_up(void *data, int type __UNUSED__, void *event)
 
    ev = event;
    qp = data;
-   if (ev->event_window != qp->clickwin) return 1;
+   if (ev->event_window != qp->clickwin) return ECORE_CALLBACK_PASS_ON;
    if (qp->visible) e_mod_quickpanel_hide(qp);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int 
+static Eina_Bool
 _e_mod_quickpanel_cb_border_add(void *data __UNUSED__, int type __UNUSED__, void *event) 
 {
    E_Event_Border_Add *ev;
@@ -225,7 +225,7 @@ _e_mod_quickpanel_cb_border_add(void *data __UNUSED__, int type __UNUSED__, void
    int iy;
 
    ev = event;
-   if (!ev->border->client.illume.quickpanel.quickpanel) return 1;
+   if (!ev->border->client.illume.quickpanel.quickpanel) return ECORE_CALLBACK_PASS_ON;
 
    zone = ev->border->zone;
 
@@ -242,7 +242,7 @@ _e_mod_quickpanel_cb_border_add(void *data __UNUSED__, int type __UNUSED__, void
         if (!zone) zone = e_util_container_zone_number_get(con->num, 0);
      }
 
-   if (!(qp = e_illume_quickpanel_by_zone_get(zone))) return 1;
+   if (!(qp = e_illume_quickpanel_by_zone_get(zone))) return ECORE_CALLBACK_PASS_ON;
 
    /* set position and zone */
    e_illume_border_indicator_pos_get(zone, NULL, &iy);
@@ -259,10 +259,10 @@ _e_mod_quickpanel_cb_border_add(void *data __UNUSED__, int type __UNUSED__, void
    /* add this border to QP border collection */
    qp->borders = eina_list_append(qp->borders, ev->border);
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int 
+static Eina_Bool
 _e_mod_quickpanel_cb_border_resize(void *data __UNUSED__, int type __UNUSED__, void *event) 
 {
    E_Event_Border_Resize *ev;
@@ -271,14 +271,14 @@ _e_mod_quickpanel_cb_border_resize(void *data __UNUSED__, int type __UNUSED__, v
    E_Border *bd;
 
    ev = event;
-   if (!ev->border->client.illume.quickpanel.quickpanel) return 1;
-   if (!(qp = e_illume_quickpanel_by_zone_get(ev->border->zone))) return 1;
+   if (!ev->border->client.illume.quickpanel.quickpanel) return ECORE_CALLBACK_PASS_ON;
+   if (!(qp = e_illume_quickpanel_by_zone_get(ev->border->zone))) return ECORE_CALLBACK_PASS_ON;
 
    qp->h = 0;
    EINA_LIST_FOREACH(qp->borders, l, bd)
      qp->h += bd->h;
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static void 
@@ -320,14 +320,14 @@ _e_mod_quickpanel_cb_free(E_Illume_Quickpanel *qp)
    E_FREE(qp);
 }
 
-static int 
+static Eina_Bool
 _e_mod_quickpanel_cb_delay_hide(void *data) 
 {
    E_Illume_Quickpanel *qp;
 
-   if (!(qp = data)) return 0;
+   if (!(qp = data)) return ECORE_CALLBACK_CANCEL;
    _e_mod_quickpanel_hide(qp);
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void 
@@ -386,13 +386,13 @@ _e_mod_quickpanel_hide(E_Illume_Quickpanel *qp)
      _e_mod_quickpanel_slide(qp, 0, (double)duration / 1000.0);
 }
 
-static int 
+static Eina_Bool
 _e_mod_quickpanel_cb_animate(void *data) 
 {
    E_Illume_Quickpanel *qp;
    double t, v = 1.0;
 
-   if (!(qp = data)) return 0;
+   if (!(qp = data)) return ECORE_CALLBACK_CANCEL;
    t = (ecore_loop_time_get() - qp->start);
    if (t > qp->len) t = qp->len;
    if (qp->len > 0.0) 
@@ -423,10 +423,10 @@ _e_mod_quickpanel_cb_animate(void *data)
 	     qp->visible = 1;
 	     _e_mod_quickpanel_clickwin_show(qp);
 	  }
-        return 0;
+        return ECORE_CALLBACK_CANCEL;
      }
 
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
 static void 

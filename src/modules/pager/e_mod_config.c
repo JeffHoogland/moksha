@@ -44,8 +44,8 @@ static int _adv_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfd
 static int _adv_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
 static void _update_btn_lbl(E_Config_Dialog_Data *cfdata);
 static void _grab_window_show(void *data1, void *data2);
-static int _grab_cb_mouse_down(void *data, int type, void *event);
-static int _grab_cb_key_down(void *data, int type, void *event);
+static Eina_Bool _grab_cb_mouse_down(void *data, int type, void *event);
+static Eina_Bool _grab_cb_key_down(void *data, int type, void *event);
 static void _grab_window_hide(E_Config_Dialog_Data *cfdata);
 static void _cb_disable_check_list(void *data, Evas_Object *obj);
 
@@ -386,15 +386,15 @@ _grab_window_show(void *data1, void *data2)
                                    pager_config->config_dialog->dia->win->evas_win);
 }
 
-static int
-_grab_cb_mouse_down(void *data, int type, void *event)
+static Eina_Bool
+_grab_cb_mouse_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Config_Dialog_Data *cfdata = NULL;
    Ecore_Event_Mouse_Button *ev;
 
    ev = event;
-   if (!(cfdata = data)) return 1;
-   if (ev->window != cfdata->grab.bind_win) return 1;
+   if (!(cfdata = data)) return ECORE_CALLBACK_PASS_ON;
+   if (ev->window != cfdata->grab.bind_win) return ECORE_CALLBACK_PASS_ON;
 
    if (ev->buttons == cfdata->btn.drag)
      cfdata->btn.drag = 0;
@@ -419,18 +419,18 @@ _grab_cb_mouse_down(void *data, int type, void *event)
                              "This button only works in the Popup"));
      }
    _grab_window_hide(cfdata);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_grab_cb_key_down(void *data, int type, void *event)
+static Eina_Bool
+_grab_cb_key_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Config_Dialog_Data *cfdata = NULL;
    Ecore_Event_Key *ev;
 
    ev = event;
-   if (!(cfdata = data)) return 1;
-   if (ev->window != cfdata->grab.bind_win) return 1;
+   if (!(cfdata = data)) return ECORE_CALLBACK_PASS_ON;
+   if (ev->window != cfdata->grab.bind_win) return ECORE_CALLBACK_PASS_ON;
    if (!strcmp(ev->keyname, "Escape")) _grab_window_hide(cfdata);
    if (!strcmp(ev->keyname, "Delete"))
      {
@@ -442,7 +442,7 @@ _grab_cb_key_down(void *data, int type, void *event)
           cfdata->btn.desk = 0;
         _grab_window_hide(cfdata);
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static void

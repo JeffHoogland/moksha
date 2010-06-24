@@ -7,7 +7,7 @@ static void *_il_kbd_config_create(E_Config_Dialog *cfd);
 static void _il_kbd_config_free(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_il_kbd_config_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static void _il_kbd_config_changed(void *data, Evas_Object *obj, void *event);
-static int _il_kbd_config_change_timeout(void *data);
+static Eina_Bool _il_kbd_config_change_timeout(void *data);
 
 EAPI Il_Kbd_Config *il_kbd_cfg = NULL;
 static E_Config_DD *conf_edd = NULL;
@@ -206,8 +206,8 @@ _il_kbd_config_changed(void *data, Evas_Object *obj, void *event)
      ecore_timer_add(0.5, _il_kbd_config_change_timeout, data);
 }
 
-static int 
-_il_kbd_config_change_timeout(void *data) 
+static Eina_Bool
+_il_kbd_config_change_timeout(__UNUSED__ void *data)
 {
    Eina_List *l;
 
@@ -250,5 +250,5 @@ _il_kbd_config_change_timeout(void *data)
    il_kbd_cfg_update();
    e_config_save_queue();
    _il_kbd_config_change_timer = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }

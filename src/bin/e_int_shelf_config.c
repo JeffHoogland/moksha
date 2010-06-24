@@ -472,7 +472,8 @@ static void
 _fill_desks(E_Config_Dialog_Data *cfdata) 
 {
    Evas *evas;
-   int mw, x, y, i;
+   int mw, x, y;
+   int i = 0;
 
    evas = evas_object_evas_get(cfdata->o_desk_list);
    evas_event_freeze(evas);

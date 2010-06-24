@@ -106,14 +106,14 @@ static void _ibox_inst_cb_leave(void *data, const char *type, void *event_info);
 static void _ibox_inst_cb_drop(void *data, const char *type, void *event_info);
 static void _ibox_drop_position_update(Instance *inst, Evas_Coord x, Evas_Coord y);
 static void _ibox_inst_cb_scroll(void *data);
-static int _ibox_cb_event_border_add(void *data, int type, void *event);
-static int _ibox_cb_event_border_remove(void *data, int type, void *event);
-static int _ibox_cb_event_border_iconify(void *data, int type, void *event);
-static int _ibox_cb_event_border_uniconify(void *data, int type, void *event);
-static int _ibox_cb_event_border_icon_change(void *data, int type, void *event);
-static int _ibox_cb_event_border_urgent_change(void *data, int type, void *event);
-static int _ibox_cb_event_border_zone_set(void *data, int type, void *event);
-static int _ibox_cb_event_desk_show(void *data, int type, void *event);
+static Eina_Bool _ibox_cb_event_border_add(void *data, int type, void *event);
+static Eina_Bool _ibox_cb_event_border_remove(void *data, int type, void *event);
+static Eina_Bool _ibox_cb_event_border_iconify(void *data, int type, void *event);
+static Eina_Bool _ibox_cb_event_border_uniconify(void *data, int type, void *event);
+static Eina_Bool _ibox_cb_event_border_icon_change(void *data, int type, void *event);
+static Eina_Bool _ibox_cb_event_border_urgent_change(void *data, int type, void *event);
+static Eina_Bool _ibox_cb_event_border_zone_set(void *data, int type, void *event);
+static Eina_Bool _ibox_cb_event_desk_show(void *data, int type, void *event);
 static Config_Item *_ibox_config_item_get(const char *id);
 
 static E_Config_DD *conf_edd = NULL;
@@ -1020,8 +1020,8 @@ _ibox_inst_cb_drop(void *data, const char *type, void *event_info)
    _gc_orient(inst->gcc, -1);
 }
 
-static int
-_ibox_cb_event_border_add(void *data, int type, void *event)
+static Eina_Bool
+_ibox_cb_event_border_add(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Add *ev;
    IBox *b;
@@ -1052,11 +1052,11 @@ _ibox_cb_event_border_add(void *data, int type, void *event)
 	while (ibox)
 	  ibox = eina_list_remove_list(ibox, ibox);
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_ibox_cb_event_border_remove(void *data, int type, void *event)
+static Eina_Bool
+_ibox_cb_event_border_remove(__UNUSED__ void *data, int type, void *event)
 {
    E_Event_Border_Remove *ev;
    IBox *b;
@@ -1080,11 +1080,11 @@ _ibox_cb_event_border_remove(void *data, int type, void *event)
    while (ibox)
      ibox = eina_list_remove_list(ibox, ibox);
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_ibox_cb_event_border_iconify(void *data, int type, void *event)
+static Eina_Bool
+_ibox_cb_event_border_iconify(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Iconify *ev;
    IBox *b;
@@ -1113,11 +1113,11 @@ _ibox_cb_event_border_iconify(void *data, int type, void *event)
 
    while (ibox)
      ibox = eina_list_remove_list(ibox, ibox);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_ibox_cb_event_border_uniconify(void *data, int type, void *event)
+static Eina_Bool
+_ibox_cb_event_border_uniconify(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Uniconify *ev;
    IBox *b;
@@ -1143,11 +1143,11 @@ _ibox_cb_event_border_uniconify(void *data, int type, void *event)
    while (ibox)
      ibox = eina_list_remove_list(ibox, ibox);
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_ibox_cb_event_border_icon_change(void *data, int type, void *event)
+static Eina_Bool
+_ibox_cb_event_border_icon_change(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Icon_Change *ev;
    IBox *b;
@@ -1169,11 +1169,11 @@ _ibox_cb_event_border_icon_change(void *data, int type, void *event)
    while (ibox)
      ibox = eina_list_remove_list(ibox, ibox);
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_ibox_cb_event_border_urgent_change(void *data, int type, void *event)
+static Eina_Bool
+_ibox_cb_event_border_urgent_change(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Urgent_Change *ev;
    IBox *b;
@@ -1201,11 +1201,11 @@ _ibox_cb_event_border_urgent_change(void *data, int type, void *event)
 	  }
      }
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_ibox_cb_event_border_zone_set(void *data, int type, void *event)
+static Eina_Bool
+_ibox_cb_event_border_zone_set(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Zone_Set *ev;
 
@@ -1217,8 +1217,8 @@ _ibox_cb_event_border_zone_set(void *data, int type, void *event)
    return 1;
 }
 
-static int
-_ibox_cb_event_desk_show(void *data, int type, void *event)
+static Eina_Bool
+_ibox_cb_event_desk_show(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Desk_Show *ev;
    IBox *b;
@@ -1242,7 +1242,7 @@ _ibox_cb_event_desk_show(void *data, int type, void *event)
    while (ibox)
      ibox = eina_list_remove_list(ibox, ibox);
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static Config_Item *

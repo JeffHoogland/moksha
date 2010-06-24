@@ -6,10 +6,10 @@
 
 E_Busywin *_e_busywin_new(E_Zone *zone, const char *themedir);
 static void _e_busywin_free(E_Busywin *esw);
-static int _e_busywin_cb_animate(void *data);
+static Eina_Bool _e_busywin_cb_animate(void *data);
 static void _e_busywin_slide(E_Busywin *esw, int out, double len);
-static int _e_busywin_cb_mouse_up(void *data, int type, void *event);
-static int _e_busywin_cb_zone_move_resize(void *data, int type, void *event);
+static Eina_Bool _e_busywin_cb_mouse_up(void *data, int type, void *event);
+static Eina_Bool _e_busywin_cb_zone_move_resize(void *data, int type, void *event);
 static void _e_busywin_cb_item_sel(void *data, void *data2);
 
 static Evas_Object *_theme_obj_new(Evas *e, const char *custom_dir, const char *group);
@@ -145,7 +145,7 @@ _e_busywin_free(E_Busywin *esw)
    free(esw);
 }
 
-static int
+static Eina_Bool
 _e_busywin_cb_animate(void *data)
 {
    E_Busywin *esw;
@@ -177,9 +177,9 @@ _e_busywin_cb_animate(void *data)
 	  edje_object_signal_emit(esw->base_obj, "e,state,out,end", "e");
 	else
 	  edje_object_signal_emit(esw->base_obj, "e,state,in,end", "e");
-	return 0;
+	return ECORE_CALLBACK_CANCEL;
      }
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
 static void
@@ -216,8 +216,8 @@ _e_busywin_slide(E_Busywin *esw, int out, double len)
      esw->animator = ecore_animator_add(_e_busywin_cb_animate, esw);
 }
 
-static int
-_e_busywin_cb_mouse_up(void *data, int type, void *event)
+static Eina_Bool
+_e_busywin_cb_mouse_up(void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Event_Mouse_Button *ev;
    E_Busywin *esw;
@@ -229,11 +229,11 @@ _e_busywin_cb_mouse_up(void *data, int type, void *event)
 	if (esw->out) _e_busywin_slide(esw, 0, (double)illume_cfg->sliding.busywin.duration / 1000.0);
 	else _e_busywin_slide(esw, 1, (double)illume_cfg->sliding.busywin.duration / 1000.0);
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_busywin_cb_zone_move_resize(void *data, int type, void *event)
+static Eina_Bool
+_e_busywin_cb_zone_move_resize(void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Zone_Move_Resize *ev;
    E_Busywin *esw;
@@ -248,7 +248,7 @@ _e_busywin_cb_zone_move_resize(void *data, int type, void *event)
 			    esw->zone->w, esw->popup->h);
 	evas_object_resize(esw->base_obj, esw->popup->w, esw->popup->h);
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 

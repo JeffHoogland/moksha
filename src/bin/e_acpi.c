@@ -19,11 +19,11 @@ struct _ACPIDevice
 };
 
 /* local function prototypes */
-static int _e_acpi_cb_server_del(void *data __UNUSED__, int type __UNUSED__, void *event);
-static int _e_acpi_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event);
+static Eina_Bool _e_acpi_cb_server_del(void *data __UNUSED__, int type __UNUSED__, void *event);
+static Eina_Bool _e_acpi_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event);
 static void _e_acpi_cb_event_free(void *data __UNUSED__, void *event);
 static int _e_acpi_lid_status_get(const char *device, const char *bus);
-static int _e_acpi_cb_event(void *data __UNUSED__, int type __UNUSED__, void *event);
+static Eina_Bool _e_acpi_cb_event(void *data __UNUSED__, int type __UNUSED__, void *event);
 
 /* local variables */
 static int _e_acpi_events_frozen = 0;
@@ -153,14 +153,14 @@ e_acpi_events_thaw(void)
 }
 
 /* local functions */
-static int 
-_e_acpi_cb_server_del(void *data __UNUSED__, int type __UNUSED__, void *event) 
+static Eina_Bool
+_e_acpi_cb_server_del(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Con_Event_Server_Del *ev;
    Ecore_Event_Handler *hdl;
 
    ev = event;
-   if (ev->server != _e_acpid) return 1;
+   if (ev->server != _e_acpid) return ECORE_CALLBACK_PASS_ON;
 
    /* cleanup event handlers */
    EINA_LIST_FREE(_e_acpid_hdls, hdl)
@@ -169,11 +169,11 @@ _e_acpi_cb_server_del(void *data __UNUSED__, int type __UNUSED__, void *event)
    /* kill the server if existing */
    if (_e_acpid) ecore_con_server_del(_e_acpid);
    _e_acpid = NULL;
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int 
-_e_acpi_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event) 
+static Eina_Bool
+_e_acpi_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Con_Event_Server_Data *ev;
    ACPIDevice *dev;
@@ -189,7 +189,7 @@ _e_acpi_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 
    /* parse out this acpi string into separate pieces */
    if (sscanf(ev->data, "%s %s %d %d", device, bus, &sig, &status) != 4)
-     return 1;
+     return ECORE_CALLBACK_PASS_ON;
 
    /* create new event structure to raise */
    acpi_event = E_NEW(E_Event_Acpi, 1);
@@ -248,7 +248,7 @@ _e_acpi_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 
    /* actually raise the event */
    ecore_event_add(event_type, acpi_event, _e_acpi_cb_event_free, NULL);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static void 
@@ -299,13 +299,13 @@ _e_acpi_lid_status_get(const char *device, const char *bus)
      return E_ACPI_LID_UNKNOWN;
 }
 
-static int 
-_e_acpi_cb_event(void *data __UNUSED__, int type __UNUSED__, void *event) 
+static Eina_Bool
+_e_acpi_cb_event(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    E_Event_Acpi *ev;
 
    ev = event;
-   if (_e_acpi_events_frozen > 0) return 1;
+   if (_e_acpi_events_frozen > 0) return ECORE_CALLBACK_PASS_ON;
    e_bindings_acpi_event_handle(E_BINDING_CONTEXT_NONE, NULL, ev);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }

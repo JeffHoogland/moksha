@@ -107,25 +107,25 @@ static void _menu_cb_post(void *data, E_Menu *m);
 static void _pager_inst_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _pager_inst_cb_menu_virtual_desktops_dialog(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _pager_instance_drop_zone_recalc(Instance *inst);
-static int _pager_cb_event_border_resize(void *data, int type, void *event);
-static int _pager_cb_event_border_move(void *data, int type, void *event);
-static int _pager_cb_event_border_add(void *data, int type, void *event);
-static int _pager_cb_event_border_remove(void *data, int type, void *event);
-static int _pager_cb_event_border_iconify(void *data, int type, void *event);
-static int _pager_cb_event_border_uniconify(void *data, int type, void *event);
-static int _pager_cb_event_border_stick(void *data, int type, void *event);
-static int _pager_cb_event_border_unstick(void *data, int type, void *event);
-static int _pager_cb_event_border_desk_set(void *data, int type, void *event);
-static int _pager_cb_event_border_stack(void *data, int type, void *event);
-static int _pager_cb_event_border_icon_change(void *data, int type, void *event);
-static int _pager_cb_event_border_urgent_change(void *data, int type, void *event);
-static int _pager_cb_event_border_focus_in(void *data, int type, void *event);
-static int _pager_cb_event_border_focus_out(void *data, int type, void *event);
-static int _pager_cb_event_border_property(void *data, int type, void *event);
-static int _pager_cb_event_zone_desk_count_set(void *data, int type, void *event);
-static int _pager_cb_event_desk_show(void *data, int type, void *event);
-static int _pager_cb_event_desk_name_change(void *data, int type, void *event);
-static int _pager_cb_event_container_resize(void *data, int type, void *event);
+static Eina_Bool _pager_cb_event_border_resize(void *data, int type, void *event);
+static Eina_Bool _pager_cb_event_border_move(void *data, int type, void *event);
+static Eina_Bool _pager_cb_event_border_add(void *data, int type, void *event);
+static Eina_Bool _pager_cb_event_border_remove(void *data, int type, void *event);
+static Eina_Bool _pager_cb_event_border_iconify(void *data, int type, void *event);
+static Eina_Bool _pager_cb_event_border_uniconify(void *data, int type, void *event);
+static Eina_Bool _pager_cb_event_border_stick(void *data, int type, void *event);
+static Eina_Bool _pager_cb_event_border_unstick(void *data, int type, void *event);
+static Eina_Bool _pager_cb_event_border_desk_set(void *data, int type, void *event);
+static Eina_Bool _pager_cb_event_border_stack(void *data, int type, void *event);
+static Eina_Bool _pager_cb_event_border_icon_change(void *data, int type, void *event);
+static Eina_Bool _pager_cb_event_border_urgent_change(void *data, int type, void *event);
+static Eina_Bool _pager_cb_event_border_focus_in(void *data, int type, void *event);
+static Eina_Bool _pager_cb_event_border_focus_out(void *data, int type, void *event);
+static Eina_Bool _pager_cb_event_border_property(void *data, int type, void *event);
+static Eina_Bool _pager_cb_event_zone_desk_count_set(void *data, int type, void *event);
+static Eina_Bool _pager_cb_event_desk_show(void *data, int type, void *event);
+static Eina_Bool _pager_cb_event_desk_name_change(void *data, int type, void *event);
+static Eina_Bool _pager_cb_event_container_resize(void *data, int type, void *event);
 static void _pager_window_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _pager_window_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _pager_window_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
@@ -142,7 +142,7 @@ static void _pager_desk_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void 
 static void _pager_desk_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _pager_desk_cb_drag_finished(E_Drag *drag, int dropped);
 static void _pager_desk_cb_mouse_wheel(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static int _pager_popup_cb_timeout(void *data);
+static Eina_Bool _pager_popup_cb_timeout(void *data);
 static Pager *_pager_new(Evas *evas, E_Zone *zone);
 static void _pager_free(Pager *p);
 static void _pager_fill(Pager *p);
@@ -166,14 +166,14 @@ static E_Config_Dialog *_pager_config_dialog(E_Container *con, const char *param
 /* functions for pager popup on key actions */
 static int _pager_popup_show();
 static void _pager_popup_hide(int switch_desk);
-static int _pager_popup_cb_mouse_down(void *data, int type, void *event);
-static int _pager_popup_cb_mouse_up(void *data, int type, void *event);
-static int _pager_popup_cb_mouse_move(void *data, int type, void *event);
-static int _pager_popup_cb_mouse_wheel(void *data, int type, void *event);
+static Eina_Bool _pager_popup_cb_mouse_down(void *data, int type, void *event);
+static Eina_Bool _pager_popup_cb_mouse_up(void *data, int type, void *event);
+static Eina_Bool _pager_popup_cb_mouse_move(void *data, int type, void *event);
+static Eina_Bool _pager_popup_cb_mouse_wheel(void *data, int type, void *event);
 static void _pager_popup_desk_switch(int x, int y);
 static void _pager_popup_modifiers_set(int mod);
-static int _pager_popup_cb_key_down(void *data, int type, void *event);
-static int _pager_popup_cb_key_up(void *data, int type, void *event);
+static Eina_Bool _pager_popup_cb_key_down(void *data, int type, void *event);
+static Eina_Bool _pager_popup_cb_key_up(void *data, int type, void *event);
 static void _pager_popup_cb_action_show(E_Object *obj, const char *params, Ecore_Event_Key *ev);
 static void _pager_popup_cb_action_switch(E_Object *obj, const char *params, Ecore_Event_Key *ev);
 
@@ -880,8 +880,8 @@ _pager_cb_config_updated(void)
    if (!pager_config) return;
 }
 
-static int
-_pager_cb_event_border_resize(void *data, int type, void *event)
+static Eina_Bool
+_pager_cb_event_border_resize(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Resize *ev;
    Eina_List *l, *l2;
@@ -902,11 +902,11 @@ _pager_cb_event_border_resize(void *data, int type, void *event)
 	     if (pw) _pager_window_move(pw);
 	  }
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_pager_cb_event_border_move(void *data, int type, void *event)
+static Eina_Bool
+_pager_cb_event_border_move(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Move *ev;
    Eina_List *l, *l2;
@@ -937,11 +937,11 @@ _pager_cb_event_border_move(void *data, int type, void *event)
 	  }
      }
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_pager_cb_event_border_add(void *data, int type, void *event)
+static Eina_Bool
+_pager_cb_event_border_add(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Add *ev;
    Eina_List *l;
@@ -961,11 +961,11 @@ _pager_cb_event_border_add(void *data, int type, void *event)
         pw = _pager_window_new(pd, ev->border);
         if (pw) pd->wins = eina_list_append(pd->wins, pw);
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_pager_cb_event_border_remove(void *data, int type, void *event)
+static Eina_Bool
+_pager_cb_event_border_remove(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Remove *ev;
    Eina_List *l, *l2;
@@ -987,11 +987,11 @@ _pager_cb_event_border_remove(void *data, int type, void *event)
              _pager_window_free(pw);
 	  }
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_pager_cb_event_border_iconify(void *data, int type, void *event)
+static Eina_Bool
+_pager_cb_event_border_iconify(__UNUSED__ void *data, __UNUSED__  type, void *event)
 {
    E_Event_Border_Iconify *ev;
    Eina_List *l, *l2;
@@ -1014,11 +1014,11 @@ _pager_cb_event_border_iconify(void *data, int type, void *event)
              evas_object_hide(pw->o_window);
 	  }
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_pager_cb_event_border_uniconify(void *data, int type, void *event)
+static Eina_Bool
+_pager_cb_event_border_uniconify(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Uniconify *ev;
    Eina_List *l, *l2;
@@ -1038,11 +1038,11 @@ _pager_cb_event_border_uniconify(void *data, int type, void *event)
 	     if ((pw) && (!pw->skip_winlist)) evas_object_show(pw->o_window);
 	  }
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_pager_cb_event_border_stick(void *data, int type, void *event)
+static Eina_Bool
+_pager_cb_event_border_stick(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Stick *ev;
    Eina_List *l, *l2;
@@ -1067,11 +1067,11 @@ _pager_cb_event_border_stick(void *data, int type, void *event)
 	       }
 	  }
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_pager_cb_event_border_unstick(void *data, int type, void *event)
+static Eina_Bool
+_pager_cb_event_border_unstick(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Unstick *ev;
    Eina_List *l, *l2;
@@ -1098,7 +1098,7 @@ _pager_cb_event_border_unstick(void *data, int type, void *event)
 	       }
 	  }
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static void
@@ -1221,8 +1221,8 @@ _pager_window_desk_change(Pager *pager, E_Border *bd)
      }
 }
 
-static int
-_pager_cb_event_border_desk_set(void *data, int type, void *event)
+static Eina_Bool
+_pager_cb_event_border_desk_set(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Desk_Set *ev;
    Eina_List *l;
@@ -1235,11 +1235,11 @@ _pager_cb_event_border_desk_set(void *data, int type, void *event)
 	_pager_window_desk_change(p, ev->border);
      }
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_pager_cb_event_border_stack(void *data, int type, void *event)
+static Eina_Bool
+_pager_cb_event_border_stack(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Stack *ev;
    Eina_List *l, *l2;
@@ -1293,11 +1293,11 @@ _pager_cb_event_border_stack(void *data, int type, void *event)
 	       }
 	  }
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_pager_cb_event_border_icon_change(void *data, int type, void *event)
+static Eina_Bool
+_pager_cb_event_border_icon_change(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Icon_Change *ev;
    Eina_List *l, *l2;
@@ -1336,11 +1336,11 @@ _pager_cb_event_border_icon_change(void *data, int type, void *event)
 	       }
 	  }
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_pager_cb_event_border_urgent_change(void *data, int type, void *event)
+static Eina_Bool
+_pager_cb_event_border_urgent_change(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Urgent_Change *ev;
    Eina_List *l, *l2;
@@ -1405,11 +1405,11 @@ _pager_cb_event_border_urgent_change(void *data, int type, void *event)
 	  }
      }
  
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_pager_cb_event_border_focus_in(void *data, int type, void *event)
+static Eina_Bool
+_pager_cb_event_border_focus_in(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Focus_In *ev;
    Eina_List *l, *l2;
@@ -1460,8 +1460,8 @@ _pager_cb_event_border_focus_in(void *data, int type, void *event)
    return 1;
 }
 
-static int
-_pager_cb_event_border_focus_out(void *data, int type, void *event)
+static Eina_Bool
+_pager_cb_event_border_focus_out(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Focus_Out *ev;
    Eina_List *l, *l2;
@@ -1512,8 +1512,8 @@ _pager_cb_event_border_focus_out(void *data, int type, void *event)
    return 1;
 }
 
-static int
-_pager_cb_event_border_property(void *data, int type, void *event)
+static Eina_Bool
+_pager_cb_event_border_property(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Property *ev;
    Eina_List *l, *l2;
@@ -1542,7 +1542,7 @@ _pager_cb_event_border_property(void *data, int type, void *event)
 	       }
 	  }
      }
-   if (found) return 1;
+   if (found) return ECORE_CALLBACK_PASS_ON;
 
    /* If we did not find this window in the pager, then add it because
     * the skip_pager state may have changed to 1 */
@@ -1601,11 +1601,11 @@ _pager_cb_event_border_property(void *data, int type, void *event)
 	       }
 	  }
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_pager_cb_event_zone_desk_count_set(void *data, int type, void *event)
+static Eina_Bool
+_pager_cb_event_zone_desk_count_set(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Eina_List *l;
    Pager *p;
@@ -1617,11 +1617,11 @@ _pager_cb_event_zone_desk_count_set(void *data, int type, void *event)
 	_pager_fill(p);
 	if (p->inst) _gc_orient(p->inst->gcc, p->inst->gcc->gadcon->orient);
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_pager_cb_event_desk_show(void *data, int type, void *event)
+static Eina_Bool
+_pager_cb_event_desk_show(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Desk_Show *ev;
    Eina_List *l;
@@ -1665,11 +1665,11 @@ _pager_cb_event_desk_show(void *data, int type, void *event)
 					 _pager_popup_cb_timeout, pp);
 	  }
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_pager_cb_event_desk_name_change(void *data, int type, void *event)
+static Eina_Bool
+_pager_cb_event_desk_name_change(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Desk_Name_Change *ev;
    Eina_List *l;
@@ -1694,11 +1694,11 @@ _pager_cb_event_desk_name_change(void *data, int type, void *event)
                edje_object_part_text_set(pd->o_desk, "e.text.label", "");
           }
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_pager_cb_event_container_resize(void *data, int type, void *event)
+static Eina_Bool
+_pager_cb_event_container_resize(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Container_Resize *ev;
    Eina_List *l, *l2;
@@ -2338,7 +2338,7 @@ _pager_desk_cb_mouse_wheel(void *data, Evas *e, Evas_Object *obj, void *event_in
      e_zone_desk_linear_flip_by(pd->desk->zone, ev->z);
 }
 
-static int
+static Eina_Bool
 _pager_popup_cb_timeout(void *data)
 {
    Pager_Popup *pp;
@@ -2352,8 +2352,8 @@ _pager_popup_cb_timeout(void *data)
 	e_grabinput_release(input_window, input_window);
 	input_window = 0;
      }
-   
-   return 0;
+
+   return ECORE_CALLBACK_CANCEL;
 }
 
 /************************************************************************/
@@ -2537,36 +2537,36 @@ _pager_popup_cb_action_switch(E_Object *obj, const char *params, Ecore_Event_Key
    _pager_popup_desk_switch(x, y);
 }
 
-static int
-_pager_popup_cb_mouse_down(void *data, int type, void *event)
+static Eina_Bool
+_pager_popup_cb_mouse_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Event_Mouse_Button *ev;
    Pager_Popup *pp = act_popup;
 
    ev = event;
-   if (ev->window != input_window) return 1;
+   if (ev->window != input_window) return ECORE_CALLBACK_PASS_ON;
 
    evas_event_feed_mouse_down(pp->popup->evas, ev->buttons,
 			      0, ev->timestamp, NULL);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_pager_popup_cb_mouse_up(void *data, int type, void *event)
+static Eina_Bool
+_pager_popup_cb_mouse_up(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Event_Mouse_Button *ev;
    Pager_Popup *pp = act_popup;
 
    ev = event;
-   if (ev->window != input_window) return 1;
+   if (ev->window != input_window) return ECORE_CALLBACK_PASS_ON;
 
    evas_event_feed_mouse_up(pp->popup->evas, ev->buttons,
 			    0, ev->timestamp, NULL);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_pager_popup_cb_mouse_move(void *data, int type, void *event)
+static Eina_Bool
+_pager_popup_cb_mouse_move(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Event_Mouse_Move *ev;
    Pager_Popup *pp = act_popup;
@@ -2578,11 +2578,11 @@ _pager_popup_cb_mouse_move(void *data, int type, void *event)
 			      ev->x - pp->popup->x + pp->pager->zone->x,
 			      ev->y - pp->popup->y + pp->pager->zone->y,
 			      ev->timestamp, NULL);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_pager_popup_cb_mouse_wheel(void *data, int type, void *event)
+static Eina_Bool
+_pager_popup_cb_mouse_wheel(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Event_Mouse_Wheel *ev = event;
    Pager_Popup *pp = act_popup;
@@ -2597,16 +2597,16 @@ _pager_popup_cb_mouse_wheel(void *data, int type, void *event)
    else
      _pager_popup_desk_switch(ev->z, 0);
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_pager_popup_cb_key_down(void *data, int type, void *event)
+static Eina_Bool
+_pager_popup_cb_key_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Event_Key *ev;
 
    ev = event;
-   if (ev->window != input_window) return 1;
+   if (ev->window != input_window) return ECORE_CALLBACK_PASS_ON;
    if (!strcmp(ev->key, "Up"))
      _pager_popup_desk_switch(0, -1);
    else if (!strcmp(ev->key, "Down"))
@@ -2655,16 +2655,16 @@ _pager_popup_cb_key_down(void *data, int type, void *event)
 	       }
 	  }
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_pager_popup_cb_key_up(void *data, int type, void *event)
+static Eina_Bool
+_pager_popup_cb_key_up(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Event_Key *ev;
 
    ev = event;
-   if (!(act_popup)) return 1;
+   if (!(act_popup)) return ECORE_CALLBACK_PASS_ON;
 
    if (hold_mod)
      {
@@ -2701,11 +2701,11 @@ _pager_popup_cb_key_up(void *data, int type, void *event)
 	if ((hold_count <= 0) && (!act_popup->pager->dragging))
 	  {
 	     _pager_popup_hide(1);
-	     return 1;
+	     return ECORE_CALLBACK_PASS_ON;
 	  }
      }
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 /***************************************************************************/

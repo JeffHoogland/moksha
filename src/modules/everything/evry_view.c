@@ -77,7 +77,7 @@ static View *view = NULL;
 static void _view_clear(Evry_View *view);
 static void _pan_item_select(Evas_Object *obj, Item *it, int scroll);
 static void _animator_del(Evas_Object *obj);
-static int _animator(void *data);
+static Eina_Bool _animator(void *data);
 
 static void
 _thumb_gen(void *data, Evas_Object *obj, void *event_info)
@@ -127,7 +127,7 @@ static int _sort_pos_cb(const void *d1, const void *d2)
    return ((it1->x + it1->y * 4) - (it2->x + it2->y * 4));
 }
 
-static int
+static Eina_Bool
 _thumb_idler(void *data)
 {
    Smart_Data *sd = data;
@@ -191,12 +191,12 @@ _thumb_idler(void *data)
 
 	e_util_wakeup();
 	sd->queue = eina_list_remove_list(sd->queue, l);
-	return 1;
+	return ECORE_CALLBACK_RENEW;
      }
 
    sd->thumb_idler = NULL;
 
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void
@@ -338,7 +338,7 @@ _item_hide(Item *it)
    it->visible = EINA_FALSE;
 }
 
-static int
+static Eina_Bool
 _e_smart_reconfigure_do(void *data)
 {
    Evas_Object *obj = data;
@@ -349,7 +349,7 @@ _e_smart_reconfigure_do(void *data)
    Evas_Coord x, y, xx, yy, ww, hh, mw, mh, ox = 0, oy = 0;
    Evas_Coord aspect_w, aspect_h;
 
-   if (!sd) return 0;
+   if (!sd) return ECORE_CALLBACK_CANCEL;
    if (sd->cx > (sd->cw - sd->w)) sd->cx = sd->cw - sd->w;
    if (sd->cy > (sd->ch - sd->h)) sd->cy = sd->ch - sd->h;
    if (sd->cx < 0) sd->cx = 0;
@@ -506,7 +506,7 @@ _e_smart_reconfigure_do(void *data)
 
    sd->idle_enter = NULL;
 
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void
@@ -705,11 +705,11 @@ _animator_del(Evas_Object *obj)
    sd->animator = NULL;
 }
 
-static int
+static Eina_Bool
 _animator(void *data)
 {
    Smart_Data *sd = evas_object_smart_data_get(data);
-   if (!sd) return 0;
+   if (!sd) return ECORE_CALLBACK_CANCEL;
 
    double da;
    double spd = ((25.0/ (double)e_config->framerate) /
@@ -735,11 +735,11 @@ _animator(void *data)
      }
 
    if (wait)
-     return 1;
+     return ECORE_CALLBACK_RENEW;
 
    _animator_del(data);
 
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 
 }
 
@@ -1355,7 +1355,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
    return 1;
 }
 
-static int
+static Eina_Bool
 _cb_item_changed(void *data, int type, void *event)
 {
    Evry_Event_Item_Changed *ev = event;
@@ -1363,14 +1363,14 @@ _cb_item_changed(void *data, int type, void *event)
    Eina_List *l;
    Item *it;
    Smart_Data *sd = evas_object_smart_data_get(v->span);
-   if (!sd) return 1;
+   if (!sd) return ECORE_CALLBACK_PASS_ON;
 
    EINA_LIST_FOREACH(sd->items, l, it)
      if (it->item == ev->item)
        break;
 
    if (!it)
-     return 1;
+     return ECORE_CALLBACK_PASS_ON;
 
    if (ev->changed_selection)
      {
@@ -1379,7 +1379,7 @@ _cb_item_changed(void *data, int type, void *event)
      }
 
    if (!it->visible)
-     return 1;
+     return ECORE_CALLBACK_PASS_ON;
 
    edje_object_part_text_set(it->frame, "e.text.label", it->item->label);
 
@@ -1402,7 +1402,7 @@ _cb_item_changed(void *data, int type, void *event)
 	  sd->thumb_idler = ecore_idle_enterer_add(_thumb_idler, sd);
      }
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static void

@@ -11,13 +11,13 @@ static void _e_zone_free(E_Zone *zone);
 static void _e_zone_cb_bg_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static void _e_zone_cb_bg_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static void _e_zone_event_zone_desk_count_set_free(void *data, void *ev);
-static int _e_zone_cb_mouse_in(void *data, int type, void *event);
-static int _e_zone_cb_mouse_out(void *data, int type, void *event);
-static int _e_zone_cb_mouse_down(void *data, int type, void *event);
-static int _e_zone_cb_mouse_up(void *data, int type, void *event);
-static int _e_zone_cb_mouse_move(void *data, int type, void *event);
-static int _e_zone_cb_desk_after_show(void *data, int type, void *event);
-static int _e_zone_cb_edge_timer(void *data);
+static Eina_Bool _e_zone_cb_mouse_in(void *data, int type, void *event);
+static Eina_Bool _e_zone_cb_mouse_out(void *data, int type, void *event);
+static Eina_Bool _e_zone_cb_mouse_down(void *data, int type, void *event);
+static Eina_Bool _e_zone_cb_mouse_up(void *data, int type, void *event);
+static Eina_Bool _e_zone_cb_mouse_move(void *data, int type, void *event);
+static Eina_Bool _e_zone_cb_desk_after_show(void *data, int type, void *event);
+static Eina_Bool _e_zone_cb_edge_timer(void *data);
 static void _e_zone_event_move_resize_free(void *data, void *ev);
 static void _e_zone_event_add_free(void *data, void *ev);
 static void _e_zone_event_del_free(void *data, void *ev);
@@ -1092,7 +1092,7 @@ _e_zone_free(E_Zone *zone)
 }
 
 static void
-_e_zone_cb_bg_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info)
+_e_zone_cb_bg_mouse_down(void *data, __UNUSED__ Evas *evas, __UNUSED__ Evas_Object *obj, __UNUSED__ void *event_info)
 {
    E_Zone *zone;
 
@@ -1122,7 +1122,7 @@ _e_zone_cb_bg_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_i
 }
 
 static void
-_e_zone_cb_bg_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_info)
+_e_zone_cb_bg_mouse_up(void *data, __UNUSED__ Evas *evas, __UNUSED__ Evas_Object *obj, __UNUSED__ void *event_info)
 {
    E_Zone *zone;
 
@@ -1156,7 +1156,7 @@ _e_zone_cb_bg_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_inf
 }
 
 static void
-_e_zone_event_zone_desk_count_set_free(void *data, void *ev)
+_e_zone_event_zone_desk_count_set_free(__UNUSED__ void *data, void *ev)
 {
    E_Event_Zone_Desk_Count_Set *e;
 
@@ -1165,8 +1165,8 @@ _e_zone_event_zone_desk_count_set_free(void *data, void *ev)
    free(e);
 }
 
-static int
-_e_zone_cb_mouse_in(void *data, int type, void *event)
+static Eina_Bool
+_e_zone_cb_mouse_in(void *data, __UNUSED__ int type, void *event)
 {
    Ecore_X_Event_Mouse_In *ev;
    E_Event_Zone_Edge *zev;
@@ -1177,7 +1177,7 @@ _e_zone_cb_mouse_in(void *data, int type, void *event)
    zone = data;
 
    edge = _e_zone_detect_edge(zone, ev->win);
-   if (edge == E_ZONE_EDGE_NONE) return 1;
+   if (edge == E_ZONE_EDGE_NONE) return ECORE_CALLBACK_PASS_ON;
 
    zev = E_NEW(E_Event_Zone_Edge, 1);
    zev->zone = zone;
@@ -1188,11 +1188,11 @@ _e_zone_cb_mouse_in(void *data, int type, void *event)
    ecore_event_add(E_EVENT_ZONE_EDGE_IN, zev, NULL, NULL);
    e_bindings_edge_in_event_handle(E_BINDING_CONTEXT_ZONE, E_OBJECT(zone), zev);
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_zone_cb_mouse_out(void *data, int type, void *event)
+static Eina_Bool
+_e_zone_cb_mouse_out(void *data, __UNUSED__ int type, void *event)
 {
    Ecore_X_Event_Mouse_Out *ev;
    E_Event_Zone_Edge *zev;
@@ -1203,7 +1203,7 @@ _e_zone_cb_mouse_out(void *data, int type, void *event)
    zone = data;
 
    edge = _e_zone_detect_edge(zone, ev->win);
-   if (edge == E_ZONE_EDGE_NONE) return 1;
+   if (edge == E_ZONE_EDGE_NONE) return ECORE_CALLBACK_PASS_ON;
 
    zev = E_NEW(E_Event_Zone_Edge, 1);
    zev->zone = zone;
@@ -1213,11 +1213,11 @@ _e_zone_cb_mouse_out(void *data, int type, void *event)
    zev->modifiers = ev->modifiers;
    ecore_event_add(E_EVENT_ZONE_EDGE_OUT, zev, NULL, NULL);
    e_bindings_edge_out_event_handle(E_BINDING_CONTEXT_ZONE, E_OBJECT(zone), zev);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_zone_cb_mouse_down(void *data, int type, void *event)
+static Eina_Bool
+_e_zone_cb_mouse_down(void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Event_Mouse_Button *ev;
    E_Event_Zone_Edge *zev;
@@ -1228,7 +1228,7 @@ _e_zone_cb_mouse_down(void *data, int type, void *event)
    zone = data;
 
    edge = _e_zone_detect_edge(zone, ev->window);
-   if (edge == E_ZONE_EDGE_NONE) return 1;
+   if (edge == E_ZONE_EDGE_NONE) return ECORE_CALLBACK_PASS_ON;
 
    zev = E_NEW(E_Event_Zone_Edge, 1);
    zev->zone = zone;
@@ -1238,11 +1238,11 @@ _e_zone_cb_mouse_down(void *data, int type, void *event)
    zev->modifiers = ev->modifiers;
    ecore_event_add(E_EVENT_ZONE_EDGE_OUT, zev, NULL, NULL);
    e_bindings_edge_down_event_handle(E_BINDING_CONTEXT_ZONE, E_OBJECT(zone), zev);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_zone_cb_mouse_up(void *data, int type, void *event)
+static Eina_Bool
+_e_zone_cb_mouse_up(void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Event_Mouse_Button *ev;
    E_Event_Zone_Edge *zev;
@@ -1253,7 +1253,7 @@ _e_zone_cb_mouse_up(void *data, int type, void *event)
    zone = data;
 
    edge = _e_zone_detect_edge(zone, ev->window);
-   if (edge == E_ZONE_EDGE_NONE) return 1;
+   if (edge == E_ZONE_EDGE_NONE) return ECORE_CALLBACK_PASS_ON;
 
    zev = E_NEW(E_Event_Zone_Edge, 1);
    zev->zone = zone;
@@ -1263,11 +1263,11 @@ _e_zone_cb_mouse_up(void *data, int type, void *event)
    zev->modifiers = ev->modifiers;
    ecore_event_add(E_EVENT_ZONE_EDGE_OUT, zev, NULL, NULL);
    e_bindings_edge_up_event_handle(E_BINDING_CONTEXT_ZONE, E_OBJECT(zone), zev);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_zone_cb_mouse_move(void *data, int type, void *event)
+static Eina_Bool
+_e_zone_cb_mouse_move(void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Event_Mouse_Move *ev;
    E_Event_Zone_Edge *zev;
@@ -1278,7 +1278,7 @@ _e_zone_cb_mouse_move(void *data, int type, void *event)
    zone = data;
 
    edge = _e_zone_detect_edge(zone, ev->window);
-   if (edge == E_ZONE_EDGE_NONE) return 1;
+   if (edge == E_ZONE_EDGE_NONE) return ECORE_CALLBACK_PASS_ON;
 
    zev = E_NEW(E_Event_Zone_Edge, 1);
    zev->zone = zone;
@@ -1287,24 +1287,24 @@ _e_zone_cb_mouse_move(void *data, int type, void *event)
    zev->y = ev->root.y;
    zev->modifiers = ev->modifiers;
    ecore_event_add(E_EVENT_ZONE_EDGE_MOVE, zev, NULL, NULL);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_zone_cb_desk_after_show(void *data, int type, void *event)
+static Eina_Bool
+_e_zone_cb_desk_after_show(void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Desk_Show *ev;
    E_Zone *zone;
 
    ev = event;
    zone = data;
-   if (ev->desk->zone != zone) return 1;
+   if (ev->desk->zone != zone) return ECORE_CALLBACK_PASS_ON;
 
    zone->flip.switching = 0;
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
+static Eina_Bool
 _e_zone_cb_edge_timer(void *data)
 {
    E_Zone *zone;
@@ -1315,7 +1315,7 @@ _e_zone_cb_edge_timer(void *data)
    if (!act)
      {
 	E_FREE(zone->flip.ev);
-	return 0;
+	return ECORE_CALLBACK_CANCEL;
      }
 
    if (act->func.go_edge)
@@ -1326,11 +1326,11 @@ _e_zone_cb_edge_timer(void *data)
    zone->flip.bind->timer = NULL;
 
    E_FREE(zone->flip.ev);
-   return 0;
+   return ECORE_CALLBACK_RENEW;
 }
 
 static void
-_e_zone_event_move_resize_free(void *data, void *ev)
+_e_zone_event_move_resize_free(__UNUSED__ void *data, void *ev)
 {
    E_Event_Zone_Move_Resize *e;
 
@@ -1340,7 +1340,7 @@ _e_zone_event_move_resize_free(void *data, void *ev)
 }
 
 static void
-_e_zone_event_add_free(void *data, void *ev)
+_e_zone_event_add_free(__UNUSED__ void *data, void *ev)
 {
    E_Event_Zone_Add *e;
 
@@ -1350,7 +1350,7 @@ _e_zone_event_add_free(void *data, void *ev)
 }
 
 static void
-_e_zone_event_del_free(void *data, void *ev)
+_e_zone_event_del_free(__UNUSED__ void *data, void *ev)
 {
    E_Event_Zone_Del *e;
 

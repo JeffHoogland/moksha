@@ -16,8 +16,8 @@ struct _E_Simplelock_Data
 };
 
 static void _e_action_simplelock_cb(E_Object *obj, const char *params);
-static int _e_simplelock_cb_key_down(void *data, int type, void *event);
-static int _e_simplelock_cb_key_up(void *data, int type, void *event);
+static Eina_Bool _e_simplelock_cb_key_down(void *data, int type, void *event);
+static Eina_Bool _e_simplelock_cb_key_up(void *data, int type, void *event);
 
 static Evas_Object *_theme_obj_new(Evas *e, const char *custom_dir, const char *group);
 
@@ -37,7 +37,7 @@ _e_action_simplelock_cb(E_Object *obj, const char *params)
      e_simplelock_show();
 }
 
-static int
+static Eina_Bool
 _e_simplelock_cb_key_down(void *data, int type, void *event)
 {
    Ecore_Event_Key *ev;
@@ -47,7 +47,7 @@ _e_simplelock_cb_key_down(void *data, int type, void *event)
    E_Binding_Modifier mod;
       
    ev = event;
-   if (ev->event_window != grab_win) return 1;
+   if (ev->event_window != grab_win) return ECORE_CALLBACK_PASS_ON;
    for (l = e_config->key_bindings; l; l = l->next)
      {
 	bind = l->data;
@@ -70,21 +70,21 @@ _e_simplelock_cb_key_down(void *data, int type, void *event)
 	     e_simplelock_hide();
 	  }
      }
-   return 0;
+   return ECORE_CALLBACK_DONE;
 }
 
-static int
-_e_simplelock_cb_key_up(void *data, int type, void *event)
+static Eina_Bool
+_e_simplelock_cb_key_up(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Event_Key *ev;
       
    ev = event;
-   if (ev->event_window != grab_win) return 1;
-   return 0;
+   if (ev->event_window != grab_win) return ECORE_CALLBACK_PASS_ON;
+   return ECORE_CALLBACK_DONE;
 }
 
-static int
-_e_simplelock_cb_zone_move_resize(void *data, int type, void *event)
+static Eina_Bool
+_e_simplelock_cb_zone_move_resize(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Zone_Move_Resize *ev;
    Eina_List *l;
@@ -115,7 +115,7 @@ _e_simplelock_cb_zone_move_resize(void *data, int type, void *event)
 					esl->zone->w, esl->zone->h);
 	  }
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 /***********************************************************************/

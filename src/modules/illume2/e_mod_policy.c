@@ -7,15 +7,15 @@ static int _e_mod_policy_load(char *file);
 static void _e_mod_policy_handlers_add(void);
 static void _e_mod_policy_hooks_add(void);
 static void _e_mod_policy_cb_free(E_Illume_Policy *p);
-static int _e_mod_policy_cb_border_add(void *data __UNUSED__, int type __UNUSED__, void *event);
-static int _e_mod_policy_cb_border_del(void *data __UNUSED__, int type __UNUSED__, void *event);
-static int _e_mod_policy_cb_border_focus_in(void *data __UNUSED__, int type __UNUSED__, void *event);
-static int _e_mod_policy_cb_border_focus_out(void *data __UNUSED__, int type __UNUSED__, void *event);
-static int _e_mod_policy_cb_border_show(void *data __UNUSED__, int type __UNUSED__, void *event);
-static int _e_mod_policy_cb_zone_move_resize(void *data __UNUSED__, int type __UNUSED__, void *event);
-static int _e_mod_policy_cb_client_message(void *data __UNUSED__, int type __UNUSED__, void *event);
-static int _e_mod_policy_cb_window_property(void *data __UNUSED__, int type __UNUSED__, void *event);
-static int _e_mod_policy_cb_policy_change(void *data __UNUSED__, int type, void *event __UNUSED__);
+static Eina_Bool _e_mod_policy_cb_border_add(void *data __UNUSED__, int type __UNUSED__, void *event);
+static Eina_Bool _e_mod_policy_cb_border_del(void *data __UNUSED__, int type __UNUSED__, void *event);
+static Eina_Bool _e_mod_policy_cb_border_focus_in(void *data __UNUSED__, int type __UNUSED__, void *event);
+static Eina_Bool _e_mod_policy_cb_border_focus_out(void *data __UNUSED__, int type __UNUSED__, void *event);
+static Eina_Bool _e_mod_policy_cb_border_show(void *data __UNUSED__, int type __UNUSED__, void *event);
+static Eina_Bool _e_mod_policy_cb_zone_move_resize(void *data __UNUSED__, int type __UNUSED__, void *event);
+static Eina_Bool _e_mod_policy_cb_client_message(void *data __UNUSED__, int type __UNUSED__, void *event);
+static Eina_Bool _e_mod_policy_cb_window_property(void *data __UNUSED__, int type __UNUSED__, void *event);
+static Eina_Bool _e_mod_policy_cb_policy_change(void *data __UNUSED__, int type, void *event __UNUSED__);
 static void _e_mod_policy_cb_hook_post_fetch(void *data __UNUSED__, void *data2);
 static void _e_mod_policy_cb_hook_post_assign(void *data __UNUSED__, void *data2);
 static void _e_mod_policy_cb_hook_layout(void *data __UNUSED__, void *data2 __UNUSED__);
@@ -308,7 +308,7 @@ _e_mod_policy_cb_free(E_Illume_Policy *p)
    E_FREE(p);
 }
 
-static int 
+static Eina_Bool
 _e_mod_policy_cb_border_add(void *data __UNUSED__, int type __UNUSED__, void *event) 
 {
    E_Event_Border_Add *ev;
@@ -317,10 +317,10 @@ _e_mod_policy_cb_border_add(void *data __UNUSED__, int type __UNUSED__, void *ev
    if ((_policy) && (_policy->funcs.border_add))
      _policy->funcs.border_add(ev->border);
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int 
+static Eina_Bool
 _e_mod_policy_cb_border_del(void *data __UNUSED__, int type __UNUSED__, void *event) 
 {
    E_Event_Border_Remove *ev;
@@ -329,10 +329,10 @@ _e_mod_policy_cb_border_del(void *data __UNUSED__, int type __UNUSED__, void *ev
    if ((_policy) && (_policy->funcs.border_del))
      _policy->funcs.border_del(ev->border);
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int 
+static Eina_Bool
 _e_mod_policy_cb_border_focus_in(void *data __UNUSED__, int type __UNUSED__, void *event) 
 {
    E_Event_Border_Focus_In *ev;
@@ -341,10 +341,10 @@ _e_mod_policy_cb_border_focus_in(void *data __UNUSED__, int type __UNUSED__, voi
    if ((_policy) && (_policy->funcs.border_focus_in))
      _policy->funcs.border_focus_in(ev->border);
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int 
+static Eina_Bool
 _e_mod_policy_cb_border_focus_out(void *data __UNUSED__, int type __UNUSED__, void *event) 
 {
    E_Event_Border_Focus_Out *ev;
@@ -353,10 +353,10 @@ _e_mod_policy_cb_border_focus_out(void *data __UNUSED__, int type __UNUSED__, vo
    if ((_policy) && (_policy->funcs.border_focus_out))
      _policy->funcs.border_focus_out(ev->border);
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int 
+static Eina_Bool
 _e_mod_policy_cb_border_show(void *data __UNUSED__, int type __UNUSED__, void *event) 
 {
    E_Event_Border_Show *ev;
@@ -365,10 +365,10 @@ _e_mod_policy_cb_border_show(void *data __UNUSED__, int type __UNUSED__, void *e
    if ((_policy) && (_policy->funcs.border_show))
      _policy->funcs.border_show(ev->border);
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int 
+static Eina_Bool
 _e_mod_policy_cb_zone_move_resize(void *data __UNUSED__, int type __UNUSED__, void *event) 
 {
    E_Event_Zone_Move_Resize *ev;
@@ -377,10 +377,10 @@ _e_mod_policy_cb_zone_move_resize(void *data __UNUSED__, int type __UNUSED__, vo
    if ((_policy) && (_policy->funcs.zone_move_resize))
      _policy->funcs.zone_move_resize(ev->zone);
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int 
+static Eina_Bool
 _e_mod_policy_cb_client_message(void *data __UNUSED__, int type __UNUSED__, void *event) 
 {
    Ecore_X_Event_Client_Message *ev;
@@ -390,7 +390,7 @@ _e_mod_policy_cb_client_message(void *data __UNUSED__, int type __UNUSED__, void
      {
         E_Border *bd;
 
-        if (!(bd = e_border_find_by_client_window(ev->win))) return 1;
+        if (!(bd = e_border_find_by_client_window(ev->win))) return ECORE_CALLBACK_PASS_ON;
         if ((_policy) && (_policy->funcs.border_activate))
           _policy->funcs.border_activate(bd);
      }
@@ -398,7 +398,7 @@ _e_mod_policy_cb_client_message(void *data __UNUSED__, int type __UNUSED__, void
      {
         E_Zone *zone;
 
-        if (!(zone = e_util_zone_window_find(ev->win))) return 1;
+        if (!(zone = e_util_zone_window_find(ev->win))) return ECORE_CALLBACK_PASS_ON;
         if ((_policy) && (_policy->funcs.zone_mode_change))
           _policy->funcs.zone_mode_change(zone, ev->data.l[0]);
      }
@@ -406,7 +406,7 @@ _e_mod_policy_cb_client_message(void *data __UNUSED__, int type __UNUSED__, void
      {
         E_Zone *zone;
 
-        if (!(zone = e_util_zone_window_find(ev->win))) return 1;
+        if (!(zone = e_util_zone_window_find(ev->win))) return ECORE_CALLBACK_PASS_ON;
         if ((_policy) && (_policy->funcs.zone_close))
           _policy->funcs.zone_close(zone);
      }
@@ -414,7 +414,7 @@ _e_mod_policy_cb_client_message(void *data __UNUSED__, int type __UNUSED__, void
      {
         E_Zone *zone;
 
-        if (!(zone = e_util_zone_window_find(ev->win))) return 1;
+        if (!(zone = e_util_zone_window_find(ev->win))) return ECORE_CALLBACK_PASS_ON;
         if ((_policy) && (_policy->funcs.focus_back))
           _policy->funcs.focus_back(zone);
      }
@@ -422,7 +422,7 @@ _e_mod_policy_cb_client_message(void *data __UNUSED__, int type __UNUSED__, void
      {
         E_Zone *zone;
 
-        if (!(zone = e_util_zone_window_find(ev->win))) return 1;
+        if (!(zone = e_util_zone_window_find(ev->win))) return ECORE_CALLBACK_PASS_ON;
         if ((_policy) && (_policy->funcs.focus_forward))
           _policy->funcs.focus_forward(zone);
      }
@@ -430,7 +430,7 @@ _e_mod_policy_cb_client_message(void *data __UNUSED__, int type __UNUSED__, void
      {
         E_Zone *zone;
 
-        if (!(zone = e_util_zone_window_find(ev->win))) return 1;
+        if (!(zone = e_util_zone_window_find(ev->win))) return ECORE_CALLBACK_PASS_ON;
         if ((_policy) && (_policy->funcs.focus_home))
           _policy->funcs.focus_home(zone);
      }
@@ -438,7 +438,7 @@ _e_mod_policy_cb_client_message(void *data __UNUSED__, int type __UNUSED__, void
      {
         E_Border *bd;
 
-        if (!(bd = e_border_find_by_client_window(ev->win))) return 1;
+        if (!(bd = e_border_find_by_client_window(ev->win))) return ECORE_CALLBACK_PASS_ON;
         if ((_policy) && (_policy->funcs.drag_start))
           _policy->funcs.drag_start(bd);
      }
@@ -446,15 +446,15 @@ _e_mod_policy_cb_client_message(void *data __UNUSED__, int type __UNUSED__, void
      {
         E_Border *bd;
 
-        if (!(bd = e_border_find_by_client_window(ev->win))) return 1;
+        if (!(bd = e_border_find_by_client_window(ev->win))) return ECORE_CALLBACK_PASS_ON;
         if ((_policy) && (_policy->funcs.drag_end))
           _policy->funcs.drag_end(bd);
      }
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int 
+static Eina_Bool
 _e_mod_policy_cb_window_property(void *data __UNUSED__, int type __UNUSED__, void *event) 
 {
    Ecore_X_Event_Window_Property *ev;
@@ -463,25 +463,25 @@ _e_mod_policy_cb_window_property(void *data __UNUSED__, int type __UNUSED__, voi
    if ((_policy) && (_policy->funcs.property_change))
      _policy->funcs.property_change(ev);
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int 
+static Eina_Bool
 _e_mod_policy_cb_policy_change(void *data __UNUSED__, int type, void *event __UNUSED__) 
 {
    char *file;
 
-   if (type != E_ILLUME_POLICY_EVENT_CHANGE) return 1;
+   if (type != E_ILLUME_POLICY_EVENT_CHANGE) return ECORE_CALLBACK_PASS_ON;
 
    /* find policy specified in config */
-   if (!(file = _e_mod_policy_find())) return 1;
+   if (!(file = _e_mod_policy_find())) return ECORE_CALLBACK_PASS_ON;
 
    /* try to load the policy */
    _e_mod_policy_load(file);
 
    if (file) free(file);
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static void 

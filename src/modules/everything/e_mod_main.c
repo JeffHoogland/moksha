@@ -7,12 +7,12 @@
 
 static void _e_mod_action_cb(E_Object *obj, const char *params);
 static void _e_mod_action_cb_edge(E_Object *obj, const char *params, E_Event_Zone_Edge *ev);
-static int  _e_mod_run_defer_cb(void *data);
+static Eina_Bool  _e_mod_run_defer_cb(void *data);
 static void _e_mod_run_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_mod_menu_add(void *data, E_Menu *m);
 static void _config_init(void);
 static void _config_free(void);
-static int  _cleanup_history(void *data);
+static Eina_Bool  _cleanup_history(void *data);
 static void _evry_type_init(const char *type);
 
 static Evry_API *_api = NULL;
@@ -234,7 +234,7 @@ e_modapi_save(E_Module *m __UNUSED__)
 /***************************************************************************/
 
 Ecore_Event_Handler *
-evry_event_handler_add(int type, int (*func) (void *data, int type, void *event), const void *data)
+evry_event_handler_add(int type, Eina_Bool (*func) (void *data, int type, void *event), const void *data)
 {
    return ecore_event_handler_add(_evry_events[type], func, data);
 }
@@ -321,18 +321,18 @@ evry_view_unregister(Evry_View *view)
 
 /***************************************************************************/
 
-static int
+static Eina_Bool
 _cleanup_history(void *data)
 {
    /* evrything is active */
    if (evry_hist)
-     return 1;
+     return ECORE_CALLBACK_RENEW;
 
    /* cleanup old entries */
    evry_history_free();
    evry_history_init();
 
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
 static void
@@ -496,7 +496,7 @@ _config_free(void)
 static Ecore_Idle_Enterer *_idler = NULL;
 static const char *_params = NULL;
 
-static int
+static Eina_Bool
 _e_mod_run_defer_cb(void *data)
 {
    E_Zone *zone;
@@ -505,7 +505,7 @@ _e_mod_run_defer_cb(void *data)
    if (zone) evry_show(zone, E_ZONE_EDGE_NONE, _params);
 
    _idler = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void

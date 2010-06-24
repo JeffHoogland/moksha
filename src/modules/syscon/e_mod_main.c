@@ -6,7 +6,7 @@
 
 /* actual module specifics */
 static void  _e_mod_action_syscon_cb(E_Object *obj, const char *params);
-static int   _e_mod_syscon_defer_cb(void *data);
+static Eina_Bool   _e_mod_syscon_defer_cb(void *data);
 static void  _e_mod_syscon_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void  _e_mod_menu_add(void *data, E_Menu *m);
 
@@ -96,14 +96,14 @@ _e_mod_action_syscon_cb(E_Object *obj, const char *params)
 }
 
 /* menu item callback(s) */
-static int
+static Eina_Bool
 _e_mod_syscon_defer_cb(void *data)
 {
    E_Zone *zone;
 
    zone = data;
    if (zone) e_syscon_show(zone, NULL);
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void 

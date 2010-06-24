@@ -18,9 +18,9 @@ static char *_gc_label(E_Gadcon_Client_Class *cc);
 static Evas_Object *_gc_icon(E_Gadcon_Client_Class *cc, Evas *evas);
 static const char *_gc_id_new(E_Gadcon_Client_Class *cc);
 static void _cb_btn_click(void *data, void *data2);
-static int _cb_border_focus_in(void *data, int type __UNUSED__, void *event);
-static int _cb_border_remove(void *data, int type __UNUSED__, void *event);
-static int _cb_border_property(void *data, int type __UNUSED__, void *event);
+static Eina_Bool _cb_border_focus_in(void *data, int type __UNUSED__, void *event);
+static Eina_Bool _cb_border_remove(void *data, int type __UNUSED__, void *event);
+static Eina_Bool _cb_border_property(void *data, int type __UNUSED__, void *event);
 static void _set_btn_icon(Evas_Object *obj, Ecore_X_Virtual_Keyboard_State state);
 
 /* local variables */
@@ -160,33 +160,33 @@ _cb_btn_click(void *data, void *data2)
                                           ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF);
 }
 
-static int 
+static Eina_Bool
 _cb_border_focus_in(void *data, int type __UNUSED__, void *event) 
 {
    Instance *inst;
    E_Event_Border_Focus_In *ev;
    E_Border *bd;
 
-   if (!(inst = data)) return 1;
+   if (!(inst = data)) return ECORE_CALLBACK_PASS_ON;
    ev = event;
-   if (ev->border->stolen) return 1;
-   if (!(bd = ev->border)) return 1;
-   if (bd->zone != inst->gcc->gadcon->zone) return 1;
+   if (ev->border->stolen) return ECORE_CALLBACK_PASS_ON;
+   if (!(bd = ev->border)) return ECORE_CALLBACK_PASS_ON;
+   if (bd->zone != inst->gcc->gadcon->zone) return ECORE_CALLBACK_PASS_ON;
    _set_btn_icon(inst->o_btn, bd->client.vkbd.state);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int 
+static Eina_Bool
 _cb_border_remove(void *data, int type __UNUSED__, void *event) 
 {
    Instance *inst;
 
-   if (!(inst = data)) return 1;
+   if (!(inst = data)) return ECORE_CALLBACK_PASS_ON;
    _set_btn_icon(inst->o_btn, ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int 
+static Eina_Bool
 _cb_border_property(void *data, int type __UNUSED__, void *event) 
 {
    Instance *inst;
@@ -194,13 +194,13 @@ _cb_border_property(void *data, int type __UNUSED__, void *event)
    E_Border *bd;
 
    ev = event;
-   if (ev->atom != ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE) return 1;
-   if (!(bd = e_border_find_by_client_window(ev->win))) return 1;
-   if (!bd->focused) return 1;
-   if (!(inst = data)) return 1;
-   if (bd->zone != inst->gcc->gadcon->zone) return 1;
+   if (ev->atom != ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE) return ECORE_CALLBACK_PASS_ON;
+   if (!(bd = e_border_find_by_client_window(ev->win))) return ECORE_CALLBACK_PASS_ON;
+   if (!bd->focused) return ECORE_CALLBACK_PASS_ON;
+   if (!(inst = data)) return ECORE_CALLBACK_PASS_ON;
+   if (bd->zone != inst->gcc->gadcon->zone) return ECORE_CALLBACK_PASS_ON;
    _set_btn_icon(inst->o_btn, bd->client.vkbd.state);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static void 

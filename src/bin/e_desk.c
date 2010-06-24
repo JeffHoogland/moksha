@@ -16,10 +16,10 @@ static void _e_desk_event_desk_deskshow_free(void *data, void *ev);
 static void _e_desk_event_desk_name_change_free(void *data, void *ev);
 static void _e_desk_show_begin(E_Desk *desk, int mode, int dx, int dy);
 static void _e_desk_show_end(E_Desk *desk);
-static int _e_desk_show_animator(void *data);
+static Eina_Bool _e_desk_show_animator(void *data);
 static void _e_desk_hide_begin(E_Desk *desk, int mode, int dx, int dy);
 static void _e_desk_hide_end(E_Desk *desk);
-static int _e_desk_hide_animator(void *data);
+static Eina_Bool _e_desk_hide_animator(void *data);
 
 EAPI int E_EVENT_DESK_SHOW = 0;
 EAPI int E_EVENT_DESK_BEFORE_SHOW = 0;
@@ -68,9 +68,9 @@ e_desk_new(E_Zone *zone, int x, int y)
    EINA_LIST_FOREACH(e_config->desktop_names, l, cfname)
      {
 	if ((cfname->container >= 0) &&
-	    (zone->container->num != cfname->container)) continue;
+	    ((int) zone->container->num != cfname->container)) continue;
 	if ((cfname->zone >= 0) &&
-	    (zone->num != cfname->zone)) continue;
+	    ((int) zone->num != cfname->zone)) continue;
 	if ((cfname->desk_x != desk->x) || (cfname->desk_y != desk->y)) 
           continue;
 	desk->name = eina_stringshare_add(cfname->name);
@@ -167,9 +167,9 @@ e_desk_name_update(void)
 			    EINA_LIST_FOREACH(e_config->desktop_names, l, cfname)
 			      {
 				 if ((cfname->container >= 0) &&
-				     (con->num != cfname->container)) continue;
+				     ((int) con->num != cfname->container)) continue;
 				 if ((cfname->zone >= 0) &&
-	    			     (zone->num != cfname->zone)) continue;
+	    			     ((int) zone->num != cfname->zone)) continue;
 				 if ((cfname->desk_x != d_x) || 
 				     (cfname->desk_y != d_y)) continue;
 				 e_desk_name_set(desk,cfname->name);
@@ -294,7 +294,7 @@ e_desk_show(E_Desk *desk)
 	if (!cf_es) continue;
 
 	zone = e_util_zone_current_get(e_manager_current_get());
-	if (cf_es->zone != zone->num) continue;
+	if (cf_es->zone != (int) zone->num) continue;
 
 	EINA_LIST_FOREACH(es->cfg->desk_list, ll, sd)
 	  {
@@ -521,7 +521,7 @@ _e_desk_free(E_Desk *desk)
 }
 
 static void
-_e_desk_event_desk_show_free(void *data, void *event)
+_e_desk_event_desk_show_free(__UNUSED__ void *data, void *event)
 {
    E_Event_Desk_Show *ev;
 
@@ -531,7 +531,7 @@ _e_desk_event_desk_show_free(void *data, void *event)
 }
 
 static void
-_e_desk_event_desk_before_show_free(void *data, void *event)
+_e_desk_event_desk_before_show_free(__UNUSED__ void *data, void *event)
 {
    E_Event_Desk_Before_Show *ev;
 
@@ -541,7 +541,7 @@ _e_desk_event_desk_before_show_free(void *data, void *event)
 }
 
 static void
-_e_desk_event_desk_after_show_free(void *data, void *event)
+_e_desk_event_desk_after_show_free(__UNUSED__ void *data, void *event)
 {
    E_Event_Desk_After_Show *ev;
 
@@ -551,7 +551,7 @@ _e_desk_event_desk_after_show_free(void *data, void *event)
 }
 
 static void
-_e_desk_event_desk_deskshow_free(void *data, void *event)
+_e_desk_event_desk_deskshow_free(__UNUSED__ void *data, void *event)
 {
    E_Event_Desk_Show *ev;
 
@@ -561,7 +561,7 @@ _e_desk_event_desk_deskshow_free(void *data, void *event)
 }
 
 static void
-_e_desk_event_desk_name_change_free(void *data, void *event)
+_e_desk_event_desk_name_change_free(__UNUSED__ void *data, void *event)
 {
    E_Event_Desk_Name_Change *ev;
 
@@ -670,7 +670,7 @@ _e_desk_show_end(E_Desk *desk)
 		   _e_desk_event_desk_after_show_free, NULL);
 }
 
-static int
+static Eina_Bool
 _e_desk_show_animator(void *data)
 {
    E_Desk *desk;
@@ -707,9 +707,9 @@ _e_desk_show_animator(void *data)
      {
 	_e_desk_show_end(desk);
 	desk->animator = NULL;
-	return 0;
+	return ECORE_CALLBACK_CANCEL;
      }
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
 static void
@@ -806,7 +806,7 @@ _e_desk_hide_end(E_Desk *desk)
    ecore_x_window_shadow_tree_flush();
 }
 
-static int
+static Eina_Bool
 _e_desk_hide_animator(void *data)
 {
    E_Desk *desk;
@@ -842,7 +842,7 @@ _e_desk_hide_animator(void *data)
      {
 	_e_desk_hide_end(desk);
 	desk->animator = NULL;
-	return 0;
+	return ECORE_CALLBACK_CANCEL;
      }
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }

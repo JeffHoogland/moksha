@@ -44,7 +44,7 @@ static void _e_smart_event_key_down   (void *data, Evas *evas, Evas_Object *obj,
 
 static void _e_typebuf_add          (Evas_Object *obj, const char *s);
 static void _e_typebuf_match        (Evas_Object *obj);
-static int  _e_typebuf_timer_cb     (void *data);
+static Eina_Bool _e_typebuf_timer_cb(void *data);
 static void _e_typebuf_timer_update (Evas_Object *obj);
 static void _e_typebuf_timer_delete (Evas_Object *obj);
 static void _e_typebuf_clean        (Evas_Object *obj);
@@ -1354,13 +1354,13 @@ _e_typebuf_match(Evas_Object *obj)
    free(match);
 }
 
-static int
+static Eina_Bool
 _e_typebuf_timer_cb(void *data)
 {
    Evas_Object *obj = data;
 
    _e_typebuf_clean(obj);
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void

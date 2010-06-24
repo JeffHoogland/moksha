@@ -4,7 +4,7 @@
 #include "e.h"
 
 /* local subsystem functions */
-static int _e_canvas_cb_flush(void *data);
+static Eina_Bool _e_canvas_cb_flush(void *data);
 
 /* local subsystem globals */
 static Eina_List *_e_canvases = NULL;
@@ -233,10 +233,10 @@ e_canvas_new(int engine_hint, Ecore_X_Window win, int x, int y, int w, int h,
 }
 
 /* local subsystem functions */
-static int
-_e_canvas_cb_flush(void *data)
+static Eina_Bool
+_e_canvas_cb_flush(__UNUSED__ void *data)
 {
    e_canvas_cache_flush();
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 

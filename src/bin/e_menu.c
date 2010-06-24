@@ -76,14 +76,14 @@ static void _e_menu_cb_intercept_container_resize(void *data, Evas_Object *o, Ev
 static void _e_menu_cb_ecore_evas_resize(Ecore_Evas *ee);
 static void _e_menu_cb_item_in(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static void _e_menu_cb_item_out(void *data, Evas *evas, Evas_Object *obj, void *event_info);
-static int _e_menu_cb_key_down(void *data, int type, void *event);
-static int _e_menu_cb_key_up(void *data, int type, void *event);
-static int _e_menu_cb_mouse_down(void *data, int type, void *event);
-static int _e_menu_cb_mouse_up(void *data, int type, void *event);
-static int _e_menu_cb_mouse_move(void *data, int type, void *event);
-static int _e_menu_cb_mouse_wheel(void *data, int type, void *event);
-static int _e_menu_cb_scroll_animator(void *data);
-static int _e_menu_cb_window_shape(void *data, int ev_type, void *ev);
+static Eina_Bool _e_menu_cb_key_down(void *data, int type, void *event);
+static Eina_Bool _e_menu_cb_key_up(void *data, int type, void *event);
+static Eina_Bool _e_menu_cb_mouse_down(void *data, int type, void *event);
+static Eina_Bool _e_menu_cb_mouse_up(void *data, int type, void *event);
+static Eina_Bool _e_menu_cb_mouse_move(void *data, int type, void *event);
+static Eina_Bool _e_menu_cb_mouse_wheel(void *data, int type, void *event);
+static Eina_Bool _e_menu_cb_scroll_animator(void *data);
+static Eina_Bool _e_menu_cb_window_shape(void *data, int ev_type, void *ev);
 static void _e_menu_cb_item_submenu_post_default(void *data, E_Menu *m, E_Menu_Item *mi);
 static Eina_Bool _e_menu_categories_free_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata);
 
@@ -2553,7 +2553,7 @@ _e_menu_cb_ecore_evas_resize(Ecore_Evas *ee)
 }
 
 static void
-_e_menu_cb_item_in(void *data, Evas *evas, Evas_Object *obj, void *event_info)
+_e_menu_cb_item_in(void *data, __UNUSED__ Evas *evas, __UNUSED__ Evas_Object *obj, __UNUSED__ void *event_info)
 {
    E_Menu_Item *mi;
    
@@ -2562,7 +2562,7 @@ _e_menu_cb_item_in(void *data, Evas *evas, Evas_Object *obj, void *event_info)
 }
 
 static void
-_e_menu_cb_item_out(void *data, Evas *evas, Evas_Object *obj, void *event_info)
+_e_menu_cb_item_out(void *data, __UNUSED__ Evas *evas, __UNUSED__ Evas_Object *obj, void *event_info)
 {
    E_Menu_Item *mi;
    Evas_Event_Mouse_In *ev;
@@ -2585,13 +2585,13 @@ _e_menu_cb_item_out(void *data, Evas *evas, Evas_Object *obj, void *event_info)
      }
 }
 
-static int
-_e_menu_cb_key_down(void *data, int type, void *event)
+static Eina_Bool
+_e_menu_cb_key_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Event_Key *ev;
    
    ev = event;
-   if (ev->window != _e_menu_win) return 1;
+   if (ev->window != _e_menu_win) return ECORE_CALLBACK_PASS_ON;
    if ((!strcmp(ev->key, "Up")) || (!strcmp(ev->key, "KP_Up")))
      _e_menu_item_activate_previous();
    else if ((!strcmp(ev->key, "Down")) || (!strcmp(ev->key, "KP_Down")))
@@ -2635,17 +2635,17 @@ _e_menu_cb_key_down(void *data, int type, void *event)
      _e_menu_item_activate_last();
    else if (ev->compose)
      _e_menu_item_activate_char(ev->compose);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_menu_cb_key_up(void *data, int type, void *event)
+static Eina_Bool
+_e_menu_cb_key_up(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Event_Key *ev;
    
    ev = event;
-   if (ev->window != _e_menu_win) return 1;
-   return 1;
+   if (ev->window != _e_menu_win) return ECORE_CALLBACK_PASS_ON;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 /* we need all of these because menus are special and grab the mouse and
@@ -2653,13 +2653,13 @@ _e_menu_cb_key_up(void *data, int type, void *event)
  * events directly to the canvases from our grab window
  */
 
-static int
-_e_menu_cb_mouse_down(void *data, int type, void *event)
+static Eina_Bool
+_e_menu_cb_mouse_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Event_Mouse_Button *ev;
    
    ev = event;
-   if (ev->window != _e_menu_win) return 1;
+   if (ev->window != _e_menu_win) return ECORE_CALLBACK_PASS_ON;
 
    /* Only allow dragging from floating menus for now.
     * The reason for this is that for non floating menus, 
@@ -2669,25 +2669,25 @@ _e_menu_cb_mouse_down(void *data, int type, void *event)
    if (_e_menu_activate_floating)
      _e_menu_activate_maybe_drag = 1;
 
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_menu_cb_mouse_up(void *data, int type, void *event)
+static Eina_Bool
+_e_menu_cb_mouse_up(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Event_Mouse_Button *ev;
    Ecore_X_Time t;
    int ret = 0;
    
    ev = event;
-   if (ev->window != _e_menu_win) return 1;
+   if (ev->window != _e_menu_win) return ECORE_CALLBACK_PASS_ON;
 
    t = ev->timestamp - _e_menu_activate_time;
    if ((_e_menu_activate_time != 0) &&
        (t < (e_config->menus_click_drag_timeout * 1000)))
      {
 	_e_menu_activate_floating = 1;
-	return 1;
+	return ECORE_CALLBACK_PASS_ON;
      }
 
    if (_e_menu_activate_dragging)
@@ -2710,11 +2710,11 @@ _e_menu_cb_mouse_up(void *data, int type, void *event)
      _e_menu_deactivate_all();
    else if (!_e_menu_activate_floating)
      _e_menu_deactivate_all();
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_menu_cb_mouse_move(void *data, int type, void *event)
+static Eina_Bool
+_e_menu_cb_mouse_move(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Event_Mouse_Move *ev;
    Eina_List *l, *tmp;
@@ -2725,7 +2725,7 @@ _e_menu_cb_mouse_move(void *data, int type, void *event)
    int is_fast = 0;
    
    ev = event;
-   if (ev->window != _e_menu_win) return 1;
+   if (ev->window != _e_menu_win) return ECORE_CALLBACK_PASS_ON;
    fast_move_threshold = e_config->menus_fast_mouse_move_threshhold;
    dx = ev->x - _e_menu_x;
    dy = ev->y - _e_menu_y;
@@ -2768,16 +2768,16 @@ _e_menu_cb_mouse_move(void *data, int type, void *event)
    _e_menu_y = ev->y;
    _e_menu_time = ev->timestamp;
    _e_menu_mouse_autoscroll_check();
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_menu_cb_mouse_wheel(void *data, int type, void *event)
+static Eina_Bool
+_e_menu_cb_mouse_wheel(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_Event_Mouse_Wheel *ev;
    
    ev = event;
-   if (ev->window != _e_menu_win) return 1;
+   if (ev->window != _e_menu_win) return ECORE_CALLBACK_PASS_ON;
    if (ev->z < 0) /* up */
      {
 	int i;
@@ -2792,11 +2792,11 @@ _e_menu_cb_mouse_wheel(void *data, int type, void *event)
 	for (i = ev->z; i > 0; i--)
 	  _e_menu_item_activate_next();
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_menu_cb_scroll_animator(void *data)
+static Eina_Bool
+_e_menu_cb_scroll_animator(__UNUSED__ void *data)
 {
    double t, dt;
    double dx, dy;
@@ -2845,8 +2845,8 @@ _e_menu_cb_scroll_animator(void *data)
    return 1;
 }
 
-static int
-_e_menu_cb_window_shape(void *data, int ev_type, void *ev)
+static Eina_Bool
+_e_menu_cb_window_shape(__UNUSED__ void *data, __UNUSED__ int ev_type, void *ev)
 {
    Eina_List *l;
    Ecore_X_Event_Window_Shape *e;
@@ -2858,7 +2858,7 @@ _e_menu_cb_window_shape(void *data, int ev_type, void *ev)
 	if (m->evas_win == e->win)
 	  m->need_shape_export = 1;
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static void
@@ -2875,7 +2875,7 @@ _e_menu_cb_item_submenu_post_default(void *data, E_Menu *m, E_Menu_Item *mi)
 
 
 static Eina_Bool
-_e_menu_categories_free_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata)
+_e_menu_categories_free_cb(__UNUSED__ const Eina_Hash *hash, __UNUSED__ const void *key, void *data, __UNUSED__ void *fdata)
 {
    E_Menu_Category_Callback *cb;
    E_Menu_Category *cat;

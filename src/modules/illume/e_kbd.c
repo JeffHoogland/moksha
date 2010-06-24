@@ -62,7 +62,7 @@ _e_kbd_border_show(E_Kbd *kbd, E_Border *bd)
    e_border_raise(bd);
 }
 
-static int
+static Eina_Bool
 _e_kbd_cb_animate(void *data)
 {
    E_Kbd *kbd;
@@ -98,9 +98,9 @@ _e_kbd_cb_animate(void *data)
 	  }
 	_e_kbd_apply_all_job_queue();
 	_e_kbd_layout_send(kbd);
-	return 0;
+	return ECORE_CALLBACK_CANCEL;
      }
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
 static void
@@ -200,7 +200,7 @@ _e_kbd_by_border_get(E_Border *bd)
    return NULL;
 }
 
-static int
+static Eina_Bool
 _e_kbd_cb_delayed_hide(void *data)
 {
    E_Kbd *kbd;
@@ -208,7 +208,7 @@ _e_kbd_cb_delayed_hide(void *data)
    kbd = data;
    _e_kbd_hide(kbd);
    kbd->delay_hide = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void
@@ -274,8 +274,8 @@ _e_kbd_all_toggle(void)
      }
 }
 
-static int
-_e_kbd_cb_client_message(void *data, int type, void *event)
+static Eina_Bool
+_e_kbd_cb_client_message(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    Ecore_X_Event_Client_Message *ev;
    
@@ -288,11 +288,11 @@ _e_kbd_cb_client_message(void *data, int type, void *event)
 	else if (ev->data.l[0] == 2) _e_kbd_all_hide();
 	else if (ev->data.l[0] == 3) _e_kbd_all_toggle();
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_kbd_cb_border_remove(void *data, int type, void *event)
+static Eina_Bool
+_e_kbd_cb_border_remove(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Remove *ev;
    E_Kbd *kbd;
@@ -302,11 +302,11 @@ _e_kbd_cb_border_remove(void *data, int type, void *event)
      {
 	focused_border = NULL;
 	focused_vkbd_state = 0;
-	return 1;
+	return ECORE_CALLBACK_PASS_ON;
      }
    // if border is in a created kbd - unstore
    kbd = _e_kbd_by_border_get(ev->border);
-   if (!kbd) return 1;
+   if (!kbd) return ECORE_CALLBACK_PASS_ON;
    if (kbd->border == ev->border)
      {
 	kbd->border = NULL;
@@ -329,16 +329,16 @@ _e_kbd_cb_border_remove(void *data, int type, void *event)
      }
    else
      kbd->waiting_borders = eina_list_remove(kbd->waiting_borders, ev->border);
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_kbd_cb_border_focus_in(void *data, int type, void *event)
+static Eina_Bool
+_e_kbd_cb_border_focus_in(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Focus_In *ev;
    
    ev = event;
-   if (_e_kbd_by_border_get(ev->border)) return 1;
+   if (_e_kbd_by_border_get(ev->border)) return ECORE_CALLBACK_PASS_ON;
    // FIXME: if ev->border->client.vkbd.state == 0 then this app doesnt know
    // how to request for a virtual keyboard and so we should have a manual
    // override
@@ -353,7 +353,7 @@ _e_kbd_cb_border_focus_in(void *data, int type, void *event)
      {
 	_e_kbd_all_layout_set(E_KBD_LAYOUT_NONE);
 	_e_kbd_all_hide();
-	return 1;
+	return ECORE_CALLBACK_PASS_ON;
      }
    else if (ev->border->client.vkbd.state == ECORE_X_VIRTUAL_KEYBOARD_STATE_ALPHA)
      _e_kbd_all_layout_set(E_KBD_LAYOUT_ALPHA);
@@ -372,16 +372,16 @@ _e_kbd_cb_border_focus_in(void *data, int type, void *event)
    else
      _e_kbd_all_layout_set(E_KBD_LAYOUT_DEFAULT);
    _e_kbd_all_show();
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_kbd_cb_border_focus_out(void *data, int type, void *event)
+static Eina_Bool
+_e_kbd_cb_border_focus_out(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Focus_Out *ev;
 
    ev = event;
-   if (_e_kbd_by_border_get(ev->border)) return 1;
+   if (_e_kbd_by_border_get(ev->border)) return ECORE_CALLBACK_PASS_ON;
    if ((ev->border->need_fullscreen) || (ev->border->fullscreen))
      e_kbd_fullscreen_set(ev->border->zone, 1);
    else e_kbd_fullscreen_set(ev->border->zone, 0);
@@ -389,28 +389,28 @@ _e_kbd_cb_border_focus_out(void *data, int type, void *event)
    _e_kbd_all_hide();
    focused_border = NULL;
    focused_vkbd_state = 0;
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static int
-_e_kbd_cb_border_property(void *data, int type, void *event)
+static Eina_Bool
+_e_kbd_cb_border_property(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Property *ev;
    
    ev = event;
-   if (_e_kbd_by_border_get(ev->border)) return 1;
-   if (!ev->border->focused) return 1;
+   if (_e_kbd_by_border_get(ev->border)) return ECORE_CALLBACK_PASS_ON;
+   if (!ev->border->focused) return ECORE_CALLBACK_PASS_ON;
    /* nothing happened to vkbd prop - leave everything alone */
    if ((ev->border == focused_border) &&
        (ev->border->client.vkbd.state == focused_vkbd_state))
-     return 1;
+     return ECORE_CALLBACK_PASS_ON;
    focused_vkbd_state = ev->border->client.vkbd.state;
    /* app doesn't know what to do - just leave everything as-is */
    if ((ev->border->need_fullscreen) || (ev->border->fullscreen))
      e_kbd_fullscreen_set(ev->border->zone, 1);
    else e_kbd_fullscreen_set(ev->border->zone, 0);
    if (ev->border->client.vkbd.state == 0)
-     return 1;
+     return ECORE_CALLBACK_PASS_ON;
    /* app wats kbd off - then kbd off it is */
    else if (ev->border->client.vkbd.state == ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF)
      _e_kbd_all_hide();
@@ -435,7 +435,7 @@ _e_kbd_cb_border_property(void *data, int type, void *event)
 	  _e_kbd_all_layout_set(E_KBD_LAYOUT_DEFAULT);
 	_e_kbd_all_show();
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static void 

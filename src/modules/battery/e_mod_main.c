@@ -39,15 +39,15 @@ struct _Instance
 };
 
 static void _battery_update(int full, int time_left, int time_full, Eina_Bool have_battery, Eina_Bool have_power);
-static int _battery_cb_exe_data(void *data, int type, void *event);
-static int _battery_cb_exe_del(void *data, int type, void *event);
+static Eina_Bool _battery_cb_exe_data(void *data, int type, void *event);
+static Eina_Bool _battery_cb_exe_del(void *data, int type, void *event);
 static void _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _menu_cb_post(void *data, E_Menu *m);
 static void _battery_face_level_set(Evas_Object *battery, double level);
 static void _battery_face_time_set(Evas_Object *battery, int time);
 static void _battery_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi);
 
-static int  _battery_cb_warning_popup_timeout(void *data);
+static Eina_Bool  _battery_cb_warning_popup_timeout(void *data);
 static void _battery_cb_warning_popup_hide(void *data, Evas *e, Evas_Object *obj, void *event);
 static void _battery_warning_popup_destroy(Instance *inst);
 static void _battery_warning_popup(Instance *inst, int time, double percent);
@@ -407,7 +407,7 @@ _battery_config_updated(void)
      }
 }
 
-static int
+static Eina_Bool
 _battery_cb_warning_popup_timeout(void *data)
 {
    Instance *inst;
@@ -415,7 +415,7 @@ _battery_cb_warning_popup_timeout(void *data)
    inst = data;
    e_gadcon_popup_hide(inst->warning);
    battery_config->alert_timer = NULL;
-   return 0;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void
@@ -602,7 +602,7 @@ _battery_update(int full, int time_left, int time_full, Eina_Bool have_battery, 
    battery_config->have_power = have_power;
 }
 
-static int
+static Eina_Bool
 _battery_cb_exe_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Exe_Event_Data *ev;
@@ -611,7 +611,7 @@ _battery_cb_exe_data(void *data __UNUSED__, int type __UNUSED__, void *event)
    int i;
 
    ev = event;
-   if (ev->exe != battery_config->batget_exe) return 1;
+   if (ev->exe != battery_config->batget_exe) return ECORE_CALLBACK_PASS_ON;
    if ((ev->lines) && (ev->lines[0].line))
      {
 
@@ -655,18 +655,18 @@ _battery_cb_exe_data(void *data __UNUSED__, int type __UNUSED__, void *event)
                }
           }
      }
-   return 0;
-}                          
+   return ECORE_CALLBACK_DONE;
+}
 
-static int
+static Eina_Bool
 _battery_cb_exe_del(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Exe_Event_Del *ev;
 
    ev = event;
-   if (ev->exe != battery_config->batget_exe) return 1;
+   if (ev->exe != battery_config->batget_exe) return ECORE_CALLBACK_PASS_ON;
    battery_config->batget_exe = NULL;
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 /* module setup */
