@@ -242,7 +242,7 @@ _gc_shutdown(E_Gadcon_Client *gcc)
 }
 
 static void
-_gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
+_gc_orient(E_Gadcon_Client *gcc, __UNUSED__ E_Gadcon_Orient orient)
 {
    Instance *inst;
 
@@ -254,13 +254,13 @@ _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
 }
 
 static char *
-_gc_label(E_Gadcon_Client_Class *client_class)
+_gc_label(__UNUSED__ E_Gadcon_Client_Class *client_class)
 {
    return _("Pager");
 }
 
 static Evas_Object *
-_gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas)
+_gc_icon(__UNUSED__ E_Gadcon_Client_Class *client_class, Evas *evas)
 {
    Evas_Object *o;
    char buf[4096];
@@ -273,7 +273,7 @@ _gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas)
 }
 
 static const char *
-_gc_id_new(E_Gadcon_Client_Class *client_class)
+_gc_id_new(__UNUSED__ E_Gadcon_Client_Class *client_class)
 {
    return _gadcon_class.name;
 }
@@ -405,13 +405,12 @@ _pager_desk_new(Pager *p, E_Desk *desk, int xpos, int ypos)
 static void
 _pager_desk_free(Pager_Desk *pd)
 {
-   Eina_List *l;
+   Pager_Win *w;
 
    evas_object_del(pd->o_desk);
    evas_object_del(pd->o_layout);
-   for (l = pd->wins; l; l = l->next)
-     _pager_window_free(l->data);
-   eina_list_free(pd->wins);
+   EINA_LIST_FREE(pd->wins, w)
+     _pager_window_free(w);
    e_object_unref(E_OBJECT(pd->desk));
    free(pd);
 }
@@ -420,13 +419,12 @@ static Pager_Desk *
 _pager_desk_at_coord(Pager *p, Evas_Coord x, Evas_Coord y)
 {
    Eina_List *l;
+   Pager_Desk *pd;
 
-   for (l = p->desks; l; l = l->next)
+   EINA_LIST_FOREACH(p->desks, l, pd)
      {
-	Pager_Desk *pd;
 	Evas_Coord dx, dy, dw, dh;
 
-	pd = l->data;
 	evas_object_geometry_get(pd->o_desk, &dx, &dy, &dw, &dh);
 	if (E_INSIDE(x, y, dx, dy, dw, dh)) return pd;
      }
@@ -437,13 +435,12 @@ static void
 _pager_desk_select(Pager_Desk *pd)
 {
    Eina_List *l;
+   Pager_Desk *pd2;
 
    if (pd->current) return;
-   for (l = pd->pager->desks; l; l = l->next)
-     {
-	Pager_Desk *pd2;
 
-	pd2 = l->data;
+   EINA_LIST_FOREACH(pd->pager->desks, l, pd2)
+     {
 	if (pd == pd2)
 	  {
 	     pd2->current = 1;
@@ -465,14 +462,12 @@ static Pager_Desk *
 _pager_desk_find(Pager *p, E_Desk *desk)
 {
    Eina_List *l;
+   Pager_Desk *pd;
 
-   for (l = p->desks; l; l = l->next)
-     {
-	Pager_Desk *pd;
+   EINA_LIST_FOREACH(p->desks, l, pd)
+     if (pd->desk == desk)
+       return pd;
 
-	pd = l->data;
-	if (pd->desk == desk) return pd;
-     }
    return NULL;
 }
 
@@ -494,15 +489,13 @@ _pager_desk_switch(Pager_Desk *pd1, Pager_Desk *pd2)
    zone2 = pd2->desk->zone;
 
    /* Move opened windows from on desk to the other */
-   for (l = pd1->wins; l; l = l->next)
+   EINA_LIST_FOREACH(pd1->wins, l, pw)
      {
-	pw = l->data;
 	if ((!pw) || (!pw->border) || (pw->border->iconic)) continue;
 	e_border_desk_set(pw->border, desk2);
      }
-   for (l = pd2->wins; l; l = l->next)
+   EINA_LIST_FOREACH(pd2->wins, l, pw)
      {
-	pw = l->data;
 	if ((!pw) || (!pw->border) || (pw->border->iconic)) continue;
 	e_border_desk_set(pw->border, desk1);
      }
@@ -516,7 +509,7 @@ _pager_desk_switch(Pager_Desk *pd1, Pager_Desk *pd2)
 	if (!tmp_dn) continue;
 	if (tmp_dn->desk_x == desk1->x &&
 	    tmp_dn->desk_y == desk1->y &&
-	    tmp_dn->zone   == desk1->zone->num)
+	    tmp_dn->zone   == (int) desk1->zone->num)
 	  {
 	     tmp_dn->desk_x = desk2->x;
 	     tmp_dn->desk_y = desk2->y;
@@ -525,7 +518,7 @@ _pager_desk_switch(Pager_Desk *pd1, Pager_Desk *pd2)
 	  }
 	else if (tmp_dn->desk_x == desk2->x &&
 		 tmp_dn->desk_y == desk2->y &&
-		 tmp_dn->zone   == desk2->zone->num)
+		 tmp_dn->zone   == (int) desk2->zone->num)
 	  {
 	     tmp_dn->desk_x = desk1->x;
 	     tmp_dn->desk_y = desk1->y;
@@ -545,7 +538,7 @@ _pager_desk_switch(Pager_Desk *pd1, Pager_Desk *pd2)
 	if (!tmp_db) continue;
 	if (tmp_db->desk_x == desk1->x &&
 	    tmp_db->desk_y == desk1->y &&
-	    tmp_db->zone   == desk1->zone->num)
+	    tmp_db->zone   == (int) desk1->zone->num)
 	  {
 	     tmp_db->desk_x = desk2->x;
 	     tmp_db->desk_y = desk2->y;
@@ -554,7 +547,7 @@ _pager_desk_switch(Pager_Desk *pd1, Pager_Desk *pd2)
 	  }
 	else if (tmp_db->desk_x == desk2->x &&
 		 tmp_db->desk_y == desk2->y &&
-		 tmp_db->zone   == desk2->zone->num)
+		 tmp_db->zone   == (int) desk2->zone->num)
 	  {
 	     tmp_db->desk_x = desk1->x;
 	     tmp_db->desk_y = desk1->y;
@@ -656,13 +649,12 @@ static Pager_Win *
 _pager_window_find(Pager *p, E_Border *border)
 {
    Eina_List  *l;
+   Pager_Desk *pd;
 
-   for (l = p->desks; l; l = l->next)
+   EINA_LIST_FOREACH(p->desks, l, pd)
      {
-	Pager_Desk *pd;
 	Pager_Win *pw;
 
-	pd = l->data;
 	pw = _pager_desk_window_find(pd, border);
 	if (pw) return pw;
      }
@@ -673,14 +665,12 @@ static Pager_Win *
 _pager_desk_window_find(Pager_Desk *pd, E_Border *border)
 {
    Eina_List *l;
+   Pager_Win *pw;
 
-   for (l = pd->wins; l; l = l->next)
-     {
-	Pager_Win *pw;
+   EINA_LIST_FOREACH(pd->wins, l, pw)
+     if (pw->border == border)
+       return pw;
 
-	pw = l->data;
-	if (pw->border == border) return pw;
-     }
    return NULL;
 }
 
@@ -766,19 +756,18 @@ _pager_popup_free(Pager_Popup *pp)
 static Pager_Popup *
 _pager_popup_find(E_Zone *zone)
 {
-   Pager *p;
    Eina_List *l;
+   Pager *p;
 
-   for (l = pagers; l; l = l->next)
-     {
-	p = l->data;
-	if ((p->popup) && (p->zone == zone)) return p->popup;
-     }
+   EINA_LIST_FOREACH(pagers, l, p)
+     if ((p->popup) && (p->zone == zone))
+       return p->popup;
+
    return NULL;
 }
 
 static void
-_pager_cb_obj_moveresize(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_pager_cb_obj_moveresize(void *data, __UNUSED__ Evas *e, __UNUSED__ Evas_Object *obj, __UNUSED__ void *event_info)
 {
    Instance *inst;
 
@@ -787,7 +776,7 @@ _pager_cb_obj_moveresize(void *data, Evas *e, Evas_Object *obj, void *event_info
 }
 
 static void
-_button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_button_cb_mouse_down(void *data, __UNUSED__ Evas *e, __UNUSED__ Evas_Object *obj, void *event_info)
 {
    Instance *inst;
    Evas_Event_Mouse_Down *ev;
@@ -883,21 +872,19 @@ _pager_cb_config_updated(void)
 static Eina_Bool
 _pager_cb_event_border_resize(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
-   E_Event_Border_Resize *ev;
+   E_Event_Border_Resize *ev = event;
    Eina_List *l, *l2;
    Pager *p;
 
-   ev = event;
-   for (l = pagers; l; l = l->next)
+   EINA_LIST_FOREACH(pagers, l, p)
      {
-	p = l->data;
+	Pager_Desk *pd;
+
 	if (p->zone != ev->border->zone) continue;
-	for (l2 = p->desks; l2; l2 = l2->next)
+	EINA_LIST_FOREACH(p->desks, l2, pd)
 	  {
-	     Pager_Desk *pd;
 	     Pager_Win *pw;
 
-	     pd = l2->data;
 	     pw = _pager_desk_window_find(pd, ev->border);
 	     if (pw) _pager_window_move(pw);
 	  }
@@ -908,20 +895,19 @@ _pager_cb_event_border_resize(__UNUSED__ void *data, __UNUSED__ int type, void *
 static Eina_Bool
 _pager_cb_event_border_move(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
-   E_Event_Border_Move *ev;
-   Eina_List *l, *l2;
+   E_Event_Border_Move *ev = event;
+   Eina_List *l;
    Pager_Win *pw;
    Pager_Desk *pd;
    Pager *p;
 
-   ev = event;
-   for (l = pagers; l; l = l->next)
+   EINA_LIST_FOREACH(pagers, l, p)
      {
-	p = l->data;
+	Eina_List *l2;
+
 	if (p->zone != ev->border->zone) continue;
-	for (l2 = p->desks; l2; l2 = l2->next)
+	EINA_LIST_FOREACH(p->desks, l2, pd)
 	  {
-	     pd = l2->data;
 	     pw = _pager_desk_window_find(pd, ev->border);
 	     if (pw) _pager_window_move(pw);
 	  }
@@ -929,9 +915,8 @@ _pager_cb_event_border_move(__UNUSED__ void *data, __UNUSED__ int type, void *ev
 
    if ((act_popup) && (act_popup->pager->zone == ev->border->zone))
      {
-	for (l = act_popup->pager->desks; l; l = l->next)
+	EINA_LIST_FOREACH(act_popup->pager->desks, l, pd)
 	  {
-	     pd = l->data;
 	     pw = _pager_desk_window_find(pd, ev->border);
 	     if (pw) _pager_window_move(pw);
 	  }
@@ -943,16 +928,15 @@ _pager_cb_event_border_move(__UNUSED__ void *data, __UNUSED__ int type, void *ev
 static Eina_Bool
 _pager_cb_event_border_add(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
-   E_Event_Border_Add *ev;
+   E_Event_Border_Add *ev = event;
    Eina_List *l;
    Pager *p;
-   Pager_Desk *pd;
-   Pager_Win *pw;
 
-   ev = event;
-   for (l = pagers; l; l = l->next)
+   EINA_LIST_FOREACH(pagers, l, p)
      {
-	p = l->data;
+	Pager_Desk *pd;
+	Pager_Win *pw;
+
 	if ((p->zone != ev->border->zone) ||
 	    (_pager_window_find(p, ev->border)))
 	  continue;
@@ -961,26 +945,28 @@ _pager_cb_event_border_add(__UNUSED__ void *data, __UNUSED__ int type, void *eve
         pw = _pager_window_new(pd, ev->border);
         if (pw) pd->wins = eina_list_append(pd->wins, pw);
      }
+
    return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool
 _pager_cb_event_border_remove(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
-   E_Event_Border_Remove *ev;
-   Eina_List *l, *l2;
+   E_Event_Border_Remove *ev = event;
+   Eina_List *l;
    Pager *p;
-   Pager_Desk *pd;
-   Pager_Win *pw;
 
-   ev = event;
-   for (l = pagers; l; l = l->next)
+   EINA_LIST_FOREACH(pagers, l, p)
      {
-	p = l->data;
+	Eina_List *l2;
+	Pager_Desk *pd;
+
 	if (p->zone != ev->border->zone) continue;
-	for (l2 = p->desks; l2; l2 = l2->next)
+
+	EINA_LIST_FOREACH(p->desks, l2, pd)
 	  {
-	     pd = l2->data;
+	     Pager_Win *pw;
+
 	     pw = _pager_desk_window_find(pd, ev->border);
              if (!pw) continue;
              pd->wins = eina_list_remove(pd->wins, pw);
@@ -991,22 +977,23 @@ _pager_cb_event_border_remove(__UNUSED__ void *data, __UNUSED__ int type, void *
 }
 
 static Eina_Bool
-_pager_cb_event_border_iconify(__UNUSED__ void *data, __UNUSED__  type, void *event)
+_pager_cb_event_border_iconify(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
-   E_Event_Border_Iconify *ev;
-   Eina_List *l, *l2;
+   E_Event_Border_Iconify *ev = event;
+   Eina_List *l;
    Pager *p;
-   Pager_Desk *pd;
-   Pager_Win *pw;
 
-   ev = event;
-   for (l = pagers; l; l = l->next)
+   EINA_LIST_FOREACH(pagers, l, p)
      {
-	p = l->data;
+	Eina_List *l2;
+	Pager_Desk *pd;
+
 	if (p->zone != ev->border->zone) continue;
-	for (l2 = p->desks; l2; l2 = l2->next)
+
+	EINA_LIST_FOREACH(p->desks, l2, pd)
 	  {
-	     pd = l2->data;
+	     Pager_Win *pw;
+
 	     pw = _pager_desk_window_find(pd, ev->border);
              if (!pw) continue;
              if ((pw->drag.from_pager) && (pw->desk->pager->dragging))
@@ -1014,89 +1001,90 @@ _pager_cb_event_border_iconify(__UNUSED__ void *data, __UNUSED__  type, void *ev
              evas_object_hide(pw->o_window);
 	  }
      }
+
    return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool
 _pager_cb_event_border_uniconify(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
-   E_Event_Border_Uniconify *ev;
-   Eina_List *l, *l2;
+   E_Event_Border_Uniconify *ev = event;
+   Eina_List *l;
    Pager *p;
-   Pager_Desk *pd;
-   Pager_Win *pw;
 
-   ev = event;
-   for (l = pagers; l; l = l->next)
+   EINA_LIST_FOREACH(pagers, l, p)
      {
-	p = l->data;
+	Eina_List *l2;
+	Pager_Desk *pd;
+
 	if (p->zone != ev->border->zone) continue;
-	for (l2 = p->desks; l2; l2 = l2->next)
+
+	EINA_LIST_FOREACH(p->desks, l2, pd)
 	  {
-	     pd = l2->data;
+	     Pager_Win *pw;
+
 	     pw = _pager_desk_window_find(pd, ev->border);
 	     if ((pw) && (!pw->skip_winlist)) evas_object_show(pw->o_window);
 	  }
      }
+
    return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool
 _pager_cb_event_border_stick(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
-   E_Event_Border_Stick *ev;
-   Eina_List *l, *l2;
+   E_Event_Border_Stick *ev = event;
+   Eina_List *l;
    Pager *p;
-   Pager_Desk *pd;
-   Pager_Win *pw;
 
-   ev = event;
-   for (l = pagers; l; l = l->next)
+   EINA_LIST_FOREACH(pagers, l, p)
      {
-	p = l->data;
+	Eina_List *l2;
+	Pager_Desk *pd;
+	Pager_Win *pw;
+
 	if (p->zone != ev->border->zone) continue;
 	pw = _pager_window_find(p, ev->border);
 	if (!pw) continue;
-	for (l2 = p->desks; l2; l2 = l2->next)
-	  {
-	     pd = l2->data;
-	     if (ev->border->desk != pd->desk)
-	       {
-		  pw = _pager_window_new(pd, ev->border);
-		  if (pw) pd->wins = eina_list_append(pd->wins, pw);
-	       }
-	  }
+
+	EINA_LIST_FOREACH(p->desks, l2, pd)
+	  if (ev->border->desk != pd->desk)
+	    {
+	       pw = _pager_window_new(pd, ev->border);
+	       if (pw) pd->wins = eina_list_append(pd->wins, pw);
+	    }
      }
+
    return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool
 _pager_cb_event_border_unstick(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
-   E_Event_Border_Unstick *ev;
-   Eina_List *l, *l2;
+   E_Event_Border_Unstick *ev = event;
+   Eina_List *l;
    Pager *p;
-   Pager_Desk *pd;
-   Pager_Win *pw;
 
-   ev = event;
-   for (l = pagers; l; l = l->next)
+   EINA_LIST_FOREACH(pagers, l, p)
      {
-	p = l->data;
+	Pager_Desk *pd;
+	Eina_List *l2;
+
 	if (p->zone != ev->border->zone) continue;
-	for (l2 = p->desks; l2; l2 = l2->next)
-	  {
-	     pd = l2->data;
-	     if (ev->border->desk != pd->desk)
-	       {
-		  pw = _pager_desk_window_find(pd, ev->border);
-		  if (pw)
-		    {
-		       pd->wins = eina_list_remove(pd->wins, pw);
-		       _pager_window_free(pw);
-		    }
-	       }
-	  }
+
+	EINA_LIST_FOREACH(p->desks, l2, pd)
+	  if (ev->border->desk != pd->desk)
+	    {
+	       Pager_Win *pw;
+
+	       pw = _pager_desk_window_find(pd, ev->border);
+	       if (pw)
+		 {
+		    pd->wins = eina_list_remove(pd->wins, pw);
+		    _pager_window_free(pw);
+		 }
+	    }
      }
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -1112,9 +1100,8 @@ _pager_window_desk_change(Pager *pager, E_Border *bd)
    if (pager->zone != bd->zone)
      {
 	/* look at all desks in the pager */
-	for (l = pager->desks; l; l = l->next)
+	EINA_LIST_FOREACH(pager->desks, l, pd)
 	  {
-	     pd = l->data;
 	     /* find this border in this desk */
 	     pw = _pager_desk_window_find(pd, bd);
              if (!pw) continue;
@@ -1196,9 +1183,8 @@ _pager_window_desk_change(Pager *pager, E_Border *bd)
 	else
 	  {
 	     /* go through all desks */
-	     for (l = pager->desks; l; l = l->next)
+	     EINA_LIST_FOREACH(pager->desks, l, pd)
 	       {
-		  pd = l->data;
 		  /* create it and add it */
 		  pw = _pager_window_new(pd, bd);
 		  if (pw)
@@ -1224,16 +1210,12 @@ _pager_window_desk_change(Pager *pager, E_Border *bd)
 static Eina_Bool
 _pager_cb_event_border_desk_set(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
-   E_Event_Border_Desk_Set *ev;
+   E_Event_Border_Desk_Set *ev = event;
    Eina_List *l;
    Pager *p;
 
-   ev = event;
-   for (l = pagers; l; l = l->next)
-     {
-	p = l->data;
-	_pager_window_desk_change(p, ev->border);
-     }
+   EINA_LIST_FOREACH(pagers, l, p)
+     _pager_window_desk_change(p, ev->border);
 
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -1241,21 +1223,20 @@ _pager_cb_event_border_desk_set(__UNUSED__ void *data, __UNUSED__ int type, void
 static Eina_Bool
 _pager_cb_event_border_stack(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
-   E_Event_Border_Stack *ev;
-   Eina_List *l, *l2;
+   E_Event_Border_Stack *ev = event;
+   Eina_List *l;
    Pager *p;
 
-   ev = event;
-   for (l = pagers; l; l = l->next)
+   EINA_LIST_FOREACH(pagers, l, p)
      {
-	p = l->data;
+	Eina_List *l2;
+	Pager_Desk *pd;
+
 	if (p->zone != ev->border->zone) continue;
-	for (l2 = p->desks; l2; l2 = l2->next)
+	EINA_LIST_FOREACH(p->desks, l2, pd)
 	  {
-	     Pager_Desk *pd;
 	     Pager_Win *pw, *pw2 = NULL;
 
-	     pd = l2->data;
 	     pw = _pager_desk_window_find(pd, ev->border);
 	     if (pw)
 	       {
@@ -1293,28 +1274,27 @@ _pager_cb_event_border_stack(__UNUSED__ void *data, __UNUSED__ int type, void *e
 	       }
 	  }
      }
+
    return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool
 _pager_cb_event_border_icon_change(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
-   E_Event_Border_Icon_Change *ev;
-   Eina_List *l, *l2;
+   E_Event_Border_Icon_Change *ev = event;
+   Eina_List *l;
    Pager *p;
 
-   ev = event;
-   for (l = pagers; l; l = l->next)
+   EINA_LIST_FOREACH(pagers, l, p)
      {
-	p = l->data;
+	Eina_List *l2;
+	Pager_Desk *pd;
 
 	if (p->zone != ev->border->zone) continue;
-	for (l2 = p->desks; l2; l2 = l2->next)
+	EINA_LIST_FOREACH(p->desks, l2, pd)
 	  {
-	     Pager_Desk *pd;
 	     Pager_Win *pw;
 
-	     pd = l2->data;
 	     pw = _pager_desk_window_find(pd, ev->border);
 	     if (pw)
 	       {
@@ -1336,6 +1316,7 @@ _pager_cb_event_border_icon_change(__UNUSED__ void *data, __UNUSED__ int type, v
 	       }
 	  }
      }
+
    return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -1370,13 +1351,12 @@ _pager_cb_event_border_urgent_change(__UNUSED__ void *data, __UNUSED__ int type,
 	  }
      }
 
-   for (l = pagers; l; l = l->next)
+   EINA_LIST_FOREACH(pagers, l, p)
      {
-	p = l->data;
 	if (p->zone != zone) continue;
-	for (l2 = p->desks; l2; l2 = l2->next)
+
+	EINA_LIST_FOREACH(p->desks, l2, pd)
 	  {
-	     pd = l2->data;
 	     pw = _pager_desk_window_find(pd, ev->border);
 	     if (pw)
 	       {
@@ -1404,7 +1384,7 @@ _pager_cb_event_border_urgent_change(__UNUSED__ void *data, __UNUSED__ int type,
 	       }
 	  }
      }
- 
+
    return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -1412,25 +1392,22 @@ static Eina_Bool
 _pager_cb_event_border_focus_in(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Focus_In *ev;
+   Instance *inst;
    Eina_List *l, *l2;
    Pager_Popup *pp;
+   Pager_Desk *pd;
+   Pager_Win *pw;
    E_Zone *zone;
 
    ev = event;
    zone = ev->border->zone;
 
-   for (l = pager_config->instances; l; l = l->next)
+   EINA_LIST_FOREACH(pager_config->instances, l, inst)
      {
-	Instance *inst;
-
-	inst = l->data;
 	if (inst->pager->zone != zone) continue;
-	for (l2 = inst->pager->desks; l2; l2 = l2->next)
-	  {
-	     Pager_Desk *pd;
-	     Pager_Win *pw;
 
-	     pd = l2->data;
+	EINA_LIST_FOREACH(inst->pager->desks, l2, pd)
+	  {
 	     pw = _pager_desk_window_find(pd, ev->border);
 	     if (pw)
 	       {
@@ -1442,13 +1419,10 @@ _pager_cb_event_border_focus_in(__UNUSED__ void *data, __UNUSED__ int type, void
      }
 
    pp = _pager_popup_find(zone);
-   if (!pp) return 1;
-   for (l = pp->pager->desks; l; l = l->next)
+   if (!pp) return ECORE_CALLBACK_PASS_ON;
+
+   EINA_LIST_FOREACH(pp->pager->desks, l, pd)
      {
-	Pager_Desk *pd;
-	Pager_Win *pw;
-	
-	pd = l->data;
 	pw = _pager_desk_window_find(pd, ev->border);
 	if (pw)
 	  {
@@ -1457,32 +1431,32 @@ _pager_cb_event_border_focus_in(__UNUSED__ void *data, __UNUSED__ int type, void
 	     break;
 	  }
      }
-   return 1;
+
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool
 _pager_cb_event_border_focus_out(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
    E_Event_Border_Focus_Out *ev;
-   Eina_List *l, *l2;
+   Eina_List *l;
    Pager_Popup *pp;
+   Pager_Desk *pd;
+   Pager_Win *pw;
+   Instance *inst;
    E_Zone *zone;
 
    ev = event;
    zone = ev->border->zone;
 
-   for (l = pager_config->instances; l; l = l->next)
+   EINA_LIST_FOREACH(pager_config->instances, l, inst)
      {
-	Instance *inst;
+	Eina_List *l2;
 
-	inst = l->data;
 	if (inst->pager->zone != zone) continue;
-	for (l2 = inst->pager->desks; l2; l2 = l2->next)
-	  {
-	     Pager_Desk *pd;
-	     Pager_Win *pw;
 
-	     pd = l2->data;
+	EINA_LIST_FOREACH(inst->pager->desks, l2, pd)
+	  {
 	     pw = _pager_desk_window_find(pd, ev->border);
 	     if (pw)
 	       {
@@ -1494,13 +1468,10 @@ _pager_cb_event_border_focus_out(__UNUSED__ void *data, __UNUSED__ int type, voi
      }
 
    pp = _pager_popup_find(zone);
-   if (!pp) return 1;
-   for (l = pp->pager->desks; l; l = l->next)
+   if (!pp) return ECORE_CALLBACK_PASS_ON;
+
+   EINA_LIST_FOREACH(pp->pager->desks, l, pd)
      {
-	Pager_Desk *pd;
-	Pager_Win *pw;
-	
-	pd = l->data;
 	pw = _pager_desk_window_find(pd, ev->border);
 	if (pw)
 	  {
@@ -1509,27 +1480,26 @@ _pager_cb_event_border_focus_out(__UNUSED__ void *data, __UNUSED__ int type, voi
 	     break;
 	  }
      }
-   return 1;
+
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool
 _pager_cb_event_border_property(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
-   E_Event_Border_Property *ev;
+   E_Event_Border_Property *ev = event;
    Eina_List *l, *l2;
    int found = 0;
    Pager *p;
    Pager_Win *pw;
    Pager_Desk *pd;
 
-   ev = event;
-   for (l = pagers; l; l = l->next)
+   EINA_LIST_FOREACH(pagers, l, p)
      {
-	p = l->data;
 	if (p->zone != ev->border->zone) continue;
-	for (l2 = p->desks; l2; l2 = l2->next)
+
+	EINA_LIST_FOREACH(p->desks, l2, pd)
 	  {
-	     pd = l2->data;
 	     pw = _pager_desk_window_find(pd, ev->border);
 	     if (pw)
 	       {
@@ -1546,9 +1516,8 @@ _pager_cb_event_border_property(__UNUSED__ void *data, __UNUSED__ int type, void
 
    /* If we did not find this window in the pager, then add it because
     * the skip_pager state may have changed to 1 */
-   for (l = pagers; l; l = l->next)
+   EINA_LIST_FOREACH(pagers, l, p)
      {
-	p = l->data;
 	if ((p->zone != ev->border->zone) ||
 	    (_pager_window_find(p, ev->border)))
 	  continue;
@@ -1579,9 +1548,8 @@ _pager_cb_event_border_property(__UNUSED__ void *data, __UNUSED__ int type, void
 	  }
 	else
 	  {
-	     for (l2 = p->desks; l2; l2 = l2->next)
+	     EINA_LIST_FOREACH(p->desks, l2, pd)
 	       {
-		  pd = l2->data;
 		  pw = _pager_window_new(pd, ev->border);
 		  if (pw)
 		    {
@@ -1601,6 +1569,7 @@ _pager_cb_event_border_property(__UNUSED__ void *data, __UNUSED__ int type, void
 	       }
 	  }
      }
+
    return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -1610,29 +1579,27 @@ _pager_cb_event_zone_desk_count_set(__UNUSED__ void *data, __UNUSED__ int type, 
    Eina_List *l;
    Pager *p;
 
-   for (l = pagers; l; l = l->next)
+   EINA_LIST_FOREACH(pagers, l, p)
      {
-	p = l->data;
 	_pager_empty(p);
 	_pager_fill(p);
 	if (p->inst) _gc_orient(p->inst->gcc, p->inst->gcc->gadcon->orient);
      }
+
    return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool
 _pager_cb_event_desk_show(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
-   E_Event_Desk_Show *ev;
+   E_Event_Desk_Show *ev = event;
    Eina_List *l;
    Pager *p;
-   Pager_Desk *pd;
    Pager_Popup *pp;
+   Pager_Desk *pd;
 
-   ev = event;
-   for (l = pagers; l; l = l->next)
+   EINA_LIST_FOREACH(pagers, l, p)
      {
-	p = l->data;
 	if (p->zone != ev->desk->zone) continue;
 	pd = _pager_desk_find(p, ev->desk);
 	if (pd) _pager_desk_select(pd);
@@ -1665,21 +1632,21 @@ _pager_cb_event_desk_show(__UNUSED__ void *data, __UNUSED__ int type, void *even
 					 _pager_popup_cb_timeout, pp);
 	  }
      }
+
    return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool
 _pager_cb_event_desk_name_change(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
-   E_Event_Desk_Name_Change *ev;
+   E_Event_Desk_Name_Change *ev = event;
    Eina_List *l;
    Pager *p;
-   Pager_Desk *pd;
 
-   ev = event;
-   for (l = pagers; l; l = l->next)
+   EINA_LIST_FOREACH(pagers, l, p)
      {
-	p = l->data;
+	Pager_Desk *pd;
+
 	if (p->zone != ev->desk->zone) continue;
 	pd = _pager_desk_find(p, ev->desk);
 	if (pager_config->show_desk_names)
@@ -1688,42 +1655,43 @@ _pager_cb_event_desk_name_change(__UNUSED__ void *data, __UNUSED__ int type, voi
 	       edje_object_part_text_set(pd->o_desk, "e.text.label", 
                                          ev->desk->name);
 	  }
-        else 
+        else
           {
              if (pd)
                edje_object_part_text_set(pd->o_desk, "e.text.label", "");
           }
      }
+
    return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool
 _pager_cb_event_container_resize(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 {
-   E_Event_Container_Resize *ev;
-   Eina_List *l, *l2;
+   E_Event_Container_Resize *ev = event;
+   Eina_List *l;
    Pager *p;
-   Pager_Desk *pd;
 
-   ev = event;
-   for (l = pagers; l; l = l->next)
+   EINA_LIST_FOREACH(pagers, l, p)
      {
-	p = l->data;
+	Eina_List *l2;
+	Pager_Desk *pd;
+
 	if (p->zone->container != ev->container) continue;
-	for (l2 = p->desks; l2; l2 = l2->next)
-	  {
-	     pd = l2->data;
-	     e_layout_virtual_size_set(pd->o_layout, pd->desk->zone->w,
-				       pd->desk->zone->h);
-	  }
+
+	EINA_LIST_FOREACH(p->desks, l2, pd)
+	  e_layout_virtual_size_set(pd->o_layout, pd->desk->zone->w,
+				    pd->desk->zone->h);
+
 	if (p->inst) _gc_orient(p->inst->gcc, p->inst->gcc->gadcon->orient);
 	/* TODO if (p->popup) */
      }
-   return 1;
+
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static void
-_pager_window_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_pager_window_cb_mouse_down(void *data, __UNUSED__ Evas *e, __UNUSED__ Evas_Object *obj, void *event_info)
 {
    Evas_Event_Mouse_Down *ev;
    Pager_Win *pw;
@@ -1734,9 +1702,9 @@ _pager_window_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_i
    if (!pw) return;
    if (pw->desk->pager->popup && !act_popup) return;
    if (!pw->desk->pager->popup && ev->button == 3) return;
-   if (ev->button == pager_config->btn_desk) return;
-   if ((ev->button == pager_config->btn_drag) ||
-       (ev->button == pager_config->btn_noplace))
+   if (ev->button == (int) pager_config->btn_desk) return;
+   if ((ev->button == (int) pager_config->btn_drag) ||
+       (ev->button == (int) pager_config->btn_noplace))
      {
 	Evas_Coord ox, oy;
 
@@ -1760,7 +1728,7 @@ _pager_window_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_i
 }
 
 static void
-_pager_window_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_pager_window_cb_mouse_up(void *data, __UNUSED__ Evas *e, __UNUSED__ Evas_Object *obj, void *event_info)
 {
    Evas_Event_Mouse_Up *ev;
    Pager_Win *pw;
@@ -1773,9 +1741,9 @@ _pager_window_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_inf
    p = pw->desk->pager;
 
    if (pw->desk->pager->popup && !act_popup) return;
-   if (ev->button == pager_config->btn_desk) return;
-   if ((ev->button == pager_config->btn_drag) ||
-       (ev->button == pager_config->btn_noplace))
+   if (ev->button == (int) pager_config->btn_desk) return;
+   if ((ev->button == (int) pager_config->btn_drag) ||
+       (ev->button == (int) pager_config->btn_noplace))
      {
 	if (!pw->drag.from_pager)
 	  {
@@ -1788,7 +1756,7 @@ _pager_window_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_inf
 }
 
 static void
-_pager_window_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_pager_window_cb_mouse_move(void *data, __UNUSED__ Evas *e, __UNUSED__ Evas_Object *obj, void *event_info)
 {
    Evas_Event_Mouse_Move *ev;
    Pager_Win *pw;
@@ -1815,7 +1783,7 @@ _pager_window_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_i
 	if (pw->desk && pw->desk->pager)
 	  resist = pager_config->drag_resist;
 
-	if (((dx * dx) + (dy * dy)) <= (resist * resist)) return;
+	if (((unsigned int) (dx * dx) + (unsigned int) (dy * dy)) <= (resist * resist)) return;
 
 	pw->desk->pager->dragging = 1;
 	pw->drag.start = 0;
@@ -2142,7 +2110,7 @@ _pager_drop_cb_drop(void *data, const char *type, void *event_info)
 }
 
 static void
-_pager_desk_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_pager_desk_cb_mouse_down(void *data, __UNUSED__ Evas *e, __UNUSED__ Evas_Object *obj, void *event_info)
 {
    Evas_Event_Mouse_Down *ev;
    Pager_Desk *pd;
@@ -2152,7 +2120,7 @@ _pager_desk_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
    pd = data;
    if (!pd) return;
    if (!pd->pager->popup && ev->button == 3) return;
-   if (ev->button == pager_config->btn_desk)
+   if (ev->button == (int) pager_config->btn_desk)
      {
 	evas_object_geometry_get(pd->o_desk, &ox, &oy, NULL, NULL);
 	pd->drag.start = 1;
@@ -2217,7 +2185,7 @@ _pager_desk_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	if (pd->pager && pd->pager->inst)
 	  resist = pager_config->drag_resist;
 
-	if (((dx * dx) + (dy * dy)) <= (resist * resist)) return;
+	if (((unsigned int) (dx * dx) + (unsigned int) (dy * dy)) <= (resist * resist)) return;
 
 	pd->pager->dragging = 1;
 	pd->drag.start = 0;
@@ -2249,11 +2217,10 @@ _pager_desk_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	edje_object_part_swallow(o, "e.swallow.content", oo);
 	evas_object_show(oo);
 
-	for (l = pd->wins; l; l = l->next)
+	EINA_LIST_FOREACH(pd->wins, l, pw)
 	  {
 	     int zx, zy;
 
-	     pw = l->data;
 	     if ((!pw) || (pw->border->iconic)
 		 || (pw->border->client.netwm.state.skip_pager))
 	       continue;
@@ -2619,14 +2586,12 @@ _pager_popup_cb_key_down(__UNUSED__ void *data, __UNUSED__ int type, void *event
      _pager_popup_hide(0);
    else
      {
+	E_Config_Binding_Key *bind;
 	Eina_List *l;
 
-	for (l = e_config->key_bindings; l; l = l->next)
+	EINA_LIST_FOREACH(e_config->key_bindings, l, bind)
 	  {
-	     E_Config_Binding_Key *bind;
 	     E_Binding_Modifier mod = 0;
-
-	     bind = l->data;
 
 	     if ((bind->action) && (strcmp(bind->action,"pager_switch"))) 
                continue;
@@ -2641,7 +2606,7 @@ _pager_popup_cb_key_down(__UNUSED__ void *data, __UNUSED__ int type, void *event
                mod |= E_BINDING_MODIFIER_WIN;
 
 	     if (bind->key && (!strcmp(bind->key, ev->keyname)) && 
-                 ((bind->modifiers == mod)))
+                 ((bind->modifiers == (int) mod)))
 	       {
 		  E_Action *act;
 
