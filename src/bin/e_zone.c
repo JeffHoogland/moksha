@@ -965,8 +965,8 @@ _e_zone_useful_geometry_calc(E_Zone *zone)
 	   case E_GADCON_ORIENT_RIGHT:
 	   case E_GADCON_ORIENT_CORNER_RT:
 	   case E_GADCON_ORIENT_CORNER_RB:
-	      if (y1 > zone->w - shelf->w)
-		y1 = zone->w - shelf->w;
+	      if (x1 > zone->w - shelf->w)
+		x1 = zone->w - shelf->w;
 	      break;
 	  }
      }
