@@ -929,6 +929,9 @@ _e_zone_useful_geometry_calc(E_Zone *zone)
 
 	if (shelf->cfg)
 	  {
+	     if (shelf->cfg->overlap)
+	       continue;
+	    
 	     if (shelf->cfg->autohide)
 	       continue;
 	     orient = shelf->cfg->orient;
