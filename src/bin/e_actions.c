@@ -1213,7 +1213,8 @@ ACT_FN_GO_EDGE(desk_flip_in_direction, )
    E_Desk *current = NULL;
    E_Event_Pointer_Warp *wev;
    int x, y, offset = 25;
-
+   
+   if (!ev) return; // with flip on _e_zone_cb_edge_timer we don't have ev!!!
    zone = _e_actions_zone_get(obj);
    wev = E_NEW(E_Event_Pointer_Warp, 1);
    if ((!wev) || (!zone)) return;
@@ -1225,9 +1226,9 @@ ACT_FN_GO_EDGE(desk_flip_in_direction, )
 	if (sscanf(params, "%i", &offset) != 1)
 	  offset = 25;
      }
-   switch(ev->edge)
+   switch (ev->edge)
      {
-      case E_ZONE_EDGE_LEFT:
+     case E_ZONE_EDGE_LEFT:
 	if (ACT_FLIP_LEFT(zone))
 	  {
 	     e_zone_desk_flip_by(zone, -1, 0);
@@ -1235,26 +1236,26 @@ ACT_FN_GO_EDGE(desk_flip_in_direction, )
 	     wev->curr.y = y;
 	     wev->curr.x = zone->w - offset;
 	  }
-	 break;
-      case E_ZONE_EDGE_RIGHT:
-	 if (ACT_FLIP_RIGHT(zone))
-	   {
-	      e_zone_desk_flip_by(zone, 1, 0);
-	      ecore_x_pointer_warp(zone->container->win, offset, y);
-	      wev->curr.y = y;
-	      wev->curr.x = offset;
-	   }
-	 break;
-      case E_ZONE_EDGE_TOP:
-	 if (ACT_FLIP_UP(zone))
-	   {
-	      e_zone_desk_flip_by(zone, 0, -1);
-	      ecore_x_pointer_warp(zone->container->win, x, zone->h - offset);
-	      wev->curr.x = x;
-	      wev->curr.y = zone->h - offset;
-	   }
-	 break;
-      case E_ZONE_EDGE_BOTTOM:
+        break;
+     case E_ZONE_EDGE_RIGHT:
+        if (ACT_FLIP_RIGHT(zone))
+          {
+             e_zone_desk_flip_by(zone, 1, 0);
+             ecore_x_pointer_warp(zone->container->win, offset, y);
+             wev->curr.y = y;
+             wev->curr.x = offset;
+          }
+        break;
+     case E_ZONE_EDGE_TOP:
+        if (ACT_FLIP_UP(zone))
+          {
+             e_zone_desk_flip_by(zone, 0, -1);
+             ecore_x_pointer_warp(zone->container->win, x, zone->h - offset);
+             wev->curr.x = x;
+             wev->curr.y = zone->h - offset;
+          }
+        break;
+     case E_ZONE_EDGE_BOTTOM:
 	if (ACT_FLIP_DOWN(zone))
 	  {
 	     e_zone_desk_flip_by(zone, 0, 1);
@@ -1262,26 +1263,26 @@ ACT_FN_GO_EDGE(desk_flip_in_direction, )
 	     wev->curr.x = x;
 	     wev->curr.y = offset;
 	  }
-	 break;
-      case E_ZONE_EDGE_TOP_LEFT:
-	 if (ACT_FLIP_UP_LEFT(zone))
-	   {
-	      e_zone_desk_flip_by(zone, -1, -1);
-	      ecore_x_pointer_warp(zone->container->win, zone->w - offset, zone->h - offset);
-	      wev->curr.x = zone->w - offset;
-	      wev->curr.y = zone->h - offset;
-	   }
-	 break;
-      case E_ZONE_EDGE_TOP_RIGHT:
-	 if (ACT_FLIP_UP_RIGHT(zone))
-	   {
-	      e_zone_desk_flip_by(zone, 1, -1);
-	      ecore_x_pointer_warp(zone->container->win, offset, zone->h - offset);
-	      wev->curr.x = offset;
-	      wev->curr.y = zone->h - offset;
-	   }
-	 break;
-      case E_ZONE_EDGE_BOTTOM_LEFT:
+        break;
+     case E_ZONE_EDGE_TOP_LEFT:
+        if (ACT_FLIP_UP_LEFT(zone))
+          {
+             e_zone_desk_flip_by(zone, -1, -1);
+             ecore_x_pointer_warp(zone->container->win, zone->w - offset, zone->h - offset);
+             wev->curr.x = zone->w - offset;
+             wev->curr.y = zone->h - offset;
+          }
+        break;
+     case E_ZONE_EDGE_TOP_RIGHT:
+        if (ACT_FLIP_UP_RIGHT(zone))
+          {
+             e_zone_desk_flip_by(zone, 1, -1);
+             ecore_x_pointer_warp(zone->container->win, offset, zone->h - offset);
+             wev->curr.x = offset;
+             wev->curr.y = zone->h - offset;
+          }
+        break;
+     case E_ZONE_EDGE_BOTTOM_LEFT:
 	if (ACT_FLIP_DOWN_LEFT(zone))
 	  {
 	     e_zone_desk_flip_by(zone, -1, 1);
@@ -1289,8 +1290,8 @@ ACT_FN_GO_EDGE(desk_flip_in_direction, )
 	     wev->curr.y = offset;
 	     wev->curr.x = zone->w - offset;
 	  }
-	 break;
-      case E_ZONE_EDGE_BOTTOM_RIGHT:
+        break;
+     case E_ZONE_EDGE_BOTTOM_RIGHT:
 	if (ACT_FLIP_DOWN_RIGHT(zone))
 	  {
 	     e_zone_desk_flip_by(zone, 1, 1);
@@ -1298,11 +1299,11 @@ ACT_FN_GO_EDGE(desk_flip_in_direction, )
 	     wev->curr.y = offset;
 	     wev->curr.x = offset;
 	  }
-	 break;
-      default:
-	 break;
+        break;
+     default:
+        break;
      }
-
+   
    current = e_desk_current_get(zone);
    if (current)
      ecore_event_add(E_EVENT_POINTER_WARP, wev, NULL, NULL);
@@ -2266,12 +2267,14 @@ ACT_FN_GO_EDGE(shelf_show, )
 {
    Eina_List *l;
    E_Shelf *es;
-
+   
    if (params)
      {
 	for (; *params != '\0'; params++)
-	  if (!isspace(*params))
-	    break;
+          {
+             if (!isspace(*params))
+               break;
+          }
 	if (*params == '\0')
 	  params = NULL;
      }
@@ -2280,36 +2283,36 @@ ACT_FN_GO_EDGE(shelf_show, )
      {
 	switch(ev->edge)
 	  {
-	   case E_ZONE_EDGE_LEFT:
-	      if ((es->gadcon->orient == E_GADCON_ORIENT_LEFT ||
-		   es->gadcon->orient == E_GADCON_ORIENT_CORNER_LT ||
-		   es->gadcon->orient == E_GADCON_ORIENT_CORNER_LB) &&
-		  (ev->y >= es->y) && (ev->y <= (es->y + es->h)))
-		ACT_SHELF_SHOW(params, es);
-	      break;
-	   case E_ZONE_EDGE_RIGHT:
-	      if ((es->gadcon->orient == E_GADCON_ORIENT_RIGHT ||
-		   es->gadcon->orient == E_GADCON_ORIENT_CORNER_RT ||
-		   es->gadcon->orient == E_GADCON_ORIENT_CORNER_RB) &&
-		  (ev->y >= es->y) && (ev->y <= (es->y + es->h)))
-		ACT_SHELF_SHOW(params, es);
-	      break;
-	   case E_ZONE_EDGE_TOP:
-	      if ((es->gadcon->orient == E_GADCON_ORIENT_TOP ||
-		   es->gadcon->orient == E_GADCON_ORIENT_CORNER_TL ||
-		   es->gadcon->orient == E_GADCON_ORIENT_CORNER_TR) &&
-		  (ev->x >= es->x) && (ev->x <= (es->x + es->w)))
-		ACT_SHELF_SHOW(params, es);
-	      break;
-	   case E_ZONE_EDGE_BOTTOM:
-	      if ((es->gadcon->orient == E_GADCON_ORIENT_BOTTOM ||
-		   es->gadcon->orient == E_GADCON_ORIENT_CORNER_BL ||
-		   es->gadcon->orient == E_GADCON_ORIENT_CORNER_BR) &&
-		  (ev->x >= es->x) && (ev->x <= (es->x + es->w)))
-		ACT_SHELF_SHOW(params, es);
-	      break;
-	   default:
-	      break;
+          case E_ZONE_EDGE_LEFT:
+             if ((es->gadcon->orient == E_GADCON_ORIENT_LEFT ||
+                  es->gadcon->orient == E_GADCON_ORIENT_CORNER_LT ||
+                  es->gadcon->orient == E_GADCON_ORIENT_CORNER_LB) &&
+                 (ev->y >= es->y) && (ev->y <= (es->y + es->h)))
+               ACT_SHELF_SHOW(params, es);
+             break;
+          case E_ZONE_EDGE_RIGHT:
+             if ((es->gadcon->orient == E_GADCON_ORIENT_RIGHT ||
+                  es->gadcon->orient == E_GADCON_ORIENT_CORNER_RT ||
+                  es->gadcon->orient == E_GADCON_ORIENT_CORNER_RB) &&
+                 (ev->y >= es->y) && (ev->y <= (es->y + es->h)))
+               ACT_SHELF_SHOW(params, es);
+             break;
+          case E_ZONE_EDGE_TOP:
+             if ((es->gadcon->orient == E_GADCON_ORIENT_TOP ||
+                  es->gadcon->orient == E_GADCON_ORIENT_CORNER_TL ||
+                  es->gadcon->orient == E_GADCON_ORIENT_CORNER_TR) &&
+                 (ev->x >= es->x) && (ev->x <= (es->x + es->w)))
+               ACT_SHELF_SHOW(params, es);
+             break;
+          case E_ZONE_EDGE_BOTTOM:
+             if ((es->gadcon->orient == E_GADCON_ORIENT_BOTTOM ||
+                  es->gadcon->orient == E_GADCON_ORIENT_CORNER_BL ||
+                  es->gadcon->orient == E_GADCON_ORIENT_CORNER_BR) &&
+                 (ev->x >= es->x) && (ev->x <= (es->x + es->w)))
+               ACT_SHELF_SHOW(params, es);
+             break;
+          default:
+             break;
 	  }
      }
 }
