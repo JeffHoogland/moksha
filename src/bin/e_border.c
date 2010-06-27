@@ -4277,7 +4277,38 @@ _e_border_cb_window_configure_request(__UNUSED__ void *data, __UNUSED__ int ev_t
 	     else
 	       {
 		  if ((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_NONE)
-		    e_border_resize(bd, w, h);
+		    {
+		       int zx, zy, zw, zh;
+		       int rx = bd->x;
+		       int ry = bd->y;
+
+		       /*
+		        * This code does resize and move a window on a
+		        * X configure request into an useful geometry.
+		        * This is really useful for size jumping file dialogs.
+		        */
+		      
+		       if (bd->zone)
+	  		 e_zone_useful_geometry_get(bd->zone, &zx, &zy, &zw, &zh);
+
+		       if (w > zw)
+			 w = zw;
+
+		       if (h > zh)
+			 h = zh;
+		      
+		       e_border_resize(bd, w, h);
+
+		       // move window horizontal if resize to not useful geometry
+		       if (bd->x + bd->w > zx + zw)
+			 rx = zx + zw - bd->w;
+
+		       // move window vertical if resize to not useful geometry
+		       if (bd->y + bd->h > zy + zh)
+			 ry = zy + zh - bd->h;
+
+		       e_border_move(bd, rx, ry);
+		    }
 	       }
 	  }
      }
