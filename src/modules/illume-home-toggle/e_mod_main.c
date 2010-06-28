@@ -5,7 +5,7 @@ typedef struct _Instance Instance;
 struct _Instance 
 {
    E_Gadcon_Client *gcc;
-   Evas_Object *o_btn;
+   Evas_Object *o_toggle;
 };
 
 /* local function prototypes */
@@ -15,7 +15,7 @@ static void _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient);
 static char *_gc_label(E_Gadcon_Client_Class *cc);
 static Evas_Object *_gc_icon(E_Gadcon_Client_Class *cc, Evas *evas);
 static const char *_gc_id_new(E_Gadcon_Client_Class *cc);
-static void _cb_btn_click(void *data, void *data2);
+static void _cb_action_home(void *data, Evas_Object *obj, const char *emission, const char *source);
 
 /* local variables */
 static Eina_List *instances = NULL;
@@ -59,21 +59,17 @@ e_modapi_save(E_Module *m)
 static E_Gadcon_Client *
 _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style) 
 {
-   Instance *inst;
-   Evas_Object *icon;
-   char buff[PATH_MAX];
+   Instance *inst = E_NEW(Instance, 1);
 
-   snprintf(buff, sizeof(buff), "%s/e-module-illume-home-toggle.edj", mod_dir);
+   inst->o_toggle = edje_object_add(gc->evas);
+   e_theme_edje_object_set(inst->o_toggle, "base/theme/modules/illume_home_toggle",
+			   "e/modules/illume_home_toggle/main");
 
-   inst = E_NEW(Instance, 1);
-   inst->o_btn = e_widget_button_add(gc->evas, NULL, NULL, 
-                                     _cb_btn_click, inst, NULL);
-   icon = e_icon_add(evas_object_evas_get(inst->o_btn));
-   e_icon_file_edje_set(icon, buff, "icon");
-   e_widget_button_icon_set(inst->o_btn, icon);
-
-   inst->gcc = e_gadcon_client_new(gc, name, id, style, inst->o_btn);
+   inst->gcc = e_gadcon_client_new(gc, name, id, style, inst->o_toggle);
    inst->gcc->data = inst;
+
+   edje_object_signal_callback_add(inst->o_toggle, "e,action,home", "",
+				   _cb_action_home, inst);
 
    instances = eina_list_append(instances, inst);
    return inst->gcc;
@@ -86,7 +82,7 @@ _gc_shutdown(E_Gadcon_Client *gcc)
 
    if (!(inst = gcc->data)) return;
    instances = eina_list_remove(instances, inst);
-   if (inst->o_btn) evas_object_del(inst->o_btn);
+   if (inst->o_toggle) evas_object_del(inst->o_toggle);
    E_FREE(inst);
 }
 
@@ -126,12 +122,11 @@ _gc_id_new(E_Gadcon_Client_Class *cc)
 }
 
 static void 
-_cb_btn_click(void *data, void *data2) 
+_cb_action_home(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
-   Instance *inst;
+   Instance *inst = (Instance *) data;
    E_Zone *zone;
 
-   if (!(inst = data)) return;
    zone = inst->gcc->gadcon->zone;
    ecore_x_e_illume_focus_home_send(zone->black_win);
 }
