@@ -59,10 +59,12 @@ e_modapi_save(E_Module *m)
 static E_Gadcon_Client *
 _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style) 
 {
-   Instance *inst = E_NEW(Instance, 1);
+   Instance *inst;
 
+   inst = E_NEW(Instance, 1);
    inst->o_toggle = edje_object_add(gc->evas);
-   e_theme_edje_object_set(inst->o_toggle, "base/theme/modules/illume_home_toggle",
+   e_theme_edje_object_set(inst->o_toggle, 
+			   "base/theme/modules/illume_home_toggle",
 			   "e/modules/illume_home_toggle/main");
 
    inst->gcc = e_gadcon_client_new(gc, name, id, style, inst->o_toggle);
@@ -124,9 +126,10 @@ _gc_id_new(E_Gadcon_Client_Class *cc)
 static void 
 _cb_action_home(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
-   Instance *inst = (Instance *) data;
+   Instance *inst;
    E_Zone *zone;
 
+   if (!(inst = data)) return;
    zone = inst->gcc->gadcon->zone;
    ecore_x_e_illume_focus_home_send(zone->black_win);
 }
