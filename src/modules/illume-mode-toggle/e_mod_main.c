@@ -6,7 +6,7 @@ typedef struct _Instance Instance;
 struct _Instance 
 {
    E_Gadcon_Client *gcc;
-   Evas_Object *o_btn;
+   Evas_Object *o_toggle;
    Ecore_Event_Handler *hdl;
 };
 
@@ -17,9 +17,12 @@ static void _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient);
 static char *_gc_label(E_Gadcon_Client_Class *cc);
 static Evas_Object *_gc_icon(E_Gadcon_Client_Class *cc, Evas *evas);
 static const char *_gc_id_new(E_Gadcon_Client_Class *cc);
-static void _cb_btn_click(void *data, void *data2);
+static void _cb_action_mode_single(void *data, Evas_Object *obj, const char *emission, const char *source);
+static void _cb_action_mode_dual_top(void *data, Evas_Object *obj, const char *emission, const char *source);
+static void _cb_action_mode_dual_left(void *data, Evas_Object *obj, const char *emission, const char *source);
 static Eina_Bool _cb_event_client_message(void *data, int type, void *event);
 static void _set_icon(Instance *inst);
+static void _mode_set(Instance *inst, Ecore_X_Illume_Mode mode);
 
 /* local variables */
 static Eina_List *instances = NULL;
@@ -63,18 +66,25 @@ e_modapi_save(E_Module *m)
 static E_Gadcon_Client *
 _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style) 
 {
-   Instance *inst;
+   Instance *inst = E_NEW(Instance, 1);
 
-   inst = E_NEW(Instance, 1);
+   inst->o_toggle = edje_object_add(gc->evas);
+   e_theme_edje_object_set(inst->o_toggle, "base/theme/modules/illume_mode_toggle",
+			   "e/modules/illume_mode_toggle/main");
 
-   inst->o_btn = e_widget_button_add(gc->evas, NULL, NULL, 
-                                     _cb_btn_click, inst, NULL);
-   inst->gcc = e_gadcon_client_new(gc, name, id, style, inst->o_btn);
+   inst->gcc = e_gadcon_client_new(gc, name, id, style, inst->o_toggle);
    inst->gcc->data = inst;
+
+   edje_object_signal_callback_add(inst->o_toggle, "e,action,mode,single", "",
+				   _cb_action_mode_single, inst);
+   edje_object_signal_callback_add(inst->o_toggle, "e,action,mode,dual,top", "",
+				   _cb_action_mode_dual_top, inst);
+   edje_object_signal_callback_add(inst->o_toggle, "e,action,mode,dual,left", "",
+				   _cb_action_mode_dual_left, inst);
 
    _set_icon(inst);
 
-   inst->hdl = ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE, 
+   inst->hdl = ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE,
                                        _cb_event_client_message, inst);
 
    instances = eina_list_append(instances, inst);
@@ -88,7 +98,7 @@ _gc_shutdown(E_Gadcon_Client *gcc)
 
    if (!(inst = gcc->data)) return;
    instances = eina_list_remove(instances, inst);
-   if (inst->o_btn) evas_object_del(inst->o_btn);
+   if (inst->o_toggle) evas_object_del(inst->o_toggle);
    if (inst->hdl) ecore_event_handler_del(inst->hdl);
    inst->hdl = NULL;
    E_FREE(inst);
@@ -129,22 +139,22 @@ _gc_id_new(E_Gadcon_Client_Class *cc)
    return buff;
 }
 
-static void 
-_cb_btn_click(void *data, void *data2) 
+static void
+_cb_action_mode_single(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
-   Instance *inst;
-   Ecore_X_Window xwin;
-   Ecore_X_Illume_Mode mode;
+   _mode_set(data, ECORE_X_ILLUME_MODE_SINGLE);
+}
 
-   if (!(inst = data)) return;
+static void
+_cb_action_mode_dual_top(void *data, Evas_Object *obj, const char *emission, const char *source)
+{
+   _mode_set(data, ECORE_X_ILLUME_MODE_DUAL_TOP);
+}
 
-   xwin = inst->gcc->gadcon->zone->black_win;
-   mode = ecore_x_e_illume_mode_get(xwin);
-   mode += 1;
-   if (mode > ECORE_X_ILLUME_MODE_DUAL_LEFT)
-     mode = ECORE_X_ILLUME_MODE_SINGLE;
-   ecore_x_e_illume_mode_set(xwin, mode);
-   ecore_x_e_illume_mode_send(xwin, mode);
+static void
+_cb_action_mode_dual_left(void *data, Evas_Object *obj, const char *emission, const char *source)
+{
+   _mode_set(data, ECORE_X_ILLUME_MODE_DUAL_LEFT);
 }
 
 static Eina_Bool
@@ -160,25 +170,32 @@ _cb_event_client_message(void *data, __UNUSED__ int type, void *event)
    return ECORE_CALLBACK_PASS_ON;
 }
 
-static void 
-_set_icon(Instance *inst) 
+static void
+_set_icon(Instance *inst)
 {
-   Evas_Object *icon;
    Ecore_X_Window xwin;
    Ecore_X_Illume_Mode mode;
-   char buff[PATH_MAX];
-
-   snprintf(buff, sizeof(buff), "%s/e-module-illume-mode-toggle.edj", mod_dir);
-   icon = e_icon_add(evas_object_evas_get(inst->o_btn));
 
    xwin = inst->gcc->gadcon->zone->black_win;
    mode = ecore_x_e_illume_mode_get(xwin);
-   if (mode <= ECORE_X_ILLUME_MODE_SINGLE)
-     e_icon_file_edje_set(icon, buff, "single");
-   else if (mode == ECORE_X_ILLUME_MODE_DUAL_TOP)
-     e_icon_file_edje_set(icon, buff, "dual_top");
-   else if (mode == ECORE_X_ILLUME_MODE_DUAL_LEFT) 
-     e_icon_file_edje_set(icon, buff, "dual_left");
 
-   e_widget_button_icon_set(inst->o_btn, icon);
+   if (mode == ECORE_X_ILLUME_MODE_DUAL_TOP)
+     edje_object_signal_emit(inst->o_toggle, "e,mode,dual,top", "e");
+   else if (mode == ECORE_X_ILLUME_MODE_DUAL_LEFT)
+     edje_object_signal_emit(inst->o_toggle, "e,mode,dual,left", "e");
+   else
+     edje_object_signal_emit(inst->o_toggle, "e,mode,single", "e");
+}
+
+static void
+_mode_set(Instance *inst, Ecore_X_Illume_Mode mode)
+{
+   Ecore_X_Window xwin;
+
+   if (!inst) return;
+
+   xwin = inst->gcc->gadcon->zone->black_win;
+
+   ecore_x_e_illume_mode_set(xwin, mode);
+   ecore_x_e_illume_mode_send(xwin, mode);
 }
