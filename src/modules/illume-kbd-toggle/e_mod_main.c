@@ -6,7 +6,7 @@ typedef struct _Instance Instance;
 struct _Instance 
 {
    E_Gadcon_Client *gcc;
-   Evas_Object *o_btn;
+   Evas_Object *o_toggle;
    Eina_List *handlers;
 };
 
@@ -17,7 +17,8 @@ static void _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient);
 static char *_gc_label(E_Gadcon_Client_Class *cc);
 static Evas_Object *_gc_icon(E_Gadcon_Client_Class *cc, Evas *evas);
 static const char *_gc_id_new(E_Gadcon_Client_Class *cc);
-static void _cb_btn_click(void *data, void *data2);
+static void _cb_action_vkbd_enable(void *data, Evas_Object *obj, const char *emission, const char *source);
+static void _cb_action_vkbd_disable(void *data, Evas_Object *obj, const char *emission, const char *source);
 static Eina_Bool _cb_border_focus_in(void *data, int type __UNUSED__, void *event);
 static Eina_Bool _cb_border_remove(void *data, int type __UNUSED__, void *event);
 static Eina_Bool _cb_border_property(void *data, int type __UNUSED__, void *event);
@@ -65,16 +66,19 @@ e_modapi_save(E_Module *m)
 static E_Gadcon_Client *
 _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style) 
 {
-   Instance *inst;
+   Instance *inst = E_NEW(Instance, 1);
 
-   inst = E_NEW(Instance, 1);
+   inst->o_toggle = edje_object_add(gc->evas);
+   e_theme_edje_object_set(inst->o_toggle, "base/theme/modules/illume_kbd_toggle",
+			   "e/modules/illume_kbd_toggle/main");
 
-   inst->o_btn = e_widget_button_add(gc->evas, NULL, NULL, 
-                                     _cb_btn_click, inst, NULL);
-   _set_btn_icon(inst->o_btn, ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF);
-
-   inst->gcc = e_gadcon_client_new(gc, name, id, style, inst->o_btn);
+   inst->gcc = e_gadcon_client_new(gc, name, id, style, inst->o_toggle);
    inst->gcc->data = inst;
+
+   edje_object_signal_callback_add(inst->o_toggle, "e,action,vkbd,enable", "",
+				   _cb_action_vkbd_enable, inst);
+   edje_object_signal_callback_add(inst->o_toggle, "e,action,vkbd,disable", "",
+				   _cb_action_vkbd_disable, inst);
 
    inst->handlers = 
      eina_list_append(inst->handlers, 
@@ -101,7 +105,7 @@ _gc_shutdown(E_Gadcon_Client *gcc)
 
    if (!(inst = gcc->data)) return;
    instances = eina_list_remove(instances, inst);
-   if (inst->o_btn) evas_object_del(inst->o_btn);
+   if (inst->o_toggle) evas_object_del(inst->o_toggle);
    EINA_LIST_FREE(inst->handlers, handler)
      ecore_event_handler_del(handler);
    E_FREE(inst);
@@ -142,8 +146,8 @@ _gc_id_new(E_Gadcon_Client_Class *cc)
    return buff;
 }
 
-static void 
-_cb_btn_click(void *data, void *data2) 
+static void
+_cb_action_vkbd_enable(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
    Instance *inst;
    E_Border *bd;
@@ -151,13 +155,25 @@ _cb_btn_click(void *data, void *data2)
    if (!(inst = data)) return;
    if (!(bd = e_border_focused_get())) return;
    if (bd->zone != inst->gcc->gadcon->zone) return;
+   if (bd->client.vkbd.state == ECORE_X_VIRTUAL_KEYBOARD_STATE_ON) return;
 
-   if (bd->client.vkbd.state <= ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF) 
-     ecore_x_e_virtual_keyboard_state_set(bd->client.win, 
-                                          ECORE_X_VIRTUAL_KEYBOARD_STATE_ON);
-   else 
-     ecore_x_e_virtual_keyboard_state_set(bd->client.win, 
-                                          ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF);
+   ecore_x_e_virtual_keyboard_state_set(bd->client.win,
+				        ECORE_X_VIRTUAL_KEYBOARD_STATE_ON);
+}
+
+static void
+_cb_action_vkbd_disable(void *data, Evas_Object *obj, const char *emission, const char *source)
+{
+   Instance *inst;
+   E_Border *bd;
+
+   if (!(inst = data)) return;
+   if (!(bd = e_border_focused_get())) return;
+   if (bd->zone != inst->gcc->gadcon->zone) return;
+   if (bd->client.vkbd.state == ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF) return;
+
+   ecore_x_e_virtual_keyboard_state_set(bd->client.win,
+				        ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF);
 }
 
 static Eina_Bool
@@ -172,7 +188,7 @@ _cb_border_focus_in(void *data, int type __UNUSED__, void *event)
    if (ev->border->stolen) return ECORE_CALLBACK_PASS_ON;
    if (!(bd = ev->border)) return ECORE_CALLBACK_PASS_ON;
    if (bd->zone != inst->gcc->gadcon->zone) return ECORE_CALLBACK_PASS_ON;
-   _set_btn_icon(inst->o_btn, bd->client.vkbd.state);
+   _set_btn_icon(inst->o_toggle, bd->client.vkbd.state);
    return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -182,7 +198,7 @@ _cb_border_remove(void *data, int type __UNUSED__, void *event)
    Instance *inst;
 
    if (!(inst = data)) return ECORE_CALLBACK_PASS_ON;
-   _set_btn_icon(inst->o_btn, ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF);
+   _set_btn_icon(inst->o_toggle, ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF);
    return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -199,22 +215,15 @@ _cb_border_property(void *data, int type __UNUSED__, void *event)
    if (!bd->focused) return ECORE_CALLBACK_PASS_ON;
    if (!(inst = data)) return ECORE_CALLBACK_PASS_ON;
    if (bd->zone != inst->gcc->gadcon->zone) return ECORE_CALLBACK_PASS_ON;
-   _set_btn_icon(inst->o_btn, bd->client.vkbd.state);
+   _set_btn_icon(inst->o_toggle, bd->client.vkbd.state);
    return ECORE_CALLBACK_PASS_ON;
 }
 
-static void 
-_set_btn_icon(Evas_Object *obj, Ecore_X_Virtual_Keyboard_State state) 
+static void
+_set_btn_icon(Evas_Object *obj, Ecore_X_Virtual_Keyboard_State state)
 {
-   Evas_Object *icon;
-   char buff[PATH_MAX];
-
-   snprintf(buff, sizeof(buff), "%s/e-module-illume-kbd-toggle.edj", mod_dir);
-
-   icon = e_icon_add(evas_object_evas_get(obj));
-   if (state <= ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF)
-     e_icon_file_edje_set(icon, buff, "icon");
-   else 
-     e_icon_file_edje_set(icon, buff, "btn_icon");
-   e_widget_button_icon_set(obj, icon);
+   if (state == ECORE_X_VIRTUAL_KEYBOARD_STATE_ON)
+     edje_object_signal_emit(obj, "e,state,vkbd,on", "e");
+   else
+     edje_object_signal_emit(obj, "e,state,vkbd,off", "e");
 }
