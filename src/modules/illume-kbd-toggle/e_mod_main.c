@@ -66,10 +66,12 @@ e_modapi_save(E_Module *m)
 static E_Gadcon_Client *
 _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style) 
 {
-   Instance *inst = E_NEW(Instance, 1);
+   Instance *inst;
 
+   inst = E_NEW(Instance, 1);
    inst->o_toggle = edje_object_add(gc->evas);
-   e_theme_edje_object_set(inst->o_toggle, "base/theme/modules/illume_kbd_toggle",
+   e_theme_edje_object_set(inst->o_toggle, 
+			   "base/theme/modules/illume_kbd_toggle",
 			   "e/modules/illume_kbd_toggle/main");
 
    inst->gcc = e_gadcon_client_new(gc, name, id, style, inst->o_toggle);
@@ -210,8 +212,10 @@ _cb_border_property(void *data, int type __UNUSED__, void *event)
    E_Border *bd;
 
    ev = event;
-   if (ev->atom != ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE) return ECORE_CALLBACK_PASS_ON;
-   if (!(bd = e_border_find_by_client_window(ev->win))) return ECORE_CALLBACK_PASS_ON;
+   if (ev->atom != ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE) 
+     return ECORE_CALLBACK_PASS_ON;
+   if (!(bd = e_border_find_by_client_window(ev->win))) 
+     return ECORE_CALLBACK_PASS_ON;
    if (!bd->focused) return ECORE_CALLBACK_PASS_ON;
    if (!(inst = data)) return ECORE_CALLBACK_PASS_ON;
    if (bd->zone != inst->gcc->gadcon->zone) return ECORE_CALLBACK_PASS_ON;
