@@ -66,10 +66,12 @@ e_modapi_save(E_Module *m)
 static E_Gadcon_Client *
 _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style) 
 {
-   Instance *inst = E_NEW(Instance, 1);
+   Instance *inst;
 
+   inst = E_NEW(Instance, 1);
    inst->o_toggle = edje_object_add(gc->evas);
-   e_theme_edje_object_set(inst->o_toggle, "base/theme/modules/illume_mode_toggle",
+   e_theme_edje_object_set(inst->o_toggle, 
+			   "base/theme/modules/illume_mode_toggle",
 			   "e/modules/illume_mode_toggle/main");
 
    inst->gcc = e_gadcon_client_new(gc, name, id, style, inst->o_toggle);
@@ -164,7 +166,8 @@ _cb_event_client_message(void *data, __UNUSED__ int type, void *event)
    Instance *inst;
 
    ev = event;
-   if (ev->message_type != ECORE_X_ATOM_E_ILLUME_MODE) return ECORE_CALLBACK_PASS_ON;
+   if (ev->message_type != ECORE_X_ATOM_E_ILLUME_MODE) 
+     return ECORE_CALLBACK_PASS_ON;
    if (!(inst = data)) return ECORE_CALLBACK_PASS_ON;
    _set_icon(inst);
    return ECORE_CALLBACK_PASS_ON;
@@ -195,7 +198,6 @@ _mode_set(Instance *inst, Ecore_X_Illume_Mode mode)
    if (!inst) return;
 
    xwin = inst->gcc->gadcon->zone->black_win;
-
    ecore_x_e_illume_mode_set(xwin, mode);
    ecore_x_e_illume_mode_send(xwin, mode);
 }
