@@ -228,6 +228,8 @@ e_canvas_new(int engine_hint, Ecore_X_Window win, int x, int y, int w, int h,
 	     if (direct_resize) ecore_evas_software_x11_direct_resize_set(ee, 1);
 	     if (win_ret) *win_ret = ecore_evas_software_x11_window_get(ee);
 	  }
+	else
+	  EINA_LOG_ERR("Impossible to build any Ecore_Evas window !!");
      }
    return ee;
 }
