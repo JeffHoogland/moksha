@@ -16,6 +16,7 @@ struct _Web
    E_Dialog *dia;
 };
 
+#if 0
 static void
 _web_pan_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
 {
@@ -103,10 +104,12 @@ _web_apply(const char *path, void *data)
    a = e_action_find("restart");
    if ((a) && (a->func.go)) a->func.go(NULL, NULL);
 }
+#endif
 
 E_Dialog *
 e_int_config_theme_web(E_Config_Dialog *parent)
 {
+#if 0
    E_Dialog *dia;
    Web *web;
    Evas_Object *ol, *exsm, *sf;
@@ -136,14 +139,14 @@ e_int_config_theme_web(E_Config_Dialog *parent)
 
    ol = e_widget_list_add(e_win_evas_get(dia->win), 0, 1);
 
-   /* The Exchange Smart Object*/
+   // The Exchange Smart Object
    e_user_dir_concat_static(usr_dir, "themes");
    exsm = exchange_smart_object_add(e_win_evas_get(dia->win));
    exchange_smart_object_remote_group_set(exsm, "Border");
    exchange_smart_object_local_path_set(exsm, usr_dir);
    exchange_smart_object_apply_cb_set(exsm, _web_apply, NULL);
 
-   /* The Scroll Frame */
+   // The Scroll Frame 
    sf = e_scrollframe_add(e_win_evas_get(dia->win));
    e_scrollframe_extern_pan_set(sf, exsm, _web_pan_set, _web_pan_get,
                                 _web_pan_max_get, _web_pan_child_size_get);
@@ -158,6 +161,8 @@ e_int_config_theme_web(E_Config_Dialog *parent)
    exchange_smart_object_run(exsm);
 
    return dia;
+#endif
+   return NULL;
 }
 
 #endif
