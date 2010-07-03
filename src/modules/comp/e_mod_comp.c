@@ -4,6 +4,8 @@
 #include "e_mod_comp_update.h"
 #include "config.h"
 
+#define OVERFLOW 4
+
 //////////////////////////////////////////////////////////////////////////
 //
 // TODO (no specific order):
@@ -625,7 +627,7 @@ _e_mod_comp_cb_update(E_Comp *c)
                   printf("NOCOMP!\n");
                   printf("kill comp %x\n", cw->win);
                   c->nocomp = 1;
-                  c->render_overflow = 2;
+                  c->render_overflow = OVERFLOW;
                   ecore_x_window_hide(c->win);
                   cw->nocomp = 1;
                   if (cw->redirected)
@@ -693,7 +695,7 @@ _e_mod_comp_cb_update(E_Comp *c)
           {
              printf("COMP!\n");
              c->nocomp = 0;
-             c->render_overflow = 2;
+             c->render_overflow = OVERFLOW;
              ecore_x_window_show(c->win);
              EINA_INLIST_FOREACH(c->wins, cw)
                {
@@ -784,7 +786,7 @@ _e_mod_comp_render_queue(E_Comp *c)
      {
         if (c->render_animator)
           {
-             c->render_overflow = 2;
+             c->render_overflow = OVERFLOW;
              return;
           }
         c->render_animator = ecore_animator_add(_e_mod_comp_cb_animator, c);
