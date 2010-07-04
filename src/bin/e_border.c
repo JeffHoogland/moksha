@@ -6447,10 +6447,33 @@ _e_border_eval(E_Border *bd)
    if (bd->new_client)
      {
 	int zx, zy, zw, zh;
+        int rw, rh;
 	zx = zy = zw = zh = 0;
 
 	if (bd->zone)
 	  e_zone_useful_geometry_get(bd->zone, &zx, &zy, &zw, &zh);
+
+        /*
+	 * Limit maximum size of windows to useful geometry
+	 */
+        // ->
+        if (bd->w > zw)
+	  rw = zw;
+        else
+          rw = bd->w;
+
+        if (bd->h > zh)
+	  rh = zh;
+        else
+	  rh = bd->h;
+
+        if ((rw != bd->w) || (rh != bd->h))
+          {
+	      bd->w = rw;
+	      bd->h = rh;
+	      e_border_resize (bd, bd->w, bd->h);
+	  }
+        // <-
 
 	if (bd->re_manage)
 	  {
