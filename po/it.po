@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-06-27 22:09+0900\n"
-"PO-Revision-Date: 2010-06-06 10:11+0200\n"
+"POT-Creation-Date: 2010-07-04 17:07+0200\n"
+"PO-Revision-Date: 2010-07-04 17:14+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -23,8 +23,8 @@ msgstr "Informazioni su Enlightenment"
 #: src/bin/e_int_border_prop.c:81 src/bin/e_theme_about.c:20
 #: src/modules/conf/e_conf.c:180
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:848
-#: src/modules/conf_theme/e_int_config_theme_web.c:130
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:120
+#: src/modules/conf_theme/e_int_config_theme_web.c:133
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:241
 #: src/modules/everything-windows/e_mod_main.c:454
 #: src/modules/fileman/e_fwin.c:1829 src/modules/illume/e_mod_win.c:173
 #: src/modules/mixer/app_mixer.c:514
@@ -822,6 +822,7 @@ msgstr "Basilari"
 
 #: src/bin/e_config_dialog.c:264
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:847
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:240
 msgid "Apply"
 msgstr "Applica"
 
@@ -1760,14 +1761,14 @@ msgstr "A tutto schermo"
 msgid "Window List"
 msgstr "Lista finestre"
 
-#: src/bin/e_int_border_menu.c:1124 src/modules/pager/e_mod_main.c:259
-#: src/modules/pager/e_mod_main.c:2802 src/modules/pager/e_mod_main.c:2809
-#: src/modules/pager/e_mod_main.c:2816 src/modules/pager/e_mod_main.c:2818
-#: src/modules/pager/e_mod_main.c:2820 src/modules/pager/e_mod_main.c:2822
+#: src/bin/e_int_border_menu.c:1124 src/modules/pager/e_mod_main.c:261
+#: src/modules/pager/e_mod_main.c:2810 src/modules/pager/e_mod_main.c:2817
 #: src/modules/pager/e_mod_main.c:2824 src/modules/pager/e_mod_main.c:2826
-#: src/modules/pager/e_mod_main.c:2859 src/modules/pager/e_mod_main.c:2860
-#: src/modules/pager/e_mod_main.c:2861 src/modules/pager/e_mod_main.c:2862
-#: src/modules/pager/e_mod_main.c:2863 src/modules/pager/e_mod_main.c:2864
+#: src/modules/pager/e_mod_main.c:2828 src/modules/pager/e_mod_main.c:2830
+#: src/modules/pager/e_mod_main.c:2832 src/modules/pager/e_mod_main.c:2834
+#: src/modules/pager/e_mod_main.c:2867 src/modules/pager/e_mod_main.c:2868
+#: src/modules/pager/e_mod_main.c:2869 src/modules/pager/e_mod_main.c:2870
+#: src/modules/pager/e_mod_main.c:2871 src/modules/pager/e_mod_main.c:2872
 msgid "Pager"
 msgstr "Pager"
 
@@ -5598,7 +5599,7 @@ msgstr ""
 "Enlightenment non ha potuto importare il tema<br>a causa di un errore di "
 "copia."
 
-#: src/modules/conf_theme/e_int_config_theme_web.c:127
+#: src/modules/conf_theme/e_int_config_theme_web.c:130
 msgid "Exchange themes"
 msgstr "Temi da Exchange"
 
@@ -5760,9 +5761,33 @@ msgstr ""
 "Enlightenment non ha potuto importare lo sfondo.<br>Siete sicuri che sia uno "
 "sfondo valido?"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:117
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:166
+msgid "By"
+msgstr "Da"
+
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:202
+msgid "Error getting data !"
+msgstr "Errore nell'ottenimento dei dati!"
+
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:237
 msgid "Exchange wallpapers"
 msgstr "Sfondi su Exchange"
+
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:239
+msgid "Download"
+msgstr "Scarica"
+
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:258
+msgid "Getting data, please wait..."
+msgstr "Ottenimento dei dati, si prega di attendere..."
+
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:270
+msgid "Select a background from the list."
+msgstr "Selezionare uno sfondo dall'elenco."
+
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:285
+msgid "Error: can't start the request."
+msgstr "Errore: impossibile avviare la richiesta"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:60
 #: src/modules/conf_window_display/e_mod_main.c:21
@@ -7368,31 +7393,31 @@ msgstr ""
 "usato dal codice<br>interno per il menù contestuale.<br>Questo tasto "
 "funziona solo nel popup."
 
-#: src/modules/pager/e_mod_main.c:2809
+#: src/modules/pager/e_mod_main.c:2817
 msgid "Show Pager Popup"
 msgstr "Mostra popup del pager"
 
-#: src/modules/pager/e_mod_main.c:2816 src/modules/pager/e_mod_main.c:2859
+#: src/modules/pager/e_mod_main.c:2824 src/modules/pager/e_mod_main.c:2867
 msgid "Popup Desk Right"
 msgstr "Popup del desktop a destra"
 
-#: src/modules/pager/e_mod_main.c:2818 src/modules/pager/e_mod_main.c:2860
+#: src/modules/pager/e_mod_main.c:2826 src/modules/pager/e_mod_main.c:2868
 msgid "Popup Desk Left"
 msgstr "Popup del desktop a sinistra"
 
-#: src/modules/pager/e_mod_main.c:2820 src/modules/pager/e_mod_main.c:2861
+#: src/modules/pager/e_mod_main.c:2828 src/modules/pager/e_mod_main.c:2869
 msgid "Popup Desk Up"
 msgstr "Popup del desktop sopra"
 
-#: src/modules/pager/e_mod_main.c:2822 src/modules/pager/e_mod_main.c:2862
+#: src/modules/pager/e_mod_main.c:2830 src/modules/pager/e_mod_main.c:2870
 msgid "Popup Desk Down"
 msgstr "Popup del desktop sotto"
 
-#: src/modules/pager/e_mod_main.c:2824 src/modules/pager/e_mod_main.c:2863
+#: src/modules/pager/e_mod_main.c:2832 src/modules/pager/e_mod_main.c:2871
 msgid "Popup Desk Next"
 msgstr "Popup del desktop successivo"
 
-#: src/modules/pager/e_mod_main.c:2826 src/modules/pager/e_mod_main.c:2864
+#: src/modules/pager/e_mod_main.c:2834 src/modules/pager/e_mod_main.c:2872
 msgid "Popup Desk Previous"
 msgstr "Popup del desktop precedente"
 
