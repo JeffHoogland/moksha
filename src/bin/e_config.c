@@ -1005,7 +1005,12 @@ e_config_load(void)
         IFCFG(0x0137);
         COPYVAL(desklock_on_suspend);
         IFCFGEND;
-        
+
+        IFCFG(0x0138);
+	COPYVAL(geometry_auto_resize_limit);
+	COPYVAL(geometry_auto_move);
+        IFCFGEND;
+
         e_config->config_version = E_CONFIG_FILE_VERSION;   
         _e_config_free(tcfg);
      }
