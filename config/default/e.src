@@ -366,6 +366,8 @@ group "E_Config" struct {
   value "desk_resist" int: 32;
   value "window_resist" int: 12;
   value "gadget_resist" int: 32;
+  value "geometry_auto_resize_limit" int: 1;
+  value "geometry_auto_move" int: 1;
   value "winlist_warp_while_selecting" int: 0;
   value "winlist_warp_at_end" int: 1;
   value "winlist_warp_speed" double: 0.1000000014901161193847656;

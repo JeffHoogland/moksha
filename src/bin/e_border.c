@@ -4297,28 +4297,35 @@ _e_border_cb_window_configure_request(__UNUSED__ void *data, __UNUSED__ int ev_t
 		        * X configure request into an useful geometry.
 		        * This is really useful for size jumping file dialogs.
 		        */
-		      
+
+
 		       if (bd->zone)
-	  		 e_zone_useful_geometry_get(bd->zone, &zx, &zy, &zw, &zh);
+		         e_zone_useful_geometry_get(bd->zone, &zx, &zy, &zw, &zh);
 
-		       if (w > zw)
-			 w = zw;
+		       if (e_config->geometry_auto_resize_limit == 1)
+		         {
+			   if (w > zw)
+			      w = zw;
 
-		       if (h > zh)
-			 h = zh;
+			   if (h > zh)
+			      h = zh;
+			 }
 		      
 		       e_border_resize(bd, w, h);
 
-		       // move window horizontal if resize to not useful geometry
-		       if (bd->x + bd->w > zx + zw)
-			 rx = zx + zw - bd->w;
+		       if (e_config->geometry_auto_move == 1)
+		         {
+			    // move window horizontal if resize to not useful geometry
+			    if (bd->x + bd->w > zx + zw)
+			      rx = zx + zw - bd->w;
 
-		       // move window vertical if resize to not useful geometry
-		       if (bd->y + bd->h > zy + zh)
-			 ry = zy + zh - bd->h;
+			    // move window vertical if resize to not useful geometry
+			    if (bd->y + bd->h > zy + zh)
+			      ry = zy + zh - bd->h;
 
-		       e_border_move(bd, rx, ry);
-		    }
+			    e_border_move(bd, rx, ry);
+			 }
+		     }
 	       }
 	  }
      }

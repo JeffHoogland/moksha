@@ -18,6 +18,8 @@ struct _E_Config_Dialog_Data
    int desk_resist;
    int window_resist;
    int gadget_resist;
+   int geometry_auto_resize_limit;
+   int geometry_auto_move;
    struct
      {
         double timeout;
@@ -66,6 +68,8 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
    cfdata->desk_resist = e_config->desk_resist;
    cfdata->window_resist = e_config->window_resist;
    cfdata->gadget_resist = e_config->gadget_resist;
+   cfdata->geometry_auto_resize_limit = e_config->geometry_auto_resize_limit;
+   cfdata->geometry_auto_move = e_config->geometry_auto_move;
    cfdata->border_keyboard.timeout = e_config->border_keyboard.timeout;
    cfdata->border_keyboard.move.dx = e_config->border_keyboard.move.dx;
 //   cfdata->border_keyboard.move.dy = e_config->border_keyboard.move.dy;
@@ -88,6 +92,8 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    e_config->desk_resist = cfdata->desk_resist;
    e_config->window_resist = cfdata->window_resist;
    e_config->gadget_resist = cfdata->gadget_resist;
+   e_config->geometry_auto_resize_limit = cfdata->geometry_auto_resize_limit;
+   e_config->geometry_auto_move = cfdata->geometry_auto_move;  
    e_config->border_keyboard.timeout = cfdata->border_keyboard.timeout;
    e_config->border_keyboard.move.dx = cfdata->border_keyboard.move.dx;
 //   e_config->border_keyboard.move.dy = cfdata->border_keyboard.move.dy;
@@ -106,6 +112,8 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
 	   (e_config->desk_resist != cfdata->desk_resist) ||
 	   (e_config->window_resist != cfdata->window_resist) ||
 	   (e_config->gadget_resist != cfdata->gadget_resist) ||
+	   (e_config->geometry_auto_resize_limit != cfdata->geometry_auto_resize_limit) ||
+           (e_config->geometry_auto_move != cfdata->geometry_auto_move) ||
 	   (e_config->border_keyboard.timeout != cfdata->border_keyboard.timeout) ||
 	   (e_config->border_keyboard.move.dx != cfdata->border_keyboard.move.dx) ||
 	   (e_config->border_keyboard.move.dy != cfdata->border_keyboard.move.dx) ||
@@ -173,6 +181,15 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%2.0f pixels"), 1, 255, 1, 0, NULL, 
                             &(cfdata->border_keyboard.resize.dx), 100);
+   e_widget_framelist_object_append(of, ob);
+   e_widget_list_object_append(o, of, 1, 0, 0.5);
+
+   of = e_widget_framelist_add(evas, _("Automatic move and resize"), 0);
+   ob = e_widget_check_add(evas, _("Limit resize on window configure request to useful geometry"), 
+                           &(cfdata->geometry_auto_resize_limit));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_check_add(evas, _("Move after resize on window configure request"), 
+                           &(cfdata->geometry_auto_move));
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 0, 0.5);
 

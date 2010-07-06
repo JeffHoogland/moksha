@@ -127,6 +127,8 @@ struct _E_Config
    int         desk_resist; // GUI
    int         window_resist; // GUI
    int         gadget_resist; // GUI
+   int         geometry_auto_move; // GUI
+   int         geometry_auto_resize_limit; // GUI
    int         winlist_warp_while_selecting; // GUI
    int         winlist_warp_at_end; // GUI
    double      winlist_warp_speed; // GUI
