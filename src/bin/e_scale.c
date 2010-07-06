@@ -23,7 +23,7 @@ e_scale_update(void)
 {
    int dpi;
    char buf[128];
-   
+
    if (e_config->scale.use_dpi)
      {
 	dpi = ecore_x_dpi_get();
@@ -37,7 +37,7 @@ e_scale_update(void)
 	if (e_scale > e_config->scale.max) e_scale = e_config->scale.max;
 	else if (e_scale < e_config->scale.min) e_scale = e_config->scale.min;
      }
-   
+
    edje_scale_set(e_scale);
    snprintf(buf, sizeof(buf), "%1.3f", e_scale);
    e_util_env_set("E_SCALE", buf);
