@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-07-04 17:07+0200\n"
-"PO-Revision-Date: 2010-07-04 17:14+0200\n"
+"POT-Creation-Date: 2010-07-07 17:44+0200\n"
+"PO-Revision-Date: 2010-07-07 17:49+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -664,7 +664,7 @@ msgstr "Imposta come sfondo"
 msgid "Color Selector"
 msgstr "Selettore colore"
 
-#: src/bin/e_color_dialog.c:50 src/bin/e_config.c:1935
+#: src/bin/e_color_dialog.c:50 src/bin/e_config.c:1944
 #: src/bin/e_config_dialog.c:262 src/bin/e_eap_editor.c:818
 #: src/bin/e_eap_editor.c:882 src/bin/e_entry_dialog.c:62 src/bin/e_exec.c:365
 #: src/bin/e_fm.c:8539 src/bin/e_fm.c:9177 src/bin/e_fm_prop.c:510
@@ -698,7 +698,7 @@ msgstr "OK"
 msgid "Cancel"
 msgstr "Annulla"
 
-#: src/bin/e_config.c:805 src/bin/e_config.c:838
+#: src/bin/e_config.c:807 src/bin/e_config.c:840
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -718,7 +718,7 @@ msgstr ""
 "funzionalità.<br>Adesso è possibile riconfigurare le cose a proprio "
 "piacimento.<br>Ci scusiamo per il disagio.<br>"
 
-#: src/bin/e_config.c:822
+#: src/bin/e_config.c:824
 msgid ""
 "Your settings are NEWER than Enlightenment. This is very<br>strange. This "
 "should not happen unless you downgraded<br>Enlightenment or copied the "
@@ -733,11 +733,11 @@ msgstr ""
 "male, quindi la vostra configurazione è<br>stata ripristinata a scopo "
 "precauzionale ai valori predefiniti. Ci<br>scusiamo per l'inconveniente.<br>"
 
-#: src/bin/e_config.c:1836
+#: src/bin/e_config.c:1845
 msgid "Settings Upgraded"
 msgstr "Impostazioni aggiornate"
 
-#: src/bin/e_config.c:1859
+#: src/bin/e_config.c:1868
 #, c-format
 msgid ""
 "An error occured while saving Enlightenment's<br>settings to disk. The error "
@@ -749,7 +749,7 @@ msgstr ""
 "dove è avvenuto l'errore è:<br>%s<br><br>Questo file è stato cancellato per "
 "evitare<br>corruzione di dati.<br>"
 
-#: src/bin/e_config.c:1870
+#: src/bin/e_config.c:1879
 #, c-format
 msgid ""
 "Enlightenment's settings files are too big<br>for the file system they are "
@@ -765,7 +765,7 @@ msgstr ""
 "avvenuto l'errore è:<br>%s<br><br>Questo file è stato cancellato per "
 "evitare<br>corruzione di dati.<br>"
 
-#: src/bin/e_config.c:1883
+#: src/bin/e_config.c:1892
 #, c-format
 msgid ""
 "An output error occured when writing the settings<br>files for "
@@ -779,7 +779,7 @@ msgstr ""
 "l'errore è:<br>%s<br><br>Questo file è stato cancellato per "
 "evitare<br>corruzione di dati.<br>"
 
-#: src/bin/e_config.c:1894
+#: src/bin/e_config.c:1903
 #, c-format
 msgid ""
 "Enlightenment cannot write its settings file<br>because it ran out of space "
@@ -793,7 +793,7 @@ msgstr ""
 "l'errore è:<br>%s<br><br>Questo file è stato cancellato per "
 "evitare<br>corruzione di dati.<br>"
 
-#: src/bin/e_config.c:1906
+#: src/bin/e_config.c:1915
 #, c-format
 msgid ""
 "Enlightenment unexpectedly had the settings file<br>it was writing closed on "
@@ -805,7 +805,7 @@ msgstr ""
 "avvenuto l'errore è:<br>%s<br><br>Questo file è stato cancellato per "
 "evitare<br>corruzione di dati.<br>"
 
-#: src/bin/e_config.c:1931
+#: src/bin/e_config.c:1940
 msgid "Enlightenment Settings Write Problems"
 msgstr "Problemi scrittura configurazione di Enlightenment"
 
@@ -4200,7 +4200,7 @@ msgid "Animation speed"
 msgstr "Velocità animazione"
 
 #: src/modules/conf_desks/e_int_config_desks.c:307
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:164
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:172
 #: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:150
 #, c-format
 msgid "%1.1f sec"
@@ -5053,11 +5053,11 @@ msgstr "Margine"
 
 #: src/modules/conf_menus/e_int_config_menus.c:310
 #: src/modules/conf_menus/e_int_config_menus.c:315
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:132
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:141
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:150
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:169
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:174
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:140
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:149
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:158
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:177
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:182
 #, c-format
 msgid "%2.0f pixels"
 msgstr "%2.0f pixel"
@@ -5980,46 +5980,58 @@ msgstr "Invia puntatore alla finestra che prende il fuoco"
 msgid "Window Focus"
 msgstr "Fuoco delle finestre"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:54
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:56
 #: src/modules/conf_window_manipulation/e_mod_main.c:21
 msgid "Window Geometry"
 msgstr "Geometria finestra"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:124
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:132
 msgid "Resistance"
 msgstr "Resistenza"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:125
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:133
 msgid "Resist obstacles"
 msgstr "Resisti agli ostacoli"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:128
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:136
 msgid "Other windows"
 msgstr "Altre finestre"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:137
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:145
 msgid "Edge of the screen"
 msgstr "Bordo dello schermo"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:146
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:154
 msgid "Desktop gadgets"
 msgstr "Gadget desktop"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:161
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:169
 msgid "Keyboard move and resize"
 msgstr "Spostamento/ridimensionamento da tastiera"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:162
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:170
 msgid "Automatically accept changes after:"
 msgstr "Accetta modifiche automaticamente dopo:"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:167
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:175
 msgid "Move by"
 msgstr "Sposta di:"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:172
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:180
 msgid "Resize by"
 msgstr "Ridimensiona di:"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:187
+msgid "Automatic move and resize"
+msgstr "Spostamento/ridimensionamento automatico"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:188
+msgid "Limit resize on window configure request to useful geometry"
+msgstr "Limita ridimensionamento allo spazio utile"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:191
+msgid "Move after resize on window configure request"
+msgstr "Muovi dopo il ridimensionamento"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:46
 #: src/modules/conf_window_manipulation/e_mod_main.c:23
