@@ -35,6 +35,14 @@ e_modapi_init(E_Module *m)
 				 "next", NULL, 0);
 	e_action_predef_name_set(_("Window : List"), _("Previous Window"),
 				 "winlist", "prev", NULL, 0);
+	e_action_predef_name_set(_("Window : List"), _("Window on the Left"),
+				 "winlist", "left", NULL, 0);
+	e_action_predef_name_set(_("Window : List"), _("Window Down"),
+				 "winlist", "down", NULL, 0);
+	e_action_predef_name_set(_("Window : List"), _("Window Up"),
+				 "winlist", "up", NULL, 0);
+	e_action_predef_name_set(_("Window : List"), _("Window on the Right"),
+				 "winlist", "right", NULL, 0);
      }
    e_module_delayed_set(m, 1);
    return m;
@@ -48,6 +56,10 @@ e_modapi_shutdown(E_Module *m)
      {
 	e_action_predef_name_del(_("Window : List"), _("Previous Window"));
 	e_action_predef_name_del(_("Window : List"), _("Next Window"));
+	e_action_predef_name_del(_("Window : List"), _("Window on the Left"));
+	e_action_predef_name_del(_("Window : List"), _("Window Down"));
+	e_action_predef_name_del(_("Window : List"), _("Window Up"));
+	e_action_predef_name_del(_("Window : List"), _("Window on the Right"));
 	e_action_del("winlist");
 	act = NULL;
      }
@@ -67,7 +79,7 @@ static void
 _e_mod_action_winlist_cb(E_Object *obj, const char *params)
 {
    E_Zone *zone = NULL;
-   
+
    if (obj)
      {
 	if (obj->type == E_MANAGER_TYPE)
@@ -93,6 +105,22 @@ _e_mod_action_winlist_cb(E_Object *obj, const char *params)
 	       {
 		  if (!e_winlist_show(zone))
 		    e_winlist_prev();
+	       }
+	     else if (!strcmp(params, "left"))
+	       {
+		  e_winlist_left(zone);
+	       }
+	     else if (!strcmp(params, "down"))
+	       {
+		  e_winlist_down(zone);
+	       }
+	     else if (!strcmp(params, "up"))
+	       {
+		  e_winlist_up(zone);
+	       }
+	     else if (!strcmp(params, "right"))
+	       {
+		  e_winlist_right(zone);
 	       }
 	  }
 	else
@@ -107,7 +135,7 @@ static void
 _e_mod_action_winlist_mouse_cb(E_Object *obj, const char *params, Ecore_Event_Mouse_Button *ev)
 {
    E_Zone *zone = NULL;
-   
+
    if (obj)
      {
 	if (obj->type == E_MANAGER_TYPE)
@@ -137,6 +165,22 @@ _e_mod_action_winlist_mouse_cb(E_Object *obj, const char *params, Ecore_Event_Mo
 		    e_winlist_modifiers_set(ev->modifiers);
 		  else
 		    e_winlist_prev();
+	       }
+	     else if (!strcmp(params, "left"))
+	       {
+		  e_winlist_left(zone);
+	       }
+	     else if (!strcmp(params, "down"))
+	       {
+		  e_winlist_down(zone);
+	       }
+	     else if (!strcmp(params, "up"))
+	       {
+		  e_winlist_up(zone);
+	       }
+	     else if (!strcmp(params, "right"))
+	       {
+		  e_winlist_right(zone);
 	       }
 	  }
 	else
@@ -153,7 +197,7 @@ static void
 _e_mod_action_winlist_key_cb(E_Object *obj, const char *params, Ecore_Event_Key *ev)
 {
    E_Zone *zone = NULL;
-   
+
    if (obj)
      {
 	if (obj->type == E_MANAGER_TYPE)
@@ -183,6 +227,22 @@ _e_mod_action_winlist_key_cb(E_Object *obj, const char *params, Ecore_Event_Key 
 		    e_winlist_modifiers_set(ev->modifiers);
 		  else
 		    e_winlist_prev();
+	       }
+	     else if (!strcmp(params, "left"))
+	       {
+		  e_winlist_left(zone);
+	       }
+	     else if (!strcmp(params, "down"))
+	       {
+		  e_winlist_down(zone);
+	       }
+	     else if (!strcmp(params, "up"))
+	       {
+		  e_winlist_up(zone);
+	       }
+	     else if (!strcmp(params, "right"))
+	       {
+		  e_winlist_right(zone);
 	       }
 	  }
 	else
