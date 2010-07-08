@@ -79,12 +79,18 @@ _add_tab(Tab_View *v, Evry_Plugin *p)
    tab->plugin = p;
    tab->tab_view = v;
    o = edje_object_add(v->evas);
-   e_theme_edje_object_set(o, "base/theme/modules/everything",
-			   "e/modules/everything/tab_item");
    if (p)
-     edje_object_part_text_set(o, "e.text.label", EVRY_ITEM(p)->label);
+     {
+	e_theme_edje_object_set(o, "base/theme/modules/everything",
+	      "e/modules/everything/tab_item");
+	edje_object_part_text_set(o, "e.text.label", EVRY_ITEM(p)->label);
+     }
    else
-     edje_object_part_text_set(o, "e.text.label", _("<<"));
+     {
+	e_theme_edje_object_set(o, "base/theme/modules/everything",
+	      "e/modules/everything/tab_item/back");
+	edje_object_part_text_set(o, "e.text.label", _("Back"));
+     }
 
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN,
 				  _tab_cb_down, tab);

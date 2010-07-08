@@ -273,6 +273,52 @@ _item_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
 }
 
 static void
+_item_select(Item *it)
+{
+   it->selected = EINA_TRUE;
+   edje_object_signal_emit(it->frame, "e,state,selected", "e");
+
+   if (it->thumb)
+     {
+	if (strcmp(evas_object_type_get(it->thumb), "e_icon"))
+	  edje_object_signal_emit(it->thumb, "e,state,selected", "e");
+	else
+	  e_icon_selected_set(it->thumb, EINA_TRUE);
+     }
+
+   if (it->image)
+     {
+	if (strcmp(evas_object_type_get(it->image), "e_icon"))
+	  edje_object_signal_emit(it->image, "e,state,selected", "e");
+	else
+	  e_icon_selected_set(it->image, EINA_TRUE);
+     }
+}
+
+static void
+_item_unselect(Item *it)
+{
+   it->selected = EINA_FALSE;
+   edje_object_signal_emit(it->frame, "e,state,unselected", "e");
+
+   if (it->thumb)
+     {
+	if (strcmp(evas_object_type_get(it->thumb), "e_icon"))
+	  edje_object_signal_emit(it->thumb, "e,state,unselected", "e");
+	else
+	  e_icon_selected_set(it->thumb, EINA_FALSE);
+     }
+
+   if (it->image)
+     {
+	if (strcmp(evas_object_type_get(it->image), "e_icon"))
+	  edje_object_signal_emit(it->image, "e,state,unselected", "e");
+	else
+	  e_icon_selected_set(it->image, EINA_FALSE);
+     }
+}
+
+static void
 _item_show(View *v, Item *it, Evas_Object *list)
 {
    if (!it->frame)
@@ -300,8 +346,8 @@ _item_show(View *v, Item *it, Evas_Object *list)
 
 	evas_object_clip_set(it->frame, evas_object_clip_get(list));
 
-	if (it->selected)
-	  edje_object_signal_emit(it->frame, "e,state,selected", "e");
+	if (it->item->selected)
+	  _item_select(it);
 
 	if (it->item->marked)
 	  edje_object_signal_emit(it->frame, "e,state,marked", "e");
@@ -782,19 +828,14 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
    if (sd->cur_item)
      {
 	prev = sd->cur_item->y / (1 + sd->cur_item->h);
-	sd->cur_item->selected = EINA_FALSE;
-	edje_object_signal_emit(sd->cur_item->frame,
-				"e,state,unselected", "e");
+	_item_unselect(sd->cur_item);
 	sd->cur_item = NULL;
      }
 
    if (!it) return;
 
+   _item_select(it);
    sd->cur_item = it;
-   it->selected = EINA_TRUE;
-
-   edje_object_signal_emit(sd->cur_item->frame,
-			   "e,state,selected", "e");
 
    if (evry_conf->scroll_animate)
      {
@@ -1414,7 +1455,7 @@ _view_cb_mouse_wheel(void *data, Evas *e, Evas_Object *obj, void *event_info)
    if (ev->z)
      {
 	if (sd->cur_item)
-	  edje_object_signal_emit(sd->cur_item->frame, "e,state,selected", "e");
+	  _item_select(sd->cur_item);
 	sd->mouse_act = 1;
      }
 }

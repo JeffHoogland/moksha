@@ -33951,6 +33951,127 @@ collections {
       }
    }
 
+   group {
+      name: "e/modules/everything/tab_item/back";
+      min: 50 10;
+      parts {
+         part {
+            name: "clip";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+            rel1.relative: 0.05 0.0;
+            rel2.relative: 0.95 1.0;
+            }
+         }
+         part {
+            name: "label2";
+            type: TEXT;
+            scale: 1;
+            clip_to: "clip";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               align: 0.5 0.5;
+               fixed: 0 1;
+               rel1.to: "e.text.label";
+               rel2.to: "e.text.label";
+               color: 0 0 0 255;
+               text {
+                  font: "Sans:style";
+                  text_source: "e.text.label";
+                  size: 10;
+                  min: 0 1;
+                  align: 0.5 0.5;
+               }
+            }
+            description {
+               state: "selected" 0.0;
+               inherit: "default" 0.0;
+               color: 10 10 10 0;
+               visible: 0;
+            }
+         }
+         part {
+            name: "bg";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               color: 255 255 255 40;
+               image {
+                  normal: "toolbar_sel.png";
+                  border: 2 2 0 0;
+               }
+               fill.smooth: 1;
+            }
+            description {
+               state: "selected" 0.0;
+               inherit: "default" 0.0;
+               color: 245 245 245 250;
+            }
+         }
+         part {
+            name: "e.text.label";
+            type: TEXT;
+            mouse_events: 0;
+            clip_to: "clip";
+            scale: 1;
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               align: 0.5 0.5;
+               fixed: 0 1;
+               rel1.to:   "clip";
+               rel2.to:   "clip";
+               rel1.offset:   5 3;
+               rel2.offset:   -6 -1;
+               visible: 0;
+               color: 245 245 245 255;
+               text {
+                  font: "Sans:style=Bold";
+                  size: 9;
+                  min: 0 1;
+                  align: 0.5 0.5;
+               }
+            }
+            description {
+               state: "selected" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+            }
+         }
+         part {
+            name: "event";
+            type: RECT;
+            description {
+               state: "default" 0.0;
+               color: 0 0 0 0;
+            }
+         }
+      }
+      programs {
+         program {
+            name: "go_active";
+            signal: "e,state,selected";
+            source: "e";
+            action: STATE_SET "selected" 0.0;
+            target: "bg";
+            target: "e.text.label";
+            target: "label2";
+            transition: LINEAR 0.1;
+         }
+         program {
+            name: "go_passive";
+            signal: "e,state,unselected";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "bg";
+            target: "e.text.label";
+            target: "label2";
+         }
+      }
+   }
+
 /////////////////////////////////////////////////////////////////////////////
 /*** EVERYTHING THUMB VIEW ***/
 
