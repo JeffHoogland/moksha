@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-07-07 10:39+0400\n"
-"PO-Revision-Date: 2010-07-07 11:56+0400\n"
+"POT-Creation-Date: 2010-07-08 07:29+0400\n"
+"PO-Revision-Date: 2010-07-08 09:02+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment French Team <pourunmondesansgourou@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -67,7 +67,7 @@ msgstr "Vous êtes sur le point de tuer %s.<br><br>Toutes les informations non e
 
 #: src/bin/e_actions.c:372
 msgid "Are you sure you want to kill this window?"
-msgstr "Êtes-vous sûr de vouloir tuer cette fenêtre ?"
+msgstr "Voulez-vous vraiment tuer cette fenêtre ?"
 
 #: src/bin/e_actions.c:375
 #: src/bin/e_actions.c:1831
@@ -103,7 +103,7 @@ msgstr "Non"
 
 #: src/bin/e_actions.c:1825
 msgid "Are you sure you want to exit?"
-msgstr "Êtes-vous sûr de vouloir quitter ?"
+msgstr "Voulez-vous vraiment quitter ?"
 
 #: src/bin/e_actions.c:1827
 msgid "You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
@@ -111,7 +111,7 @@ msgstr "Vous avez demandé à quitter Enlightenment.<br><br>Voulez-vous vraiment
 
 #: src/bin/e_actions.c:1922
 msgid "Are you sure you want to log out?"
-msgstr "Êtes-vous sûr de vouloir fermer votre session ?"
+msgstr "Voulez-vous vraiment fermer votre session ?"
 
 #: src/bin/e_actions.c:1924
 msgid "You are about to log out.<br><br>Are you sure you want to do this?"
@@ -120,7 +120,7 @@ msgstr "Vous êtes sur le point de fermer votre session.<br><br>Voulez-vous vrai
 #: src/bin/e_actions.c:1985
 #: src/bin/e_actions.c:2111
 msgid "Are you sure you want to turn off?"
-msgstr "Êtes-vous sûr de vouloir éteindre ?"
+msgstr "Voulez-vous vraiment éteindre ?"
 
 #: src/bin/e_actions.c:1987
 msgid "You requested to turn off your Computer.<br><br>Are you sure you want to shut down?"
@@ -128,7 +128,7 @@ msgstr "Vous avez demandé à éteindre votre ordinateur.<br><br>Voulez-vous vra
 
 #: src/bin/e_actions.c:2048
 msgid "Are you sure you want to reboot?"
-msgstr "Êtes-vous sûr de vouloir redémarrer ?"
+msgstr "Voulez-vous vraiment redémarrer ?"
 
 #: src/bin/e_actions.c:2050
 msgid "You requested to reboot your Computer.<br><br>Are you sure you want to restart it?"
@@ -140,7 +140,7 @@ msgstr "Vous avez demandé à mettre votre ordinateur en veille.<br><br>Voulez-v
 
 #: src/bin/e_actions.c:2174
 msgid "Are you sure you want to hibernate?"
-msgstr "Êtes-vous sûr de vouloir mettre votre ordinateur en sommeil (STD) ?"
+msgstr "Voulez-vous vraiment mettre votre ordinateur en sommeil (STD) ?"
 
 #: src/bin/e_actions.c:2176
 msgid "You requested to hibernate your Computer.<br><br>Are you sure you want to suspend to disk?"
@@ -1400,12 +1400,12 @@ msgstr "Confirmer la suppression"
 #: src/bin/e_fm.c:9261
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight> ?"
-msgstr "Êtes-vous sûr de vouloir supprimer<br><hilight>%s</hilight> ?"
+msgstr "Voulez-vous vraiment supprimer<br><hilight>%s</hilight> ?"
 
 #: src/bin/e_fm.c:9267
 #, c-format
 msgid "Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</hilight> ?"
-msgstr "Êtes-vous sûr de vouloir supprimer<br>les %d fichiers sélectionnés dans :<br><hilight>%s</hilight> ?"
+msgstr "Voulez-vous vraiment supprimer<br>les %d fichiers sélectionnés dans :<br><hilight>%s</hilight> ?"
 
 #: src/bin/e_fm_dbus.c:183
 #, c-format
@@ -2924,7 +2924,7 @@ msgstr "Vous avez désactivé l'écran de veille trop vite.<br><br>Voulez-vous a
 #: src/bin/e_shelf.c:1301
 #: src/modules/conf_shelves/e_int_config_shelf.c:281
 msgid "Are you sure you want to delete this shelf?"
-msgstr "Êtes-vous sûr de vouloir supprimer ce rack ?"
+msgstr "Voulez-vous vraiment supprimer ce rack ?"
 
 #: src/bin/e_shelf.c:1302
 msgid "You requested to delete this shelf.<br><br>Are you sure you want to delete it?"
@@ -6878,22 +6878,50 @@ msgstr "Afficher/Masquer les gadgets"
 
 #: src/modules/winlist/e_mod_main.c:34
 #: src/modules/winlist/e_mod_main.c:36
-#: src/modules/winlist/e_mod_main.c:49
-#: src/modules/winlist/e_mod_main.c:50
+#: src/modules/winlist/e_mod_main.c:38
+#: src/modules/winlist/e_mod_main.c:40
+#: src/modules/winlist/e_mod_main.c:42
+#: src/modules/winlist/e_mod_main.c:44
+#: src/modules/winlist/e_mod_main.c:57
+#: src/modules/winlist/e_mod_main.c:58
+#: src/modules/winlist/e_mod_main.c:59
+#: src/modules/winlist/e_mod_main.c:60
+#: src/modules/winlist/e_mod_main.c:61
+#: src/modules/winlist/e_mod_main.c:62
 msgid "Window : List"
 msgstr "Fenêtre : liste"
 
 #: src/modules/winlist/e_mod_main.c:34
-#: src/modules/winlist/e_mod_main.c:50
+#: src/modules/winlist/e_mod_main.c:58
 msgid "Next Window"
 msgstr "Fenêtre suivante"
 
 #: src/modules/winlist/e_mod_main.c:36
-#: src/modules/winlist/e_mod_main.c:49
+#: src/modules/winlist/e_mod_main.c:57
 msgid "Previous Window"
 msgstr "Fenêtre précédente"
 
-#: src/modules/winlist/e_winlist.c:147
+#: src/modules/winlist/e_mod_main.c:38
+#: src/modules/winlist/e_mod_main.c:59
+msgid "Window on the Left"
+msgstr "Fenêtre à gauche"
+
+#: src/modules/winlist/e_mod_main.c:40
+#: src/modules/winlist/e_mod_main.c:60
+msgid "Window Down"
+msgstr "Fenêtre en bas"
+
+#: src/modules/winlist/e_mod_main.c:42
+#: src/modules/winlist/e_mod_main.c:61
+msgid "Window Up"
+msgstr "Fenêtre en haut"
+
+#: src/modules/winlist/e_mod_main.c:44
+#: src/modules/winlist/e_mod_main.c:62
+msgid "Window on the Right"
+msgstr "Fenêtre à droite"
+
+#: src/modules/winlist/e_winlist.c:149
 msgid "Select a window"
 msgstr "Sélectionner une fenêtre"
 
@@ -6941,7 +6969,7 @@ msgstr "Vous avez demandé à supprimer « %s ».<br><br>Voulez-vous vraiment 
 
 #: src/modules/ibar/e_mod_config.c:187
 msgid "Are you sure you want to delete this bar source?"
-msgstr "Êtes-vous sûr de vouloir supprimer cette source ?"
+msgstr "Voulez-vous vraiment supprimer cette source ?"
 
 #: src/modules/ibar/e_mod_main.c:215
 msgid "IBar"

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-07-07 17:44+0200\n"
-"PO-Revision-Date: 2010-07-07 17:49+0200\n"
+"POT-Creation-Date: 2010-07-08 17:36+0200\n"
+"PO-Revision-Date: 2010-07-08 17:39+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -673,7 +673,7 @@ msgstr "Selettore colore"
 #: src/bin/e_utils.c:695 src/modules/conf_dpms/e_int_config_dpms.c:64
 #: src/modules/conf_dpms/e_int_config_dpms.c:85
 #: src/modules/conf_imc/e_int_config_imc_import.c:120
-#: src/modules/conf_mime/e_int_config_mime_edit.c:283
+#: src/modules/conf_mime/e_int_config_mime_edit.c:303
 #: src/modules/conf_profiles/e_int_config_profiles.c:388
 #: src/modules/conf_theme/e_int_config_theme_import.c:120
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:198
@@ -688,7 +688,7 @@ msgstr "OK"
 #: src/bin/e_eap_editor.c:884 src/bin/e_entry_dialog.c:63 src/bin/e_fm.c:8541
 #: src/bin/e_fm_prop.c:511 src/bin/e_utils.c:1172
 #: src/modules/conf_imc/e_int_config_imc_import.c:124
-#: src/modules/conf_mime/e_int_config_mime_edit.c:284
+#: src/modules/conf_mime/e_int_config_mime_edit.c:304
 #: src/modules/conf_profiles/e_int_config_profiles.c:389
 #: src/modules/conf_theme/e_int_config_theme_import.c:124
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:199
@@ -953,7 +953,7 @@ msgstr "Commento"
 
 #: src/bin/e_eap_editor.c:688 src/bin/e_eap_editor.c:697
 #: src/bin/e_fm_prop.c:397 src/modules/conf_fonts/e_int_config_fonts.c:96
-#: src/modules/conf_mime/e_int_config_mime_edit.c:145
+#: src/modules/conf_mime/e_int_config_mime_edit.c:147
 msgid "Icon"
 msgstr "Icona"
 
@@ -1485,7 +1485,7 @@ msgstr "Usa questa icona per tutti i file di questo tipo"
 msgid "Link Information"
 msgstr "Informazioni collegamento"
 
-#: src/bin/e_fm_prop.c:499 src/modules/conf_mime/e_int_config_mime_edit.c:272
+#: src/bin/e_fm_prop.c:499
 msgid "Select an Image"
 msgstr "Seleziona un'immagine"
 
@@ -5112,41 +5112,45 @@ msgstr "Icone dei file"
 msgid "File Types"
 msgstr "Tipi di file"
 
-#: src/modules/conf_mime/e_int_config_mime_edit.c:69
+#: src/modules/conf_mime/e_int_config_mime_edit.c:71
 msgid "File Icon"
 msgstr "Icona dei file"
 
-#: src/modules/conf_mime/e_int_config_mime_edit.c:136
+#: src/modules/conf_mime/e_int_config_mime_edit.c:138
 msgid "Basic Info"
 msgstr "Informazioni di base"
 
-#: src/modules/conf_mime/e_int_config_mime_edit.c:137
+#: src/modules/conf_mime/e_int_config_mime_edit.c:139
 msgid "Mime:"
 msgstr "Mime:"
 
-#: src/modules/conf_mime/e_int_config_mime_edit.c:147
+#: src/modules/conf_mime/e_int_config_mime_edit.c:149
 msgid "Use Generated Thumbnail"
 msgstr "Usa anteprime generate"
 
-#: src/modules/conf_mime/e_int_config_mime_edit.c:150
+#: src/modules/conf_mime/e_int_config_mime_edit.c:152
 msgid "Use Theme Icon"
 msgstr "Usa icona del tema"
 
-#: src/modules/conf_mime/e_int_config_mime_edit.c:153
+#: src/modules/conf_mime/e_int_config_mime_edit.c:155
 msgid "Use Edje File"
 msgstr "Usa file edje"
 
-#: src/modules/conf_mime/e_int_config_mime_edit.c:156
+#: src/modules/conf_mime/e_int_config_mime_edit.c:158
 msgid "Use Image"
 msgstr "Usa immagine"
 
-#: src/modules/conf_mime/e_int_config_mime_edit.c:159
+#: src/modules/conf_mime/e_int_config_mime_edit.c:161
 msgid "Use Default"
 msgstr "Usa valori predefiniti"
 
-#: src/modules/conf_mime/e_int_config_mime_edit.c:270
-msgid "Select an Edj File"
-msgstr "Seleziona file edj"
+#: src/modules/conf_mime/e_int_config_mime_edit.c:290
+msgid "Select an Edje file"
+msgstr "Seleziona un file Edje"
+
+#: src/modules/conf_mime/e_int_config_mime_edit.c:292
+msgid "Select an image"
+msgstr "Seleziona un'immagine"
 
 #: src/modules/conf_mime/e_mod_main.c:20
 #: src/modules/everything-files/e_mod_main.c:1429
@@ -7158,19 +7162,39 @@ msgid "Show/hide gadgets"
 msgstr "Mostra/nascondi i gadget"
 
 #: src/modules/winlist/e_mod_main.c:34 src/modules/winlist/e_mod_main.c:36
-#: src/modules/winlist/e_mod_main.c:49 src/modules/winlist/e_mod_main.c:50
+#: src/modules/winlist/e_mod_main.c:38 src/modules/winlist/e_mod_main.c:40
+#: src/modules/winlist/e_mod_main.c:42 src/modules/winlist/e_mod_main.c:44
+#: src/modules/winlist/e_mod_main.c:57 src/modules/winlist/e_mod_main.c:58
+#: src/modules/winlist/e_mod_main.c:59 src/modules/winlist/e_mod_main.c:60
+#: src/modules/winlist/e_mod_main.c:61 src/modules/winlist/e_mod_main.c:62
 msgid "Window : List"
 msgstr "Finestre : Lista"
 
-#: src/modules/winlist/e_mod_main.c:34 src/modules/winlist/e_mod_main.c:50
+#: src/modules/winlist/e_mod_main.c:34 src/modules/winlist/e_mod_main.c:58
 msgid "Next Window"
 msgstr "Finestra successiva"
 
-#: src/modules/winlist/e_mod_main.c:36 src/modules/winlist/e_mod_main.c:49
+#: src/modules/winlist/e_mod_main.c:36 src/modules/winlist/e_mod_main.c:57
 msgid "Previous Window"
 msgstr "Finestra precedente"
 
-#: src/modules/winlist/e_winlist.c:147
+#: src/modules/winlist/e_mod_main.c:38 src/modules/winlist/e_mod_main.c:59
+msgid "Window on the Left"
+msgstr "Finestra a sinistra"
+
+#: src/modules/winlist/e_mod_main.c:40 src/modules/winlist/e_mod_main.c:60
+msgid "Window Down"
+msgstr "Finestra sotto"
+
+#: src/modules/winlist/e_mod_main.c:42 src/modules/winlist/e_mod_main.c:61
+msgid "Window Up"
+msgstr "Finestra sopra"
+
+#: src/modules/winlist/e_mod_main.c:44 src/modules/winlist/e_mod_main.c:62
+msgid "Window on the Right"
+msgstr "Finestra a destra"
+
+#: src/modules/winlist/e_winlist.c:149
 msgid "Select a window"
 msgstr "Seleziona una finestra"
 
