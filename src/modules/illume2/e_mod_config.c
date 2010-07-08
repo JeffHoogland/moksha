@@ -18,8 +18,6 @@ E_Illume_Config *_e_illume_cfg = NULL;
 int 
 e_mod_illume_config_init(void) 
 {
-   char buff[PATH_MAX];
-
    /* create config structure for zones */
    _il_conf_zone_edd = E_CONFIG_DD_NEW("Illume_Config_Zone", E_Illume_Config_Zone);
 #undef T
@@ -85,8 +83,7 @@ e_mod_illume_config_init(void)
    if (!_e_illume_cfg) _e_mod_illume_config_new();
 
    /* setup category for config panel */
-   snprintf(buff, sizeof(buff), "%s/e-module-illume2.edj", _e_illume_mod_dir);
-   e_configure_registry_category_add("illume", 0, _("Illume"), buff, "icon");
+   e_configure_registry_category_add("illume", 0, _("Illume"), NULL, "preferences-illume");
 
    /* add config items to category */
    e_configure_registry_generic_item_add("illume/policy", 0, _("Policy"), 

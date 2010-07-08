@@ -117,7 +117,7 @@ e_cfg_init(E_Module *m)
    // duplicate system settings
    illume_cfg->performance.fps = e_config->framerate;
    
-   e_configure_registry_category_add("display", 0, "Display", NULL, "enlightenment/display");
+   e_configure_registry_category_add("display", 0, "Display", NULL, "enlightenment/illume");
    e_configure_registry_generic_item_add("display/launcher", 0, "Launcher", NULL, "enlightenment/launcher", e_cfg_launcher);
    e_configure_registry_generic_item_add("display/power", 0, "Power", NULL, "enlightenment/power", e_cfg_power);
    e_configure_registry_generic_item_add("display/keyboard", 0, "Keyboard", NULL, "enlightenment/keyboard", e_cfg_keyboard);
