@@ -35,6 +35,10 @@ e_modapi_init(E_Module *m)
 				 "next", NULL, 0);
 	e_action_predef_name_set(_("Window : List"), _("Previous Window"),
 				 "winlist", "prev", NULL, 0);
+	e_action_predef_name_set(_("Window : List"), _("Next window of same class"), "winlist",
+				 "class-next", NULL, 0);
+	e_action_predef_name_set(_("Window : List"), _("Previous window of same class"),
+				 "winlist", "class-prev", NULL, 0);
 	e_action_predef_name_set(_("Window : List"), _("Window on the Left"),
 				 "winlist", "left", NULL, 0);
 	e_action_predef_name_set(_("Window : List"), _("Window Down"),
@@ -56,6 +60,8 @@ e_modapi_shutdown(E_Module *m)
      {
 	e_action_predef_name_del(_("Window : List"), _("Previous Window"));
 	e_action_predef_name_del(_("Window : List"), _("Next Window"));
+	e_action_predef_name_del(_("Window : List"), _("Previous window of same class"));
+	e_action_predef_name_del(_("Window : List"), _("Next window of same class"));
 	e_action_predef_name_del(_("Window : List"), _("Window on the Left"));
 	e_action_predef_name_del(_("Window : List"), _("Window Down"));
 	e_action_predef_name_del(_("Window : List"), _("Window Up"));
@@ -98,12 +104,22 @@ _e_mod_action_winlist_cb(E_Object *obj, const char *params)
 	  {
 	     if (!strcmp(params, "next"))
 	       {
-		  if (!e_winlist_show(zone))
+		  if (!e_winlist_show(zone, EINA_FALSE))
 		    e_winlist_next();
 	       }
 	     else if (!strcmp(params, "prev"))
 	       {
-		  if (!e_winlist_show(zone))
+		  if (!e_winlist_show(zone, EINA_FALSE))
+		    e_winlist_prev();
+	       }
+	     else if (!strcmp(params, "class-next"))
+	       {
+		  if (!e_winlist_show(zone, EINA_TRUE))
+		    e_winlist_next();
+	       }
+	     else if (!strcmp(params, "class-prev"))
+	       {
+		  if (!e_winlist_show(zone, EINA_TRUE))
 		    e_winlist_prev();
 	       }
 	     else if (!strcmp(params, "left"))
@@ -125,7 +141,7 @@ _e_mod_action_winlist_cb(E_Object *obj, const char *params)
 	  }
 	else
 	  {
-	     if (!e_winlist_show(zone))
+	     if (!e_winlist_show(zone, EINA_FALSE))
 	       e_winlist_next();
 	  }
      }
@@ -154,14 +170,28 @@ _e_mod_action_winlist_mouse_cb(E_Object *obj, const char *params, Ecore_Event_Mo
 	  {
 	     if (!strcmp(params, "next"))
 	       {
-		  if (e_winlist_show(zone))
+		  if (e_winlist_show(zone, EINA_FALSE))
 		    e_winlist_modifiers_set(ev->modifiers);
 		  else
 		    e_winlist_next();
 	       }
 	     else if (!strcmp(params, "prev"))
 	       {
-		  if (e_winlist_show(zone))
+		  if (e_winlist_show(zone, EINA_FALSE))
+		    e_winlist_modifiers_set(ev->modifiers);
+		  else
+		    e_winlist_prev();
+	       }
+	     else if (!strcmp(params, "class-next"))
+	       {
+		  if (e_winlist_show(zone, EINA_TRUE))
+		    e_winlist_modifiers_set(ev->modifiers);
+		  else
+		    e_winlist_next();
+	       }
+	     else if (!strcmp(params, "class-prev"))
+	       {
+		  if (e_winlist_show(zone, EINA_TRUE))
 		    e_winlist_modifiers_set(ev->modifiers);
 		  else
 		    e_winlist_prev();
@@ -185,7 +215,7 @@ _e_mod_action_winlist_mouse_cb(E_Object *obj, const char *params, Ecore_Event_Mo
 	  }
 	else
 	  {
-	     if (e_winlist_show(zone))
+	     if (e_winlist_show(zone, EINA_FALSE))
 	       e_winlist_modifiers_set(ev->modifiers);
 	     else
 	       e_winlist_next();
@@ -216,14 +246,28 @@ _e_mod_action_winlist_key_cb(E_Object *obj, const char *params, Ecore_Event_Key 
 	  {
 	     if (!strcmp(params, "next"))
 	       {
-		  if (e_winlist_show(zone))
+		  if (e_winlist_show(zone, EINA_FALSE))
 		    e_winlist_modifiers_set(ev->modifiers);
 		  else
 		    e_winlist_next();
 	       }
 	     else if (!strcmp(params, "prev"))
 	       {
-		  if (e_winlist_show(zone))
+		  if (e_winlist_show(zone, EINA_FALSE))
+		    e_winlist_modifiers_set(ev->modifiers);
+		  else
+		    e_winlist_prev();
+	       }
+	     else if (!strcmp(params, "class-next"))
+	       {
+		  if (e_winlist_show(zone, EINA_TRUE))
+		    e_winlist_modifiers_set(ev->modifiers);
+		  else
+		    e_winlist_next();
+	       }
+	     else if (!strcmp(params, "class-prev"))
+	       {
+		  if (e_winlist_show(zone, EINA_TRUE))
 		    e_winlist_modifiers_set(ev->modifiers);
 		  else
 		    e_winlist_prev();
@@ -247,7 +291,7 @@ _e_mod_action_winlist_key_cb(E_Object *obj, const char *params, Ecore_Event_Key 
 	  }
 	else
 	  {
-	     if (e_winlist_show(zone))
+	     if (e_winlist_show(zone, EINA_FALSE))
 	       e_winlist_modifiers_set(ev->modifiers);
 	     else
 	       e_winlist_next();

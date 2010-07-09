@@ -83,7 +83,7 @@ e_winlist_shutdown(void)
 }
 
 int
-e_winlist_show(E_Zone *zone)
+e_winlist_show(E_Zone *zone, Eina_Bool same_class)
 {
    int x, y, w, h;
    Evas_Object *o;
@@ -149,6 +149,8 @@ e_winlist_show(E_Zone *zone)
    edje_object_part_text_set(bg_object, "e.text.title", _("Select a window"));
    evas_object_show(o);
 
+   last_border = e_border_focused_get();
+
    desk = e_desk_current_get(winlist->zone);
    e_box_freeze(list_object);
    for (l = e_border_focus_stack_get(); l; l = l->next)
@@ -156,7 +158,10 @@ e_winlist_show(E_Zone *zone)
 	E_Border *bd;
 
 	bd = l->data;
-	_e_winlist_border_add(bd, winlist->zone, desk);
+	if ((!same_class) ||
+	    (!strcmp((const char*) last_border->client.icccm.class,
+		     (const char*) bd->client.icccm.class)))
+	    _e_winlist_border_add(bd, winlist->zone, desk);
      }
    e_box_thaw(list_object);
 
@@ -172,7 +177,6 @@ e_winlist_show(E_Zone *zone)
    if (e_config->winlist_warp_while_selecting)
      ecore_x_pointer_xy_get(winlist->zone->container->win,
                             &last_pointer_x, &last_pointer_y);
-   last_border = e_border_focused_get();
    if (last_border)
      {
         if (!last_border->lock_focus_out)
