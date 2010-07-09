@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-07-08 07:29+0400\n"
-"PO-Revision-Date: 2010-07-08 09:02+0400\n"
+"POT-Creation-Date: 2010-07-09 07:29+0400\n"
+"PO-Revision-Date: 2010-07-09 09:25+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment French Team <pourunmondesansgourou@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -758,7 +758,7 @@ msgstr "Sélecteur de couleurs"
 #: src/modules/conf_dpms/e_int_config_dpms.c:64
 #: src/modules/conf_dpms/e_int_config_dpms.c:85
 #: src/modules/conf_imc/e_int_config_imc_import.c:120
-#: src/modules/conf_mime/e_int_config_mime_edit.c:283
+#: src/modules/conf_mime/e_int_config_mime_edit.c:303
 #: src/modules/conf_profiles/e_int_config_profiles.c:388
 #: src/modules/conf_theme/e_int_config_theme_import.c:120
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:198
@@ -778,7 +778,7 @@ msgstr "O.K."
 #: src/bin/e_fm_prop.c:511
 #: src/bin/e_utils.c:1172
 #: src/modules/conf_imc/e_int_config_imc_import.c:124
-#: src/modules/conf_mime/e_int_config_mime_edit.c:284
+#: src/modules/conf_mime/e_int_config_mime_edit.c:304
 #: src/modules/conf_profiles/e_int_config_profiles.c:389
 #: src/modules/conf_theme/e_int_config_theme_import.c:124
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:199
@@ -796,7 +796,7 @@ msgstr "Les données de configuration ont dû être mises à jour. Votre ancienn
 
 #: src/bin/e_config.c:824
 msgid "Your settings are NEWER than Enlightenment. This is very<br>strange. This should not happen unless you downgraded<br>Enlightenment or copied the settings from a place where<br>a newer version of Enlightenment was running. This is bad and<br>as a precaution your settings have been now restored to<br>defaults. Sorry for the inconvenience.<br>"
-msgstr "Votre configuration est PLUS RÉCENTE que Enlightenment.<br>C'est vraiment étonnant. Cela ne devrait pas se produire à<br>moins que vous n'ayez installé une version antérieure ou copié<br>la configuration depuis une machine sur laquelle une version<br>plus récente était en cours. Ce n'est pas bon et, par<br>mesure de précaution, votre configuration a été<br>remise à zéro. Désolé pour le désagrément.<br>"
+msgstr "Votre configuration est PLUS RÉCENTE que Enlightenment.<br>C'est vraiment étonnant. Cela ne devrait pas se produire<br>à moins que vous n'ayez installé une version antérieure<br>ou copié la configuration depuis une machine sur laquelle<br>une version plus récente était en cours. Ce n'est pas bon<br>et, par mesure de précaution, les valeurs par défaut de<br>votre configuration ont été restaurées.<br>Désolé pour le désagrément.<br>"
 
 #: src/bin/e_config.c:1845
 msgid "Settings Upgraded"
@@ -958,7 +958,7 @@ msgstr "Commentaire"
 #: src/bin/e_eap_editor.c:697
 #: src/bin/e_fm_prop.c:397
 #: src/modules/conf_fonts/e_int_config_fonts.c:96
-#: src/modules/conf_mime/e_int_config_mime_edit.c:145
+#: src/modules/conf_mime/e_int_config_mime_edit.c:147
 msgid "Icon"
 msgstr "Icone"
 
@@ -1522,7 +1522,6 @@ msgid "Link Information"
 msgstr "Information sur le lien"
 
 #: src/bin/e_fm_prop.c:499
-#: src/modules/conf_mime/e_int_config_mime_edit.c:272
 msgid "Select an Image"
 msgstr "Sélectionner une image"
 
@@ -3220,7 +3219,7 @@ msgstr "Configuration de %s actualisée"
 
 #: src/bin/e_utils.c:1510
 msgid "Your module configuration is NEWER than the module version. This is very<br>strange. This should not happen unless you downgraded<br>the module or copied the configuration from a place where<br>a newer version of the module was running. This is bad and<br>as a precaution your configuration has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
-msgstr "Votre configuration du module est PLUS RÉCENTE que la version du<br>module actuelle. C'est vraiment étonnant. Cela ne devrait pas se produire<br>à moins que vous n'ayez installé une version antérieure ou copié<br>la configuration du module depuis une machine sur laquelle une<br>version plus récente était installée. Ce n'est pas bon et, par<br>mesure de précaution, votre configuration a été remise à zéro.<br>Désolé pour le désagrément.<br>"
+msgstr "Votre configuration du module est PLUS RÉCENTE que la version<br>actuelle du module. C'est vraiment étonnant. Cela ne devrait<br>pas se produire à moins que vous n'ayez installé une version<br>antérieure ou copié la configuration du module depuis une machine sur<br>laquelle une version plus récente était en cours. Ce n'est<br>pas bon et, par mesure de précaution, les valeurs par<br>défaut de votre configuration ont été restaurées.<br>Désolé pour le désagrément.<br>"
 
 #: src/bin/e_widget_config_list.c:63
 #: src/modules/conf_applications/e_int_config_apps.c:207
@@ -3428,7 +3427,7 @@ msgstr "La configuration du module Panneau de configuration a dû être mise à 
 
 #: src/modules/conf/e_mod_main.c:285
 msgid "Your Configuration Panel Module configuration is NEWER than the module version. This is very<br>strange. This should not happen unless you downgraded<br>the module or copied the configuration from a place where<br>a newer version of the module was running. This is bad and<br>as a precaution your configuration has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
-msgstr "Votre configuration du module Panneau de configuration est PLUS RÉCENTE que la version du<br>module actuelle. C'est vraiment étonnant. Cela ne devrait pas se produire<br>à moins que vous n'ayez installé une version antérieure ou copié<br>la configuration du module depuis une machine sur laquelle une<br>version plus récente était installée. Ce n'est pas bon et, par<br>mesure de précaution, votre configuration a été remise à zéro.<br>Désolé pour le désagrément.<br>"
+msgstr "Votre configuration du module Panneau de configuration est PLUS RÉCENTE que la version<br>actuelle du module. C'est vraiment étonnant. Cela ne devrait pas se produire, à moins<br>que vous n'ayez installé une version antérieure ou copié la configuration du module<br>depuis une machine sur laquelle une version plus récente était en cours. Ce n'est<br>pas bon et, par mesure de précaution, les valeurs par défaut de votre configuration<br>ont été restaurées.<br>Désolé pour le désagrément.<br>"
 
 #: src/modules/conf/e_mod_main.c:416
 msgid "Presentation"
@@ -4922,41 +4921,45 @@ msgstr "Icones des fichiers"
 msgid "File Types"
 msgstr "Types de fichiers"
 
-#: src/modules/conf_mime/e_int_config_mime_edit.c:69
+#: src/modules/conf_mime/e_int_config_mime_edit.c:71
 msgid "File Icon"
 msgstr "Icone du fichier"
 
-#: src/modules/conf_mime/e_int_config_mime_edit.c:136
+#: src/modules/conf_mime/e_int_config_mime_edit.c:138
 msgid "Basic Info"
 msgstr "Info basique"
 
-#: src/modules/conf_mime/e_int_config_mime_edit.c:137
+#: src/modules/conf_mime/e_int_config_mime_edit.c:139
 msgid "Mime:"
 msgstr "MIME :"
 
-#: src/modules/conf_mime/e_int_config_mime_edit.c:147
+#: src/modules/conf_mime/e_int_config_mime_edit.c:149
 msgid "Use Generated Thumbnail"
 msgstr "Utiliser la vignette générée"
 
-#: src/modules/conf_mime/e_int_config_mime_edit.c:150
+#: src/modules/conf_mime/e_int_config_mime_edit.c:152
 msgid "Use Theme Icon"
 msgstr "Utiliser l'icone du thème"
 
-#: src/modules/conf_mime/e_int_config_mime_edit.c:153
+#: src/modules/conf_mime/e_int_config_mime_edit.c:155
 msgid "Use Edje File"
 msgstr "Utiliser un fichier edj"
 
-#: src/modules/conf_mime/e_int_config_mime_edit.c:156
+#: src/modules/conf_mime/e_int_config_mime_edit.c:158
 msgid "Use Image"
 msgstr "Utiliser une image"
 
-#: src/modules/conf_mime/e_int_config_mime_edit.c:159
+#: src/modules/conf_mime/e_int_config_mime_edit.c:161
 msgid "Use Default"
 msgstr "Utiliser la valeur par défaut"
 
-#: src/modules/conf_mime/e_int_config_mime_edit.c:270
-msgid "Select an Edj File"
+#: src/modules/conf_mime/e_int_config_mime_edit.c:290
+msgid "Select an Edje file"
 msgstr "Sélectionner un fichier edj"
+
+#: src/modules/conf_mime/e_int_config_mime_edit.c:292
+msgid "Select an image"
+msgstr "Sélectionner une image"
 
 #: src/modules/conf_mime/e_mod_main.c:20
 #: src/modules/everything-files/e_mod_main.c:1429
@@ -6613,7 +6616,7 @@ msgstr "La configuration du module Gestionnaire de fichiers a dû être mise à 
 
 #: src/modules/fileman/e_mod_main.c:454
 msgid "Your Fileman Module configuration is NEWER than Fileman Module version. This is very<br>strange. This should not happen unless you downgraded<br>the Fileman Module or copied the configuration from a place where<br>a newer version of the Fileman Module was running. This is bad and<br>as a precaution your configuration has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
-msgstr "Votre configuration du module Gestionnaire de fichiers est PLUS RÉCENTE que la version du<br>module actuelle. C'est vraiment étonnant. Cela ne devrait pas se produire<br>à moins que vous n'ayez installé une version antérieure ou copié<br>la configuration du module depuis une machine sur laquelle une<br>version plus récente était installée. Ce n'est pas bon et, par<br>mesure de précaution, votre configuration a été remise à zéro.<br>Désolé pour le désagrément.<br>"
+msgstr "Votre configuration du module Gestionnaire de fichiers est PLUS RÉCENTE que la version<br>actuelle du module. C'est vraiment étonnant. Cela ne devrait pas se produire, à moins<br>que vous n'ayez installé une version antérieure ou copié la configuration du module<br>depuis une machine sur laquelle une version plus récente était en cours. Ce n'est<br>pas bon et, par mesure de précaution, les valeurs par défaut de votre configuration<br>ont été restaurées. Désolé pour le désagrément.<br>"
 
 #: src/modules/fileman/e_mod_main.c:523
 msgid "Fileman Settings Updated"
