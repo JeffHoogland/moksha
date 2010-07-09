@@ -412,11 +412,11 @@ _grab_cb_mouse_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 
    if (ev->buttons == 3)
      {
-        e_util_dialog_show(_("Attetion"),
+        e_util_dialog_show(_("Attention"),
                            _("You cannot use the right mouse button in the<br>"
                              "shelf for this as it is already taken by internal<br>"
-                             "code for context menus. <br>"
-                             "This button only works in the Popup"));
+                             "code for context menus.<br>"
+                             "This button only works in the popup."));
      }
    _grab_window_hide(cfdata);
    return ECORE_CALLBACK_PASS_ON;
