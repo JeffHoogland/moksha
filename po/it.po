@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-07-08 17:36+0200\n"
-"PO-Revision-Date: 2010-07-08 17:39+0200\n"
+"POT-Creation-Date: 2010-07-10 11:33+0200\n"
+"PO-Revision-Date: 2010-07-10 11:38+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -7164,33 +7164,43 @@ msgstr "Mostra/nascondi i gadget"
 #: src/modules/winlist/e_mod_main.c:34 src/modules/winlist/e_mod_main.c:36
 #: src/modules/winlist/e_mod_main.c:38 src/modules/winlist/e_mod_main.c:40
 #: src/modules/winlist/e_mod_main.c:42 src/modules/winlist/e_mod_main.c:44
-#: src/modules/winlist/e_mod_main.c:57 src/modules/winlist/e_mod_main.c:58
-#: src/modules/winlist/e_mod_main.c:59 src/modules/winlist/e_mod_main.c:60
+#: src/modules/winlist/e_mod_main.c:46 src/modules/winlist/e_mod_main.c:48
 #: src/modules/winlist/e_mod_main.c:61 src/modules/winlist/e_mod_main.c:62
+#: src/modules/winlist/e_mod_main.c:63 src/modules/winlist/e_mod_main.c:64
+#: src/modules/winlist/e_mod_main.c:65 src/modules/winlist/e_mod_main.c:66
+#: src/modules/winlist/e_mod_main.c:67 src/modules/winlist/e_mod_main.c:68
 msgid "Window : List"
 msgstr "Finestre : Lista"
 
-#: src/modules/winlist/e_mod_main.c:34 src/modules/winlist/e_mod_main.c:58
+#: src/modules/winlist/e_mod_main.c:34 src/modules/winlist/e_mod_main.c:62
 msgid "Next Window"
 msgstr "Finestra successiva"
 
-#: src/modules/winlist/e_mod_main.c:36 src/modules/winlist/e_mod_main.c:57
+#: src/modules/winlist/e_mod_main.c:36 src/modules/winlist/e_mod_main.c:61
 msgid "Previous Window"
 msgstr "Finestra precedente"
 
-#: src/modules/winlist/e_mod_main.c:38 src/modules/winlist/e_mod_main.c:59
+#: src/modules/winlist/e_mod_main.c:38 src/modules/winlist/e_mod_main.c:64
+msgid "Next window of same class"
+msgstr "Finestra successiva di classe uguale"
+
+#: src/modules/winlist/e_mod_main.c:40 src/modules/winlist/e_mod_main.c:63
+msgid "Previous window of same class"
+msgstr "Finestra precedente di classe uguale"
+
+#: src/modules/winlist/e_mod_main.c:42 src/modules/winlist/e_mod_main.c:65
 msgid "Window on the Left"
 msgstr "Finestra a sinistra"
 
-#: src/modules/winlist/e_mod_main.c:40 src/modules/winlist/e_mod_main.c:60
+#: src/modules/winlist/e_mod_main.c:44 src/modules/winlist/e_mod_main.c:66
 msgid "Window Down"
 msgstr "Finestra sotto"
 
-#: src/modules/winlist/e_mod_main.c:42 src/modules/winlist/e_mod_main.c:61
+#: src/modules/winlist/e_mod_main.c:46 src/modules/winlist/e_mod_main.c:67
 msgid "Window Up"
 msgstr "Finestra sopra"
 
-#: src/modules/winlist/e_mod_main.c:44 src/modules/winlist/e_mod_main.c:62
+#: src/modules/winlist/e_mod_main.c:48 src/modules/winlist/e_mod_main.c:68
 msgid "Window on the Right"
 msgstr "Finestra a destra"
 
@@ -7416,14 +7426,14 @@ msgstr ""
 "abortire"
 
 #: src/modules/pager/e_mod_config.c:415
-msgid "Attetion"
+msgid "Attention"
 msgstr "Attenzione"
 
 #: src/modules/pager/e_mod_config.c:416
 msgid ""
 "You cannot use the right mouse button in the<br>shelf for this as it is "
-"already taken by internal<br>code for context menus. <br>This button only "
-"works in the Popup"
+"already taken by internal<br>code for context menus.<br>This button only "
+"works in the popup."
 msgstr ""
 "Non potete usare il tasto destro del mouse<br>nella mensola poichè è già "
 "usato dal codice<br>interno per il menù contestuale.<br>Questo tasto "

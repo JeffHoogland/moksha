@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-07-09 07:29+0400\n"
-"PO-Revision-Date: 2010-07-09 09:25+0400\n"
+"POT-Creation-Date: 2010-07-10 07:02+0400\n"
+"PO-Revision-Date: 2010-07-10 11:30+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment French Team <pourunmondesansgourou@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -6885,42 +6885,56 @@ msgstr "Afficher/Masquer les gadgets"
 #: src/modules/winlist/e_mod_main.c:40
 #: src/modules/winlist/e_mod_main.c:42
 #: src/modules/winlist/e_mod_main.c:44
-#: src/modules/winlist/e_mod_main.c:57
-#: src/modules/winlist/e_mod_main.c:58
-#: src/modules/winlist/e_mod_main.c:59
-#: src/modules/winlist/e_mod_main.c:60
+#: src/modules/winlist/e_mod_main.c:46
+#: src/modules/winlist/e_mod_main.c:48
 #: src/modules/winlist/e_mod_main.c:61
 #: src/modules/winlist/e_mod_main.c:62
+#: src/modules/winlist/e_mod_main.c:63
+#: src/modules/winlist/e_mod_main.c:64
+#: src/modules/winlist/e_mod_main.c:65
+#: src/modules/winlist/e_mod_main.c:66
+#: src/modules/winlist/e_mod_main.c:67
+#: src/modules/winlist/e_mod_main.c:68
 msgid "Window : List"
 msgstr "Fenêtre : liste"
 
 #: src/modules/winlist/e_mod_main.c:34
-#: src/modules/winlist/e_mod_main.c:58
+#: src/modules/winlist/e_mod_main.c:62
 msgid "Next Window"
 msgstr "Fenêtre suivante"
 
 #: src/modules/winlist/e_mod_main.c:36
-#: src/modules/winlist/e_mod_main.c:57
+#: src/modules/winlist/e_mod_main.c:61
 msgid "Previous Window"
 msgstr "Fenêtre précédente"
 
 #: src/modules/winlist/e_mod_main.c:38
-#: src/modules/winlist/e_mod_main.c:59
+#: src/modules/winlist/e_mod_main.c:64
+msgid "Next window of same class"
+msgstr "Fenêtre suivante de même classe"
+
+#: src/modules/winlist/e_mod_main.c:40
+#: src/modules/winlist/e_mod_main.c:63
+msgid "Previous window of same class"
+msgstr "Fenêtre précédente de même classe"
+
+#: src/modules/winlist/e_mod_main.c:42
+#: src/modules/winlist/e_mod_main.c:65
 msgid "Window on the Left"
 msgstr "Fenêtre à gauche"
 
-#: src/modules/winlist/e_mod_main.c:40
-#: src/modules/winlist/e_mod_main.c:60
+#: src/modules/winlist/e_mod_main.c:44
+#: src/modules/winlist/e_mod_main.c:66
 msgid "Window Down"
 msgstr "Fenêtre en bas"
 
-#: src/modules/winlist/e_mod_main.c:42
-#: src/modules/winlist/e_mod_main.c:61
+#: src/modules/winlist/e_mod_main.c:46
+#: src/modules/winlist/e_mod_main.c:67
 msgid "Window Up"
 msgstr "Fenêtre en haut"
 
-#: src/modules/winlist/e_mod_main.c:44
-#: src/modules/winlist/e_mod_main.c:62
+#: src/modules/winlist/e_mod_main.c:48
+#: src/modules/winlist/e_mod_main.c:68
 msgid "Window on the Right"
 msgstr "Fenêtre à droite"
 
@@ -7148,12 +7162,12 @@ msgid "Please press a mouse button<br>Press <hilight>Escape</hilight> to abort.<
 msgstr "Veuillez cliquer sur un bouton de la souris.<br>Pressez  <hilight>Échap</hilight> pour annuler.<br>Ou<br><hilight>Suppr</hilight> pour réinitialiser le bouton."
 
 #: src/modules/pager/e_mod_config.c:415
-msgid "Attetion"
+msgid "Attention"
 msgstr "Attention"
 
 #: src/modules/pager/e_mod_config.c:416
-msgid "You cannot use the right mouse button in the<br>shelf for this as it is already taken by internal<br>code for context menus. <br>This button only works in the Popup"
-msgstr "Vous ne pouvez pas utiliser le bouton droit de la souris dans le rack<br>pour cette action car il est déjà utilisé par le code interne<br>pour les menus contextuels.<br>Ce bouton fonctionne uniquement dans le pop-up."
+msgid "You cannot use the right mouse button in the<br>shelf for this as it is already taken by internal<br>code for context menus.<br>This button only works in the popup."
+msgstr "Vous ne pouvez pas utiliser le bouton droit de la souris<br>dans le rack pour cette action car il est déjà utilisé<br>par le code interne, pour les menus contextuels.<br>Ce bouton fonctionne uniquement dans le pop-up."
 
 #: src/modules/pager/e_mod_main.c:2817
 msgid "Show Pager Popup"
@@ -7893,8 +7907,6 @@ msgstr "Zone de notification"
 #~ "<hilight>OK</hilight> et<br>vos paramètres seront acceptés. "
 #~ "Cliquez<br>sur <hilight>Annuler</hilight> si vous n'êtes pas sûr<br>et "
 #~ "rien ne sera modifié."
-#~ msgid "Window name and class"
-#~ msgstr "Nom et classe de fenêtre"
 #~ msgid "Mount of device failed"
 #~ msgstr "Impossible de monter le périphérique"
 #~ msgid "Shelf Size"
