@@ -322,7 +322,6 @@ e.h \
 e_intl_data.c \
 e_config_data.c \
 e_imc_main.c
-# $(enlightenment_src)
 
 enlightenment_imc_LDADD = @E_IMC_LIBS@
 
