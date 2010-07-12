@@ -328,11 +328,11 @@ _e_popup_idle_enterer(void *data)
 
    if (!(pop = data)) return ECORE_CALLBACK_CANCEL;
    ecore_evas_move(pop->ecore_evas,
-		   pop->zone->x + pop->x, 
+		   pop->zone->x + pop->x,
 		   pop->zone->y + pop->y);
    e_container_shape_show(pop->shape);
    pop->idle_enterer = NULL;
-   return ECORE_CALLBACK_RENEW;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static Eina_Bool
