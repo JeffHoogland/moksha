@@ -2316,6 +2316,7 @@ _pager_popup_cb_timeout(void *data)
    Pager_Popup *pp;
 
    pp = data;
+   pp->timer = NULL;
    _pager_popup_free(pp);
 
    if (input_window)
