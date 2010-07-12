@@ -6466,8 +6466,9 @@ _e_border_eval(E_Border *bd)
         /*
 	 * Limit maximum size of windows to useful geometry
 	 */
+       // TODO: temoporary limited maximize algorithm
         // ->
-        if (bd->w > zw)
+        /*if (bd->w > zw)
 	  rw = zw;
         else
           rw = bd->w;
@@ -6482,7 +6483,7 @@ _e_border_eval(E_Border *bd)
 	      bd->w = rw;
 	      bd->h = rh;
 	      e_border_resize (bd, bd->w, bd->h);
-	  }
+	  }*/
         // <-
 
 	if (bd->re_manage)
