@@ -35343,8 +35343,8 @@ collections {
 
 	group {
 		name: "e/modules/conf/main";
-		images.image: "icon_configuration.png" COMP;
 		images {
+                        image: "icon_configuration.png" COMP;
 			image: "bt_base1.png" COMP;
 			image: "bt_base2.png" COMP;
 			image: "bt_hilight.png" COMP;
@@ -35403,7 +35403,7 @@ collections {
 					state: "default" 0.0;
 					aspect: 1.0 1.0;
 					aspect_preference: BOTH;
-					visible: 0;
+					visible: 1;
 					image.normal: "icon_configuration.png";
 					rel1 {
 						to: "button_image";
