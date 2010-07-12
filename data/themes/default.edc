@@ -35339,6 +35339,137 @@ collections {
    }
 
 /////////////////////////////////////////////////////////////////////////////
+/*** MOD: CONF ***/
+
+	group {
+		name: "e/modules/conf/main";
+		images.image: "icon_configuration.png" COMP;
+		images {
+			image: "bt_base1.png" COMP;
+			image: "bt_base2.png" COMP;
+			image: "bt_hilight.png" COMP;
+			image: "bt_shine.png" COMP;
+			image: "bt_glow.png" COMP;
+		}
+		min: 16 16;
+		max: 128 128;
+		parts {
+			part {
+				name: "button_image";
+				mouse_events: 1;
+				scale: 1;
+				description {
+					state: "default" 0.0;
+					fixed: 1 1;
+					align: 0.5 0.5;
+               min: 32 16;
+					image {
+						normal: "bt_base2.png";
+						border: 7 7 7 7;
+					}
+				}
+				description {
+					state: "clicked" 0.0;
+					inherit: "default" 0.0;
+					image.normal: "bt_base1.png";
+				}
+				program {
+					name: "button_down";
+					signal: "mouse,down,1";
+					source: "button_image";
+					action: STATE_SET "clicked" 0.0;
+					target: "button_image";
+					target: "over3";
+				}
+				program {
+					name: "button_up";
+					signal: "mouse,up,1";
+					source: "button_image";
+					action: STATE_SET "default" 0.0;
+					target: "button_image";
+					target: "over3";
+				}
+				program {
+					name: "button_click";
+					signal: "mouse,clicked,1";
+					source: "button_image";
+					action: SIGNAL_EMIT "e,action,conf" "";
+				}
+			}
+			part {
+				name: "icon";
+				mouse_events: 0;
+				description {
+					state: "default" 0.0;
+					aspect: 1.0 1.0;
+					aspect_preference: BOTH;
+					visible: 0;
+					image.normal: "icon_configuration.png";
+					rel1 {
+						to: "button_image";
+						relative: 0.0  0.0;
+						offset: 3    3;
+					}
+					rel2 {
+						relative: 1.0  1.0;
+						offset: -4   -4;
+						to: "button_image";
+					}
+				}
+			}
+			part {
+				name: "over1";
+				mouse_events: 0;
+				description {
+					state: "default" 0.0;
+					rel1.to: "button_image";
+					rel2.to: "button_image";
+					rel2.relative: 1.0 0.5;
+					image {
+						normal: "bt_hilight.png";
+						border: 7 7 7 0;
+					}
+				}
+			}
+			part {
+				name: "over2";
+				mouse_events: 0;
+				description {
+					state: "default" 0.0;
+					rel1.to: "button_image";
+					rel2.to: "button_image";
+					image {
+						normal: "bt_shine.png";
+						border: 7 7 7 7;
+					}
+				}
+			}
+			part {
+				name: "over3";
+				mouse_events: 0;
+				description {
+					state: "default" 0.0;
+					rel1.to: "button_image";
+					rel2.to: "button_image";
+					visible: 0;
+					color: 255 255 255 0;
+					image {
+						normal: "bt_glow.png";
+						border: 12 12 12 12;
+					}
+					fill.smooth : 0;
+				}
+				description {
+					state: "clicked" 0.0;
+					inherit: "default" 0.0;
+					visible: 1;
+					color: 255 255 255 255;
+				}
+			}
+		}
+	}
+
+/////////////////////////////////////////////////////////////////////////////
 /*** MOD: ILLUME-HOME-TOGGLE ***/
 
 	group {

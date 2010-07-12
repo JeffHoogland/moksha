@@ -4,6 +4,13 @@
 #include "e.h"
 #include "e_mod_main.h"
 
+typedef struct _Instance Instance;
+struct _Instance
+{
+   E_Gadcon_Client *gcc;
+   Evas_Object *o_toggle;
+};
+
 /* actual module specifics */
 
 static void _e_mod_action_conf_cb(E_Object *obj, const char *params);
@@ -19,7 +26,7 @@ static void _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient);
 static char *_gc_label(E_Gadcon_Client_Class *client_class);
 static Evas_Object *_gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas);
 static const char *_gc_id_new(E_Gadcon_Client_Class *client_class);
-static void _cb_button_click(void *data, void *data2);
+static void _cb_action_conf(void *data, Evas_Object *obj, const char *emission, const char *source);
 
 static void _conf_new(void);
 static void _conf_free(void);
@@ -30,6 +37,8 @@ static E_Action *act = NULL;
 static E_Int_Menu_Augmentation *maug = NULL;
 static E_Config_DD *conf_edd = NULL;
 Config *conf = NULL;
+
+static Eina_List *instances = NULL;
 
 /* and actually define the gadcon class that this module provides (just 1) */
 static const E_Gadcon_Client_Class _gadcon_class =
@@ -45,27 +54,35 @@ static const E_Gadcon_Client_Class _gadcon_class =
 static E_Gadcon_Client *
 _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 {
-   Evas_Object *o, *icon;
-   E_Gadcon_Client *gcc;
+   Instance *inst;
 
-   o = e_widget_button_add(gc->evas, NULL, NULL,
-                           _cb_button_click, NULL, NULL);
+   inst = E_NEW(Instance, 1);
+   inst->o_toggle = edje_object_add(gc->evas);
+   e_theme_edje_object_set(inst->o_toggle,
+			   "base/theme/modules/conf",
+			   "e/modules/conf/main");
 
-   icon = e_icon_add(evas_object_evas_get(o));
-   e_util_icon_theme_set(icon, "preferences-system");
-   e_widget_button_icon_set(o, icon);
+   inst->gcc = e_gadcon_client_new(gc, name, id, style, inst->o_toggle);
+   inst->gcc->data = inst;
 
-   gcc = e_gadcon_client_new(gc, name, id, style, o);
-   gcc->data = o;
-   e_gadcon_client_util_menu_attach(gcc);
+   edje_object_signal_callback_add(inst->o_toggle, "e,action,conf", "",
+				   _cb_action_conf, inst);
 
-   return gcc;
+   instances = eina_list_append(instances, inst);
+   e_gadcon_client_util_menu_attach(inst->gcc);
+
+   return inst->gcc;
 }
 
 static void
 _gc_shutdown(E_Gadcon_Client *gcc)
 {
-   evas_object_del(gcc->o_base);
+   Instance *inst;
+
+   if (!(inst = gcc->data)) return;
+   instances = eina_list_remove(instances, inst);
+   if (inst->o_toggle) evas_object_del(inst->o_toggle);
+   E_FREE(inst);
 }
 
 static void
@@ -112,6 +129,17 @@ _cb_button_click(void *data __UNUSED__, void *data2 __UNUSED__)
 {
    E_Action *a;
 
+   a = e_action_find("configuration");
+   if ((a) && (a->func.go)) a->func.go(NULL, NULL);
+}
+
+static void
+_cb_action_conf(void *data, Evas_Object *obj, const char *emission, const char *source)
+{
+   Instance *inst;
+   E_Action *a;
+
+   if (!(inst = data)) return;
    a = e_action_find("configuration");
    if ((a) && (a->func.go)) a->func.go(NULL, NULL);
 }
