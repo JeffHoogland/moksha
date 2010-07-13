@@ -12,7 +12,6 @@ E_Config_Dialog *e_int_config_wallpaper_desk(E_Container *con, const char *param
 
 void e_int_config_wallpaper_update(E_Config_Dialog *dia, char *file);
 void e_int_config_wallpaper_import_done(E_Config_Dialog *dia);
-void e_int_config_wallpaper_gradient_done(E_Config_Dialog *dia);
 void e_int_config_wallpaper_web_done(E_Config_Dialog *dia);
 
 #endif

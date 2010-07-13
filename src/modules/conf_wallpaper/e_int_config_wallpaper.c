@@ -22,7 +22,6 @@ static void _cb_files_files_deleted(void *data, Evas_Object *obj, void *event_in
 static void _cb_theme_wallpaper(void *data, Evas_Object *obj, void *event_info);
 static void _cb_dir(void *data, Evas_Object *obj, void *event_info);
 static void _cb_import(void *data1, void *data2);
-static void _cb_gradient(void *data1, void *data2);
 
 #define E_CONFIG_WALLPAPER_ALL 0
 #define E_CONFIG_WALLPAPER_DESK 1
@@ -52,10 +51,9 @@ struct _E_Config_Dialog_Data
 
    /* dialogs */
    E_Win *win_import;
-   E_Dialog *dia_gradient;
 #ifdef HAVE_EXCHANGE
    E_Dialog *dia_web;
-#endif   
+#endif
 };
 
 E_Config_Dialog *
@@ -142,15 +140,6 @@ e_int_config_wallpaper_import_done(E_Config_Dialog *dia)
 
    cfdata = dia->cfdata;
    cfdata->win_import = NULL;
-}
-
-void
-e_int_config_wallpaper_gradient_done(E_Config_Dialog *dia)
-{
-   E_Config_Dialog_Data *cfdata;
-
-   cfdata = dia->cfdata;
-   cfdata->dia_gradient = NULL;
 }
 
 #ifdef HAVE_EXCHANGE
@@ -338,18 +327,6 @@ _cb_import(void *data1, void *data2)
      cfdata->win_import = e_int_config_wallpaper_fsel(cfdata->cfd);
 }
 
-static void
-_cb_gradient(void *data1, void *data2)
-{
-   E_Config_Dialog_Data *cfdata;
-
-   cfdata = data1;
-   if (cfdata->dia_gradient)
-     e_win_raise(cfdata->dia_gradient->win);
-   else 
-     cfdata->dia_gradient = e_int_config_wallpaper_gradient(cfdata->cfd);
-}
-
 #ifdef HAVE_EXCHANGE
 static void
 _cb_web(void *data1, void *data2)
@@ -442,8 +419,6 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    if (cfdata->win_import) 
      e_int_config_wallpaper_import_del(cfdata->win_import);
-   if (cfdata->dia_gradient) 
-     e_int_config_wallpaper_gradient_del(cfdata->dia_gradient);
 #ifdef HAVE_EXCHANGE
    if (cfdata->dia_web)
      e_int_config_wallpaper_web_del(cfdata->dia_web);
@@ -519,9 +494,6 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    ow = e_widget_button_add(evas, _("Picture..."), "folder-image",
 			    _cb_import, cfdata, NULL);
    e_widget_table_object_append(ot, ow, 0, 1, 1, 1, 1, 0, 0, 0);
-   ow = e_widget_button_add(evas, _("Gradient..."), "preferences-gradient",
-			    _cb_gradient, cfdata, NULL);
-   e_widget_table_object_append(ot, ow, 1, 1, 1, 1, 1, 0, 0, 0);
 
 #ifdef HAVE_EXCHANGE
    if (online)
@@ -650,9 +622,6 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    ow = e_widget_button_add(evas, _("Picture..."), "folder-image",
 			    _cb_import, cfdata, NULL);
    e_widget_table_object_append(ot, ow, 0, 1, 1, 1, 1, 0, 0, 0);
-   ow = e_widget_button_add(evas, _("Gradient..."), "preferences-gradient",
-			    _cb_gradient, cfdata, NULL);
-   e_widget_table_object_append(ot, ow, 1, 1, 1, 1, 1, 0, 0, 0);
 
 #ifdef HAVE_EXCHANGE
    if (online)

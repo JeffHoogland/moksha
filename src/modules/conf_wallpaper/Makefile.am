@@ -22,8 +22,6 @@ pkg_LTLIBRARIES        = module.la
 module_la_SOURCES      = e_mod_main.c \
                          e_mod_main.h \
 			 e_int_config_wallpaper.c \
-			 e_int_config_wallpaper_gradient.c \
-			 e_int_config_wallpaper_gradient.h \
 			 e_int_config_wallpaper.h \
 			 e_int_config_wallpaper_import.c \
 			 e_int_config_wallpaper_import.h \
