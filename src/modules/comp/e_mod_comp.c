@@ -366,6 +366,7 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
              cw->pw = 0;
              cw->ph = 0;
           }
+        ecore_x_e_comp_pixmap_set(cw->win, cw->pixmap);
         cw->native = 0;
         DBG("  [0x%x] up resize %ix%i\n", cw->win, cw->pw, cw->ph);
         e_mod_comp_update_resize(cw->up, cw->pw, cw->ph);
@@ -644,6 +645,7 @@ _e_mod_comp_cb_update(E_Comp *c)
                        cw->pixmap = 0;
                        cw->pw = 0;
                        cw->ph = 0;
+                       ecore_x_e_comp_pixmap_set(cw->win, cw->pixmap);
                     }
                   if (cw->xim)
                     {
@@ -732,6 +734,7 @@ _e_mod_comp_cb_update(E_Comp *c)
                             ecore_x_pixmap_free(cw->pixmap);
                             cw->pixmap = 0;
                          }
+                       ecore_x_e_comp_pixmap_set(cw->win, cw->pixmap);
                        cw->redirected = 1;
                        cw->dmg_updates = 0;
                        DBG("  [0x%x] up resize2 %ix%i\n", cw->win, cw->pw, cw->ph);
@@ -1332,6 +1335,7 @@ _e_mod_comp_win_del(E_Comp_Win *cw)
         cw->pixmap = 0;
         cw->pw = 0;
         cw->ph = 0;
+        ecore_x_e_comp_pixmap_set(cw->win, cw->pixmap);
      }
    if (cw->redirected)
      {
@@ -1454,6 +1458,7 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
         e_mod_comp_update_resize(cw->up, cw->pw, cw->ph);
         e_mod_comp_update_add(cw->up, 0, 0, cw->pw, cw->ph);
      }
+   ecore_x_e_comp_pixmap_set(cw->win, cw->pixmap);
 /* don't need  
    if ((cw->shobj) && (cw->obj))
      {
@@ -1551,6 +1556,7 @@ _e_mod_comp_win_hide(E_Comp_Win *cw)
              e_mod_comp_update_resize(cw->up, cw->pw, cw->ph);
              e_mod_comp_update_add(cw->up, 0, 0, cw->pw, cw->ph);
              cw->dmg_updates = 0;
+             ecore_x_e_comp_pixmap_set(cw->win, cw->pixmap);
           }
         if (_comp_mod->conf->send_flush)
           {
@@ -1576,6 +1582,7 @@ _e_mod_comp_win_hide(E_Comp_Win *cw)
         cw->pixmap = 0;
         cw->pw = 0;
         cw->ph = 0;
+        ecore_x_e_comp_pixmap_set(cw->win, cw->pixmap);
      }
    if (cw->xim)
      {
@@ -1673,6 +1680,7 @@ _e_mod_comp_win_configure(E_Comp_Win *cw, int x, int y, int w, int h, int border
              cw->native = 0;
              cw->pw = 0;
              cw->ph = 0;
+             ecore_x_e_comp_pixmap_set(cw->win, cw->pixmap);
           }
         cw->w = w;
         cw->h = h;
@@ -2277,7 +2285,7 @@ e_mod_comp_init(void)
 {
    Eina_List *l;
    E_Manager *man;
-
+      
    windows = eina_hash_string_superfast_new(NULL);
    borders = eina_hash_string_superfast_new(NULL);
    damages = eina_hash_string_superfast_new(NULL);
