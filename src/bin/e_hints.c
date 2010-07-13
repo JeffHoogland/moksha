@@ -904,16 +904,24 @@ e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
 	 switch (action)
 	   {
 	    case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
-	       e_border_layer_set(bd, 100);
-	       break;
+              e_border_layer_set(bd, 100);
+              e_hints_window_stacking_set(bd, E_STACKING_NONE);
+              break;
 	    case ECORE_X_WINDOW_STATE_ACTION_ADD:
-	       e_border_layer_set(bd, 150);
+              e_hints_window_stacking_set(bd, E_STACKING_ABOVE);
+              e_border_layer_set(bd, 150);
 	       break;
 	    case ECORE_X_WINDOW_STATE_ACTION_TOGGLE:
-	       if (bd->layer == 150)
-		 e_border_layer_set(bd, 100);
-	       else
-		 e_border_layer_set(bd, 150);
+              if (bd->layer == 150)
+                {
+                   e_hints_window_stacking_set(bd, E_STACKING_NONE);
+                   e_border_layer_set(bd, 100);
+                }
+              else
+                {
+                   e_hints_window_stacking_set(bd, E_STACKING_ABOVE);
+                   e_border_layer_set(bd, 150);
+                }
 	       break;
 	   }
 	 break;
@@ -924,17 +932,25 @@ e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
 	 switch (action)
 	   {
 	    case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
-	       e_border_layer_set(bd, 100);
-	       break;
+              e_hints_window_stacking_set(bd, E_STACKING_NONE);
+              e_border_layer_set(bd, 100);
+              break;
 	    case ECORE_X_WINDOW_STATE_ACTION_ADD:
-	       e_border_layer_set(bd, 50);
-	       break;
+              e_hints_window_stacking_set(bd, E_STACKING_BELOW);
+              e_border_layer_set(bd, 50);
+              break;
 	    case ECORE_X_WINDOW_STATE_ACTION_TOGGLE:
-	       if (bd->layer == 50)
-		 e_border_layer_set(bd, 100);
-	       else
-		 e_border_layer_set(bd, 50);
-	       break;
+              if (bd->layer == 50)
+                {
+                   e_hints_window_stacking_set(bd, E_STACKING_NONE);
+                   e_border_layer_set(bd, 100);
+                }
+              else
+                {
+                   e_hints_window_stacking_set(bd, E_STACKING_BELOW);
+                   e_border_layer_set(bd, 50);
+                }
+              break;
 	   }
 	 break;
       case ECORE_X_WINDOW_STATE_DEMANDS_ATTENTION:
