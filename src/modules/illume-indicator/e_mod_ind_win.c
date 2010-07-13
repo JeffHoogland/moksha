@@ -292,8 +292,13 @@ _e_mod_ind_win_cb_mouse_up(void *data, Evas *evas __UNUSED__, Evas_Object *obj _
    Evas_Event_Mouse_Up *ev;
 
    ev = event;
-   if (ev->button != 1) return;
    if (!(iwin = data)) return;
+
+   /* reset mouse pointer */
+   if (iwin->win->border->pointer) 
+     e_pointer_type_pop(iwin->win->border->pointer, iwin->win->border, "move");
+
+   if (ev->button != 1) return;
 
    /* if we are not dragging, send message to toggle quickpanel state */
    if ((!iwin->drag.dnd) && (iwin->mouse_down == 1)) 
@@ -308,9 +313,6 @@ _e_mod_ind_win_cb_mouse_up(void *data, Evas *evas __UNUSED__, Evas_Object *obj _
         E_Border *bd;
 
         bd = iwin->win->border;
-
-        /* reset mouse pointer */
-        if (bd->pointer) e_pointer_type_pop(bd->pointer, bd, "move");
 
         /* tell edj we are done moving */
         edje_object_signal_emit(iwin->o_base, "e,action,move,stop", "e");
