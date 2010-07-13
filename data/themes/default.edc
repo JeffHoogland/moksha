@@ -46,7 +46,7 @@
  *
  * FIXME: this is bad. namespacing! FIXME!
  */
-
+#if 0
 spectra {
    spectrum {
       name: "black_to_trans";
@@ -54,7 +54,7 @@ spectra {
       color: 0 0 0 0 1;
    }
 }
-
+#endif
 /* color classes are used to control the colors of text and also apply
  * tints to images. These can be controlled with the colors dialog. Below
  * are the standard color_class names that the module looks for in a
@@ -29907,6 +29907,7 @@ collections {
       name: "e/icons/enlightenment/gradient_h";
       max: 24 24;
       parts {
+#if 0
          part {
             name: "bg";
             type: GRADIENT;
@@ -29924,6 +29925,7 @@ collections {
                }
             }
          }
+#endif
          part {
             name: "screen";
             mouse_events: 0;
@@ -29943,6 +29945,7 @@ collections {
       name: "e/icons/enlightenment/gradient_v";
       max: 24 24;
       parts {
+#if 0
          part {
             name: "bg";
             type: GRADIENT;
@@ -29954,6 +29957,7 @@ collections {
                gradient.spectrum: "black_to_trans";
             }
          }
+#endif
          part {
             name: "screen";
             mouse_events: 0;
@@ -29973,6 +29977,7 @@ collections {
       name: "e/icons/enlightenment/gradient_du";
       max: 24 24;
       parts {
+#if 0
          part {
             name: "bg";
             type: GRADIENT;
@@ -29990,6 +29995,7 @@ collections {
                }
             }
          }
+#endif
          part {
             name: "screen";
             mouse_events: 0;
@@ -30009,6 +30015,7 @@ collections {
       name: "e/icons/enlightenment/gradient_dd";
       max: 24 24;
       parts {
+#if 0
          part {
             name: "bg";
             type: GRADIENT;
@@ -30026,6 +30033,7 @@ collections {
                }
             }
          }
+#endif
          part {
             name: "screen";
             mouse_events: 0;
@@ -30045,6 +30053,7 @@ collections {
       name: "e/icons/enlightenment/gradient_rad";
       max: 24 24;
       parts {
+#if 0
          part {
             name: "bg";
             type: GRADIENT;
@@ -30062,6 +30071,7 @@ collections {
                }
             }
          }
+#endif
          part {
             name: "screen";
             mouse_events: 0;
