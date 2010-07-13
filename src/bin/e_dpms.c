@@ -6,6 +6,7 @@
 static Ecore_Event_Handler *_e_dpms_handler_config_mode = NULL;
 static Ecore_Event_Handler *_e_dpms_handler_border_fullscreen = NULL;
 static Ecore_Event_Handler *_e_dpms_handler_border_unfullscreen = NULL;
+static Ecore_Event_Handler *_e_dpms_handler_border_remove = NULL;
 static int _e_dpms_fullscreen_count = 0;
 
 static Eina_Bool
@@ -19,6 +20,7 @@ static Eina_Bool
 _e_dpms_handler_border_fullscreen_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    _e_dpms_fullscreen_count++;
+printf("incremented fs_count: %d\n", _e_dpms_fullscreen_count); 
    if (_e_dpms_fullscreen_count == 1) e_dpms_init();
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -27,8 +29,23 @@ static Eina_Bool
 _e_dpms_handler_border_unfullscreen_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    _e_dpms_fullscreen_count--;
+printf("decremented fs_count: %d\n", _e_dpms_fullscreen_count); 
    if (_e_dpms_fullscreen_count == 0) e_dpms_init();
    else if (_e_dpms_fullscreen_count < 0) _e_dpms_fullscreen_count = 0;
+   return ECORE_CALLBACK_PASS_ON;
+}
+
+static Eina_Bool
+_e_dpms_handler_border_remove_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
+{
+   E_Event_Border_Remove *ev = event;
+
+   if (ev->border->fullscreen) {
+      _e_dpms_fullscreen_count--;
+printf("decremented fs_count from remove: %d\n", _e_dpms_fullscreen_count); 
+      if (_e_dpms_fullscreen_count == 0) e_dpms_init();
+      else if (_e_dpms_fullscreen_count < 0) _e_dpms_fullscreen_count = 0;
+                               }
    return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -38,6 +55,7 @@ e_dpms_init(void)
    int standby=0, suspend=0, off=0;
    int enabled = ((e_config->dpms_enable) && (!e_config->mode.presentation) &&
 		  (_e_dpms_fullscreen_count <= 0));
+printf("checking fs_count and if enabled: %d, %d\n", _e_dpms_fullscreen_count, enabled); 
 
    if (!_e_dpms_handler_config_mode)
      _e_dpms_handler_config_mode = ecore_event_handler_add
@@ -50,6 +68,10 @@ e_dpms_init(void)
    if (!_e_dpms_handler_border_unfullscreen)
      _e_dpms_handler_border_unfullscreen = ecore_event_handler_add
        (E_EVENT_BORDER_UNFULLSCREEN, _e_dpms_handler_border_unfullscreen_cb, NULL);
+
+   if (!_e_dpms_handler_border_remove)
+     _e_dpms_handler_border_remove = ecore_event_handler_add
+       (E_EVENT_BORDER_REMOVE, _e_dpms_handler_border_remove_cb, NULL);
 
    ecore_x_dpms_enabled_set(enabled);
    if (!enabled)
