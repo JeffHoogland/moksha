@@ -1060,7 +1060,7 @@ _font_list_load(E_Config_Dialog_Data *cfdata, const char *cur_font)
 	const char *f;
 
 	f = next->data;
-	if ((cur_font) && (!strcasecmp(f, cur_font)))
+	if (!strcasecmp(f, cur_font))
 	  {
 	     e_widget_ilist_selected_set(ob, n);
 	     break;

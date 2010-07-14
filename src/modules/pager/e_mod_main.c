@@ -1911,7 +1911,7 @@ _pager_window_cb_drag_finished(E_Drag *drag, int dropped)
 
 	if (!(pw->border->lock_user_stacking)) e_border_raise(pw->border);
      }
-   if (pw && pw->drag.from_pager) pw->drag.from_pager->dragging = 0;
+   if (pw->drag.from_pager) pw->drag.from_pager->dragging = 0;
    pw->drag.from_pager = NULL;
 
   if (act_popup)

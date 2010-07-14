@@ -243,7 +243,7 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
    if (desktop)
      {
 	Eina_List *l;
-        
+
 	efreet_desktop_ref(desktop);
 	inst->desktop = desktop;
         inst->key = eina_stringshare_add(desktop->orig_path);
@@ -252,7 +252,7 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
 	inst->launch_time = ecore_time_get();
 	inst->expire_timer = ecore_timer_add(e_config->exec.expire_timeout, 
                                              _e_exec_cb_expire_timer, inst);
-        
+
 	l = eina_hash_find(e_exec_instances, desktop->orig_path);
         l = eina_list_append(l, inst);
 	if (l)
@@ -260,16 +260,16 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
 	else
           eina_hash_add(e_exec_instances, desktop->orig_path, l);
 	e_exec_start_pending = eina_list_append(e_exec_start_pending, desktop);
-        
+
 	e_exehist_add(launch->launch_method, desktop->exec);
      }
-   else if (exe)
+   else
      {
 	E_FREE(inst);
 	inst = NULL;
 	ecore_exe_free(exe);
      }
-   
+
    if (!remaining)
      {
 	if (launch->launch_method) eina_stringshare_del(launch->launch_method);

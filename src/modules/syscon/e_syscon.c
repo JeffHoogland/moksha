@@ -431,7 +431,7 @@ _cb_signal_action(void *data, Evas_Object *obj, const char *emission, const char
    if (!sca) return;
    a = e_action_find(sca->action);
    if (!a) return;
-   if (a) a->func.go(NULL, sca->params);
+   a->func.go(NULL, sca->params);
 }
 
 static void

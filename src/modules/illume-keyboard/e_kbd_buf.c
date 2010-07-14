@@ -377,13 +377,13 @@ EAPI void
 e_kbd_buf_layout_key_add(E_Kbd_Buf *kb, const char *key,  const char *key_shift, const char *key_capslock, int x, int y, int w, int h)
 {
    E_Kbd_Buf_Key *ky;
-   
+
    if (!key) return;
    if (!kb->layout) kb->layout = _e_kbd_buf_new();
    if (!kb->layout) return;
    ky = E_NEW(E_Kbd_Buf_Key, 1);
    if (!ky) return;
-   if (key) ky->key = eina_stringshare_add(key);
+   ky->key = eina_stringshare_add(key);
    if (key_shift) ky->key_shift = eina_stringshare_add(key_shift);
    if (key_capslock) ky->key_capslock = eina_stringshare_add(key_capslock);
    ky->x = x;
