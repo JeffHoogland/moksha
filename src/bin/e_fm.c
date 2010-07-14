@@ -3402,16 +3402,15 @@ _e_fm2_buffer_fill(Evas_Object *obj)
    int bufused, buffree;
    const char *realpath;
    const E_Fm2_Icon_Info *ici;
-   Eina_Bool ret;
 
    sel = e_fm2_selected_list_get(obj);
-   if (!sel) return 0;
+   if (!sel) return EINA_FALSE;
 
    realpath = e_fm2_real_path_get(obj);
-   if (!realpath) return 0;
+   if (!realpath) return EINA_FALSE;
 
    bufused = eina_strlcpy(buf, realpath, sizeof(buf));
-   if (bufused >= sizeof(buf) - 2) return 0;
+   if (bufused >= sizeof(buf) - 2) return EINA_FALSE;
 
    if ((bufused > 0) && (buf[bufused - 1] != '/'))
      {
@@ -3422,7 +3421,6 @@ _e_fm2_buffer_fill(Evas_Object *obj)
    pfile = buf + bufused;
    buffree = sizeof(buf) - bufused;
 
-   ret = !!sel;
    EINA_LIST_FREE(sel, ici)
      {
 	if (!ici) continue;
@@ -3430,7 +3428,7 @@ _e_fm2_buffer_fill(Evas_Object *obj)
 	_e_fm_file_buffer = eina_list_append(_e_fm_file_buffer, _e_fm2_uri_escape(buf));
      }
 
-   return ret;
+   return EINA_TRUE;
 }
 
 static void
