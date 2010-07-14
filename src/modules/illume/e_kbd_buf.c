@@ -29,7 +29,7 @@ _e_kbd_buf_layout_unref(E_Kbd_Buf_Layout *kbl)
    while (kbl->keys)
      {
 	E_Kbd_Buf_Key *ky;
-	
+
 	ky = kbl->keys->data;
 	if (ky->key) eina_stringshare_del(ky->key);
 	if (ky->key_shift) eina_stringshare_del(ky->key_shift);
@@ -384,7 +384,7 @@ e_kbd_buf_layout_key_add(E_Kbd_Buf *kb, const char *key,  const char *key_shift,
    if (!kb->layout) return;
    ky = E_NEW(E_Kbd_Buf_Key, 1);
    if (!ky) return;
-   ky->key = eina_stringshare_add(key);
+   if (key) ky->key = eina_stringshare_add(key);
    if (key_shift) ky->key_shift = eina_stringshare_add(key_shift);
    if (key_capslock) ky->key_capslock = eina_stringshare_add(key_capslock);
    ky->x = x;
