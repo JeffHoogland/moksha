@@ -1,5 +1,3 @@
-#include <Eina.h>
-
 #include "e.h"
 #include "e_kbd_buf.h"
 #include "e_kbd_int.h"
