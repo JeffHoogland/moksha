@@ -2,7 +2,6 @@
 #include "e_mod_main.h"
 #include "e_mod_gadman.h"
 #include "e_mod_config.h"
-#include "config.h"
 
 struct _E_Config_Dialog_Data
 {
