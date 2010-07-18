@@ -235,7 +235,7 @@ color_classes {
    }
    color_class {
       name: "entry_text_disabled";
-      color: 164 164 164 255;
+      color: 128 128 128 255;
    }
    color_class {
       name: "slider_text";
