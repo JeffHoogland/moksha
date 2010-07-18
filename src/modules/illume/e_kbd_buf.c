@@ -3,8 +3,6 @@
 #include "e_kbd_dict.h"
 #include "e_cfg.h"
 
-#include <math.h>
-
 static E_Kbd_Buf_Layout *
 _e_kbd_buf_new(void)
 {
