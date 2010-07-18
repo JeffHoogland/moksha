@@ -391,7 +391,7 @@ e_int_config_wallpaper_import_del(E_Win *win)
    if (import->win) e_object_del(E_OBJECT(import->win));
    E_FREE(import->cfdata->file);
    E_FREE(import->cfdata);
-   if (import) free(import);
+   E_FREE(import);
 }
 
 void
@@ -399,12 +399,12 @@ e_int_config_wallpaper_fsel_del(E_Win *win)
 {
    FSel *fsel;
 
-   fsel = win->data;
+   if (!(fsel = win->data)) return;
    _fsel_path_save(fsel);
-   e_object_del(E_OBJECT(fsel->win));
+   if (fsel->win) e_object_del(E_OBJECT(fsel->win));
    if (fsel->parent)
      e_int_config_wallpaper_import_done(fsel->parent);
-   if (fsel) free(fsel);
+   E_FREE(fsel);
 }
 
 static void
@@ -437,7 +437,7 @@ _import_edj_gen(Import *import)
    int fd, num = 1;
    int w = 0, h = 0;
    const char *file, *locale;
-   char buf[4096], cmd[4096], tmpn[4096], ipart[4096], enc[128];
+   char buf[PATH_MAX], cmd[PATH_MAX], tmpn[PATH_MAX], ipart[PATH_MAX], enc[128];
    char *imgdir = NULL, *fstrip;
    int cr = 255, cg = 255, cb = 255, ca = 255;
    FILE *f;
@@ -451,9 +451,7 @@ _import_edj_gen(Import *import)
    if (len >= sizeof(buf)) return;
    off = len - (sizeof(".edj") - 1);
    for (num = 1; ecore_file_exists(buf) && num < 100; num++)
-     {
-	snprintf(buf + off, sizeof(buf) - off, "-%d.edj", num);
-     }
+     snprintf(buf + off, sizeof(buf) - off, "-%d.edj", num);
    free(fstrip);
 
    if (num == 100)
@@ -689,9 +687,8 @@ _import_cb_ok(void *data, void *data2)
    FSel *fsel;
    E_Win *win;
    const char *file;
-   char buf[4096];
-   int is_bg, is_theme;
-   int r;
+   char buf[PATH_MAX];
+   int is_bg, is_theme, r;
 
    r = 0;
    win = data;
@@ -785,8 +782,7 @@ _fsel_cb_ok(void *data, void *data2)
 {
    FSel *fsel;
    E_Win *win;
-   const char *path;
-   const char *p;
+   const char *path, *p;
 
    win = data;
    if (!(fsel = win->data)) return;
@@ -796,10 +792,9 @@ _fsel_cb_ok(void *data, void *data2)
    p = strrchr(path, '.');
    if ((!p) || (!strcasecmp(p, ".edj")))
      {
-	int r;
-	int is_bg, is_theme;
+	int is_bg, is_theme, r;
 	const char *file;
-	char buf[4096];
+	char buf[PATH_MAX];
 
 	r = 0;
 	file = ecore_file_file_get(path);
