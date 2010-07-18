@@ -1,7 +1,6 @@
 #include "e.h"
 #include "e_mod_main.h"
 #include "e_mod_comp_update.h"
-#include "config.h"
 
 //////////////////////////////////////////////////////////////////////////
 
