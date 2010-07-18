@@ -9,11 +9,7 @@
  * @todo: implement messages/popup part of the spec (anyone using this at all?)
  */
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
-#include <e.h>
+#include "e.h"
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 #include "e_mod_main.h"
