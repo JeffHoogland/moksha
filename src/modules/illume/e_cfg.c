@@ -1,4 +1,3 @@
-#include "config.h"
 #include "e.h"
 #include "e_cfg.h"
 #include "e_pwr.h"
