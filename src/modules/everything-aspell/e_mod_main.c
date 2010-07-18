@@ -5,7 +5,6 @@
 #include "e.h"
 #include "e_mod_main.h"
 #include "evry_api.h"
-#include <ctype.h>
 
 #define CMD_ASPELL   1
 #define CMD_HUNSPELL 2
