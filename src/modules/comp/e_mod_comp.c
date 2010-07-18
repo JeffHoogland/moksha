@@ -2,7 +2,6 @@
 #include "e_mod_main.h"
 #include "e_mod_comp.h"
 #include "e_mod_comp_update.h"
-#include "config.h"
 
 #define OVER_FLOW 4
 
