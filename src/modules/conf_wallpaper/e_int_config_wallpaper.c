@@ -418,7 +418,7 @@ static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    if (cfdata->win_import) 
-     e_int_config_wallpaper_import_del(cfdata->win_import);
+     e_int_config_wallpaper_fsel_del(cfdata->win_import);
 #ifdef HAVE_EXCHANGE
    if (cfdata->dia_web)
      e_int_config_wallpaper_web_del(cfdata->dia_web);

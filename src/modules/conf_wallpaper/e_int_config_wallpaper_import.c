@@ -381,14 +381,14 @@ e_int_config_wallpaper_import_del(E_Win *win)
 {
    Import *import;
 
-   import = win->data;
+   if (!(import = win->data)) return;
    if (import->exe_handler) ecore_event_handler_del(import->exe_handler);
    import->exe_handler = NULL;
    if (import->tmpf) unlink(import->tmpf);
    E_FREE(import->tmpf);
    E_FREE(import->fdest);
    import->exe = NULL;
-   e_object_del(E_OBJECT(import->win));
+   if (import->win) e_object_del(E_OBJECT(import->win));
    E_FREE(import->cfdata->file);
    E_FREE(import->cfdata);
    if (import) free(import);
