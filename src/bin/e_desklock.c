@@ -5,7 +5,6 @@
 #ifdef HAVE_PAM
 # include <security/pam_appl.h>
 # include <pwd.h>
-# include <limits.h>
 #endif
 
 #define E_DESKLOCK_STATE_DEFAULT 0
@@ -38,21 +37,23 @@ struct _E_Desklock_Data
    char		   passwd[PASSWD_LEN];
    int		   state;
 };
+
 #ifdef HAVE_PAM
 struct _E_Desklock_Auth
 {
-   struct {
-      struct pam_conv conv;
-      pam_handle_t    *handle;
-   } pam;
+   struct 
+     {
+	struct pam_conv conv;
+	pam_handle_t    *handle;
+     } pam;
 
    char user[PATH_MAX];
    char passwd[PATH_MAX];
 };
 #endif
 
-static	E_Desklock_Data *edd = NULL;
-static	E_Zone *last_active_zone = NULL;
+static E_Desklock_Data *edd = NULL;
+static E_Zone *last_active_zone = NULL;
 #ifdef HAVE_PAM
 static Ecore_Event_Handler *_e_desklock_exit_handler = NULL;
 static pid_t _e_desklock_child_pid = -1;
@@ -66,14 +67,16 @@ static E_Dialog *_e_desklock_ask_presentation_dia = NULL;
 static int _e_desklock_ask_presentation_count = 0;
 static Ecore_Event_Handler *_e_desklock_handler_border_fullscreen = NULL;
 static Ecore_Event_Handler *_e_desklock_handler_border_unfullscreen = NULL;
+static Ecore_Event_Handler *_e_desklock_handler_border_remove = NULL;
+static Ecore_Event_Handler *_e_desklock_handler_border_iconify = NULL;
+static Ecore_Event_Handler *_e_desklock_handler_border_uniconify = NULL;
+static Ecore_Event_Handler *_e_desklock_handler_border_desk_set = NULL;
+static Ecore_Event_Handler *_e_desklock_handler_desk_show = NULL;
 static int _e_desklock_fullscreen_count = 0;
 
 /***********************************************************************/
 
 static Eina_Bool _e_desklock_cb_key_down(void *data, int type, void *event);
-static Eina_Bool _e_desklock_cb_mouse_down(void *data, int type, void *event);
-static Eina_Bool _e_desklock_cb_mouse_up(void *data, int type, void *event);
-static Eina_Bool _e_desklock_cb_mouse_wheel(void *data, int type, void *event);
 static Eina_Bool _e_desklock_cb_mouse_move(void *data, int type, void *event);
 static Eina_Bool _e_desklock_cb_custom_desklock_exit(void *data, int type, void *event);
 static Eina_Bool _e_desklock_cb_idle_poller(void *data);
@@ -82,7 +85,7 @@ static void _e_desklock_null(void);
 static void _e_desklock_passwd_update(void);
 static void _e_desklock_backspace(void);
 static void _e_desklock_delete(void);
-static int  _e_desklock_zone_num_get(void);
+static int _e_desklock_zone_num_get(void);
 static int _e_desklock_check_auth(void);
 static void _e_desklock_state_set(int state);
 
@@ -96,8 +99,9 @@ static char *_desklock_auth_get_current_host(void);
 #endif
 
 static void _e_desklock_ask_presentation_mode(void);
-static Eina_Bool _e_desklock_handler_border_fullscreen_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__);
-static Eina_Bool _e_desklock_handler_border_unfullscreen_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__);
+static Eina_Bool _e_desklock_handler_border_fullscreen_check_cb(void *data __UNUSED__, int type __UNUSED__, void *event);
+static Eina_Bool _e_desklock_handler_border_desk_set_cb(void *data __UNUSED__, int type __UNUSED__, void *event);
+static Eina_Bool _e_desklock_handler_desk_show_cb(void *data __UNUSED__, int type __UNUSED__, void *event);
 
 EAPI int E_EVENT_DESKLOCK = 0;
 
@@ -110,11 +114,31 @@ e_desklock_init(void)
 
    if (!_e_desklock_handler_border_fullscreen)
      _e_desklock_handler_border_fullscreen = ecore_event_handler_add
-       (E_EVENT_BORDER_FULLSCREEN, _e_desklock_handler_border_fullscreen_cb, NULL);
+       (E_EVENT_BORDER_FULLSCREEN, _e_desklock_handler_border_fullscreen_check_cb, NULL);
 
    if (!_e_desklock_handler_border_unfullscreen)
      _e_desklock_handler_border_unfullscreen = ecore_event_handler_add
-       (E_EVENT_BORDER_UNFULLSCREEN, _e_desklock_handler_border_unfullscreen_cb, NULL);
+       (E_EVENT_BORDER_UNFULLSCREEN, _e_desklock_handler_border_fullscreen_check_cb, NULL);
+
+   if (!_e_desklock_handler_border_remove)
+     _e_desklock_handler_border_remove = ecore_event_handler_add
+       (E_EVENT_BORDER_REMOVE, _e_desklock_handler_border_fullscreen_check_cb, NULL);
+
+   if (!_e_desklock_handler_border_iconify)
+     _e_desklock_handler_border_iconify = ecore_event_handler_add
+       (E_EVENT_BORDER_ICONIFY, _e_desklock_handler_border_fullscreen_check_cb, NULL);
+
+   if (!_e_desklock_handler_border_uniconify)
+     _e_desklock_handler_border_uniconify = ecore_event_handler_add
+       (E_EVENT_BORDER_UNICONIFY, _e_desklock_handler_border_fullscreen_check_cb, NULL);
+
+   if (!_e_desklock_handler_border_desk_set)
+     _e_desklock_handler_border_desk_set = ecore_event_handler_add
+       (E_EVENT_BORDER_DESK_SET, _e_desklock_handler_border_desk_set_cb, NULL);
+
+   if (!_e_desklock_handler_desk_show)
+     _e_desklock_handler_desk_show = ecore_event_handler_add
+       (E_EVENT_DESK_SHOW, _e_desklock_handler_desk_show_cb, NULL);
 
    if (e_config->desklock_background)
      e_filereg_register(e_config->desklock_background);
@@ -139,6 +163,36 @@ e_desklock_shutdown(void)
 	_e_desklock_handler_border_unfullscreen = NULL;
      }
 
+   if (_e_desklock_handler_border_remove)
+     {
+	ecore_event_handler_del(_e_desklock_handler_border_remove);
+	_e_desklock_handler_border_remove = NULL;
+     }
+
+   if (_e_desklock_handler_border_iconify)
+     {
+	ecore_event_handler_del(_e_desklock_handler_border_iconify);
+	_e_desklock_handler_border_iconify = NULL;
+     }
+
+   if (_e_desklock_handler_border_uniconify)
+     {
+	ecore_event_handler_del(_e_desklock_handler_border_uniconify);
+	_e_desklock_handler_border_uniconify = NULL;
+     }
+
+   if (_e_desklock_handler_border_desk_set)
+     {
+	ecore_event_handler_del(_e_desklock_handler_border_desk_set);
+	_e_desklock_handler_border_desk_set = NULL;
+     }
+
+   if (_e_desklock_handler_desk_show)
+     {
+	ecore_event_handler_del(_e_desklock_handler_desk_show);
+	_e_desklock_handler_desk_show = NULL;
+     }
+
    e_desklock_hide();
    if (e_config->desklock_background)
      e_filereg_deregister(e_config->desklock_background);
@@ -156,11 +210,9 @@ _user_wallpaper_get(void)
      return e_config->desktop_default_background;
 
    EINA_LIST_FOREACH(e_config->desktop_backgrounds, l, cdbg)
-     if (cdbg->file)
-       return cdbg->file;
+     if (cdbg->file) return cdbg->file;
 
-   return e_theme_edje_file_get("base/theme/desklock",
-				"e/desklock/background");
+   return e_theme_edje_file_get("base/theme/desklock", "e/desklock/background");
 }
 
 EAPI int
@@ -175,24 +227,24 @@ e_desklock_show_autolocked(void)
 EAPI int
 e_desklock_show(void)
 {
-   Eina_List		  *managers, *l, *l2, *l3;
-   E_Manager		  *man;
-   E_Desklock_Popup_Data  *edp;
-   Evas_Coord		  mw, mh;
-   E_Zone		  *current_zone;
-   int			  zone_counter;
-   int			  total_zone_num;
-   E_Event_Desklock      *ev;
+   Eina_List *managers, *l, *l2, *l3;
+   E_Manager *man;
+   E_Desklock_Popup_Data *edp;
+   Evas_Coord mw, mh;
+   E_Zone *current_zone;
+   int zone_counter, total_zone_num;
+   E_Event_Desklock *ev;
 
    if (_e_custom_desklock_exe) return 0;
 
    if (e_config->desklock_use_custom_desklock)
      {
-	_e_custom_desklock_exe_handler = ecore_event_handler_add(ECORE_EXE_EVENT_DEL,
-							      _e_desklock_cb_custom_desklock_exit,
-							      NULL);
+	_e_custom_desklock_exe_handler = 
+	  ecore_event_handler_add(ECORE_EXE_EVENT_DEL,
+				  _e_desklock_cb_custom_desklock_exit, NULL);
         e_util_library_path_strip();
-	_e_custom_desklock_exe = ecore_exe_run(e_config->desklock_custom_desklock_cmd, NULL);
+	_e_custom_desklock_exe = 
+	  ecore_exe_run(e_config->desklock_custom_desklock_cmd, NULL);
         e_util_library_path_restore();
 	return 1;
      }
@@ -225,8 +277,8 @@ e_desklock_show(void)
 
    edd = E_NEW(E_Desklock_Data, 1);
    if (!edd) return 0;
-   edd->elock_wnd = ecore_x_window_input_new(e_manager_current_get()->root,
-					     0, 0, 1, 1);
+   edd->elock_wnd = 
+     ecore_x_window_input_new(e_manager_current_get()->root, 0, 0, 1, 1);
    ecore_x_window_show(edd->elock_wnd);
    managers = e_manager_list();
    if (!e_grabinput_get(edd->elock_wnd, 0, edd->elock_wnd))
@@ -268,8 +320,7 @@ e_desklock_show(void)
 			     "has grabbed either the keyboard or the mouse or both<br>"
 			     "and their grab is unable to be broken."));
 	ecore_x_window_free(edd->elock_wnd);
-	free(edd);
-	edd = NULL;
+	E_FREE(edd);
 	return 0;
      }
    works:
@@ -282,9 +333,11 @@ e_desklock_show(void)
    EINA_LIST_FOREACH(managers, l, man)
      {
 	E_Container *con;
+
 	EINA_LIST_FOREACH(man->containers, l2, con)
 	  {
 	     E_Zone *zone;
+
 	     EINA_LIST_FOREACH(con->zones, l3, zone)
 	       {
 		  edp = E_NEW(E_Desklock_Popup_Data, 1);
@@ -303,9 +356,9 @@ e_desklock_show(void)
 		       if ((!e_config->desklock_background) ||
 			   (!strcmp(e_config->desklock_background, "theme_desklock_background")))
 			 {
-			   e_theme_edje_object_set(edp->bg_object,
-						   "base/theme/desklock",
-						   "e/desklock/background");
+			    e_theme_edje_object_set(edp->bg_object,
+						    "base/theme/desklock",
+						    "e/desklock/background");
 			 }
 		       else if (!strcmp(e_config->desklock_background, "theme_background"))
 			 {
@@ -324,18 +377,18 @@ e_desklock_show(void)
 
 			   if (e_util_edje_collection_exists(f, "e/desklock/background"))
 			     {
-			       edje_object_file_set(edp->bg_object, f,
-						    "e/desklock/background");
+				edje_object_file_set(edp->bg_object, f,
+						     "e/desklock/background");
 			     }
 			   else
 			     {
 			       if (!edje_object_file_set(edp->bg_object,
 							 f, "e/desktop/background"))
 				 {
-				   edje_object_file_set(edp->bg_object,
-							e_theme_edje_file_get("base/theme/desklock",
-									      "e/desklock/background"),
-							"e/desklock/background");
+				    edje_object_file_set(edp->bg_object,
+							 e_theme_edje_file_get("base/theme/desklock",
+									       "e/desklock/background"),
+							 "e/desklock/background");
 				 }
 			     }
 			 }
@@ -374,7 +427,6 @@ e_desklock_show(void)
 			 }
 		       else
 			 evas_object_show(edp->login_box);
-		       /**/
 
 		       e_popup_edje_bg_object_set(edp->popup_wnd, edp->bg_object);
 		       evas_event_thaw(edp->popup_wnd->evas);
@@ -389,24 +441,20 @@ e_desklock_show(void)
      }
 
    /* handlers */
-   edd->handlers = eina_list_append(edd->handlers,
-				    ecore_event_handler_add(ECORE_EVENT_KEY_DOWN,
-							    _e_desklock_cb_key_down, NULL));
-   edd->handlers = eina_list_append(edd->handlers,
-				    ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_DOWN,
-							    _e_desklock_cb_mouse_down, NULL));
-   edd->handlers = eina_list_append(edd->handlers,
-				    ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP,
-							    _e_desklock_cb_mouse_up, NULL));
-   edd->handlers = eina_list_append(edd->handlers,
-				    ecore_event_handler_add(ECORE_EVENT_MOUSE_WHEEL,
-							    _e_desklock_cb_mouse_wheel,
-							    NULL));
-   if ((total_zone_num > 1) && (e_config->desklock_login_box_zone == -2))
-     edd->handlers = eina_list_append(edd->handlers,
-				      ecore_event_handler_add(ECORE_EVENT_MOUSE_MOVE,
-							      _e_desklock_cb_mouse_move,
-							      NULL));
+   edd->handlers = 
+     eina_list_append(edd->handlers,
+		      ecore_event_handler_add(ECORE_EVENT_KEY_DOWN,
+					      _e_desklock_cb_key_down, NULL));
+
+   if ((total_zone_num > 1) && (e_config->desklock_login_box_zone == -2)) 
+     {
+	edd->handlers = 
+	  eina_list_append(edd->handlers,
+			   ecore_event_handler_add(ECORE_EVENT_MOUSE_MOVE,
+						   _e_desklock_cb_mouse_move,
+						   NULL));
+     }
+
    _e_desklock_passwd_update();
 
    ev = E_NEW(E_Event_Desklock, 1);
@@ -419,7 +467,7 @@ EAPI void
 e_desklock_hide(void)
 {
    E_Desklock_Popup_Data *edp;
-   E_Event_Desklock      *ev;
+   E_Event_Desklock *ev;
 
    if ((!edd) && (!_e_custom_desklock_exe)) return;
 
@@ -483,7 +531,9 @@ static Eina_Bool
 _e_desklock_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Event_Key *ev = event;
-   if (ev->window != edd->elock_wnd || edd->state == E_DESKLOCK_STATE_CHECKING) return 1;
+
+   if ((ev->window != edd->elock_wnd) || 
+       (edd->state == E_DESKLOCK_STATE_CHECKING)) return 1;
 
    if (!strcmp(ev->key, "Escape"))
      ;
@@ -495,7 +545,8 @@ _e_desklock_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
      _e_desklock_backspace();
    else if (!strcmp(ev->key, "Delete"))
      _e_desklock_delete();
-   else if (!strcmp(ev->key, "u") && (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL))
+   else if ((!strcmp(ev->key, "u") && 
+	     (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)))
      _e_desklock_null();
    else
      {
@@ -510,24 +561,6 @@ _e_desklock_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	  }
      }
 
-   return ECORE_CALLBACK_PASS_ON;
-}
-
-static Eina_Bool
-_e_desklock_cb_mouse_down(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
-{
-   return ECORE_CALLBACK_PASS_ON;
-}
-
-static Eina_Bool
-_e_desklock_cb_mouse_up(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
-{
-   return ECORE_CALLBACK_PASS_ON;
-}
-
-static Eina_Bool
-_e_desklock_cb_mouse_wheel(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
-{
    return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -570,10 +603,8 @@ _e_desklock_passwd_update(void)
    *pp = 0;
 
    EINA_LIST_FOREACH(edd->elock_wnd_list, l, edp)
-     {
-	edje_object_part_text_set(edp->login_box, "e.text.password",
-				  passwd_hidden);
-     }
+     edje_object_part_text_set(edp->login_box, "e.text.password",
+			       passwd_hidden);
 }
 
 static void
@@ -620,9 +651,7 @@ _e_desklock_zone_num_get(void)
      {
 	E_Container *con;
 	EINA_LIST_FOREACH(man->containers, l2, con)
-	  {
-	     num += eina_list_count(con->zones);
-	  }
+	  num += eina_list_count(con->zones);
      }
 
    return num;
@@ -694,6 +723,7 @@ static Eina_Bool
 _e_desklock_cb_exit(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Exe_Event_Del *ev = event;
+
    if (ev->pid == _e_desklock_child_pid)
      {
 	_e_desklock_child_pid = -1;
@@ -723,7 +753,8 @@ _e_desklock_cb_exit(void *data __UNUSED__, int type __UNUSED__, void *event)
 	     /* security - null out passwd string once we are done with it */
 	     _e_desklock_null();
 	  }
-	if (_e_desklock_exit_handler) ecore_event_handler_del(_e_desklock_exit_handler);
+	if (_e_desklock_exit_handler) 
+	  ecore_event_handler_del(_e_desklock_exit_handler);
 	_e_desklock_exit_handler = NULL;
      }
    return ECORE_CALLBACK_PASS_ON;
@@ -845,16 +876,16 @@ _desklock_pam_init(E_Desklock_Auth *da)
 
    if ((pamerr = pam_set_item(da->pam.handle, PAM_USER, current_user)) != PAM_SUCCESS)
      {
-       free(current_user);
-       return pamerr;
+	free(current_user);
+	return pamerr;
      }
 
    current_host = _desklock_auth_get_current_host();
    if ((pamerr = pam_set_item(da->pam.handle, PAM_RHOST, current_host)) != PAM_SUCCESS)
      {
-       free(current_user);
-       free(current_host);
-       return pamerr;
+	free(current_user);
+	free(current_host);
+	return pamerr;
      }
 
    free(current_user);
@@ -871,8 +902,7 @@ _desklock_auth_pam_conv(int num_msg, const struct pam_message **msg, struct pam_
 
    reply = (struct pam_response *)malloc(sizeof(struct pam_response) *num_msg);
 
-   if (!reply)
-     return PAM_CONV_ERR;
+   if (!reply) return PAM_CONV_ERR;
 
    for (replies = 0; replies < num_msg; replies++)
      {
@@ -911,6 +941,7 @@ static Eina_Bool
 _e_desklock_cb_custom_desklock_exit(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Exe_Event_Del *ev = event;
+
    if (ev->exe != _e_custom_desklock_exe) return ECORE_CALLBACK_PASS_ON;
 
    if (ev->exit_code != 0)
@@ -1032,62 +1063,70 @@ _e_desklock_ask_presentation_mode(void)
    E_Container *con;
    E_Dialog *dia;
 
-   if (_e_desklock_ask_presentation_dia)
-     return;
+   if (_e_desklock_ask_presentation_dia) return;
 
-   man = e_manager_current_get();
-   if (!man) return;
-   con = e_container_current_get(man);
-   if (!con) return;
-   dia = e_dialog_new(con, "E", "_desklock_ask_presentation");
-   if (!dia) return;
+   if (!(man = e_manager_current_get())) return;
+   if (!(con = e_container_current_get(man))) return;
+   if (!(dia = e_dialog_new(con, "E", "_desklock_ask_presentation"))) return;
 
    e_dialog_title_set(dia, _("Activate Presentation Mode?"));
    e_dialog_icon_set(dia, "dialog-ask", 64);
-   e_dialog_text_set
-     (dia,
-      _("You unlocked desktop too fast.<br><br>"
-	"Would you like to enable <b>presentation</b> mode and "
-	"temporarily disable screen saver, lock and power saving?"));
+   e_dialog_text_set(dia,
+		     _("You unlocked desktop too fast.<br><br>"
+		       "Would you like to enable <b>presentation</b> mode and "
+		       "temporarily disable screen saver, lock and power saving?"));
 
-   e_object_del_attach_func_set
-     (E_OBJECT(dia), _e_desklock_ask_presentation_del);
-   e_dialog_button_add
-     (dia, _("Yes"), NULL, _e_desklock_ask_presentation_yes, NULL);
-   e_dialog_button_add
-     (dia, _("No"), NULL, _e_desklock_ask_presentation_no, NULL);
-   e_dialog_button_add
-     (dia, _("No, but increase timeout"), NULL,
-      _e_desklock_ask_presentation_no_increase, NULL);
-   e_dialog_button_add
-     (dia, _("No, and stop asking"), NULL,
-      _e_desklock_ask_presentation_no_forever, NULL);
+   e_object_del_attach_func_set(E_OBJECT(dia), 
+				_e_desklock_ask_presentation_del);
+   e_dialog_button_add(dia, _("Yes"), NULL, 
+		       _e_desklock_ask_presentation_yes, NULL);
+   e_dialog_button_add(dia, _("No"), NULL, 
+		       _e_desklock_ask_presentation_no, NULL);
+   e_dialog_button_add(dia, _("No, but increase timeout"), NULL,
+		       _e_desklock_ask_presentation_no_increase, NULL);
+   e_dialog_button_add(dia, _("No, and stop asking"), NULL,
+		       _e_desklock_ask_presentation_no_forever, NULL);
 
    e_dialog_button_focus_num(dia, 0);
    e_widget_list_homogeneous_set(dia->box_object, 0);
    e_win_centered_set(dia->win, 1);
    e_dialog_show(dia);
 
-   evas_object_event_callback_add
-     (dia->bg_object, EVAS_CALLBACK_KEY_DOWN,
-      _e_desklock_ask_presentation_key_down, dia);
+   evas_object_event_callback_add(dia->bg_object, EVAS_CALLBACK_KEY_DOWN,
+				  _e_desklock_ask_presentation_key_down, dia);
 
    _e_desklock_ask_presentation_dia = dia;
 }
 
 static Eina_Bool
-_e_desklock_handler_border_fullscreen_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
+_e_desklock_handler_border_fullscreen_check_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
-   _e_desklock_fullscreen_count++;
-   if (_e_desklock_fullscreen_count == 1) e_desklock_init();
+   E_Event_Border_Fullscreen *ev = event;
+
+   _e_desklock_fullscreen_count = ev->border->desk->fullscreen_borders; 
+   e_desklock_init();
    return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool
-_e_desklock_handler_border_unfullscreen_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
+_e_desklock_handler_border_desk_set_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
-   _e_desklock_fullscreen_count--;
-   if (_e_desklock_fullscreen_count == 0) e_desklock_init();
-   else if (_e_desklock_fullscreen_count < 0) _e_desklock_fullscreen_count = 0;
+   E_Event_Border_Desk_Set *ev = event;
+
+   if (ev->border->desk->visible)
+     _e_desklock_fullscreen_count = ev->border->desk->fullscreen_borders; 
+   else if (ev->desk->visible)
+     _e_desklock_fullscreen_count = ev->desk->fullscreen_borders; 
+   e_desklock_init();
+   return ECORE_CALLBACK_PASS_ON;
+}
+
+static Eina_Bool
+_e_desklock_handler_desk_show_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
+{
+   E_Event_Desk_Show *ev = event;
+
+   _e_desklock_fullscreen_count = ev->desk->fullscreen_borders; 
+   e_desklock_init();
    return ECORE_CALLBACK_PASS_ON;
 }

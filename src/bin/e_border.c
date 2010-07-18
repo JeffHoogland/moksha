@@ -699,6 +699,7 @@ EAPI void
 e_border_desk_set(E_Border *bd, E_Desk *desk)
 {
    E_Event_Border_Desk_Set *ev;
+   E_Desk *old_desk;
 
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
@@ -711,6 +712,7 @@ e_border_desk_set(E_Border *bd, E_Desk *desk)
 	bd->desk->fullscreen_borders--;
 	desk->fullscreen_borders++;
      }
+   old_desk = bd->desk;
    bd->desk = desk;
    e_border_zone_set(bd, desk->zone);
 
@@ -721,8 +723,8 @@ e_border_desk_set(E_Border *bd, E_Desk *desk)
    ev->border = bd;
    e_object_ref(E_OBJECT(bd));
 //   e_object_breadcrumb_add(E_OBJECT(bd), "border_desk_set_event");
-   ev->desk = desk;
-   e_object_ref(E_OBJECT(desk));
+   ev->desk = old_desk;
+   e_object_ref(E_OBJECT(old_desk));
    ecore_event_add(E_EVENT_BORDER_DESK_SET, ev, _e_border_event_border_desk_set_free, NULL);
 
    if (bd->ignore_first_unmap != 1)
@@ -2458,6 +2460,7 @@ e_border_iconify(E_Border *bd)
      {
 	bd->iconic = 1;
 	e_border_hide(bd, 1);
+        if (bd->fullscreen) bd->desk->fullscreen_borders--;
 	edje_object_signal_emit(bd->bg_object, "e,action,iconify", "e");
      }
    iconic = 1;
@@ -2498,6 +2501,7 @@ e_border_uniconify(E_Border *bd)
    if (bd->iconic)
      {
 	bd->iconic = 0;
+        if (bd->fullscreen) bd->desk->fullscreen_borders++;
 	desk = e_desk_current_get(bd->desk->zone);
 	e_border_desk_set(bd, desk);
 	e_border_raise(bd);
