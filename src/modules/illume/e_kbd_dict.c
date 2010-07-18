@@ -1,10 +1,7 @@
 #include "e.h"
 #include "e_kbd_dict.h"
 
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <fcntl.h>
-#include <unistd.h>
 #include <sys/mman.h>
 
 #define MAXLATIN 0x100
