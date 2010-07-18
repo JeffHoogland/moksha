@@ -1,9 +1,5 @@
 #include <alsa/asoundlib.h>
-#include <stdlib.h>
-#include <math.h>
 #include <poll.h>
-#include <alloca.h>
-#include <Ecore.h>
 #include "e_mod_system.h"
 #include "e.h"
 
