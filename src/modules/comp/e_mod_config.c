@@ -2,7 +2,6 @@
 #include "e_mod_main.h"
 #include "e_mod_config.h"
 #include "e_mod_comp.h"
-#include "config.h"
 
 typedef struct _E_Demo_Style_Item
 {
