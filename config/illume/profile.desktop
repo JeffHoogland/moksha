@@ -1,7 +1,6 @@
 [Desktop Entry]
 Type=Link
 Name=Illume
-Name[fr]=Illume
 Name[el]=Illume
 Name[eo]=Illume
 Name[zh_CN]=Illume
@@ -10,7 +9,7 @@ Comment=Illume profile for embedded systems like phones and web tablets with tin
 Comment[cs]=Illume profil pro<br>přenosná zařízení<br>jako telefony<br>a webové tablety<br>s malými dotykovými displeji.<br>Použijte jen pokud<br>opravdu máte<br>takové zařízení.
 Comment[it]=Profilo Illume per<br>sistemi embedded come<br>cellulari e webpad<br>con piccoli display<br>touchscreen.<br>Usatelo solo se<br>avete realmente un<br>dispositivo simile.
 Comment[hu]=Illume profil <br>telefonokhoz, érintőképernyőkhöz.<br>Csak akkor használd ezt,<br>ha valóban ilyen eszközöd van.
-Comment[fr]=Profil Illume pour les systèmes<br>embarqués comme les téléphones<br>et tablettes internet pourvus<br>d'un petit écran tactile.<br>À n'utiliser que si<br>vous disposez réellement<br>d'un tel matériel.
+Comment[fr]=Profil Illume pour les systèmes<br>embarqués comme les téléphones<br>et tablettes Internet pourvus<br>d'un petit écran tactile.<br>À n'utiliser que si<br>vous disposez réellement<br>d'un tel matériel.
 Comment[el]=Το προφίλ Illume είναι<br>για μικροσυσκευές όπως <br>κινητά τηλέφωνα ή internet<br>tablets με μικρές οθόνες αφής.<br>Επιλέξτε μόνο αν έχετε τέτοια<br>συσκευή.
 Comment[eo]=Profilo Illume por la<br>enkorpigitaj sistemoj<br>kiel la telefonoj kaj<br>ttt-tabletoj kun etaj<br>tuŝekranoj. Nur uzu<br>tiun se vi vere havas<br>tian aparaton.
 Comment[zh_CN]=为带有小型触屏的嵌入式系统如手机和上网本设计的 Illume 设置主题。
