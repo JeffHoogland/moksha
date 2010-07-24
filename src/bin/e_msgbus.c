@@ -52,6 +52,7 @@ e_msgbus_init(void)
 	return 0;
      }
    e_dbus_object_interface_attach(_e_msgbus_data->obj, iface);
+   e_dbus_interface_unref(iface);
  
    /* Hardcore methods */
    e_dbus_interface_method_add(iface, "Restart", "", "", _e_msgbus_core_restart_cb);
@@ -64,6 +65,7 @@ e_msgbus_init(void)
 	return 0;
      }
    e_dbus_object_interface_attach(_e_msgbus_data->obj, iface);
+   e_dbus_interface_unref(iface);
 
    /* Module methods */
    e_dbus_interface_method_add(iface, "Load", "s", "", _e_msgbus_module_load_cb);
@@ -79,6 +81,7 @@ e_msgbus_init(void)
 	return 0;
      }
    e_dbus_object_interface_attach(_e_msgbus_data->obj, iface);
+   e_dbus_interface_unref(iface);
 
    /* Profile methods */
    e_dbus_interface_method_add(iface, "Set", "s", "", _e_msgbus_profile_set_cb);
