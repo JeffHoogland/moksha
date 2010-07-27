@@ -4,8 +4,8 @@ static E_Config_Dialog_View *_config_view_new(void);
 
 static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static int _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static int _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static void _fill_data(E_Config_Dialog_Data *cfdata);
 static void _basic_apply_border(E_Config_Dialog_Data *cfdata);
@@ -63,8 +63,8 @@ _config_view_new(void)
    if (!v) return NULL;
    v->create_cfdata = _create_data;
    v->free_cfdata = _free_data;
-   v->basic.create_widgets = _basic_create_widgets;
-   v->basic.apply_cfdata = _basic_apply_data;
+   v->basic.create_widgets = _basic_create;
+   v->basic.apply_cfdata = _basic_apply;
    v->basic.check_changed = _basic_check_changed;
    v->override_auto_apply = 1;
    return v;
@@ -114,8 +114,7 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 }
 
 static int
-_basic_check_changed(E_Config_Dialog *cfd __UNUSED__,
-		     E_Config_Dialog_Data *cfdata) 
+_basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
 {
    if (cfdata->border)
      return strcmp(cfdata->bordername, cfdata->border->client.border.name);
@@ -124,15 +123,15 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__,
 }
 
 static int 
-_basic_apply_data(E_Config_Dialog *cfd __UNUSED__,
-		  E_Config_Dialog_Data *cfdata) 
+_basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
 {
    if (cfdata->border) 
      _basic_apply_border(cfdata);
    else if (cfdata->container)
      {
 	eina_stringshare_del(e_config->theme_default_border_style);
-	e_config->theme_default_border_style = eina_stringshare_ref(cfdata->bordername);
+	e_config->theme_default_border_style = 
+          eina_stringshare_ref(cfdata->bordername);
 	/* FIXME: Should this trigger an E Restart to reset all borders ? */
      }
    e_config_save_queue();
@@ -156,8 +155,7 @@ _basic_apply_border(E_Config_Dialog_Data *cfdata)
 	if (!rem) 
 	  {
              rem = e_remember_new();
-             if (rem)
-	       e_remember_use(rem);
+             if (rem) e_remember_use(rem);
 	  }
 	if (rem) 
 	  {
@@ -185,7 +183,7 @@ _basic_apply_border(E_Config_Dialog_Data *cfdata)
 }
 
 static Evas_Object *
-_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
+_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
    Evas_Object *o, *ol, *ob, *oj, *orect, *of;
    Evas_Coord w, h;
@@ -213,12 +211,13 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    
    for (n = 1, l = borders; l; l = l->next, n++) 
      {
-	char buf[4096];
-	
+	char buf[PATH_MAX];
+
 	ob = e_livethumb_add(evas);
 	e_livethumb_vsize_set(ob, 96, 96);
 	oj = edje_object_add(e_livethumb_evas_get(ob));
-	snprintf(buf, sizeof(buf), "e/widgets/border/%s/border", (char *)l->data);
+	snprintf(buf, sizeof(buf), "e/widgets/border/%s/border", 
+                 (char *)l->data);
 	e_theme_edje_object_set(oj, "base/theme/borders", buf);
 	e_livethumb_thumb_set(ob, oj);
 	orect = evas_object_rectangle_add(e_livethumb_evas_get(ob));
@@ -231,7 +230,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
      }
    
    e_widget_size_min_get(ol, &w, &h);
-   e_widget_size_min_set(ol, w > 200 ? w : 200, 200);
+   e_widget_size_min_set(ol, w > 200 ? w : 200, 100);
 
    e_widget_ilist_go(ol);
    e_widget_ilist_selected_set(ol, sel);
@@ -244,7 +243,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    if (cfdata->border) 
      {
-	ob = e_widget_check_add(evas, _("Remember this Border for this window next time it appears"), &(cfdata->remember_border));
+	ob = e_widget_check_add(evas, _("Remember this Border for this window next time it appears"), 
+                                &(cfdata->remember_border));
 	e_widget_list_object_append(o, ob, 1, 0, 0.0);
      }
    
