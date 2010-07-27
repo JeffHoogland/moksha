@@ -29503,6 +29503,7 @@ collections {
    ICON("preferences-system-performance","icon_performance.png",64)                   // "enlightenment/performance"
    ICON("preferences-system-power-management","icon_power_management.png",64)         // "enlightenment/power_management"
    ICON("preferences-system-screen-resolution","icon_screen_resolution.png",64)// *** // "enlightenment/screen_resolution"
+   ICON("preferences-illume","icon_illume.png",64)
    ICON("system-file-manager","icon_efm_folder.png",64)                               // "enlightenment/fileman"
    ICON("application-exit","icon_logout.png",64)                                      // "enlightenment/exit"
    ICON("enlightenment","logo_white_128.png",64)                               // *** // "enlightenment/e"
