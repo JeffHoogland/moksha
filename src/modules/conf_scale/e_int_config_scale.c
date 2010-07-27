@@ -3,15 +3,15 @@
 /* local function prototypes */
 static void *_create_data(E_Config_Dialog *cfd);
 static void _fill_data(E_Config_Dialog_Data *cfdata);
-static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static int _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static int _basic_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static void _basic_use_dpi_changed(void *data, Evas_Object *obj);
-static Evas_Object *_adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static int _adv_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static int _adv_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static void _adv_policy_changed(void *data, Evas_Object *obj);
+static void _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
+static Evas_Object *_basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata);
+static int _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
+static int _basic_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
+static void _basic_use_dpi_changed(void *data, Evas_Object *obj __UNUSED__);
+static Evas_Object *_adv_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata);
+static int _adv_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
+static int _adv_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
+static void _adv_policy_changed(void *data, Evas_Object *obj __UNUSED__);
 
 struct _E_Config_Dialog_Data 
 {
@@ -83,13 +83,13 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 }
 
 static void 
-_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
 {
    E_FREE(cfdata);
 }
 
 static Evas_Object *
-_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
+_basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
    Evas_Object *o, *of, *ow;
    char buff[256];
@@ -118,7 +118,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 }
 
 static int 
-_basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
 {
    cfdata->use_custom = 0;
    if (cfdata->use_dpi) cfdata->use_mode = 1;
@@ -139,14 +139,14 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 }
 
 static int 
-_basic_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_basic_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
 {
    return ((cfdata->use_dpi != e_config->scale.use_dpi) || 
            (cfdata->base_dpi != e_config->scale.base_dpi));
 }
 
 static void 
-_basic_use_dpi_changed(void *data, Evas_Object *obj) 
+_basic_use_dpi_changed(void *data, Evas_Object *obj __UNUSED__) 
 {
    E_Config_Dialog_Data *cfdata;
 
@@ -156,66 +156,70 @@ _basic_use_dpi_changed(void *data, Evas_Object *obj)
 }
 
 static Evas_Object *
-_adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
+_adv_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
-   Evas_Object *o, *of, *ow;
+   Evas_Object *o, *otb, *ow;
    E_Radio_Group *rg;
    char buff[256];
 
+   otb = e_widget_toolbook_add(evas, 24, 24);
+
+   /* Policy */
    o = e_widget_list_add(evas, 0, 0);
-
-   of = e_widget_framelist_add(evas, _("Policy"), 0);
    rg = e_widget_radio_group_new(&(cfdata->use_mode));
-
    ow = e_widget_radio_add(evas, _("Don't Scale"), 0, rg);
    e_widget_on_change_hook_set(ow, _adv_policy_changed, cfdata);
-   e_widget_framelist_object_append(of, ow);
-
+   e_widget_list_object_append(o, ow, 1, 1, 0.5);
    ow = e_widget_radio_add(evas, _("Scale relative to screen DPI"), 1, rg);
    e_widget_on_change_hook_set(ow, _adv_policy_changed, cfdata);
-   e_widget_framelist_object_append(of, ow);
+   e_widget_list_object_append(o, ow, 1, 1, 0.5);
+
    snprintf(buff, sizeof(buff), 
             _("Base DPI (Currently %i DPI)"), ecore_x_dpi_get());
    ow = e_widget_label_add(evas, buff);
    cfdata->gui.adv.dpi_lbl = ow;
-   e_widget_framelist_object_append(of, ow);
+   e_widget_list_object_append(o, ow, 1, 1, 0.5);
    ow = e_widget_slider_add(evas, 1, 0, _("%1.0f DPI"), 30, 1200, 1, 0, 
                             NULL, &(cfdata->base_dpi), 150);
    cfdata->gui.adv.dpi_slider = ow;
-   e_widget_framelist_object_append(of, ow);
-
+   e_widget_list_object_append(o, ow, 1, 1, 0.5);
    ow = e_widget_radio_add(evas, _("Custom scaling factor"), 2, rg);
    e_widget_on_change_hook_set(ow, _adv_policy_changed, cfdata);
-   e_widget_framelist_object_append(of, ow);
+   e_widget_list_object_append(o, ow, 1, 1, 0.5);
    ow = e_widget_slider_add(evas, 1, 0, _("%1.2f times"), 0.25, 8.0, 0.05, 
                             0, &(cfdata->factor), NULL, 150);
    cfdata->gui.adv.custom_slider = ow;
-   e_widget_framelist_object_append(of, ow);
-   e_widget_list_object_append(o, of, 1, 0, 0.5);
+   e_widget_list_object_append(o, ow, 1, 1, 0.5);
+   e_widget_toolbook_page_append(otb, NULL, _("Policy"), o, 
+                                 1, 0, 1, 0, 0.5, 0.0);
 
-   of = e_widget_framelist_add(evas, _("Constraints"), 0);
+
+   /* Constraints */
+   o = e_widget_list_add(evas, 0, 0);
    ow = e_widget_label_add(evas, _("Minimum"));
    cfdata->gui.adv.min_lbl = ow;
-   e_widget_framelist_object_append(of, ow);
+   e_widget_list_object_append(o, ow, 1, 1, 0.5);
    ow = e_widget_slider_add(evas, 1, 0, _("%1.2f times"), 0.25, 8.0, 0.05, 
                             0, &(cfdata->min), NULL, 150);
    cfdata->gui.adv.min_slider = ow;
-   e_widget_framelist_object_append(of, ow);
+   e_widget_list_object_append(o, ow, 1, 1, 0.5);
    ow = e_widget_label_add(evas, _("Maximum"));
    cfdata->gui.adv.max_lbl = ow;
-   e_widget_framelist_object_append(of, ow);
+   e_widget_list_object_append(o, ow, 1, 1, 0.5);
    ow = e_widget_slider_add(evas, 1, 0, _("%1.2f times"), 0.25, 8.0, 0.05, 
                             0, &(cfdata->max), NULL, 150);
    cfdata->gui.adv.max_slider = ow;
-   e_widget_framelist_object_append(of, ow);
-   e_widget_list_object_append(o, of, 1, 0, 0.5);
+   e_widget_list_object_append(o, ow, 1, 1, 0.5);
+   e_widget_toolbook_page_append(otb, NULL, _("Constraints"), o, 
+                                 1, 0, 1, 0, 0.5, 0.0);
 
+   e_widget_toolbook_page_show(otb, 0);
    _adv_policy_changed(cfdata, NULL);
-   return o;
+   return otb;
 }
 
 static int 
-_adv_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_adv_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
 {
    cfdata->use_custom = 0;
    cfdata->use_dpi = 0;
@@ -239,7 +243,7 @@ _adv_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 }
 
 static int 
-_adv_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_adv_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
 {
    int use_dpi, use_custom;
 
@@ -258,7 +262,7 @@ _adv_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 }
 
 static void 
-_adv_policy_changed(void *data, Evas_Object *obj) 
+_adv_policy_changed(void *data, Evas_Object *obj __UNUSED__) 
 {
    E_Config_Dialog_Data *cfdata;
 
