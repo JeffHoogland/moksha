@@ -84,7 +84,7 @@ e_int_border_menu_create(E_Border *bd)
 				   "e/widgets/border/default/application_add"),
 				   "e/widgets/border/default/application_add");
 	  }
-	else if (bd->client.icccm.class) 
+	else if (!bd->client.icccm.class) 
 	  {
              /* icons with no class useless to borders */
 	     mi = e_menu_item_new(m);
@@ -171,8 +171,7 @@ e_int_border_menu_create(E_Border *bd)
      {
 	if ((!bd->lock_user_maximize) && (!bd->shaded) && (!bd->fullscreen) && 
             ((bd->client.netwm.type == ECORE_X_WINDOW_TYPE_NORMAL) ||
-             (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_UNKNOWN))
-            )
+                (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_UNKNOWN)))
 	  {
 	     separator = 0;
 	     mi = e_menu_item_new(m);
@@ -189,8 +188,7 @@ e_int_border_menu_create(E_Border *bd)
      {
 	if ((!bd->lock_user_iconify) && (!bd->fullscreen) && 
             ((bd->client.netwm.type == ECORE_X_WINDOW_TYPE_NORMAL) ||
-             (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_UNKNOWN))
-            )
+                (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_UNKNOWN)))
 	  {
 	     separator = 0;
 	     mi = e_menu_item_new(m);
