@@ -27,6 +27,7 @@ e_pwr_init(void)
    _system_req_state("on");
    e_pwr_cfg_update();
    init_going = 1;
+   e_pwr_init_done();
    return 1;
 }
 
