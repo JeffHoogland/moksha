@@ -84,7 +84,7 @@ e_int_border_menu_create(E_Border *bd)
 				   "e/widgets/border/default/application_add"),
 				   "e/widgets/border/default/application_add");
 	  }
-	else if (!bd->client.icccm.class) 
+	else if (bd->client.icccm.class) 
 	  {
              /* icons with no class useless to borders */
 	     mi = e_menu_item_new(m);
