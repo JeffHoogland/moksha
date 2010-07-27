@@ -298,6 +298,7 @@ icon_windows.png \
 icon_winlist.png \
 icon_win_move.png \
 icon_win_resize.png \
+icon_illume.png \
 ilist_1.png \
 ilist_2.png \
 ilist_header_1.png \
