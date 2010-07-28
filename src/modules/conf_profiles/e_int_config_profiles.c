@@ -1,8 +1,8 @@
 #include "e.h"
 
 static void *_create_data(E_Config_Dialog *cfd);
-static void  _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static int   _apply_cfdata(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int _apply_cfdata(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static void _ilist_fill(E_Config_Dialog_Data *cfdata);
 static void _ilist_cb_selected(void *data);
@@ -16,7 +16,6 @@ E_Dialog *_dia_new_profile(E_Config_Dialog_Data *cfdata);
 static void _new_profile_cb_close(void *data, E_Dialog *dia);
 static void _new_profile_cb_ok(void *data, E_Dialog *dia);
 static void _new_profile_cb_dia_del(void *obj);
-
 
 struct _E_Config_Dialog_Data
 {
@@ -52,9 +51,8 @@ e_int_config_profiles(E_Container *con, const char *params __UNUSED__)
    v->basic.apply_cfdata = _apply_cfdata;
    v->basic.create_widgets = _create_widgets;
 
-   cfd = e_config_dialog_new(con,
-			     _("Profile Selector"),
-			     "E", "settings/profiles",
+   cfd = e_config_dialog_new(con, _("Profile Selector"),
+                             "E", "settings/profiles",
 			     "preferences-profiles", 0, v, NULL);
    e_config_dialog_changed_auto_set(cfd, 0);
    return cfd;
@@ -107,7 +105,7 @@ _create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 
    of = e_widget_framelist_add(evas, _("Available Profiles"), 0);
    cfdata->o_list = e_widget_ilist_add(evas, 24, 24, &(cfdata->sel_profile));
-   e_widget_size_min_set(cfdata->o_list, 140 * e_scale, 100 * e_scale);
+   e_widget_size_min_set(cfdata->o_list, 140 * e_scale, 80 * e_scale);
    e_widget_framelist_object_append(of, cfdata->o_list);
 
    cfdata->o_textlabel = e_widget_label_add(evas, "");
@@ -127,16 +125,18 @@ _create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 					 1, 1, /* fill */
 					 1, 0, /* expand */
 					 0.5, 0.5, /* align */
-					 140 * e_scale, 80 * e_scale, /* min */
+					 140 * e_scale, 60 * e_scale, /* min */
 					 99999, 99999 /* max */
 					 );
 
    ot = e_widget_table_add(evas, 0);
    ob = e_widget_button_add(evas, _("Add"), "list-add", _cb_add, cfdata, NULL);
    e_widget_table_object_append(ot, ob, 0, 0, 1, 1, 1, 1, 0, 0);
-   cfdata->o_delete = e_widget_button_add(evas, _("Delete"), "list-remove", _cb_delete, cfdata, NULL);
+   cfdata->o_delete = e_widget_button_add(evas, _("Delete"), "list-remove", 
+                                          _cb_delete, cfdata, NULL);
    e_widget_table_object_append(ot, cfdata->o_delete, 1, 0, 1, 1, 1, 1, 0, 0);
-   cfdata->o_reset = e_widget_button_add(evas, _("Reset"), "system-restart", _cb_reset, cfdata, NULL);
+   cfdata->o_reset = e_widget_button_add(evas, _("Reset"), "system-restart", 
+                                         _cb_reset, cfdata, NULL);
    e_widget_table_object_align_append(ot, cfdata->o_reset, 2, 0, 1, 1, 0, 1, 1, 1, 1.0, 0.5);
 
    e_widget_list_object_append(o, of, 1, 1, 0.5);
