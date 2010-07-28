@@ -65,8 +65,6 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->icon_themes = eina_list_sort(cfdata->icon_themes, 
                                         eina_list_count(cfdata->icon_themes),
                                         _sort_icon_themes);
-
-   return;
 }
 
 static void *
