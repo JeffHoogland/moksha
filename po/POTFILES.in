@@ -142,6 +142,7 @@ src/modules/conf_colors/e_int_config_color_classes.c
 src/modules/conf_colors/e_mod_main.c
 src/modules/conf_desk/e_int_config_desk.c
 src/modules/conf_desk/e_mod_main.c
+src/modules/conf_desklock/e_int_config_desklock_fsel.c
 src/modules/conf_desklock/e_int_config_desklock.c
 src/modules/conf_desklock/e_mod_main.c
 src/modules/conf_desks/e_int_config_desks.c
