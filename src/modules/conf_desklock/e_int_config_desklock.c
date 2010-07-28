@@ -95,7 +95,11 @@ e_int_config_desklock_fsel_done(E_Config_Dialog *cfd, const char *bg_file)
    if (!(cfdata = cfd->cfdata)) return;
    cfdata->bg_fsel = NULL;
    if (bg_file) 
-     eina_stringshare_replace(&cfdata->bg, bg_file);
+     {
+        eina_stringshare_replace(&cfdata->bg, bg_file);
+        e_widget_preview_edje_set(cfdata->gui.o_bg, cfdata->bg, 
+                                  "e/desktop/background");
+     }
 }
 
 static void
@@ -458,6 +462,8 @@ _cb_method_change(void *data, Evas_Object * obj, void *event_info)
                                     "e/desktop/background");
 	break;
       default:
+        e_widget_preview_edje_set(cfdata->gui.o_bg, cfdata->bg, 
+                                  "e/desktop/background");
         break;
      }
 }
