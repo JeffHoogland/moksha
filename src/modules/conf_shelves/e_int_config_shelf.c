@@ -64,36 +64,36 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
-   Evas_Object *o, *of, *ot, *ob;
+   Evas_Object *ol, *ow, *ot, *of;
 
-   o = e_widget_list_add(evas, 0, 1);
+   ol = e_widget_list_add(evas, 0, 0);
 
    of = e_widget_framelist_add(evas, _("Configured Shelves"), 0);
    cfdata->o_list = e_widget_ilist_add(evas, 24, 24, &(cfdata->cur_shelf));
-   e_widget_ilist_selector_set(cfdata->o_list, 1);
-   e_widget_size_min_set(cfdata->o_list, 155, 250);
-   e_widget_framelist_object_append(of, cfdata->o_list);   
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_size_min_set(cfdata->o_list, (140 * e_scale), (80 * e_scale));
+   e_widget_framelist_object_append(of, cfdata->o_list);
+   e_widget_list_object_append(ol, of, 1, 1, 0.5);
 
    ot = e_widget_table_add(evas, 0);
-   ob = e_widget_button_add(evas, _("Add"), "list-add", _cb_add, cfdata, NULL);
-   e_widget_table_object_append(ot, ob, 0, 0, 1, 1, 1, 1, 0, 0);
+   ow = e_widget_button_add(evas, _("Add"), "list-add", _cb_add, cfdata, NULL);
+   e_widget_table_object_append(ot, ow, 0, 0, 1, 1, 1, 1, 0, 0);
    cfdata->o_delete = e_widget_button_add(evas, _("Delete"), "list-remove", 
 					  _cb_delete, cfdata, NULL);
-   e_widget_table_object_append(ot, cfdata->o_delete, 0, 1, 1, 1, 1, 1, 0, 0);
+   e_widget_table_object_append(ot, cfdata->o_delete, 1, 0, 1, 1, 1, 1, 0, 0);
    cfdata->o_config = e_widget_button_add(evas, _("Setup"), "configure", 
 					  _cb_config, cfdata, NULL);
-   e_widget_table_object_append(ot, cfdata->o_config, 0, 2, 1, 1, 1, 1, 0, 0);
+   e_widget_table_object_align_append(ot, cfdata->o_config, 
+                                      2, 0, 1, 1, 0, 1, 1, 1, 1.0, 0.5);
+   e_widget_list_object_append(ol, ot, 1, 0, 0.0);
 
    e_widget_disabled_set(cfdata->o_delete, 1);
    e_widget_disabled_set(cfdata->o_config, 1);
 
-   e_widget_list_object_append(o, ot, 1, 0, 0.0);
-
    _ilist_fill(cfdata);
 
    e_dialog_resizable_set(cfd->dia, 1);
-   return o;
+
+   return ol;
 }
 
 /* private functions */
