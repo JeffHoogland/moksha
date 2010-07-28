@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-07-15 11:34+0400\n"
-"PO-Revision-Date: 2010-07-15 12:46+0400\n"
+"POT-Creation-Date: 2010-07-28 08:17+0400\n"
+"PO-Revision-Date: 2010-07-28 09:06+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment French Team <pourunmondesansgourou@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,7 @@ msgstr "À propos de Enlightenment"
 #: src/bin/e_actions.c:2612
 #: src/bin/e_config_dialog.c:272
 #: src/bin/e_fm.c:946
-#: src/bin/e_int_border_menu.c:247
+#: src/bin/e_int_border_menu.c:245
 #: src/bin/e_int_border_prop.c:81
 #: src/bin/e_theme_about.c:20
 #: src/modules/conf/e_conf.c:180
@@ -77,11 +77,11 @@ msgstr "Voulez-vous vraiment tuer cette fenêtre ?"
 #: src/bin/e_actions.c:2117
 #: src/bin/e_actions.c:2180
 #: src/bin/e_confirm_dialog.c:47
-#: src/bin/e_desklock.c:1056
+#: src/bin/e_desklock.c:1081
 #: src/bin/e_fm.c:9019
 #: src/bin/e_fm.c:9251
 #: src/bin/e_module.c:516
-#: src/bin/e_screensaver.c:109
+#: src/bin/e_screensaver.c:108
 msgid "Yes"
 msgstr "Oui"
 
@@ -93,11 +93,11 @@ msgstr "Oui"
 #: src/bin/e_actions.c:2119
 #: src/bin/e_actions.c:2182
 #: src/bin/e_confirm_dialog.c:48
-#: src/bin/e_desklock.c:1058
+#: src/bin/e_desklock.c:1083
 #: src/bin/e_fm.c:9017
 #: src/bin/e_fm.c:9252
 #: src/bin/e_module.c:517
-#: src/bin/e_screensaver.c:111
+#: src/bin/e_screensaver.c:110
 msgid "No"
 msgstr "Non"
 
@@ -187,19 +187,19 @@ msgid "Window Menu"
 msgstr "Menu de la fenêtre"
 
 #: src/bin/e_actions.c:2602
-#: src/bin/e_int_border_menu.c:218
+#: src/bin/e_int_border_menu.c:216
 #: src/modules/conf_winlist/e_int_config_winlist.c:274
 #: src/modules/conf_winlist/e_int_config_winlist.c:444
 msgid "Raise"
 msgstr "Placer dessus"
 
 #: src/bin/e_actions.c:2607
-#: src/bin/e_int_border_menu.c:210
+#: src/bin/e_int_border_menu.c:208
 msgid "Lower"
 msgstr "Placer dessous"
 
 #: src/bin/e_actions.c:2617
-#: src/bin/e_int_border_menu.c:236
+#: src/bin/e_int_border_menu.c:234
 msgid "Kill"
 msgstr "Tuer"
 
@@ -236,8 +236,8 @@ msgid "Fullscreen Mode Toggle"
 msgstr "Activer/Désactiver le mode plein écran"
 
 #: src/bin/e_actions.c:2643
-#: src/bin/e_int_border_menu.c:179
-#: src/bin/e_int_border_menu.c:401
+#: src/bin/e_int_border_menu.c:178
+#: src/bin/e_int_border_menu.c:399
 msgid "Maximize"
 msgstr "Maximiser"
 
@@ -661,7 +661,7 @@ msgstr "Activer/Désactiver le mode hors ligne"
 #: src/bin/e_actions.c:2951
 #: src/bin/e_configure.c:151
 #: src/bin/e_int_config_modules.c:65
-#: src/modules/conf_desklock/e_int_config_desklock.c:314
+#: src/modules/conf_desklock/e_int_config_desklock_fsel.c:87
 #: src/modules/conf_imc/e_int_config_imc.c:811
 #: src/modules/conf_menus/e_int_config_menus.c:294
 #: src/modules/conf_startup/e_int_config_startup.c:259
@@ -669,7 +669,7 @@ msgstr "Activer/Désactiver le mode hors ligne"
 #: src/modules/conf_theme/e_int_config_theme.c:793
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:456
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:586
-#: src/modules/gadman/e_mod_config.c:185
+#: src/modules/gadman/e_mod_config.c:184
 #: src/modules/syscon/e_mod_main.c:34
 #: src/modules/syscon/e_mod_main.c:38
 #: src/modules/syscon/e_mod_main.c:55
@@ -866,7 +866,7 @@ msgstr "Modules"
 #: src/modules/everything/e_mod_main.c:93
 #: src/modules/everything-apps/e_mod_main.c:1219
 #: src/modules/everything-files/e_mod_main.c:1660
-#: src/modules/gadman/e_mod_main.c:25
+#: src/modules/gadman/e_mod_main.c:24
 #: src/modules/mixer/e_mod_main.c:1047
 #: src/modules/connman/e_mod_main.c:1734
 msgid "Extensions"
@@ -877,51 +877,51 @@ msgstr "Extensions"
 msgid "Container %d"
 msgstr "Conteneur %d"
 
-#: src/bin/e_desklock.c:201
+#: src/bin/e_desklock.c:253
 msgid "Error - no PAM support"
 msgstr "Erreur : pas de support PAM"
 
-#: src/bin/e_desklock.c:202
+#: src/bin/e_desklock.c:254
 msgid "No PAM support was built into Enlightenment, so<br>desk locking is disabled."
 msgstr "Enlightenment n'a pas été compilé avec le support PAM,<br>le verrouillage d'écran a été désactivé."
 
-#: src/bin/e_desklock.c:266
+#: src/bin/e_desklock.c:318
 msgid "Lock Failed"
 msgstr "Échec du verrouillage"
 
-#: src/bin/e_desklock.c:267
+#: src/bin/e_desklock.c:319
 msgid "Locking the desktop failed because some application<br>has grabbed either the keyboard or the mouse or both<br>and their grab is unable to be broken."
 msgstr "Le verrouillage de l'écran a échoué car une application<br>s'est accaparée le clavier ou la souris, voire les deux,<br>et il n'est pas possible d'outrepasser cette action."
 
-#: src/bin/e_desklock.c:351
+#: src/bin/e_desklock.c:404
 msgid "Please enter your unlock password"
 msgstr "Veuillez entrer le mot de passe de déverrouillage"
 
-#: src/bin/e_desklock.c:713
+#: src/bin/e_desklock.c:743
 msgid "Authentication System Error"
 msgstr "Erreur du système d'authentification"
 
-#: src/bin/e_desklock.c:714
+#: src/bin/e_desklock.c:744
 #, c-format
 msgid "Authentication via PAM had errors setting up the<br>authentication session. The error code was <hilight>%i</hilight>.<br>This is bad and should not be happening. Please report this bug."
 msgstr "L'authentification via PAM a rencontré une erreur lors de<br>la session d'authentification. Le code de l'erreur est <hilight>%i</hilight>.<br>Cette erreur ne devrait pas se produire.<br>Merci de faire un rapport de bogue."
 
-#: src/bin/e_desklock.c:1045
-#: src/bin/e_screensaver.c:98
+#: src/bin/e_desklock.c:1072
+#: src/bin/e_screensaver.c:99
 msgid "Activate Presentation Mode?"
 msgstr "Activer le mode présentation ?"
 
-#: src/bin/e_desklock.c:1049
+#: src/bin/e_desklock.c:1075
 msgid "You unlocked desktop too fast.<br><br>Would you like to enable <b>presentation</b> mode and temporarily disable screen saver, lock and power saving?"
 msgstr "Vous avez déverrouillé l'écran trop vite.<br><br>Voulez-vous activer le mode  <b>présentation</b> et désactiver temporairement l'écran de veille, le verrouillage et la gestion de l'énergie ?"
 
-#: src/bin/e_desklock.c:1060
-#: src/bin/e_screensaver.c:113
+#: src/bin/e_desklock.c:1085
+#: src/bin/e_screensaver.c:112
 msgid "No, but increase timeout"
 msgstr "Non, mais augmenter le délai"
 
-#: src/bin/e_desklock.c:1063
-#: src/bin/e_screensaver.c:116
+#: src/bin/e_desklock.c:1087
+#: src/bin/e_screensaver.c:114
 msgid "No, and stop asking"
 msgstr "Non, et ne plus demander"
 
@@ -988,7 +988,7 @@ msgstr "Fichier desktop"
 #: src/modules/conf_performance/e_int_config_performance.c:115
 #: src/modules/everything/evry_config.c:380
 #: src/modules/everything/evry_config.c:464
-#: src/modules/everything-aspell/e_mod_main.c:481
+#: src/modules/everything-aspell/e_mod_main.c:480
 #: src/modules/everything-files/e_mod_main.c:1552
 #: src/modules/pager/e_mod_config.c:125
 #: src/modules/pager/e_mod_config.c:212
@@ -1025,7 +1025,7 @@ msgstr "Sélectionner un exécutable"
 #: src/bin/e_fm.c:8039
 #: src/modules/conf_profiles/e_int_config_profiles.c:137
 #: src/modules/conf_shelves/e_int_config_shelf.c:81
-#: src/modules/ibar/e_mod_config.c:112
+#: src/modules/ibar/e_mod_config.c:111
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -1489,7 +1489,7 @@ msgstr "Le propriétaire peut écrire"
 
 #: src/bin/e_fm_prop.c:382
 #: src/bin/e_widget_fsel.c:306
-#: src/modules/conf_icon_theme/e_int_config_icon_themes.c:248
+#: src/modules/conf_icon_theme/e_int_config_icon_themes.c:251
 #: src/modules/conf_theme/e_int_config_theme.c:1032
 #: src/modules/conf_transitions/e_int_config_transitions.c:166
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:154
@@ -1508,8 +1508,8 @@ msgid "Thumbnail"
 msgstr "Vignette"
 
 #: src/bin/e_fm_prop.c:435
-#: src/modules/conf_desklock/e_int_config_desklock.c:300
-#: src/modules/everything-aspell/e_mod_main.c:495
+#: src/modules/conf_desklock/e_int_config_desklock.c:309
+#: src/modules/everything-aspell/e_mod_main.c:494
 msgid "Custom"
 msgstr "Personnalisé"
 
@@ -1530,18 +1530,18 @@ msgid "Move this gadget to"
 msgstr "Déplacer ce gadget vers"
 
 #: src/bin/e_gadcon.c:1354
-#: src/modules/gadman/e_mod_gadman.c:711
+#: src/modules/gadman/e_mod_gadman.c:710
 msgid "Plain"
 msgstr "En plein"
 
 #: src/bin/e_gadcon.c:1363
-#: src/modules/gadman/e_mod_gadman.c:719
+#: src/modules/gadman/e_mod_gadman.c:718
 msgid "Inset"
 msgstr "En creux"
 
 #: src/bin/e_gadcon.c:1372
 #: src/bin/e_int_config_modules.c:61
-#: src/modules/gadman/e_mod_gadman.c:755
+#: src/modules/gadman/e_mod_gadman.c:754
 msgid "Appearance"
 msgstr "Apparence"
 
@@ -1554,12 +1554,12 @@ msgid "Able to be resized"
 msgstr "Permettre le redimensionnement"
 
 #: src/bin/e_gadcon.c:1399
-#: src/modules/gadman/e_mod_gadman.c:790
+#: src/modules/gadman/e_mod_gadman.c:789
 msgid "Begin move/resize this gadget"
 msgstr "Déplacer/Redimensionner ce gadget"
 
 #: src/bin/e_gadcon.c:1407
-#: src/modules/gadman/e_mod_gadman.c:798
+#: src/modules/gadman/e_mod_gadman.c:797
 msgid "Remove this gadget"
 msgstr "Supprimer ce gadget"
 
@@ -1576,7 +1576,7 @@ msgstr ""
 "active sur cet écran. Abandon du démarrage.\n"
 
 #: src/bin/e_int_border_locks.c:67
-#: src/bin/e_int_border_menu.c:615
+#: src/bin/e_int_border_menu.c:613
 msgid "Window Locks"
 msgstr "Verrous de la fenêtre"
 
@@ -1627,7 +1627,7 @@ msgstr "Taille"
 
 #: src/bin/e_int_border_locks.c:313
 #: src/bin/e_int_border_locks.c:332
-#: src/bin/e_int_border_menu.c:587
+#: src/bin/e_int_border_menu.c:585
 #: src/bin/e_int_border_prop.c:469
 #: src/bin/e_int_border_remember.c:708
 #: src/bin/e_int_shelf_config.c:133
@@ -1716,113 +1716,113 @@ msgstr "Désépingler du bureau"
 msgid "More..."
 msgstr "Plus…"
 
-#: src/bin/e_int_border_menu.c:197
+#: src/bin/e_int_border_menu.c:195
 #: src/modules/everything-windows/e_mod_main.c:440
 msgid "Iconify"
 msgstr "Minimiser"
 
-#: src/bin/e_int_border_menu.c:412
+#: src/bin/e_int_border_menu.c:410
 msgid "Maximize vertically"
 msgstr "Maximiser verticalement"
 
-#: src/bin/e_int_border_menu.c:423
+#: src/bin/e_int_border_menu.c:421
 msgid "Maximize horizontally"
 msgstr "Maximiser horizontalement"
 
-#: src/bin/e_int_border_menu.c:434
+#: src/bin/e_int_border_menu.c:432
 msgid "Unmaximize"
 msgstr "Restaurer"
 
-#: src/bin/e_int_border_menu.c:535
+#: src/bin/e_int_border_menu.c:533
 msgid "Keyboard Shortcut"
 msgstr "Raccourci clavier"
 
-#: src/bin/e_int_border_menu.c:541
+#: src/bin/e_int_border_menu.c:539
 msgid "To Favorites Menu"
 msgstr "Au menu des favoris"
 
-#: src/bin/e_int_border_menu.c:546
+#: src/bin/e_int_border_menu.c:544
 msgid "To Launcher"
 msgstr "Au lanceur"
 
-#: src/bin/e_int_border_menu.c:568
+#: src/bin/e_int_border_menu.c:566
 #: src/modules/conf_borders/e_mod_main.c:23
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:321
 msgid "Border"
 msgstr "Bordure"
 
-#: src/bin/e_int_border_menu.c:577
+#: src/bin/e_int_border_menu.c:575
 msgid "Skip"
 msgstr "Ignorer"
 
-#: src/bin/e_int_border_menu.c:596
+#: src/bin/e_int_border_menu.c:594
 #: src/bin/e_int_border_prop.c:433
 msgid "State"
 msgstr "État"
 
-#: src/bin/e_int_border_menu.c:607
+#: src/bin/e_int_border_menu.c:605
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:128
 msgid "Remember"
 msgstr "Mémoriser"
 
-#: src/bin/e_int_border_menu.c:623
+#: src/bin/e_int_border_menu.c:621
 #: src/bin/e_int_border_prop.c:75
 msgid "Window Properties"
 msgstr "Propriétés de la fenêtre"
 
-#: src/bin/e_int_border_menu.c:858
+#: src/bin/e_int_border_menu.c:856
 msgid "Always On Top"
 msgstr "Toujours au-dessus"
 
-#: src/bin/e_int_border_menu.c:869
+#: src/bin/e_int_border_menu.c:867
 #: src/modules/conf_fonts/e_int_config_fonts.c:101
 #: src/modules/conf_fonts/e_int_config_fonts.c:265
 msgid "Normal"
 msgstr "Normal"
 
-#: src/bin/e_int_border_menu.c:880
+#: src/bin/e_int_border_menu.c:878
 msgid "Always Below"
 msgstr "Toujours en dessous"
 
-#: src/bin/e_int_border_menu.c:971
+#: src/bin/e_int_border_menu.c:969
 msgid "Select Border Style"
 msgstr "Sélectionner un style de bordure"
 
-#: src/bin/e_int_border_menu.c:983
+#: src/bin/e_int_border_menu.c:981
 msgid "Use E17 Default Icon Preference"
 msgstr "Utiliser l'icone proposé par E17"
 
-#: src/bin/e_int_border_menu.c:991
+#: src/bin/e_int_border_menu.c:989
 msgid "Use Application Provided Icon "
 msgstr "Utiliser l'icone fourni par l'application"
 
-#: src/bin/e_int_border_menu.c:999
+#: src/bin/e_int_border_menu.c:997
 msgid "Use User Defined Icon"
 msgstr "Utiliser l'icone défini par l'utilisateur"
 
-#: src/bin/e_int_border_menu.c:1060
+#: src/bin/e_int_border_menu.c:1058
 #: src/bin/e_int_border_prop.c:473
 msgid "Shaded"
 msgstr "Enroulé"
 
-#: src/bin/e_int_border_menu.c:1073
+#: src/bin/e_int_border_menu.c:1071
 #: src/bin/e_int_border_prop.c:472
 msgid "Sticky"
 msgstr "Ancré"
 
-#: src/bin/e_int_border_menu.c:1089
+#: src/bin/e_int_border_menu.c:1087
 #: src/bin/e_int_border_prop.c:477
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:119
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:142
 msgid "Fullscreen"
 msgstr "Plein écran"
 
-#: src/bin/e_int_border_menu.c:1114
+#: src/bin/e_int_border_menu.c:1112
 #: src/modules/conf_winlist/e_mod_main.c:21
 msgid "Window List"
 msgstr "Liste des fenêtres"
 
-#: src/bin/e_int_border_menu.c:1124
+#: src/bin/e_int_border_menu.c:1122
 #: src/modules/pager/e_mod_main.c:261
 #: src/modules/pager/e_mod_main.c:2811
 #: src/modules/pager/e_mod_main.c:2818
@@ -1841,7 +1841,7 @@ msgstr "Liste des fenêtres"
 msgid "Pager"
 msgstr "Pager"
 
-#: src/bin/e_int_border_menu.c:1134
+#: src/bin/e_int_border_menu.c:1132
 msgid "Taskbar"
 msgstr "Barre des tâches"
 
@@ -2146,8 +2146,8 @@ msgid "Toolbar Contents"
 msgstr "Contenu de la barre d'outils"
 
 #: src/bin/e_int_gadcon_config.c:155
-#: src/modules/gadman/e_mod_config.c:120
-#: src/modules/gadman/e_mod_config.c:136
+#: src/modules/gadman/e_mod_config.c:119
+#: src/modules/gadman/e_mod_config.c:135
 msgid "Add Gadget"
 msgstr "Ajouter un gadget"
 
@@ -3225,7 +3225,7 @@ msgstr "Votre configuration du module est PLUS RÉCENTE que la version<br>actuel
 #: src/modules/conf_applications/e_int_config_apps.c:207
 #: src/modules/conf_profiles/e_int_config_profiles.c:135
 #: src/modules/conf_shelves/e_int_config_shelf.c:79
-#: src/modules/ibar/e_mod_config.c:110
+#: src/modules/ibar/e_mod_config.c:109
 msgid "Add"
 msgstr "Ajouter"
 
@@ -3249,12 +3249,13 @@ msgid "Add to Favorites"
 msgstr "Ajouter aux favoris"
 
 #: src/bin/e_widget_fsel.c:298
+#: src/modules/conf_desklock/e_int_config_desklock_fsel.c:91
 #: src/modules/conf_imc/e_int_config_imc.c:818
 #: src/modules/conf_startup/e_int_config_startup.c:267
 #: src/modules/conf_theme/e_int_config_theme.c:407
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:462
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:592
-#: src/modules/gadman/e_mod_config.c:189
+#: src/modules/gadman/e_mod_config.c:188
 msgid "Go up a Directory"
 msgstr "Remonter d'un niveau"
 
@@ -3482,7 +3483,7 @@ msgid "IBar Other"
 msgstr "IBar (autres)"
 
 #: src/modules/conf_borders/e_int_config_borders.c:30
-#: src/modules/conf_borders/e_int_config_borders.c:202
+#: src/modules/conf_borders/e_int_config_borders.c:200
 msgid "Default Border Style"
 msgstr "Style de bordure par défaut"
 
@@ -3490,7 +3491,7 @@ msgstr "Style de bordure par défaut"
 msgid "Window Border Selection"
 msgstr "Sélection de la bordure de fenêtre"
 
-#: src/modules/conf_borders/e_int_config_borders.c:247
+#: src/modules/conf_borders/e_int_config_borders.c:246
 msgid "Remember this Border for this window next time it appears"
 msgstr "Mémoriser la bordure lors de la prochaine apparition de cette fenêtre"
 
@@ -3878,40 +3879,54 @@ msgstr "Définir"
 msgid "Desk"
 msgstr "Bureau"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:89
+#: src/modules/conf_desklock/e_int_config_desklock_fsel.c:41
+msgid "Select a Background..."
+msgstr "Choisir un fond d'écran…"
+
+#: src/modules/conf_desklock/e_int_config_desklock_fsel.c:84
+#: src/modules/conf_imc/e_int_config_imc.c:806
+#: src/modules/conf_startup/e_int_config_startup.c:254
+#: src/modules/conf_theme/e_int_config_theme.c:396
+#: src/modules/conf_theme/e_int_config_theme.c:789
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:452
+#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:582
+#: src/modules/gadman/e_mod_config.c:180
+msgid "Personal"
+msgstr "Personnel"
+
+#: src/modules/conf_desklock/e_int_config_desklock.c:84
 msgid "Screen Lock Settings"
 msgstr "Paramétrage du verrouillage de l'écran"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:202
-msgid "Lock when Enlightenment starts"
-msgstr "Verrouiller au démarrage de Enlightenment"
-
-#: src/modules/conf_desklock/e_int_config_desklock.c:207
 #: src/modules/conf_desklock/e_int_config_desklock.c:215
-msgid "Custom Screenlock Command"
-msgstr "Commande de verrouillage personnalisée"
+msgid "Lock on Startup"
+msgstr "Verrouiller au démarrage"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:210
+#: src/modules/conf_desklock/e_int_config_desklock.c:218
 msgid "Lock on Suspend"
 msgstr "Verrouiller à la mise en veille"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:220
-msgid "Login Box Settings"
-msgstr "Configuration de la boîte de connexion"
+#: src/modules/conf_desklock/e_int_config_desklock.c:222
+msgid "Custom Screenlock Command"
+msgstr "Commande de verrouillage personnalisée"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:223
-msgid "Show on all screen zones"
-msgstr "Afficher sur toutes les zones d'écran"
+#: src/modules/conf_desklock/e_int_config_desklock.c:226
+msgid "Locking"
+msgstr "Verrouillage"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:227
-msgid "Show on current screen zone"
-msgstr "Afficher sur la zone d'écran actuelle"
+#: src/modules/conf_desklock/e_int_config_desklock.c:232
+msgid "Show on all screens"
+msgstr "Afficher sur tous les écrans"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:231
-msgid "Show on screen zone #:"
-msgstr "Afficher sur la zone d'écran ..."
+#: src/modules/conf_desklock/e_int_config_desklock.c:237
+msgid "Show on current screen"
+msgstr "Afficher sur l'écran actuel"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:236
+#: src/modules/conf_desklock/e_int_config_desklock.c:242
+msgid "Show on screen #:"
+msgstr "Afficher sur l'écran ..."
+
+#: src/modules/conf_desklock/e_int_config_desklock.c:248
 #: src/modules/conf_desks/e_int_config_desks.c:232
 #: src/modules/conf_desks/e_int_config_desks.c:237
 #: src/modules/conf_desks/e_int_config_desks.c:265
@@ -3928,31 +3943,27 @@ msgstr "Afficher sur la zone d'écran ..."
 msgid "%1.0f"
 msgstr "%1.0f"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:242
-msgid "Locking"
-msgstr "Verrouillage"
+#: src/modules/conf_desklock/e_int_config_desklock.c:252
+msgid "Login Box"
+msgstr "Boîte de connexion"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:247
-msgid "Screen Lock Timers"
-msgstr "Minuteurs du verrouillage d'écran"
-
-#: src/modules/conf_desklock/e_int_config_desklock.c:248
+#: src/modules/conf_desklock/e_int_config_desklock.c:257
 msgid "Lock after X screensaver activates"
 msgstr "Verrouiller au démarrage de l'écran de veille"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:253
-#: src/modules/conf_desklock/e_int_config_desklock.c:276
+#: src/modules/conf_desklock/e_int_config_desklock.c:263
+#: src/modules/conf_desklock/e_int_config_desklock.c:288
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:153
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:167
 #, c-format
 msgid "%1.0f seconds"
 msgstr "%1.0f secondes"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:258
+#: src/modules/conf_desklock/e_int_config_desklock.c:269
 msgid "Lock when idle time exceeded"
 msgstr "Verrouiller quand le temps d'attente est dépassé"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:262
+#: src/modules/conf_desklock/e_int_config_desklock.c:274
 #: src/modules/conf_dpms/e_int_config_dpms.c:218
 #: src/modules/conf_dpms/e_int_config_dpms.c:230
 #: src/modules/conf_dpms/e_int_config_dpms.c:242
@@ -3961,69 +3972,42 @@ msgstr "Verrouiller quand le temps d'attente est dépassé"
 msgid "%1.0f minutes"
 msgstr "%1.0f minutes"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:270
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:159
-msgid "Presentation Mode"
-msgstr "Mode présentation"
-
-#: src/modules/conf_desklock/e_int_config_desklock.c:272
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:161
-msgid "Suggest if deactivated before"
-msgstr "À suggérer si désactivé avant"
-
-#: src/modules/conf_desklock/e_int_config_desklock.c:284
+#: src/modules/conf_desklock/e_int_config_desklock.c:279
 #: src/modules/conf_dpms/e_int_config_dpms.c:212
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:176
 msgid "Timers"
 msgstr "Minuteurs"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:289
-msgid "Wallpaper Mode"
-msgstr "Type de fond d'écran"
+#: src/modules/conf_desklock/e_int_config_desklock.c:284
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:161
+msgid "Suggest if deactivated before"
+msgstr "À suggérer si désactivé avant"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:291
-#: src/modules/gadman/e_mod_config.c:143
+#: src/modules/conf_desklock/e_int_config_desklock.c:293
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:159
+msgid "Presentation Mode"
+msgstr "Mode présentation"
+
+#: src/modules/conf_desklock/e_int_config_desklock.c:300
+#: src/modules/gadman/e_mod_config.c:142
 msgid "Theme Defined"
 msgstr "Défini par le thème"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:294
+#: src/modules/conf_desklock/e_int_config_desklock.c:303
 msgid "Theme Wallpaper"
 msgstr "Fond d'écran du thème"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:297
-msgid "User Wallpaper"
-msgstr "Fond d'écran utilisateur"
+#: src/modules/conf_desklock/e_int_config_desklock.c:306
+msgid "Current Wallpaper"
+msgstr "Fond d'écran actuel"
 
-#: src/modules/conf_desklock/e_int_config_desklock.c:307
-msgid "Custom Wallpaper"
-msgstr "Fond d'écran personnalisé"
-
-#: src/modules/conf_desklock/e_int_config_desklock.c:311
-#: src/modules/conf_imc/e_int_config_imc.c:806
-#: src/modules/conf_startup/e_int_config_startup.c:254
-#: src/modules/conf_theme/e_int_config_theme.c:396
-#: src/modules/conf_theme/e_int_config_theme.c:789
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:452
-#: src/modules/conf_wallpaper/e_int_config_wallpaper.c:582
-#: src/modules/gadman/e_mod_config.c:181
-msgid "Personal"
-msgstr "Personnel"
-
-#: src/modules/conf_desklock/e_int_config_desklock.c:317
-msgid "Directory up"
-msgstr "Remonter d'un niveau"
-
-#: src/modules/conf_desklock/e_int_config_desklock.c:365
+#: src/modules/conf_desklock/e_int_config_desklock.c:320
 #: src/modules/conf_wallpaper/e_mod_main.c:26
 #: src/modules/conf_wallpaper/e_mod_main.c:30
 #: src/modules/conf_wallpaper/e_mod_main.c:33
 #: src/modules/conf_wallpaper/e_mod_main.c:83
 msgid "Wallpaper"
 msgstr "Fond d'écran"
-
-#: src/modules/conf_desklock/e_int_config_desklock.c:374
-msgid "Enter Presentation Mode"
-msgstr "Entrer en mode présentation"
 
 #: src/modules/conf_desklock/e_mod_main.c:21
 msgid "Screen Lock"
@@ -4366,28 +4350,28 @@ msgstr "La séquence de raccourci que vous avez choisie est déjà utilisée<br>
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1313
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1305
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1337
-#: src/modules/gadman/e_mod_gadman.c:819
+#: src/modules/gadman/e_mod_gadman.c:818
 msgid "CTRL"
 msgstr "Ctrl"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1318
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1310
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1342
-#: src/modules/gadman/e_mod_gadman.c:824
+#: src/modules/gadman/e_mod_gadman.c:823
 msgid "ALT"
 msgstr "Alt"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1324
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1316
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1348
-#: src/modules/gadman/e_mod_gadman.c:830
+#: src/modules/gadman/e_mod_gadman.c:829
 msgid "SHIFT"
 msgstr "Majuscule"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1330
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1322
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1354
-#: src/modules/gadman/e_mod_gadman.c:836
+#: src/modules/gadman/e_mod_gadman.c:835
 msgid "WIN"
 msgstr "Logo"
 
@@ -4647,7 +4631,7 @@ msgstr "Optimisation/Polices de secours"
 msgid "Icon Theme Settings"
 msgstr "Paramétrage du thème d'icones"
 
-#: src/modules/conf_icon_theme/e_int_config_icon_themes.c:260
+#: src/modules/conf_icon_theme/e_int_config_icon_themes.c:264
 msgid "This overrides general theme"
 msgstr "Prime sur le thème général"
 
@@ -4688,11 +4672,11 @@ msgstr "Paramétrage de la méthode de saisie"
 
 #: src/modules/conf_imc/e_int_config_imc.c:901
 msgid "Execute Command"
-msgstr "Exécuter une commande"
+msgstr "Commande d'exécution"
 
 #: src/modules/conf_imc/e_int_config_imc.c:908
 msgid "Setup Command"
-msgstr "Configuration de la commande"
+msgstr "Commande de configuration"
 
 #: src/modules/conf_imc/e_int_config_imc.c:917
 msgid "Exported Environment Variables"
@@ -4717,7 +4701,7 @@ msgstr "Enlightenment n'a pas pu importer cette configuration,<br>à cause d'une
 
 #: src/modules/conf_imc/e_mod_main.c:20
 #: src/modules/conf_intl/e_mod_main.c:20
-#: src/modules/everything-aspell/e_mod_main.c:505
+#: src/modules/everything-aspell/e_mod_main.c:504
 #: src/modules/wizard/page_010.c:142
 msgid "Language"
 msgstr "Langue"
@@ -5236,15 +5220,11 @@ msgstr "%1.0f DPI"
 msgid "Currently %i DPI"
 msgstr "Actuellement %i DPI"
 
-#: src/modules/conf_scale/e_int_config_scale.c:167
-msgid "Policy"
-msgstr "Politique"
-
 #: src/modules/conf_scale/e_int_config_scale.c:170
 msgid "Don't Scale"
 msgstr "Pas de mise à l'échelle"
 
-#: src/modules/conf_scale/e_int_config_scale.c:174
+#: src/modules/conf_scale/e_int_config_scale.c:173
 msgid "Scale relative to screen DPI"
 msgstr "Échelle en relation avec le DPI de l'écran"
 
@@ -5253,28 +5233,32 @@ msgstr "Échelle en relation avec le DPI de l'écran"
 msgid "Base DPI (Currently %i DPI)"
 msgstr "DPI de base (actuellement %i DPI)"
 
-#: src/modules/conf_scale/e_int_config_scale.c:187
+#: src/modules/conf_scale/e_int_config_scale.c:186
 msgid "Custom scaling factor"
 msgstr "Facteur d'échelle personnalisé"
 
-#: src/modules/conf_scale/e_int_config_scale.c:190
-#: src/modules/conf_scale/e_int_config_scale.c:200
-#: src/modules/conf_scale/e_int_config_scale.c:207
+#: src/modules/conf_scale/e_int_config_scale.c:189
+#: src/modules/conf_scale/e_int_config_scale.c:202
+#: src/modules/conf_scale/e_int_config_scale.c:209
 #, c-format
 msgid "%1.2f times"
 msgstr "%1.2f fois"
 
-#: src/modules/conf_scale/e_int_config_scale.c:196
-msgid "Constraints"
-msgstr "Contraintes"
+#: src/modules/conf_scale/e_int_config_scale.c:193
+msgid "Policy"
+msgstr "Politique"
 
-#: src/modules/conf_scale/e_int_config_scale.c:197
+#: src/modules/conf_scale/e_int_config_scale.c:199
 msgid "Minimum"
 msgstr "Minimum"
 
-#: src/modules/conf_scale/e_int_config_scale.c:204
+#: src/modules/conf_scale/e_int_config_scale.c:206
 msgid "Maximum"
 msgstr "Maximum"
+
+#: src/modules/conf_scale/e_int_config_scale.c:213
+msgid "Constraints"
+msgstr "Contraintes"
 
 #: src/modules/conf_scale/e_mod_main.c:22
 msgid "Scaling"
@@ -5333,7 +5317,7 @@ msgid "Configured Shelves"
 msgstr "Racks configurés"
 
 #: src/modules/conf_shelves/e_int_config_shelf.c:84
-#: src/modules/ibar/e_mod_config.c:114
+#: src/modules/ibar/e_mod_config.c:113
 msgid "Setup"
 msgstr "Configurer"
 
@@ -5475,14 +5459,14 @@ msgstr "Options de remplissage"
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:167
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:155
 #: src/modules/everything/evry_config.c:572
-#: src/modules/gadman/e_mod_gadman.c:739
+#: src/modules/gadman/e_mod_gadman.c:738
 msgid "Horizontal"
 msgstr "Horizontal"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:172
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:157
 #: src/modules/everything/evry_config.c:565
-#: src/modules/gadman/e_mod_gadman.c:747
+#: src/modules/gadman/e_mod_gadman.c:746
 msgid "Vertical"
 msgstr "Vertical"
 
@@ -5518,28 +5502,28 @@ msgstr "Répéter"
 msgid "Select a Picture..."
 msgstr "Choisir une image…"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:633
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:631
 msgid "Picture Import Error"
 msgstr "Erreur lors de l'importation du fichier"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:634
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:632
 msgid "Enlightenment was unable to import the picture<br>due to conversion errors."
 msgstr "Enlightenment n'a pu importer l'image<br>à cause d'erreurs de conversion."
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:722
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:732
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:816
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:826
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:719
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:729
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:811
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:821
 msgid "Wallpaper Import Error"
 msgstr "Erreur d'importation du fond d'écran"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:723
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:817
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:720
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:812
 msgid "Enlightenment was unable to import the wallpaper<br>due to a copy error."
 msgstr "Enlightenment n'a pu importer le fond d'écran<br>à cause d'une erreur de copie."
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:733
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:827
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:730
+#: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:822
 msgid "Enlightenment was unable to import the wallpaper.<br><br>Are you sure this is a valid wallpaper?"
 msgstr "Enlightenment n'a pu importer le fond d'écran.<br><br>Êtes-vous sûr qu'il s'agit d'un fond d'écran valide ?"
 
@@ -5962,7 +5946,7 @@ msgstr "Minimisées"
 
 #: src/modules/conf_winlist/e_int_config_winlist.c:267
 #: src/modules/conf_winlist/e_int_config_winlist.c:484
-#: src/modules/gadman/e_mod_config.c:161
+#: src/modules/gadman/e_mod_config.c:160
 msgid "Animations"
 msgstr "Animations"
 
@@ -6161,95 +6145,95 @@ msgstr "Votre noyau ne supporte pas le changement<br>de fréquence. Vous l'avez 
 msgid "There was an error trying to set the<br>cpu frequency setting via the module's<br>setfreq utility."
 msgstr "Une erreur s'est produite lors de la tentative<br>de changement de fréquence du CPU<br>via l'utilitaire setfreq du module."
 
-#: src/modules/dropshadow/e_mod_config.c:40
+#: src/modules/dropshadow/e_mod_config.c:39
 msgid "Dropshadow Settings"
 msgstr "Paramétrage de l'ombre"
 
-#: src/modules/dropshadow/e_mod_config.c:108
+#: src/modules/dropshadow/e_mod_config.c:107
 msgid "Quality"
 msgstr "Qualité"
 
-#: src/modules/dropshadow/e_mod_config.c:111
+#: src/modules/dropshadow/e_mod_config.c:110
 msgid "High Quality"
 msgstr "Haute qualité"
 
-#: src/modules/dropshadow/e_mod_config.c:113
+#: src/modules/dropshadow/e_mod_config.c:112
 msgid "Medium Quality"
 msgstr "Qualité moyenne"
 
-#: src/modules/dropshadow/e_mod_config.c:115
+#: src/modules/dropshadow/e_mod_config.c:114
 msgid "Low Quality"
 msgstr "Basse qualité"
 
-#: src/modules/dropshadow/e_mod_config.c:119
+#: src/modules/dropshadow/e_mod_config.c:118
 msgid "Blur Type"
 msgstr "Type de flou"
 
-#: src/modules/dropshadow/e_mod_config.c:122
+#: src/modules/dropshadow/e_mod_config.c:121
 msgid "Very Fuzzy"
 msgstr "Très flou"
 
-#: src/modules/dropshadow/e_mod_config.c:124
+#: src/modules/dropshadow/e_mod_config.c:123
 msgid "Fuzzy"
 msgstr "Flou"
 
-#: src/modules/dropshadow/e_mod_config.c:126
+#: src/modules/dropshadow/e_mod_config.c:125
 msgid "Medium"
 msgstr "Moyen"
 
-#: src/modules/dropshadow/e_mod_config.c:128
+#: src/modules/dropshadow/e_mod_config.c:127
 msgid "Sharp"
 msgstr "Précis"
 
-#: src/modules/dropshadow/e_mod_config.c:130
+#: src/modules/dropshadow/e_mod_config.c:129
 msgid "Very Sharp"
 msgstr "Très précis"
 
-#: src/modules/dropshadow/e_mod_config.c:134
+#: src/modules/dropshadow/e_mod_config.c:133
 msgid "Shadow Distance"
 msgstr "Distance de l'ombre"
 
-#: src/modules/dropshadow/e_mod_config.c:137
+#: src/modules/dropshadow/e_mod_config.c:136
 msgid "Very Far"
 msgstr "Très éloignée"
 
-#: src/modules/dropshadow/e_mod_config.c:139
+#: src/modules/dropshadow/e_mod_config.c:138
 msgid "Far"
 msgstr "Éloignée"
 
-#: src/modules/dropshadow/e_mod_config.c:141
+#: src/modules/dropshadow/e_mod_config.c:140
 msgid "Near"
 msgstr "Proche"
 
-#: src/modules/dropshadow/e_mod_config.c:143
+#: src/modules/dropshadow/e_mod_config.c:142
 msgid "Very Near"
 msgstr "Très proche"
 
-#: src/modules/dropshadow/e_mod_config.c:145
+#: src/modules/dropshadow/e_mod_config.c:144
 msgid "Extremely Near"
 msgstr "Extrêmement proche"
 
-#: src/modules/dropshadow/e_mod_config.c:147
+#: src/modules/dropshadow/e_mod_config.c:146
 msgid "Underneath"
 msgstr "Immédiatement en dessous"
 
-#: src/modules/dropshadow/e_mod_config.c:151
+#: src/modules/dropshadow/e_mod_config.c:150
 msgid "Shadow Darkness"
 msgstr "Intensité de l'ombre"
 
-#: src/modules/dropshadow/e_mod_config.c:154
+#: src/modules/dropshadow/e_mod_config.c:153
 msgid "Very Dark"
 msgstr "Très sombre"
 
-#: src/modules/dropshadow/e_mod_config.c:156
+#: src/modules/dropshadow/e_mod_config.c:155
 msgid "Dark"
 msgstr "Sombre"
 
-#: src/modules/dropshadow/e_mod_config.c:158
+#: src/modules/dropshadow/e_mod_config.c:157
 msgid "Light"
 msgstr "Claire"
 
-#: src/modules/dropshadow/e_mod_config.c:160
+#: src/modules/dropshadow/e_mod_config.c:159
 msgid "Very Light"
 msgstr "Très claire"
 
@@ -6494,29 +6478,29 @@ msgstr "Commande du terminal"
 msgid "Sudo GUI"
 msgstr "Interface graphique sudo"
 
-#: src/modules/everything-aspell/e_mod_main.c:403
+#: src/modules/everything-aspell/e_mod_main.c:402
 msgid "Spell Checker"
 msgstr "Correcteur orthographique"
 
-#: src/modules/everything-aspell/e_mod_main.c:467
-#: src/modules/everything-aspell/e_mod_main.c:600
-#: src/modules/everything-aspell/e_mod_main.c:619
+#: src/modules/everything-aspell/e_mod_main.c:466
+#: src/modules/everything-aspell/e_mod_main.c:599
+#: src/modules/everything-aspell/e_mod_main.c:618
 msgid "Everything Aspell"
 msgstr "Omni aspell"
 
-#: src/modules/everything-aspell/e_mod_main.c:486
+#: src/modules/everything-aspell/e_mod_main.c:485
 msgid "Spell checker"
 msgstr "Correcteur orthographique"
 
-#: src/modules/everything-aspell/e_mod_main.c:489
+#: src/modules/everything-aspell/e_mod_main.c:488
 msgid "Aspell"
 msgstr "Aspell"
 
-#: src/modules/everything-aspell/e_mod_main.c:492
+#: src/modules/everything-aspell/e_mod_main.c:491
 msgid "Hunspell"
 msgstr "Hunspell"
 
-#: src/modules/everything-aspell/e_mod_main.c:499
+#: src/modules/everything-aspell/e_mod_main.c:498
 #: src/modules/fileman/e_fwin.c:1903
 msgid "Custom Command"
 msgstr "Commande personnalisée"
@@ -6666,7 +6650,7 @@ msgid "Show Toolbar"
 msgstr "Montrer la barre d'outils"
 
 #: src/modules/fileman/e_mod_config.c:268
-#: src/modules/gadman/e_mod_gadman.c:783
+#: src/modules/gadman/e_mod_gadman.c:782
 msgid "Behavior"
 msgstr "Comportement"
 
@@ -6810,67 +6794,67 @@ msgstr "Gestionnaire de fichiers inactif"
 msgid "EFM Operation Info"
 msgstr "Informations EFM"
 
-#: src/modules/gadman/e_mod_config.c:54
+#: src/modules/gadman/e_mod_config.c:53
 msgid "Gadgets Manager"
 msgstr "Gestionnaire de gadgets"
 
-#: src/modules/gadman/e_mod_config.c:109
+#: src/modules/gadman/e_mod_config.c:108
 msgid "Available Gadgets"
 msgstr "Gadgets disponibles"
 
-#: src/modules/gadman/e_mod_config.c:141
+#: src/modules/gadman/e_mod_config.c:140
 msgid "Mode"
 msgstr "Mode"
 
-#: src/modules/gadman/e_mod_config.c:146
-#: src/modules/gadman/e_mod_config.c:178
+#: src/modules/gadman/e_mod_config.c:145
+#: src/modules/gadman/e_mod_config.c:177
 msgid "Custom Image"
 msgstr "Image personnalisée"
 
-#: src/modules/gadman/e_mod_config.c:150
-#: src/modules/gadman/e_mod_config.c:171
+#: src/modules/gadman/e_mod_config.c:149
+#: src/modules/gadman/e_mod_config.c:170
 msgid "Custom Color"
 msgstr "Couleur personnalisée"
 
-#: src/modules/gadman/e_mod_config.c:154
+#: src/modules/gadman/e_mod_config.c:153
 msgid "Transparent"
 msgstr "Transparent"
 
-#: src/modules/gadman/e_mod_config.c:162
+#: src/modules/gadman/e_mod_config.c:161
 msgid "Background"
 msgstr "Fond d'écran"
 
-#: src/modules/gadman/e_mod_config.c:165
-#: src/modules/gadman/e_mod_main.c:27
-#: src/modules/gadman/e_mod_main.c:77
-#: src/modules/gadman/e_mod_main.c:84
-#: src/modules/gadman/e_mod_main.c:120
-#: src/modules/gadman/e_mod_main.c:149
+#: src/modules/gadman/e_mod_config.c:164
+#: src/modules/gadman/e_mod_main.c:26
+#: src/modules/gadman/e_mod_main.c:76
+#: src/modules/gadman/e_mod_main.c:83
+#: src/modules/gadman/e_mod_main.c:119
+#: src/modules/gadman/e_mod_main.c:148
 msgid "Gadgets"
 msgstr "Gadgets"
 
-#: src/modules/gadman/e_mod_config.c:237
+#: src/modules/gadman/e_mod_config.c:236
 msgid "Background Options"
 msgstr "Options du fond d'écran"
 
-#: src/modules/gadman/e_mod_gadman.c:731
+#: src/modules/gadman/e_mod_gadman.c:730
 msgid "Free"
 msgstr "Libre"
 
-#: src/modules/gadman/e_mod_gadman.c:763
+#: src/modules/gadman/e_mod_gadman.c:762
 msgid "Always on desktop"
 msgstr "Toujours sur le bureau"
 
-#: src/modules/gadman/e_mod_gadman.c:773
+#: src/modules/gadman/e_mod_gadman.c:772
 msgid "On top pressing"
 msgstr "Au-dessus en appuyant sur"
 
-#: src/modules/gadman/e_mod_gadman.c:804
+#: src/modules/gadman/e_mod_gadman.c:803
 msgid "Add other gadgets"
 msgstr "Ajouter un autre gadget"
 
-#: src/modules/gadman/e_mod_main.c:84
-#: src/modules/gadman/e_mod_main.c:120
+#: src/modules/gadman/e_mod_main.c:83
+#: src/modules/gadman/e_mod_main.c:119
 msgid "Show/hide gadgets"
 msgstr "Afficher/Masquer les gadgets"
 
@@ -6937,49 +6921,49 @@ msgstr "Fenêtre à droite"
 msgid "Select a window"
 msgstr "Sélectionner une fenêtre"
 
-#: src/modules/ibar/e_mod_config.c:56
+#: src/modules/ibar/e_mod_config.c:55
 msgid "IBar Settings"
 msgstr "Paramétrage de l'IBar"
 
-#: src/modules/ibar/e_mod_config.c:102
+#: src/modules/ibar/e_mod_config.c:101
 msgid "Selected Bar Source"
 msgstr "Sélection de la source"
 
-#: src/modules/ibar/e_mod_config.c:123
+#: src/modules/ibar/e_mod_config.c:122
 msgid "Icon Labels"
 msgstr "Étiquettes de l'icone"
 
-#: src/modules/ibar/e_mod_config.c:124
+#: src/modules/ibar/e_mod_config.c:123
 #: src/modules/ibox/e_mod_config.c:100
 msgid "Show Icon Label"
 msgstr "Montrer l'étiquette de l'icone"
 
-#: src/modules/ibar/e_mod_config.c:130
+#: src/modules/ibar/e_mod_config.c:129
 msgid "Display App Name"
 msgstr "Afficher le nom de l'appli"
 
-#: src/modules/ibar/e_mod_config.c:134
+#: src/modules/ibar/e_mod_config.c:133
 msgid "Display App Comment"
 msgstr "Afficher le commentaire de l'appli"
 
-#: src/modules/ibar/e_mod_config.c:138
+#: src/modules/ibar/e_mod_config.c:137
 msgid "Display App Generic"
 msgstr "Afficher l'information générique de l'appli"
 
-#: src/modules/ibar/e_mod_config.c:168
+#: src/modules/ibar/e_mod_config.c:167
 msgid "Create new IBar source"
 msgstr "Créer une nouvelle source"
 
-#: src/modules/ibar/e_mod_config.c:169
+#: src/modules/ibar/e_mod_config.c:168
 msgid "Enter a name for this new source:"
 msgstr "Entrer un nom pour cette nouvelle source :"
 
-#: src/modules/ibar/e_mod_config.c:183
+#: src/modules/ibar/e_mod_config.c:182
 #, c-format
 msgid "You requested to delete \"%s\".<br><br>Are you sure you want to delete this bar source?"
 msgstr "Vous avez demandé à supprimer « %s ».<br><br>Voulez-vous vraiment supprimer cette source ?"
 
-#: src/modules/ibar/e_mod_config.c:187
+#: src/modules/ibar/e_mod_config.c:186
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Voulez-vous vraiment supprimer cette source ?"
 
@@ -7562,18 +7546,30 @@ msgstr "connecté"
 msgid "offline"
 msgstr "hors ligne"
 
-#: src/modules/systray/e_mod_main.c:893
+#: src/modules/systray/e_mod_main.c:889
 msgid "Another systray exists"
 msgstr "Il y a déjà une zone de notification"
 
-#: src/modules/systray/e_mod_main.c:894
+#: src/modules/systray/e_mod_main.c:890
 msgid "There can be only one systray gadget and another one already exists."
 msgstr "Il y a déjà une zone de notification active et seule une instance de ce gadget est autorisée."
 
-#: src/modules/systray/e_mod_main.c:1096
+#: src/modules/systray/e_mod_main.c:1092
 msgid "Systray"
 msgstr "Zone de notification"
 
+#~ msgid "Lock when Enlightenment starts"
+#~ msgstr "Verrouiller au démarrage de Enlightenment"
+#~ msgid "Screen Lock Timers"
+#~ msgstr "Minuteurs du verrouillage d'écran"
+#~ msgid "Wallpaper Mode"
+#~ msgstr "Type de fond d'écran"
+#~ msgid "User Wallpaper"
+#~ msgstr "Fond d'écran utilisateur"
+#~ msgid "Directory up"
+#~ msgstr "Remonter d'un niveau"
+#~ msgid "Enter Presentation Mode"
+#~ msgstr "Entrer en mode présentation"
 #~ msgid "Gradient..."
 #~ msgstr "Dégradé…"
 #~ msgid "Automatic Locking"
