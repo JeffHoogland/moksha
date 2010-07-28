@@ -21,7 +21,9 @@ pkg_LTLIBRARIES        = module.la
 module_la_SOURCES      = e_mod_main.c \
                          e_mod_main.h \
 			 e_int_config_desklock.c \
-			 e_int_config_desklock.h
+			 e_int_config_desklock.h \
+                         e_int_config_desklock_fsel.c \
+                         e_int_config_desklock_fsel.h
 
 module_la_LIBADD       = @e_libs@ @dlopen_libs@
 module_la_LDFLAGS      = -module -avoid-version
