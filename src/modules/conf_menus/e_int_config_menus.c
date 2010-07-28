@@ -196,9 +196,9 @@ _create_menus_list(Evas *evas, E_Config_Dialog_Data *cfdata)
    int sel = -1, i = 0;
    
    get_menus(&menus);
-   ob = e_widget_ilist_add(evas, 32 * e_scale, 32 * e_scale, 
+   ob = e_widget_ilist_add(evas, (32 * e_scale), (32 * e_scale), 
                            &(cfdata->default_system_menu));
-   e_widget_size_min_set(ob, 200 * e_scale, 200 * e_scale);
+   e_widget_size_min_set(ob, (100 * e_scale), (140 * e_scale));
    e_widget_ilist_freeze(ob);
    
    EINA_LIST_FREE(menus, file)
@@ -280,7 +280,7 @@ _adv_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *c
 {
    Evas_Object *otb, *ol, *ow;
 
-   otb = e_widget_toolbook_add(evas, (48 * e_scale), (48 * e_scale));
+   otb = e_widget_toolbook_add(evas, (24 * e_scale), (24 * e_scale));
 
    ol = e_widget_list_add(evas, 0, 0);
    ow = e_widget_check_add(evas, _("Favorites"), &(cfdata->show_favs));
