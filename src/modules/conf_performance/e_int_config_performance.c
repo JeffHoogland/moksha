@@ -2,9 +2,9 @@
 
 static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 
 struct _E_Config_Dialog_Data
 {
@@ -28,8 +28,8 @@ e_int_config_performance(E_Container *con, const char *params __UNUSED__)
 
    v->create_cfdata = _create_data;
    v->free_cfdata = _free_data;
-   v->basic.apply_cfdata = _basic_apply_data;
-   v->basic.create_widgets = _basic_create_widgets;
+   v->basic.apply_cfdata = _basic_apply;
+   v->basic.create_widgets = _basic_create;
    v->basic.check_changed = _basic_check_changed;
 
    cfd = e_config_dialog_new(con, _("Performance Settings"),
@@ -62,7 +62,7 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 }
 
 static int
-_basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
+_basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    if (cfdata->framerate <= 0.0) cfdata->framerate = 1.0;
    e_config->framerate = cfdata->framerate;
@@ -93,21 +93,21 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
 }
 
 static Evas_Object *
-_basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
+_basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *otb, *ob, *ol;
 
-   otb = e_widget_toolbook_add(evas, 48 * e_scale, 48 * e_scale);
+   otb = e_widget_toolbook_add(evas, (24 * e_scale), (24 * e_scale));
 
    ol = e_widget_list_add(evas, 0, 0);
    ob = e_widget_label_add(evas, _("Framerate"));
-   e_widget_list_object_append(ol, ob, 1, 0, 0.5);
+   e_widget_list_object_append(ol, ob, 1, 1, 0.5);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f fps"), 5.0, 200.0, 1.0, 0, 
                             &(cfdata->framerate), NULL, 100);
    e_widget_list_object_append(ol, ob, 1, 0, 0.5);
 
    ob = e_widget_label_add(evas, _("Applications priority"));
-   e_widget_list_object_append(ol, ob, 1, 0, 0.5);
+   e_widget_list_object_append(ol, ob, 1, 1, 0.5);
    ob = e_widget_slider_add(evas, 1, 0, "%1.0f", 0, 19, 1, 0, NULL, 
                             &(cfdata->priority), 100);
    e_widget_list_object_append(ol, ob, 1, 0, 0.5);
@@ -117,36 +117,39 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
 
    ol = e_widget_list_add(evas, 0, 0);
    ob = e_widget_label_add(evas, _("Cache flush interval"));
-   e_widget_list_object_append(ol, ob, 1, 0, 0.5);
+   e_widget_list_object_append(ol, ob, 1, 1, 0.5);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f ticks"), 8, 4096, 8, 0, NULL,
                             &(cfdata->cache_flush_poll_interval), 100);
    e_widget_list_object_append(ol, ob, 1, 0, 0.5);
 
    ob = e_widget_label_add(evas, _("Font cache size"));
-   e_widget_list_object_append(ol, ob, 1, 0, 0.5);
+   e_widget_list_object_append(ol, ob, 1, 1, 0.5);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.1f MB"), 0, 4, 0.1, 0,
                             &(cfdata->font_cache), NULL, 100);
    e_widget_list_object_append(ol, ob, 1, 0, 0.5);
 
    ob = e_widget_label_add(evas, _("Image cache size"));
-   e_widget_list_object_append(ol, ob, 1, 0, 0.5);
+   e_widget_list_object_append(ol, ob, 1, 1, 0.5);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f MB"), 0, 32, 1, 0,
                             &(cfdata->image_cache), NULL, 100);
    e_widget_list_object_append(ol, ob, 1, 0, 0.5);
 
+   e_widget_toolbook_page_append(otb, NULL, _("Caches"), ol, 
+                                 1, 0, 1, 0, 0.5, 0.0);
+
+   ol = e_widget_list_add(evas, 0, 0);
    ob = e_widget_label_add(evas, _("Number of Edje files to cache"));
-   e_widget_list_object_append(ol, ob, 1, 0, 0.5);
+   e_widget_list_object_append(ol, ob, 1, 1, 0.5);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f files"), 0, 256, 1, 0, NULL,
                             &(cfdata->edje_cache), 100);
    e_widget_list_object_append(ol, ob, 1, 0, 0.5);
 
    ob = e_widget_label_add(evas, _("Number of Edje collections to cache"));
-   e_widget_list_object_append(ol, ob, 1, 0, 0.5);
+   e_widget_list_object_append(ol, ob, 1, 1, 0.5);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f collections"), 0, 512, 1, 0,
                             NULL, &(cfdata->edje_collection_cache), 100);
    e_widget_list_object_append(ol, ob, 1, 0, 0.5);
-
-   e_widget_toolbook_page_append(otb, NULL, _("Caches"), ol, 
+   e_widget_toolbook_page_append(otb, NULL, _("Edje Cache"), ol, 
                                  1, 0, 1, 0, 0.5, 0.0);
 
    e_widget_toolbook_page_show(otb, 0);
