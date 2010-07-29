@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-07-28 08:17+0400\n"
-"PO-Revision-Date: 2010-07-28 09:06+0400\n"
+"POT-Creation-Date: 2010-07-29 09:16+0400\n"
+"PO-Revision-Date: 2010-07-29 10:05+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment French Team <pourunmondesansgourou@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -188,8 +188,7 @@ msgstr "Menu de la fenêtre"
 
 #: src/bin/e_actions.c:2602
 #: src/bin/e_int_border_menu.c:216
-#: src/modules/conf_winlist/e_int_config_winlist.c:274
-#: src/modules/conf_winlist/e_int_config_winlist.c:444
+#: src/modules/conf_winlist/e_int_config_winlist.c:217
 msgid "Raise"
 msgstr "Placer dessus"
 
@@ -1023,8 +1022,8 @@ msgstr "Sélectionner un exécutable"
 
 #: src/bin/e_entry.c:496
 #: src/bin/e_fm.c:8039
-#: src/modules/conf_profiles/e_int_config_profiles.c:137
-#: src/modules/conf_shelves/e_int_config_shelf.c:81
+#: src/modules/conf_profiles/e_int_config_profiles.c:135
+#: src/modules/conf_shelves/e_int_config_shelf.c:80
 #: src/modules/ibar/e_mod_config.c:111
 msgid "Delete"
 msgstr "Supprimer"
@@ -1497,8 +1496,8 @@ msgid "Preview"
 msgstr "Aperçu"
 
 #: src/bin/e_fm_prop.c:429
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:183
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:196
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:180
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:193
 #: src/modules/everything/evry_config.c:432
 msgid "Default"
 msgstr "Par défaut"
@@ -1803,17 +1802,17 @@ msgstr "Utiliser l'icone défini par l'utilisateur"
 #: src/bin/e_int_border_menu.c:1058
 #: src/bin/e_int_border_prop.c:473
 msgid "Shaded"
-msgstr "Enroulé"
+msgstr "Enroulé(e)"
 
 #: src/bin/e_int_border_menu.c:1071
 #: src/bin/e_int_border_prop.c:472
 msgid "Sticky"
-msgstr "Ancré"
+msgstr "Ancré(e)"
 
 #: src/bin/e_int_border_menu.c:1087
 #: src/bin/e_int_border_prop.c:477
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:119
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:142
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:124
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:148
 msgid "Fullscreen"
 msgstr "Plein écran"
 
@@ -1950,7 +1949,7 @@ msgstr "Propriétés NetWM"
 
 #: src/bin/e_int_border_prop.c:471
 msgid "Modal"
-msgstr "Modale"
+msgstr "Modal(e)"
 
 #: src/bin/e_int_border_prop.c:474
 #: src/bin/e_int_border_remember.c:741
@@ -1964,7 +1963,7 @@ msgstr "Ignorer le Pager"
 
 #: src/bin/e_int_border_prop.c:476
 msgid "Hidden"
-msgstr "Caché"
+msgstr "Caché(e)"
 
 #: src/bin/e_int_border_remember.c:85
 msgid "Window Remember"
@@ -3223,8 +3222,8 @@ msgstr "Votre configuration du module est PLUS RÉCENTE que la version<br>actuel
 
 #: src/bin/e_widget_config_list.c:63
 #: src/modules/conf_applications/e_int_config_apps.c:207
-#: src/modules/conf_profiles/e_int_config_profiles.c:135
-#: src/modules/conf_shelves/e_int_config_shelf.c:79
+#: src/modules/conf_profiles/e_int_config_profiles.c:133
+#: src/modules/conf_shelves/e_int_config_shelf.c:78
 #: src/modules/ibar/e_mod_config.c:109
 msgid "Add"
 msgstr "Ajouter"
@@ -3967,24 +3966,24 @@ msgstr "Verrouiller quand le temps d'attente est dépassé"
 #: src/modules/conf_dpms/e_int_config_dpms.c:218
 #: src/modules/conf_dpms/e_int_config_dpms.c:230
 #: src/modules/conf_dpms/e_int_config_dpms.c:242
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:145
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:146
 #, c-format
 msgid "%1.0f minutes"
 msgstr "%1.0f minutes"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:279
 #: src/modules/conf_dpms/e_int_config_dpms.c:212
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:176
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:157
 msgid "Timers"
 msgstr "Minuteurs"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:284
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:161
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:162
 msgid "Suggest if deactivated before"
 msgstr "À suggérer si désactivé avant"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:293
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:159
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:173
 msgid "Presentation Mode"
 msgstr "Mode présentation"
 
@@ -4065,8 +4064,8 @@ msgid "Animation speed"
 msgstr "Vitesse de l'animation"
 
 #: src/modules/conf_desks/e_int_config_desks.c:307
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:172
-#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:150
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:171
+#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:154
 #, c-format
 msgid "%1.1f sec"
 msgstr "%1.1f s"
@@ -4528,7 +4527,7 @@ msgstr "Petit"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:102
 msgid "Large"
-msgstr "Grand"
+msgstr "Grand(e)"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:103
 msgid "Small Styled"
@@ -4606,6 +4605,7 @@ msgid "Bytecode"
 msgstr "Bytecode"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:660
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:196
 #: src/modules/cpufreq/e_mod_main.c:226
 #: src/modules/cpufreq/e_mod_main.c:260
 msgid "Automatic"
@@ -4706,42 +4706,42 @@ msgstr "Enlightenment n'a pas pu importer cette configuration,<br>à cause d'une
 msgid "Language"
 msgstr "Langue"
 
-#: src/modules/conf_interaction/e_int_config_interaction.c:37
+#: src/modules/conf_interaction/e_int_config_interaction.c:36
 msgid "Interaction Settings"
 msgstr "Paramétrage de l'interaction"
 
-#: src/modules/conf_interaction/e_int_config_interaction.c:96
+#: src/modules/conf_interaction/e_int_config_interaction.c:95
 msgid "Thumbscroll"
 msgstr "Défilement au doigt"
 
-#: src/modules/conf_interaction/e_int_config_interaction.c:98
+#: src/modules/conf_interaction/e_int_config_interaction.c:97
 msgid "Enable Thumbscroll"
 msgstr "Activer le défilement au doigt"
 
-#: src/modules/conf_interaction/e_int_config_interaction.c:103
+#: src/modules/conf_interaction/e_int_config_interaction.c:102
 msgid "Threshold for a thumb drag"
 msgstr "Seuil du glisser au doigt"
 
-#: src/modules/conf_interaction/e_int_config_interaction.c:106
+#: src/modules/conf_interaction/e_int_config_interaction.c:105
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:141
 #, c-format
 msgid "%1.0f pixels"
 msgstr "%1.0f pixels"
 
-#: src/modules/conf_interaction/e_int_config_interaction.c:111
+#: src/modules/conf_interaction/e_int_config_interaction.c:110
 msgid "Threshold for applying drag momentum"
 msgstr "Seuil d'application de l'impulsion"
 
-#: src/modules/conf_interaction/e_int_config_interaction.c:114
+#: src/modules/conf_interaction/e_int_config_interaction.c:113
 #, c-format
 msgid "%1.0f pixels/sec"
 msgstr "%1.0f pixels/s"
 
-#: src/modules/conf_interaction/e_int_config_interaction.c:120
+#: src/modules/conf_interaction/e_int_config_interaction.c:119
 msgid "Friction slowdown"
 msgstr "Inertie"
 
-#: src/modules/conf_interaction/e_int_config_interaction.c:123
+#: src/modules/conf_interaction/e_int_config_interaction.c:122
 #, c-format
 msgid "%1.2f sec"
 msgstr "%1.2f s"
@@ -4818,10 +4818,8 @@ msgstr "Favoris"
 
 #: src/modules/conf_menus/e_int_config_menus.c:102
 #: src/modules/conf_menus/e_int_config_menus.c:304
-#: src/modules/conf_window_display/e_int_config_window_display.c:179
-#: src/modules/conf_window_display/e_int_config_window_display.c:251
-#: src/modules/conf_winlist/e_int_config_winlist.c:259
-#: src/modules/conf_winlist/e_int_config_winlist.c:438
+#: src/modules/conf_window_display/e_int_config_window_display.c:149
+#: src/modules/conf_winlist/e_int_config_winlist.c:211
 msgid "Display"
 msgstr "Affichage"
 
@@ -4846,11 +4844,11 @@ msgstr "Marge"
 
 #: src/modules/conf_menus/e_int_config_menus.c:310
 #: src/modules/conf_menus/e_int_config_menus.c:315
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:140
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:149
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:158
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:177
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:182
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:139
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:148
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:157
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:176
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:181
 #, c-format
 msgid "%2.0f pixels"
 msgstr "%2.0f pixels"
@@ -4877,7 +4875,7 @@ msgid "Fast Mouse Move Threshhold"
 msgstr "Seuil d'accélération de la souris"
 
 #: src/modules/conf_menus/e_int_config_menus.c:329
-#: src/modules/conf_window_display/e_int_config_window_display.c:279
+#: src/modules/conf_window_display/e_int_config_window_display.c:190
 #, c-format
 msgid "%4.0f pixels/sec"
 msgstr "%4.0f pixels/s"
@@ -4892,7 +4890,9 @@ msgid "%2.2f sec"
 msgstr "%2.2f s"
 
 #: src/modules/conf_menus/e_int_config_menus.c:337
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:208
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:204
+#: src/modules/conf_window_focus/e_int_config_focus.c:265
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:189
 msgid "Miscellaneous"
 msgstr "Divers"
 
@@ -5129,45 +5129,49 @@ msgid "%1.0f MB"
 msgstr "%1.0f Mo"
 
 #: src/modules/conf_performance/e_int_config_performance.c:137
+msgid "Caches"
+msgstr "Tampons"
+
+#: src/modules/conf_performance/e_int_config_performance.c:141
 msgid "Number of Edje files to cache"
 msgstr "Nombre de fichiers edj à mettre en tampon"
 
-#: src/modules/conf_performance/e_int_config_performance.c:139
+#: src/modules/conf_performance/e_int_config_performance.c:143
 #, c-format
 msgid "%1.0f files"
 msgstr "%1.0f fichiers"
 
-#: src/modules/conf_performance/e_int_config_performance.c:143
+#: src/modules/conf_performance/e_int_config_performance.c:147
 msgid "Number of Edje collections to cache"
 msgstr "Nombre de collections edj à mettre en tampon"
 
-#: src/modules/conf_performance/e_int_config_performance.c:145
+#: src/modules/conf_performance/e_int_config_performance.c:149
 #, c-format
 msgid "%1.0f collections"
 msgstr "%1.0f collections"
 
-#: src/modules/conf_performance/e_int_config_performance.c:149
-msgid "Caches"
-msgstr "Tampons"
+#: src/modules/conf_performance/e_int_config_performance.c:152
+msgid "Edje Cache"
+msgstr "Cache Edje"
 
 #: src/modules/conf_performance/e_mod_main.c:21
 msgid "Performance"
 msgstr "Performance"
 
-#: src/modules/conf_profiles/e_int_config_profiles.c:56
+#: src/modules/conf_profiles/e_int_config_profiles.c:54
 msgid "Profile Selector"
 msgstr "Sélecteur de profil"
 
-#: src/modules/conf_profiles/e_int_config_profiles.c:108
+#: src/modules/conf_profiles/e_int_config_profiles.c:106
 msgid "Available Profiles"
 msgstr "Profils disponibles"
 
-#: src/modules/conf_profiles/e_int_config_profiles.c:124
+#: src/modules/conf_profiles/e_int_config_profiles.c:122
 #: src/modules/wizard/page_020.c:121
 msgid "Select a profile"
 msgstr "Sélectionnez un profil"
 
-#: src/modules/conf_profiles/e_int_config_profiles.c:139
+#: src/modules/conf_profiles/e_int_config_profiles.c:138
 msgid "Reset"
 msgstr "Redémarrer"
 
@@ -5245,6 +5249,7 @@ msgid "%1.2f times"
 msgstr "%1.2f fois"
 
 #: src/modules/conf_scale/e_int_config_scale.c:193
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:158
 msgid "Policy"
 msgstr "Politique"
 
@@ -5268,15 +5273,15 @@ msgstr "Mise à l'échelle"
 msgid "Screen Saver Settings"
 msgstr "Paramétrage de l'économiseur d'écran"
 
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:131
-msgid "Enable X screensaver"
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:134
+msgid "Enable X Screensaver"
 msgstr "Activer l'écran de veille de X"
 
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:140
-msgid "Screensaver Timer"
-msgstr "Minuteur de l'écran de veille"
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:138
+msgid "Screensaver"
+msgstr "Écran de veille"
 
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:142
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:143
 msgid "Initial timeout"
 msgstr "Délai initial"
 
@@ -5284,27 +5289,27 @@ msgstr "Délai initial"
 msgid "Alternation timeout"
 msgstr "Délai d'alternance"
 
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:181
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:178
 msgid "Blanking"
 msgstr "Extinction de l'écran"
 
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:186
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:183
 msgid "Preferred"
 msgstr "Préféré"
 
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:189
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:186
 msgid "Not Preferred"
 msgstr "Non préféré"
 
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:194
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:191
 msgid "Exposure Events"
 msgstr "Événements d'exposition"
 
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:199
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:196
 msgid "Allow"
 msgstr "Autoriser"
 
-#: src/modules/conf_screensaver/e_int_config_screensaver.c:202
+#: src/modules/conf_screensaver/e_int_config_screensaver.c:199
 msgid "Don't Allow"
 msgstr "Ne pas autoriser"
 
@@ -5316,7 +5321,7 @@ msgstr "Écran de veille"
 msgid "Configured Shelves"
 msgstr "Racks configurés"
 
-#: src/modules/conf_shelves/e_int_config_shelf.c:84
+#: src/modules/conf_shelves/e_int_config_shelf.c:83
 #: src/modules/ibar/e_mod_config.c:113
 msgid "Setup"
 msgstr "Configurer"
@@ -5457,18 +5462,18 @@ msgid "Fill Options"
 msgstr "Options de remplissage"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:167
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:155
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:164
 #: src/modules/everything/evry_config.c:572
 #: src/modules/gadman/e_mod_gadman.c:738
 msgid "Horizontal"
-msgstr "Horizontal"
+msgstr "Horizontal(e)"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:172
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:157
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:166
 #: src/modules/everything/evry_config.c:565
 #: src/modules/gadman/e_mod_gadman.c:746
 msgid "Vertical"
-msgstr "Vertical"
+msgstr "Vertical(e)"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:177
 msgid "Diagonal Up"
@@ -5555,107 +5560,90 @@ msgstr "Choisissez un fond d'écran dans la liste."
 msgid "Error: can't start the request."
 msgstr "Erreur : initialisation impossible."
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:60
+#: src/modules/conf_window_display/e_int_config_window_display.c:48
 #: src/modules/conf_window_display/e_mod_main.c:21
 msgid "Window Display"
 msgstr "Affichage des fenêtres"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:180
-msgid "Geometry when moving or resizing"
-msgstr "Géométrie en déplacement ou redimensionnement"
-
-#: src/modules/conf_window_display/e_int_config_window_display.c:183
-msgid "Animated shading"
-msgstr "Enroulement animé"
-
-#: src/modules/conf_window_display/e_int_config_window_display.c:188
-msgid "New Window Placement"
-msgstr "Positionnement des nouvelles fenêtres"
-
-#: src/modules/conf_window_display/e_int_config_window_display.c:190
-#: src/modules/conf_window_display/e_int_config_window_display.c:259
-msgid "Smart Placement"
-msgstr "Positionnement intelligent"
-
-#: src/modules/conf_window_display/e_int_config_window_display.c:193
-#: src/modules/conf_window_display/e_int_config_window_display.c:261
-msgid "Don't hide Gadgets"
-msgstr "Ne pas masquer les gadgets"
-
-#: src/modules/conf_window_display/e_int_config_window_display.c:196
-#: src/modules/conf_window_display/e_int_config_window_display.c:263
-msgid "Place at mouse pointer"
-msgstr "Placer au curseur de la souris"
-
-#: src/modules/conf_window_display/e_int_config_window_display.c:199
-#: src/modules/conf_window_display/e_int_config_window_display.c:265
-msgid "Place manually with the mouse"
-msgstr "Placer manuellement à la souris"
-
-#: src/modules/conf_window_display/e_int_config_window_display.c:202
-#: src/modules/conf_window_display/e_int_config_window_display.c:269
-msgid "Switch to desktop of new window"
-msgstr "Basculer vers le bureau de la nouvelle fenêtre"
-
-#: src/modules/conf_window_display/e_int_config_window_display.c:223
+#: src/modules/conf_window_display/e_int_config_window_display.c:128
 msgid "Move Geometry"
 msgstr "Géométrie en déplacement"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:225
-#: src/modules/conf_window_display/e_int_config_window_display.c:234
+#: src/modules/conf_window_display/e_int_config_window_display.c:129
+#: src/modules/conf_window_display/e_int_config_window_display.c:140
 msgid "Display information"
 msgstr "Afficher les informations"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:227
-#: src/modules/conf_window_display/e_int_config_window_display.c:236
+#: src/modules/conf_window_display/e_int_config_window_display.c:132
+#: src/modules/conf_window_display/e_int_config_window_display.c:143
 msgid "Follows the window"
 msgstr "Suivi de la fenêtre"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:233
+#: src/modules/conf_window_display/e_int_config_window_display.c:139
 msgid "Resize Geometry"
 msgstr "Géométrie en redimensionnement"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:242
-msgid "Border Icon Preference"
-msgstr "Préférence de l'icone en bordure"
-
-#: src/modules/conf_window_display/e_int_config_window_display.c:244
+#: src/modules/conf_window_display/e_int_config_window_display.c:155
 msgid "User defined"
 msgstr "Défini par l'utilisateur"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:246
+#: src/modules/conf_window_display/e_int_config_window_display.c:157
 msgid "Application provided"
 msgstr "Icone fourni par l'application"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:256
+#: src/modules/conf_window_display/e_int_config_window_display.c:159
+msgid "Border Icon"
+msgstr "Icone en ordure"
+
+#: src/modules/conf_window_display/e_int_config_window_display.c:164
 msgid "Placement"
 msgstr "Positionnement"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:273
+#: src/modules/conf_window_display/e_int_config_window_display.c:166
+msgid "Smart Placement"
+msgstr "Positionnement intelligent"
+
+#: src/modules/conf_window_display/e_int_config_window_display.c:169
+msgid "Don't hide Gadgets"
+msgstr "Ne pas masquer les gadgets"
+
+#: src/modules/conf_window_display/e_int_config_window_display.c:172
+msgid "Place at mouse pointer"
+msgstr "Placer au curseur de la souris"
+
+#: src/modules/conf_window_display/e_int_config_window_display.c:175
+msgid "Place manually with the mouse"
+msgstr "Placer manuellement à la souris"
+
+#: src/modules/conf_window_display/e_int_config_window_display.c:179
+msgid "Switch to desktop of new window"
+msgstr "Basculer vers le bureau de la nouvelle fenêtre"
+
+#: src/modules/conf_window_display/e_int_config_window_display.c:182
 msgid "New Windows"
 msgstr "Nouvelles fenêtres"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:277
+#: src/modules/conf_window_display/e_int_config_window_display.c:187
 msgid "Animate"
 msgstr "Animation"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:284
+#: src/modules/conf_window_display/e_int_config_window_display.c:198
 msgid "Linear"
 msgstr "Linéaire"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:288
+#: src/modules/conf_window_display/e_int_config_window_display.c:202
 msgid "Accelerate, then decelerate"
 msgstr "Accélérer, puis décélérer"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:292
+#: src/modules/conf_window_display/e_int_config_window_display.c:207
 msgid "Accelerate"
 msgstr "Accélérer"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:296
+#: src/modules/conf_window_display/e_int_config_window_display.c:211
 msgid "Decelerate"
 msgstr "Décélérer"
 
-#: src/modules/conf_window_display/e_int_config_window_display.c:302
+#: src/modules/conf_window_display/e_int_config_window_display.c:215
 msgid "Shading"
 msgstr "Enroulement"
 
@@ -5663,81 +5651,80 @@ msgstr "Enroulement"
 msgid "Focus Settings"
 msgstr "Paramétrage de la focalisation"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:189
+#: src/modules/conf_window_focus/e_int_config_focus.c:192
 msgid "Click Window to Focus"
 msgstr "Cliquer pour focaliser"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:191
+#: src/modules/conf_window_focus/e_int_config_focus.c:194
 msgid "Window under the Mouse"
 msgstr "Fenêtre sous le curseur"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:193
+#: src/modules/conf_window_focus/e_int_config_focus.c:196
 msgid "Most recent Window under the Mouse"
 msgstr "Fenêtre la plus récente sous le curseur"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:208
-#: src/modules/conf_winlist/e_int_config_winlist.c:272
-#: src/modules/conf_winlist/e_int_config_winlist.c:442
-msgid "Focus"
-msgstr "Focalisation"
-
-#: src/modules/conf_window_focus/e_int_config_focus.c:210
+#: src/modules/conf_window_focus/e_int_config_focus.c:214
 msgid "Click"
 msgstr "Clic"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:212
+#: src/modules/conf_window_focus/e_int_config_focus.c:216
 msgid "Pointer"
 msgstr "Curseur"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:214
+#: src/modules/conf_window_focus/e_int_config_focus.c:218
 msgid "Sloppy"
 msgstr "Fluide"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:218
+#: src/modules/conf_window_focus/e_int_config_focus.c:221
 msgid "New Window Focus"
 msgstr "Focalisation des nouvelles fenêtres"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:220
+#: src/modules/conf_window_focus/e_int_config_focus.c:223
 msgid "No window"
 msgstr "Aucune fenêtre"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:222
+#: src/modules/conf_window_focus/e_int_config_focus.c:225
 msgid "All windows"
 msgstr "Toutes les fenêtres"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:224
+#: src/modules/conf_window_focus/e_int_config_focus.c:227
 msgid "Only dialogs"
 msgstr "Uniquement les boîtes de dialogue"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:226
+#: src/modules/conf_window_focus/e_int_config_focus.c:229
 msgid "Only dialogs with focused parent"
 msgstr "Uniquement les boîtes de dialogue dont le parent est focalisé"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:231
+#: src/modules/conf_window_focus/e_int_config_focus.c:233
+#: src/modules/conf_winlist/e_int_config_winlist.c:215
+msgid "Focus"
+msgstr "Focalisation"
+
+#: src/modules/conf_window_focus/e_int_config_focus.c:238
 msgid "Other Settings"
 msgstr "Autres paramètres"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:232
+#: src/modules/conf_window_focus/e_int_config_focus.c:239
 msgid "Always pass click events to programs"
 msgstr "Toujours transmettre les clics aux programmes"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:235
+#: src/modules/conf_window_focus/e_int_config_focus.c:242
 msgid "Click raises the window"
 msgstr "Cliquer place la fenêtre au-dessus"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:238
+#: src/modules/conf_window_focus/e_int_config_focus.c:245
 msgid "Click focuses the window"
 msgstr "Cliquer focalise la fenêtre"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:241
+#: src/modules/conf_window_focus/e_int_config_focus.c:248
 msgid "Refocus last window on desktop switch"
 msgstr "Refocaliser la dernière fenêtre lors d'un changement de bureau"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:244
+#: src/modules/conf_window_focus/e_int_config_focus.c:251
 msgid "Revert focus when it is lost"
 msgstr "Rendre le focus quand il est perdu"
 
-#: src/modules/conf_window_focus/e_int_config_focus.c:255
+#: src/modules/conf_window_focus/e_int_config_focus.c:261
 msgid "Slide pointer to a new focused window"
 msgstr "Déplacer le curseur vers la nouvelle fenêtre focalisée"
 
@@ -5751,126 +5738,117 @@ msgstr "Focalisation des fenêtres"
 msgid "Window Geometry"
 msgstr "Géométrie des fenêtres"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:132
-msgid "Resistance"
-msgstr "Résistance"
-
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:133
 msgid "Resist obstacles"
 msgstr "Résistance aux obstacles"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:136
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:135
 msgid "Other windows"
 msgstr "Autres fenêtres"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:145
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:144
 msgid "Edge of the screen"
 msgstr "Bord de l'écran"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:154
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:153
 msgid "Desktop gadgets"
 msgstr "Gadgets de bureau"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:169
-msgid "Keyboard move and resize"
-msgstr "Déplacement et redimensionnement au clavier"
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:164
+msgid "Resistance"
+msgstr "Résistance"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:170
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:169
 msgid "Automatically accept changes after:"
 msgstr "Acceptation automatique des changements après :"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:175
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:174
 msgid "Move by"
 msgstr "Déplacer de :"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:180
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:179
 msgid "Resize by"
 msgstr "Redimensionner de :"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:187
-msgid "Automatic move and resize"
-msgstr "Déplacement et redimensionnement automatiques"
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:184
+msgid "Keyboard"
+msgstr "Clavier"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:188
-msgid "Limit resize on window configure request to useful geometry"
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:190
+msgid "Limit resize to useful geometry"
 msgstr "Limiter la géométrie du redimensionnement"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:191
-msgid "Move after resize on window configure request"
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:193
+msgid "Move after resize"
 msgstr "Déplacer après redimensionnement"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:46
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:47
 #: src/modules/conf_window_manipulation/e_mod_main.c:23
 msgid "Window Maximize Policy"
 msgstr "Maximisation des fenêtres"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:117
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:140
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:122
 msgid "Maximize Policy"
 msgstr "Politique de maximisation"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:121
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:145
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:126
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:151
 msgid "Smart expansion"
 msgstr "Expansion intelligente"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:125
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:149
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:130
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:155
 msgid "Fill available space"
 msgstr "Remplir l'espace disponible"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:153
-msgid "Maximize Directions"
-msgstr "Directions de maximisation"
-
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:159
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:168
 msgid "Both"
 msgstr "Les deux"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:163
-msgid "Miscellaneous Options"
-msgstr "Autres options"
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:170
+msgid "Direction"
+msgstr "Direction"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:172
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:183
 msgid "Allow manipulation of maximized windows"
 msgstr "Autoriser la manipulation des fenêtres maximisées"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:180
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:186
 msgid "Adjust windows on shelf hide"
 msgstr "Ajuster les fenêtres lors de l'auto-masquage du rack"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:51
+#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:52
 #: src/modules/conf_window_manipulation/e_mod_main.c:22
 msgid "Window Stacking"
 msgstr "Empilement des fenêtres"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:122
-#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:143
-msgid "Automatically raise windows on mouse over"
-msgstr "Élever automatiquement les fenêtres lors du survol"
-
 #: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:126
-#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:168
-msgid "Allow windows to be above fullscreen window"
-msgstr "Autoriser les fenêtres à être au-dessus de la fenêtre en plein écran"
+#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:147
+msgid "Raise windows on mouse over"
+msgstr "Élever les fenêtres lors du survol"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:142
+#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:130
+#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:172
+msgid "Allow windows above fullscreen window"
+msgstr "Autoriser les fenêtres au-dessus de la fenêtre en plein écran"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:146
 msgid "Autoraise"
 msgstr "Élever automatiquement"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:146
+#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:150
 msgid "Delay before raising:"
 msgstr "Délai avant la mise au premier plan :"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:160
+#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:164
 msgid "Raise Window"
 msgstr "Élever la fenêtre"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:162
+#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:166
 msgid "Raise when starting to move or resize"
 msgstr "Élever lors du déplacement ou du redimensionnement"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:165
+#: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:169
 msgid "Raise when clicking to focus"
 msgstr "Élever lors du clic de focalisation"
 
@@ -5927,130 +5905,117 @@ msgstr "Rôle :"
 msgid "<No Role>"
 msgstr "<Sans Rôle>"
 
-#: src/modules/conf_winlist/e_int_config_winlist.c:64
+#: src/modules/conf_winlist/e_int_config_winlist.c:58
 msgid "Window List Settings"
 msgstr "Paramétrage de la liste des fenêtres"
 
-#: src/modules/conf_winlist/e_int_config_winlist.c:260
-msgid "From other desks"
-msgstr "Des autres bureaux"
-
-#: src/modules/conf_winlist/e_int_config_winlist.c:262
-msgid "From other screens"
-msgstr "Des autres écrans"
-
-#: src/modules/conf_winlist/e_int_config_winlist.c:265
-#: src/modules/conf_winlist/e_int_config_winlist.c:424
-msgid "Iconified"
-msgstr "Minimisées"
-
-#: src/modules/conf_winlist/e_int_config_winlist.c:267
-#: src/modules/conf_winlist/e_int_config_winlist.c:484
-#: src/modules/gadman/e_mod_config.c:160
-msgid "Animations"
-msgstr "Animations"
-
-#: src/modules/conf_winlist/e_int_config_winlist.c:271
-#: src/modules/conf_winlist/e_int_config_winlist.c:458
-msgid "Selecting"
-msgstr "Sélection"
-
-#: src/modules/conf_winlist/e_int_config_winlist.c:276
-#: src/modules/conf_winlist/e_int_config_winlist.c:446
-msgid "Uncover"
-msgstr "Découvrir"
-
-#: src/modules/conf_winlist/e_int_config_winlist.c:278
-msgid "Warp mouse"
-msgstr "Déplacer le curseur"
-
-#: src/modules/conf_winlist/e_int_config_winlist.c:280
-#: src/modules/conf_winlist/e_int_config_winlist.c:456
-msgid "Jump to desk"
-msgstr "Basculer vers le bureau"
-
-#: src/modules/conf_winlist/e_int_config_winlist.c:418
+#: src/modules/conf_winlist/e_int_config_winlist.c:191
 msgid "Windows from other desks"
 msgstr "Fenêtres des autres bureaux"
 
-#: src/modules/conf_winlist/e_int_config_winlist.c:421
+#: src/modules/conf_winlist/e_int_config_winlist.c:194
 msgid "Windows from other screens"
 msgstr "Fenêtres des autres écrans"
 
-#: src/modules/conf_winlist/e_int_config_winlist.c:428
+#: src/modules/conf_winlist/e_int_config_winlist.c:197
+msgid "Iconified"
+msgstr "Minimisées"
+
+#: src/modules/conf_winlist/e_int_config_winlist.c:201
 msgid "Iconified from other desks"
 msgstr "Fenêtres minimisées des autres bureaux"
 
-#: src/modules/conf_winlist/e_int_config_winlist.c:433
+#: src/modules/conf_winlist/e_int_config_winlist.c:206
 msgid "Iconified from other screens"
 msgstr "Fenêtres minimisées des autres écrans"
 
-#: src/modules/conf_winlist/e_int_config_winlist.c:448
+#: src/modules/conf_winlist/e_int_config_winlist.c:219
+msgid "Uncover"
+msgstr "Découvrir"
+
+#: src/modules/conf_winlist/e_int_config_winlist.c:221
 msgid "Warp mouse while selecting"
 msgstr "Déplacer le curseur lors de la sélection"
 
-#: src/modules/conf_winlist/e_int_config_winlist.c:452
+#: src/modules/conf_winlist/e_int_config_winlist.c:225
 msgid "Warp mouse at end"
 msgstr "Déplacer le curseur à la fin"
 
-#: src/modules/conf_winlist/e_int_config_winlist.c:462
+#: src/modules/conf_winlist/e_int_config_winlist.c:229
+msgid "Jump to desk"
+msgstr "Basculer vers le bureau"
+
+#: src/modules/conf_winlist/e_int_config_winlist.c:231
+msgid "Selecting"
+msgstr "Sélection"
+
+#: src/modules/conf_winlist/e_int_config_winlist.c:235
 msgid "Warp speed"
 msgstr "Vitesse du déplacement"
 
-#: src/modules/conf_winlist/e_int_config_winlist.c:466
-#: src/modules/conf_winlist/e_int_config_winlist.c:479
-#: src/modules/conf_winlist/e_int_config_winlist.c:490
-#: src/modules/conf_winlist/e_int_config_winlist.c:495
+#: src/modules/conf_winlist/e_int_config_winlist.c:239
+#: src/modules/conf_winlist/e_int_config_winlist.c:252
+#: src/modules/conf_winlist/e_int_config_winlist.c:293
+#: src/modules/conf_winlist/e_int_config_winlist.c:298
 #: src/modules/everything/evry_config.c:567
 #: src/modules/everything/evry_config.c:574
 #, c-format
 msgid "%1.2f"
 msgstr "%1.2f"
 
-#: src/modules/conf_winlist/e_int_config_winlist.c:470
+#: src/modules/conf_winlist/e_int_config_winlist.c:243
 msgid "Scroll Animation"
 msgstr "Animation du défilement"
 
-#: src/modules/conf_winlist/e_int_config_winlist.c:475
+#: src/modules/conf_winlist/e_int_config_winlist.c:248
 msgid "Scroll speed"
 msgstr "Vitesse du défilement"
 
-#: src/modules/conf_winlist/e_int_config_winlist.c:488
-msgid "Horizontal alignment"
-msgstr "Alignement horizontal"
+#: src/modules/conf_winlist/e_int_config_winlist.c:257
+#: src/modules/gadman/e_mod_config.c:160
+msgid "Animations"
+msgstr "Animations"
 
-#: src/modules/conf_winlist/e_int_config_winlist.c:493
-msgid "Vertical alignment"
-msgstr "Alignement vertical"
-
-#: src/modules/conf_winlist/e_int_config_winlist.c:498
+#: src/modules/conf_winlist/e_int_config_winlist.c:261
 msgid "Minimum width"
 msgstr "Largeur minimale"
 
-#: src/modules/conf_winlist/e_int_config_winlist.c:500
-#: src/modules/conf_winlist/e_int_config_winlist.c:507
-#: src/modules/conf_winlist/e_int_config_winlist.c:513
-#: src/modules/conf_winlist/e_int_config_winlist.c:520
+#: src/modules/conf_winlist/e_int_config_winlist.c:263
+#: src/modules/conf_winlist/e_int_config_winlist.c:270
+#: src/modules/conf_winlist/e_int_config_winlist.c:276
+#: src/modules/conf_winlist/e_int_config_winlist.c:283
 #, c-format
 msgid "%4.0f"
 msgstr "%4.0f"
 
-#: src/modules/conf_winlist/e_int_config_winlist.c:505
+#: src/modules/conf_winlist/e_int_config_winlist.c:268
 msgid "Maximum width"
 msgstr "Largeur maximale"
 
-#: src/modules/conf_winlist/e_int_config_winlist.c:511
+#: src/modules/conf_winlist/e_int_config_winlist.c:274
 msgid "Minimum height"
 msgstr "Hauteur minimale"
 
-#: src/modules/conf_winlist/e_int_config_winlist.c:518
+#: src/modules/conf_winlist/e_int_config_winlist.c:281
 msgid "Maximum height"
 msgstr "Hauteur maximale"
 
-#: src/modules/conf_winlist/e_int_config_winlist.c:524
+#: src/modules/conf_winlist/e_int_config_winlist.c:287
 #: src/modules/everything/evry_config.c:597
 msgid "Geometry"
 msgstr "Géométrie"
+
+#: src/modules/conf_winlist/e_int_config_winlist.c:291
+msgid "Horizontal alignment"
+msgstr "Alignement horizontal"
+
+#: src/modules/conf_winlist/e_int_config_winlist.c:296
+msgid "Vertical alignment"
+msgstr "Alignement vertical"
+
+#: src/modules/conf_winlist/e_int_config_winlist.c:301
+msgid "Alignment"
+msgstr "Alignement :"
 
 #: src/modules/cpufreq/e_mod_main.c:134
 msgid "Cpufreq"
@@ -7558,6 +7523,32 @@ msgstr "Il y a déjà une zone de notification active et seule une instance de c
 msgid "Systray"
 msgstr "Zone de notification"
 
+#~ msgid "Screensaver Timer"
+#~ msgstr "Minuteur de l'écran de veille"
+#~ msgid "Geometry when moving or resizing"
+#~ msgstr "Géométrie en déplacement ou redimensionnement"
+#~ msgid "Animated shading"
+#~ msgstr "Enroulement animé"
+#~ msgid "New Window Placement"
+#~ msgstr "Positionnement des nouvelles fenêtres"
+#~ msgid "Border Icon Preference"
+#~ msgstr "Préférence de l'icone en bordure"
+#~ msgid "Keyboard move and resize"
+#~ msgstr "Déplacement et redimensionnement au clavier"
+#~ msgid "Automatic move and resize"
+#~ msgstr "Déplacement et redimensionnement automatiques"
+#~ msgid "Move after resize on window configure request"
+#~ msgstr "Déplacer après redimensionnement"
+#~ msgid "Maximize Directions"
+#~ msgstr "Directions de maximisation"
+#~ msgid "Miscellaneous Options"
+#~ msgstr "Autres options"
+#~ msgid "From other desks"
+#~ msgstr "Des autres bureaux"
+#~ msgid "From other screens"
+#~ msgstr "Des autres écrans"
+#~ msgid "Warp mouse"
+#~ msgstr "Déplacer le curseur"
 #~ msgid "Lock when Enlightenment starts"
 #~ msgstr "Verrouiller au démarrage de Enlightenment"
 #~ msgid "Screen Lock Timers"
@@ -8025,8 +8016,6 @@ msgstr "Zone de notification"
 #~ msgstr "Configuration de la méthode de saisie"
 #~ msgid "Language Configuration"
 #~ msgstr "Configuration de la langue"
-#~ msgid "Keyboard & Mouse"
-#~ msgstr "Clavier & Souris"
 #~ msgid "Search Path Configuration"
 #~ msgstr "Configuration des chemins de recherche"
 #~ msgid "Dropshadow Configuration"
