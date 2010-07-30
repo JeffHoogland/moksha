@@ -1,8 +1,8 @@
 #include "e.h"
 #include "e_mod_main.h"
 
-static void _battery_udev_event_battery(const char *syspath, int event, void *data, Eeze_Udev_Watch *watch);
-static void _battery_udev_event_ac(const char *syspath, int event, void *data, Eeze_Udev_Watch *watch);
+static void _battery_udev_event_battery(const char *syspath, Eeze_Udev_Event event, void *data, Eeze_Udev_Watch *watch);
+static void _battery_udev_event_ac(const char *syspath, Eeze_Udev_Event event, void *data, Eeze_Udev_Watch *watch);
 static void _battery_udev_battery_add(const char *syspath);
 static void _battery_udev_ac_add(const char *syspath);
 static void _battery_udev_battery_del(const char *syspath);
@@ -67,26 +67,26 @@ _battery_udev_stop(void)
 
 
 static void 
-_battery_udev_event_battery(const char *syspath, int event, void *data, Eeze_Udev_Watch *watch)
+_battery_udev_event_battery(const char *syspath, Eeze_Udev_Event event, void *data, Eeze_Udev_Watch *watch)
 {
-   if (((event & EEZE_UDEV_EVENT_ADD) == EEZE_UDEV_EVENT_ADD) ||
-     ((event & EEZE_UDEV_EVENT_ONLINE) == EEZE_UDEV_EVENT_ONLINE))
+   if ((event & EEZE_UDEV_EVENT_ADD) ||
+     (event & EEZE_UDEV_EVENT_ONLINE))
      _battery_udev_battery_add(syspath);
-   else if (((event & EEZE_UDEV_EVENT_REMOVE) == EEZE_UDEV_EVENT_REMOVE) ||
-     ((event & EEZE_UDEV_EVENT_OFFLINE) == EEZE_UDEV_EVENT_OFFLINE))
+   else if ((event & EEZE_UDEV_EVENT_REMOVE) ||
+     (event & EEZE_UDEV_EVENT_OFFLINE))
      _battery_udev_battery_del(syspath);
    else /* must be change */
      _battery_udev_battery_update(syspath, data);
 }
 
 static void 
-_battery_udev_event_ac(const char *syspath, int event, void *data, Eeze_Udev_Watch *watch)
+_battery_udev_event_ac(const char *syspath, Eeze_Udev_Event event, void *data, Eeze_Udev_Watch *watch)
 {
-   if (((event & EEZE_UDEV_EVENT_ADD) == EEZE_UDEV_EVENT_ADD) ||
-     ((event & EEZE_UDEV_EVENT_ONLINE) == EEZE_UDEV_EVENT_ONLINE))
+   if ((event & EEZE_UDEV_EVENT_ADD) ||
+     (event & EEZE_UDEV_EVENT_ONLINE))
      _battery_udev_ac_add(syspath);
-   else if (((event & EEZE_UDEV_EVENT_REMOVE) == EEZE_UDEV_EVENT_REMOVE) ||
-     ((event & EEZE_UDEV_EVENT_OFFLINE) == EEZE_UDEV_EVENT_OFFLINE))
+   else if ((event & EEZE_UDEV_EVENT_REMOVE) ||
+     (event & EEZE_UDEV_EVENT_OFFLINE))
      _battery_udev_ac_del(syspath);
    else /* must be change */
      _battery_udev_ac_update(syspath, data);
