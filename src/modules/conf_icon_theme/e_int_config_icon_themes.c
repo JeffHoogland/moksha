@@ -187,7 +187,7 @@ _fill_icon_themes(void *data)
 	e_widget_ilist_go(d->cfdata->gui.list);
 
         e_widget_size_min_get(d->cfdata->gui.list, &mw, &mh);
-        e_widget_size_min_set(d->cfdata->gui.list, mw, 50);
+        e_widget_size_min_set(d->cfdata->gui.list, mw, 100);
 
 	d->cfdata->fill_icon_themes_delayed = NULL;
 	d->cfdata->populating = EINA_FALSE;
@@ -243,6 +243,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    o = e_widget_list_add(evas, 0, 0);
    ilist = e_widget_ilist_add(evas, 24, 24, &(cfdata->themename));
    cfdata->gui.list = ilist;
+   e_widget_size_min_set(cfdata->gui.list, 100, 100);
 
    cfdata->populating = EINA_TRUE;
    e_widget_on_change_hook_set(ilist, _icon_theme_changed, cfdata);
