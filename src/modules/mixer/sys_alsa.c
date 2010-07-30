@@ -113,10 +113,10 @@ _mixer_callback_del(E_Mixer_System *self, struct e_mixer_callback_desc *desc)
 {
    Ecore_Fd_Handler *handler;
 
-   snd_mixer_set_callback_private(self, NULL);
-
    EINA_LIST_FREE(desc->handlers, handler)
      ecore_main_fd_handler_del(handler);
+
+   snd_mixer_set_callback_private(self, NULL);
 
    free(desc);
 
