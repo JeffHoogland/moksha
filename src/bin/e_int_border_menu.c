@@ -1149,6 +1149,8 @@ _e_border_menu_cb_fav_add(void *data, E_Menu *m, E_Menu_Item *mi)
    if (!(bd = data)) return;
    e_user_dir_concat_static(buf, "applications/menu/favorite.menu");
    menu = efreet_menu_parse(buf);
+   if (!menu)
+      menu = efreet_menu_new("Favorites");
    if (!menu) return;
    efreet_menu_desktop_insert(menu, bd->desktop, -1);
    efreet_menu_save(menu, buf);
