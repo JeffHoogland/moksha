@@ -18,37 +18,37 @@ typedef struct _Item Item;
 
 struct _Info
 {
-   E_Win       *win;
+   E_Win *win;
    Evas_Object *bg, *preview, *mini, *button, *box, *sframe, *span;
-   char        *bg_file;
-   int          iw, ih;
-   Eina_List   *dirs;
-   char        *curdir;
-   DIR         *dir;
+   char *bg_file;
+   int iw, ih;
+   Eina_List *dirs;
+   char *curdir;
+   DIR *dir;
    Ecore_Idler *idler;
-   int          scans;
-   int          con_num, zone_num, desk_x, desk_y;
-   int          use_theme_bg;
-   int          mode;
+   int scans;
+   int con_num, zone_num, desk_x, desk_y;
+   int use_theme_bg;
+   int mode;
 };
 
 struct _Smart_Data
 {
-   Eina_List   *items;
+   Eina_List *items;
    Ecore_Idle_Enterer *idle_enter;
    Ecore_Animator *animator;
    Ecore_Timer *seltimer;
-   Info        *info;
-   Evas_Coord   x, y, w, h;
-   Evas_Coord   cx, cy, cw, ch;
-   Evas_Coord   sx, sy;
-   int          id_num;
-   int          sort_num;
-   double       seltime;
-   double       selmove;
-   Eina_Bool    selin : 1;
-   Eina_Bool    selout : 1;
-   Eina_Bool    jump2hi : 1;
+   Info *info;
+   Evas_Coord x, y, w, h;
+   Evas_Coord cx, cy, cw, ch;
+   Evas_Coord sx, sy;
+   int id_num;
+   int sort_num;
+   double seltime;
+   double selmove;
+   Eina_Bool selin : 1;
+   Eina_Bool selout : 1;
+   Eina_Bool jump2hi : 1;
 };
 
 struct _Item
@@ -70,11 +70,18 @@ struct _Item
 static Info *global_info = NULL;
 
 static void _e_smart_reconfigure(Evas_Object *obj);
+static void _e_smart_reconfigure(Evas_Object *obj);
+static void _thumb_gen(void *data, Evas_Object *obj, void *event_info);
+static void _item_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void _item_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static int _sort_cb(const void *d1, const void *d2);
+static void _scan(Info *info);
 
 static void
 _pan_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
 {
    Smart_Data *sd = evas_object_smart_data_get(obj);
+
    if (x > (sd->cw - sd->w)) x = sd->cw - sd->w;
    if (y > (sd->ch - sd->h)) y = sd->ch - sd->h;
    if (x < 0) x = 0;
@@ -89,6 +96,7 @@ static void
 _pan_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y)
 {
    Smart_Data *sd = evas_object_smart_data_get(obj);
+
    if (x) *x = sd->cx;
    if (y) *y = sd->cy;
 }
@@ -119,12 +127,6 @@ _pan_child_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
    if (h) *h = sd->ch;
 }
 
-static void _e_smart_reconfigure(Evas_Object *obj);
-static void _thumb_gen(void *data, Evas_Object *obj, void *event_info);
-static void _item_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static void _item_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static int _sort_cb(const void *d1, const void *d2);
-
 static Eina_Bool
 _e_smart_reconfigure_do(void *data)
 {
@@ -135,6 +137,7 @@ _e_smart_reconfigure_do(void *data)
    int iw, redo = 0, changed = 0;
    static int recursion = 0;
    Evas_Coord x, y, xx, yy, ww, hh, mw, mh, ox, oy, dd;
+   Evas *evas;
 
    if (!sd) return ECORE_CALLBACK_CANCEL;
    if (sd->cx > (sd->cw - sd->w)) sd->cx = sd->cw - sd->w;
@@ -154,8 +157,9 @@ _e_smart_reconfigure_do(void *data)
    y = 0;
    ww = iw;
    hh = (sd->info->ih * iw) / (sd->info->iw);
-
    mw = mh = 0;
+
+   evas = evas_object_evas_get(obj);
    EINA_LIST_FOREACH(sd->items, l, it)
      {
         xx = sd->x - sd->cx + x;
@@ -293,7 +297,7 @@ _e_smart_reconfigure_do(void *data)
           }
         xx = sd->x - sd->cx + it->x + ox;
         yy = sd->y - sd->cy + it->y + oy;
-        evas_output_viewport_get(evas_object_evas_get(obj), NULL, NULL, &vw, &vh);
+        evas_output_viewport_get(evas, NULL, NULL, &vw, &vh);
         if (E_INTERSECTS(xx, yy, it->w, it->h, 0, 0, vw, vh))
           {
              if (!it->have_thumb)
@@ -308,7 +312,7 @@ _e_smart_reconfigure_do(void *data)
                {
                   if (!it->frame)
                     {
-                       it->frame = edje_object_add(evas_object_evas_get(obj));
+                       it->frame = edje_object_add(evas);
                        if (it->theme)
                          e_theme_edje_object_set(it->frame, "base/theme/widgets",
                                                  "e/conf/wallpaper/main/mini-theme");
@@ -330,7 +334,7 @@ _e_smart_reconfigure_do(void *data)
 
                        evas_object_smart_member_add(it->frame, obj);
                        evas_object_clip_set(it->frame, evas_object_clip_get(obj));
-                       it->image = e_thumb_icon_add(evas_object_evas_get(obj));
+                       it->image = e_thumb_icon_add(evas);
                        edje_object_part_swallow(it->frame, "e.swallow.content", it->image);
                        evas_object_smart_callback_add(it->image, "e_thumb_gen", _thumb_gen, it);
                        if (it->theme)
@@ -382,7 +386,7 @@ _e_smart_reconfigure_do(void *data)
                     }
                   evas_object_del(it->image);
                   it->have_thumb = EINA_FALSE;
-                  it->image = e_thumb_icon_add(evas_object_evas_get(obj));
+                  it->image = e_thumb_icon_add(evas);
                   edje_object_part_swallow(it->frame, "e.swallow.content", it->image);
                   evas_object_smart_callback_add(it->image, "e_thumb_gen", _thumb_gen, it);
                   if (it->theme)
@@ -642,9 +646,7 @@ _pan_unhilight(Evas_Object *obj, Item *it)
    if (!it->hilighted) return;
    it->hilighted = 0;
    if (it->frame)
-     {
-        edje_object_signal_emit(it->frame, "e,state,unselected", "e");
-     }
+     edje_object_signal_emit(it->frame, "e,state,unselected", "e");
 }
 
 static void
@@ -856,14 +858,16 @@ _pan_file_add(Evas_Object *obj, const char *file, Eina_Bool remote, Eina_Bool th
 {
    Smart_Data *sd = evas_object_smart_data_get(obj);
    Item *it = calloc(1, sizeof(Item));
+   Evas *evas;
 
    if (!it) return;
+   evas = evas_object_evas_get(obj);
    sd->items = eina_list_append(sd->items, it);
    it->obj = obj;
    it->remote = remote;
    it->theme = theme;
    it->file = eina_stringshare_add(file);
-   it->frame = edje_object_add(evas_object_evas_get(obj));
+   it->frame = edje_object_add(evas);
    if (it->theme)
      e_theme_edje_object_set(it->frame, "base/theme/widgets",
                              "e/conf/wallpaper/main/mini-theme");
@@ -886,7 +890,7 @@ _pan_file_add(Evas_Object *obj, const char *file, Eina_Bool remote, Eina_Bool th
    evas_object_smart_member_add(it->frame, obj);
    evas_object_clip_set(it->frame, evas_object_clip_get(obj));
    evas_object_show(it->frame);
-   it->image = e_thumb_icon_add(evas_object_evas_get(obj));
+   it->image = e_thumb_icon_add(evas);
    edje_object_part_swallow(it->frame, "e.swallow.content", it->image);
    evas_object_smart_callback_add(it->image, "e_thumb_gen", _thumb_gen, it);
    if (it->theme)
@@ -957,6 +961,7 @@ static void
 _resize(E_Win *wn)
 {
    Info *info = wn->data;
+
    evas_object_resize(info->bg, wn->w, wn->h);
 }
 
@@ -970,6 +975,7 @@ static void
 _bg_clicked(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
    Info *info = data;
+
    _pan_sel_up(info->span);
 }
 
@@ -997,7 +1003,8 @@ _ok(void *data, void *data2)
      {
         /* specific desk */
         e_bg_del(info->con_num, info->zone_num, info->desk_x, info->desk_y);
-        e_bg_add(info->con_num, info->zone_num, info->desk_x, info->desk_y, info->bg_file);
+        e_bg_add(info->con_num, info->zone_num, info->desk_x, info->desk_y, 
+                 info->bg_file);
      }
    else
      {
@@ -1023,6 +1030,7 @@ static void
 _wp_add(void *data, void *data2)
 {
    Info *info = data;
+
    edje_object_signal_emit(info->bg, "e,action,panel,hide", "e");
 }
 
@@ -1030,6 +1038,7 @@ static void
 _wp_delete(void *data, void *data2)
 {
    Info *info = data;
+
    edje_object_signal_emit(info->bg, "e,action,panel,hide", "e");
 }
 
@@ -1037,10 +1046,9 @@ static void
 _wp_changed(void *data, Evas_Object *obj, void *event_info)
 {
    Info *info = data;
+
    edje_object_signal_emit(info->bg, "e,action,panel,hide", "e");
 }
-
-static void _scan(Info *info);
 
 static Eina_Bool
 _idler(void *data)
@@ -1298,7 +1306,8 @@ wp_broser_free(Info *info)
    if (info->dir) closedir(info->dir);
    free(info->bg_file);
    free(info->curdir);
-   EINA_LIST_FREE(info->dirs, s) free(s);
+   EINA_LIST_FREE(info->dirs, s) 
+     free(s);
    if (info->idler) ecore_idler_del(info->idler);
    // del other stuff
    free(info);
