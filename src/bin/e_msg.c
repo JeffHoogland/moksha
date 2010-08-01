@@ -7,17 +7,20 @@ typedef struct _E_Msg_Event E_Msg_Event;
 
 struct _E_Msg_Handler
 {
-   void (*func) (void *data, const char *name, const char *info, int val, E_Object *obj);
+   void (*func) (void *data, const char *name, const char *info, int val, E_Object *obj, void *msgdata);
    void *data;
    unsigned char delete_me : 1;
 };
 
 struct _E_Msg_Event
 {
-   char *name;
-   char *info;
-   int   val;
+   char     *name;
+   char     *info;
+   int       val;
    E_Object *obj;
+   void     *msgdata;
+   void    (*afterfunc) (void *data, E_Object *obj, void *msgdata);
+   void     *afterdata;
 };
 
 /* local subsystem functions */
@@ -51,7 +54,7 @@ e_msg_shutdown(void)
 }
 
 EAPI void
-e_msg_send(const char *name, const char *info, int val, E_Object *obj)
+e_msg_send(const char *name, const char *info, int val, E_Object *obj, void *msgdata, void (*afterfunc) (void *data, E_Object *obj, void *msgdata), void *afterdata)
 {
    unsigned int size, pos, name_len, info_len;
    E_Msg_Event *ev;
@@ -76,12 +79,15 @@ e_msg_send(const char *name, const char *info, int val, E_Object *obj)
      }
    ev->val = val;
    ev->obj = obj;
+   ev->msgdata = msgdata;
+   ev->afterfunc = afterfunc;
+   ev->afterdata = afterdata;
    if (ev->obj) e_object_ref(ev->obj);
    ecore_event_add(E_EVENT_MSG, ev, _e_msg_event_free, NULL);
 }
 
 EAPI E_Msg_Handler *
-e_msg_handler_add(void (*func) (void *data, const char *name, const char *info, int val, E_Object *obj), void *data)
+e_msg_handler_add(void (*func) (void *data, const char *name, const char *info, int val, E_Object *obj, void *msgdata), void *data)
 {
    E_Msg_Handler *emsgh;
    
@@ -122,8 +128,9 @@ _e_msg_event_cb(__UNUSED__ void *data, __UNUSED__ int ev_type, void *ev)
    EINA_LIST_FOREACH(handlers, l, emsgh)
      {
 	if (!emsgh->delete_me)
-	  emsgh->func(emsgh->data, e->name, e->info, e->val, e->obj);
+	  emsgh->func(emsgh->data, e->name, e->info, e->val, e->obj, e->msgdata);
      }
+   if (e->afterfunc) e->afterfunc(e->afterdata, e->obj, e->msgdata);
    processing_handlers--;
    if ((processing_handlers == 0) && (del_handlers))
      {

@@ -521,6 +521,147 @@ e_managers_keys_ungrab(void)
      }
 }
 
+
+
+
+
+
+
+EAPI void
+e_manager_comp_set(E_Manager *man, E_Manager_Comp *comp)
+{
+   E_OBJECT_CHECK(man);
+   E_OBJECT_TYPE_CHECK(man, E_MANAGER_TYPE);
+   man->comp = comp;
+   e_msg_send("comp.manager", "change.comp", // name + info
+              0, // val
+              E_OBJECT(man), // obj
+              NULL, // msgdata
+              NULL, NULL); // afterfunc + afterdata
+}
+
+EAPI Evas *
+e_manager_comp_evas_get(E_Manager *man)
+{
+   E_OBJECT_CHECK(man);
+   E_OBJECT_TYPE_CHECK_RETURN(man, E_MANAGER_TYPE, NULL);
+   if (!man->comp) return NULL;
+   return man->comp->func.evas_get(man->comp->data, man);
+}
+
+EAPI void
+e_manager_comp_evas_update(E_Manager *man)
+{
+   E_OBJECT_CHECK(man);
+   E_OBJECT_TYPE_CHECK(man, E_MANAGER_TYPE);
+   if (!man->comp) return;
+   return man->comp->func.update(man->comp->data, man);
+}
+
+EAPI const Eina_List *
+e_manager_comp_src_list(E_Manager *man)
+{
+   return man->comp->func.src_list_get(man->comp->data, man);
+}
+
+EAPI Evas_Object *
+e_manager_comp_src_image_get(E_Manager *man, E_Manager_Comp_Source *src)
+{
+   return man->comp->func.src_image_get(man->comp->data, man, src);
+}
+
+EAPI Evas_Object *
+e_manager_comp_src_shadow_get(E_Manager *man, E_Manager_Comp_Source *src)
+{
+   return man->comp->func.src_shadow_get(man->comp->data, man, src);
+}
+
+EAPI Evas_Object *
+e_manager_comp_src_image_mirror_add(E_Manager *man, E_Manager_Comp_Source *src)
+{
+   return man->comp->func.src_image_mirror_add(man->comp->data, man, src);
+}
+
+EAPI Eina_Bool
+e_manager_comp_src_visible_get(E_Manager *man, E_Manager_Comp_Source *src)
+{
+   return man->comp->func.src_visible_get(man->comp->data, man, src);
+}
+
+EAPI void
+e_manager_comp_src_hidden_set(E_Manager *man, E_Manager_Comp_Source *src, Eina_Bool hidden)
+{
+   return man->comp->func.src_hidden_set(man->comp->data, man, src, hidden);
+}
+
+EAPI Eina_Bool
+e_manager_comp_src_hidden_get(E_Manager *man, E_Manager_Comp_Source *src)
+{
+   return man->comp->func.src_hidden_get(man->comp->data, man, src);
+}
+
+EAPI void
+e_manager_comp_event_resize_send(E_Manager *man)
+{
+   e_msg_send("comp.manager", "resize.comp", // name + info
+              0, // val
+              E_OBJECT(man), // obj
+              NULL, // msgdata
+              NULL, NULL); // afterfunc + afterdata
+}
+
+EAPI void
+e_manager_comp_event_src_add_send(E_Manager *man, E_Manager_Comp_Source *src,
+                                  void (*afterfunc) (void *data, E_Manager *man, E_Manager_Comp_Source *src),
+                                  void *data)
+{
+   e_msg_send("comp.manager", "add.src", // name + info
+              0, // val
+              E_OBJECT(man), // obj
+              src, // msgdata
+              (void (*)(void *, E_Object *, void *))afterfunc, data); // afterfunc + afterdata
+}
+
+EAPI void
+e_manager_comp_event_src_del_send(E_Manager *man, E_Manager_Comp_Source *src,
+                                  void (*afterfunc) (void *data, E_Manager *man, E_Manager_Comp_Source *src),
+                                  void *data)
+{
+   e_msg_send("comp.manager", "del.src", // name + info
+              0, // val
+              E_OBJECT(man), // obj
+              src, // msgdata
+              (void (*)(void *, E_Object *, void *))afterfunc, data); // afterfunc + afterdata
+}
+
+EAPI void
+e_manager_comp_event_src_config_send(E_Manager *man, E_Manager_Comp_Source *src,
+                                     void (*afterfunc) (void *data, E_Manager *man, E_Manager_Comp_Source *src),
+                                     void *data)
+{
+   e_msg_send("comp.manager", "config.src", // name + info
+              0, // val
+              E_OBJECT(man), // obj
+              src, // msgdata
+              (void (*)(void *, E_Object *, void *))afterfunc, data); // afterfunc + afterdata
+}
+
+EAPI void
+e_manager_comp_event_src_visibility_send(E_Manager *man, E_Manager_Comp_Source *src,
+                                         void (*afterfunc) (void *data, E_Manager *man, E_Manager_Comp_Source *src),
+                                         void *data)
+{
+   e_msg_send("comp.manager", "visibility.src", // name + info
+              0, // val
+              E_OBJECT(man), // obj
+              src, // msgdata
+              (void (*)(void *, E_Object *, void *))afterfunc, data); // afterfunc + afterdata
+}
+
+
+
+
+
 /* local subsystem functions */
 static void
 _e_manager_free(E_Manager *man)

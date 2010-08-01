@@ -3,13 +3,31 @@
  */
 #ifdef E_TYPEDEFS
 
-typedef struct _E_Manager E_Manager;
+typedef struct _E_Manager             E_Manager;
+typedef struct _E_Manager_Comp        E_Manager_Comp;
+typedef struct _E_Manager_Comp_Source E_Manager_Comp_Source;
 
 #else
 #ifndef E_MANAGER_H
 #define E_MANAGER_H
 
 #define E_MANAGER_TYPE (int) 0xE0b01008
+
+struct _E_Manager_Comp
+{
+   struct {
+      Evas             * (*evas_get)             (void *data, E_Manager *man);
+      void               (*update)               (void *data, E_Manager *man);
+      const Eina_List  * (*src_list_get)         (void *data, E_Manager *man);
+      Evas_Object      * (*src_image_get)        (void *data, E_Manager *man, E_Manager_Comp_Source *src);
+      Evas_Object      * (*src_shadow_get)       (void *data, E_Manager *man, E_Manager_Comp_Source *src);
+      Evas_Object      * (*src_image_mirror_add) (void *data, E_Manager *man, E_Manager_Comp_Source *src);
+      Eina_Bool          (*src_visible_get)      (void *data, E_Manager *man, E_Manager_Comp_Source *src);
+      void               (*src_hidden_set)       (void *data, E_Manager *man, E_Manager_Comp_Source *src, Eina_Bool hidden);
+      Eina_Bool          (*src_hidden_get)       (void *data, E_Manager *man, E_Manager_Comp_Source *src);
+   } func;
+   void                   *data;
+};
 
 struct _E_Manager
 {
@@ -25,6 +43,8 @@ struct _E_Manager
 
    E_Pointer           *pointer;
    Ecore_X_Window       initwin;
+   
+   E_Manager_Comp      *comp;
 };
 
 EAPI int        e_manager_init(void);
@@ -45,6 +65,64 @@ EAPI E_Manager      *e_manager_number_get(int num);
 
 EAPI void            e_managers_keys_grab(void);
 EAPI void            e_managers_keys_ungrab(void);
-    
+
+// tenative api for e's compositor to advertise to the rest of e the comp
+// canvas. on comp evas register (set evas) we send:
+//   e_msg_send("comp.manager", "comp.change", 0, man);
+// so to hook up to it:
+//   static void handler(void *data, const char *name, const char *info, int val, E_Object *obj, void *msgdata)
+//   {
+//     if (!strcmp(name, "comp.manager") 
+//       {
+//         if (!strcmp(info, "change.comp"))
+//           { // compositor canvas added or deleted
+//             Evas *e = e_manager_comp_evas_get((E_Manager *)obj);
+//             if (!e) printf("No comp manager\n");
+//             else printf("comp canvas = %p\n", e);
+//           }
+/// FIXME: implement below
+//         else if (!strcmp(info, "resize.comp")
+//           { // compositor canvas resized
+//           }
+//         else if (!strcmp(info, "add.src")
+//           { // compositor source added
+//           }
+//         else if (!strcmp(info, "del.src")
+//           { // compositor source deleted
+//           }
+//         else if (!strcmp(info, "config.src")
+//           { // compositor src reconfigured (moved, resized)
+//           }
+//         else if (!strcmp(info, "visible.src")
+//           { // compositor src shown or hidden
+//           }
+//       }
+//   }
+//   e_msg_handler_add(handler, mydata);
+// 
+// remember to listen to zone confiugre events like:
+// E_EVENT_ZONE_MOVE_RESIZE
+// E_EVENT_ZONE_ADD
+// E_EVENT_ZONE_DEL
+// 
+// only 1 compositor can own a manager at a time, so before you "set" the 
+// comp evas, you need to get it and make sure it's NULL, if so, then
+// you can set the update func and the comp evas
+EAPI void             e_manager_comp_set(E_Manager *man, E_Manager_Comp *comp);
+EAPI Evas            *e_manager_comp_evas_get(E_Manager *man);
+EAPI void             e_manager_comp_evas_update(E_Manager *man);
+EAPI const Eina_List *e_manager_comp_src_list(E_Manager *man);
+EAPI Evas_Object     *e_manager_comp_src_image_get(E_Manager *man, E_Manager_Comp_Source *src);
+EAPI Evas_Object     *e_manager_comp_src_shadow_get(E_Manager *man, E_Manager_Comp_Source *src);
+EAPI Evas_Object     *e_manager_comp_src_image_mirror_add(E_Manager *man, E_Manager_Comp_Source *src);
+EAPI Eina_Bool        e_manager_comp_src_visible_get(E_Manager *man, E_Manager_Comp_Source *src);
+EAPI void             e_manager_comp_src_hidden_set(E_Manager *man, E_Manager_Comp_Source *src, Eina_Bool hidden);
+EAPI Eina_Bool        e_manager_comp_src_hidden_get(E_Manager *man, E_Manager_Comp_Source *src);
+EAPI void             e_manager_comp_event_resize_send(E_Manager *man);
+EAPI void             e_manager_comp_event_src_add_send(E_Manager *man, E_Manager_Comp_Source *src, void (*afterfunc) (void *data, E_Manager *man, E_Manager_Comp_Source *src), void *data);
+EAPI void             e_manager_comp_event_src_del_send(E_Manager *man, E_Manager_Comp_Source *src, void (*afterfunc) (void *data, E_Manager *man, E_Manager_Comp_Source *src), void *data);
+EAPI void             e_manager_comp_event_src_config_send(E_Manager *man, E_Manager_Comp_Source *src, void (*afterfunc) (void *data, E_Manager *man, E_Manager_Comp_Source *src), void *data);
+EAPI void             e_manager_comp_event_src_visibility_send(E_Manager *man, E_Manager_Comp_Source *src, void (*afterfunc) (void *data, E_Manager *man, E_Manager_Comp_Source *src), void *data);
+
 #endif
 #endif
