@@ -77,6 +77,7 @@ EAPI E_Dialog                   *e_util_image_import_settings_new(const char *pa
 EAPI E_Util_Image_Import_Handle *e_util_image_import(const char *image_path, const char *edje_path, const char *edje_group, Eina_Bool external, int quality, E_Image_Import_Mode mode, void (*cb)(void *data, Eina_Bool ok, const char *image_path, const char *edje_path), const void *data);
 EAPI void                        e_util_image_import_cancel(E_Util_Image_Import_Handle *handle);
 
+EAPI int e_util_container_desk_count_get(E_Container *con);
 
 #endif
 #endif

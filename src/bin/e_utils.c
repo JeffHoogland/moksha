@@ -389,13 +389,12 @@ EAPI int
 e_util_edje_icon_check(const char *name)
 {
    const char *file;
-   char buf[4096];
+   char buf[PATH_MAX];
 
    if ((!name) || (!name[0])) return 0;
    snprintf(buf, sizeof(buf), "e/icons/%s", name);
    file = e_theme_edje_file_get("base/theme/icons", buf);
-   if (file[0])
-      return 1;
+   if (file[0]) return 1;
    return 0;
 }
 
@@ -407,7 +406,7 @@ EAPI int
 e_util_edje_icon_set(Evas_Object *obj, const char *name)
 {
    const char *file;
-   char buf[4096];
+   char buf[PATH_MAX];
 
    if ((!name) || (!name[0])) return 0;
    snprintf(buf, sizeof(buf), "e/icons/%s", name);
@@ -1408,6 +1407,30 @@ e_util_image_import_cancel(E_Util_Image_Import_Handle *handle)
    ecore_exe_kill(handle->exe);
 }
 
+EAPI int 
+e_util_container_desk_count_get(E_Container *con) 
+{
+   Eina_List *zl;
+   E_Zone *zone;
+   int count = 0;
+
+   E_OBJECT_CHECK_RETURN(con, 0);
+   E_OBJECT_TYPE_CHECK_RETURN(con, E_CONTAINER_TYPE, 0);
+   EINA_LIST_FOREACH(con->zones, zl, zone) 
+     {
+        int x, y;
+        int cx = 0, cy = 0;
+
+        e_zone_desk_count_get(zone, &cx, &cy);
+        for (x = 0; x < cx; x++) 
+          {
+             for (y = 0; y < cy; y++)
+               count += 1;
+          }
+     }
+   return count;
+}
+
 /* local subsystem functions */
 static Eina_Bool
 _e_util_cb_delayed_del(void *data)
@@ -1479,7 +1502,7 @@ static Eina_Bool
 _e_util_conf_timer_old(void *data)
 {
    char *module_name = data;
-   char buf[4096];
+   char buf[PATH_MAX];
    char *msg =
      _("Configuration data needed "
        "upgrading. Your old configuration<br> has been"
