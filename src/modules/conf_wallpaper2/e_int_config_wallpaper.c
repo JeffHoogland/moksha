@@ -10,7 +10,6 @@
 //   need after select on delete an ok/cancel if file or "ok to remove whole online source" if online
 //   need to make "exchange" wallpapers have a different look
 //   bug: animated wp doesnt workon first show
-//   need to disable "this desktop vs all desktops" if only 1 desk exists
 //   need to be able to "type name to search/filter"
 
 typedef struct _Info Info;
@@ -1231,6 +1230,7 @@ wp_browser_new(E_Container *con)
    o2 = e_widget_radio_add(info->win->evas, _("All Desktops"), 0, rg);
    evas_object_smart_callback_add(o2, "changed", _wp_changed, info);
    e_widget_list_object_append(o, o2, 1, 0, 0.5);
+   e_widget_disabled_set(o2, (e_util_container_desk_count_get(con) < 2));
    evas_object_show(o2);
 
    o2 = e_widget_radio_add(info->win->evas, _("This Desktop"), 1, rg);
