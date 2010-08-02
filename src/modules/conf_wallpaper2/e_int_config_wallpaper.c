@@ -1170,7 +1170,6 @@ wp_browser_new(E_Container *con)
 
    e_win_title_set(win, _("Wallpaper Settings"));
    e_win_name_class_set(win, "E", "_config::appearance/wallpaper2");
-   e_win_border_icon_set(win, "preferences-desktop-wallpaper");
    e_win_resize_callback_set(win, _resize);
    e_win_delete_callback_set(win, _delete);
 
@@ -1285,6 +1284,7 @@ wp_browser_new(E_Container *con)
    e_win_resize(win, mw, mh);
    e_win_centered_set(win, 1);
    e_win_show(win);
+   e_win_border_icon_set(win, "preferences-desktop-wallpaper");
 
    evas_object_resize(info->bg, info->win->w, info->win->h);
    evas_object_show(info->bg);
