@@ -1722,6 +1722,7 @@ _e_mod_comp_win_hide(E_Comp_Win *cw)
         // fixme: ask the x homies. why does this need to be done?
         // why free pixmap (+texture bound), undriect, then redirect again
         // getting pixmap againand well - getting texture too again. why?
+#if 0 // disable
         if (cw->redirected)
           {
              if (cw->pixmap) ecore_x_pixmap_free(cw->pixmap);
@@ -1766,6 +1767,7 @@ _e_mod_comp_win_hide(E_Comp_Win *cw)
              cw->dmg_updates = 0;
              ecore_x_e_comp_pixmap_set(cw->win, cw->pixmap);
           }
+#endif
         if (_comp_mod->conf->send_flush)
           {
              if (cw->bd) ecore_x_e_comp_flush_send(cw->bd->client.win);
