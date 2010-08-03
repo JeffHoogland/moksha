@@ -72,7 +72,7 @@ EAPI void            e_managers_keys_ungrab(void);
 // so to hook up to it:
 //   static void handler(void *data, const char *name, const char *info, int val, E_Object *obj, void *msgdata)
 //   {
-//     if (!strcmp(name, "comp.manager") 
+//     if (!strcmp(name, "comp.manager"))
 //       {
 //         if (!strcmp(info, "change.comp"))
 //           { // compositor canvas added or deleted
@@ -81,19 +81,19 @@ EAPI void            e_managers_keys_ungrab(void);
 //             else printf("comp canvas = %p\n", e);
 //           }
 /// FIXME: implement below
-//         else if (!strcmp(info, "resize.comp")
+//         else if (!strcmp(info, "resize.comp"))
 //           { // compositor canvas resized
 //           }
-//         else if (!strcmp(info, "add.src")
+//         else if (!strcmp(info, "add.src"))
 //           { // compositor source added
 //           }
-//         else if (!strcmp(info, "del.src")
+//         else if (!strcmp(info, "del.src"))
 //           { // compositor source deleted
 //           }
-//         else if (!strcmp(info, "config.src")
+//         else if (!strcmp(info, "config.src"))
 //           { // compositor src reconfigured (moved, resized)
 //           }
-//         else if (!strcmp(info, "visible.src")
+//         else if (!strcmp(info, "visible.src"))
 //           { // compositor src shown or hidden
 //           }
 //       }

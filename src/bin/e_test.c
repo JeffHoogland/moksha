@@ -869,6 +869,109 @@ _e_test_internal(E_Container *con)
    ecore_timer_add(1.0, _e_test_timer, con);
 }
 
+#elif 0
+
+static void
+delorig(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   evas_object_del(data);
+}
+
+static void
+newwin(Evas *e, E_Manager *man, E_Manager_Comp_Source *src)
+{
+   Evas_Object *o, *orig;
+   
+   printf("newwin %p | %p\n", man, src);
+   orig = e_manager_comp_src_image_get(man, src);
+   o = e_manager_comp_src_image_mirror_add(man, src);
+   evas_object_move(o, rand() & 0x1ff, 0);
+   evas_object_resize(o, 48, 48);
+   evas_object_color_set(o, 128, 128, 128, 128);
+   evas_object_show(o);
+   evas_object_event_callback_add(orig, EVAS_CALLBACK_DEL, delorig, o);
+   e_manager_comp_evas_update(man);
+}
+
+static void
+setup(E_Manager *man)
+{
+   Eina_List *list, *l;
+   E_Manager_Comp_Source *src;
+   Evas *e;
+   
+   e = e_manager_comp_evas_get(man);
+   list = (Eina_List *)e_manager_comp_src_list(man);
+   EINA_LIST_FOREACH(list, l, src)
+     {
+        newwin(e, man, src);
+     }
+}
+
+static void
+handler(void *data, const char *name, const char *info, int val, 
+        E_Object *obj, void *msgdata)
+{
+   E_Manager *man = (E_Manager *)obj;
+   E_Manager_Comp_Source *src = (E_Manager_Comp_Source *)msgdata;
+   Evas *e;
+
+   printf("handler... '%s' '%s'\n", name, info);
+   if (strcmp(name, "comp.manager")) return;
+   
+   e = e_manager_comp_evas_get(man);
+   if (!strcmp(info, "change.comp"))
+     {
+        if (!e) printf("TTT: No comp manager\n");
+        else printf("TTT: comp canvas = %p\n", e);
+        if (e) setup(man);
+     }
+   else if (!strcmp(info, "resize.comp"))
+     {
+        printf("%s: %p | %p\n", info, man, src);
+     }
+   else if (!strcmp(info, "add.src"))
+     {
+        printf("%s: %p | %p\n", info, man, src);
+        newwin(e, man, src);
+     }
+   else if (!strcmp(info, "del.src"))
+     {
+        printf("%s: %p | %p\n", info, man, src);
+     }
+   else if (!strcmp(info, "config.src"))
+     {
+        printf("%s: %p | %p\n", info, man, src);
+     }
+   else if (!strcmp(info, "visible.src"))
+     {
+        printf("%s: %p | %p\n", info, man, src);
+     }
+}
+
+static Eina_Bool
+_e_test_timer(void *data)
+{
+   Eina_List *list, *l, *wins;
+   E_Manager *man;
+
+   printf("shetup\n");
+   e_msg_handler_add(handler, NULL);
+   list = e_manager_list();
+   EINA_LIST_FOREACH(list, l, man)
+     {
+        Evas *e = e_manager_comp_evas_get(man);
+        if (e) setup(man);
+     }
+   return 0;
+}
+
+static void
+_e_test_internal(E_Container *con)
+{
+   ecore_timer_add(3.0, _e_test_timer, con);
+}
+
 #else
 static void
 _e_test_internal(E_Container *con)
