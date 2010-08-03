@@ -817,7 +817,10 @@ e_border_hide(E_Border *bd, int manage)
 	     bd->await_hide_event++;
 	  }
 	if (manage != 2)
-	  ecore_x_window_hide(bd->client.win);
+          {
+             if (!e_manager_comp_evas_get(bd->zone->container->manager))
+                ecore_x_window_hide(bd->client.win);
+          }
      }
    
    visible = 0;
@@ -2742,6 +2745,7 @@ e_border_idler_before(void)
 		       else
 			 {
 			    ecore_x_window_show(bd->win);
+                            ecore_x_composite_window_events_enable(bd->win);
 			 }
 		       bd->changes.visible = 0;
 		    }
@@ -2755,8 +2759,15 @@ e_border_idler_before(void)
 		  if (e_object_is_del(E_OBJECT(bd))) continue;
 		  if ((bd->changes.visible) && (!bd->visible))
 		    {
-		       ecore_x_window_hide(bd->win);
-		       ecore_evas_hide(bd->bg_ecore_evas);
+                       if (!e_manager_comp_evas_get(bd->zone->container->manager))
+                         {
+                            ecore_x_window_hide(bd->win);
+                            ecore_evas_hide(bd->bg_ecore_evas);
+                         }
+                       else
+                         {
+                            ecore_x_composite_window_events_disable(bd->win);
+                         }
 		       bd->changes.visible = 0;
 		    }
 		  if (bd->changed) _e_border_eval(bd);
@@ -2774,6 +2785,7 @@ e_border_idler_before(void)
 		       else
 			 {
 			    ecore_x_window_show(bd->win);
+                            ecore_x_composite_window_events_enable(bd->win);
 			 }
 		       bd->changes.visible = 0;
 		    }
@@ -5618,7 +5630,11 @@ _e_border_post_move_resize_job(void *data)
      }
    if (bd->post_show)
      {
-	if (bd->visible) ecore_x_window_show(bd->win);
+	if (bd->visible)
+           {
+              ecore_x_window_show(bd->win);
+              ecore_x_composite_window_events_enable(bd->win);
+           }
      }
    bd->post_show = 0;
    bd->post_move = 0;
@@ -7018,6 +7034,7 @@ _e_border_eval(E_Border *bd)
 	else
 	  {
 	     ecore_x_window_show(bd->win);
+             ecore_x_composite_window_events_enable(bd->win);
 	  }
 	if (bd->cur_mouse_action)
 	  {

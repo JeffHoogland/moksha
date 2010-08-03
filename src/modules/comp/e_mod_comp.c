@@ -2224,7 +2224,8 @@ _e_mod_comp_bd_show(__UNUSED__ void *data, __UNUSED__ int type, void *event)
    E_Event_Border_Show *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
    if (!cw) return ECORE_CALLBACK_PASS_ON;
-   // fimxe: show compwin here
+   if (cw->visible) return ECORE_CALLBACK_PASS_ON;
+   _e_mod_comp_win_show(cw);
    return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -2234,7 +2235,8 @@ _e_mod_comp_bd_hide(__UNUSED__ void *data, __UNUSED__ int type, void *event)
    E_Event_Border_Hide *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
    if (!cw) return ECORE_CALLBACK_PASS_ON;
-   // fimxe: hide compwin here
+   if (!cw->visible) return ECORE_CALLBACK_PASS_ON;
+   _e_mod_comp_win_hide(cw);
    return ECORE_CALLBACK_PASS_ON;
 }
 
