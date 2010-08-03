@@ -8,7 +8,7 @@ static void _e_mod_kbd_device_kbd_add(const char *udi);
 static void _e_mod_kbd_device_kbd_del(const char *udi);
 static void _e_mod_kbd_device_kbd_eval(void);
 #ifdef HAVE_EEZE
-static void _e_mod_kbd_device_udev_event(const char *device, int event, void *data __UNUSED__, Eeze_Udev_Watch *watch __UNUSED__);
+static void _e_mod_kbd_device_udev_event(const char *device, Eeze_Udev_Event event, void *data __UNUSED__, Eeze_Udev_Watch *watch __UNUSED__);
 #else
 static void _e_mod_kbd_device_cb_input_kbd(void *data __UNUSED__, void *reply, DBusError *err);
 static void _e_mod_kbd_device_cb_input_kbd_is(void *data, void *reply, DBusError *err);
@@ -144,7 +144,7 @@ _e_mod_kbd_device_ignore_load_file(const char *file)
 
 #ifdef HAVE_EEZE
 static void 
-_e_mod_kbd_device_udev_event(const char *device, int event, void *data __UNUSED__, Eeze_Udev_Watch *watch __UNUSED__)
+_e_mod_kbd_device_udev_event(const char *device, Eeze_Udev_Event event, void *data __UNUSED__, Eeze_Udev_Watch *watch __UNUSED__)
 {
    if ((!device) || (!event)) return;
 
