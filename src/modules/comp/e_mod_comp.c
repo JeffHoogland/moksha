@@ -996,11 +996,20 @@ _e_mod_comp_object_del(void *data, void *obj)
           }
         eina_hash_del(borders, e_util_winid_str_get(cw->bd->client.win), cw);
         cw->bd = NULL;
+        evas_object_data_del(cw->shobj, "border");
 // hmm - lockup?
 //        cw->counter = 0;
      }
-   else if (obj == cw->pop) cw->pop = NULL;
-   else if (obj == cw->menu) cw->menu = NULL;
+   else if (obj == cw->pop)
+     {
+        cw->pop = NULL;
+        evas_object_data_del(cw->shobj, "popup");
+     }
+   else if (obj == cw->menu)
+     {
+        cw->menu = NULL;
+        evas_object_data_del(cw->shobj, "menu");
+     }
    if (cw->dfn)
      {
         e_object_delfn_del(obj, cw->dfn);
@@ -1431,6 +1440,16 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
                }
           }
         
+        if (cw->bd) evas_object_data_set(cw->shobj, "border", cw->bd);
+        else if (cw->pop) evas_object_data_set(cw->shobj, "popup", cw->pop);
+        else if (cw->menu) evas_object_data_set(cw->shobj, "menu", cw->menu);
+        
+        evas_object_data_set(cw->shobj, "win", 
+                             (void *)((unsigned long)cw->win));
+
+        evas_object_pass_events_set(cw->shobj, 1);
+        evas_object_pass_events_set(cw->obj, 1);
+        
         cw->pending_count++;
         e_manager_comp_event_src_add_send
            (cw->c->man, (E_Manager_Comp_Source *)cw,
@@ -1439,7 +1458,12 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
    else
      {
         cw->shobj = evas_object_rectangle_add(c->evas);
-        evas_object_color_set(cw->shobj, 0, 0, 0, 64);
+        evas_object_color_set(cw->shobj, 0, 0, 0, 0);
+        
+        evas_object_data_set(cw->shobj, "win", 
+                             (void *)((unsigned long)cw->win));
+        
+        evas_object_pass_events_set(cw->shobj, 1);
      }
    c->wins_invalid = 1;
    c->wins = eina_inlist_append(c->wins, EINA_INLIST_GET(cw));

@@ -879,6 +879,7 @@ newwin(Evas *e, E_Manager *man, E_Manager_Comp_Source *src)
 {
    Evas_Object *o, *orig;
    
+   if (!e_manager_comp_src_image_get(man, src)) return;
    printf("newwin %p | %p\n", man, src);
    orig = e_manager_comp_src_image_get(man, src);
    o = e_manager_comp_src_image_mirror_add(man, src);
