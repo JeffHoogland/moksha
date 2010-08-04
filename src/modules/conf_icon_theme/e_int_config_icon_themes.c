@@ -117,6 +117,8 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config->icon_theme_overrides = !!cfdata->overrides;
    e_config_save_queue();
 
+   e_util_env_set("E_ICON_THEME", e_config->icon_theme);
+
    ev = E_NEW(E_Event_Config_Icon_Theme, 1);
    if (ev)
      {
