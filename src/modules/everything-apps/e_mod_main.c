@@ -255,7 +255,8 @@ _fetch_exe(Evry_Plugin *plugin, const char *input)
 
 	     if (!strncmp(input, tmp, end))
 	       {
-		  if (query && (cnt++ < 50) && (len != tmp_len))
+		  if (query && (cnt++ < 50) &&
+		      (len != tmp_len))
 		    _item_exe_add(p, tmp, 15);
 
 		  if (!min || tmp_len < min)
@@ -278,7 +279,7 @@ _fetch_exe(Evry_Plugin *plugin, const char *input)
 	     EVRY_ITEM_LABEL_SET(it, file);
 	     IF_RELEASE(p->command->file);
 	     p->command->file = eina_stringshare_ref(it->label);
-	     it->fuzzy_match = 10;
+	     it->fuzzy_match = 11; // prefix match
 	     EVRY_PLUGIN_ITEM_APPEND(p, it);
 	     evry->item_changed(it, 0, 0);
 	  }
