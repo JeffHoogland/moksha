@@ -1,3 +1,5 @@
+/* 
+ * NOTE TO FreeBSD users. Install libexecinfo from  
  * ports/devel/libexecinfo and add -lexecinfo to LDFLAGS
  * to add backtrace support.
  */
