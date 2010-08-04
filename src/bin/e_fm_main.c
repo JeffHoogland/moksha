@@ -1029,8 +1029,10 @@ e_volume_mount(E_Volume *v)
        (!strcmp(v->fstype, "ntfs"))
        )
      {
+#if !defined(__FreeBSD__)
 	snprintf(buf, sizeof(buf), "uid=%i", (int)getuid());
 	opt = eina_list_append(opt, buf);
+#endif
      }
 
    if ((!strcmp(v->fstype, "vfat")) || 
