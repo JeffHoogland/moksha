@@ -1512,7 +1512,7 @@ _e_int_menus_shelves_add_cb(void *data, E_Menu *m, E_Menu_Item *mi)
    cs = E_NEW(E_Config_Shelf, 1);
    cs->name = eina_stringshare_add("shelf");
    cs->container = con->num;
-   cs->zone = zone->num;
+   cs->zone = zone->id;
    cs->popup = 1;
    cs->layer = 200;
    cs->orient = E_GADCON_ORIENT_CORNER_BR;
