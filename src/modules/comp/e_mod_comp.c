@@ -2428,7 +2428,9 @@ _e_mod_comp_src_hidden_set_func(void *data, E_Manager *man, E_Manager_Comp_Sourc
    E_Comp *c = data;
    E_Comp_Win *cw = (E_Comp_Win *)src;
    if (!cw->c) return;
+   if (!cw->hidden_override == hidden) return;
    cw->hidden_override = hidden;
+   if (cw->bd) e_border_comp_hidden_set(cw->bd, cw->hidden_override);
    if (cw->visible)
      {
         if (cw->hidden_override) evas_object_hide(cw->shobj);

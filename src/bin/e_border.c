@@ -2744,8 +2744,9 @@ e_border_idler_before(void)
 			 }
 		       else
 			 {
+                            if (!bd->comp_hidden)
+                               ecore_x_composite_window_events_enable(bd->win);
 			    ecore_x_window_show(bd->win);
-                            ecore_x_composite_window_events_enable(bd->win);
 			 }
 		       bd->changes.visible = 0;
 		    }
@@ -2784,8 +2785,9 @@ e_border_idler_before(void)
 			 }
 		       else
 			 {
+                            if (!bd->comp_hidden)
+                               ecore_x_composite_window_events_enable(bd->win);
 			    ecore_x_window_show(bd->win);
-                            ecore_x_composite_window_events_enable(bd->win);
 			 }
 		       bd->changes.visible = 0;
 		    }
@@ -5633,7 +5635,8 @@ _e_border_post_move_resize_job(void *data)
 	if (bd->visible)
            {
               ecore_x_window_show(bd->win);
-              ecore_x_composite_window_events_enable(bd->win);
+              if (!bd->comp_hidden)
+                 ecore_x_composite_window_events_enable(bd->win);
            }
      }
    bd->post_show = 0;
@@ -7033,8 +7036,9 @@ _e_border_eval(E_Border *bd)
 	  }
 	else
 	  {
+             if (!bd->comp_hidden)
+                ecore_x_composite_window_events_enable(bd->win);
 	     ecore_x_window_show(bd->win);
-             ecore_x_composite_window_events_enable(bd->win);
 	  }
 	if (bd->cur_mouse_action)
 	  {
@@ -8128,4 +8132,17 @@ e_border_pointer_warp_to_center(E_Border *bd)
    ecore_x_pointer_xy_get(bd->zone->container->win, &warp_x, &warp_y);
    warp_timer = ecore_timer_add(0.01, _e_border_pointer_warp_to_center_timer, (const void*)bd);
    return 1;
+}
+
+EAPI void
+e_border_comp_hidden_set(E_Border *bd, Eina_Bool hidden)
+{
+   E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
+   
+   if (bd->comp_hidden == hidden) return;
+   if (bd->comp_hidden)
+      ecore_x_composite_window_events_disable(bd->win);
+   else
+      ecore_x_composite_window_events_enable(bd->win);
 }

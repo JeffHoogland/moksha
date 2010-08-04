@@ -558,6 +558,8 @@ struct _E_Border
 
    Efreet_Desktop *desktop;
    E_Pointer *pointer;
+
+   unsigned char comp_hidden   : 1;
    
    unsigned char post_move   : 1;
    unsigned char post_resize : 1;
@@ -701,6 +703,8 @@ EAPI void e_border_focus_track_thaw(void);
 
 EAPI E_Border *e_border_under_pointer_get(E_Desk *desk, E_Border *exclude);
 EAPI int e_border_pointer_warp_to_center(E_Border *bd);
+
+EAPI void e_border_comp_hidden_set(E_Border *bd, Eina_Bool hidden);
 
 extern EAPI int E_EVENT_BORDER_RESIZE;
 extern EAPI int E_EVENT_BORDER_MOVE;
