@@ -1,7 +1,3 @@
-/*
- * vim:cindent:ts=8:sw=3:sts=8:expandtab:cino=>5n-3f0^-2{2
- */
-
 #include "config.h"
 
 #ifndef _FILE_OFFSET_BITS

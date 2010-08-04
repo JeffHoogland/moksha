@@ -1,7 +1,3 @@
-/*
- * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
- */
-
 /***************************************************
   TODO option for maximum items to cache
   TODO keep common list for recent file instances

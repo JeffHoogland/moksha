@@ -1,6 +1,3 @@
-/*
- * vim:cindent:ts=8:sw=3:sts=8:expandtab:cino=>5n-3f0^-2{2
- */
 #ifdef E_TYPEDEFS
 
 #define E_FM_OP_DEBUG(...) fprintf(stderr, __VA_ARGS__)
