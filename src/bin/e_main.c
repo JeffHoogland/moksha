@@ -584,6 +584,8 @@ main(int argc, char **argv)
      }
    _e_main_shutdown_push(e_config_shutdown);
 
+   e_util_env_set("E_ICON_THEME", e_config->icon_theme);
+
    locked |= e_config->desklock_start_locked;
 
    /* set all execced stuff to configured priority */
