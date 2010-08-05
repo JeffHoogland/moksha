@@ -1444,10 +1444,6 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
         else if (cw->pop) evas_object_data_set(cw->shobj, "popup", cw->pop);
         else if (cw->menu) evas_object_data_set(cw->shobj, "menu", cw->menu);
         
-        evas_object_data_set(cw->shobj, "win", 
-                             (void *)((unsigned long)cw->win));
-
-        evas_object_pass_events_set(cw->shobj, 1);
         evas_object_pass_events_set(cw->obj, 1);
         
         cw->pending_count++;
@@ -1459,12 +1455,12 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
      {
         cw->shobj = evas_object_rectangle_add(c->evas);
         evas_object_color_set(cw->shobj, 0, 0, 0, 0);
-        
-        evas_object_data_set(cw->shobj, "win", 
-                             (void *)((unsigned long)cw->win));
-        
-        evas_object_pass_events_set(cw->shobj, 1);
      }
+   evas_object_pass_events_set(cw->shobj, 1);
+   evas_object_data_set(cw->shobj, "win", 
+                        (void *)((unsigned long)cw->win));
+   evas_object_data_set(cw->shobj, "src", cw);
+   
    c->wins_invalid = 1;
    c->wins = eina_inlist_append(c->wins, EINA_INLIST_GET(cw));
    cw->up = e_mod_comp_update_new();

@@ -867,7 +867,6 @@ _e_test_internal(E_Container *con)
 }
 
 #elif 0
-
 static void
 delorig(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
@@ -875,19 +874,41 @@ delorig(void *data, Evas *e, Evas_Object *obj, void *event_info)
 }
 
 static void
+movorig(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   Evas_Coord x, y;
+   evas_object_geometry_get(obj, &x, &y, NULL, NULL);
+   evas_object_move(data, x, y);
+}
+
+static void
+reszorig(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   Evas_Coord w, h;
+   evas_object_geometry_get(obj, NULL, NULL, &w, &h);
+   evas_object_resize(data, w / 8, h / 8);
+}
+
+static void
 newwin(Evas *e, E_Manager *man, E_Manager_Comp_Source *src)
 {
    Evas_Object *o, *orig;
+   Evas_Coord x, y, w, h;
    
    if (!e_manager_comp_src_image_get(man, src)) return;
-   printf("newwin %p | %p\n", man, src);
-   orig = e_manager_comp_src_image_get(man, src);
+
+   orig = e_manager_comp_src_shadow_get(man, src);
    o = e_manager_comp_src_image_mirror_add(man, src);
-   evas_object_move(o, rand() & 0x1ff, 0);
-   evas_object_resize(o, 48, 48);
-   evas_object_color_set(o, 128, 128, 128, 128);
-   evas_object_show(o);
+   evas_object_color_set(o, 200, 200, 200, 200);
    evas_object_event_callback_add(orig, EVAS_CALLBACK_DEL, delorig, o);
+   evas_object_event_callback_add(orig, EVAS_CALLBACK_MOVE, movorig, o);
+   evas_object_event_callback_add(orig, EVAS_CALLBACK_RESIZE, reszorig, o);
+   evas_object_geometry_get(orig, &x, &y, &w, &h);
+   
+   evas_object_move(o, x, y);
+   evas_object_resize(o, w / 8, h / 8);
+
+   evas_object_show(o);
    e_manager_comp_evas_update(man);
 }
 
