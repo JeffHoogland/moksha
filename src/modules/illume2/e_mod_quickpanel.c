@@ -84,7 +84,7 @@ e_mod_quickpanel_new(E_Zone *zone)
 
    /* set quickpanel zone */
    qp->zone = zone;
-   qp->dir = 0;
+   qp->vert.dir = 0;
 
    qp->mouse_hdl = ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP, 
                                            _e_mod_quickpanel_cb_mouse_up, qp);
@@ -113,7 +113,7 @@ e_mod_quickpanel_show(E_Illume_Quickpanel *qp)
 
    /* grab the height of the indicator */
    cz = e_illume_zone_config_get(qp->zone->id);
-   qp->ih = cz->indicator.size;
+   qp->vert.isz = cz->indicator.size;
 
    /* check animation duration */
    if (duration <= 0) 
@@ -122,14 +122,14 @@ e_mod_quickpanel_show(E_Illume_Quickpanel *qp)
         E_Border *bd;
         int ny = 0;
 
-	ny = qp->ih;
-	if (qp->dir == 1) ny = 0;
+	ny = qp->vert.isz;
+	if (qp->vert.dir == 1) ny = 0;
 
         /* if we are not animating, just show the borders */
         EINA_LIST_FOREACH(qp->borders, l, bd) 
           {
              if (!bd->visible) e_illume_border_show(bd);
-             if (qp->dir == 0) 
+             if (qp->vert.dir == 0) 
 	       {
 		  e_border_fx_offset(bd, 0, ny);
 		  ny += bd->h;
@@ -260,7 +260,7 @@ _e_mod_quickpanel_cb_border_add(void *data __UNUSED__, int type __UNUSED__, void
    /* hide this border */
    e_illume_border_hide(ev->border);
 
-   qp->h += ev->border->h;
+   qp->vert.sz += ev->border->h;
 
    /* add this border to QP border collection */
    qp->borders = eina_list_append(qp->borders, ev->border);
@@ -300,9 +300,9 @@ _e_mod_quickpanel_cb_border_remove(void *data __UNUSED__, int type __UNUSED__, v
    /* add this border to QP border collection */
    qp->borders = eina_list_remove(qp->borders, ev->border);
 
-   qp->h = 0;
+   qp->vert.sz = 0;
    EINA_LIST_FOREACH(qp->borders, l, bd)
-     qp->h += bd->h;
+     qp->vert.sz += bd->h;
 
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -319,9 +319,9 @@ _e_mod_quickpanel_cb_border_resize(void *data __UNUSED__, int type __UNUSED__, v
    if (!ev->border->client.illume.quickpanel.quickpanel) return ECORE_CALLBACK_PASS_ON;
    if (!(qp = e_illume_quickpanel_by_zone_get(ev->border->zone))) return ECORE_CALLBACK_PASS_ON;
 
-   qp->h = 0;
+   qp->vert.sz = 0;
    EINA_LIST_FOREACH(qp->borders, l, bd)
-     qp->h += bd->h;
+     qp->vert.sz += bd->h;
 
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -380,15 +380,15 @@ _e_mod_quickpanel_slide(E_Illume_Quickpanel *qp, int visible, double len)
 {
    qp->start = ecore_loop_time_get();
    qp->len = len;
-   qp->adjust_start = qp->adjust;
-   qp->adjust_end = 0;
-   if (qp->dir == 0) 
+   qp->vert.adjust_start = qp->vert.adjust;
+   qp->vert.adjust_end = 0;
+   if (qp->vert.dir == 0) 
      {
-	if (visible) qp->adjust_end = qp->h;
+	if (visible) qp->vert.adjust_end = qp->vert.sz;
      }
    else 
      {
-	if (visible) qp->adjust_end = -qp->h;
+	if (visible) qp->vert.adjust_end = -qp->vert.sz;
      }
 
    if (!qp->animator) 
@@ -450,9 +450,9 @@ _e_mod_quickpanel_cb_animate(void *data)
    else 
      t = qp->len;
 
-   qp->adjust = (qp->adjust_end * v) + (qp->adjust_start * (1.0 - v));
+   qp->vert.adjust = (qp->vert.adjust_end * v) + (qp->vert.adjust_start * (1.0 - v));
 
-   if (qp->dir == 0) _e_mod_quickpanel_animate_down(qp);
+   if (qp->vert.dir == 0) _e_mod_quickpanel_animate_down(qp);
    else _e_mod_quickpanel_animate_up(qp);
 
    if (t == qp->len) 
@@ -486,8 +486,8 @@ _e_mod_quickpanel_position_update(E_Illume_Quickpanel *qp)
    EINA_LIST_FOREACH(qp->borders, l, bd) 
      e_border_move(bd, qp->zone->x, iy);
 
-   qp->dir = 0;
-   if ((iy + qp->ih + qp->h) > qp->zone->h) qp->dir = 1;
+   qp->vert.dir = 0;
+   if ((iy + qp->vert.isz + qp->vert.sz) > qp->zone->h) qp->vert.dir = 1;
 }
 
 static void 
@@ -497,13 +497,13 @@ _e_mod_quickpanel_animate_down(E_Illume_Quickpanel *qp)
    E_Border *bd;
    int pbh = 0;
 
-   pbh = (qp->ih - qp->h);
+   pbh = (qp->vert.isz - qp->vert.sz);
    EINA_LIST_FOREACH(qp->borders, l, bd) 
      {
         /* don't adjust borders that are being deleted */
         if (e_object_is_del(E_OBJECT(bd))) continue;
-	if (bd->fx.y != (qp->adjust + pbh)) 
-	  e_border_fx_offset(bd, 0, (qp->adjust + pbh));
+	if (bd->fx.y != (qp->vert.adjust + pbh)) 
+	  e_border_fx_offset(bd, 0, (qp->vert.adjust + pbh));
 	pbh += bd->h;
 
         if (!qp->visible) 
@@ -530,14 +530,14 @@ _e_mod_quickpanel_animate_up(E_Illume_Quickpanel *qp)
    E_Border *bd;
    int pbh = 0;
 
-   pbh = qp->h;
+   pbh = qp->vert.sz;
    EINA_LIST_FOREACH(qp->borders, l, bd) 
      {
         /* don't adjust borders that are being deleted */
         if (e_object_is_del(E_OBJECT(bd))) continue;
 	pbh -= bd->h;
-	if (bd->fx.y != (qp->adjust + pbh)) 
-	  e_border_fx_offset(bd, 0, (qp->adjust + pbh));
+	if (bd->fx.y != (qp->vert.adjust + pbh)) 
+	  e_border_fx_offset(bd, 0, (qp->vert.adjust + pbh));
 
         if (!qp->visible) 
           {
