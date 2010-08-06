@@ -5,6 +5,7 @@
 static Eina_Bool _e_mod_quickpanel_cb_client_message(void *data __UNUSED__, int type __UNUSED__, void *event);
 static Eina_Bool _e_mod_quickpanel_cb_mouse_up(void *data, int type __UNUSED__, void *event);
 static Eina_Bool _e_mod_quickpanel_cb_border_add(void *data __UNUSED__, int type __UNUSED__, void *event);
+static Eina_Bool _e_mod_quickpanel_cb_border_remove(void *data __UNUSED__, int type __UNUSED__, void *event);
 static Eina_Bool _e_mod_quickpanel_cb_border_resize(void *data __UNUSED__, int type __UNUSED__, void *event);
 static void _e_mod_quickpanel_cb_post_fetch(void *data __UNUSED__, void *data2);
 static void _e_mod_quickpanel_cb_free(E_Illume_Quickpanel *qp);
@@ -35,6 +36,11 @@ e_mod_quickpanel_init(void)
      eina_list_append(_qp_hdls, 
                       ecore_event_handler_add(E_EVENT_BORDER_ADD, 
                                               _e_mod_quickpanel_cb_border_add, 
+                                              NULL));
+   _qp_hdls = 
+     eina_list_append(_qp_hdls, 
+                      ecore_event_handler_add(E_EVENT_BORDER_REMOVE, 
+                                              _e_mod_quickpanel_cb_border_remove,
                                               NULL));
 
    _qp_hdls = 
@@ -258,6 +264,45 @@ _e_mod_quickpanel_cb_border_add(void *data __UNUSED__, int type __UNUSED__, void
 
    /* add this border to QP border collection */
    qp->borders = eina_list_append(qp->borders, ev->border);
+
+   return ECORE_CALLBACK_PASS_ON;
+}
+
+static Eina_Bool
+_e_mod_quickpanel_cb_border_remove(void *data __UNUSED__, int type __UNUSED__, void *event) 
+{
+   E_Event_Border_Remove *ev;
+   E_Illume_Quickpanel *qp;
+   E_Zone *zone;
+   Eina_List *l;
+   E_Border *bd;
+
+   ev = event;
+   if (!ev->border->client.illume.quickpanel.quickpanel) return ECORE_CALLBACK_PASS_ON;
+
+   zone = ev->border->zone;
+
+   /* if this border should be on a different zone, get requested zone */
+   if (zone->num != ev->border->client.illume.quickpanel.zone) 
+     {
+        E_Container *con;
+        int zn = 0;
+
+        /* find this zone */
+        con = e_container_current_get(e_manager_current_get());
+        zn = ev->border->client.illume.quickpanel.zone;
+        zone = e_util_container_zone_number_get(con->num, zn);
+        if (!zone) zone = e_util_container_zone_number_get(con->num, 0);
+     }
+
+   if (!(qp = e_illume_quickpanel_by_zone_get(zone))) return ECORE_CALLBACK_PASS_ON;
+
+   /* add this border to QP border collection */
+   qp->borders = eina_list_remove(qp->borders, ev->border);
+
+   qp->h = 0;
+   EINA_LIST_FOREACH(qp->borders, l, bd)
+     qp->h += bd->h;
 
    return ECORE_CALLBACK_PASS_ON;
 }
