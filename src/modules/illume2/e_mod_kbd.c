@@ -245,6 +245,11 @@ _e_mod_kbd_cb_border_remove(void *data __UNUSED__, int type __UNUSED__, void *ev
    ev = event;
 
    /* if we removed the focused border, reset some variables */
+   if ((_prev_focused_border) && (_prev_focused_border == ev->border)) 
+     {
+        _prev_focused_border = NULL;
+     }
+   /* if we removed the focused border, reset some variables */
    if ((_focused_border) && (_focused_border == ev->border)) 
      {
         e_mod_kbd_hide();
