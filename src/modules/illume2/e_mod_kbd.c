@@ -223,7 +223,8 @@ _e_mod_kbd_cb_client_message(void *data __UNUSED__, int type __UNUSED__, void *e
    Ecore_X_Event_Client_Message *ev;
 
    ev = event;
-   if (ev->win != ecore_x_window_root_first_get()) return ECORE_CALLBACK_PASS_ON;
+   if (ev->win != ecore_x_window_root_first_get()) 
+     return ECORE_CALLBACK_PASS_ON;
 
    /* legacy illume 1 code */
    if ((ev->message_type == ecore_x_atom_get("_MB_IM_INVOKER_COMMAND")) || 
@@ -256,7 +257,8 @@ _e_mod_kbd_cb_border_remove(void *data __UNUSED__, int type __UNUSED__, void *ev
      }
 
    /* try to find the keyboard for this border */
-   if (!(kbd = _e_mod_kbd_by_border_get(ev->border))) return ECORE_CALLBACK_PASS_ON;
+   if (!(kbd = _e_mod_kbd_by_border_get(ev->border))) 
+     return ECORE_CALLBACK_PASS_ON;
 
    if ((kbd->border) && (kbd->border == ev->border)) 
      {
@@ -347,15 +349,18 @@ _e_mod_kbd_cb_border_property(void *data __UNUSED__, int type __UNUSED__, void *
    ev = event;
 
    /* only interested in vkbd state changes here */
-   if (ev->atom != ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE) return ECORE_CALLBACK_PASS_ON;
+   if (ev->atom != ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE) 
+     return ECORE_CALLBACK_PASS_ON;
 
    /* make sure we have a border */
-   if (!(bd = e_border_find_by_client_window(ev->win))) return ECORE_CALLBACK_PASS_ON;
+   if (!(bd = e_border_find_by_client_window(ev->win))) 
+     return ECORE_CALLBACK_PASS_ON;
 
 //   printf("Kbd Border Property Change: %s\n", bd->client.icccm.name);
 
    /* if it's not focused, we don't care */
-   if ((!bd->focused) || (_e_mod_kbd_by_border_get(bd))) return ECORE_CALLBACK_PASS_ON;
+   if ((!bd->focused) || (_e_mod_kbd_by_border_get(bd))) 
+     return ECORE_CALLBACK_PASS_ON;
 
    /* NB: Not sure why, but we seem to need to fetch kbd state here. This could 
     * be a result of filtering the container_hook_layout. Not real happy 
@@ -366,7 +371,8 @@ _e_mod_kbd_cb_border_property(void *data __UNUSED__, int type __UNUSED__, void *
    if ((_focused_border) && (_focused_border == bd)) 
      {
         /* if focused state is the same, get out */
-        if (_focused_state == bd->client.vkbd.state) return ECORE_CALLBACK_PASS_ON;
+        if (_focused_state == bd->client.vkbd.state) 
+          return ECORE_CALLBACK_PASS_ON;
      }
 
    /* set our variables */

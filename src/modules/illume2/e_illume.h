@@ -323,9 +323,10 @@ struct _E_Illume_Quickpanel
    Ecore_X_Window clickwin;
    Ecore_Event_Handler *mouse_hdl;
    double start, len;
-   struct {
-      int sz, isz, adjust, adjust_start, adjust_end, dir;
-   } vert, horiz;
+   struct 
+     {
+        int size, isize, adjust, adjust_start, adjust_end, dir;
+     } vert, horiz;
    unsigned char visible : 1;
    /**< flag to indicate if the quickpanel is currently visible */
 };

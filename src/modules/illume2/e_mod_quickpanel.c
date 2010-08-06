@@ -113,7 +113,7 @@ e_mod_quickpanel_show(E_Illume_Quickpanel *qp)
 
    /* grab the height of the indicator */
    cz = e_illume_zone_config_get(qp->zone->id);
-   qp->vert.isz = cz->indicator.size;
+   qp->vert.isize = cz->indicator.size;
 
    /* check animation duration */
    if (duration <= 0) 
@@ -122,7 +122,7 @@ e_mod_quickpanel_show(E_Illume_Quickpanel *qp)
         E_Border *bd;
         int ny = 0;
 
-	ny = qp->vert.isz;
+	ny = qp->vert.isize;
 	if (qp->vert.dir == 1) ny = 0;
 
         /* if we are not animating, just show the borders */
@@ -201,8 +201,10 @@ _e_mod_quickpanel_cb_client_message(void *data __UNUSED__, int type __UNUSED__, 
         E_Border *bd;
         E_Illume_Quickpanel *qp;
 
-        if (!(bd = e_border_find_by_client_window(ev->win))) return ECORE_CALLBACK_PASS_ON;
-        if (!(qp = e_illume_quickpanel_by_zone_get(bd->zone))) return ECORE_CALLBACK_PASS_ON;
+        if (!(bd = e_border_find_by_client_window(ev->win))) 
+          return ECORE_CALLBACK_PASS_ON;
+        if (!(qp = e_illume_quickpanel_by_zone_get(bd->zone))) 
+          return ECORE_CALLBACK_PASS_ON;
         _e_mod_quickpanel_position_update(qp);
      }
 
@@ -231,7 +233,8 @@ _e_mod_quickpanel_cb_border_add(void *data __UNUSED__, int type __UNUSED__, void
    int iy;
 
    ev = event;
-   if (!ev->border->client.illume.quickpanel.quickpanel) return ECORE_CALLBACK_PASS_ON;
+   if (!ev->border->client.illume.quickpanel.quickpanel) 
+     return ECORE_CALLBACK_PASS_ON;
 
    zone = ev->border->zone;
 
@@ -248,7 +251,8 @@ _e_mod_quickpanel_cb_border_add(void *data __UNUSED__, int type __UNUSED__, void
         if (!zone) zone = e_util_container_zone_number_get(con->num, 0);
      }
 
-   if (!(qp = e_illume_quickpanel_by_zone_get(zone))) return ECORE_CALLBACK_PASS_ON;
+   if (!(qp = e_illume_quickpanel_by_zone_get(zone))) 
+     return ECORE_CALLBACK_PASS_ON;
 
    /* set position and zone */
    e_illume_border_indicator_pos_get(zone, NULL, &iy);
@@ -260,7 +264,7 @@ _e_mod_quickpanel_cb_border_add(void *data __UNUSED__, int type __UNUSED__, void
    /* hide this border */
    e_illume_border_hide(ev->border);
 
-   qp->vert.sz += ev->border->h;
+   qp->vert.size += ev->border->h;
 
    /* add this border to QP border collection */
    qp->borders = eina_list_append(qp->borders, ev->border);
@@ -278,7 +282,8 @@ _e_mod_quickpanel_cb_border_remove(void *data __UNUSED__, int type __UNUSED__, v
    E_Border *bd;
 
    ev = event;
-   if (!ev->border->client.illume.quickpanel.quickpanel) return ECORE_CALLBACK_PASS_ON;
+   if (!ev->border->client.illume.quickpanel.quickpanel) 
+     return ECORE_CALLBACK_PASS_ON;
 
    zone = ev->border->zone;
 
@@ -295,14 +300,15 @@ _e_mod_quickpanel_cb_border_remove(void *data __UNUSED__, int type __UNUSED__, v
         if (!zone) zone = e_util_container_zone_number_get(con->num, 0);
      }
 
-   if (!(qp = e_illume_quickpanel_by_zone_get(zone))) return ECORE_CALLBACK_PASS_ON;
+   if (!(qp = e_illume_quickpanel_by_zone_get(zone))) 
+     return ECORE_CALLBACK_PASS_ON;
 
    /* add this border to QP border collection */
    qp->borders = eina_list_remove(qp->borders, ev->border);
 
-   qp->vert.sz = 0;
+   qp->vert.size = 0;
    EINA_LIST_FOREACH(qp->borders, l, bd)
-     qp->vert.sz += bd->h;
+     qp->vert.size += bd->h;
 
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -316,12 +322,14 @@ _e_mod_quickpanel_cb_border_resize(void *data __UNUSED__, int type __UNUSED__, v
    E_Border *bd;
 
    ev = event;
-   if (!ev->border->client.illume.quickpanel.quickpanel) return ECORE_CALLBACK_PASS_ON;
-   if (!(qp = e_illume_quickpanel_by_zone_get(ev->border->zone))) return ECORE_CALLBACK_PASS_ON;
+   if (!ev->border->client.illume.quickpanel.quickpanel) 
+     return ECORE_CALLBACK_PASS_ON;
+   if (!(qp = e_illume_quickpanel_by_zone_get(ev->border->zone))) 
+     return ECORE_CALLBACK_PASS_ON;
 
-   qp->vert.sz = 0;
+   qp->vert.size = 0;
    EINA_LIST_FOREACH(qp->borders, l, bd)
-     qp->vert.sz += bd->h;
+     qp->vert.size += bd->h;
 
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -384,11 +392,11 @@ _e_mod_quickpanel_slide(E_Illume_Quickpanel *qp, int visible, double len)
    qp->vert.adjust_end = 0;
    if (qp->vert.dir == 0) 
      {
-	if (visible) qp->vert.adjust_end = qp->vert.sz;
+	if (visible) qp->vert.adjust_end = qp->vert.size;
      }
    else 
      {
-	if (visible) qp->vert.adjust_end = -qp->vert.sz;
+	if (visible) qp->vert.adjust_end = -qp->vert.size;
      }
 
    if (!qp->animator) 
@@ -450,7 +458,8 @@ _e_mod_quickpanel_cb_animate(void *data)
    else 
      t = qp->len;
 
-   qp->vert.adjust = (qp->vert.adjust_end * v) + (qp->vert.adjust_start * (1.0 - v));
+   qp->vert.adjust = ((qp->vert.adjust_end * v) + 
+                      (qp->vert.adjust_start * (1.0 - v)));
 
    if (qp->vert.dir == 0) _e_mod_quickpanel_animate_down(qp);
    else _e_mod_quickpanel_animate_up(qp);
@@ -487,7 +496,7 @@ _e_mod_quickpanel_position_update(E_Illume_Quickpanel *qp)
      e_border_move(bd, qp->zone->x, iy);
 
    qp->vert.dir = 0;
-   if ((iy + qp->vert.isz + qp->vert.sz) > qp->zone->h) qp->vert.dir = 1;
+   if ((iy + qp->vert.isize + qp->vert.size) > qp->zone->h) qp->vert.dir = 1;
 }
 
 static void 
@@ -497,7 +506,7 @@ _e_mod_quickpanel_animate_down(E_Illume_Quickpanel *qp)
    E_Border *bd;
    int pbh = 0;
 
-   pbh = (qp->vert.isz - qp->vert.sz);
+   pbh = (qp->vert.isize - qp->vert.size);
    EINA_LIST_FOREACH(qp->borders, l, bd) 
      {
         /* don't adjust borders that are being deleted */
@@ -530,7 +539,7 @@ _e_mod_quickpanel_animate_up(E_Illume_Quickpanel *qp)
    E_Border *bd;
    int pbh = 0;
 
-   pbh = qp->vert.sz;
+   pbh = qp->vert.size;
    EINA_LIST_FOREACH(qp->borders, l, bd) 
      {
         /* don't adjust borders that are being deleted */
