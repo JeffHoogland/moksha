@@ -266,7 +266,7 @@ _e_mod_sft_win_create_default_buttons(Sft_Win *swin)
 
 
    /* create close button */
-   btn = e_widget_button_add(swin->win->evas, _("Close"), "window-close", 
+   btn = e_widget_button_add(swin->win->evas, _("Close"), "application-exit", 
                              _e_mod_sft_win_cb_close, swin, NULL);
    e_widget_size_min_get(btn, &mw, &mh);
    evas_object_size_hint_min_set(btn, (mw * e_scale), (mh * e_scale));
