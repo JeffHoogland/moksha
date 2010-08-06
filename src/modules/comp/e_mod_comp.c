@@ -1640,13 +1640,13 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
         DBG("NATIVE SHOW1 [0x%x] %x %ix%i\n", cw->win, cw->pixmap, cw->pw, cw->ph);
      }
 */
+   if (cw->pixmap) ecore_x_pixmap_free(cw->pixmap);
+   cw->pixmap = 0; 
+   cw->pw = 0;
+   cw->ph = 0;
+   cw->native = 0;
    if (!cw->redirected)
      {
-        if (cw->pixmap) ecore_x_pixmap_free(cw->pixmap);
-        cw->pixmap = 0; 
-        cw->pw = 0;
-        cw->ph = 0;
-        cw->native = 0;
 //        printf("^^^^ redirect5 %x\n", cw->win);
 // we redirect all subwindows anyway
 //        ecore_x_composite_redirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
@@ -1668,8 +1668,8 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
         DBG("  [0x%x] up resize %ix%i\n", cw->win, cw->pw, cw->ph);
         e_mod_comp_update_resize(cw->up, cw->pw, cw->ph);
         e_mod_comp_update_add(cw->up, 0, 0, cw->pw, cw->ph);
-        ecore_x_e_comp_pixmap_set(cw->win, cw->pixmap);
      }
+   ecore_x_e_comp_pixmap_set(cw->win, cw->pixmap);
 /* don't need  
    if ((cw->shobj) && (cw->obj))
      {
