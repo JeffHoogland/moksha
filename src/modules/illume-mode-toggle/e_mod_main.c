@@ -17,10 +17,10 @@ static void _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient);
 static char *_gc_label(E_Gadcon_Client_Class *cc);
 static Evas_Object *_gc_icon(E_Gadcon_Client_Class *cc, Evas *evas);
 static const char *_gc_id_new(E_Gadcon_Client_Class *cc);
-static void _cb_action_mode_single(void *data, Evas_Object *obj, const char *emission, const char *source);
-static void _cb_action_mode_dual_top(void *data, Evas_Object *obj, const char *emission, const char *source);
-static void _cb_action_mode_dual_left(void *data, Evas_Object *obj, const char *emission, const char *source);
-static Eina_Bool _cb_event_client_message(void *data, int type, void *event);
+static void _cb_action_mode_single(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__);
+static void _cb_action_mode_dual_top(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__);
+static void _cb_action_mode_dual_left(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__);
+static Eina_Bool _cb_event_client_message(void *data, int type __UNUSED__, void *event);
 static void _set_icon(Instance *inst);
 static void _mode_set(Instance *inst, Ecore_X_Illume_Mode mode);
 
@@ -142,25 +142,25 @@ _gc_id_new(E_Gadcon_Client_Class *cc)
 }
 
 static void
-_cb_action_mode_single(void *data, Evas_Object *obj, const char *emission, const char *source)
+_cb_action_mode_single(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    _mode_set(data, ECORE_X_ILLUME_MODE_SINGLE);
 }
 
 static void
-_cb_action_mode_dual_top(void *data, Evas_Object *obj, const char *emission, const char *source)
+_cb_action_mode_dual_top(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    _mode_set(data, ECORE_X_ILLUME_MODE_DUAL_TOP);
 }
 
 static void
-_cb_action_mode_dual_left(void *data, Evas_Object *obj, const char *emission, const char *source)
+_cb_action_mode_dual_left(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    _mode_set(data, ECORE_X_ILLUME_MODE_DUAL_LEFT);
 }
 
 static Eina_Bool
-_cb_event_client_message(void *data, __UNUSED__ int type, void *event)
+_cb_event_client_message(void *data, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Client_Message *ev;
    Instance *inst;
