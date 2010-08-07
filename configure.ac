@@ -281,14 +281,14 @@ AC_MSG_RESULT([$e_cv_enable_files])
 
 AC_MSG_CHECKING([which device backend to use])
 AC_ARG_ENABLE([device-hal],
-   AS_HELP_STRING([--enable-device-hal],[enable hal device backend @<:@default=enabled@:>@]),
+   AS_HELP_STRING([--enable-device-hal],[enable hal device backend @<:@default=disabled@:>@]),
    [e_cv_want_device_hal=$enableval]
-   AC_CACHE_VAL([e_cv_want_device_hal], [e_cv_want_device_hal=yes]))
+   AC_CACHE_VAL([e_cv_want_device_hal], [e_cv_want_device_hal=no]))
 
 AC_ARG_ENABLE([device-udev],
-   AS_HELP_STRING([--enable-device-udev],[enable udev support @<:@default=disabled@:>@]),
+   AS_HELP_STRING([--enable-device-udev],[enable udev support @<:@default=enabled@:>@]),
    [e_cv_want_device_udev=$enableval],
-   AC_CACHE_VAL([e_cv_want_device_udev], [e_cv_want_device_udev=no]))
+   AC_CACHE_VAL([e_cv_want_device_udev], [e_cv_want_device_udev=yes]))
 
 if test "x$e_cv_want_device_udev" = "xyes";then
   device_backend=eeze
@@ -810,10 +810,6 @@ config/illume/Makefile
 config/illume-home/Makefile
 $po_makefile_in
 ])
-
-if test "$device_backend" = "eeze";then
-  device_backend+=" (EXPERIMENTAL!)"
-fi
 
 # report
 txt_strip() {
