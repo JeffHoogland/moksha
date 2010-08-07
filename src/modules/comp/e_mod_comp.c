@@ -427,9 +427,9 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
      }
 
    evas_object_move(cw->shobj, cw->x, cw->y);
-   evas_object_resize(cw->shobj, 
-                      cw->pw + (cw->border * 2), 
-                      cw->ph + (cw->border * 2));
+   evas_object_resize(cw->shobj,
+                      cw->w + (cw->border * 2), 
+                      cw->h + (cw->border * 2));
 
    if ((cw->c->gl) && (_comp_mod->conf->texture_from_pixmap) &&
        (!cw->shaped) && (!cw->rects)/* && (!cw->shape_changed)*/)
@@ -1928,12 +1928,21 @@ _e_mod_comp_win_configure(E_Comp_Win *cw, int x, int y, int w, int h, int border
    if (!((w == cw->w) && (h == cw->h)))
      {
         DBG("  [0x%x] rsz %4ix%4i\n", cw->win, w, h);
+        evas_object_image_size_set(cw->obj, 1, 1);
         if (cw->pixmap)
           {
              DBG("  [0x%x] free pm %x\n", cw->win, cw->pixmap);
+             if (cw->native)
+               {
+                  evas_object_image_native_surface_set(cw->obj, NULL);
+                  cw->native = 0;
+                  EINA_LIST_FOREACH(cw->obj_mirror, l, o)
+                    {
+                       evas_object_image_native_surface_set(o, NULL);
+                    }
+                }
              ecore_x_pixmap_free(cw->pixmap);
              cw->pixmap = 0;
-             cw->native = 0;
              cw->pw = 0;
              cw->ph = 0;
              ecore_x_e_comp_pixmap_set(cw->win, cw->pixmap);
@@ -2170,6 +2179,7 @@ _e_mod_comp_shape(__UNUSED__ void *data, __UNUSED__ int type, void *event)
    Ecore_X_Event_Window_Shape *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->win);
    if (!cw) return ECORE_CALLBACK_PASS_ON;
+   if (ev->type != ECORE_X_SHAPE_BOUNDING) return ECORE_CALLBACK_PASS_ON;
    _e_mod_comp_win_reshape(cw);
    return ECORE_CALLBACK_PASS_ON;
 }
