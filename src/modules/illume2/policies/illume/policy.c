@@ -172,7 +172,8 @@ _policy_border_hide_below(E_Border *bd)
              else 
                {
                   /* we need to check x/y position */
-                  if (E_CONTAINS(bd->x, bd->y, bd->w, bd->h, b->x, b->y, b->w, b->h))
+                  if (E_CONTAINS(bd->x, bd->y, bd->w, bd->h, 
+                                 b->x, b->y, b->w, b->h))
                     {
 		       if (b->visible) e_illume_border_hide(b);
                     }
@@ -417,11 +418,11 @@ _policy_zone_layout_keyboard(E_Border *bd, E_Illume_Config_Zone *cz)
 
    if ((!bd) || (!cz)) return;
 
-   /* grab minimum keyboard size */
-   e_illume_border_min_get(bd, NULL, &cz->vkbd.size);
-
    /* no point in adjusting size or position if it's not visible */
    if (!bd->visible) return;
+
+   /* grab minimum keyboard size */
+   e_illume_border_min_get(bd, NULL, &cz->vkbd.size);
 
    /* make sure it's the required width & height */
    if ((bd->w != bd->zone->w) || (bd->h != cz->vkbd.size))
@@ -524,13 +525,10 @@ _policy_zone_layout_home_dual_custom(E_Border *bd, E_Illume_Config_Zone *cz)
 
    /* see if there are any other home windows */
    home = e_illume_border_home_get(bd->zone);
-   if (home) 
+   if ((home) && (bd != home))
      {
-        if (bd != home) 
-          {
-             ny = (iy + cz->indicator.size);
-             nh = ((bd->zone->y + bd->zone->h) - ny - cz->softkey.size);
-          }
+        ny = (iy + cz->indicator.size);
+        nh = ((bd->zone->y + bd->zone->h) - ny - cz->softkey.size);
      }
 
    /* make sure it's the required width & height */
@@ -566,10 +564,7 @@ _policy_zone_layout_home_dual_left(E_Border *bd, E_Illume_Config_Zone *cz)
 
    /* see if there are any other home windows */
    home = e_illume_border_home_get(bd->zone);
-   if (home) 
-     {
-        if (bd != home) nx = (home->x + nw);
-     }
+   if ((home) && (bd != home)) nx = (home->x + nw);
 
    /* make sure it's the required width & height */
    if ((bd->w != nw) || (bd->h != nh))
@@ -656,7 +651,6 @@ _policy_zone_layout_app_dual_top(E_Border *bd, E_Illume_Config_Zone *cz)
      {
         /* grab keyboard safe region */
         e_illume_keyboard_safe_app_region_get(bd->zone, NULL, NULL, NULL, &kh);
-
         nh = (kh - cz->indicator.size);
      }
    else 
@@ -668,28 +662,25 @@ _policy_zone_layout_app_dual_top(E_Border *bd, E_Illume_Config_Zone *cz)
    /* see if there is a border already there. if so, check placement based on 
     * virtual keyboard usage */
    b = e_illume_border_at_xy_get(bd->zone, bd->zone->x, ny);
-   if (b) 
+   if ((b) && (b != bd))
      {
-        if (b != bd) 
+        /* does this border need keyboard ? */
+        if ((bd->focused) && 
+            (bd->client.vkbd.state > ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF)) 
           {
-             /* does this border need keyboard ? */
-             if ((bd->focused) && 
-                 (bd->client.vkbd.state > ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF)) 
-               {
-                  int h;
+             int h;
 
-                  /* move existing border to bottom if needed */
-                  h = ((bd->zone->h - cz->indicator.size - cz->softkey.size) / 2);
-                  if ((b->x != b->zone->x) || (b->y != (ny + h)))
-                    _policy_border_move(b, b->zone->x, (ny + h));
+             /* move existing border to bottom if needed */
+             h = ((bd->zone->h - cz->indicator.size - cz->softkey.size) / 2);
+             if ((b->x != b->zone->x) || (b->y != (ny + h)))
+               _policy_border_move(b, b->zone->x, (ny + h));
 
-                  /* resize existing border if needed */
-                  if ((b->w != b->zone->w) || (b->h != h))
-                    _policy_border_resize(b, b->zone->w, h);
-               }
-             else
-               ny = b->y + nh;
+             /* resize existing border if needed */
+             if ((b->w != b->zone->w) || (b->h != h))
+               _policy_border_resize(b, b->zone->w, h);
           }
+        else
+          ny = b->y + nh;
      }
 
    /* resize if needed */
@@ -723,13 +714,10 @@ _policy_zone_layout_app_dual_custom(E_Border *bd, E_Illume_Config_Zone *cz)
    nh = iy;
 
    app = e_illume_border_at_xy_get(bd->zone, bd->zone->x, bd->zone->y);
-   if (app) 
+   if ((app) && (bd != app))
      {
-        if (bd != app) 
-          {
-             ny = (iy + cz->indicator.size);
-             nh = ((bd->zone->y + bd->zone->h) - ny - cz->softkey.size);
-          }
+        ny = (iy + cz->indicator.size);
+        nh = ((bd->zone->y + bd->zone->h) - ny - cz->softkey.size);
      }
 
    /* make sure it's the required width & height */
@@ -769,10 +757,7 @@ _policy_zone_layout_app_dual_left(E_Border *bd, E_Illume_Config_Zone *cz)
 
    /* see if there is a border already there. if so, place at right */
    b = e_illume_border_at_xy_get(bd->zone, nx, (ky + cz->indicator.size));
-   if (b) 
-     {
-        if (bd != b) nx = b->x + nw;
-     }
+   if ((b) && (bd != b)) nx = b->x + nw;
 
    /* resize if needed */
    if ((bd->w != nw) || (bd->h != kh))
@@ -1054,11 +1039,8 @@ _policy_border_add(E_Border *bd)
    if ((bd->client.icccm.accepts_focus) || (bd->client.icccm.take_focus)) 
      _pol_focus_stack = eina_list_append(_pol_focus_stack, bd);
 
-   if ((e_illume_border_is_softkey(bd)) ||
-       (e_illume_border_is_indicator(bd)))
-     {
-	_policy_zone_layout_update(bd->zone);
-     }
+   if ((e_illume_border_is_softkey(bd)) || (e_illume_border_is_indicator(bd)))
+     _policy_zone_layout_update(bd->zone);
    else 
      {
 	/* set focus on new border if we can */
@@ -1139,8 +1121,8 @@ _policy_border_focus_out(E_Border *bd)
           {
              E_Border *parent;
 
-             parent = e_illume_border_parent_get(bd);
-             if (parent) _policy_border_set_focus(parent);
+             if (parent = e_illume_border_parent_get(bd))
+               _policy_border_set_focus(parent);
           }
      }
 }
@@ -1174,12 +1156,9 @@ _policy_border_activate(E_Border *bd)
     * occasionally fall through wrt E's focus policy, so cherry pick the good 
     * parts and use here :) */
 
-   /* if the border is iconified then uniconify */
-   if (bd->iconic) 
-     {
-        /* if the user is allowed to uniconify, then do it */
-        if (!bd->lock_user_iconify) e_border_uniconify(bd);
-     }
+   /* if the border is iconified then uniconify if allowed */
+   if ((bd->iconic) && (!bd->lock_user_iconify)) 
+     e_border_uniconify(bd);
 
    /* set very high layer for this window as it needs attention and thus 
     * should show above everything */
