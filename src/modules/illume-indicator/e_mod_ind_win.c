@@ -306,9 +306,8 @@ _e_mod_ind_win_cb_mouse_up(void *data, Evas *evas __UNUSED__, Evas_Object *obj _
         bd = iwin->win->border;
 
         /* reset mouse pointer */
-        if (iwin->win->border->pointer) 
-          e_pointer_type_pop(iwin->win->border->pointer, 
-                             iwin->win->border, "move");
+        if (bd->pointer) 
+          e_pointer_type_pop(bd->pointer, bd, "move");
 
         /* tell edj we are done moving */
         edje_object_signal_emit(iwin->o_base, "e,action,move,stop", "e");
