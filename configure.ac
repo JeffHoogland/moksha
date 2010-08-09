@@ -291,8 +291,11 @@ AC_ARG_ENABLE([device-udev],
    AC_CACHE_VAL([e_cv_want_device_udev], [e_cv_want_device_udev=yes]))
 
 if test "x$e_cv_want_device_udev" = "xyes";then
+  PKG_CHECK_EXISTS([eeze],
+[
   device_backend=eeze
   AC_DEFINE_UNQUOTED([HAVE_EEZE],[1],[enable udev support])
+],[device_backend=ehal])
 else
   device_backend=ehal
 fi
