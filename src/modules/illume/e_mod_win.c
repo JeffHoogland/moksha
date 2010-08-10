@@ -451,7 +451,7 @@ _app_prev(void)
    E_Border *bd, *bd2;
    Eina_List *apps, *bl;
    
-   // go to the next bd in the list and focus it */
+   // go to the next bd in the list and focus it
    bd2 = e_border_focused_get();
    apps = __app_list();
    if (!apps) return;
@@ -485,7 +485,7 @@ _app_next(void)
    E_Border *bd, *bd2;
    Eina_List *apps, *bl;
    
-   // go to the prev bd in the list and focus it */
+   // go to the prev bd in the list and focus it
    bd2 = e_border_focused_get();
    apps = __app_list();
    if (!apps) return;
