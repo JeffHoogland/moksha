@@ -485,7 +485,7 @@ ACT_FN_GO(window_fullscreen_toggle, )
 	bd = (E_Border *)obj;
 	if (bd->fullscreen)
 	  e_border_unfullscreen(bd);
-	else if (params == 0 || *params == '\0')
+	else if (params == NULL || *params == '\0')
 	  e_border_fullscreen(bd, e_config->fullscreen_policy);
 	else if (! strcmp(params, "resize"))
 	  e_border_fullscreen(bd, E_FULLSCREEN_RESIZE);
