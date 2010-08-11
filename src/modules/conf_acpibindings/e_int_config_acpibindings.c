@@ -47,7 +47,7 @@ e_int_config_acpibindings(E_Container *con, const char *params __UNUSED__)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
 
-   if (e_config_dialog_find("E", "advanced/acpi_bindings")) 
+   if ((e_config_dialog_find("E", "advanced/acpi_bindings")))
      return NULL;
 
    v = E_NEW(E_Config_Dialog_View, 1);
@@ -285,7 +285,7 @@ _selected_binding_get(E_Config_Dialog_Data *cfdata)
 {
    E_Config_Binding_Acpi *bind;
 
-   if (!cfdata) return NULL;
+   if ((!cfdata) || (!cfdata->bindex)) return NULL;
    if (!(bind = eina_list_nth(cfdata->bindings, atoi(cfdata->bindex)))) 
      return NULL;
    return bind;

@@ -29,7 +29,7 @@ e_modapi_shutdown(E_Module *m)
 {
    E_Config_Dialog *cfd;
 
-   if (cfd = e_config_dialog_get("E", "advanced/acpi_bindings"))
+   if ((cfd = e_config_dialog_get("E", "advanced/acpi_bindings")))
      e_object_del(E_OBJECT(cfd));
    e_configure_registry_item_del("advanced/acpi_bindings");
    e_configure_registry_category_del("advanced");
