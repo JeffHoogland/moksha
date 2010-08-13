@@ -34,7 +34,7 @@ e_fm2_custom_file_init(void)
    _e_fm2_custom_init++;
    if (_e_fm2_custom_init > 1) return _e_fm2_custom_init;
 
-   if (!eet_eina_stream_data_descriptor_class_set(&eddc, "e_fm2_custom_dir", sizeof (E_Fm2_Custom_Dir)))
+   if (!eet_eina_stream_data_descriptor_class_set(&eddc, sizeof (eddc), "e_fm2_custom_dir", sizeof (E_Fm2_Custom_Dir)))
      {
 	_e_fm2_custom_init--;
 	return 0;

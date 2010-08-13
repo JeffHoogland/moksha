@@ -124,7 +124,7 @@ _e_volume_edd_new(void)
    Eet_Data_Descriptor *edd;
    Eet_Data_Descriptor_Class eddc;
 
-   if (!eet_eina_stream_data_descriptor_class_set(&eddc, "e_volume", sizeof (E_Volume)))
+   if (!eet_eina_stream_data_descriptor_class_set(&eddc, sizeof (eddc), "e_volume", sizeof (E_Volume)))
      return NULL;
 
 //   eddc.func.str_alloc = (char *(*)(const char *)) strdup;
@@ -155,7 +155,7 @@ _e_storage_edd_new(void)
    Eet_Data_Descriptor *edd;
    Eet_Data_Descriptor_Class eddc;
 
-   if (!eet_eina_stream_data_descriptor_class_set(&eddc, "e_storage", sizeof (E_Storage)))
+   if (!eet_eina_stream_data_descriptor_class_set(&eddc, sizeof (eddc), "e_storage", sizeof (E_Storage)))
      return NULL;
 
 //   eddc.func.str_alloc = (char *(*)(const char *)) strdup;

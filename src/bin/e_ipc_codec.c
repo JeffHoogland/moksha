@@ -39,7 +39,7 @@ e_ipc_codec_init(void)
 {
    Eet_Data_Descriptor_Class eddc;
 
-   if (!eet_eina_stream_data_descriptor_class_set(&eddc, "int", sizeof (E_Ipc_Int)))
+   if (!eet_eina_stream_data_descriptor_class_set(&eddc, sizeof (eddc), "int", sizeof (E_Ipc_Int)))
      return 0;
    _e_ipc_int_edd = eet_data_descriptor_stream_new(&eddc);
    E_CONFIG_VAL(_e_ipc_int_edd, E_Ipc_Int, val, INT);
