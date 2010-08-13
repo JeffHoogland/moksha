@@ -341,8 +341,7 @@ _il_home_desktop_find_border(E_Zone *zone, Efreet_Desktop *desktop)
    else 
      {
         size_t s = p - desktop->exec + 1;
-        exe = malloc(s);
-        memset(exe, 0, s);
+        exe = calloc(1, s);
         if (exe) eina_strlcpy(exe, desktop->exec, s);
      }
    if (exe) 
