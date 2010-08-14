@@ -31,6 +31,7 @@
 #include "e_hints.h"
 #include "e_signals.h"
 #include "e_xinerama.h"
+#include "e_randr.h"
 #include "e_table.h"
 #include "e_layout.h"
 #include "e_font.h"

@@ -500,6 +500,16 @@ main(int argc, char **argv)
      }
    _e_main_shutdown_push(e_xinerama_shutdown);
 
+   TS("randr");
+   if (!e_randr_init())
+     {
+	e_error_message_show(_("Enlightenment cannot setup randr wrapping.\n"
+			       "This should not happen."));
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_randr_shutdown);
+
+
 /* ecore_x_grab(); */
 
    ecore_x_io_error_handler_set(_e_main_cb_x_fatal, NULL);

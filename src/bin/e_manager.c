@@ -105,26 +105,6 @@ e_manager_new(Ecore_X_Window root, int num)
 	man->win = man->root;
      }
 
-   /* FIXME: this handles 1 screen only - not multihead. multihead randr
-    * and xinerama are complex oin terms of interaction, so for now only
-    * really have this work in single head. the randr module kept this
-    * as a list, and i might move it to be the same too, but for now, keep
-    * it as is
-    */
-   if (e_config->display_res_restore)
-     {
-        Ecore_X_Screen_Size size;
-	Ecore_X_Screen_Refresh_Rate rate;
-	
-	size.width = e_config->display_res_width;
-	size.height = e_config->display_res_height;
-	rate.rate = e_config->display_res_hz;
-	ecore_x_randr_screen_refresh_rate_set(man->root, size, rate);
-	if (e_config->display_res_rotation)
-	  ecore_x_randr_screen_rotation_set(man->root,
-					    e_config->display_res_rotation);
-     }
-   
    h = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHOW_REQUEST, _e_manager_cb_window_show_request, man);
    if (h) man->handlers = eina_list_append(man->handlers, h);
    h = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_CONFIGURE, _e_manager_cb_window_configure, man);
@@ -153,7 +133,7 @@ e_manager_manage_windows(E_Manager *man)
    Ecore_X_Window *windows;
    int wnum;
 
-   /* a manager is designated for each root. lets get all the windows in 
+   /* a manager is designated for each root. lets get all the windows in
       the managers root */
    windows = ecore_x_window_children_get(man->root, &wnum);
    if (windows)
@@ -169,7 +149,7 @@ e_manager_manage_windows(E_Manager *man)
         Ecore_X_Atom atom_xmbed, atom_kde_netwm_systray, atom_kwm_dockwindow;
 	unsigned char *data = NULL;
 	int count;
-	
+
 	ecore_x_atoms_get(atom_names, 3, atoms);
 	atom_xmbed = atoms[0];
 	atom_kde_netwm_systray = atoms[1];
@@ -188,8 +168,8 @@ e_manager_manage_windows(E_Manager *man)
 		  if (att.override)
 		    {
 		       char *wname = NULL, *wclass = NULL;
-		       
-		       ecore_x_icccm_name_class_get(windows[i], 
+
+		       ecore_x_icccm_name_class_get(windows[i],
 						    &wname, &wclass);
 		       if ((wname) && (wclass) &&
 			   (!strcmp(wname, "E")) &&
@@ -251,7 +231,7 @@ e_manager_manage_windows(E_Manager *man)
 		  char *path;
 		  Efreet_Desktop *desktop = NULL;
 
-		  /* get all information from window before it is 
+		  /* get all information from window before it is
 		   * reset by e_border_new */
 		  ret = ecore_x_window_prop_card32_get(windows[i],
 						       E_ATOM_CONTAINER,
@@ -260,7 +240,7 @@ e_manager_manage_windows(E_Manager *man)
 		    con = e_container_number_get(man, id);
 		  if (!con)
 		    con = e_container_current_get(man);
-		  
+
 		  ret = ecore_x_window_prop_card32_get(windows[i],
 						       E_ATOM_ZONE,
 						       &id, 1);
@@ -305,7 +285,7 @@ e_manager_manage_windows(E_Manager *man)
 		   * should be seen */
 		  E_Container *con;
 		  E_Border *bd;
-		  
+
 		  con = e_container_current_get(man);
 		  bd = e_border_new(con, windows[i], 1, 0);
 		  if (bd)
@@ -324,7 +304,7 @@ e_manager_show(E_Manager *man)
 {
    Eina_List *l;
    E_Container *con;
-   
+
    E_OBJECT_CHECK(man);
    E_OBJECT_TYPE_CHECK(man, E_MANAGER_TYPE);
    if (man->visible) return;
@@ -335,7 +315,7 @@ e_manager_show(E_Manager *man)
    if (man->root != man->win)
      {
 	Ecore_X_Window mwin;
-	
+
 	mwin = e_menu_grab_window_get();
 	if (!mwin) mwin = man->initwin;
 	if (!mwin)
@@ -356,7 +336,7 @@ e_manager_hide(E_Manager *man)
 {
    Eina_List *l;
    E_Container *con;
-   
+
    E_OBJECT_CHECK(man);
    E_OBJECT_TYPE_CHECK(man, E_MANAGER_TYPE);
    if (!man->visible) return;
@@ -366,7 +346,7 @@ e_manager_hide(E_Manager *man)
      }
    if (man->root != man->win)
      ecore_x_window_hide(man->win);
-   man->visible = 0; 
+   man->visible = 0;
 }
 
 EAPI void
@@ -388,7 +368,7 @@ e_manager_resize(E_Manager *man, int w, int h)
 {
    Eina_List *l;
    E_Container *con;
-   
+
    E_OBJECT_CHECK(man);
    E_OBJECT_TYPE_CHECK(man, E_MANAGER_TYPE);
    if ((w == man->w) && (h == man->h)) return;
@@ -396,7 +376,7 @@ e_manager_resize(E_Manager *man, int w, int h)
    man->h = h;
    if (man->root != man->win)
      ecore_x_window_resize(man->win, man->w, man->h);
-	
+
    EINA_LIST_FOREACH(man->containers, l, con)
      {
 	e_container_resize(con, man->w, man->h);
@@ -410,7 +390,7 @@ e_manager_move_resize(E_Manager *man, int x, int y, int w, int h)
 {
    Eina_List *l;
    E_Container *con;
-   
+
    E_OBJECT_CHECK(man);
    E_OBJECT_TYPE_CHECK(man, E_MANAGER_TYPE);
    if ((x == man->x) && (y == man->y) && (w == man->w) && (h == man->h)) return;
@@ -437,7 +417,7 @@ e_manager_raise(E_Manager *man)
    if (man->root != man->win)
      {
 	Ecore_X_Window mwin;
-	
+
 	mwin = e_menu_grab_window_get();
 	if (!mwin) mwin = man->initwin;
 	if (!mwin)
@@ -466,7 +446,7 @@ e_manager_current_get(void)
    Eina_List *l;
    E_Manager *man;
    int x, y;
-   
+
    if (!managers) return NULL;
    EINA_LIST_FOREACH(managers, l, man)
      {
@@ -484,7 +464,7 @@ e_manager_number_get(int num)
 {
    Eina_List *l;
    E_Manager *man;
-   
+
    if (!managers) return NULL;
    EINA_LIST_FOREACH(managers, l, man)
      {
@@ -511,7 +491,7 @@ e_managers_keys_ungrab(void)
 {
    Eina_List *l;
    E_Manager *man;
-   
+
    EINA_LIST_FOREACH(managers, l, man)
      {
 	e_bindings_key_ungrab(E_BINDING_CONTEXT_ANY, man->root);
@@ -674,7 +654,7 @@ _e_manager_free(E_Manager *man)
 	ecore_x_window_free(man->win);
      }
    if (man->pointer) e_object_del(E_OBJECT(man->pointer));
-   managers = eina_list_remove(managers, man);   
+   managers = eina_list_remove(managers, man);
    free(man);
 }
 
@@ -710,7 +690,7 @@ _e_manager_cb_window_configure(void *data, int ev_type __UNUSED__, void *ev)
 {
    E_Manager *man;
    Ecore_X_Event_Window_Configure *e;
-   
+
    man = data;
    e = ev;
    if (e->win != man->root) return ECORE_CALLBACK_PASS_ON;
@@ -723,7 +703,7 @@ _e_manager_cb_key_down(void *data, int ev_type __UNUSED__, void *ev)
 {
    E_Manager *man;
    Ecore_Event_Key *e;
-   
+
    man = data;
    e = ev;
 
@@ -739,7 +719,7 @@ _e_manager_cb_key_up(void *data, int ev_type __UNUSED__, void *ev)
 {
    E_Manager *man;
    Ecore_Event_Key *e;
-   
+
    man = data;
    e = ev;
 
@@ -763,7 +743,7 @@ _e_manager_cb_frame_extents_request(void *data, int ev_type __UNUSED__, void *ev
    const char *border, *signal, *key;
    int ok;
    unsigned int i, num;
-   
+
    man = data;
    con = e_container_current_get(man);
    e = ev;
@@ -787,7 +767,7 @@ _e_manager_cb_frame_extents_request(void *data, int ev_type __UNUSED__, void *ev
 
    ok = ecore_x_netwm_window_type_get(e->win, &type);
    if ((ok) &&
-       ((type == ECORE_X_WINDOW_TYPE_DESKTOP) || 
+       ((type == ECORE_X_WINDOW_TYPE_DESKTOP) ||
 	(type == ECORE_X_WINDOW_TYPE_DOCK)))
      {
 	border = "borderless";
@@ -861,7 +841,7 @@ _e_manager_cb_frame_extents_request(void *data, int ev_type __UNUSED__, void *ev
 
 		  evas_object_resize(o, 1000, 1000);
 		  edje_object_calc_force(o);
-		  edje_object_part_geometry_get(o, "e.swallow.client", 
+		  edje_object_part_geometry_get(o, "e.swallow.client",
 						&x, &y, &w, &h);
 		  extents->l = x;
 		  extents->r = 1000 - (x + w);
@@ -892,7 +872,7 @@ _e_manager_cb_ping(void *data, int ev_type __UNUSED__, void *ev)
    E_Manager *man;
    E_Border *bd;
    Ecore_X_Event_Ping *e;
-   
+
    man = data;
    e = ev;
 
@@ -948,15 +928,15 @@ _e_manager_cb_client_message(__UNUSED__ void *data, __UNUSED__ int ev_type, void
 {
    Ecore_X_Event_Client_Message *e;
    E_Border *bd;
-   
+
    e = ev;
-   
+
    if (e->message_type == ECORE_X_ATOM_NET_ACTIVE_WINDOW)
      {
 	bd = e_border_find_by_client_window(e->win);
 	if ((bd) && (!bd->focused))
 	  {
-#if 0 /* notes */	     
+#if 0 /* notes */
 	     if (e->data.l[0] == 0 /* 0 == old, 1 == client, 2 == pager */)
 	       {
 		  // FIXME: need config for the below - what to do given each
@@ -971,23 +951,23 @@ _e_manager_cb_client_message(__UNUSED__ void *data, __UNUSED__ int ev_type, void
 	     requestor_id e->data.l[2];
 #endif
              if ((e_config->focus_setting == E_FOCUS_NEW_WINDOW) ||
-		 ((bd->parent) && 
+		 ((bd->parent) &&
 		  ((e_config->focus_setting == E_FOCUS_NEW_DIALOG) ||
-		   ((bd->parent->focused) && 
+		   ((bd->parent->focused) &&
 		    (e_config->focus_setting == E_FOCUS_NEW_DIALOG_IF_OWNER_FOCUSED)))))
 	       {
 		  if (bd->iconic)
 		    {
 		       if (e_config->clientlist_warp_to_iconified_desktop == 1)
 			 e_desk_show(bd->desk);
-		       
+
 		       if (!bd->lock_user_iconify)
 			 e_border_uniconify(bd);
 		    }
 		  if (!bd->iconic) e_desk_show(bd->desk);
 		  if (!bd->lock_user_stacking) e_border_raise(bd);
 		  if (!bd->lock_focus_out)
-		    {  
+		    {
 		       if (e_config->focus_policy != E_FOCUS_CLICK)
 			 ecore_x_pointer_warp(bd->zone->container->win,
 					      bd->x + (bd->w / 2), bd->y + (bd->h / 2));

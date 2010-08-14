@@ -62,6 +62,7 @@ e_startup.h \
 e_hints.h \
 e_signals.h \
 e_xinerama.h \
+e_randr.h \
 e_table.h \
 e_layout.h \
 e_test.h \
@@ -203,6 +204,7 @@ e_startup.c \
 e_hints.c \
 e_signals.c \
 e_xinerama.c \
+e_randr.c \
 e_table.c \
 e_layout.c \
 e_test.c \
@@ -358,7 +360,8 @@ enlightenment_sys_LDADD = @E_SYS_LIBS@
 
 enlightenment_init_SOURCES = \
 e_init_main.c \
-e_xinerama.c
+e_xinerama.c \
+e_randr.c
 
 enlightenment_init_LDADD = @E_INIT_LIBS@
 

@@ -25,14 +25,14 @@ typedef struct _E_Event_Config_Icon_Theme   E_Event_Config_Icon_Theme;
 #ifndef E_CONFIG_H
 #define E_CONFIG_H
 
-/* increment this whenever we change config enough that you need new 
+/* increment this whenever we change config enough that you need new
  * defaults for e to work.
  */
 #define E_CONFIG_FILE_EPOCH      0x0001
 /* increment this whenever a new set of config values are added but the users
  * config doesn't need to be wiped - simply new values need to be put in
  */
-#define E_CONFIG_FILE_GENERATION 0x0138
+#define E_CONFIG_FILE_GENERATION 0x0140
 #define E_CONFIG_FILE_VERSION    ((E_CONFIG_FILE_EPOCH << 16) | E_CONFIG_FILE_GENERATION)
 
 #define E_EVAS_ENGINE_DEFAULT         0
@@ -194,7 +194,7 @@ struct _E_Config
    int         use_app_icon; // GUI
    int         cnfmdlg_disabled; // GUI
    int         cfgdlg_auto_apply; // GUI
-   int         cfgdlg_default_mode; // GUI   
+   int         cfgdlg_default_mode; // GUI
    Eina_List  *gadcons; // GUI
    Eina_List  *shelves; // GUI
    int         font_hinting; // GUI
@@ -221,7 +221,7 @@ struct _E_Config
    int         screensaver_expose; // GUI
    Eina_Bool   screensaver_ask_presentation; // GUI
    double      screensaver_ask_presentation_timeout; // GUI
-  
+
    int         dpms_enable; // GUI
    int         dpms_standby_enable; // GUI
    int         dpms_standby_timeout; // GUI
@@ -243,12 +243,9 @@ struct _E_Config
    int         mouse_accel_numerator; // GUI
    int         mouse_accel_denominator; // GUI
    int         mouse_accel_threshold; // GUI
-   
-   int         display_res_restore; // GUI
-   int         display_res_width; // GUI
-   int         display_res_height; // GUI
-   int         display_res_hz; // GUI
-   int         display_res_rotation; // GUI
+
+   Eina_List   *screen_info; // GUI
+
    int         border_raise_on_mouse_action; // GUI
    int         border_raise_on_focus; // GUI
    int         desk_flip_wrap; // GUI
@@ -256,14 +253,14 @@ struct _E_Config
 
    const char *icon_theme; // GUI
    Eina_Bool   icon_theme_overrides; // GUI
-   
+
    int         desk_flip_animate_mode; // GUI
    int         desk_flip_animate_interpolation; // GUI
    double      desk_flip_animate_time; // GUI
    Eina_Bool   desk_flip_pan_bg;
    double      desk_flip_pan_x_axis_factor;
    double      desk_flip_pan_y_axis_factor;
-   
+
    const char *wallpaper_import_last_dev; // INTERNAL
    const char *wallpaper_import_last_path; // INTERNAL
 
@@ -275,15 +272,15 @@ struct _E_Config
    int wallpaper_grad_c2_b; // INTERNAL
 
    const char *theme_default_border_style; // GUI
-   
+
    Eina_List *mime_icons; // GUI
    int desk_auto_switch; // GUI;
 
    int thumb_nice;
-   
+
    int ping_clients_interval;
    int cache_flush_poll_interval; // GUI
-   
+
    int thumbscroll_enable; // GUI
    int thumbscroll_threshhold; // GUI
    double thumbscroll_momentum_threshhold; // GUI
@@ -304,7 +301,7 @@ struct _E_Config
 	 unsigned char dy;
       } resize;
    } border_keyboard;
-   
+
    struct {
       double min; // GUI
       double max; // GUI
@@ -316,11 +313,11 @@ struct _E_Config
 
    unsigned char show_cursor; // GUI
    unsigned char idle_cursor; // GUI
-   
+
    const char *default_system_menu;
 
    unsigned char cfgdlg_normal_wins; // GUI
-   
+
    struct {
       struct {
          int icon_size;
@@ -334,7 +331,7 @@ struct _E_Config
       Eina_Bool presentation;
       Eina_Bool offline;
    } mode;
-   
+
    struct {
       double    expire_timeout;
       Eina_Bool show_run_dialog;
@@ -418,7 +415,7 @@ struct _E_Config_Binding_Wheel
    const char    *params;
 };
 
-struct _E_Config_Binding_Acpi 
+struct _E_Config_Binding_Acpi
 {
    int context, type, status;
    const char *action, *params;
@@ -508,7 +505,7 @@ EAPI int        e_config_init(void);
 EAPI int        e_config_shutdown(void);
 
 EAPI void       e_config_load(void);
-    
+
 EAPI int        e_config_save(void);
 EAPI void       e_config_save_flush(void);
 EAPI void       e_config_save_queue(void);
@@ -524,7 +521,7 @@ EAPI Eina_List *e_config_engine_list(void);
 
 EAPI void       e_config_save_block_set(int block);
 EAPI int        e_config_save_block_get(void);
-    
+
 EAPI void      *e_config_domain_load(const char *domain, E_Config_DD *edd);
 EAPI void      *e_config_domain_system_load(const char *domain, E_Config_DD *edd);
 EAPI int        e_config_profile_save(void);

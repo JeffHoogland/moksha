@@ -6,6 +6,24 @@
 #define DEF_MENUCLICK 0.25
 #endif
 
+typedef enum _Eet_Union
+{
+  EET_SCREEN_INFO_11 = (int)((1 << 16) | 1),
+  EET_SCREEN_INFO_12 = (int)((1 << 16) | 2),
+  EET_SCREEN_INFO_13 = (int)((1 << 16) | 3),
+  EET_UNKNOWN
+} Eet_Union;
+
+struct {
+   Eet_Union u;
+   const char *name;
+} eet_mapping[] = {
+  { EET_SCREEN_INFO_11, "E_Config_Screen_11" },
+  { EET_SCREEN_INFO_12, "E_Config_Screen_12" },
+  { EET_SCREEN_INFO_12, "E_Config_Screen_13" },
+  { EET_UNKNOWN, NULL }
+};
+
 EAPI E_Config *e_config = NULL;
 
 static int _e_config_revisions = 0;
@@ -16,6 +34,8 @@ static void _e_config_free(E_Config *cfg);
 static Eina_Bool _e_config_cb_timer(void *data);
 static int _e_config_eet_close_handle(Eet_File *ef, char *file);
 static void _e_config_acpi_bindings_add(void);
+static const char * _eet_union_type_get(const void *data, Eina_Bool *unknow);
+static Eina_Bool _eet_union_type_set(const char *type, void *data, Eina_Bool unknow);
 
 /* local subsystem globals */
 static int _e_config_save_block = 0;
@@ -44,6 +64,15 @@ static E_Config_DD *_e_config_shelf_edd = NULL;
 static E_Config_DD *_e_config_shelf_desk_edd = NULL;
 static E_Config_DD *_e_config_mime_icon_edd = NULL;
 static E_Config_DD *_e_config_syscon_action_edd = NULL;
+static E_Config_DD *_e_config_screen_size_edd = NULL;
+static E_Config_DD *_e_config_screen_size_mm_edd = NULL;
+static E_Config_DD *_e_config_eina_rectangle_edd = NULL;
+static E_Config_DD *_e_config_screen_info_edd = NULL;
+static E_Config_DD *_e_config_screen_restore_info_11_edd = NULL;
+static E_Config_DD *_e_config_screen_restore_info_12_edd = NULL;
+static E_Config_DD *_e_config_screen_output_restore_info_edd = NULL;
+static E_Config_DD *_e_config_screen_crtc_restore_info_edd = NULL;
+
 
 EAPI int E_EVENT_CONFIG_ICON_THEME = 0;
 EAPI int E_EVENT_CONFIG_MODE_CHANGED = 0;
@@ -54,12 +83,12 @@ _e_config_profile_name_get(Eet_File *ef)
    /* profile config exists */
    char *data, *s = NULL;
    int data_len = 0;
-   
+
    data = eet_read(ef, "config", &data_len);
    if ((data) && (data_len > 0))
      {
         int ok = 1;
-        
+
         for (s = data; s < (data + data_len); s++)
           {
              // if profile is not all ascii (valid printable ascii - no
@@ -97,7 +126,7 @@ e_config_init(void)
    if (_e_config_profile)
      /* if environment var set - use this profile name */
     _e_config_profile = strdup(_e_config_profile);
-   else 
+   else
      {
 	Eet_File *ef;
 	char buf[4096];
@@ -114,7 +143,7 @@ e_config_init(void)
 	if (!_e_config_profile)
 	  {
              int i;
-             
+
              for (i =1; i <= _e_config_revisions; i++)
                {
                   e_user_dir_snprintf(buf, sizeof(buf), "config/profile.%i.cfg", i);
@@ -144,7 +173,7 @@ e_config_init(void)
 	  {
 	     /* no profile config - try other means */
 	     char *link = NULL;
-	     
+
 	     /* check symlink - if default is a symlink to another dir */
 	     e_prefix_data_concat_static(buf, "data/config/default");
 	     link = ecore_file_readlink(buf);
@@ -181,7 +210,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, orient, INT);
    E_CONFIG_VAL(D, T, autoscroll, UCHAR);
    E_CONFIG_VAL(D, T, resizable, UCHAR);
-   
+
    _e_config_gadcon_edd = E_CONFIG_DD_NEW("E_Config_Gadcon", E_Config_Gadcon);
 #undef T
 #undef D
@@ -199,7 +228,7 @@ e_config_init(void)
 #define D _e_config_shelf_desk_edd
    E_CONFIG_VAL(D, T, x, INT);
    E_CONFIG_VAL(D, T, y, INT);
-   
+
    _e_config_shelf_edd = E_CONFIG_DD_NEW("E_Config_Shelf", E_Config_Shelf);
 #undef T
 #undef D
@@ -234,7 +263,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, desk_x, INT);
    E_CONFIG_VAL(D, T, desk_y, INT);
    E_CONFIG_VAL(D, T, file, STR);
-   
+
    _e_config_desktop_name_edd = E_CONFIG_DD_NEW("E_Config_Desktop_Name", E_Config_Desktop_Name);
 #undef T
 #undef D
@@ -260,7 +289,7 @@ e_config_init(void)
 #define D _e_config_theme_edd
    E_CONFIG_VAL(D, T, category, STR);
    E_CONFIG_VAL(D, T, file, STR);
-   
+
    _e_config_module_edd = E_CONFIG_DD_NEW("E_Config_Module", E_Config_Module);
 #undef T
 #undef D
@@ -271,7 +300,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, delayed, UCHAR);
    E_CONFIG_VAL(D, T, priority, INT);
 
-   _e_config_font_default_edd = E_CONFIG_DD_NEW("E_Font_Default", 
+   _e_config_font_default_edd = E_CONFIG_DD_NEW("E_Font_Default",
 						E_Font_Default);
 #undef T
 #undef D
@@ -281,7 +310,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, font, STR);
    E_CONFIG_VAL(D, T, size, INT);
 
-   _e_config_font_fallback_edd = E_CONFIG_DD_NEW("E_Font_Fallback", 
+   _e_config_font_fallback_edd = E_CONFIG_DD_NEW("E_Font_Fallback",
 						  E_Font_Fallback);
 #undef T
 #undef D
@@ -289,7 +318,7 @@ e_config_init(void)
 #define D _e_config_font_fallback_edd
    E_CONFIG_VAL(D, T, name, STR);
 
-   _e_config_bindings_mouse_edd = E_CONFIG_DD_NEW("E_Config_Binding_Mouse", 
+   _e_config_bindings_mouse_edd = E_CONFIG_DD_NEW("E_Config_Binding_Mouse",
 						  E_Config_Binding_Mouse);
 #undef T
 #undef D
@@ -302,7 +331,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, button, UCHAR);
    E_CONFIG_VAL(D, T, any_mod, UCHAR);
 
-   _e_config_bindings_key_edd = E_CONFIG_DD_NEW("E_Config_Binding_Key", 
+   _e_config_bindings_key_edd = E_CONFIG_DD_NEW("E_Config_Binding_Key",
 						E_Config_Binding_Key);
 #undef T
 #undef D
@@ -315,7 +344,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, params, STR);
    E_CONFIG_VAL(D, T, any_mod, UCHAR);
 
-   _e_config_bindings_edge_edd = E_CONFIG_DD_NEW("E_Config_Binding_Edge", 
+   _e_config_bindings_edge_edd = E_CONFIG_DD_NEW("E_Config_Binding_Edge",
 						  E_Config_Binding_Edge);
 #undef T
 #undef D
@@ -329,7 +358,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, any_mod, UCHAR);
    E_CONFIG_VAL(D, T, delay, FLOAT);
 
-   _e_config_bindings_signal_edd = E_CONFIG_DD_NEW("E_Config_Binding_Signal", 
+   _e_config_bindings_signal_edd = E_CONFIG_DD_NEW("E_Config_Binding_Signal",
 						   E_Config_Binding_Signal);
 #undef T
 #undef D
@@ -343,7 +372,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, action, STR);
    E_CONFIG_VAL(D, T, params, STR);
 
-   _e_config_bindings_wheel_edd = E_CONFIG_DD_NEW("E_Config_Binding_Wheel", 
+   _e_config_bindings_wheel_edd = E_CONFIG_DD_NEW("E_Config_Binding_Wheel",
 						  E_Config_Binding_Wheel);
 #undef T
 #undef D
@@ -357,7 +386,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, action, STR);
    E_CONFIG_VAL(D, T, params, STR);
 
-   _e_config_bindings_acpi_edd = E_CONFIG_DD_NEW("E_Config_Binding_Acpi", 
+   _e_config_bindings_acpi_edd = E_CONFIG_DD_NEW("E_Config_Binding_Acpi",
 						 E_Config_Binding_Acpi);
 #undef T
 #undef D
@@ -451,7 +480,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, b3, INT);
    E_CONFIG_VAL(D, T, a3, INT);
 
-   _e_config_mime_icon_edd = E_CONFIG_DD_NEW("E_Config_Mime_Icon", 
+   _e_config_mime_icon_edd = E_CONFIG_DD_NEW("E_Config_Mime_Icon",
 					     E_Config_Mime_Icon);
 #undef T
 #undef D
@@ -471,6 +500,95 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, button, STR);
    E_CONFIG_VAL(D, T, icon, STR);
    E_CONFIG_VAL(D, T, is_main, INT);
+
+   _e_config_screen_size_edd = E_CONFIG_DD_NEW("Ecore_X_Randr_Screen_Size", Ecore_X_Randr_Screen_Size);
+#undef T
+#undef D
+#define T Ecore_X_Randr_Screen_Size
+#define D _e_config_screen_size_edd
+   E_CONFIG_VAL(D, T, width, INT);
+   E_CONFIG_VAL(D, T, height, INT);
+   E_CONFIG_VAL(D, T, width, INT);
+   E_CONFIG_VAL(D, T, height, INT);
+
+   _e_config_screen_size_mm_edd = E_CONFIG_DD_NEW("Ecore_X_Randr_Screen_Size_MM", Ecore_X_Randr_Screen_Size_MM);
+#undef T
+#undef D
+#define T Ecore_X_Randr_Screen_Size_MM
+#define D _e_config_screen_size_mm_edd
+   E_CONFIG_VAL(D, T, width, INT);
+   E_CONFIG_VAL(D, T, height, INT);
+   E_CONFIG_VAL(D, T, width_mm, INT);
+   E_CONFIG_VAL(D, T, height_mm, INT);
+
+   _e_config_screen_restore_info_11_edd = E_CONFIG_DD_NEW("E_Randr_Screen_Restore_Info_11", E_Randr_Screen_Restore_Info_11);
+#undef T
+#undef D
+#define T E_Randr_Screen_Restore_Info_11
+#define D _e_config_screen_restore_info_11_edd
+   E_CONFIG_SUB(D, T, size, _e_config_screen_size_edd);
+   E_CONFIG_VAL(D, T, orientation, INT);
+   E_CONFIG_VAL(D, T, refresh_rate, SHORT);
+
+    _e_config_eina_rectangle_edd = E_CONFIG_DD_NEW("Eina_Rectangle", Eina_Rectangle);
+#undef T
+#undef D
+#define T Eina_Rectangle
+#define D _e_config_eina_rectangle_edd
+   E_CONFIG_VAL(D, T, x, INT);
+   E_CONFIG_VAL(D, T, y, INT);
+   E_CONFIG_VAL(D, T, w, INT);
+   E_CONFIG_VAL(D, T, h, INT);
+
+    _e_config_screen_output_restore_info_edd = E_CONFIG_DD_NEW("E_Randr_Output_Restore_Info", Eina_Rectangle);
+#undef T
+#undef D
+#define T E_Randr_Output_Restore_Info
+#define D _e_config_screen_output_restore_info_edd
+   E_CONFIG_VAL(D, T, edid, STR);
+   E_CONFIG_VAL(D, T, backlight_level, DOUBLE);
+
+  _e_config_screen_crtc_restore_info_edd = E_CONFIG_DD_NEW("E_Randr_Crtc_Restore_Info", E_Randr_Crtc_Restore_Info);
+#undef T
+#undef D
+#define T E_Randr_Crtc_Restore_Info
+#define D _e_config_screen_crtc_restore_info_edd
+   E_CONFIG_SUB(D, T, geometry, _e_config_eina_rectangle_edd);
+   E_CONFIG_LIST(D, T, outputs, _e_config_screen_output_restore_info_edd);
+   E_CONFIG_VAL(D, T, orientation, INT);
+
+   _e_config_screen_restore_info_12_edd = E_CONFIG_DD_NEW("E_Randr_Screen_Restore_Info_12", E_Randr_Screen_Restore_Info_12);
+#undef T
+#undef D
+#define T E_Randr_Screen_Restore_Info_12
+#define D _e_config_screen_restore_info_12_edd
+   E_CONFIG_LIST(D, T, crtcs, _e_config_screen_crtc_restore_info_edd);
+   E_CONFIG_VAL(D, T, output_policy, INT);
+   E_CONFIG_VAL(D, T, alignment, INT);
+
+#undef T
+#undef D
+#define T E_Randr_Screen_Restore_Info
+#define D _e_config_screen_info_edd
+   Eet_Data_Descriptor_Class eddc;
+   Eet_Data_Descriptor *unified, *edd_11_info, *edd_12_info;
+   EET_EINA_STREAM_DATA_DESCRIPTOR_CLASS_SET(&eddc, T);
+   D = eet_data_descriptor_stream_new(&eddc);
+   eddc.version = EET_DATA_DESCRIPTOR_CLASS_VERSION;
+   eddc.func.type_get = _eet_union_type_get;
+   eddc.func.type_set = _eet_union_type_set;
+   //virtual types to work around EET's inability to differentiate when it
+   //comes to pointers (a->b) vs. values (a.b) in union mappings
+   edd_11_info = E_CONFIG_DD_NEW("E_Randr_Screen_Restore_Info_11_Struct", E_Randr_Screen_Restore_Info_11);
+   E_CONFIG_SUB(edd_11_info, E_Randr_Screen_Restore_Info_Union, restore_info_11, _e_config_screen_restore_info_11_edd);
+   edd_12_info = E_CONFIG_DD_NEW("E_Randr_Screen_Restore_Info_12_Struct", E_Randr_Screen_Restore_Info_12);
+   E_CONFIG_LIST(edd_12_info, E_Randr_Screen_Restore_Info_Union, restore_info_12, _e_config_screen_restore_info_12_edd);
+   unified = eet_data_descriptor_stream_new(&eddc);
+   EET_DATA_DESCRIPTOR_ADD_MAPPING(unified, "E_Config_Screen_11", edd_11_info);
+   EET_DATA_DESCRIPTOR_ADD_MAPPING(unified, "E_Config_Screen_12", edd_12_info);
+   EET_DATA_DESCRIPTOR_ADD_MAPPING(unified, "E_Config_Screen_13", edd_12_info);
+   EET_DATA_DESCRIPTOR_ADD_UNION(D, T, "E_Randr_Screen_Restore_Info_Union", rrvd_restore_info, randr_version, unified);
+   E_CONFIG_VAL(D, T, randr_version, INT);
 
    _e_config_edd = E_CONFIG_DD_NEW("E_Config", E_Config);
 #undef T
@@ -631,12 +749,8 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, desklock_ask_presentation, UCHAR);
    E_CONFIG_VAL(D, T, desklock_ask_presentation_timeout, DOUBLE);
 
-   E_CONFIG_VAL(D, T, display_res_restore, INT);
-   E_CONFIG_VAL(D, T, display_res_width, INT);
-   E_CONFIG_VAL(D, T, display_res_height, INT);
-   E_CONFIG_VAL(D, T, display_res_hz, INT);
-   E_CONFIG_VAL(D, T, display_res_rotation, INT);
-   
+   E_CONFIG_LIST(D, T, screen_info, _e_config_screen_info_edd);
+
    E_CONFIG_VAL(D, T, screensaver_enable, INT);
    E_CONFIG_VAL(D, T, screensaver_timeout, INT);
    E_CONFIG_VAL(D, T, screensaver_interval, INT);
@@ -652,7 +766,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, dpms_standby_timeout, INT);
    E_CONFIG_VAL(D, T, dpms_suspend_timeout, INT);
    E_CONFIG_VAL(D, T, dpms_off_timeout, INT);
-   
+
    E_CONFIG_VAL(D, T, clientlist_group_by, INT);
    E_CONFIG_VAL(D, T, clientlist_include_all_zones, INT);
    E_CONFIG_VAL(D, T, clientlist_separate_with, INT);
@@ -661,7 +775,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, clientlist_warp_to_iconified_desktop, INT);
    E_CONFIG_VAL(D, T, clientlist_limit_caption_len, INT);
    E_CONFIG_VAL(D, T, clientlist_max_caption_len, INT);
-   
+
    E_CONFIG_VAL(D, T, mouse_hand, INT);
    E_CONFIG_VAL(D, T, mouse_accel_numerator, INT);
    E_CONFIG_VAL(D, T, mouse_accel_denominator, INT);
@@ -674,14 +788,14 @@ e_config_init(void)
 
    E_CONFIG_VAL(D, T, icon_theme, STR);
    E_CONFIG_VAL(D, T, icon_theme_overrides, UCHAR);
-   
+
    E_CONFIG_VAL(D, T, desk_flip_animate_mode, INT);
    E_CONFIG_VAL(D, T, desk_flip_animate_interpolation, INT);
    E_CONFIG_VAL(D, T, desk_flip_animate_time, DOUBLE);
    E_CONFIG_VAL(D, T, desk_flip_pan_bg, UCHAR);
    E_CONFIG_VAL(D, T, desk_flip_pan_x_axis_factor, DOUBLE);
    E_CONFIG_VAL(D, T, desk_flip_pan_y_axis_factor, DOUBLE);
-   
+
    E_CONFIG_VAL(D, T, wallpaper_import_last_dev, STR);
    E_CONFIG_VAL(D, T, wallpaper_import_last_path, STR);
 
@@ -693,7 +807,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, wallpaper_grad_c2_b, INT);
 
    E_CONFIG_VAL(D, T, theme_default_border_style, STR);
-   
+
    E_CONFIG_LIST(D, T, mime_icons, _e_config_mime_icon_edd); /**/
 
    E_CONFIG_VAL(D, T, desk_auto_switch, INT);
@@ -702,7 +816,7 @@ e_config_init(void)
 
    E_CONFIG_VAL(D, T, menu_favorites_show, INT);
    E_CONFIG_VAL(D, T, menu_apps_show, INT);
-   
+
    E_CONFIG_VAL(D, T, ping_clients_interval, INT);
    E_CONFIG_VAL(D, T, cache_flush_poll_interval, INT);
 
@@ -710,7 +824,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, thumbscroll_threshhold, INT);
    E_CONFIG_VAL(D, T, thumbscroll_momentum_threshhold, DOUBLE);
    E_CONFIG_VAL(D, T, thumbscroll_friction, DOUBLE);
-   
+
    E_CONFIG_VAL(D, T, dbus_desktop, INT);
    E_CONFIG_VAL(D, T, dbus_auto_mount, INT);
    E_CONFIG_VAL(D, T, dbus_auto_open, INT);
@@ -748,9 +862,9 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, exec.expire_timeout, DOUBLE);
    E_CONFIG_VAL(D, T, exec.show_run_dialog, UCHAR);
    E_CONFIG_VAL(D, T, exec.show_exit_dialog, UCHAR);
-   
+
    e_config_load();
-   
+
    e_config_save_queue();
    return 1;
 }
@@ -780,6 +894,7 @@ e_config_shutdown(void)
    E_CONFIG_DD_FREE(_e_config_shelf_desk_edd);
    E_CONFIG_DD_FREE(_e_config_mime_icon_edd);
    E_CONFIG_DD_FREE(_e_config_syscon_action_edd);
+   E_CONFIG_DD_FREE(_e_config_screen_info_edd);
    return 1;
 }
 
@@ -787,12 +902,12 @@ EAPI void
 e_config_load(void)
 {
    E_Config *tcfg = NULL;
-   
+
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
      {
         int reload = 0;
-        
+
         /* major version change - that means wipe and restart */
 	if ((e_config->config_version >> 16) < E_CONFIG_FILE_EPOCH)
 	  {
@@ -871,7 +986,7 @@ e_config_load(void)
         if (!tcfg)
           {
              const char *pprofile;
-             
+
              pprofile = e_config_profile_get();
              if (pprofile) pprofile = eina_stringshare_add(pprofile);
              e_config_profile_set("standard");
@@ -884,7 +999,7 @@ e_config_load(void)
         if (!tcfg)
           {
              E_Action *a;
-             
+
              e_config_profile_set("default");
              e_config_profile_del(e_config_profile_get());
              e_config_save_block_set(1);
@@ -907,11 +1022,11 @@ e_config_load(void)
         COPYVAL(thumbscroll_momentum_threshhold);
         COPYVAL(thumbscroll_friction);
         IFCFGEND;
-        
+
         IFCFG(0x0125);
         COPYVAL(mouse_hand);
         IFCFGEND;
-        
+
         IFCFG(0x0126);
         COPYVAL(border_keyboard.timeout);
         COPYVAL(border_keyboard.move.dx);
@@ -919,7 +1034,7 @@ e_config_load(void)
         COPYVAL(border_keyboard.resize.dx);
         COPYVAL(border_keyboard.resize.dy);
         IFCFGEND;
-        
+
         IFCFG(0x0127);
         COPYVAL(scale.min);
         COPYVAL(scale.max);
@@ -928,24 +1043,24 @@ e_config_load(void)
         COPYVAL(scale.use_dpi);
         COPYVAL(scale.use_custom);
         IFCFGEND;
-        
+
         IFCFG(0x0128);
         COPYVAL(show_cursor);
         COPYVAL(idle_cursor);
         IFCFGEND;
-        
+
         IFCFG(0x0129);
         COPYSTR(default_system_menu);
         IFCFGEND;
-        
+
         IFCFG(0x012a);
         COPYVAL(desklock_start_locked);
         IFCFGEND;
-        
+
         IFCFG(0x012b);
         COPYVAL(cfgdlg_normal_wins);
         IFCFGEND;
-        
+
         IFCFG(0x012c);
         COPYVAL(syscon.main.icon_size);
         COPYVAL(syscon.secondary.icon_size);
@@ -954,15 +1069,15 @@ e_config_load(void)
         COPYVAL(syscon.do_input);
         COPYPTR(syscon.actions);
         IFCFGEND;
-        
+
         IFCFG(0x012d);
         COPYVAL(priority);
         IFCFGEND;
-        
+
         IFCFG(0x012e);
         COPYVAL(fullscreen_flip);
         IFCFGEND;
-        
+
         IFCFG(0x012f);
         COPYVAL(icon_theme_overrides);
         IFCFGEND;
@@ -1008,7 +1123,7 @@ e_config_load(void)
 	COPYVAL(geometry_auto_move);
         IFCFGEND;
 
-        e_config->config_version = E_CONFIG_FILE_VERSION;   
+        e_config->config_version = E_CONFIG_FILE_VERSION;
         _e_config_free(tcfg);
      }
 
@@ -1044,8 +1159,8 @@ e_config_load(void)
    E_CONFIG_LIMIT(e_config->desk_resist, 0, 100);
    E_CONFIG_LIMIT(e_config->window_resist, 0, 100);
    E_CONFIG_LIMIT(e_config->gadget_resist, 0, 100);
-   E_CONFIG_LIMIT(e_config->geometry_auto_move, 0, 1);   
-   E_CONFIG_LIMIT(e_config->geometry_auto_resize_limit, 0, 1); 
+   E_CONFIG_LIMIT(e_config->geometry_auto_move, 0, 1);
+   E_CONFIG_LIMIT(e_config->geometry_auto_resize_limit, 0, 1);
    E_CONFIG_LIMIT(e_config->winlist_warp_while_selecting, 0, 1);
    E_CONFIG_LIMIT(e_config->winlist_warp_at_end, 0, 1);
    E_CONFIG_LIMIT(e_config->winlist_warp_speed, 0.0, 1.0);
@@ -1102,11 +1217,6 @@ e_config_load(void)
    E_CONFIG_LIMIT(e_config->desklock_use_custom_desklock, 0, 1);
    E_CONFIG_LIMIT(e_config->desklock_ask_presentation, 0, 1);
    E_CONFIG_LIMIT(e_config->desklock_ask_presentation_timeout, 1.0, 300.0);
-   E_CONFIG_LIMIT(e_config->display_res_restore, 0, 1);
-   E_CONFIG_LIMIT(e_config->display_res_width, 1, 8192);
-   E_CONFIG_LIMIT(e_config->display_res_height, 1, 8192);
-   E_CONFIG_LIMIT(e_config->display_res_hz, 0, 250);
-   E_CONFIG_LIMIT(e_config->display_res_rotation, 0, 0xff);
    E_CONFIG_LIMIT(e_config->border_raise_on_mouse_action, 0, 1);
    E_CONFIG_LIMIT(e_config->border_raise_on_focus, 0, 1);
    E_CONFIG_LIMIT(e_config->desk_flip_wrap, 0, 1);
@@ -1142,7 +1252,7 @@ e_config_load(void)
    E_CONFIG_LIMIT(e_config->mouse_hand, 0, 1);
    E_CONFIG_LIMIT(e_config->clientlist_limit_caption_len, 0, 1);
    E_CONFIG_LIMIT(e_config->clientlist_max_caption_len, 2, E_CLIENTLIST_MAX_CAPTION_LEN);
-   
+
    E_CONFIG_LIMIT(e_config->mouse_accel_numerator, 1, 10);
    E_CONFIG_LIMIT(e_config->mouse_accel_denominator, 1, 10);
    E_CONFIG_LIMIT(e_config->mouse_accel_threshold, 1, 10);
@@ -1158,7 +1268,7 @@ e_config_load(void)
    E_CONFIG_LIMIT(e_config->exec.expire_timeout, 0.1, 1000);
    E_CONFIG_LIMIT(e_config->exec.show_run_dialog, 0, 1);
    E_CONFIG_LIMIT(e_config->exec.show_exit_dialog, 0, 1);
-   
+
    /* FIXME: disabled auto apply because it causes problems */
    e_config->cfgdlg_auto_apply = 0;
    /* FIXME: desklock personalized password id disabled for security reasons */
@@ -1375,7 +1485,7 @@ e_config_domain_load(const char *domain, E_Config_DD *edd)
 	eet_close(ef);
         if (data) return data;
      }
-   
+
    for (i =1; i <= _e_config_revisions; i++)
      {
         e_user_dir_snprintf(buf, sizeof(buf), "config/%s/%s.%i.cfg",
@@ -1425,17 +1535,17 @@ e_config_profile_save(void)
    ef = eet_open(buf2, EET_FILE_MODE_WRITE);
    if (ef)
      {
-	ok = eet_write(ef, "config", _e_config_profile, 
+	ok = eet_write(ef, "config", _e_config_profile,
 		       strlen(_e_config_profile), 0);
 	if (_e_config_eet_close_handle(ef, buf2))
 	  {
 	     int ret;
-             
+
              if (_e_config_revisions > 0)
                {
                   int i;
                   char bsrc[4096], bdst[4096];
-                  
+
                   for (i = _e_config_revisions; i > 1; i--)
                     {
                        e_user_dir_snprintf(bsrc, sizeof(bsrc), "config/profile.%i.cfg", i - 1);
@@ -1497,7 +1607,7 @@ e_config_domain_save(const char *domain, E_Config_DD *edd, const void *data)
                {
                   int i;
                   char bsrc[4096], bdst[4096];
-                  
+
                   for (i = _e_config_revisions; i > 1; i--)
                     {
                        e_user_dir_snprintf(bsrc, sizeof(bsrc), "config/%s/%s.%i.cfg", _e_config_profile, domain, i - 1);
@@ -1525,7 +1635,7 @@ e_config_binding_mouse_match(E_Config_Binding_Mouse *eb_in)
    Eina_List *l;
    E_Config_Binding_Mouse *eb;
 
-   EINA_LIST_FOREACH(e_config->mouse_bindings, l, eb)   
+   EINA_LIST_FOREACH(e_config->mouse_bindings, l, eb)
      {
 	if ((eb->context == eb_in->context) &&
 	    (eb->button == eb_in->button) &&
@@ -1545,8 +1655,8 @@ e_config_binding_key_match(E_Config_Binding_Key *eb_in)
 {
    Eina_List *l;
    E_Config_Binding_Key *eb;
-   
-   EINA_LIST_FOREACH(e_config->mouse_bindings, l, eb)   
+
+   EINA_LIST_FOREACH(e_config->mouse_bindings, l, eb)
      {
 	if ((eb->context == eb_in->context) &&
 	    (eb->modifiers == eb_in->modifiers) &&
@@ -1567,7 +1677,7 @@ e_config_binding_edge_match(E_Config_Binding_Edge *eb_in)
 {
    Eina_List *l;
    E_Config_Binding_Edge *eb;
-   
+
    EINA_LIST_FOREACH(e_config->edge_bindings, l, eb)
      {
 	if ((eb->context == eb_in->context) &&
@@ -1589,7 +1699,7 @@ e_config_binding_signal_match(E_Config_Binding_Signal *eb_in)
 {
    Eina_List *l;
    E_Config_Binding_Signal *eb;
-   
+
    EINA_LIST_FOREACH(e_config->signal_bindings, l, eb)
      {
 	if ((eb->context == eb_in->context) &&
@@ -1631,7 +1741,7 @@ e_config_binding_wheel_match(E_Config_Binding_Wheel *eb_in)
 }
 
 EAPI E_Config_Binding_Acpi *
-e_config_binding_acpi_match(E_Config_Binding_Acpi *eb_in) 
+e_config_binding_acpi_match(E_Config_Binding_Acpi *eb_in)
 {
    Eina_List *l;
    E_Config_Binding_Acpi *eb;
@@ -1639,12 +1749,12 @@ e_config_binding_acpi_match(E_Config_Binding_Acpi *eb_in)
    EINA_LIST_FOREACH(e_config->acpi_bindings, l, eb)
      {
 	if ((eb->context == eb_in->context) &&
-	    (eb->type == eb_in->type) && 
-	    (eb->status == eb_in->status) && 
-	    (((eb->action) && (eb_in->action) && 
+	    (eb->type == eb_in->type) &&
+	    (eb->status == eb_in->status) &&
+	    (((eb->action) && (eb_in->action) &&
 	      (!strcmp(eb->action, eb_in->action))) ||
 		((!eb->action) && (!eb_in->action))) &&
-	    (((eb->params) && (eb_in->params) && 
+	    (((eb->params) && (eb_in->params) &&
 	      (!strcmp(eb->params, eb_in->params))) ||
 		((!eb->params) && (!eb_in->params))))
 	  return eb;
@@ -1685,7 +1795,12 @@ _e_config_free(E_Config *ecf)
    E_Color_Class *cc;
    E_Path_Dir *epd;
    E_Remember *rem;
-        
+   E_Randr_Screen_Restore_Info *screen_info;
+   E_Randr_Crtc_Restore_Info *crtc_info;
+   E_Randr_Output_Info *output_info;
+   E_Randr_Screen_Restore_Info_12 *restore_info_12;
+
+
    if (!ecf) return;
 
    EINA_LIST_FREE(ecf->modules, em)
@@ -1798,7 +1913,7 @@ _e_config_free(E_Config *ecf)
      {
         if (rem->name) eina_stringshare_del(rem->name);
         if (rem->class) eina_stringshare_del(rem->class);
-        if (rem->title) eina_stringshare_del(rem->title);		   
+        if (rem->title) eina_stringshare_del(rem->title);
         if (rem->role) eina_stringshare_del(rem->role);
         if (rem->prop.border) eina_stringshare_del(rem->prop.border);
         if (rem->prop.command) eina_stringshare_del(rem->prop.command);
@@ -1833,6 +1948,37 @@ _e_config_free(E_Config *ecf)
         if (sca->icon) eina_stringshare_del(sca->icon);
         E_FREE(sca);
      }
+   if (ecf->screen_info)
+     {
+	EINA_LIST_FREE(ecf->screen_info, screen_info)
+	  {
+	     switch (screen_info->randr_version)
+	       {
+		case EET_SCREEN_INFO_11:
+		   free(screen_info->rrvd_restore_info.restore_info_11);
+		   break;
+		case EET_SCREEN_INFO_12:
+		case EET_SCREEN_INFO_13:
+		   EINA_LIST_FREE(screen_info->rrvd_restore_info.restore_info_12, restore_info_12)
+		     {
+			EINA_LIST_FREE(restore_info_12->crtcs, crtc_info)
+			  {
+			     EINA_LIST_FREE(crtc_info->outputs, output_info)
+			       {
+				  free(output_info->name);
+				  free(output_info->edid);
+				  free (output_info);
+			       }
+			     free (crtc_info);
+			  }
+			free(restore_info_12);
+		     }
+		   eina_list_free(screen_info->rrvd_restore_info.restore_info_12);
+		   break;
+	       }
+	     free(screen_info);
+	  }
+     }
    E_FREE(ecf);
 }
 
@@ -1857,7 +2003,7 @@ _e_config_eet_close_handle(Eet_File *ef, char *file)
 {
    Eet_Error err;
    char *erstr = NULL;
-   
+
    err = eet_close(ef);
    switch (err)
      {
@@ -1951,8 +2097,8 @@ _e_config_eet_close_handle(Eet_File *ef, char *file)
    return 1;
 }
 
-static void 
-_e_config_acpi_bindings_add(void) 
+static void
+_e_config_acpi_bindings_add(void)
 {
    E_Config_Binding_Acpi *bind;
 
@@ -1995,4 +2141,37 @@ _e_config_acpi_bindings_add(void)
    bind->action = eina_stringshare_add("suspend");
    bind->params = eina_stringshare_add("now");
    e_config->acpi_bindings = eina_list_append(e_config->acpi_bindings, bind);
+}
+
+static const char *
+_eet_union_type_get(const void *data, Eina_Bool *unknow)
+{
+   const Eet_Union *u = data;
+   int i;
+
+   if (unknow) *unknow = EINA_FALSE;
+   for (i = 0; eet_mapping[i].name != NULL; ++i)
+     if (*u == eet_mapping[i].u)
+       return eet_mapping[i].name;
+
+   if (unknow) *unknow = EINA_TRUE;
+   return NULL;
+}
+
+static Eina_Bool
+_eet_union_type_set(const char *type, void *data, Eina_Bool unknow)
+{
+   Eet_Union *u = data;
+   int i;
+
+   if (unknow) return EINA_FALSE;
+
+   for (i = 0; eet_mapping[i].name != NULL; ++i)
+     if (strcmp(eet_mapping[i].name, type) == 0)
+       {
+	  *u = eet_mapping[i].u;
+	  return EINA_TRUE;
+       }
+
+   return EINA_FALSE;
 }
