@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-08-14 19:51+0400\n"
-"PO-Revision-Date: 2010-08-14 20:33+0400\n"
+"PO-Revision-Date: 2010-08-15 08:44+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment French Team <pourunmondesansgourou@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -2992,11 +2992,11 @@ msgstr "Annuler la fermeture de session"
 
 #: src/bin/e_sys.c:409
 msgid "Logout in progress"
-msgstr "Fermeture de la session en cours…"
+msgstr "Fermeture de la session…"
 
 #: src/bin/e_sys.c:412
 msgid "Logout in progress.<br><hilight>Please wait.</hilight>"
-msgstr "Fermeture de session en cours.<br><hilight>Veuillez patienter…</hilight>"
+msgstr "Fermeture de session en cours.<br><hilight>Veuillez patienter.</hilight>"
 
 #: src/bin/e_sys.c:438
 #: src/bin/e_sys.c:499
@@ -3050,7 +3050,7 @@ msgstr "Extinction"
 
 #: src/bin/e_sys.c:581
 msgid "Power off.<br><hilight>Please wait.</hilight>"
-msgstr "Extinction.<br><hilight>Veuillez patienter…</hilight>"
+msgstr "Extinction.<br><hilight>Veuillez patienter.</hilight>"
 
 #: src/bin/e_sys.c:605
 msgid "Resetting"
@@ -3058,7 +3058,7 @@ msgstr "Redémarrage"
 
 #: src/bin/e_sys.c:608
 msgid "Resetting.<br><hilight>Please wait.</hilight>"
-msgstr "Redémarrage.<br><hilight>Veuillez patienter…</hilight>"
+msgstr "Redémarrage.<br><hilight>Veuillez patienter.</hilight>"
 
 #: src/bin/e_sys.c:633
 msgid "Suspending"
@@ -3066,7 +3066,7 @@ msgstr "Mise en veille"
 
 #: src/bin/e_sys.c:636
 msgid "Suspending.<br><hilight>Please wait.</hilight>"
-msgstr "Mise en veille.<br><hilight>Veuillez patienter…</hilight>"
+msgstr "Mise en veille.<br><hilight>Veuillez patienter.</hilight>"
 
 #: src/bin/e_sys.c:661
 msgid "Hibernating"
@@ -3074,7 +3074,7 @@ msgstr "Mise en hibernation"
 
 #: src/bin/e_sys.c:664
 msgid "Hibernating.<br><hilight>Please wait.</hilight>"
-msgstr "Mise en hibernation.<br><hilight>Veuillez patienter…</hilight>"
+msgstr "Mise en hibernation.<br><hilight>Veuillez patienter.</hilight>"
 
 #: src/bin/e_theme_about.c:14
 msgid "About Theme"
@@ -3094,7 +3094,7 @@ msgstr "Impossible de quitter : fenêtres immortelles."
 
 #: src/bin/e_utils.c:280
 msgid "Some windows are left still around with the Lifespan lock enabled. This means<br>that Enlightenment will not allow itself to exit until these windows have<br>been closed or have the lifespan lock removed.<br>"
-msgstr "Des fenêtres sont toujours présentes car elles ont été verrouillées. Toutefois,<br>Enlightenment n'autorisera pas la fin de session tant que ces<br>fenêtres n'auront pas été fermées, ou déverrouillées.<br>"
+msgstr "Des fenêtres sont toujours présentes car elles ont été verrouillées.<br>Enlightenment n'autorisera pas la fin de session tant que ces<br>fenêtres n'auront pas été fermées, ou déverrouillées.<br>"
 
 #: src/bin/e_utils.c:855
 #, c-format
@@ -6726,7 +6726,7 @@ msgstr "Suppression accomplie"
 #: src/modules/fileman_opinfo/e_mod_main.c:124
 #, c-format
 msgid "Deleting files..."
-msgstr "Suppression des fichiers en cours…"
+msgstr "Suppression des fichiers…"
 
 #: src/modules/fileman/e_fwin.c:2204
 #: src/modules/fileman_opinfo/e_mod_main.c:127
