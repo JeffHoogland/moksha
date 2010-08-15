@@ -44,37 +44,37 @@
 
 static Eina_Bool				_e_randr_init				(void);
 static void					_e_randr_shutdown			(void);
-static inline void				_e_randr_event_listeners_add		(void);
-static inline void				_e_randr_event_listeners_remove		(void);
+static void				_e_randr_event_listeners_add		(void);
+static void				_e_randr_event_listeners_remove		(void);
 static Eina_Bool				_e_randr_event_cb			(void *data, int type, void *e);
 static E_Randr_Screen_Info *			_e_randr_screen_info_new		(void);
 static void					_e_randr_screen_info_free		(E_Randr_Screen_Info *screen_info);
 static E_Randr_Screen_Info_11 *			_e_randr_screen_info_11_new		(void);
-static const Eina_Bool				_e_randr_screen_info_11_set		(void);
+static Eina_Bool				_e_randr_screen_info_11_set		(void);
 static void					_e_randr_screen_info_11_free		(E_Randr_Screen_Info_11 *screen_info_11);
 static E_Randr_Screen_Info_12 *			_e_randr_screen_info_12_new		(void);
-static const Eina_Bool				_e_randr_screen_info_12_set		(E_Randr_Screen_Info_12 *screen_info_12);
+static Eina_Bool				_e_randr_screen_info_12_set		(E_Randr_Screen_Info_12 *screen_info_12);
 static void					_e_randr_screen_info_12_free		(E_Randr_Screen_Info_12 *screen_info_12);
 static E_Randr_Output_Info *			_e_randr_output_info_new		(int nrequested);
 static void					_e_randr_output_info_free		(E_Randr_Output_Info *output_info);
 static E_Randr_Crtc_Info *			_e_randr_crtc_info_new			(int nrequested);
 static void					_e_randr_crtc_info_free			(E_Randr_Crtc_Info *crtc_info);
-static inline Eina_Bool				_e_randr_screen_outputs_init		(void);
-static inline Eina_Bool				_e_randr_screen_crtcs_init		(void);
-static inline Eina_Bool				_e_randr_output_modes_add		(E_Randr_Output_Info *output_info);
-static inline void				_e_randr_notify_crtc_mode_change	(E_Randr_Crtc_Info *crtc_info);
-static inline void				_e_randr_notify_output_change		(E_Randr_Output_Info *output_info);
-static inline Ecore_X_Randr_Mode_Info *		_e_randr_mode_info_get			(Ecore_X_Randr_Mode mode);
-static inline E_Randr_Crtc_Info *		_e_randr_crtc_info_get			(Ecore_X_Randr_Crtc crtc);
-static inline E_Randr_Output_Info *		_e_randr_output_info_get		(Ecore_X_Randr_Output output);
+static Eina_Bool				_e_randr_screen_outputs_init		(void);
+static Eina_Bool				_e_randr_screen_crtcs_init		(void);
+static Eina_Bool				_e_randr_output_modes_add		(E_Randr_Output_Info *output_info);
+static void				_e_randr_notify_crtc_mode_change	(E_Randr_Crtc_Info *crtc_info);
+static void				_e_randr_notify_output_change		(E_Randr_Output_Info *output_info);
+static Ecore_X_Randr_Mode_Info *		_e_randr_mode_info_get			(Ecore_X_Randr_Mode mode);
+static E_Randr_Crtc_Info *		_e_randr_crtc_info_get			(Ecore_X_Randr_Crtc crtc);
+static E_Randr_Output_Info *		_e_randr_output_info_get		(Ecore_X_Randr_Output output);
 static void					_e_randr_output_info_set		(E_Randr_Output_Info *output_info);
-static const inline Eina_Bool			_e_randr_outputs_connected		(Eina_List *outputs_info);
+static Eina_Bool			_e_randr_outputs_connected		(Eina_List *outputs_info);
 static void					_e_randr_crtc_info_set			(E_Randr_Crtc_Info *crtc_info);
-static const inline E_Randr_Crtc_Info *         _e_randr_policy_crtc_get		(E_Randr_Crtc_Info* but, E_Randr_Crtc_Info *hint, Ecore_X_Randr_Output_Policy policy);
-static const inline Eina_Bool			_e_randr_outputs_connected		(Eina_List *outputs_info);
-static inline Ecore_X_Randr_Output *		_e_randr_outputs_to_array		(Eina_List *outputs_info);
+static const E_Randr_Crtc_Info *         _e_randr_policy_crtc_get		(E_Randr_Crtc_Info* but, E_Randr_Crtc_Info *hint, Ecore_X_Randr_Output_Policy policy);
+static Eina_Bool			_e_randr_outputs_connected		(Eina_List *outputs_info);
+static Ecore_X_Randr_Output *		_e_randr_outputs_to_array		(Eina_List *outputs_info);
 static int					_e_randr_config_find_suiting_config_11	(E_Randr_Screen_Restore_Info_11** restore_info);
-static inline E_Randr_Screen_Restore_Info_12 *	_e_randr_config_find_suiting_config_12	(void);
+static E_Randr_Screen_Restore_Info_12 *	_e_randr_config_find_suiting_config_12	(void);
 static Eina_Bool				_e_randr_config_enable_11		(int size_index, Ecore_X_Randr_Refresh_Rate refresh_rate, Ecore_X_Randr_Orientation orientation);
 static Eina_Bool				_e_randr_config_enable_12		(const E_Randr_Screen_Restore_Info_12 *restore_info);
 static Eina_Bool				_e_randr_try_enable_output		(E_Randr_Output_Info *output_info, Eina_Bool force);
@@ -86,14 +86,14 @@ static int                                      _outputs_size_sort_cb           
 static int                                      _modes_size_sort_cb                     (const void *d1, const void *d2);
 static Eina_List *                              _e_randr_outputs_common_modes_get       (Eina_List *outputs, Ecore_X_Randr_Mode_Info *max_size_mode);
 static Ecore_X_Randr_Mode_Info *                _e_randr_outputs_common_mode_max_get    (Eina_List *outputs, Ecore_X_Randr_Mode_Info *max_size_mode);
-static inline Ecore_X_Randr_Mode_Info *         _e_randr_mode_geo_identical_find        (Eina_List *modes, Ecore_X_Randr_Mode_Info *mode);
-static inline Eina_Bool                         _e_randr_crtc_mode_intersects_crtcs     (E_Randr_Crtc_Info *crtc_info, Ecore_X_Randr_Mode_Info *mode);
-static inline Eina_Bool                         _e_randr_crtc_outputs_mode_max_set      (E_Randr_Crtc_Info *crtc_info);
+static Ecore_X_Randr_Mode_Info *         _e_randr_mode_geo_identical_find        (Eina_List *modes, Ecore_X_Randr_Mode_Info *mode);
+static Eina_Bool                         _e_randr_crtc_mode_intersects_crtcs     (E_Randr_Crtc_Info *crtc_info, Ecore_X_Randr_Mode_Info *mode);
+static Eina_Bool                         _e_randr_crtc_outputs_mode_max_set      (E_Randr_Crtc_Info *crtc_info);
 static Eina_Bool                                _e_randr_crtcs_clone_crtc_removed       (E_Randr_Crtc_Info *former_clone);
 static void                                     _e_randr_screen_primary_output_assign   (E_Randr_Output_Info *removed);
 static void                                     _e_randr_output_info_hw_info_set        (E_Randr_Output_Info *output_info);
 static void                                     _e_randr_output_hw_info_free            (E_Randr_Output_Info *output_info);
-static const inline Eina_Bool                   _e_randr_outputs_are_clones             (E_Randr_Output_Info *output_info, Eina_List *outputs);
+static Eina_Bool                   _e_randr_outputs_are_clones             (E_Randr_Output_Info *output_info, Eina_List *outputs);
 
 E_Randr_Screen_Info *		e_randr_screen_info	= NULL;
 static Eina_List *		_e_randr_event_handlers	= NULL;
@@ -192,7 +192,7 @@ _e_randr_screen_info_new(void)
 /**
  * @param screen_info the screen info to free.
  */
-   static inline void
+static void
 _e_randr_screen_info_free(E_Randr_Screen_Info *screen_info)
 {
    if (!screen_info || !(screen_info->rrvd_info.randr_info_11)) return;
@@ -281,7 +281,7 @@ _e_randr_screen_info_12_new(void)
    return ret;
 }
 
-   static const Eina_Bool
+   static Eina_Bool
 _e_randr_screen_info_12_set(E_Randr_Screen_Info_12 *screen_info)
 {
    E_RANDR_NO_12_RET(EINA_FALSE);
@@ -292,7 +292,7 @@ _e_randr_screen_info_12_set(E_Randr_Screen_Info_12 *screen_info)
    return EINA_TRUE;
 }
 
-   static const Eina_Bool
+   static Eina_Bool
 _e_randr_screen_info_11_set(void)
 {
    E_RANDR_NO_11_RET(EINA_FALSE);
@@ -424,7 +424,7 @@ _e_randr_crtc_info_free(E_Randr_Crtc_Info *crtc_info)
  * @return E_Randr_Output_Info element, or it could not be
  * created, NULL
  */
-   static inline E_Randr_Output_Info *
+static E_Randr_Output_Info *
 _e_randr_output_info_new(int nrequested)
 {
    E_Randr_Output_Info *ret = NULL;
@@ -524,7 +524,7 @@ _e_randr_crtc_info_set(E_Randr_Crtc_Info *crtc_info)
  * looks up modes supported by an output and adds them - if they are not already
  * known by - to the screen's information struct ant the output_info itself
  */
-   static inline Eina_Bool
+static Eina_Bool
 _e_randr_output_modes_add(E_Randr_Output_Info *output_info)
 {
    Ecore_X_Randr_Mode *modes;
@@ -540,7 +540,7 @@ _e_randr_output_modes_add(E_Randr_Output_Info *output_info)
         added_yet = EINA_FALSE;
         EINA_LIST_FOREACH(e_randr_screen_info->rrvd_info.randr_info_12->modes, iter, mode_info)
           {
-             if (mode_info->xid == modes[nmodes])
+             if (mode_info && mode_info->xid == modes[nmodes])
                {
                   added_yet = EINA_TRUE;
                   break;
@@ -560,7 +560,7 @@ _e_randr_output_modes_add(E_Randr_Output_Info *output_info)
    return EINA_TRUE;
 }
 
-   static inline Eina_Bool
+static Eina_Bool
 _e_randr_screen_crtcs_init(void)
 {
    Ecore_X_Randr_Crtc *crtcs = NULL;
@@ -595,9 +595,7 @@ ecore_x_randr_screen_crtcs_init_fail_free_crtcs:
    return EINA_FALSE;
 }
 
-
-
-   static inline Eina_Bool
+static Eina_Bool
 _e_randr_screen_outputs_init(void)
 {
    Ecore_X_Randr_Output *outputs;
@@ -631,7 +629,7 @@ _e_randr_screen_outputs_init_fail_free_outputs:
    return EINA_FALSE;
 }
 
-   static inline Ecore_X_Randr_Mode_Info*
+static Ecore_X_Randr_Mode_Info*
 _e_randr_mode_info_get(Ecore_X_Randr_Mode mode)
 {
    Eina_List *iter;
@@ -640,12 +638,12 @@ _e_randr_mode_info_get(Ecore_X_Randr_Mode mode)
    E_RANDR_NO_MODE_RET(mode, NULL);
    EINA_LIST_FOREACH(e_randr_screen_info->rrvd_info.randr_info_12->modes, iter, mode_info)
      {
-        if (mode_info->xid == mode) return mode_info;
+        if (mode_info && mode_info->xid == mode) return mode_info;
      }
    return NULL;
 }
 
-   static inline E_Randr_Output_Info*
+static E_Randr_Output_Info*
 _e_randr_output_info_get(Ecore_X_Randr_Output output)
 {
    Eina_List *iter;
@@ -654,12 +652,12 @@ _e_randr_output_info_get(Ecore_X_Randr_Output output)
    E_RANDR_NO_OUTPUTS_RET(NULL);
    EINA_LIST_FOREACH(e_randr_screen_info->rrvd_info.randr_info_12->outputs, iter, output_info)
      {
-        if (output_info->xid == output) return output_info;
+        if (output_info && output_info->xid == output) return output_info;
      }
    return NULL;
 }
 
-   static inline E_Randr_Crtc_Info*
+static E_Randr_Crtc_Info*
 _e_randr_crtc_info_get(Ecore_X_Randr_Crtc crtc)
 {
    Eina_List *iter;
@@ -668,7 +666,7 @@ _e_randr_crtc_info_get(Ecore_X_Randr_Crtc crtc)
    E_RANDR_NO_CRTCS_RET(NULL);
    EINA_LIST_FOREACH(e_randr_screen_info->rrvd_info.randr_info_12->crtcs, iter, crtc_info)
      {
-        if (crtc_info->xid == crtc) return crtc_info;
+        if (crtc_info && crtc_info->xid == crtc) return crtc_info;
      }
    return NULL;
 }
@@ -819,9 +817,10 @@ _e_randr_event_cb(void *data, int type, void *ev)
                   //let's try to get a proper config for the new setup and crop the
                   //screen afterwards.
                   if((restore_info = _e_randr_config_find_suiting_config_12()))
-                    //in case we didn't have, init it anyway...
-                    //_e_randr_config_enable_12(restore_info);
-                    ;
+		    {
+		       //in case we didn't have, init it anyway...
+		       //_e_randr_config_enable_12(restore_info);
+                    }
                }
              _e_randr_notify_output_change(output_info);
              _e_randr_output_hw_info_free(output_info);
@@ -844,7 +843,7 @@ _e_randr_event_cb(void *data, int type, void *ev)
    return ECORE_CALLBACK_RENEW;
 }
 
-   static inline void
+static void
 _e_randr_event_listeners_add(void)
 {
    if (E_RANDR_NO_12) return;
@@ -854,7 +853,7 @@ _e_randr_event_listeners_add(void)
    _e_randr_event_handlers= eina_list_append(_e_randr_event_handlers, ecore_event_handler_add(ECORE_X_EVENT_RANDR_OUTPUT_PROPERTY_NOTIFY, _e_randr_event_cb, NULL));
 }
 
-   static inline void
+static void
 _e_randr_event_listeners_remove(void)
 {
    Ecore_Event_Handler *_event_handler = NULL;
@@ -862,7 +861,7 @@ _e_randr_event_listeners_remove(void)
       ecore_event_handler_del(_event_handler);
 }
 
-   static inline void
+static void
 _e_randr_notify_crtc_mode_change(E_Randr_Crtc_Info *crtc_info)
 {
 //   E_Notification *n;
@@ -877,7 +876,7 @@ _e_randr_notify_crtc_mode_change(E_Randr_Crtc_Info *crtc_info)
 //        e_notification_unref(n);
      }
 }
-   static inline void
+static void
 _e_randr_notify_output_change(E_Randr_Output_Info *output_info)
 {
 //   E_Notification *n;
@@ -905,7 +904,7 @@ _e_randr_notify_output_change(E_Randr_Output_Info *output_info)
  * instead of trying to fill gaps like tetris. Though this could be done by
  * simply implementing another policy.
  */
-   static const inline E_Randr_Crtc_Info*
+static const E_Randr_Crtc_Info*
 _e_randr_policy_crtc_get(E_Randr_Crtc_Info *but, E_Randr_Crtc_Info *hint, Ecore_X_Randr_Output_Policy policy)
 {
    Eina_List *iter;
@@ -929,7 +928,7 @@ _e_randr_policy_crtc_get(E_Randr_Crtc_Info *but, E_Randr_Crtc_Info *hint, Ecore_
       case ECORE_X_RANDR_OUTPUT_POLICY_ABOVE:
          EINA_LIST_FOREACH(e_randr_screen_info->rrvd_info.randr_info_12->crtcs, iter, crtc_info)
            {
-              if ((crtc_info != but) && (crtc_info->geometry.y <= ret->geometry.y))
+              if (crtc_info && (crtc_info != but) && (crtc_info->geometry.y <= ret->geometry.y))
                 {
                    ret = crtc_info;
                 }
@@ -938,7 +937,7 @@ _e_randr_policy_crtc_get(E_Randr_Crtc_Info *but, E_Randr_Crtc_Info *hint, Ecore_
       case ECORE_X_RANDR_OUTPUT_POLICY_RIGHT:
          EINA_LIST_FOREACH(e_randr_screen_info->rrvd_info.randr_info_12->crtcs, iter, crtc_info)
            {
-              if ((crtc_info != but) && ((crtc_info->geometry.x + crtc_info->geometry.w) >= (ret->geometry.x + ret->geometry.w)))
+              if (crtc_info && (crtc_info != but) && ((crtc_info->geometry.x + crtc_info->geometry.w) >= (ret->geometry.x + ret->geometry.w)))
                 {
                    ret = crtc_info;
                 }
@@ -948,7 +947,7 @@ _e_randr_policy_crtc_get(E_Randr_Crtc_Info *but, E_Randr_Crtc_Info *hint, Ecore_
       case ECORE_X_RANDR_OUTPUT_POLICY_BELOW:
          EINA_LIST_FOREACH(e_randr_screen_info->rrvd_info.randr_info_12->crtcs, iter, crtc_info)
            {
-              if ((crtc_info != but) && ((crtc_info->geometry.y + crtc_info->geometry.h) >= (ret->geometry.y + ret->geometry.h)))
+              if (crtc_info && (crtc_info != but) && ((crtc_info->geometry.y + crtc_info->geometry.h) >= (ret->geometry.y + ret->geometry.h)))
                 {
                    ret = crtc_info;
                 }
@@ -958,7 +957,7 @@ _e_randr_policy_crtc_get(E_Randr_Crtc_Info *but, E_Randr_Crtc_Info *hint, Ecore_
       case ECORE_X_RANDR_OUTPUT_POLICY_LEFT:
          EINA_LIST_FOREACH(e_randr_screen_info->rrvd_info.randr_info_12->crtcs, iter, crtc_info)
            {
-              if ((crtc_info != but) && (crtc_info->geometry.x <= ret->geometry.x))
+              if (crtc_info && (crtc_info != but) && (crtc_info->geometry.x <= ret->geometry.x))
                 {
                    ret = crtc_info;
                 }
@@ -975,7 +974,7 @@ _e_randr_policy_crtc_get(E_Randr_Crtc_Info *but, E_Randr_Crtc_Info *hint, Ecore_
    return ret;
 }
 
-   static const inline Eina_Bool
+static Eina_Bool
 _e_randr_outputs_connected(Eina_List *outputs_info)
 {
    Eina_List *iter;
@@ -1030,7 +1029,7 @@ _e_randr_config_enable_12(const E_Randr_Screen_Restore_Info_12* restore_info)
    return EINA_FALSE;
 }
 
-   static inline int
+static int
 _e_randr_config_find_suiting_config_11(E_Randr_Screen_Restore_Info_11 **restore_info)
 {
    E_RANDR_NO_11_RET(Ecore_X_Randr_None);
@@ -1044,6 +1043,7 @@ _e_randr_config_find_suiting_config_11(E_Randr_Screen_Restore_Info_11 **restore_
 
    EINA_LIST_FOREACH(e_config->screen_info, cfg_screen_restore_info_iter, screen_restore_info)
      {
+	if (!screen_restore_info) continue ;
         if (screen_restore_info->randr_version != ECORE_X_RANDR_1_1) continue;
         restore_info_11 = screen_restore_info->rrvd_restore_info.restore_info_11;
         if((sizes = ecore_x_randr_screen_primary_output_sizes_get(e_randr_screen_info->root, &nsizes)))
@@ -1076,7 +1076,7 @@ _e_randr_config_find_suiting_config_11(E_Randr_Screen_Restore_Info_11 **restore_
 /**
  * @Brief find configuration with the most hardware currently available
  */
-   static inline E_Randr_Screen_Restore_Info_12 *
+static E_Randr_Screen_Restore_Info_12 *
 _e_randr_config_find_suiting_config_12(void)
 {
    //TODO: write geometry based loading
@@ -1111,7 +1111,7 @@ _e_randr_config_find_suiting_config_12(void)
 }
 
 
-   static inline Ecore_X_Randr_Output *
+static Ecore_X_Randr_Output *
 _e_randr_outputs_to_array(Eina_List *outputs_info)
 {
    Ecore_X_Randr_Output *ret = NULL;
@@ -1121,7 +1121,7 @@ _e_randr_outputs_to_array(Eina_List *outputs_info)
 
    if (!outputs_info || !(ret = malloc(sizeof(Ecore_X_Randr_Output) * eina_list_count(outputs_info)))) return NULL;
    EINA_LIST_FOREACH(outputs_info, output_iter, output_info)
-      ret[i++] = output_info->xid;
+     ret[i++] = output_info ? output_info->xid : NULL;
    return ret;
 }
 
@@ -1150,7 +1150,7 @@ _e_randr_try_enable_output(E_Randr_Output_Info *output_info, Eina_Bool force)
     */
    EINA_LIST_FOREACH(output_info->possible_crtcs, iter, crtc_info)
      {
-        if (!crtc_info->current_mode || force)
+        if (crtc_info && (!crtc_info->current_mode || force))
           {
              usable_crtc = crtc_info;
              break;
@@ -1469,7 +1469,7 @@ _modes_size_sort_cb(const void *d1, const void *d2)
  * returns a mode within a given list of modes that is gemetrically identical.
  * If none is found, NULL is returned.
  */
-   static inline Ecore_X_Randr_Mode_Info *
+static Ecore_X_Randr_Mode_Info *
 _e_randr_mode_geo_identical_find(Eina_List *modes, Ecore_X_Randr_Mode_Info *mode)
 {
    Eina_List *iter;
@@ -1487,7 +1487,7 @@ _e_randr_mode_geo_identical_find(Eina_List *modes, Ecore_X_Randr_Mode_Info *mode
  * reconfigures a CRTC enabling the highest resolution amongst its outputs,
  * without touching any other CRTC currently activated
  */
-   static inline Eina_Bool
+static Eina_Bool
 _e_randr_crtc_outputs_mode_max_set(E_Randr_Crtc_Info *crtc_info)
 {
    Ecore_X_Randr_Mode_Info *mode_info;
@@ -1523,7 +1523,7 @@ _e_randr_crtc_outputs_mode_max_set(E_Randr_Crtc_Info *crtc_info)
  * returns EINA_TRUE if given CRTC would intersect with other CRTCs if set to
  * given mode
  */
-   static inline Eina_Bool
+static Eina_Bool
 _e_randr_crtc_mode_intersects_crtcs(E_Randr_Crtc_Info *crtc_info, Ecore_X_Randr_Mode_Info *mode)
 {
    Eina_List *iter;
@@ -1732,7 +1732,7 @@ _e_randr_output_hw_info_free(E_Randr_Output_Info *output_info)
 /*
  * checks whether a given output is a common clone of the given list's outputs 
  */
-   static const inline Eina_Bool
+static Eina_Bool
 _e_randr_outputs_are_clones(E_Randr_Output_Info *output_info, Eina_List *outputs)
 {
    E_Randr_Output_Info *output;
