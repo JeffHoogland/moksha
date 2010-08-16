@@ -66,7 +66,7 @@ po/Rules-quot
 
 endif
 
-EXTRA_DIST = config.rpath  README AUTHORS COPYING COPYING-PLAIN \
+EXTRA_DIST = config.rpath  README AUTHORS COPYING \
              enlightenment.spec.in enlightenment.spec enlightenment.pc
 
 filesdir = $(datadir)/enlightenment/
