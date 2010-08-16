@@ -7,6 +7,7 @@ static void *_il_home_config_create(E_Config_Dialog *cfd);
 static void _il_home_config_free(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_il_home_config_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static void _il_home_config_changed(void *data, Evas_Object *obj, void *event);
+static void _il_home_config_slider_changed(void *data, Evas_Object *obj);
 static void _il_home_config_click_changed(void *data, Evas_Object *obj, void *event);
 static Eina_Bool _il_home_config_change_timeout(void *data);
 
@@ -167,9 +168,7 @@ _il_home_config_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdat
    o = e_widget_slider_add(evas, 1, 0, "%1.0f ms", 0, 350, 1, 0, NULL, 
                            &(il_home_cfg->single_click_delay), 150);
    delay_slider = o;
-   /* Slider does not emit a changed signal */
-//   evas_object_smart_callback_add(o, "changed", 
-//                                  _il_home_config_changed, NULL);
+   e_widget_on_change_hook_set(o, _il_home_config_slider_changed, NULL);
    e_widget_disabled_set(o, !(il_home_cfg->single_click));
    e_widget_framelist_object_append(of, o);
    e_widget_list_object_append(list, of, 1, 0, 0.0);
@@ -179,6 +178,15 @@ _il_home_config_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdat
 
 static void 
 _il_home_config_changed(void *data, Evas_Object *obj, void *event) 
+{
+   if (_il_home_config_change_timer) 
+     ecore_timer_del(_il_home_config_change_timer);
+   _il_home_config_change_timer = 
+     ecore_timer_add(0.5, _il_home_config_change_timeout, data);
+}
+
+static void 
+_il_home_config_slider_changed(void *data, Evas_Object *obj) 
 {
    if (_il_home_config_change_timer) 
      ecore_timer_del(_il_home_config_change_timer);
