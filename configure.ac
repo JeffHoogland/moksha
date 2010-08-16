@@ -444,7 +444,7 @@ AC_DEFINE(E_INTERNAL, 1, "This define can be used to wrap internal E stuff, as c
 AM_CONDITIONAL(HAVE_BATTERY, false)
 define([CHECK_MODULE_BATTERY],
 [
-        AC_E_CHECK_PKG(BATTERY, [ecore ecore-file ecore-con eina-0],
+        AC_E_CHECK_PKG(BATTERY, [ecore ecore-file ecore-con eina],
                        [], [BATTERY=false])
 ])
 
@@ -460,7 +460,7 @@ AC_SUBST(BATTERY_LDFLAGS)
 AM_CONDITIONAL(HAVE_TEMPERATURE, false)
 define([CHECK_MODULE_TEMPERATURE],
 [
-        AC_E_CHECK_PKG(TEMPERATURE, [ecore ecore-file eina-0],
+        AC_E_CHECK_PKG(TEMPERATURE, [ecore ecore-file eina],
                        [], [TEMPERATURE=false])
 ])
 
