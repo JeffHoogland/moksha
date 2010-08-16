@@ -2,8 +2,6 @@
  * vim:ts=8:sw=3:sts=8:expandtab:cino=>5n-3f0^-2{2
  */
 #include "e.h"
-#include <stdio.h>
-#include <Ecore.h>
 
 #define ECORE_X_RANDR_1_1 ((1 << 16) | 1)
 #define ECORE_X_RANDR_1_2 ((1 << 16) | 2)
