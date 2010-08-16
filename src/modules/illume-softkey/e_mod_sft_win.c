@@ -80,7 +80,8 @@ e_mod_sft_win_new(E_Zone *zone)
    e_win_size_min_set(swin->win, zone->w, (il_sft_cfg->height * e_scale));
 
    /* position and resize this window */
-   e_win_move_resize(swin->win, zone->x, (zone->y + zone->h - (32 * e_scale)), 
+   e_win_move_resize(swin->win, zone->x, 
+                     (zone->y + zone->h - (il_sft_cfg->height * e_scale)), 
                      zone->w, (il_sft_cfg->height * e_scale));
 
    /* show the window */
@@ -95,8 +96,10 @@ e_mod_sft_win_new(E_Zone *zone)
 
    /* tell conformant apps our position and size */
    ecore_x_e_illume_softkey_geometry_set(zone->black_win, 
-                                         zone->x, (zone->h - (il_sft_cfg->height * e_scale)), 
-                                         zone->w, (il_sft_cfg->height * e_scale));
+                                         zone->x, 
+                                         (zone->h - (il_sft_cfg->height * e_scale)), 
+                                         zone->w, 
+                                         (il_sft_cfg->height * e_scale));
 
    return swin;
 }
@@ -130,7 +133,8 @@ _e_mod_sft_win_cb_free(Sft_Win *swin)
         /* delete the buttons */
         EINA_LIST_FREE(swin->extra_btns, btn) 
           {
-             edje_object_part_box_remove(swin->o_base, "e.box.extra_buttons", btn);
+             edje_object_part_box_remove(swin->o_base, 
+                                         "e.box.extra_buttons", btn);
              evas_object_del(btn);
           }
      }
@@ -159,7 +163,8 @@ _e_mod_sft_win_cb_win_prop(void *data, int type __UNUSED__, void *event)
    ev = event;
 
    if (!(swin = data)) return ECORE_CALLBACK_PASS_ON;
-   if (ev->win != swin->win->container->manager->root) return ECORE_CALLBACK_PASS_ON;
+   if (ev->win != swin->win->container->manager->root) 
+     return ECORE_CALLBACK_PASS_ON;
    if (ev->atom != ATM_ENLIGHTENMENT_SCALE) return ECORE_CALLBACK_PASS_ON;
 
    /* set minimum size of this window */
@@ -176,7 +181,8 @@ _e_mod_sft_win_cb_win_prop(void *data, int type __UNUSED__, void *event)
    /* tell conformant apps our position and size */
    ecore_x_e_illume_softkey_geometry_set(swin->zone->black_win, 
                                          swin->win->x, swin->win->y, 
-                                         swin->win->w, (il_sft_cfg->height * e_scale));
+                                         swin->win->w, 
+                                         (il_sft_cfg->height * e_scale));
    return ECORE_CALLBACK_PASS_ON;
 }
 
