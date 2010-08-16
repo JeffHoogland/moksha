@@ -395,10 +395,7 @@ PKG_CHECK_MODULES(E, [
 ])
 requirements_e="evas >= 1.0.0 ecore >= 1.0.0 ecore-x >= 1.0.0 ecore-evas >= 1.0.0 ecore-con >= 1.0.0 ecore-ipc >= 1.0.0 ecore-file >= 1.0.0 eet >= 1.4.0 edje >= 1.0.0 efreet >= 1.0.0 efreet-mime >= 1.0.0 eina >= 1.0.0 dbus-1 edbus >= 1.0.0 ehal >= 1.0.0 $device_backend"
 
-AC_E_CHECK_PKG(ECORE_IMF, [
-                 ecore-imf >= 1.0.0 
-                 ecore-imf-evas >= 1.0.0
-               ], [], [:])
+AC_E_CHECK_PKG(ECORE_IMF, [ecore-imf >= 1.0.0 ecore-imf-evas >= 1.0.0], [], [:])
 
 e_libs=$E_LIBS" "$LIBINTL" "$fnmatch_libs" "$ECORE_IMF_LIBS" "$execinfo_libs
 e_cflags="-DUSE_E_CONFIG_H "$E_CFLAGS" "$ECORE_IMF_CFLAGS
@@ -447,12 +444,7 @@ AC_DEFINE(E_INTERNAL, 1, "This define can be used to wrap internal E stuff, as c
 AM_CONDITIONAL(HAVE_BATTERY, false)
 define([CHECK_MODULE_BATTERY],
 [
-        AC_E_CHECK_PKG(BATTERY, [
-                         ecore >= 1.0.0 
-                         ecore-file >= 1.0.0 
-                         ecore-con >= 1.0.0 
-                         eina >= 1.0.0
-                       ], [], [BATTERY=false])
+        AC_E_CHECK_PKG(BATTERY, [ecore >= 1.0.0 ecore-file >= 1.0.0 ecore-con >= 1.0.0 eina >= 1.0.0], [], [BATTERY=false])
 ])
 
 BATTERY_LDFLAGS=
@@ -467,11 +459,7 @@ AC_SUBST(BATTERY_LDFLAGS)
 AM_CONDITIONAL(HAVE_TEMPERATURE, false)
 define([CHECK_MODULE_TEMPERATURE],
 [
-        AC_E_CHECK_PKG(TEMPERATURE, [
-                         ecore >= 1.0.0 
-                         ecore-file >= 1.0.0
-                         eina >= 1.0.0
-                       ], [], [TEMPERATURE=false])
+        AC_E_CHECK_PKG(TEMPERATURE, [ecore >= 1.0.0 ecore-file >= 1.0.0 eina >= 1.0.0], [], [TEMPERATURE=false])
 ])
 
 have_exchange=no
@@ -522,10 +510,7 @@ AC_SUBST(SOUND_LIBS)
 AM_CONDITIONAL(HAVE_ECONNMAN, false)
 define([CHECK_MODULE_CONNMAN],
 [
-        AC_E_CHECK_PKG(ECONNMAN, [
-                         edbus >= 1.0.0 
-                         econnman >= 1.0.0
-                       ], [], [ECONNMAN=false])
+        AC_E_CHECK_PKG(ECONNMAN, [edbus >= 1.0.0 econnman >= 1.0.0], [], [ECONNMAN=false])
 ])
 AC_SUBST(ECONNMAN_CFLAGS)
 AC_SUBST(ECONNMAN_LIBS)
@@ -533,10 +518,7 @@ AC_SUBST(ECONNMAN_LIBS)
 AM_CONDITIONAL(HAVE_EBLUEZ, false)
 define([CHECK_MODULE_BLUEZ],
 [
-        AC_E_CHECK_PKG(EBLUEZ, [
-                         edbus >= 1.0.0
-                         ebluez >= 1.0.0
-                       ], [], [EBLUEZ=false])
+        AC_E_CHECK_PKG(EBLUEZ, [edbus >= 1.0.0 ebluez >= 1.0.0], [], [EBLUEZ=false])
 ])
 AC_SUBST(EBLUEZ_CFLAGS)
 AC_SUBST(EBLUEZ_LIBS)
@@ -544,10 +526,7 @@ AC_SUBST(EBLUEZ_LIBS)
 AM_CONDITIONAL(HAVE_EOFONO, false)
 define([CHECK_MODULE_OFONO],
 [
-        AC_E_CHECK_PKG(EOFONO, [
-                         edbus >= 1.0.0
-                         eofono >= 1.0.0
-                       ], [], [EOFONO=false])
+        AC_E_CHECK_PKG(EOFONO, [edbus >= 1.0.0 eofono >= 1.0.0], [], [EOFONO=false])
 ])
 AC_SUBST(EOFONO_CFLAGS)
 AC_SUBST(EOFONO_LIBS)
