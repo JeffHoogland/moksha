@@ -291,7 +291,7 @@ AC_ARG_ENABLE([device-udev],
    AC_CACHE_VAL([e_cv_want_device_udev], [e_cv_want_device_udev=yes]))
 
 if test "x$e_cv_want_device_udev" = "xyes";then
-  PKG_CHECK_EXISTS([eeze],
+  PKG_CHECK_EXISTS([eeze >= 1.0.0],
 [
   device_backend=eeze
   AC_DEFINE_UNQUOTED([HAVE_EEZE],[1],[enable udev support])
@@ -309,93 +309,93 @@ EFL_CHECK_DOXYGEN([build_doc="yes"], [build_doc="no"])
 
 # explicit libs for each binary to reduce linkage requirements
 PKG_CHECK_MODULES(E_REMOTE, [
-  ecore
-  ecore-ipc
-  eet >= 1.2.3
-  eina-0
+  ecore >= 1.0.0
+  ecore-ipc >= 1.0.0
+  eet >= 1.4.0
+  eina >= 1.0.0
 ])
 
 PKG_CHECK_MODULES(E_IMC, [
-  ecore-file
-  eet >= 1.2.3
-  eina-0
+  ecore-file >= 1.0.0
+  eet >= 1.4.0
+  eina >= 1.0.0
 ])
 
 PKG_CHECK_MODULES(E_THUMB, [
-  eina-0
-  evas
-  ecore
-  ecore-evas
-  edje
-  ecore-file
-  ecore-ipc
-  eet >= 1.2.3
-  efreet
+  eina >= 1.0.0
+  evas >= 1.0.0
+  ecore >= 1.0.0
+  ecore-evas >= 1.0.0
+  edje >= 1.0.0
+  ecore-file >= 1.0.0
+  ecore-ipc >= 1.0.0
+  eet >= 1.4.0
+  efreet >= 1.0.0
 ])
 
 PKG_CHECK_MODULES(E_FM, [
-  ecore
-  ecore-file
-  ecore-ipc
-  eet >= 1.2.3
-  efreet
+  ecore >= 1.0.0
+  ecore-file >= 1.0.0
+  ecore-ipc >= 1.0.0
+  eet >= 1.4.0
+  efreet >= 1.0.0
   dbus-1
-  edbus
-  ehal
-  eina-0
+  edbus >= 1.0.0
+  ehal >= 1.0.0
+  eina >= 1.0.0
 ])
 
 PKG_CHECK_MODULES(E_FM_OP, [
-  ecore
-  ecore-file
-  eina-0
+  ecore >= 1.0.0
+  ecore-file >= 1.0.0
+  eina >= 1.0.0
 ])
 
 PKG_CHECK_MODULES(E_FM_OPEN, [
-  ecore
-  ecore-ipc
-  eet >= 1.2.3
-  eina-0
+  ecore >= 1.0.0
+  ecore-ipc >= 1.0.0
+  eet >= 1.4.0
+  eina >= 1.0.0
 ])
 
 PKG_CHECK_MODULES(E_SYS, [
-  eina-0
+  eina >= 1.0.0
 ])
 
 PKG_CHECK_MODULES(E_INIT, [
-  evas
-  ecore
-  ecore-evas
-  ecore-x
-  edje
-  ecore-ipc
-  eina-0
+  evas >= 1.0.0
+  ecore >= 1.0.0
+  ecore-evas >= 1.0.0
+  ecore-x >= 1.0.0
+  edje >= 1.0.0
+  ecore-ipc >= 1.0.0
+  eina >= 1.0.0
 ])
 
 PKG_CHECK_MODULES(E, [
-  evas
-  ecore
-  ecore-x
-  ecore-evas
-  ecore-input
-  ecore-input-evas
-  ecore-con
-  ecore-ipc
-  ecore-file
-  eet >= 1.2.3
-  edje
-  efreet
-  efreet-mime
-  efreet-trash
-  eina-0
+  evas >= 1.0.0
+  ecore >= 1.0.0
+  ecore-x >= 1.0.0
+  ecore-evas >= 1.0.0
+  ecore-input >= 1.0.0
+  ecore-input-evas >= 1.0.0
+  ecore-con >= 1.0.0
+  ecore-ipc >= 1.0.0
+  ecore-file >= 1.0.0
+  eet >= 1.4.0
+  edje >= 1.0.0
+  efreet >= 1.0.0
+  efreet-mime >= 1.0.0
+  efreet-trash >= 1.0.0
+  eina >= 1.0.0
   dbus-1
-  edbus
-  ehal
+  edbus >= 1.0.0
+  ehal >= 1.0.0
   $device_backend
 ])
-requirements_e="evas ecore ecore-x ecore-evas ecore-con ecore-ipc ecore-file eet edje efreet efreet-mime eina-0 dbus-1 edbus ehal $device_backend"
+requirements_e="evas >= 1.0.0 ecore >= 1.0.0 ecore-x >= 1.0.0 ecore-evas >= 1.0.0 ecore-con >= 1.0.0 ecore-ipc >= 1.0.0 ecore-file >= 1.0.0 eet >= 1.4.0 edje >= 1.0.0 efreet >= 1.0.0 efreet-mime >= 1.0.0 eina >= 1.0.0 dbus-1 edbus >= 1.0.0 ehal >= 1.0.0 $device_backend"
 
-AC_E_CHECK_PKG(ECORE_IMF, [ecore-imf ecore-imf-evas], [], [:])
+AC_E_CHECK_PKG(ECORE_IMF, [ecore-imf >= 1.0.0 ecore-imf-evas >= 1.0.0], [], [:])
 
 e_libs=$E_LIBS" "$LIBINTL" "$fnmatch_libs" "$ECORE_IMF_LIBS" "$execinfo_libs
 e_cflags="-DUSE_E_CONFIG_H "$E_CFLAGS" "$ECORE_IMF_CFLAGS
@@ -427,7 +427,7 @@ AC_ARG_WITH(edje-cc,
 ])
 AC_SUBST(edje_cc)
 
-PKG_CHECK_MODULES(EET, [eet >= 1.2.3])
+PKG_CHECK_MODULES(EET, [eet >= 1.4.0])
 AC_ARG_WITH(eet-eet,
 [  --with-eet-eet=PATH              specify a specific path to eet utility],
 [
