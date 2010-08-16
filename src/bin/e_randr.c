@@ -4,7 +4,6 @@
 #include "e.h"
 #include <stdio.h>
 #include <Ecore.h>
-#include "e_randr.h"
 
 #define ECORE_X_RANDR_1_1 ((1 << 16) | 1)
 #define ECORE_X_RANDR_1_2 ((1 << 16) | 2)
@@ -1121,7 +1120,7 @@ _e_randr_outputs_to_array(Eina_List *outputs_info)
 
    if (!outputs_info || !(ret = malloc(sizeof(Ecore_X_Randr_Output) * eina_list_count(outputs_info)))) return NULL;
    EINA_LIST_FOREACH(outputs_info, output_iter, output_info)
-     ret[i++] = output_info ? output_info->xid : NULL;
+     ret[i++] = output_info ? output_info->xid : 0;
    return ret;
 }
 
