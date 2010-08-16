@@ -360,8 +360,7 @@ enlightenment_sys_LDADD = @E_SYS_LIBS@
 
 enlightenment_init_SOURCES = \
 e_init_main.c \
-e_xinerama.c \
-e_randr.c
+e_xinerama.c
 
 enlightenment_init_LDADD = @E_INIT_LIBS@
 
