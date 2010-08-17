@@ -703,6 +703,8 @@ _e_randr_event_cb(void *data, int type, void *ev)
            };
            */
         crtc_info = _e_randr_crtc_info_get(event->crtc);
+	if (!crtc_info) goto on_exit;
+
         if (event->mode != Ecore_X_Randr_None)
           {
              //switched (on)
@@ -771,8 +773,9 @@ _e_randr_event_cb(void *data, int type, void *ev)
         output_info = _e_randr_output_info_get(event->output);
         if((output_info->crtc = _e_randr_crtc_info_get(event->crtc)))
           {
-             if (!eina_list_data_find(output_info->crtc->outputs, output_info))
-               output_info->crtc->outputs = eina_list_append(output_info->crtc->outputs, output_info);
+	     if (output_info->crtc)
+	       if (!eina_list_data_find(output_info->crtc->outputs, output_info))
+		 output_info->crtc->outputs = eina_list_append(output_info->crtc->outputs, output_info);
           }
 
         output_info->connection_status = event->connection;
@@ -847,6 +850,7 @@ _e_randr_event_cb(void *data, int type, void *ev)
            };
            */
      }
+ on_exit:
    return ECORE_CALLBACK_RENEW;
 }
 
@@ -1241,13 +1245,16 @@ _e_randr_try_enable_output(E_Randr_Output_Info *output_info, Eina_Bool force)
                    */
                   if (((outputs_list = eina_list_append(outputs_list, primary_output)) && (outputs_list = eina_list_append(outputs_list, output_info))))
                     {
-                       if((mode_info = _e_randr_outputs_common_mode_max_get(outputs_list, primary_output->crtc->current_mode)))
-                         {
-                            fprintf(stderr, "Will try to set mode: %dx%d for primary and clone.\n", mode_info->width, mode_info->height);
-                            ret = ecore_x_randr_crtc_mode_set(e_randr_screen_info->root, primary_output->crtc->xid, ((Ecore_X_Randr_Output*)Ecore_X_Randr_Unset), Ecore_X_Randr_Unset, mode_info->xid);
-                            ret = (ret && ecore_x_randr_crtc_mode_set(e_randr_screen_info->root, usable_crtc->xid, &output_info->xid, 1, mode_info->xid));
-                            ret = (ret && ecore_x_randr_crtc_pos_relative_set(e_randr_screen_info->root, usable_crtc->xid, primary_output->crtc->xid, ECORE_X_RANDR_OUTPUT_POLICY_CLONE, e_randr_screen_info->rrvd_info.randr_info_12->alignment));
-                       }
+		       if (primary_output->crtc)
+			 {
+			    if((mode_info = _e_randr_outputs_common_mode_max_get(outputs_list, primary_output->crtc->current_mode)))
+			      {
+				 fprintf(stderr, "Will try to set mode: %dx%d for primary and clone.\n", mode_info->width, mode_info->height);
+				 ret = ecore_x_randr_crtc_mode_set(e_randr_screen_info->root, primary_output->crtc->xid, ((Ecore_X_Randr_Output*)Ecore_X_Randr_Unset), Ecore_X_Randr_Unset, mode_info->xid);
+				 ret = (ret && ecore_x_randr_crtc_mode_set(e_randr_screen_info->root, usable_crtc->xid, &output_info->xid, 1, mode_info->xid));
+				 ret = (ret && ecore_x_randr_crtc_pos_relative_set(e_randr_screen_info->root, usable_crtc->xid, primary_output->crtc->xid, ECORE_X_RANDR_OUTPUT_POLICY_CLONE, e_randr_screen_info->rrvd_info.randr_info_12->alignment));
+			      }
+			 }
                        eina_list_free(outputs_list);
                   }
              }
