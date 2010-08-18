@@ -24,7 +24,6 @@ static void _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cf
 static Evas_Object *_basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata);
 static int _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static void _fill_styles(E_Config_Dialog_Data *cfdata, Evas_Object *obj);
-static void _cb_set_contents(void *data, void *data2 __UNUSED__);
 static void _cb_autohide_change(void *data, Evas_Object *obj __UNUSED__);
 static void _fill_desks(E_Config_Dialog_Data *cfdata);
 
@@ -444,16 +443,6 @@ _fill_styles(E_Config_Dialog_Data *cfdata, Evas_Object *obj)
    e_widget_ilist_thaw(obj);
    edje_thaw();
    evas_event_thaw(evas);
-}
-
-static void 
-_cb_set_contents(void *data, void *data2 __UNUSED__) 
-{
-   E_Config_Dialog_Data *cfdata;
-
-   if (!(cfdata = data)) return;
-   if (!cfdata->es->gadcon->config_dialog)
-     e_int_gadcon_config_shelf(cfdata->es->gadcon);
 }
 
 static void 
