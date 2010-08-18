@@ -178,7 +178,7 @@ e_bindings_mouse_ungrab(E_Binding_Context ctxt, Ecore_X_Window win)
 }
 
 EAPI E_Action *
-e_bindings_mouse_down_find(E_Binding_Context ctxt, E_Object *obj, Ecore_Event_Mouse_Button *ev, E_Binding_Mouse **bind_ret)
+e_bindings_mouse_down_find(E_Binding_Context ctxt, E_Object *obj __UNUSED__, Ecore_Event_Mouse_Button *ev, E_Binding_Mouse **bind_ret)
 {
    E_Binding_Modifier mod = 0;
    E_Binding_Mouse *bind;
@@ -222,7 +222,7 @@ e_bindings_mouse_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_
 }
 
 EAPI E_Action *
-e_bindings_mouse_up_find(E_Binding_Context ctxt, E_Object *obj, Ecore_Event_Mouse_Button *ev, E_Binding_Mouse **bind_ret)
+e_bindings_mouse_up_find(E_Binding_Context ctxt, E_Object *obj __UNUSED__, Ecore_Event_Mouse_Button *ev, E_Binding_Mouse **bind_ret)
 {
    E_Binding_Modifier mod = 0;
    E_Binding_Mouse *bind;
@@ -683,7 +683,7 @@ e_bindings_signal_del(E_Binding_Context ctxt, const char *sig, const char *src, 
 }
 
 EAPI E_Action  *
-e_bindings_signal_find(E_Binding_Context ctxt, E_Object *obj, const char *sig, const char *src, E_Binding_Signal **bind_ret)
+e_bindings_signal_find(E_Binding_Context ctxt, E_Object *obj __UNUSED__, const char *sig, const char *src, E_Binding_Signal **bind_ret)
 {
    E_Binding_Modifier mod = 0;
    E_Binding_Signal *bind;
@@ -833,7 +833,7 @@ e_bindings_wheel_ungrab(E_Binding_Context ctxt, Ecore_X_Window win)
 }
 
 EAPI E_Action *
-e_bindings_wheel_find(E_Binding_Context ctxt, E_Object *obj, Ecore_Event_Mouse_Wheel *ev, E_Binding_Wheel **bind_ret)
+e_bindings_wheel_find(E_Binding_Context ctxt, E_Object *obj __UNUSED__, Ecore_Event_Mouse_Wheel *ev, E_Binding_Wheel **bind_ret)
 {
    E_Binding_Modifier mod = 0;
    E_Binding_Wheel *bind;
@@ -914,7 +914,7 @@ e_bindings_acpi_del(E_Binding_Context ctxt, int type, int status, const char *ac
 }
 
 EAPI E_Action *
-e_bindings_acpi_find(E_Binding_Context ctxt, E_Object *obj, E_Event_Acpi *ev, E_Binding_Acpi **bind_ret) 
+e_bindings_acpi_find(E_Binding_Context ctxt, E_Object *obj __UNUSED__, E_Event_Acpi *ev, E_Binding_Acpi **bind_ret) 
 {
    E_Binding_Acpi *bind;
    Eina_List *l;
