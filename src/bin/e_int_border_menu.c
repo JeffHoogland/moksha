@@ -271,7 +271,7 @@ e_int_border_menu_del(E_Border *bd)
 }
 
 static void
-_e_border_cb_border_menu_end(void *data, E_Menu *m)
+_e_border_cb_border_menu_end(void *data __UNUSED__, E_Menu *m)
 {
    E_Border *bd;
 
@@ -289,7 +289,7 @@ _e_border_cb_border_menu_end(void *data, E_Menu *m)
 }
 
 static void
-_e_border_menu_cb_locks(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_locks(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Border *bd;
 
@@ -299,7 +299,7 @@ _e_border_menu_cb_locks(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_remember(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_remember(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Border *bd;
 
@@ -309,7 +309,7 @@ _e_border_menu_cb_remember(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_border(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_border(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Border *bd;
    char buf[256];
@@ -321,7 +321,7 @@ _e_border_menu_cb_border(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_close(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_close(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Border *bd;
 
@@ -330,7 +330,7 @@ _e_border_menu_cb_close(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_iconify(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_iconify(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Border *bd;
 
@@ -345,7 +345,7 @@ _e_border_menu_cb_iconify(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_kill(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_kill(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Action *a;
    E_Border *bd;
@@ -358,7 +358,7 @@ _e_border_menu_cb_kill(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_move(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_move(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Border *bd;
 
@@ -369,7 +369,7 @@ _e_border_menu_cb_move(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_resize(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_resize(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Border *bd;
 
@@ -380,7 +380,7 @@ _e_border_menu_cb_resize(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_maximize_pre(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_maximize_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
 {
    E_Menu *subm;
    E_Menu_Item *submi;
@@ -438,7 +438,7 @@ _e_border_menu_cb_maximize_pre(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_maximize(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_maximize(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Border *bd;
 
@@ -449,7 +449,7 @@ _e_border_menu_cb_maximize(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_maximize_vertically(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_maximize_vertically(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Border *bd;
 
@@ -464,7 +464,7 @@ _e_border_menu_cb_maximize_vertically(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_maximize_horizontally(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_maximize_horizontally(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Border *bd;
 
@@ -479,7 +479,7 @@ _e_border_menu_cb_maximize_horizontally(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_unmaximize(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_unmaximize(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Border *bd;
 
@@ -488,7 +488,7 @@ _e_border_menu_cb_unmaximize(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_shade(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_shade(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Border *bd;
 
@@ -503,7 +503,7 @@ _e_border_menu_cb_shade(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi __UNUSED__)
 {
    E_Border *bd;
 
@@ -512,7 +512,7 @@ _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_application_add_pre(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_application_add_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
 {
    E_Menu *subm;
    E_Menu_Item *submi;
@@ -545,7 +545,7 @@ _e_border_menu_cb_application_add_pre(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_more_pre(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_more_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
 {
    E_Menu *subm;
    E_Menu_Item *submi;
@@ -624,7 +624,7 @@ _e_border_menu_cb_more_pre(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_prop(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_prop(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Border *bd;
 
@@ -633,7 +633,7 @@ _e_border_menu_cb_prop(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_stick(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_stick(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Border *bd;
 
@@ -648,7 +648,7 @@ _e_border_menu_cb_stick(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_on_top(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_on_top(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Border *bd;
 
@@ -661,7 +661,7 @@ _e_border_menu_cb_on_top(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_below(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_below(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Border *bd;
 
@@ -674,7 +674,7 @@ _e_border_menu_cb_below(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_normal(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_normal(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Border *bd;
 
@@ -687,7 +687,7 @@ _e_border_menu_cb_normal(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_fullscreen(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_fullscreen(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
 {
    E_Border *bd;
    int toggle;
@@ -705,7 +705,7 @@ _e_border_menu_cb_fullscreen(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_skip_winlist(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_skip_winlist(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
 {
    E_Border *bd;
 
@@ -721,7 +721,7 @@ _e_border_menu_cb_skip_winlist(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_skip_pager(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_skip_pager(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
 {
    E_Border *bd;
 
@@ -736,7 +736,7 @@ _e_border_menu_cb_skip_pager(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_skip_taskbar(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_skip_taskbar(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
 {
    E_Border *bd;
 
@@ -773,7 +773,7 @@ _e_border_menu_cb_sendto_icon_pre(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_sendto_pre(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_sendto_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
 {
    E_Menu *subm;
    E_Menu_Item *submi;
@@ -804,7 +804,7 @@ _e_border_menu_cb_sendto_pre(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_sendto(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_sendto(void *data, E_Menu *m, E_Menu_Item *mi __UNUSED__)
 {
    E_Desk *desk;
    E_Border *bd;
@@ -815,7 +815,7 @@ _e_border_menu_cb_sendto(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_pin(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_pin(void *data __UNUSED__, E_Menu *m, E_Menu_Item *mi __UNUSED__)
 {
    E_Border *bd;
 
@@ -824,7 +824,7 @@ _e_border_menu_cb_pin(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_unpin(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_unpin(void *data __UNUSED__, E_Menu *m, E_Menu_Item *mi __UNUSED__)
 {
    E_Border *bd;
 
@@ -833,7 +833,7 @@ _e_border_menu_cb_unpin(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_stacking_pre(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_stacking_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
 {
    E_Menu *subm;
    E_Menu_Item *submi;
@@ -884,7 +884,7 @@ _e_border_menu_cb_stacking_pre(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_raise(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_raise(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Border *bd;
 
@@ -897,7 +897,7 @@ _e_border_menu_cb_raise(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_lower(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_lower(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Border *bd;
 
@@ -948,7 +948,7 @@ _e_border_menu_cb_netwm_icon(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_border_pre(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_border_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
 {
    E_Menu *subm;
    E_Menu_Item *submi;
@@ -1000,7 +1000,7 @@ _e_border_menu_cb_border_pre(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_iconpref_e(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_iconpref_e(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Border *bd;
 
@@ -1012,7 +1012,7 @@ _e_border_menu_cb_iconpref_e(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_iconpref_user(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_iconpref_user(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Border *bd;
 
@@ -1024,7 +1024,7 @@ _e_border_menu_cb_iconpref_user(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_iconpref_netwm(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_iconpref_netwm(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Border *bd;
 
@@ -1036,7 +1036,7 @@ _e_border_menu_cb_iconpref_netwm(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_state_pre(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_state_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
 {
    E_Border *bd;
    E_Menu *subm;
@@ -1093,7 +1093,7 @@ _e_border_menu_cb_state_pre(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_skip_pre(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_skip_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
 {
    E_Border *bd;
    E_Menu *subm;
@@ -1137,11 +1137,11 @@ _e_border_menu_cb_skip_pre(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_fav_add(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_fav_add(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Border *bd;
    Efreet_Menu *menu;
-   char buf[4096];
+   char buf[PATH_MAX];
 
    if (!(bd = data)) return;
    e_user_dir_concat_static(buf, "applications/menu/favorite.menu");
@@ -1155,7 +1155,7 @@ _e_border_menu_cb_fav_add(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_kbdshrtct_add(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_kbdshrtct_add(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Border *bd;
    E_Zone *zone;
@@ -1168,13 +1168,13 @@ _e_border_menu_cb_kbdshrtct_add(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_ibar_add_pre(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_ibar_add_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
 {
    E_Menu *sm;
    E_Border *bd;
    Eina_List *dirs;
    Eina_List *l;
-   char buf[4096], *file;
+   char buf[PATH_MAX], *file;
    size_t len;
 
    if (!(bd = data)) return;
@@ -1206,11 +1206,11 @@ _e_border_menu_cb_ibar_add_pre(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_ibar_add(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_ibar_add(void *data, E_Menu *m, E_Menu_Item *mi __UNUSED__)
 {
    E_Order *od;
    E_Border *bd;
-   char buf[4096];
+   char buf[PATH_MAX];
 
    bd = e_object_data_get(E_OBJECT(m));
    if ((!bd) || (!bd->desktop)) return;
