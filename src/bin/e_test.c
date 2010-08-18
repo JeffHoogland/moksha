@@ -993,7 +993,7 @@ _e_test_internal(E_Container *con)
 
 #else
 static void
-_e_test_internal(E_Container *con)
+_e_test_internal(E_Container *con __UNUSED__)
 {    
 }
 #endif
