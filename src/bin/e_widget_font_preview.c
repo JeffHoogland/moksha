@@ -78,7 +78,7 @@ _e_wid_del_hook(Evas_Object *obj)
 }
 
 static void
-_e_wid_cb_scrollframe_resize(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_e_wid_cb_scrollframe_resize(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
 {
    E_Widget_Data *wd;
    Evas_Coord mw, mh, vw, vh;
@@ -93,7 +93,7 @@ _e_wid_cb_scrollframe_resize(void *data, Evas *e, Evas_Object *obj, void *event_
 }
    
 static void
-_e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_e_wid_focus_steal(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    e_widget_focus_steal(data);
 }
