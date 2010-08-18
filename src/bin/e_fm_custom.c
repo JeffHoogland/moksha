@@ -275,7 +275,7 @@ struct _E_Custom_List
 };
 
 static Eina_Bool
-_e_fm2_custom_file_hash_foreach_list(const Eina_Hash *hash, const void *key, void *data, void *fdata)
+_e_fm2_custom_file_hash_foreach_list(const Eina_Hash *hash __UNUSED__, const void *key, void *data __UNUSED__, void *fdata)
 {
    struct _E_Custom_List *cl;
 
@@ -325,14 +325,14 @@ _e_fm2_custom_hash_key_sub_list(const Eina_Hash *hash, const void *str)
 */
 
 static Eina_Bool
-_e_fm2_custom_file_hash_foreach(const Eina_Hash *hash, const void *key, void *data, void *fdata)
+_e_fm2_custom_file_hash_foreach(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__)
 {
    _e_fm2_custom_file_del(data);
    return 1;
 }
 
 static Eina_Bool
-_e_fm2_custom_file_hash_foreach_save(const Eina_Hash *hash, const void *key, void *data, void *fdata)
+_e_fm2_custom_file_hash_foreach_save(const Eina_Hash *hash __UNUSED__, const void *key, void *data, void *fdata)
 {
    Eet_File *ef;
    E_Fm2_Custom_File *cf;
@@ -426,7 +426,7 @@ _e_fm2_custom_file_info_free(void)
 }
 
 static void
-_e_fm2_custom_file_cb_defer_save(void *data)
+_e_fm2_custom_file_cb_defer_save(void *data __UNUSED__)
 {
    _e_fm2_custom_file_info_save();
    _e_fm2_custom_file_info_free();

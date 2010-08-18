@@ -129,7 +129,7 @@ e_powersave_mode_get(void)
 /* local subsystem functions */
 
 static Eina_Bool
-_e_powersave_cb_deferred_timer(void *data)
+_e_powersave_cb_deferred_timer(void *data __UNUSED__)
 {
    E_Powersave_Deferred_Action *pa;
 
