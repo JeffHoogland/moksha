@@ -102,7 +102,7 @@ e_slidesel_jump(Evas_Object *obj, int num)
 
 /* local subsystem functions */
 static void
-_e_smart_event_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_e_smart_event_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
    Evas_Event_Mouse_Down *ev;
    E_Smart_Data *sd;
@@ -121,7 +121,7 @@ _e_smart_event_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 }
 
 static void
-_e_smart_event_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_e_smart_event_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
    Evas_Event_Mouse_Down *ev;
    E_Smart_Data *sd;
@@ -151,7 +151,7 @@ _e_smart_event_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
 }
 
 static void
-_e_smart_event_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_e_smart_event_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
    Evas_Event_Mouse_Move *ev;
    E_Smart_Data *sd;
@@ -174,7 +174,7 @@ _e_smart_event_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 }
 
 static void
-_e_smart_event_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_e_smart_event_key_down(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
 /*   
    Evas_Event_Key_Down *ev;
@@ -350,7 +350,10 @@ _e_smart_init(void)
 	       NULL,
 	       NULL,
 	       NULL,
-	       NULL
+	       NULL, 
+               NULL, 
+               NULL, 
+               NULL
 	  };
 	_e_smart = evas_smart_class_new(&sc);
      }
