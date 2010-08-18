@@ -144,7 +144,7 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
    E_Exec_Launch *launch;
    Ecore_Exe *exe;
    char *penv_display;
-   char buf[4096];
+   char buf[PATH_MAX];
 
    launch = data;
    if (desktop)
@@ -348,8 +348,8 @@ _e_exec_cb_exit(__UNUSED__ void *data, __UNUSED__ int type, void *event)
                                 "E", "_e_exec_run_error_dialog");
              if (dia)
                {
-                  char buf[4096];
-                  
+                  char buf[PATH_MAX];
+
                   e_dialog_title_set(dia, _("Application run error"));
                   snprintf(buf, sizeof(buf),
                            _("Enlightenment was unable to run the application:<br>"
@@ -460,7 +460,7 @@ _e_exec_error_dialog(Efreet_Desktop *desktop, const char *exec, Ecore_Exe_Event_
 static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
-   char buf[4096];
+   char buf[PATH_MAX];
 
    if (!cfdata->label)
      {
@@ -547,7 +547,7 @@ _create_data(E_Config_Dialog *cfd)
 }
 
 static void
-_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    if (cfdata->error) ecore_exe_event_data_free(cfdata->error);
    if (cfdata->read) ecore_exe_event_data_free(cfdata->read);
@@ -612,9 +612,9 @@ _dialog_scrolltext_create(Evas *evas, char *title, Ecore_Exe_Event_Data_Line *li
 }
 
 static Evas_Object *
-_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
+_basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   char buf[4096];
+   char buf[PATH_MAX];
    int error_length = 0;
    Evas_Object *o, *ob, *os;
 
@@ -651,9 +651,9 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 }
 
 static Evas_Object *
-_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
+_advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   char buf[4096];
+   char buf[PATH_MAX];
    int read_length = 0;
    int error_length = 0;
    Evas_Object *o, *of, *ob, *ot;
@@ -730,13 +730,13 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 }
 
 static void
-_dialog_save_cb(void *data, void *data2)
+_dialog_save_cb(void *data __UNUSED__, void *data2)
 {
    E_Config_Dialog_Data *cfdata;
    FILE *f;
    char *text;
    char buf[1024];
-   char buffer[4096];
+   char buffer[PATH_MAX];
    int read_length = 0;
    int i, tlen;
 
