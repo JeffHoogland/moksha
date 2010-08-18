@@ -271,13 +271,13 @@ _e_dialog_free(E_Dialog *dia)
 }
 
 static void
-_e_dialog_del_func_cb(void *data, E_Dialog *dia)
+_e_dialog_del_func_cb(void *data __UNUSED__, E_Dialog *dia)
 {
    e_util_defer_object_del(E_OBJECT(dia));
 }
 
 static void
-_e_dialog_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event)
+_e_dialog_cb_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event)
 {
    Evas_Event_Key_Down *ev;
    E_Dialog *dia;
