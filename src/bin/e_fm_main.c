@@ -323,7 +323,7 @@ main(int argc, char **argv)
 }
 
 static void
-_e_hal_poll(void *data, DBusMessage *msg)
+_e_hal_poll(void *data __UNUSED__, DBusMessage *msg)
 {
    DBusError err;
    const char *name, *from, *to;
@@ -342,44 +342,44 @@ _e_hal_poll(void *data, DBusMessage *msg)
 }
 
 static void
-_hal_test(void *data, DBusMessage *msg, DBusError *error)
+_hal_test(void *data __UNUSED__, DBusMessage *msg __UNUSED__, DBusError *error)
 {
-
    if ((error) && (dbus_error_is_set(error)))
      {
        dbus_error_free(error);
        if (!_hal_poll)
-         _hal_poll = e_dbus_signal_handler_add(_e_dbus_conn, 
-                     E_DBUS_FDO_BUS, E_DBUS_FDO_PATH, E_DBUS_FDO_INTERFACE,
-                     "NameOwnerChanged", _e_hal_poll, NULL);
+         _hal_poll = 
+          e_dbus_signal_handler_add(_e_dbus_conn, 
+                                    E_DBUS_FDO_BUS, E_DBUS_FDO_PATH, 
+                                    E_DBUS_FDO_INTERFACE,
+                                    "NameOwnerChanged", _e_hal_poll, NULL);
        return;
      }
    if (_hal_poll)
      e_dbus_signal_handler_del(_e_dbus_conn, _hal_poll);
 
-
    e_hal_manager_get_all_devices(_e_dbus_conn, _e_dbus_cb_dev_all, NULL);
    e_hal_manager_find_device_by_capability(_e_dbus_conn, "storage",
-        _e_dbus_cb_dev_store, NULL);
+                                           _e_dbus_cb_dev_store, NULL);
    e_hal_manager_find_device_by_capability(_e_dbus_conn, "volume",
-        _e_dbus_cb_dev_vol, NULL);
+                                           _e_dbus_cb_dev_vol, NULL);
    
    e_dbus_signal_handler_add(_e_dbus_conn, E_HAL_SENDER,
-        E_HAL_MANAGER_PATH,
-        E_HAL_MANAGER_INTERFACE,
-        "DeviceAdded", _e_dbus_cb_dev_add, NULL);
+                             E_HAL_MANAGER_PATH,
+                             E_HAL_MANAGER_INTERFACE,
+                             "DeviceAdded", _e_dbus_cb_dev_add, NULL);
    e_dbus_signal_handler_add(_e_dbus_conn, E_HAL_SENDER,
-        E_HAL_MANAGER_PATH,
-        E_HAL_MANAGER_INTERFACE,
-        "DeviceRemoved", _e_dbus_cb_dev_del, NULL);
+                             E_HAL_MANAGER_PATH,
+                             E_HAL_MANAGER_INTERFACE,
+                             "DeviceRemoved", _e_dbus_cb_dev_del, NULL);
    e_dbus_signal_handler_add(_e_dbus_conn, E_HAL_SENDER,
-        E_HAL_MANAGER_PATH,
-        E_HAL_MANAGER_INTERFACE,
-        "NewCapability", _e_dbus_cb_cap_add, NULL);
+                             E_HAL_MANAGER_PATH,
+                             E_HAL_MANAGER_INTERFACE,
+                             "NewCapability", _e_dbus_cb_cap_add, NULL);
 }
 
 static void
-_e_dbus_cb_dev_all(void *user_data, void *reply_data, DBusError *error)
+_e_dbus_cb_dev_all(void *user_data __UNUSED__, void *reply_data, DBusError *error)
 {
    E_Hal_Manager_Get_All_Devices_Return *ret = reply_data;
    Eina_List *l;
@@ -404,7 +404,7 @@ _e_dbus_cb_dev_all(void *user_data, void *reply_data, DBusError *error)
 }
 
 static void
-_e_dbus_cb_dev_store(void *user_data, void *reply_data, DBusError *error)
+_e_dbus_cb_dev_store(void *user_data __UNUSED__, void *reply_data, DBusError *error)
 {
    E_Hal_Manager_Find_Device_By_Capability_Return *ret = reply_data;
    Eina_List *l;
@@ -426,7 +426,7 @@ _e_dbus_cb_dev_store(void *user_data, void *reply_data, DBusError *error)
 }
 
 static void
-_e_dbus_cb_dev_vol(void *user_data, void *reply_data, DBusError *error)
+_e_dbus_cb_dev_vol(void *user_data __UNUSED__, void *reply_data, DBusError *error)
 {
    E_Hal_Manager_Find_Device_By_Capability_Return *ret = reply_data;
    Eina_List *l;
@@ -492,7 +492,7 @@ _e_dbus_cb_vol_is(void *user_data, void *reply_data, DBusError *error)
 }
 
 static void
-_e_dbus_cb_dev_add(void *data, DBusMessage *msg)
+_e_dbus_cb_dev_add(void *data __UNUSED__, DBusMessage *msg)
 {
    DBusError err;
    char *udi = NULL;
@@ -507,7 +507,7 @@ _e_dbus_cb_dev_add(void *data, DBusMessage *msg)
 }
 
 static void
-_e_dbus_cb_dev_del(void *data, DBusMessage *msg)
+_e_dbus_cb_dev_del(void *data __UNUSED__, DBusMessage *msg)
 {
    DBusError err;
    char *udi;
@@ -523,7 +523,7 @@ _e_dbus_cb_dev_del(void *data, DBusMessage *msg)
 }
 
 static void
-_e_dbus_cb_cap_add(void *data, DBusMessage *msg)
+_e_dbus_cb_cap_add(void *data __UNUSED__, DBusMessage *msg)
 {
    DBusError err;
    char *udi, *capability;
@@ -971,7 +971,7 @@ _e_dbus_vol_mount_timeout(void *data)
 }
 
 static void
-_e_dbus_cb_vol_mounted(void *user_data, void *method_return, DBusError *error)
+_e_dbus_cb_vol_mounted(void *user_data, void *method_return __UNUSED__, DBusError *error)
 {
    E_Volume *v = user_data;
    char *buf;
@@ -1075,7 +1075,7 @@ _e_dbus_vol_unmount_timeout(void *data)
 }
 
 static void
-_e_dbus_cb_vol_unmounted(void *user_data, void *method_return, DBusError *error)
+_e_dbus_cb_vol_unmounted(void *user_data, void *method_return __UNUSED__, DBusError *error)
 {
    E_Volume *v = user_data;
    char *buf;
@@ -1169,7 +1169,7 @@ _e_dbus_cb_vol_unmounted_before_eject(void *user_data, void *method_return, DBus
 }
 
 static void
-_e_dbus_cb_vol_ejected(void *user_data, void *method_return, DBusError *error)
+_e_dbus_cb_vol_ejected(void *user_data, void *method_return __UNUSED__, DBusError *error)
 {
    E_Volume *v = user_data;
    char *buf;
@@ -1249,7 +1249,7 @@ _e_ipc_init(void)
 }
 
 static Eina_Bool
-_e_ipc_cb_server_add(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_ipc_cb_server_add(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Ipc_Event_Server_Add *e;
    
@@ -1262,7 +1262,7 @@ _e_ipc_cb_server_add(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_ipc_cb_server_del(__UNUSED__ void *data, __UNUSED__ int type, __UNUSED__ void *event)
+_e_ipc_cb_server_del(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    /* quit now */
    ecore_main_loop_quit();
@@ -1527,7 +1527,7 @@ _e_fm_mkdir_try(E_Fm_Task *task)
 }
 
 static void
-_e_fm_mkdir(int id, const char *src, const char *rel, int rel_to, int x, int y)
+_e_fm_mkdir(int id, const char *src, const char *rel, int rel_to __UNUSED__, int x, int y)
 {
    E_Fm_Task *task;
 
@@ -1582,7 +1582,7 @@ _e_fm_handle_error_response(int id, E_Fm_Op_Type type)
 
 
 static Eina_Bool
-_e_ipc_cb_server_data(void *data, int type, void *event)
+_e_ipc_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Ipc_Event_Server_Data *e;
    
@@ -1853,7 +1853,7 @@ static int _e_fm_slave_send(E_Fm_Slave *slave, E_Fm_Op_Type type, void *data, in
 }
 
 static Eina_Bool
-_e_fm_slave_data_cb(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_fm_slave_data_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Exe_Event_Data *e = event;
    E_Fm_Slave *slave;
@@ -1905,7 +1905,7 @@ _e_fm_slave_data_cb(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_fm_slave_error_cb(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_fm_slave_error_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Exe_Event_Data *e = event;
    E_Fm_Slave *slave;
@@ -1920,7 +1920,7 @@ _e_fm_slave_error_cb(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_fm_slave_del_cb(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_fm_slave_del_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Exe_Event_Del *e = event;
    E_Fm_Slave *slave;
@@ -1939,7 +1939,7 @@ _e_fm_slave_del_cb(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static void
-_e_cb_file_monitor(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, const char *path)
+_e_cb_file_monitor(void *data __UNUSED__, Ecore_File_Monitor *em __UNUSED__, Ecore_File_Event event, const char *path)
 {
    E_Dir *ed;
    char *dir, *rp, *drp;
