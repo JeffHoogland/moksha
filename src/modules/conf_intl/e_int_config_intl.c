@@ -106,6 +106,7 @@ const E_Intl_Pair basic_language_predefined_pairs[ ] = {
      {"da_DK.UTF-8", "Dansk"},
      {"nl_NL.UTF-8", "Nederlands"},
      {"en_US.UTF-8", "English"},
+     {"en_GB.UTF-8", "British English"},
      {"fi_FI.UTF-8", "Suomi"},
      {"fr_FR.UTF-8", "Français"},
      {"de_DE.UTF-8", "Deutsch"},
