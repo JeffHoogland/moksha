@@ -79,7 +79,7 @@ _e_entry_dialog_free(E_Entry_Dialog *ed)
 }
     
 static void
-_e_entry_dialog_ok(void *data, E_Dialog *dia) 
+_e_entry_dialog_ok(void *data, E_Dialog *dia __UNUSED__) 
 {
    E_Entry_Dialog *ed;
    
@@ -91,7 +91,7 @@ _e_entry_dialog_ok(void *data, E_Dialog *dia)
 }
 
 static void
-_e_entry_dialog_cancel(void *data, E_Dialog *dia) 
+_e_entry_dialog_cancel(void *data, E_Dialog *dia __UNUSED__) 
 {
    E_Entry_Dialog *ed;
    
@@ -114,7 +114,7 @@ _e_entry_dialog_delete(E_Win *win)
 }
 
 static void 
-_e_entry_cb_key_down(void *data, Evas_Object *obj, void *event_info) 
+_e_entry_cb_key_down(void *data, Evas_Object *obj __UNUSED__, void *event_info) 
 {
    Evas_Event_Key_Down *ev;
    E_Entry_Dialog *ed;
@@ -124,6 +124,6 @@ _e_entry_cb_key_down(void *data, Evas_Object *obj, void *event_info)
    if (!strcmp(ev->keyname, "Return")) 
       _e_entry_dialog_ok(data, ed->dia);
    else
-      if (!strcmp(ev->keyname, "Escape"))
-         _e_entry_dialog_cancel(data, ed->dia);
+     if (!strcmp(ev->keyname, "Escape"))
+       _e_entry_dialog_cancel(data, ed->dia);
 }
