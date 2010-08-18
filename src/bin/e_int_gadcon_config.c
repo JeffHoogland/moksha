@@ -201,8 +201,8 @@ _fill_list(E_Config_Dialog_Data *cfdata)
 
    EINA_LIST_FOREACH(e_gadcon_provider_list(), l, gcc) 
      {
-        Evas_Object *icon, *end;
-        const char *lbl;
+        Evas_Object *icon = NULL, *end;
+        const char *lbl = NULL;
 
         if ((gcc->func.is_site) && (!gcc->func.is_site(cfdata->site)))
           continue;
