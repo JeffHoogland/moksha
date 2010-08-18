@@ -55,9 +55,11 @@ _e_wid_reconfigure(E_Widget_Data *wd)
 }
 
 static void
-_cb_reconfigure(void *data, Evas *a, Evas_Object *obj, void *event_info)
+_cb_reconfigure(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
-   E_Widget_Data *wd = data;
+   E_Widget_Data *wd;
+
+   wd = data;
    _e_wid_reconfigure(wd);
 }
 
