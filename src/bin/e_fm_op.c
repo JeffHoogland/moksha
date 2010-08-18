@@ -410,7 +410,7 @@ _e_fm_op_remove_link_task(E_Fm_Op_Task *task)
  * did not actually read enough data.
  */
 static Eina_Bool
-_e_fm_op_stdin_data(void *data, Ecore_Fd_Handler * fd_handler)
+_e_fm_op_stdin_data(void *data __UNUSED__, Ecore_Fd_Handler * fd_handler)
 {
    int fd;
    static char *buf = NULL;
@@ -637,7 +637,7 @@ _e_fm_op_idler_handle_error(int *mark, Eina_List **queue, Eina_List **node, E_Fm
  * After this, just finish everything.
  */
 static Eina_Bool
-_e_fm_op_work_idler(void *data)
+_e_fm_op_work_idler(void *data __UNUSED__)
 {
    /* E_Fm_Op_Task is marked static here because _e_fm_op_work_queue can be populated with another
     * tasks between calls. So it is possible when a part of file is copied and then 
@@ -715,7 +715,7 @@ _e_fm_op_work_idler(void *data)
  * for those files. And we don't have _e_fm_op_separator here.
  */
 Eina_Bool
-_e_fm_op_scan_idler(void *data)
+_e_fm_op_scan_idler(void *data __UNUSED__)
 {
    static Eina_List *node = NULL;
    E_Fm_Op_Task *task = NULL;
@@ -850,7 +850,7 @@ _e_fm_op_scan_idler(void *data)
  * are for this format string,
  */
 static void
-_e_fm_op_send_error(E_Fm_Op_Task * task, E_Fm_Op_Type type, const char *fmt, ...)
+_e_fm_op_send_error(E_Fm_Op_Task *task __UNUSED__, E_Fm_Op_Type type, const char *fmt, ...)
 {
    va_list ap;
    char buffer[READBUFSIZE];
