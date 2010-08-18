@@ -115,7 +115,7 @@ e_focus_event_mouse_down(E_Border* bd)
 }
 
 EAPI void
-e_focus_event_mouse_up(E_Border* bd)
+e_focus_event_mouse_up(E_Border* bd __UNUSED__)
 {
 }
 
