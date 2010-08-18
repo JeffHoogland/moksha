@@ -66,7 +66,7 @@ e_thumb_shutdown(void)
 }
 
 static void
-_thumb_preloaded(void *data, Evas_Object *obj, void *event)
+_thumb_preloaded(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED__)
 {
    evas_object_smart_callback_call(data, "e_thumb_gen", NULL);
 }
@@ -326,7 +326,7 @@ _e_thumb_gen_end(int objid)
 }
 
 static void
-_e_thumb_del_hook(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_e_thumb_del_hook(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
 {
    E_Thumb *eth;
 
