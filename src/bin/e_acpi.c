@@ -178,7 +178,7 @@ _e_acpi_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
    Ecore_Con_Event_Server_Data *ev;
    ACPIDevice *dev;
    E_Event_Acpi *acpi_event;
-   int res, sig, status, event_type;
+   int sig, status, event_type;
    char device[1024], bus[1024];
 
    ev = event;

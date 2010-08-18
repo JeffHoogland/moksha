@@ -314,7 +314,7 @@ _e_wid_disable_hook(Evas_Object *obj)
 }
 
 static void
-_e_wid_signal_cb1(void *data, Evas_Object *obj, const char *emission, const char *source)
+_e_wid_signal_cb1(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    Item *it, *it2;
    E_Widget_Data *wd;
@@ -335,7 +335,7 @@ _e_wid_signal_cb1(void *data, Evas_Object *obj, const char *emission, const char
 }
 
 static void
-_e_wid_signal_prev(void *data, Evas_Object *obj, const char *emission, const char *source)
+_e_wid_signal_prev(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    E_Widget_Data *wd;
    Eina_List *l, *l2;
@@ -360,7 +360,7 @@ _e_wid_signal_prev(void *data, Evas_Object *obj, const char *emission, const cha
 }
 
 static void
-_e_wid_signal_next(void *data, Evas_Object *obj, const char *emission, const char *source)
+_e_wid_signal_next(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    E_Widget_Data *wd;
    Eina_List *l, *l2;
@@ -385,7 +385,7 @@ _e_wid_signal_next(void *data, Evas_Object *obj, const char *emission, const cha
 }
 
 static void
-_e_wid_cb_scrollframe_resize(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_e_wid_cb_scrollframe_resize(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Widget_Data *wd;
    Evas_Coord mw, mh, vw, vh, w, h;
@@ -413,7 +413,7 @@ _e_wid_cb_scrollframe_resize(void *data, Evas *e, Evas_Object *obj, void *event_
 }
 
 static void
-_e_wid_cb_key_down(void *data, Evas *evas, Evas_Object *obj, void *event_info)
+_e_wid_cb_key_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
    Evas_Event_Key_Down *ev;
    E_Widget_Data *wd;
@@ -500,7 +500,7 @@ _e_wid_focus_hook(Evas_Object *obj)
 }
 
 static void
-_e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_e_wid_focus_steal(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    e_widget_focus_steal(data);
 }
