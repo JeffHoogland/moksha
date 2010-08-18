@@ -1229,7 +1229,7 @@ _e_entry_clip_unset(Evas_Object *object)
 }
 
 static void 
-_e_entry_cb_menu_post(void *data, E_Menu *m) 
+_e_entry_cb_menu_post(void *data, E_Menu *m __UNUSED__) 
 {
    E_Entry_Smart_Data *sd;
 
@@ -1240,7 +1240,7 @@ _e_entry_cb_menu_post(void *data, E_Menu *m)
 }
 
 static void 
-_e_entry_cb_cut(void *data, E_Menu *m, E_Menu_Item *mi) 
+_e_entry_cb_cut(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__) 
 {
    E_Entry_Smart_Data *sd;
    Evas_Object *editable;
@@ -1275,7 +1275,7 @@ _e_entry_cb_cut(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void 
-_e_entry_cb_copy(void *data, E_Menu *m, E_Menu_Item *mi) 
+_e_entry_cb_copy(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__) 
 {
    E_Entry_Smart_Data *sd;
    Evas_Object *editable;
@@ -1306,7 +1306,7 @@ _e_entry_cb_copy(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void 
-_e_entry_cb_paste(void *data, E_Menu *m, E_Menu_Item *mi) 
+_e_entry_cb_paste(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__) 
 {
    E_Entry_Smart_Data *sd;
    E_Win *win;
@@ -1320,18 +1320,17 @@ _e_entry_cb_paste(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void 
-_e_entry_cb_select_all(void *data, E_Menu *m, E_Menu_Item *mi) 
+_e_entry_cb_select_all(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__) 
 {
    E_Entry_Smart_Data *sd;
-   
-   sd = data;
 
+   sd = data;
    e_editable_select_all(sd->editable_object);
    _e_entry_x_selection_update(sd->entry_object);
 }
 
 static void 
-_e_entry_cb_delete(void *data, E_Menu *m, E_Menu_Item *mi) 
+_e_entry_cb_delete(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__) 
 {
    E_Entry_Smart_Data *sd;
    Evas_Object *editable;
@@ -1342,7 +1341,7 @@ _e_entry_cb_delete(void *data, E_Menu *m, E_Menu_Item *mi)
 
    sd = data;
    if (!sd->enabled) return;
-   
+
    editable = sd->editable_object;
    cursor_pos = e_editable_cursor_pos_get(editable);
    selection_pos = e_editable_selection_pos_get(editable);
@@ -1350,7 +1349,7 @@ _e_entry_cb_delete(void *data, E_Menu *m, E_Menu_Item *mi)
    end_pos = (cursor_pos >= selection_pos) ? cursor_pos : selection_pos;
    selecting = (start_pos != end_pos);
    if (!selecting) return;
-   
+
    range = e_editable_text_range_get(editable, start_pos, end_pos);
    if (range)
      {
@@ -1362,7 +1361,7 @@ _e_entry_cb_delete(void *data, E_Menu *m, E_Menu_Item *mi)
 
 #ifdef HAVE_ECORE_IMF
 static int
- _e_entry_cb_imf_retrieve_surrounding(void *data, Ecore_IMF_Context *ctx, char **text, int *cursor_pos)
+_e_entry_cb_imf_retrieve_surrounding(void *data, Ecore_IMF_Context *ctx __UNUSED__, char **text, int *cursor_pos)
 {
    E_Entry_Smart_Data *sd;
 
