@@ -238,9 +238,10 @@ _e_gadcon_popup_position(E_Gadcon_Popup *pop)
 }
 
 static void
-_e_gadcon_popup_changed_size_hints_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_e_gadcon_popup_changed_size_hints_cb(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
 {
-   E_Gadcon_Popup *pop = data;
+   E_Gadcon_Popup *pop;
 
+   pop = data;
    _e_gadcon_popup_size_recalc(pop, obj);
 }
