@@ -141,10 +141,10 @@ _e_obj_dialog_cb_delete(E_Win *win)
 }
 
 static void
-_e_obj_dialog_cb_close(void *data, Evas_Object *obj, const char *emission, const char *source)
+_e_obj_dialog_cb_close(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    E_Obj_Dialog *od;
-   
+
    od = data;
    if (od->cb_delete)
      od->cb_delete(od);
