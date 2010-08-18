@@ -459,7 +459,7 @@ e_theme_comp_list(void)
 }
 
 EAPI void
-e_theme_handler_set(Evas_Object *obj, const char *path, void *data)
+e_theme_handler_set(Evas_Object *obj __UNUSED__, const char *path, void *data __UNUSED__)
 {
    E_Action *a;
 
@@ -471,7 +471,7 @@ e_theme_handler_set(Evas_Object *obj, const char *path, void *data)
 }
 
 EAPI int
-e_theme_handler_test(Evas_Object *obj, const char *path, void *data)
+e_theme_handler_test(Evas_Object *obj __UNUSED__, const char *path, void *data __UNUSED__)
 {
    if (!path) return 0;
    if (!edje_file_group_exists(path, "e/widgets/border/default/border"))
@@ -481,7 +481,7 @@ e_theme_handler_test(Evas_Object *obj, const char *path, void *data)
 
 /* local subsystem functions */
 static Eina_Bool
-_e_theme_mappings_free_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata)
+_e_theme_mappings_free_cb(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__)
 {
    E_Theme_Result *res;
 
@@ -498,7 +498,7 @@ _e_theme_mappings_free_cb(const Eina_Hash *hash, const void *key, void *data, vo
 }
 
 static Eina_Bool
-_e_theme_mappings_quickfind_free_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata)
+_e_theme_mappings_quickfind_free_cb(const Eina_Hash *hash __UNUSED__, const void *key, void *data __UNUSED__, void *fdata __UNUSED__)
 {
    eina_stringshare_del(key);
    return EINA_TRUE;
