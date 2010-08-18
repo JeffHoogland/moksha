@@ -680,12 +680,12 @@ _e_randr_crtc_info_get(Ecore_X_Randr_Crtc crtc)
 }
 
 static Eina_Bool
-_e_randr_event_cb(void *data, int type, void *ev)
+_e_randr_event_cb(void *data __UNUSED__, int type, void *ev)
 {
    E_Randr_Crtc_Info *crtc_info;
    Eina_Bool enabled;
-   if (!e_randr_screen_info) return ECORE_CALLBACK_RENEW;
 
+   if (!e_randr_screen_info) return ECORE_CALLBACK_RENEW;
    if (type == ECORE_X_EVENT_RANDR_CRTC_CHANGE)
      {
         Ecore_X_Event_Randr_Crtc_Change *event = (Ecore_X_Event_Randr_Crtc_Change*) ev;
@@ -916,7 +916,7 @@ _e_randr_notify_output_change(E_Randr_Output_Info *output_info)
  * simply implementing another policy.
  */
 static const E_Randr_Crtc_Info*
-_e_randr_policy_crtc_get(E_Randr_Crtc_Info *but, E_Randr_Crtc_Info *hint, Ecore_X_Randr_Output_Policy policy)
+_e_randr_policy_crtc_get(E_Randr_Crtc_Info *but, E_Randr_Crtc_Info *hint __UNUSED__, Ecore_X_Randr_Output_Policy policy)
 {
    Eina_List *iter;
    E_Randr_Crtc_Info *crtc_info, *ret = NULL;
@@ -1017,7 +1017,7 @@ _e_randr_config_enable_11(int size_index, Ecore_X_Randr_Refresh_Rate refresh_rat
 }
 
 static Eina_Bool
-_e_randr_config_enable_12(const E_Randr_Screen_Restore_Info_12* restore_info)
+_e_randr_config_enable_12(const E_Randr_Screen_Restore_Info_12 *restore_info __UNUSED__)
 {
    /*
       if (E_RANDR_NO_12 || !restore_info) return EINA_FALSE;
