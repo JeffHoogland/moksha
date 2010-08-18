@@ -871,7 +871,7 @@ _e_shelf_orient_string_get(E_Shelf *es)
 }
 
 static void
-_e_shelf_gadcon_min_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h)
+_e_shelf_gadcon_min_size_request(void *data __UNUSED__, E_Gadcon *gc __UNUSED__, Evas_Coord w __UNUSED__, Evas_Coord h __UNUSED__)
 {
    return;
 }
@@ -1048,7 +1048,7 @@ _e_shelf_gadcon_frame_request(void *data, E_Gadcon_Client *gcc, const char *styl
 {
    E_Shelf *es;
    Evas_Object *o;
-   char buf[4096];
+   char buf[PATH_MAX];
 
    es = data;
    o = edje_object_add(gcc->gadcon->evas);
@@ -1183,7 +1183,7 @@ _e_shelf_menu_append(E_Shelf *es, E_Menu *mn)
 }
 
 static void
-_e_shelf_cb_menu_items_append(void *data, E_Gadcon_Client *gcc, E_Menu *mn)
+_e_shelf_cb_menu_items_append(void *data, E_Gadcon_Client *gcc __UNUSED__, E_Menu *mn)
 {
    E_Shelf *es;
 
@@ -1210,7 +1210,7 @@ _e_shelf_cb_urgent_show(void *data)
 }
 
 static void
-_e_shelf_cb_menu_config(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_shelf_cb_menu_config(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Shelf *es;
 
@@ -1219,7 +1219,7 @@ _e_shelf_cb_menu_config(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_shelf_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_shelf_cb_menu_edit(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Shelf *es;
 
@@ -1237,7 +1237,7 @@ _e_shelf_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_shelf_cb_menu_contents(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_shelf_cb_menu_contents(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Shelf *es;
 
@@ -1274,7 +1274,7 @@ _e_shelf_cb_confirm_dialog_yes(void *data)
 
 
 static void
-_e_shelf_cb_menu_delete(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_shelf_cb_menu_delete(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Shelf *es;
    E_Config_Shelf *cfg;
@@ -1304,7 +1304,7 @@ _e_shelf_cb_menu_delete(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_shelf_cb_menu_post(void *data, E_Menu *m)
+_e_shelf_cb_menu_post(void *data, E_Menu *m __UNUSED__)
 {
    E_Shelf *es;
 
@@ -1315,7 +1315,7 @@ _e_shelf_cb_menu_post(void *data, E_Menu *m)
 }
 
 static void
-_e_shelf_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info)
+_e_shelf_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
    Evas_Event_Mouse_Down *ev;
    E_Shelf *es;
