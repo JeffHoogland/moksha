@@ -334,7 +334,7 @@ _bd_cb_dialog_del(void *obj)
 }
 
 static void 
-_bd_cb_dialog_close(void *data, E_Dialog *dia) 
+_bd_cb_dialog_close(void *data __UNUSED__, E_Dialog *dia) 
 {
    if (dia->data)
      _free_data(dia, dia->data);
@@ -401,7 +401,7 @@ _bd_go(void *data, void *data2)
    }
 
 static Evas_Object *
-_bd_icccm_create(E_Dialog *dia, void *data) 
+_bd_icccm_create(E_Dialog *dia, void *data __UNUSED__) 
 {
    Evas *evas;
    Evas_Object *o, *ob, *of;
@@ -449,7 +449,7 @@ _bd_icccm_create(E_Dialog *dia, void *data)
 }
 
 static Evas_Object *
-_bd_netwm_create(E_Dialog *dia, void *data) 
+_bd_netwm_create(E_Dialog *dia, void *data __UNUSED__) 
 {
    Evas *evas;
    Evas_Object *o, *of, *ob;
