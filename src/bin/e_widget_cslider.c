@@ -101,22 +101,24 @@ e_widget_cslider_add(Evas *evas, E_Color_Component mode, E_Color *color, int ver
 }
 
 static void
-_e_wid_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_e_wid_move(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
 {
-   E_Widget_Data *wd = data;
+   E_Widget_Data *wd;
    Evas_Coord x, y;
 
+   wd = data;
    evas_object_geometry_get(obj, &x, &y, NULL, NULL);
    evas_object_move(wd->o_grad, x, y);
    _e_wid_update(wd);
 }
 
 static void
-_e_wid_resize(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_e_wid_resize(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
 {
-   E_Widget_Data *wd = data;
+   E_Widget_Data *wd;
    Evas_Coord w, h;
 
+   wd = data;
    evas_object_geometry_get(obj, NULL, NULL, &w, &h);
    evas_object_resize(wd->o_grad, w, h);
    _e_wid_update(wd);
@@ -126,8 +128,8 @@ static void
 _e_wid_value_set(Evas_Object *o, double vx)
 {
    E_Widget_Data *wd;
-   wd = e_widget_data_get(o);
 
+   wd = e_widget_data_get(o);
    switch (wd->mode)
      {
       case E_COLOR_COMPONENT_R:
@@ -176,9 +178,8 @@ void
 e_widget_cslider_update(Evas_Object *obj)
 {
    E_Widget_Data *wd;
-   
+
    wd = e_widget_data_get(obj);
-   
    _e_wid_update(wd);
 }
 
@@ -186,6 +187,7 @@ void
 e_widget_cslider_mode_set(Evas_Object *obj, E_Color_Component mode)
 {
    E_Widget_Data *wd;
+
    wd = e_widget_data_get(obj);
    if (wd->mode == mode) return;
    wd->mode = mode;
@@ -199,8 +201,7 @@ _e_wid_update(E_Widget_Data *wd)
    Eina_Bool changed = EINA_FALSE;
 
    evas_object_geometry_get(wd->o_event, &x, &y, &w, &h);
-   if (x != wd->x || y != wd->y
-       || w != wd->w || h != wd->h)
+   if (x != wd->x || y != wd->y || w != wd->w || h != wd->h)
      changed = EINA_TRUE;
 
    if (memcmp(wd->color, wd->prev, sizeof (E_Color)))
@@ -521,13 +522,13 @@ _e_wid_disable_hook(Evas_Object *obj)
 }
 
 static void
-_e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_e_wid_focus_steal(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    e_widget_focus_steal(data);
 }
 
 static void
-_e_wid_cb_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_e_wid_cb_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
    Evas_Event_Mouse_Down *ev;
    Evas_Object *o_wid;
@@ -553,7 +554,7 @@ _e_wid_cb_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 }
 
 static void
-_e_wid_cb_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_e_wid_cb_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    Evas_Object *o_wid;
    E_Widget_Data *wd;
@@ -564,7 +565,7 @@ _e_wid_cb_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
 }
 
 static void
-_e_wid_cb_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_e_wid_cb_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
    Evas_Event_Mouse_Move *ev;
    Evas_Object *o_wid;
