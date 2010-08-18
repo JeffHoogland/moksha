@@ -181,7 +181,7 @@ _e_sys_cb_timer(__UNUSED__ void *data)
 }
 
 static Eina_Bool
-_e_sys_cb_exit(void *data, int type, void *event)
+_e_sys_cb_exit(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Exe_Event_Del *ev;
 
@@ -246,7 +246,7 @@ _e_sys_cb_exit(void *data, int type, void *event)
 }
 
 static void
-_e_sys_cb_logout_logout(void *data, E_Dialog *dia)
+_e_sys_cb_logout_logout(void *data __UNUSED__, E_Dialog *dia)
 {
    if (_e_sys_logout_timer)
      {
@@ -260,7 +260,7 @@ _e_sys_cb_logout_logout(void *data, E_Dialog *dia)
 }
 
 static void
-_e_sys_cb_logout_wait(void *data, E_Dialog *dia)
+_e_sys_cb_logout_wait(void *data __UNUSED__, E_Dialog *dia)
 {
    if (_e_sys_logout_timer) ecore_timer_del(_e_sys_logout_timer);
    _e_sys_logout_timer = ecore_timer_add(0.5, _e_sys_cb_logout_timer, NULL);
@@ -270,7 +270,7 @@ _e_sys_cb_logout_wait(void *data, E_Dialog *dia)
 }
 
 static void
-_e_sys_cb_logout_abort(void *data, E_Dialog *dia)
+_e_sys_cb_logout_abort(void *data __UNUSED__, E_Dialog *dia)
 {
    if (_e_sys_logout_timer)
      {
@@ -292,7 +292,7 @@ _e_sys_cb_logout_abort(void *data, E_Dialog *dia)
 static void
 _e_sys_logout_confirm_dialog_update(int remaining)
 {
-   char txt[4096];
+   char txt[PATH_MAX];
 
    if (!_e_sys_logout_confirm_dialog)
      {
@@ -314,7 +314,7 @@ _e_sys_logout_confirm_dialog_update(int remaining)
 }
 
 static Eina_Bool
-_e_sys_cb_logout_timer(void *data)
+_e_sys_cb_logout_timer(void *data __UNUSED__)
 {
    Eina_List *l;
    E_Border *bd;
@@ -534,9 +534,9 @@ _e_sys_action_failed(void)
 }
 
 static int
-_e_sys_action_do(E_Sys_Action a, char *param)
+_e_sys_action_do(E_Sys_Action a, char *param __UNUSED__)
 {
-   char buf[4096];
+   char buf[PATH_MAX];
    E_Obj_Dialog *od;
 
    switch (a)
@@ -677,7 +677,8 @@ _e_sys_action_do(E_Sys_Action a, char *param)
    return 1;
 }
 
-static void _e_sys_dialog_cb_delete(E_Obj_Dialog * od)
+static void 
+_e_sys_dialog_cb_delete(E_Obj_Dialog *od __UNUSED__)
 {
    /* If we don't NULL out the _e_sys_dialog, then the
     * ECORE_EXE_EVENT_DEL callback will trigger and segv if the window
