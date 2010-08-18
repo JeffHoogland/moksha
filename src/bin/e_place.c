@@ -455,7 +455,7 @@ e_place_zone_region_smart(E_Zone *zone, Eina_List *skiplist, int x, int y, int w
 }
 
 EAPI int
-e_place_zone_cursor(E_Zone *zone, int x, int y, int w, int h, int it, int *rx, int *ry)
+e_place_zone_cursor(E_Zone *zone, int x __UNUSED__, int y __UNUSED__, int w, int h, int it, int *rx, int *ry)
 {
    int cursor_x = 0, cursor_y = 0;
    int zone_right, zone_bottom;
