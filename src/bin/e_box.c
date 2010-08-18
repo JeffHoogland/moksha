@@ -396,7 +396,7 @@ _e_box_smart_disown(Evas_Object *obj)
 }
 
 static void
-_e_box_smart_item_del_hook(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_e_box_smart_item_del_hook(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
 {
    e_box_unpack(obj);
 }
