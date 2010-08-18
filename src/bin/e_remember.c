@@ -556,9 +556,11 @@ _e_remember_free(E_Remember *rem)
 }
 
 static void
-_e_remember_cb_hook_eval_post_new_border(void *data, void *border)
+_e_remember_cb_hook_eval_post_new_border(void *data __UNUSED__, void *border)
 {
-   E_Border *bd = border;
+   E_Border *bd;
+
+   bd = border;
 
    // remember only when window was modified
    // if (!bd->new_client) return;
@@ -585,7 +587,7 @@ _e_remember_cb_hook_eval_post_new_border(void *data, void *border)
 	if (!rem) return;
 
 	e_remember_default_match_set(rem, bd);
-	
+
 	rem->apply = E_REMEMBER_APPLY_POS | E_REMEMBER_APPLY_SIZE | E_REMEMBER_APPLY_BORDER;
 
 	e_remember_use(rem);
