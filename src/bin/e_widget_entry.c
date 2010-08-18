@@ -216,13 +216,13 @@ _e_wid_disable_hook(Evas_Object *obj)
 }
 
 static void
-_e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_e_wid_focus_steal(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    e_widget_focus_steal(data);
 }
 
 static void
-_e_wid_in(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_e_wid_in(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Pointer *p;
    
@@ -231,7 +231,7 @@ _e_wid_in(void *data, Evas *e, Evas_Object *obj, void *event_info)
 }
 
 static void
-_e_wid_out(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_e_wid_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Pointer *p;
    
@@ -240,7 +240,7 @@ _e_wid_out(void *data, Evas *e, Evas_Object *obj, void *event_info)
 }
 
 static void
-_e_wid_changed_cb(void *data, Evas_Object *obj, void *event_info)
+_e_wid_changed_cb(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    Evas_Object *entry;
    E_Widget_Data *wd;
@@ -248,7 +248,7 @@ _e_wid_changed_cb(void *data, Evas_Object *obj, void *event_info)
 
    if (!(entry = data) || (!(wd = e_widget_data_get(entry))))
       return;
-   
+
    if (wd->text_location)
      {
         text = e_entry_text_get(wd->o_entry);
@@ -261,7 +261,7 @@ _e_wid_changed_cb(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void 
-_e_wid_keydown(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_e_wid_keydown(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
    evas_object_smart_callback_call(data, "key_down", event_info);
 }

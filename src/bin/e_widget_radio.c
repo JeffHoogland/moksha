@@ -263,14 +263,14 @@ _e_wid_disable_hook(Evas_Object *obj)
 }
 
 static void
-_e_wid_signal_cb1(void *data, Evas_Object *obj, const char *emission, const char *source)
+_e_wid_signal_cb1(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    _e_wid_do(data);
    e_widget_change(data);
 }
 
 static void
-_e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_e_wid_focus_steal(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    e_widget_focus_steal(data);
 }
