@@ -451,7 +451,7 @@ e_menu_title_set(E_Menu *m, char *title)
 }
 
 EAPI void
-e_menu_icon_file_set(E_Menu *m, char *icon)
+e_menu_icon_file_set(E_Menu *m, char *icon __UNUSED__)
 {
    E_OBJECT_CHECK(m);
    E_OBJECT_TYPE_CHECK(m, E_MENU_TYPE);
@@ -2859,7 +2859,7 @@ _e_menu_cb_window_shape(__UNUSED__ void *data, __UNUSED__ int ev_type, void *ev)
 }
 
 static void
-_e_menu_cb_item_submenu_post_default(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_menu_cb_item_submenu_post_default(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi)
 {
    E_Menu *subm;
 
