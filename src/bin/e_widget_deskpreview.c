@@ -192,7 +192,7 @@ _e_wid_reconfigure(E_Widget_Data *wd)
 }
 
 static void 
-_e_wid_desk_cb_config(void *data, Evas *evas, Evas_Object *obj, void *event) 
+_e_wid_desk_cb_config(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event) 
 {
    E_Widget_Desk_Data *dd;
    Evas_Event_Mouse_Down *ev;
@@ -212,7 +212,7 @@ _e_wid_desk_cb_config(void *data, Evas *evas, Evas_Object *obj, void *event)
 }
 
 static void 
-_e_wid_cb_resize(void *data, Evas *evas, Evas_Object *obj, void *event) 
+_e_wid_cb_resize(void *data __UNUSED__, Evas *evas __UNUSED__, Evas_Object *obj, void *event __UNUSED__) 
 {
    E_Widget_Data *wd;
 
