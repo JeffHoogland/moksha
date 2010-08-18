@@ -10,13 +10,13 @@ static Eina_List *handlers = NULL;
 static E_Int_Menu_Augmentation *maug = NULL;
 
 static void
-_e_configure_menu_module_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_configure_menu_module_item_cb(void *data __UNUSED__, E_Menu *m, E_Menu_Item *mi __UNUSED__)
 {
    e_int_config_modules(m->zone->container, NULL);
 }
 
 static void
-_e_configure_menu_add(void *data, E_Menu *m)
+_e_configure_menu_add(void *data __UNUSED__, E_Menu *m)
 {
    E_Menu_Item *mi;
 
