@@ -63,6 +63,8 @@ AC_SUBST(release_info)
 release=relname
 AC_SUBST(release)
 
+PKG_PROG_PKG_CONFIG
+
 EFL_CHECK_PATH_MAX
 
 AC_CHECK_FUNCS(setenv)
