@@ -86,7 +86,7 @@ e_widget_preview_file_set(Evas_Object *obj, const char *file, const char *key)
 }
 
 EAPI int
-e_widget_preview_thumb_set(Evas_Object *obj, const char *file, const char *key, int w, int h)
+e_widget_preview_thumb_set(Evas_Object *obj, const char *file, const char *key __UNUSED__, int w, int h)
 {
    E_Widget_Data *wd;
 
@@ -122,7 +122,7 @@ e_widget_preview_thumb_set(Evas_Object *obj, const char *file, const char *key, 
 }
 
 static void
-_e_wid_preview_thumb_gen(void *data, Evas_Object *obj, void *event_info)
+_e_wid_preview_thumb_gen(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    Evas_Coord w, h;
    E_Widget_Data *wd;
