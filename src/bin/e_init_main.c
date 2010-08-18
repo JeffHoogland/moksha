@@ -43,7 +43,7 @@ static int initwins_num = 0;
 static Ecore_Ipc_Server *server = NULL;
 
 static Eina_Bool
-delayed_ok(void *data)
+delayed_ok(void *data __UNUSED__)
 {
    kill(getppid(), SIGUSR2);
    return ECORE_CALLBACK_CANCEL;
@@ -143,7 +143,7 @@ _e_ipc_init(void)
 }
 
 static Eina_Bool
-_e_ipc_cb_server_add(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_ipc_cb_server_add(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Ipc_Event_Server_Add *e;
 
@@ -159,7 +159,7 @@ _e_ipc_cb_server_add(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_ipc_cb_server_del(__UNUSED__ void *data, __UNUSED__ int type, __UNUSED__ void *event)
+_e_ipc_cb_server_del(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    /* quit now */
    ecore_main_loop_quit();
@@ -167,7 +167,7 @@ _e_ipc_cb_server_del(__UNUSED__ void *data, __UNUSED__ int type, __UNUSED__ void
 }
 
 static Eina_Bool
-_e_ipc_cb_server_data(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_ipc_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Ipc_Event_Server_Data *e;
 
@@ -361,7 +361,7 @@ e_init_done(void)
 
 
 static void
-_e_init_cb_signal_disable(void *data, Evas_Object *obj, const char *emission, const char *source)
+_e_init_cb_signal_disable(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    if (!server) return;
    ecore_ipc_server_send(server,
@@ -373,7 +373,7 @@ _e_init_cb_signal_disable(void *data, Evas_Object *obj, const char *emission, co
 }
 
 static void
-_e_init_cb_signal_enable(void *data, Evas_Object *obj, const char *emission, const char *source)
+_e_init_cb_signal_enable(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    if (!server) return;
    ecore_ipc_server_send(server,
@@ -385,7 +385,7 @@ _e_init_cb_signal_enable(void *data, Evas_Object *obj, const char *emission, con
 }
 
 static void
-_e_init_cb_signal_done_ok(void *data, Evas_Object *obj, const char *emission, const char *source)
+_e_init_cb_signal_done_ok(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    e_init_hide();
    if (_e_init_timeout_timer)
@@ -397,7 +397,7 @@ _e_init_cb_signal_done_ok(void *data, Evas_Object *obj, const char *emission, co
 }
 
 static Eina_Bool
-_e_init_cb_window_configure(__UNUSED__ void *data, __UNUSED__ int ev_type, void *ev)
+_e_init_cb_window_configure(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
 {
    Ecore_X_Event_Window_Configure *e;
 
@@ -411,7 +411,7 @@ _e_init_cb_window_configure(__UNUSED__ void *data, __UNUSED__ int ev_type, void 
 }
 
 static Eina_Bool
-_e_init_cb_timeout(void *data)
+_e_init_cb_timeout(void *data __UNUSED__)
 {
    e_init_hide();
    _e_init_timeout_timer = NULL;
