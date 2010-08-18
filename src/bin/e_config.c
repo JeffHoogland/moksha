@@ -1770,7 +1770,7 @@ e_config_mode_changed(void)
 
 /* local subsystem functions */
 static void
-_e_config_save_cb(void *data)
+_e_config_save_cb(void *data __UNUSED__)
 {
    e_config_profile_save();
    e_module_save_all();
