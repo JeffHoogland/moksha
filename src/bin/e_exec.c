@@ -736,7 +736,7 @@ _dialog_save_cb(void *data __UNUSED__, void *data2)
    FILE *f;
    char *text;
    char buf[1024];
-   char buffer[PATH_MAX];
+   char buffer[4096];
    int read_length = 0;
    int i, tlen;
 
