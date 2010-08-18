@@ -171,7 +171,7 @@ _e_order_cb_monitor_delay(void *data)
 }
 
 static void
-_e_order_cb_monitor(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, const char *path)
+_e_order_cb_monitor(void *data, Ecore_File_Monitor *em __UNUSED__, Ecore_File_Event event __UNUSED__, const char *path __UNUSED__)
 {
    E_Order *eo = data;
 
