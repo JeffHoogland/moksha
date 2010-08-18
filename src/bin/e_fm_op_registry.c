@@ -27,7 +27,7 @@ struct _E_Fm2_Op_Registry_Entry_Internal
 };
 
 static void
-_e_fm2_op_registry_entry_e_fm_deleted(void *data, Evas *evas, Evas_Object *e_fm, void *event)
+_e_fm2_op_registry_entry_e_fm_deleted(void *data, Evas *evas __UNUSED__, Evas_Object *e_fm __UNUSED__, void *event __UNUSED__)
 {
    E_Fm2_Op_Registry_Entry *entry = data;
 
