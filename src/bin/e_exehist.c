@@ -475,7 +475,7 @@ _e_exehist_normalize_exe(const char *exe)
 }
 
 static void
-_e_exehist_cb_unload(void *data)
+_e_exehist_cb_unload(void *data __UNUSED__)
 {
    if (_e_exehist_changes)
      {
