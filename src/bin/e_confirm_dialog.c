@@ -60,7 +60,7 @@ _e_confirm_dialog_free(E_Confirm_Dialog *cd)
 }
 
 static void
-_e_confirm_dialog_yes(void *data, E_Dialog *dia)
+_e_confirm_dialog_yes(void *data, E_Dialog *dia __UNUSED__)
 {
    E_Confirm_Dialog *cd;
 
@@ -70,7 +70,7 @@ _e_confirm_dialog_yes(void *data, E_Dialog *dia)
 }
 
 static void
-_e_confirm_dialog_no(void *data, E_Dialog *dia)
+_e_confirm_dialog_no(void *data, E_Dialog *dia __UNUSED__)
 {
    E_Confirm_Dialog *cd;
 
