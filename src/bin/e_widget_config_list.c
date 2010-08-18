@@ -32,7 +32,7 @@ struct _E_Widget_Data
 
 /* Externally accessible functions */
 EAPI Evas_Object *
-e_widget_config_list_add(Evas *evas, Evas_Object* (*func_entry_add) (Evas *evas, char **val, void (*func) (void *data, void *data2), void *data, void *data2), const char *label, int listspan)
+e_widget_config_list_add(Evas *evas, Evas_Object* (*func_entry_add) (Evas *evas, char **val, void (*func) (void *data, void *data2), void *data, void *data2), const char *label, int listspan __UNUSED__)
 {
    Evas_Object *obj, *o;
    E_Widget_Data *wd;
@@ -153,7 +153,7 @@ e_widget_config_list_object_append(Evas_Object *obj, Evas_Object *sobj, int col,
 
 /* Private Function defs */
 static void 
-_list_cb_change(void *data, Evas_Object *obj)
+_list_cb_change(void *data, Evas_Object *obj __UNUSED__)
 {
    E_Widget_Data *wd;
    int indx;
@@ -195,11 +195,10 @@ _button_cb_add(void *data, void *obj)
 }
 
 static void 
-_button_cb_remove(void *data, void *obj)
+_button_cb_remove(void *data, void *obj __UNUSED__)
 {
    E_Widget_Data *wd;
-   int indx;
-   int count;
+   int indx, count;
 
    if (!(wd = data)) return;
 
@@ -214,7 +213,7 @@ _button_cb_remove(void *data, void *obj)
 }
 
 static void 
-_button_cb_up(void *data, void *obj)
+_button_cb_up(void *data, void *obj __UNUSED__)
 {
    E_Widget_Data *wd;
    int idx_sel;
@@ -235,7 +234,7 @@ _button_cb_up(void *data, void *obj)
 }
 
 static void 
-_button_cb_down(void *data, void *obj)
+_button_cb_down(void *data, void *obj __UNUSED__)
 {
    E_Widget_Data *wd;
    int idx_sel;
