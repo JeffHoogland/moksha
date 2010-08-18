@@ -11,6 +11,7 @@
 #endif
 
 static volatile Eina_Bool _e_x_composite_shutdown_try = 0;
+
 static void
 _e_x_composite_shutdown(void)
 {
@@ -29,6 +30,7 @@ _e_x_composite_shutdown(void)
 }
 
 #define _e_write_safe(fd, buf) _e_write_safe_int(fd, buf, sizeof(buf))
+
 static void
 _e_write_safe_int(int fd, const char *buf, size_t size)
 {
@@ -58,6 +60,7 @@ _e_gdb_print_backtrace(int fd)
 {
    char cmd[1024];
    size_t size;
+   int ret;
 
    // FIXME: we are in a segv'd state. do as few function calls and things
    // depending on a known working state as possible. this also prevents the
@@ -81,16 +84,18 @@ _e_gdb_print_backtrace(int fd)
    _e_write_safe(fd, "EXECUTING GDB AS: ");
    _e_write_safe_int(fd, cmd, size);
    _e_write_safe(fd, "\n");
-   system(cmd); // TODO: use popen() or fork()+pipe()+exec() and save to 'fd'
+   ret = system(cmd); // TODO: use popen() or fork()+pipe()+exec() and save to 'fd'
 }
 
 #define _e_backtrace(msg) _e_backtrace_int(2, msg, sizeof(msg))
 static void
-_e_backtrace_int(int fd, const char *msg, size_t msg_len)
+_e_backtrace_int(int fd __UNUSED__, const char *msg __UNUSED__, size_t msg_len __UNUSED__)
 {
+   /*
    char attachmsg[1024];
    void *array[255];
    size_t size;
+    */
 
    return; // disable. causes hangs and problems
 /*
@@ -113,7 +118,7 @@ _e_backtrace_int(int fd, const char *msg, size_t msg_len)
  * with the -rdynamic flag to GCC for any sort of decent output. 
  */
 EAPI void
-e_sigseg_act(int x, siginfo_t *info, void *data)
+e_sigseg_act(int x __UNUSED__, siginfo_t *info __UNUSED__, void *data __UNUSED__)
 {
    _e_backtrace("**** SEGMENTATION FAULT ****");
    _e_x_composite_shutdown();
@@ -134,7 +139,7 @@ e_sigseg_act(int x, siginfo_t *info, void *data)
 }
 
 EAPI void
-e_sigill_act(int x, siginfo_t *info, void *data)
+e_sigill_act(int x __UNUSED__, siginfo_t *info __UNUSED__, void *data __UNUSED__)
 {
    _e_backtrace("**** ILLEGAL INSTRUCTION ****");
    _e_x_composite_shutdown();
@@ -155,7 +160,7 @@ e_sigill_act(int x, siginfo_t *info, void *data)
 }
 
 EAPI void
-e_sigfpe_act(int x, siginfo_t *info, void *data)
+e_sigfpe_act(int x __UNUSED__, siginfo_t *info __UNUSED__, void *data __UNUSED__)
 {
    _e_backtrace("**** FLOATING POINT EXCEPTION ****");
    _e_x_composite_shutdown();
@@ -176,7 +181,7 @@ e_sigfpe_act(int x, siginfo_t *info, void *data)
 }
 
 EAPI void
-e_sigbus_act(int x, siginfo_t *info, void *data)
+e_sigbus_act(int x __UNUSED__, siginfo_t *info __UNUSED__, void *data __UNUSED__)
 {
    _e_backtrace("**** BUS ERROR ****");
    _e_x_composite_shutdown();
@@ -197,7 +202,7 @@ e_sigbus_act(int x, siginfo_t *info, void *data)
 }
 
 EAPI void
-e_sigabrt_act(int x, siginfo_t *info, void *data)
+e_sigabrt_act(int x __UNUSED__, siginfo_t *info __UNUSED__, void *data __UNUSED__)
 {
    _e_backtrace("**** ABORT ****");
    _e_x_composite_shutdown();
