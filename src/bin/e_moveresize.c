@@ -51,7 +51,7 @@ e_moveresize_shutdown(void)
 }
 
 static void
-_e_resize_begin(void *data, void *border)
+_e_resize_begin(void *data __UNUSED__, void *border)
 {
    E_Border *bd = border;
    Evas_Coord ew, eh;
@@ -109,7 +109,7 @@ _e_resize_begin(void *data, void *border)
 }
 
 static void
-_e_resize_end(void *data, void *border)
+_e_resize_end(void *data __UNUSED__, void *border __UNUSED__)
 {
    if (e_config->resize_info_visible)
      {
@@ -129,7 +129,7 @@ _e_resize_end(void *data, void *border)
 }
 
 static void
-_e_resize_update(void *data, void *border)
+_e_resize_update(void *data __UNUSED__, void *border)
 {
    E_Border *bd = border;
    char buf[40];
@@ -183,7 +183,7 @@ _e_resize_border_extents(E_Border *bd, int *w, int *h)
 }
 
 static void
-_e_move_begin(void *data, void *border)
+_e_move_begin(void *data __UNUSED__, void *border)
 {
    E_Border *bd = border;
    Evas_Coord ew, eh;
@@ -223,7 +223,7 @@ _e_move_begin(void *data, void *border)
 }
 
 static void
-_e_move_end(void *data, void *border)
+_e_move_end(void *data __UNUSED__, void *border __UNUSED__)
 {
    if (e_config->move_info_visible)
      {
@@ -243,10 +243,9 @@ _e_move_end(void *data, void *border)
 }
 
 static void
-_e_move_update(void *data, void *border)
+_e_move_update(void *data __UNUSED__, void *border)
 {
    E_Border *bd = border;
-   
    char buf[40];
 
    if (!_disp_pop) return;
