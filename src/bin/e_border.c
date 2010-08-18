@@ -2907,7 +2907,7 @@ _e_border_key_down_modifier_apply(int modifier, int value)
 }
 
 static Eina_Bool
-_e_border_action_move_timeout(__UNUSED__ void *data)
+_e_border_action_move_timeout(void *data __UNUSED__)
 {
    _e_border_move_end(action_border);
    _e_border_action_finish();
@@ -2923,7 +2923,7 @@ _e_border_action_move_timeout_add(void)
 }
 
 static Eina_Bool
-_e_border_move_key_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_border_move_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Event_Key *ev = event;
    int x, y;
@@ -2970,7 +2970,7 @@ _e_border_move_key_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_border_move_mouse_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_border_move_mouse_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Event_Mouse_Button *ev = event;
 
@@ -3014,7 +3014,7 @@ e_border_act_move_keyboard(E_Border *bd)
 }
 
 static Eina_Bool
-_e_border_action_resize_timeout(__UNUSED__ void *data)
+_e_border_action_resize_timeout(void *data __UNUSED__)
 {
    _e_border_resize_end(action_border);
    _e_border_action_finish();
@@ -3030,7 +3030,7 @@ _e_border_action_resize_timeout_add(void)
 }
 
 static Eina_Bool
-_e_border_resize_key_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_border_resize_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Event_Key *ev = event;
    int w, h, dx, dy;
@@ -3092,7 +3092,7 @@ _e_border_resize_key_down(__UNUSED__ void *data, __UNUSED__ int type, void *even
 }
 
 static Eina_Bool
-_e_border_resize_mouse_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_border_resize_mouse_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Event_Mouse_Button *ev = event;
 
@@ -3158,7 +3158,7 @@ e_border_act_move_begin(E_Border *bd, Ecore_Event_Mouse_Button *ev)
 }
 
 EAPI void
-e_border_act_move_end(E_Border *bd, Ecore_Event_Mouse_Button *ev)
+e_border_act_move_end(E_Border *bd, Ecore_Event_Mouse_Button *ev __UNUSED__)
 {
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
@@ -3216,7 +3216,7 @@ e_border_act_resize_begin(E_Border *bd, Ecore_Event_Mouse_Button *ev)
 }
 
 EAPI void
-e_border_act_resize_end(E_Border *bd, Ecore_Event_Mouse_Button *ev)
+e_border_act_resize_end(E_Border *bd, Ecore_Event_Mouse_Button *ev __UNUSED__)
 {
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
@@ -3572,7 +3572,7 @@ e_border_name_get(const E_Border *bd)
 
 
 EAPI void
-e_border_signal_move_begin(E_Border *bd, const char *sig, const char *src)
+e_border_signal_move_begin(E_Border *bd, const char *sig, const char *src __UNUSED__)
 {
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
@@ -3585,7 +3585,7 @@ e_border_signal_move_begin(E_Border *bd, const char *sig, const char *src)
 }
 
 EAPI void
-e_border_signal_move_end(E_Border *bd, const char *sig, const char *src)
+e_border_signal_move_end(E_Border *bd, const char *sig __UNUSED__, const char *src __UNUSED__)
 {
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
@@ -3607,7 +3607,7 @@ e_border_resizing_get(E_Border *bd)
 }
 
 EAPI void
-e_border_signal_resize_begin(E_Border *bd, const char *dir, const char *sig, const char *src)
+e_border_signal_resize_begin(E_Border *bd, const char *dir, const char *sig, const char *src __UNUSED__)
 {
    Ecore_X_Gravity grav = ECORE_X_GRAVITY_NW;
    int resize_mode = RESIZE_BR;
@@ -3665,7 +3665,7 @@ e_border_signal_resize_begin(E_Border *bd, const char *dir, const char *sig, con
 }
 
 EAPI void
-e_border_signal_resize_end(E_Border *bd, const char *dir, const char *sig, const char *src)
+e_border_signal_resize_end(E_Border *bd, const char *dir __UNUSED__, const char *sig __UNUSED__, const char *src __UNUSED__)
 {
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
@@ -4036,7 +4036,7 @@ _e_border_del(E_Border *bd)
 }
 
 static Eina_Bool
-_e_border_cb_window_show_request(__UNUSED__ void *data, __UNUSED__ int ev_type, void *ev)
+_e_border_cb_window_show_request(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
 {
    E_Border *bd;
    Ecore_X_Event_Window_Show_Request *e;
@@ -4060,7 +4060,7 @@ _e_border_cb_window_show_request(__UNUSED__ void *data, __UNUSED__ int ev_type, 
 }
 
 static Eina_Bool
-_e_border_cb_window_destroy(__UNUSED__ void *data, __UNUSED__ int ev_type, void *ev)
+_e_border_cb_window_destroy(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
 {
    E_Border *bd;
    Ecore_X_Event_Window_Destroy *e;
@@ -4074,7 +4074,7 @@ _e_border_cb_window_destroy(__UNUSED__ void *data, __UNUSED__ int ev_type, void 
 }
 
 static Eina_Bool
-_e_border_cb_window_hide(__UNUSED__ void *data, __UNUSED__ int ev_type, void *ev)
+_e_border_cb_window_hide(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
 {
    E_Border *bd;
    Ecore_X_Event_Window_Hide *e;
@@ -4144,7 +4144,7 @@ _e_border_cb_window_hide(__UNUSED__ void *data, __UNUSED__ int ev_type, void *ev
 }
 
 static Eina_Bool
-_e_border_cb_window_reparent(__UNUSED__ void *data, __UNUSED__ int ev_type, void *ev)
+_e_border_cb_window_reparent(void *data __UNUSED__, int ev_type __UNUSED__, void *ev __UNUSED__)
 {
 #if 0
    E_Border *bd;
@@ -4165,7 +4165,7 @@ _e_border_cb_window_reparent(__UNUSED__ void *data, __UNUSED__ int ev_type, void
 }
 
 static Eina_Bool
-_e_border_cb_window_configure_request(__UNUSED__ void *data, __UNUSED__ int ev_type, void *ev)
+_e_border_cb_window_configure_request(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
 {
    E_Border *bd;
    Ecore_X_Event_Window_Configure_Request *e;
@@ -4413,7 +4413,7 @@ _e_border_cb_window_configure_request(__UNUSED__ void *data, __UNUSED__ int ev_t
 }
 
 static Eina_Bool
-_e_border_cb_window_resize_request(__UNUSED__ void *data, __UNUSED__ int ev_type, void *ev)
+_e_border_cb_window_resize_request(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
 {
    E_Border *bd;
    Ecore_X_Event_Window_Resize_Request *e;
@@ -4458,7 +4458,7 @@ _e_border_cb_window_resize_request(__UNUSED__ void *data, __UNUSED__ int ev_type
 }
 
 static Eina_Bool
-_e_border_cb_window_gravity(__UNUSED__ void *data, __UNUSED__ int ev_type, void *ev)
+_e_border_cb_window_gravity(void *data __UNUSED__, int ev_type __UNUSED__, void *ev __UNUSED__)
 {
 //   E_Border *bd;
 //   Ecore_X_Event_Window_Gravity *e;
@@ -4470,7 +4470,7 @@ _e_border_cb_window_gravity(__UNUSED__ void *data, __UNUSED__ int ev_type, void 
 }
 
 static Eina_Bool
-_e_border_cb_window_stack_request(__UNUSED__ void *data, __UNUSED__ int ev_type, void *ev)
+_e_border_cb_window_stack_request(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
 {
    E_Border *bd;
    Ecore_X_Event_Window_Stack_Request *e;
@@ -4497,7 +4497,7 @@ _e_border_cb_window_stack_request(__UNUSED__ void *data, __UNUSED__ int ev_type,
 }
 
 static Eina_Bool
-_e_border_cb_window_property(__UNUSED__ void *data, __UNUSED__ int ev_type, void *ev)
+_e_border_cb_window_property(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
 {
    E_Border *bd;
    Ecore_X_Event_Window_Property *e;
@@ -4677,7 +4677,7 @@ _e_border_cb_window_property(__UNUSED__ void *data, __UNUSED__ int ev_type, void
 }
 
 static Eina_Bool
-_e_border_cb_window_colormap(__UNUSED__ void *data, __UNUSED__ int ev_type, void *ev)
+_e_border_cb_window_colormap(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
 {
    E_Border *bd;
    Ecore_X_Event_Window_Colormap *e;
@@ -4689,7 +4689,7 @@ _e_border_cb_window_colormap(__UNUSED__ void *data, __UNUSED__ int ev_type, void
 }
 
 static Eina_Bool
-_e_border_cb_window_shape(__UNUSED__ void *data, __UNUSED__ int ev_type, void *ev)
+_e_border_cb_window_shape(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
 {
    E_Border *bd;
    Ecore_X_Event_Window_Shape *e;
@@ -4720,7 +4720,7 @@ _e_border_cb_window_shape(__UNUSED__ void *data, __UNUSED__ int ev_type, void *e
 }
 
 static Eina_Bool
-_e_border_cb_window_focus_in(__UNUSED__ void *data, __UNUSED__ int ev_type, void *ev)
+_e_border_cb_window_focus_in(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
 {
    E_Border *bd;
    Ecore_X_Event_Window_Focus_In *e;
@@ -4773,7 +4773,7 @@ _e_border_cb_window_focus_in(__UNUSED__ void *data, __UNUSED__ int ev_type, void
 }
 
 static Eina_Bool
-_e_border_cb_window_focus_out(__UNUSED__ void *data, __UNUSED__ int ev_type, void *ev)
+_e_border_cb_window_focus_out(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
 {
    E_Border *bd;
    Ecore_X_Event_Window_Focus_Out *e;
@@ -4844,7 +4844,7 @@ _e_border_cb_window_focus_out(__UNUSED__ void *data, __UNUSED__ int ev_type, voi
 }
 
 static Eina_Bool
-_e_border_cb_client_message(__UNUSED__ void *data, __UNUSED__ int ev_type, void *ev)
+_e_border_cb_client_message(void *data __UNUSED__, int ev_type __UNUSED__, void *ev __UNUSED__)
 {
    /*
    E_Border *bd;
@@ -4858,7 +4858,7 @@ _e_border_cb_client_message(__UNUSED__ void *data, __UNUSED__ int ev_type, void 
 }
 
 static Eina_Bool
-_e_border_cb_window_state_request(__UNUSED__ void *data, __UNUSED__ int ev_type, void *ev)
+_e_border_cb_window_state_request(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
 {
    E_Border *bd;
    Ecore_X_Event_Window_State_Request *e;
@@ -4875,7 +4875,7 @@ _e_border_cb_window_state_request(__UNUSED__ void *data, __UNUSED__ int ev_type,
 }
 
 static Eina_Bool
-_e_border_cb_window_move_resize_request(__UNUSED__ void *data, __UNUSED__ int ev_type, void *ev)
+_e_border_cb_window_move_resize_request(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
 {
    E_Border *bd;
    Ecore_X_Event_Window_Move_Resize_Request *e;
@@ -4988,7 +4988,7 @@ _e_border_cb_window_move_resize_request(__UNUSED__ void *data, __UNUSED__ int ev
 }
 
 static Eina_Bool
-_e_border_cb_desktop_change(__UNUSED__ void *data, __UNUSED__ int ev_type, void *ev)
+_e_border_cb_desktop_change(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
 {
    E_Border *bd;
    Ecore_X_Event_Desktop_Change *e;
@@ -5016,7 +5016,7 @@ _e_border_cb_desktop_change(__UNUSED__ void *data, __UNUSED__ int ev_type, void 
 }
 
 static Eina_Bool
-_e_border_cb_sync_alarm(__UNUSED__ void *data, __UNUSED__ int ev_type, void *ev)
+_e_border_cb_sync_alarm(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
 {
    E_Border *bd;
    Ecore_X_Event_Sync_Alarm *e;
@@ -5074,7 +5074,7 @@ _e_border_cb_sync_alarm(__UNUSED__ void *data, __UNUSED__ int ev_type, void *ev)
 }
 
 static Eina_Bool
-_e_border_cb_efreet_cache_update(__UNUSED__ void *data, __UNUSED__ int ev_type, __UNUSED__ void *ev)
+_e_border_cb_efreet_cache_update(void *data __UNUSED__, int ev_type __UNUSED__, __UNUSED__ void *ev)
 {
    Eina_List *l;
    E_Border *bd;
@@ -5098,7 +5098,7 @@ _e_border_cb_efreet_cache_update(__UNUSED__ void *data, __UNUSED__ int ev_type, 
 }
 
 static Eina_Bool
-_e_border_cb_config_icon_theme(__UNUSED__ void *data, __UNUSED__ int ev_type, __UNUSED__ void *ev)
+_e_border_cb_config_icon_theme(void *data __UNUSED__, int ev_type __UNUSED__, __UNUSED__ void *ev)
 {
    Eina_List *l;
    E_Border *bd;
@@ -5117,7 +5117,7 @@ _e_border_cb_config_icon_theme(__UNUSED__ void *data, __UNUSED__ int ev_type, __
  * Calculate pos from e->x and e->y
  */
 static Eina_Bool
-_e_border_cb_pointer_warp(__UNUSED__ void *data, __UNUSED__ int ev_type, void *ev)
+_e_border_cb_pointer_warp(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
 {
    E_Event_Pointer_Warp *e;
 
@@ -5128,7 +5128,7 @@ _e_border_cb_pointer_warp(__UNUSED__ void *data, __UNUSED__ int ev_type, void *e
 }
 
 static void
-_e_border_cb_signal_bind(void *data, Evas_Object *obj, const char *emission, const char *source)
+_e_border_cb_signal_bind(void *data, Evas_Object *obj __UNUSED__, const char *emission, const char *source)
 {
    E_Border *bd;
 
@@ -5139,7 +5139,7 @@ _e_border_cb_signal_bind(void *data, Evas_Object *obj, const char *emission, con
 }
 
 static Eina_Bool
-_e_border_cb_mouse_in(void *data, __UNUSED__ int type, void *event)
+_e_border_cb_mouse_in(void *data, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Mouse_In *ev;
    E_Border *bd;
@@ -5198,7 +5198,7 @@ _e_border_cb_mouse_in(void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_border_cb_mouse_out(void *data, __UNUSED__ int type, void *event)
+_e_border_cb_mouse_out(void *data, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Mouse_Out *ev;
    E_Border *bd;
@@ -5271,7 +5271,7 @@ _e_border_cb_mouse_out(void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_border_cb_mouse_wheel(void *data, __UNUSED__ int type, void *event)
+_e_border_cb_mouse_wheel(void *data, int type __UNUSED__, void *event)
 {
    Ecore_Event_Mouse_Wheel *ev;
    E_Border *bd;
@@ -5291,7 +5291,7 @@ _e_border_cb_mouse_wheel(void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_border_cb_mouse_down(void *data, __UNUSED__ int type, void *event)
+_e_border_cb_mouse_down(void *data, int type __UNUSED__, void *event)
 {
    Ecore_Event_Mouse_Button *ev;
    E_Border *bd;
@@ -5380,7 +5380,7 @@ _e_border_cb_mouse_down(void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_border_cb_mouse_up(void *data, __UNUSED__ int type, void *event)
+_e_border_cb_mouse_up(void *data, int type __UNUSED__, void *event)
 {
    Ecore_Event_Mouse_Button *ev;
    E_Border *bd;
@@ -5433,7 +5433,7 @@ _e_border_cb_mouse_up(void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_border_cb_mouse_move(void *data, __UNUSED__ int type, void *event)
+_e_border_cb_mouse_move(void *data, int type __UNUSED__, void *event)
 {
    Ecore_Event_Mouse_Move *ev;
    E_Border *bd;
@@ -5573,11 +5573,11 @@ _e_border_cb_mouse_move(void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_border_cb_grab_replay(void *data, int type, void *event)
+_e_border_cb_grab_replay(void *data __UNUSED__, int type, void *event)
 {
    Ecore_Event_Mouse_Button *ev;
-   if (type != ECORE_EVENT_MOUSE_BUTTON_DOWN) return ECORE_CALLBACK_DONE;
 
+   if (type != ECORE_EVENT_MOUSE_BUTTON_DOWN) return ECORE_CALLBACK_DONE;
    ev = event;
    if ((e_config->pass_click_on) || (e_config->always_click_to_raise) ||
        (e_config->always_click_to_focus))
@@ -5601,7 +5601,7 @@ _e_border_cb_grab_replay(void *data, int type, void *event)
 }
 
 static void
-_e_border_cb_drag_finished(E_Drag *drag, int dropped)
+_e_border_cb_drag_finished(E_Drag *drag, int dropped __UNUSED__)
 {
    E_Border *bd;
 
@@ -6480,9 +6480,7 @@ _e_border_eval(E_Border *bd)
 
    if (bd->new_client)
      {
-	int zx, zy, zw, zh;
-        int rw, rh;
-	zx = zy = zw = zh = 0;
+	int zx = 0, zy = 0, zw = 0, zh = 0;
 
 	if (bd->zone)
 	  e_zone_useful_geometry_get(bd->zone, &zx, &zy, &zw, &zh);
@@ -7432,7 +7430,7 @@ _e_border_shade_animator(void *data)
 }
 
 static void
-_e_border_event_border_resize_free(__UNUSED__ void *data, void *ev)
+_e_border_event_border_resize_free(void *data __UNUSED__, void *ev)
 {
    E_Event_Border_Resize *e;
 
@@ -7443,7 +7441,7 @@ _e_border_event_border_resize_free(__UNUSED__ void *data, void *ev)
 }
 
 static void
-_e_border_event_border_move_free(__UNUSED__ void *data, void *ev)
+_e_border_event_border_move_free(void *data __UNUSED__, void *ev)
 {
    E_Event_Border_Move *e;
 
@@ -7454,7 +7452,7 @@ _e_border_event_border_move_free(__UNUSED__ void *data, void *ev)
 }
 
 static void
-_e_border_event_border_add_free(__UNUSED__ void *data, void *ev)
+_e_border_event_border_add_free(void *data __UNUSED__, void *ev)
 {
    E_Event_Border_Add *e;
 
@@ -7465,7 +7463,7 @@ _e_border_event_border_add_free(__UNUSED__ void *data, void *ev)
 }
 
 static void
-_e_border_event_border_remove_free(__UNUSED__ void *data, void *ev)
+_e_border_event_border_remove_free(void *data __UNUSED__, void *ev)
 {
    E_Event_Border_Remove *e;
 
@@ -7476,7 +7474,7 @@ _e_border_event_border_remove_free(__UNUSED__ void *data, void *ev)
 }
 
 static void
-_e_border_event_border_show_free(__UNUSED__ void *data, void *ev)
+_e_border_event_border_show_free(void *data __UNUSED__, void *ev)
 {
    E_Event_Border_Show *e;
 
@@ -7487,7 +7485,7 @@ _e_border_event_border_show_free(__UNUSED__ void *data, void *ev)
 }
 
 static void
-_e_border_event_border_hide_free(__UNUSED__ void *data, void *ev)
+_e_border_event_border_hide_free(void *data __UNUSED__, void *ev)
 {
    E_Event_Border_Hide *e;
 
@@ -7498,7 +7496,7 @@ _e_border_event_border_hide_free(__UNUSED__ void *data, void *ev)
 }
 
 static void
-_e_border_event_border_iconify_free(__UNUSED__ void *data, void *ev)
+_e_border_event_border_iconify_free(void *data __UNUSED__, void *ev)
 {
    E_Event_Border_Iconify *e;
 
@@ -7509,7 +7507,7 @@ _e_border_event_border_iconify_free(__UNUSED__ void *data, void *ev)
 }
 
 static void
-_e_border_event_border_uniconify_free(__UNUSED__ void *data, void *ev)
+_e_border_event_border_uniconify_free(void *data __UNUSED__, void *ev)
 {
    E_Event_Border_Uniconify *e;
 
@@ -7520,7 +7518,7 @@ _e_border_event_border_uniconify_free(__UNUSED__ void *data, void *ev)
 }
 
 static void
-_e_border_event_border_stick_free(__UNUSED__ void *data, void *ev)
+_e_border_event_border_stick_free(void *data __UNUSED__, void *ev)
 {
    E_Event_Border_Stick *e;
 
@@ -7531,7 +7529,7 @@ _e_border_event_border_stick_free(__UNUSED__ void *data, void *ev)
 }
 
 static void
-_e_border_event_border_unstick_free(__UNUSED__ void *data, void *ev)
+_e_border_event_border_unstick_free(void *data __UNUSED__, void *ev)
 {
    E_Event_Border_Unstick *e;
 
@@ -7542,7 +7540,7 @@ _e_border_event_border_unstick_free(__UNUSED__ void *data, void *ev)
 }
 
 static void
-_e_border_event_border_zone_set_free(__UNUSED__ void *data, void *ev)
+_e_border_event_border_zone_set_free(void *data __UNUSED__, void *ev)
 {
    E_Event_Border_Zone_Set *e;
 
@@ -7554,7 +7552,7 @@ _e_border_event_border_zone_set_free(__UNUSED__ void *data, void *ev)
 }
 
 static void
-_e_border_event_border_desk_set_free(__UNUSED__ void *data, void *ev)
+_e_border_event_border_desk_set_free(void *data __UNUSED__, void *ev)
 {
    E_Event_Border_Desk_Set *e;
 
@@ -7566,7 +7564,7 @@ _e_border_event_border_desk_set_free(__UNUSED__ void *data, void *ev)
 }
 
 static void
-_e_border_event_border_stack_free(__UNUSED__ void *data, void *ev)
+_e_border_event_border_stack_free(void *data __UNUSED__, void *ev)
 {
    E_Event_Border_Stack *e;
 
@@ -7582,7 +7580,7 @@ _e_border_event_border_stack_free(__UNUSED__ void *data, void *ev)
 }
 
 static void
-_e_border_event_border_icon_change_free(__UNUSED__ void *data, void *ev)
+_e_border_event_border_icon_change_free(void *data __UNUSED__, void *ev)
 {
    E_Event_Border_Icon_Change *e;
 
@@ -7593,7 +7591,7 @@ _e_border_event_border_icon_change_free(__UNUSED__ void *data, void *ev)
 }
 
 static void
-_e_border_event_border_urgent_change_free(__UNUSED__ void *data, void *ev)
+_e_border_event_border_urgent_change_free(void *data __UNUSED__, void *ev)
 {
    E_Event_Border_Urgent_Change *e;
 
@@ -7603,7 +7601,7 @@ _e_border_event_border_urgent_change_free(__UNUSED__ void *data, void *ev)
 }
 
 static void
-_e_border_event_border_focus_in_free(__UNUSED__ void *data, void *ev)
+_e_border_event_border_focus_in_free(void *data __UNUSED__, void *ev)
 {
    E_Event_Border_Focus_In *e;
 
@@ -7613,7 +7611,7 @@ _e_border_event_border_focus_in_free(__UNUSED__ void *data, void *ev)
 }
 
 static void
-_e_border_event_border_focus_out_free(__UNUSED__ void *data, void *ev)
+_e_border_event_border_focus_out_free(void *data __UNUSED__, void *ev)
 {
    E_Event_Border_Focus_Out *e;
 
@@ -7623,7 +7621,7 @@ _e_border_event_border_focus_out_free(__UNUSED__ void *data, void *ev)
 }
 
 static void
-_e_border_event_border_property_free(__UNUSED__ void *data, void *ev)
+_e_border_event_border_property_free(void *data __UNUSED__, void *ev)
 {
    E_Event_Border_Property *e;
 
@@ -7633,7 +7631,7 @@ _e_border_event_border_property_free(__UNUSED__ void *data, void *ev)
 }
 
 static void
-_e_border_event_border_fullscreen_free(__UNUSED__ void *data, void *ev)
+_e_border_event_border_fullscreen_free(void *data __UNUSED__, void *ev)
 {
    E_Event_Border_Fullscreen *e;
 
@@ -7644,7 +7642,7 @@ _e_border_event_border_fullscreen_free(__UNUSED__ void *data, void *ev)
 }
 
 static void
-_e_border_event_border_unfullscreen_free(__UNUSED__ void *data, void *ev)
+_e_border_event_border_unfullscreen_free(void *data __UNUSED__, void *ev)
 {
    E_Event_Border_Unfullscreen *e;
 
@@ -8062,7 +8060,7 @@ e_border_under_pointer_get(E_Desk *desk, E_Border *exclude)
 }
 
 static Eina_Bool
-_e_border_pointer_warp_to_center_timer(__UNUSED__ void *data)
+_e_border_pointer_warp_to_center_timer(void *data __UNUSED__)
 {
    if (warp_to)
      {
