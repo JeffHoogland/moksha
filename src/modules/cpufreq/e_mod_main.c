@@ -58,6 +58,7 @@ static void _cpufreq_menu_auto_powersave(void *data, E_Menu *m, E_Menu_Item *mi)
 static void _cpufreq_menu_governor(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _cpufreq_menu_powersave_governor(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _cpufreq_menu_frequency(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _cpufreq_poll_interval_update(void);
 
 static E_Config_DD *conf_edd = NULL;
 
@@ -119,20 +120,20 @@ _gc_shutdown(E_Gadcon_Client *gcc)
 }
 
 static void
-_gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
+_gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient __UNUSED__)
 {
    e_gadcon_client_aspect_set(gcc, 16, 16);
    e_gadcon_client_min_size_set(gcc, 16, 16);
 }
 
 static char *
-_gc_label(E_Gadcon_Client_Class *client_class)
+_gc_label(E_Gadcon_Client_Class *client_class __UNUSED__)
 {
    return _("Cpufreq");
 }
 
 static Evas_Object *
-_gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas)
+_gc_icon(E_Gadcon_Client_Class *client_class __UNUSED__, Evas *evas)
 {
    Evas_Object *o;
    char buf[PATH_MAX];
@@ -145,7 +146,7 @@ _gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas)
 }
 
 static const char *
-_gc_id_new(E_Gadcon_Client_Class *client_class)
+_gc_id_new(E_Gadcon_Client_Class *client_class __UNUSED__)
 {
    static char idbuff[32];
 
@@ -155,7 +156,7 @@ _gc_id_new(E_Gadcon_Client_Class *client_class)
 }
 
 static void
-_button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
    Instance *inst;
    Evas_Event_Mouse_Down *ev;
@@ -346,7 +347,7 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 }
 
 static void
-_menu_cb_post(void *data, E_Menu *m)
+_menu_cb_post(void *data __UNUSED__, E_Menu *m __UNUSED__)
 {
    if (!cpufreq_config->menu) return;
    e_object_del(E_OBJECT(cpufreq_config->menu));
@@ -448,7 +449,7 @@ _cpufreq_set_frequency(int frequency)
 }
 
 static Eina_Bool
-_cpufreq_cb_check(void *data)
+_cpufreq_cb_check(void *data __UNUSED__)
 {
    Instance *inst;
    Eina_List *l;
@@ -766,7 +767,7 @@ _cpufreq_face_update_current(Instance *inst)
 }
 
 static void
-_cpufreq_face_cb_set_frequency(void *data, Evas_Object *obj, const char *emission, const char *src)
+_cpufreq_face_cb_set_frequency(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const char *emission, const char *src __UNUSED__)
 {
    Eina_List *l;
    int next_frequency = 0;
@@ -793,7 +794,7 @@ _cpufreq_face_cb_set_frequency(void *data, Evas_Object *obj, const char *emissio
 }
 
 static void
-_cpufreq_face_cb_set_governor(void *data, Evas_Object *obj, const char *emission, const char *src)
+_cpufreq_face_cb_set_governor(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *src __UNUSED__)
 {
    Eina_List *l;
    char *next_governor = NULL;
@@ -863,84 +864,62 @@ _cpufreq_event_cb_powersave(void *data __UNUSED__, int type, void *event)
 }
 
 static void
-_cpufreq_menu_fast(void *data, E_Menu *m, E_Menu_Item *mi)
+_cpufreq_menu_fast(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    cpufreq_config->poll_interval = 4;
-   ecore_poller_del(cpufreq_config->frequency_check_poller);
-   cpufreq_config->frequency_check_poller =
-     ecore_poller_add(ECORE_POLLER_CORE, cpufreq_config->poll_interval,
-		      _cpufreq_cb_check, NULL);
-   e_config_save_queue();
+   _cpufreq_poll_interval_update();
 }
 
 static void
-_cpufreq_menu_medium(void *data, E_Menu *m, E_Menu_Item *mi)
+_cpufreq_menu_medium(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    cpufreq_config->poll_interval = 8;
-   ecore_poller_del(cpufreq_config->frequency_check_poller);
-   cpufreq_config->frequency_check_poller =
-     ecore_poller_add(ECORE_POLLER_CORE, cpufreq_config->poll_interval,
-		      _cpufreq_cb_check, NULL);
-   e_config_save_queue();
+   _cpufreq_poll_interval_update();
 }
 
 static void
-_cpufreq_menu_normal(void *data, E_Menu *m, E_Menu_Item *mi)
+_cpufreq_menu_normal(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    cpufreq_config->poll_interval = 32;
-   ecore_poller_del(cpufreq_config->frequency_check_poller);
-   cpufreq_config->frequency_check_poller =
-     ecore_poller_add(ECORE_POLLER_CORE, cpufreq_config->poll_interval,
-		      _cpufreq_cb_check, NULL);
-   e_config_save_queue();
+   _cpufreq_poll_interval_update();
 }
 
 static void
-_cpufreq_menu_slow(void *data, E_Menu *m, E_Menu_Item *mi)
+_cpufreq_menu_slow(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    cpufreq_config->poll_interval = 64;
-   ecore_poller_del(cpufreq_config->frequency_check_poller);
-   cpufreq_config->frequency_check_poller =
-     ecore_poller_add(ECORE_POLLER_CORE, cpufreq_config->poll_interval,
-		      _cpufreq_cb_check, NULL);
-   e_config_save_queue();
+   _cpufreq_poll_interval_update();
 }
 
 static void
-_cpufreq_menu_very_slow(void *data, E_Menu *m, E_Menu_Item *mi)
+_cpufreq_menu_very_slow(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    cpufreq_config->poll_interval = 256;
-   ecore_poller_del(cpufreq_config->frequency_check_poller);
-   cpufreq_config->frequency_check_poller =
-     ecore_poller_add(ECORE_POLLER_CORE, cpufreq_config->poll_interval,
-		      _cpufreq_cb_check, NULL);
-   e_config_save_queue();
+   _cpufreq_poll_interval_update();
 }
 
 static void
-_cpufreq_menu_restore_governor(void *data, E_Menu *m, E_Menu_Item *mi)
+_cpufreq_menu_restore_governor(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi)
 {
    cpufreq_config->restore_governor = e_menu_item_toggle_get(mi);
    if ((!cpufreq_config->governor) ||
        (strcmp(cpufreq_config->status->cur_governor, cpufreq_config->governor)))
      {
-	if (cpufreq_config->governor) 
-          eina_stringshare_del(cpufreq_config->governor);
-	cpufreq_config->governor = 
-          eina_stringshare_add(cpufreq_config->status->cur_governor);
+        eina_stringshare_replace(&cpufreq_config->governor, 
+                                 cpufreq_config->status->cur_governor);
      }
    e_config_save_queue();
 }
 
 static void
-_cpufreq_menu_auto_powersave(void *data, E_Menu *m, E_Menu_Item *mi)
+_cpufreq_menu_auto_powersave(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi)
 {
    cpufreq_config->auto_powersave = e_menu_item_toggle_get(mi);
    e_config_save_queue();
 }
 
 static void
-_cpufreq_menu_governor(void *data, E_Menu *m, E_Menu_Item *mi)
+_cpufreq_menu_governor(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    const char *governor;
 
@@ -948,35 +927,40 @@ _cpufreq_menu_governor(void *data, E_Menu *m, E_Menu_Item *mi)
    if (governor)
      {
 	_cpufreq_set_governor(governor);
-	if (cpufreq_config->governor) 
-          eina_stringshare_del(cpufreq_config->governor);
-	cpufreq_config->governor = eina_stringshare_add(governor);
+        eina_stringshare_replace(&cpufreq_config->governor, governor);
      }
    e_config_save_queue();
 }
 
 static void
-_cpufreq_menu_powersave_governor(void *data, E_Menu *m, E_Menu_Item *mi)
+_cpufreq_menu_powersave_governor(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    const char *governor;
 
    governor = data;
    if (governor)
-     {
-	if (cpufreq_config->powersave_governor)
-	  eina_stringshare_del(cpufreq_config->powersave_governor);
-	cpufreq_config->powersave_governor = eina_stringshare_add(governor);
-     }
+     eina_stringshare_replace(&cpufreq_config->powersave_governor, governor);
    e_config_save_queue();
 }
 
 static void
-_cpufreq_menu_frequency(void * data, E_Menu *m, E_Menu_Item *mi)
+_cpufreq_menu_frequency(void * data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    int frequency;
 
    frequency = (long)data;
    if (frequency > 0) _cpufreq_set_frequency(frequency);
+}
+
+static void 
+_cpufreq_poll_interval_update(void) 
+{
+   if (cpufreq_config->frequency_check_poller)
+     ecore_poller_del(cpufreq_config->frequency_check_poller);
+   cpufreq_config->frequency_check_poller =
+     ecore_poller_add(ECORE_POLLER_CORE, cpufreq_config->poll_interval,
+		      _cpufreq_cb_check, NULL);
+   e_config_save_queue();
 }
 
 /* module setup */
@@ -1049,7 +1033,7 @@ e_modapi_init(E_Module *m)
 }
 
 EAPI int
-e_modapi_shutdown(E_Module *m)
+e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    e_gadcon_provider_unregister(&_gadcon_class);
 
@@ -1096,7 +1080,7 @@ e_modapi_shutdown(E_Module *m)
 }
 
 EAPI int
-e_modapi_save(E_Module *m)
+e_modapi_save(E_Module *m __UNUSED__)
 {
    e_config_domain_save("module.cpufreq", conf_edd, cpufreq_config);
    return 1;
