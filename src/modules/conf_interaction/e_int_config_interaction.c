@@ -50,7 +50,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 }
 
 static void *
-_create_data(E_Config_Dialog *cfd) 
+_create_data(E_Config_Dialog *cfd __UNUSED__) 
 {
    E_Config_Dialog_Data *cfdata;
    
@@ -60,13 +60,13 @@ _create_data(E_Config_Dialog *cfd)
 }
 
 static void
-_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
 {
    E_FREE(cfdata);
 }
 
 static int
-_basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
 {
    return ((cfdata->thumbscroll_enable != e_config->thumbscroll_enable) ||
 	   (cfdata->thumbscroll_threshhold != e_config->thumbscroll_threshhold) ||
@@ -75,7 +75,7 @@ _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 }
 
 static int
-_basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
 {
    e_config->thumbscroll_enable = cfdata->thumbscroll_enable;
    e_config->thumbscroll_threshhold = cfdata->thumbscroll_threshhold;
@@ -87,7 +87,7 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 }
 
 static Evas_Object *
-_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
+_basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
    Evas_Object *o, *of, *ob;
 
@@ -140,7 +140,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 }
 
 static void
-_enabled_cb(void *data, Evas_Object *obj, void *event_info)
+_enabled_cb(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
 

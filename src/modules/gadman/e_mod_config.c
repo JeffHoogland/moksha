@@ -59,7 +59,7 @@ _config_gadman_module(E_Container *con, const char *params __UNUSED__)
 }
 
 static void *
-_create_data(E_Config_Dialog *cfd)
+_create_data(E_Config_Dialog *cfd __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
 
@@ -85,7 +85,7 @@ _create_data(E_Config_Dialog *cfd)
 }
 
 static void
-_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    Man->config_dialog = NULL;
    E_FREE(cfdata->color);
@@ -100,7 +100,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    Evas_Coord mw, mh;
    E_Fm2_Config fmc;
    char path[PATH_MAX];
-
 
    otb = e_widget_toolbook_add(evas, 48 * e_scale, 48 * e_scale);
    o = e_widget_list_add(evas, 0, 0);
@@ -241,7 +240,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 }
 
 static int
-_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    Eina_List *sel;
    const char *p = NULL;
@@ -313,7 +312,7 @@ _fill_gadgets_list(Evas_Object *ilist)
 }
 
 static void 
-_cb_add(void *data, void *data2) 
+_cb_add(void *data, void *data2 __UNUSED__) 
 {
    E_Config_Dialog_Data *cfdata;
    Eina_List *l = NULL;
@@ -341,7 +340,7 @@ _cb_add(void *data, void *data2)
 }
 
 static void 
-_avail_list_cb_change(void *data, Evas_Object *obj) 
+_avail_list_cb_change(void *data, Evas_Object *obj __UNUSED__) 
 {
    E_Config_Dialog_Data *cfdata;
 
@@ -351,7 +350,7 @@ _avail_list_cb_change(void *data, Evas_Object *obj)
 
 //Advanced Callbacks
 static void
-_cb_color_changed(void *data, Evas_Object *o)
+_cb_color_changed(void *data, Evas_Object *o __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
    cfdata = data;
@@ -360,7 +359,7 @@ _cb_color_changed(void *data, Evas_Object *o)
 }
 
 static void
-_cb_fm_radio_change(void *data, Evas_Object *obj)
+_cb_fm_radio_change(void *data, Evas_Object *obj __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
    char path[PATH_MAX];
@@ -375,7 +374,7 @@ _cb_fm_radio_change(void *data, Evas_Object *obj)
 }
 
 static void 
-_cb_fm_change(void *data, Evas_Object *obj, void *event_info)
+_cb_fm_change(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
    const char *p;
@@ -408,7 +407,7 @@ _cb_fm_change(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void 
-_cb_fm_sel_change(void *data, Evas_Object *obj, void *event_info)
+_cb_fm_sel_change(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
 
@@ -416,7 +415,7 @@ _cb_fm_sel_change(void *data, Evas_Object *obj, void *event_info)
    e_widget_change(cfdata->o_sf);
 }
 static void
-_cb_button_up(void *data1, void *data2)
+_cb_button_up(void *data1, void *data2 __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
 
@@ -426,4 +425,3 @@ _cb_button_up(void *data1, void *data2)
    e_fm2_parent_go(cfdata->o_fm);
    e_widget_scrollframe_child_pos_set(cfdata->o_sf, 0, 0);
 }
-

@@ -59,7 +59,7 @@ e_int_config_scale(E_Container *con, const char *params __UNUSED__)
 
 /* local function prototypes */
 static void *
-_create_data(E_Config_Dialog *cfd) 
+_create_data(E_Config_Dialog *cfd __UNUSED__) 
 {
    E_Config_Dialog_Data *cfdata;
 

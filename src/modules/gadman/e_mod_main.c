@@ -9,7 +9,8 @@ static void _gadman_maug_add(void *data, E_Menu *m);
 static void _gadman_action_cb(E_Object *obj, const char *params);
 
 /* public module routines. all modules must have these */
-EAPI E_Module_Api e_modapi = {
+EAPI E_Module_Api e_modapi = 
+{
    E_MODULE_API_VERSION,
    "Gadman"
 };
@@ -101,7 +102,7 @@ e_modapi_init(E_Module *m)
 }
 
 EAPI int
-e_modapi_shutdown(E_Module *m)
+e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    if (Man->maug)
      e_int_menus_menu_augmentation_del("config/1", Man->maug);
@@ -127,14 +128,14 @@ e_modapi_shutdown(E_Module *m)
 }
 
 EAPI int
-e_modapi_save(E_Module *m)
+e_modapi_save(E_Module *m __UNUSED__)
 {
    e_config_domain_save("module.gadman", Man->conf_edd, Man->conf);
    return 1;
 }
 
 static void 
-_gadman_maug_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+_gadman_maug_cb(void *data __UNUSED__, E_Menu *m, E_Menu_Item *mi __UNUSED__)
 {
    e_configure_registry_call("extensions/gadman", m->zone->container, NULL);
 }
@@ -151,7 +152,7 @@ _gadman_maug_add(void *data, E_Menu *m)
 }
 
 static void
-_gadman_action_cb(E_Object *obj, const char *params)
+_gadman_action_cb(E_Object *obj __UNUSED__, const char *params __UNUSED__)
 {
    gadman_gadgets_toggle();
 }
