@@ -168,7 +168,7 @@ _e_kbd_dict_line_next(E_Kbd_Dict *kd, const char *p)
 }
 
 static char *
-_e_kbd_dict_line_parse(E_Kbd_Dict *kd, const char *p, int *usage)
+_e_kbd_dict_line_parse(E_Kbd_Dict *kd __UNUSED__, const char *p, int *usage)
 {
    const char *ps;
    char *wd = NULL;
@@ -188,7 +188,7 @@ _e_kbd_dict_line_parse(E_Kbd_Dict *kd, const char *p, int *usage)
 }
 
 static void
-_e_kbd_dict_lookup_build_line(E_Kbd_Dict *kd, const char *p, const char *eol, int *glyphs)
+_e_kbd_dict_lookup_build_line(E_Kbd_Dict *kd __UNUSED__, const char *p, const char *eol, int *glyphs)
 {
    char *s;
    int p2;

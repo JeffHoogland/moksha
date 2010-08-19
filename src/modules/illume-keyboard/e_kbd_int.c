@@ -226,7 +226,7 @@ _e_kbd_int_buf_send(E_Kbd_Int *ki)
 }
 
 static void
-_e_kbd_int_cb_match_select(void *data, Evas_Object *obj, const char *emission, const char *source)
+_e_kbd_int_cb_match_select(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    E_Kbd_Int_Match *km;
 
@@ -502,7 +502,7 @@ _e_kbd_int_zoomkey_up(E_Kbd_Int *ki)
 {
    const Eina_List *l;
    Evas_Object *o, *o2;
-   Evas_Coord w, h, mw, mh, vw, vh;
+   Evas_Coord mw, mh, vw, vh;
    int sx, sy, sw, sh;
 
    if (ki->zoomkey.popup) return;
@@ -665,7 +665,7 @@ _e_kbd_int_cb_hold_timeout(void *data)
 }
 
 static void
-_e_kbd_int_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info)
+_e_kbd_int_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
    Evas_Event_Mouse_Down *ev;
    E_Kbd_Int *ki;
@@ -709,7 +709,7 @@ _e_kbd_int_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_i
 }
 
 static void
-_e_kbd_int_cb_mouse_move(void *data, Evas *evas, Evas_Object *obj, void *event_info)
+_e_kbd_int_cb_mouse_move(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
    Evas_Event_Mouse_Move *ev;
    E_Kbd_Int *ki;
@@ -752,11 +752,10 @@ _e_kbd_int_cb_mouse_move(void *data, Evas *evas, Evas_Object *obj, void *event_i
 }
 
 static void
-_e_kbd_int_cb_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_info)
+_e_kbd_int_cb_mouse_up(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
    Evas_Event_Mouse_Up *ev;
    E_Kbd_Int *ki;
-   Evas_Coord x, y;
    E_Kbd_Int_Key *ky;
    int dir = 0;
 
@@ -1268,7 +1267,6 @@ static void
 _e_kbd_int_layout_next(E_Kbd_Int *ki)
 {
    Eina_List *l, *ln = NULL;
-   const char *nextlay = NULL;
    E_Kbd_Int_Layout *kil;
 
    EINA_LIST_FOREACH(ki->layouts, l, kil)
@@ -1294,7 +1292,7 @@ _e_kbd_int_cb_client_message(void *data, __UNUSED__ int type, void *event)
    if ((ev->win == ki->win->evas_win) && 
        (ev->message_type == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE)) 
      {
-	E_Kbd_Int_Layout *kil;
+	E_Kbd_Int_Layout *kil = NULL;
 
 	if (ev->data.l[0] == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_OFF)
 	  {
@@ -1378,7 +1376,7 @@ static void
 _e_kbd_int_dictlist_up(E_Kbd_Int *ki)
 {
    Evas_Object *o;
-   Evas_Coord w, h, mw, mh;
+   Evas_Coord mw, mh;
    int sx, sy, sw, sh, used;
    Eina_List *files;
    Eina_List *l;
@@ -1530,7 +1528,7 @@ _e_kbd_int_matchlist_up(E_Kbd_Int *ki)
 {
    const Eina_List *l;
    Evas_Object *o;
-   Evas_Coord w, h, mw, mh, vw, vh;
+   Evas_Coord mw, mh;
    int sx, sy, sw, sh;
 
    if (!e_kbd_buf_string_matches_get(ki->kbuf)) return;
@@ -1598,7 +1596,7 @@ _e_kbd_int_matchlist_up(E_Kbd_Int *ki)
 }
 
 static void
-_e_kbd_int_cb_matches(void *data, Evas_Object *obj, const char *emission, const char *source)
+_e_kbd_int_cb_matches(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    E_Kbd_Int *ki;
 
@@ -1615,7 +1613,7 @@ _e_kbd_int_cb_matches(void *data, Evas_Object *obj, const char *emission, const 
 }
 
 static void
-_e_kbd_int_cb_dicts(void *data, Evas_Object *obj, const char *emission, const char *source)
+_e_kbd_int_cb_dicts(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    E_Kbd_Int *ki;
 
@@ -1625,7 +1623,7 @@ _e_kbd_int_cb_dicts(void *data, Evas_Object *obj, const char *emission, const ch
 }
 
 static void
-_e_kbd_int_cb_layouts(void *data, Evas_Object *obj, const char *emission, const char *source)
+_e_kbd_int_cb_layouts(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    E_Kbd_Int *ki;
 
@@ -1637,10 +1635,8 @@ EAPI E_Kbd_Int *
 e_kbd_int_new(const char *themedir, const char *syskbds, const char *sysdicts)
 {
    E_Kbd_Int *ki;
-   unsigned int one = 1;
    Evas_Object *o;
    Evas_Coord mw, mh;
-   const char *deflay;
    E_Zone *zone;
    E_Kbd_Int_Layout *kil;
    Ecore_X_Window_State states[2];
@@ -1769,7 +1765,7 @@ _theme_obj_new(Evas *e, const char *custom_dir, const char *group)
 }
 
 static Eina_Bool
-_e_kbd_int_cb_border_move(void *data, int type, void *event) 
+_e_kbd_int_cb_border_move(void *data, int type __UNUSED__, void *event) 
 {
    E_Event_Border_Move *ev;
    E_Kbd_Int *ki;
