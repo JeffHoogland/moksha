@@ -559,8 +559,6 @@ const E_Intl_Pair charset_predefined_pairs[ ] = {
        { NULL, NULL }
 };
 
-
-
 E_Config_Dialog *
 e_int_config_intl(E_Container *con, const char *params __UNUSED__)
 {
@@ -792,7 +790,7 @@ _create_data(E_Config_Dialog *cfd)
 }
 
 static void
-_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    E_FREE(cfdata->cur_language);
 
@@ -858,7 +856,7 @@ _region_hash_free_cb(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED_
 }
 
 static int
-_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    if (cfdata->cur_language)
      {
@@ -872,7 +870,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 }
 
 static int
-_advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_advanced_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    if (cfdata->cur_language)
      {
@@ -1059,31 +1057,29 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 }
 
 static void
-_ilist_basic_language_cb_change(void *data, Evas_Object *obj)
+_ilist_basic_language_cb_change(void *data, Evas_Object *obj __UNUSED__)
 {
-   E_Config_Dialog_Data * cfdata;
-    
-   cfdata = data;
+   E_Config_Dialog_Data *cfdata;
 
+   cfdata = data;
    e_widget_entry_text_set(cfdata->gui.locale_entry, cfdata->cur_blang);
 }
 
 static void
-_ilist_language_cb_change(void *data, Evas_Object *obj)
+_ilist_language_cb_change(void *data, Evas_Object *obj __UNUSED__)
 {
-   E_Config_Dialog_Data * cfdata;
-   
+   E_Config_Dialog_Data *cfdata;
+
    cfdata = data;
-   
    _cfdata_language_go(cfdata->cur_lang, NULL, NULL, NULL, cfdata);
-   
+
    e_widget_entry_text_set(cfdata->gui.locale_entry, cfdata->cur_lang);
    eina_stringshare_del(cfdata->cur_cs);
    eina_stringshare_del(cfdata->cur_mod);
 }
 
 static void
-_ilist_region_cb_change(void *data, Evas_Object *obj)
+_ilist_region_cb_change(void *data, Evas_Object *obj __UNUSED__)
 {
    E_Config_Dialog_Data * cfdata;
    char locale[32];
@@ -1099,7 +1095,7 @@ _ilist_region_cb_change(void *data, Evas_Object *obj)
 }
 
 static void 
-_ilist_codeset_cb_change(void *data, Evas_Object *obj)
+_ilist_codeset_cb_change(void *data, Evas_Object *obj __UNUSED__)
 {
    E_Config_Dialog_Data * cfdata;
    char locale[32];
@@ -1115,7 +1111,7 @@ _ilist_codeset_cb_change(void *data, Evas_Object *obj)
 }
 
 static void 
-_ilist_modifier_cb_change(void *data, Evas_Object *obj)
+_ilist_modifier_cb_change(void *data, Evas_Object *obj __UNUSED__)
 {
    E_Config_Dialog_Data * cfdata;
    char locale[32];
