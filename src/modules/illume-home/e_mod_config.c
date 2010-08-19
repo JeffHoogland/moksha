@@ -92,7 +92,7 @@ il_home_config_save(void)
 }
 
 void 
-il_home_config_show(E_Container *con, const char *params) 
+il_home_config_show(E_Container *con, const char *params __UNUSED__) 
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v = NULL;
@@ -116,20 +116,20 @@ il_home_config_show(E_Container *con, const char *params)
 
 /* local functions */
 static void *
-_il_home_config_create(E_Config_Dialog *cfd) 
+_il_home_config_create(E_Config_Dialog *cfd __UNUSED__) 
 {
    return NULL;
 }
 
 static void 
-_il_home_config_free(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_il_home_config_free(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata __UNUSED__) 
 {
    il_home_cfg->cfd = NULL;
    il_home_win_cfg_update();
 }
 
 static Evas_Object *
-_il_home_config_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
+_il_home_config_ui(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata __UNUSED__) 
 {
    Evas_Object *list, *of, *o;
    E_Radio_Group *rg;
@@ -177,7 +177,7 @@ _il_home_config_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdat
 }
 
 static void 
-_il_home_config_changed(void *data, Evas_Object *obj, void *event) 
+_il_home_config_changed(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED__) 
 {
    if (_il_home_config_change_timer) 
      ecore_timer_del(_il_home_config_change_timer);
@@ -186,7 +186,7 @@ _il_home_config_changed(void *data, Evas_Object *obj, void *event)
 }
 
 static void 
-_il_home_config_slider_changed(void *data, Evas_Object *obj) 
+_il_home_config_slider_changed(void *data, Evas_Object *obj __UNUSED__) 
 {
    if (_il_home_config_change_timer) 
      ecore_timer_del(_il_home_config_change_timer);
@@ -203,7 +203,7 @@ _il_home_config_click_changed(void *data, Evas_Object *obj, void *event)
 }
 
 static Eina_Bool
-_il_home_config_change_timeout(void *data) 
+_il_home_config_change_timeout(void *data __UNUSED__) 
 {
    il_home_win_cfg_update();
    e_config_save_queue();

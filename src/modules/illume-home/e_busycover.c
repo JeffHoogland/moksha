@@ -77,7 +77,6 @@ e_busycover_resize(E_Busycover *cover, int w, int h)
 static void 
 _e_busycover_cb_free(E_Busycover *cover) 
 {
-   Eina_List *l;
    E_Busycover_Handle *handle;
 
    EINA_LIST_FREE(cover->handles, handle) 
