@@ -276,7 +276,7 @@ e_gadcon_custom_del(E_Gadcon *gc)
 }
 
 EAPI E_Gadcon *
-e_gadcon_swallowed_new(const char *name, int id, Evas_Object *obj, char *swallow_name)
+e_gadcon_swallowed_new(const char *name, int id, Evas_Object *obj, const char *swallow_name)
 {
    E_Gadcon *gc;
    E_Config_Gadcon *cf_gc;
