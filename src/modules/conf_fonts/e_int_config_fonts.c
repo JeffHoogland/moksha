@@ -308,7 +308,7 @@ _create_data(E_Config_Dialog *cfd)
 }
 
 static void
-_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    E_Font_Size_Data *size_data;
    CFText_Class *tc;
@@ -341,7 +341,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 }
 
 static int
-_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    CFText_Class *tc;
    Eina_List *next;
@@ -456,7 +456,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 }
 
 static void
-_basic_font_cb_change(void *data, Evas_Object *obj)
+_basic_font_cb_change(void *data, Evas_Object *obj __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
 
@@ -466,7 +466,7 @@ _basic_font_cb_change(void *data, Evas_Object *obj)
 }
 
 static void
-_basic_enable_cb_change(void *data, Evas_Object *obj)
+_basic_enable_cb_change(void *data, Evas_Object *obj __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
 
@@ -527,7 +527,7 @@ _basic_init_data_fill(E_Config_Dialog_Data *cfdata)
 }
 
 static int
-_advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_advanced_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    int i;
    Eina_List *next;
@@ -739,7 +739,7 @@ _class_list_load(E_Config_Dialog_Data *cfdata)
 
 /* Called whenever class list selection changes */
 static void
-_adv_class_cb_change(void *data, Evas_Object *obj)
+_adv_class_cb_change(void *data, Evas_Object *obj __UNUSED__)
 {
    int indx;
    E_Config_Dialog_Data *cfdata;
@@ -805,7 +805,7 @@ _adv_class_cb_change(void *data, Evas_Object *obj)
 }
 
 static void
-_adv_enabled_font_cb_change(void *data, Evas_Object *obj)
+_adv_enabled_font_cb_change(void *data, Evas_Object *obj __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
    Eina_List *l;
@@ -872,7 +872,7 @@ _size_cb_change(void *data)
 }
 
 static void
-_adv_font_cb_change(void *data, Evas_Object *obj)
+_adv_font_cb_change(void *data, Evas_Object *obj __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
    CFText_Class *tc;
@@ -1067,7 +1067,7 @@ _font_list_load(E_Config_Dialog_Data *cfdata, const char *cur_font)
 }
 
 static void
-_adv_style_cb_change(void *data, Evas_Object *obj)
+_adv_style_cb_change(void *data, Evas_Object *obj __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
    Eina_List *l;
@@ -1094,7 +1094,7 @@ _adv_style_cb_change(void *data, Evas_Object *obj)
 
 /* Private Font Fallback Functions */
 static void
-_adv_enabled_fallback_cb_change(void *data, Evas_Object *obj)
+_adv_enabled_fallback_cb_change(void *data, Evas_Object *obj __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
 
