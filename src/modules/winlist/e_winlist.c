@@ -364,7 +364,6 @@ e_winlist_prev(void)
 void
 e_winlist_left(E_Zone *zone)
 {
-   int x, y, w, h;
    Eina_List *l;
    E_Desk *desk;
    E_Border *bd_orig;
@@ -377,7 +376,6 @@ e_winlist_left(E_Zone *zone)
    E_OBJECT_CHECK_RETURN(zone, 0);
    E_OBJECT_TYPE_CHECK_RETURN(zone, E_ZONE_TYPE, 0);
 
-
    bd_orig = e_border_focused_get();
    if (!bd_orig) return;
 
@@ -388,9 +386,6 @@ e_winlist_left(E_Zone *zone)
    for (l = e_border_focus_stack_get(); l; l = l->next)
      {
 	E_Border *bd = l->data;
-	E_Winlist_Win *ww;
-	Evas_Coord mw, mh;
-	Evas_Object *o;
 	int center_next;
 	int delta_next;
 
@@ -403,16 +398,18 @@ e_winlist_left(E_Zone *zone)
 	  {
 	     if (!e_config->winlist_list_show_iconified) continue;
 	     if ((bd->zone != zone) &&
-		   (!e_config->winlist_list_show_other_screen_iconified)) continue;
+                 (!e_config->winlist_list_show_other_screen_iconified)) 
+               continue;
 	     if ((bd->desk != desk) &&
-		   (!e_config->winlist_list_show_other_desk_iconified)) continue;
+                 (!e_config->winlist_list_show_other_desk_iconified)) continue;
 	  }
 	else
 	  {
 	     if (bd->sticky)
 	       {
 		  if ((bd->zone != zone) &&
-			(!e_config->winlist_list_show_other_screen_windows)) continue;
+                      (!e_config->winlist_list_show_other_screen_windows)) 
+                    continue;
 	       }
 	     else
 	       {
@@ -429,7 +426,7 @@ e_winlist_left(E_Zone *zone)
 	       }
 	  }
 	/* bd is suitable */
-	center_next = bd->x + bd->w/2;
+	center_next = bd->x + bd->w / 2;
 	if (center_next >= center) continue;
 	delta_next = bd_orig->x - (bd->x + bd->w);
 	if (delta_next < 0) delta = center - center_next;
@@ -472,9 +469,11 @@ e_winlist_left(E_Zone *zone)
 	if (!_animator)
 	  _animator = ecore_animator_add(_e_winlist_animator, NULL);
 	
-	if ((!_bd_next->lock_user_stacking) && (e_config->winlist_list_raise_while_selecting))
+	if ((!_bd_next->lock_user_stacking) && 
+            (e_config->winlist_list_raise_while_selecting))
 	  e_border_raise(_bd_next);
-	if ((!_bd_next->lock_focus_out) && (e_config->winlist_list_focus_while_selecting))
+	if ((!_bd_next->lock_focus_out) && 
+            (e_config->winlist_list_focus_while_selecting))
 	  e_border_focus_set(_bd_next, 1, 1);
      }
 }
@@ -482,7 +481,6 @@ e_winlist_left(E_Zone *zone)
 void
 e_winlist_down(E_Zone *zone)
 {
-   int x, y, w, h;
    Eina_List *l;
    E_Desk *desk;
    E_Border *bd_orig;
@@ -494,7 +492,6 @@ e_winlist_down(E_Zone *zone)
    E_OBJECT_CHECK_RETURN(zone, 0);
    E_OBJECT_TYPE_CHECK_RETURN(zone, E_ZONE_TYPE, 0);
 
-
    bd_orig = e_border_focused_get();
    if (!bd_orig) return;
 
@@ -505,9 +502,6 @@ e_winlist_down(E_Zone *zone)
    for (l = e_border_focus_stack_get(); l; l = l->next)
      {
 	E_Border *bd = l->data;
-	E_Winlist_Win *ww;
-	Evas_Coord mw, mh;
-	Evas_Object *o;
 	int center_next;
 	int delta_next;
 
@@ -520,16 +514,18 @@ e_winlist_down(E_Zone *zone)
 	  {
 	     if (!e_config->winlist_list_show_iconified) continue;
 	     if ((bd->zone != zone) &&
-		   (!e_config->winlist_list_show_other_screen_iconified)) continue;
+                 (!e_config->winlist_list_show_other_screen_iconified)) 
+               continue;
 	     if ((bd->desk != desk) &&
-		   (!e_config->winlist_list_show_other_desk_iconified)) continue;
+                 (!e_config->winlist_list_show_other_desk_iconified)) continue;
 	  }
 	else
 	  {
 	     if (bd->sticky)
 	       {
 		  if ((bd->zone != zone) &&
-			(!e_config->winlist_list_show_other_screen_windows)) continue;
+                      (!e_config->winlist_list_show_other_screen_windows)) 
+                    continue;
 	       }
 	     else
 	       {
@@ -599,7 +595,6 @@ e_winlist_down(E_Zone *zone)
 void
 e_winlist_up(E_Zone *zone)
 {
-   int x, y, w, h;
    Eina_List *l;
    E_Desk *desk;
    E_Border *bd_orig;
@@ -611,7 +606,6 @@ e_winlist_up(E_Zone *zone)
    E_OBJECT_CHECK_RETURN(zone, 0);
    E_OBJECT_TYPE_CHECK_RETURN(zone, E_ZONE_TYPE, 0);
 
-
    bd_orig = e_border_focused_get();
    if (!bd_orig) return;
 
@@ -622,9 +616,6 @@ e_winlist_up(E_Zone *zone)
    for (l = e_border_focus_stack_get(); l; l = l->next)
      {
 	E_Border *bd = l->data;
-	E_Winlist_Win *ww;
-	Evas_Coord mw, mh;
-	Evas_Object *o;
 	int center_next;
 	int delta_next;
 
@@ -637,16 +628,18 @@ e_winlist_up(E_Zone *zone)
 	  {
 	     if (!e_config->winlist_list_show_iconified) continue;
 	     if ((bd->zone != zone) &&
-		   (!e_config->winlist_list_show_other_screen_iconified)) continue;
+                 (!e_config->winlist_list_show_other_screen_iconified)) 
+               continue;
 	     if ((bd->desk != desk) &&
-		   (!e_config->winlist_list_show_other_desk_iconified)) continue;
+                 (!e_config->winlist_list_show_other_desk_iconified)) continue;
 	  }
 	else
 	  {
 	     if (bd->sticky)
 	       {
 		  if ((bd->zone != zone) &&
-			(!e_config->winlist_list_show_other_screen_windows)) continue;
+                      (!e_config->winlist_list_show_other_screen_windows)) 
+                    continue;
 	       }
 	     else
 	       {
@@ -716,7 +709,6 @@ e_winlist_up(E_Zone *zone)
 void
 e_winlist_right(E_Zone *zone)
 {
-   int x, y, w, h;
    Eina_List *l;
    E_Desk *desk;
    E_Border *bd_orig;
@@ -728,7 +720,6 @@ e_winlist_right(E_Zone *zone)
    E_OBJECT_CHECK_RETURN(zone, 0);
    E_OBJECT_TYPE_CHECK_RETURN(zone, E_ZONE_TYPE, 0);
 
-
    bd_orig = e_border_focused_get();
    if (!bd_orig) return;
 
@@ -739,9 +730,6 @@ e_winlist_right(E_Zone *zone)
    for (l = e_border_focus_stack_get(); l; l = l->next)
      {
 	E_Border *bd = l->data;
-	E_Winlist_Win *ww;
-	Evas_Coord mw, mh;
-	Evas_Object *o;
 	int center_next;
 	int delta_next;
 
@@ -754,16 +742,18 @@ e_winlist_right(E_Zone *zone)
 	  {
 	     if (!e_config->winlist_list_show_iconified) continue;
 	     if ((bd->zone != zone) &&
-		   (!e_config->winlist_list_show_other_screen_iconified)) continue;
+                 (!e_config->winlist_list_show_other_screen_iconified)) 
+               continue;
 	     if ((bd->desk != desk) &&
-		   (!e_config->winlist_list_show_other_desk_iconified)) continue;
+                 (!e_config->winlist_list_show_other_desk_iconified)) continue;
 	  }
 	else
 	  {
 	     if (bd->sticky)
 	       {
 		  if ((bd->zone != zone) &&
-			(!e_config->winlist_list_show_other_screen_windows)) continue;
+                      (!e_config->winlist_list_show_other_screen_windows)) 
+                    continue;
 	       }
 	     else
 	       {
@@ -1195,7 +1185,7 @@ _e_winlist_restore_desktop(void)
 }
 
 static Eina_Bool
-_e_winlist_cb_event_border_add(__UNUSED__ void *data, __UNUSED__ int type,  void *event)
+_e_winlist_cb_event_border_add(void *data __UNUSED__, int type __UNUSED__,  void *event)
 {
    E_Event_Border_Add *ev;
 
@@ -1207,7 +1197,7 @@ _e_winlist_cb_event_border_add(__UNUSED__ void *data, __UNUSED__ int type,  void
 }
 
 static Eina_Bool
-_e_winlist_cb_event_border_remove(__UNUSED__ void *data, __UNUSED__ int type,  void *event)
+_e_winlist_cb_event_border_remove(void *data __UNUSED__, int type __UNUSED__,  void *event)
 {
    E_Event_Border_Remove *ev;
 
@@ -1218,7 +1208,7 @@ _e_winlist_cb_event_border_remove(__UNUSED__ void *data, __UNUSED__ int type,  v
 }
 
 static Eina_Bool
-_e_winlist_cb_key_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_winlist_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Event_Key *ev;
 
@@ -1297,7 +1287,7 @@ _e_winlist_cb_key_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_winlist_cb_key_up(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_winlist_cb_key_up(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Event_Key *ev;
    E_Action *act;
@@ -1376,7 +1366,7 @@ _e_winlist_cb_key_up(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_winlist_cb_mouse_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_winlist_cb_mouse_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Event_Mouse_Button *ev;
 
@@ -1388,7 +1378,7 @@ _e_winlist_cb_mouse_down(__UNUSED__ void *data, __UNUSED__ int type, void *event
 }
 
 static Eina_Bool
-_e_winlist_cb_mouse_up(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_winlist_cb_mouse_up(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Event_Mouse_Button *ev;
 
@@ -1400,7 +1390,7 @@ _e_winlist_cb_mouse_up(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_winlist_cb_mouse_wheel(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_winlist_cb_mouse_wheel(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Event_Mouse_Wheel *ev;
    int i;
@@ -1423,7 +1413,7 @@ _e_winlist_cb_mouse_wheel(__UNUSED__ void *data, __UNUSED__ int type, void *even
 }
 
 static Eina_Bool
-_e_winlist_cb_mouse_move(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_winlist_cb_mouse_move(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Event_Mouse_Move *ev;
 
@@ -1431,20 +1421,22 @@ _e_winlist_cb_mouse_move(__UNUSED__ void *data, __UNUSED__ int type, void *event
    if (ev->window != _input_window) return ECORE_CALLBACK_PASS_ON;
 
    evas_event_feed_mouse_move(_winlist->evas, ev->x - _winlist->x +
-	 _winlist->zone->x, ev->y - _winlist->y + _winlist->zone->y, ev->timestamp, NULL);
+                              _winlist->zone->x, ev->y - _winlist->y + 
+                              _winlist->zone->y, ev->timestamp, NULL);
 
    return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool
-_e_winlist_scroll_timer(__UNUSED__ void *data)
+_e_winlist_scroll_timer(void *data __UNUSED__)
 {
    if (_scroll_to)
      {
 	double spd;
 
 	spd = e_config->winlist_scroll_speed;
-	_scroll_align = (_scroll_align * (1.0 - spd)) + (_scroll_align_to * spd);
+	_scroll_align = (_scroll_align * (1.0 - spd)) + 
+          (_scroll_align_to * spd);
 	return 1;
      }
    _scroll_timer = NULL;
@@ -1452,7 +1444,7 @@ _e_winlist_scroll_timer(__UNUSED__ void *data)
 }
 
 static Eina_Bool
-_e_winlist_warp_timer(__UNUSED__ void *data)
+_e_winlist_warp_timer(void *data __UNUSED__)
 {
    if (_warp_to)
      {
@@ -1471,7 +1463,7 @@ _e_winlist_warp_timer(__UNUSED__ void *data)
 }
 
 static Eina_Bool
-_e_winlist_animator(__UNUSED__ void *data)
+_e_winlist_animator(void *data __UNUSED__)
 {
    if (_warp_to)
      {

@@ -28,13 +28,15 @@ e_modapi_init(E_Module *m)
 	act->func.go = _e_mod_action_winlist_cb;
 	act->func.go_mouse = _e_mod_action_winlist_mouse_cb;
 	act->func.go_key = _e_mod_action_winlist_key_cb;
-	e_action_predef_name_set(_("Window : List"), _("Next Window"), "winlist",
-				 "next", NULL, 0);
+	e_action_predef_name_set(_("Window : List"), _("Next Window"), 
+                                 "winlist", "next", NULL, 0);
 	e_action_predef_name_set(_("Window : List"), _("Previous Window"),
 				 "winlist", "prev", NULL, 0);
-	e_action_predef_name_set(_("Window : List"), _("Next window of same class"), "winlist",
+	e_action_predef_name_set(_("Window : List"), 
+                                 _("Next window of same class"), "winlist",
 				 "class-next", NULL, 0);
-	e_action_predef_name_set(_("Window : List"), _("Previous window of same class"),
+	e_action_predef_name_set(_("Window : List"), 
+                                 _("Previous window of same class"),
 				 "winlist", "class-prev", NULL, 0);
 	e_action_predef_name_set(_("Window : List"), _("Window on the Left"),
 				 "winlist", "left", NULL, 0);
@@ -50,15 +52,17 @@ e_modapi_init(E_Module *m)
 }
 
 EAPI int
-e_modapi_shutdown(E_Module *m)
+e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    /* remove module-supplied action */
    if (act)
      {
 	e_action_predef_name_del(_("Window : List"), _("Previous Window"));
 	e_action_predef_name_del(_("Window : List"), _("Next Window"));
-	e_action_predef_name_del(_("Window : List"), _("Previous window of same class"));
-	e_action_predef_name_del(_("Window : List"), _("Next window of same class"));
+	e_action_predef_name_del(_("Window : List"), 
+                                 _("Previous window of same class"));
+	e_action_predef_name_del(_("Window : List"), 
+                                 _("Next window of same class"));
 	e_action_predef_name_del(_("Window : List"), _("Window on the Left"));
 	e_action_predef_name_del(_("Window : List"), _("Window Down"));
 	e_action_predef_name_del(_("Window : List"), _("Window Up"));
@@ -72,7 +76,7 @@ e_modapi_shutdown(E_Module *m)
 }
 
 EAPI int
-e_modapi_save(E_Module *m)
+e_modapi_save(E_Module *m __UNUSED__)
 {
    return 1;
 }
