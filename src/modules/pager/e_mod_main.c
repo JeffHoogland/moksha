@@ -831,7 +831,7 @@ _pager_inst_cb_menu_configure(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Men
 }
 
 static E_Config_Dialog *
-_pager_config_dialog(E_Container *con, const char *params)
+_pager_config_dialog(E_Container *con __UNUSED__, const char *params __UNUSED__)
 {
    if (!pager_config) return NULL;
    if (pager_config->config_dialog) return NULL;
@@ -1571,7 +1571,7 @@ _pager_cb_event_border_property(void *data __UNUSED__, int type __UNUSED__, void
 }
 
 static Eina_Bool
-_pager_cb_event_zone_desk_count_set(void *data __UNUSED__, int type __UNUSED__, void *event)
+_pager_cb_event_zone_desk_count_set(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    Eina_List *l;
    Pager *p;
@@ -2836,7 +2836,7 @@ e_modapi_init(E_Module *m)
 }
 
 EAPI int
-e_modapi_shutdown(E_Module *m)
+e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    e_gadcon_provider_unregister(&_gadcon_class);
 
@@ -2874,7 +2874,7 @@ e_modapi_shutdown(E_Module *m)
 }
 
 EAPI int
-e_modapi_save(E_Module *m)
+e_modapi_save(E_Module *m __UNUSED__)
 {
    e_config_domain_save("module.pager", conf_edd, pager_config);
    return 1;

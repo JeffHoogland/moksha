@@ -79,7 +79,7 @@ _config_pager_module(Config_Item *ci)
 
 /* local function prototypes */
 static void *
-_create_data(E_Config_Dialog *cfd) 
+_create_data(E_Config_Dialog *cfd __UNUSED__) 
 {
    E_Config_Dialog_Data *cfdata;
 
