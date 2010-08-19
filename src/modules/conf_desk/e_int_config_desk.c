@@ -102,7 +102,7 @@ _create_data(E_Config_Dialog *cfd)
 }
 
 static void
-_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
 {
    if (cfdata->hdl)
      ecore_event_handler_del(cfdata->hdl);
@@ -114,22 +114,26 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 }
 
 static int
-_basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
 {
    char name[40];
    
    if (!cfdata->name[0]) 
      {
-	snprintf(name, sizeof(name), _(e_config->desktop_default_name), cfdata->desk_x, cfdata->desk_y);
+	snprintf(name, sizeof(name), _(e_config->desktop_default_name), 
+                 cfdata->desk_x, cfdata->desk_y);
 	cfdata->name = strdup(name);
      }
 
-   e_desk_name_del(cfdata->con_num, cfdata->zone_num, cfdata->desk_x, cfdata->desk_y);
-   e_desk_name_add(cfdata->con_num, cfdata->zone_num, cfdata->desk_x, cfdata->desk_y, cfdata->name);
+   e_desk_name_del(cfdata->con_num, cfdata->zone_num, 
+                   cfdata->desk_x, cfdata->desk_y);
+   e_desk_name_add(cfdata->con_num, cfdata->zone_num, 
+                   cfdata->desk_x, cfdata->desk_y, cfdata->name);
    e_desk_name_update();
    
    e_bg_del(cfdata->con_num, cfdata->zone_num, cfdata->desk_x, cfdata->desk_y);
-   e_bg_add(cfdata->con_num, cfdata->zone_num, cfdata->desk_x, cfdata->desk_y, cfdata->bg);
+   e_bg_add(cfdata->con_num, cfdata->zone_num, 
+            cfdata->desk_x, cfdata->desk_y, cfdata->bg);
    e_bg_update();
 
    e_config_save_queue();
@@ -172,7 +176,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 }
 
 static void 
-_cb_config(void *data, void *data2) 
+_cb_config(void *data, void *data2 __UNUSED__) 
 {
    E_Config_Dialog_Data *cfdata;
    char buf[256];
@@ -181,7 +185,9 @@ _cb_config(void *data, void *data2)
    if (!cfdata) return;
    snprintf(buf, sizeof(buf), "%i %i %i %i", 
 	    cfdata->con_num, cfdata->zone_num, cfdata->desk_x, cfdata->desk_y);
-   e_configure_registry_call("internal/wallpaper_desk", e_container_current_get(e_manager_current_get()), buf);
+   e_configure_registry_call("internal/wallpaper_desk", 
+                             e_container_current_get(e_manager_current_get()), 
+                             buf);
 }
 
 static Eina_Bool
@@ -200,10 +206,12 @@ _cb_bg_change(void *data, int type, void *event)
    if (ev->desk_x != cfdata->desk_x) return ECORE_CALLBACK_PASS_ON;
    if (ev->desk_y != cfdata->desk_y) return ECORE_CALLBACK_PASS_ON;
    
-   file = e_bg_file_get(cfdata->con_num, cfdata->zone_num, cfdata->desk_x, cfdata->desk_y);
+   file = e_bg_file_get(cfdata->con_num, cfdata->zone_num, 
+                        cfdata->desk_x, cfdata->desk_y);
    E_FREE(cfdata->bg);
    cfdata->bg = strdup(file);
-   e_widget_preview_edje_set(cfdata->preview, cfdata->bg, "e/desktop/background");
+   e_widget_preview_edje_set(cfdata->preview, cfdata->bg, 
+                             "e/desktop/background");
 
    return ECORE_CALLBACK_PASS_ON;
 }
