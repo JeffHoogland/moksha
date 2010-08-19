@@ -6,18 +6,13 @@ static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static void _fill_data(E_Config_Dialog_Data *cfdata);
 static int _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static int _adv_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static int _adv_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static Evas_Object *_adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 
 static void _cb_method_change(void *data, Evas_Object *obj, void *event_info);
-static void _cb_radio_change(void *data, Evas_Object *obj);
 static void _cb_login_change(void *data, Evas_Object *obj);
 static int _zone_count_get(void);
 
 static void _cb_bg_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event);
-static void _cb_disable_check(void *data, Evas_Object *obj);
 static void _cb_ask_presentation_changed(void *data, Evas_Object *obj);
 
 struct _E_Config_Dialog_Data
@@ -162,7 +157,7 @@ _create_data(E_Config_Dialog *cfd)
 }
 
 static void
-_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    if (cfdata->bg_fsel) 
      e_object_del(E_OBJECT(cfdata->bg_fsel));
@@ -172,7 +167,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 }
 
 static void
-_basic_auto_lock_cb_changed(void *data, Evas_Object *o)
+_basic_auto_lock_cb_changed(void *data, Evas_Object *o __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
    int disable;
@@ -183,7 +178,7 @@ _basic_auto_lock_cb_changed(void *data, Evas_Object *o)
 }
 
 static void
-_basic_screensaver_lock_cb_changed(void *data, Evas_Object *o)
+_basic_screensaver_lock_cb_changed(void *data, Evas_Object *o __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
    int disable;
@@ -200,7 +195,6 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    E_Radio_Group *rg;
    E_Zone *zone;
    int screen_count;
-   char path[PATH_MAX];
 
    zone = e_zone_current_get(cfd->con);
    screen_count = ecore_x_xinerama_screen_count_get();
@@ -326,7 +320,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 }
 
 static int
-_basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    e_config->desklock_start_locked = cfdata->start_locked;
    e_config->desklock_on_suspend = cfdata->lock_on_suspend;
@@ -361,7 +355,7 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 }
 
 static int
-_basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    if (e_config->desklock_start_locked != cfdata->start_locked)
      return 1;
@@ -409,12 +403,10 @@ _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 }
 
 static void
-_cb_method_change(void *data, Evas_Object * obj, void *event_info)
+_cb_method_change(void *data, Evas_Object * obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
-   Eina_List *sel;
-   char path[PATH_MAX];
-   const char *f, *theme;
+   const char *theme = NULL;
 
    if (!(cfdata = data)) return;
    e_widget_disabled_set(cfdata->gui.o_bg, (cfdata->bg_method < 3));
@@ -466,7 +458,7 @@ _cb_method_change(void *data, Evas_Object * obj, void *event_info)
 }
 
 static void
-_cb_login_change(void *data, Evas_Object *obj)
+_cb_login_change(void *data, Evas_Object *obj __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
 
@@ -493,7 +485,7 @@ _zone_count_get(void)
 }
 
 static void 
-_cb_bg_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event) 
+_cb_bg_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj, void *event __UNUSED__) 
 {
    E_Config_Dialog_Data *cfdata;
 

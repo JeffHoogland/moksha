@@ -47,7 +47,7 @@ e_int_config_desklock_fsel(E_Config_Dialog *parent)
 
 /* local functions */
 static void *
-_create_data(E_Config_Dialog *cfd) 
+_create_data(E_Config_Dialog *cfd __UNUSED__) 
 {
    E_Config_Dialog_Data *cfdata;
 
@@ -68,7 +68,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 }
 
 static Evas_Object *
-_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
+_basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
    Evas_Object *o, *ow, *ot, *rt;
    E_Radio_Group *rg;
@@ -116,7 +116,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 }
 
 static void 
-_cb_dir_changed(void *data, Evas_Object *obj, void *event) 
+_cb_dir_changed(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED__) 
 {
    E_Config_Dialog_Data *cfdata;
 
@@ -126,7 +126,7 @@ _cb_dir_changed(void *data, Evas_Object *obj, void *event)
 }
 
 static void 
-_cb_sel_changed(void *data, Evas_Object *obj, void *event) 
+_cb_sel_changed(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED__) 
 {
    E_Config_Dialog_Data *cfdata;
    Eina_List *sel;
@@ -149,7 +149,7 @@ _cb_sel_changed(void *data, Evas_Object *obj, void *event)
 }
 
 static void 
-_cb_files_changed(void *data, Evas_Object *obj, void *event) 
+_cb_files_changed(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED__) 
 {
    E_Config_Dialog_Data *cfdata;
    const char *p = NULL;
@@ -181,7 +181,7 @@ _cb_files_changed(void *data, Evas_Object *obj, void *event)
 }
 
 static void 
-_cb_files_deleted(void *data, Evas_Object *obj, void *event) 
+_cb_files_deleted(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED__) 
 {
    E_Config_Dialog_Data *cfdata;
    Eina_List *sel, *all, *n;
@@ -206,7 +206,7 @@ _cb_files_deleted(void *data, Evas_Object *obj, void *event)
 }
 
 static void 
-_cb_radio_changed(void *data, Evas_Object *obj, void *event) 
+_cb_radio_changed(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED__) 
 {
    E_Config_Dialog_Data *cfdata;
    char path[PATH_MAX];
@@ -220,7 +220,7 @@ _cb_radio_changed(void *data, Evas_Object *obj, void *event)
 }
 
 static void 
-_cb_dir_up(void *data1, void *data2) 
+_cb_dir_up(void *data1, void *data2 __UNUSED__) 
 {
    E_Config_Dialog_Data *cfdata;
 
