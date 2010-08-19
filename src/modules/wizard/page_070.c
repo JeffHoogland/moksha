@@ -120,57 +120,57 @@ _app_write(App *a)
 }
 
 EAPI int
-wizard_page_init(E_Wizard_Page *pg)
+wizard_page_init(E_Wizard_Page *pg __UNUSED__)
 {
    Eina_List *desks = NULL;
    Efreet_Desktop *desk;
    int i;
-   
+
    desks = efreet_util_desktop_name_glob_list("*");
    EINA_LIST_FREE(desks, desk)
-          {
-             char dbuf[4096];
+     {
+        char dbuf[4096];
 
-             if (!desk->exec)
-	       {
-		  efreet_desktop_free(desk);
-		  continue;
-	       }
-             if (sscanf(desk->exec, "%4000s", dbuf) == 1)
+        if (!desk->exec)
+          {
+             efreet_desktop_free(desk);
+             continue;
+          }
+        if (sscanf(desk->exec, "%4000s", dbuf) == 1)
+          {
+             for (i = 0; i < (sizeof(apps) / sizeof(App)); i++)
                {
-                  for (i = 0; i < (sizeof(apps) / sizeof(App)); i++)
+                  if (apps[i].found == 0)
                     {
-                       if (apps[i].found == 0)
-                         {
-                            char abuf[4096];
+                       char abuf[4096];
                             
-                            if (sscanf(apps[i].exec, "%4000s", abuf) == 1)
-                              {
-                                 char *p1, *p2;
+                       if (sscanf(apps[i].exec, "%4000s", abuf) == 1)
+                         {
+                            char *p1, *p2;
                                  
-                                 if (!ecore_file_app_installed(abuf))
-                                   {
-                                      /* can't find exe - mark as not available */
-                                      apps[i].found = -1;
-                                   }
-                                 else
-                                   {
-                                      p1 = strrchr(dbuf, '/');
-                                      if (p1) p1++;
-                                      else p1 = dbuf;
-                                      p2 = strrchr(abuf, '/');
-                                      if (p2) p2++;
-                                      else p2 = abuf;
-                                      if (!strcmp(p1, p2))
-                                        /* mark as found in .desktops */
-                                        apps[i].found = 2;
-                                   }
+                            if (!ecore_file_app_installed(abuf))
+                              {
+                                 /* can't find exe - mark as not available */
+                                 apps[i].found = -1;
+                              }
+                            else
+                              {
+                                 p1 = strrchr(dbuf, '/');
+                                 if (p1) p1++;
+                                 else p1 = dbuf;
+                                 p2 = strrchr(abuf, '/');
+                                 if (p2) p2++;
+                                 else p2 = abuf;
+                                 if (!strcmp(p1, p2))
+                                   /* mark as found in .desktops */
+                                   apps[i].found = 2;
                               }
                          }
                     }
                }
-	     efreet_desktop_free(desk);
           }
+        efreet_desktop_free(desk);
+     }
 
    // FIXME: list all apps and of the apps either already installed, or to be
    // created, offer them to be added to ibar by default. (actually should be
@@ -178,10 +178,11 @@ wizard_page_init(E_Wizard_Page *pg)
    return 1;
 }
 EAPI int
-wizard_page_shutdown(E_Wizard_Page *pg)
+wizard_page_shutdown(E_Wizard_Page *pg __UNUSED__)
 {
    return 1;
 }
+
 EAPI int
 wizard_page_show(E_Wizard_Page *pg)
 {
@@ -255,7 +256,7 @@ wizard_page_hide(E_Wizard_Page *pg)
    return 1;
 }
 EAPI int
-wizard_page_apply(E_Wizard_Page *pg)
+wizard_page_apply(E_Wizard_Page *pg __UNUSED__)
 {
    // FIXME: write ~/.e/e/applications/bar/default/.order
    // which should contain whatever apps the user wants in their bar by

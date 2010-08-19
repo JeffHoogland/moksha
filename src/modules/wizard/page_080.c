@@ -15,7 +15,7 @@ _cb_sort_desks(Efreet_Desktop *d1, Efreet_Desktop *d2)
 }
 
 EAPI int
-wizard_page_init(E_Wizard_Page *pg)
+wizard_page_init(E_Wizard_Page *pg __UNUSED__)
 {
    Eina_List *desks = NULL;
    Efreet_Desktop *desk;
@@ -23,14 +23,14 @@ wizard_page_init(E_Wizard_Page *pg)
    desks = efreet_util_desktop_name_glob_list("*");
    desks = eina_list_sort(desks, 0, (Eina_Compare_Cb)_cb_sort_desks);
    EINA_LIST_FREE(desks, desk)
+     {
+        if (!desk->exec)
           {
-             if (!desk->exec)
-	       {
-		  efreet_desktop_free(desk);
-		  continue;
-	       }
-             desktops = eina_list_append(desktops, desk);
+             efreet_desktop_free(desk);
+             continue;
           }
+        desktops = eina_list_append(desktops, desk);
+     }
    if (desktops)
      {
         desktops_num = eina_list_count(desktops);
@@ -38,13 +38,15 @@ wizard_page_init(E_Wizard_Page *pg)
      }
    return 1;
 }
+
 EAPI int
-wizard_page_shutdown(E_Wizard_Page *pg)
+wizard_page_shutdown(E_Wizard_Page *pg __UNUSED__)
 {
    return 1;
 }
+
 EAPI int
-wizard_page_show(E_Wizard_Page *pg)
+wizard_page_show(E_Wizard_Page *pg __UNUSED__)
 {
    Evas_Object *o, *of, *ob, *li, *ck;
    Evas_Coord mw, mh;
@@ -93,14 +95,16 @@ wizard_page_show(E_Wizard_Page *pg)
 
    return 1; /* 1 == show ui, and wait for user, 0 == just continue */
 }
+
 EAPI int
 wizard_page_hide(E_Wizard_Page *pg)
 {
    evas_object_del(pg->data);
    return 1;
 }
+
 EAPI int
-wizard_page_apply(E_Wizard_Page *pg)
+wizard_page_apply(E_Wizard_Page *pg __UNUSED__)
 {
    Efreet_Desktop *desk;
    Eina_List *l;

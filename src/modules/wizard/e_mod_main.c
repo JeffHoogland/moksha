@@ -1,17 +1,8 @@
 #include "e.h"
 #include "e_mod_main.h"
 
-/***************************************************************************/
-/**/
 /* actual module specifics */
-
 static E_Module *conf_module = NULL;
-
-/**/
-/***************************************************************************/
-
-/***************************************************************************/
-/**/
 
 /*
  * These are the currently planned wizard pages:
@@ -39,11 +30,6 @@ static E_Module *conf_module = NULL;
  * with pointer focus and ibar icons/desktop makes no sense.
  */
 
-/**/
-/***************************************************************************/
-
-/***************************************************************************/
-/**/
 /* module setup */
 EAPI E_Module_Api e_modapi =
 {
@@ -51,8 +37,8 @@ EAPI E_Module_Api e_modapi =
      "Wizard"
 };
 
-
-static int _cb_sort_files(char *f1, char *f2)
+static int 
+_cb_sort_files(char *f1, char *f2)
 {
    return strcmp(f1, f2);
 }
@@ -99,7 +85,7 @@ e_modapi_init(E_Module *m)
 }
 
 EAPI int
-e_modapi_shutdown(E_Module *m)
+e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    e_wizard_shutdown();
    conf_module = NULL;
@@ -110,7 +96,7 @@ e_modapi_shutdown(E_Module *m)
 }
 
 EAPI int
-e_modapi_save(E_Module *m)
+e_modapi_save(E_Module *m __UNUSED__)
 {
    return 1;
 }

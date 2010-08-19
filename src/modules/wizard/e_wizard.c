@@ -21,23 +21,23 @@ EAPI int
 e_wizard_init(void)
 {
    Eina_List *l;
-   
+
    for (l = e_manager_list(); l; l = l->next)
      {
 	E_Manager *man;
 	Eina_List *l2;
-	
+
 	man = l->data;
 	for (l2 = man->containers; l2; l2 = l2->next)
 	  {
 	     E_Container *con;
 	     Eina_List *l3;
-	     
+
 	     con = l2->data;
 	     for (l3 = con->zones; l3; l3 = l3->next)
 	       {
 		  E_Zone *zone;
-		  
+
 		  zone = l3->data;
 		  if (!pop)
 		    pop = _e_wizard_main_new(zone);
@@ -95,11 +95,11 @@ EAPI void
 e_wizard_apply(void)
 {
    Eina_List *l;
-   
+
    for (l = pages; l; l = l->next)
      {  
 	E_Wizard_Page *pg;
-	
+
 	pg = l->data;
 	if (pg->apply) pg->apply(pg);
      }
@@ -109,7 +109,7 @@ EAPI void
 e_wizard_next(void)
 {
    Eina_List *l;
-   
+
    for (l = pages; l; l = l->next)
      {
 	if (l->data == curpage)
@@ -148,12 +148,12 @@ e_wizard_next(void)
 EAPI void
 e_wizard_page_show(Evas_Object *obj)
 {
-   Evas_Coord minw, minh;
-
    if (o_content) evas_object_del(o_content);
    o_content = obj;
    if (obj)
      {
+        Evas_Coord minw, minh;
+
 	e_widget_size_min_get(obj, &minw, &minh);
 	edje_extern_object_min_size_set(obj, minw, minh);
 	edje_object_part_swallow(o_bg, "e.swallow.content", obj);
@@ -173,21 +173,21 @@ e_wizard_page_add(void *handle,
 		  )
 {
    E_Wizard_Page *pg;
-   
+
    pg = E_NEW(E_Wizard_Page, 1);
    if (!pg) return NULL;
-   
+
    pg->handle = handle;
    pg->evas = pop->evas;
-   
+
    pg->init = init;
    pg->shutdown = shutdown;
    pg->show = show;
    pg->hide = hide;
    pg->apply = apply;
-   
+
    pages = eina_list_append(pages, pg);
-   
+
    return pg;
 }
 
@@ -222,7 +222,7 @@ static void
 _e_wizard_next_eval(void)
 {
    int ok;
-   
+
    ok = next_can;
    if (!next_ok) ok = 0;
    if (next_prev != ok)
@@ -240,7 +240,7 @@ _e_wizard_main_new(E_Zone *zone)
    Evas_Object *o;
    Evas_Modifier_Mask mask;
    Eina_Bool kg;
-   
+
    pop = e_popup_new(zone, 0, 0, zone->w, zone->h);
    e_popup_layer_set(pop, 255);
    o = edje_object_add(pop->evas);
@@ -252,24 +252,24 @@ _e_wizard_main_new(E_Zone *zone)
    edje_object_signal_callback_add(o, "e,action,next", "",
 				   _e_wizard_cb_next, pop);
    o_bg = o;
-   
+
    o = evas_object_rectangle_add(pop->evas);
    mask = 0;
    kg = evas_object_key_grab(o, "Tab", mask, ~mask, 0);
    if (!kg)
-      fprintf(stderr,"ERROR: unable to redirect \"Tab\" key events to object %p.\n", o);
+     fprintf(stderr,"ERROR: unable to redirect \"Tab\" key events to object %p.\n", o);
    mask = evas_key_modifier_mask_get(pop->evas, "Shift");
    kg = evas_object_key_grab(o, "Tab", mask, ~mask, 0);
    if (!kg)
-      fprintf(stderr,"ERROR: unable to redirect \"Tab\" key events to object %p.\n", o);
+     fprintf(stderr,"ERROR: unable to redirect \"Tab\" key events to object %p.\n", o);
    mask = 0;
    kg = evas_object_key_grab(o, "Return", mask, ~mask, 0);
    if (!kg)
-      fprintf(stderr,"ERROR: unable to redirect \"Return\" key events to object %p.\n", o);
+     fprintf(stderr,"ERROR: unable to redirect \"Return\" key events to object %p.\n", o);
    mask = 0;
    kg = evas_object_key_grab(o, "KP_Enter", mask, ~mask, 0);
    if (!kg)
-      fprintf(stderr,"ERROR: unable to redirect \"KP_Enter\" key events to object %p.\n", o);
+     fprintf(stderr,"ERROR: unable to redirect \"KP_Enter\" key events to object %p.\n", o);
    evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN,
 				  _e_wizard_cb_key_down, pop);
 
@@ -277,7 +277,7 @@ _e_wizard_main_new(E_Zone *zone)
    edje_object_part_text_set(o_bg, "e.text.title", _("Welcome to Enlightenment"));
    edje_object_signal_emit(o_bg, "e,state,next,disable", "e");
    e_wizard_labels_update();
-   
+
    e_popup_edje_bg_object_set(pop, o_bg);
    e_popup_show(pop);
    if (!e_grabinput_get(ecore_evas_software_x11_window_get(pop->ecore_evas),
@@ -294,7 +294,7 @@ _e_wizard_extra_new(E_Zone *zone)
 {
    E_Popup *pop;
    Evas_Object *o;
-   
+
    pop = e_popup_new(zone, 0, 0, zone->w, zone->h);
    e_popup_layer_set(pop, 255);
    o = edje_object_add(pop->evas);
@@ -308,10 +308,10 @@ _e_wizard_extra_new(E_Zone *zone)
 }
 
 static void
-_e_wizard_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event)
+_e_wizard_cb_key_down(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event)
 {
    Evas_Event_Key_Down *ev;
-   
+
    ev = event;
    if (!o_content) return;
    if (!strcmp(ev->keyname, "Tab"))
@@ -326,14 +326,14 @@ _e_wizard_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event)
 	     (!strcmp(ev->keyname, "space"))))
      {
 	Evas_Object *o;
-	
+
 	o = e_widget_focused_object_get(o_content);
 	if (o) e_widget_activate(o);
      }
 }
 
 static void
-_e_wizard_cb_next(void *data, Evas_Object *obj, const char *emission, const char *source)
+_e_wizard_cb_next(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    e_wizard_next();
 }
