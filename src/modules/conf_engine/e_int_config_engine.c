@@ -26,6 +26,7 @@ e_int_config_engine(E_Container *con, const char *params __UNUSED__)
    E_Config_Dialog_View *v;
 
    if (e_config_dialog_find("E", "advanced/engine")) return NULL;
+
    v = E_NEW(E_Config_Dialog_View, 1);
    if (!v) return NULL;
    v->create_cfdata = _create_data;
@@ -34,9 +35,7 @@ e_int_config_engine(E_Container *con, const char *params __UNUSED__)
    v->basic.create_widgets = _basic_create_widgets;
    v->basic.check_changed = _basic_check_changed;
 
-   cfd = e_config_dialog_new(con,
-			     _("Engine Settings"),
-			     "E", "advanced/engine",
+   cfd = e_config_dialog_new(con, _("Engine Settings"), "E", "advanced/engine",
 			     "preferences-engine", 0, v, NULL);
    return cfd;
 }
@@ -60,13 +59,13 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 }
 
 static void
-_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    E_FREE(cfdata);
 }
 
 static int
-_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    e_config->use_composite = cfdata->use_composite;
    e_config->evas_engine_default = E_EVAS_ENGINE_SOFTWARE_X11;
@@ -75,7 +74,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 }
 
 static int
-_basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    return !((cfdata->use_composite == e_config->use_composite) &&
 	    (cfdata->evas_engine_default == e_config->evas_engine_default));
@@ -85,9 +84,11 @@ static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *ob, *of;
+/*
    E_Radio_Group *rg;
    Eina_List *l;
    int engine;
+*/
 
    o = e_widget_list_add(evas, 0, 0);
 
@@ -124,7 +125,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 }
 
 static void
-_cb_composite_change(void *data, Evas_Object *obj)
+_cb_composite_change(void *data, Evas_Object *obj __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata = NULL;
 
