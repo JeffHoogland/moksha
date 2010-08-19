@@ -183,7 +183,6 @@ static Evas_Object *
 _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *otb, *ol, *ob, *iconified, *scroll_animate;
-   Evas_Coord mw, mh;
 
    otb = e_widget_toolbook_add(evas, (48 * e_scale), (48 * e_scale));
 
