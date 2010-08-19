@@ -121,6 +121,7 @@ _gc_id_new(E_Gadcon_Client_Class *client_class __UNUSED__)
    return _gadcon_class.name;
 }
 
+/*
 static void
 _cb_button_click(void *data __UNUSED__, void *data2 __UNUSED__)
 {
@@ -129,9 +130,10 @@ _cb_button_click(void *data __UNUSED__, void *data2 __UNUSED__)
    a = e_action_find("configuration");
    if ((a) && (a->func.go)) a->func.go(NULL, NULL);
 }
+*/
 
 static void
-_cb_action_conf(void *data, Evas_Object *obj, const char *emission, const char *source)
+_cb_action_conf(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    Instance *inst;
    E_Action *a;
