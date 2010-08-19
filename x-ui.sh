@@ -23,6 +23,8 @@ where options are:
   -c, --host-cursor        Uses host-cursor, otherwise uses Xephyr's.
   -d, --dpi=NUMBER         states the dots-per-inch to be used.
   -s, --screen=SPEC        WIDTHxHEIGHT[xDEPTH] to be used.
+  -x, --fxs=WxH+X+Y        Fake xinerama screen resolution
+                           (can be applied repeatedly)
   -p, --profile=NAME       Enlightenment profile name.
   -e, --empty-home[=PATH]  Run with \$HOME being a new, empty directory at /tmp
 
@@ -111,6 +113,13 @@ while [ $# -gt 0 ]; do
             fi
             SCREEN=$value
             ;;
+        -x|-fxs|--fxs)
+            if [ -z "$value" ]; then
+                value=$1
+                shift
+            fi
+            FAKE_XINERAMA_SCREEN="$FAKE_XINERAMA_SCREEN $value"
+            ;;
         -p|-profile|--profile)
             if [ -z "$value" ]; then
                 value=$1
@@ -168,6 +177,12 @@ if [ $debuggers -gt 1 ]; then
     echo "WARNING: more than one debugger specified. Using $DEBUGGER" 1>&2
 fi
 
+if [ ! -z "$FAKE_XINERAMA_SCREEN" ]; then
+	for fxsm in $FAKE_XINERAMA_SCREEN; do
+		E_OPTIONS="$E_OPTIONS -fake-xinerama-screen $fxsm"
+	done
+fi
+
 if [ ! -z "$TEST_HOME" ]; then
     if [ "${TEST_HOME#/tmp/}" != "$TEST_HOME" ]; then
         # just delete if inside /tmp
@@ -184,6 +199,7 @@ Using:
 
    DPI=$DPI
    SCREEN=$SCREEN
+   FAKE_XINERAMA_SCREEN=$FAKE_XINERAMA_SCREEN
    PROFILE=$PROFILE
    HOST_CURSOR=$HOST_CURSOR
    DEBUGGER=$DEBUGGER
@@ -205,7 +221,5 @@ enlightenment_start \
     -no-precache \
     -i-really-know-what-i-am-doing-and-accept-full-responsibility-for-it \
     -profile $PROFILE \
+	$E_OPTIONS \
     $DEBUGGER
-
-#-fake-xinerama-screen 480x400+0+0 \
-#$-fake-xinerama-screen 480x400+480+0
