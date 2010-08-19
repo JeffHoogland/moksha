@@ -1,8 +1,8 @@
 #include "e.h"
 
 static Evas_Object *_trans_preview_add(E_Config_Dialog_Data *cfdata, Evas *evas, int minw, int minh);
-static void         _e_wid_done(void *data, Evas_Object *obj, const char *emission, const char *source);
-static void         _trans_preview_trans_set(E_Config_Dialog_Data *cfdata, const char *trans);
+static void _e_wid_done(void *data, Evas_Object *obj, const char *emission, const char *source);
+static void _trans_preview_trans_set(E_Config_Dialog_Data *cfdata, const char *trans);
 
 static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
@@ -59,7 +59,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 }
 
 static void *
-_create_data(E_Config_Dialog *cfd) 
+_create_data(E_Config_Dialog *cfd __UNUSED__) 
 {
    E_Config_Dialog_Data *cfdata;
    
@@ -69,7 +69,7 @@ _create_data(E_Config_Dialog *cfd)
 }
 
 static void 
-_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
 {
    E_FREE(cfdata->transition_start);
    E_FREE(cfdata->transition_desk);
@@ -78,7 +78,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 }
 
 static int 
-_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
 {
    if (e_config->transition_start)
      eina_stringshare_del(e_config->transition_start);
@@ -86,7 +86,8 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (cfdata->transition_start) 
      {
 	if (e_theme_transition_find(cfdata->transition_start)) 
-	  e_config->transition_start = eina_stringshare_add(cfdata->transition_start);
+	  e_config->transition_start = 
+          eina_stringshare_add(cfdata->transition_start);
      }
 
    if (e_config->transition_desk)
@@ -316,7 +317,7 @@ _trans_preview_trans_set(E_Config_Dialog_Data *cfdata, const char *trans)
 }
 
 static void 
-_e_wid_done(void *data, Evas_Object *obj, const char *emission, const char *source) 
+_e_wid_done(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__) 
 {
    E_Config_Dialog_Data *cfdata;
    Evas_Object *o;
