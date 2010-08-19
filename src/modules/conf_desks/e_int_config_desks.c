@@ -79,7 +79,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 }
 
 static void *
-_create_data(E_Config_Dialog *cdd)
+_create_data(E_Config_Dialog *cfd __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
 
@@ -89,7 +89,7 @@ _create_data(E_Config_Dialog *cdd)
 }
 
 static void
-_free_data(E_Config_Dialog *cdd, E_Config_Dialog_Data *cfdata)
+_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    eina_list_free(cfdata->flip_anim_list);
    E_FREE(cfdata);
@@ -97,7 +97,7 @@ _free_data(E_Config_Dialog *cdd, E_Config_Dialog_Data *cfdata)
 
 /**--APPLY--**/
 static int
-_basic_apply_data(E_Config_Dialog *cdd, E_Config_Dialog_Data *cfdata)
+_basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    /* Actually take our cfdata settings and apply them in real life */
    const Eina_List *l, *ll, *lll;
@@ -126,7 +126,7 @@ _basic_apply_data(E_Config_Dialog *cdd, E_Config_Dialog_Data *cfdata)
 }
 
 static int
-_basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    const Eina_List *l, *ll, *lll;
    E_Manager *man;
@@ -152,7 +152,7 @@ _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 }
 
 static int
-_advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_advanced_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    /* Actually take our cfdata settings and apply them in real life */
    const Eina_List *l, *ll, *lll;
@@ -182,7 +182,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 }
 
 static int
-_advanced_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_advanced_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    const Eina_List *l, *ll, *lll;
    E_Manager *man;
@@ -212,7 +212,7 @@ _advanced_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
 /**--GUI--**/
 static Evas_Object *
-_basic_create_widgets(E_Config_Dialog *cdd, Evas *evas, E_Config_Dialog_Data *cfdata)
+_basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    /* generate the core widget layout for a basic dialog */
    Evas_Object *o, *ob, *of;
@@ -248,7 +248,7 @@ _basic_create_widgets(E_Config_Dialog *cdd, Evas *evas, E_Config_Dialog_Data *cf
 }
 
 static Evas_Object *
-_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
+_advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *otb, *ow, *o;
    E_Radio_Group *rg;
@@ -333,7 +333,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 }
 
 static void
-_cb_slider_change(void *data, Evas_Object *obj)
+_cb_slider_change(void *data, Evas_Object *obj __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata = data;
 
@@ -341,7 +341,7 @@ _cb_slider_change(void *data, Evas_Object *obj)
 }
 
 static void
-_cb_disable_flip_anim(void *data, Evas_Object *obj)
+_cb_disable_flip_anim(void *data, Evas_Object *obj __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata = (E_Config_Dialog_Data*) data;
    Eina_List *list = cfdata->flip_anim_list;
