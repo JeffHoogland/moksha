@@ -151,7 +151,7 @@ e_int_config_wallpaper_web_done(E_Config_Dialog *dia)
 #endif
 
 static void
-_cb_button_up(void *data1, void *data2)
+_cb_button_up(void *data1, void *data2 __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
 
@@ -160,7 +160,7 @@ _cb_button_up(void *data1, void *data2)
 }
 
 static void
-_cb_files_changed(void *data, Evas_Object *obj, void *event_info)
+_cb_files_changed(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
 
@@ -172,7 +172,7 @@ _cb_files_changed(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void
-_cb_files_selection_change(void *data, Evas_Object *obj, void *event_info)
+_cb_files_selection_change(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
    Eina_List *selected;
@@ -204,7 +204,7 @@ _cb_files_selection_change(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void
-_cb_files_files_changed(void *data, Evas_Object *obj, void *event_info)
+_cb_files_files_changed(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
    const char *p = NULL;
@@ -237,7 +237,7 @@ _cb_files_files_changed(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void
-_cb_files_files_deleted(void *data, Evas_Object *obj, void *event_info) 
+_cb_files_files_deleted(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__) 
 {
    E_Config_Dialog_Data *cfdata;
    Eina_List *sel, *all, *n;
@@ -269,7 +269,7 @@ _cb_files_files_deleted(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void
-_cb_theme_wallpaper(void *data, Evas_Object *obj, void *event_info)
+_cb_theme_wallpaper(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
    const char *f;
@@ -299,7 +299,7 @@ _cb_theme_wallpaper(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void
-_cb_dir(void *data, Evas_Object *obj, void *event_info)
+_cb_dir(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
    char path[PATH_MAX];
@@ -313,7 +313,7 @@ _cb_dir(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void
-_cb_import(void *data1, void *data2)
+_cb_import(void *data1, void *data2 __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
 
@@ -661,7 +661,7 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 }
 
 static int
-_adv_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_adv_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    Eina_List *fl = NULL, *l;
    E_Zone *z;
@@ -708,7 +708,7 @@ _adv_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 		  E_Config_Desktop_Background *cfbg;
 
 		  cfbg = l->data;
-		  if ((cfbg->container == z->container->num) &&
+		  if ((cfbg->container == (int)z->container->num) &&
 		      (cfbg->zone == z->id))
 		    fl = eina_list_append(fl, cfbg);
 	       }

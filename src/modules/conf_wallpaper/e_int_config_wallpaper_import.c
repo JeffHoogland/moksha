@@ -669,7 +669,7 @@ _import_cb_resize(E_Win *win)
 }
 
 static void 
-_import_cb_close(void *data, void *data2) 
+_import_cb_close(void *data, void *data2 __UNUSED__) 
 {
    E_Win *win;
 
@@ -678,7 +678,7 @@ _import_cb_close(void *data, void *data2)
 }
 
 static void 
-_import_cb_ok(void *data, void *data2) 
+_import_cb_ok(void *data, void *data2 __UNUSED__) 
 {
    Import *import;
    FSel *fsel;
@@ -766,7 +766,7 @@ _fsel_cb_resize(E_Win *win)
 }
 
 static void
-_fsel_cb_close(void *data, void *data2)
+_fsel_cb_close(void *data, void *data2 __UNUSED__)
 {
    E_Win *win;
 
@@ -775,7 +775,7 @@ _fsel_cb_close(void *data, void *data2)
 }
 
 static void
-_fsel_cb_ok(void *data, void *data2)
+_fsel_cb_ok(void *data, void *data2 __UNUSED__)
 {
    FSel *fsel;
    E_Win *win;
@@ -843,7 +843,7 @@ _import_cb_wid_on_focus(void *data, Evas_Object *obj)
 }
 
 static void 
-_import_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event) 
+_import_cb_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event) 
 {
    Evas_Event_Key_Down *ev;
    Import *import;
@@ -902,7 +902,7 @@ _import_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event)
 }
 
 static void
-_fsel_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event)
+_fsel_cb_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event)
 {
    Evas_Event_Key_Down *ev;
    FSel *fsel;
