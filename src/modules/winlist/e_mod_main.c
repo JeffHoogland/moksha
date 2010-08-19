@@ -3,8 +3,10 @@
 
 /* actual module specifics */
 static void _e_mod_action_winlist_cb(E_Object *obj, const char *params);
-static void _e_mod_action_winlist_mouse_cb(E_Object *obj, const char *params, Ecore_Event_Mouse_Button *ev);
-static void _e_mod_action_winlist_key_cb(E_Object *obj, const char *params, Ecore_Event_Key *ev);
+static void _e_mod_action_winlist_mouse_cb(E_Object *obj, const char *params,
+                                           Ecore_Event_Mouse_Button *ev);
+static void _e_mod_action_winlist_key_cb(E_Object *obj, const char *params,
+                                         Ecore_Event_Key *ev);
 
 static E_Module *conf_module = NULL;
 static E_Action *act = NULL;
@@ -28,7 +30,7 @@ e_modapi_init(E_Module *m)
 	act->func.go = _e_mod_action_winlist_cb;
 	act->func.go_mouse = _e_mod_action_winlist_mouse_cb;
 	act->func.go_key = _e_mod_action_winlist_key_cb;
-	e_action_predef_name_set(_("Window : List"), _("Next Window"), 
+	e_action_predef_name_set(_("Window : List"), _("Next Window"),
                                  "winlist", "next", NULL, 0);
 	e_action_predef_name_set(_("Window : List"), _("Previous Window"),
 				 "winlist", "prev", NULL, 0);
@@ -59,9 +61,9 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
      {
 	e_action_predef_name_del(_("Window : List"), _("Previous Window"));
 	e_action_predef_name_del(_("Window : List"), _("Next Window"));
-	e_action_predef_name_del(_("Window : List"), 
+	e_action_predef_name_del(_("Window : List"),
                                  _("Previous window of same class"));
-	e_action_predef_name_del(_("Window : List"), 
+	e_action_predef_name_del(_("Window : List"),
                                  _("Next window of same class"));
 	e_action_predef_name_del(_("Window : List"), _("Window on the Left"));
 	e_action_predef_name_del(_("Window : List"), _("Window Down"));
@@ -149,7 +151,8 @@ _e_mod_action_winlist_cb(E_Object *obj, const char *params)
 }
 
 static void
-_e_mod_action_winlist_mouse_cb(E_Object *obj, const char *params, Ecore_Event_Mouse_Button *ev)
+_e_mod_action_winlist_mouse_cb(E_Object *obj, const char *params,
+                               Ecore_Event_Mouse_Button *ev)
 {
    E_Zone *zone = NULL;
 
