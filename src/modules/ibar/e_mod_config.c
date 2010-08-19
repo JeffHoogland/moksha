@@ -79,7 +79,7 @@ _create_data(E_Config_Dialog *cfd)
 }
 
 static void 
-_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    if (cfdata->dir) eina_stringshare_del(cfdata->dir);
    if (cfdata->dialog_delete) e_object_del(E_OBJECT(cfdata->dialog_delete));
@@ -88,7 +88,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 }
 
 static Evas_Object *
-_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
+_basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *of, *ol, *ob, *ot;
    E_Radio_Group *rg;
@@ -156,7 +156,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 }
 
 static void 
-_cb_add(void *data, void *data2) 
+_cb_add(void *data, void *data2 __UNUSED__) 
 {
    E_Config_Dialog_Data *cfdata;
 
@@ -167,7 +167,7 @@ _cb_add(void *data, void *data2)
 }
 
 static void 
-_cb_del(void *data, void *data2) 
+_cb_del(void *data, void *data2 __UNUSED__) 
 {
    char buf[4096];
    E_Config_Dialog_Data *cfdata;
@@ -188,7 +188,7 @@ _cb_del(void *data, void *data2)
 }
 
 static void 
-_cb_config(void *data, void *data2) 
+_cb_config(void *data, void *data2 __UNUSED__) 
 {
    char path[PATH_MAX];
    E_Config_Dialog_Data *cfdata;
@@ -293,7 +293,7 @@ _load_tlist(E_Config_Dialog_Data *cfdata)
 }
 
 static void 
-_show_label_cb_change(void *data, Evas_Object *obj) 
+_show_label_cb_change(void *data, Evas_Object *obj __UNUSED__) 
 {
    E_Config_Dialog_Data *cfdata;
 

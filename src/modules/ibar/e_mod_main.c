@@ -207,13 +207,13 @@ _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
 }
 
 static char *
-_gc_label(E_Gadcon_Client_Class *client_class)
+_gc_label(E_Gadcon_Client_Class *client_class __UNUSED__)
 {
    return _("IBar");
 }
 
 static Evas_Object *
-_gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas)
+_gc_icon(E_Gadcon_Client_Class *client_class __UNUSED__, Evas *evas)
 {
    Evas_Object *o;
    char buf[4096];
@@ -226,7 +226,7 @@ _gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas)
 }
 
 static const char *
-_gc_id_new(E_Gadcon_Client_Class *client_class)
+_gc_id_new(E_Gadcon_Client_Class *client_class __UNUSED__)
 {
    Config_Item *ci;
 
@@ -235,7 +235,7 @@ _gc_id_new(E_Gadcon_Client_Class *client_class)
 }
 
 static void
-_gc_id_del(E_Gadcon_Client_Class *client_class, const char *id)
+_gc_id_del(E_Gadcon_Client_Class *client_class __UNUSED__, const char *id __UNUSED__)
 {
 /* yes - don't do this. on shutdown gadgets are deleted and this means config
  * for them is deleted - that means empty config is saved. keep them around
@@ -290,7 +290,7 @@ _ibar_free(IBar *b)
 }
 
 static void
-_ibar_cb_empty_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_ibar_cb_empty_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
    Evas_Event_Mouse_Down *ev;
    IBar *b;
@@ -643,7 +643,7 @@ _ibar_icon_signal_emit(IBar_Icon *ic, char *sig, char *src)
 }
 
 static void
-_ibar_cb_app_change(void *data, E_Order *eo)
+_ibar_cb_app_change(void *data, E_Order *eo __UNUSED__)
 {
    IBar *b;
 
@@ -656,7 +656,7 @@ _ibar_cb_app_change(void *data, E_Order *eo)
 }
 
 static void
-_ibar_cb_obj_moveresize(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_ibar_cb_obj_moveresize(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    Instance *inst;
 
@@ -666,7 +666,7 @@ _ibar_cb_obj_moveresize(void *data, Evas *e, Evas_Object *obj, void *event_info)
 }
 
 static void 
-_ibar_cb_menu_icon_new(void *data, E_Menu *m, E_Menu_Item *mi) 
+_ibar_cb_menu_icon_new(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__) 
 {
    E_Container *con;
 
@@ -676,7 +676,7 @@ _ibar_cb_menu_icon_new(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void 
-_ibar_cb_menu_icon_add(void *data, E_Menu *m, E_Menu_Item *mi) 
+_ibar_cb_menu_icon_add(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__) 
 {
    E_Container *con;
 
@@ -686,7 +686,7 @@ _ibar_cb_menu_icon_add(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_ibar_cb_menu_icon_properties(void *data, E_Menu *m, E_Menu_Item *mi)
+_ibar_cb_menu_icon_properties(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    IBar_Icon *ic;
 
@@ -695,7 +695,7 @@ _ibar_cb_menu_icon_properties(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_ibar_cb_menu_icon_remove(void *data, E_Menu *m, E_Menu_Item *mi)
+_ibar_cb_menu_icon_remove(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    IBar_Icon *ic;
    E_Gadcon_Client *gc;
@@ -710,7 +710,7 @@ _ibar_cb_menu_icon_remove(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_ibar_cb_menu_configuration(void *data, E_Menu *m, E_Menu_Item *mi)
+_ibar_cb_menu_configuration(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    IBar *b;
 
@@ -719,7 +719,7 @@ _ibar_cb_menu_configuration(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_ibar_cb_menu_add(void *data, E_Menu *m, E_Menu_Item *mi)
+_ibar_cb_menu_add(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    IBar *b;
 
@@ -730,7 +730,7 @@ _ibar_cb_menu_add(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_ibar_cb_menu_post(void *data, E_Menu *m)
+_ibar_cb_menu_post(void *data __UNUSED__, E_Menu *m __UNUSED__)
 {
    if (!ibar_config->menu) return;
    e_object_del(E_OBJECT(ibar_config->menu));
@@ -738,7 +738,7 @@ _ibar_cb_menu_post(void *data, E_Menu *m)
 }
 
 static void
-_ibar_cb_icon_mouse_in(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_ibar_cb_icon_mouse_in(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    IBar_Icon *ic;
 
@@ -749,7 +749,7 @@ _ibar_cb_icon_mouse_in(void *data, Evas *e, Evas_Object *obj, void *event_info)
 }
 
 static void
-_ibar_cb_icon_mouse_out(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_ibar_cb_icon_mouse_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    IBar_Icon *ic;
 
@@ -760,7 +760,7 @@ _ibar_cb_icon_mouse_out(void *data, Evas *e, Evas_Object *obj, void *event_info)
 }
 
 static void
-_ibar_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_ibar_cb_icon_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
    Evas_Event_Mouse_Down *ev;
    IBar_Icon *ic;
@@ -841,7 +841,7 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info
 }
 
 static void
-_ibar_cb_icon_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_ibar_cb_icon_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event_info)
 {
    Evas_Event_Mouse_Up *ev;
    IBar_Icon *ic;
@@ -874,7 +874,7 @@ _ibar_cb_icon_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
 }
 
 static void
-_ibar_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_ibar_cb_icon_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
    Evas_Event_Mouse_Move *ev;
    IBar_Icon *ic;
@@ -921,7 +921,7 @@ _ibar_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info
 }
 
 static void
-_ibar_cb_icon_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_ibar_cb_icon_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    IBar_Icon *ic;
    Evas_Coord x, y;
@@ -933,7 +933,7 @@ _ibar_cb_icon_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 }
 
 static void
-_ibar_cb_icon_resize(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_ibar_cb_icon_resize(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    IBar_Icon *ic;
    Evas_Coord w, h;
@@ -945,7 +945,7 @@ _ibar_cb_icon_resize(void *data, Evas *e, Evas_Object *obj, void *event_info)
 }
 
 static void
-_ibar_cb_drop_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_ibar_cb_drop_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    IBar *b;
    Evas_Coord x, y;
@@ -956,7 +956,7 @@ _ibar_cb_drop_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 }
 
 static void
-_ibar_cb_drop_resize(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_ibar_cb_drop_resize(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    IBar *b;
    Evas_Coord w, h;
@@ -1045,7 +1045,7 @@ _ibar_drop_position_update(Instance *inst, Evas_Coord x, Evas_Coord y)
 }
 
 static void
-_ibar_inst_cb_enter(void *data, const char *type, void *event_info)
+_ibar_inst_cb_enter(void *data, const char *type __UNUSED__, void *event_info)
 {
    E_Event_Dnd_Enter *ev;
    Instance *inst;
@@ -1075,7 +1075,7 @@ _ibar_inst_cb_enter(void *data, const char *type, void *event_info)
 }
 
 static void
-_ibar_inst_cb_move(void *data, const char *type, void *event_info)
+_ibar_inst_cb_move(void *data, const char *type __UNUSED__, void *event_info)
 {
    E_Event_Dnd_Move *ev;
    Instance *inst;
@@ -1087,7 +1087,7 @@ _ibar_inst_cb_move(void *data, const char *type, void *event_info)
 }
 
 static void
-_ibar_inst_cb_leave(void *data, const char *type, void *event_info)
+_ibar_inst_cb_leave(void *data, const char *type __UNUSED__, void *event_info __UNUSED__)
 {
    Instance *inst;
 
@@ -1286,7 +1286,7 @@ e_modapi_init(E_Module *m)
 }
 
 EAPI int
-e_modapi_shutdown(E_Module *m)
+e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    Ecore_Event_Handler *eh;
    Config_Item *ci;
@@ -1320,7 +1320,7 @@ e_modapi_shutdown(E_Module *m)
 }
 
 EAPI int
-e_modapi_save(E_Module *m)
+e_modapi_save(E_Module *m __UNUSED__)
 {
    e_config_domain_save("module.ibar", conf_edd, ibar_config);
    return 1;
