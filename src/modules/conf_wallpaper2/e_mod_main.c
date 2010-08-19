@@ -1,10 +1,7 @@
 #include "e.h"
 #include "e_mod_main.h"
 
-/***************************************************************************/
-/**/
 /* actual module specifics */
-
 static void  _e_mod_run_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void  _e_mod_menu_add(void *data, E_Menu *m);
 
@@ -44,7 +41,7 @@ e_modapi_init(E_Module *m)
 }
 
 EAPI int
-e_modapi_shutdown(E_Module *m)
+e_modapi_shutdown(E_Module *m __UNUSED__)
 {
 //   E_Config_Dialog *cfd;
    /* remove module-supplied menu additions */
@@ -72,21 +69,21 @@ e_modapi_shutdown(E_Module *m)
 }
 
 EAPI int
-e_modapi_save(E_Module *m)
+e_modapi_save(E_Module *m __UNUSED__)
 {
    return 1;
 }
 
 /* menu item callback(s) */
 static void 
-_e_mod_run_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_mod_run_cb(void *data __UNUSED__, E_Menu *m, E_Menu_Item *mi __UNUSED__)
 {
    e_configure_registry_call("appearance/wallpaper2", m->zone->container, NULL);
 }
 
 /* menu item add hook */
 static void
-_e_mod_menu_add(void *data, E_Menu *m)
+_e_mod_menu_add(void *data __UNUSED__, E_Menu *m)
 {
    E_Menu_Item *mi;
    

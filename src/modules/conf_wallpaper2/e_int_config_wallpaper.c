@@ -487,35 +487,35 @@ _e_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 }
 
 static void
-_e_smart_show(Evas_Object *obj)
+_e_smart_show(Evas_Object *obj __UNUSED__)
 {
 //   Smart_Data *sd = evas_object_smart_data_get(obj);
 //   evas_object_show(sd->child_obj);
 }
 
 static void
-_e_smart_hide(Evas_Object *obj)
+_e_smart_hide(Evas_Object *obj __UNUSED__)
 {
 //   Smart_Data *sd = evas_object_smart_data_get(obj);
 //   evas_object_hide(sd->child_obj);
 }
 
 static void
-_e_smart_color_set(Evas_Object *obj, int r, int g, int b, int a)
+_e_smart_color_set(Evas_Object *obj __UNUSED__, int r __UNUSED__, int g __UNUSED__, int b __UNUSED__, int a __UNUSED__)
 {
 //   Smart_Data *sd = evas_object_smart_data_get(obj);
 //   evas_object_color_set(sd->child_obj, r, g, b, a);
 }
 
 static void
-_e_smart_clip_set(Evas_Object *obj, Evas_Object * clip)
+_e_smart_clip_set(Evas_Object *obj __UNUSED__, Evas_Object * clip __UNUSED__)
 {
 //   Smart_Data *sd = evas_object_smart_data_get(obj);
 //   evas_object_clip_set(sd->child_obj, clip);
 }
 
 static void
-_e_smart_clip_unset(Evas_Object *obj)
+_e_smart_clip_unset(Evas_Object *obj __UNUSED__)
 {
 //   Smart_Data *sd = evas_object_smart_data_get(obj);
 //   evas_object_clip_unset(sd->child_obj);
@@ -541,6 +541,9 @@ _pan_add(Evas *evas)
           NULL,
           NULL,
           NULL,
+          NULL, 
+          NULL, 
+          NULL, 
           NULL
      };
    smart = evas_smart_class_new(&sc);
@@ -637,7 +640,7 @@ _sel_timer(void *data)
 }
 
 static void
-_pan_unhilight(Evas_Object *obj, Item *it)
+_pan_unhilight(Evas_Object *obj __UNUSED__, Item *it)
 {
 //   Smart_Data *sd = evas_object_smart_data_get(obj);
    if (!it->hilighted) return;
@@ -647,7 +650,7 @@ _pan_unhilight(Evas_Object *obj, Item *it)
 }
 
 static void
-_pan_hilight(Evas_Object *obj, Item *it)
+_pan_hilight(Evas_Object *obj __UNUSED__, Item *it)
 {
    Eina_List *l;
    Item *it2;
@@ -795,7 +798,7 @@ _item_sort(Item *it)
 }
 
 static void
-_thumb_gen(void *data, Evas_Object *obj, void *event_info)
+_thumb_gen(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    Item *it = data;
 
@@ -826,7 +829,7 @@ _thumb_gen(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void         
-_item_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_item_down(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
 //   Evas_Event_Mouse_Down *ev = event_info;
 //   Item *it = data;
@@ -834,7 +837,7 @@ _item_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 }
     
 static void         
-_item_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_item_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
    Evas_Event_Mouse_Up *ev = event_info;
    Item *it = data;
@@ -963,13 +966,13 @@ _resize(E_Win *wn)
 }
 
 static void
-_delete(E_Win *wn)
+_delete(E_Win *wn __UNUSED__)
 {
    wp_conf_hide();
 }
 
 static void
-_bg_clicked(void *data, Evas_Object *obj, const char *emission, const char *source)
+_bg_clicked(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    Info *info = data;
 
@@ -977,7 +980,7 @@ _bg_clicked(void *data, Evas_Object *obj, const char *emission, const char *sour
 }
 
 static void
-_ok(void *data, void *data2)
+_ok(void *data, void *data2 __UNUSED__)
 {
    Info *info = data;
 
@@ -1024,7 +1027,7 @@ _ok(void *data, void *data2)
 }
 
 static void
-_wp_add(void *data, void *data2)
+_wp_add(void *data, void *data2 __UNUSED__)
 {
    Info *info = data;
 
@@ -1032,7 +1035,7 @@ _wp_add(void *data, void *data2)
 }
 
 static void
-_wp_delete(void *data, void *data2)
+_wp_delete(void *data, void *data2 __UNUSED__)
 {
    Info *info = data;
 
@@ -1040,7 +1043,7 @@ _wp_delete(void *data, void *data2)
 }
 
 static void
-_wp_changed(void *data, Evas_Object *obj, void *event_info)
+_wp_changed(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    Info *info = data;
 
