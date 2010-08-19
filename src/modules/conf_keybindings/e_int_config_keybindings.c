@@ -144,7 +144,7 @@ _create_data(E_Config_Dialog *cfd)
 }
 
 static void
-_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    E_Config_Binding_Key *bi;
 
@@ -166,7 +166,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 }
 
 static int
-_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    Eina_List *l = NULL;
    E_Config_Binding_Key *bi, *bi2;
@@ -305,7 +305,7 @@ _fill_actions_list(E_Config_Dialog_Data *cfdata)
 /**************** Callbacks *********/
 
 static void
-_add_key_binding_cb(void *data, void *data2)
+_add_key_binding_cb(void *data, void *data2 __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
 
@@ -318,7 +318,7 @@ _add_key_binding_cb(void *data, void *data2)
 }
 
 static void
-_modify_key_binding_cb(void *data, void *data2)
+_modify_key_binding_cb(void *data, void *data2 __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
 
@@ -359,7 +359,7 @@ _action_change_cb(void *data)
 }
 
 static void
-_delete_all_key_binding_cb(void *data, void *data2)
+_delete_all_key_binding_cb(void *data, void *data2 __UNUSED__)
 {
    E_Config_Binding_Key *bi;
    E_Config_Dialog_Data *cfdata;
@@ -388,7 +388,7 @@ _delete_all_key_binding_cb(void *data, void *data2)
 }
 
 static void
-_delete_key_binding_cb(void *data, void *data2)
+_delete_key_binding_cb(void *data, void *data2 __UNUSED__)
 {
    Eina_List *l = NULL;
    const char *n;
@@ -437,7 +437,7 @@ _delete_key_binding_cb(void *data, void *data2)
      }
 }
 static void
-_restore_key_binding_defaults_cb(void *data, void *data2)
+_restore_key_binding_defaults_cb(void *data, void *data2 __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
    E_Config_Binding_Key *bi;
