@@ -269,7 +269,7 @@ _e_randr_screen_info_12_new(void)
         .crtcs = NULL,
         .outputs = NULL,
         .primary_output = NULL,
-        .output_policy = ECORE_X_RANDR_OUTPUT_POLICY_RIGHT,
+        .output_policy = ECORE_X_RANDR_OUTPUT_POLICY_NONE,
         .alignment = ECORE_X_RANDR_RELATIVE_ALIGNMENT_NONE
      };
 
@@ -786,7 +786,7 @@ _e_randr_event_cb(void *data __UNUSED__, int type, void *ev)
              if (event->crtc)
                output_info->crtc = _e_randr_crtc_info_get(event->crtc);
 
-             if (!event->crtc && !event->mode)
+             if (output_info && !output_info->crtc && !event->crtc && !event->mode)
                {
                   //Monitor was attached!
                   _e_randr_output_info_hw_info_set(output_info);
@@ -1175,6 +1175,8 @@ _e_randr_try_enable_output(E_Randr_Output_Info *output_info, Eina_Bool force)
    //get the CRTC we will refer to, dependend on policy
    switch (e_randr_screen_info->rrvd_info.randr_info_12->output_policy)
      {
+      case ECORE_X_RANDR_OUTPUT_POLICY_NONE:
+         return EINA_TRUE;
       case ECORE_X_RANDR_OUTPUT_POLICY_CLONE:
          /*
           * Order of approaches to enable a clone (of the primary output):
@@ -1268,7 +1270,7 @@ _e_randr_try_enable_output(E_Randr_Output_Info *output_info, Eina_Bool force)
         break;
 
       default:
-        if ((!usable_crtc->current_mode) || force)
+        if ((usable_crtc && (!usable_crtc->current_mode)) || force)
           {
              //enable and position according to used policies
              mode_info = ((Ecore_X_Randr_Mode_Info*)eina_list_nth(output_info->preferred_modes, 0));

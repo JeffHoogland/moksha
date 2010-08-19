@@ -58,7 +58,7 @@ struct _E_Config_Dialog_Data
    int flip;
    int flip_x;
    int flip_y;
-   int has_rates;
+   Eina_Bool has_rates;
 
    Evas_Object *rate_list;
    Evas_Object *res_list;
@@ -252,11 +252,32 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 
    EINA_LIST_FOREACH(e_config->screen_info, iter, restore_info)
      {
-	if (restore_info->randr_version == RANDR_11)
-	  {
-	     e_screen_config_11 = restore_info->rrvd_restore_info.restore_info_11;
-	     break;
-	  }
+        if (restore_info->randr_version == RANDR_11)
+          {
+             e_screen_config_11 = restore_info->rrvd_restore_info.restore_info_11;
+             break;
+          }
+     }
+
+   if(!e_screen_config_11)
+     {
+        if ((restore_info = E_NEW(E_Randr_Screen_Restore_Info, 1)))
+          {
+             restore_info->randr_version = RANDR_11;
+             if ((e_screen_config_11 = E_NEW(E_Randr_Screen_Restore_Info_11, 1)))
+               {
+                  restore_info->rrvd_restore_info.restore_info_11 = e_screen_config_11;
+                  if (!(e_config->screen_info = eina_list_append(e_config->screen_info, restore_info)))
+                    {
+                       free(e_screen_config_11);
+                       free(restore_info);
+                    }
+               }
+             else
+               {
+                  free (restore_info);
+               }
+          }
      }
 
    rots = ecore_x_randr_screen_primary_output_orientations_get(man->root);
@@ -436,7 +457,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    man = e_manager_current_get();
    sizes = ecore_x_randr_screen_primary_output_sizes_get(man->root, &s);
-   cfdata->has_rates = 0;
+   cfdata->has_rates = EINA_FALSE;
 
    if ((!sizes) || (s == 0))
      ecore_timer_add(0.5, _deferred_noxrandr_error, NULL);
@@ -462,7 +483,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	       {
 		  Ecore_X_Randr_Refresh_Rate * rt;
 
-		  cfdata->has_rates = 1;
+		  cfdata->has_rates = EINA_TRUE;
 		  rt = E_NEW(Ecore_X_Randr_Refresh_Rate, 1);
 		  if (!rt) continue;
 		  *rt = rates[j];
