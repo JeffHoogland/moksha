@@ -5,12 +5,10 @@ typedef struct _Instance
 {
    char            *theme_file;
    E_Gadcon_Client *gcc;
-   
-   Evas_Object     *o_box,
-                   *o_status;
-   
-   Ecore_Event_Handler *fm_op_entry_add_handler,
-                       *fm_op_entry_del_handler;
+
+   Evas_Object     *o_box, *o_status;
+
+   Ecore_Event_Handler *fm_op_entry_add_handler, *fm_op_entry_del_handler;
 } Instance;
 
 /* gadcon requirements */
@@ -182,7 +180,7 @@ _opinfo_op_registry_free_data_delayed(void *data)
 }
 
 static void 
-_opinfo_op_registry_abort_cb(void *data, Evas_Object *obj, const char *emission, const char *source)
+_opinfo_op_registry_abort_cb(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    int id;
    
@@ -193,7 +191,7 @@ _opinfo_op_registry_abort_cb(void *data, Evas_Object *obj, const char *emission,
 }
 
 static void 
-_opinfo_op_registry_summary_cb(void *data, Evas_Object *obj, const char *emission, const char *source)
+_opinfo_op_registry_summary_cb(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    int mw, mh;
    
@@ -204,7 +202,7 @@ _opinfo_op_registry_summary_cb(void *data, Evas_Object *obj, const char *emissio
 }
 
 static void 
-_opinfo_op_registry_detailed_cb(void *data, Evas_Object *obj, const char *emission, const char *source)
+_opinfo_op_registry_detailed_cb(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    int mw, xh;
 
@@ -216,7 +214,7 @@ _opinfo_op_registry_detailed_cb(void *data, Evas_Object *obj, const char *emissi
 }
 
 static void 
-_opinfo_op_registry_window_jump_cb(void *data, Evas_Object *obj, const char *emission, const char *source)
+_opinfo_op_registry_window_jump_cb(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    int id = (long)data;
    E_Fm2_Op_Registry_Entry *ere;
@@ -395,7 +393,7 @@ _gc_shutdown(E_Gadcon_Client *gcc)
 }
 
 static void
-_gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
+_gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient __UNUSED__)
 {
    Instance *inst = gcc->data;
    Evas_Coord mw = 200, mh = 100;
@@ -406,13 +404,13 @@ _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
 }
 
 static char *
-_gc_label(E_Gadcon_Client_Class *client_class)
+_gc_label(E_Gadcon_Client_Class *client_class __UNUSED__)
 {
    return _("EFM Operation Info");
 }
 
 static Evas_Object *
-_gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas)
+_gc_icon(E_Gadcon_Client_Class *client_class __UNUSED__, Evas *evas)
 {
    Evas_Object *o;
    char buf[PATH_MAX];
@@ -426,7 +424,7 @@ _gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas)
 }
 
 static const char *
-_gc_id_new(E_Gadcon_Client_Class *client_class)
+_gc_id_new(E_Gadcon_Client_Class *client_class __UNUSED__)
 {
    return _gadcon_class.name;
 }
@@ -443,26 +441,20 @@ EAPI void *
 e_modapi_init(E_Module *m)
 {
    opinfo_module = m;
-
    e_gadcon_provider_register(&_gadcon_class);
-   
    return m;
 }
 
 EAPI int
-e_modapi_shutdown(E_Module *m)
+e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    opinfo_module = NULL;
-
    e_gadcon_provider_unregister(&_gadcon_class);
-   
    return 1;
 }
 
 EAPI int
-e_modapi_save(E_Module *m)
+e_modapi_save(E_Module *m __UNUSED__)
 {
    return 1;
 }
-
-/***************************************************************************/
