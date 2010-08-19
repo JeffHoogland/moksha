@@ -1102,7 +1102,7 @@ _e_fwin_cb_resize(E_Win *win)
 }
 
 static void
-_e_fwin_deleted(void *data, Evas_Object *obj, void *event_info)
+_e_fwin_deleted(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Fwin_Page *page;
 
@@ -1111,7 +1111,7 @@ _e_fwin_deleted(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void
-_e_fwin_changed(void *data, Evas_Object *obj, void *event_info)
+_e_fwin_changed(void *data, Evas_Object *obj, void *event_info __UNUSED__)
 {
    E_Fwin *fwin;
    E_Fwin_Page *page;
@@ -1211,7 +1211,7 @@ _e_fwin_changed(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void
-_e_fwin_selected(void *data, Evas_Object *obj, void *event_info)
+_e_fwin_selected(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Fwin_Page *page;
    Eina_List *selected;
@@ -1224,7 +1224,7 @@ _e_fwin_selected(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void
-_e_fwin_selection_change(void *data, Evas_Object *obj, void *event_info)
+_e_fwin_selection_change(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    Eina_List *l;
    E_Fwin_Page *page;
@@ -1238,7 +1238,7 @@ _e_fwin_selection_change(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void 
-_e_fwin_cb_all_change(void *data, Evas_Object *obj) 
+_e_fwin_cb_all_change(void *data, Evas_Object *obj __UNUSED__) 
 {
    E_Fwin_Apps_Dialog *fad;
    Efreet_Desktop *desktop = NULL;
@@ -1252,7 +1252,7 @@ _e_fwin_cb_all_change(void *data, Evas_Object *obj)
 }
 
 static void
-_e_fwin_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_e_fwin_cb_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
    Evas_Event_Key_Down *ev;
    E_Fwin *fwin;
@@ -1348,7 +1348,7 @@ _e_fwin_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 
 /* fwin zone callbacks */
 static void
-_e_fwin_zone_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info) 
+_e_fwin_zone_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__) 
 {
    E_Fwin *fwin;
 
@@ -1401,7 +1401,7 @@ _e_fwin_zone_del(void *data, int type, void *event)
 
 /* fm menu extend */
 static void
-_e_fwin_menu_extend(void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info)
+_e_fwin_menu_extend(void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info __UNUSED__)
 {
    E_Fwin_Page *page;
    E_Menu_Item *mi;
@@ -1426,13 +1426,13 @@ _e_fwin_menu_extend(void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *in
 }
 
 static void
-_e_fwin_parent(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_fwin_parent(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    e_fm2_parent_go(data);
 }
 
 static void
-_e_fwin_cb_menu_open_fast(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_fwin_cb_menu_open_fast(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
 {
    E_Fwin_Page *page;
    Efreet_Desktop *desk;
@@ -1440,8 +1440,8 @@ _e_fwin_cb_menu_open_fast(void *data, E_Menu *m, E_Menu_Item *mi)
    page = data;
    desk = e_object_data_get(E_OBJECT(mi));
 
-   if (page && desk)
-      _e_fwin_desktop_run(desk, page, EINA_TRUE);
+   if ((page) && (desk))
+     _e_fwin_desktop_run(desk, page, EINA_TRUE);
 }
 
 static void
@@ -1486,7 +1486,7 @@ _e_fwin_cb_menu_extend_open_with(void *data, E_Menu *m)
 }
 
 static void
-_e_fwin_cb_menu_extend_start(void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info)
+_e_fwin_cb_menu_extend_start(void *data, Evas_Object *obj __UNUSED__, E_Menu *m, E_Fm2_Icon_Info *info __UNUSED__)
 {
    E_Menu_Item *mi;
    E_Fwin_Page *page;
@@ -1508,7 +1508,7 @@ _e_fwin_cb_menu_extend_start(void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon
 }
 
 static void
-_e_fwin_cb_menu_open(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_fwin_cb_menu_open(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Fwin_Page *page;
    Eina_List *selected;
@@ -1521,7 +1521,7 @@ _e_fwin_cb_menu_open(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_fwin_cb_menu_open_with(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_fwin_cb_menu_open_with(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Fwin_Page *page;
    Eina_List *selected = NULL;
@@ -1532,7 +1532,6 @@ _e_fwin_cb_menu_open_with(void *data, E_Menu *m, E_Menu_Item *mi)
    _e_fwin_file_open_dialog(page, selected, 1);
    eina_list_free(selected);
 }
-
 
 /* 'open with' dialog*/
 static void
@@ -1912,7 +1911,7 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page, Eina_List *files, int always)
 }
 
 static void
-_e_fwin_file_open_dialog_cb_key_down(void *data, Evas *e, Evas_Object *o, void *event_info)
+_e_fwin_file_open_dialog_cb_key_down(void *data, Evas *e __UNUSED__, Evas_Object *o __UNUSED__, void *event_info)
 {
    Evas_Event_Key_Down *ev = event_info;
    E_Fwin_Page *page = data;
@@ -1948,7 +1947,7 @@ _e_fwin_dlg_cb_desk_list_sort(const void *data1, const void *data2)
 }
 
 static void
-_e_fwin_cb_exec_cmd_changed(void *data, void *data2)
+_e_fwin_cb_exec_cmd_changed(void *data, void *data2 __UNUSED__)
 {
    E_Fwin_Apps_Dialog *fad = NULL;
    Efreet_Desktop *desktop = NULL;
@@ -1968,9 +1967,8 @@ _e_fwin_cb_exec_cmd_changed(void *data, void *data2)
    efreet_desktop_free(desktop);
 }
 
-
 static void
-_e_fwin_cb_open(void *data, E_Dialog *dia)
+_e_fwin_cb_open(void *data, E_Dialog *dia __UNUSED__)
 {
    E_Fwin_Apps_Dialog *fad;
    Efreet_Desktop *desktop = NULL;
@@ -2010,7 +2008,7 @@ _e_fwin_cb_open(void *data, E_Dialog *dia)
 }
 
 static void
-_e_fwin_cb_close(void *data, E_Dialog *dia)
+_e_fwin_cb_close(void *data, E_Dialog *dia __UNUSED__)
 {
    E_Fwin_Apps_Dialog *fad;
 
@@ -2031,7 +2029,6 @@ _e_fwin_cb_dialog_free(void *obj)
    fad->fwin->fad = NULL;
    E_FREE(fad);
 }
-
 
 /* scrolling ability */
 static void
@@ -2270,12 +2267,11 @@ _e_fwin_op_registry_entry_iter(E_Fwin_Page *page)
 }
 
 static void 
-_e_fwin_op_registry_abort_cb(void *data, Evas_Object *obj, const char *emission, const char *source)
+_e_fwin_op_registry_abort_cb(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    int id;
-   
+
    id = (long)data;
    if (!id) return;
-   
    e_fm2_operation_abort(id);
 }

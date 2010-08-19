@@ -103,7 +103,7 @@ e_modapi_init(E_Module *m)
 }
 
 EAPI int
-e_modapi_shutdown(E_Module *m)
+e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    Eina_List *l, *ll, *lll;
    E_Manager *man;
@@ -158,7 +158,7 @@ e_modapi_shutdown(E_Module *m)
 }
 
 EAPI int
-e_modapi_save(E_Module *m)
+e_modapi_save(E_Module *m __UNUSED__)
 {
    e_config_domain_save("module.fileman", conf_edd, fileman_config);
    return 1;
@@ -221,7 +221,7 @@ _e_mod_action_fileman_cb(E_Object *obj, const char *params)
 //~ }
 
 static void
-_e_mod_menu_gtk_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_mod_menu_gtk_cb(void *data, E_Menu *m, E_Menu_Item *mi __UNUSED__)
 {
    char *path;
 
@@ -231,15 +231,16 @@ _e_mod_menu_gtk_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_mod_menu_virtual_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_mod_menu_virtual_cb(void *data, E_Menu *m, E_Menu_Item *mi __UNUSED__)
 {
    if (m->zone) e_fwin_new(m->zone->container, data, "/");
 }
 
 static void
-_e_mod_menu_volume_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_mod_menu_volume_cb(void *data, E_Menu *m, E_Menu_Item *mi __UNUSED__)
 {
    E_Volume *vol = data;
+
    if (vol->mounted)
      {
 	if (m->zone)
@@ -248,6 +249,7 @@ _e_mod_menu_volume_cb(void *data, E_Menu *m, E_Menu_Item *mi)
    else
      {
         char buf[PATH_MAX];
+
         snprintf(buf, sizeof(buf), "removable:%s", vol->udi);
         e_fwin_new(e_container_current_get(e_manager_current_get()),
                    buf, "/");
@@ -306,7 +308,7 @@ _e_mod_fileman_parse_gtk_bookmarks(E_Menu *m, Eina_Bool need_separator)
 
 /* menu item add hook */
 void
-_e_mod_menu_generate(void *data, E_Menu *m)
+_e_mod_menu_generate(void *data __UNUSED__, E_Menu *m)
 {
    E_Menu_Item *mi;
    E_Volume *vol;
@@ -374,7 +376,7 @@ _e_mod_menu_generate(void *data, E_Menu *m)
 }
 
 void
-_e_mod_menu_add(void *data, E_Menu *m)
+_e_mod_menu_add(void *data __UNUSED__, E_Menu *m)
 {
 #ifdef ENABLE_FILES
    E_Menu_Item *mi;

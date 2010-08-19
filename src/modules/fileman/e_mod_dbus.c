@@ -14,9 +14,10 @@ struct _E_Fileman_DBus_Daemon
    E_DBus_Interface *iface;
    E_DBus_Object *obj;
 
-   struct {
-      DBusPendingCall *request_name;
-   } pending;
+   struct 
+     {
+        DBusPendingCall *request_name;
+     } pending;
 };
 
 static DBusMessage *
@@ -28,8 +29,7 @@ _e_fileman_dbus_daemon_error(DBusMessage *message, const char *msg)
 static void
 _e_fileman_dbus_daemon_object_init(E_Fileman_DBus_Daemon *d)
 {
-   if (d->obj)
-     return;
+   if (d->obj) return;
 
    d->obj = e_dbus_object_add(d->conn, E_FILEMAN_PATH, d);
    if (!d->obj)
@@ -63,7 +63,7 @@ _e_fileman_dbus_daemon_free(E_Fileman_DBus_Daemon *d)
 }
 
 DBusMessage *
-_e_fileman_dbus_daemon_open_directory_cb(E_DBus_Object *obj, DBusMessage *message)
+_e_fileman_dbus_daemon_open_directory_cb(E_DBus_Object *obj __UNUSED__, DBusMessage *message)
 {
    DBusMessageIter itr;
    const char *directory = NULL, *p;
@@ -180,19 +180,20 @@ _e_fileman_dbus_daemon_new(void)
 
    d->pending.request_name = e_dbus_request_name
      (d->conn, E_FILEMAN_BUS_NAME, DBUS_NAME_FLAG_REPLACE_EXISTING,
-      _e_fileman_dbus_daemon_request_name_cb, d);
+         _e_fileman_dbus_daemon_request_name_cb, d);
    if (!d->pending.request_name)
      goto error;
 
-   const struct {
-      const char *method;
-      const char *signature;
-      const char *ret_signature;
-      E_DBus_Method_Cb func;
-   } *itr, desc[] = {
-     {"OpenDirectory", "s", "", _e_fileman_dbus_daemon_open_directory_cb},
-     {NULL}
-   };
+   const struct 
+     {
+        const char *method;
+        const char *signature;
+        const char *ret_signature;
+        E_DBus_Method_Cb func;
+     } *itr, desc[] = {
+        {"OpenDirectory", "s", "", _e_fileman_dbus_daemon_open_directory_cb},
+        {NULL}
+     };
 
    for (itr = desc; itr->method != NULL; itr++)
      e_dbus_interface_method_add

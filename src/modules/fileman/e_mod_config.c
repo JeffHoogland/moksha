@@ -6,20 +6,21 @@
 struct _E_Config_Dialog_Data 
 {
    /* general view mode */
-   struct {
-      int   mode;
-      int   open_dirs_in_place;
-      int   selector;
-      int   single_click;
-      int   no_subdir_jump;
-      int   no_subdir_drop;
-      int   always_order;
-      int   link_drop;
-      int   fit_custom_pos;
-      int   show_full_path;
-      int   show_desktop_icons;
-      int   show_toolbar;
-   } view;
+   struct 
+     {
+        int   mode;
+        int   open_dirs_in_place;
+        int   selector;
+        int   single_click;
+        int   no_subdir_jump;
+        int   no_subdir_drop;
+        int   always_order;
+        int   link_drop;
+        int   fit_custom_pos;
+        int   show_full_path;
+        int   show_desktop_icons;
+        int   show_toolbar;
+     } view;
    /* display of icons */
    struct 
      {
@@ -39,9 +40,10 @@ struct _E_Config_Dialog_Data
 	struct 
 	  {
 	     int case_sen;
-	     struct {
-		int first, last;
-	     } dirs;
+	     struct 
+               {
+                  int first, last;
+               } dirs;
 	  } sort;
      } list;
    /* control how you can select files */
@@ -136,7 +138,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 }
 
 static int 
-_basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
 {
    fileman_config->view.mode = cfdata->view.mode;
    fileman_config->view.open_dirs_in_place = cfdata->view.open_dirs_in_place;
@@ -173,7 +175,7 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 }
 
 static int
-_basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    return
      ((fileman_config->view.mode != cfdata->view.mode) ||
@@ -195,7 +197,7 @@ _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 }
 
 static Evas_Object *
-_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
+_basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
    Evas_Object *o, *ob, *of, *otb;
    E_Radio_Group *rg;
