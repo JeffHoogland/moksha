@@ -1011,7 +1011,7 @@ _ds_config_darkness_set(Dropshadow *ds, double v)
 }
 
 static void
-_ds_config_shadow_xy_set(Dropshadow *ds, int x, int y)
+_ds_config_shadow_xy_set(Dropshadow *ds, int x __UNUSED__, int y __UNUSED__)
 {
    Eina_List *l;
    
@@ -1134,7 +1134,7 @@ _ds_gauss_int(double x)
 }
 
 static void
-_ds_gauss_blur_h(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_h, unsigned char *lut, int blur, int q, int rx, int ry, int rxx, int ryy)
+_ds_gauss_blur_h(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_h __UNUSED__, unsigned char *lut, int blur, int q, int rx, int ry, int rxx, int ryy)
 {
    int x, y;
    int i, sum, weight, x1, x2, l, l1, l2, wt;
