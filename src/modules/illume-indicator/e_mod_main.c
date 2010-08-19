@@ -60,7 +60,7 @@ e_modapi_init(E_Module *m)
 }
 
 EAPI int 
-e_modapi_shutdown(E_Module *m) 
+e_modapi_shutdown(E_Module *m __UNUSED__) 
 {
    Ind_Win *iwin;
 
@@ -83,7 +83,7 @@ e_modapi_shutdown(E_Module *m)
 }
 
 EAPI int 
-e_modapi_save(E_Module *m) 
+e_modapi_save(E_Module *m __UNUSED__) 
 {
    return il_ind_config_save();
 }
