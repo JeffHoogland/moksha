@@ -1,10 +1,9 @@
 #include "e.h"
 
-static void        *_create_data(E_Config_Dialog *cfd);
-static void         _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static int          _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static void *_create_data(E_Config_Dialog *cfd);
+static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-void                _ilist_cb_init_selected(void *data);
 
 struct _E_Config_Dialog_Data 
 {
@@ -43,10 +42,10 @@ e_int_config_startup(E_Container *con, const char *params __UNUSED__)
 }
 
 static void
-_cb_button_up(void *data1, void *data2)
+_cb_button_up(void *data1, void *data2 __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
-   
+
    cfdata = data1;
    if (cfdata->o_fm)
      e_fm2_parent_go(cfdata->o_fm);
@@ -55,10 +54,10 @@ _cb_button_up(void *data1, void *data2)
 }
 
 static void
-_cb_files_changed(void *data, Evas_Object *obj, void *event_info)
+_cb_files_changed(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
-   
+
    cfdata = data;
    if (!cfdata->o_fm) return;
    if (!e_fm2_has_parent_get(cfdata->o_fm))
@@ -76,7 +75,7 @@ _cb_files_changed(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void
-_cb_files_selection_change(void *data, Evas_Object *obj, void *event_info)
+_cb_files_selection_change(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
    Eina_List *selected;
@@ -105,7 +104,7 @@ _cb_files_selection_change(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void
-_cb_files_files_changed(void *data, Evas_Object *obj, void *event_info)
+_cb_files_files_changed(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
    char buf[4096];
@@ -137,7 +136,7 @@ _cb_files_files_changed(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void
-_cb_dir(void *data, Evas_Object *obj, void *event_info)
+_cb_dir(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
    char path[4096];
@@ -206,14 +205,14 @@ _create_data(E_Config_Dialog *cfd)
 }
 
 static void
-_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
 {
    E_FREE(cfdata->splash);
    E_FREE(cfdata);
 }
 
 static int
-_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
 {
    e_config->show_splash = cfdata->show_splash;
    if (e_config->init_default_theme)
