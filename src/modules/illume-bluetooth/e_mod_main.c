@@ -72,7 +72,7 @@ _gc_shutdown(E_Gadcon_Client *gcc)
 }
 
 static void 
-_gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient) 
+_gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient __UNUSED__) 
 {
    Instance *inst;
    int mw, mh, xw, xh;
@@ -90,13 +90,13 @@ _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
 }
 
 static char *
-_gc_label(E_Gadcon_Client_Class *cc) 
+_gc_label(E_Gadcon_Client_Class *cc __UNUSED__) 
 {
    return _("Illume Bluetooth");
 }
 
 static Evas_Object *
-_gc_icon(E_Gadcon_Client_Class *cc, Evas *evas) 
+_gc_icon(E_Gadcon_Client_Class *cc __UNUSED__, Evas *evas) 
 {
    Evas_Object *o;
    char buff[PATH_MAX];
@@ -109,7 +109,7 @@ _gc_icon(E_Gadcon_Client_Class *cc, Evas *evas)
 }
 
 static const char *
-_gc_id_new(E_Gadcon_Client_Class *cc) 
+_gc_id_new(E_Gadcon_Client_Class *cc __UNUSED__) 
 {
    static char buff[32];
 
@@ -185,7 +185,7 @@ e_modapi_init(E_Module *m)
 }
 
 EAPI int 
-e_modapi_shutdown(E_Module *m) 
+e_modapi_shutdown(E_Module *m __UNUSED__) 
 {
    e_gadcon_provider_unregister(&_gc_class);
    if (_bt_mod_dir) eina_stringshare_del(_bt_mod_dir);
@@ -194,7 +194,7 @@ e_modapi_shutdown(E_Module *m)
 }
 
 EAPI int 
-e_modapi_save(E_Module *M) 
+e_modapi_save(E_Module *m __UNUSED__) 
 {
    return 1;
 }

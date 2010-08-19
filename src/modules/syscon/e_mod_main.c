@@ -38,7 +38,7 @@ e_modapi_init(E_Module *m)
 }
 
 EAPI int
-e_modapi_shutdown(E_Module *m)
+e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    /* remove module-supplied menu additions */
    if (maug)
@@ -59,7 +59,7 @@ e_modapi_shutdown(E_Module *m)
 }
 
 EAPI int
-e_modapi_save(E_Module *m)
+e_modapi_save(E_Module *m __UNUSED__)
 {
    return 1;
 }
@@ -104,14 +104,14 @@ _e_mod_syscon_defer_cb(void *data)
 }
 
 static void 
-_e_mod_syscon_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_mod_syscon_cb(void *data __UNUSED__, E_Menu *m, E_Menu_Item *mi __UNUSED__)
 {
    ecore_idle_enterer_add(_e_mod_syscon_defer_cb, m->zone);
 }
 
 /* menu item add hook */
 static void
-_e_mod_menu_add(void *data, E_Menu *m)
+_e_mod_menu_add(void *data __UNUSED__, E_Menu *m)
 {
    E_Menu_Item *mi;
 

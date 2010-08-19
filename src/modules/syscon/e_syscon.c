@@ -383,7 +383,7 @@ _cb_mouse_wheel(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static void
-_cb_signal_close(void *data, Evas_Object *obj, const char *emission, const char *source)
+_cb_signal_close(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    e_syscon_hide();
 }
@@ -411,14 +411,14 @@ _do_action_name(const char *action)
 }
 
 static void
-_cb_signal_syscon(void *data, Evas_Object *obj, const char *emission, const char *source)
+_cb_signal_syscon(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source)
 {
    e_syscon_hide();
    _do_action_name(source);
 }
 
 static void
-_cb_signal_action(void *data, Evas_Object *obj, const char *emission, const char *source)
+_cb_signal_action(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    E_Config_Syscon_Action *sca;
    E_Action *a;
@@ -432,7 +432,7 @@ _cb_signal_action(void *data, Evas_Object *obj, const char *emission, const char
 }
 
 static void
-_cb_signal_action_extra(void *data, Evas_Object *obj, const char *emission, const char *source)
+_cb_signal_action_extra(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    E_Sys_Con_Action *sca;
   
@@ -443,7 +443,7 @@ _cb_signal_action_extra(void *data, Evas_Object *obj, const char *emission, cons
 }
 
 static Eina_Bool
-_cb_timeout_defaction(void *data)
+_cb_timeout_defaction(void *data __UNUSED__)
 {
    deftimer = NULL;
    if (!do_defact) return ECORE_CALLBACK_CANCEL;

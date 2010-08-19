@@ -48,7 +48,7 @@ e_modapi_init(E_Module *m)
 }
 
 EAPI int 
-e_modapi_shutdown(E_Module *m) 
+e_modapi_shutdown(E_Module *m __UNUSED__) 
 {
    e_gadcon_provider_unregister(&_gc_class);
    if (mod_dir) eina_stringshare_del(mod_dir);
@@ -57,7 +57,7 @@ e_modapi_shutdown(E_Module *m)
 }
 
 EAPI int 
-e_modapi_save(E_Module *m) 
+e_modapi_save(E_Module *m __UNUSED__) 
 {
    return 1;
 }
@@ -114,20 +114,20 @@ _gc_shutdown(E_Gadcon_Client *gcc)
 }
 
 static void 
-_gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient) 
+_gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient __UNUSED__) 
 {
    e_gadcon_client_aspect_set(gcc, 16, 16);
    e_gadcon_client_min_size_set(gcc, 16, 16);
 }
 
 static char *
-_gc_label(E_Gadcon_Client_Class *cc) 
+_gc_label(E_Gadcon_Client_Class *cc __UNUSED__) 
 {
    return _("Illume-Keyboard-Toggle");
 }
 
 static Evas_Object *
-_gc_icon(E_Gadcon_Client_Class *cc, Evas *evas) 
+_gc_icon(E_Gadcon_Client_Class *cc __UNUSED__, Evas *evas) 
 {
    Evas_Object *o;
    char buff[PATH_MAX];
@@ -139,7 +139,7 @@ _gc_icon(E_Gadcon_Client_Class *cc, Evas *evas)
 }
 
 static const char *
-_gc_id_new(E_Gadcon_Client_Class *cc) 
+_gc_id_new(E_Gadcon_Client_Class *cc __UNUSED__) 
 {
    static char buff[32];
 
@@ -149,7 +149,7 @@ _gc_id_new(E_Gadcon_Client_Class *cc)
 }
 
 static void
-_cb_action_vkbd_enable(void *data, Evas_Object *obj, const char *emission, const char *source)
+_cb_action_vkbd_enable(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    Instance *inst;
    E_Border *bd;
@@ -164,7 +164,7 @@ _cb_action_vkbd_enable(void *data, Evas_Object *obj, const char *emission, const
 }
 
 static void
-_cb_action_vkbd_disable(void *data, Evas_Object *obj, const char *emission, const char *source)
+_cb_action_vkbd_disable(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    Instance *inst;
    E_Border *bd;
@@ -195,7 +195,7 @@ _cb_border_focus_in(void *data, int type __UNUSED__, void *event)
 }
 
 static Eina_Bool
-_cb_border_remove(void *data, int type __UNUSED__, void *event) 
+_cb_border_remove(void *data, int type __UNUSED__, void *event __UNUSED__) 
 {
    Instance *inst;
 
