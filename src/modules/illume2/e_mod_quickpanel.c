@@ -167,13 +167,13 @@ _e_mod_quickpanel_cb_client_message(void *data __UNUSED__, int type __UNUSED__, 
      {
         E_Zone *zone;
 
-        if (zone = e_util_zone_window_find(ev->win)) 
+        if ((zone = e_util_zone_window_find(ev->win))) 
           {
              E_Illume_Quickpanel *qp;
 
-             if (qp = e_illume_quickpanel_by_zone_get(zone)) 
+             if ((qp = e_illume_quickpanel_by_zone_get(zone))) 
                {
-                  if (ev->data.l[0] == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_OFF)
+                  if (ev->data.l[0] == (int)ECORE_X_ATOM_E_ILLUME_QUICKPANEL_OFF)
                     _e_mod_quickpanel_hide(qp);
                   else
                     e_mod_quickpanel_show(qp);
@@ -184,11 +184,11 @@ _e_mod_quickpanel_cb_client_message(void *data __UNUSED__, int type __UNUSED__, 
      {
         E_Zone *zone;
 
-        if (zone = e_util_zone_window_find(ev->win)) 
+        if ((zone = e_util_zone_window_find(ev->win))) 
           {
              E_Illume_Quickpanel *qp;
 
-             if (qp = e_illume_quickpanel_by_zone_get(zone)) 
+             if ((qp = e_illume_quickpanel_by_zone_get(zone))) 
                {
                   if (qp->visible) 
 		    _e_mod_quickpanel_hide(qp);
@@ -240,7 +240,7 @@ _e_mod_quickpanel_cb_border_add(void *data __UNUSED__, int type __UNUSED__, void
    if (!(zone = ev->border->zone)) return ECORE_CALLBACK_PASS_ON;
 
    /* if this border should be on a different zone, get requested zone */
-   if (zone->num != ev->border->client.illume.quickpanel.zone) 
+   if ((int)zone->num != ev->border->client.illume.quickpanel.zone) 
      {
         E_Container *con;
         int zn = 0;
@@ -291,7 +291,7 @@ _e_mod_quickpanel_cb_border_remove(void *data __UNUSED__, int type __UNUSED__, v
    if (!(zone = ev->border->zone)) return ECORE_CALLBACK_PASS_ON;
 
    /* if this border should be on a different zone, get requested zone */
-   if (zone->num != ev->border->client.illume.quickpanel.zone) 
+   if ((int)zone->num != ev->border->client.illume.quickpanel.zone) 
      {
         E_Container *con;
         int zn = 0;

@@ -7,7 +7,6 @@ static void _e_mod_illume_config_policy_free(E_Config_Dialog *cfd, E_Config_Dial
 static Evas_Object *_e_mod_illume_config_policy_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static void _e_mod_illume_config_policy_list_changed(void *data);
 static Eina_Bool _e_mod_illume_config_policy_change_timeout(void *data);
-static Evas_Object *_e_mod_illume_config_policy_settings_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static Eina_List *_e_mod_illume_config_policy_policies_get(void);
 static void _e_mod_illume_config_policy_policy_free(E_Illume_Policy *p);
 
@@ -16,7 +15,7 @@ Ecore_Timer *_policy_change_timer = NULL;
 const char *_policy_name = NULL;
 
 void 
-e_mod_illume_config_policy_show(E_Container *con, const char *params) 
+e_mod_illume_config_policy_show(E_Container *con, const char *params __UNUSED__) 
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
@@ -40,20 +39,20 @@ e_mod_illume_config_policy_show(E_Container *con, const char *params)
 
 /* local functions */
 static void *
-_e_mod_illume_config_policy_create(E_Config_Dialog *cfd) 
+_e_mod_illume_config_policy_create(E_Config_Dialog *cfd __UNUSED__) 
 {
    return NULL;
 }
 
 static void 
-_e_mod_illume_config_policy_free(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_e_mod_illume_config_policy_free(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata __UNUSED__) 
 {
    if (_policy_change_timer) ecore_timer_del(_policy_change_timer);
    _policy_change_timer = NULL;
 }
 
 static Evas_Object *
-_e_mod_illume_config_policy_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
+_e_mod_illume_config_policy_ui(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata __UNUSED__) 
 {
    Evas_Object *list, *ow;
    Eina_List *policies;
@@ -110,7 +109,7 @@ _e_mod_illume_config_policy_list_changed(void *data)
 }
 
 static Eina_Bool
-_e_mod_illume_config_policy_change_timeout(void *data) 
+_e_mod_illume_config_policy_change_timeout(void *data __UNUSED__) 
 {
    e_config_save_queue();
    _policy_change_timer = NULL;

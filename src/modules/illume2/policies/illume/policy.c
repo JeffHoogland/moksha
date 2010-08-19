@@ -196,7 +196,7 @@ _policy_border_show_below(E_Border *bd)
 
    if (bd->client.icccm.transient_for) 
      {
-        if (prev = e_border_find_by_client_window(bd->client.icccm.transient_for)) 
+        if ((prev = e_border_find_by_client_window(bd->client.icccm.transient_for))) 
           {
              _policy_border_set_focus(prev);
              return;
@@ -440,7 +440,7 @@ _policy_zone_layout_keyboard(E_Border *bd, E_Illume_Config_Zone *cz)
      layer = POL_KEYBOARD_LAYER;
 
    /* set layer if needed */
-   if (bd->layer != layer) e_border_layer_set(bd, layer);
+   if ((int)bd->layer != layer) e_border_layer_set(bd, layer);
 }
 
 static void 
@@ -602,7 +602,6 @@ _policy_zone_layout_fullscreen(E_Border *bd)
 static void 
 _policy_zone_layout_app_single(E_Border *bd, E_Illume_Config_Zone *cz) 
 {
-   E_Border *home;
    int ky, kh, ny, nh;
 
    if ((!bd) || (!cz)) return;
@@ -1028,7 +1027,7 @@ _policy_border_add(E_Border *bd)
         E_Border *ind;
 
         /* try to get the Indicator on this zone */
-        if (ind = e_illume_border_indicator_get(bd->zone)) 
+        if ((ind = e_illume_border_indicator_get(bd->zone))) 
           {
              /* we have the indicator, hide it if needed */
 	     if (ind->visible) e_illume_border_hide(ind);
@@ -1063,7 +1062,7 @@ _policy_border_del(E_Border *bd)
         E_Border *ind;
 
         /* try to get the Indicator on this zone */
-        if (ind = e_illume_border_indicator_get(bd->zone)) 
+        if ((ind = e_illume_border_indicator_get(bd->zone))) 
           {
              /* we have the indicator, show it if needed */
 	     if (!ind->visible) e_illume_border_show(ind);
@@ -1100,7 +1099,7 @@ _policy_border_del(E_Border *bd)
 }
 
 void 
-_policy_border_focus_in(E_Border *bd) 
+_policy_border_focus_in(E_Border *bd __UNUSED__) 
 {
 //   printf("Border focus in: %s\n", bd->client.icccm.name);
 }
@@ -1121,7 +1120,7 @@ _policy_border_focus_out(E_Border *bd)
           {
              E_Border *parent;
 
-             if (parent = e_illume_border_parent_get(bd))
+             if ((parent = e_illume_border_parent_get(bd)))
                _policy_border_set_focus(parent);
           }
      }
@@ -1140,7 +1139,7 @@ _policy_border_activate(E_Border *bd)
    if (bd->stolen) return;
 
    /* conformant windows hide the softkey */
-   if (sft = e_illume_border_softkey_get(bd->zone))
+   if ((sft = e_illume_border_softkey_get(bd->zone)))
      {
         if (e_illume_border_is_conformant(bd)) 
           {
@@ -1480,7 +1479,7 @@ _policy_zone_mode_change(E_Zone *zone, Ecore_X_Atom mode)
              E_Border *home;
 
              /* try to get a home window on this zone and remove it */
-             if (home = e_illume_border_home_get(zone))
+             if ((home = e_illume_border_home_get(zone)))
                ecore_x_e_illume_home_del_send(home->client.win);
           }
      }
@@ -1576,7 +1575,7 @@ _policy_focus_back(E_Zone *zone)
              else 
                {
                   /* we've reached the end of the list. Set focus to first */
-                  if (b = eina_list_nth(fl, 0)) 
+                  if ((b = eina_list_nth(fl, 0))) 
                     {
                        _policy_border_set_focus(b);
                        break;
@@ -1621,7 +1620,7 @@ _policy_focus_forward(E_Zone *zone)
              else 
                {
                   /* we've reached the end of the list. Set focus to first */
-                  if (b = eina_list_nth(fl, 0)) 
+                  if ((b = eina_list_nth(fl, 0))) 
                     {
                        _policy_border_set_focus(b);
                        break;

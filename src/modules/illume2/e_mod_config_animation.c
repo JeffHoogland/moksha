@@ -39,20 +39,20 @@ e_mod_illume_config_animation_show(E_Container *con, const char *params __UNUSED
 
 /* local function prototypes */
 static void *
-_e_mod_illume_config_animation_create(E_Config_Dialog *cfd) 
+_e_mod_illume_config_animation_create(E_Config_Dialog *cfd __UNUSED__) 
 {
    return NULL;
 }
 
 static void 
-_e_mod_illume_config_animation_free(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_e_mod_illume_config_animation_free(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata __UNUSED__) 
 {
    if (_anim_change_timer) ecore_timer_del(_anim_change_timer);
    _anim_change_timer = NULL;
 }
 
 static Evas_Object *
-_e_mod_illume_config_animation_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
+_e_mod_illume_config_animation_ui(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata __UNUSED__) 
 {
    Evas_Object *list, *of, *ow;
    E_Radio_Group *rg;
@@ -111,7 +111,7 @@ _e_mod_illume_config_animation_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dia
 }
 
 static void 
-_e_mod_illume_config_animation_change(void *data, Evas_Object *obj, void *event) 
+_e_mod_illume_config_animation_change(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED__) 
 {
    if (_anim_change_timer) ecore_timer_del(_anim_change_timer);
    _anim_change_timer = 
@@ -119,7 +119,7 @@ _e_mod_illume_config_animation_change(void *data, Evas_Object *obj, void *event)
 }
 
 static Eina_Bool
-_e_mod_illume_config_animation_timeout(void *data) 
+_e_mod_illume_config_animation_timeout(void *data __UNUSED__) 
 {
    e_config_save_queue();
    _anim_change_timer = NULL;

@@ -44,20 +44,20 @@ e_mod_illume_config_windows_show(E_Container *con, const char *params __UNUSED__
 
 /* local function prototypes */
 static void *
-_e_mod_illume_config_windows_create(E_Config_Dialog *cfd) 
+_e_mod_illume_config_windows_create(E_Config_Dialog *cfd __UNUSED__) 
 {
    return NULL;
 }
 
 static void 
-_e_mod_illume_config_windows_free(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_e_mod_illume_config_windows_free(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata __UNUSED__) 
 {
    if (_windows_change_timer) ecore_timer_del(_windows_change_timer);
    _windows_change_timer = NULL;
 }
 
 static Evas_Object *
-_e_mod_illume_config_windows_ui(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
+_e_mod_illume_config_windows_ui(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata __UNUSED__) 
 {
    Evas_Object *list, *of, *ow;
 

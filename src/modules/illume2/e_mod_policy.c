@@ -75,7 +75,7 @@ e_mod_policy_init(void)
              EINA_LIST_FOREACH(con->zones, zl, zone) 
                {
                   E_Illume_Config_Zone *cz;
-                  Ecore_X_Illume_Mode mode;
+                  Ecore_X_Illume_Mode mode = ECORE_X_ILLUME_MODE_SINGLE;
 
                   /* check for zone config */
                   if (!(cz = e_illume_zone_config_get(zone->id))) 

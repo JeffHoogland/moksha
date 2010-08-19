@@ -41,20 +41,20 @@ e_mod_illume_config_select_window(E_Illume_Select_Window_Type type)
 }
 
 static void *
-_e_mod_illume_config_select_window_create_data(E_Config_Dialog *cfd) 
+_e_mod_illume_config_select_window_create_data(E_Config_Dialog *cfd __UNUSED__) 
 {
    return NULL;
 }
 
 static void 
-_e_mod_illume_config_select_window_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_e_mod_illume_config_select_window_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata __UNUSED__) 
 {
    if (_sw_change_timer) ecore_timer_del(_sw_change_timer);
    _sw_change_timer = NULL;
 }
 
 static Evas_Object *
-_e_mod_illume_config_select_window_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
+_e_mod_illume_config_select_window_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata __UNUSED__) 
 {
    Evas_Object *list, *ow;
    Eina_List *bds, *l;
@@ -71,7 +71,7 @@ _e_mod_illume_config_select_window_create(E_Config_Dialog *cfd, Evas *evas, E_Co
    e_widget_ilist_clear(ow);
    e_widget_ilist_go(ow);
 
-   if (bds = e_border_client_list())
+   if ((bds = e_border_client_list()))
      {
         for (i = 0, l = bds; l; l = l->next, i++) 
           {
