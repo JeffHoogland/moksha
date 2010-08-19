@@ -47,7 +47,7 @@ e_int_config_shelf(E_Container *con, const char *params __UNUSED__)
 }
 
 static void *
-_create_data(E_Config_Dialog *cfd) 
+_create_data(E_Config_Dialog *cfd __UNUSED__) 
 {
    E_Config_Dialog_Data *cfdata;
 
@@ -56,7 +56,7 @@ _create_data(E_Config_Dialog *cfd)
 }
 
 static void
-_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
 {
    E_FREE(cfdata);
 }
@@ -211,7 +211,7 @@ _ilist_cb_selected(void *data)
 }
 
 static void 
-_cb_add(void *data, void *data2) 
+_cb_add(void *data, void *data2 __UNUSED__) 
 {
    E_Config_Dialog_Data *cfdata;
    E_Config_Shelf *cfg;
@@ -246,7 +246,7 @@ _cb_add(void *data, void *data2)
 }
 
 static void 
-_cb_delete(void *data, void *data2) 
+_cb_delete(void *data, void *data2 __UNUSED__) 
 {
    Shelf_Del_Confirm_Data *d;
    char buf[4096];
@@ -309,7 +309,7 @@ _cb_dialog_destroy(void *data)
 }
 
 static void 
-_cb_config(void *data, void *data2) 
+_cb_config(void *data, void *data2 __UNUSED__) 
 {
    E_Config_Dialog_Data *cfdata;
    E_Shelf *es;
