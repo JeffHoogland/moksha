@@ -175,7 +175,7 @@ _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
    Instance *inst;
 
    inst = gcc->data;
-   if (orient != -1) inst->orient = orient;
+   if ((int)orient != -1) inst->orient = orient;
 
    switch (inst->orient)
      {
