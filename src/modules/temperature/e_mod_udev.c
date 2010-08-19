@@ -12,7 +12,7 @@ void
 temperature_udev_update(void *data)
 {
    Config_Face *inst;
-   Eina_List *l, *l2;
+   Eina_List *l;
    double cur, temp, cpus = 0;
    char *syspath;
    const char *test;
@@ -23,7 +23,7 @@ temperature_udev_update(void *data)
    temp = -999;
 
    if (!inst->tempdevs)
-        inst->tempdevs = eeze_udev_find_by_type(EEZE_UDEV_TYPE_IS_IT_HOT_OR_IS_IT_COLD_SENSOR, NULL);
+     inst->tempdevs = eeze_udev_find_by_type(EEZE_UDEV_TYPE_IS_IT_HOT_OR_IS_IT_COLD_SENSOR, NULL);
    if (eina_list_count(inst->tempdevs))
      {
         temp = 0;
@@ -31,8 +31,7 @@ temperature_udev_update(void *data)
           {
              for (x = 1, y = 0;x < 15;x++)
                {
-                  if (y >= 2)
-                    break;
+                  if (y >= 2) break;
                   sprintf(buf, "temp%d_input", x);
                   if ((test = eeze_udev_syspath_get_sysattr(syspath, buf)))
                     {
@@ -53,7 +52,7 @@ temperature_udev_update(void *data)
    if (temp != -999)
      {
         if (inst->units == FAHRENHEIT) 
-   temp = (temp * 9.0 / 5.0) + 32;
+          temp = (temp * 9.0 / 5.0) + 32;
 
         if (!inst->have_temp)
           {

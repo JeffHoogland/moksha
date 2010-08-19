@@ -157,20 +157,20 @@ _gc_shutdown(E_Gadcon_Client *gcc)
 }
 
 static void
-_gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
+_gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient __UNUSED__)
 {
    e_gadcon_client_aspect_set(gcc, 16, 16);
    e_gadcon_client_min_size_set(gcc, 16, 16);
 }
 
 static char *
-_gc_label(E_Gadcon_Client_Class *client_class)
+_gc_label(E_Gadcon_Client_Class *client_class __UNUSED__)
 {
    return _("Temperature");
 }
 
 static Evas_Object *
-_gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas)
+_gc_icon(E_Gadcon_Client_Class *client_class __UNUSED__, Evas *evas)
 {
    Evas_Object *o;
    char buf[PATH_MAX];
@@ -183,7 +183,7 @@ _gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas)
 }
 
 static const char *
-_gc_id_new(E_Gadcon_Client_Class *client_class)
+_gc_id_new(E_Gadcon_Client_Class *client_class __UNUSED__)
 {
    Config_Face *inst;
    char id[128];
@@ -208,7 +208,7 @@ _gc_id_new(E_Gadcon_Client_Class *client_class)
 }
 
 static void
-_temperature_face_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_temperature_face_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
    Config_Face *inst;
    Evas_Event_Mouse_Down *ev;
@@ -242,7 +242,7 @@ _temperature_face_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *eve
 }
 
 static void
-_temperature_face_cb_post_menu(void *data, E_Menu *m)
+_temperature_face_cb_post_menu(void *data, E_Menu *m __UNUSED__)
 {
    Config_Face *inst;
 
@@ -264,7 +264,7 @@ _temperature_face_level_set(Config_Face *inst, double level)
 }
 
 static void
-_temperature_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi)
+_temperature_face_cb_menu_configure(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    Config_Face *inst;
 
@@ -464,7 +464,7 @@ e_modapi_init(E_Module *m)
 }
 
 EAPI int
-e_modapi_shutdown(E_Module *m)
+e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    e_gadcon_provider_unregister(&_gadcon_class);
    eina_hash_foreach(temperature_config->faces, _temperature_face_shutdown, NULL);
@@ -477,7 +477,7 @@ e_modapi_shutdown(E_Module *m)
 }
 
 EAPI int
-e_modapi_save(E_Module *m)
+e_modapi_save(E_Module *m __UNUSED__)
 {
    e_config_domain_save("module.temperature", conf_edd, temperature_config);
    return 1;

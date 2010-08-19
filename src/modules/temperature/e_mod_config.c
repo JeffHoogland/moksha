@@ -170,7 +170,7 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 }
 
 static Evas_Object *
-_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
+_basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
    Evas_Object *otb, *ol, *ow;
    E_Radio_Group *rg;
@@ -255,7 +255,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 }
 
 static int 
-_basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
 {
    cfdata->inst->poll_interval = cfdata->poll.interval;
    cfdata->inst->units = cfdata->unit_method;
