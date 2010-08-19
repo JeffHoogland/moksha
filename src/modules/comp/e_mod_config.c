@@ -189,9 +189,8 @@ _match_free(Match_Config *m)
 }
 
 static void
-_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
 {
-   E_Demo_Style_Item *ds_it;
    Match_Config *m;
 
    _comp_mod->config_dialog = NULL;
@@ -216,7 +215,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 }
 
 static void
-_shadow_changed(void *data, Evas_Object *obj, void *event_info)
+_shadow_changed(void *data, Evas_Object *obj, void *event_info __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata = data;
    Evas_Object *orec0;
@@ -279,7 +278,7 @@ _style_demo(void *data)
 }
 
 static void
-_style_selector_del(void *data, Evas *e, Evas_Object *o, void *event_info)
+_style_selector_del(void *data __UNUSED__, Evas *e, Evas_Object *o, void *event_info __UNUSED__)
 {
    Eina_List *style_shadows, *style_list;
    Ecore_Timer *timer;
@@ -410,10 +409,10 @@ _style_selector(Evas *evas, int use_shadow, const char **source)
 }
 
 static void
-_match_sel(void *data)
+_match_sel(void *data __UNUSED__)
 {
-   Match_Config *m = data;
-   E_Config_Dialog *cfd = m->cfd;
+//   Match_Config *m = data;
+//   E_Config_Dialog *cfd = m->cfd;
 }
 
 const char *
@@ -540,7 +539,7 @@ _edit_ok(void *d1, void *d2)
 }
 
 static void
-_create_edit_frame(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata, Match_Config *m)
+_create_edit_frame(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata, Match_Config *m)
 {
    Evas_Object *tab, *of, *oi, *lb, *en, *bt, *tb, *tab2, *o, *sf, *li;
    E_Radio_Group *rg;
@@ -901,7 +900,7 @@ _but_edit(void *d1, void *d2)
 }
 
 static Evas_Object *
-_create_match_editor(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata, Eina_List **matches, Evas_Object **il_ret)
+_create_match_editor(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata __UNUSED__, Eina_List **matches, Evas_Object **il_ret)
 {
    Evas_Object *tab, *il, *bt;
    Match_Config *m;
@@ -972,10 +971,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 {
    Evas_Object *ob, *ol, *ol2, *of, *otb, *oi, *orec0, *tab;
    E_Radio_Group *rg;
-   Eina_List *styles, *l;
-   char *style;
-   int n, sel;
-   Evas_Coord wmw, wmh;
 
    orec0 = evas_object_rectangle_add(evas);
    evas_object_name_set(orec0, "style_shadows");
@@ -1146,7 +1141,7 @@ _match_dup2(Match_Config *m2, Match *m)
 }
 
 static int
-_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
 {
    if ((cfdata->use_shadow != _comp_mod->conf->use_shadow) ||
        (cfdata->lock_fps != _comp_mod->conf->lock_fps) ||

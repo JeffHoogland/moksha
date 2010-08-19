@@ -3,7 +3,7 @@
 #include "e_mod_config.h"
 #include "e_mod_comp.h"
 
-static Ecore_Event_Handler *init_done_handler = NULL;
+//static Ecore_Event_Handler *init_done_handler = NULL;
 
 //static int
 //_e_init_done(void *data, int type, void *event)
@@ -38,9 +38,11 @@ e_modapi_init(E_Module *m)
    
    mod->module = m;
    snprintf(buf, sizeof(buf), "%s/e-module-comp.edj", e_module_dir_get(m));
-   e_configure_registry_category_add("appearance", 10, _("Look"), NULL, "preferences-appearance");
-   e_configure_registry_item_add("appearance/comp", 120, _("Composite"), NULL, buf, e_int_config_comp_module);
-   
+   e_configure_registry_category_add("appearance", 10, _("Look"), NULL, 
+                                     "preferences-appearance");
+   e_configure_registry_item_add("appearance/comp", 120, _("Composite"), NULL, 
+                                 buf, e_int_config_comp_module);
+
    mod->conf_match_edd = E_CONFIG_DD_NEW("Comp_Match", Match);
 #undef T
 #undef D

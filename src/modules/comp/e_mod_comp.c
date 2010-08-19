@@ -133,7 +133,7 @@ static void _e_mod_comp_win_hide(E_Comp_Win *cw);
 static void _e_mod_comp_win_configure(E_Comp_Win *cw, int x, int y, int w, int h, int border);
 
 static void
-_e_mod_comp_cb_pending_after(void *data, E_Manager *man, E_Manager_Comp_Source *src)
+_e_mod_comp_cb_pending_after(void *data __UNUSED__, E_Manager *man __UNUSED__, E_Manager_Comp_Source *src)
 {
    E_Comp_Win *cw = (E_Comp_Win *)src;
    cw->pending_count--;
@@ -486,7 +486,7 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
         cw->native = 0;
         if (!cw->xim)
           {
-             if (cw->xim = ecore_x_image_new(cw->pw, cw->ph, cw->vis, cw->depth))
+             if ((cw->xim = ecore_x_image_new(cw->pw, cw->ph, cw->vis, cw->depth)))
                e_mod_comp_update_add(cw->up, 0, 0, cw->pw, cw->ph);
           }
         r = e_mod_comp_update_rects_get(cw->up);
@@ -582,7 +582,7 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
 }
 
 static void
-_e_mod_comp_pre_swap(void *data, Evas *e)
+_e_mod_comp_pre_swap(void *data, Evas *e __UNUSED__)
 {
    E_Comp *c = data;
    
@@ -1031,14 +1031,14 @@ _e_mod_comp_done_defer(E_Comp_Win *cw)
 }
 
 static void
-_e_mod_comp_show_done(void *data, Evas_Object *obj, const char *emission, const char *source)
+_e_mod_comp_show_done(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    E_Comp_Win *cw = data;
    _e_mod_comp_done_defer(cw);
 }
 
 static void
-_e_mod_comp_hide_done(void *data, Evas_Object *obj, const char *emission, const char *source)
+_e_mod_comp_hide_done(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    E_Comp_Win *cw = data;
    _e_mod_comp_done_defer(cw);
@@ -2032,7 +2032,7 @@ _e_mod_comp_win_reshape(E_Comp_Win *cw)
 //////////////////////////////////////////////////////////////////////////
 
 static Eina_Bool
-_e_mod_comp_create(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_mod_comp_create(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Window_Create *ev = event;
    E_Comp_Win *cw;
@@ -2047,7 +2047,7 @@ _e_mod_comp_create(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_mod_comp_destroy(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_mod_comp_destroy(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Window_Destroy *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->win);
@@ -2058,7 +2058,7 @@ _e_mod_comp_destroy(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_mod_comp_show(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_mod_comp_show(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Window_Show *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->win);
@@ -2069,7 +2069,7 @@ _e_mod_comp_show(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_mod_comp_hide(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_mod_comp_hide(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Window_Hide *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->win);
@@ -2080,7 +2080,7 @@ _e_mod_comp_hide(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_mod_comp_reparent(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_mod_comp_reparent(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Window_Reparent *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->win);
@@ -2092,7 +2092,7 @@ _e_mod_comp_reparent(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_mod_comp_configure(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_mod_comp_configure(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Window_Configure *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->win);
@@ -2124,7 +2124,7 @@ _e_mod_comp_configure(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_mod_comp_stack(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_mod_comp_stack(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Window_Stack *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->win);
@@ -2135,14 +2135,14 @@ _e_mod_comp_stack(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_mod_comp_property(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_mod_comp_property(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
-   Ecore_X_Event_Window_Property *ev = event;
+//   Ecore_X_Event_Window_Property *ev = event;
    return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool
-_e_mod_comp_message(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_mod_comp_message(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Client_Message *ev = event;
    E_Comp_Win *cw = NULL;
@@ -2174,7 +2174,7 @@ _e_mod_comp_message(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_mod_comp_shape(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_mod_comp_shape(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Window_Shape *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->win);
@@ -2185,7 +2185,7 @@ _e_mod_comp_shape(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_mod_comp_damage(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_mod_comp_damage(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Damage *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_damage_find(ev->damage);
@@ -2197,7 +2197,7 @@ _e_mod_comp_damage(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_mod_comp_damage_win(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_mod_comp_damage_win(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Window_Damage *ev = event;
    Eina_List *l;
@@ -2218,7 +2218,7 @@ _e_mod_comp_damage_win(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_mod_comp_randr(__UNUSED__ void *data, __UNUSED__ int type, __UNUSED__ void *event)
+_e_mod_comp_randr(void *data __UNUSED__, int type __UNUSED__, __UNUSED__ void *event)
 {
    Eina_List *l;
    E_Comp *c;
@@ -2231,7 +2231,7 @@ _e_mod_comp_randr(__UNUSED__ void *data, __UNUSED__ int type, __UNUSED__ void *e
 }
 
 static Eina_Bool
-_e_mod_comp_bd_add(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_mod_comp_bd_add(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    E_Event_Border_Add *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
@@ -2241,7 +2241,7 @@ _e_mod_comp_bd_add(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_mod_comp_bd_del(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_mod_comp_bd_del(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    E_Event_Border_Remove *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
@@ -2251,7 +2251,7 @@ _e_mod_comp_bd_del(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_mod_comp_bd_show(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_mod_comp_bd_show(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    E_Event_Border_Show *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
@@ -2262,7 +2262,7 @@ _e_mod_comp_bd_show(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_mod_comp_bd_hide(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_mod_comp_bd_hide(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    E_Event_Border_Hide *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
@@ -2273,7 +2273,7 @@ _e_mod_comp_bd_hide(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_mod_comp_bd_move(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_mod_comp_bd_move(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    E_Event_Border_Move *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
@@ -2283,7 +2283,7 @@ _e_mod_comp_bd_move(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_mod_comp_bd_resize(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_mod_comp_bd_resize(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    E_Event_Border_Resize *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
@@ -2293,7 +2293,7 @@ _e_mod_comp_bd_resize(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_mod_comp_bd_iconify(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_mod_comp_bd_iconify(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    E_Event_Border_Iconify *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
@@ -2303,7 +2303,7 @@ _e_mod_comp_bd_iconify(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_mod_comp_bd_uniconify(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_mod_comp_bd_uniconify(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    E_Event_Border_Uniconify *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
@@ -2313,7 +2313,7 @@ _e_mod_comp_bd_uniconify(__UNUSED__ void *data, __UNUSED__ int type, void *event
 }
 
 static Eina_Bool
-_e_mod_comp_bd_urgent_change(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_mod_comp_bd_urgent_change(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    E_Event_Border_Urgent_Change *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
@@ -2326,7 +2326,7 @@ _e_mod_comp_bd_urgent_change(__UNUSED__ void *data, __UNUSED__ int type, void *e
 }
 
 static Eina_Bool
-_e_mod_comp_bd_focus_in(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_mod_comp_bd_focus_in(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    E_Event_Border_Focus_In *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
@@ -2336,7 +2336,7 @@ _e_mod_comp_bd_focus_in(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_mod_comp_bd_focus_out(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_mod_comp_bd_focus_out(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    E_Event_Border_Focus_Out *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
@@ -2346,7 +2346,7 @@ _e_mod_comp_bd_focus_out(__UNUSED__ void *data, __UNUSED__ int type, void *event
 }
 
 static Eina_Bool
-_e_mod_comp_bd_property(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_mod_comp_bd_property(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    E_Event_Border_Property *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
@@ -2358,7 +2358,7 @@ _e_mod_comp_bd_property(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 //////////////////////////////////////////////////////////////////////////
 
 static Eina_Bool
-_e_mod_comp_key_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_mod_comp_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Event_Key *ev = event;
    
@@ -2382,21 +2382,21 @@ _e_mod_comp_key_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 
 //////////////////////////////////////////////////////////////////////////
 static Evas *
-_e_mod_comp_evas_get_func(void *data, E_Manager *man)
+_e_mod_comp_evas_get_func(void *data, E_Manager *man __UNUSED__)
 {
    E_Comp *c = data;
    return c->evas;
 }
 
 static void
-_e_mod_comp_update_func(void *data, E_Manager *man)
+_e_mod_comp_update_func(void *data, E_Manager *man __UNUSED__)
 {
    E_Comp *c = data;
    _e_mod_comp_render_queue(c);
 }
 
 static const Eina_List *
-_e_mod_comp_src_list_get_func(void *data, E_Manager *man)
+_e_mod_comp_src_list_get_func(void *data, E_Manager *man __UNUSED__)
 {
    E_Comp *c = data;
    E_Comp_Win *cw;
@@ -2417,45 +2417,45 @@ _e_mod_comp_src_list_get_func(void *data, E_Manager *man)
 }
 
 static Evas_Object *
-_e_mod_comp_src_image_get_func(void *data, E_Manager *man, E_Manager_Comp_Source *src)
+_e_mod_comp_src_image_get_func(void *data __UNUSED__, E_Manager *man __UNUSED__, E_Manager_Comp_Source *src)
 {
-   E_Comp *c = data;
+//   E_Comp *c = data;
    E_Comp_Win *cw = (E_Comp_Win *)src;
    if (!cw->c) return NULL;
    return cw->obj;
 }
 
 static Evas_Object *
-_e_mod_comp_src_shadow_get_func(void *data, E_Manager *man, E_Manager_Comp_Source *src)
+_e_mod_comp_src_shadow_get_func(void *data __UNUSED__, E_Manager *man __UNUSED__, E_Manager_Comp_Source *src)
 {
-   E_Comp *c = data;
+//   E_Comp *c = data;
    E_Comp_Win *cw = (E_Comp_Win *)src;
    if (!cw->c) return NULL;
    return cw->shobj;
 }
 
 static Evas_Object *
-_e_mod_comp_src_image_mirror_add_func(void *data, E_Manager *man, E_Manager_Comp_Source *src)
+_e_mod_comp_src_image_mirror_add_func(void *data __UNUSED__, E_Manager *man __UNUSED__, E_Manager_Comp_Source *src)
 {
-   E_Comp *c = data;
+//   E_Comp *c = data;
    E_Comp_Win *cw = (E_Comp_Win *)src;
    if (!cw->c) return NULL;
    return _e_mod_comp_win_mirror_add(cw);
 }
 
 static Eina_Bool
-_e_mod_comp_src_visible_get_func(void *data, E_Manager *man, E_Manager_Comp_Source *src)
+_e_mod_comp_src_visible_get_func(void *data __UNUSED__, E_Manager *man __UNUSED__, E_Manager_Comp_Source *src)
 {
-   E_Comp *c = data;
+//   E_Comp *c = data;
    E_Comp_Win *cw = (E_Comp_Win *)src;
    if (!cw->c) return 0;
    return cw->visible;
 }
 
 static void
-_e_mod_comp_src_hidden_set_func(void *data, E_Manager *man, E_Manager_Comp_Source *src, Eina_Bool hidden)
+_e_mod_comp_src_hidden_set_func(void *data __UNUSED__, E_Manager *man __UNUSED__, E_Manager_Comp_Source *src, Eina_Bool hidden)
 {
-   E_Comp *c = data;
+//   E_Comp *c = data;
    E_Comp_Win *cw = (E_Comp_Win *)src;
    if (!cw->c) return;
    if (!cw->hidden_override == hidden) return;
@@ -2473,9 +2473,9 @@ _e_mod_comp_src_hidden_set_func(void *data, E_Manager *man, E_Manager_Comp_Sourc
 }
 
 static Eina_Bool
-_e_mod_comp_src_hidden_get_func(void *data, E_Manager *man, E_Manager_Comp_Source *src)
+_e_mod_comp_src_hidden_get_func(void *data __UNUSED__, E_Manager *man __UNUSED__, E_Manager_Comp_Source *src)
 {
-   E_Comp *c = data;
+//   E_Comp *c = data;
    E_Comp_Win *cw = (E_Comp_Win *)src;
    if (!cw->c) return 0;
    return cw->hidden_override;
