@@ -193,7 +193,7 @@ _theme_import_cb_wid_focus(void *data, Evas_Object *obj)
 }
 
 static void 
-_theme_import_cb_selected(void *data, Evas_Object *obj) 
+_theme_import_cb_selected(void *data, Evas_Object *obj __UNUSED__) 
 {
    Import *import;
    
@@ -202,7 +202,7 @@ _theme_import_cb_selected(void *data, Evas_Object *obj)
 }
 
 static void 
-_theme_import_cb_changed(void *data, Evas_Object *obj) 
+_theme_import_cb_changed(void *data, Evas_Object *obj __UNUSED__) 
 {
    Import *import;
    const char *path;
@@ -243,7 +243,7 @@ _theme_import_cb_changed(void *data, Evas_Object *obj)
 }
 
 static void 
-_theme_import_cb_ok(void *data, void *data2) 
+_theme_import_cb_ok(void *data, void *data2 __UNUSED__) 
 {
    Import *import;
    E_Win *win;
@@ -303,7 +303,7 @@ _theme_import_cb_ok(void *data, void *data2)
 }
 
 static void 
-_theme_import_cb_close(void *data, void *data2) 
+_theme_import_cb_close(void *data, void *data2 __UNUSED__) 
 {
    E_Win *win;
    
@@ -312,7 +312,7 @@ _theme_import_cb_close(void *data, void *data2)
 }
 
 static void 
-_theme_import_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event) 
+_theme_import_cb_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event) 
 {
    Evas_Event_Key_Down *ev;
    Import *import;

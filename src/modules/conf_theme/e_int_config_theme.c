@@ -133,7 +133,7 @@ e_int_config_theme_update(E_Config_Dialog *dia, char *file)
 }
 
 static void
-_cb_button_up(void *data1, void *data2)
+_cb_button_up(void *data1, void *data2 __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
 
@@ -142,7 +142,7 @@ _cb_button_up(void *data1, void *data2)
 }
 
 static void
-_cb_files_changed(void *data, Evas_Object *obj, void *event_info)
+_cb_files_changed(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
 
@@ -154,7 +154,7 @@ _cb_files_changed(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void
-_cb_files_selection_change(void *data, Evas_Object *obj, void *event_info)
+_cb_files_selection_change(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
    Eina_List *selected;
@@ -197,7 +197,7 @@ _cb_files_selected(void *data, Evas_Object *obj, void *event_info)
 #endif
 
 static void
-_cb_files_files_changed(void *data, Evas_Object *obj, void *event_info)
+_cb_files_files_changed(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
    const char *p;
@@ -230,7 +230,7 @@ _cb_files_files_changed(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void
-_cb_dir(void *data, Evas_Object *obj, void *event_info)
+_cb_dir(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
    char path[4096];
@@ -244,7 +244,7 @@ _cb_dir(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void
-_cb_files_files_deleted(void *data, Evas_Object *obj, void *event_info)
+_cb_files_files_deleted(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
    Eina_List *sel, *all, *n;
@@ -277,7 +277,7 @@ _cb_files_files_deleted(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void
-_cb_import(void *data1, void *data2)
+_cb_import(void *data1, void *data2 __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
 
@@ -357,7 +357,7 @@ _create_data(E_Config_Dialog *cfd)
 }
 
 static void
-_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    E_Config_Theme *t;
 
@@ -462,7 +462,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 }
 
 static int
-_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    E_Action *a;
    E_Config_Theme *ct;
@@ -636,7 +636,7 @@ _preview_set(void *data)
 }
 
 static void
-_cb_adv_categories_change(void *data, Evas_Object *obj)
+_cb_adv_categories_change(void *data, Evas_Object *obj __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
    const char *label = NULL;
@@ -686,7 +686,7 @@ _cb_adv_categories_change(void *data, Evas_Object *obj)
 }
 
 static void
-_cb_adv_theme_change(void *data, Evas_Object *obj)
+_cb_adv_theme_change(void *data, Evas_Object *obj __UNUSED__)
 {
    _preview_set(data);
 }
@@ -829,7 +829,7 @@ _fill_categories_ilist(E_Config_Dialog_Data *cfdata)
 }
 
 static void
-_cb_adv_btn_assign(void *data1, void *data2)
+_cb_adv_btn_assign(void *data1, void *data2 __UNUSED__)
 {
    Evas *evas;
    E_Config_Dialog_Data *cfdata;
@@ -906,7 +906,7 @@ _cb_adv_btn_assign(void *data1, void *data2)
 }
 
 static void
-_cb_adv_btn_clear(void *data1, void *data2)
+_cb_adv_btn_clear(void *data1, void *data2 __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
    E_Config_Theme *t;
@@ -959,7 +959,7 @@ _cb_adv_btn_clear(void *data1, void *data2)
 }
 
 static void
-_cb_adv_btn_clearall(void *data1, void *data2)
+_cb_adv_btn_clearall(void *data1, void *data2 __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
    E_Config_Theme *t;
@@ -1048,7 +1048,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 }
 
 static int
-_advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_advanced_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    E_Config_Theme *theme;
    Eina_List *themes;
