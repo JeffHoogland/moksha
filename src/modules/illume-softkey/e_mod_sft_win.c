@@ -115,7 +115,7 @@ _e_mod_sft_win_cb_free(Sft_Win *swin)
    EINA_LIST_FREE(swin->hdls, hdl)
      ecore_event_handler_del(hdl);
 
-   if (box = edje_object_part_object_get(swin->o_base, "e.box.buttons")) 
+   if ((box = edje_object_part_object_get(swin->o_base, "e.box.buttons"))) 
      {
         Evas_Object *btn;
 
@@ -126,7 +126,7 @@ _e_mod_sft_win_cb_free(Sft_Win *swin)
              evas_object_del(btn);
           }
      }
-   if (box = edje_object_part_object_get(swin->o_base, "e.box.extra_buttons")) 
+   if ((box = edje_object_part_object_get(swin->o_base, "e.box.extra_buttons"))) 
      {
         Evas_Object *btn;
 
@@ -222,7 +222,7 @@ _e_mod_sft_win_cb_resize(E_Win *win)
      }
 
    /* adjust box size for content */
-   if (box = edje_object_part_object_get(swin->o_base, "e.box.buttons")) 
+   if ((box = edje_object_part_object_get(swin->o_base, "e.box.buttons"))) 
      {
         evas_object_size_hint_min_get((Evas_Object *)box, &mw, &mh);
         evas_object_resize((Evas_Object *)box, mw, mh);
@@ -238,7 +238,7 @@ _e_mod_sft_win_cb_resize(E_Win *win)
      }
 
    /* adjust box size for content */
-   if (box = edje_object_part_object_get(swin->o_base, "e.box.extra_buttons")) 
+   if ((box = edje_object_part_object_get(swin->o_base, "e.box.extra_buttons"))) 
      {
         evas_object_size_hint_min_get((Evas_Object *)box, &mw, &mh);
         evas_object_resize((Evas_Object *)box, mw, mh);
