@@ -14,7 +14,8 @@ EAPI void *
 e_modapi_init(E_Module *m)
 {
    e_configure_registry_category_add("advanced", 80, 
-				     _("Advanced"), NULL, "preferences-advanced");
+				     _("Advanced"), NULL, 
+                                     "preferences-advanced");
    e_configure_registry_item_add("advanced/acpi_bindings", 10, 
 				 _("ACPI Bindings"), NULL, 
 				 "preferences-system-power-management", 
@@ -25,7 +26,7 @@ e_modapi_init(E_Module *m)
 }
 
 EAPI int
-e_modapi_shutdown(E_Module *m)
+e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    E_Config_Dialog *cfd;
 
@@ -38,7 +39,7 @@ e_modapi_shutdown(E_Module *m)
 }
 
 EAPI int
-e_modapi_save(E_Module *m)
+e_modapi_save(E_Module *m __UNUSED__)
 {
    return 1;
 }

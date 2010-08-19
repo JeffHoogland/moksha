@@ -20,8 +20,8 @@ struct _E_Config_Dialog_Data
 /* local function prototypes */
 static void *_create_data(E_Config_Dialog *cfd);
 static void _fill_data(E_Config_Dialog_Data *cfdata);
-static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static int _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static void _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
+static int _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static void _fill_bindings(E_Config_Dialog_Data *cfdata);
 static void _fill_actions(E_Config_Dialog_Data *cfdata);
@@ -97,7 +97,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 }
 
 static void 
-_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
 {
    E_Config_Binding_Acpi *bind;
    Ecore_Event_Handler *hdl;
@@ -131,7 +131,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 }
 
 static int 
-_basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
 {
    E_Config_Binding_Acpi *bind, *b2;
    Eina_List *l;
@@ -295,7 +295,7 @@ static E_Action_Description *
 _selected_action_get(E_Config_Dialog_Data *cfdata) 
 {
    E_Action_Group *grp;
-   E_Action_Description *dsc;
+   E_Action_Description *dsc = NULL;
    Eina_List *l, *ll;
    const char *lbl;
    int sel;
