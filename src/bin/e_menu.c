@@ -451,11 +451,12 @@ e_menu_title_set(E_Menu *m, char *title)
 }
 
 EAPI void
-e_menu_icon_file_set(E_Menu *m, char *icon __UNUSED__)
+e_menu_icon_file_set(E_Menu *m __UNUSED__, char *icon __UNUSED__)
 {
+   /* FIXME: support menu icons
    E_OBJECT_CHECK(m);
    E_OBJECT_TYPE_CHECK(m, E_MENU_TYPE);
-   /* FIXME: support menu icons */
+    */
 }
 
 EAPI void
