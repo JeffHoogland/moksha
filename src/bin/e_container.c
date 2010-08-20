@@ -296,17 +296,17 @@ e_container_move_resize(E_Container *con, int x, int y, int w, int h)
 }
 
 EAPI void
-e_container_raise(E_Container *con)
+e_container_raise(E_Container *con __UNUSED__)
 {
-   E_OBJECT_CHECK(con);
-   E_OBJECT_TYPE_CHECK(con, E_CONTAINER_TYPE);
+//   E_OBJECT_CHECK(con);
+//   E_OBJECT_TYPE_CHECK(con, E_CONTAINER_TYPE);
 }
 
 EAPI void
-e_container_lower(E_Container *con)
+e_container_lower(E_Container *con __UNUSED__)
 {
-   E_OBJECT_CHECK(con);
-   E_OBJECT_TYPE_CHECK(con, E_CONTAINER_TYPE);
+//   E_OBJECT_CHECK(con);
+//   E_OBJECT_TYPE_CHECK(con, E_CONTAINER_TYPE);
 }
 
 EAPI E_Zone *
