@@ -301,7 +301,7 @@ static Eina_Bool
 _e_randr_screen_info_11_set(void)
 {
    E_RANDR_NO_11_RET(EINA_FALSE);
-
+   
    E_Randr_Screen_Info_11 *screen_info_11 = e_randr_screen_info->rrvd_info.randr_info_11;
    Ecore_X_Randr_Screen_Size_MM *sizes = NULL;
    Ecore_X_Randr_Refresh_Rate *rates = NULL;
@@ -309,24 +309,28 @@ _e_randr_screen_info_11_set(void)
    int i, nsizes, nrates;
 
    if (!(sizes = ecore_x_randr_screen_primary_output_sizes_get(e_randr_screen_info->root, &nsizes))) 
-     return EINA_FALSE;
+      return EINA_FALSE;
    for (i = 0; i < nsizes; i++)
-     if (!(screen_info_11->sizes = eina_list_append(screen_info_11->sizes, &sizes[i]))) goto _e_randr_screen_info_11_fill_fail_sizes;
+      if (!(screen_info_11->sizes = eina_list_append(screen_info_11->sizes, &sizes[i])))
+         goto _e_randr_screen_info_11_fill_fail_sizes;
    ecore_x_randr_screen_primary_output_current_size_get(e_randr_screen_info->root, NULL, NULL, NULL, NULL, &(screen_info_11->csize_index));
    screen_info_11->corientation = ecore_x_randr_screen_primary_output_orientation_get(e_randr_screen_info->root);
    screen_info_11->orientations = ecore_x_randr_screen_primary_output_orientations_get(e_randr_screen_info->root);
    for (i = 0; i < nsizes; i++)
      {
         rates_list = NULL;
-        if (!(rates = ecore_x_randr_screen_primary_output_refresh_rates_get(e_randr_screen_info->root, i, &nrates))) return EINA_FALSE;
+        if (!(rates = ecore_x_randr_screen_primary_output_refresh_rates_get(e_randr_screen_info->root, i, &nrates)))
+           return EINA_FALSE;
         for (i = 0; i < nrates; i++)
-          if (!(rates_list = eina_list_append(rates_list, &rates[i]))) goto _e_randr_screen_info_11_fill_fail_rates_list;
-        if (!(screen_info_11->rates = eina_list_append(screen_info_11->rates, rates_list))) goto _e_randr_screen_info_11_fill_fail_rates;
+           if (!(rates_list = eina_list_append(rates_list, &rates[i])))
+              goto _e_randr_screen_info_11_fill_fail_rates_list;
+        if (!(screen_info_11->rates = eina_list_append(screen_info_11->rates, rates_list)))
+           goto _e_randr_screen_info_11_fill_fail_rates;
      }
    screen_info_11->current_rate = ecore_x_randr_screen_primary_output_current_refresh_rate_get(e_randr_screen_info->root);
-
+   
    return EINA_TRUE;
-
+   
 _e_randr_screen_info_11_fill_fail_rates_list:
    eina_list_free(rates_list);
 _e_randr_screen_info_11_fill_fail_rates:
