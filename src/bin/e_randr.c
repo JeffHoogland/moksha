@@ -306,7 +306,7 @@ _e_randr_screen_info_11_set(void)
    Ecore_X_Randr_Screen_Size_MM *sizes = NULL;
    Ecore_X_Randr_Refresh_Rate *rates = NULL;
    Eina_List *rates_list;
-   int i, nsizes, nrates;
+   int i, j, nsizes, nrates;
 
    if (!(sizes = ecore_x_randr_screen_primary_output_sizes_get(e_randr_screen_info->root, &nsizes))) 
       return EINA_FALSE;
@@ -321,8 +321,8 @@ _e_randr_screen_info_11_set(void)
         rates_list = NULL;
         if (!(rates = ecore_x_randr_screen_primary_output_refresh_rates_get(e_randr_screen_info->root, i, &nrates)))
            return EINA_FALSE;
-        for (i = 0; i < nrates; i++)
-           if (!(rates_list = eina_list_append(rates_list, &rates[i])))
+        for (j = 0; j < nrates; j++)
+           if (!(rates_list = eina_list_append(rates_list, &rates[j])))
               goto _e_randr_screen_info_11_fill_fail_rates_list;
         if (!(screen_info_11->rates = eina_list_append(screen_info_11->rates, rates_list)))
            goto _e_randr_screen_info_11_fill_fail_rates;
