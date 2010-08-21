@@ -664,7 +664,7 @@ _e_fm_op_work_idler(void *data __UNUSED__)
      {
         if ((_e_fm_op_separator) && 
             (_e_fm_op_work_queue == _e_fm_op_separator) && 
-            (_e_fm_op_scan_idler_p == NULL))
+            (!_e_fm_op_scan_idler_p))
           {
              /* You may want to look at the comment in _e_fm_op_scan_atom() about this separator thing. */
              _e_fm_op_work_queue = eina_list_remove_list(_e_fm_op_work_queue, _e_fm_op_separator);
@@ -672,7 +672,7 @@ _e_fm_op_work_idler(void *data __UNUSED__)
              return ECORE_CALLBACK_RENEW;
           }
 
-        if ((_e_fm_op_scan_idler_p == NULL) && (!_e_fm_op_work_error) && 
+        if ((!_e_fm_op_scan_idler_p) && (!_e_fm_op_work_error) && 
             (!_e_fm_op_scan_error))
           ecore_main_loop_quit();
 
@@ -1212,14 +1212,14 @@ _e_fm_op_open_files(E_Fm_Op_Task *task)
    if (!data->from) 
      {
         data->from = fopen(task->src.name, "rb");
-        if (data->from == NULL)
+        if (!data->from)
           _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot open file '%s' for reading: %s.", task->src.name);
      }
 
    if (!data->to)
      {
         data->to = fopen(task->dst.name, "wb");
-        if (data->to == NULL)
+        if (!data->to)
           _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot open file '%s' for writing: %s.", task->dst.name);
      }
 

@@ -236,7 +236,7 @@ _cftype_free(CFType *cft)
 {
    CFModule *cfm;
 
-   assert(cft->modules_hash == NULL); // must do it before calling this function
+   assert(!cft->modules_hash); // must do it before calling this function
    EINA_LIST_FREE(cft->modules, cfm)
      _module_free(cfm);
 

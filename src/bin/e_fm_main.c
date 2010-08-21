@@ -1810,7 +1810,7 @@ static int _e_fm_slave_run(E_Fm_Op_Type type, const char *args, int id)
 
    _e_fm_slaves = eina_list_append(_e_fm_slaves, slave);
 
-   return (slave->exe != NULL);
+   return (!!slave->exe);
 }
 
 static E_Fm_Slave *_e_fm_slave_get(int id)
@@ -1910,7 +1910,7 @@ _e_fm_slave_error_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
    Ecore_Exe_Event_Data *e = event;
    E_Fm_Slave *slave;
 
-   if (e == NULL) return 1;
+   if (!e) return 1;
 
    slave = ecore_exe_data_get(e->exe);
 

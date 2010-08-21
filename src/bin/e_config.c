@@ -2154,7 +2154,7 @@ _eet_union_type_get(const void *data, Eina_Bool *unknow)
    int i;
 
    if (unknow) *unknow = EINA_FALSE;
-   for (i = 0; eet_mapping[i].name != NULL; ++i)
+   for (i = 0; eet_mapping[i].name; ++i)
      if (*u == eet_mapping[i].u)
        return eet_mapping[i].name;
 
@@ -2170,7 +2170,7 @@ _eet_union_type_set(const char *type, void *data, Eina_Bool unknow)
 
    if (unknow) return EINA_FALSE;
 
-   for (i = 0; eet_mapping[i].name != NULL; ++i)
+   for (i = 0; eet_mapping[i].name; ++i)
      if (strcmp(eet_mapping[i].name, type) == 0)
        {
 	  *u = eet_mapping[i].u;

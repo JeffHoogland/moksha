@@ -195,7 +195,7 @@ _e_fileman_dbus_daemon_new(void)
         {NULL}
      };
 
-   for (itr = desc; itr->method != NULL; itr++)
+   for (itr = desc; itr->method; itr++)
      e_dbus_interface_method_add
        (d->iface, itr->method, itr->signature, itr->ret_signature, itr->func);
 

@@ -593,7 +593,7 @@ _cpufreq_status_check_available(Status *s)
 	       }
 	     freq = strtok(NULL, " ");
 	  }
-	while (freq != NULL);
+	while (freq);
 
 	s->frequencies = eina_list_sort(s->frequencies,
 					eina_list_count(s->frequencies),
@@ -625,7 +625,7 @@ _cpufreq_status_check_available(Status *s)
 	       s->governors = eina_list_append(s->governors, strdup(gov));
 	     gov = strtok(NULL, " ");
 	  }
-	while (gov != NULL);
+	while (gov);
 
 	s->governors = 
           eina_list_sort(s->governors, eina_list_count(s->governors),
@@ -695,7 +695,7 @@ _cpufreq_status_check_current(Status *s)
 	buf[sizeof(buf) - 1] = 0;
 	fclose(f);
 
-	if ((s->cur_governor == NULL) || (strcmp(buf, s->cur_governor)))
+	if ((!s->cur_governor) || (strcmp(buf, s->cur_governor)))
 	  {
 	     ret = 1;
 
@@ -758,7 +758,7 @@ _cpufreq_face_update_current(Instance *inst)
 
    /* BSD crashes here without the if-condition
     * since it has no governors (yet) */
-   if (cpufreq_config->status->cur_governor != NULL)
+   if (cpufreq_config->status->cur_governor)
      {
 	governor_msg.str = cpufreq_config->status->cur_governor;
 	edje_object_message_send(inst->o_cpu, EDJE_MESSAGE_STRING, 4,
@@ -810,7 +810,7 @@ _cpufreq_face_cb_set_governor(void *data __UNUSED__, Evas_Object *obj __UNUSED__
 	     break;
 	  }
      }
-   if (next_governor != NULL) _cpufreq_set_governor(next_governor);
+   if (next_governor) _cpufreq_set_governor(next_governor);
 }
 
 static Eina_Bool

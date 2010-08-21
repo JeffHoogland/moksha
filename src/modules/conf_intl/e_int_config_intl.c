@@ -645,7 +645,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 		       /* First check if the LANGUAGE exists in there already */
 
 		       lang_node  = eina_hash_find(cfdata->locale_hash, locale_parts->lang);
-		       if (lang_node == NULL)
+		       if (!lang_node)
 			 {
 			    Eina_List *next;
 			    int i;
@@ -695,7 +695,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 			 {
 			    region_node = eina_hash_find(lang_node->region_hash, locale_parts->region);
 
-			    if (region_node == NULL)
+			    if (!region_node)
 			      {
 				 int i;
 
@@ -728,7 +728,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 				 const char * cs_trans;
 			    
 				 cs_trans = _intl_charset_upper_get(locale_parts->codeset);
-				 if (cs_trans == NULL) 
+				 if (!cs_trans) 
 				   cs = eina_stringshare_add(locale_parts->codeset);
 				 else 
 				   cs = eina_stringshare_add(cs_trans);
@@ -977,7 +977,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    cfdata->gui.lang_list = ob;
 
    /* If lang_list already loaded just use it */
-   if (cfdata->lang_list == NULL)
+   if (!cfdata->lang_list)
      eina_hash_foreach(cfdata->locale_hash, _lang_hash_cb, cfdata);
 
    if (cfdata->lang_list)
@@ -1284,7 +1284,7 @@ _intl_current_locale_setup(E_Config_Dialog_Data *cfdata)
 		  const char *cs_trans;
 	
 		  cs_trans = _intl_charset_upper_get(locale_parts->codeset);
-		  if (cs_trans == NULL)
+		  if (!cs_trans)
 		    cfdata->cur_cs = eina_stringshare_add(locale_parts->codeset);
 		  else
 		    cfdata->cur_cs = eina_stringshare_add(cs_trans);

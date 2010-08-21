@@ -622,7 +622,7 @@ _preview_set(void *data)
 	int ret = 0;
 	int i;
 
-	for (i = 0; parts_list[i] != NULL; i++)
+	for (i = 0; parts_list[i]; i++)
 	  if (strstr(parts_list[i], c_label)) break;
 
 	if (parts_list[i])
@@ -725,9 +725,9 @@ _ilist_files_add(E_Config_Dialog_Data *cfdata, const char *header, const char *d
    d = opendir(dir);
    if (d)
      {
-	while ((dentry = readdir(d)) != NULL)
+	while ((dentry = readdir(d)))
 	  {
-	     if (strstr(dentry->d_name,".edj") != NULL)
+	     if (strstr(dentry->d_name, ".edj"))
 	       {
 		  snprintf(themename, sizeof(themename), "%s/%s",
 			   dir, dentry->d_name);

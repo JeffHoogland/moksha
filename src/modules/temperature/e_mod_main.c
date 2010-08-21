@@ -334,7 +334,7 @@ temperature_face_update_config(Config_Face *inst)
 		      "%s/%s/tempget %i \"%s\" %i", 
 		      e_module_dir_get(temperature_config->module), MODULE_ARCH, 
 		      inst->sensor_type,
-		      (inst->sensor_name != NULL ? inst->sensor_name : "(null)"),
+		      (inst->sensor_name ? inst->sensor_name : "(null)"),
 		      inst->poll_interval);
 	     inst->tempget_exe = 
 	       ecore_exe_pipe_run(buf, ECORE_EXE_PIPE_READ | 
@@ -362,7 +362,7 @@ temperature_face_update_config(Config_Face *inst)
 		 "%s/%s/tempget %i \"%s\" %i", 
 		 e_module_dir_get(temperature_config->module), MODULE_ARCH, 
 		 inst->sensor_type,
-		 (inst->sensor_name != NULL ? inst->sensor_name : "(null)"),
+		 (inst->sensor_name ? inst->sensor_name : "(null)"),
 		 inst->poll_interval);
 	inst->tempget_exe = 
 	  ecore_exe_pipe_run(buf, ECORE_EXE_PIPE_READ | 

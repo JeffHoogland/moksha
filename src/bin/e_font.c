@@ -156,7 +156,7 @@ e_font_available_hash_free(Eina_Hash *hash)
 EAPI E_Font_Properties *
 e_font_fontconfig_name_parse(const char *font)
 {
-   if (font == NULL) return NULL;
+   if (!font) return NULL;
    return _e_font_fontconfig_name_parse(NULL, NULL, font);
 }
 
@@ -190,7 +190,7 @@ _e_font_fontconfig_name_parse(Eina_Hash **font_hash, E_Font_Properties *efp, con
              style = s1 + strlen(E_TOK_STYLE);
 
              if (font_hash) efp = eina_hash_find(*font_hash, name);
-             if (efp == NULL)
+             if (!efp)
                {
                   efp = calloc(1, sizeof(E_Font_Properties));
                   efp->name = eina_stringshare_add(name);
@@ -220,7 +220,7 @@ _e_font_fontconfig_name_parse(Eina_Hash **font_hash, E_Font_Properties *efp, con
    else 
      {
         if (font_hash) efp = eina_hash_find(*font_hash, font);
-        if (efp == NULL)
+        if (!efp)
           {
              efp = calloc(1, sizeof(E_Font_Properties));
              efp->name = eina_stringshare_add(font);
@@ -279,8 +279,8 @@ e_font_fontconfig_name_get(const char *name, const char *style)
 {
    char buf[256];
 
-   if (name == NULL) return NULL;
-   if (style == NULL || style[0] == 0) return eina_stringshare_add(name);
+   if (!name) return NULL;
+   if (!style || style[0] == 0) return eina_stringshare_add(name);
    snprintf(buf, 256, "%s"E_TOK_STYLE"%s", name, style);
    return eina_stringshare_add(buf);
 }

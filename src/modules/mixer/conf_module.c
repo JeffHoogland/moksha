@@ -22,7 +22,7 @@ _find_default_instance_index(E_Mixer_Module_Context *ctxt)
    Eina_List *l;
    int i;
 
-   for (i = 0, l = ctxt->instances; l != NULL; l = l->next, i++)
+   for (i = 0, l = ctxt->instances; l; l = l->next, i++)
      if (l->data == ctxt->default_instance)
        return i;
 
@@ -92,7 +92,7 @@ _basic_create_general(E_Config_Dialog *dialog, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(ui->frame, label);
 
    ui->radio = e_widget_radio_group_new(&cfdata->default_instance);
-   for (i = 0, l = ctxt->instances; l != NULL; l = l->next, i++)
+   for (i = 0, l = ctxt->instances; l; l = l->next, i++)
      {
 	E_Mixer_Instance *inst;
 	E_Mixer_Gadget_Config *conf;

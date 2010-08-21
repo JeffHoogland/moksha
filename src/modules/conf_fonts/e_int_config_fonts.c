@@ -347,7 +347,7 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    Eina_List *next;
    int i;
 
-   if (cfdata->cur_enabled && cfdata->cur_font == NULL)
+   if (cfdata->cur_enabled && !cfdata->cur_font)
      return 0;
 
    for (i = 0; text_class_predefined_names[i].class_description; i++ )
@@ -512,7 +512,7 @@ _basic_init_data_fill(E_Config_Dialog_Data *cfdata)
 
    /* Check based on efd */
    ob = cfdata->gui.enabled;
-   if (efd == NULL)
+   if (!efd)
      e_widget_check_checked_set(ob, 0);
    else if (!strcmp(efd->text_class, "default"))
      e_widget_check_checked_set(ob, 0);
@@ -1010,7 +1010,7 @@ _font_list_load(E_Config_Dialog_Data *cfdata, const char *cur_font)
    e_widget_ilist_freeze(ob);
 
    /* Load Hash a single time */
-   if (cfdata->font_hash == NULL)
+   if (!cfdata->font_hash)
      {
 	Eina_List *fonts;
 

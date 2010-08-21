@@ -494,7 +494,7 @@ ACT_FN_GO(window_fullscreen_toggle, )
 	bd = (E_Border *)obj;
 	if (bd->fullscreen)
 	  e_border_unfullscreen(bd);
-	else if (params == NULL || *params == '\0')
+	else if (!params || *params == '\0')
 	  e_border_fullscreen(bd, e_config->fullscreen_policy);
 	else if (! strcmp(params, "resize"))
 	  e_border_fullscreen(bd, E_FULLSCREEN_RESIZE);
@@ -1009,7 +1009,7 @@ ACT_FN_GO(window_push, )
         bd_list = e_container_border_list_first(bd->zone->container);
         cur = e_container_border_list_next(bd_list);
 
-        while (cur != NULL)
+        while (cur)
           {
             if ((bd->desk == cur->desk) && (bd != cur) && (!cur->iconic))
                {
@@ -1092,7 +1092,7 @@ ACT_FN_GO(window_desk_move_by, )
 
 	to_x = dx + x;
 	to_y = dy + y;
-	while ((desk = e_desk_at_xy_get(bd->zone, to_x, to_y )) == NULL)
+	while (!(desk = e_desk_at_xy_get(bd->zone, to_x, to_y)))
 	  {
 	     /* here we are out of our desktop range */
 	     while (to_x >= bd->zone->desk_x_count)
@@ -3111,9 +3111,9 @@ e_action_predef_name_set(const char *act_grp, const char *act_name, const char *
    if (!actd) return;
 
    actd->act_name = eina_stringshare_add(act_name);
-   actd->act_cmd = act_cmd == NULL ? NULL : eina_stringshare_add(act_cmd);
-   actd->act_params = act_params == NULL ? NULL : eina_stringshare_add(act_params);
-   actd->param_example = param_example == NULL ? NULL : eina_stringshare_add(param_example);
+   actd->act_cmd = !act_cmd ? NULL : eina_stringshare_add(act_cmd);
+   actd->act_params = !act_params ? NULL : eina_stringshare_add(act_params);
+   actd->param_example = !param_example ? NULL : eina_stringshare_add(param_example);
    actd->editable = editable;
 
    actg->acts = eina_list_append(actg->acts, actd);

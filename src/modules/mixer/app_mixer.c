@@ -200,7 +200,7 @@ _channels_info_new(E_Mixer_System *sys)
 
    channels = e_mixer_system_get_channels(sys);
    channels_infos = NULL;
-   for (l = channels; l != NULL; l = l->next)
+   for (l = channels; l; l = l->next)
      {
 	struct channel_info *info;
 
@@ -286,7 +286,7 @@ _populate_channels(E_Mixer_App_Dialog_Data *app)
 	  }
      }
 
-   for (l = app->channels_infos; l != NULL; l = l->next, i++)
+   for (l = app->channels_infos; l; l = l->next, i++)
      {
 	struct channel_info *info = l->data;
 
@@ -528,7 +528,7 @@ _find_card_by_name(E_Mixer_App_Dialog_Data *app, const char *card_name)
    Eina_List *l;
    int i;
 
-   for (i = 0, l = app->cards; l != NULL; i++, l = l->next)
+   for (i = 0, l = app->cards; l; i++, l = l->next)
      if (strcmp(card_name, l->data) == 0)
        return i;
 

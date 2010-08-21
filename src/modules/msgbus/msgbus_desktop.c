@@ -160,7 +160,7 @@ cb_desktop_bglist(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
      {
 	DBusMessageIter sub;
 
-	if (bg == NULL || bg->file == NULL)
+	if (!bg || !bg->file)
 	{
 	   continue;
 	}

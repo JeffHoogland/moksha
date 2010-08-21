@@ -665,8 +665,8 @@ _e_desklock_check_auth(void)
      {
 #endif
 	if ((e_config->desklock_personal_passwd) &&
-	    (!strcmp(edd->passwd == NULL ? "" : edd->passwd,
-		     e_config->desklock_personal_passwd == NULL ? "" :
+	    (!strcmp(!edd->passwd ? "" : edd->passwd,
+		     !e_config->desklock_personal_passwd ? "" :
 		     e_config->desklock_personal_passwd)))
 	  {
 	     /* password ok */

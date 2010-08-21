@@ -262,7 +262,7 @@ _e_kbd_dict_open(E_Kbd_Dict *kd)
    kd->file.size = st.st_size;
    kd->file.dict = mmap(NULL, kd->file.size, PROT_READ, MAP_SHARED,
 			kd->file.fd, 0);
-   if ((kd->file.dict== MAP_FAILED) || (kd->file.dict == NULL))
+   if ((kd->file.dict== MAP_FAILED) || (!kd->file.dict))
      {
 	close(kd->file.fd);
 	return 0;

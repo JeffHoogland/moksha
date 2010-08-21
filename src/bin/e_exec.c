@@ -574,7 +574,7 @@ _dialog_scrolltext_create(Evas *evas, char *title, Ecore_Exe_Event_Data_Line *li
    obj = e_widget_textblock_add(evas);
 
    tlen = 0;
-   for (i = 0; lines[i].line != NULL; i++)
+   for (i = 0; lines[i].line; i++)
      {
 	tlen += lines[i].size + 1;
 	/* When the program output is extraordinarily long, it can cause
@@ -600,7 +600,7 @@ _dialog_scrolltext_create(Evas *evas, char *title, Ecore_Exe_Event_Data_Line *li
 	  }
 
 	/* Append the warning about truncated output. */
-	if (lines[max_lines].line != NULL) strcat(text, trunc_note);
+	if (lines[max_lines].line) strcat(text, trunc_note);
 
 	e_widget_textblock_plain_set(obj, text);
      }
@@ -765,13 +765,13 @@ _dialog_save_cb(void *data __UNUSED__, void *data2)
    if (read_length)
      {
 	tlen = 0;
-	for (i = 0; cfdata->read->lines[i].line != NULL; i++)
+	for (i = 0; cfdata->read->lines[i].line; i++)
 	  tlen += cfdata->read->lines[i].size + 2;
 	text = alloca(tlen + 1);
 	if (text)
 	  {
 	     text[0] = 0;
-	     for (i = 0; cfdata->read->lines[i].line != NULL; i++)
+	     for (i = 0; cfdata->read->lines[i].line; i++)
 	       {
 		  strcat(text, "\t");
 		  strcat(text, cfdata->read->lines[i].line);
@@ -794,13 +794,13 @@ _dialog_save_cb(void *data __UNUSED__, void *data2)
    if (read_length)
      {
 	tlen = 0;
-	for (i = 0; cfdata->error->lines[i].line != NULL; i++)
+	for (i = 0; cfdata->error->lines[i].line; i++)
 	  tlen += cfdata->error->lines[i].size + 1;
 	text = alloca(tlen + 1);
 	if (text)
 	  {
 	     text[0] = 0;
-	     for (i = 0; cfdata->error->lines[i].line != NULL; i++)
+	     for (i = 0; cfdata->error->lines[i].line; i++)
 	       {
 		  strcat(text, "\t");
 		  strcat(text, cfdata->error->lines[i].line);

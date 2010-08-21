@@ -60,7 +60,7 @@ e_intl_input_method_config_write(Eet_File *imc_file, E_Input_Method_Config *imc)
 EAPI void
 e_intl_input_method_config_free(E_Input_Method_Config *imc)
 {
-   if (imc != NULL)
+   if (imc)
      {
 	if (imc->e_im_name) eina_stringshare_del(imc->e_im_name);
 	if (imc->gtk_im_module) eina_stringshare_del(imc->gtk_im_module);

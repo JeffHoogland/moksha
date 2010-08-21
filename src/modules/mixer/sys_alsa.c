@@ -303,7 +303,7 @@ e_mixer_system_get_channels(E_Mixer_System *self)
    channels = NULL;
 
    elem = snd_mixer_first_elem(self);
-   for (; elem != NULL; elem = snd_mixer_elem_next(elem))
+   for (; elem; elem = snd_mixer_elem_next(elem))
      {
 	if ((!snd_mixer_selem_is_active(elem)) ||
             (!snd_mixer_selem_has_playback_volume(elem)))
@@ -335,7 +335,7 @@ e_mixer_system_get_channels_names(E_Mixer_System *self)
    snd_mixer_selem_id_alloca(&sid);
 
    elem = snd_mixer_first_elem(self);
-   for (; elem != NULL; elem = snd_mixer_elem_next(elem))
+   for (; elem; elem = snd_mixer_elem_next(elem))
      {
 	const char *name;
 	if ((!snd_mixer_selem_is_active(elem)) ||
@@ -372,7 +372,7 @@ e_mixer_system_get_default_channel_name(E_Mixer_System *self)
    snd_mixer_selem_id_alloca(&sid);
 
    elem = snd_mixer_first_elem(self);
-   for (; elem != NULL; elem = snd_mixer_elem_next(elem))
+   for (; elem; elem = snd_mixer_elem_next(elem))
      {
 	const char *name;
 	if ((!snd_mixer_selem_is_active(elem)) ||
@@ -400,7 +400,7 @@ e_mixer_system_get_channel_by_name(E_Mixer_System *self, const char *name)
    snd_mixer_selem_id_alloca(&sid);
 
    elem = snd_mixer_first_elem(self);
-   for (; elem != NULL; elem = snd_mixer_elem_next(elem))
+   for (; elem; elem = snd_mixer_elem_next(elem))
      {
 	const char *n;
 	if ((!snd_mixer_selem_is_active(elem)) ||

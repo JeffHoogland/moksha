@@ -710,7 +710,7 @@ _mixer_sys_setup(E_Mixer_Instance *inst)
 
    inst->channel = e_mixer_system_get_channel_by_name(inst->sys,
                    conf->channel_name);
-   return inst->channel != NULL;
+   return !!inst->channel;
 }
 
 static int

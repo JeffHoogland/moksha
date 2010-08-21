@@ -197,7 +197,7 @@ e_connman_config_dialog_new(E_Container *con, E_Connman_Module_Context *ctxt)
    E_Config_Dialog *dialog;
    E_Config_Dialog_View *view;
 
-   EINA_SAFETY_ON_TRUE_RETURN_VAL(ctxt->conf_dialog != NULL, ctxt->conf_dialog);
+   EINA_SAFETY_ON_TRUE_RETURN_VAL(!!ctxt->conf_dialog, ctxt->conf_dialog);
 
    view = E_NEW(E_Config_Dialog_View, 1);
    if (!view)

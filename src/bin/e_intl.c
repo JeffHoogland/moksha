@@ -18,8 +18,8 @@ static char *_e_intl_orig_gtk_im_module = NULL;
 static const char *_e_intl_imc_personal_path = NULL;
 static const char *_e_intl_imc_system_path = NULL;
 
-#define E_EXE_STOP(EXE) if (EXE != NULL) { ecore_exe_terminate(EXE); ecore_exe_free(EXE); EXE = NULL; }
-#define E_EXE_IS_VALID(EXE) (!((EXE == NULL) || (EXE[0] == 0)))
+#define E_EXE_STOP(EXE) if (EXE) { ecore_exe_terminate(EXE); ecore_exe_free(EXE); EXE = NULL; }
+#define E_EXE_IS_VALID(EXE) (!((!EXE) || (EXE[0] == 0)))
 
 /* All locale parts */
 #define E_INTL_LOC_ALL		E_INTL_LOC_LANG | \
@@ -209,14 +209,14 @@ e_intl_language_set(const char *lang)
              char *locale_path;
 
              locale_path = _e_intl_language_path_find(_e_intl_language_alias);
-             if (locale_path == NULL)
+             if (!locale_path)
 	       {
 		  E_Locale_Parts *locale_parts;
 
 		  locale_parts = e_intl_locale_parts_get(_e_intl_language_alias);
 
 		  /* If locale is C or some form of en don't report an error */
-		  if ((locale_parts == NULL) && 
+		  if ((!locale_parts) && 
 		      (strcmp(_e_intl_language_alias, "C")))
 		    {
 		       fprintf(stderr,
@@ -390,7 +390,7 @@ e_intl_input_method_list(void)
 const char *
 e_intl_imc_personal_path_get(void)
 {
-   if (_e_intl_imc_personal_path == NULL)
+   if (!_e_intl_imc_personal_path)
      {
 	char buf[4096];
 
@@ -403,7 +403,7 @@ e_intl_imc_personal_path_get(void)
 const char *
 e_intl_imc_system_path_get(void)
 {
-   if (_e_intl_imc_system_path == NULL)
+   if (!_e_intl_imc_system_path)
      {
 	char buf[4096];
 
@@ -469,7 +469,7 @@ _e_intl_language_path_find(char *language)
 
    search_list = _e_intl_locale_search_order_get(language);
 
-   if (search_list == NULL) return NULL;
+   if (!search_list) return NULL;
 
    directory = NULL;
    found = 0;
@@ -546,11 +546,11 @@ _e_intl_locale_alias_get(const char *language)
    char *lower_language;
    unsigned int i;
 
-   if ((language == NULL) || (!strncmp(language, "POSIX", strlen("POSIX"))))
+   if ((!language) || (!strncmp(language, "POSIX", strlen("POSIX"))))
      return strdup("C");
 
    alias_hash = _e_intl_locale_alias_hash_get();
-   if (alias_hash == NULL) /* No alias file available */
+   if (!alias_hash) /* No alias file available */
      return strdup(language);
 
    lower_language = malloc(strlen(language) + 1);
@@ -755,7 +755,7 @@ e_intl_locale_parts_get(const char *locale)
 EAPI void
 e_intl_locale_parts_free(E_Locale_Parts *locale_parts)
 {
-   if (locale_parts != NULL)
+   if (locale_parts)
      {
 	if (locale_parts->lang) eina_stringshare_del(locale_parts->lang);
 	if (locale_parts->region) eina_stringshare_del(locale_parts->region);
@@ -881,7 +881,7 @@ _e_intl_locale_validate(const char *locale)
    locale_lr = 
      e_intl_locale_parts_combine(locale_parts, 
 				 E_INTL_LOC_LANG | E_INTL_LOC_REGION);
-   if (locale_lr == NULL)
+   if (!locale_lr)
      {
 	/* Not valid locale, maybe its an alias */
 	locale_lr = strdup(locale);
@@ -914,7 +914,7 @@ _e_intl_locale_validate(const char *locale)
 		 (!strcmp(locale_lr, locale_lr_next)))
 	       {
 		  /* Matched lang/region part, now if CS matches */
-		  if ((locale_parts->codeset == NULL) && (locale_parts_next->codeset == NULL))
+		  if ((!locale_parts->codeset) && (!locale_parts_next->codeset))
 		    {
 		       /* Lang/Region parts match and no charsets,
 			* we have a match
@@ -995,7 +995,7 @@ _e_intl_locale_search_order_get(const char *locale)
    int mask;
 
    locale_parts = e_intl_locale_parts_get(locale);
-   if (locale_parts == NULL) return NULL;
+   if (!locale_parts) return NULL;
 
    search_list = NULL;
    for (mask = E_INTL_LOC_ALL; mask >= E_INTL_LOC_LANG; mask--)
@@ -1022,7 +1022,7 @@ _e_intl_imc_dir_scan(const char *dir)
 
    EINA_LIST_FREE(files, file)
      {
-	if (strstr(file, ".imc") != NULL)
+	if (strstr(file, ".imc"))
 	  {
 	     char buf[PATH_MAX];
 	     

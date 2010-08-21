@@ -372,7 +372,7 @@ e_int_menus_menu_augmentation_add_sorted(const char *menu,
    if (_e_int_menus_augmentation)
      {
 	l = eina_hash_find(_e_int_menus_augmentation, menu);
-	old = (l != NULL);
+	old = (l);
      }
    else
      {

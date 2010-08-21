@@ -1919,7 +1919,7 @@ _e_fm2_icon_thumb_edje_get(Evas *evas, const E_Fm2_Icon *ic, void (*cb) (void *d
    else
      itr = known_groups + 1;
 
-   for (; *itr != NULL; itr++)
+   for (; *itr; itr++)
      if (edje_file_group_exists(buf, *itr))
        break;
 
@@ -9292,7 +9292,7 @@ _e_fm2_file_delete_delete_cb(void *obj)
 static char *
 _e_fm_string_append_char(char *str, size_t *size, size_t *len, char c)
 {
-   if (str == NULL)
+   if (!str)
      {
 	str = malloc(4096);
 	str[0] = '\x00';
