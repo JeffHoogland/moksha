@@ -540,6 +540,9 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, w, INT);
    E_CONFIG_VAL(D, T, h, INT);
 
+   // FIXME: need to totally re-do this randr config stuff - remove the
+   // union stuff. do this differently to not use unions really. not
+   // intended for how it is used here really.
     _e_config_screen_output_restore_info_edd = E_CONFIG_DD_NEW("E_Randr_Output_Restore_Info", Eina_Rectangle);
 #undef T
 #undef D
@@ -587,6 +590,7 @@ e_config_init(void)
    EET_DATA_DESCRIPTOR_ADD_MAPPING(unified, "E_Config_Screen_11", edd_11_info);
    EET_DATA_DESCRIPTOR_ADD_MAPPING(unified, "E_Config_Screen_12", edd_12_info);
    EET_DATA_DESCRIPTOR_ADD_MAPPING(unified, "E_Config_Screen_13", edd_12_info);
+// DISABLE! crashie crashie long time   
 //   EET_DATA_DESCRIPTOR_ADD_UNION(D, T, "E_Randr_Screen_Restore_Info_Union", rrvd_restore_info, randr_version, unified);
    E_CONFIG_VAL(D, T, randr_version, INT);
 
