@@ -70,6 +70,7 @@ static E_Config_DD *_e_config_eina_rectangle_edd = NULL;
 static E_Config_DD *_e_config_screen_info_edd = NULL;
 static E_Config_DD *_e_config_screen_restore_info_11_edd = NULL;
 static E_Config_DD *_e_config_screen_restore_info_12_edd = NULL;
+static E_Config_DD *_e_config_screen_output_edid_hash_edd = NULL;
 static E_Config_DD *_e_config_screen_output_restore_info_edd = NULL;
 static E_Config_DD *_e_config_screen_crtc_restore_info_edd = NULL;
 
@@ -540,15 +541,22 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, w, INT);
    E_CONFIG_VAL(D, T, h, INT);
 
+      _e_config_screen_output_edid_hash_edd = E_CONFIG_DD_NEW("E_Randr_Output_Edid_Hash", E_Randr_Output_Edid_Hash);
+#undef T
+#undef D
+#define T E_Randr_Output_Edid_Hash
+#define D _e_config_screen_output_edid_hash_edd
+   E_CONFIG_VAL(D, T, hash, INT);
+
    // FIXME: need to totally re-do this randr config stuff - remove the
    // union stuff. do this differently to not use unions really. not
    // intended for how it is used here really.
-    _e_config_screen_output_restore_info_edd = E_CONFIG_DD_NEW("E_Randr_Output_Restore_Info", Eina_Rectangle);
+    _e_config_screen_output_restore_info_edd = E_CONFIG_DD_NEW("E_Randr_Output_Restore_Info", E_Randr_Output_Restore_Info);
 #undef T
 #undef D
 #define T E_Randr_Output_Restore_Info
 #define D _e_config_screen_output_restore_info_edd
-   E_CONFIG_VAL(D, T, edid, STR);
+   E_CONFIG_SUB(D, T, edid_hash, _e_config_screen_output_edid_hash_edd);
    E_CONFIG_VAL(D, T, backlight_level, DOUBLE);
 
   _e_config_screen_crtc_restore_info_edd = E_CONFIG_DD_NEW("E_Randr_Crtc_Restore_Info", E_Randr_Crtc_Restore_Info);
@@ -566,6 +574,8 @@ e_config_init(void)
 #define T E_Randr_Screen_Restore_Info_12
 #define D _e_config_screen_restore_info_12_edd
    E_CONFIG_LIST(D, T, crtcs, _e_config_screen_crtc_restore_info_edd);
+   E_CONFIG_LIST(D, T, outputs_edid_hashes, _e_config_screen_output_edid_hash_edd);
+   E_CONFIG_VAL(D, T, noutputs, INT);
    E_CONFIG_VAL(D, T, output_policy, INT);
    E_CONFIG_VAL(D, T, alignment, INT);
 

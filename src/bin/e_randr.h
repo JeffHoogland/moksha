@@ -6,6 +6,7 @@ typedef struct _E_Randr_Screen_Info_11 E_Randr_Screen_Info_11;
 typedef struct _E_Randr_Screen_Info_12 E_Randr_Screen_Info_12;
 typedef union _E_Randr_Screen_RRVD_Info E_Randr_Screen_RRVD_Info;
 typedef struct _E_Randr_Screen_Info E_Randr_Screen_Info;
+typedef struct _E_Randr_Output_Edid_Hash E_Randr_Output_Edid_Hash;
 typedef struct _E_Randr_Output_Restore_Info E_Randr_Output_Restore_Info;
 typedef struct _E_Randr_Crtc_Restore_Info E_Randr_Crtc_Restore_Info;
 typedef struct _E_Randr_Screen_Restore_Info_11 E_Randr_Screen_Restore_Info_11;
@@ -56,12 +57,12 @@ struct _E_Randr_Output_Info
    unsigned char *edid;
    unsigned long edid_length;
    int max_backlight;
-   double current_backlight;
+   double backlight_level;
    Ecore_X_Render_Subpixel_Order subpixel_order;
    Eina_List *compatible_outputs;
 };
 
-struct _E_Randr_Screen_Info_11 
+struct _E_Randr_Screen_Info_11
 {
    //List of Ecore_X_Randr_Screen_Size_MM*
    Eina_List *sizes;
@@ -101,13 +102,17 @@ struct _E_Randr_Screen_Info
 };
 
 //Following stuff is just for configuration purposes
-struct _E_Randr_Output_Restore_Info 
+struct _E_Randr_Output_Edid_Hash {
+   int hash;
+};
+
+struct _E_Randr_Output_Restore_Info
 {
-   const char *edid;
+   E_Randr_Output_Edid_Hash edid_hash;
    double backlight_level;
 };
 
-struct _E_Randr_Crtc_Restore_Info 
+struct _E_Randr_Crtc_Restore_Info
 {
    Eina_Rectangle geometry;
    Ecore_X_Randr_Orientation orientation;
@@ -124,6 +129,8 @@ struct _E_Randr_Screen_Restore_Info_11
 
 struct _E_Randr_Screen_Restore_Info_12 
 {
+   Eina_List *outputs_edid_hashes;
+   int noutputs;
    Eina_List *crtcs;
    Ecore_X_Randr_Output_Policy output_policy;
    Ecore_X_Randr_Relative_Alignment alignment;

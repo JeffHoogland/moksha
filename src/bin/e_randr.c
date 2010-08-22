@@ -447,7 +447,7 @@ _e_randr_output_info_new(int nrequested)
         .possible_crtcs = NULL,
         .preferred_modes = NULL,
         .max_backlight = Ecore_X_Randr_Unset,
-        .current_backlight = Ecore_X_Randr_Unset,
+        .backlight_level = 0.0,
         .edid = NULL,
         .edid_length = 0,
         .size_mm = {Ecore_X_Randr_Unset, Ecore_X_Randr_Unset},
@@ -1058,7 +1058,8 @@ _e_randr_config_find_suiting_config_11(E_Randr_Screen_Restore_Info_11 **restore_
 
    EINA_LIST_FOREACH(e_config->screen_info, cfg_screen_restore_info_iter, screen_restore_info)
      {
-	if (!screen_restore_info) continue ;
+        /* 'screen_restore_info' should _never_ be NULL, since this functions shouldn't be called due to randr init failing. */
+	if (!screen_restore_info) continue;
         if (screen_restore_info->randr_version != ECORE_X_RANDR_1_1) continue;
         restore_info_11 = screen_restore_info->rrvd_restore_info.restore_info_11;
         if((sizes = ecore_x_randr_screen_primary_output_sizes_get(e_randr_screen_info->root, &nsizes)))
@@ -1135,7 +1136,8 @@ _e_randr_outputs_to_array(Eina_List *outputs_info)
 
    if (!outputs_info || !(ret = malloc(sizeof(Ecore_X_Randr_Output) * eina_list_count(outputs_info)))) return NULL;
    EINA_LIST_FOREACH(outputs_info, output_iter, output_info)
-     ret[i++] = output_info ? output_info->xid : 0;
+     /* output_info == NULL should _not_ be possible! */
+     ret[i++] = output_info ? output_info->xid : Ecore_X_Randr_None;
    return ret;
 }
 
