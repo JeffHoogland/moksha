@@ -371,14 +371,14 @@ e_int_menus_menu_augmentation_add_sorted(const char *menu,
 
    if (_e_int_menus_augmentation)
      {
-	l = eina_hash_find(_e_int_menus_augmentation, menu);
-	old = (l);
+	if ((l = eina_hash_find(_e_int_menus_augmentation, menu)))
+          old = EINA_TRUE;
      }
    else
      {
 	_e_int_menus_augmentation = eina_hash_string_superfast_new(NULL);
 	l = NULL;
-	old = 0;
+	old = EINA_FALSE;
      }
 
    if ((!l) || (!maug->sort_key))
