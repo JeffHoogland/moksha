@@ -705,14 +705,15 @@ _theme_file_used(Eina_List *tlist, const char *filename)
    return 0;
 }
 
-static int
-_ilist_files_add(E_Config_Dialog_Data *cfdata, const char *header, const char *dir)
+static void
+_ilist_files_add(E_Config_Dialog_Data *cfdata,
+		 const char *header, const char *dir,
+		 int *count_cb)
 {
-   DIR *d = NULL;
-   struct dirent *dentry = NULL;
+   Eina_Iterator *it;
+   const char *file;
    Eina_List *themefiles = NULL;
    int count = 0;
-   char themename[1024];
    char *tmp;
    Evas_Object *o;
    const char *theme;
@@ -722,23 +723,27 @@ _ilist_files_add(E_Config_Dialog_Data *cfdata, const char *header, const char *d
    e_widget_ilist_header_append(o, NULL, header);
    evas = evas_object_evas_get(o);
 
-   d = opendir(dir);
-   if (d)
+   it = eina_file_ls(dir);
+
+   if (it)
      {
-	while ((dentry = readdir(d)))
-	  {
-	     if (strstr(dentry->d_name, ".edj"))
-	       {
-		  snprintf(themename, sizeof(themename), "%s/%s",
-			   dir, dentry->d_name);
-		  themefiles = eina_list_append(themefiles, eina_stringshare_add(themename));
-	       }
-	  }
-	closedir(d);
+	EINA_ITERATOR_FOREACH(it, file)
+	  if (strstr(file,".edj") != NULL)
+	    {
+	       themefiles = eina_list_append(themefiles, file);
+	    }
+	  else
+	    {
+	       eina_stringshare_del(file);
+	    }
+
+	eina_iterator_free(it);
      }
 
    if (themefiles)
      {
+	char themename[PATH_MAX];
+
 	themefiles = eina_list_sort(themefiles, -1, _cb_sort);
 	count = eina_list_count(themefiles);
 
@@ -761,7 +766,8 @@ _ilist_files_add(E_Config_Dialog_Data *cfdata, const char *header, const char *d
 	  }
      }
 
-   return count;
+   if (count_cb)
+     *count_cb = count;
 }
 
 static void
@@ -781,12 +787,11 @@ _fill_files_ilist(E_Config_Dialog_Data *cfdata)
 
    /* Grab the "Personal" themes. */
    e_user_dir_concat_static(theme_dir, "themes");
-   cfdata->personal_file_count = 
-     _ilist_files_add(cfdata, _("Personal"), theme_dir);
+   _ilist_files_add(cfdata, _("Personal"), theme_dir, &cfdata->personal_file_count);
 
    /* Grab the "System" themes. */
    e_prefix_data_concat_static(theme_dir, "data/themes");
-   _ilist_files_add(cfdata, _("System"), theme_dir);
+   _ilist_files_add(cfdata, _("System"), theme_dir, NULL);
 
    e_widget_ilist_go(o);
    e_widget_ilist_thaw(o);
