@@ -533,6 +533,9 @@ define([CHECK_MODULE_OFONO],
 AC_SUBST(EOFONO_CFLAGS)
 AC_SUBST(EOFONO_LIBS)
 
+#dnl Check enotify support for illume-indicator module so it can do dbus notifications or not
+AC_E_CHECK_PKG(ENOTIFY, [enotify >= 1.0.0], [], [ENOTIFY=false])
+
 AC_E_OPTIONAL_MODULE([ibar], true)
 AC_E_OPTIONAL_MODULE([dropshadow], true)
 AC_E_OPTIONAL_MODULE([clock], true)
