@@ -2,7 +2,7 @@
 # define E_MOD_MAIN_H
 
 # ifdef HAVE_ENOTIFY
-#  include <E_Notify.h>
+#  include <E_Notification_Daemon.h>
 # endif
 
 EAPI extern E_Module_Api e_modapi;

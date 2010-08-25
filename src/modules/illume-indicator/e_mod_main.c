@@ -34,7 +34,7 @@ e_modapi_init(E_Module *m)
 
 #ifdef HAVE_ENOTIFY
    /* init notification subsystem */
-   if (!e_notification_init()) 
+   if (!e_notification_daemon_init()) 
      {
         /* shutdown config */
         il_ind_config_shutdown();
@@ -92,7 +92,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 
 #ifdef HAVE_ENOTIFY
    /* shutdown notification subsystem */
-   e_notification_shutdown();
+   e_notification_daemon_shutdown();
 #endif
 
    /* shutdown config */
