@@ -6,6 +6,13 @@
 /* local variables */
 static Eina_List *iwins = NULL;
 
+#ifdef HAVE_ENOTIFY
+static int _cb_notify_add(E_Notification_Daemon *daemon __UNUSED__, E_Notification *n);
+static void _cb_notify_del(E_Notification_Daemon *daemon __UNUSED__, unsigned int id);
+
+static E_Notification_Daemon *notify_daemon = NULL;
+#endif
+
 /* external variables */
 const char *_ind_mod_dir = NULL;
 
@@ -45,6 +52,12 @@ e_modapi_init(E_Module *m)
 
         return NULL;
      }
+   notify_daemon = e_notification_daemon_add("illume-indicator", 
+                                             "Enlightenment");
+//   e_notification_daemon_data_set(notify_daemon, NULL);
+   e_notification_daemon_callback_notify_set(notify_daemon, _cb_notify_add);
+   e_notification_daemon_callback_close_notification_set(notify_daemon, 
+                                                         _cb_notify_del);
 #endif
 
    /* loop through the managers (root windows) */
@@ -91,6 +104,8 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
                                            0, 0, 0, 0);
 
 #ifdef HAVE_ENOTIFY
+   if (notify_daemon) e_notification_daemon_free(notify_daemon);
+
    /* shutdown notification subsystem */
    e_notification_daemon_shutdown();
 #endif
@@ -110,3 +125,18 @@ e_modapi_save(E_Module *m __UNUSED__)
 {
    return il_ind_config_save();
 }
+
+/* local function prototypes */
+#ifdef HAVE_ENOTIFY
+static int 
+_cb_notify_add(E_Notification_Daemon *daemon __UNUSED__, E_Notification *n) 
+{
+   return 1;
+}
+
+static void 
+_cb_notify_del(E_Notification_Daemon *daemon __UNUSED__, unsigned int id) 
+{
+
+}
+#endif
