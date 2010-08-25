@@ -32,6 +32,21 @@ e_modapi_init(E_Module *m)
         return NULL;
      }
 
+#ifdef HAVE_ENOTIFY
+   /* init notification subsystem */
+   if (!e_notification_init()) 
+     {
+        /* shutdown config */
+        il_ind_config_shutdown();
+
+        /* clear module directory variable */
+        if (_ind_mod_dir) eina_stringshare_del(_ind_mod_dir);
+        _ind_mod_dir = NULL;
+
+        return NULL;
+     }
+#endif
+
    /* loop through the managers (root windows) */
    EINA_LIST_FOREACH(e_manager_list(), ml, man) 
      {
@@ -43,6 +58,9 @@ e_modapi_init(E_Module *m)
           {
              E_Zone *zone;
              Eina_List *zl;
+
+             /* TODO: Make this configurable so illume2 can be run
+              * on just one zone/screen/etc */
 
              /* for each zone, create an indicator window */
              EINA_LIST_FOREACH(con->zones, zl, zone) 
@@ -71,6 +89,11 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    /* reset indicator geometry for conformant apps */
    ecore_x_e_illume_indicator_geometry_set(ecore_x_window_root_first_get(), 
                                            0, 0, 0, 0);
+
+#ifdef HAVE_ENOTIFY
+   /* shutdown notification subsystem */
+   e_notification_shutdown();
+#endif
 
    /* shutdown config */
    il_ind_config_shutdown();

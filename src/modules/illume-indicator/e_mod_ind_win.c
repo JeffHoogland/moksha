@@ -189,7 +189,8 @@ _e_mod_ind_win_cb_win_prop(void *data, int type __UNUSED__, void *event)
    ev = event;
 
    if (!(iwin = data)) return ECORE_CALLBACK_PASS_ON;
-   if (ev->win != iwin->win->container->manager->root) return ECORE_CALLBACK_PASS_ON;
+   if (ev->win != iwin->win->container->manager->root) 
+     return ECORE_CALLBACK_PASS_ON;
    if (ev->atom != ATM_ENLIGHTENMENT_SCALE) return ECORE_CALLBACK_PASS_ON;
 
    /* set minimum size of this window */
