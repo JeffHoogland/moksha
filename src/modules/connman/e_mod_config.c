@@ -24,10 +24,12 @@ struct _E_Config_Dialog_Data
 	Evas_Object *hlayout;
 	Evas_Object *netframe;
 	Evas_Object *netlist;
-	Evas_Object *o_up;
+/*
+        Evas_Object *o_up;
 	Evas_Object *o_down;
 	Evas_Object *o_add;
 	Evas_Object *o_del;
+*/
 	Evas_Object *setframe;
 	struct connman_config_network_settings_ui
 	  {
@@ -379,7 +381,7 @@ _networks_fill_details(E_Config_Dialog_Data *cfdata, Evas_Object *list __UNUSED_
    evas_object_show(ui->list_general);
    evas_object_show(ui->scr_general);
 }
-
+/*
 static inline void
 _networks_disable_buttons(E_Config_Dialog_Data *cfdata, Evas_Object *list, int sel)
 {
@@ -400,14 +402,14 @@ _networks_disable_buttons(E_Config_Dialog_Data *cfdata, Evas_Object *list, int s
 	e_widget_disabled_set(o_down, 1);
      }
 }
-
+*/
 void
 _cb_service_selected(void *data)
 {
    E_Config_Dialog_Data *cfdata = data;
    Evas_Object *list = cfdata->networks.netlist;
    int sel = e_widget_ilist_selected_get(list);
-   _networks_disable_buttons(cfdata, list, sel);
+//   _networks_disable_buttons(cfdata, list, sel);
    _networks_fill_details(cfdata, list, sel);
 }
 
@@ -497,6 +499,7 @@ _networks_list_create(Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_ilist_selected_set(ui->netlist, 0);
    e_widget_framelist_object_append(ui->netframe, ui->netlist);
 
+#if 0
    /* Buttons */
    ot = e_widget_table_add(evas, 0);
    ui->o_up = e_widget_button_add
@@ -520,6 +523,7 @@ _networks_list_create(Evas *evas, E_Config_Dialog_Data *cfdata)
 					 mw, mh, /* min */
 					 99999, 99999 /* max */
 					 );
+#endif
 }
 
 static void
