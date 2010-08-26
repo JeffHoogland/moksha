@@ -66,14 +66,15 @@ e_desktop_border_create(E_Border *bd)
 {
    Efreet_Desktop *desktop = NULL;
    const char *desktop_dir, *icon_dir;
-   const char *bname, *bclass;
+   const char *bname, *bclass, *btitle;
    char path[PATH_MAX];
 
    bname = bd->client.icccm.name;
    if ((bname) && (bname[0] == 0)) bname = NULL;
    bclass = bd->client.icccm.class;
    if ((bclass) && (bclass[0] == 0)) bclass = NULL;
-
+   btitle = e_border_name_get(bd);
+   
    desktop_dir = e_user_desktop_dir_get();
 
    if ((!desktop_dir) || (!e_util_dir_check(desktop_dir))) return NULL;
@@ -114,6 +115,11 @@ e_desktop_border_create(E_Border *bd)
 	return NULL;
      }
    if (bclass) desktop->name = strdup(bclass);
+   else if (bname) desktop->name = strdup(bname);
+   else if (btitle) desktop->name = strdup(btitle);
+   
+   if (btitle) desktop->comment = strdup(btitle);
+   
    if (bclass) desktop->startup_wm_class = strdup(bclass);
    if (bd->client.icccm.command.argc > 0)
      // FIXME this should concat the entire argv array together
@@ -121,7 +127,8 @@ e_desktop_border_create(E_Border *bd)
    else if (bname)
      desktop->exec = strdup(bname); 
 
-   if (bd->client.netwm.startup_id > 0) desktop->startup_notify = 1;
+// disable this   
+//   if (bd->client.netwm.startup_id > 0) desktop->startup_notify = 1;
    if (bd->client.netwm.icons)
      {
 	/* FIXME
