@@ -728,7 +728,7 @@ _ilist_files_add(E_Config_Dialog_Data *cfdata,
    if (it)
      {
 	EINA_ITERATOR_FOREACH(it, file)
-	  if (strstr(file,".edj") != NULL)
+	  if (strstr(file, ".edj"))
 	    {
 	       themefiles = eina_list_append(themefiles, file);
 	    }
