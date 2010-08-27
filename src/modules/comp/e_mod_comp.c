@@ -111,6 +111,8 @@ struct _E_Comp_Win
    Eina_Bool             nocomp : 1; // nocomp applied
    Eina_Bool             needpix : 1; // need new pixmap
    Eina_Bool             needxim : 1; // need new xim
+   Eina_Bool             real_hid : 1; // last hide was a real window unmap
+   Eina_Bool             inhash : 1; // is in the windows hash
 };
 
 static Eina_List *handlers = NULL;
@@ -131,6 +133,7 @@ static void _e_mod_comp_render_queue(E_Comp *c);
 static void _e_mod_comp_win_damage(E_Comp_Win *cw, int x, int y, int w, int h, Eina_Bool dmg);
 static void _e_mod_comp_win_render_queue(E_Comp_Win *cw);
 static void _e_mod_comp_win_del(E_Comp_Win *cw);
+static void _e_mod_comp_win_real_hide(E_Comp_Win *cw);
 static void _e_mod_comp_win_hide(E_Comp_Win *cw);
 static void _e_mod_comp_win_configure(E_Comp_Win *cw, int x, int y, int w, int h, int border);
 
@@ -897,7 +900,7 @@ _e_mod_comp_cb_update(E_Comp *c)
           }
      }
    
-   DBG("UPDATE ALL DONE: overlow = %i\n", c->render_overflow);
+   DBG("UPDATE ALL DONE: overflow = %i\n", c->render_overflow);
    if (c->render_overflow <= 0)
      {
         c->render_overflow = 0;
@@ -1441,6 +1444,7 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
    cw->depth = att.depth;
    cw->argb = ecore_x_window_argb_get(cw->win);
    eina_hash_add(windows, e_util_winid_str_get(cw->win), cw);
+   cw->inhash = 1;
    if ((!cw->input_only) && (!cw->invalid))
      {
         Ecore_X_Rectangle *rects;
@@ -1561,9 +1565,18 @@ _e_mod_comp_win_del(E_Comp_Win *cw)
           {
              eina_hash_del(borders, e_util_winid_str_get(cw->bd->client.win), cw);
              e_object_delfn_del(E_OBJECT(cw->bd), cw->dfn);
+             cw->bd = NULL;
           }
-        else if (cw->pop) e_object_delfn_del(E_OBJECT(cw->pop), cw->dfn);
-        else if (cw->menu) e_object_delfn_del(E_OBJECT(cw->menu), cw->dfn);
+        else if (cw->pop)
+           {
+              e_object_delfn_del(E_OBJECT(cw->pop), cw->dfn);
+              cw->pop = NULL;
+           }
+        else if (cw->menu)
+           {
+              e_object_delfn_del(E_OBJECT(cw->menu), cw->dfn);
+              cw->menu = NULL;
+           }
         cw->dfn = NULL;
      }
    if (cw->pixmap)
@@ -1613,7 +1626,8 @@ _e_mod_comp_win_del(E_Comp_Win *cw)
         evas_object_del(cw->shobj);
         cw->shobj = NULL;
      }
-   eina_hash_del(windows, e_util_winid_str_get(cw->win), cw);
+   if (cw->inhash)
+      eina_hash_del(windows, e_util_winid_str_get(cw->win), cw);
    if (cw->damage)
      {
         Ecore_X_Region parts;
@@ -1647,22 +1661,54 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
    
    if (cw->visible) return;
    cw->visible = 1;
-   DBG("  [0x%x] sho ++++++++++\n", cw->win);
+   DBG("  [0x%x] sho ++ [redir=%i, pm=%x, dmg_up=%i]\n", 
+       cw->win, cw->redirected, cw->pixmap, cw->dmg_updates);
    _e_mod_comp_win_configure(cw, cw->hidden.x, cw->hidden.y, cw->w, cw->h, cw->border);
    if ((cw->input_only) || (cw->invalid)) return;
-   if (cw->pixmap) ecore_x_pixmap_free(cw->pixmap);
-   // XXXX: do all the below to cw->obj_mirror list
-   evas_object_image_size_set(cw->obj, cw->pw, cw->ph);
-   EINA_LIST_FOREACH(cw->obj_mirror, l, o)
+   if (cw->real_hid)
      {
-        evas_object_image_size_set(o, cw->pw, cw->ph);
+        DBG("  [0x%x] real hid - fix\n", cw->win);
+        cw->real_hid = 0;
+        if (cw->native)
+          {
+             evas_object_image_native_surface_set(cw->obj, NULL);
+             cw->native = 0;
+             EINA_LIST_FOREACH(cw->obj_mirror, l, o)
+               {
+                  evas_object_image_native_surface_set(o, NULL);
+               }
+          }
+        if (cw->pixmap)
+          {
+             ecore_x_pixmap_free(cw->pixmap);
+             cw->pixmap = 0;
+             cw->pw = 0;
+             cw->ph = 0;
+             ecore_x_e_comp_pixmap_set(cw->win, cw->pixmap);
+          }
+        if (cw->xim)
+          {
+             evas_object_image_size_set(cw->obj, 1, 1);
+             evas_object_image_data_set(cw->obj, NULL);
+             ecore_x_image_free(cw->xim);
+             cw->xim = NULL;
+             EINA_LIST_FOREACH(cw->obj_mirror, l, o)
+               {
+                  evas_object_image_size_set(o, 1, 1);
+                  evas_object_image_data_set(o, NULL);
+               }
+          }
+        if (cw->redirected)
+          {
+             cw->redirected = 0;
+             cw->pw = 0;
+             cw->ph = 0;
+          }
+        cw->dmg_updates = 1;
      }
-   if (cw->pixmap) ecore_x_pixmap_free(cw->pixmap);
-   cw->pixmap = 0; 
-   cw->pw = 0;
-   cw->ph = 0;
-   cw->native = 0;
-   if (!cw->redirected)
+   else
+      cw->dmg_updates = 1;
+   if ((!cw->redirected) || (!cw->pixmap))
      {
 //        printf("^^^^ redirect5 %x\n", cw->win);
 // we redirect all subwindows anyway
@@ -1677,28 +1723,23 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
           }
         if ((cw->pw <= 0) || (cw->ph <= 0))
           {
-             ecore_x_pixmap_free(cw->pixmap);
-             cw->pixmap = 0;
+             if (cw->pixmap)
+               {
+                  ecore_x_pixmap_free(cw->pixmap);
+                  cw->pixmap = 0;
+               }
           }
         cw->redirected = 1;
-        cw->dmg_updates = 0;
         DBG("  [0x%x] up resize %ix%i\n", cw->win, cw->pw, cw->ph);
         e_mod_comp_update_resize(cw->up, cw->pw, cw->ph);
         e_mod_comp_update_add(cw->up, 0, 0, cw->pw, cw->ph);
-     }
-   ecore_x_e_comp_pixmap_set(cw->win, cw->pixmap);
-/* don't need  
-   if ((cw->shobj) && (cw->obj))
-     {
-        if (_comp_mod->conf->use_shadow)
+        evas_object_image_size_set(cw->obj, cw->pw, cw->ph);
+        EINA_LIST_FOREACH(cw->obj_mirror, l, o)
           {
-             if (_e_mod_comp_win_do_shadow(cw))
-               edje_object_signal_emit(cw->shobj, "e,state,shadow,on", "e");
-             else
-               edje_object_signal_emit(cw->shobj, "e,state,shadow,off", "e");
+             evas_object_image_size_set(o, cw->pw, cw->ph);
           }
+        ecore_x_e_comp_pixmap_set(cw->win, cw->pixmap);
      }
- */
    if (cw->dmg_updates >= 1)
      {
         cw->defer_hide = 0;
@@ -1714,6 +1755,18 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
                _e_mod_comp_cb_pending_after, cw->c);
      }
    _e_mod_comp_win_render_queue(cw);
+}
+
+static void
+_e_mod_comp_win_real_hide(E_Comp_Win *cw)
+{
+   if (cw->bd)
+     {
+        _e_mod_comp_win_hide(cw);
+        return;
+     }
+   cw->real_hid = 1;
+   _e_mod_comp_win_hide(cw);
 }
 
 static void
@@ -2010,7 +2063,7 @@ _e_mod_comp_hide(void *data __UNUSED__, int type __UNUSED__, void *event)
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->win);
    if (!cw) return ECORE_CALLBACK_PASS_ON;
    if (!cw->visible) return ECORE_CALLBACK_PASS_ON;
-   _e_mod_comp_win_hide(cw);
+   _e_mod_comp_win_real_hide(cw);
    return ECORE_CALLBACK_PASS_ON;
 }
 
