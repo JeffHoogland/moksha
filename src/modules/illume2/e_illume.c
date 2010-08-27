@@ -572,6 +572,11 @@ e_illume_border_show(E_Border *bd)
    /* make sure we have a border */
    if (!bd) return;
 
+   e_border_uniconify(bd);
+   e_border_raise(bd);
+   e_border_show(bd);
+   return;
+#if 0   
    /* NB: We handle shows this way so we don't get extra layout events from 
     * the e_border calls */
    e_container_border_lower(bd);
@@ -582,6 +587,7 @@ e_illume_border_show(E_Border *bd)
    bd->changes.visible = 1;
    ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_MAPPED, &visible, 1);
    ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_MANAGED, &visible, 1);
+#endif   
 }
 
 /**
@@ -601,6 +607,9 @@ e_illume_border_hide(E_Border *bd)
    /* make sure we have a border */
    if (!bd) return;
 
+   e_border_iconify(bd);
+   return;
+#if 0   
    /* NB: We handle hides this way so we don't get extra layout events from 
     * the e_border calls */
    e_container_shape_hide(bd->shape);
@@ -608,6 +617,7 @@ e_illume_border_hide(E_Border *bd)
    bd->visible = 0;
    bd->changes.visible = 1;
    ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_MAPPED, &visible, 1);
+#endif   
 }
 
 /**
