@@ -303,7 +303,6 @@ evry_hide(Evry_Window *win, int clear)
 
 	sel = CUR_SEL;
 	s = sel->state;
-
 	_evry_clear(sel);
 	_evry_clear(sel);
 
@@ -616,8 +615,8 @@ evry_plugin_update(Evry_Plugin *p, int action)
    if (!(win = sel->win))
      return;
 
-   if (s->request != p->request)
-     return;
+   // if (s->request != p->request)
+   //   return;
 
    DBG("update %d %d %s", s->request, p->request, p->name);
 
@@ -848,12 +847,14 @@ _evry_window_new(E_Zone *zone, E_Zone_Edge edge)
 
 	x += zone->x;
 	y += zone->y;
-	
+
 	mw += offset_s*2;
 	mh += offset_s*2;
      }
 
    e_win_move_resize(win->ewin, x, y, mw, mh);
+   win->ewin->w = mw;
+   win->ewin->h = mh;
 
    o = win->o_main;
    evas_object_move(o, 0, 0);
