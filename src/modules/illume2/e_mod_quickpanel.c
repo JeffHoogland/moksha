@@ -426,7 +426,7 @@ _e_mod_quickpanel_hide(E_Illume_Quickpanel *qp)
    qp->timer = NULL;
 
    /* if it's not visible, we can't hide it */
-   if ((!qp->visible) || (!qp->borders)) return;
+   if (!qp->visible) return;
 
    duration = _e_illume_cfg->animation.quickpanel.duration;
 
