@@ -29,7 +29,7 @@ temperature_udev_update(void *data)
         temp = 0;
         EINA_LIST_FOREACH(inst->tempdevs, l, syspath)
           {
-             for (x = 1, y = 0;x < 15;x++)
+             for (x = 1, y = 0; x < 15; x++)
                {
                   if (y >= 2) break;
                   sprintf(buf, "temp%d_input", x);
@@ -67,8 +67,8 @@ temperature_udev_update(void *data)
           snprintf(buf, sizeof(buf), "%3.0f°C", temp);  
 
         _temperature_face_level_set(inst,
-        (double)(temp - inst->low) /
-        (double)(inst->high - inst->low));
+                                    (double)(temp - inst->low) /
+                                    (double)(inst->high - inst->low));
         edje_object_part_text_set(inst->o_temp, "e.text.reading", buf);
      }
    else
