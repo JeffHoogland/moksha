@@ -18,18 +18,16 @@ extern double init_time;
 void 
 _battery_udev_start(void)
 {
-   Eina_List *l, *devices;
+   Eina_List *devices;
    const char *dev;
    
    devices = eeze_udev_find_by_type(EEZE_UDEV_TYPE_POWER_BAT, NULL);
-   EINA_LIST_FOREACH(devices, l, dev)
+   EINA_LIST_FREE(devices, dev)
      _battery_udev_battery_add(dev);
-   eina_list_free(devices);
 
    devices = eeze_udev_find_by_type(EEZE_UDEV_TYPE_POWER_AC, NULL);
-   EINA_LIST_FOREACH(devices, l, dev)
+   EINA_LIST_FREE(devices, dev)
      _battery_udev_ac_add(dev);
-   eina_list_free(devices);
 
    if (!battery_config->batwatch)
      battery_config->batwatch = eeze_udev_watch_add(EEZE_UDEV_TYPE_POWER_BAT, EEZE_UDEV_EVENT_NONE, _battery_udev_event_battery, NULL);
