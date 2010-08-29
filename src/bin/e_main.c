@@ -83,7 +83,6 @@ static Eina_Bool _e_main_cb_eet_cacheburst_end(void *data __UNUSED__);
 static Eina_Bool _e_main_cb_startup_fake_end(void *data __UNUSED__);
 static void _e_main_desk_save(void);
 static void _e_main_desk_restore(E_Manager *man, E_Container *con);
-static void _e_main_test_svg_loader(void);
 
 /* local subsystem globals */
 #define MAX_LEVEL 64
@@ -723,7 +722,7 @@ main(int argc, char **argv)
                                          "loader support.\n"));
                   _e_main_shutdown(-1);
                }
-
+             
              e_prefix_data_concat_static(buf, "data/images/test.edj");
              evas_object_image_file_set(im, buf, "images/0");
              if (evas_object_image_load_error_get(im) != EVAS_LOAD_ERROR_NONE)
@@ -747,6 +746,36 @@ main(int argc, char **argv)
              e_canvas_del(ee);
              ecore_evas_free(ee);
           }
+     }
+
+   e_init_status_set(_("Check SVG Support"));
+   TS("svg");
+     {
+        Ecore_Evas *ee;
+        Evas_Object *im;
+        char buf[PATH_MAX];
+
+        ee = ecore_evas_buffer_new(1, 1);
+        if (!ee)
+          {
+             e_error_message_show(_("Enlightenment found Evas can't create a buffer canvas. Please check\n"
+                                    "Evas has Software Buffer engine support.\n"));
+             _e_main_shutdown(-1);
+          }
+        e_canvas_add(ee);
+        im = evas_object_image_add(ecore_evas_get(ee));
+
+        e_prefix_data_concat_static(buf, "data/images/test.svg");
+        evas_object_image_file_set(im, buf, NULL);
+        if (evas_object_image_load_error_get(im) == EVAS_LOAD_ERROR_NONE)
+          {
+             efreet_icon_extension_add(".svg");
+             /* prefer png over svg */
+             efreet_icon_extension_add(".png");
+          }
+        evas_object_del(im);
+        e_canvas_del(ee);
+        ecore_evas_free(ee);
      }
 
    e_init_status_set(_("Setup Screens"));
@@ -811,7 +840,6 @@ main(int argc, char **argv)
 	     *list = eina_list_prepend(*list, (void *)eina_stringshare_add(buf));
 	  }
      }
-   _e_main_test_svg_loader();
    efreet_icon_extension_add(".edj");
    TS("efreet paths done");
 
@@ -1687,36 +1715,5 @@ _e_main_desk_restore(E_Manager *man, E_Container *con)
 	desk = e_desk_at_xy_get(zone, desk_x, desk_y);
 	if (!desk) continue;
 	e_desk_show(desk);
-     }
-}
-
-static void
-_e_main_test_svg_loader(void)
-{
-   Evas_Imaging_Image *tmp;
-   char file[] = "/tmp/e17-1341234234.svg";
-   FILE *fp = fopen(file, "w");
-   if (!fp) return;
-
-   fputs("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>"
-	 "<svg xmlns:svg=\"http://www.w3.org/2000/svg\""
-	 " xmlns=\"http://www.w3.org/2000/svg\""
-	 " xmlns:xlink=\"http://www.w3.org/1999/xlink\""
-	 " version=\"1.0\""
-	 " width=\"128\""
-	 " height=\"128\""
-	 " id=\"svg3486\">"
-	 "</svg>", fp);
-   fclose(fp);
-
-   tmp = evas_imaging_image_load (file, NULL);
-   ecore_file_remove(file);
-
-   if (tmp)
-     {
-	evas_imaging_image_free(tmp);
-	efreet_icon_extension_add(".svg");
-	/* prefer png over svg */
-	efreet_icon_extension_add(".png");
      }
 }

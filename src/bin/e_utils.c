@@ -1239,7 +1239,8 @@ e_util_image_import(const char *image_path, const char *edje_path, const char *e
 {
    static const char *tmpdir = NULL;
    E_Util_Image_Import_Handle *handle;
-   Evas_Imaging_Image *img;
+   Ecore_Evas *ee;
+   Evas_Object *img;
    int fd, w, h;
    const char *escaped_file;
    char cmd[PATH_MAX * 2], tmpn[PATH_MAX];
@@ -1249,15 +1250,17 @@ e_util_image_import(const char *image_path, const char *edje_path, const char *e
    if (!edje_path) return NULL;
    if (!edje_group) return NULL;
    if (!cb) return NULL;
-
-   img = evas_imaging_image_load(image_path, NULL);
-   if (!img)
+   ee = ecore_evas_buffer_new(1, 1);
+   img = evas_object_image_add(ecore_evas_get(ee));
+   evas_object_image_file_set(img, image_path, NULL);
+   if (evas_object_image_load_error_get(img) != EVAS_LOAD_ERROR_NONE)
      {
+        ecore_evas_free(ee);
 	printf("Error loading image '%s'\n", image_path);
 	return NULL;
      }
-   evas_imaging_image_size_get(img, &w, &h);
-   evas_imaging_image_free(img);
+   evas_object_image_size_get(img, &w, &h);
+   ecore_evas_free(ee);
 
    if (!tmpdir)
      {
