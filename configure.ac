@@ -76,30 +76,30 @@ AC_CHECK_HEADERS(fnmatch.h,, AC_MSG_ERROR([Cannot find fnmatch.h. Make sure your
 
 AC_CHECK_FUNCS(fnmatch, res=yes, res=no)
 if test "x$res" = "xno"; then
-        AC_CHECK_LIB(fnmatch, fnmatch, res=yes, res=no)
-	if test "x$res" = "xno"; then
-		AC_MSG_ERROR([Cannot find fnmatch() in neither libc nor libfnmatch])
-        else
-	        fnmatch_libs="-lfnmatch"
-	fi
+  AC_CHECK_LIB(fnmatch, fnmatch, res=yes, res=no)
+  if test "x$res" = "xno"; then
+    AC_MSG_ERROR([Cannot find fnmatch() in neither libc nor libfnmatch])
+  else
+    fnmatch_libs="-lfnmatch"
+  fi
 fi
 
 AC_SUBST(fnmatch_libs)
 
 have_pam=no
 AC_ARG_ENABLE(pam,
-	AC_HELP_STRING([--enable-pam], [enable PAM support @<:@default=detect@:>@]),
-	[want_pam=$enableval],
-	[want_pam=auto]
+  AC_HELP_STRING([--enable-pam], [enable PAM support @<:@default=detect@:>@]),
+  [want_pam=$enableval],
+  [want_pam=auto]
 )
 if test "x$want_pam" != "xno" ; then
-	AC_CHECK_HEADERS(security/pam_appl.h, [
-		LIBS="$LIBS -lpam"
-		have_pam=yes
-		AC_DEFINE(HAVE_PAM, 1, [PAM Authentication Support])])
-	if test "x$want_pam$have_pam" = "xyesno" ; then
-		AC_MSG_ERROR([PAM support was requested but not found])
-	fi
+  AC_CHECK_HEADERS(security/pam_appl.h, [
+    LIBS="$LIBS -lpam"
+    have_pam=yes
+    AC_DEFINE(HAVE_PAM, 1, [PAM Authentication Support])])
+    if test "x$want_pam$have_pam" = "xyesno" ; then
+      AC_MSG_ERROR([PAM support was requested but not found])
+    fi
 fi
 
 dnl AC_E_CHECK_PKG(VALGRIND, [valgrind >= 2.4.0], [], [:])
@@ -192,45 +192,45 @@ AC_SUBST(cf_libs)
 execinfo_libs=""
 AC_CHECK_HEADERS([execinfo.h], [have_execinfo="yes"], [have_execinfo="no"])
 if test "x${have_execinfo}" = "xyes" ; then
-   AC_MSG_CHECKING([whether backtrace_symbols_fd() is in libc])
+  AC_MSG_CHECKING([whether backtrace_symbols_fd() is in libc])
 
-   AC_LINK_IFELSE(
-      [AC_LANG_PROGRAM(
-         [[
+  AC_LINK_IFELSE(
+    [AC_LANG_PROGRAM(
+      [[
 #include <stdlib.h>
 #include <execinfo.h>
-         ]],
-         [[
+      ]],
+      [[
 backtrace_symbols_fd(NULL, 0, 0);
-         ]])],
-      [link_execinfo="yes"],
-      [link_execinfo="no"])
+      ]])],
+    [link_execinfo="yes"],
+    [link_execinfo="no"])
 
-   AC_MSG_RESULT([${link_execinfo}])
+  AC_MSG_RESULT([${link_execinfo}])
 fi
 
 if test "x${link_execinfo}" = "xno" ; then
-   AC_MSG_CHECKING([whether backtrace_symbols_fd() is in libexecinfo])
+  AC_MSG_CHECKING([whether backtrace_symbols_fd() is in libexecinfo])
 
-   LDFLAGS_save="${LDFLAGS}"
-   LDFLAGS="${LDFLAGS} -lexecinfo"
-   AC_LINK_IFELSE(
-      [AC_LANG_PROGRAM(
-         [[
+  LDFLAGS_save="${LDFLAGS}"
+  LDFLAGS="${LDFLAGS} -lexecinfo"
+  AC_LINK_IFELSE(
+    [AC_LANG_PROGRAM(
+      [[
 #include <stdlib.h>
 #include <execinfo.h>
-         ]],
-         [[
+      ]],
+      [[
 backtrace_symbols_fd(NULL, 0, 0);
-         ]])],
-      [
-       link_execinfo="yes"
-       execinfo_libs="-lexecinfo"
-      ],
-      [link_execinfo="no"])
-   LDFLAGS="${LDFLAGS_save}"
+      ]])],
+    [
+      link_execinfo="yes"
+      execinfo_libs="-lexecinfo"
+    ],
+    [link_execinfo="no"])
+  LDFLAGS="${LDFLAGS_save}"
 
-   AC_MSG_RESULT([${link_execinfo}])
+  AC_MSG_RESULT([${link_execinfo}])
 fi
 
 dnl if test "x${link_execinfo}" = "xno" ; then
@@ -265,39 +265,39 @@ AC_SUBST(dlopen_libs)
 
 AC_MSG_CHECKING([whether to install sysactions.conf])
 AC_ARG_ENABLE([install-sysactions],
-   AS_HELP_STRING([--disable-install-sysactions],[disable installing /etc/enlightenment/sysactions.conf @<:@default=enabled@:>@]),
-   [e_cv_enable_install_sysactions=$enableval],
-   AC_CACHE_VAL([e_cv_enable_install_sysactions], [e_cv_enable_install_sysactions=yes]))
+  AS_HELP_STRING([--disable-install-sysactions],[disable installing /etc/enlightenment/sysactions.conf @<:@default=enabled@:>@]),
+    [e_cv_enable_install_sysactions=$enableval],
+    AC_CACHE_VAL([e_cv_enable_install_sysactions], [e_cv_enable_install_sysactions=yes]))
 AC_MSG_RESULT([$e_cv_enable_install_sysactions])
 AM_CONDITIONAL(INSTALL_SYSACTIONS, test x${e_cv_enable_install_sysactions} = xyes)
 
 AC_MSG_CHECKING([whether to enable Files menu item])
 AC_ARG_ENABLE([files],
-   AS_HELP_STRING([--disable-files],[disable Files menu item @<:@default=enabled@:>@]),
-   [e_cv_enable_files=$enableval],
-   AC_CACHE_VAL([e_cv_enable_files], [e_cv_enable_files=yes]))
+  AS_HELP_STRING([--disable-files],[disable Files menu item @<:@default=enabled@:>@]),
+    [e_cv_enable_files=$enableval],
+    AC_CACHE_VAL([e_cv_enable_files], [e_cv_enable_files=yes]))
 if test "[${e_cv_enable_files}]" = yes; then
-   AC_DEFINE_UNQUOTED([ENABLE_FILES],[1],[enable Files menu item])
+  AC_DEFINE_UNQUOTED([ENABLE_FILES],[1],[enable Files menu item])
 fi
 AC_MSG_RESULT([$e_cv_enable_files])
 
 AC_MSG_CHECKING([which device backend to use])
 AC_ARG_ENABLE([device-hal],
-   AS_HELP_STRING([--enable-device-hal],[enable hal device backend @<:@default=disabled@:>@]),
-   [e_cv_want_device_hal=$enableval]
-   AC_CACHE_VAL([e_cv_want_device_hal], [e_cv_want_device_hal=no]))
+  AS_HELP_STRING([--enable-device-hal],[enable hal device backend @<:@default=disabled@:>@]),
+  [e_cv_want_device_hal=$enableval]
+  AC_CACHE_VAL([e_cv_want_device_hal], [e_cv_want_device_hal=no]))
 
 AC_ARG_ENABLE([device-udev],
-   AS_HELP_STRING([--enable-device-udev],[enable udev support @<:@default=enabled@:>@]),
-   [e_cv_want_device_udev=$enableval],
-   AC_CACHE_VAL([e_cv_want_device_udev], [e_cv_want_device_udev=yes]))
+  AS_HELP_STRING([--enable-device-udev],[enable udev support @<:@default=enabled@:>@]),
+  [e_cv_want_device_udev=$enableval],
+  AC_CACHE_VAL([e_cv_want_device_udev], [e_cv_want_device_udev=yes]))
 
 if test "x$e_cv_want_device_udev" = "xyes";then
   PKG_CHECK_EXISTS([eeze >= 1.0.0],
-[
-  device_backend=eeze
-  AC_DEFINE_UNQUOTED([HAVE_EEZE],[1],[enable udev support])
-],[device_backend=ehal])
+    [
+      device_backend=eeze
+      AC_DEFINE_UNQUOTED([HAVE_EEZE],[1],[enable udev support])
+    ],[device_backend=ehal])
 else
   device_backend=ehal
 fi
@@ -410,7 +410,8 @@ AC_SUBST(requirements_e)
 
 profile="SLOW_PC"
 AC_ARG_WITH(profile,
-  AS_HELP_STRING([--with-profile=TARGET_PROFILE], [specify a target format profile of:
+  AS_HELP_STRING([--with-profile=TARGET_PROFILE], 
+  [specify a target format profile of:
                                     LOWRES_PDA, MEDIUMRES_PDA, HIRES_PDA, SLOW_PC, MEDIUM_PC, FAST_PC]),
   [profile=$withval])
 AC_MSG_NOTICE([Enlightenment build profile set to $profile])
@@ -446,14 +447,14 @@ AC_DEFINE(E_INTERNAL, 1, "This define can be used to wrap internal E stuff, as c
 AM_CONDITIONAL(HAVE_BATTERY, false)
 define([CHECK_MODULE_BATTERY],
 [
-        AC_E_CHECK_PKG(BATTERY, [ecore >= 1.0.0 ecore-file >= 1.0.0 ecore-con >= 1.0.0 eina >= 1.0.0], [], [BATTERY=false])
+  AC_E_CHECK_PKG(BATTERY, [ecore >= 1.0.0 ecore-file >= 1.0.0 ecore-con >= 1.0.0 eina >= 1.0.0], [], [BATTERY=false])
 ])
 
 BATTERY_LDFLAGS=
 case "$host_os" in
-   darwin*)
-      BATTERY_LDFLAGS="-framework Foundation -framework IOKit"
-   ;;
+  darwin*)
+    BATTERY_LDFLAGS="-framework Foundation -framework IOKit"
+  ;;
 esac
 
 AC_SUBST(BATTERY_LDFLAGS)
@@ -461,49 +462,49 @@ AC_SUBST(BATTERY_LDFLAGS)
 AM_CONDITIONAL(HAVE_TEMPERATURE, false)
 define([CHECK_MODULE_TEMPERATURE],
 [
-        AC_E_CHECK_PKG(TEMPERATURE, [ecore >= 1.0.0 ecore-file >= 1.0.0 eina >= 1.0.0], [], [TEMPERATURE=false])
+  AC_E_CHECK_PKG(TEMPERATURE, [ecore >= 1.0.0 ecore-file >= 1.0.0 eina >= 1.0.0], [], [TEMPERATURE=false])
 ])
 
 have_exchange=no
 AC_ARG_ENABLE(exchange,
-	AC_HELP_STRING([--disable-exchange], [disable Exchange support @<:@default=detect@:>@]),
-	[want_exchange=$enableval],
-	[want_exchange=auto]
+  AC_HELP_STRING([--disable-exchange], [disable Exchange support @<:@default=detect@:>@]),
+  [want_exchange=$enableval],
+  [want_exchange=auto]
 )
 
 AM_CONDITIONAL(HAVE_EXCHANGE, false)
 define([CHECK_MODULE_CONF_THEME],
 [
-        if test "x$want_exchange" != "xno" ; then
-                AC_E_CHECK_PKG(EXCHANGE, [exchange], [], [:])
-        else
-                AC_MSG_NOTICE([requested to not use exchange library])
-        fi
+  if test "x$want_exchange" != "xno" ; then
+    AC_E_CHECK_PKG(EXCHANGE, [exchange], [], [:])
+  else
+    AC_MSG_NOTICE([requested to not use exchange library])
+  fi
 ])
 
 AM_CONDITIONAL(HAVE_ALSA, false)
 define([CHECK_MODULE_MIXER],
 [
-if test "x$enable_alsa" = "x" || test "x$enable_alsa" = "xdefault" || test "x$enable_alsa" = "xyes"; then
-   AC_E_CHECK_PKG(ALSA, [alsa >= 1.0.8],
-   [ SOUND_CFLAGS="$ALSA_CFLAGS -DHAVE_ALSA $SOUND_CFLAGS"
-     SOUND_LIBS="$ALSA_LIBS $SOUND_LDFLAGS"
-   ],
-   [ if test "x$enable_alsa" = "xyes"; then
+  if test "x$enable_alsa" = "x" || test "x$enable_alsa" = "xdefault" || test "x$enable_alsa" = "xyes"; then
+    AC_E_CHECK_PKG(ALSA, [alsa >= 1.0.8],
+    [ SOUND_CFLAGS="$ALSA_CFLAGS -DHAVE_ALSA $SOUND_CFLAGS"
+      SOUND_LIBS="$ALSA_LIBS $SOUND_LDFLAGS"
+    ],
+    [ if test "x$enable_alsa" = "xyes"; then
         AC_MSG_ERROR([alsa library >= 1.0.8 not found])
-     else
+      else
         AC_MSG_WARN([alsa library development files not present. no alsa support.])
-     fi
-   ])
-else
-  have_alsa=no
-fi
-
-if test "$have_alsa" = "yes"; then
-    AC_DEFINE(HAVE_ALSA, 1, [Define if the ALSA output plugin should be built])
-else
+      fi
+    ])
+  else
     have_alsa=no
-fi
+  fi
+
+  if test "$have_alsa" = "yes"; then
+    AC_DEFINE(HAVE_ALSA, 1, [Define if the ALSA output plugin should be built])
+  else
+    have_alsa=no
+  fi
 ])
 
 AC_SUBST(SOUND_CFLAGS)
@@ -512,7 +513,7 @@ AC_SUBST(SOUND_LIBS)
 AM_CONDITIONAL(HAVE_ECONNMAN, false)
 define([CHECK_MODULE_CONNMAN],
 [
-        AC_E_CHECK_PKG(ECONNMAN, [edbus >= 1.0.0 econnman >= 1.0.0], [], [ECONNMAN=false])
+  AC_E_CHECK_PKG(ECONNMAN, [edbus >= 1.0.0 econnman >= 1.0.0], [], [CONNMAN=false])
 ])
 AC_SUBST(ECONNMAN_CFLAGS)
 AC_SUBST(ECONNMAN_LIBS)
@@ -520,7 +521,7 @@ AC_SUBST(ECONNMAN_LIBS)
 AM_CONDITIONAL(HAVE_EBLUEZ, false)
 define([CHECK_MODULE_BLUEZ],
 [
-        AC_E_CHECK_PKG(EBLUEZ, [edbus >= 1.0.0 ebluez >= 1.0.0], [], [EBLUEZ=false])
+  AC_E_CHECK_PKG(EBLUEZ, [edbus >= 1.0.0 ebluez >= 1.0.0], [], [BLUEZ=false])
 ])
 AC_SUBST(EBLUEZ_CFLAGS)
 AC_SUBST(EBLUEZ_LIBS)
@@ -528,13 +529,13 @@ AC_SUBST(EBLUEZ_LIBS)
 AM_CONDITIONAL(HAVE_EOFONO, false)
 define([CHECK_MODULE_OFONO],
 [
-        AC_E_CHECK_PKG(EOFONO, [edbus >= 1.0.0 eofono >= 1.0.0], [], [EOFONO=false])
+  AC_E_CHECK_PKG(EOFONO, [edbus >= 1.0.0 eofono >= 1.0.0], [], [OFONO=false])
 ])
 AC_SUBST(EOFONO_CFLAGS)
 AC_SUBST(EOFONO_LIBS)
 
-#dnl Check enotify support for illume-indicator module so it can do dbus notifications or not
-AC_E_CHECK_PKG(ENOTIFY, [enotify >= 1.0.0], [], [ENOTIFY=false])
+# Check enotify support for illume-indicator module so it can do dbus notifications or not
+AC_E_CHECK_PKG(ENOTIFY, [edbus >= 1.0.0 enotify >= 1.0.0], [], [ILLUME2=false])
 
 AC_E_OPTIONAL_MODULE([ibar], true)
 AC_E_OPTIONAL_MODULE([dropshadow], true)
@@ -820,7 +821,7 @@ $po_makefile_in
 
 # report
 txt_strip() {
-        echo "[$]@" | sed -e 's/^[[ \t]]*\([[^ \t]]*\)[[ \t]]*$/\1/g'
+  echo "[$]@" | sed -e 's/^[[ \t]]*\([[^ \t]]*\)[[ \t]]*$/\1/g'
 }
 
 echo
@@ -840,7 +841,7 @@ echo
 
 UNUSED_MODS=""
 for mod in $UNUSED_OPTIONAL_MODULES; do
-        UNUSED_MODS="$UNUSED_MODS${COLOR_HRED}$mod${COLOR_END} "
+  UNUSED_MODS="$UNUSED_MODS${COLOR_HRED}$mod${COLOR_END} "
 done
 
 cat << MODULES_EOF
@@ -854,7 +855,7 @@ Documentation:
  * enabled.........: ${build_doc}
 DOCS_EOF
 if test "x${build_doc}" = "xyes" ; then
-   echo " Building..........: make doc"
+  echo " Building..........: make doc"
 fi
 echo
 
