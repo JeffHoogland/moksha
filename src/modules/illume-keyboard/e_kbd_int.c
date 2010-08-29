@@ -886,7 +886,7 @@ static void
 _e_kbd_int_layout_parse(E_Kbd_Int *ki, const char *layout)
 {
    FILE *f;
-   char buf[4096];
+   char buf[PATH_MAX];
    int isok = 0;
    E_Kbd_Int_Key *ky = NULL;
    E_Kbd_Int_Key_State *st = NULL;
@@ -1050,9 +1050,12 @@ _e_kbd_int_layout_build(E_Kbd_Int *ki)
    e_layout_child_move(o, 0, 0);
    e_layout_child_resize(o, ki->layout.w, ki->layout.h);
    evas_object_color_set(o, 0, 0, 0, 0);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _e_kbd_int_cb_mouse_down, ki);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_UP, _e_kbd_int_cb_mouse_up, ki);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_MOVE, _e_kbd_int_cb_mouse_move, ki);
+   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, 
+                                  _e_kbd_int_cb_mouse_down, ki);
+   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_UP, 
+                                  _e_kbd_int_cb_mouse_up, ki);
+   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_MOVE, 
+                                  _e_kbd_int_cb_mouse_move, ki);
    evas_object_show(o);
    ki->event_obj = o;
    evas_event_thaw(ki->win->evas);
@@ -1376,12 +1379,11 @@ static void
 _e_kbd_int_dictlist_up(E_Kbd_Int *ki)
 {
    Evas_Object *o;
-   Evas_Coord mw, mh;
-   int sx, sy, sw, sh, used;
-   Eina_List *files;
-   Eina_List *l;
+   Evas_Coord mw, mh, sh;
+   Eina_List *files, *l;
    char buf[PATH_MAX], *p, *file, *pp;
    const char *str;
+   int used;
 
    if (ki->dictlist.popup) return;
 
@@ -1393,7 +1395,7 @@ _e_kbd_int_dictlist_up(E_Kbd_Int *ki)
    ki->dictlist.base_obj = o;
 
    o = e_widget_ilist_add(ki->dictlist.popup->evas, 
-                          32 * e_scale, 32 * e_scale, NULL);
+                          (32 * e_scale), (32 * e_scale), NULL);
    e_widget_ilist_selector_set(o, 1);
    e_widget_ilist_freeze(o);
    ki->dictlist.ilist_obj = o;
@@ -1407,8 +1409,8 @@ _e_kbd_int_dictlist_up(E_Kbd_Int *ki)
         if ((p) && (!strcmp(p, ".dic")))
           {
              const char *match;
-             used = 0;
 
+             used = 0;
 	     EINA_LIST_FOREACH(ki->dictlist.matches, l, match)
 	       if (!strcmp(match, file)) used = 1;
 
@@ -1442,8 +1444,8 @@ _e_kbd_int_dictlist_up(E_Kbd_Int *ki)
         if ((p) && (!strcmp(p, ".dic")))
           {
 	     const char *match;
-             used = 0;
 
+             used = 0;
 	     EINA_LIST_FOREACH(ki->dictlist.matches, l, match)
 	       if (!strcmp(match, file)) used = 1;
 
@@ -1471,16 +1473,16 @@ _e_kbd_int_dictlist_up(E_Kbd_Int *ki)
    e_widget_ilist_go(o);
 
    e_widget_ilist_preferred_size_get(o, &mw, &mh);
-   if (mh < (120 *e_scale)) mh = 120 * e_scale;
+   if (mh < (120 *e_scale)) mh = (120 * e_scale);
 
    edje_extern_object_min_size_set(ki->dictlist.ilist_obj, mw, mh);
    edje_object_part_swallow(ki->dictlist.base_obj, "e.swallow.content",
                             ki->dictlist.ilist_obj);
    edje_object_size_min_calc(ki->dictlist.base_obj, &mw, &mh);
 
-   e_zone_useful_geometry_get(ki->win->border->zone, &sx, &sy, &sw, &sh);   
+   e_zone_useful_geometry_get(ki->win->border->zone, NULL, NULL, NULL, &sh);
    mw = ki->win->w;
-   if (mh > (sh - ki->win->h)) mh = sh - ki->win->h;
+   if (mh > (sh - ki->win->h)) mh = (sh - ki->win->h);
    e_popup_move_resize(ki->dictlist.popup, 0, ki->win->y - mh, mw, mh);
 
    evas_object_resize(ki->dictlist.base_obj, 
@@ -1528,8 +1530,7 @@ _e_kbd_int_matchlist_up(E_Kbd_Int *ki)
 {
    const Eina_List *l;
    Evas_Object *o;
-   Evas_Coord mw, mh;
-   int sx, sy, sw, sh;
+   Evas_Coord mw, mh, sh;
 
    if (!e_kbd_buf_string_matches_get(ki->kbuf)) return;
    if (ki->matchlist.popup) return;
@@ -1540,7 +1541,8 @@ _e_kbd_int_matchlist_up(E_Kbd_Int *ki)
 		      "e/modules/kbd/match/default");
    ki->matchlist.base_obj = o;
 
-   o = e_widget_ilist_add(ki->matchlist.popup->evas, 32 * e_scale, 32 * e_scale, NULL);
+   o = e_widget_ilist_add(ki->matchlist.popup->evas, 
+                          (32 * e_scale), (32 * e_scale), NULL);
    e_widget_ilist_selector_set(o, 1);
    ki->matchlist.ilist_obj = o;
    edje_object_part_swallow(ki->matchlist.base_obj, "e.swallow.content", o);
@@ -1557,7 +1559,8 @@ _e_kbd_int_matchlist_up(E_Kbd_Int *ki)
 	       {
 		  str = eina_stringshare_add(str);
 		  ki->matchlist.matches = eina_list_append(ki->matchlist.matches, str);
-		  e_widget_ilist_append(o, NULL, str, _e_kbd_int_cb_matchlist_item_sel,
+		  e_widget_ilist_append(o, NULL, str, 
+                                        _e_kbd_int_cb_matchlist_item_sel,
 					ki, NULL);
 	       }
 	  }
@@ -1571,7 +1574,7 @@ _e_kbd_int_matchlist_up(E_Kbd_Int *ki)
    e_widget_ilist_go(o);
 
    e_widget_ilist_preferred_size_get(o, &mw, &mh);
-   if (mh < (120 *e_scale)) mh = 120 * e_scale;
+   if (mh < (120 *e_scale)) mh = (120 * e_scale);
 
    edje_extern_object_min_size_set(ki->matchlist.ilist_obj, mw, mh);
    edje_object_part_swallow(ki->matchlist.base_obj, "e.swallow.content",
@@ -1581,9 +1584,9 @@ _e_kbd_int_matchlist_up(E_Kbd_Int *ki)
    edje_extern_object_min_size_set(ki->matchlist.ilist_obj, 0, 0);
    edje_object_part_swallow(ki->matchlist.base_obj, "e.swallow.content",
 		   	    ki->matchlist.ilist_obj);
-   e_zone_useful_geometry_get(ki->win->border->zone, &sx, &sy, &sw, &sh);   
+   e_zone_useful_geometry_get(ki->win->border->zone, NULL, NULL, NULL, &sh);
    mw = ki->win->w;
-   if (mh > (sh - ki->win->h)) mh = sh - ki->win->h;
+   if (mh > (sh - ki->win->h)) mh = (sh - ki->win->h);
    e_popup_move_resize(ki->matchlist.popup,
 		       ki->win->x, ki->win->y - mh, mw, mh);
    evas_object_resize(ki->matchlist.base_obj, 
@@ -1646,12 +1649,12 @@ e_kbd_int_new(const char *themedir, const char *syskbds, const char *sysdicts)
    if (themedir) ki->themedir = eina_stringshare_add(themedir);
    if (syskbds) ki->syskbds = eina_stringshare_add(syskbds);
    if (sysdicts) ki->sysdicts = eina_stringshare_add(sysdicts);
-   ki->win = e_win_new(e_util_container_number_get(0));
+   zone = e_util_zone_current_get(e_manager_current_get());
+   ki->win = e_win_new(zone->container);
    states[0] = ECORE_X_WINDOW_STATE_SKIP_TASKBAR;
    states[1] = ECORE_X_WINDOW_STATE_SKIP_PAGER;
    ecore_x_netwm_window_state_set(ki->win->evas_win, states, 2);
    ecore_x_icccm_hints_set(ki->win->evas_win, 0, 0, 0, 0, 0, 0, 0);
-   zone = e_util_zone_current_get(e_manager_current_get());
    e_win_no_remember_set(ki->win, 1);
    e_win_resize(ki->win, zone->w, zone->h);
 
@@ -1661,8 +1664,7 @@ e_kbd_int_new(const char *themedir, const char *syskbds, const char *sysdicts)
    e_win_name_class_set(ki->win, "Virtual-Keyboard", "Virtual-Keyboard");
    e_win_title_set(ki->win, "Virtual Keyboard");
 
-   ki->base_obj = _theme_obj_new(ki->win->evas,
-				 ki->themedir,
+   ki->base_obj = _theme_obj_new(ki->win->evas, ki->themedir,
 				 "e/modules/kbd/base/default");
    edje_object_signal_callback_add(ki->base_obj, "e,action,do,matches", "",
 				   _e_kbd_int_cb_matches, ki);
@@ -1714,10 +1716,12 @@ e_kbd_int_new(const char *themedir, const char *syskbds, const char *sysdicts)
    e_win_size_min_set(ki->win, zone->w, mh);
    ecore_x_e_virtual_keyboard_set(ki->win->evas_win, 1);
 
-   ki->client_message_handler = ecore_event_handler_add
-     (ECORE_X_EVENT_CLIENT_MESSAGE, _e_kbd_int_cb_client_message, ki);
-   ki->kbd_move_hdl = ecore_event_handler_add
-     (E_EVENT_BORDER_MOVE, _e_kbd_int_cb_border_move, ki);
+   ki->client_message_handler = 
+     ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE, 
+                             _e_kbd_int_cb_client_message, ki);
+   ki->kbd_move_hdl = 
+     ecore_event_handler_add(E_EVENT_BORDER_MOVE, 
+                             _e_kbd_int_cb_border_move, ki);
 
    e_win_show(ki->win);
    ki->win->border->user_skip_winlist = 1;
@@ -1741,7 +1745,7 @@ e_kbd_int_free(E_Kbd_Int *ki)
    _e_kbd_int_zoomkey_down(ki);
    e_kbd_buf_free(ki->kbuf);
    e_object_del(E_OBJECT(ki->win));
-   free(ki);
+   E_FREE(ki);
 }
 
 static Evas_Object *
