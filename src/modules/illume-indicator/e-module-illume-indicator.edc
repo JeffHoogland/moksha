@@ -1,3 +1,20 @@
+styles 
+{
+   style 
+     {
+        name: "notification_style";
+        base: "font=Sans font_size=10 align=left style=soft_shadow shadow_color=#fff color=#000 wrap=word text_class=module_normal";
+        tag:  "subject"  "+ text_class=module_large font_size=10";
+        tag:  "body"  "+ text_class=module_normal font_size=10";
+        tag:  "br" "\n";
+        tag:  "b" "+ font=Sans:style=Bold text_class=module_bold";
+        tag:  "i" "+ font=Sans:style=Oblique text_class=module_bold";
+        tag:  "u" "+ underline=on";
+        tag:  "img" ""; /* images not supported */
+        tag:  "a" ""; /* links not supported */
+     }
+}
+
 collections 
 {
    group 
@@ -50,6 +67,107 @@ collections
                        state: "default" 0.0;
                        rel1.offset: 3 3;
                        rel2.offset: -4 -4;
+                    }
+               }
+          }
+     }
+   group 
+     {
+        images.image: "base_bg.png" COMP;
+        name: "modules/illume-indicator/notify";
+        parts 
+          {
+             part 
+               {
+                  name: "base";
+                  type: IMAGE;
+                  mouse_events: 0;
+                  description 
+                    {
+                       state: "default" 0.0;
+                       color_class: "shelf_base";
+                       image.normal: "base_bg.png";
+                       image.border: 1 1 1 1;
+                       fill.smooth: 0;
+                    }
+               }
+             part 
+               {
+                  name: "e.swallow.icon";
+                  type: SWALLOW;
+                  mouse_events: 0;
+                  description 
+                    {
+                       state: "default" 0.0;
+                       align: 0.0 0.0;
+                       aspect: 1 1;
+                       aspect_preference: BOTH;
+                       rel1.offset: 4 4;
+                       rel2
+                         {
+                            relative: 0.0 1.0;
+                            offset: 52 -5;
+                         }
+                    }
+               }
+             part 
+               {
+                  name: "e.text.title";
+                  type: TEXT;
+                  mouse_events: 0;
+                  scale: 1;
+                  effect: SOFT_SHADOW;
+                  description 
+                    {
+                       state: "default" 0.0;
+                       fixed: 1 1;
+                       align: 0.0 0.0;
+                       rel1
+                         {
+                            relative: 1.0 0.0;
+                            offset: 3 4;
+                            to_x: "e.swallow.icon";
+                         }
+                       rel2
+                         {
+                            relative: 1.0 0.0;
+                            offset: -5 4; // 15
+                         }
+                       color: 0 0 0 255;
+                       color3: 224 224 224 64;
+                       color_class: "menu_title_active";
+                       text
+                         {
+                            font: "Sans:style=Bold";
+                            size: 10;
+                            align: 0.0 0.0;
+                            min: 0 1;
+                            fit: 1 1;
+                            text_class: "menu_title";
+                         }
+                    }
+               }
+             part 
+               {
+                  name: "e.text.message";
+                  type: TEXTBLOCK;
+                  mouse_events: 0;
+                  description 
+                    {
+                       state: "default" 0.0;
+                       align: 0.0 0.0;
+                       rel1
+                         {
+                            relative: 1.0 0.0;
+                            offset: 4 22;
+                            to_x: "e.swallow.icon";
+                         }
+                       rel2.offset: -5 -5;
+                       text
+                         {
+                            style: "notification_style";
+//                            min: 0 1;
+                         }
                     }
                }
           }
