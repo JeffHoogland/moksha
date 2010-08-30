@@ -360,6 +360,9 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
    if (e_config->desklock_start_locked != cfdata->start_locked)
      return 1;
 
+   if (e_config->desklock_on_suspend != cfdata->lock_on_suspend)
+     return 1;
+
    if (e_config->desklock_autolock_idle != cfdata->auto_lock)
      return 1;
 
