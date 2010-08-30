@@ -265,6 +265,7 @@ _e_desktop_edit_create_data(E_Config_Dialog *cfd)
    cfdata->editor = cfd->data;
 
    /* 
+    * If we can't write to the file on it's current location,
     * we always save to the user's applications dir.
     * If the file is already there, then edit it directly. Otherwise, create
     * a new empty desktop entry there. 
@@ -279,23 +280,28 @@ _e_desktop_edit_create_data(E_Config_Dialog *cfd)
 	char dir[PATH_MAX];
 	const char *file;
 
-	snprintf(dir, sizeof(dir), "%s/applications", efreet_data_home_get());
-	if (!strncmp(dir, cfdata->editor->desktop->orig_path, strlen(dir)))
+	if (ecore_file_can_write (cfdata->editor->desktop->orig_path))
 	  cfdata->desktop = efreet_desktop_uncached_new(cfdata->editor->desktop->orig_path);
 	else
 	  {
-	     /* file not in user's dir, so create new desktop that points there */
-	     if (!ecore_file_exists(dir)) ecore_file_mkdir(dir);
-	     file = ecore_file_file_get(cfdata->editor->desktop->orig_path);
-	     snprintf(path, sizeof(path), "%s/%s", dir, file);
-	     /*
-	      * if a file already exists in the user dir with this name, we
-	      * fetch the pointer to it, so the caches stay consistent (this
-	      * probably will never return non null, since the ui shouldn't
-	      * provide a means to edit a file in a system dir when one 
-	      * exists in the user's
-	      */
-	     cfdata->desktop = efreet_desktop_uncached_new(path);
+	     snprintf(dir, sizeof(dir), "%s/applications", efreet_data_home_get());
+	     if (!strncmp(dir, cfdata->editor->desktop->orig_path, strlen(dir)))
+	       cfdata->desktop = efreet_desktop_uncached_new(cfdata->editor->desktop->orig_path);
+	     else
+	       {
+	          /* file not in user's dir, so create new desktop that points there */
+	          if (!ecore_file_exists(dir)) ecore_file_mkdir(dir);
+	          file = ecore_file_file_get(cfdata->editor->desktop->orig_path);
+	          snprintf(path, sizeof(path), "%s/%s", dir, file);
+	          /*
+	           * if a file already exists in the user dir with this name, we
+	           * fetch the pointer to it, so the caches stay consistent (this
+	           * probably will never return non null, since the ui shouldn't
+	           * provide a means to edit a file in a system dir when one 
+	           * exists in the user's
+	           */
+	          cfdata->desktop = efreet_desktop_uncached_new(path);
+	       }
 	  }
 	desktop = cfdata->editor->desktop;
      }

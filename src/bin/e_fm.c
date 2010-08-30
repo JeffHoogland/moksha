@@ -328,6 +328,7 @@ static void _e_fm2_file_rename(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_file_rename_delete_cb(void *obj);
 static void _e_fm2_file_rename_yes_cb(char *text, void *data);
 static void _e_fm2_file_rename_no_cb(void *data);
+static void _e_fm2_file_application_properties(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
 static void _e_fm2_file_properties(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_file_properties_delete_cb(void *obj);
 static void _e_fm2_file_do_rename(const char *text, E_Fm2_Icon *ic);
@@ -8079,11 +8080,19 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
                   e_menu_item_separator_set(mi, 1);
                }
 	  }
+
+    if (!strcmp(ic->info.mime, "application/x-desktop"))
+      {
+         mi = e_menu_item_new(mn);
+         e_menu_item_label_set(mi, _("Application Properties"));
+         e_util_menu_item_theme_icon_set(mi, "configure");
+         e_menu_item_callback_set(mi, _e_fm2_file_application_properties, ic);
+      }
 	
-        mi = e_menu_item_new(mn);
-        e_menu_item_label_set(mi, _("Properties"));
-        e_util_menu_item_theme_icon_set(mi, "document-properties");
-        e_menu_item_callback_set(mi, _e_fm2_file_properties, ic);
+    mi = e_menu_item_new(mn);
+    e_menu_item_label_set(mi, _("File Properties"));
+    e_util_menu_item_theme_icon_set(mi, "document-properties");
+    e_menu_item_callback_set(mi, _e_fm2_file_properties, ic);
 
 	if (ic->info.mime)
 	  {
@@ -9193,6 +9202,28 @@ _e_fm_dbus_error_dialog(const char *title, const char *msg, const char *pstr)
    e_win_centered_set(dialog->win, 1);
    e_dialog_button_focus_num(dialog, 0);
    e_dialog_show(dialog);
+}
+
+static void
+_e_fm2_file_application_properties(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
+{
+   Efreet_Desktop *desktop;
+   E_Fm2_Icon *ic;
+   E_Manager *man;
+   E_Container *con;
+   char buf[PATH_MAX];
+
+   ic = data;
+   if (!_e_fm2_icon_realpath(ic, buf, sizeof(buf)))
+     return;
+   desktop = efreet_desktop_get(buf);
+
+   man = e_manager_current_get();
+   if (!man) return;
+   con = e_container_current_get(man);
+   if (!con) return;
+
+   e_desktop_edit(con, desktop);
 }
 
 static void
