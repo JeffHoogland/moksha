@@ -607,6 +607,8 @@ AC_E_OPTIONAL_MODULE([everything-windows], true)
 AC_E_OPTIONAL_MODULE([systray], true)
 AC_E_OPTIONAL_MODULE([comp], true)
 
+AC_E_CHECK_PKG(ENOTIFY, [edbus >= 1.0.0 enotify >= 1.0.0], [], [])
+
 if test "x$USE_MODULE_ILLUME" = "xtrue" -a "x$USE_MODULE_ILLUME2" = "xtrue" ;then
    AC_MSG_ERROR([illume and illume2 cannot be built together])
 fi
