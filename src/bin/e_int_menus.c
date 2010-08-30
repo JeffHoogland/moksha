@@ -356,7 +356,7 @@ e_int_menus_menu_augmentation_add_sorted(const char *menu,
 {
    E_Int_Menu_Augmentation *maug;
    Eina_List *l;
-   Eina_Bool old;
+   Eina_Bool old = EINA_FALSE;
 
    maug = E_NEW(E_Int_Menu_Augmentation, 1);
    if (!maug) return NULL;
