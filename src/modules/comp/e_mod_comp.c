@@ -460,9 +460,10 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
      }
 
    evas_object_move(cw->shobj, cw->x, cw->y);
+   // was cw->w / cw->h
    evas_object_resize(cw->shobj,
-                      cw->w + (cw->border * 2), 
-                      cw->h + (cw->border * 2));
+                      cw->pw + (cw->border * 2), 
+                      cw->ph + (cw->border * 2));
 
    if ((cw->c->gl) && (_comp_mod->conf->texture_from_pixmap) &&
        (!cw->shaped) && (!cw->rects))
@@ -1947,17 +1948,19 @@ _e_mod_comp_win_configure(E_Comp_Win *cw, int x, int y, int w, int h, int border
         cw->w = w;
         cw->h = h;
         cw->needpix = 1;
+        // was cw->w / cw->h
         evas_object_resize(cw->shobj, 
-                           cw->w + (cw->border * 2), 
-                           cw->h + (cw->border * 2));
+                           cw->pw + (cw->border * 2), 
+                           cw->ph + (cw->border * 2));
         _e_mod_comp_win_damage(cw, 0, 0, cw->w, cw->h, 0);
      }
    if (cw->border != border)
      {
         cw->border = border; 
+        // was cw->w / cw->h
         evas_object_resize(cw->shobj, 
-                           cw->w + (cw->border * 2), 
-                           cw->h + (cw->border * 2));
+                           cw->pw + (cw->border * 2), 
+                           cw->ph + (cw->border * 2));
      }
    cw->hidden.w = cw->w;
    cw->hidden.h = cw->h;
