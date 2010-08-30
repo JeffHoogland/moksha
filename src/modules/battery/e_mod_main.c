@@ -344,6 +344,7 @@ _battery_config_updated(void)
    Eina_List *l;
    Instance *inst;
    char buf[4096];
+   int ok = 0;
 
    if (!battery_config) return;
 
@@ -352,24 +353,27 @@ _battery_config_updated(void)
         EINA_LIST_FOREACH(battery_config->instances, l, inst)
           _battery_warning_popup_destroy(inst);
      }
-   if (battery_config->have_subsystem == UNKNOWN)
+   if (battery_config->batget_exe)
      {
-#ifdef HAVE_EEZE
-          battery_config->have_subsystem = SUBSYSTEM;
-#else
-        if (!e_dbus_bus_get(DBUS_BUS_SYSTEM))
-          battery_config->have_subsystem = NOSUBSYSTEM;
-#endif
+        ecore_exe_terminate(battery_config->batget_exe);
+        ecore_exe_free(battery_config->batget_exe);
+        battery_config->batget_exe = NULL;
      }
 
-   if ((battery_config->have_subsystem == NOSUBSYSTEM) ||
+   if ((battery_config->force_mode == UNKNOWN) ||
+       (battery_config->force_mode == SUBSYSTEM))
+     {
+#ifdef HAVE_EEZE
+        ok = _battery_udev_start();
+#else
+        ok = _battery_dbus_start();
+#endif
+     }
+   if (ok) return;
+
+   if ((battery_config->force_mode == UNKNOWN) ||
        (battery_config->force_mode == NOSUBSYSTEM))
      {
-        if (battery_config->batget_exe)
-          {
-             ecore_exe_terminate(battery_config->batget_exe);
-             ecore_exe_free(battery_config->batget_exe);
-          }
         snprintf(buf, sizeof(buf), "%s/%s/batget %i",
                  e_module_dir_get(battery_config->module), MODULE_ARCH,
                  battery_config->poll_interval);
@@ -378,29 +382,6 @@ _battery_config_updated(void)
           ecore_exe_pipe_run(buf, ECORE_EXE_PIPE_READ |
                              ECORE_EXE_PIPE_READ_LINE_BUFFERED |
                              ECORE_EXE_NOT_LEADER, NULL);
-     }
-   else if ((battery_config->have_subsystem == UNKNOWN) ||
-            (battery_config->force_mode == SUBSYSTEM))
-     {
-        if (battery_config->batget_exe)
-          {
-             ecore_exe_terminate(battery_config->batget_exe);
-             ecore_exe_free(battery_config->batget_exe);
-             battery_config->batget_exe = NULL;
-          }
-#ifdef HAVE_EEZE
-        _battery_udev_start();
-#else
-        E_DBus_Connection *conn;
-        conn = e_dbus_bus_get(DBUS_BUS_SYSTEM);
-        if (conn)
-          {
-             battery_config->have_subsystem = SUBSYSTEM;
-             _battery_dbus_start();
-          }
-        else
-          battery_config->have_subsystem = NOSUBSYSTEM;
-#endif
      }
 }
 

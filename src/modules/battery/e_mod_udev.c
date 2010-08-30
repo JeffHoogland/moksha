@@ -15,7 +15,7 @@ extern Eina_List *device_batteries;
 extern Eina_List *device_ac_adapters;
 extern double init_time;
 
-void 
+int 
 _battery_udev_start(void)
 {
    Eina_List *devices;
@@ -35,6 +35,7 @@ _battery_udev_start(void)
      battery_config->acwatch = eeze_udev_watch_add(EEZE_UDEV_TYPE_POWER_AC, EEZE_UDEV_EVENT_NONE, _battery_udev_event_ac, NULL);
 
    init_time = ecore_time_get();
+   return 1;
 }
 
 void 

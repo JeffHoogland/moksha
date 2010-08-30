@@ -19,43 +19,41 @@ extern Eina_List *device_batteries;
 extern Eina_List *device_ac_adapters;
 extern double init_time;
 
+static E_DBus_Connection *e_dbus_conn = NULL;
 
-void
+int
 _battery_dbus_start(void)
 {
-   E_DBus_Connection *conn;
-
-   conn = e_dbus_bus_get(DBUS_BUS_SYSTEM);
-   if (!conn) return;
-   
+   e_dbus_conn = e_dbus_bus_get(DBUS_BUS_SYSTEM);
+   if (!e_dbus_conn) return 0;
    // FIXME: e_dbus doesnt allow us to track this pending call
    e_hal_manager_find_device_by_capability
-     (conn, "battery", _battery_dbus_find_battery, NULL);
+     (e_dbus_conn, "battery", _battery_dbus_find_battery, NULL);
    e_hal_manager_find_device_by_capability
-     (conn, "ac_adapter", _battery_dbus_find_ac, NULL);
+     (e_dbus_conn, "ac_adapter", _battery_dbus_find_ac, NULL);
    battery_config->dbus.dev_add = 
-     e_dbus_signal_handler_add(conn, E_HAL_SENDER,
+     e_dbus_signal_handler_add(e_dbus_conn, E_HAL_SENDER,
                                E_HAL_MANAGER_PATH,
                                E_HAL_MANAGER_INTERFACE,
                                "DeviceAdded", _battery_dbus_dev_add, NULL);
    battery_config->dbus.dev_del = 
-     e_dbus_signal_handler_add(conn, E_HAL_SENDER,
+     e_dbus_signal_handler_add(e_dbus_conn, E_HAL_SENDER,
                                E_HAL_MANAGER_PATH,
                                E_HAL_MANAGER_INTERFACE,
                                "DeviceRemoved", _battery_dbus_dev_del, NULL);
    init_time = ecore_time_get();
+   return 1;
 }
 
 
 void
 _battery_dbus_stop(void)
 {
-   E_DBus_Connection *conn;
    Ac_Adapter *ac;
    Battery *bat;
+
+   if (!e_dbus_conn) return;
    
-   conn = e_dbus_bus_get(DBUS_BUS_SYSTEM);
-   if (!conn) return;
    if (battery_config->dbus.have)
      {
         dbus_pending_call_cancel(battery_config->dbus.have);
@@ -63,24 +61,24 @@ _battery_dbus_stop(void)
      }
    if (battery_config->dbus.dev_add)
      {
-        e_dbus_signal_handler_del(conn, battery_config->dbus.dev_add);
+        e_dbus_signal_handler_del(e_dbus_conn, battery_config->dbus.dev_add);
         battery_config->dbus.dev_add = NULL;
      }
    if (battery_config->dbus.dev_del)
      {
-        e_dbus_signal_handler_del(conn, battery_config->dbus.dev_del);
+        e_dbus_signal_handler_del(e_dbus_conn, battery_config->dbus.dev_del);
         battery_config->dbus.dev_del = NULL;
      }
    EINA_LIST_FREE(device_ac_adapters, ac)
      {
-        e_dbus_signal_handler_del(conn, ac->prop_change);
+        e_dbus_signal_handler_del(e_dbus_conn, ac->prop_change);
         eina_stringshare_del(ac->udi);
         eina_stringshare_del(ac->product);
         free(ac);
      }
    EINA_LIST_FREE(device_batteries, bat)
      {
-        e_dbus_signal_handler_del(conn, bat->prop_change);
+        e_dbus_signal_handler_del(e_dbus_conn, bat->prop_change);
         eina_stringshare_del(bat->udi);
         eina_stringshare_del(bat->technology);
         eina_stringshare_del(bat->type);
@@ -89,6 +87,8 @@ _battery_dbus_stop(void)
         eina_stringshare_del(bat->vendor);
         free(bat);
      }
+   e_dbus_connection_close(e_dbus_conn);
+   e_dbus_conn = NULL;
 }
 
 static void
@@ -183,36 +183,25 @@ _battery_dbus_ac_adapter_props(void *data, void *reply_data, DBusError *error __
 static void
 _battery_dbus_battery_property_changed(void *data, DBusMessage *msg __UNUSED__)
 {
-   E_DBus_Connection *conn;
-   
-   conn = e_dbus_bus_get(DBUS_BUS_SYSTEM);
-   if (!conn) return;
    // FIXME: e_dbus doesnt allow us to track this pending call
-   e_hal_device_get_all_properties(conn, ((Battery *)data)->udi,
+   e_hal_device_get_all_properties(e_dbus_conn, ((Battery *)data)->udi,
                                    _battery_dbus_battery_props, data);
 }
 
 static void
 _battery_dbus_ac_adapter_property_changed(void *data, DBusMessage *msg __UNUSED__)
 {
-   E_DBus_Connection *conn;
-   
-   conn = e_dbus_bus_get(DBUS_BUS_SYSTEM);
-   if (!conn) return;
    // FIXME: e_dbus doesnt allow us to track this pending call
-   e_hal_device_get_all_properties(conn, ((Ac_Adapter *)data)->udi,
+   e_hal_device_get_all_properties(e_dbus_conn, ((Ac_Adapter *)data)->udi,
                                    _battery_dbus_ac_adapter_props, data);
 }
 
 static void
 _battery_dbus_battery_add(const char *udi)
 {
-   E_DBus_Connection *conn;
    Battery *bat;
 
    bat = _battery_battery_find(udi);
-   conn = e_dbus_bus_get(DBUS_BUS_SYSTEM);
-   if (!conn) return;
    if (!bat)
      {
         bat = E_NEW(Battery, 1);
@@ -220,13 +209,13 @@ _battery_dbus_battery_add(const char *udi)
         bat->udi = eina_stringshare_add(udi);
         device_batteries = eina_list_append(device_batteries, bat);
         bat->prop_change =
-     e_dbus_signal_handler_add(conn, E_HAL_SENDER, udi,
-                               E_HAL_DEVICE_INTERFACE, "PropertyModified",
-                               _battery_dbus_battery_property_changed,
-                               bat);
+        e_dbus_signal_handler_add(e_dbus_conn, E_HAL_SENDER, udi,
+                                  E_HAL_DEVICE_INTERFACE, "PropertyModified",
+                                  _battery_dbus_battery_property_changed,
+                                  bat);
      }
    // FIXME: e_dbus doesnt allow us to track this pending call
-   e_hal_device_get_all_properties(conn, udi, 
+   e_hal_device_get_all_properties(e_dbus_conn, udi, 
                                    _battery_dbus_battery_props, bat);
 
    _battery_device_update();
@@ -235,16 +224,13 @@ _battery_dbus_battery_add(const char *udi)
 static void
 _battery_dbus_battery_del(const char *udi)
 {
-   E_DBus_Connection *conn;
    Eina_List *l;
    Battery *bat;
    
-   conn = e_dbus_bus_get(DBUS_BUS_SYSTEM);
-   if (!conn) return;
    bat = _battery_battery_find(udi);
    if (bat)
      {
-        e_dbus_signal_handler_del(conn, bat->prop_change);
+        e_dbus_signal_handler_del(e_dbus_conn, bat->prop_change);
         l = eina_list_data_find(device_batteries, bat);
         eina_stringshare_del(bat->udi);
         eina_stringshare_del(bat->technology);
@@ -262,22 +248,19 @@ _battery_dbus_battery_del(const char *udi)
 static void
 _battery_dbus_ac_adapter_add(const char *udi)
 {
-   E_DBus_Connection *conn;
    Ac_Adapter *ac;
 
-   conn = e_dbus_bus_get(DBUS_BUS_SYSTEM);
-   if (!conn) return;
    ac = E_NEW(Ac_Adapter, 1);
    if (!ac) return;
    ac->udi = eina_stringshare_add(udi);
    device_ac_adapters = eina_list_append(device_ac_adapters, ac);
    ac->prop_change =
-     e_dbus_signal_handler_add(conn, E_HAL_SENDER, udi,
+     e_dbus_signal_handler_add(e_dbus_conn, E_HAL_SENDER, udi,
                                E_HAL_DEVICE_INTERFACE, "PropertyModified",
                                _battery_dbus_ac_adapter_property_changed, 
                                ac);
    // FIXME: e_dbus doesnt allow us to track this pending call
-   e_hal_device_get_all_properties(conn, udi, 
+   e_hal_device_get_all_properties(e_dbus_conn, udi, 
                                    _battery_dbus_ac_adapter_props, ac);
    _battery_device_update();
 }
@@ -285,16 +268,13 @@ _battery_dbus_ac_adapter_add(const char *udi)
 static void
 _battery_dbus_ac_adapter_del(const char *udi)
 {
-   E_DBus_Connection *conn;
    Eina_List *l;
    Ac_Adapter *ac;
    
-   conn = e_dbus_bus_get(DBUS_BUS_SYSTEM);
-   if (!conn) return;
    ac = _battery_ac_adapter_find(udi);
    if (ac)
      {
-        e_dbus_signal_handler_del(conn, ac->prop_change);
+        e_dbus_signal_handler_del(e_dbus_conn, ac->prop_change);
         l = eina_list_data_find(device_ac_adapters, ac);
         eina_stringshare_del(ac->udi);
         eina_stringshare_del(ac->product);
@@ -393,17 +373,14 @@ _battery_dbus_dev_add(void *data __UNUSED__, DBusMessage *msg)
 {
    DBusError err;
    char *udi = NULL;
-   E_DBus_Connection *conn;
    
    dbus_error_init(&err);
    dbus_message_get_args(msg, &err, DBUS_TYPE_STRING, &udi, DBUS_TYPE_INVALID);
    if (!udi) return;
-   conn = e_dbus_bus_get(DBUS_BUS_SYSTEM);
-   if (!conn) return;
    // FIXME: e_dbus doesnt allow us to track this pending call
-   e_hal_device_query_capability(conn, udi, "battery",
+   e_hal_device_query_capability(e_dbus_conn, udi, "battery",
                                  _battery_dbus_is_battery, (void*)eina_stringshare_add(udi));
-   e_hal_device_query_capability(conn, udi, "ac_adapter",
+   e_hal_device_query_capability(e_dbus_conn, udi, "ac_adapter",
                                  _battery_dbus_is_ac_adapter, (void*)eina_stringshare_add(udi));
 }
 
