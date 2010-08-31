@@ -191,6 +191,7 @@ _e_mod_notify_refresh(Ind_Notify_Win *nwin)
    edje_object_calc_force(nwin->o_base);
    edje_object_size_min_calc(nwin->o_base, &mw, &mh);
 
+   evas_object_size_hint_min_set(nwin->o_base, mw, mh);
    e_win_size_min_set(nwin->win, nwin->zone->w, mh);
 }
 
