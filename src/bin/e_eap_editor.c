@@ -9,6 +9,7 @@ struct _E_Config_Dialog_Data
    char *comment; /* a longer description */
    char *exec; /* command to execute */
    char *try_exec; /* executable to test for an apps existance */
+   char *url; /* url to open */
 
    char *startup_wm_class; /* window class */
    char *categories; /* list of category names that app is in */
@@ -316,6 +317,7 @@ _e_desktop_edit_create_data(E_Config_Dialog *cfd)
    IFDUP(desktop->comment, cfdata->comment);
    IFDUP(desktop->exec, cfdata->exec);
    IFDUP(desktop->try_exec, cfdata->try_exec);
+   IFDUP(desktop->url, cfdata->url);
    IFDUP(desktop->startup_wm_class, cfdata->startup_wm_class);
    IFDUP(desktop->orig_path, cfdata->orig_path);
 
@@ -355,6 +357,7 @@ _e_desktop_edit_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data 
    IFFREE(cfdata->comment);
    IFFREE(cfdata->exec);
    IFFREE(cfdata->try_exec);
+   IFFREE(cfdata->url);
    IFFREE(cfdata->startup_wm_class);
    IFFREE(cfdata->categories);
    IFFREE(cfdata->icon);
@@ -445,12 +448,14 @@ _e_desktop_edit_basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialo
    IFDUP(cfdata->name, cfdata->desktop->name);
    IFFREE(cfdata->desktop->exec);
    IFDUP(cfdata->exec, cfdata->desktop->exec);
+   IFFREE(cfdata->desktop->try_exec);
+   IFDUP(cfdata->try_exec, cfdata->desktop->try_exec);
+   IFFREE(cfdata->desktop->url);
+   IFDUP(cfdata->url, cfdata->desktop->url);
    IFFREE(cfdata->desktop->comment);
    IFDUP(cfdata->comment, cfdata->desktop->comment);
    IFFREE(cfdata->desktop->generic_name);
    IFDUP(cfdata->generic_name, cfdata->desktop->generic_name);
-   IFFREE(cfdata->desktop->try_exec);
-   IFDUP(cfdata->try_exec, cfdata->desktop->try_exec);
    IFFREE(cfdata->desktop->startup_wm_class);
    IFDUP(cfdata->startup_wm_class, cfdata->desktop->startup_wm_class);
 
@@ -508,9 +513,10 @@ _e_desktop_edit_basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Di
 
    CHECK(name);
    CHECK(exec);
+   CHECK(try_exec);
+   CHECK(url);
    CHECK(comment);
    CHECK(generic_name);
-   CHECK(try_exec);
    CHECK(startup_wm_class);
    CHECK(icon);
 #undef CHECK
@@ -660,20 +666,33 @@ _e_desktop_edit_basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas
      e_widget_on_change_hook_set(o, _e_desktop_editor_name_changed, cfdata);
    e_widget_list_object_append(ol, o, 1, 0, 0.0);
 
-   o = e_widget_label_add(evas, _("Executable"));
-   e_widget_list_object_append(ol, o, 1, 0, 0.0);
+   // FIXME: use radio buttons to switch between different .desktop file modes (executable, url, etc.)
+   if (cfdata->desktop->exec && *cfdata->desktop->exec)
+     {
+        o = e_widget_label_add(evas, _("Executable"));
+        e_widget_list_object_append(ol, o, 1, 0, 0.0);
 
-   oh = e_widget_list_add(evas, 0, 1);
+        oh = e_widget_list_add(evas, 0, 1);
 
-   editor->entry_widget = e_widget_entry_add
-     (evas, &(cfdata->exec), NULL, NULL, NULL);
-   e_widget_list_object_append(oh, editor->entry_widget, 1, 1, 0.5);
+        editor->entry_widget = e_widget_entry_add
+          (evas, &(cfdata->exec), NULL, NULL, NULL);
+        e_widget_list_object_append(oh, editor->entry_widget, 1, 1, 0.5);
 
-   o = e_widget_button_add
-     (evas, "...", NULL, _e_desktop_editor_cb_exec_select, cfdata, editor);
-   e_widget_list_object_append(oh, o, 0, 0, 0.5);
+        o = e_widget_button_add
+          (evas, "...", NULL, _e_desktop_editor_cb_exec_select, cfdata, editor);
+        e_widget_list_object_append(oh, o, 0, 0, 0.5);
 
-   e_widget_list_object_append(ol, oh, 1, 0, 0.0);
+        e_widget_list_object_append(ol, oh, 1, 0, 0.0);
+     }
+   else if (cfdata->desktop->url && *cfdata->desktop->url)
+     {
+        o = e_widget_label_add(evas, _("URL"));
+        e_widget_list_object_append(ol, o, 1, 0, 0.0);
+
+        editor->entry_widget = e_widget_entry_add
+          (evas, &(cfdata->url), NULL, NULL, NULL);
+        e_widget_list_object_append(ol, editor->entry_widget, 1, 0, 0.0);
+     }
 
    o = e_widget_label_add(evas, _("Comment"));
    e_widget_list_object_append(ol, o, 1, 0, 0.0);
