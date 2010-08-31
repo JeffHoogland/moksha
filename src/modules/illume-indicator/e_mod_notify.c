@@ -72,9 +72,13 @@ _e_mod_notify_cb_add(E_Notification_Daemon *daemon __UNUSED__, E_Notification *n
         e_notification_ref(n);
         if (nwin->notify) e_notification_unref(nwin->notify);
         nwin->notify = n;
+        _e_mod_notify_refresh(nwin);
      }
    else if (!replace) 
-     nwin = _e_mod_notify_merge(n);
+     {
+        if ((nwin = _e_mod_notify_merge(n)))
+          _e_mod_notify_refresh(nwin);
+     }
 
    if (!nwin) 
      {
@@ -82,9 +86,6 @@ _e_mod_notify_cb_add(E_Notification_Daemon *daemon __UNUSED__, E_Notification *n
           return _notify_id;
         _nwins = eina_list_append(_nwins, nwin);
      }
-
-   if (nwin)
-     _e_mod_notify_refresh(nwin);
 
    /* show it */
    ecore_x_e_illume_quickpanel_state_send(nwin->zone->black_win, 
@@ -276,7 +277,8 @@ _e_mod_notify_new(E_Notification *n)
    evas_object_move(nwin->o_base, 0, 0);
    evas_object_show(nwin->o_base);
 
-   e_win_size_min_set(nwin->win, zone->w, 48);
+   _e_mod_notify_refresh(nwin);
+
    e_win_show(nwin->win);
    e_border_zone_set(nwin->win->border, zone);
    nwin->win->border->user_skip_winlist = 1;
