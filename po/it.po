@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-08-31 13:10+0200\n"
-"PO-Revision-Date: 2010-08-31 13:13+0200\n"
+"POT-Creation-Date: 2010-09-01 13:42+0200\n"
+"PO-Revision-Date: 2010-09-01 13:43+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -664,8 +664,8 @@ msgid "Color Selector"
 msgstr "Selettore colore"
 
 #: src/bin/e_color_dialog.c:46 src/bin/e_config.c:2101
-#: src/bin/e_config_dialog.c:259 src/bin/e_eap_editor.c:828
-#: src/bin/e_eap_editor.c:892 src/bin/e_entry_dialog.c:62 src/bin/e_exec.c:362
+#: src/bin/e_config_dialog.c:259 src/bin/e_eap_editor.c:847
+#: src/bin/e_eap_editor.c:911 src/bin/e_entry_dialog.c:62 src/bin/e_exec.c:362
 #: src/bin/e_fm.c:8546 src/bin/e_fm.c:9190 src/bin/e_fm_prop.c:507
 #: src/bin/e_int_border_remember.c:321 src/bin/e_int_border_remember.c:521
 #: src/bin/e_module.c:409 src/bin/e_sys.c:484 src/bin/e_sys.c:530
@@ -683,8 +683,8 @@ msgstr "Selettore colore"
 msgid "OK"
 msgstr "OK"
 
-#: src/bin/e_color_dialog.c:47 src/bin/e_eap_editor.c:830
-#: src/bin/e_eap_editor.c:894 src/bin/e_entry_dialog.c:63 src/bin/e_fm.c:8548
+#: src/bin/e_color_dialog.c:47 src/bin/e_eap_editor.c:849
+#: src/bin/e_eap_editor.c:913 src/bin/e_entry_dialog.c:63 src/bin/e_fm.c:8548
 #: src/bin/e_fm_prop.c:508 src/bin/e_utils.c:1168
 #: src/modules/conf_imc/e_int_config_imc_import.c:124
 #: src/modules/conf_mime/e_int_config_mime_edit.c:304
@@ -815,7 +815,7 @@ msgstr "Problemi scrittura configurazione di Enlightenment"
 msgid "Advanced"
 msgstr "Avanzate"
 
-#: src/bin/e_config_dialog.c:236 src/bin/e_eap_editor.c:685
+#: src/bin/e_config_dialog.c:236 src/bin/e_eap_editor.c:704
 msgid "Basic"
 msgstr "Basilari"
 
@@ -912,11 +912,11 @@ msgstr "No, ma aumenta la temporizzazione"
 msgid "No, and stop asking"
 msgstr "No, e non chiedere più"
 
-#: src/bin/e_eap_editor.c:172
+#: src/bin/e_eap_editor.c:173
 msgid "Incomplete Window Properties"
 msgstr "Proprietà della finestra incomplete"
 
-#: src/bin/e_eap_editor.c:173
+#: src/bin/e_eap_editor.c:174
 msgid ""
 "The window you are creating an icon for<br>does not contain window name and "
 "class<br>properties, so the needed properties for<br>the icon so that it "
@@ -931,53 +931,57 @@ msgstr ""
 "metodo funzioni<br>correttamente occorre che il titolo sia lo stesso "
 "ad<br>ogni avvio della finestra e che non cambi."
 
-#: src/bin/e_eap_editor.c:228
+#: src/bin/e_eap_editor.c:229
 msgid "Desktop Entry Editor"
 msgstr "Editor file desktop"
 
-#: src/bin/e_eap_editor.c:652 src/bin/e_int_border_prop.c:420
+#: src/bin/e_eap_editor.c:658 src/bin/e_int_border_prop.c:420
 #: src/bin/e_int_border_prop.c:467 src/modules/conf_imc/e_int_config_imc.c:891
 #: src/modules/conf_menus/e_int_config_menus.c:103
 #: src/modules/conf_menus/e_int_config_menus.c:298
 msgid "Name"
 msgstr "Nome"
 
-#: src/bin/e_eap_editor.c:663
+#: src/bin/e_eap_editor.c:672
 msgid "Executable"
 msgstr "Eseguibile"
 
-#: src/bin/e_eap_editor.c:678
+#: src/bin/e_eap_editor.c:689
+msgid "URL"
+msgstr "URL"
+
+#: src/bin/e_eap_editor.c:697
 msgid "Comment"
 msgstr "Commento"
 
-#: src/bin/e_eap_editor.c:698 src/bin/e_eap_editor.c:707
+#: src/bin/e_eap_editor.c:717 src/bin/e_eap_editor.c:726
 #: src/bin/e_fm_prop.c:394 src/modules/conf_fonts/e_int_config_fonts.c:93
 #: src/modules/conf_mime/e_int_config_mime_edit.c:147
 msgid "Icon"
 msgstr "Icona"
 
-#: src/bin/e_eap_editor.c:711
+#: src/bin/e_eap_editor.c:730
 msgid "Generic Name"
 msgstr "Descrizione"
 
-#: src/bin/e_eap_editor.c:717
+#: src/bin/e_eap_editor.c:736
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:103
 msgid "Window Class"
 msgstr "Classe"
 
-#: src/bin/e_eap_editor.c:723 src/modules/conf_mime/e_int_config_mime.c:176
+#: src/bin/e_eap_editor.c:742 src/modules/conf_mime/e_int_config_mime.c:176
 msgid "Categories"
 msgstr "Categorie"
 
-#: src/bin/e_eap_editor.c:730
+#: src/bin/e_eap_editor.c:749
 msgid "Mime Types"
 msgstr "Tipi Mime"
 
-#: src/bin/e_eap_editor.c:737
+#: src/bin/e_eap_editor.c:756
 msgid "Desktop file"
 msgstr "File desktop"
 
-#: src/bin/e_eap_editor.c:747
+#: src/bin/e_eap_editor.c:766
 #: src/modules/conf_performance/e_int_config_performance.c:115
 #: src/modules/everything/evry_config.c:380
 #: src/modules/everything/evry_config.c:464
@@ -987,27 +991,27 @@ msgstr "File desktop"
 msgid "General"
 msgstr "Impostazioni generali"
 
-#: src/bin/e_eap_editor.c:751
+#: src/bin/e_eap_editor.c:770
 msgid "Startup Notify"
 msgstr "Notifica avvio"
 
-#: src/bin/e_eap_editor.c:753 src/modules/everything-apps/e_mod_main.c:997
+#: src/bin/e_eap_editor.c:772 src/modules/everything-apps/e_mod_main.c:997
 msgid "Run in Terminal"
 msgstr "Esegui in terminale"
 
-#: src/bin/e_eap_editor.c:755
+#: src/bin/e_eap_editor.c:774
 msgid "Show in Menus"
 msgstr "Mostra in menù"
 
-#: src/bin/e_eap_editor.c:758 src/bin/e_int_border_remember.c:748
+#: src/bin/e_eap_editor.c:777 src/bin/e_int_border_remember.c:748
 msgid "Options"
 msgstr "Opzioni"
 
-#: src/bin/e_eap_editor.c:788
+#: src/bin/e_eap_editor.c:807
 msgid "Select an Icon"
 msgstr "Seleziona un'icona"
 
-#: src/bin/e_eap_editor.c:857
+#: src/bin/e_eap_editor.c:876
 msgid "Select an Executable"
 msgstr "Seleziona un'eseguibile"
 

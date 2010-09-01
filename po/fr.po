@@ -6,10 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-08-31 06:18+0400\n"
-"PO-Revision-Date: 2010-08-31 07:51+0400\n"
+"POT-Creation-Date: 2010-09-01 06:17+0400\n"
+"PO-Revision-Date: 2010-09-01 08:09+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: French <pourunmondesansgourou@gmail.com>\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -741,8 +742,8 @@ msgstr "Sélecteur de couleur"
 #: src/bin/e_color_dialog.c:46
 #: src/bin/e_config.c:2101
 #: src/bin/e_config_dialog.c:259
-#: src/bin/e_eap_editor.c:828
-#: src/bin/e_eap_editor.c:892
+#: src/bin/e_eap_editor.c:847
+#: src/bin/e_eap_editor.c:911
 #: src/bin/e_entry_dialog.c:62
 #: src/bin/e_exec.c:362
 #: src/bin/e_fm.c:8546
@@ -770,8 +771,8 @@ msgid "OK"
 msgstr "O.K."
 
 #: src/bin/e_color_dialog.c:47
-#: src/bin/e_eap_editor.c:830
-#: src/bin/e_eap_editor.c:894
+#: src/bin/e_eap_editor.c:849
+#: src/bin/e_eap_editor.c:913
 #: src/bin/e_entry_dialog.c:63
 #: src/bin/e_fm.c:8548
 #: src/bin/e_fm_prop.c:508
@@ -840,7 +841,7 @@ msgid "Advanced"
 msgstr "Avancé"
 
 #: src/bin/e_config_dialog.c:236
-#: src/bin/e_eap_editor.c:685
+#: src/bin/e_eap_editor.c:704
 msgid "Basic"
 msgstr "Basique"
 
@@ -924,19 +925,19 @@ msgstr "Non, mais augmenter le délai"
 msgid "No, and stop asking"
 msgstr "Non, et ne plus demander"
 
-#: src/bin/e_eap_editor.c:172
+#: src/bin/e_eap_editor.c:173
 msgid "Incomplete Window Properties"
 msgstr "Propriétés de la fenêtre incomplètes"
 
-#: src/bin/e_eap_editor.c:173
+#: src/bin/e_eap_editor.c:174
 msgid "The window you are creating an icon for<br>does not contain window name and class<br>properties, so the needed properties for<br>the icon so that it will be used for this<br>window cannot be guessed. You will need to<br>use the window title instead. This will only<br>work if the window title is the same at<br>the time the window starts up, and does not<br>change."
 msgstr "La fenêtre pour laquelle vous voulez créer un icone<br>n'a pas de nom, ni de classe, aussi les<br>propriétés nécessaires pour cet icone ne peuvent-elles<br>être allouées. Vous devriez utiliser le titre de<br>la fenêtre à la place. Cela fonctionnera<br>seulement si le nom de la fenêtre est identique<br>à celui du démarrage, et ne change pas ensuite."
 
-#: src/bin/e_eap_editor.c:228
+#: src/bin/e_eap_editor.c:229
 msgid "Desktop Entry Editor"
 msgstr "Éditeur de fichier desktop"
 
-#: src/bin/e_eap_editor.c:652
+#: src/bin/e_eap_editor.c:658
 #: src/bin/e_int_border_prop.c:420
 #: src/bin/e_int_border_prop.c:467
 #: src/modules/conf_imc/e_int_config_imc.c:891
@@ -945,45 +946,49 @@ msgstr "Éditeur de fichier desktop"
 msgid "Name"
 msgstr "Nom"
 
-#: src/bin/e_eap_editor.c:663
+#: src/bin/e_eap_editor.c:672
 msgid "Executable"
 msgstr "Exécutable"
 
-#: src/bin/e_eap_editor.c:678
+#: src/bin/e_eap_editor.c:689
+msgid "URL"
+msgstr "URL"
+
+#: src/bin/e_eap_editor.c:697
 msgid "Comment"
 msgstr "Commentaire"
 
-#: src/bin/e_eap_editor.c:698
-#: src/bin/e_eap_editor.c:707
+#: src/bin/e_eap_editor.c:717
+#: src/bin/e_eap_editor.c:726
 #: src/bin/e_fm_prop.c:394
 #: src/modules/conf_fonts/e_int_config_fonts.c:93
 #: src/modules/conf_mime/e_int_config_mime_edit.c:147
 msgid "Icon"
 msgstr "Icone"
 
-#: src/bin/e_eap_editor.c:711
+#: src/bin/e_eap_editor.c:730
 msgid "Generic Name"
 msgstr "Nom générique"
 
-#: src/bin/e_eap_editor.c:717
+#: src/bin/e_eap_editor.c:736
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:103
 msgid "Window Class"
 msgstr "Classe de fenêtre"
 
-#: src/bin/e_eap_editor.c:723
+#: src/bin/e_eap_editor.c:742
 #: src/modules/conf_mime/e_int_config_mime.c:176
 msgid "Categories"
 msgstr "Catégories"
 
-#: src/bin/e_eap_editor.c:730
+#: src/bin/e_eap_editor.c:749
 msgid "Mime Types"
 msgstr "Types MIME"
 
-#: src/bin/e_eap_editor.c:737
+#: src/bin/e_eap_editor.c:756
 msgid "Desktop file"
 msgstr "Fichier desktop"
 
-#: src/bin/e_eap_editor.c:747
+#: src/bin/e_eap_editor.c:766
 #: src/modules/conf_performance/e_int_config_performance.c:115
 #: src/modules/everything/evry_config.c:380
 #: src/modules/everything/evry_config.c:464
@@ -994,29 +999,29 @@ msgstr "Fichier desktop"
 msgid "General"
 msgstr "Général"
 
-#: src/bin/e_eap_editor.c:751
+#: src/bin/e_eap_editor.c:770
 msgid "Startup Notify"
 msgstr "Notification de démarrage"
 
-#: src/bin/e_eap_editor.c:753
+#: src/bin/e_eap_editor.c:772
 #: src/modules/everything-apps/e_mod_main.c:997
 msgid "Run in Terminal"
 msgstr "Exécuter dans un terminal"
 
-#: src/bin/e_eap_editor.c:755
+#: src/bin/e_eap_editor.c:774
 msgid "Show in Menus"
 msgstr "Montrer dans les menus"
 
-#: src/bin/e_eap_editor.c:758
+#: src/bin/e_eap_editor.c:777
 #: src/bin/e_int_border_remember.c:748
 msgid "Options"
 msgstr "Options"
 
-#: src/bin/e_eap_editor.c:788
+#: src/bin/e_eap_editor.c:807
 msgid "Select an Icon"
 msgstr "Sélectionner un icone"
 
-#: src/bin/e_eap_editor.c:857
+#: src/bin/e_eap_editor.c:876
 msgid "Select an Executable"
 msgstr "Sélectionner un exécutable"
 
@@ -1155,7 +1160,7 @@ msgstr "Il n'y a eu aucun message d'erreur."
 #: src/bin/e_exec.c:641
 #: src/bin/e_exec.c:720
 msgid "Save This Message"
-msgstr "Sauvegarder ce message"
+msgstr "Enregistrer ce message"
 
 #: src/bin/e_exec.c:645
 #: src/bin/e_exec.c:724
@@ -1976,7 +1981,7 @@ msgstr "Les propriétés de la fenêtre sont partagées"
 
 #: src/bin/e_int_border_remember.c:307
 msgid "You are trying to ask Enlightenment to remember to apply<br>properties (such as size, location, border style etc.) to<br>a window that <hilight>does not have unique properties</hilight>.<br><br>This means it shares Name/Class, Transience, Role etc. properties<br>with more than 1 other window on the screen and remembering<br>properties for this window will apply to all other windows<br>that match these properties.<br><br>This is just a warning in case you did not intend this to happen.<br>If you did, simply press <hilight>Apply</hilight> or <hilight>OK</hilight> buttons<br>and your settings will be accepted. Press <hilight>Cancel</hilight> if you<br>are not sure and nothing will be affected."
-msgstr "Vous demandez à Enlightenment de mémoriser les<br>propriétés (telles que la taille, la position,<br>le type de bordure, etc) d'une fenêtre sans<br><hilight>propriétés distinctives</hilight>.<br><br>Ce qui signifie qu'elle partage son nom et classe, sa fugacité,<br>son rôle, etc, avec au moins une autre fenêtre à l'écran et que la<br>mémorisation des propriétés pour cette fenêtre s'appliquera à<br>toutes les autres fenêtres qui partagent les mêmes propriétés.<br><br>Ceci n'est qu'un avertissement au cas où ce<br>n'était pas ce que vous recherchiez.<br>Cliquez sur <hilight>Appliquer</hilight> ou <hilight>O.K.</hilight> et<br>vos paramètres seront acceptés. Cliquez<br>sur <hilight>Annuler</hilight> si vous n'êtes pas sûr<br>et rien ne sera modifié."
+msgstr "Vous demandez à Enlightenment de mémoriser les<br>propriétés (telles que la taille, la position,<br>le type de bordure, etc) d'une fenêtre sans<br><hilight>propriétés distinctives</hilight>.<br><br>Ce qui signifie qu'elle partage son nom et classe, sa fugacité,<br>son rôle, etc, avec au moins une autre fenêtre à l'écran et que la<br>mémorisation des propriétés pour cette fenêtre s'appliquera à<br>toutes les autres fenêtres qui partagent les mêmes propriétés.<br><br>Ceci n'est qu'un avertissement au cas où ce<br>n'était pas ce que vous recherchiez.<br>Cliquez sur <hilight>Appliquer</hilight> ou <hilight>O.K.</hilight> et<br>vos paramètres seront acceptés. Cliquez<br>sur <hilight>Annuler</hilight> si vous n'êtes pas sûr,<br>et rien ne sera modifié."
 
 #: src/bin/e_int_border_remember.c:512
 msgid "No match properties set"
@@ -5192,7 +5197,7 @@ msgstr "Redémarrer"
 #: src/modules/conf_profiles/e_int_config_profiles.c:268
 #, c-format
 msgid "Selected profile: %s"
-msgstr "Sélectionnez un profil : %s"
+msgstr "Profil sélectionné : %s"
 
 #: src/modules/conf_profiles/e_int_config_profiles.c:304
 #, c-format
@@ -7248,7 +7253,7 @@ msgstr "Aucun fichier de menus<br>n'a été détecté.<br>Veuillez consulter la<
 
 #: src/modules/wizard/page_030.c:104
 msgid "Select application menu"
-msgstr "Sélectionnez le menu"
+msgstr "Sélectionnez l'agencement du menu"
 
 #: src/modules/wizard/page_040.c:22
 msgid "Launcher Bar"
