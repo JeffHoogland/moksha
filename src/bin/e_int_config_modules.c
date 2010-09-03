@@ -511,7 +511,7 @@ _list_item_append(E_Config_Dialog_Data *cfdata, CFModule *cfm)
 	  }
 	else
 	  {
-	     EINA_LOG_ERR("your theme misses 'e/widgets/ilist/toggle_end'!");
+	     EINA_LOG_ERR("your theme is missing 'e/widgets/ilist/toggle_end'!");
 	     evas_object_del(end);
 	     end = NULL;
 	  }
