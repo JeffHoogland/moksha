@@ -30,10 +30,11 @@ struct _E_Config_Dialog_Data
    Evas_Object *b_load, *b_unload;
    Evas_Object *o_desc;
    Eina_List *types;
-   struct {
-      Eina_List *loaded, *unloaded;
-      Ecore_Idler *idler;
-   } selected;
+   struct 
+     {
+        Eina_List *loaded, *unloaded;
+        Ecore_Idler *idler;
+     } selected;
 
    /* just exists while loading: */
    Eina_List *modules_paths;
@@ -407,8 +408,8 @@ _fill_data_loader_iterate(void *data)
 	e_path_dir_list_free(cfdata->modules_paths);
 	cfdata->modules_paths = NULL;
 
-	eina_hash_foreach
-	  (cfdata->types_hash, _types_list_create_foreach_cb, cfdata);
+	eina_hash_foreach(cfdata->types_hash, 
+                          _types_list_create_foreach_cb, cfdata);
 	eina_hash_free(cfdata->types_hash);
 	cfdata->types_hash = NULL;
 	cfdata->types = eina_list_sort(cfdata->types, -1, _types_list_sort);
@@ -517,8 +518,8 @@ _list_item_append(E_Config_Dialog_Data *cfdata, CFModule *cfm)
 	  }
      }
 
-   e_widget_ilist_append_full
-     (cfdata->l_modules, icon, end, cfm->name, NULL, cfm, NULL);
+   e_widget_ilist_append_full(cfdata->l_modules, icon, end, 
+                              cfm->name, NULL, cfm, NULL);
 }
 
 static void
@@ -579,14 +580,14 @@ _widget_list_item_selected_postponed(void *data)
 
 	if (cfm->enabled)
 	  {
-	     cfdata->selected.loaded = eina_list_append
-	       (cfdata->selected.loaded, cfm);
+	     cfdata->selected.loaded = 
+               eina_list_append(cfdata->selected.loaded, cfm);
 	     loaded++;
 	  }
 	else
 	  {
-	     cfdata->selected.unloaded = eina_list_append
-	       (cfdata->selected.unloaded, cfm);
+	     cfdata->selected.unloaded = 
+               eina_list_append(cfdata->selected.unloaded, cfm);
 	     unloaded++;
 	  }
      }
@@ -614,8 +615,8 @@ _widget_list_selection_changed(void *data, Evas_Object *obj __UNUSED__)
 
    if (cfdata->selected.idler)
      ecore_idler_del(cfdata->selected.idler);
-   cfdata->selected.idler = ecore_idler_add
-     (_widget_list_item_selected_postponed, cfdata);
+   cfdata->selected.idler = 
+     ecore_idler_add(_widget_list_item_selected_postponed, cfdata);
 }
 
 static void
