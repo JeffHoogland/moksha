@@ -9,14 +9,16 @@ struct _E_Widget_Data
    Evas_Object *o_widget, *o_scrollframe, *o_ilist;
    Eina_List *callbacks;
    char **value;
-   struct {
-      Eina_List *queue;
-      Ecore_Timer *timer;
-      int count;
-      int show_nth;
-      int select_nth;
-   } queue;
+   struct 
+     {
+        Eina_List *queue;
+        Ecore_Timer *timer;
+        int count;
+        int show_nth;
+        int select_nth;
+     } queue;
 };
+
 struct _E_Widget_Callback
 {
    void (*func) (void *data);
@@ -508,7 +510,10 @@ e_widget_ilist_count(Evas_Object *obj)
    E_Widget_Data *wd;
 
    wd = e_widget_data_get(obj);
-   return e_ilist_count(wd->o_ilist);
+   if (wd->queue.queue) 
+     return eina_list_count(wd->queue.queue);
+   else
+     return e_ilist_count(wd->o_ilist);
 }
 
 EAPI Eina_List *
