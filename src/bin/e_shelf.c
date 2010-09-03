@@ -1669,9 +1669,9 @@ _e_shelf_menu_pre_cb(void *data, E_Menu *m)
 
    mi = e_menu_item_new(m);
    if (es->gadcon->editing)
-     e_menu_item_label_set(mi, _("Stop Moving/Resizing Items"));
+     e_menu_item_label_set(mi, _("Stop Moving/Resizing Gadgets"));
    else
-     e_menu_item_label_set(mi, _("Begin Moving/Resizing Items"));
+     e_menu_item_label_set(mi, _("Begin Moving/Resizing Gadgets"));
    e_util_menu_item_theme_icon_set(mi, "transform-scale");
    e_menu_item_callback_set(mi, _e_shelf_cb_menu_edit, es);
 
@@ -1679,17 +1679,20 @@ _e_shelf_menu_pre_cb(void *data, E_Menu *m)
    e_menu_item_separator_set(mi, 1);
 
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Shelf Settings"));
-   e_util_menu_item_theme_icon_set(mi, "configure");
-   e_menu_item_callback_set(mi, _e_shelf_cb_menu_config, es);
-
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Set Shelf Contents"));
+   e_menu_item_label_set(mi, _("Contents"));
    e_util_menu_item_theme_icon_set(mi, "preferences-desktop-shelf");
    e_menu_item_callback_set(mi, _e_shelf_cb_menu_contents, es);
 
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Delete this Shelf"));
+   e_menu_item_label_set(mi, _("Settings"));
+   e_util_menu_item_theme_icon_set(mi, "configure");
+   e_menu_item_callback_set(mi, _e_shelf_cb_menu_config, es);
+
+   mi = e_menu_item_new(m);
+   e_menu_item_separator_set(mi, 1);
+
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Delete"));
    e_util_menu_item_theme_icon_set(mi, "list-remove");
    e_menu_item_callback_set(mi, _e_shelf_cb_menu_delete, es);   
 }
