@@ -6,14 +6,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-09-01 06:17+0400\n"
-"PO-Revision-Date: 2010-09-01 08:09+0400\n"
+"POT-Creation-Date: 2010-09-04 07:06+0400\n"
+"PO-Revision-Date: 2010-09-04 07:27+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: French <pourunmondesansgourou@gmail.com>\n"
-"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
 "X-Poedit-Language: French\n"
 "X-Poedit-Country: FRANCE\n"
 "Plural-Forms: nplurals=2; plural=n>1;\n"
@@ -660,7 +660,7 @@ msgstr "Activer/Désactiver le mode hors ligne"
 #: src/bin/e_actions.c:2953
 #: src/bin/e_actions.c:2957
 #: src/bin/e_configure.c:148
-#: src/bin/e_int_config_modules.c:62
+#: src/bin/e_int_config_modules.c:63
 #: src/modules/conf_desklock/e_int_config_desklock_fsel.c:87
 #: src/modules/conf_imc/e_int_config_imc.c:808
 #: src/modules/conf_menus/e_int_config_menus.c:294
@@ -1027,6 +1027,7 @@ msgstr "Sélectionner un exécutable"
 
 #: src/bin/e_entry.c:493
 #: src/bin/e_fm.c:8038
+#: src/bin/e_shelf.c:1695
 #: src/modules/conf_profiles/e_int_config_profiles.c:135
 #: src/modules/conf_shelves/e_int_config_shelf.c:80
 #: src/modules/ibar/e_mod_config.c:108
@@ -1545,7 +1546,7 @@ msgid "Inset"
 msgstr "En creux"
 
 #: src/bin/e_gadcon.c:1366
-#: src/bin/e_int_config_modules.c:58
+#: src/bin/e_int_config_modules.c:59
 #: src/modules/gadman/e_mod_gadman.c:754
 msgid "Appearance"
 msgstr "Apparence"
@@ -2082,8 +2083,9 @@ msgstr "Conserver les propriétés actuelles"
 msgid "Start this program on login"
 msgstr "Démarrer ce programme à l'ouverture de session"
 
-#: src/bin/e_int_config_modules.c:59
+#: src/bin/e_int_config_modules.c:60
 #: src/bin/e_int_menus.c:223
+#: src/bin/e_shelf.c:1687
 #: src/modules/battery/e_mod_main.c:186
 #: src/modules/conf/e_conf.c:121
 #: src/modules/conf/e_conf.c:131
@@ -2103,7 +2105,7 @@ msgstr "Démarrer ce programme à l'ouverture de session"
 msgid "Settings"
 msgstr "Configuration"
 
-#: src/bin/e_int_config_modules.c:60
+#: src/bin/e_int_config_modules.c:61
 #: src/modules/fileman/e_mod_main.c:48
 #: src/modules/fileman/e_mod_main.c:60
 #: src/modules/fileman/e_mod_main.c:143
@@ -2111,34 +2113,34 @@ msgstr "Configuration"
 msgid "File Manager"
 msgstr "Gestionnaire de fichiers"
 
-#: src/bin/e_int_config_modules.c:61
+#: src/bin/e_int_config_modules.c:62
 msgid "Shelf"
 msgstr "Rack"
 
-#: src/bin/e_int_config_modules.c:63
+#: src/bin/e_int_config_modules.c:64
 #: src/modules/everything/e_mod_main.c:80
 #: src/modules/everything/e_mod_main.c:196
 msgid "Everything Launcher"
 msgstr "Lanceur Omni"
 
-#: src/bin/e_int_config_modules.c:95
+#: src/bin/e_int_config_modules.c:96
 msgid "Module Settings"
 msgstr "Paramétrage des modules"
 
-#: src/bin/e_int_config_modules.c:159
+#: src/bin/e_int_config_modules.c:160
 msgid "Load"
 msgstr "Activer"
 
-#: src/bin/e_int_config_modules.c:164
+#: src/bin/e_int_config_modules.c:165
 msgid "Unload"
 msgstr "Désactiver"
 
-#: src/bin/e_int_config_modules.c:172
-#: src/bin/e_int_config_modules.c:602
+#: src/bin/e_int_config_modules.c:173
+#: src/bin/e_int_config_modules.c:603
 msgid "No modules selected."
 msgstr "Aucun module sélectionné."
 
-#: src/bin/e_int_config_modules.c:600
+#: src/bin/e_int_config_modules.c:601
 msgid "More than one module selected."
 msgstr "Plus d'un module sélectionné."
 
@@ -2278,7 +2280,6 @@ msgid "Delete A Shelf"
 msgstr "Supprimer un rack"
 
 #: src/bin/e_int_shelf_config.c:43
-#: src/bin/e_shelf.c:1682
 #: src/modules/conf_shelves/e_int_config_shelf.c:43
 msgid "Shelf Settings"
 msgstr "Paramétrage du rack"
@@ -2948,22 +2949,16 @@ msgid "You requested to delete this shelf.<br><br>Are you sure you want to delet
 msgstr "Vous avez demandé à supprimer ce rack.<br><br>Voulez-vous vraiment le faire ?"
 
 #: src/bin/e_shelf.c:1672
-#: src/bin/e_toolbar.c:325
-msgid "Stop Moving/Resizing Items"
-msgstr "Arrêter de déplacer/redimensionner des éléments"
+msgid "Stop Moving/Resizing Gadgets"
+msgstr "Arrêter de déplacer/redimensionner des gadgets"
 
 #: src/bin/e_shelf.c:1674
-#: src/bin/e_toolbar.c:327
-msgid "Begin Moving/Resizing Items"
-msgstr "Déplacer/Redimensionner des éléments"
+msgid "Begin Moving/Resizing Gadgets"
+msgstr "Déplacer/Redimensionner des gadgets"
 
-#: src/bin/e_shelf.c:1687
-msgid "Set Shelf Contents"
-msgstr "Définir le contenu du rack"
-
-#: src/bin/e_shelf.c:1692
-msgid "Delete this Shelf"
-msgstr "Supprimer ce rack"
+#: src/bin/e_shelf.c:1682
+msgid "Contents"
+msgstr "Contenu"
 
 #: src/bin/e_startup.c:63
 msgid "Starting"
@@ -3094,6 +3089,14 @@ msgstr "À propos de ce thème"
 #: src/bin/e_theme.c:40
 msgid "Set As Theme"
 msgstr "Utiliser ce thème"
+
+#: src/bin/e_toolbar.c:325
+msgid "Stop Moving/Resizing Items"
+msgstr "Arrêter de déplacer/redimensionner des éléments"
+
+#: src/bin/e_toolbar.c:327
+msgid "Begin Moving/Resizing Items"
+msgstr "Déplacer/Redimensionner des éléments"
 
 #: src/bin/e_toolbar.c:340
 msgid "Set Toolbar Contents"
@@ -7537,6 +7540,12 @@ msgstr "Il y a déjà une zone de notification active et seule une instance de c
 #: src/modules/systray/e_mod_main.c:1092
 msgid "Systray"
 msgstr "Zone de notification"
+
+#~ msgid "Set Shelf Contents"
+#~ msgstr "Définir le contenu du rack"
+
+#~ msgid "Delete this Shelf"
+#~ msgstr "Supprimer ce rack"
 
 #~ msgid "Properties"
 #~ msgstr "Propriétés"

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-09-01 13:42+0200\n"
-"PO-Revision-Date: 2010-09-01 13:43+0200\n"
+"POT-Creation-Date: 2010-09-04 08:46+0200\n"
+"PO-Revision-Date: 2010-09-04 08:50+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -588,7 +588,7 @@ msgstr "Commuta modalità disconnessa"
 
 #: src/bin/e_actions.c:2937 src/bin/e_actions.c:2941 src/bin/e_actions.c:2945
 #: src/bin/e_actions.c:2949 src/bin/e_actions.c:2953 src/bin/e_actions.c:2957
-#: src/bin/e_configure.c:148 src/bin/e_int_config_modules.c:62
+#: src/bin/e_configure.c:148 src/bin/e_int_config_modules.c:63
 #: src/modules/conf_desklock/e_int_config_desklock_fsel.c:87
 #: src/modules/conf_imc/e_int_config_imc.c:808
 #: src/modules/conf_menus/e_int_config_menus.c:294
@@ -1015,7 +1015,7 @@ msgstr "Seleziona un'icona"
 msgid "Select an Executable"
 msgstr "Seleziona un'eseguibile"
 
-#: src/bin/e_entry.c:493 src/bin/e_fm.c:8038
+#: src/bin/e_entry.c:493 src/bin/e_fm.c:8038 src/bin/e_shelf.c:1695
 #: src/modules/conf_profiles/e_int_config_profiles.c:135
 #: src/modules/conf_shelves/e_int_config_shelf.c:80
 #: src/modules/ibar/e_mod_config.c:108
@@ -1504,7 +1504,7 @@ msgstr "Liscio"
 msgid "Inset"
 msgstr "Incassato"
 
-#: src/bin/e_gadcon.c:1366 src/bin/e_int_config_modules.c:58
+#: src/bin/e_gadcon.c:1366 src/bin/e_int_config_modules.c:59
 #: src/modules/gadman/e_mod_gadman.c:754
 msgid "Appearance"
 msgstr "Aspetto"
@@ -2034,10 +2034,10 @@ msgstr "Mantieni proprietà attuali"
 msgid "Start this program on login"
 msgstr "Avvia questo programma al login"
 
-#: src/bin/e_int_config_modules.c:59 src/bin/e_int_menus.c:223
-#: src/modules/battery/e_mod_main.c:186 src/modules/conf/e_conf.c:121
-#: src/modules/conf/e_conf.c:131 src/modules/conf/e_mod_main.c:102
-#: src/modules/conf_dialogs/e_mod_main.c:17
+#: src/bin/e_int_config_modules.c:60 src/bin/e_int_menus.c:223
+#: src/bin/e_shelf.c:1687 src/modules/battery/e_mod_main.c:186
+#: src/modules/conf/e_conf.c:121 src/modules/conf/e_conf.c:131
+#: src/modules/conf/e_mod_main.c:102 src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:133
 #: src/modules/conf_profiles/e_mod_main.c:17
 #: src/modules/everything-settings/e_mod_main.c:188
@@ -2048,38 +2048,38 @@ msgstr "Avvia questo programma al login"
 msgid "Settings"
 msgstr "Impostazioni"
 
-#: src/bin/e_int_config_modules.c:60 src/modules/fileman/e_mod_main.c:48
+#: src/bin/e_int_config_modules.c:61 src/modules/fileman/e_mod_main.c:48
 #: src/modules/fileman/e_mod_main.c:60 src/modules/fileman/e_mod_main.c:143
 #: src/modules/wizard/page_050.c:23
 msgid "File Manager"
 msgstr "File manager"
 
-#: src/bin/e_int_config_modules.c:61
+#: src/bin/e_int_config_modules.c:62
 msgid "Shelf"
 msgstr "Mensola"
 
-#: src/bin/e_int_config_modules.c:63 src/modules/everything/e_mod_main.c:80
+#: src/bin/e_int_config_modules.c:64 src/modules/everything/e_mod_main.c:80
 #: src/modules/everything/e_mod_main.c:196
 msgid "Everything Launcher"
 msgstr "Pannello di Everything"
 
-#: src/bin/e_int_config_modules.c:95
+#: src/bin/e_int_config_modules.c:96
 msgid "Module Settings"
 msgstr "Gestione moduli"
 
-#: src/bin/e_int_config_modules.c:159
+#: src/bin/e_int_config_modules.c:160
 msgid "Load"
 msgstr "Carica"
 
-#: src/bin/e_int_config_modules.c:164
+#: src/bin/e_int_config_modules.c:165
 msgid "Unload"
 msgstr "Scarica"
 
-#: src/bin/e_int_config_modules.c:172 src/bin/e_int_config_modules.c:602
+#: src/bin/e_int_config_modules.c:173 src/bin/e_int_config_modules.c:603
 msgid "No modules selected."
 msgstr "Nessun modulo selezionato."
 
-#: src/bin/e_int_config_modules.c:600
+#: src/bin/e_int_config_modules.c:601
 msgid "More than one module selected."
 msgstr "Più di un modulo selezionati."
 
@@ -2214,7 +2214,7 @@ msgstr "Aggiungi mensola"
 msgid "Delete A Shelf"
 msgstr "Elimina mensola"
 
-#: src/bin/e_int_shelf_config.c:43 src/bin/e_shelf.c:1682
+#: src/bin/e_int_shelf_config.c:43
 #: src/modules/conf_shelves/e_int_config_shelf.c:43
 msgid "Shelf Settings"
 msgstr "Impostazioni mensole porta-gadget"
@@ -2990,21 +2990,17 @@ msgstr ""
 "Avete chiesto di eliminare questa mensola.<br><br>Siete sicuri di volerla "
 "eliminare?"
 
-#: src/bin/e_shelf.c:1672 src/bin/e_toolbar.c:325
-msgid "Stop Moving/Resizing Items"
+#: src/bin/e_shelf.c:1672
+msgid "Stop Moving/Resizing Gadgets"
 msgstr "Fine spostamento/ridimensionamento oggetti"
 
-#: src/bin/e_shelf.c:1674 src/bin/e_toolbar.c:327
-msgid "Begin Moving/Resizing Items"
+#: src/bin/e_shelf.c:1674
+msgid "Begin Moving/Resizing Gadgets"
 msgstr "Inizio spostamento/ridimensionamento oggetti"
 
-#: src/bin/e_shelf.c:1687
-msgid "Set Shelf Contents"
-msgstr "Imposta contenuti della mensola"
-
-#: src/bin/e_shelf.c:1692
-msgid "Delete this Shelf"
-msgstr "Elimina questa mensola"
+#: src/bin/e_shelf.c:1682
+msgid "Contents"
+msgstr "Contenuti"
 
 #: src/bin/e_startup.c:63
 msgid "Starting"
@@ -3158,6 +3154,14 @@ msgstr "Informazioni sul tema"
 #: src/bin/e_theme.c:40
 msgid "Set As Theme"
 msgstr "Imposta come tema"
+
+#: src/bin/e_toolbar.c:325
+msgid "Stop Moving/Resizing Items"
+msgstr "Fine spostamento/ridimensionamento oggetti"
+
+#: src/bin/e_toolbar.c:327
+msgid "Begin Moving/Resizing Items"
+msgstr "Inizio spostamento/ridimensionamento oggetti"
 
 #: src/bin/e_toolbar.c:340
 msgid "Set Toolbar Contents"
