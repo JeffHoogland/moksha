@@ -1572,7 +1572,7 @@ e_border_focus_set_with_pointer(E_Border *bd)
 /*
  * this causes problems as the grab can cause an in/out event (by grab) that
  * normally would be like a grab from a menu or something else and e gets into
- * a slef-feeding loop. sorry - can't grab :(
+ * a self-feeding loop. sorry - can't grab :(
    if (!ecore_x_pointer_grab(bd->zone->container->win))
      return;
  */
