@@ -250,8 +250,8 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map, int internal)
      bd->win = ecore_x_window_manager_argb_new(con->win, 0, 0, bd->w, bd->h);
    else
      {
-	bd->win = ecore_x_window_override_new(con->win, 0, 0, bd->w, bd->h);
-	ecore_x_window_shape_events_select(bd->win, 1);
+        bd->win = ecore_x_window_override_new(con->win, 0, 0, bd->w, bd->h);
+        ecore_x_window_shape_events_select(bd->win, 1);
      }
    e_bindings_mouse_grab(E_BINDING_CONTEXT_BORDER, bd->win);
    e_bindings_wheel_grab(E_BINDING_CONTEXT_BORDER, bd->win);
@@ -276,15 +276,15 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map, int internal)
    att = &bd->client.initial_attributes;
    if ((!ecore_x_window_attributes_get(win, att)) || (att->input_only))
      {
-//	printf("##- ATTR FETCH FAILED/INPUT ONLY FOR 0x%x - ABORT MANAGE\n", win);
-	e_canvas_del(bd->bg_ecore_evas);
-	ecore_evas_free(bd->bg_ecore_evas);
-	ecore_x_window_free(bd->client.shell_win);
-	e_bindings_mouse_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
-	e_bindings_wheel_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
-	ecore_x_window_free(bd->win);
-	free(bd);
-	return NULL;
+        //	printf("##- ATTR FETCH FAILED/INPUT ONLY FOR 0x%x - ABORT MANAGE\n", win);
+        e_canvas_del(bd->bg_ecore_evas);
+        ecore_evas_free(bd->bg_ecore_evas);
+        ecore_x_window_free(bd->client.shell_win);
+        e_bindings_mouse_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
+        e_bindings_wheel_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
+        ecore_x_window_free(bd->win);
+        free(bd);
+        return NULL;
      }
 
    /* printf("##- ON MAP CLIENT 0x%x SIZE %ix%i %i:%i\n",
@@ -295,13 +295,13 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map, int internal)
     * create a border for it */
    if (first_map)
      {
-	// printf("##- FIRST MAP\n");
-	bd->x = att->x;
-	bd->y = att->y;
-	bd->changes.pos = 1;
-	bd->re_manage = 1;
-	// needed to be 1 for internal windw and on restart.
-	// bd->ignore_first_unmap = 2;
+        // printf("##- FIRST MAP\n");
+        bd->x = att->x;
+        bd->y = att->y;
+        bd->changes.pos = 1;
+        bd->re_manage = 1;
+        // needed to be 1 for internal windw and on restart.
+        // bd->ignore_first_unmap = 2;
      }
 
    bd->client.win = win;
@@ -360,128 +360,128 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map, int internal)
    bd->client.netwm.type = ECORE_X_WINDOW_TYPE_UNKNOWN;
 
      {
-	int at_num = 0, i;
-	Ecore_X_Atom *atoms;
+      int at_num = 0, i;
+      Ecore_X_Atom *atoms;
 
-	atoms = ecore_x_window_prop_list(bd->client.win, &at_num);
-	bd->client.icccm.fetch.command = 1;
-	if (atoms)
-	  {
-	     /* icccm */
-	     for (i = 0; i < at_num; i++)
-	       {
-		  if (atoms[i] == ECORE_X_ATOM_WM_NAME)
-		    bd->client.icccm.fetch.title = 1;
-		  else if (atoms[i] == ECORE_X_ATOM_WM_CLASS)
-		    bd->client.icccm.fetch.name_class = 1;
-		  else if (atoms[i] == ECORE_X_ATOM_WM_ICON_NAME)
-		    bd->client.icccm.fetch.icon_name = 1;
-		  else if (atoms[i] == ECORE_X_ATOM_WM_CLIENT_MACHINE)
-		    bd->client.icccm.fetch.machine = 1;
-		  else if (atoms[i] == ECORE_X_ATOM_WM_HINTS)
-		    bd->client.icccm.fetch.hints = 1;
-		  else if (atoms[i] == ECORE_X_ATOM_WM_NORMAL_HINTS)
-		    bd->client.icccm.fetch.size_pos_hints = 1;
-		  else if (atoms[i] == ECORE_X_ATOM_WM_PROTOCOLS)
-		    bd->client.icccm.fetch.protocol = 1;
-		  else if (atoms[i] == ECORE_X_ATOM_MOTIF_WM_HINTS)
-		    bd->client.mwm.fetch.hints = 1;
-		  else if (atoms[i] == ECORE_X_ATOM_WM_TRANSIENT_FOR)
-		    {
-		       bd->client.icccm.fetch.transient_for = 1;
-		       bd->client.netwm.fetch.type = 1;
-		    }
-		  else if (atoms[i] == ECORE_X_ATOM_WM_CLIENT_LEADER)
-		    bd->client.icccm.fetch.client_leader = 1;
-		  else if (atoms[i] == ECORE_X_ATOM_WM_WINDOW_ROLE)
-		    bd->client.icccm.fetch.window_role = 1;
-		  else if (atoms[i] == ECORE_X_ATOM_WM_STATE)
-		    bd->client.icccm.fetch.state = 1;
-	       }
-	     /* netwm, loop again, netwm will ignore some icccm, so we
-	      * have to be sure that netwm is checked after */
-	     for (i = 0; i < at_num; i++)
-	       {
-		  if (atoms[i] == ECORE_X_ATOM_NET_WM_NAME)
-		    {
-		       /* Ignore icccm */
-		       bd->client.icccm.fetch.title = 0;
-		       bd->client.netwm.fetch.name = 1;
-		    }
-		  else if (atoms[i] == ECORE_X_ATOM_NET_WM_ICON_NAME)
-		    {
-		       /* Ignore icccm */
-		       bd->client.icccm.fetch.icon_name = 0;
-		       bd->client.netwm.fetch.icon_name = 1;
-		    }
-		  else if (atoms[i] == ECORE_X_ATOM_NET_WM_ICON)
-		    {
-		       bd->client.netwm.fetch.icon = 1;
-		    }
-		  else if (atoms[i] == ECORE_X_ATOM_NET_WM_USER_TIME)
-		    {
-		       bd->client.netwm.fetch.user_time = 1;
-		    }
-		  else if (atoms[i] == ECORE_X_ATOM_NET_WM_STRUT)
-		    {
-		       printf("ECORE_X_ATOM_NET_WM_STRUT\n");
-		       bd->client.netwm.fetch.strut = 1;
-		    }
-		  else if (atoms[i] == ECORE_X_ATOM_NET_WM_STRUT_PARTIAL)
-		    {
-		       printf("ECORE_X_ATOM_NET_WM_STRUT_PARTIAL\n");
-		       bd->client.netwm.fetch.strut = 1;
-		    }
-		  else if (atoms[i] == ECORE_X_ATOM_NET_WM_WINDOW_TYPE)
-		    {
-		       /* Ignore mwm
-		       bd->client.mwm.fetch.hints = 0;
-		       */
-		       bd->client.netwm.fetch.type = 1;
-		    }
-		  else if (atoms[i] == ECORE_X_ATOM_NET_WM_STATE)
-		    {
-		       bd->client.netwm.fetch.state = 1;
-		    }
-	       }
-	     /* other misc atoms */
-	     for (i = 0; i < at_num; i++)
-	       {
-		  /* loop to check for own atoms */
-		  if (atoms[i] == E_ATOM_WINDOW_STATE)
-		    {
-		       bd->client.e.fetch.state = 1;
-		    }
-		  /* loop to check for qtopia atoms */
-		  if (atoms[i] == ATM__QTOPIA_SOFT_MENU)
-		    bd->client.qtopia.fetch.soft_menu = 1;
-		  else if (atoms[i] == ATM__QTOPIA_SOFT_MENUS)
-		    bd->client.qtopia.fetch.soft_menus = 1;
-		  /* loop to check for vkbd atoms */
-		  else if (atoms[i] == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE)
-		    bd->client.vkbd.fetch.state = 1;
-		  else if (atoms[i] == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD)
-		    bd->client.vkbd.fetch.vkbd = 1;
-                  /* loop to check for illume atoms */
-                  else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_CONFORMANT)
-                    bd->client.illume.conformant.fetch.conformant = 1;
-                  else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_STATE)
-                    bd->client.illume.quickpanel.fetch.state = 1;
-                  else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_QUICKPANEL)
-                    bd->client.illume.quickpanel.fetch.quickpanel = 1;
-                  else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_PRIORITY_MAJOR)
-                    bd->client.illume.quickpanel.fetch.priority.major = 1;
-                  else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_PRIORITY_MINOR)
-                    bd->client.illume.quickpanel.fetch.priority.minor = 1;
-                  else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_ZONE)
-                    bd->client.illume.quickpanel.fetch.zone = 1;
-                  else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_DRAG_LOCKED)
-                    bd->client.illume.drag.fetch.locked = 1;
-                  else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_DRAG)
-                    bd->client.illume.drag.fetch.drag = 1;
-	       }
-	     free(atoms);
-	  }
+      atoms = ecore_x_window_prop_list(bd->client.win, &at_num);
+      bd->client.icccm.fetch.command = 1;
+      if (atoms)
+        {
+           /* icccm */
+           for (i = 0; i < at_num; i++)
+             {
+                if (atoms[i] == ECORE_X_ATOM_WM_NAME)
+                  bd->client.icccm.fetch.title = 1;
+                else if (atoms[i] == ECORE_X_ATOM_WM_CLASS)
+                  bd->client.icccm.fetch.name_class = 1;
+                else if (atoms[i] == ECORE_X_ATOM_WM_ICON_NAME)
+                  bd->client.icccm.fetch.icon_name = 1;
+                else if (atoms[i] == ECORE_X_ATOM_WM_CLIENT_MACHINE)
+                  bd->client.icccm.fetch.machine = 1;
+                else if (atoms[i] == ECORE_X_ATOM_WM_HINTS)
+                  bd->client.icccm.fetch.hints = 1;
+                else if (atoms[i] == ECORE_X_ATOM_WM_NORMAL_HINTS)
+                  bd->client.icccm.fetch.size_pos_hints = 1;
+                else if (atoms[i] == ECORE_X_ATOM_WM_PROTOCOLS)
+                  bd->client.icccm.fetch.protocol = 1;
+                else if (atoms[i] == ECORE_X_ATOM_MOTIF_WM_HINTS)
+                  bd->client.mwm.fetch.hints = 1;
+                else if (atoms[i] == ECORE_X_ATOM_WM_TRANSIENT_FOR)
+                  {
+                     bd->client.icccm.fetch.transient_for = 1;
+                     bd->client.netwm.fetch.type = 1;
+                  }
+                else if (atoms[i] == ECORE_X_ATOM_WM_CLIENT_LEADER)
+                  bd->client.icccm.fetch.client_leader = 1;
+                else if (atoms[i] == ECORE_X_ATOM_WM_WINDOW_ROLE)
+                  bd->client.icccm.fetch.window_role = 1;
+                else if (atoms[i] == ECORE_X_ATOM_WM_STATE)
+                  bd->client.icccm.fetch.state = 1;
+             }
+           /* netwm, loop again, netwm will ignore some icccm, so we
+            * have to be sure that netwm is checked after */
+           for (i = 0; i < at_num; i++)
+             {
+              if (atoms[i] == ECORE_X_ATOM_NET_WM_NAME)
+                {
+                   /* Ignore icccm */
+                   bd->client.icccm.fetch.title = 0;
+                   bd->client.netwm.fetch.name = 1;
+                }
+              else if (atoms[i] == ECORE_X_ATOM_NET_WM_ICON_NAME)
+                {
+                   /* Ignore icccm */
+                   bd->client.icccm.fetch.icon_name = 0;
+                   bd->client.netwm.fetch.icon_name = 1;
+                }
+              else if (atoms[i] == ECORE_X_ATOM_NET_WM_ICON)
+                {
+                   bd->client.netwm.fetch.icon = 1;
+                }
+              else if (atoms[i] == ECORE_X_ATOM_NET_WM_USER_TIME)
+                {
+                   bd->client.netwm.fetch.user_time = 1;
+                }
+              else if (atoms[i] == ECORE_X_ATOM_NET_WM_STRUT)
+                {
+                   printf("ECORE_X_ATOM_NET_WM_STRUT\n");
+                   bd->client.netwm.fetch.strut = 1;
+                }
+              else if (atoms[i] == ECORE_X_ATOM_NET_WM_STRUT_PARTIAL)
+                {
+                   printf("ECORE_X_ATOM_NET_WM_STRUT_PARTIAL\n");
+                   bd->client.netwm.fetch.strut = 1;
+                }
+              else if (atoms[i] == ECORE_X_ATOM_NET_WM_WINDOW_TYPE)
+                {
+                   /* Ignore mwm
+                   bd->client.mwm.fetch.hints = 0;
+                   */
+                   bd->client.netwm.fetch.type = 1;
+                }
+              else if (atoms[i] == ECORE_X_ATOM_NET_WM_STATE)
+                {
+                   bd->client.netwm.fetch.state = 1;
+                }
+             }
+           /* other misc atoms */
+           for (i = 0; i < at_num; i++)
+             {
+                /* loop to check for own atoms */
+                if (atoms[i] == E_ATOM_WINDOW_STATE)
+                  {
+                     bd->client.e.fetch.state = 1;
+                  }
+                /* loop to check for qtopia atoms */
+                if (atoms[i] == ATM__QTOPIA_SOFT_MENU)
+                  bd->client.qtopia.fetch.soft_menu = 1;
+                else if (atoms[i] == ATM__QTOPIA_SOFT_MENUS)
+                  bd->client.qtopia.fetch.soft_menus = 1;
+                /* loop to check for vkbd atoms */
+                else if (atoms[i] == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE)
+                  bd->client.vkbd.fetch.state = 1;
+                else if (atoms[i] == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD)
+                  bd->client.vkbd.fetch.vkbd = 1;
+                /* loop to check for illume atoms */
+                else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_CONFORMANT)
+                  bd->client.illume.conformant.fetch.conformant = 1;
+                else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_STATE)
+                  bd->client.illume.quickpanel.fetch.state = 1;
+                else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_QUICKPANEL)
+                  bd->client.illume.quickpanel.fetch.quickpanel = 1;
+                else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_PRIORITY_MAJOR)
+                  bd->client.illume.quickpanel.fetch.priority.major = 1;
+                else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_PRIORITY_MINOR)
+                  bd->client.illume.quickpanel.fetch.priority.minor = 1;
+                else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_ZONE)
+                  bd->client.illume.quickpanel.fetch.zone = 1;
+                else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_DRAG_LOCKED)
+                  bd->client.illume.drag.fetch.locked = 1;
+                else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_DRAG)
+                  bd->client.illume.drag.fetch.drag = 1;
+             }
+           free(atoms);
+        }
      }
    bd->client.border.changed = 1;
 
@@ -520,15 +520,15 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map, int internal)
    bd2 = eina_hash_find(borders_hash, e_util_winid_str_get(bd->client.win));
    if (bd2)
      {
-	printf("EEEEK! 2 borders with same client window id in them! very bad!\n");
-	printf("optimisations failing due to bizarre client behavior. will\n");
-	printf("work around.\n");
-	printf("bd=%p, bd->references=%i, bd->deleted=%i, bd->client.win=%x\n",
-	       bd2, bd2->e_obj_inherit.references, bd2->e_obj_inherit.deleted,
-	       bd2->client.win);
-	eina_hash_del(borders_hash, e_util_winid_str_get(bd->client.win), bd2);
-	eina_hash_del(borders_hash, e_util_winid_str_get(bd2->bg_win), bd2);
-	eina_hash_del(borders_hash, e_util_winid_str_get(bd2->win), bd2);
+        printf("EEEEK! 2 borders with same client window id in them! very bad!\n");
+        printf("optimisations failing due to bizarre client behavior. will\n");
+        printf("work around.\n");
+        printf("bd=%p, bd->references=%i, bd->deleted=%i, bd->client.win=%x\n",
+               bd2, bd2->e_obj_inherit.references, bd2->e_obj_inherit.deleted,
+               bd2->client.win);
+        eina_hash_del(borders_hash, e_util_winid_str_get(bd->client.win), bd2);
+        eina_hash_del(borders_hash, e_util_winid_str_get(bd2->bg_win), bd2);
+        eina_hash_del(borders_hash, e_util_winid_str_get(bd2->win), bd2);
      }
    eina_hash_add(borders_hash, e_util_winid_str_get(bd->client.win), bd);
    eina_hash_add(borders_hash, e_util_winid_str_get(bd->bg_win), bd);
@@ -573,7 +573,7 @@ e_border_res_change_geometry_restore(E_Border *bd)
       unsigned char valid : 1;
       int x, y, w, h;
       struct {
-	 int x, y, w, h;
+	        int x, y, w, h;
       } saved;
    } pre_res_change;
 
@@ -587,51 +587,51 @@ e_border_res_change_geometry_restore(E_Border *bd)
 
    if (bd->fullscreen)
      {
-	e_border_unfullscreen(bd);
-	e_border_fullscreen(bd, e_config->fullscreen_policy);
+        e_border_unfullscreen(bd);
+        e_border_fullscreen(bd, e_config->fullscreen_policy);
      }
    else if (bd->maximized != E_MAXIMIZE_NONE)
      {
-	E_Maximize max;
+        E_Maximize max;
 
-	max = bd->maximized;
-	e_border_unmaximize(bd, E_MAXIMIZE_BOTH);
-	e_border_maximize(bd, max);
+        max = bd->maximized;
+        e_border_unmaximize(bd, E_MAXIMIZE_BOTH);
+        e_border_maximize(bd, max);
      }
    else
      {
-	int x, y, w, h, zx, zy, zw, zh;
+        int x, y, w, h, zx, zy, zw, zh;
 
-	bd->saved.x = bd->pre_res_change.saved.x;
-	bd->saved.y = bd->pre_res_change.saved.y;
-	bd->saved.w = bd->pre_res_change.saved.w;
-	bd->saved.h = bd->pre_res_change.saved.h;
+        bd->saved.x = bd->pre_res_change.saved.x;
+        bd->saved.y = bd->pre_res_change.saved.y;
+        bd->saved.w = bd->pre_res_change.saved.w;
+        bd->saved.h = bd->pre_res_change.saved.h;
 
-	e_zone_useful_geometry_get(bd->zone, &zx, &zy, &zw, &zh);
+        e_zone_useful_geometry_get(bd->zone, &zx, &zy, &zw, &zh);
 
-	if (bd->saved.w > zw)
-	  bd->saved.w = zw;
-	if ((bd->saved.x + bd->saved.w) > (zx + zw))
-	  bd->saved.x = zx + zw - bd->saved.w;
+        if (bd->saved.w > zw)
+          bd->saved.w = zw;
+        if ((bd->saved.x + bd->saved.w) > (zx + zw))
+          bd->saved.x = zx + zw - bd->saved.w;
 
-	if (bd->saved.h > zh)
-	  bd->saved.h = zh;
-	if ((bd->saved.y + bd->saved.h) > (zy + zh))
-	  bd->saved.y = zy + zh - bd->saved.h;
+        if (bd->saved.h > zh)
+          bd->saved.h = zh;
+        if ((bd->saved.y + bd->saved.h) > (zy + zh))
+          bd->saved.y = zy + zh - bd->saved.h;
 
-	x = bd->pre_res_change.x;
-	y = bd->pre_res_change.y;
-	w = bd->pre_res_change.w;
-	h = bd->pre_res_change.h;
-	if (w > zw)
-	  w = zw;
-	if (h > zh)
-	  h = zh;
-	if ((x + w) > (zx + zw))
-	  x = zx + zw - w;
-	if ((y + h) > (zy + zh))
-	  y = zy + zh - h;
-	e_border_move_resize(bd, x, y, w, h);
+        x = bd->pre_res_change.x;
+        y = bd->pre_res_change.y;
+        w = bd->pre_res_change.w;
+        h = bd->pre_res_change.h;
+        if (w > zw)
+          w = zw;
+        if (h > zh)
+          h = zh;
+        if ((x + w) > (zx + zw))
+          x = zx + zw - w;
+        if ((y + h) > (zy + zh))
+          y = zy + zh - h;
+        e_border_move_resize(bd, x, y, w, h);
      }
    memcpy(&bd->pre_res_change, &pre_res_change, sizeof(pre_res_change));
 }
