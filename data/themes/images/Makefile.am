@@ -1,4 +1,4 @@
-yMAINTAINERCLEANFILES = Makefile.in
+MAINTAINERCLEANFILES = Makefile.in
 EXTRA_DIST = \
 about_bot.png \
 about_mid.png \
