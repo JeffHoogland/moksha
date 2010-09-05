@@ -594,7 +594,7 @@ AC_E_OPTIONAL_MODULE([mixer], true, [CHECK_MODULE_MIXER])
 AC_E_OPTIONAL_MODULE([connman], true, [CHECK_MODULE_CONNMAN])
 AC_E_OPTIONAL_MODULE([bluez], true, [CHECK_MODULE_BLUEZ])
 AC_E_OPTIONAL_MODULE([ofono], true, [CHECK_MODULE_OFONO])
-AC_E_OPTIONAL_MODULE([illume], false)
+AC_E_OPTIONAL_MODULE([illume], true)
 AC_E_OPTIONAL_MODULE([illume2], true)
 AC_E_OPTIONAL_MODULE([syscon], true)
 AC_E_OPTIONAL_MODULE([everything], true)
@@ -608,10 +608,6 @@ AC_E_OPTIONAL_MODULE([systray], true)
 AC_E_OPTIONAL_MODULE([comp], true)
 
 AC_E_CHECK_PKG(ENOTIFY, [edbus >= 1.0.0 enotify >= 1.0.0], [], [])
-
-if test "x$USE_MODULE_ILLUME" = "xtrue" -a "x$USE_MODULE_ILLUME2" = "xtrue" ;then
-   AC_MSG_ERROR([illume and illume2 cannot be built together])
-fi
 
 AC_OUTPUT([
 Makefile

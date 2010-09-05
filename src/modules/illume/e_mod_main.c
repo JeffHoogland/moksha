@@ -34,6 +34,10 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m) 
 {
+   /* check if illume2 is loaded and bail out if it is.
+    * Illume1 and illume2 both cannot be loaded @ the same time */
+   if (e_module_find("illume2")) return NULL;
+
    /* set up the virtual keyboard */
    e_cfg_init(m);
    e_kbd_init(m);

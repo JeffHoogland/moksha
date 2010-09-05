@@ -26,6 +26,10 @@ e_modapi_init(E_Module *m)
    Ecore_X_Window *zones;
    int zcount = 0;
 
+   /* check if illume is loaded and bail out if it is.
+    * Illume1 and illume2 both cannot be loaded @ the same time */
+   if (e_module_find("illume")) return NULL;
+
    /* set module priority so we load first */
    e_module_priority_set(m, 100);
 
