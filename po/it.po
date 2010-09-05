@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-09-04 08:46+0200\n"
+"POT-Creation-Date: 2010-09-06 00:12+0900\n"
 "PO-Revision-Date: 2010-09-04 08:50+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
@@ -675,7 +675,6 @@ msgstr "Selettore colore"
 #: src/modules/conf_mime/e_int_config_mime_edit.c:303
 #: src/modules/conf_profiles/e_int_config_profiles.c:387
 #: src/modules/conf_theme/e_int_config_theme_import.c:120
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:195
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:215
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:345
 #: src/modules/cpufreq/e_mod_main.c:391 src/modules/cpufreq/e_mod_main.c:420
@@ -690,7 +689,6 @@ msgstr "OK"
 #: src/modules/conf_mime/e_int_config_mime_edit.c:304
 #: src/modules/conf_profiles/e_int_config_profiles.c:388
 #: src/modules/conf_theme/e_int_config_theme_import.c:124
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:196
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:219
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:349
 #: src/modules/syscon/e_syscon.c:94 src/modules/connman/e_mod_main.c:283
@@ -1459,7 +1457,6 @@ msgstr "Proprietario può scrivere"
 #: src/modules/conf_icon_theme/e_int_config_icon_themes.c:251
 #: src/modules/conf_theme/e_int_config_theme.c:1033
 #: src/modules/conf_transitions/e_int_config_transitions.c:167
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:151
 msgid "Preview"
 msgstr "Anteprima"
 
@@ -4000,7 +3997,6 @@ msgstr "Nome desktop"
 
 #: src/modules/conf_desk/e_int_config_desk.c:154
 #: src/modules/conf_profiles/e_int_config_profiles.c:375
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:117
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:137
 msgid "Name:"
 msgstr "Nome:"
@@ -5673,56 +5669,6 @@ msgstr "Questo desktop"
 msgid "This Screen"
 msgstr "Questo schermo"
 
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:94
-msgid "Create a gradient..."
-msgstr "Crea gradiente..."
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:121
-msgid "Color 1:"
-msgstr "Colore 1:"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:125
-msgid "Color 2:"
-msgstr "Colore 2:"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:161
-msgid "Fill Options"
-msgstr "Opzioni di riempimento"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:164
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:161
-#: src/modules/everything/evry_config.c:572
-#: src/modules/gadman/e_mod_gadman.c:738
-msgid "Horizontal"
-msgstr "Orizzontale"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:169
-#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:163
-#: src/modules/everything/evry_config.c:565
-#: src/modules/gadman/e_mod_gadman.c:746
-msgid "Vertical"
-msgstr "Verticale"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:174
-msgid "Diagonal Up"
-msgstr "Diagonale verso l'alto"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:179
-msgid "Diagonal Down"
-msgstr "Diagonale verso il basso"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:184
-msgid "Radial"
-msgstr "Radiale"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:364
-msgid "Gradient Creation Error"
-msgstr "Errore creazione gradiente"
-
-#: src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c:365
-msgid "For some reason, Enlightenment was unable to create a gradient."
-msgstr "Per qualche ragione Enlightenment non ha potuto creare il gradiente."
-
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:124
 msgid "Wallpaper settings..."
 msgstr "Impostazioni sfondo..."
@@ -6038,6 +5984,18 @@ msgstr "Intelligente"
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:152
 msgid "Fill available space"
 msgstr "Riempitiva"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:161
+#: src/modules/everything/evry_config.c:572
+#: src/modules/gadman/e_mod_gadman.c:738
+msgid "Horizontal"
+msgstr "Orizzontale"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:163
+#: src/modules/everything/evry_config.c:565
+#: src/modules/gadman/e_mod_gadman.c:746
+msgid "Vertical"
+msgstr "Verticale"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:165
 msgid "Both"
@@ -7808,3 +7766,31 @@ msgstr ""
 #: src/modules/systray/e_mod_main.c:1092
 msgid "Systray"
 msgstr "Systray"
+
+#~ msgid "Create a gradient..."
+#~ msgstr "Crea gradiente..."
+
+#~ msgid "Color 1:"
+#~ msgstr "Colore 1:"
+
+#~ msgid "Color 2:"
+#~ msgstr "Colore 2:"
+
+#~ msgid "Fill Options"
+#~ msgstr "Opzioni di riempimento"
+
+#~ msgid "Diagonal Up"
+#~ msgstr "Diagonale verso l'alto"
+
+#~ msgid "Diagonal Down"
+#~ msgstr "Diagonale verso il basso"
+
+#~ msgid "Radial"
+#~ msgstr "Radiale"
+
+#~ msgid "Gradient Creation Error"
+#~ msgstr "Errore creazione gradiente"
+
+#~ msgid "For some reason, Enlightenment was unable to create a gradient."
+#~ msgstr ""
+#~ "Per qualche ragione Enlightenment non ha potuto creare il gradiente."

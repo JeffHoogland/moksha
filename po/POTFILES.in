@@ -202,7 +202,6 @@ src/modules/conf_theme/e_mod_main.c
 src/modules/conf_transitions/e_int_config_transitions.c
 src/modules/conf_transitions/e_mod_main.c
 src/modules/conf_wallpaper/e_int_config_wallpaper.c
-src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c
 src/modules/conf_wallpaper/e_int_config_wallpaper_import.c
 src/modules/conf_wallpaper/e_int_config_wallpaper_web.c
 src/modules/conf_wallpaper/e_mod_main.c
