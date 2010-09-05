@@ -1,4 +1,4 @@
-MAINTAINERCLEANFILES = Makefile.in
+yMAINTAINERCLEANFILES = Makefile.in
 EXTRA_DIST = \
 about_bot.png \
 about_mid.png \
@@ -307,6 +307,11 @@ ilist_item_shadow.png \
 illume-apps.png \
 illume-close.png \
 illume-home.png \
+illume-kbd.png \
+illume-kbd-on.png \
+illume-mode-dual-left.png \
+illume-mode-dual-top.png \
+illume-mode-single.png \
 init_check1.png \
 init_check2.png \
 inset_raised.png \
