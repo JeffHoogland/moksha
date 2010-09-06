@@ -20,7 +20,8 @@ struct _E_Desktop_Edit
    Evas_Object *img_widget;
    Evas_Object *icon_fsel;
    E_Dialog    *icon_fsel_dia;
-   Evas_Object *entry_widget;
+   Evas_Object *entry_widget_exec;
+   Evas_Object *entry_widget_url;
    Evas_Object *exec_fsel;
    E_Dialog    *exec_fsel_dia;
    //int          img_set;
