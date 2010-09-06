@@ -3,6 +3,7 @@
 struct _E_Config_Dialog_Data
 {
    Efreet_Desktop *desktop;
+   int type; /* desktop type */
 
    char *name; /* app name (e.g. Firefox) */
    char *generic_name; /* generic app name (e.g. Web Browser) */
@@ -332,6 +333,11 @@ _e_desktop_edit_create_data(E_Config_Dialog *cfd)
    cfdata->terminal = desktop->terminal;
    cfdata->show_in_menus = !desktop->no_display;
 
+   if (cfdata->exec && *cfdata->exec)
+     cfdata->type = 0;
+   else if (cfdata->url && *cfdata->url)
+     cfdata->type = 1;
+
    return cfdata;
 }
 
@@ -446,14 +452,23 @@ _e_desktop_edit_basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialo
 
    IFFREE(cfdata->desktop->name);
    IFDUP(cfdata->name, cfdata->desktop->name);
-   IFFREE(cfdata->desktop->exec);
-   IFDUP(cfdata->exec, cfdata->desktop->exec);
-   IFFREE(cfdata->desktop->try_exec);
-   IFDUP(cfdata->try_exec, cfdata->desktop->try_exec);
-   IFFREE(cfdata->desktop->url);
-   IFDUP(cfdata->url, cfdata->desktop->url);
    IFFREE(cfdata->desktop->comment);
    IFDUP(cfdata->comment, cfdata->desktop->comment);
+
+   switch (cfdata->type)
+     {
+        case 1:
+          IFFREE(cfdata->desktop->url);
+          IFDUP(cfdata->url, cfdata->desktop->url);
+          break;
+        default:
+          IFFREE(cfdata->desktop->exec);
+          IFDUP(cfdata->exec, cfdata->desktop->exec);
+          IFFREE(cfdata->desktop->try_exec);
+          IFDUP(cfdata->try_exec, cfdata->desktop->try_exec);
+          break;
+     }
+
    IFFREE(cfdata->desktop->generic_name);
    IFDUP(cfdata->generic_name, cfdata->desktop->generic_name);
    IFFREE(cfdata->desktop->startup_wm_class);
@@ -646,124 +661,121 @@ static Evas_Object *
 _e_desktop_edit_basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    E_Desktop_Edit *editor = cfdata->editor;
-   Evas_Object *otb, *ol, *o, *oh;
+   E_Radio_Group *rg;
+   Evas_Object *otb, *ol, *o, *ot;
    Evas_Coord mw, mh;
 
    editor->evas = evas;
 
    otb = e_widget_toolbook_add(evas, 48 * e_scale, 48 * e_scale);
 
-   ol = e_widget_list_add(evas, 0, 0);
+   ot = e_widget_table_add(evas, 0);
 
    o = e_widget_label_add(evas, _("Name"));
+   e_widget_table_object_append(ot, o, 0, 0, 1, 1, 1, 1, 0, 0);
+
+   o = e_widget_entry_add(evas, &(cfdata->name), NULL, NULL, NULL);
    e_widget_size_min_get(o, &mw, &mh);
    if (mw < 220) mw = 220;
    e_widget_size_min_set(o, mw, mh);
-   e_widget_list_object_append(ol, o, 1, 0, 0.0);
-
-   o = e_widget_entry_add(evas, &(cfdata->name), NULL, NULL, NULL);
    if ((!cfdata->desktop->orig_path) || (!cfdata->desktop->orig_path[0]))
      e_widget_on_change_hook_set(o, _e_desktop_editor_name_changed, cfdata);
-   e_widget_list_object_append(ol, o, 1, 0, 0.0);
-
-   // FIXME: use radio buttons to switch between different .desktop file modes (executable, url, etc.)
-   if (cfdata->desktop->exec && *cfdata->desktop->exec)
-     {
-        o = e_widget_label_add(evas, _("Executable"));
-        e_widget_list_object_append(ol, o, 1, 0, 0.0);
-
-        oh = e_widget_list_add(evas, 0, 1);
-
-        editor->entry_widget = e_widget_entry_add
-          (evas, &(cfdata->exec), NULL, NULL, NULL);
-        e_widget_list_object_append(oh, editor->entry_widget, 1, 1, 0.5);
-
-        o = e_widget_button_add
-          (evas, "...", NULL, _e_desktop_editor_cb_exec_select, cfdata, editor);
-        e_widget_list_object_append(oh, o, 0, 0, 0.5);
-
-        e_widget_list_object_append(ol, oh, 1, 0, 0.0);
-     }
-   else if (cfdata->desktop->url && *cfdata->desktop->url)
-     {
-        o = e_widget_label_add(evas, _("URL"));
-        e_widget_list_object_append(ol, o, 1, 0, 0.0);
-
-        editor->entry_widget = e_widget_entry_add
-          (evas, &(cfdata->url), NULL, NULL, NULL);
-        e_widget_list_object_append(ol, editor->entry_widget, 1, 0, 0.0);
-     }
+   e_widget_table_object_append(ot, o, 1, 0, 1, 1, 1, 1, 1, 0);
 
    o = e_widget_label_add(evas, _("Comment"));
-   e_widget_list_object_append(ol, o, 1, 0, 0.0);
+   e_widget_table_object_append(ot, o, 0, 1, 1, 1, 1, 1, 0, 0);
 
    o = e_widget_entry_add(evas, &(cfdata->comment), NULL, NULL, NULL);
-   e_widget_list_object_append(ol, o, 1, 0, 0.0);
+   e_widget_table_object_append(ot, o, 1, 1, 1, 1, 1, 1, 1, 0);
+
+   rg = e_widget_radio_group_new(&(cfdata->type));
+
+   // desktop type: application
+
+   o = e_widget_radio_add(evas, _("Application"), 0, rg);
+   e_widget_table_object_append(ot, o, 0, 2, 1, 1, 1, 1, 0, 0);
+
+   editor->entry_widget_exec = e_widget_entry_add
+     (evas, &(cfdata->exec), NULL, NULL, NULL);
+   e_widget_table_object_append(ot, editor->entry_widget_exec, 1, 2, 1, 1, 1, 1, 1, 0);
+
+   o = e_widget_button_add
+     (evas, "...", NULL, _e_desktop_editor_cb_exec_select, cfdata, editor);
+   e_widget_table_object_append(ot, o, 2, 2, 1, 1, 0, 0, 0, 0);
+
+   // desktop type: url
+   o = e_widget_radio_add(evas, _("URL"), 1, rg);
+   e_widget_table_object_append(ot, o, 0, 3, 1, 1, 1, 1, 0, 0);
+
+   editor->entry_widget_url = e_widget_entry_add
+     (evas, &(cfdata->url), NULL, NULL, NULL);
+   e_widget_table_object_append(ot, editor->entry_widget_url, 1, 3, 1, 1, 1, 1, 1, 0);
+   // FIXME: add url selection dialog (file:/etc/..)
 
    e_widget_toolbook_page_append
-     (otb, NULL, _("Basic"), ol, 1, 0, 1, 0, 0.5, 0.0);
+     (otb, NULL, _("Basic"), ot, 1, 0, 1, 0, 0.5, 0.0);
 
    /* e_widget_size_min_get(ol, &mw, &mh); */
 
-   ol = e_widget_list_add(evas, 0, 0);
+   ot = e_widget_table_add(evas, 0);
    
    editor->img_widget = e_widget_button_add
      (evas, "", NULL, _e_desktop_editor_cb_icon_select, cfdata, editor);
    _e_desktop_editor_icon_update(cfdata);
    e_widget_size_min_set(editor->img_widget, 192, 192);
 
-   e_widget_list_object_append(ol, editor->img_widget, 1, 0, 0.0);
+   e_widget_table_object_append(ot, editor->img_widget, 0, 0, 2, 1, 1, 1, 0, 0);
 
    o = e_widget_label_add(evas, _("Icon"));
-   e_widget_list_object_append(ol, o, 1, 0, 0.0);
+   e_widget_table_object_append(ot, o, 0, 1, 1, 1, 1, 1, 0, 0);
 
    o = e_widget_entry_add(evas, &(cfdata->icon), NULL, NULL, NULL);
    cfdata->icon_entry = o;
    e_widget_on_change_hook_set(o, _e_desktop_editor_icon_entry_changed, cfdata);
-   e_widget_list_object_append(ol, o, 1, 0, 0.0);
+   e_widget_table_object_append(ot, o, 1, 1, 1, 1, 1, 1, 1, 0);
 
    e_widget_toolbook_page_append
-     (otb, NULL, _("Icon"), ol, 0, 0, 0, 0, 0.5, 0.5);
+     (otb, NULL, _("Icon"), ot, 0, 0, 0, 0, 0.5, 0.5);
    
-   ol = e_widget_list_add(evas, 0, 0);
+   ot = e_widget_table_add(evas, 0);
 
    o = e_widget_label_add(evas, _("Generic Name"));
-   e_widget_list_object_append(ol, o, 1, 0, 0.0);
+   e_widget_table_object_append(ot, o, 0, 0, 1, 1, 1, 1, 0, 0);
 
    o = e_widget_entry_add(evas, &(cfdata->generic_name), NULL, NULL, NULL);
-   e_widget_list_object_append(ol, o, 1, 0, 0.0);
+   e_widget_table_object_append(ot, o, 1, 0, 1, 1, 1, 1, 1, 0);
 
    o = e_widget_label_add(evas, _("Window Class"));
-   e_widget_list_object_append(ol, o, 1, 0, 0.0);
+   e_widget_table_object_append(ot, o, 0, 1, 1, 1, 1, 1, 0, 0);
 
    o = e_widget_entry_add(evas, &(cfdata->startup_wm_class), NULL, NULL, NULL);
-   e_widget_list_object_append(ol, o, 1, 0, 0.0);
+   e_widget_table_object_append(ot, o, 1, 1, 1, 1, 1, 1, 1, 0);
 
    o = e_widget_label_add(evas, _("Categories"));
-   e_widget_list_object_append(ol, o, 1, 0, 0.0);
+   e_widget_table_object_append(ot, o, 0, 2, 1, 1, 1, 1, 0, 0);
 
    o = e_widget_entry_add(evas, &(cfdata->categories), NULL, NULL, NULL);
    e_widget_on_change_hook_set(o, _e_desktop_editor_categories_changed, cfdata);
-   e_widget_list_object_append(ol, o, 1, 0, 0.0);
+   e_widget_table_object_append(ot, o, 1, 2, 1, 1, 1, 1, 1, 0);
 
    o = e_widget_label_add(evas, _("Mime Types"));
-   e_widget_list_object_append(ol, o, 1, 0, 0.0);
+   e_widget_table_object_append(ot, o, 0, 3, 1, 1, 1, 1, 0, 0);
 
    o = e_widget_entry_add(evas, &(cfdata->mimes), NULL, NULL, NULL);
    e_widget_on_change_hook_set(o, _e_desktop_editor_mimes_changed, cfdata);
-   e_widget_list_object_append(ol, o, 1, 0, 0.0);
+   e_widget_table_object_append(ot, o, 1, 3, 1, 1, 1, 1, 1, 0);
 
    o = e_widget_label_add(evas, _("Desktop file"));
-   e_widget_list_object_append(ol, o, 1, 0, 0.0);
+   e_widget_table_object_append(ot, o, 0, 4, 1, 1, 1, 1, 0, 0);
 
    o = e_widget_entry_add(evas, NULL, NULL, NULL, NULL);
-   e_widget_list_object_append(ol, o, 1, 0, 0.0);
+   e_widget_table_object_append(ot, o, 1, 4, 1, 1, 1, 1, 1, 0);
    e_widget_disabled_set(o, 1);
    cfdata->orig_path_entry = o;
    _e_desktop_edit_update_orig_path(cfdata);
 
    e_widget_toolbook_page_append
-     (otb, NULL, _("General"), ol, 1, 0, 1, 0, 0.5, 0.0);
+     (otb, NULL, _("General"), ot, 1, 0, 1, 0, 0.5, 0.0);
 
 
    ol = e_widget_list_add(evas, 0, 0);
@@ -1014,6 +1026,6 @@ _e_desktop_edit_cb_exec_select_cancel(void *data, E_Dialog *dia)
 static void
 _e_desktop_editor_exec_update(E_Config_Dialog_Data *cfdata)
 {
-   if (!cfdata->editor->entry_widget) return;
-   e_widget_entry_text_set(cfdata->editor->entry_widget, cfdata->exec);
+   if (!cfdata->editor->entry_widget_exec) return;
+   e_widget_entry_text_set(cfdata->editor->entry_widget_exec, cfdata->exec);
 }
