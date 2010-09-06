@@ -1425,9 +1425,8 @@ _e_int_menus_shelves_pre_cb(void *data __UNUSED__, E_Menu *m)
 	if (s->zone->num != zone->num) continue;
 	if (s->cfg->container != (int) con->num) continue;
 
-	name = s->name;
-	if (!name) name = _("Shelf #");	
-	snprintf(buf, sizeof(buf), "%s %i", name, s->id);
+    name = e_shelf_orient_string_get (s);
+	snprintf(buf, sizeof(buf), "Shelf %s", name);
 
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, buf);

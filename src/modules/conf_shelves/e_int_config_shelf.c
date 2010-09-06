@@ -128,9 +128,8 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
 	es = l->data;
 	if (!es) continue;
 
-	label = es->name;
-	if (!label) label = _("Shelf #");
-	snprintf(buf, sizeof(buf), "%s %i", label, es->id);
+    label = e_shelf_orient_string_get (es);
+    snprintf(buf, sizeof(buf), "Shelf %s", label);
 
 	ob = e_icon_add(evas);
         switch (es->cfg->orient)

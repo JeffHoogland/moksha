@@ -1,7 +1,6 @@
 #include "e.h"
 
 static void _e_shelf_free(E_Shelf *es);
-static const char *_e_shelf_orient_string_get(E_Shelf *es);
 static void _e_shelf_gadcon_min_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h);
 static void _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h);
 static Evas_Object *_e_shelf_gadcon_frame_request(void *data, E_Gadcon_Client *gcc, const char *style);
@@ -176,7 +175,7 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
 				       _e_shelf_gadcon_frame_request, es);
    e_gadcon_orient(es->gadcon, E_GADCON_ORIENT_TOP);
    snprintf(buf, sizeof(buf), "e,state,orientation,%s", 
-	    _e_shelf_orient_string_get(es));
+	    e_shelf_orient_string_get(es));
    edje_object_signal_emit(es->o_base, buf, "e");
    edje_object_message_signal_process(es->o_base);
    e_gadcon_zone_set(es->gadcon, zone);
@@ -508,11 +507,69 @@ e_shelf_orient(E_Shelf *es, E_Gadcon_Orient orient)
 
    e_gadcon_orient(es->gadcon, orient);
    snprintf(buf, sizeof(buf), "e,state,orientation,%s", 
-            _e_shelf_orient_string_get(es));
+            e_shelf_orient_string_get(es));
    edje_object_signal_emit(es->o_base, buf, "e");
    edje_object_message_signal_process(es->o_base);
    e_gadcon_location_set_icon_name(es->gadcon->location, _e_shelf_orient_icon_name_get(es));
    e_zone_useful_geometry_dirty(es->zone);
+}
+
+EAPI const char *
+e_shelf_orient_string_get(E_Shelf *es)
+{
+   const char *sig = "";
+
+   switch (es->gadcon->orient)
+     {
+      case E_GADCON_ORIENT_FLOAT:
+	sig = "float";
+	break;
+      case E_GADCON_ORIENT_HORIZ:
+	sig = "horizontal";
+	break;
+      case E_GADCON_ORIENT_VERT:
+	sig = "vertical";
+	break;
+      case E_GADCON_ORIENT_LEFT:
+	sig = "left";
+	break;
+      case E_GADCON_ORIENT_RIGHT:
+	sig = "right";
+	break;
+      case E_GADCON_ORIENT_TOP:
+	sig = "top";
+	break;
+      case E_GADCON_ORIENT_BOTTOM:
+	sig = "bottom";
+	break;
+      case E_GADCON_ORIENT_CORNER_TL:
+	sig = "top_left";
+	break;
+      case E_GADCON_ORIENT_CORNER_TR:
+	sig = "top_right";
+	break;
+      case E_GADCON_ORIENT_CORNER_BL:
+	sig = "bottom_left";
+	break;
+      case E_GADCON_ORIENT_CORNER_BR:
+	sig = "bottom_right";
+	break;
+      case E_GADCON_ORIENT_CORNER_LT:
+	sig = "left_top";
+	break;
+      case E_GADCON_ORIENT_CORNER_RT:
+	sig = "right_top";
+	break;
+      case E_GADCON_ORIENT_CORNER_LB:
+	sig = "left_bottom";
+	break;
+      case E_GADCON_ORIENT_CORNER_RB:
+	sig = "right_bottom";
+	break;
+      default:
+	break;
+     }
+   return sig;
 }
 
 EAPI void
@@ -812,64 +869,6 @@ _e_shelf_free(E_Shelf *es)
    free(es);
 }
 
-static const char *
-_e_shelf_orient_string_get(E_Shelf *es)
-{
-   const char *sig = "";
-
-   switch (es->gadcon->orient)
-     {
-      case E_GADCON_ORIENT_FLOAT:
-	sig = "float";
-	break;
-      case E_GADCON_ORIENT_HORIZ:
-	sig = "horizontal";
-	break;
-      case E_GADCON_ORIENT_VERT:
-	sig = "vertical";
-	break;
-      case E_GADCON_ORIENT_LEFT:
-	sig = "left";
-	break;
-      case E_GADCON_ORIENT_RIGHT:
-	sig = "right";
-	break;
-      case E_GADCON_ORIENT_TOP:
-	sig = "top";
-	break;
-      case E_GADCON_ORIENT_BOTTOM:
-	sig = "bottom";
-	break;
-      case E_GADCON_ORIENT_CORNER_TL:
-	sig = "top_left";
-	break;
-      case E_GADCON_ORIENT_CORNER_TR:
-	sig = "top_right";
-	break;
-      case E_GADCON_ORIENT_CORNER_BL:
-	sig = "bottom_left";
-	break;
-      case E_GADCON_ORIENT_CORNER_BR:
-	sig = "bottom_right";
-	break;
-      case E_GADCON_ORIENT_CORNER_LT:
-	sig = "left_top";
-	break;
-      case E_GADCON_ORIENT_CORNER_RT:
-	sig = "right_top";
-	break;
-      case E_GADCON_ORIENT_CORNER_LB:
-	sig = "left_bottom";
-	break;
-      case E_GADCON_ORIENT_CORNER_RB:
-	sig = "right_bottom";
-	break;
-      default:
-	break;
-     }
-   return sig;
-}
-
 static void
 _e_shelf_gadcon_min_size_request(void *data __UNUSED__, E_Gadcon *gc __UNUSED__, Evas_Coord w __UNUSED__, Evas_Coord h __UNUSED__)
 {
@@ -1067,7 +1066,7 @@ _e_shelf_gadcon_frame_request(void *data, E_Gadcon_Client *gcc, const char *styl
 	  }
      }
    snprintf(buf, sizeof(buf), "e,state,orientation,%s", 
-            _e_shelf_orient_string_get(es));
+            e_shelf_orient_string_get(es));
    edje_object_signal_emit(es->o_base, buf, "e");
    edje_object_message_signal_process(o);
    return o;
@@ -1166,9 +1165,8 @@ _e_shelf_menu_append(E_Shelf *es, E_Menu *mn)
    const char *name;
    char buf[256];
 
-   name = es->name;
-   if (!name) name = _("Shelf #");
-   snprintf(buf, sizeof(buf), "%s %i", name, es->id);
+   name = e_shelf_orient_string_get (es);
+   snprintf(buf, sizeof(buf), "Shelf %s", name);
 
    e_shelf_locked_set(es, 1);
 
