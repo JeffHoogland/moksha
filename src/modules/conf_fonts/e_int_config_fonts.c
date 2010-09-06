@@ -984,7 +984,7 @@ _size_list_load(E_Config_Dialog_Data *cfdata, Eina_List *size_list, Evas_Font_Si
      {
        E_Font_Size_Data *size_data;
 
-       size_data = e_widget_ilist_nth_data_get(ob, n);
+       if (!(size_data = e_widget_ilist_nth_data_get(ob, n))) continue;
        if (cur_size == size_data->size)
 	  {
 	     e_widget_ilist_selected_set(ob, n);
