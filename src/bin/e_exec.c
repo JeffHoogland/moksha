@@ -239,7 +239,7 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
 
    if (desktop)
      {
-	Eina_List *l;
+	Eina_List *l, *lnew;
 
 	efreet_desktop_ref(desktop);
 	inst->desktop = desktop;
@@ -249,13 +249,12 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
 	inst->launch_time = ecore_time_get();
 	inst->expire_timer = ecore_timer_add(e_config->exec.expire_timeout, 
                                              _e_exec_cb_expire_timer, inst);
-
 	l = eina_hash_find(e_exec_instances, desktop->orig_path);
-        l = eina_list_append(l, inst);
+        lnew = eina_list_append(l, inst);
 	if (l)
-          eina_hash_modify(e_exec_instances, desktop->orig_path, l);
+          eina_hash_modify(e_exec_instances, desktop->orig_path, lnew);
 	else
-          eina_hash_add(e_exec_instances, desktop->orig_path, l);
+          eina_hash_add(e_exec_instances, desktop->orig_path, lnew);
 	e_exec_start_pending = eina_list_append(e_exec_start_pending, desktop);
 
 	e_exehist_add(launch->launch_method, desktop->exec);
@@ -410,6 +409,10 @@ _e_exec_startup_id_pid_find(const Eina_Hash *hash __UNUSED__, const void *key __
    search = data;
    EINA_LIST_FOREACH(value, l, inst)
      {
+        int pid = -1;
+        
+        if (inst->exe)
+           pid = ecore_exe_pid_get(inst->exe);
         if (((search->startup_id > 0) && 
              (search->startup_id == inst->startup_id)) ||
             ((inst->exe) && (search->pid > 1) && 
