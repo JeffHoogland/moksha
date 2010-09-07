@@ -296,19 +296,19 @@ struct _E_Border
          } state;
 
          /* NetWM Window allowed actions */
-                struct {
-                   unsigned char move : 1;
-                   unsigned char resize : 1;
-                   unsigned char minimize : 1;
-                   unsigned char shade : 1;
-                   unsigned char stick : 1;
-                   unsigned char maximized_h : 1;
-                   unsigned char maximized_v : 1;
-                   unsigned char fullscreen : 1;
-                   unsigned char change_desktop : 1;
-                   unsigned char close : 1;
-                } action;
-
+         struct {
+            unsigned char move : 1;
+            unsigned char resize : 1;
+            unsigned char minimize : 1;
+            unsigned char shade : 1;
+            unsigned char stick : 1;
+            unsigned char maximized_h : 1;
+            unsigned char maximized_v : 1;
+            unsigned char fullscreen : 1;
+            unsigned char change_desktop : 1;
+            unsigned char close : 1;
+         } action;
+         
          Ecore_X_Window_Type type;
          Ecore_X_Window_Type *extra_types;
          int extra_types_num;
