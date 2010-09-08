@@ -26,7 +26,7 @@ _battery_dbus_start(void)
 {
    e_dbus_conn = e_dbus_bus_get(DBUS_BUS_SYSTEM);
    if (!e_dbus_conn) return 0;
-   // FIXME: e_dbus doesnt allow us to track this pending call
+   // FIXME: e_dbus doesn't allow us to track this pending call
    e_hal_manager_find_device_by_capability
      (e_dbus_conn, "battery", _battery_dbus_find_battery, NULL);
    e_hal_manager_find_device_by_capability
@@ -183,7 +183,7 @@ _battery_dbus_ac_adapter_props(void *data, void *reply_data, DBusError *error __
 static void
 _battery_dbus_battery_property_changed(void *data, DBusMessage *msg __UNUSED__)
 {
-   // FIXME: e_dbus doesnt allow us to track this pending call
+   // FIXME: e_dbus doesn't allow us to track this pending call
    e_hal_device_get_all_properties(e_dbus_conn, ((Battery *)data)->udi,
                                    _battery_dbus_battery_props, data);
 }
@@ -191,7 +191,7 @@ _battery_dbus_battery_property_changed(void *data, DBusMessage *msg __UNUSED__)
 static void
 _battery_dbus_ac_adapter_property_changed(void *data, DBusMessage *msg __UNUSED__)
 {
-   // FIXME: e_dbus doesnt allow us to track this pending call
+   // FIXME: e_dbus doesn't allow us to track this pending call
    e_hal_device_get_all_properties(e_dbus_conn, ((Ac_Adapter *)data)->udi,
                                    _battery_dbus_ac_adapter_props, data);
 }
@@ -214,7 +214,7 @@ _battery_dbus_battery_add(const char *udi)
                                   _battery_dbus_battery_property_changed,
                                   bat);
      }
-   // FIXME: e_dbus doesnt allow us to track this pending call
+   // FIXME: e_dbus doesn't allow us to track this pending call
    e_hal_device_get_all_properties(e_dbus_conn, udi, 
                                    _battery_dbus_battery_props, bat);
 
@@ -259,7 +259,7 @@ _battery_dbus_ac_adapter_add(const char *udi)
                                E_HAL_DEVICE_INTERFACE, "PropertyModified",
                                _battery_dbus_ac_adapter_property_changed, 
                                ac);
-   // FIXME: e_dbus doesnt allow us to track this pending call
+   // FIXME: e_dbus doesn't allow us to track this pending call
    e_hal_device_get_all_properties(e_dbus_conn, udi, 
                                    _battery_dbus_ac_adapter_props, ac);
    _battery_device_update();
@@ -377,7 +377,7 @@ _battery_dbus_dev_add(void *data __UNUSED__, DBusMessage *msg)
    dbus_error_init(&err);
    dbus_message_get_args(msg, &err, DBUS_TYPE_STRING, &udi, DBUS_TYPE_INVALID);
    if (!udi) return;
-   // FIXME: e_dbus doesnt allow us to track this pending call
+   // FIXME: e_dbus doesn't allow us to track this pending call
    e_hal_device_query_capability(e_dbus_conn, udi, "battery",
                                  _battery_dbus_is_battery, (void*)eina_stringshare_add(udi));
    e_hal_device_query_capability(e_dbus_conn, udi, "ac_adapter",

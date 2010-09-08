@@ -282,7 +282,7 @@ evry_history_item_add(Evry_Item *it, const char *ctxt, const char *input)
 
    if (it->hi)
      {
-	/* keep hi when context didnt change */
+	/* keep hi when context didn't change */
 	if ((!rem_ctxt) || (!it->hi->context && !ctxt) ||
 	    (it->hi->context && ctxt && !strcmp(it->hi->context, ctxt)))
 	  hi = it->hi;
@@ -368,7 +368,7 @@ evry_history_item_usage_set(Evry_Item *it, const char *input, const char *ctxt)
 
    if (it->hi)
      {
-	/* keep hi when context didnt change */
+	/* keep hi when context didn't change */
 	if ((!rem_ctxt) || (!it->hi->context && !ctxt) ||
 	    (it->hi->context && ctxt && !strcmp(it->hi->context, ctxt)))
 	  hi = it->hi;

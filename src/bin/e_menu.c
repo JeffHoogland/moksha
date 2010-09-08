@@ -484,7 +484,7 @@ e_menu_category_data_set(char *category, void *data)
    cat = eina_hash_find(_e_menu_categories, category);
    if (cat)
      cat->data = data;
-   else   /* if it isnt found create the new hash */
+   else   /* if it isn't found create the new hash */
      {
 	cat = calloc(1, sizeof(E_Menu_Category));
 	cat->data = data;
@@ -499,7 +499,7 @@ e_menu_category_callback_add(char *category, void (*create) (E_Menu *m, void *ca
    E_Menu_Category_Callback *cb = NULL;
 
    cat = eina_hash_find(_e_menu_categories, category);
-   if (!cat)   /* if it isnt found create the new hash */
+   if (!cat)   /* if it isn't found create the new hash */
      {
 	cat = calloc(1, sizeof(E_Menu_Category));
 	eina_hash_add(_e_menu_categories, category, cat);
@@ -1812,7 +1812,7 @@ _e_menu_activate_internal(E_Menu *m, E_Zone *zone)
    m->zone = zone;
    if (!m->active)
      {
-	/* this remove is in case the menu is marked as inactive but hasnt */
+	/* this remove is in case the menu is marked as inactive but hasn't */
 	/* been removed from the list yet */
 	if (m->in_active_list)
 	  {
@@ -2647,7 +2647,7 @@ _e_menu_cb_key_up(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 /* we need all of these because menus are special and grab the mouse and
- * keyboard and thus the normal event mechanism doesnt work, so we feed
+ * keyboard and thus the normal event mechanism doesn't work, so we feed
  * events directly to the canvases from our grab window
  */
 

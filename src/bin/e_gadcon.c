@@ -463,7 +463,7 @@ e_gadcon_unpopulate(E_Gadcon *gc)
 
    E_OBJECT_CHECK(gc);
    E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
-   /* Be carefull, e_object_del does remove gcc from gc->clients */
+   /* Be careful, e_object_del does remove gcc from gc->clients */
    while (gc->clients)
      {
 	gcc = eina_list_data_get(gc->clients);

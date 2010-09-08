@@ -369,7 +369,7 @@ e_font_default_set(const char *text_class, const char *font, Evas_Font_Size size
 	  }
      }
 
-   /* the text class doesnt exist */
+   /* the text class doesn't exist */
    efd = E_NEW(E_Font_Default, 1);
    efd->text_class = eina_stringshare_add(text_class);
    efd->font = eina_stringshare_add(font);

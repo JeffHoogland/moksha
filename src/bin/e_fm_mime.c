@@ -38,7 +38,7 @@ e_fm_mime_icon_get(const char *mime)
    E_Config_Mime_Icon *mi;
    size_t len;
 
-   /* 0.0 clean out hash cache once it has mroe than 512 entries in it */
+   /* 0.0 clean out hash cache once it has more than 512 entries in it */
    if (eina_hash_population(icon_map) > 512) e_fm_mime_icon_cache_flush();
 
    /* 0. look in mapping cache */
@@ -221,7 +221,7 @@ e_fm2_mime_handler_glob_add(E_Fm2_Mime_Handler *handler, const char *glob)
    return 1;
 }
 
-/* delete a certain handler for a certian mime */
+/* delete a certain handler for a certain mime */
 EAPI void
 e_fm2_mime_handler_mime_del(E_Fm2_Mime_Handler *handler, const char *mime)
 {

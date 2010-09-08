@@ -174,7 +174,7 @@ e_hints_init(void)
  */
 /*	     ecore_x_netwm_wm_identify(roots[i], win, "KWin");*/
 	     ecore_x_netwm_wm_identify(roots[i], win, "Enlightenment");
-/* this makes openoffice.org read gtk settings so it doesnt look like shit */
+/* this makes openoffice.org read gtk settings so it doesn't look like shit */
 	     e_hints_openoffice_gnome_fake(roots[i]);
 
 	     ecore_x_netwm_supported_set(roots[i], supported, supported_num);

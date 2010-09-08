@@ -784,12 +784,12 @@ _e_kbd_dict_matches_lookup_iter(E_Kbd_Dict *kd, Eina_List *word,
 			 }
 		       kw->word = eina_stringshare_add(wd);
 		       // FIXME: magic combination of distance metric and
-		       // frequency of useage. this is simple now, but could
+		       // frequency of usage. this is simple now, but could
 		       // be tweaked
 		       wc = eina_list_count(word);
 		       if (md < 1) md = 1;
 		       
-		       // basically a metric to see how far away teh keys that
+		       // basically a metric to see how far away the keys that
 		       // were actually pressed are away from the letters of
 		       // this word in a physical on-screen sense
 		       accuracy = md - (d / (wc + 1));

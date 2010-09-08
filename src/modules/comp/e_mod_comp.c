@@ -80,7 +80,7 @@ struct _E_Comp_Win
    
    Ecore_X_Pixmap        cache_pixmap; // the cached pixmap (1/nth the dimensions)
    int                   cache_w, cache_h; // cached pixmap size
-   int                   update_count; // how many updates have happend to this win
+   int                   update_count; // how many updates have happened to this win
    double                last_visible_time; // last time window was visible
    double                last_draw_time; // last time window was damaged
    

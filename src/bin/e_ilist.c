@@ -715,7 +715,7 @@ e_ilist_nth_label_set(Evas_Object *obj, int n, const char *label)
 {
    E_Ilist_Item *si = NULL;
 
-   /* check for a NULL label first...simplier, faster check then doing
+   /* check for a NULL label first...simpler, faster check then doing
     * API_ENTRY check first */
    if (!label) return;
    API_ENTRY return;

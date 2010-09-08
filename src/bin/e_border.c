@@ -291,7 +291,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map, int internal)
     * 	  bd->client.win, bd->client.w, bd->client.h, att->x, att->y); */
 
    /* FIXME: if first_map is 1 then we should ignore the first hide event
-    * or ensure the window is alreayd hidden and events flushed before we
+    * or ensure the window is already hidden and events flushed before we
     * create a border for it */
    if (first_map)
      {
@@ -5033,7 +5033,7 @@ _e_border_cb_sync_alarm(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
      {
 	E_Border_Pending_Move_Resize *pnd = NULL;
 
-	/* skip pending for which we didnt get a reply */
+	/* skip pending for which we didn't get a reply */
 	while (bd->pending_move_resize)
 	  {
 	     pnd = bd->pending_move_resize->data;
@@ -6133,7 +6133,7 @@ _e_border_eval0(E_Border *bd)
 	  {
 	     int cw = 0, ch = 0;
 
-	     /* This doesnt fix the race, but makes it smaller. we detect
+	     /* This doesn't fix the race, but makes it smaller. we detect
 	      * this and if cw and ch != client w/h then mark this as needing
 	      * a shape change again to fixup next event loop.
 	      */

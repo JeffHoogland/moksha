@@ -1148,7 +1148,7 @@ _pager_window_desk_change(Pager *pager, E_Border *bd)
 	     _pager_window_move(pw);
 	  }
      }
-   /* the border isnt in this pager at all - it must have moved zones */
+   /* the border isn't in this pager at all - it must have moved zones */
    else
      {
 	if (!bd->sticky)

@@ -165,7 +165,7 @@ WHEN:
 ISSUES:
     When new applications are installed, will need to update.
 SOLUTION:
-    Parse them during idle time, maybe as a seperate process.  Monitor
+    Parse them during idle time, maybe as a separate process.  Monitor
     relevant directories. ~/.e/e/applications/menu/all is the results
     cached to disk.
 
@@ -360,7 +360,7 @@ comments on cache doc:
       smart that the existing evas cache :) so don't worry about icons and
       their pixels - just the file paths/keys
    2. instead of "in memory" let's try a new idea. lets put it in a flat
-      mmap'ed file (not eet). let's not make it architecture dependant
+      mmap'ed file (not eet). let's not make it architecture dependent
       (write any integers in a fixed byte order) and make it all offset
       based. fill the file with strings and indexes and fast search indexes
       etc. 1 big flat file for the whole cache.. the eap structs themselves

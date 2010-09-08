@@ -2022,11 +2022,11 @@ _e_config_eet_close_handle(Eet_File *ef, char *file)
    switch (err)
      {
       case EET_ERROR_WRITE_ERROR:
-	erstr = _("An error occured while saving Enlightenment's<br>"
+	erstr = _("An error occurred while saving Enlightenment's<br>"
 		  "settings to disk. The error could not be<br>"
 		  "deterimined.<br>"
 		  "<br>"
-		  "The file where the error occured was:<br>"
+		  "The file where the error occurred was:<br>"
 		  "%s<br>"
 		  "<br>"
 		  "This file has been deleted to avoid corrupt data.<br>"
@@ -2039,18 +2039,18 @@ _e_config_eet_close_handle(Eet_File *ef, char *file)
 		  "be extremely small. Please check the settings<br>"
 		  "for your home directory.<br>"
 		  "<br>"
-		  "The file where the error occured was:<br>"
+		  "The file where the error occurred was:<br>"
 		  "%s<br>"
 		  "<br>"
 		  "This file has been deleted to avoid corrupt data.<br>"
 		  );
 	break;
       case EET_ERROR_WRITE_ERROR_IO_ERROR:
-	erstr = _("An output error occured when writing the settings<br>"
+	erstr = _("An output error occurred when writing the settings<br>"
 		  "files for Enlightenment. Your disk is having troubles<br>"
 		  "and possibly needs replacement.<br>"
 		  "<br>"
-		  "The file where the error occured was:<br>"
+		  "The file where the error occurred was:<br>"
 		  "%s<br>"
 		  "<br>"
 		  "This file has been deleted to avoid corrupt data.<br>"
@@ -2062,7 +2062,7 @@ _e_config_eet_close_handle(Eet_File *ef, char *file)
 		  "You have either run out of disk space or have<br>"
 		  "gone over your quota limit.<br>"
 		  "<br>"
-		  "The file where the error occured was:<br>"
+		  "The file where the error occurred was:<br>"
 		  "%s<br>"
 		  "<br>"
 		  "This file has been deleted to avoid corrupt data.<br>"
@@ -2072,7 +2072,7 @@ _e_config_eet_close_handle(Eet_File *ef, char *file)
 	erstr = _("Enlightenment unexpectedly had the settings file<br>"
 		  "it was writing closed on it. This is very unusual.<br>"
 		  "<br>"
-		  "The file where the error occured was:<br>"
+		  "The file where the error occurred was:<br>"
 		  "%s<br>"
 		  "<br>"
 		  "This file has been deleted to avoid corrupt data.<br>"

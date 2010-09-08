@@ -228,7 +228,7 @@ _e_prefix_share_hunt(void)
    char buf[4096], buf2[4096], *p;
    FILE *f;
 
-   /* sometimes this isnt the case - so we need to do a more exhaustive search
+   /* sometimes this isn't the case - so we need to do a more exhaustive search
     * through more parent and subdirs. hre is an example i have seen:
     * 
     * /blah/whatever/exec/bin/exe

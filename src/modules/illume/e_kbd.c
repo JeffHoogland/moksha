@@ -339,7 +339,7 @@ _e_kbd_cb_border_focus_in(__UNUSED__ void *data, __UNUSED__ int type, void *even
    
    ev = event;
    if (_e_kbd_by_border_get(ev->border)) return ECORE_CALLBACK_PASS_ON;
-   // FIXME: if ev->border->client.vkbd.state == 0 then this app doesnt know
+   // FIXME: if ev->border->client.vkbd.state == 0 then this app doesn't know
    // how to request for a virtual keyboard and so we should have a manual
    // override
    if ((ev->border->need_fullscreen) || (ev->border->fullscreen))

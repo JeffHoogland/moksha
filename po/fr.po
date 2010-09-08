@@ -54,7 +54,7 @@ msgid "Enlightenment"
 msgstr "Enlightenment"
 
 #: src/bin/e_about.c:23
-msgid "Copyright &copy; 1999-2010, by the Enlightenment Development Team.<br><br>We hope you enjoy using this software as much as we enjoyed writing it.<br><br>This software is provided as-is with no explicit or implied warranty. This software is governed by licensing conditions, so please see the COPYING and COPYING-PLAIN licence files installed on your system.<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</hilight> and it is not stable. Many features are incomplete or even non-existant yet and may have many bugs. You have been <hilight>WARNED!</hilight>"
+msgid "Copyright &copy; 1999-2010, by the Enlightenment Development Team.<br><br>We hope you enjoy using this software as much as we enjoyed writing it.<br><br>This software is provided as-is with no explicit or implied warranty. This software is governed by licensing conditions, so please see the COPYING and COPYING-PLAIN licence files installed on your system.<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</hilight> and it is not stable. Many features are incomplete or even non-existent yet and may have many bugs. You have been <hilight>WARNED!</hilight>"
 msgstr "Copyright &copy; 1999-2010, par l'Équipe de Développement de Enlightenment.<br><br>Nous espérons que vous prendrez autant de plaisir à utiliser ce programme que nous en prenons à le développer.<br><br>Ce programme est fourni « EN L'ÉTAT » sans garantie d'aucune sorte, qu'elle soit exprimée ou implicite. Ce programme est régi par des conditions de licence, veuillez consulter les fichiers de licence COPYING et COPYING-PLAIN installés sur votre système.<br><br>Enlightenment est en cours de <hilight>DÉVELOPPEMENT INTENSIF</hilight> et n'est donc pas stable. Beaucoup de fonctionnalités sont encore incomplètes ou non encore implémentées et peuvent contenir de nombreux bogues. Vous êtes <hilight>PRÉVENU !</hilight>"
 
 #: src/bin/e_about.c:47
@@ -803,27 +803,27 @@ msgstr "Configuration mise à niveau"
 
 #: src/bin/e_config.c:2025
 #, c-format
-msgid "An error occured while saving Enlightenment's<br>settings to disk. The error could not be<br>deterimined.<br><br>The file where the error occured was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
+msgid "An error occurred while saving Enlightenment's<br>settings to disk. The error could not be<br>deterimined.<br><br>The file where the error occurred was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr "Une erreur est survenue lors de l'enregistrement de<br>la configuration de Enlightenment sur le disque.<br>L'origine de cette erreur n'a pu être déterminée.<br><br>Le fichier incriminé était :<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption<br>des données.<br>"
 
 #: src/bin/e_config.c:2036
 #, c-format
-msgid "Enlightenment's settings files are too big<br>for the file system they are being saved to.<br>This error is very strange as the files should<br>be extremely small. Please check the settings<br>for your home directory.<br><br>The file where the error occured was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
+msgid "Enlightenment's settings files are too big<br>for the file system they are being saved to.<br>This error is very strange as the files should<br>be extremely small. Please check the settings<br>for your home directory.<br><br>The file where the error occurred was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr "Les fichiers de configuration de Enlightenment sont trop<br>gros pour le système de fichiers où ils doivent être<br>enregistrés. Une erreur tout à fait étonnante car<br>ils devraient être vraiment très petits.<br>Veuillez vérifier les paramètres de<br>votre dossier personnel.<br><br>Le fichier incriminé était :<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption<br>des données.<br>"
 
 #: src/bin/e_config.c:2049
 #, c-format
-msgid "An output error occured when writing the settings<br>files for Enlightenment. Your disk is having troubles<br>and possibly needs replacement.<br><br>The file where the error occured was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
+msgid "An output error occurred when writing the settings<br>files for Enlightenment. Your disk is having troubles<br>and possibly needs replacement.<br><br>The file where the error occurred was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr "Une erreur d'entrée/sortie est survenue lors de l'écriture<br>des fichiers de configuration de Enlightenment. Votre disque dur<br>est en cause et devra vraisemblablement être remplacé.<br><br>Le fichier incriminé était :<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption<br>des données.<br>"
 
 #: src/bin/e_config.c:2060
 #, c-format
-msgid "Enlightenment cannot write its settings file<br>because it ran out of space to write the file.<br>You have either run out of disk space or have<br>gone over your quota limit.<br><br>The file where the error occured was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
+msgid "Enlightenment cannot write its settings file<br>because it ran out of space to write the file.<br>You have either run out of disk space or have<br>gone over your quota limit.<br><br>The file where the error occurred was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr "Enlightenment n'a pu écrire son fichier de configuration<br>car il n'y a pas suffisamment d'espace pour cela.<br>Soit vous n'avez plus d'espace disque,<br>soit vous avez dépassé votre quota.<br><br>Le fichier incriminé était :<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption<br>des données.<br>"
 
 #: src/bin/e_config.c:2072
 #, c-format
-msgid "Enlightenment unexpectedly had the settings file<br>it was writing closed on it. This is very unusual.<br><br>The file where the error occured was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
+msgid "Enlightenment unexpectedly had the settings file<br>it was writing closed on it. This is very unusual.<br><br>The file where the error occurred was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr "Le fichier de configuration dans lequel Enlightenment était en train<br>d'écrire s'est fermé de façon inattendue. C'est exceptionnel.<br><br>Le fichier incriminé était :<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption des données.<br>"
 
 #: src/bin/e_config.c:2097
@@ -1395,7 +1395,7 @@ msgstr "Tout ignorer"
 
 #: src/bin/e_fm.c:9120
 #, c-format
-msgid "An error occured while performing an operation.<br>%s"
+msgid "An error occurred while performing an operation.<br>%s"
 msgstr "Une erreur s'est produite lors d'une opération.<br>%s"
 
 #: src/bin/e_fm.c:9291
@@ -7138,7 +7138,7 @@ msgid "Sensors"
 msgstr "Capteurs"
 
 #: src/modules/temperature/e_mod_config.c:200
-msgid "Celcius"
+msgid "Celsius"
 msgstr "Celsius"
 
 #: src/modules/temperature/e_mod_config.c:203

@@ -2741,7 +2741,7 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 		  E_Fm2_Finfo finf;
 
                   p = e->data;
-		  /* NOTE: i am NOT converting this data to portable arch/os independant
+		  /* NOTE: i am NOT converting this data to portable arch/os independent
 		   * format. i am ASSUMING e_fm_main and e are local and built together
 		   * and thus this will work. if this ever changes this here needs to
 		   * change */
@@ -6156,7 +6156,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
     * on a literal move find any fm views for the dir of the dropped file
     * and refresh those, as well as refresh current target fm dir
     */
-   if (sd->drop_all) /* drop arbitarily into the dir */
+   if (sd->drop_all) /* drop arbitrarily into the dir */
      {
 	/* move file into this fm dir */
 	for (ll = fsel, il = isel; ll && il; ll = eina_list_next(ll), il = eina_list_next(il))
@@ -6167,7 +6167,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 
 	     if ((ic) && (_e_fm2_view_mode_get(sd) == E_FM2_VIEW_MODE_CUSTOM_ICONS))
 	       {
-		  /* dnd doesnt tell me all the co-ords of the icons being dragged so i can't place them accurately.
+		  /* dnd doesn't tell me all the co-ords of the icons being dragged so i can't place them accurately.
 		   * need to fix this. ev->data probably needs to become more compelx than a list of url's
 		   */
 		  x = ev->x + (ic->x - ox) - ic->drag.x + sd->pos.x;
@@ -6668,7 +6668,7 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
 		case E_POPUP_TYPE:
 		  con = ((E_Popup *)(ic->sd->eobj))->zone->container;
 		  break;
-		  /* FIXME: add mroe types as needed */
+		  /* FIXME: add more types as needed */
 		default:
 		  break;
 	       }
@@ -9117,7 +9117,7 @@ _e_fm_error_dialog(int pid, const char *str)
    e_dialog_button_focus_num(dialog, 0);
    e_dialog_title_set(dialog, _("Error"));
    snprintf(text, sizeof(text),
-	 _("An error occured while performing an operation.<br>"
+	 _("An error occurred while performing an operation.<br>"
 	    "%s"),
 	 str);
 

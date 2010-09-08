@@ -483,7 +483,7 @@ _basic_enable_cb_change(void *data, Evas_Object *obj __UNUSED__)
      }
 }
 
-/* fill the basic dialog with inital data and select it */
+/* fill the basic dialog with initial data and select it */
 static void
 _basic_init_data_fill(E_Config_Dialog_Data *cfdata)
 {
@@ -495,7 +495,7 @@ _basic_init_data_fill(E_Config_Dialog_Data *cfdata)
    init_font = NULL;
    init_size = -100;
 
-   /* Get inital basic basic */
+   /* Get initial basic basic */
    efd = e_font_default_get("e_basic_font");
    if (efd)
      {

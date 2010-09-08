@@ -189,7 +189,7 @@ evry_show(E_Zone *zone, E_Zone_Edge edge, const char *params)
    if (e_grabinput_get(win->ewin->evas_win, 0, win->ewin->evas_win))
      win->grab = 1;
    else
-     ERR("could not aquire grab");
+     ERR("could not acquire grab");
 
    evry_history_load();
 

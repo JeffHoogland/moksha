@@ -525,7 +525,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	return 0;
      }
 
-   /* TODO warn when match doesnt match the current window
+   /* TODO warn when match doesn't match the current window
     * (when using globs) */
 
    if (!cfdata->warned)

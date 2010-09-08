@@ -311,7 +311,7 @@ e_desklock_show(void)
 		  free(windows);
 	       }
 	  }
-	/* everything failed - cant lock */
+	/* everything failed - can't lock */
 	e_util_dialog_show(_("Lock Failed"),
 			   _("Locking the desktop failed because some application<br>"
 			     "has grabbed either the keyboard or the mouse or both<br>"

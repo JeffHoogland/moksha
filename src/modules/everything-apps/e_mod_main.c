@@ -1432,7 +1432,7 @@ _scan_idler(void *data)
 	free(eina_list_data_get(exe_path));
 	exe_path = eina_list_remove_list(exe_path, exe_path);
      }
-   /* we have mroe scannign to do */
+   /* we have more scannign to do */
    return ECORE_CALLBACK_RENEW;
 }
 

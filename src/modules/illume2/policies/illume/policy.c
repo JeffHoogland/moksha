@@ -104,7 +104,7 @@ _policy_border_move(E_Border *bd, int x, int y)
     * this could be a result of E honoring the icccm request position, 
     * not sure */
 
-   /* NB: Seems something similiar happens with elementary windows also 
+   /* NB: Seems something similar happens with elementary windows also
     * so for now just set bd->placed on all windows until this 
     * gets investigated */
    bd->placed = 1;
@@ -809,7 +809,7 @@ _policy_zone_layout_dialog(E_Border *bd, E_Illume_Config_Zone *cz)
    else 
      {
         /* NB: there is an assumption here that the parent has already been 
-         * layed out on screen. This could be bad. Needs Testing */
+         * laid out on screen. This could be bad. Needs Testing */
 
         /* make sure we are not larger than the parent window */
         if (mw > parent->w) mw = parent->w;
@@ -871,7 +871,7 @@ _policy_zone_layout_splash(E_Border *bd, E_Illume_Config_Zone *cz)
    else 
      {
         /* NB: there is an assumption here that the parent has already been 
-         * layed out on screen. This could be bad. Needs Testing */
+         * laid out on screen. This could be bad. Needs Testing */
 
         /* make sure we are not larger than the parent window */
         if (mw > parent->w) mw = parent->w;

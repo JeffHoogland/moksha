@@ -197,7 +197,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
 
    ol = e_widget_list_add(evas, 0, 0);
    rg = e_widget_radio_group_new(&(cfdata->unit_method));
-   ow = e_widget_radio_add(evas, _("Celcius"), CELCIUS, rg);
+   ow = e_widget_radio_add(evas, _("Celsius"), CELCIUS, rg);
    e_widget_on_change_hook_set(ow, _cb_display_changed, cfdata);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
    ow = e_widget_radio_add(evas, _("Fahrenheit"), FAHRENHEIT, rg);

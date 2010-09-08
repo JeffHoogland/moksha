@@ -15,7 +15,7 @@ typedef enum _E_Binding_Context
 } E_Binding_Context;
 
 /* why do we do this? config stored bindings must be fixed. x's modifier masks
- * may change from time to time, xserver to xserver - so we cant do a 
+ * may change from time to time, xserver to xserver - so we can't do a
  * simple match without translating to fixed values
  */
 typedef enum _E_Binding_Modifier

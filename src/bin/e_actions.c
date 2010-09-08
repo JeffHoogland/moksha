@@ -1114,7 +1114,7 @@ ACT_FN_GO(window_desk_move_by, )
 	
 	if (desk)
 	  {
-	     /* switch desktop. Quite usefull from the interface point of view. */
+	     /* switch desktop. Quite useful from the interface point of view. */
 	     e_zone_desk_flip_by(bd->zone, to_x - dx, to_y - dy);
 	     /* send the border to the required desktop. */
 	     e_border_desk_set(bd, desk);

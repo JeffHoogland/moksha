@@ -99,7 +99,7 @@ struct _E_Illume_Keyboard
  * @brief structure for policy API.
  * 
  * @details When Illume tries to load a policy, it will check for the 
- * existince of this structure. If it is not found, the policy will fail 
+ * existence of this structure. If it is not found, the policy will fail
  * to load.
  * 
  * @warning This structure is required for Illume to load a policy.

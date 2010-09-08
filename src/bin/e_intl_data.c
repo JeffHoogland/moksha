@@ -2,7 +2,7 @@
 
 /* This file is the counterpart for data storage of e_intl */
 /* This only needs to be separate because the e_imc binary and other third parties
-   many waht to include the functionality to read IMC data from EET files
+   many want to include the functionality to read IMC data from EET files
  */
 static Eet_Data_Descriptor *_e_intl_input_method_config_edd = NULL;
 

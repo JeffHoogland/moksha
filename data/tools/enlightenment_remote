@@ -398,7 +398,7 @@ esac
 ignore_this(){
 # IGNORE THIS SECTION
 # think at it just like as a TODO list or a list where are listed all the old options of enlightenmen_remote
-# Remember that the elements of this next list are removed everytime they are implemented on this tool
+# Remember that the elements of this next list are removed every time they are implemented on this tool
 
 echo "
   -module-list List all loaded modules

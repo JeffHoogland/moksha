@@ -3,7 +3,7 @@
 /* TODO List:
  * 
  * * add module types/classes
- * * add list of exclusions that a module cant work withApi
+ * * add list of exclusions that a module can't work withApi
  * 
  */
 

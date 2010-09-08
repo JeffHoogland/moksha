@@ -228,7 +228,7 @@ e_container_current_get(E_Manager *man)
 	if (con->visible) return con;
      }
 
-   /* If noone is available, return the first */
+   /* If no one is available, return the first */
    if (!man->containers) return NULL;
    l = man->containers;
    return (E_Container *)eina_list_data_get(l);

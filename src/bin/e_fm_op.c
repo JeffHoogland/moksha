@@ -379,7 +379,7 @@ _e_fm_op_task_free(void *t)
 /* Removes link task from work queue.
  * Link task is not NULL in case of MOVE. Then two tasks are created: copy and remove.
  * Remove task is a link task for the copy task. If copy task is aborted (e.g. error 
- * occured and user chooses to ignore this), then the remove task is removed from 
+ * occurred and user chooses to ignore this), then the remove task is removed from
  * queue with this functions.
  */
 static void 

@@ -10,10 +10,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eo\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-09-06 00:12+0900\n"
+"POT-Creation-Date: 2010-09-08 20:58-0300\n"
 "PO-Revision-Date: 2009-12-06 10:46+0100\n"
 "Last-Translator: Olivier <eliovir@nospam.gmail.com>\n"
 "Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
+"Language: eo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -50,14 +51,15 @@ msgid "Enlightenment"
 msgstr "Enlightenment"
 
 #: src/bin/e_about.c:23
+#, fuzzy
 msgid ""
-"Copyright &copy; 1999-2009, by the Enlightenment Development Team.<br><br>We "
+"Copyright &copy; 1999-2010, by the Enlightenment Development Team.<br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>This software is provided as-is with no explicit or implied "
 "warranty. This software is governed by licensing conditions, so please see "
 "the COPYING and COPYING-PLAIN licence files installed on your system."
 "<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</hilight> and it "
-"is not stable. Many features are incomplete or even non-existant yet and may "
+"is not stable. Many features are incomplete or even non-existent yet and may "
 "have many bugs. You have been <hilight>WARNED!</hilight>"
 msgstr ""
 "Kopirajto &copy; 1999-2009; de la Programada Teamo de Enlightenment."
@@ -566,7 +568,7 @@ msgstr "Lanĉi"
 msgid "Command"
 msgstr "Komando"
 
-#: src/bin/e_actions.c:2911
+#: src/bin/e_actions.c:2911 src/bin/e_eap_editor.c:695
 msgid "Application"
 msgstr "Aplikaĵo"
 
@@ -675,8 +677,8 @@ msgid "Color Selector"
 msgstr "Koloro-elektilo"
 
 #: src/bin/e_color_dialog.c:46 src/bin/e_config.c:2101
-#: src/bin/e_config_dialog.c:259 src/bin/e_eap_editor.c:847
-#: src/bin/e_eap_editor.c:911 src/bin/e_entry_dialog.c:62 src/bin/e_exec.c:362
+#: src/bin/e_config_dialog.c:259 src/bin/e_eap_editor.c:859
+#: src/bin/e_eap_editor.c:923 src/bin/e_entry_dialog.c:62 src/bin/e_exec.c:361
 #: src/bin/e_fm.c:8546 src/bin/e_fm.c:9190 src/bin/e_fm_prop.c:507
 #: src/bin/e_int_border_remember.c:321 src/bin/e_int_border_remember.c:521
 #: src/bin/e_module.c:409 src/bin/e_sys.c:484 src/bin/e_sys.c:530
@@ -693,8 +695,8 @@ msgstr "Koloro-elektilo"
 msgid "OK"
 msgstr "Konfirmi"
 
-#: src/bin/e_color_dialog.c:47 src/bin/e_eap_editor.c:849
-#: src/bin/e_eap_editor.c:913 src/bin/e_entry_dialog.c:63 src/bin/e_fm.c:8548
+#: src/bin/e_color_dialog.c:47 src/bin/e_eap_editor.c:861
+#: src/bin/e_eap_editor.c:925 src/bin/e_entry_dialog.c:63 src/bin/e_fm.c:8548
 #: src/bin/e_fm_prop.c:508 src/bin/e_utils.c:1168
 #: src/modules/conf_imc/e_int_config_imc_import.c:124
 #: src/modules/conf_mime/e_int_config_mime_edit.c:304
@@ -745,9 +747,9 @@ msgstr "Ĝisdatiĝis agordoj"
 #: src/bin/e_config.c:2025
 #, c-format
 msgid ""
-"An error occured while saving Enlightenment's<br>settings to disk. The error "
-"could not be<br>deterimined.<br><br>The file where the error occured was:<br>"
-"%s<br><br>This file has been deleted to avoid corrupt data.<br>"
+"An error occurred while saving Enlightenment's<br>settings to disk. The "
+"error could not be<br>deterimined.<br><br>The file where the error occurred "
+"was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 "Eraro okazis dum registrado de Enlightenment-aj<br>agordoj en la disko. La "
 "eraro ne povas esti difinata.<br><br>La dosiero kie la eraro okazis estis:"
@@ -760,7 +762,7 @@ msgid ""
 "Enlightenment's settings files are too big<br>for the file system they are "
 "being saved to.<br>This error is very strange as the files should<br>be "
 "extremely small. Please check the settings<br>for your home directory."
-"<br><br>The file where the error occured was:<br>%s<br><br>This file has "
+"<br><br>The file where the error occurred was:<br>%s<br><br>This file has "
 "been deleted to avoid corrupt data.<br>"
 msgstr ""
 "La agordaj dosieroj de Enlightenenment estas troo grandaj<br>por la  "
@@ -773,9 +775,9 @@ msgstr ""
 #: src/bin/e_config.c:2049
 #, c-format
 msgid ""
-"An output error occured when writing the settings<br>files for "
+"An output error occurred when writing the settings<br>files for "
 "Enlightenment. Your disk is having troubles<br>and possibly needs "
-"replacement.<br><br>The file where the error occured was:<br>%s<br><br>This "
+"replacement.<br><br>The file where the error occurred was:<br>%s<br><br>This "
 "file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 "Eniga eraro okazis dum la skibado de agordaj dosieroj<br>por Enlightenemnt. "
@@ -788,8 +790,8 @@ msgstr ""
 msgid ""
 "Enlightenment cannot write its settings file<br>because it ran out of space "
 "to write the file.<br>You have either run out of disk space or have<br>gone "
-"over your quota limit.<br><br>The file where the error occured was:<br>%"
-"s<br><br>This file has been deleted to avoid corrupt data.<br>"
+"over your quota limit.<br><br>The file where the error occurred was:<br>"
+"%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 "Enlightement ne povas skribi sian agordan dosieron<br>ĉar ĝi elĉerpiĝis "
 "spacon por skribi la dosieron.<br>Vi elĉerpiĝis diskon spacon ĉu "
@@ -801,8 +803,8 @@ msgstr ""
 #, c-format
 msgid ""
 "Enlightenment unexpectedly had the settings file<br>it was writing closed on "
-"it. This is very unusual.<br><br>The file where the error occured was:<br>%"
-"s<br><br>This file has been deleted to avoid corrupt data.<br>"
+"it. This is very unusual.<br><br>The file where the error occurred was:<br>"
+"%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 "La agorda dosiero, kien Enlightenment estis skribanta,<br>neatendite "
 "malfermiĝis. Tio estas tre nekutima.<br><br>La dosiero kie la eraro okazis "
@@ -820,7 +822,7 @@ msgstr "Problemoj de skribo de Enlightenment-agordo"
 msgid "Advanced"
 msgstr "Plidetale"
 
-#: src/bin/e_config_dialog.c:236 src/bin/e_eap_editor.c:704
+#: src/bin/e_config_dialog.c:236 src/bin/e_eap_editor.c:716
 msgid "Basic"
 msgstr "Baze"
 
@@ -914,11 +916,11 @@ msgstr "Ne, sed pligrandigi la tempolimon"
 msgid "No, and stop asking"
 msgstr "Ne, kaj ĉesi tiun peton"
 
-#: src/bin/e_eap_editor.c:173
+#: src/bin/e_eap_editor.c:174
 msgid "Incomplete Window Properties"
 msgstr "Malplenaj Fenestraj Ecoj"
 
-#: src/bin/e_eap_editor.c:174
+#: src/bin/e_eap_editor.c:175
 msgid ""
 "The window you are creating an icon for<br>does not contain window name and "
 "class<br>properties, so the needed properties for<br>the icon so that it "
@@ -933,57 +935,53 @@ msgstr ""
 "la fenestra titolo estas la sama dum<br>la fenestro aperas supre, kaj "
 "ne<br>ŝanĝas."
 
-#: src/bin/e_eap_editor.c:229
+#: src/bin/e_eap_editor.c:230
 msgid "Desktop Entry Editor"
 msgstr "Redaktilo de Labortabla Enigo"
 
-#: src/bin/e_eap_editor.c:658 src/bin/e_int_border_prop.c:420
+#: src/bin/e_eap_editor.c:674 src/bin/e_int_border_prop.c:420
 #: src/bin/e_int_border_prop.c:467 src/modules/conf_imc/e_int_config_imc.c:891
 #: src/modules/conf_menus/e_int_config_menus.c:103
 #: src/modules/conf_menus/e_int_config_menus.c:298
 msgid "Name"
 msgstr "Nomo"
 
-#: src/bin/e_eap_editor.c:672
-msgid "Executable"
-msgstr "Lanĉebla"
-
-#: src/bin/e_eap_editor.c:689
-msgid "URL"
-msgstr ""
-
-#: src/bin/e_eap_editor.c:697
+#: src/bin/e_eap_editor.c:685
 msgid "Comment"
 msgstr "Komento"
 
-#: src/bin/e_eap_editor.c:717 src/bin/e_eap_editor.c:726
+#: src/bin/e_eap_editor.c:707
+msgid "URL"
+msgstr ""
+
+#: src/bin/e_eap_editor.c:729 src/bin/e_eap_editor.c:738
 #: src/bin/e_fm_prop.c:394 src/modules/conf_fonts/e_int_config_fonts.c:93
 #: src/modules/conf_mime/e_int_config_mime_edit.c:147
 msgid "Icon"
 msgstr "Piktogramo"
 
-#: src/bin/e_eap_editor.c:730
+#: src/bin/e_eap_editor.c:742
 msgid "Generic Name"
 msgstr "Ĝenerala Nomo"
 
-#: src/bin/e_eap_editor.c:736
+#: src/bin/e_eap_editor.c:748
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:103
 msgid "Window Class"
 msgstr "Fenestra Klaso"
 
-#: src/bin/e_eap_editor.c:742 src/modules/conf_mime/e_int_config_mime.c:176
+#: src/bin/e_eap_editor.c:754 src/modules/conf_mime/e_int_config_mime.c:176
 msgid "Categories"
 msgstr "Kategorioj"
 
-#: src/bin/e_eap_editor.c:749
+#: src/bin/e_eap_editor.c:761
 msgid "Mime Types"
 msgstr "MIME-typoj"
 
-#: src/bin/e_eap_editor.c:756
+#: src/bin/e_eap_editor.c:768
 msgid "Desktop file"
 msgstr "Labortabla dosiero"
 
-#: src/bin/e_eap_editor.c:766
+#: src/bin/e_eap_editor.c:778
 #: src/modules/conf_performance/e_int_config_performance.c:115
 #: src/modules/everything/evry_config.c:380
 #: src/modules/everything/evry_config.c:464
@@ -993,31 +991,31 @@ msgstr "Labortabla dosiero"
 msgid "General"
 msgstr "Ĝenerala"
 
-#: src/bin/e_eap_editor.c:770
+#: src/bin/e_eap_editor.c:782
 msgid "Startup Notify"
 msgstr "Atentigo de Lanĉo"
 
-#: src/bin/e_eap_editor.c:772 src/modules/everything-apps/e_mod_main.c:997
+#: src/bin/e_eap_editor.c:784 src/modules/everything-apps/e_mod_main.c:997
 msgid "Run in Terminal"
 msgstr "Lanĉi en Terminalon"
 
-#: src/bin/e_eap_editor.c:774
+#: src/bin/e_eap_editor.c:786
 msgid "Show in Menus"
 msgstr "Vidigi en Menuoj"
 
-#: src/bin/e_eap_editor.c:777 src/bin/e_int_border_remember.c:748
+#: src/bin/e_eap_editor.c:789 src/bin/e_int_border_remember.c:748
 msgid "Options"
 msgstr "Opcioj"
 
-#: src/bin/e_eap_editor.c:807
+#: src/bin/e_eap_editor.c:819
 msgid "Select an Icon"
 msgstr "Elekti Piktogramon"
 
-#: src/bin/e_eap_editor.c:876
+#: src/bin/e_eap_editor.c:888
 msgid "Select an Executable"
 msgstr "Elekti Lanĉeblon"
 
-#: src/bin/e_entry.c:493 src/bin/e_fm.c:8038 src/bin/e_shelf.c:1695
+#: src/bin/e_entry.c:493 src/bin/e_fm.c:8038 src/bin/e_shelf.c:1693
 #: src/modules/conf_profiles/e_int_config_profiles.c:135
 #: src/modules/conf_shelves/e_int_config_shelf.c:80
 #: src/modules/ibar/e_mod_config.c:108
@@ -1053,11 +1051,11 @@ msgstr "Lanĉa Eraro"
 msgid "Enlightenment was unable to fork a child process:<br><br>%s<br>"
 msgstr "Enlightenment ne povis forki idan procezo:<br><br>%s<br>"
 
-#: src/bin/e_exec.c:353
+#: src/bin/e_exec.c:352
 msgid "Application run error"
 msgstr "Eraro dum lanĉo de aplikaĵo"
 
-#: src/bin/e_exec.c:355
+#: src/bin/e_exec.c:354
 #, c-format
 msgid ""
 "Enlightenment was unable to run the application:<br><br>%s<br><br>The "
@@ -1066,106 +1064,106 @@ msgstr ""
 "Enlightenment ne povas lanĉi tiun aplikaĵon :<br><br>%s><br><br>La aplikaĵo "
 "malsukcesis komenci."
 
-#: src/bin/e_exec.c:455
+#: src/bin/e_exec.c:458
 msgid "Application Execution Error"
 msgstr "Eraro dum lanĉo de Aplikaĵo"
 
-#: src/bin/e_exec.c:467
+#: src/bin/e_exec.c:470
 #, c-format
 msgid "%s stopped running unexpectedly."
 msgstr "%s haltis ruladon senatendite."
 
-#: src/bin/e_exec.c:473
+#: src/bin/e_exec.c:476
 #, c-format
 msgid "An exit code of %i was returned from %s."
 msgstr "Elirsignala kodo %i sendita el %s."
 
-#: src/bin/e_exec.c:481
+#: src/bin/e_exec.c:484
 #, c-format
 msgid "%s was interrupted by an Interrupt Signal."
 msgstr "%s interrompiĝis per InterrompSignalo."
 
-#: src/bin/e_exec.c:484
+#: src/bin/e_exec.c:487
 #, c-format
 msgid "%s was interrupted by a Quit Signal."
 msgstr "%s interrompiĝis per ElirSignalo."
 
-#: src/bin/e_exec.c:488
+#: src/bin/e_exec.c:491
 #, c-format
 msgid "%s was interrupted by an Abort Signal."
 msgstr "%s interrompiĝis per ĉesigSignalo."
 
-#: src/bin/e_exec.c:491
+#: src/bin/e_exec.c:494
 #, c-format
 msgid "%s was interrupted by a Floating Point Error."
 msgstr "%s interrompiĝis per glitpunkta eraro."
 
-#: src/bin/e_exec.c:495
+#: src/bin/e_exec.c:498
 #, c-format
 msgid "%s was interrupted by an Uninterruptable Kill Signal."
 msgstr "%s interrompiĝis per Neinterrompebla Mortiga Signalo"
 
-#: src/bin/e_exec.c:499
+#: src/bin/e_exec.c:502
 #, c-format
 msgid "%s was interrupted by a Segmentation Fault."
 msgstr "%s interrompiĝis per Segmenta Misfunkcio."
 
-#: src/bin/e_exec.c:503
+#: src/bin/e_exec.c:506
 #, c-format
 msgid "%s was interrupted by a Broken Pipe."
 msgstr "%s interrompiĝis per Rompita Dukto."
 
-#: src/bin/e_exec.c:506
+#: src/bin/e_exec.c:509
 #, c-format
 msgid "%s was interrupted by a Termination Signal."
 msgstr "%s interrompiĝis per FiniĝSignalo."
 
-#: src/bin/e_exec.c:510
+#: src/bin/e_exec.c:513
 #, c-format
 msgid "%s was interrupted by a Bus Error."
 msgstr "%s interrompiĝis per Busa Eraro."
 
-#: src/bin/e_exec.c:513
+#: src/bin/e_exec.c:516
 #, c-format
 msgid "%s was interrupted by the signal number %i."
 msgstr "%s interrompiĝis per Signala Numero %i."
 
-#: src/bin/e_exec.c:569
+#: src/bin/e_exec.c:572
 msgid ""
 "***The remaining output has been truncated. Save the output to view.***\n"
 msgstr ""
 "*** la restanta eligo estis distranĉita. Registru la eligon por vidi.***\n"
 
-#: src/bin/e_exec.c:631 src/bin/e_exec.c:705 src/bin/e_exec.c:712
+#: src/bin/e_exec.c:634 src/bin/e_exec.c:708 src/bin/e_exec.c:715
 msgid "Error Logs"
 msgstr "Eraraj Protokoloj"
 
-#: src/bin/e_exec.c:637 src/bin/e_exec.c:713
+#: src/bin/e_exec.c:640 src/bin/e_exec.c:716
 msgid "There was no error message."
 msgstr "Nenio erara mesaĝo ĉeestas."
 
-#: src/bin/e_exec.c:641 src/bin/e_exec.c:720
+#: src/bin/e_exec.c:644 src/bin/e_exec.c:723
 msgid "Save This Message"
 msgstr "Konservi Tiun Mesaĝon"
 
-#: src/bin/e_exec.c:645 src/bin/e_exec.c:724
+#: src/bin/e_exec.c:648 src/bin/e_exec.c:727
 #, c-format
 msgid "This error log will be saved as %s/%s.log"
 msgstr "La erara protokolo estos registrata kiel %s/%s.log"
 
-#: src/bin/e_exec.c:671
+#: src/bin/e_exec.c:674
 msgid "Error Information"
 msgstr "Erara Informaĵo"
 
-#: src/bin/e_exec.c:679
+#: src/bin/e_exec.c:682
 msgid "Error Signal Information"
 msgstr "Erara Signala informaĵo"
 
-#: src/bin/e_exec.c:689 src/bin/e_exec.c:696
+#: src/bin/e_exec.c:692 src/bin/e_exec.c:699
 msgid "Output Data"
 msgstr "Eligitaj Datumoj"
 
-#: src/bin/e_exec.c:697
+#: src/bin/e_exec.c:700
 msgid "There was no output."
 msgstr "Neniu eligo ĉeestas"
 
@@ -1364,7 +1362,7 @@ msgstr "Malatenti ĉiujn"
 
 #: src/bin/e_fm.c:9120
 #, c-format
-msgid "An error occured while performing an operation.<br>%s"
+msgid "An error occurred while performing an operation.<br>%s"
 msgstr "Eraro okazis dum efektivado de funkciado.<br>%s"
 
 #: src/bin/e_fm.c:9291
@@ -2037,7 +2035,7 @@ msgid "Start this program on login"
 msgstr "Restarigi tiun programon dum ensaluto"
 
 #: src/bin/e_int_config_modules.c:60 src/bin/e_int_menus.c:223
-#: src/bin/e_shelf.c:1687 src/modules/battery/e_mod_main.c:186
+#: src/bin/e_shelf.c:1685 src/modules/battery/e_mod_main.c:186
 #: src/modules/conf/e_conf.c:121 src/modules/conf/e_conf.c:131
 #: src/modules/conf/e_mod_main.c:102 src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:133
@@ -2207,16 +2205,11 @@ msgstr "Neniu nomo!!"
 msgid "(No Shelves)"
 msgstr "(Neniu Breto)"
 
-#: src/bin/e_int_menus.c:1429 src/bin/e_shelf.c:164 src/bin/e_shelf.c:1170
-#: src/modules/conf_shelves/e_int_config_shelf.c:132
-msgid "Shelf #"
-msgstr "Breto numero"
-
-#: src/bin/e_int_menus.c:1482
+#: src/bin/e_int_menus.c:1481
 msgid "Add A Shelf"
 msgstr "Aldoni Breton"
 
-#: src/bin/e_int_menus.c:1489
+#: src/bin/e_int_menus.c:1488
 msgid "Delete A Shelf"
 msgstr "Forviŝi Breton"
 
@@ -2335,8 +2328,8 @@ msgid ""
 "\t\tgiven the geometry. Add as many as you like. They all\n"
 "\t\treplace the real xinerama screens, if any. This can\n"
 "\t\tbe used to simulate xinerama.\n"
-"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
-"+0\n"
+"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen "
+"800x600+800+0\n"
 "\t-profile CONF_PROFILE\n"
 "\t\tUse the configuration profile CONF_PROFILE instead of the user selected "
 "default or just \"default\".\n"
@@ -2360,8 +2353,8 @@ msgstr ""
 "\t\tlaŭ la geometrio. Aldonu tiom kom vi volas. Ili ĉiuj\n"
 "\t\tanstataŭigas la verajn xinerama-ekranojn, se pluraj.\n"
 "\t\tTio povas esti uzita por simuli xinerama.\n"
-"\t\tEkz.: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
-"+0\n"
+"\t\tEkz.: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen "
+"800x600+800+0\n"
 "\t-profile AGORDA_PROFILO\n"
 "\t\tUzi la agordan profilon AGORDA_PROFILO anstataŭ la elektita defaŭlta "
 "aŭnur \"default\".\n"
@@ -2927,28 +2920,32 @@ msgstr ""
 "<b>prezentan reĝimon</b> kaj dumtempe malebligi la ekrankurtenon, ŝlosilon "
 "kaj energiŝparadon?"
 
-#: src/bin/e_shelf.c:1298 src/modules/conf_shelves/e_int_config_shelf.c:281
+#: src/bin/e_shelf.c:163
+msgid "Shelf #"
+msgstr "Breto numero"
+
+#: src/bin/e_shelf.c:1296 src/modules/conf_shelves/e_int_config_shelf.c:280
 msgid "Are you sure you want to delete this shelf?"
 msgstr "Ĉu vi estas certa, ke vi deziras forviŝi tiun breton ?"
 
-#: src/bin/e_shelf.c:1299
+#: src/bin/e_shelf.c:1297
 msgid ""
 "You requested to delete this shelf.<br><br>Are you sure you want to delete "
 "it?"
 msgstr ""
 "Vi petis foriviŝi tiun breton.<br><br>Ĉu vi certas ke vi volas foriviŝi ĝin ?"
 
-#: src/bin/e_shelf.c:1672
+#: src/bin/e_shelf.c:1670
 #, fuzzy
 msgid "Stop Moving/Resizing Gadgets"
 msgstr "Halti Movadon/GrandecŜanĝon de Elementoj"
 
-#: src/bin/e_shelf.c:1674
+#: src/bin/e_shelf.c:1672
 #, fuzzy
 msgid "Begin Moving/Resizing Gadgets"
 msgstr "Komenci Movadon/GrandecŜanĝon de Elementoj"
 
-#: src/bin/e_shelf.c:1682
+#: src/bin/e_shelf.c:1680
 #, fuzzy
 msgid "Contents"
 msgstr "Komento"
@@ -4526,8 +4523,8 @@ msgstr "Eraro de Edje-Bindo"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1175
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>%"
-"s</hilight> action.<br>Please choose another binding edge sequence."
+"The binding key sequence, that you choose, is already used by <br><hilight>"
+"%s</hilight> action.<br>Please choose another binding edge sequence."
 msgstr ""
 "La bindado de klava sekvenco, kiun vi elektis, estas jam uzita de la agado "
 "\"<br><hilight>%s</hilight>\".<br>Bonvolu elekti alian bindadon de Edje-"
@@ -4999,8 +4996,8 @@ msgstr "Eraro de Klava Bindo"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1148
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>%"
-"s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by <br><hilight>"
+"%s</hilight> action.<br>Please choose another binding key sequence."
 msgstr ""
 "La bindado de klava sekvenco, kiun vi elektis, estas jam uzita de la agado "
 "\"<br><hilight>%s</hilight>\".<br>Bonvolu elekti alian bindadon de klavan "
@@ -5558,7 +5555,7 @@ msgstr "Agorditaj Bretoj"
 msgid "Setup"
 msgstr "Agordi"
 
-#: src/modules/conf_shelves/e_int_config_shelf.c:277
+#: src/modules/conf_shelves/e_int_config_shelf.c:276
 #, c-format
 msgid ""
 "You requested to delete \"%s\".<br><br>Are you sure you want to delete this "
@@ -7530,7 +7527,7 @@ msgstr "Sensiloj"
 
 #: src/modules/temperature/e_mod_config.c:200
 #, fuzzy
-msgid "Celcius"
+msgid "Celsius"
 msgstr "Celsius"
 
 #: src/modules/temperature/e_mod_config.c:203
@@ -7899,6 +7896,9 @@ msgstr "Nu unu akcesoraĵo de taskopleto povas esti kaj alia jam ekzistas."
 #: src/modules/systray/e_mod_main.c:1092
 msgid "Systray"
 msgstr "Taskopleto"
+
+#~ msgid "Executable"
+#~ msgstr "Lanĉebla"
 
 #~ msgid "Properties"
 #~ msgstr "Ecoj"

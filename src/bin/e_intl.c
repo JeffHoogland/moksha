@@ -27,7 +27,7 @@ static const char *_e_intl_imc_system_path = NULL;
 				E_INTL_LOC_CODESET | \
 				E_INTL_LOC_MODIFIER
 
-/* Locale parts wich are significant when Validating */
+/* Locale parts which are significant when Validating */
 #define E_INTL_LOC_SIGNIFICANT	E_INTL_LOC_LANG | \
 				E_INTL_LOC_REGION | \
 				E_INTL_LOC_CODESET

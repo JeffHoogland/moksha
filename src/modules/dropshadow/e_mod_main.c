@@ -12,7 +12,7 @@
  * * bug in shadow_x < 0 and shadow_y < 0 needs to be fixed (not urgent though)
  * * add alpha-pixel only pixel space to image objects in evas and make use of it to save cpu and ram
  * * look into mmx for the blur function...
- * * handle other shadow pos cases where we cant use 4 objects (3 or 2).
+ * * handle other shadow pos cases where we can't use 4 objects (3 or 2).
  */
 
 /* module private routines */
@@ -865,7 +865,7 @@ _ds_shadow_recalc(Shadow *sh)
 
 	if (sh->use_shared)
 	  {
-	     printf("EEEK useing shared already!!\n");
+	     printf("EEEK using shared already!!\n");
 	  }
 	else
 	  {
@@ -1139,14 +1139,14 @@ _ds_gauss_blur_h(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_
    int x, y;
    int i, sum, weight, x1, x2, l, l1, l2, wt;
    unsigned char *p1, *p2, *pp;
-   int full, usefull;
+   int full, useful;
    
    full = 0;
    for (i = 0; i < (blur * 2) - 1; i++)
      full += lut[i];
    for (x = rx; x < rxx; x += q)
      {
-	usefull = 1;
+	useful = 1;
 	
 	x1 = x - (blur - 1);
 	l1 = 0;
@@ -1154,19 +1154,19 @@ _ds_gauss_blur_h(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_
 	l2 = (blur * 2) - 2;
 	if (x1 < 0)
 	  {
-	     usefull = 0;
+	     useful = 0;
 	     l1 -= x1;
 	     x1 = 0;
 	  }
 	if (x2 >= pix_w)
 	  {
-	     usefull = 0;
+	     useful = 0;
 	     l2 -= x2 - pix_w + 1;
 	  }
 	
 	pp = pix + x1 + (ry * pix_w);
 	p2 = pix_dst + x + (ry * pix_w);
-	if (usefull)
+	if (useful)
 	  {
 	     for (y = ry; y < ryy; y++)
 	       {
@@ -1302,14 +1302,14 @@ _ds_gauss_blur_v(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_
    int x, y;
    int i, sum, weight, l, l1, l2, wt, y1, y2;
    unsigned char *p1, *p2, *pp;
-   int full, usefull;
+   int full, useful;
    
    full = 0;
    for (i = 0; i < (blur * 2) - 1; i++)
      full += lut[i];
    for (y = ry; y < ryy; y += q)
      {
-	usefull = 1;
+	useful = 1;
 	
 	y1 = y - (blur - 1);
 	l1 = 0;
@@ -1317,19 +1317,19 @@ _ds_gauss_blur_v(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_
 	l2 = (blur * 2) - 2;
 	if (y1 < 0)
 	  {
-	     usefull = 0;
+	     useful = 0;
 	     l1 -= y1;
 	     y1 = 0;
 	  }
 	if (y2 >= pix_h)
 	  {
-	     usefull = 0;
+	     useful = 0;
 	     l2 -= y2 - pix_h + 1;
 	  }
 	
 	pp = pix + (y1 * pix_w) + rx;
 	p2 = pix_dst + (y * pix_w) + rx;
-	if (usefull)
+	if (useful)
 	  {
 	     for (x = rx; x < rxx; x++)
 	       {

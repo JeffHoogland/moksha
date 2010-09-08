@@ -303,7 +303,7 @@ collections {
                 * the same name but closest value to the one being asked for.
                 * This allows you to create many states that act as a
                 * meticulously defined series of states from 0.0 to 1.0
-                * (example - a "fuel guage") where the theme may provide as many
+                * (example - a "fuel gauge") where the theme may provide as many
                 * or few as the designer wants, and edje will just chose the
                 * closest match to what it wants. In almost all cases you will
                 * not use this feature, but this explains the "0.0" you see
@@ -708,10 +708,10 @@ collections {
                    * means that we flip through a series
                    * of images when moving TO this state
                    * over the transition time. it's like
-                   * specifiying multiple frames of an
+                   * specifying multiple frames of an
                    * animatin sequence. the "final"
                    * state is "normal". the images
-                   * inbetween are the "tween" images
+                   * between are the "tween" images
                    * listed in order working towards
                    * the "normal" image */
                }
@@ -5997,7 +5997,7 @@ collections {
    /* This pointer is used if the Xserver does not support full ARGB color
     * pointers. This can happen if X is old or the driver or libxcursor did
     * not exist when ecore was compiled. since the cursor will be literally
-    * reduced down to black and white whith a single transparency mask,
+    * reduced down to black and white with a single transparency mask,
     * colors other than black and whigte will be lost (and be approximated
     * with dithering) and any translucency other than completely opaque or
     * completely transparent pixels will also be lost. it then makes sense

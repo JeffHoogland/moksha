@@ -7,7 +7,7 @@
  * TODO:
  * - Let an internal drag work with several types.
  * - Let a drag be both internal and external, or allow internal xdnd
- *   (internal xdnd is unecessary load)
+ *   (internal xdnd is unnecessary load)
  */
 
 /* local subsystem functions */

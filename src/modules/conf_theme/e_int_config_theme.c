@@ -677,7 +677,7 @@ _cb_adv_categories_change(void *data, Evas_Object *obj __UNUSED__)
 
 	tmp = _files_ilist_nth_label_to_file(cfdata, n);
 	eina_stringshare_del(tmp);
-	if (file == tmp) /* We don't need the value, just the adress. */
+	if (file == tmp) /* We don't need the value, just the address. */
 	  {
 	     e_widget_ilist_selected_set(cfdata->o_files_ilist, n);
 	     break;

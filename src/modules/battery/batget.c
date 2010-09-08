@@ -1364,7 +1364,7 @@ linux_pmu_check(void)
 		    }
 		  else
 		    {
-		       /* Charging - works in paralell */
+		       /* Charging - works in parallel */
 		       seconds = MAX(timeleft, seconds);
 		    }
 	       }

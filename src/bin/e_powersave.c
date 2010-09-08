@@ -151,7 +151,7 @@ _e_powersave_mode_eval(void)
    
    switch (powersave_mode)
      {
-	/* FIXME: these values are hardcoded - shoudl be configurable */
+	/* FIXME: these values are hardcoded - should be configurable */
       case E_POWERSAVE_MODE_NONE:
 	t = 0.25; /* time to defer "power expensive" activities */
 	break;

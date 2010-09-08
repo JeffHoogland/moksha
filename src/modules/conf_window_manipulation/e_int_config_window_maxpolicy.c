@@ -171,7 +171,7 @@ _advanced_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Da
    ol = e_widget_list_add(evas, 0, 0);
    /* FIXME this should be default imho. no big deal if one resizes
       a maximized window by mistake and then it's not maximized
-      anymore.. people will rather wonder why they cant shade
+      anymore.. people will rather wonder why they can't shade
       their window (hannes)
 
       k-s: often this also mean disable such border decoration, so makes sense.

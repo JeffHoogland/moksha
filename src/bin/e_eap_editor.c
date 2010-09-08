@@ -9,7 +9,7 @@ struct _E_Config_Dialog_Data
    char *generic_name; /* generic app name (e.g. Web Browser) */
    char *comment; /* a longer description */
    char *exec; /* command to execute */
-   char *try_exec; /* executable to test for an apps existance */
+   char *try_exec; /* executable to test for an apps existence */
    char *url; /* url to open */
 
    char *startup_wm_class; /* window class */

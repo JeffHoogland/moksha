@@ -527,7 +527,7 @@ main(int argc, char **argv)
 			       "Perhaps you are out of memory?"));
 	_e_main_shutdown(-1);
     }
-   ecore_evas_app_comp_sync_set(0); /* e doesnt sync to compositor - it should be one */
+   ecore_evas_app_comp_sync_set(0); /* e doesn't sync to compositor - it should be one */
    if (!ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_SOFTWARE_XLIB))
      {
 	e_error_message_show(_("Enlightenment found ecore_evas doesn't support the Software X11\n"
@@ -1473,7 +1473,7 @@ _e_main_path_init(void)
    e_path_default_path_append(path_modules, "~/.e/e/modules");
    snprintf(buf, sizeof(buf), "%s/enlightenment/modules", e_prefix_lib_get());
    e_path_default_path_append(path_modules, buf);
-   /* FIXME: eventually this has to go - moduels shoudl have installers that
+   /* FIXME: eventually this has to go - moduels should have installers that
     * add appropriate install paths (if not installed to user homedir) to
     * e's module search dirs
     */

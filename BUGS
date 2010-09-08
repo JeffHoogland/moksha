@@ -27,7 +27,7 @@ Carsten Haitzler (The Rasterman) wrote:
 >>>>>iconified.
 >>>>
 >>>>
->>>>e waits for a map request. it doesnt respond to a change in hints for a
+>>>>e waits for a map request. it doesn't respond to a change in hints for a
 >>>>map. we can make it do so though :) i will write these down in the TODO.
 >>>>
 >>>

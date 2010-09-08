@@ -7,7 +7,7 @@
  */
 /* FIXME: multiple selected files across different fwins - you can only dnd the
  * ones in the 1 window src - not all selected ones. also selecting a new file
- * in a new fwin doesnt deseclect other selections in other fwin's (unless
+ * in a new fwin doesn't deseclect other selections in other fwin's (unless
  * multi-selecting)
  */
 

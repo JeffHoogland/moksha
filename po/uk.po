@@ -5,10 +5,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e.HEAD\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-09-06 00:12+0900\n"
+"POT-Creation-Date: 2010-09-08 20:58-0300\n"
 "PO-Revision-Date: 2009-12-13 21:16+0000\n"
 "Last-Translator: Sergio Gavrylov <sergiovana@bigmir.net>\n"
 "Language-Team: Ukrainian <translation@linux.org.ua>\n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -41,14 +42,15 @@ msgid "Enlightenment"
 msgstr "Enlightenment"
 
 #: src/bin/e_about.c:23
+#, fuzzy
 msgid ""
-"Copyright &copy; 1999-2009, by the Enlightenment Development Team.<br><br>We "
+"Copyright &copy; 1999-2010, by the Enlightenment Development Team.<br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>This software is provided as-is with no explicit or implied "
 "warranty. This software is governed by licensing conditions, so please see "
 "the COPYING and COPYING-PLAIN licence files installed on your system."
 "<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</hilight> and it "
-"is not stable. Many features are incomplete or even non-existant yet and may "
+"is not stable. Many features are incomplete or even non-existent yet and may "
 "have many bugs. You have been <hilight>WARNED!</hilight>"
 msgstr ""
 "Copyright &copy; 1999-2009, by the Enlightenment Development Team.<br><br>Ми "
@@ -549,7 +551,7 @@ msgstr "Запустити"
 msgid "Command"
 msgstr "Команду"
 
-#: src/bin/e_actions.c:2911
+#: src/bin/e_actions.c:2911 src/bin/e_eap_editor.c:695
 msgid "Application"
 msgstr "Програму"
 
@@ -658,8 +660,8 @@ msgid "Color Selector"
 msgstr "Вибір кольору"
 
 #: src/bin/e_color_dialog.c:46 src/bin/e_config.c:2101
-#: src/bin/e_config_dialog.c:259 src/bin/e_eap_editor.c:847
-#: src/bin/e_eap_editor.c:911 src/bin/e_entry_dialog.c:62 src/bin/e_exec.c:362
+#: src/bin/e_config_dialog.c:259 src/bin/e_eap_editor.c:859
+#: src/bin/e_eap_editor.c:923 src/bin/e_entry_dialog.c:62 src/bin/e_exec.c:361
 #: src/bin/e_fm.c:8546 src/bin/e_fm.c:9190 src/bin/e_fm_prop.c:507
 #: src/bin/e_int_border_remember.c:321 src/bin/e_int_border_remember.c:521
 #: src/bin/e_module.c:409 src/bin/e_sys.c:484 src/bin/e_sys.c:530
@@ -676,8 +678,8 @@ msgstr "Вибір кольору"
 msgid "OK"
 msgstr "Гаразд"
 
-#: src/bin/e_color_dialog.c:47 src/bin/e_eap_editor.c:849
-#: src/bin/e_eap_editor.c:913 src/bin/e_entry_dialog.c:63 src/bin/e_fm.c:8548
+#: src/bin/e_color_dialog.c:47 src/bin/e_eap_editor.c:861
+#: src/bin/e_eap_editor.c:925 src/bin/e_entry_dialog.c:63 src/bin/e_fm.c:8548
 #: src/bin/e_fm_prop.c:508 src/bin/e_utils.c:1168
 #: src/modules/conf_imc/e_int_config_imc_import.c:124
 #: src/modules/conf_mime/e_int_config_mime_edit.c:304
@@ -728,13 +730,13 @@ msgstr "Параметри оновлено"
 #: src/bin/e_config.c:2025
 #, c-format
 msgid ""
-"An error occured while saving Enlightenment's<br>settings to disk. The error "
-"could not be<br>deterimined.<br><br>The file where the error occured was:<br>"
-"%s<br><br>This file has been deleted to avoid corrupt data.<br>"
+"An error occurred while saving Enlightenment's<br>settings to disk. The "
+"error could not be<br>deterimined.<br><br>The file where the error occurred "
+"was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 "Під час збереження налаштування Enlightenment на диск<br>виникла помилка, "
-"яку не можливо<br>визначити.<br><br>Файл в якому виникла помилка:<br>%"
-"s<br><br>Цей файл був вилучений з метою запобігання пошкодження даних.<br>"
+"яку не можливо<br>визначити.<br><br>Файл в якому виникла помилка:<br>"
+"%s<br><br>Цей файл був вилучений з метою запобігання пошкодження даних.<br>"
 
 #: src/bin/e_config.c:2036
 #, c-format
@@ -742,7 +744,7 @@ msgid ""
 "Enlightenment's settings files are too big<br>for the file system they are "
 "being saved to.<br>This error is very strange as the files should<br>be "
 "extremely small. Please check the settings<br>for your home directory."
-"<br><br>The file where the error occured was:<br>%s<br><br>This file has "
+"<br><br>The file where the error occurred was:<br>%s<br><br>This file has "
 "been deleted to avoid corrupt data.<br>"
 msgstr ""
 "Файли параметрів Enlightenment занадто великі<br>для збереження їх в цій "
@@ -754,9 +756,9 @@ msgstr ""
 #: src/bin/e_config.c:2049
 #, c-format
 msgid ""
-"An output error occured when writing the settings<br>files for "
+"An output error occurred when writing the settings<br>files for "
 "Enlightenment. Your disk is having troubles<br>and possibly needs "
-"replacement.<br><br>The file where the error occured was:<br>%s<br><br>This "
+"replacement.<br><br>The file where the error occurred was:<br>%s<br><br>This "
 "file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 "Під час запису файлів параметрів Enlightenment виникла<br>помилка виведення. "
@@ -769,20 +771,20 @@ msgstr ""
 msgid ""
 "Enlightenment cannot write its settings file<br>because it ran out of space "
 "to write the file.<br>You have either run out of disk space or have<br>gone "
-"over your quota limit.<br><br>The file where the error occured was:<br>%"
-"s<br><br>This file has been deleted to avoid corrupt data.<br>"
+"over your quota limit.<br><br>The file where the error occurred was:<br>"
+"%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 "Enlightenment не може зберегти налаштування<br>за браком місця на диску. "
 "Причиною<br>може бути або фізична вада диску,<br>або ви вичерпали свою квоту "
-"дискового<br><br>простору. Файл в якому<br><br>виникла помилка:<br>%"
-"s<br><br>Цей файл був вилучений з метою запобігання пошкодження даних.<br>"
+"дискового<br><br>простору. Файл в якому<br><br>виникла помилка:<br>"
+"%s<br><br>Цей файл був вилучений з метою запобігання пошкодження даних.<br>"
 
 #: src/bin/e_config.c:2072
 #, c-format
 msgid ""
 "Enlightenment unexpectedly had the settings file<br>it was writing closed on "
-"it. This is very unusual.<br><br>The file where the error occured was:<br>%"
-"s<br><br>This file has been deleted to avoid corrupt data.<br>"
+"it. This is very unusual.<br><br>The file where the error occurred was:<br>"
+"%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 "Enlightenment несподівано отримав файл параметрів<br>і це було записано в "
 "ньому. Це дуже дивно.<br><br>Файл, в якому сталася помилка:<br>%s<br><br>Цей "
@@ -799,7 +801,7 @@ msgstr "Проблеми під час збереження параметрів
 msgid "Advanced"
 msgstr "Додатково"
 
-#: src/bin/e_config_dialog.c:236 src/bin/e_eap_editor.c:704
+#: src/bin/e_config_dialog.c:236 src/bin/e_eap_editor.c:716
 msgid "Basic"
 msgstr "Базове"
 
@@ -894,11 +896,11 @@ msgstr "Ні, але збільшити затримку"
 msgid "No, and stop asking"
 msgstr "Ні, і більше не запитувати"
 
-#: src/bin/e_eap_editor.c:173
+#: src/bin/e_eap_editor.c:174
 msgid "Incomplete Window Properties"
 msgstr "Неповні властивості вікна"
 
-#: src/bin/e_eap_editor.c:174
+#: src/bin/e_eap_editor.c:175
 msgid ""
 "The window you are creating an icon for<br>does not contain window name and "
 "class<br>properties, so the needed properties for<br>the icon so that it "
@@ -912,57 +914,53 @@ msgstr ""
 "замість цього.<br>Це спрацює якщо тільки заголовок буде таким самим "
 "під<br>час запуску вікна, та не змінюватиметься надалі."
 
-#: src/bin/e_eap_editor.c:229
+#: src/bin/e_eap_editor.c:230
 msgid "Desktop Entry Editor"
 msgstr "Редактор програм"
 
-#: src/bin/e_eap_editor.c:658 src/bin/e_int_border_prop.c:420
+#: src/bin/e_eap_editor.c:674 src/bin/e_int_border_prop.c:420
 #: src/bin/e_int_border_prop.c:467 src/modules/conf_imc/e_int_config_imc.c:891
 #: src/modules/conf_menus/e_int_config_menus.c:103
 #: src/modules/conf_menus/e_int_config_menus.c:298
 msgid "Name"
 msgstr "Назва"
 
-#: src/bin/e_eap_editor.c:672
-msgid "Executable"
-msgstr "Виконуваний"
-
-#: src/bin/e_eap_editor.c:689
-msgid "URL"
-msgstr ""
-
-#: src/bin/e_eap_editor.c:697
+#: src/bin/e_eap_editor.c:685
 msgid "Comment"
 msgstr "Коментар"
 
-#: src/bin/e_eap_editor.c:717 src/bin/e_eap_editor.c:726
+#: src/bin/e_eap_editor.c:707
+msgid "URL"
+msgstr ""
+
+#: src/bin/e_eap_editor.c:729 src/bin/e_eap_editor.c:738
 #: src/bin/e_fm_prop.c:394 src/modules/conf_fonts/e_int_config_fonts.c:93
 #: src/modules/conf_mime/e_int_config_mime_edit.c:147
 msgid "Icon"
 msgstr "Піктограма"
 
-#: src/bin/e_eap_editor.c:730
+#: src/bin/e_eap_editor.c:742
 msgid "Generic Name"
 msgstr "Загальна назва"
 
-#: src/bin/e_eap_editor.c:736
+#: src/bin/e_eap_editor.c:748
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:103
 msgid "Window Class"
 msgstr "Клас вікна"
 
-#: src/bin/e_eap_editor.c:742 src/modules/conf_mime/e_int_config_mime.c:176
+#: src/bin/e_eap_editor.c:754 src/modules/conf_mime/e_int_config_mime.c:176
 msgid "Categories"
 msgstr "Категорії"
 
-#: src/bin/e_eap_editor.c:749
+#: src/bin/e_eap_editor.c:761
 msgid "Mime Types"
 msgstr "Типи MIME"
 
-#: src/bin/e_eap_editor.c:756
+#: src/bin/e_eap_editor.c:768
 msgid "Desktop file"
 msgstr "Файл стільниці"
 
-#: src/bin/e_eap_editor.c:766
+#: src/bin/e_eap_editor.c:778
 #: src/modules/conf_performance/e_int_config_performance.c:115
 #: src/modules/everything/evry_config.c:380
 #: src/modules/everything/evry_config.c:464
@@ -972,31 +970,31 @@ msgstr "Файл стільниці"
 msgid "General"
 msgstr "Загальні"
 
-#: src/bin/e_eap_editor.c:770
+#: src/bin/e_eap_editor.c:782
 msgid "Startup Notify"
 msgstr "Сповіщення про запуск"
 
-#: src/bin/e_eap_editor.c:772 src/modules/everything-apps/e_mod_main.c:997
+#: src/bin/e_eap_editor.c:784 src/modules/everything-apps/e_mod_main.c:997
 msgid "Run in Terminal"
 msgstr "Запустити в Терміналі"
 
-#: src/bin/e_eap_editor.c:774
+#: src/bin/e_eap_editor.c:786
 msgid "Show in Menus"
 msgstr "Показувати в меню"
 
-#: src/bin/e_eap_editor.c:777 src/bin/e_int_border_remember.c:748
+#: src/bin/e_eap_editor.c:789 src/bin/e_int_border_remember.c:748
 msgid "Options"
 msgstr "Опції"
 
-#: src/bin/e_eap_editor.c:807
+#: src/bin/e_eap_editor.c:819
 msgid "Select an Icon"
 msgstr "Вибрати піктограму"
 
-#: src/bin/e_eap_editor.c:876
+#: src/bin/e_eap_editor.c:888
 msgid "Select an Executable"
 msgstr "Виберіть виконуваний файл"
 
-#: src/bin/e_entry.c:493 src/bin/e_fm.c:8038 src/bin/e_shelf.c:1695
+#: src/bin/e_entry.c:493 src/bin/e_fm.c:8038 src/bin/e_shelf.c:1693
 #: src/modules/conf_profiles/e_int_config_profiles.c:135
 #: src/modules/conf_shelves/e_int_config_shelf.c:80
 #: src/modules/ibar/e_mod_config.c:108
@@ -1032,11 +1030,11 @@ msgstr "Помилка запуску"
 msgid "Enlightenment was unable to fork a child process:<br><br>%s<br>"
 msgstr "Enlightenment не зміг запустити дочірній процес:<br><br>%s<br>"
 
-#: src/bin/e_exec.c:353
+#: src/bin/e_exec.c:352
 msgid "Application run error"
 msgstr "Помилка запуску програми"
 
-#: src/bin/e_exec.c:355
+#: src/bin/e_exec.c:354
 #, c-format
 msgid ""
 "Enlightenment was unable to run the application:<br><br>%s<br><br>The "
@@ -1045,105 +1043,105 @@ msgstr ""
 "Enlightenment не зміг запустити програму:<br><br>%s<br><br>Програма не може "
 "запуститися."
 
-#: src/bin/e_exec.c:455
+#: src/bin/e_exec.c:458
 msgid "Application Execution Error"
 msgstr "Помилка виконання програми"
 
-#: src/bin/e_exec.c:467
+#: src/bin/e_exec.c:470
 #, c-format
 msgid "%s stopped running unexpectedly."
 msgstr "%s несподівано закінчив виконання."
 
-#: src/bin/e_exec.c:473
+#: src/bin/e_exec.c:476
 #, c-format
 msgid "An exit code of %i was returned from %s."
 msgstr "Код виходу %i був повернутий з %s."
 
-#: src/bin/e_exec.c:481
+#: src/bin/e_exec.c:484
 #, c-format
 msgid "%s was interrupted by an Interrupt Signal."
 msgstr "%s перерваний сигналом переривання."
 
-#: src/bin/e_exec.c:484
+#: src/bin/e_exec.c:487
 #, c-format
 msgid "%s was interrupted by a Quit Signal."
 msgstr "%s перерваний сигналом виходу."
 
-#: src/bin/e_exec.c:488
+#: src/bin/e_exec.c:491
 #, c-format
 msgid "%s was interrupted by an Abort Signal."
 msgstr "%s перерваний сигналом аварійного припинення роботи."
 
-#: src/bin/e_exec.c:491
+#: src/bin/e_exec.c:494
 #, c-format
 msgid "%s was interrupted by a Floating Point Error."
 msgstr "%s перерваний помилкою плаваючої коми."
 
-#: src/bin/e_exec.c:495
+#: src/bin/e_exec.c:498
 #, c-format
 msgid "%s was interrupted by an Uninterruptable Kill Signal."
 msgstr "%s перерваний сигналом Uninterruptable Kill."
 
-#: src/bin/e_exec.c:499
+#: src/bin/e_exec.c:502
 #, c-format
 msgid "%s was interrupted by a Segmentation Fault."
 msgstr "%s перерваний помилкою сегментації."
 
-#: src/bin/e_exec.c:503
+#: src/bin/e_exec.c:506
 #, c-format
 msgid "%s was interrupted by a Broken Pipe."
 msgstr "%s перерваний помилкою Broken Pipe."
 
-#: src/bin/e_exec.c:506
+#: src/bin/e_exec.c:509
 #, c-format
 msgid "%s was interrupted by a Termination Signal."
 msgstr "%s перерваний сигналом завершення."
 
-#: src/bin/e_exec.c:510
+#: src/bin/e_exec.c:513
 #, c-format
 msgid "%s was interrupted by a Bus Error."
 msgstr "%s перерваний помилкою Bus Error."
 
-#: src/bin/e_exec.c:513
+#: src/bin/e_exec.c:516
 #, c-format
 msgid "%s was interrupted by the signal number %i."
 msgstr "%s перерваний сигналом номер %i."
 
-#: src/bin/e_exec.c:569
+#: src/bin/e_exec.c:572
 msgid ""
 "***The remaining output has been truncated. Save the output to view.***\n"
 msgstr "*** Залишок виведення був обрізаний. Збережіть для перегляду. ***\n"
 
-#: src/bin/e_exec.c:631 src/bin/e_exec.c:705 src/bin/e_exec.c:712
+#: src/bin/e_exec.c:634 src/bin/e_exec.c:708 src/bin/e_exec.c:715
 msgid "Error Logs"
 msgstr "Журнали помилок"
 
-#: src/bin/e_exec.c:637 src/bin/e_exec.c:713
+#: src/bin/e_exec.c:640 src/bin/e_exec.c:716
 msgid "There was no error message."
 msgstr "Не було повідомлення про помилку."
 
-#: src/bin/e_exec.c:641 src/bin/e_exec.c:720
+#: src/bin/e_exec.c:644 src/bin/e_exec.c:723
 msgid "Save This Message"
 msgstr "Зберегти це повідомлення"
 
-#: src/bin/e_exec.c:645 src/bin/e_exec.c:724
+#: src/bin/e_exec.c:648 src/bin/e_exec.c:727
 #, c-format
 msgid "This error log will be saved as %s/%s.log"
 msgstr "Цей файл помилки буде збережений як %s/%s.log"
 
-#: src/bin/e_exec.c:671
+#: src/bin/e_exec.c:674
 msgid "Error Information"
 msgstr "Інформація про помилку"
 
-#: src/bin/e_exec.c:679
+#: src/bin/e_exec.c:682
 msgid "Error Signal Information"
 msgstr "Сигнал помилки інформації"
 
-#: src/bin/e_exec.c:689 src/bin/e_exec.c:696
+#: src/bin/e_exec.c:692 src/bin/e_exec.c:699
 msgid "Output Data"
 msgstr "Вихідні дані"
 
-#: src/bin/e_exec.c:697
+#: src/bin/e_exec.c:700
 msgid "There was no output."
 msgstr "Не було ніяких даних."
 
@@ -1340,7 +1338,7 @@ msgstr "Ігнорувати все"
 
 #: src/bin/e_fm.c:9120
 #, c-format
-msgid "An error occured while performing an operation.<br>%s"
+msgid "An error occurred while performing an operation.<br>%s"
 msgstr "Сталася помилка під час виконання операції.<br>%s"
 
 #: src/bin/e_fm.c:9291
@@ -2015,7 +2013,7 @@ msgid "Start this program on login"
 msgstr "Запустити цю програму під час входу в систему"
 
 #: src/bin/e_int_config_modules.c:60 src/bin/e_int_menus.c:223
-#: src/bin/e_shelf.c:1687 src/modules/battery/e_mod_main.c:186
+#: src/bin/e_shelf.c:1685 src/modules/battery/e_mod_main.c:186
 #: src/modules/conf/e_conf.c:121 src/modules/conf/e_conf.c:131
 #: src/modules/conf/e_mod_main.c:102 src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:133
@@ -2185,16 +2183,11 @@ msgstr "Немає назви!!"
 msgid "(No Shelves)"
 msgstr "(Немає поличок)"
 
-#: src/bin/e_int_menus.c:1429 src/bin/e_shelf.c:164 src/bin/e_shelf.c:1170
-#: src/modules/conf_shelves/e_int_config_shelf.c:132
-msgid "Shelf #"
-msgstr "Поличка №"
-
-#: src/bin/e_int_menus.c:1482
+#: src/bin/e_int_menus.c:1481
 msgid "Add A Shelf"
 msgstr "Додати поличку"
 
-#: src/bin/e_int_menus.c:1489
+#: src/bin/e_int_menus.c:1488
 msgid "Delete A Shelf"
 msgstr "Вилучити поличку"
 
@@ -2313,8 +2306,8 @@ msgid ""
 "\t\tgiven the geometry. Add as many as you like. They all\n"
 "\t\treplace the real xinerama screens, if any. This can\n"
 "\t\tbe used to simulate xinerama.\n"
-"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
-"+0\n"
+"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen "
+"800x600+800+0\n"
 "\t-profile CONF_PROFILE\n"
 "\t\tUse the configuration profile CONF_PROFILE instead of the user selected "
 "default or just \"default\".\n"
@@ -2338,8 +2331,8 @@ msgstr ""
 "\t\tgiven the geometry. Add as many as you like. They all\n"
 "\t\treplace the real xinerama screens, if any. This can\n"
 "\t\tbe used to simulate xinerama.\n"
-"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
-"+0\n"
+"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen "
+"800x600+800+0\n"
 "\t-profile CONF_PROFILE\n"
 "\t\tUse the configuration profile CONF_PROFILE instead of the user selected "
 "default or just \"default\".\n"
@@ -2905,27 +2898,31 @@ msgstr ""
 "режим <b>презентації</ B> та тимчасово вимкнути екранну заставку, блокування "
 "стільниці та режим енергозбереження?"
 
-#: src/bin/e_shelf.c:1298 src/modules/conf_shelves/e_int_config_shelf.c:281
+#: src/bin/e_shelf.c:163
+msgid "Shelf #"
+msgstr "Поличка №"
+
+#: src/bin/e_shelf.c:1296 src/modules/conf_shelves/e_int_config_shelf.c:280
 msgid "Are you sure you want to delete this shelf?"
 msgstr "Ви дійсно хочете вилучити цю поличку?"
 
-#: src/bin/e_shelf.c:1299
+#: src/bin/e_shelf.c:1297
 msgid ""
 "You requested to delete this shelf.<br><br>Are you sure you want to delete "
 "it?"
 msgstr "Ви запросили вилучити цю поличку.<br><br>Ви дійсно хочете вилучити її?"
 
-#: src/bin/e_shelf.c:1672
+#: src/bin/e_shelf.c:1670
 #, fuzzy
 msgid "Stop Moving/Resizing Gadgets"
 msgstr "Закінчити переміщення/зміну розміру елементів"
 
-#: src/bin/e_shelf.c:1674
+#: src/bin/e_shelf.c:1672
 #, fuzzy
 msgid "Begin Moving/Resizing Gadgets"
 msgstr "Почати переміщення/зміну розміру елементів"
 
-#: src/bin/e_shelf.c:1682
+#: src/bin/e_shelf.c:1680
 #, fuzzy
 msgid "Contents"
 msgstr "Коментар"
@@ -4254,8 +4251,8 @@ msgid ""
 "will be restored in %d seconds."
 msgstr ""
 "Все виглядає чудово? Натисніть <hilight>Зберегти</hilight>, якщо так, або "
-"поверніть, якщо ні.<br>Якщо ви не натиснете кнопку, попередні параметри<br>%"
-"dx%d на %d Гц будуть повернуті через %d секунд."
+"поверніть, якщо ні.<br>Якщо ви не натиснете кнопку, попередні параметри<br>"
+"%dx%d на %d Гц будуть повернуті через %d секунд."
 
 #: src/modules/conf_display/e_int_config_display.c:143
 #, c-format
@@ -4265,8 +4262,8 @@ msgid ""
 "restored in %d seconds."
 msgstr ""
 "Все виглядає чудово? Натисніть <hilight>Зберегти</hilight>, якщо так, або "
-"поверніть, якщо ні.<br>Якщо ви не натиснете кнопку, попередні параметри<br>%"
-"dx%d будуть повернуті через %d секунд."
+"поверніть, якщо ні.<br>Якщо ви не натиснете кнопку, попередні параметри<br>"
+"%dx%d будуть повернуті через %d секунд."
 
 #: src/modules/conf_display/e_int_config_display.c:153
 #, c-format
@@ -4276,8 +4273,8 @@ msgid ""
 "will be restored <hilight>IMMEDIATELY</hilight>."
 msgstr ""
 "Все виглядає чудово? Натисніть <hilight>Зберегти</hilight>, якщо так, або "
-"поверніть, якщо ні.<br>Якщо ви не натиснете кнопку, попередні параметри<br>%"
-"dx%d на %d Гц будуть повернуті<hilight>НЕГАЙНО</hilight>."
+"поверніть, якщо ні.<br>Якщо ви не натиснете кнопку, попередні параметри<br>"
+"%dx%d на %d Гц будуть повернуті<hilight>НЕГАЙНО</hilight>."
 
 #: src/modules/conf_display/e_int_config_display.c:160
 #, c-format
@@ -4287,8 +4284,8 @@ msgid ""
 "restored <hilight>IMMEDIATELY</hilight>."
 msgstr ""
 "Все виглядає чудово? Натисніть <hilight>Зберегти</hilight>, якщо так, або "
-"поверніть, якщо ні.<br>Якщо ви не натиснете кнопку, попередні параметри<br>%"
-"dx%d будуть повернуті <hilight>НЕГАЙНО</hilight>."
+"поверніть, якщо ні.<br>Якщо ви не натиснете кнопку, попередні параметри<br>"
+"%dx%d будуть повернуті <hilight>НЕГАЙНО</hilight>."
 
 #: src/modules/conf_display/e_int_config_display.c:197
 msgid "Resolution change"
@@ -4499,8 +4496,8 @@ msgstr "Помилка прив'язки до краю"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1175
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>%"
-"s</hilight> action.<br>Please choose another binding edge sequence."
+"The binding key sequence, that you choose, is already used by <br><hilight>"
+"%s</hilight> action.<br>Please choose another binding edge sequence."
 msgstr ""
 "Послідовність прив'язок до країв, яку ви вибрали, вже використовується "
 "<br><hilight>%s</hilight>.<br>Будь ласка, виберіть іншу послідовність "
@@ -4972,8 +4969,8 @@ msgstr "Помилка прив'язки клавіші"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1148
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>%"
-"s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by <br><hilight>"
+"%s</hilight> action.<br>Please choose another binding key sequence."
 msgstr ""
 "Обрана Вами послідовність прив'язки клавіші вже використовується прив'язкою "
 "<br><hilight>%s</hilight>.<br>Будь ласка, виберіть іншу послідовність."
@@ -5528,7 +5525,7 @@ msgstr "Налаштовані полички"
 msgid "Setup"
 msgstr "Налаштування"
 
-#: src/modules/conf_shelves/e_int_config_shelf.c:277
+#: src/modules/conf_shelves/e_int_config_shelf.c:276
 #, c-format
 msgid ""
 "You requested to delete \"%s\".<br><br>Are you sure you want to delete this "
@@ -7494,7 +7491,7 @@ msgstr "Датчики"
 
 #: src/modules/temperature/e_mod_config.c:200
 #, fuzzy
-msgid "Celcius"
+msgid "Celsius"
 msgstr "Цельсієм"
 
 #: src/modules/temperature/e_mod_config.c:203
@@ -7863,6 +7860,9 @@ msgstr "Може бути тільки один системний лоток, �
 #: src/modules/systray/e_mod_main.c:1092
 msgid "Systray"
 msgstr "Системний лоток"
+
+#~ msgid "Executable"
+#~ msgstr "Виконуваний"
 
 #~ msgid "Properties"
 #~ msgstr "Властивості"

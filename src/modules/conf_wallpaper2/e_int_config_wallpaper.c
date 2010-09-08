@@ -6,7 +6,7 @@
 //   need delete select mode
 //   need after select on delete an ok/cancel if file or "ok to remove whole online source" if online
 //   need to make "exchange" wallpapers have a different look
-//   bug: animated wp doesnt workon first show
+//   bug: animated wp doesn't workon first show
 //   need to be able to "type name to search/filter"
 
 typedef struct _Info Info;

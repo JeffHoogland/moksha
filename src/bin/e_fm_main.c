@@ -2102,7 +2102,7 @@ _e_file_add_mod(E_Dir *ed, const char *path, E_Fm_Op_Type op, int listing)
    if (!rlnk) rlnk = strdup("");
 
    p = buf;
-   /* NOTE: i am NOT converting this data to portable arch/os independant
+   /* NOTE: i am NOT converting this data to portable arch/os independent
     * format. i am ASSUMING e_fm_main and e are local and built together
     * and thus this will work. if this ever changes this here needs to
     * change */

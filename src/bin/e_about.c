@@ -31,7 +31,7 @@ e_about_new(E_Container *con)
 	"installed on your system.<br>"
 	"<br>"
 	"Enlightenment is under <hilight>HEAVY DEVELOPMENT</hilight> and it "
-	"is not stable. Many features are incomplete or even non-existant "
+	"is not stable. Many features are incomplete or even non-existent "
 	"yet and may have many bugs. You have been <hilight>WARNED!</hilight>"
 	)
       );
