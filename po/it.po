@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-09-06 00:12+0900\n"
+"POT-Creation-Date: 2010-09-08 19:30+0200\n"
 "PO-Revision-Date: 2010-09-04 08:50+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
@@ -41,7 +41,7 @@ msgstr "Enlightenment"
 
 #: src/bin/e_about.c:23
 msgid ""
-"Copyright &copy; 1999-2009, by the Enlightenment Development Team.<br><br>We "
+"Copyright &copy; 1999-2010, by the Enlightenment Development Team.<br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>This software is provided as-is with no explicit or implied "
 "warranty. This software is governed by licensing conditions, so please see "
@@ -50,7 +50,7 @@ msgid ""
 "is not stable. Many features are incomplete or even non-existant yet and may "
 "have many bugs. You have been <hilight>WARNED!</hilight>"
 msgstr ""
-"Copyright &copy; 1999-2009, del Enlightenment Development Team.<br><br>Ci "
+"Copyright &copy; 1999-2010, del Enlightenment Development Team.<br><br>Ci "
 "auguriamo che vi piacerà usare questo software tanto quanto a noi è piaciuto "
 "scriverlo.<br><br>Questo software viene fornito così-com'è senza alcuna "
 "garanzia esplicita o implicita. Questo software è regolato dalle condizioni "
@@ -558,7 +558,7 @@ msgstr "Lancia"
 msgid "Command"
 msgstr "Comando"
 
-#: src/bin/e_actions.c:2911
+#: src/bin/e_actions.c:2911 src/bin/e_eap_editor.c:695
 msgid "Application"
 msgstr "Applicazione"
 
@@ -664,8 +664,8 @@ msgid "Color Selector"
 msgstr "Selettore colore"
 
 #: src/bin/e_color_dialog.c:46 src/bin/e_config.c:2101
-#: src/bin/e_config_dialog.c:259 src/bin/e_eap_editor.c:847
-#: src/bin/e_eap_editor.c:911 src/bin/e_entry_dialog.c:62 src/bin/e_exec.c:362
+#: src/bin/e_config_dialog.c:259 src/bin/e_eap_editor.c:859
+#: src/bin/e_eap_editor.c:923 src/bin/e_entry_dialog.c:62 src/bin/e_exec.c:361
 #: src/bin/e_fm.c:8546 src/bin/e_fm.c:9190 src/bin/e_fm_prop.c:507
 #: src/bin/e_int_border_remember.c:321 src/bin/e_int_border_remember.c:521
 #: src/bin/e_module.c:409 src/bin/e_sys.c:484 src/bin/e_sys.c:530
@@ -682,8 +682,8 @@ msgstr "Selettore colore"
 msgid "OK"
 msgstr "OK"
 
-#: src/bin/e_color_dialog.c:47 src/bin/e_eap_editor.c:849
-#: src/bin/e_eap_editor.c:913 src/bin/e_entry_dialog.c:63 src/bin/e_fm.c:8548
+#: src/bin/e_color_dialog.c:47 src/bin/e_eap_editor.c:861
+#: src/bin/e_eap_editor.c:925 src/bin/e_entry_dialog.c:63 src/bin/e_fm.c:8548
 #: src/bin/e_fm_prop.c:508 src/bin/e_utils.c:1168
 #: src/modules/conf_imc/e_int_config_imc_import.c:124
 #: src/modules/conf_mime/e_int_config_mime_edit.c:304
@@ -813,7 +813,7 @@ msgstr "Problemi scrittura configurazione di Enlightenment"
 msgid "Advanced"
 msgstr "Avanzate"
 
-#: src/bin/e_config_dialog.c:236 src/bin/e_eap_editor.c:704
+#: src/bin/e_config_dialog.c:236 src/bin/e_eap_editor.c:716
 msgid "Basic"
 msgstr "Basilari"
 
@@ -910,11 +910,11 @@ msgstr "No, ma aumenta la temporizzazione"
 msgid "No, and stop asking"
 msgstr "No, e non chiedere più"
 
-#: src/bin/e_eap_editor.c:173
+#: src/bin/e_eap_editor.c:174
 msgid "Incomplete Window Properties"
 msgstr "Proprietà della finestra incomplete"
 
-#: src/bin/e_eap_editor.c:174
+#: src/bin/e_eap_editor.c:175
 msgid ""
 "The window you are creating an icon for<br>does not contain window name and "
 "class<br>properties, so the needed properties for<br>the icon so that it "
@@ -929,57 +929,53 @@ msgstr ""
 "metodo funzioni<br>correttamente occorre che il titolo sia lo stesso "
 "ad<br>ogni avvio della finestra e che non cambi."
 
-#: src/bin/e_eap_editor.c:229
+#: src/bin/e_eap_editor.c:230
 msgid "Desktop Entry Editor"
 msgstr "Editor file desktop"
 
-#: src/bin/e_eap_editor.c:658 src/bin/e_int_border_prop.c:420
+#: src/bin/e_eap_editor.c:674 src/bin/e_int_border_prop.c:420
 #: src/bin/e_int_border_prop.c:467 src/modules/conf_imc/e_int_config_imc.c:891
 #: src/modules/conf_menus/e_int_config_menus.c:103
 #: src/modules/conf_menus/e_int_config_menus.c:298
 msgid "Name"
 msgstr "Nome"
 
-#: src/bin/e_eap_editor.c:672
-msgid "Executable"
-msgstr "Eseguibile"
-
-#: src/bin/e_eap_editor.c:689
-msgid "URL"
-msgstr "URL"
-
-#: src/bin/e_eap_editor.c:697
+#: src/bin/e_eap_editor.c:685
 msgid "Comment"
 msgstr "Commento"
 
-#: src/bin/e_eap_editor.c:717 src/bin/e_eap_editor.c:726
+#: src/bin/e_eap_editor.c:707
+msgid "URL"
+msgstr "URL"
+
+#: src/bin/e_eap_editor.c:729 src/bin/e_eap_editor.c:738
 #: src/bin/e_fm_prop.c:394 src/modules/conf_fonts/e_int_config_fonts.c:93
 #: src/modules/conf_mime/e_int_config_mime_edit.c:147
 msgid "Icon"
 msgstr "Icona"
 
-#: src/bin/e_eap_editor.c:730
+#: src/bin/e_eap_editor.c:742
 msgid "Generic Name"
 msgstr "Descrizione"
 
-#: src/bin/e_eap_editor.c:736
+#: src/bin/e_eap_editor.c:748
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:103
 msgid "Window Class"
 msgstr "Classe"
 
-#: src/bin/e_eap_editor.c:742 src/modules/conf_mime/e_int_config_mime.c:176
+#: src/bin/e_eap_editor.c:754 src/modules/conf_mime/e_int_config_mime.c:176
 msgid "Categories"
 msgstr "Categorie"
 
-#: src/bin/e_eap_editor.c:749
+#: src/bin/e_eap_editor.c:761
 msgid "Mime Types"
 msgstr "Tipi Mime"
 
-#: src/bin/e_eap_editor.c:756
+#: src/bin/e_eap_editor.c:768
 msgid "Desktop file"
 msgstr "File desktop"
 
-#: src/bin/e_eap_editor.c:766
+#: src/bin/e_eap_editor.c:778
 #: src/modules/conf_performance/e_int_config_performance.c:115
 #: src/modules/everything/evry_config.c:380
 #: src/modules/everything/evry_config.c:464
@@ -989,31 +985,31 @@ msgstr "File desktop"
 msgid "General"
 msgstr "Impostazioni generali"
 
-#: src/bin/e_eap_editor.c:770
+#: src/bin/e_eap_editor.c:782
 msgid "Startup Notify"
 msgstr "Notifica avvio"
 
-#: src/bin/e_eap_editor.c:772 src/modules/everything-apps/e_mod_main.c:997
+#: src/bin/e_eap_editor.c:784 src/modules/everything-apps/e_mod_main.c:997
 msgid "Run in Terminal"
 msgstr "Esegui in terminale"
 
-#: src/bin/e_eap_editor.c:774
+#: src/bin/e_eap_editor.c:786
 msgid "Show in Menus"
 msgstr "Mostra in menù"
 
-#: src/bin/e_eap_editor.c:777 src/bin/e_int_border_remember.c:748
+#: src/bin/e_eap_editor.c:789 src/bin/e_int_border_remember.c:748
 msgid "Options"
 msgstr "Opzioni"
 
-#: src/bin/e_eap_editor.c:807
+#: src/bin/e_eap_editor.c:819
 msgid "Select an Icon"
 msgstr "Seleziona un'icona"
 
-#: src/bin/e_eap_editor.c:876
+#: src/bin/e_eap_editor.c:888
 msgid "Select an Executable"
 msgstr "Seleziona un'eseguibile"
 
-#: src/bin/e_entry.c:493 src/bin/e_fm.c:8038 src/bin/e_shelf.c:1695
+#: src/bin/e_entry.c:493 src/bin/e_fm.c:8038 src/bin/e_shelf.c:1693
 #: src/modules/conf_profiles/e_int_config_profiles.c:135
 #: src/modules/conf_shelves/e_int_config_shelf.c:80
 #: src/modules/ibar/e_mod_config.c:108
@@ -1050,11 +1046,11 @@ msgid "Enlightenment was unable to fork a child process:<br><br>%s<br>"
 msgstr ""
 "Enlightenment non ha potuto fare il fork di un processo figlio:<br><br>%s<br>"
 
-#: src/bin/e_exec.c:353
+#: src/bin/e_exec.c:352
 msgid "Application run error"
 msgstr "Errore d'esecuzione dell'applicazione"
 
-#: src/bin/e_exec.c:355
+#: src/bin/e_exec.c:354
 #, c-format
 msgid ""
 "Enlightenment was unable to run the application:<br><br>%s<br><br>The "
@@ -1063,106 +1059,106 @@ msgstr ""
 "Enlightenment non ha potuto avviare l'applicazione:<br><br>%"
 "s<br><br>L'applicazione non è partita"
 
-#: src/bin/e_exec.c:455
+#: src/bin/e_exec.c:458
 msgid "Application Execution Error"
 msgstr "Errore d'esecuzione dell'applicazione"
 
-#: src/bin/e_exec.c:467
+#: src/bin/e_exec.c:470
 #, c-format
 msgid "%s stopped running unexpectedly."
 msgstr "L'esecuzione di %s è terminata inaspettatamente"
 
-#: src/bin/e_exec.c:473
+#: src/bin/e_exec.c:476
 #, c-format
 msgid "An exit code of %i was returned from %s."
 msgstr "%2$s ha restituito il codice d'uscita %1$i."
 
-#: src/bin/e_exec.c:481
+#: src/bin/e_exec.c:484
 #, c-format
 msgid "%s was interrupted by an Interrupt Signal."
 msgstr "%s è stato fermato da un segnale d'interruzione"
 
-#: src/bin/e_exec.c:484
+#: src/bin/e_exec.c:487
 #, c-format
 msgid "%s was interrupted by a Quit Signal."
 msgstr "%s è stato fermato da un segnale di uscita"
 
-#: src/bin/e_exec.c:488
+#: src/bin/e_exec.c:491
 #, c-format
 msgid "%s was interrupted by an Abort Signal."
 msgstr "%s è stato fermato da un segnale di aborto"
 
-#: src/bin/e_exec.c:491
+#: src/bin/e_exec.c:494
 #, c-format
 msgid "%s was interrupted by a Floating Point Error."
 msgstr "%s è stato fermato da un errore di virgola mobile"
 
-#: src/bin/e_exec.c:495
+#: src/bin/e_exec.c:498
 #, c-format
 msgid "%s was interrupted by an Uninterruptable Kill Signal."
 msgstr "%s è stato fermato da un segnale di uccisione ininterrompibile"
 
-#: src/bin/e_exec.c:499
+#: src/bin/e_exec.c:502
 #, c-format
 msgid "%s was interrupted by a Segmentation Fault."
 msgstr "%s è stato fermato da un errore di segmentazione"
 
-#: src/bin/e_exec.c:503
+#: src/bin/e_exec.c:506
 #, c-format
 msgid "%s was interrupted by a Broken Pipe."
 msgstr "%s è stato fermato da una pipe rotta"
 
-#: src/bin/e_exec.c:506
+#: src/bin/e_exec.c:509
 #, c-format
 msgid "%s was interrupted by a Termination Signal."
 msgstr "%s è stato fermato da un segnale di terminazione"
 
-#: src/bin/e_exec.c:510
+#: src/bin/e_exec.c:513
 #, c-format
 msgid "%s was interrupted by a Bus Error."
 msgstr "%s è stato fermato da un errore del bus"
 
-#: src/bin/e_exec.c:513
+#: src/bin/e_exec.c:516
 #, c-format
 msgid "%s was interrupted by the signal number %i."
 msgstr "%s è stato fermato dal segnale numero %i"
 
-#: src/bin/e_exec.c:569
+#: src/bin/e_exec.c:572
 msgid ""
 "***The remaining output has been truncated. Save the output to view.***\n"
 msgstr ""
 "***L'output rimanente è stato troncato. Salvare l'output per vederlo.***\n"
 
-#: src/bin/e_exec.c:631 src/bin/e_exec.c:705 src/bin/e_exec.c:712
+#: src/bin/e_exec.c:634 src/bin/e_exec.c:708 src/bin/e_exec.c:715
 msgid "Error Logs"
 msgstr "Log di errore"
 
-#: src/bin/e_exec.c:637 src/bin/e_exec.c:713
+#: src/bin/e_exec.c:640 src/bin/e_exec.c:716
 msgid "There was no error message."
 msgstr "Non ci sono messaggi d'errore."
 
-#: src/bin/e_exec.c:641 src/bin/e_exec.c:720
+#: src/bin/e_exec.c:644 src/bin/e_exec.c:723
 msgid "Save This Message"
 msgstr "Salva questo messaggio"
 
-#: src/bin/e_exec.c:645 src/bin/e_exec.c:724
+#: src/bin/e_exec.c:648 src/bin/e_exec.c:727
 #, c-format
 msgid "This error log will be saved as %s/%s.log"
 msgstr "Questo log di errore verrà salvato come %s/%s.log"
 
-#: src/bin/e_exec.c:671
+#: src/bin/e_exec.c:674
 msgid "Error Information"
 msgstr "Informazioni sull'errore"
 
-#: src/bin/e_exec.c:679
+#: src/bin/e_exec.c:682
 msgid "Error Signal Information"
 msgstr "Informazioni sui segnali d'errore"
 
-#: src/bin/e_exec.c:689 src/bin/e_exec.c:696
+#: src/bin/e_exec.c:692 src/bin/e_exec.c:699
 msgid "Output Data"
 msgstr "Dati dell'output"
 
-#: src/bin/e_exec.c:697
+#: src/bin/e_exec.c:700
 msgid "There was no output."
 msgstr "Non ci sono output."
 
@@ -2032,7 +2028,7 @@ msgid "Start this program on login"
 msgstr "Avvia questo programma al login"
 
 #: src/bin/e_int_config_modules.c:60 src/bin/e_int_menus.c:223
-#: src/bin/e_shelf.c:1687 src/modules/battery/e_mod_main.c:186
+#: src/bin/e_shelf.c:1685 src/modules/battery/e_mod_main.c:186
 #: src/modules/conf/e_conf.c:121 src/modules/conf/e_conf.c:131
 #: src/modules/conf/e_mod_main.c:102 src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:133
@@ -2198,16 +2194,11 @@ msgstr "Nessun nome!!"
 msgid "(No Shelves)"
 msgstr "(Nessuna mensola)"
 
-#: src/bin/e_int_menus.c:1429 src/bin/e_shelf.c:164 src/bin/e_shelf.c:1170
-#: src/modules/conf_shelves/e_int_config_shelf.c:132
-msgid "Shelf #"
-msgstr "Mensola #"
-
-#: src/bin/e_int_menus.c:1482
+#: src/bin/e_int_menus.c:1481
 msgid "Add A Shelf"
 msgstr "Aggiungi mensola"
 
-#: src/bin/e_int_menus.c:1489
+#: src/bin/e_int_menus.c:1488
 msgid "Delete A Shelf"
 msgstr "Elimina mensola"
 
@@ -2975,11 +2966,15 @@ msgstr ""
 "modalità <b>presentazione</b> e disabilitare temporaneamente lo screensaver, "
 "il bloccaschermo e la gestione energetica?"
 
-#: src/bin/e_shelf.c:1298 src/modules/conf_shelves/e_int_config_shelf.c:281
+#: src/bin/e_shelf.c:163
+msgid "Shelf #"
+msgstr "Mensola #"
+
+#: src/bin/e_shelf.c:1296 src/modules/conf_shelves/e_int_config_shelf.c:280
 msgid "Are you sure you want to delete this shelf?"
 msgstr "Siete sicuri di voler eliminare questa mensola?"
 
-#: src/bin/e_shelf.c:1299
+#: src/bin/e_shelf.c:1297
 msgid ""
 "You requested to delete this shelf.<br><br>Are you sure you want to delete "
 "it?"
@@ -2987,15 +2982,15 @@ msgstr ""
 "Avete chiesto di eliminare questa mensola.<br><br>Siete sicuri di volerla "
 "eliminare?"
 
-#: src/bin/e_shelf.c:1672
+#: src/bin/e_shelf.c:1670
 msgid "Stop Moving/Resizing Gadgets"
 msgstr "Fine spostamento/ridimensionamento oggetti"
 
-#: src/bin/e_shelf.c:1674
+#: src/bin/e_shelf.c:1672
 msgid "Begin Moving/Resizing Gadgets"
 msgstr "Inizio spostamento/ridimensionamento oggetti"
 
-#: src/bin/e_shelf.c:1682
+#: src/bin/e_shelf.c:1680
 msgid "Contents"
 msgstr "Contenuti"
 
@@ -5540,7 +5535,7 @@ msgstr "Mensole configurate"
 msgid "Setup"
 msgstr "Configurazione"
 
-#: src/modules/conf_shelves/e_int_config_shelf.c:277
+#: src/modules/conf_shelves/e_int_config_shelf.c:276
 #, c-format
 msgid ""
 "You requested to delete \"%s\".<br><br>Are you sure you want to delete this "
@@ -7766,31 +7761,3 @@ msgstr ""
 #: src/modules/systray/e_mod_main.c:1092
 msgid "Systray"
 msgstr "Systray"
-
-#~ msgid "Create a gradient..."
-#~ msgstr "Crea gradiente..."
-
-#~ msgid "Color 1:"
-#~ msgstr "Colore 1:"
-
-#~ msgid "Color 2:"
-#~ msgstr "Colore 2:"
-
-#~ msgid "Fill Options"
-#~ msgstr "Opzioni di riempimento"
-
-#~ msgid "Diagonal Up"
-#~ msgstr "Diagonale verso l'alto"
-
-#~ msgid "Diagonal Down"
-#~ msgstr "Diagonale verso il basso"
-
-#~ msgid "Radial"
-#~ msgstr "Radiale"
-
-#~ msgid "Gradient Creation Error"
-#~ msgstr "Errore creazione gradiente"
-
-#~ msgid "For some reason, Enlightenment was unable to create a gradient."
-#~ msgstr ""
-#~ "Per qualche ragione Enlightenment non ha potuto creare il gradiente."
