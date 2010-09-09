@@ -299,27 +299,25 @@ _ibar_cb_empty_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
    b = data;
    if (!ibar_config->menu)
      {
-	E_Menu *mn;
+	E_Menu *ma, *mg;
 	E_Menu_Item *mi;
 	int cx, cy, cw, ch;
 
-	mn = e_menu_new();
-	e_menu_post_deactivate_callback_set(mn, _ibar_cb_menu_post, NULL);
-	ibar_config->menu = mn;
+	ma = e_menu_new();
+	mg = e_menu_new();
+	e_menu_post_deactivate_callback_set(ma, _ibar_cb_menu_post, NULL);
+	ibar_config->menu = ma;
 
-	mi = e_menu_item_new(mn);
+	mi = e_menu_item_new(mg);
 	e_menu_item_label_set(mi, _("Settings"));
 	e_util_menu_item_theme_icon_set(mi, "configure");
 	e_menu_item_callback_set(mi, _ibar_cb_menu_configuration, b);
 
-	mi = e_menu_item_new(mn);
-	e_menu_item_separator_set(mi, 1);
-
-	e_gadcon_client_util_menu_items_append(b->inst->gcc, mn, 0);
+	e_gadcon_client_util_menu_items_append(b->inst->gcc, ma, mg, 0);
 
 	e_gadcon_canvas_zone_geometry_get(b->inst->gcc->gadcon,
 					  &cx, &cy, &cw, &ch);
-	e_menu_activate_mouse(mn,
+	e_menu_activate_mouse(ma,
 			      e_util_zone_current_get(e_manager_current_get()),
 			      cx + ev->output.x, cy + ev->output.y, 1, 1,
 			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
@@ -764,6 +762,7 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
 {
    Evas_Event_Mouse_Down *ev;
    IBar_Icon *ic;
+   char buf[256];
 
    ev = event_info;
    ic = data;
@@ -777,55 +776,62 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
      }
    else if ((ev->button == 3) && (!ibar_config->menu))
      {
-	E_Menu *mn;
+	E_Menu *ma, *mg, *mo;
 	E_Menu_Item *mi;
 	int cx, cy;
 
-	mn = e_menu_new();
-	e_menu_post_deactivate_callback_set(mn, _ibar_cb_menu_post, NULL);
-	ibar_config->menu = mn;
+	ma = e_menu_new();
+	e_menu_post_deactivate_callback_set(ma, _ibar_cb_menu_post, NULL);
+	ibar_config->menu = ma;
 
 	/* FIXME: other icon options go here too */
-	mi = e_menu_item_new(mn);
-	e_menu_item_label_set(mi, _("Change Icon Properties"));
+	mo = e_menu_new();
+
+	mi = e_menu_item_new(mo);
+	e_menu_item_label_set(mi, _("Properties"));
 	e_util_menu_item_theme_icon_set(mi, "configure");
 	e_menu_item_callback_set(mi, _ibar_cb_menu_icon_properties, ic);
 
-	mi = e_menu_item_new(mn);
-	e_menu_item_label_set(mi, _("Remove Icon"));
+	mi = e_menu_item_new(mo);
+	e_menu_item_label_set(mi, _("Remove"));
 	e_util_menu_item_theme_icon_set(mi, "list-remove");
 	e_menu_item_callback_set(mi, _ibar_cb_menu_icon_remove, ic);
 
-	mi = e_menu_item_new(mn);
-	e_menu_item_separator_set(mi, 1);
+        mi = e_menu_item_new(ma);
+        snprintf(buf, sizeof(buf), "Icon %s", ic->app->name);
+        e_menu_item_label_set(mi, _(buf));
+        e_util_menu_item_theme_icon_set(mi, "preferences-icon");
+        e_menu_item_submenu_set(mi, mo);
+
+	mg = e_menu_new();
+	if (e_configure_registry_exists("applications/new_application")) 
+	  {
+	     mi = e_menu_item_new(mg);
+	     e_menu_item_label_set(mi, _("Create new Icon"));
+	     e_util_menu_item_theme_icon_set(mi, "document-new");
+	     e_menu_item_callback_set(mi, _ibar_cb_menu_icon_new, NULL);
+	  }
+
+        mi = e_menu_item_new(mg);
+        e_menu_item_separator_set(mi, 1);
 
 	if (e_configure_registry_exists("applications/ibar_applications")) 
 	  {
-	     mi = e_menu_item_new(mn);
-	     e_menu_item_label_set(mi, _("Add An Icon"));
+	     mi = e_menu_item_new(mg);
+	     e_menu_item_label_set(mi, _("Contents"));
 	     e_util_menu_item_theme_icon_set(mi, "list-add");
 	     e_menu_item_callback_set(mi, _ibar_cb_menu_icon_add, NULL);
 	  }
-	if (e_configure_registry_exists("applications/new_application")) 
-	  {
-	     mi = e_menu_item_new(mn);
-	     e_menu_item_label_set(mi, _("Create New Icon"));
-	     e_util_menu_item_theme_icon_set(mi, "document-new");
-	     e_menu_item_callback_set(mi, _ibar_cb_menu_icon_new, NULL);
 
-	     mi = e_menu_item_new(mn);
-	     e_menu_item_separator_set(mi, 1);
-	  }
-
-	mi = e_menu_item_new(mn);
+	mi = e_menu_item_new(mg);
 	e_menu_item_label_set(mi, _("Settings"));
 	e_util_menu_item_theme_icon_set(mi, "configure");
 	e_menu_item_callback_set(mi, _ibar_cb_menu_configuration, ic->ibar);
 
-	e_gadcon_client_util_menu_items_append(ic->ibar->inst->gcc, mn, 0);
+	e_gadcon_client_util_menu_items_append(ic->ibar->inst->gcc, ma, mg, 0);
 	e_gadcon_canvas_zone_geometry_get(ic->ibar->inst->gcc->gadcon,
 					  &cx, &cy, NULL, NULL);
-	e_menu_activate_mouse(mn,
+	e_menu_activate_mouse(ma,
 			      e_util_zone_current_get(e_manager_current_get()),
 			      cx + ev->output.x, cy + ev->output.y, 1, 1,
 			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);

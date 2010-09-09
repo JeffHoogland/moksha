@@ -1325,7 +1325,7 @@ e_gadcon_client_add_location_menu(E_Gadcon_Client *gcc, E_Menu *menu)
      {
 	mn = e_menu_new();
 	mi = e_menu_item_new(menu);
-	e_menu_item_label_set(mi, _("Move this gadget to"));
+	e_menu_item_label_set(mi, _("Move to"));
 	e_util_menu_item_theme_icon_set(mi, "preferences-appearance");
 	e_menu_item_submenu_set(mi, mn);
 	e_menu_pre_activate_callback_set(mn, _e_gadcon_gadget_move_to_pre_cb, gcc);
@@ -1333,80 +1333,93 @@ e_gadcon_client_add_location_menu(E_Gadcon_Client *gcc, E_Menu *menu)
 }
 
 EAPI void
-e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu, int flags __UNUSED__)
+e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu_main, E_Menu *menu_gadget, int flags __UNUSED__)
 {
-   E_Menu *mn;
+   E_Menu *mo;
    E_Menu_Item *mi;
+   char buf[256];
 
    E_OBJECT_CHECK(gcc);
    E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
 
-   if (gcc->gadcon->shelf) 
-     {
-	mn = e_menu_new();
-	mi = e_menu_item_new(mn);
-	e_menu_item_label_set(mi, _("Plain"));
-	e_util_menu_item_theme_icon_set(mi, "enlightenment/plain");
-	e_menu_item_radio_group_set(mi, 1);
-	e_menu_item_radio_set(mi, 1);
-	if ((gcc->style) && (!strcmp(gcc->style, E_GADCON_CLIENT_STYLE_PLAIN)))
-	  e_menu_item_toggle_set(mi, 1);
-	e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_style_plain, gcc);
-
-	mi = e_menu_item_new(mn);
-	e_menu_item_label_set(mi, _("Inset"));
-	e_util_menu_item_theme_icon_set(mi, "enlightenment/inset");
-	e_menu_item_radio_group_set(mi, 1);
-	e_menu_item_radio_set(mi, 1);
-	if ((gcc->style) && (!strcmp(gcc->style, E_GADCON_CLIENT_STYLE_INSET)))
-	  e_menu_item_toggle_set(mi, 1);
-	e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_style_inset, gcc);
-
-	mi = e_menu_item_new(menu);
-	e_menu_item_label_set(mi, _("Appearance"));
-	e_util_menu_item_theme_icon_set(mi, "preferences-appearance");
-	e_menu_item_submenu_set(mi, mn);
-     }
-
    if ((gcc->gadcon->shelf) || (gcc->gadcon->toolbar))
      {
-	mi = e_menu_item_new(menu);
+        mi = e_menu_item_new(menu_gadget);
+        e_menu_item_separator_set(mi, 1);
+
+	if (!gcc->o_control) 
+	  {
+             mi = e_menu_item_new(menu_gadget);
+             e_menu_item_label_set(mi, _("Begin move/resize"));
+             e_util_menu_item_theme_icon_set(mi, "transform-scale");
+             e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_edit, gcc);
+	  }
+
+	mi = e_menu_item_new(menu_gadget);
+	e_menu_item_label_set(mi, _("Resizeable"));
+	e_util_menu_item_theme_icon_set(mi, "transform-scale");
+	e_menu_item_check_set(mi, 1);
+	if (gcc->resizable) e_menu_item_toggle_set(mi, 1);
+	e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_resizable, gcc);
+
+	mi = e_menu_item_new(menu_gadget);
 	e_menu_item_label_set(mi, _("Automatically scroll contents"));
 	e_util_menu_item_theme_icon_set(mi, "transform-move");
 	e_menu_item_check_set(mi, 1);
 	if (gcc->autoscroll) e_menu_item_toggle_set(mi, 1);
 	e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_autoscroll, gcc);
 
-	mi = e_menu_item_new(menu);
-	e_menu_item_label_set(mi, _("Able to be resized"));
-	e_util_menu_item_theme_icon_set(mi, "transform-scale");
-	e_menu_item_check_set(mi, 1);
-	if (gcc->resizable) e_menu_item_toggle_set(mi, 1);
-	e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_resizable, gcc);
+        if (gcc->gadcon->shelf) 
+          {
+             mo = e_menu_new();
 
-	mi = e_menu_item_new(menu);
+             mi = e_menu_item_new(mo);
+             e_menu_item_label_set(mi, _("Plain"));
+             e_util_menu_item_theme_icon_set(mi, "enlightenment/plain");
+             e_menu_item_radio_group_set(mi, 1);
+             e_menu_item_radio_set(mi, 1);
+             if ((gcc->style) && (!strcmp(gcc->style, E_GADCON_CLIENT_STYLE_PLAIN)))
+               e_menu_item_toggle_set(mi, 1);
+             e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_style_plain, gcc);
+
+             mi = e_menu_item_new(mo);
+             e_menu_item_label_set(mi, _("Inset"));
+             e_util_menu_item_theme_icon_set(mi, "enlightenment/inset");
+             e_menu_item_radio_group_set(mi, 1);
+             e_menu_item_radio_set(mi, 1);
+             if ((gcc->style) && (!strcmp(gcc->style, E_GADCON_CLIENT_STYLE_INSET)))
+               e_menu_item_toggle_set(mi, 1);
+             e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_style_inset, gcc);
+
+             mi = e_menu_item_new(menu_gadget);
+             e_menu_item_label_set(mi, _("Appearance"));
+             e_util_menu_item_theme_icon_set(mi, "preferences-appearance");
+             e_menu_item_submenu_set(mi, mo);
+          }
+
+	mi = e_menu_item_new(menu_gadget);
 	e_menu_item_separator_set(mi, 1);
 
-	if (!gcc->o_control) 
-	  {
-             mi = e_menu_item_new(menu);
-             e_menu_item_label_set(mi, _("Begin move/resize this gadget"));
-             e_util_menu_item_theme_icon_set(mi, "transform-scale");
-             e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_edit, gcc);
-	  }
+	e_gadcon_client_add_location_menu(gcc, menu_gadget);
 
-	e_gadcon_client_add_location_menu(gcc, menu);
-
-	mi = e_menu_item_new(menu);
-	e_menu_item_label_set(mi, _("Remove this gadget"));
+	mi = e_menu_item_new(menu_gadget);
+	e_menu_item_label_set(mi, _("Remove"));
 	e_util_menu_item_theme_icon_set(mi, "list-remove");
 	e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_remove, gcc);
      }
+
+   mi = e_menu_item_new(menu_main);
+   snprintf(buf, sizeof(buf), "Gadget %s", gcc->name);
+   e_menu_item_label_set(mi, _(buf));
+   e_util_menu_item_theme_icon_set(mi, "preferences-gadget");	// FIXME: icon theme
+   e_menu_item_submenu_set(mi, menu_gadget);
+
    if (gcc->gadcon->menu_attach.func)
      {
-	mi = e_menu_item_new(menu);
-	e_menu_item_separator_set(mi, 1);
-	gcc->gadcon->menu_attach.func(gcc->gadcon->menu_attach.data, gcc, menu);
+        if ((gcc->gadcon->shelf) || (gcc->gadcon->toolbar))
+          gcc->gadcon->menu_attach.func(gcc->gadcon->menu_attach.data, gcc, menu_main);
+        else
+          gcc->gadcon->menu_attach.func(gcc->gadcon->menu_attach.data, gcc, menu_gadget);
      }
 }
     
@@ -2524,21 +2537,22 @@ _e_gadcon_client_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj 
    if (gcc->menu) return;
    if (ev->button == 3)
      {
-	E_Menu *mn;
+	E_Menu *ma, *mg;
         E_Zone *zone;
 	int cx, cy, cw, ch;
 
 	e_gadcon_locked_set(gcc->gadcon, 1);
-	mn = e_menu_new();
-	e_menu_post_deactivate_callback_set(mn, _e_gadcon_client_cb_menu_post,
+	ma = e_menu_new();
+	mg = e_menu_new();
+	e_menu_post_deactivate_callback_set(ma, _e_gadcon_client_cb_menu_post,
 					    gcc);
-	gcc->menu = mn;
+	gcc->menu = ma;
 
-	e_gadcon_client_util_menu_items_append(gcc, mn, 0);
+	e_gadcon_client_util_menu_items_append(gcc, ma, mg, 0);
 	e_gadcon_canvas_zone_geometry_get(gcc->gadcon, &cx, &cy, &cw, &ch);
         zone = gcc->gadcon->zone;
         if (!zone) zone = e_util_zone_current_get(e_manager_current_get());
-	e_menu_activate_mouse(mn, zone, 
+	e_menu_activate_mouse(ma, zone, 
 			      cx + ev->output.x, 
                               cy + ev->output.y, 1, 1,
 			      E_MENU_POP_DIRECTION_AUTO, ev->timestamp);

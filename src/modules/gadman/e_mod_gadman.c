@@ -701,10 +701,20 @@ _attach_menu(void *data __UNUSED__, E_Gadcon_Client *gcc, E_Menu *menu)
    //printf("Attach menu (gcc: %x id: %s) [%s]\n", gcc, gcc->cf->id, gcc->cf->style);
    if (!gcc) return;
 
+   mi = e_menu_item_new(menu);
+   e_menu_item_separator_set(mi, 1);
+
+   /* Move / resize*/
+   mi = e_menu_item_new(menu);
+   e_menu_item_label_set(mi, _("Begin move/resize"));
+   e_util_menu_item_theme_icon_set(mi, "transform-scale");
+   e_menu_item_callback_set(mi, on_menu_edit, gcc);
+
+
+   /* plain / inset */
    if (!gcc->cf->style)
      gcc->cf->style = eina_stringshare_add(E_GADCON_CLIENT_STYLE_INSET);
 
-   /* plain / inset */
    mn = e_menu_new();
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, _("Plain"));
@@ -784,21 +794,21 @@ _attach_menu(void *data __UNUSED__, E_Gadcon_Client *gcc, E_Menu *menu)
    e_menu_item_submenu_set(mi, mn);
    e_object_del(E_OBJECT(mn));
 
-   /* Move / resize*/
    mi = e_menu_item_new(menu);
-   e_menu_item_label_set(mi, _("Begin move/resize this gadget"));
-   e_util_menu_item_theme_icon_set(mi, "transform-scale");
-   e_menu_item_callback_set(mi, on_menu_edit, gcc);
+   e_menu_item_separator_set(mi, 1);
 
    e_gadcon_client_add_location_menu(gcc, menu);
 
    /* Remove this gadgets */
    mi = e_menu_item_new(menu);
-   e_menu_item_label_set(mi, _("Remove this gadget"));
+   e_menu_item_label_set(mi, _("Remove"));
    e_util_menu_item_theme_icon_set(mi, "list-remove");
    e_menu_item_callback_set(mi, on_menu_delete, gcc);
 
    /* Add other gadgets */
+   mi = e_menu_item_new(menu);
+   e_menu_item_separator_set(mi, 1);
+
    mi = e_menu_item_new(menu);
    e_menu_item_label_set(mi, _("Add other gadgets"));
    e_util_menu_item_theme_icon_set(mi, "list-add");
@@ -1074,14 +1084,15 @@ on_frame_click(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void
 
    if (ev->button == 5)
      {
-	E_Menu *mn;
+	E_Menu *ma, *mg;
 	int cx, cy, cw, ch;
 
-	mn = e_menu_new();
-	gcc->menu = mn;
-	e_gadcon_client_util_menu_items_append(gcc, mn, 0);
+	ma = e_menu_new();
+	gcc->menu = ma;
+	mg = e_menu_new();
+	e_gadcon_client_util_menu_items_append(gcc, ma, mg, 0);
 	e_gadcon_canvas_zone_geometry_get(gcc->gadcon, &cx, &cy, &cw, &ch);
-	e_menu_activate_mouse(mn,
+	e_menu_activate_mouse(ma,
 			      e_util_zone_current_get(e_manager_current_get()),
 			      cx + ev->output.x, cy + ev->output.y, 1, 1,
 			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);

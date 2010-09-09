@@ -292,27 +292,26 @@ _ibox_cb_empty_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
    b = data;
    if (!ibox_config->menu)
      {
-	E_Menu *mn;
+	E_Menu *ma, *mg;
 	E_Menu_Item *mi;
 	int cx, cy;
 
-	mn = e_menu_new();
-	e_menu_post_deactivate_callback_set(mn, _ibox_cb_menu_post, NULL);
-	ibox_config->menu = mn;
+	ma = e_menu_new();
+	e_menu_post_deactivate_callback_set(ma, _ibox_cb_menu_post, NULL);
+	ibox_config->menu = ma;
 
-	mi = e_menu_item_new(mn);
+	mg = e_menu_new();
+
+	mi = e_menu_item_new(mg);
 	e_menu_item_label_set(mi, _("Settings"));
 	e_util_menu_item_theme_icon_set(mi, "configure");
 	e_menu_item_callback_set(mi, _ibox_cb_menu_configuration, b);
 
-	mi = e_menu_item_new(mn);
-	e_menu_item_separator_set(mi, 1);
-	
-	e_gadcon_client_util_menu_items_append(b->inst->gcc, mn, 0);
+	e_gadcon_client_util_menu_items_append(b->inst->gcc, ma, mg, 0);
 	
 	e_gadcon_canvas_zone_geometry_get(b->inst->gcc->gadcon,
 					  &cx, &cy, NULL, NULL);
-	e_menu_activate_mouse(mn,
+	e_menu_activate_mouse(ma,
 			      e_util_zone_current_get(e_manager_current_get()),
 			      cx + ev->output.x, cy + ev->output.y, 1, 1,
 			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
@@ -686,28 +685,27 @@ _ibox_cb_icon_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
      }
    else if ((ev->button == 3) && (!ibox_config->menu))
      {
-	E_Menu *mn;
+	E_Menu *ma, *mg;
 	E_Menu_Item *mi;
 	int cx, cy;
 
-	mn = e_menu_new();
-	e_menu_post_deactivate_callback_set(mn, _ibox_cb_menu_post, NULL);
-	ibox_config->menu = mn;
+	ma = e_menu_new();
+	e_menu_post_deactivate_callback_set(ma, _ibox_cb_menu_post, NULL);
+	ibox_config->menu = ma;
+
+	mg = e_menu_new();
 
 	/* FIXME: other icon options go here too */
-	mi = e_menu_item_new(mn);
+	mi = e_menu_item_new(mg);
 	e_menu_item_label_set(mi, _("Settings"));
 	e_util_menu_item_theme_icon_set(mi, "configure");
 	e_menu_item_callback_set(mi, _ibox_cb_menu_configuration, ic->ibox);
 
-	mi = e_menu_item_new(mn);
-	e_menu_item_separator_set(mi, 1);
-	
-	e_gadcon_client_util_menu_items_append(ic->ibox->inst->gcc, mn, 0);
+	e_gadcon_client_util_menu_items_append(ic->ibox->inst->gcc, ma, mg, 0);
 	
 	e_gadcon_canvas_zone_geometry_get(ic->ibox->inst->gcc->gadcon,
 					  &cx, &cy, NULL, NULL);
-	e_menu_activate_mouse(mn,
+	e_menu_activate_mouse(ma,
 			      e_util_zone_current_get(e_manager_current_get()),
 			      cx + ev->output.x, cy + ev->output.y, 1, 1,
 			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);

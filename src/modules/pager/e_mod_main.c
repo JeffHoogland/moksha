@@ -781,32 +781,34 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
    ev = event_info;
    if ((ev->button == 3) && (!pager_config->menu))
      {
-	E_Menu *mn;
+	E_Menu *ma, *mg;
 	E_Menu_Item *mi;
 	int cx, cy;
 
-	mn = e_menu_new();
-	e_menu_post_deactivate_callback_set(mn, _menu_cb_post, inst);
-	pager_config->menu = mn;
-
-	mi = e_menu_item_new(mn);
-	e_menu_item_label_set(mi, _("Settings"));
-	e_util_menu_item_theme_icon_set(mi, "configure");
-	e_menu_item_callback_set(mi, _pager_inst_cb_menu_configure, NULL);
+	ma = e_menu_new();
+	e_menu_post_deactivate_callback_set(ma, _menu_cb_post, inst);
+	pager_config->menu = ma;
 
 	if (e_configure_registry_exists("screen/virtual_desktops"))
 	  {
-	     mi = e_menu_item_new(mn);
+	     mi = e_menu_item_new(ma);
 	     e_menu_item_label_set(mi, _("Virtual Desktops Settings"));
 	     e_util_menu_item_theme_icon_set(mi, "preferences-desktop");
 	     e_menu_item_callback_set(mi, _pager_inst_cb_menu_virtual_desktops_dialog, inst);
 	  }
 
-	e_gadcon_client_util_menu_items_append(inst->gcc, mn, 0);
+	mg = e_menu_new();
+
+	mi = e_menu_item_new(mg);
+	e_menu_item_label_set(mi, _("Settings"));
+	e_util_menu_item_theme_icon_set(mi, "configure");
+	e_menu_item_callback_set(mi, _pager_inst_cb_menu_configure, NULL);
+
+	e_gadcon_client_util_menu_items_append(inst->gcc, ma, mg, 0);
 
 	e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &cx, &cy, 
                                           NULL, NULL);
-	e_menu_activate_mouse(mn,
+	e_menu_activate_mouse(ma,
 			      e_util_zone_current_get(e_manager_current_get()),
 			      cx + ev->output.x, cy + ev->output.y, 1, 1,
 			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);

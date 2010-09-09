@@ -165,44 +165,44 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
    ev = event_info;
    if ((ev->button == 3) && (!cpufreq_config->menu))
      {
-	E_Menu *mn;
+	E_Menu *ma, *mg, *mo;
 	E_Menu_Item *mi;
 	int cx, cy;
 	Eina_List *l;
 	char buf[256];
 
-	mn = e_menu_new();
-	cpufreq_config->menu_poll = mn;
+	mo = e_menu_new();
+	cpufreq_config->menu_poll = mo;
 
-	mi = e_menu_item_new(mn);
+	mi = e_menu_item_new(mo);
 	e_menu_item_label_set(mi, _("Fast (4 ticks)"));
 	e_menu_item_radio_set(mi, 1);
 	e_menu_item_radio_group_set(mi, 1);
 	if (cpufreq_config->poll_interval <= 4) e_menu_item_toggle_set(mi, 1);
 	e_menu_item_callback_set(mi, _cpufreq_menu_fast, NULL);
 
-	mi = e_menu_item_new(mn);
+	mi = e_menu_item_new(mo);
 	e_menu_item_label_set(mi, _("Medium (8 ticks)"));
 	e_menu_item_radio_set(mi, 1);
 	e_menu_item_radio_group_set(mi, 1);
 	if (cpufreq_config->poll_interval > 4) e_menu_item_toggle_set(mi, 1);
 	e_menu_item_callback_set(mi, _cpufreq_menu_medium, NULL);
 
-	mi = e_menu_item_new(mn);
+	mi = e_menu_item_new(mo);
 	e_menu_item_label_set(mi, _("Normal (32 ticks)"));
 	e_menu_item_radio_set(mi, 1);
 	e_menu_item_radio_group_set(mi, 1);
 	if (cpufreq_config->poll_interval >= 32) e_menu_item_toggle_set(mi, 1);
 	e_menu_item_callback_set(mi, _cpufreq_menu_normal, NULL);
 
-	mi = e_menu_item_new(mn);
+	mi = e_menu_item_new(mo);
 	e_menu_item_label_set(mi, _("Slow (64 ticks)"));
 	e_menu_item_radio_set(mi, 1);
 	e_menu_item_radio_group_set(mi, 1);
 	if (cpufreq_config->poll_interval >= 64) e_menu_item_toggle_set(mi, 1);
 	e_menu_item_callback_set(mi, _cpufreq_menu_slow, NULL);
 
-	mi = e_menu_item_new(mn);
+	mi = e_menu_item_new(mo);
 	e_menu_item_label_set(mi, _("Very Slow (256 ticks)"));
 	e_menu_item_radio_set(mi, 1);
 	e_menu_item_radio_group_set(mi, 1);
@@ -212,12 +212,12 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 
 	if (cpufreq_config->status->governors)
 	  {
-	     mn = e_menu_new();
-	     cpufreq_config->menu_governor = mn;
+	     mo = e_menu_new();
+	     cpufreq_config->menu_governor = mo;
 
 	     for (l = cpufreq_config->status->governors; l; l = l->next)
 	       {
-		  mi = e_menu_item_new(mn);
+		  mi = e_menu_item_new(mo);
 		  if (!strcmp(l->data, "userspace"))
 		    e_menu_item_label_set(mi, _("Manual"));
 		  else if (!strcmp(l->data, "ondemand"))
@@ -235,25 +235,23 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 		  e_menu_item_callback_set(mi, _cpufreq_menu_governor, l->data);
 	       }
 
-	     e_menu_item_separator_set(e_menu_item_new(mn), 1);
+	     e_menu_item_separator_set(e_menu_item_new(mo), 1);
 
-	     mi = e_menu_item_new(mn);
+	     mi = e_menu_item_new(mo);
 	     e_menu_item_label_set(mi, _("Restore CPU Power Policy"));
 	     e_menu_item_check_set(mi, 1);
 	     e_menu_item_toggle_set(mi, cpufreq_config->restore_governor);
 	     e_menu_item_callback_set(mi, _cpufreq_menu_restore_governor, NULL);
 
-	     mn = e_menu_new();
-	     cpufreq_config->menu_powersave = mn;
-
-	     e_menu_title_set(mn, _("Powersaving policy"));
+	     mo = e_menu_new();
+	     cpufreq_config->menu_powersave = mo;
 
 	     for (l = cpufreq_config->status->governors; l; l = l->next)
 	       {
 		  if (!strcmp(l->data, "userspace"))
 		    continue;
 
-		  mi = e_menu_item_new(mn);
+		  mi = e_menu_item_new(mo);
 		  if (!strcmp(l->data, "ondemand"))
 		    e_menu_item_label_set(mi, _("Automatic"));
 		  else if (!strcmp(l->data, "conservative"))
@@ -271,9 +269,9 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 		  e_menu_item_callback_set(mi, _cpufreq_menu_powersave_governor, l->data);
 	       }
 
-	     e_menu_item_separator_set(e_menu_item_new(mn), 1);
+	     e_menu_item_separator_set(e_menu_item_new(mo), 1);
 
-	     mi = e_menu_item_new(mn);
+	     mi = e_menu_item_new(mo);
 	     e_menu_item_label_set(mi, _("Automatic powersaving"));
 	     e_menu_item_check_set(mi, 1);
 	     e_menu_item_toggle_set(mi, cpufreq_config->auto_powersave);
@@ -283,15 +281,15 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 	if ((cpufreq_config->status->frequencies) &&
 	    (cpufreq_config->status->can_set_frequency))
 	  {
-	     mn = e_menu_new();
-	     cpufreq_config->menu_frequency = mn;
+	     mo = e_menu_new();
+	     cpufreq_config->menu_frequency = mo;
 
 	     for (l = cpufreq_config->status->frequencies; l; l = l->next)
 	       {
 		  int frequency;
 
 		  frequency = (long)l->data;
-		  mi = e_menu_item_new(mn);
+		  mi = e_menu_item_new(mo);
 		  if (frequency < 1000000)
 		    snprintf(buf, sizeof(buf), _("%i MHz"), frequency / 1000);
 		  else
@@ -307,39 +305,41 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 	       }
 	  }
 
-	mn = e_menu_new();
-	cpufreq_config->menu = mn;
-	e_menu_post_deactivate_callback_set(mn, _menu_cb_post, inst);
+	ma = e_menu_new();
+	cpufreq_config->menu = ma;
+	e_menu_post_deactivate_callback_set(ma, _menu_cb_post, inst);
 
-	mi = e_menu_item_new(mn);
+	mg = e_menu_new();
+
+	mi = e_menu_item_new(mg);
 	e_menu_item_label_set(mi, _("Time Between Updates"));
 	e_menu_item_submenu_set(mi, cpufreq_config->menu_poll);
 
 	if (cpufreq_config->menu_governor)
 	  {
-	     mi = e_menu_item_new(mn);
+	     mi = e_menu_item_new(mg);
 	     e_menu_item_label_set(mi, _("Set CPU Power Policy"));
 	     e_menu_item_submenu_set(mi, cpufreq_config->menu_governor);
 	  }
 
 	if (cpufreq_config->menu_frequency)
 	  {
-	     mi = e_menu_item_new(mn);
+	     mi = e_menu_item_new(mg);
 	     e_menu_item_label_set(mi, _("Set CPU Speed"));
 	     e_menu_item_submenu_set(mi, cpufreq_config->menu_frequency);
 	  }
 	if (cpufreq_config->menu_powersave)
 	  {
-	     mi = e_menu_item_new(mn);
+	     mi = e_menu_item_new(mg);
 	     e_menu_item_label_set(mi, _("Powersaving behavior"));
 	     e_menu_item_submenu_set(mi, cpufreq_config->menu_powersave);
 	  }
 
-        e_gadcon_client_util_menu_items_append(inst->gcc, mn, 0);
+        e_gadcon_client_util_menu_items_append(inst->gcc, ma, mg, 0);
 
 	e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon,
 					  &cx, &cy, NULL, NULL);
-	e_menu_activate_mouse(mn,
+	e_menu_activate_mouse(ma,
 			      e_util_zone_current_get(e_manager_current_get()),
 			      cx + ev->output.x, cy + ev->output.y, 1, 1,
 			      E_MENU_POP_DIRECTION_AUTO, ev->timestamp);
