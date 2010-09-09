@@ -475,7 +475,9 @@ _ibar_config_update(Config_Item *ci)
 
    EINA_LIST_FOREACH(ibar_config->instances, l, inst)
      {
-	char buf[4096];
+	char buf[PATH_MAX];
+	const Eina_List *i;
+	IBar_Icon *ic;
 
 	if (inst->ci != ci) continue;
 
@@ -491,9 +493,6 @@ _ibar_config_update(Config_Item *ci)
 	_ibar_fill(inst->ibar);
 	_ibar_resize_handle(inst->ibar);
 	_gc_orient(inst->gcc, -1);
-
-	const Eina_List *i;
-	IBar_Icon *ic;
 
 	EINA_LIST_FOREACH(inst->ibar->icons, i, ic)
 	  {
@@ -716,6 +715,7 @@ _ibar_cb_menu_configuration(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __
    _config_ibar_module(b->inst->ci);
 }
 
+/*
 static void
 _ibar_cb_menu_add(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
@@ -726,6 +726,7 @@ _ibar_cb_menu_add(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 			     b->inst->gcc->gadcon->zone->container,
 			     b->apps->path);
 }
+*/
 
 static void
 _ibar_cb_menu_post(void *data __UNUSED__, E_Menu *m __UNUSED__)
@@ -800,7 +801,9 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
         mi = e_menu_item_new(ma);
         snprintf(buf, sizeof(buf), "Icon %s", ic->app->name);
         e_menu_item_label_set(mi, _(buf));
-        e_util_menu_item_theme_icon_set(mi, "preferences-icon");
+        e_util_desktop_menu_item_icon_add(ic->app, 
+                                          e_util_icon_size_normalize(24 * e_scale), 
+                                          mi);
         e_menu_item_submenu_set(mi, mo);
 
 	mg = e_menu_new();
