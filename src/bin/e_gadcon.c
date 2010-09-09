@@ -55,6 +55,7 @@ static void _e_gadcon_client_cb_menu_autoscroll(void *data, E_Menu *m, E_Menu_It
 static void _e_gadcon_client_cb_menu_resizable(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_gadcon_client_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_gadcon_client_cb_menu_remove(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_gadcon_client_cb_menu_pre(void *data, E_Menu *m, E_Menu_Item *mi);
 
 static void _e_gadcon_client_del_hook(void *data, Evas *e, Evas_Object *obj, void *event_info);
 
@@ -1409,9 +1410,14 @@ e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu_main, 
      }
 
    mi = e_menu_item_new(menu_main);
-   snprintf(buf, sizeof(buf), "Gadget %s", gcc->name);
+   if (gcc->client_class->func.label)
+     snprintf(buf, sizeof(buf), "Gadget %s", 
+              gcc->client_class->func.label((E_Gadcon_Client_Class *)gcc->client_class));
+   else
+     snprintf(buf, sizeof(buf), "Gadget %s", gcc->name);
+
    e_menu_item_label_set(mi, _(buf));
-   e_util_menu_item_theme_icon_set(mi, "preferences-gadget");	// FIXME: icon theme
+   e_menu_item_realize_callback_set(mi, _e_gadcon_client_cb_menu_pre, gcc);
    e_menu_item_submenu_set(mi, menu_gadget);
 
    if (gcc->gadcon->menu_attach.func)
@@ -2688,6 +2694,18 @@ _e_gadcon_client_cb_menu_remove(void *data, E_Menu *m __UNUSED__, E_Menu_Item *m
    e_gadcon_unpopulate(gc);
    e_gadcon_populate(gc);
    e_config_save_queue();
+}
+
+static void 
+_e_gadcon_client_cb_menu_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi) 
+{
+   E_Gadcon_Client *gcc;
+
+   if (!(gcc = data)) return;
+   if (!gcc->client_class->func.icon) return;
+   mi->icon_object = 
+     gcc->client_class->func.icon((E_Gadcon_Client_Class *)gcc->client_class, 
+                                  mi->menu->evas);
 }
 
 static void
