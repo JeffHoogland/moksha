@@ -762,7 +762,6 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
 {
    Evas_Event_Mouse_Down *ev;
    IBar_Icon *ic;
-   char buf[256];
 
    ev = event_info;
    ic = data;
@@ -778,6 +777,7 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
      {
 	E_Menu *ma, *mg, *mo;
 	E_Menu_Item *mi;
+        char buf[256];
 	int cx, cy;
 
 	ma = e_menu_new();
