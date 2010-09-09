@@ -2702,10 +2702,14 @@ _e_gadcon_client_cb_menu_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
    E_Gadcon_Client *gcc;
 
    if (!(gcc = data)) return;
-   if (!gcc->client_class->func.icon) return;
-   mi->icon_object = 
-     gcc->client_class->func.icon((E_Gadcon_Client_Class *)gcc->client_class, 
-                                  mi->menu->evas);
+   if (gcc->client_class->func.icon) 
+     {
+        mi->icon_object = 
+          gcc->client_class->func.icon((E_Gadcon_Client_Class *)gcc->client_class, 
+                                       mi->menu->evas);
+     }
+   else
+     e_util_menu_item_theme_icon_set(mi, "preferences-gadget"); // FIXME: Needs icon in theme
 }
 
 static void
