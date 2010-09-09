@@ -3053,7 +3053,7 @@ msgid ""
 "Logging out.<br>You cannot perform other system actions<br>once a logout has "
 "begun."
 msgstr ""
-"Chiusura un corso.<br>Non è possibile richiedere ulteriori azioni di "
+"Chiusura in corso.<br>Non è possibile richiedere ulteriori azioni di "
 "sistema<br>una volta che è stata richiesta la chiusura di sessione."
 
 #: src/bin/e_sys.c:452
