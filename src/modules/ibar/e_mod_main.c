@@ -810,10 +810,10 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
 	     e_menu_item_label_set(mi, _("Create new Icon"));
 	     e_util_menu_item_theme_icon_set(mi, "document-new");
 	     e_menu_item_callback_set(mi, _ibar_cb_menu_icon_new, NULL);
-	  }
 
-        mi = e_menu_item_new(mg);
-        e_menu_item_separator_set(mi, 1);
+             mi = e_menu_item_new(mg);
+             e_menu_item_separator_set(mi, 1);
+	  }
 
 	if (e_configure_registry_exists("applications/ibar_applications")) 
 	  {
