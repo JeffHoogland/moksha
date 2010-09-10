@@ -2573,7 +2573,7 @@ _e_mod_comp_add(E_Manager *man)
    Ecore_X_Window *wins;
    Ecore_X_Window_Attributes att;
    int i, num;
-   
+
    c = calloc(1, sizeof(E_Comp));
    if (!c) return NULL;
 
@@ -2795,6 +2795,24 @@ e_mod_comp_init(void)
    handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_FOCUS_OUT,       _e_mod_comp_bd_focus_out,     NULL));
    handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_PROPERTY,        _e_mod_comp_bd_property,      NULL));
 
+   if (!ecore_x_composite_query())
+     {
+        e_util_dialog_internal
+          (_("Compositor Error"),
+           _("Your X Display does not support the XComposite extension<br>"
+             "or Ecore was built without XComposite support.<br>"
+             "Note that for composite support you will also need<br>"
+             "XRender and XFixes support in X11 and Ecore."));
+        return 0;
+     }
+   if (!ecore_x_damage_query())
+     {
+        e_util_dialog_internal
+          (_("Compositor Error"),
+           _("Your screen does not support the XDamage extension<br>"
+             "or Ecore was built without XDamage support."));
+        return 0;
+     }
    EINA_LIST_FOREACH(e_manager_list(), l, man)
      {
         E_Comp *c;
@@ -2817,9 +2835,12 @@ e_mod_comp_shutdown(void)
    
    E_FREE_LIST(handlers, ecore_event_handler_del);
    
-   eina_hash_free(damages);
-   eina_hash_free(windows);
-   eina_hash_free(borders);
+   if (damages) eina_hash_free(damages);
+   if (windows) eina_hash_free(windows);
+   if (borders) eina_hash_free(borders);
+   damages = NULL;
+   windows = NULL;
+   borders = NULL;
 }
 
 void
