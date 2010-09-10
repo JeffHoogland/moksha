@@ -74,6 +74,7 @@ struct _E_Comp_Win
    E_Object_Delfn       *dfn; // delete function handle for objects being tracked
    Ecore_X_Sync_Counter  counter; // sync counter for syncronised drawing
    Ecore_Timer          *update_timeout; // max time between damage and "done" event
+   Ecore_Timer          *ready_timeout; // max time on show (new window draw) to wait for window contents to be ready if sync protocol not handled. this is fallback.
    int                   dmg_updates; // num of damage event updates since a redirect
    Ecore_X_Rectangle    *rects; // shape rects... if shaped :(
    int                   rects_num; // num rects above
@@ -113,6 +114,7 @@ struct _E_Comp_Win
    Eina_Bool             needxim : 1; // need new xim
    Eina_Bool             real_hid : 1; // last hide was a real window unmap
    Eina_Bool             inhash : 1; // is in the windows hash
+   Eina_Bool             show_ready : 1; // is this window ready for its first show
 };
 
 static Eina_List *handlers = NULL;
@@ -129,6 +131,7 @@ static Eina_Hash *damages = NULL;
 #define DBG(f, x...)
 #endif
 
+static void _e_mod_comp_win_ready_timeout_setup(E_Comp_Win *cw);
 static void _e_mod_comp_render_queue(E_Comp *c);
 static void _e_mod_comp_win_damage(E_Comp_Win *cw, int x, int y, int w, int h, Eina_Bool dmg);
 static void _e_mod_comp_win_render_queue(E_Comp_Win *cw);
@@ -324,6 +327,56 @@ _e_mod_comp_win_shape_rectangles_apply(E_Comp_Win *cw, const Ecore_X_Rectangle *
      }
 }
 
+static Eina_Bool
+_e_mod_comp_cb_win_show_ready_timeout(void *data)
+{
+   E_Comp_Win *cw = data;
+   cw->show_ready = 1;
+//   printf("_e_mod_comp_cb_win_show_ready_timeout %x\n", cw->win);
+   if (cw->visible)
+     {
+//        printf("  vis\n");
+        if (!cw->update)
+          {
+//             printf("    not update\n");
+             if (cw->update_timeout)
+               {
+                  ecore_timer_del(cw->update_timeout);
+                  cw->update_timeout = NULL;
+               }
+             cw->update = 1;
+             cw->c->updates = eina_list_append(cw->c->updates, cw);
+          }
+        _e_mod_comp_win_render_queue(cw);
+     }
+   cw->ready_timeout = NULL;
+   return ECORE_CALLBACK_CANCEL;
+}
+
+static void
+_e_mod_comp_win_ready_timeout_setup(E_Comp_Win *cw)
+{
+   if (cw->ready_timeout)
+     {
+        ecore_timer_del(cw->ready_timeout);
+        cw->ready_timeout = NULL;
+     }
+   if (cw->show_ready) return;
+   if (cw->counter) return;
+//   printf("_e_mod_comp_win_ready_timeout_setup %x\n", cw->win);
+   // FIXME: make show_ready option
+   if (0)
+     {
+        cw->show_ready = 1;
+     }
+   else
+     {
+        // FIXME 0.1 -> make config val
+        cw->ready_timeout = ecore_timer_add
+           (0.1, _e_mod_comp_cb_win_show_ready_timeout, cw);
+     }
+}
+
 static void
 _e_mod_comp_win_update(E_Comp_Win *cw)
 {
@@ -401,7 +454,10 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
              oldpm = cw->pixmap;
              cw->pixmap = pm;
              if (cw->pixmap)
-                ecore_x_pixmap_geometry_get(cw->pixmap, NULL, NULL, &(cw->pw), &(cw->ph));
+               {
+                  ecore_x_pixmap_geometry_get(cw->pixmap, NULL, NULL, &(cw->pw), &(cw->ph));
+                  _e_mod_comp_win_ready_timeout_setup(cw);
+               }
              else
                {
                   cw->pw = 0;
@@ -425,6 +481,7 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
                        DBG("  [0x%x] free pixmap\n", cw->win);
                        ecore_x_pixmap_free(cw->pixmap);
                        cw->pixmap = 0;
+//                       cw->show_ready = 0; // hmm maybe not needed?
                     }
                   cw->pw = 0;
                   cw->ph = 0;
@@ -508,7 +565,9 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
              free(r);
           }
         else
-          cw->update = 1;
+          {
+             cw->update = 1;
+          }
      }
    else
      {
@@ -601,13 +660,18 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
         else
           {
              DBG("UPDATE [0x%x] NO RECTS!!! %i %i - %i %i\n", cw->win, cw->up->w, cw->up->h, cw->up->tw, cw->up->th);
-             cw->update = 1;
+// causes updates to be flagged when not needed - disabled             
+//             cw->update = 1;
           }
      }
-   if ((!cw->update) && (cw->visible) && (cw->dmg_updates >= 1))
+//   printf("==== up %x | %i %i %i %i\n", cw->win, cw->update, cw->visible, cw->dmg_updates, cw->show_ready);
+   // FIXME: below cw update check screws with show
+   if (/*(!cw->update) &&*/(cw->visible) && (cw->dmg_updates >= 1) &&
+       (cw->show_ready))
      {
         if (!evas_object_visible_get(cw->shobj))
           {
+//             printf("  real show %x\n", cw->win);
              if (!cw->hidden_override) evas_object_show(cw->shobj);
              edje_object_signal_emit(cw->shobj, "e,state,visible,on", "e");
              if (!cw->animating) cw->c->animating++;
@@ -677,6 +741,7 @@ _e_mod_comp_cb_update(E_Comp *c)
         ecore_x_sync();
         c->grabbed = 1;
      }
+//   printf("UPAAAAAAAAAAAAAAAAAL\n");
    EINA_LIST_FREE(c->updates, cw)
      {
         if (_comp_mod->conf->efl_sync)
@@ -779,6 +844,7 @@ _e_mod_comp_cb_update(E_Comp *c)
                        cw->pw = 0;
                        cw->ph = 0;
                        ecore_x_e_comp_pixmap_set(cw->win, cw->pixmap);
+                       cw->show_ready = 0; // hmm maybe not needed?
                     }
                   if (cw->xim)
                     {
@@ -847,6 +913,7 @@ _e_mod_comp_cb_update(E_Comp *c)
                   cw->pw = 0;
                   cw->ph = 0;
                   cw->native = 0;
+                  cw->show_ready = 0; // hmm maybe not needed?
                   if (!cw->damage)
                     {
                        cw->damage = ecore_x_damage_new
@@ -860,7 +927,10 @@ _e_mod_comp_cb_update(E_Comp *c)
                        ecore_x_composite_redirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
                        cw->pixmap = ecore_x_composite_name_window_pixmap_get(cw->win);
                        if (cw->pixmap)
-                         ecore_x_pixmap_geometry_get(cw->pixmap, NULL, NULL, &(cw->pw), &(cw->ph));
+                         {
+                            ecore_x_pixmap_geometry_get(cw->pixmap, NULL, NULL, &(cw->pw), &(cw->ph));
+                            _e_mod_comp_win_ready_timeout_setup(cw);
+                         }
                        else
                          {
                             cw->pw = 0;
@@ -871,6 +941,7 @@ _e_mod_comp_cb_update(E_Comp *c)
                          {
                             ecore_x_pixmap_free(cw->pixmap);
                             cw->pixmap = 0;
+//                            cw->show_ready = 0; // hmm maybe not needed?
                          }
                        ecore_x_e_comp_pixmap_set(cw->win, cw->pixmap);
                        cw->redirected = 1;
@@ -1425,6 +1496,12 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
           }
         _e_mod_comp_win_sync_setup(cw, cw->win);
      }
+//   printf("CW ADD %x\n", cw->win);
+   if (!cw->counter)
+     {
+        // FIXME: config - disable ready timeout for non-counter wins
+//        cw->show_ready = 1;
+     }
    // fixme: could use bd/pop/menu for this too
    memset((&att), 0, sizeof(Ecore_X_Window_Attributes));
    if (!ecore_x_window_attributes_get(cw->win, &att))
@@ -1560,6 +1637,11 @@ _e_mod_comp_win_del(E_Comp_Win *cw)
         ecore_timer_del(cw->update_timeout);
         cw->update_timeout = NULL;
      }
+   if (cw->ready_timeout)
+     {
+        ecore_timer_del(cw->ready_timeout);
+        cw->ready_timeout = NULL;
+     }
    if (cw->dfn)
      {
         if (cw->bd)
@@ -1587,6 +1669,7 @@ _e_mod_comp_win_del(E_Comp_Win *cw)
         cw->pw = 0;
         cw->ph = 0;
         ecore_x_e_comp_pixmap_set(cw->win, cw->pixmap);
+        cw->show_ready = 0; // hmm maybe not needed?
      }
    if (cw->redirected)
      {
@@ -1716,7 +1799,10 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
 //        ecore_x_composite_redirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
         cw->pixmap = ecore_x_composite_name_window_pixmap_get(cw->win);
         if (cw->pixmap)
-          ecore_x_pixmap_geometry_get(cw->pixmap, NULL, NULL, &(cw->pw), &(cw->ph));
+          {
+             ecore_x_pixmap_geometry_get(cw->pixmap, NULL, NULL, &(cw->pw), &(cw->ph));
+             _e_mod_comp_win_ready_timeout_setup(cw);
+          }
         else
           {
              cw->pw = 0;
@@ -1729,6 +1815,7 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
                   ecore_x_pixmap_free(cw->pixmap);
                   cw->pixmap = 0;
                }
+//             cw->show_ready = 0; // hmm maybe not needed?
           }
         cw->redirected = 1;
         DBG("  [0x%x] up resize %ix%i\n", cw->win, cw->pw, cw->ph);
@@ -1741,7 +1828,7 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
           }
         ecore_x_e_comp_pixmap_set(cw->win, cw->pixmap);
      }
-   if (cw->dmg_updates >= 1)
+   if ((cw->dmg_updates >= 1) && (cw->show_ready))
      {
         cw->defer_hide = 0;
         if (!cw->hidden_override) evas_object_show(cw->shobj);
@@ -1817,6 +1904,11 @@ _e_mod_comp_win_hide(E_Comp_Win *cw)
           }
         return;
      }
+   if (cw->ready_timeout)
+     {
+        ecore_timer_del(cw->ready_timeout);
+        cw->ready_timeout = NULL;
+     }
    
    if (cw->native)
      {
@@ -1834,6 +1926,7 @@ _e_mod_comp_win_hide(E_Comp_Win *cw)
         cw->pw = 0;
         cw->ph = 0;
         ecore_x_e_comp_pixmap_set(cw->win, cw->pixmap);
+//        cw->show_ready = 0; // hmm maybe not needed?
      }
    if (cw->xim)
      {
@@ -2147,6 +2240,7 @@ _e_mod_comp_message(void *data __UNUSED__, int type __UNUSED__, void *event)
      {
         if (cw->counter)
           {
+             cw->show_ready = 1;
              if (!cw->update)
                {
                   if (cw->update_timeout)
