@@ -364,8 +364,8 @@ ACT_FN_GO(window_kill, __UNUSED__)
 
    snprintf(dialog_text, sizeof(dialog_text),
 	    _("You are about to kill %s.<br><br>"
-	    "Please keep in mind that all data of this window,<br>"
-	    "which has not been saved yet will be lost!<br><br>"
+	    "Please keep in mind that all data from this window<br>"
+	    "which has not yet been saved will be lost!<br><br>"
 	    "Are you sure you want to kill this window?"), 
 	    bd->client.icccm.name);
 
