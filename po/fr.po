@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-09-10 06:24+0400\n"
-"PO-Revision-Date: 2010-09-10 07:53+0400\n"
+"POT-Creation-Date: 2010-09-11 12:50+0400\n"
+"PO-Revision-Date: 2010-09-11 13:30+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: French <pourunmondesansgourou@gmail.com>\n"
 "Language: fr\n"
@@ -63,7 +63,7 @@ msgstr "<title>Notre Équipe</title>"
 
 #: src/bin/e_actions.c:366
 #, c-format
-msgid "You are about to kill %s.<br><br>Please keep in mind that all data of this window,<br>which has not been saved yet will be lost!<br><br>Are you sure you want to kill this window?"
+msgid "You are about to kill %s.<br><br>Please keep in mind that all data from this window<br>which has not yet been saved will be lost!<br><br>Are you sure you want to kill this window?"
 msgstr "Vous êtes sur le point de tuer %s.<br><br>Toutes les informations non encore enregistrées<br>contenues dans cette fenêtre seront perdues !<br><br>Voulez-vous vraiment tuer cette fenêtre ?"
 
 #: src/bin/e_actions.c:378
@@ -2875,7 +2875,7 @@ msgstr "Enlightenment a planté au démarrage et a<br>été redémarré. Tous le
 
 #: src/bin/e_main.c:1102
 msgid "Enlightenment crashed early on start and has been restarted.<br>All modules have been disabled and will not be loaded to help<br>remove any problem modules from your configuration.<br><br>The module configuration dialog should let you select your<br>modules again."
-msgstr "Enlightenment a planté au démarrage et a été redémarré.<br>Tous les modules ont été désactivés et ne seront pas chargés pour vous<br>aider à supprimer les modules problématiques de votre configuration.<br><br>Le dialogue de configuration des modules vous permettra de<br>recharger vos modules."
+msgstr "Enlightenment a planté au démarrage et a été redémarré.<br>Tous les modules ont été désactivés et ne seront pas chargés pour vous<br>aider à supprimer les modules problématiques de votre configuration.<br><br>Le dialogue de configuration des modules vous permettra<br>de recharger vos modules."
 
 #: src/bin/e_main.c:1131
 msgid "Configure Shelves"
@@ -5361,11 +5361,11 @@ msgstr "Sélecteur de thème"
 
 #: src/modules/conf_theme/e_int_config_theme.c:432
 msgid " Import..."
-msgstr "Importer…"
+msgstr " Importer…"
 
 #: src/modules/conf_theme/e_int_config_theme.c:436
 msgid " Online..."
-msgstr "En ligne…"
+msgstr " En ligne…"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1004
 msgid "Theme Categories"
