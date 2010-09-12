@@ -18,7 +18,13 @@
 /* local subsystem functions */
 static void _e_border_free(E_Border *bd);
 static void _e_border_del(E_Border *bd);
+
+#ifdef PRINT_LOTS_OF_DEBUG
+#define E_PRINT_BORDER_INFO(X) \
+  _e_border_print(X, __PRETTY_FUNC__)
+
 static void _e_border_print(E_Border *bd, const char *func);
+#endif
 
 /* FIXME: these likely belong in a separate icccm/client handler */
 /* and the border needs to become a dumb object that just does what its */
@@ -1562,7 +1568,7 @@ EAPI void
 e_border_focus_set_with_pointer(E_Border *bd)
 {
 #ifdef PRINT_LOTS_OF_DEBUG
-   _e_border_print(bd);
+   E_PRINT_BORDER_INFO(bd);
 #endif
    /* note: this is here as it seems there are enough apps that do not even
     * expect us to emulate a look of focus but not actually set x input
@@ -4040,6 +4046,7 @@ _e_border_del(E_Border *bd)
      }
 }
 
+#ifdef PRINT_LOTS_OF_DEBUG
 static void
 _e_border_print(E_Border *bd, const char *func)
 {
@@ -4053,6 +4060,7 @@ _e_border_print(E_Border *bd, const char *func)
           bd, bd->client.icccm.name, bd->client.icccm.title,
           bd->borderless ? "TRUE" : "FALSE");
 }
+#endif
 
 static Eina_Bool
 _e_border_cb_window_show_request(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
