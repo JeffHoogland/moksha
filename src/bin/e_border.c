@@ -18,6 +18,7 @@
 /* local subsystem functions */
 static void _e_border_free(E_Border *bd);
 static void _e_border_del(E_Border *bd);
+static void _e_border_print(E_Border *bd, const char *func);
 
 /* FIXME: these likely belong in a separate icccm/client handler */
 /* and the border needs to become a dumb object that just does what its */
@@ -1560,6 +1561,9 @@ e_border_raise_latest_set(E_Border *bd)
 EAPI void
 e_border_focus_set_with_pointer(E_Border *bd)
 {
+#ifdef PRINT_LOTS_OF_DEBUG
+   _e_border_print(bd);
+#endif
    /* note: this is here as it seems there are enough apps that do not even
     * expect us to emulate a look of focus but not actually set x input
     * focus as we do - so simply abort any focuse set on such windows */
@@ -1576,6 +1580,7 @@ e_border_focus_set_with_pointer(E_Border *bd)
    if (!ecore_x_pointer_grab(bd->zone->container->win))
      return;
  */
+
    if (e_config->focus_policy == E_FOCUS_SLOPPY)
      {
 	if (e_border_under_pointer_get(bd->desk, bd))
@@ -4033,6 +4038,20 @@ _e_border_del(E_Border *bd)
      {
 	child->leader = NULL;
      }
+}
+
+static void
+_e_border_print(E_Border *bd, const char *func)
+{
+   if (!bd) return;
+
+   printf("*Window Info*"
+          "\tPointer: %p\n"
+          "\tName: %s\n"
+          "\tTitle: %s\n"
+          "\tBorderless: %s\n",
+          bd, bd->client.icccm.name, bd->client.icccm.title,
+          bd->borderless ? "TRUE" : "FALSE");
 }
 
 static Eina_Bool
