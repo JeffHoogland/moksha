@@ -22323,11 +22323,8 @@ collections {
                state: "default" 0.0;
                align: 0.5 1.0;
                fixed: 1 1;
-               aspect: 1.0 1.0;
-               aspect_preference: HORIZONTAL;
-               rel1.relative: 0.5 0.0;
+               rel1.relative: 0.5 1.0;
                rel2.relative: 0.5 1.0;
-               rel2.offset: 0  -5;
             }
          }
       }
