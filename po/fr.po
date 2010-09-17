@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-09-11 12:50+0400\n"
-"PO-Revision-Date: 2010-09-11 13:30+0400\n"
+"PO-Revision-Date: 2010-09-17 10:07+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: French <pourunmondesansgourou@gmail.com>\n"
 "Language: fr\n"
@@ -1589,7 +1589,7 @@ msgstr "Verrous génériques"
 
 #: src/bin/e_int_border_locks.c:283
 msgid "Lock the Window so it does only what I tell it to"
-msgstr "Verrouiller la fenêtre de sorte qu'elle ne fasse que ce que je lui dit de faire"
+msgstr "Verrouiller la fenêtre de sorte qu'elle ne fasse que ce que je décide"
 
 #: src/bin/e_int_border_locks.c:285
 msgid "Protect this window from me accidentally changing it"
@@ -3808,17 +3808,17 @@ msgstr "Classe de couleur : %s"
 #: src/modules/conf_colors/e_int_config_color_classes.c:273
 #, c-format
 msgid "Selected %u mixed colors classes"
-msgstr "Classes de couleurs mélangées %u sélectionnées"
+msgstr "Sélection de %u classes de couleurs mixtes"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:276
 #, c-format
 msgid "Selected %u unset colors classes"
-msgstr "Classes de couleurs indéfinies %u sélectionnées"
+msgstr "Sélection de %u classes de couleurs indéfinies"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:279
 #, c-format
 msgid "Selected %u uniform colors classes"
-msgstr "Classes de couleurs identiques %u sélectionnées"
+msgstr "Sélection de %u classes de couleurs uniformes"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:283
 #: src/modules/conf_colors/e_int_config_color_classes.c:542
@@ -4213,7 +4213,7 @@ msgstr "Fonctionnalités manquantes"
 
 #: src/modules/conf_display/e_int_config_display.c:677
 msgid "Your X Display Server is missing support for<br>the <hilight>XRandR</hilight> (X Resize and Rotate) extension.<br>You cannot change screen resolutions without<br>the support of this extension. It could also be<br>that at the time <hilight>ecore</hilight> was built, there<br>was no XRandR support detected."
-msgstr "Votre serveur X ne supporte pas l'extension<br><hilight>XRandR</hilight> (redimensionnement et rotation X).<br>Vous ne pouvez modifier la résolution de l'écran sans le<br>support de cette extension. Il se peut aussi qu'au moment de la compilation<br>de <hilight>ecore</hilight>, le support de XRandR n'ait pas été détecté."
+msgstr "Votre serveur X ne supporte pas l'extension<br><hilight>XRandR</hilight> (redimensionnement et rotation).<br>Vous ne pouvez modifier la résolution de l'écran sans le<br>support de cette extension. Il se peut aussi qu'au moment de la compilation<br>de <hilight>ecore</hilight>, le support de XRandR n'ait pas été détecté."
 
 #: src/modules/conf_display/e_int_config_display.c:689
 msgid "No Refresh Rates Found"
@@ -5184,7 +5184,7 @@ msgstr "Sélectionnez un profil"
 
 #: src/modules/conf_profiles/e_int_config_profiles.c:138
 msgid "Reset"
-msgstr "Redémarrer"
+msgstr "Rétablir"
 
 #: src/modules/conf_profiles/e_int_config_profiles.c:268
 #, c-format
