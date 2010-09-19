@@ -931,6 +931,7 @@ _adv_font_cb_change(void *data, Evas_Object *obj __UNUSED__)
 	     const char *f;
 
 	     f = e_widget_ilist_nth_label_get(cfdata->gui.style_list, n);
+             if (!f) continue;
 	     if (!strcasecmp(f, tc->style))
 	       {
 		  e_widget_ilist_selected_set(cfdata->gui.style_list, n);
