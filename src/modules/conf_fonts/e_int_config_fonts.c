@@ -924,14 +924,14 @@ _adv_font_cb_change(void *data, Evas_Object *obj __UNUSED__)
      }
 
    /* select configured style from list */
-   if (tc && tc->style)
+   if ((tc) && (tc->style))
      {
 	for (n = 0; n < e_widget_ilist_count(cfdata->gui.style_list); n++)
 	  {
 	     const char *f;
 
 	     f = e_widget_ilist_nth_label_get(cfdata->gui.style_list, n);
-             if (!f) continue;
+             if ((!f) || (!tc->style)) continue;
 	     if (!strcasecmp(f, tc->style))
 	       {
 		  e_widget_ilist_selected_set(cfdata->gui.style_list, n);
