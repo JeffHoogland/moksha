@@ -78,7 +78,7 @@ e_object_free(E_Object *obj)
     * although this is good - if during cleanup the cleanup func calls
     * other generic funcs to do cleanups on the same object... we get bitching.
     * disable for now (the final free of the struct should probably happen after
-    * the cleanup func and be done byt he object system - set the magic after
+    * the cleanup func and be done by the object system - set the magic after
     * cleanup :)  
     */
 #if 0
