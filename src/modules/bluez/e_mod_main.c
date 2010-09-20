@@ -1312,7 +1312,7 @@ e_modapi_init(E_Module *m)
      return NULL;
 
    ctxt->agent.conn = e_dbus_bus_get(DBUS_BUS_SYSTEM);
-   if (!e_bluez_system_init(ctxt->agent.conn))
+   if ((!ctxt->agent.conn) || (!e_bluez_system_init(ctxt->agent.conn)))
      goto error_bluez_system_init;
 
    bluez_mod = m;
