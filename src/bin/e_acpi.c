@@ -180,15 +180,21 @@ _e_acpi_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
    E_Event_Acpi *acpi_event;
    int sig, status, event_type;
    char device[1024], bus[1024];
+   char *sdata;
 
    ev = event;
 
    /* write out actual acpi received data to stdout for debugging
    res = fwrite(ev->data, ev->size, 1, stdout);
     */
-
+   /* data from a server isnt a string - its not 0 byte terminated. it's just
+    * a blob of data. copy to string and 0 byte terminate it so it can be
+    * string-swizzled/parsed etc. */
+   sdata = alloca(ev->size + 1);
+   memcpy(sdata, ev->data, ev->size);
+   sdata[ev->size] = 0;
    /* parse out this acpi string into separate pieces */
-   if (sscanf(ev->data, "%s %s %d %d", device, bus, &sig, &status) != 4)
+   if (sscanf(sdata, "%s %s %d %d", device, bus, &sig, &status) != 4)
      return ECORE_CALLBACK_PASS_ON;
 
    /* create new event structure to raise */
