@@ -108,6 +108,7 @@ e_modapi_init(E_Module *m)
         // FIXME: handle if comp init fails
      }
 
+   e_module_delayed_set(m, 0);
    e_module_priority_set(m, -1000);
    return mod;
 }
