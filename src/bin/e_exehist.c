@@ -96,7 +96,7 @@ e_exehist_add(const char *launch_method, const char *exe)
    ei->launch_method = eina_stringshare_add(launch_method);
    ei->exe = eina_stringshare_add(exe);
    ei->normalized_exe = _e_exehist_normalize_exe(exe);
-   ei->exetime = ecore_time_get();
+   ei->exetime = ecore_time_unix_get();
    _e_exehist->history = eina_list_append(_e_exehist->history, ei);
    _e_exehist_limit();
    _e_exehist_changes++;
@@ -311,7 +311,7 @@ e_exehist_mime_desktop_add(const char *mime, Efreet_Desktop *desktop)
      }
    ei->launch_method = eina_stringshare_add(mime);
    ei->exe = eina_stringshare_add(f);
-   ei->exetime = ecore_time_get();
+   ei->exetime = ecore_time_unix_get();
    _e_exehist->mimes = eina_list_append(_e_exehist->mimes, ei);
    _e_exehist_limit();
    _e_exehist_changes++;

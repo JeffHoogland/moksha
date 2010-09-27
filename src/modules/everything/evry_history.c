@@ -170,7 +170,7 @@ evry_history_free(void)
    if (evry_hist)
      {
 	d = E_NEW(Cleanup_Data, 1);
-	d->time = ecore_time_get();
+	d->time = ecore_time_unix_get();
 
 	if (evry_hist->subjects)
 	  {
@@ -207,7 +207,7 @@ evry_history_load(void)
      {
 	evry_hist = E_NEW(Evry_History, 1);
 	evry_hist->version = HISTORY_VERSION;
-	evry_hist->begin = ecore_time_get() - SEVEN_DAYS;
+	evry_hist->begin = ecore_time_unix_get() - SEVEN_DAYS;
      }
    if (!evry_hist->subjects)
      evry_hist->subjects = eina_hash_string_superfast_new(NULL);
@@ -322,7 +322,7 @@ evry_history_item_add(Evry_Item *it, const char *ctxt, const char *input)
      {
 	it->hi = hi;
 
-	hi->last_used = ecore_time_get();
+	hi->last_used = ecore_time_unix_get();
 	hi->usage /= 4.0;
 	hi->usage += TIME_FACTOR(hi->last_used);
 	hi->transient = it->plugin->transient;

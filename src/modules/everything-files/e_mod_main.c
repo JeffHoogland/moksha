@@ -26,7 +26,7 @@ FIXME
 #define ACT_SORT_NAME	6
 
 #define ONE_DAY  86400.0
-#define SIX_DAYS_AGO (ecore_time_get() - ONE_DAY * 6)
+#define SIX_DAYS_AGO (ecore_time_unix_get() - ONE_DAY * 6)
 #define MIN_USAGE 0.0
 
 /* #undef DBG

@@ -2022,7 +2022,7 @@ _e_cb_recent_clean(void *data)
    
    ed = data;
    ed->cleaning = 1;
-   t_now = ecore_time_get();
+   t_now = ecore_time_unix_get();
    EINA_LIST_FOREACH_SAFE(ed->recent_mods, pl, l, m)
 	if ((m->mod) && ((t_now - m->timestamp) >= DEF_MOD_BACKOFF))
 	  {
@@ -2059,7 +2059,7 @@ _e_file_add_mod(E_Dir *ed, const char *path, E_Fm_Op_Type op, int listing)
 	double t_now;
 	int skip = 0;
 	
-	t_now = ecore_time_get();
+	t_now = ecore_time_unix_get();
 	EINA_LIST_FOREACH(ed->recent_mods, l, m)
 	  {
 	     if ((m->mod) && (!strcmp(m->path, path)))
@@ -2088,7 +2088,7 @@ _e_file_add_mod(E_Dir *ed, const char *path, E_Fm_Op_Type op, int listing)
 	     return;
 	  }
      }
-//   printf("MOD %s %3.3f\n", path, ecore_time_get());
+//   printf("MOD %s %3.3f\n", path, ecore_time_unix_get());
    lnk = ecore_file_readlink(path);
    memset(&st, 0, sizeof(struct stat));
    if (stat(path, &st) == -1)

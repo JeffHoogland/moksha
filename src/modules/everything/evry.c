@@ -1895,7 +1895,7 @@ _evry_cheat_history(Evry_State *s, int promote, int delete)
 	else if (promote)
 	  {
 	     hi->count += 5;
-	     hi->last_used = ecore_time_get();
+	     hi->last_used = ecore_time_unix_get();
 	  }
 	else /* demote */
 	  {

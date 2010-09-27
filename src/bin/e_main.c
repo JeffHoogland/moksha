@@ -102,7 +102,7 @@ static Ecore_Idle_Enterer *_e_main_idle_enterer_flusher = NULL;
 #ifdef TS_DO   
 #define TS(x) \
    { \
-      t1 = ecore_time_get(); \
+      t1 = ecore_time_unix_get(); \
       printf("ESTART: %1.5f [%1.5f] - %s\n", t1 - t0, t1 - t2, x); \
       t2 = t1; \
    }
@@ -137,7 +137,7 @@ main(int argc, char **argv)
    double t, tstart;
 
 #ifdef TS_DO
-   t0 = t1 = t2 = ecore_time_get();   
+   t0 = t1 = t2 = ecore_time_unix_get();
 #endif
    TS("begin");
    
@@ -183,7 +183,7 @@ main(int argc, char **argv)
 
    TS("signals done");
 
-   t = ecore_time_get();
+   t = ecore_time_unix_get();
    s = getenv("E_START_TIME");
    if ((s) && (!getenv("E_RESTART_OK")))
      {
