@@ -5866,9 +5866,10 @@ _e_border_eval0(E_Border *bd)
      }
    if (bd->client.icccm.fetch.hints)
      {
-	int accepts_focus = 1;
-	int is_urgent = 0;
+	Eina_Bool accepts_focus, is_urgent;
 
+        accepts_focus = EINA_TRUE;
+        is_urgent = EINA_FALSE;
 	bd->client.icccm.initial_state = ECORE_X_WINDOW_STATE_HINT_NORMAL;
 	if (ecore_x_icccm_hints_get(bd->client.win,
 				    &accepts_focus,
@@ -5897,8 +5898,9 @@ _e_border_eval0(E_Border *bd)
      }
    if (bd->client.icccm.fetch.size_pos_hints)
      {
-	int request_pos = 0;
+	Eina_Bool request_pos;
 
+        request_pos = EINA_FALSE;
 	if (ecore_x_icccm_size_pos_hints_get(bd->client.win,
 					     &request_pos,
 					     &bd->client.icccm.gravity,
