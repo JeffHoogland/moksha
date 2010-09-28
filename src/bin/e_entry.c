@@ -56,7 +56,7 @@ static void _e_entry_cb_paste(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_entry_cb_select_all(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_entry_cb_delete(void *data, E_Menu *m, E_Menu_Item *mi);
 #ifdef HAVE_ECORE_IMF
-static int _e_entry_cb_imf_retrieve_surrounding(void *data, Ecore_IMF_Context *ctx, char **text, int *cursor_pos);
+static Eina_Bool _e_entry_cb_imf_retrieve_surrounding(void *data, Ecore_IMF_Context *ctx, char **text, int *cursor_pos);
 static Eina_Bool _e_entry_cb_imf_event_commit(void *data, int type, void *event);
 static Eina_Bool _e_entry_cb_imf_event_delete_surrounding(void *data, int type, void *event);
 #endif
@@ -1066,12 +1066,12 @@ _e_entry_smart_add(Evas_Object *object)
         ecore_imf_context_retrieve_surrounding_callback_set(sd->imf_context,
                                                             _e_entry_cb_imf_retrieve_surrounding,
                                                             sd);
-        sd->imf_ee_commit_handler = ecore_event_handler_add(ECORE_IMF_EVENT_COMMIT,
-                                                            _e_entry_cb_imf_event_commit,
-                                                            object);
-        sd->imf_ee_delete_handler = ecore_event_handler_add(ECORE_IMF_EVENT_DELETE_SURROUNDING,
-                                                            _e_entry_cb_imf_event_delete_surrounding,
-                                                            sd);
+        sd->imf_ee_commit_handler = 
+          ecore_event_handler_add(ECORE_IMF_EVENT_COMMIT,
+                                  _e_entry_cb_imf_event_commit, object);
+        sd->imf_ee_delete_handler = 
+          ecore_event_handler_add(ECORE_IMF_EVENT_DELETE_SURROUNDING,
+                                  _e_entry_cb_imf_event_delete_surrounding, sd);
      }
 #endif
 
@@ -1360,7 +1360,7 @@ _e_entry_cb_delete(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 }
 
 #ifdef HAVE_ECORE_IMF
-static int
+static Eina_Bool 
 _e_entry_cb_imf_retrieve_surrounding(void *data, Ecore_IMF_Context *ctx __UNUSED__, char **text, int *cursor_pos)
 {
    E_Entry_Smart_Data *sd;
@@ -1378,7 +1378,7 @@ _e_entry_cb_imf_retrieve_surrounding(void *data, Ecore_IMF_Context *ctx __UNUSED
    if (cursor_pos)
      *cursor_pos = e_editable_cursor_pos_get(sd->editable_object);
 
-   return 1;
+   return EINA_TRUE;
 }
 
 static Eina_Bool
