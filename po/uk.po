@@ -5,14 +5,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e.HEAD\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-09-08 20:58-0300\n"
+"POT-Creation-Date: 2010-10-03 18:09+0900\n"
 "PO-Revision-Date: 2009-12-13 21:16+0000\n"
 "Last-Translator: Sergio Gavrylov <sergiovana@bigmir.net>\n"
 "Language-Team: Ukrainian <translation@linux.org.ua>\n"
-"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: uk\n"
 "X-Launchpad-Export-Date: 2009-12-14 04:36+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
@@ -68,11 +68,11 @@ msgid "<title>The Team</title>"
 msgstr "<title>Команда</title>"
 
 #: src/bin/e_actions.c:366
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"You are about to kill %s.<br><br>Please keep in mind that all data of this "
-"window,<br>which has not been saved yet will be lost!<br><br>Are you sure "
-"you want to kill this window?"
+"You are about to kill %s.<br><br>Please keep in mind that all data from this "
+"window<br>which has not yet been saved will be lost!<br><br>Are you sure you "
+"want to kill this window?"
 msgstr ""
 "Ви збираєтеся примусово зачинити %s.<br><br>Будь ласка, майте на увазі, що "
 "всі не збережені дані з цього вікна,<br>будуть втрачені!<br><br>Ви впевнені, "
@@ -735,8 +735,8 @@ msgid ""
 "was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 "Під час збереження налаштування Enlightenment на диск<br>виникла помилка, "
-"яку не можливо<br>визначити.<br><br>Файл в якому виникла помилка:<br>"
-"%s<br><br>Цей файл був вилучений з метою запобігання пошкодження даних.<br>"
+"яку не можливо<br>визначити.<br><br>Файл в якому виникла помилка:<br>%"
+"s<br><br>Цей файл був вилучений з метою запобігання пошкодження даних.<br>"
 
 #: src/bin/e_config.c:2036
 #, c-format
@@ -771,20 +771,20 @@ msgstr ""
 msgid ""
 "Enlightenment cannot write its settings file<br>because it ran out of space "
 "to write the file.<br>You have either run out of disk space or have<br>gone "
-"over your quota limit.<br><br>The file where the error occurred was:<br>"
-"%s<br><br>This file has been deleted to avoid corrupt data.<br>"
+"over your quota limit.<br><br>The file where the error occurred was:<br>%"
+"s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 "Enlightenment не може зберегти налаштування<br>за браком місця на диску. "
 "Причиною<br>може бути або фізична вада диску,<br>або ви вичерпали свою квоту "
-"дискового<br><br>простору. Файл в якому<br><br>виникла помилка:<br>"
-"%s<br><br>Цей файл був вилучений з метою запобігання пошкодження даних.<br>"
+"дискового<br><br>простору. Файл в якому<br><br>виникла помилка:<br>%"
+"s<br><br>Цей файл був вилучений з метою запобігання пошкодження даних.<br>"
 
 #: src/bin/e_config.c:2072
 #, c-format
 msgid ""
 "Enlightenment unexpectedly had the settings file<br>it was writing closed on "
-"it. This is very unusual.<br><br>The file where the error occurred was:<br>"
-"%s<br><br>This file has been deleted to avoid corrupt data.<br>"
+"it. This is very unusual.<br><br>The file where the error occurred was:<br>%"
+"s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 "Enlightenment несподівано отримав файл параметрів<br>і це було записано в "
 "ньому. Це дуже дивно.<br><br>Файл, в якому сталася помилка:<br>%s<br><br>Цей "
@@ -794,7 +794,7 @@ msgstr ""
 msgid "Enlightenment Settings Write Problems"
 msgstr "Проблеми під час збереження параметрів Enlightenment"
 
-#: src/bin/e_config_dialog.c:207 src/modules/battery/e_mod_main.c:711
+#: src/bin/e_config_dialog.c:207 src/modules/battery/e_mod_main.c:713
 #: src/modules/conf/e_mod_main.c:275 src/modules/conf_engine/e_mod_main.c:17
 #: src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
@@ -823,8 +823,8 @@ msgstr "Модулі"
 #: src/modules/everything/e_mod_main.c:89
 #: src/modules/everything-apps/e_mod_main.c:1216
 #: src/modules/everything-files/e_mod_main.c:1656
-#: src/modules/gadman/e_mod_main.c:25 src/modules/mixer/e_mod_main.c:1047
-#: src/modules/connman/e_mod_main.c:1731
+#: src/modules/gadman/e_mod_main.c:25 src/modules/mixer/e_mod_main.c:1049
+#: src/modules/connman/e_mod_main.c:1733
 msgid "Extensions"
 msgstr "Розширення"
 
@@ -1469,40 +1469,45 @@ msgstr "Інформація про посилання"
 msgid "Select an Image"
 msgstr "Вибрати зображення"
 
-#: src/bin/e_gadcon.c:1328
-msgid "Move this gadget to"
-msgstr "Рухати цей ґаджет до"
+#: src/bin/e_gadcon.c:1329
+#, fuzzy
+msgid "Move to"
+msgstr "Рухати текст"
 
-#: src/bin/e_gadcon.c:1348 src/modules/gadman/e_mod_gadman.c:710
-msgid "Plain"
-msgstr "Гладко"
+#: src/bin/e_gadcon.c:1354 src/modules/gadman/e_mod_gadman.c:709
+#, fuzzy
+msgid "Begin move/resize"
+msgstr "Почати рух/змінити розмір цього гаджету"
 
-#: src/bin/e_gadcon.c:1357 src/modules/gadman/e_mod_gadman.c:718
-msgid "Inset"
-msgstr "Вкладка"
+#: src/bin/e_gadcon.c:1360
+#, fuzzy
+msgid "Resizeable"
+msgstr "Змінити розмір"
 
-#: src/bin/e_gadcon.c:1366 src/bin/e_int_config_modules.c:59
-#: src/modules/gadman/e_mod_gadman.c:754
-msgid "Appearance"
-msgstr "Вигляд"
-
-#: src/bin/e_gadcon.c:1374
+#: src/bin/e_gadcon.c:1367
 msgid "Automatically scroll contents"
 msgstr "Автоматична прокрутка вмісту"
 
-#: src/bin/e_gadcon.c:1381
-msgid "Able to be resized"
-msgstr "Може змінювати розмір"
+#: src/bin/e_gadcon.c:1378 src/modules/gadman/e_mod_gadman.c:720
+msgid "Plain"
+msgstr "Гладко"
 
-#: src/bin/e_gadcon.c:1393 src/modules/gadman/e_mod_gadman.c:789
-msgid "Begin move/resize this gadget"
-msgstr "Почати рух/змінити розмір цього гаджету"
+#: src/bin/e_gadcon.c:1387 src/modules/gadman/e_mod_gadman.c:728
+msgid "Inset"
+msgstr "Вкладка"
 
-#: src/bin/e_gadcon.c:1401 src/modules/gadman/e_mod_gadman.c:797
-msgid "Remove this gadget"
-msgstr "Вилучити цей ґаджет"
+#: src/bin/e_gadcon.c:1396 src/bin/e_int_config_modules.c:59
+#: src/modules/gadman/e_mod_gadman.c:764
+msgid "Appearance"
+msgstr "Вигляд"
 
-#: src/bin/e_gadcon.c:1879
+#: src/bin/e_gadcon.c:1407 src/bin/e_widget_config_list.c:66
+#: src/modules/conf_applications/e_int_config_apps.c:211
+#: src/modules/gadman/e_mod_gadman.c:804 src/modules/ibar/e_mod_main.c:797
+msgid "Remove"
+msgstr "Вилучити"
+
+#: src/bin/e_gadcon.c:1898
 msgid "Stop move/resize this gadget"
 msgstr "Завершити рух/зміну розміру цього ґаджета"
 
@@ -1742,13 +1747,13 @@ msgid "Window List"
 msgstr "Перелік вікон"
 
 #: src/bin/e_int_border_menu.c:1119 src/modules/pager/e_mod_main.c:257
-#: src/modules/pager/e_mod_main.c:2807 src/modules/pager/e_mod_main.c:2814
-#: src/modules/pager/e_mod_main.c:2821 src/modules/pager/e_mod_main.c:2823
-#: src/modules/pager/e_mod_main.c:2825 src/modules/pager/e_mod_main.c:2827
-#: src/modules/pager/e_mod_main.c:2829 src/modules/pager/e_mod_main.c:2831
-#: src/modules/pager/e_mod_main.c:2864 src/modules/pager/e_mod_main.c:2865
+#: src/modules/pager/e_mod_main.c:2809 src/modules/pager/e_mod_main.c:2816
+#: src/modules/pager/e_mod_main.c:2823 src/modules/pager/e_mod_main.c:2825
+#: src/modules/pager/e_mod_main.c:2827 src/modules/pager/e_mod_main.c:2829
+#: src/modules/pager/e_mod_main.c:2831 src/modules/pager/e_mod_main.c:2833
 #: src/modules/pager/e_mod_main.c:2866 src/modules/pager/e_mod_main.c:2867
 #: src/modules/pager/e_mod_main.c:2868 src/modules/pager/e_mod_main.c:2869
+#: src/modules/pager/e_mod_main.c:2870 src/modules/pager/e_mod_main.c:2871
 msgid "Pager"
 msgstr "Пейджер"
 
@@ -2013,16 +2018,16 @@ msgid "Start this program on login"
 msgstr "Запустити цю програму під час входу в систему"
 
 #: src/bin/e_int_config_modules.c:60 src/bin/e_int_menus.c:223
-#: src/bin/e_shelf.c:1685 src/modules/battery/e_mod_main.c:186
+#: src/bin/e_shelf.c:1685 src/modules/battery/e_mod_main.c:188
 #: src/modules/conf/e_conf.c:121 src/modules/conf/e_conf.c:131
 #: src/modules/conf/e_mod_main.c:102 src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:133
 #: src/modules/conf_profiles/e_mod_main.c:17
 #: src/modules/everything-settings/e_mod_main.c:188
-#: src/modules/ibar/e_mod_main.c:311 src/modules/ibar/e_mod_main.c:821
-#: src/modules/ibox/e_mod_main.c:304 src/modules/ibox/e_mod_main.c:699
-#: src/modules/pager/e_mod_main.c:793 src/modules/temperature/e_mod_main.c:229
-#: src/modules/mixer/e_mod_main.c:641 src/modules/connman/e_mod_main.c:1225
+#: src/modules/ibar/e_mod_main.c:312 src/modules/ibar/e_mod_main.c:830
+#: src/modules/ibox/e_mod_main.c:306 src/modules/ibox/e_mod_main.c:700
+#: src/modules/pager/e_mod_main.c:803 src/modules/temperature/e_mod_main.c:231
+#: src/modules/mixer/e_mod_main.c:643 src/modules/connman/e_mod_main.c:1227
 msgid "Settings"
 msgstr "Налаштування"
 
@@ -2306,8 +2311,8 @@ msgid ""
 "\t\tgiven the geometry. Add as many as you like. They all\n"
 "\t\treplace the real xinerama screens, if any. This can\n"
 "\t\tbe used to simulate xinerama.\n"
-"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen "
-"800x600+800+0\n"
+"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
+"+0\n"
 "\t-profile CONF_PROFILE\n"
 "\t\tUse the configuration profile CONF_PROFILE instead of the user selected "
 "default or just \"default\".\n"
@@ -2331,8 +2336,8 @@ msgstr ""
 "\t\tgiven the geometry. Add as many as you like. They all\n"
 "\t\treplace the real xinerama screens, if any. This can\n"
 "\t\tbe used to simulate xinerama.\n"
-"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen "
-"800x600+800+0\n"
+"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
+"+0\n"
 "\t-profile CONF_PROFILE\n"
 "\t\tUse the configuration profile CONF_PROFILE instead of the user selected "
 "default or just \"default\".\n"
@@ -2922,7 +2927,7 @@ msgstr "Закінчити переміщення/зміну розміру ел
 msgid "Begin Moving/Resizing Gadgets"
 msgstr "Почати переміщення/зміну розміру елементів"
 
-#: src/bin/e_shelf.c:1680
+#: src/bin/e_shelf.c:1680 src/modules/ibar/e_mod_main.c:824
 #, fuzzy
 msgid "Contents"
 msgstr "Коментар"
@@ -3270,11 +3275,6 @@ msgstr ""
 msgid "Add"
 msgstr "Додати"
 
-#: src/bin/e_widget_config_list.c:66
-#: src/modules/conf_applications/e_int_config_apps.c:211
-msgid "Remove"
-msgstr "Вилучити"
-
 #: src/bin/e_widget_config_list.c:80
 #: src/modules/conf_applications/e_int_config_apps.c:223
 msgid "Up"
@@ -3425,24 +3425,24 @@ msgstr "Обладнання"
 msgid "Battery"
 msgstr "Батарея"
 
-#: src/modules/battery/e_mod_main.c:454
+#: src/modules/battery/e_mod_main.c:456
 msgid "Your battery is low!"
 msgstr "Низький заряд батареї!"
 
-#: src/modules/battery/e_mod_main.c:456
+#: src/modules/battery/e_mod_main.c:458
 msgid "AC power is recommended."
 msgstr "Рекомендоване мережеве живлення."
 
-#: src/modules/battery/e_mod_main.c:531
+#: src/modules/battery/e_mod_main.c:533
 msgid "N/A"
 msgstr "Н/Д"
 
-#: src/modules/battery/e_mod_main.c:605 src/modules/battery/e_mod_main.c:607
-#: src/modules/battery/e_mod_main.c:614 src/modules/battery/e_mod_main.c:616
+#: src/modules/battery/e_mod_main.c:607 src/modules/battery/e_mod_main.c:609
+#: src/modules/battery/e_mod_main.c:616 src/modules/battery/e_mod_main.c:618
 msgid "ERROR"
 msgstr "ПОМИЛКА"
 
-#: src/modules/battery/e_mod_main.c:713
+#: src/modules/battery/e_mod_main.c:715
 msgid "Battery Meter"
 msgstr "Індикатор Батареї"
 
@@ -4115,7 +4115,7 @@ msgid "Screen Lock"
 msgstr "Блокувати екран"
 
 #: src/modules/conf_desks/e_int_config_desks.c:58
-#: src/modules/pager/e_mod_main.c:800
+#: src/modules/pager/e_mod_main.c:795
 msgid "Virtual Desktops Settings"
 msgstr "Налаштування віртуальних стільниць"
 
@@ -4251,8 +4251,8 @@ msgid ""
 "will be restored in %d seconds."
 msgstr ""
 "Все виглядає чудово? Натисніть <hilight>Зберегти</hilight>, якщо так, або "
-"поверніть, якщо ні.<br>Якщо ви не натиснете кнопку, попередні параметри<br>"
-"%dx%d на %d Гц будуть повернуті через %d секунд."
+"поверніть, якщо ні.<br>Якщо ви не натиснете кнопку, попередні параметри<br>%"
+"dx%d на %d Гц будуть повернуті через %d секунд."
 
 #: src/modules/conf_display/e_int_config_display.c:143
 #, c-format
@@ -4262,8 +4262,8 @@ msgid ""
 "restored in %d seconds."
 msgstr ""
 "Все виглядає чудово? Натисніть <hilight>Зберегти</hilight>, якщо так, або "
-"поверніть, якщо ні.<br>Якщо ви не натиснете кнопку, попередні параметри<br>"
-"%dx%d будуть повернуті через %d секунд."
+"поверніть, якщо ні.<br>Якщо ви не натиснете кнопку, попередні параметри<br>%"
+"dx%d будуть повернуті через %d секунд."
 
 #: src/modules/conf_display/e_int_config_display.c:153
 #, c-format
@@ -4273,8 +4273,8 @@ msgid ""
 "will be restored <hilight>IMMEDIATELY</hilight>."
 msgstr ""
 "Все виглядає чудово? Натисніть <hilight>Зберегти</hilight>, якщо так, або "
-"поверніть, якщо ні.<br>Якщо ви не натиснете кнопку, попередні параметри<br>"
-"%dx%d на %d Гц будуть повернуті<hilight>НЕГАЙНО</hilight>."
+"поверніть, якщо ні.<br>Якщо ви не натиснете кнопку, попередні параметри<br>%"
+"dx%d на %d Гц будуть повернуті<hilight>НЕГАЙНО</hilight>."
 
 #: src/modules/conf_display/e_int_config_display.c:160
 #, c-format
@@ -4284,8 +4284,8 @@ msgid ""
 "restored <hilight>IMMEDIATELY</hilight>."
 msgstr ""
 "Все виглядає чудово? Натисніть <hilight>Зберегти</hilight>, якщо так, або "
-"поверніть, якщо ні.<br>Якщо ви не натиснете кнопку, попередні параметри<br>"
-"%dx%d будуть повернуті <hilight>НЕГАЙНО</hilight>."
+"поверніть, якщо ні.<br>Якщо ви не натиснете кнопку, попередні параметри<br>%"
+"dx%d будуть повернуті <hilight>НЕГАЙНО</hilight>."
 
 #: src/modules/conf_display/e_int_config_display.c:197
 msgid "Resolution change"
@@ -4496,8 +4496,8 @@ msgstr "Помилка прив'язки до краю"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1175
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding edge sequence."
+"The binding key sequence, that you choose, is already used by <br><hilight>%"
+"s</hilight> action.<br>Please choose another binding edge sequence."
 msgstr ""
 "Послідовність прив'язок до країв, яку ви вибрали, вже використовується "
 "<br><hilight>%s</hilight>.<br>Будь ласка, виберіть іншу послідовність "
@@ -4506,28 +4506,28 @@ msgstr ""
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1312
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1302
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1334
-#: src/modules/gadman/e_mod_gadman.c:818
+#: src/modules/gadman/e_mod_gadman.c:828
 msgid "CTRL"
 msgstr "CTRL"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1317
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1307
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1339
-#: src/modules/gadman/e_mod_gadman.c:823
+#: src/modules/gadman/e_mod_gadman.c:833
 msgid "ALT"
 msgstr "ALT"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1323
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1313
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1345
-#: src/modules/gadman/e_mod_gadman.c:829
+#: src/modules/gadman/e_mod_gadman.c:839
 msgid "SHIFT"
 msgstr "SHIFT"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1329
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1319
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1351
-#: src/modules/gadman/e_mod_gadman.c:835
+#: src/modules/gadman/e_mod_gadman.c:845
 msgid "WIN"
 msgstr "WIN"
 
@@ -4767,7 +4767,7 @@ msgstr "Байткод"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:657
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:193
-#: src/modules/cpufreq/e_mod_main.c:224 src/modules/cpufreq/e_mod_main.c:258
+#: src/modules/cpufreq/e_mod_main.c:224 src/modules/cpufreq/e_mod_main.c:256
 msgid "Automatic"
 msgstr "Автоматично"
 
@@ -4969,8 +4969,8 @@ msgstr "Помилка прив'язки клавіші"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1148
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by <br><hilight>%"
+"s</hilight> action.<br>Please choose another binding key sequence."
 msgstr ""
 "Обрана Вами послідовність прив'язки клавіші вже використовується прив'язкою "
 "<br><hilight>%s</hilight>.<br>Будь ласка, виберіть іншу послідовність."
@@ -5998,13 +5998,13 @@ msgstr "Заповнити доступне місце"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:161
 #: src/modules/everything/evry_config.c:572
-#: src/modules/gadman/e_mod_gadman.c:738
+#: src/modules/gadman/e_mod_gadman.c:748
 msgid "Horizontal"
 msgstr "Горизонтально"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:163
 #: src/modules/everything/evry_config.c:565
-#: src/modules/gadman/e_mod_gadman.c:746
+#: src/modules/gadman/e_mod_gadman.c:756
 msgid "Vertical"
 msgstr "Вертикально"
 
@@ -6279,15 +6279,15 @@ msgstr "Дуже повільно (256 тіків)"
 msgid "Manual"
 msgstr "Власне"
 
-#: src/modules/cpufreq/e_mod_main.c:226 src/modules/cpufreq/e_mod_main.c:260
+#: src/modules/cpufreq/e_mod_main.c:226 src/modules/cpufreq/e_mod_main.c:258
 msgid "Lower Power Automatic"
 msgstr "Автоматично знижувати потужність"
 
-#: src/modules/cpufreq/e_mod_main.c:228 src/modules/cpufreq/e_mod_main.c:262
+#: src/modules/cpufreq/e_mod_main.c:228 src/modules/cpufreq/e_mod_main.c:260
 msgid "Minimum Speed"
 msgstr "Мінімальна швидкість"
 
-#: src/modules/cpufreq/e_mod_main.c:230 src/modules/cpufreq/e_mod_main.c:264
+#: src/modules/cpufreq/e_mod_main.c:230 src/modules/cpufreq/e_mod_main.c:262
 msgid "Maximum Speed"
 msgstr "Максимальна швидкість"
 
@@ -6295,20 +6295,16 @@ msgstr "Максимальна швидкість"
 msgid "Restore CPU Power Policy"
 msgstr "Відновлення потужності ЦП"
 
-#: src/modules/cpufreq/e_mod_main.c:249
-msgid "Powersaving policy"
-msgstr "Політика енергозбереження"
-
-#: src/modules/cpufreq/e_mod_main.c:277
+#: src/modules/cpufreq/e_mod_main.c:275
 msgid "Automatic powersaving"
 msgstr "Автоматичне енергозбереження"
 
-#: src/modules/cpufreq/e_mod_main.c:296
+#: src/modules/cpufreq/e_mod_main.c:294
 #, c-format
 msgid "%i MHz"
 msgstr "%i Мгц"
 
-#: src/modules/cpufreq/e_mod_main.c:298
+#: src/modules/cpufreq/e_mod_main.c:296
 #, c-format
 msgid "%i.%i GHz"
 msgstr "%i.%i Ґґц"
@@ -6951,7 +6947,7 @@ msgid "Show Toolbar"
 msgstr "Показувати панель інструментів"
 
 #: src/modules/fileman/e_mod_config.c:267
-#: src/modules/gadman/e_mod_gadman.c:782
+#: src/modules/gadman/e_mod_gadman.c:792
 msgid "Behavior"
 msgstr "Поведінка"
 
@@ -7135,19 +7131,19 @@ msgstr "Ґаджети"
 msgid "Background Options"
 msgstr "Панорамування фону"
 
-#: src/modules/gadman/e_mod_gadman.c:730
+#: src/modules/gadman/e_mod_gadman.c:740
 msgid "Free"
 msgstr "Вільно"
 
-#: src/modules/gadman/e_mod_gadman.c:762
+#: src/modules/gadman/e_mod_gadman.c:772
 msgid "Always on desktop"
 msgstr "Завжди на стільниці"
 
-#: src/modules/gadman/e_mod_gadman.c:772
+#: src/modules/gadman/e_mod_gadman.c:782
 msgid "On top pressing"
 msgstr "Натиснувши зверху"
 
-#: src/modules/gadman/e_mod_gadman.c:803
+#: src/modules/gadman/e_mod_gadman.c:813
 msgid "Add other gadgets"
 msgstr "Додати інші ґаджети"
 
@@ -7259,20 +7255,13 @@ msgstr "Ви дійсно хочете стерти джерело для ціє
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:790
-msgid "Change Icon Properties"
-msgstr "Змінити властивості піктограми"
+#: src/modules/ibar/e_mod_main.c:792
+msgid "Properties"
+msgstr "Властивості"
 
-#: src/modules/ibar/e_mod_main.c:795
-msgid "Remove Icon"
-msgstr "Вилучити піктограму"
-
-#: src/modules/ibar/e_mod_main.c:805
-msgid "Add An Icon"
-msgstr "Додати піктограму"
-
-#: src/modules/ibar/e_mod_main.c:812
-msgid "Create New Icon"
+#: src/modules/ibar/e_mod_main.c:813
+#, fuzzy
+msgid "Create new Icon"
 msgstr "Створити нову піктограму"
 
 #: src/modules/ibox/e_mod_config.c:48
@@ -7439,32 +7428,32 @@ msgstr ""
 "тому що вона вже зайнята<br>внутрішнім кодом для контекстних меню.<br>Ця "
 "кнопка працює тільки в підказках"
 
-#: src/modules/pager/e_mod_main.c:2814
+#: src/modules/pager/e_mod_main.c:2816
 msgid "Show Pager Popup"
 msgstr "Показувати підказку пейджера"
 
-#: src/modules/pager/e_mod_main.c:2821 src/modules/pager/e_mod_main.c:2864
+#: src/modules/pager/e_mod_main.c:2823 src/modules/pager/e_mod_main.c:2866
 msgid "Popup Desk Right"
 msgstr "Пересунути підказку праворуч"
 
-#: src/modules/pager/e_mod_main.c:2823 src/modules/pager/e_mod_main.c:2865
+#: src/modules/pager/e_mod_main.c:2825 src/modules/pager/e_mod_main.c:2867
 msgid "Popup Desk Left"
 msgstr "Пересунути підказку ліворуч"
 
-#: src/modules/pager/e_mod_main.c:2825 src/modules/pager/e_mod_main.c:2866
+#: src/modules/pager/e_mod_main.c:2827 src/modules/pager/e_mod_main.c:2868
 msgid "Popup Desk Up"
 msgstr "Пересунути підказку вверх"
 
-#: src/modules/pager/e_mod_main.c:2827 src/modules/pager/e_mod_main.c:2867
+#: src/modules/pager/e_mod_main.c:2829 src/modules/pager/e_mod_main.c:2869
 msgid "Popup Desk Down"
 msgstr "Пересунути підказку вниз"
 
-#: src/modules/pager/e_mod_main.c:2829 src/modules/pager/e_mod_main.c:2868
+#: src/modules/pager/e_mod_main.c:2831 src/modules/pager/e_mod_main.c:2870
 #, fuzzy
 msgid "Popup Desk Next"
 msgstr "Пересунути підказку ліворуч"
 
-#: src/modules/pager/e_mod_main.c:2831 src/modules/pager/e_mod_main.c:2869
+#: src/modules/pager/e_mod_main.c:2833 src/modules/pager/e_mod_main.c:2871
 #, fuzzy
 msgid "Popup Desk Previous"
 msgstr "Пересунути підказку ліворуч"
@@ -7697,7 +7686,7 @@ msgstr "Налаштування мікшера оновлені"
 msgid "Controls"
 msgstr "Канали"
 
-#: src/modules/mixer/e_mod_main.c:1125
+#: src/modules/mixer/e_mod_main.c:1127
 msgid ""
 "Mixer Module Settings data changed.<br>Your old configuration has been "
 "replaced with new default.<br>Sorry for the inconvenience."
@@ -7706,7 +7695,7 @@ msgstr ""
 "замінена типовою.<br>Приносимо вибачення за незручності."
 
 #: src/modules/connman/e_mod_main.c:83 src/modules/connman/e_mod_main.c:110
-#: src/modules/connman/e_mod_main.c:970 src/modules/connman/e_mod_main.c:1699
+#: src/modules/connman/e_mod_main.c:970 src/modules/connman/e_mod_main.c:1701
 msgid "Cannot toggle system's offline mode."
 msgstr ""
 
@@ -7760,112 +7749,130 @@ msgstr ""
 msgid "Offline mode"
 msgstr "Поза мережею"
 
-#: src/modules/connman/e_mod_main.c:1323
+#: src/modules/connman/e_mod_main.c:1325
 msgid "No ConnMan"
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:1325
+#: src/modules/connman/e_mod_main.c:1327
 msgid "No ConnMan server found."
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:1338
+#: src/modules/connman/e_mod_main.c:1340
 msgid "Offline mode: all radios are turned off"
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:1363
+#: src/modules/connman/e_mod_main.c:1365
 #, fuzzy
 msgid "No Connection"
 msgstr "Налаштування мережних з'єднань"
 
-#: src/modules/connman/e_mod_main.c:1367
+#: src/modules/connman/e_mod_main.c:1369
 #, fuzzy
 msgid "Not connected"
 msgstr "Захищено"
 
-#: src/modules/connman/e_mod_main.c:1370 src/modules/connman/e_mod_main.c:1776
+#: src/modules/connman/e_mod_main.c:1372 src/modules/connman/e_mod_main.c:1778
 msgid "disconnect"
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:1393
+#: src/modules/connman/e_mod_main.c:1395
 #, fuzzy
 msgid "Unknown Name"
 msgstr "Невідомий носій"
 
-#: src/modules/connman/e_mod_main.c:1402
+#: src/modules/connman/e_mod_main.c:1404
 #, fuzzy
 msgid "No error"
 msgstr "Помилка під'єднання"
 
-#: src/modules/connman/e_mod_main.c:1770
+#: src/modules/connman/e_mod_main.c:1772
 #, fuzzy
 msgid "idle"
 msgstr "Черепицею"
 
-#: src/modules/connman/e_mod_main.c:1771
+#: src/modules/connman/e_mod_main.c:1773
 #, fuzzy
 msgid "association"
 msgstr "Переходи"
 
-#: src/modules/connman/e_mod_main.c:1772
+#: src/modules/connman/e_mod_main.c:1774
 #, fuzzy
 msgid "configuration"
 msgstr "(немає інформації)"
 
-#: src/modules/connman/e_mod_main.c:1773
+#: src/modules/connman/e_mod_main.c:1775
 msgid "ready"
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:1774
+#: src/modules/connman/e_mod_main.c:1776
 #, fuzzy
 msgid "login"
 msgstr "Гладко"
 
-#: src/modules/connman/e_mod_main.c:1775
+#: src/modules/connman/e_mod_main.c:1777
 #, fuzzy
 msgid "online"
 msgstr "Рушій"
 
-#: src/modules/connman/e_mod_main.c:1777
+#: src/modules/connman/e_mod_main.c:1779
 msgid "failure"
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:1778
+#: src/modules/connman/e_mod_main.c:1780
 #, fuzzy
 msgid "enabled"
 msgstr "Увімкнений"
 
-#: src/modules/connman/e_mod_main.c:1779
+#: src/modules/connman/e_mod_main.c:1781
 #, fuzzy
 msgid "available"
 msgstr "Заповнити доступне місце"
 
-#: src/modules/connman/e_mod_main.c:1780
+#: src/modules/connman/e_mod_main.c:1782
 #, fuzzy
 msgid "connected"
 msgstr "Захищено"
 
-#: src/modules/connman/e_mod_main.c:1781
+#: src/modules/connman/e_mod_main.c:1783
 #, fuzzy
 msgid "offline"
 msgstr "Поза мережею"
 
-#: src/modules/systray/e_mod_main.c:889
+#: src/modules/systray/e_mod_main.c:891
 msgid "Another systray exists"
 msgstr "Інший системний лоток вже існує"
 
-#: src/modules/systray/e_mod_main.c:890
+#: src/modules/systray/e_mod_main.c:892
 msgid "There can be only one systray gadget and another one already exists."
 msgstr "Може бути тільки один системний лоток, і він вже існує."
 
-#: src/modules/systray/e_mod_main.c:1092
+#: src/modules/systray/e_mod_main.c:1094
 msgid "Systray"
 msgstr "Системний лоток"
 
+#~ msgid "Move this gadget to"
+#~ msgstr "Рухати цей ґаджет до"
+
+#~ msgid "Able to be resized"
+#~ msgstr "Може змінювати розмір"
+
+#~ msgid "Remove this gadget"
+#~ msgstr "Вилучити цей ґаджет"
+
+#~ msgid "Powersaving policy"
+#~ msgstr "Політика енергозбереження"
+
+#~ msgid "Change Icon Properties"
+#~ msgstr "Змінити властивості піктограми"
+
+#~ msgid "Remove Icon"
+#~ msgstr "Вилучити піктограму"
+
+#~ msgid "Add An Icon"
+#~ msgstr "Додати піктограму"
+
 #~ msgid "Executable"
 #~ msgstr "Виконуваний"
-
-#~ msgid "Properties"
-#~ msgstr "Властивості"
 
 #~ msgid "Set Shelf Contents"
 #~ msgstr "Налаштувати вміст полички"

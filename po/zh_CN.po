@@ -10,14 +10,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-09-08 20:58-0300\n"
+"POT-Creation-Date: 2010-10-03 18:09+0900\n"
 "PO-Revision-Date: 2010-01-16 11:57+0800\n"
 "Last-Translator: Aron Xu <happyaron.xu@gmail.com>\n"
 "Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
-"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: zh_CN\n"
 
 #: src/bin/e_about.c:14
 msgid "About Enlightenment"
@@ -68,11 +68,11 @@ msgid "<title>The Team</title>"
 msgstr "<title>开发组</title>"
 
 #: src/bin/e_actions.c:366
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"You are about to kill %s.<br><br>Please keep in mind that all data of this "
-"window,<br>which has not been saved yet will be lost!<br><br>Are you sure "
-"you want to kill this window?"
+"You are about to kill %s.<br><br>Please keep in mind that all data from this "
+"window<br>which has not yet been saved will be lost!<br><br>Are you sure you "
+"want to kill this window?"
 msgstr ""
 "您正要杀掉 %s.<br><br>请注意窗口内所有信息<br>一旦杀掉就会丢失！<br><br>确定"
 "要杀死这个窗口吗？"
@@ -746,8 +746,8 @@ msgstr ""
 msgid ""
 "Enlightenment cannot write its settings file<br>because it ran out of space "
 "to write the file.<br>You have either run out of disk space or have<br>gone "
-"over your quota limit.<br><br>The file where the error occurred was:<br>"
-"%s<br><br>This file has been deleted to avoid corrupt data.<br>"
+"over your quota limit.<br><br>The file where the error occurred was:<br>%"
+"s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 "Enlightenment 因没有足够的空间无法写入设置文件。<br>您可能没有足够的磁盘空间"
 "或者达到了磁盘使用配额。<br>出现错误的文件为：<br>%s<br>该文件已被删除以避免"
@@ -757,15 +757,15 @@ msgstr ""
 #, c-format
 msgid ""
 "Enlightenment unexpectedly had the settings file<br>it was writing closed on "
-"it. This is very unusual.<br><br>The file where the error occurred was:<br>"
-"%s<br><br>This file has been deleted to avoid corrupt data.<br>"
+"it. This is very unusual.<br><br>The file where the error occurred was:<br>%"
+"s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 
 #: src/bin/e_config.c:2097
 msgid "Enlightenment Settings Write Problems"
 msgstr "Enlightenment 设定写入问题"
 
-#: src/bin/e_config_dialog.c:207 src/modules/battery/e_mod_main.c:711
+#: src/bin/e_config_dialog.c:207 src/modules/battery/e_mod_main.c:713
 #: src/modules/conf/e_mod_main.c:275 src/modules/conf_engine/e_mod_main.c:17
 #: src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
@@ -794,8 +794,8 @@ msgstr "模块"
 #: src/modules/everything/e_mod_main.c:89
 #: src/modules/everything-apps/e_mod_main.c:1216
 #: src/modules/everything-files/e_mod_main.c:1656
-#: src/modules/gadman/e_mod_main.c:25 src/modules/mixer/e_mod_main.c:1047
-#: src/modules/connman/e_mod_main.c:1731
+#: src/modules/gadman/e_mod_main.c:25 src/modules/mixer/e_mod_main.c:1049
+#: src/modules/connman/e_mod_main.c:1733
 msgid "Extensions"
 msgstr "扩展"
 
@@ -1428,40 +1428,45 @@ msgstr "连接信息"
 msgid "Select an Image"
 msgstr "选择一个图像"
 
-#: src/bin/e_gadcon.c:1328
-msgid "Move this gadget to"
-msgstr ""
+#: src/bin/e_gadcon.c:1329
+#, fuzzy
+msgid "Move to"
+msgstr "移动文本"
 
-#: src/bin/e_gadcon.c:1348 src/modules/gadman/e_mod_gadman.c:710
-msgid "Plain"
-msgstr "简易"
+#: src/bin/e_gadcon.c:1354 src/modules/gadman/e_mod_gadman.c:709
+#, fuzzy
+msgid "Begin move/resize"
+msgstr "开始移动/缩放此组件"
 
-#: src/bin/e_gadcon.c:1357 src/modules/gadman/e_mod_gadman.c:718
-msgid "Inset"
-msgstr "插入"
+#: src/bin/e_gadcon.c:1360
+#, fuzzy
+msgid "Resizeable"
+msgstr "改变大小"
 
-#: src/bin/e_gadcon.c:1366 src/bin/e_int_config_modules.c:59
-#: src/modules/gadman/e_mod_gadman.c:754
-msgid "Appearance"
-msgstr "外观"
-
-#: src/bin/e_gadcon.c:1374
+#: src/bin/e_gadcon.c:1367
 msgid "Automatically scroll contents"
 msgstr "自动滚动"
 
-#: src/bin/e_gadcon.c:1381
-msgid "Able to be resized"
-msgstr "可以变换尺寸"
+#: src/bin/e_gadcon.c:1378 src/modules/gadman/e_mod_gadman.c:720
+msgid "Plain"
+msgstr "简易"
 
-#: src/bin/e_gadcon.c:1393 src/modules/gadman/e_mod_gadman.c:789
-msgid "Begin move/resize this gadget"
-msgstr "开始移动/缩放此组件"
+#: src/bin/e_gadcon.c:1387 src/modules/gadman/e_mod_gadman.c:728
+msgid "Inset"
+msgstr "插入"
 
-#: src/bin/e_gadcon.c:1401 src/modules/gadman/e_mod_gadman.c:797
-msgid "Remove this gadget"
-msgstr "删除该组件"
+#: src/bin/e_gadcon.c:1396 src/bin/e_int_config_modules.c:59
+#: src/modules/gadman/e_mod_gadman.c:764
+msgid "Appearance"
+msgstr "外观"
 
-#: src/bin/e_gadcon.c:1879
+#: src/bin/e_gadcon.c:1407 src/bin/e_widget_config_list.c:66
+#: src/modules/conf_applications/e_int_config_apps.c:211
+#: src/modules/gadman/e_mod_gadman.c:804 src/modules/ibar/e_mod_main.c:797
+msgid "Remove"
+msgstr "删除"
+
+#: src/bin/e_gadcon.c:1898
 msgid "Stop move/resize this gadget"
 msgstr "停止移动/缩放此组件"
 
@@ -1699,13 +1704,13 @@ msgid "Window List"
 msgstr "窗口列表"
 
 #: src/bin/e_int_border_menu.c:1119 src/modules/pager/e_mod_main.c:257
-#: src/modules/pager/e_mod_main.c:2807 src/modules/pager/e_mod_main.c:2814
-#: src/modules/pager/e_mod_main.c:2821 src/modules/pager/e_mod_main.c:2823
-#: src/modules/pager/e_mod_main.c:2825 src/modules/pager/e_mod_main.c:2827
-#: src/modules/pager/e_mod_main.c:2829 src/modules/pager/e_mod_main.c:2831
-#: src/modules/pager/e_mod_main.c:2864 src/modules/pager/e_mod_main.c:2865
+#: src/modules/pager/e_mod_main.c:2809 src/modules/pager/e_mod_main.c:2816
+#: src/modules/pager/e_mod_main.c:2823 src/modules/pager/e_mod_main.c:2825
+#: src/modules/pager/e_mod_main.c:2827 src/modules/pager/e_mod_main.c:2829
+#: src/modules/pager/e_mod_main.c:2831 src/modules/pager/e_mod_main.c:2833
 #: src/modules/pager/e_mod_main.c:2866 src/modules/pager/e_mod_main.c:2867
 #: src/modules/pager/e_mod_main.c:2868 src/modules/pager/e_mod_main.c:2869
+#: src/modules/pager/e_mod_main.c:2870 src/modules/pager/e_mod_main.c:2871
 msgid "Pager"
 msgstr "分页器"
 
@@ -1965,16 +1970,16 @@ msgid "Start this program on login"
 msgstr "登陆时启动该程序"
 
 #: src/bin/e_int_config_modules.c:60 src/bin/e_int_menus.c:223
-#: src/bin/e_shelf.c:1685 src/modules/battery/e_mod_main.c:186
+#: src/bin/e_shelf.c:1685 src/modules/battery/e_mod_main.c:188
 #: src/modules/conf/e_conf.c:121 src/modules/conf/e_conf.c:131
 #: src/modules/conf/e_mod_main.c:102 src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:133
 #: src/modules/conf_profiles/e_mod_main.c:17
 #: src/modules/everything-settings/e_mod_main.c:188
-#: src/modules/ibar/e_mod_main.c:311 src/modules/ibar/e_mod_main.c:821
-#: src/modules/ibox/e_mod_main.c:304 src/modules/ibox/e_mod_main.c:699
-#: src/modules/pager/e_mod_main.c:793 src/modules/temperature/e_mod_main.c:229
-#: src/modules/mixer/e_mod_main.c:641 src/modules/connman/e_mod_main.c:1225
+#: src/modules/ibar/e_mod_main.c:312 src/modules/ibar/e_mod_main.c:830
+#: src/modules/ibox/e_mod_main.c:306 src/modules/ibox/e_mod_main.c:700
+#: src/modules/pager/e_mod_main.c:803 src/modules/temperature/e_mod_main.c:231
+#: src/modules/mixer/e_mod_main.c:643 src/modules/connman/e_mod_main.c:1227
 msgid "Settings"
 msgstr "设置"
 
@@ -2252,8 +2257,8 @@ msgid ""
 "\t\tgiven the geometry. Add as many as you like. They all\n"
 "\t\treplace the real xinerama screens, if any. This can\n"
 "\t\tbe used to simulate xinerama.\n"
-"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen "
-"800x600+800+0\n"
+"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
+"+0\n"
 "\t-profile CONF_PROFILE\n"
 "\t\tUse the configuration profile CONF_PROFILE instead of the user selected "
 "default or just \"default\".\n"
@@ -2769,8 +2774,8 @@ msgid ""
 "There was an error loading module named: %s<br>The full path to this module "
 "is:<br>%s<br>The error reported was:<br>%s<br>"
 msgstr ""
-"导入模块 %s 时发生错误。<br>该模块的全路径是：<br>%s<br>错误报告如下：<br>"
-"%s<br>"
+"导入模块 %s 时发生错误。<br>该模块的全路径是：<br>%s<br>错误报告如下：<br>%"
+"s<br>"
 
 #: src/bin/e_module.c:162
 msgid "Module does not contain all needed functions"
@@ -2826,7 +2831,7 @@ msgstr "停止移动/缩放项目"
 msgid "Begin Moving/Resizing Gadgets"
 msgstr "开始移动/缩放项目"
 
-#: src/bin/e_shelf.c:1680
+#: src/bin/e_shelf.c:1680 src/modules/ibar/e_mod_main.c:824
 #, fuzzy
 msgid "Contents"
 msgstr "评论"
@@ -3157,11 +3162,6 @@ msgstr ""
 msgid "Add"
 msgstr "添加"
 
-#: src/bin/e_widget_config_list.c:66
-#: src/modules/conf_applications/e_int_config_apps.c:211
-msgid "Remove"
-msgstr "删除"
-
 #: src/bin/e_widget_config_list.c:80
 #: src/modules/conf_applications/e_int_config_apps.c:223
 msgid "Up"
@@ -3312,24 +3312,24 @@ msgstr "硬件"
 msgid "Battery"
 msgstr "电池"
 
-#: src/modules/battery/e_mod_main.c:454
+#: src/modules/battery/e_mod_main.c:456
 msgid "Your battery is low!"
 msgstr "电池电量低！"
 
-#: src/modules/battery/e_mod_main.c:456
+#: src/modules/battery/e_mod_main.c:458
 msgid "AC power is recommended."
 msgstr "建议使用交流电源。"
 
-#: src/modules/battery/e_mod_main.c:531
+#: src/modules/battery/e_mod_main.c:533
 msgid "N/A"
 msgstr "N/A"
 
-#: src/modules/battery/e_mod_main.c:605 src/modules/battery/e_mod_main.c:607
-#: src/modules/battery/e_mod_main.c:614 src/modules/battery/e_mod_main.c:616
+#: src/modules/battery/e_mod_main.c:607 src/modules/battery/e_mod_main.c:609
+#: src/modules/battery/e_mod_main.c:616 src/modules/battery/e_mod_main.c:618
 msgid "ERROR"
 msgstr "错误"
 
-#: src/modules/battery/e_mod_main.c:713
+#: src/modules/battery/e_mod_main.c:715
 msgid "Battery Meter"
 msgstr "电池标尺"
 
@@ -3998,7 +3998,7 @@ msgid "Screen Lock"
 msgstr "屏幕锁定"
 
 #: src/modules/conf_desks/e_int_config_desks.c:58
-#: src/modules/pager/e_mod_main.c:800
+#: src/modules/pager/e_mod_main.c:795
 msgid "Virtual Desktops Settings"
 msgstr "虚拟桌面设置"
 
@@ -4370,35 +4370,35 @@ msgstr "边缘绑定出错"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1175
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding edge sequence."
+"The binding key sequence, that you choose, is already used by <br><hilight>%"
+"s</hilight> action.<br>Please choose another binding edge sequence."
 msgstr ""
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1312
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1302
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1334
-#: src/modules/gadman/e_mod_gadman.c:818
+#: src/modules/gadman/e_mod_gadman.c:828
 msgid "CTRL"
 msgstr "CTRL"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1317
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1307
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1339
-#: src/modules/gadman/e_mod_gadman.c:823
+#: src/modules/gadman/e_mod_gadman.c:833
 msgid "ALT"
 msgstr "ALT"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1323
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1313
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1345
-#: src/modules/gadman/e_mod_gadman.c:829
+#: src/modules/gadman/e_mod_gadman.c:839
 msgid "SHIFT"
 msgstr "SHIFT"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1329
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1319
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1351
-#: src/modules/gadman/e_mod_gadman.c:835
+#: src/modules/gadman/e_mod_gadman.c:845
 msgid "WIN"
 msgstr "WIN"
 
@@ -4637,7 +4637,7 @@ msgstr "字节码"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:657
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:193
-#: src/modules/cpufreq/e_mod_main.c:224 src/modules/cpufreq/e_mod_main.c:258
+#: src/modules/cpufreq/e_mod_main.c:224 src/modules/cpufreq/e_mod_main.c:256
 msgid "Automatic"
 msgstr "自动"
 
@@ -4834,8 +4834,8 @@ msgstr "绑定按键错误"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1148
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by <br><hilight>%"
+"s</hilight> action.<br>Please choose another binding key sequence."
 msgstr ""
 
 #: src/modules/conf_menus/e_int_config_menus.c:43
@@ -5853,13 +5853,13 @@ msgstr "填充可用区域"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:161
 #: src/modules/everything/evry_config.c:572
-#: src/modules/gadman/e_mod_gadman.c:738
+#: src/modules/gadman/e_mod_gadman.c:748
 msgid "Horizontal"
 msgstr "水平"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:163
 #: src/modules/everything/evry_config.c:565
-#: src/modules/gadman/e_mod_gadman.c:746
+#: src/modules/gadman/e_mod_gadman.c:756
 msgid "Vertical"
 msgstr "垂直"
 
@@ -6132,15 +6132,15 @@ msgstr "很慢 (256下)"
 msgid "Manual"
 msgstr "手动"
 
-#: src/modules/cpufreq/e_mod_main.c:226 src/modules/cpufreq/e_mod_main.c:260
+#: src/modules/cpufreq/e_mod_main.c:226 src/modules/cpufreq/e_mod_main.c:258
 msgid "Lower Power Automatic"
 msgstr "自动低电量消耗"
 
-#: src/modules/cpufreq/e_mod_main.c:228 src/modules/cpufreq/e_mod_main.c:262
+#: src/modules/cpufreq/e_mod_main.c:228 src/modules/cpufreq/e_mod_main.c:260
 msgid "Minimum Speed"
 msgstr "最低速"
 
-#: src/modules/cpufreq/e_mod_main.c:230 src/modules/cpufreq/e_mod_main.c:264
+#: src/modules/cpufreq/e_mod_main.c:230 src/modules/cpufreq/e_mod_main.c:262
 msgid "Maximum Speed"
 msgstr "最高速"
 
@@ -6148,20 +6148,16 @@ msgstr "最高速"
 msgid "Restore CPU Power Policy"
 msgstr "重置 CPU 电源策略"
 
-#: src/modules/cpufreq/e_mod_main.c:249
-msgid "Powersaving policy"
-msgstr "节电规则"
-
-#: src/modules/cpufreq/e_mod_main.c:277
+#: src/modules/cpufreq/e_mod_main.c:275
 msgid "Automatic powersaving"
 msgstr "自动节电"
 
-#: src/modules/cpufreq/e_mod_main.c:296
+#: src/modules/cpufreq/e_mod_main.c:294
 #, c-format
 msgid "%i MHz"
 msgstr "%i MHz"
 
-#: src/modules/cpufreq/e_mod_main.c:298
+#: src/modules/cpufreq/e_mod_main.c:296
 #, c-format
 msgid "%i.%i GHz"
 msgstr "%i.%i GHz"
@@ -6794,7 +6790,7 @@ msgid "Show Toolbar"
 msgstr "显示工具栏"
 
 #: src/modules/fileman/e_mod_config.c:267
-#: src/modules/gadman/e_mod_gadman.c:782
+#: src/modules/gadman/e_mod_gadman.c:792
 msgid "Behavior"
 msgstr "行为"
 
@@ -6978,19 +6974,19 @@ msgstr "组件"
 msgid "Background Options"
 msgstr "背景摇镜"
 
-#: src/modules/gadman/e_mod_gadman.c:730
+#: src/modules/gadman/e_mod_gadman.c:740
 msgid "Free"
 msgstr "空闲"
 
-#: src/modules/gadman/e_mod_gadman.c:762
+#: src/modules/gadman/e_mod_gadman.c:772
 msgid "Always on desktop"
 msgstr "总在桌面上"
 
-#: src/modules/gadman/e_mod_gadman.c:772
+#: src/modules/gadman/e_mod_gadman.c:782
 msgid "On top pressing"
 msgstr "按下时"
 
-#: src/modules/gadman/e_mod_gadman.c:803
+#: src/modules/gadman/e_mod_gadman.c:813
 msgid "Add other gadgets"
 msgstr "添加其他组件"
 
@@ -7102,20 +7098,13 @@ msgstr "确定要删除这个bar源吗？"
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:790
-msgid "Change Icon Properties"
-msgstr "改变图标属性"
+#: src/modules/ibar/e_mod_main.c:792
+msgid "Properties"
+msgstr "属性"
 
-#: src/modules/ibar/e_mod_main.c:795
-msgid "Remove Icon"
-msgstr "删除图标"
-
-#: src/modules/ibar/e_mod_main.c:805
-msgid "Add An Icon"
-msgstr "添加一个图标"
-
-#: src/modules/ibar/e_mod_main.c:812
-msgid "Create New Icon"
+#: src/modules/ibar/e_mod_main.c:813
+#, fuzzy
+msgid "Create new Icon"
 msgstr "创建新图标"
 
 #: src/modules/ibox/e_mod_config.c:48
@@ -7281,32 +7270,32 @@ msgstr ""
 "您不能在 shelf 使用鼠标右键，因为右键已经被指定到上下文菜单。<br>此按键只能在"
 "弹出菜单工作。"
 
-#: src/modules/pager/e_mod_main.c:2814
+#: src/modules/pager/e_mod_main.c:2816
 msgid "Show Pager Popup"
 msgstr ""
 
-#: src/modules/pager/e_mod_main.c:2821 src/modules/pager/e_mod_main.c:2864
+#: src/modules/pager/e_mod_main.c:2823 src/modules/pager/e_mod_main.c:2866
 msgid "Popup Desk Right"
 msgstr "弹出桌面向右"
 
-#: src/modules/pager/e_mod_main.c:2823 src/modules/pager/e_mod_main.c:2865
+#: src/modules/pager/e_mod_main.c:2825 src/modules/pager/e_mod_main.c:2867
 msgid "Popup Desk Left"
 msgstr "弹出桌面向左"
 
-#: src/modules/pager/e_mod_main.c:2825 src/modules/pager/e_mod_main.c:2866
+#: src/modules/pager/e_mod_main.c:2827 src/modules/pager/e_mod_main.c:2868
 msgid "Popup Desk Up"
 msgstr "弹出桌面向上"
 
-#: src/modules/pager/e_mod_main.c:2827 src/modules/pager/e_mod_main.c:2867
+#: src/modules/pager/e_mod_main.c:2829 src/modules/pager/e_mod_main.c:2869
 msgid "Popup Desk Down"
 msgstr "弹出桌面向下"
 
-#: src/modules/pager/e_mod_main.c:2829 src/modules/pager/e_mod_main.c:2868
+#: src/modules/pager/e_mod_main.c:2831 src/modules/pager/e_mod_main.c:2870
 #, fuzzy
 msgid "Popup Desk Next"
 msgstr "弹出桌面向左"
 
-#: src/modules/pager/e_mod_main.c:2831 src/modules/pager/e_mod_main.c:2869
+#: src/modules/pager/e_mod_main.c:2833 src/modules/pager/e_mod_main.c:2871
 #, fuzzy
 msgid "Popup Desk Previous"
 msgstr "弹出桌面向左"
@@ -7538,14 +7527,14 @@ msgstr "混音器设定已经更新"
 msgid "Controls"
 msgstr "控制"
 
-#: src/modules/mixer/e_mod_main.c:1125
+#: src/modules/mixer/e_mod_main.c:1127
 msgid ""
 "Mixer Module Settings data changed.<br>Your old configuration has been "
 "replaced with new default.<br>Sorry for the inconvenience."
 msgstr "混音模块设置已改变。如有不便，敬请谅解。"
 
 #: src/modules/connman/e_mod_main.c:83 src/modules/connman/e_mod_main.c:110
-#: src/modules/connman/e_mod_main.c:970 src/modules/connman/e_mod_main.c:1699
+#: src/modules/connman/e_mod_main.c:970 src/modules/connman/e_mod_main.c:1701
 msgid "Cannot toggle system's offline mode."
 msgstr ""
 
@@ -7598,105 +7587,120 @@ msgstr ""
 msgid "Offline mode"
 msgstr "脱机模式"
 
-#: src/modules/connman/e_mod_main.c:1323
+#: src/modules/connman/e_mod_main.c:1325
 msgid "No ConnMan"
 msgstr "没有 ConnMan"
 
-#: src/modules/connman/e_mod_main.c:1325
+#: src/modules/connman/e_mod_main.c:1327
 msgid "No ConnMan server found."
 msgstr "未找到 ConnMan 服务器。"
 
-#: src/modules/connman/e_mod_main.c:1338
+#: src/modules/connman/e_mod_main.c:1340
 msgid "Offline mode: all radios are turned off"
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:1363
+#: src/modules/connman/e_mod_main.c:1365
 msgid "No Connection"
 msgstr "无连接"
 
-#: src/modules/connman/e_mod_main.c:1367
+#: src/modules/connman/e_mod_main.c:1369
 msgid "Not connected"
 msgstr "未连接"
 
-#: src/modules/connman/e_mod_main.c:1370 src/modules/connman/e_mod_main.c:1776
+#: src/modules/connman/e_mod_main.c:1372 src/modules/connman/e_mod_main.c:1778
 msgid "disconnect"
 msgstr "断开连接"
 
-#: src/modules/connman/e_mod_main.c:1393
+#: src/modules/connman/e_mod_main.c:1395
 msgid "Unknown Name"
 msgstr "未知名称"
 
-#: src/modules/connman/e_mod_main.c:1402
+#: src/modules/connman/e_mod_main.c:1404
 msgid "No error"
 msgstr "无错误"
 
-#: src/modules/connman/e_mod_main.c:1770
+#: src/modules/connman/e_mod_main.c:1772
 msgid "idle"
 msgstr "空闲"
 
-#: src/modules/connman/e_mod_main.c:1771
+#: src/modules/connman/e_mod_main.c:1773
 msgid "association"
 msgstr "关联"
 
-#: src/modules/connman/e_mod_main.c:1772
+#: src/modules/connman/e_mod_main.c:1774
 msgid "configuration"
 msgstr "配置"
 
-#: src/modules/connman/e_mod_main.c:1773
+#: src/modules/connman/e_mod_main.c:1775
 msgid "ready"
 msgstr "就绪"
 
-#: src/modules/connman/e_mod_main.c:1774
+#: src/modules/connman/e_mod_main.c:1776
 #, fuzzy
 msgid "login"
 msgstr "简易"
 
-#: src/modules/connman/e_mod_main.c:1775
+#: src/modules/connman/e_mod_main.c:1777
 #, fuzzy
 msgid "online"
 msgstr "引擎"
 
-#: src/modules/connman/e_mod_main.c:1777
+#: src/modules/connman/e_mod_main.c:1779
 msgid "failure"
 msgstr "错误"
 
-#: src/modules/connman/e_mod_main.c:1778
+#: src/modules/connman/e_mod_main.c:1780
 #, fuzzy
 msgid "enabled"
 msgstr "已启用"
 
-#: src/modules/connman/e_mod_main.c:1779
+#: src/modules/connman/e_mod_main.c:1781
 #, fuzzy
 msgid "available"
 msgstr "填充可用区域"
 
-#: src/modules/connman/e_mod_main.c:1780
+#: src/modules/connman/e_mod_main.c:1782
 #, fuzzy
 msgid "connected"
 msgstr "未连接"
 
-#: src/modules/connman/e_mod_main.c:1781
+#: src/modules/connman/e_mod_main.c:1783
 #, fuzzy
 msgid "offline"
 msgstr "脱机"
 
-#: src/modules/systray/e_mod_main.c:889
+#: src/modules/systray/e_mod_main.c:891
 msgid "Another systray exists"
 msgstr "有另外一个系统托盘存在。"
 
-#: src/modules/systray/e_mod_main.c:890
+#: src/modules/systray/e_mod_main.c:892
 msgid "There can be only one systray gadget and another one already exists."
 msgstr "只允许一个系统托盘的组件，目前已经有了一个。"
 
-#: src/modules/systray/e_mod_main.c:1092
+#: src/modules/systray/e_mod_main.c:1094
 msgid "Systray"
 msgstr "系统托盘"
 
+#~ msgid "Able to be resized"
+#~ msgstr "可以变换尺寸"
+
+#~ msgid "Remove this gadget"
+#~ msgstr "删除该组件"
+
+#~ msgid "Powersaving policy"
+#~ msgstr "节电规则"
+
+#~ msgid "Change Icon Properties"
+#~ msgstr "改变图标属性"
+
+#~ msgid "Remove Icon"
+#~ msgstr "删除图标"
+
+#~ msgid "Add An Icon"
+#~ msgstr "添加一个图标"
+
 #~ msgid "Executable"
 #~ msgstr "可执行"
-
-#~ msgid "Properties"
-#~ msgstr "属性"
 
 #~ msgid "Set Shelf Contents"
 #~ msgstr "设定书架内容"

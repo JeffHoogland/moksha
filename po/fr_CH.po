@@ -29,15 +29,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-09-08 20:58-0300\n"
+"POT-Creation-Date: 2010-10-03 18:09+0900\n"
 "PO-Revision-Date: 2007-06-04 11:27+0100\n"
 "Last-Translator: Antoine Giniès <aginies.cooker@gmail.com>\n"
 "Language-Team: Enlightenment i18n French <enlightenment-intl@lists."
 "sourceforge.net>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 
 #: src/bin/e_about.c:14
 msgid "About Enlightenment"
@@ -92,11 +92,11 @@ msgid "<title>The Team</title>"
 msgstr "<title>L'Équipe</title>"
 
 #: src/bin/e_actions.c:366
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"You are about to kill %s.<br><br>Please keep in mind that all data of this "
-"window,<br>which has not been saved yet will be lost!<br><br>Are you sure "
-"you want to kill this window?"
+"You are about to kill %s.<br><br>Please keep in mind that all data from this "
+"window<br>which has not yet been saved will be lost!<br><br>Are you sure you "
+"want to kill this window?"
 msgstr ""
 "Vous êtes sur le point de tuer %s.<br><br>Toutes les informations contenues "
 "dans<br> cette fenêtre vont être perdu !<br><br>Êtes vous sur de vouloir "
@@ -846,8 +846,8 @@ msgstr ""
 msgid ""
 "Enlightenment cannot write its settings file<br>because it ran out of space "
 "to write the file.<br>You have either run out of disk space or have<br>gone "
-"over your quota limit.<br><br>The file where the error occurred was:<br>"
-"%s<br><br>This file has been deleted to avoid corrupt data.<br>"
+"over your quota limit.<br><br>The file where the error occurred was:<br>%"
+"s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 "Enlightenment n'a pu écrire son fichier de configuration<br>car il n'y a pas "
 "suffisamment d'espace pour l'écrire :<br>- soit vous n'avez plus d'espace "
@@ -859,19 +859,19 @@ msgstr ""
 #, fuzzy, c-format
 msgid ""
 "Enlightenment unexpectedly had the settings file<br>it was writing closed on "
-"it. This is very unusual.<br><br>The file where the error occurred was:<br>"
-"%s<br><br>This file has been deleted to avoid corrupt data.<br>"
+"it. This is very unusual.<br><br>The file where the error occurred was:<br>%"
+"s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 "Erreur de fermeture d'un fichier pendant son écriture par Enlightenment. Ce "
-"n'est pas courant.<br><br>Le fichier sur lequel l'erreur est apparu est:<br>"
-"%s<br><br>Ce fichier a été effacé pour éviter des erreurs de corruption.<br>"
+"n'est pas courant.<br><br>Le fichier sur lequel l'erreur est apparu est:<br>%"
+"s<br><br>Ce fichier a été effacé pour éviter des erreurs de corruption.<br>"
 
 #: src/bin/e_config.c:2097
 #, fuzzy
 msgid "Enlightenment Settings Write Problems"
 msgstr "Problèmes d'écriture de la configuration d'Enlightenment"
 
-#: src/bin/e_config_dialog.c:207 src/modules/battery/e_mod_main.c:711
+#: src/bin/e_config_dialog.c:207 src/modules/battery/e_mod_main.c:713
 #: src/modules/conf/e_mod_main.c:275 src/modules/conf_engine/e_mod_main.c:17
 #: src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
@@ -900,8 +900,8 @@ msgstr "Modules"
 #: src/modules/everything/e_mod_main.c:89
 #: src/modules/everything-apps/e_mod_main.c:1216
 #: src/modules/everything-files/e_mod_main.c:1656
-#: src/modules/gadman/e_mod_main.c:25 src/modules/mixer/e_mod_main.c:1047
-#: src/modules/connman/e_mod_main.c:1731
+#: src/modules/gadman/e_mod_main.c:25 src/modules/mixer/e_mod_main.c:1049
+#: src/modules/connman/e_mod_main.c:1733
 msgid "Extensions"
 msgstr "Extensions"
 
@@ -1568,41 +1568,45 @@ msgstr "Informations sur le lien"
 msgid "Select an Image"
 msgstr "Sélectionner une image"
 
-#: src/bin/e_gadcon.c:1328
+#: src/bin/e_gadcon.c:1329
 #, fuzzy
-msgid "Move this gadget to"
-msgstr "Supprimer ce gadget"
+msgid "Move to"
+msgstr "Texte de déplacement"
 
-#: src/bin/e_gadcon.c:1348 src/modules/gadman/e_mod_gadman.c:710
-msgid "Plain"
-msgstr "Tel quel"
+#: src/bin/e_gadcon.c:1354 src/modules/gadman/e_mod_gadman.c:709
+#, fuzzy
+msgid "Begin move/resize"
+msgstr "Déplacer / redimensionner ce gadget"
 
-#: src/bin/e_gadcon.c:1357 src/modules/gadman/e_mod_gadman.c:718
-msgid "Inset"
-msgstr "Encart"
+#: src/bin/e_gadcon.c:1360
+#, fuzzy
+msgid "Resizeable"
+msgstr "Changer la taille (resize)"
 
-#: src/bin/e_gadcon.c:1366 src/bin/e_int_config_modules.c:59
-#: src/modules/gadman/e_mod_gadman.c:754
-msgid "Appearance"
-msgstr "Apparence"
-
-#: src/bin/e_gadcon.c:1374
+#: src/bin/e_gadcon.c:1367
 msgid "Automatically scroll contents"
 msgstr "Défilement automatique du contenu"
 
-#: src/bin/e_gadcon.c:1381
-msgid "Able to be resized"
-msgstr "Permettre le redimensionnement"
+#: src/bin/e_gadcon.c:1378 src/modules/gadman/e_mod_gadman.c:720
+msgid "Plain"
+msgstr "Tel quel"
 
-#: src/bin/e_gadcon.c:1393 src/modules/gadman/e_mod_gadman.c:789
-msgid "Begin move/resize this gadget"
-msgstr "Déplacer / redimensionner ce gadget"
+#: src/bin/e_gadcon.c:1387 src/modules/gadman/e_mod_gadman.c:728
+msgid "Inset"
+msgstr "Encart"
 
-#: src/bin/e_gadcon.c:1401 src/modules/gadman/e_mod_gadman.c:797
-msgid "Remove this gadget"
-msgstr "Supprimer ce gadget"
+#: src/bin/e_gadcon.c:1396 src/bin/e_int_config_modules.c:59
+#: src/modules/gadman/e_mod_gadman.c:764
+msgid "Appearance"
+msgstr "Apparence"
 
-#: src/bin/e_gadcon.c:1879
+#: src/bin/e_gadcon.c:1407 src/bin/e_widget_config_list.c:66
+#: src/modules/conf_applications/e_int_config_apps.c:211
+#: src/modules/gadman/e_mod_gadman.c:804 src/modules/ibar/e_mod_main.c:797
+msgid "Remove"
+msgstr "Supprimer"
+
+#: src/bin/e_gadcon.c:1898
 msgid "Stop move/resize this gadget"
 msgstr "Arrêter de Déplacer/redimensionner ce gadget"
 
@@ -1850,13 +1854,13 @@ msgid "Window List"
 msgstr "Liste des fenêtres"
 
 #: src/bin/e_int_border_menu.c:1119 src/modules/pager/e_mod_main.c:257
-#: src/modules/pager/e_mod_main.c:2807 src/modules/pager/e_mod_main.c:2814
-#: src/modules/pager/e_mod_main.c:2821 src/modules/pager/e_mod_main.c:2823
-#: src/modules/pager/e_mod_main.c:2825 src/modules/pager/e_mod_main.c:2827
-#: src/modules/pager/e_mod_main.c:2829 src/modules/pager/e_mod_main.c:2831
-#: src/modules/pager/e_mod_main.c:2864 src/modules/pager/e_mod_main.c:2865
+#: src/modules/pager/e_mod_main.c:2809 src/modules/pager/e_mod_main.c:2816
+#: src/modules/pager/e_mod_main.c:2823 src/modules/pager/e_mod_main.c:2825
+#: src/modules/pager/e_mod_main.c:2827 src/modules/pager/e_mod_main.c:2829
+#: src/modules/pager/e_mod_main.c:2831 src/modules/pager/e_mod_main.c:2833
 #: src/modules/pager/e_mod_main.c:2866 src/modules/pager/e_mod_main.c:2867
 #: src/modules/pager/e_mod_main.c:2868 src/modules/pager/e_mod_main.c:2869
+#: src/modules/pager/e_mod_main.c:2870 src/modules/pager/e_mod_main.c:2871
 msgid "Pager"
 msgstr "Pager"
 
@@ -2128,16 +2132,16 @@ msgid "Start this program on login"
 msgstr "Démarrer ce programme à l'ouverture de session"
 
 #: src/bin/e_int_config_modules.c:60 src/bin/e_int_menus.c:223
-#: src/bin/e_shelf.c:1685 src/modules/battery/e_mod_main.c:186
+#: src/bin/e_shelf.c:1685 src/modules/battery/e_mod_main.c:188
 #: src/modules/conf/e_conf.c:121 src/modules/conf/e_conf.c:131
 #: src/modules/conf/e_mod_main.c:102 src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:133
 #: src/modules/conf_profiles/e_mod_main.c:17
 #: src/modules/everything-settings/e_mod_main.c:188
-#: src/modules/ibar/e_mod_main.c:311 src/modules/ibar/e_mod_main.c:821
-#: src/modules/ibox/e_mod_main.c:304 src/modules/ibox/e_mod_main.c:699
-#: src/modules/pager/e_mod_main.c:793 src/modules/temperature/e_mod_main.c:229
-#: src/modules/mixer/e_mod_main.c:641 src/modules/connman/e_mod_main.c:1225
+#: src/modules/ibar/e_mod_main.c:312 src/modules/ibar/e_mod_main.c:830
+#: src/modules/ibox/e_mod_main.c:306 src/modules/ibox/e_mod_main.c:700
+#: src/modules/pager/e_mod_main.c:803 src/modules/temperature/e_mod_main.c:231
+#: src/modules/mixer/e_mod_main.c:643 src/modules/connman/e_mod_main.c:1227
 #, fuzzy
 msgid "Settings"
 msgstr "Paramètre du bureau"
@@ -2431,8 +2435,8 @@ msgid ""
 "\t\tgiven the geometry. Add as many as you like. They all\n"
 "\t\treplace the real xinerama screens, if any. This can\n"
 "\t\tbe used to simulate xinerama.\n"
-"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen "
-"800x600+800+0\n"
+"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
+"+0\n"
 "\t-profile CONF_PROFILE\n"
 "\t\tUse the configuration profile CONF_PROFILE instead of the user selected "
 "default or just \"default\".\n"
@@ -2457,8 +2461,8 @@ msgstr ""
 "\t\tque vous le désirez. Ils remplaceront les écrans réels\n"
 "\t\tle cas échéant. Ceci peut être utilisé pour simuler\n"
 "\t\txinerama.\n"
-"\t\tExemple : -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen "
-"800x600+800+0\n"
+"\t\tExemple : -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600"
+"+800+0\n"
 "\t-profile PROFIL_CONF\n"
 "\t\tUtiliser le profil de configuration PROFIL_CONF en place du profil par "
 "défaut de l'utilisateur ou juste \"default\" pour le profil par défaut.\n"
@@ -3091,7 +3095,7 @@ msgstr "Arrêter de déplacer/redimensionner des éléments"
 msgid "Begin Moving/Resizing Gadgets"
 msgstr "Démarrer le déplacement/redimensionnement des éléments"
 
-#: src/bin/e_shelf.c:1680
+#: src/bin/e_shelf.c:1680 src/modules/ibar/e_mod_main.c:824
 #, fuzzy
 msgid "Contents"
 msgstr "Commentaire"
@@ -3470,11 +3474,6 @@ msgstr ""
 msgid "Add"
 msgstr "Ajouter"
 
-#: src/bin/e_widget_config_list.c:66
-#: src/modules/conf_applications/e_int_config_apps.c:211
-msgid "Remove"
-msgstr "Supprimer"
-
 #: src/bin/e_widget_config_list.c:80
 #: src/modules/conf_applications/e_int_config_apps.c:223
 msgid "Up"
@@ -3634,25 +3633,25 @@ msgstr ""
 msgid "Battery"
 msgstr "Batterie"
 
-#: src/modules/battery/e_mod_main.c:454
+#: src/modules/battery/e_mod_main.c:456
 #, fuzzy
 msgid "Your battery is low!"
 msgstr "Afficher une alerte dès que la batterie est faible"
 
-#: src/modules/battery/e_mod_main.c:456
+#: src/modules/battery/e_mod_main.c:458
 msgid "AC power is recommended."
 msgstr ""
 
-#: src/modules/battery/e_mod_main.c:531
+#: src/modules/battery/e_mod_main.c:533
 msgid "N/A"
 msgstr ""
 
-#: src/modules/battery/e_mod_main.c:605 src/modules/battery/e_mod_main.c:607
-#: src/modules/battery/e_mod_main.c:614 src/modules/battery/e_mod_main.c:616
+#: src/modules/battery/e_mod_main.c:607 src/modules/battery/e_mod_main.c:609
+#: src/modules/battery/e_mod_main.c:616 src/modules/battery/e_mod_main.c:618
 msgid "ERROR"
 msgstr ""
 
-#: src/modules/battery/e_mod_main.c:713
+#: src/modules/battery/e_mod_main.c:715
 #, fuzzy
 msgid "Battery Meter"
 msgstr "Batterie"
@@ -4339,7 +4338,7 @@ msgid "Screen Lock"
 msgstr "Verrouillage d'écran"
 
 #: src/modules/conf_desks/e_int_config_desks.c:58
-#: src/modules/pager/e_mod_main.c:800
+#: src/modules/pager/e_mod_main.c:795
 msgid "Virtual Desktops Settings"
 msgstr "Configuration des Bureaux virtuels"
 
@@ -4480,8 +4479,8 @@ msgid ""
 "will be restored in %d seconds."
 msgstr ""
 "Pas trop pouet? Cliquez sur <hilight>Oui</hilight> si c'est le cas, sur Non "
-"sinon.<br>Si vous ne cliquez nulle part, la précédente résolution de<br>%dx"
-"%d à %d Hz sera restaurée dans %d secondes."
+"sinon.<br>Si vous ne cliquez nulle part, la précédente résolution de<br>%dx%"
+"d à %d Hz sera restaurée dans %d secondes."
 
 #: src/modules/conf_display/e_int_config_display.c:143
 #, fuzzy, c-format
@@ -4491,8 +4490,8 @@ msgid ""
 "restored in %d seconds."
 msgstr ""
 "Pas trop pouet? Cliquez sur <hilight>Oui</hilight> si c'est le cas, sur Non "
-"sinon.<br>Si vous ne cliquez nulle part, la précédente résolution de<br>%dx"
-"%d sera restaurée dans %d secondes."
+"sinon.<br>Si vous ne cliquez nulle part, la précédente résolution de<br>%dx%"
+"d sera restaurée dans %d secondes."
 
 #: src/modules/conf_display/e_int_config_display.c:153
 #, fuzzy, c-format
@@ -4502,8 +4501,8 @@ msgid ""
 "will be restored <hilight>IMMEDIATELY</hilight>."
 msgstr ""
 "Pas trop pouet? Cliquez sur <hilight>Oui</hilight> si c'est le cas, sur Non "
-"sinon.<br>Si vous ne cliquez nulle part, la précédente résolution de<br>%dx"
-"%d à %d Hz sera restaurée <hilight>IMMÉDIATEMENT</hilight>."
+"sinon.<br>Si vous ne cliquez nulle part, la précédente résolution de<br>%dx%"
+"d à %d Hz sera restaurée <hilight>IMMÉDIATEMENT</hilight>."
 
 #: src/modules/conf_display/e_int_config_display.c:160
 #, fuzzy, c-format
@@ -4732,8 +4731,8 @@ msgstr "Erreur de raccourci-clavier"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1175
 #, fuzzy, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding edge sequence."
+"The binding key sequence, that you choose, is already used by <br><hilight>%"
+"s</hilight> action.<br>Please choose another binding edge sequence."
 msgstr ""
 "La séquence de raccourci-clavier, que vous avez choisie, est déjà "
 "utilisée<br>par l'action <hilight>%s</hilight>.<br>Veuillez choisir une "
@@ -4742,28 +4741,28 @@ msgstr ""
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1312
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1302
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1334
-#: src/modules/gadman/e_mod_gadman.c:818
+#: src/modules/gadman/e_mod_gadman.c:828
 msgid "CTRL"
 msgstr "CTRL"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1317
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1307
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1339
-#: src/modules/gadman/e_mod_gadman.c:823
+#: src/modules/gadman/e_mod_gadman.c:833
 msgid "ALT"
 msgstr "ALT"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1323
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1313
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1345
-#: src/modules/gadman/e_mod_gadman.c:829
+#: src/modules/gadman/e_mod_gadman.c:839
 msgid "SHIFT"
 msgstr "MAJ"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1329
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1319
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1351
-#: src/modules/gadman/e_mod_gadman.c:835
+#: src/modules/gadman/e_mod_gadman.c:845
 msgid "WIN"
 msgstr "WIN"
 
@@ -5010,7 +5009,7 @@ msgstr "Bytecode"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:657
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:193
-#: src/modules/cpufreq/e_mod_main.c:224 src/modules/cpufreq/e_mod_main.c:258
+#: src/modules/cpufreq/e_mod_main.c:224 src/modules/cpufreq/e_mod_main.c:256
 msgid "Automatic"
 msgstr "Automatique"
 
@@ -5217,8 +5216,8 @@ msgstr "Erreur de raccourci-clavier"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1148
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by <br><hilight>%"
+"s</hilight> action.<br>Please choose another binding key sequence."
 msgstr ""
 "La séquence de raccourci-clavier, que vous avez choisie, est déjà "
 "utilisée<br>par l'action <hilight>%s</hilight>.<br>Veuillez choisir une "
@@ -6283,13 +6282,13 @@ msgstr "Remplir l'espace disponible"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:161
 #: src/modules/everything/evry_config.c:572
-#: src/modules/gadman/e_mod_gadman.c:738
+#: src/modules/gadman/e_mod_gadman.c:748
 msgid "Horizontal"
 msgstr "Horizontal"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:163
 #: src/modules/everything/evry_config.c:565
-#: src/modules/gadman/e_mod_gadman.c:746
+#: src/modules/gadman/e_mod_gadman.c:756
 msgid "Vertical"
 msgstr "Vertical"
 
@@ -6580,15 +6579,15 @@ msgstr "Très lente (30 s)"
 msgid "Manual"
 msgstr "Manuel"
 
-#: src/modules/cpufreq/e_mod_main.c:226 src/modules/cpufreq/e_mod_main.c:260
+#: src/modules/cpufreq/e_mod_main.c:226 src/modules/cpufreq/e_mod_main.c:258
 msgid "Lower Power Automatic"
 msgstr "Automatique basse consommation"
 
-#: src/modules/cpufreq/e_mod_main.c:228 src/modules/cpufreq/e_mod_main.c:262
+#: src/modules/cpufreq/e_mod_main.c:228 src/modules/cpufreq/e_mod_main.c:260
 msgid "Minimum Speed"
 msgstr "Vitesse minimale"
 
-#: src/modules/cpufreq/e_mod_main.c:230 src/modules/cpufreq/e_mod_main.c:264
+#: src/modules/cpufreq/e_mod_main.c:230 src/modules/cpufreq/e_mod_main.c:262
 msgid "Maximum Speed"
 msgstr "Vitesse maximale"
 
@@ -6596,21 +6595,17 @@ msgstr "Vitesse maximale"
 msgid "Restore CPU Power Policy"
 msgstr "Restaurer la politique CPU"
 
-#: src/modules/cpufreq/e_mod_main.c:249
-msgid "Powersaving policy"
-msgstr ""
-
-#: src/modules/cpufreq/e_mod_main.c:277
+#: src/modules/cpufreq/e_mod_main.c:275
 #, fuzzy
 msgid "Automatic powersaving"
 msgstr "Verrouillage automatique"
 
-#: src/modules/cpufreq/e_mod_main.c:296
+#: src/modules/cpufreq/e_mod_main.c:294
 #, c-format
 msgid "%i MHz"
 msgstr "%i MHz"
 
-#: src/modules/cpufreq/e_mod_main.c:298
+#: src/modules/cpufreq/e_mod_main.c:296
 #, c-format
 msgid "%i.%i GHz"
 msgstr "%i,%i GHz"
@@ -7266,7 +7261,7 @@ msgid "Show Toolbar"
 msgstr "Couleur de l'ombre"
 
 #: src/modules/fileman/e_mod_config.c:267
-#: src/modules/gadman/e_mod_gadman.c:782
+#: src/modules/gadman/e_mod_gadman.c:792
 msgid "Behavior"
 msgstr "Comportement"
 
@@ -7461,21 +7456,21 @@ msgstr "Widgets"
 msgid "Background Options"
 msgstr "Changement de fond d'écran"
 
-#: src/modules/gadman/e_mod_gadman.c:730
+#: src/modules/gadman/e_mod_gadman.c:740
 #, fuzzy
 msgid "Free"
 msgstr "Féroé"
 
-#: src/modules/gadman/e_mod_gadman.c:762
+#: src/modules/gadman/e_mod_gadman.c:772
 #, fuzzy
 msgid "Always on desktop"
 msgstr "Toujours au-dessus"
 
-#: src/modules/gadman/e_mod_gadman.c:772
+#: src/modules/gadman/e_mod_gadman.c:782
 msgid "On top pressing"
 msgstr ""
 
-#: src/modules/gadman/e_mod_gadman.c:803
+#: src/modules/gadman/e_mod_gadman.c:813
 #, fuzzy
 msgid "Add other gadgets"
 msgstr "Ajouter un gadget"
@@ -7592,22 +7587,13 @@ msgstr "Êtes-vous sûr de vouloir supprimer cette source de barre ?"
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:790
-msgid "Change Icon Properties"
-msgstr "Changer les propriétés de l'icône"
+#: src/modules/ibar/e_mod_main.c:792
+msgid "Properties"
+msgstr "Propriétés"
 
-#: src/modules/ibar/e_mod_main.c:795
-msgid "Remove Icon"
-msgstr "Supprimer l'icône"
-
-#: src/modules/ibar/e_mod_main.c:805
+#: src/modules/ibar/e_mod_main.c:813
 #, fuzzy
-msgid "Add An Icon"
-msgstr "Ajouter une applications"
-
-#: src/modules/ibar/e_mod_main.c:812
-#, fuzzy
-msgid "Create New Icon"
+msgid "Create new Icon"
 msgstr "Créer une icône"
 
 #: src/modules/ibox/e_mod_config.c:48
@@ -7783,37 +7769,37 @@ msgstr ""
 "Vous ne pouvez pas utiliser le bouton droit de la souris<br>pour cette "
 "action car il est déja utilisé pour les menus contextuels."
 
-#: src/modules/pager/e_mod_main.c:2814
+#: src/modules/pager/e_mod_main.c:2816
 #, fuzzy
 msgid "Show Pager Popup"
 msgstr "Paramètres de popup du Pager"
 
-#: src/modules/pager/e_mod_main.c:2821 src/modules/pager/e_mod_main.c:2864
+#: src/modules/pager/e_mod_main.c:2823 src/modules/pager/e_mod_main.c:2866
 #, fuzzy
 msgid "Popup Desk Right"
 msgstr "Vers le bureau à droite"
 
-#: src/modules/pager/e_mod_main.c:2823 src/modules/pager/e_mod_main.c:2865
+#: src/modules/pager/e_mod_main.c:2825 src/modules/pager/e_mod_main.c:2867
 #, fuzzy
 msgid "Popup Desk Left"
 msgstr "Vers le bureau à gauche"
 
-#: src/modules/pager/e_mod_main.c:2825 src/modules/pager/e_mod_main.c:2866
+#: src/modules/pager/e_mod_main.c:2827 src/modules/pager/e_mod_main.c:2868
 #, fuzzy
 msgid "Popup Desk Up"
 msgstr "Vers le bureau au dessus"
 
-#: src/modules/pager/e_mod_main.c:2827 src/modules/pager/e_mod_main.c:2867
+#: src/modules/pager/e_mod_main.c:2829 src/modules/pager/e_mod_main.c:2869
 #, fuzzy
 msgid "Popup Desk Down"
 msgstr "Vers le bureau en dessous"
 
-#: src/modules/pager/e_mod_main.c:2829 src/modules/pager/e_mod_main.c:2868
+#: src/modules/pager/e_mod_main.c:2831 src/modules/pager/e_mod_main.c:2870
 #, fuzzy
 msgid "Popup Desk Next"
 msgstr "Vers le bureau à gauche"
 
-#: src/modules/pager/e_mod_main.c:2831 src/modules/pager/e_mod_main.c:2869
+#: src/modules/pager/e_mod_main.c:2833 src/modules/pager/e_mod_main.c:2871
 #, fuzzy
 msgid "Popup Desk Previous"
 msgstr "Vers le bureau à gauche"
@@ -8077,14 +8063,14 @@ msgstr "Configuration du gestionnaire de fichiers mise à jour"
 msgid "Controls"
 msgstr "Fixer le controleur"
 
-#: src/modules/mixer/e_mod_main.c:1125
+#: src/modules/mixer/e_mod_main.c:1127
 msgid ""
 "Mixer Module Settings data changed.<br>Your old configuration has been "
 "replaced with new default.<br>Sorry for the inconvenience."
 msgstr ""
 
 #: src/modules/connman/e_mod_main.c:83 src/modules/connman/e_mod_main.c:110
-#: src/modules/connman/e_mod_main.c:970 src/modules/connman/e_mod_main.c:1699
+#: src/modules/connman/e_mod_main.c:970 src/modules/connman/e_mod_main.c:1701
 msgid "Cannot toggle system's offline mode."
 msgstr ""
 
@@ -8138,115 +8124,132 @@ msgstr ""
 msgid "Offline mode"
 msgstr "Délai avant d'éteindre"
 
-#: src/modules/connman/e_mod_main.c:1323
+#: src/modules/connman/e_mod_main.c:1325
 msgid "No ConnMan"
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:1325
+#: src/modules/connman/e_mod_main.c:1327
 msgid "No ConnMan server found."
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:1338
+#: src/modules/connman/e_mod_main.c:1340
 msgid "Offline mode: all radios are turned off"
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:1363
+#: src/modules/connman/e_mod_main.c:1365
 #, fuzzy
 msgid "No Connection"
 msgstr "Paramètres de sélection"
 
-#: src/modules/connman/e_mod_main.c:1367
+#: src/modules/connman/e_mod_main.c:1369
 #, fuzzy
 msgid "Not connected"
 msgstr "Protégé"
 
-#: src/modules/connman/e_mod_main.c:1370 src/modules/connman/e_mod_main.c:1776
+#: src/modules/connman/e_mod_main.c:1372 src/modules/connman/e_mod_main.c:1778
 msgid "disconnect"
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:1393
+#: src/modules/connman/e_mod_main.c:1395
 #, fuzzy
 msgid "Unknown Name"
 msgstr "volume inconnu"
 
-#: src/modules/connman/e_mod_main.c:1402
+#: src/modules/connman/e_mod_main.c:1404
 #, fuzzy
 msgid "No error"
 msgstr "Erreur d'exécution"
 
-#: src/modules/connman/e_mod_main.c:1770
+#: src/modules/connman/e_mod_main.c:1772
 #, fuzzy
 msgid "idle"
 msgstr "Répéter"
 
-#: src/modules/connman/e_mod_main.c:1771
+#: src/modules/connman/e_mod_main.c:1773
 #, fuzzy
 msgid "association"
 msgstr "Transitions"
 
-#: src/modules/connman/e_mod_main.c:1772
+#: src/modules/connman/e_mod_main.c:1774
 #, fuzzy
 msgid "configuration"
 msgstr "Configuration"
 
-#: src/modules/connman/e_mod_main.c:1773
+#: src/modules/connman/e_mod_main.c:1775
 #, fuzzy
 msgid "ready"
 msgstr "Grenade"
 
-#: src/modules/connman/e_mod_main.c:1774
+#: src/modules/connman/e_mod_main.c:1776
 #, fuzzy
 msgid "login"
 msgstr "Blin"
 
-#: src/modules/connman/e_mod_main.c:1775
+#: src/modules/connman/e_mod_main.c:1777
 #, fuzzy
 msgid "online"
 msgstr "Moteur"
 
-#: src/modules/connman/e_mod_main.c:1777
+#: src/modules/connman/e_mod_main.c:1779
 #, fuzzy
 msgid "failure"
 msgstr "Configurer"
 
-#: src/modules/connman/e_mod_main.c:1778
+#: src/modules/connman/e_mod_main.c:1780
 #, fuzzy
 msgid "enabled"
 msgstr "Activé"
 
-#: src/modules/connman/e_mod_main.c:1779
+#: src/modules/connman/e_mod_main.c:1781
 #, fuzzy
 msgid "available"
 msgstr "Remplir l'espace disponible"
 
-#: src/modules/connman/e_mod_main.c:1780
+#: src/modules/connman/e_mod_main.c:1782
 #, fuzzy
 msgid "connected"
 msgstr "Protégé"
 
-#: src/modules/connman/e_mod_main.c:1781
+#: src/modules/connman/e_mod_main.c:1783
 #, fuzzy
 msgid "offline"
 msgstr "Délai avant d'éteindre"
 
-#: src/modules/systray/e_mod_main.c:889
+#: src/modules/systray/e_mod_main.c:891
 msgid "Another systray exists"
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:890
+#: src/modules/systray/e_mod_main.c:892
 msgid "There can be only one systray gadget and another one already exists."
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:1092
+#: src/modules/systray/e_mod_main.c:1094
 #, fuzzy
 msgid "Systray"
 msgstr "Système"
 
+#, fuzzy
+#~ msgid "Move this gadget to"
+#~ msgstr "Supprimer ce gadget"
+
+#~ msgid "Able to be resized"
+#~ msgstr "Permettre le redimensionnement"
+
+#~ msgid "Remove this gadget"
+#~ msgstr "Supprimer ce gadget"
+
+#~ msgid "Change Icon Properties"
+#~ msgstr "Changer les propriétés de l'icône"
+
+#~ msgid "Remove Icon"
+#~ msgstr "Supprimer l'icône"
+
+#, fuzzy
+#~ msgid "Add An Icon"
+#~ msgstr "Ajouter une applications"
+
 #~ msgid "Executable"
 #~ msgstr "Exécutable"
-
-#~ msgid "Properties"
-#~ msgstr "Propriétés"
 
 #, fuzzy
 #~ msgid "Set Shelf Contents"
