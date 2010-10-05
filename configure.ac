@@ -615,6 +615,7 @@ enlightenment.spec
 enlightenment.pc
 src/Makefile
 src/bin/Makefile
+src/bin/e_fm/Makefile
 src/modules/Makefile
 src/modules/ibar/Makefile
 src/modules/ibar/module.desktop

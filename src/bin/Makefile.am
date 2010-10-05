@@ -1,3 +1,5 @@
+SUBDIRS = e_fm
+
 MAINTAINERCLEANFILES = Makefile.in
 
 INCLUDES = -I$(top_builddir) \
@@ -23,7 +25,6 @@ enlightenment_start
 internal_bindir = $(libdir)/enlightenment/utils
 internal_bin_PROGRAMS = \
 enlightenment_init \
-enlightenment_fm \
 enlightenment_fm_op \
 enlightenment_sys \
 enlightenment_thumb
@@ -338,15 +339,6 @@ e_user.c \
 e_sha1.c
 
 enlightenment_thumb_LDADD = @E_THUMB_LIBS@
-
-enlightenment_fm_SOURCES = \
-e_fm_main.c \
-e_fm_ipc.c \
-e_user.c \
-e_sha1.c
-
-enlightenment_fm_LDADD = @E_FM_LIBS@
-enlightenment_fm_CFLAGS = $(INCLUDES)
 
 enlightenment_fm_op_SOURCES = \
 e_fm_op.c
