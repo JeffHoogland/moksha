@@ -1552,7 +1552,7 @@ _policy_focus_back(E_Zone *zone)
 
 //   printf("Focus back\n");
 
-   EINA_LIST_FOREACH(_pol_focus_stack, l, bd) 
+   EINA_LIST_REVERSE_FOREACH(_pol_focus_stack, l, bd) 
      {
         if (bd->zone != zone) continue;
         fl = eina_list_append(fl, bd);
