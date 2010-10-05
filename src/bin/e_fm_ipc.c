@@ -55,7 +55,7 @@
 typedef struct _E_Dir E_Dir;
 typedef struct _E_Fop E_Fop;
 typedef struct _E_Mod E_Mod;
-typedef struct _E_Fm_Slave E_Fm_Slave;
+typedef struct _e_fm_ipc_slave E_Fm_Slave;
 typedef struct _E_Fm_Task E_Fm_Task;
 
 struct _E_Dir
@@ -100,7 +100,7 @@ struct _E_Mod
    unsigned char  done : 1;
 };
 
-struct _E_Fm_Slave
+struct _e_fm_ipc_slave
 {
    Ecore_Exe *exe;
    int id;
@@ -120,59 +120,59 @@ struct _E_Fm_Task
 
 #include "e_fm_shared.h"
 /* local subsystem globals */
-Ecore_Ipc_Server *_e_ipc_server = NULL;
+Ecore_Ipc_Server *_e_fm_ipc_server = NULL;
 
 static Eina_List *_e_dirs = NULL;
 static Eina_List *_e_fops = NULL;
 static int _e_sync_num = 0;
 
 
-static Eina_List *_e_fm_slaves = NULL;
+static Eina_List *_e_fm_ipc_slaves = NULL;
 static Eina_List *_e_fm_tasks = NULL;
 
 /* local subsystem functions */
-static Eina_Bool _e_ipc_cb_server_add(void *data, int type, void *event);
-static Eina_Bool _e_ipc_cb_server_del(void *data, int type, void *event);
-static Eina_Bool _e_ipc_cb_server_data(void *data, int type, void *event);
+static Eina_Bool _e_fm_ipc_cb_server_add(void *data, int type, void *event);
+static Eina_Bool _e_fm_ipc_cb_server_del(void *data, int type, void *event);
+static Eina_Bool _e_fm_ipc_cb_server_data(void *data, int type, void *event);
 
-static void _e_fm_monitor_start(int id, const char *path);
-static void _e_fm_monitor_start_try(E_Fm_Task *task);
-static void _e_fm_monitor_end(int id, const char *path);
-static E_Fm_Task *_e_fm_task_get(int id);
-static Eina_List *_e_fm_task_node_get(int id);
-static void _e_fm_task_remove(E_Fm_Task *task);
-static void _e_fm_mkdir_try(E_Fm_Task *task);
-static void _e_fm_mkdir(int id, const char *src, const char *rel, int rel_to, int x, int y);
-static void _e_fm_handle_error_response(int id, E_Fm_Op_Type type);
+static void _e_fm_ipc_monitor_start(int id, const char *path);
+static void _e_fm_ipc_monitor_start_try(E_Fm_Task *task);
+static void _e_fm_ipc_monitor_end(int id, const char *path);
+static E_Fm_Task *_e_fm_ipc_task_get(int id);
+static Eina_List *_e_fm_ipc_task_node_get(int id);
+static void _e_fm_ipc_task_remove(E_Fm_Task *task);
+static void _e_fm_ipc_mkdir_try(E_Fm_Task *task);
+static void _e_fm_ipc_mkdir(int id, const char *src, const char *rel, int rel_to, int x, int y);
+static void _e_fm_ipc_handle_error_response(int id, E_Fm_Op_Type type);
 
-static int _e_client_send(int id, E_Fm_Op_Type type, void *data, int size);
+static int _e_fm_ipc_client_send(int id, E_Fm_Op_Type type, void *data, int size);
 
-static int _e_fm_slave_run(E_Fm_Op_Type type, const char *args, int id);
-static E_Fm_Slave *_e_fm_slave_get(int id);
-static int _e_fm_slave_send(E_Fm_Slave *slave, E_Fm_Op_Type type, void *data, int size);
+static int _e_fm_ipc_slave_run(E_Fm_Op_Type type, const char *args, int id);
+static E_Fm_Slave *_e_fm_ipc_slave_get(int id);
+static int _e_fm_ipc_slave_send(E_Fm_Slave *slave, E_Fm_Op_Type type, void *data, int size);
 
-static void _e_cb_file_monitor(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, const char *path);
-static Eina_Bool _e_cb_recent_clean(void *data);
+static void _e_fm_ipc_cb_file_monitor(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, const char *path);
+static Eina_Bool _e_fm_ipc_cb_recent_clean(void *data);
 
-static void _e_file_add_mod(E_Dir *ed, const char *path, E_Fm_Op_Type op, int listing);
-static void _e_file_add(E_Dir *ed, const char *path, int listing);
-static void _e_file_del(E_Dir *ed, const char *path);
-static void _e_file_mod(E_Dir *ed, const char *path);
-static void _e_file_mon_dir_del(E_Dir *ed, const char *path);
-static void _e_file_mon_list_sync(E_Dir *ed);
+static void _e_fm_ipc_file_add_mod(E_Dir *ed, const char *path, E_Fm_Op_Type op, int listing);
+static void _e_fm_ipc_file_add(E_Dir *ed, const char *path, int listing);
+static void _e_fm_ipc_file_del(E_Dir *ed, const char *path);
+static void _e_fm_ipc_file_mod(E_Dir *ed, const char *path);
+static void _e_fm_ipc_file_mon_dir_del(E_Dir *ed, const char *path);
+static void _e_fm_ipc_file_mon_list_sync(E_Dir *ed);
 
-static Eina_Bool _e_cb_file_mon_list_idler(void *data);
-static Eina_Bool _e_cb_fop_trash_idler(void *data);
+static Eina_Bool _e_fm_ipc_cb_file_mon_list_idler(void *data);
+static Eina_Bool _e_fm_ipc_cb_fop_trash_idler(void *data);
 static char *_e_str_list_remove(Eina_List **list, char *str);
-static void _e_fm_reorder(const char *file, const char *dst, const char *relative, int after);
-static void _e_dir_del(E_Dir *ed);
+static void _e_fm_ipc_reorder(const char *file, const char *dst, const char *relative, int after);
+static void _e_fm_ipc_dir_del(E_Dir *ed);
 
-static const char *_e_prepare_command(E_Fm_Op_Type type, const char *args);
+static const char *_e_fm_ipc_prepare_command(E_Fm_Op_Type type, const char *args);
 
 
 /* local subsystem functions */
 int
-_e_ipc_init(void)
+_e_fm_ipc_init(void)
 {
    char *sdir;
    
@@ -185,22 +185,22 @@ _e_ipc_init(void)
                "Enlightenment's IPC socket file (minus port number).\n");
         return 0;
      }
-   _e_ipc_server = ecore_ipc_server_connect(ECORE_IPC_LOCAL_SYSTEM, sdir, 0, NULL);
-   if (!_e_ipc_server)
+   _e_fm_ipc_server = ecore_ipc_server_connect(ECORE_IPC_LOCAL_SYSTEM, sdir, 0, NULL);
+   if (!_e_fm_ipc_server)
      {
         printf("Cannot connect to enlightenment - abort\n");
         return 0;
      }
    
-   ecore_event_handler_add(ECORE_IPC_EVENT_SERVER_ADD, _e_ipc_cb_server_add, NULL);
-   ecore_event_handler_add(ECORE_IPC_EVENT_SERVER_DEL, _e_ipc_cb_server_del, NULL);
-   ecore_event_handler_add(ECORE_IPC_EVENT_SERVER_DATA, _e_ipc_cb_server_data, NULL);
+   ecore_event_handler_add(ECORE_IPC_EVENT_SERVER_ADD, _e_fm_ipc_cb_server_add, NULL);
+   ecore_event_handler_add(ECORE_IPC_EVENT_SERVER_DEL, _e_fm_ipc_cb_server_del, NULL);
+   ecore_event_handler_add(ECORE_IPC_EVENT_SERVER_DATA, _e_fm_ipc_cb_server_data, NULL);
    
    return 1;
 }
 
 static Eina_Bool
-_e_ipc_cb_server_add(void *data __UNUSED__, int type __UNUSED__, void *event)
+_e_fm_ipc_cb_server_add(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Ipc_Event_Server_Add *e;
    
@@ -213,7 +213,7 @@ _e_ipc_cb_server_add(void *data __UNUSED__, int type __UNUSED__, void *event)
 }
 
 static Eina_Bool
-_e_ipc_cb_server_del(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
+_e_fm_ipc_cb_server_del(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    /* quit now */
    ecore_main_loop_quit();
@@ -221,7 +221,7 @@ _e_ipc_cb_server_del(void *data __UNUSED__, int type __UNUSED__, void *event __U
 }
 
 static void
-_e_fm_monitor_start(int id, const char *path)
+_e_fm_ipc_monitor_start(int id, const char *path)
 {
    E_Fm_Task *task = malloc(sizeof(E_Fm_Task));
 
@@ -239,11 +239,11 @@ _e_fm_monitor_start(int id, const char *path)
 
    _e_fm_tasks = eina_list_append(_e_fm_tasks, task);
 
-   _e_fm_monitor_start_try(task);
+   _e_fm_ipc_monitor_start_try(task);
 }
 
 static void
-_e_fm_monitor_start_try(E_Fm_Task *task)
+_e_fm_ipc_monitor_start_try(E_Fm_Task *task)
 {
    E_Dir *ed, *ped = NULL;
    
@@ -268,7 +268,7 @@ _e_fm_monitor_start_try(E_Fm_Task *task)
 	char buf[PATH_MAX + 4096];
 
 	snprintf(buf, sizeof(buf), "Cannot open directory '%s': %s.", task->src, strerror(errno));
-	_e_client_send(task->id, E_FM_OP_ERROR_RETRY_ABORT, buf, strlen(buf) + 1);
+	_e_fm_ipc_client_send(task->id, E_FM_OP_ERROR_RETRY_ABORT, buf, strlen(buf) + 1);
      }
    else
      {
@@ -286,7 +286,7 @@ _e_fm_monitor_start_try(E_Fm_Task *task)
 	  {
 	     /* if no previous monitoring dir exists - this one 
 	      * becomes the master monitor enty */
-	     ed->mon = ecore_file_monitor_add(ed->dir, _e_cb_file_monitor, ed);
+	     ed->mon = ecore_file_monitor_add(ed->dir, _e_fm_ipc_cb_file_monitor, ed);
 	     ed->mon_ref = 1;
 	  }
 	else
@@ -354,20 +354,20 @@ _e_fm_monitor_start_try(E_Fm_Task *task)
 	     else
 	       snprintf(buf, sizeof(buf), "%s/.order", task->src);
 	     if (eina_list_count(files) == 1)
-	       _e_file_add(ed, buf, 2);
+	       _e_fm_ipc_file_add(ed, buf, 2);
 	     else
-	       _e_file_add(ed, buf, 1);
+	       _e_fm_ipc_file_add(ed, buf, 1);
 	  }
 	/* send empty file - indicate empty dir */
-	if (!files) _e_file_add(ed, "", 2);
+	if (!files) _e_fm_ipc_file_add(ed, "", 2);
 	/* and in an idler - list files, statting them etc. */
-	ed->idler = ecore_idler_add(_e_cb_file_mon_list_idler, ed);
+	ed->idler = ecore_idler_add(_e_fm_ipc_cb_file_mon_list_idler, ed);
 	ed->sync_num = DEF_SYNC_NUM;
      }
 }
 
 static void
-_e_fm_monitor_end(int id, const char *path)
+_e_fm_ipc_monitor_end(int id, const char *path)
 {
    E_Fm_Task *task;
    Eina_List *l;
@@ -386,38 +386,38 @@ _e_fm_monitor_end(int id, const char *path)
 		  if (ed->mon_real->mon_ref == 0)
 		    {
 		       /* original is at 0 ref - free it */
-		       _e_dir_del(ed->mon_real);
+		       _e_fm_ipc_dir_del(ed->mon_real);
 		       ed->mon_real = NULL;
 		    }
 		  /* free this node */
-		  _e_dir_del(ed);
+		  _e_fm_ipc_dir_del(ed);
 	       }
 	     /* this is a core monitoring node - remove ref */
 	     else
 	       {
 		  ed->mon_ref--;
 		  /* we are the last ref - free */
-		  if (ed->mon_ref == 0) _e_dir_del(ed);
+		  if (ed->mon_ref == 0) _e_fm_ipc_dir_del(ed);
 	       }
 	     /* remove from dirs list anyway */
 	     _e_dirs = eina_list_remove_list(_e_dirs, l);
 	     break;
 	  }
 
-   task = _e_fm_task_get(id);
-   if (task) _e_fm_task_remove(task);
+   task = _e_fm_ipc_task_get(id);
+   if (task) _e_fm_ipc_task_remove(task);
 }
 
 static E_Fm_Task *
-_e_fm_task_get(int id)
+_e_fm_ipc_task_get(int id)
 {
-   Eina_List *l = _e_fm_task_node_get(id);
+   Eina_List *l = _e_fm_ipc_task_node_get(id);
 
    return (E_Fm_Task *)eina_list_data_get(l);
 }
 
 static Eina_List *
-_e_fm_task_node_get(int id)
+_e_fm_ipc_task_node_get(int id)
 {
    E_Fm_Task *task;
    Eina_List *l;
@@ -430,9 +430,9 @@ _e_fm_task_node_get(int id)
 }
 
 static void
-_e_fm_task_remove(E_Fm_Task *task)
+_e_fm_ipc_task_remove(E_Fm_Task *task)
 {
-   Eina_List *l = _e_fm_task_node_get(task->id);
+   Eina_List *l = _e_fm_ipc_task_node_get(task->id);
 
    switch(task->type)
      {
@@ -444,7 +444,7 @@ _e_fm_task_remove(E_Fm_Task *task)
 	       * * we can't look in it */
 	      memset(&ted, 0, sizeof(E_Dir));
 	      ted.id = task->id;
-	      _e_file_mon_dir_del(&ted, task->src);
+	      _e_fm_ipc_file_mon_dir_del(&ted, task->src);
 	   }
 	 break;
       default:
@@ -461,24 +461,24 @@ _e_fm_task_remove(E_Fm_Task *task)
 }
 
 static void
-_e_fm_mkdir_try(E_Fm_Task *task)
+_e_fm_ipc_mkdir_try(E_Fm_Task *task)
 {
    char buf[PATH_MAX + 4096];
 
    if (mkdir(task->src, S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) < 0)
      {
 	snprintf(buf, sizeof(buf), "Cannot make directory '%s': %s.", task->src, strerror(errno));
-	_e_client_send(task->id, E_FM_OP_ERROR_RETRY_ABORT, buf, strlen(buf) + 1);
+	_e_fm_ipc_client_send(task->id, E_FM_OP_ERROR_RETRY_ABORT, buf, strlen(buf) + 1);
      }
    else
      {
-	_e_fm_reorder(ecore_file_file_get(task->src), ecore_file_dir_get(task->src), task->rel, task->rel_to);
-	_e_fm_task_remove(task);
+	_e_fm_ipc_reorder(ecore_file_file_get(task->src), ecore_file_dir_get(task->src), task->rel, task->rel_to);
+	_e_fm_ipc_task_remove(task);
      }
 }
 
 static void
-_e_fm_mkdir(int id, const char *src, const char *rel, int rel_to __UNUSED__, int x, int y)
+_e_fm_ipc_mkdir(int id, const char *src, const char *rel, int rel_to __UNUSED__, int x, int y)
 {
    E_Fm_Task *task;
 
@@ -495,36 +495,36 @@ _e_fm_mkdir(int id, const char *src, const char *rel, int rel_to __UNUSED__, int
 
    _e_fm_tasks = eina_list_append(_e_fm_tasks, task);
 
-   _e_fm_mkdir_try(task);
+   _e_fm_ipc_mkdir_try(task);
 }
 
 static void
-_e_fm_handle_error_response(int id, E_Fm_Op_Type type)
+_e_fm_ipc_handle_error_response(int id, E_Fm_Op_Type type)
 {
-   E_Fm_Task *task = _e_fm_task_get(id);
+   E_Fm_Task *task = _e_fm_ipc_task_get(id);
    E_Fm_Slave *slave = NULL;
 
    if (!task)
      {
-	slave = _e_fm_slave_get(id);
-	if (slave) _e_fm_slave_send(slave, type, NULL, 0);
+	slave = _e_fm_ipc_slave_get(id);
+	if (slave) _e_fm_ipc_slave_send(slave, type, NULL, 0);
 	return;
      }
 
    if (type == E_FM_OP_ERROR_RESPONSE_ABORT)
      {
-	_e_fm_task_remove(task);
+	_e_fm_ipc_task_remove(task);
      }
    else if (type == E_FM_OP_ERROR_RESPONSE_RETRY)
      {
 	switch(task->type)
 	  {
 	   case E_FM_OP_MKDIR:
-	      _e_fm_mkdir_try(task);
+	      _e_fm_ipc_mkdir_try(task);
 	      break;
 
 	   case E_FM_OP_MONITOR_START:
-	      _e_fm_monitor_start_try(task);
+	      _e_fm_ipc_monitor_start_try(task);
 	   default:
 	      break;
 	  }
@@ -533,7 +533,7 @@ _e_fm_handle_error_response(int id, E_Fm_Op_Type type)
 
 
 static Eina_Bool
-_e_ipc_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
+_e_fm_ipc_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Ipc_Event_Server_Data *e;
    
@@ -543,18 +543,18 @@ _e_ipc_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
      {
       case E_FM_OP_MONITOR_START: /* monitor dir (and implicitly list) */
 	  {
-	     _e_fm_monitor_start(e->ref, e->data);
+	     _e_fm_ipc_monitor_start(e->ref, e->data);
 	  }
 	break;
       case E_FM_OP_MONITOR_END: /* monitor dir end */
 	  {
 //	     printf("End listing directory: %s\n", e->data);
-	     _e_fm_monitor_end(e->ref, e->data);
+	     _e_fm_ipc_monitor_end(e->ref, e->data);
 	  }
 	break;
       case E_FM_OP_REMOVE: /* fop delete file/dir */
 	  {
-	     _e_fm_slave_run(E_FM_OP_REMOVE, (const char *)e->data, e->ref);
+	     _e_fm_ipc_slave_run(E_FM_OP_REMOVE, (const char *)e->data, e->ref);
 	  }
 	break;
       case E_FM_OP_TRASH: /* fop trash file/dir */
@@ -567,23 +567,23 @@ _e_ipc_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 		  fop->id = e->ref;
 		  fop->src = eina_stringshare_add(e->data);
 		  _e_fops = eina_list_append(_e_fops, fop);
-		  fop->idler = ecore_idler_add(_e_cb_fop_trash_idler, fop);
+		  fop->idler = ecore_idler_add(_e_fm_ipc_cb_fop_trash_idler, fop);
 	       }
 	  }
 	break;
       case E_FM_OP_MOVE: /* fop mv file/dir */
 	  {
-	     _e_fm_slave_run(E_FM_OP_MOVE, (const char *)e->data, e->ref);
+	     _e_fm_ipc_slave_run(E_FM_OP_MOVE, (const char *)e->data, e->ref);
 	  }
 	break;
       case E_FM_OP_COPY: /* fop cp file/dir */
 	  {
-	     _e_fm_slave_run(E_FM_OP_COPY, (const char *)e->data, e->ref);
+	     _e_fm_ipc_slave_run(E_FM_OP_COPY, (const char *)e->data, e->ref);
 	  }
 	break;
       case E_FM_OP_SYMLINK: /* fop ln -s */
 	  {
-	     _e_fm_slave_run(E_FM_OP_SYMLINK, (const char *)e->data, e->ref);
+	     _e_fm_ipc_slave_run(E_FM_OP_SYMLINK, (const char *)e->data, e->ref);
 	  }
 	break;
       case E_FM_OP_MKDIR: /* fop mkdir */
@@ -597,7 +597,7 @@ _e_ipc_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	     memcpy(&x, rel + strlen(rel) + 1 + sizeof(int), sizeof(int));
 	     memcpy(&y, rel + strlen(rel) + 1 + sizeof(int), sizeof(int));
 
-	     _e_fm_mkdir(e->ref, src, rel, rel_to, x, y);
+	     _e_fm_ipc_mkdir(e->ref, src, rel, rel_to, x, y);
 	  }
 	break;
       case E_FM_OP_MOUNT: /* mount udi mountpoint */
@@ -670,7 +670,7 @@ _e_ipc_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 			      ed->sync_num -= 1;
 			    /* always sync at least 1 file */
 			    if (ed->sync_num < 1) ed->sync_num = 1;
-			    ed->idler = ecore_idler_add(_e_cb_file_mon_list_idler, ed);
+			    ed->idler = ecore_idler_add(_e_fm_ipc_cb_file_mon_list_idler, ed);
 			    break;
 			 }
 		    }
@@ -679,9 +679,9 @@ _e_ipc_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	break;
       case E_FM_OP_ABORT: // abort copy/move/delete operation by user
           {
-             E_Fm_Slave *slave = _e_fm_slave_get(e->ref);
+             E_Fm_Slave *slave = _e_fm_ipc_slave_get(e->ref);
              if (slave)
-                _e_fm_slave_send(slave, e->minor, NULL, 0);
+                _e_fm_ipc_slave_send(slave, e->minor, NULL, 0);
           }
         break; 
       case E_FM_OP_ERROR_RESPONSE_IGNORE_THIS:
@@ -689,7 +689,7 @@ _e_ipc_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
       case E_FM_OP_ERROR_RESPONSE_ABORT:
       case E_FM_OP_ERROR_RESPONSE_RETRY:
 	  {
-	     _e_fm_handle_error_response(e->ref, e->minor);
+	     _e_fm_ipc_handle_error_response(e->ref, e->minor);
 	  }
 	break;
       case E_FM_OP_OVERWRITE_RESPONSE_NO:
@@ -697,7 +697,7 @@ _e_ipc_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
       case E_FM_OP_OVERWRITE_RESPONSE_YES:
       case E_FM_OP_OVERWRITE_RESPONSE_YES_ALL:
 	  {
-	     _e_fm_slave_send(_e_fm_slave_get(e->ref), e->minor, NULL, 0);
+	     _e_fm_ipc_slave_send(_e_fm_ipc_slave_get(e->ref), e->minor, NULL, 0);
 	  }
 	break;
       case E_FM_OP_REORDER:
@@ -717,7 +717,7 @@ _e_ipc_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 
 	     after = *((int *)p);
              
-	     _e_fm_reorder(file, dst, relative, after);
+	     _e_fm_ipc_reorder(file, dst, relative, after);
 	  }
 	break;
       default:
@@ -727,22 +727,22 @@ _e_ipc_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
     * count of outstanding requests - maybe for balancing between fm
     * slaves later. ref_to is set to the the ref id in the request to 
     * allow for async handling later */
-   ecore_ipc_server_send(_e_ipc_server,
+   ecore_ipc_server_send(_e_fm_ipc_server,
 			 6/*E_IPC_DOMAIN_FM*/,
 			 E_FM_OP_OK,
 			 0, e->ref, 0, NULL, 0);
    return ECORE_CALLBACK_PASS_ON;
 }
 
-static int _e_client_send(int id, E_Fm_Op_Type type, void *data, int size)
+static int _e_fm_ipc_client_send(int id, E_Fm_Op_Type type, void *data, int size)
 {
-   return ecore_ipc_server_send(_e_ipc_server,
+   return ecore_ipc_server_send(_e_fm_ipc_server,
 	 6/*E_IPC_DOMAIN_FM*/,
 	 type,
 	 id, 0, 0, data, size);
 }
 
-static int _e_fm_slave_run(E_Fm_Op_Type type, const char *args, int id)
+static int _e_fm_ipc_slave_run(E_Fm_Op_Type type, const char *args, int id)
 {
    E_Fm_Slave *slave;
    const char *command;
@@ -751,7 +751,7 @@ static int _e_fm_slave_run(E_Fm_Op_Type type, const char *args, int id)
 
    if (!slave) return 0;
 	     
-   command = eina_stringshare_add(_e_prepare_command(type, args));
+   command = eina_stringshare_add(_e_fm_ipc_prepare_command(type, args));
 
    slave->id = id;
    slave->exe = ecore_exe_pipe_run(command, ECORE_EXE_PIPE_WRITE | ECORE_EXE_PIPE_READ | ECORE_EXE_PIPE_ERROR, slave );
@@ -759,17 +759,17 @@ static int _e_fm_slave_run(E_Fm_Op_Type type, const char *args, int id)
    
    eina_stringshare_del(command);
 
-   _e_fm_slaves = eina_list_append(_e_fm_slaves, slave);
+   _e_fm_ipc_slaves = eina_list_append(_e_fm_ipc_slaves, slave);
 
    return (!!slave->exe);
 }
 
-static E_Fm_Slave *_e_fm_slave_get(int id)
+static E_Fm_Slave *_e_fm_ipc_slave_get(int id)
 {
    Eina_List *l;
    E_Fm_Slave *slave;
 
-   EINA_LIST_FOREACH(_e_fm_slaves, l, slave)
+   EINA_LIST_FOREACH(_e_fm_ipc_slaves, l, slave)
      {
 	if (slave->id == id)
 	  return slave;
@@ -778,7 +778,7 @@ static E_Fm_Slave *_e_fm_slave_get(int id)
    return NULL;
 }
 
-static int _e_fm_slave_send(E_Fm_Slave *slave, E_Fm_Op_Type type, void *data, int size)
+static int _e_fm_ipc_slave_send(E_Fm_Slave *slave, E_Fm_Op_Type type, void *data, int size)
 {
    char *sdata;
    int ssize;
@@ -804,7 +804,7 @@ static int _e_fm_slave_send(E_Fm_Slave *slave, E_Fm_Op_Type type, void *data, in
 }
 
 Eina_Bool
-_e_fm_slave_data_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
+_e_fm_ipc_slave_data_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Exe_Event_Data *e = event;
    E_Fm_Slave *slave;
@@ -836,16 +836,16 @@ _e_fm_slave_data_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
 
 	if (id == E_FM_OP_OVERWRITE)
 	  {
-	     _e_client_send(slave->id, E_FM_OP_OVERWRITE, sdata, size);
+	     _e_fm_ipc_client_send(slave->id, E_FM_OP_OVERWRITE, sdata, size);
 	     printf("%s:%s(%d) Overwrite sent to client from slave #%d.\n", __FILE__, __FUNCTION__, __LINE__, slave->id);
 	  }
 	else if (id == E_FM_OP_ERROR)
 	  {
-	     _e_client_send(slave->id, E_FM_OP_ERROR, sdata, size);
+	     _e_fm_ipc_client_send(slave->id, E_FM_OP_ERROR, sdata, size);
 	  }
 	else if (id == E_FM_OP_PROGRESS)
 	  {
-	     _e_client_send(slave->id, E_FM_OP_PROGRESS, sdata, size);
+	     _e_fm_ipc_client_send(slave->id, E_FM_OP_PROGRESS, sdata, size);
 	  }
 
 	sdata += size;
@@ -856,7 +856,7 @@ _e_fm_slave_data_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
 }
 
 Eina_Bool
-_e_fm_slave_error_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
+_e_fm_ipc_slave_error_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Exe_Event_Data *e = event;
    E_Fm_Slave *slave;
@@ -871,7 +871,7 @@ _e_fm_slave_error_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
 }
 
 Eina_Bool
-_e_fm_slave_del_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
+_e_fm_ipc_slave_del_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Exe_Event_Del *e = event;
    E_Fm_Slave *slave;
@@ -879,18 +879,18 @@ _e_fm_slave_del_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
    if (!e) return 1;
 
    slave = ecore_exe_data_get(e->exe);
-   _e_client_send(slave->id, E_FM_OP_QUIT, NULL, 0);
+   _e_fm_ipc_client_send(slave->id, E_FM_OP_QUIT, NULL, 0);
 
    if (!slave) return 1;
 
-   _e_fm_slaves = eina_list_remove(_e_fm_slaves, (void *)slave);
+   _e_fm_ipc_slaves = eina_list_remove(_e_fm_ipc_slaves, (void *)slave);
    free(slave);
 
    return 1;
 }
 
 static void
-_e_cb_file_monitor(void *data __UNUSED__, Ecore_File_Monitor *em __UNUSED__, Ecore_File_Event event, const char *path)
+_e_fm_ipc_cb_file_monitor(void *data __UNUSED__, Ecore_File_Monitor *em __UNUSED__, Ecore_File_Event event, const char *path)
 {
    E_Dir *ed;
    char *dir, *rp, *drp;
@@ -908,7 +908,7 @@ _e_cb_file_monitor(void *data __UNUSED__, Ecore_File_Monitor *em __UNUSED__, Eco
 	     if (drp)
 	       {
 		  if (!strcmp(rp, drp))
-		    _e_file_add(ed, path, 0);
+		    _e_fm_ipc_file_add(ed, path, 0);
 		  free(drp);
 	       }
 	  }
@@ -924,7 +924,7 @@ _e_cb_file_monitor(void *data __UNUSED__, Ecore_File_Monitor *em __UNUSED__, Eco
 	     if (drp)
 	       {
 		  if (!strcmp(rp, drp))
-		    _e_file_del(ed, path);
+		    _e_fm_ipc_file_del(ed, path);
 		  free(drp);
 	       }
 	  }
@@ -939,7 +939,7 @@ _e_cb_file_monitor(void *data __UNUSED__, Ecore_File_Monitor *em __UNUSED__, Eco
 	     if (drp)
 	       {
 		  if (!strcmp(rp, drp))
-		    _e_file_mod(ed, path);
+		    _e_fm_ipc_file_mod(ed, path);
 		  free(drp);
 	       }
 	  }
@@ -954,7 +954,7 @@ _e_cb_file_monitor(void *data __UNUSED__, Ecore_File_Monitor *em __UNUSED__, Eco
 	     if (drp)
 	       {
 		  if (!strcmp(rp, drp))
-		    _e_file_mon_dir_del(ed, path);
+		    _e_fm_ipc_file_mon_dir_del(ed, path);
 		  free(drp);
 	       }
 	  }
@@ -964,7 +964,7 @@ _e_cb_file_monitor(void *data __UNUSED__, Ecore_File_Monitor *em __UNUSED__, Eco
 }
 
 static Eina_Bool
-_e_cb_recent_clean(void *data)
+_e_fm_ipc_cb_recent_clean(void *data)
 {
    E_Dir *ed;
    Eina_List *l, *pl;
@@ -978,7 +978,7 @@ _e_cb_recent_clean(void *data)
 	if ((m->mod) && ((t_now - m->timestamp) >= DEF_MOD_BACKOFF))
 	  {
 	     ed->recent_mods = eina_list_remove_list(ed->recent_mods, pl);
-	     if (!m->done) _e_file_add_mod(ed, m->path, 5, 0);
+	     if (!m->done) _e_fm_ipc_file_add_mod(ed, m->path, 5, 0);
 	     eina_stringshare_del(m->path);
 	     free(m);
 	  }
@@ -990,7 +990,7 @@ _e_cb_recent_clean(void *data)
 			       
 
 static void
-_e_file_add_mod(E_Dir *ed, const char *path, E_Fm_Op_Type op, int listing)
+_e_fm_ipc_file_add_mod(E_Dir *ed, const char *path, E_Fm_Op_Type op, int listing)
 {
    struct stat st;
    char *lnk = NULL, *rlnk = NULL;
@@ -1032,7 +1032,7 @@ _e_file_add_mod(E_Dir *ed, const char *path, E_Fm_Op_Type op, int listing)
 	     ed->recent_mods = eina_list_append(ed->recent_mods, m);
 	  }
 	if ((!ed->recent_clean) && (ed->recent_mods))
-	  ed->recent_clean = ecore_timer_add(DEF_MOD_BACKOFF, _e_cb_recent_clean, ed);
+	  ed->recent_clean = ecore_timer_add(DEF_MOD_BACKOFF, _e_fm_ipc_cb_recent_clean, ed);
 	if (skip)
 	  {
 //	     printf("SKIP MOD %s %3.3f\n", path, t_now);
@@ -1073,67 +1073,67 @@ _e_file_add_mod(E_Dir *ed, const char *path, E_Fm_Op_Type op, int listing)
    p += strlen(rlnk) + 1;
    
    bsz = p - buf;
-   ecore_ipc_server_send(_e_ipc_server, 6/*E_IPC_DOMAIN_FM*/, op, 0, ed->id,
+   ecore_ipc_server_send(_e_fm_ipc_server, 6/*E_IPC_DOMAIN_FM*/, op, 0, ed->id,
 			 listing, buf, bsz);
    if (lnk) free(lnk);
    if (rlnk) free(rlnk);
 }
 
 static void
-_e_file_add(E_Dir *ed, const char *path, int listing)
+_e_fm_ipc_file_add(E_Dir *ed, const char *path, int listing)
 {
    if (!listing)
      {
 	/* FIXME: handle BACKOFF */
      }
-   _e_file_add_mod(ed, path, E_FM_OP_FILE_ADD, listing);/*file add*/
+   _e_fm_ipc_file_add_mod(ed, path, E_FM_OP_FILE_ADD, listing);/*file add*/
 }
 
 static void
-_e_file_del(E_Dir *ed, const char *path)
+_e_fm_ipc_file_del(E_Dir *ed, const char *path)
 {
      {
 	/* FIXME: handle BACKOFF */
      }
-   ecore_ipc_server_send(_e_ipc_server,
+   ecore_ipc_server_send(_e_fm_ipc_server,
 			 6/*E_IPC_DOMAIN_FM*/,
 			 E_FM_OP_FILE_DEL,
 			 0, ed->id, 0, (void *)path, strlen(path) + 1);
 }
 
 static void
-_e_file_mod(E_Dir *ed, const char *path)
+_e_fm_ipc_file_mod(E_Dir *ed, const char *path)
 {
      {
 	/* FIXME: handle BACKOFF */
      }
-   _e_file_add_mod(ed, path, E_FM_OP_FILE_CHANGE, 0);/*file change*/
+   _e_fm_ipc_file_add_mod(ed, path, E_FM_OP_FILE_CHANGE, 0);/*file change*/
 }
 
 static void
-_e_file_mon_dir_del(E_Dir *ed, const char *path)
+_e_fm_ipc_file_mon_dir_del(E_Dir *ed, const char *path)
 {
-   ecore_ipc_server_send(_e_ipc_server,
+   ecore_ipc_server_send(_e_fm_ipc_server,
 			 6/*E_IPC_DOMAIN_FM*/,
 			 E_FM_OP_MONITOR_END,
 			 0, ed->id, 0, (void *)path, strlen(path) + 1);
 }
 
 static void
-_e_file_mon_list_sync(E_Dir *ed)
+_e_fm_ipc_file_mon_list_sync(E_Dir *ed)
 {
    _e_sync_num++;
    if (_e_sync_num == 0) _e_sync_num = 1;
    ed->sync = _e_sync_num;
    ed->sync_time = ecore_time_get();
-   ecore_ipc_server_send(_e_ipc_server,
+   ecore_ipc_server_send(_e_fm_ipc_server,
 			 6/*E_IPC_DOMAIN_FM*/,
 			 E_FM_OP_MONITOR_SYNC,
 			 0, ed->id, ed->sync, NULL, 0);
 }
 
 static Eina_Bool
-_e_cb_file_mon_list_idler(void *data)
+_e_fm_ipc_cb_file_mon_list_idler(void *data)
 {
    E_Dir *ed;
    int n = 0;
@@ -1150,16 +1150,16 @@ _e_cb_file_mon_list_idler(void *data)
 	       snprintf(buf, sizeof(buf), "/%s", file);
 	     else
 	       snprintf(buf, sizeof(buf), "%s/%s", ed->dir, file);
-	     _e_file_add(ed, buf, 1);
+	     _e_fm_ipc_file_add(ed, buf, 1);
 	  }
 	free(file);
 	ed->fq = eina_list_remove_list(ed->fq, ed->fq);
 	n++;
 	if (n == ed->sync_num)
 	  {
-	     _e_file_mon_list_sync(ed);
+	     _e_fm_ipc_file_mon_list_sync(ed);
 	     ed->idler = NULL;
-	     if (!ed->fq) _e_file_add(ed, "", 2);
+	     if (!ed->fq) _e_fm_ipc_file_add(ed, "", 2);
 	     return 0;
 	  }
      }
@@ -1167,12 +1167,12 @@ _e_cb_file_mon_list_idler(void *data)
    ed->sync = 0;
    ed->sync_time = 0.0;
    ed->idler = NULL;
-   if (!ed->fq) _e_file_add(ed, "", 2);
+   if (!ed->fq) _e_fm_ipc_file_add(ed, "", 2);
    return ECORE_CALLBACK_CANCEL;
 }
 
 static Eina_Bool
-_e_cb_fop_trash_idler(void *data)
+_e_fm_ipc_cb_fop_trash_idler(void *data)
 {
    E_Fop *fop = NULL;
    FILE *info = NULL;
@@ -1271,7 +1271,7 @@ _e_str_list_remove(Eina_List **list, char *str)
 }
 
 static void
-_e_fm_reorder(const char *file, const char *dst, const char *relative, int after)
+_e_fm_ipc_reorder(const char *file, const char *dst, const char *relative, int after)
 {
    char buffer[PATH_MAX];
    char order[PATH_MAX];
@@ -1346,7 +1346,7 @@ _e_fm_reorder(const char *file, const char *dst, const char *relative, int after
 }
 
 static void
-_e_dir_del(E_Dir *ed)
+_e_fm_ipc_dir_del(E_Dir *ed)
 {
    void *data;
    E_Mod *m;
@@ -1366,7 +1366,7 @@ _e_dir_del(E_Dir *ed)
 }
 
 static const char *
-_e_prepare_command(E_Fm_Op_Type type, const char *args)
+_e_fm_ipc_prepare_command(E_Fm_Op_Type type, const char *args)
 {
    char *buffer;
    unsigned int length = 0;

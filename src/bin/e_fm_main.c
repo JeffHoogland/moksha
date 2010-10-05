@@ -77,6 +77,8 @@ static E_DBus_Signal_Handler *_hal_poll = NULL;
 #include "e_fm_shared.h"
 #undef E_FM_SHARED_DATATYPES
 
+static void _e_fm_init(void);
+static void _e_fm_shutdown(void);
 static void _e_dbus_cb_dev_all(void *user_data, void *reply_data, DBusError *error);
 static void _e_dbus_cb_dev_store(void *user_data, void *reply_data, DBusError *error);
 static void _e_dbus_cb_dev_vol(void *user_data, void *reply_data, DBusError *error);
@@ -107,7 +109,7 @@ static Eina_Bool _e_dbus_vol_eject_timeout(void *data);
 #define E_FM_EJECT_TIMEOUT 15.0
 
 static E_DBus_Connection *_e_dbus_conn = NULL;
-extern Ecore_Ipc_Server *_e_ipc_server;
+extern Ecore_Ipc_Server *_e_fm_ipc_server;
 
 /* contains:
  * _e_volume_edd
@@ -147,40 +149,51 @@ main(int argc, char **argv)
    ecore_init();
    ecore_app_args_set(argc, (const char **)argv);
 
+   _e_fm_init();
+
+   ecore_file_init();
+   ecore_ipc_init();
+   _e_storage_volume_edd_init();
+   _e_fm_ipc_init();
+   
+   ecore_event_handler_add(ECORE_EXE_EVENT_DATA, _e_fm_ipc_slave_data_cb, NULL);
+   ecore_event_handler_add(ECORE_EXE_EVENT_ERROR, _e_fm_ipc_slave_error_cb, NULL);
+   ecore_event_handler_add(ECORE_EXE_EVENT_DEL, _e_fm_ipc_slave_del_cb, NULL);
+   
+   ecore_main_loop_begin();
+  
+   if (_e_fm_ipc_server)
+     {
+        ecore_ipc_server_del(_e_fm_ipc_server);
+        _e_fm_ipc_server = NULL;
+     }
+
+   _e_fm_shutdown();
+   ecore_ipc_shutdown();
+   ecore_file_shutdown();
+   ecore_shutdown();
+   eina_shutdown();
+}
+
+static void
+_e_fm_init(void)
+{
    e_dbus_init();
    e_hal_init();
    _e_dbus_conn = e_dbus_bus_get(DBUS_BUS_SYSTEM);
    /* previously, this assumed that if dbus was running, hal was running. */
    if (_e_dbus_conn)
      e_dbus_get_name_owner(_e_dbus_conn, E_HAL_SENDER, _hal_test, NULL);
+}
 
-   ecore_file_init();
-   ecore_ipc_init();
-   _e_storage_volume_edd_init();
-   _e_ipc_init();
-   
-   ecore_event_handler_add(ECORE_EXE_EVENT_DATA, _e_fm_slave_data_cb, NULL);
-   ecore_event_handler_add(ECORE_EXE_EVENT_ERROR, _e_fm_slave_error_cb, NULL);
-   ecore_event_handler_add(ECORE_EXE_EVENT_DEL, _e_fm_slave_del_cb, NULL);
-   
-   ecore_main_loop_begin();
-  
-   if (_e_ipc_server)
-     {
-        ecore_ipc_server_del(_e_ipc_server);
-        _e_ipc_server = NULL;
-     }
-
+static void
+_e_fm_shutdown(void)
+{
    if (_e_dbus_conn)
      e_dbus_connection_close(_e_dbus_conn);
    _e_storage_volume_edd_shutdown();
-   
-   ecore_ipc_shutdown();
-   ecore_file_shutdown();
    e_hal_shutdown();
    e_dbus_shutdown();
-   eina_shutdown();
-   ecore_shutdown();
 }
 
 static void
@@ -508,7 +521,7 @@ _e_dbus_cb_store_prop(void *data, void *reply_data, DBusError *error)
 	msg_data = eet_data_descriptor_encode(_e_storage_edd, s, &msg_size);
 	if (msg_data)
 	  {
-	     ecore_ipc_server_send(_e_ipc_server,
+	     ecore_ipc_server_send(_e_fm_ipc_server,
 				   6/*E_IPC_DOMAIN_FM*/,
 				   E_FM_OP_STORAGE_ADD,
 				   0, 0, 0, msg_data, msg_size);
@@ -550,7 +563,7 @@ e_storage_del(const char *udi)
    if (s->validated)
      {
 //	printf("--STO %s\n", s->udi);
-	ecore_ipc_server_send(_e_ipc_server,
+	ecore_ipc_server_send(_e_fm_ipc_server,
 			      6/*E_IPC_DOMAIN_FM*/,
 			      E_FM_OP_STORAGE_DEL,
 			      0, 0, 0, s->udi, strlen(s->udi) + 1);
@@ -652,7 +665,7 @@ _e_dbus_cb_vol_prop(void *data, void *reply_data, DBusError *error)
 	msg_data = eet_data_descriptor_encode(_e_volume_edd, v, &msg_size);
 	if (msg_data)
 	  {
-	     ecore_ipc_server_send(_e_ipc_server,
+	     ecore_ipc_server_send(_e_fm_ipc_server,
 				   6/*E_IPC_DOMAIN_FM*/,
 				   E_FM_OP_VOLUME_ADD,
 				   0, 0, 0, msg_data, msg_size);
@@ -704,10 +717,10 @@ _e_dbus_cb_vol_prop_mount_modified(void *data, void *reply_data, DBusError *erro
    
         size = _e_dbus_format_error_msg(&buf, v, error);
         if (v->mounted)
-           ecore_ipc_server_send(_e_ipc_server, 6/*E_IPC_DOMAIN_FM*/, E_FM_OP_UNMOUNT_ERROR,
+           ecore_ipc_server_send(_e_fm_ipc_server, 6/*E_IPC_DOMAIN_FM*/, E_FM_OP_UNMOUNT_ERROR,
                                  0, 0, 0, buf, size);
         else
-           ecore_ipc_server_send(_e_ipc_server, 6/*E_IPC_DOMAIN_FM*/, E_FM_OP_MOUNT_ERROR,
+           ecore_ipc_server_send(_e_fm_ipc_server, 6/*E_IPC_DOMAIN_FM*/, E_FM_OP_MOUNT_ERROR,
                                  0, 0, 0, buf, size);
 	dbus_error_free(error);
 	free(buf);
@@ -732,12 +745,12 @@ _e_dbus_cb_vol_prop_mount_modified(void *data, void *reply_data, DBusError *erro
 	strcpy(buf, v->udi);
 	strcpy(buf + strlen(buf) + 1, v->mount_point);
 	if (v->mounted)
-	ecore_ipc_server_send(_e_ipc_server,
+	ecore_ipc_server_send(_e_fm_ipc_server,
 			      6/*E_IPC_DOMAIN_FM*/,
 			      E_FM_OP_MOUNT_DONE,
 			      0, 0, 0, buf, size);
 	else
-	ecore_ipc_server_send(_e_ipc_server,
+	ecore_ipc_server_send(_e_fm_ipc_server,
 			      6/*E_IPC_DOMAIN_FM*/,
 			      E_FM_OP_UNMOUNT_DONE,
 			      0, 0, 0, buf, size);
@@ -789,7 +802,7 @@ e_volume_del(const char *udi)
      {
 //	printf("--VOL %s\n", v->udi);
 	/* FIXME: send event of storage volume (disk) removed */
-	ecore_ipc_server_send(_e_ipc_server,
+	ecore_ipc_server_send(_e_fm_ipc_server,
 			      6/*E_IPC_DOMAIN_FM*/,
 			      E_FM_OP_VOLUME_DEL,
 			      0, 0, 0, v->udi, strlen(v->udi) + 1);
@@ -824,7 +837,7 @@ _e_dbus_vol_mount_timeout(void *data)
    error.name = "org.enlightenment.fm2.MountTimeout";
    error.message = "Unable to mount the volume with specified time-out.";
    size = _e_dbus_format_error_msg(&buf, v, &error);
-   ecore_ipc_server_send(_e_ipc_server, 6/*E_IPC_DOMAIN_FM*/, E_FM_OP_MOUNT_ERROR,
+   ecore_ipc_server_send(_e_fm_ipc_server, 6/*E_IPC_DOMAIN_FM*/, E_FM_OP_MOUNT_ERROR,
                          0, 0, 0, buf, size);
    free(buf);
    
@@ -847,7 +860,7 @@ _e_dbus_cb_vol_mounted(void *user_data, void *method_return __UNUSED__, DBusErro
    if (dbus_error_is_set(error))
      {
         size = _e_dbus_format_error_msg(&buf, v, error);
-        ecore_ipc_server_send(_e_ipc_server, 6/*E_IPC_DOMAIN_FM*/, E_FM_OP_MOUNT_ERROR,
+        ecore_ipc_server_send(_e_fm_ipc_server, 6/*E_IPC_DOMAIN_FM*/, E_FM_OP_MOUNT_ERROR,
                               0, 0, 0, buf, size);
         dbus_error_free(error);
         free(buf);
@@ -861,7 +874,7 @@ _e_dbus_cb_vol_mounted(void *user_data, void *method_return __UNUSED__, DBusErro
    buf = alloca(size);
    strcpy(buf, v->udi);
    strcpy(buf + strlen(buf) + 1, v->mount_point);
-   ecore_ipc_server_send(_e_ipc_server,
+   ecore_ipc_server_send(_e_fm_ipc_server,
 			 6/*E_IPC_DOMAIN_FM*/,
 			 E_FM_OP_MOUNT_DONE,
 			 0, 0, 0, buf, size);
@@ -928,7 +941,7 @@ _e_dbus_vol_unmount_timeout(void *data)
    error.name = "org.enlightenment.fm2.UnmountTimeout";
    error.message = "Unable to unmount the volume with specified time-out.";
    size = _e_dbus_format_error_msg(&buf, v, &error);
-   ecore_ipc_server_send(_e_ipc_server, 6/*E_IPC_DOMAIN_FM*/, E_FM_OP_UNMOUNT_ERROR,
+   ecore_ipc_server_send(_e_fm_ipc_server, 6/*E_IPC_DOMAIN_FM*/, E_FM_OP_UNMOUNT_ERROR,
                          0, 0, 0, buf, size);
    free(buf);
    
@@ -951,7 +964,7 @@ _e_dbus_cb_vol_unmounted(void *user_data, void *method_return __UNUSED__, DBusEr
    if (dbus_error_is_set(error))
      {
         size = _e_dbus_format_error_msg(&buf, v, error);
-        ecore_ipc_server_send(_e_ipc_server, 6/*E_IPC_DOMAIN_FM*/, E_FM_OP_UNMOUNT_ERROR,
+        ecore_ipc_server_send(_e_fm_ipc_server, 6/*E_IPC_DOMAIN_FM*/, E_FM_OP_UNMOUNT_ERROR,
                               0, 0, 0, buf, size);
         dbus_error_free(error);
         free(buf);
@@ -965,7 +978,7 @@ _e_dbus_cb_vol_unmounted(void *user_data, void *method_return __UNUSED__, DBusEr
    buf = alloca(size);
    strcpy(buf, v->udi);
    strcpy(buf + strlen(buf) + 1, v->mount_point);
-   ecore_ipc_server_send(_e_ipc_server,
+   ecore_ipc_server_send(_e_fm_ipc_server,
 			 6/*E_IPC_DOMAIN_FM*/,
 			 E_FM_OP_UNMOUNT_DONE,
 			 0, 0, 0, buf, size);
@@ -996,7 +1009,7 @@ _e_dbus_vol_eject_timeout(void *data)
    error.name = "org.enlightenment.fm2.EjectTimeout";
    error.message = "Unable to eject the media with specified time-out.";
    size = _e_dbus_format_error_msg(&buf, v, &error);
-   ecore_ipc_server_send(_e_ipc_server, 6/*E_IPC_DOMAIN_FM*/, E_FM_OP_EJECT_ERROR,
+   ecore_ipc_server_send(_e_fm_ipc_server, 6/*E_IPC_DOMAIN_FM*/, E_FM_OP_EJECT_ERROR,
                          0, 0, 0, buf, size);
    free(buf);
    
@@ -1045,7 +1058,7 @@ _e_dbus_cb_vol_ejected(void *user_data, void *method_return __UNUSED__, DBusErro
    if (dbus_error_is_set(error))
      {
         size = _e_dbus_format_error_msg(&buf, v, error);
-        ecore_ipc_server_send(_e_ipc_server, 6/*E_IPC_DOMAIN_FM*/, E_FM_OP_EJECT_ERROR,
+        ecore_ipc_server_send(_e_fm_ipc_server, 6/*E_IPC_DOMAIN_FM*/, E_FM_OP_EJECT_ERROR,
                               0, 0, 0, buf, size);
         dbus_error_free(error);
         free(buf);
@@ -1055,7 +1068,7 @@ _e_dbus_cb_vol_ejected(void *user_data, void *method_return __UNUSED__, DBusErro
    size = strlen(v->udi) + 1;
    buf = alloca(size);
    strcpy(buf, v->udi);
-   ecore_ipc_server_send(_e_ipc_server,
+   ecore_ipc_server_send(_e_fm_ipc_server,
                          6/*E_IPC_DOMAIN_FM*/,
                          E_FM_OP_EJECT_DONE,
                          0, 0, 0, buf, size);

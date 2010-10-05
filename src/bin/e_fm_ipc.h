@@ -1,10 +1,10 @@
 #ifndef E_FM_IPC_H
 #define E_FM_IPC_H
 
-int _e_ipc_init(void);
-Eina_Bool _e_fm_slave_data_cb(void *data, int type, void *event);
-Eina_Bool _e_fm_slave_error_cb(void *data, int type, void *event);
-Eina_Bool _e_fm_slave_del_cb(void *data, int type, void *event);
+int _e_fm_ipc_init(void);
+Eina_Bool _e_fm_ipc_slave_data_cb(void *data, int type, void *event);
+Eina_Bool _e_fm_ipc_slave_error_cb(void *data, int type, void *event);
+Eina_Bool _e_fm_ipc_slave_del_cb(void *data, int type, void *event);
 
 EAPI E_Storage *e_storage_add(const char *udi);
 EAPI void       e_storage_del(const char *udi);
