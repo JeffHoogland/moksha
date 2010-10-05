@@ -143,8 +143,8 @@ main(int argc, char **argv)
 	  }
      }
 
-   ecore_init();
    eina_init();
+   ecore_init();
    ecore_app_args_set(argc, (const char **)argv);
 
    e_dbus_init();
