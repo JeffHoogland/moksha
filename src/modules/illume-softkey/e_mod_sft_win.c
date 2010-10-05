@@ -11,6 +11,7 @@ static void _e_mod_sft_win_cb_resize(E_Win *win);
 static void _e_mod_sft_win_create_default_buttons(Sft_Win *swin);
 static void _e_mod_sft_win_cb_close(void *data, void *data2 __UNUSED__);
 static void _e_mod_sft_win_cb_back(void *data, void *data2 __UNUSED__);
+static void _e_mod_sft_win_cb_forward(void *data, void *data2 __UNUSED__);
 
 Sft_Win *
 e_mod_sft_win_new(E_Zone *zone) 
@@ -270,7 +271,21 @@ _e_mod_sft_win_create_default_buttons(Sft_Win *swin)
    /* add button to our list */
    swin->btns = eina_list_append(swin->btns, btn);
 
+   /* create forward button */
+   btn = e_widget_button_add(swin->win->evas, _("Forward"), "go-next", 
+                             _e_mod_sft_win_cb_forward, swin, NULL);
+   e_widget_size_min_get(btn, &mw, &mh);
+   evas_object_size_hint_min_set(btn, (mw * e_scale), (mh * e_scale));
 
+   /* NB: this show is required when packing e_widgets into an edje box else
+    * the widgets do not receive any events */
+   evas_object_show(btn);
+
+   /* add button to box */
+   edje_object_part_box_append(swin->o_base, "e.box.buttons", btn);
+
+   /* add button to our list */
+   swin->btns = eina_list_append(swin->btns, btn);
    /* create close button */
    btn = e_widget_button_add(swin->win->evas, _("Close"), "application-exit", 
                              _e_mod_sft_win_cb_close, swin, NULL);
@@ -304,4 +319,13 @@ _e_mod_sft_win_cb_back(void *data, void *data2 __UNUSED__)
 
    if (!(swin = data)) return;
    ecore_x_e_illume_focus_back_send(swin->zone->black_win);
+}
+
+static void 
+_e_mod_sft_win_cb_forward(void *data, void *data2 __UNUSED__) 
+{
+   Sft_Win *swin;
+
+   if (!(swin = data)) return;
+   ecore_x_e_illume_focus_forward_send(swin->zone->black_win);
 }
