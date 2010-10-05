@@ -639,7 +639,7 @@ _e_dbus_cb_store_prop(void *data, void *reply_data, DBusError *error)
    s->icon.volume = eina_stringshare_add(s->icon.volume);
    
 //   printf("++STO:\n  udi: %s\n  bus: %s\n  drive_type: %s\n  model: %s\n  vendor: %s\n  serial: %s\n  icon.drive: %s\n  icon.volume: %s\n\n", s->udi, s->bus, s->drive_type, s->model, s->vendor, s->serial, s->icon.drive, s->icon.volume);
-   s->validated = 1;
+   s->validated = EINA_TRUE;
      {
 	void *msg_data;
 	int msg_size;
@@ -783,7 +783,7 @@ _e_dbus_cb_vol_prop(void *data, void *reply_data, DBusError *error)
 //   printf("++VOL:\n  udi: %s\n  uuid: %s\n  fstype: %s\n  size: %llu\n label: %s\n  partition: %d\n  partition_number: %d\n partition_label: %s\n  mounted: %d\n  mount_point: %s\n", v->udi, v->uuid, v->fstype, v->size, v->label, v->partition, v->partition_number, v->partition ? v->partition_label : "(not a partition)", v->mounted, v->mount_point);
 //   if (s) printf("  for storage: %s\n", s->udi);
 //   else printf("  storage unknown\n");
-   v->validated = 1;
+   v->validated = EINA_TRUE;
      {
 	void *msg_data;
 	int msg_size;
@@ -994,7 +994,7 @@ _e_dbus_cb_vol_mounted(void *user_data, void *method_return __UNUSED__, DBusErro
      }
 
 #if 0
-   v->mounted = 1;
+   v->mounted = EINA_TRUE;
 //   printf("MOUNT: %s from %s\n", v->udi, v->mount_point);
    size = strlen(v->udi) + 1 + strlen(v->mount_point) + 1;
    buf = alloca(size);
@@ -1098,7 +1098,7 @@ _e_dbus_cb_vol_unmounted(void *user_data, void *method_return __UNUSED__, DBusEr
      }
 
 #if 0
-   v->mounted = 0;
+   v->mounted = EINA_FALSE;
 //   printf("UNMOUNT: %s from %s\n", v->udi, v->mount_point);
    size = strlen(v->udi) + 1 + strlen(v->mount_point) + 1;
    buf = alloca(size);

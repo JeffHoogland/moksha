@@ -14,11 +14,13 @@ struct _E_Storage
 
    const char *model, *vendor, *serial;
 
-   char removable, media_available;
+   Eina_Bool removable;
+   Eina_Bool media_available;
    unsigned long long media_size;
 
-   char requires_eject, hotpluggable;
-   char media_check_enabled;
+   Eina_Bool requires_eject;
+   Eina_Bool hotpluggable;
+   Eina_Bool media_check_enabled;
 
    struct 
      {
@@ -27,8 +29,8 @@ struct _E_Storage
 
    Eina_List *volumes;
 
-   unsigned char validated;
-   unsigned char trackable;
+   Eina_Bool validated : 1;
+   Eina_Bool trackable : 1;
 };
 
 struct _E_Volume
@@ -38,10 +40,10 @@ struct _E_Volume
    const char *label, *icon, *fstype;
    unsigned long long size;
 
-   char partition;
+   Eina_Bool partition;
    int partition_number;
    const char *partition_label;
-   char mounted;
+   Eina_Bool mounted;
    const char *mount_point;
 
    const char *parent;
@@ -49,10 +51,10 @@ struct _E_Volume
    void *prop_handler;
    Eina_List *mounts;
 
-   unsigned char validated;
+   Eina_Bool validated : 1;
 
-   char auto_unmount;                  // unmount, when last associated fm window closed
-   char first_time;                    // volume discovery in init sequence
+   Eina_Bool auto_unmount : 1;                  // unmount, when last associated fm window closed
+   Eina_Bool first_time;                    // volume discovery in init sequence
    Ecore_Timer *guard;                 // operation guard timer
    DBusPendingCall *op;                // d-bus call handle
 };
@@ -70,7 +72,7 @@ struct _E_Fm2_Mount
 
    E_Volume *volume;
 
-   unsigned char mounted : 1;
+   Eina_Bool mounted : 1;
 };
 
 #endif

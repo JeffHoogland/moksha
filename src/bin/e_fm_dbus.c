@@ -20,7 +20,7 @@ e_fm2_dbus_storage_add(E_Storage *s)
 {
    if (e_fm2_dbus_storage_find(s->udi)) return;
 
-   s->validated = 1;
+   s->validated = EINA_TRUE;
    _e_stores = eina_list_append(_e_stores, s);
 /*   
    printf("STO+\n"
@@ -65,7 +65,7 @@ e_fm2_dbus_storage_add(E_Storage *s)
      }
    else
      {
-	s->trackable = 1;
+	s->trackable = EINA_TRUE;
      }
 }
 
@@ -104,7 +104,7 @@ e_fm2_dbus_volume_add(E_Volume *v)
 
    if (e_fm2_dbus_volume_find(v->udi)) return;
 
-   v->validated = 1;
+   v->validated = EINA_TRUE;
    _e_vols = eina_list_append(_e_vols, v);
 /*   
    printf("VOL+\n"
@@ -407,7 +407,7 @@ e_fm2_dbus_mount_add(E_Volume *v, const char *mountpoint)
    Eina_List *l;
    E_Fm2_Mount *m;
 
-   v->mounted = 1;
+   v->mounted = EINA_TRUE;
    if (mountpoint && (*mountpoint != 0))
      {
         if (v->mount_point) 
@@ -426,7 +426,7 @@ e_fm2_dbus_mount_del(E_Volume *v)
 {
    E_Fm2_Mount *m;
    
-   v->mounted = 0;
+   v->mounted = EINA_FALSE;
    if (v->mount_point) 
      {
         eina_stringshare_del(v->mount_point);
@@ -495,12 +495,12 @@ e_fm2_dbus_mount(E_Volume *v,
 
    if (!v->mounted)
      {
-        v->auto_unmount = 1;
+        v->auto_unmount = EINA_TRUE;
 	_e_fm2_client_mount(v->udi, v->mount_point);
      }
    else
      {
-        v->auto_unmount = 0;
+        v->auto_unmount = EINA_FALSE;
         m->mount_point = eina_stringshare_add(v->mount_point);
      }
 
@@ -512,7 +512,7 @@ e_fm2_dbus_mount_fail(E_Volume *v)
 {
    E_Fm2_Mount *m;
 
-   v->mounted = 0;
+   v->mounted = EINA_FALSE;
    if (v->mount_point) 
      {
         eina_stringshare_del(v->mount_point);
@@ -545,7 +545,7 @@ e_fm2_dbus_unmount_fail(E_Volume *v)
    Eina_List *l;
    E_Fm2_Mount *m;
 
-   v->mounted = 1;
+   v->mounted = EINA_TRUE;
 
    EINA_LIST_FOREACH(v->mounts, l, m)
      _e_fm2_dbus_unmount_fail(m);
@@ -555,7 +555,7 @@ static void
 _e_fm2_dbus_mount_ok(E_Fm2_Mount *m)
 {
    if (m->mounted) return;
-   m->mounted = 1;
+   m->mounted = EINA_TRUE;
    if (m->volume) 
       m->mount_point = eina_stringshare_add(m->volume->mount_point);
    if (m->mount_ok) 
@@ -566,7 +566,7 @@ _e_fm2_dbus_mount_ok(E_Fm2_Mount *m)
 static void
 _e_fm2_dbus_mount_fail(E_Fm2_Mount *m)
 {
-   m->mounted = 0;
+   m->mounted = EINA_FALSE;
    if (m->mount_point)
      {
         eina_stringshare_del(m->mount_point);
@@ -580,7 +580,7 @@ static void
 _e_fm2_dbus_unmount_ok(E_Fm2_Mount *m)
 {
    if (!m->mounted) return;
-   m->mounted = 0;
+   m->mounted = EINA_FALSE;
    if (m->mount_point)
      {
         eina_stringshare_del(m->mount_point);
@@ -594,7 +594,7 @@ static void
 _e_fm2_dbus_unmount_fail(E_Fm2_Mount *m)
 {
    if (m->mounted) return;
-   m->mounted = 1;
+   m->mounted = EINA_TRUE;
    if (m->unmount_fail) 
      m->unmount_fail(m->data);
 }
