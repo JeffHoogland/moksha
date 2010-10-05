@@ -341,6 +341,7 @@ enlightenment_thumb_LDADD = @E_THUMB_LIBS@
 
 enlightenment_fm_SOURCES = \
 e_fm_main.c \
+e_fm_ipc.c \
 e_user.c \
 e_sha1.c
 
