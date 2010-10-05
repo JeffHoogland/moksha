@@ -86,9 +86,7 @@ e_fm2_dbus_storage_find(const char *udi)
    if (!udi) return NULL;
 
    EINA_LIST_FOREACH(_e_stores, l, s)   
-     {
-	if (!strcmp(udi, s->udi)) return s;
-     }
+	if (udi == s->udi) return s;
    return NULL;
 }
 
@@ -368,9 +366,8 @@ e_fm2_dbus_volume_find(const char *udi)
    if (!udi) return NULL;
 
    EINA_LIST_FOREACH(_e_vols, l, v)
-     {
-	if ((v->udi) && (!strcmp(udi, v->udi))) return v;
-     }
+	if (udi == v->udi) return v;
+
    return NULL;
 }
 
