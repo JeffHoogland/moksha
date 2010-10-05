@@ -121,6 +121,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 	e_action_del("gadman_toggle");
 	Man->action = NULL;
      }
+   E_CONFIG_DD_FREE(Man->conf_edd);
 
    gadman_shutdown();
 
