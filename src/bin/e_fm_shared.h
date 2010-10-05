@@ -126,27 +126,27 @@ _e_volume_edd_new(void)
    Eet_Data_Descriptor *edd;
    Eet_Data_Descriptor_Class eddc;
 
-   if (!eet_eina_stream_data_descriptor_class_set(&eddc, sizeof (eddc), "e_volume", sizeof (E_Volume)))
+   if (!eet_eina_stream_data_descriptor_class_set(&eddc, sizeof(eddc), "e_volume", sizeof(E_Volume)))
      return NULL;
 
 //   eddc.func.str_alloc = (char *(*)(const char *)) strdup;
 //   eddc.func.str_free = (void (*)(const char *)) free;
 
    edd = eet_data_descriptor_stream_new(&eddc);
-#define DAT(x, y, z) EET_DATA_DESCRIPTOR_ADD_BASIC(edd, E_Volume, x, y, z)
-   DAT("type", type, EET_T_INT);
-   DAT("udi", udi, EET_T_STRING);
-   DAT("uuid", uuid, EET_T_STRING);
-   DAT("label", label, EET_T_STRING);
-   DAT("fstype", fstype, EET_T_STRING);
-   DAT("size", size, EET_T_ULONG_LONG);
-   DAT("partition", partition, EET_T_CHAR);
-   DAT("partition_number", partition_number, EET_T_INT);
-   DAT("partition_label", partition_label, EET_T_STRING);
-   DAT("mounted", mounted, EET_T_CHAR);
-   DAT("mount_point", mount_point, EET_T_STRING);
-   DAT("parent", parent, EET_T_STRING);
-   DAT("first_time", first_time, EET_T_CHAR);
+#define DAT(MEMBER, TYPE) EET_DATA_DESCRIPTOR_ADD_BASIC(edd, E_Volume, #MEMBER, MEMBER, EET_T_##TYPE)
+   DAT(type, INT);
+   DAT(udi, STRING);
+   DAT(uuid, STRING);
+   DAT(label, STRING);
+   DAT(fstype, STRING);
+   DAT(size, ULONG_LONG);
+   DAT(partition, CHAR);
+   DAT(partition_number, INT);
+   DAT(partition_label, STRING);
+   DAT(mounted, CHAR);
+   DAT(mount_point, STRING);
+   DAT(parent, STRING);
+   DAT(first_time, CHAR);
 #undef DAT
    return edd;
 }
@@ -164,22 +164,22 @@ _e_storage_edd_new(void)
 //   eddc.func.str_free = (void (*)(const char *)) free;
 
    edd = eet_data_descriptor_stream_new(&eddc);
-#define DAT(x, y, z) EET_DATA_DESCRIPTOR_ADD_BASIC(edd, E_Storage, x, y, z)
-   DAT("type", type, EET_T_INT);
-   DAT("udi", udi, EET_T_STRING);
-   DAT("bus", bus, EET_T_STRING);
-   DAT("drive_type", drive_type, EET_T_STRING);
-   DAT("model", model, EET_T_STRING);
-   DAT("vendor", vendor, EET_T_STRING);
-   DAT("serial", serial, EET_T_STRING);
-   DAT("removable", removable, EET_T_CHAR);
-   DAT("media_available", media_available, EET_T_CHAR);
-   DAT("media_size", media_size, EET_T_ULONG_LONG);
-   DAT("requires_eject", requires_eject, EET_T_CHAR);
-   DAT("hotpluggable", hotpluggable, EET_T_CHAR);
-   DAT("media_check_enabled", media_check_enabled, EET_T_CHAR);
-   DAT("icon.drive", icon.drive, EET_T_STRING);
-   DAT("icon.volume", icon.volume, EET_T_STRING);
+#define DAT(MEMBER, TYPE) EET_DATA_DESCRIPTOR_ADD_BASIC(edd, E_Storage, #MEMBER, MEMBER, EET_T_##TYPE)
+   DAT(type, INT);
+   DAT(udi, STRING);
+   DAT(bus, STRING);
+   DAT(drive_type, STRING);
+   DAT(model, STRING);
+   DAT(vendor, STRING);
+   DAT(serial, STRING);
+   DAT(removable, CHAR);
+   DAT(media_available, CHAR);
+   DAT(media_size, ULONG_LONG);
+   DAT(requires_eject, CHAR);
+   DAT(hotpluggable, CHAR);
+   DAT(media_check_enabled, CHAR);
+   DAT(icon.drive, STRING);
+   DAT(icon.volume, STRING);
 #undef DAT
    return edd;
 }
