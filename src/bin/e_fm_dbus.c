@@ -1,8 +1,6 @@
 #include "e_fm_dbus.h"
-
-#define E_FM_SHARED_CODEC
-#include "e_fm_shared.h"
-#undef E_FM_SHARED_CODEC
+#include "e_fm_shared_codec.h"
+#include "e_fm_shared_dbus.h"
 
 static void _e_fm2_volume_write(E_Volume *v) EINA_ARG_NONNULL(1);
 static void _e_fm2_volume_erase(E_Volume *v) EINA_ARG_NONNULL(1);
@@ -74,7 +72,7 @@ e_fm2_dbus_storage_del(E_Storage *s)
 {
 //   printf("STO- %s\n", s->udi);
    _e_stores = eina_list_remove(_e_stores, s);
-   _e_storage_free(s);
+   _e_fm_shared_dbus_storage_free(s);
 }
 
 EAPI E_Storage *
@@ -279,7 +277,7 @@ e_fm2_dbus_volume_del(E_Volume *v)
         _e_fm2_dbus_unmount_ok(m);
         _e_fm2_dbus_mount_free(m);
      }
-   _e_volume_free(v);
+   _e_fm_shared_dbus_volume_free(v);
 }
 
 static void

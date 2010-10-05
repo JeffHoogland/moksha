@@ -449,9 +449,8 @@ static Ecore_Timer *_e_fm2_mime_clear = NULL;
  * _e_storage_volume_edd_init()
  * _e_storage_volume_edd_shutdown()
  */
-#define E_FM_SHARED_CODEC
-#include "e_fm_shared.h"
-#undef E_FM_SHARED_CODEC
+
+#include "e_fm_shared_codec.h"
 
 static inline Eina_Bool
 _e_fm2_icon_realpath(const E_Fm2_Icon *ic, char *buf, int buflen)
@@ -2914,7 +2913,7 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 	  {
 	     E_Storage *s;
 
-	     s = eet_data_descriptor_decode(_e_storage_edd, e->data, e->size);
+	     s = _e_fm_shared_codec_storage_decode(e->data, e->size);
 	     if (s) e_fm2_dbus_storage_add(s);
 	  }
 	break;
@@ -2936,7 +2935,7 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 	  {
 	     E_Volume *v;
 
-	     v = eet_data_descriptor_decode(_e_volume_edd, e->data, e->size);
+	     v = _e_fm_shared_codec_volume_decode(e->data, e->size);
 	     if (v) 
 	       {
 	          e_fm2_dbus_volume_add(v);

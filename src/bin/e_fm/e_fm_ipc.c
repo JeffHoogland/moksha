@@ -33,17 +33,12 @@
 #include <Evas.h>
 #include <Efreet.h>
 #include <Eet.h>
-#include <E_DBus.h>
-#ifdef HAVE_EUKIT
-#include <E_Ukit.h>
-#else
-#include <E_Hal.h>
-#endif
+
 #include <eina_stringshare.h>
 
 #include "e.h"
 #include "e_fm_ipc.h"
-
+//#include "e_fm_shared_c.h"
 #include "e_fm_op.h"
 
 
@@ -118,7 +113,7 @@ struct _E_Fm_Task
    int x,y;
 };
 
-#include "e_fm_shared.h"
+
 /* local subsystem globals */
 Ecore_Ipc_Server *_e_fm_ipc_server = NULL;
 

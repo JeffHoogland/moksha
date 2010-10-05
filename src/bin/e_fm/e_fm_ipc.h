@@ -1,6 +1,8 @@
 #ifndef E_FM_IPC_H
 #define E_FM_IPC_H
 
+#include "e_fm_shared_types.h"
+
 int _e_fm_ipc_init(void);
 Eina_Bool _e_fm_ipc_slave_data_cb(void *data, int type, void *event);
 Eina_Bool _e_fm_ipc_slave_error_cb(void *data, int type, void *event);

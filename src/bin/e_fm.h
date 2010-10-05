@@ -47,9 +47,7 @@ typedef struct _E_Fm2_Config      E_Fm2_Config;
 typedef struct _E_Fm2_Icon        E_Fm2_Icon;
 typedef struct _E_Fm2_Icon_Info   E_Fm2_Icon_Info;
 
-#define E_FM_SHARED_DATATYPES
-#include "e_fm_shared.h"
-#undef E_FM_SHARED_DATATYPES
+#include "e_fm_shared_types.h"
 
 #else
 #ifndef E_FM_H

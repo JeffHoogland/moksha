@@ -159,7 +159,9 @@ e_order.h \
 e_exec.h \
 e_widget_font_preview.h \
 e_fm_custom.h \
-e_fm_shared.h \
+e_fm_shared_types.h \
+e_fm_shared_codec.h \
+e_fm_shared_dbus.h \
 e_config_data.h \
 e_intl_data.h \
 e_toolbar.h \
@@ -277,6 +279,8 @@ e_confirm_dialog.c \
 e_int_border_prop.c \
 e_entry_dialog.c \
 e_fm.c \
+e_fm_shared_codec.c \
+e_fm_shared_dbus.c \
 e_fm_dbus.c \
 e_fm_op_registry.c \
 e_widget_scrollframe.c \
