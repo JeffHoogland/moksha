@@ -129,6 +129,8 @@ struct _E_Fm2_Icon_Info
    Eina_Bool     broken_link : 1;
 };
 
+typedef void (*E_Fm_Cb) (void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info);
+
 EAPI int                   e_fm2_init(void);
 EAPI int                   e_fm2_shutdown(void);
 EAPI Evas_Object          *e_fm2_add(Evas *evas);
@@ -150,9 +152,9 @@ EAPI Eina_List            *e_fm2_selected_list_get(Evas_Object *obj);
 EAPI Eina_List            *e_fm2_all_list_get(Evas_Object *obj);
 EAPI void                  e_fm2_select_set(Evas_Object *obj, const char *file, int select);
 EAPI void                  e_fm2_file_show(Evas_Object *obj, const char *file);
-EAPI void                  e_fm2_icon_menu_replace_callback_set(Evas_Object *obj, void (*func) (void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info), void *data);
-EAPI void                  e_fm2_icon_menu_start_extend_callback_set(Evas_Object *obj, void (*func) (void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info), void *data);
-EAPI void                  e_fm2_icon_menu_end_extend_callback_set(Evas_Object *obj, void (*func) (void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info), void *data);
+EAPI void                  e_fm2_icon_menu_replace_callback_set(Evas_Object *obj, E_Fm_Cb func, void *data);
+EAPI void                  e_fm2_icon_menu_start_extend_callback_set(Evas_Object *obj, E_Fm_Cb func, void *data);
+EAPI void                  e_fm2_icon_menu_end_extend_callback_set(Evas_Object *obj, E_Fm_Cb func, void *data);
 EAPI void                  e_fm2_icon_menu_flags_set(Evas_Object *obj, E_Fm2_Menu_Flags flags);
 EAPI E_Fm2_Menu_Flags      e_fm2_icon_menu_flags_get(Evas_Object *obj);
 EAPI void                  e_fm2_view_flags_set(Evas_Object *obj, E_Fm2_View_Flags flags);
@@ -169,10 +171,8 @@ EAPI void                  e_fm2_all_icons_update(void);
 
 EAPI void                  e_fm2_operation_abort(int id);
 
-EAPI Evas_Object *
-  e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
-		 void (*gen_func) (void *data, Evas_Object *obj, void *event_info),
-		 void *data, int force_gen, const char **type_ret);
+EAPI Evas_Object *e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic, Evas_Smart_Cb gen_func,
+                                 void *data, int force_gen, const char **type_ret);
 EAPI E_Fm2_Icon_Info *e_fm2_icon_file_info_get(E_Fm2_Icon *ic);
 EAPI void        e_fm2_icon_geometry_get(E_Fm2_Icon *ic, int *x, int *y, int *w, int *h);
 

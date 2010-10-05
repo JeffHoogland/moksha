@@ -59,7 +59,7 @@ struct _E_Fm2_Smart_Data
    } regions;
    struct {
       struct {
-	 void (*func) (void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info);
+	 E_Fm_Cb func;
 	 void *data;
       } start, end, replace;
       E_Fm2_Menu_Flags flags;
@@ -233,7 +233,7 @@ static void _e_fm2_icon_realize(E_Fm2_Icon *ic);
 static void _e_fm2_icon_unrealize(E_Fm2_Icon *ic);
 static Eina_Bool _e_fm2_icon_visible(const E_Fm2_Icon *ic);
 static void _e_fm2_icon_label_set(E_Fm2_Icon *ic, Evas_Object *obj);
-static Evas_Object *_e_fm2_icon_icon_direct_set(E_Fm2_Icon *ic, Evas_Object *o, void (*gen_func) (void *data, Evas_Object *obj, void *event_info), void *data, int force_gen);
+static Evas_Object *_e_fm2_icon_icon_direct_set(E_Fm2_Icon *ic, Evas_Object *o, Evas_Smart_Cb gen_func, void *data, int force_gen);
 static void _e_fm2_icon_icon_set(E_Fm2_Icon *ic);
 static void _e_fm2_icon_thumb(const E_Fm2_Icon *ic, Evas_Object *oic, int force);
 static void _e_fm2_icon_select(E_Fm2_Icon *ic);
@@ -1443,7 +1443,7 @@ e_fm2_file_show(Evas_Object *obj, const char *file)
 }
 
 EAPI void
-e_fm2_icon_menu_replace_callback_set(Evas_Object *obj, void (*func) (void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info), void *data)
+e_fm2_icon_menu_replace_callback_set(Evas_Object *obj, E_Fm_Cb func, void *data)
 {
    E_Fm2_Smart_Data *sd;
 
@@ -1456,7 +1456,7 @@ e_fm2_icon_menu_replace_callback_set(Evas_Object *obj, void (*func) (void *data,
 }
 
 EAPI void
-e_fm2_icon_menu_start_extend_callback_set(Evas_Object *obj, void (*func) (void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info), void *data)
+e_fm2_icon_menu_start_extend_callback_set(Evas_Object *obj, E_Fm_Cb func, void *data)
 {
    E_Fm2_Smart_Data *sd;
 
@@ -1469,7 +1469,7 @@ e_fm2_icon_menu_start_extend_callback_set(Evas_Object *obj, void (*func) (void *
 }
 
 EAPI void
-e_fm2_icon_menu_end_extend_callback_set(Evas_Object *obj, void (*func) (void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info), void *data)
+e_fm2_icon_menu_end_extend_callback_set(Evas_Object *obj, E_Fm_Cb func, void *data)
 {
    E_Fm2_Smart_Data *sd;
 
@@ -1869,7 +1869,7 @@ _e_fm2_icon_explicit_get(Evas *evas, const E_Fm2_Icon *ic, const char *icon, con
  * @param force_gen whenever to force generation of thumbnails, even it exists.
  */
 static Evas_Object *
-_e_fm2_icon_thumb_get(Evas *evas, const E_Fm2_Icon *ic, const char *group, void (*cb) (void *data, Evas_Object *obj, void *event_info), void *data, int force_gen, const char **type_ret)
+_e_fm2_icon_thumb_get(Evas *evas, const E_Fm2_Icon *ic, const char *group, Evas_Smart_Cb cb, void *data, int force_gen, const char **type_ret)
 {
    Evas_Object *o;
    char buf[PATH_MAX];
@@ -1898,7 +1898,7 @@ _e_fm2_icon_thumb_get(Evas *evas, const E_Fm2_Icon *ic, const char *group, void 
  * known groups like 'icon', 'e/desktop/background' and 'e/init/splash'.
  */
 static Evas_Object *
-_e_fm2_icon_thumb_edje_get(Evas *evas, const E_Fm2_Icon *ic, void (*cb) (void *data, Evas_Object *obj, void *event_info), void *data, int force_gen, const char **type_ret)
+_e_fm2_icon_thumb_edje_get(Evas *evas, const E_Fm2_Icon *ic, Evas_Smart_Cb cb, void *data, int force_gen, const char **type_ret)
 {
    char buf[PATH_MAX];
    const char **itr, *group;
@@ -2051,7 +2051,7 @@ _e_fm2_icon_mime_theme_get(Evas *evas, const E_Fm2_Icon *ic, const char **type_r
  * Use mime type information to set icon.
  */
 static Evas_Object *
-_e_fm2_icon_mime_get(Evas *evas, const E_Fm2_Icon *ic, void (*gen_func) (void *data, Evas_Object *obj, void *event_info), void *data, int force_gen, const char **type_ret)
+_e_fm2_icon_mime_get(Evas *evas, const E_Fm2_Icon *ic, Evas_Smart_Cb gen_func, void *data, int force_gen, const char **type_ret)
 {
    Evas_Object *o;
    const char *icon;
@@ -2165,7 +2165,7 @@ _e_fm2_icon_imc_get(Evas *evas, const E_Fm2_Icon *ic, const char **type_ret)
  * Use heuristics to discover and set icon.
  */
 static Evas_Object *
-_e_fm2_icon_discover_get(Evas *evas, const E_Fm2_Icon *ic, void (*gen_func) (void *data, Evas_Object *obj, void *event_info), void *data, int force_gen, const char **type_ret)
+_e_fm2_icon_discover_get(Evas *evas, const E_Fm2_Icon *ic, Evas_Smart_Cb gen_func, void *data, int force_gen, const char **type_ret)
 {
    const char *p;
 
@@ -2198,7 +2198,7 @@ _e_fm2_icon_discover_get(Evas *evas, const E_Fm2_Icon *ic, void (*gen_func) (voi
  */
 EAPI Evas_Object *
 e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
-	       void (*gen_func) (void *data, Evas_Object *obj, void *event_info),
+	       Evas_Smart_Cb gen_func,
 	       void *data, int force_gen, const char **type_ret)
 {
    if (ic->info.icon)
@@ -4783,7 +4783,7 @@ _e_fm2_icon_label_set(E_Fm2_Icon *ic, Evas_Object *obj)
 }
 
 static Evas_Object *
-_e_fm2_icon_icon_direct_set(E_Fm2_Icon *ic, Evas_Object *o, void (*gen_func) (void *data, Evas_Object *obj, void *event_info), void *data, int force_gen)
+_e_fm2_icon_icon_direct_set(E_Fm2_Icon *ic, Evas_Object *o, Evas_Smart_Cb gen_func, void *data, int force_gen)
 {
    Evas_Object *oic;
 
