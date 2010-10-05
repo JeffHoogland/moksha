@@ -64,10 +64,10 @@ struct _E_Fm2_Mount
    const char *udi;
    const char *mount_point;
 
-   void (*mount_ok) (void *data);
-   void (*mount_fail) (void *data);
-   void (*unmount_ok) (void *data);
-   void (*unmount_fail) (void *data);
+   Ecore_Cb mount_ok;
+   Ecore_Cb mount_fail;
+   Ecore_Cb unmount_ok;
+   Ecore_Cb unmount_fail;
    void *data;
 
    E_Volume *volume;

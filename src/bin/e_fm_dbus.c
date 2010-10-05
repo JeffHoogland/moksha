@@ -470,8 +470,8 @@ e_fm2_dbus_mount_find(const char *path)
 
 EAPI E_Fm2_Mount *
 e_fm2_dbus_mount(E_Volume *v, 
-	       void (*mount_ok) (void *data), void (*mount_fail) (void *data), 
-	       void (*unmount_ok) (void *data), void (*unmount_fail) (void *data), 
+	       Ecore_Cb mount_ok, Ecore_Cb mount_fail, 
+	       Ecore_Cb unmount_ok, Ecore_Cb unmount_fail, 
 	       void *data)
 {
    E_Fm2_Mount *m;
