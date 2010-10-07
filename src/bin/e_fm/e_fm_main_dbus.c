@@ -998,7 +998,7 @@ _e_fm_main_dbus_storage_find(const char *udi)
    
    EINA_LIST_FOREACH(_e_stores, l, s)
      {
-	       if (udi == s->udi) return s;
+	       if (!strcmp(udi, s->udi)) return s;
      }
    return NULL;
 }
