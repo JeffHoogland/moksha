@@ -402,18 +402,18 @@ _e_fm_main_dbus_cb_store_prop(void *data, void *reply_data, DBusError *error)
 //   printf("++STO:\n  udi: %s\n  bus: %s\n  drive_type: %s\n  model: %s\n  vendor: %s\n  serial: %s\n  icon.drive: %s\n  icon.volume: %s\n\n", s->udi, s->bus, s->drive_type, s->model, s->vendor, s->serial, s->icon.drive, s->icon.volume);
    s->validated = EINA_TRUE;
      {
-								void *msg_data;
-								int msg_size;
-								
-								msg_data = _e_fm_shared_codec_storage_encode(s, &msg_size);
-								if (msg_data)
-										{
-													ecore_ipc_server_send(_e_fm_ipc_server,
-														6/*E_IPC_DOMAIN_FM*/,
-														E_FM_OP_STORAGE_ADD,
-														0, 0, 0, msg_data, msg_size);
-													free(msg_data);
-										}
+        void *msg_data;
+        int msg_size;
+        
+        msg_data = _e_fm_shared_codec_storage_encode(s, &msg_size);
+        if (msg_data)
+          {
+             ecore_ipc_server_send(_e_fm_ipc_server,
+                                   6/*E_IPC_DOMAIN_FM*/,
+                                   E_FM_OP_STORAGE_ADD,
+                                   0, 0, 0, msg_data, msg_size);
+             free(msg_data);
+          }
      }
    return;
    
@@ -806,13 +806,13 @@ _e_fm_main_dbus_volume_add(const char *udi, Eina_Bool first_time)
    v->first_time = first_time;
    _e_vols = eina_list_append(_e_vols, v);
    e_hal_device_get_all_properties(_e_fm_main_dbus_conn, v->udi,
-				                               _e_fm_main_dbus_cb_vol_prop, v);
+                                   _e_fm_main_dbus_cb_vol_prop, v);
    v->prop_handler = e_dbus_signal_handler_add(_e_fm_main_dbus_conn,
                                                E_HAL_SENDER,
-																																															udi,
-																																															E_HAL_DEVICE_INTERFACE,
-																																															"PropertyModified",
-																																															_e_fm_main_dbus_cb_prop_modified, v);
+                                               udi,
+                                               E_HAL_DEVICE_INTERFACE,
+                                               "PropertyModified",
+                                               _e_fm_main_dbus_cb_prop_modified, v);
    v->guard = NULL;
    
    return v;
@@ -833,12 +833,12 @@ _e_fm_main_dbus_volume_del(const char *udi)
    if (v->prop_handler) e_dbus_signal_handler_del(_e_fm_main_dbus_conn, v->prop_handler);
    if (v->validated)
      {
-					 		//	printf("--VOL %s\n", v->udi);
-								/* FIXME: send event of storage volume (disk) removed */
-								ecore_ipc_server_send(_e_fm_ipc_server,
-																6/*E_IPC_DOMAIN_FM*/,
-																E_FM_OP_VOLUME_DEL,
-																0, 0, 0, v->udi, eina_stringshare_strlen(v->udi) + 1);
+        //	printf("--VOL %s\n", v->udi);
+        /* FIXME: send event of storage volume (disk) removed */
+        ecore_ipc_server_send(_e_fm_ipc_server,
+                              6/*E_IPC_DOMAIN_FM*/,
+                              E_FM_OP_VOLUME_DEL,
+                              0, 0, 0, v->udi, eina_stringshare_strlen(v->udi) + 1);
      }
    _e_vols = eina_list_remove(_e_vols, v);
    _e_fm_shared_dbus_volume_free(v);
@@ -849,10 +849,12 @@ _e_fm_main_dbus_volume_find(const char *udi)
 {
    Eina_List *l;
    E_Volume *v;
-   
+
+   if (!udi) return NULL;
    EINA_LIST_FOREACH(_e_vols, l, v)
      {
-	       if (udi == v->udi) return v;
+        if (!v->udi) continue;
+        if (!strcmp(udi, v->udi)) return v;
      }
    return NULL;
 }
@@ -902,12 +904,12 @@ _e_fm_main_dbus_volume_mount(E_Volume *v)
 
    if ((!strcmp(v->fstype, "vfat")) ||
        (!strcmp(v->fstype, "ntfs"))
-       )
+      )
      {
-								snprintf(buf, sizeof(buf), "uid=%i", (int)getuid());
-								opt = eina_list_append(opt, buf);
+        snprintf(buf, sizeof(buf), "uid=%i", (int)getuid());
+        opt = eina_list_append(opt, buf);
      }
-
+   
    if ((!strcmp(v->fstype, "vfat")) || 
        (!strcmp(v->fstype, "ntfs")) ||
        (!strcmp(v->fstype, "iso9660"))
@@ -979,10 +981,10 @@ _e_fm_main_dbus_storage_del(const char *udi)
    if (s->validated)
      {
         //	printf("--STO %s\n", s->udi);
-								ecore_ipc_server_send(_e_fm_ipc_server,
-																6/*E_IPC_DOMAIN_FM*/,
-																E_FM_OP_STORAGE_DEL,
-																0, 0, 0, s->udi, strlen(s->udi) + 1);
+        ecore_ipc_server_send(_e_fm_ipc_server,
+                              6/*E_IPC_DOMAIN_FM*/,
+                              E_FM_OP_STORAGE_DEL,
+                              0, 0, 0, s->udi, strlen(s->udi) + 1);
      }
    _e_stores = eina_list_remove(_e_stores, s);
    _e_fm_shared_dbus_storage_free(s);

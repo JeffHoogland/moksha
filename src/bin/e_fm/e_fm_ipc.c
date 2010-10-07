@@ -603,6 +603,7 @@ _e_fm_ipc_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event
 	     udi = e->data;          
 	     mountpoint = udi + strlen(udi) + 1;
 	     v = e_volume_find(udi);
+//             printf("REQ M %p (find from %s -> %s)\n", v, udi, mountpoint); fflush(stdout);
 	     if (v)
 	       {
 		  if (mountpoint[0])
@@ -610,7 +611,6 @@ _e_fm_ipc_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event
 		       if (v->mount_point) eina_stringshare_del(v->mount_point);
 		       v->mount_point = eina_stringshare_add(mountpoint);
 		    }
-//		  printf("REQ M\n");
 		  e_volume_mount(v);
 	       }
 	  }
@@ -624,7 +624,7 @@ _e_fm_ipc_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event
 	     v = e_volume_find(udi);
 	     if (v)
 	       {
-//		  printf("REQ UM\n");
+//		  printf("REQ UM\n"); fflush(stdout);
 		  e_volume_unmount(v);
 	       }
 	  }

@@ -183,29 +183,29 @@ e_volume_eject(E_Volume *v)
 EAPI E_Volume *
 e_volume_find(const char *udi)
 {
-	  return _E_FM(volume_find)(udi);
+   return _E_FM(volume_find)(udi);
 }
 
 EAPI void
 e_storage_del(const char *udi)
 {
-	  _E_FM(storage_del)(udi);
+   _E_FM(storage_del)(udi);
 }
 
 EAPI E_Storage *
 e_storage_find(const char *udi)
 {
-	  return _E_FM(storage_find)(udi);
+   return _E_FM(storage_find)(udi);
 }
 
 void
 _e_storage_free(E_Storage *s)
 {
-	  _E_FM_SHARED(storage_free)(s);
+   _E_FM_SHARED(storage_free)(s);
 }
 
 void
 _e_volume_free(E_Volume *v)
 {
-	  _E_FM_SHARED(volume_free)(v);
+   _E_FM_SHARED(volume_free)(v);
 }
