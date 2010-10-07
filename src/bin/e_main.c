@@ -552,17 +552,6 @@ main(int argc, char **argv)
    TS("test done");
 
    /*** Finished loading subsystems, Loading WM Specifics ***/
-   TS("efreet");
-   /* init FDO desktop */
-   if (!efreet_init())
-     {
-        e_error_message_show(_("Enlightenment cannot initialize the FDO desktop system.\n"
-                               "Perhaps you are out of memory?"));
-        _e_main_shutdown(-1);
-     }
-   _e_main_shutdown_push(efreet_shutdown);
-   TS("efreet done");
-
    TS("configure");
    e_configure_init();
 
@@ -687,6 +676,17 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_intl_post_shutdown);
+
+   TS("efreet");
+   /* init FDO desktop */
+   if (!efreet_init())
+     {
+        e_error_message_show(_("Enlightenment cannot initialize the FDO desktop system.\n"
+                               "Perhaps you are out of memory?"));
+        _e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(efreet_shutdown);
+   TS("efreet done");
 
    if (!really_know)
      {
