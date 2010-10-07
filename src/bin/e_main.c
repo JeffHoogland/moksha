@@ -1,4 +1,7 @@
-#define _GNU_SOURCE
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
+
 #include "e.h"
 
 #ifdef HAVE_ECORE_IMF
