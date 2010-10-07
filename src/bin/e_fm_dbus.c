@@ -82,9 +82,10 @@ e_fm2_dbus_storage_find(const char *udi)
    E_Storage  *s;
 
    if (!udi) return NULL;
-
    EINA_LIST_FOREACH(_e_stores, l, s)   
-	if (!strcmpudi, s->udi)) return s;
+     {
+        if (!strcmp(udi, s->udi)) return s;
+     }
    return NULL;
 }
 
