@@ -2863,7 +2863,7 @@ e_actions_init(void)
    ACT_GO(window_push);
    e_action_predef_name_set(_("Window : Actions"), "Push in Direction...", 
 			    "window_push", NULL,
-			    "syntax: direction, example: up, down, left, right, up-left, up-right, bottom-left, bottom-right", 1);
+			    "syntax: direction, example: up, down, left, right, up-left, up-right, down-left, down-right", 1);
 
    /* window_drag_icon */
    ACT_GO(window_drag_icon);
