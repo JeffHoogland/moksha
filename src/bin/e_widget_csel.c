@@ -17,15 +17,14 @@ static void
 _e_wid_del_hook(Evas_Object *obj)
 {
    E_Widget_Data *wd;
-   int i;
-   
+   int i = 0;
+
    wd = e_widget_data_get(obj);
    if (!wd) return;
 
    for (i = 0; i < E_COLOR_COMPONENT_MAX; i++)
-     {
-	E_FREE(wd->values[i]);
-     }
+     E_FREE(wd->values[i]);
+
    E_FREE(wd->values);
 
    eina_list_free(wd->sliders);
@@ -49,15 +48,13 @@ _e_wid_cb_color_changed(void *data, Evas_Object *o)
    E_Widget_Data *wd = data;
    Eina_List *l;
    Evas_Object *eo, *so;
-   int i;
-   int changed = -1;
+   int changed = -1, i = 0;
 
    if (wd->changing) return;
 
    wd->changing = 1;
 
    /* entry changed */
-   i = 0;
    EINA_LIST_FOREACH(wd->entries, l, eo)
      {
 	if (o == eo)
@@ -114,19 +111,14 @@ _e_wid_cb_color_changed(void *data, Evas_Object *o)
    else
      e_widget_cslider_update(wd->vert);
 
-
    /* update the sliders */
    i = 0;
    EINA_LIST_FOREACH(wd->sliders, l, so)
      {
 	if (o != so)
-	  {
-	     e_widget_cslider_update(so);
-	  }
+          e_widget_cslider_update(so);
 	else
-	  {
-	     changed = i;
-	  }
+          changed = i;
 	i++;
      }
 
@@ -148,6 +140,7 @@ _e_wid_cb_color_changed(void *data, Evas_Object *o)
    EINA_LIST_FOREACH(wd->entries, l, eo)
      {
 	char buf[10];
+
 	if (o == eo) continue;
 	switch (i)
 	  {
@@ -189,7 +182,7 @@ e_widget_csel_add(Evas *evas, E_Color *color, Eina_Bool alpha_enabled)
 {
    Evas_Object *obj, *o;
    Evas_Object *frame, *table;
-   int i;
+   int i = 0;
    E_Radio_Group *grp = NULL;
    char *labels[6] = { "R", "G", "B", "H", "S", "V" };
    E_Widget_Data *wd;
@@ -234,7 +227,7 @@ e_widget_csel_add(Evas *evas, E_Color *color, Eina_Bool alpha_enabled)
 	      snprintf(wd->values[i], 10, "%.2f", wd->cv->s);
 	      break;
 	   case E_COLOR_COMPONENT_V:
-	      snprintf(wd->values[i], 11, "%.2f", wd->cv->v);
+	      snprintf(wd->values[i], 10, "%.2f", wd->cv->v);
 	      break;
 	  }
 
@@ -262,8 +255,8 @@ e_widget_csel_add(Evas *evas, E_Color *color, Eina_Bool alpha_enabled)
      {
 	o = e_widget_label_add(evas, "Alpha");
 	e_widget_table_object_append(frame, o, 1, i, 1, 1, 1, 1, 0, 0);
-	o = e_widget_slider_add
-	  (evas, 1, 0, "%0.0f", 0, 255, 1, 0, NULL, &(wd->cv->a), 100);
+	o = e_widget_slider_add(evas, 1, 0, "%0.0f", 0, 255, 1, 0, NULL, 
+                                &(wd->cv->a), 100);
 	e_widget_on_change_hook_set(o, _e_wid_cb_alpha_changed, wd);
 	e_widget_table_object_append(frame, o, 2, i, 1, 1, 1, 1, 0, 0);
      }
@@ -292,9 +285,5 @@ e_widget_csel_add(Evas *evas, E_Color *color, Eina_Bool alpha_enabled)
    wd->well = o;
    e_widget_table_object_append(table, o, 3, 2, 1, 1, 1, 1, 1, 1);
 
-
    return obj;
 }
-
-
-
