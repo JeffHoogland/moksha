@@ -881,11 +881,14 @@ _e_mod_comp_cb_update(E_Comp *c)
                     }
                   if (cw->counter)
                     {
-                       printf("nosync\n");
                        if (cw->bd)
-                         ecore_x_e_comp_sync_cancel_send(cw->bd->client.win);
+                         {
+                            ecore_x_e_comp_sync_cancel_send(cw->bd->client.win);
+                         }
                        else
-                         ecore_x_e_comp_sync_cancel_send(cw->win);
+                         {
+                            ecore_x_e_comp_sync_cancel_send(cw->win);
+                         }
                        ecore_x_sync_counter_inc(cw->counter, 1);
                     }
 //                  ecore_x_window_hide(cw->win);
@@ -964,9 +967,13 @@ _e_mod_comp_cb_update(E_Comp *c)
                   if (cw->counter)
                     {
                        if (cw->bd)
-                         ecore_x_e_comp_sync_begin_send(cw->bd->client.win);
+                         {
+                            ecore_x_e_comp_sync_begin_send(cw->bd->client.win);
+                         }
                        else
-                         ecore_x_e_comp_sync_begin_send(cw->win);
+                         {
+                            ecore_x_e_comp_sync_begin_send(cw->win);
+                         }
                     }
                }
           }
@@ -1113,9 +1120,13 @@ _e_mod_comp_object_del(void *data, void *obj)
         if (cw->counter)
           {
              if (cw->bd)
-               ecore_x_e_comp_sync_cancel_send(cw->bd->client.win);
+               {
+                  ecore_x_e_comp_sync_cancel_send(cw->bd->client.win);
+               }
              else
-               ecore_x_e_comp_sync_cancel_send(cw->win);
+               {
+                  ecore_x_e_comp_sync_cancel_send(cw->win);
+               }
              ecore_x_sync_counter_inc(cw->counter, 1);
           }
         eina_hash_del(borders, e_util_winid_str_get(cw->bd->client.win), cw);
@@ -1179,7 +1190,9 @@ _e_mod_comp_win_sync_setup(E_Comp_Win *cw, Ecore_X_Window win)
             (_comp_mod->conf->loose_sync))
           cw->counter = ecore_x_e_comp_sync_counter_get(win);
         else
-          ecore_x_e_comp_sync_cancel_send(win);
+          {
+             ecore_x_e_comp_sync_cancel_send(win);
+          }
      }
    else
      cw->counter = ecore_x_e_comp_sync_counter_get(win);
@@ -1464,7 +1477,8 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
         eina_hash_add(borders, e_util_winid_str_get(cw->bd->client.win), cw);
         cw->dfn = e_object_delfn_add(E_OBJECT(cw->bd), 
                                      _e_mod_comp_object_del, cw);
-        _e_mod_comp_win_sync_setup(cw, cw->bd->client.win);
+// setup on show
+//      _e_mod_comp_win_sync_setup(cw, cw->bd->client.win);
      }
    else
      {
@@ -1494,7 +1508,8 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
                     cw->primary_type = ECORE_X_WINDOW_TYPE_UNKNOWN;
                }
           }
-        _e_mod_comp_win_sync_setup(cw, cw->win);
+// setup on show
+//        _e_mod_comp_win_sync_setup(cw, cw->win);
      }
 //   printf("CW ADD %x\n", cw->win);
    if (!cw->counter)
@@ -1749,6 +1764,13 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
        cw->win, cw->redirected, cw->pixmap, cw->dmg_updates);
    _e_mod_comp_win_configure(cw, cw->hidden.x, cw->hidden.y, cw->w, cw->h, cw->border);
    if ((cw->input_only) || (cw->invalid)) return;
+   
+// setup on show
+   if (cw->bd)
+      _e_mod_comp_win_sync_setup(cw, cw->bd->client.win);
+   else
+      _e_mod_comp_win_sync_setup(cw, cw->win);
+   
    if (cw->real_hid)
      {
         DBG("  [0x%x] real hid - fix\n", cw->win);
