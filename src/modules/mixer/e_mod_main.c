@@ -1,6 +1,9 @@
 #include "e_mod_main.h"
 #include "e_mod_system.h"
 
+static void _mixer_popup_timer_new(E_Mixer_Instance *inst);
+static Eina_Bool _mixer_popup_timer_cb(void *data);
+
 static E_Module *mixer_mod = NULL;
 static char tmpbuf[PATH_MAX]; /* general purpose buffer, just use immediately */
 
