@@ -83,20 +83,17 @@ void *alloca (size_t);
 #include "e_fm_shared_codec.h"
 #include "e_fm_ipc.h"
 
+static void
+_e_fm_init(void)
+{
+   _E_FM(init)();
+}
 
-static void _e_fm_init(void);
-static void _e_fm_shutdown(void);
-
-/* contains:
- * _e_volume_edd
- * _e_storage_edd
- * _e_volume_free()
- * _e_storage_free()
- * _e_volume_edd_new()
- * _e_storage_edd_new()
- * _e_storage_volume_edd_init()
- * _e_storage_volume_edd_shutdown()
- */
+static void
+_e_fm_shutdown(void)
+{
+   _E_FM(shutdown)();
+}
 
 /* externally accessible functions */
 int
@@ -149,17 +146,19 @@ main(int argc, char **argv)
    eina_shutdown();
 }
 
-static void
-_e_fm_init(void)
+void
+_e_storage_free(E_Storage *s)
 {
-   _E_FM(init)();
+   _e_fm_shared_device_storage_free(s);
 }
 
-static void
-_e_fm_shutdown(void)
+void
+_e_volume_free(E_Volume *v)
 {
-   _E_FM(shutdown)();
+   _e_fm_shared_device_volume_free(v);
 }
+
+/* API functions */
 
 EAPI void
 e_volume_mount(E_Volume *v)
@@ -196,16 +195,4 @@ EAPI E_Storage *
 e_storage_find(const char *udi)
 {
    return _E_FM(storage_find)(udi);
-}
-
-void
-_e_storage_free(E_Storage *s)
-{
-   _e_fm_shared_device_storage_free(s);
-}
-
-void
-_e_volume_free(E_Volume *v)
-{
-   _e_fm_shared_device_volume_free(v);
 }
