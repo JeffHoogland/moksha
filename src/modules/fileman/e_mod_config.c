@@ -160,9 +160,9 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 
    e_config->dbus_desktop = cfdata->dbus.desktop;
    if(e_config->dbus_desktop) 
-     e_fm2_dbus_show_desktop_icons();
+     e_fm2_device_show_desktop_icons();
    else
-     e_fm2_dbus_hide_desktop_icons();
+     e_fm2_device_hide_desktop_icons();
 
    e_config->dbus_auto_mount = cfdata->dbus.auto_mount;
    e_config->dbus_auto_open = cfdata->dbus.auto_open;

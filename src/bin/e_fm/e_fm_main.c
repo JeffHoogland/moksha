@@ -1,4 +1,6 @@
+#ifdef HAVE_CONFIG_H
 #include "config.h"
+#endif
 
 #ifdef HAVE_ALLOCA_H
 # include <alloca.h>
@@ -55,15 +57,13 @@ void *alloca (size_t);
 /* if using ehal, functions will point to _e_fm_main_dbus_X
  * if using eeze, functions will point to _e_fm_main_eeze_X
  */
+#include "e_fm_shared_device.h"
 #ifndef HAVE_EEZE_MOUNT
 #include "e_fm_main_dbus.h"
-#include "e_fm_shared_dbus.h"
 #define _E_FM(FUNC) _e_fm_main_dbus_##FUNC
-#define _E_FM_SHARED(FUNC) _e_fm_shared_dbus_##FUNC
 #else
 #include "e_fm_main_eeze.h"
 #define _E_FM(FUNC) _e_fm_main_eeze_##FUNC
-#define _E_FM_SHARED(FUNC) _e_fm_shared_eeze_##FUNC
 #endif
 
 /* FIXME: things to add to the slave enlightenment_fm process and ipc to e:
@@ -201,11 +201,11 @@ e_storage_find(const char *udi)
 void
 _e_storage_free(E_Storage *s)
 {
-   _E_FM_SHARED(storage_free)(s);
+   _e_fm_shared_device_storage_free(s);
 }
 
 void
 _e_volume_free(E_Volume *v)
 {
-   _E_FM_SHARED(volume_free)(v);
+   _e_fm_shared_device_volume_free(v);
 }

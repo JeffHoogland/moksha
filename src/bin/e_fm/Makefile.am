@@ -25,7 +25,7 @@ e_fm_main.c \
 e_fm_main_dbus.c \
 e_fm_ipc.c \
 ../e_fm_shared_codec.c \
-../e_fm_shared_dbus.c \
+../e_fm_shared_device.c \
 ../e_user.c \
 ../e_sha1.c
 

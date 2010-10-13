@@ -286,9 +286,9 @@ struct _E_Config
    double thumbscroll_momentum_threshhold; // GUI
    double thumbscroll_friction; // GUI
 
-   int dbus_desktop;
-   int dbus_auto_mount;
-   int dbus_auto_open;
+   int device_desktop;
+   int device_auto_mount;
+   int device_auto_open;
 
    struct {
       double timeout;

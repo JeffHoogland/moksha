@@ -1,4 +1,6 @@
+#ifdef HAVE_CONFIG_H
 #include "config.h"
+#endif
 
 #ifdef HAVE_ALLOCA_H
 # include <alloca.h>
@@ -50,9 +52,9 @@ void *alloca (size_t);
 #include "e_fm_main_dbus.h"
 
 #include "e_fm_shared_codec.h"
-#include "e_fm_shared_dbus.h"
+#include "e_fm_shared_device.h"
 #include "e_fm_ipc.h"
-#include "e_fm_dbus.h"
+#include "e_fm_device.h"
 
 static E_DBus_Signal_Handler *_hal_poll = NULL;
 static E_DBus_Connection *_e_fm_main_dbus_conn = NULL;
@@ -841,7 +843,7 @@ _e_fm_main_dbus_volume_del(const char *udi)
                               0, 0, 0, v->udi, eina_stringshare_strlen(v->udi) + 1);
      }
    _e_vols = eina_list_remove(_e_vols, v);
-   _e_fm_shared_dbus_volume_free(v);
+   _e_fm_shared_device_volume_free(v);
 }
 
 E_Volume *
@@ -987,7 +989,7 @@ _e_fm_main_dbus_storage_del(const char *udi)
                               0, 0, 0, s->udi, strlen(s->udi) + 1);
      }
    _e_stores = eina_list_remove(_e_stores, s);
-   _e_fm_shared_dbus_storage_free(s);
+   _e_fm_shared_device_storage_free(s);
 }
 
 E_Storage *

@@ -1,5 +1,5 @@
 #include "e.h"
-#include "e_fm_dbus.h"
+#include "e_fm_device.h"
 #include "e_fm_op.h"
 
 #define OVERCLIP 128
@@ -357,7 +357,7 @@ static void _e_fm_error_abort_cb(void *data, E_Dialog *dialog);
 static void _e_fm_error_ignore_this_cb(void *data, E_Dialog *dialog);
 static void _e_fm_error_ignore_all_cb(void *data, E_Dialog *dialog);
 
-static void _e_fm_dbus_error_dialog(const char *title, const char *msg, const char *pstr);
+static void _e_fm_device_error_dialog(const char *title, const char *msg, const char *pstr);
 
 static void _e_fm2_file_delete(Evas_Object *obj);
 static void _e_fm2_file_delete_menu(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -833,7 +833,7 @@ _e_fm2_cb_mount_fail(void *data)
    if (!sd) return; // safety
    if (sd->mount)
      {
-        // At this moment E_Fm2_Mount object already deleted in e_fm_dbus.c
+        // At this moment E_Fm2_Mount object already deleted in e_fm_device.c
 	sd->mount = NULL;
         if (sd->config->view.open_dirs_in_place)
            e_fm2_path_set(data, "favorites", "/");
@@ -973,7 +973,7 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
        && strncmp(sd->mount->mount_point, sd->realpath,
 		  strlen(sd->mount->mount_point)))
      {
-	e_fm2_dbus_unmount(sd->mount);
+	e_fm2_device_unmount(sd->mount);
 	sd->mount = NULL;
      }
 
@@ -982,18 +982,18 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
      {
 	E_Volume *v = NULL;
 
-	v = e_fm2_dbus_volume_find(sd->dev + strlen("removable:"));
+	v = e_fm2_device_volume_find(sd->dev + strlen("removable:"));
 	if (v)
-	  sd->mount = e_fm2_dbus_mount(v,
+	  sd->mount = e_fm2_device_mount(v,
 				     _e_fm2_cb_mount_ok, _e_fm2_cb_mount_fail,
 				     _e_fm2_cb_unmount_ok, NULL, obj);
      }
    else if (sd->config->view.open_dirs_in_place == 0)
      {
 	E_Fm2_Mount *m;
-	m = e_fm2_dbus_mount_find(sd->realpath);
+	m = e_fm2_device_mount_find(sd->realpath);
 	if (m)
-	  sd->mount = e_fm2_dbus_mount(m->volume,
+	  sd->mount = e_fm2_device_mount(m->volume,
 				     _e_fm2_cb_mount_ok, _e_fm2_cb_mount_fail,
 				     _e_fm2_cb_unmount_ok, NULL, obj);
      }
@@ -2914,7 +2914,7 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 	     E_Storage *s;
 
 	     s = _e_fm_shared_codec_storage_decode(e->data, e->size);
-	     if (s) e_fm2_dbus_storage_add(s);
+	     if (s) e_fm2_device_storage_add(s);
 	  }
 	break;
 
@@ -2925,8 +2925,8 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 	     E_Storage *s;
 
 	     udi = e->data;
-	     s = e_fm2_dbus_storage_find(udi);
-	     if (s) e_fm2_dbus_storage_del(s);
+	     s = e_fm2_device_storage_find(udi);
+	     if (s) e_fm2_device_storage_del(s);
 	  }
 	break;
 
@@ -2938,8 +2938,8 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 	     v = _e_fm_shared_codec_volume_decode(e->data, e->size);
 	     if (v) 
 	       {
-	          e_fm2_dbus_volume_add(v);
-	          if (e_config->dbus_auto_mount && !v->mounted && !v->first_time)
+	          e_fm2_device_volume_add(v);
+	          if (e_config->device_auto_mount && !v->mounted && !v->first_time)
 	             _e_fm2_client_mount(v->udi, v->mount_point);
 	          v->first_time = 0;
 	       }
@@ -2953,8 +2953,8 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
              E_Volume *v;
 
 	     udi = e->data;
-	     v = e_fm2_dbus_volume_find(udi);
-	     if (v) e_fm2_dbus_volume_del(v);
+	     v = e_fm2_device_volume_find(udi);
+	     if (v) e_fm2_device_volume_del(v);
 	  }
 	break;
 
@@ -2966,12 +2966,12 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 
 	     udi = e->data;
 	     mountpoint = udi + strlen(udi) + 1;
-	     v = e_fm2_dbus_volume_find(udi);
+	     v = e_fm2_device_volume_find(udi);
 	     if (v) 
                {
-                  e_fm2_dbus_mount_add(v, mountpoint);
+                  e_fm2_device_mount_add(v, mountpoint);
                   _e_fm2_volume_icon_update(v);
-                  if (e_config->dbus_auto_open && !eina_list_count(v->mounts))
+                  if (e_config->device_auto_open && !eina_list_count(v->mounts))
                     {
                        E_Action *a;
                        Eina_List *m;
@@ -2992,10 +2992,10 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 	     char *udi;
 
 	     udi = e->data;
-	     v = e_fm2_dbus_volume_find(udi);
+	     v = e_fm2_device_volume_find(udi);
 	     if (v) 
                {
-                  e_fm2_dbus_mount_del(v);
+                  e_fm2_device_mount_del(v);
                   _e_fm2_volume_icon_update(v);
                }
 	  }
@@ -3011,11 +3011,11 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
              char *udi;
 
              udi = e->data;
-             v = e_fm2_dbus_volume_find(udi);
+             v = e_fm2_device_volume_find(udi);
              if (v) 
                {
-                  _e_fm_dbus_error_dialog(_("Mount Error"), _("Can't mount device"), e->data);
-                  e_fm2_dbus_mount_fail(v);
+                  _e_fm_device_error_dialog(_("Mount Error"), _("Can't mount device"), e->data);
+                  e_fm2_device_mount_fail(v);
                }
           }
         break;
@@ -3027,11 +3027,11 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
              char *udi;
 
              udi = e->data;
-             v = e_fm2_dbus_volume_find(udi);
+             v = e_fm2_device_volume_find(udi);
              if (v)
                {
-                  _e_fm_dbus_error_dialog(_("Unmount Error"), _("Can't unmount device"), e->data);
-                  e_fm2_dbus_unmount_fail(v);
+                  _e_fm_device_error_dialog(_("Unmount Error"), _("Can't unmount device"), e->data);
+                  e_fm2_device_unmount_fail(v);
                }
           }
         break;
@@ -3043,9 +3043,9 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
              char *udi;
 
              udi = e->data;
-             v = e_fm2_dbus_volume_find(udi);
+             v = e_fm2_device_volume_find(udi);
              if (v)
-                _e_fm_dbus_error_dialog(_("Eject Error"), _("Can't eject device"), e->data);
+                _e_fm_device_error_dialog(_("Eject Error"), _("Can't eject device"), e->data);
           }
         break;
         
@@ -3221,11 +3221,11 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
 	  {
 	     E_Volume *v;
 
-	     v = e_fm2_dbus_volume_find(dev + strlen("removable:"));
+	     v = e_fm2_device_volume_find(dev + strlen("removable:"));
 	     if (v)
 	       {
 		  if (!v->mount_point)
-		    v->mount_point = e_fm2_dbus_volume_mountpoint_get(v);;
+		    v->mount_point = e_fm2_device_volume_mountpoint_get(v);;
 		  if (PRT("%s/%s", v->mount_point, path) >= sizeof(buf))
 		    return NULL;
 	       }
@@ -4915,8 +4915,8 @@ _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
 	     else if (!strcmp(type, "Removable"))
 	       {
 		  ic->info.removable = EINA_TRUE;
-		  if ((!e_fm2_dbus_storage_find(ic->info.link)) &&
-		       (!e_fm2_dbus_volume_find(ic->info.link)))
+		  if ((!e_fm2_device_storage_find(ic->info.link)) &&
+		       (!e_fm2_device_volume_find(ic->info.link)))
 		    {
 		       _e_fm2_live_file_del(ic->sd->obj, ic->info.file);
 		       efreet_desktop_free(desktop);
@@ -7536,7 +7536,7 @@ _e_fm2_smart_del(Evas_Object *obj)
    sd->dev = sd->path = sd->realpath = NULL;
    if (sd->mount)
      {
-	e_fm2_dbus_unmount(sd->mount);
+	e_fm2_device_unmount(sd->mount);
 	sd->mount = NULL;
      }
    if (sd->config) _e_fm2_config_free(sd->config);
@@ -8052,7 +8052,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	  {
 	     E_Volume *v;
 	     
-             v = e_fm2_dbus_volume_find(ic->info.link);
+             v = e_fm2_device_volume_find(ic->info.link);
              if (v)
                {
                   mi = e_menu_item_new(mn);
@@ -9170,7 +9170,7 @@ _e_fm_error_ignore_all_cb(void *data __UNUSED__, E_Dialog *dialog)
 }
 
 static void
-_e_fm_dbus_error_dialog(const char *title, const char *msg, const char *pstr)
+_e_fm_device_error_dialog(const char *title, const char *msg, const char *pstr)
 {
    E_Manager *man;
    E_Container *con;
@@ -9183,7 +9183,7 @@ _e_fm_dbus_error_dialog(const char *title, const char *msg, const char *pstr)
    con = e_container_current_get(man);
    if (!con) return;
 
-   dialog = e_dialog_new(con, "E", "_fm_dbus_error_dialog");
+   dialog = e_dialog_new(con, "E", "_fm_device_error_dialog");
    e_dialog_title_set(dialog, title);
    e_dialog_icon_set(dialog, "drive-harddisk", 64);
    e_dialog_button_add(dialog, _("OK"), NULL, NULL, NULL);
@@ -9742,7 +9742,7 @@ _e_fm2_volume_mount(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__
    v = data;
    if (!v) return;
    
-   mp = e_fm2_dbus_volume_mountpoint_get(v);
+   mp = e_fm2_device_volume_mountpoint_get(v);
    _e_fm2_client_mount(v->udi, mp);
    eina_stringshare_del(mp);
 }
@@ -9827,7 +9827,7 @@ _e_fm2_icon_removable_update(E_Fm2_Icon *ic)
    E_Volume *v;
    
    if (!ic) return;
-   v = e_fm2_dbus_volume_find(ic->info.link);
+   v = e_fm2_device_volume_find(ic->info.link);
    _update_volume_icon(v, ic);
 }
 
