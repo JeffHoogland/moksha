@@ -486,6 +486,9 @@ _mixer_popup_del(E_Mixer_Instance *inst)
    inst->ui.table = NULL;
    inst->ui.button = NULL;
    inst->popup = NULL;
+   if (inst->popup_timer)
+      ecore_timer_del(inst->popup_timer);
+   inst->popup_timer = NULL;
 }
 
 static void
@@ -596,6 +599,37 @@ _mixer_popup_new(E_Mixer_Instance *inst)
    e_gadcon_popup_content_set(inst->popup, inst->ui.table);
    e_gadcon_popup_show(inst->popup);
    _mixer_popup_input_window_create(inst);
+}
+
+static void
+_mixer_popup_timer_new(E_Mixer_Instance *inst)
+{
+   if (inst->popup)
+     {
+        if (inst->popup_timer)
+		  {
+             ecore_timer_del(inst->popup_timer); 
+             inst->popup_timer = ecore_timer_add(1.0, _mixer_popup_timer_cb, inst);
+          }
+     }
+   else
+     {
+        _mixer_popup_new(inst);
+        inst->popup_timer = ecore_timer_add(1.0, _mixer_popup_timer_cb, inst);
+     }
+}
+
+static Eina_Bool
+_mixer_popup_timer_cb(void *data)
+{
+   E_Mixer_Instance *inst;
+   inst = data;
+
+   if (inst->popup)
+      _mixer_popup_del(inst);
+   inst->popup_timer = NULL;
+
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void
@@ -978,8 +1012,12 @@ _mixer_cb_volume_increase(E_Object *obj __UNUSED__, const char *params __UNUSED_
    if (!ctxt->conf)
       return;
 
-   if (ctxt->default_instance)
-      _mixer_volume_increase(ctxt->default_instance);
+
+   if (!ctxt->default_instance)
+      return;
+
+   _mixer_popup_timer_new(ctxt->default_instance);
+   _mixer_volume_increase(ctxt->default_instance);
 }
 
 static void
@@ -994,8 +1032,11 @@ _mixer_cb_volume_decrease(E_Object *obj __UNUSED__, const char *params __UNUSED_
    if (!ctxt->conf)
       return;
 
-   if (ctxt->default_instance)
-      _mixer_volume_decrease(ctxt->default_instance);
+   if (!ctxt->default_instance)
+      return;
+
+   _mixer_popup_timer_new(ctxt->default_instance);
+   _mixer_volume_decrease(ctxt->default_instance);
 }
 
 static void
@@ -1010,8 +1051,11 @@ _mixer_cb_volume_mute(E_Object *obj __UNUSED__, const char *params __UNUSED__)
    if (!ctxt->conf)
       return;
 
-   if (ctxt->default_instance)
-      _mixer_toggle_mute(ctxt->default_instance);
+   if (!ctxt->default_instance)
+      return;
+
+   _mixer_popup_timer_new(ctxt->default_instance);
+   _mixer_toggle_mute(ctxt->default_instance);
 }
 
 static E_Config_Dialog *

@@ -29,6 +29,7 @@ typedef struct E_Mixer_Instance
 {
    E_Gadcon_Client *gcc;
    E_Gadcon_Popup *popup;
+   Ecore_Timer *popup_timer;
    E_Menu *menu;
 
    struct
@@ -81,6 +82,8 @@ E_Config_Dialog *e_mixer_config_dialog_new(E_Container *con, E_Mixer_Gadget_Conf
 E_Dialog *e_mixer_app_dialog_new(E_Container *con, void (*func)(E_Dialog *dialog, void *data), void *data);
 int e_mixer_app_dialog_select(E_Dialog *dialog, const char *card_name, const char *channel_name);
 
+static void _mixer_popup_timer_new(E_Mixer_Instance *inst);
+static Eina_Bool _mixer_popup_timer_cb(void *data);
 int e_mixer_update(E_Mixer_Instance *inst);
 const char *e_mixer_theme_path(void);
 
