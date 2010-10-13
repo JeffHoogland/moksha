@@ -32,7 +32,7 @@ src/bin/e_filereg.c
 src/bin/e_flowlayout.c
 src/bin/e_fm.c
 src/bin/e_fm_custom.c
-src/bin/e_fm_dbus.c
+src/bin/e_fm_device.c
 src/bin/e_fm_mime.c
 src/bin/e_fm_prop.c
 src/bin/e_focus.c
