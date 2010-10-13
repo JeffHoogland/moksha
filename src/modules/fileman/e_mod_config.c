@@ -1,7 +1,7 @@
 #include "e.h"
 #include "e_mod_main.h"
 #include "e_mod_config.h"
-#include "e_fm_dbus.h"
+#include "e_fm_device.h"
 
 struct _E_Config_Dialog_Data 
 {
@@ -125,9 +125,9 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->selection.windows_modifiers = fileman_config->selection.windows_modifiers;
    cfdata->list.sort.dirs.first = fileman_config->list.sort.dirs.first;
    cfdata->list.sort.case_sen = !(fileman_config->list.sort.no_case);
-   cfdata->dbus.desktop = e_config->dbus_desktop;
-   cfdata->dbus.auto_mount = e_config->dbus_auto_mount;
-   cfdata->dbus.auto_open = e_config->dbus_auto_open;
+   cfdata->dbus.desktop = e_config->device_desktop;
+   cfdata->dbus.auto_mount = e_config->device_auto_mount;
+   cfdata->dbus.auto_open = e_config->device_auto_open;
 }
 
 static void 
@@ -158,14 +158,14 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    fileman_config->list.sort.dirs.last = !(cfdata->list.sort.dirs.first);
    fileman_config->list.sort.no_case = !(cfdata->list.sort.case_sen);
 
-   e_config->dbus_desktop = cfdata->dbus.desktop;
-   if(e_config->dbus_desktop) 
+   e_config->device_desktop = cfdata->dbus.desktop;
+   if(e_config->device_desktop) 
      e_fm2_device_show_desktop_icons();
    else
      e_fm2_device_hide_desktop_icons();
 
-   e_config->dbus_auto_mount = cfdata->dbus.auto_mount;
-   e_config->dbus_auto_open = cfdata->dbus.auto_open;
+   e_config->device_auto_mount = cfdata->dbus.auto_mount;
+   e_config->device_auto_open = cfdata->dbus.auto_open;
    
    e_config_save_queue();
    
@@ -191,9 +191,9 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
       (fileman_config->list.sort.dirs.first != cfdata->list.sort.dirs.first) ||
       (fileman_config->list.sort.dirs.last != !(cfdata->list.sort.dirs.first)) ||
       (fileman_config->list.sort.no_case != !(cfdata->list.sort.case_sen)) ||
-      (e_config->dbus_desktop != cfdata->dbus.desktop) ||
-      (e_config->dbus_auto_mount != cfdata->dbus.auto_mount) ||
-      (e_config->dbus_auto_open != cfdata->dbus.auto_open));
+      (e_config->device_desktop != cfdata->dbus.desktop) ||
+      (e_config->device_auto_mount != cfdata->dbus.auto_mount) ||
+      (e_config->device_auto_open != cfdata->dbus.auto_open));
 }
 
 static Evas_Object *
