@@ -168,7 +168,7 @@ _item_free(Evry_Item *it)
 }
 
 static void
-_scan_func(void *data)
+_scan_func(Ecore_Thread *thread __UNUSED__, void *data)
 {
    Data *d = data;
    Plugin *p = d->plugin;
@@ -244,7 +244,7 @@ _scan_func(void *data)
 }
 
 static void
-_scan_mime_func(void *data)
+_scan_mime_func(Ecore_Thread *thread __UNUSED__, void *data)
 {
    Data *d = data;
    Evry_Item_File *file;
