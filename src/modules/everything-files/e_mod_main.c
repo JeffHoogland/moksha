@@ -177,6 +177,8 @@ _scan_func(Ecore_Thread *thread __UNUSED__, void *data)
    char buf[4096];
    Eina_Bool is_dir;
 
+   if (!d->directory)
+     return;
    d->dirp = opendir(d->directory);
    if (!d->dirp) return;
 
@@ -342,6 +344,7 @@ _scan_cancel_func(void *data)
      }
 
    free(d->directory);
+   d->directory = NULL;
    E_FREE(d);
 
    p->thread = NULL;
@@ -492,6 +495,7 @@ _scan_end_func(void *data)
 	  }
 
 	free(d->directory);
+        d->directory = NULL;
 	E_FREE(d);
 	p->thread = NULL;
      }
