@@ -649,7 +649,8 @@ evry_plugin_update(Evry_Plugin *p, int action)
 	_evry_aggregator_fetch(s);
 
 	/* select first plugin */
-	if ((!s->plugin) || (s->plugin_auto_selected))
+	if ((!s->plugin) || (s->plugin_auto_selected) ||
+	    !(eina_list_data_find(s->cur_plugins, s->plugin)))
 	  {
 	     _evry_plugin_select(s, NULL);
 	  }
