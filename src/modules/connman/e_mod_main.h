@@ -105,8 +105,8 @@ struct E_Connman_Module_Context
    } poller;
 
    Eina_Bool has_manager:1;
-   bool offline_mode;
-   bool offline_mode_pending;
+   Eina_Bool offline_mode;
+   Eina_Bool offline_mode_pending;
    const char *technology;
    const E_Connman_Service *default_service;
    Eina_Inlist *services;

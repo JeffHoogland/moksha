@@ -140,7 +140,7 @@ struct _connman_technology_onoff_data
 {
    const char *type;
    E_Connman_Module_Context *ctxt;
-   bool on;
+   Eina_Bool on;
 };
 
 static void
@@ -161,7 +161,7 @@ _connman_technology_onoff_cb(void *data, DBusMessage *msg __UNUSED__, DBusError 
 }
 
 static void
-_connman_technology_onoff(E_Connman_Module_Context *ctxt, const char *type, bool on)
+_connman_technology_onoff(E_Connman_Module_Context *ctxt, const char *type, Eina_Bool on)
 {
    int ret;
    struct _connman_technology_onoff_data *d;

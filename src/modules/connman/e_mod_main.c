@@ -87,7 +87,7 @@ _connman_toggle_offline_mode_cb(void *data, DBusMessage *msg __UNUSED__, DBusErr
 void
 _connman_toggle_offline_mode(E_Connman_Module_Context *ctxt)
 {
-   bool offline;
+   Eina_Bool offline;
 
    if ((!ctxt) || (!ctxt->has_manager))
      {
@@ -320,7 +320,7 @@ _connman_service_changed(void *data, const E_Connman_Element *element)
    E_Connman_Service *service = data;
    const char *str;
    unsigned char u8;
-   bool b;
+   Eina_Bool b;
 
 #define GSTR(name_, getter)				\
    str = NULL;						\
@@ -388,7 +388,7 @@ _connman_service_new(E_Connman_Module_Context *ctxt, E_Connman_Element *element)
    E_Connman_Service *service;
    const char *str;
    unsigned char u8;
-   bool b;
+   Eina_Bool b;
 
    if (!element)
      return NULL;
