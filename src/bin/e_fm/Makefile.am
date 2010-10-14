@@ -21,6 +21,9 @@ internal_bin_PROGRAMS = \
 enlightenment_fm 
 
 enlightenment_fm_SOURCES = \
+e_fm_main.h \
+e_fm_main_dbus.h \
+e_fm_ipc.h \
 e_fm_main.c \
 e_fm_main_dbus.c \
 e_fm_ipc.c \
