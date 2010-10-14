@@ -318,7 +318,7 @@ _scan_cancel_func(void *data)
    Plugin *p = d->plugin;
    Evry_Item_File *file;
 
-   if (!d->run_cnt)
+   if (!d->run_cnt) /* _scan_func was canceled */
      {
 	EINA_LIST_FREE(d->files, file)
 	  {
@@ -327,7 +327,7 @@ _scan_cancel_func(void *data)
 	     free(file);
 	  }
      }
-   else
+   else /* _scan_mime_func was canceled */
      {
 	EINA_LIST_FREE(d->files, file)
 	  EVRY_ITEM_FREE(file);
@@ -340,7 +340,6 @@ _scan_cancel_func(void *data)
 
    free(d->directory);
    E_FREE(d);
-
 }
 
 static void
@@ -642,8 +641,8 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
 	EVRY_PLUGIN_INSTANCE(p, plugin);
 	p->parent = EINA_FALSE;
 
-	if (_conf->show_homedir)
-	  p->directory = eina_stringshare_add(e_user_homedir_get());
+	/* if (_conf->show_homedir) */
+	p->directory = eina_stringshare_add(e_user_homedir_get());
 
 	_read_directory(p);
 
@@ -1546,9 +1545,9 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    of = e_widget_framelist_add(evas, _("General"), 0);
    e_widget_framelist_content_align_set(of, 0.0, 0.0);
 
-   ow = e_widget_check_add(evas, _("Show home directory"),
-			   &(cfdata->show_homedir));
-   e_widget_framelist_object_append(of, ow);
+   /* ow = e_widget_check_add(evas, _("Show home directory"),
+    * 			   &(cfdata->show_homedir));
+    * e_widget_framelist_object_append(of, ow); */
 
    ow = e_widget_check_add(evas, _("Show recent files"),
 			   &(cfdata->show_recent));
