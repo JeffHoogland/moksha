@@ -60,11 +60,10 @@ static const CFTypes _types[] =
 };
 
 /* local function protos */
-static Eina_Bool _fill_data(E_Config_Dialog_Data *cfdata);
 static void _cftype_free(CFType *cft);
 
 static void _widget_list_populate(E_Config_Dialog_Data *cfdata);
-static void _widget_list_selection_changed(void *data, Evas_Object *obj);
+static void _widget_list_selection_changed(void *data, Evas_Object *obj __UNUSED__);
 
 static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
@@ -597,7 +596,6 @@ static void
 _widget_list_selection_changed(void *data, Evas_Object *obj __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata = data;
-   CFModule *cfm;
 
    if (cfdata->selected.idler)
      ecore_idler_del(cfdata->selected.idler);
