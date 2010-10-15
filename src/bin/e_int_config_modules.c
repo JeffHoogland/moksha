@@ -27,6 +27,7 @@ struct _E_Config_Dialog_Data
 {
    Evas *evas;
    Evas_Object *l_modules;
+   Evas_Object *o_toolbar;
    Evas_Object *b_load, *b_unload;
    Evas_Object *o_desc;
    Eina_List *types;
@@ -35,14 +36,6 @@ struct _E_Config_Dialog_Data
         Eina_List *loaded, *unloaded;
         Ecore_Idler *idler;
      } selected;
-
-   /* just exists while loading: */
-   Eina_List *modules_paths;
-   Eina_List *modules_path_current;
-   Eina_Hash *types_hash;
-   Ecore_Timer *data_delay;
-   Ecore_Idler *data_loader;
-   Eina_Bool did_modules_list;
 };
 
 struct _CFTypes
@@ -58,10 +51,10 @@ static const CFTypes _types[] =
   {sizeof(k) - 1, k, n, i}
   _CFT("appearance", N_("Appearance"), "preferences-appearance"),
   _CFT("config", N_("Settings"), "preferences-system"),
+  _CFT("everything", N_("Everything Launcher"), "system-run"),
   _CFT("fileman", N_("File Manager"), "system-file-manager"),
   _CFT("shelf", N_("Shelf"), "preferences-desktop-shelf"),
   _CFT("system", N_("System"), "system"),
-  _CFT("everything", N_("Everything Launcher"), "system-run"),
 #undef _CFT
   {0, NULL, NULL, NULL}
 };
@@ -76,6 +69,15 @@ static void _widget_list_selection_changed(void *data, Evas_Object *obj);
 static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static void _fill_cat_list(E_Config_Dialog_Data *cfdata);
+static void _module_end_state_apply(CFModule *cfm);
+
+static void _toolbar_select_cb(void *data, void *data2);
+
+static CFType *_cftype_new(const char *key, const char *name, const char *icon);
+static void _load_modules(const char *dir, Eina_Hash *types_hash);
+static Eina_Bool _types_list_create_foreach_cb(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata);
+static int _types_list_sort(const void *data1, const void *data2);
 
 static void _btn_cb_unload(void *data, void *data2);
 static void _btn_cb_load(void *data, void *data2);
@@ -102,14 +104,32 @@ e_int_config_modules(E_Container *con, const char *params __UNUSED__)
 static void *
 _create_data(E_Config_Dialog *cfd __UNUSED__)
 {
+   Eina_Hash *types_hash;
+   Eina_List *modules_paths, *l;
+   E_Path_Dir *epd;
    E_Config_Dialog_Data *cfdata = E_NEW(E_Config_Dialog_Data, 1);
 
-   if (!cfdata) return NULL;
-   if (!_fill_data(cfdata))
+   types_hash = eina_hash_string_superfast_new(NULL);
+   if (!types_hash) return cfdata;
+
+   modules_paths = e_path_dir_list_get(path_modules);
+   if (!modules_paths)
      {
-	E_FREE(cfdata);
-	return NULL;
+	eina_hash_free(types_hash);
+	return cfdata;
      }
+
+   EINA_LIST_FOREACH(modules_paths, l, epd)
+     {
+        if (ecore_file_is_dir(epd->dir))
+          _load_modules(epd->dir, types_hash);
+     }
+
+   e_path_dir_list_free(modules_paths);
+
+   eina_hash_foreach(types_hash, _types_list_create_foreach_cb, cfdata);
+   eina_hash_free(types_hash);
+   cfdata->types = eina_list_sort(cfdata->types, -1, _types_list_sort);
 
    return cfdata;
 }
@@ -118,16 +138,6 @@ static void
 _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    CFType *cft;
-
-   if (cfdata->data_delay)
-     ecore_timer_del(cfdata->data_delay);
-   else if (cfdata->data_loader)
-     ecore_idler_del(cfdata->data_loader);
-
-   if (cfdata->modules_paths)
-     e_path_dir_list_free(cfdata->modules_paths);
-   if (cfdata->types_hash)
-     eina_hash_free(cfdata->types_hash);
 
    EINA_LIST_FREE(cfdata->types, cft) _cftype_free(cft);
 
@@ -140,44 +150,185 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
+   Evas_Coord mw, mh;
    Evas_Object *of, *ol;
-   Evas_Coord w;
 
    cfdata->evas = e_win_evas_get(cfd->dia->win);
 
    of = e_widget_table_add(evas, 0);
-   ol = e_widget_ilist_add(evas, 24, 24, NULL);
-   cfdata->l_modules = ol;
 
-   e_widget_size_min_get(cfdata->l_modules, &w, NULL);
-   if (w < 200 * e_scale) w = (200 * e_scale);
-   e_widget_size_min_set(cfdata->l_modules, w, (100 * e_scale));
+   cfdata->o_toolbar = e_widget_toolbar_add(evas, 32 * e_scale, 32 * e_scale);
+   e_widget_toolbar_scrollable_set(cfdata->o_toolbar, 1);
+   _fill_cat_list(cfdata);
+   e_widget_table_object_append(of, cfdata->o_toolbar, 0, 0, 2, 1, 1, 1, 1, 0);
 
-   e_widget_ilist_multi_select_set(ol, EINA_TRUE);
-   e_widget_on_change_hook_set(ol, _widget_list_selection_changed, cfdata);
-   e_widget_table_object_append(of, ol, 0, 0, 2, 1, 1, 1, 1, 1);
+   cfdata->l_modules = e_widget_ilist_add(evas, 32 * e_scale, 32 * e_scale, NULL);
+   e_widget_ilist_multi_select_set(cfdata->l_modules, EINA_TRUE);
+   e_widget_ilist_go(cfdata->l_modules);
+   e_widget_size_min_get(cfdata->l_modules, &mw, &mh);
+   if (mw < (200 * e_scale)) mw = 200 * e_scale;
+   if (mh < (120 * e_scale)) mh = 120 * e_scale;
+   e_widget_size_min_set(cfdata->l_modules, mw, mh);
+   e_widget_on_change_hook_set(cfdata->l_modules, _widget_list_selection_changed, cfdata);
+   e_widget_table_object_append(of, cfdata->l_modules, 0, 1, 2, 1, 1, 1, 1, 1);
 
    ol = e_widget_button_add(evas, _("Load"), NULL, _btn_cb_load, cfdata, NULL);
    cfdata->b_load = ol;
    e_widget_disabled_set(ol, 1);
-   e_widget_table_object_append(of, ol, 0, 1, 1, 1, 1, 1, 1, 0);
+   e_widget_table_object_append(of, ol, 0, 2, 1, 1, 1, 1, 1, 0);
 
    ol = e_widget_button_add(evas, _("Unload"), NULL, _btn_cb_unload, cfdata, NULL);
    cfdata->b_unload = ol;
    e_widget_disabled_set(ol, 1);
-   e_widget_table_object_append(of, ol, 1, 1, 1, 1, 1, 1, 1, 0);
+   e_widget_table_object_append(of, ol, 1, 2, 1, 1, 1, 1, 1, 0);
 
    ol = e_widget_textblock_add(evas);
    e_widget_size_min_set(ol, (200 * e_scale), 60 * e_scale);
    cfdata->o_desc = ol;
-   e_widget_textblock_markup_set(ol, _("No modules selected."));
-   e_widget_table_object_append(of, ol, 0, 2, 2, 1, 1, 0, 1, 0);
+   e_widget_table_object_append(of, ol, 0, 3, 2, 1, 1, 0, 1, 0);
 
    e_dialog_resizable_set(cfd->dia, 1);
    e_util_win_auto_resize_fill(cfd->dia->win);
    e_win_centered_set(cfd->dia->win, 1);
 
+   e_widget_focus_set(cfdata->o_toolbar, 1);
+   e_widget_toolbar_item_select(cfdata->o_toolbar, 0);
+
    return of;
+}
+
+static void
+_fill_cat_list(E_Config_Dialog_Data *cfdata)
+{
+   Evas_Coord w, h;
+   Evas_Object *icon;
+   CFType *cft;
+   const CFTypes *itr;
+
+   evas_event_freeze(cfdata->evas);
+   edje_freeze();
+
+   for (itr = _types; itr->key_len > 0; itr++)
+     {
+        cft = _cftype_new(itr->key, itr->name, itr->icon);
+        icon = e_icon_add(cfdata->evas);
+        if (icon)
+          {
+             if (!e_util_icon_theme_set(icon, cft->icon))
+               {
+                  evas_object_del(icon);
+                  icon = NULL;
+               }
+          }
+
+        e_widget_toolbar_item_append(cfdata->o_toolbar, icon, cft->name,
+                                     _toolbar_select_cb, cfdata, cft);
+     }
+
+   e_widget_size_min_get(cfdata->o_toolbar, &w, &h);
+   e_widget_size_min_set(cfdata->o_toolbar, w, h);
+
+   edje_thaw();
+   evas_event_thaw(cfdata->evas);
+}
+
+static void
+_list_item_append(E_Config_Dialog_Data *cfdata, CFModule *cfm)
+{
+   Evas_Object *icon, *end;
+
+   if (!cfm->icon)
+     icon = NULL;
+   else
+     {
+	icon = e_icon_add(cfdata->evas);
+	if (icon)
+	  {
+	     if (!e_util_icon_theme_set(icon, cfm->icon))
+	       {
+		  if (cfm->orig_path)
+		    {
+		       char *dir = ecore_file_dir_get(cfm->orig_path);
+		       char buf[PATH_MAX];
+
+		       snprintf(buf, sizeof(buf), "%s/%s.edj", dir, cfm->icon);
+		       free(dir);
+
+		       e_icon_file_edje_set(icon, buf, "icon");
+		    }
+		  else
+		    {
+		       evas_object_del(icon);
+		       icon = NULL;
+		    }
+	       }
+	  }
+     }
+
+   end = edje_object_add(cfdata->evas);
+   if (end)
+     {
+	if (e_theme_edje_object_set(end, "base/theme/widgets",
+				     "e/widgets/ilist/toggle_end"))
+	  {
+	     cfm->end = end;
+	     _module_end_state_apply(cfm);
+	  }
+	else
+	  {
+	     EINA_LOG_ERR("your theme is missing 'e/widgets/ilist/toggle_end'!");
+	     evas_object_del(end);
+	     end = NULL;
+	  }
+     }
+
+   e_widget_ilist_append_full(cfdata->l_modules, icon, end, 
+                              cfm->name, NULL, cfm, NULL);
+}
+
+static void
+_toolbar_select_cb(void *data, void *data2)
+{
+   CFType *cft, *cft_cat;
+   E_Config_Dialog_Data *cfdata;
+   Evas_Coord w, h;
+
+   cfdata = data;
+   cft_cat = data2;
+   if (!cfdata || !cft_cat) return;
+
+   eina_list_free(cfdata->selected.loaded);
+   eina_list_free(cfdata->selected.unloaded);
+   cfdata->selected.loaded = NULL;
+   cfdata->selected.unloaded = NULL;
+   e_widget_disabled_set(cfdata->b_load, EINA_TRUE);
+   e_widget_disabled_set(cfdata->b_unload, EINA_TRUE);
+   e_widget_textblock_markup_set(cfdata->o_desc, _("No modules selected."));
+
+   evas_event_freeze(evas_object_evas_get(cfdata->l_modules));
+   edje_freeze();
+   e_widget_ilist_freeze(cfdata->l_modules);
+   e_widget_ilist_clear(cfdata->l_modules);
+
+   Eina_List *l_type;
+   EINA_LIST_FOREACH(cfdata->types, l_type, cft)
+     {
+        if (strcmp(cft->key, cft_cat->key))
+          continue;
+
+        CFModule *cfm;
+        Eina_List *l_module;
+
+        EINA_LIST_FOREACH(cft->modules, l_module, cfm)
+          _list_item_append(cfdata, cfm);
+     }
+
+   e_widget_ilist_go(cfdata->l_modules);
+   e_widget_size_min_get(cfdata->l_modules, &w, &h);
+   e_widget_size_min_set(cfdata->l_modules, w, h);
+   e_widget_ilist_thaw(cfdata->l_modules);
+   edje_thaw();
+   evas_event_thaw(evas_object_evas_get(cfdata->l_modules));
 }
 
 static CFModule *
@@ -389,176 +540,6 @@ _types_list_sort(const void *data1, const void *data2)
 }
 
 static Eina_Bool
-_fill_data_loader_iterate(void *data)
-{
-   E_Config_Dialog_Data *cfdata = data;
-
-   if (cfdata->modules_path_current)
-     {
-	E_Path_Dir *epd = cfdata->modules_path_current->data;
-	cfdata->modules_path_current = cfdata->modules_path_current->next;
-
-	if (ecore_file_is_dir(epd->dir))
-	  _load_modules(epd->dir, cfdata->types_hash);
-     }
-   else if (!cfdata->did_modules_list)
-     {
-	cfdata->did_modules_list = EINA_TRUE;
-
-	e_path_dir_list_free(cfdata->modules_paths);
-	cfdata->modules_paths = NULL;
-
-	eina_hash_foreach(cfdata->types_hash, 
-                          _types_list_create_foreach_cb, cfdata);
-	eina_hash_free(cfdata->types_hash);
-	cfdata->types_hash = NULL;
-	cfdata->types = eina_list_sort(cfdata->types, -1, _types_list_sort);
-     }
-   else
-     {
-	_widget_list_populate(cfdata);
-	cfdata->data_loader = NULL;
-	return ECORE_CALLBACK_CANCEL;
-     }
-
-   return ECORE_CALLBACK_RENEW;
-}
-
-static Eina_Bool
-_fill_data_delayed(void *data)
-{
-   E_Config_Dialog_Data *cfdata = data;
-
-   cfdata->data_loader = ecore_idler_add(_fill_data_loader_iterate, cfdata);
-   cfdata->data_delay = NULL;
-   return ECORE_CALLBACK_CANCEL;
-}
-
-static Eina_Bool
-_fill_data(E_Config_Dialog_Data *cfdata)
-{
-   cfdata->types_hash = eina_hash_string_superfast_new(NULL);
-   if (!cfdata->types_hash) return EINA_FALSE;
-
-   cfdata->modules_paths = e_path_dir_list_get(path_modules);
-   if (!cfdata->modules_paths)
-     {
-	eina_hash_free(cfdata->types_hash);
-	cfdata->types_hash = NULL;
-	return EINA_FALSE;
-     }
-   cfdata->modules_path_current = cfdata->modules_paths;
-   cfdata->data_delay = ecore_timer_add(0.2, _fill_data_delayed, cfdata);
-   return EINA_TRUE;
-}
-
-static void
-_list_header_append(E_Config_Dialog_Data *cfdata, CFType *cft)
-{
-   Evas_Object *icon = e_icon_add(cfdata->evas);
-
-   if (icon)
-     {
-	if (!e_util_icon_theme_set(icon, cft->icon))
-	  {
-	     evas_object_del(icon);
-	     icon = NULL;
-	  }
-     }
-   e_widget_ilist_header_append(cfdata->l_modules, icon, cft->name);
-}
-
-static void
-_list_item_append(E_Config_Dialog_Data *cfdata, CFModule *cfm)
-{
-   Evas_Object *icon, *end;
-
-   if (!cfm->icon)
-     icon = NULL;
-   else
-     {
-	icon = e_icon_add(cfdata->evas);
-	if (icon)
-	  {
-	     if (!e_util_icon_theme_set(icon, cfm->icon))
-	       {
-		  if (cfm->orig_path)
-		    {
-		       char *dir = ecore_file_dir_get(cfm->orig_path);
-		       char buf[PATH_MAX];
-
-		       snprintf(buf, sizeof(buf), "%s/%s.edj", dir, cfm->icon);
-		       free(dir);
-
-		       e_icon_file_edje_set(icon, buf, "icon");
-		    }
-		  else
-		    {
-		       evas_object_del(icon);
-		       icon = NULL;
-		    }
-	       }
-	  }
-     }
-
-   end = edje_object_add(cfdata->evas);
-   if (end)
-     {
-	if (e_theme_edje_object_set(end, "base/theme/widgets",
-				     "e/widgets/ilist/toggle_end"))
-	  {
-	     cfm->end = end;
-	     _module_end_state_apply(cfm);
-	  }
-	else
-	  {
-	     EINA_LOG_ERR("your theme is missing 'e/widgets/ilist/toggle_end'!");
-	     evas_object_del(end);
-	     end = NULL;
-	  }
-     }
-
-   e_widget_ilist_append_full(cfdata->l_modules, icon, end, 
-                              cfm->name, NULL, cfm, NULL);
-}
-
-static void
-_widget_list_populate(E_Config_Dialog_Data *cfdata)
-{
-   CFType *cft;
-   Eina_List *l_type;
-   int idx = 0;
-
-   // TODO postpone list fill to idler?
-
-   evas_event_freeze(cfdata->evas);
-   edje_freeze();
-   e_widget_ilist_freeze(cfdata->l_modules);
-   e_widget_ilist_clear(cfdata->l_modules);
-
-   EINA_LIST_FOREACH(cfdata->types, l_type, cft)
-     {
-	CFModule *cfm;
-	Eina_List *l_module;
-
-	_list_header_append(cfdata, cft);
-	idx++;
-
-	EINA_LIST_FOREACH(cft->modules, l_module, cfm)
-	  {
-	     _list_item_append(cfdata, cfm);
-	     cfm->idx = idx;
-	     idx++;
-	  }
-     }
-
-   e_widget_ilist_go(cfdata->l_modules);
-   e_widget_ilist_thaw(cfdata->l_modules);
-   edje_thaw();
-   evas_event_thaw(cfdata->evas);
-}
-
-static Eina_Bool
 _widget_list_item_selected_postponed(void *data)
 {
    E_Config_Dialog_Data *cfdata = data;
@@ -567,6 +548,7 @@ _widget_list_item_selected_postponed(void *data)
    unsigned int loaded = 0, unloaded = 0;
    CFModule *cfm = NULL;
    const char *description;
+   int idx = 0;
 
    eina_list_free(cfdata->selected.loaded);
    eina_list_free(cfdata->selected.unloaded);
@@ -575,8 +557,10 @@ _widget_list_item_selected_postponed(void *data)
 
    EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->l_modules), l, it)
      {
-	if ((!it->selected) || (it->header)) continue;
+	idx++;
+	if (!it->selected) continue;
 	cfm = e_widget_ilist_item_data_get(it);
+	cfm->idx = (idx-1);
 
 	if (cfm->enabled)
 	  {
@@ -590,6 +574,7 @@ _widget_list_item_selected_postponed(void *data)
                eina_list_append(cfdata->selected.unloaded, cfm);
 	     unloaded++;
 	  }
+	
      }
 
    e_widget_disabled_set(cfdata->b_load, !unloaded);
@@ -612,6 +597,7 @@ static void
 _widget_list_selection_changed(void *data, Evas_Object *obj __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata = data;
+   CFModule *cfm;
 
    if (cfdata->selected.idler)
      ecore_idler_del(cfdata->selected.idler);
@@ -636,8 +622,8 @@ _btn_cb_unload(void *data, void *data2 __UNUSED__)
 	     cfm->enabled = e_module_enabled_get(cfm->module);
 	  }
 
-	// weird, but unselects it as it was already selected
-	e_widget_ilist_multi_select(cfdata->l_modules, cfm->idx);
+        // weird, but unselects it as it was already selected
+        e_widget_ilist_multi_select(cfdata->l_modules, cfm->idx);
 	_module_end_state_apply(cfm);
      }
 
@@ -663,8 +649,8 @@ _btn_cb_load(void *data, void *data2 __UNUSED__)
 	     cfm->enabled = e_module_enabled_get(cfm->module);
 	  }
 
-	// weird, but unselects it as it was already selected
-	e_widget_ilist_multi_select(cfdata->l_modules, cfm->idx);
+        // weird, but unselects it as it was already selected
+        e_widget_ilist_multi_select(cfdata->l_modules, cfm->idx);
 	_module_end_state_apply(cfm);
      }
 
