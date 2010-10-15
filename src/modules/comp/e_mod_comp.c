@@ -371,9 +371,9 @@ _e_mod_comp_win_ready_timeout_setup(E_Comp_Win *cw)
      }
    else
      {
-        // FIXME 0.1 -> make config val
+        // FIXME 0.2 -> make config val
         cw->ready_timeout = ecore_timer_add
-           (0.1, _e_mod_comp_cb_win_show_ready_timeout, cw);
+           (0.2, _e_mod_comp_cb_win_show_ready_timeout, cw);
      }
 }
 
@@ -1198,8 +1198,8 @@ _e_mod_comp_win_sync_setup(E_Comp_Win *cw, Ecore_X_Window win)
      cw->counter = ecore_x_e_comp_sync_counter_get(win);
    if (cw->counter)
      {
-        ecore_x_sync_counter_inc(cw->counter, 1);
         ecore_x_e_comp_sync_begin_send(win);
+        ecore_x_sync_counter_inc(cw->counter, 1);
      }
 }
 
@@ -2255,18 +2255,30 @@ _e_mod_comp_message(void *data __UNUSED__, int type __UNUSED__, void *event)
    if ((ev->message_type != ECORE_X_ATOM_E_COMP_SYNC_DRAW_DONE) ||
        (ev->format != 32)) return ECORE_CALLBACK_PASS_ON;
    cw = _e_mod_comp_border_client_find(ev->data.l[0]);
-   if (!cw) return ECORE_CALLBACK_PASS_ON;
-   if (!cw->bd) return ECORE_CALLBACK_PASS_ON;
-   if (ev->data.l[0] != cw->bd->client.win) return ECORE_CALLBACK_PASS_ON;
-   if (cw->bd)
+   if (cw)
+     {
+        if (!cw->bd) return ECORE_CALLBACK_PASS_ON;
+        if (ev->data.l[0] != cw->bd->client.win) return ECORE_CALLBACK_PASS_ON;
+     }
+   else
+     {
+        cw = _e_mod_comp_win_find(ev->data.l[0]);
+        if (!cw) return ECORE_CALLBACK_PASS_ON;
+        if (ev->data.l[0] != cw->win) return ECORE_CALLBACK_PASS_ON;
+     }
+   DBG("  [0x%x] sync draw done %4ix%4i\n", cw->win, cw->w, cw->h);
+//   if (cw->bd)
      {
         if (cw->counter)
           {
+             DBG("  [0x%x] have counter\n", cw->win);
              cw->show_ready = 1;
              if (!cw->update)
                {
+                  DBG("  [0x%x] set update\n", cw->win);
                   if (cw->update_timeout)
                     {
+                       DBG("  [0x%x] del timeout\n", cw->win);
                        ecore_timer_del(cw->update_timeout);
                        cw->update_timeout = NULL;
                     }
