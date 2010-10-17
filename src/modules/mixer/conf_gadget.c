@@ -6,6 +6,7 @@ struct _E_Config_Dialog_Data
 {
    int lock_sliders;
    int show_locked;
+   int keybindings_popup;
    int card_num;
    int channel;
    const char *card;
@@ -21,6 +22,7 @@ struct _E_Config_Dialog_Data
          Evas_Object *frame;
          Evas_Object *lock_sliders;
          Evas_Object *show_locked;
+         Evas_Object *keybindings_popup;
       } general;
       struct mixer_config_ui_cards
       {
@@ -110,6 +112,7 @@ _create_data(E_Config_Dialog *dialog)
    cfdata->conf = conf;
    cfdata->lock_sliders = conf->lock_sliders;
    cfdata->show_locked = conf->show_locked;
+   cfdata->keybindings_popup = conf->keybindings_popup;
    cfdata->card = eina_stringshare_add(conf->card);
    _mixer_fill_cards_info(cfdata);
    _mixer_fill_channels_info(cfdata);
@@ -153,6 +156,7 @@ _basic_apply(E_Config_Dialog *dialog, E_Config_Dialog_Data *cfdata)
 
    conf->lock_sliders = cfdata->lock_sliders;
    conf->show_locked = cfdata->show_locked;
+   conf->keybindings_popup = cfdata->keybindings_popup;
 
    card = eina_list_nth(cfdata->cards, cfdata->card_num);
    if (card)
@@ -196,6 +200,10 @@ _basic_create_general(Evas *evas, E_Config_Dialog_Data *cfdata)
 					evas, _("Show both sliders when locked"), &cfdata->show_locked);
    e_widget_disabled_set(ui->show_locked, !cfdata->lock_sliders);
    e_widget_framelist_object_append(ui->frame, ui->show_locked);
+
+   ui->keybindings_popup = e_widget_check_add(
+					evas, _("Show Popup on volume change via keybindings"), &cfdata->keybindings_popup);
+   e_widget_framelist_object_append(ui->frame, ui->keybindings_popup);
 }
 
 static void

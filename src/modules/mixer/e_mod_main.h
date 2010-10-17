@@ -11,6 +11,7 @@ typedef struct E_Mixer_Gadget_Config
 {
    int lock_sliders;
    int show_locked;
+   int keybindings_popup;
    const char *card;
    const char *channel_name;
    const char *id;

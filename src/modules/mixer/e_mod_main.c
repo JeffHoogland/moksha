@@ -58,6 +58,7 @@ _mixer_gadget_configuration_defaults(E_Mixer_Gadget_Config *conf)
    conf->channel_name = channel;
    conf->lock_sliders = 1;
    conf->show_locked = 0;
+   conf->keybindings_popup = 0;
 
    return 1;
 }
@@ -1019,7 +1020,8 @@ _mixer_cb_volume_increase(E_Object *obj __UNUSED__, const char *params __UNUSED_
    if (!ctxt->default_instance)
       return;
 
-   _mixer_popup_timer_new(ctxt->default_instance);
+   if (ctxt->default_instance->conf->keybindings_popup)
+     _mixer_popup_timer_new(ctxt->default_instance);
    _mixer_volume_increase(ctxt->default_instance);
 }
 
@@ -1038,7 +1040,8 @@ _mixer_cb_volume_decrease(E_Object *obj __UNUSED__, const char *params __UNUSED_
    if (!ctxt->default_instance)
       return;
 
-   _mixer_popup_timer_new(ctxt->default_instance);
+   if (ctxt->default_instance->conf->keybindings_popup)
+     _mixer_popup_timer_new(ctxt->default_instance);
    _mixer_volume_decrease(ctxt->default_instance);
 }
 
@@ -1057,7 +1060,8 @@ _mixer_cb_volume_mute(E_Object *obj __UNUSED__, const char *params __UNUSED__)
    if (!ctxt->default_instance)
       return;
 
-   _mixer_popup_timer_new(ctxt->default_instance);
+   if (ctxt->default_instance->conf->keybindings_popup)
+     _mixer_popup_timer_new(ctxt->default_instance);
    _mixer_toggle_mute(ctxt->default_instance);
 }
 
@@ -1140,6 +1144,7 @@ _mixer_gadget_configuration_descriptor_new(void)
       return NULL;
    E_CONFIG_VAL(conf_edd, E_Mixer_Gadget_Config, lock_sliders, INT);
    E_CONFIG_VAL(conf_edd, E_Mixer_Gadget_Config, show_locked, INT);
+   E_CONFIG_VAL(conf_edd, E_Mixer_Gadget_Config, keybindings_popup, INT);
    E_CONFIG_VAL(conf_edd, E_Mixer_Gadget_Config, card, STR);
    E_CONFIG_VAL(conf_edd, E_Mixer_Gadget_Config, channel_name, STR);
 
