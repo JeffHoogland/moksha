@@ -3,6 +3,7 @@ Type=Link
 Name=IBox
 Name[eo]=Breto IBox
 Icon=e-module-ibox
+X-Enlightenment-ModuleType=utils
 Comment=A home for your iconified applications.
 Comment[cs]=Zde se zobrazují všechny minimalizované aplikace.
 Comment[de]=

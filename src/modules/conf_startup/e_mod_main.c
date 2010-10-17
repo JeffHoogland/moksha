@@ -15,7 +15,7 @@ EAPI void *
 e_modapi_init(E_Module *m)
 {
    e_configure_registry_category_add("appearance", 10, _("Look"), NULL, 
-                                     "preferences-appearance");
+                                     "preferences-look");
    e_configure_registry_item_add("appearance/startup", 90, _("Startup"), NULL, 
                                  "preferences-startup", e_int_config_startup);
    conf_module = m;

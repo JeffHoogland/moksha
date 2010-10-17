@@ -4,6 +4,7 @@ Name=IBar
 Name[cs]=Lišta spouštěčů
 Name[eo]=Breto IBar
 Icon=e-module-ibar
+X-Enlightenment-ModuleType=utils
 Comment=Iconic application launcher.
 Comment[cs]=Lišta se spouštěči.
 Comment[de]=

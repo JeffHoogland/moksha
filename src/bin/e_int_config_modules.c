@@ -49,12 +49,12 @@ static const CFTypes _types[] =
 {
 #define _CFT(k, n, i)				\
   {sizeof(k) - 1, k, n, i}
-  _CFT("appearance", N_("Appearance"), "preferences-appearance"),
+  _CFT("utils", N_("Utils"), "preferences-utils"),
+  _CFT("look", N_("Look"), "preferences-look"),
+  _CFT("system", N_("System"), "system"),
   _CFT("config", N_("Settings"), "preferences-system"),
   _CFT("everything", N_("Everything Launcher"), "system-run"),
   _CFT("fileman", N_("File Manager"), "system-file-manager"),
-  _CFT("shelf", N_("Shelf"), "preferences-desktop-shelf"),
-  _CFT("system", N_("System"), "system"),
 #undef _CFT
   {0, NULL, NULL, NULL}
 };
@@ -452,7 +452,7 @@ _load_modules(const char *dir, Eina_Hash *types_hash)
 	  type = eina_hash_find(desk->x, "X-Enlightenment-ModuleType");
 	else
 	  type = NULL;
-	if (!type) type = "shelf"; // todo: warn?
+	if (!type) type = "utils"; // todo: warn?
 
 	cft = eina_hash_find(types_hash, type);
 	if (cft)

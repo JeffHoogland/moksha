@@ -7718,7 +7718,7 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
 	  {
 	     mi = e_menu_item_new(mn);
 	     e_menu_item_label_set(mi, _("View Mode"));
-	     e_util_menu_item_theme_icon_set(mi, "preferences-appearance");
+	     e_util_menu_item_theme_icon_set(mi, "preferences-look");
 	     e_menu_item_submenu_pre_callback_set(mi, _e_fm2_view_menu_pre, sd);
 	  }
 	if (!(sd->icon_menu.flags & E_FM2_MENU_NO_REFRESH))
@@ -7878,7 +7878,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	  {
 	     mi = e_menu_item_new(mn);
 	     e_menu_item_label_set(mi, _("View Mode"));
-	     e_util_menu_item_theme_icon_set(mi, "preferences-appearance");
+	     e_util_menu_item_theme_icon_set(mi, "preferences-look");
 	     e_menu_item_submenu_pre_callback_set(mi, _e_fm2_icon_view_menu_pre, sd);
 	  }
 	if (!(sd->icon_menu.flags & E_FM2_MENU_NO_REFRESH))

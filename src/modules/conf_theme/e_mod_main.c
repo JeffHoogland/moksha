@@ -19,7 +19,7 @@ EAPI void *
 e_modapi_init(E_Module *m)
 {
    e_configure_registry_category_add("appearance", 10, _("Look"), NULL, 
-                                     "preferences-appearance");
+                                     "preferences-look");
    e_configure_registry_item_add("appearance/theme", 20, _("Theme"), NULL, 
                                  "preferences-desktop-theme", 
                                  e_int_config_theme);

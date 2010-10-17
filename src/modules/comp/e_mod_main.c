@@ -39,7 +39,7 @@ e_modapi_init(E_Module *m)
    mod->module = m;
    snprintf(buf, sizeof(buf), "%s/e-module-comp.edj", e_module_dir_get(m));
    e_configure_registry_category_add("appearance", 10, _("Look"), NULL, 
-                                     "preferences-appearance");
+                                     "preferences-look");
    e_configure_registry_item_add("appearance/comp", 120, _("Composite"), NULL, 
                                  buf, e_int_config_comp_module);
 

@@ -15,7 +15,7 @@ EAPI void *
 e_modapi_init(E_Module *m)
 {
    e_configure_registry_category_add("appearance", 10, _("Look"), NULL, 
-                                     "preferences-appearance");
+                                     "preferences-look");
    e_configure_registry_item_add("appearance/transitions", 80, 
                                  _("Transitions"), NULL, 
                                  "preferences-transitions", 

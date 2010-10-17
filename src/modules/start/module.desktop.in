@@ -8,6 +8,7 @@ Name[hu]=Start menü
 Name[fr]=Menu E
 Name[tr]=Başlat
 Icon=e-module-start
+X-Enlightenment-ModuleType=utils
 Comment=E17's "Start" button equivalent.
 Comment[cs]=E17 Start menu.
 Comment[de]=

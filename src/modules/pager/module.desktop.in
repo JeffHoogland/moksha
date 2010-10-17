@@ -6,6 +6,7 @@ Name[eo]=Tabulpaĝilo
 Name[hu]=Lapozó
 Name[tr]=Sayfalayıcı
 Icon=e-module-pager
+X-Enlightenment-ModuleType=utils
 Comment=Gadget to allow you to visualize your virtual desktops and the windows they contain.
 Comment[cs]=Gadget pro zobrazení/přepínání virtuálních ploch a oken, které obsahují.
 Comment[de]=

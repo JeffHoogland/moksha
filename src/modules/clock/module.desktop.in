@@ -16,6 +16,7 @@ Name[tr]=Saat
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-clock
+X-Enlightenment-ModuleType=utils
 Comment=Nice clock gadget to show current time.
 Comment[cs]=Gadget pro zobrazení aktuálního času.
 Comment[de]=

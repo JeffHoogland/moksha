@@ -14,7 +14,7 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-   e_configure_registry_category_add("appearance", 10, _("Look"), NULL, "preferences-appearance");
+   e_configure_registry_category_add("appearance", 10, _("Look"), NULL, "preferences-look");
    e_configure_registry_item_add("appearance/mouse_cursor", 70, _("Mouse Cursor"), NULL, "preferences-desktop-pointer", e_int_config_cursor);
    conf_module = m;
    e_module_delayed_set(m, 1);

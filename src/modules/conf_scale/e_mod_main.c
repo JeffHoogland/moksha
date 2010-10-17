@@ -16,7 +16,7 @@ EAPI void *
 e_modapi_init(E_Module *m)
 {
    e_configure_registry_category_add("appearance", 10, _("Look"), 
-                                     NULL, "preferences-appearance");
+                                     NULL, "preferences-look");
    e_configure_registry_item_add("appearance/scale", 90, _("Scaling"), NULL, 
                                  "preferences-scale", e_int_config_scale);
    conf_module = m;
