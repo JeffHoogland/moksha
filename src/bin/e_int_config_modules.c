@@ -49,7 +49,7 @@ static const CFTypes _types[] =
 {
 #define _CFT(k, n, i)				\
   {sizeof(k) - 1, k, n, i}
-  _CFT("utils", N_("Utils"), "preferences-utils"),
+  _CFT("utils", N_("Utilities"), "preferences-utils"),
   _CFT("look", N_("Look"), "preferences-look"),
   _CFT("system", N_("System"), "system"),
   _CFT("config", N_("Settings"), "preferences-system"),
