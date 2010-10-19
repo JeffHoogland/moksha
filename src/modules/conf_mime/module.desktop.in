@@ -1,17 +1,17 @@
 [Desktop Entry]
 Type=Link
-Name=Settings - File Icons
-Name[cs]=Nastavení - ikony souborů
+Name=File Icons
+Name[cs]=Ikony souborů
 Name[de]=
-Name[eo]=Agordo - Dosieraj piktogramoj
-Name[es]=Configuración - Íconos de archivo
-Name[fr]=Configuraton - Icones des fichiers
-Name[hu]=Beállítások - Fájl ikonok
-Name[it]=Configurazione - Icone dei file
+Name[eo]=Dosieraj piktogramoj
+Name[es]=Íconos de archivo
+Name[fr]=Icones des fichiers
+Name[hu]=Fájl ikonok
+Name[it]=Icone dei file
 Name[ja]=
 Name[pt]=
 Name[pt_BR]=
-Name[tr]=Ayarlar - Dosya Simgeleri
+Name[tr]=Dosya Simgeleri
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_mime

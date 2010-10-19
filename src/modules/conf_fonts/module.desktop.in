@@ -1,17 +1,17 @@
 [Desktop Entry]
 Type=Link
-Name=Settings - Fonts
-Name[cs]=Nastavení - písmo
+Name=Fonts
+Name[cs]=Písmo
 Name[de]=
-Name[eo]=Agordo - Tiparoj
-Name[es]=Configuración - Fuentes
-Name[fr]=Configuration - Polices
-Name[hu]=Beállítások - Betűtípusok
-Name[it]=Configurazione - Font
+Name[eo]=Tiparoj
+Name[es]=Fuentes
+Name[fr]=Polices
+Name[hu]=Betűtípusok
+Name[it]=Font
 Name[ja]=
 Name[pt]=
 Name[pt_BR]=
-Name[tr]=Ayarlar - Yazıtipleri
+Name[tr]=Yazıtipleri
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=preferences-desktop-font

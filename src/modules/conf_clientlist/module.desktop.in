@@ -1,18 +1,18 @@
 [Desktop Entry]
 Type=Link
-Name=Settings - Client List Menu
-Name[cs]=Nastavení - klientské menu
+Name=Client List Menu
+Name[cs]=Klientské menu
 Name[de]=
-Name[el]=Ρυθμίσεις - Μενού λίστας client
-Name[eo]=Agordo - Menuo de klienta listo
-Name[es]=Configuración - Menú de lista de clientes
-Name[fr]=Configuration - Menu de la liste des fenêtres
-Name[hu]=Beállítások - Ablaklista
-Name[it]=Configurazione - Menù lista client
+Name[el]=Μενού λίστας client
+Name[eo]=Menuo de klienta listo
+Name[es]=Menú de lista de clientes
+Name[fr]=Menu de la liste des fenêtres
+Name[hu]=Ablaklista
+Name[it]=Menù lista client
 Name[ja]=
 Name[pt]=
 Name[pt_BR]=
-Name[tr]=Ayarlar - İstemci Listesi Menüsü
+Name[tr]=İstemci Listesi Menüsü
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_clientlist

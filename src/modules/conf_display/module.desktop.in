@@ -1,17 +1,17 @@
 [Desktop Entry]
 Type=Link
-Name=Settings - Screen Resolution
-Name[cs]=Nastavení - rozlišení obrazovky
+Name=Screen Resolution
+Name[cs]=Rozlišení obrazovky
 Name[de]=
-Name[eo]=Agordo - Ekrandistingivo
-Name[es]=Configuración - Resolución de pantalla
-Name[fr]=Configuration - Résolution de l'écran
-Name[hu]=Beállítások - Képernyő felbontása
-Name[it]=Configurazione - Risoluzione schermo
+Name[eo]=Ekrandistingivo
+Name[es]=Resolución de pantalla
+Name[fr]=Résolution de l'écran
+Name[hu]=Képernyő felbontása
+Name[it]=Risoluzione schermo
 Name[ja]=
 Name[pt]=
 Name[pt_BR]=
-Name[tr]=Ayarlar - Ekran Çözünürlüğü
+Name[tr]=Ekran Çözünürlüğü
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_display

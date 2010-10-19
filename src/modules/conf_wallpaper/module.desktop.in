@@ -1,17 +1,17 @@
 [Desktop Entry]
 Type=Link
-Name=Settings - Wallpaper
-Name[cs]=Nastavení - pozadí plochy
+Name=Wallpaper
+Name[cs]=Pozadí plochy
 Name[de]=
-Name[eo]=Agordo - Tapeto
-Name[es]=Configuración - Fondo de pantalla
-Name[fr]=Configuration - Fond d'écran
-Name[hu]=Beállítások - Háttérkép
-Name[it]=Configurazione - Sfondo
+Name[eo]=Tapeto
+Name[es]=Fondo de pantalla
+Name[fr]=Fond d'écran
+Name[hu]=Háttérkép
+Name[it]=Sfondo
 Name[ja]=
 Name[pt]=
 Name[pt_BR]=
-Name[tr]=Ayarlar - Duvarkağıdı
+Name[tr]=Duvarkağıdı
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=preferences-desktop-wallpaper

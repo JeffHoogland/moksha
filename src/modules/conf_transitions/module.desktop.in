@@ -1,17 +1,17 @@
 [Desktop Entry]
 Type=Link
-Name=Settings - Transitions
-Name[cs]=Nastavení - přechody
+Name=Transitions
+Name[cs]=Přechody
 Name[de]=
-Name[eo]=Agordo - Transiroj
-Name[es]=Configuración - Transiciones
-Name[fr]=Configuration - Transitions
-Name[hu]=Beállítások - Átmenetek
-Name[it]=Configurazione - Transizioni
+Name[eo]=Transiroj
+Name[es]=Transiciones
+Name[fr]=Transitions
+Name[hu]=Átmenetek
+Name[it]=Transizioni
 Name[ja]=
 Name[pt]=
 Name[pt_BR]=
-Name[tr]=Ayarlar - Geçişler
+Name[tr]=Geçişler
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_transitions

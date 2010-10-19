@@ -1,17 +1,17 @@
 [Desktop Entry]
 Type=Link
-Name=Settings - Key Bindings
-Name[cs]=Nastavení - klávesové zkratky
+Name=Key Bindings
+Name[cs]=Klávesové zkratky
 Name[de]=
-Name[eo]=Agordo - Klavaraj bindoj
-Name[es]=Configuración - Atajos de teclado
-Name[fr]=Configuration - Raccourcis clavier
-Name[hu]=Billentyű kombinációk
-Name[it]=Configurazione - Associazioni di tasti
+Name[eo]=Klavaraj bindoj
+Name[es]=Atajos de teclado
+Name[fr]=Raccourcis clavier
+Name[hu]=Kombinációk
+Name[it]=Associazioni di tasti
 Name[ja]=
 Name[pt]=
 Name[pt_BR]=
-Name[tr]=Ayarlar - Tuş Bağlayıcıları
+Name[tr]=Tuş Bağlayıcıları
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=preferences-desktop-keyboard-shortcuts

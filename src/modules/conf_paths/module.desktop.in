@@ -1,17 +1,17 @@
 [Desktop Entry]
 Type=Link
-Name=Settings - Search Directories
-Name[cs]=Nastavení - adresáře k hledání
+Name=Search Directories
+Name[cs]=Adresáře k hledání
 Name[de]=
-Name[eo]=Agordo - Dosierujoj de serĉo
-Name[es]=Configuración - Directorios de búsqueda
-Name[fr]=Configuration - Recherche de dossiers
-Name[hu]=Beállítások - Könyvtárak
-Name[it]=Configurazione - Percorsi di ricerca
+Name[eo]=Dosierujoj de serĉo
+Name[es]=Directorios de búsqueda
+Name[fr]=Recherche de dossiers
+Name[hu]=Könyvtárak
+Name[it]=Percorsi di ricerca
 Name[ja]=
 Name[pt]=
 Name[pt_BR]=
-Name[tr]=Ayarlar - Aranacak Dizinler
+Name[tr]=Aranacak Dizinler
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_paths

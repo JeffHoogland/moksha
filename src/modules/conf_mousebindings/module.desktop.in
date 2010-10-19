@@ -1,17 +1,17 @@
 [Desktop Entry]
 Type=Link
-Name=Settings - Mouse Bindings
-Name[cs]=Nastavení - zkratky myši
+Name=Mouse Bindings
+Name[cs]=Zkratky myši
 Name[de]=
-Name[eo]=Agordo - Musaj bindoj
-Name[es]=Configuración - Atajos del mouse
-Name[fr]=Configuration - Raccourcis souris
-Name[hu]=Beállítások - Egér kombinációk
-Name[it]=Configurazione - Associazioni del mouse
+Name[eo]=Musaj bindoj
+Name[es]=Atajos del mouse
+Name[fr]=Raccourcis souris
+Name[hu]=Egér kombinációk
+Name[it]=Associazioni del mouse
 Name[ja]=
 Name[pt]=
 Name[pt_BR]=
-Name[tr]=Ayarlar - Fare Bağlayıcıları
+Name[tr]=Fare Bağlayıcıları
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_mousebindings

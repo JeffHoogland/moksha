@@ -1,17 +1,17 @@
 [Desktop Entry]
 Type=Link
-Name=Settings - Window List
-Name[cs]=Nastavení - seznam oken
+Name=Window List
+Name[cs]=Seznam oken
 Name[de]=
-Name[eo]=Agordo - Fenestrolisto
-Name[es]=Configuración - Lista de ventanas
-Name[fr]=Configuration - Liste des fenêtres
-Name[hu]=Beállítások - Ablak lista
-Name[it]=Configurazione - Lista finestre
+Name[eo]=Fenestrolisto
+Name[es]=Lista de ventanas
+Name[fr]=Liste des fenêtres
+Name[hu]=Ablak lista
+Name[it]=Lista finestre
 Name[ja]=
 Name[pt]=
 Name[pt_BR]=
-Name[tr]=Ayarlar - Pencere Listesi
+Name[tr]=Pencere Listesi
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_winlist

@@ -1,17 +1,17 @@
 [Desktop Entry]
 Type=Link
-Name=Settings - Menu Settings
-Name[cs]=Nastavení - volby menu
+Name=Menu Settings
+Name[cs]=Volby menu
 Name[de]=
-Name[eo]=Agordo - Menuaj agordoj
-Name[es]=Configuración - Opciones de menú
-Name[fr]=Configuration - Paramétrage du menu
-Name[hu]=Beállítások - Menü beállítások
-Name[it]=Configurazione - Impostazioni menù
+Name[eo]=Menuaj agordoj
+Name[es]=Opciones de menú
+Name[fr]=Paramétrage du menu
+Name[hu]=Menü beállítások
+Name[it]=Impostazioni menù
 Name[ja]=
 Name[pt]=
 Name[pt_BR]=
-Name[tr]=Ayarlar - Menü Ayarları
+Name[tr]=Menü Ayarları
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_menus
@@ -29,5 +29,4 @@ Comment[pt_BR]=
 Comment[tr]=Menü davranışını yapılandırır.
 Comment[zh_CN]=
 Comment[zh_TW]=
-
 X-Enlightenment-ModuleType=settings

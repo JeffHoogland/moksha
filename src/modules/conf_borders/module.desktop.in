@@ -1,18 +1,18 @@
 [Desktop Entry]
 Type=Link
-Name=Settings - Borders
-Name[cs]=Nastavení - rámy
+Name=Borders
+Name[cs]=Rámy
 Name[de]=
-Name[el]=Ρυθμίσεις - Περιγράμματα
-Name[eo]=Agordo - Randoj
-Name[es]=Configuración - Bordes
-Name[fr]=Configuration - Bordures
-Name[hu]=Beállítások - Ablakkeret
-Name[it]=Configurazione - Bordi
+Name[el]=Περιγράμματα
+Name[eo]=Randoj
+Name[es]=Bordes
+Name[fr]=Bordures
+Name[hu]=Ablakkeret
+Name[it]=Bordi
 Name[ja]=
 Name[pt]=
 Name[pt_BR]=
-Name[tr]=Ayarlar - Sınırlar
+Name[tr]=Sınırlar
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_borders

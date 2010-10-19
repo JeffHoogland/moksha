@@ -1,17 +1,17 @@
 [Desktop Entry]
 Type=Link
-Name=Settings - Input Methods
-Name[cs]=Nastavení - vstupní metody
+Name=Input Methods
+Name[cs]=Vstupní metody
 Name[de]=
-Name[eo]=Agordo - Tajpo-metodoj
-Name[es]=Configuración - Método de entrada
-Name[fr]=Configuration - Méthode de saisie
-Name[hu]=Beállítások - Beviteli mód
-Name[it]=Configurazione - Metodo di input
+Name[eo]=Tajpo-metodoj
+Name[es]=Método de entrada
+Name[fr]=Méthode de saisie
+Name[hu]=Beviteli mód
+Name[it]=Metodo di input
 Name[ja]=
 Name[pt]=
 Name[pt_BR]=
-Name[tr]=Ayarlar - Girdi Metodları
+Name[tr]=Girdi Metodları
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_imc

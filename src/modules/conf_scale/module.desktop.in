@@ -1,17 +1,17 @@
 [Desktop Entry]
 Type=Link
-Name=Settings - Scaling
-Name[cs]=Nastavení - škálování
+Name=Scaling
+Name[cs]=Škálování
 Name[de]=
-Name[eo]=Agordo - Skalado
+Name[eo]=Skalado
 Name[es]=
-Name[fr]=Configuration - Mise à l'échelle
+Name[fr]=Mise à l'échelle
 Name[hu]=Kalibrálás
 Name[it]=Configurazione - Scalatura
 Name[ja]=
 Name[pt]=
 Name[pt_BR]=
-Name[tr]=Ayarlar - Ölçekleme
+Name[tr]=Ölçekleme
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_scale

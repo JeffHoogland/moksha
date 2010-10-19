@@ -1,17 +1,17 @@
 [Desktop Entry]
 Type=Link
-Name=Settings - Interaction
-Name[cs]=Nastavení - interakce
+Name=Interaction
+Name[cs]=Interakce
 Name[de]=
-Name[eo]=Agordo - Interagoj
+Name[eo]=Interagoj
 Name[es]=
-Name[fr]=Configuration - Interaction
-Name[hu]=Beállítások - Kölcsönhatások
-Name[it]=Configurazione - Interazione
+Name[fr]=Interaction
+Name[hu]=Kölcsönhatások
+Name[it]=Interazione
 Name[ja]=
 Name[pt]=
 Name[pt_BR]=
-Name[tr]=Ayarlar - Etkileşim
+Name[tr]=Etkileşim
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_interaction

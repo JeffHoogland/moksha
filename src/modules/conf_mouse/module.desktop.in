@@ -1,17 +1,17 @@
 [Desktop Entry]
 Type=Link
-Name=Settings - Mouse Settings
-Name[cs]=Nastavení - volby myši
+Name=Mouse Settings
+Name[cs]=Volby myši
 Name[de]=
-Name[eo]=Agordo - Musa plirapidigo
-Name[es]=Configuración - Aceleración del mouse
-Name[fr]=Configuration - Paramétrage de la souris
-Name[hu]=Beállítások - Egér sebessége
-Name[it]=Configurazione - Accelerazione mouse
+Name[eo]=Musa plirapidigo
+Name[es]=Aceleración del mouse
+Name[fr]=Paramétrage de la souris
+Name[hu]=Egér sebessége
+Name[it]=Accelerazione mouse
 Name[ja]=
 Name[pt]=
 Name[pt_BR]=
-Name[tr]=Ayarlar - Fare Ayarları
+Name[tr]=Fare Ayarları
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_mouse

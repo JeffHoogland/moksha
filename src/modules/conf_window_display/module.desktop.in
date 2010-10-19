@@ -1,17 +1,17 @@
 [Desktop Entry]
 Type=Link
-Name=Settings - Window Display
-Name[cs]=Nastavení - zobrazení okna
+Name=Window Display
+Name[cs]=Zobrazení okna
 Name[de]=
-Name[eo]=Agordo - Vidigo de fenestroj
-Name[es]=Configuración - Visualización de ventanas
-Name[fr]=Configuration - Affichage des fenêtres
-Name[hu]=Beállítások - Ablak megjelenés
-Name[it]=Configurazione - Visualizzazione finestre
+Name[eo]=Vidigo de fenestroj
+Name[es]=Visualización de ventanas
+Name[fr]=Affichage des fenêtres
+Name[hu]=Ablak megjelenés
+Name[it]=Visualizzazione finestre
 Name[ja]=
 Name[pt]=
 Name[pt_BR]=
-Name[tr]=Ayarlar - Pencere Görünümü
+Name[tr]=Pencere Görünümü
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_window_display

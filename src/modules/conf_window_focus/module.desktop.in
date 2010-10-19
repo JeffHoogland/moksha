@@ -1,17 +1,17 @@
 [Desktop Entry]
 Type=Link
-Name=Settings - Window Focus
-Name[cs]=Nastavení - aktivace okna
+Name=Window Focus
+Name[cs]=Aktivace okna
 Name[de]=
-Name[eo]=Agordo - Fokuso de fenestroj
-Name[es]=Configuración - Foco de la ventana
-Name[fr]=Configuration - Focalisation des fenêtres
-Name[hu]=Beállítások - Ablak fókusz
-Name[it]=Configurazione - Fuoco delle finestre
+Name[eo]=Fokuso de fenestroj
+Name[es]=Foco de la ventana
+Name[fr]=Focalisation des fenêtres
+Name[hu]=Ablak fókusz
+Name[it]=Fuoco delle finestre
 Name[ja]=
 Name[pt]=
 Name[pt_BR]=
-Name[tr]=Ayarlar - Pencere Odaklanması
+Name[tr]=Pencere Odaklanması
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_window_focus

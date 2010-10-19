@@ -1,13 +1,13 @@
 [Desktop Entry]
 Type=Link
-Name=Settings - Desk
-Name[cs]=Nastavení - plocha
+Name=Desk
+Name[cs]=Plocha
 Name[de]=
-Name[eo]=Agordo - Labortablo
-Name[es]=Configuración - Escritorio
-Name[fr]=Configuration - Bureau
-Name[hu]=Beállítások - Munkaasztal
-Name[it]=Configurazione - Desktop
+Name[eo]=Labortablo
+Name[es]=Escritorio
+Name[fr]=Bureau
+Name[hu]=Munkaasztal
+Name[it]=Desktop
 Name[ja]=
 Name[pt]=
 Name[pt_BR]=

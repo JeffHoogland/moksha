@@ -1,17 +1,17 @@
 [Desktop Entry]
 Type=Link
-Name=Settings - Language
-Name[cs]=Nastavení - jazyk
+Name=Language
+Name[cs]=Jazyk
 Name[de]=
-Name[eo]=Agordo - Lingvo
-Name[es]=Configuración - Idioma
-Name[fr]=Configuration - Langue
-Name[hu]=Beállítások - Nyelv
-Name[it]=Configurazione - Lingua
+Name[eo]=Lingvo
+Name[es]=Idioma
+Name[fr]=Langue
+Name[hu]=Nyelv
+Name[it]=Lingua
 Name[ja]=
 Name[pt]=
 Name[pt_BR]=
-Name[tr]=Ayarlar - Dil
+Name[tr]=Dil
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_intl

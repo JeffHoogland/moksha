@@ -1,17 +1,17 @@
 [Desktop Entry]
 Type=Link
-Name=Settings - Theme
-Name[cs]=Nastavení - téma
+Name=Theme
+Name[cs]=Téma
 Name[de]=
-Name[eo]=Agordo - Etoso
-Name[es]=Configuración - Tema
-Name[fr]=Configuration - Thème
-Name[hu]=Beállítások - Téma
-Name[it]=Configurazione - Temi
+Name[eo]=Etoso
+Name[es]=Tema
+Name[fr]=Thème
+Name[hu]=Téma
+Name[it]=Temi
 Name[ja]=
 Name[pt]=
 Name[pt_BR]=
-Name[tr]=Ayarlar - Tema
+Name[tr]=Tema
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=preferences-desktop-theme

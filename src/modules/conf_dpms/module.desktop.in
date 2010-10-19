@@ -1,17 +1,17 @@
 [Desktop Entry]
 Type=Link
-Name=Settings - Power Management
-Name[cs]=Nastavení - správa napájení
+Name=Power Management
+Name[cs]=Správa napájení
 Name[de]=
-Name[eo]=Agordo - Potenca Administrado
-Name[es]=Configuración - Administración de energía
-Name[fr]=Configuration - Gestion de l'énergie
-Name[hu]=Beállítások - Energiakezelés
-Name[it]=Configurazione - Gestione energetica
+Name[eo]=Potenca Administrado
+Name[es]=Administración de energía
+Name[fr]=Gestion de l'énergie
+Name[hu]=Energiakezelés
+Name[it]=Gestione energetica
 Name[ja]=
 Name[pt]=
 Name[pt_BR]=
-Name[tr]=Ayarlar - Güç Yönetimi
+Name[tr]=Güç Yönetimi
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_dpms

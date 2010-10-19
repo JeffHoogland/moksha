@@ -1,17 +1,17 @@
 [Desktop Entry]
 Type=Link
-Name=Settings - Colors
-Name[cs]=Nastavení - barvy
+Name=Colors
+Name[cs]=Barvy
 Name[de]=
-Name[eo]=Agordo - Koloroj
-Name[es]=Configuración - Colores
-Name[fr]=Configuration - Couleurs
-Name[hu]=Beállítások - Színek
-Name[it]=Configurazione - Colori
+Name[eo]=Koloroj
+Name[es]=Colores
+Name[fr]=Couleurs
+Name[hu]=Színek
+Name[it]=Colori
 Name[ja]=
 Name[pt]=
 Name[pt_BR]=
-Name[tr]=Ayarlar - Renkler
+Name[tr]=Renkler
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_colors

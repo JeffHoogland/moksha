@@ -1,17 +1,17 @@
 [Desktop Entry]
 Type=Link
-Name=Settings - Screen Saver
-Name[cs]=Nastavení - spořič obrazovky
+Name=Screen Saver
+Name[cs]=Spořič obrazovky
 Name[de]=
-Name[eo]=Agordo - Ekrankurtenoj
-Name[es]=Configuración - Salvapantallas
-Name[fr]=Configuration - Écran de veille
-Name[hu]=Beállítások - Képernyővédő
-Name[it]=Configurazione - Screensaver
+Name[eo]=Ekrankurtenoj
+Name[es]=Salvapantallas
+Name[fr]=Écran de veille
+Name[hu]=Képernyővédő
+Name[it]=Screensaver
 Name[ja]=
 Name[pt]=
 Name[pt_BR]=
-Name[tr]=Ayarlar - Ekran Koruyucu
+Name[tr]=Ekran Koruyucu
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=preferences-desktop-screensaver

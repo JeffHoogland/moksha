@@ -1,17 +1,17 @@
 [Desktop Entry]
 Type=Link
-Name=Settings - Window Manipulation
-Name[cs]=Nastavení - manipulace s okny
+Name=Window Manipulation
+Name[cs]=Manipulace s okny
 Name[de]=
-Name[eo]=Agordo - Manipulado de fenestroj
-Name[es]=Configuración - Manipulación de ventanas
-Name[fr]=Configuration - Manipulation des fenêtres
-Name[hu]=Beállítások - Ablak műveletek
-Name[it]=Configurazione - Manipolazione finestre
+Name[eo]=Manipulado de fenestroj
+Name[es]=Manipulación de ventanas
+Name[fr]=Manipulation des fenêtres
+Name[hu]=Ablak műveletek
+Name[it]=Manipolazione finestre
 Name[ja]=
 Name[pt]=
 Name[pt_BR]=
-Name[tr]=Ayarlar - Pencere Manipülasyonu
+Name[tr]=Pencere Manipülasyonu
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_winmanip

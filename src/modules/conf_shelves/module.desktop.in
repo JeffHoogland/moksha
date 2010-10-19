@@ -1,17 +1,17 @@
 [Desktop Entry]
 Type=Link
-Name=Settings - Shelves
-Name[cs]=Nastavení - panely
+Name=Shelves
+Name[cs]=Panely
 Name[de]=
-Name[eo]=Agordo - Bretoj
-Name[es]=Configuración - Contenedores
-Name[fr]=Configuration - Racks
-Name[hu]=Beállítások - Polcok
-Name[it]=Configurazione - Mensole
+Name[eo]=Bretoj
+Name[es]=Contenedores
+Name[fr]=Racks
+Name[hu]=Polcok
+Name[it]=Mensole
 Name[ja]=
 Name[pt]=
 Name[pt_BR]=
-Name[tr]=Ayarlar - Raflar
+Name[tr]=Raflar
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_shelves

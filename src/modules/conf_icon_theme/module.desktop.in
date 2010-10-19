@@ -1,17 +1,17 @@
 [Desktop Entry]
 Type=Link
-Name=Settings - Icon Theme
-Name[cs]=Nastavení - téma ikon
+Name=Icon Theme
+Name[cs]=Téma ikon
 Name[de]=
-Name[eo]=Agordo - Piktograma etoso
-Name[es]=Configuración - Tema de íconos
-Name[fr]=Configuration - Thème d'icones
-Name[hu]=Beállítások - Ikon téma
-Name[it]=Configurazione - Temi di icone
+Name[eo]=Piktograma etoso
+Name[es]=Tema de íconos
+Name[fr]=Thème d'icones
+Name[hu]=Ikon téma
+Name[it]=Temi di icone
 Name[ja]=
 Name[pt]=
 Name[pt_BR]=
-Name[tr]=Ayarlar - Simge Teması
+Name[tr]=Simge Teması
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_icon_theme

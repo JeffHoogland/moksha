@@ -1,17 +1,17 @@
 [Desktop Entry]
 Type=Link
-Name=Settings - Startup
-Name[cs]=Nastavení - spuštění
+Name=Startup
+Name[cs]=Spuštění
 Name[de]=
-Name[eo]=Agordo - Startigo
-Name[es]=Configuración - Inicio
-Name[fr]=Configuration - Démarrage
-Name[hu]=Beállítások - Rendszerindítás
-Name[it]=Configurazione - Avvio
+Name[eo]=Startigo
+Name[es]=Inicio
+Name[fr]=Démarrage
+Name[hu]=Rendszerindítás
+Name[it]=Avvio
 Name[ja]=
 Name[pt]=
 Name[pt_BR]=
-Name[tr]=Ayarlar - Açılış
+Name[tr]=Açılış
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_startup

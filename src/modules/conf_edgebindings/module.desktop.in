@@ -1,11 +1,11 @@
 [Desktop Entry]
 Type=Link
-Name=Settings - Edge Bindings
-Name[cs]=Nastaven� - zkratky okraj�
-Name[eo]=Agordo - Fulmklavoj de ekranrandoj
-Name[fr]=Configuration - Raccourcis des bords de l'écran
-Name[it]=Configurazione - Associazioni a confini schermo
-Name[tr]=Ayarlar - Kenar Bağlayıcıları
+Name=Edge Bindings
+Name[cs]=Zkratky okraj�
+Name[eo]=Fulmklavoj de ekranrandoj
+Name[fr]=Raccourcis des bords de l'écran
+Name[it]=Associazioni a confini schermo
+Name[tr]=Kenar Bağlayıcıları
 Icon=e-module-conf_edgebindings
 Comment=Configure your edge bindings here.
 Comment[cs]=Zde m��ete nastavit zkratky pro okraje a rohy obrazovky.

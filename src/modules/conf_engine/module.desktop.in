@@ -1,17 +1,17 @@
 [Desktop Entry]
 Type=Link
-Name=Settings - Engine
-Name[cs]=Nastavení - engine
+Name=Engine
+Name[cs]=Engine
 Name[de]=
-Name[eo]=Agordo - Motoro
-Name[es]=Configuración - Motor
-Name[fr]=Configuration - Moteur
-Name[hu]=Beállítások - Meghajtó
-Name[it]=Configurazione - Motore
+Name[eo]=Motoro
+Name[es]=Motor
+Name[fr]=Moteur
+Name[hu]=Meghajtó
+Name[it]=Motore
 Name[ja]=
 Name[pt]=
 Name[pt_BR]=
-Name[tr]=Ayarlar - Motor
+Name[tr]=Motor
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_engine

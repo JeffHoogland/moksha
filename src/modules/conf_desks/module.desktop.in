@@ -1,17 +1,17 @@
 [Desktop Entry]
 Type=Link
-Name=Settings - Virtual Desktops
-Name[cs]=Nastavení - virtuální plochy
+Name=Virtual Desktops
+Name[cs]=Virtuální plochy
 Name[de]=
-Name[eo]=Agordo - Virtualaj labortabloj
-Name[es]=Configuración - Escritorios virtuales
-Name[fr]=Configuration - Bureaux virtuels
-Name[hu]=Beállítások - Virtuális munkaasztalok
-Name[it]=Configurazione - Desktop virtuali
+Name[eo]=Virtualaj labortabloj
+Name[es]=Escritorios virtuales
+Name[fr]=Bureaux virtuels
+Name[hu]=Virtuális munkaasztalok
+Name[it]=Desktop virtuali
 Name[ja]=
 Name[pt]=
 Name[pt_BR]=
-Name[tr]=Ayarlar - Sanal Masaüstleri
+Name[tr]=Sanal Masaüstleri
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_desks

@@ -1,17 +1,17 @@
 [Desktop Entry]
 Type=Link
-Name=Settings - Performance
-Name[cs]=Nastavení - výkon
+Name=Performance
+Name[cs]=Výkon
 Name[de]=
-Name[eo]=Agordo - Rendimento
-Name[es]=Configuración - Rendimiento
-Name[fr]=Configuration - Performance
-Name[hu]=Beállítások - Teljesítmény
-Name[it]=Configurazione - Prestazioni
+Name[eo]=Rendimento
+Name[es]=Rendimiento
+Name[fr]=Performance
+Name[hu]=Teljesítmény
+Name[it]=Prestazioni
 Name[ja]=
 Name[pt]=
 Name[pt_BR]=
-Name[tr]=Ayarlar - Performans
+Name[tr]=Performans
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_performance

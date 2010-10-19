@@ -1,18 +1,18 @@
 [Desktop Entry]
 Type=Link
-Name=Settings - Applications
-Name[cs]=Nastavení - aplikace
+Name=Applications
+Name[cs]=Aplikace
 Name[de]=
-Name[el]=Ρυθμίσεις - Εφαρμογές
-Name[eo]=Agordo - Aplikaĵoj
-Name[es]=Configuración - Aplicaciones
-Name[fr]=Configuration - Applications
-Name[hu]=Beállítások - Alkalmazások
-Name[it]=Configurazione - Applicazioni
+Name[el]=Εφαρμογές
+Name[eo]=Aplikaĵoj
+Name[es]=Aplicaciones
+Name[fr]=Applications
+Name[hu]=Alkalmazások
+Name[it]=Applicazioni
 Name[ja]=
 Name[pt]=
 Name[pt_BR]=
-Name[tr]=Ayarlar - Uygulamalar
+Name[tr]=Uygulamalar
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_applications

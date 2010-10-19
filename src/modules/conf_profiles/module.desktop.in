@@ -1,17 +1,17 @@
 [Desktop Entry]
 Type=Link
-Name=Settings - Profiles
-Name[cs]=Nastavení - profily
+Name=Profiles
+Name[cs]=Profily
 Name[de]=
-Name[eo]=Agordo - Profiloj
-Name[es]=Configuración - Perfiles
-Name[fr]=Configuration - Profils
-Name[hu]=Beállítások - Profilok
-Name[it]=Configurazione - Profili
+Name[eo]=Profiloj
+Name[es]=Perfiles
+Name[fr]=Profils
+Name[hu]=Profilok
+Name[it]=Profili
 Name[ja]=
 Name[pt]=
 Name[pt_BR]=
-Name[tr]=Ayarlar - Profiller
+Name[tr]=Profiller
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_profiles

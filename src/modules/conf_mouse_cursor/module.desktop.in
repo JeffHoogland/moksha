@@ -1,17 +1,17 @@
 [Desktop Entry]
 Type=Link
-Name=Settings - Mouse Cursor
-Name[cs]=Nastavení - kurzor myši
+Name=Mouse Cursor
+Name[cs]=Kurzor myši
 Name[de]=
-Name[eo]=Agordo - Musa kursoro
-Name[es]=Configuración - Cursor del mouse
-Name[fr]=Configuration - Curseur de souris
-Name[hu]=Beállítások - Egér mutató
-Name[it]=Configurazione - Cursore del mouse
+Name[eo]=Musa kursoro
+Name[es]=Cursor del mouse
+Name[fr]=Curseur de souris
+Name[hu]=Egér mutató
+Name[it]=Cursore del mouse
 Name[ja]=
 Name[pt]=
 Name[pt_BR]=
-Name[tr]=Ayarlar - Fare İmleci
+Name[tr]=Fare İmleci
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_mouse_cursor

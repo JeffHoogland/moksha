@@ -1,17 +1,17 @@
 [Desktop Entry]
 Type=Link
-Name=Settings - Screen Lock
-Name[cs]=Nastavení - uzamčení obrazovky
+Name=Screen Lock
+Name[cs]=Uzamčení obrazovky
 Name[de]=
-Name[eo]=Agordo - Ekranŝlosilo
-Name[es]=Configuración - Bloqueo de pantalla
-Name[fr]=Configuration - Verrouillage de l'écran
-Name[hu]=Beállítások - Képernyő zárolása
-Name[it]=Configurazione - Bloccaschermo
+Name[eo]=Ekranŝlosilo
+Name[es]=Bloqueo de pantalla
+Name[fr]=Verrouillage de l'écran
+Name[hu]=Képernyő zárolása
+Name[it]=Bloccaschermo
 Name[ja]=
 Name[pt]=
 Name[pt_BR]=
-Name[tr]=Ayarlar - Ekran Kilidi
+Name[tr]=Ekran Kilidi
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_desklock

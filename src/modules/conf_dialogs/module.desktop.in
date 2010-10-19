@@ -1,17 +1,17 @@
 [Desktop Entry]
 Type=Link
-Name=Settings - Dialogs
-Name[cs]=Nastavení - dialogy
+Name=Dialogs
+Name[cs]=Dialogy
 Name[de]=
-Name[eo]=Agordo - Dialogoj
-Name[es]=Configuración - Diálogos
-Name[fr]=Configuration - Boîtes de dialogue
-Name[hu]=Beállítások - Párbeszédablakok
-Name[it]=Configurazione - Finestre di dialogo
+Name[eo]=Dialogoj
+Name[es]=Diálogos
+Name[fr]=Boîtes de dialogue
+Name[hu]=Párbeszédablakok
+Name[it]=Finestre di dialogo
 Name[ja]=
 Name[pt]=
 Name[pt_BR]=
-Name[tr]=Ayarlar - Diyaloglar
+Name[tr]=Diyaloglar
 Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_dialogs
