@@ -29505,6 +29505,15 @@ collections {
    ICON("system-file-manager","icon_efm_folder.png",64)                               // "enlightenment/fileman"
    ICON("application-exit","icon_logout.png",64)                                      // "enlightenment/exit"
    ICON("enlightenment","logo_white_128.png",64)                               // *** // "enlightenment/e"
+   //Standard Module Category Icons 
+   ICON("modules-utils","icon_gadget.png",64)
+   ICON("modules-system","icon_gadget.png",64)
+   ICON("modules-look","icon_look.png",64)
+   ICON("modules-files","icon_efm_folder.png",64)
+   ICON("modules-launcher","icon_run.png",64)
+   ICON("modules-core","logo_white_128.png",64)
+   ICON("modules-mobile","icon_globe.png",64)
+   ICON("modules-settings","icon_config.png",64)
    //Standard Emblem Icons
    ICON("emblem-symbolic-link","icon_dummy.png",64)                // EFMBUTTON("symlink")
    //Standard Place Icons

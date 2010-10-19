@@ -7,4 +7,4 @@ Icon=preferences-system-power-management
 Comment=Configure your ACPI bindings here.
 Comment[fr]=Permet de configurer vos raccourcis ACPI.
 Comment[it]=Configurate qui le vostre associazioni con ACPI.
-X-Enlightenment-ModuleType=config
+X-Enlightenment-ModuleType=settings

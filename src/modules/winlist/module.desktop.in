@@ -17,4 +17,4 @@ Comment[hu]=A modul megmutatja az éppen futó alkalmazások ablakainak listáj�
 Comment[it]=Un modulo per la visualizzazione e la navigazione tra le finestre aperte.
 Comment[fr]=Affiche la liste des applications ouvertes et permet de basculer d'une application à l'autre.
 Comment[tr]=Mevcut çalışan istemci uygulamaların listesini gösteren modül.
-X-Enlightenment-ModuleType=system
+X-Enlightenment-ModuleType=core

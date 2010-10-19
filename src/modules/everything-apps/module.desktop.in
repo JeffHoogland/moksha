@@ -4,6 +4,6 @@ Name=Everything Applications
 Name[fr]=Omni - Applications
 Name[it]=Everything - Applicazioni
 Icon=e-module
-X-Enlightenment-ModuleType=everything
 Comment[fr]=Actions sur les applications.
 Comment[it]=Azioni con le applicazioni.
+X-Enlightenment-ModuleType=launcher

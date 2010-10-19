@@ -15,4 +15,4 @@ Comment[it]=Questo modulo fornisce una finestra di dialogo popup<br>unificata pe
 Comment[hu]=Ez a modul egy felugró ablakocskát<br>biztosít, amely segítségével az<br>e17 folyamatait kísérhetjük figyelemmel
 Comment[fr]=Fournit une fenêtre de dialogue pop-up<br>regroupant toutes les actions système<br>dans Enlightenment.
 Comment[tr]=Tüm sistem eylemleri için özelleştirilmiş<br>açılır pencere diyaloğu sunan Enlightenment modülü.
-X-Enlightenment-ModuleType=system
+X-Enlightenment-ModuleType=core

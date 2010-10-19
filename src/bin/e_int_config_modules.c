@@ -49,12 +49,14 @@ static const CFTypes _types[] =
 {
 #define _CFT(k, n, i)				\
   {sizeof(k) - 1, k, n, i}
-  _CFT("utils", N_("Utilities"), "preferences-utils"),
-  _CFT("look", N_("Look"), "preferences-look"),
-  _CFT("system", N_("System"), "system"),
-  _CFT("config", N_("Settings"), "preferences-system"),
-  _CFT("everything", N_("Launcher"), "system-run"),
-  _CFT("fileman", N_("Fileman"), "system-file-manager"),
+  _CFT("utils", N_("Utilities"), "modules-utils"),
+  _CFT("system", N_("System"), "modules-system"),
+  _CFT("look", N_("Look"), "modules-look"),
+  _CFT("files", N_("Files"), "modules-files"),
+  _CFT("launcher", N_("Launcher"), "modules-launcher"),
+  _CFT("core", N_("Core"), "modules-core"),
+  _CFT("mobile", N_("Mobile"), "modules-mobile"),
+  _CFT("settings", N_("Settings"), "modules-settings"),
 #undef _CFT
   {0, NULL, NULL, NULL}
 };

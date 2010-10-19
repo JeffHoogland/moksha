@@ -15,4 +15,4 @@ Comment[it]=Rimuove le impostazioni da ricordare delle finestre.
 Comment[hu]=Meglévő ablak emlékek törlése.
 Comment[fr]=Permet d'effacer les mémorisations.
 Comment[tr]=Mevcut pencere hatırlamalarını sil.
-X-Enlightenment-ModuleType=config
+X-Enlightenment-ModuleType=settings

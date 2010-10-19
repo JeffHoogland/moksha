@@ -4,7 +4,7 @@ Name=Everything Calculator
 Name[fr]=Omni - Calculatrice
 Name[it]=Everything - Calcolatrice
 Icon=accessories-calculator
-X-Enlightenment-ModuleType=everything
 Comment=Frontend for bc. Use '=' as trigger.
 Comment[fr]=Frontal pour bc, utilise « = » comme déclencheur.
 Comment[it]=Frontend per bc, usa '=' come richiamo.
+X-Enlightenment-ModuleType=launcher
