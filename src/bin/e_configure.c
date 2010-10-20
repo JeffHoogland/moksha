@@ -1,5 +1,6 @@
 #include "e.h"
 
+static void _e_configure_efreet_desktop_cleanup(void);
 static void _e_configure_efreet_desktop_update(void);
 static Eina_Bool _e_configure_cb_efreet_desktop_cache_update(void *data, int type, void *event);
 static void _e_configure_registry_item_full_add(const char *path, int pri, const char *label, const char *icon_file, const char *icon, E_Config_Dialog *(*func) (E_Container *con, const char *params), void (*generic_func) (E_Container *con, const char *params), Efreet_Desktop *desktop);
@@ -8,6 +9,7 @@ EAPI Eina_List *e_configure_registry = NULL;
 
 static Eina_List *handlers = NULL;
 static E_Int_Menu_Augmentation *maug = NULL;
+static Ecore_Job *update_job = NULL;
 
 static void
 _e_configure_menu_module_item_cb(void *data __UNUSED__, E_Menu *m, E_Menu_Item *mi __UNUSED__)
@@ -26,6 +28,21 @@ _e_configure_menu_add(void *data __UNUSED__, E_Menu *m)
    e_menu_item_callback_set(mi, _e_configure_menu_module_item_cb, NULL);
 }
 
+static void
+_configure_job(void *data __UNUSED__)
+{
+   _e_configure_efreet_desktop_update();
+   update_job = NULL;
+}
+
+static Eina_Bool
+_configure_init_timer(void *data __UNUSED__)
+{
+   if (update_job) ecore_job_del(update_job);
+   update_job = ecore_job_add(_configure_job, NULL);
+   return EINA_FALSE;
+}
+
 EAPI void
 e_configure_init(void)
 {
@@ -38,21 +55,24 @@ e_configure_init(void)
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
          (EFREET_EVENT_DESKTOP_CACHE_UPDATE, _e_configure_cb_efreet_desktop_cache_update, NULL));
-   //_e_configure_efreet_desktop_update();
+   if (update_job)
+      {
+         ecore_job_del(update_job);
+         update_job = NULL;
+      }
+   ecore_timer_add(0.0, _configure_init_timer, NULL);
 }
 
 static void
-_e_configure_efreet_desktop_update(void)
+_e_configure_efreet_desktop_cleanup(void)
 {
-   Eina_List *settings_desktops, *system_desktops;
    Eina_List *remove_items = NULL;
    Eina_List *remove_cats = NULL;
    Eina_List *l;
-   Efreet_Desktop *desktop;
    E_Configure_Cat *ecat;
-   void *data;
    char buf[1024];
-
+   void *data;
+   
    /* remove anything with a desktop entry */
    EINA_LIST_FOREACH(e_configure_registry, l, ecat)
      {
@@ -77,6 +97,15 @@ _e_configure_efreet_desktop_update(void)
 	e_configure_registry_category_del(data);
 	free(data);
      }
+}
+
+static void
+_e_configure_efreet_desktop_update(void)
+{
+   Eina_List *settings_desktops, *system_desktops;
+   Efreet_Desktop *desktop;
+   Eina_List *l;
+   char buf[1024];
 
    /* get desktops */
    settings_desktops = efreet_util_desktop_category_list("Settings");
@@ -177,7 +206,9 @@ _e_configure_efreet_desktop_update(void)
 static Eina_Bool
 _e_configure_cb_efreet_desktop_cache_update(__UNUSED__ void *data, __UNUSED__ int type, __UNUSED__ void *event)
 {
-   _e_configure_efreet_desktop_update();
+   _e_configure_efreet_desktop_cleanup();
+   if (update_job) ecore_job_del(update_job);
+   update_job = ecore_job_add(_configure_job, NULL);
    return 1;
 }
 
