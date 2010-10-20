@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-10-18 06:15+0400\n"
-"PO-Revision-Date: 2010-10-18 12:01+0400\n"
+"POT-Creation-Date: 2010-10-20 06:23+0400\n"
+"PO-Revision-Date: 2010-10-20 07:41+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: French <pourunmondesansgourou@gmail.com>\n"
 "Language: fr\n"
@@ -661,7 +661,7 @@ msgstr "Activer/Désactiver le mode hors ligne"
 #: src/bin/e_actions.c:2953
 #: src/bin/e_actions.c:2957
 #: src/bin/e_configure.c:148
-#: src/bin/e_int_config_modules.c:54
+#: src/bin/e_int_config_modules.c:53
 #: src/modules/conf_desklock/e_int_config_desklock_fsel.c:87
 #: src/modules/conf_imc/e_int_config_imc.c:808
 #: src/modules/conf_menus/e_int_config_menus.c:294
@@ -1553,7 +1553,7 @@ msgid "Inset"
 msgstr "En creux"
 
 #: src/bin/e_gadcon.c:1396
-#: src/bin/e_int_config_modules.c:53
+#: src/bin/e_int_config_modules.c:54
 #: src/modules/conf_borders/e_mod_main.c:17
 #: src/modules/conf_colors/e_mod_main.c:17
 #: src/modules/conf_fonts/e_mod_main.c:17
@@ -2095,6 +2095,29 @@ msgid "Utilities"
 msgstr "Utilitaires"
 
 #: src/bin/e_int_config_modules.c:55
+#: src/modules/conf_mime/e_mod_main.c:17
+#: src/modules/everything-files/e_mod_main.c:1422
+#: src/modules/everything-files/e_mod_main.c:1431
+#: src/modules/fileman/e_mod_main.c:46
+#: src/modules/fileman/e_mod_main.c:64
+#: src/modules/fileman/e_mod_main.c:386
+msgid "Files"
+msgstr "Fichiers"
+
+#: src/bin/e_int_config_modules.c:56
+msgid "Launcher"
+msgstr "Lanceur"
+
+#: src/bin/e_int_config_modules.c:57
+#: src/modules/conf_fonts/e_int_config_fonts.c:57
+msgid "Core"
+msgstr "Base"
+
+#: src/bin/e_int_config_modules.c:58
+msgid "Mobile"
+msgstr "Mobile"
+
+#: src/bin/e_int_config_modules.c:59
 #: src/bin/e_int_menus.c:223
 #: src/bin/e_shelf.c:1685
 #: src/modules/battery/e_mod_main.c:188
@@ -2116,32 +2139,24 @@ msgstr "Utilitaires"
 msgid "Settings"
 msgstr "Configuration"
 
-#: src/bin/e_int_config_modules.c:56
-msgid "Launcher"
-msgstr "Lanceur"
-
-#: src/bin/e_int_config_modules.c:57
-msgid "Fileman"
-msgstr "EFM"
-
-#: src/bin/e_int_config_modules.c:97
+#: src/bin/e_int_config_modules.c:99
 msgid "Module Settings"
 msgstr "Paramétrage des modules"
 
-#: src/bin/e_int_config_modules.c:174
+#: src/bin/e_int_config_modules.c:176
 msgid "Load"
 msgstr "Activer"
 
-#: src/bin/e_int_config_modules.c:179
+#: src/bin/e_int_config_modules.c:181
 msgid "Unload"
 msgstr "Désactiver"
 
-#: src/bin/e_int_config_modules.c:305
-#: src/bin/e_int_config_modules.c:587
+#: src/bin/e_int_config_modules.c:307
+#: src/bin/e_int_config_modules.c:589
 msgid "No modules selected."
 msgstr "Aucun module sélectionné."
 
-#: src/bin/e_int_config_modules.c:585
+#: src/bin/e_int_config_modules.c:587
 msgid "More than one module selected."
 msgstr "Plus d'un module sélectionné."
 
@@ -4405,10 +4420,6 @@ msgstr "Vous avez choisi d'activer l'extension composite,<br>mais votre écran a
 msgid "Engine"
 msgstr "Moteur"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:57
-msgid "Core"
-msgstr "Base"
-
 #: src/modules/conf_fonts/e_int_config_fonts.c:58
 msgid "Title Bar"
 msgstr "Barre de titre"
@@ -4764,12 +4775,12 @@ msgstr "Sélecteur de langue"
 #: src/modules/conf_intl/e_int_config_intl.c:946
 #: src/modules/conf_intl/e_int_config_intl.c:1024
 msgid "Locale Selected"
-msgstr "Locale sélectionnée"
+msgstr "Paramètres régionaux"
 
 #: src/modules/conf_intl/e_int_config_intl.c:947
 #: src/modules/conf_intl/e_int_config_intl.c:1025
 msgid "Locale"
-msgstr "Locale"
+msgstr "Localisation"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:4
 msgid "Please press key sequence,<br><br>or <hilight>Escape</hilight> to abort."
@@ -4945,15 +4956,6 @@ msgstr "Sélectionner un fichier edj"
 #: src/modules/conf_mime/e_int_config_mime_edit.c:292
 msgid "Select an image"
 msgstr "Sélectionner une image"
-
-#: src/modules/conf_mime/e_mod_main.c:17
-#: src/modules/everything-files/e_mod_main.c:1422
-#: src/modules/everything-files/e_mod_main.c:1431
-#: src/modules/fileman/e_mod_main.c:46
-#: src/modules/fileman/e_mod_main.c:64
-#: src/modules/fileman/e_mod_main.c:386
-msgid "Files"
-msgstr "Fichiers"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:7
 msgid "Please hold any modifier you want<br>and press any button on your mouse,<br> or roll a wheel, to assign mouse binding.<br>Press <hilight>Escape</highlight> to abort."
@@ -7486,6 +7488,8 @@ msgstr "Il y a déjà une zone de notification active et seule une instance de c
 msgid "Systray"
 msgstr "Zone de notification"
 
+#~ msgid "Fileman"
+#~ msgstr "EFM"
 #~ msgid "Shelf"
 #~ msgstr "Rack"
 #~ msgid "Show home directory"

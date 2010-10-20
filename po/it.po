@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-10-18 13:31+0200\n"
-"PO-Revision-Date: 2010-10-18 13:34+0200\n"
+"POT-Creation-Date: 2010-10-20 13:00+0200\n"
+"PO-Revision-Date: 2010-10-20 13:04+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -588,7 +588,7 @@ msgstr "Commuta modalità disconnessa"
 
 #: src/bin/e_actions.c:2937 src/bin/e_actions.c:2941 src/bin/e_actions.c:2945
 #: src/bin/e_actions.c:2949 src/bin/e_actions.c:2953 src/bin/e_actions.c:2957
-#: src/bin/e_configure.c:148 src/bin/e_int_config_modules.c:54
+#: src/bin/e_configure.c:148 src/bin/e_int_config_modules.c:53
 #: src/modules/conf_desklock/e_int_config_desklock_fsel.c:87
 #: src/modules/conf_imc/e_int_config_imc.c:808
 #: src/modules/conf_menus/e_int_config_menus.c:294
@@ -1509,7 +1509,7 @@ msgstr "Liscio"
 msgid "Inset"
 msgstr "Incassato"
 
-#: src/bin/e_gadcon.c:1396 src/bin/e_int_config_modules.c:53
+#: src/bin/e_gadcon.c:1396 src/bin/e_int_config_modules.c:54
 #: src/modules/conf_borders/e_mod_main.c:17
 #: src/modules/conf_colors/e_mod_main.c:17
 #: src/modules/conf_fonts/e_mod_main.c:17
@@ -2043,7 +2043,28 @@ msgstr "Avvia questo programma al login"
 msgid "Utilities"
 msgstr "Utilità"
 
-#: src/bin/e_int_config_modules.c:55 src/bin/e_int_menus.c:223
+#: src/bin/e_int_config_modules.c:55 src/modules/conf_mime/e_mod_main.c:17
+#: src/modules/everything-files/e_mod_main.c:1422
+#: src/modules/everything-files/e_mod_main.c:1431
+#: src/modules/fileman/e_mod_main.c:46 src/modules/fileman/e_mod_main.c:64
+#: src/modules/fileman/e_mod_main.c:386
+msgid "Files"
+msgstr "File"
+
+#: src/bin/e_int_config_modules.c:56
+msgid "Launcher"
+msgstr "Lanciatore"
+
+#: src/bin/e_int_config_modules.c:57
+#: src/modules/conf_fonts/e_int_config_fonts.c:57
+msgid "Core"
+msgstr "Nucleo"
+
+#: src/bin/e_int_config_modules.c:58
+msgid "Mobile"
+msgstr "Mobile"
+
+#: src/bin/e_int_config_modules.c:59 src/bin/e_int_menus.c:223
 #: src/bin/e_shelf.c:1685 src/modules/battery/e_mod_main.c:188
 #: src/modules/conf/e_conf.c:121 src/modules/conf/e_conf.c:131
 #: src/modules/conf/e_mod_main.c:102 src/modules/conf_dialogs/e_mod_main.c:17
@@ -2057,31 +2078,23 @@ msgstr "Utilità"
 msgid "Settings"
 msgstr "Impostazioni"
 
-#: src/bin/e_int_config_modules.c:56
-msgid "Launcher"
-msgstr "Lanciatore"
-
-#: src/bin/e_int_config_modules.c:57
-msgid "Fileman"
-msgstr "File manager"
-
-#: src/bin/e_int_config_modules.c:97
+#: src/bin/e_int_config_modules.c:99
 msgid "Module Settings"
 msgstr "Gestione moduli"
 
-#: src/bin/e_int_config_modules.c:174
+#: src/bin/e_int_config_modules.c:176
 msgid "Load"
 msgstr "Carica"
 
-#: src/bin/e_int_config_modules.c:179
+#: src/bin/e_int_config_modules.c:181
 msgid "Unload"
 msgstr "Scarica"
 
-#: src/bin/e_int_config_modules.c:305 src/bin/e_int_config_modules.c:587
+#: src/bin/e_int_config_modules.c:307 src/bin/e_int_config_modules.c:589
 msgid "No modules selected."
 msgstr "Nessun modulo selezionato."
 
-#: src/bin/e_int_config_modules.c:585
+#: src/bin/e_int_config_modules.c:587
 msgid "More than one module selected."
 msgstr "Più di un modulo selezionati."
 
@@ -4585,10 +4598,6 @@ msgstr ""
 msgid "Engine"
 msgstr "Motore"
 
-#: src/modules/conf_fonts/e_int_config_fonts.c:57
-msgid "Core"
-msgstr "Nucleo"
-
 #: src/modules/conf_fonts/e_int_config_fonts.c:58
 msgid "Title Bar"
 msgstr "Barra del titolo"
@@ -5137,14 +5146,6 @@ msgstr "Seleziona un file Edje"
 #: src/modules/conf_mime/e_int_config_mime_edit.c:292
 msgid "Select an image"
 msgstr "Seleziona un'immagine"
-
-#: src/modules/conf_mime/e_mod_main.c:17
-#: src/modules/everything-files/e_mod_main.c:1422
-#: src/modules/everything-files/e_mod_main.c:1431
-#: src/modules/fileman/e_mod_main.c:46 src/modules/fileman/e_mod_main.c:64
-#: src/modules/fileman/e_mod_main.c:386
-msgid "Files"
-msgstr "File"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:7
 msgid ""
