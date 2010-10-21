@@ -312,6 +312,7 @@ if test "x$e_cv_want_device_udev" = "xyes";then
     ],[device_backend=ehal])
 else
   device_backend=ehal
+  AM_CONDITIONAL([HAVE_EEZE_MOUNT], [false])
 fi
 AC_MSG_RESULT($device_backend)
 
