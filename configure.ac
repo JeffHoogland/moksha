@@ -292,6 +292,7 @@ AC_ARG_ENABLE([device-udev],
   [e_cv_want_device_udev=$enableval],
   AC_CACHE_VAL([e_cv_want_device_udev], [e_cv_want_device_udev=yes]))
 
+eeze_mount=
 if test "x$e_cv_want_device_udev" = "xyes";then
   PKG_CHECK_EXISTS([eeze >= 1.0.0],
     [
@@ -299,12 +300,11 @@ if test "x$e_cv_want_device_udev" = "xyes";then
       AC_DEFINE_UNQUOTED([HAVE_EEZE],[1],[enable udev support])
       AC_CHECK_LIB([eeze], [eeze_disk_function],
         [
-           AM_CONDITIONAL([HAVE_EEZE_MOUNT], [true])
+           eeze_mount=yes
            AC_DEFINE_UNQUOTED([HAVE_EEZE_MOUNT], [1], [enable eeze mounting])
            AC_MSG_NOTICE([eeze mounting enabled])
         ],
         [
-           AM_CONDITIONAL([HAVE_EEZE_MOUNT], [false]),
            AC_MSG_NOTICE([eeze mounting disabled])
         ]
       )
@@ -312,12 +312,11 @@ if test "x$e_cv_want_device_udev" = "xyes";then
     ],[device_backend=ehal])
 else
   device_backend=ehal
-  AM_CONDITIONAL([HAVE_EEZE_MOUNT], [false])
 fi
 AC_MSG_RESULT($device_backend)
 
 AM_CONDITIONAL([HAVE_EEZE], [test "x${device_backend}" = "xeeze"])
-
+AM_CONDITIONAL([HAVE_EEZE_MOUNT], [test "x${eeze_mount}" = "xyes"])
 
 # doxygen program for documentation building
 
