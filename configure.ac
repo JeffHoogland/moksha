@@ -348,17 +348,29 @@ PKG_CHECK_MODULES(E_THUMB, [
   efreet >= 1.0.0
 ])
 
-PKG_CHECK_MODULES(E_FM, [
-  ecore >= 1.0.0
-  ecore-file >= 1.0.0
-  ecore-ipc >= 1.0.0
-  eet >= 1.4.0
-  efreet >= 1.0.0
-  dbus-1
-  edbus >= 1.0.0
-  ehal >= 1.0.0
-  eina >= 1.0.0
-])
+if test -z $eeze_mount ; then
+  PKG_CHECK_MODULES(E_FM, [
+    ecore >= 1.0.0
+    ecore-file >= 1.0.0
+    ecore-ipc >= 1.0.0
+    eet >= 1.4.0
+    efreet >= 1.0.0
+    dbus-1
+    edbus >= 1.0.0
+    ehal >= 1.0.0
+    eina >= 1.0.0
+  ])
+else
+  PKG_CHECK_MODULES(E_FM, [
+    ecore >= 1.0.0
+    ecore-file >= 1.0.0
+    ecore-ipc >= 1.0.0
+    eet >= 1.4.0
+    efreet >= 1.0.0
+    eeze >= 1.1.0
+    eina >= 1.0.0
+  ])
+fi
 
 PKG_CHECK_MODULES(E_FM_OP, [
   ecore >= 1.0.0
@@ -387,6 +399,11 @@ PKG_CHECK_MODULES(E_INIT, [
   eina >= 1.0.0
 ])
 
+if test -z $eeze_mount ; then
+  hal_check="ehal >= 1.0.0"
+else
+  hal_check=""
+fi
 PKG_CHECK_MODULES(E, [
   evas >= 1.0.0
   ecore >= 1.0.0
@@ -405,10 +422,10 @@ PKG_CHECK_MODULES(E, [
   eina >= 1.0.0
   dbus-1
   edbus >= 1.0.0
-  ehal >= 1.0.0
+  $hal_check
   $device_backend
 ])
-requirements_e="evas >= 1.0.0 ecore >= 1.0.0 ecore-x >= 1.0.0 ecore-evas >= 1.0.0 ecore-con >= 1.0.0 ecore-ipc >= 1.0.0 ecore-file >= 1.0.0 eet >= 1.4.0 edje >= 1.0.0 efreet >= 1.0.0 efreet-mime >= 1.0.0 eina >= 1.0.0 dbus-1 edbus >= 1.0.0 ehal >= 1.0.0 $device_backend"
+requirements_e="evas >= 1.0.0 ecore >= 1.0.0 ecore-x >= 1.0.0 ecore-evas >= 1.0.0 ecore-con >= 1.0.0 ecore-ipc >= 1.0.0 ecore-file >= 1.0.0 eet >= 1.4.0 edje >= 1.0.0 efreet >= 1.0.0 efreet-mime >= 1.0.0 eina >= 1.0.0 dbus-1 edbus >= 1.0.0 $hal_check $device_backend"
 
 AC_E_CHECK_PKG(ECORE_IMF, [ecore-imf >= 1.0.0 ecore-imf-evas >= 1.0.0], [], [:])
 
