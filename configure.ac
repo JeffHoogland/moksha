@@ -297,6 +297,18 @@ if test "x$e_cv_want_device_udev" = "xyes";then
     [
       device_backend=eeze
       AC_DEFINE_UNQUOTED([HAVE_EEZE],[1],[enable udev support])
+      AC_CHECK_LIB([eeze], [eeze_disk_function],
+        [
+           AM_CONDITIONAL([HAVE_EEZE_MOUNT], [true])
+           AC_DEFINE_UNQUOTED([HAVE_EEZE_MOUNT], [1], [enable eeze mounting])
+           AC_MSG_NOTICE([eeze mounting enabled])
+        ],
+        [
+           AM_CONDITIONAL([HAVE_EEZE_MOUNT], [false]),
+           AC_MSG_NOTICE([eeze mounting disabled])
+        ]
+      )
+           
     ],[device_backend=ehal])
 else
   device_backend=ehal
@@ -304,6 +316,7 @@ fi
 AC_MSG_RESULT($device_backend)
 
 AM_CONDITIONAL([HAVE_EEZE], [test "x${device_backend}" = "xeeze"])
+
 
 # doxygen program for documentation building
 
