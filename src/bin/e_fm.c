@@ -259,7 +259,7 @@ static int           _e_fm2_region_visible(E_Fm2_Region *rg);
 static void          _e_fm2_icon_make_visible(E_Fm2_Icon *ic);
 static void          _e_fm2_icon_desel_any(Evas_Object *obj);
 static E_Fm2_Icon *  _e_fm2_icon_first_selected_find(Evas_Object *obj);
-static E_Fm2_Icon *  _e_fm2_icon_next_find(Evas_Object *obj, int next, intmatch_func(E_Fm2_Icon * ic, void *data), void *data);
+static E_Fm2_Icon *  _e_fm2_icon_next_find(Evas_Object *obj, int next, int match_func(E_Fm2_Icon * ic, void *data), void *data);
 
 static void          _e_fm2_icon_sel_first(Evas_Object *obj);
 static void          _e_fm2_icon_sel_last(Evas_Object *obj);
