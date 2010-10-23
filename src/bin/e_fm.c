@@ -214,7 +214,7 @@ struct _E_Fm2_Context_Menu_Data
    E_Fm2_Mime_Handler *handler;
 };
 
-static const char *  _e_fm2_dev_path_map(const char *dev, const char *path);
+static const char   *_e_fm2_dev_path_map(const char *dev, const char *path);
 static void          _e_fm2_file_add(Evas_Object *obj, const char *file, int unique, const char *file_rel, int after, E_Fm2_Finfo *finf);
 static void          _e_fm2_file_del(Evas_Object *obj, const char *file);
 static void          _e_fm2_queue_process(Evas_Object *obj);
@@ -229,13 +229,13 @@ static void          _e_fm2_config_free(E_Fm2_Config *cfg);
 static void          _e_fm2_dir_load_props(E_Fm2_Smart_Data *sd);
 static void          _e_fm2_dir_save_props(E_Fm2_Smart_Data *sd);
 
-static Evas_Object * _e_fm2_file_fm2_find(const char *file);
-static E_Fm2_Icon *  _e_fm2_icon_find(Evas_Object *obj, const char *file);
-static const char *  _e_fm2_uri_escape(const char *path);
-static Eina_List *   _e_fm2_uri_path_list_get(Eina_List *uri_list);
-static Eina_List *   _e_fm2_uri_icon_list_get(Eina_List *uri);
+static Evas_Object  *_e_fm2_file_fm2_find(const char *file);
+static E_Fm2_Icon   *_e_fm2_icon_find(Evas_Object *obj, const char *file);
+static const char   *_e_fm2_uri_escape(const char *path);
+static Eina_List    *_e_fm2_uri_path_list_get(Eina_List *uri_list);
+static Eina_List    *_e_fm2_uri_icon_list_get(Eina_List *uri);
 
-static E_Fm2_Icon *  _e_fm2_icon_new(E_Fm2_Smart_Data *sd, const char *file, E_Fm2_Finfo *finf);
+static E_Fm2_Icon   *_e_fm2_icon_new(E_Fm2_Smart_Data *sd, const char *file, E_Fm2_Finfo *finf);
 static void          _e_fm2_icon_unfill(E_Fm2_Icon *ic);
 static int           _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf);
 static void          _e_fm2_icon_free(E_Fm2_Icon *ic);
@@ -243,7 +243,7 @@ static void          _e_fm2_icon_realize(E_Fm2_Icon *ic);
 static void          _e_fm2_icon_unrealize(E_Fm2_Icon *ic);
 static Eina_Bool     _e_fm2_icon_visible(const E_Fm2_Icon *ic);
 static void          _e_fm2_icon_label_set(E_Fm2_Icon *ic, Evas_Object *obj);
-static Evas_Object * _e_fm2_icon_icon_direct_set(E_Fm2_Icon *ic, Evas_Object *o, Evas_Smart_Cb gen_func, void *data, int force_gen);
+static Evas_Object  *_e_fm2_icon_icon_direct_set(E_Fm2_Icon *ic, Evas_Object *o, Evas_Smart_Cb gen_func, void *data, int force_gen);
 static void          _e_fm2_icon_icon_set(E_Fm2_Icon *ic);
 static void          _e_fm2_icon_thumb(const E_Fm2_Icon *ic, Evas_Object *oic, int force);
 static void          _e_fm2_icon_select(E_Fm2_Icon *ic);
@@ -258,8 +258,8 @@ static int           _e_fm2_region_visible(E_Fm2_Region *rg);
 
 static void          _e_fm2_icon_make_visible(E_Fm2_Icon *ic);
 static void          _e_fm2_icon_desel_any(Evas_Object *obj);
-static E_Fm2_Icon *  _e_fm2_icon_first_selected_find(Evas_Object *obj);
-static E_Fm2_Icon *  _e_fm2_icon_next_find(Evas_Object *obj, int next, int match_func(E_Fm2_Icon * ic, void *data), void *data);
+static E_Fm2_Icon   *_e_fm2_icon_first_selected_find(Evas_Object *obj);
+static E_Fm2_Icon   *_e_fm2_icon_next_find(Evas_Object *obj, int next, int (*match_func)(E_Fm2_Icon *ic, void *data), void *data);
 
 static void          _e_fm2_icon_sel_first(Evas_Object *obj);
 static void          _e_fm2_icon_sel_last(Evas_Object *obj);
@@ -343,24 +343,24 @@ static void          _e_fm2_file_properties(void *data, E_Menu *m, E_Menu_Item *
 static void          _e_fm2_file_properties_delete_cb(void *obj);
 static void          _e_fm2_file_do_rename(const char *text, E_Fm2_Icon *ic);
 
-static Evas_Object * _e_fm2_icon_entry_widget_add(E_Fm2_Icon *ic);
+static Evas_Object  *_e_fm2_icon_entry_widget_add(E_Fm2_Icon *ic);
 static void          _e_fm2_icon_entry_widget_del(E_Fm2_Icon *ic);
 static void          _e_fm2_icon_entry_widget_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void          _e_fm2_icon_entry_widget_accept(E_Fm2_Icon *ic);
 
-static E_Dialog *    _e_fm_retry_abort_dialog(int pid, const char *str);
+static E_Dialog     *_e_fm_retry_abort_dialog(int pid, const char *str);
 static void          _e_fm_retry_abort_delete_cb(void *obj);
 static void          _e_fm_retry_abort_retry_cb(void *data, E_Dialog *dialog);
 static void          _e_fm_retry_abort_abort_cb(void *data, E_Dialog *dialog);
 
-static E_Dialog *    _e_fm_overwrite_dialog(int pid, const char *str);
+static E_Dialog     *_e_fm_overwrite_dialog(int pid, const char *str);
 static void          _e_fm_overwrite_delete_cb(void *obj);
 static void          _e_fm_overwrite_no_cb(void *data, E_Dialog *dialog);
 static void          _e_fm_overwrite_no_all_cb(void *data, E_Dialog *dialog);
 static void          _e_fm_overwrite_yes_cb(void *data, E_Dialog *dialog);
 static void          _e_fm_overwrite_yes_all_cb(void *data, E_Dialog *dialog);
 
-static E_Dialog *    _e_fm_error_dialog(int pid, const char *str);
+static E_Dialog     *_e_fm_error_dialog(int pid, const char *str);
 static void          _e_fm_error_delete_cb(void *obj);
 static void          _e_fm_error_retry_cb(void *data, E_Dialog *dialog);
 static void          _e_fm_error_abort_cb(void *data, E_Dialog *dialog);
@@ -415,8 +415,8 @@ static void          _e_fm2_sel_rect_update(void *data);
 static inline void   _e_fm2_context_menu_append(Evas_Object *obj, const char *path, Eina_List *l, E_Menu *mn, E_Fm2_Icon *ic);
 static int           _e_fm2_context_list_sort(const void *data1, const void *data2);
 
-static char *        _e_fm_string_append_char(char *str, size_t *size, size_t *len, char c);
-static char *        _e_fm_string_append_quoted(char *str, size_t *size, size_t *len, const char *src);
+static char         *_e_fm_string_append_char(char *str, size_t *size, size_t *len, char c);
+static char         *_e_fm_string_append_quoted(char *str, size_t *size, size_t *len, const char *src);
 
 void                 _e_fm2_path_parent_set(Evas_Object *obj, const char *path);
 
@@ -510,8 +510,8 @@ _e_fm2_ext_is_desktop(const char *ext)
      return 0;
 
    ext++;
-   return ((strcasecmp(ext, "esktop") == 0) ||
-           (strcasecmp(ext, "irectory") == 0));
+   return (strcasecmp(ext, "esktop") == 0) ||
+          (strcasecmp(ext, "irectory") == 0);
 #endif
 }
 
@@ -526,7 +526,7 @@ _e_fm2_ext_is_imc(const char *ext)
    else
      return 0;
 #else
-   return (strcasecmp(ext, "imc") == 0);
+   return strcasecmp(ext, "imc") == 0;
 #endif
 }
 
@@ -534,14 +534,14 @@ static inline Eina_Bool
 _e_fm2_file_is_edje(const char *file)
 {
    const char *p = strrchr(file, '.');
-   return ((p) && (_e_fm2_ext_is_edje(p + 1)));
+   return (p) && (_e_fm2_ext_is_edje(p + 1));
 }
 
 static inline Eina_Bool
 _e_fm2_file_is_desktop(const char *file)
 {
    const char *p = strrchr(file, '.');
-   return ((p) && (_e_fm2_ext_is_desktop(p + 1)));
+   return (p) && (_e_fm2_ext_is_desktop(p + 1));
 }
 
 static inline char
@@ -5172,7 +5172,7 @@ _e_fm2_icon_sel_any(Evas_Object *obj)
 }
 
 static E_Fm2_Icon *
-_e_fm2_icon_next_find(Evas_Object *obj, int next, int match_func(E_Fm2_Icon *ic, void *data), void *data)
+_e_fm2_icon_next_find(Evas_Object *obj, int next, int (*match_func)(E_Fm2_Icon *ic, void *data), void *data)
 {
    E_Fm2_Smart_Data *sd;
    Eina_List *l;
@@ -5569,10 +5569,10 @@ static int
 _e_fm2_typebuf_match_func(E_Fm2_Icon *ic, void *data)
 {
    char *tb = data;
-   return (((ic->info.label) &&
-            (e_util_glob_case_match(ic->info.label, tb))) ||
-           ((ic->info.file) &&
-            (e_util_glob_case_match(ic->info.file, tb))));
+   return ((ic->info.label) &&
+           (e_util_glob_case_match(ic->info.label, tb))) ||
+          ((ic->info.file) &&
+           (e_util_glob_case_match(ic->info.file, tb)));
 }
 
 static Eina_Bool
@@ -7772,7 +7772,7 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
           {
              mi = e_menu_item_new(mn);
              e_menu_item_label_set(mi, _("Show Hidden Files"));
-             e_util_menu_item_theme_icon_set(mi,"view-refresh");
+             e_util_menu_item_theme_icon_set(mi, "view-refresh");
              e_menu_item_check_set(mi, 1);
              e_menu_item_toggle_set(mi, sd->show_hidden_files);
              e_menu_item_callback_set(mi, _e_fm2_toggle_hidden_files, sd);
@@ -8239,7 +8239,7 @@ _e_fm2_context_list_sort(const void *data1, const void *data2)
    if (!d1->label) return 1;
    d2 = data2;
    if (!d2->label) return -1;
-   return (strcmp(d1->label, d2->label));
+   return strcmp(d1->label, d2->label);
 }
 
 static void
