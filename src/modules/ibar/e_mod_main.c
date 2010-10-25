@@ -413,6 +413,15 @@ _ibar_resize_handle(IBar *b)
    e_box_freeze(b->o_box);
    EINA_LIST_FOREACH(b->icons, l, ic)
      {
+	if ((w > 0) && (h > 0))
+          {
+             int size;
+
+             size = MAX(w, h);
+	     /* TODO: Check icon padding */
+             if (ic->o_icon) e_util_desktop_icon_file_set(ic->o_icon, ic->app, size);
+             if (ic->o_icon2) e_util_desktop_icon_file_set(ic->o_icon2, ic->app, size);
+          }
 	e_box_pack_options_set(ic->o_holder,
 			       1, 1, /* fill */
 			       0, 0, /* expand */
@@ -589,7 +598,6 @@ _ibar_icon_free(IBar_Icon *ic)
 static void
 _ibar_icon_fill(IBar_Icon *ic)
 {
-   /* TODO: Correct icon size! */
    if (ic->o_icon) evas_object_del(ic->o_icon);
    ic->o_icon = e_util_desktop_icon_add(ic->app, 48, 
                                         evas_object_evas_get(ic->ibar->o_box));

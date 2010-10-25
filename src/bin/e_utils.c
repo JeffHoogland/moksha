@@ -978,11 +978,38 @@ e_util_icon_add(const char *path, Evas *evas)
    return o;
 }
 
+EAPI void
+e_util_icon_file_set(Evas_Object *icon, const char *path)
+{
+   const char *ext;
+
+   if (!path) return;
+   if (!ecore_file_exists(path)) return;
+
+   ext = strrchr(path, '.');
+   if (ext)
+     {
+	if (!strcmp(ext, ".edj"))
+	  e_icon_file_edje_set(icon, path, "icon");
+	else
+	  e_icon_file_set(icon, path);
+     }
+   else
+     e_icon_file_set(icon, path);
+}
+
 EAPI Evas_Object *
 e_util_desktop_icon_add(Efreet_Desktop *desktop, unsigned int size, Evas *evas)
 {
    if ((!desktop) || (!desktop->icon)) return NULL;
    return e_util_icon_theme_icon_add(desktop->icon, size, evas);
+}
+
+EAPI void
+e_util_desktop_icon_file_set(Evas_Object *icon, Efreet_Desktop *desktop, unsigned int size)
+{
+   if ((!desktop) || (!desktop->icon)) return;
+   return e_util_icon_theme_icon_file_set(icon, desktop->icon, size);
 }
 
 EAPI Evas_Object *
@@ -1004,6 +1031,27 @@ e_util_icon_theme_icon_add(const char *icon_name, unsigned int size, Evas *evas)
 	  }
      }
    return NULL;
+}
+
+EAPI void
+e_util_icon_theme_icon_file_set(Evas_Object *icon, const char *icon_name, unsigned int size)
+{
+   if (!icon_name) return;
+   if (icon_name[0] == '/')
+     {
+	e_util_icon_file_set(icon, icon_name);
+     }
+   else
+     {
+	char *path;
+
+	path = efreet_icon_path_find(e_config->icon_theme, icon_name, size);
+	if (path)
+	  {
+	     e_util_icon_file_set(icon, path);
+	     free(path);
+	  }
+     }
 }
 
 EAPI void
