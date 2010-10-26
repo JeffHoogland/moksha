@@ -5,7 +5,7 @@
 #include "evry_api.h"
 
 #define MOD_CONFIG_FILE_EPOCH 0x0005
-#define MOD_CONFIG_FILE_GENERATION 0x0001
+#define MOD_CONFIG_FILE_GENERATION 0x0002
 #define MOD_CONFIG_FILE_VERSION					\
   ((MOD_CONFIG_FILE_EPOCH << 16) | MOD_CONFIG_FILE_GENERATION)
 
@@ -29,10 +29,7 @@ struct _Evry_Window
 
   Eina_Bool request_selection;
   Eina_Bool plugin_dedicated;
-
   Eina_Bool visible;
-  Ecore_Timer *show_timer;
-  Ecore_Timer *hide_timer;
 
   Eina_List *handlers;
 
