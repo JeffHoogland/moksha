@@ -33261,7 +33261,6 @@ collections {
             signal: "e,state,list_show";
             source: "e";
             action: STATE_SET "visible" 0.0;
-            /* transition: DECELERATE 0.1; */
             target: "base";
          }
          program {
@@ -33277,9 +33276,6 @@ collections {
             signal: "e,state,entry_show";
             source: "e";
             action: STATE_SET "visible" 0.0;
-            transition: SINUSOIDAL 0.08;
-            /* target: "input_over1";
-             * target: "input_over2"; */
             target: "input_base";
          }
          program {
@@ -33288,8 +33284,6 @@ collections {
             source: "e";
             action: STATE_SET "default" 0.0;
             transition: SINUSOIDAL 0.08;
-            /* target: "input_over1";
-             * target: "input_over2"; */
             target: "input_base";
          }
          program {
