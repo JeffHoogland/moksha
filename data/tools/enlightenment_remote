@@ -36,6 +36,7 @@ OPTIONS:
   -desktop-bg-add OPT1 OPT2 OPT3 OPT4 OPT5 Add a desktop bg definition. OPT1 = container no. OPT2 = zone no. OPT3 = desk_x. OPT4 = desk_y. OPT5 = bg file path
   -desktop-bg-del OPT1 OPT2 OPT3 OPT4 Delete a desktop bg definition. OPT1 = container no. OPT2 = zone no. OPT3 = desk_x. OPT4 = desk_y.
   -desktop-bg-list List all current desktop bg definitions
+  -desktop-lock Lock the desktop
 
   -efm-open-dir OPT1 Open dir in OPT1 in EFileManager. Opens /home/$USER if no path is given or it doesn't exist 
 
@@ -191,7 +192,12 @@ ERCII(){
    dbus-send --print-reply=literal --dest=org.enlightenment.wm.service /org/enlightenment/wm/RemoteObject "$1" int32:"$2" int32:"$3"
 }
 
-
+#-------------------------------------------------------------------------------
+#   E Lock
+#-------------------------------------------------------------------------------
+er_lock(){
+   ERC org.enlightenment.wm.Desktop.Lock
+}
 
 #-------------------------------------------------------------------------------
 #   E Restart
@@ -383,6 +389,9 @@ case "$1" in
    -desks-get|-desktops-get)
       er_desktop_get
    ;;
+   -desktop-lock)
+      er_lock
+   ;;
    -desktop-show)
       er_desktop_show "$@"
    ;;
@@ -401,7 +410,6 @@ case "$1" in
    -efm-open-dir)
       er_efm_open_dir "$@"
    ;;
-
 
    # This entry needs to be always the last option of the list (*)
    -h|-help|--help|--h|*)
