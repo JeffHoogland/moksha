@@ -32,8 +32,6 @@ _browse(Evry_Plugin *plugin, const Evry_Item *item)
    pc = item->data;
    pp = pc->plugin;
 
-   GET_PLUGIN(p, item->plugin);
-
    if (pp->begin && (inst = pp->begin(pp, NULL)))
      {
 	if (!strcmp(plugin->name, "Plugins"))

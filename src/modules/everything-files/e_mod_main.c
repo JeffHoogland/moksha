@@ -349,7 +349,7 @@ _cache_mime_get(History_Types *ht, Evry_Item_File *file)
    History_Item *hi;
    Eina_List *l;
    
-   if (he = eina_hash_find(ht->types, file->path))
+   if ((he = eina_hash_find(ht->types, file->path)))
      {
 	EINA_LIST_FOREACH(he->items, l, hi)
 	  {
@@ -401,7 +401,7 @@ _scan_end_func(void *data)
    Data *d = data;
    Plugin *p = d->plugin;
    Evry_Item *item;
-   char *filename, *path, *mime;
+   char *filename, *path;
    Eina_List *l, *ll;
    History_Types *ht = NULL;
 

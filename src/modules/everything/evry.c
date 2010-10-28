@@ -135,7 +135,6 @@ Evry_Window *
 evry_show(E_Zone *zone, E_Zone_Edge edge, const char *params)
 {
    Evry_Window *win;
-   Ecore_X_Window input_window;
    Evry_Selector *sel;
 
    E_OBJECT_CHECK_RETURN(zone, 0);
@@ -701,7 +700,7 @@ _evry_cb_win_delete(E_Win *ewin)
 static void
 _evry_cb_win_move(E_Win *ewin)
 {
-   Evry_Window *win = ewin->data;
+   /* Evry_Window *win = ewin->data; */
    /* evas_object_resize(win->o_main, ewin->w, ewin->h); */
    /* if (win->input_window)
     *   ecore_x_window_move(win->input_window, win->ewin->x, win->ewin->y); */
@@ -846,11 +845,13 @@ _evry_window_new(E_Zone *zone, E_Zone_Edge edge)
    return win;
 }
 
+#if 0
 static void
 _evry_cb_drag_finished(E_Drag *drag, int dropped)
 {
    E_FREE(drag->data);
 }
+#endif
 
 static Eina_Bool
 _evry_cb_mouse(void *data, int type, void *event)
@@ -1499,9 +1500,8 @@ evry_state_push(Evry_Selector *sel, Eina_List *plugins)
 {
    Evry_State *s, *new_state;
    Eina_List *l;
-   Evry_Plugin *p, *pp;
+   Evry_Plugin *p;
    Evry_View *view = NULL;
-   int browse_aggregator = 0;
    Evry_Window *win = sel->win;
 
    s = sel->state;
@@ -1591,7 +1591,7 @@ evry_browse_item(Evry_Item *it)
 	     if ((pref) && (!strcmp(p->name, pref->name)))
 	       continue;
 
-	     if (pp = p->browse(p, it))
+	     if ((pp = p->browse(p, it)))
 	       plugins = eina_list_append(plugins, pp);
 	  }
      }
@@ -1885,7 +1885,6 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 #endif
    else if (ev->modifiers)
      {
-	E_Action *act;
 	Eina_List *l;
 	E_Config_Binding_Key *bind;
 	E_Binding_Modifier mod;

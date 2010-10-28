@@ -84,7 +84,6 @@ _thumb_gen(void *data, Evas_Object *obj, void *event_info)
 {
    Evas_Coord w, h;
    Item *it = data;
-   Smart_Data *sd = evas_object_smart_data_get(it->obj);
 
    if (!it->frame) return;
 
@@ -822,9 +821,7 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
    Smart_Data *sd = evas_object_smart_data_get(obj);
    double align = -1;
    int prev = -1;
-   int align_to = -1;
-   int cur_pos, new_pos;
-
+   
    if (sd->cur_item)
      {
 	prev = sd->cur_item->y / (1 + sd->cur_item->h);
@@ -1475,7 +1472,7 @@ _view_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 static void
 _view_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
-   Evas_Event_Mouse_Up *ev = event_info;
+   /* Evas_Event_Mouse_Up *ev = event_info; */
    Smart_Data *sd = evas_object_smart_data_get(data);
    if (!sd) return;
    sd->mouse_x = 0;

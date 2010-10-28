@@ -5,6 +5,7 @@ static Eina_List *actions = NULL;
 int
 evry_plugins_init(void)
 {
+   return 1;
 }
 
 void
@@ -122,7 +123,6 @@ evry_plugin_register(Evry_Plugin *p, int type, int priority)
    Eina_List *l;
    Plugin_Config *pc;
    Eina_List *conf[3];
-   int i = 0;
    int new_conf = 0;
 
    if (type < 0 || type > 2)

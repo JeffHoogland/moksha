@@ -19,7 +19,7 @@ static int
 _fetch(Evry_Plugin *plugin, const char *input)
 {
    Plugin *p = (Plugin *) plugin;
-   Evry_Plugin *pp, *pp2;
+   Evry_Plugin *pp;
    Evry_State *s;
    Eina_List *l, *ll, *lp = NULL;
    Evry_Item *it, *it2;
@@ -208,7 +208,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 		    evry_history_item_usage_set(it, input, context);
 
 		  if ((subj_sel) && (top_level) &&
-		      (!it->usage) && (inp_len < 2))
+		      (!it->usage) && (inp_len < plugin->config->min_query))
 		    continue;
 
 		  items = eina_list_append(items, it);

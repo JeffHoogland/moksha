@@ -232,9 +232,8 @@ _fill_list(Eina_List *plugins, Evas_Object *obj, int enabled __UNUSED__)
 static void
 _plugin_move(Plugin_Page *page, int dir)
 {
-   Evas_Object *list;
    int sel;
-   Eina_List *plugins, *l1, *l2;
+   Eina_List *l1, *l2;
 
    sel = e_widget_ilist_selected_get(page->list);
 
@@ -735,7 +734,7 @@ _cat_basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _cat_basic_create_widgets(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdata)
 {
-   Evas_Object *o, *of, *ob, *otb;
+   Evas_Object *ob, *otb;
 
    otb = e_widget_toolbook_add(e, 48 * e_scale, 48 * e_scale);
 

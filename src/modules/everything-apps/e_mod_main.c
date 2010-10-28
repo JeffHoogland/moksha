@@ -560,7 +560,7 @@ static Evry_Plugin *
 _begin_mime(Evry_Plugin *plugin, const Evry_Item *item)
 {
    Plugin *p = NULL;
-   Efreet_Desktop *d, *d2;
+   Efreet_Desktop *d;
    const char *mime;
    const char *path = NULL;
    Eina_List *l;

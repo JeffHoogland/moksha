@@ -19,7 +19,6 @@ static Ecore_Timer *cleanup_timer;
 
 static E_Config_DD *conf_edd = NULL;
 static E_Config_DD *plugin_conf_edd = NULL;
-static E_Config_DD *collection_conf_edd = NULL;
 
 Evry_Config *evry_conf = NULL;
 int _evry_events[NUM_EVRY_EVENTS];

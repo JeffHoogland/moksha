@@ -98,7 +98,7 @@ _gc_label(E_Gadcon_Client_Class *client_class)
 static Evas_Object *
 _gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas)
 {
-   Evas_Object *o;
+   /* Evas_Object *o; */
    /* char buf[4096];
     *
     * o = edje_object_add(evas);
@@ -139,9 +139,9 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
    if (ev->button == 1)
      {
 	Evas_Coord x, y, w, h;
-	int cx, cy, px, py, pw, ph;
+	int cx, cy, pw, ph;
 	Evry_Window *win;
-	int dir;
+
 
 	win = evry_show(e_util_zone_current_get(e_manager_current_get()), 0, "Start");
 	if (!win) return;
