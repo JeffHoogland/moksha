@@ -850,7 +850,7 @@ _e_randr_event_cb(void *data __UNUSED__, int type, void *ev)
            Ecore_X_Randr_Output          output;
            Ecore_X_Atom                  property;
            Ecore_X_Time                  time;
-           int                           state; // NewValue, Deleted
+           Ecore_X_Randr_Property_Change state;
            };
            */
      }
