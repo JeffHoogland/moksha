@@ -633,23 +633,24 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
 	EVRY_PLUGIN_INSTANCE(p, plugin);
 	p->directory = dir;
 	p->parent = EINA_FALSE;
+	p->min_query = 0;
 	_read_directory(p);
+	
+	return EVRY_PLUGIN(p);
      }
    else
      {
 	/* provide subject */
 	EVRY_PLUGIN_INSTANCE(p, plugin);
 	p->parent = EINA_FALSE;
-
-	/* if (_conf->show_homedir) */
 	p->directory = eina_stringshare_add(e_user_homedir_get());
-
+	p->min_query = plugin->config->min_query;
 	_read_directory(p);
 
 	return EVRY_PLUGIN(p);
      }
 
-   return EVRY_PLUGIN(p);
+   return NULL;
 }
 
 static void
@@ -812,9 +813,6 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
    if (input && !p->command)
      p->input = eina_stringshare_add(input);
-
-   if (!p->parent)
-     p->min_query = plugin->config->min_query;
 
    if ((p->command) || (!p->min_query) || (len >= p->min_query))
      _append_files(p);
