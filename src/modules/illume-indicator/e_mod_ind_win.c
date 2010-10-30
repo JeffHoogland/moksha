@@ -26,11 +26,13 @@ e_mod_ind_win_new(E_Zone *zone)
 {
    Ind_Win *iwin;
    Ecore_X_Window_State states[2];
+   Evas_Coord h = 0;
 
    /* create our new indicator window object */
    iwin = E_OBJECT_ALLOC(Ind_Win, IND_WIN_TYPE, _e_mod_ind_win_cb_free);
    if (!iwin) return NULL;
 
+   h = (il_ind_cfg->height * e_scale);
    iwin->zone = zone;
 
    /* create new window */
@@ -54,8 +56,7 @@ e_mod_ind_win_new(E_Zone *zone)
    ecore_x_icccm_hints_set(iwin->win->evas_win, 0, 0, 0, 0, 0, 0, 0);
 
    /* create the popup */
-   iwin->popup = e_popup_new(zone, 0, 0, zone->w, 
-                             (il_ind_cfg->height * e_scale));
+   iwin->popup = e_popup_new(zone, 0, 0, zone->w, h);
    e_popup_name_set(iwin->popup, "indicator");
    e_popup_layer_set(iwin->popup, 200);
 
@@ -92,8 +93,7 @@ e_mod_ind_win_new(E_Zone *zone)
    /* create our gadget container */
    iwin->gadcon = e_gadcon_swallowed_new("illume-indicator", zone->id, 
                                          iwin->o_base, "e.swallow.content");
-   edje_extern_object_min_size_set(iwin->gadcon->o_container, 
-                                   zone->w, (il_ind_cfg->height * e_scale));
+   edje_extern_object_min_size_set(iwin->gadcon->o_container, zone->w, h);
    e_gadcon_min_size_request_callback_set(iwin->gadcon, 
                                           _e_mod_ind_win_cb_min_size_request, 
                                           iwin);
@@ -106,7 +106,8 @@ e_mod_ind_win_new(E_Zone *zone)
    e_gadcon_ecore_evas_set(iwin->gadcon, iwin->win->ecore_evas);
 
    e_gadcon_util_menu_attach_func_set(iwin->gadcon, 
-                                      _e_mod_ind_win_cb_menu_items_append, iwin);
+                                      _e_mod_ind_win_cb_menu_items_append, 
+                                      iwin);
    e_gadcon_populate(iwin->gadcon);
 
    /* hook into property change so we can adjust w/ e_scale */
@@ -124,15 +125,12 @@ e_mod_ind_win_new(E_Zone *zone)
                                               iwin));
 
    /* set minimum size of this window & popup */
-   e_win_size_min_set(iwin->win, zone->w, (il_ind_cfg->height * e_scale));
-   ecore_evas_size_min_set(iwin->popup->ecore_evas, zone->w, 
-                           (il_ind_cfg->height * e_scale));
+   e_win_size_min_set(iwin->win, zone->w, h);
+   ecore_evas_size_min_set(iwin->popup->ecore_evas, zone->w, h);
 
    /* position and resize this window */
-   e_win_move_resize(iwin->win, zone->x, zone->y, zone->w, 
-                     (il_ind_cfg->height * e_scale));
-   e_popup_move_resize(iwin->popup, zone->x, zone->y, zone->w, 
-                     (il_ind_cfg->height * e_scale));
+   e_win_move_resize(iwin->win, zone->x, zone->y, zone->w, h);
+   e_popup_move_resize(iwin->popup, zone->x, zone->y, zone->w, h);
 
    /* show the window */
    e_win_show(iwin->win);
@@ -148,8 +146,7 @@ e_mod_ind_win_new(E_Zone *zone)
 
    /* tell conformant apps our position and size */
    ecore_x_e_illume_indicator_geometry_set(zone->black_win, zone->x, zone->y, 
-                                           zone->w, 
-                                           (il_ind_cfg->height * e_scale));
+                                           zone->w, h);
 
    return iwin;
 }
@@ -201,6 +198,7 @@ _e_mod_ind_win_cb_win_prop(void *data, int type __UNUSED__, void *event)
 {
    Ind_Win *iwin;
    Ecore_X_Event_Window_Property *ev;
+   Evas_Coord h = 0;
 
    ev = event;
 
@@ -209,10 +207,11 @@ _e_mod_ind_win_cb_win_prop(void *data, int type __UNUSED__, void *event)
      return ECORE_CALLBACK_PASS_ON;
    if (ev->atom != ATM_ENLIGHTENMENT_SCALE) return ECORE_CALLBACK_PASS_ON;
 
+   h = (il_ind_cfg->height * e_scale);
+
    /* set minimum size of this window */
-   e_win_size_min_set(iwin->win, iwin->zone->w, (il_ind_cfg->height * e_scale));
-   ecore_evas_size_min_set(iwin->popup->ecore_evas, iwin->zone->w, 
-                           (il_ind_cfg->height * e_scale));
+   e_win_size_min_set(iwin->win, iwin->zone->w, h);
+   ecore_evas_size_min_set(iwin->popup->ecore_evas, iwin->zone->w, h);
 
    /* NB: Not sure why, but we need to tell this border to fetch icccm 
     * size position hints now :( (NOTE: This was not needed a few days ago) 
@@ -220,13 +219,13 @@ _e_mod_ind_win_cb_win_prop(void *data, int type __UNUSED__, void *event)
    iwin->win->border->client.icccm.fetch.size_pos_hints = 1;
 
    /* resize this window */
-   e_win_resize(iwin->win, iwin->zone->w, (il_ind_cfg->height * e_scale));
-   e_popup_resize(iwin->popup, iwin->zone->w, (il_ind_cfg->height * e_scale));
+   e_win_resize(iwin->win, iwin->zone->w, h);
+   e_popup_resize(iwin->popup, iwin->zone->w, h);
 
    /* tell conformant apps our position and size */
    ecore_x_e_illume_indicator_geometry_set(iwin->zone->black_win, 
                                            iwin->win->x, iwin->win->y, 
-                                           iwin->win->w, (il_ind_cfg->height * e_scale));
+                                           iwin->win->w, h);
 
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -236,15 +235,17 @@ _e_mod_ind_win_cb_zone_resize(void *data, int type __UNUSED__, void *event)
 {
    Ind_Win *iwin;
    E_Event_Zone_Move_Resize *ev;
+   Evas_Coord h = 0;
 
    ev = event;
    if (!(iwin = data)) return ECORE_CALLBACK_PASS_ON;
    if (ev->zone != iwin->zone) return ECORE_CALLBACK_PASS_ON;
 
+   h = (il_ind_cfg->height * e_scale);
+
    /* set minimum size of this window to match zone size */
-   e_win_size_min_set(iwin->win, ev->zone->w, (il_ind_cfg->height * e_scale));
-   ecore_evas_size_min_set(iwin->popup->ecore_evas, ev->zone->w, 
-                           (il_ind_cfg->height * e_scale));
+   e_win_size_min_set(iwin->win, ev->zone->w, h);
+   ecore_evas_size_min_set(iwin->popup->ecore_evas, ev->zone->w, h);
 
    return ECORE_CALLBACK_PASS_ON;
 }
