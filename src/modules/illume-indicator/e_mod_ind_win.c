@@ -53,6 +53,12 @@ e_mod_ind_win_new(E_Zone *zone)
    /* set this window to not accept or take focus */
    ecore_x_icccm_hints_set(iwin->win->evas_win, 0, 0, 0, 0, 0, 0, 0);
 
+   /* create the popup */
+   iwin->popup = e_popup_new(zone, 0, 0, zone->w, 
+                             (il_ind_cfg->height * e_scale));
+   e_popup_name_set(iwin->popup, "indicator");
+   e_popup_layer_set(iwin->popup, 200);
+
    /* create our event rectangle */
    iwin->o_event = evas_object_rectangle_add(iwin->win->evas);
    evas_object_color_set(iwin->o_event, 0, 0, 0, 0);
@@ -80,6 +86,8 @@ e_mod_ind_win_new(E_Zone *zone)
      }
    evas_object_move(iwin->o_base, 0, 0);
    evas_object_show(iwin->o_base);
+
+   e_popup_edje_bg_object_set(iwin->popup, iwin->o_base);
 
    /* create our gadget container */
    iwin->gadcon = e_gadcon_swallowed_new("illume-indicator", zone->id, 
@@ -115,15 +123,20 @@ e_mod_ind_win_new(E_Zone *zone)
                                               _e_mod_ind_win_cb_zone_resize, 
                                               iwin));
 
-   /* set minimum size of this window */
+   /* set minimum size of this window & popup */
    e_win_size_min_set(iwin->win, zone->w, (il_ind_cfg->height * e_scale));
+   ecore_evas_size_min_set(iwin->popup->ecore_evas, zone->w, 
+                           (il_ind_cfg->height * e_scale));
 
    /* position and resize this window */
    e_win_move_resize(iwin->win, zone->x, zone->y, zone->w, 
                      (il_ind_cfg->height * e_scale));
+   e_popup_move_resize(iwin->popup, zone->x, zone->y, zone->w, 
+                     (il_ind_cfg->height * e_scale));
 
    /* show the window */
    e_win_show(iwin->win);
+   e_popup_show(iwin->popup);
 
    /* set this window on proper zone */
    e_border_zone_set(iwin->win->border, zone);
@@ -172,6 +185,9 @@ _e_mod_ind_win_cb_free(Ind_Win *iwin)
    /* tell conformant apps our position and size */
    ecore_x_e_illume_indicator_geometry_set(iwin->zone->black_win, 0, 0, 0, 0);
 
+   if (iwin->popup) e_object_del(E_OBJECT(iwin->popup));
+   iwin->popup = NULL;
+
    /* delete the window */
    if (iwin->win) e_object_del(E_OBJECT(iwin->win));
    iwin->win = NULL;
@@ -195,6 +211,8 @@ _e_mod_ind_win_cb_win_prop(void *data, int type __UNUSED__, void *event)
 
    /* set minimum size of this window */
    e_win_size_min_set(iwin->win, iwin->zone->w, (il_ind_cfg->height * e_scale));
+   ecore_evas_size_min_set(iwin->popup->ecore_evas, iwin->zone->w, 
+                           (il_ind_cfg->height * e_scale));
 
    /* NB: Not sure why, but we need to tell this border to fetch icccm 
     * size position hints now :( (NOTE: This was not needed a few days ago) 
@@ -203,6 +221,7 @@ _e_mod_ind_win_cb_win_prop(void *data, int type __UNUSED__, void *event)
 
    /* resize this window */
    e_win_resize(iwin->win, iwin->zone->w, (il_ind_cfg->height * e_scale));
+   e_popup_resize(iwin->popup, iwin->zone->w, (il_ind_cfg->height * e_scale));
 
    /* tell conformant apps our position and size */
    ecore_x_e_illume_indicator_geometry_set(iwin->zone->black_win, 
@@ -224,6 +243,8 @@ _e_mod_ind_win_cb_zone_resize(void *data, int type __UNUSED__, void *event)
 
    /* set minimum size of this window to match zone size */
    e_win_size_min_set(iwin->win, ev->zone->w, (il_ind_cfg->height * e_scale));
+   ecore_evas_size_min_set(iwin->popup->ecore_evas, ev->zone->w, 
+                           (il_ind_cfg->height * e_scale));
 
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -234,6 +255,7 @@ _e_mod_ind_win_cb_resize(E_Win *win)
    Ind_Win *iwin;
 
    if (!(iwin = win->data)) return;
+   if (iwin->popup) e_popup_resize(iwin->popup, win->w, win->h);
    if (iwin->o_event) evas_object_resize(iwin->o_event, win->w, win->h);
    if (iwin->o_base) evas_object_resize(iwin->o_base, win->w, win->h);
    if (iwin->gadcon->o_container)
@@ -400,6 +422,7 @@ _e_mod_ind_win_cb_mouse_move(void *data, Evas *evas __UNUSED__, Evas_Object *obj
              bd->y = ny;
              bd->changes.pos = 1;
              bd->changed = 1;
+             e_popup_move(iwin->popup, iwin->popup->x, ny);
           }
      }
 }

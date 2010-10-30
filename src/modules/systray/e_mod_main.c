@@ -904,10 +904,12 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 	E_FREE(inst);
 	return NULL;
      }
+
    if ((gc->shelf) && (gc->shelf->popup))
      inst->win.parent = gc->shelf->popup->evas_win;
    else
-     inst->win.parent = inst->con->bg_win;
+     inst->win.parent = (Ecore_X_Window) 
+       ecore_evas_window_get(ecore_evas_ecore_evas_get(gc->evas));
 
    inst->win.base = None;
    inst->win.selection = None;

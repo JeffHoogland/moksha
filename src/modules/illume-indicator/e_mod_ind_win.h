@@ -14,6 +14,7 @@ struct _Ind_Win
    Eina_List *hdls;
 
    E_Win *win;
+   E_Popup *popup;
    Evas_Object *o_base, *o_event;
    E_Gadcon *gadcon;
    E_Menu *menu;

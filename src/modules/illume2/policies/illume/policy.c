@@ -1266,9 +1266,9 @@ _policy_zone_layout(E_Zone *zone)
    Eina_List *l;
    E_Border *bd;
 
-//   printf("Zone Layout: %d\n", zone->id);
-
    if (!zone) return;
+
+//   printf("Zone Layout: %d\n", zone->id);
 
    /* get the config for this zone */
    cz = e_illume_zone_config_get(zone->id);

@@ -97,9 +97,9 @@ e_illume_border_is_indicator(E_Border *bd)
      {
         const char *title;
 
-        title = e_border_name_get(bd);
-        if (!strcmp(title, _e_illume_cfg->policy.indicator.title))
-          return EINA_TRUE;
+        if ((title = e_border_name_get(bd)))
+          if (!strcmp(title, _e_illume_cfg->policy.indicator.title))
+            return EINA_TRUE;
      }
 
    /* return a fallback */
@@ -156,9 +156,9 @@ e_illume_border_is_softkey(E_Border *bd)
      {
         const char *title;
 
-        title = e_border_name_get(bd);
-        if (!strcmp(title, _e_illume_cfg->policy.softkey.title))
-          return EINA_TRUE;
+        if ((title = e_border_name_get(bd)))
+          if (!strcmp(title, _e_illume_cfg->policy.softkey.title))
+            return EINA_TRUE;
      }
 
    /* return a fallback */
@@ -214,9 +214,9 @@ e_illume_border_is_keyboard(E_Border *bd)
      {
         const char *title;
 
-        title = e_border_name_get(bd);
-        if (!strcmp(title, _e_illume_cfg->policy.vkbd.title))
-          return EINA_TRUE;
+        if ((title = e_border_name_get(bd)))
+          if (!strcmp(title, _e_illume_cfg->policy.vkbd.title))
+            return EINA_TRUE;
      }
 
    /* return a fallback */
@@ -268,9 +268,9 @@ e_illume_border_is_home(E_Border *bd)
      {
         const char *title;
 
-        title = e_border_name_get(bd);
-        if (!strcmp(title, _e_illume_cfg->policy.home.title))
-          return EINA_TRUE;
+        if ((title = e_border_name_get(bd)))
+          if (!strcmp(title, _e_illume_cfg->policy.home.title))
+            return EINA_TRUE;
      }
 
    /* return a fallback */
