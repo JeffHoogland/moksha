@@ -898,12 +898,14 @@ _e_fm_main_dbus_volume_mount(E_Volume *v)
    const char *mount_point;
    Eina_List *opt = NULL;
 
-   if (!v || v->guard || !v->mount_point || strncmp(v->mount_point, "/media/", 7))
+   if ((!v) || (v->guard) || (!v->mount_point) || 
+       (strncmp(v->mount_point, "/media/", 7)))
      return;
 
    mount_point = v->mount_point + 7;
 //   printf("mount %s %s [fs type = %s]\n", v->udi, v->mount_point, v->fstype);
 
+  // for vfat and ntfs we want the uid mapped to the user mounting, if we can
    if ((!strcmp(v->fstype, "vfat")) ||
        (!strcmp(v->fstype, "ntfs"))
       )
@@ -912,6 +914,9 @@ _e_fm_main_dbus_volume_mount(E_Volume *v)
         opt = eina_list_append(opt, buf);
      }
    
+  // force utf8 as the encoding - e only likes/handles utf8. its the
+  // pseudo-standard these days anyway for "linux" for intl text to work
+  // everywhere. problem is some fs's use differing options
    if ((!strcmp(v->fstype, "vfat")) || 
        (!strcmp(v->fstype, "ntfs")) ||
        (!strcmp(v->fstype, "iso9660"))
@@ -921,17 +926,19 @@ _e_fm_main_dbus_volume_mount(E_Volume *v)
         opt = eina_list_append(opt, buf2);
      }
    else if ((!strcmp(v->fstype, "fat")) || 
-            (!strcmp(v->fstype, "jfs")) 
-//            (!strcmp(v->fstype, "udf"))
+            (!strcmp(v->fstype, "jfs")) ||
+            (!strcmp(v->fstype, "udf"))
             )
      {
         snprintf(buf2, sizeof(buf2), "iocharset=utf8");
         opt = eina_list_append(opt, buf2);
      }
 
-   v->guard = ecore_timer_add(E_FM_MOUNT_TIMEOUT, _e_fm_main_dbus_vol_mount_timeout, v);
+   v->guard = ecore_timer_add(E_FM_MOUNT_TIMEOUT, 
+                              _e_fm_main_dbus_vol_mount_timeout, v);
    v->op = e_hal_device_volume_mount(_e_fm_main_dbus_conn, v->udi, mount_point,
-                                     v->fstype, opt, _e_fm_main_dbus_cb_vol_mounted, v);
+                                     v->fstype, opt, 
+                                     _e_fm_main_dbus_cb_vol_mounted, v);
    eina_list_free(opt);
 }
 
