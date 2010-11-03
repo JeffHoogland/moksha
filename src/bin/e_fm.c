@@ -917,8 +917,8 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
         sd->config->view.single_click = EINA_FALSE;
         sd->config->view.single_click_delay = EINA_FALSE;
         sd->config->view.no_subdir_jump = EINA_FALSE;
-        sd->config->icon.icon.w = 28;
-        sd->config->icon.icon.h = 28;
+        sd->config->icon.icon.w = 128;
+        sd->config->icon.icon.h = 128;
         sd->config->icon.list.w = 24;
         sd->config->icon.list.h = 24;
         sd->config->icon.fixed.w = EINA_TRUE;
