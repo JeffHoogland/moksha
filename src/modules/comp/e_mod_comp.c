@@ -2034,10 +2034,6 @@ _e_mod_comp_win_lower(E_Comp_Win *cw)
 static void
 _e_mod_comp_win_configure(E_Comp_Win *cw, int x, int y, int w, int h, int border)
 {
-   Eina_List *l;
-   Evas_Object *o;
-   Eina_Bool moved = 0;
-   
    if (!cw->visible)
      {
         cw->hidden.x = x;
@@ -2052,7 +2048,6 @@ _e_mod_comp_win_configure(E_Comp_Win *cw, int x, int y, int w, int h, int border
              cw->x = x;
              cw->y = y;
              evas_object_move(cw->shobj, cw->x, cw->y);
-             moved = 1;
           }
         cw->hidden.x = x;
         cw->hidden.y = y;
@@ -2082,9 +2077,9 @@ _e_mod_comp_win_configure(E_Comp_Win *cw, int x, int y, int w, int h, int border
    if ((cw->input_only) || (cw->invalid)) return;
    _e_mod_comp_win_render_queue(cw);
    cw->pending_count++;
-   e_manager_comp_event_src_config_send
-      (cw->c->man, (E_Manager_Comp_Source *)cw,
-          _e_mod_comp_cb_pending_after, cw->c);
+   e_manager_comp_event_src_config_send(cw->c->man, 
+                                        (E_Manager_Comp_Source *)cw,
+                                        _e_mod_comp_cb_pending_after, cw->c);
 }
 
 static void
