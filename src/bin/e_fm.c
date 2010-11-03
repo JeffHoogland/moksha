@@ -1180,8 +1180,8 @@ _e_fm2_dir_load_props(E_Fm2_Smart_Data *sd)
      }
    else
      {
-        sd->pos.x = EINA_FALSE;
-        sd->pos.y = EINA_FALSE;
+        sd->pos.x = 0;
+        sd->pos.y = 0;
      }
 
    if (!(sd->view_flags & E_FM2_VIEW_INHERIT_DIR_CUSTOM))
@@ -3913,8 +3913,8 @@ _e_fm2_icons_place_icon(E_Fm2_Icon *ic)
    Eina_List *l;
    E_Fm2_Icon *ic2;
 
-   ic->x = EINA_FALSE;
-   ic->y = EINA_FALSE;
+   ic->x = 0;
+   ic->y = 0;
    ic->saved_pos = EINA_TRUE;
    /* ### BLAH ### */
 //   if (!_e_fm2_icons_icon_overlaps(ic)) return;
@@ -7104,8 +7104,8 @@ _e_fm2_cb_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, 
 
    sd = data;
    sd->selecting = EINA_FALSE;
-   sd->selrect.ox = EINA_FALSE;
-   sd->selrect.oy = EINA_FALSE;
+   sd->selrect.ox = 0;
+   sd->selrect.oy = 0;
    evas_object_hide(sd->sel_rect);
 }
 
@@ -7125,8 +7125,8 @@ _e_fm2_cb_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__
         if (sd->selecting)
           {
              sd->selecting = EINA_FALSE;
-             sd->selrect.ox = EINA_FALSE;
-             sd->selrect.oy = EINA_FALSE;
+             sd->selrect.ox = 0;
+             sd->selrect.oy = 0;
              evas_object_hide(sd->sel_rect);
           }
         return;
