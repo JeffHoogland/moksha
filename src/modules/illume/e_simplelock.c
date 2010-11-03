@@ -2,14 +2,14 @@
 #include "e_simplelock.h"
 
 /**************************** private data ******************************/
-typedef struct _E_Simplelock_Data	      E_Simplelock_Data;
+typedef struct _E_Simplelock_Data E_Simplelock_Data;
 
 struct _E_Simplelock_Data
 {
-   E_Popup        *popup;
-   Evas_Object    *base_obj;
-   Ecore_X_Window  win;
-   E_Zone         *zone;
+   E_Popup *popup;
+   Evas_Object *base_obj;
+   Ecore_X_Window win;
+   E_Zone *zone;
 };
 
 static void _e_action_simplelock_cb(E_Object *obj, const char *params);
@@ -18,15 +18,14 @@ static Eina_Bool _e_simplelock_cb_key_up(void *data, int type, void *event);
 
 static Evas_Object *_theme_obj_new(Evas *e, const char *custom_dir, const char *group);
 
-static E_Module       *mod = NULL;
+static E_Module *mod = NULL;
 
-static Eina_List      *locks = NULL;
-static Ecore_X_Window  grab_win;
-static Eina_List      *handlers = NULL;
+static Eina_List *locks = NULL;
+static Ecore_X_Window grab_win;
+static Eina_List *handlers = NULL;
 
-/***********************************************************************/
 static void
-_e_action_simplelock_cb(E_Object *obj, const char *params)
+_e_action_simplelock_cb(E_Object *obj __UNUSED__, const char *params __UNUSED__)
 {
    if (locks)
      e_simplelock_hide();
@@ -35,7 +34,7 @@ _e_action_simplelock_cb(E_Object *obj, const char *params)
 }
 
 static Eina_Bool
-_e_simplelock_cb_key_down(void *data, int type, void *event)
+_e_simplelock_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Event_Key *ev;
    E_Action *act;
@@ -71,7 +70,7 @@ _e_simplelock_cb_key_down(void *data, int type, void *event)
 }
 
 static Eina_Bool
-_e_simplelock_cb_key_up(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_simplelock_cb_key_up(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Event_Key *ev;
       
@@ -81,7 +80,7 @@ _e_simplelock_cb_key_up(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_simplelock_cb_zone_move_resize(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_simplelock_cb_zone_move_resize(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    E_Event_Zone_Move_Resize *ev;
    Eina_List *l;
@@ -146,7 +145,7 @@ e_simplelock_shutdown(void)
 EAPI int
 e_simplelock_show(void)
 {
-   Eina_List	     *managers, *l, *l2, *l3;
+   Eina_List *l, *l2, *l3;
 
    if (locks) return 1;
    for (l = e_manager_list(); l; l = l->next)
@@ -208,13 +207,13 @@ e_simplelock_show(void)
      }
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
-      (ECORE_EVENT_KEY_DOWN, _e_simplelock_cb_key_down, NULL));
+         (ECORE_EVENT_KEY_DOWN, _e_simplelock_cb_key_down, NULL));
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
-      (ECORE_EVENT_KEY_UP, _e_simplelock_cb_key_up, NULL));
+         (ECORE_EVENT_KEY_UP, _e_simplelock_cb_key_up, NULL));
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
-      (E_EVENT_ZONE_MOVE_RESIZE, _e_simplelock_cb_zone_move_resize, NULL));
+         (E_EVENT_ZONE_MOVE_RESIZE, _e_simplelock_cb_zone_move_resize, NULL));
    return 1;
 }
 

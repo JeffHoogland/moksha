@@ -5,7 +5,7 @@
 static Evas_Object *_theme_obj_new(Evas *e, const char *custom_dir, const char *group);
 
 static void
-_e_flaunch_cb_button_select(void *data, Evas_Object *obj, const char *emission, const char *source)
+_e_flaunch_cb_button_select(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    E_Flaunch_App *fla;
    
@@ -93,7 +93,6 @@ _e_flaunch_apps_clear(E_Flaunch *fl)
 static void
 _e_flaunch_apps_populate(E_Flaunch *fl)
 {
-   E_Flaunch_App *fla;
    Eina_List *bar_desktops;
    Eina_List *l;
    int num = 0, max, count;
@@ -145,7 +144,7 @@ _e_flaunch_apps_populate(E_Flaunch *fl)
 }
 
 static void
-_e_fluanch_cb_home_button(void *data)
+_e_fluanch_cb_home_button(void *data __UNUSED__)
 {
    printf("FIXME: this 'start' button has no defined behavior\n");
 }
@@ -167,7 +166,7 @@ _e_flaunch_free(E_Flaunch *fl)
 }
 
 static Eina_Bool
-_e_flaunch_cb_zone_move_resize(void *data, __UNUSED__ int type, void *event)
+_e_flaunch_cb_zone_move_resize(void *data, int type __UNUSED__, void *event)
 {       
    E_Event_Zone_Move_Resize *ev;
    E_Flaunch *fl;
@@ -195,13 +194,14 @@ _e_flaunch_cb_delayed_repopulate(void *data)
 }
 
 static Eina_Bool
-_e_flaunch_cb_cache_update(void *data, __UNUSED__ int type, void *event)
+_e_flaunch_cb_cache_update(void *data, int type __UNUSED__, void *event __UNUSED__)
 {
    E_Flaunch *fl;
    
    fl = data;
    if (fl->repopulate_timer) ecore_timer_del(fl->repopulate_timer);
-   fl->repopulate_timer = ecore_timer_add(0.5, _e_flaunch_cb_delayed_repopulate, fl);
+   fl->repopulate_timer = 
+     ecore_timer_add(0.5, _e_flaunch_cb_delayed_repopulate, fl);
    return ECORE_CALLBACK_PASS_ON;
 }
 

@@ -9,18 +9,21 @@ struct _Data
 {
    Evas_Object *o_frame;
    Evas_Object *o_ilist;
-   struct {
-      void (*func) (void *data, E_Border *bd);
-      void *data;
-   } select;
-   struct {
-      Eina_List *prepend;
-      Eina_List *append;
-      unsigned char changed : 1;
-   } special;
-   struct {
-      Evas_Coord w, h;
-   } optimal_size;
+   struct 
+     {
+        void (*func) (void *data, E_Border *bd);
+        void *data;
+     } select;
+   struct 
+     {
+        Eina_List *prepend;
+        Eina_List *append;
+        unsigned char changed : 1;
+     } special;
+   struct 
+     {
+        Evas_Coord w, h;
+     } optimal_size;
    Eina_List *borders;
    Eina_List *labels;
 };
@@ -57,12 +60,30 @@ static Eina_List *winilists = NULL;
 EAPI int
 e_winilist_init(void)
 {
-   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_ADD, _cb_border_add, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_REMOVE, _cb_border_remove, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_SHOW, _cb_border_show, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_HIDE, _cb_border_hide, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_PROPERTY, _cb_border_property, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_DESK_SHOW, _cb_desk_show, NULL));
+   handlers = 
+     eina_list_append(handlers, 
+                      ecore_event_handler_add(E_EVENT_BORDER_ADD, 
+                                              _cb_border_add, NULL));
+   handlers = 
+     eina_list_append(handlers, 
+                      ecore_event_handler_add(E_EVENT_BORDER_REMOVE, 
+                                              _cb_border_remove, NULL));
+   handlers = 
+     eina_list_append(handlers, 
+                      ecore_event_handler_add(E_EVENT_BORDER_SHOW, 
+                                              _cb_border_show, NULL));
+   handlers = 
+     eina_list_append(handlers, 
+                      ecore_event_handler_add(E_EVENT_BORDER_HIDE, 
+                                              _cb_border_hide, NULL));
+   handlers = 
+     eina_list_append(handlers, 
+                      ecore_event_handler_add(E_EVENT_BORDER_PROPERTY, 
+                                              _cb_border_property, NULL));
+   handlers = 
+     eina_list_append(handlers, 
+                      ecore_event_handler_add(E_EVENT_DESK_SHOW, 
+                                              _cb_desk_show, NULL));
    return 1;
 }
 
@@ -91,9 +112,11 @@ e_winilist_add(Evas *e)
    evas_object_show(d->o_ilist);
    
    winilists = eina_list_append(winilists, d);
-   evas_object_event_callback_add(d->o_frame, EVAS_CALLBACK_DEL, _cb_object_del, NULL);
-   evas_object_event_callback_add(d->o_frame, EVAS_CALLBACK_RESIZE, _cb_object_resize, NULL);
-   
+   evas_object_event_callback_add(d->o_frame, EVAS_CALLBACK_DEL, 
+                                  _cb_object_del, NULL);
+   evas_object_event_callback_add(d->o_frame, EVAS_CALLBACK_RESIZE, 
+                                  _cb_object_resize, NULL);
+
    _refill(d);
    
    return d->o_frame;
@@ -183,7 +206,7 @@ _cb_item_sel(void *data, void *data2)
 }
 
 static void
-_cb_special_sel(void *data, void *data2)
+_cb_special_sel(void *data, void *data2 __UNUSED__)
 {
    Special *s;
    
@@ -195,7 +218,7 @@ _cb_special_sel(void *data, void *data2)
 }
 
 static void
-_cb_object_del(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_cb_object_del(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
 {
    Data *d;
    
@@ -256,7 +279,7 @@ _cb_object_del(void *data, Evas *e, Evas_Object *obj, void *event_info)
 }
 
 static void
-_cb_object_resize(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_cb_object_resize(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
 {
    Data *d;
    Evas_Coord lw, lh, vw, vh;
@@ -275,21 +298,21 @@ _refill(Data *d)
 {
    Evas_Coord w, h, lw, lh, vw, vh;
    Eina_List *borders, *l, *l2, *l3;
-   
+
    borders = e_border_client_list();
    if (!d->special.changed)
      {
 	int changed = 0;
-	
+
 	if ((borders) && (d->borders))
 	  {
 	     Eina_List *tmp = NULL;
-	     
+
 	     changed = 0;
 	     for (l = borders; l; l = l->next)
 	       {
 		  E_Border *bd;
-		  
+
 		  bd = l->data;
 		  if (e_object_is_del(E_OBJECT(bd))) continue;
 		  if ((!bd->client.icccm.accepts_focus) &&
@@ -319,7 +342,7 @@ _refill(Data *d)
 			 {
 			    E_Border *bd, *bd2;
 			    const char *title;
-			    
+
 			    bd = l->data;
 			    bd2 = l2->data;
 			    if (bd != bd2)
@@ -356,13 +379,13 @@ _refill(Data *d)
 	eina_stringshare_del(d->labels->data);
 	d->labels = eina_list_remove_list(d->labels, d->labels);
      }
-   
+
    e_ilist_freeze(d->o_ilist);
    e_ilist_clear(d->o_ilist);
    for (l = d->special.prepend; l; l = l->next)
      {
 	Special *s;
-	
+
 	s = l->data;
 	e_ilist_append(d->o_ilist, s->icon, NULL, s->label, 0, _cb_special_sel, NULL,
 		       s, NULL);
@@ -371,7 +394,7 @@ _refill(Data *d)
      {
 	E_Border *bd;
 	const char *title;
-	
+
 	bd = l->data;
 	if (e_object_is_del(E_OBJECT(bd))) continue;
 	if ((!bd->client.icccm.accepts_focus) &&
@@ -380,7 +403,7 @@ _refill(Data *d)
 	if (bd->user_skip_winlist) continue;
 	if ((!bd->sticky) && 
 	    (bd->desk != e_desk_current_get(bd->zone))) continue;
-	
+
 	title = "???";
 	if (bd->client.netwm.name) title = bd->client.netwm.name;
 	else if (bd->client.icccm.title) title = bd->client.icccm.title;
@@ -399,13 +422,13 @@ _refill(Data *d)
 	e_ilist_append(d->o_ilist, s->icon, NULL, s->label, 0, _cb_special_sel, NULL,
 		       s, NULL);
      }
-   
+
    e_ilist_thaw(d->o_ilist);
-   
+
    /* FIXME: figure out optimal size */
    e_ilist_size_min_get(d->o_ilist, &lw, &lh);
    if (lh < (120 * e_scale)) lh = 120 * e_scale;
-   printf("%i\n", lh);
+//   printf("%i\n", lh);
    e_scrollframe_child_viewport_size_get(d->o_frame, &vw, &vh);
    evas_object_geometry_get(d->o_frame, NULL, NULL, &w, &h);
    evas_object_resize(d->o_ilist, vw, lh);
@@ -415,55 +438,55 @@ _refill(Data *d)
 }
 
 static Eina_Bool
-_cb_border_add(__UNUSED__ void *data, __UNUSED__ int ev_type, __UNUSED__ void *event)
+_cb_border_add(void *data __UNUSED__, int ev_type __UNUSED__, void *event __UNUSED__)
 {
    Eina_List *l;
-	
+
    for (l = winilists; l; l = l->next) _refill(l->data);
    return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool
-_cb_border_remove(__UNUSED__ void *data, __UNUSED__ int ev_type, __UNUSED__ void *event)
+_cb_border_remove(void *data __UNUSED__, int ev_type __UNUSED__, void *event __UNUSED__)
 {
    Eina_List *l;
-	
+
    for (l = winilists; l; l = l->next) _refill(l->data);
    return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool
-_cb_border_show(__UNUSED__ void *data, __UNUSED__ int ev_type, __UNUSED__ void *event)
+_cb_border_show(void *data __UNUSED__, int ev_type __UNUSED__, void *event __UNUSED__)
 {
    Eina_List *l;
-	
+
    for (l = winilists; l; l = l->next) _refill(l->data);
    return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool
-_cb_border_hide(__UNUSED__ void *data, __UNUSED__ int ev_type, __UNUSED__ void *event)
+_cb_border_hide(void *data __UNUSED__, int ev_type __UNUSED__, void *event __UNUSED__)
 {
    Eina_List *l;
-	
+
    for (l = winilists; l; l = l->next) _refill(l->data);
    return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool
-_cb_border_property(__UNUSED__ void *data, __UNUSED__ int ev_type, __UNUSED__ void *event)
+_cb_border_property(void *data __UNUSED__, int ev_type __UNUSED__, void *event __UNUSED__)
 {
    Eina_List *l;
-	
+
    for (l = winilists; l; l = l->next) _refill(l->data);
    return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool
-_cb_desk_show(__UNUSED__ void *data, __UNUSED__ int ev_type, __UNUSED__ void *event)
+_cb_desk_show(void *data __UNUSED__, int ev_type __UNUSED__, void *event __UNUSED__)
 {
    Eina_List *l;
-	
+
    for (l = winilists; l; l = l->next) _refill(l->data);
    return ECORE_CALLBACK_PASS_ON;
 }

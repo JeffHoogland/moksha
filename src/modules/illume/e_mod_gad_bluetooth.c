@@ -105,7 +105,7 @@ _gc_shutdown(E_Gadcon_Client *gcc)
 }
 
 static void
-_gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
+_gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient __UNUSED__)
 {
    Instance *inst;
    Evas_Coord mw, mh, mxw, mxh;
@@ -124,18 +124,18 @@ _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
 }
 
 static char *
-_gc_label(E_Gadcon_Client_Class *client_class)
+_gc_label(E_Gadcon_Client_Class *client_class __UNUSED__)
 {
    return "Bluetooth (Illume)";
 }
 
 static Evas_Object *
-_gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas)
+_gc_icon(E_Gadcon_Client_Class *client_class __UNUSED__, Evas *evas __UNUSED__)
 {
 /* FIXME: need icon
    Evas_Object *o;
-   char buf[4096];
-   
+   char buf[PATH_MAX];
+
    o = edje_object_add(evas);
    snprintf(buf, sizeof(buf), "%s/e-module-clock.edj",
 	    e_module_dir_get(clock_module));
@@ -146,7 +146,7 @@ _gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas)
 }
 
 static const char *
-_gc_id_new(E_Gadcon_Client_Class *client_class)
+_gc_id_new(E_Gadcon_Client_Class *client_class __UNUSED__)
 {
    return _gadcon_class.name;
 }
@@ -159,31 +159,30 @@ _find_interface_class(int iclass)
 
    devs = ecore_file_ls("/sys/bus/usb/devices");
    EINA_LIST_FREE(devs, name)
-	  {
-	     char buf[PATH_MAX];
-	     FILE *f;
+     {
+        char buf[PATH_MAX];
+        FILE *f;
 
-	     snprintf(buf, sizeof(buf), "%s/%s/%s",
-		      "/sys/bus/usb/devices", name, "bInterfaceClass");
-	     f = fopen(buf, "r");
-	     if (f)
-	       {
-		  if (fgets(buf, sizeof(buf), f))
-		    {
-		       int id = -1;
+        snprintf(buf, sizeof(buf), "%s/%s/%s",
+                 "/sys/bus/usb/devices", name, "bInterfaceClass");
+        f = fopen(buf, "r");
+        if (f)
+          {
+             if (fgets(buf, sizeof(buf), f))
+               {
+                  int id = -1;
 
-		       sscanf(buf, "%x", &id);
-		       if (iclass == id)
-			 {
-                            EINA_LIST_FREE(devs, name)
-                              free(name);
-			    fclose(f);
-			    return 1;
-			 }
-		    }
-		  fclose(f);
-	       }
-
+                  sscanf(buf, "%x", &id);
+                  if (iclass == id)
+                    {
+                       EINA_LIST_FREE(devs, name)
+                         free(name);
+                       fclose(f);
+                       return 1;
+                    }
+               }
+             fclose(f);
+          }
 	free(name);
      }
    return 0;

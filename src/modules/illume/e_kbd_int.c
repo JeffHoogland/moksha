@@ -5,12 +5,13 @@
 #include "e_cfg.h"
 #include "e_slipshelf.h"
 
-enum {
-   NORMAL   = 0,
-   SHIFT    = (1 << 0),
+enum 
+{
+   NORMAL = 0,
+   SHIFT = (1 << 0),
    CAPSLOCK = (1 << 1),
-   CTRL     = (1 << 2),
-   ALT      = (1 << 3)
+   CTRL = (1 << 2),
+   ALT = (1 << 3)
 };
 
 static Evas_Object *_theme_obj_new(Evas *e, const char *custom_dir, const char *group);
@@ -228,7 +229,7 @@ _e_kbd_int_buf_send(E_Kbd_Int *ki)
 
 
 static void
-_e_kbd_int_cb_match_select(void *data, Evas_Object *obj, const char *emission, const char *source)
+_e_kbd_int_cb_match_select(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    E_Kbd_Int_Match *km;
    
@@ -510,9 +511,9 @@ _e_kbd_int_zoomkey_up(E_Kbd_Int *ki)
 {
    const Eina_List *l;
    Evas_Object *o, *o2;
-   Evas_Coord w, h, mw, mh, vw, vh;
+   Evas_Coord mw, mh, vw, vh;
    int sx, sy, sw, sh;
-   
+
    if (ki->zoomkey.popup) return;
    ki->zoomkey.popup = e_popup_new(ki->win->border->zone, -1, -1, 1, 1);
    e_popup_layer_set(ki->zoomkey.popup, 190);
@@ -674,7 +675,7 @@ _e_kbd_int_cb_hold_timeout(void *data)
 }
 
 static void
-_e_kbd_int_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info)
+_e_kbd_int_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
    Evas_Event_Mouse_Down *ev;
    E_Kbd_Int *ki;
@@ -719,7 +720,7 @@ _e_kbd_int_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_i
 }
 
 static void
-_e_kbd_int_cb_mouse_move(void *data, Evas *evas, Evas_Object *obj, void *event_info)
+_e_kbd_int_cb_mouse_move(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
    Evas_Event_Mouse_Move *ev;
    E_Kbd_Int *ki;
@@ -762,11 +763,10 @@ _e_kbd_int_cb_mouse_move(void *data, Evas *evas, Evas_Object *obj, void *event_i
 }
 
 static void
-_e_kbd_int_cb_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_info)
+_e_kbd_int_cb_mouse_up(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
    Evas_Event_Mouse_Up *ev;
    E_Kbd_Int *ki;
-   Evas_Coord x, y;
    E_Kbd_Int_Key *ky;
    int dir = 0;
    
@@ -845,24 +845,24 @@ _e_kbd_int_cb_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_inf
 static E_Kbd_Int_Layout *
 _e_kbd_int_layouts_list_default_get(E_Kbd_Int *ki)
 {
-	E_Kbd_Int_Layout *kil;
+   E_Kbd_Int_Layout *kil;
    Eina_List *l;
 	
    EINA_LIST_FOREACH(ki->layouts, l, kil)
-	if ((!strcmp(ecore_file_file_get(kil->path), "Default.kbd")))
-	  return kil;
+     if ((!strcmp(ecore_file_file_get(kil->path), "Default.kbd")))
+       return kil;
    return NULL;
 }
 
 static E_Kbd_Int_Layout *
 _e_kbd_int_layouts_type_get(E_Kbd_Int *ki, int type)
 {
-	E_Kbd_Int_Layout *kil;
+   E_Kbd_Int_Layout *kil;
    Eina_List *l;
 	
    EINA_LIST_FOREACH(ki->layouts, l, kil)
-	if (kil->type == type)
-	  return kil;
+     if (kil->type == type)
+       return kil;
    return NULL;
 }
 
@@ -876,9 +876,9 @@ _e_kbd_int_layout_free(E_Kbd_Int *ki)
    ki->layout.directory = NULL;
    ki->layout.file = NULL;
    EINA_LIST_FREE(ki->layout.keys, ky)
-	  {
-	     E_Kbd_Int_Key_State *st;
-	     
+     {
+        E_Kbd_Int_Key_State *st;
+
 	EINA_LIST_FREE(ky->states, st)
 	  {
 	     if (st->label) eina_stringshare_del(st->label);
@@ -898,7 +898,7 @@ static void
 _e_kbd_int_layout_parse(E_Kbd_Int *ki, const char *layout)
 {
    FILE *f;
-   char buf[4096];
+   char buf[PATH_MAX];
    int isok = 0;
    E_Kbd_Int_Key *ky = NULL;
    E_Kbd_Int_Key_State *st = NULL;
@@ -914,8 +914,8 @@ _e_kbd_int_layout_parse(E_Kbd_Int *ki, const char *layout)
    while (fgets(buf, sizeof(buf), f))
      {
 	int len;
-	char str[4096];
-	
+	char str[PATH_MAX];
+
 	if (!isok)
 	  {
 	     if (!strcmp(buf, "##KBDCONF-1.0\n")) isok = 1;
@@ -967,9 +967,8 @@ _e_kbd_int_layout_parse(E_Kbd_Int *ki, const char *layout)
 	    (!strcmp(str, "capslock")))
 	  {
 	     char *p;
-	     char label[4096];
-	     int xx;
-	     
+	     char label[PATH_MAX];
+
 	     if (sscanf(buf, "%*s %4000s", label) != 1) continue;
 	     st = calloc(1, sizeof(E_Kbd_Int_Key_State));
 	     if (!st) continue;
@@ -1074,8 +1073,8 @@ _e_kbd_int_layout_build(E_Kbd_Int *ki)
 static void
 _e_kbd_int_layouts_free(E_Kbd_Int *ki)
 {
-	E_Kbd_Int_Layout *kil;
-	
+   E_Kbd_Int_Layout *kil;
+
    EINA_LIST_FREE(ki->layouts, kil)
      {
 	eina_stringshare_del(kil->path);
@@ -1182,12 +1181,12 @@ _e_kbd_int_layouts_list_update(E_Kbd_Int *ki)
 	     if (f)
 	       {
 		  int isok = 0;
-		  
+
 		  while (fgets(buf, sizeof(buf), f))
 		    {
 		       int len;
-		       char str[4096];
-		       
+		       char str[PATH_MAX];
+
 		       if (!isok)
 			 {
 			    if (!strcmp(buf, "##KBDCONF-1.0\n")) isok = 1;
@@ -1268,15 +1267,14 @@ static void
 _e_kbd_int_layout_next(E_Kbd_Int *ki)
 {
    Eina_List *l, *ln = NULL;
-   const char *nextlay = NULL;
    E_Kbd_Int_Layout *kil;
    
    EINA_LIST_FOREACH(ki->layouts, l, kil)
-	if (!strcmp(kil->path, ki->layout.file))
-	  {
-	     ln = l->next;
-	     break;
-	  }
+     if (!strcmp(kil->path, ki->layout.file))
+       {
+          ln = l->next;
+          break;
+       }
    if (!ln) ln = ki->layouts;
    if (!ln) return;
    kil = ln->data;
@@ -1284,7 +1282,7 @@ _e_kbd_int_layout_next(E_Kbd_Int *ki)
 }
 
 static Eina_Bool
-_e_kbd_int_cb_client_message(void *data, __UNUSED__ int type, void *event)
+_e_kbd_int_cb_client_message(void *data, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Client_Message *ev;
    E_Kbd_Int *ki;
@@ -1388,7 +1386,7 @@ static void
 _e_kbd_int_dictlist_up(E_Kbd_Int *ki)
 {
    Evas_Object *o;
-   Evas_Coord w, h, mw, mh, vw, vh;
+   Evas_Coord mw, mh;
    int sx, sy, sw, sh;
    Eina_List *files;
    Eina_List *l;
@@ -1545,9 +1543,9 @@ _e_kbd_int_matchlist_up(E_Kbd_Int *ki)
 {
    const Eina_List *l;
    Evas_Object *o;
-   Evas_Coord w, h, mw, mh, vw, vh;
+   Evas_Coord mw, mh;
    int sx, sy, sw, sh;
-   
+
    if (!e_kbd_buf_string_matches_get(ki->kbuf)) return;
    if (ki->matchlist.popup) return;
    ki->matchlist.popup = e_popup_new(ki->win->border->zone, -1, -1, 1, 1);
@@ -1615,7 +1613,7 @@ _e_kbd_int_matchlist_up(E_Kbd_Int *ki)
 }
 
 static void
-_e_kbd_int_cb_matches(void *data, Evas_Object *obj, const char *emission, const char *source)
+_e_kbd_int_cb_matches(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    E_Kbd_Int *ki;
    
@@ -1632,7 +1630,7 @@ _e_kbd_int_cb_matches(void *data, Evas_Object *obj, const char *emission, const 
 }
 
 static void
-_e_kbd_int_cb_dicts(void *data, Evas_Object *obj, const char *emission, const char *source)
+_e_kbd_int_cb_dicts(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    E_Kbd_Int *ki;
    
@@ -1741,7 +1739,7 @@ _e_kbd_int_layoutlist_up(E_Kbd_Int *ki)
 }
 
 static void
-_e_kbd_int_cb_layouts(void *data, Evas_Object *obj, const char *emission, const char *source)
+_e_kbd_int_cb_layouts(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    E_Kbd_Int *ki;
    
@@ -1754,10 +1752,8 @@ EAPI E_Kbd_Int *
 e_kbd_int_new(const char *themedir, const char *syskbds, const char *sysdicts)
 {
    E_Kbd_Int *ki;
-   unsigned int one = 1;
    Evas_Object *o;
    Evas_Coord mw, mh;
-   const char *deflay;
    E_Zone *zone;
    E_Kbd_Int_Layout *kil;
    Ecore_X_Window_State states[2];

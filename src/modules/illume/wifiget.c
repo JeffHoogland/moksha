@@ -105,6 +105,7 @@ link_quality(void)
    return -1;
 }
 
+/*
 static void
 link_end(void)
 {
@@ -113,7 +114,6 @@ link_end(void)
    link_fd = -1;
 }
 
-/*
 static int
 _wifi_signal_get(void)
 {

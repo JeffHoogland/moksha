@@ -17,8 +17,8 @@ typedef struct _Win_Entry Win_Entry;
 
 struct _Win_Entry
 {
-   E_Appwin   *appwin;
-   E_Border    *border;
+   E_Appwin *appwin;
+   E_Border *border;
    Evas_Object *icon;
 };
 
@@ -31,9 +31,9 @@ static void _e_appwin_free(E_Appwin *ess);
 static Eina_Bool _e_appwin_cb_animate(void *data);
 static void _e_appwin_slide(E_Appwin *ess, int out, double len);
 static Eina_Bool _e_appwin_cb_mouse_up(void *data, int type, void *event);
-static Eina_Bool _e_appwin_cb_zone_move_resize(void *data, int type, void *event);
-static Eina_Bool _e_appwin_cb_zone_del(void *data, int type, void *event);
-static void _e_appwin_event_simple_free(void *data, void *ev);
+//static Eina_Bool _e_appwin_cb_zone_move_resize(void *data, int type, void *event);
+//static Eina_Bool _e_appwin_cb_zone_del(void *data, int type, void *event);
+//static void _e_appwin_event_simple_free(void *data, void *ev);
 static void _e_appwin_object_del_attach(void *o);
 static void _e_appwin_cb_item_sel(void *data);
 
@@ -123,8 +123,7 @@ e_appwin_new(E_Zone *zone, const char *themedir)
 EAPI void
 e_appwin_show(E_Appwin *esw)
 {
-   Evas_Object *o;
-   Evas_Coord mw, mh, vw, vh, w, h;
+   Evas_Coord mw, mh;
    Eina_List *borders, *l;
    Win_Entry *ent;
    int i, selnum;
@@ -311,7 +310,7 @@ _e_appwin_slide(E_Appwin *esw, int out, double len)
 }
 
 static Eina_Bool
-_e_appwin_cb_mouse_up(void *data, __UNUSED__ int type, void *event)
+_e_appwin_cb_mouse_up(void *data, int type __UNUSED__, void *event)
 {
    Ecore_Event_Mouse_Button *ev;
    E_Appwin *esw;
@@ -326,8 +325,9 @@ _e_appwin_cb_mouse_up(void *data, __UNUSED__ int type, void *event)
    return ECORE_CALLBACK_PASS_ON;
 }
 
+/*
 static Eina_Bool
-_e_appwin_cb_zone_move_resize(void *data, __UNUSED__ int type, void *event)
+_e_appwin_cb_zone_move_resize(void *data, int type __UNUSED__, void *event)
 {
    E_Event_Zone_Move_Resize *ev;
    E_Appwin *esw;
@@ -336,13 +336,13 @@ _e_appwin_cb_zone_move_resize(void *data, __UNUSED__ int type, void *event)
    esw = data;
    if (esw->zone == ev->zone)
      {
-	/* FIXME: handle new size pants */
+	// FIXME: handle new size pants
      }
    return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool
-_e_appwin_cb_zone_del(void *data, __UNUSED__ int type, void *event)
+_e_appwin_cb_zone_del(void *data, int type __UNUSED__, void *event)
 {
    E_Event_Zone_Del *ev;
    E_Appwin *esw;
@@ -357,20 +357,21 @@ _e_appwin_cb_zone_del(void *data, __UNUSED__ int type, void *event)
 }
 				       
 static void
-_e_appwin_event_simple_free(void *data, void *ev)
+_e_appwin_event_simple_free(void *data __UNUSED__, void *ev)
 {
    struct _E_Event_Appwin_Simple *e;
-   
+
    e = ev;
    e_object_unref(E_OBJECT(e->appwin));
    free(e);
 }
+*/
 
 static void
 _e_appwin_object_del_attach(void *o)
 {
    E_Appwin *esw;
-   E_Event_Appwin_Del *ev;
+//   E_Event_Appwin_Del *ev;
 
    if (e_object_is_del(E_OBJECT(o))) return;
    esw = o;
@@ -424,4 +425,3 @@ _theme_obj_new(Evas *e, const char *custom_dir, const char *group)
      }
    return o;
 }
-

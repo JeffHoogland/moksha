@@ -1,6 +1,5 @@
 #include "e.h"
 
-/***************************************************************************/
 typedef struct _Instance Instance;
 
 struct _Instance
@@ -13,8 +12,6 @@ struct _Instance
    int strength;
 };
 
-/***************************************************************************/
-/**/
 /* gadcon requirements */
 static E_Gadcon_Client *_gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style);
 static void _gc_shutdown(E_Gadcon_Client *gcc);
@@ -34,8 +31,6 @@ static const E_Gadcon_Client_Class _gadcon_class =
    E_GADCON_CLIENT_STYLE_PLAIN
 };
 static E_Module *mod = NULL;
-/**/
-/***************************************************************************/
 
 static void _wifiget_spawn(Instance *inst);
 static void _wifiget_kill(Instance *inst);
@@ -115,7 +110,7 @@ _gc_shutdown(E_Gadcon_Client *gcc)
 }
 
 static void
-_gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
+_gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient __UNUSED__)
 {
    Instance *inst;
    Evas_Coord mw, mh, mxw, mxh;
@@ -134,18 +129,18 @@ _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
 }
 
 static char *
-_gc_label(E_Gadcon_Client_Class *client_class)
+_gc_label(E_Gadcon_Client_Class *client_class __UNUSED__)
 {
    return "Wifi (Illume)";
 }
 
 static Evas_Object *
-_gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas)
+_gc_icon(E_Gadcon_Client_Class *client_class __UNUSED__, Evas *evas __UNUSED__)
 {
 /* FIXME: need icon
    Evas_Object *o;
-   char buf[4096];
-   
+   char buf[PATH_MAX];
+
    o = edje_object_add(evas);
    snprintf(buf, sizeof(buf), "%s/e-module-clock.edj",
 	    e_module_dir_get(clock_module));
@@ -156,7 +151,7 @@ _gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas)
 }
 
 static const char *
-_gc_id_new(E_Gadcon_Client_Class *client_class)
+_gc_id_new(E_Gadcon_Client_Class *client_class __UNUSED__)
 {
    return _gadcon_class.name;
 }
@@ -164,25 +159,20 @@ _gc_id_new(E_Gadcon_Client_Class *client_class)
 static void
 _wifiget_spawn(Instance *inst)
 {
-   char buf[4096];
-   
+   char buf[PATH_MAX];
+
    if (inst->wifiget_exe) return;
-   snprintf(buf, sizeof(buf),
-	             "%s/%s/wifiget %i",
-	             e_module_dir_get(mod), MODULE_ARCH,
-	             8);
+   snprintf(buf, sizeof(buf), "%s/%s/wifiget %i",
+            e_module_dir_get(mod), MODULE_ARCH, 8);
    inst->wifiget_exe = ecore_exe_pipe_run(buf,
 					  ECORE_EXE_PIPE_READ |
 					  ECORE_EXE_PIPE_READ_LINE_BUFFERED |
 					  ECORE_EXE_NOT_LEADER,
 					  inst);
    inst->wifiget_data_handler =
-     ecore_event_handler_add(ECORE_EXE_EVENT_DATA, _wifiget_cb_exe_data,
-			     inst);
+     ecore_event_handler_add(ECORE_EXE_EVENT_DATA, _wifiget_cb_exe_data, inst);
    inst->wifiget_del_handler =
-     ecore_event_handler_add(ECORE_EXE_EVENT_DEL,
-			     _wifiget_cb_exe_del,
-			     inst);
+     ecore_event_handler_add(ECORE_EXE_EVENT_DEL, _wifiget_cb_exe_del, inst);
    
 }
 
@@ -200,7 +190,7 @@ _wifiget_kill(Instance *inst)
 }
 
 static Eina_Bool
-_wifiget_cb_exe_data(void *data, __UNUSED__ int type, void *event)
+_wifiget_cb_exe_data(void *data, int type __UNUSED__, void *event)
 {
    Ecore_Exe_Event_Data *ev;
    Instance *inst;
@@ -238,7 +228,7 @@ _wifiget_cb_exe_data(void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_wifiget_cb_exe_del(void *data, __UNUSED__ int type, void *event)
+_wifiget_cb_exe_del(void *data, int type __UNUSED__, void *event)
 {
    Ecore_Exe_Event_Del *ev;
    Instance *inst;

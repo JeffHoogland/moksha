@@ -11,7 +11,7 @@
 E_Busycover *_e_busycover_new(E_Zone *zone, const char *themedir);
 static void _e_busycover_free(E_Busycover *esw);
 static Eina_Bool _e_busycover_cb_zone_move_resize(void *data, int type, void *event);
-static void _e_busycover_cb_item_sel(void *data, void *data2);
+//static void _e_busycover_cb_item_sel(void *data, void *data2);
 
 static Evas_Object *_theme_obj_new(Evas *e, const char *custom_dir, const char *group);
 
@@ -22,8 +22,7 @@ static void
 _e_busycover_add_object(E_Busycover *esw)
 {
    int x, y, w, h;
-   Evas_Object *o;
-   
+
    esw->base_obj = _theme_obj_new(esw->zone->container->bg_evas,
 				  esw->themedir,
 				  "e/modules/busycover/default");
@@ -126,7 +125,7 @@ _e_busycover_free(E_Busycover *esw)
 }
 
 static Eina_Bool
-_e_busycover_cb_zone_move_resize(void *data, int type, void *event)
+_e_busycover_cb_zone_move_resize(void *data, int type __UNUSED__, void *event)
 {
    E_Event_Zone_Move_Resize *ev;
    E_Busycover *esw;
@@ -143,11 +142,6 @@ _e_busycover_cb_zone_move_resize(void *data, int type, void *event)
      }
    return ECORE_CALLBACK_PASS_ON;
 }
-
-
-
-
-
 
 static Evas_Object *
 _theme_obj_new(Evas *e, const char *custom_dir, const char *group)

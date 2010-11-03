@@ -467,7 +467,7 @@ _e_slipshelf_free(E_Slipshelf *ess)
 }
 
 static void
-_e_slipshelf_cb_toggle(void *data, Evas_Object *obj, const char *emission, const char *source)
+_e_slipshelf_cb_toggle(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    E_Slipshelf *ess;
    
@@ -479,7 +479,7 @@ _e_slipshelf_cb_toggle(void *data, Evas_Object *obj, const char *emission, const
 }
 
 static void
-_e_slipshelf_cb_home(void *data, Evas_Object *obj, const char *emission, const char *source)
+_e_slipshelf_cb_home(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    E_Slipshelf *ess;
    
@@ -492,7 +492,7 @@ _e_slipshelf_cb_home(void *data, Evas_Object *obj, const char *emission, const c
 }
 
 static void
-_e_slipshelf_cb_close(void *data, Evas_Object *obj, const char *emission, const char *source)
+_e_slipshelf_cb_close(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    E_Slipshelf *ess;
    
@@ -505,7 +505,7 @@ _e_slipshelf_cb_close(void *data, Evas_Object *obj, const char *emission, const 
 }
 
 static void
-_e_slipshelf_cb_apps(void *data, Evas_Object *obj, const char *emission, const char *source)
+_e_slipshelf_cb_apps(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    E_Slipshelf *ess;
    
@@ -518,7 +518,7 @@ _e_slipshelf_cb_apps(void *data, Evas_Object *obj, const char *emission, const c
 }
 
 static void
-_e_slipshelf_cb_keyboard(void *data, Evas_Object *obj, const char *emission, const char *source)
+_e_slipshelf_cb_keyboard(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    E_Slipshelf *ess;
    
@@ -531,7 +531,7 @@ _e_slipshelf_cb_keyboard(void *data, Evas_Object *obj, const char *emission, con
 }
 
 static void
-_e_slipshelf_cb_app_next(void *data, Evas_Object *obj, const char *emission, const char *source)
+_e_slipshelf_cb_app_next(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    E_Slipshelf *ess;
    
@@ -544,7 +544,7 @@ _e_slipshelf_cb_app_next(void *data, Evas_Object *obj, const char *emission, con
 }
 
 static void
-_e_slipshelf_cb_app_prev(void *data, Evas_Object *obj, const char *emission, const char *source)
+_e_slipshelf_cb_app_prev(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    E_Slipshelf *ess;
    
@@ -734,7 +734,7 @@ _e_slipshelf_slide(E_Slipshelf *ess, int out, double len)
 }
 
 static Eina_Bool
-_e_slipshelf_cb_mouse_up(void *data, __UNUSED__ int type, void *event)
+_e_slipshelf_cb_mouse_up(void *data, int type __UNUSED__, void *event)
 {
    Ecore_Event_Mouse_Button *ev;
    E_Slipshelf *ess;
@@ -752,7 +752,7 @@ _e_slipshelf_cb_mouse_up(void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_slipshelf_cb_zone_move_resize(void *data, __UNUSED__ int type, void *event)
+_e_slipshelf_cb_zone_move_resize(void *data, int type __UNUSED__, void *event)
 {
    E_Event_Zone_Move_Resize *ev;
    E_Slipshelf *ess;
@@ -774,7 +774,7 @@ _e_slipshelf_cb_zone_move_resize(void *data, __UNUSED__ int type, void *event)
 }
 
 static void
-_e_slipshelf_event_simple_free(__UNUSED__ void *data, void *ev)
+_e_slipshelf_event_simple_free(void *data __UNUSED__, void *ev)
 {
    struct _E_Event_Slipshelf_Simple *e;
    
@@ -799,7 +799,7 @@ _e_slipshelf_object_del_attach(void *o)
 }
 
 static Eina_Bool
-_e_slipshelf_cb_border_focus_in(void *data, __UNUSED__ int type, void *event)
+_e_slipshelf_cb_border_focus_in(void *data, int type __UNUSED__, void *event)
 {
    E_Event_Border_Focus_In *ev;
    E_Slipshelf *ess;
@@ -812,7 +812,7 @@ _e_slipshelf_cb_border_focus_in(void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_slipshelf_cb_border_focus_out(void *data, __UNUSED__ int type, void *event)
+_e_slipshelf_cb_border_focus_out(void *data, int type __UNUSED__, void *event)
 {
    E_Event_Border_Focus_Out *ev;
    E_Slipshelf *ess;
@@ -826,7 +826,7 @@ _e_slipshelf_cb_border_focus_out(void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_slipshelf_cb_border_property(void *data, __UNUSED__ int type, void *event)
+_e_slipshelf_cb_border_property(void *data, int type __UNUSED__, void *event)
 {
    E_Event_Border_Property *ev;
    E_Slipshelf *ess;
@@ -898,7 +898,7 @@ _e_slipshelf_cb_gadcon_min_size_request(void *data, E_Gadcon *gc, Evas_Coord w, 
 }
 
 static Evas_Object *
-_e_slipshelf_cb_gadcon_frame_request(void *data, E_Gadcon_Client *gcc, const char *style)
+_e_slipshelf_cb_gadcon_frame_request(void *data __UNUSED__, E_Gadcon_Client *gcc __UNUSED__, const char *style __UNUSED__)
 {
    /* FIXME: provide an inset look edje thing */
    return NULL;

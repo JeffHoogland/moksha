@@ -200,7 +200,7 @@ _gc_shutdown(E_Gadcon_Client *gcc)
 }
 
 static void
-_gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
+_gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient __UNUSED__)
 {
    Instance *inst;
    Evas_Coord mw, mh, mxw, mxh;
@@ -219,17 +219,17 @@ _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
 }
 
 static char *
-_gc_label(E_Gadcon_Client_Class *client_class)
+_gc_label(E_Gadcon_Client_Class *client_class __UNUSED__)
 {
    return "GSM (Illume)";
 }
 
 static Evas_Object *
-_gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas)
+_gc_icon(E_Gadcon_Client_Class *client_class __UNUSED__, Evas *evas __UNUSED__)
 {
 /* FIXME: need icon
    Evas_Object *o;
-   char buf[4096];
+   char buf[PATH_MAX];
    
    o = edje_object_add(evas);
    snprintf(buf, sizeof(buf), "%s/e-module-clock.edj",
@@ -241,7 +241,7 @@ _gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas)
 }
 
 static const char *
-_gc_id_new(E_Gadcon_Client_Class *client_class)
+_gc_id_new(E_Gadcon_Client_Class *client_class __UNUSED__)
 {
    return _gadcon_class.name;
 }
@@ -295,7 +295,7 @@ update_signal(int sig, void *data)
 
 
 static void *
-signal_unmarhsall(DBusMessage *msg, DBusError *err)
+signal_unmarhsall(DBusMessage *msg, DBusError *err __UNUSED__)
 {
    dbus_int32_t val = -1;
 
@@ -314,7 +314,7 @@ signal_unmarhsall(DBusMessage *msg, DBusError *err)
 }
 
 static void *
-operator_unmarhsall(DBusMessage *msg, DBusError *err)
+operator_unmarhsall(DBusMessage *msg, DBusError *err __UNUSED__)
 {
    const char *str;
 
@@ -375,13 +375,13 @@ _fso_operator_unmarhsall(DBusMessage *msg)
 }
 
 static void *
-fso_operator_unmarhsall(DBusMessage *msg, DBusError *err)
+fso_operator_unmarhsall(DBusMessage *msg, DBusError *err __UNUSED__)
 {
    return _fso_operator_unmarhsall(msg);
 }
 
 static void
-signal_callback_qtopia(void *data, void *ret, DBusError *err)
+signal_callback_qtopia(void *data, void *ret, DBusError *err __UNUSED__)
 {
 //   printf("GSM-gadget: Qtopia signal callback called\n");
    if (ret)
@@ -412,7 +412,7 @@ signal_callback_qtopia(void *data, void *ret, DBusError *err)
 }
 
 static void
-signal_callback_fso(void *data, void *ret, DBusError *err)
+signal_callback_fso(void *data, void *ret, DBusError *err __UNUSED__)
 {
 //   printf("GSM-gadget: FSO signal callback called\n");
    if (ret)
@@ -443,7 +443,7 @@ signal_callback_fso(void *data, void *ret, DBusError *err)
 }
 
 static void
-operator_callback_qtopia(void *data, void *ret, DBusError *err)
+operator_callback_qtopia(void *data, void *ret, DBusError *err __UNUSED__)
 {
 //   printf("GSM-gadget: Qtopia operator callback called\n");
    if (ret)
@@ -471,7 +471,7 @@ operator_callback_qtopia(void *data, void *ret, DBusError *err)
 }
 
 static void
-operator_callback_fso(void *data, void *ret, DBusError *err)
+operator_callback_fso(void *data, void *ret, DBusError *err __UNUSED__)
 {
 //   printf("GSM-gadget: FSO operator callback called\n");
    if (ret)

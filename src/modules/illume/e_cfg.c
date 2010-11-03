@@ -14,14 +14,14 @@
 static void _e_cfg_dbus_if_init(void);
 static void _e_cfg_dbus_if_shutdown(void);
 
-static Evas_Object *_e_cfg_win_new(const char *title, const char *name, const char *themedir, void (*delfunc) (const void *data), const void *data);
-static void _e_cfg_win_complete(Evas_Object *ol);
+//static Evas_Object *_e_cfg_win_new(const char *title, const char *name, const char *themedir, void (*delfunc) (const void *data), const void *data);
+//static void _e_cfg_win_complete(Evas_Object *ol);
 
-static void _cb_signal_ok(void *data, Evas_Object *obj, const char *emission, const char *source);
-static void _cb_delete(E_Win *win);
-static void _cb_resize(E_Win *win);
+//static void _cb_signal_ok(void *data, Evas_Object *obj, const char *emission, const char *source);
+//static void _cb_delete(E_Win *win);
+//static void _cb_resize(E_Win *win);
 
-static Evas_Object *_theme_obj_new(Evas *e, const char *custom_dir, const char *group);
+//static Evas_Object *_theme_obj_new(Evas *e, const char *custom_dir, const char *group);
 
 /* state */
 EAPI Illume_Cfg *illume_cfg = NULL;
@@ -160,42 +160,48 @@ e_cfg_save(void)
 
 ///////////////////////////////////////////////////////////////////////////////
 Ecore_Timer *_e_cfg_launcher_change_timer = NULL;
+Evas_Object *delay_label, *delay_slider;
+
 static Eina_Bool
-_e_cfg_launcher_change_timeout(__UNUSED__ void *data)
+_e_cfg_launcher_change_timeout(void *data __UNUSED__)
 {
    _e_mod_win_cfg_update();
    e_config_save_queue();
    _e_cfg_launcher_change_timer = NULL;
    return ECORE_CALLBACK_CANCEL;
 }
+
 static void
-_e_cfg_launcher_change(void *data, Evas_Object *obj, void *event_info) {
-   if (_e_cfg_launcher_change_timer) ecore_timer_del(_e_cfg_launcher_change_timer);
-   _e_cfg_launcher_change_timer = ecore_timer_add(0.5, _e_cfg_launcher_change_timeout, data);
+_e_cfg_launcher_change(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__) 
+{
+   if (_e_cfg_launcher_change_timer) 
+     ecore_timer_del(_e_cfg_launcher_change_timer);
+   _e_cfg_launcher_change_timer = 
+     ecore_timer_add(0.5, _e_cfg_launcher_change_timeout, data);
 }
 
-Evas_Object *delay_label, *delay_slider;
 static void
-_e_cfg_launcher_click_change(void *data, Evas_Object *obj, void *event_info) {
-	e_widget_disabled_set(delay_label, !illume_cfg->launcher.single_click);
-	e_widget_disabled_set(delay_slider, !illume_cfg->launcher.single_click);
-	_e_cfg_launcher_change(data, obj, event_info);
+_e_cfg_launcher_click_change(void *data, Evas_Object *obj, void *event_info) 
+{
+   e_widget_disabled_set(delay_label, !illume_cfg->launcher.single_click);
+   e_widget_disabled_set(delay_slider, !illume_cfg->launcher.single_click);
+   _e_cfg_launcher_change(data, obj, event_info);
 }
 
 static void *
-_e_cfg_launcher_create(E_Config_Dialog *cfd)
+_e_cfg_launcher_create(E_Config_Dialog *cfd __UNUSED__)
 { // alloc cfd->cfdata
    return NULL;
 }
 
 static void 
-_e_cfg_launcher_free(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_e_cfg_launcher_free(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata __UNUSED__)
 { // free cfd->cfdata
    _e_mod_win_cfg_update(); // Reload on exit (to apply the slider value)
 }
 
 static Evas_Object *
-_e_cfg_launcher_ui(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdata)
+_e_cfg_launcher_ui(E_Config_Dialog *cfd __UNUSED__, Evas *e, E_Config_Dialog_Data *cfdata __UNUSED__)
 {
    Evas_Object *list, *o, *frame;
    E_Radio_Group *rg;
@@ -250,19 +256,19 @@ _e_cfg_launcher_ui(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdata)
 }
 
 EAPI void
-e_cfg_launcher(E_Container *con, const char *params)
+e_cfg_launcher(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v = NULL;
    
    if (e_config_dialog_find("E", "_config_illume_launcher_settings")) return;
    v = E_NEW(E_Config_Dialog_View, 1);
-   v->create_cfdata        = _e_cfg_launcher_create;
-   v->free_cfdata          = _e_cfg_launcher_free;
+   v->create_cfdata = _e_cfg_launcher_create;
+   v->free_cfdata = _e_cfg_launcher_free;
    v->basic.create_widgets = _e_cfg_launcher_ui;
-   v->basic_only           = 1;
-   v->normal_win           = 1;
-   v->scroll               = 1;
+   v->basic_only = 1;
+   v->normal_win = 1;
+   v->scroll = 1;
    cfd = e_config_dialog_new(con, "Launcher Settings",
 			     "E", "_config_illume_launcher_settings",
 			     "enlightenment/launcher_settings", 0, v, NULL);
@@ -271,8 +277,9 @@ e_cfg_launcher(E_Container *con, const char *params)
 
 ///////////////////////////////////////////////////////////////////////////////
 Ecore_Timer *_e_cfg_power_change_timer = NULL;
+
 static Eina_Bool
-_e_cfg_power_change_timeout(void *data)
+_e_cfg_power_change_timeout(void *data __UNUSED__)
 {
    if (e_config->screensaver_timeout > 0)
      {
@@ -297,25 +304,29 @@ _e_cfg_power_change_timeout(void *data)
    _e_cfg_power_change_timer = NULL;
    return ECORE_CALLBACK_CANCEL;
 }
+
 static void
-_e_cfg_power_change(void *data, Evas_Object *obj, void *event_info) {
+_e_cfg_power_change(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__) 
+{
    if (_e_cfg_power_change_timer) ecore_timer_del(_e_cfg_power_change_timer);
-   _e_cfg_power_change_timer = ecore_timer_add(0.5, _e_cfg_power_change_timeout, data);
+   _e_cfg_power_change_timer = 
+     ecore_timer_add(0.5, _e_cfg_power_change_timeout, data);
 }
 
 static void *
-_e_cfg_power_create(E_Config_Dialog *cfd)
+_e_cfg_power_create(E_Config_Dialog *cfd __UNUSED__)
 { // alloc cfd->cfdata
    return NULL;
 }
 
 static void 
-_e_cfg_power_free(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_e_cfg_power_free(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata __UNUSED__)
 { // free cfd->cfdata
+
 }
 
 static Evas_Object *
-_e_cfg_power_ui(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdata)
+_e_cfg_power_ui(E_Config_Dialog *cfd __UNUSED__, Evas *e, E_Config_Dialog_Data *cfdata __UNUSED__)
 {
    Evas_Object *list, *o, *frame;
    E_Radio_Group *rg;
@@ -376,19 +387,19 @@ _e_cfg_power_ui(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdata)
 }
 
 EAPI void
-e_cfg_power(E_Container *con, const char *params)
+e_cfg_power(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v = NULL;
    
    if (e_config_dialog_find("E", "_config_illume_power_settings")) return;
    v = E_NEW(E_Config_Dialog_View, 1);
-   v->create_cfdata        = _e_cfg_power_create;
-   v->free_cfdata          = _e_cfg_power_free;
+   v->create_cfdata = _e_cfg_power_create;
+   v->free_cfdata = _e_cfg_power_free;
    v->basic.create_widgets = _e_cfg_power_ui;
-   v->basic_only           = 1;
-   v->normal_win           = 1;
-   v->scroll               = 1;
+   v->basic_only = 1;
+   v->normal_win = 1;
+   v->scroll = 1;
    cfd = e_config_dialog_new(con, "Power Settings",
 			     "E", "_config_illume_power_settings",
 			     "enlightenment/power_settings", 0, v, NULL);
@@ -397,32 +408,38 @@ e_cfg_power(E_Container *con, const char *params)
 
 ///////////////////////////////////////////////////////////////////////////////
 Ecore_Timer *_e_cfg_animation_change_timer = NULL;
+
 static Eina_Bool
-_e_cfg_animation_change_timeout(__UNUSED__ void *data)
+_e_cfg_animation_change_timeout(void *data __UNUSED__)
 {
    e_config_save_queue();
    _e_cfg_animation_change_timer = NULL;
    return ECORE_CALLBACK_CANCEL;
 }
+
 static void
-_e_cfg_animation_change(void *data, Evas_Object *obj, void *event_info) {
-   if (_e_cfg_animation_change_timer) ecore_timer_del(_e_cfg_animation_change_timer);
-   _e_cfg_animation_change_timer = ecore_timer_add(0.5, _e_cfg_animation_change_timeout, data);
+_e_cfg_animation_change(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__) 
+{
+   if (_e_cfg_animation_change_timer) 
+     ecore_timer_del(_e_cfg_animation_change_timer);
+   _e_cfg_animation_change_timer = 
+     ecore_timer_add(0.5, _e_cfg_animation_change_timeout, data);
 }
 
 static void *
-_e_cfg_animation_create(E_Config_Dialog *cfd)
+_e_cfg_animation_create(E_Config_Dialog *cfd __UNUSED__)
 { // alloc cfd->cfdata
    return NULL;
 }
 
 static void 
-_e_cfg_animation_free(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_e_cfg_animation_free(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata __UNUSED__)
 { // free cfd->cfdata
+
 }
 
 static Evas_Object *
-_e_cfg_animation_ui(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdata)
+_e_cfg_animation_ui(E_Config_Dialog *cfd __UNUSED__, Evas *e, E_Config_Dialog_Data *cfdata __UNUSED__)
 {
    Evas_Object *list, *o, *frame;
    E_Radio_Group *rg;
@@ -509,19 +526,19 @@ _e_cfg_animation_ui(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdata)
 }
 
 EAPI void
-e_cfg_animation(E_Container *con, const char *params)
+e_cfg_animation(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v = NULL;
    
    if (e_config_dialog_find("E", "_config_illume_animation_settings")) return;
    v = E_NEW(E_Config_Dialog_View, 1);
-   v->create_cfdata        = _e_cfg_animation_create;
-   v->free_cfdata          = _e_cfg_animation_free;
+   v->create_cfdata = _e_cfg_animation_create;
+   v->free_cfdata = _e_cfg_animation_free;
    v->basic.create_widgets = _e_cfg_animation_ui;
-   v->basic_only           = 1;
-   v->normal_win           = 1;
-   v->scroll               = 1;
+   v->basic_only = 1;
+   v->normal_win = 1;
+   v->scroll = 1;
    cfd = e_config_dialog_new(con, "Animation Settings",
 			     "E", "_config_illume_animation_settings",
 			     "enlightenment/animation_settings", 0, v, NULL);
@@ -530,33 +547,39 @@ e_cfg_animation(E_Container *con, const char *params)
 
 ///////////////////////////////////////////////////////////////////////////////
 Ecore_Timer *_e_cfg_slipshelf_change_timer = NULL;
+
 static Eina_Bool
-_e_cfg_slipshelf_change_timeout(__UNUSED__ void *data)
+_e_cfg_slipshelf_change_timeout(void *data __UNUSED__)
 {
    _e_mod_win_slipshelf_cfg_update();
    e_config_save_queue();
    _e_cfg_slipshelf_change_timer = NULL;
    return ECORE_CALLBACK_CANCEL;
 }
+
 static void
-_e_cfg_slipshelf_change(void *data, Evas_Object *obj, void *event_info) {
-   if (_e_cfg_slipshelf_change_timer) ecore_timer_del(_e_cfg_slipshelf_change_timer);
-   _e_cfg_slipshelf_change_timer = ecore_timer_add(0.5, _e_cfg_slipshelf_change_timeout, data);
+_e_cfg_slipshelf_change(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__) 
+{
+   if (_e_cfg_slipshelf_change_timer) 
+     ecore_timer_del(_e_cfg_slipshelf_change_timer);
+   _e_cfg_slipshelf_change_timer = 
+     ecore_timer_add(0.5, _e_cfg_slipshelf_change_timeout, data);
 }
 
 static void *
-_e_cfg_slipshelf_create(E_Config_Dialog *cfd)
+_e_cfg_slipshelf_create(E_Config_Dialog *cfd __UNUSED__)
 { // alloc cfd->cfdata
    return NULL;
 }
 
 static void 
-_e_cfg_slipshelf_free(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_e_cfg_slipshelf_free(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata __UNUSED__)
 { // free cfd->cfdata
+
 }
 
 static Evas_Object *
-_e_cfg_slipshelf_ui(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdata)
+_e_cfg_slipshelf_ui(E_Config_Dialog *cfd __UNUSED__, Evas *e, E_Config_Dialog_Data *cfdata __UNUSED__)
 {
    Evas_Object *list, *o, *frame;
    E_Radio_Group *rg;
@@ -629,19 +652,19 @@ _e_cfg_slipshelf_ui(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdata)
 }
 
 EAPI void
-e_cfg_slipshelf(E_Container *con, const char *params)
+e_cfg_slipshelf(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v = NULL;
    
    if (e_config_dialog_find("E", "_config_illume_slipshelf_settings")) return;
    v = E_NEW(E_Config_Dialog_View, 1);
-   v->create_cfdata        = _e_cfg_slipshelf_create;
-   v->free_cfdata          = _e_cfg_slipshelf_free;
+   v->create_cfdata = _e_cfg_slipshelf_create;
+   v->free_cfdata = _e_cfg_slipshelf_free;
    v->basic.create_widgets = _e_cfg_slipshelf_ui;
-   v->basic_only           = 1;
-   v->normal_win           = 1;
-   v->scroll               = 1;
+   v->basic_only = 1;
+   v->normal_win = 1;
+   v->scroll = 1;
    cfd = e_config_dialog_new(con, "Top Shelf Settings",
 			     "E", "_config_illume_slipshelf_settings",
 			     "enlightenment/slipshelf_settings", 0, v, NULL);
@@ -650,8 +673,9 @@ e_cfg_slipshelf(E_Container *con, const char *params)
 
 ///////////////////////////////////////////////////////////////////////////////
 Ecore_Timer *_e_cfg_thumbscroll_change_timer = NULL;
+
 static Eina_Bool
-_e_cfg_thumbscroll_change_timeout(__UNUSED__ void *data)
+_e_cfg_thumbscroll_change_timeout(void *data __UNUSED__)
 {
    if (e_config->thumbscroll_threshhold == 0)
      {
@@ -667,31 +691,36 @@ _e_cfg_thumbscroll_change_timeout(__UNUSED__ void *data)
    _e_cfg_thumbscroll_change_timer = NULL;
    return ECORE_CALLBACK_CANCEL;
 }
+
 static void
-_e_cfg_thumbscroll_change(void *data, Evas_Object *obj, void *event_info) {
-   if (_e_cfg_thumbscroll_change_timer) ecore_timer_del(_e_cfg_thumbscroll_change_timer);
-   _e_cfg_thumbscroll_change_timer = ecore_timer_add(0.5, _e_cfg_thumbscroll_change_timeout, data);
+_e_cfg_thumbscroll_change(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__) 
+{
+   if (_e_cfg_thumbscroll_change_timer) 
+     ecore_timer_del(_e_cfg_thumbscroll_change_timer);
+   _e_cfg_thumbscroll_change_timer = 
+     ecore_timer_add(0.5, _e_cfg_thumbscroll_change_timeout, data);
 }
 
 static void *
-_e_cfg_thumbscroll_create(E_Config_Dialog *cfd)
+_e_cfg_thumbscroll_create(E_Config_Dialog *cfd __UNUSED__)
 { // alloc cfd->cfdata
    return NULL;
 }
 
 static void 
-_e_cfg_thumbscroll_free(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_e_cfg_thumbscroll_free(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata __UNUSED__)
 { // free cfd->cfdata
+
 }
 
 static Evas_Object *
-_e_cfg_thumbscroll_ui(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdata)
+_e_cfg_thumbscroll_ui(E_Config_Dialog *cfd __UNUSED__, Evas *e, E_Config_Dialog_Data *cfdata __UNUSED__)
 {
    Evas_Object *list, *o, *frame;
    E_Radio_Group *rg;
 
    list = e_widget_list_add(e, 0, 0);
-   
+
    frame = e_widget_framelist_add(e, "Drag Sensitivity", 0);
    rg = e_widget_radio_group_new(&(e_config->thumbscroll_threshhold));
    o = e_widget_radio_add(e, "Very High", 6, rg);
@@ -721,19 +750,19 @@ _e_cfg_thumbscroll_ui(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdat
 }
 
 EAPI void
-e_cfg_thumbscroll(E_Container *con, const char *params)
+e_cfg_thumbscroll(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v = NULL;
    
    if (e_config_dialog_find("E", "_config_illume_thumbscroll_settings")) return;
    v = E_NEW(E_Config_Dialog_View, 1);
-   v->create_cfdata        = _e_cfg_thumbscroll_create;
-   v->free_cfdata          = _e_cfg_thumbscroll_free;
+   v->create_cfdata = _e_cfg_thumbscroll_create;
+   v->free_cfdata = _e_cfg_thumbscroll_free;
    v->basic.create_widgets = _e_cfg_thumbscroll_ui;
-   v->basic_only           = 1;
-   v->normal_win           = 1;
-   v->scroll               = 0;
+   v->basic_only = 1;
+   v->normal_win = 1;
+   v->scroll = 0;
    cfd = e_config_dialog_new(con, "Finger Scrolling",
 			     "E", "_config_illume_thumbscroll_settings",
 			     "enlightenment/thumbscroll_settings", 0, v, NULL);
@@ -742,8 +771,9 @@ e_cfg_thumbscroll(E_Container *con, const char *params)
 
 ///////////////////////////////////////////////////////////////////////////////
 Ecore_Timer *_e_cfg_fps_change_timer = NULL;
+
 static Eina_Bool
-_e_cfg_fps_change_timeout(__UNUSED__ void *data)
+_e_cfg_fps_change_timeout(void *data __UNUSED__)
 {
    e_config->framerate = illume_cfg->performance.fps;
    edje_frametime_set(1.0 / e_config->framerate);
@@ -751,25 +781,29 @@ _e_cfg_fps_change_timeout(__UNUSED__ void *data)
    _e_cfg_fps_change_timer = NULL;
    return ECORE_CALLBACK_CANCEL;
 }
+
 static void
-_e_cfg_fps_change(void *data, Evas_Object *obj, void *event_info) {
+_e_cfg_fps_change(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__) 
+{
    if (_e_cfg_fps_change_timer) ecore_timer_del(_e_cfg_fps_change_timer);
-   _e_cfg_fps_change_timer = ecore_timer_add(0.5, _e_cfg_fps_change_timeout, data);
+   _e_cfg_fps_change_timer = 
+     ecore_timer_add(0.5, _e_cfg_fps_change_timeout, data);
 }
 
 static void *
-_e_cfg_fps_create(E_Config_Dialog *cfd)
+_e_cfg_fps_create(E_Config_Dialog *cfd __UNUSED__)
 { // alloc cfd->cfdata
    return NULL;
 }
 
 static void 
-_e_cfg_fps_free(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_e_cfg_fps_free(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata __UNUSED__)
 { // free cfd->cfdata
+
 }
 
 static Evas_Object *
-_e_cfg_fps_ui(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdata)
+_e_cfg_fps_ui(E_Config_Dialog *cfd __UNUSED__, Evas *e, E_Config_Dialog_Data *cfdata __UNUSED__)
 {
    Evas_Object *list, *o, *frame;
    E_Radio_Group *rg;
@@ -808,19 +842,19 @@ _e_cfg_fps_ui(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdata)
 }
 
 EAPI void
-e_cfg_fps(E_Container *con, const char *params)
+e_cfg_fps(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v = NULL;
    
    if (e_config_dialog_find("E", "_config_illume_fps_settings")) return;
    v = E_NEW(E_Config_Dialog_View, 1);
-   v->create_cfdata        = _e_cfg_fps_create;
-   v->free_cfdata          = _e_cfg_fps_free;
+   v->create_cfdata = _e_cfg_fps_create;
+   v->free_cfdata = _e_cfg_fps_free;
    v->basic.create_widgets = _e_cfg_fps_ui;
-   v->basic_only           = 1;
-   v->normal_win           = 1;
-   v->scroll               = 0;
+   v->basic_only = 1;
+   v->normal_win = 1;
+   v->scroll = 0;
    cfd = e_config_dialog_new(con, "Framerate",
 			     "E", "_config_illume_fps_settings",
 			     "enlightenment/fps_settings", 0, v, NULL);
@@ -839,33 +873,34 @@ struct _Gadit
 E_Slipshelf *local_slipshelf = NULL;
 Eina_List *gadits = NULL;
 Ecore_Timer *_e_cfg_gadgets_change_timer = NULL;
+
 static Eina_Bool
-_e_cfg_gadgets_change_timeout(__UNUSED__ void *data)
+_e_cfg_gadgets_change_timeout(void *data __UNUSED__)
 {
    Eina_List *l2;
-	Gadit *gi;
+   Gadit *gi;
    int update = 0;
-	
+
    EINA_LIST_FREE(gadits, gi)
-	if (gi->enabled != gi->was_enabled)
-	  {
-	     if (gi->enabled)
-	       {
-		  e_gadcon_client_config_new(gi->gc, gi->name);
-	       }
-	     else
-	       {
-		       E_Config_Gadcon_Client *gccc;
-		       
+     if (gi->enabled != gi->was_enabled)
+       {
+          if (gi->enabled)
+            {
+               e_gadcon_client_config_new(gi->gc, gi->name);
+            }
+          else
+            {
+               E_Config_Gadcon_Client *gccc;
+
 	       EINA_LIST_FOREACH(gi->gc->cf->clients, l2, gccc)
 		 {
-		       if (strcmp(gi->name, gccc->name)) continue;
-		       e_gadcon_client_config_del(gi->gc->cf, gccc);
-		    }
-	       }
-	     update = 1;
-	     gi->was_enabled = gi->enabled;
-	  }
+                    if (strcmp(gi->name, gccc->name)) continue;
+                    e_gadcon_client_config_del(gi->gc->cf, gccc);
+                 }
+            }
+          update = 1;
+          gi->was_enabled = gi->enabled;
+       }
    if (update)
      {
         e_gadcon_unpopulate(local_slipshelf->gadcon);
@@ -877,14 +912,18 @@ _e_cfg_gadgets_change_timeout(__UNUSED__ void *data)
    _e_cfg_gadgets_change_timer = NULL;
    return ECORE_CALLBACK_CANCEL;
 }
+
 static void
-_e_cfg_gadgets_change(void *data, Evas_Object *obj, void *event_info) {
-   if (_e_cfg_gadgets_change_timer) ecore_timer_del(_e_cfg_gadgets_change_timer);
-   _e_cfg_gadgets_change_timer = ecore_timer_add(0.5, _e_cfg_gadgets_change_timeout, data);
+_e_cfg_gadgets_change(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__) 
+{
+   if (_e_cfg_gadgets_change_timer) 
+     ecore_timer_del(_e_cfg_gadgets_change_timer);
+   _e_cfg_gadgets_change_timer = 
+     ecore_timer_add(0.5, _e_cfg_gadgets_change_timeout, data);
 }
 
 static void *
-_e_cfg_gadgets_create(E_Config_Dialog *cfd)
+_e_cfg_gadgets_create(E_Config_Dialog *cfd __UNUSED__)
 { // alloc cfd->cfdata
    local_slipshelf = slipshelf;
    e_object_ref(E_OBJECT(local_slipshelf));
@@ -892,10 +931,10 @@ _e_cfg_gadgets_create(E_Config_Dialog *cfd)
 }
 
 static void 
-_e_cfg_gadgets_free(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_e_cfg_gadgets_free(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata __UNUSED__)
 { // free cfd->cfdata
-	Gadit *gi;
-	
+   Gadit *gi;
+
    EINA_LIST_FREE(gadits, gi)
      {
 	eina_stringshare_del(gi->name);
@@ -906,7 +945,7 @@ _e_cfg_gadgets_free(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 }
 
 static Evas_Object *
-_e_cfg_gadgets_ui(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdata)
+_e_cfg_gadgets_ui(E_Config_Dialog *cfd __UNUSED__, Evas *e, E_Config_Dialog_Data *cfdata __UNUSED__)
 {
    Evas_Object *list, *o, *frame;
    E_Gadcon_Client_Class *cc;
@@ -960,12 +999,12 @@ _e_cfg_gadgets_ui(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdata)
 	if (!lbl) lbl = cc->name;
 	on = 0;
 	EINA_LIST_FOREACH(local_slipshelf->gadcon_extra->cf->clients, l3, gccc)
-	     if (!strcmp(cc->name, gccc->name))
-	       {
-		  on = 1;
-		  break;
-	       }
-	
+          if (!strcmp(cc->name, gccc->name))
+            {
+               on = 1;
+               break;
+            }
+
 	gi = E_NEW(Gadit, 1);
 	gi->gc = local_slipshelf->gadcon_extra;
 	gi->name = eina_stringshare_add(cc->name);
@@ -982,19 +1021,19 @@ _e_cfg_gadgets_ui(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdata)
 }
 
 EAPI void
-e_cfg_gadgets(E_Container *con, const char *params)
+e_cfg_gadgets(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v = NULL;
    
    if (e_config_dialog_find("E", "_config_illume_gadgets_settings")) return;
    v = E_NEW(E_Config_Dialog_View, 1);
-   v->create_cfdata        = _e_cfg_gadgets_create;
-   v->free_cfdata          = _e_cfg_gadgets_free;
+   v->create_cfdata = _e_cfg_gadgets_create;
+   v->free_cfdata = _e_cfg_gadgets_free;
    v->basic.create_widgets = _e_cfg_gadgets_ui;
-   v->basic_only           = 1;
-   v->normal_win           = 1;
-   v->scroll               = 1;
+   v->basic_only = 1;
+   v->normal_win = 1;
+   v->scroll = 1;
    cfd = e_config_dialog_new(con, "Top Shelf Gadgets",
 			     "E", "_config_illume_gadgets_settings",
 			     "enlightenment/gadgets_settings", 0, v, NULL);
@@ -1006,10 +1045,8 @@ int external_keyboard = 0;
 Ecore_Timer *_e_cfg_keyboard_change_timer = NULL;
 
 static Eina_Bool
-_e_cfg_keyboard_change_timeout(__UNUSED__ void *data)
+_e_cfg_keyboard_change_timeout(void *data __UNUSED__)
 {
-   Eina_List *l;
-
    illume_cfg->kbd.use_internal = 0;
    if (illume_cfg->kbd.run_keyboard)
      {
@@ -1055,14 +1092,18 @@ _e_cfg_keyboard_change_timeout(__UNUSED__ void *data)
    _e_cfg_keyboard_change_timer = NULL;
    return ECORE_CALLBACK_CANCEL;
 }
+
 static void
-_e_cfg_keyboard_change(void *data, Evas_Object *obj, void *event_info) {
-   if (_e_cfg_keyboard_change_timer) ecore_timer_del(_e_cfg_keyboard_change_timer);
-   _e_cfg_keyboard_change_timer = ecore_timer_add(0.5, _e_cfg_keyboard_change_timeout, data);
+_e_cfg_keyboard_change(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__) 
+{
+   if (_e_cfg_keyboard_change_timer) 
+     ecore_timer_del(_e_cfg_keyboard_change_timer);
+   _e_cfg_keyboard_change_timer = 
+     ecore_timer_add(0.5, _e_cfg_keyboard_change_timeout, data);
 }
 
 static void *
-_e_cfg_keyboard_create(E_Config_Dialog *cfd)
+_e_cfg_keyboard_create(E_Config_Dialog *cfd __UNUSED__)
 { // alloc cfd->cfdata
    local_slipshelf = slipshelf;
    e_object_ref(E_OBJECT(local_slipshelf));
@@ -1070,16 +1111,16 @@ _e_cfg_keyboard_create(E_Config_Dialog *cfd)
 }
 
 static void 
-_e_cfg_keyboard_free(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_e_cfg_keyboard_free(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata __UNUSED__)
 { // free cfd->cfdata
+
 }
 
 static Evas_Object *
-_e_cfg_keyboard_ui(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdata)
+_e_cfg_keyboard_ui(E_Config_Dialog *cfd __UNUSED__, Evas *e, E_Config_Dialog_Data *cfdata __UNUSED__)
 {
    Evas_Object *list, *o, *frame;
    E_Radio_Group *rg;
-   Eina_List *l;
 
    list = e_widget_list_add(e, 0, 0);
    
@@ -1149,19 +1190,19 @@ _e_cfg_keyboard_ui(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdata)
 }
 
 EAPI void
-e_cfg_keyboard(E_Container *con, const char *params)
+e_cfg_keyboard(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v = NULL;
    
    if (e_config_dialog_find("E", "_config_illume_keyboard_settings")) return;
    v = E_NEW(E_Config_Dialog_View, 1);
-   v->create_cfdata        = _e_cfg_keyboard_create;
-   v->free_cfdata          = _e_cfg_keyboard_free;
+   v->create_cfdata = _e_cfg_keyboard_create;
+   v->free_cfdata = _e_cfg_keyboard_free;
    v->basic.create_widgets = _e_cfg_keyboard_ui;
-   v->basic_only           = 1;
-   v->normal_win           = 1;
-   v->scroll               = 1;
+   v->basic_only = 1;
+   v->normal_win = 1;
+   v->scroll = 1;
    cfd = e_config_dialog_new(con, "Keyboard Settings",
 			     "E", "_config_illume_keyboard_settings",
 			     "enlightenment/keyboard_settings", 0, v, NULL);
@@ -1180,14 +1221,15 @@ struct _Data
    const void *data;
 };
 
+/*
 static Evas_Object *
 _e_cfg_win_new(const char *title, const char *name, const char *themedir, void (*delfunc) (const void *data), const void *data)
 {
    E_Zone *zone;
    E_Win *win;
-   Evas_Object *o, *sf, *ol;
+   Evas_Object *o, *ol;
    Data *d;
-   
+
    zone = e_util_zone_current_get(e_manager_current_get());
    if (!zone) return NULL;
    win = e_win_new(zone->container);
@@ -1241,7 +1283,7 @@ _e_cfg_win_complete(Evas_Object *ol)
 }
 
 static void
-_cb_signal_ok(void *data, Evas_Object *obj, const char *emission, const char *source)
+_cb_signal_ok(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    E_Win *win;
    Data *d;
@@ -1294,14 +1336,7 @@ _theme_obj_new(Evas *e, const char *custom_dir, const char *group)
      }
    return o;
 }
-
-
-
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////
+*/
 
 typedef struct _DB_Method DB_Method;
 struct _DB_Method
@@ -1316,7 +1351,7 @@ struct _DB_Method
 
 // illume_cfg->launcher.mode 0/1
 static DBusMessage *
-_dbcb_launcher_type_get(E_DBus_Object *obj, DBusMessage *msg)
+_dbcb_launcher_type_get(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 {
    DBusMessage *reply;
    DBusMessageIter iter;
@@ -1328,7 +1363,7 @@ _dbcb_launcher_type_get(E_DBus_Object *obj, DBusMessage *msg)
 }
 
 static DBusMessage *
-_dbcb_launcher_type_set(E_DBus_Object *obj, DBusMessage *msg)
+_dbcb_launcher_type_set(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 {
    DBusMessageIter iter;
    DBusMessage *reply;
@@ -1350,7 +1385,7 @@ _dbcb_launcher_type_set(E_DBus_Object *obj, DBusMessage *msg)
 
 // illume_cfg->launcher.icon_size 1-640
 static DBusMessage *
-_dbcb_launcher_icon_size_get(E_DBus_Object *obj, DBusMessage *msg)
+_dbcb_launcher_icon_size_get(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 {
    DBusMessage *reply;
    DBusMessageIter iter;
@@ -1362,7 +1397,7 @@ _dbcb_launcher_icon_size_get(E_DBus_Object *obj, DBusMessage *msg)
 }
 
 static DBusMessage *
-_dbcb_launcher_icon_size_set(E_DBus_Object *obj, DBusMessage *msg)
+_dbcb_launcher_icon_size_set(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 {
    DBusMessageIter iter;
    DBusMessage *reply;
@@ -1384,7 +1419,7 @@ _dbcb_launcher_icon_size_set(E_DBus_Object *obj, DBusMessage *msg)
 
 // illume_cfg->launcher.single_click 0/1
 static DBusMessage *
-_dbcb_launcher_single_click_get(E_DBus_Object *obj, DBusMessage *msg)
+_dbcb_launcher_single_click_get(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 {
    DBusMessage *reply;
    DBusMessageIter iter;
@@ -1396,7 +1431,7 @@ _dbcb_launcher_single_click_get(E_DBus_Object *obj, DBusMessage *msg)
 }
 
 static DBusMessage *
-_dbcb_launcher_single_click_set(E_DBus_Object *obj, DBusMessage *msg)
+_dbcb_launcher_single_click_set(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 {
    DBusMessageIter iter;
    DBusMessage *reply;
@@ -1418,7 +1453,7 @@ _dbcb_launcher_single_click_set(E_DBus_Object *obj, DBusMessage *msg)
 
 // illume_cfg->launcher.single_click_delay
 static DBusMessage *
-_dbcb_launcher_single_click_delay_get(E_DBus_Object *obj, DBusMessage *msg)
+_dbcb_launcher_single_click_delay_get(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 {
    DBusMessage *reply;
    DBusMessageIter iter;
@@ -1430,7 +1465,7 @@ _dbcb_launcher_single_click_delay_get(E_DBus_Object *obj, DBusMessage *msg)
 }
 
 static DBusMessage *
-_dbcb_launcher_single_click_delay_set(E_DBus_Object *obj, DBusMessage *msg)
+_dbcb_launcher_single_click_delay_set(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 {
    DBusMessageIter iter;
    DBusMessage *reply;
@@ -1452,7 +1487,7 @@ _dbcb_launcher_single_click_delay_set(E_DBus_Object *obj, DBusMessage *msg)
 
 // e_config->screensaver_timeout 0(off)-3600
 static DBusMessage *
-_dbcb_screensaver_timeout_get(E_DBus_Object *obj, DBusMessage *msg)
+_dbcb_screensaver_timeout_get(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 {
    DBusMessage *reply;
    DBusMessageIter iter;
@@ -1467,7 +1502,7 @@ _dbcb_screensaver_timeout_get(E_DBus_Object *obj, DBusMessage *msg)
 }
 
 static DBusMessage *
-_dbcb_screensaver_timeout_set(E_DBus_Object *obj, DBusMessage *msg)
+_dbcb_screensaver_timeout_set(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 {
    DBusMessageIter iter;
    DBusMessage *reply;
@@ -1489,7 +1524,7 @@ _dbcb_screensaver_timeout_set(E_DBus_Object *obj, DBusMessage *msg)
 
 // illume_cfg->power.auto_suspend_delay 0(off)-600
 static DBusMessage *
-_dbcb_autosuspend_timeout_get(E_DBus_Object *obj, DBusMessage *msg)
+_dbcb_autosuspend_timeout_get(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 {
    DBusMessage *reply;
    DBusMessageIter iter;
@@ -1504,7 +1539,7 @@ _dbcb_autosuspend_timeout_get(E_DBus_Object *obj, DBusMessage *msg)
 }
 
 static DBusMessage *
-_dbcb_autosuspend_timeout_set(E_DBus_Object *obj, DBusMessage *msg)
+_dbcb_autosuspend_timeout_set(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 {
    DBusMessageIter iter;
    DBusMessage *reply;
@@ -1526,7 +1561,7 @@ _dbcb_autosuspend_timeout_set(E_DBus_Object *obj, DBusMessage *msg)
 
 // illume_cfg->sliding.layout.duration
 static DBusMessage *
-_dbcb_slide_window_duration_get(E_DBus_Object *obj, DBusMessage *msg)
+_dbcb_slide_window_duration_get(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 {
    DBusMessage *reply;
    DBusMessageIter iter;
@@ -1538,7 +1573,7 @@ _dbcb_slide_window_duration_get(E_DBus_Object *obj, DBusMessage *msg)
 }
 
 static DBusMessage *
-_dbcb_slide_window_duration_set(E_DBus_Object *obj, DBusMessage *msg)
+_dbcb_slide_window_duration_set(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 {
    DBusMessageIter iter;
    DBusMessage *reply;
@@ -1560,7 +1595,7 @@ _dbcb_slide_window_duration_set(E_DBus_Object *obj, DBusMessage *msg)
 
 // illume_cfg->sliding.slipshelf.duration
 static DBusMessage *
-_dbcb_slide_slipshelf_duration_get(E_DBus_Object *obj, DBusMessage *msg)
+_dbcb_slide_slipshelf_duration_get(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 {
    DBusMessage *reply;
    DBusMessageIter iter;
@@ -1572,7 +1607,7 @@ _dbcb_slide_slipshelf_duration_get(E_DBus_Object *obj, DBusMessage *msg)
 }
 
 static DBusMessage *
-_dbcb_slide_slipshelf_duration_set(E_DBus_Object *obj, DBusMessage *msg)
+_dbcb_slide_slipshelf_duration_set(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 {
    DBusMessageIter iter;
    DBusMessage *reply;
@@ -1594,7 +1629,7 @@ _dbcb_slide_slipshelf_duration_set(E_DBus_Object *obj, DBusMessage *msg)
 
 // illume_cfg->sliding.kbd.duration
 static DBusMessage *
-_dbcb_slide_kbd_duration_get(E_DBus_Object *obj, DBusMessage *msg)
+_dbcb_slide_kbd_duration_get(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 {
    DBusMessage *reply;
    DBusMessageIter iter;
@@ -1606,7 +1641,7 @@ _dbcb_slide_kbd_duration_get(E_DBus_Object *obj, DBusMessage *msg)
 }
 
 static DBusMessage *
-_dbcb_slide_kbd_duration_set(E_DBus_Object *obj, DBusMessage *msg)
+_dbcb_slide_kbd_duration_set(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 {
    DBusMessageIter iter;
    DBusMessage *reply;
@@ -1628,7 +1663,7 @@ _dbcb_slide_kbd_duration_set(E_DBus_Object *obj, DBusMessage *msg)
 
 // illume_cfg->sliding.busywin.duration
 static DBusMessage *
-_dbcb_slide_busywin_duration_get(E_DBus_Object *obj, DBusMessage *msg)
+_dbcb_slide_busywin_duration_get(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 {
    DBusMessage *reply;
    DBusMessageIter iter;
@@ -1640,7 +1675,7 @@ _dbcb_slide_busywin_duration_get(E_DBus_Object *obj, DBusMessage *msg)
 }
 
 static DBusMessage *
-_dbcb_slide_busywin_duration_set(E_DBus_Object *obj, DBusMessage *msg)
+_dbcb_slide_busywin_duration_set(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 {
    DBusMessageIter iter;
    DBusMessage *reply;
@@ -1662,7 +1697,7 @@ _dbcb_slide_busywin_duration_set(E_DBus_Object *obj, DBusMessage *msg)
 
 // illume_cfg->slipshelf.main_gadget_size
 static DBusMessage *
-_dbcb_slipshelf_main_gadget_size_get(E_DBus_Object *obj, DBusMessage *msg)
+_dbcb_slipshelf_main_gadget_size_get(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 {
    DBusMessage *reply;
    DBusMessageIter iter;
@@ -1674,7 +1709,7 @@ _dbcb_slipshelf_main_gadget_size_get(E_DBus_Object *obj, DBusMessage *msg)
 }
 
 static DBusMessage *
-_dbcb_slipshelf_main_gadget_size_set(E_DBus_Object *obj, DBusMessage *msg)
+_dbcb_slipshelf_main_gadget_size_set(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 {
    DBusMessageIter iter;
    DBusMessage *reply;
@@ -1696,7 +1731,7 @@ _dbcb_slipshelf_main_gadget_size_set(E_DBus_Object *obj, DBusMessage *msg)
 
 // illume_cfg->slipshelf.extra_gagdet_size
 static DBusMessage *
-_dbcb_slipshelf_extra_gadget_size_get(E_DBus_Object *obj, DBusMessage *msg)
+_dbcb_slipshelf_extra_gadget_size_get(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 {
    DBusMessage *reply;
    DBusMessageIter iter;
@@ -1708,7 +1743,7 @@ _dbcb_slipshelf_extra_gadget_size_get(E_DBus_Object *obj, DBusMessage *msg)
 }
 
 static DBusMessage *
-_dbcb_slipshelf_extra_gadget_size_set(E_DBus_Object *obj, DBusMessage *msg)
+_dbcb_slipshelf_extra_gadget_size_set(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 {
    DBusMessageIter iter;
    DBusMessage *reply;
@@ -1730,7 +1765,7 @@ _dbcb_slipshelf_extra_gadget_size_set(E_DBus_Object *obj, DBusMessage *msg)
 
 // e_config->thumbscroll_threshhold
 static DBusMessage *
-_dbcb_thumbscroll_threshhold_get(E_DBus_Object *obj, DBusMessage *msg)
+_dbcb_thumbscroll_threshhold_get(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 {
    DBusMessage *reply;
    DBusMessageIter iter;
@@ -1745,7 +1780,7 @@ _dbcb_thumbscroll_threshhold_get(E_DBus_Object *obj, DBusMessage *msg)
 }
 
 static DBusMessage *
-_dbcb_thumbscroll_threshhold_set(E_DBus_Object *obj, DBusMessage *msg)
+_dbcb_thumbscroll_threshhold_set(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 {
    DBusMessageIter iter;
    DBusMessage *reply;
@@ -1767,7 +1802,7 @@ _dbcb_thumbscroll_threshhold_set(E_DBus_Object *obj, DBusMessage *msg)
 
 // illume_cfg->performance.fps
 static DBusMessage *
-_dbcb_animation_fps_get(E_DBus_Object *obj, DBusMessage *msg)
+_dbcb_animation_fps_get(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 {
    DBusMessage *reply;
    DBusMessageIter iter;
@@ -1779,7 +1814,7 @@ _dbcb_animation_fps_get(E_DBus_Object *obj, DBusMessage *msg)
 }
 
 static DBusMessage *
-_dbcb_animation_fps_set(E_DBus_Object *obj, DBusMessage *msg)
+_dbcb_animation_fps_set(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 {
    DBusMessageIter iter;
    DBusMessage *reply;
@@ -1801,7 +1836,7 @@ _dbcb_animation_fps_set(E_DBus_Object *obj, DBusMessage *msg)
 
 // list available gadgets
 static DBusMessage *
-_dbcb_gadget_list_get(E_DBus_Object *obj, DBusMessage *msg)
+_dbcb_gadget_list_get(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 {
    DBusMessage *reply;
    DBusMessageIter iter, arr;
@@ -1822,7 +1857,7 @@ _dbcb_gadget_list_get(E_DBus_Object *obj, DBusMessage *msg)
 
 // list gadgets for main shelf
 static DBusMessage *
-_dbcb_slipshelf_main_gadget_list_get(E_DBus_Object *obj, DBusMessage *msg)
+_dbcb_slipshelf_main_gadget_list_get(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 {
    DBusMessage *reply;
    E_Config_Gadcon_Client *gccc;
@@ -1843,7 +1878,7 @@ _dbcb_slipshelf_main_gadget_list_get(E_DBus_Object *obj, DBusMessage *msg)
 
 // + gadgets for main shelf
 static DBusMessage *
-_dbcb_slipshelf_main_gadget_add(E_DBus_Object *obj, DBusMessage *msg)
+_dbcb_slipshelf_main_gadget_add(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 {
    DBusMessageIter iter;
    DBusMessage *reply;
@@ -1869,7 +1904,7 @@ _dbcb_slipshelf_main_gadget_add(E_DBus_Object *obj, DBusMessage *msg)
 
 // - gadgets for main shelf
 static DBusMessage *
-_dbcb_slipshelf_main_gadget_del(E_DBus_Object *obj, DBusMessage *msg)
+_dbcb_slipshelf_main_gadget_del(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 {
    DBusMessageIter iter;
    DBusMessage *reply;
@@ -1902,7 +1937,7 @@ _dbcb_slipshelf_main_gadget_del(E_DBus_Object *obj, DBusMessage *msg)
 
 // list gadgets for extra shelf
 static DBusMessage *
-_dbcb_slipshelf_extra_gadget_list_get(E_DBus_Object *obj, DBusMessage *msg)
+_dbcb_slipshelf_extra_gadget_list_get(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 {
    DBusMessage *reply;
    DBusMessageIter iter, arr;
@@ -1923,7 +1958,7 @@ _dbcb_slipshelf_extra_gadget_list_get(E_DBus_Object *obj, DBusMessage *msg)
 
 // + gadgets for extra shelf
 static DBusMessage *
-_dbcb_slipshelf_extra_gadget_add(E_DBus_Object *obj, DBusMessage *msg)
+_dbcb_slipshelf_extra_gadget_add(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 {
    DBusMessageIter iter;
    DBusMessage *reply;
@@ -1949,7 +1984,7 @@ _dbcb_slipshelf_extra_gadget_add(E_DBus_Object *obj, DBusMessage *msg)
 
 // - gadgets for extra shelf
 static DBusMessage *
-_dbcb_slipshelf_extra_gadget_del(E_DBus_Object *obj, DBusMessage *msg)
+_dbcb_slipshelf_extra_gadget_del(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 {
    DBusMessageIter iter;
    DBusMessage *reply;
@@ -1982,7 +2017,7 @@ _dbcb_slipshelf_extra_gadget_del(E_DBus_Object *obj, DBusMessage *msg)
 
 // get keyboard - "none", "internal", ["a.desktop", "b.desktop" ...]
 static DBusMessage *
-_dbcb_keyboard_get(E_DBus_Object *obj, DBusMessage *msg)
+_dbcb_keyboard_get(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 {
    DBusMessageIter iter;
    DBusMessage *reply;
@@ -2003,7 +2038,7 @@ _dbcb_keyboard_get(E_DBus_Object *obj, DBusMessage *msg)
 
 // set kebyoard - "none", "internal", ["a.desktop", "b.desktop" ...]
 static DBusMessage *
-_dbcb_keyboard_set(E_DBus_Object *obj, DBusMessage *msg)
+_dbcb_keyboard_set(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 {
    DBusMessageIter iter;
    DBusMessage *reply;

@@ -10,7 +10,6 @@ static Eina_Bool _e_busywin_cb_animate(void *data);
 static void _e_busywin_slide(E_Busywin *esw, int out, double len);
 static Eina_Bool _e_busywin_cb_mouse_up(void *data, int type, void *event);
 static Eina_Bool _e_busywin_cb_zone_move_resize(void *data, int type, void *event);
-static void _e_busywin_cb_item_sel(void *data, void *data2);
 
 static Evas_Object *_theme_obj_new(Evas *e, const char *custom_dir, const char *group);
 
@@ -36,14 +35,13 @@ e_busywin_new(E_Zone *zone, const char *themedir)
    E_Busywin *esw;
    Evas_Coord mw, mh;
    int x, y;
-   Evas_Object *o;
-     
+
    esw = E_OBJECT_ALLOC(E_Busywin, E_BUSYWIN_TYPE, _e_busywin_free);
    if (!esw) return NULL;
-   
+
    esw->zone = zone;
    if (themedir) esw->themedir = eina_stringshare_add(themedir);
-   
+
    esw->clickwin = ecore_x_window_input_new(zone->container->win,
 					    zone->x, zone->y, zone->w, zone->h);
    esw->popup = e_popup_new(esw->zone, -1, -1, 1, 1);
@@ -53,36 +51,36 @@ e_busywin_new(E_Zone *zone, const char *themedir)
 			    esw->popup->evas_win,
 			    ECORE_X_WINDOW_STACK_BELOW);
    e_popup_layer_set(esw->popup, 250);
-   
+
    esw->base_obj = _theme_obj_new(esw->popup->evas,
 				  esw->themedir,
 				  "e/modules/busywin/base/default");
 
    edje_object_size_min_calc(esw->base_obj, &mw, &mh);
-   
+
    x = zone->x;
    y = zone->y + zone->h;
    mw = zone->w;
-   
+
    e_popup_move_resize(esw->popup, x, y, mw, mh);
 
    evas_object_resize(esw->base_obj, esw->popup->w, esw->popup->h);
    e_popup_edje_bg_object_set(esw->popup, esw->base_obj);
    evas_object_show(esw->base_obj);
-   
+
    e_popup_show(esw->popup);
 
    busywins = eina_list_append(busywins, esw);
 
    esw->handlers = eina_list_append
      (esw->handlers,
-      ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP,
-			      _e_busywin_cb_mouse_up, esw));
+         ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP,
+                                 _e_busywin_cb_mouse_up, esw));
    esw->handlers = eina_list_append
      (esw->handlers,
-      ecore_event_handler_add(E_EVENT_ZONE_MOVE_RESIZE,
-			      _e_busywin_cb_zone_move_resize, esw));
-   
+         ecore_event_handler_add(E_EVENT_ZONE_MOVE_RESIZE,
+                                 _e_busywin_cb_zone_move_resize, esw));
+
    return esw;
 }
 
@@ -217,7 +215,7 @@ _e_busywin_slide(E_Busywin *esw, int out, double len)
 }
 
 static Eina_Bool
-_e_busywin_cb_mouse_up(void *data, __UNUSED__ int type, void *event)
+_e_busywin_cb_mouse_up(void *data, int type __UNUSED__, void *event)
 {
    Ecore_Event_Mouse_Button *ev;
    E_Busywin *esw;
@@ -233,7 +231,7 @@ _e_busywin_cb_mouse_up(void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_busywin_cb_zone_move_resize(void *data, __UNUSED__ int type, void *event)
+_e_busywin_cb_zone_move_resize(void *data, int type __UNUSED__, void *event)
 {
    E_Event_Zone_Move_Resize *ev;
    E_Busywin *esw;

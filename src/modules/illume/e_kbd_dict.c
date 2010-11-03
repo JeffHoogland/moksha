@@ -174,7 +174,7 @@ _e_kbd_dict_line_next(E_Kbd_Dict *kd, const char *p)
 }
 
 static char *
-_e_kbd_dict_line_parse(E_Kbd_Dict *kd, const char *p, int *usage)
+_e_kbd_dict_line_parse(E_Kbd_Dict *kd __UNUSED__, const char *p, int *usage)
 {
    const char *ps;
    char *wd = NULL;
@@ -194,12 +194,11 @@ _e_kbd_dict_line_parse(E_Kbd_Dict *kd, const char *p, int *usage)
 }
 
 static void
-_e_kbd_dict_lookup_build_line(E_Kbd_Dict *kd, const char *p, const char *eol, 
-			      int *glyphs)
+_e_kbd_dict_lookup_build_line(E_Kbd_Dict *kd __UNUSED__, const char *p, const char *eol, int *glyphs)
 {
    char *s;
    int p2;
-   
+
    s = alloca(eol - p + 1);
    strncpy(s, p, eol - p);
    s[eol - p] = 0;
@@ -691,17 +690,15 @@ e_kbd_dict_word_letter_delete(E_Kbd_Dict *kd)
 }
 
 static void
-_e_kbd_dict_matches_lookup_iter(E_Kbd_Dict *kd, Eina_List *word,
-				Eina_List *more)
+_e_kbd_dict_matches_lookup_iter(E_Kbd_Dict *kd, Eina_List *word, Eina_List *more)
 {
-   Eina_List *l, *l2, *list;
-   const char *p, *pn;
+   Eina_List *l, *list;
+   const char *p;
    char *base, *buf, *wd, *bufapp;
    E_Kbd_Dict_Letter *kl;
    int len, dist = 0, d, baselen, maxdist = 0, md;
-   
-   static int level = 0, lv;
-   
+   static int level = 0;
+
    len = 0;
    level++;
    for (l = word; l; l = l->next)
@@ -759,7 +756,7 @@ _e_kbd_dict_matches_lookup_iter(E_Kbd_Dict *kd, Eina_List *word,
 	       {
 		  E_Kbd_Dict_Word *kw;
 		  int usage = 0;
-		  
+
 		  wd = _e_kbd_dict_line_parse(kd, p, &usage);
 		  if (!wd) break;
 		  if (_e_kbd_dict_normalized_strcmp(wd, buf))
@@ -771,8 +768,8 @@ _e_kbd_dict_matches_lookup_iter(E_Kbd_Dict *kd, Eina_List *word,
 		  if (kw)
 		    {
 		       int accuracy;
-		       int w, b, w2, b2, wc, bc, upper;
-		       
+		       int w, b, w2, b2, wc, bc;
+
 		       // match any capitalisation
 		       for (w = 0, b = 0; wd[w] && buf[b];)
 			 {

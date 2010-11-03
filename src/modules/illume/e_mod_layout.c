@@ -46,14 +46,12 @@ static Eina_List *handlers = NULL;
 static Eina_List *effects = NULL;
 
 /* mainwin is the main big window currently focused/visible */
-static E_Border *mainwin = NULL;
-static E_Border *focuswin = NULL;
 static E_Border *dockwin = NULL;
 static int dockwin_use = 0;
 
 /* called from the module core */
 void
-_e_mod_layout_init(E_Module *m)
+_e_mod_layout_init(E_Module *m __UNUSED__)
 {
    hook1 = e_border_hook_add(E_BORDER_HOOK_EVAL_POST_FETCH,
 			     _e_mod_layout_cb_hook_post_fetch, NULL);
@@ -61,27 +59,26 @@ _e_mod_layout_init(E_Module *m)
 			     _e_mod_layout_cb_hook_post_border_assign, NULL);
    hook3 = e_border_hook_add(E_BORDER_HOOK_EVAL_END,
 			     _e_mod_layout_cb_hook_end, NULL);
-   handlers = eina_list_append
-     (handlers, ecore_event_handler_add
-         (E_EVENT_BORDER_ADD, _cb_event_border_add, NULL));
-   handlers = eina_list_append
-     (handlers, ecore_event_handler_add
-         (E_EVENT_BORDER_REMOVE, _cb_event_border_remove, NULL));
-   handlers = eina_list_append
-     (handlers, ecore_event_handler_add
-         (E_EVENT_BORDER_FOCUS_IN, _cb_event_border_focus_in, NULL));
-   handlers = eina_list_append
-     (handlers, ecore_event_handler_add
-         (E_EVENT_BORDER_FOCUS_OUT, _cb_event_border_focus_out, NULL));
-   handlers = eina_list_append
-     (handlers, ecore_event_handler_add
-         (E_EVENT_BORDER_SHOW, _cb_event_border_show, NULL));
-   handlers = eina_list_append
-     (handlers, ecore_event_handler_add
-         (E_EVENT_BORDER_HIDE, _cb_event_border_hide, NULL));
-   handlers = eina_list_append
-     (handlers, ecore_event_handler_add
-         (E_EVENT_ZONE_MOVE_RESIZE, _cb_event_zone_move_resize, NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add
+                               (E_EVENT_BORDER_ADD, _cb_event_border_add, NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add
+                               (E_EVENT_BORDER_REMOVE, 
+                                   _cb_event_border_remove, NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add
+                               (E_EVENT_BORDER_FOCUS_IN, 
+                                   _cb_event_border_focus_in, NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add
+                               (E_EVENT_BORDER_FOCUS_OUT, 
+                                   _cb_event_border_focus_out, NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add
+                               (E_EVENT_BORDER_SHOW, 
+                                   _cb_event_border_show, NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add
+                               (E_EVENT_BORDER_HIDE, 
+                                   _cb_event_border_hide, NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add
+                               (E_EVENT_ZONE_MOVE_RESIZE, 
+                                   _cb_event_zone_move_resize, NULL));
 
      {
 	E_Zone *zone;
@@ -314,7 +311,7 @@ _e_mod_layout_effect_slide_in(E_Border *bd, double in, int post)
 static Ecore_Timer *_dockwin_hide_timer = NULL;
 
 static Eina_Bool
-_e_mod_layout_cb_docwin_hide(void *data)
+_e_mod_layout_cb_docwin_hide(void *data __UNUSED__)
 {
    _dockwin_hide_timer = NULL;
    if (!dockwin) return ECORE_CALLBACK_CANCEL;
@@ -379,7 +376,7 @@ _is_dialog(E_Border *bd)
 }
 
 static void
-_e_mod_layout_cb_hook_post_fetch(void *data, void *data2)
+_e_mod_layout_cb_hook_post_fetch(void *data __UNUSED__, void *data2)
 {
    E_Border *bd;
 
@@ -673,7 +670,7 @@ _e_mod_layout_post_border_assign(E_Border *bd, int not_new)
 }
 
 static void
-_e_mod_layout_cb_hook_post_border_assign(void *data, void *data2)
+_e_mod_layout_cb_hook_post_border_assign(void *data __UNUSED__, void *data2)
 {
    E_Border *bd;
 
@@ -682,7 +679,7 @@ _e_mod_layout_cb_hook_post_border_assign(void *data, void *data2)
 }
 
 static void
-_e_mod_layout_cb_hook_end(void *data, void *data2)
+_e_mod_layout_cb_hook_end(void *data __UNUSED__, void *data2)
 {
    E_Border *bd;
 
@@ -693,7 +690,7 @@ _e_mod_layout_cb_hook_end(void *data, void *data2)
 }
 
 static Eina_Bool
-_cb_event_border_add(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_cb_event_border_add(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    E_Event_Border_Add *ev;
 
@@ -703,7 +700,7 @@ _cb_event_border_add(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_cb_event_border_remove(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_cb_event_border_remove(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    E_Event_Border_Remove *ev;
    Eina_List *l, *pl;
@@ -746,7 +743,7 @@ _cb_event_border_remove(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_cb_event_border_focus_in(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_cb_event_border_focus_in(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    E_Event_Border_Focus_In *ev;
    E_Border *bd;
@@ -758,12 +755,14 @@ _cb_event_border_focus_in(__UNUSED__ void *data, __UNUSED__ int type, void *even
      {
 	if (bd->client.qtopia.soft_menus)
 	  {
-	     if ((dockwin) && (!dockwin_use) && (dockwin->client.qtopia.soft_menu))
+	     if ((dockwin) && (!dockwin_use) && 
+                 (dockwin->client.qtopia.soft_menu))
 	       _e_mod_layout_dockwin_show();
 	  }
 	else
 	  {
-	     if ((dockwin) && (dockwin_use) && (dockwin->client.qtopia.soft_menu))
+	     if ((dockwin) && (dockwin_use) && 
+                 (dockwin->client.qtopia.soft_menu))
 	       _e_mod_layout_dockwin_hide();
 	  }
      }
@@ -771,7 +770,7 @@ _cb_event_border_focus_in(__UNUSED__ void *data, __UNUSED__ int type, void *even
 }
 
 static Eina_Bool
-_cb_event_border_focus_out(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_cb_event_border_focus_out(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    E_Event_Border_Focus_Out *ev;
    E_Border *bd;
@@ -783,7 +782,8 @@ _cb_event_border_focus_out(__UNUSED__ void *data, __UNUSED__ int type, void *eve
      {
 	if (bd->client.qtopia.soft_menus)
 	  {
-	     if ((dockwin) && (dockwin_use) && (dockwin->client.qtopia.soft_menu))
+	     if ((dockwin) && (dockwin_use) && 
+                 (dockwin->client.qtopia.soft_menu))
 	       _e_mod_layout_dockwin_hide();
 	  }
      }
@@ -791,7 +791,7 @@ _cb_event_border_focus_out(__UNUSED__ void *data, __UNUSED__ int type, void *eve
 }
 
 static Eina_Bool
-_cb_event_border_show(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_cb_event_border_show(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    E_Event_Border_Show *ev;
 
@@ -801,7 +801,7 @@ _cb_event_border_show(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_cb_event_border_hide(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_cb_event_border_hide(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    E_Event_Border_Hide *ev;
 
@@ -811,7 +811,7 @@ _cb_event_border_hide(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_cb_event_zone_move_resize(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_cb_event_zone_move_resize(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    _e_mod_layout_apply_all();
    return ECORE_CALLBACK_PASS_ON;

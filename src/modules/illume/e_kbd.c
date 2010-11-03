@@ -17,8 +17,9 @@ static E_Module *mod = NULL;
 //#define ICONIFY_TO_HIDE
 
 static Ecore_Job *_e_kbd_apply_all_job = NULL;
+
 static void
-_e_kbd_cb_apply_all_job(void *data)
+_e_kbd_cb_apply_all_job(void *data __UNUSED__)
 {
    _e_mod_layout_apply_all();
    _e_kbd_apply_all_job = NULL;
@@ -275,7 +276,7 @@ _e_kbd_all_toggle(void)
 }
 
 static Eina_Bool
-_e_kbd_cb_client_message(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_kbd_cb_client_message(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Client_Message *ev;
    
@@ -292,7 +293,7 @@ _e_kbd_cb_client_message(__UNUSED__ void *data, __UNUSED__ int type, void *event
 }
 
 static Eina_Bool
-_e_kbd_cb_border_remove(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_kbd_cb_border_remove(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    E_Event_Border_Remove *ev;
    E_Kbd *kbd;
@@ -333,7 +334,7 @@ _e_kbd_cb_border_remove(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_kbd_cb_border_focus_in(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_kbd_cb_border_focus_in(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    E_Event_Border_Focus_In *ev;
    
@@ -376,7 +377,7 @@ _e_kbd_cb_border_focus_in(__UNUSED__ void *data, __UNUSED__ int type, void *even
 }
 
 static Eina_Bool
-_e_kbd_cb_border_focus_out(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_kbd_cb_border_focus_out(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    E_Event_Border_Focus_Out *ev;
 
@@ -393,7 +394,7 @@ _e_kbd_cb_border_focus_out(__UNUSED__ void *data, __UNUSED__ int type, void *eve
 }
 
 static Eina_Bool
-_e_kbd_cb_border_property(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_kbd_cb_border_property(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    E_Event_Border_Property *ev;
    
@@ -439,7 +440,7 @@ _e_kbd_cb_border_property(__UNUSED__ void *data, __UNUSED__ int type, void *even
 }
 
 static void 
-_e_kbd_cb_border_hook_pre_post_fetch(void *data, void *data2)
+_e_kbd_cb_border_hook_pre_post_fetch(void *data __UNUSED__, void *data2)
 {
    E_Border *bd;
 
@@ -497,7 +498,7 @@ _e_kbd_cb_border_hook_pre_post_fetch(void *data, void *data2)
 }
 
 static void
-_e_kbd_cb_border_hook_post_fetch(void *data, void *data2)
+_e_kbd_cb_border_hook_post_fetch(void *data __UNUSED__, void *data2)
 {
    E_Border *bd;
 
@@ -507,7 +508,7 @@ _e_kbd_cb_border_hook_post_fetch(void *data, void *data2)
 }
 
 static void
-_e_kbd_cb_border_hook_post_border_assign(void *data, void *data2)
+_e_kbd_cb_border_hook_post_border_assign(void *data __UNUSED__, void *data2)
 {
    E_Border *bd;
    E_Kbd *kbd;
@@ -590,7 +591,7 @@ _e_kbd_cb_border_hook_post_border_assign(void *data, void *data2)
 }
 
 static void
-_e_kbd_cb_border_hook_end(void *data, void *data2)
+_e_kbd_cb_border_hook_end(void *data __UNUSED__, void *data2)
 {
    E_Kbd *kbd;
    E_Border *bd;
@@ -720,13 +721,13 @@ _e_kbd_dbus_keyboard_eval(void)
 }
 
 static void
-_e_kbd_dbus_cb_dev_input_keyboard(void *user_data, void *reply_data, DBusError *error)
+_e_kbd_dbus_cb_dev_input_keyboard(void *user_data __UNUSED__, void *reply_data, DBusError *error)
 {
    E_Hal_Manager_Find_Device_By_Capability_Return *ret = reply_data;
    Eina_List *l;
    char *device;
                                      
-   if (!ret || !ret->strings) return;
+   if ((!ret) || (!ret->strings)) return;
    
    if (dbus_error_is_set(error))
      {
@@ -764,20 +765,21 @@ _e_kbd_dbus_cb_input_keyboard_is(void *user_data, void *reply_data, DBusError *e
 }
 
 static void
-_e_kbd_dbus_cb_dev_add(void *data, DBusMessage *msg)
+_e_kbd_dbus_cb_dev_add(void *data __UNUSED__, DBusMessage *msg)
 {
    DBusError err;
    char *udi;
         
    dbus_error_init(&err);
    dbus_message_get_args(msg, &err, DBUS_TYPE_STRING, &udi, DBUS_TYPE_INVALID);
-   e_hal_device_query_capability(_e_kbd_dbus_conn, eina_stringshare_add(udi), "input.keyboard",
-                                       _e_kbd_dbus_cb_input_keyboard_is, 
-				                                   (void*)eina_stringshare_add(udi));
+   e_hal_device_query_capability(_e_kbd_dbus_conn, eina_stringshare_add(udi), 
+                                 "input.keyboard",
+                                 _e_kbd_dbus_cb_input_keyboard_is, 
+                                 (void*)eina_stringshare_add(udi));
 }
      
 static void
-_e_kbd_dbus_cb_dev_del(void *data, DBusMessage *msg)
+_e_kbd_dbus_cb_dev_del(void *data __UNUSED__, DBusMessage *msg)
 {
    DBusError err;
    char *udi;
@@ -789,7 +791,7 @@ _e_kbd_dbus_cb_dev_del(void *data, DBusMessage *msg)
 }
 
 static void
-_e_kbd_dbus_cb_cap_add(void *data, DBusMessage *msg)
+_e_kbd_dbus_cb_cap_add(void *data __UNUSED__, DBusMessage *msg)
 {
    DBusError err;
    char *udi, *capability;
@@ -807,7 +809,7 @@ _e_kbd_dbus_cb_cap_add(void *data, DBusMessage *msg)
 static void
 _e_kbd_dbus_ignore_keyboards_file_load(const char *file)
 {
-   char buf[4096];
+   char buf[PATH_MAX];
    FILE *f;
    
    f = fopen(file, "r");
@@ -836,6 +838,7 @@ static void
 _e_kbd_dbus_ignore_keyboards_load(void)
 {
    char buf[PATH_MAX];
+
    e_user_dir_concat_static(buf, "keyboards/ignore_built_in_keyboards");
    _e_kbd_dbus_ignore_keyboards_file_load(buf);
    snprintf(buf, sizeof(buf), "%s/keyboards/ignore_built_in_keyboards", e_module_dir_get(mod));
@@ -881,9 +884,12 @@ _e_kbd_dbus_real_kbd_shutdown(void)
 
    if (_e_kbd_dbus_conn)
      {
-	e_dbus_signal_handler_del(_e_kbd_dbus_conn, _e_kbd_dbus_handler_dev_add);
-	e_dbus_signal_handler_del(_e_kbd_dbus_conn, _e_kbd_dbus_handler_dev_del);
-	e_dbus_signal_handler_del(_e_kbd_dbus_conn, _e_kbd_dbus_handler_dev_chg);
+	e_dbus_signal_handler_del(_e_kbd_dbus_conn, 
+                                  _e_kbd_dbus_handler_dev_add);
+	e_dbus_signal_handler_del(_e_kbd_dbus_conn, 
+                                  _e_kbd_dbus_handler_dev_del);
+	e_dbus_signal_handler_del(_e_kbd_dbus_conn, 
+                                  _e_kbd_dbus_handler_dev_chg);
      }
    EINA_LIST_FREE(_e_kbd_dbus_real_ignore, str)
      eina_stringshare_del(str);
@@ -903,43 +909,43 @@ e_kbd_init(E_Module *m)
    handlers = eina_list_append(handlers, 
 			       ecore_event_handler_add
 			       (ECORE_X_EVENT_CLIENT_MESSAGE,
-				_e_kbd_cb_client_message, NULL));
+                                   _e_kbd_cb_client_message, NULL));
    handlers = eina_list_append(handlers, 
 			       ecore_event_handler_add
 			       (E_EVENT_BORDER_REMOVE,
-				_e_kbd_cb_border_remove, NULL));
+                                   _e_kbd_cb_border_remove, NULL));
    handlers = eina_list_append(handlers, 
 			       ecore_event_handler_add
 			       (E_EVENT_BORDER_FOCUS_IN,
-				_e_kbd_cb_border_focus_in, NULL));
+                                   _e_kbd_cb_border_focus_in, NULL));
    handlers = eina_list_append(handlers, 
 			       ecore_event_handler_add
 			       (E_EVENT_BORDER_FOCUS_OUT,
-				_e_kbd_cb_border_focus_out, NULL));
+                                   _e_kbd_cb_border_focus_out, NULL));
    handlers = eina_list_append(handlers, 
 			       ecore_event_handler_add
 			       (E_EVENT_BORDER_PROPERTY,
-				_e_kbd_cb_border_property, NULL));
+                                   _e_kbd_cb_border_property, NULL));
    border_hooks = eina_list_append(border_hooks,
 				   e_border_hook_add
 				   (E_BORDER_HOOK_EVAL_PRE_POST_FETCH,
-				    _e_kbd_cb_border_hook_pre_post_fetch,
-				    NULL));
+                                       _e_kbd_cb_border_hook_pre_post_fetch,
+                                       NULL));
    border_hooks = eina_list_append(border_hooks,
 				   e_border_hook_add
 				   (E_BORDER_HOOK_EVAL_POST_FETCH,
-				    _e_kbd_cb_border_hook_post_fetch,
-				    NULL));
+                                       _e_kbd_cb_border_hook_post_fetch,
+                                       NULL));
    border_hooks = eina_list_append(border_hooks,
 				   e_border_hook_add
 				   (E_BORDER_HOOK_EVAL_POST_BORDER_ASSIGN,
-				    _e_kbd_cb_border_hook_post_border_assign,
-				    NULL));
+                                       _e_kbd_cb_border_hook_post_border_assign,
+                                       NULL));
    border_hooks = eina_list_append(border_hooks,
 				   e_border_hook_add
 				   (E_BORDER_HOOK_EVAL_END,
-				    _e_kbd_cb_border_hook_end,
-				    NULL));
+                                       _e_kbd_cb_border_hook_end,
+                                       NULL));
    _e_kbd_dbus_real_kbd_init();
    return 1;
 }
@@ -963,7 +969,7 @@ e_kbd_shutdown(void)
 }
 
 EAPI E_Kbd *
-e_kbd_new(E_Zone *zone, const char *themedir, const char *syskbds, const char *sysdicts)
+e_kbd_new(E_Zone *zone __UNUSED__, const char *themedir __UNUSED__, const char *syskbds __UNUSED__, const char *sysdicts __UNUSED__)
 {
    E_Kbd *kbd;
    
@@ -1075,11 +1081,11 @@ e_kbd_safe_app_region_get(E_Zone *zone, int *x, int *y, int *w, int *h)
 }
 
 EAPI void
-e_kbd_fullscreen_set(E_Zone *zone, int fullscreen)
+e_kbd_fullscreen_set(E_Zone *zone __UNUSED__, int fullscreen)
 {
    Eina_List *l;
    E_Kbd *kbd;
-	
+
    EINA_LIST_FOREACH(kbds, l, kbd)
      if ((!!fullscreen) != kbd->fullscreen)
        {

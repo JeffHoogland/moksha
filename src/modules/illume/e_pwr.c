@@ -123,7 +123,7 @@ _system_unreq_state(void)
 
 /* internal calls */
 static Eina_Bool
-_cb_suspend(void *data)
+_cb_suspend(void *data __UNUSED__)
 {
    suspended = 1;
    
@@ -139,7 +139,7 @@ _cb_suspend(void *data)
 }
 
 static Eina_Bool
-_cb_saver(void *data, int ev_type, void *ev)
+_cb_saver(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
 {
    Ecore_X_Event_Screensaver_Notify *event;
    
