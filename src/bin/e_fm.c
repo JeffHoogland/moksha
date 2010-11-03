@@ -4068,8 +4068,8 @@ _e_fm2_icons_place(Evas_Object *obj)
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    /* take the icon list and find a location for them */
-   sd->max.w = EINA_FALSE;
-   sd->max.h = EINA_FALSE;
+   sd->max.w = 0;
+   sd->max.h = 0;
    switch (_e_fm2_view_mode_get(sd))
      {
       case E_FM2_VIEW_MODE_ICONS:
@@ -6231,8 +6231,8 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
            }
          if (adjust_icons)
            {
-              sd->max.w = EINA_FALSE;
-              sd->max.h = EINA_FALSE;
+              sd->max.w = 0;
+              sd->max.h = 0;
               EINA_LIST_FOREACH(sd->icons, l, ic)
                 {
                    if ((ic->x + ic->w) > sd->max.w) sd->max.w = ic->x + ic->w;
@@ -7620,7 +7620,7 @@ static void
 _e_fm2_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 {
    E_Fm2_Smart_Data *sd;
-   int wch = 0;
+   Eina_Bool wch = EINA_FALSE;
 
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
