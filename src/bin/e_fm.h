@@ -74,8 +74,8 @@ struct _E_Fm2_Config
 	 int w, h;
       } icon, list;
       struct {
-	 Eina_Bool w : 1;
-	 Eina_Bool h : 1;
+	 unsigned char w;
+	 unsigned char h;
       } fixed;
       struct {
 	 Eina_Bool show : 1;
