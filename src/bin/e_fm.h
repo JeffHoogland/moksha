@@ -119,7 +119,7 @@ struct _E_Fm2_Icon_Info
    const char       *real_link;
    const char       *category;
    struct stat       statinfo;
-   Eina_Bool     icon_type;
+   unsigned char     icon_type;
    Eina_Bool     mount : 1;
    Eina_Bool     removable : 1;
    Eina_Bool     removable_full : 1;
