@@ -31,9 +31,6 @@ e_configure_init(void)
    maug = e_int_menus_menu_augmentation_add_sorted
      ("config/1", _("Modules"), _e_configure_menu_add, NULL, NULL, NULL);
 
-   handlers = eina_list_append
-     (handlers, ecore_event_handler_add
-         (EFREET_EVENT_DESKTOP_CACHE_UPDATE, _e_configure_cb_efreet_desktop_cache_update, NULL));
    if (update_job)
       {
          ecore_job_del(update_job);
@@ -249,6 +246,9 @@ _configure_job(void *data __UNUSED__)
 static Eina_Bool
 _configure_init_timer(void *data __UNUSED__)
 {
+   handlers = eina_list_append
+     (handlers, ecore_event_handler_add
+         (EFREET_EVENT_DESKTOP_CACHE_UPDATE, _e_configure_cb_efreet_desktop_cache_update, NULL));
    if (update_job) ecore_job_del(update_job);
    update_job = ecore_job_add(_configure_job, NULL);
    return EINA_FALSE;
