@@ -413,15 +413,6 @@ _ibar_resize_handle(IBar *b)
    e_box_freeze(b->o_box);
    EINA_LIST_FOREACH(b->icons, l, ic)
      {
-	if ((w > 0) && (h > 0))
-          {
-             int size;
-
-             size = MAX(w, h);
-	     /* TODO: Check icon padding */
-             if (ic->o_icon) e_util_desktop_icon_file_set(ic->o_icon, ic->app, size);
-             if (ic->o_icon2) e_util_desktop_icon_file_set(ic->o_icon2, ic->app, size);
-          }
 	e_box_pack_options_set(ic->o_holder,
 			       1, 1, /* fill */
 			       0, 0, /* expand */
@@ -599,14 +590,14 @@ static void
 _ibar_icon_fill(IBar_Icon *ic)
 {
    if (ic->o_icon) evas_object_del(ic->o_icon);
-   ic->o_icon = e_util_desktop_icon_add(ic->app, 48, 
-                                        evas_object_evas_get(ic->ibar->o_box));
+   ic->o_icon = e_icon_add(evas_object_evas_get(ic->ibar->o_box));
+   e_icon_fdo_icon_set(ic->o_icon, ic->app->icon);
    edje_object_part_swallow(ic->o_holder, "e.swallow.content", ic->o_icon);
    evas_object_pass_events_set(ic->o_icon, 1);
    evas_object_show(ic->o_icon);
    if (ic->o_icon2) evas_object_del(ic->o_icon2);
-   ic->o_icon2 = e_util_desktop_icon_add(ic->app, 48, 
-                                         evas_object_evas_get(ic->ibar->o_box));
+   ic->o_icon2 = e_icon_add(evas_object_evas_get(ic->ibar->o_box));
+   e_icon_fdo_icon_set(ic->o_icon2, ic->app->icon);
    edje_object_part_swallow(ic->o_holder2, "e.swallow.content", ic->o_icon2);
    evas_object_pass_events_set(ic->o_icon2, 1);
    evas_object_show(ic->o_icon2);
