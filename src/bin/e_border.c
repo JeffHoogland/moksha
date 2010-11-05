@@ -1611,7 +1611,7 @@ e_border_focus_set_with_pointer(E_Border *bd)
 	  e_border_focus_set(bd, 1, 1);
        }
 
-   ecore_x_pointer_ungrab();
+   //ecore_x_pointer_ungrab();
 }
 
 EAPI void
