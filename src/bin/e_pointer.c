@@ -294,7 +294,7 @@ _e_pointer_canvas_del(E_Pointer *p)
 }
 
 static void
-_e_pointer_cb_move(void *data, Evas *e __UNUSED__, __UNUSED__ Evas_Object *obj, __UNUSED__ void *event_info)
+_e_pointer_cb_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Pointer *p;
    Evas_Coord x, y;
@@ -454,7 +454,7 @@ _e_pointer_active_handle(E_Pointer *p)
 }
 
 static Eina_Bool
-_e_pointer_cb_mouse_down(__UNUSED__ void *data, __UNUSED__ int type, __UNUSED__ void *event)
+_e_pointer_cb_mouse_down(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    Eina_List *l;
    E_Pointer *p;
@@ -473,7 +473,7 @@ _e_pointer_cb_mouse_down(__UNUSED__ void *data, __UNUSED__ int type, __UNUSED__ 
 }
 
 static Eina_Bool
-_e_pointer_cb_mouse_up(__UNUSED__ void *data, __UNUSED__ int type, __UNUSED__ void *event)
+_e_pointer_cb_mouse_up(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    Eina_List *l;
    E_Pointer *p;
@@ -492,7 +492,7 @@ _e_pointer_cb_mouse_up(__UNUSED__ void *data, __UNUSED__ int type, __UNUSED__ vo
 }
 
 static Eina_Bool
-_e_pointer_cb_mouse_move(__UNUSED__ void *data, __UNUSED__ int type, __UNUSED__ void *event)
+_e_pointer_cb_mouse_move(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    Eina_List *l;
    E_Pointer *p;
@@ -511,7 +511,7 @@ _e_pointer_cb_mouse_move(__UNUSED__ void *data, __UNUSED__ int type, __UNUSED__ 
 }
 
 static Eina_Bool
-_e_pointer_cb_mouse_wheel(__UNUSED__ void *data, __UNUSED__ int type, __UNUSED__ void *event)
+_e_pointer_cb_mouse_wheel(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    Eina_List *l;
    E_Pointer *p;

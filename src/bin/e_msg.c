@@ -114,7 +114,7 @@ e_msg_handler_del(E_Msg_Handler *emsgh)
 /* local subsystem functions */
 
 static Eina_Bool
-_e_msg_event_cb(__UNUSED__ void *data, __UNUSED__ int ev_type, void *ev)
+_e_msg_event_cb(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
 {
    E_Msg_Event *e;
    Eina_List *l;
@@ -137,7 +137,7 @@ _e_msg_event_cb(__UNUSED__ void *data, __UNUSED__ int ev_type, void *ev)
 }
 
 static void
-_e_msg_event_free(__UNUSED__ void *data, void *ev)
+_e_msg_event_free(void *data __UNUSED__, void *ev)
 {
    E_Msg_Event *e;
 

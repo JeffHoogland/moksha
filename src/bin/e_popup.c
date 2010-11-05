@@ -333,7 +333,7 @@ _e_popup_idle_enterer(void *data)
 }
 
 static Eina_Bool
-_e_popup_cb_window_shape(__UNUSED__ void *data, __UNUSED__ int ev_type, void *ev)
+_e_popup_cb_window_shape(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
 {
    E_Popup *pop;
    Ecore_X_Event_Window_Shape *e;

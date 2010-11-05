@@ -518,7 +518,7 @@ _e_desk_free(E_Desk *desk)
 }
 
 static void
-_e_desk_event_desk_show_free(__UNUSED__ void *data, void *event)
+_e_desk_event_desk_show_free(void *data __UNUSED__, void *event)
 {
    E_Event_Desk_Show *ev;
 
@@ -528,7 +528,7 @@ _e_desk_event_desk_show_free(__UNUSED__ void *data, void *event)
 }
 
 static void
-_e_desk_event_desk_before_show_free(__UNUSED__ void *data, void *event)
+_e_desk_event_desk_before_show_free(void *data __UNUSED__, void *event)
 {
    E_Event_Desk_Before_Show *ev;
 
@@ -538,7 +538,7 @@ _e_desk_event_desk_before_show_free(__UNUSED__ void *data, void *event)
 }
 
 static void
-_e_desk_event_desk_after_show_free(__UNUSED__ void *data, void *event)
+_e_desk_event_desk_after_show_free(void *data __UNUSED__, void *event)
 {
    E_Event_Desk_After_Show *ev;
 
@@ -548,7 +548,7 @@ _e_desk_event_desk_after_show_free(__UNUSED__ void *data, void *event)
 }
 
 static void
-_e_desk_event_desk_deskshow_free(__UNUSED__ void *data, void *event)
+_e_desk_event_desk_deskshow_free(void *data __UNUSED__, void *event)
 {
    E_Event_Desk_Show *ev;
 
@@ -558,7 +558,7 @@ _e_desk_event_desk_deskshow_free(__UNUSED__ void *data, void *event)
 }
 
 static void
-_e_desk_event_desk_name_change_free(__UNUSED__ void *data, void *event)
+_e_desk_event_desk_name_change_free(void *data __UNUSED__, void *event)
 {
    E_Event_Desk_Name_Change *ev;
 

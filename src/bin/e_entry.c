@@ -342,7 +342,7 @@ e_entry_disable(Evas_Object *entry)
 
 /* Called when a key has been pressed by the user */
 static void
-_e_entry_key_down_cb(__UNUSED__ void *data, __UNUSED__ Evas *e, Evas_Object *obj, void *event_info)
+_e_entry_key_down_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj, void *event_info)
 {
    E_Entry_Smart_Data *sd;
 
@@ -370,7 +370,7 @@ _e_entry_key_down_cb(__UNUSED__ void *data, __UNUSED__ Evas *e, Evas_Object *obj
 
 /* Called when a key has been released by the user */
 static void
-_e_entry_key_up_cb(__UNUSED__ void *data, __UNUSED__ Evas *e, Evas_Object *obj, void *event_info)
+_e_entry_key_up_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj, void *event_info)
 {
    E_Entry_Smart_Data *sd;
 
@@ -393,7 +393,7 @@ _e_entry_key_up_cb(__UNUSED__ void *data, __UNUSED__ Evas *e, Evas_Object *obj, 
 
 /* Called when the entry object is pressed by the mouse */
 static void
-_e_entry_mouse_down_cb(__UNUSED__ void *data, __UNUSED__ Evas *e, Evas_Object *obj, void *event_info)
+_e_entry_mouse_down_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj, void *event_info)
 {
    E_Entry_Smart_Data *sd;
    Evas_Event_Mouse_Down *event;
@@ -548,7 +548,7 @@ _e_entry_mouse_down_cb(__UNUSED__ void *data, __UNUSED__ Evas *e, Evas_Object *o
 
 /* Called when the entry object is released by the mouse */
 static void
-_e_entry_mouse_up_cb(__UNUSED__ void *data, __UNUSED__ Evas *e, Evas_Object *obj, void *event_info)
+_e_entry_mouse_up_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj, void *event_info)
 {
    E_Entry_Smart_Data *sd;
    
@@ -577,7 +577,7 @@ _e_entry_mouse_up_cb(__UNUSED__ void *data, __UNUSED__ Evas *e, Evas_Object *obj
 
 /* Called when the mouse moves over the entry object */
 static void
-_e_entry_mouse_move_cb(__UNUSED__ void *data, __UNUSED__ Evas *e, Evas_Object *obj, void *event_info)
+_e_entry_mouse_move_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj, void *event_info)
 {
    E_Entry_Smart_Data *sd;
    Evas_Event_Mouse_Move *event;
@@ -622,7 +622,7 @@ _e_entry_mouse_move_cb(__UNUSED__ void *data, __UNUSED__ Evas *e, Evas_Object *o
 
 /* Called when the the "selection_notify" event is emitted */
 static Eina_Bool
-_e_entry_x_selection_notify_handler(void *data, __UNUSED__ int type, void *event)
+_e_entry_x_selection_notify_handler(void *data, int type __UNUSED__, void *event)
 {
    Evas_Object *entry;
    E_Entry_Smart_Data *sd;
@@ -1382,7 +1382,7 @@ _e_entry_cb_imf_retrieve_surrounding(void *data, Ecore_IMF_Context *ctx __UNUSED
 }
 
 static Eina_Bool
-_e_entry_cb_imf_event_commit(void *data, __UNUSED__ int type, void *event)
+_e_entry_cb_imf_event_commit(void *data, int type __UNUSED__, void *event)
 {
    Evas_Object *entry;
    E_Entry_Smart_Data *sd;
@@ -1417,7 +1417,7 @@ _e_entry_cb_imf_event_commit(void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_entry_cb_imf_event_delete_surrounding(void *data, __UNUSED__ int type, void *event)
+_e_entry_cb_imf_event_delete_surrounding(void *data, int type __UNUSED__, void *event)
 {
    E_Entry_Smart_Data *sd;
    Ecore_IMF_Event_Delete_Surrounding *ev = event;

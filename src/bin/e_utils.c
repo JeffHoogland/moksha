@@ -1440,7 +1440,7 @@ _e_util_cb_delayed_del(void *data)
 }
 
 static Eina_Bool
-_e_util_wakeup_cb(__UNUSED__ void *data)
+_e_util_wakeup_cb(void *data __UNUSED__)
 {
    _e_util_dummy_timer = NULL;
    return ECORE_CALLBACK_CANCEL;

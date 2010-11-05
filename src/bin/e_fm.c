@@ -658,7 +658,7 @@ _e_fm2_op_registry_entry_print(const E_Fm2_Op_Registry_Entry *ere)
 }
 
 static Eina_Bool
-_e_fm2_op_registry_entry_add_cb(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_fm2_op_registry_entry_add_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    const E_Fm2_Op_Registry_Entry *ere = event;
    printf("E FM OPERATION STARTED: id=%d, op=%d\n", ere->id, ere->op);
@@ -666,7 +666,7 @@ _e_fm2_op_registry_entry_add_cb(__UNUSED__ void *data, __UNUSED__ int type, void
 }
 
 static Eina_Bool
-_e_fm2_op_registry_entry_del_cb(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_fm2_op_registry_entry_del_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    const E_Fm2_Op_Registry_Entry *ere = event;
    puts("E FM OPERATION FINISHED:");
@@ -676,7 +676,7 @@ _e_fm2_op_registry_entry_del_cb(__UNUSED__ void *data, __UNUSED__ int type, void
 }
 
 static Eina_Bool
-_e_fm2_op_registry_entry_changed_cb(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_fm2_op_registry_entry_changed_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    const E_Fm2_Op_Registry_Entry *ere = event;
    puts("E FM OPERATION CHANGED:");

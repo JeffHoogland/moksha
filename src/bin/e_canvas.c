@@ -233,7 +233,7 @@ e_canvas_new(int engine_hint, Ecore_X_Window win, int x, int y, int w, int h,
 
 /* local subsystem functions */
 static Eina_Bool
-_e_canvas_cb_flush(__UNUSED__ void *data)
+_e_canvas_cb_flush(void *data __UNUSED__)
 {
    e_canvas_cache_flush();
    return ECORE_CALLBACK_RENEW;

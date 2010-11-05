@@ -381,7 +381,7 @@ _e_configure_efreet_desktop_update(void)
 }
 
 static Eina_Bool
-_e_configure_cb_efreet_desktop_cache_update(__UNUSED__ void *data, __UNUSED__ int type, __UNUSED__ void *event)
+_e_configure_cb_efreet_desktop_cache_update(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    _e_configure_efreet_desktop_cleanup();
    if (update_job) ecore_job_del(update_job);

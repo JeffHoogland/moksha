@@ -161,7 +161,7 @@ e_sys_con_extra_action_list_get(void)
 
 /* local subsystem functions */
 static Eina_Bool
-_e_sys_cb_timer(__UNUSED__ void *data)
+_e_sys_cb_timer(void *data __UNUSED__)
 {
    /* exec out sys helper and ask it to test if we are allowed to do these
     * things

@@ -252,7 +252,7 @@ _e_order_save(E_Order *eo)
 }
 
 static Eina_Bool
-_e_order_cb_efreet_cache_update(__UNUSED__ void *data, __UNUSED__ int ev_type, __UNUSED__ void *ev)
+_e_order_cb_efreet_cache_update(void *data __UNUSED__, int ev_type __UNUSED__, void *ev __UNUSED__)
 {
    Eina_List *l;
    E_Order *eo;

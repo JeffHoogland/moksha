@@ -321,7 +321,7 @@ _e_exec_cb_instance_finish(void *data)
 
 
 static Eina_Bool
-_e_exec_cb_exit(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_exec_cb_exit(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Exe_Event_Del *ev;
    E_Exec_Instance *inst;

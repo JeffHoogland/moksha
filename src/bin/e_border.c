@@ -5101,7 +5101,7 @@ _e_border_cb_sync_alarm(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
 }
 
 static Eina_Bool
-_e_border_cb_efreet_cache_update(void *data __UNUSED__, int ev_type __UNUSED__, __UNUSED__ void *ev)
+_e_border_cb_efreet_cache_update(void *data __UNUSED__, int ev_type __UNUSED__, void *ev __UNUSED__)
 {
    Eina_List *l;
    E_Border *bd;
@@ -5125,7 +5125,7 @@ _e_border_cb_efreet_cache_update(void *data __UNUSED__, int ev_type __UNUSED__, 
 }
 
 static Eina_Bool
-_e_border_cb_config_icon_theme(void *data __UNUSED__, int ev_type __UNUSED__, __UNUSED__ void *ev)
+_e_border_cb_config_icon_theme(void *data __UNUSED__, int ev_type __UNUSED__, void *ev __UNUSED__)
 {
    Eina_List *l;
    E_Border *bd;

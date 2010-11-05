@@ -529,7 +529,7 @@ _e_module_cb_dialog_disable(void *data, E_Dialog *dia)
 }
 
 static Eina_Bool
-_e_module_cb_idler(__UNUSED__ void *data)
+_e_module_cb_idler(void *data __UNUSED__)
 {
    if (_e_modules_delayed)
      {
@@ -568,7 +568,7 @@ _e_module_sort_priority(const void *d1, const void *d2)
 
 
 static void 
-_e_module_event_update_free(__UNUSED__ void *data, void *event) 
+_e_module_event_update_free(void *data __UNUSED__, void *event) 
 {
    E_Event_Module_Update *ev;
 

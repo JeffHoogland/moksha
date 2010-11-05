@@ -966,7 +966,7 @@ _e_container_find_by_event_window(Ecore_X_Window win)
 }
 
 static Eina_Bool
-_e_container_cb_mouse_in(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_container_cb_mouse_in(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Mouse_In *ev;
    E_Border *bd;
@@ -985,7 +985,7 @@ _e_container_cb_mouse_in(__UNUSED__ void *data, __UNUSED__ int type, void *event
 }
 
 static Eina_Bool
-_e_container_cb_mouse_out(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_container_cb_mouse_out(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Mouse_Out *ev;
    E_Container *con;
@@ -1003,7 +1003,7 @@ _e_container_cb_mouse_out(__UNUSED__ void *data, __UNUSED__ int type, void *even
 }
 
 static Eina_Bool
-_e_container_cb_mouse_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_container_cb_mouse_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Event_Mouse_Button *ev;
    E_Container *con;
@@ -1025,7 +1025,7 @@ _e_container_cb_mouse_down(__UNUSED__ void *data, __UNUSED__ int type, void *eve
 }
 
 static Eina_Bool
-_e_container_cb_mouse_up(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_container_cb_mouse_up(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Event_Mouse_Button *ev;
    E_Container *con;
@@ -1043,7 +1043,7 @@ _e_container_cb_mouse_up(__UNUSED__ void *data, __UNUSED__ int type, void *event
 }
 
 static Eina_Bool
-_e_container_cb_mouse_move(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_container_cb_mouse_move(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Event_Mouse_Move *ev;
    E_Container *con;
@@ -1059,7 +1059,7 @@ _e_container_cb_mouse_move(__UNUSED__ void *data, __UNUSED__ int type, void *eve
 }
 
 static Eina_Bool
-_e_container_cb_mouse_wheel(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_container_cb_mouse_wheel(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Event_Mouse_Wheel *ev;
    E_Container *con;
@@ -1225,7 +1225,7 @@ _e_container_resize_handle(E_Container *con)
 }
 
 static void
-_e_container_event_container_resize_free(__UNUSED__ void *data, void *ev)
+_e_container_event_container_resize_free(void *data __UNUSED__, void *ev)
 {
    E_Event_Container_Resize *e;
 

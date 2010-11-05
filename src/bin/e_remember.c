@@ -124,7 +124,7 @@ e_remember_internal_save(void)
 }
 
 static Eina_Bool
-_e_remember_restore_cb(__UNUSED__ void *data, __UNUSED__ int type, __UNUSED__ void *event)
+_e_remember_restore_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    E_Remember *rem;
    Eina_List *l;
@@ -597,7 +597,7 @@ _e_remember_cb_hook_eval_post_new_border(void *data __UNUSED__, void *border)
 }
 
 static void
-_e_remember_cb_hook_pre_post_fetch(__UNUSED__ void *data, void *border)
+_e_remember_cb_hook_pre_post_fetch(void *data __UNUSED__, void *border)
 {
    E_Border *bd = border;
    E_Remember *rem = NULL;

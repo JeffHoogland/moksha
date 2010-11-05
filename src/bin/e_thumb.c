@@ -392,7 +392,7 @@ _e_thumb_thumbnailers_kill_cancel(void)
 }
 
 static Eina_Bool
-_e_thumb_cb_kill(__UNUSED__ void *data)
+_e_thumb_cb_kill(void *data __UNUSED__)
 {
    Eina_List *l;
    Ecore_Exe *exe;
@@ -404,7 +404,7 @@ _e_thumb_cb_kill(__UNUSED__ void *data)
 }
 
 static Eina_Bool
-_e_thumb_cb_exe_event_del(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_thumb_cb_exe_event_del(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Exe_Event_Del *ev;
    Ecore_Exe *exe;

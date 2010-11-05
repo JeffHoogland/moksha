@@ -414,7 +414,7 @@ e_intl_imc_system_path_get(void)
 }
 
 static Eina_Bool
-_e_intl_cb_exit(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_intl_cb_exit(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Exe_Event_Del *ev;
 

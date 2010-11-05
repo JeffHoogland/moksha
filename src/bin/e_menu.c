@@ -2551,7 +2551,7 @@ _e_menu_cb_ecore_evas_resize(Ecore_Evas *ee)
 }
 
 static void
-_e_menu_cb_item_in(void *data, __UNUSED__ Evas *evas, __UNUSED__ Evas_Object *obj, __UNUSED__ void *event_info)
+_e_menu_cb_item_in(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Menu_Item *mi;
    
@@ -2560,7 +2560,7 @@ _e_menu_cb_item_in(void *data, __UNUSED__ Evas *evas, __UNUSED__ Evas_Object *ob
 }
 
 static void
-_e_menu_cb_item_out(void *data, __UNUSED__ Evas *evas, __UNUSED__ Evas_Object *obj, void *event_info)
+_e_menu_cb_item_out(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
    E_Menu_Item *mi;
    Evas_Event_Mouse_In *ev;
@@ -2584,7 +2584,7 @@ _e_menu_cb_item_out(void *data, __UNUSED__ Evas *evas, __UNUSED__ Evas_Object *o
 }
 
 static Eina_Bool
-_e_menu_cb_key_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_menu_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Event_Key *ev;
    
@@ -2637,7 +2637,7 @@ _e_menu_cb_key_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_menu_cb_key_up(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_menu_cb_key_up(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Event_Key *ev;
    
@@ -2652,7 +2652,7 @@ _e_menu_cb_key_up(__UNUSED__ void *data, __UNUSED__ int type, void *event)
  */
 
 static Eina_Bool
-_e_menu_cb_mouse_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_menu_cb_mouse_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Event_Mouse_Button *ev;
    
@@ -2671,7 +2671,7 @@ _e_menu_cb_mouse_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_menu_cb_mouse_up(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_menu_cb_mouse_up(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Event_Mouse_Button *ev;
    Ecore_X_Time t;
@@ -2712,7 +2712,7 @@ _e_menu_cb_mouse_up(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_menu_cb_mouse_move(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_menu_cb_mouse_move(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Event_Mouse_Move *ev;
    Eina_List *l, *tmp;
@@ -2770,7 +2770,7 @@ _e_menu_cb_mouse_move(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_menu_cb_mouse_wheel(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_menu_cb_mouse_wheel(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Event_Mouse_Wheel *ev;
    
@@ -2794,7 +2794,7 @@ _e_menu_cb_mouse_wheel(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_menu_cb_scroll_animator(__UNUSED__ void *data)
+_e_menu_cb_scroll_animator(void *data __UNUSED__)
 {
    double t, dt;
    double dx, dy;
@@ -2844,7 +2844,7 @@ _e_menu_cb_scroll_animator(__UNUSED__ void *data)
 }
 
 static Eina_Bool
-_e_menu_cb_window_shape(__UNUSED__ void *data, __UNUSED__ int ev_type, void *ev)
+_e_menu_cb_window_shape(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
 {
    Eina_List *l;
    Ecore_X_Event_Window_Shape *e;
@@ -2873,7 +2873,7 @@ _e_menu_cb_item_submenu_post_default(void *data __UNUSED__, E_Menu *m __UNUSED__
 
 
 static Eina_Bool
-_e_menu_categories_free_cb(__UNUSED__ const Eina_Hash *hash, __UNUSED__ const void *key, void *data, __UNUSED__ void *fdata)
+_e_menu_categories_free_cb(const Eina_Hash __UNUSED__ *hash, const void __UNUSED__ *key, void *data, void *fdata __UNUSED__)
 {
    E_Menu_Category_Callback *cb;
    E_Menu_Category *cat;

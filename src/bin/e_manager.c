@@ -924,7 +924,7 @@ _e_manager_cb_screensaver_notify(void *data __UNUSED__, int ev_type __UNUSED__, 
 }
 
 static Eina_Bool
-_e_manager_cb_client_message(__UNUSED__ void *data, __UNUSED__ int ev_type, void *ev)
+_e_manager_cb_client_message(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
 {
    Ecore_X_Event_Client_Message *e;
    E_Border *bd;
