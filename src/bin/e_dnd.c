@@ -1357,10 +1357,13 @@ _e_dnd_cb_event_dnd_drop(void *data __UNUSED__, int type __UNUSED__, void *event
    id = e_util_winid_str_get(ev->win);
    if (!eina_hash_find(_drop_win_hash, id)) return ECORE_CALLBACK_PASS_ON;
 
-   ecore_x_selection_xdnd_request(ev->win, _xdnd->type);
+   if (_xdnd)
+     {
+        ecore_x_selection_xdnd_request(ev->win, _xdnd->type);
 
-   _xdnd->x = ev->position.x;
-   _xdnd->y = ev->position.y;
+        _xdnd->x = ev->position.x;
+        _xdnd->y = ev->position.y;
+     }
 
    return ECORE_CALLBACK_PASS_ON;
 }
