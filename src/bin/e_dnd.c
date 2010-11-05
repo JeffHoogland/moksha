@@ -1084,7 +1084,7 @@ _e_drag_free(E_Drag *drag)
 
 
 static Eina_Bool
-_e_dnd_cb_window_shape(__UNUSED__ void *data, __UNUSED__ int ev_type, void *ev)
+_e_dnd_cb_window_shape(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
 {
    Ecore_X_Event_Window_Shape *e = ev;
    const Eina_List *l;
@@ -1099,7 +1099,7 @@ _e_dnd_cb_window_shape(__UNUSED__ void *data, __UNUSED__ int ev_type, void *ev)
 }
 
 static Eina_Bool
-_e_dnd_cb_key_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_dnd_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Event_Key *ev;
 
@@ -1115,7 +1115,7 @@ _e_dnd_cb_key_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_dnd_cb_key_up(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_dnd_cb_key_up(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Event_Key *ev;
 
@@ -1131,7 +1131,7 @@ _e_dnd_cb_key_up(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_dnd_cb_mouse_up(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_dnd_cb_mouse_up(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Event_Mouse_Button *ev;
 
@@ -1144,7 +1144,7 @@ _e_dnd_cb_mouse_up(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_dnd_cb_mouse_move(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_dnd_cb_mouse_move(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Event_Mouse_Move *ev;
 
@@ -1159,7 +1159,7 @@ _e_dnd_cb_mouse_move(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_e_dnd_cb_event_dnd_enter(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_dnd_cb_event_dnd_enter(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Xdnd_Enter *ev;
    E_Drop_Handler *h;
@@ -1225,7 +1225,7 @@ _e_dnd_cb_event_dnd_enter(__UNUSED__ void *data, __UNUSED__ int type, void *even
 }
 
 static Eina_Bool
-_e_dnd_cb_event_dnd_leave(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_dnd_cb_event_dnd_leave(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Xdnd_Leave *ev;
    E_Event_Dnd_Leave leave_ev;
@@ -1263,7 +1263,7 @@ _e_dnd_cb_event_dnd_leave(__UNUSED__ void *data, __UNUSED__ int type, void *even
 }
 
 static Eina_Bool
-_e_dnd_cb_event_dnd_position(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_dnd_cb_event_dnd_position(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Xdnd_Position *ev;
    Ecore_X_Rectangle rect;
@@ -1314,7 +1314,7 @@ _e_dnd_cb_event_dnd_position(__UNUSED__ void *data, __UNUSED__ int type, void *e
 }
 
 static Eina_Bool
-_e_dnd_cb_event_dnd_status(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_dnd_cb_event_dnd_status(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Xdnd_Status *ev;
 
@@ -1324,7 +1324,7 @@ _e_dnd_cb_event_dnd_status(__UNUSED__ void *data, __UNUSED__ int type, void *eve
 }
 
 static Eina_Bool
-_e_dnd_cb_event_dnd_finished(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_dnd_cb_event_dnd_finished(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Xdnd_Finished *ev;
 
@@ -1348,7 +1348,7 @@ _e_dnd_cb_event_dnd_finished(__UNUSED__ void *data, __UNUSED__ int type, void *e
 }
 
 static Eina_Bool
-_e_dnd_cb_event_dnd_drop(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_dnd_cb_event_dnd_drop(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Xdnd_Drop *ev;
    const char *id;
@@ -1366,7 +1366,7 @@ _e_dnd_cb_event_dnd_drop(__UNUSED__ void *data, __UNUSED__ int type, void *event
 }
 
 static Eina_Bool
-_e_dnd_cb_event_dnd_selection(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_e_dnd_cb_event_dnd_selection(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Selection_Notify *ev;
    const char *id;
