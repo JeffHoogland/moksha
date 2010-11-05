@@ -6,6 +6,7 @@ static void _e_configure_efreet_desktop_cleanup(void);
 static void _e_configure_efreet_desktop_update(void);
 static Eina_Bool _e_configure_cb_efreet_desktop_cache_update(void *data, int type, void *event);
 static void _e_configure_registry_item_full_add(const char *path, int pri, const char *label, const char *icon_file, const char *icon, E_Config_Dialog *(*func) (E_Container *con, const char *params), void (*generic_func) (E_Container *con, const char *params), Efreet_Desktop *desktop);
+static void _e_configure_registry_item_free(E_Configure_It *eci);
 
 static void _configure_job(void *data);
 static Eina_Bool _configure_init_timer(void *data);
@@ -116,12 +117,7 @@ e_configure_registry_item_del(const char *path)
 	      {
 		 ecat->items = eina_list_remove_list(ecat->items, ll);
 
-		 eina_stringshare_del(eci->item);
-		 eina_stringshare_del(eci->label);
-		 eina_stringshare_del(eci->icon);
-		 if (eci->icon_file) eina_stringshare_del(eci->icon_file);
-		 if (eci->desktop) efreet_desktop_free(eci->desktop);
-		 free(eci);
+                 _e_configure_registry_item_free(eci);
 		 break;
 	      }
 	  break;
@@ -261,36 +257,22 @@ _configure_init_timer(void *data __UNUSED__)
 static void
 _e_configure_efreet_desktop_cleanup(void)
 {
-   Eina_List *remove_items = NULL;
-   Eina_List *remove_cats = NULL;
    Eina_List *l;
    E_Configure_Cat *ecat;
-   char buf[1024];
-   void *data;
-   
+
+   printf("cleanup\n");
    /* remove anything with a desktop entry */
    EINA_LIST_FOREACH(e_configure_registry, l, ecat)
      {
 	E_Configure_It *eci;
-	Eina_List *ll;
+	Eina_List *ll, *ln;
 
-	EINA_LIST_FOREACH(ecat->items, ll, eci)
+	EINA_LIST_FOREACH_SAFE(ecat->items, ll, ln, eci)
 	   if (eci->desktop)
 	     {
-		snprintf(buf, sizeof(buf), "%s/%s", ecat->cat, eci->item);
-		remove_items = eina_list_append(remove_items, strdup(buf));
-		remove_cats = eina_list_append(remove_cats, strdup(ecat->cat));
+                _e_configure_registry_item_free(eci);
+		ecat->items = eina_list_remove_list(ecat->items, ll);
 	     }
-     }
-   EINA_LIST_FREE(remove_items, data)
-     {
-	e_configure_registry_item_del(data);
-	free(data);
-     }
-   EINA_LIST_FREE(remove_cats, data)
-     {
-	e_configure_registry_category_del(data);
-	free(data);
      }
 }
 
@@ -453,3 +435,13 @@ _e_configure_registry_item_full_add(const char *path, int pri, const char *label
    free(cat);
 }
 
+static void
+_e_configure_registry_item_free(E_Configure_It *eci)
+{
+   eina_stringshare_del(eci->item);
+   eina_stringshare_del(eci->label);
+   eina_stringshare_del(eci->icon);
+   if (eci->icon_file) eina_stringshare_del(eci->icon_file);
+   if (eci->desktop) efreet_desktop_free(eci->desktop);
+   free(eci);
+}
