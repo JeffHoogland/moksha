@@ -6373,6 +6373,8 @@ _e_fm2_mouse_1_handler(E_Fm2_Icon *ic, int up, void *evas_event)
         eu = evas_event;
         modifiers = eu->modifiers;
      }
+   if (ed && ic->sd->config->view.single_click_delay)
+     down_timestamp = ed->timestamp;
 
    if (ic->sd->config->selection.windows_modifiers)
      {
@@ -6393,6 +6395,19 @@ _e_fm2_mouse_1_handler(E_Fm2_Icon *ic, int up, void *evas_event)
         multi_sel = 0;
         range_sel = 0;
      }
+
+   /*
+    * On mouse up, check if we want to do inplace open
+    */
+   if ((eu) &&
+       (!multi_sel) &&
+       (!range_sel) &&
+       (ic->sd->config->view.single_click) &&
+       ((eu->timestamp - down_timestamp) > ic->sd->config->view.single_click_delay))
+     {
+        if (_e_fm2_inplace_open(ic) == 1) return;
+     }
+
    if (range_sel)
      {
         const Eina_List *l;
@@ -6476,13 +6491,8 @@ _e_fm2_mouse_1_handler(E_Fm2_Icon *ic, int up, void *evas_event)
      }
    if (sel_change)
      evas_object_smart_callback_call(ic->sd->obj, "selection_change", NULL);
-   if ((!(S_ISDIR(ic->info.statinfo.st_mode)) ||
-        (ic->sd->config->view.no_subdir_jump)) &&
-       (ic->sd->config->view.single_click))
+   if (ic->sd->config->view.single_click)
      {
-        if (ed && ic->sd->config->view.single_click_delay)
-          down_timestamp = ed->timestamp;
-
         if (eu && (eu->timestamp - down_timestamp) > ic->sd->config->view.single_click_delay)
           {
              int icon_pos_x = ic->x + ic->sd->x - ic->sd->pos.x;
@@ -6560,14 +6570,6 @@ _e_fm2_cb_icon_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
         ic->drag.dnd = EINA_FALSE;
         ic->drag.src = EINA_FALSE;
         ic->down_sel = EINA_FALSE;
-
-        if ((ic->sd->config->view.single_click) &&
-            (ic->sd->config->view.single_click_delay == 0) &&
-            (!evas_key_modifier_is_set(ev->modifiers, "Control")) &&
-            (!evas_key_modifier_is_set(ev->modifiers, "Shift")) &&
-            (_e_fm2_inplace_open(ic) == 0) &&
-            S_ISDIR(ic->info.statinfo.st_mode))
-          evas_object_smart_callback_call(ic->sd->obj, "selected", NULL);
      }
 }
 
