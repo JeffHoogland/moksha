@@ -776,8 +776,13 @@ e_gadcon_client_config_new(E_Gadcon *gc, const char *name)
 
    cf_gcc = E_NEW(E_Config_Gadcon_Client, 1);
    if (!cf_gcc) return NULL;
-   cf_gcc->name = eina_stringshare_add(name);
    cf_gcc->id = eina_stringshare_add(cc->func.id_new(cc));
+   if (!cf_gcc->id)
+     {
+        free(cf_gcc);
+        return NULL;
+     }
+   cf_gcc->name = eina_stringshare_add(name);
    if (gc->zone)
      cf_gcc->geom.res = gc->zone->w;
    else
