@@ -4047,6 +4047,30 @@ _e_border_del(E_Border *bd)
      {
 	child->leader = NULL;
      }
+   if (e_config->focus_revert_on_hide_or_close)
+     {
+        E_Border *pbd;
+        E_Container *con;
+        E_Zone *zone;
+        E_Desk *desk;
+
+        con = e_container_current_get(e_manager_current_get());
+        zone = e_zone_current_get(con);
+        desk = e_desk_current_get(zone);
+
+        /* When using pointer focus, the border under the
+         * pointer (if any) gets focused, in sloppy/click
+         * focus the last focused window on the current
+         * desk gets focus */
+        if (e_config->focus_policy == E_FOCUS_MOUSE)
+          {
+             pbd = e_border_under_pointer_get(desk, bd);
+             if (pbd)
+               e_border_focus_set(pbd, 1, 1);
+          }
+        else
+          e_desk_last_focused_focus(desk);
+     }
 }
 
 #ifdef PRINT_LOTS_OF_DEBUG
@@ -4144,30 +4168,6 @@ _e_border_cb_window_hide(void *data __UNUSED__, int ev_type __UNUSED__, void *ev
      {
 //             printf("  hide2\n");
 	e_border_hide(bd, 0);
-	if (e_config->focus_revert_on_hide_or_close)
-	  {
-	     E_Border *pbd;
-	     E_Container *con;
-	     E_Zone *zone;
-	     E_Desk *desk;
-
-	     con = e_container_current_get(e_manager_current_get());
-	     zone = e_zone_current_get(con);
-	     desk = e_desk_current_get(zone);
-
-	     /* When using pointer focus, the border under the
-	      * pointer (if any) gets focused, in sloppy/click
-	      * focus the last focused window on the current
-	      * desk gets focus */
-	     if (e_config->focus_policy == E_FOCUS_MOUSE)
-	       {
-		  pbd = e_border_under_pointer_get(desk, bd);
-		  if (pbd)
-		    e_border_focus_set(pbd, 1, 1);
-	       }
-	     else
-	       e_desk_last_focused_focus(desk);
-	  }
 	e_object_del(E_OBJECT(bd));
      }
    return ECORE_CALLBACK_PASS_ON;
