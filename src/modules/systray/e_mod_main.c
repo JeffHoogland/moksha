@@ -1062,19 +1062,19 @@ _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
 	 break;
       case E_GADCON_ORIENT_CORNER_LT:
 	 signal = "e,action,orient,corner_lt";
-	 systray_orient = _NET_SYSTEM_TRAY_ORIENTATION_HORZ;
+	 systray_orient = _NET_SYSTEM_TRAY_ORIENTATION_VERT;
 	 break;
       case E_GADCON_ORIENT_CORNER_RT:
 	 signal = "e,action,orient,corner_rt";
-	 systray_orient = _NET_SYSTEM_TRAY_ORIENTATION_HORZ;
+	 systray_orient = _NET_SYSTEM_TRAY_ORIENTATION_VERT;
 	 break;
       case E_GADCON_ORIENT_CORNER_LB:
 	 signal = "e,action,orient,corner_lb";
-	 systray_orient = _NET_SYSTEM_TRAY_ORIENTATION_HORZ;
+	 systray_orient = _NET_SYSTEM_TRAY_ORIENTATION_VERT;
 	 break;
       case E_GADCON_ORIENT_CORNER_RB:
 	 signal = "e,action,orient,corner_rb";
-	 systray_orient = _NET_SYSTEM_TRAY_ORIENTATION_HORZ;
+	 systray_orient = _NET_SYSTEM_TRAY_ORIENTATION_VERT;
 	 break;
       default:
 	 signal = "e,action,orient,horiz";
