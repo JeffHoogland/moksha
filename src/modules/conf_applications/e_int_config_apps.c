@@ -342,6 +342,11 @@ _fill_apps_list(E_Config_Dialog_Data *cfdata)
      {
         Eina_List *ll;
 
+        if (desk->no_display)
+          {
+             efreet_desktop_free(desk);
+             continue;
+          }
         ll = eina_list_search_unsorted_list(cfdata->new_apps, _cb_desks_sort, desk);
         if (ll)
           {
