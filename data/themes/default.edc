@@ -13565,28 +13565,28 @@ collections {
                name: "e,action,orient,corner_lt";
                signal: "e,action,orient,corner_lt";
                source: "e";
-               action: STATE_SET "default" 0.0;
+               action: STATE_SET "vertical" 0.0;
                target: "e.box";
             }
             program {
                name: "e,action,orient,corner_rt";
                signal: "e,action,orient,corner_rt";
                source: "e";
-               action: STATE_SET "default" 0.0;
+               action: STATE_SET "vertical" 0.0;
                target: "e.box";
             }
             program {
                name: "e,action,orient,corner_lb";
                signal: "e,action,orient,corner_lb";
                source: "e";
-               action: STATE_SET "default" 0.0;
+               action: STATE_SET "vertical" 0.0;
                target: "e.box";
             }
             program {
                name: "e,action,orient,corner_rb";
                signal: "e,action,orient,corner_rb";
                source: "e";
-               action: STATE_SET "default" 0.0;
+               action: STATE_SET "vertical" 0.0;
                target: "e.box";
             }
          }
