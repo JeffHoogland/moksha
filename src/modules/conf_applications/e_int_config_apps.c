@@ -10,7 +10,7 @@ struct _E_Config_Dialog_Data
    E_Config_Data *data;
    Evas_Object *o_list, *o_add, *o_del;
    Evas_Object *o_order, *o_up, *o_down;
-   Eina_List *apps;
+   Eina_List *apps, *new_apps;
    Ecore_Timer *fill_delay;
 };
 
@@ -185,6 +185,8 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
      }
    EINA_LIST_FREE(cfdata->apps, desk)
      efreet_desktop_free(desk);
+   EINA_LIST_FREE(cfdata->new_apps, desk)
+     efreet_desktop_free(desk);
    E_FREE(cfdata);
 }
 
@@ -296,17 +298,14 @@ _save_menu(E_Config_Dialog_Data *cfdata)
 {
    Eina_List *l;
    Efreet_Menu *menu = NULL;
-   const E_Ilist_Item *it;
+   Efreet_Desktop *desk;
    int ret;
 
    menu = efreet_menu_new("Favorites");
-   EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->o_order), l, it)
+   EINA_LIST_FOREACH(cfdata->apps, l, desk)
      {
-        Efreet_Desktop *desk;
-
-        if (!(desk = efreet_util_desktop_name_find(it->label))) continue;
+        if (!desk) continue;
         efreet_menu_desktop_insert(menu, desk, -1);
-        efreet_desktop_free(desk);
      }
    ret = efreet_menu_save(menu, cfdata->data->filename);
    efreet_menu_free(menu);
@@ -318,17 +317,14 @@ _save_order(E_Config_Dialog_Data *cfdata)
 {
    Eina_List *l;
    E_Order *order = NULL;
-   const E_Ilist_Item *it;
+   Efreet_Desktop *desk;
 
    if (!(order = e_order_new(cfdata->data->filename))) return 0;
    e_order_clear(order);
-   EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->o_order), l, it)
+   EINA_LIST_FOREACH(cfdata->apps, l, desk)
      {
-        Efreet_Desktop *desk;
-
-        if (!(desk = efreet_util_desktop_name_find(it->label))) continue;
+        if (!desk) continue;
         e_order_append(order, desk);
-        efreet_desktop_free(desk);
      }
    e_object_del(E_OBJECT(order));
    return 1;
@@ -344,12 +340,31 @@ _fill_apps_list(E_Config_Dialog_Data *cfdata)
    desks = efreet_util_desktop_name_glob_list("*");
    EINA_LIST_FREE(desks, desk) 
      {
-        if (!eina_list_search_unsorted(l, _cb_desks_sort, desk))
-          l = eina_list_append(l, desk);
+        Eina_List *ll;
+
+        ll = eina_list_search_unsorted_list(cfdata->new_apps, _cb_desks_sort, desk);
+        if (ll)
+          {
+             Efreet_Desktop *old;
+
+             old = eina_list_data_get(ll);
+             /*
+              * This fixes when we have several .desktop with the same name,
+              * and the only difference is that some of them are for specific
+              * desktops.
+              */
+             if ((old->only_show_in) && (!desk->only_show_in)) 
+               {
+                  efreet_desktop_free(old);
+                  eina_list_data_set(ll, desk);
+               }
+             else
+               efreet_desktop_free(desk);
+          }
         else
-          efreet_desktop_free(desk);
+          cfdata->new_apps = eina_list_append(cfdata->new_apps, desk);
      }
-   l = eina_list_sort(l, -1, _cb_desks_sort);
+   cfdata->new_apps = eina_list_sort(cfdata->new_apps, -1, _cb_desks_sort);
 
    evas = evas_object_evas_get(cfdata->o_list);
    evas_event_freeze(evas);
@@ -357,7 +372,7 @@ _fill_apps_list(E_Config_Dialog_Data *cfdata)
    e_widget_ilist_freeze(cfdata->o_list);
    e_widget_ilist_clear(cfdata->o_list);
 
-   EINA_LIST_FREE(l, desk) 
+   EINA_LIST_FOREACH(cfdata->new_apps, l, desk) 
      {
         Evas_Object *icon = NULL, *end = NULL;
 
@@ -381,7 +396,6 @@ _fill_apps_list(E_Config_Dialog_Data *cfdata)
         icon = e_util_desktop_icon_add(desk, 24, evas);
         e_widget_ilist_append_full(cfdata->o_list, icon, end, desk->name, 
                                    _cb_apps_list_selected, cfdata, NULL);
-        efreet_desktop_free(desk);
      }
 
    e_widget_ilist_go(cfdata->o_list);
@@ -457,6 +471,18 @@ _cb_order_list_selected(void *data)
 }
 
 static int 
+_cb_desks_name(const void *data1, const void *data2) 
+{
+   const Efreet_Desktop *d1;
+   const char *d2;
+
+   if (!(d1 = data1)) return 1;
+   if (!d1->name) return 1;
+   if (!(d2 = data2)) return -1;
+   return strcmp(d1->name, d2);
+}
+
+static int 
 _cb_desks_sort(const void *data1, const void *data2) 
 {
    const Efreet_Desktop *d1, *d2;
@@ -481,7 +507,7 @@ _cb_add(void *data, void *data2 __UNUSED__)
         Efreet_Desktop *desk;
 
         if ((!it->selected) || (it->header)) continue;
-        if (!(desk = efreet_util_desktop_name_find(it->label))) continue;
+        if (!(desk = eina_list_search_unsorted(cfdata->new_apps, _cb_desks_name, it->label))) continue;
         if (!eina_list_search_unsorted(cfdata->apps, _cb_desks_sort, desk)) 
           {
              Evas_Object *end;
@@ -491,8 +517,6 @@ _cb_add(void *data, void *data2 __UNUSED__)
              efreet_desktop_ref(desk);
              cfdata->apps = eina_list_append(cfdata->apps, desk);
           }
-        else 
-          efreet_desktop_free(desk);
      }
    e_widget_ilist_unselect(cfdata->o_list);
    e_widget_disabled_set(cfdata->o_add, EINA_TRUE);
