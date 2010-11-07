@@ -3536,12 +3536,17 @@ e_border_move_cancel(void)
      {
 	if (move->cur_mouse_action)
 	  {
-	     if (move->cur_mouse_action->func.end_mouse)
-	       move->cur_mouse_action->func.end_mouse(E_OBJECT(move), "", NULL);
-	     else if (move->cur_mouse_action->func.end)
-	       move->cur_mouse_action->func.end(E_OBJECT(move), "");
-	     e_object_unref(E_OBJECT(move->cur_mouse_action));
-	     move->cur_mouse_action = NULL;
+             E_Border *bd;
+
+             bd = move;
+             e_object_ref(E_OBJECT(bd));
+	     if (bd->cur_mouse_action->func.end_mouse)
+	       bd->cur_mouse_action->func.end_mouse(E_OBJECT(bd), "", NULL);
+	     else if (bd->cur_mouse_action->func.end)
+	       bd->cur_mouse_action->func.end(E_OBJECT(bd), "");
+	     e_object_unref(E_OBJECT(bd->cur_mouse_action));
+	     bd->cur_mouse_action = NULL;
+             e_object_unref(E_OBJECT(bd));
 	  }
         else
           _e_border_move_end(move);
@@ -3555,12 +3560,17 @@ e_border_resize_cancel(void)
      {
         if (resize->cur_mouse_action)
           {
-             if (resize->cur_mouse_action->func.end_mouse)
-               resize->cur_mouse_action->func.end_mouse(E_OBJECT(move), "", NULL);
-             else if (resize->cur_mouse_action->func.end)
-               resize->cur_mouse_action->func.end(E_OBJECT(move), "");
-             e_object_unref(E_OBJECT(resize->cur_mouse_action));
-             resize->cur_mouse_action = NULL;
+             E_Border *bd;
+
+             bd = resize;
+             e_object_ref(E_OBJECT(bd));
+	     if (bd->cur_mouse_action->func.end_mouse)
+	       bd->cur_mouse_action->func.end_mouse(E_OBJECT(bd), "", NULL);
+	     else if (bd->cur_mouse_action->func.end)
+	       bd->cur_mouse_action->func.end(E_OBJECT(bd), "");
+	     e_object_unref(E_OBJECT(bd->cur_mouse_action));
+	     bd->cur_mouse_action = NULL;
+             e_object_unref(E_OBJECT(bd));
           }
         else
           {
