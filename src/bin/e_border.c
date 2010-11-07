@@ -811,19 +811,20 @@ e_border_hide(E_Border *bd, int manage)
 	     e_border_focus_set(bd, 0, 1);
 	     if (manage != 2)
 	       {
-                  if ((bd->parent) && (bd->parent->modal == bd))
+                  E_Border *pbd;
+                  E_Container *con;
+                  E_Zone *zone;
+                  E_Desk *desk;
+
+                  con = e_container_current_get(e_manager_current_get());
+                  zone = e_zone_current_get(con);
+                  desk = e_desk_current_get(zone);
+
+                  if ((bd->parent) &&
+                      (bd->parent->desk == desk) && (bd->parent->modal == bd))
                     e_border_focus_set(bd->parent, 1, 1);
                   else if (e_config->focus_revert_on_hide_or_close)
                     {
-                       E_Border *pbd;
-                       E_Container *con;
-                       E_Zone *zone;
-                       E_Desk *desk;
-
-                       con = e_container_current_get(e_manager_current_get());
-                       zone = e_zone_current_get(con);
-                       desk = e_desk_current_get(zone);
-
                        /* When using pointer focus, the border under the
                         * pointer (if any) gets focused, in sloppy/click
                         * focus the last focused window on the current
