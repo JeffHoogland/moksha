@@ -811,11 +811,34 @@ e_border_hide(E_Border *bd, int manage)
 	     e_border_focus_set(bd, 0, 1);
 	     if (manage != 2)
 	       {
-		  if ((e_config->focus_policy == E_FOCUS_CLICK) &&
-		      (e_config->focus_revert_on_hide_or_close))
-		    e_desk_last_focused_focus(bd->desk);
-	       }
-	  }
+                  if ((bd->parent) && (bd->parent->modal == bd))
+                    e_border_focus_set(bd->parent, 1, 1);
+                  else if (e_config->focus_revert_on_hide_or_close)
+                    {
+                       E_Border *pbd;
+                       E_Container *con;
+                       E_Zone *zone;
+                       E_Desk *desk;
+
+                       con = e_container_current_get(e_manager_current_get());
+                       zone = e_zone_current_get(con);
+                       desk = e_desk_current_get(zone);
+
+                       /* When using pointer focus, the border under the
+                        * pointer (if any) gets focused, in sloppy/click
+                        * focus the last focused window on the current
+                        * desk gets focus */
+                       if (e_config->focus_policy == E_FOCUS_MOUSE)
+                         {
+                            pbd = e_border_under_pointer_get(desk, bd);
+                            if (pbd)
+                              e_border_focus_set(pbd, 1, 1);
+                         }
+                       else
+                         e_desk_last_focused_focus(desk);
+                    }
+               }
+          }
 	if (manage == 1)
 	  {
 	     /* Make sure that this border isn't deleted */
@@ -1632,7 +1655,7 @@ e_border_focus_set(E_Border *bd, int focus, int set)
    /* dont focus an iconified window. that's silly! */
    if ((focus) && (bd->iconic))
      return;
-   if ((bd->modal) && (bd->modal != bd))
+   if ((bd->modal) && (bd->modal != bd) && (bd->modal->visible))
      {
 	e_border_focus_set(bd->modal, focus, set);
 	return;
@@ -3790,11 +3813,6 @@ _e_border_free(E_Border *bd)
 	e_object_del(E_OBJECT(bd->pointer));
 	bd->pointer = NULL;
      }
-   if (bd->focused)
-     {
-	if (e_config->focus_revert_on_hide_or_close)
-	  e_desk_last_focused_focus(bd->desk);
-     }
    if (resize == bd)
      _e_border_resize_end(bd);
    if (move == bd)
@@ -3956,6 +3974,35 @@ _e_border_del(E_Border *bd)
    E_Border *child;
 
    if (bd->fullscreen) bd->desk->fullscreen_borders--;
+   if (bd->focused)
+     {
+        if ((bd->parent) && (bd->parent->modal == bd))
+          e_border_focus_set(bd->parent, 1, 1);
+        else if (e_config->focus_revert_on_hide_or_close)
+          {
+             E_Border *pbd;
+             E_Container *con;
+             E_Zone *zone;
+             E_Desk *desk;
+
+             con = e_container_current_get(e_manager_current_get());
+             zone = e_zone_current_get(con);
+             desk = e_desk_current_get(zone);
+
+             /* When using pointer focus, the border under the
+              * pointer (if any) gets focused, in sloppy/click
+              * focus the last focused window on the current
+              * desk gets focus */
+             if (e_config->focus_policy == E_FOCUS_MOUSE)
+               {
+                  pbd = e_border_under_pointer_get(desk, bd);
+                  if (pbd)
+                    e_border_focus_set(pbd, 1, 1);
+               }
+             else
+               e_desk_last_focused_focus(desk);
+          }
+     }
 
    if ((drag_border) && (drag_border->data == bd))
      {
@@ -4017,12 +4064,8 @@ _e_border_del(E_Border *bd)
      {
 	bd->parent->transients = eina_list_remove(bd->parent->transients, bd);
 	if (bd->parent->modal == bd)
-	  {
-	     bd->parent->modal = NULL;
-	     if (bd->focused)
-	       e_border_focus_set(bd->parent, 1, 1);
-	  }
-	bd->parent = NULL;
+          bd->parent->modal = NULL;
+        bd->parent = NULL;
      }
    EINA_LIST_FREE(bd->transients, child)
      {
@@ -4032,44 +4075,13 @@ _e_border_del(E_Border *bd)
    if (bd->leader)
      {
 	bd->leader->group = eina_list_remove(bd->leader->group, bd);
-	if (bd->leader->modal == bd)
-	  {
-	     bd->leader->modal = NULL;
-	     /* TODO Should we focus leader when this window closes? */
-#if 0
-	     if (bd->focused)
-	       e_border_focus_set(bd->leader, 1, 1);
-#endif
-	  }
+        if (bd->leader->modal == bd)
+          bd->leader->modal = NULL;
 	bd->leader = NULL;
      }
    EINA_LIST_FREE(bd->group, child)
      {
 	child->leader = NULL;
-     }
-   if (e_config->focus_revert_on_hide_or_close)
-     {
-        E_Border *pbd;
-        E_Container *con;
-        E_Zone *zone;
-        E_Desk *desk;
-
-        con = e_container_current_get(e_manager_current_get());
-        zone = e_zone_current_get(con);
-        desk = e_desk_current_get(zone);
-
-        /* When using pointer focus, the border under the
-         * pointer (if any) gets focused, in sloppy/click
-         * focus the last focused window on the current
-         * desk gets focus */
-        if (e_config->focus_policy == E_FOCUS_MOUSE)
-          {
-             pbd = e_border_under_pointer_get(desk, bd);
-             if (pbd)
-               e_border_focus_set(pbd, 1, 1);
-          }
-        else
-          e_desk_last_focused_focus(desk);
      }
 }
 
