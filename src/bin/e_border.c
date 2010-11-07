@@ -3532,7 +3532,20 @@ e_border_ping(E_Border *bd)
 EAPI void
 e_border_move_cancel(void)
 {
-   if (move) _e_border_move_end(move);
+   if (move)
+     {
+	if (move->cur_mouse_action)
+	  {
+	     if (move->cur_mouse_action->func.end_mouse)
+	       move->cur_mouse_action->func.end_mouse(E_OBJECT(move), "", NULL);
+	     else if (move->cur_mouse_action->func.end)
+	       move->cur_mouse_action->func.end(E_OBJECT(move), "");
+	     e_object_unref(E_OBJECT(move->cur_mouse_action));
+	     move->cur_mouse_action = NULL;
+	  }
+        else
+          _e_border_move_end(move);
+     }
 }
 
 EAPI void
@@ -3540,8 +3553,20 @@ e_border_resize_cancel(void)
 {
    if (resize)
      {
-	resize->resize_mode = RESIZE_NONE;
-	_e_border_resize_end(resize);
+        if (resize->cur_mouse_action)
+          {
+             if (resize->cur_mouse_action->func.end_mouse)
+               resize->cur_mouse_action->func.end_mouse(E_OBJECT(move), "", NULL);
+             else if (resize->cur_mouse_action->func.end)
+               resize->cur_mouse_action->func.end(E_OBJECT(move), "");
+             e_object_unref(E_OBJECT(resize->cur_mouse_action));
+             resize->cur_mouse_action = NULL;
+          }
+        else
+          {
+             resize->resize_mode = RESIZE_NONE;
+             _e_border_resize_end(resize);
+          }
      }
 }
 
