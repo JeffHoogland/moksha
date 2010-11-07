@@ -123,6 +123,8 @@ e_winlist_show(E_Zone *zone, Eina_Bool same_class)
         _input_window = 0;
         return 0;
      }
+   e_border_move_cancel();
+   e_border_resize_cancel();
    e_border_focus_track_freeze();
 
    evas_event_feed_mouse_in(_winlist->evas, ecore_x_current_time_get(), NULL);
