@@ -107,6 +107,7 @@ static void _ibar_inst_cb_enter(void *data, const char *type, void *event_info);
 static void _ibar_inst_cb_move(void *data, const char *type, void *event_info);
 static void _ibar_inst_cb_leave(void *data, const char *type, void *event_info);
 static void _ibar_inst_cb_drop(void *data, const char *type, void *event_info);
+static void _ibar_cb_drag_finished(E_Drag *data, int dropped);
 static void _ibar_drop_position_update(Instance *inst, Evas_Coord x, Evas_Coord y);
 static void _ibar_inst_cb_scroll(void *data);
 static Eina_Bool  _ibar_cb_config_icon_theme(void *data, int ev_type, void *ev);
@@ -429,10 +430,7 @@ _ibar_instance_drop_zone_recalc(Instance *inst)
 {
    Evas_Coord x, y, w, h;
 
-   if (inst->gcc->o_box)
-     evas_object_geometry_get(inst->gcc->o_box, &x, &y, &w, &h);
-   else
-     evas_object_geometry_get(inst->o_ibar, &x, &y, &w, &h);
+   e_gadcon_client_viewport_geometry_get(inst->gcc, &x, &y, &w, &h);
    e_drop_handler_geometry_set(inst->drop_handler, x, y, w, h);
 }  
 
@@ -906,7 +904,8 @@ _ibar_cb_icon_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
 	     evas_object_geometry_get(ic->o_icon, &x, &y, &w, &h);
 	     d = e_drag_new(ic->ibar->inst->gcc->gadcon->zone->container,
 			    x, y, drag_types, 1,
-			    ic->app, -1, NULL, NULL);
+			    ic->app, -1, NULL, _ibar_cb_drag_finished);
+             efreet_desktop_ref(ic->app);
 	     size = MAX(w, h);
              o = e_util_desktop_icon_add(ic->app, size, e_drag_evas_get(d));
 	     e_drag_object_set(d, o);
@@ -970,6 +969,12 @@ _ibar_cb_drop_resize(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__
 }
 
 static void
+_ibar_cb_drag_finished(E_Drag *drag, int dropped)
+{
+   efreet_desktop_unref(drag->data);
+}
+
+static void
 _ibar_inst_cb_scroll(void *data)
 {
    Instance *inst;
@@ -984,16 +989,15 @@ static void
 _ibar_drop_position_update(Instance *inst, Evas_Coord x, Evas_Coord y)
 {
    Evas_Coord xx, yy;
-   int ox, oy;
+   Evas_Coord ox, oy;
    IBar_Icon *ic;
 
    inst->ibar->dnd_x = x;
    inst->ibar->dnd_y = y;
 
    if (inst->ibar->o_drop) e_box_unpack(inst->ibar->o_drop);
-   evas_object_geometry_get(inst->ibar->o_box, &xx, &yy, NULL, NULL);
-   e_box_align_pixel_offset_get(inst->gcc->o_box, &ox, &oy);
-   ic = _ibar_icon_at_coord(inst->ibar, x + xx + ox, y + yy + oy);
+   e_gadcon_client_object_position_get(inst->gcc, x, y, &xx, &yy);
+   ic = _ibar_icon_at_coord(inst->ibar, xx, yy);
 
    /* This handles autoscrolling bars that would otherwise prevent us
     * from dropping in the very last spot in the ibar. This is not

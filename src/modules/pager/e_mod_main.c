@@ -857,10 +857,7 @@ _pager_instance_drop_zone_recalc(Instance *inst)
 {
    Evas_Coord x, y, w, h;
 
-   if (inst->gcc->o_box)
-     evas_object_geometry_get(inst->gcc->o_box, &x, &y, &w, &h);
-   else
-     evas_object_geometry_get(inst->o_pager, &x, &y, &w, &h);
+   e_gadcon_client_viewport_geometry_get(inst->gcc, &x, &y, &w, &h);
    e_drop_handler_geometry_set(inst->pager->drop_handler, x, y, w, h);
 }
 

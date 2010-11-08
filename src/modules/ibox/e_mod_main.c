@@ -449,10 +449,7 @@ _ibox_instance_drop_zone_recalc(Instance *inst)
 {
    Evas_Coord x, y, w, h;
 
-   if (inst->gcc->o_box)
-     evas_object_geometry_get(inst->gcc->o_box, &x, &y, &w, &h);
-   else
-     evas_object_geometry_get(inst->o_ibox, &x, &y, &w, &h);
+   e_gadcon_client_viewport_geometry_get(inst->gcc, &x, &y, &w, &h);
    e_drop_handler_geometry_set(inst->drop_handler, x, y, w, h);
 }
 
@@ -845,7 +842,6 @@ static void
 _ibox_drop_position_update(Instance *inst, Evas_Coord x, Evas_Coord y)
 {
    Evas_Coord xx, yy;
-   int ox, oy;
    IBox_Icon *ic;
 
    inst->ibox->dnd_x = x;
@@ -853,9 +849,8 @@ _ibox_drop_position_update(Instance *inst, Evas_Coord x, Evas_Coord y)
 
    if (inst->ibox->o_drop)
       e_box_unpack(inst->ibox->o_drop);
-   evas_object_geometry_get(inst->ibox->o_box, &xx, &yy, NULL, NULL);
-   e_box_align_pixel_offset_get(inst->gcc->o_box, &ox, &oy);
-   ic = _ibox_icon_at_coord(inst->ibox, x + xx + ox, y + yy + oy);
+   e_gadcon_client_object_position_get(inst->gcc, x, y, &xx, &yy);
+   ic = _ibox_icon_at_coord(inst->ibox, xx, yy);
    inst->ibox->ic_drop_before = ic;
    if (ic)
      {
