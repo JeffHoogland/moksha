@@ -429,7 +429,10 @@ _ibar_instance_drop_zone_recalc(Instance *inst)
 {
    Evas_Coord x, y, w, h;
 
-   evas_object_geometry_get(inst->o_ibar, &x, &y, &w, &h);
+   if (inst->gcc->o_box)
+     evas_object_geometry_get(inst->gcc->o_box, &x, &y, &w, &h);
+   else
+     evas_object_geometry_get(inst->o_ibar, &x, &y, &w, &h);
    e_drop_handler_geometry_set(inst->drop_handler, x, y, w, h);
 }  
 
