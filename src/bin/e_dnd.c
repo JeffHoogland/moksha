@@ -605,7 +605,6 @@ _e_drag_coords_update(const E_Drop_Handler *h, int *dx, int *dy, int *dw, int *d
 	     e_gadcon_canvas_zone_geometry_get((E_Gadcon *)(h->obj), &px, &py, NULL, NULL);
 	     break;
 	   case E_GADCON_CLIENT_TYPE:
-	     evas_object_geometry_get(((E_Gadcon_Client *)(h->obj))->o_frame, dx, dy, dw, dh);
 	     e_gadcon_canvas_zone_geometry_get(((E_Gadcon_Client *)(h->obj))->gadcon, &px, &py, NULL, NULL);
 	     break;
 	   case E_WIN_TYPE:
