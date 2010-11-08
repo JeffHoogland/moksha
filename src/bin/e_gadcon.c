@@ -1484,6 +1484,7 @@ e_gadcon_client_autoscroll_update(E_Gadcon_Client *gcc, Evas_Coord x, Evas_Coord
 	Evas_Coord w, h;
 	double d;
 
+        /* TODO: When using gadman there is no o_box! */
 	evas_object_geometry_get(gcc->o_box, NULL, NULL, &w, &h);
         if (e_box_orientation_get(gcc->o_box))
 	  {
