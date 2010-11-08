@@ -202,8 +202,6 @@ gadman_gadget_place(E_Config_Gadcon_Client *cf, Gadman_Layer_Type layer, E_Zone 
    else
      edje_object_signal_emit(gcc->o_frame, "e,state,visibility,plain", "e");
 
-   gcc->o_box = gcc->o_frame;
-
    /* swallow the client inside the frame */
    edje_object_part_swallow(gcc->o_frame, "e.swallow.content", gcc->o_base);
    evas_object_event_callback_add(gcc->o_frame, EVAS_CALLBACK_MOUSE_DOWN, 
