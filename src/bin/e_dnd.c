@@ -936,6 +936,7 @@ _e_drag_end(Ecore_X_Window root, int x, int y)
 		  h->cb.drop(h->cb.data, h->active_type, &ev);
 		  dropped = 1;
 	       }
+             h->entered = 0;
 	  }
 	if (_drag_current->cb.finished)
 	  _drag_current->cb.finished(_drag_current, dropped);
