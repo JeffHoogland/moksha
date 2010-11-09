@@ -412,7 +412,7 @@ _evry_icon_theme_set(Evas_Object *obj, const char *icon)
 static int
 _evry_icon_fdo_set(Evas_Object *obj, const char *icon)
 {
-   char *path = NULL;
+   const char *path = NULL;
 
    if ((!icon) || (!icon[0])) return 0;
    path = efreet_icon_path_find(e_config->icon_theme, icon, 128);
@@ -420,7 +420,6 @@ _evry_icon_fdo_set(Evas_Object *obj, const char *icon)
    if (!path) return 0;
    e_icon_scale_size_set(obj, 128);
    e_icon_file_set(obj, path);
-   E_FREE(path);
    return 1;
 }
 
@@ -479,7 +478,7 @@ Evas_Object *
 evry_icon_mime_get(const char *mime, Evas *e)
 {
    Evas_Object *o = NULL;
-   char *icon;
+   const char *icon;
 
    if (!e_config->icon_theme_overrides)
      o = _evry_icon_mime_theme_get(mime, e);
@@ -488,10 +487,7 @@ evry_icon_mime_get(const char *mime, Evas *e)
 
    icon = efreet_mime_type_icon_get(mime, e_config->icon_theme, 128);
    if (icon)
-     {
-	o = e_util_icon_add(icon, e);
-	free(icon);
-     }
+     o = e_util_icon_add(icon, e);
    if (o) return o;
 
    return _evry_icon_mime_theme_get(mime, e);

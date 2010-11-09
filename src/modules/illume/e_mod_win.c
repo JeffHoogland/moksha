@@ -1044,7 +1044,8 @@ _apps_populate(void)
      {
 	// TODO: Needs some efreet love
 	Efreet_Menu *menu, *entry, *subentry;
-	char *label, *icon, *plabel;
+	char *label, *plabel;
+        const char *icon;
 	Eina_List *settings_desktops, *system_desktops, *keyboard_desktops;
 	Eina_List *l, *ll;
 	
@@ -1074,7 +1075,8 @@ _apps_populate(void)
 		       Efreet_Desktop *desktop;
 		       if (subentry->type != EFREET_MENU_ENTRY_DESKTOP) continue;
 
-		       label = icon = NULL;
+		       label = NULL;
+                       icon = NULL;
 		       desktop = subentry->desktop;
 		       
 		       if (!desktop) continue;
@@ -1085,15 +1087,12 @@ _apps_populate(void)
 		       if ((keyboard_desktops) &&
 			   (eina_list_data_find(keyboard_desktops, desktop))) continue;
 		       
-		       if ((desktop) && (desktop->x))
-			 {
-			    icon = eina_hash_find(desktop->x, "X-Application-Screenshot");
-			    if (icon) icon = strdup(icon);
-			 }
+                       if ((desktop) && (desktop->x))
+                         icon = eina_hash_find(desktop->x, "X-Application-Screenshot");
 		       if ((!icon) && (subentry->icon))
 			 {
 			    if (subentry->icon[0] == '/')
-			      icon = strdup(subentry->icon);
+			      icon = subentry->icon;
 			    else
 			      icon = efreet_icon_path_find(e_config->icon_theme,
 							   subentry->icon, 512);
@@ -1111,7 +1110,7 @@ _apps_populate(void)
 		  
 		       if (!icon) icon = efreet_icon_path_find(e_config->icon_theme,
 							  "hires.jpg", 512);
-		       if (!icon) icon = strdup("DEFAULT");
+		       if (!icon) icon = "DEFAULT";
 		       if (!label) label = strdup("???");
 		       
 		       snprintf(buf, sizeof(buf), "%s / %s", plabel, label);
@@ -1131,7 +1130,6 @@ _apps_populate(void)
 			    num++;
 			 }
 		       if (label) free(label);
-		       if (icon) free(icon);
 		       
 		    }
 		  if (plabel) free(plabel);

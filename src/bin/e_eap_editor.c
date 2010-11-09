@@ -805,7 +805,8 @@ _e_desktop_editor_cb_icon_select(void *data1, void *data2)
    Evas_Object *o;
    Evas_Coord mw, mh;
    E_Desktop_Edit *editor;
-   char *path = NULL, *icon_path = NULL;
+   char *path = NULL;
+   const char *icon_path = NULL;
 
    editor = data2;
    cfdata = data1;
@@ -825,15 +826,12 @@ _e_desktop_editor_cb_icon_select(void *data1, void *data2)
    if (cfdata->icon) 
      {
 	if (ecore_file_exists(cfdata->icon))
-	  icon_path = strdup(cfdata->icon);
+	  icon_path = cfdata->icon;
 	else
 	  icon_path = efreet_icon_path_find(e_config->icon_theme, cfdata->icon, 64);
 
-	if (icon_path)
-	  {
-	     path = ecore_file_dir_get(icon_path);
-	     free(icon_path);
-	  }
+        if (icon_path)
+          path = ecore_file_dir_get(icon_path);
      }
 
    if (path)

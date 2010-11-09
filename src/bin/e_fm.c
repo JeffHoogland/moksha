@@ -2016,7 +2016,7 @@ _e_fm2_icon_mime_size_normalize(const E_Fm2_Icon *ic)
 static Evas_Object *
 _e_fm2_icon_mime_fdo_get(Evas *evas, const E_Fm2_Icon *ic, const char **type_ret)
 {
-   char *icon;
+   const char *icon;
    unsigned int size;
 
    size = _e_fm2_icon_mime_size_normalize(ic);
@@ -2025,7 +2025,6 @@ _e_fm2_icon_mime_fdo_get(Evas *evas, const E_Fm2_Icon *ic, const char **type_ret
      {
         Evas_Object *o;
         o = _e_fm2_icon_explicit_get(evas, ic, icon, type_ret);
-        free(icon);
         return o;
      }
    return NULL;

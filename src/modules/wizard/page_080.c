@@ -67,7 +67,7 @@ wizard_page_show(E_Wizard_Page *pg __UNUSED__)
    for (i = 0, l = desktops; l ; l = l->next, i++)
      {
         Efreet_Desktop *desk;
-        char *icon;
+        const char *icon;
         
         desk = l->data;
         icon = NULL;
@@ -77,7 +77,6 @@ wizard_page_show(E_Wizard_Page *pg __UNUSED__)
         ck = e_widget_check_icon_add(pg->evas, desk->name, 
                                      icon, 32 * e_scale, 32 * e_scale,
                                      &(desktops_add[i]));
-        if (icon) free(icon);
         e_widget_list_object_append(li, ck, 1, 1, 0.0);
         evas_object_show(ck);
      }

@@ -436,7 +436,7 @@ _e_util_icon_theme_set(Evas_Object *obj, const char *icon)
 static int
 _e_util_icon_fdo_set(Evas_Object *obj, const char *icon)
 {
-   char *path = NULL;
+   const char *path = NULL;
    unsigned int size;
 
    if ((!icon) || (!icon[0])) return 0;
@@ -444,7 +444,6 @@ _e_util_icon_fdo_set(Evas_Object *obj, const char *icon)
    path = efreet_icon_path_find(e_config->icon_theme, icon, size);
    if (!path) return 0;
    e_icon_file_set(obj, path);
-   E_FREE(path);
    return 1;
 }
 
@@ -508,7 +507,7 @@ e_util_icon_size_normalize(unsigned int desired)
 static int
 _e_util_menu_item_fdo_icon_set(E_Menu_Item *mi, const char *icon)
 {
-   char *path = NULL;
+   const char *path = NULL;
    unsigned int size;
 
    if ((!icon) || (!icon[0])) return 0;
@@ -516,7 +515,6 @@ _e_util_menu_item_fdo_icon_set(E_Menu_Item *mi, const char *icon)
    path = efreet_icon_path_find(e_config->icon_theme, icon, size);
    if (!path) return 0;
    e_menu_item_icon_file_set(mi, path);
-   E_FREE(path);
    return 1;
 }
 
@@ -993,13 +991,12 @@ e_util_icon_theme_icon_add(const char *icon_name, unsigned int size, Evas *evas)
    else
      {
 	Evas_Object *obj;
-	char *path;
+	const char *path;
 
 	path = efreet_icon_path_find(e_config->icon_theme, icon_name, size);
 	if (path)
 	  {
 	     obj = e_util_icon_add(path, evas);
-	     free(path);
 	     return obj;
 	  }
      }
@@ -1009,11 +1006,11 @@ e_util_icon_theme_icon_add(const char *icon_name, unsigned int size, Evas *evas)
 EAPI void
 e_util_desktop_menu_item_icon_add(Efreet_Desktop *desktop, unsigned int size, E_Menu_Item *mi)
 {
-   char *path = NULL;
+   const char *path = NULL;
 
    if ((!desktop) || (!desktop->icon)) return;
 
-   if (desktop->icon[0] == '/') path = strdup(desktop->icon);
+   if (desktop->icon[0] == '/') path = desktop->icon;
    else path = efreet_icon_path_find(e_config->icon_theme, desktop->icon, size);
 
    if (path)
@@ -1030,7 +1027,6 @@ e_util_desktop_menu_item_icon_add(Efreet_Desktop *desktop, unsigned int size, E_
 	  }
 	else
 	  e_menu_item_icon_file_set(mi, path);
-	free(path);
      }
 }
 

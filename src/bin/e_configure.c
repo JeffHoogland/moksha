@@ -301,10 +301,10 @@ _e_configure_efreet_desktop_update(void)
      {
 	char *s;
 	char *cfg_cat_name;
-	char *cfg_cat_icon;
+	const char *cfg_cat_icon;
 	char *cfg_cat;
 	char *cfg_cat_cfg;
-	char *cfg_icon;
+	const char *cfg_icon;
 	char *label;
 	int cfg_pri;
 
@@ -323,19 +323,14 @@ _e_configure_efreet_desktop_update(void)
 	     if (s) cfg_pri = atoi(s);
 	     cfg_cat_name = eina_hash_find(desktop->x, "X-Enlightenment-Config-Category-Name");
 	     cfg_cat_icon = eina_hash_find(desktop->x, "X-Enlightenment-Config-Category-Icon");
-	     if (cfg_cat_icon)
-	       {
-		  if (cfg_cat_icon[0] == '/')
-		    cfg_cat_icon = strdup(cfg_cat_icon);
-		  else
-		    cfg_cat_icon = efreet_icon_path_find(e_config->icon_theme,
-							 cfg_cat_icon, 64);
-	       }
+	     if ((cfg_cat_icon) && (cfg_cat_icon[0] != '/'))
+               cfg_cat_icon = efreet_icon_path_find(e_config->icon_theme,
+                                                    cfg_cat_icon, 64);
 	  }
 	if (desktop->icon)
 	  {
 	     if (desktop->icon[0] == '/')
-	       cfg_icon = strdup(desktop->icon);
+	       cfg_icon = desktop->icon;
 	     else
 	       cfg_icon = efreet_icon_path_find(e_config->icon_theme,
 						desktop->icon, 64);
@@ -345,7 +340,7 @@ _e_configure_efreet_desktop_update(void)
 	else label = "???";
 	if (!cfg_cat_cfg)
 	  {
-	     char *ic;
+	     const char *ic;
 
 	     snprintf(buf, sizeof(buf), "system/%s", label);
 	     cfg_cat_cfg = buf;
@@ -371,8 +366,6 @@ _e_configure_efreet_desktop_update(void)
 	_e_configure_registry_item_full_add(cfg_cat_cfg, cfg_pri, label,
 					    NULL, cfg_icon,
 					    NULL, NULL, desktop);
-	if (cfg_icon) free(cfg_icon);
-	if (cfg_cat_icon) free(cfg_cat_icon);
      }
    EINA_LIST_FREE(settings_desktops, desktop)
       efreet_desktop_free(desktop);

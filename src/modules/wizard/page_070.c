@@ -210,7 +210,7 @@ wizard_page_show(E_Wizard_Page *pg)
      {
         if (apps[i].found == 0)
           {
-             char *icon;
+             const char *icon;
 
              apps[i].found = 1;
              icon = efreet_icon_path_find(e_config->icon_theme, 
@@ -218,7 +218,6 @@ wizard_page_show(E_Wizard_Page *pg)
              ck = e_widget_check_icon_add(pg->evas, apps[i].name, 
                                           icon, 32 * e_scale, 32 * e_scale,
                                           &(apps[i].found));
-             if (icon) free(icon);
              e_widget_list_object_append(li, ck, 1, 1, 0.0);
              evas_object_show(ck);
           }

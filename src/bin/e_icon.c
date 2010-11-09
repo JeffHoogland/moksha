@@ -153,7 +153,7 @@ EAPI Eina_Bool
 e_icon_fdo_icon_set(Evas_Object *obj, const char *icon)
 {
    E_Smart_Data *sd;
-   char *path;
+   const char *path;
 
    if (!icon) return EINA_TRUE;
    if (icon[0] == '/') return e_icon_file_set(obj, icon);
@@ -173,7 +173,6 @@ e_icon_fdo_icon_set(Evas_Object *obj, const char *icon)
      evas_object_image_load_size_set(sd->obj, sd->size, sd->size);
    if (sd->preload) evas_object_hide(sd->obj);
    evas_object_image_file_set(sd->obj, path, NULL);
-   free(path);
    if (evas_object_image_load_error_get(sd->obj) != EVAS_LOAD_ERROR_NONE)
      return EINA_FALSE;
    if (sd->preload)
@@ -547,7 +546,7 @@ _e_icon_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
    sd->h = h;
    if (sd->fdo)
      {
-        char *path;
+        const char *path;
 
         sd->size = MAX(w, h);
         path = efreet_icon_path_find(e_config->icon_theme, sd->fdo, sd->size);
@@ -556,7 +555,6 @@ _e_icon_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
         /* smart code here */
         evas_object_image_load_size_set(sd->obj, sd->size, sd->size);
         evas_object_image_file_set(sd->obj, path, NULL);
-        free(path);
         if (sd->preload)
           {
              sd->loading = 1;
