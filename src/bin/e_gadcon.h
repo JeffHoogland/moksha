@@ -286,7 +286,6 @@ EAPI void             e_gadcon_client_autoscroll_cb_set(E_Gadcon_Client *gcc, vo
 EAPI void             e_gadcon_client_resizable_set(E_Gadcon_Client *gcc, int resizable);
 EAPI int	      e_gadcon_client_geometry_get(E_Gadcon_Client *gcc, int *x, int *y, int *w, int *h);
 EAPI int              e_gadcon_client_viewport_geometry_get(E_Gadcon_Client *gcc, int *x, int *y, int *w, int *h);
-EAPI int              e_gadcon_client_object_position_get(E_Gadcon_Client *gcc, int x, int y, int *rx, int *ry);
 EAPI E_Zone          *e_gadcon_client_zone_get(E_Gadcon_Client *gcc);
 EAPI void             e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu_main, E_Menu *menu_gadget, int flags);
 EAPI void             e_gadcon_client_util_menu_attach(E_Gadcon_Client *gcc);

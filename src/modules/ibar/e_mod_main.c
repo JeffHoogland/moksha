@@ -988,16 +988,13 @@ _ibar_inst_cb_scroll(void *data)
 static void
 _ibar_drop_position_update(Instance *inst, Evas_Coord x, Evas_Coord y)
 {
-   Evas_Coord xx, yy;
-   Evas_Coord ox, oy;
    IBar_Icon *ic;
 
    inst->ibar->dnd_x = x;
    inst->ibar->dnd_y = y;
 
    if (inst->ibar->o_drop) e_box_unpack(inst->ibar->o_drop);
-   e_gadcon_client_object_position_get(inst->gcc, x, y, &xx, &yy);
-   ic = _ibar_icon_at_coord(inst->ibar, xx, yy);
+   ic = _ibar_icon_at_coord(inst->ibar, x, y);
 
    /* This handles autoscrolling bars that would otherwise prevent us
     * from dropping in the very last spot in the ibar. This is not
@@ -1027,11 +1024,11 @@ _ibar_drop_position_update(Instance *inst, Evas_Coord x, Evas_Coord y)
 	evas_object_geometry_get(ic->o_holder, &ix, &iy, &iw, &ih);
 	if (e_box_orientation_get(inst->ibar->o_box))
 	  {
-	     if ((x + xx) < (ix + (iw / 2))) before = 1;
+	     if (x < (ix + (iw / 2))) before = 1;
 	  }
 	else
 	  {
-	     if ((y + yy) < (iy + (ih / 2))) before = 1;
+	     if (y < (iy + (ih / 2))) before = 1;
 	  }
 	if (before)
 	  e_box_pack_before(inst->ibar->o_box, inst->ibar->o_drop, ic->o_holder);

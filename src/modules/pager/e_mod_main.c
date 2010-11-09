@@ -1932,17 +1932,11 @@ static void
 _pager_update_drop_position(Pager *p, Evas_Coord x, Evas_Coord y)
 {
    Pager_Desk *pd, *pd2;
-   Evas_Coord xx, yy;
-   int ox, oy;
    Eina_List *l;
-
-   ox = oy = 0;
 
    p->dnd_x = x;
    p->dnd_y = y;
-   evas_object_geometry_get(p->o_table, &xx, &yy, NULL, NULL);
-   if (p->inst) e_box_align_pixel_offset_get(p->inst->gcc->o_box, &ox, &oy);
-   pd = _pager_desk_at_coord(p, x + xx + ox, y + yy + oy);
+   pd = _pager_desk_at_coord(p, x, y);
    if (pd == p->active_drop_pd) return;
    for (l = p->desks; l; l = l->next)
      {
@@ -2032,8 +2026,6 @@ _pager_drop_cb_drop(void *data, const char *type, void *event_info)
    Eina_List *l;
    int dx = 0, dy = 0;
    Pager_Win *pw = NULL;
-   Evas_Coord xx, yy;
-   int x = 0, y = 0;
    Evas_Coord wx, wy, wx2, wy2;
    Evas_Coord nx, ny;
    Pager *p;
@@ -2043,9 +2035,7 @@ _pager_drop_cb_drop(void *data, const char *type, void *event_info)
 
    if (act_popup) p = act_popup->pager;
 
-   evas_object_geometry_get(p->o_table, &xx, &yy, NULL, NULL);
-   if (p->inst) e_box_align_pixel_offset_get(p->inst->gcc->o_box, &x, &y);
-   pd = _pager_desk_at_coord(p, ev->x + xx + x, ev->y + yy + y);
+   pd = _pager_desk_at_coord(p, ev->x, ev->y);
    if (pd)
      {
 	if (!strcmp(type, "enlightenment/pager_win"))
@@ -2086,8 +2076,8 @@ _pager_drop_cb_drop(void *data, const char *type, void *event_info)
 		  int zx, zy;
 
 		  e_layout_coord_canvas_to_virtual(pd->o_layout,
-						   ev->x + xx + x + dx,
-						   ev->y + yy + y + dy,
+						   ev->x + dx,
+						   ev->y + dy,
 						   &nx, &ny);
 		  e_zone_useful_geometry_get(pd->desk->zone,
 					     &zx, &zy, NULL, NULL);

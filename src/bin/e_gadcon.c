@@ -1266,21 +1266,6 @@ e_gadcon_client_viewport_geometry_get(E_Gadcon_Client *gcc, int *x, int *y, int 
    return 1;
 }
 
-/*
- * position x, y is in viewport coords, return is in object coords
- */
-EAPI int
-e_gadcon_client_object_position_get(E_Gadcon_Client *gcc, int x, int y, int *rx, int *ry)
-{
-   int xx = 0, yy = 0;
-
-   if (gcc->o_box) evas_object_geometry_get(gcc->o_box, &xx, &yy, NULL, NULL);
-   else if (gcc->o_base) evas_object_geometry_get(gcc->o_base, &xx, &yy, NULL, NULL);
-   if (rx) *rx = x + xx;
-   if (ry) *ry = y + yy;
-   return 1;
-}
-
 EAPI E_Zone *
 e_gadcon_client_zone_get(E_Gadcon_Client *gcc)
 {

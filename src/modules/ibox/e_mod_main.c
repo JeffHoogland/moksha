@@ -841,7 +841,6 @@ _ibox_inst_cb_scroll(void *data)
 static void
 _ibox_drop_position_update(Instance *inst, Evas_Coord x, Evas_Coord y)
 {
-   Evas_Coord xx, yy;
    IBox_Icon *ic;
 
    inst->ibox->dnd_x = x;
@@ -849,8 +848,7 @@ _ibox_drop_position_update(Instance *inst, Evas_Coord x, Evas_Coord y)
 
    if (inst->ibox->o_drop)
       e_box_unpack(inst->ibox->o_drop);
-   e_gadcon_client_object_position_get(inst->gcc, x, y, &xx, &yy);
-   ic = _ibox_icon_at_coord(inst->ibox, xx, yy);
+   ic = _ibox_icon_at_coord(inst->ibox, x, y);
    inst->ibox->ic_drop_before = ic;
    if (ic)
      {
@@ -860,11 +858,11 @@ _ibox_drop_position_update(Instance *inst, Evas_Coord x, Evas_Coord y)
 	evas_object_geometry_get(ic->o_holder, &ix, &iy, &iw, &ih);
 	if (e_box_orientation_get(inst->ibox->o_box))
 	  {
-	     if ((x + xx) < (ix + (iw / 2))) before = 1;
+	     if (x < (ix + (iw / 2))) before = 1;
 	  }
 	else
 	  {
-	     if ((y + yy) < (iy + (ih / 2))) before = 1;
+	     if (y < (iy + (ih / 2))) before = 1;
 	  }
 	if (before)
 	  e_box_pack_before(inst->ibox->o_box, inst->ibox->o_drop, ic->o_holder);
