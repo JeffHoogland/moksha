@@ -996,25 +996,6 @@ _ibar_drop_position_update(Instance *inst, Evas_Coord x, Evas_Coord y)
    if (inst->ibar->o_drop) e_box_unpack(inst->ibar->o_drop);
    ic = _ibar_icon_at_coord(inst->ibar, x, y);
 
-   /* This handles autoscrolling bars that would otherwise prevent us
-    * from dropping in the very last spot in the ibar. This is not
-    * necessarily a good way to solve the problem however it is by far
-    * the simplest. */
-   if ((inst->gcc->autoscroll) && (ic))
-     {
-	 double ax,ay;
-
-	 e_box_align_get(inst->gcc->o_box, &ax, &ay);
-	 if (e_box_orientation_get(inst->ibar->o_box))
-	   {
-	      if (ax < .01) ic = NULL;
-	   }
-	 else
-	   {
-	      if (ay < .01) ic = NULL;
-	   }
-     }
-
    inst->ibar->ic_drop_before = ic;
    if (ic)
      {
