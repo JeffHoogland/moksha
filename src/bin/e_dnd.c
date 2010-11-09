@@ -15,7 +15,7 @@
 static void _e_drag_show(E_Drag *drag);
 static void _e_drag_hide(E_Drag *drag);
 static void _e_drag_move(E_Drag *drag, int x, int y);
-static void _e_drag_coords_update(const E_Drop_Handler *h, int *dx, int *dy, int *dw, int *dh);
+static void _e_drag_coords_update(const E_Drop_Handler *h, int *dx, int *dy);
 static Ecore_X_Window _e_drag_win_get(const E_Drop_Handler *h, int xdnd);
 static int  _e_drag_win_matches(E_Drop_Handler *h, Ecore_X_Window win, int xdnd);
 static void _e_drag_win_show(E_Drop_Handler *h);
@@ -401,10 +401,12 @@ e_drop_handler_geometry_set(E_Drop_Handler *handler, int x, int y, int w, int h)
 EAPI int
 e_drop_inside(const E_Drop_Handler *handler, int x, int y)
 {
-   int dx, dy, dw, dh;
+   int dx, dy;
 
-   _e_drag_coords_update(handler, &dx, &dy, &dw, &dh);
-   return E_INSIDE(x, y, dx, dy, dw, dh);
+   _e_drag_coords_update(handler, &dx, &dy);
+   x -= dx;
+   y -= dy;
+   return E_INSIDE(x, y, handler->x, handler->y, handler->w, handler->h);
 }
 
 EAPI void
@@ -589,14 +591,12 @@ _e_drag_move(E_Drag *drag, int x, int y)
 }
 
 static void
-_e_drag_coords_update(const E_Drop_Handler *h, int *dx, int *dy, int *dw, int *dh)
+_e_drag_coords_update(const E_Drop_Handler *h, int *dx, int *dy)
 {
    int px = 0, py = 0;
    
-   *dx = h->x;
-   *dy = h->y;
-   *dw = h->w;
-   *dh = h->h;
+   *dx = 0;
+   *dy = 0;
    if (h->obj)
      {
 	switch (h->obj->type)
@@ -739,7 +739,7 @@ _e_drag_update(Ecore_X_Window root, int x, int y, Ecore_X_Atom action)
    E_Event_Dnd_Enter enter_ev;
    E_Event_Dnd_Move move_ev;
    E_Event_Dnd_Leave leave_ev;
-   int dx, dy, dw, dh;
+   int dx, dy;
    Ecore_X_Window win, ignore_win[2];
    int responsive = 0;
 
@@ -770,7 +770,7 @@ _e_drag_update(Ecore_X_Window root, int x, int y, Ecore_X_Atom action)
 	EINA_LIST_FOREACH(_drop_handlers, l, h)
 	  {
 	     if (!h->active) continue;
-	     _e_drag_coords_update(h, &dx, &dy, &dw, &dh);
+	     _e_drag_coords_update(h, &dx, &dy);
 	     enter_ev.x = x - dx;
 	     enter_ev.y = y - dy;
 	     enter_ev.data = NULL;
@@ -781,7 +781,7 @@ _e_drag_update(Ecore_X_Window root, int x, int y, Ecore_X_Atom action)
 	     leave_ev.x = x - dx;
 	     leave_ev.y = y - dy;
 	     
-	     if (E_INSIDE(x, y, dx, dy, dw, dh) && 
+	     if (E_INSIDE(enter_ev.x, enter_ev.y, h->x, h->y, h->w, h->h) && 
 		 _e_drag_win_matches(h, win, 0))
 	       {
 		  if (e_drop_handler_responsive_get(h)) responsive = 1;
@@ -824,7 +824,7 @@ _e_drag_update(Ecore_X_Window root, int x, int y, Ecore_X_Atom action)
 	EINA_LIST_FOREACH(_drop_handlers, l, h)
 	  {
 	     if (!h->active) continue;
-	     _e_drag_coords_update(h, &dx, &dy, &dw, &dh);
+	     _e_drag_coords_update(h, &dx, &dy);
 	     enter_ev.x = x - dx;
 	     enter_ev.y = y - dy;
 	     enter_ev.action = action;
@@ -833,7 +833,7 @@ _e_drag_update(Ecore_X_Window root, int x, int y, Ecore_X_Atom action)
 	     move_ev.action = action;
 	     leave_ev.x = x - dx;
 	     leave_ev.y = y - dy;
-	     if (E_INSIDE(x, y, dx, dy, dw, dh) && _e_drag_win_matches(h, win, 1))
+	     if (E_INSIDE(enter_ev.x, enter_ev.y, h->x, h->y, h->w, h->h) && _e_drag_win_matches(h, win, 1))
 	       {
 		  if (e_drop_handler_responsive_get(h)) responsive = 1;
 
@@ -869,7 +869,7 @@ _e_drag_end(Ecore_X_Window root, int x, int y)
    E_Zone *zone;
    const Eina_List *l;
    E_Event_Dnd_Drop ev;
-   int dx, dy, dw, dh;
+   int dx, dy;
    Ecore_X_Window win, ignore_win[2];
    E_Drag *tmp;
 
@@ -920,11 +920,11 @@ _e_drag_end(Ecore_X_Window root, int x, int y)
 	EINA_LIST_FOREACH(_drop_handlers, l, h)
 	  {
 	     if (!h->active) continue;
-	     _e_drag_coords_update(h, &dx, &dy, &dw, &dh);
+	     _e_drag_coords_update(h, &dx, &dy);
 	     ev.x = x - dx;
 	     ev.y = y - dy;
 	     if ((_e_drag_win_matches(h, win, 0)) &&
-		 ((h->cb.drop) && (E_INSIDE(x, y, dx, dy, dw, dh))))
+		 ((h->cb.drop) && (E_INSIDE(ev.x, ev.y, h->x, h->y, h->w, h->h))))
 	       {
 		  if (_drag_current->cb.convert)
 		    {
@@ -973,7 +973,7 @@ _e_drag_xdnd_end(Ecore_X_Window win, int x, int y)
 {
    const Eina_List *l;
    E_Event_Dnd_Drop ev;
-   int dx, dy, dw, dh;
+   int dx, dy;
 
    if (!_xdnd) return;
 
@@ -986,11 +986,11 @@ _e_drag_xdnd_end(Ecore_X_Window win, int x, int y)
 	EINA_LIST_FOREACH(_drop_handlers, l, h)
 	  {
 	     if (!h->active) continue;
-	     _e_drag_coords_update(h, &dx, &dy, &dw, &dh);
+	     _e_drag_coords_update(h, &dx, &dy);
 	     ev.x = x - dx;
 	     ev.y = y - dy;
 	     if (_e_drag_win_matches(h, win, 1) && h->cb.drop 
-		 && E_INSIDE(x, y, dx, dy, dw, dh))
+		 && E_INSIDE(ev.x, ev.y, h->x, h->y, h->w, h->h))
 	       {
 		  h->cb.drop(h->cb.data, h->active_type, &ev);
 	       }
