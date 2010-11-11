@@ -5,26 +5,26 @@
 #define BUTTON_NOPLACE 1
 #define BUTTON_DESK 2
 
-struct _E_Config_Dialog_Data 
+struct _E_Config_Dialog_Data
 {
-   struct 
+   struct
      {
-        int show, urgent_show, urgent_stick;
+        int show, urgent_show, urgent_stick, urgent_focus;
         double speed, urgent_speed;
         int height, act_height;
      } popup;
-   struct 
+   struct
      {
         unsigned int drag, noplace, desk;
      } btn;
-   struct 
+   struct
      {
         Ecore_X_Window bind_win;
         E_Dialog *dia;
         Eina_List *hdls;
         int btn;
      } grab;
-   struct 
+   struct
      {
         Evas_Object *ob1, *ob2, *ob3;
         Eina_List *popup_list, *urgent_list;
@@ -88,13 +88,14 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
    return cfdata;
 }
 
-static void 
-_fill_data(E_Config_Dialog_Data *cfdata) 
+static void
+_fill_data(E_Config_Dialog_Data *cfdata)
 {
    cfdata->popup.show = pager_config->popup;
    cfdata->popup.speed = pager_config->popup_speed;
    cfdata->popup.urgent_show = pager_config->popup_urgent;
    cfdata->popup.urgent_stick = pager_config->popup_urgent_stick;
+   cfdata->popup.urgent_focus = pager_config->popup_urgent_focus;
    cfdata->popup.urgent_speed = pager_config->popup_urgent_speed;
    cfdata->popup.height = pager_config->popup_height;
    cfdata->popup.act_height = pager_config->popup_act_height;
@@ -252,11 +253,19 @@ _adv_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *c
    uc = e_widget_check_add(evas, _("Show popup on urgent window"), 
                            &(cfdata->popup.urgent_show));
    e_widget_list_object_append(ol, uc, 1, 0, 0.5);
-   ow = e_widget_check_add(evas, _("Urgent popup sticks on screen"), 
+
+   ow = e_widget_check_add(evas, _("Urgent popup sticks on screen"),
                            &(cfdata->popup.urgent_stick));
    cfdata->gui.urgent_list = eina_list_append(cfdata->gui.urgent_list, ow);
    e_widget_disabled_set(ow, !cfdata->popup.urgent_show);
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
+
+   ow = e_widget_check_add(evas, _("Show popup for focused windows"),
+                           &(cfdata->popup.urgent_focus));
+   cfdata->gui.urgent_list = eina_list_append(cfdata->gui.urgent_list, ow);
+   e_widget_disabled_set(ow, !cfdata->popup.urgent_show);
+   e_widget_list_object_append(ol, ow, 1, 0, 0.5);
+
    ow = e_widget_label_add(evas, _("Urgent popup speed"));
    cfdata->gui.urgent_list = eina_list_append(cfdata->gui.urgent_list, ow);
    e_widget_disabled_set(ow, !cfdata->popup.urgent_show);
@@ -283,6 +292,7 @@ _adv_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    pager_config->flip_desk = cfdata->flip_desk;
    pager_config->popup_urgent = cfdata->popup.urgent_show;
    pager_config->popup_urgent_stick = cfdata->popup.urgent_stick;
+   pager_config->popup_urgent_focus = cfdata->popup.urgent_focus;
    pager_config->popup_urgent_speed = cfdata->popup.urgent_speed;
    pager_config->show_desk_names = cfdata->show_desk_names;
    pager_config->popup_height = cfdata->popup.height;
@@ -304,6 +314,7 @@ _adv_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata
    if (pager_config->popup_urgent != cfdata->popup.urgent_show) return 1;
    if (pager_config->popup_speed != cfdata->popup.speed) return 1;
    if (pager_config->popup_urgent_stick != cfdata->popup.urgent_stick) return 1;
+   if (pager_config->popup_urgent_focus != cfdata->popup.urgent_focus) return 1;
    if (pager_config->popup_urgent_speed != cfdata->popup.urgent_speed) return 1;
    if (pager_config->popup_height != cfdata->popup.height) return 1;
    if (pager_config->popup_act_height != cfdata->popup.act_height) return 1;
