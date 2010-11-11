@@ -115,7 +115,6 @@ icon_active.png \
 icon_add_fav.png \
 icon_add.png \
 icon_advanced.png \
-icon_appearance.png \
 icon_applications.png \
 icon_applications_ibar.png \
 icon_applications_new.png \
@@ -432,4 +431,6 @@ connman-connecting-2.png \
 connman-connecting-3.png \
 connman-connecting-4.png \
 comp-sh1.png \
-shelf_alt_vert_bg.png
+shelf_alt_vert_bg.png \
+icon_look.png \
+icon_gadget.png
