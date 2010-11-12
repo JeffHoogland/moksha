@@ -168,7 +168,7 @@ _item_free(Evry_Item *it)
 }
 
 static void
-_scan_func(Ecore_Thread *thread __UNUSED__, void *data)
+_scan_func(void *data, Ecore_Thread *thread __UNUSED__)
 {
    Data *d = data;
    Plugin *p = d->plugin;
@@ -244,7 +244,7 @@ _scan_func(Ecore_Thread *thread __UNUSED__, void *data)
 }
 
 static void
-_scan_mime_func(Ecore_Thread *thread __UNUSED__, void *data)
+_scan_mime_func(void *data, Ecore_Thread *thread __UNUSED__)
 {
    Data *d = data;
    Evry_Item_File *file;
@@ -312,7 +312,7 @@ _append_files(Plugin *p)
 }
 
 static void
-_scan_cancel_func(void *data)
+_scan_cancel_func(void *data, Ecore_Thread *thread __UNUSED__)
 {
    Data *d = data;
    Plugin *p = d->plugin;
@@ -396,7 +396,7 @@ _cache_dir_add(Eina_List *files)
 }
 
 static void
-_scan_end_func(void *data)
+_scan_end_func(void *data, Ecore_Thread *thread __UNUSED__)
 {
    Data *d = data;
    Plugin *p = d->plugin;
