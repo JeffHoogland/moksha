@@ -741,6 +741,7 @@ _e_randr_event_cb(void *data __UNUSED__, int type, void *ev)
              crtc_info->geometry.h = 0;
              crtc_info->current_mode = NULL;
              if (crtc_info->outputs) eina_list_free(crtc_info->outputs);
+             crtc_info->outputs = NULL;
 
              //update screensize of necessary
              ecore_x_randr_screen_reset(e_randr_screen_info->root);
