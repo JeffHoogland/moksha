@@ -524,6 +524,7 @@ _cpufreq_status_check_available(Status *s)
 {
    char buf[PATH_MAX];
    Eina_List *l;
+  // FIXME: this sssumes all cores accept the same freqs/ might be wrong
 #ifdef __FreeBSD__
    int freq, i;
    size_t len = 0;
@@ -643,6 +644,7 @@ _cpufreq_status_check_current(Status *s)
    FILE *f;
    int ret = 0;
    int frequency = 0;
+   int freqtot = 0;
 #ifdef __FreeBSD__
    int len = 4;
 
@@ -663,20 +665,31 @@ _cpufreq_status_check_current(Status *s)
    s->active = 0;
 
    _cpufreq_status_check_available(s);
-   f = fopen("/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq", "r");
-   if (f)
-     {
-	fgets(buf, sizeof(buf), f);
-	buf[sizeof(buf) - 1] = 0;
-	fclose(f);
-
-	frequency = atoi(buf);
-	if (frequency != s->cur_frequency)
-	  ret = 1;
-	s->cur_frequency = frequency;
-	s->active = 1;
-     }
-
+   // average out frequencies of all cores
+   for (i = 0; i < 64; i++)
+    {
+      snprintf(buf, sizeof(buf), "/sys/devices/system/cpu/cpu%i/cpufreq/scaling_cur_freq", i);
+      f = fopen(buf, "r");
+      if (f)
+        {
+          fgets(buf, sizeof(buf), f);
+          buf[sizeof(buf) - 1] = 0;
+          fclose(f);
+          
+          frequency = atoi(buf);
+          freqtot += frequency;
+          s->active = 1;
+        }
+      else
+        break;
+    }
+  if (i < 64) i++;
+  frequency = freqtot / i;
+  if (frequency != s->cur_frequency)
+    ret = 1;
+  s->cur_frequency = frequency;
+  
+  // FIXME: this sssumes all cores are on the same governor
    f = fopen("/sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed", "r");
    if (f)
      {
