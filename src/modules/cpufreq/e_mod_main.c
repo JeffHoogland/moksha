@@ -683,7 +683,7 @@ _cpufreq_status_check_current(Status *s)
       else
         break;
     }
-  if (i < 64) i++;
+  if (i < 1) i = 1;
   frequency = freqtot / i;
   if (frequency != s->cur_frequency)
     ret = 1;
