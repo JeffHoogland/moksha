@@ -259,7 +259,7 @@ color_classes {
    }
    color_class {
       name: "comp_focus-out_color";
-      color: 180 180 180 255;
+      color: 255 255 255 220;
    }
 }
 
@@ -36047,7 +36047,7 @@ collections {
             type: RECT;
             mouse_events: 0;
             description { state: "default" 0.0;
-               color: 255 255 255 220;
+               color_class: "comp_focus-out_color";
                rel1 {
                   relative: -1.0  -1.0;
                   offset: -9999 -9999;
@@ -36059,6 +36059,7 @@ collections {
             }
             description { state: "focused" 0.0;
                inherit: "default" 0.0;
+               color_class: "";
                color: 255 255 255 255;
             }
          }
@@ -36356,9 +36357,30 @@ collections {
                visible: 0;
             }
          }
+         part { name: "focus-clipper";
+            type: RECT;
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               color_class: "comp_focus-out_color";
+               rel1 {
+                  relative: -1.0  -1.0;
+                  offset: -9999 -9999;
+               }
+               rel2 {
+                  relative: 2.0   2.0;
+                  offset: 9999  9999;
+               }
+            }
+            description { state: "focused" 0.0;
+               inherit: "default" 0.0;
+               color_class: "";
+               color: 255 255 255 255;
+            }
+         }
          part { name: "e.swallow.content";
             type: SWALLOW;
             mouse_events: 0;
+            clip_to: "focus-clipper";
             description { state: "default" 0.0;
             }
          }
@@ -36385,6 +36407,20 @@ collections {
             signal: "e,state,visible,off";
             source: "e";
             action: SIGNAL_EMIT "e,action,hide,done" "e";
+         }
+         program { name: "focus";
+            signal: "e,state,focus,on";
+            source: "e";
+            action: STATE_SET "focused" 0.0;
+            transition: SINUSOIDAL 0.2;
+            target: "focus-clipper";
+         }
+         program { name: "unfocus";
+            signal: "e,state,focus,off";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            transition: SINUSOIDAL 0.5;
+            target: "focus-clipper";
          }
       }
    }
