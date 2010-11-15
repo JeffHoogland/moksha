@@ -120,9 +120,9 @@ static Eina_List *borders = NULL;
 static Eina_Hash *borders_hash = NULL;
 static E_Border  *focused = NULL;
 
-static E_Border    *resize = NULL;
-static E_Border    *move = NULL;
-static E_Drag      *drag_border = NULL;
+static E_Border *resize = NULL;
+static E_Border *move = NULL;
+static E_Drag *drag_border = NULL;
 
 static int grabbed = 0;
 
@@ -130,7 +130,7 @@ static Eina_List *focus_stack = NULL;
 static Eina_List *raise_stack = NULL;
 
 static Ecore_X_Randr_Screen_Size screen_size = { -1, -1 };
-static int			 screen_size_index = -1;
+static int screen_size_index = -1;
 
 static int focus_track_frozen = 0;
 

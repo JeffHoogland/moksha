@@ -64,7 +64,6 @@ static const CFTypes _types[] =
 /* local function protos */
 static void _cftype_free(CFType *cft);
 
-static void _widget_list_populate(E_Config_Dialog_Data *cfdata);
 static void _widget_list_selection_changed(void *data, Evas_Object *obj __UNUSED__);
 
 static void *_create_data(E_Config_Dialog *cfd);
@@ -170,7 +169,8 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    if (mw < (200 * e_scale)) mw = 200 * e_scale;
    if (mh < (120 * e_scale)) mh = 120 * e_scale;
    e_widget_size_min_set(cfdata->l_modules, mw, mh);
-   e_widget_on_change_hook_set(cfdata->l_modules, _widget_list_selection_changed, cfdata);
+   e_widget_on_change_hook_set(cfdata->l_modules, 
+                               _widget_list_selection_changed, cfdata);
    e_widget_table_object_append(of, cfdata->l_modules, 0, 1, 2, 1, 1, 1, 1, 1);
 
    ol = e_widget_button_add(evas, _("Load"), NULL, _btn_cb_load, cfdata, NULL);
@@ -575,7 +575,6 @@ _widget_list_item_selected_postponed(void *data)
                eina_list_append(cfdata->selected.unloaded, cfm);
 	     unloaded++;
 	  }
-	
      }
 
    e_widget_disabled_set(cfdata->b_load, !unloaded);
