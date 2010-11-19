@@ -259,7 +259,8 @@ struct _Evry_Event_Action_Performed
 #define EVRY_MODULE_UNREGISTER(_module) {			\
      Eina_List *l = e_datastore_get("everything_modules");	\
      l = eina_list_remove(l, _module);				\
-     e_datastore_set("everything_modules", l); }
+     if (l) e_datastore_set("everything_modules", l);           \
+     else e_datastore_del("everything_modules"); }
 
 /*** handy macros ***/
 
