@@ -999,6 +999,7 @@ _e_kbd_int_layout_build(E_Kbd_Int *ki)
    edje_object_part_geometry_get(ki->base_obj, "e.swallow.content", NULL, NULL, &lw, &lh);
    lh = (ki->layout.h * lw) / ki->layout.w;
    edje_extern_object_min_size_set(ki->layout_obj, lw, lh);
+   edje_extern_object_max_size_set(ki->layout_obj, ki->win->w, ki->win->h);
    edje_object_part_swallow(ki->base_obj, "e.swallow.content", ki->layout_obj);
 
    EINA_LIST_FOREACH(ki->layout.keys, l, ky)
