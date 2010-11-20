@@ -58,13 +58,48 @@ e_zone_shutdown(void)
    return 1;
 }
 
+static void
+_e_zone_black_get(E_Zone *zone)
+{
+   Evas_Object *o;
+   char name[256];
+  
+   if (zone->black_ecore_evas) return;
+   zone->black_ecore_evas = 
+     e_canvas_new(e_config->evas_engine_zone, zone->container->win,
+                  zone->x, zone->y, zone->w, zone->h, 1, 1, &(zone->black_win));
+   e_canvas_add(zone->black_ecore_evas);
+   ecore_evas_layer_set(zone->black_ecore_evas, 6);
+   zone->black_evas = ecore_evas_get(zone->black_ecore_evas);
+
+   o = evas_object_rectangle_add(zone->black_evas);
+   evas_object_move(o, 0, 0);
+   evas_object_resize(o, zone->w, zone->h);
+   evas_object_color_set(o, 0, 0, 0, 255);
+   evas_object_show(o);
+
+   ecore_evas_name_class_set(zone->black_ecore_evas, "E", "Black_Window");
+   snprintf(name, sizeof(name), "Enlightenment Black Zone (%d)", zone->num);
+   ecore_evas_title_set(zone->black_ecore_evas, name);
+}
+
+static void
+_e_zone_black_unget(E_Zone *zone)
+{
+   if (!zone->black_ecore_evas) return;
+   e_canvas_del(zone->black_ecore_evas);
+   ecore_evas_free(zone->black_ecore_evas);
+   zone->black_ecore_evas = NULL;
+   zone->black_win = 0;
+}
+
 EAPI E_Zone *
 e_zone_new(E_Container *con, int num, int id, int x, int y, int w, int h)
 {
    E_Zone *zone;
-   char name[40];
    Evas_Object *o;
    E_Event_Zone_Add *ev;
+   char name[40];
 
    zone = E_OBJECT_ALLOC(E_Zone, E_ZONE_TYPE, _e_zone_free);
    if (!zone) return NULL;
@@ -128,23 +163,7 @@ e_zone_new(E_Container *con, int num, int id, int x, int y, int w, int h)
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_UP, _e_zone_cb_bg_mouse_up, zone);
 
    /* TODO: config the ecore_evas type. */
-   zone->black_ecore_evas = 
-     e_canvas_new(e_config->evas_engine_zone, zone->container->win,
-                  zone->x, zone->y, zone->w, zone->h, 1, 1, &(zone->black_win));
-   e_canvas_add(zone->black_ecore_evas);
-   ecore_evas_layer_set(zone->black_ecore_evas, 6);
-   zone->black_evas = ecore_evas_get(zone->black_ecore_evas);
-
-   o = evas_object_rectangle_add(zone->black_evas);
-   evas_object_move(o, 0, 0);
-   evas_object_resize(o, zone->w, zone->h);
-   evas_object_color_set(o, 0, 0, 0, 255);
-   evas_object_show(o);
-
-   ecore_evas_name_class_set(zone->black_ecore_evas, "E", "Black_Window");
-   snprintf(name, sizeof(name), "Enlightenment Black Zone (%d)", zone->num);
-   ecore_evas_title_set(zone->black_ecore_evas, name);
-
+  
    zone->desk_x_count = 0;
    zone->desk_y_count = 0;
    zone->desk_x_current = 0;
@@ -271,6 +290,7 @@ e_zone_fullscreen_set(E_Zone *zone, int on)
 
    if ((!zone->fullscreen) && (on))
      {
+        _e_zone_black_get(zone);
 	ecore_evas_show(zone->black_ecore_evas);
 	e_container_window_raise(zone->container, zone->black_win, 150);
 	zone->fullscreen = 1;
@@ -279,6 +299,7 @@ e_zone_fullscreen_set(E_Zone *zone, int on)
      {
 	ecore_evas_hide(zone->black_ecore_evas);
 	zone->fullscreen = 0;
+        _e_zone_black_unget(zone);
      }
 }
 

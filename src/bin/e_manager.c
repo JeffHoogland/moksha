@@ -87,6 +87,7 @@ e_manager_new(Ecore_X_Window root, int num)
    Ecore_Event_Handler *h;
 
    if (!ecore_x_window_manage(root)) return NULL;
+   ecore_x_window_background_color_set(root, 0, 0, 0);
    man = E_OBJECT_ALLOC(E_Manager, E_MANAGER_TYPE, _e_manager_free);
    if (!man) return NULL;
    managers = eina_list_append(managers, man);
