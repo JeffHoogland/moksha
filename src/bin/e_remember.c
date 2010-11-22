@@ -30,7 +30,7 @@ static Eina_List *handlers = NULL;
 
 
 /* externally accessible functions */
-EAPI int
+EINTERN int
 e_remember_init(E_Startup_Mode mode)
 {
    Eina_List *l = NULL;
@@ -66,7 +66,7 @@ e_remember_init(E_Startup_Mode mode)
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_remember_shutdown(void)
 {
    E_Border_Hook *h;

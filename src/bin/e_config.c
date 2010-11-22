@@ -117,7 +117,7 @@ _e_config_profile_name_get(Eet_File *ef)
 }
 
 /* externally accessible functions */
-EAPI int
+EINTERN int
 e_config_init(void)
 {
    E_EVENT_CONFIG_ICON_THEME = ecore_event_type_new();
@@ -883,7 +883,7 @@ e_config_init(void)
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_config_shutdown(void)
 {
    E_FREE(_e_config_profile);

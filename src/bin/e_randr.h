@@ -148,8 +148,8 @@ struct _E_Randr_Screen_Restore_Info
    E_Randr_Screen_Restore_Info_Union rrvd_restore_info;
 };
 
-EAPI Eina_Bool e_randr_init(void);
-EAPI int e_randr_shutdown(void);
+EINTERN Eina_Bool e_randr_init(void);
+EINTERN int e_randr_shutdown(void);
 
 extern E_Randr_Screen_Info *e_randr_screen_info;
 

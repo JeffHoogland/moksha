@@ -169,7 +169,7 @@ ecore_x_window_gravity_set(bd->client.shell_win, grav); \
 ecore_x_window_gravity_set(bd->client.win, grav);
 
 /* externally accessible functions */
-EAPI int
+EINTERN int
 e_border_init(void)
 {
    handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHOW_REQUEST, _e_border_cb_window_show_request, NULL));
@@ -225,7 +225,7 @@ e_border_init(void)
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_border_shutdown(void)
 {
    E_FREE_LIST(handlers, ecore_event_handler_del);

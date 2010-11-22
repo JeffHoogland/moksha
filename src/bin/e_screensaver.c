@@ -204,7 +204,7 @@ _e_screensaver_handler_desk_show_cb(void *data __UNUSED__, int type __UNUSED__, 
    return ECORE_CALLBACK_PASS_ON;
 }
 
-EAPI int
+EINTERN int
 e_screensaver_init(void)
 {
    _e_screensaver_handler_config_mode = ecore_event_handler_add
@@ -244,7 +244,7 @@ e_screensaver_init(void)
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_screensaver_shutdown(void)
 {
    if (_e_screensaver_handler_config_mode)

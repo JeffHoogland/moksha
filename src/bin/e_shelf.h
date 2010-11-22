@@ -45,9 +45,9 @@ struct _E_Shelf
    unsigned int         locked; 
 };
 
-EAPI int              e_shelf_init(void);
-EAPI int              e_shelf_shutdown(void);
-EAPI void             e_shelf_config_init(void);
+EINTERN int              e_shelf_init(void);
+EINTERN int              e_shelf_shutdown(void);
+EAPI void             e_shelf_config_update(void);
 EAPI Eina_List       *e_shelf_list(void);
 EAPI E_Shelf         *e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, int layer, int id);
 EAPI void             e_shelf_zone_move_resize_handle(E_Zone *zone);

@@ -63,7 +63,7 @@ static Ecore_Event_Handler *_e_exec_exit_handler = NULL;
 static Ecore_Event_Handler *_e_exec_border_add_handler = NULL;
 
 /* externally accessible functions */
-EAPI int
+EINTERN int
 e_exec_init(void)
 {
    e_exec_instances = eina_hash_string_superfast_new(NULL);
@@ -77,7 +77,7 @@ e_exec_init(void)
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_exec_shutdown(void)
 {
    char buf[256];

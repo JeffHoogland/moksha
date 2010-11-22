@@ -36,7 +36,7 @@ static const int E_LOGOUT_AUTO_TIME = 60;
 static const int E_LOGOUT_WAIT_TIME = 15;
 
 /* externally accessible functions */
-EAPI int
+EINTERN int
 e_sys_init(void)
 {
    /* this is not optimal - but it does work cleanly */
@@ -47,7 +47,7 @@ e_sys_init(void)
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_sys_shutdown(void)
 {
    if (_e_sys_exe_exit_handler)

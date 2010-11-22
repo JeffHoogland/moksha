@@ -32,7 +32,7 @@ static int E_EVENT_MSG = 0;
 static Ecore_Event_Handler *hand = NULL;
 
 /* externally accessible functions */
-EAPI int
+EINTERN int
 e_msg_init(void)
 {
    E_EVENT_MSG = ecore_event_type_new();
@@ -40,7 +40,7 @@ e_msg_init(void)
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_msg_shutdown(void)
 {
    while (handlers) e_msg_handler_del(eina_list_data_get(handlers));

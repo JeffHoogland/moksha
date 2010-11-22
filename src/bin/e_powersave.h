@@ -23,8 +23,8 @@ struct _E_Event_Powersave_Update
    E_Powersave_Mode	mode;
 };
 
-EAPI int e_powersave_init(void);
-EAPI int e_powersave_shutdown(void);
+EINTERN int e_powersave_init(void);
+EINTERN int e_powersave_shutdown(void);
 
 EAPI E_Powersave_Deferred_Action *e_powersave_deferred_action_add(void (*func) (void *data), const void *data);
 EAPI void                         e_powersave_deferred_action_del(E_Powersave_Deferred_Action *pa);

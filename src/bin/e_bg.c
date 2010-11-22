@@ -40,7 +40,7 @@ struct _E_Bg_Image_Import_Handle
 };
 
 /* externally accessible functions */
-EAPI int
+EINTERN int
 e_bg_init(void)
 {
    Eina_List *l = NULL;
@@ -72,7 +72,7 @@ e_bg_init(void)
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_bg_shutdown(void)
 {
    Eina_List *l = NULL;

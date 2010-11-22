@@ -23,7 +23,7 @@ static E_Powersave_Mode powersave_mode = E_POWERSAVE_MODE_LOW;
 static double defer_time = 5.0;
 
 /* externally accessible functions */
-EAPI int
+EINTERN int
 e_powersave_init(void)
 {
    _e_powersave_mode_eval();
@@ -31,7 +31,7 @@ e_powersave_init(void)
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_powersave_shutdown(void)
 {
    return 1;

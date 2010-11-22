@@ -135,7 +135,7 @@ _e_menu_list_free_unref(Eina_List *l)
 }
 
 /* externally accessible functions */
-EAPI int
+EINTERN int
 e_menu_init(void)
 {
    _e_menu_key_down_handler = 
@@ -163,7 +163,7 @@ e_menu_init(void)
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_menu_shutdown(void)
 {
    E_Menu *m;

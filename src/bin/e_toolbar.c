@@ -22,13 +22,13 @@ static void _e_toolbar_menu_items_append(void *data, E_Gadcon_Client *gcc, E_Men
 /* local vars */
 static Eina_List *toolbars = NULL;
 
-EAPI int 
+EINTERN int
 e_toolbar_init(void) 
 {
    return 1;
 }
 
-EAPI int 
+EINTERN int
 e_toolbar_shutdown(void) 
 {
    while (toolbars) 

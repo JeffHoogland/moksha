@@ -3,15 +3,15 @@
 #ifndef E_HINTS_H
 #define E_HINTS_H
 
-EAPI void e_hints_init(void);
+EINTERN void e_hints_init(void);
 EAPI void e_hints_e16_comms_pretend(E_Manager *man);
-EAPI void e_hints_manager_init(E_Manager *man);
+EINTERN void e_hints_manager_init(E_Manager *man);
 EAPI void e_hints_client_list_set(void);
 EAPI void e_hints_client_stacking_set(void);
 
 EAPI void e_hints_active_window_set(E_Manager *man, E_Border *bd);
 
-EAPI void e_hints_window_init(E_Border *bd);
+EINTERN void e_hints_window_init(E_Border *bd);
 EAPI void e_hints_window_state_set(E_Border *bd);
 EAPI void e_hints_window_state_get(E_Border *bd);
 EAPI void e_hints_window_type_set(E_Border *bd);

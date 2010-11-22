@@ -37,8 +37,8 @@ struct _E_Win
    E_Pointer           *pointer;
 };
 
-EAPI int    e_win_init               (void);
-EAPI int    e_win_shutdown           (void);
+EINTERN int    e_win_init               (void);
+EINTERN int    e_win_shutdown           (void);
 EAPI E_Win *e_win_new                (E_Container *con);
 EAPI void   e_win_show               (E_Win *win);
 EAPI void   e_win_hide               (E_Win *win);

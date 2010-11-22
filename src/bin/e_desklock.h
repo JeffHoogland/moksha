@@ -11,8 +11,8 @@ struct _E_Event_Desklock
    int on;
 };
 
-EAPI int e_desklock_init(void);
-EAPI int e_desklock_shutdown(void);
+EINTERN int e_desklock_init(void);
+EINTERN int e_desklock_shutdown(void);
 
 EAPI int e_desklock_show(void);
 EAPI int e_desklock_show_autolocked(void);

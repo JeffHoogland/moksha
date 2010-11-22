@@ -29,8 +29,8 @@ struct _E_Popup
    Ecore_Idle_Enterer  *idle_enterer;
 };
 
-EAPI int         e_popup_init(void);
-EAPI int         e_popup_shutdown(void);
+EINTERN int         e_popup_init(void);
+EINTERN int         e_popup_shutdown(void);
 
 EAPI E_Popup    *e_popup_new(E_Zone *zone, int x, int y, int w, int h);
 EAPI void        e_popup_name_set(E_Popup *pop, const char *name);

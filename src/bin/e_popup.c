@@ -12,7 +12,7 @@ static Eina_Hash *_e_popup_hash = NULL;
 
 /* externally accessible functions */
 
-EAPI int
+EINTERN int
 e_popup_init(void)
 {
    _e_popup_window_shape_handler = 
@@ -22,7 +22,7 @@ e_popup_init(void)
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_popup_shutdown(void)
 {
    if (_e_popup_hash)

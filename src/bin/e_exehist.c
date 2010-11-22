@@ -40,7 +40,7 @@ static E_Powersave_Deferred_Action *_e_exehist_unload_defer = NULL;
 static int _e_exehist_changes = 0;
 
 /* externally accessible functions */
-EAPI int
+EINTERN int
 e_exehist_init(void)
 {
    _e_exehist_config_item_edd = E_CONFIG_DD_NEW("E_Exehist_Item", E_Exehist_Item);
@@ -66,7 +66,7 @@ e_exehist_init(void)
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_exehist_shutdown(void)
 {
    if (_e_exehist_unload_defer)

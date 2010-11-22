@@ -129,8 +129,8 @@ struct _E_Fm2_Icon_Info
 
 typedef void (*E_Fm_Cb) (void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info);
 
-EAPI int                   e_fm2_init(void);
-EAPI int                   e_fm2_shutdown(void);
+EINTERN int                   e_fm2_init(void);
+EINTERN int                   e_fm2_shutdown(void);
 EAPI Evas_Object          *e_fm2_add(Evas *evas);
 EAPI void                  e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path);
 EAPI void                  e_fm2_custom_theme_set(Evas_Object *obj, const char *path);

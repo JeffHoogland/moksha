@@ -8,14 +8,14 @@ static Eina_List *all_screens = NULL;
 static Eina_List *chosen_screens = NULL;
 static Eina_List *fake_screens = NULL;
 
-EAPI int
+EINTERN int
 e_xinerama_init(void)
 {
    _e_xinerama_update();
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_xinerama_shutdown(void)
 {
    _e_xinerama_clean();

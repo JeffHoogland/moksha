@@ -49,8 +49,8 @@ struct _E_Event_Desk_Name_Change
    E_Desk   *desk;
 };
 
-EAPI int          e_desk_init(void);
-EAPI int          e_desk_shutdown(void);
+EINTERN int          e_desk_init(void);
+EINTERN int          e_desk_shutdown(void);
 EAPI E_Desk      *e_desk_new(E_Zone *zone, int x, int y);
 EAPI void         e_desk_name_set(E_Desk *desk, const char *name);
 EAPI void         e_desk_name_add(int container, int zone, int desk_x, int desk_y, const char *name);

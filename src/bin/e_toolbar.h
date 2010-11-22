@@ -26,8 +26,8 @@ struct _E_Toolbar
    Evas_Object *o_base, *o_event;
 };
 
-EAPI int e_toolbar_init(void);
-EAPI int e_toolbar_shutdown(void);
+EINTERN int e_toolbar_init(void);
+EINTERN int e_toolbar_shutdown(void);
 EAPI E_Toolbar *e_toolbar_new(Evas *evas, const char *name, E_Win *fwin, Evas_Object *fm2);
 EAPI void e_toolbar_fwin_set(E_Toolbar *tbar, E_Win *fwin);
 EAPI E_Win *e_toolbar_fwin_get(E_Toolbar *tbar);

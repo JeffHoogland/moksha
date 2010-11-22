@@ -22,7 +22,7 @@ static DBusMessage* _e_msgbus_profile_delete_cb(E_DBus_Object *obj, DBusMessage 
 static E_Msgbus_Data *_e_msgbus_data = NULL;
 
 /* externally accessible functions */
-EAPI int
+EINTERN int
 e_msgbus_init(void)
 {
    E_DBus_Interface *iface;
@@ -93,7 +93,7 @@ e_msgbus_init(void)
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_msgbus_shutdown(void)
 {
    if (_e_msgbus_data->obj)

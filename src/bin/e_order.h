@@ -23,8 +23,8 @@ struct _E_Order
    } cb;
 };
 
-EAPI int e_order_init(void);
-EAPI int e_order_shutdown(void);
+EINTERN int e_order_init(void);
+EINTERN int e_order_shutdown(void);
 
 EAPI E_Order *e_order_new(const char *path);
 EAPI void     e_order_update_callback_set(E_Order *eo, void (*cb)(void *data, E_Order *eo), void *data);

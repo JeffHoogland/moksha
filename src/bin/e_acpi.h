@@ -48,8 +48,8 @@ struct _E_Event_Acpi
    int type, signal, status;
 };
 
-EAPI int e_acpi_init(void);
-EAPI int e_acpi_shutdown(void);
+EINTERN int e_acpi_init(void);
+EINTERN int e_acpi_shutdown(void);
 EAPI void e_acpi_events_freeze(void);
 EAPI void e_acpi_events_thaw(void);
 

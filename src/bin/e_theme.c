@@ -30,7 +30,7 @@ static E_Fm2_Mime_Handler *theme_hdl = NULL;
 
 /* externally accessible functions */
 
-EAPI int
+EINTERN int
 e_theme_init(void)
 {
    E_Config_Theme *et;
@@ -66,7 +66,7 @@ e_theme_init(void)
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_theme_shutdown(void)
 {
    const char *str;

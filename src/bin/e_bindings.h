@@ -100,8 +100,8 @@ struct _E_Binding_Acpi
    const char *action, *params;
 };
 
-EAPI int         e_bindings_init(void);
-EAPI int         e_bindings_shutdown(void);
+EINTERN int         e_bindings_init(void);
+EINTERN int         e_bindings_shutdown(void);
 
 EAPI void        e_bindings_mouse_add(E_Binding_Context ctxt, int button, E_Binding_Modifier mod, int any_mod, const char *action, const char *params);
 EAPI void        e_bindings_mouse_del(E_Binding_Context ctxt, int button, E_Binding_Modifier mod, int any_mod, const char *action, const char *params);

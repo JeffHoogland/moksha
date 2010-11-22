@@ -39,8 +39,8 @@ struct _E_Fm2_Custom_File
    /* FIXME: this will have more added */
 };
 
-EAPI int                   e_fm2_custom_file_init(void);
-EAPI void                  e_fm2_custom_file_shutdown(void);
+EINTERN int                   e_fm2_custom_file_init(void);
+EINTERN void                  e_fm2_custom_file_shutdown(void);
 EAPI E_Fm2_Custom_File    *e_fm2_custom_file_get(const char *path);
 EAPI void                  e_fm2_custom_file_set(const char *path, const E_Fm2_Custom_File *cf);
 EAPI void                  e_fm2_custom_file_del(const char *path);

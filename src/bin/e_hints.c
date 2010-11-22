@@ -7,7 +7,7 @@ EAPI Ecore_X_Atom ATM_ENLIGHTENMENT_COMMS = 0;
 EAPI Ecore_X_Atom ATM_ENLIGHTENMENT_VERSION = 0;
 EAPI Ecore_X_Atom ATM_ENLIGHTENMENT_SCALE = 0;
 
-EAPI void
+EINTERN void
 e_hints_init(void)
 {
    Ecore_X_Window *roots = NULL;
@@ -212,7 +212,7 @@ e_hints_e16_comms_pretend(E_Manager *man)
    ecore_x_window_prop_property_set(man->root, ATM_ENLIGHTENMENT_COMMS, ECORE_X_ATOM_STRING, 8, buf, 14);
 }
 
-EAPI void
+EINTERN void
 e_hints_manager_init(E_Manager *man)
 {
    /* Set desktop count, desktop names and workarea */
@@ -407,7 +407,7 @@ e_hints_active_window_set(E_Manager *man, E_Border *bd)
      ecore_x_netwm_client_active_set(man->root, 0);
 }
 
-EAPI void
+EINTERN void
 e_hints_window_init(E_Border *bd)
 {
    E_Remember *rem = NULL;

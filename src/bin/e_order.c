@@ -11,7 +11,7 @@ static Eina_List *orders = NULL;
 static Eina_List *handlers = NULL;
 
 /* externally accessible functions */
-EAPI int
+EINTERN int
 e_order_init(void)
 {
    handlers = 
@@ -23,7 +23,7 @@ e_order_init(void)
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_order_shutdown(void)
 {
    orders = eina_list_free(orders);

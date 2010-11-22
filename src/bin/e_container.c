@@ -30,7 +30,7 @@ static int container_count;
 static Eina_List *handlers = NULL;
 
 /* externally accessible functions */
-EAPI int
+EINTERN int
 e_container_init(void)
 {
    E_EVENT_CONTAINER_RESIZE = ecore_event_type_new();
@@ -45,7 +45,7 @@ e_container_init(void)
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_container_shutdown(void)
 {
    E_FREE_LIST(handlers, ecore_event_handler_del);

@@ -34,7 +34,7 @@ static Eina_Bool _e_pointer_cb_idle_timer_wait(void *data);
 static Eina_Bool _e_pointer_cb_idle_poller(void *data);
 
 /* externally accessible functions */
-EAPI int
+EINTERN int
 e_pointer_init(void)
 {
    handlers = 
@@ -56,7 +56,7 @@ e_pointer_init(void)
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_pointer_shutdown(void)
 {
    E_FREE_LIST(handlers, ecore_event_handler_del);

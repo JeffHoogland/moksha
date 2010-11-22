@@ -19,7 +19,7 @@ static Eina_Bool _filereg_hash_cb_free(const Eina_Hash *hash __UNUSED__,
 				       void *data, void *fdata __UNUSED__);
 
 /* Externally accessible functions */
-EAPI int
+EINTERN int
 e_filereg_init(void)
 {
    _e_filereg = eina_hash_string_superfast_new(NULL);
@@ -27,7 +27,7 @@ e_filereg_init(void)
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_filereg_shutdown(void)
 {
    eina_hash_foreach(_e_filereg, _filereg_hash_cb_free, NULL);

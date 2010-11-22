@@ -38,7 +38,7 @@ static Ecore_Event_Handler *_exe_del_handler = NULL;
 static Ecore_Timer *_kill_timer = NULL;
 
 /* externally accessible functions */
-EAPI int
+EINTERN int
 e_thumb_init(void)
 {
    _exe_del_handler = ecore_event_handler_add(ECORE_EXE_EVENT_DEL,
@@ -48,7 +48,7 @@ e_thumb_init(void)
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_thumb_shutdown(void)
 {
    _e_thumb_thumbnailers_kill_cancel();

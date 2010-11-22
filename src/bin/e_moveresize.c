@@ -18,7 +18,7 @@ static int obj_y = 0;
 static int obj_w = 0;
 static int obj_h = 0;
 
-EAPI int
+EINTERN int
 e_moveresize_init(void)
 {
    E_Border_Hook *h;
@@ -39,7 +39,7 @@ e_moveresize_init(void)
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_moveresize_shutdown(void)
 {
    E_Border_Hook *h;

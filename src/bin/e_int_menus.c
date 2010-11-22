@@ -1524,7 +1524,7 @@ _e_int_menus_shelves_add_cb(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_
    e_config->shelves = eina_list_append(e_config->shelves, cs);
    e_config_save_queue();
 
-   e_shelf_config_init();
+   e_shelf_config_update();
 }
 
 static void 

@@ -3,8 +3,8 @@
 #ifndef E_INIT_H
 #define E_INIT_H
 
-EAPI int            e_init_init(void);
-EAPI int            e_init_shutdown(void);
+EINTERN int            e_init_init(void);
+EINTERN int            e_init_shutdown(void);
 EAPI void           e_init_show(void);
 EAPI void           e_init_hide(void);
 EAPI void           e_init_title_set(const char *str);

@@ -63,8 +63,8 @@ EAPI int            e_fm2_op_registry_count(void);
 
 EAPI void           e_fm2_op_registry_entry_abort(E_Fm2_Op_Registry_Entry *entry);
 
-EAPI unsigned int e_fm2_op_registry_init(void);
-EAPI unsigned int e_fm2_op_registry_shutdown(void);
+EINTERN unsigned int e_fm2_op_registry_init(void);
+EINTERN unsigned int e_fm2_op_registry_shutdown(void);
 
 /* E internal/private functions, symbols not exported outside e binary (e_fm.c mainly) */
 Eina_Bool e_fm2_op_registry_entry_add(int id, Evas_Object *e_fm, E_Fm_Op_Type op, E_Fm2_Op_Registry_Abort_Func abort);

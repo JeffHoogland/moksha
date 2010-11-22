@@ -13,13 +13,13 @@ static void _e_win_cb_delete(Ecore_Evas *ee);
 static Eina_List *wins = NULL;
 
 /* externally accessible functions */
-EAPI int
+EINTERN int
 e_win_init(void)
 {
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_win_shutdown(void)
 {
 /*   

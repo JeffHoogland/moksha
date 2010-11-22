@@ -1,6 +1,6 @@
 #include "e.h"
 
-EAPI int
+EINTERN int
 e_color_class_init(void)
 {
    const Eina_List *l;
@@ -20,7 +20,7 @@ e_color_class_init(void)
   return 1;
 }
 
-EAPI int
+EINTERN int
 e_color_class_shutdown(void)
 {
    return 1;

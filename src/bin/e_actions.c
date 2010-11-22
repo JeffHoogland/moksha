@@ -2568,7 +2568,7 @@ static Eina_List *action_groups = NULL;
 
 /* externally accessible functions */
 
-EAPI int
+EINTERN int
 e_actions_init(void)
 {
    E_Action *act;
@@ -2989,7 +2989,7 @@ e_actions_init(void)
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_actions_shutdown(void)
 {
    e_action_predef_name_all_del();

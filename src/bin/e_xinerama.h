@@ -12,8 +12,8 @@ struct _E_Screen
    int x, y, w, h;
 };
 
-EAPI int              e_xinerama_init(void);
-EAPI int              e_xinerama_shutdown(void);
+EINTERN int              e_xinerama_init(void);
+EINTERN int              e_xinerama_shutdown(void);
 EAPI void             e_xinerama_update(void);
 EAPI const Eina_List *e_xinerama_screens_get(void);
 EAPI const Eina_List *e_xinerama_screens_all_get(void);

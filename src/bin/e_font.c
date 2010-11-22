@@ -7,14 +7,14 @@ static Eina_Hash *_e_font_available_hash_add(Eina_Hash *font_hash, const char *f
 static E_Font_Properties *_e_font_fontconfig_name_parse(Eina_Hash **font_hash, E_Font_Properties *efp, const char *font);
 static char _fn_buf[1024];
 
-EAPI int
+EINTERN int
 e_font_init(void)
 {
    /* all init stuff is in e_config */
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_font_shutdown(void)
 {
    /* e_config will do this */

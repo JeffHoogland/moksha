@@ -19,8 +19,8 @@ struct _E_Input_Method_Config
    const char *e_im_setup_exec;
 };
 
-EAPI int		 e_intl_data_init(void);
-EAPI int		 e_intl_data_shutdown(void);
+EINTERN int		 e_intl_data_init(void);
+EINTERN int		 e_intl_data_shutdown(void);
 EAPI E_Input_Method_Config *e_intl_input_method_config_read (Eet_File *imc_file);
 EAPI int		 e_intl_input_method_config_write (Eet_File *imc_file, E_Input_Method_Config *imc);
 EAPI void		 e_intl_input_method_config_free (E_Input_Method_Config *imc);

@@ -605,8 +605,8 @@ struct _E_Event_Border_Stack
    E_Stacking type;
 };
 
-EAPI int       e_border_init(void);
-EAPI int       e_border_shutdown(void);
+EINTERN int       e_border_init(void);
+EINTERN int       e_border_shutdown(void);
 
 EAPI E_Border *e_border_new(E_Container *con, Ecore_X_Window win, int first_map, int internal);
 EAPI void      e_border_free(E_Border *bd);

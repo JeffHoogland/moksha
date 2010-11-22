@@ -31,8 +31,8 @@ struct _E_Sys_Con_Action
 #ifndef E_SYS_H
 #define E_SYS_H
 
-EAPI int e_sys_init(void);
-EAPI int e_sys_shutdown(void);
+EINTERN int e_sys_init(void);
+EINTERN int e_sys_shutdown(void);
 EAPI int e_sys_action_possible_get(E_Sys_Action a);
 EAPI int e_sys_action_do(E_Sys_Action a, char *param);
 

@@ -692,7 +692,7 @@ static Ecore_Event_Handler *_e_fm2_op_registry_entry_changed_handler = NULL;
 
 /***/
 
-EAPI int
+EINTERN int
 e_fm2_init(void)
 {
    char path[PATH_MAX];
@@ -762,7 +762,7 @@ e_fm2_init(void)
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_fm2_shutdown(void)
 {
    eina_stringshare_replace(&_e_fm2_icon_desktop_str, NULL);

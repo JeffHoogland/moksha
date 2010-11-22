@@ -44,8 +44,8 @@ struct _E_Manager
    E_Manager_Comp      *comp;
 };
 
-EAPI int        e_manager_init(void);
-EAPI int        e_manager_shutdown(void);
+EINTERN int        e_manager_init(void);
+EINTERN int        e_manager_shutdown(void);
 EAPI Eina_List *e_manager_list(void);
     
 EAPI E_Manager      *e_manager_new(Ecore_X_Window root, int num);

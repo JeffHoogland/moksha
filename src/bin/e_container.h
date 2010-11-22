@@ -84,8 +84,8 @@ struct _E_Event_Container_Resize
    E_Container *container;
 };
 
-EAPI int          e_container_init(void);
-EAPI int          e_container_shutdown(void);
+EINTERN int          e_container_init(void);
+EINTERN int          e_container_shutdown(void);
 
 EAPI E_Container *e_container_new(E_Manager *man);
 EAPI void         e_container_show(E_Container *con);

@@ -193,13 +193,13 @@ static E_Gadcon_Client *drag_gcc = NULL;
 static E_Gadcon_Client *new_gcc = NULL;
 
 /* externally accessible functions */
-EAPI int
+EINTERN int
 e_gadcon_init(void)
 {
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_gadcon_shutdown(void)
 {
    eina_list_free(populate_requests);

@@ -1008,7 +1008,7 @@ main(int argc, char **argv)
    e_init_status_set(_("Setup Mouse"));
    TS("mouse");     
    /* setup mouse accel */
-   if (!e_mouse_init())
+   if (!e_mouse_update())
      {
 	e_error_message_show(_("Enlightenment cannot configure the mouse settings."));
 	_e_main_shutdown(-1);
@@ -1134,8 +1134,8 @@ main(int argc, char **argv)
    e_test();
 
    e_init_status_set(_("Configure Shelves"));
-   TS("shelf config init");
-   e_shelf_config_init();
+   TS("shelf config update");
+   e_shelf_config_update();
 
    TS("manage all windows");
    _e_main_manage_all();

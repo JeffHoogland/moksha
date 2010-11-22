@@ -22,7 +22,7 @@ static struct {
    const char *data;
 } custom_desktop_exec = { NULL, NULL };
 
-EAPI void
+EINTERN void
 e_configure_init(void)
 {
    e_configure_registry_category_add("extensions", 90, _("Extensions"), NULL, "preferences-extensions");

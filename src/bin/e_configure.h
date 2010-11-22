@@ -37,7 +37,7 @@ EAPI void e_configure_registry_category_del(const char *path);
 EAPI void e_configure_registry_call(const char *path, E_Container *con, const char *params);
 EAPI int  e_configure_registry_exists(const char *path);
 EAPI void e_configure_registry_custom_desktop_exec_callback_set(void (*func) (const void *data, E_Container *con, const char *params, Efreet_Desktop *desktop), const void *data);
-EAPI void e_configure_init(void);
+EINTERN void e_configure_init(void);
 
 extern EAPI Eina_List *e_configure_registry;
 

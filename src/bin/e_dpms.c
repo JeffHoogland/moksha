@@ -93,7 +93,7 @@ _e_dpms_handler_desk_show_cb(void *data __UNUSED__, int type __UNUSED__, void *e
    return ECORE_CALLBACK_PASS_ON;
 }
 
-EAPI int
+EINTERN int
 e_dpms_init(void)
 {
    _e_dpms_handler_config_mode = ecore_event_handler_add
@@ -129,7 +129,7 @@ e_dpms_init(void)
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_dpms_shutdown(void)
 {
    if (_e_dpms_handler_config_mode)

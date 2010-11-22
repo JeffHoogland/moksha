@@ -35,10 +35,10 @@ struct _E_Locale_Parts
    const char *modifier;
 };
 
-EAPI int		 e_intl_init(void);
-EAPI int		 e_intl_shutdown(void);
-EAPI int		 e_intl_post_init(void);
-EAPI int		 e_intl_post_shutdown(void);
+EINTERN int		 e_intl_init(void);
+EINTERN int		 e_intl_shutdown(void);
+EINTERN int		 e_intl_post_init(void);
+EINTERN int		 e_intl_post_shutdown(void);
 /* Setting & Getting Language */
 EAPI void		 e_intl_language_set(const char *lang);
 EAPI const char		*e_intl_language_get(void);

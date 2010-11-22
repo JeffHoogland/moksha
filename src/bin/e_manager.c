@@ -45,7 +45,7 @@ static Eina_Hash *frame_extents = NULL;
 static Ecore_Timer *timer_post_screensaver_lock = NULL;
 
 /* externally accessible functions */
-EAPI int
+EINTERN int
 e_manager_init(void)
 {
    ecore_x_screensaver_event_listen_set(1);
@@ -53,7 +53,7 @@ e_manager_init(void)
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_manager_shutdown(void)
 {
    E_FREE_LIST(managers, e_object_del);

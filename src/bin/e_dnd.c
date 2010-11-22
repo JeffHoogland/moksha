@@ -71,7 +71,7 @@ static Ecore_X_Atom _action;
 
 /* externally accessible functions */
 
-EAPI int
+EINTERN int
 e_dnd_init(void)
 {
    _type_text_uri_list = eina_stringshare_add("text/uri-list");
@@ -123,7 +123,7 @@ e_dnd_init(void)
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_dnd_shutdown(void)
 {
    E_FREE_LIST(_drag_list, e_object_del);

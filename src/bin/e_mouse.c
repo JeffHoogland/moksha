@@ -1,7 +1,7 @@
 #include "e.h"
  
 EAPI int
-e_mouse_init(void)
+e_mouse_update(void)
 {
    unsigned char map[256];
    int n;

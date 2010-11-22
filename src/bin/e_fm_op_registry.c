@@ -465,7 +465,7 @@ e_fm2_op_registry_count(void)
 }
 
 
-EAPI unsigned int
+EINTERN unsigned int
 e_fm2_op_registry_init(void)
 {
    _e_fm2_init_count++;
@@ -488,7 +488,7 @@ e_fm2_op_registry_init(void)
    return 1;
 }
 
-EAPI unsigned int
+EINTERN unsigned int
 e_fm2_op_registry_shutdown(void)
 {
    if (_e_fm2_init_count == 0) return 0;

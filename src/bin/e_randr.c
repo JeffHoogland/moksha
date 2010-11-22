@@ -94,13 +94,13 @@ static Eina_Bool _e_randr_outputs_are_clones(E_Randr_Output_Info *output_info, E
 E_Randr_Screen_Info *e_randr_screen_info = NULL;
 static Eina_List *_e_randr_event_handlers = NULL;
 
-EAPI Eina_Bool
+EINTERN Eina_Bool
 e_randr_init(void)
 {
    return _e_randr_init();
 }
 
-EAPI int
+EINTERN int
 e_randr_shutdown(void)
 {
    _e_randr_shutdown();

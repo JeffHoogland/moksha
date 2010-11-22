@@ -24,7 +24,7 @@ EAPI int E_EVENT_MODULE_UPDATE = 0;
 EAPI int E_EVENT_MODULE_INIT_END = 0;
 
 /* externally accessible functions */
-EAPI int
+EINTERN int
 e_module_init(void)
 {
    E_EVENT_MODULE_UPDATE = ecore_event_type_new();
@@ -32,7 +32,7 @@ e_module_init(void)
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_module_shutdown(void)
 {
    E_Module *m;

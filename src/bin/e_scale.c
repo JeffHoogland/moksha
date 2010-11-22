@@ -2,14 +2,14 @@
 
 EAPI double e_scale = 1.0;
 
-EAPI int
+EINTERN int
 e_scale_init(void)
 {
    e_scale_update();
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_scale_shutdown(void)
 {
    return 1;

@@ -50,7 +50,7 @@ static Eina_Bool 	 _e_intl_locale_hash_free_cb(const Eina_Hash *hash, const void
 static Eina_Bool	 _e_intl_cb_exit(void *data, int type, void *event);
 static Eina_List 	*_e_intl_imc_dir_scan(const char *dir);
 
-EAPI int
+EINTERN int
 e_intl_init(void)
 {
    char *s;
@@ -69,7 +69,7 @@ e_intl_init(void)
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_intl_shutdown(void)
 {
    E_FREE(_e_intl_language);
@@ -93,7 +93,7 @@ e_intl_shutdown(void)
 }
 
 /* Setup configuration settings and start services */
-EAPI int
+EINTERN int
 e_intl_post_init(void)
 {
    if ((e_config->language) && (e_config->language[0] != 0))
@@ -109,7 +109,7 @@ e_intl_post_init(void)
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_intl_post_shutdown(void)
 {
    if (_e_intl_exit_handler)

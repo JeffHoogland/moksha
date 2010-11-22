@@ -14,8 +14,8 @@ struct _E_Color_Class
    int		  r3, g3, b3, a3;
 };
 
-EAPI int e_color_class_init(void);
-EAPI int e_color_class_shutdown(void);
+EINTERN int e_color_class_init(void);
+EINTERN int e_color_class_shutdown(void);
 
 EAPI void e_color_class_instance_set(E_Color_Class *cc,
 				     int r, int g, int b, int a,

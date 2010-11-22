@@ -10,7 +10,7 @@ typedef enum _E_Mouse_Hand
 #ifndef E_MOUSE_H
 #define E_MOUSE_H
 
-EAPI int e_mouse_init(void);
+EAPI int e_mouse_update(void);
 
 #endif
 #endif

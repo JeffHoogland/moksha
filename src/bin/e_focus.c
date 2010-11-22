@@ -6,13 +6,13 @@ static Eina_Bool _e_focus_raise_timer(void* data);
 /* local subsystem globals */
 
 /* externally accessible functions */
-EAPI int
+EINTERN int
 e_focus_init(void)
 {
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_focus_shutdown(void)
 {
    return 1;

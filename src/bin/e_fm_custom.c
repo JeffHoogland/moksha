@@ -26,7 +26,7 @@ static int _e_fm2_custom_init = 0;
  */
 
 /* externally accessible functions */
-EAPI int
+EINTERN int
 e_fm2_custom_file_init(void)
 {
    Eet_Data_Descriptor_Class eddc;
@@ -81,7 +81,7 @@ e_fm2_custom_file_init(void)
    return 1;
 }
 
-EAPI void
+EINTERN void
 e_fm2_custom_file_shutdown(void)
 {
    _e_fm2_custom_init--;

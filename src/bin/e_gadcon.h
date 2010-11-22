@@ -233,8 +233,8 @@ struct _E_Gadcon_Location
      } gadget_remove;
 };
 
-EAPI int              e_gadcon_init(void);
-EAPI int              e_gadcon_shutdown(void);
+EINTERN int              e_gadcon_init(void);
+EINTERN int              e_gadcon_shutdown(void);
 EAPI void             e_gadcon_provider_register(const E_Gadcon_Client_Class *cc);
 EAPI void             e_gadcon_provider_unregister(const E_Gadcon_Client_Class *cc);
 EAPI Eina_List       *e_gadcon_provider_list(void);

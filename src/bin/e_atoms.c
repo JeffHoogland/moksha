@@ -14,7 +14,7 @@ EAPI Ecore_X_Atom E_ATOM_WINDOW_STATE_CENTERED = 0;
 EAPI Ecore_X_Atom E_ATOM_DESKTOP_FILE = 0;
 
 /* externally accessible functions */
-EAPI int
+EINTERN int
 e_atoms_init(void)
 {
    const char *atom_names[] = {
@@ -47,7 +47,7 @@ e_atoms_init(void)
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_atoms_shutdown(void)
 {
    /* Nothing really to do here yet, just present for consistency right now */

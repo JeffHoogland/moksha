@@ -501,8 +501,8 @@ struct _E_Event_Config_Icon_Theme
    const char *icon_theme;
 };
 
-EAPI int        e_config_init(void);
-EAPI int        e_config_shutdown(void);
+EINTERN int        e_config_init(void);
+EINTERN int        e_config_shutdown(void);
 
 EAPI void       e_config_load(void);
 

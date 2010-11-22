@@ -37,7 +37,7 @@ struct _E_Binding_Edge_Data
 
 /* externally accessible functions */
 
-EAPI int
+EINTERN int
 e_bindings_init(void)
 {
    E_Config_Binding_Signal *ebs;
@@ -95,7 +95,7 @@ e_bindings_init(void)
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_bindings_shutdown(void)
 {
    E_FREE_LIST(mouse_bindings, _e_bindings_mouse_free);

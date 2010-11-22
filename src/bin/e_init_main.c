@@ -10,13 +10,51 @@
 #include <Evas.h>
 #include <Edje.h>
 
+#ifdef EAPI
+#undef EAPI
+#endif
+#ifdef WIN32
+# ifdef BUILDING_DLL
+#  define EAPI __declspec(dllexport)
+# else
+#  define EAPI __declspec(dllimport)
+# endif
+#else
+# ifdef __GNUC__
+#  if __GNUC__ >= 4
+/* BROKEN in gcc 4 on amd64 */
+#if 0
+#   pragma GCC visibility push(hidden)
+#endif
+#   define EAPI __attribute__ ((visibility("default")))
+#  else
+#   define EAPI
+#  endif
+# else
+#  define EAPI
+# endif
+#endif
+
+#ifdef EINTERN
+#undef EINTERN
+#endif
+#ifdef __GNUC__
+# if __GNUC__ >= 4
+#  define EINTERN __attribute__ ((visibility("hidden")))
+# else
+#  define EINTERN
+# endif
+#else
+# define EINTERN
+#endif
+
 #define E_TYPEDEFS 1
 #include "e_xinerama.h"
 #undef E_TYPEDEFS
 #include "e_xinerama.h"
 
-EAPI int e_init_init(void);
-EAPI int e_init_shutdown(void);
+EINTERN int e_init_init(void);
+EINTERN int e_init_shutdown(void);
 EAPI void e_init_show(void);
 EAPI void e_init_hide(void);
 EAPI void e_init_title_set(const char *str);
@@ -205,7 +243,7 @@ static Ecore_Event_Handler *_e_init_configure_handler = NULL;
 static Ecore_Timer *_e_init_timeout_timer = NULL;
 
 /* externally accessible functions */
-EAPI int
+EINTERN int
 e_init_init(void)
 {
    Ecore_X_Window root, *roots;
@@ -298,7 +336,7 @@ e_init_init(void)
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_init_shutdown(void)
 {
    if (_e_init_configure_handler) 

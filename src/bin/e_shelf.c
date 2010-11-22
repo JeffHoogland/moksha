@@ -33,13 +33,13 @@ static Eina_List *shelves = NULL;
 static Eina_Hash *winid_shelves = NULL;
 
 /* externally accessible functions */
-EAPI int
+EINTERN int
 e_shelf_init(void)
 {
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_shelf_shutdown(void)
 {
    while (shelves)
@@ -54,7 +54,7 @@ e_shelf_shutdown(void)
 }
 
 EAPI void
-e_shelf_config_init(void)
+e_shelf_config_update(void)
 {
    Eina_List *l;
    E_Config_Shelf *cf_es;

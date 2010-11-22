@@ -38,7 +38,7 @@ EAPI int E_EVENT_ZONE_EDGE_MOVE = 0;
 
 #define E_ZONE_CORNER_RATIO 0.025;
 
-EAPI int
+EINTERN int
 e_zone_init(void)
 {
    E_EVENT_ZONE_DESK_COUNT_SET = ecore_event_type_new();
@@ -52,7 +52,7 @@ e_zone_init(void)
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_zone_shutdown(void)
 {
    return 1;

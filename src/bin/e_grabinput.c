@@ -11,13 +11,13 @@ static E_Focus_Method focus_method = E_FOCUS_METHOD_NO_INPUT;
 static double last_focus_time = 0.0;
 
 /* externally accessible functions */
-EAPI int
+EINTERN int
 e_grabinput_init(void)
 {
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_grabinput_shutdown(void)
 {
    return 1;

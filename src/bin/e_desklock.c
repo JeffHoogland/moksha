@@ -91,7 +91,7 @@ static void _e_desklock_ask_presentation_mode(void);
 
 EAPI int E_EVENT_DESKLOCK = 0;
 
-EAPI int
+EINTERN int
 e_desklock_init(void)
 {
    /* A poller to tick every 256 ticks, watching for an idle user */
@@ -106,7 +106,7 @@ e_desklock_init(void)
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_desklock_shutdown(void)
 {
    e_desklock_hide();

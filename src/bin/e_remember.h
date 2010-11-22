@@ -97,8 +97,8 @@ struct _E_Remember
      } prop;
 };
 
-EAPI int          e_remember_init(E_Startup_Mode mode);
-EAPI int          e_remember_shutdown(void);
+EINTERN int          e_remember_init(E_Startup_Mode mode);
+EINTERN int          e_remember_shutdown(void);
 EAPI E_Remember  *e_remember_new(void);
 EAPI int          e_remember_usable_get(E_Remember *rem);
 EAPI void         e_remember_use(E_Remember *rem);

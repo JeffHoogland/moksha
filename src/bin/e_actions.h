@@ -45,8 +45,8 @@ struct _E_Action_Group
    Eina_List *acts;
 };
 
-EAPI int         e_actions_init(void);
-EAPI int         e_actions_shutdown(void);
+EINTERN int         e_actions_init(void);
+EINTERN int         e_actions_shutdown(void);
 
 EAPI Eina_List  *e_action_name_list(void);
 EAPI E_Action   *e_action_add(const char *name);

@@ -12,8 +12,8 @@ typedef enum _E_Focus_Method
 #ifndef E_GRABINPUT_H
 #define E_GRABINPUT_H
 
-EAPI int            e_grabinput_init(void);
-EAPI int            e_grabinput_shutdown(void);
+EINTERN int            e_grabinput_init(void);
+EINTERN int            e_grabinput_shutdown(void);
 EAPI int            e_grabinput_get(Ecore_X_Window mouse_win, int confine_mouse, Ecore_X_Window key_win);
 EAPI void           e_grabinput_release(Ecore_X_Window mouse_win, Ecore_X_Window key_win);
 EAPI void           e_grabinput_focus(Ecore_X_Window win, E_Focus_Method method);

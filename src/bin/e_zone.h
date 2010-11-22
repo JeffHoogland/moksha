@@ -121,8 +121,8 @@ struct _E_Event_Zone_Edge
    int modifiers;
 };
 
-EAPI int        e_zone_init(void);
-EAPI int        e_zone_shutdown(void);
+EINTERN int        e_zone_init(void);
+EINTERN int        e_zone_shutdown(void);
 EAPI E_Zone    *e_zone_new(E_Container *con, int num, int id, int x, int y, int w, int h);
 EAPI void       e_zone_name_set(E_Zone *zone, const char *name);
 EAPI void       e_zone_move(E_Zone *zone, int x, int y);

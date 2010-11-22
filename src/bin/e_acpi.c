@@ -60,7 +60,7 @@ EAPI int E_EVENT_ACPI_VIDEO = 0;
 EAPI int E_EVENT_ACPI_WIFI = 0;
 
 /* public functions */
-EAPI int 
+EINTERN int
 e_acpi_init(void) 
 {
    const ACPIDevice *dev;
@@ -120,7 +120,7 @@ e_acpi_init(void)
    return 1;
 }
 
-EAPI int 
+EINTERN int
 e_acpi_shutdown(void) 
 {
    Ecore_Event_Handler *hdl;

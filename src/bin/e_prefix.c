@@ -173,7 +173,7 @@ e_prefix_determine(char *argv0)
    return 0;
 }
 
-EAPI void
+EINTERN void
 e_prefix_shutdown(void)
 {
    E_FREE(_exe_path);

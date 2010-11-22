@@ -24,7 +24,7 @@ EAPI int E_EVENT_DESK_AFTER_SHOW = 0;
 EAPI int E_EVENT_DESK_DESKSHOW = 0;
 EAPI int E_EVENT_DESK_NAME_CHANGE = 0;
 
-EAPI int
+EINTERN int
 e_desk_init(void)
 {
    E_EVENT_DESK_SHOW = ecore_event_type_new();
@@ -35,7 +35,7 @@ e_desk_init(void)
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_desk_shutdown(void)
 {
    return 1;

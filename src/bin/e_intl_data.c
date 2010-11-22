@@ -6,7 +6,7 @@
  */
 static Eet_Data_Descriptor *_e_intl_input_method_config_edd = NULL;
 
-EAPI int
+EINTERN int
 e_intl_data_init(void)
 {
    _e_intl_input_method_config_edd = E_CONFIG_DD_NEW("input_method_config", E_Input_Method_Config);
@@ -21,7 +21,7 @@ e_intl_data_init(void)
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_intl_data_shutdown(void)
 {
    E_CONFIG_DD_FREE(_e_intl_input_method_config_edd);

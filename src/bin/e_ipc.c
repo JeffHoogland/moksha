@@ -11,7 +11,7 @@ static Ecore_Ipc_Server *_e_ipc_server = NULL;
 #endif
 
 /* externally accessible functions */
-EAPI int
+EINTERN int
 e_ipc_init(void)
 {
 #ifdef USE_IPC
@@ -77,7 +77,7 @@ e_ipc_init(void)
    return 1;
 }
 
-EAPI int
+EINTERN int
 e_ipc_shutdown(void)
 {
 #ifdef USE_IPC
