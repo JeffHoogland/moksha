@@ -1101,7 +1101,6 @@ _e_desklock_handler_border_fullscreen_check_cb(void *data __UNUSED__, int type _
    E_Event_Border_Fullscreen *ev = event;
 
    _e_desklock_fullscreen_count = ev->border->desk->fullscreen_borders; 
-   e_desklock_init();
    return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -1114,7 +1113,6 @@ _e_desklock_handler_border_desk_set_cb(void *data __UNUSED__, int type __UNUSED_
      _e_desklock_fullscreen_count = ev->border->desk->fullscreen_borders; 
    else if (ev->desk->visible)
      _e_desklock_fullscreen_count = ev->desk->fullscreen_borders; 
-   e_desklock_init();
    return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -1124,6 +1122,5 @@ _e_desklock_handler_desk_show_cb(void *data __UNUSED__, int type __UNUSED__, voi
    E_Event_Desk_Show *ev = event;
 
    _e_desklock_fullscreen_count = ev->desk->fullscreen_borders; 
-   e_desklock_init();
    return ECORE_CALLBACK_PASS_ON;
 }
