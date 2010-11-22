@@ -239,7 +239,7 @@ _cb_add(void *data, void *data2 __UNUSED__)
    e_config->shelves = eina_list_append(e_config->shelves, cfg);
    e_config_save_queue();
 
-   e_shelf_config_init();
+   e_shelf_config_update();
 
    _ilist_fill(cfdata);
 }

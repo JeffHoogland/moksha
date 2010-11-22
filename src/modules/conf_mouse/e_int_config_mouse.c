@@ -85,7 +85,7 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    e_config->mouse_accel_threshold = cfdata->threshold;
 
    /* Apply the above settings */
-   e_mouse_init();
+   e_mouse_update();
 
    e_config_save_queue();
    return 1;

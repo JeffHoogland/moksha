@@ -103,7 +103,7 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
      cfdata->ask_presentation_timeout;
 
    /* Apply settings */
-   e_screensaver_init();
+   e_screensaver_update();
 
    e_config_save_queue();
    return 1;

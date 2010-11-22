@@ -47,7 +47,7 @@ e_pwr_cfg_update(void)
 	ecore_timer_del(suspend_timer);
 	suspend_timer = NULL;
      }
-   e_screensaver_init();
+   e_screensaver_update();
 }
 
 EAPI void

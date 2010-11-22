@@ -173,7 +173,7 @@ _apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    e_config->dpms_off_timeout = cfdata->off_timeout * 60;
 
    e_config_save_queue();
-   e_dpms_init();
+   e_dpms_update();
    return 1;
 }
 
