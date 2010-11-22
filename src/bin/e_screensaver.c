@@ -12,10 +12,54 @@ static Ecore_Event_Handler *_e_screensaver_handler_desk_show = NULL;
 static E_Dialog *_e_screensaver_ask_presentation_dia = NULL;
 static int _e_screensaver_ask_presentation_count = 0;
 
+static int _e_screensaver_timeout = 0;
+static int _e_screensaver_interval = 0;
+static int _e_screensaver_blanking = 0;
+static int _e_screensaver_expose = 0;
+
+EAPI void
+e_screensaver_update(void)
+{
+   int timeout = 0, interval = 0, blanking = 0, expose = 0;
+   int count = (1 + _e_screensaver_ask_presentation_count);
+   Eina_Bool changed = EINA_FALSE;
+
+   if ((e_config->screensaver_enable) && (!e_config->mode.presentation) &&
+       (!e_util_fullscreen_curreny_any()))
+     timeout = e_config->screensaver_timeout * count;
+
+   interval = e_config->screensaver_interval;
+   blanking = e_config->screensaver_blanking;
+   expose = e_config->screensaver_expose;
+
+   if (_e_screensaver_timeout != timeout)
+     {
+        _e_screensaver_timeout = timeout;
+        changed = EINA_TRUE;
+     }
+   if (_e_screensaver_interval != interval)
+     {
+        _e_screensaver_interval = interval;
+        changed = EINA_TRUE;
+     }
+   if (_e_screensaver_blanking != blanking)
+     {
+        _e_screensaver_blanking = blanking;
+        changed = EINA_TRUE;
+     }
+   if (_e_screensaver_expose != expose)
+     {
+        _e_screensaver_expose = expose;
+        changed = EINA_TRUE;
+     }
+
+   if (changed) ecore_x_screensaver_set(timeout, interval, blanking, expose);
+}
+
 static Eina_Bool
 _e_screensaver_handler_config_mode_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
-   e_screensaver_init();
+   e_screensaver_update();
    return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -46,15 +90,8 @@ _e_screensaver_ask_presentation_no(void *data __UNUSED__, E_Dialog *dia)
 static void
 _e_screensaver_ask_presentation_no_increase(void *data __UNUSED__, E_Dialog *dia)
 {
-   int timeout, interval, blanking, expose;
-
    _e_screensaver_ask_presentation_count++;
-   timeout = e_config->screensaver_timeout * (1 + _e_screensaver_ask_presentation_count);
-   interval = e_config->screensaver_interval;
-   blanking = e_config->screensaver_blanking;
-   expose = e_config->screensaver_expose;
-
-   ecore_x_screensaver_set(timeout, interval, blanking, expose);
+   e_screensaver_update();
    e_object_del(E_OBJECT(dia));
 }
 
@@ -149,73 +186,120 @@ _e_screensaver_handler_screensaver_notify_cb(void *data __UNUSED__, int type __U
 static Eina_Bool
 _e_screensaver_handler_border_fullscreen_check_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
-   e_screensaver_init();
+   e_screensaver_update();
    return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool
 _e_screensaver_handler_border_desk_set_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
-   e_screensaver_init();
+   e_screensaver_update();
    return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool
 _e_screensaver_handler_desk_show_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
-   e_screensaver_init();
+   e_screensaver_update();
    return ECORE_CALLBACK_PASS_ON;
 }
 
 EAPI int
 e_screensaver_init(void)
 {
-   int timeout=0, interval=0, blanking=0, expose=0;
+   _e_screensaver_handler_config_mode = ecore_event_handler_add
+     (E_EVENT_CONFIG_MODE_CHANGED, _e_screensaver_handler_config_mode_cb, NULL);
 
-   if (!_e_screensaver_handler_config_mode)
-     _e_screensaver_handler_config_mode = ecore_event_handler_add
-       (E_EVENT_CONFIG_MODE_CHANGED, _e_screensaver_handler_config_mode_cb, NULL);
+   _e_screensaver_handler_screensaver_notify = ecore_event_handler_add
+     (ECORE_X_EVENT_SCREENSAVER_NOTIFY, _e_screensaver_handler_screensaver_notify_cb, NULL);
 
-   if (!_e_screensaver_handler_screensaver_notify)
-     _e_screensaver_handler_screensaver_notify = ecore_event_handler_add
-       (ECORE_X_EVENT_SCREENSAVER_NOTIFY, _e_screensaver_handler_screensaver_notify_cb, NULL);
+   _e_screensaver_handler_border_fullscreen = ecore_event_handler_add
+     (E_EVENT_BORDER_FULLSCREEN, _e_screensaver_handler_border_fullscreen_check_cb, NULL);
 
-   if (!_e_screensaver_handler_border_fullscreen)
-     _e_screensaver_handler_border_fullscreen = ecore_event_handler_add
-       (E_EVENT_BORDER_FULLSCREEN, _e_screensaver_handler_border_fullscreen_check_cb, NULL);
+   _e_screensaver_handler_border_unfullscreen = ecore_event_handler_add
+     (E_EVENT_BORDER_UNFULLSCREEN, _e_screensaver_handler_border_fullscreen_check_cb, NULL);
 
-   if (!_e_screensaver_handler_border_unfullscreen)
-     _e_screensaver_handler_border_unfullscreen = ecore_event_handler_add
-       (E_EVENT_BORDER_UNFULLSCREEN, _e_screensaver_handler_border_fullscreen_check_cb, NULL);
+   _e_screensaver_handler_border_remove = ecore_event_handler_add
+     (E_EVENT_BORDER_REMOVE, _e_screensaver_handler_border_fullscreen_check_cb, NULL);
 
-   if (!_e_screensaver_handler_border_remove)
-     _e_screensaver_handler_border_remove = ecore_event_handler_add
-       (E_EVENT_BORDER_REMOVE, _e_screensaver_handler_border_fullscreen_check_cb, NULL);
+   _e_screensaver_handler_border_iconify = ecore_event_handler_add
+     (E_EVENT_BORDER_ICONIFY, _e_screensaver_handler_border_fullscreen_check_cb, NULL);
 
-   if (!_e_screensaver_handler_border_iconify)
-     _e_screensaver_handler_border_iconify = ecore_event_handler_add
-       (E_EVENT_BORDER_ICONIFY, _e_screensaver_handler_border_fullscreen_check_cb, NULL);
+   _e_screensaver_handler_border_uniconify = ecore_event_handler_add
+     (E_EVENT_BORDER_UNICONIFY, _e_screensaver_handler_border_fullscreen_check_cb, NULL);
 
-   if (!_e_screensaver_handler_border_uniconify)
-     _e_screensaver_handler_border_uniconify = ecore_event_handler_add
-       (E_EVENT_BORDER_UNICONIFY, _e_screensaver_handler_border_fullscreen_check_cb, NULL);
+   _e_screensaver_handler_border_desk_set = ecore_event_handler_add
+     (E_EVENT_BORDER_DESK_SET, _e_screensaver_handler_border_desk_set_cb, NULL);
 
-   if (!_e_screensaver_handler_border_desk_set)
-     _e_screensaver_handler_border_desk_set = ecore_event_handler_add
-       (E_EVENT_BORDER_DESK_SET, _e_screensaver_handler_border_desk_set_cb, NULL);
+   _e_screensaver_handler_desk_show = ecore_event_handler_add
+     (E_EVENT_DESK_SHOW, _e_screensaver_handler_desk_show_cb, NULL);
 
-   if (!_e_screensaver_handler_desk_show)
-     _e_screensaver_handler_desk_show = ecore_event_handler_add
-       (E_EVENT_DESK_SHOW, _e_screensaver_handler_desk_show_cb, NULL);
+   _e_screensaver_timeout = ecore_x_screensaver_timeout_get();
+   _e_screensaver_interval = ecore_x_screensaver_interval_get();
+   _e_screensaver_blanking = ecore_x_screensaver_blank_get();
+   _e_screensaver_expose = ecore_x_screensaver_expose_get();
 
-   if ((e_config->screensaver_enable) && (!e_config->mode.presentation) &&
-       (!e_util_fullscreen_curreny_any()))
-     timeout = e_config->screensaver_timeout;
-   
-   interval = e_config->screensaver_interval;
-   blanking = e_config->screensaver_blanking;
-   expose = e_config->screensaver_expose;
-  
-   ecore_x_screensaver_set(timeout, interval, blanking, expose);
+   e_screensaver_update();
+
+   return 1;
+}
+
+EAPI int
+e_screensaver_shutdown(void)
+{
+   if (_e_screensaver_handler_config_mode)
+     {
+        ecore_event_handler_del(_e_screensaver_handler_config_mode);
+        _e_screensaver_handler_config_mode = NULL;
+     }
+
+   if (_e_screensaver_handler_screensaver_notify)
+     {
+        ecore_event_handler_del(_e_screensaver_handler_screensaver_notify);
+        _e_screensaver_handler_screensaver_notify = NULL;
+     }
+
+   if (_e_screensaver_handler_border_fullscreen)
+     {
+        ecore_event_handler_del(_e_screensaver_handler_border_fullscreen);
+        _e_screensaver_handler_border_fullscreen = NULL;
+     }
+
+   if (_e_screensaver_handler_border_unfullscreen)
+     {
+        ecore_event_handler_del(_e_screensaver_handler_border_fullscreen);
+        _e_screensaver_handler_border_fullscreen = NULL;
+     }
+
+   if (_e_screensaver_handler_border_remove)
+     {
+        ecore_event_handler_del(_e_screensaver_handler_border_fullscreen);
+        _e_screensaver_handler_border_fullscreen = NULL;
+     }
+
+   if (_e_screensaver_handler_border_iconify)
+     {
+        ecore_event_handler_del(_e_screensaver_handler_border_fullscreen);
+        _e_screensaver_handler_border_fullscreen = NULL;
+     }
+
+   if (_e_screensaver_handler_border_uniconify)
+     {
+        ecore_event_handler_del(_e_screensaver_handler_border_fullscreen);
+        _e_screensaver_handler_border_fullscreen = NULL;
+     }
+
+   if (_e_screensaver_handler_border_desk_set)
+     {
+        ecore_event_handler_del(_e_screensaver_handler_border_fullscreen);
+        _e_screensaver_handler_border_fullscreen = NULL;
+     }
+
+   if (_e_screensaver_handler_desk_show)
+     {
+        ecore_event_handler_del(_e_screensaver_handler_border_fullscreen);
+        _e_screensaver_handler_border_fullscreen = NULL;
+     }
+
    return 1;
 }

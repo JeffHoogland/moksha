@@ -800,6 +800,7 @@ main(int argc, char **argv)
 	e_error_message_show(_("Enlightenment cannot configure the X screensaver."));
 	_e_main_shutdown(-1);
      }
+   _e_main_shutdown_push(e_screensaver_shutdown);
 
    e_init_status_set(_("Setup Desklock"));
    TS("desklock");
@@ -983,6 +984,7 @@ main(int argc, char **argv)
 	e_error_message_show(_("Enlightenment cannot configure the DPMS settings."));
 	_e_main_shutdown(-1);
      }
+   _e_main_shutdown_push(e_dpms_shutdown);
 
    e_init_status_set(_("Setup Powersave modes"));
    TS("powersave");
