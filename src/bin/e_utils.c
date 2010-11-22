@@ -26,7 +26,7 @@ struct _E_Util_Fake_Mouse_Up_Info
 struct _E_Util_Image_Import_Settings
 {
    E_Dialog *dia;
-   struct 
+   struct
      {
         void (*func)(void *data, const char *path, Eina_Bool ok, Eina_Bool external, int quality, E_Image_Import_Mode mode);
         void *data;
@@ -42,12 +42,12 @@ struct _E_Util_Image_Import_Handle
 {
    Ecore_Exe *exe;
    Ecore_Event_Handler *handler;
-   struct 
+   struct
      {
         void (*func)(void *data, Eina_Bool ok, const char *image_path, const char *edje_path);
         void *data;
      } cb;
-   struct 
+   struct
      {
         const char *image, *edje, *temp;
      } path;
@@ -492,7 +492,7 @@ e_util_menu_item_edje_icon_set(E_Menu_Item *mi, const char *name)
 EAPI unsigned int
 e_util_icon_size_normalize(unsigned int desired)
 {
-   const unsigned int *itr, known_sizes[] = 
+   const unsigned int *itr, known_sizes[] =
      {
         16, 22, 24, 32, 36, 48, 64, 72, 96, 128, 192, 256, -1
      };
@@ -555,7 +555,7 @@ e_util_container_window_find(Ecore_X_Window win)
 }
 
 EAPI E_Zone *
-e_util_zone_window_find(Ecore_X_Window win) 
+e_util_zone_window_find(Ecore_X_Window win)
 {
    Eina_List *l, *ll, *lll;
    E_Manager *man;
@@ -564,7 +564,7 @@ e_util_zone_window_find(Ecore_X_Window win)
 
    EINA_LIST_FOREACH(e_manager_list(), l, man)
      EINA_LIST_FOREACH(man->containers, ll, con)
-       EINA_LIST_FOREACH(con->zones, lll, zone) 
+       EINA_LIST_FOREACH(con->zones, lll, zone)
          if (zone->black_win == win) return zone;
 
    return NULL;
@@ -1403,8 +1403,8 @@ e_util_image_import_cancel(E_Util_Image_Import_Handle *handle)
    ecore_exe_kill(handle->exe);
 }
 
-EAPI int 
-e_util_container_desk_count_get(E_Container *con) 
+EAPI int
+e_util_container_desk_count_get(E_Container *con)
 {
    Eina_List *zl;
    E_Zone *zone;
@@ -1412,13 +1412,13 @@ e_util_container_desk_count_get(E_Container *con)
 
    E_OBJECT_CHECK_RETURN(con, 0);
    E_OBJECT_TYPE_CHECK_RETURN(con, E_CONTAINER_TYPE, 0);
-   EINA_LIST_FOREACH(con->zones, zl, zone) 
+   EINA_LIST_FOREACH(con->zones, zl, zone)
      {
         int x, y;
         int cx = 0, cy = 0;
 
         e_zone_desk_count_get(zone, &cx, &cy);
-        for (x = 0; x < cx; x++) 
+        for (x = 0; x < cx; x++)
           {
              for (y = 0; y < cy; y++)
                count += 1;
@@ -1559,4 +1559,55 @@ e_util_module_config_check(const char *module_name, int conf, int epoch, int ver
      }
 
    return EINA_TRUE;
+}
+
+/**
+ * Checks whenever the current manager/container/zone have fullscreen windows.
+ */
+EAPI Eina_Bool
+e_util_fullscreen_curreny_any(void)
+{
+   E_Manager *man = e_manager_current_get();
+   E_Container *con = e_container_current_get(man);
+   E_Zone *zone = e_zone_current_get(con);
+   E_Desk *desk;
+
+   if ((zone) && (zone->fullscreen > 0)) return EINA_TRUE;
+   desk = e_desk_current_get(zone);
+   if ((desk) && (desk->fullscreen_borders > 0)) return EINA_TRUE;
+   return EINA_FALSE;
+}
+
+/**
+ * Checks whenever any manager/container/zone have fullscreen windows.
+ */
+EAPI Eina_Bool
+e_util_fullscreen_any(void)
+{
+   E_Zone *zone;
+   Eina_List *lm, *lc, *lz;
+   E_Container *con;
+   E_Manager *man;
+   E_Desk *desk;
+   int x, y;
+
+   EINA_LIST_FOREACH(e_manager_list(), lm, man)
+     {
+        EINA_LIST_FOREACH(man->containers, lc, con)
+          {
+             EINA_LIST_FOREACH(con->zones, lz, zone)
+               {
+                  if (zone->fullscreen > 0) return EINA_TRUE;
+
+                  for (x = 0; x < zone->desk_x_count; x++)
+                    for (y = 0; y < zone->desk_y_count; y++)
+                      {
+                         desk = e_desk_at_xy_get(zone, x, y);
+                         if ((desk) && (desk->fullscreen_borders > 0))
+                           return EINA_TRUE;
+                      }
+               }
+          }
+     }
+   return EINA_FALSE;
 }

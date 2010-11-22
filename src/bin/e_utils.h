@@ -76,5 +76,8 @@ EAPI void                        e_util_image_import_cancel(E_Util_Image_Import_
 
 EAPI int e_util_container_desk_count_get(E_Container *con);
 
+EAPI Eina_Bool e_util_fullscreen_curreny_any(void);
+EAPI Eina_Bool e_util_fullscreen_any(void);
+
 #endif
 #endif

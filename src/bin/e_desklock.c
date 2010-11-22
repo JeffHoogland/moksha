@@ -62,14 +62,6 @@ static int _e_desklock_user_idle = 0;
 static double _e_desklock_autolock_time = 0.0;
 static E_Dialog *_e_desklock_ask_presentation_dia = NULL;
 static int _e_desklock_ask_presentation_count = 0;
-static Ecore_Event_Handler *_e_desklock_handler_border_fullscreen = NULL;
-static Ecore_Event_Handler *_e_desklock_handler_border_unfullscreen = NULL;
-static Ecore_Event_Handler *_e_desklock_handler_border_remove = NULL;
-static Ecore_Event_Handler *_e_desklock_handler_border_iconify = NULL;
-static Ecore_Event_Handler *_e_desklock_handler_border_uniconify = NULL;
-static Ecore_Event_Handler *_e_desklock_handler_border_desk_set = NULL;
-static Ecore_Event_Handler *_e_desklock_handler_desk_show = NULL;
-static int _e_desklock_fullscreen_count = 0;
 
 /***********************************************************************/
 
@@ -96,9 +88,6 @@ static char *_desklock_auth_get_current_host(void);
 #endif
 
 static void _e_desklock_ask_presentation_mode(void);
-static Eina_Bool _e_desklock_handler_border_fullscreen_check_cb(void *data __UNUSED__, int type __UNUSED__, void *event);
-static Eina_Bool _e_desklock_handler_border_desk_set_cb(void *data __UNUSED__, int type __UNUSED__, void *event);
-static Eina_Bool _e_desklock_handler_desk_show_cb(void *data __UNUSED__, int type __UNUSED__, void *event);
 
 EAPI int E_EVENT_DESKLOCK = 0;
 
@@ -108,34 +97,6 @@ e_desklock_init(void)
    /* A poller to tick every 256 ticks, watching for an idle user */
    _e_desklock_idle_poller = ecore_poller_add(ECORE_POLLER_CORE, 256,
 					      _e_desklock_cb_idle_poller, NULL);
-
-   if (!_e_desklock_handler_border_fullscreen)
-     _e_desklock_handler_border_fullscreen = ecore_event_handler_add
-       (E_EVENT_BORDER_FULLSCREEN, _e_desklock_handler_border_fullscreen_check_cb, NULL);
-
-   if (!_e_desklock_handler_border_unfullscreen)
-     _e_desklock_handler_border_unfullscreen = ecore_event_handler_add
-       (E_EVENT_BORDER_UNFULLSCREEN, _e_desklock_handler_border_fullscreen_check_cb, NULL);
-
-   if (!_e_desklock_handler_border_remove)
-     _e_desklock_handler_border_remove = ecore_event_handler_add
-       (E_EVENT_BORDER_REMOVE, _e_desklock_handler_border_fullscreen_check_cb, NULL);
-
-   if (!_e_desklock_handler_border_iconify)
-     _e_desklock_handler_border_iconify = ecore_event_handler_add
-       (E_EVENT_BORDER_ICONIFY, _e_desklock_handler_border_fullscreen_check_cb, NULL);
-
-   if (!_e_desklock_handler_border_uniconify)
-     _e_desklock_handler_border_uniconify = ecore_event_handler_add
-       (E_EVENT_BORDER_UNICONIFY, _e_desklock_handler_border_fullscreen_check_cb, NULL);
-
-   if (!_e_desklock_handler_border_desk_set)
-     _e_desklock_handler_border_desk_set = ecore_event_handler_add
-       (E_EVENT_BORDER_DESK_SET, _e_desklock_handler_border_desk_set_cb, NULL);
-
-   if (!_e_desklock_handler_desk_show)
-     _e_desklock_handler_desk_show = ecore_event_handler_add
-       (E_EVENT_DESK_SHOW, _e_desklock_handler_desk_show_cb, NULL);
 
    if (e_config->desklock_background)
      e_filereg_register(e_config->desklock_background);
@@ -148,48 +109,6 @@ e_desklock_init(void)
 EAPI int
 e_desklock_shutdown(void)
 {
-   if (_e_desklock_handler_border_fullscreen)
-     {
-	ecore_event_handler_del(_e_desklock_handler_border_fullscreen);
-	_e_desklock_handler_border_fullscreen = NULL;
-     }
-
-   if (_e_desklock_handler_border_unfullscreen)
-     {
-	ecore_event_handler_del(_e_desklock_handler_border_unfullscreen);
-	_e_desklock_handler_border_unfullscreen = NULL;
-     }
-
-   if (_e_desklock_handler_border_remove)
-     {
-	ecore_event_handler_del(_e_desklock_handler_border_remove);
-	_e_desklock_handler_border_remove = NULL;
-     }
-
-   if (_e_desklock_handler_border_iconify)
-     {
-	ecore_event_handler_del(_e_desklock_handler_border_iconify);
-	_e_desklock_handler_border_iconify = NULL;
-     }
-
-   if (_e_desklock_handler_border_uniconify)
-     {
-	ecore_event_handler_del(_e_desklock_handler_border_uniconify);
-	_e_desklock_handler_border_uniconify = NULL;
-     }
-
-   if (_e_desklock_handler_border_desk_set)
-     {
-	ecore_event_handler_del(_e_desklock_handler_border_desk_set);
-	_e_desklock_handler_border_desk_set = NULL;
-     }
-
-   if (_e_desklock_handler_desk_show)
-     {
-	ecore_event_handler_del(_e_desklock_handler_desk_show);
-	_e_desklock_handler_desk_show = NULL;
-     }
-
    e_desklock_hide();
    if (e_config->desklock_background)
      e_filereg_deregister(e_config->desklock_background);
@@ -215,7 +134,7 @@ _user_wallpaper_get(void)
 EAPI int
 e_desklock_show_autolocked(void)
 {
-   if (_e_desklock_fullscreen_count > 0) return 0;
+   if (e_util_fullscreen_curreny_any()) return 0;
    if (_e_desklock_autolock_time < 1.0)
      _e_desklock_autolock_time = ecore_loop_time_get();
    return e_desklock_show();
@@ -955,7 +874,7 @@ static Eina_Bool
 _e_desklock_cb_idle_poller(void *data __UNUSED__)
 {
    if ((e_config->desklock_autolock_idle) && (!e_config->mode.presentation) &&
-       (_e_desklock_fullscreen_count <= 0))
+       (!e_util_fullscreen_curreny_any()))
      {
 	double idle, max;
 
@@ -1093,34 +1012,4 @@ _e_desklock_ask_presentation_mode(void)
 				  _e_desklock_ask_presentation_key_down, dia);
 
    _e_desklock_ask_presentation_dia = dia;
-}
-
-static Eina_Bool
-_e_desklock_handler_border_fullscreen_check_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
-{
-   E_Event_Border_Fullscreen *ev = event;
-
-   _e_desklock_fullscreen_count = ev->border->desk->fullscreen_borders; 
-   return ECORE_CALLBACK_PASS_ON;
-}
-
-static Eina_Bool
-_e_desklock_handler_border_desk_set_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
-{
-   E_Event_Border_Desk_Set *ev = event;
-
-   if (ev->border->desk->visible)
-     _e_desklock_fullscreen_count = ev->border->desk->fullscreen_borders; 
-   else if (ev->desk->visible)
-     _e_desklock_fullscreen_count = ev->desk->fullscreen_borders; 
-   return ECORE_CALLBACK_PASS_ON;
-}
-
-static Eina_Bool
-_e_desklock_handler_desk_show_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
-{
-   E_Event_Desk_Show *ev = event;
-
-   _e_desklock_fullscreen_count = ev->desk->fullscreen_borders; 
-   return ECORE_CALLBACK_PASS_ON;
 }

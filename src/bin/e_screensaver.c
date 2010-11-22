@@ -11,7 +11,6 @@ static Ecore_Event_Handler *_e_screensaver_handler_border_desk_set = NULL;
 static Ecore_Event_Handler *_e_screensaver_handler_desk_show = NULL;
 static E_Dialog *_e_screensaver_ask_presentation_dia = NULL;
 static int _e_screensaver_ask_presentation_count = 0;
-static int _e_screensaver_fullscreen_count = 0;
 
 static Eina_Bool
 _e_screensaver_handler_config_mode_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
@@ -148,34 +147,22 @@ _e_screensaver_handler_screensaver_notify_cb(void *data __UNUSED__, int type __U
 }
 
 static Eina_Bool
-_e_screensaver_handler_border_fullscreen_check_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
+_e_screensaver_handler_border_fullscreen_check_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
-   E_Event_Border_Fullscreen *ev = event;
-
-   _e_screensaver_fullscreen_count = ev->border->desk->fullscreen_borders; 
    e_screensaver_init();
    return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool
-_e_screensaver_handler_border_desk_set_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
+_e_screensaver_handler_border_desk_set_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
-   E_Event_Border_Desk_Set *ev = event;
-
-   if (ev->border->desk->visible)
-     _e_screensaver_fullscreen_count = ev->border->desk->fullscreen_borders; 
-   else if (ev->desk->visible)
-     _e_screensaver_fullscreen_count = ev->desk->fullscreen_borders; 
    e_screensaver_init();
    return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool
-_e_screensaver_handler_desk_show_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
+_e_screensaver_handler_desk_show_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
-   E_Event_Desk_Show *ev = event;
-
-   _e_screensaver_fullscreen_count = ev->desk->fullscreen_borders; 
    e_screensaver_init();
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -222,7 +209,7 @@ e_screensaver_init(void)
        (E_EVENT_DESK_SHOW, _e_screensaver_handler_desk_show_cb, NULL);
 
    if ((e_config->screensaver_enable) && (!e_config->mode.presentation) &&
-       (_e_screensaver_fullscreen_count <= 0))
+       (!e_util_fullscreen_curreny_any()))
      timeout = e_config->screensaver_timeout;
    
    interval = e_config->screensaver_interval;
