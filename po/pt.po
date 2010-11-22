@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e17\n"
 "Report-Msgid-Bugs-To: http://trac.enlightenment.org/e/\n"
-"POT-Creation-Date: 2010-11-13 07:01-0800\n"
-"PO-Revision-Date: 2010-11-15 17:10-0000\n"
+"POT-Creation-Date: 2010-11-15 16:02-0800\n"
+"PO-Revision-Date: 2010-11-22 11:40-0000\n"
 "Last-Translator: Sérgio Marques <smarquespt@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -286,11 +286,11 @@ msgstr ""
 
 #: ../src/bin/e_actions.c:2685
 msgid "Toggle Borderless State"
-msgstr ""
+msgstr "Alternar para estado sem contornos"
 
 #: ../src/bin/e_actions.c:2690
 msgid "Toggle Pinned State"
-msgstr ""
+msgstr "Alternar para estado fixo"
 
 #: ../src/bin/e_actions.c:2695
 #: ../src/bin/e_actions.c:2697
@@ -648,11 +648,11 @@ msgstr "Enlightenment : Modo"
 
 #: ../src/bin/e_actions.c:2928
 msgid "Presentation Mode Toggle"
-msgstr ""
+msgstr "Alternar para o modo de demonstração"
 
 #: ../src/bin/e_actions.c:2933
 msgid "Offline Mode Toggle"
-msgstr ""
+msgstr "Alternar para o modo \"off-line\""
 
 #: ../src/bin/e_actions.c:2937
 #: ../src/bin/e_actions.c:2941
@@ -911,16 +911,16 @@ msgstr ""
 #: ../src/bin/e_desklock.c:1069
 #: ../src/bin/e_screensaver.c:96
 msgid "Activate Presentation Mode?"
-msgstr "Ativar o modo de apresentação?"
+msgstr "Ativar o modo de demonstração?"
 
 #: ../src/bin/e_desklock.c:1072
 msgid "You unlocked desktop too fast.<br><br>Would you like to enable <b>presentation</b> mode and temporarily disable screen saver, lock and power saving?"
-msgstr ""
+msgstr "Desbloqueou o ambiente de trabalho muito rapidamente.<br><br>Pretende ativar o modo de<b>demonstração</b> e inativar temporariamente a proteção de ecrã, os bloqueios e a poupança de energia?"
 
 #: ../src/bin/e_desklock.c:1082
 #: ../src/bin/e_screensaver.c:109
 msgid "No, but increase timeout"
-msgstr ""
+msgstr "Não, mas aumentar o tempo limite"
 
 #: ../src/bin/e_desklock.c:1084
 #: ../src/bin/e_screensaver.c:111
@@ -1618,11 +1618,11 @@ msgstr "Bloqueios gerais"
 
 #: ../src/bin/e_int_border_locks.c:283
 msgid "Lock the Window so it does only what I tell it to"
-msgstr ""
+msgstr "Bloquear esta janela de modo a que apenas faça o que eu quiser"
 
 #: ../src/bin/e_int_border_locks.c:285
 msgid "Protect this window from me accidentally changing it"
-msgstr ""
+msgstr "Proteger esta janela de eventuais alterações acidentais"
 
 #: ../src/bin/e_int_border_locks.c:287
 msgid "Protect this window from being accidentally closed because it is important"
@@ -2012,7 +2012,7 @@ msgstr ""
 
 #: ../src/bin/e_int_border_remember.c:512
 msgid "No match properties set"
-msgstr ""
+msgstr "Nenhumas propriedades definidas"
 
 #: ../src/bin/e_int_border_remember.c:515
 msgid "You are trying to ask Enlightenment to remember to apply<br>properties (such as size, location, border style etc.) to<br>a window <hilight>without specifying how to remember it</hilight>.<br><br>You must specify at least 1 way of remembering this window."
@@ -2063,7 +2063,7 @@ msgstr "Tipo de janela"
 
 #: ../src/bin/e_int_border_remember.c:691
 msgid "wildcard matches are allowed"
-msgstr ""
+msgstr "as \"wildcards\" são permitidas"
 
 #: ../src/bin/e_int_border_remember.c:693
 msgid "Transience"
@@ -2160,7 +2160,7 @@ msgstr "Móvel"
 msgid "Settings"
 msgstr "Definições"
 
-#: ../src/bin/e_int_config_modules.c:99
+#: ../src/bin/e_int_config_modules.c:98
 msgid "Module Settings"
 msgstr "Definições do módulo"
 
@@ -2173,11 +2173,11 @@ msgid "Unload"
 msgstr "Descarregar"
 
 #: ../src/bin/e_int_config_modules.c:307
-#: ../src/bin/e_int_config_modules.c:589
+#: ../src/bin/e_int_config_modules.c:588
 msgid "No modules selected."
 msgstr "Nenhum módulo selecionado."
 
-#: ../src/bin/e_int_config_modules.c:587
+#: ../src/bin/e_int_config_modules.c:586
 msgid "More than one module selected."
 msgstr "Mais que um módulo selecionado."
 
@@ -2317,7 +2317,7 @@ msgstr "Definições de \"shelf\""
 
 #: ../src/bin/e_int_shelf_config.c:123
 msgid "Above Everything"
-msgstr ""
+msgstr "Sobre Everything"
 
 #: ../src/bin/e_int_shelf_config.c:125
 msgid "Below Windows"
@@ -2359,7 +2359,7 @@ msgstr "Mostrar ao clicar com o rato"
 
 #: ../src/bin/e_int_shelf_config.c:213
 msgid "Hide timeout"
-msgstr ""
+msgstr "Ocultar tempo limite"
 
 #: ../src/bin/e_int_shelf_config.c:217
 #: ../src/bin/e_int_shelf_config.c:227
@@ -2435,72 +2435,96 @@ msgid ""
 "Enlightenment cannot Initialize Ecore!\n"
 "Perhaps you are out of memory?"
 msgstr ""
+"O Enlightenment não consegue iniciar o Ecore!\n"
+"Será que a memória é suficiente?"
 
 #: ../src/bin/e_main.c:414
 msgid ""
 "Enlightenment cannot initialize the File system.\n"
 "Perhaps you are out of memory?"
 msgstr ""
+"O Enlightenment não consegue iniciar o sistema de ficheiros.\n"
+"Será que a memória é suficiente?"
 
 #: ../src/bin/e_main.c:427
 msgid ""
 "Enlightenment cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
+"O Enlightenment não consegue configurar o sinal de saída.\n"
+"Será que a memória é suficiente?"
 
 #: ../src/bin/e_main.c:433
 msgid ""
 "Enlightenment cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
+"O Enlightenment não consegue configurar o sinal do HUP.\n"
+"Será que a memória é suficiente?"
 
 #: ../src/bin/e_main.c:439
 msgid ""
 "Enlightenment cannot set up a USER signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
+"O Enlightenment não consegue configurar o sinal de UTILIZADOR.\n"
+"Será que a memória é suficiente?"
 
 #: ../src/bin/e_main.c:451
 msgid ""
 "Enlightenment cannot initialize its X connection.\n"
 "Have you set your DISPLAY variable?"
 msgstr ""
+"O Enlightenment não consegue iniciar o X.\n"
+"Configurou a variável DISPLAY?"
 
 #: ../src/bin/e_main.c:459
 msgid ""
 "Enlightenment cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
 msgstr ""
+"O Enlightenment não consegue iniciar o sistema de alertas.\n"
+"Configurou a variável DISPLAY?"
 
 #: ../src/bin/e_main.c:482
 msgid ""
 "Enlightenment cannot initialize the connections system.\n"
 "Perhaps you are out of memory?"
 msgstr ""
+"O Enlightenment não consegue iniciar o sistema de ligações.\n"
+"Será que a memória é suficiente?"
 
 #: ../src/bin/e_main.c:490
 msgid ""
 "Enlightenment cannot initialize the IPC system.\n"
 "Perhaps you are out of memory?"
 msgstr ""
+"O Enlightenment não consegue iniciar o sistema IPC.\n"
+"Será que a memória é suficiente?"
 
 #: ../src/bin/e_main.c:499
 msgid ""
 "Enlightenment cannot setup xinerama wrapping.\n"
 "This should not happen."
 msgstr ""
+"O Enlightenment não consegue configurar o xinerama.\n"
+"Não é suposto isto acontecer."
 
 #: ../src/bin/e_main.c:508
 msgid ""
 "Enlightenment cannot setup randr wrapping.\n"
 "This should not happen."
 msgstr ""
+"O Enlightenment não consegue configurar o randr.\n"
+"Não é suposto isto acontecer."
 
 #: ../src/bin/e_main.c:529
 msgid ""
 "Enlightenment cannot initialize the Evas system.\n"
 "Perhaps you are out of memory?"
 msgstr ""
+"O Enlightenment não consegue iniciar o Evas!\n"
+"Será que a memória é suficiente?"
 
 #: ../src/bin/e_main.c:536
 msgid ""
@@ -2893,7 +2917,7 @@ msgstr "Pretende desativar este módulo?"
 
 #: ../src/bin/e_screensaver.c:99
 msgid "You disabled screensaver too fast.<br><br>Would you like to enable <b>presentation</b> mode and temporarily disable screen saver, lock and power saving?"
-msgstr ""
+msgstr "Desativou a proteção de ecrã muito rapidamente.<br><br>Pretende ativar o modo de<b>demonstração</b> e inativar temporariamente a proteção de ecrã, os bloqueios e a poupança de energia?"
 
 #: ../src/bin/e_shelf.c:163
 msgid "Shelf #"
@@ -3066,7 +3090,7 @@ msgstr "Definir o conteúdo da barra de ferramentas"
 
 #: ../src/bin/e_utils.c:279
 msgid "Cannot exit - immortal windows."
-msgstr ""
+msgstr "Não pode sair- janelas não termináveis."
 
 #: ../src/bin/e_utils.c:280
 msgid "Some windows are left still around with the Lifespan lock enabled. This means<br>that Enlightenment will not allow itself to exit until these windows have<br>been closed or have the lifespan lock removed.<br>"
@@ -3410,7 +3434,7 @@ msgstr ""
 
 #: ../src/modules/conf/e_mod_main.c:443
 msgid "Presentation"
-msgstr "Apresentação"
+msgstr "Demonstração"
 
 #: ../src/modules/conf/e_mod_main.c:450
 msgid "Offline"
@@ -3522,7 +3546,7 @@ msgstr "Alfabética"
 
 #: ../src/modules/conf_clientlist/e_int_config_clientlist.c:131
 msgid "Window stacking layer"
-msgstr ""
+msgstr "Camada de empilhamento da janela"
 
 #: ../src/modules/conf_clientlist/e_int_config_clientlist.c:134
 msgid "Most recently used"
@@ -3598,7 +3622,7 @@ msgstr "Título do menu"
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:80
 msgid "Menu Title Active"
-msgstr ""
+msgstr "Título do menu - ativo"
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:81
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:59
@@ -3607,11 +3631,11 @@ msgstr "Item de menu"
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:82
 msgid "Menu Item Active"
-msgstr ""
+msgstr "Item do menu - ativo"
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:83
 msgid "Menu Item Disabled"
-msgstr ""
+msgstr "Título do menu - inativo"
 
 #: ../src/modules/conf_colors/e_int_config_color_classes.c:84
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:64
@@ -3951,7 +3975,7 @@ msgstr "Sugerir se desativado antes de"
 #: ../src/modules/conf_desklock/e_int_config_desklock.c:284
 #: ../src/modules/conf_screensaver/e_int_config_screensaver.c:173
 msgid "Presentation Mode"
-msgstr "Modo de apresentação"
+msgstr "Modo de demonstração"
 
 #: ../src/modules/conf_desklock/e_int_config_desklock.c:291
 #: ../src/modules/gadman/e_mod_config.c:141
@@ -4238,12 +4262,12 @@ msgstr "Por favor, selecione um limite<br>ou clique em <hilight>Fechar</hilight>
 
 #: ../src/modules/conf_edgebindings/e_int_config_edgebindings.c:102
 msgid "Edge Bindings Settings"
-msgstr ""
+msgstr "Definições da associação de limites"
 
 #: ../src/modules/conf_edgebindings/e_int_config_edgebindings.c:255
 #: ../src/modules/conf_edgebindings/e_mod_main.c:20
 msgid "Edge Bindings"
-msgstr ""
+msgstr "Associação de limites"
 
 #: ../src/modules/conf_edgebindings/e_int_config_edgebindings.c:260
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:226
@@ -4297,7 +4321,7 @@ msgstr "Permitir associação com janelas de ecrã completo"
 
 #: ../src/modules/conf_edgebindings/e_int_config_edgebindings.c:842
 msgid "Edge Binding Sequence"
-msgstr ""
+msgstr "Sequência de associação de limites"
 
 #: ../src/modules/conf_edgebindings/e_int_config_edgebindings.c:854
 #, c-format
@@ -4310,7 +4334,7 @@ msgstr "Limite clicável"
 
 #: ../src/modules/conf_edgebindings/e_int_config_edgebindings.c:1174
 msgid "Binding Edge Error"
-msgstr ""
+msgstr "Erro na associação de limites"
 
 #: ../src/modules/conf_edgebindings/e_int_config_edgebindings.c:1175
 #, c-format
@@ -4410,11 +4434,11 @@ msgstr "Sobre o texto"
 
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:71
 msgid "Desklock Title"
-msgstr ""
+msgstr "Título do bloqueio"
 
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:72
 msgid "Desklock Password"
-msgstr ""
+msgstr "Senha do bloqueio"
 
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:73
 msgid "Dialog Error"
@@ -4536,7 +4560,7 @@ msgstr "%d pixeis"
 
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:424
 msgid "Enable Custom Font Classes"
-msgstr ""
+msgstr "Ativar classes personalizadas de letras"
 
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:431
 #: ../src/modules/conf_fonts/e_mod_main.c:19
@@ -4566,11 +4590,11 @@ msgstr "Antevisão avançada de texto.. 我真的会写中文"
 
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:650
 msgid "Hinting"
-msgstr ""
+msgstr "Sugestões"
 
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:653
 msgid "Bytecode"
-msgstr ""
+msgstr "\"Bytecode\""
 
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:657
 #: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:193
@@ -4593,7 +4617,7 @@ msgstr "Ativar opções de recurso"
 
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:688
 msgid "Hinting / Fallbacks"
-msgstr ""
+msgstr "Sugestões/Recursos"
 
 #: ../src/modules/conf_icon_theme/e_int_config_icon_themes.c:52
 msgid "Icon Theme Settings"
@@ -4659,15 +4683,15 @@ msgstr "Selecione a definição do método..."
 #: ../src/modules/conf_imc/e_int_config_imc_import.c:283
 #: ../src/modules/conf_imc/e_int_config_imc_import.c:299
 msgid "Input Method Config Import Error"
-msgstr ""
+msgstr "Erro ao importar o método de entrada"
 
 #: ../src/modules/conf_imc/e_int_config_imc_import.c:284
 msgid "Enlightenment was unable to import the configuration.<br><br>Are you sure this is really a valid configuration?"
-msgstr ""
+msgstr "O Enlightenment não conseguiu importar a configuração.<br><br>Tem a certeza que esta é uma configuração válida?"
 
 #: ../src/modules/conf_imc/e_int_config_imc_import.c:300
 msgid "Enlightenment was unable to import the configuration<br>due to a copy error."
-msgstr ""
+msgstr "O Enlightenment não conseguiu importar a configuração<br>por erros de cópia."
 
 #: ../src/modules/conf_imc/e_mod_main.c:17
 #: ../src/modules/conf_intl/e_mod_main.c:17
@@ -4682,15 +4706,15 @@ msgstr "Definições de interação"
 
 #: ../src/modules/conf_interaction/e_int_config_interaction.c:95
 msgid "Thumbscroll"
-msgstr ""
+msgstr "Deslocação com o dedo"
 
 #: ../src/modules/conf_interaction/e_int_config_interaction.c:97
 msgid "Enable Thumbscroll"
-msgstr ""
+msgstr "Ativar deslocação com o dedo"
 
 #: ../src/modules/conf_interaction/e_int_config_interaction.c:102
 msgid "Threshold for a thumb drag"
-msgstr ""
+msgstr "Limite para um arrastamento"
 
 #: ../src/modules/conf_interaction/e_int_config_interaction.c:105
 #: ../src/modules/conf_mouse_cursor/e_int_config_cursor.c:141
@@ -4700,7 +4724,7 @@ msgstr "%1.0f pixeis"
 
 #: ../src/modules/conf_interaction/e_int_config_interaction.c:110
 msgid "Threshold for applying drag momentum"
-msgstr ""
+msgstr "Limite para aplicar o impulso do arrasto"
 
 #: ../src/modules/conf_interaction/e_int_config_interaction.c:113
 #, c-format
@@ -4709,7 +4733,7 @@ msgstr "%1.0f pixeis/seg"
 
 #: ../src/modules/conf_interaction/e_int_config_interaction.c:119
 msgid "Friction slowdown"
-msgstr ""
+msgstr "Diminuição da fricção"
 
 #: ../src/modules/conf_interaction/e_int_config_interaction.c:122
 #, c-format
@@ -4743,7 +4767,7 @@ msgstr "Idioma"
 
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:4
 msgid "Please press key sequence,<br><br>or <hilight>Escape</hilight> to abort."
-msgstr ""
+msgstr "Por favor, escolha a sequência<br><br>ou <hilight>Escape</hilight> para abortar."
 
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:8
 msgid "Single key"
@@ -4834,7 +4858,7 @@ msgstr "Deslocamento automático"
 
 #: ../src/modules/conf_menus/e_int_config_menus.c:322
 msgid "Menu Scroll Speed"
-msgstr ""
+msgstr "Velocidade de deslocação do menu"
 
 #: ../src/modules/conf_menus/e_int_config_menus.c:324
 #, c-format
@@ -5002,7 +5026,7 @@ msgstr "Velocidade"
 
 #: ../src/modules/conf_mouse/e_int_config_mouse.c:118
 msgid "Threshold"
-msgstr ""
+msgstr "Limiar"
 
 #: ../src/modules/conf_paths/e_int_config_paths.c:59
 msgid "Search Path Settings"
@@ -5245,11 +5269,11 @@ msgstr "Proteção de ecrã"
 
 #: ../src/modules/conf_screensaver/e_int_config_screensaver.c:143
 msgid "Initial timeout"
-msgstr ""
+msgstr "Tempo limite inicial"
 
 #: ../src/modules/conf_screensaver/e_int_config_screensaver.c:150
 msgid "Alternation timeout"
-msgstr ""
+msgstr "Alternação do tempo limite"
 
 #: ../src/modules/conf_screensaver/e_int_config_screensaver.c:178
 msgid "Blanking"
@@ -5480,7 +5504,7 @@ msgstr "Exibição de janela"
 
 #: ../src/modules/conf_window_display/e_int_config_window_display.c:125
 msgid "Move Geometry"
-msgstr ""
+msgstr "Geometria"
 
 #: ../src/modules/conf_window_display/e_int_config_window_display.c:126
 #: ../src/modules/conf_window_display/e_int_config_window_display.c:137
@@ -5575,7 +5599,7 @@ msgstr "Janela por baixo do rato"
 
 #: ../src/modules/conf_window_focus/e_int_config_focus.c:193
 msgid "Most recent Window under the Mouse"
-msgstr ""
+msgstr "Janelas mais recentes sobre o rato"
 
 #: ../src/modules/conf_window_focus/e_int_config_focus.c:211
 msgid "Click"
@@ -5646,7 +5670,7 @@ msgstr "Reverter focagem se perdida"
 #.
 #: ../src/modules/conf_window_focus/e_int_config_focus.c:258
 msgid "Slide pointer to a new focused window"
-msgstr ""
+msgstr "Deslizar ponteiro para a nova janela focada"
 
 #: ../src/modules/conf_window_focus/e_mod_main.c:18
 #: ../src/modules/wizard/page_060.c:23
@@ -5681,7 +5705,7 @@ msgstr "Resistência"
 
 #: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:166
 msgid "Automatically accept changes after:"
-msgstr ""
+msgstr "Aceitar alterações automaticamente após:"
 
 #: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:171
 msgid "Move by"
@@ -5758,7 +5782,7 @@ msgstr "Direção"
 #.
 #: ../src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:180
 msgid "Allow manipulation of maximized windows"
-msgstr ""
+msgstr "Permitir a manipulação de janelas maximizadas"
 
 #: ../src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:183
 msgid "Adjust windows on shelf hide"
@@ -6154,28 +6178,28 @@ msgstr "Sombra na retaguarda"
 #: ../src/modules/everything/e_mod_main.c:79
 #: ../src/modules/everything/e_mod_main.c:195
 msgid "Everything Launcher"
-msgstr ""
+msgstr "Iniciador do Everything"
 
 #: ../src/modules/everything/e_mod_main.c:80
 #: ../src/modules/everything/e_mod_main.c:196
 msgid "Show Everything Dialog"
-msgstr ""
+msgstr "Mostrar janela Everything"
 
 #: ../src/modules/everything/e_mod_main.c:91
 msgid "Everything Configuration"
-msgstr ""
+msgstr "Configuração Everything"
 
 #: ../src/modules/everything/e_mod_main.c:385
 msgid "Everything Module"
-msgstr ""
+msgstr "Módulo Everything"
 
 #: ../src/modules/everything/e_mod_main.c:567
 msgid "Run Everything"
-msgstr ""
+msgstr "Executar Everything"
 
 #: ../src/modules/everything/evry_config.c:79
 msgid "Everything Settings"
-msgstr ""
+msgstr "Definições Everything"
 
 #: ../src/modules/everything/evry_config.c:361
 msgid "Available Plugins"
@@ -6211,15 +6235,15 @@ msgstr "Caracteres mínimos para pesquisa"
 
 #: ../src/modules/everything/evry_config.c:414
 msgid "Plugin Trigger"
-msgstr ""
+msgstr "Invocador do \"plugin\""
 
 #: ../src/modules/everything/evry_config.c:415
 msgid "Default is plugin name"
-msgstr ""
+msgstr "Default é o nome do \"plug-in\""
 
 #: ../src/modules/everything/evry_config.c:422
 msgid "Search only when triggered"
-msgstr ""
+msgstr "Apenas pesquisar se invocado"
 
 #: ../src/modules/everything/evry_config.c:429
 msgid "Plugin View"
@@ -6263,7 +6287,7 @@ msgstr "Deslocação animada"
 #. * e_widget_framelist_object_append(of, ob);
 #: ../src/modules/everything/evry_config.c:502
 msgid "Up/Down select next item in icon view"
-msgstr ""
+msgstr "Cima/Baixo seleciona o seguinte item na visualização"
 
 #: ../src/modules/everything/evry_config.c:507
 msgid "Sorting"
@@ -6384,7 +6408,7 @@ msgstr "Abrir aqui um terminal"
 #: ../src/modules/everything-apps/e_mod_main.c:1221
 #: ../src/modules/everything-apps/e_mod_main.c:1240
 msgid "Everything Applications"
-msgstr ""
+msgstr "Aplicações Everything"
 
 #: ../src/modules/everything-apps/e_mod_main.c:1129
 msgid "Commands"
@@ -6406,7 +6430,7 @@ msgstr "Corretor ortográfico"
 #: ../src/modules/everything-aspell/e_mod_main.c:595
 #: ../src/modules/everything-aspell/e_mod_main.c:614
 msgid "Everything Aspell"
-msgstr ""
+msgstr "Everything Aspell"
 
 #: ../src/modules/everything-aspell/e_mod_main.c:481
 msgid "Spell checker"
@@ -6462,7 +6486,7 @@ msgstr "Ficheiros recentes"
 #: ../src/modules/everything-files/e_mod_main.c:1602
 #: ../src/modules/everything-files/e_mod_main.c:1623
 msgid "Everything Files"
-msgstr ""
+msgstr "Ficheiros Everything"
 
 #. ow = e_widget_check_add(evas, _("Show home directory"),
 #. * 			   &(cfdata->show_homedir));
@@ -7064,7 +7088,7 @@ msgstr ""
 
 #: ../src/modules/pager/e_mod_config.c:371
 msgid "Please press a mouse button<br>Press <hilight>Escape</hilight> to abort.<br>Or <hilight>Del</hilight> to reset the button."
-msgstr ""
+msgstr "Por favor, prima o botão do rato.<br>Prima <hilight>Escape</hilight> para abortar<br>ou <hilight>Del</hilight> para repor o botão."
 
 #: ../src/modules/pager/e_mod_config.c:426
 msgid "Attention"
@@ -7076,7 +7100,7 @@ msgstr ""
 
 #: ../src/modules/pager/e_mod_main.c:2807
 msgid "Show Pager Popup"
-msgstr ""
+msgstr "Mostrar alerta do paginador"
 
 #: ../src/modules/pager/e_mod_main.c:2814
 #: ../src/modules/pager/e_mod_main.c:2857
@@ -7196,7 +7220,7 @@ msgstr "Perfil"
 
 #: ../src/modules/wizard/page_030.c:88
 msgid "No menu files were<br>found on your system.<br>Please see the<br>documentation on<br>www.enlightenment.org<br>for more details on<br>how to get your<br>application menus<br>working."
-msgstr ""
+msgstr "Não foram encontrados<br>os ficheiros de menu.<br>Por favor, veja a<br>documentação em<br>www.enlightenment.org<br>para mais detalhes<br> sobre fazer que <br>os menus da aplicação<br>funcionem."
 
 #: ../src/modules/wizard/page_030.c:104
 msgid "Select application menu"
@@ -7232,7 +7256,7 @@ msgstr "Clique para focar as janelas"
 
 #: ../src/modules/wizard/page_060.c:32
 msgid "Mouse over focuses windows"
-msgstr ""
+msgstr "Focar janelas se o rato estiver em cima"
 
 #: ../src/modules/wizard/page_070.c:203
 msgid "Select Icons to Add"
