@@ -2,6 +2,8 @@
 Type=Link
 Name=Bluetooth Manager
 Name[fr]=Gestionnaire Bluetooth
+Name[it]=Gestore Bluetooth
+Name[pt]=Gestor de bluetooth
 Icon=e-module-bluez
 Comment=
 Comment[fr]=

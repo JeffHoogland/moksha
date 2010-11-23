@@ -5,4 +5,5 @@ Icon=e-module-comp
 Comment=
 Comment[fr]=Gestionnaire de composite intégré.
 Comment[it]=Composite manager per Enlightenment.
+Comment[pt]=Gestão de composição integrada
 X-Enlightenment-ModuleType=look
