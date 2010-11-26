@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-11-13 16:20+0400\n"
-"PO-Revision-Date: 2010-11-13 17:00+0400\n"
+"POT-Creation-Date: 2010-11-26 06:55+0400\n"
+"PO-Revision-Date: 2010-11-26 08:10+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: French <pourunmondesansgourou@gmail.com>\n"
 "Language: fr\n"
@@ -78,11 +78,11 @@ msgstr "Voulez-vous vraiment tuer cette fenêtre ?"
 #: src/bin/e_actions.c:2123
 #: src/bin/e_actions.c:2186
 #: src/bin/e_confirm_dialog.c:44
-#: src/bin/e_desklock.c:1078
+#: src/bin/e_desklock.c:997
 #: src/bin/e_fm.c:9075
 #: src/bin/e_fm.c:9329
 #: src/bin/e_module.c:513
-#: src/bin/e_screensaver.c:105
+#: src/bin/e_screensaver.c:141
 msgid "Yes"
 msgstr "Oui"
 
@@ -94,11 +94,11 @@ msgstr "Oui"
 #: src/bin/e_actions.c:2125
 #: src/bin/e_actions.c:2188
 #: src/bin/e_confirm_dialog.c:45
-#: src/bin/e_desklock.c:1080
+#: src/bin/e_desklock.c:999
 #: src/bin/e_fm.c:9073
 #: src/bin/e_fm.c:9330
 #: src/bin/e_module.c:514
-#: src/bin/e_screensaver.c:107
+#: src/bin/e_screensaver.c:143
 msgid "No"
 msgstr "Non"
 
@@ -854,7 +854,7 @@ msgstr "Appliquer"
 #: src/modules/conf_shelves/e_mod_main.c:21
 #: src/modules/everything/e_mod_main.c:88
 #: src/modules/everything-apps/e_mod_main.c:1216
-#: src/modules/everything-files/e_mod_main.c:1651
+#: src/modules/everything-files/e_mod_main.c:1599
 #: src/modules/gadman/e_mod_main.c:25
 #: src/modules/mixer/e_mod_main.c:1100
 #: src/modules/connman/e_mod_main.c:1733
@@ -876,51 +876,51 @@ msgstr "Modules"
 msgid "Container %d"
 msgstr "Conteneur %d"
 
-#: src/bin/e_desklock.c:250
+#: src/bin/e_desklock.c:169
 msgid "Error - no PAM support"
 msgstr "Erreur : aucun support de PAM"
 
-#: src/bin/e_desklock.c:251
+#: src/bin/e_desklock.c:170
 msgid "No PAM support was built into Enlightenment, so<br>desk locking is disabled."
 msgstr "Enlightenment a été compilé sans le support de PAM,<br>le verrouillage d'écran a été désactivé."
 
-#: src/bin/e_desklock.c:315
+#: src/bin/e_desklock.c:234
 msgid "Lock Failed"
 msgstr "Échec du verrouillage"
 
-#: src/bin/e_desklock.c:316
+#: src/bin/e_desklock.c:235
 msgid "Locking the desktop failed because some application<br>has grabbed either the keyboard or the mouse or both<br>and their grab is unable to be broken."
 msgstr "Le verrouillage de l'écran a échoué car une application<br>s'est accaparée le clavier ou la souris, voire les deux,<br>et il n'est pas possible d'outrepasser cette action."
 
-#: src/bin/e_desklock.c:401
+#: src/bin/e_desklock.c:320
 msgid "Please enter your unlock password"
 msgstr "Veuillez saisir le mot de passe de déverrouillage"
 
-#: src/bin/e_desklock.c:740
+#: src/bin/e_desklock.c:659
 msgid "Authentication System Error"
 msgstr "Erreur du système d'authentification"
 
-#: src/bin/e_desklock.c:741
+#: src/bin/e_desklock.c:660
 #, c-format
 msgid "Authentication via PAM had errors setting up the<br>authentication session. The error code was <hilight>%i</hilight>.<br>This is bad and should not be happening. Please report this bug."
 msgstr "L'authentification via PAM a rencontré une erreur lors de<br>la session d'authentification. Le code de l'erreur est <hilight>%i</hilight>.<br>Cette erreur ne devrait pas se produire.<br>Merci de faire un rapport de bogue."
 
-#: src/bin/e_desklock.c:1069
-#: src/bin/e_screensaver.c:96
+#: src/bin/e_desklock.c:988
+#: src/bin/e_screensaver.c:132
 msgid "Activate Presentation Mode?"
 msgstr "Activer le mode présentation ?"
 
-#: src/bin/e_desklock.c:1072
+#: src/bin/e_desklock.c:991
 msgid "You unlocked desktop too fast.<br><br>Would you like to enable <b>presentation</b> mode and temporarily disable screen saver, lock and power saving?"
 msgstr "Vous avez déverrouillé l'écran trop vite...<br><br>Voulez-vous activer le mode  <b>présentation</b> et désactiver temporairement l'écran de veille, le verrouillage et la gestion de l'énergie ?"
 
-#: src/bin/e_desklock.c:1082
-#: src/bin/e_screensaver.c:109
+#: src/bin/e_desklock.c:1001
+#: src/bin/e_screensaver.c:145
 msgid "No, but increase timeout"
 msgstr "Non, mais augmenter le délai"
 
-#: src/bin/e_desklock.c:1084
-#: src/bin/e_screensaver.c:111
+#: src/bin/e_desklock.c:1003
+#: src/bin/e_screensaver.c:147
 msgid "No, and stop asking"
 msgstr "Non, et ne plus demander"
 
@@ -988,7 +988,7 @@ msgstr "Fichier desktop"
 #: src/modules/everything/evry_config.c:379
 #: src/modules/everything/evry_config.c:463
 #: src/modules/everything-aspell/e_mod_main.c:476
-#: src/modules/everything-files/e_mod_main.c:1543
+#: src/modules/everything-files/e_mod_main.c:1491
 #: src/modules/pager/e_mod_config.c:126
 #: src/modules/pager/e_mod_config.c:213
 msgid "General"
@@ -1706,7 +1706,7 @@ msgstr "Éditer l'icone"
 
 #: src/bin/e_int_border_menu.c:77
 msgid "Add Application..."
-msgstr "Ajouter une application…"
+msgstr "Ajouter l'application…"
 
 #: src/bin/e_int_border_menu.c:88
 msgid "Create Icon"
@@ -1748,7 +1748,7 @@ msgstr "Restaurer"
 
 #: src/bin/e_int_border_menu.c:530
 msgid "Keyboard Shortcut"
-msgstr "Raccourci clavier"
+msgstr "Aux raccourcis clavier"
 
 #: src/bin/e_int_border_menu.c:536
 msgid "To Favorites Menu"
@@ -2096,8 +2096,8 @@ msgstr "Utilitaires"
 
 #: src/bin/e_int_config_modules.c:55
 #: src/modules/conf_mime/e_mod_main.c:17
-#: src/modules/everything-files/e_mod_main.c:1420
-#: src/modules/everything-files/e_mod_main.c:1429
+#: src/modules/everything-files/e_mod_main.c:1368
+#: src/modules/everything-files/e_mod_main.c:1377
 #: src/modules/fileman/e_mod_main.c:46
 #: src/modules/fileman/e_mod_main.c:64
 #: src/modules/fileman/e_mod_main.c:386
@@ -2139,7 +2139,7 @@ msgstr "Mobile"
 msgid "Settings"
 msgstr "Configuration"
 
-#: src/bin/e_int_config_modules.c:99
+#: src/bin/e_int_config_modules.c:98
 msgid "Module Settings"
 msgstr "Paramétrage des modules"
 
@@ -2152,11 +2152,11 @@ msgid "Unload"
 msgstr "Désactiver"
 
 #: src/bin/e_int_config_modules.c:307
-#: src/bin/e_int_config_modules.c:589
+#: src/bin/e_int_config_modules.c:588
 msgid "No modules selected."
 msgstr "Aucun module sélectionné."
 
-#: src/bin/e_int_config_modules.c:587
+#: src/bin/e_int_config_modules.c:586
 msgid "More than one module selected."
 msgstr "Plus d'un module sélectionné."
 
@@ -2693,214 +2693,214 @@ msgstr "Configuration de l'écran de veille"
 msgid "Enlightenment cannot configure the X screensaver."
 msgstr "Enlightenment ne peut pas configurer l'écran de veille de X."
 
-#: src/bin/e_main.c:804
+#: src/bin/e_main.c:805
 msgid "Setup Desklock"
 msgstr "Configuration du verrouillage d'écran"
 
-#: src/bin/e_main.c:809
+#: src/bin/e_main.c:810
 msgid "Enlightenment cannot set up its desk locking system."
 msgstr "Enlightenment ne peut pas configurer son système de verrouillage d'écran."
 
-#: src/bin/e_main.c:814
+#: src/bin/e_main.c:815
 msgid "Setup Popups"
 msgstr "Configuration des pop-up"
 
-#: src/bin/e_main.c:819
+#: src/bin/e_main.c:820
 msgid "Enlightenment cannot set up its popup system."
 msgstr "Enlightenment ne peut pas configurer son système de pop-up."
 
-#: src/bin/e_main.c:832
+#: src/bin/e_main.c:833
 msgid "Setup Paths"
 msgstr "Configuration des chemins"
 
-#: src/bin/e_main.c:849
+#: src/bin/e_main.c:850
 msgid "Setup System Controls"
 msgstr "Configuration des contrôles du système"
 
-#: src/bin/e_main.c:854
+#: src/bin/e_main.c:855
 msgid "Enlightenment cannot initialize the System Command system.\n"
 msgstr "Enlightenment ne peut pas initialiser son gestionnaire de commandes système.\n"
 
-#: src/bin/e_main.c:859
+#: src/bin/e_main.c:860
 msgid "Setup Actions"
 msgstr "Configuration des actions"
 
-#: src/bin/e_main.c:864
+#: src/bin/e_main.c:865
 msgid "Enlightenment cannot set up its actions system."
 msgstr "Enlightenment ne peut pas configurer son système d'actions."
 
-#: src/bin/e_main.c:868
+#: src/bin/e_main.c:869
 msgid "Setup Execution System"
 msgstr "Configuration du système d'exécution"
 
-#: src/bin/e_main.c:873
+#: src/bin/e_main.c:874
 msgid "Enlightenment cannot set up its exec system."
 msgstr "Enlightenment ne peut pas initialiser son système d'exécution."
 
-#: src/bin/e_main.c:881
+#: src/bin/e_main.c:882
 msgid "Setup FM"
 msgstr "Configuration du gestionnaire de fichiers"
 
-#: src/bin/e_main.c:886
+#: src/bin/e_main.c:887
 msgid "Enlightenment cannot initialize the File manager.\n"
 msgstr "Enlightenment ne peut pas initialiser son gestionnaire de fichiers.\n"
 
-#: src/bin/e_main.c:901
+#: src/bin/e_main.c:902
 msgid "Setup Message System"
 msgstr "Configuration du système de messages"
 
-#: src/bin/e_main.c:906
+#: src/bin/e_main.c:907
 msgid "Enlightenment cannot set up its msg system."
 msgstr "Enlightenment ne peut pas configurer son système de messages."
 
-#: src/bin/e_main.c:911
+#: src/bin/e_main.c:912
 msgid "Setup DND"
 msgstr "Configuration du glisser-déposer"
 
-#: src/bin/e_main.c:916
+#: src/bin/e_main.c:917
 msgid "Enlightenment cannot set up its dnd system."
 msgstr "Enlightenment ne peut pas configurer son système de glisser-déposer."
 
-#: src/bin/e_main.c:921
+#: src/bin/e_main.c:922
 msgid "Setup Grab Input Handling"
 msgstr "Configuration des périphériques d'entrée"
 
-#: src/bin/e_main.c:926
+#: src/bin/e_main.c:927
 msgid "Enlightenment cannot set up its input grab handling system."
 msgstr "Enlightenment ne peut pas configurer son gestionnaire de réservation de périphériques d'entrée."
 
-#: src/bin/e_main.c:931
+#: src/bin/e_main.c:932
 msgid "Setup Modules"
 msgstr "Configuration des modules"
 
-#: src/bin/e_main.c:936
+#: src/bin/e_main.c:937
 msgid "Enlightenment cannot set up its module system."
 msgstr "Enlightenment ne peut pas configurer son système de modules."
 
-#: src/bin/e_main.c:941
+#: src/bin/e_main.c:942
 msgid "Setup Remembers"
 msgstr "Configuration de la mémorisation"
 
-#: src/bin/e_main.c:946
+#: src/bin/e_main.c:947
 msgid "Enlightenment cannot setup remember settings."
 msgstr "Enlightenment ne peut pas initialiser son système de mémorisation."
 
-#: src/bin/e_main.c:951
+#: src/bin/e_main.c:952
 msgid "Setup Color Classes"
 msgstr "Configuration des classes de couleurs"
 
-#: src/bin/e_main.c:956
+#: src/bin/e_main.c:957
 msgid "Enlightenment cannot set up its color class system."
 msgstr "Enlightenment ne peut pas configurer son système de classes de couleurs."
 
-#: src/bin/e_main.c:961
+#: src/bin/e_main.c:962
 msgid "Setup Gadcon"
 msgstr "Configuration de Gadcon"
 
-#: src/bin/e_main.c:966
+#: src/bin/e_main.c:967
 msgid "Enlightenment cannot set up its gadget control system."
 msgstr "Enlightenment ne peut pas configurer son système de contrôle des gadgets."
 
-#: src/bin/e_main.c:971
+#: src/bin/e_main.c:972
 msgid "Setup ACPI"
 msgstr "Configuration de l'ACPI"
 
-#: src/bin/e_main.c:978
+#: src/bin/e_main.c:979
 msgid "Setup DPMS"
 msgstr "Configuration du DPMS"
 
-#: src/bin/e_main.c:983
+#: src/bin/e_main.c:984
 msgid "Enlightenment cannot configure the DPMS settings."
 msgstr "Enlightenment ne peut pas configurer le DPMS."
 
-#: src/bin/e_main.c:987
+#: src/bin/e_main.c:989
 msgid "Setup Powersave modes"
 msgstr "Configuration de la gestion de l'énergie"
 
-#: src/bin/e_main.c:991
+#: src/bin/e_main.c:993
 msgid "Enlightenment cannot set up its powersave modes."
 msgstr "Enlightenment ne peut pas configurer la gestion de l'énergie."
 
-#: src/bin/e_main.c:996
+#: src/bin/e_main.c:998
 msgid "Setup Wallpaper"
 msgstr "Configuration du fond d'écran"
 
-#: src/bin/e_main.c:1001
+#: src/bin/e_main.c:1003
 msgid "Enlightenment cannot set up its desktop background system."
 msgstr "Enlightenment ne peut pas configurer son gestionnaire de fonds d'écran."
 
-#: src/bin/e_main.c:1006
+#: src/bin/e_main.c:1008
 msgid "Setup Mouse"
 msgstr "Configuration de la souris"
 
-#: src/bin/e_main.c:1011
+#: src/bin/e_main.c:1013
 msgid "Enlightenment cannot configure the mouse settings."
 msgstr "Enlightenment est incapable de configurer la souris."
 
-#: src/bin/e_main.c:1016
+#: src/bin/e_main.c:1018
 msgid "Setup Bindings"
 msgstr "Configuration des raccourcis"
 
-#: src/bin/e_main.c:1021
+#: src/bin/e_main.c:1023
 msgid "Enlightenment cannot set up its bindings system."
 msgstr "Enlightenment ne peut pas configurer son système de raccourcis."
 
-#: src/bin/e_main.c:1026
+#: src/bin/e_main.c:1028
 msgid "Setup Shelves"
 msgstr "Configuration des racks"
 
-#: src/bin/e_main.c:1031
+#: src/bin/e_main.c:1033
 msgid "Enlightenment cannot set up its shelf system."
 msgstr "Enlightenment ne peut pas configurer son gestionnaire de racks."
 
-#: src/bin/e_main.c:1036
+#: src/bin/e_main.c:1038
 msgid "Setup Thumbnailer"
 msgstr "Configuration des vignettes"
 
-#: src/bin/e_main.c:1041
+#: src/bin/e_main.c:1043
 msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
 msgstr "Enlightenment ne peut pas initialiser son système de vignettes.\n"
 
-#: src/bin/e_main.c:1046
+#: src/bin/e_main.c:1048
 msgid "Setup File Ordering"
 msgstr "Configuration du classement des fichiers"
 
-#: src/bin/e_main.c:1050
+#: src/bin/e_main.c:1052
 msgid "Enlightenment cannot set up its order file system."
 msgstr "Enlightenment ne peut pas configurer sa gestion des fichiers."
 
-#: src/bin/e_main.c:1065
+#: src/bin/e_main.c:1067
 msgid "Load Modules"
 msgstr "Activer les modules"
 
-#: src/bin/e_main.c:1082
+#: src/bin/e_main.c:1084
 #, c-format
 msgid "Enlightenment crashed early on start and has<br>been restarted. There was an error loading<br>module named: %s. This module has been disabled<br>and will not be loaded."
 msgstr "Enlightenment a planté au démarrage et a<br>été redémarré. L'erreur s'est produite lors du<br>chargement du module : %s.<br>Ce module est désactivé et ne sera pas chargé."
 
-#: src/bin/e_main.c:1087
-#: src/bin/e_main.c:1104
+#: src/bin/e_main.c:1089
+#: src/bin/e_main.c:1106
 msgid "Enlightenment crashed early on start and has been restarted"
 msgstr "Enlightenment a planté au démarrage et a été redémarré "
 
-#: src/bin/e_main.c:1088
+#: src/bin/e_main.c:1090
 #, c-format
 msgid "Enlightenment crashed early on start and has been restarted.<br>There was an error loading module named: %s<br><br>This module has been disabled and will not be loaded."
 msgstr "Enlightenment a planté au démarrage et a été redémarré.<br>L'erreur s'est produite lors du chargement du module : %s.<br><br>Ce module est désactivé et ne sera pas chargé."
 
-#: src/bin/e_main.c:1097
+#: src/bin/e_main.c:1099
 msgid "Enlightenment crashed early on start and has<br>been restarted. All modules have been disabled<br>and will not be loaded to help remove any problem<br>modules from your configuration. The module<br>configuration dialog should let you select your<br>modules again."
 msgstr "Enlightenment a planté au démarrage et a<br>été redémarré. Tous les modules ont été désactivés<br>et ne seront pas chargés pour vous aider à supprimer<br>les modules problématiques de votre configuration.<br>Le dialogue de configuration des modules vous permettra<br>de recharger vos modules."
 
-#: src/bin/e_main.c:1105
+#: src/bin/e_main.c:1107
 msgid "Enlightenment crashed early on start and has been restarted.<br>All modules have been disabled and will not be loaded to help<br>remove any problem modules from your configuration.<br><br>The module configuration dialog should let you select your<br>modules again."
 msgstr "Enlightenment a planté au démarrage et a été redémarré.<br>Tous les modules ont été désactivés et ne seront pas chargés pour vous<br>aider à supprimer les modules problématiques de votre configuration.<br><br>Le dialogue de configuration des modules vous permettra<br>de recharger vos modules."
 
-#: src/bin/e_main.c:1134
+#: src/bin/e_main.c:1136
 msgid "Configure Shelves"
 msgstr "Configurer les racks"
 
-#: src/bin/e_main.c:1145
+#: src/bin/e_main.c:1147
 msgid "Almost Done"
 msgstr "Presque fini..."
 
@@ -2944,7 +2944,7 @@ msgstr "Module %s de Enlightenment"
 msgid "Would you like to unload this module?<br>"
 msgstr "Voulez-vous désactiver ce module ?<br>"
 
-#: src/bin/e_screensaver.c:99
+#: src/bin/e_screensaver.c:135
 msgid "You disabled screensaver too fast.<br><br>Would you like to enable <b>presentation</b> mode and temporarily disable screen saver, lock and power saving?"
 msgstr "Vous avez désactivé l'écran de veille trop vite...<br><br>Voulez-vous activer le mode  <b>présentation</b> et désactiver temporairement l'écran de veille, le verrouillage et la gestion de l'énergie ?"
 
@@ -6440,58 +6440,58 @@ msgstr "Commande personnalisée"
 msgid "Calculator"
 msgstr "Calculatrice"
 
-#: src/modules/everything-files/e_mod_main.c:1382
+#: src/modules/everything-files/e_mod_main.c:1330
 msgid "Copy To ..."
 msgstr "Copier dans..."
 
-#: src/modules/everything-files/e_mod_main.c:1387
+#: src/modules/everything-files/e_mod_main.c:1335
 msgid "Move To ..."
 msgstr "Déplacer vers..."
 
-#: src/modules/everything-files/e_mod_main.c:1392
+#: src/modules/everything-files/e_mod_main.c:1340
 msgid "Move to Trash"
 msgstr "Mettre à la corbeille"
 
-#: src/modules/everything-files/e_mod_main.c:1396
+#: src/modules/everything-files/e_mod_main.c:1344
 msgid "Open Folder (EFM)"
 msgstr "Ouvrir le dossier avec EFM"
 
-#: src/modules/everything-files/e_mod_main.c:1400
+#: src/modules/everything-files/e_mod_main.c:1348
 msgid "Sort by Date"
 msgstr "Classer par date"
 
-#: src/modules/everything-files/e_mod_main.c:1405
+#: src/modules/everything-files/e_mod_main.c:1353
 msgid "Sort by Name"
 msgstr "Classer par nom"
 
-#: src/modules/everything-files/e_mod_main.c:1437
-#: src/modules/everything-files/e_mod_main.c:1446
+#: src/modules/everything-files/e_mod_main.c:1385
+#: src/modules/everything-files/e_mod_main.c:1394
 msgid "Recent Files"
 msgstr "Documents récents"
 
-#: src/modules/everything-files/e_mod_main.c:1523
-#: src/modules/everything-files/e_mod_main.c:1654
-#: src/modules/everything-files/e_mod_main.c:1675
+#: src/modules/everything-files/e_mod_main.c:1471
+#: src/modules/everything-files/e_mod_main.c:1602
+#: src/modules/everything-files/e_mod_main.c:1623
 msgid "Everything Files"
 msgstr "Omni fichiers"
 
-#: src/modules/everything-files/e_mod_main.c:1550
+#: src/modules/everything-files/e_mod_main.c:1498
 msgid "Show recent files"
 msgstr "Afficher les documents récents"
 
-#: src/modules/everything-files/e_mod_main.c:1554
+#: src/modules/everything-files/e_mod_main.c:1502
 msgid "Search recent files"
 msgstr "Rechercher dans les documents récents"
 
-#: src/modules/everything-files/e_mod_main.c:1558
+#: src/modules/everything-files/e_mod_main.c:1506
 msgid "Search cached files"
 msgstr "Rechercher dans le cache des documents"
 
-#: src/modules/everything-files/e_mod_main.c:1562
+#: src/modules/everything-files/e_mod_main.c:1510
 msgid "Cache visited directories"
 msgstr "Mettre en cache les dossiers visités"
 
-#: src/modules/everything-files/e_mod_main.c:1566
+#: src/modules/everything-files/e_mod_main.c:1514
 msgid "Clear cache"
 msgstr "Vider le cache"
 
@@ -7247,7 +7247,7 @@ msgstr "Lanceur"
 
 #: src/modules/wizard/page_080.c:61
 msgid "Select Applications"
-msgstr "Sélectionnez les applications"
+msgstr "Sélectionnez les applications dans la barre"
 
 #: src/modules/mixer/app_mixer.c:161
 msgid "Capture"
