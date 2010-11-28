@@ -2,7 +2,8 @@
 Type=Link
 Name=Everything Applications
 Name[fr]=Omni - Applications
-Name[it]=Everything - Applicazioni
+Name[it]=Everything - Applicazioni 
+Name[pt]=Everything - Aplicações
 Icon=e-module
 Comment[fr]=Actions sur les applications.
 Comment[it]=Azioni con le applicazioni.

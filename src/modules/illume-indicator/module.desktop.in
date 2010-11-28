@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Illume-Indicator
+Name[pt]=Illume-Indicador
 Icon=e-module-illume-indicator
 X-Enlightenment-ModuleType=mobile
 Comment=
