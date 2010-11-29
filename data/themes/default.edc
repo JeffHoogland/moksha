@@ -12183,6 +12183,7 @@ collections {
 /////////////////////////////////////////////////////////////////////////////
 /*** MOD: CPUFREQ ***/
 
+#if 0
    group {
       name: "e/modules/cpufreq/main";
       images {
@@ -12514,7 +12515,342 @@ collections {
          }
       }
    }
+#else
+   group {
+      name: "e/modules/cpufreq/main";
+      images {
+         image: "tacho_bg.png" COMP;
+         image: "tacho_fg.png" COMP;
+         image: "t0.png" COMP;
+         image: "t0-sh.png" COMP;
+         image: "t1.png" COMP;
+         image: "t1-sh.png" COMP;
+         image: "t2.png" COMP;
+      }
+      min: 16 16;
+      max: 128 128;
+      script {
+         public available_frequencies;
+         public available_governors;
 
+         public cur_freq_old;
+         public cur_freq_new;
+         public cur_freq_now;
+         public cur_freq_anim;
+
+         public min_freq_old;
+         public min_freq_new;
+         public min_freq_now;
+
+         public max_freq_old;
+         public max_freq_new;
+         public max_freq_now;
+        
+         public slide_cur_freq(val, Float:v) {
+            new Float:freq, Float:min_freq, Float:max_freq, Float:tf;
+            new f, f0, f1;
+           
+            v = (1.0 - cos(v * 3.141592654)) / 2.0;
+           
+            min_freq = fetch_int(available_frequencies, 0);
+            max_freq = fetch_int(available_frequencies,
+                                 count(available_frequencies) - 1);
+           
+            f0 = get_int(cur_freq_old);
+            f1 = get_int(cur_freq_new);
+            f = f1 - f0;
+            freq = float(f) * v;
+            f = round(freq);
+            f = f + f0;
+            set_int(cur_freq_now, f);
+           
+            freq = (float(f) - min_freq) / (max_freq - min_freq);
+            tf = (freq * 225.0) - 135.0;
+            custom_state(PART:"meter", "default", 0.0);
+            set_state_val(PART:"meter", STATE_MAP_ROT_Z, tf);
+            set_state(PART:"meter", "custom", 0.0);
+            custom_state(PART:"meter_sh", "default", 0.0);
+            set_state_val(PART:"meter_sh", STATE_MAP_ROT_Z, tf);
+            set_state(PART:"meter_sh", "custom", 0.0);
+           
+            f0 = get_int(min_freq_old);
+            f1 = get_int(min_freq_new);
+            f = f1 - f0;
+            freq = float(f) * v;
+            f = round(freq);
+            f = f + f0;
+            set_int(min_freq_now, f);
+           
+            freq = (float(f) - min_freq) / (max_freq - min_freq);
+            tf = (freq * 225.0) - 135.0;
+            custom_state(PART:"meter_min", "default", 0.0);
+            set_state_val(PART:"meter_min", STATE_MAP_ROT_Z, tf);
+            set_state(PART:"meter_min", "custom", 0.0);
+            custom_state(PART:"meter_min_sh", "default", 0.0);
+            set_state_val(PART:"meter_min_sh", STATE_MAP_ROT_Z, tf);
+            set_state(PART:"meter_min_sh", "custom", 0.0);
+           
+            f0 = get_int(max_freq_old);
+            f1 = get_int(max_freq_new);
+            f = f1 - f0;
+            freq = float(f) * v;
+            f = round(freq);
+            f = f + f0;
+            set_int(max_freq_now, f);
+           
+            freq = (float(f) - min_freq) / (max_freq - min_freq);
+            tf = (freq * 225.0) - 135.0;
+            custom_state(PART:"meter_max", "default", 0.0);
+            set_state_val(PART:"meter_max", STATE_MAP_ROT_Z, tf);
+            set_state(PART:"meter_max", "custom", 0.0);
+            custom_state(PART:"meter_max_sh", "default", 0.0);
+            set_state_val(PART:"meter_max_sh", STATE_MAP_ROT_Z, tf);
+            set_state(PART:"meter_max_sh", "custom", 0.0);
+           
+            if (v >= 1.0) {
+              set_int(cur_freq_anim, 0);
+              return 0;
+            }
+            return 1;
+         }
+        
+         public message(Msg_Type:type, id, ...) {
+            if ((type == MSG_INT_SET) && (id == 1)) { // add an available freq
+               while (count(available_frequencies) > 0) {
+                  remove(available_frequencies, 0);
+               }
+               for (new i = 2; i < numargs(); i++) {
+                  append_int(available_frequencies, getarg(i));
+               }
+            } 
+            else if ((type == MSG_STRING_SET) && (id == 2)) { // add a governor
+               new text[100];
+               while (count(available_governors) > 0) {
+                  remove(available_governors, 0);
+               }
+               for (new i = 2; i < numargs(); i++) {
+                  snprintf(text, 100, "%s", getarg(i));
+                  append_str(available_governors, text);
+               }
+            } 
+            else if ((type == MSG_INT_SET) && (id == 3)) { // avg freq
+               new f;
+               new ani, curf, minf, maxf;
+               new text[100];
+
+               f = getarg(2);              
+               if (f < 1000000) snprintf(text, 100, "%i", f / 1000);
+               else snprintf(text, 100, "%i.%i", f / 1000000,
+                             (f % 1000000) / 100000);
+               set_text(PART:"readout", text);
+              
+               ani = get_int(cur_freq_anim);
+               if (ani > 0) cancel_anim(ani);
+               ani = anim(1.0, "slide_cur_freq", 0);
+               set_int(cur_freq_anim, ani);
+              
+               f = getarg(2);
+               curf = get_int(cur_freq_now);
+               set_int(cur_freq_old, curf);
+               set_int(cur_freq_new, f);
+              
+               f = getarg(4);
+               minf = get_int(min_freq_now);
+               set_int(min_freq_old, minf);
+               set_int(min_freq_new, f);
+              
+               f = getarg(5);
+               maxf = get_int(max_freq_now);
+               set_int(max_freq_old, maxf);
+               set_int(max_freq_new, f);
+            } 
+            else if ((type == MSG_STRING) && (id == 4)) {
+               new text[100];
+               snprintf(text, 100, "%s", getarg(2));
+            }
+         }
+      }
+      parts {
+         part {
+            name: "fade_clip";
+            type: RECT;
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               color: 255 255 255 255;
+            }
+            description {
+               state: "faded" 0.0;
+               color: 255 255 255 128;
+            }
+         }
+         part {
+            name: "base";
+            clip_to: "fade_clip";
+            description {
+               state: "default" 0.0;
+               aspect: 1.0 1.0;
+               aspect_preference: BOTH;
+               image.normal: "tacho_bg.png";
+            }
+         }
+         part {
+            name: "readout";
+            type: TEXT;
+            scale: 1;
+            // effect: OUTLINE_SOFT_SHADOW;
+            mouse_events: 0;
+            clip_to: "fade_clip";
+            description {
+               state: "default" 0.0;
+               rel1 {
+                  relative: 0.6 0.7;
+                  offset: 0 0;
+               }
+               rel2 {
+                  relative: 0.6 0.7;
+                  offset: 0 0;
+               }
+               color: 255 255 255 255;
+               color2: 0 0 0 128;
+               color3: 0 0 0 32;
+               color_class: "module_label";
+               text {
+                  text: "??? Ghz";
+                  font: "Sans:style=Bold";
+                  size: 6;
+                  align: 0.5 0.5;
+                  min: 1 1;
+                  text_class: "module_small";
+               }
+            }
+         }
+         part { name: "meter_min_sh";
+            clip_to: "fade_clip";
+            mouse_events: 0;
+            description { state: "default" 0.0000;
+               image.normal: "t1-sh.png";
+               rel1.to: "meter_min";
+               rel1.relative: 0.0+(2.0/64.0) 0.0+(2.0/64.0);
+               rel2.to: "meter_min";
+               rel2.relative: 1.0+(2.0/64.0) 1.0+(2.0/64.0);
+               map {
+                  on: 1;
+                  rotation {
+                     center: "meter_min_sh";
+                  }
+               }
+            }
+         }
+         part { name: "meter_min";
+            clip_to: "fade_clip";
+            mouse_events: 0;
+            description { state: "default" 0.0000;
+               image.normal: "t2.png";
+               rel1.to: "base";
+               rel2.to: "base";
+               map {
+                  on: 1;
+                  rotation {
+                     center: "base";
+                  }
+               }
+            }
+         }
+         part { name: "meter_max_sh";
+            clip_to: "fade_clip";
+            mouse_events: 0;
+            description { state: "default" 0.0000;
+               image.normal: "t1-sh.png";
+               rel1.to: "meter_max";
+               rel1.relative: 0.0+(2.0/64.0) 0.0+(2.0/64.0);
+               rel2.to: "meter_max";
+               rel2.relative: 1.0+(2.0/64.0) 1.0+(2.0/64.0);
+               map {
+                  on: 1;
+                  rotation {
+                     center: "meter_max_sh";
+                  }
+               }
+            }
+         }
+         part { name: "meter_max";
+            clip_to: "fade_clip";
+            mouse_events: 0;
+            description { state: "default" 0.0000;
+               image.normal: "t1.png";
+               rel1.to: "base";
+               rel2.to: "base";
+               map {
+                  on: 1;
+                  rotation {
+                     center: "base";
+                  }
+               }
+            }
+         }
+         part { name: "meter_sh";
+            clip_to: "fade_clip";
+            mouse_events: 0;
+            description { state: "default" 0.0000;
+               image.normal: "t0-sh.png";
+               rel1.to: "meter";
+               rel1.relative: 0.0+(2.0/64.0) 0.0+(2.0/64.0);
+               rel2.to: "meter";
+               rel2.relative: 1.0+(2.0/64.0) 1.0+(2.0/64.0);
+               map {
+                  on: 1;
+                  rotation {
+                     center: "meter_sh";
+                  }
+               }
+            }
+         }
+         part { name: "meter";
+            clip_to: "fade_clip";
+            mouse_events: 0;
+            description { state: "default" 0.0000;
+               image.normal: "t0.png";
+               rel1.to: "base";
+               rel2.to: "base";
+               map {
+                  on: 1;
+                  rotation {
+                     center: "base";
+                  }
+               }
+            }
+         }
+         part {
+            name: "over";
+            clip_to: "fade_clip";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               rel1.to: "base";
+               rel2.to: "base";
+               image.normal: "tacho_fg.png";
+            }
+         }
+      }
+      programs {
+         program {
+            name: "enabled";
+            signal: "e,state,enabled";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "fade_clip";
+         }
+         program {
+            name: "disabled";
+            signal: "e,state,disabled";
+            source: "e";
+            action: STATE_SET "faded" 0.0;
+            target: "fade_clip";
+         }
+      }
+   }
+#endif
 
 /////////////////////////////////////////////////////////////////////////////
 /*** MOD: IBOX / IBAR ***/

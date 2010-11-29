@@ -11,6 +11,8 @@ struct _Status
    Eina_List     *frequencies;
    Eina_List     *governors;
    int            cur_frequency;
+   int            cur_min_frequency;
+   int            cur_max_frequency;
    int            can_set_frequency;
    char          *cur_governor;
    const char    *orig_governor;

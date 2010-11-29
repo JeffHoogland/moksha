@@ -644,6 +644,8 @@ _cpufreq_status_check_current(Status *s)
    FILE *f;
    int ret = 0;
    int frequency = 0;
+   int frequency_min = 0x7fffffff;
+   int frequency_max = 0;
    int freqtot = 0;
 #ifdef __FreeBSD__
    int len = 4;
@@ -677,6 +679,8 @@ _cpufreq_status_check_current(Status *s)
           fclose(f);
           
           frequency = atoi(buf);
+          if (frequency > frequency_max) frequency_max = frequency;
+          if (frequency < frequency_min) frequency_min = frequency;
           freqtot += frequency;
           s->active = 1;
         }
@@ -685,9 +689,14 @@ _cpufreq_status_check_current(Status *s)
     }
   if (i < 1) i = 1;
   frequency = freqtot / i;
-  if (frequency != s->cur_frequency)
-    ret = 1;
+  if (frequency != s->cur_frequency) ret = 1;
+  if (frequency_min != s->cur_min_frequency) ret = 1;
+  if (frequency_max != s->cur_max_frequency) ret = 1;
   s->cur_frequency = frequency;
+  s->cur_min_frequency = frequency_min;
+  s->cur_max_frequency = frequency_max;
+  
+//  printf("%i | %i %i\n", frequency, frequency_min, frequency_max);
   
   // FIXME: this sssumes all cores are on the same governor
    f = fopen("/sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed", "r");
@@ -761,10 +770,13 @@ _cpufreq_face_update_current(Instance *inst)
    Edje_Message_Int_Set *frequency_msg;
    Edje_Message_String governor_msg;
 
-   frequency_msg = malloc(sizeof(Edje_Message_Int_Set) + sizeof(int));
-   frequency_msg->count = 2;
+   frequency_msg = malloc(sizeof(Edje_Message_Int_Set) + (sizeof(int) * 4));
+   frequency_msg->count = 5;
    frequency_msg->val[0] = cpufreq_config->status->cur_frequency;
    frequency_msg->val[1] = cpufreq_config->status->can_set_frequency;
+   frequency_msg->val[2] = cpufreq_config->status->cur_min_frequency;
+   frequency_msg->val[3] = cpufreq_config->status->cur_max_frequency;
+   frequency_msg->val[4] = 0; // pad
    edje_object_message_send(inst->o_cpu, EDJE_MESSAGE_INT_SET, 3,
 			    frequency_msg);
    free(frequency_msg);
