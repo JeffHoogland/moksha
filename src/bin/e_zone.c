@@ -981,7 +981,10 @@ _e_zone_useful_geometry_calc(E_Zone *zone)
    y1 = zone->h;
    EINA_LIST_FOREACH(e_shelf_list(), l, shelf)
      {
+        E_Config_Shelf_Desk *sd;
 	E_Gadcon_Orient orient;
+        Eina_List *ll;
+        int skip_shelf = 0;
 
 	if (shelf->zone != zone)
 	  continue;
@@ -997,6 +1000,22 @@ _e_zone_useful_geometry_calc(E_Zone *zone)
 	  }
 	else
 	  orient = shelf->gadcon->orient;
+
+        if (shelf->cfg->desk_show_mode)
+          {
+             skip_shelf = 1;
+             EINA_LIST_FOREACH(shelf->cfg->desk_list, ll, sd)
+               {
+                  if (!sd) continue;
+                  if ((sd->x == zone->desk_x_current) && (sd->y == zone->desk_y_current))
+                    {
+                       skip_shelf = 0;
+                       break;
+                    }
+               }
+             if (skip_shelf)
+               continue;
+          }
 
 	switch (orient)
 	  {
@@ -1049,8 +1068,22 @@ e_zone_useful_geometry_get(E_Zone *zone, int *x, int *y, int *w, int *h)
 {
    E_OBJECT_CHECK(zone);
    E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
+   Eina_List *l;
+   E_Shelf *shelf;
 
-   if (zone->useful_geometry.dirty)
+   if (!zone->useful_geometry.dirty)
+     {
+        EINA_LIST_FOREACH(e_shelf_list(), l, shelf)
+          {
+             if (!shelf->cfg) continue;
+             if (shelf->cfg->desk_show_mode)
+               {
+                  _e_zone_useful_geometry_calc(zone);
+                  break;
+               }
+          }
+     }
+   else
      _e_zone_useful_geometry_calc(zone);
 
    if (x) *x = zone->useful_geometry.x;
