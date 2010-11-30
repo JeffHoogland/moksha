@@ -59,7 +59,7 @@ e_zone_shutdown(void)
 }
 
 static void
-_e_zone_black_get(E_Zone *zone)
+_e_zone_black_new(E_Zone *zone)
 {
    Evas_Object *o;
    char name[256];
@@ -67,7 +67,7 @@ _e_zone_black_get(E_Zone *zone)
    if (zone->black_ecore_evas) return;
    zone->black_ecore_evas = 
      e_canvas_new(e_config->evas_engine_zone, zone->container->win,
-                  zone->x, zone->y, zone->w, zone->h, 1, 1, &(zone->black_win));
+                  zone->x, zone->y, 1, 1, 1, 1, &(zone->black_win));
    e_canvas_add(zone->black_ecore_evas);
    ecore_evas_layer_set(zone->black_ecore_evas, 6);
    zone->black_evas = ecore_evas_get(zone->black_ecore_evas);
@@ -84,13 +84,37 @@ _e_zone_black_get(E_Zone *zone)
 }
 
 static void
-_e_zone_black_unget(E_Zone *zone)
+_e_zone_black_free(E_Zone *zone)
 {
    if (!zone->black_ecore_evas) return;
    e_canvas_del(zone->black_ecore_evas);
    ecore_evas_free(zone->black_ecore_evas);
    zone->black_ecore_evas = NULL;
    zone->black_win = 0;
+}
+
+static void
+_e_zone_black_get(E_Zone *zone)
+{
+   zone->black_need++;
+   if (!zone->black_ecore_evas) return;
+   if (zone->black_need == 1)
+     {
+       ecore_evas_move(zone->black_ecore_evas, zone->x, zone->y);
+       ecore_evas_resize(zone->black_ecore_evas, zone->w, zone->h);
+     }
+}
+
+static void
+_e_zone_black_unget(E_Zone *zone)
+{
+   zone->black_need--;
+   if (!zone->black_ecore_evas) return;
+   if (zone->black_need == 0)
+     {
+       ecore_evas_move(zone->black_ecore_evas, zone->x, zone->y);
+       ecore_evas_resize(zone->black_ecore_evas, 1, 1);
+     }
 }
 
 EAPI E_Zone *
@@ -172,6 +196,8 @@ e_zone_new(E_Container *con, int num, int id, int x, int y, int w, int h)
 			 e_config->zone_desks_y_count);
 
    e_object_del_attach_func_set(E_OBJECT(zone), _e_zone_object_del_attach);
+  
+   _e_zone_black_new(zone);
 
    ev = E_NEW(E_Event_Zone_Add, 1);
    ev->zone = zone;
@@ -215,6 +241,11 @@ e_zone_move(E_Zone *zone, int x, int y)
 
    _e_zone_edge_move_resize(zone);
    e_zone_bg_reconfigure(zone);
+   if (zone->black_need > 0)
+     {
+       ecore_evas_move(zone->black_ecore_evas, zone->x, zone->y);
+       ecore_evas_resize(zone->black_ecore_evas, zone->w, zone->h);
+     }
 }
 
 EAPI void
@@ -242,6 +273,11 @@ e_zone_resize(E_Zone *zone, int w, int h)
 
    _e_zone_edge_move_resize(zone);
    e_zone_bg_reconfigure(zone);
+   if (zone->black_need > 0)
+     {
+       ecore_evas_move(zone->black_ecore_evas, zone->x, zone->y);
+       ecore_evas_resize(zone->black_ecore_evas, zone->w, zone->h);
+     }
 }
 
 EAPI void
@@ -280,6 +316,11 @@ e_zone_move_resize(E_Zone *zone, int x, int y, int w, int h)
    _e_zone_edge_move_resize(zone);
 
    e_zone_bg_reconfigure(zone);
+   if (zone->black_need > 0)
+     {
+       ecore_evas_move(zone->black_ecore_evas, zone->x, zone->y);
+       ecore_evas_resize(zone->black_ecore_evas, zone->w, zone->h);
+     }
 } 
 
 EAPI void
@@ -1109,6 +1150,9 @@ _e_zone_free(E_Zone *zone)
 	  e_object_del(E_OBJECT(zone->desks[x + (y * zone->desk_x_count)]));
      }
    free(zone->desks);
+  
+   _e_zone_black_free(zone);
+  
    free(zone);
 }
 
