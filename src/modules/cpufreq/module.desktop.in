@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Link
-Name=Cpu freq
+Name=Cpufreq
 Name[cs]=Frekvence procesoru
 Name[eo]=Ĉeforgana ofteco
 Name[hu]=Processzor frekvencia
@@ -17,7 +17,7 @@ Comment[fr]=Permet le monitorage et le changement de fréquence du CPU.
 Comment[hu]=A processzor frekvenciáját felügyelő és beállító modul.
 Comment[it]=Modulo per il monitoraggio e la variazione della frequenza della CPU.
 Comment[ja]=
-Comment[pt]=Permite-lhe vigiar e alterar a frquência do CPU
+Comment[pt]=Permite-lhe vigiar e alterar a frequência do CPU
 Comment[pt_BR]=
 Comment[tr]=İşlemci frekansını değiştiren ve izleyen bir alet.
 Comment[zh_CN]=
