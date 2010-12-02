@@ -110,7 +110,7 @@ static void _ibar_inst_cb_drop(void *data, const char *type, void *event_info);
 static void _ibar_cb_drag_finished(E_Drag *data, int dropped);
 static void _ibar_drop_position_update(Instance *inst, Evas_Coord x, Evas_Coord y);
 static void _ibar_inst_cb_scroll(void *data);
-static Eina_Bool  _ibar_cb_config_icon_theme(void *data, int ev_type, void *ev);
+static Eina_Bool  _ibar_cb_config_icons(void *data, int ev_type, void *ev);
 
 static E_Config_DD *conf_edd = NULL;
 static E_Config_DD *conf_item_edd = NULL;
@@ -1264,7 +1264,11 @@ e_modapi_init(E_Module *m)
    ibar_config->handlers = 
      eina_list_append(ibar_config->handlers,
                       ecore_event_handler_add(E_EVENT_CONFIG_ICON_THEME, 
-                                              _ibar_cb_config_icon_theme, NULL));
+                                              _ibar_cb_config_icons, NULL));
+   ibar_config->handlers = 
+     eina_list_append(ibar_config->handlers,
+                      ecore_event_handler_add(EFREET_EVENT_ICON_CACHE_UPDATE,
+                                              _ibar_cb_config_icons, NULL));
 
    e_gadcon_provider_register(&_gadcon_class);
    return m;
@@ -1312,7 +1316,7 @@ e_modapi_save(E_Module *m __UNUSED__)
 }
 
 static Eina_Bool
-_ibar_cb_config_icon_theme(__UNUSED__ void *data, __UNUSED__ int ev_type, __UNUSED__ void *ev)
+_ibar_cb_config_icons(__UNUSED__ void *data, __UNUSED__ int ev_type, __UNUSED__ void *ev)
 {
    const Eina_List *l;
    Instance *inst;
