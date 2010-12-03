@@ -217,7 +217,7 @@ static Evas_Object *
 _gc_icon(E_Gadcon_Client_Class *client_class __UNUSED__, Evas *evas)
 {
    Evas_Object *o;
-   char buf[4096];
+   char buf[PATH_MAX];
 
    o = edje_object_add(evas);
    snprintf(buf, sizeof(buf), "%s/e-module-ibar.edj",
@@ -257,7 +257,7 @@ static IBar *
 _ibar_new(Evas *evas, Instance *inst)
 {
    IBar *b;
-   char buf[4096];
+   char buf[PATH_MAX];
 
    b = E_NEW(IBar, 1);
    inst->ibar = b;
@@ -969,7 +969,7 @@ _ibar_cb_drop_resize(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__
 }
 
 static void
-_ibar_cb_drag_finished(E_Drag *drag, int dropped)
+_ibar_cb_drag_finished(E_Drag *drag, int dropped __UNUSED__)
 {
    efreet_desktop_unref(drag->data);
 }
