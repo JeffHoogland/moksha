@@ -11,8 +11,7 @@ dnl m4_undefine([v_rev])
 m4_define([relname], [ver-pre-svn-08])
 m4_define([v_rel], [-release relname])
 ##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##
-m4_ifdef([v_rev], [m4_define([v_ver], [v_maj.v_min.v_mic.v_rev])],
-[m4_define([v_ver], [v_maj.v_min.v_mic])])
+m4_ifdef([v_rev], [m4_define([v_ver], [v_maj.v_min.v_mic.v_rev])], [m4_define([v_ver], [v_maj.v_min.v_mic])])
 m4_define([lt_rev], m4_eval(v_maj + v_min))
 m4_define([lt_cur], v_mic)
 m4_define([lt_age], v_min)
