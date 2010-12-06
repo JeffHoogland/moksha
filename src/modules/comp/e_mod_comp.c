@@ -535,6 +535,8 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
           {
              Evas_Native_Surface ns;
              
+             ns.version = EVAS_NATIVE_SURFACE_VERSION;
+             ns.type = EVAS_NATIVE_SURFACE_X11;
              ns.data.x11.visual = cw->vis;
              ns.data.x11.pixmap = cw->pixmap;
              evas_object_image_native_surface_set(cw->obj, &ns);
@@ -1438,6 +1440,8 @@ _e_mod_comp_win_mirror_add(E_Comp_Win *cw)
                {
                   Evas_Native_Surface ns;
                   
+                  ns.version = EVAS_NATIVE_SURFACE_VERSION;
+                  ns.type = EVAS_NATIVE_SURFACE_X11;
                   ns.data.x11.visual = cw->vis;
                   ns.data.x11.pixmap = cw->pixmap;
                   evas_object_image_size_set(o, w, h);
