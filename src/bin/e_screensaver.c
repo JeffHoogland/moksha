@@ -267,38 +267,38 @@ e_screensaver_shutdown(void)
 
    if (_e_screensaver_handler_border_unfullscreen)
      {
-        ecore_event_handler_del(_e_screensaver_handler_border_fullscreen);
-        _e_screensaver_handler_border_fullscreen = NULL;
+        ecore_event_handler_del(_e_screensaver_handler_border_unfullscreen);
+        _e_screensaver_handler_border_unfullscreen = NULL;
      }
 
    if (_e_screensaver_handler_border_remove)
      {
-        ecore_event_handler_del(_e_screensaver_handler_border_fullscreen);
-        _e_screensaver_handler_border_fullscreen = NULL;
+        ecore_event_handler_del(_e_screensaver_handler_border_remove);
+        _e_screensaver_handler_border_remove = NULL;
      }
 
    if (_e_screensaver_handler_border_iconify)
      {
-        ecore_event_handler_del(_e_screensaver_handler_border_fullscreen);
-        _e_screensaver_handler_border_fullscreen = NULL;
+        ecore_event_handler_del(_e_screensaver_handler_border_iconify);
+        _e_screensaver_handler_border_iconify = NULL;
      }
 
    if (_e_screensaver_handler_border_uniconify)
      {
-        ecore_event_handler_del(_e_screensaver_handler_border_fullscreen);
-        _e_screensaver_handler_border_fullscreen = NULL;
+        ecore_event_handler_del(_e_screensaver_handler_border_uniconify);
+        _e_screensaver_handler_border_uniconify = NULL;
      }
 
    if (_e_screensaver_handler_border_desk_set)
      {
-        ecore_event_handler_del(_e_screensaver_handler_border_fullscreen);
-        _e_screensaver_handler_border_fullscreen = NULL;
+        ecore_event_handler_del(_e_screensaver_handler_border_desk_set);
+        _e_screensaver_handler_border_desk_set = NULL;
      }
 
    if (_e_screensaver_handler_desk_show)
      {
-        ecore_event_handler_del(_e_screensaver_handler_border_fullscreen);
-        _e_screensaver_handler_border_fullscreen = NULL;
+        ecore_event_handler_del(_e_screensaver_handler_desk_show);
+        _e_screensaver_handler_desk_show = NULL;
      }
 
    return 1;
