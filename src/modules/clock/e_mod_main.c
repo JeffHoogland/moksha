@@ -9,8 +9,6 @@ static char *_gc_label(E_Gadcon_Client_Class *client_class);
 static Evas_Object *_gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas);
 static const char *_gc_id_new(E_Gadcon_Client_Class *client_class);
 
-static void _clock_cb_obj_moveresize(void *data, Evas *e, Evas_Object *obj, void *event_info);
-
 /* and actually define the gadcon class that this module provides (just 1) */
 static const E_Gadcon_Client_Class _gadcon_class =
 {
@@ -29,7 +27,6 @@ struct _Instance
 {
    E_Gadcon_Client *gcc;
    Evas_Object     *o_clock;
-   Evas_Object     *o_event;
 }; 
 
 static E_Module *clock_module = NULL;
@@ -47,20 +44,12 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    e_theme_edje_object_set(o, "base/theme/modules/clock",
 			   "e/modules/clock/main");
    evas_object_show(o);
-   inst->o_clock = o;
-   o = evas_object_rectangle_add(gc->evas);
-   evas_object_color_set(o, 0, 0, 0, 0);
-   inst->o_event = o;
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOVE,
-				  _clock_cb_obj_moveresize, inst);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_RESIZE,
-				  _clock_cb_obj_moveresize, inst);
-   evas_object_show(o);
    
    gcc = e_gadcon_client_new(gc, name, id, style, o);
    gcc->data = inst;
    
    inst->gcc = gcc;
+   inst->o_clock = o;
    
    e_gadcon_client_util_menu_attach(gcc);
    
@@ -74,7 +63,6 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    
    inst = gcc->data;
    evas_object_del(inst->o_clock);
-   evas_object_del(inst->o_event);
    free(inst);
 }
 
@@ -147,16 +135,4 @@ EAPI int
 e_modapi_save(E_Module *m __UNUSED__)
 {
    return 1;
-}
-
-static void
-_clock_cb_obj_moveresize(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
-{
-   Evas_Coord x, y, w, h;
-   Instance *inst;
-
-   inst = data;
-   evas_object_geometry_get(inst->o_event, &x, &y, &w, &h);
-   evas_object_move(inst->o_clock, x, y);
-   evas_object_resize(inst->o_clock, w, h);
 }
