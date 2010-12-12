@@ -260,7 +260,7 @@ _e_configure_efreet_desktop_cleanup(void)
    Eina_List *l;
    E_Configure_Cat *ecat;
 
-   printf("cleanup\n");
+//   printf("_e_configure_efreet_desktop_cleanup\n");
    /* remove anything with a desktop entry */
    EINA_LIST_FOREACH(e_configure_registry, l, ecat)
      {
