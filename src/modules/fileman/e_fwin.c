@@ -277,10 +277,10 @@ e_fwin_all_unsel(void *data)
 void 
 e_fwin_zone_shutdown(E_Zone *zone) 
 {
-   Eina_List *f;
+   Eina_List *f, *fn;
    E_Fwin *win;
 
-   EINA_LIST_FOREACH(fwins, f, win)
+   EINA_LIST_FOREACH_SAFE(fwins, f, fn, win)
      {
 	if (win->zone != zone) continue;
 	e_object_del(E_OBJECT(win));
