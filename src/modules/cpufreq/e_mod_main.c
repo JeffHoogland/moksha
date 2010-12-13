@@ -713,16 +713,20 @@ _cpufreq_status_check_current(Status *s)
    f = fopen("/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor", "r");
    if (f)
      {
+        char *p;
+        
+        buf[0] = 0;
 	fgets(buf, sizeof(buf), f);
 	buf[sizeof(buf) - 1] = 0;
 	fclose(f);
+        for (p = buf; (*p != 0) && (isalnum(*p)); p++);
+        *p = 0;
 
 	if ((!s->cur_governor) || (strcmp(buf, s->cur_governor)))
 	  {
 	     ret = 1;
 
-	     if (s->cur_governor)
-	       free(s->cur_governor);
+	     if (s->cur_governor) free(s->cur_governor);
 	     s->cur_governor = strdup(buf);
 
 	     for (i = strlen(s->cur_governor) - 1; i >= 0; i--)
