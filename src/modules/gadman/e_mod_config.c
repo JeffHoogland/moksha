@@ -333,7 +333,7 @@ _cb_add(void *data, void *data2 __UNUSED__)
         if (!cc) continue;
 
         gcc = gadman_gadget_add(cc, GADMAN_LAYER_BG);
-        gadman_gadget_edit_start(gcc);
+        if (gcc) gadman_gadget_edit_start(gcc);
      }
 
    if (l) eina_list_free(l);
