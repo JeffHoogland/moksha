@@ -585,7 +585,7 @@ _cb_up(void *data, void *data2 __UNUSED__)
 
              ll = l->prev;
              cfdata->apps = eina_list_remove_list(cfdata->apps, l);
-             cfdata->apps = eina_list_prepend_relative(cfdata->apps, desk, ll);
+             cfdata->apps = eina_list_prepend_relative_list(cfdata->apps, desk, ll);
 
              e_widget_ilist_remove_num(cfdata->o_order, sel);
              e_widget_ilist_go(cfdata->o_order);
@@ -632,7 +632,7 @@ _cb_down(void *data, void *data2 __UNUSED__)
 
              ll = l->next;
              cfdata->apps = eina_list_remove_list(cfdata->apps, l);
-             cfdata->apps = eina_list_append_relative(cfdata->apps, desk, ll);
+             cfdata->apps = eina_list_append_relative_list(cfdata->apps, desk, ll);
 
              e_widget_ilist_remove_num(cfdata->o_order, sel);
              e_widget_ilist_go(cfdata->o_order);
