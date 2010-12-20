@@ -586,17 +586,15 @@ _cb_up(void *data, void *data2 __UNUSED__)
              ll = l->prev;
              cfdata->apps = eina_list_remove_list(cfdata->apps, l);
              cfdata->apps = eina_list_prepend_relative(cfdata->apps, desk, ll);
-          }
-        else
-           cfdata->apps = eina_list_promote_list(cfdata->apps, l);
 
-        e_widget_ilist_remove_num(cfdata->o_order, sel);
-        e_widget_ilist_go(cfdata->o_order);
-        icon = e_util_desktop_icon_add(desk, 24, evas);
-        e_widget_ilist_prepend_relative(cfdata->o_order, icon, desk->name, 
-                                        _cb_order_list_selected, cfdata, 
-                                        NULL, (sel - 1));
-        e_widget_ilist_selected_set(cfdata->o_order, (sel - 1));
+             e_widget_ilist_remove_num(cfdata->o_order, sel);
+             e_widget_ilist_go(cfdata->o_order);
+             icon = e_util_desktop_icon_add(desk, 24, evas);
+             e_widget_ilist_prepend_relative(cfdata->o_order, icon, desk->name, 
+                                             _cb_order_list_selected, cfdata, 
+                                             NULL, (sel - 1));
+             e_widget_ilist_selected_set(cfdata->o_order, (sel - 1));
+          }
      }
 
    e_widget_ilist_go(cfdata->o_order);
@@ -635,18 +633,15 @@ _cb_down(void *data, void *data2 __UNUSED__)
              ll = l->next;
              cfdata->apps = eina_list_remove_list(cfdata->apps, l);
              cfdata->apps = eina_list_append_relative(cfdata->apps, desk, ll);
+
+             e_widget_ilist_remove_num(cfdata->o_order, sel);
+             e_widget_ilist_go(cfdata->o_order);
+             icon = e_util_desktop_icon_add(desk, 24, evas);
+             e_widget_ilist_append_relative(cfdata->o_order, icon, desk->name, 
+                                            _cb_order_list_selected, cfdata, 
+                                            NULL, sel);
+             e_widget_ilist_selected_set(cfdata->o_order, (sel + 1));
           }
-        else
-           cfdata->apps = eina_list_demote_list(cfdata->apps, l);
-
-
-        e_widget_ilist_remove_num(cfdata->o_order, sel);
-        e_widget_ilist_go(cfdata->o_order);
-        icon = e_util_desktop_icon_add(desk, 24, evas);
-        e_widget_ilist_append_relative(cfdata->o_order, icon, desk->name, 
-                                       _cb_order_list_selected, cfdata, 
-                                       NULL, sel);
-        e_widget_ilist_selected_set(cfdata->o_order, (sel + 1));
      }
 
    e_widget_ilist_go(cfdata->o_order);
