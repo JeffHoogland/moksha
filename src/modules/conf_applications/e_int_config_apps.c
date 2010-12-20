@@ -29,6 +29,8 @@ static void _fill_order_list(E_Config_Dialog_Data *cfdata);
 static void _cb_apps_list_selected(void *data);
 static void _cb_order_list_selected(void *data);
 static int _cb_desks_sort(const void *data1, const void *data2);
+static int _cb_desks_name(const void *data1, const void *data2) ;
+static int _cb_desks_sort(const void *data1, const void *data2);
 static void _cb_add(void *data, void *data2 __UNUSED__);
 static void _cb_del(void *data, void *data2 __UNUSED__);
 static void _cb_up(void *data, void *data2 __UNUSED__);
@@ -448,15 +450,11 @@ _cb_apps_list_selected(void *data)
    if (!(cfdata = data)) return;
    EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->o_list), l, it)
      {
-        Efreet_Desktop *desk;
-
         if ((!it->selected) || (it->header)) continue;
-        if (!(desk = efreet_util_desktop_name_find(it->label))) continue;
-        if (eina_list_search_unsorted(cfdata->apps, _cb_desks_sort, desk))
+        if (eina_list_search_unsorted(cfdata->apps, _cb_desks_name, it->label))
           enabled++;
         else
           disabled++;
-        efreet_desktop_free(desk);
      }
    e_widget_disabled_set(cfdata->o_add, !disabled);
    e_widget_disabled_set(cfdata->o_del, !enabled);
@@ -542,18 +540,15 @@ _cb_del(void *data, void *data2 __UNUSED__)
         Efreet_Desktop *desk;
 
         if ((!it->selected) || (it->header)) continue;
-        if (!(desk = efreet_util_desktop_name_find(it->label))) continue;
-        if (eina_list_search_unsorted(cfdata->apps, _cb_desks_sort, desk))
+        if ((desk = eina_list_search_unsorted(cfdata->apps, _cb_desks_name, it->label)))
           {
              Evas_Object *end;
 
              end = e_widget_ilist_item_end_get(it);
              if (end) edje_object_signal_emit(end, "e,state,unchecked", "e");
-             efreet_desktop_unref(desk);
              cfdata->apps = eina_list_remove(cfdata->apps, desk);
+             efreet_desktop_unref(desk);
           }
-        else 
-          efreet_desktop_free(desk);
      }
    e_widget_ilist_unselect(cfdata->o_list);
    e_widget_disabled_set(cfdata->o_add, EINA_TRUE);
@@ -578,7 +573,7 @@ _cb_up(void *data, void *data2 __UNUSED__)
 
    sel = e_widget_ilist_selected_get(cfdata->o_order);
    lbl = e_widget_ilist_selected_label_get(cfdata->o_order);
-   if ((desk = efreet_util_desktop_name_find(lbl)))
+   if ((desk = eina_list_search_unsorted(cfdata->apps, _cb_desks_name, lbl)))
      {
         Evas_Object *icon = NULL;
 
@@ -589,7 +584,6 @@ _cb_up(void *data, void *data2 __UNUSED__)
                                         _cb_order_list_selected, cfdata, 
                                         NULL, (sel - 1));
         e_widget_ilist_selected_set(cfdata->o_order, (sel - 1));
-        efreet_desktop_free(desk);
      }
 
    e_widget_ilist_go(cfdata->o_order);
@@ -615,7 +609,7 @@ _cb_down(void *data, void *data2 __UNUSED__)
 
    sel = e_widget_ilist_selected_get(cfdata->o_order);
    lbl = e_widget_ilist_selected_label_get(cfdata->o_order);
-   if ((desk = efreet_util_desktop_name_find(lbl)))
+   if ((desk = eina_list_search_unsorted(cfdata->apps, _cb_desks_name, lbl)))
      {
         Evas_Object *icon = NULL;
 
@@ -626,7 +620,6 @@ _cb_down(void *data, void *data2 __UNUSED__)
                                        _cb_order_list_selected, cfdata, 
                                        NULL, sel);
         e_widget_ilist_selected_set(cfdata->o_order, (sel + 1));
-        efreet_desktop_free(desk);
      }
 
    e_widget_ilist_go(cfdata->o_order);
