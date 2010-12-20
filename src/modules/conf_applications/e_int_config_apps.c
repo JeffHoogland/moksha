@@ -468,7 +468,7 @@ _cb_order_list_selected(void *data)
 
    if (!(cfdata = data)) return;
    sel = e_widget_ilist_selected_get(cfdata->o_order);
-   count = e_widget_ilist_count(cfdata->o_order);
+   count = eina_list_count(cfdata->apps);
    e_widget_disabled_set(cfdata->o_up, (sel == 0));
    e_widget_disabled_set(cfdata->o_down, !(sel < (count - 1)));
 }
