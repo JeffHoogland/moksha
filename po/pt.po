@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: e17\n"
 "Report-Msgid-Bugs-To: http://trac.enlightenment.org/e/\n"
 "POT-Creation-Date: 2010-12-13 05:02-0800\n"
-"PO-Revision-Date: 2010-12-13 13:34-0000\n"
+"PO-Revision-Date: 2010-12-20 15:11-0000\n"
 "Last-Translator: Sérgio Marques <smarquespt@gmail.com>\n"
 "Language-Team: Portuguese <>\n"
 "MIME-Version: 1.0\n"
@@ -67,7 +67,7 @@ msgstr "Está prestes a fechar %s.<br><br>Tenha em conta que todos os dados dest
 
 #: ../src/bin/e_actions.c:378
 msgid "Are you sure you want to kill this window?"
-msgstr "Tem a certeza que quer sair desta janela?"
+msgstr "Tem a certeza que quer fechar esta janela?"
 
 #: ../src/bin/e_actions.c:381
 #: ../src/bin/e_actions.c:1837
@@ -561,7 +561,7 @@ msgstr "Recuar o rato 1 ecrã"
 
 #: ../src/bin/e_actions.c:2837
 msgid "Send Mouse Forward/Back Screens..."
-msgstr "Recuar/avançar o rato nos ecrãs"
+msgstr "Recuar/avançar o rato nos ecrãs..."
 
 #: ../src/bin/e_actions.c:2875
 #: ../src/bin/e_actions.c:2877
@@ -811,22 +811,22 @@ msgstr "Ocorreu um erro ao tentar gravar as definições do Enlightenment<br>par
 #: ../src/bin/e_config.c:2036
 #, c-format
 msgid "Enlightenment's settings files are too big<br>for the file system they are being saved to.<br>This error is very strange as the files should<br>be extremely small. Please check the settings<br>for your home directory.<br><br>The file where the error occurred was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
-msgstr "O ficheiro das definições do Enlightenment são muito grandes<br>para o tamanho do sistema onde estão a ser gravados.<br>Este erro é muito estranho pois os ficheiros são<br>extremamente pequenos. Por favor, verifique as definições<br>da sua pasta pessoal.<br><br>O erro ocorreu no ficheiro:<br>%s<br><br>Este ficheiro foi apagado para evitar a danificação dos dados.<br>"
+msgstr "Os ficheiros das definições do Enlightenment são muito grandes<br>para o sistema onde estão a ser gravados.<br>Este erro é muito estranho pois os ficheiros são<br>extremamente pequenos. Por favor, verifique as definições<br>da sua pasta pessoal.<br><br>O erro ocorreu no ficheiro:<br>%s<br><br>Este ficheiro foi apagado para evitar a danificação dos dados.<br>"
 
 #: ../src/bin/e_config.c:2049
 #, c-format
 msgid "An output error occurred when writing the settings<br>files for Enlightenment. Your disk is having troubles<br>and possibly needs replacement.<br><br>The file where the error occurred was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
-msgstr "Ocorreu um erro ao escrever o ficheiro das definições<br>do Enlightenment. O seu disco possui problemas e<br>é possível que necessite de ser substituído.<br><br>O erro ocorreu no ficheiro:<br>%s<br><br>Este ficheiro foi apagado para evitar a danificação dos dados.<br>"
+msgstr "Ocorreu um erro ao escrever os ficheiros das definições<br>do Enlightenment. O seu disco possui problemas e<br>é possível que necessite de ser substituído.<br><br>O erro ocorreu no ficheiro:<br>%s<br><br>Este ficheiro foi apagado para evitar a danificação dos dados.<br>"
 
 #: ../src/bin/e_config.c:2060
 #, c-format
 msgid "Enlightenment cannot write its settings file<br>because it ran out of space to write the file.<br>You have either run out of disk space or have<br>gone over your quota limit.<br><br>The file where the error occurred was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
-msgstr "O Enlightenment não conseguiu escrever o ficheiro de definições<br>porque o espaço em disco é insuficiente.<br>Das duas uma, ou não tem espaço em disco<br>ou excedeu o limite da sua cota.<br><br>O erro ocorreu no ficheiro:<br>%s<br><br>Este ficheiro foi apagado para evitar a danificação dos dados.<br>"
+msgstr "O Enlightenment não conseguiu escrever os ficheiros de definições<br>porque o espaço em disco é insuficiente.<br>Das duas uma, ou não tem espaço em disco<br>ou excedeu o limite da sua cota.<br><br>O erro ocorreu no ficheiro:<br>%s<br><br>Este ficheiro foi apagado para evitar a danificação dos dados.<br>"
 
 #: ../src/bin/e_config.c:2072
 #, c-format
 msgid "Enlightenment unexpectedly had the settings file<br>it was writing closed on it. This is very unusual.<br><br>The file where the error occurred was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
-msgstr "O Enlightenment terminou abruptamente<br>ao escrever o ficheiro de definições. Isto é muito estranho.<br><br>O erro ocorreu no ficheiro:<br>%s<br><br>Este ficheiro foi apagado para evitar a danificação dos dados.<br>"
+msgstr "O Enlightenment terminou abruptamente<br>ao escrever os ficheiros de definições. Isto é muito estranho.<br><br>O erro ocorreu no ficheiro:<br>%s<br><br>Este ficheiro foi apagado para evitar a danificação dos dados.<br>"
 
 #: ../src/bin/e_config.c:2097
 msgid "Enlightenment Settings Write Problems"
@@ -893,7 +893,7 @@ msgstr "Falha ao bloquear"
 
 #: ../src/bin/e_desklock.c:235
 msgid "Locking the desktop failed because some application<br>has grabbed either the keyboard or the mouse or both<br>and their grab is unable to be broken."
-msgstr "O bloqueio da área de trabalho falhou pois alguma aplicação<br>apoderou-se do teclado, do rato ou de ambos e<br>essa posse não pode ser quebrada."
+msgstr "O bloqueio da área de trabalho falhou pois uma aplicação<br>apoderou-se do teclado, do rato ou de ambos e<br>essa posse não pode ser quebrada."
 
 #: ../src/bin/e_desklock.c:320
 msgid "Please enter your unlock password"
@@ -906,7 +906,7 @@ msgstr "Erro de autenticação"
 #: ../src/bin/e_desklock.c:660
 #, c-format
 msgid "Authentication via PAM had errors setting up the<br>authentication session. The error code was <hilight>%i</hilight>.<br>This is bad and should not be happening. Please report this bug."
-msgstr "Ocorreram erros durante a autenticação da sessão<br>através de PAM. O código do erro foi <hilight>%i</hilight>.<br>Isto é mau enão deveria acontecer. Por favor, reporte este erro."
+msgstr "Ocorreram erros durante a autenticação da sessão<br>através de PAM. O código do erro foi <hilight>%i</hilight>.<br>Isto é mau e não deveria acontecer. Por favor, reporte este erro."
 
 #: ../src/bin/e_desklock.c:988
 #: ../src/bin/e_screensaver.c:132
@@ -933,7 +933,7 @@ msgstr "Propriedades da janela incompleta"
 
 #: ../src/bin/e_eap_editor.c:175
 msgid "The window you are creating an icon for<br>does not contain window name and class<br>properties, so the needed properties for<br>the icon so that it will be used for this<br>window cannot be guessed. You will need to<br>use the window title instead. This will only<br>work if the window title is the same at<br>the time the window starts up, and does not<br>change."
-msgstr "A janela para a qual está a criar um ícone<br>não contém o nome da janela nem<br>as propriedades da classe. Assim as propriedades para<br>o ícone a utilizar para esta<br>janela não pode ser adivinhadas. Precisa de utilizar<br>o título da janela. Isto só vai<br>funcionar se o título da janela for o mesmo<br>no momento em que a janela é iniciada e não for<br>alterado."
+msgstr "A janela para a qual está a criar um ícone<br>não contém o nome da janela nem<br>as propriedades da classe. Assim, as propriedades para<br>o ícone a utilizar nesta<br>janela não podem ser adivinhadas. Precisa de utilizar<br>o título da janela. Isto só vai<br>funcionar se o título da janela for o mesmo<br>no momento em que a janela é iniciada e não for<br>alterado."
 
 #: ../src/bin/e_eap_editor.c:230
 msgid "Desktop Entry Editor"
@@ -1092,7 +1092,7 @@ msgstr "%s terminou inesperadamente."
 #: ../src/bin/e_exec.c:476
 #, c-format
 msgid "An exit code of %i was returned from %s."
-msgstr "Um código saída %i foi indicado por %s."
+msgstr "O código de saída %i foi indicado por %s."
 
 #: ../src/bin/e_exec.c:484
 #, c-format
@@ -1243,7 +1243,7 @@ msgstr "Abortar"
 #: ../src/bin/e_fm.c:7752
 #: ../src/bin/e_fm.c:7912
 msgid "Inherit parent settings"
-msgstr "Herdar definições do processo principal"
+msgstr "Herdar definições da principal"
 
 #: ../src/bin/e_fm.c:7761
 #: ../src/bin/e_fm.c:7921
@@ -1458,7 +1458,7 @@ msgstr "%llu B"
 #: ../src/bin/e_fm_device.c:216
 #, c-format
 msgid "Unknown Volume"
-msgstr "Volume desconhecido"
+msgstr "Desconhecido"
 
 #: ../src/bin/e_fm_device.c:313
 msgid "Removable Device"
@@ -1624,7 +1624,7 @@ msgstr "Bloquear esta janela de modo a que apenas faça o que eu quiser"
 
 #: ../src/bin/e_int_border_locks.c:285
 msgid "Protect this window from me accidentally changing it"
-msgstr "Proteger esta janela de eventuais alterações acidentais"
+msgstr "Proteger esta janela de possíveis alterações acidentais"
 
 #: ../src/bin/e_int_border_locks.c:287
 msgid "Protect this window from being accidentally closed because it is important"
@@ -2215,6 +2215,7 @@ msgstr "Disposição"
 msgid "Input Method Error"
 msgstr "Método de introdução"
 
+# Ultima linha revista
 #: ../src/bin/e_intl.c:360
 msgid "Error starting the input method executable<br><br>please make sure that your input<br>method configuration is correct and<br>that your configuration's<br>executable is in your PATH<br>"
 msgstr "Ocorreu um erro ao iniciar o executável do método de entrada.<br><br>Por favor, certifique-se que o método<br>de entrada está bem configurado e<br>que o executável<br>está no seu PATH<br>"
@@ -7156,7 +7157,7 @@ msgstr "Atenção"
 
 #: ../src/modules/pager/e_mod_config.c:427
 msgid "You cannot use the right mouse button in the<br>shelf for this as it is already taken by internal<br>code for context menus.<br>This button only works in the popup."
-msgstr "Não pode utilizar o botão direito do rato neste<br>painel pois este já é objeto de manipulação pelos<br>menus de contexto.<br>Este botão só funciona para os alertas."
+msgstr "Não pode utilizar o botão direito do rato neste<br>painel pois este já é objeto de manipulação pelos<br>menus de contexto.<br>Este botão só funciona nos alertas."
 
 #: ../src/modules/pager/e_mod_main.c:2807
 msgid "Show Pager Popup"
@@ -7222,7 +7223,7 @@ msgstr "Fahrenheit"
 
 #: ../src/modules/temperature/e_mod_config.c:206
 msgid "Display Units"
-msgstr "Exibir unidades"
+msgstr "Unidades de exibição"
 
 #: ../src/modules/temperature/e_mod_config.c:213
 msgid "Check Interval"
