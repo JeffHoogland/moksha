@@ -126,6 +126,7 @@ gadman_shutdown(void)
         //ecore_evas_free(Man->top_ee);
      }
    free(Man);
+   Man = NULL;
 }
 
 void
