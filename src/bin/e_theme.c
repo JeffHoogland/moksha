@@ -462,9 +462,43 @@ EAPI void
 e_theme_handler_set(Evas_Object *obj __UNUSED__, const char *path, void *data __UNUSED__)
 {
    E_Action *a;
+   char buf[PATH_MAX];
+   int copy = 1;
 
    if (!path) return;
-   e_theme_config_set("theme", path);
+
+   /* if not in system dir or user dir, copy to user dir */
+   e_prefix_data_concat_static(buf, "data/themes");
+   if (!strncmp(buf, path, strlen(buf)))
+      copy = 0;
+   if (copy)
+     {
+        e_user_dir_concat_static(buf, "themes");
+        if (!strncmp(buf, path, strlen(buf)))
+           copy = 0;
+     }
+   if (copy)
+     {
+        const char *file;
+        char *name;
+
+        file = ecore_file_file_get(path);
+        name = ecore_file_strip_ext(file);
+
+        e_user_dir_snprintf(buf, sizeof(buf), "themes/%s-%f.edj", name, ecore_time_unix_get());
+        free(name);
+
+        if (!ecore_file_exists(buf))
+          {
+             ecore_file_cp(path, buf);
+             e_theme_config_set("theme", buf);
+          }
+        else
+           e_theme_config_set("theme", path);
+     }
+   else
+      e_theme_config_set("theme", path);
+
    e_config_save_queue();
    a = e_action_find("restart");
    if ((a) && (a->func.go)) a->func.go(NULL, NULL);
