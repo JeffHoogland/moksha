@@ -136,6 +136,8 @@ struct _E_Fm2_Smart_Data
    } selrect;
 
    E_Fm2_Icon *iop_icon;
+
+   Eina_List  *event_handlers;
 };
 
 struct _E_Fm2_Region
@@ -297,6 +299,7 @@ static void          _e_fm2_cb_resize_job(void *data);
 static int           _e_fm2_cb_icon_sort(const void *data1, const void *data2);
 static Eina_Bool     _e_fm2_cb_scan_timer(void *data);
 static Eina_Bool     _e_fm2_cb_sort_idler(void *data);
+static Eina_Bool     _e_fm2_cb_theme(void *data, int type, void *event);
 
 static void          _e_fm2_obj_icons_place(E_Fm2_Smart_Data *sd);
 
@@ -7433,6 +7436,13 @@ _e_fm2_cb_sort_idler(void *data)
    return ECORE_CALLBACK_RENEW;
 }
 
+static Eina_Bool
+_e_fm2_cb_theme(void *data, int type, void *event)
+{
+   e_fm2_refresh(data);
+   return ECORE_CALLBACK_RENEW;
+}
+
 /**************************/
 static void
 _e_fm2_obj_icons_place(E_Fm2_Smart_Data *sd)
@@ -7532,6 +7542,13 @@ _e_fm2_smart_add(Evas_Object *obj)
    evas_object_smart_data_set(obj, sd);
    evas_object_move(obj, 0, 0);
    evas_object_resize(obj, 0, 0);
+
+   sd->event_handlers = eina_list_append(sd->event_handlers,
+                                         ecore_event_handler_add(E_EVENT_CONFIG_ICON_THEME,
+                                                                 _e_fm2_cb_theme,
+                                                                 sd->obj));
+
+
    _e_fm2_list = eina_list_append(_e_fm2_list, sd->obj);
 }
 
@@ -7539,9 +7556,13 @@ static void
 _e_fm2_smart_del(Evas_Object *obj)
 {
    E_Fm2_Smart_Data *sd;
+   Ecore_Event_Handler *hdl;
 
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
+
+   EINA_LIST_FREE(sd->event_handlers, hdl)
+      ecore_event_handler_del(hdl);
 
    _e_fm2_client_monitor_list_end(obj);
    if (sd->realpath) _e_fm2_client_monitor_del(sd->id, sd->realpath);
