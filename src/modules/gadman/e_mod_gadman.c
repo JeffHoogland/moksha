@@ -186,6 +186,7 @@ gadman_gadget_place(E_Config_Gadcon_Client *cf, Gadman_Layer_Type layer, E_Zone 
    /* init Gadcon_Client */
    gcc = cc->func.init(gc, cf->name, cf->id, cc->default_style);
    if (!gcc) return NULL;
+   e_object_del_func_set(E_OBJECT(gcc), E_OBJECT_CLEANUP_FUNC(gadman_gadget_del));
    gcc->cf = cf;
    gcc->client_class = cc;
 
