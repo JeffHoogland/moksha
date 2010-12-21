@@ -113,7 +113,6 @@ gadman_shutdown(void)
 	     if (gc->config_dialog) e_object_del(E_OBJECT(gc->config_dialog));
 	  }
 
-	eina_list_free(Man->gadgets[layer]);
 	evas_object_del(Man->movers[layer]);
      }
 
