@@ -637,14 +637,48 @@ e_bg_handler_set(Evas_Object *obj __UNUSED__, const char *path, void *data __UNU
 
    if (_e_bg_file_edje_check(path))
      {
+        char buf[PATH_MAX];
+        int copy = 1;
+
 	E_Container *con = e_container_current_get(e_manager_current_get());
 	E_Zone *zone = e_zone_current_get(con);
 	E_Desk *desk = e_desk_current_get(zone);
 
-	e_bg_add(con->num, zone->num, desk->x, desk->y, path);
-	e_bg_update();
-	e_config_save_queue();
-	return;
+        /* if not in system dir or user dir, copy to user dir */
+        e_prefix_data_concat_static(buf, "data/backgrounds");
+        if (!strncmp(buf, path, strlen(buf)))
+           copy = 0;
+        if (copy)
+          {
+             e_user_dir_concat_static(buf, "backgrounds");
+             if (!strncmp(buf, path, strlen(buf)))
+                copy = 0;
+          }
+        if (copy)
+          {
+             const char *file;
+             char *name;
+
+             file = ecore_file_file_get(path);
+             name = ecore_file_strip_ext(file);
+
+             e_user_dir_snprintf(buf, sizeof(buf), "backgrounds/%s-%f.edj", name, ecore_time_unix_get());
+             free(name);
+
+             if (!ecore_file_exists(buf))
+               {
+                  ecore_file_cp(path, buf);
+                  e_bg_add(con->num, zone->num, desk->x, desk->y, buf);
+               }
+             else
+                e_bg_add(con->num, zone->num, desk->x, desk->y, path);
+          }
+        else
+           e_bg_add(con->num, zone->num, desk->x, desk->y, path);
+
+        e_bg_update();
+        e_config_save_queue();
+        return;
      }
 
    e_bg_image_import(path, _e_bg_handler_image_imported, NULL);
