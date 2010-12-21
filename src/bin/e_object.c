@@ -31,9 +31,9 @@ e_object_del(E_Object *obj)
 {
    E_OBJECT_CHECK(obj);
    if (obj->deleted) return;
+   obj->deleted = 1;
    if (obj->del_att_func) obj->del_att_func(obj);
    if (obj->del_func) obj->del_func(obj);
-   obj->deleted = 1;
    e_object_unref(obj);
 }
 
