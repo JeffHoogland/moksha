@@ -1116,6 +1116,8 @@ _e_mod_comp_object_del(void *data, void *obj)
 {
    E_Comp_Win *cw = data;
 
+   if (!cw) return;
+
    _e_mod_comp_win_render_queue(cw);
    if (obj == cw->bd)
      {
@@ -1131,7 +1133,7 @@ _e_mod_comp_object_del(void *data, void *obj)
                }
              ecore_x_sync_counter_inc(cw->counter, 1);
           }
-        eina_hash_del(borders, e_util_winid_str_get(cw->bd->client.win), cw);
+        if (cw->bd) eina_hash_del(borders, e_util_winid_str_get(cw->bd->client.win), cw);
         cw->bd = NULL;
         evas_object_data_del(cw->shobj, "border");
 // hmm - lockup?
