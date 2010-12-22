@@ -1620,7 +1620,7 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page, Eina_List *files, int always)
 			 {
 			    if (fwin->win)
 			      fwin2 = _e_fwin_new(fwin->win->container, NULL, buf);
-			    else
+			    else if (fwin->zone)
 			      fwin2 = _e_fwin_new(fwin->zone->container, NULL, buf);
 			 }
 		       else 
