@@ -1075,25 +1075,25 @@ _e_zone_useful_geometry_calc(E_Zone *zone)
              if (shelf->cfg->autohide)
                continue;
              orient = shelf->cfg->orient;
+
+             if (shelf->cfg->desk_show_mode)
+               {
+                  skip_shelf = 1;
+                  EINA_LIST_FOREACH(shelf->cfg->desk_list, ll, sd)
+                    {
+                       if (!sd) continue;
+                       if ((sd->x == zone->desk_x_current) && (sd->y == zone->desk_y_current))
+                         {
+                            skip_shelf = 0;
+                            break;
+                         }
+                    }
+                  if (skip_shelf)
+                    continue;
+               }
           }
         else
           orient = shelf->gadcon->orient;
-
-        if (shelf->cfg->desk_show_mode)
-          {
-             skip_shelf = 1;
-             EINA_LIST_FOREACH(shelf->cfg->desk_list, ll, sd)
-               {
-                  if (!sd) continue;
-                  if ((sd->x == zone->desk_x_current) && (sd->y == zone->desk_y_current))
-                    {
-                       skip_shelf = 0;
-                       break;
-                    }
-               }
-             if (skip_shelf)
-               continue;
-          }
 
         switch (orient)
           {
