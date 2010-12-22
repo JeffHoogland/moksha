@@ -1001,7 +1001,7 @@ _e_fwin_toolbar_resize(E_Fwin_Page *page)
 	 th = h - offset;
 	 ty = offset;
 
-	 x = (tx + tw);
+	 x = tw;
 	 y = offset;
 	 w = (w - tw);
 	 break;
