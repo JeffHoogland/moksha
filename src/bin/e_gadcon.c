@@ -4331,7 +4331,7 @@ _e_gadcon_layout_smart_gadcons_position(E_Smart_Data *sd, Eina_List **list)
      {
 	lc_moving->state = E_LAYOUT_ITEM_CONTAINER_STATE_POS_LOCKED;
 	_e_gadcon_layout_smart_gadcons_position_static(sd, list);
-	LC_FREE(lc_back);
+	if (lc_back) LC_FREE(lc_back);
      }
    else if (lc_moving->state == E_LAYOUT_ITEM_CONTAINER_STATE_SIZE_MAX_END_INC)
      {
@@ -4396,7 +4396,7 @@ _e_gadcon_layout_smart_gadcons_position(E_Smart_Data *sd, Eina_List **list)
      {
 	lc_moving->state = E_LAYOUT_ITEM_CONTAINER_STATE_POS_LOCKED;
 	_e_gadcon_layout_smart_gadcons_position_static(sd, list);
-	LC_FREE(lc_back);
+	if (lc_back) LC_FREE(lc_back);
      }
 
    if (bi_moving)
