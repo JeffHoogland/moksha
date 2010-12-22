@@ -4545,33 +4545,37 @@ _e_border_cb_window_configure_request(void *data  __UNUSED__,
       */
 
                        if (bd->zone)
-                         e_zone_useful_geometry_get(bd->zone, &zx, &zy, &zw, &zh);
-
-                       if (e_config->geometry_auto_resize_limit == 1)
                          {
-                            if (w > zw)
-                              w = zw;
+                            e_zone_useful_geometry_get(bd->zone, &zx, &zy, &zw, &zh);
 
-                            if (h > zh)
-                              h = zh;
+                            if (e_config->geometry_auto_resize_limit == 1)
+                              {
+                                 if (w > zw)
+                                   w = zw;
+
+                                 if (h > zh)
+                                   h = zh;
+                              }
                          }
-
                        e_border_resize(bd, w, h);
 
                        if (e_config->geometry_auto_move == 1)
                          {
-     // move window horizontal if resize to not useful geometry
-                             if (bd->x + bd->w > zx + zw)
-                               rx = zx + zw - bd->w;
-                             else if (bd->x < zx)
-                               rx = zx;
+                             /* z{x,y,w,h} are only set here; FIXME! */
+                             if (bd->zone)
+                               {
+                                  // move window horizontal if resize to not useful geometry
+                                  if (bd->x + bd->w > zx + zw)
+                                    rx = zx + zw - bd->w;
+                                  else if (bd->x < zx)
+                                    rx = zx;
 
-     // move window vertical if resize to not useful geometry
-                             if (bd->y + bd->h > zy + zh)
-                               ry = zy + zh - bd->h;
-                             else if (bd->y < zy)
-                               ry = zy;
-
+                                  // move window vertical if resize to not useful geometry
+                                  if (bd->y + bd->h > zy + zh)
+                                    ry = zy + zh - bd->h;
+                                  else if (bd->y < zy)
+                                    ry = zy;
+                               }
                              e_border_move(bd, rx, ry);
                          }
                     }
