@@ -164,9 +164,10 @@ _e_kbd_buf_actual_string_update(E_Kbd_Buf *kb)
 	     if ((actual_len + strlen(str) + 1) > actual_size)
 	       {
 		  actual_size += 64;
-		  actual = realloc(actual, actual_size);
+		  actual = malloc(actual_size);
+                  EINA_SAFETY_ON_NULL_RETURN(actual);
+                  strcpy(actual, str);
 	       }
-	     strcpy(actual + actual_len, str);
 	     actual_len += strlen(str);
 	  }
      }
