@@ -6634,7 +6634,7 @@ _e_border_eval(E_Border *bd)
 		   bd->y = zy + zh - bd->h;
 		 // <--
 
-		  if (e_container_zone_at_point_get(bd->zone->container, bd->x, bd->y))
+		  if (bd->zone && e_container_zone_at_point_get(bd->zone->container, bd->x, bd->y))
 		    {
 		       bd->changes.pos = 1;
 		       bd->placed = 1;
