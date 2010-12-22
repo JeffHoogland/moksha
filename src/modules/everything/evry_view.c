@@ -568,7 +568,7 @@ _e_smart_add(Evas_Object *obj)
 {
    Smart_Data *sd = calloc(1, sizeof(Smart_Data));
    if (!sd) return;
-   sd->x = sd->y = sd->w = sd->h = 0;
+
    sd->sx = sd->sy = -1;
    evas_object_smart_data_set(obj, sd);
 }
