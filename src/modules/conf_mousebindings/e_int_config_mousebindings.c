@@ -1028,8 +1028,8 @@ _auto_apply_changes(E_Config_Dialog_Data *cfdata)
 	params = &(bw->params);
      } 
    
-   if (*action) eina_stringshare_del(*action); 
-   if (*params) eina_stringshare_del(*params); 
+   if (action && *action) eina_stringshare_del(*action); 
+   if (params && *params) eina_stringshare_del(*params); 
    *action = NULL; 
    *params = NULL;
 
