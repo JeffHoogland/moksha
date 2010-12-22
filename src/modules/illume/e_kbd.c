@@ -514,7 +514,7 @@ _e_kbd_cb_border_hook_post_border_assign(void *data __UNUSED__, void *data2)
    E_Kbd *kbd;
    int pbx, pby, pbw, pbh;
 
-   if (!(bd = data2)) return;
+   if (!(bd = data2)) return; /* is there a point to this? */
    kbd = _e_kbd_by_border_get(bd);
    if (!kbd) return;
    
@@ -543,7 +543,7 @@ _e_kbd_cb_border_hook_post_border_assign(void *data __UNUSED__, void *data2)
    bd->client.icccm.take_focus  = 0;
 
    bd->w = bd->zone->w;
-   bd->h = bd->h; 
+   bd->h = bd->zone->h; 
    bd->x = bd->zone->x;
    bd->y = bd->zone->y + bd->zone->h - bd->h;
    
