@@ -236,7 +236,7 @@ e_toolbar_position_calc(E_Toolbar *tbar)
 	tbar->x = 0;
 	tbar->w = 32;
 	tbar->h = tbar->fwin->h;
-	tbar->y = (tbar->fwin->h - tbar->h);
+	tbar->y = 0;
 	break;
       case E_GADCON_ORIENT_RIGHT:
 	tbar->y = 0;
