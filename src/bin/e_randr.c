@@ -179,7 +179,7 @@ _e_randr_screen_info_new(void)
 
    if (!(ret = malloc(sizeof(E_Randr_Screen_Info)))) return NULL;
 
-   ret = memcpy(ret, &default_info, sizeof(default_info));
+   memcpy(ret, &default_info, sizeof(default_info));
 
    return ret;
 }
