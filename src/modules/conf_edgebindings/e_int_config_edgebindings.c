@@ -1147,7 +1147,7 @@ _edge_grab_wnd_selection_apply(E_Config_Dialog_Data *cfdata)
 		  e_widget_disabled_set(cfdata->gui.o_params, 1);
 	       }
 	  }
-	else
+	else if (bi)
 	  {
 	     label = _edge_binding_text_get(bi->edge, bi->delay, bi->modifiers);
 	     e_widget_ilist_nth_label_set(cfdata->gui.o_binding_list, n, label);
