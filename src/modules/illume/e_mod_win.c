@@ -268,7 +268,7 @@ e_mod_win_cfg_kbd_start(void)
 		    {
 		       const char *dname;
 		       
-		       dname = ecore_file_file_get(desktop->orig_path);
+		       dname = ecore_file_file_get(d->orig_path);
 		       if (dname)
 			 {
 			    if (!strcmp(dname, illume_cfg->kbd.run_keyboard))
