@@ -2181,7 +2181,7 @@ _pager_desk_cb_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
 	if (((unsigned int) (dx * dx) + (unsigned int) (dy * dy)) <= 
 	    (resist * resist)) return;
 
-	pd->pager->dragging = 1;
+	if (pd->pager) pd->pager->dragging = 1;
 	pd->drag.start = 0;
      }
 
