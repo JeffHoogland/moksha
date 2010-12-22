@@ -1244,7 +1244,7 @@ _e_randr_try_enable_output(E_Randr_Output_Info *output_info, Eina_Bool force)
                 /*
                  * 2b. geometrically identical mode
                  */
-                  if ((mode_info = _e_randr_mode_geo_identical_find(output_info->modes, primary_output->crtc->current_mode)))
+                  if (primary_output->crtc && (mode_info = _e_randr_mode_geo_identical_find(output_info->modes, primary_output->crtc->current_mode)))
                     {
                        ret = ecore_x_randr_crtc_mode_set(e_randr_screen_info->root, usable_crtc->xid, &output_info->xid, 1, mode_info->xid);
                        return (ret && ecore_x_randr_crtc_pos_relative_set(e_randr_screen_info->root, usable_crtc->xid, primary_output->crtc->xid, ECORE_X_RANDR_OUTPUT_POLICY_CLONE, e_randr_screen_info->rrvd_info.randr_info_12->alignment));
