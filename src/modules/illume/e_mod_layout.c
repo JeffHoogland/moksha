@@ -489,7 +489,6 @@ _e_mod_layout_post_border_assign(E_Border *bd, int not_new)
 	bd->x = 0;
 	bd->y = wy + wh - bd->h;
 	bd->w = ww;
-	bd->h = bd->h;
 
 	if ((pbx != bd->x) || (pby != bd->y)  ||
 	    (pbw != bd->w) || (pbh != bd->h))
