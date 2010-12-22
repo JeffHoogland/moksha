@@ -51,10 +51,10 @@ e_mod_comp_update_tile_size_set(E_Update *up, int tsw, int tsh)
 void
 e_mod_comp_update_resize(E_Update *up, int w, int h)
 {
-   unsigned char *ptiles = up->tiles, *p, *pp;
+   unsigned char *ptiles, *p, *pp;
    int ptw, pth, x, y;
    
-   if ((up->w == w) && (up->h == h)) return;
+   if ((!up) || ((up->w == w) && (up->h == h))) return;
    
    ptw = up->tw;
    pth = up->th;
