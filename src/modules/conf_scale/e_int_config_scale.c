@@ -245,7 +245,7 @@ _adv_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 static int 
 _adv_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
 {
-   int use_dpi, use_custom;
+   int use_dpi = 0, use_custom = 0;
 
    if (cfdata->use_mode == 1)
      use_dpi = 1;
