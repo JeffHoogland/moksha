@@ -1103,19 +1103,7 @@ _grab_key_down_cb(void          *data,
                        bi->any_mod = 0;
 
                        cfdata->binding.key = eina_list_append(cfdata->binding.key, bi);
-                    }
-                  else if (cfdata->locals.cur && cfdata->locals.cur[0])
-                    {
-                       sscanf(cfdata->locals.cur, "k%d", &n);
-                       bi = eina_list_nth(cfdata->binding.key, n);
 
-                       bi->modifiers = mod;
-                       if (bi->key) eina_stringshare_del(bi->key);
-                       bi->key = eina_stringshare_add(ev->keyname);
-                    }
-
-                  if (cfdata->locals.add)
-                    {
                        n = _update_key_binding_list(cfdata, bi);
 
                        e_widget_ilist_selected_set(cfdata->gui.o_binding_list, n);
@@ -1134,16 +1122,22 @@ _grab_key_down_cb(void          *data,
                                  e_widget_entry_text_set(cfdata->gui.o_params, cfdata->params);
                               }
                          }
-                       else
+                       else 
                          {
                             e_widget_entry_clear(cfdata->gui.o_params);
                             e_widget_disabled_set(cfdata->gui.o_params, 1);
                          }
                     }
-                  else
+                  else if (cfdata->locals.cur && cfdata->locals.cur[0])
                     {
-                       printf("blub\n");
                        char *label;
+                       sscanf(cfdata->locals.cur, "k%d", &n);
+                       bi = eina_list_nth(cfdata->binding.key, n);
+
+                       bi->modifiers = mod;
+                       if (bi->key) eina_stringshare_del(bi->key);
+                       bi->key = eina_stringshare_add(ev->keyname);
+                       printf("blub\n");
 
                        label = _key_binding_text_get(bi);
                        e_widget_ilist_nth_label_set(cfdata->gui.o_binding_list, n, label);
