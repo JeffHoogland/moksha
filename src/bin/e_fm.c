@@ -3624,7 +3624,7 @@ _e_fm2_queue_process(Evas_Object *obj)
         n = eina_list_count(sd->icons);
         E_FREE(sd->tmp.list_index);
         if (n > 0)
-          sd->tmp.list_index = malloc(n * sizeof(Eina_List *));
+          sd->tmp.list_index = calloc(n, sizeof(Eina_List *));
         if (sd->tmp.list_index)
           {
              ll = sd->tmp.list_index;
@@ -3638,7 +3638,7 @@ _e_fm2_queue_process(Evas_Object *obj)
              p0 = 0; p1 = n;
              i = (p0 + p1) / 2;
              ll = sd->tmp.list_index;
-             do
+             if (ll[i]) do /* avoid garbage deref */
                {
                   ic2 = eina_list_data_get(ll[i]);
                   v = _e_fm2_cb_icon_sort(ic, ic2);
