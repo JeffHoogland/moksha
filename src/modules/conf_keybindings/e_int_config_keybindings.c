@@ -1074,24 +1074,21 @@ _grab_key_down_cb(void          *data,
                          found = 1;
                     }
                }
-             else
+             else if (cfdata->locals.cur && cfdata->locals.cur[0])
                {
-                  if (cfdata->locals.cur && cfdata->locals.cur[0])
-                    {
-                       found = 0;
-                       sscanf(cfdata->locals.cur, "k%d", &n);
-                       bi = eina_list_nth(cfdata->binding.key, n);
+                  found = 0;
+                  sscanf(cfdata->locals.cur, "k%d", &n);
+                  bi = eina_list_nth(cfdata->binding.key, n);
 
-                       for (l = cfdata->binding.key, n = 0; l && !found; l = l->next, n++)
-                         {
-                            bi2 = l->data;
-                            if (bi == bi2) continue;
-                            if (bi2->modifiers == mod && !strcmp(bi2->key, ev->keyname))
-                              found = 1;
-                         }
+                  for (l = cfdata->binding.key, n = 0; l && !found; l = l->next, n++)
+                    {
+                       bi2 = l->data;
+                       if (bi == bi2) continue;
+                       if (bi2->modifiers == mod && !strcmp(bi2->key, ev->keyname))
+                         found = 1;
                     }
                }
-
+               
              if (!found)
                {
                   if (cfdata->locals.add)
@@ -1107,17 +1104,14 @@ _grab_key_down_cb(void          *data,
 
                        cfdata->binding.key = eina_list_append(cfdata->binding.key, bi);
                     }
-                  else
+                  else if (cfdata->locals.cur && cfdata->locals.cur[0])
                     {
-                       if (cfdata->locals.cur && cfdata->locals.cur[0])
-                         {
-                            sscanf(cfdata->locals.cur, "k%d", &n);
-                            bi = eina_list_nth(cfdata->binding.key, n);
+                       sscanf(cfdata->locals.cur, "k%d", &n);
+                       bi = eina_list_nth(cfdata->binding.key, n);
 
-                            bi->modifiers = mod;
-                            if (bi->key) eina_stringshare_del(bi->key);
-                            bi->key = eina_stringshare_add(ev->keyname);
-                         }
+                       bi->modifiers = mod;
+                       if (bi->key) eina_stringshare_del(bi->key);
+                       bi->key = eina_stringshare_add(ev->keyname);
                     }
 
                   if (cfdata->locals.add)
