@@ -315,7 +315,8 @@ fi
 AC_MSG_RESULT($device_backend)
 
 AM_CONDITIONAL([HAVE_EEZE], [test "x${device_backend}" = "xeeze"])
-AM_CONDITIONAL([HAVE_EEZE_MOUNT], [test "x${eeze_mount}" = "xyes"])
+##AM_CONDITIONAL([HAVE_EEZE_MOUNT], [test "x${eeze_mount}" = "xyes"])
+AM_CONDITIONAL([HAVE_EEZE_MOUNT], [false])
 
 # doxygen program for documentation building
 
