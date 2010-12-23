@@ -753,6 +753,7 @@ _cpufreq_face_update_available(Instance *inst)
 
    count = eina_list_count(cpufreq_config->status->frequencies);
    frequency_msg = malloc(sizeof(Edje_Message_Int_Set) + (count - 1) * sizeof(int));
+   EINA_SAFETY_ON_NULL_RETURN(frequency_msg);
    frequency_msg->count = count;
    for (l = cpufreq_config->status->frequencies, i = 0; l; l = l->next, i++)
      frequency_msg->val[i] = (long)l->data;
@@ -775,6 +776,7 @@ _cpufreq_face_update_current(Instance *inst)
    Edje_Message_String governor_msg;
 
    frequency_msg = malloc(sizeof(Edje_Message_Int_Set) + (sizeof(int) * 4));
+   EINA_SAFETY_ON_NULL_RETURN(frequency_msg);
    frequency_msg->count = 5;
    frequency_msg->val[0] = cpufreq_config->status->cur_frequency;
    frequency_msg->val[1] = cpufreq_config->status->can_set_frequency;
