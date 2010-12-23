@@ -341,43 +341,39 @@ _selected_action_get(E_Config_Dialog_Data *cfdata)
 static const char *
 _binding_label_get(E_Config_Binding_Acpi *bind)
 {
-   char *ret;
-
    if (bind->type == E_ACPI_TYPE_UNKNOWN) return NULL;
-   else if (bind->type == E_ACPI_TYPE_AC_ADAPTER)
+   if (bind->type == E_ACPI_TYPE_AC_ADAPTER)
      {
-        ret = _("Ac Adapter");
-        if (bind->status == 0) ret = _("AC Adapter Unplugged");
-        else if (bind->status == 1)
-          ret = _("AC Adapter Plugged");
+        if (bind->status == 0) return _("AC Adapter Unplugged");
+        if (bind->status == 1) return _("AC Adapter Plugged");
+        return _("Ac Adapter");
      }
-   else if (bind->type == E_ACPI_TYPE_BATTERY)
-     ret = _("Battery");
-   else if (bind->type == E_ACPI_TYPE_BUTTON)
-     ret = _("Button");
-   else if (bind->type == E_ACPI_TYPE_FAN)
-     ret = _("Fan");
-   else if (bind->type == E_ACPI_TYPE_LID)
+   if (bind->type == E_ACPI_TYPE_BATTERY)
+     return _("Battery");
+   if (bind->type == E_ACPI_TYPE_BUTTON)
+     return _("Button");
+   if (bind->type == E_ACPI_TYPE_FAN)
+     return _("Fan");
+   if (bind->type == E_ACPI_TYPE_LID)
      {
-        ret = _("Lid");
-        if (bind->status == 0) ret = _("Lid Closed");
-        else if (bind->status == 1)
-          ret = _("Lid Opened");
+        if (bind->status == 0) return _("Lid Closed");
+        if (bind->status == 1) return _("Lid Opened");
+        return _("Lid");
      }
-   else if (bind->type == E_ACPI_TYPE_POWER)
-     ret = _("Power Button");
-   else if (bind->type == E_ACPI_TYPE_PROCESSOR)
-     ret = _("Processor");
-   else if (bind->type == E_ACPI_TYPE_SLEEP)
-     ret = _("Sleep Button");
-   else if (bind->type == E_ACPI_TYPE_THERMAL)
-     ret = _("Thermal");
-   else if (bind->type == E_ACPI_TYPE_VIDEO)
-     ret = _("Video");
-   else if (bind->type == E_ACPI_TYPE_WIFI)
-     ret = _("Wifi");
+   if (bind->type == E_ACPI_TYPE_POWER)
+     return _("Power Button");
+   if (bind->type == E_ACPI_TYPE_PROCESSOR)
+     return _("Processor");
+   if (bind->type == E_ACPI_TYPE_SLEEP)
+     return _("Sleep Button");
+   if (bind->type == E_ACPI_TYPE_THERMAL)
+     return _("Thermal");
+   if (bind->type == E_ACPI_TYPE_VIDEO)
+     return _("Video");
+   if (bind->type == E_ACPI_TYPE_WIFI)
+     return _("Wifi");
 
-   return ret;
+   return NULL;
 }
 
 static void
