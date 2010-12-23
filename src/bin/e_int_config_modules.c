@@ -404,8 +404,11 @@ _cftype_new_from_key(const char *key)
 {
    const CFTypes *itr;
    char name[1024], icon[1024];
-   size_t key_len = strlen(key);
+   size_t key_len;
 
+   if (!key) return NULL;
+
+   key_len = strlen(key);
    for (itr = _types; itr->key_len > 0; itr++)
      {
 	if (key_len != itr->key_len) continue;
