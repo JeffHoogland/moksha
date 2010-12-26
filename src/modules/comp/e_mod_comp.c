@@ -2655,14 +2655,28 @@ _e_mod_comp_add(E_Manager *man)
    
    if (_comp_mod->conf->engine == E_EVAS_ENGINE_GL_X11)
      {
+        int opt[20];
+        int opt_i = 0;
+        
         if (_comp_mod->conf->indirect)
           {
-             const int opt[] = 
-               { ECORE_EVAS_GL_X11_OPT_INDIRECT, 1,
-                    ECORE_EVAS_GL_X11_OPT_NONE 
-               };
+             opt[opt_i] = ECORE_EVAS_GL_X11_OPT_INDIRECT;
+             opt_i++;
+             opt[opt_i] = 1;
+             opt_i++;
+          }
+        if (_comp_mod->conf->vsync)
+          {
+             opt[opt_i] = ECORE_EVAS_GL_X11_OPT_VSYNC;
+             opt_i++;
+             opt[opt_i] = 1;
+             opt_i++;
+          }
+        if (opt_i > 0)
+          {
+             opt[opt_i] = ECORE_EVAS_GL_X11_OPT_NONE;
              c->ee = ecore_evas_gl_x11_options_new
-               (NULL, c->win, 0, 0, man->w, man->h, opt);
+                (NULL, c->win, 0, 0, man->w, man->h, opt);
           }
         if (!c->ee)
           c->ee = ecore_evas_gl_x11_new(NULL, c->win, 0, 0, man->w, man->h);
