@@ -1243,7 +1243,7 @@ _e_main_shutdown(int errorcode)
      }
    for (i = _e_main_level - 1; i >= 0; i--)
      (*_e_main_shutdown_func[i])();
-   if (errorcode < 0) exit(errorcode);
+   exit(errorcode);
 }
 
 static int
