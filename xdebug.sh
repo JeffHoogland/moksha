@@ -51,7 +51,7 @@ for arg in $@; do
 	  "--help")
 	     echo "Usage: $0 [DEBUG-OPTION] ..."
 		 echo "      --dbg-display=<NUMBER>    = set the used display number"
-		 echo "      --dpg-geo=<WxH+X+Y>       = set xserver geometry"
+		 echo "      --dbg-geo=<WxH+X+Y>       = set xserver geometry"
 		 echo "      --dbg-mode=<CHAR>         = b: text debugger with auto backtrace (gdb)"
 		 echo "                                  c: curses debugger (cgdb)"
 		 echo "                                  d: GUI debugger (ddd)"
