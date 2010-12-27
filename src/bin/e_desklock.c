@@ -385,7 +385,7 @@ e_desklock_hide(void)
    E_Desklock_Popup_Data *edp;
    E_Event_Desklock *ev;
 
-   if ((!edd) || (!_e_custom_desklock_exe)) return;
+   if ((!edd) && (!_e_custom_desklock_exe)) return;
 
    if (e_config->desklock_use_custom_desklock)
      {
