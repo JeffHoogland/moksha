@@ -349,7 +349,7 @@ main(int argc, char **argv)
 		  "\t\tIf you need this help, you don't need this option.\n"
 		  )
 		);
-	     _e_main_shutdown(0);
+	     _e_main_shutdown(-1);
 	  }
      }
 
@@ -1243,7 +1243,7 @@ _e_main_shutdown(int errorcode)
      }
    for (i = _e_main_level - 1; i >= 0; i--)
      (*_e_main_shutdown_func[i])();
-   exit(errorcode);
+   if (errorcode < 0) exit(errorcode); 
 }
 
 static int
