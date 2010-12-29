@@ -100,8 +100,9 @@ _e_wid_fsel_favorites_add(void *data1, void *data2 __UNUSED__)
 	symlink(current_path, buf);
      }
    fn = ecore_file_file_get(buf);
-   fname = alloca(strlen(fn) + 1);
-   strcpy(fname, fn);
+   len = strlen(fn) + 1;
+   fname = alloca(len);
+   memcpy(fname, fn, len);
    e_user_dir_concat_static(buf, "fileman/favorites/.order");
    if (ecore_file_exists(buf))
      {
