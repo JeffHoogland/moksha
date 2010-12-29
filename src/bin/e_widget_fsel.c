@@ -67,7 +67,7 @@ static void
 _e_wid_fsel_favorites_add(void *data1, void *data2 __UNUSED__)
 {
    E_Widget_Data *wd;
-   const char *current_path;
+   const char *current_path, *fn;
    char buf[PATH_MAX], *fname;
    struct stat st;
    FILE *f;
@@ -80,10 +80,12 @@ _e_wid_fsel_favorites_add(void *data1, void *data2 __UNUSED__)
    len = e_user_dir_snprintf(buf, sizeof(buf), "fileman/favorites/%s",
 			     ecore_file_file_get(current_path));
    if (len >= sizeof(buf)) return;
-   if (stat(buf, &st) < 0) symlink(current_path, buf);
+   if (stat(buf, &st) < 0) 
+     symlink(current_path, buf);
    else
      {
 	unsigned int i = 1, maxlen;
+
 	buf[len] = '-';
 	len++;
 	if (len == sizeof(buf)) return;
@@ -97,8 +99,9 @@ _e_wid_fsel_favorites_add(void *data1, void *data2 __UNUSED__)
         while (stat(buf, &st) == 0);
 	symlink(current_path, buf);
      }
-   fname = alloca(strlen(ecore_file_file_get(buf)) + 1);
-   strcpy(fname, ecore_file_file_get(buf));
+   fn = ecore_file_file_get(buf);
+   fname = alloca(strlen(fn) + 1);
+   strcpy(fname, fn);
    e_user_dir_concat_static(buf, "fileman/favorites/.order");
    if (ecore_file_exists(buf))
      {
