@@ -299,7 +299,7 @@ static void          _e_fm2_cb_resize_job(void *data);
 static int           _e_fm2_cb_icon_sort(const void *data1, const void *data2);
 static Eina_Bool     _e_fm2_cb_scan_timer(void *data);
 static Eina_Bool     _e_fm2_cb_sort_idler(void *data);
-static Eina_Bool     _e_fm2_cb_theme(void *data, int type, void *event);
+static Eina_Bool     _e_fm2_cb_theme(void *data, int type __UNUSED__, void *event __UNUSED__);
 
 static void          _e_fm2_obj_icons_place(E_Fm2_Smart_Data *sd);
 
@@ -7437,7 +7437,7 @@ _e_fm2_cb_sort_idler(void *data)
 }
 
 static Eina_Bool
-_e_fm2_cb_theme(void *data, int type, void *event)
+_e_fm2_cb_theme(void *data, int type __UNUSED__, void *event __UNUSED__)
 {
    e_fm2_refresh(data);
    return ECORE_CALLBACK_RENEW;
