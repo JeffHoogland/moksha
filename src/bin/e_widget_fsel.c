@@ -628,7 +628,7 @@ static char *
 _e_wid_file_perms_get(mode_t st_mode, uid_t st_uid, gid_t st_gid)
 {
    char perms[256];
-   int access = 0;
+   int acc = 0;
    int owner = 0;
    int group = 0;
    int user_read = 0;
@@ -665,7 +665,7 @@ _e_wid_file_perms_get(mode_t st_mode, uid_t st_uid, gid_t st_gid)
         else if ((user_read) && (!user_write)) 
 	  snprintf(perms, sizeof(perms), _("Read Only"));
         else if ((user_read) && (user_write)) 
-	  access = 1;
+	  acc = 1;
      }
    else if (group)
      {
@@ -674,7 +674,7 @@ _e_wid_file_perms_get(mode_t st_mode, uid_t st_uid, gid_t st_gid)
         else if ((group_read) && (!group_write)) 
 	  snprintf(perms, sizeof(perms), _("Read Only"));
         else if ((group_read) && (group_write)) 
-	  access = 1;
+	  acc = 1;
      }
    else
      {
@@ -683,9 +683,9 @@ _e_wid_file_perms_get(mode_t st_mode, uid_t st_uid, gid_t st_gid)
         else if ((other_read) && (!other_write)) 
 	  snprintf(perms, sizeof(perms), _("Read Only"));
         else if ((other_read) && (other_write)) 
-	  access = 1;
+	  acc = 1;
      }
-   if (!access) 
+   if (!acc)
      return strdup(perms);
    else 
      return strdup(_("Read-Write"));
