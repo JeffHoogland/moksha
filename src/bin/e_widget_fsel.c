@@ -122,7 +122,7 @@ _e_wid_fsel_favorites_files_changed(void *data, Evas_Object *obj __UNUSED__, voi
    E_Widget_Data *wd;
    Eina_List *icons, *l;
    E_Fm2_Icon_Info *ici;
-   const char *realpath;
+   const char *rp;
    char *p1, *p2;
    
    wd = data;
@@ -130,8 +130,8 @@ _e_wid_fsel_favorites_files_changed(void *data, Evas_Object *obj __UNUSED__, voi
    if (!wd->o_files_fm) return;
    icons = e_fm2_all_list_get(wd->o_favorites_fm);
    if (!icons) return;
-   realpath = e_fm2_real_path_get(wd->o_files_fm);
-   p1 = ecore_file_realpath(realpath);
+   rp = e_fm2_real_path_get(wd->o_files_fm);
+   p1 = ecore_file_realpath(rp);
    if (!p1) goto done;
    EINA_LIST_FOREACH(icons, l, ici)
      {
@@ -151,7 +151,7 @@ _e_wid_fsel_favorites_files_changed(void *data, Evas_Object *obj __UNUSED__, voi
 	  }
      }
    done:
-   e_widget_entry_text_set(wd->o_entry, realpath);
+   e_widget_entry_text_set(wd->o_entry, rp);
    E_FREE(p1);
    eina_list_free(icons);
 }
@@ -211,7 +211,7 @@ _e_wid_fsel_files_selection_change(void *data, Evas_Object *obj __UNUSED__, void
    E_Widget_Data *wd;
    Eina_List *selected;
    E_Fm2_Icon_Info *ici;
-   const char *realpath;
+   const char *rp;
    char buf[PATH_MAX];
    struct stat st;
    
@@ -221,15 +221,15 @@ _e_wid_fsel_files_selection_change(void *data, Evas_Object *obj __UNUSED__, void
    if (!selected) return;
    ici = eina_list_data_get(selected);
    E_FREE(wd->path);
-   realpath = e_fm2_real_path_get(wd->o_files_fm);
-   if (!strcmp(realpath, "/"))
+   rp = e_fm2_real_path_get(wd->o_files_fm);
+   if (!strcmp(rp, "/"))
      {
 	snprintf(buf, sizeof(buf), "/%s", ici->file);
      }
    else
      {
 	snprintf(buf, sizeof(buf), "%s/%s",
-		 realpath, ici->file);
+		 rp, ici->file);
      }
    wd->path = strdup(buf);
    if (stat(wd->path, &st) == 0)
