@@ -84,7 +84,7 @@ _e_wid_fsel_favorites_add(void *data1, void *data2 __UNUSED__)
      symlink(current_path, buf);
    else
      {
-	unsigned int i = 1, maxlen;
+	int i = 1, maxlen;
 
 	buf[len] = '-';
 	len++;
