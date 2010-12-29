@@ -7,6 +7,7 @@ static Eina_Bool _e_mod_quickpanel_cb_mouse_up(void *data, int type __UNUSED__, 
 static Eina_Bool _e_mod_quickpanel_cb_border_add(void *data __UNUSED__, int type __UNUSED__, void *event);
 static Eina_Bool _e_mod_quickpanel_cb_border_remove(void *data __UNUSED__, int type __UNUSED__, void *event);
 static Eina_Bool _e_mod_quickpanel_cb_border_resize(void *data __UNUSED__, int type __UNUSED__, void *event);
+static Eina_Bool _e_mod_quickpanel_cb_border_uniconify(void *data __UNUSED__, int type __UNUSED__, void *event);
 static void _e_mod_quickpanel_cb_post_fetch(void *data __UNUSED__, void *data2);
 static void _e_mod_quickpanel_cb_free(E_Illume_Quickpanel *qp);
 static Eina_Bool _e_mod_quickpanel_cb_delay_hide(void *data);
@@ -42,11 +43,15 @@ e_mod_quickpanel_init(void)
                       ecore_event_handler_add(E_EVENT_BORDER_REMOVE, 
                                               _e_mod_quickpanel_cb_border_remove,
                                               NULL));
-
    _qp_hdls = 
      eina_list_append(_qp_hdls, 
                       ecore_event_handler_add(E_EVENT_BORDER_RESIZE, 
                                               _e_mod_quickpanel_cb_border_resize, 
+                                              NULL));
+   _qp_hdls = 
+     eina_list_append(_qp_hdls, 
+                      ecore_event_handler_add(E_EVENT_BORDER_UNICONIFY, 
+                                              _e_mod_quickpanel_cb_border_uniconify, 
                                               NULL));
 
    /* add hook for new borders so we can test for qp borders */
@@ -337,6 +342,21 @@ _e_mod_quickpanel_cb_border_resize(void *data __UNUSED__, int type __UNUSED__, v
    EINA_LIST_FOREACH(qp->borders, l, bd)
      qp->vert.size += bd->h;
 
+   return ECORE_CALLBACK_PASS_ON;
+}
+
+static Eina_Bool 
+_e_mod_quickpanel_cb_border_uniconify(void *data __UNUSED__, int type __UNUSED__, void *event) 
+{
+   E_Event_Border_Uniconify *ev;
+   E_Illume_Quickpanel *qp;
+
+   ev = event;
+   if (!ev->border->client.illume.quickpanel.quickpanel)
+     return ECORE_CALLBACK_PASS_ON;
+   if (!(qp = e_illume_quickpanel_by_zone_get(ev->border->zone)))
+     return ECORE_CALLBACK_PASS_ON;
+   e_mod_quickpanel_show(qp);
    return ECORE_CALLBACK_PASS_ON;
 }
 
