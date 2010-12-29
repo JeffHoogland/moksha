@@ -285,6 +285,7 @@ gadman_gadget_del(E_Gadcon_Client *gcc)
 //   edje_object_part_unswallow(gcc->o_frame, gcc->o_base);
 
    if (gcc->cf) e_gadcon_client_config_del(gcc->gadcon->cf, gcc->cf);
+   gcc->cf = NULL;
    e_object_del(E_OBJECT(gcc));
    current = NULL;
 }
