@@ -1365,9 +1365,11 @@ e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu_main, 
 
    if ((gcc->gadcon->shelf) || (gcc->gadcon->toolbar))
      {
-        mi = e_menu_item_new(menu_gadget);
-        e_menu_item_separator_set(mi, 1);
-
+        if (e_menu_item_nth(menu_gadget, 0))
+          {
+             mi = e_menu_item_new(menu_gadget);
+             e_menu_item_separator_set(mi, 1);
+          }
 	if (!gcc->o_control) 
 	  {
              mi = e_menu_item_new(menu_gadget);

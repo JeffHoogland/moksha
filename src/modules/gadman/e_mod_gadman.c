@@ -701,8 +701,11 @@ _attach_menu(void *data __UNUSED__, E_Gadcon_Client *gcc, E_Menu *menu)
    //printf("Attach menu (gcc: %x id: %s) [%s]\n", gcc, gcc->cf->id, gcc->cf->style);
    if (!gcc) return;
 
-   mi = e_menu_item_new(menu);
-   e_menu_item_separator_set(mi, 1);
+   if (e_menu_item_nth(menu, 0))
+     {
+        mi = e_menu_item_new(menu);
+        e_menu_item_separator_set(mi, 1);
+     }
 
    /* Move / resize*/
    mi = e_menu_item_new(menu);
