@@ -29739,7 +29739,6 @@ collections {
    ICON("system-suspend","icon_suspend.png",128)                   // "enlightenment/suspend"
    ICON("system-suspend-hibernate","icon_hibernate.png",128)       // "enlightenment/hibernate"
    ICON("system-log-out","icon_logout.png",128)                    // "enlightenment/logout"
-   ICON("system-restart","icon_reset.png",128)                     // "enlightenment/reset" "widget/reset"
    ICON("system-lock-screen","icon_desklock_menu.png",128)         // "enlightenment/desklock_menu"
    ICON("window-close","icon_close.png",64)                        // "widget/close"
    ICON("dialog-ok-apply","icon_check.png",64)                     // "enlightenment/check"
