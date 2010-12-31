@@ -4,6 +4,8 @@
  * TODO: gadcon client ordering on drop
  */
 
+#define E_LAYOUT_ITEM_DRAG_RESIST_LEVEL 10
+
 static void _e_gadcon_free(E_Gadcon *gc);
 static void _e_gadcon_client_free(E_Gadcon_Client *gcc);
 
@@ -80,8 +82,6 @@ static Eina_Bool  _e_gadcon_provider_populate_idler(void *data);
 static Eina_Bool  _e_gadcon_custom_populate_idler(void *data);
 
 static int _e_gadcon_location_change(E_Gadcon_Client * gcc, E_Gadcon_Location *src, E_Gadcon_Location *dst);
-/********************/
-#define E_LAYOUT_ITEM_DRAG_RESIST_LEVEL 10
 
 typedef struct _E_Smart_Data E_Smart_Data;
 typedef struct _E_Layout_Item_Container E_Layout_Item_Container;
@@ -260,11 +260,16 @@ e_gadcon_provider_list(void)
 EAPI void
 e_gadcon_custom_new(E_Gadcon *gc)
 {
-   if (!gc) return;
+   E_OBJECT_CHECK(gc);
+   E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
+
    gadcons = eina_list_append(gadcons, gc);
 
-   if (!custom_populate_idler)
-     custom_populate_idler = ecore_idler_add(_e_gadcon_custom_populate_idler, NULL);
+   if (!custom_populate_idler) 
+     {
+        custom_populate_idler = 
+          ecore_idler_add(_e_gadcon_custom_populate_idler, NULL);
+     }
    if (!eina_list_data_find(custom_populate_requests, gc))
      custom_populate_requests = eina_list_append(custom_populate_requests, gc);
 }
@@ -272,7 +277,8 @@ e_gadcon_custom_new(E_Gadcon *gc)
 EAPI void
 e_gadcon_custom_del(E_Gadcon *gc)
 {
-   if (!gc) return;
+   E_OBJECT_CHECK(gc);
+   E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
    gadcons = eina_list_remove(gadcons, gc);
 }
 
@@ -341,6 +347,8 @@ e_gadcon_swallowed_new(const char *name, int id, Evas_Object *obj, const char *s
 EAPI void
 e_gadcon_swallowed_min_size_set(E_Gadcon *gc, Evas_Coord w, Evas_Coord h)
 {
+   E_OBJECT_CHECK(gc);
+   E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
    if (gc->edje.o_parent)
      {
 	edje_extern_object_min_size_set(gc->o_container, w, h);
@@ -1039,6 +1047,9 @@ e_gadcon_client_edit_end(E_Gadcon_Client *gcc)
 EAPI void
 e_gadcon_client_show(E_Gadcon_Client *gcc)
 {
+   E_OBJECT_CHECK(gcc);
+   E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
+
    if (!gcc->hidden) return;
    if (gcc->o_box) evas_object_show(gcc->o_box);
    if (gcc->o_frame) evas_object_show(gcc->o_frame);
@@ -1061,6 +1072,9 @@ e_gadcon_client_show(E_Gadcon_Client *gcc)
 EAPI void
 e_gadcon_client_hide(E_Gadcon_Client *gcc)
 {
+   E_OBJECT_CHECK(gcc);
+   E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
+
    if (gcc->hidden) return;
    if (gcc->o_box) evas_object_hide(gcc->o_box);
    if (gcc->o_frame) evas_object_hide(gcc->o_frame);
@@ -1254,6 +1268,9 @@ e_gadcon_client_geometry_get(E_Gadcon_Client *gcc, int *x, int *y, int *w, int *
 EAPI int
 e_gadcon_client_viewport_geometry_get(E_Gadcon_Client *gcc, int *x, int *y, int *w, int *h)
 {
+   E_OBJECT_CHECK(gcc);
+   E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
+
    if (gcc->o_box) evas_object_geometry_get(gcc->o_base, x, y, w, h);
    else if (gcc->o_base) evas_object_geometry_get(gcc->o_base, x, y, w, h);
    else
@@ -1479,6 +1496,8 @@ e_gadcon_client_util_menu_attach(E_Gadcon_Client *gcc)
 EAPI void
 e_gadcon_locked_set(E_Gadcon *gc, int lock)
 {
+   E_OBJECT_CHECK(gc);
+   E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
    if (gc->locked_set.func)
      gc->locked_set.func(gc->locked_set.data, lock);
 }
@@ -1486,6 +1505,8 @@ e_gadcon_locked_set(E_Gadcon *gc, int lock)
 EAPI void
 e_gadcon_urgent_show(E_Gadcon *gc)
 {
+   E_OBJECT_CHECK(gc);
+   E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
    if (gc->urgent_show.func)
      gc->urgent_show.func(gc->urgent_show.data);
 }
@@ -1496,6 +1517,9 @@ e_gadcon_urgent_show(E_Gadcon *gc)
 EAPI void
 e_gadcon_client_autoscroll_update(E_Gadcon_Client *gcc, Evas_Coord x, Evas_Coord y)
 {
+   E_OBJECT_CHECK(gcc);
+   E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
+
    if (gcc->autoscroll)
      {
 	Evas_Coord w, h;
@@ -1528,6 +1552,8 @@ e_gadcon_client_autoscroll_update(E_Gadcon_Client *gcc, Evas_Coord x, Evas_Coord
 EAPI void
 e_gadcon_client_autoscroll_cb_set(E_Gadcon_Client *gcc, void (*func)(void *data), void *data)
 {
+   E_OBJECT_CHECK(gcc);
+   E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
    gcc->scroll_cb.func = func;
    gcc->scroll_cb.data = data;
 }
