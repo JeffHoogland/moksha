@@ -103,7 +103,8 @@ e_widget_toolbar_item_append(Evas_Object *obj, Evas_Object *icon, const char *la
    Item *it;
    Evas_Coord mw = 0, mh = 0, vw = 0, vh = 0;
 
-   wd = e_widget_data_get(obj);
+   if (!obj) return;
+   if (!(wd = e_widget_data_get(obj))) return;
    o = edje_object_add(evas_object_evas_get(obj));
    e_theme_edje_object_set(o, "base/theme/widgets",
                            "e/widgets/toolbar/item");
@@ -150,7 +151,8 @@ e_widget_toolbar_item_remove(Evas_Object *obj, int num)
    E_Widget_Data *wd;
    Item *it;
 
-   wd = e_widget_data_get(obj);
+   if (!obj) return;
+   if (!(wd = e_widget_data_get(obj))) return;
    it = eina_list_nth(wd->items, num);
    if (it)
      {
@@ -169,7 +171,8 @@ e_widget_toolbar_item_select(Evas_Object *obj, int num)
    Item *it = NULL;
    int i = 0;
 
-   wd = e_widget_data_get(obj);
+   if (!obj) return;
+   if (!(wd = e_widget_data_get(obj))) return;
    EINA_LIST_FOREACH(wd->items, l, it)
      {
         if (i == num)
@@ -190,7 +193,8 @@ e_widget_toolbar_item_label_set(Evas_Object *obj, int num, const char *label)
    E_Widget_Data *wd = NULL;
    Item *it = NULL;
 
-   wd = e_widget_data_get(obj);
+   if (!obj) return;
+   if (!(wd = e_widget_data_get(obj))) return;
    it = eina_list_nth(wd->items, num);
    if (it)
      {
@@ -214,7 +218,8 @@ e_widget_toolbar_scrollable_set(Evas_Object *obj, Eina_Bool scrollable)
    E_Widget_Data *wd;
    Evas_Coord mw = 0, mh = 0, vw = 0, vh = 0;
 
-   wd = e_widget_data_get(obj);
+   if (!obj) return;
+   if (!(wd = e_widget_data_get(obj))) return;
    wd->scrollable = scrollable;
    e_box_size_min_get(wd->o_box, &mw, &mh);
    evas_object_resize(wd->o_box, mw, mh);
@@ -232,7 +237,8 @@ e_widget_toolbar_focus_steal_set(Evas_Object *obj, Eina_Bool steal)
 {
    E_Widget_Data *wd;
 
-   wd = e_widget_data_get(obj);
+   if (!obj) return;
+   if (!(wd = e_widget_data_get(obj))) return;
    if (wd->focus_steal == steal) return;
    if (steal)
      {
@@ -256,7 +262,8 @@ e_widget_toolbar_clear(Evas_Object *obj)
    E_Widget_Data *wd = NULL;
    Item *it = NULL;
 
-   wd = e_widget_data_get(obj);
+   if (!obj) return;
+   if (!(wd = e_widget_data_get(obj))) return;
    EINA_LIST_FREE(wd->items, it)
      {
         evas_object_del(it->o_base);
@@ -273,7 +280,8 @@ e_widget_toolbar_item_selected_get(Evas_Object *obj)
    Item *it = NULL;
    int i = 0;
 
-   wd = e_widget_data_get(obj);
+   if (!obj) return 0;
+   if (!(wd = e_widget_data_get(obj))) return 0;
    EINA_LIST_FOREACH(wd->items, l, it) 
      {
         if (it->selected) return i;
@@ -289,7 +297,8 @@ _e_wid_del_hook(Evas_Object *obj)
    E_Widget_Data *wd;
    Item *it;
 
-   wd = e_widget_data_get(obj);
+   if (!obj) return;
+   if (!(wd = e_widget_data_get(obj))) return;
    EINA_LIST_FREE(wd->items, it)
      {
         evas_object_del(it->o_base);
@@ -304,7 +313,8 @@ _e_wid_disable_hook(Evas_Object *obj)
 {
    E_Widget_Data *wd;
 
-   wd = e_widget_data_get(obj);
+   if (!obj) return;
+   if (!(wd = e_widget_data_get(obj))) return;
    if (e_widget_disabled_get(obj))
      edje_object_signal_emit(e_scrollframe_edje_object_get(wd->o_base), 
                              "e,state,disabled", "e");
@@ -341,7 +351,7 @@ _e_wid_signal_prev(void *data, Evas_Object *obj __UNUSED__, const char *emission
    Eina_List *l, *l2;
    Item *it = NULL, *it2 = NULL;
 
-   wd = e_widget_data_get(data);
+   if (!(wd = e_widget_data_get(data))) return;
    if ((!wd->o_base) || (!wd->o_box)) return;
    EINA_LIST_FOREACH(wd->items, l, it)
      {
@@ -366,7 +376,7 @@ _e_wid_signal_next(void *data, Evas_Object *obj __UNUSED__, const char *emission
    Eina_List *l, *l2;
    Item *it = NULL, *it2 = NULL;
 
-   wd = e_widget_data_get(data);
+   if (!(wd = e_widget_data_get(data))) return;
    if ((!wd->o_base) || (!wd->o_box)) return;
    EINA_LIST_FOREACH(wd->items, l, it)
      {
@@ -392,7 +402,7 @@ _e_wid_cb_scrollframe_resize(void *data, Evas *e __UNUSED__, Evas_Object *obj __
    Eina_List *l;
    Item *it;
 
-   wd = e_widget_data_get(data);
+   if (!(wd = e_widget_data_get(data))) return;
    if ((!wd->o_base) || (!wd->o_box)) return;
 
    e_scrollframe_child_viewport_size_get(wd->o_base, &vw, &vh);
@@ -486,7 +496,8 @@ _e_wid_focus_hook(Evas_Object *obj)
 {
    E_Widget_Data *wd;
 
-   wd = e_widget_data_get(obj);
+   if (!obj) return;
+   if (!(wd = e_widget_data_get(obj))) return;
    if (e_widget_focus_get(obj))
      {
         edje_object_signal_emit(wd->o_base, "e,state,focused", "e");
