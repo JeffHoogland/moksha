@@ -123,54 +123,51 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
      {
 	E_Shelf *es;
 	Evas_Object *ob;
-	const char *label;
 
-	es = l->data;
-	if (!es) continue;
+	if (!(es = l->data)) continue;
 
-    label = e_shelf_orient_string_get (es);
-    snprintf(buf, sizeof(buf), "Shelf %s", label);
+        snprintf(buf, sizeof(buf), "Shelf %s", e_shelf_orient_string_get(es));
 
 	ob = e_icon_add(evas);
         switch (es->cfg->orient)
           {
-          case E_GADCON_ORIENT_LEFT:
+           case E_GADCON_ORIENT_LEFT:
              e_util_icon_theme_set(ob, "preferences-position-left");
              break;
-          case E_GADCON_ORIENT_RIGHT:
+           case E_GADCON_ORIENT_RIGHT:
              e_util_icon_theme_set(ob, "preferences-position-right");
              break;
-          case E_GADCON_ORIENT_TOP:
+           case E_GADCON_ORIENT_TOP:
              e_util_icon_theme_set(ob, "preferences-position-top");
              break;
-          case E_GADCON_ORIENT_BOTTOM:
+           case E_GADCON_ORIENT_BOTTOM:
              e_util_icon_theme_set(ob, "preferences-position-bottom");
              break;
-          case E_GADCON_ORIENT_CORNER_TL:
+           case E_GADCON_ORIENT_CORNER_TL:
              e_util_icon_theme_set(ob, "preferences-position-top-left");
              break;
-          case E_GADCON_ORIENT_CORNER_TR:
+           case E_GADCON_ORIENT_CORNER_TR:
              e_util_icon_theme_set(ob, "preferences-position-top-right");
              break;
-          case E_GADCON_ORIENT_CORNER_BL:
+           case E_GADCON_ORIENT_CORNER_BL:
              e_util_icon_theme_set(ob, "preferences-position-bottom-left");
              break;
-          case E_GADCON_ORIENT_CORNER_BR:
+           case E_GADCON_ORIENT_CORNER_BR:
              e_util_icon_theme_set(ob, "preferences-position-bottom-right");
              break;
-          case E_GADCON_ORIENT_CORNER_LT:
+           case E_GADCON_ORIENT_CORNER_LT:
              e_util_icon_theme_set(ob, "preferences-position-left-top");
              break;
-          case E_GADCON_ORIENT_CORNER_RT:
+           case E_GADCON_ORIENT_CORNER_RT:
              e_util_icon_theme_set(ob, "preferences-position-right-top");
              break;
-          case E_GADCON_ORIENT_CORNER_LB:
+           case E_GADCON_ORIENT_CORNER_LB:
              e_util_icon_theme_set(ob, "preferences-position-left-bottom");
              break;
-          case E_GADCON_ORIENT_CORNER_RB:
+           case E_GADCON_ORIENT_CORNER_RB:
              e_util_icon_theme_set(ob, "preferences-position-right-bottom");
              break;
-          default:
+           default:
              e_util_icon_theme_set(ob, "enlightenment");
              break;
           }
@@ -202,9 +199,7 @@ _ilist_cb_selected(void *data)
 {
    E_Config_Dialog_Data *cfdata;
 
-   cfdata = data;
-   if (!cfdata) return;
-
+   if (!(cfdata = data)) return;
    e_widget_disabled_set(cfdata->o_delete, 0);
    e_widget_disabled_set(cfdata->o_config, 0);
 }
@@ -217,8 +212,7 @@ _cb_add(void *data, void *data2 __UNUSED__)
    E_Container *con;
    E_Zone *zone;
 
-   cfdata = data;
-   if (!cfdata) return;
+   if (!(cfdata = data)) return;
 
    con = e_container_current_get(e_manager_current_get());
    zone = e_zone_current_get(con);
@@ -248,16 +242,28 @@ static void
 _cb_delete(void *data, void *data2 __UNUSED__) 
 {
    Shelf_Del_Confirm_Data *d;
-   char buf[4096];
+   char buf[PATH_MAX];
 
    d = E_NEW(Shelf_Del_Confirm_Data, 1);
    if (!d) return;
    d->cfdata = data;
-   if (!d->cfdata) return;
-   if (!d->cfdata->cur_shelf) return;
+   if (!d->cfdata) 
+     {
+        E_FREE(d);
+        return;
+     }
+   if (!d->cfdata->cur_shelf) 
+     {
+        E_FREE(d);
+        return;
+     }
    d->es = eina_list_nth(e_shelf_list(), 
 			 e_widget_ilist_selected_get(d->cfdata->o_list));
-   if (!d->es) return;
+   if (!d->es) 
+     {
+        E_FREE(d);
+        return;
+     }
    e_object_ref(E_OBJECT(d->es));
 
    if (e_config->cnfmdlg_disabled)
@@ -270,7 +276,7 @@ _cb_delete(void *data, void *data2 __UNUSED__)
         e_object_unref(E_OBJECT(d->es));
         _ilist_fill(d->cfdata);
         E_FREE(d);
-		return;
+        return;
      }
 
    snprintf(buf, sizeof(buf), _("You requested to delete \"%s\".<br><br>"
@@ -287,9 +293,7 @@ _cb_dialog_yes(void *data)
 {
    Shelf_Del_Confirm_Data *d;
 
-   d = data;
-   if (!data) return;
-
+   if (!(d = data)) return;
    if (e_object_is_del(E_OBJECT(d->es))) return;
    e_shelf_unsave(d->es);
    e_object_del(E_OBJECT(d->es));
@@ -313,9 +317,7 @@ _cb_config(void *data, void *data2 __UNUSED__)
    E_Config_Dialog_Data *cfdata;
    E_Shelf *es;
 
-   cfdata = data;
-   if (!cfdata) return;
-
+   if (!(cfdata = data)) return;
    es = eina_list_nth(e_shelf_list(), 
 		      e_widget_ilist_selected_get(cfdata->o_list));
    if (!es) return;
