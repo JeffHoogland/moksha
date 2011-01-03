@@ -10,7 +10,6 @@ MAINTAINERCLEANFILES = \
 ABOUT-NLS* \
 Makefile.in \
 aclocal.m4 \
-autom4te.cache \
 compile \
 config.guess \
 config.h.in \
@@ -82,3 +81,6 @@ pkgconfig_DATA = enlightenment.pc
 doc:
 	@echo "entering doc/"
 	make -C doc doc
+
+maintainer-clean-local:
+	rm -rf autom4te.cache
