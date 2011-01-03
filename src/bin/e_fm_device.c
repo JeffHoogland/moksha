@@ -187,7 +187,8 @@ e_fm2_device_volume_add(E_Volume *v)
 
         /* Choose the label */
         if ((v->label) && (v->label[0]))
-          {}else if ((v->partition_label) && (v->partition_label[0]))
+          {}
+        else if ((v->partition_label) && (v->partition_label[0]))
           snprintf(label, sizeof(label) - 1, "%s", v->partition_label);
         else if (((v->storage->vendor) && (v->storage->vendor[0])) &&
                  ((v->storage->model) && (v->storage->model[0])))
@@ -214,11 +215,7 @@ e_fm2_device_volume_add(E_Volume *v)
         else
           snprintf(label, sizeof(label), _("Unknown Volume"));
 
-        if (label[0])
-          {
-             if (v->label) eina_stringshare_del(v->label);
-             v->label = eina_stringshare_add(label);
-          }
+        if (label[0]) eina_stringshare_replace(&v->label, label);
 
         /* Choose the icon */
         /* http://standards.freedesktop.org/icon-naming-spec/icon-naming-spec-latest.html */
@@ -245,11 +242,7 @@ e_fm2_device_volume_add(E_Volume *v)
                       || !strcmp(v->storage->drive_type, "sd_mmc"))
                icon = "media-flash";
           }
-        if (icon)
-          {
-             if (v->icon) eina_stringshare_del(v->icon);
-             v->icon = eina_stringshare_add(icon);
-          }
+        if (icon) eina_stringshare_replace(&v->icon, icon);
 
         if ((!v->mount_point) ||
             (strcmp(v->mount_point, "/") &&
