@@ -93,7 +93,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    o = e_widget_list_add(evas, 0, 0);
 
    of = e_widget_framelist_add(evas, _("General Settings"), 0);
-   ob = e_widget_check_add(evas, _("Enable Composite"),
+   ob = e_widget_check_add(evas, _("Use ARGB instead of shaped windows"),
 			   &(cfdata->use_composite));
    cfdata->o_composite = ob;
    e_widget_on_change_hook_set(ob, _cb_composite_change, cfdata);
@@ -135,12 +135,12 @@ _cb_composite_change(void *data, Evas_Object *obj __UNUSED__)
 	if (!ecore_x_screen_is_composited(0))
 	  {
 	     /* pop dialog */
-	     e_confirm_dialog_show(_("Enable Composite Support ?"),
+	     e_confirm_dialog_show(_("Use ARGB instead of shaped windows"),
 				   "preferences-engine",
-				   _("You have chosen to enable composite "
+				   _("You have chosen to enable ARGB composite "
 				     "support,<br>but your current screen does "
 				     "not support composite.<br><br>"
-				     "Are you sure you wish to enable composite support ?"),
+				     "Are you sure you wish to enable ARGB support ?"),
 				   NULL, NULL, _cb_confirm_yes, _cb_confirm_no,
 				   cfdata, cfdata, NULL, NULL);
 	  }
