@@ -750,7 +750,7 @@ _e_randr_event_cb(void *data __UNUSED__, int type, void *ev)
      }
    else if (type == ECORE_X_EVENT_RANDR_OUTPUT_CHANGE)
      {
-        Ecore_X_Event_Randr_Output_Change *event = (Ecore_X_Event_Randr_Output_Change*) ev;
+        Ecore_X_Event_Randr_Output_Change *event = ev;
         const E_Randr_Screen_Restore_Info_12 *restore_info;
         E_Randr_Output_Info* output_info = NULL;
         /* available information:
@@ -776,20 +776,21 @@ _e_randr_event_cb(void *data __UNUSED__, int type, void *ev)
                 event->win, event->output, event->crtc, event->mode, event->orientation, event->connection, ECORE_X_RANDR_CONNECTION_STATUS_CONNECTED, ECORE_X_RANDR_CONNECTION_STATUS_DISCONNECTED, ECORE_X_RANDR_CONNECTION_STATUS_UNKNOWN, event->subpixel_order);
 
         output_info = _e_randr_output_info_get(event->output);
-        if((output_info->crtc = _e_randr_crtc_info_get(event->crtc)))
+        if (!output_info) goto on_exit;
+        
+        if ((output_info->crtc = _e_randr_crtc_info_get(event->crtc)))
           {
-	     if (output_info->crtc)
-	       if (!eina_list_data_find(output_info->crtc->outputs, output_info))
-		 output_info->crtc->outputs = eina_list_append(output_info->crtc->outputs, output_info);
+             if (!eina_list_data_find(output_info->crtc->outputs, output_info))
+                output_info->crtc->outputs = eina_list_append(output_info->crtc->outputs, output_info);
           }
 
         output_info->connection_status = event->connection;
         output_info->subpixel_order = event->subpixel_order;
-
-        if(event->connection == ECORE_X_RANDR_CONNECTION_STATUS_CONNECTED)
+        
+        if (event->connection == ECORE_X_RANDR_CONNECTION_STATUS_CONNECTED)
           {
              if (event->crtc)
-               output_info->crtc = _e_randr_crtc_info_get(event->crtc);
+                output_info->crtc = _e_randr_crtc_info_get(event->crtc);
 
              if (output_info && !output_info->crtc && !event->crtc && !event->mode)
                {
@@ -797,12 +798,12 @@ _e_randr_event_cb(void *data __UNUSED__, int type, void *ev)
                   _e_randr_output_info_hw_info_set(output_info);
                   //make the crtcs aware of their possibly new output
                   _e_randr_crtcs_possible_output_update(output_info);
-                  if((restore_info = _e_randr_config_find_suiting_config_12()))
-                    //maybe we have a suiting configuration
-                    //_e_randr_config_enable_12(restore_info);
-                    ;
+                  if ((restore_info = _e_randr_config_find_suiting_config_12()))
+                     //maybe we have a suiting configuration
+                     //_e_randr_config_enable_12(restore_info);
+                     ;
                   else
-                    enabled = _e_randr_try_enable_output(output_info, EINA_FALSE); //maybe give a success message?
+                     enabled = _e_randr_try_enable_output(output_info, EINA_FALSE); //maybe give a success message?
                }
              _e_randr_notify_output_change(output_info);
           }
@@ -824,14 +825,14 @@ _e_randr_event_cb(void *data __UNUSED__, int type, void *ev)
                             ecore_x_randr_screen_reset(e_randr_screen_info->root);
                          }
                        else
-                         _e_randr_crtc_outputs_mode_max_set(output_info->crtc);
+                          _e_randr_crtc_outputs_mode_max_set(output_info->crtc);
                     }
-
+                  
                   if (e_randr_screen_info->rrvd_info.randr_info_12->primary_output && (output_info == e_randr_screen_info->rrvd_info.randr_info_12->primary_output))
-                    _e_randr_screen_primary_output_assign(output_info);
+                     _e_randr_screen_primary_output_assign(output_info);
                   //let's try to get a proper config for the new setup and crop the
                   //screen afterwards.
-                  if((restore_info = _e_randr_config_find_suiting_config_12()))
+                  if ((restore_info = _e_randr_config_find_suiting_config_12()))
 		    {
 		       //in case we didn't have, init it anyway...
 		       //_e_randr_config_enable_12(restore_info);
