@@ -1460,13 +1460,17 @@ e_config_engine_list(void)
     * contexts, so for now just disable it. xrender is much more complete in
     * this regard.
     */
-#if 0
+#if 0 /* opengl cant do occludes for frames - only useful for compositor */
    l = eina_list_append(l, strdup("GL"));
 #endif
+#if 0 /* xrender too incomplete these days */   
    if (ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_XRENDER_X11))
      l = eina_list_append(l, strdup("XRENDER"));
+#endif   
+#if 0 /* software-16 too incomplete and buggy */
    if (ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_SOFTWARE_16_X11))
      l = eina_list_append(l, strdup("SOFTWARE_16"));
+#endif   
    return l;
 }
 
