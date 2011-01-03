@@ -1500,7 +1500,7 @@ e_config_domain_load(const char *domain, E_Config_DD *edd)
         if (data) return data;
      }
 
-   for (i =1; i <= _e_config_revisions; i++)
+   for (i = 1; i <= _e_config_revisions; i++)
      {
         e_user_dir_snprintf(buf, sizeof(buf), "config/%s/%s.%i.cfg",
                             _e_config_profile, domain, i);
@@ -1553,7 +1553,7 @@ e_config_profile_save(void)
 		       strlen(_e_config_profile), 0);
 	if (_e_config_eet_close_handle(ef, buf2))
 	  {
-	     int ret;
+	     Eina_Bool ret;
 
              if (_e_config_revisions > 0)
                {
@@ -1564,11 +1564,23 @@ e_config_profile_save(void)
                     {
                        e_user_dir_snprintf(bsrc, sizeof(bsrc), "config/profile.%i.cfg", i - 1);
                        e_user_dir_snprintf(bdst, sizeof(bdst), "config/profile.%i.cfg", i);
-                       ecore_file_mv(bsrc, bdst);
+                       ret = ecore_file_mv(bsrc, bdst);
+                       if (!ret)
+                         {
+                            printf("*** Error saving profile. ***");
+                            break;
+                         }
                     }
-                  e_user_dir_snprintf(bsrc, sizeof(bsrc), "config/profile.cfg");
-                  e_user_dir_snprintf(bdst, sizeof(bdst), "config/profile.1.cfg");
-                  ecore_file_mv(bsrc, bdst);
+                  if (ret)
+                    {
+                       e_user_dir_snprintf(bsrc, sizeof(bsrc), "config/profile.cfg");
+                       e_user_dir_snprintf(bdst, sizeof(bdst), "config/profile.1.cfg");
+                       ret = ecore_file_mv(bsrc, bdst);
+                       if (!ret)
+                         {
+                            printf("*** Error saving profile. ***");
+                         }
+                    }
                }
              ret = ecore_file_mv(buf2, buf);
 	     if (!ret)
