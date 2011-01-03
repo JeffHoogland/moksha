@@ -145,7 +145,7 @@ e_config_init(void)
 	  {
              int i;
 
-             for (i =1; i <= _e_config_revisions; i++)
+             for (i = 1; i <= _e_config_revisions; i++)
                {
                   e_user_dir_snprintf(buf, sizeof(buf), "config/profile.%i.cfg", i);
                   ef = eet_open(buf, EET_FILE_MODE_READ);
@@ -1635,7 +1635,7 @@ e_config_domain_save(const char *domain, E_Config_DD *edd, const void *data)
 	     ret = ecore_file_mv(buf2, buf);
 	     if (!ret)
 	       {
-		  printf("*** Error saving config. ***");
+		  printf("*** Error saving config. ***\n");
 	       }
 	  }
 	ecore_file_unlink(buf2);
@@ -2021,64 +2021,64 @@ _e_config_eet_close_handle(Eet_File *ef, char *file)
    err = eet_close(ef);
    switch (err)
      {
-      case EET_ERROR_WRITE_ERROR:
-	erstr = _("An error occurred while saving Enlightenment's<br>"
-		  "settings to disk. The error could not be<br>"
-		  "deterimined.<br>"
-		  "<br>"
-		  "The file where the error occurred was:<br>"
-		  "%s<br>"
-		  "<br>"
-		  "This file has been deleted to avoid corrupt data.<br>"
-		  );
+      case EET_ERROR_NONE:
+        /* all good - no error */
 	break;
+      case EET_ERROR_BAD_OBJECT:
+	erstr = _("The EET file handle is bad.");
+	break;
+      case EET_ERROR_EMPTY:
+	erstr = _("The file data is empty.");
+	break;
+      case EET_ERROR_NOT_WRITABLE:
+	erstr = _("The file is not writable. Perhaps the disk is read-only<br>or you lost permissions to your files.");
+	break;
+      case EET_ERROR_OUT_OF_MEMORY:
+	erstr = _("Memory ran out while preparing the write.<br>Please free up memory.");
+	break;
+      case EET_ERROR_WRITE_ERROR:
+	erstr = _("This is a generic error.");
       case EET_ERROR_WRITE_ERROR_FILE_TOO_BIG:
-	erstr = _("Enlightenment's settings files are too big<br>"
-		  "for the file system they are being saved to.<br>"
-		  "This error is very strange as the files should<br>"
-		  "be extremely small. Please check the settings<br>"
-		  "for your home directory.<br>"
-		  "<br>"
-		  "The file where the error occurred was:<br>"
-		  "%s<br>"
-		  "<br>"
-		  "This file has been deleted to avoid corrupt data.<br>"
-		  );
+	erstr = _("The settings file is too large.<br>It should be very small (a few hundred KB at most).");
 	break;
       case EET_ERROR_WRITE_ERROR_IO_ERROR:
-	erstr = _("An output error occurred when writing the settings<br>"
-		  "files for Enlightenment. Your disk is having troubles<br>"
-		  "and possibly needs replacement.<br>"
-		  "<br>"
-		  "The file where the error occurred was:<br>"
-		  "%s<br>"
-		  "<br>"
-		  "This file has been deleted to avoid corrupt data.<br>"
-		  );
+	erstr = _("You have I/O errors on the disk.<br>Maybe it needs replacing?");
 	break;
       case EET_ERROR_WRITE_ERROR_OUT_OF_SPACE:
-	erstr = _("Enlightenment cannot write its settings file<br>"
-		  "because it ran out of space to write the file.<br>"
-		  "You have either run out of disk space or have<br>"
-		  "gone over your quota limit.<br>"
-		  "<br>"
-		  "The file where the error occurred was:<br>"
-		  "%s<br>"
-		  "<br>"
-		  "This file has been deleted to avoid corrupt data.<br>"
-		  );
+	erstr = _("You ran out of space while writing the file");
 	break;
       case EET_ERROR_WRITE_ERROR_FILE_CLOSED:
-	erstr = _("Enlightenment unexpectedly had the settings file<br>"
-		  "it was writing closed on it. This is very unusual.<br>"
-		  "<br>"
-		  "The file where the error occurred was:<br>"
-		  "%s<br>"
-		  "<br>"
-		  "This file has been deleted to avoid corrupt data.<br>"
-		  );
+	erstr = _("The file was closed on it while writing.");
 	break;
-      default:
+      case EET_ERROR_MMAP_FAILED:
+	erstr = _("Memory-mapping (mmap) of the file failed.");
+	break;
+      case EET_ERROR_X509_ENCODING_FAILED:
+	erstr = _("X509 Encoding failed.");
+	break;
+      case EET_ERROR_SIGNATURE_FAILED:
+	erstr = _("Signature failed.");
+	break;
+      case EET_ERROR_INVALID_SIGNATURE:
+        erstr = _("The signature was invalid.");
+	break;
+      case EET_ERROR_NOT_SIGNED:
+	erstr = _("Not signed.");
+	break;
+      case EET_ERROR_NOT_IMPLEMENTED:
+	erstr = _("Feature not implemented.");
+	break;
+      case EET_ERROR_PRNG_NOT_SEEDED:
+	erstr = _("PRNG was not seeded.");
+	break;
+      case EET_ERROR_ENCRYPT_FAILED:
+	erstr = _("Encryption failed.");
+	break;
+      case EET_ERROR_DECRYPT_FAILED:
+	erstr = _("Decruption failed.");
+	break;
+      default: /* if we get here eet added errors we don't know */
+	erstr = _("The error is unknown to Enlightenment.");
 	break;
      }
    if (erstr)
@@ -2089,19 +2089,30 @@ _e_config_eet_close_handle(Eet_File *ef, char *file)
 	  {
              E_Dialog *dia;
 
-	     dia = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_sys_error_logout_slow");
+	     dia = e_dialog_new(e_container_current_get(e_manager_current_get()), 
+                                "E", "_sys_error_logout_slow");
 	     if (dia)
 	       {
 		  char buf[8192];
 
 		  e_dialog_title_set(dia, _("Enlightenment Settings Write Problems"));
 		  e_dialog_icon_set(dia, "dialog-error", 64);
-		  snprintf(buf, sizeof(buf), erstr, file);
+		  snprintf(buf, sizeof(buf), 
+                           _("Enlightenment has an error while writing<br>"
+                             "its config file.<br>"
+                             "%s<br>"
+                             "<br>"
+                             "The file where the error occurred was:<br>"
+                             "%s<br>"
+                             "<br>"
+                             "This file has been deleted to avoid corrupt data.<br>"),
+                           erstr, file);
 		  e_dialog_text_set(dia, buf);
 		  e_dialog_button_add(dia, _("OK"), NULL, NULL, NULL);
 		  e_dialog_button_focus_num(dia, 0);
 		  e_win_centered_set(dia->win, 1);
-		  e_object_del_attach_func_set(E_OBJECT(dia), _e_config_error_dialog_cb_delete);
+		  e_object_del_attach_func_set(E_OBJECT(dia),
+                                               _e_config_error_dialog_cb_delete);
 		  e_dialog_show(dia);
 		  _e_config_error_dialog = dia;
 	       }
