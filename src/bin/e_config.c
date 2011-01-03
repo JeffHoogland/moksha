@@ -78,6 +78,15 @@ static E_Config_DD *_e_config_screen_crtc_restore_info_edd = NULL;
 EAPI int E_EVENT_CONFIG_ICON_THEME = 0;
 EAPI int E_EVENT_CONFIG_MODE_CHANGED = 0;
 
+static E_Dialog *_e_config_error_dialog = NULL;
+
+static void
+_e_config_error_dialog_cb_delete(void *dia)
+{
+   if (dia == _e_config_error_dialog)
+     _e_config_error_dialog = NULL;
+}
+
 static char *
 _e_config_profile_name_get(Eet_File *ef)
 {
@@ -1539,6 +1548,43 @@ e_config_domain_system_load(const char *domain, E_Config_DD *edd)
    return data;
 }
 
+static void
+_e_config_mv_error(const char *from, const char *to)
+{
+   if (!_e_config_error_dialog)
+     {
+        E_Dialog *dia;
+        
+        dia = e_dialog_new(e_container_current_get(e_manager_current_get()), 
+                           "E", "_sys_error_logout_slow");
+        if (dia)
+          {
+             char buf[8192];
+             
+             e_dialog_title_set(dia, _("Enlightenment Settings Write Problems"));
+             e_dialog_icon_set(dia, "dialog-error", 64);
+             snprintf(buf, sizeof(buf), 
+                      _("Enlightenment has an error while moving config files<br>"
+                        "from:<br>"
+                        "%s<br>"
+                        "<br>"
+                        "to:<br>"
+                        "%s<br>"
+                        "<br>"
+                        "The rest of the write has been aborted for safety.<br>"),
+                      from, to);
+             e_dialog_text_set(dia, buf);
+             e_dialog_button_add(dia, _("OK"), NULL, NULL, NULL);
+             e_dialog_button_focus_num(dia, 0);
+             e_win_centered_set(dia->win, 1);
+             e_object_del_attach_func_set(E_OBJECT(dia),
+                                          _e_config_error_dialog_cb_delete);
+             e_dialog_show(dia);
+             _e_config_error_dialog = dia;
+          }
+     }
+}
+
 EAPI int
 e_config_profile_save(void)
 {
@@ -1557,7 +1603,7 @@ e_config_profile_save(void)
 		       strlen(_e_config_profile), 0);
 	if (_e_config_eet_close_handle(ef, buf2))
 	  {
-	     Eina_Bool ret;
+	     Eina_Bool ret = EINA_TRUE;
 
              if (_e_config_revisions > 0)
                {
@@ -1568,11 +1614,14 @@ e_config_profile_save(void)
                     {
                        e_user_dir_snprintf(bsrc, sizeof(bsrc), "config/profile.%i.cfg", i - 1);
                        e_user_dir_snprintf(bdst, sizeof(bdst), "config/profile.%i.cfg", i);
-                       ret = ecore_file_mv(bsrc, bdst);
-                       if (!ret)
+                       if (ecore_file_exists(bsrc))
                          {
-                            printf("*** Error saving profile. ***");
-                            break;
+                            ret = ecore_file_mv(bsrc, bdst);
+                            if (!ret)
+                              {
+                                 _e_config_mv_error(bsrc, bdst);
+                                 break;
+                              }
                          }
                     }
                   if (ret)
@@ -1581,16 +1630,11 @@ e_config_profile_save(void)
                        e_user_dir_snprintf(bdst, sizeof(bdst), "config/profile.1.cfg");
                        ret = ecore_file_mv(bsrc, bdst);
                        if (!ret)
-                         {
-                            printf("*** Error saving profile. ***");
-                         }
+                          _e_config_mv_error(bsrc, bdst);
                     }
                }
              ret = ecore_file_mv(buf2, buf);
-	     if (!ret)
-	       {
-		  printf("*** Error saving profile. ***");
-	       }
+	     if (!ret) _e_config_mv_error(buf2, buf);
 	  }
 	ecore_file_unlink(buf2);
      }
@@ -2017,15 +2061,6 @@ _e_config_cb_timer(void *data)
 {
    e_util_dialog_show(_("Settings Upgraded"), "%s", (char *)data);
    return 0;
-}
-
-static E_Dialog *_e_config_error_dialog = NULL;
-
-static void
-_e_config_error_dialog_cb_delete(void *dia)
-{
-   if (dia == _e_config_error_dialog)
-     _e_config_error_dialog = NULL;
 }
 
 static int
