@@ -2101,6 +2101,8 @@ _e_config_eet_close_handle(Eet_File *ef, char *file)
      {
 	/* delete any partially-written file */
 	ecore_file_unlink(file);
+        /* only show dialog for first error - further ones are likely */
+        /* more of the same error */
 	if (!_e_config_error_dialog)
 	  {
              E_Dialog *dia;
