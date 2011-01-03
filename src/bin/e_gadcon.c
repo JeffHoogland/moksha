@@ -1639,8 +1639,9 @@ _e_gadcon_client_free(E_Gadcon_Client *gcc)
      }
    e_gadcon_client_edit_end(gcc);
    gcc->client_class->func.shutdown(gcc);
-   if (gcc->client_class->func.id_del)
-     gcc->client_class->func.id_del((E_Gadcon_Client_Class *)gcc->client_class, gcc->cf->id);
+   if ((gcc->client_class->func.id_del) && (gcc->cf))
+     gcc->client_class->func.id_del((E_Gadcon_Client_Class *)gcc->client_class,
+                                    gcc->cf->id);
    gcc->gadcon->clients = eina_list_remove(gcc->gadcon->clients, gcc);
    if (gcc->o_box) evas_object_del(gcc->o_box);
    if (gcc->o_frame) evas_object_del(gcc->o_frame);
