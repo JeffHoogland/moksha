@@ -11,7 +11,8 @@ typedef struct _E_Storage E_Storage;
 typedef struct _E_Volume  E_Volume;
 typedef struct _E_Fm2_Mount  E_Fm2_Mount;
 
-#ifndef HAVE_EEZE_MOUNT
+#if @EEZE_MOUNT_CONFIG@
+#else
 struct _E_Storage
 {
    int type;

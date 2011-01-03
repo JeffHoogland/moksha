@@ -292,6 +292,7 @@ AC_ARG_ENABLE([device-udev],
   AC_CACHE_VAL([e_cv_want_device_udev], [e_cv_want_device_udev=yes]))
 
 eeze_mount=
+EEZE_MOUNT_CONFIG=0
 if test "x$e_cv_want_device_udev" = "xyes";then
   PKG_CHECK_EXISTS([eeze >= 1.0.0],
     [
@@ -300,6 +301,7 @@ if test "x$e_cv_want_device_udev" = "xyes";then
       AC_CHECK_LIB([eeze], [eeze_disk_function],
         [
            eeze_mount=yes
+           EEZE_MOUNT_CONFIG=1
            AC_DEFINE_UNQUOTED([HAVE_EEZE_MOUNT], [1], [enable eeze mounting])
            AC_MSG_NOTICE([eeze mounting enabled])
         ],
@@ -314,6 +316,7 @@ else
 fi
 AC_MSG_RESULT($device_backend)
 
+AC_SUBST([EEZE_MOUNT_CONFIG])
 AM_CONDITIONAL([HAVE_EEZE], [test "x${device_backend}" = "xeeze"])
 ##AM_CONDITIONAL([HAVE_EEZE_MOUNT], [test "x${eeze_mount}" = "xyes"])
 AM_CONDITIONAL([HAVE_EEZE_MOUNT], [false])
@@ -645,6 +648,7 @@ enlightenment.spec
 enlightenment.pc
 src/Makefile
 src/bin/Makefile
+src/bin/e_fm_shared_types.h
 src/bin/e_fm/Makefile
 src/modules/Makefile
 src/modules/ibar/Makefile

@@ -1,6 +1,7 @@
 SUBDIRS = e_fm
 
 MAINTAINERCLEANFILES = Makefile.in
+DISTCLEANFILES = e_fm_shared_types.h
 
 INCLUDES = \
 -I$(top_builddir) \
