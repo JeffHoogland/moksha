@@ -287,38 +287,70 @@ AC_ARG_ENABLE([device-hal],
   AC_CACHE_VAL([e_cv_want_device_hal], [e_cv_want_device_hal=no]))
 
 AC_ARG_ENABLE([device-udev],
-  AS_HELP_STRING([--enable-device-udev],[enable udev support @<:@default=enabled@:>@]),
+  AS_HELP_STRING([--enable-device-udev],[enable udev device backend @<:@default=enabled@:>@]),
   [e_cv_want_device_udev=$enableval],
   AC_CACHE_VAL([e_cv_want_device_udev], [e_cv_want_device_udev=yes]))
 
-eeze_mount=
-EEZE_MOUNT_CONFIG=0
-if test "x$e_cv_want_device_udev" = "xyes";then
+if test "x$e_cv_want_device_udev" != "xno";then
   PKG_CHECK_EXISTS([eeze >= 1.0.0],
     [
       device_backend=eeze
       AC_DEFINE_UNQUOTED([HAVE_EEZE],[1],[enable udev support])
-      AC_CHECK_LIB([eeze], [eeze_disk_function],
-        [
-           eeze_mount=yes
-           EEZE_MOUNT_CONFIG=1
-           AC_DEFINE_UNQUOTED([HAVE_EEZE_MOUNT], [1], [enable eeze mounting])
-           AC_MSG_NOTICE([eeze mounting enabled])
-        ],
-        [
-           AC_MSG_NOTICE([eeze mounting disabled])
-        ]
-      )
-           
     ],[device_backend=ehal])
 else
   device_backend=ehal
 fi
 AC_MSG_RESULT($device_backend)
 
+DBUS_MOUNT_CONFIG=1
+dbus_mount="dbus-1"
+hal_mount="ehal >= 1.0.0"
+udisks_mount="eukit >= 1.0.0"
+AC_ARG_ENABLE([mount-hal],
+  AS_HELP_STRING([--enable-mount-hal],[enable hal mounting support @<:@default=enabled@:>@]),
+  [e_cv_want_mount_hal=$enableval],
+  AC_CACHE_VAL([e_cv_want_mount_hal], [e_cv_want_mount_hal=yes]))
+
+AC_ARG_ENABLE([mount-udisks],
+  AS_HELP_STRING([--enable-mount-udisks],[enable udisks mounting support @<:@default=enabled@:>@]),
+  [e_cv_want_mount_udisks=$enableval],
+  AC_CACHE_VAL([e_cv_want_mount_udisks], [e_cv_want_mount_udisks=yes]))
+if test "x${e_cv_want_mount_udisks}" = "xno" && test "x${e_cv_want_mount_hal}" = "xno" ; then
+  DBUS_MOUNT_CONFIG=0
+  dbus_mount=
+  test "x${e_cv_want_mount_udisks}" = "xno" && udisks_mount=
+  test "x${e_cv_want_mount_hal}" = "xno" && hal_mount=
+fi
+
+AC_ARG_ENABLE([mount-eeze],
+  AS_HELP_STRING([--enable-mount-eeze],[enable eeze mounting support @<:@default=enabled@:>@]),
+  [e_cv_want_mount_eeze=$enableval],
+  AC_CACHE_VAL([e_cv_want_mount_eeze], [e_cv_want_mount_eeze=yes]))
+
+eeze_mount=
+EEZE_MOUNT_CONFIG=0
+if test "x$e_cv_want_mount_eeze" != "xno" ; then
+      AC_CHECK_LIB([eeze], [eeze_disk_function],
+        [
+           eeze_mount="eeze >= 1.1.0"
+           EEZE_MOUNT_CONFIG=1
+           AC_DEFINE_UNQUOTED([HAVE_EEZE_MOUNT], [1], [enable eeze mounting])
+           AC_MSG_NOTICE([eeze mounting enabled])
+        ],
+        [
+           AC_MSG_NOTICE([eeze mounting disabled])
+           e_cv_want_mount_eeze=no
+        ]
+      )
+fi
+
 AC_SUBST([EEZE_MOUNT_CONFIG])
+AC_SUBST([DBUS_MOUNT_CONFIG])
 AM_CONDITIONAL([HAVE_EEZE], [test "x${device_backend}" = "xeeze"])
-##AM_CONDITIONAL([HAVE_EEZE_MOUNT], [test "x${eeze_mount}" = "xyes"])
+AM_CONDITIONAL([HAVE_HAL_MOUNT], [test -n "$hal_mount"])
+AM_CONDITIONAL([HAVE_UDISKS_MOUNT], [test -n "$udisks_mount"])
+##AM_CONDITIONAL([HAVE_UDISKS_MOUNT], [false])
+##AM_CONDITIONAL([HAVE_EEZE_MOUNT], [test -n "$eeze_mount"])
 AM_CONDITIONAL([HAVE_EEZE_MOUNT], [false])
 
 # doxygen program for documentation building
@@ -351,29 +383,10 @@ PKG_CHECK_MODULES(E_THUMB, [
   efreet >= 1.0.0
 ])
 
-if test -z $eeze_mount ; then
-  PKG_CHECK_MODULES(E_FM, [
-    ecore >= 1.0.0
-    ecore-file >= 1.0.0
-    ecore-ipc >= 1.0.0
-    eet >= 1.4.0
-    efreet >= 1.0.0
-    dbus-1
-    edbus >= 1.0.0
-    ehal >= 1.0.0
-    eina >= 1.0.0
-  ])
-else
-  PKG_CHECK_MODULES(E_FM, [
-    ecore >= 1.0.0
-    ecore-file >= 1.0.0
-    ecore-ipc >= 1.0.0
-    eet >= 1.4.0
-    efreet >= 1.0.0
-    eeze >= 1.1.0
-    eina >= 1.0.0
-  ])
-fi
+efm_requires="ecore >= 1.0.0 ecore-file >= 1.0.0 ecore-ipc >= 1.0.0 eet >= 1.4.0 efreet >= 1.0.0 eina >= 1.0.0"
+efm_requires+=" $eeze_mount $dbus_mount $hal_mount $udisks_mount"
+
+PKG_CHECK_MODULES(E_FM, [$efm_requires])
 
 PKG_CHECK_MODULES(E_FM_OP, [
   ecore >= 1.0.0
@@ -402,11 +415,6 @@ PKG_CHECK_MODULES(E_INIT, [
   eina >= 1.0.0
 ])
 
-if test -z $eeze_mount ; then
-  hal_check="ehal >= 1.0.0"
-else
-  hal_check=""
-fi
 PKG_CHECK_MODULES(E, [
   evas >= 1.0.0
   ecore >= 1.0.0
@@ -425,10 +433,12 @@ PKG_CHECK_MODULES(E, [
   eina >= 1.0.0
   dbus-1
   edbus >= 1.0.0
-  $hal_check
+  $hal_mount
+  $eeze_mount
+  $udisks_mount
   $device_backend
 ])
-requirements_e="evas >= 1.0.0 ecore >= 1.0.0 ecore-x >= 1.0.0 ecore-evas >= 1.0.0 ecore-con >= 1.0.0 ecore-ipc >= 1.0.0 ecore-file >= 1.0.0 eet >= 1.4.0 edje >= 1.0.0 efreet >= 1.0.0 efreet-mime >= 1.0.0 eina >= 1.0.0 dbus-1 edbus >= 1.0.0 $hal_check $device_backend"
+requirements_e="evas >= 1.0.0 ecore >= 1.0.0 ecore-x >= 1.0.0 ecore-evas >= 1.0.0 ecore-con >= 1.0.0 ecore-ipc >= 1.0.0 ecore-file >= 1.0.0 eet >= 1.4.0 edje >= 1.0.0 efreet >= 1.0.0 efreet-mime >= 1.0.0 eina >= 1.0.0 dbus-1 edbus >= 1.0.0 $hal_mount $udisks_mount $eeze_mount $device_backend"
 
 AC_E_CHECK_PKG(ECORE_IMF, [ecore-imf >= 1.0.0 ecore-imf-evas >= 1.0.0], [], [:])
 
@@ -866,6 +876,9 @@ echo
 cat << DEVICE_EOF
 Preferred Backends:
  * device..........: $device_backend
+ * hal_mount...........: $((test x$e_cv_want_mount_hal != xno) && echo enabled)
+ * udisks_mount........: $((test x$e_cv_want_mount_udisks != xno) && echo enabled)
+ * eeze_mount..........: $((test x$e_cv_want_mount_eeze != xno) && echo enabled)
 DEVICE_EOF
 echo
 
