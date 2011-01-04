@@ -302,6 +302,8 @@ else
 fi
 AC_MSG_RESULT($device_backend)
 AM_CONDITIONAL([HAVE_EEZE], [test "x${device_backend}" = "xeeze"])
+test "x${device_backend}" = "xeeze" || AC_DEFINE_UNQUOTED([HAVE_HAL],[1],[enable HAL support])
+
 
 DBUS_MOUNT_CONFIG=1
 dbus_mount="dbus-1"
