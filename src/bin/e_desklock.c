@@ -730,7 +730,7 @@ _desklock_auth(char *passwd)
 	     exit(0);
 	  }
 	free(current_user);
-	exit(-1);
+	exit(1);
      }
    else
      {

@@ -106,7 +106,7 @@ e_alert_show(const char *text)
      {
 	fputs(text, stderr);
 	fflush(stderr);
-	exit(-1);
+	exit(1);
      }
    
    fh = fs->ascent + fs->descent;

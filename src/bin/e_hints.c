@@ -149,7 +149,7 @@ e_hints_init(void)
                          {
                             e_error_message_show(_("A previous instance of Enlightenment is still active\n"
                                                    "on this screen. Aborting startup.\n"));
-                            exit(-1);
+                            exit(1);
                          }
                     }
                }

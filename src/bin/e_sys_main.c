@@ -56,7 +56,7 @@ main(int argc, char **argv)
      }
    else
      {
-	exit(-1);
+	exit(1);
      }
 
    uid = getuid();
