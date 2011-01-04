@@ -20,13 +20,20 @@ internal_bindir = $(libdir)/enlightenment/utils
 internal_bin_PROGRAMS = \
 enlightenment_fm 
 
+if HAVE_HAL_MOUNT
+hal_s = \
+e_fm_main_hal.h \
+e_fm_main_hal.c
+else
+hal_s =
+endif
+
 enlightenment_fm_SOURCES = \
 e_fm_main.h \
-e_fm_main_dbus.h \
 e_fm_ipc.h \
 e_fm_main.c \
-e_fm_main_dbus.c \
 e_fm_ipc.c \
+$(hal_s) \
 ../e_fm_shared_codec.c \
 ../e_fm_shared_device.c \
 ../e_user.c \

@@ -54,17 +54,32 @@ void *alloca (size_t);
 #include "e_config_data.h"
 #include "e_fm_op.h"
 
-/* if using ehal, functions will point to _e_fm_main_dbus_X
+#include "e_fm_shared_device.h"
+#ifdef HAVE_HAL_MOUNT
+# include "e_fm_main_hal.h"
+#endif
+#ifdef HAVE_UDISKS_MOUNT
+# include "e_fm_main_udisks.h"
+#endif
+#ifdef HAVE_EEZE_MOUNT
+# include "e_fm_main_eeze.h"
+#endif
+
+
+/* if using ehal, functions will point to _e_fm_main_hal_X
+ * if using udisks, functions will point to _e_fm_main_udisks_X
  * if using eeze, functions will point to _e_fm_main_eeze_X
  */
-#include "e_fm_shared_device.h"
-#ifndef HAVE_EEZE_MOUNT
-#include "e_fm_main_dbus.h"
-#define _E_FM(FUNC) _e_fm_main_dbus_##FUNC
-#else
-#include "e_fm_main_eeze.h"
-#define _E_FM(FUNC) _e_fm_main_eeze_##FUNC
-#endif
+
+typedef enum
+{
+   USING_RASTER_MOUNT,
+   USING_HAL_MOUNT,
+   USING_UDISKS_MOUNT,
+   USING_EEZE_MOUNT
+} efm_mode;
+
+static efm_mode mode = USING_RASTER_MOUNT;
 
 /* FIXME: things to add to the slave enlightenment_fm process and ipc to e:
  * 
@@ -86,13 +101,33 @@ void *alloca (size_t);
 static void
 _e_fm_init(void)
 {
-   _E_FM(init)();
+#ifdef HAVE_HAL_MOUNT
+   _e_fm_main_hal_init();
+#else
+# ifdef HAVE_UDISKS_MOUNT
+   _e_fm_main_udisks_init();
+# else
+#  ifdef HAVE_EEZE_MOUNT
+   _e_fm_main_eeze_init();
+#  endif
+# endif
+#endif
 }
 
 static void
 _e_fm_shutdown(void)
 {
-   _E_FM(shutdown)();
+#ifdef HAVE_HAL_MOUNT
+   _e_fm_main_hal_shutdown();
+#else
+# ifdef HAVE_UDISKS_MOUNT
+   _e_fm_main_udisks_shutdown();
+# else
+#  ifdef HAVE_EEZE_MOUNT
+   _e_fm_main_eeze_shutdown();
+#  endif
+# endif
+#endif
 }
 
 /* externally accessible functions */
@@ -101,18 +136,13 @@ main(int argc, char **argv)
 {
    int i;
 
-   for (i = 1; i < argc; i++)
+   if (argc > 1)
      {
-	if ((!strcmp(argv[i], "-h")) ||
-	    (!strcmp(argv[i], "-help")) ||
-	    (!strcmp(argv[i], "--help")))
-	  {
-	     printf(
-		    "This is an internal tool for Enlightenment.\n"
-		    "do not use it.\n"
-		    );
-	     exit(0);
-	  }
+        printf(
+        "This is an internal tool for Enlightenment.\n"
+        "do not use it.\n"
+        );
+        exit(0);
      }
 
    eina_init();
@@ -146,6 +176,28 @@ main(int argc, char **argv)
    eina_shutdown();
 }
 
+#ifdef HAVE_HAL_MOUNT
+void
+_e_fm_main_hal_catch(Eina_Bool usable)
+{
+   mode = USING_HAL_MOUNT;
+}
+#endif
+#ifdef HAVE_UDISKS_MOUNT
+void
+_e_fm_main_udisks_catch(Eina_Bool usable)
+{
+   mode = USING_UDISKS_MOUNT;
+}
+#endif
+#ifdef HAVE_EEZE_MOUNT
+void
+_e_fm_main_eeze_catch(Eina_Bool usable)
+{
+   mode = USING_EEZE_MOUNT;
+}
+#endif
+
 void
 _e_storage_free(E_Storage *s)
 {
@@ -163,36 +215,144 @@ _e_volume_free(E_Volume *v)
 EAPI void
 e_volume_mount(E_Volume *v)
 {
-   _E_FM(volume_mount)(v);
+  switch (mode)
+    {
+#ifdef HAVE_HAL_MOUNT
+     case USING_HAL_MOUNT:
+       _e_fm_main_hal_volume_mount(v);
+       break;
+#endif
+#ifdef HAVE_UDISKS_MOUNT
+     case USING_UDISKS_MOUNT:
+       _e_fm_main_udisks_volume_mount(v);
+       break;
+#endif
+#ifdef HAVE_EEZE_MOUNT
+     case USING_EEZE_MOUNT:
+       _e_fm_main_eeze_volume_mount(v);
+       break;
+#endif
+     default:
+       printf("raster can't mount disks by himself!\n");
+    }
 }
 
 
 EAPI void
 e_volume_unmount(E_Volume *v)
 {
-   _E_FM(volume_unmount)(v);
+  switch (mode)
+    {
+#ifdef HAVE_HAL_MOUNT
+     case USING_HAL_MOUNT:
+       _e_fm_main_hal_volume_unmount(v);
+       break;
+#endif
+#ifdef HAVE_UDISKS_MOUNT
+     case USING_UDISKS_MOUNT:
+       _e_fm_main_udisks_volume_unmount(v);
+       break;
+#endif
+#ifdef HAVE_EEZE_MOUNT
+     case USING_EEZE_MOUNT:
+       _e_fm_main_eeze_volume_unmount(v);
+       break;
+#endif
+     default:
+       printf("raster can't unmount disks by himself!\n");
+    }
 }
 
 EAPI void
 e_volume_eject(E_Volume *v)
 {
-   _E_FM(volume_eject)(v);
+  switch (mode)
+    {
+#ifdef HAVE_HAL_MOUNT
+     case USING_HAL_MOUNT:
+       _e_fm_main_hal_volume_eject(v);
+       break;
+#endif
+#ifdef HAVE_UDISKS_MOUNT
+     case USING_UDISKS_MOUNT:
+       _e_fm_main_udisks_volume_eject(v);
+       break;
+#endif
+#ifdef HAVE_EEZE_MOUNT
+     case USING_EEZE_MOUNT:
+       _e_fm_main_eeze_volume_eject(v);
+       break;
+#endif
+     default:
+       printf("raster can't eject disks by himself!\n");
+    }
 }
 
 EAPI E_Volume *
 e_volume_find(const char *udi)
 {
-   return _E_FM(volume_find)(udi);
+   switch (mode)
+     {
+#ifdef HAVE_HAL_MOUNT
+      case USING_HAL_MOUNT:
+        return _e_fm_main_hal_volume_find(udi);
+#endif
+#ifdef HAVE_UDISKS_MOUNT
+      case USING_UDISKS_MOUNT:
+        return _e_fm_main_udisks_volume_find(udi);
+#endif
+#ifdef HAVE_EEZE_MOUNT
+      case USING_EEZE_MOUNT:
+        return _e_fm_main_eeze_volume_find(udi);
+#endif
+      default:
+        printf("raster can't find disks by himself!\n");
+     }
 }
 
 EAPI void
 e_storage_del(const char *udi)
 {
-   _E_FM(storage_del)(udi);
+  switch (mode)
+    {
+#ifdef HAVE_HAL_MOUNT
+     case USING_HAL_MOUNT:
+       _e_fm_main_hal_storage_del(udi);
+       break;
+#endif
+#ifdef HAVE_UDISKS_MOUNT
+     case USING_UDISKS_MOUNT:
+       _e_fm_main_udisks_storage_del(udi);
+       break;
+#endif
+#ifdef HAVE_EEZE_MOUNT
+     case USING_EEZE_MOUNT:
+       _e_fm_main_eeze_storage_del(udi);
+       break;
+#endif
+     default:
+       printf("raster can't delete disks by himself!\n");
+    }
 }
 
 EAPI E_Storage *
 e_storage_find(const char *udi)
 {
-   return _E_FM(storage_find)(udi);
+  switch (mode)
+    {
+#ifdef HAVE_HAL_MOUNT
+     case USING_HAL_MOUNT:
+       return _e_fm_main_hal_storage_find(udi);
+#endif
+#ifdef HAVE_UDISKS_MOUNT
+     case USING_UDISKS_MOUNT:
+       return _e_fm_main_udisks_storage_find(udi);
+#endif
+#ifdef HAVE_EEZE_MOUNT
+     case USING_EEZE_MOUNT:
+       return _e_fm_main_eeze_storage_find(udi);
+#endif
+     default:
+       printf("raster can't find disks by himself!\n");
+    }
 }

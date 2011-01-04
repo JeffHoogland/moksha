@@ -49,7 +49,7 @@ void *alloca (size_t);
 #include <E_Hal.h>
 
 #include "e_fm_main.h"
-#include "e_fm_main_dbus.h"
+#include "e_fm_main_hal.h"
 
 #include "e_fm_shared_codec.h"
 #include "e_fm_shared_device.h"
@@ -57,36 +57,37 @@ void *alloca (size_t);
 #include "e_fm_device.h"
 
 static E_DBus_Signal_Handler *_hal_poll = NULL;
-static E_DBus_Connection *_e_fm_main_dbus_conn = NULL;
+static E_DBus_Connection *_e_fm_main_hal_conn = NULL;
+static Eina_List *_e_stores = NULL;
 
-static void _e_fm_main_dbus_cb_dev_all(void *user_data, void *reply_data, DBusError *error);
-static void _e_fm_main_dbus_cb_dev_store(void *user_data, void *reply_data, DBusError *error);
-static void _e_fm_main_dbus_cb_dev_vol(void *user_data, void *reply_data, DBusError *error);
-static void _e_fm_main_dbus_cb_store_is(void *user_data, void *reply_data, DBusError *error);
-static void _e_fm_main_dbus_cb_vol_is(void *user_data, void *reply_data, DBusError *error);
-static void _e_fm_main_dbus_cb_dev_add(void *data, DBusMessage *msg);
-static void _e_fm_main_dbus_cb_dev_del(void *data, DBusMessage *msg);
-static void _e_fm_main_dbus_cb_cap_add(void *data, DBusMessage *msg);
-static void _e_fm_main_dbus_cb_prop_modified(void *data, DBusMessage *msg);
-static void _e_fm_main_dbus_cb_store_prop(void *data, void *reply_data, DBusError *error);
-static void _e_fm_main_dbus_cb_vol_prop(void *data, void *reply_data, DBusError *error);
-static void _e_fm_main_dbus_cb_vol_prop_mount_modified(void *data, void *reply_data, DBusError *error);
-static void _e_fm_main_dbus_cb_vol_mounted(void *user_data, void *method_return, DBusError *error);
-static void _e_fm_main_dbus_cb_vol_unmounted(void *user_data, void *method_return, DBusError *error);
-static void _e_fm_main_dbus_cb_vol_unmounted_before_eject(void *user_data, void *method_return, DBusError *error);
+static void _e_fm_main_hal_cb_dev_all(void *user_data, void *reply_data, DBusError *error);
+static void _e_fm_main_hal_cb_dev_store(void *user_data, void *reply_data, DBusError *error);
+static void _e_fm_main_hal_cb_dev_vol(void *user_data, void *reply_data, DBusError *error);
+static void _e_fm_main_hal_cb_store_is(void *user_data, void *reply_data, DBusError *error);
+static void _e_fm_main_hal_cb_vol_is(void *user_data, void *reply_data, DBusError *error);
+static void _e_fm_main_hal_cb_dev_add(void *data, DBusMessage *msg);
+static void _e_fm_main_hal_cb_dev_del(void *data, DBusMessage *msg);
+static void _e_fm_main_hal_cb_cap_add(void *data, DBusMessage *msg);
+static void _e_fm_main_hal_cb_prop_modified(void *data, DBusMessage *msg);
+static void _e_fm_main_hal_cb_store_prop(void *data, void *reply_data, DBusError *error);
+static void _e_fm_main_hal_cb_vol_prop(void *data, void *reply_data, DBusError *error);
+static void _e_fm_main_hal_cb_vol_prop_mount_modified(void *data, void *reply_data, DBusError *error);
+static void _e_fm_main_hal_cb_vol_mounted(void *user_data, void *method_return, DBusError *error);
+static void _e_fm_main_hal_cb_vol_unmounted(void *user_data, void *method_return, DBusError *error);
+static void _e_fm_main_hal_cb_vol_unmounted_before_eject(void *user_data, void *method_return, DBusError *error);
 
-static Eina_Bool _e_fm_main_dbus_vb_vol_ejecting_after_unmount(void *data);
-static void _e_fm_main_dbus_cb_vol_ejected(void *user_data, void *method_return, DBusError *error);
-static int  _e_fm_main_dbus_format_error_msg(char **buf, E_Volume *v, DBusError *error);
-static void _e_fm_main_dbus_hal_test(void *data, DBusMessage *msg, DBusError *error);
-static void _e_fm_main_dbus_hal_poll(void *data, DBusMessage *msg);
+static Eina_Bool _e_fm_main_hal_vb_vol_ejecting_after_unmount(void *data);
+static void _e_fm_main_hal_cb_vol_ejected(void *user_data, void *method_return, DBusError *error);
+static int  _e_fm_main_hal_format_error_msg(char **buf, E_Volume *v, DBusError *error);
+static void _e_fm_main_hal_test(void *data, DBusMessage *msg, DBusError *error);
+static void _e_fm_main_hal_poll(void *data, DBusMessage *msg);
 
-static Eina_Bool _e_fm_main_dbus_vol_mount_timeout(void *data);
-static Eina_Bool _e_fm_main_dbus_vol_unmount_timeout(void *data);
-static Eina_Bool _e_fm_main_dbus_vol_eject_timeout(void *data);
+static Eina_Bool _e_fm_main_hal_vol_mount_timeout(void *data);
+static Eina_Bool _e_fm_main_hal_vol_unmount_timeout(void *data);
+static Eina_Bool _e_fm_main_hal_vol_eject_timeout(void *data);
 
 static void
-_e_fm_main_dbus_hal_poll(void *data __UNUSED__, DBusMessage *msg)
+_e_fm_main_hal_poll(void *data __UNUSED__, DBusMessage *msg)
 {
    DBusError err;
    const char *name, *from, *to;
@@ -101,48 +102,55 @@ _e_fm_main_dbus_hal_poll(void *data __UNUSED__, DBusMessage *msg)
    
    printf("name: %s\nfrom: %s\nto: %s\n", name, from, to);
    if ((name) && !strcmp(name, E_HAL_SENDER))
-     _e_fm_main_dbus_hal_test(NULL, NULL, NULL);
+     _e_fm_main_hal_test(NULL, NULL, NULL);
 }
 
 static void
-_e_fm_main_dbus_hal_test(void *data __UNUSED__, DBusMessage *msg __UNUSED__, DBusError *error)
+_e_fm_main_hal_test(void *data __UNUSED__, DBusMessage *msg __UNUSED__, DBusError *error)
 {
    if ((error) && (dbus_error_is_set(error)))
      {
        dbus_error_free(error);
        if (!_hal_poll)
-         _hal_poll = 
-          e_dbus_signal_handler_add(_e_fm_main_dbus_conn, 
+         _hal_poll =  e_dbus_signal_handler_add(_e_fm_main_hal_conn, 
                                     E_DBUS_FDO_BUS, E_DBUS_FDO_PATH, 
                                     E_DBUS_FDO_INTERFACE,
-                                    "NameOwnerChanged", _e_fm_main_dbus_hal_poll, NULL);
+                                    "NameOwnerChanged", _e_fm_main_hal_poll, NULL);
+#ifdef HAVE_UDISKS_MOUNT
+       _e_fm_main_udisks_init(); /* check for udisks while listening for hal */
+#else
+# ifdef HAVE_EEZE_MOUNT
+       _e_fm_main_eeze_init(); /* check for eeze while listening for hal */
+# endif
+#endif
        return;
      }
    if (_hal_poll)
-     e_dbus_signal_handler_del(_e_fm_main_dbus_conn, _hal_poll);
+     e_dbus_signal_handler_del(_e_fm_main_hal_conn, _hal_poll);
 
-   e_hal_manager_get_all_devices(_e_fm_main_dbus_conn, _e_fm_main_dbus_cb_dev_all, NULL);
-   e_hal_manager_find_device_by_capability(_e_fm_main_dbus_conn, "storage",
-                                           _e_fm_main_dbus_cb_dev_store, NULL);
-   e_hal_manager_find_device_by_capability(_e_fm_main_dbus_conn, "volume",
-                                           _e_fm_main_dbus_cb_dev_vol, NULL);
+   e_hal_manager_get_all_devices(_e_fm_main_hal_conn, _e_fm_main_hal_cb_dev_all, NULL);
+   e_hal_manager_find_device_by_capability(_e_fm_main_hal_conn, "storage",
+                                           _e_fm_main_hal_cb_dev_store, NULL);
+   e_hal_manager_find_device_by_capability(_e_fm_main_hal_conn, "volume",
+                                           _e_fm_main_hal_cb_dev_vol, NULL);
    
-   e_dbus_signal_handler_add(_e_fm_main_dbus_conn, E_HAL_SENDER,
+   e_dbus_signal_handler_add(_e_fm_main_hal_conn, E_HAL_SENDER,
                              E_HAL_MANAGER_PATH,
                              E_HAL_MANAGER_INTERFACE,
-                             "DeviceAdded", _e_fm_main_dbus_cb_dev_add, NULL);
-   e_dbus_signal_handler_add(_e_fm_main_dbus_conn, E_HAL_SENDER,
+                             "DeviceAdded", _e_fm_main_hal_cb_dev_add, NULL);
+   e_dbus_signal_handler_add(_e_fm_main_hal_conn, E_HAL_SENDER,
                              E_HAL_MANAGER_PATH,
                              E_HAL_MANAGER_INTERFACE,
-                             "DeviceRemoved", _e_fm_main_dbus_cb_dev_del, NULL);
-   e_dbus_signal_handler_add(_e_fm_main_dbus_conn, E_HAL_SENDER,
+                             "DeviceRemoved", _e_fm_main_hal_cb_dev_del, NULL);
+   e_dbus_signal_handler_add(_e_fm_main_hal_conn, E_HAL_SENDER,
                              E_HAL_MANAGER_PATH,
                              E_HAL_MANAGER_INTERFACE,
-                             "NewCapability", _e_fm_main_dbus_cb_cap_add, NULL);
+                             "NewCapability", _e_fm_main_hal_cb_cap_add, NULL);
+   _e_fm_main_hal_catch(EINA_TRUE); /* signal usage of HAL for mounting */
 }
 
 static void
-_e_fm_main_dbus_cb_dev_all(void *user_data __UNUSED__, void *reply_data, DBusError *error)
+_e_fm_main_hal_cb_dev_all(void *user_data __UNUSED__, void *reply_data, DBusError *error)
 {
    E_Hal_Manager_Get_All_Devices_Return *ret = reply_data;
    Eina_List *l;
@@ -159,15 +167,15 @@ _e_fm_main_dbus_cb_dev_all(void *user_data __UNUSED__, void *reply_data, DBusErr
    EINA_LIST_FOREACH(ret->strings, l, udi)
      {
 //	printf("DB INIT DEV+: %s\n", udi);
-	e_hal_device_query_capability(_e_fm_main_dbus_conn, udi, "storage",
-	      _e_fm_main_dbus_cb_store_is, (void*)eina_stringshare_add(udi));
-	e_hal_device_query_capability(_e_fm_main_dbus_conn, udi, "volume", 
-	      _e_fm_main_dbus_cb_vol_is, (void*)eina_stringshare_add(udi));
+	e_hal_device_query_capability(_e_fm_main_hal_conn, udi, "storage",
+	      _e_fm_main_hal_cb_store_is, (void*)eina_stringshare_add(udi));
+	e_hal_device_query_capability(_e_fm_main_hal_conn, udi, "volume", 
+	      _e_fm_main_hal_cb_vol_is, (void*)eina_stringshare_add(udi));
      }
 }
 
 static void
-_e_fm_main_dbus_cb_dev_store(void *user_data __UNUSED__, void *reply_data, DBusError *error)
+_e_fm_main_hal_cb_dev_store(void *user_data __UNUSED__, void *reply_data, DBusError *error)
 {
    E_Hal_Manager_Find_Device_By_Capability_Return *ret = reply_data;
    Eina_List *l;
@@ -184,12 +192,12 @@ _e_fm_main_dbus_cb_dev_store(void *user_data __UNUSED__, void *reply_data, DBusE
    EINA_LIST_FOREACH(ret->strings, l, device)
      {
 //	printf("DB STORE+: %s\n", device);
-	_e_fm_main_dbus_storage_add(device);
+	_e_fm_main_hal_storage_add(device);
      }
 }
 
 static void
-_e_fm_main_dbus_cb_dev_vol(void *user_data __UNUSED__, void *reply_data, DBusError *error)
+_e_fm_main_hal_cb_dev_vol(void *user_data __UNUSED__, void *reply_data, DBusError *error)
 {
    E_Hal_Manager_Find_Device_By_Capability_Return *ret = reply_data;
    Eina_List *l;
@@ -206,12 +214,12 @@ _e_fm_main_dbus_cb_dev_vol(void *user_data __UNUSED__, void *reply_data, DBusErr
    EINA_LIST_FOREACH(ret->strings, l, device)
      {
 //	printf("DB VOL+: %s\n", device);
-	_e_fm_main_dbus_volume_add(device, 1);
+	_e_fm_main_hal_volume_add(device, 1);
      }
 }
 
 static void
-_e_fm_main_dbus_cb_store_is(void *user_data, void *reply_data, DBusError *error)
+_e_fm_main_hal_cb_store_is(void *user_data, void *reply_data, DBusError *error)
 {
    char *udi = user_data;
    E_Hal_Device_Query_Capability_Return *ret = reply_data;
@@ -225,7 +233,7 @@ _e_fm_main_dbus_cb_store_is(void *user_data, void *reply_data, DBusError *error)
    if (ret && ret->boolean)
      {
 //	printf("DB STORE IS+: %s\n", udi);
-	_e_fm_main_dbus_storage_add(udi);
+	_e_fm_main_hal_storage_add(udi);
      }
    
    error:
@@ -233,7 +241,7 @@ _e_fm_main_dbus_cb_store_is(void *user_data, void *reply_data, DBusError *error)
 }
 
 static void
-_e_fm_main_dbus_cb_vol_is(void *user_data, void *reply_data, DBusError *error)
+_e_fm_main_hal_cb_vol_is(void *user_data, void *reply_data, DBusError *error)
 {
    char *udi = user_data;
    E_Hal_Device_Query_Capability_Return *ret = reply_data;
@@ -247,7 +255,7 @@ _e_fm_main_dbus_cb_vol_is(void *user_data, void *reply_data, DBusError *error)
    if (ret && ret->boolean)
      {
 //	printf("DB VOL IS+: %s\n", udi);
-	_e_fm_main_dbus_volume_add(udi, 0);
+	_e_fm_main_hal_volume_add(udi, 0);
      }
    
    error:
@@ -255,7 +263,7 @@ _e_fm_main_dbus_cb_vol_is(void *user_data, void *reply_data, DBusError *error)
 }
 
 static void
-_e_fm_main_dbus_cb_dev_add(void *data __UNUSED__, DBusMessage *msg)
+_e_fm_main_hal_cb_dev_add(void *data __UNUSED__, DBusMessage *msg)
 {
    DBusError err;
    char *udi = NULL;
@@ -263,14 +271,14 @@ _e_fm_main_dbus_cb_dev_add(void *data __UNUSED__, DBusMessage *msg)
    dbus_error_init(&err);
    dbus_message_get_args(msg, &err, DBUS_TYPE_STRING, &udi, DBUS_TYPE_INVALID);
    if (!udi) return;
-   e_hal_device_query_capability(_e_fm_main_dbus_conn, udi, "storage", 
-				       _e_fm_main_dbus_cb_store_is, (void*)eina_stringshare_add(udi));
-   e_hal_device_query_capability(_e_fm_main_dbus_conn, udi, "volume",
-				 _e_fm_main_dbus_cb_vol_is, (void*)eina_stringshare_add(udi));
+   e_hal_device_query_capability(_e_fm_main_hal_conn, udi, "storage", 
+				       _e_fm_main_hal_cb_store_is, (void*)eina_stringshare_add(udi));
+   e_hal_device_query_capability(_e_fm_main_hal_conn, udi, "volume",
+				 _e_fm_main_hal_cb_vol_is, (void*)eina_stringshare_add(udi));
 }
 
 static void
-_e_fm_main_dbus_cb_dev_del(void *data __UNUSED__, DBusMessage *msg)
+_e_fm_main_hal_cb_dev_del(void *data __UNUSED__, DBusMessage *msg)
 {
    DBusError err;
    char *udi;
@@ -281,12 +289,12 @@ _e_fm_main_dbus_cb_dev_del(void *data __UNUSED__, DBusMessage *msg)
 			 &err, DBUS_TYPE_STRING, 
 			 &udi, DBUS_TYPE_INVALID);
 //   printf("DB DEV-: %s\n", udi);
-   _e_fm_main_dbus_storage_del(udi);
-   _e_fm_main_dbus_volume_del(udi);
+   _e_fm_main_hal_storage_del(udi);
+   _e_fm_main_hal_volume_del(udi);
 }
 
 static void
-_e_fm_main_dbus_cb_cap_add(void *data __UNUSED__, DBusMessage *msg)
+_e_fm_main_hal_cb_cap_add(void *data __UNUSED__, DBusMessage *msg)
 {
    DBusError err;
    char *udi, *capability;
@@ -300,12 +308,12 @@ _e_fm_main_dbus_cb_cap_add(void *data __UNUSED__, DBusMessage *msg)
    if (!strcmp(capability, "storage"))
      {
 //        printf("DB STORE CAP+: %s\n", udi);
-	_e_fm_main_dbus_storage_add(udi);
+	_e_fm_main_hal_storage_add(udi);
      }
 }
 
 static void
-_e_fm_main_dbus_cb_prop_modified(void *data, DBusMessage *msg)
+_e_fm_main_hal_cb_prop_modified(void *data, DBusMessage *msg)
 {
    E_Volume *v;
    DBusMessageIter iter, sub, subsub;
@@ -341,8 +349,8 @@ _e_fm_main_dbus_cb_prop_modified(void *data, DBusMessage *msg)
 	dbus_message_iter_get_basic(&subsub, &(prop.name));
 	if (!strcmp(prop.name, "volume.mount_point"))
 	  {
-	     e_hal_device_get_all_properties(_e_fm_main_dbus_conn, v->udi,
-					     _e_fm_main_dbus_cb_vol_prop_mount_modified,
+	     e_hal_device_get_all_properties(_e_fm_main_hal_conn, v->udi,
+					     _e_fm_main_hal_cb_vol_prop_mount_modified,
 					     v);
 	     return;
 	  }
@@ -353,7 +361,7 @@ _e_fm_main_dbus_cb_prop_modified(void *data, DBusMessage *msg)
 }
 
 static void
-_e_fm_main_dbus_cb_store_prop(void *data, void *reply_data, DBusError *error)
+_e_fm_main_hal_cb_store_prop(void *data, void *reply_data, DBusError *error)
 {
    E_Storage *s = data;
    E_Hal_Properties *ret = reply_data;
@@ -421,11 +429,11 @@ _e_fm_main_dbus_cb_store_prop(void *data, void *reply_data, DBusError *error)
    
    error: 
 //   printf("ERR %s\n", s->udi);
-   _e_fm_main_dbus_storage_del(s->udi);
+   _e_fm_main_hal_storage_del(s->udi);
 }
 
 static void
-_e_fm_main_dbus_cb_vol_prop(void *data, void *reply_data, DBusError *error)
+_e_fm_main_hal_cb_vol_prop(void *data, void *reply_data, DBusError *error)
 {
    E_Volume *v = data;
    E_Storage *s = NULL;
@@ -514,12 +522,12 @@ _e_fm_main_dbus_cb_vol_prop(void *data, void *reply_data, DBusError *error)
    return;
    
    error:
-   _e_fm_main_dbus_volume_del(v->udi);
+   _e_fm_main_hal_volume_del(v->udi);
    return;
 }
 
 static int
-_e_fm_main_dbus_format_error_msg(char **buf, E_Volume *v, DBusError *error)
+_e_fm_main_hal_format_error_msg(char **buf, E_Volume *v, DBusError *error)
 {
    int size, vu, vm, en;
    char *tmp;
@@ -542,7 +550,7 @@ _e_fm_main_dbus_format_error_msg(char **buf, E_Volume *v, DBusError *error)
 }
 
 static void
-_e_fm_main_dbus_cb_vol_prop_mount_modified(void *data, void *reply_data, DBusError *error)
+_e_fm_main_hal_cb_vol_prop_mount_modified(void *data, void *reply_data, DBusError *error)
 {
    E_Volume *v = data;
    E_Hal_Device_Get_All_Properties_Return *ret = reply_data;
@@ -554,7 +562,7 @@ _e_fm_main_dbus_cb_vol_prop_mount_modified(void *data, void *reply_data, DBusErr
         char *buf;
         int size;
    
-        size = _e_fm_main_dbus_format_error_msg(&buf, v, error);
+        size = _e_fm_main_hal_format_error_msg(&buf, v, error);
         if (v->mounted)
            ecore_ipc_server_send(_e_fm_ipc_server, 6/*E_IPC_DOMAIN_FM*/, E_FM_OP_UNMOUNT_ERROR,
                                  0, 0, 0, buf, size);
@@ -598,7 +606,7 @@ _e_fm_main_dbus_cb_vol_prop_mount_modified(void *data, void *reply_data, DBusErr
 }
 
 static Eina_Bool
-_e_fm_main_dbus_vol_mount_timeout(void *data)
+_e_fm_main_hal_vol_mount_timeout(void *data)
 {
    E_Volume *v = data;
    DBusError error;
@@ -609,7 +617,7 @@ _e_fm_main_dbus_vol_mount_timeout(void *data)
    dbus_pending_call_cancel(v->op);
    error.name = "org.enlightenment.fm2.MountTimeout";
    error.message = "Unable to mount the volume with specified time-out.";
-   size = _e_fm_main_dbus_format_error_msg(&buf, v, &error);
+   size = _e_fm_main_hal_format_error_msg(&buf, v, &error);
    ecore_ipc_server_send(_e_fm_ipc_server, 6/*E_IPC_DOMAIN_FM*/, E_FM_OP_MOUNT_ERROR,
                          0, 0, 0, buf, size);
    free(buf);
@@ -618,7 +626,7 @@ _e_fm_main_dbus_vol_mount_timeout(void *data)
 }
 
 static void
-_e_fm_main_dbus_cb_vol_mounted(void *user_data, void *method_return __UNUSED__, DBusError *error)
+_e_fm_main_hal_cb_vol_mounted(void *user_data, void *method_return __UNUSED__, DBusError *error)
 {
    E_Volume *v = user_data;
    char *buf;
@@ -632,7 +640,7 @@ _e_fm_main_dbus_cb_vol_mounted(void *user_data, void *method_return __UNUSED__, 
    
    if (dbus_error_is_set(error))
      {
-        size = _e_fm_main_dbus_format_error_msg(&buf, v, error);
+        size = _e_fm_main_hal_format_error_msg(&buf, v, error);
         ecore_ipc_server_send(_e_fm_ipc_server, 6/*E_IPC_DOMAIN_FM*/, E_FM_OP_MOUNT_ERROR,
                               0, 0, 0, buf, size);
         dbus_error_free(error);
@@ -656,7 +664,7 @@ _e_fm_main_dbus_cb_vol_mounted(void *user_data, void *method_return __UNUSED__, 
 
 
 static Eina_Bool
-_e_fm_main_dbus_vol_unmount_timeout(void *data)
+_e_fm_main_hal_vol_unmount_timeout(void *data)
 {
    E_Volume *v = data;
    DBusError error;
@@ -667,7 +675,7 @@ _e_fm_main_dbus_vol_unmount_timeout(void *data)
    dbus_pending_call_cancel(v->op);
    error.name = "org.enlightenment.fm2.UnmountTimeout";
    error.message = "Unable to unmount the volume with specified time-out.";
-   size = _e_fm_main_dbus_format_error_msg(&buf, v, &error);
+   size = _e_fm_main_hal_format_error_msg(&buf, v, &error);
    ecore_ipc_server_send(_e_fm_ipc_server, 6/*E_IPC_DOMAIN_FM*/, E_FM_OP_UNMOUNT_ERROR,
                          0, 0, 0, buf, size);
    free(buf);
@@ -676,7 +684,7 @@ _e_fm_main_dbus_vol_unmount_timeout(void *data)
 }
 
 static void
-_e_fm_main_dbus_cb_vol_unmounted(void *user_data, void *method_return __UNUSED__, DBusError *error)
+_e_fm_main_hal_cb_vol_unmounted(void *user_data, void *method_return __UNUSED__, DBusError *error)
 {
    E_Volume *v = user_data;
    char *buf;
@@ -690,7 +698,7 @@ _e_fm_main_dbus_cb_vol_unmounted(void *user_data, void *method_return __UNUSED__
    
    if (dbus_error_is_set(error))
      {
-        size = _e_fm_main_dbus_format_error_msg(&buf, v, error);
+        size = _e_fm_main_hal_format_error_msg(&buf, v, error);
         ecore_ipc_server_send(_e_fm_ipc_server, 6/*E_IPC_DOMAIN_FM*/, E_FM_OP_UNMOUNT_ERROR,
                               0, 0, 0, buf, size);
         dbus_error_free(error);
@@ -714,7 +722,7 @@ _e_fm_main_dbus_cb_vol_unmounted(void *user_data, void *method_return __UNUSED__
 
 
 static Eina_Bool
-_e_fm_main_dbus_vol_eject_timeout(void *data)
+_e_fm_main_hal_vol_eject_timeout(void *data)
 {
    E_Volume *v = data;
    DBusError error;
@@ -725,7 +733,7 @@ _e_fm_main_dbus_vol_eject_timeout(void *data)
    dbus_pending_call_cancel(v->op);
    error.name = "org.enlightenment.fm2.EjectTimeout";
    error.message = "Unable to eject the media with specified time-out.";
-   size = _e_fm_main_dbus_format_error_msg(&buf, v, &error);
+   size = _e_fm_main_hal_format_error_msg(&buf, v, &error);
    ecore_ipc_server_send(_e_fm_ipc_server, 6/*E_IPC_DOMAIN_FM*/, E_FM_OP_EJECT_ERROR,
                          0, 0, 0, buf, size);
    free(buf);
@@ -734,33 +742,33 @@ _e_fm_main_dbus_vol_eject_timeout(void *data)
 }
 
 static Eina_Bool
-_e_fm_main_dbus_vb_vol_ejecting_after_unmount(void *data)
+_e_fm_main_hal_vb_vol_ejecting_after_unmount(void *data)
 {
    E_Volume *v = data;
    
-   v->guard = ecore_timer_add(E_FM_EJECT_TIMEOUT, _e_fm_main_dbus_vol_eject_timeout, v);
-   v->op = e_hal_device_volume_eject(_e_fm_main_dbus_conn, v->udi, NULL,
-                                     _e_fm_main_dbus_cb_vol_ejected, v);
+   v->guard = ecore_timer_add(E_FM_EJECT_TIMEOUT, _e_fm_main_hal_vol_eject_timeout, v);
+   v->op = e_hal_device_volume_eject(_e_fm_main_hal_conn, v->udi, NULL,
+                                     _e_fm_main_hal_cb_vol_ejected, v);
    
    return ECORE_CALLBACK_CANCEL;
 }
 
 static void
-_e_fm_main_dbus_cb_vol_unmounted_before_eject(void *user_data, void *method_return, DBusError *error)
+_e_fm_main_hal_cb_vol_unmounted_before_eject(void *user_data, void *method_return, DBusError *error)
 {
    E_Volume *v = user_data;
    char err;
 
    err = dbus_error_is_set(error) ? 1 : 0;
-   _e_fm_main_dbus_cb_vol_unmounted(user_data, method_return, error);
+   _e_fm_main_hal_cb_vol_unmounted(user_data, method_return, error);
    
    // delay is required for all message handlers were executed after unmount
    if (!err)
-      ecore_timer_add(1.0, _e_fm_main_dbus_vb_vol_ejecting_after_unmount, v);
+      ecore_timer_add(1.0, _e_fm_main_hal_vb_vol_ejecting_after_unmount, v);
 }
 
 static void
-_e_fm_main_dbus_cb_vol_ejected(void *user_data, void *method_return __UNUSED__, DBusError *error)
+_e_fm_main_hal_cb_vol_ejected(void *user_data, void *method_return __UNUSED__, DBusError *error)
 {
    E_Volume *v = user_data;
    char *buf;
@@ -774,7 +782,7 @@ _e_fm_main_dbus_cb_vol_ejected(void *user_data, void *method_return __UNUSED__, 
    
    if (dbus_error_is_set(error))
      {
-        size = _e_fm_main_dbus_format_error_msg(&buf, v, error);
+        size = _e_fm_main_hal_format_error_msg(&buf, v, error);
         ecore_ipc_server_send(_e_fm_ipc_server, 6/*E_IPC_DOMAIN_FM*/, E_FM_OP_EJECT_ERROR,
                               0, 0, 0, buf, size);
         dbus_error_free(error);
@@ -794,7 +802,7 @@ _e_fm_main_dbus_cb_vol_ejected(void *user_data, void *method_return __UNUSED__, 
 static Eina_List *_e_vols = NULL;
 
 E_Volume *
-_e_fm_main_dbus_volume_add(const char *udi, Eina_Bool first_time)
+_e_fm_main_hal_volume_add(const char *udi, Eina_Bool first_time)
 {
    E_Volume *v;
    
@@ -807,21 +815,21 @@ _e_fm_main_dbus_volume_add(const char *udi, Eina_Bool first_time)
    v->icon = NULL;
    v->first_time = first_time;
    _e_vols = eina_list_append(_e_vols, v);
-   e_hal_device_get_all_properties(_e_fm_main_dbus_conn, v->udi,
-                                   _e_fm_main_dbus_cb_vol_prop, v);
-   v->prop_handler = e_dbus_signal_handler_add(_e_fm_main_dbus_conn,
+   e_hal_device_get_all_properties(_e_fm_main_hal_conn, v->udi,
+                                   _e_fm_main_hal_cb_vol_prop, v);
+   v->prop_handler = e_dbus_signal_handler_add(_e_fm_main_hal_conn,
                                                E_HAL_SENDER,
                                                udi,
                                                E_HAL_DEVICE_INTERFACE,
                                                "PropertyModified",
-                                               _e_fm_main_dbus_cb_prop_modified, v);
+                                               _e_fm_main_hal_cb_prop_modified, v);
    v->guard = NULL;
    
    return v;
 }
 
 void
-_e_fm_main_dbus_volume_del(const char *udi)
+_e_fm_main_hal_volume_del(const char *udi)
 {
    E_Volume *v;
    
@@ -832,7 +840,7 @@ _e_fm_main_dbus_volume_del(const char *udi)
         ecore_timer_del(v->guard);
         v->guard = NULL;      
      }
-   if (v->prop_handler) e_dbus_signal_handler_del(_e_fm_main_dbus_conn, v->prop_handler);
+   if (v->prop_handler) e_dbus_signal_handler_del(_e_fm_main_hal_conn, v->prop_handler);
    if (v->validated)
      {
         //	printf("--VOL %s\n", v->udi);
@@ -847,7 +855,7 @@ _e_fm_main_dbus_volume_del(const char *udi)
 }
 
 E_Volume *
-_e_fm_main_dbus_volume_find(const char *udi)
+_e_fm_main_hal_volume_find(const char *udi)
 {
    Eina_List *l;
    E_Volume *v;
@@ -862,36 +870,36 @@ _e_fm_main_dbus_volume_find(const char *udi)
 }
 
 void
-_e_fm_main_dbus_volume_eject(E_Volume *v)
+_e_fm_main_hal_volume_eject(E_Volume *v)
 {
    if (!v || v->guard) return;
    if (v->mounted)
      {
-        v->guard = ecore_timer_add(E_FM_UNMOUNT_TIMEOUT, _e_fm_main_dbus_vol_unmount_timeout, v);
-        v->op = e_hal_device_volume_unmount(_e_fm_main_dbus_conn, v->udi, NULL,
-                                            _e_fm_main_dbus_cb_vol_unmounted_before_eject, v);
+        v->guard = ecore_timer_add(E_FM_UNMOUNT_TIMEOUT, _e_fm_main_hal_vol_unmount_timeout, v);
+        v->op = e_hal_device_volume_unmount(_e_fm_main_hal_conn, v->udi, NULL,
+                                            _e_fm_main_hal_cb_vol_unmounted_before_eject, v);
      }
    else
      {
-        v->guard = ecore_timer_add(E_FM_EJECT_TIMEOUT, _e_fm_main_dbus_vol_eject_timeout, v);
-        v->op = e_hal_device_volume_eject(_e_fm_main_dbus_conn, v->udi, NULL,
-                                          _e_fm_main_dbus_cb_vol_ejected, v);
+        v->guard = ecore_timer_add(E_FM_EJECT_TIMEOUT, _e_fm_main_hal_vol_eject_timeout, v);
+        v->op = e_hal_device_volume_eject(_e_fm_main_hal_conn, v->udi, NULL,
+                                          _e_fm_main_hal_cb_vol_ejected, v);
      }
 }
 
 void
-_e_fm_main_dbus_volume_unmount(E_Volume *v)
+_e_fm_main_hal_volume_unmount(E_Volume *v)
 {
 //   printf("unmount %s %s\n", v->udi, v->mount_point);
    if (!v || v->guard) return;
    
-   v->guard = ecore_timer_add(E_FM_UNMOUNT_TIMEOUT, _e_fm_main_dbus_vol_unmount_timeout, v);
-   v->op = e_hal_device_volume_unmount(_e_fm_main_dbus_conn, v->udi, NULL,
-                                       _e_fm_main_dbus_cb_vol_unmounted, v);
+   v->guard = ecore_timer_add(E_FM_UNMOUNT_TIMEOUT, _e_fm_main_hal_vol_unmount_timeout, v);
+   v->op = e_hal_device_volume_unmount(_e_fm_main_hal_conn, v->udi, NULL,
+                                       _e_fm_main_hal_cb_vol_unmounted, v);
 }
 
 void
-_e_fm_main_dbus_volume_mount(E_Volume *v)
+_e_fm_main_hal_volume_mount(E_Volume *v)
 {
    char buf[256];
    char buf2[256];
@@ -935,37 +943,35 @@ _e_fm_main_dbus_volume_mount(E_Volume *v)
      }
 
    v->guard = ecore_timer_add(E_FM_MOUNT_TIMEOUT, 
-                              _e_fm_main_dbus_vol_mount_timeout, v);
-   v->op = e_hal_device_volume_mount(_e_fm_main_dbus_conn, v->udi, mount_point,
+                              _e_fm_main_hal_vol_mount_timeout, v);
+   v->op = e_hal_device_volume_mount(_e_fm_main_hal_conn, v->udi, mount_point,
                                      v->fstype, opt, 
-                                     _e_fm_main_dbus_cb_vol_mounted, v);
+                                     _e_fm_main_hal_cb_vol_mounted, v);
    eina_list_free(opt);
 }
 
 void
-_e_fm_main_dbus_init(void)
+_e_fm_main_hal_init(void)
 {
    e_dbus_init();
    e_hal_init();
-   _e_fm_main_dbus_conn = e_dbus_bus_get(DBUS_BUS_SYSTEM);
+   _e_fm_main_hal_conn = e_dbus_bus_get(DBUS_BUS_SYSTEM);
    /* previously, this assumed that if dbus was running, hal was running. */
-   if (_e_fm_main_dbus_conn)
-     e_dbus_get_name_owner(_e_fm_main_dbus_conn, E_HAL_SENDER, _e_fm_main_dbus_hal_test, NULL);
+   if (_e_fm_main_hal_conn)
+     e_dbus_get_name_owner(_e_fm_main_hal_conn, E_HAL_SENDER, _e_fm_main_hal_test, NULL);
 }
 
 void
-_e_fm_main_dbus_shutdown(void)
+_e_fm_main_hal_shutdown(void)
 {
-   if (_e_fm_main_dbus_conn)
-     e_dbus_connection_close(_e_fm_main_dbus_conn);
+   if (_e_fm_main_hal_conn)
+     e_dbus_connection_close(_e_fm_main_hal_conn);
    e_hal_shutdown();
    e_dbus_shutdown();
 }
 
-static Eina_List *_e_stores = NULL;
-
 E_Storage *
-_e_fm_main_dbus_storage_add(const char *udi)
+_e_fm_main_hal_storage_add(const char *udi)
 {
    E_Storage *s;
 
@@ -975,13 +981,13 @@ _e_fm_main_dbus_storage_add(const char *udi)
    if (!s) return NULL;
    s->udi = eina_stringshare_add(udi);
    _e_stores = eina_list_append(_e_stores, s);
-   e_hal_device_get_all_properties(_e_fm_main_dbus_conn, s->udi,
-				   _e_fm_main_dbus_cb_store_prop, s);
+   e_hal_device_get_all_properties(_e_fm_main_hal_conn, s->udi,
+				   _e_fm_main_hal_cb_store_prop, s);
    return s;
 }
 
 void
-_e_fm_main_dbus_storage_del(const char *udi)
+_e_fm_main_hal_storage_del(const char *udi)
 {
    E_Storage *s;
 
@@ -1000,7 +1006,7 @@ _e_fm_main_dbus_storage_del(const char *udi)
 }
 
 E_Storage *
-_e_fm_main_dbus_storage_find(const char *udi)
+_e_fm_main_hal_storage_find(const char *udi)
 {
    Eina_List *l;
    E_Storage  *s;
