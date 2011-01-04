@@ -223,23 +223,24 @@ e_fm2_device_volume_add(E_Volume *v)
           icon = v->storage->icon.volume;
         else
           {
-             if (!strcmp(v->storage->drive_type, "disk"))
+             if ((!v->storage->drive_type) || (!strcmp(v->storage->drive_type, "disk")))
                {
                   if (v->storage->removable == 0)
                     icon = "drive-harddisk";
                   else
                     icon = "drive-removable-media";
                }
-             else if (!strcmp(v->storage->drive_type, "cdrom"))
+             else if ((!strcmp(v->storage->drive_type, "cdrom")) || (!strncmp(v->storage->drive_type, "optical", 7)))
                icon = "drive-optical";
-             else if (!strcmp(v->storage->drive_type, "floppy"))
+             else if (!strncmp(v->storage->drive_type, "floppy", 6))
                icon = "media-floppy";
              else if (!strcmp(v->storage->drive_type, "tape"))
                icon = "media-tape";
              else if (!strcmp(v->storage->drive_type, "compact_flash")
                       || !strcmp(v->storage->drive_type, "memory_stick")
                       || !strcmp(v->storage->drive_type, "smart_media")
-                      || !strcmp(v->storage->drive_type, "sd_mmc"))
+                      || !strcmp(v->storage->drive_type, "sd_mmc")
+                      || !strncmp(v->storage->drive_type, "flash", 5))
                icon = "media-flash";
           }
         if (icon) eina_stringshare_replace(&v->icon, icon);
