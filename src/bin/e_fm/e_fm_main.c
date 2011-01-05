@@ -308,6 +308,7 @@ e_volume_find(const char *udi)
       default:
         printf("raster can't find disks by himself!\n");
      }
+   return NULL;
 }
 
 EAPI void
@@ -355,4 +356,5 @@ e_storage_find(const char *udi)
      default:
        printf("raster can't find disks by himself!\n");
     }
+  return NULL;
 }
