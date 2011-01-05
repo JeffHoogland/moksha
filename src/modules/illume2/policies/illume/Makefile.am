@@ -8,7 +8,7 @@ INCLUDES = -I.. \
            -I$(top_srcdir)/src/modules/$(MODULE) \
            -I$(top_srcdir)/src/modules/$(MODULE)/policies/$(POLICY) \
            -I$(top_srcdir)/src/bin \
-           -I$(top_srcdir)/src/lib \
+           -I$(top_builddir)/src/bin \
            -I$(top_srcdir)/src/modules \
            @e_cflags@
 

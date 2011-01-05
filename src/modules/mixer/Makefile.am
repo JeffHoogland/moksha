@@ -12,7 +12,7 @@ INCLUDES          = -I. \
                     -I$(top_srcdir) \
                     -I$(top_srcdir)/src/modules/$(MODULE) \
                     -I$(top_srcdir)/src/bin \
-                    -I$(top_srcdir)/src/lib \
+                    -I$(top_builddir)/src/bin \
                     -I$(top_srcdir)/src/modules \
                     @e_cflags@ @SOUND_CFLAGS@
 pkgdir            = $(libdir)/enlightenment/modules/$(MODULE)/$(MODULE_ARCH)
