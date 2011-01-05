@@ -28,12 +28,21 @@ else
 hal_s =
 endif
 
+if HAVE_UDISKS_MOUNT
+udisks_s = \
+e_fm_main_udisks.h \
+e_fm_main_udisks.c
+else
+udisks_s =
+endif
+
 enlightenment_fm_SOURCES = \
 e_fm_main.h \
 e_fm_ipc.h \
 e_fm_main.c \
 e_fm_ipc.c \
 $(hal_s) \
+$(udisks_s) \
 ../e_fm_shared_codec.c \
 ../e_fm_shared_device.c \
 ../e_user.c \

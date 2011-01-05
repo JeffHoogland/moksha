@@ -350,11 +350,10 @@ fi
 AC_SUBST([EEZE_MOUNT_CONFIG])
 AC_SUBST([DBUS_MOUNT_CONFIG])
 AM_CONDITIONAL([HAVE_HAL_MOUNT], [test -n "$hal_mount"])
-AM_CONDITIONAL([HAVE_UDISKS_MOUNT], [false])
 AM_CONDITIONAL([HAVE_EEZE_MOUNT], [false])
 test -n "$hal_mount" && AC_DEFINE_UNQUOTED([HAVE_HAL_MOUNT], [1], [enable HAL mounting])
-##test -n "$udisks_mount" && AC_DEFINE_UNQUOTED([HAVE_UDISKS_MOUNT], [1], [enable Udisks mounting])
-##AM_CONDITIONAL([HAVE_UDISKS_MOUNT], [test -n "$udisks_mount"])
+test -n "$udisks_mount" && AC_DEFINE_UNQUOTED([HAVE_UDISKS_MOUNT], [1], [enable Udisks mounting])
+AM_CONDITIONAL([HAVE_UDISKS_MOUNT], [test -n "$udisks_mount"])
 ##AM_CONDITIONAL([HAVE_EEZE_MOUNT], [test -n "$eeze_mount"])
 
 # doxygen program for documentation building
