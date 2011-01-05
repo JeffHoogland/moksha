@@ -157,15 +157,15 @@ _e_fm_main_udisks_test(void *data       __UNUSED__,
 
    e_dbus_signal_handler_add(_e_fm_main_udisks_conn, E_UDISKS_BUS,
                              E_UDISKS_PATH,
-                             E_UDISKS_INTERFACE,
+                             E_UDISKS_BUS,
                              "DeviceAdded", (E_DBus_Signal_Cb)_e_fm_main_udisks_cb_dev_add, NULL);
    e_dbus_signal_handler_add(_e_fm_main_udisks_conn, E_UDISKS_BUS,
                              E_UDISKS_PATH,
-                             E_UDISKS_INTERFACE,
+                             E_UDISKS_BUS,
                              "DeviceRemoved", (E_DBus_Signal_Cb)_e_fm_main_udisks_cb_dev_del, NULL);
    e_dbus_signal_handler_add(_e_fm_main_udisks_conn, E_UDISKS_BUS,
                              E_UDISKS_PATH,
-                             E_UDISKS_INTERFACE,
+                             E_UDISKS_BUS,
                              "DeviceChanged", (E_DBus_Signal_Cb)_e_fm_main_udisks_cb_dev_chg, NULL);
    _e_fm_main_udisks_catch(EINA_TRUE); /* signal usage of udisks for mounting */
 }
@@ -356,9 +356,11 @@ _e_fm_main_udisks_cb_store_prop(E_Storage *s,
    s->media_check_enabled = !e_ukit_property_bool_get(ret, "DeviceIsMediaChangeDetectionInhibited", &err);
 
    s->icon.drive = e_ukit_property_string_get(ret, "DevicePresentationIconName", &err);
-   s->icon.drive = eina_stringshare_add(s->icon.drive);
+   if (s->icon.drive && s->icon.drive[0]) s->icon.drive = eina_stringshare_add(s->icon.drive);
+   else s->icon.drive = NULL;
    s->icon.volume = e_ukit_property_string_get(ret, "DevicePresentationIconName", &err);
-   s->icon.volume = eina_stringshare_add(s->icon.volume);
+   if (s->icon.volume && s->icon.volume[0]) s->icon.volume = eina_stringshare_add(s->icon.volume);
+   else s->icon.volume = NULL;
 
 //   printf("++STO:\n  udi: %s\n  bus: %s\n  drive_type: %s\n  model: %s\n  vendor: %s\n  serial: %s\n  icon.drive: %s\n  icon.volume: %s\n\n", s->udi, s->bus, s->drive_type, s->model, s->vendor, s->serial, s->icon.drive, s->icon.volume);
    s->validated = EINA_TRUE;
