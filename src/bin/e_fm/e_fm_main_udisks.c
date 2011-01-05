@@ -215,7 +215,7 @@ _e_fm_main_udisks_cb_dev_verify(const char *udi,
 //	printf("DB VOL+: %s\n", udi);
           _e_fm_main_udisks_volume_add(udi, EINA_TRUE);
      }
-   eina_stringshare_del(udi);
+   //eina_stringshare_del(udi);
 }
 
 static void
@@ -238,7 +238,7 @@ _e_fm_main_udisks_cb_dev_add_verify(const char *udi,
 //	printf("DB VOL+: %s\n", udi);
           _e_fm_main_udisks_volume_add(udi, EINA_FALSE);
      }
-   eina_stringshare_del(udi);
+   //eina_stringshare_del(udi);
 }
 
 static void
@@ -249,7 +249,7 @@ _e_fm_main_udisks_cb_dev_add(void *data   __UNUSED__,
    char *udi = NULL;
 
    dbus_error_init(&err);
-   dbus_message_get_args(msg, &err, DBUS_TYPE_STRING, &udi, DBUS_TYPE_INVALID);
+   dbus_message_get_args(msg, &err, DBUS_TYPE_OBJECT_PATH, &udi, DBUS_TYPE_INVALID);
    if (!udi) return;
    e_udisks_get_property(_e_fm_main_udisks_conn, udi, "IdUsage",
                          (E_DBus_Callback_Func)_e_fm_main_udisks_cb_dev_add_verify, (void*)eina_stringshare_add(udi));
@@ -266,7 +266,7 @@ _e_fm_main_udisks_cb_dev_del(void *data   __UNUSED__,
    dbus_error_init(&err);
 
    dbus_message_get_args(msg,
-                         &err, DBUS_TYPE_STRING,
+                         &err, DBUS_TYPE_OBJECT_PATH,
                          &udi, DBUS_TYPE_INVALID);
 //   printf("DB DEV-: %s\n", udi);
    if ((v = _e_fm_main_udisks_volume_find(udi)))
@@ -288,7 +288,7 @@ _e_fm_main_udisks_cb_dev_chg(void *data   __UNUSED__,
    dbus_error_init(&err);
 
    dbus_message_get_args(msg, &err,
-                         DBUS_TYPE_STRING, &udi,
+                         DBUS_TYPE_OBJECT_PATH, &udi,
                          DBUS_TYPE_INVALID);
 
 //        printf("DB STORE CAP+: %s\n", udi);
@@ -396,21 +396,6 @@ _e_fm_main_udisks_cb_vol_prop(E_Volume      *v,
 
    if ((!v) || (!ret)) goto error;
 
-   switch (v->optype)
-     {
-      case E_VOLUME_OP_TYPE_MOUNT:
-        _e_fm_main_udisks_cb_vol_mounted(v, error);
-        return;
-      case E_VOLUME_OP_TYPE_UNMOUNT:
-        _e_fm_main_udisks_cb_vol_unmounted(v, error);
-        return;
-      case E_VOLUME_OP_TYPE_EJECT:
-        _e_fm_main_udisks_cb_vol_unmounted_before_eject(v, NULL, error);
-        return;
-      default:
-        break;
-     }
-
    if (dbus_error_is_set(error))
      {
         dbus_error_free(error);
@@ -432,11 +417,10 @@ _e_fm_main_udisks_cb_vol_prop(E_Volume      *v,
    v->uuid = eina_stringshare_add(v->uuid);
 
    v->label = e_ukit_property_string_get(ret, "IdLabel", &err);
-//   if (err) goto error;
+   if (!v->label) v->label = e_ukit_property_string_get(ret, "DeviceFile", &err); /* avoid having blank labels */
    v->label = eina_stringshare_add(v->label);
 
    v->fstype = e_ukit_property_string_get(ret, "IdType", &err);
-//   if (err) goto error;
    v->fstype = eina_stringshare_add(v->fstype);
 
    v->size = e_ukit_property_uint64_get(ret, "DeviceSize", &err);
@@ -450,8 +434,8 @@ _e_fm_main_udisks_cb_vol_prop(E_Volume      *v,
    {
       const Eina_List *l;   
       l = e_ukit_property_strlist_get(ret, "DeviceMountPaths", &err);
-      if (err || (!l)) goto error;
-      v->mount_point = eina_stringshare_add(l->data);
+      if (err) goto error;
+      if (l) v->mount_point = eina_stringshare_add(l->data);
    }
 
    if (v->partition)
@@ -462,16 +446,40 @@ _e_fm_main_udisks_cb_vol_prop(E_Volume      *v,
      }
 
    v->parent = e_ukit_property_string_get(ret, "PartitionSlave", &err);
-   if ((!err) && (v->parent))
+   if (!err)
      {
-        s = e_storage_find(v->parent);
-        if (s)
+        if (v->parent)
           {
-             v->storage = s;
-             s->volumes = eina_list_append(s->volumes, v);
+             s = e_storage_find(v->parent);
+             if (s)
+               {
+                  v->storage = s;
+                  if (!eina_list_data_find_list(s->volumes, v))
+                    s->volumes = eina_list_append(s->volumes, v);
+               }
+          }
+        else
+          {
+             v->storage = _e_fm_main_udisks_storage_add(v->udi); /* disk is both storage and volume */
+             if (v->storage) v->storage->volumes = eina_list_append(v->storage->volumes, v);
           }
      }
    v->parent = eina_stringshare_add(v->parent);
+
+   switch (v->optype)
+     {
+      case E_VOLUME_OP_TYPE_MOUNT:
+        _e_fm_main_udisks_cb_vol_mounted(v, error);
+        return;
+      case E_VOLUME_OP_TYPE_UNMOUNT:
+        _e_fm_main_udisks_cb_vol_unmounted(v, error);
+        return;
+      case E_VOLUME_OP_TYPE_EJECT:
+        _e_fm_main_udisks_cb_vol_unmounted_before_eject(v, NULL, error);
+        return;
+      default:
+        break;
+     }
 
 //   printf("++VOL:\n  udi: %s\n  uuid: %s\n  fstype: %s\n  size: %llu\n label: %s\n  partition: %d\n  partition_number: %d\n partition_label: %s\n  mounted: %d\n  mount_point: %s\n", v->udi, v->uuid, v->fstype, v->size, v->label, v->partition, v->partition_number, v->partition ? v->partition_label : "(not a partition)", v->mounted, v->mount_point);
 //   if (s) printf("  for storage: %s\n", s->udi);
@@ -555,17 +563,19 @@ _e_fm_main_udisks_cb_vol_mounted(E_Volume               *v,
         v->guard = NULL;
      }
 
-   v->optype = E_VOLUME_OP_TYPE_NONE;
-   if (dbus_error_is_set(error))
+   if (error && dbus_error_is_set(error))
      {
         size = _e_fm_main_udisks_format_error_msg(&buf, v, error);
         ecore_ipc_server_send(_e_fm_ipc_server, 6 /*E_IPC_DOMAIN_FM*/, E_FM_OP_MOUNT_ERROR,
                               0, 0, 0, buf, size);
         dbus_error_free(error);
         free(buf);
+        v->optype = E_VOLUME_OP_TYPE_NONE;
         return;
      }
+   if (!v->mount_point) return; /* come back later */
 
+   v->optype = E_VOLUME_OP_TYPE_NONE;
    v->mounted = EINA_TRUE;
 //   printf("MOUNT: %s from %s\n", v->udi, v->mount_point);
    size = strlen(v->udi) + 1 + strlen(v->mount_point) + 1;
@@ -818,8 +828,7 @@ _e_fm_main_udisks_volume_mount(E_Volume *v)
    char buf2[256];
    Eina_List *opt = NULL;
 
-   if ((!v) || (v->guard) || (!v->mount_point) ||
-       (strncmp(v->mount_point, "/media/", 7)))
+   if ((!v) || (v->guard) || (!v->storage) || (!v->storage->removable))
      return;
 
 //   printf("mount %s %s [fs type = %s]\n", v->udi, v->mount_point, v->fstype);
