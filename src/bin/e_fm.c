@@ -3243,7 +3243,7 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
                {
                   if (!v->mount_point)
                     v->mount_point = e_fm2_device_volume_mountpoint_get(v);
-                  ;
+
                   if (PRT("%s/%s", v->mount_point, path) >= sizeof(buf))
                     return NULL;
                }
