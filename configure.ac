@@ -313,11 +313,31 @@ AC_ARG_ENABLE([mount-hal],
   AS_HELP_STRING([--enable-mount-hal],[enable hal mounting support @<:@default=enabled@:>@]),
   [e_cv_want_mount_hal=$enableval],
   AC_CACHE_VAL([e_cv_want_mount_hal], [e_cv_want_mount_hal=yes]))
+if test "x$e_cv_want_mount_hal" != "xno";then
+  PKG_CHECK_EXISTS([ehal >= 1.0.0],
+    [],[
+      hal_mount=
+      AC_MSG_NOTICE([HAL mounting disabled])
+    ])
+else
+  hal_mount=
+fi
 
 AC_ARG_ENABLE([mount-udisks],
   AS_HELP_STRING([--enable-mount-udisks],[enable udisks mounting support @<:@default=enabled@:>@]),
   [e_cv_want_mount_udisks=$enableval],
   AC_CACHE_VAL([e_cv_want_mount_udisks], [e_cv_want_mount_udisks=yes]))
+if test "x$e_cv_want_mount_udisks" != "xno";then
+  PKG_CHECK_EXISTS([eukit >= 1.0.0],
+    [],[
+      udisks_mount=
+      AC_MSG_NOTICE([udisks mounting disabled])
+    ])
+else
+  udisks_mount=
+fi
+
+
 if test "x${e_cv_want_mount_udisks}" = "xno" && test "x${e_cv_want_mount_hal}" = "xno" ; then
   DBUS_MOUNT_CONFIG=0
   dbus_mount=
