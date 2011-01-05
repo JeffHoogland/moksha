@@ -50,6 +50,12 @@ void *alloca(size_t);
 
 #include "e_fm_main.h"
 #include "e_fm_main_hal.h"
+#ifdef HAVE_UDISKS_MOUNT
+# include "e_fm_main_udisks.h"
+#endif
+#ifdef HAVE_EEZE_MOUNT
+# include "e_fm_main_eeze.h"
+#endif
 
 #include "e_fm_shared_codec.h"
 #include "e_fm_shared_device.h"
