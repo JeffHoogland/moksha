@@ -18,6 +18,14 @@ typedef struct _E_Storage E_Storage;
 typedef struct _E_Volume  E_Volume;
 typedef struct _E_Fm2_Mount  E_Fm2_Mount;
 
+typedef enum
+{
+  E_VOLUME_OP_TYPE_NONE,
+  E_VOLUME_OP_TYPE_MOUNT,
+  E_VOLUME_OP_TYPE_UNMOUNT,
+  E_VOLUME_OP_TYPE_EJECT
+} E_Volume_Op_Type;
+
 struct _E_Storage
 {
    int type;
@@ -71,6 +79,7 @@ struct _E_Volume
    Eina_Bool auto_unmount : 1;                  // unmount, when last associated fm window closed
    Eina_Bool first_time;                    // volume discovery in init sequence
    Ecore_Timer *guard;                 // operation guard timer
+   E_Volume_Op_Type optype;
 #if @DBUS_MOUNT_CONFIG@
    DBusPendingCall *op;                // d-bus call handle
    void *prop_handler;
