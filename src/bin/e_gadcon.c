@@ -202,13 +202,13 @@ e_gadcon_init(void)
 EINTERN int
 e_gadcon_shutdown(void)
 {
-   eina_list_free(populate_requests);
+   populate_requests = eina_list_free(populate_requests);
    if (populate_idler)
      {
 	ecore_idler_del(populate_idler);
 	populate_idler = NULL;
      }
-   eina_list_free(custom_populate_requests);
+   custom_populate_requests = eina_list_free(custom_populate_requests);
    if (custom_populate_idler)
      {
 	ecore_idler_del(custom_populate_idler);
