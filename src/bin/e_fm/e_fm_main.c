@@ -134,8 +134,6 @@ _e_fm_shutdown(void)
 int
 main(int argc, char **argv)
 {
-   int i;
-
    if (argc > 1)
      {
         printf(
@@ -180,21 +178,21 @@ main(int argc, char **argv)
 void
 _e_fm_main_hal_catch(Eina_Bool usable)
 {
-   mode = USING_HAL_MOUNT;
+   if (usable) mode = USING_HAL_MOUNT;
 }
 #endif
 #ifdef HAVE_UDISKS_MOUNT
 void
 _e_fm_main_udisks_catch(Eina_Bool usable)
 {
-   mode = USING_UDISKS_MOUNT;
+   if (usable) mode = USING_UDISKS_MOUNT;
 }
 #endif
 #ifdef HAVE_EEZE_MOUNT
 void
 _e_fm_main_eeze_catch(Eina_Bool usable)
 {
-   mode = USING_EEZE_MOUNT;
+   if (usable) mode = USING_EEZE_MOUNT;
 }
 #endif
 
