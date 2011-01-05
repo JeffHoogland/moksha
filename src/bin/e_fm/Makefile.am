@@ -2,9 +2,9 @@ MAINTAINERCLEANFILES = Makefile.in
 
 AM_CFLAGS = \
 -I$(top_builddir) \
+-I$(top_builddir)/src/bin \
 -I$(top_srcdir) \
 -I$(top_srcdir)/src/bin \
--I$(top_srcdir)/src/lib \
 @e_cflags@ \
 @x_cflags@ \
 @cf_cflags@ \
