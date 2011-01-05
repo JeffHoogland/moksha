@@ -644,8 +644,7 @@ _e_fm2_op_registry_entry_print(const E_Fm2_Op_Registry_Entry *ere)
    };
    const char *status;
 
-   if ((ere->status >= 0) &&
-       (ere->status < sizeof(status_strings) / sizeof(status_strings[0])))
+   if (ere->status <= E_FM2_OP_STATUS_ERROR)
      status = status_strings[ere->status];
    else
      status = status_strings[0];
