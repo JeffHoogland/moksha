@@ -666,8 +666,7 @@ static Eina_Bool
 _e_fm_main_udisks_cb_vol_ejecting_after_unmount(E_Volume *v)
 {
    v->guard = ecore_timer_add(E_FM_EJECT_TIMEOUT, (Ecore_Task_Cb)_e_fm_main_udisks_vol_eject_timeout, v);
-   v->op = e_udisks_volume_eject(_e_fm_main_udisks_conn, v->udi, NULL,
-                                 (E_DBus_Callback_Func)_e_fm_main_udisks_cb_vol_ejected, v);
+   v->op = e_udisks_volume_eject(_e_fm_main_udisks_conn, v->udi, NULL);
 
    return ECORE_CALLBACK_CANCEL;
 }
@@ -732,6 +731,7 @@ _e_fm_main_udisks_volume_add(const char *udi,
    v = calloc(1, sizeof(E_Volume));
    if (!v) return NULL;
 //   printf("VOL+ %s\n", udi);
+   v->efm_mode = USING_UDISKS_MOUNT;
    v->udi = eina_stringshare_add(udi);
    v->icon = NULL;
    v->first_time = first_time;
@@ -797,14 +797,12 @@ _e_fm_main_udisks_volume_eject(E_Volume *v)
    if (v->mounted)
      {
         v->guard = ecore_timer_add(E_FM_UNMOUNT_TIMEOUT, (Ecore_Task_Cb)_e_fm_main_udisks_vol_unmount_timeout, v);
-        v->op = e_udisks_volume_unmount(_e_fm_main_udisks_conn, v->udi, NULL,
-                                               (E_DBus_Callback_Func)_e_fm_main_udisks_cb_vol_unmounted_before_eject, v);
+        v->op = e_udisks_volume_unmount(_e_fm_main_udisks_conn, v->udi, NULL);
      }
    else
      {
         v->guard = ecore_timer_add(E_FM_EJECT_TIMEOUT, (Ecore_Task_Cb)_e_fm_main_udisks_vol_eject_timeout, v);
-        v->op = e_udisks_volume_eject(_e_fm_main_udisks_conn, v->udi, NULL,
-                                             (E_DBus_Callback_Func)_e_fm_main_udisks_cb_vol_ejected, v);
+        v->op = e_udisks_volume_eject(_e_fm_main_udisks_conn, v->udi, NULL);
      }
    v->optype = E_VOLUME_OP_TYPE_EJECT;
 }
@@ -816,8 +814,7 @@ _e_fm_main_udisks_volume_unmount(E_Volume *v)
      if (!v || v->guard) return;
 
      v->guard = ecore_timer_add(E_FM_UNMOUNT_TIMEOUT, (Ecore_Task_Cb)_e_fm_main_udisks_vol_unmount_timeout, v);
-     v->op = e_udisks_volume_unmount(_e_fm_main_udisks_conn, v->udi, NULL,
-                                            (E_DBus_Callback_Func)_e_fm_main_udisks_cb_vol_unmounted, v);
+     v->op = e_udisks_volume_unmount(_e_fm_main_udisks_conn, v->udi, NULL);
      v->optype = E_VOLUME_OP_TYPE_UNMOUNT;
 }
 
@@ -864,8 +861,7 @@ _e_fm_main_udisks_volume_mount(E_Volume *v)
 
    v->guard = ecore_timer_add(E_FM_MOUNT_TIMEOUT, (Ecore_Task_Cb)_e_fm_main_udisks_vol_mount_timeout, v);
    v->op = e_udisks_volume_mount(_e_fm_main_udisks_conn, v->udi,
-                                        v->fstype, opt,
-                                        (E_DBus_Callback_Func)_e_fm_main_udisks_cb_vol_mounted, v);
+                                        v->fstype, opt);
    eina_list_free(opt);
    v->optype = E_VOLUME_OP_TYPE_MOUNT;
 }
