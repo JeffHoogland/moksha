@@ -718,7 +718,7 @@ _desklock_auth(char *passwd)
 	if (pamerr != PAM_SUCCESS)
 	  {
 	     free(current_user);
-	     exit(pamerr);
+	     exit(1);
 	  }
 	pamerr = pam_authenticate(da.pam.handle, 0);
 	pam_end(da.pam.handle, pamerr);
@@ -730,7 +730,7 @@ _desklock_auth(char *passwd)
 	     exit(0);
 	  }
 	free(current_user);
-	exit(1);
+	exit(-1);
      }
    else
      {
