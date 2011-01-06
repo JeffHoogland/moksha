@@ -93,10 +93,6 @@ void *alloca (size_t);
 #include <Efreet.h>
 #include <Efreet_Mime.h>
 #include <E_DBus.h>
-#include <E_Hal.h>
-#ifdef HAVE_EEZE
-#include <Eeze.h>
-#endif
 
 #ifdef EAPI
 #undef EAPI

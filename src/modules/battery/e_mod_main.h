@@ -1,6 +1,12 @@
 #ifndef E_MOD_MAIN_H
 #define E_MOD_MAIN_H
 
+#ifdef HAVE_EEZE
+# include <Eeze.h>
+#else
+# include <E_Hal.h>
+#endif
+
 typedef struct _Config       Config;
 
 #define CHECK_NONE      0

@@ -2,6 +2,7 @@
 #include "e_kbd.h"
 #include "e_mod_layout.h"
 #include "e_cfg.h"
+#include <E_Hal.h>
 
 static void _e_kbd_layout_send(E_Kbd *kbd);
 

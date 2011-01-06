@@ -1,6 +1,12 @@
 #ifndef E_MOD_MAIN_H
 #define E_MOD_MAIN_H
 
+#ifdef HAVE_EEZE
+# include <Eeze.h>
+#else
+# include <E_Hal.h>
+#endif
+
 #include "e_mod_main_private.h"
 
 typedef struct _Config Config;
