@@ -140,7 +140,7 @@ _e_fm_main_hal_poll(void *data   __UNUSED__,
                               DBUS_TYPE_INVALID))
      dbus_error_free(&err);
 
-   printf("name: %s\nfrom: %s\nto: %s\n", name, from, to);
+   //printf("name: %s\nfrom: %s\nto: %s\n", name, from, to);
    if ((name) && !strcmp(name, E_HAL_SENDER))
      _e_fm_main_hal_test(NULL, NULL, NULL);
 }
@@ -884,6 +884,7 @@ _e_fm_main_hal_volume_add(const char *udi,
    if (!v) return NULL;
 //   printf("VOL+ %s\n", udi);
    v->udi = eina_stringshare_add(udi);
+   v->efm_mode = EFM_MODE_USING_HAL_MOUNT;
    v->icon = NULL;
    v->first_time = first_time;
    _e_vols = eina_list_append(_e_vols, v);
