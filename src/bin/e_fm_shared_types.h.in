@@ -20,6 +20,14 @@ typedef struct _E_Fm2_Mount  E_Fm2_Mount;
 
 typedef enum
 {
+   EFM_MODE_USING_RASTER_MOUNT,
+   EFM_MODE_USING_HAL_MOUNT,
+   EFM_MODE_USING_UDISKS_MOUNT,
+   EFM_MODE_USING_EEZE_MOUNT
+} Efm_Mode;
+
+typedef enum
+{
   E_VOLUME_OP_TYPE_NONE,
   E_VOLUME_OP_TYPE_MOUNT,
   E_VOLUME_OP_TYPE_UNMOUNT,
@@ -80,6 +88,8 @@ struct _E_Volume
    Eina_Bool first_time;                    // volume discovery in init sequence
    Ecore_Timer *guard;                 // operation guard timer
    E_Volume_Op_Type optype;
+   Efm_Mode efm_mode;
+   
 #if @DBUS_MOUNT_CONFIG@
    DBusPendingCall *op;                // d-bus call handle
    void *prop_handler;
