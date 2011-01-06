@@ -2,7 +2,7 @@
 Type=Link
 Name=Battery
 Name[cs]=Baterie
-Name[de]=
+Name[de]=Batterie
 Name[el]=Μπαταρία
 Name[eo]=Baterío
 Name[es]=Batería
@@ -17,7 +17,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-battery
 Comment=A gadget to visualize your battery status.
-Comment[de]=
+Comment[de]=Helfer zum Visualisieren des Batteriezustands
 Comment[el]=Συστατικό που σας δείχνει οπτικά την κατάσταση της μπαταρίας σας.
 Comment[eo]=Vidigi staton de sia baterio.
 Comment[cs]=Gadget pro zobrazení stavu vaší baterie v notebooku.

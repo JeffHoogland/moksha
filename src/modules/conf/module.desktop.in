@@ -2,7 +2,7 @@
 Type=Link
 Name=Settings Panel
 Name[cs]=Ovládací centrum
-Name[de]=
+Name[de]=Einstellungsleiste
 Name[el]=Πάνελ ρυθμίσεων
 Name[eo]=Panelo de agordado
 Name[es]=Panel de configuración
@@ -18,7 +18,7 @@ Name[zh_TW]=
 Icon=e-module-conf
 Comment=
 Comment[cs]=
-Comment[de]=
+Comment[de]=Einstellungen an Enlightenment bequem vornehmen
 Comment[el]=
 Comment[eo]=
 Comment[es]=

@@ -2,6 +2,7 @@
 Type=Link
 Name=Connection Manager
 Name[cs]=Správce připojení
+Name[de]=Verbindungsmanager
 Name[it]=Gestore connessioni
 Name[hu]=Hálózati kapcsolatok
 Name[eo]=Administrilo de konekto
@@ -11,6 +12,7 @@ Name[pt]=Gestor de ligações
 Icon=e-module-connman
 Comment=Control Wifi and wired networks as a user.
 Comment[cs]=Nastavení wifi a drátových sítí jako uživatel.
+Comment[de]=Drahtlose und kabelgebundene Nezwerke als Nutzer verwalten
 Comment[it]=Controlla le reti wireless e cablate come utente.
 Comment[hu]=Wifi és vezetékes hálózatok kezelését teszi lehetővé.
 Comment[eo]=Por kontroli sendratajn kaj dratajn retojn kiel uzanto.

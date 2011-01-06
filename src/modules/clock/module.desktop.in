@@ -2,7 +2,7 @@
 Type=Link
 Name=Clock
 Name[cs]=Hodiny
-Name[de]=
+Name[de]=Uhr
 Name[el]=Ρολόι
 Name[eo]=Horloĝo
 Name[es]=Reloj
@@ -19,7 +19,7 @@ Icon=e-module-clock
 X-Enlightenment-ModuleType=utils
 Comment=Nice clock gadget to show current time.
 Comment[cs]=Gadget pro zobrazení aktuálního času.
-Comment[de]=
+Comment[de]=Netter Helfer zum Anzeigen der aktuellen Uhrzeit.
 Comment[el]=Ένα όμορφο συστατικό που σας δείχνει την ώρα.
 Comment[eo]=Vidigi la nunan horon.
 Comment[es]=Un lindo reloj para mostrar la hora actual.
