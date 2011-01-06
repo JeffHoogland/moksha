@@ -18,6 +18,9 @@ _e_fm_shared_device_storage_free(E_Storage *s)
    if (s->serial) eina_stringshare_del(s->serial);
    if (s->icon.drive) eina_stringshare_del(s->icon.drive);
    if (s->icon.volume) eina_stringshare_del(s->icon.volume);
+#ifdef HAVE_EEZE_MOUNT
+   if (s->disk) eeze_disk_free(s->disk);
+#endif
    free(s);
 }
 
