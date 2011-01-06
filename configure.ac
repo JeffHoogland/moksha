@@ -321,6 +321,7 @@ if test "x$e_cv_want_mount_hal" != "xno";then
     ])
 else
   hal_mount=
+  AC_MSG_NOTICE([HAL mounting disabled])
 fi
 
 AC_ARG_ENABLE([mount-udisks],
@@ -335,6 +336,7 @@ if test "x$e_cv_want_mount_udisks" != "xno";then
     ])
 else
   udisks_mount=
+  AC_MSG_NOTICE([udisks mounting disabled])
 fi
 
 
@@ -365,6 +367,8 @@ if test "x$e_cv_want_mount_eeze" != "xno" ; then
            e_cv_want_mount_eeze=no
         ]
       )
+else
+  AC_MSG_NOTICE([eeze mounting disabled])
 fi
 
 AC_SUBST([EEZE_MOUNT_CONFIG])
