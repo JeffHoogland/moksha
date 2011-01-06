@@ -127,7 +127,7 @@ _e_fm_main_udisks_poll(void *data   __UNUSED__,
                               DBUS_TYPE_INVALID))
      dbus_error_free(&err);
 
-   printf("name: %s\nfrom: %s\nto: %s\n", name, from, to);
+   //printf("name: %s\nfrom: %s\nto: %s\n", name, from, to);
    if ((name) && !strcmp(name, E_UDISKS_BUS))
      _e_fm_main_udisks_test(NULL, NULL, NULL);
 }
@@ -731,7 +731,7 @@ _e_fm_main_udisks_volume_add(const char *udi,
    v = calloc(1, sizeof(E_Volume));
    if (!v) return NULL;
 //   printf("VOL+ %s\n", udi);
-   v->efm_mode = USING_UDISKS_MOUNT;
+   v->efm_mode = EFM_MODE_USING_UDISKS_MOUNT;
    v->udi = eina_stringshare_add(udi);
    v->icon = NULL;
    v->first_time = first_time;
@@ -825,7 +825,7 @@ _e_fm_main_udisks_volume_mount(E_Volume *v)
    char buf2[256];
    Eina_List *opt = NULL;
 
-   if ((!v) || (v->guard) || (!v->storage) || (!v->storage->removable))
+   if ((!v) || (v->guard))
      return;
 
 //   printf("mount %s %s [fs type = %s]\n", v->udi, v->mount_point, v->fstype);

@@ -130,12 +130,13 @@ e_fm2_device_volume_add(E_Volume *v)
           v->parent);
  */
 /* Check mount point */
-   if ((!v->mount_point) || (v->mount_point[0] == 0))
+   if ((v->efm_mode == EFM_MODE_USING_HAL_MOUNT) &&
+       ((!v->mount_point) || (!v->mount_point[0])))
      {
         if (v->mount_point) eina_stringshare_del(v->mount_point);
         v->mount_point = NULL;
         v->mount_point = e_fm2_device_volume_mountpoint_get(v);
-        if ((!v->mount_point) || (v->mount_point[0] == 0))
+        if ((!v->mount_point) || (!v->mount_point[0]))
           {
              char buf[PATH_MAX];
              const char *id;
@@ -377,6 +378,8 @@ e_fm2_device_volume_mountpoint_get(E_Volume *v)
         //	printf("GET MOUNTPOINT = %s\n", v->mount_point);
           return eina_stringshare_add(v->mount_point);
      }
+   else if (v->efm_mode != EFM_MODE_USING_HAL_MOUNT)
+     return NULL;
 
    if (v->label && v->label[0] != '\0')
      snprintf(buf, sizeof(buf) - 1, "/media/%s", v->label);

@@ -823,6 +823,16 @@ _e_fm2_cb_mount_ok(void *data)
    sd = evas_object_smart_data_get(data);
    if (!sd) return;  // safety
 
+   if (sd->mount->volume->efm_mode != EFM_MODE_USING_HAL_MOUNT)
+     {
+        /* Clean up typebuf. */
+        _e_fm2_typebuf_hide(data);
+        /* we only just now have the mount point so we should do stuff we couldn't do before */
+        eina_stringshare_replace(&sd->realpath, sd->mount->volume->mount_point);
+        eina_stringshare_replace(&sd->mount->mount_point, sd->mount->volume->mount_point);
+        _e_fm2_dir_load_props(sd);
+     }
+
    if (strcmp(sd->mount->mount_point, sd->realpath))
      {
         e_fm2_path_set(sd->obj, "/", sd->mount->mount_point);
@@ -994,11 +1004,14 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
      {
         E_Volume *v = NULL;
 
-        v = e_fm2_device_volume_find(sd->dev + strlen("removable:"));
+        v = e_fm2_device_volume_find(sd->dev + sizeof("removable:") - 1);
         if (v)
-          sd->mount = e_fm2_device_mount(v,
-                                         _e_fm2_cb_mount_ok, _e_fm2_cb_mount_fail,
-                                         _e_fm2_cb_unmount_ok, NULL, obj);
+          {
+             sd->mount = e_fm2_device_mount(v,
+                                            _e_fm2_cb_mount_ok, _e_fm2_cb_mount_fail,
+                                            _e_fm2_cb_unmount_ok, NULL, obj);
+             if (v->efm_mode != EFM_MODE_USING_HAL_MOUNT) return;
+          }
      }
    else if (sd->config->view.open_dirs_in_place == 0)
      {
@@ -1151,6 +1164,8 @@ _e_fm2_dir_load_props(E_Fm2_Smart_Data *sd)
 {
    E_Fm2_Custom_File *cf;
 
+
+   if (!sd->realpath) return; /* come back later */
    if (!(sd->view_flags & E_FM2_VIEW_LOAD_DIR_CUSTOM)) return;
 
    cf = e_fm2_custom_file_get(sd->realpath);
@@ -2574,17 +2589,23 @@ EAPI int
 _e_fm2_client_mount(const char *udi, const char *mountpoint)
 {
    char *d;
-   int l, l1, l2;
+   int l, l1, l2 = 0;
 
-   if (!udi || !mountpoint)
+   if (!udi)
      return 0;
 
    l1 = strlen(udi);
-   l2 = strlen(mountpoint);
-   l = l1 + 1 + l2 + 1;
+   if (mountpoint)
+     {
+        l2 = strlen(mountpoint);
+        l = l1 + 1 + l2 + 1;
+     }
+   else
+     l = l1 + 1;
    d = alloca(l);
    strcpy(d, udi);
-   strcpy(d + l1 + 1, mountpoint);
+   if (mountpoint)
+     strcpy(d + l1 + 1, mountpoint);
 
    return _e_fm_client_send_new(E_FM_OP_MOUNT, (void *)d, l);
 }
@@ -3241,8 +3262,9 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
              v = e_fm2_device_volume_find(dev + strlen("removable:"));
              if (v)
                {
-                  if (!v->mount_point)
+                  if ((!v->mount_point) && (v->efm_mode == EFM_MODE_USING_HAL_MOUNT))
                     v->mount_point = e_fm2_device_volume_mountpoint_get(v);
+                  else return NULL;
 
                   if (PRT("%s/%s", v->mount_point, path) >= sizeof(buf))
                     return NULL;
