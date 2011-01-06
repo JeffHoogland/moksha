@@ -345,11 +345,9 @@ _e_fm_main_udisks_cb_store_prop(E_Storage *s,
 
    s->removable = e_ukit_property_bool_get(ret, "DeviceIsRemovable", &err);
 
-   if (s->removable)
-     {
-        s->media_available = e_ukit_property_bool_get(ret, "DeviceIsMediaAvailable", &err);
-        s->media_size = e_ukit_property_uint64_get(ret, "DeviceSize", &err);
-     }
+   if (!s->removable) goto error; /* only track removable media */
+   s->media_available = e_ukit_property_bool_get(ret, "DeviceIsMediaAvailable", &err);
+   s->media_size = e_ukit_property_uint64_get(ret, "DeviceSize", &err);
 
    s->requires_eject = e_ukit_property_bool_get(ret, "DriveIsMediaEjectable", &err);
    s->hotpluggable = e_ukit_property_bool_get(ret, "DriveCanDetach", &err);
@@ -401,6 +399,8 @@ _e_fm_main_udisks_cb_vol_prop(E_Volume      *v,
         dbus_error_free(error);
         goto error;
      }
+
+   if (!e_ukit_property_bool_get(ret, "DeviceIsRemovable", &err) || err) goto error;
 
    /* skip volumes with volume.ignore set */
    if (e_ukit_property_bool_get(ret, "DeviceIsMediaChangeDetectionInhibited", &err) || err)
@@ -462,6 +462,7 @@ _e_fm_main_udisks_cb_vol_prop(E_Volume      *v,
           {
              v->storage = _e_fm_main_udisks_storage_add(v->udi); /* disk is both storage and volume */
              if (v->storage) v->storage->volumes = eina_list_append(v->storage->volumes, v);
+             v->parent = v->udi;
           }
      }
    v->parent = eina_stringshare_add(v->parent);
