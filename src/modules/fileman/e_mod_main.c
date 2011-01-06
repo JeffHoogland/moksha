@@ -199,7 +199,7 @@ _e_mod_action_fileman_cb(E_Object   *obj,
           e_fwin_new(zone->container, "/", params);
         else if (params && params[0] == '~')
           e_fwin_new(zone->container, "~/", params + 1);
-        else if (params)
+        else if (params && strcmp(params, "(none)")) /* avoid matching paths that no longer exist */
           {
              char *path;
              path = e_util_shell_env_path_eval(params);
