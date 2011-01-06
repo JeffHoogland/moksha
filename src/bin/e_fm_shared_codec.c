@@ -31,6 +31,7 @@ _e_volume_edd_new(void)
    DAT(mount_point, STRING);
    DAT(parent, STRING);
    DAT(first_time, CHAR);
+   DAT(efm_mode, UINT);
 #undef DAT
    return edd;
 }
