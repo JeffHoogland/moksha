@@ -2,6 +2,11 @@
 #include "e_fm_shared_codec.h"
 #include "e_fm_shared_device.h"
 
+#define TEBIBYTE_SIZE 1099511627776LL
+#define GIBIBYTE_SIZE 1073741824
+#define MEBIBYTE_SIZE 1048576
+#define KIBIBYTE_SIZE 1024
+
 static void _e_fm2_volume_write(E_Volume *v) EINA_ARG_NONNULL(1);
 static void _e_fm2_volume_erase(E_Volume *v) EINA_ARG_NONNULL(1);
 static void _e_fm2_device_mount_free(E_Fm2_Mount *m); EINA_ARG_NONNULL(1);
@@ -13,9 +18,102 @@ static void _e_fm2_device_unmount_fail(E_Fm2_Mount *m) EINA_ARG_NONNULL(1);
 static Eina_List *_e_stores = NULL;
 static Eina_List *_e_vols = NULL;
 
+static void
+_e_fm2_device_volume_setup(E_Volume *v)
+{
+   char label[1024] = {0};
+   char size[256] = {0};
+   const char *icon = NULL;
+   unsigned long long sz;
+
+   /* Compute the size in a readable form */
+   if (v->size)
+     {
+        if ((sz = (v->size / TEBIBYTE_SIZE)) > 0)
+          snprintf(size, sizeof(size) - 1, _("%llu TiB"), sz);
+        else if ((sz = (v->size / GIBIBYTE_SIZE)) > 0)
+          snprintf(size, sizeof(size) - 1, _("%llu GiB"), sz);
+        else if ((sz = (v->size / MEBIBYTE_SIZE)) > 0)
+          snprintf(size, sizeof(size) - 1, _("%llu MiB"), sz);
+        else if ((sz = (v->size / KIBIBYTE_SIZE)) > 0)
+          snprintf(size, sizeof(size) - 1, _("%llu KiB"), sz);
+        else
+          snprintf(size, sizeof(size) - 1, _("%llu B"), v->size);
+     }
+
+   /* Choose the label */
+   if ((v->label) && (v->label[0]))
+     {}
+   else if ((v->partition_label) && (v->partition_label[0]))
+     snprintf(label, sizeof(label) - 1, "%s", v->partition_label);
+   else if (((v->storage->vendor) && (v->storage->vendor[0])) &&
+            ((v->storage->model) && (v->storage->model[0])))
+     {
+        if (size[0] != '\0')
+          snprintf(label, sizeof(label) - 1, "%s %s - %s", v->storage->vendor, v->storage->model, size);
+        else
+          snprintf(label, sizeof(label) - 1, "%s %s", v->storage->vendor, v->storage->model);
+     }
+   else if ((v->storage->model) && (v->storage->model[0]))
+     {
+        if (size[0] != '\0')
+          snprintf(label, sizeof(label) - 1, "%s - %s", v->storage->model, size);
+        else
+          snprintf(label, sizeof(label) - 1, "%s", v->storage->model);
+     }
+   else if ((v->storage->vendor) && (v->storage->vendor[0]))
+     {
+        if (size[0] != '\0')
+          snprintf(label, sizeof(label) - 1, "%s - %s", v->storage->vendor, size);
+        else
+          snprintf(label, sizeof(label) - 1, "%s", v->storage->vendor);
+     }
+   else
+     snprintf(label, sizeof(label), _("Unknown Volume"));
+
+   if (label[0]) eina_stringshare_replace(&v->label, label);
+
+   /* Choose the icon */
+   /* http://standards.freedesktop.org/icon-naming-spec/icon-naming-spec-latest.html */
+   if (v->storage->icon.volume)
+     icon = v->storage->icon.volume;
+   else
+     {
+        if ((!v->storage->drive_type) || (!strcmp(v->storage->drive_type, "disk")))
+          {
+             if (v->storage->removable == 0)
+               icon = "drive-harddisk";
+             else
+               icon = "drive-removable-media";
+          }
+        else if ((!strcmp(v->storage->drive_type, "cdrom")) || (!strncmp(v->storage->drive_type, "optical", 7)))
+          icon = "drive-optical";
+        else if (!strncmp(v->storage->drive_type, "floppy", 6))
+          icon = "media-floppy";
+        else if (!strcmp(v->storage->drive_type, "tape"))
+          icon = "media-tape";
+        else if (!strcmp(v->storage->drive_type, "compact_flash")
+                 || !strcmp(v->storage->drive_type, "memory_stick")
+                 || !strcmp(v->storage->drive_type, "smart_media")
+                 || !strcmp(v->storage->drive_type, "sd_mmc")
+                 || !strncmp(v->storage->drive_type, "flash", 5))
+          icon = "media-flash";
+     }
+   if (icon) eina_stringshare_replace(&v->icon, icon);
+
+   if ((!v->mount_point) ||
+       (strcmp(v->mount_point, "/") &&
+        strcmp(v->mount_point, "/home") &&
+        strcmp(v->mount_point, "/tmp")))
+     _e_fm2_volume_write(v);
+}
+     
 EAPI void
 e_fm2_device_storage_add(E_Storage *s)
 {
+   Eina_List *l;
+   E_Volume *v;
+   
    if (e_fm2_device_storage_find(s->udi)) return;
 
    s->validated = EINA_TRUE;
@@ -65,6 +163,15 @@ e_fm2_device_storage_add(E_Storage *s)
      {
         s->trackable = EINA_TRUE;
      }
+     
+   EINA_LIST_FOREACH(_e_vols, l, v) /* catch volumes which were added before their storage */
+     {
+        if ((!v->storage) && (s->udi == v->parent))
+          {
+             v->storage = s;
+             _e_fm2_device_volume_setup(v);
+          }
+     }
 }
 
 EAPI void
@@ -89,10 +196,6 @@ e_fm2_device_storage_find(const char *udi)
    return NULL;
 }
 
-#define TEBIBYTE_SIZE 1099511627776LL
-#define GIBIBYTE_SIZE 1073741824
-#define MEBIBYTE_SIZE 1048576
-#define KIBIBYTE_SIZE 1024
 
 EAPI void
 e_fm2_device_volume_add(E_Volume *v)
@@ -164,94 +267,8 @@ e_fm2_device_volume_add(E_Volume *v)
         s->volumes = eina_list_append(s->volumes, v);
      }
 
-   if (v->storage)
-     {
-        char label[1024] = {0};
-        char size[256] = {0};
-        const char *icon = NULL;
-        unsigned long long sz;
-
-        /* Compute the size in a readable form */
-        if (v->size)
-          {
-             if ((sz = (v->size / TEBIBYTE_SIZE)) > 0)
-               snprintf(size, sizeof(size) - 1, _("%llu TiB"), sz);
-             else if ((sz = (v->size / GIBIBYTE_SIZE)) > 0)
-               snprintf(size, sizeof(size) - 1, _("%llu GiB"), sz);
-             else if ((sz = (v->size / MEBIBYTE_SIZE)) > 0)
-               snprintf(size, sizeof(size) - 1, _("%llu MiB"), sz);
-             else if ((sz = (v->size / KIBIBYTE_SIZE)) > 0)
-               snprintf(size, sizeof(size) - 1, _("%llu KiB"), sz);
-             else
-               snprintf(size, sizeof(size) - 1, _("%llu B"), v->size);
-          }
-
-        /* Choose the label */
-        if ((v->label) && (v->label[0]))
-          {}
-        else if ((v->partition_label) && (v->partition_label[0]))
-          snprintf(label, sizeof(label) - 1, "%s", v->partition_label);
-        else if (((v->storage->vendor) && (v->storage->vendor[0])) &&
-                 ((v->storage->model) && (v->storage->model[0])))
-          {
-             if (size[0] != '\0')
-               snprintf(label, sizeof(label) - 1, "%s %s - %s", v->storage->vendor, v->storage->model, size);
-             else
-               snprintf(label, sizeof(label) - 1, "%s %s", v->storage->vendor, v->storage->model);
-          }
-        else if ((v->storage->model) && (v->storage->model[0]))
-          {
-             if (size[0] != '\0')
-               snprintf(label, sizeof(label) - 1, "%s - %s", v->storage->model, size);
-             else
-               snprintf(label, sizeof(label) - 1, "%s", v->storage->model);
-          }
-        else if ((v->storage->vendor) && (v->storage->vendor[0]))
-          {
-             if (size[0] != '\0')
-               snprintf(label, sizeof(label) - 1, "%s - %s", v->storage->vendor, size);
-             else
-               snprintf(label, sizeof(label) - 1, "%s", v->storage->vendor);
-          }
-        else
-          snprintf(label, sizeof(label), _("Unknown Volume"));
-
-        if (label[0]) eina_stringshare_replace(&v->label, label);
-
-        /* Choose the icon */
-        /* http://standards.freedesktop.org/icon-naming-spec/icon-naming-spec-latest.html */
-        if (v->storage->icon.volume)
-          icon = v->storage->icon.volume;
-        else
-          {
-             if ((!v->storage->drive_type) || (!strcmp(v->storage->drive_type, "disk")))
-               {
-                  if (v->storage->removable == 0)
-                    icon = "drive-harddisk";
-                  else
-                    icon = "drive-removable-media";
-               }
-             else if ((!strcmp(v->storage->drive_type, "cdrom")) || (!strncmp(v->storage->drive_type, "optical", 7)))
-               icon = "drive-optical";
-             else if (!strncmp(v->storage->drive_type, "floppy", 6))
-               icon = "media-floppy";
-             else if (!strcmp(v->storage->drive_type, "tape"))
-               icon = "media-tape";
-             else if (!strcmp(v->storage->drive_type, "compact_flash")
-                      || !strcmp(v->storage->drive_type, "memory_stick")
-                      || !strcmp(v->storage->drive_type, "smart_media")
-                      || !strcmp(v->storage->drive_type, "sd_mmc")
-                      || !strncmp(v->storage->drive_type, "flash", 5))
-               icon = "media-flash";
-          }
-        if (icon) eina_stringshare_replace(&v->icon, icon);
-
-        if ((!v->mount_point) ||
-            (strcmp(v->mount_point, "/") &&
-             strcmp(v->mount_point, "/home") &&
-             strcmp(v->mount_point, "/tmp")))
-          _e_fm2_volume_write(v);
-     }
+   if (v->storage) _e_fm2_device_volume_setup(v);
+     
 }
 
 EAPI void
