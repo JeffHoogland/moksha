@@ -71,15 +71,7 @@ void *alloca (size_t);
  * if using eeze, functions will point to _e_fm_main_eeze_X
  */
 
-typedef enum
-{
-   USING_RASTER_MOUNT,
-   USING_HAL_MOUNT,
-   USING_UDISKS_MOUNT,
-   USING_EEZE_MOUNT
-} efm_mode;
-
-static efm_mode mode = USING_RASTER_MOUNT;
+static Efm_Mode mode = EFM_MODE_USING_RASTER_MOUNT;
 
 /* FIXME: things to add to the slave enlightenment_fm process and ipc to e:
  * 
@@ -178,21 +170,21 @@ main(int argc, char **argv)
 void
 _e_fm_main_hal_catch(Eina_Bool usable)
 {
-   if (usable) mode = USING_HAL_MOUNT;
+   if (usable) mode = EFM_MODE_USING_HAL_MOUNT;
 }
 #endif
 #ifdef HAVE_UDISKS_MOUNT
 void
 _e_fm_main_udisks_catch(Eina_Bool usable)
 {
-   if (usable) mode = USING_UDISKS_MOUNT;
+   if (usable) mode = EFM_MODE_USING_UDISKS_MOUNT;
 }
 #endif
 #ifdef HAVE_EEZE_MOUNT
 void
 _e_fm_main_eeze_catch(Eina_Bool usable)
 {
-   if (usable) mode = USING_EEZE_MOUNT;
+   if (usable) mode = EFM_MODE_USING_EEZE_MOUNT;
 }
 #endif
 
@@ -216,17 +208,17 @@ e_volume_mount(E_Volume *v)
   switch (mode)
     {
 #ifdef HAVE_HAL_MOUNT
-     case USING_HAL_MOUNT:
+     case EFM_MODE_USING_HAL_MOUNT:
        _e_fm_main_hal_volume_mount(v);
        break;
 #endif
 #ifdef HAVE_UDISKS_MOUNT
-     case USING_UDISKS_MOUNT:
+     case EFM_MODE_USING_UDISKS_MOUNT:
        _e_fm_main_udisks_volume_mount(v);
        break;
 #endif
 #ifdef HAVE_EEZE_MOUNT
-     case USING_EEZE_MOUNT:
+     case EFM_MODE_USING_EEZE_MOUNT:
        _e_fm_main_eeze_volume_mount(v);
        break;
 #endif
@@ -242,17 +234,17 @@ e_volume_unmount(E_Volume *v)
   switch (mode)
     {
 #ifdef HAVE_HAL_MOUNT
-     case USING_HAL_MOUNT:
+     case EFM_MODE_USING_HAL_MOUNT:
        _e_fm_main_hal_volume_unmount(v);
        break;
 #endif
 #ifdef HAVE_UDISKS_MOUNT
-     case USING_UDISKS_MOUNT:
+     case EFM_MODE_USING_UDISKS_MOUNT:
        _e_fm_main_udisks_volume_unmount(v);
        break;
 #endif
 #ifdef HAVE_EEZE_MOUNT
-     case USING_EEZE_MOUNT:
+     case EFM_MODE_USING_EEZE_MOUNT:
        _e_fm_main_eeze_volume_unmount(v);
        break;
 #endif
@@ -267,17 +259,17 @@ e_volume_eject(E_Volume *v)
   switch (mode)
     {
 #ifdef HAVE_HAL_MOUNT
-     case USING_HAL_MOUNT:
+     case EFM_MODE_USING_HAL_MOUNT:
        _e_fm_main_hal_volume_eject(v);
        break;
 #endif
 #ifdef HAVE_UDISKS_MOUNT
-     case USING_UDISKS_MOUNT:
+     case EFM_MODE_USING_UDISKS_MOUNT:
        _e_fm_main_udisks_volume_eject(v);
        break;
 #endif
 #ifdef HAVE_EEZE_MOUNT
-     case USING_EEZE_MOUNT:
+     case EFM_MODE_USING_EEZE_MOUNT:
        _e_fm_main_eeze_volume_eject(v);
        break;
 #endif
@@ -292,15 +284,15 @@ e_volume_find(const char *udi)
    switch (mode)
      {
 #ifdef HAVE_HAL_MOUNT
-      case USING_HAL_MOUNT:
+      case EFM_MODE_USING_HAL_MOUNT:
         return _e_fm_main_hal_volume_find(udi);
 #endif
 #ifdef HAVE_UDISKS_MOUNT
-      case USING_UDISKS_MOUNT:
+      case EFM_MODE_USING_UDISKS_MOUNT:
         return _e_fm_main_udisks_volume_find(udi);
 #endif
 #ifdef HAVE_EEZE_MOUNT
-      case USING_EEZE_MOUNT:
+      case EFM_MODE_USING_EEZE_MOUNT:
         return _e_fm_main_eeze_volume_find(udi);
 #endif
       default:
@@ -315,17 +307,17 @@ e_storage_del(const char *udi)
   switch (mode)
     {
 #ifdef HAVE_HAL_MOUNT
-     case USING_HAL_MOUNT:
+     case EFM_MODE_USING_HAL_MOUNT:
        _e_fm_main_hal_storage_del(udi);
        break;
 #endif
 #ifdef HAVE_UDISKS_MOUNT
-     case USING_UDISKS_MOUNT:
+     case EFM_MODE_USING_UDISKS_MOUNT:
        _e_fm_main_udisks_storage_del(udi);
        break;
 #endif
 #ifdef HAVE_EEZE_MOUNT
-     case USING_EEZE_MOUNT:
+     case EFM_MODE_USING_EEZE_MOUNT:
        _e_fm_main_eeze_storage_del(udi);
        break;
 #endif
@@ -340,15 +332,15 @@ e_storage_find(const char *udi)
   switch (mode)
     {
 #ifdef HAVE_HAL_MOUNT
-     case USING_HAL_MOUNT:
+     case EFM_MODE_USING_HAL_MOUNT:
        return _e_fm_main_hal_storage_find(udi);
 #endif
 #ifdef HAVE_UDISKS_MOUNT
-     case USING_UDISKS_MOUNT:
+     case EFM_MODE_USING_UDISKS_MOUNT:
        return _e_fm_main_udisks_storage_find(udi);
 #endif
 #ifdef HAVE_EEZE_MOUNT
-     case USING_EEZE_MOUNT:
+     case EFM_MODE_USING_EEZE_MOUNT:
        return _e_fm_main_eeze_storage_find(udi);
 #endif
      default:
