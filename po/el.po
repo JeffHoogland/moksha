@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-10-03 18:09+0900\n"
-"PO-Revision-Date: 2010-05-15 22:32+0200\n"
-"Last-Translator: Alex-P. Natsios <root@drakevr.gr>\n"
+"PO-Revision-Date: 2011-01-07 18:56+0200\n"
+"Last-Translator: George Koutsikos <ragecryx@yahoo.gr>\n"
 "Language-Team: Ελληνικά\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,21 +26,30 @@ msgstr ""
 msgid "About Enlightenment"
 msgstr "Σχετικά με το Enlightenment"
 
-#: src/bin/e_about.c:17 src/bin/e_actions.c:2618 src/bin/e_config_dialog.c:269
-#: src/bin/e_fm.c:945 src/bin/e_int_border_menu.c:242
-#: src/bin/e_int_border_prop.c:81 src/bin/e_theme_about.c:17
+#: src/bin/e_about.c:17
+#: src/bin/e_actions.c:2618
+#: src/bin/e_config_dialog.c:269
+#: src/bin/e_fm.c:945
+#: src/bin/e_int_border_menu.c:242
+#: src/bin/e_int_border_prop.c:81
+#: src/bin/e_theme_about.c:17
 #: src/modules/conf/e_conf.c:180
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:845
 #: src/modules/conf_theme/e_int_config_theme_web.c:129
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:237
 #: src/modules/everything-windows/e_mod_main.c:450
-#: src/modules/fileman/e_fwin.c:1825 src/modules/illume/e_mod_win.c:173
+#: src/modules/fileman/e_fwin.c:1825
+#: src/modules/illume/e_mod_win.c:173
 #: src/modules/mixer/app_mixer.c:514
 msgid "Close"
 msgstr "Κλείσιμο"
 
-#: src/bin/e_about.c:18 src/bin/e_actions.c:2915 src/bin/e_actions.c:2919
-#: src/bin/e_actions.c:2923 src/bin/e_int_menus.c:178 src/bin/e_main.c:672
+#: src/bin/e_about.c:18
+#: src/bin/e_actions.c:2915
+#: src/bin/e_actions.c:2919
+#: src/bin/e_actions.c:2923
+#: src/bin/e_int_menus.c:178
+#: src/bin/e_main.c:672
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:155
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:219
 #: src/modules/wizard/page_000.c:29
@@ -48,26 +57,8 @@ msgid "Enlightenment"
 msgstr "Enlightenment"
 
 #: src/bin/e_about.c:23
-#, fuzzy
-msgid ""
-"Copyright &copy; 1999-2010, by the Enlightenment Development Team.<br><br>We "
-"hope you enjoy using this software as much as we enjoyed writing it."
-"<br><br>This software is provided as-is with no explicit or implied "
-"warranty. This software is governed by licensing conditions, so please see "
-"the COPYING and COPYING-PLAIN licence files installed on your system."
-"<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</hilight> and it "
-"is not stable. Many features are incomplete or even non-existent yet and may "
-"have many bugs. You have been <hilight>WARNED!</hilight>"
-msgstr ""
-"Πνευματική ιδιοκτησία &copy; 1999-2008, της ομάδας ανάπτυξης του "
-"Enlightenment.<br><br>Ελπίζουμε να απολαμβάνετε τη χρήση του λογισμικού όσο "
-"απολαύσαμε εμείς τη συγγραφή του.<br><br>Αυτό το λογισμικό παρέχεται όπως-"
-"είναι χωρίς καμία προσωρινή ή υποκρυπτόμενη εγγύηση. Αυτό το λογισμικό "
-"διέπεται από όρους χρήσης, γι'αυτό παρακαλώ δείτε τα COPYING και COPYING-"
-"PLAIN αρχεία αδειών που είναι εγκατεστημένα στο σύστημα σας.<br><br> Το "
-"Enlightenment είναι υπό<hilight>ΣΥΝΕΧΗ ΑΝΑΠΤΥΞΗ</hilight> και δεν είναι "
-"σταθερό. Πολλά χαρακτηριστικά είναι ημιτελή ή δεν υπάρχουν και ενδέχεται να "
-"έχουν πολλά προβλήματα. Έχετε <hilight>ΠΡΟΕΙΔΟΠΟΙΗΘΕΙ!</hilight>"
+msgid "Copyright &copy; 1999-2010, by the Enlightenment Development Team.<br><br>We hope you enjoy using this software as much as we enjoyed writing it.<br><br>This software is provided as-is with no explicit or implied warranty. This software is governed by licensing conditions, so please see the COPYING and COPYING-PLAIN licence files installed on your system.<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</hilight> and it is not stable. Many features are incomplete or even non-existent yet and may have many bugs. You have been <hilight>WARNED!</hilight>"
+msgstr "Πνευματική ιδιοκτησία &copy; 1999-2010, της ομάδας ανάπτυξης του Enlightenment.<br><br>Ελπίζουμε να απολαμβάνετε τη χρήση του λογισμικού όσο απολαύσαμε εμείς τη συγγραφή του.<br><br>Αυτό το λογισμικό παρέχεται όπως-είναι χωρίς καμία προσωρινή ή υποκρυπτόμενη εγγύηση. Αυτό το λογισμικό διέπεται από όρους χρήσης, γι'αυτό παρακαλώ δείτε τα COPYING και COPYING-PLAIN αρχεία αδειών που είναι εγκατεστημένα στο σύστημα σας.<br><br>Το Enlightenment είναι υπό <hilight>ΣΥΝΕΧΗ ΑΝΑΠΤΥΞΗ</hilight> και δεν είναι σταθερό. Πολλά χαρακτηριστικά είναι ημιτελή ή δεν υπάρχουν και ενδέχεται να έχουν πολλά προβλήματα. Έχετε <hilight>ΠΡΟΕΙΔΟΠΟΙΗΘΕΙ!</hilight>"
 
 #: src/bin/e_about.c:47
 msgid "<title>The Team</title>"
@@ -75,32 +66,42 @@ msgstr "<title>Η Ομάδα</title>"
 
 #: src/bin/e_actions.c:366
 #, fuzzy, c-format
-msgid ""
-"You are about to kill %s.<br><br>Please keep in mind that all data from this "
-"window<br>which has not yet been saved will be lost!<br><br>Are you sure you "
-"want to kill this window?"
-msgstr ""
-"Πρόκειτε να σκοτώσετε το %s.<br><br>Παρακαλώ έχετε κατά νού ότι τα δεδομένα "
-"αυτού του παραθύρου<br>που δεν αποθηκεύτηκαν θα χαθούν!<br><br>Είστε "
-"σίγουροι για το σκότωμα του παραθύρου αυτού?"
+msgid "You are about to kill %s.<br><br>Please keep in mind that all data from this window<br>which has not yet been saved will be lost!<br><br>Are you sure you want to kill this window?"
+msgstr "Πρόκειτε να σκοτώσετε το %s.<br><br>Παρακαλώ έχετε κατά νού ότι τα δεδομένα αυτού του παραθύρου<br>που δεν αποθηκεύτηκαν θα χαθούν!<br><br>Είστε σίγουροι για το σκότωμα του παραθύρου αυτού?"
 
 #: src/bin/e_actions.c:378
 msgid "Are you sure you want to kill this window?"
 msgstr "Είστε σίγουροι ότι θέλετε να σκοτώσετε αυτό το παράθυρο?"
 
-#: src/bin/e_actions.c:381 src/bin/e_actions.c:1837 src/bin/e_actions.c:1934
-#: src/bin/e_actions.c:1997 src/bin/e_actions.c:2060 src/bin/e_actions.c:2123
-#: src/bin/e_actions.c:2186 src/bin/e_confirm_dialog.c:44
-#: src/bin/e_desklock.c:1078 src/bin/e_fm.c:9034 src/bin/e_fm.c:9288
-#: src/bin/e_module.c:513 src/bin/e_screensaver.c:105
+#: src/bin/e_actions.c:381
+#: src/bin/e_actions.c:1837
+#: src/bin/e_actions.c:1934
+#: src/bin/e_actions.c:1997
+#: src/bin/e_actions.c:2060
+#: src/bin/e_actions.c:2123
+#: src/bin/e_actions.c:2186
+#: src/bin/e_confirm_dialog.c:44
+#: src/bin/e_desklock.c:1078
+#: src/bin/e_fm.c:9034
+#: src/bin/e_fm.c:9288
+#: src/bin/e_module.c:513
+#: src/bin/e_screensaver.c:105
 msgid "Yes"
 msgstr "Ναι"
 
-#: src/bin/e_actions.c:383 src/bin/e_actions.c:1839 src/bin/e_actions.c:1936
-#: src/bin/e_actions.c:1999 src/bin/e_actions.c:2062 src/bin/e_actions.c:2125
-#: src/bin/e_actions.c:2188 src/bin/e_confirm_dialog.c:45
-#: src/bin/e_desklock.c:1080 src/bin/e_fm.c:9032 src/bin/e_fm.c:9289
-#: src/bin/e_module.c:514 src/bin/e_screensaver.c:107
+#: src/bin/e_actions.c:383
+#: src/bin/e_actions.c:1839
+#: src/bin/e_actions.c:1936
+#: src/bin/e_actions.c:1999
+#: src/bin/e_actions.c:2062
+#: src/bin/e_actions.c:2125
+#: src/bin/e_actions.c:2188
+#: src/bin/e_confirm_dialog.c:45
+#: src/bin/e_desklock.c:1080
+#: src/bin/e_fm.c:9032
+#: src/bin/e_fm.c:9289
+#: src/bin/e_module.c:514
+#: src/bin/e_screensaver.c:107
 msgid "No"
 msgstr "Όχι"
 
@@ -109,10 +110,8 @@ msgid "Are you sure you want to exit?"
 msgstr "Επιθυμείτε σίγουρα την έξοδο?"
 
 #: src/bin/e_actions.c:1833
-msgid ""
-"You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
-msgstr ""
-"Αιτήθηκε έξοδος από το Enlightenment.<br><br>Επιθυμείτε σίγουρα την έξοδο?"
+msgid "You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
+msgstr "Αιτήθηκε έξοδος από το Enlightenment.<br><br>Επιθυμείτε σίγουρα την έξοδο?"
 
 #: src/bin/e_actions.c:1928
 msgid "Are you sure you want to log out?"
@@ -122,14 +121,13 @@ msgstr "Επιθυμείτε σίγουρα να αποσυνδεθείτε?"
 msgid "You are about to log out.<br><br>Are you sure you want to do this?"
 msgstr "Πρόκειται να αποσυνδεθείτε.<br><br>Είστε σίγουροι για αυτό?"
 
-#: src/bin/e_actions.c:1991 src/bin/e_actions.c:2117
+#: src/bin/e_actions.c:1991
+#: src/bin/e_actions.c:2117
 msgid "Are you sure you want to turn off?"
 msgstr "Επιθυμείτε σίγουρα το κλείσιμο του συστήματος?"
 
 #: src/bin/e_actions.c:1993
-msgid ""
-"You requested to turn off your Computer.<br><br>Are you sure you want to "
-"shut down?"
+msgid "You requested to turn off your Computer.<br><br>Are you sure you want to shut down?"
 msgstr "Αιτήθηκε κλείσιμο Η/Υ.<br><br>Είστε σίγουροι για το κλείσιμο?"
 
 #: src/bin/e_actions.c:2054
@@ -137,15 +135,11 @@ msgid "Are you sure you want to reboot?"
 msgstr "Είστε σίγουροι ότι θέλετε να κάνετε επανεκκίνηση?"
 
 #: src/bin/e_actions.c:2056
-msgid ""
-"You requested to reboot your Computer.<br><br>Are you sure you want to "
-"restart it?"
+msgid "You requested to reboot your Computer.<br><br>Are you sure you want to restart it?"
 msgstr "Αιτήθηκε επανεκκίνηση Η/Υ.<br><br>Είστε σίγουροι για την επανεκκίνηση?"
 
 #: src/bin/e_actions.c:2119
-msgid ""
-"You requested to suspend your Computer.<br><br>Are you sure you want to "
-"suspend?"
+msgid "You requested to suspend your Computer.<br><br>Are you sure you want to suspend?"
 msgstr "Αιτήθηκε αναστολή Η/Υ.<br><br>Είστε σίγουροι για την αναστολή?"
 
 #: src/bin/e_actions.c:2180
@@ -153,31 +147,41 @@ msgid "Are you sure you want to hibernate?"
 msgstr "Είστε σίγουροι οτι θέλετε να κάνετε αδρανοποίηση;"
 
 #: src/bin/e_actions.c:2182
-msgid ""
-"You requested to hibernate your Computer.<br><br>Are you sure you want to "
-"suspend to disk?"
-msgstr ""
-"Ζητήσατε να αδρανοποίησετε τον Υπολογιστή.<br><br>Είστε σίγουροι οτι θέλετε "
-"να αναστείλετε τις εργασίες στον δίσκο;"
+msgid "You requested to hibernate your Computer.<br><br>Are you sure you want to suspend to disk?"
+msgstr "Ζητήσατε να αδρανοποίησετε τον Υπολογιστή.<br><br>Είστε σίγουροι οτι θέλετε να αναστείλετε τις εργασίες στον δίσκο;"
 
-#: src/bin/e_actions.c:2578 src/bin/e_actions.c:2589 src/bin/e_actions.c:2608
-#: src/bin/e_actions.c:2613 src/bin/e_actions.c:2618 src/bin/e_actions.c:2623
-#: src/bin/e_actions.c:2843 src/bin/e_actions.c:2847 src/bin/e_actions.c:2852
-#: src/bin/e_actions.c:2858 src/bin/e_actions.c:2864 src/bin/e_actions.c:2870
+#: src/bin/e_actions.c:2578
+#: src/bin/e_actions.c:2589
+#: src/bin/e_actions.c:2608
+#: src/bin/e_actions.c:2613
+#: src/bin/e_actions.c:2618
+#: src/bin/e_actions.c:2623
+#: src/bin/e_actions.c:2843
+#: src/bin/e_actions.c:2847
+#: src/bin/e_actions.c:2852
+#: src/bin/e_actions.c:2858
+#: src/bin/e_actions.c:2864
+#: src/bin/e_actions.c:2870
 msgid "Window : Actions"
 msgstr "Παράθυρο : Ενέργειες"
 
-#: src/bin/e_actions.c:2578 src/bin/e_fm.c:6081
+#: src/bin/e_actions.c:2578
+#: src/bin/e_fm.c:6081
 #: src/bin/e_int_border_menu.c:145
 msgid "Move"
 msgstr "Μετακίνηση"
 
-#: src/bin/e_actions.c:2589 src/bin/e_int_border_menu.c:157
+#: src/bin/e_actions.c:2589
+#: src/bin/e_int_border_menu.c:157
 msgid "Resize"
 msgstr "Αλλαγή μεγέθους"
 
-#: src/bin/e_actions.c:2600 src/bin/e_actions.c:2891 src/bin/e_actions.c:2893
-#: src/bin/e_actions.c:2895 src/bin/e_actions.c:2897 src/bin/e_actions.c:2899
+#: src/bin/e_actions.c:2600
+#: src/bin/e_actions.c:2891
+#: src/bin/e_actions.c:2893
+#: src/bin/e_actions.c:2895
+#: src/bin/e_actions.c:2897
+#: src/bin/e_actions.c:2899
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:325
 msgid "Menu"
 msgstr "Μενού"
@@ -186,25 +190,39 @@ msgstr "Μενού"
 msgid "Window Menu"
 msgstr "Μενού παραθύρου"
 
-#: src/bin/e_actions.c:2608 src/bin/e_int_border_menu.c:213
+#: src/bin/e_actions.c:2608
+#: src/bin/e_int_border_menu.c:213
 #: src/modules/conf_winlist/e_int_config_winlist.c:216
 msgid "Raise"
 msgstr "Ανύψωση"
 
-#: src/bin/e_actions.c:2613 src/bin/e_int_border_menu.c:205
+#: src/bin/e_actions.c:2613
+#: src/bin/e_int_border_menu.c:205
 msgid "Lower"
 msgstr "Βύθιση"
 
-#: src/bin/e_actions.c:2623 src/bin/e_int_border_menu.c:231
+#: src/bin/e_actions.c:2623
+#: src/bin/e_int_border_menu.c:231
 msgid "Kill"
 msgstr "Σκότωμα"
 
-#: src/bin/e_actions.c:2628 src/bin/e_actions.c:2635 src/bin/e_actions.c:2642
-#: src/bin/e_actions.c:2649 src/bin/e_actions.c:2651 src/bin/e_actions.c:2654
-#: src/bin/e_actions.c:2657 src/bin/e_actions.c:2659 src/bin/e_actions.c:2661
-#: src/bin/e_actions.c:2663 src/bin/e_actions.c:2670 src/bin/e_actions.c:2672
-#: src/bin/e_actions.c:2674 src/bin/e_actions.c:2676 src/bin/e_actions.c:2678
-#: src/bin/e_actions.c:2685 src/bin/e_actions.c:2690
+#: src/bin/e_actions.c:2628
+#: src/bin/e_actions.c:2635
+#: src/bin/e_actions.c:2642
+#: src/bin/e_actions.c:2649
+#: src/bin/e_actions.c:2651
+#: src/bin/e_actions.c:2654
+#: src/bin/e_actions.c:2657
+#: src/bin/e_actions.c:2659
+#: src/bin/e_actions.c:2661
+#: src/bin/e_actions.c:2663
+#: src/bin/e_actions.c:2670
+#: src/bin/e_actions.c:2672
+#: src/bin/e_actions.c:2674
+#: src/bin/e_actions.c:2676
+#: src/bin/e_actions.c:2678
+#: src/bin/e_actions.c:2685
+#: src/bin/e_actions.c:2690
 msgid "Window : State"
 msgstr "Παράθυρο : Κατάσταση"
 
@@ -220,7 +238,8 @@ msgstr "Εναλλαγή σε εικονιδιοποιημένη λειτουρ�
 msgid "Fullscreen Mode Toggle"
 msgstr "Εναλλαγή σε λειτουργία πλήρους οθόνης"
 
-#: src/bin/e_actions.c:2649 src/bin/e_int_border_menu.c:175
+#: src/bin/e_actions.c:2649
+#: src/bin/e_int_border_menu.c:175
 #: src/bin/e_int_border_menu.c:396
 msgid "Maximize"
 msgstr "Μεγιστοποίηση"
@@ -277,27 +296,63 @@ msgstr "Εναλλαγή σε Κατάσταση χωρίς περίγραμμα
 msgid "Toggle Pinned State"
 msgstr "Εναλλαγή σε κατάσταση ακινητοποίησης"
 
-#: src/bin/e_actions.c:2695 src/bin/e_actions.c:2697 src/bin/e_actions.c:2699
-#: src/bin/e_actions.c:2701 src/bin/e_actions.c:2703 src/bin/e_actions.c:2709
-#: src/bin/e_actions.c:2715 src/bin/e_actions.c:2720 src/bin/e_actions.c:2726
-#: src/bin/e_actions.c:2732 src/bin/e_actions.c:2734 src/bin/e_actions.c:2736
-#: src/bin/e_actions.c:2738 src/bin/e_actions.c:2740 src/bin/e_actions.c:2742
-#: src/bin/e_actions.c:2744 src/bin/e_actions.c:2746 src/bin/e_actions.c:2748
-#: src/bin/e_actions.c:2750 src/bin/e_actions.c:2752 src/bin/e_actions.c:2754
-#: src/bin/e_actions.c:2756 src/bin/e_actions.c:2762 src/bin/e_actions.c:2764
-#: src/bin/e_actions.c:2766 src/bin/e_actions.c:2768 src/bin/e_actions.c:2770
-#: src/bin/e_actions.c:2776 src/bin/e_actions.c:2782 src/bin/e_actions.c:2788
-#: src/bin/e_actions.c:2793 src/bin/e_actions.c:2795 src/bin/e_actions.c:2797
-#: src/bin/e_actions.c:2799 src/bin/e_actions.c:2801 src/bin/e_actions.c:2803
-#: src/bin/e_actions.c:2805 src/bin/e_actions.c:2807 src/bin/e_actions.c:2809
-#: src/bin/e_actions.c:2811 src/bin/e_actions.c:2813 src/bin/e_actions.c:2815
-#: src/bin/e_actions.c:2817 src/bin/e_actions.c:2965 src/bin/e_actions.c:2970
-#: src/bin/e_fm.c:3208 src/bin/e_fm.c:3213 src/bin/e_fm.c:9805
-#: src/bin/e_fm_dbus.c:324 src/bin/e_fm_dbus.c:348 src/bin/e_fm_dbus.c:624
-#: src/bin/e_fm_dbus.c:651 src/bin/e_int_menus.c:144
+#: src/bin/e_actions.c:2695
+#: src/bin/e_actions.c:2697
+#: src/bin/e_actions.c:2699
+#: src/bin/e_actions.c:2701
+#: src/bin/e_actions.c:2703
+#: src/bin/e_actions.c:2709
+#: src/bin/e_actions.c:2715
+#: src/bin/e_actions.c:2720
+#: src/bin/e_actions.c:2726
+#: src/bin/e_actions.c:2732
+#: src/bin/e_actions.c:2734
+#: src/bin/e_actions.c:2736
+#: src/bin/e_actions.c:2738
+#: src/bin/e_actions.c:2740
+#: src/bin/e_actions.c:2742
+#: src/bin/e_actions.c:2744
+#: src/bin/e_actions.c:2746
+#: src/bin/e_actions.c:2748
+#: src/bin/e_actions.c:2750
+#: src/bin/e_actions.c:2752
+#: src/bin/e_actions.c:2754
+#: src/bin/e_actions.c:2756
+#: src/bin/e_actions.c:2762
+#: src/bin/e_actions.c:2764
+#: src/bin/e_actions.c:2766
+#: src/bin/e_actions.c:2768
+#: src/bin/e_actions.c:2770
+#: src/bin/e_actions.c:2776
+#: src/bin/e_actions.c:2782
+#: src/bin/e_actions.c:2788
+#: src/bin/e_actions.c:2793
+#: src/bin/e_actions.c:2795
+#: src/bin/e_actions.c:2797
+#: src/bin/e_actions.c:2799
+#: src/bin/e_actions.c:2801
+#: src/bin/e_actions.c:2803
+#: src/bin/e_actions.c:2805
+#: src/bin/e_actions.c:2807
+#: src/bin/e_actions.c:2809
+#: src/bin/e_actions.c:2811
+#: src/bin/e_actions.c:2813
+#: src/bin/e_actions.c:2815
+#: src/bin/e_actions.c:2817
+#: src/bin/e_actions.c:2965
+#: src/bin/e_actions.c:2970
+#: src/bin/e_fm.c:3208
+#: src/bin/e_fm.c:3213
+#: src/bin/e_fm.c:9805
+#: src/bin/e_fm_dbus.c:324
+#: src/bin/e_fm_dbus.c:348
+#: src/bin/e_fm_dbus.c:624
+#: src/bin/e_fm_dbus.c:651
+#: src/bin/e_int_menus.c:144
 #: src/bin/e_int_shelf_config.c:247
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:101
-#: src/modules/fileman/e_mod_main.c:325 src/modules/ibox/e_mod_config.c:162
+#: src/modules/fileman/e_mod_main.c:325
+#: src/modules/ibox/e_mod_config.c:162
 msgid "Desktop"
 msgstr "Επιφάνεια εργασίας"
 
@@ -473,8 +528,12 @@ msgstr "Αλλαγή στην επιφάνεια εργασίας 11 (Όλες �
 msgid "Switch To Desktop... (All Screens)"
 msgstr "Αλλαγή στην επιφάνεια εργασίας... (Όλες οθόνες)"
 
-#: src/bin/e_actions.c:2823 src/bin/e_actions.c:2825 src/bin/e_actions.c:2827
-#: src/bin/e_actions.c:2833 src/bin/e_actions.c:2835 src/bin/e_actions.c:2837
+#: src/bin/e_actions.c:2823
+#: src/bin/e_actions.c:2825
+#: src/bin/e_actions.c:2827
+#: src/bin/e_actions.c:2833
+#: src/bin/e_actions.c:2835
+#: src/bin/e_actions.c:2837
 #: src/modules/conf_desklock/e_mod_main.c:17
 #: src/modules/conf_desks/e_mod_main.c:19
 #: src/modules/conf_display/e_mod_main.c:17
@@ -508,7 +567,9 @@ msgstr "Προώθηση ποντικιού κατά 1 οθόνη πίσω"
 msgid "Send Mouse Forward/Back Screens..."
 msgstr "Προώθηση ποντικιού κατά ... οθόνες"
 
-#: src/bin/e_actions.c:2875 src/bin/e_actions.c:2877 src/bin/e_actions.c:2879
+#: src/bin/e_actions.c:2875
+#: src/bin/e_actions.c:2877
+#: src/bin/e_actions.c:2879
 #: src/bin/e_actions.c:2885
 msgid "Window : Moving"
 msgstr "Παράθυρο : Μετακίνηση"
@@ -549,26 +610,33 @@ msgstr "Εμφάνιση μενού πελατών"
 msgid "Show Menu..."
 msgstr "Εμφάνιση μενού..."
 
-#: src/bin/e_actions.c:2906 src/bin/e_actions.c:2911
-#: src/modules/conf/e_mod_main.c:264 src/modules/conf/e_mod_main.c:367
+#: src/bin/e_actions.c:2906
+#: src/bin/e_actions.c:2911
+#: src/modules/conf/e_mod_main.c:264
+#: src/modules/conf/e_mod_main.c:367
 #: src/modules/everything-apps/e_mod_main.c:983
-#: src/modules/fileman/e_mod_main.c:60 src/modules/fileman/e_mod_main.c:143
+#: src/modules/fileman/e_mod_main.c:60
+#: src/modules/fileman/e_mod_main.c:143
 msgid "Launch"
 msgstr "Εκτέλεση"
 
-#: src/bin/e_actions.c:2906 src/bin/e_int_border_prop.c:439
+#: src/bin/e_actions.c:2906
+#: src/bin/e_int_border_prop.c:439
 msgid "Command"
 msgstr "Εντολή"
 
-#: src/bin/e_actions.c:2911 src/bin/e_eap_editor.c:695
+#: src/bin/e_actions.c:2911
+#: src/bin/e_eap_editor.c:695
 msgid "Application"
 msgstr "Εφαρμογή"
 
-#: src/bin/e_actions.c:2915 src/bin/e_int_menus.c:202
+#: src/bin/e_actions.c:2915
+#: src/bin/e_int_menus.c:202
 msgid "Restart"
 msgstr "Επανεκκίνηση"
 
-#: src/bin/e_actions.c:2919 src/bin/e_int_menus.c:207
+#: src/bin/e_actions.c:2919
+#: src/bin/e_int_menus.c:207
 msgid "Exit"
 msgstr "Έξοδος"
 
@@ -576,7 +644,8 @@ msgstr "Έξοδος"
 msgid "Exit Now"
 msgstr "Έξοδος τώρα"
 
-#: src/bin/e_actions.c:2927 src/bin/e_actions.c:2932
+#: src/bin/e_actions.c:2927
+#: src/bin/e_actions.c:2932
 msgid "Enlightenment : Mode"
 msgstr "Enlightenment : Λειτουργία"
 
@@ -588,9 +657,14 @@ msgstr "Εναλλαγή σε λειτουργία παρουσίασης"
 msgid "Offline Mode Toggle"
 msgstr "Εναλλαγή σε λειτουργία εκτός σύνδεσης"
 
-#: src/bin/e_actions.c:2937 src/bin/e_actions.c:2941 src/bin/e_actions.c:2945
-#: src/bin/e_actions.c:2949 src/bin/e_actions.c:2953 src/bin/e_actions.c:2957
-#: src/bin/e_configure.c:148 src/bin/e_int_config_modules.c:63
+#: src/bin/e_actions.c:2937
+#: src/bin/e_actions.c:2941
+#: src/bin/e_actions.c:2945
+#: src/bin/e_actions.c:2949
+#: src/bin/e_actions.c:2953
+#: src/bin/e_actions.c:2957
+#: src/bin/e_configure.c:148
+#: src/bin/e_int_config_modules.c:63
 #: src/modules/conf_desklock/e_int_config_desklock_fsel.c:87
 #: src/modules/conf_imc/e_int_config_imc.c:808
 #: src/modules/conf_menus/e_int_config_menus.c:294
@@ -599,8 +673,10 @@ msgstr "Εναλλαγή σε λειτουργία εκτός σύνδεσης"
 #: src/modules/conf_theme/e_int_config_theme.c:794
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:453
 #: src/modules/conf_wallpaper/e_int_config_wallpaper.c:583
-#: src/modules/gadman/e_mod_config.c:183 src/modules/syscon/e_mod_main.c:31
-#: src/modules/syscon/e_mod_main.c:35 src/modules/syscon/e_mod_main.c:52
+#: src/modules/gadman/e_mod_config.c:183
+#: src/modules/syscon/e_mod_main.c:31
+#: src/modules/syscon/e_mod_main.c:35
+#: src/modules/syscon/e_mod_main.c:52
 #: src/modules/syscon/e_mod_main.c:119
 msgid "System"
 msgstr "Σύστημα"
@@ -633,7 +709,8 @@ msgstr "Αδρανοποίηση"
 msgid "Lock"
 msgstr "Κλείδωμα"
 
-#: src/bin/e_actions.c:2970 src/bin/e_int_menus.c:1165
+#: src/bin/e_actions.c:2970
+#: src/bin/e_int_menus.c:1165
 msgid "Cleanup Windows"
 msgstr "Καθαρισμός παραθύρων"
 
@@ -645,20 +722,18 @@ msgstr "Γενικά : Ενέργειες"
 msgid "Delayed Action"
 msgstr "Καθυστερημένη ενέργεια"
 
-#: src/bin/e_actions.c:2982 src/bin/e_actions.c:2986
-#, fuzzy
+#: src/bin/e_actions.c:2982
+#: src/bin/e_actions.c:2986
 msgid "Acpi"
-msgstr "Ενέργεια"
+msgstr "Acpi"
 
 #: src/bin/e_actions.c:2982
-#, fuzzy
 msgid "Dim Screen"
-msgstr "Σε αυτή την οθόνη"
+msgstr "Εξασθένηση φωτεινότητας"
 
 #: src/bin/e_actions.c:2986
-#, fuzzy
 msgid "Undim Screen"
-msgstr "Σε αυτή την οθόνη"
+msgstr "Ενίσχυση φωτεινότητας"
 
 #: src/bin/e_bg.c:50
 msgid "Set As Background"
@@ -668,13 +743,23 @@ msgstr "Ορισμός ως ταπετσαρία"
 msgid "Color Selector"
 msgstr "Επιλογή χρώματος"
 
-#: src/bin/e_color_dialog.c:46 src/bin/e_config.c:2101
-#: src/bin/e_config_dialog.c:259 src/bin/e_eap_editor.c:859
-#: src/bin/e_eap_editor.c:923 src/bin/e_entry_dialog.c:62 src/bin/e_exec.c:361
-#: src/bin/e_fm.c:8546 src/bin/e_fm.c:9190 src/bin/e_fm_prop.c:507
-#: src/bin/e_int_border_remember.c:321 src/bin/e_int_border_remember.c:521
-#: src/bin/e_module.c:409 src/bin/e_sys.c:484 src/bin/e_sys.c:530
-#: src/bin/e_utils.c:691 src/modules/conf_dpms/e_int_config_dpms.c:64
+#: src/bin/e_color_dialog.c:46
+#: src/bin/e_config.c:2101
+#: src/bin/e_config_dialog.c:259
+#: src/bin/e_eap_editor.c:859
+#: src/bin/e_eap_editor.c:923
+#: src/bin/e_entry_dialog.c:62
+#: src/bin/e_exec.c:361
+#: src/bin/e_fm.c:8546
+#: src/bin/e_fm.c:9190
+#: src/bin/e_fm_prop.c:507
+#: src/bin/e_int_border_remember.c:321
+#: src/bin/e_int_border_remember.c:521
+#: src/bin/e_module.c:409
+#: src/bin/e_sys.c:484
+#: src/bin/e_sys.c:530
+#: src/bin/e_utils.c:691
+#: src/modules/conf_dpms/e_int_config_dpms.c:64
 #: src/modules/conf_dpms/e_int_config_dpms.c:85
 #: src/modules/conf_imc/e_int_config_imc_import.c:120
 #: src/modules/conf_mime/e_int_config_mime_edit.c:303
@@ -682,42 +767,37 @@ msgstr "Επιλογή χρώματος"
 #: src/modules/conf_theme/e_int_config_theme_import.c:120
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:215
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:345
-#: src/modules/cpufreq/e_mod_main.c:391 src/modules/cpufreq/e_mod_main.c:420
+#: src/modules/cpufreq/e_mod_main.c:391
+#: src/modules/cpufreq/e_mod_main.c:420
 #: src/modules/cpufreq/e_mod_main.c:445
 msgid "OK"
 msgstr "Εντάξει"
 
-#: src/bin/e_color_dialog.c:47 src/bin/e_eap_editor.c:861
-#: src/bin/e_eap_editor.c:925 src/bin/e_entry_dialog.c:63 src/bin/e_fm.c:8548
-#: src/bin/e_fm_prop.c:508 src/bin/e_utils.c:1168
+#: src/bin/e_color_dialog.c:47
+#: src/bin/e_eap_editor.c:861
+#: src/bin/e_eap_editor.c:925
+#: src/bin/e_entry_dialog.c:63
+#: src/bin/e_fm.c:8548
+#: src/bin/e_fm_prop.c:508
+#: src/bin/e_utils.c:1168
 #: src/modules/conf_imc/e_int_config_imc_import.c:124
 #: src/modules/conf_mime/e_int_config_mime_edit.c:304
 #: src/modules/conf_profiles/e_int_config_profiles.c:388
 #: src/modules/conf_theme/e_int_config_theme_import.c:124
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:219
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:349
-#: src/modules/syscon/e_syscon.c:94 src/modules/connman/e_mod_main.c:283
+#: src/modules/syscon/e_syscon.c:94
+#: src/modules/connman/e_mod_main.c:283
 msgid "Cancel"
 msgstr "Ακύρωση"
 
-#: src/bin/e_config.c:933 src/bin/e_config.c:966
-msgid ""
-"Settings data needed upgrading. Your old settings have<br>been wiped and a "
-"new set of defaults initialized. This<br>will happen regularly during "
-"development, so don't report a<br>bug. This simply means Enlightenment needs "
-"new settings<br>data by default for usable functionality that your "
-"old<br>settings simply lack. This new set of defaults will fix<br>that by "
-"adding it in. You can re-configure things now to your<br>liking. Sorry for "
-"the hiccup in your settings.<br>"
+#: src/bin/e_config.c:933
+#: src/bin/e_config.c:966
+msgid "Settings data needed upgrading. Your old settings have<br>been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means Enlightenment needs new settings<br>data by default for usable functionality that your old<br>settings simply lack. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the hiccup in your settings.<br>"
 msgstr ""
 
 #: src/bin/e_config.c:950
-msgid ""
-"Your settings are NEWER than Enlightenment. This is very<br>strange. This "
-"should not happen unless you downgraded<br>Enlightenment or copied the "
-"settings from a place where<br>a newer version of Enlightenment was running. "
-"This is bad and<br>as a precaution your settings have been now restored "
-"to<br>defaults. Sorry for the inconvenience.<br>"
+msgid "Your settings are NEWER than Enlightenment. This is very<br>strange. This should not happen unless you downgraded<br>Enlightenment or copied the settings from a place where<br>a newer version of Enlightenment was running. This is bad and<br>as a precaution your settings have been now restored to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr ""
 
 #: src/bin/e_config.c:2002
@@ -726,64 +806,44 @@ msgstr "Ρυθμίσεις αναβαθμίστηκαν"
 
 #: src/bin/e_config.c:2025
 #, c-format
-msgid ""
-"An error occurred while saving Enlightenment's<br>settings to disk. The "
-"error could not be<br>deterimined.<br><br>The file where the error occurred "
-"was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
-msgstr ""
-"Ενα σφάλμα παρουσιάστηκε κατα την αποθήκευση των ρυθμίσεων<br>του "
-"Enlightenment στο δίσκο. Το πρόβλημα δεν μπορεί να<brb>προσδιοριστεί."
-"<br><br>Το αρχείο που παρουσιάστηκε το σφάλμα ήταν:<br>%s<br><br>Αυτό το "
-"αρχείο διαγράφηκε για να αποφευχθούν φθαρμένα δεδομένα. <br>"
+msgid "An error occurred while saving Enlightenment's<br>settings to disk. The error could not be<br>deterimined.<br><br>The file where the error occurred was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
+msgstr "Ενα σφάλμα παρουσιάστηκε κατα την αποθήκευση των ρυθμίσεων<br>του Enlightenment στο δίσκο. Το πρόβλημα δεν μπορεί να<brb>προσδιοριστεί.<br><br>Το αρχείο που παρουσιάστηκε το σφάλμα ήταν:<br>%s<br><br>Αυτό το αρχείο διαγράφηκε για να αποφευχθούν φθαρμένα δεδομένα. <br>"
 
 #: src/bin/e_config.c:2036
 #, c-format
-msgid ""
-"Enlightenment's settings files are too big<br>for the file system they are "
-"being saved to.<br>This error is very strange as the files should<br>be "
-"extremely small. Please check the settings<br>for your home directory."
-"<br><br>The file where the error occurred was:<br>%s<br><br>This file has "
-"been deleted to avoid corrupt data.<br>"
+msgid "Enlightenment's settings files are too big<br>for the file system they are being saved to.<br>This error is very strange as the files should<br>be extremely small. Please check the settings<br>for your home directory.<br><br>The file where the error occurred was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 
 #: src/bin/e_config.c:2049
 #, c-format
-msgid ""
-"An output error occurred when writing the settings<br>files for "
-"Enlightenment. Your disk is having troubles<br>and possibly needs "
-"replacement.<br><br>The file where the error occurred was:<br>%s<br><br>This "
-"file has been deleted to avoid corrupt data.<br>"
+msgid "An output error occurred when writing the settings<br>files for Enlightenment. Your disk is having troubles<br>and possibly needs replacement.<br><br>The file where the error occurred was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 
 #: src/bin/e_config.c:2060
 #, c-format
-msgid ""
-"Enlightenment cannot write its settings file<br>because it ran out of space "
-"to write the file.<br>You have either run out of disk space or have<br>gone "
-"over your quota limit.<br><br>The file where the error occurred was:<br>%"
-"s<br><br>This file has been deleted to avoid corrupt data.<br>"
+msgid "Enlightenment cannot write its settings file<br>because it ran out of space to write the file.<br>You have either run out of disk space or have<br>gone over your quota limit.<br><br>The file where the error occurred was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 
 #: src/bin/e_config.c:2072
 #, c-format
-msgid ""
-"Enlightenment unexpectedly had the settings file<br>it was writing closed on "
-"it. This is very unusual.<br><br>The file where the error occurred was:<br>%"
-"s<br><br>This file has been deleted to avoid corrupt data.<br>"
+msgid "Enlightenment unexpectedly had the settings file<br>it was writing closed on it. This is very unusual.<br><br>The file where the error occurred was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 
 #: src/bin/e_config.c:2097
 msgid "Enlightenment Settings Write Problems"
 msgstr "Προβλήματα εγγραφής ρυθμίσεων του Enlightenment"
 
-#: src/bin/e_config_dialog.c:207 src/modules/battery/e_mod_main.c:713
-#: src/modules/conf/e_mod_main.c:275 src/modules/conf_engine/e_mod_main.c:17
+#: src/bin/e_config_dialog.c:207
+#: src/modules/battery/e_mod_main.c:713
+#: src/modules/conf/e_mod_main.c:275
+#: src/modules/conf_engine/e_mod_main.c:17
 #: src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
 msgid "Advanced"
 msgstr "Προχωρημένα"
 
-#: src/bin/e_config_dialog.c:236 src/bin/e_eap_editor.c:716
+#: src/bin/e_config_dialog.c:236
+#: src/bin/e_eap_editor.c:716
 msgid "Basic"
 msgstr "Βασικά"
 
@@ -793,7 +853,9 @@ msgstr "Βασικά"
 msgid "Apply"
 msgstr "Εφαρμογή"
 
-#: src/bin/e_configure.c:24 src/bin/e_configure.c:33 src/bin/e_configure.c:36
+#: src/bin/e_configure.c:24
+#: src/bin/e_configure.c:33
+#: src/bin/e_configure.c:36
 #: src/modules/conf_colors/e_int_config_color_classes.c:844
 #: src/modules/conf_fonts/e_int_config_fonts.c:96
 #: src/modules/conf_paths/e_int_config_paths.c:80
@@ -801,11 +863,13 @@ msgstr "Εφαρμογή"
 msgid "Modules"
 msgstr "Αρθρώματα"
 
-#: src/bin/e_configure.c:32 src/modules/conf_shelves/e_mod_main.c:21
+#: src/bin/e_configure.c:32
+#: src/modules/conf_shelves/e_mod_main.c:21
 #: src/modules/everything/e_mod_main.c:89
 #: src/modules/everything-apps/e_mod_main.c:1216
 #: src/modules/everything-files/e_mod_main.c:1656
-#: src/modules/gadman/e_mod_main.c:25 src/modules/mixer/e_mod_main.c:1049
+#: src/modules/gadman/e_mod_main.c:25
+#: src/modules/mixer/e_mod_main.c:1049
 #: src/modules/connman/e_mod_main.c:1733
 msgid "Extensions"
 msgstr "Επεκτάσεις"
@@ -820,24 +884,16 @@ msgid "Error - no PAM support"
 msgstr "Σφάλμα - δεν υπάρχει PAM υποστήριξη"
 
 #: src/bin/e_desklock.c:251
-msgid ""
-"No PAM support was built into Enlightenment, so<br>desk locking is disabled."
-msgstr ""
-"Δεν έχει υλοποιηθεί υποστήριξη PAM στο Enlightenment, έτσι<br>το κλείδωμα "
-"του desk είναι απενεργοποιημένο."
+msgid "No PAM support was built into Enlightenment, so<br>desk locking is disabled."
+msgstr "Δεν έχει υλοποιηθεί υποστήριξη PAM στο Enlightenment, έτσι<br>το κλείδωμα του desk είναι απενεργοποιημένο."
 
 #: src/bin/e_desklock.c:315
 msgid "Lock Failed"
 msgstr "Κλείδωμα απέτυχε"
 
 #: src/bin/e_desklock.c:316
-msgid ""
-"Locking the desktop failed because some application<br>has grabbed either "
-"the keyboard or the mouse or both<br>and their grab is unable to be broken."
-msgstr ""
-"Το κλείδωμα της επιφάνειας εργασίας απέτυχε επειδή κάποια εφαρμογή<br>αρπαξε "
-"είτε το πληκτρολόγιο είτε το ποντίκι ή και τα δύο<br>και η αρπαγή δεν είναι "
-"δυνατόν να σπάσει."
+msgid "Locking the desktop failed because some application<br>has grabbed either the keyboard or the mouse or both<br>and their grab is unable to be broken."
+msgstr "Το κλείδωμα της επιφάνειας εργασίας απέτυχε επειδή κάποια εφαρμογή<br>αρπαξε είτε το πληκτρολόγιο είτε το ποντίκι ή και τα δύο<br>και η αρπαγή δεν είναι δυνατόν να σπάσει."
 
 #: src/bin/e_desklock.c:401
 msgid "Please enter your unlock password"
@@ -849,31 +905,25 @@ msgstr "Σφάλμα συστήματος ταυτοποίησης"
 
 #: src/bin/e_desklock.c:741
 #, c-format
-msgid ""
-"Authentication via PAM had errors setting up the<br>authentication session. "
-"The error code was <hilight>%i</hilight>.<br>This is bad and should not be "
-"happening. Please report this bug."
-msgstr ""
-"Η πιστοποίηση μέσω PAM παρουσίασε προβλήματα<br>για την πιστοποιημένη "
-"περίοδο. Ο κωδικός σφάλματος ήταν  <hilight>%i</hilight>.<br>Αυτό είναι "
-"άσχημο και δεν θα έπρεπε να συμβαίνει. Παρακαλώ αναφέρετε αυτό το σφάλμα."
+msgid "Authentication via PAM had errors setting up the<br>authentication session. The error code was <hilight>%i</hilight>.<br>This is bad and should not be happening. Please report this bug."
+msgstr "Η πιστοποίηση μέσω PAM παρουσίασε προβλήματα<br>για την πιστοποιημένη περίοδο. Ο κωδικός σφάλματος ήταν  <hilight>%i</hilight>.<br>Αυτό είναι άσχημο και δεν θα έπρεπε να συμβαίνει. Παρακαλώ αναφέρετε αυτό το σφάλμα."
 
-#: src/bin/e_desklock.c:1069 src/bin/e_screensaver.c:96
+#: src/bin/e_desklock.c:1069
+#: src/bin/e_screensaver.c:96
 msgid "Activate Presentation Mode?"
 msgstr "Ενεργοποίηση λειτουργίας παρουσίασης?"
 
 #: src/bin/e_desklock.c:1072
-msgid ""
-"You unlocked desktop too fast.<br><br>Would you like to enable "
-"<b>presentation</b> mode and temporarily disable screen saver, lock and "
-"power saving?"
+msgid "You unlocked desktop too fast.<br><br>Would you like to enable <b>presentation</b> mode and temporarily disable screen saver, lock and power saving?"
 msgstr ""
 
-#: src/bin/e_desklock.c:1082 src/bin/e_screensaver.c:109
+#: src/bin/e_desklock.c:1082
+#: src/bin/e_screensaver.c:109
 msgid "No, but increase timeout"
 msgstr "Όχι, αλλά αύξησε το χρόνο λήξης"
 
-#: src/bin/e_desklock.c:1084 src/bin/e_screensaver.c:111
+#: src/bin/e_desklock.c:1084
+#: src/bin/e_screensaver.c:111
 msgid "No, and stop asking"
 msgstr "Όχι, και σταμάτα να ρωτάς"
 
@@ -882,20 +932,17 @@ msgid "Incomplete Window Properties"
 msgstr "Ελλιπείς ιδιότητες παραθύρου"
 
 #: src/bin/e_eap_editor.c:175
-msgid ""
-"The window you are creating an icon for<br>does not contain window name and "
-"class<br>properties, so the needed properties for<br>the icon so that it "
-"will be used for this<br>window cannot be guessed. You will need to<br>use "
-"the window title instead. This will only<br>work if the window title is the "
-"same at<br>the time the window starts up, and does not<br>change."
+msgid "The window you are creating an icon for<br>does not contain window name and class<br>properties, so the needed properties for<br>the icon so that it will be used for this<br>window cannot be guessed. You will need to<br>use the window title instead. This will only<br>work if the window title is the same at<br>the time the window starts up, and does not<br>change."
 msgstr ""
 
 #: src/bin/e_eap_editor.c:230
 msgid "Desktop Entry Editor"
 msgstr "Επεξεργαστής καταχωρήσεων επιφάνειας εργασίας"
 
-#: src/bin/e_eap_editor.c:674 src/bin/e_int_border_prop.c:420
-#: src/bin/e_int_border_prop.c:467 src/modules/conf_imc/e_int_config_imc.c:891
+#: src/bin/e_eap_editor.c:674
+#: src/bin/e_int_border_prop.c:420
+#: src/bin/e_int_border_prop.c:467
+#: src/modules/conf_imc/e_int_config_imc.c:891
 #: src/modules/conf_menus/e_int_config_menus.c:103
 #: src/modules/conf_menus/e_int_config_menus.c:298
 msgid "Name"
@@ -907,10 +954,12 @@ msgstr "Σχόλιο"
 
 #: src/bin/e_eap_editor.c:707
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
-#: src/bin/e_eap_editor.c:729 src/bin/e_eap_editor.c:738
-#: src/bin/e_fm_prop.c:394 src/modules/conf_fonts/e_int_config_fonts.c:93
+#: src/bin/e_eap_editor.c:729
+#: src/bin/e_eap_editor.c:738
+#: src/bin/e_fm_prop.c:394
+#: src/modules/conf_fonts/e_int_config_fonts.c:93
 #: src/modules/conf_mime/e_int_config_mime_edit.c:147
 msgid "Icon"
 msgstr "Εικονίδιο"
@@ -924,7 +973,8 @@ msgstr "Γενικό όνομα"
 msgid "Window Class"
 msgstr "Κατηγορία παραθύρου"
 
-#: src/bin/e_eap_editor.c:754 src/modules/conf_mime/e_int_config_mime.c:176
+#: src/bin/e_eap_editor.c:754
+#: src/modules/conf_mime/e_int_config_mime.c:176
 msgid "Categories"
 msgstr "Κατηγορίες"
 
@@ -942,7 +992,8 @@ msgstr "Αρχείο επιφάνειας εργασίας"
 #: src/modules/everything/evry_config.c:464
 #: src/modules/everything-aspell/e_mod_main.c:476
 #: src/modules/everything-files/e_mod_main.c:1548
-#: src/modules/pager/e_mod_config.c:125 src/modules/pager/e_mod_config.c:212
+#: src/modules/pager/e_mod_config.c:125
+#: src/modules/pager/e_mod_config.c:212
 msgid "General"
 msgstr "Γενικά"
 
@@ -950,7 +1001,8 @@ msgstr "Γενικά"
 msgid "Startup Notify"
 msgstr "Ειδοποίηση έναρξης"
 
-#: src/bin/e_eap_editor.c:784 src/modules/everything-apps/e_mod_main.c:997
+#: src/bin/e_eap_editor.c:784
+#: src/modules/everything-apps/e_mod_main.c:997
 msgid "Run in Terminal"
 msgstr "Εκτέλεση σε τερματικό"
 
@@ -958,7 +1010,8 @@ msgstr "Εκτέλεση σε τερματικό"
 msgid "Show in Menus"
 msgstr "Εμφάνιση στα μενού"
 
-#: src/bin/e_eap_editor.c:789 src/bin/e_int_border_remember.c:748
+#: src/bin/e_eap_editor.c:789
+#: src/bin/e_int_border_remember.c:748
 msgid "Options"
 msgstr "Επιλογές"
 
@@ -970,22 +1023,29 @@ msgstr "Επιλογή εικονιδίου"
 msgid "Select an Executable"
 msgstr "Επιλογή ενός εκτελέσιμου"
 
-#: src/bin/e_entry.c:493 src/bin/e_fm.c:8038 src/bin/e_shelf.c:1693
+#: src/bin/e_entry.c:493
+#: src/bin/e_fm.c:8038
+#: src/bin/e_shelf.c:1693
 #: src/modules/conf_profiles/e_int_config_profiles.c:135
 #: src/modules/conf_shelves/e_int_config_shelf.c:80
 #: src/modules/ibar/e_mod_config.c:108
 msgid "Delete"
 msgstr "Διαγραφή"
 
-#: src/bin/e_entry.c:503 src/bin/e_fm.c:7946
+#: src/bin/e_entry.c:503
+#: src/bin/e_fm.c:7946
 msgid "Cut"
 msgstr "Αποκοπή"
 
-#: src/bin/e_entry.c:511 src/bin/e_fm.c:6076 src/bin/e_fm.c:7960
+#: src/bin/e_entry.c:511
+#: src/bin/e_fm.c:6076
+#: src/bin/e_fm.c:7960
 msgid "Copy"
 msgstr "Αντιγραφή"
 
-#: src/bin/e_entry.c:519 src/bin/e_fm.c:7785 src/bin/e_fm.c:7973
+#: src/bin/e_entry.c:519
+#: src/bin/e_fm.c:7785
+#: src/bin/e_fm.c:7973
 msgid "Paste"
 msgstr "Επικόλληση"
 
@@ -993,19 +1053,20 @@ msgstr "Επικόλληση"
 msgid "Select All"
 msgstr "Επιλογή όλων"
 
-#: src/bin/e_exec.c:223 src/bin/e_utils.c:234
+#: src/bin/e_exec.c:223
+#: src/bin/e_utils.c:234
 #: src/modules/conf_imc/e_int_config_imc.c:265
 #: src/modules/conf_imc/e_int_config_imc.c:513
 msgid "Run Error"
 msgstr "Σφάλμα εκτέλεσης"
 
-#: src/bin/e_exec.c:224 src/bin/e_utils.c:235
+#: src/bin/e_exec.c:224
+#: src/bin/e_utils.c:235
 #: src/modules/conf_imc/e_int_config_imc.c:266
 #: src/modules/conf_imc/e_int_config_imc.c:514
 #, c-format
 msgid "Enlightenment was unable to fork a child process:<br><br>%s<br>"
-msgstr ""
-"Το Enlightenment δεν μπόρεσε να δημιουργήσει διεργασία παιδί:<br><br>%s<br>"
+msgstr "Το Enlightenment δεν μπόρεσε να δημιουργήσει διεργασία παιδί:<br><br>%s<br>"
 
 #: src/bin/e_exec.c:352
 msgid "Application run error"
@@ -1013,12 +1074,8 @@ msgstr "Σφάλμα εκκίνησης εφαρμογής"
 
 #: src/bin/e_exec.c:354
 #, c-format
-msgid ""
-"Enlightenment was unable to run the application:<br><br>%s<br><br>The "
-"application failed to start."
-msgstr ""
-"Το Enlightenment δεν κατάφερε να τρέξει την εφαρμογή:<br><br>%s<br><br>Η "
-"εφαρμογή απέτυχε να ξεκινήσει."
+msgid "Enlightenment was unable to run the application:<br><br>%s<br><br>The application failed to start."
+msgstr "Το Enlightenment δεν κατάφερε να τρέξει την εφαρμογή:<br><br>%s<br><br>Η εφαρμογή απέτυχε να ξεκινήσει."
 
 #: src/bin/e_exec.c:458
 msgid "Application Execution Error"
@@ -1085,23 +1142,27 @@ msgid "%s was interrupted by the signal number %i."
 msgstr "%s διακόπηκε απο το σήμα με αριθμό %i."
 
 #: src/bin/e_exec.c:572
-msgid ""
-"***The remaining output has been truncated. Save the output to view.***\n"
+msgid "***The remaining output has been truncated. Save the output to view.***\n"
 msgstr ""
 
-#: src/bin/e_exec.c:634 src/bin/e_exec.c:708 src/bin/e_exec.c:715
+#: src/bin/e_exec.c:634
+#: src/bin/e_exec.c:708
+#: src/bin/e_exec.c:715
 msgid "Error Logs"
 msgstr "Καταγραφές σφαλμάτων"
 
-#: src/bin/e_exec.c:640 src/bin/e_exec.c:716
+#: src/bin/e_exec.c:640
+#: src/bin/e_exec.c:716
 msgid "There was no error message."
 msgstr "Δεν υπήρξε μήνυμα σφάλματος."
 
-#: src/bin/e_exec.c:644 src/bin/e_exec.c:723
+#: src/bin/e_exec.c:644
+#: src/bin/e_exec.c:723
 msgid "Save This Message"
 msgstr "Αποθήκευση αυτού του μηνύματος"
 
-#: src/bin/e_exec.c:648 src/bin/e_exec.c:727
+#: src/bin/e_exec.c:648
+#: src/bin/e_exec.c:727
 #, c-format
 msgid "This error log will be saved as %s/%s.log"
 msgstr "Αυτή η καταγραφή σφάλματος θα αποθηκευτεί ως %s/%s.log"
@@ -1114,7 +1175,8 @@ msgstr "Πληροφορίες σφάλματος"
 msgid "Error Signal Information"
 msgstr "Πληροφορίες σήματος σφάλματος"
 
-#: src/bin/e_exec.c:692 src/bin/e_exec.c:699
+#: src/bin/e_exec.c:692
+#: src/bin/e_exec.c:699
 msgid "Output Data"
 msgstr "Δεδομένα εξόδου"
 
@@ -1160,40 +1222,51 @@ msgstr "Αδυναμία εξαγωγής συσκευής"
 msgid "%i Files"
 msgstr "%i Αρχεία"
 
-#: src/bin/e_fm.c:6089 src/bin/e_fm.c:7793 src/bin/e_fm.c:7981
+#: src/bin/e_fm.c:6089
+#: src/bin/e_fm.c:7793
+#: src/bin/e_fm.c:7981
 msgid "Link"
 msgstr "Σύνδεσμος"
 
-#: src/bin/e_fm.c:6097 src/bin/e_fm.c:8972 src/bin/e_fm.c:9113
+#: src/bin/e_fm.c:6097
+#: src/bin/e_fm.c:8972
+#: src/bin/e_fm.c:9113
 msgid "Abort"
 msgstr "Ακύρωση"
 
-#: src/bin/e_fm.c:7712 src/bin/e_fm.c:7872
+#: src/bin/e_fm.c:7712
+#: src/bin/e_fm.c:7872
 msgid "Inherit parent settings"
 msgstr "Κληρονόμησε τις ρυθμίσεις γονέα"
 
-#: src/bin/e_fm.c:7721 src/bin/e_fm.c:7881
+#: src/bin/e_fm.c:7721
+#: src/bin/e_fm.c:7881
 #: src/modules/fileman/e_mod_config.c:208
 msgid "View Mode"
 msgstr "Λειτουργία προβολής"
 
-#: src/bin/e_fm.c:7728 src/bin/e_fm.c:7888
+#: src/bin/e_fm.c:7728
+#: src/bin/e_fm.c:7888
 msgid "Refresh View"
 msgstr "Ανανέωση προβολής"
 
-#: src/bin/e_fm.c:7736 src/bin/e_fm.c:7896
+#: src/bin/e_fm.c:7736
+#: src/bin/e_fm.c:7896
 msgid "Show Hidden Files"
 msgstr "Εμφάνιση κρυφών αρχείων"
 
-#: src/bin/e_fm.c:7748 src/bin/e_fm.c:7908
+#: src/bin/e_fm.c:7748
+#: src/bin/e_fm.c:7908
 msgid "Remember Ordering"
 msgstr "Απομνημόνευση σειράς"
 
-#: src/bin/e_fm.c:7757 src/bin/e_fm.c:7917
+#: src/bin/e_fm.c:7757
+#: src/bin/e_fm.c:7917
 msgid "Sort Now"
 msgstr "Ταξινόμηση τώρα"
 
-#: src/bin/e_fm.c:7769 src/bin/e_fm.c:7932
+#: src/bin/e_fm.c:7769
+#: src/bin/e_fm.c:7932
 #: src/modules/conf_paths/e_int_config_paths.c:205
 msgid "New Directory"
 msgstr "Νέος κατάλογος"
@@ -1219,23 +1292,28 @@ msgstr "Εξαγωγή"
 msgid "Application Properties"
 msgstr "παρεχόμενο από την Εφαρμογή "
 
-#: src/bin/e_fm.c:8093 src/bin/e_fm_prop.c:105
+#: src/bin/e_fm.c:8093
+#: src/bin/e_fm_prop.c:105
 msgid "File Properties"
 msgstr "Ιδιότητες αρχείου"
 
-#: src/bin/e_fm.c:8330 src/bin/e_fm.c:8383
+#: src/bin/e_fm.c:8330
+#: src/bin/e_fm.c:8383
 msgid "Use default"
 msgstr "Χρήση προκαθορισμένων"
 
-#: src/bin/e_fm.c:8356 src/modules/fileman/e_mod_config.c:213
+#: src/bin/e_fm.c:8356
+#: src/modules/fileman/e_mod_config.c:213
 msgid "Grid Icons"
 msgstr "Εικονίδια πλέγματος"
 
-#: src/bin/e_fm.c:8364 src/modules/fileman/e_mod_config.c:215
+#: src/bin/e_fm.c:8364
+#: src/modules/fileman/e_mod_config.c:215
 msgid "Custom Icons"
 msgstr "Προσαρμοσμένα εικονίδια"
 
-#: src/bin/e_fm.c:8372 src/modules/everything/evry_config.c:436
+#: src/bin/e_fm.c:8372
+#: src/modules/everything/evry_config.c:436
 #: src/modules/everything/evry_config.c:489
 #: src/modules/fileman/e_mod_config.c:223
 msgid "List"
@@ -1246,15 +1324,18 @@ msgstr "Λίστα"
 msgid "Icon Size (%d)"
 msgstr "Μέγεθος εικονιδίου (%d)"
 
-#: src/bin/e_fm.c:8443 src/bin/e_fm.c:8649
+#: src/bin/e_fm.c:8443
+#: src/bin/e_fm.c:8649
 msgid "Set background..."
 msgstr "Ορισμός ταπετσαρίας..."
 
-#: src/bin/e_fm.c:8448 src/bin/e_fm.c:8693
+#: src/bin/e_fm.c:8448
+#: src/bin/e_fm.c:8693
 msgid "Set overlay..."
 msgstr "Ορισμός επίστρωσης..."
 
-#: src/bin/e_fm.c:8547 src/modules/conf_theme/e_int_config_theme.c:1025
+#: src/bin/e_fm.c:8547
+#: src/modules/conf_theme/e_int_config_theme.c:1025
 msgid "Clear"
 msgstr "Καθαρισμός"
 
@@ -1275,11 +1356,14 @@ msgstr "Μετονομασία %s σε:"
 msgid "Rename File"
 msgstr "Μετονομασία αρχείου"
 
-#: src/bin/e_fm.c:8971 src/bin/e_fm.c:9112
+#: src/bin/e_fm.c:8971
+#: src/bin/e_fm.c:9112
 msgid "Retry"
 msgstr "Προσπάθεια ξανά"
 
-#: src/bin/e_fm.c:8975 src/bin/e_fm.c:9118 src/modules/wizard/page_030.c:82
+#: src/bin/e_fm.c:8975
+#: src/bin/e_fm.c:9118
+#: src/modules/wizard/page_030.c:82
 msgid "Error"
 msgstr "Σφάλμα"
 
@@ -1329,12 +1413,8 @@ msgstr "Είστε σίγουροι ότι θέλετε να διαγράψετ�
 
 #: src/bin/e_fm.c:9302
 #, c-format
-msgid ""
-"Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</"
-"hilight> ?"
-msgstr ""
-"Είστε σίγουροι ότι θέλετε να διαγράψετε<br>τα %d επιλεγμένα αρχεία στο:"
-"<br><hilight>%s</hilight> ?"
+msgid "Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</hilight> ?"
+msgstr "Είστε σίγουροι ότι θέλετε να διαγράψετε<br>τα %d επιλεγμένα αρχεία στο:<br><hilight>%s</hilight> ?"
 
 #: src/bin/e_fm_dbus.c:180
 #, c-format
@@ -1374,7 +1454,8 @@ msgstr "Αφαιρούμενη συσκευή"
 msgid "File:"
 msgstr "Αρχείο:"
 
-#: src/bin/e_fm_prop.c:339 src/bin/e_widget_fsel.c:324
+#: src/bin/e_fm_prop.c:339
+#: src/bin/e_widget_fsel.c:324
 msgid "Size:"
 msgstr "Μέγεθος:"
 
@@ -1390,7 +1471,8 @@ msgstr "Τύπος αρχείου:"
 msgid "Permissions"
 msgstr "Δικαιώματα"
 
-#: src/bin/e_fm_prop.c:361 src/bin/e_widget_fsel.c:340
+#: src/bin/e_fm_prop.c:361
+#: src/bin/e_widget_fsel.c:340
 msgid "Owner:"
 msgstr "Ιδιοκτήτης:"
 
@@ -1410,7 +1492,8 @@ msgstr "Ανάγνωση από ιδιοκτήτη"
 msgid "Owner can write"
 msgstr "Εγγραφή από ιδιοκτήτη"
 
-#: src/bin/e_fm_prop.c:379 src/bin/e_widget_fsel.c:303
+#: src/bin/e_fm_prop.c:379
+#: src/bin/e_widget_fsel.c:303
 #: src/modules/conf_icon_theme/e_int_config_icon_themes.c:251
 #: src/modules/conf_theme/e_int_config_theme.c:1033
 #: src/modules/conf_transitions/e_int_config_transitions.c:167
@@ -1447,40 +1530,44 @@ msgid "Select an Image"
 msgstr "Επιλογή εικόνας"
 
 #: src/bin/e_gadcon.c:1329
-#, fuzzy
 msgid "Move to"
-msgstr "Μετακίνηση κειμένου"
+msgstr "Μετακίνηση σε"
 
-#: src/bin/e_gadcon.c:1354 src/modules/gadman/e_mod_gadman.c:709
-#, fuzzy
+#: src/bin/e_gadcon.c:1354
+#: src/modules/gadman/e_mod_gadman.c:709
 msgid "Begin move/resize"
-msgstr "Έναρξη μετακίνησης/αλλαγής μεγέθους αυτού του Συστατικού"
+msgstr "Έναρξη μετακίνησης/αλλαγής μεγέθους"
 
 #: src/bin/e_gadcon.c:1360
 #, fuzzy
 msgid "Resizeable"
-msgstr "Αλλαγή μεγέθους"
+msgstr "Δυνατότητα αλλαγής μεγέθους"
 
 #: src/bin/e_gadcon.c:1367
 msgid "Automatically scroll contents"
 msgstr "Αυτόματη κύλιση περιεχομένων"
 
-#: src/bin/e_gadcon.c:1378 src/modules/gadman/e_mod_gadman.c:720
+#: src/bin/e_gadcon.c:1378
+#: src/modules/gadman/e_mod_gadman.c:720
 msgid "Plain"
 msgstr "Απλό"
 
-#: src/bin/e_gadcon.c:1387 src/modules/gadman/e_mod_gadman.c:728
+#: src/bin/e_gadcon.c:1387
+#: src/modules/gadman/e_mod_gadman.c:728
 msgid "Inset"
 msgstr "Ένθεμα"
 
-#: src/bin/e_gadcon.c:1396 src/bin/e_int_config_modules.c:59
+#: src/bin/e_gadcon.c:1396
+#: src/bin/e_int_config_modules.c:59
 #: src/modules/gadman/e_mod_gadman.c:764
 msgid "Appearance"
 msgstr "Εμφάνιση"
 
-#: src/bin/e_gadcon.c:1407 src/bin/e_widget_config_list.c:66
+#: src/bin/e_gadcon.c:1407
+#: src/bin/e_widget_config_list.c:66
 #: src/modules/conf_applications/e_int_config_apps.c:211
-#: src/modules/gadman/e_mod_gadman.c:804 src/modules/ibar/e_mod_main.c:797
+#: src/modules/gadman/e_mod_gadman.c:804
+#: src/modules/ibar/e_mod_main.c:797
 msgid "Remove"
 msgstr "Αφαίρεση"
 
@@ -1496,7 +1583,8 @@ msgstr ""
 "Ένα προηγούμενο στιγμιότυπο του Enlightenment είναι ακόμη ενεργό\n"
 "σε αυτή την οθόνη. Αναβολή εκκίνησης.\n"
 
-#: src/bin/e_int_border_locks.c:64 src/bin/e_int_border_menu.c:610
+#: src/bin/e_int_border_locks.c:64
+#: src/bin/e_int_border_menu.c:610
 msgid "Window Locks"
 msgstr "Κλειδώματα παραθύρου"
 
@@ -1513,8 +1601,7 @@ msgid "Protect this window from me accidentally changing it"
 msgstr "Προστάτεψε αυτό το παράθυρο από το να το τροποποιήσω κατα λάθος"
 
 #: src/bin/e_int_border_locks.c:287
-msgid ""
-"Protect this window from being accidentally closed because it is important"
+msgid "Protect this window from being accidentally closed because it is important"
 msgstr "Προστάτεψε αυτό το παράθυρο από το να το κλείσω κατα λάθος"
 
 #: src/bin/e_int_border_locks.c:289
@@ -1523,52 +1610,62 @@ msgstr "Μην αφήσεις το πλαίσιο του παραθύρου αυ
 
 #: src/bin/e_int_border_locks.c:292
 msgid "Remember these Locks for this window next time it appears"
-msgstr ""
-"Να θυμάσαι αυτά τα κλειδώματα την επόμενη φορά που θα εμφανιστεί αυτό το "
-"παράθυρο"
+msgstr "Να θυμάσαι αυτά τα κλειδώματα την επόμενη φορά που θα εμφανιστεί αυτό το παράθυρο"
 
 #: src/bin/e_int_border_locks.c:305
 msgid "Lock program changing:"
 msgstr "Κλείδωμα αλλαγής προγράμματος:"
 
-#: src/bin/e_int_border_locks.c:306 src/bin/e_int_border_locks.c:325
-#: src/bin/e_int_border_remember.c:699 src/bin/e_int_shelf_config.c:174
+#: src/bin/e_int_border_locks.c:306
+#: src/bin/e_int_border_locks.c:325
+#: src/bin/e_int_border_remember.c:699
+#: src/bin/e_int_shelf_config.c:174
 msgid "Position"
 msgstr "Θέση"
 
-#: src/bin/e_int_border_locks.c:308 src/bin/e_int_border_locks.c:327
-#: src/bin/e_int_border_remember.c:702 src/bin/e_int_shelf_config.c:185
+#: src/bin/e_int_border_locks.c:308
+#: src/bin/e_int_border_locks.c:327
+#: src/bin/e_int_border_remember.c:702
+#: src/bin/e_int_shelf_config.c:185
 #: src/modules/conf_fonts/e_int_config_fonts.c:439
 #: src/modules/conf_fonts/e_int_config_fonts.c:634
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:137
 msgid "Size"
 msgstr "Μέγεθος"
 
-#: src/bin/e_int_border_locks.c:310 src/bin/e_int_border_locks.c:329
-#: src/bin/e_int_border_menu.c:582 src/bin/e_int_border_prop.c:469
-#: src/bin/e_int_border_remember.c:705 src/bin/e_int_shelf_config.c:132
+#: src/bin/e_int_border_locks.c:310
+#: src/bin/e_int_border_locks.c:329
+#: src/bin/e_int_border_menu.c:582
+#: src/bin/e_int_border_prop.c:469
+#: src/bin/e_int_border_remember.c:705
+#: src/bin/e_int_shelf_config.c:132
 msgid "Stacking"
 msgstr "Στοίβαγμα"
 
-#: src/bin/e_int_border_locks.c:312 src/bin/e_int_border_locks.c:331
+#: src/bin/e_int_border_locks.c:312
+#: src/bin/e_int_border_locks.c:331
 msgid "Iconified state"
 msgstr "Εικονιδιοποιημένη κατάσταση"
 
-#: src/bin/e_int_border_locks.c:314 src/bin/e_int_border_locks.c:333
+#: src/bin/e_int_border_locks.c:314
+#: src/bin/e_int_border_locks.c:333
 #: src/bin/e_int_border_remember.c:717
 msgid "Stickiness"
 msgstr ""
 
-#: src/bin/e_int_border_locks.c:316 src/bin/e_int_border_locks.c:335
+#: src/bin/e_int_border_locks.c:316
+#: src/bin/e_int_border_locks.c:335
 #: src/bin/e_int_border_remember.c:723
 msgid "Shaded state"
 msgstr "Σκιασμένη κατάσταση"
 
-#: src/bin/e_int_border_locks.c:318 src/bin/e_int_border_locks.c:337
+#: src/bin/e_int_border_locks.c:318
+#: src/bin/e_int_border_locks.c:337
 msgid "Maximized state"
 msgstr "Μεγιστοποιημένη κατάσταση"
 
-#: src/bin/e_int_border_locks.c:320 src/bin/e_int_border_locks.c:339
+#: src/bin/e_int_border_locks.c:320
+#: src/bin/e_int_border_locks.c:339
 #: src/bin/e_int_border_remember.c:726
 msgid "Fullscreen state"
 msgstr "Κατάσταση πλήρους οθόνης"
@@ -1577,7 +1674,8 @@ msgstr "Κατάσταση πλήρους οθόνης"
 msgid "Lock me from changing:"
 msgstr "Κλείδωσε με από το να αλλάξω:"
 
-#: src/bin/e_int_border_locks.c:341 src/bin/e_int_border_remember.c:711
+#: src/bin/e_int_border_locks.c:341
+#: src/bin/e_int_border_remember.c:711
 msgid "Border style"
 msgstr "Στυλ περιγράμματος"
 
@@ -1655,7 +1753,8 @@ msgstr "Στο μενού αγαπημένων"
 msgid "To Launcher"
 msgstr "Στον εκκινητή"
 
-#: src/bin/e_int_border_menu.c:563 src/modules/conf_borders/e_mod_main.c:20
+#: src/bin/e_int_border_menu.c:563
+#: src/modules/conf_borders/e_mod_main.c:20
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:321
 msgid "Border"
 msgstr "Περίγραμμα"
@@ -1664,7 +1763,8 @@ msgstr "Περίγραμμα"
 msgid "Skip"
 msgstr "Παράλειψη"
 
-#: src/bin/e_int_border_menu.c:591 src/bin/e_int_border_prop.c:433
+#: src/bin/e_int_border_menu.c:591
+#: src/bin/e_int_border_prop.c:433
 msgid "State"
 msgstr "Κατάσταση"
 
@@ -1673,7 +1773,8 @@ msgstr "Κατάσταση"
 msgid "Remember"
 msgstr "Ενθύμηση"
 
-#: src/bin/e_int_border_menu.c:618 src/bin/e_int_border_prop.c:75
+#: src/bin/e_int_border_menu.c:618
+#: src/bin/e_int_border_prop.c:75
 msgid "Window Properties"
 msgstr "Ιδιότητες παραθύρου"
 
@@ -1707,33 +1808,45 @@ msgstr "Χρήση εικονιδίου παρεχόμενου από την Ε�
 msgid "Use User Defined Icon"
 msgstr "Χρήση εικονιδίου καθορισμένου από το χρήστη"
 
-#: src/bin/e_int_border_menu.c:1055 src/bin/e_int_border_prop.c:473
+#: src/bin/e_int_border_menu.c:1055
+#: src/bin/e_int_border_prop.c:473
 msgid "Shaded"
 msgstr "Σκιασμένο"
 
-#: src/bin/e_int_border_menu.c:1068 src/bin/e_int_border_prop.c:472
+#: src/bin/e_int_border_menu.c:1068
+#: src/bin/e_int_border_prop.c:472
 #, fuzzy
 msgid "Sticky"
 msgstr "Κολλώδης"
 
-#: src/bin/e_int_border_menu.c:1084 src/bin/e_int_border_prop.c:477
+#: src/bin/e_int_border_menu.c:1084
+#: src/bin/e_int_border_prop.c:477
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:121
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:145
 msgid "Fullscreen"
 msgstr "Πλήρης οθόνη"
 
-#: src/bin/e_int_border_menu.c:1109 src/modules/conf_winlist/e_mod_main.c:19
+#: src/bin/e_int_border_menu.c:1109
+#: src/modules/conf_winlist/e_mod_main.c:19
 msgid "Window List"
 msgstr "Λίστα παραθύρων"
 
-#: src/bin/e_int_border_menu.c:1119 src/modules/pager/e_mod_main.c:257
-#: src/modules/pager/e_mod_main.c:2809 src/modules/pager/e_mod_main.c:2816
-#: src/modules/pager/e_mod_main.c:2823 src/modules/pager/e_mod_main.c:2825
-#: src/modules/pager/e_mod_main.c:2827 src/modules/pager/e_mod_main.c:2829
-#: src/modules/pager/e_mod_main.c:2831 src/modules/pager/e_mod_main.c:2833
-#: src/modules/pager/e_mod_main.c:2866 src/modules/pager/e_mod_main.c:2867
-#: src/modules/pager/e_mod_main.c:2868 src/modules/pager/e_mod_main.c:2869
-#: src/modules/pager/e_mod_main.c:2870 src/modules/pager/e_mod_main.c:2871
+#: src/bin/e_int_border_menu.c:1119
+#: src/modules/pager/e_mod_main.c:257
+#: src/modules/pager/e_mod_main.c:2809
+#: src/modules/pager/e_mod_main.c:2816
+#: src/modules/pager/e_mod_main.c:2823
+#: src/modules/pager/e_mod_main.c:2825
+#: src/modules/pager/e_mod_main.c:2827
+#: src/modules/pager/e_mod_main.c:2829
+#: src/modules/pager/e_mod_main.c:2831
+#: src/modules/pager/e_mod_main.c:2833
+#: src/modules/pager/e_mod_main.c:2866
+#: src/modules/pager/e_mod_main.c:2867
+#: src/modules/pager/e_mod_main.c:2868
+#: src/modules/pager/e_mod_main.c:2869
+#: src/modules/pager/e_mod_main.c:2870
+#: src/modules/pager/e_mod_main.c:2871
 msgid "Pager"
 msgstr "Διαχειριστής επιφανειών"
 
@@ -1753,7 +1866,8 @@ msgstr "ICCCM"
 msgid "ICCCM Properties"
 msgstr "Ιδιότητες ICCCM"
 
-#: src/bin/e_int_border_prop.c:419 src/bin/e_int_border_remember.c:659
+#: src/bin/e_int_border_prop.c:419
+#: src/bin/e_int_border_remember.c:659
 #: src/bin/e_utils.c:1193
 msgid "Title"
 msgstr "Τίτλος"
@@ -1762,7 +1876,8 @@ msgstr "Τίτλος"
 msgid "Class"
 msgstr "Κλάση"
 
-#: src/bin/e_int_border_prop.c:422 src/bin/e_int_border_prop.c:468
+#: src/bin/e_int_border_prop.c:422
+#: src/bin/e_int_border_prop.c:468
 msgid "Icon Name"
 msgstr "Όνομα εικονιδίου"
 
@@ -1846,11 +1961,13 @@ msgstr "Ιδιότητες NetWM"
 msgid "Modal"
 msgstr ""
 
-#: src/bin/e_int_border_prop.c:474 src/bin/e_int_border_remember.c:738
+#: src/bin/e_int_border_prop.c:474
+#: src/bin/e_int_border_remember.c:738
 msgid "Skip Taskbar"
 msgstr "Παράλειψη γραμμής εργασιών"
 
-#: src/bin/e_int_border_prop.c:475 src/bin/e_int_border_remember.c:735
+#: src/bin/e_int_border_prop.c:475
+#: src/bin/e_int_border_remember.c:735
 msgid "Skip Pager"
 msgstr "Παράλειψη πίνακα σελίδων"
 
@@ -1867,17 +1984,7 @@ msgid "Window properties are not a unique match"
 msgstr ""
 
 #: src/bin/e_int_border_remember.c:307
-msgid ""
-"You are trying to ask Enlightenment to remember to apply<br>properties (such "
-"as size, location, border style etc.) to<br>a window that <hilight>does not "
-"have unique properties</hilight>.<br><br>This means it shares Name/Class, "
-"Transience, Role etc. properties<br>with more than 1 other window on the "
-"screen and remembering<br>properties for this window will apply to all other "
-"windows<br>that match these properties.<br><br>This is just a warning in "
-"case you did not intend this to happen.<br>If you did, simply press "
-"<hilight>Apply</hilight> or <hilight>OK</hilight> buttons<br>and your "
-"settings will be accepted. Press <hilight>Cancel</hilight> if you<br>are not "
-"sure and nothing will be affected."
+msgid "You are trying to ask Enlightenment to remember to apply<br>properties (such as size, location, border style etc.) to<br>a window that <hilight>does not have unique properties</hilight>.<br><br>This means it shares Name/Class, Transience, Role etc. properties<br>with more than 1 other window on the screen and remembering<br>properties for this window will apply to all other windows<br>that match these properties.<br><br>This is just a warning in case you did not intend this to happen.<br>If you did, simply press <hilight>Apply</hilight> or <hilight>OK</hilight> buttons<br>and your settings will be accepted. Press <hilight>Cancel</hilight> if you<br>are not sure and nothing will be affected."
 msgstr ""
 
 #: src/bin/e_int_border_remember.c:512
@@ -1885,11 +1992,7 @@ msgid "No match properties set"
 msgstr ""
 
 #: src/bin/e_int_border_remember.c:515
-msgid ""
-"You are trying to ask Enlightenment to remember to apply<br>properties (such "
-"as size, location, border style etc.) to<br>a window <hilight>without "
-"specifying how to remember it</hilight>.<br><br>You must specify at least 1 "
-"way of remembering this window."
+msgid "You are trying to ask Enlightenment to remember to apply<br>properties (such as size, location, border style etc.) to<br>a window <hilight>without specifying how to remember it</hilight>.<br><br>You must specify at least 1 way of remembering this window."
 msgstr ""
 
 #: src/bin/e_int_border_remember.c:611
@@ -1900,7 +2003,8 @@ msgstr "Τίποτα"
 msgid "Size and Position"
 msgstr "Μέγεθος και θέση"
 
-#: src/bin/e_int_border_remember.c:615 src/bin/e_int_border_remember.c:708
+#: src/bin/e_int_border_remember.c:615
+#: src/bin/e_int_border_remember.c:708
 msgid "Locks"
 msgstr "Κλειδώματα"
 
@@ -1908,7 +2012,8 @@ msgstr "Κλειδώματα"
 msgid "Size, Position and Locks"
 msgstr "Μέγεθος, θέση και κλειδώματα"
 
-#: src/bin/e_int_border_remember.c:619 src/modules/conf/e_mod_main.c:245
+#: src/bin/e_int_border_remember.c:619
+#: src/modules/conf/e_mod_main.c:245
 #: src/modules/everything/evry_plug_aggregator.c:333
 msgid "All"
 msgstr "Όλα"
@@ -1981,22 +2086,32 @@ msgstr "ρυθμίσεων"
 msgid "Start this program on login"
 msgstr "Εκκίνηση αυτού του προγράμματος κατά την σύνδεση"
 
-#: src/bin/e_int_config_modules.c:60 src/bin/e_int_menus.c:223
-#: src/bin/e_shelf.c:1685 src/modules/battery/e_mod_main.c:188
-#: src/modules/conf/e_conf.c:121 src/modules/conf/e_conf.c:131
-#: src/modules/conf/e_mod_main.c:102 src/modules/conf_dialogs/e_mod_main.c:17
+#: src/bin/e_int_config_modules.c:60
+#: src/bin/e_int_menus.c:223
+#: src/bin/e_shelf.c:1685
+#: src/modules/battery/e_mod_main.c:188
+#: src/modules/conf/e_conf.c:121
+#: src/modules/conf/e_conf.c:131
+#: src/modules/conf/e_mod_main.c:102
+#: src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:133
 #: src/modules/conf_profiles/e_mod_main.c:17
 #: src/modules/everything-settings/e_mod_main.c:188
-#: src/modules/ibar/e_mod_main.c:312 src/modules/ibar/e_mod_main.c:830
-#: src/modules/ibox/e_mod_main.c:306 src/modules/ibox/e_mod_main.c:700
-#: src/modules/pager/e_mod_main.c:803 src/modules/temperature/e_mod_main.c:231
-#: src/modules/mixer/e_mod_main.c:643 src/modules/connman/e_mod_main.c:1227
+#: src/modules/ibar/e_mod_main.c:312
+#: src/modules/ibar/e_mod_main.c:830
+#: src/modules/ibox/e_mod_main.c:306
+#: src/modules/ibox/e_mod_main.c:700
+#: src/modules/pager/e_mod_main.c:803
+#: src/modules/temperature/e_mod_main.c:231
+#: src/modules/mixer/e_mod_main.c:643
+#: src/modules/connman/e_mod_main.c:1227
 msgid "Settings"
 msgstr "Ρυθμίσεις"
 
-#: src/bin/e_int_config_modules.c:61 src/modules/fileman/e_mod_main.c:48
-#: src/modules/fileman/e_mod_main.c:60 src/modules/fileman/e_mod_main.c:143
+#: src/bin/e_int_config_modules.c:61
+#: src/modules/fileman/e_mod_main.c:48
+#: src/modules/fileman/e_mod_main.c:60
+#: src/modules/fileman/e_mod_main.c:143
 #: src/modules/wizard/page_050.c:23
 msgid "File Manager"
 msgstr "Διαχειριστής αρχείων"
@@ -2005,7 +2120,8 @@ msgstr "Διαχειριστής αρχείων"
 msgid "Shelf"
 msgstr "Ράφι"
 
-#: src/bin/e_int_config_modules.c:64 src/modules/everything/e_mod_main.c:80
+#: src/bin/e_int_config_modules.c:64
+#: src/modules/everything/e_mod_main.c:80
 #: src/modules/everything/e_mod_main.c:196
 msgid "Everything Launcher"
 msgstr "Εκκινητής Everything"
@@ -2022,13 +2138,14 @@ msgstr "Φόρτωσε"
 msgid "Unload"
 msgstr "Αποφόρτωσε"
 
-#: src/bin/e_int_config_modules.c:173 src/bin/e_int_config_modules.c:603
+#: src/bin/e_int_config_modules.c:173
+#: src/bin/e_int_config_modules.c:603
 msgid "No modules selected."
 msgstr "Χωρίς επιλεγμένα αρθρώματα"
 
 #: src/bin/e_int_config_modules.c:601
 msgid "More than one module selected."
-msgstr ""
+msgstr "Περισσότερα από ένα αρθρώματα είναι επιλεγμένα."
 
 #: src/bin/e_int_gadcon_config.c:38
 msgid "Shelf Contents"
@@ -2038,7 +2155,8 @@ msgstr "Περιεχόμενα ραφιού"
 msgid "Toolbar Contents"
 msgstr "Περιεχόμενα γραμμής εργαλείων"
 
-#: src/bin/e_int_gadcon_config.c:155 src/modules/gadman/e_mod_config.c:118
+#: src/bin/e_int_gadcon_config.c:155
+#: src/modules/gadman/e_mod_config.c:118
 #: src/modules/gadman/e_mod_config.c:134
 msgid "Add Gadget"
 msgstr "Προσθήκη συστατικού"
@@ -2047,7 +2165,8 @@ msgstr "Προσθήκη συστατικού"
 msgid "Remove Gadget"
 msgstr "Αφαίρεση συστατικού"
 
-#: src/bin/e_int_toolbar_config.c:30 src/bin/e_toolbar.c:335
+#: src/bin/e_int_toolbar_config.c:30
+#: src/bin/e_toolbar.c:335
 msgid "Toolbar Settings"
 msgstr "Ρυθμίσεις γραμμής εργαλείων"
 
@@ -2060,10 +2179,7 @@ msgid "Input Method Error"
 msgstr "Σφάλμα μεθόδου εισαγωγής"
 
 #: src/bin/e_intl.c:360
-msgid ""
-"Error starting the input method executable<br><br>please make sure that your "
-"input<br>method configuration is correct and<br>that your "
-"configuration's<br>executable is in your PATH<br>"
+msgid "Error starting the input method executable<br><br>please make sure that your input<br>method configuration is correct and<br>that your configuration's<br>executable is in your PATH<br>"
 msgstr ""
 
 #: src/bin/e_int_menus.c:99
@@ -2076,7 +2192,8 @@ msgstr "Κεντρικό"
 msgid "Favorite Applications"
 msgstr "Αγαπημένες εφαρμογές"
 
-#: src/bin/e_int_menus.c:127 src/modules/conf_menus/e_int_config_menus.c:98
+#: src/bin/e_int_menus.c:127
+#: src/modules/conf_menus/e_int_config_menus.c:98
 #: src/modules/conf_menus/e_int_config_menus.c:288
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:194
 #: src/modules/everything-apps/e_mod_main.c:950
@@ -2085,7 +2202,8 @@ msgstr "Αγαπημένες εφαρμογές"
 msgid "Applications"
 msgstr "Εφαρμογές"
 
-#: src/bin/e_int_menus.c:151 src/bin/e_int_menus.c:1124
+#: src/bin/e_int_menus.c:151
+#: src/bin/e_int_menus.c:1124
 #: src/modules/conf_window_display/e_mod_main.c:17
 #: src/modules/conf_window_focus/e_mod_main.c:17
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
@@ -2095,7 +2213,8 @@ msgstr "Εφαρμογές"
 msgid "Windows"
 msgstr "Παράθυρα"
 
-#: src/bin/e_int_menus.c:161 src/bin/e_int_menus.c:1178
+#: src/bin/e_int_menus.c:161
+#: src/bin/e_int_menus.c:1178
 msgid "Lost Windows"
 msgstr "Χαμένα παράθυρα"
 
@@ -2115,7 +2234,8 @@ msgstr "Θέμα"
 msgid "Virtual"
 msgstr "Εικονικό"
 
-#: src/bin/e_int_menus.c:282 src/modules/conf_shelves/e_mod_main.c:23
+#: src/bin/e_int_menus.c:282
+#: src/modules/conf_shelves/e_mod_main.c:23
 #: src/modules/conf_shelves/e_mod_main.c:27
 #: src/modules/conf_shelves/e_mod_main.c:74
 msgid "Shelves"
@@ -2133,11 +2253,13 @@ msgstr "(Χωρίς εφαρμογές)"
 msgid "Set Virtual Desktops"
 msgstr "Όρισε εικονικές επιφάνειες εργασίας"
 
-#: src/bin/e_int_menus.c:1130 src/bin/e_int_menus.c:1314
+#: src/bin/e_int_menus.c:1130
+#: src/bin/e_int_menus.c:1314
 msgid "(No Windows)"
 msgstr "(Χωρίς παράθυρα)"
 
-#: src/bin/e_int_menus.c:1224 src/bin/e_int_menus.c:1326
+#: src/bin/e_int_menus.c:1224
+#: src/bin/e_int_menus.c:1326
 msgid "No name!!"
 msgstr "Χωρίς όνομα!!"
 
@@ -2204,7 +2326,8 @@ msgstr "Εμφάνιση με το κλικ του ποντικιού"
 msgid "Hide timeout"
 msgstr "Χρονικό όριο απόκρυψης"
 
-#: src/bin/e_int_shelf_config.c:217 src/bin/e_int_shelf_config.c:227
+#: src/bin/e_int_shelf_config.c:217
+#: src/bin/e_int_shelf_config.c:227
 #, c-format
 msgid "%.1f seconds"
 msgstr "%.1f δευτερόλεπτα"
@@ -2257,11 +2380,9 @@ msgid ""
 "\t\tgiven the geometry. Add as many as you like. They all\n"
 "\t\treplace the real xinerama screens, if any. This can\n"
 "\t\tbe used to simulate xinerama.\n"
-"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
-"+0\n"
+"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800+0\n"
 "\t-profile CONF_PROFILE\n"
-"\t\tUse the configuration profile CONF_PROFILE instead of the user selected "
-"default or just \"default\".\n"
+"\t\tUse the configuration profile CONF_PROFILE instead of the user selected default or just \"default\".\n"
 "\t-good\n"
 "\t\tBe good.\n"
 "\t-evil\n"
@@ -2339,11 +2460,12 @@ msgid ""
 msgstr ""
 
 #: src/bin/e_main.c:505
-#, fuzzy
 msgid ""
 "Enlightenment cannot setup randr wrapping.\n"
 "This should not happen."
-msgstr "Το Enlightenment δεν μπορεί να ρυθμίσει το σύστημα δράσεων του."
+msgstr ""
+"Το Enlightenment δεν μπορεί να ρυθμίσει το randr.\n"
+"Αυτό δεν θα έπρεπε να συμβαίνει."
 
 #: src/bin/e_main.c:526
 msgid ""
@@ -2404,8 +2526,7 @@ msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Το Enlightenment δεν μπορεί να ρυθμίσει τις διαδρομές για να βρίσκονται τα "
-"αρχεία.\n"
+"Το Enlightenment δεν μπορεί να ρυθμίσει τις διαδρομές για να βρίσκονται τα αρχεία.\n"
 "Πιθανόν να μην έχετε αρκετή μνήμη;"
 
 #: src/bin/e_main.c:640
@@ -2436,7 +2557,8 @@ msgstr ""
 msgid "Testing Format Support"
 msgstr "Δοκιμή υποστήριξης τύπων αρχείων"
 
-#: src/bin/e_main.c:701 src/bin/e_main.c:761
+#: src/bin/e_main.c:701
+#: src/bin/e_main.c:761
 msgid ""
 "Enlightenment found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
@@ -2447,8 +2569,7 @@ msgid ""
 "Enlightenment found Evas can't load PNG files. Check Evas has PNG\n"
 "loader support.\n"
 msgstr ""
-"Το Enlightenment διαπίστωσε οτι το Evas δεν μπορεί να φορτώσει PNG αρχεία. "
-"Ελέγξτε αν το Evas έχει\n"
+"Το Enlightenment διαπίστωσε οτι το Evas δεν μπορεί να φορτώσει PNG αρχεία. Ελέγξτε αν το Evas έχει\n"
 "υποστήριξη για φόρτωση PNG.\n"
 
 #: src/bin/e_main.c:721
@@ -2456,8 +2577,7 @@ msgid ""
 "Enlightenment found Evas can't load JPEG files. Check Evas has JPEG\n"
 "loader support.\n"
 msgstr ""
-"Το Enlightenment διαπίστωσε οτι το Evas δεν μπορεί να φορτώσει JPEG αρχεία. "
-"Ελέγξτε αν το Evas έχει\n"
+"Το Enlightenment διαπίστωσε οτι το Evas δεν μπορεί να φορτώσει JPEG αρχεία. Ελέγξτε αν το Evas έχει\n"
 "υποστήριξη για φόρτωση JPEG.\n"
 
 #: src/bin/e_main.c:730
@@ -2465,14 +2585,12 @@ msgid ""
 "Enlightenment found Evas can't load EET files. Check Evas has EET\n"
 "loader support.\n"
 msgstr ""
-"Το Enlightenment διαπίστωσε οτι το Evas δεν μπορεί να φορτώσει EET αρχεία. "
-"Ελέγξτε αν το Evas έχει\n"
+"Το Enlightenment διαπίστωσε οτι το Evas δεν μπορεί να φορτώσει EET αρχεία. Ελέγξτε αν το Evas έχει\n"
 "υποστήριξη για φόρτωση EET.\n"
 
 #: src/bin/e_main.c:741
 msgid ""
-"Enlightenment found Evas can't load the 'Sans' font. Check Evas has "
-"fontconfig\n"
+"Enlightenment found Evas can't load the 'Sans' font. Check Evas has fontconfig\n"
 "support and system fontconfig defines a 'Sans' font.\n"
 msgstr ""
 
@@ -2512,8 +2630,7 @@ msgstr "Ρύθμιση άμεσων ειδοποιήσεων"
 
 #: src/bin/e_main.c:816
 msgid "Enlightenment cannot set up its popup system."
-msgstr ""
-"Το Enlightenment δεν μπορεί να εγκαταστήσει το σύστημα ειδοποιήσεων του."
+msgstr "Το Enlightenment δεν μπορεί να εγκαταστήσει το σύστημα ειδοποιήσεων του."
 
 #: src/bin/e_main.c:829
 msgid "Setup Paths"
@@ -2608,9 +2725,8 @@ msgid "Enlightenment cannot set up its gadget control system."
 msgstr ""
 
 #: src/bin/e_main.c:968
-#, fuzzy
 msgid "Setup ACPI"
-msgstr "Ρύθμιση DPMS"
+msgstr "Ρύθμιση ACPI"
 
 #: src/bin/e_main.c:975
 msgid "Setup DPMS"
@@ -2634,9 +2750,7 @@ msgstr "Ρύθμιση ταπετσαρίας"
 
 #: src/bin/e_main.c:998
 msgid "Enlightenment cannot set up its desktop background system."
-msgstr ""
-"Το Enlightenment δεν μπορεί να εγκαταστήσει στο σύστημα φόντου επιφάνειας "
-"εργασίας."
+msgstr "Το Enlightenment δεν μπορεί να εγκαταστήσει στο σύστημα φόντου επιφάνειας εργασίας."
 
 #: src/bin/e_main.c:1003
 msgid "Setup Mouse"
@@ -2644,8 +2758,7 @@ msgstr "Ρύθμιση ποντικιού"
 
 #: src/bin/e_main.c:1008
 msgid "Enlightenment cannot configure the mouse settings."
-msgstr ""
-"Το Enlightenment δεν μπορεί να διαμορφώσει τις ρυθμίσεις για το ποντίκι."
+msgstr "Το Enlightenment δεν μπορεί να διαμορφώσει τις ρυθμίσεις για το ποντίκι."
 
 #: src/bin/e_main.c:1013
 msgid "Setup Bindings"
@@ -2685,38 +2798,25 @@ msgstr "Φόρτωση αρθρωμάτων"
 
 #: src/bin/e_main.c:1079
 #, c-format
-msgid ""
-"Enlightenment crashed early on start and has<br>been restarted. There was an "
-"error loading<br>module named: %s. This module has been disabled<br>and will "
-"not be loaded."
+msgid "Enlightenment crashed early on start and has<br>been restarted. There was an error loading<br>module named: %s. This module has been disabled<br>and will not be loaded."
 msgstr ""
 
-#: src/bin/e_main.c:1084 src/bin/e_main.c:1101
+#: src/bin/e_main.c:1084
+#: src/bin/e_main.c:1101
 msgid "Enlightenment crashed early on start and has been restarted"
 msgstr ""
 
 #: src/bin/e_main.c:1085
 #, c-format
-msgid ""
-"Enlightenment crashed early on start and has been restarted.<br>There was an "
-"error loading module named: %s<br><br>This module has been disabled and will "
-"not be loaded."
+msgid "Enlightenment crashed early on start and has been restarted.<br>There was an error loading module named: %s<br><br>This module has been disabled and will not be loaded."
 msgstr ""
 
 #: src/bin/e_main.c:1094
-msgid ""
-"Enlightenment crashed early on start and has<br>been restarted. All modules "
-"have been disabled<br>and will not be loaded to help remove any "
-"problem<br>modules from your configuration. The module<br>configuration "
-"dialog should let you select your<br>modules again."
+msgid "Enlightenment crashed early on start and has<br>been restarted. All modules have been disabled<br>and will not be loaded to help remove any problem<br>modules from your configuration. The module<br>configuration dialog should let you select your<br>modules again."
 msgstr ""
 
 #: src/bin/e_main.c:1102
-msgid ""
-"Enlightenment crashed early on start and has been restarted.<br>All modules "
-"have been disabled and will not be loaded to help<br>remove any problem "
-"modules from your configuration.<br><br>The module configuration dialog "
-"should let you select your<br>modules again."
+msgid "Enlightenment crashed early on start and has been restarted.<br>All modules have been disabled and will not be loaded to help<br>remove any problem modules from your configuration.<br><br>The module configuration dialog should let you select your<br>modules again."
 msgstr ""
 
 #: src/bin/e_main.c:1131
@@ -2734,22 +2834,19 @@ msgstr "Φόρτωση αρθρωμάτος: %s"
 
 #: src/bin/e_module.c:129
 #, c-format
-msgid ""
-"There was an error loading module named: %s<br>No module named %s could be "
-"found in the<br>module search directories.<br>"
-msgstr ""
-"Υπήρξε σφάλμα κατα τη φόρτωση του αρθρώματος με όνομα: %s<br>Κανένα άρθρωμα "
-"με όνομα %s δεν βρέθηκε<br>στους καταλόγους αρθρωμάτων.<br>"
+msgid "There was an error loading module named: %s<br>No module named %s could be found in the<br>module search directories.<br>"
+msgstr "Υπήρξε σφάλμα κατα τη φόρτωση του αρθρώματος με όνομα: %s<br>Κανένα άρθρωμα με όνομα %s δεν βρέθηκε<br>στους καταλόγους αρθρωμάτων.<br>"
 
-#: src/bin/e_module.c:132 src/bin/e_module.c:145 src/bin/e_module.c:163
+#: src/bin/e_module.c:132
+#: src/bin/e_module.c:145
+#: src/bin/e_module.c:163
 msgid "Error loading Module"
 msgstr "Σφάλμα φόρτωσης αρθρώματος"
 
-#: src/bin/e_module.c:140 src/bin/e_module.c:157
+#: src/bin/e_module.c:140
+#: src/bin/e_module.c:157
 #, c-format
-msgid ""
-"There was an error loading module named: %s<br>The full path to this module "
-"is:<br>%s<br>The error reported was:<br>%s<br>"
+msgid "There was an error loading module named: %s<br>The full path to this module is:<br>%s<br>The error reported was:<br>%s<br>"
 msgstr ""
 
 #: src/bin/e_module.c:162
@@ -2758,10 +2855,7 @@ msgstr "Το άρθρωμα δεν περιέχει όλες τις απαραί
 
 #: src/bin/e_module.c:177
 #, c-format
-msgid ""
-"Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
-"module API version of: %i.<br>The module API advertized by Enlightenment is: "
-"%i.<br>"
+msgid "Module API Error<br>Error initializing Module: %s<br>It requires a minimum module API version of: %i.<br>The module API advertized by Enlightenment is: %i.<br>"
 msgstr ""
 
 #: src/bin/e_module.c:182
@@ -2774,27 +2868,21 @@ msgid "Would you like to unload this module?<br>"
 msgstr "Θέλετε να αποφορτώσετε αυτό το άρθρωμα?<br>"
 
 #: src/bin/e_screensaver.c:99
-msgid ""
-"You disabled screensaver too fast.<br><br>Would you like to enable "
-"<b>presentation</b> mode and temporarily disable screen saver, lock and "
-"power saving?"
+msgid "You disabled screensaver too fast.<br><br>Would you like to enable <b>presentation</b> mode and temporarily disable screen saver, lock and power saving?"
 msgstr ""
 
 #: src/bin/e_shelf.c:163
 msgid "Shelf #"
 msgstr "Ράφι #"
 
-#: src/bin/e_shelf.c:1296 src/modules/conf_shelves/e_int_config_shelf.c:280
+#: src/bin/e_shelf.c:1296
+#: src/modules/conf_shelves/e_int_config_shelf.c:280
 msgid "Are you sure you want to delete this shelf?"
 msgstr "Επιθυμείτε σίγουρα την διαγραφή αυτού του ραφιού?"
 
 #: src/bin/e_shelf.c:1297
-msgid ""
-"You requested to delete this shelf.<br><br>Are you sure you want to delete "
-"it?"
-msgstr ""
-"Αιτήθηκε διαγραφή αυτού του ραφιού.<br><br>Είστε σίγουροι για τη διαγραφή "
-"του?"
+msgid "You requested to delete this shelf.<br><br>Are you sure you want to delete it?"
+msgstr "Αιτήθηκε διαγραφή αυτού του ραφιού.<br><br>Είστε σίγουροι για τη διαγραφή του?"
 
 #: src/bin/e_shelf.c:1670
 #, fuzzy
@@ -2806,10 +2894,10 @@ msgstr "Τέλος μετακίνησης/αλλαγής μεγέθους αντ
 msgid "Begin Moving/Resizing Gadgets"
 msgstr "Έναρξη μετακίνησης/αλλαγής μεγέθους αντικειμένων"
 
-#: src/bin/e_shelf.c:1680 src/modules/ibar/e_mod_main.c:824
-#, fuzzy
+#: src/bin/e_shelf.c:1680
+#: src/modules/ibar/e_mod_main.c:824
 msgid "Contents"
-msgstr "Σχόλια"
+msgstr "Περιεχόμενα"
 
 #: src/bin/e_startup.c:63
 msgid "Starting"
@@ -2819,21 +2907,17 @@ msgstr "Εκκινεί"
 msgid "Checking System Permissions"
 msgstr "Έλεγχος δικαιωμάτων συστήματος"
 
-#: src/bin/e_sys.c:209 src/bin/e_sys.c:220 src/bin/e_sys.c:229
+#: src/bin/e_sys.c:209
+#: src/bin/e_sys.c:220
+#: src/bin/e_sys.c:229
 #: src/bin/e_sys.c:238
 msgid "System Check Done"
 msgstr "Έλεγχος συστήματος ολοκληρώθηκε"
 
 #: src/bin/e_sys.c:305
 #, fuzzy, c-format
-msgid ""
-"Logout is taking too long.<br>Some applications refuse to close.<br>Do you "
-"want to finish the logout<br>anyway without closing these<br>applications "
-"first?<br><br>Auto logout in %d seconds."
-msgstr ""
-"Η αποσύνδεση καθυστερεί πολύ. Μερικές<br>εφαρμογές αρνούνται να κλείσουν."
-"<br>Θέλετε να ολοκληρώσετε την αποσύνδεση<br>χωρίς τον τερματισμό "
-"αυτών<br>των εφαρμογών?"
+msgid "Logout is taking too long.<br>Some applications refuse to close.<br>Do you want to finish the logout<br>anyway without closing these<br>applications first?<br><br>Auto logout in %d seconds."
+msgstr "Η αποσύνδεση καθυστερεί πολύ. Μερικές<br>εφαρμογές αρνούνται να κλείσουν.<br>Θέλετε να ολοκληρώσετε την αποσύνδεση<br>χωρίς τον τερματισμό αυτών<br>των εφαρμογών?"
 
 #: src/bin/e_sys.c:366
 msgid "Logout problems"
@@ -2859,41 +2943,33 @@ msgstr "Αποσύνδεση σε εξέλιξη"
 msgid "Logout in progress.<br><hilight>Please wait.</hilight>"
 msgstr ""
 
-#: src/bin/e_sys.c:438 src/bin/e_sys.c:499
+#: src/bin/e_sys.c:438
+#: src/bin/e_sys.c:499
 msgid "Enlightenment is busy with another request"
 msgstr "Το Enlightenment είναι απασχολημένο με ένα άλλο αίτημα"
 
 #: src/bin/e_sys.c:444
-msgid ""
-"Logging out.<br>You cannot perform other system actions<br>once a logout has "
-"begun."
+msgid "Logging out.<br>You cannot perform other system actions<br>once a logout has begun."
 msgstr ""
 
 #: src/bin/e_sys.c:452
-msgid ""
-"Powering off.<br>You cannot do any other system actions<br>once a shutdown "
-"has been started."
+msgid "Powering off.<br>You cannot do any other system actions<br>once a shutdown has been started."
 msgstr ""
 
 #: src/bin/e_sys.c:459
-msgid ""
-"Resetting.<br>You cannot do any other system actions<br>once a reboot has "
-"begun."
+msgid "Resetting.<br>You cannot do any other system actions<br>once a reboot has begun."
 msgstr ""
 
 #: src/bin/e_sys.c:466
-msgid ""
-"Suspending.<br>Until suspend is complete you cannot perform<br>any other "
-"system actions."
+msgid "Suspending.<br>Until suspend is complete you cannot perform<br>any other system actions."
 msgstr ""
 
 #: src/bin/e_sys.c:473
-msgid ""
-"Hibernating.<br>You cannot perform an other system actions<br>until this is "
-"complete."
+msgid "Hibernating.<br>You cannot perform an other system actions<br>until this is complete."
 msgstr ""
 
-#: src/bin/e_sys.c:480 src/bin/e_sys.c:526
+#: src/bin/e_sys.c:480
+#: src/bin/e_sys.c:526
 msgid "EEK! This should not happen"
 msgstr "ΕΕΚ! Αυτό δεν θα έπρεπε να συμβαίνει"
 
@@ -2970,10 +3046,7 @@ msgid "Cannot exit - immortal windows."
 msgstr "Αδύνατη η εξοδος - αθάνατα παράθυρα."
 
 #: src/bin/e_utils.c:280
-msgid ""
-"Some windows are left still around with the Lifespan lock enabled. This "
-"means<br>that Enlightenment will not allow itself to exit until these "
-"windows have<br>been closed or have the lifespan lock removed.<br>"
+msgid "Some windows are left still around with the Lifespan lock enabled. This means<br>that Enlightenment will not allow itself to exit until these windows have<br>been closed or have the lifespan lock removed.<br>"
 msgstr ""
 
 #: src/bin/e_utils.c:855
@@ -3040,7 +3113,8 @@ msgstr "%li Λεπτά πριν"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1179
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1152
 #: src/modules/conf_profiles/e_int_config_profiles.c:274
-#: src/modules/wizard/page_020.c:19 src/modules/wizard/page_020.c:27
+#: src/modules/wizard/page_020.c:19
+#: src/modules/wizard/page_020.c:27
 msgid "Unknown"
 msgstr "Άγνωστο"
 
@@ -3094,28 +3168,17 @@ msgid "%3.0f%%"
 msgstr "%3.0f%%"
 
 #: src/bin/e_utils.c:1507
-msgid ""
-"Configuration data needed upgrading. Your old configuration<br> has been "
-"wiped and a new set of defaults initialized. This<br>will happen regularly "
-"during development, so don't report a<br>bug. This simply means the module "
-"needs new configuration<br>data by default for usable functionality that "
-"your old<br>configuration simply lacks. This new set of defaults will "
-"fix<br>that by adding it in. You can re-configure things now to "
-"your<br>liking. Sorry for the inconvenience.<br>"
+msgid "Configuration data needed upgrading. Your old configuration<br> has been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means the module needs new configuration<br>data by default for usable functionality that your old<br>configuration simply lacks. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the inconvenience.<br>"
 msgstr ""
 
-#: src/bin/e_utils.c:1520 src/bin/e_utils.c:1544
-#, fuzzy, c-format
+#: src/bin/e_utils.c:1520
+#: src/bin/e_utils.c:1544
+#, c-format
 msgid "%s Configuration Updated"
-msgstr "ρύθμιση"
+msgstr "%s ρύθμιση ανανεώθηκε"
 
 #: src/bin/e_utils.c:1533
-msgid ""
-"Your module configuration is NEWER than the module version. This is "
-"very<br>strange. This should not happen unless you downgraded<br>the module "
-"or copied the configuration from a place where<br>a newer version of the "
-"module was running. This is bad and<br>as a precaution your configuration "
-"has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
+msgid "Your module configuration is NEWER than the module version. This is very<br>strange. This should not happen unless you downgraded<br>the module or copied the configuration from a place where<br>a newer version of the module was running. This is bad and<br>as a precaution your configuration has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr ""
 
 #: src/bin/e_widget_config_list.c:60
@@ -3169,13 +3232,15 @@ msgstr "Εσύ"
 msgid "Protected"
 msgstr "Προστατευμένο"
 
-#: src/bin/e_widget_fsel.c:662 src/bin/e_widget_fsel.c:671
+#: src/bin/e_widget_fsel.c:662
+#: src/bin/e_widget_fsel.c:671
 #: src/bin/e_widget_fsel.c:680
 #, c-format
 msgid "Read Only"
 msgstr "Μόνο για ανάγνωση"
 
-#: src/bin/e_widget_fsel.c:669 src/bin/e_widget_fsel.c:678
+#: src/bin/e_widget_fsel.c:669
+#: src/bin/e_widget_fsel.c:678
 #, c-format
 msgid "Forbidden"
 msgstr "Απαγόρευση"
@@ -3204,19 +3269,16 @@ msgid "%1.0f ticks"
 msgstr "%1.0f tick"
 
 #: src/modules/battery/e_mod_config.c:214
-#, fuzzy
 msgid "Polling"
 msgstr "Σφυγμομέτρηση"
 
 #: src/modules/battery/e_mod_config.c:218
-#, fuzzy
 msgid "Show low battery alert"
-msgstr "Εμφάνιση ειδοποίησης όταν η μπαταρία τελειώνει"
+msgstr "Εμφάνιση ειδοποίησης για χαμηλή μπαταρία"
 
 #: src/modules/battery/e_mod_config.c:222
-#, fuzzy
 msgid "Alert when at:"
-msgstr "Ειδοποίηση όταν γίνει:"
+msgstr "Ειδοποίηση όταν:"
 
 #: src/modules/battery/e_mod_config.c:225
 #, c-format
@@ -3257,12 +3319,11 @@ msgstr "Εσωτερικό"
 #: src/modules/battery/e_mod_config.c:258
 #: src/modules/temperature/e_mod_config.c:248
 msgid "udev"
-msgstr ""
+msgstr "udev"
 
 #: src/modules/battery/e_mod_config.c:261
-#, fuzzy
 msgid "Fuzzy Mode"
-msgstr "Συγκεχυμένο"
+msgstr "Ασαφής λειτουργία"
 
 #: src/modules/battery/e_mod_config.c:265
 #: src/modules/fileman/e_mod_config.c:284
@@ -3290,8 +3351,10 @@ msgstr "Προτείνεται πηγή εναλλασσόμενου ρεύμα�
 msgid "N/A"
 msgstr "N/A"
 
-#: src/modules/battery/e_mod_main.c:607 src/modules/battery/e_mod_main.c:609
-#: src/modules/battery/e_mod_main.c:616 src/modules/battery/e_mod_main.c:618
+#: src/modules/battery/e_mod_main.c:607
+#: src/modules/battery/e_mod_main.c:609
+#: src/modules/battery/e_mod_main.c:616
+#: src/modules/battery/e_mod_main.c:618
 msgid "ERROR"
 msgstr "ΣΦΑΛΜΑ"
 
@@ -3303,35 +3366,23 @@ msgstr "Μετρητής μπαταρίας"
 msgid "Clock"
 msgstr "Ρολόι"
 
-#: src/modules/conf/e_mod_main.c:264 src/modules/conf/e_mod_main.c:268
-#: src/modules/conf/e_mod_main.c:367 src/modules/conf/e_mod_main.c:474
+#: src/modules/conf/e_mod_main.c:264
+#: src/modules/conf/e_mod_main.c:268
+#: src/modules/conf/e_mod_main.c:367
+#: src/modules/conf/e_mod_main.c:474
 msgid "Settings Panel"
 msgstr "Πάνελ ρυθμίσεων"
 
 #: src/modules/conf/e_mod_main.c:277
-#, fuzzy
 msgid "Configuration Panel"
-msgstr "ρύθμιση"
+msgstr "Πάνελ ρύθμισης"
 
 #: src/modules/conf/e_mod_main.c:295
-msgid ""
-"Configuration Panel Module Configuration data needed upgrading. Your old "
-"configuration<br> has been wiped and a new set of defaults initialized. "
-"This<br>will happen regularly during development, so don't report a<br>bug. "
-"This simply means the module needs new configuration<br>data by default for "
-"usable functionality that your old<br>configuration simply lacks. This new "
-"set of defaults will fix<br>that by adding it in. You can re-configure "
-"things now to your<br>liking. Sorry for the inconvenience.<br>"
+msgid "Configuration Panel Module Configuration data needed upgrading. Your old configuration<br> has been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means the module needs new configuration<br>data by default for usable functionality that your old<br>configuration simply lacks. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the inconvenience.<br>"
 msgstr ""
 
 #: src/modules/conf/e_mod_main.c:312
-msgid ""
-"Your Configuration Panel Module configuration is NEWER than the module "
-"version. This is very<br>strange. This should not happen unless you "
-"downgraded<br>the module or copied the configuration from a place where<br>a "
-"newer version of the module was running. This is bad and<br>as a precaution "
-"your configuration has been now restored to<br>defaults. Sorry for the "
-"inconvenience.<br>"
+msgid "Your Configuration Panel Module configuration is NEWER than the module version. This is very<br>strange. This should not happen unless you downgraded<br>the module or copied the configuration from a place where<br>a newer version of the module was running. This is bad and<br>as a precaution your configuration has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr ""
 
 #: src/modules/conf/e_mod_main.c:443
@@ -3367,14 +3418,12 @@ msgid "Restart Applications"
 msgstr "Επανεκκίνηση εφαρμογών"
 
 #: src/modules/conf_applications/e_int_config_apps.c:215
-#, fuzzy
 msgid "Selection"
-msgstr "Επιλογή ενός"
+msgstr "Επιλογή"
 
 #: src/modules/conf_applications/e_int_config_apps.c:231
-#, fuzzy
 msgid "Order"
-msgstr "Περίγραμμα"
+msgstr "Σειρά"
 
 #: src/modules/conf_applications/e_mod_main.c:18
 msgid "Apps"
@@ -3443,9 +3492,8 @@ msgid "Include windows from other screens"
 msgstr "Να περιλαμβάνει παράθυρα από άλλες οθόνες"
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:110
-#, fuzzy
 msgid "Seperate Groups By"
-msgstr "Διαχωρισμός ομάδων με"
+msgstr "Διαχωρισμός ομάδων κατά"
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:114
 msgid "Using separator bars"
@@ -3456,9 +3504,8 @@ msgid "Using menus"
 msgstr "Χρησιμοποιώντας μενού"
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:121
-#, fuzzy
 msgid "Grouping"
-msgstr "Ομαδοποίηση κατά"
+msgstr "Ομαδοποίηση"
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:128
 msgid "Alphabetical"
@@ -3473,9 +3520,8 @@ msgid "Most recently used"
 msgstr "Τα πιο πρόσφατα χρησιμοποιημένα"
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:137
-#, fuzzy
 msgid "Sort Order"
-msgstr "Περίγραμμα"
+msgstr "Σειρά ταξινόμησης"
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:142
 msgid "Group with owning desktop"
@@ -3487,7 +3533,7 @@ msgstr ""
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:148
 msgid "Separate group"
-msgstr ""
+msgstr "Ξεχωριστή ομάδα"
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:151
 msgid "Warp to owning desktop"
@@ -3507,12 +3553,12 @@ msgid "%1.0f Chars"
 msgstr "%1.0f Χαρακτήρες"
 
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:165
-#, fuzzy
 msgid "Captions"
-msgstr "Επιλογές"
+msgstr "Τίτλοι"
 
 #: src/modules/conf_clientlist/e_mod_main.c:17
-#: src/modules/conf_menus/e_mod_main.c:17 src/modules/wizard/page_030.c:78
+#: src/modules/conf_menus/e_mod_main.c:17
+#: src/modules/wizard/page_030.c:78
 msgid "Menus"
 msgstr "Μενού"
 
@@ -3525,18 +3571,16 @@ msgid "Border Title"
 msgstr "Τίτλος περιγράμματος"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:76
-#, fuzzy
 msgid "Border Title Active"
-msgstr "Τίτλος μενού ενεργός"
+msgstr "Ενεργός τίτλος πλαισίου"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:77
 msgid "Error Text"
 msgstr "Κείμενο σφάλματος"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:78
-#, fuzzy
 msgid "Menu Background Base"
-msgstr "Ταπετσαρίες"
+msgstr "Βαση φόντου μενού"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:79
 #: src/modules/conf_fonts/e_int_config_fonts.c:60
@@ -3557,9 +3601,8 @@ msgid "Menu Item Active"
 msgstr "Αντικείμενο μενού ενεργό"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:83
-#, fuzzy
 msgid "Menu Item Disabled"
-msgstr "Αντικείμενο μενού ενεργό"
+msgstr "Ανενεργό αντικείμενο μενού"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:84
 #: src/modules/conf_fonts/e_int_config_fonts.c:64
@@ -3590,19 +3633,16 @@ msgid "Winlist Title"
 msgstr ""
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:90
-#, fuzzy
 msgid "Dialog Background Base"
-msgstr "Ταπετσαρίες"
+msgstr "Βαση φόντου διαλόγου"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:91
-#, fuzzy
 msgid "Shelf Background Base"
-msgstr "Ταπετσαρίες"
+msgstr "Βαση φόντου ραφιού"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:92
-#, fuzzy
 msgid "File Manager Background Base"
-msgstr "Διαχειριστής αρχείων"
+msgstr "Βαση φόντου διαχειριστή αρχείων"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:97
 msgid "Button Text"
@@ -3625,9 +3665,8 @@ msgid "Entry Text"
 msgstr "Κείμενο καταχώρησης"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:102
-#, fuzzy
 msgid "Entry Text Disabled"
-msgstr "Κείμενο κουμπιού ανενεργό"
+msgstr ""
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:103
 msgid "Label Text"
@@ -3691,9 +3730,8 @@ msgid "Slider Text Disabled"
 msgstr "Κείμενο συστατικού κύλισης ανενεργό"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:118
-#, fuzzy
 msgid "Frame Background Base"
-msgstr "Ταπετσαρίες"
+msgstr "Βάση φόντου πλαισίου"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:119
 msgid "Scroller Frame Background Base"
@@ -3735,31 +3773,27 @@ msgstr "Ρύθμιση κλάσεων χρωμάτων"
 #: src/modules/conf_colors/e_int_config_color_classes.c:283
 #: src/modules/conf_colors/e_int_config_color_classes.c:542
 msgid "No selected color class"
-msgstr ""
+msgstr "Χωρίς επιλεγμένη χρωματική τάξη"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:545
-#, fuzzy
 msgid "Custom colors"
-msgstr "Προσαρμοσμένο χρώμα"
+msgstr "Προσαρμοσμένα χρώματα"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:551
-#, fuzzy
 msgid "Object:"
-msgstr "Εξαγωγή"
+msgstr "Αντικείμενο:"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:557
-#, fuzzy
 msgid "Outline:"
-msgstr "Εκτός σύνδεσης"
+msgstr "Περίγραμμα:"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:563
-#, fuzzy
 msgid "Shadow:"
-msgstr "Χρώμα σκιάς"
+msgstr "Σκιά:"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:595
 msgid "Text with applied colors."
-msgstr ""
+msgstr "Κείμενο με εφαρμοσμένα χρώματα."
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:601
 msgid "Colors depend on theme capabilities."
@@ -3775,9 +3809,8 @@ msgid "Widgets"
 msgstr "Συστατικά"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:848
-#, fuzzy
 msgid "Others"
-msgstr "Άλλο"
+msgstr "Άλλα"
 
 #: src/modules/conf_desk/e_int_config_desk.c:52
 msgid "Desk Settings"
@@ -3807,9 +3840,8 @@ msgid "Desk"
 msgstr "Επιφάνεια"
 
 #: src/modules/conf_desklock/e_int_config_desklock_fsel.c:41
-#, fuzzy
 msgid "Select a Background..."
-msgstr "Ορισμός ταπετσαρίας..."
+msgstr "Επιλογή ταπετσαρίας..."
 
 #: src/modules/conf_desklock/e_int_config_desklock_fsel.c:84
 #: src/modules/conf_imc/e_int_config_imc.c:803
@@ -3827,39 +3859,33 @@ msgid "Screen Lock Settings"
 msgstr "Ρυθμίσεις κλειδώματος οθόνης"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:206
-#, fuzzy
 msgid "Lock on Startup"
-msgstr "Αναστολή"
+msgstr "Κλείδωμα με την έναρξη"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:209
-#, fuzzy
 msgid "Lock on Suspend"
-msgstr "Αναστολή"
+msgstr "Κλείδωμα με την αναστολή"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:213
-#, fuzzy
 msgid "Custom Screenlock Command"
-msgstr "Προσαρμοσμένο κλείδωμα οθόνης"
+msgstr "Προσαρμοσμένη εντολή κλειδώματος"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:217
 #, fuzzy
 msgid "Locking"
-msgstr "Κλείδωμα"
+msgstr "Κλειδώνει"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:223
-#, fuzzy
 msgid "Show on all screens"
-msgstr "Εμφάνιση σε όλες τις ζώνες οθόνης"
+msgstr "Εμφάνιση σε όλες τις οθόνες"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:228
-#, fuzzy
 msgid "Show on current screen"
-msgstr "Εμφάνιση στην τρέχουσα ζώνη οθόνης"
+msgstr "Εμφάνιση στη τρέχουσα οθόνη"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:233
-#, fuzzy
 msgid "Show on screen #:"
-msgstr "Εμφάνιση στην ζώνη οθόνης #:"
+msgstr "Εμφάνιση στην οθόνης #:"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:239
 #: src/modules/conf_desks/e_int_config_desks.c:229
@@ -3879,14 +3905,12 @@ msgid "%1.0f"
 msgstr "%1.0f"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:243
-#, fuzzy
 msgid "Login Box"
-msgstr "Ρυθμίσεις πλαισίου επανασύνδεσης"
+msgstr "Πλαίσιο σύνδεσης"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:248
-#, fuzzy
 msgid "Lock after X screensaver activates"
-msgstr "Κλέιδωμα όταν το X Screensaver ενεργοποιείται"
+msgstr "Κλέιδωμα με την ενεργοποίηση του X Screensaver"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:254
 #: src/modules/conf_desklock/e_int_config_desklock.c:279
@@ -3922,9 +3946,8 @@ msgstr ""
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:284
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:173
-#, fuzzy
 msgid "Presentation Mode"
-msgstr "Εναλλαγή σε λειτουργία παρουσίασης"
+msgstr "Λειτουργία παρουσίασης"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:291
 #: src/modules/gadman/e_mod_config.c:141
@@ -3936,9 +3959,8 @@ msgid "Theme Wallpaper"
 msgstr "Ταπετσαρία θέματος"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:297
-#, fuzzy
 msgid "Current Wallpaper"
-msgstr "Ταπετσαρία επιφάνειας εργασίας"
+msgstr "Τρέχουσα ταπετσαρία"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:311
 #: src/modules/conf_wallpaper/e_mod_main.c:23
@@ -4000,9 +4022,8 @@ msgid "Background panning"
 msgstr "Αλλαγή ταπετσαρία"
 
 #: src/modules/conf_desks/e_int_config_desks.c:301
-#, fuzzy
 msgid "Animation speed"
-msgstr "Κινούμενα γραφικά"
+msgstr "Ταχύτητα κίνησης"
 
 #: src/modules/conf_desks/e_int_config_desks.c:304
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:168
@@ -4012,20 +4033,18 @@ msgid "%1.1f sec"
 msgstr "%1.1f sec"
 
 #: src/modules/conf_desks/e_int_config_desks.c:310
-#, fuzzy
 msgid "X-Axis pan factor"
-msgstr "%.2f παράγοντας μετακίνησης στον άξονα Χ"
+msgstr "Παράγοντας μετακίνησης στον άξονα Χ"
 
 #: src/modules/conf_desks/e_int_config_desks.c:313
 #: src/modules/conf_desks/e_int_config_desks.c:322
-#, fuzzy, c-format
+#, c-format
 msgid "%.2f"
-msgstr "%1.2f"
+msgstr "%.2f"
 
 #: src/modules/conf_desks/e_int_config_desks.c:319
-#, fuzzy
 msgid "Y-Axis pan factor"
-msgstr "%.2f παράγοντας μετακίνησης στον άξονα Υ"
+msgstr "Παράγοντας μετακίνησης στον άξονα Υ"
 
 #: src/modules/conf_desks/e_int_config_desks.c:328
 msgid "Flip Animation"
@@ -4042,8 +4061,10 @@ msgstr "Ρυθμίσεις διαλόγων"
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:109
 #: src/modules/conf_engine/e_int_config_engine.c:95
 #: src/modules/conf_fonts/e_int_config_fonts.c:646
-#: src/modules/everything/evry_config.c:523 src/modules/ibox/e_mod_config.c:96
-#: src/modules/mixer/conf_gadget.c:187 src/modules/mixer/conf_module.c:89
+#: src/modules/everything/evry_config.c:523
+#: src/modules/ibox/e_mod_config.c:96
+#: src/modules/mixer/conf_gadget.c:187
+#: src/modules/mixer/conf_module.c:89
 msgid "General Settings"
 msgstr "Γενικές ρυθμίσεις"
 
@@ -4083,34 +4104,22 @@ msgstr "Διάλογοι"
 
 #: src/modules/conf_display/e_int_config_display.c:136
 #, c-format
-msgid ""
-"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
-"<br>If you do not press a button, the old resolution of<br>%dx%d at %d Hz "
-"will be restored in %d seconds."
+msgid "Does this look OK? <hilight>Save</hilight> if it does, or Restore if not.<br>If you do not press a button, the old resolution of<br>%dx%d at %d Hz will be restored in %d seconds."
 msgstr ""
 
 #: src/modules/conf_display/e_int_config_display.c:143
 #, c-format
-msgid ""
-"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
-"<br>If you do not press a button, the old resolution of<br>%dx%d will be "
-"restored in %d seconds."
+msgid "Does this look OK? <hilight>Save</hilight> if it does, or Restore if not.<br>If you do not press a button, the old resolution of<br>%dx%d will be restored in %d seconds."
 msgstr ""
 
 #: src/modules/conf_display/e_int_config_display.c:153
 #, c-format
-msgid ""
-"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
-"<br>If you do not press a button, the old resolution of<br>%dx%d at %d Hz "
-"will be restored <hilight>IMMEDIATELY</hilight>."
+msgid "Does this look OK? <hilight>Save</hilight> if it does, or Restore if not.<br>If you do not press a button, the old resolution of<br>%dx%d at %d Hz will be restored <hilight>IMMEDIATELY</hilight>."
 msgstr ""
 
 #: src/modules/conf_display/e_int_config_display.c:160
 #, c-format
-msgid ""
-"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
-"<br>If you do not press a button, the old resolution of<br>%dx%d will be "
-"restored <hilight>IMMEDIATELY</hilight>."
+msgid "Does this look OK? <hilight>Save</hilight> if it does, or Restore if not.<br>If you do not press a button, the old resolution of<br>%dx%d will be restored <hilight>IMMEDIATELY</hilight>."
 msgstr ""
 
 #: src/modules/conf_display/e_int_config_display.c:197
@@ -4154,12 +4163,7 @@ msgid "Missing Features"
 msgstr "Ελλειπή χαρακτηριστικά"
 
 #: src/modules/conf_display/e_int_config_display.c:677
-msgid ""
-"Your X Display Server is missing support for<br>the <hilight>XRandR</"
-"hilight> (X Resize and Rotate) extension.<br>You cannot change screen "
-"resolutions without<br>the support of this extension. It could also "
-"be<br>that at the time <hilight>ecore</hilight> was built, there<br>was no "
-"XRandR support detected."
+msgid "Your X Display Server is missing support for<br>the <hilight>XRandR</hilight> (X Resize and Rotate) extension.<br>You cannot change screen resolutions without<br>the support of this extension. It could also be<br>that at the time <hilight>ecore</hilight> was built, there<br>was no XRandR support detected."
 msgstr ""
 
 #: src/modules/conf_display/e_int_config_display.c:689
@@ -4167,12 +4171,7 @@ msgid "No Refresh Rates Found"
 msgstr "Δεν βρέθηκαν ρυθμοί ανανέωσης"
 
 #: src/modules/conf_display/e_int_config_display.c:690
-msgid ""
-"No refresh rates were reported by your X Display Server.<br>If you are "
-"running a nested X Display Server, then<br>this is to be expected. However, "
-"if you are not, then<br>the current refresh rate will be used when "
-"setting<br>the resolution, which may cause <hilight>damage</hilight> to your "
-"screen."
+msgid "No refresh rates were reported by your X Display Server.<br>If you are running a nested X Display Server, then<br>this is to be expected. However, if you are not, then<br>the current refresh rate will be used when setting<br>the resolution, which may cause <hilight>damage</hilight> to your screen."
 msgstr ""
 
 #: src/modules/conf_display/e_mod_main.c:20
@@ -4225,16 +4224,12 @@ msgid "<None>"
 msgstr "<Κανένα>"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:4
-msgid ""
-"Please select an edge,<br>or click <hilight>Close</hilight> to abort."
-"<br><br>You can either specify a delay of this<br> action using the slider, "
-"or make it<br>respond to edge clicks:"
+msgid "Please select an edge,<br>or click <hilight>Close</hilight> to abort.<br><br>You can either specify a delay of this<br> action using the slider, or make it<br>respond to edge clicks:"
 msgstr ""
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:102
-#, fuzzy
 msgid "Edge Bindings Settings"
-msgstr "Ρυθμίσεις συντόμευσης άκρων"
+msgstr ""
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:255
 #: src/modules/conf_edgebindings/e_mod_main.c:20
@@ -4310,9 +4305,7 @@ msgstr "Σφάλμα συντόμευσης άκρων"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1175
 #, c-format
-msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>%"
-"s</hilight> action.<br>Please choose another binding edge sequence."
+msgid "The binding key sequence, that you choose, is already used by <br><hilight>%s</hilight> action.<br>Please choose another binding edge sequence."
 msgstr ""
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1312
@@ -4347,7 +4340,8 @@ msgstr "WIN"
 #: src/modules/conf_interaction/e_mod_main.c:17
 #: src/modules/conf_keybindings/e_mod_main.c:17
 #: src/modules/conf_mousebindings/e_mod_main.c:17
-#: src/modules/conf_mouse/e_mod_main.c:17 src/modules/mixer/app_mixer.c:277
+#: src/modules/conf_mouse/e_mod_main.c:17
+#: src/modules/mixer/app_mixer.c:277
 #: src/modules/mixer/app_mixer.c:295
 msgid "Input"
 msgstr "Είσοδος"
@@ -4365,10 +4359,7 @@ msgid "Enable Composite Support ?"
 msgstr "Ενεργοποίηση υποστήριξης composite ?"
 
 #: src/modules/conf_engine/e_int_config_engine.c:140
-msgid ""
-"You have chosen to enable composite support,<br>but your current screen does "
-"not support composite.<br><br>Are you sure you wish to enable composite "
-"support ?"
+msgid "You have chosen to enable composite support,<br>but your current screen does not support composite.<br><br>Are you sure you wish to enable composite support ?"
 msgstr ""
 
 #: src/modules/conf_engine/e_mod_main.c:19
@@ -4577,7 +4568,8 @@ msgstr "Bytecode"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:657
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:193
-#: src/modules/cpufreq/e_mod_main.c:224 src/modules/cpufreq/e_mod_main.c:256
+#: src/modules/cpufreq/e_mod_main.c:224
+#: src/modules/cpufreq/e_mod_main.c:256
 msgid "Automatic"
 msgstr "Αυτόματα"
 
@@ -4602,9 +4594,8 @@ msgid "Icon Theme Settings"
 msgstr "Ρυθμίσεις θέματος εικονιδίων"
 
 #: src/modules/conf_icon_theme/e_int_config_icon_themes.c:264
-#, fuzzy
 msgid "This overrides general theme"
-msgstr "Υπερκάλυψη των εικονιδίων του θέματος"
+msgstr "Αυτό υπερκαλύπτει το γενικό θέμα"
 
 #: src/modules/conf_icon_theme/e_mod_main.c:19
 msgid "Icon Theme"
@@ -4646,9 +4637,8 @@ msgid "Execute Command"
 msgstr "Εκτέλεση εντολής"
 
 #: src/modules/conf_imc/e_int_config_imc.c:905
-#, fuzzy
 msgid "Setup Command"
-msgstr "Εντολή εγκατάστασης"
+msgstr ""
 
 #: src/modules/conf_imc/e_int_config_imc.c:914
 msgid "Exported Environment Variables"
@@ -4664,19 +4654,15 @@ msgid "Input Method Config Import Error"
 msgstr "Σφάλμα εισαγωγής ρύθμισης μεθόδου εισόδου"
 
 #: src/modules/conf_imc/e_int_config_imc_import.c:284
-msgid ""
-"Enlightenment was unable to import the configuration.<br><br>Are you sure "
-"this is really a valid configuration?"
-msgstr ""
-"Δεν ήταν δυνατή η εισαγωγή της ρύθμισης.<br><br>Είστε σίγουροι πως είναι μια "
-"έγκυρη ρύθμιση?"
+msgid "Enlightenment was unable to import the configuration.<br><br>Are you sure this is really a valid configuration?"
+msgstr "Δεν ήταν δυνατή η εισαγωγή της ρύθμισης.<br><br>Είστε σίγουροι πως είναι μια έγκυρη ρύθμιση?"
 
 #: src/modules/conf_imc/e_int_config_imc_import.c:300
-msgid ""
-"Enlightenment was unable to import the configuration<br>due to a copy error."
+msgid "Enlightenment was unable to import the configuration<br>due to a copy error."
 msgstr ""
 
-#: src/modules/conf_imc/e_mod_main.c:17 src/modules/conf_intl/e_mod_main.c:17
+#: src/modules/conf_imc/e_mod_main.c:17
+#: src/modules/conf_intl/e_mod_main.c:17
 #: src/modules/everything-aspell/e_mod_main.c:500
 #: src/modules/wizard/page_010.c:139
 msgid "Language"
@@ -4747,21 +4733,16 @@ msgid "Locale"
 msgstr "Εντοπιότητα"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:4
-msgid ""
-"Please press key sequence,<br><br>or <hilight>Escape</hilight> to abort."
-msgstr ""
-"Παρακαλώ πατήστε μια ακολουθία πλήκτρων,<br><br>ή <hilight>Escape</hilight> "
-"για ακύρωση."
+msgid "Please press key sequence,<br><br>or <hilight>Escape</hilight> to abort."
+msgstr "Παρακαλώ πατήστε μια ακολουθία πλήκτρων,<br><br>ή <hilight>Escape</hilight> για ακύρωση."
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:8
-#, fuzzy
 msgid "Single key"
-msgstr "Χρήση ενός κλικ"
+msgstr "Ένα πλήκτρο"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:91
-#, fuzzy
 msgid "Key Bindings Settings"
-msgstr "Ρυθμίσεις συνδυασμού πλήκτρων"
+msgstr ""
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:221
 #: src/modules/conf_keybindings/e_mod_main.c:20
@@ -4778,12 +4759,8 @@ msgstr "Σφάλμα συντόμευσης πληκτρολογίου"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1148
 #, c-format
-msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>%"
-"s</hilight> action.<br>Please choose another binding key sequence."
-msgstr ""
-"Ο συνδυασμός συντόμευσης πληκτρολογίου που επιλέξατε, χρησιμοποιείται ήδη "
-"από το <br><hilight>%s</hilight>. <br>Παρακαλώ επιλέξτε έναν άλλο συνδυασμό."
+msgid "The binding key sequence, that you choose, is already used by <br><hilight>%s</hilight> action.<br>Please choose another binding key sequence."
+msgstr "Ο συνδυασμός συντόμευσης πληκτρολογίου που επιλέξατε, χρησιμοποιείται ήδη από το <br><hilight>%s</hilight>. <br>Παρακαλώ επιλέξτε έναν άλλο συνδυασμό."
 
 #: src/modules/conf_menus/e_int_config_menus.c:43
 #: src/modules/conf_menus/e_mod_main.c:18
@@ -4792,9 +4769,8 @@ msgstr "Ρυθμίσεις μενού"
 
 #: src/modules/conf_menus/e_int_config_menus.c:95
 #: src/modules/conf_menus/e_int_config_menus.c:290
-#, fuzzy
 msgid "Main Menu"
-msgstr "Εμφάνιση κεντρικού μενού"
+msgstr "Κεντρικό μενού"
 
 #: src/modules/conf_menus/e_int_config_menus.c:96
 #: src/modules/conf_menus/e_int_config_menus.c:286
@@ -4811,9 +4787,8 @@ msgstr "Ρυθμίσεις προβολής"
 
 #: src/modules/conf_menus/e_int_config_menus.c:105
 #: src/modules/conf_menus/e_int_config_menus.c:300
-#, fuzzy
 msgid "Generic"
-msgstr "Γενικό όνομα"
+msgstr "Γενικό"
 
 #: src/modules/conf_menus/e_int_config_menus.c:107
 #: src/modules/conf_menus/e_int_config_menus.c:302
@@ -4826,9 +4801,8 @@ msgid "System Default"
 msgstr "Προκαθορισμένα συστήματος"
 
 #: src/modules/conf_menus/e_int_config_menus.c:308
-#, fuzzy
 msgid "Margin"
-msgstr "Κεντρικό"
+msgstr ""
 
 #: src/modules/conf_menus/e_int_config_menus.c:310
 #: src/modules/conf_menus/e_int_config_menus.c:315
@@ -4842,14 +4816,12 @@ msgid "%2.0f pixels"
 msgstr "%2.0f pixel"
 
 #: src/modules/conf_menus/e_int_config_menus.c:313
-#, fuzzy
 msgid "Cursor Margin"
-msgstr "Περιθώριο κύλισης δείκτη"
+msgstr ""
 
 #: src/modules/conf_menus/e_int_config_menus.c:318
-#, fuzzy
 msgid "Autoscroll"
-msgstr "Περιθώριο κύλισης"
+msgstr "Αυτόματη κύλιση"
 
 #: src/modules/conf_menus/e_int_config_menus.c:322
 msgid "Menu Scroll Speed"
@@ -4875,17 +4847,16 @@ msgid "Click Drag Timeout"
 msgstr ""
 
 #: src/modules/conf_menus/e_int_config_menus.c:334
-#, fuzzy, c-format
+#, c-format
 msgid "%2.2f sec"
-msgstr "%1.2f sec"
+msgstr "%2.2f δευτ."
 
 #: src/modules/conf_menus/e_int_config_menus.c:337
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:204
 #: src/modules/conf_window_focus/e_int_config_focus.c:262
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:186
-#, fuzzy
 msgid "Miscellaneous"
-msgstr "Διάφορες επιλογές"
+msgstr "Διάφορα"
 
 #: src/modules/conf_mime/e_int_config_mime.c:61
 #: src/modules/conf_mime/e_mod_main.c:19
@@ -4929,28 +4900,24 @@ msgid "Use Default"
 msgstr "Χρήση προκαθορισμένων"
 
 #: src/modules/conf_mime/e_int_config_mime_edit.c:290
-#, fuzzy
 msgid "Select an Edje file"
-msgstr "Επιλογή ενός αρχείου Edj"
+msgstr "Επιλογή αρχείου Edje"
 
 #: src/modules/conf_mime/e_int_config_mime_edit.c:292
-#, fuzzy
 msgid "Select an image"
 msgstr "Επιλογή εικόνας"
 
 #: src/modules/conf_mime/e_mod_main.c:17
 #: src/modules/everything-files/e_mod_main.c:1425
 #: src/modules/everything-files/e_mod_main.c:1434
-#: src/modules/fileman/e_mod_main.c:46 src/modules/fileman/e_mod_main.c:64
+#: src/modules/fileman/e_mod_main.c:46
+#: src/modules/fileman/e_mod_main.c:64
 #: src/modules/fileman/e_mod_main.c:386
 msgid "Files"
 msgstr "Αρχεία"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:7
-msgid ""
-"Please hold any modifier you want<br>and press any button on your mouse,<br> "
-"or roll a wheel, to assign mouse binding.<br>Press <hilight>Escape</"
-"highlight> to abort."
+msgid "Please hold any modifier you want<br>and press any button on your mouse,<br> or roll a wheel, to assign mouse binding.<br>Press <hilight>Escape</highlight> to abort."
 msgstr ""
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:112
@@ -4976,7 +4943,8 @@ msgid "Win List"
 msgstr "Λίστα παραθύρων"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:333
-#: src/modules/pager/e_mod_config.c:134 src/modules/pager/e_mod_config.c:247
+#: src/modules/pager/e_mod_config.c:134
+#: src/modules/pager/e_mod_config.c:247
 msgid "Popup"
 msgstr "Υπενθύμηση"
 
@@ -5006,11 +4974,11 @@ msgstr "Εμφάνιση δείκτη"
 
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:150
 msgid "X"
-msgstr ""
+msgstr "X"
 
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:160
 msgid "Idle effects"
-msgstr ""
+msgstr "Εφέ αδράνειας"
 
 #: src/modules/conf_mouse_cursor/e_mod_main.c:18
 msgid "Mouse Cursor"
@@ -5098,7 +5066,6 @@ msgid "%1.0f fps"
 msgstr "%1.0f fps"
 
 #: src/modules/conf_performance/e_int_config_performance.c:109
-#, fuzzy
 msgid "Applications priority"
 msgstr "Προτεραιότητα εφαρμογών"
 
@@ -5109,7 +5076,7 @@ msgstr "Διάστημα καθαρισμού προσωρινής μνήμης"
 
 #: src/modules/conf_performance/e_int_config_performance.c:125
 msgid "Font cache size"
-msgstr ""
+msgstr "Μέγεθος προσωρινής μνήμης γραμματοσειρών"
 
 #: src/modules/conf_performance/e_int_config_performance.c:127
 #, c-format
@@ -5118,7 +5085,7 @@ msgstr "%1.1f MB"
 
 #: src/modules/conf_performance/e_int_config_performance.c:131
 msgid "Image cache size"
-msgstr ""
+msgstr "Μέγεθος προσωρινής μνήμης εικόνων"
 
 #: src/modules/conf_performance/e_int_config_performance.c:133
 #, c-format
@@ -5126,9 +5093,8 @@ msgid "%1.0f MB"
 msgstr "%1.0f MB"
 
 #: src/modules/conf_performance/e_int_config_performance.c:137
-#, fuzzy
 msgid "Caches"
-msgstr "Ακύρωση"
+msgstr "Προσωρινές μνήμες"
 
 #: src/modules/conf_performance/e_int_config_performance.c:141
 #, fuzzy
@@ -5151,9 +5117,8 @@ msgid "%1.0f collections"
 msgstr "%1.0f συλλογές"
 
 #: src/modules/conf_performance/e_int_config_performance.c:152
-#, fuzzy
 msgid "Edje Cache"
-msgstr "Ακύρωση"
+msgstr "Προσωρινή μνήμη Edje"
 
 #: src/modules/conf_performance/e_mod_main.c:18
 msgid "Performance"
@@ -5177,9 +5142,9 @@ msgid "Reset"
 msgstr "Επανεκκίνηση"
 
 #: src/modules/conf_profiles/e_int_config_profiles.c:268
-#, fuzzy, c-format
+#, c-format
 msgid "Selected profile: %s"
-msgstr "Επιλογή ενός προφίλ"
+msgstr "Επιλογή προφίλ: %s"
 
 #: src/modules/conf_profiles/e_int_config_profiles.c:304
 #, c-format
@@ -5199,7 +5164,6 @@ msgid "Profiles"
 msgstr "Προφίλ"
 
 #: src/modules/conf_scale/e_int_config_scale.c:55
-#, fuzzy
 msgid "Scale Settings"
 msgstr "Ρυθμίσεις κλιμάκωσης"
 
@@ -5276,12 +5240,10 @@ msgid "Screen Saver Settings"
 msgstr "Ρυθμίσεις προφύλαξης οθόνης"
 
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:134
-#, fuzzy
 msgid "Enable X Screensaver"
 msgstr "Ενεργοποίηση X Screensaver"
 
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:138
-#, fuzzy
 msgid "Screensaver"
 msgstr "Προφύλαξη οθόνης"
 
@@ -5334,12 +5296,8 @@ msgstr "Ρύθμιση"
 
 #: src/modules/conf_shelves/e_int_config_shelf.c:276
 #, c-format
-msgid ""
-"You requested to delete \"%s\".<br><br>Are you sure you want to delete this "
-"shelf?"
-msgstr ""
-"Αιτήθηκε διαγραφή \"%s\".<br><br>Είστε σίγουροι για τη διαγραφή αυτού του "
-"ραφιού?"
+msgid "You requested to delete \"%s\".<br><br>Are you sure you want to delete this shelf?"
+msgstr "Αιτήθηκε διαγραφή \"%s\".<br><br>Είστε σίγουροι για τη διαγραφή αυτού του ραφιού?"
 
 #: src/modules/conf_startup/e_int_config_startup.c:38
 msgid "Startup Settings"
@@ -5388,17 +5346,12 @@ msgid "Theme Import Error"
 msgstr "Σφάλμα εισαγωγής θέματος"
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:285
-msgid ""
-"Enlightenment was unable to import the theme.<br><br>Are you sure this is "
-"really a valid theme?"
-msgstr ""
-"Δεν ήταν δυνατή η εισαγωγή του θέματος.<br><br>Είστε σίγουροι πως είναι ένα "
-"έγκυρο θέμα?"
+msgid "Enlightenment was unable to import the theme.<br><br>Are you sure this is really a valid theme?"
+msgstr "Δεν ήταν δυνατή η εισαγωγή του θέματος.<br><br>Είστε σίγουροι πως είναι ένα έγκυρο θέμα?"
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:294
 msgid "Enlightenment was unable to import the theme<br>due to a copy error."
-msgstr ""
-"Δεν ήταν δυνατή η εισαγωγή του θέματος<br>λόγω ενός σφάλματος αντιγραφής"
+msgstr "Δεν ήταν δυνατή η εισαγωγή του θέματος<br>λόγω ενός σφάλματος αντιγραφής"
 
 #: src/modules/conf_theme/e_int_config_theme_web.c:126
 msgid "Exchange themes"
@@ -5477,11 +5430,8 @@ msgid "Picture Import Error"
 msgstr "Σφάλμα εισαγωγής εικόνας"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:629
-msgid ""
-"Enlightenment was unable to import the picture<br>due to conversion errors."
-msgstr ""
-"Το Enlightenment δεν μπόρεσε να εισάγει την εικόνα<br>λόγω σφαλμάτων "
-"μετατροπής."
+msgid "Enlightenment was unable to import the picture<br>due to conversion errors."
+msgstr "Το Enlightenment δεν μπόρεσε να εισάγει την εικόνα<br>λόγω σφαλμάτων μετατροπής."
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:716
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:726
@@ -5492,24 +5442,17 @@ msgstr "Σφάλμα εισαγωγής ταπετσαρίας"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:717
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:809
-msgid ""
-"Enlightenment was unable to import the wallpaper<br>due to a copy error."
-msgstr ""
-"Το Enlightenment δεν μπόρεσε να εισάγει την ταπετσαρία<br>λόγω ενός "
-"σφάλματος αντιγραφής."
+msgid "Enlightenment was unable to import the wallpaper<br>due to a copy error."
+msgstr "Το Enlightenment δεν μπόρεσε να εισάγει την ταπετσαρία<br>λόγω ενός σφάλματος αντιγραφής."
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:727
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:819
-msgid ""
-"Enlightenment was unable to import the wallpaper.<br><br>Are you sure this "
-"is a valid wallpaper?"
-msgstr ""
-"Το Enlightenment δεν μπόρεσε να εισάγει την ταπετσαρία.<br><br>Είστε "
-"σίγουρος ότι είναι μια έγκυρη ταπετσαρία?"
+msgid "Enlightenment was unable to import the wallpaper.<br><br>Are you sure this is a valid wallpaper?"
+msgstr "Το Enlightenment δεν μπόρεσε να εισάγει την ταπετσαρία.<br><br>Είστε σίγουρος ότι είναι μια έγκυρη ταπετσαρία?"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:162
 msgid "By"
-msgstr ""
+msgstr "από"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:198
 msgid "Error getting data !"
@@ -5520,9 +5463,8 @@ msgid "Exchange wallpapers"
 msgstr "Ανταλλαγή φόντων"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:235
-#, fuzzy
 msgid "Download"
-msgstr "Αποφόρτωσε"
+msgstr "Κατέβασε"
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:254
 msgid "Getting data, please wait..."
@@ -5530,7 +5472,7 @@ msgstr ""
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:266
 msgid "Select a background from the list."
-msgstr ""
+msgstr "Επιλογή ταπετσαρίας από τη λίστα."
 
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:281
 msgid "Error: can't start the request."
@@ -5570,14 +5512,12 @@ msgid "Application provided"
 msgstr "παρεχόμενο από την Εφαρμογή "
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:156
-#, fuzzy
 msgid "Border Icon"
-msgstr "Περίγραμμα"
+msgstr "Εικονίδιο περιγράμματος"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:161
-#, fuzzy
 msgid "Placement"
-msgstr "Έξυπνη τοποθέτηση"
+msgstr "Τοποθέτηση"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:163
 msgid "Smart Placement"
@@ -5601,23 +5541,20 @@ msgid "Switch to desktop of new window"
 msgstr "Αυτόματη εναλλαγή επιφάνειας εργασίας στο νέο παράθυρο"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:179
-#, fuzzy
 msgid "New Windows"
-msgstr "Κάτω από τα παράθυρα"
+msgstr "Νέα παράθυρα"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:184
-#, fuzzy
 msgid "Animate"
-msgstr "Κινούμενα γραφικά"
+msgstr ""
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:195
 msgid "Linear"
 msgstr "Γραμμική"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:199
-#, fuzzy
 msgid "Accelerate, then decelerate"
-msgstr "Ομαλή επιτάχυνση και επιβράδυνση"
+msgstr "Επιτάχυνση και μετά επιβράδυνση"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:204
 msgid "Accelerate"
@@ -5628,9 +5565,8 @@ msgid "Decelerate"
 msgstr "Επιβράδυνση"
 
 #: src/modules/conf_window_display/e_int_config_window_display.c:212
-#, fuzzy
 msgid "Shading"
-msgstr "Κλιμάκωση"
+msgstr "Σκίαση"
 
 #: src/modules/conf_window_focus/e_int_config_focus.c:51
 msgid "Focus Settings"
@@ -5666,14 +5602,12 @@ msgid "New Window Focus"
 msgstr "Εστίαση νέου παραθύρου"
 
 #: src/modules/conf_window_focus/e_int_config_focus.c:220
-#, fuzzy
 msgid "No window"
-msgstr "(Χωρίς παράθυρα)"
+msgstr "Χωρίς παράθυρο"
 
 #: src/modules/conf_window_focus/e_int_config_focus.c:222
-#, fuzzy
 msgid "All windows"
-msgstr "Παράθυρα"
+msgstr "Όλα τα παράθυρα"
 
 #: src/modules/conf_window_focus/e_int_config_focus.c:224
 msgid "Only dialogs"
@@ -5730,19 +5664,16 @@ msgid "Window Geometry"
 msgstr "Γεωμετρία παραθύρου"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:130
-#, fuzzy
 msgid "Resist obstacles"
-msgstr "Αντίσταση"
+msgstr ""
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:132
-#, fuzzy
 msgid "Other windows"
-msgstr "Εσωτερικά παράθυρα"
+msgstr "Άλλα παράθυρα"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:141
-#, fuzzy
 msgid "Edge of the screen"
-msgstr "Να περιλαμβάνει παράθυρα από άλλες οθόνες"
+msgstr "Άκρη της οθόνης"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:150
 msgid "Desktop gadgets"
@@ -5765,18 +5696,16 @@ msgid "Resize by"
 msgstr "Αλλαγή μεγέθους κατά:"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:181
-#, fuzzy
 msgid "Keyboard"
-msgstr "Συντόμευση πληκτρολογίου"
+msgstr "Πληκτρολόγιο"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:187
 msgid "Limit resize to useful geometry"
 msgstr ""
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:190
-#, fuzzy
 msgid "Move after resize"
-msgstr "Δυνατότητα αλλαγής μεγέθους"
+msgstr "Μετακίνηση μετά την αλλαγή μεγέθους"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:44
 #: src/modules/conf_window_manipulation/e_mod_main.c:20
@@ -5814,9 +5743,8 @@ msgid "Both"
 msgstr "Και τα δύο"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:167
-#, fuzzy
 msgid "Direction"
-msgstr "Επιλογή ενός"
+msgstr "Κατεύθυνση"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:180
 msgid "Allow manipulation of maximized windows"
@@ -5946,7 +5874,7 @@ msgstr "Εμφάνιση εικονιδιοποιημένων παραθύρων
 
 #: src/modules/conf_winlist/e_int_config_winlist.c:218
 msgid "Uncover"
-msgstr ""
+msgstr "Αποκάλυψη"
 
 #: src/modules/conf_winlist/e_int_config_winlist.c:220
 msgid "Warp mouse while selecting"
@@ -5962,9 +5890,8 @@ msgid "Jump to desk"
 msgstr ""
 
 #: src/modules/conf_winlist/e_int_config_winlist.c:230
-#, fuzzy
 msgid "Selecting"
-msgstr "Επιλογή ενός"
+msgstr "Επιλογή"
 
 #: src/modules/conf_winlist/e_int_config_winlist.c:234
 #, fuzzy
@@ -6026,19 +5953,16 @@ msgid "Geometry"
 msgstr "Γεωμετρία"
 
 #: src/modules/conf_winlist/e_int_config_winlist.c:290
-#, fuzzy
 msgid "Horizontal alignment"
-msgstr "Οριζόντια"
+msgstr "Οριζόντια στοίχιση"
 
 #: src/modules/conf_winlist/e_int_config_winlist.c:295
-#, fuzzy
 msgid "Vertical alignment"
-msgstr "Κάθετα"
+msgstr "Κάθετη στοίχιση"
 
 #: src/modules/conf_winlist/e_int_config_winlist.c:300
-#, fuzzy
 msgid "Alignment"
-msgstr "Enlightenment"
+msgstr "Στοίχιση"
 
 #: src/modules/cpufreq/e_mod_main.c:132
 msgid "Cpufreq"
@@ -6068,15 +5992,18 @@ msgstr "Πολύ Αργό (256 tick)"
 msgid "Manual"
 msgstr "Χειροκίνητα"
 
-#: src/modules/cpufreq/e_mod_main.c:226 src/modules/cpufreq/e_mod_main.c:258
+#: src/modules/cpufreq/e_mod_main.c:226
+#: src/modules/cpufreq/e_mod_main.c:258
 msgid "Lower Power Automatic"
 msgstr ""
 
-#: src/modules/cpufreq/e_mod_main.c:228 src/modules/cpufreq/e_mod_main.c:260
+#: src/modules/cpufreq/e_mod_main.c:228
+#: src/modules/cpufreq/e_mod_main.c:260
 msgid "Minimum Speed"
 msgstr "Ελάχιστη ταχύτητα"
 
-#: src/modules/cpufreq/e_mod_main.c:230 src/modules/cpufreq/e_mod_main.c:262
+#: src/modules/cpufreq/e_mod_main.c:230
+#: src/modules/cpufreq/e_mod_main.c:262
 msgid "Maximum Speed"
 msgstr "Μέγιστη ταχύτητα"
 
@@ -6115,22 +6042,15 @@ msgid "Powersaving behavior"
 msgstr "Συμπεριφορά εξοικονόμησης"
 
 #: src/modules/cpufreq/e_mod_main.c:388
-msgid ""
-"There was an error trying to set the<br>cpu frequency governor via the "
-"module's<br>setfreq utility."
+msgid "There was an error trying to set the<br>cpu frequency governor via the module's<br>setfreq utility."
 msgstr ""
 
 #: src/modules/cpufreq/e_mod_main.c:416
-msgid ""
-"Your kernel does not support setting the<br>CPU frequency at all. You may be "
-"missing<br>Kernel modules or features, or your CPU<br>simply does not "
-"support this feature."
+msgid "Your kernel does not support setting the<br>CPU frequency at all. You may be missing<br>Kernel modules or features, or your CPU<br>simply does not support this feature."
 msgstr ""
 
 #: src/modules/cpufreq/e_mod_main.c:442
-msgid ""
-"There was an error trying to set the<br>cpu frequency setting via the "
-"module's<br>setfreq utility."
+msgid "There was an error trying to set the<br>cpu frequency setting via the module's<br>setfreq utility."
 msgstr ""
 
 #: src/modules/dropshadow/e_mod_config.c:39
@@ -6231,33 +6151,28 @@ msgstr "Ρίψη σκιάς"
 
 #: src/modules/everything/e_mod_main.c:81
 #: src/modules/everything/e_mod_main.c:197
-#, fuzzy
 msgid "Show Everything Dialog"
-msgstr "Κάτω από τα πάντα"
+msgstr "Εμφάνιση διαλόγου Everything"
 
 #: src/modules/everything/e_mod_main.c:92
 msgid "Everything Configuration"
 msgstr "Ρύθμιση του Everything"
 
 #: src/modules/everything/e_mod_main.c:386
-#, fuzzy
 msgid "Everything Module"
-msgstr "Τα πάντα"
+msgstr "Αρθρώμα Everything"
 
 #: src/modules/everything/e_mod_main.c:563
-#, fuzzy
 msgid "Run Everything"
-msgstr "Τα πάντα"
+msgstr "Εκτέλεση Everything"
 
 #: src/modules/everything/evry_config.c:79
-#, fuzzy
 msgid "Everything Settings"
-msgstr "Ρυθμίσεις τερματικού"
+msgstr "Ρυθμίσεις Everything"
 
 #: src/modules/everything/evry_config.c:362
-#, fuzzy
 msgid "Available Plugins"
-msgstr "Διαθέσιμα προφίλ"
+msgstr "Διαθέσιμα πρόσθετα"
 
 #: src/modules/everything/evry_config.c:368
 msgid "Move Up"
@@ -6268,9 +6183,8 @@ msgid "Move Down"
 msgstr "Μετακίνηση Κάτω"
 
 #: src/modules/everything/evry_config.c:381
-#, fuzzy
 msgid "Configure"
-msgstr "Ρύθμιση ραφιών"
+msgstr "Ρύθμιση"
 
 #: src/modules/everything/evry_config.c:388
 msgid "Enabled"
@@ -6295,17 +6209,17 @@ msgid "Plugin Trigger"
 msgstr ""
 
 #: src/modules/everything/evry_config.c:416
-#, fuzzy
 msgid "Default is plugin name"
-msgstr "Προκαθορισμένη μηχανή"
+msgstr ""
 
 #: src/modules/everything/evry_config.c:423
 msgid "Search only when triggered"
 msgstr ""
 
 #: src/modules/everything/evry_config.c:430
+#, fuzzy
 msgid "Plugin View"
-msgstr ""
+msgstr "Προβολή πρόσθετων"
 
 #: src/modules/everything/evry_config.c:440
 #: src/modules/everything/evry_config.c:491
@@ -6317,29 +6231,26 @@ msgid "Hide input when inactive"
 msgstr ""
 
 #: src/modules/everything/evry_config.c:470
-#, fuzzy
 msgid "Hide list"
-msgstr "Χρονικό όριο απόκρυψης"
+msgstr "Απόκρυψη λίστας"
 
 #: src/modules/everything/evry_config.c:474
 msgid "Quick Navigation"
-msgstr ""
+msgstr "Γρήγορη πλοήγηση"
 
 #: src/modules/everything/evry_config.c:480
 msgid "Emacs style (ALT + n,p,f,b,m,i)"
-msgstr ""
+msgstr "Στυλ Emacs (ALT + n,p,f,b,m,i)"
 
 #: src/modules/everything/evry_config.c:482
 msgid "Vi style (ALT + h,j,k,l,n,p,m,i)"
-msgstr ""
+msgstr "Στυλ Vi (ALT + h,j,k,l,n,p,m,i)"
 
 #: src/modules/everything/evry_config.c:487
-#, fuzzy
 msgid "Default View"
-msgstr "Προκαθορισμένη μηχανή"
+msgstr "Προκαθορισμένη προβολή"
 
 #: src/modules/everything/evry_config.c:496
-#, fuzzy
 msgid "Animate scrolling"
 msgstr "Κινούμενη κύληση"
 
@@ -6348,37 +6259,32 @@ msgid "Up/Down select next item in icon view"
 msgstr ""
 
 #: src/modules/everything/evry_config.c:508
-#, fuzzy
 msgid "Sorting"
-msgstr "Εκκινεί"
+msgstr "Ταξινομεί"
 
 #: src/modules/everything/evry_config.c:510
 msgid "By usage"
-msgstr ""
+msgstr "κατά χρήση"
 
 #: src/modules/everything/evry_config.c:513
-#, fuzzy
 msgid "Most used"
-msgstr "Τα πιο πρόσφατα χρησιμοποιημένα"
+msgstr "Τα πιο χρησιμοποιούμενα"
 
 #: src/modules/everything/evry_config.c:516
-#, fuzzy
 msgid "Last used"
-msgstr "Τελευταία τΤροποποίηση:"
+msgstr "Πρόσφατα χρησιμοποιημένα"
 
 #: src/modules/everything/evry_config.c:530
 msgid "Subject Plugins"
-msgstr ""
+msgstr "Πρόσθετα θέματος"
 
 #: src/modules/everything/evry_config.c:534
-#, fuzzy
 msgid "Action Plugins"
-msgstr "Παράμετροι ενέργειας"
+msgstr "Πρόσθετα ενέργειας"
 
 #: src/modules/everything/evry_config.c:538
-#, fuzzy
 msgid "Object Plugins"
-msgstr "Χρώμα αντικειμένου"
+msgstr "Πρόσθετα αντικειμένου"
 
 #: src/modules/everything/evry_config.c:541
 #: src/modules/everything/evry_config.c:743
@@ -6413,9 +6319,8 @@ msgid "Edge Popup Size"
 msgstr "Υπενθύμηση"
 
 #: src/modules/everything/evry_config.c:638
-#, fuzzy
 msgid "Everything Collection"
-msgstr "Επανεκκίνηση εφαρμογών"
+msgstr "Συλλογή Everything"
 
 #: src/modules/everything/evry_plug_actions.c:172
 msgid "Actions"
@@ -6423,35 +6328,18 @@ msgstr "Ενέργειες"
 
 #: src/modules/everything/evry_plug_aggregator.c:119
 msgid "Items"
-msgstr ""
+msgstr "Αντικέιμενα"
 
 #: src/modules/everything/evry_plug_aggregator.c:345
 msgid "No plugins loaded"
-msgstr ""
+msgstr "Χωρίς φορτωμένα πρόσθετα"
 
 #: src/modules/everything/evry_plug_clipboard.c:33
 msgid "Copy to Clipboard"
 msgstr ""
 
 #: src/modules/everything/evry_view_help.c:67
-msgid ""
-"  Ok, here comes the explanation of <hilight>everything</hilight>...<br>  "
-"Just type a few letters of the thing you are looking for. <br>  Use cursor "
-"<hilight>&lt;up/down&gt;</hilight> to choose from the list of things.<br>  "
-"Press  <hilight>&lt;tab&gt;</hilight> to select an action, then press  "
-"<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
-"you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
-"close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
-"right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
-"down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
-"hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
-"</hilight> toggle list view modes<br>    <hilight>&lt;ctrl+3&gt;</hilight> "
-"toggle thumb view modes"
+msgid "  Ok, here comes the explanation of <hilight>everything</hilight>...<br>  Just type a few letters of the thing you are looking for. <br>  Use cursor <hilight>&lt;up/down&gt;</hilight> to choose from the list of things.<br>  Press  <hilight>&lt;tab&gt;</hilight> to select an action, then press  <hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    <hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;</hilight> toggle list view modes<br>    <hilight>&lt;ctrl+3&gt;</hilight> toggle thumb view modes"
 msgstr ""
 
 #: src/modules/everything-apps/e_mod_main.c:959
@@ -6467,73 +6355,66 @@ msgid "Open File..."
 msgstr "Άνοιγμα Αρχείου..."
 
 #: src/modules/everything-apps/e_mod_main.c:1004
-#, fuzzy
 msgid "Edit Application Entry"
-msgstr "Προσθήκη εφαρμογής"
+msgstr "Επεξεργασία εγγραφής εφαρμογής"
 
 #: src/modules/everything-apps/e_mod_main.c:1011
-#, fuzzy
 msgid "New Application Entry"
-msgstr "Νέα εφαρμογή"
+msgstr "Νέα εγγραφή εφαρμογής"
 
 #: src/modules/everything-apps/e_mod_main.c:1018
 msgid "Run with Sudo"
-msgstr ""
+msgstr "Εκτέλεση με Sudo"
 
 #: src/modules/everything-apps/e_mod_main.c:1024
-#: src/modules/fileman/e_fwin.c:1502 src/modules/fileman/e_fwin.c:1821
+#: src/modules/fileman/e_fwin.c:1502
+#: src/modules/fileman/e_fwin.c:1821
 msgid "Open with..."
 msgstr "Άνοιγμα με..."
 
 #: src/modules/everything-apps/e_mod_main.c:1031
-#, fuzzy
 msgid "Open Terminal here"
-msgstr "Εκτέλεση σε τερματικό"
+msgstr "Άνοιγμα τερματικού εδώ"
 
 #: src/modules/everything-apps/e_mod_main.c:1096
 #: src/modules/everything-apps/e_mod_main.c:1221
 #: src/modules/everything-apps/e_mod_main.c:1240
-#, fuzzy
 msgid "Everything Applications"
-msgstr "Επανεκκίνηση εφαρμογών"
+msgstr "Εφαρμογές Everything"
 
 #: src/modules/everything-apps/e_mod_main.c:1129
-#, fuzzy
 msgid "Commands"
-msgstr "Εντολή"
+msgstr "Εντολές"
 
 #: src/modules/everything-apps/e_mod_main.c:1130
-#, fuzzy
 msgid "Terminal Command"
-msgstr "Καθορισμένη Εντολή"
+msgstr "Εντολή τερματικού"
 
 #: src/modules/everything-apps/e_mod_main.c:1135
 msgid "Sudo GUI"
-msgstr ""
+msgstr "Διεπαφή του Sudo"
 
 #: src/modules/everything-aspell/e_mod_main.c:398
-#, fuzzy
 msgid "Spell Checker"
-msgstr "Έλεγχος συστήματος ολοκληρώθηκε"
+msgstr "Ορθογραφικός έλεγχος"
 
 #: src/modules/everything-aspell/e_mod_main.c:462
 #: src/modules/everything-aspell/e_mod_main.c:595
 #: src/modules/everything-aspell/e_mod_main.c:614
-#, fuzzy
 msgid "Everything Aspell"
-msgstr "Τα πάντα"
+msgstr "Everything Aspell"
 
 #: src/modules/everything-aspell/e_mod_main.c:481
 msgid "Spell checker"
-msgstr ""
+msgstr "Ορθογραφικός έλεγχος"
 
 #: src/modules/everything-aspell/e_mod_main.c:484
 msgid "Aspell"
-msgstr ""
+msgstr "Aspell"
 
 #: src/modules/everything-aspell/e_mod_main.c:487
 msgid "Hunspell"
-msgstr ""
+msgstr "Hunspell"
 
 #: src/modules/everything-aspell/e_mod_main.c:494
 #: src/modules/fileman/e_fwin.c:1899
@@ -6542,66 +6423,58 @@ msgstr "Προσαρμοσμένη εντολή"
 
 #: src/modules/everything-calc/e_mod_main.c:237
 msgid "Calculator"
-msgstr ""
+msgstr "Αριθμομηχανή"
 
 #: src/modules/everything-files/e_mod_main.c:1387
 msgid "Copy To ..."
-msgstr ""
+msgstr "Αντιγραφή στο..."
 
 #: src/modules/everything-files/e_mod_main.c:1392
-#, fuzzy
 msgid "Move To ..."
-msgstr "Περισσότερα..."
+msgstr "Μετακίνηση στο..."
 
 #: src/modules/everything-files/e_mod_main.c:1397
 msgid "Move to Trash"
-msgstr ""
+msgstr "Μετακίνηση στα απορρίματα"
 
 #: src/modules/everything-files/e_mod_main.c:1401
 msgid "Open Folder (EFM)"
-msgstr ""
+msgstr "Άνοιγμα φακέλου (EFM)"
 
 #: src/modules/everything-files/e_mod_main.c:1405
 msgid "Sort by Date"
-msgstr ""
+msgstr "Ταξινόμηση κατά ημερομηνία"
 
 #: src/modules/everything-files/e_mod_main.c:1410
-#, fuzzy
 msgid "Sort by Name"
-msgstr "Ταξινόμηση τώρα"
+msgstr "Ταξινόμηση κατά όνομα"
 
 #: src/modules/everything-files/e_mod_main.c:1442
 #: src/modules/everything-files/e_mod_main.c:1451
-#, fuzzy
 msgid "Recent Files"
-msgstr "Μετονομασία αρχείου"
+msgstr "Προσωρινά αρχεία"
 
 #: src/modules/everything-files/e_mod_main.c:1528
 #: src/modules/everything-files/e_mod_main.c:1659
 #: src/modules/everything-files/e_mod_main.c:1680
-#, fuzzy
 msgid "Everything Files"
-msgstr "Τα πάντα"
+msgstr "Αρχεία Everything"
 
 #: src/modules/everything-files/e_mod_main.c:1551
-#, fuzzy
 msgid "Show home directory"
-msgstr "Στον γονικό κατάλογο"
+msgstr "Εμφάνιση αρχικού καταλόγου"
 
 #: src/modules/everything-files/e_mod_main.c:1555
-#, fuzzy
 msgid "Show recent files"
-msgstr "Εμφάνιση κρυφών αρχείων"
+msgstr "Εμφάνιση πρόσφατων αρχείων"
 
 #: src/modules/everything-files/e_mod_main.c:1559
-#, fuzzy
 msgid "Search recent files"
-msgstr "Αναζήτηση καταλόγων"
+msgstr "Αναζήτηση πρόσφατων αρχείων"
 
 #: src/modules/everything-files/e_mod_main.c:1563
-#, fuzzy
 msgid "Search cached files"
-msgstr "Ρυθμίσεις διαδρομής αναζήτησης"
+msgstr "Αναζήτηση προσωρινών αρχείων"
 
 #: src/modules/everything-files/e_mod_main.c:1567
 #, fuzzy
@@ -6609,25 +6482,23 @@ msgid "Cache visited directories"
 msgstr "Κατάλογοι καθορισμένοι από το χρήστη"
 
 #: src/modules/everything-files/e_mod_main.c:1571
-#, fuzzy
 msgid "Clear cache"
-msgstr "Καθαρισμός"
+msgstr "Καθαρισμός προσωρινής μνήμης"
 
 #: src/modules/everything-settings/e_mod_main.c:194
-#, fuzzy
 msgid "Show Dialog"
-msgstr "Διάλογοι"
+msgstr "Εμφάνιση διαλόγου"
 
 #: src/modules/everything-windows/e_mod_main.c:428
 msgid "Switch to Window"
-msgstr ""
+msgstr "Εναλλαγή στο παράθυρο"
 
 #: src/modules/everything-windows/e_mod_main.c:443
-#, fuzzy
 msgid "Toggle Fullscreen"
-msgstr "Πλήρης οθόνη"
+msgstr "Εναλλαγή πλήρους οθόνης"
 
-#: src/modules/fileman/e_mod_main.c:319 src/modules/illume/e_mod_win.c:176
+#: src/modules/fileman/e_mod_main.c:319
+#: src/modules/illume/e_mod_win.c:176
 msgid "Home"
 msgstr "Αρχικός κατάλογος"
 
@@ -6636,24 +6507,11 @@ msgid "Root"
 msgstr "Σύστημα αρχείων"
 
 #: src/modules/fileman/e_mod_main.c:440
-msgid ""
-"Fileman Module Settings data needed upgrading. Your old configuration<br>has "
-"been wiped and a new set of defaults initialized. This<br>will happen "
-"regularly during development, so don't report a<br>bug. This simply means "
-"Fileman module needs new configuration<br>data by default for usable "
-"functionality that your old<br>configuration simply lacks. This new set of "
-"defaults will fix<br>that by adding it in. You can re-configure things now "
-"to your<br>liking. Sorry for the hiccup in your configuration.<br>"
+msgid "Fileman Module Settings data needed upgrading. Your old configuration<br>has been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means Fileman module needs new configuration<br>data by default for usable functionality that your old<br>configuration simply lacks. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the hiccup in your configuration.<br>"
 msgstr ""
 
 #: src/modules/fileman/e_mod_main.c:453
-msgid ""
-"Your Fileman Module configuration is NEWER than Fileman Module version. This "
-"is very<br>strange. This should not happen unless you downgraded<br>the "
-"Fileman Module or copied the configuration from a place where<br>a newer "
-"version of the Fileman Module was running. This is bad and<br>as a "
-"precaution your configuration has been now restored to<br>defaults. Sorry "
-"for the inconvenience.<br>"
+msgid "Your Fileman Module configuration is NEWER than Fileman Module version. This is very<br>strange. This should not happen unless you downgraded<br>the Fileman Module or copied the configuration from a place where<br>a newer version of the Fileman Module was running. This is bad and<br>as a precaution your configuration has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr ""
 
 #: src/modules/fileman/e_mod_main.c:522
@@ -6714,9 +6572,8 @@ msgid "Behavior"
 msgstr "Συμπεριφορά"
 
 #: src/modules/fileman/e_mod_config.c:271
-#, fuzzy
 msgid "Show UDisks icons on desktop"
-msgstr "Εμφάνισε εικονίδια HAL στην επιφάνεια εργασίας"
+msgstr "Εμφάνισε εικονίδια UDisk στην επιφάνεια εργασίας"
 
 #: src/modules/fileman/e_mod_config.c:273
 msgid "Show HAL icons on desktop"
@@ -6738,7 +6595,8 @@ msgstr "Στον γονικό κατάλογο"
 msgid "Other application..."
 msgstr "Άλλη εφαρμογή..."
 
-#: src/modules/fileman/e_fwin.c:1497 src/modules/fileman/e_fwin.c:1823
+#: src/modules/fileman/e_fwin.c:1497
+#: src/modules/fileman/e_fwin.c:1823
 msgid "Open"
 msgstr "Άνοιγμα"
 
@@ -6862,15 +6720,16 @@ msgid "Available Gadgets"
 msgstr "Διαθέσιμα συστατικά"
 
 #: src/modules/gadman/e_mod_config.c:139
-#, fuzzy
 msgid "Mode"
-msgstr "Λειτουργίες"
+msgstr "Λειτουργία"
 
-#: src/modules/gadman/e_mod_config.c:144 src/modules/gadman/e_mod_config.c:176
+#: src/modules/gadman/e_mod_config.c:144
+#: src/modules/gadman/e_mod_config.c:176
 msgid "Custom Image"
 msgstr "Προσαρμοσμένη εικόνα"
 
-#: src/modules/gadman/e_mod_config.c:148 src/modules/gadman/e_mod_config.c:169
+#: src/modules/gadman/e_mod_config.c:148
+#: src/modules/gadman/e_mod_config.c:169
 msgid "Custom Color"
 msgstr "Προσαρμοσμένο χρώμα"
 
@@ -6882,16 +6741,18 @@ msgstr "Διαφάνεια"
 msgid "Background"
 msgstr "Φόντο"
 
-#: src/modules/gadman/e_mod_config.c:163 src/modules/gadman/e_mod_main.c:27
-#: src/modules/gadman/e_mod_main.c:77 src/modules/gadman/e_mod_main.c:84
-#: src/modules/gadman/e_mod_main.c:120 src/modules/gadman/e_mod_main.c:149
+#: src/modules/gadman/e_mod_config.c:163
+#: src/modules/gadman/e_mod_main.c:27
+#: src/modules/gadman/e_mod_main.c:77
+#: src/modules/gadman/e_mod_main.c:84
+#: src/modules/gadman/e_mod_main.c:120
+#: src/modules/gadman/e_mod_main.c:149
 msgid "Gadgets"
 msgstr "Συστατικά"
 
 #: src/modules/gadman/e_mod_config.c:235
-#, fuzzy
 msgid "Background Options"
-msgstr "Αλλαγή ταπετσαρία"
+msgstr "Επιλογές ταπετσαρίας"
 
 #: src/modules/gadman/e_mod_gadman.c:740
 msgid "Free"
@@ -6909,58 +6770,69 @@ msgstr ""
 msgid "Add other gadgets"
 msgstr "Προσθήκη άλλων συστατικών"
 
-#: src/modules/gadman/e_mod_main.c:84 src/modules/gadman/e_mod_main.c:120
+#: src/modules/gadman/e_mod_main.c:84
+#: src/modules/gadman/e_mod_main.c:120
 msgid "Show/hide gadgets"
 msgstr "Εμφάνιση/απόκρυψη συστατικών"
 
-#: src/modules/winlist/e_mod_main.c:33 src/modules/winlist/e_mod_main.c:35
-#: src/modules/winlist/e_mod_main.c:37 src/modules/winlist/e_mod_main.c:40
-#: src/modules/winlist/e_mod_main.c:43 src/modules/winlist/e_mod_main.c:45
-#: src/modules/winlist/e_mod_main.c:47 src/modules/winlist/e_mod_main.c:49
-#: src/modules/winlist/e_mod_main.c:62 src/modules/winlist/e_mod_main.c:63
-#: src/modules/winlist/e_mod_main.c:64 src/modules/winlist/e_mod_main.c:66
-#: src/modules/winlist/e_mod_main.c:68 src/modules/winlist/e_mod_main.c:69
-#: src/modules/winlist/e_mod_main.c:70 src/modules/winlist/e_mod_main.c:71
+#: src/modules/winlist/e_mod_main.c:33
+#: src/modules/winlist/e_mod_main.c:35
+#: src/modules/winlist/e_mod_main.c:37
+#: src/modules/winlist/e_mod_main.c:40
+#: src/modules/winlist/e_mod_main.c:43
+#: src/modules/winlist/e_mod_main.c:45
+#: src/modules/winlist/e_mod_main.c:47
+#: src/modules/winlist/e_mod_main.c:49
+#: src/modules/winlist/e_mod_main.c:62
+#: src/modules/winlist/e_mod_main.c:63
+#: src/modules/winlist/e_mod_main.c:64
+#: src/modules/winlist/e_mod_main.c:66
+#: src/modules/winlist/e_mod_main.c:68
+#: src/modules/winlist/e_mod_main.c:69
+#: src/modules/winlist/e_mod_main.c:70
+#: src/modules/winlist/e_mod_main.c:71
 msgid "Window : List"
 msgstr "Παράθυρο : Λίστα"
 
-#: src/modules/winlist/e_mod_main.c:33 src/modules/winlist/e_mod_main.c:63
+#: src/modules/winlist/e_mod_main.c:33
+#: src/modules/winlist/e_mod_main.c:63
 msgid "Next Window"
 msgstr "Επόμενο παράθυρο"
 
-#: src/modules/winlist/e_mod_main.c:35 src/modules/winlist/e_mod_main.c:62
+#: src/modules/winlist/e_mod_main.c:35
+#: src/modules/winlist/e_mod_main.c:62
 msgid "Previous Window"
 msgstr "Προηγούμενο παράθυρο"
 
-#: src/modules/winlist/e_mod_main.c:38 src/modules/winlist/e_mod_main.c:67
-#, fuzzy
+#: src/modules/winlist/e_mod_main.c:38
+#: src/modules/winlist/e_mod_main.c:67
 msgid "Next window of same class"
-msgstr "Όνομα και κλάση παραθύρου"
+msgstr "Επόμενο παράθυρο ίδιας κλάσης"
 
-#: src/modules/winlist/e_mod_main.c:41 src/modules/winlist/e_mod_main.c:65
-#, fuzzy
+#: src/modules/winlist/e_mod_main.c:41
+#: src/modules/winlist/e_mod_main.c:65
 msgid "Previous window of same class"
-msgstr "Προηγούμενο παράθυρο"
+msgstr "Προηγούμενο παράθυρο ίδιας κλάσης"
 
-#: src/modules/winlist/e_mod_main.c:43 src/modules/winlist/e_mod_main.c:68
-#, fuzzy
+#: src/modules/winlist/e_mod_main.c:43
+#: src/modules/winlist/e_mod_main.c:68
 msgid "Window on the Left"
-msgstr "Εστίαση του παραθύρου κάτω από το ποντίκι"
+msgstr "Παράθυρο στα αριστερά"
 
-#: src/modules/winlist/e_mod_main.c:45 src/modules/winlist/e_mod_main.c:69
-#, fuzzy
+#: src/modules/winlist/e_mod_main.c:45
+#: src/modules/winlist/e_mod_main.c:69
 msgid "Window Down"
-msgstr "ID παραθύρου"
+msgstr "Παράθυρο κάτω"
 
-#: src/modules/winlist/e_mod_main.c:47 src/modules/winlist/e_mod_main.c:70
-#, fuzzy
+#: src/modules/winlist/e_mod_main.c:47
+#: src/modules/winlist/e_mod_main.c:70
 msgid "Window Up"
-msgstr "Τύπος παραθύρου"
+msgstr "Παράθυρο πάνω"
 
-#: src/modules/winlist/e_mod_main.c:49 src/modules/winlist/e_mod_main.c:71
-#, fuzzy
+#: src/modules/winlist/e_mod_main.c:49
+#: src/modules/winlist/e_mod_main.c:71
 msgid "Window on the Right"
-msgstr "Εστίαση του παραθύρου κάτω από το ποντίκι"
+msgstr "Παράθυρο στα δεξιά"
 
 #: src/modules/winlist/e_winlist.c:149
 msgid "Select a window"
@@ -6978,7 +6850,8 @@ msgstr "Επιλεγμένη πηγή μπάρας"
 msgid "Icon Labels"
 msgstr "Ετικέτα εικονιδίων"
 
-#: src/modules/ibar/e_mod_config.c:120 src/modules/ibox/e_mod_config.c:97
+#: src/modules/ibar/e_mod_config.c:120
+#: src/modules/ibox/e_mod_config.c:97
 msgid "Show Icon Label"
 msgstr "Εμφάνιση ετικέτας εικονιδίου"
 
@@ -7004,12 +6877,8 @@ msgstr "Εισαγωγή ενός ονόματος για αυτή τη νέα �
 
 #: src/modules/ibar/e_mod_config.c:179
 #, c-format
-msgid ""
-"You requested to delete \"%s\".<br><br>Are you sure you want to delete this "
-"bar source?"
-msgstr ""
-"Αιτήθηκε διαγραφή \"%s\".<br><br>Είστε σίγουροι για τη διαγραφή αυτή την "
-"πηγή μπάρας?"
+msgid "You requested to delete \"%s\".<br><br>Are you sure you want to delete this bar source?"
+msgstr "Αιτήθηκε διαγραφή \"%s\".<br><br>Είστε σίγουροι για τη διαγραφή αυτή την πηγή μπάρας?"
 
 #: src/modules/ibar/e_mod_config.c:183
 msgid "Are you sure you want to delete this bar source?"
@@ -7024,7 +6893,6 @@ msgid "Properties"
 msgstr "Ιδιότητες"
 
 #: src/modules/ibar/e_mod_main.c:813
-#, fuzzy
 msgid "Create new Icon"
 msgstr "Δημιουργία νέου εικονιδίου"
 
@@ -7076,15 +6944,18 @@ msgstr "IBox"
 msgid "Pager Settings"
 msgstr "Ρυθμίσεις διαχειριστή επιφανειών"
 
-#: src/modules/pager/e_mod_config.c:126 src/modules/pager/e_mod_config.c:178
+#: src/modules/pager/e_mod_config.c:126
+#: src/modules/pager/e_mod_config.c:178
 msgid "Flip desktop on mouse wheel"
 msgstr "Εναλλαγή επιφάνειας εργασίας με τη ροδέλα του ποντικιού"
 
-#: src/modules/pager/e_mod_config.c:129 src/modules/pager/e_mod_config.c:181
+#: src/modules/pager/e_mod_config.c:129
+#: src/modules/pager/e_mod_config.c:181
 msgid "Show desktop names"
 msgstr "Εμφάνιση ονομάτων επιαφανειών εργασίας"
 
-#: src/modules/pager/e_mod_config.c:135 src/modules/pager/e_mod_config.c:217
+#: src/modules/pager/e_mod_config.c:135
+#: src/modules/pager/e_mod_config.c:217
 msgid "Show popup on desktop change"
 msgstr "Εμφάνιση ειδοποίησης κατα την αλλαγή"
 
@@ -7096,7 +6967,8 @@ msgstr "Εμφάνιση ειδοποίησης για επείγοντα παρ
 msgid "Resistance to dragging"
 msgstr "Αντίσταση στο τράβηγμα"
 
-#: src/modules/pager/e_mod_config.c:186 src/modules/pager/e_mod_config.c:225
+#: src/modules/pager/e_mod_config.c:186
+#: src/modules/pager/e_mod_config.c:225
 #: src/modules/pager/e_mod_config.c:244
 #, c-format
 msgid "%.0f px"
@@ -7106,9 +6978,12 @@ msgstr "%.0f px"
 msgid "Select and Slide button"
 msgstr "Επιλογή και ολίσθηση κουμπιού"
 
-#: src/modules/pager/e_mod_config.c:193 src/modules/pager/e_mod_config.c:201
-#: src/modules/pager/e_mod_config.c:207 src/modules/pager/e_mod_config.c:324
-#: src/modules/pager/e_mod_config.c:329 src/modules/pager/e_mod_config.c:333
+#: src/modules/pager/e_mod_config.c:193
+#: src/modules/pager/e_mod_config.c:201
+#: src/modules/pager/e_mod_config.c:207
+#: src/modules/pager/e_mod_config.c:324
+#: src/modules/pager/e_mod_config.c:329
+#: src/modules/pager/e_mod_config.c:333
 #, c-format
 msgid "Click to set"
 msgstr "Κλικ για ορισμό"
@@ -7129,7 +7004,8 @@ msgstr "Ύψος πλαισίου ειδοποίησης"
 msgid "Popup speed"
 msgstr "Ταχύτητα ειδοποίησης"
 
-#: src/modules/pager/e_mod_config.c:235 src/modules/pager/e_mod_config.c:264
+#: src/modules/pager/e_mod_config.c:235
+#: src/modules/pager/e_mod_config.c:264
 #, c-format
 msgid "%1.1f seconds"
 msgstr "%1.1f δευτερόλεπτα"
@@ -7153,11 +7029,11 @@ msgid "Urgent popup speed"
 msgstr "Ταχύτητα ειδοποίησης"
 
 #: src/modules/pager/e_mod_config.c:271
-#, fuzzy
 msgid "Urgent Windows"
-msgstr "Ρυθμίσεις επειγόντων παραθύρων"
+msgstr "Επείγοντα παράθυρα"
 
-#: src/modules/pager/e_mod_config.c:326 src/modules/pager/e_mod_config.c:331
+#: src/modules/pager/e_mod_config.c:326
+#: src/modules/pager/e_mod_config.c:331
 #: src/modules/pager/e_mod_config.c:335
 #, c-format
 msgid "Button %i"
@@ -7169,21 +7045,15 @@ msgid "Pager Button Grab"
 msgstr "Σύρσιμο κουμπιού του διαχειριστή επιφανειών"
 
 #: src/modules/pager/e_mod_config.c:360
-msgid ""
-"Please press a mouse button<br>Press <hilight>Escape</hilight> to abort."
-"<br>Or <hilight>Del</hilight> to reset the button."
+msgid "Please press a mouse button<br>Press <hilight>Escape</hilight> to abort.<br>Or <hilight>Del</hilight> to reset the button."
 msgstr ""
 
 #: src/modules/pager/e_mod_config.c:415
-#, fuzzy
 msgid "Attention"
 msgstr "Προσοχή"
 
 #: src/modules/pager/e_mod_config.c:416
-msgid ""
-"You cannot use the right mouse button in the<br>shelf for this as it is "
-"already taken by internal<br>code for context menus.<br>This button only "
-"works in the popup."
+msgid "You cannot use the right mouse button in the<br>shelf for this as it is already taken by internal<br>code for context menus.<br>This button only works in the popup."
 msgstr ""
 
 #: src/modules/pager/e_mod_main.c:2816
@@ -7191,28 +7061,34 @@ msgstr ""
 msgid "Show Pager Popup"
 msgstr "Εμφάνιση ειδοποίησης του διαχειριστή επιφανειών"
 
-#: src/modules/pager/e_mod_main.c:2823 src/modules/pager/e_mod_main.c:2866
+#: src/modules/pager/e_mod_main.c:2823
+#: src/modules/pager/e_mod_main.c:2866
 msgid "Popup Desk Right"
 msgstr ""
 
-#: src/modules/pager/e_mod_main.c:2825 src/modules/pager/e_mod_main.c:2867
+#: src/modules/pager/e_mod_main.c:2825
+#: src/modules/pager/e_mod_main.c:2867
 msgid "Popup Desk Left"
 msgstr ""
 
-#: src/modules/pager/e_mod_main.c:2827 src/modules/pager/e_mod_main.c:2868
+#: src/modules/pager/e_mod_main.c:2827
+#: src/modules/pager/e_mod_main.c:2868
 msgid "Popup Desk Up"
 msgstr ""
 
-#: src/modules/pager/e_mod_main.c:2829 src/modules/pager/e_mod_main.c:2869
+#: src/modules/pager/e_mod_main.c:2829
+#: src/modules/pager/e_mod_main.c:2869
 msgid "Popup Desk Down"
 msgstr ""
 
-#: src/modules/pager/e_mod_main.c:2831 src/modules/pager/e_mod_main.c:2870
+#: src/modules/pager/e_mod_main.c:2831
+#: src/modules/pager/e_mod_main.c:2870
 #, fuzzy
 msgid "Popup Desk Next"
 msgstr "Ταχύτητα ειδοποίησης"
 
-#: src/modules/pager/e_mod_main.c:2833 src/modules/pager/e_mod_main.c:2871
+#: src/modules/pager/e_mod_main.c:2833
+#: src/modules/pager/e_mod_main.c:2871
 msgid "Popup Desk Previous"
 msgstr ""
 
@@ -7292,7 +7168,8 @@ msgstr "Επόμενο"
 msgid "Welcome to Enlightenment"
 msgstr "Καλώς ορίσατε στο Enlightenment"
 
-#: src/modules/wizard/page_010.c:140 src/modules/wizard/page_020.c:56
+#: src/modules/wizard/page_010.c:140
+#: src/modules/wizard/page_020.c:56
 msgid "Select one"
 msgstr "Επιλογή ενός"
 
@@ -7301,10 +7178,7 @@ msgid "Profile"
 msgstr "Προφίλ"
 
 #: src/modules/wizard/page_030.c:88
-msgid ""
-"No menu files were<br>found on your system.<br>Please see "
-"the<br>documentation on<br>www.enlightenment.org<br>for more details "
-"on<br>how to get your<br>application menus<br>working."
+msgid "No menu files were<br>found on your system.<br>Please see the<br>documentation on<br>www.enlightenment.org<br>for more details on<br>how to get your<br>application menus<br>working."
 msgstr ""
 
 #: src/modules/wizard/page_030.c:104
@@ -7340,9 +7214,8 @@ msgid "Click to focus windows"
 msgstr "Κλικ για εστίαση παραθύρων"
 
 #: src/modules/wizard/page_060.c:32
-#, fuzzy
 msgid "Mouse over focuses windows"
-msgstr "Περνώντας το ποντίκι πάνω από το παράθυρο γίνεται εστίαση"
+msgstr "Εστίαση απλά με μετακίνηση του ποντικιού"
 
 #: src/modules/wizard/page_070.c:203
 msgid "Select Icons to Add"
@@ -7372,7 +7245,8 @@ msgstr "Έξοδος"
 msgid "Cards"
 msgstr "Κάρτες"
 
-#: src/modules/mixer/app_mixer.c:369 src/modules/mixer/conf_gadget.c:270
+#: src/modules/mixer/app_mixer.c:369
+#: src/modules/mixer/conf_gadget.c:270
 msgid "Channels"
 msgstr "Κανάλια"
 
@@ -7396,11 +7270,13 @@ msgstr "Αριστερά"
 msgid "Right:"
 msgstr "Δεξιά:"
 
-#: src/modules/mixer/app_mixer.c:401 src/modules/mixer/e_mod_main.c:576
+#: src/modules/mixer/app_mixer.c:401
+#: src/modules/mixer/e_mod_main.c:576
 msgid "Mute"
 msgstr "Σίγαση"
 
-#: src/modules/mixer/app_mixer.c:404 src/modules/mixer/conf_gadget.c:190
+#: src/modules/mixer/app_mixer.c:404
+#: src/modules/mixer/conf_gadget.c:190
 msgid "Lock Sliders"
 msgstr "Ολισθητές κλειδώματος"
 
@@ -7436,22 +7312,24 @@ msgstr "Ρυθμίσεις αρθρώματος μείκτη"
 msgid "Mixer Settings Updated"
 msgstr "Ρυθμίσεις μείκτη ανανεώθηκαν"
 
-#: src/modules/mixer/e_mod_main.c:586 src/modules/connman/e_mod_main.c:1165
+#: src/modules/mixer/e_mod_main.c:586
+#: src/modules/connman/e_mod_main.c:1165
 msgid "Controls"
 msgstr "Έλεγχοι"
 
 #: src/modules/mixer/e_mod_main.c:1127
-msgid ""
-"Mixer Module Settings data changed.<br>Your old configuration has been "
-"replaced with new default.<br>Sorry for the inconvenience."
+msgid "Mixer Module Settings data changed.<br>Your old configuration has been replaced with new default.<br>Sorry for the inconvenience."
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:83 src/modules/connman/e_mod_main.c:110
-#: src/modules/connman/e_mod_main.c:970 src/modules/connman/e_mod_main.c:1701
+#: src/modules/connman/e_mod_main.c:83
+#: src/modules/connman/e_mod_main.c:110
+#: src/modules/connman/e_mod_main.c:970
+#: src/modules/connman/e_mod_main.c:1701
 msgid "Cannot toggle system's offline mode."
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:94 src/modules/connman/e_mod_main.c:962
+#: src/modules/connman/e_mod_main.c:94
+#: src/modules/connman/e_mod_main.c:962
 msgid "ConnMan Daemon is not running."
 msgstr "Ο ConnMan daemon δεν εκτελείται."
 
@@ -7465,12 +7343,8 @@ msgstr "O ConnMan χρειάζεται την κωδική σας φράση"
 
 #: src/modules/connman/e_mod_main.c:241
 #, c-format
-msgid ""
-"Connection Manager needs your passphrase for <br>the service <hilight>%s</"
-"hilight>"
-msgstr ""
-"Ο διαχειριστής συνδέσεων σας χρειάζεται την κωδική λέξη για <br>την υπηρεσία "
-"<hilight>%s</hilight>"
+msgid "Connection Manager needs your passphrase for <br>the service <hilight>%s</hilight>"
+msgstr "Ο διαχειριστής συνδέσεων σας χρειάζεται την κωδική λέξη για <br>την υπηρεσία <hilight>%s</hilight>"
 
 #: src/modules/connman/e_mod_main.c:265
 msgid "Show passphrase as clear text"
@@ -7480,16 +7354,19 @@ msgstr "Εμφάνιση κωδικής φράσης ως καθαρό κείμ�
 msgid "Ok"
 msgstr "Οκ"
 
-#: src/modules/connman/e_mod_main.c:525 src/modules/connman/e_mod_main.c:538
+#: src/modules/connman/e_mod_main.c:525
+#: src/modules/connman/e_mod_main.c:538
 msgid "Disconnect from network service."
 msgstr "Αποσύνδεση από την υπηρεσία δικτύου."
 
-#: src/modules/connman/e_mod_main.c:568 src/modules/connman/e_mod_main.c:627
+#: src/modules/connman/e_mod_main.c:568
+#: src/modules/connman/e_mod_main.c:627
 #: src/modules/connman/e_mod_main.c:651
 msgid "Service does not exist anymore"
 msgstr "Η υπηρεσία δεν υπάρχει πλέον"
 
-#: src/modules/connman/e_mod_main.c:576 src/modules/connman/e_mod_main.c:581
+#: src/modules/connman/e_mod_main.c:576
+#: src/modules/connman/e_mod_main.c:581
 #: src/modules/connman/e_mod_main.c:608
 msgid "Connect to network service."
 msgstr "Σύνδεση σε υπηρεσία δικτύου."
@@ -7522,7 +7399,8 @@ msgstr "Χωρίς σύνδεση"
 msgid "Not connected"
 msgstr "Αποσυνδεμένο"
 
-#: src/modules/connman/e_mod_main.c:1372 src/modules/connman/e_mod_main.c:1778
+#: src/modules/connman/e_mod_main.c:1372
+#: src/modules/connman/e_mod_main.c:1778
 msgid "disconnect"
 msgstr "αποσύνδεση"
 
@@ -7567,9 +7445,8 @@ msgid "enabled"
 msgstr "Ενεργοποιημένο"
 
 #: src/modules/connman/e_mod_main.c:1781
-#, fuzzy
 msgid "available"
-msgstr "Γέμισμα διαθέσιμου χώρου"
+msgstr "διαθέσιμο"
 
 #: src/modules/connman/e_mod_main.c:1782
 msgid "connected"
