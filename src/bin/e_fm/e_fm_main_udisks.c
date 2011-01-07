@@ -409,7 +409,14 @@ _e_fm_main_udisks_cb_vol_prop(E_Volume      *v,
    /* skip volumes that aren't filesystems */
    str = e_ukit_property_string_get(ret, "IdUsage", &err);
    if (err || !str) goto error;
-   if (strcmp(str, "filesystem")) goto error;
+   if (strcmp(str, "filesystem"))
+     {
+        if (strcmp(str, "crypto"))
+          v->encrypted = e_ukit_property_bool_get(ret, "DeviceIsLuks", &err);
+
+        if (!v->encrypted)
+          goto error;
+     }
    str = NULL;
 
    v->uuid = e_ukit_property_string_get(ret, "IdUuid", &err);
@@ -420,23 +427,27 @@ _e_fm_main_udisks_cb_vol_prop(E_Volume      *v,
    if (!v->label) v->label = e_ukit_property_string_get(ret, "DeviceFile", &err); /* avoid having blank labels */
    v->label = eina_stringshare_add(v->label);
 
-   v->fstype = e_ukit_property_string_get(ret, "IdType", &err);
-   v->fstype = eina_stringshare_add(v->fstype);
+   if (!v->encrypted)
+     {
+        const Eina_List *l;   
 
-   v->size = e_ukit_property_uint64_get(ret, "DeviceSize", &err);
+        l = e_ukit_property_strlist_get(ret, "DeviceMountPaths", &err);
+        if (err) goto error;
+        if (l) v->mount_point = eina_stringshare_add(l->data);
 
-   v->mounted = e_ukit_property_bool_get(ret, "DeviceIsMounted", &err);
-   if (err) goto error;
+        v->fstype = e_ukit_property_string_get(ret, "IdType", &err);
+        v->fstype = eina_stringshare_add(v->fstype);
+
+        v->size = e_ukit_property_uint64_get(ret, "DeviceSize", &err);
+
+        v->mounted = e_ukit_property_bool_get(ret, "DeviceIsMounted", &err);
+        if (err) goto error;
+     }
+   else
+     v->unlocked = e_ukit_property_bool_get(ret, "DeviceIsLuksCleartext", &err);
 
    v->partition = e_ukit_property_bool_get(ret, "DeviceIsPartition", &err);
    if (err) goto error;
-
-   {
-      const Eina_List *l;   
-      l = e_ukit_property_strlist_get(ret, "DeviceMountPaths", &err);
-      if (err) goto error;
-      if (l) v->mount_point = eina_stringshare_add(l->data);
-   }
 
    if (v->partition)
      {
@@ -445,24 +456,39 @@ _e_fm_main_udisks_cb_vol_prop(E_Volume      *v,
         v->partition_label = eina_stringshare_add(v->partition_label);
      }
 
-   v->parent = e_ukit_property_string_get(ret, "PartitionSlave", &err);
-   if (!err)
+   if (v->unlocked)
      {
-        if (v->parent)
+        const char *enc;
+        E_Volume *venc;
+
+        enc = e_ukit_property_string_get(ret, "LuksCleartextSlave", &err);
+        venc = _e_fm_main_udisks_volume_find(enc);
+        v->parent = venc->parent;
+        v->storage = venc->storage;
+        v->storage->volumes = eina_list_append(v->storage->volumes, v);
+     }
+   else
+     {
+        v->parent = e_ukit_property_string_get(ret, "PartitionSlave", &err);
+          
+        if (!err)
           {
-             s = e_storage_find(v->parent);
-             if (s)
+             if (v->parent)
                {
-                  v->storage = s;
-                  if (!eina_list_data_find_list(s->volumes, v))
-                    s->volumes = eina_list_append(s->volumes, v);
+                  s = e_storage_find(v->parent);
+                  if (s)
+                    {
+                       v->storage = s;
+                       if (!eina_list_data_find_list(s->volumes, v))
+                         s->volumes = eina_list_append(s->volumes, v);
+                    }
                }
-          }
-        else
-          {
-             v->storage = _e_fm_main_udisks_storage_add(v->udi); /* disk is both storage and volume */
-             if (v->storage) v->storage->volumes = eina_list_append(v->storage->volumes, v);
-             v->parent = v->udi;
+             else
+               {
+                  v->storage = _e_fm_main_udisks_storage_add(v->udi); /* disk is both storage and volume */
+                  if (v->storage) v->storage->volumes = eina_list_append(v->storage->volumes, v);
+                  v->parent = v->udi;
+               }
           }
      }
    v->parent = eina_stringshare_add(v->parent);

@@ -89,6 +89,9 @@ struct _E_Volume
    Ecore_Timer *guard;                 // operation guard timer
    E_Volume_Op_Type optype;
    Efm_Mode efm_mode;
+
+   Eina_Bool encrypted;
+   Eina_Bool unlocked;
    
 #if @DBUS_MOUNT_CONFIG@
    DBusPendingCall *op;                // d-bus call handle
