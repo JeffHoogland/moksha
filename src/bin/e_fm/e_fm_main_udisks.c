@@ -404,7 +404,7 @@ _e_fm_main_udisks_cb_vol_prop(E_Volume      *v,
         goto error;
      }
 
-   if (!e_ukit_property_bool_get(ret, "DeviceIsRemovable", &err) || err) goto error;
+   if (e_ukit_property_bool_get(ret, "DeviceIsSystemInternal", &err) || err) goto error;
 
    /* skip volumes with volume.ignore set */
    if (e_ukit_property_bool_get(ret, "DeviceIsMediaChangeDetectionInhibited", &err) || err)
