@@ -833,7 +833,7 @@ _e_fm2_cb_mount_ok(void *data)
         _e_fm2_dir_load_props(sd);
      }
 
-   if (strcmp(sd->mount->mount_point, sd->realpath))
+   if ((sd->realpath) && (strcmp(sd->mount->mount_point, sd->realpath)))
      {
         e_fm2_path_set(sd->obj, "/", sd->mount->mount_point);
      }
@@ -2800,7 +2800,7 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 
               evdir = ecore_file_dir_get(path);
               if ((evdir) && (sd->id == e->ref_to) &&
-                  ((!strcmp(evdir, "") || (!strcmp(dir, evdir)))))
+                  ((!strcmp(evdir, "") || ((dir) && (!strcmp(dir, evdir))))))
                 {
 //                       printf(" ch/add response = %i\n", e->response);
                      if (e->response == 0)  /*live changes*/
@@ -3265,7 +3265,7 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
                {
                   if ((!v->mount_point) && (v->efm_mode == EFM_MODE_USING_HAL_MOUNT))
                     v->mount_point = e_fm2_device_volume_mountpoint_get(v);
-                  else return NULL;
+                  else if (!v->mount_point) return NULL;
 
                   if (PRT("%s/%s", v->mount_point, path) >= sizeof(buf))
                     return NULL;
@@ -9897,7 +9897,7 @@ _e_fm2_volume_icon_update(E_Volume *v)
             (eina_list_data_find(_e_fm2_list_remove, o))) continue;
 
         rp = e_fm2_real_path_get(o);
-        if (strcmp(rp, fav) && strcmp(rp, desk)) continue;
+        if ((rp) && (strcmp(rp, fav)) && (strcmp(rp, desk))) continue;
 
         ic = _e_fm2_icon_find(o, file);
         if (ic)
