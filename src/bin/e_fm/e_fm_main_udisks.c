@@ -274,8 +274,8 @@ _e_fm_main_udisks_cb_dev_del(void *data   __UNUSED__,
         if (v->optype == E_VOLUME_OP_TYPE_EJECT)
           _e_fm_main_udisks_cb_vol_ejected(v, msg, &err);  
      }
-   _e_fm_main_udisks_storage_del(udi);
    _e_fm_main_udisks_volume_del(udi);
+   _e_fm_main_udisks_storage_del(udi);
 }
 
 static void
@@ -316,6 +316,7 @@ _e_fm_main_udisks_cb_store_prop(E_Storage *s,
                                 E_Ukit_Properties *ret,
                                 DBusError *error)
 {
+   const char *str;
    int err = 0;
 
    if (!ret) goto error;
@@ -348,8 +349,17 @@ _e_fm_main_udisks_cb_store_prop(E_Storage *s,
    s->serial = eina_stringshare_add(s->serial);
 
    s->removable = e_ukit_property_bool_get(ret, "DeviceIsRemovable", &err);
-
-   if (!s->removable) goto error; /* only track removable media */
+   s->system_internal = e_ukit_property_bool_get(ret, "DeviceIsSystemInternal", &err);
+   if (s->system_internal) goto error; /* only track non internal */
+   str = e_ukit_property_string_get(ret, "IdUsage", &err);
+   /* if not of filesystem usage type - skip it  - testing on ubuntu 10.04 */
+   if (!((str) && (!strcmp(str, "filesystem")))) goto error;
+   /* force it to be removable if it passed the above tests */
+   s->removable = EINA_TRUE;
+   
+// ubuntu 10.04 - only dvd is reported as removable. usb storage and mmcblk
+// is not - but its not "system internal".   
+//   if (!s->removable) goto error; /* only track removable media */
    s->media_available = e_ukit_property_bool_get(ret, "DeviceIsMediaAvailable", &err);
    s->media_size = e_ukit_property_uint64_get(ret, "DeviceSize", &err);
 
@@ -904,8 +914,13 @@ _e_fm_main_udisks_volume_mount(E_Volume *v)
      }
 
    v->guard = ecore_timer_add(E_FM_MOUNT_TIMEOUT, (Ecore_Task_Cb)_e_fm_main_udisks_vol_mount_timeout, v);
+// on ubuntu 10.04 if we request mount with opt - it fails. unknown why right
+// now, but lets try without and maybe we need to try 2 mounts - one with
+// opts and one without?   
+//   v->op = e_udisks_volume_mount(_e_fm_main_udisks_conn, v->udi,
+//                                        v->fstype, opt);
    v->op = e_udisks_volume_mount(_e_fm_main_udisks_conn, v->udi,
-                                        v->fstype, opt);
+                                        v->fstype, NULL);
    eina_list_free(opt);
    v->optype = E_VOLUME_OP_TYPE_MOUNT;
 }
@@ -955,7 +970,7 @@ _e_fm_main_udisks_storage_del(const char *udi)
    if (!s) return;
    if (s->validated)
      {
-        //	printf("--STO %s\n", s->udi);
+//        printf("--STO %s\n", s->udi);
           ecore_ipc_server_send(_e_fm_ipc_server,
                                 6 /*E_IPC_DOMAIN_FM*/,
                                 E_FM_OP_STORAGE_DEL,
