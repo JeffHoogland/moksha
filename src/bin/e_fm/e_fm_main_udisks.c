@@ -429,6 +429,7 @@ _e_fm_main_udisks_cb_vol_prop(E_Volume      *v,
 
    v->label = e_ukit_property_string_get(ret, "IdLabel", &err);
    if (!v->label) v->label = e_ukit_property_string_get(ret, "DeviceFile", &err); /* avoid having blank labels */
+   if (!v->label) v->label = v->uuid; /* last resort */
    v->label = eina_stringshare_add(v->label);
 
    if (!v->encrypted)
