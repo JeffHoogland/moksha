@@ -44,6 +44,7 @@ struct _E_Storage
 
    Eina_Bool removable;
    Eina_Bool media_available;
+   Eina_Bool system_internal;
    unsigned long long media_size;
 
    Eina_Bool requires_eject;
