@@ -421,12 +421,8 @@ e_fm2_device_mount_add(E_Volume   *v,
    E_Fm2_Mount *m;
 
    v->mounted = EINA_TRUE;
-   if (mountpoint && (*mountpoint != 0))
-     {
-        if (v->mount_point)
-          eina_stringshare_del(v->mount_point);
-        v->mount_point = eina_stringshare_add(mountpoint);
-     }
+   if (mountpoint && (mountpoint[0]))
+     eina_stringshare_replace(&v->mount_point, mountpoint);
 
    EINA_LIST_FOREACH(v->mounts, l, m)
      _e_fm2_device_mount_ok(m);

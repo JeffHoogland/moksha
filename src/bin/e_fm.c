@@ -3000,10 +3000,11 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
         if ((e->data) && (e->size > 1))
           {
              E_Volume *v;
-             char *udi, *mountpoint;
+             char *udi, *mountpoint = NULL;
 
              udi = e->data;
-             mountpoint = udi + strlen(udi) + 1;
+             if ((unsigned int)e->size != (strlen(udi) + 1))
+               mountpoint = udi + strlen(udi) + 1;
              v = e_fm2_device_volume_find(udi);
              if (v)
                {
@@ -3016,7 +3017,7 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 
                        a = e_action_find("fileman");
                        m = e_manager_list();
-                       if (a && a->func.go && m && eina_list_data_get(m))
+                       if (a && a->func.go && m && eina_list_data_get(m) && mountpoint)
                          a->func.go(E_OBJECT(eina_list_data_get(m)), mountpoint);
                     }
                }
