@@ -329,9 +329,13 @@ _e_fm_main_udisks_cb_store_prop(E_Storage *s,
    s->bus = e_ukit_property_string_get(ret, "DriveConnectionInterface", &err);
    if (err) goto error;
    s->bus = eina_stringshare_add(s->bus);
-   s->drive_type = e_ukit_property_string_get(ret, "DriveMediaCompatibility", &err);
-   if (err) goto error;
-   s->drive_type = eina_stringshare_add(s->drive_type);
+   {
+      const Eina_List *l;
+
+      l = e_ukit_property_strlist_get(ret, "DriveMediaCompatibility", &err);
+      if (err) goto error;
+      if (l) s->drive_type = eina_stringshare_add(l->data);
+   }
    s->model = e_ukit_property_string_get(ret, "DriveModel", &err);
    if (err) goto error;
    s->model = eina_stringshare_add(s->model);
