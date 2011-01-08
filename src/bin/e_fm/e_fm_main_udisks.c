@@ -571,6 +571,8 @@ _e_fm_main_udisks_vol_mount_timeout(E_Volume *v)
 
    v->guard = NULL;
    dbus_pending_call_cancel(v->op);
+   v->op = NULL;
+   v->optype = E_VOLUME_OP_TYPE_NONE;
    error.name = "org.enlightenment.fm2.MountTimeout";
    error.message = "Unable to mount the volume with specified time-out.";
    size = _e_fm_main_udisks_format_error_msg(&buf, v, &error);
@@ -607,6 +609,7 @@ _e_fm_main_udisks_cb_vol_mounted(E_Volume               *v,
    if (!v->mount_point) return; /* come back later */
 
    v->optype = E_VOLUME_OP_TYPE_NONE;
+   v->op = NULL;
    v->mounted = EINA_TRUE;
 //   printf("MOUNT: %s from %s\n", v->udi, v->mount_point);
    size = strlen(v->udi) + 1 + strlen(v->mount_point) + 1;
@@ -628,6 +631,8 @@ _e_fm_main_udisks_vol_unmount_timeout(E_Volume *v)
 
    v->guard = NULL;
    dbus_pending_call_cancel(v->op);
+   v->op = NULL;
+   v->optype = E_VOLUME_OP_TYPE_NONE;
    error.name = "org.enlightenment.fm2.UnmountTimeout";
    error.message = "Unable to unmount the volume with specified time-out.";
    size = _e_fm_main_udisks_format_error_msg(&buf, v, &error);
@@ -651,7 +656,11 @@ _e_fm_main_udisks_cb_vol_unmounted(E_Volume               *v,
         v->guard = NULL;
      }
 
-   if (v->optype != E_VOLUME_OP_TYPE_EJECT) v->optype = E_VOLUME_OP_TYPE_NONE;
+   if (v->optype != E_VOLUME_OP_TYPE_EJECT)
+     {
+        v->optype = E_VOLUME_OP_TYPE_NONE;
+        v->op = NULL;
+     }
    if (dbus_error_is_set(error))
      {
         size = _e_fm_main_udisks_format_error_msg(&buf, v, error);
@@ -683,6 +692,8 @@ _e_fm_main_udisks_vol_eject_timeout(E_Volume *v)
 
    v->guard = NULL;
    dbus_pending_call_cancel(v->op);
+   v->op = NULL;
+   v->optype = E_VOLUME_OP_TYPE_NONE;
    error.name = "org.enlightenment.fm2.EjectTimeout";
    error.message = "Unable to eject the media with specified time-out.";
    size = _e_fm_main_udisks_format_error_msg(&buf, v, &error);
@@ -732,6 +743,7 @@ _e_fm_main_udisks_cb_vol_ejected(E_Volume               *v,
      }
 
    v->optype = E_VOLUME_OP_TYPE_NONE;
+   v->op = NULL;
    if (dbus_error_is_set(error))
      {
         size = _e_fm_main_udisks_format_error_msg(&buf, v, error);
