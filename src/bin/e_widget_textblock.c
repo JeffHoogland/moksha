@@ -17,9 +17,9 @@ e_widget_textblock_add(Evas *evas)
 {
    Evas_Object *obj, *o;
    E_Widget_Data *wd;
-   
+
    obj = e_widget_add(evas);
-   
+
    e_widget_del_hook_set(obj, _e_wid_del_hook);
    e_widget_focus_hook_set(obj, _e_wid_focus_hook);
    wd = calloc(1, sizeof(E_Widget_Data));
@@ -37,10 +37,11 @@ e_widget_textblock_add(Evas *evas)
 			   "e/widgets/textblock");
    wd->o_textblock = o;
    evas_object_event_callback_add(wd->o_scrollframe, EVAS_CALLBACK_RESIZE, _e_wid_cb_scrollframe_resize, wd);
+   evas_object_event_callback_add(wd->o_textblock, EVAS_CALLBACK_RESIZE, _e_wid_cb_scrollframe_resize, wd);
    e_scrollframe_child_set(wd->o_scrollframe, o);
    e_widget_sub_object_add(obj, o);
    evas_object_show(o);
-		       
+
    evas_object_resize(obj, 32, 32);
    e_widget_size_min_set(obj, 32, 32);
    return obj;
@@ -69,7 +70,7 @@ e_widget_textblock_plain_set(Evas_Object *obj, const char *text)
 {
    char *markup;
    char *d;
-   const char *p; 
+   const char *p;
    int mlen;
 
    if (!text)
@@ -134,7 +135,7 @@ static void
 _e_wid_del_hook(Evas_Object *obj)
 {
    E_Widget_Data *wd;
-   
+
    wd = e_widget_data_get(obj);
    free(wd);
 }
@@ -143,7 +144,7 @@ static void
 _e_wid_focus_hook(Evas_Object *obj)
 {
    E_Widget_Data *wd;
-   
+
    wd = e_widget_data_get(obj);
    if (e_widget_focus_get(obj))
      {
@@ -162,7 +163,7 @@ _e_wid_cb_scrollframe_resize(void *data, Evas *e __UNUSED__, Evas_Object *obj __
 {
    E_Widget_Data *wd;
    Evas_Coord mw, mh, vw, vh;
-   
+
    wd = data;
    edje_object_size_min_calc(wd->o_textblock, &mw, &mh);
    e_scrollframe_child_viewport_size_get(wd->o_scrollframe, &vw, &vh);
@@ -170,7 +171,7 @@ _e_wid_cb_scrollframe_resize(void *data, Evas *e __UNUSED__, Evas_Object *obj __
    if (vh > mh) mh = vh;
    evas_object_resize(wd->o_textblock, mw, mh);
 }
-   
+
 static void
 _e_wid_focus_steal(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
