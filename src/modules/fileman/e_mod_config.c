@@ -281,7 +281,7 @@ _basic_create(E_Config_Dialog *cfd  __UNUSED__,
 #ifdef HAVE_EUKIT
    ob = e_widget_check_add(evas, _("Show UDisks icons on desktop"),
 #else
-   ob = e_widget_check_add(evas, _("Show HAL icons on desktop"),
+   ob = e_widget_check_add(evas, _("Show device icons on desktop"),
 #endif
                            &(cfdata->dbus.desktop));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
@@ -292,7 +292,7 @@ _basic_create(E_Config_Dialog *cfd  __UNUSED__,
                            &(cfdata->dbus.auto_open));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
 
-   e_widget_toolbook_page_append(otb, NULL, _("HAL"), o, 0, 0, 0, 0, 0.5, 0.0);
+   e_widget_toolbook_page_append(otb, NULL, _("Device"), o, 0, 0, 0, 0, 0.5, 0.0);
 
    e_widget_toolbook_page_show(otb, 0);
                                return otb;
