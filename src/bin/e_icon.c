@@ -60,10 +60,15 @@ EAPI Eina_Bool
 e_icon_file_set(Evas_Object *obj, const char *file)
 {
    E_Smart_Data *sd;
+   int len;
 
    if (!(sd = evas_object_smart_data_get(obj))) 
      return EINA_FALSE;
 
+   len = strlen(file);
+   if ((len > 4) && (!strcasecmp(file + len - 4, ".edj")))
+      return e_icon_file_edje_set(obj, file, "icon");
+   
    /* smart code here */
    _e_icon_obj_prepare(obj, sd);
    /* FIXME: 64x64 - unhappy about this. use icon size */
