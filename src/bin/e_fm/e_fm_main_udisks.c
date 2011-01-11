@@ -140,11 +140,7 @@ _e_fm_main_udisks_test(void *data       __UNUSED__,
    if ((error) && (dbus_error_is_set(error)))
      {
         dbus_error_free(error);
-        if (!_udisks_poll)
-          _udisks_poll = e_dbus_signal_handler_add(_e_fm_main_udisks_conn,
-                                                   E_DBUS_FDO_BUS, E_DBUS_FDO_PATH,
-                                                   E_DBUS_FDO_INTERFACE,
-                                                   "NameOwnerChanged", _e_fm_main_udisks_poll, NULL);
+
 #ifdef HAVE_EEZE_MOUNT
         _e_fm_main_eeze_init(); /* check for eeze while listening for udisks */
 #endif
@@ -928,12 +924,21 @@ _e_fm_main_udisks_volume_mount(E_Volume *v)
 void
 _e_fm_main_udisks_init(void)
 {
+   DBusMessage *msg;
+
    e_dbus_init();
    e_ukit_init();
    _e_fm_main_udisks_conn = e_dbus_bus_get(DBUS_BUS_SYSTEM);
-   /* previously, this assumed that if dbus was running, udisks was running. */
-   if (_e_fm_main_udisks_conn)
-     e_dbus_get_name_owner(_e_fm_main_udisks_conn, E_UDISKS_BUS, _e_fm_main_udisks_test, NULL);
+   if (!_e_fm_main_udisks_conn) return;
+   if (!_udisks_poll)
+     _udisks_poll = e_dbus_signal_handler_add(_e_fm_main_udisks_conn,
+                                              E_DBUS_FDO_BUS, E_DBUS_FDO_PATH,
+                                              E_DBUS_FDO_INTERFACE,
+                                              "NameOwnerChanged", _e_fm_main_udisks_poll, NULL);
+
+   msg = dbus_message_new_method_call(E_UDISKS_BUS, E_UDISKS_PATH, E_UDISKS_BUS, NULL);
+   e_dbus_method_call_send(_e_fm_main_udisks_conn, msg, NULL, (E_DBus_Callback_Func)_e_fm_main_udisks_test, NULL, -1, NULL);
+   dbus_message_unref(msg);
 }
 
 void
