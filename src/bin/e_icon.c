@@ -62,6 +62,7 @@ e_icon_file_set(Evas_Object *obj, const char *file)
    E_Smart_Data *sd;
    int len;
 
+   if (!file) return;
    if (!(sd = evas_object_smart_data_get(obj))) 
      return EINA_FALSE;
 
