@@ -936,8 +936,9 @@ _e_fm_main_udisks_init(void)
                                               E_DBUS_FDO_INTERFACE,
                                               "NameOwnerChanged", _e_fm_main_udisks_poll, NULL);
 
-   msg = dbus_message_new_method_call(E_UDISKS_BUS, E_UDISKS_PATH, E_UDISKS_BUS, NULL);
-   e_dbus_method_call_send(_e_fm_main_udisks_conn, msg, NULL, (E_DBus_Callback_Func)_e_fm_main_udisks_test, NULL, -1, NULL);
+   e_dbus_get_name_owner(_e_fm_main_udisks_conn, E_UDISKS_BUS, _e_fm_main_udisks_test, NULL); /* test for already running udisks */
+   msg = dbus_message_new_method_call(E_UDISKS_BUS, E_UDISKS_PATH, E_UDISKS_BUS, "suuuuuup");
+   e_dbus_method_call_send(_e_fm_main_udisks_conn, msg, NULL, (E_DBus_Callback_Func)_e_fm_main_udisks_test, NULL, -1, NULL); /* test for not running udisks */
    dbus_message_unref(msg);
 }
 
