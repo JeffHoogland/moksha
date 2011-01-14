@@ -281,9 +281,9 @@ _fill_actions(E_Config_Dialog_Data *cfdata)
         if ((strcmp(grp->act_grp, "Acpi")) &&
             (strcmp(grp->act_grp, "System")) &&
             (strcmp(grp->act_grp, "Launch"))) continue;
-        e_widget_ilist_header_append(cfdata->o_actions, NULL, grp->act_grp);
+        e_widget_ilist_header_append(cfdata->o_actions, NULL, _(grp->act_grp));
         EINA_LIST_FOREACH(grp->acts, ll, dsc)
-          e_widget_ilist_append(cfdata->o_actions, NULL, dsc->act_name,
+          e_widget_ilist_append(cfdata->o_actions, NULL, _(dsc->act_name),
                                 _cb_actions_changed, cfdata, dsc->act_cmd);
      }
 

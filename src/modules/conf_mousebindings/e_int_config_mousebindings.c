@@ -380,14 +380,14 @@ _fill_actions_list(E_Config_Dialog_Data *cfdata)
 
 	if (!actg->acts) continue;
 
-	e_widget_ilist_header_append(cfdata->gui.o_action_list, NULL, actg->act_grp);
+	e_widget_ilist_header_append(cfdata->gui.o_action_list, NULL, _(actg->act_grp));
 
 	for (l2 = actg->acts, a = 0; l2; l2 = l2->next, a++)
 	  {
 	     actd = l2->data;
 
 	     snprintf(buf, sizeof(buf), "%d %d", g, a);
-	     e_widget_ilist_append(cfdata->gui.o_action_list, NULL, actd->act_name,
+	     e_widget_ilist_append(cfdata->gui.o_action_list, NULL, _(actd->act_name),
 				   _action_change_cb, cfdata, buf);
 	  }
      }
