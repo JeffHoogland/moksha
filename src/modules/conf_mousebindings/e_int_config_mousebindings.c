@@ -1030,8 +1030,8 @@ _auto_apply_changes(E_Config_Dialog_Data *cfdata)
    
    if (action && *action) eina_stringshare_del(*action); 
    if (params && *params) eina_stringshare_del(*params); 
-   *action = NULL; 
-   *params = NULL;
+   if (action) *action = NULL; 
+   if (params) *params = NULL;
 
    if ((!cfdata->locals.action) || (!cfdata->locals.action[0])) return;
 
