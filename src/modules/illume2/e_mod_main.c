@@ -37,10 +37,27 @@ e_modapi_init(E_Module *m)
    _e_illume_mod_dir = eina_stringshare_add(m->dir);
 
    /* try to initialize the config subsystem */
-   if (!e_mod_illume_config_init()) goto err1;
+   if (!e_mod_illume_config_init()) 
+     {
+        /* clear module directory variable */
+        if (_e_illume_mod_dir) eina_stringshare_del(_e_illume_mod_dir);
+        _e_illume_mod_dir = NULL;
+
+        return NULL;
+     }
 
    /* try to initialize the policy subsystem */
-   if (!e_mod_policy_init()) goto err2;
+   if (!e_mod_policy_init()) 
+     {
+        /* shutdown the config subsystem */
+        e_mod_illume_config_shutdown();
+
+        /* clear module directory variable */
+        if (_e_illume_mod_dir) eina_stringshare_del(_e_illume_mod_dir);
+        _e_illume_mod_dir = NULL;
+
+        return NULL;
+     }
 
    /* initialize the keyboard subsystem */
    e_mod_kbd_init();
@@ -60,7 +77,25 @@ e_modapi_init(E_Module *m)
 
    /* allocate enough zones */
    zones = calloc(zcount, sizeof(Ecore_X_Window));
-   EINA_SAFETY_ON_NULL_GOTO(zones, err3);
+   if (!zones) 
+     {
+        /* free the keyboard */
+        E_FREE(_e_illume_kbd);
+
+        /* shutdown quickpanel & kbd sub-systems */
+        e_mod_quickpanel_shutdown();
+        e_mod_kbd_shutdown();
+
+        /* shutdown the config subsystem */
+        e_mod_illume_config_shutdown();
+
+        /* clear module directory variable */
+        if (_e_illume_mod_dir) eina_stringshare_del(_e_illume_mod_dir);
+        _e_illume_mod_dir = NULL;
+
+        return NULL;
+     }
+
    zcount = 0;
 
    /* loop the zones and create quickpanels for each one */
@@ -95,20 +130,6 @@ e_modapi_init(E_Module *m)
    free(zones);
 
    return m;
-err3:
-   E_FREE(_e_illume_kbd);
-   _e_illume_kbd = NULL;
-   e_mod_quickpanel_shutdown();
-   e_mod_kbd_shutdown();
-err2:
-   /* shutdown the config subsystem */
-   e_mod_illume_config_shutdown();
-err1:
-   /* clear module directory variable */
-   if (_e_illume_mod_dir) eina_stringshare_del(_e_illume_mod_dir);
-   _e_illume_mod_dir = NULL;
-
-   return NULL;
 }
 
 EAPI int 
