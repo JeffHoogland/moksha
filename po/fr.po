@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-01-11 09:59+0400\n"
-"PO-Revision-Date: 2011-01-11 11:51+0400\n"
+"POT-Creation-Date: 2011-01-16 06:23+0400\n"
+"PO-Revision-Date: 2011-01-16 08:54+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: French <pourunmondesansgourou@gmail.com>\n"
 "Language: fr\n"
@@ -565,6 +565,30 @@ msgstr "Envoyer le curseur à l'écran précédent"
 msgid "Send Mouse Forward/Back Screens..."
 msgstr "Envoyer le curseur … écrans plus loin"
 
+#: src/bin/e_actions.c:2843
+msgid "Move To Center"
+msgstr "Déplacer au centre"
+
+#: src/bin/e_actions.c:2847
+msgid "Move To..."
+msgstr "Déplacer vers …"
+
+#: src/bin/e_actions.c:2852
+msgid "Move By..."
+msgstr "Déplacer de …"
+
+#: src/bin/e_actions.c:2858
+msgid "Resize By..."
+msgstr "Redimensionner de …"
+
+#: src/bin/e_actions.c:2864
+msgid "Push in Direction..."
+msgstr "En direction de …"
+
+#: src/bin/e_actions.c:2870
+msgid "Drag Icon..."
+msgstr "Glisser l'icone …"
+
 #: src/bin/e_actions.c:2875
 #: src/bin/e_actions.c:2877
 #: src/bin/e_actions.c:2879
@@ -606,7 +630,7 @@ msgstr "Afficher la liste des fenêtres"
 
 #: src/bin/e_actions.c:2899
 msgid "Show Menu..."
-msgstr "Afficher le menu…"
+msgstr "Afficher le menu …"
 
 #: src/bin/e_actions.c:2906
 #: src/bin/e_actions.c:2911
@@ -1594,7 +1618,7 @@ msgid "Move to"
 msgstr "Déplacer vers"
 
 #: src/bin/e_gadcon.c:1393
-#: src/modules/gadman/e_mod_gadman.c:712
+#: src/modules/gadman/e_mod_gadman.c:720
 msgid "Begin move/resize"
 msgstr "Déplacer/Redimensionner"
 
@@ -1607,12 +1631,12 @@ msgid "Automatically scroll contents"
 msgstr "Défilement automatique du contenu"
 
 #: src/bin/e_gadcon.c:1417
-#: src/modules/gadman/e_mod_gadman.c:723
+#: src/modules/gadman/e_mod_gadman.c:731
 msgid "Plain"
 msgstr "En plein"
 
 #: src/bin/e_gadcon.c:1426
-#: src/modules/gadman/e_mod_gadman.c:731
+#: src/modules/gadman/e_mod_gadman.c:739
 msgid "Inset"
 msgstr "En creux"
 
@@ -1635,7 +1659,7 @@ msgstr "Aspect"
 #: src/bin/e_gadcon.c:1446
 #: src/bin/e_widget_config_list.c:66
 #: src/modules/conf_applications/e_int_config_apps.c:215
-#: src/modules/gadman/e_mod_gadman.c:807
+#: src/modules/gadman/e_mod_gadman.c:815
 #: src/modules/ibar/e_mod_main.c:797
 msgid "Remove"
 msgstr "Supprimer"
@@ -3915,7 +3939,7 @@ msgstr "Rendu des couleurs sur le texte."
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:601
 msgid "Colors depend on theme capabilities."
-msgstr "Les couleurs sont assujetties aux performances du thème."
+msgstr "Les possibilités offertes dépendent du thème."
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:840
 msgid "Window Manager"
@@ -4428,28 +4452,28 @@ msgstr "La séquence de raccourci que vous avez choisie est déjà utilisée<br>
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1312
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1331
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1363
-#: src/modules/gadman/e_mod_gadman.c:831
+#: src/modules/gadman/e_mod_gadman.c:839
 msgid "CTRL"
 msgstr "Ctrl"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1317
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1336
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1368
-#: src/modules/gadman/e_mod_gadman.c:836
+#: src/modules/gadman/e_mod_gadman.c:844
 msgid "ALT"
 msgstr "Alt"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1323
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1342
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1374
-#: src/modules/gadman/e_mod_gadman.c:842
+#: src/modules/gadman/e_mod_gadman.c:850
 msgid "SHIFT"
 msgstr "Majuscule"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1329
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1348
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1380
-#: src/modules/gadman/e_mod_gadman.c:848
+#: src/modules/gadman/e_mod_gadman.c:856
 msgid "WIN"
 msgstr "Logo"
 
@@ -5816,13 +5840,13 @@ msgstr "Remplir l'espace disponible"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:161
 #: src/modules/everything/evry_config.c:571
-#: src/modules/gadman/e_mod_gadman.c:751
+#: src/modules/gadman/e_mod_gadman.c:759
 msgid "Horizontal"
 msgstr "Horizontal(e)"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:163
 #: src/modules/everything/evry_config.c:564
-#: src/modules/gadman/e_mod_gadman.c:759
+#: src/modules/gadman/e_mod_gadman.c:767
 msgid "Vertical"
 msgstr "Vertical(e)"
 
@@ -6644,7 +6668,7 @@ msgid "Show Toolbar"
 msgstr "Montrer la barre d'outils"
 
 #: src/modules/fileman/e_mod_config.c:278
-#: src/modules/gadman/e_mod_gadman.c:795
+#: src/modules/gadman/e_mod_gadman.c:803
 msgid "Behavior"
 msgstr "Comportement"
 
@@ -6835,23 +6859,23 @@ msgstr "Gadgets"
 msgid "Background Options"
 msgstr "Options du fond d'écran"
 
-#: src/modules/gadman/e_mod_gadman.c:743
+#: src/modules/gadman/e_mod_gadman.c:751
 msgid "Free"
 msgstr "Libre"
 
-#: src/modules/gadman/e_mod_gadman.c:767
+#: src/modules/gadman/e_mod_gadman.c:775
 msgid "Appearance"
 msgstr "Apparence"
 
-#: src/modules/gadman/e_mod_gadman.c:775
+#: src/modules/gadman/e_mod_gadman.c:783
 msgid "Always on desktop"
 msgstr "Toujours sur le bureau"
 
-#: src/modules/gadman/e_mod_gadman.c:785
+#: src/modules/gadman/e_mod_gadman.c:793
 msgid "On top pressing"
 msgstr "Au-dessus en appuyant sur"
 
-#: src/modules/gadman/e_mod_gadman.c:816
+#: src/modules/gadman/e_mod_gadman.c:824
 msgid "Add other gadgets"
 msgstr "Ajouter un autre gadget"
 
