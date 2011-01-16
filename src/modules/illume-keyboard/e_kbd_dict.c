@@ -362,7 +362,11 @@ e_kbd_dict_save(E_Kbd_Dict *kd)
 	     int usage = 0;
 
 	     pn = _e_kbd_dict_line_next(kd, p);
-	     if (!pn) return;
+	     if (!pn)
+               {
+                  fclose(f);
+                  return;
+               }
 	     wd = _e_kbd_dict_line_parse(kd, p, &usage);
 	     if ((wd) && (strlen(wd) > 0))
 	       {
