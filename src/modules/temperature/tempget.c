@@ -125,6 +125,11 @@ init(void)
 		  sensor_type = SENSOR_TYPE_LINUX_INTELCORETEMP;
 		  sensor_name = strdup("dummy");
 	       }
+             else if (ecore_file_exists("/sys/devices/platform/thinkpad_hwmon/temp1_input"))
+               {
+                  sensor_type = SENSOR_TYPE_LINUX_THINKPAD;
+                  sensor_name = strdup("dummy");
+               }
 	     else
 	       {
 		  // try the i2c bus
@@ -216,6 +221,9 @@ init(void)
 	     break;
 	   case SENSOR_TYPE_LINUX_INTELCORETEMP:
 	     sensor_path = strdup("/sys/devices/platform/coretemp.0/temp1_input");
+	     break;
+	   case SENSOR_TYPE_LINUX_THINKPAD:
+	     sensor_path = strdup("/sys/devices/platform/thinkpad_hwmon/temp1_input");
 	     break;
 	   case SENSOR_TYPE_LINUX_I2C:
 	     therms = ecore_file_ls("/sys/bus/i2c/devices");
@@ -330,6 +338,7 @@ check(void)
 	break;
       case SENSOR_TYPE_LINUX_INTELCORETEMP:
       case SENSOR_TYPE_LINUX_I2C:
+      case SENSOR_TYPE_LINUX_THINKPAD:
 	f = fopen(sensor_path, "r");
 	if (f)
 	  {
