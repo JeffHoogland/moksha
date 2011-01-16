@@ -11,7 +11,7 @@
       if (act) act->func.go = _e_actions_act_##name##_go; \
    }
 #define ACT_FN_GO(act, use) \
-   static void _e_actions_act_##act##_go(E_Object *obj, const char *params use)
+   static void _e_actions_act_##act##_go(E_Object *obj __UNUSED__, const char *params use)
 
 #define ACT_GO_MOUSE(name) \
    { \
@@ -19,7 +19,7 @@
       if (act) act->func.go_mouse = _e_actions_act_##name##_go_mouse; \
    }
 #define ACT_FN_GO_MOUSE(act, use) \
-   static void _e_actions_act_##act##_go_mouse(E_Object *obj, const char *params use, Ecore_Event_Mouse_Button *ev)
+   static void _e_actions_act_##act##_go_mouse(E_Object *obj __UNUSED__, const char *params use, Ecore_Event_Mouse_Button *ev __UNUSED__)
 
 #define ACT_GO_WHEEL(name) \
    { \
@@ -27,7 +27,7 @@
       if (act) act->func.go_wheel = _e_actions_act_##name##_go_wheel; \
    }
 #define ACT_FN_GO_WHEEL(act, use) \
-   static void _e_actions_act_##act##_go_wheel(E_Object *obj, const char *params use, Ecore_Event_Mouse_Wheel *ev)
+   static void _e_actions_act_##act##_go_wheel(E_Object *obj __UNUSED__, const char *params use, Ecore_Event_Mouse_Wheel *ev __UNUSED__)
 
 #define ACT_GO_EDGE(name) \
    { \
@@ -35,7 +35,7 @@
       if (act) act->func.go_edge = _e_actions_act_##name##_go_edge; \
    }
 #define ACT_FN_GO_EDGE(act, use) \
-   static void _e_actions_act_##act##_go_edge(E_Object *obj, const char *params use, E_Event_Zone_Edge *ev)
+   static void _e_actions_act_##act##_go_edge(E_Object *obj __UNUSED__, const char *params use, E_Event_Zone_Edge *ev __UNUSED__)
 
 #define ACT_GO_SIGNAL(name) \
    { \
@@ -43,7 +43,7 @@
       if (act) act->func.go_signal = _e_actions_act_##name##_go_signal; \
    }
 #define ACT_FN_GO_SIGNAL(act, use) \
-   static void _e_actions_act_##act##_go_signal(E_Object *obj, const char *params use, const char *sig, const char *src)
+   static void _e_actions_act_##act##_go_signal(E_Object *obj __UNUSED__, const char *params use, const char *sig, const char *src)
 
 #define ACT_GO_KEY(name) \
    { \
@@ -51,7 +51,7 @@
       if (act) act->func.go_key = _e_actions_act_##name##_go_key; \
    }
 #define ACT_FN_GO_KEY(act, use) \
-   static void _e_actions_act_##act##_go_key(E_Object *obj, const char *params use, Ecore_Event_Key *ev)
+   static void _e_actions_act_##act##_go_key(E_Object *obj __UNUSED__, const char *params use, Ecore_Event_Key *ev __UNUSED__)
 
 #define ACT_END(name) \
    { \
@@ -59,7 +59,7 @@
       if (act) act->func.end = _e_actions_act_##name##_end; \
    }
 #define ACT_FN_END(act, use) \
-   static void _e_actions_act_##act##_end(E_Object *obj, const char *params use)
+   static void _e_actions_act_##act##_end(E_Object *obj __UNUSED__, const char *params use)
 
 #define ACT_END_MOUSE(name) \
    { \
@@ -67,7 +67,7 @@
       if (act) act->func.end_mouse = _e_actions_act_##name##_end_mouse; \
    }
 #define ACT_FN_END_MOUSE(act, use) \
-   static void _e_actions_act_##act##_end_mouse(E_Object *obj, const char *params use, Ecore_Event_Mouse_Button *ev)
+   static void _e_actions_act_##act##_end_mouse(E_Object *obj __UNUSED__, const char *params use, Ecore_Event_Mouse_Button *ev __UNUSED__)
 
 #define ACT_END_KEY(name) \
    { \
@@ -75,7 +75,7 @@
       if (act) act->func.end_key = _e_actions_act_##name##_end_key; \
    }
 #define ACT_FN_END_KEY(act, use) \
-   static void _e_actions_act_##act##_end_key(E_Object *obj, const char *params use, Ecore_Event_Key *ev)
+   static void _e_actions_act_##act##_end_key(E_Object *obj __UNUSED__, const char *params use, Ecore_Event_Key *ev __UNUSED__)
 
 #define ACT_GO_ACPI(name) \
    { \
@@ -83,7 +83,7 @@
       if (act) act->func.go_acpi = _e_actions_act_##name##_go_acpi; \
    }
 #define ACT_FN_GO_ACPI(act, use) \
-   static void _e_actions_act_##act##_go_acpi(E_Object *obj, const char *params use, E_Event_Acpi *ev)
+   static void _e_actions_act_##act##_go_acpi(E_Object *obj __UNUSED__, const char *params use, E_Event_Acpi *ev __UNUSED__)
 
 /* local subsystem functions */
 static void _e_action_free(E_Action *act);
