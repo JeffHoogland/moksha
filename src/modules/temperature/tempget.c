@@ -318,12 +318,12 @@ check(void)
 	if (f)
 	  {
 	     fgets(buf, sizeof(buf), f);
+	     fclose(f);
              buf[sizeof(buf) - 1] = 0;
 	     if (sscanf(buf, "%i", &temp) == 1)
 	       ret = 1;
 	     else
 	       goto error;
-	     fclose(f);
 	  }
 	else
 	  goto error;
