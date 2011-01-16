@@ -540,7 +540,7 @@ _e_fm_main_udisks_cb_vol_prop(E_Volume      *v,
    return;
 
 error:
-   _e_fm_main_udisks_volume_del(v->udi);
+   if (v) _e_fm_main_udisks_volume_del(v->udi);
    return;
 }
 
