@@ -376,7 +376,7 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
         E_Desk *desk;
         Eina_List *l;
         E_Config_Shelf_Desk *sd;
-        int show;
+        int show = 0;
 
         desk = e_desk_current_get(cfdata->es->zone);
         EINA_LIST_FOREACH(cfdata->escfg->desk_list, l, sd) 
