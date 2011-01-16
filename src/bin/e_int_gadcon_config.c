@@ -267,7 +267,7 @@ _cb_add(void *data, void *data2 __UNUSED__)
    E_Config_Dialog_Data *cfdata;
    const E_Ilist_Item *it;
    Eina_List *l;
-   int update;
+   int update = 0;
 
    if (!(cfdata = data)) return;
    EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->o_list), l, it) 
@@ -307,7 +307,7 @@ _cb_del(void *data, void *data2 __UNUSED__)
    E_Config_Dialog_Data *cfdata;
    const E_Ilist_Item *it;
    Eina_List *l;
-   int update;
+   int update = 0;
 
    if (!(cfdata = data)) return;
    EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->o_list), l, it) 

@@ -255,7 +255,7 @@ static int
 _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    E_Config_Shelf_Desk *sd;
-   int restart;
+   int restart = 0;
 
    if (!cfdata->escfg->style) 
      {

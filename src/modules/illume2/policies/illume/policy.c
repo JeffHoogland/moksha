@@ -835,7 +835,7 @@ _policy_zone_layout_dialog(E_Border *bd, E_Illume_Config_Zone *cz)
 static void 
 _policy_zone_layout_splash(E_Border *bd, E_Illume_Config_Zone *cz) 
 {
-   E_Border *parent;
+   E_Border *parent = NULL;
    int mw, mh, nx, ny;
 
    /* NB: This code is almost exactly the same as the dialog layout code 
