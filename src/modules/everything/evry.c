@@ -1039,7 +1039,7 @@ static Evry_Selector *
 _evry_selector_new(Evry_Window *win, int type)
 {
    Plugin_Config *pc;
-   Eina_List *l, *pcs;
+   Eina_List *l, *pcs = NULL;
    Evry_Selector *sel = E_NEW(Evry_Selector, 1);
    Evas_Object *o = NULL;
 
