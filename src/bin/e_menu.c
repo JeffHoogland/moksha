@@ -619,10 +619,13 @@ e_menu_item_icon_file_set(E_Menu_Item *mi, const char *icon)
    if (mi->icon_key) eina_stringshare_del(mi->icon_key);
    mi->icon = NULL;
    mi->icon_key = NULL;
-   if (icon) mi->icon = eina_stringshare_add(icon);
-   len = strlen(icon);
-   if ((len > 4) && (!strcasecmp(icon + len - 4, ".edj")))
-      mi->icon_key = eina_stringshare_add("icon");
+   if (icon)
+     {
+        mi->icon = eina_stringshare_add(icon);
+        len = strlen(icon);
+        if ((len > 4) && (!strcasecmp(icon + len - 4, ".edj")))
+          mi->icon_key = eina_stringshare_add("icon");
+     }
    mi->changed = 1;
    mi->menu->changed = 1;
 }
