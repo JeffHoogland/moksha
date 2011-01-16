@@ -2185,7 +2185,7 @@ _pager_desk_cb_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
 	pd->drag.start = 0;
      }
 
-   if (pd->drag.in_pager)
+   if (pd->drag.in_pager && pd->pager)
      {
 	evas_object_geometry_get(pd->o_desk, &x, &y, &w, &h);
 	drag = e_drag_new(pd->pager->zone->container,
