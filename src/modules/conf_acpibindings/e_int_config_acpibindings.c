@@ -9,10 +9,10 @@
 /* local config structure */
 struct _E_Config_Dialog_Data
 {
-   Eina_List       *bindings;
-   Evas_Object     *o_bindings, *o_actions, *o_params;
-   Evas_Object     *o_add, *o_del;
-   const char      *bindex;
+   Eina_List *bindings;
+   Evas_Object *o_bindings, *o_actions, *o_params;
+   Evas_Object *o_add, *o_del;
+   const char *bindex;
 
    E_Config_Dialog *cfd;
 };
@@ -330,12 +330,12 @@ _selected_action_get(E_Config_Dialog_Data *cfdata)
             (strcmp(grp->act_grp, "Launch"))) continue;
         EINA_LIST_FOREACH(grp->acts, ll, dsc)
           {
-             if ((dsc->act_name) && (!strcmp(dsc->act_name, lbl)))
+             if ((dsc->act_name) && (!strcmp(dsc->act_name, lbl))) 
                return dsc;
           }
      }
 
-   return dsc;
+   return NULL;
 }
 
 static const char *
@@ -386,9 +386,9 @@ _cb_bindings_changed(void *data)
    int i = -1;
 
    if (!(cfdata = data)) return;
+   e_widget_entry_clear(cfdata->o_params);
    if (!(bind = _selected_binding_get(cfdata)))
      {
-        e_widget_entry_clear(cfdata->o_params);
         e_widget_disabled_set(cfdata->o_params, EINA_TRUE);
         e_widget_disabled_set(cfdata->o_del, EINA_TRUE);
         return;
@@ -417,16 +417,15 @@ _cb_actions_changed(void *data)
    E_Action_Description *dsc;
 
    if (!(cfdata = data)) return;
+   e_widget_entry_clear(cfdata->o_params);
    if (!(bind = _selected_binding_get(cfdata)))
      {
-        e_widget_entry_clear(cfdata->o_params);
         e_widget_disabled_set(cfdata->o_params, EINA_TRUE);
         e_widget_disabled_set(cfdata->o_del, EINA_TRUE);
         return;
      }
    if (!(dsc = _selected_action_get(cfdata)))
      {
-        e_widget_entry_clear(cfdata->o_params);
         e_widget_disabled_set(cfdata->o_params, EINA_TRUE);
         return;
      }

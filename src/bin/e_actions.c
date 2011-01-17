@@ -2096,6 +2096,11 @@ _e_actions_cb_suspend_dialog_delete(E_Win *win)
    _e_actions_cb_suspend_dialog_cancel(NULL, dia);
 }
 
+ACT_FN_GO(suspend_now, __UNUSED__)
+{
+   e_sys_action_do(E_SYS_SUSPEND, NULL);
+}
+
 ACT_FN_GO(suspend, )
 {
    if ((params) && (!strcmp(params, "now")))
@@ -2947,6 +2952,10 @@ e_actions_init(void)
 
    ACT_GO(reboot);
    e_action_predef_name_set(N_("System"), N_("Reboot"), "reboot", 
+			    NULL, NULL, 0);
+
+   ACT_GO(suspend_now);
+   e_action_predef_name_set(N_("System"), N_("Suspend Now"), "suspend_now", 
 			    NULL, NULL, 0);
 
    ACT_GO(suspend);
