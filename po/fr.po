@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2011-01-18 07:18+0400\n"
-"PO-Revision-Date: 2011-01-18 08:21+0400\n"
+"PO-Revision-Date: 2011-01-19 13:34+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: French <pourunmondesansgourou@gmail.com>\n"
 "Language: fr\n"
@@ -710,7 +710,7 @@ msgstr "Sortie"
 
 #: src/bin/e_actions.c:2946
 msgid "Power Off Now"
-msgstr "Arrêt direct"
+msgstr "Arrêt immédiat"
 
 #: src/bin/e_actions.c:2950
 msgid "Power Off"
@@ -722,7 +722,7 @@ msgstr "Relance"
 
 #: src/bin/e_actions.c:2958
 msgid "Suspend Now"
-msgstr "En veille à l'instant"
+msgstr "Directement en veille"
 
 #: src/bin/e_actions.c:2962
 msgid "Suspend"
@@ -3093,7 +3093,7 @@ msgstr "Problème de fermeture de session"
 
 #: src/bin/e_sys.c:368
 msgid "Logout now"
-msgstr "Fermer immédiatement la session"
+msgstr "Fermer à l'instant la session"
 
 #: src/bin/e_sys.c:369
 msgid "Wait longer"
@@ -6138,7 +6138,7 @@ msgstr "Périodicité des mises à jour"
 
 #: src/modules/cpufreq/e_mod_main.c:321
 msgid "Set CPU Power Policy"
-msgstr "Définir la politique de consommation du CPU"
+msgstr "Politique de consommation du CPU"
 
 #: src/modules/cpufreq/e_mod_main.c:328
 msgid "Set CPU Speed"
