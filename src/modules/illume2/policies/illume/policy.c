@@ -59,16 +59,6 @@ _policy_border_set_focus(E_Border *bd)
              /* if the border was hidden due to layout, we need to unhide */
 	     if (!bd->visible) e_illume_border_show(bd);
 
-             /* if the border is iconified then uniconify */
-             if (bd->iconic) 
-               {
-                  /* if the user is allowed to uniconify, then do it */
-                  if (!bd->lock_user_iconify) e_border_uniconify(bd);
-               }
-
-             /* if we can raise the border do it */
-             if (!bd->lock_user_stacking) e_border_raise(bd);
-
              /* focus the border */
              e_border_focus_set(bd, 1, 1);
 
