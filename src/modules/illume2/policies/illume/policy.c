@@ -783,9 +783,6 @@ _policy_zone_layout_dialog(E_Border *bd, E_Illume_Config_Zone *cz)
 
    if ((!bd) || (!cz)) return;
 
-   /* no point in adjusting size or position if it's not visible */
-   if (!bd->visible) return;
-
    /* grab minimum size */
    e_illume_border_min_get(bd, &mw, &mh);
    if (mw <= 0) mw = bd->w;
