@@ -788,6 +788,8 @@ _policy_zone_layout_dialog(E_Border *bd, E_Illume_Config_Zone *cz)
 
    /* grab minimum size */
    e_illume_border_min_get(bd, &mw, &mh);
+   if (mw <= 0) mw = bd->w;
+   if (mh <= 0) mh = bd->h;
 
    /* make sure it fits in this zone */
    if (mw > bd->zone->w) mw = bd->zone->w;
@@ -829,7 +831,8 @@ _policy_zone_layout_dialog(E_Border *bd, E_Illume_Config_Zone *cz)
      _policy_border_move(bd, nx, ny);
 
    /* set layer if needed */
-   if (bd->layer != POL_DIALOG_LAYER) e_border_layer_set(bd, POL_DIALOG_LAYER);
+   if (bd->layer != POL_DIALOG_LAYER) 
+     e_border_layer_set(bd, POL_DIALOG_LAYER);
 }
 
 static void 
