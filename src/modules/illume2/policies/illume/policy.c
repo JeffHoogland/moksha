@@ -783,10 +783,8 @@ _policy_zone_layout_dialog(E_Border *bd, E_Illume_Config_Zone *cz)
 
    if ((!bd) || (!cz)) return;
 
-   /* grab minimum size */
-   e_illume_border_min_get(bd, &mw, &mh);
-   if (mw <= 0) mw = bd->w;
-   if (mh <= 0) mh = bd->h;
+   mw = bd->w;
+   mh = bd->h;
 
    /* make sure it fits in this zone */
    if (mw > bd->zone->w) mw = bd->zone->w;
