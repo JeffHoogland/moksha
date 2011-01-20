@@ -10,14 +10,15 @@ static void _e_startup(void);
 static void _e_startup_next_cb(void *data);
 
 /* local subsystem globals */
-static E_Order        *startup_apps = NULL;
-static int             start_app_pos = -1;
+static E_Order *startup_apps = NULL;
+static int start_app_pos = -1;
 
 /* externally accessible functions */
 EAPI void
 e_startup(E_Startup_Mode mode)
 {
    char buf[PATH_MAX];
+
    if (mode == E_STARTUP_START)
      {
 	e_user_dir_concat_static(buf, "applications/startup/.order");
@@ -42,8 +43,8 @@ static void
 _e_startup(void)
 {
    Efreet_Desktop *desktop;
-   char buf[4096];
-   
+   char buf[PATH_MAX];
+
    if (!startup_apps)
      {
 	e_init_done();
