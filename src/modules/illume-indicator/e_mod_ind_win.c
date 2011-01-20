@@ -20,8 +20,8 @@ static void _e_mod_ind_win_cb_menu_pre(void *data, E_Menu *mn);
 static void _e_mod_ind_win_cb_menu_post(void *data, E_Menu *mn __UNUSED__);
 static void _e_mod_ind_win_cb_menu_contents(void *data, E_Menu *mn __UNUSED__, E_Menu_Item *mi __UNUSED__);
 static void _e_mod_ind_win_cb_menu_edit(void *data, E_Menu *mn __UNUSED__, E_Menu_Item *mi __UNUSED__);
-static void _e_mod_ind_win_cb_show(Ecore_Evas *ee);
-static void _e_mod_ind_win_cb_hide(Ecore_Evas *ee);
+static Eina_Bool _e_mod_ind_win_cb_border_hide(void *data, int type __UNUSED__, void *event);
+static Eina_Bool _e_mod_ind_win_cb_border_show(void *data, int type __UNUSED__, void *event);
 
 Ind_Win *
 e_mod_ind_win_new(E_Zone *zone) 
@@ -126,6 +126,18 @@ e_mod_ind_win_new(E_Zone *zone)
                                               _e_mod_ind_win_cb_zone_resize, 
                                               iwin));
 
+   iwin->hdls = 
+     eina_list_append(iwin->hdls, 
+                      ecore_event_handler_add(E_EVENT_BORDER_HIDE, 
+                                              _e_mod_ind_win_cb_border_hide, 
+                                              iwin));
+
+   iwin->hdls = 
+     eina_list_append(iwin->hdls, 
+                      ecore_event_handler_add(E_EVENT_BORDER_SHOW, 
+                                              _e_mod_ind_win_cb_border_show, 
+                                              iwin));
+
    /* set minimum size of this window & popup */
    e_win_size_min_set(iwin->win, zone->w, h);
    ecore_evas_size_min_set(iwin->popup->ecore_evas, zone->w, h);
@@ -137,12 +149,6 @@ e_mod_ind_win_new(E_Zone *zone)
    /* show the window */
    e_win_show(iwin->win);
    e_popup_show(iwin->popup);
-
-   /* setup callbacks for show/hide so we can do the proper thing with the 
-    * popup */
-   ecore_evas_data_set(iwin->win->ecore_evas, "iwin", iwin);
-   ecore_evas_callback_show_set(iwin->win->ecore_evas, _e_mod_ind_win_cb_show);
-   ecore_evas_callback_hide_set(iwin->win->ecore_evas, _e_mod_ind_win_cb_hide);
 
    /* set this window on proper zone */
    e_border_zone_set(iwin->win->border, zone);
@@ -548,20 +554,28 @@ _e_mod_ind_win_cb_menu_edit(void *data, E_Menu *mn __UNUSED__, E_Menu_Item *mi _
      e_gadcon_edit_begin(iwin->gadcon);
 }
 
-static void 
-_e_mod_ind_win_cb_show(Ecore_Evas *ee) 
+static Eina_Bool 
+_e_mod_ind_win_cb_border_hide(void *data, int type __UNUSED__, void *event) 
 {
    Ind_Win *iwin;
+   E_Event_Border_Hide *ev;
 
-   iwin = ecore_evas_data_get(ee, "iwin");
-   e_popup_show(iwin->popup);
+   if (!(iwin = data)) return ECORE_CALLBACK_PASS_ON;
+   ev = event;
+   if (ev->border != iwin->win->border) return ECORE_CALLBACK_PASS_ON;
+   e_popup_hide(iwin->popup);
+   return ECORE_CALLBACK_PASS_ON;
 }
 
-static void 
-_e_mod_ind_win_cb_hide(Ecore_Evas *ee) 
+static Eina_Bool 
+_e_mod_ind_win_cb_border_show(void *data, int type __UNUSED__, void *event) 
 {
    Ind_Win *iwin;
+   E_Event_Border_Show *ev;
 
-   iwin = ecore_evas_data_get(ee, "iwin");
-   e_popup_hide(iwin->popup);
+   if (!(iwin = data)) return ECORE_CALLBACK_PASS_ON;
+   ev = event;
+   if (ev->border != iwin->win->border) return ECORE_CALLBACK_PASS_ON;
+   e_popup_show(iwin->popup);
+   return ECORE_CALLBACK_PASS_ON;
 }
