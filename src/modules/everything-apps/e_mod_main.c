@@ -3,6 +3,11 @@
 #include "evry_api.h"
 #include "e_mod_main.h"
 
+/* #undef DBG
+ * #define DBG(...) ERR(__VA_ARGS__) */
+
+#define MAX_ITEMS 200
+
 typedef struct _Plugin Plugin;
 typedef struct _Module_Config Module_Config;
 typedef struct _E_Exe E_Exe;
@@ -239,7 +244,7 @@ _fetch_exe(Evry_Plugin *plugin, const char *input)
 	if ((tmp = strchr(input, ' ')))
 	  end = tmp - input;
 
-	if (!(exe_list) && !(exe_scan_idler))
+	if ((!exe_list) && (!exe_scan_idler))
 	  _scan_executables();
 
 	EINA_LIST_FOREACH(exe_list, l, tmp)
@@ -251,11 +256,10 @@ _fetch_exe(Evry_Plugin *plugin, const char *input)
 
 	     if (!strncmp(input, tmp, end))
 	       {
-		  if (query && (cnt++ < 50) &&
-		      (len != tmp_len))
+		  if (query && (cnt++ < 50) && (len != tmp_len))
 		    _item_exe_add(p, tmp, 15);
 
-		  if (!min || tmp_len < min)
+		  if ((!min) || (tmp_len < min))
 		    {
 		       min = tmp_len;
 		       file = tmp;
@@ -393,7 +397,7 @@ _desktop_list_add(Plugin *p, Eina_List *apps, const char *input)
 
    EINA_LIST_FOREACH(apps, l, desktop)
      {
-	if (eina_list_count(p->base.items) > 199) break;
+	if (eina_list_count(p->base.items) >= MAX_ITEMS) break;
 
 	m1 = m2 = 0;
 
@@ -460,13 +464,15 @@ _hist_items_get_cb(const Eina_Hash *hash, const void *key, void *data, void *fda
 	if (strcmp(hi->plugin, EVRY_PLUGIN(p)->name))
 	  continue;
 
+	/* d = efreet_util_desktop_exec_find(exec); */
+
 	EINA_LIST_FOREACH(p->apps_all, ll, d)
 	  if (d->exec && !strcmp(d->exec, exec))
 	    break;
 
-	if (!(d))
+	if (!d)
 	  {
-	     DBG("app not found %s\n", (char *)key);
+	     DBG("app not found %s", exec);
 	     break;
 	  }
 
