@@ -395,6 +395,10 @@ _e_smart_reconfigure_do(void *data)
    Evas_Coord aspect_w, aspect_h;
 
    if (!sd) return ECORE_CALLBACK_CANCEL;
+
+   sd->idle_enter = NULL;
+   if (sd->w < 1) return ECORE_CALLBACK_CANCEL;
+
    if (sd->cx > (sd->cw - sd->w)) sd->cx = sd->cw - sd->w;
    if (sd->cy > (sd->ch - sd->h)) sd->cy = sd->ch - sd->h;
    if (sd->cx < 0) sd->cx = 0;
@@ -821,7 +825,7 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
    Smart_Data *sd = evas_object_smart_data_get(obj);
    double align = -1;
    int prev = -1;
-   
+
    if (sd->cur_item)
      {
 	prev = sd->cur_item->y / (1 + sd->cur_item->h);
