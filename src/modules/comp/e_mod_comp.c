@@ -36,8 +36,12 @@ struct _E_Comp
    Ecore_Animator *render_animator;
    Ecore_Job      *update_job;
    Ecore_Timer    *new_up_timer;
+   Evas_Object    *fps_bg;
+   Evas_Object    *fps_fg;
    int             animating;
    int             render_overflow;
+   double          frametimes[122];
+   int             frameskip;
    
    E_Manager_Comp  comp;
 
@@ -724,6 +728,41 @@ _e_mod_comp_cb_delayed_update_timer(void *data)
    return ECORE_CALLBACK_CANCEL;
 }
 
+static void
+_e_mod_comp_fps_update(E_Comp *c)
+{
+   if (_comp_mod->conf->fps_show)
+     {
+        if (!c->fps_bg)
+          {
+             c->fps_bg = evas_object_rectangle_add(c->evas);
+             evas_object_color_set(c->fps_bg, 0, 0, 0, 128);
+             evas_object_show(c->fps_bg);
+          }
+        if (!c->fps_fg)
+          {
+             c->fps_fg = evas_object_text_add(c->evas);
+             evas_object_text_font_set(c->fps_fg, "Sans", 10);
+             evas_object_text_text_set(c->fps_fg, "???");
+             evas_object_color_set(c->fps_fg, 255, 255, 255, 255);
+             evas_object_show(c->fps_fg);
+          }
+     }
+   else
+     {
+        if (c->fps_fg)
+          {
+             evas_object_del(c->fps_fg);
+             c->fps_fg = NULL;
+          }
+        if (c->fps_bg)
+          {
+             evas_object_del(c->fps_bg);
+             c->fps_bg = NULL;
+          }
+     }
+}
+
 static Eina_Bool
 _e_mod_comp_cb_update(E_Comp *c)
 {
@@ -763,6 +802,67 @@ _e_mod_comp_cb_update(E_Comp *c)
         if (cw->update)
           new_updates = eina_list_append(new_updates, cw);
      }
+   _e_mod_comp_fps_update(c);
+   if (_comp_mod->conf->fps_show)
+     {
+        char buf[128];
+        double fps = 0.0, t, dt;
+        int i;
+        Evas_Coord x, y, w, h;
+        E_Zone *z;
+        
+        t = ecore_time_get();
+        if (_comp_mod->conf->fps_average_range < 1)
+           _comp_mod->conf->fps_average_range = 30;
+        else if (_comp_mod->conf->fps_average_range > 120)
+           _comp_mod->conf->fps_average_range = 120;
+        dt = t - c->frametimes[_comp_mod->conf->fps_average_range - 1];
+        if (dt > 0.0)
+           fps = (double)_comp_mod->conf->fps_average_range / dt;
+        else fps = 0.0;
+        if (fps > 0.0)
+           snprintf(buf, sizeof(buf), "FPS: %1.1f", fps);
+        else
+           snprintf(buf, sizeof(buf), "N/A");
+        for (i = 31; i >= 1; i--) c->frametimes[i] = c->frametimes[i - 1];
+        c->frametimes[0] = t;
+        c->frameskip++;
+        if (c->frameskip >= _comp_mod->conf->fps_average_range)
+          {
+             c->frameskip = 0;
+             evas_object_text_text_set(c->fps_fg, buf);
+          }
+        evas_object_geometry_get(c->fps_fg, NULL, NULL, &w, &h);
+        w += 8;
+        h += 4;
+        z = e_util_zone_current_get(c->man);
+        if (z)
+          {
+             switch (_comp_mod->conf->fps_corner)
+               {
+                case 3:
+                  x = z->x + z->w - w;
+                  y = z->y + z->h - h;
+                  break;
+                case 2:
+                  x = z->x;
+                  y = z->y + z->h - h;
+                  break;
+                case 1:
+                  x = z->x + z->w - w;
+                  y = z->y;
+                  break;
+                case 0:
+                default:
+                     x = z->x;
+                  y = z->y;
+                  break;
+               }
+             evas_object_move(c->fps_bg, x, y);
+             evas_object_resize(c->fps_bg, w, h);
+             evas_object_move(c->fps_fg, x + 4, y + 4);
+          }
+     }
    if (_comp_mod->conf->lock_fps)
      {
         DBG("MANUAL RENDER...\n");
@@ -793,7 +893,7 @@ _e_mod_comp_cb_update(E_Comp *c)
      }
    c->updates = new_updates;
    if (!c->animating) c->render_overflow--;
-   
+/*   
    if (doframeinfo == -1)
      {
         doframeinfo = 0;
@@ -816,7 +916,7 @@ _e_mod_comp_cb_update(E_Comp *c)
           }
         t0 = t;
      }
-
+ */
    nocomp:
    cw = _e_mod_comp_fullscreen_check(c);
    if (cw)
@@ -2476,6 +2576,27 @@ _e_mod_comp_bd_property(void *data __UNUSED__, int type __UNUSED__, void *event)
 }
 
 //////////////////////////////////////////////////////////////////////////
+static void
+_e_mod_comp_fps_toggle(void)
+{
+   if (_comp_mod)
+     {
+        Eina_List *l;
+        E_Comp *c;
+        
+        if (_comp_mod->conf->fps_show)
+          {
+             _comp_mod->conf->fps_show = 0;
+             e_config_save_queue();
+          }
+        else
+          {
+             _comp_mod->conf->fps_show = 1;
+             e_config_save_queue();
+          }
+        EINA_LIST_FOREACH(compositors, l, c) _e_mod_comp_cb_update(c);
+     }
+}
 
 static Eina_Bool
 _e_mod_comp_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
@@ -2497,7 +2618,30 @@ _e_mod_comp_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
              e_sys_action_do(E_SYS_RESTART, NULL);
           }
      }
+   else if ((!strcasecmp(ev->keyname, "f")) &&
+            (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT) &&
+            (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
+            (ev->modifiers & ECORE_EVENT_MODIFIER_ALT))
+     {
+        _e_mod_comp_fps_toggle();
+     }
    return ECORE_CALLBACK_PASS_ON;
+}
+
+static Eina_Bool
+_e_mod_comp_signal_user(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
+{
+   Ecore_Event_Signal_User *e = ev;
+   
+   if (e->number == 1)
+     {
+        // core e uses this for popping up config panel
+     }
+   else if (e->number == 2)
+     {
+        _e_mod_comp_fps_toggle();
+     }
+   return ECORE_CALLBACK_RENEW;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -2740,7 +2884,12 @@ _e_mod_comp_add(E_Manager *man)
                            ECORE_EVENT_MODIFIER_SHIFT |
                            ECORE_EVENT_MODIFIER_CTRL |
                            ECORE_EVENT_MODIFIER_ALT, 0);
-
+   ecore_x_window_key_grab(c->man->root,
+                           "F", 
+                           ECORE_EVENT_MODIFIER_SHIFT |
+                           ECORE_EVENT_MODIFIER_CTRL |
+                           ECORE_EVENT_MODIFIER_ALT, 0);
+      
    c->comp.data                      = c;
    c->comp.func.evas_get             = _e_mod_comp_evas_get_func;
    c->comp.func.update               = _e_mod_comp_update_func;
@@ -2761,8 +2910,23 @@ _e_mod_comp_del(E_Comp *c)
 {
    E_Comp_Win *cw;
 
+   if (c->fps_fg)
+     {
+        evas_object_del(c->fps_fg);
+        c->fps_fg = NULL;
+     }
+   if (c->fps_bg)
+     {
+        evas_object_del(c->fps_bg);
+        c->fps_bg = NULL;
+     }
    e_manager_comp_set(c->man, NULL);
    
+   ecore_x_window_key_ungrab(c->man->root,
+                             "F", 
+                             ECORE_EVENT_MODIFIER_SHIFT |
+                             ECORE_EVENT_MODIFIER_CTRL |
+                             ECORE_EVENT_MODIFIER_ALT, 0);
    ecore_x_window_key_ungrab(c->man->root,
                              "Home", 
                              ECORE_EVENT_MODIFIER_SHIFT |
@@ -2803,6 +2967,7 @@ _e_mod_comp_del(E_Comp *c)
 }
 
 //////////////////////////////////////////////////////////////////////////
+static Ecore_Event_Handler *sig_user_handler = NULL;
 
 Eina_Bool
 e_mod_comp_init(void)
@@ -2810,6 +2975,9 @@ e_mod_comp_init(void)
    Eina_List *l;
    E_Manager *man;
       
+   sig_user_handler = ecore_event_handler_add(ECORE_EVENT_SIGNAL_USER,
+                                              _e_mod_comp_signal_user, NULL);
+
    windows = eina_hash_string_superfast_new(NULL);
    borders = eina_hash_string_superfast_new(NULL);
    damages = eina_hash_string_superfast_new(NULL);
@@ -2890,6 +3058,12 @@ e_mod_comp_shutdown(void)
    damages = NULL;
    windows = NULL;
    borders = NULL;
+   
+   if (sig_user_handler)
+     {
+        ecore_event_handler_del(sig_user_handler);
+        sig_user_handler = NULL;
+     }
 }
 
 void
@@ -2903,6 +3077,7 @@ e_mod_comp_shadow_set(void)
         E_Comp_Win *cw;
         
         ecore_evas_manual_render_set(c->ee, _comp_mod->conf->lock_fps);
+        _e_mod_comp_fps_update(c);
         EINA_INLIST_FOREACH(c->wins, cw)
           {
              if ((cw->shobj) && (cw->obj))

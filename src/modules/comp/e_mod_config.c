@@ -58,6 +58,10 @@ struct _E_Config_Dialog_Data
    int send_flush;
    int send_dump;
    int nocomp_fs;
+   
+   int fps_show;
+   int fps_corner;
+   int fps_average_range;
 };
 
 
@@ -137,6 +141,11 @@ _create_data(E_Config_Dialog *cfd)
    cfdata->send_flush = _comp_mod->conf->send_flush;
    cfdata->send_dump = _comp_mod->conf->send_dump;
    cfdata->nocomp_fs = _comp_mod->conf->nocomp_fs;
+   
+   cfdata->fps_show = _comp_mod->conf->fps_show;
+   cfdata->fps_corner = _comp_mod->conf->fps_corner;
+   cfdata->fps_average_range = _comp_mod->conf->fps_average_range;
+   if (cfdata->fps_average_range < 1) cfdata->fps_average_range = 12;
    
    EINA_LIST_FOREACH(_comp_mod->conf->match.popups, l, m)
      {
@@ -1105,6 +1114,36 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_list_object_append(ol, ol2, 1, 1, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Timeouts"), ol, 0, 0, 0, 0, 0.5, 0.0);
    
+   ///////////////////////////////////////////
+   ol = e_widget_list_add(evas, 0, 0);
+   
+   ob = e_widget_check_add(evas, _("Show Framerate"), &(cfdata->fps_show));
+   e_widget_list_object_append(ol, ob, 1, 1, 0.5);
+   ob = e_widget_label_add(evas, _("Rolling average frame count"));
+   e_widget_list_object_append(ol, ob, 1, 1, 0.5);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f Frames"), 1, 120, 1, 0,
+                            NULL, &(cfdata->fps_average_range), 240);
+   e_widget_list_object_append(ol, ob, 1, 1, 0.5);
+   
+   of = e_widget_frametable_add(evas, _("Corner"), 0);
+   e_widget_frametable_content_align_set(of, 0.5, 0.5);
+   rg = e_widget_radio_group_new(&(cfdata->fps_corner));
+   ob = e_widget_radio_icon_add(evas, NULL, "preferences-position-top-left",
+                                24, 24, 0, rg);
+   e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_radio_icon_add(evas, NULL, "preferences-position-top-right",
+                                24, 24, 1, rg);
+   e_widget_frametable_object_append(of, ob, 1, 0, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_radio_icon_add(evas, NULL, "preferences-position-bottom-left",
+                                24, 24, 2, rg);
+   e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_radio_icon_add(evas, NULL, "preferences-position-bottom-right",
+                                24, 24, 3, rg);
+   e_widget_frametable_object_append(of, ob, 1, 1, 1, 1, 1, 1, 1, 1);
+   e_widget_list_object_append(ol, of, 1, 1, 0.5);
+   
+   e_widget_toolbook_page_append(otb, NULL, _("Debug"), ol, 0, 0, 0, 0, 0.5, 0.0);
+   
    e_widget_toolbook_page_show(otb, 0);
    
    e_dialog_resizable_set(cfd->dia, 1);
@@ -1155,6 +1194,9 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
        (cfdata->min_unmapped_time != _comp_mod->conf->min_unmapped_time) ||
        (cfdata->send_flush != _comp_mod->conf->send_flush) ||
        (cfdata->send_dump != _comp_mod->conf->send_dump) ||
+       (cfdata->fps_show != _comp_mod->conf->fps_show) ||
+       (cfdata->fps_corner != _comp_mod->conf->fps_corner) ||
+       (cfdata->fps_average_range != _comp_mod->conf->fps_average_range) ||
        (cfdata->match.changed)
        )
      {
@@ -1215,6 +1257,9 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
         _comp_mod->conf->min_unmapped_time = cfdata->min_unmapped_time;
         _comp_mod->conf->send_flush = cfdata->send_flush;
         _comp_mod->conf->send_dump = cfdata->send_dump;
+        _comp_mod->conf->fps_show = cfdata->fps_show;
+        _comp_mod->conf->fps_corner = cfdata->fps_corner;
+        _comp_mod->conf->fps_average_range = cfdata->fps_average_range;
         if (_comp_mod->conf->shadow_style)
           eina_stringshare_del(_comp_mod->conf->shadow_style);
         _comp_mod->conf->shadow_style = NULL;

@@ -8,10 +8,16 @@ typedef struct _Match         Match;
 
 struct _Config
 {
-   unsigned char    use_shadow;
    const char      *shadow_file;
    const char      *shadow_style;
    int              engine;
+   int              max_unmapped_pixels;
+   int              max_unmapped_time;
+   int              min_unmapped_time;
+   int              fps_average_range;
+   unsigned char    fps_corner;
+   unsigned char    fps_show;
+   unsigned char    use_shadow;
    unsigned char    indirect;
    unsigned char    texture_from_pixmap;
    unsigned char    lock_fps;
@@ -24,9 +30,6 @@ struct _Config
    unsigned char    send_dump;
    unsigned char    nocomp_fs;
    unsigned char    smooth_windows;
-   int              max_unmapped_pixels;
-   int              max_unmapped_time;
-   int              min_unmapped_time;
 
    struct {
       Eina_List    *popups; // used for e popups
@@ -54,6 +57,8 @@ struct _Match
    const char *clas; // glob - used for borders, overrides, NULL if not to be used
    const char *role; // glob - used for borders
    
+   const char *shadow_style; // shadow style to use
+   
    int         primary_type; // Ecore_X_Window_Type - used for borders, overrides, first one found - ECORE_X_WINDOW_TYPE_UNKNOWN if not to be used
    char        borderless; // used for borders, 0 == dont use, 1 == borderless, -1 == not borderless
    char        dialog; // used for borders, 0 == don't use, 1 == dialog, -1 == not dialog
@@ -64,7 +69,6 @@ struct _Match
    char        fullscreen; // used for borders, 0 == don't use, 1 == is fullscreen, -1 == not fullscreen
    char        modal; // used for borders, 0 == don't use, 1 == is modal, -1 == not modal
    
-   const char *shadow_style; // shadow style to use
 };
 
 extern Mod *_comp_mod;
