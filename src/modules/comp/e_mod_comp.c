@@ -824,7 +824,7 @@ _e_mod_comp_cb_update(E_Comp *c)
            snprintf(buf, sizeof(buf), "FPS: %1.1f", fps);
         else
            snprintf(buf, sizeof(buf), "N/A");
-        for (i = 31; i >= 1; i--) c->frametimes[i] = c->frametimes[i - 1];
+        for (i = 121; i >= 1; i--) c->frametimes[i] = c->frametimes[i - 1];
         c->frametimes[0] = t;
         c->frameskip++;
         if (c->frameskip >= _comp_mod->conf->fps_average_range)
