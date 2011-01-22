@@ -808,7 +808,7 @@ _e_mod_comp_cb_update(E_Comp *c)
         char buf[128];
         double fps = 0.0, t, dt;
         int i;
-        Evas_Coord x, y, w, h;
+        Evas_Coord x = 0, y = 0, w = 0, h = 0;
         E_Zone *z;
         
         t = ecore_time_get();
@@ -817,13 +817,10 @@ _e_mod_comp_cb_update(E_Comp *c)
         else if (_comp_mod->conf->fps_average_range > 120)
            _comp_mod->conf->fps_average_range = 120;
         dt = t - c->frametimes[_comp_mod->conf->fps_average_range - 1];
-        if (dt > 0.0)
-           fps = (double)_comp_mod->conf->fps_average_range / dt;
+        if (dt > 0.0) fps = (double)_comp_mod->conf->fps_average_range / dt;
         else fps = 0.0;
-        if (fps > 0.0)
-           snprintf(buf, sizeof(buf), "FPS: %1.1f", fps);
-        else
-           snprintf(buf, sizeof(buf), "N/A");
+        if (fps > 0.0) snprintf(buf, sizeof(buf), "FPS: %1.1f", fps);
+        else snprintf(buf, sizeof(buf), "N/A");
         for (i = 121; i >= 1; i--) c->frametimes[i] = c->frametimes[i - 1];
         c->frametimes[0] = t;
         c->frameskip++;
@@ -834,34 +831,33 @@ _e_mod_comp_cb_update(E_Comp *c)
           }
         evas_object_geometry_get(c->fps_fg, NULL, NULL, &w, &h);
         w += 8;
-        h += 4;
+        h += 8;
         z = e_util_zone_current_get(c->man);
         if (z)
           {
              switch (_comp_mod->conf->fps_corner)
                {
-                case 3:
+                case 3: // bottom-right
                   x = z->x + z->w - w;
                   y = z->y + z->h - h;
                   break;
-                case 2:
+                case 2: // bottom-left
                   x = z->x;
                   y = z->y + z->h - h;
                   break;
-                case 1:
+                case 1: // top-right
                   x = z->x + z->w - w;
                   y = z->y;
                   break;
-                case 0:
-                default:
-                     x = z->x;
+                default: // 0 // top-left
+                  x = z->x;
                   y = z->y;
                   break;
                }
-             evas_object_move(c->fps_bg, x, y);
-             evas_object_resize(c->fps_bg, w, h);
-             evas_object_move(c->fps_fg, x + 4, y + 4);
           }
+        evas_object_move(c->fps_bg, x, y);
+        evas_object_resize(c->fps_bg, w, h);
+        evas_object_move(c->fps_fg, x + 4, y + 4);
      }
    if (_comp_mod->conf->lock_fps)
      {

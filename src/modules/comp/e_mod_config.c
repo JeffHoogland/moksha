@@ -146,6 +146,7 @@ _create_data(E_Config_Dialog *cfd)
    cfdata->fps_corner = _comp_mod->conf->fps_corner;
    cfdata->fps_average_range = _comp_mod->conf->fps_average_range;
    if (cfdata->fps_average_range < 1) cfdata->fps_average_range = 12;
+   else if (cfdata->fps_average_range > 120) cfdata->fps_average_range = 120;
    
    EINA_LIST_FOREACH(_comp_mod->conf->match.popups, l, m)
      {
