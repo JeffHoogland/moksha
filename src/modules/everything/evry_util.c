@@ -427,7 +427,7 @@ Evas_Object *
 evry_icon_theme_get(const char *icon, Evas *e)
 {
    Evas_Object *o = e_icon_add(e);
-   /* e_icon_preload_set(o, 1); */
+   e_icon_preload_set(o, 1);
 
    if (e_config->icon_theme_overrides)
      {
@@ -504,7 +504,7 @@ _file_icon_get(Evry_Item *it, Evas *e)
 	if (it->icon[0] == '/')
 	  {
 	     o = e_icon_add(e);
-	     /* e_icon_preload_set(o, 1); */
+	     e_icon_preload_set(o, 1);
 
 	     if (!e_icon_file_set(o, it->icon))
 	       {
@@ -565,7 +565,7 @@ evry_util_icon_get(Evry_Item *it, Evas *e)
    if (!o && it->icon && it->icon[0] == '/')
      {
 	o = e_icon_add(e);
-	/* e_icon_preload_set(o, 1); */
+	e_icon_preload_set(o, 1);
 
 	if (!e_icon_file_set(o, it->icon))
 	  {
