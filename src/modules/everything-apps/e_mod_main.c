@@ -118,6 +118,7 @@ _item_new(Plugin *p, const char *label, const char *id)
 
    app = EVRY_ITEM_NEW(Evry_Item_App, p, label, _icon_get, _item_free);
    EVRY_ACTN(app)->action = &_exec_open_file_action;
+   EVRY_ACTN(app)->it1.type = EVRY_TYPE_FILE;
    EVRY_ITEM(app)->id = eina_stringshare_add(id);
 
    eina_hash_add(p->added, id, app);
@@ -464,17 +465,28 @@ _hist_items_get_cb(const Eina_Hash *hash, const void *key, void *data, void *fda
 	if (strcmp(hi->plugin, EVRY_PLUGIN(p)->name))
 	  continue;
 
-	/* d = efreet_util_desktop_exec_find(exec); */
+	/* d = NULL;
+	 * if (hi->data)
+	 *   d = efreet_desktop_new(hi->data);
+	 * if (!d) */
+	d = efreet_util_desktop_exec_find(exec);
 
+	/* if (!d) */
 	EINA_LIST_FOREACH(p->apps_all, ll, d)
-	  if (d->exec && !strcmp(d->exec, exec))
-	    break;
+	  if (d->exec && !strcmp(d->exec, exec)) break;
 
 	if (!d)
 	  {
 	     DBG("app not found %s", exec);
 	     break;
 	  }
+
+	/* if (hi->data)
+	 *   eina_stringshare_del(hi->data);
+	 * hi->data = NULL;
+	 *
+	 * if (d->orig_path)
+	 *   hi->data = eina_stringshare_add(d->orig_path); */
 
 	p->apps_hist = eina_list_append(p->apps_hist, d);
 	break;
