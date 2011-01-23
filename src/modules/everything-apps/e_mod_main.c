@@ -975,6 +975,24 @@ _open_term_action(Evry_Action *act)
    return ret;
 }
 
+static int
+_check_executable(Evry_Action *act __UNUSED__, const Evry_Item *it)
+{
+   GET_FILE(file, it);
+
+   return ecore_file_can_exec(evry->file_path_get(file));
+}
+
+static int
+_run_executable(Evry_Action *act)
+{
+   GET_FILE(file, act->it1.item);
+
+   e_exec(e_util_zone_current_get(e_manager_current_get()), NULL, file->path, NULL, NULL);
+
+   return 1;
+}
+
 /***************************************************************************/
 static Eina_Bool
 _desktop_cache_update(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
@@ -1088,6 +1106,13 @@ _plugins_init(const Evry_API *api)
 			 EVRY_TYPE_FILE, 0,
 			 "system-run",
 			 _open_term_action, NULL);
+   _actions = eina_list_append(_actions, act);
+
+   act = EVRY_ACTION_NEW(N_("Run Executable"),
+			 EVRY_TYPE_FILE, 0,
+			 "system-run",
+			 _run_executable,
+			 _check_executable);
    _actions = eina_list_append(_actions, act);
 
    EINA_LIST_FOREACH(_actions, l, act)
