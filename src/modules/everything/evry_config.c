@@ -259,13 +259,13 @@ _plugin_move(Plugin_Page *page, int dir)
 }
 
 static void
-_plugin_move_up_cb(void *data, void *data2)
+_plugin_move_up_cb(void *data, void *data2 __UNUSED__)
 {
    _plugin_move(data, -1);
 }
 
 static void
-_plugin_move_down_cb(void *data, void *data2)
+_plugin_move_down_cb(void *data, void *data2 __UNUSED__)
 {
    _plugin_move(data, 1);
 }
@@ -339,7 +339,7 @@ _list_select_cb (void *data, Evas_Object *obj)
 }
 
 static void
-_plugin_config_cb(void *data, void *data2)
+_plugin_config_cb(void *data, void *data2 __UNUSED__)
 {
    Plugin_Page *page = data;
    Evry_Plugin *p = page->cur->plugin;
@@ -353,7 +353,7 @@ _plugin_config_cb(void *data, void *data2)
 }
 
 static Evas_Object *
-_create_plugin_page(E_Config_Dialog_Data *cfdata, Evas *e, Plugin_Page *page)
+_create_plugin_page(E_Config_Dialog_Data *cfdata __UNUSED__, Evas *e, Plugin_Page *page)
 {
    Evas_Object *o, *of, *ob;
    E_Radio_Group *rg;
@@ -687,7 +687,7 @@ _cat_create_data(E_Config_Dialog *cfd)
 }
 
 static void
-_cat_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_cat_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    if (cfdata->page[0].configs) eina_list_free(cfdata->page[0].configs);
 
@@ -732,7 +732,7 @@ _cat_basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 }
 
 static Evas_Object *
-_cat_basic_create_widgets(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdata)
+_cat_basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *e, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *ob, *otb;
 

@@ -154,7 +154,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 }
 
 static int
-_action_check(Evry_Action *act, const Evry_Item *item)
+_action_check(Evry_Action *act __UNUSED__, const Evry_Item *item)
 {
    return !!(((Settings_Item*)item)->eci);
 }
@@ -241,7 +241,7 @@ e_modapi_init(E_Module *m)
 }
 
 EAPI int
-e_modapi_shutdown(E_Module *m)
+e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    _plugins_shutdown();
    
@@ -252,7 +252,7 @@ e_modapi_shutdown(E_Module *m)
 }
 
 EAPI int
-e_modapi_save(E_Module *m)
+e_modapi_save(E_Module *m __UNUSED__)
 {
    return 1;
 }

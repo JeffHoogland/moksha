@@ -170,7 +170,6 @@ static void
 _scan_func(void *data, Ecore_Thread *thread)
 {
    Data *d = data;
-   Plugin *p = d->plugin;
    Eina_Iterator *ls;
    Eina_File_Direct_Info *info;
    Evry_Item_File *file;
@@ -180,11 +179,10 @@ _scan_func(void *data, Ecore_Thread *thread)
 
    EINA_ITERATOR_FOREACH(ls, info)
      {
-	if ((p->show_hidden) != (*(info->path + info->name_start) == '.'))
+	if ((d->plugin->show_hidden) != (*(info->path + info->name_start) == '.'))
 	  continue;
 
-	file = EVRY_ITEM_NEW(Evry_Item_File, p,
-			     NULL, NULL, _item_free);
+	file = EVRY_ITEM_NEW(Evry_Item_File, d->plugin, NULL, NULL, _item_free);
 	file->path = strdup(info->path);
 	EVRY_ITEM(file)->label = strdup(info->path + info->name_start);
 	EVRY_ITEM(file)->browseable = (info->type == EINA_FILE_DIR);
@@ -233,7 +231,7 @@ _files_filter(Plugin *p)
    int cnt = 0;
    Evry_Item *it;
    Eina_List *l;
-   int len = p->input ? strlen(p->input) : 0;
+   unsigned int len = p->input ? strlen(p->input) : 0;
 
    EVRY_PLUGIN_ITEMS_CLEAR(p);
 
@@ -374,13 +372,12 @@ _file_add(Plugin *p, Evry_Item *item)
 }
 
 static void
-_scan_end_func(void *data, Ecore_Thread *thread)
+_scan_end_func(void *data, Ecore_Thread *thread __UNUSED__)
 {
    Data *d = data;
    Plugin *p = d->plugin;
    Evry_Item *item;
    Evry_Item_File *file;
-   char *filename, *path;
    Eina_List *l, *ll;
    History_Types *ht = NULL;
 
@@ -446,7 +443,7 @@ _scan_end_func(void *data, Ecore_Thread *thread)
 }
 
 static void
-_dir_watcher(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, const char *path)
+_dir_watcher(void *data, Ecore_File_Monitor *em __UNUSED__, Ecore_File_Event event, const char *path)
 {
    Plugin *p = data;
    Evry_Item_File *file;
@@ -660,7 +657,7 @@ static int
 _fetch(Evry_Plugin *plugin, const char *input)
 {
    GET_PLUGIN(p, plugin);
-   int len = (input ? strlen(input) : 0);
+   unsigned int len = (input ? strlen(input) : 0);
 
    if (!p->command)
      EVRY_PLUGIN_ITEMS_CLEAR(p);
@@ -831,8 +828,8 @@ _recentf_files_filter(Plugin *p)
 
    EINA_LIST_FREE(new, it)
      {
-	if (cnt++ < MAX_SHOWN);
-	EVRY_PLUGIN_ITEM_APPEND(p, it);
+	if (cnt++ < MAX_SHOWN)
+	  EVRY_PLUGIN_ITEM_APPEND(p, it);
      }
 
    return cnt;
@@ -913,7 +910,7 @@ _recentf_end_func(void *data)
 #endif
 
 static Eina_Bool
-_recentf_items_add_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata)
+_recentf_items_add_cb(const Eina_Hash *hash __UNUSED__, const void *key, void *data, void *fdata)
 {
    History_Entry *he = data;
    History_Item *hi = NULL, *hi2;
@@ -1453,7 +1450,7 @@ static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dia
 static int _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 
 static E_Config_Dialog *
-_conf_dialog(E_Container *con, const char *params)
+_conf_dialog(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd = NULL;
    E_Config_Dialog_View *v = NULL;
@@ -1476,13 +1473,13 @@ _conf_dialog(E_Container *con, const char *params)
 }
 
 static void
-_clear_cache_cb(void *data, void *data2)
+_clear_cache_cb(void *data __UNUSED__, void *data2 __UNUSED__)
 {
    clear_cache = EINA_TRUE;
 }
 
 static Evas_Object *
-_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
+_basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o = NULL, *of = NULL, *ow = NULL;
 
@@ -1522,7 +1519,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 }
 
 static void *
-_create_data(E_Config_Dialog *cfd)
+_create_data(E_Config_Dialog *cfd __UNUSED__)
   {
      E_Config_Dialog_Data *cfdata = NULL;
 
@@ -1532,7 +1529,7 @@ _create_data(E_Config_Dialog *cfd)
   }
 
 static void
-_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    _conf->cfd = NULL;
    E_FREE(cfdata);
@@ -1551,7 +1548,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 }
 
 static int
-_basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
 #define C(_name) _conf->_name = cfdata->_name;
    C(show_homedir);
@@ -1664,7 +1661,7 @@ e_modapi_init(E_Module *m)
 }
 
 EAPI int
-e_modapi_shutdown(E_Module *m)
+e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    _plugins_shutdown();
 
@@ -1677,7 +1674,7 @@ e_modapi_shutdown(E_Module *m)
 }
 
 EAPI int
-e_modapi_save(E_Module *m)
+e_modapi_save(E_Module *m __UNUSED__)
 {
    e_config_domain_save("module.everything-files", conf_edd, _conf);
    return 1;

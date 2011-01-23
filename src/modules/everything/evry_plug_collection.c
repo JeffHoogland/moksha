@@ -68,7 +68,7 @@ _add_item(Plugin *p, Plugin_Config *pc)
 }
 
 static Evry_Plugin *
-_begin(Evry_Plugin *plugin, const Evry_Item *item)
+_begin(Evry_Plugin *plugin, const Evry_Item *item __UNUSED__)
 {
    Plugin_Config *pc;
    Eina_List *l;
@@ -83,7 +83,7 @@ _begin(Evry_Plugin *plugin, const Evry_Item *item)
 }
 
 static Evry_Plugin *
-_begin_all(Evry_Plugin *plugin, const Evry_Item *item)
+_begin_all(Evry_Plugin *plugin, const Evry_Item *item __UNUSED__)
 {
    Plugin_Config *pc;
    Eina_List *l;
@@ -116,7 +116,7 @@ _finish(Evry_Plugin *plugin)
 
    EINA_LIST_FREE(p->plugins, it)
      EVRY_ITEM_FREE(it);
-
+   
    E_FREE(p);
 }
 

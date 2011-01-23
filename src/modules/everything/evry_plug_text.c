@@ -4,7 +4,7 @@ static Evry_Plugin *p1;
 static Evry_Plugin *p2;
 
 static Evry_Plugin *
-_begin(Evry_Plugin *p, const Evry_Item *it)
+_begin(Evry_Plugin *p, const Evry_Item *it __UNUSED__)
 {
    return p;
 }

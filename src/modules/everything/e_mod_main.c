@@ -317,7 +317,7 @@ evry_view_unregister(Evry_View *view)
 /***************************************************************************/
 
 static Eina_Bool
-_cleanup_history(void *data)
+_cleanup_history(void *data __UNUSED__)
 {
    /* evrything is active */
    if (evry_hist)
@@ -538,7 +538,7 @@ _e_mod_action_cb(E_Object *obj, const char *params)
 }
 
 static void
-_e_mod_action_cb_edge(E_Object *obj, const char *params, E_Event_Zone_Edge *ev)
+_e_mod_action_cb_edge(E_Object *obj  __UNUSED__, const char *params, E_Event_Zone_Edge *ev)
 {
    IF_RELEASE(_params);
    if (params && params[0])

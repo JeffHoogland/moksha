@@ -98,7 +98,7 @@ _cb_border_add(void *data, __UNUSED__ int type,  void *event)
 {
    E_Event_Border_Add *ev = event;
    Plugin *p = data;
-   int min;
+   unsigned int min;
 
    if (!_border_item_add(p, ev->border))
      return ECORE_CALLBACK_PASS_ON;
@@ -505,7 +505,7 @@ e_modapi_init(E_Module *m)
 }
 
 EAPI int
-e_modapi_shutdown(E_Module *m)
+e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    _plugins_shutdown();
 
@@ -516,7 +516,7 @@ e_modapi_shutdown(E_Module *m)
 }
 
 EAPI int
-e_modapi_save(E_Module *m)
+e_modapi_save(E_Module *m __UNUSED__)
 {
    return 1;
 }

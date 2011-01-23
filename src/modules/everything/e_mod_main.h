@@ -392,4 +392,8 @@ EAPI extern E_Module_Api e_modapi;
 extern Eina_List *_refd;
 #endif
 
+#ifdef CHECK_TIME
+extern double _evry_time;
+#endif
+
 #endif

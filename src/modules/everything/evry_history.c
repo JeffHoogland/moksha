@@ -64,7 +64,7 @@ evry_history_init(void)
 }
 
 static Eina_Bool
-_hist_entry_free_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata)
+_hist_entry_free_cb(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__)
 {
    History_Entry *he = data;
    History_Item *hi;
@@ -88,7 +88,7 @@ _hist_entry_free_cb(const Eina_Hash *hash, const void *key, void *data, void *fd
 }
 
 static Eina_Bool
-_hist_free_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata)
+_hist_free_cb(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__)
 {
    History_Types *ht = data;
 
@@ -104,7 +104,7 @@ _hist_free_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata)
 }
 
 static Eina_Bool
-_hist_entry_cleanup_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata)
+_hist_entry_cleanup_cb(const Eina_Hash *hash __UNUSED__, const void *key, void *data, void *fdata)
 {
    History_Entry *he = data;
    Cleanup_Data *d = fdata;
@@ -120,7 +120,7 @@ _hist_entry_cleanup_cb(const Eina_Hash *hash, const void *key, void *data, void 
 	  }
 
 	/* item is transient or too old */
-	if (!hi->count || hi->transient)
+	if ((hi->count < 1) || hi->transient)
 	  {
 	     if (hi->input)
 	       eina_stringshare_del(hi->input);
@@ -146,7 +146,7 @@ _hist_entry_cleanup_cb(const Eina_Hash *hash, const void *key, void *data, void 
 }
 
 static Eina_Bool
-_hist_cleanup_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata)
+_hist_cleanup_cb(const Eina_Hash *hash __UNUSED__, const void *key, void *data, void *fdata)
 {
    History_Types *ht = data;
    Cleanup_Data *d = fdata;

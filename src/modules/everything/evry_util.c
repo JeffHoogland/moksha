@@ -455,7 +455,7 @@ _evry_icon_mime_theme_get(const char *mime, Evas *e)
    char buf[1024];
    const char *file;
 
-   if (snprintf(buf, sizeof(buf), "e/icons/fileman/mime/%s", mime) >= sizeof(buf))
+   if (snprintf(buf, sizeof(buf), "e/icons/fileman/mime/%s", mime) >= (int)sizeof(buf))
      return NULL;
 
    file = e_theme_edje_file_get("base/theme/icons", buf);
@@ -866,7 +866,7 @@ evry_file_url_get(Evry_Item_File *file)
 }
 
 static void
-_cb_free_item_changed(void *data, void *event)
+_cb_free_item_changed(void *data __UNUSED__, void *event)
 {
    Evry_Event_Item_Changed *ev = event;
 

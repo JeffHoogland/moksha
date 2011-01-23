@@ -18,6 +18,7 @@ static Eina_List *handlers = NULL;
 static int error = 0;
 static Eina_Bool active = EINA_FALSE;
 static char _module_icon[] = "accessories-calculator";
+static Evry_Item *cur_item = NULL;
 
 static Evry_Plugin *
 _begin(Evry_Plugin *p, const Evry_Item *item __UNUSED__)
@@ -42,8 +43,8 @@ _begin(Evry_Plugin *p, const Evry_Item *item __UNUSED__)
 
    it = EVRY_ITEM_NEW(Evry_Item, p, "0", NULL, NULL);
    it->context = eina_stringshare_ref(p->name);
-   p->items = eina_list_prepend(p->items, it);
-
+   cur_item = it;
+   
    active = EINA_TRUE;
    return p;
 }
@@ -171,7 +172,7 @@ _fetch(Evry_Plugin *p, const char *input)
 	error = 0;
      }
 
-   return 1;
+   return !!(p->items);
 }
 
 static Eina_Bool
@@ -185,24 +186,32 @@ _cb_data(void *data, int type __UNUSED__, void *event)
 
    if (ev->lines)
      {
-	it = p->items->data;
+	it = cur_item;
 	eina_stringshare_del(it->label);
 	it->label = eina_stringshare_add(ev->lines->line);
 
-	if (it) evry->item_changed(it, 0, 0);
+	if (!(it = eina_list_data_get(p->items)) || (it != cur_item))
+	  {
+	     p->items = eina_list_prepend(p->items, cur_item);
+	     EVRY_PLUGIN_UPDATE(p, EVRY_UPDATE_ADD);
+	  }
+	else if (it) evry->item_changed(it, 0, 0);
      }
 
    return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool
-_cb_error(void *data __UNUSED__, int type __UNUSED__, void *event)
+_cb_error(void *data, int type __UNUSED__, void *event)
 {
    Ecore_Exe_Event_Data *ev = event;
-
+   Evry_Plugin *p = data;
+   
    if (ev->exe != exe)
      return ECORE_CALLBACK_PASS_ON;
 
+   p->items = eina_list_remove(p->items, cur_item);
+   EVRY_PLUGIN_UPDATE(p, EVRY_UPDATE_ADD);
    error = 1;
 
    return ECORE_CALLBACK_PASS_ON;
@@ -294,7 +303,7 @@ e_modapi_init(E_Module *m)
 }
 
 EAPI int
-e_modapi_shutdown(E_Module *m)
+e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    _plugins_shutdown();
 
@@ -305,7 +314,7 @@ e_modapi_shutdown(E_Module *m)
 }
 
 EAPI int
-e_modapi_save(E_Module *m)
+e_modapi_save(E_Module *m __UNUSED__)
 {
    return 1;
 }

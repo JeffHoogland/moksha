@@ -13,7 +13,7 @@ _view_clear(Evry_View *v)
 }
 
 static int
-_view_update(Evry_View *v)
+_view_update(Evry_View *v __UNUSED__)
 {
    return 1;
 }
@@ -58,7 +58,7 @@ _cb_key_down(Evry_View *v, const Ecore_Event_Key *ev)
 }
 
 static Evry_View *
-_view_create(Evry_View *v, const Evry_State *s, const Evas_Object *swallow)
+_view_create(Evry_View *v, const Evry_State *s __UNUSED__, const Evas_Object *swallow)
 {
    Evas_Object *o;
    int mw, mh;

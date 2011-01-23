@@ -3,6 +3,8 @@
 #include "evry_api.h"
 #include "e_mod_main.h"
 
+// FIXME clear cache on .desktop chage event
+
 /* #undef DBG
  * #define DBG(...) ERR(__VA_ARGS__) */
 
@@ -48,6 +50,7 @@ struct _Module_Config
 
 static const Evry_API   *evry            = NULL;
 static Evry_Module      *evry_module     = NULL;
+static Eina_List        *handlers        = NULL;
 
 static Module_Config	*_conf;
 
@@ -61,7 +64,7 @@ static E_Config_DD	*exelist_edd	 = NULL;
 static DIR		*exe_dir	 = NULL;
 static Eina_List	*exe_list	 = NULL;
 static Eina_List	*exe_list2	 = NULL;
-
+static Eina_List        *apps_cache      = NULL;
 static void _scan_executables();
 
 /***************************************************************************/
@@ -78,9 +81,22 @@ _icon_get(Evry_Item *it, Evas *e)
    GET_APP(app, it);
    Evas_Object *o = NULL;
 
-   if (app->desktop)
+   if (app->desktop && app->desktop->icon)
      {
-	o = evry->icon_theme_get(app->desktop->icon, e);
+	if (app->desktop->icon[0] == '/')
+	  {
+	     o = e_icon_add(e);
+	     e_icon_preload_set(o, 1);
+
+	     if (!e_icon_file_set(o, app->desktop->icon))
+	       {
+		  evas_object_del(o);
+		  o = NULL;
+	       }
+	  }
+
+	if (!o)
+	  o = evry->icon_theme_get(app->desktop->icon, e);
 
 	if (!o)
 	  o = e_util_desktop_icon_add(app->desktop, 128, e);
@@ -183,7 +199,7 @@ _item_exe_add(Plugin *p, const char *exe, int match)
 }
 
 static Eina_Bool
-_hist_exe_get_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata)
+_hist_exe_get_cb(const Eina_Hash *hash __UNUSED__, const void *key, void *data, void *fdata)
 {
    History_Entry *he = data;
    History_Item *hi;
@@ -228,11 +244,11 @@ _fetch_exe(Evry_Plugin *plugin, const char *input)
    Eina_List *l;
    Evry_Item *it;
    History_Types *ht;
-   int len = (input ? strlen(input) : 0);
+   unsigned int len = (input ? strlen(input) : 0);
    double max = 0.0;
    const char *tmp, *file = NULL;
-   int min = 0, cnt = 0, end = len, tmp_len;
-   int query = (len >= plugin->config->min_query);
+   unsigned int min = 0, cnt = 0, end = len, tmp_len;
+   unsigned int query = (len >= (unsigned int)plugin->config->min_query);
    EVRY_PLUGIN_ITEMS_CLEAR(p);
 
    p->input = input;
@@ -451,7 +467,7 @@ _desktop_list_get(void)
 }
 
 static Eina_Bool
-_hist_items_get_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata)
+_hist_items_get_cb(const Eina_Hash *hash __UNUSED__, const void *key, void *data, void *fdata)
 {
    History_Entry *he = data;
    History_Item *hi;
@@ -462,31 +478,43 @@ _hist_items_get_cb(const Eina_Hash *hash, const void *key, void *data, void *fda
 
    EINA_LIST_FOREACH(he->items, l, hi)
      {
+	d = NULL;
+
+	if (hi->transient)
+	  continue;
+
 	if (strcmp(hi->plugin, EVRY_PLUGIN(p)->name))
 	  continue;
 
-	/* d = NULL;
-	 * if (hi->data)
-	 *   d = efreet_desktop_new(hi->data);
-	 * if (!d) */
-	d = efreet_util_desktop_exec_find(exec);
-
-	/* if (!d) */
-	EINA_LIST_FOREACH(p->apps_all, ll, d)
+	EINA_LIST_FOREACH(apps_cache, ll, d)
 	  if (d->exec && !strcmp(d->exec, exec)) break;
+
+	if (!d)
+	  {
+	     if (!p->apps_all)
+	       p->apps_all = _desktop_list_get();
+
+	     EINA_LIST_FOREACH(p->apps_all, ll, d)
+	       if (d->exec && !strcmp(d->exec, exec)) break;
+
+	     if (d)
+	       {
+		  efreet_desktop_ref(d);
+		  apps_cache = eina_list_append(apps_cache, d);
+	       }
+	     else
+	       {
+		  /* remove from history */
+		  DBG("no desktop: %s", exec);
+		  hi->transient = 1;
+	       }
+	  }
 
 	if (!d)
 	  {
 	     DBG("app not found %s", exec);
 	     break;
 	  }
-
-	/* if (hi->data)
-	 *   eina_stringshare_del(hi->data);
-	 * hi->data = NULL;
-	 *
-	 * if (d->orig_path)
-	 *   hi->data = eina_stringshare_add(d->orig_path); */
 
 	p->apps_hist = eina_list_append(p->apps_hist, d);
 	break;
@@ -541,11 +569,11 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
    EVRY_PLUGIN_ITEMS_CLEAR(p);
 
-   if (!p->apps_all)
-     p->apps_all = _desktop_list_get();
-
    if (input)
      {
+	if (!p->apps_all)
+	  p->apps_all = _desktop_list_get();
+
 	_desktop_list_add(p, p->apps_all, input);
      }
    else
@@ -700,7 +728,7 @@ _fetch_mime(Evry_Plugin *plugin, const char *input)
 
 
 static int
-_complete(Evry_Plugin *plugin, const Evry_Item *it, char **input)
+_complete(Evry_Plugin *plugin __UNUSED__, const Evry_Item *it, char **input)
 {
    GET_APP(app, it);
 
@@ -725,7 +753,7 @@ _complete(Evry_Plugin *plugin, const Evry_Item *it, char **input)
 /***************************************************************************/
 
 static int
-_exec_app_check_item(Evry_Action *act, const Evry_Item *it)
+_exec_app_check_item(Evry_Action *act __UNUSED__, const Evry_Item *it __UNUSED__)
 {
    return 1;
 }
@@ -948,6 +976,16 @@ _open_term_action(Evry_Action *act)
 }
 
 /***************************************************************************/
+static Eina_Bool
+_desktop_cache_update(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
+{
+   Efreet_Desktop *d;
+
+   EINA_LIST_FREE(apps_cache, d)
+     efreet_desktop_unref(d);
+
+   return EINA_TRUE;
+}
 
 static int
 _plugins_init(const Evry_API *api)
@@ -1000,7 +1038,7 @@ _plugins_init(const Evry_API *api)
 
    act = EVRY_ACTION_NEW(N_("Launch"),
 			 EVRY_TYPE_APP, 0,
-			 "everything-launch",
+			 "system-run",
 			 _exec_app_action,
 			 _exec_app_check_item);
    _actions = eina_list_append(_actions, act);
@@ -1055,6 +1093,10 @@ _plugins_init(const Evry_API *api)
    EINA_LIST_FOREACH(_actions, l, act)
      evry->action_register(act,  prio++);
 
+   handlers = eina_list_append
+     (handlers, ecore_event_handler_add
+      (EFREET_EVENT_DESKTOP_CACHE_UPDATE, _desktop_cache_update, NULL));
+
    return EINA_TRUE;
 }
 
@@ -1063,15 +1105,23 @@ _plugins_shutdown(void)
 {
    Evry_Action *act;
    Evry_Plugin *p;
+   Efreet_Desktop *d;
+   Ecore_Event_Handler *h;
 
    if (!evry_module->active)
      return;
+
+   EINA_LIST_FREE(apps_cache, d)
+     efreet_desktop_unref(d);
 
    EINA_LIST_FREE(_plugins, p)
      EVRY_PLUGIN_FREE(p);
 
    EINA_LIST_FREE(_actions, act)
      EVRY_ACTION_FREE(act);
+
+   EINA_LIST_FREE(handlers, h)
+     ecore_event_handler_del(h);
 
    evry_module->active = EINA_FALSE;
 }
@@ -1093,7 +1143,7 @@ static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dia
 static int _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 
 static E_Config_Dialog *
-_conf_dialog(E_Container *con, const char *params)
+_conf_dialog(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd = NULL;
    E_Config_Dialog_View *v = NULL;
@@ -1121,7 +1171,7 @@ _conf_dialog(E_Container *con, const char *params)
 
 /* Local Functions */
 static void *
-_create_data(E_Config_Dialog *cfd)
+_create_data(E_Config_Dialog *cfd __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata = NULL;
 
@@ -1131,14 +1181,14 @@ _create_data(E_Config_Dialog *cfd)
 }
 
 static void
-_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    _conf->cfd = NULL;
    E_FREE(cfdata);
 }
 
 static Evas_Object *
-_basic_create(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdata)
+_basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *e, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o = NULL, *of = NULL, *ow = NULL;
 
@@ -1173,7 +1223,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 }
 
 static int
-_basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
 #define CP(_name)					\
    if (_conf->_name)					\
@@ -1313,7 +1363,7 @@ e_modapi_init(E_Module *m)
 }
 
 EAPI int
-e_modapi_shutdown(E_Module *m)
+e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    _plugins_shutdown();
 
@@ -1329,7 +1379,7 @@ e_modapi_shutdown(E_Module *m)
 }
 
 EAPI int
-e_modapi_save(E_Module *m)
+e_modapi_save(E_Module *m __UNUSED__)
 {
    e_config_domain_save("module.everything-apps", conf_edd, _conf);
    return 1;
@@ -1340,7 +1390,7 @@ e_modapi_save(E_Module *m)
 
 /* taken from e_exebuf.c */
 static Eina_Bool
-_scan_idler(void *data)
+_scan_idler(void *data __UNUSED__)
 {
    struct stat st;
    struct dirent *dp;

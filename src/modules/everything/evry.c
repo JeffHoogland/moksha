@@ -14,6 +14,9 @@
 /* #undef DBG
  * #define DBG(...) ERR(__VA_ARGS__) */
 
+#undef DBG
+#define DBG(...)
+
 static void _evry_matches_update(Evry_Selector *sel, int async);
 static void _evry_plugin_action(Evry_Selector *sel, int finished);
 static void _evry_plugin_select(Evry_State *s, Evry_Plugin *p);
@@ -62,6 +65,15 @@ static Eina_Bool  _evry_cb_selection_notify(void *data, int type, void *event);
 static Eina_Bool  _evry_cb_mouse(void *data, int type, void *event);
 
 static Eina_List *windows = NULL;
+
+#ifdef CHECK_TIME
+double _evry_time;
+#endif
+
+#ifdef CHECK_REFS
+static int _item_cnt = 0;
+Eina_List *_refd = NULL;
+#endif
 
 #define SUBJ_SEL win->selectors[0]
 #define ACTN_SEL win->selectors[1]
@@ -137,6 +149,11 @@ evry_show(E_Zone *zone, E_Zone_Edge edge, const char *params)
    Evry_Window *win;
    Evry_Selector *sel;
 
+#ifdef CHECK_TIME
+   _evry_time = ecore_time_get();
+   DBG("_____evry_show______");
+#endif
+   
    E_OBJECT_CHECK_RETURN(zone, 0);
    E_OBJECT_TYPE_CHECK_RETURN(zone, E_ZONE_TYPE, 0);
 
@@ -395,11 +412,6 @@ _evry_selectors_shift(Evry_Window *win, int dir)
 
    return 0;
 }
-
-#ifdef CHECK_REFS
-static int _item_cnt = 0;
-Eina_List *_refd = NULL;
-#endif
 
 Evry_Item *
 evry_item_new(Evry_Item *base, Evry_Plugin *p, const char *label,
@@ -698,7 +710,7 @@ _evry_cb_win_delete(E_Win *ewin)
 }
 
 static void
-_evry_cb_win_move(E_Win *ewin)
+_evry_cb_win_move(E_Win *ewin  __UNUSED__)
 {
    /* Evry_Window *win = ewin->data; */
    /* evas_object_resize(win->o_main, ewin->w, ewin->h); */
@@ -965,7 +977,7 @@ _evry_window_free(Evry_Window *win)
 }
 
 static void
-_evry_selector_cb_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_evry_selector_cb_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
    Evas_Event_Mouse_Down *ev = event_info;
    Evry_Selector *sel = data;
@@ -978,7 +990,7 @@ _evry_selector_cb_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 }
 
 static void
-_evry_selector_cb_wheel(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_evry_selector_cb_wheel(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
    Evas_Event_Mouse_Wheel *ev = event_info;
    Evry_Selector *sel = data;
@@ -997,7 +1009,7 @@ _evry_selector_cb_wheel(void *data, Evas *e, Evas_Object *obj, void *event_info)
 }
 
 static void
-_evry_selector_cb_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_evry_selector_cb_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
    Evas_Event_Mouse_Up *ev = event_info;
    Evry_Selector *sel = data;
@@ -1185,7 +1197,7 @@ _evry_selector_activate(Evry_Selector *sel, int slide)
 }
 
 static void
-_evry_selector_thumb_gen(void *data, Evas_Object *obj, void *event_info)
+_evry_selector_thumb_gen(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    Evas_Coord w, h;
    Evry_Selector *sel = data;
@@ -1907,7 +1919,7 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	       mod |= E_BINDING_MODIFIER_WIN;
 
 	     if (!(bind->key && (!strcmp(bind->key, ev->keyname)) &&
-		   ((bind->modifiers == mod) || (bind->any_mod))))
+		   (((unsigned int)bind->modifiers == mod) || (bind->any_mod))))
 	       continue;
 
 	     if (win->level > 0)
@@ -2113,7 +2125,7 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
      }
    else if ((ev->compose && !(ev->modifiers & ECORE_EVENT_MODIFIER_ALT)))
      {
-	int len = strlen(s->inp);
+	unsigned int len = strlen(s->inp);
 
 	if (len == 0 && (evry_view_toggle(s, ev->compose)))
 	  goto end;
@@ -2243,7 +2255,7 @@ _evry_clear(Evry_Selector *sel)
 }
 
 static void
-_evry_cb_free_action_performed(void *data, void *event)
+_evry_cb_free_action_performed(void *data __UNUSED__, void *event)
 {
    Evry_Event_Action_Performed *ev = event;
 
@@ -2670,6 +2682,8 @@ _evry_matches_update(Evry_Selector *sel, int async)
    s->changed = 1;
    s->request++;
 
+   DBG("matches update %f", ecore_time_get() - _evry_time);
+   
    if (sel->update_timer)
      {
 	ecore_timer_del(sel->update_timer);
@@ -2781,6 +2795,8 @@ _evry_matches_update(Evry_Selector *sel, int async)
 
 	if (p->fetch(p, input))
 	  {
+	     DBG("fetch %s %f", p->name, ecore_time_get() - _evry_time);
+
 	     s->cur_plugins = eina_list_append(s->cur_plugins, p);
 	     continue;
 	  }
@@ -2852,7 +2868,7 @@ _evry_plugin_select(Evry_State *s, Evry_Plugin *p)
 }
 
 static void
-_evry_cb_free_plugin_selected(void *data, void *event)
+_evry_cb_free_plugin_selected(void *data __UNUSED__, void *event)
 {
    Evry_Event_Item_Selected *ev = event;
 
@@ -2905,7 +2921,7 @@ _evry_plugin_list_insert(Evry_State *s, Evry_Plugin *p)
 }
 
 static Eina_Bool
-_evry_cb_selection_notify(void *data, int type, void *event)
+_evry_cb_selection_notify(void *data, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Selection_Notify *ev;
    Evry_Window *win = data;
