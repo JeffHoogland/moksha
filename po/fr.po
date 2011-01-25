@@ -7,13 +7,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-01-18 07:18+0400\n"
-"PO-Revision-Date: 2011-01-19 13:34+0400\n"
+"POT-Creation-Date: 2011-01-25 13:20+0400\n"
+"PO-Revision-Date: 2011-01-25 15:12+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: French <pourunmondesansgourou@gmail.com>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: French\n"
 "X-Poedit-Country: FRANCE\n"
@@ -636,7 +636,7 @@ msgstr "Afficher le menu …"
 #: src/bin/e_actions.c:2916
 #: src/modules/conf/e_mod_main.c:264
 #: src/modules/conf/e_mod_main.c:367
-#: src/modules/everything-apps/e_mod_main.c:983
+#: src/modules/everything-apps/e_mod_main.c:1057
 #: src/modules/fileman/e_mod_main.c:70
 #: src/modules/fileman/e_mod_main.c:153
 msgid "Launch"
@@ -946,8 +946,8 @@ msgstr "Appliquer"
 #: src/bin/e_configure.c:28
 #: src/modules/conf_shelves/e_mod_main.c:21
 #: src/modules/everything/e_mod_main.c:88
-#: src/modules/everything-apps/e_mod_main.c:1216
-#: src/modules/everything-files/e_mod_main.c:1599
+#: src/modules/everything-apps/e_mod_main.c:1309
+#: src/modules/everything-files/e_mod_main.c:1596
 #: src/modules/gadman/e_mod_main.c:25
 #: src/modules/mixer/e_mod_main.c:1100
 #: src/modules/connman/e_mod_main.c:1733
@@ -1081,7 +1081,7 @@ msgstr "Fichier desktop"
 #: src/modules/everything/evry_config.c:379
 #: src/modules/everything/evry_config.c:463
 #: src/modules/everything-aspell/e_mod_main.c:476
-#: src/modules/everything-files/e_mod_main.c:1491
+#: src/modules/everything-files/e_mod_main.c:1488
 #: src/modules/pager/e_mod_config.c:126
 #: src/modules/pager/e_mod_config.c:213
 msgid "General"
@@ -1092,7 +1092,7 @@ msgid "Startup Notify"
 msgstr "Notification de démarrage"
 
 #: src/bin/e_eap_editor.c:784
-#: src/modules/everything-apps/e_mod_main.c:997
+#: src/modules/everything-apps/e_mod_main.c:1071
 msgid "Run in Terminal"
 msgstr "Exécuter dans un terminal"
 
@@ -2189,8 +2189,8 @@ msgstr "Utilitaires"
 
 #: src/bin/e_int_config_modules.c:55
 #: src/modules/conf_mime/e_mod_main.c:17
-#: src/modules/everything-files/e_mod_main.c:1368
-#: src/modules/everything-files/e_mod_main.c:1377
+#: src/modules/everything-files/e_mod_main.c:1365
+#: src/modules/everything-files/e_mod_main.c:1374
 #: src/modules/fileman/e_mod_main.c:56
 #: src/modules/fileman/e_mod_main.c:74
 #: src/modules/fileman/e_mod_main.c:406
@@ -2302,8 +2302,8 @@ msgstr "Applications favorites"
 #: src/modules/conf_menus/e_int_config_menus.c:98
 #: src/modules/conf_menus/e_int_config_menus.c:288
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:194
-#: src/modules/everything-apps/e_mod_main.c:950
-#: src/modules/everything-apps/e_mod_main.c:968
+#: src/modules/everything-apps/e_mod_main.c:1024
+#: src/modules/everything-apps/e_mod_main.c:1042
 #: src/modules/wizard/page_070.c:201
 msgid "Applications"
 msgstr "Applications"
@@ -3067,7 +3067,7 @@ msgstr "Déplacer/Redimensionner des gadgets"
 msgid "Contents"
 msgstr "Contenu"
 
-#: src/bin/e_startup.c:63
+#: src/bin/e_startup.c:64
 msgid "Starting"
 msgstr "Démarrage"
 
@@ -4734,7 +4734,7 @@ msgstr "Paramétrage du thème d'icones"
 
 #: src/modules/conf_icon_theme/e_int_config_icon_themes.c:263
 msgid "This overrides general theme"
-msgstr "Prime sur le thème général"
+msgstr "Remplacer aussi le thème interne"
 
 #: src/modules/conf_icon_theme/e_mod_main.c:19
 msgid "Icon Theme"
@@ -6446,55 +6446,59 @@ msgstr "Copier dans le presse-papiers "
 msgid "  Ok, here comes the explanation of <hilight>everything</hilight>...<br>  Just type a few letters of the thing you are looking for. <br>  Use cursor <hilight>&lt;up/down&gt;</hilight> to choose from the list of things.<br>  Press  <hilight>&lt;tab&gt;</hilight> to select an action, then press  <hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    <hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;</hilight> toggle list view modes<br>    <hilight>&lt;ctrl+3&gt;</hilight> toggle thumb view modes"
 msgstr "  Voici des éclaircissements sur <hilight>Omni</hilight>...<br>  Tapez juste les premières lettres de ce que vous recherchez. <br>  Utilisez les touches <hilight>&lt;Flèche haut/bas&gt;</hilight> pour choisir dans la liste.<br>  Appuyez sur <hilight>&lt;Tabulation&gt;</hilight> pour sélectionner une action, puis sur  <hilight>&lt;Entrée&gt;</hilight>.<br>  Cette page ne s'affichera pas lors de la prochaine utilisation d' <hilight>Omni</hilight>.<br>    <hilight>&lt;Échap&gt;</hilight> ferme cette boîte de dialogue<br>    <hilight>&lt;?&gt;</hilight> affiche cette page<br>    <hilight>&lt;Entrée&gt;</hilight> exécute une action<br>    <hilight>&lt;Ctrl+Entrée&gt;</hilight> exécute une action et continue<br>    <hilight>&lt;tab&gt;</hilight> passe d'un selecteur à l'autre<br>    <hilight>&lt;Ctrl+Tabulation&gt;</hilight> détail des entrées (ça dépend du greffon)<br>    <hilight>&lt;Ctrl+« x »&gt;</hilight> va au greffon commençant par la lettre « ... »<br>    <hilight>&lt;Ctrl+Flèche gauche/droite&gt;</hilight> circule parmi les greffons<br>    <hilight>&lt;ctrl+Flèche haut/bas&gt;</hilight> va au premier/dernier élément<br>    <hilight>&lt;Ctrl+1&gt;</hilight> commute le mode d'affichage (quitter cette page ;)<br>    <hilight>&lt;Ctrl+2&gt;</hilight> commute le mode d'affichage de la liste<br>    <hilight>&lt;Ctrl+3&gt;</hilight> commute le mode d'affichage des vignettes."
 
-#: src/modules/everything-apps/e_mod_main.c:959
+#: src/modules/everything-apps/e_mod_main.c:1033
 msgid "Exebuf"
 msgstr "Exebuf"
 
-#: src/modules/everything-apps/e_mod_main.c:976
+#: src/modules/everything-apps/e_mod_main.c:1050
 msgid "Open With..."
 msgstr "Ouvrir avec…"
 
-#: src/modules/everything-apps/e_mod_main.c:990
+#: src/modules/everything-apps/e_mod_main.c:1064
 msgid "Open File..."
 msgstr "Ouvrir le fichier…"
 
-#: src/modules/everything-apps/e_mod_main.c:1004
+#: src/modules/everything-apps/e_mod_main.c:1078
 msgid "Edit Application Entry"
 msgstr "Éditer le fichier d'application"
 
-#: src/modules/everything-apps/e_mod_main.c:1011
+#: src/modules/everything-apps/e_mod_main.c:1085
 msgid "New Application Entry"
 msgstr "Nouveau fichier d'application"
 
-#: src/modules/everything-apps/e_mod_main.c:1018
+#: src/modules/everything-apps/e_mod_main.c:1092
 msgid "Run with Sudo"
 msgstr "Exécuter avec sudo"
 
-#: src/modules/everything-apps/e_mod_main.c:1024
+#: src/modules/everything-apps/e_mod_main.c:1098
 #: src/modules/fileman/e_fwin.c:1656
 #: src/modules/fileman/e_fwin.c:1981
 msgid "Open with..."
 msgstr "Ouvrir avec…"
 
-#: src/modules/everything-apps/e_mod_main.c:1031
+#: src/modules/everything-apps/e_mod_main.c:1105
 msgid "Open Terminal here"
 msgstr "Ouvrir dans un terminal"
 
-#: src/modules/everything-apps/e_mod_main.c:1096
-#: src/modules/everything-apps/e_mod_main.c:1221
-#: src/modules/everything-apps/e_mod_main.c:1240
+#: src/modules/everything-apps/e_mod_main.c:1111
+msgid "Run Executable"
+msgstr "Lancer l'exécutable"
+
+#: src/modules/everything-apps/e_mod_main.c:1189
+#: src/modules/everything-apps/e_mod_main.c:1314
+#: src/modules/everything-apps/e_mod_main.c:1333
 msgid "Everything Applications"
 msgstr "Omni applications"
 
-#: src/modules/everything-apps/e_mod_main.c:1129
+#: src/modules/everything-apps/e_mod_main.c:1222
 msgid "Commands"
 msgstr "Commandes"
 
-#: src/modules/everything-apps/e_mod_main.c:1130
+#: src/modules/everything-apps/e_mod_main.c:1223
 msgid "Terminal Command"
 msgstr "Commande du terminal"
 
-#: src/modules/everything-apps/e_mod_main.c:1135
+#: src/modules/everything-apps/e_mod_main.c:1228
 msgid "Sudo GUI"
 msgstr "Interface graphique sudo"
 
@@ -6525,62 +6529,62 @@ msgstr "Hunspell"
 msgid "Custom Command"
 msgstr "Commande personnalisée"
 
-#: src/modules/everything-calc/e_mod_main.c:237
+#: src/modules/everything-calc/e_mod_main.c:246
 msgid "Calculator"
 msgstr "Calculatrice"
 
-#: src/modules/everything-files/e_mod_main.c:1330
+#: src/modules/everything-files/e_mod_main.c:1327
 msgid "Copy To ..."
 msgstr "Copier dans..."
 
-#: src/modules/everything-files/e_mod_main.c:1335
+#: src/modules/everything-files/e_mod_main.c:1332
 msgid "Move To ..."
 msgstr "Déplacer vers..."
 
-#: src/modules/everything-files/e_mod_main.c:1340
+#: src/modules/everything-files/e_mod_main.c:1337
 msgid "Move to Trash"
 msgstr "Mettre à la corbeille"
 
-#: src/modules/everything-files/e_mod_main.c:1344
+#: src/modules/everything-files/e_mod_main.c:1341
 msgid "Open Folder (EFM)"
 msgstr "Ouvrir le dossier avec EFM"
 
-#: src/modules/everything-files/e_mod_main.c:1348
+#: src/modules/everything-files/e_mod_main.c:1345
 msgid "Sort by Date"
 msgstr "Classer par date"
 
-#: src/modules/everything-files/e_mod_main.c:1353
+#: src/modules/everything-files/e_mod_main.c:1350
 msgid "Sort by Name"
 msgstr "Classer par nom"
 
-#: src/modules/everything-files/e_mod_main.c:1385
-#: src/modules/everything-files/e_mod_main.c:1394
+#: src/modules/everything-files/e_mod_main.c:1382
+#: src/modules/everything-files/e_mod_main.c:1391
 msgid "Recent Files"
 msgstr "Documents récents"
 
-#: src/modules/everything-files/e_mod_main.c:1471
-#: src/modules/everything-files/e_mod_main.c:1602
-#: src/modules/everything-files/e_mod_main.c:1623
+#: src/modules/everything-files/e_mod_main.c:1468
+#: src/modules/everything-files/e_mod_main.c:1599
+#: src/modules/everything-files/e_mod_main.c:1620
 msgid "Everything Files"
 msgstr "Omni fichiers"
 
-#: src/modules/everything-files/e_mod_main.c:1498
+#: src/modules/everything-files/e_mod_main.c:1495
 msgid "Show recent files"
 msgstr "Afficher les documents récents"
 
-#: src/modules/everything-files/e_mod_main.c:1502
+#: src/modules/everything-files/e_mod_main.c:1499
 msgid "Search recent files"
 msgstr "Rechercher dans les documents récents"
 
-#: src/modules/everything-files/e_mod_main.c:1506
+#: src/modules/everything-files/e_mod_main.c:1503
 msgid "Search cached files"
 msgstr "Rechercher dans le cache des documents"
 
-#: src/modules/everything-files/e_mod_main.c:1510
+#: src/modules/everything-files/e_mod_main.c:1507
 msgid "Cache visited directories"
 msgstr "Mettre en cache les dossiers visités"
 
-#: src/modules/everything-files/e_mod_main.c:1514
+#: src/modules/everything-files/e_mod_main.c:1511
 msgid "Clear cache"
 msgstr "Vider le cache"
 
@@ -7655,8 +7659,6 @@ msgstr "Zone de notification"
 #~ msgstr "Supprimer l'icone"
 #~ msgid "Add An Icon"
 #~ msgstr "Ajouter un icone"
-#~ msgid "Executable"
-#~ msgstr "Exécutable"
 #~ msgid "Create a gradient..."
 #~ msgstr "Créer un dégradé…"
 #~ msgid "Color 1:"

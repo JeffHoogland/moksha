@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-01-18 19:37+0100\n"
-"PO-Revision-Date: 2011-01-18 19:38+0100\n"
+"POT-Creation-Date: 2011-01-25 13:54+0100\n"
+"PO-Revision-Date: 2011-01-25 13:56+0100\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -573,7 +573,7 @@ msgstr "Mostra menù..."
 
 #: src/bin/e_actions.c:2911 src/bin/e_actions.c:2916
 #: src/modules/conf/e_mod_main.c:264 src/modules/conf/e_mod_main.c:367
-#: src/modules/everything-apps/e_mod_main.c:983
+#: src/modules/everything-apps/e_mod_main.c:1057
 #: src/modules/fileman/e_mod_main.c:70 src/modules/fileman/e_mod_main.c:153
 msgid "Launch"
 msgstr "Lancia"
@@ -896,8 +896,8 @@ msgstr "Applica"
 
 #: src/bin/e_configure.c:28 src/modules/conf_shelves/e_mod_main.c:21
 #: src/modules/everything/e_mod_main.c:88
-#: src/modules/everything-apps/e_mod_main.c:1216
-#: src/modules/everything-files/e_mod_main.c:1599
+#: src/modules/everything-apps/e_mod_main.c:1309
+#: src/modules/everything-files/e_mod_main.c:1596
 #: src/modules/gadman/e_mod_main.c:25 src/modules/mixer/e_mod_main.c:1100
 #: src/modules/connman/e_mod_main.c:1733
 msgid "Extensions"
@@ -1051,7 +1051,7 @@ msgstr "File desktop"
 #: src/modules/everything/evry_config.c:379
 #: src/modules/everything/evry_config.c:463
 #: src/modules/everything-aspell/e_mod_main.c:476
-#: src/modules/everything-files/e_mod_main.c:1491
+#: src/modules/everything-files/e_mod_main.c:1488
 #: src/modules/pager/e_mod_config.c:126 src/modules/pager/e_mod_config.c:213
 msgid "General"
 msgstr "Impostazioni generali"
@@ -1060,7 +1060,7 @@ msgstr "Impostazioni generali"
 msgid "Startup Notify"
 msgstr "Notifica avvio"
 
-#: src/bin/e_eap_editor.c:784 src/modules/everything-apps/e_mod_main.c:997
+#: src/bin/e_eap_editor.c:784 src/modules/everything-apps/e_mod_main.c:1071
 msgid "Run in Terminal"
 msgstr "Esegui in terminale"
 
@@ -2115,8 +2115,8 @@ msgid "Utilities"
 msgstr "Utilità"
 
 #: src/bin/e_int_config_modules.c:55 src/modules/conf_mime/e_mod_main.c:17
-#: src/modules/everything-files/e_mod_main.c:1368
-#: src/modules/everything-files/e_mod_main.c:1377
+#: src/modules/everything-files/e_mod_main.c:1365
+#: src/modules/everything-files/e_mod_main.c:1374
 #: src/modules/fileman/e_mod_main.c:56 src/modules/fileman/e_mod_main.c:74
 #: src/modules/fileman/e_mod_main.c:406
 msgid "Files"
@@ -2221,8 +2221,8 @@ msgstr "Applicazioni preferite"
 #: src/bin/e_int_menus.c:127 src/modules/conf_menus/e_int_config_menus.c:98
 #: src/modules/conf_menus/e_int_config_menus.c:288
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:194
-#: src/modules/everything-apps/e_mod_main.c:950
-#: src/modules/everything-apps/e_mod_main.c:968
+#: src/modules/everything-apps/e_mod_main.c:1024
+#: src/modules/everything-apps/e_mod_main.c:1042
 #: src/modules/wizard/page_070.c:201
 msgid "Applications"
 msgstr "Applicazioni"
@@ -3087,7 +3087,7 @@ msgstr "Inizio spostamento/ridimensionamento oggetti"
 msgid "Contents"
 msgstr "Contenuti"
 
-#: src/bin/e_startup.c:63
+#: src/bin/e_startup.c:64
 msgid "Starting"
 msgstr "Avvio"
 
@@ -6686,54 +6686,58 @@ msgstr ""
 "visualizzazione a elenco<br>    <hilight>&lt;ctrl+3&gt;</hilight> cambia "
 "visualizzazione a miniature"
 
-#: src/modules/everything-apps/e_mod_main.c:959
+#: src/modules/everything-apps/e_mod_main.c:1033
 msgid "Exebuf"
 msgstr "Riga di comando"
 
-#: src/modules/everything-apps/e_mod_main.c:976
+#: src/modules/everything-apps/e_mod_main.c:1050
 msgid "Open With..."
 msgstr "Apri con..."
 
-#: src/modules/everything-apps/e_mod_main.c:990
+#: src/modules/everything-apps/e_mod_main.c:1064
 msgid "Open File..."
 msgstr "Apri file..."
 
-#: src/modules/everything-apps/e_mod_main.c:1004
+#: src/modules/everything-apps/e_mod_main.c:1078
 msgid "Edit Application Entry"
 msgstr "Modifica applicazione"
 
-#: src/modules/everything-apps/e_mod_main.c:1011
+#: src/modules/everything-apps/e_mod_main.c:1085
 msgid "New Application Entry"
 msgstr "Nuova applicazione"
 
-#: src/modules/everything-apps/e_mod_main.c:1018
+#: src/modules/everything-apps/e_mod_main.c:1092
 msgid "Run with Sudo"
 msgstr "Esegui con Sudo"
 
-#: src/modules/everything-apps/e_mod_main.c:1024
+#: src/modules/everything-apps/e_mod_main.c:1098
 #: src/modules/fileman/e_fwin.c:1656 src/modules/fileman/e_fwin.c:1981
 msgid "Open with..."
 msgstr "Apri con..."
 
-#: src/modules/everything-apps/e_mod_main.c:1031
+#: src/modules/everything-apps/e_mod_main.c:1105
 msgid "Open Terminal here"
 msgstr "Apri terminale qui"
 
-#: src/modules/everything-apps/e_mod_main.c:1096
-#: src/modules/everything-apps/e_mod_main.c:1221
-#: src/modules/everything-apps/e_mod_main.c:1240
+#: src/modules/everything-apps/e_mod_main.c:1111
+msgid "Run Executable"
+msgstr "Lancia eseguibile"
+
+#: src/modules/everything-apps/e_mod_main.c:1189
+#: src/modules/everything-apps/e_mod_main.c:1314
+#: src/modules/everything-apps/e_mod_main.c:1333
 msgid "Everything Applications"
 msgstr "Modulo applicazioni di Everything"
 
-#: src/modules/everything-apps/e_mod_main.c:1129
+#: src/modules/everything-apps/e_mod_main.c:1222
 msgid "Commands"
 msgstr "Comandi"
 
-#: src/modules/everything-apps/e_mod_main.c:1130
+#: src/modules/everything-apps/e_mod_main.c:1223
 msgid "Terminal Command"
 msgstr "Comando terminale"
 
-#: src/modules/everything-apps/e_mod_main.c:1135
+#: src/modules/everything-apps/e_mod_main.c:1228
 msgid "Sudo GUI"
 msgstr "Interfaccia sudo"
 
@@ -6764,62 +6768,62 @@ msgstr "Hunspell"
 msgid "Custom Command"
 msgstr "Comando personalizzato"
 
-#: src/modules/everything-calc/e_mod_main.c:237
+#: src/modules/everything-calc/e_mod_main.c:246
 msgid "Calculator"
 msgstr "Calcolatrice"
 
-#: src/modules/everything-files/e_mod_main.c:1330
+#: src/modules/everything-files/e_mod_main.c:1327
 msgid "Copy To ..."
 msgstr "Copia in ..."
 
-#: src/modules/everything-files/e_mod_main.c:1335
+#: src/modules/everything-files/e_mod_main.c:1332
 msgid "Move To ..."
 msgstr "Sposta in ..."
 
-#: src/modules/everything-files/e_mod_main.c:1340
+#: src/modules/everything-files/e_mod_main.c:1337
 msgid "Move to Trash"
 msgstr "Sposta nel cestino"
 
-#: src/modules/everything-files/e_mod_main.c:1344
+#: src/modules/everything-files/e_mod_main.c:1341
 msgid "Open Folder (EFM)"
 msgstr "Apri cartella (EFM)"
 
-#: src/modules/everything-files/e_mod_main.c:1348
+#: src/modules/everything-files/e_mod_main.c:1345
 msgid "Sort by Date"
 msgstr "Ordina per data"
 
-#: src/modules/everything-files/e_mod_main.c:1353
+#: src/modules/everything-files/e_mod_main.c:1350
 msgid "Sort by Name"
 msgstr "Ordina per nome"
 
-#: src/modules/everything-files/e_mod_main.c:1385
-#: src/modules/everything-files/e_mod_main.c:1394
+#: src/modules/everything-files/e_mod_main.c:1382
+#: src/modules/everything-files/e_mod_main.c:1391
 msgid "Recent Files"
 msgstr "File recenti"
 
-#: src/modules/everything-files/e_mod_main.c:1471
-#: src/modules/everything-files/e_mod_main.c:1602
-#: src/modules/everything-files/e_mod_main.c:1623
+#: src/modules/everything-files/e_mod_main.c:1468
+#: src/modules/everything-files/e_mod_main.c:1599
+#: src/modules/everything-files/e_mod_main.c:1620
 msgid "Everything Files"
 msgstr "Modulo file di Everything"
 
-#: src/modules/everything-files/e_mod_main.c:1498
+#: src/modules/everything-files/e_mod_main.c:1495
 msgid "Show recent files"
 msgstr "Mostra file recenti"
 
-#: src/modules/everything-files/e_mod_main.c:1502
+#: src/modules/everything-files/e_mod_main.c:1499
 msgid "Search recent files"
 msgstr "Cerca file recenti"
 
-#: src/modules/everything-files/e_mod_main.c:1506
+#: src/modules/everything-files/e_mod_main.c:1503
 msgid "Search cached files"
 msgstr "Cerca file in cache"
 
-#: src/modules/everything-files/e_mod_main.c:1510
+#: src/modules/everything-files/e_mod_main.c:1507
 msgid "Cache visited directories"
 msgstr "Cache per directory visitate"
 
-#: src/modules/everything-files/e_mod_main.c:1514
+#: src/modules/everything-files/e_mod_main.c:1511
 msgid "Clear cache"
 msgstr "Svuota cache"
 
