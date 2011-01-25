@@ -1597,7 +1597,7 @@ ACT_FN_GO(zone_desk_linear_flip_to, )
 
 /***************************************************************************/
 static void
-_e_actions_cb_menu_end(void *data, E_Menu *m)
+_e_actions_cb_menu_end(void *data __UNUSED__, E_Menu *m)
 {
    e_object_del(E_OBJECT(m));
 }
@@ -1784,7 +1784,7 @@ ACT_FN_GO(cleanup_windows, __UNUSED__)
 static E_Dialog *exit_dialog = NULL;
 
 static void
-_e_actions_cb_exit_dialog_ok(void *data, E_Dialog *dia)
+_e_actions_cb_exit_dialog_ok(void *data __UNUSED__, E_Dialog *dia)
 {
    if (dia)
      {
@@ -1795,7 +1795,7 @@ _e_actions_cb_exit_dialog_ok(void *data, E_Dialog *dia)
 }
 
 static void
-_e_actions_cb_exit_dialog_cancel(void *data, E_Dialog *dia)
+_e_actions_cb_exit_dialog_cancel(void *data __UNUSED__, E_Dialog *dia)
 {
    e_object_del(E_OBJECT(exit_dialog));
    exit_dialog = NULL;
@@ -1881,7 +1881,7 @@ ACT_FN_GO(mode_offline_toggle, __UNUSED__)
 static E_Dialog *logout_dialog = NULL;
 
 static void
-_e_actions_cb_logout_dialog_ok(void *data, E_Dialog *dia)
+_e_actions_cb_logout_dialog_ok(void *data __UNUSED__, E_Dialog *dia)
 {
    if (dia)
      {
@@ -1892,7 +1892,7 @@ _e_actions_cb_logout_dialog_ok(void *data, E_Dialog *dia)
 }
 
 static void
-_e_actions_cb_logout_dialog_cancel(void *data, E_Dialog *dia)
+_e_actions_cb_logout_dialog_cancel(void *data __UNUSED__, E_Dialog *dia __UNUSED__)
 {
    e_object_del(E_OBJECT(logout_dialog));
    logout_dialog = NULL;
@@ -1944,7 +1944,7 @@ ACT_FN_GO(logout, )
 static E_Dialog *halt_dialog = NULL;
 
 static void
-_e_actions_cb_halt_dialog_ok(void *data, E_Dialog *dia)
+_e_actions_cb_halt_dialog_ok(void *data __UNUSED__, E_Dialog *dia)
 {
    if (dia)
      {
@@ -1955,7 +1955,7 @@ _e_actions_cb_halt_dialog_ok(void *data, E_Dialog *dia)
 }
 
 static void
-_e_actions_cb_halt_dialog_cancel(void *data, E_Dialog *dia)
+_e_actions_cb_halt_dialog_cancel(void *data __UNUSED__, E_Dialog *dia __UNUSED__)
 {
    e_object_del(E_OBJECT(halt_dialog));
    halt_dialog = NULL;
@@ -2007,7 +2007,7 @@ ACT_FN_GO(halt, )
 static E_Dialog *reboot_dialog = NULL;
 
 static void
-_e_actions_cb_reboot_dialog_ok(void *data, E_Dialog *dia)
+_e_actions_cb_reboot_dialog_ok(void *data __UNUSED__, E_Dialog *dia)
 {
    if (dia)
      {
@@ -2018,7 +2018,7 @@ _e_actions_cb_reboot_dialog_ok(void *data, E_Dialog *dia)
 }
 
 static void
-_e_actions_cb_reboot_dialog_cancel(void *data, E_Dialog *dia)
+_e_actions_cb_reboot_dialog_cancel(void *data __UNUSED__, E_Dialog *dia __UNUSED__)
 {
    e_object_del(E_OBJECT(reboot_dialog));
    reboot_dialog = NULL;
@@ -2070,7 +2070,7 @@ ACT_FN_GO(reboot, )
 static E_Dialog *suspend_dialog = NULL;
 
 static void
-_e_actions_cb_suspend_dialog_ok(void *data, E_Dialog *dia)
+_e_actions_cb_suspend_dialog_ok(void *data __UNUSED__, E_Dialog *dia)
 {
    if (dia)
      {
@@ -2081,7 +2081,7 @@ _e_actions_cb_suspend_dialog_ok(void *data, E_Dialog *dia)
 }
 
 static void
-_e_actions_cb_suspend_dialog_cancel(void *data, E_Dialog *dia)
+_e_actions_cb_suspend_dialog_cancel(void *data __UNUSED__, E_Dialog *dia __UNUSED__)
 {
    e_object_del(E_OBJECT(suspend_dialog));
    suspend_dialog = NULL;
@@ -2138,7 +2138,7 @@ ACT_FN_GO(suspend, )
 static E_Dialog *hibernate_dialog = NULL;
 
 static void
-_e_actions_cb_hibernate_dialog_ok(void *data, E_Dialog *dia)
+_e_actions_cb_hibernate_dialog_ok(void *data __UNUSED__, E_Dialog *dia)
 {
    if (dia)
      {
@@ -2149,7 +2149,7 @@ _e_actions_cb_hibernate_dialog_ok(void *data, E_Dialog *dia)
 }
 
 static void
-_e_actions_cb_hibernate_dialog_cancel(void *data, E_Dialog *dia)
+_e_actions_cb_hibernate_dialog_cancel(void *data __UNUSED__, E_Dialog *dia __UNUSED__)
 {
    e_object_del(E_OBJECT(hibernate_dialog));
    hibernate_dialog = NULL;
@@ -2479,7 +2479,7 @@ _delayed_action_key_add(E_Object *obj, const char *params, Ecore_Event_Key *ev)
 }
 
 static void
-_delayed_action_key_del(E_Object *obj, const char *params, Ecore_Event_Key *ev)
+_delayed_action_key_del(E_Object *obj, const char *params __UNUSED__, Ecore_Event_Key *ev)
 {
    Eina_List *l;
    Delayed_Action *da;
@@ -2516,7 +2516,7 @@ _delayed_action_mouse_add(E_Object *obj, const char *params, Ecore_Event_Mouse_B
 }
 
 static void
-_delayed_action_mouse_del(E_Object *obj, const char *params, Ecore_Event_Mouse_Button *ev)
+_delayed_action_mouse_del(E_Object *obj, const char *params __UNUSED__, Ecore_Event_Mouse_Button *ev)
 {
    Eina_List *l;
    Delayed_Action *da;
