@@ -8,10 +8,12 @@
 /* local subsystem functions */
 static void _e_startup(void);
 static void _e_startup_next_cb(void *data);
+static Eina_Bool _e_startup_event_cb(void *data, int ev_type, void *ev);
 
 /* local subsystem globals */
 static E_Order *startup_apps = NULL;
 static int start_app_pos = -1;
+static Ecore_Event_Handler *desktop_cache_update_handler = NULL;
 
 /* externally accessible functions */
 EAPI void
@@ -31,11 +33,11 @@ e_startup(E_Startup_Mode mode)
 	if (!ecore_file_exists(buf))
 	  e_prefix_data_concat_static(buf, "data/applications/restart/.order");
      }
-   startup_apps = e_order_new(buf);
-   if (!startup_apps) return;
-   start_app_pos = 0;
+   desktop_cache_update_handler =
+      ecore_event_handler_add(EFREET_EVENT_DESKTOP_CACHE_UPDATE,
+                              _e_startup_event_cb,
+                              strdup(buf));
    e_init_undone();
-   _e_startup();
 }
 
 /* local subsystem functions */
@@ -70,4 +72,19 @@ static void
 _e_startup_next_cb(void *data __UNUSED__)
 {
    _e_startup();
+}
+
+static Eina_Bool
+_e_startup_event_cb(void *data, int ev_type __UNUSED__, void *ev __UNUSED__)
+{
+   char *buf;
+
+   ecore_event_handler_del(desktop_cache_update_handler);
+   buf = data;
+   startup_apps = e_order_new(buf);
+   if (startup_apps)
+      start_app_pos = 0;
+   free(buf);
+   _e_startup();
+   return ECORE_CALLBACK_PASS_ON;
 }
