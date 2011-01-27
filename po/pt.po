@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e17\n"
 "Report-Msgid-Bugs-To: http://trac.enlightenment.org/e/\n"
-"POT-Creation-Date: 2011-01-17 10:01-0800\n"
-"PO-Revision-Date: 2011-01-17 22:54-0000\n"
+"POT-Creation-Date: 2011-01-23 16:00-0800\n"
+"PO-Revision-Date: 2011-01-27 10:03-0000\n"
 "Last-Translator: Sérgio Marques <smarquespt@gmail.com>\n"
 "Language-Team: Portuguese <>\n"
 "MIME-Version: 1.0\n"
@@ -564,32 +564,26 @@ msgid "Send Mouse Forward/Back Screens..."
 msgstr "Recuar/avançar o rato nos ecrãs..."
 
 #: ../src/bin/e_actions.c:2848
-#| msgid "Move Text"
 msgid "Move To Center"
 msgstr "Mover para o centro"
 
 #: ../src/bin/e_actions.c:2852
-#| msgid "Move To ..."
 msgid "Move To..."
 msgstr "Mover para..."
 
 #: ../src/bin/e_actions.c:2857
-#| msgid "Move To ..."
 msgid "Move By..."
 msgstr "Mover por..."
 
 #: ../src/bin/e_actions.c:2863
-#| msgid "Resize by"
 msgid "Resize By..."
 msgstr "Ajustar em..."
 
 #: ../src/bin/e_actions.c:2869
-#| msgid "Flip Desktop In Direction..."
 msgid "Push in Direction..."
 msgstr "Enviar para a direção..."
 
 #: ../src/bin/e_actions.c:2875
-#| msgid "Create Icon"
 msgid "Drag Icon..."
 msgstr "Arrastar ícone..."
 
@@ -640,7 +634,7 @@ msgstr "Mostrar menu..."
 #: ../src/bin/e_actions.c:2916
 #: ../src/modules/conf/e_mod_main.c:264
 #: ../src/modules/conf/e_mod_main.c:367
-#: ../src/modules/everything-apps/e_mod_main.c:983
+#: ../src/modules/everything-apps/e_mod_main.c:1057
 #: ../src/modules/fileman/e_mod_main.c:70
 #: ../src/modules/fileman/e_mod_main.c:153
 msgid "Launch"
@@ -726,7 +720,6 @@ msgid "Reboot"
 msgstr "Reiniciar"
 
 #: ../src/bin/e_actions.c:2958
-#| msgid "Suspend"
 msgid "Suspend Now"
 msgstr "Suspender agora"
 
@@ -955,8 +948,8 @@ msgstr "Aplicar"
 #: ../src/bin/e_configure.c:28
 #: ../src/modules/conf_shelves/e_mod_main.c:21
 #: ../src/modules/everything/e_mod_main.c:88
-#: ../src/modules/everything-apps/e_mod_main.c:1216
-#: ../src/modules/everything-files/e_mod_main.c:1599
+#: ../src/modules/everything-apps/e_mod_main.c:1309
+#: ../src/modules/everything-files/e_mod_main.c:1596
 #: ../src/modules/gadman/e_mod_main.c:25
 #: ../src/modules/mixer/e_mod_main.c:1100
 #: ../src/modules/connman/e_mod_main.c:1733
@@ -1093,7 +1086,7 @@ msgstr "Ficheiro \"desktop\""
 #: ../src/modules/everything/evry_config.c:379
 #: ../src/modules/everything/evry_config.c:463
 #: ../src/modules/everything-aspell/e_mod_main.c:476
-#: ../src/modules/everything-files/e_mod_main.c:1491
+#: ../src/modules/everything-files/e_mod_main.c:1488
 #: ../src/modules/pager/e_mod_config.c:126
 #: ../src/modules/pager/e_mod_config.c:213
 msgid "General"
@@ -1104,7 +1097,7 @@ msgid "Startup Notify"
 msgstr "Notificação de arranque"
 
 #: ../src/bin/e_eap_editor.c:784
-#: ../src/modules/everything-apps/e_mod_main.c:997
+#: ../src/modules/everything-apps/e_mod_main.c:1071
 msgid "Run in Terminal"
 msgstr "Executar no terminal"
 
@@ -2219,8 +2212,8 @@ msgstr "Utilitários"
 #. Setup Entry in Config Panel
 #: ../src/bin/e_int_config_modules.c:55
 #: ../src/modules/conf_mime/e_mod_main.c:17
-#: ../src/modules/everything-files/e_mod_main.c:1368
-#: ../src/modules/everything-files/e_mod_main.c:1377
+#: ../src/modules/everything-files/e_mod_main.c:1365
+#: ../src/modules/everything-files/e_mod_main.c:1374
 #: ../src/modules/fileman/e_mod_main.c:56
 #: ../src/modules/fileman/e_mod_main.c:74
 #: ../src/modules/fileman/e_mod_main.c:406
@@ -2333,8 +2326,8 @@ msgstr "Aplicações favoritas"
 #: ../src/modules/conf_menus/e_int_config_menus.c:98
 #: ../src/modules/conf_menus/e_int_config_menus.c:288
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:194
-#: ../src/modules/everything-apps/e_mod_main.c:950
-#: ../src/modules/everything-apps/e_mod_main.c:968
+#: ../src/modules/everything-apps/e_mod_main.c:1024
+#: ../src/modules/everything-apps/e_mod_main.c:1042
 #: ../src/modules/wizard/page_070.c:201
 msgid "Applications"
 msgstr "Aplicações"
@@ -3105,7 +3098,7 @@ msgstr "Iniciar a deslocação/ajustamento de \"gadgets\""
 msgid "Contents"
 msgstr "Conteúdo"
 
-#: ../src/bin/e_startup.c:63
+#: ../src/bin/e_startup.c:64
 msgid "Starting"
 msgstr "A iniciar"
 
@@ -6526,56 +6519,61 @@ msgstr "Copiar para a área de transferência"
 msgid "  Ok, here comes the explanation of <hilight>everything</hilight>...<br>  Just type a few letters of the thing you are looking for. <br>  Use cursor <hilight>&lt;up/down&gt;</hilight> to choose from the list of things.<br>  Press  <hilight>&lt;tab&gt;</hilight> to select an action, then press  <hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    <hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;</hilight> toggle list view modes<br>    <hilight>&lt;ctrl+3&gt;</hilight> toggle thumb view modes"
 msgstr "Muito bem, aqui vem uma pequena explicação sobre o <hilight>everything</hilight>...<br>Digite algumas letras do que está a procurar.<br>Utilize o cursor <hilight>&lt;cima/baixo&gt;</hilight> para escolher da lista aquilo que pretende.<br>Prima <hilight>&lt;tab&gt;</hilight> para selecionar uma ação e prima <hilight>&lt;return&gt;</hilight>.<br>Esta página não será exibida na próxima vez que utilizar o <hilight>everything</hilight>.<br><hilight>&lt;Esc&gt;</hilight> fecha este diálogo<br><hilight>&lt;?&gt;</hilight> mostra esta página<br><hilight>&lt;return&gt;</hilight> executa uma ação<br><hilight>&lt;ctrl+return&gt;</hilight> executa uma ação e continua<br><hilight>&lt;tab&gt;</hilight> alterna entre os seletores<br><hilight>&lt;ctrl+tab&gt;</hilight> conclui a entrada (depende do \"plug-in\")<br><hilight>&lt;ctrl+x&gt;</hilight> vai para o \"plug-in\" que começa com \"x\"<br><hilight>&lt;ctrl+left/right&gt;</hilight> troca entre os \"plug-ins\"<br><hilight>&lt;ctrl+up/down&gt;</hilight> vai para o primeiro/último item<br><hilight>&lt;ctrl+1&gt;</hilight> alterna os modos de visualização (sai desta página ;)<br><hilight>&lt;ctrl+2&gt;</hilight> alterna os modos de visualização em lista<br><hilight>&lt;ctrl+3&gt;</hilight> alterna os modos de visualização em miniaturas"
 
-#: ../src/modules/everything-apps/e_mod_main.c:959
+#: ../src/modules/everything-apps/e_mod_main.c:1033
 msgid "Exebuf"
 msgstr "Exebuf"
 
-#: ../src/modules/everything-apps/e_mod_main.c:976
+#: ../src/modules/everything-apps/e_mod_main.c:1050
 msgid "Open With..."
 msgstr "Abrir com..."
 
-#: ../src/modules/everything-apps/e_mod_main.c:990
+#: ../src/modules/everything-apps/e_mod_main.c:1064
 msgid "Open File..."
 msgstr "Abrir ficheiro..."
 
-#: ../src/modules/everything-apps/e_mod_main.c:1004
+#: ../src/modules/everything-apps/e_mod_main.c:1078
 msgid "Edit Application Entry"
 msgstr "Editar entrada da aplicação"
 
-#: ../src/modules/everything-apps/e_mod_main.c:1011
+#: ../src/modules/everything-apps/e_mod_main.c:1085
 msgid "New Application Entry"
 msgstr "Nova entrada de aplicação"
 
-#: ../src/modules/everything-apps/e_mod_main.c:1018
+#: ../src/modules/everything-apps/e_mod_main.c:1092
 msgid "Run with Sudo"
 msgstr "Executar com Sudo"
 
 #. make clang happy
-#: ../src/modules/everything-apps/e_mod_main.c:1024
+#: ../src/modules/everything-apps/e_mod_main.c:1098
 #: ../src/modules/fileman/e_fwin.c:1656
 #: ../src/modules/fileman/e_fwin.c:1981
 msgid "Open with..."
 msgstr "Abrir com..."
 
-#: ../src/modules/everything-apps/e_mod_main.c:1031
+#: ../src/modules/everything-apps/e_mod_main.c:1105
 msgid "Open Terminal here"
 msgstr "Abrir aqui um terminal"
 
-#: ../src/modules/everything-apps/e_mod_main.c:1096
-#: ../src/modules/everything-apps/e_mod_main.c:1221
-#: ../src/modules/everything-apps/e_mod_main.c:1240
+#: ../src/modules/everything-apps/e_mod_main.c:1111
+#| msgid "Select an Executable"
+msgid "Run Executable"
+msgstr "Processar executável"
+
+#: ../src/modules/everything-apps/e_mod_main.c:1189
+#: ../src/modules/everything-apps/e_mod_main.c:1314
+#: ../src/modules/everything-apps/e_mod_main.c:1333
 msgid "Everything Applications"
 msgstr "Everything - Aplicações"
 
-#: ../src/modules/everything-apps/e_mod_main.c:1129
+#: ../src/modules/everything-apps/e_mod_main.c:1222
 msgid "Commands"
 msgstr "Comandos"
 
-#: ../src/modules/everything-apps/e_mod_main.c:1130
+#: ../src/modules/everything-apps/e_mod_main.c:1223
 msgid "Terminal Command"
 msgstr "Comando do terminal"
 
-#: ../src/modules/everything-apps/e_mod_main.c:1135
+#: ../src/modules/everything-apps/e_mod_main.c:1228
 msgid "Sudo GUI"
 msgstr "Interface Sudo"
 
@@ -6606,65 +6604,65 @@ msgstr "Hunspell"
 msgid "Custom Command"
 msgstr "Comando personalizado"
 
-#: ../src/modules/everything-calc/e_mod_main.c:237
+#: ../src/modules/everything-calc/e_mod_main.c:246
 msgid "Calculator"
 msgstr "Calculadora"
 
-#: ../src/modules/everything-files/e_mod_main.c:1330
+#: ../src/modules/everything-files/e_mod_main.c:1327
 msgid "Copy To ..."
 msgstr "Copiar para..."
 
-#: ../src/modules/everything-files/e_mod_main.c:1335
+#: ../src/modules/everything-files/e_mod_main.c:1332
 msgid "Move To ..."
 msgstr "Mover para..."
 
-#: ../src/modules/everything-files/e_mod_main.c:1340
+#: ../src/modules/everything-files/e_mod_main.c:1337
 msgid "Move to Trash"
 msgstr "Mover para o lixo"
 
-#: ../src/modules/everything-files/e_mod_main.c:1344
+#: ../src/modules/everything-files/e_mod_main.c:1341
 msgid "Open Folder (EFM)"
 msgstr "Abrir pasta (EFM)"
 
-#: ../src/modules/everything-files/e_mod_main.c:1348
+#: ../src/modules/everything-files/e_mod_main.c:1345
 msgid "Sort by Date"
 msgstr "Ordenar por data"
 
-#: ../src/modules/everything-files/e_mod_main.c:1353
+#: ../src/modules/everything-files/e_mod_main.c:1350
 msgid "Sort by Name"
 msgstr "Ordenar por nome"
 
-#: ../src/modules/everything-files/e_mod_main.c:1385
-#: ../src/modules/everything-files/e_mod_main.c:1394
+#: ../src/modules/everything-files/e_mod_main.c:1382
+#: ../src/modules/everything-files/e_mod_main.c:1391
 msgid "Recent Files"
 msgstr "Ficheiros recentes"
 
-#: ../src/modules/everything-files/e_mod_main.c:1471
-#: ../src/modules/everything-files/e_mod_main.c:1602
-#: ../src/modules/everything-files/e_mod_main.c:1623
+#: ../src/modules/everything-files/e_mod_main.c:1468
+#: ../src/modules/everything-files/e_mod_main.c:1599
+#: ../src/modules/everything-files/e_mod_main.c:1620
 msgid "Everything Files"
 msgstr "Everything - Ficheiros"
 
 #. ow = e_widget_check_add(evas, _("Show home directory"),
 #. * 			   &(cfdata->show_homedir));
 #. * e_widget_framelist_object_append(of, ow);
-#: ../src/modules/everything-files/e_mod_main.c:1498
+#: ../src/modules/everything-files/e_mod_main.c:1495
 msgid "Show recent files"
 msgstr "Mostrar ficheiros recentes"
 
-#: ../src/modules/everything-files/e_mod_main.c:1502
+#: ../src/modules/everything-files/e_mod_main.c:1499
 msgid "Search recent files"
 msgstr "Pesquisar ficheiros recentes"
 
-#: ../src/modules/everything-files/e_mod_main.c:1506
+#: ../src/modules/everything-files/e_mod_main.c:1503
 msgid "Search cached files"
 msgstr "Pesquisar ficheiros em \"cache\""
 
-#: ../src/modules/everything-files/e_mod_main.c:1510
+#: ../src/modules/everything-files/e_mod_main.c:1507
 msgid "Cache visited directories"
 msgstr "Colocar em \"cache\" os diretórios visitados"
 
-#: ../src/modules/everything-files/e_mod_main.c:1514
+#: ../src/modules/everything-files/e_mod_main.c:1511
 msgid "Clear cache"
 msgstr "Limpar \"cache\""
 
