@@ -1592,7 +1592,7 @@ _e_main_cb_signal_user(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
      }
    else if (e->number == 2)
      {
-        // FIXME: another core util for doing things with e
+        // comp module has its own handler for this for enabling/disabling fps debug
      }
    return ECORE_CALLBACK_RENEW;
 }
