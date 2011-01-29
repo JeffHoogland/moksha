@@ -9,9 +9,14 @@ static Eina_Bool _e_mod_sft_win_cb_win_prop(void *data, int type __UNUSED__, voi
 static Eina_Bool _e_mod_sft_win_cb_zone_resize(void *data, int type __UNUSED__, void *event);
 static void _e_mod_sft_win_cb_resize(E_Win *win);
 static void _e_mod_sft_win_create_default_buttons(Sft_Win *swin);
+static void _e_mod_sft_win_create_extra_buttons(Sft_Win *swin);
 static void _e_mod_sft_win_cb_close(void *data, void *data2 __UNUSED__);
 static void _e_mod_sft_win_cb_back(void *data, void *data2 __UNUSED__);
 static void _e_mod_sft_win_cb_forward(void *data, void *data2 __UNUSED__);
+static void _e_mod_sft_win_cb_win_pos(void *data, void *data2 __UNUSED__);
+static void _e_mod_sft_win_pos_toggle_top(Sft_Win *swin);
+static void _e_mod_sft_win_pos_toggle_left(Sft_Win *swin);
+static E_Border *_e_mod_sft_win_border_get(E_Zone *zone, int x, int y);
 
 Sft_Win *
 e_mod_sft_win_new(E_Zone *zone) 
@@ -76,6 +81,9 @@ e_mod_sft_win_new(E_Zone *zone)
 
    /* create default buttons */
    _e_mod_sft_win_create_default_buttons(swin);
+
+   /* create default buttons */
+   _e_mod_sft_win_create_extra_buttons(swin);
 
    /* set minimum size of this window */
    e_win_size_min_set(swin->win, zone->w, (il_sft_cfg->height * e_scale));
@@ -304,6 +312,29 @@ _e_mod_sft_win_create_default_buttons(Sft_Win *swin)
 }
 
 static void 
+_e_mod_sft_win_create_extra_buttons(Sft_Win *swin) 
+{
+   Evas_Object *btn;
+   int mw, mh;
+
+   /* create window toggle button */
+   btn = e_widget_button_add(swin->win->evas, _("Switch"), "view-refresh", 
+                             _e_mod_sft_win_cb_win_pos, swin, NULL);
+   e_widget_size_min_get(btn, &mw, &mh);
+   evas_object_size_hint_min_set(btn, (mw * e_scale), (mh * e_scale));
+
+   /* NB: this show is required when packing e_widgets into an edje box else
+    * the widgets do not receive any events */
+   evas_object_show(btn);
+
+   /* add button to box */
+   edje_object_part_box_append(swin->o_base, "e.box.extra_buttons", btn);
+
+   /* add button to our list */
+   swin->extra_btns = eina_list_append(swin->extra_btns, btn);
+}
+
+static void 
 _e_mod_sft_win_cb_close(void *data, void *data2 __UNUSED__) 
 {
    Sft_Win *swin;
@@ -328,4 +359,98 @@ _e_mod_sft_win_cb_forward(void *data, void *data2 __UNUSED__)
 
    if (!(swin = data)) return;
    ecore_x_e_illume_focus_forward_send(swin->zone->black_win);
+}
+
+static void 
+_e_mod_sft_win_cb_win_pos(void *data, void *data2 __UNUSED__) 
+{
+   Sft_Win *swin;
+   Ecore_X_Illume_Mode mode;
+
+   if (!(swin = data)) return;
+   mode = ecore_x_e_illume_mode_get(swin->zone->black_win);
+   switch (mode) 
+     {
+      case ECORE_X_ILLUME_MODE_UNKNOWN:
+      case ECORE_X_ILLUME_MODE_SINGLE:
+        break;
+      case ECORE_X_ILLUME_MODE_DUAL_TOP:
+        _e_mod_sft_win_pos_toggle_top(swin);
+        ecore_x_e_illume_mode_send(swin->zone->black_win, mode);
+        break;
+      case ECORE_X_ILLUME_MODE_DUAL_LEFT:
+        _e_mod_sft_win_pos_toggle_left(swin);
+        ecore_x_e_illume_mode_send(swin->zone->black_win, mode);
+        break;
+     }
+}
+
+static void 
+_e_mod_sft_win_pos_toggle_top(Sft_Win *swin) 
+{
+   E_Border *t, *b;
+   int y, h, tpos, bpos;
+
+   if (!swin) return;
+   if (!ecore_x_e_illume_indicator_geometry_get(swin->zone->black_win, 
+                                                NULL, &y, NULL, &h)) 
+     y = 0;
+
+   if (y > 0) 
+     {
+        tpos = 0;
+        bpos = (y + h);
+     }
+   else 
+     {
+        tpos = (y + h);
+        bpos = (swin->zone->h / 2);
+     }
+
+   t = _e_mod_sft_win_border_get(swin->zone, swin->zone->x, tpos);
+   b = _e_mod_sft_win_border_get(swin->zone, swin->zone->x, bpos);
+
+   if (t) e_border_move(t, t->x, bpos);
+   if (b) e_border_move(b, b->x, tpos);
+}
+
+static void 
+_e_mod_sft_win_pos_toggle_left(Sft_Win *swin) 
+{
+   E_Border *l, *r;
+   int h, lpos, rpos;
+
+   if (!swin) return;
+
+   if (!ecore_x_e_illume_indicator_geometry_get(swin->zone->black_win, 
+                                                NULL, NULL, NULL, &h)) 
+     h = 0;
+
+   lpos = 0;
+   rpos = (swin->zone->w / 2);
+
+   l = _e_mod_sft_win_border_get(swin->zone, lpos, h);
+   r = _e_mod_sft_win_border_get(swin->zone, rpos, h);
+
+   if (l) e_border_move(l, rpos, l->y);
+   if (r) e_border_move(r, lpos, r->y);
+}
+
+static E_Border *
+_e_mod_sft_win_border_get(E_Zone *zone, int x, int y) 
+{
+   Eina_List *l;
+   E_Border *bd;
+
+   if (!zone) return NULL;
+   EINA_LIST_REVERSE_FOREACH(e_border_client_list(), l, bd) 
+     {
+        if (bd->zone != zone) continue;
+        if (!bd->visible) continue;
+        if ((bd->x != x) || (bd->y != y)) continue;
+        if (bd->client.illume.quickpanel.quickpanel) continue;
+
+        return bd;
+     }
+   return NULL;
 }
