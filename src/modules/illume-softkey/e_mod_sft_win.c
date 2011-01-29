@@ -376,11 +376,9 @@ _e_mod_sft_win_cb_win_pos(void *data, void *data2 __UNUSED__)
         break;
       case ECORE_X_ILLUME_MODE_DUAL_TOP:
         _e_mod_sft_win_pos_toggle_top(swin);
-        ecore_x_e_illume_mode_send(swin->zone->black_win, mode);
         break;
       case ECORE_X_ILLUME_MODE_DUAL_LEFT:
         _e_mod_sft_win_pos_toggle_left(swin);
-        ecore_x_e_illume_mode_send(swin->zone->black_win, mode);
         break;
      }
 }
