@@ -356,6 +356,11 @@ _e_mod_ind_win_cb_mouse_up(void *data, Evas *evas __UNUSED__, Evas_Object *obj _
         /* update quickpanel position if needed */
         if (bd->y != iwin->drag.by) 
           ecore_x_e_illume_quickpanel_position_update_send(bd->client.win);
+
+        /* tell conformant apps our position and size */
+        ecore_x_e_illume_indicator_geometry_set(iwin->zone->black_win, 
+                                                bd->x, bd->y, 
+                                                bd->w, bd->h);
      }
    iwin->drag.start = 0;
    iwin->drag.dnd = 0;
