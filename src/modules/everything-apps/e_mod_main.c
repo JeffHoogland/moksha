@@ -505,8 +505,8 @@ _hist_items_get_cb(const Eina_Hash *hash __UNUSED__, const void *key, void *data
 	     else
 	       {
 		  /* remove from history */
-		  DBG("no desktop: %s", exec);
-		  hi->transient = 1;
+		  /* DBG("no desktop: %s", exec);
+		   * hi->transient = 1; */
 	       }
 	  }
 
