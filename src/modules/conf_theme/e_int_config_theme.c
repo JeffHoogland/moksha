@@ -290,7 +290,7 @@ _cb_import(void *data1, void *data2 __UNUSED__)
 
 #ifdef HAVE_EXCHANGE
 static void
-_cb_web(void *data1, void *data2)
+_cb_web(void *data1, void *data2 __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
 
