@@ -59,7 +59,7 @@ _web_del_cb(void *data)
 }
 
 static void
-_web_download_complete_cb(Exchange_Object *obj, const char *file, void *data)
+_web_download_complete_cb(Exchange_Object *obj __UNUSED__, const char *file __UNUSED__, void *data)
 {
    Exchange_Object *wp = data;
    Web *web = exchange_obj_data_get(wp);
@@ -72,7 +72,7 @@ _web_download_complete_cb(Exchange_Object *obj, const char *file, void *data)
 }
 
 static void
-_web_download_btn_cb(void *data, E_Dialog *dia)
+_web_download_btn_cb(void *data, E_Dialog *dia __UNUSED__)
 {
    Web *web = data;
    Exchange_Object *wp;
@@ -88,7 +88,7 @@ _web_download_btn_cb(void *data, E_Dialog *dia)
 }
 
 static void
-_web_apply_btn_cb(void *data, E_Dialog *dia)
+_web_apply_btn_cb(void *data, E_Dialog *dia __UNUSED__)
 {
    Web *web = data;
    Exchange_Object *wp;
@@ -108,7 +108,7 @@ _web_apply_btn_cb(void *data, E_Dialog *dia)
 }
 
 static void
-_web_close_btn_cb(void *data, E_Dialog *dia)
+_web_close_btn_cb(void *data __UNUSED__, E_Dialog *dia)
 {
    e_int_config_wallpaper_web_del(dia);
 }
