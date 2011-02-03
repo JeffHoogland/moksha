@@ -324,7 +324,7 @@ _e_actions_cb_kill_dialog_ok(void *data, E_Dialog *dia)
 }
 
 static void
-_e_actions_cb_kill_dialog_cancel(void *data, E_Dialog *dia)
+_e_actions_cb_kill_dialog_cancel(void *data __UNUSED__, E_Dialog *dia __UNUSED__)
 {
    e_object_del(E_OBJECT(kill_dialog));
    kill_dialog = NULL;
@@ -1795,7 +1795,7 @@ _e_actions_cb_exit_dialog_ok(void *data __UNUSED__, E_Dialog *dia)
 }
 
 static void
-_e_actions_cb_exit_dialog_cancel(void *data __UNUSED__, E_Dialog *dia)
+_e_actions_cb_exit_dialog_cancel(void *data __UNUSED__, E_Dialog *dia __UNUSED__)
 {
    e_object_del(E_OBJECT(exit_dialog));
    exit_dialog = NULL;
