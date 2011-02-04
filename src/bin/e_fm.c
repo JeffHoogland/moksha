@@ -4973,7 +4973,12 @@ _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
                   if ((!e_fm2_device_storage_find(ic->info.link)) &&
                       (!e_fm2_device_volume_find(ic->info.link)))
                     {
-                       _e_fm2_live_file_del(ic->sd->obj, ic->info.file);
+		       /* delete .desktop for non existing device */
+		       if (ecore_file_remove(buf))
+			 _e_fm2_live_file_del(ic->sd->obj, ic->info.file);
+		       else /* ignore */
+			 _e_fm2_file_del(ic->sd->obj, ic->info.file);
+
                        efreet_desktop_free(desktop);
                        goto error;
                     }
