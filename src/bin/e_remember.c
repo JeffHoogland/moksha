@@ -114,7 +114,8 @@ e_remember_internal_save(void)
 		      E_REMEMBER_APPLY_DESKTOP | E_REMEMBER_APPLY_LOCKS |
 		      E_REMEMBER_APPLY_SKIP_WINLIST |	  
 		      E_REMEMBER_APPLY_SKIP_PAGER |
-		      E_REMEMBER_APPLY_SKIP_TASKBAR);
+		      E_REMEMBER_APPLY_SKIP_TASKBAR |
+		      E_REMEMBER_APPLY_OFFER_RESISTANCE);
 	_e_remember_update(bd, rem);
 
 	remembers->list = eina_list_append(remembers->list, rem);
@@ -438,6 +439,8 @@ _e_remember_update(E_Border *bd, E_Remember *rem)
      e_desk_xy_get(bd->desk, &rem->prop.desk_x, &rem->prop.desk_y);
    if (rem->apply & E_REMEMBER_APPLY_FULLSCREEN)
      rem->prop.fullscreen = bd->fullscreen;   
+   if (rem->apply & E_REMEMBER_APPLY_OFFER_RESISTANCE)
+     rem->prop.offer_resistance = bd->offer_resistance;
 }
 
 /* local subsystem functions */
@@ -856,6 +859,8 @@ _e_remember_cb_hook_pre_post_fetch(void *data __UNUSED__, void *border)
      bd->client.netwm.state.skip_taskbar = rem->prop.skip_taskbar;
    if (rem->apply & E_REMEMBER_APPLY_ICON_PREF)
      bd->icon_preference = rem->prop.icon_preference;
+   if (rem->apply & E_REMEMBER_APPLY_OFFER_RESISTANCE)
+     bd->offer_resistance = rem->prop.offer_resistance;
    if (rem->apply & E_REMEMBER_SET_FOCUS_ON_START)
      bd->want_focus = 1;
 
@@ -929,6 +934,7 @@ _e_remember_init_edd(void)
    E_CONFIG_VAL(D, T, prop.command, STR);
    E_CONFIG_VAL(D, T, prop.icon_preference, UCHAR);
    E_CONFIG_VAL(D, T, prop.desktop_file, STR);
+   E_CONFIG_VAL(D, T, prop.offer_resistance, UCHAR);
 #undef T
 #undef D
    e_remember_list_edd = E_CONFIG_DD_NEW("E_Remember_List", E_Remember_List);

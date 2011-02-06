@@ -74,7 +74,7 @@ e_resist_container_border_position(E_Container *con, Eina_List *skiplist,
 		       break;
 		    }
 	       }
-	     if (ok)
+	     if (ok && bd->offer_resistance)
 	       {
 		  OBSTACLE(bd->x, bd->y, bd->w, bd->h, e_config->window_resist);
 	       }

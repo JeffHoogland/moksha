@@ -25,6 +25,7 @@ typedef struct _E_Remember E_Remember;
 #define E_REMEMBER_APPLY_ICON_PREF (1 << 13)
 #define E_REMEMBER_SET_FOCUS_ON_START (1 << 14)
 #define E_REMEMBER_APPLY_FULLSCREEN (1 << 15)
+#define E_REMEMBER_APPLY_OFFER_RESISTANCE (1 << 16)
 
 #define E_REMEMBER_INTERNAL_DIALOGS   (1 << 0)
 #define E_REMEMBER_INTERNAL_FM_WINS   (1 << 1)
@@ -88,6 +89,7 @@ struct _E_Remember
 	unsigned char skip_pager;
 	unsigned char skip_taskbar;
 	unsigned char icon_preference;
+	unsigned char offer_resistance;
       
 	int           desk_x, desk_y;
 	int           zone;

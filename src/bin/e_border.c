@@ -590,6 +590,8 @@ e_border_new(E_Container   *con,
    bd->changes.icon = 1;
    bd->changes.size = 1;
    bd->changes.shape = 1;
+   
+   bd->offer_resistance = 1;
 
    /* just to friggin make java happy - we're DELAYING the reparent until
     * eval time...

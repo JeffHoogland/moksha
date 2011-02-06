@@ -53,6 +53,7 @@ struct _E_Config_Dialog_Data
       int apply_desktop_file;
       int set_focus_on_start;
       int keep_settings;
+      int offer_resistance;
    } remember;
 
   int applied;
@@ -227,6 +228,8 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	  cfdata->remember.apply_icon_pref = 1;
 	if (rem->apply & E_REMEMBER_SET_FOCUS_ON_START)
 	  cfdata->remember.set_focus_on_start = 1;
+	if (rem->apply & E_REMEMBER_APPLY_OFFER_RESISTANCE)
+	  cfdata->remember.offer_resistance = 1;
      }
 
    if (!rem) cfdata->mode = MODE_NOTHING;
@@ -424,7 +427,8 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
        E_REMEMBER_APPLY_LOCKS | E_REMEMBER_APPLY_BORDER | E_REMEMBER_APPLY_STICKY |
        E_REMEMBER_APPLY_DESKTOP | E_REMEMBER_APPLY_SHADE | E_REMEMBER_APPLY_ZONE |
        E_REMEMBER_APPLY_SKIP_WINLIST | E_REMEMBER_APPLY_SKIP_PAGER |
-       E_REMEMBER_APPLY_SKIP_TASKBAR | E_REMEMBER_APPLY_FULLSCREEN | E_REMEMBER_APPLY_ICON_PREF;
+       E_REMEMBER_APPLY_SKIP_TASKBAR | E_REMEMBER_APPLY_FULLSCREEN | E_REMEMBER_APPLY_ICON_PREF |
+       E_REMEMBER_APPLY_OFFER_RESISTANCE;
 
    rem->apply_first_only = 0;
 
@@ -577,6 +581,8 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      rem->apply |= E_REMEMBER_APPLY_ICON_PREF;
    if (cfdata->remember.set_focus_on_start)
      rem->apply |= E_REMEMBER_SET_FOCUS_ON_START;
+   if (cfdata->remember.offer_resistance)
+     rem->apply |= E_REMEMBER_APPLY_OFFER_RESISTANCE;
   
    if (!rem->apply && !rem->prop.desktop_file)
      {
@@ -738,9 +744,12 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
    ob = e_widget_check_add(evas, _("Skip Taskbar"),
 			   &(cfdata->remember.apply_skip_taskbar));
    e_widget_frametable_object_append(of, ob, 1, 6, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_check_add(evas, _("Offer Resistance"),
+			   &(cfdata->remember.offer_resistance));
+   e_widget_frametable_object_append(of, ob, 1, 7, 1, 1, 1, 1, 1, 1);
    ob = e_widget_check_add(evas, _("Application file or name (.desktop)"),
 			   &(cfdata->remember.apply_desktop_file));
-   e_widget_frametable_object_append(of, ob, 0, 7, 2, 1, 1, 1, 1, 1);
+   e_widget_frametable_object_append(of, ob, 0, 7, 1, 1, 1, 1, 1, 1);
    ob = e_widget_entry_add(evas, &cfdata->desktop, NULL, NULL, NULL);
    e_widget_frametable_object_append(of, ob, 0, 8, 2, 1, 1, 1, 1, 1);
    e_widget_table_object_append(o, of, 1, 0, 1, 2, 1, 1, 1, 1);

@@ -15,6 +15,7 @@ static void _e_border_menu_cb_maximize_vertically(void *data, E_Menu *m, E_Menu_
 static void _e_border_menu_cb_maximize_horizontally(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_unmaximize(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_shade(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_border_menu_cb_resistance(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_application_add_pre(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_more_pre(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -500,6 +501,15 @@ _e_border_menu_cb_shade(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUS
 	else
 	  e_border_shade(bd, E_DIRECTION_UP);
      }
+}
+
+static void
+_e_border_menu_cb_resistance(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
+{
+   E_Border *bd;
+
+   bd = data;
+   bd->offer_resistance = !bd->offer_resistance;
 }
 
 static void
@@ -997,6 +1007,17 @@ _e_border_menu_cb_border_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
    e_menu_item_toggle_set(submi, (bd->icon_preference == E_ICON_PREF_USER ? 1 : 0));
    e_util_desktop_menu_item_icon_add(bd->desktop, 16, submi);
    e_menu_item_callback_set(submi, _e_border_menu_cb_iconpref_user, bd);
+   e_menu_item_separator_set(submi, 1);
+
+   submi = e_menu_item_new(subm);
+   e_menu_item_label_set(submi, _("Offer Resistance"));
+   e_menu_item_check_set(submi, 1);
+   e_menu_item_toggle_set(submi, (bd->offer_resistance ? 1 : 0));
+   e_menu_item_callback_set(submi, _e_border_menu_cb_resistance, bd);
+   e_menu_item_icon_edje_set(submi,
+   e_theme_edje_file_get("base/theme/borders",
+				"e/widgets/border/default/borderless"),
+				"e/widgets/border/default/borderless");
 }
 
 static void
