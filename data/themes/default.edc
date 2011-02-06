@@ -33391,6 +33391,7 @@ collections {
                   size: 11;
                   align: 0.0 0.5;
                   min: 1 1;
+                  text_class: "fileman_typebuf";
                }
             }
          }
@@ -34085,6 +34086,7 @@ collections {
                   size: 9;
                   min: 0 1;
                   align: 0.0 1.0;
+                  text_class: "fileman_typebuf";
                }
             }
             description {
@@ -34116,6 +34118,7 @@ collections {
                   size: 9;
                   min: 0 1;
                   align: 1.0 0.0;
+                  text_class: "fileman_icon";
                }
             }
             description {
@@ -34224,6 +34227,7 @@ collections {
                   size: 10;
                   min: 0 1;
                   align: 0.5 0.5;
+	          text_class: "fileman_icon";
                }
             }
             description {
@@ -34273,6 +34277,7 @@ collections {
                   size: 9;
                   min: 0 1;
                   align: 0.5 0.5;
+                  text_class: "fileman_icon";
                }
             }
             description {
@@ -34345,6 +34350,7 @@ collections {
                   size: 10;
                   min: 0 1;
                   align: 0.5 0.5;
+                  text_class: "fileman_icon";
                }
             }
             description {
@@ -34394,6 +34400,7 @@ collections {
                   size: 9;
                   min: 0 1;
                   align: 0.5 0.5;
+                  text_class: "fileman_icon";
                }
             }
             description {
@@ -34642,10 +34649,12 @@ collections {
                   size: 10;
                   min: 0 1;
                   align: 0.5 0.0;
+                  text_class: "fileman_icon";
                }
             }
             description {
                state: "selected" 0.0;
+	       inherit: "default" 0.0;
                rel1 {
                   offset: 2 -12;
                   relative: 0.0 1.0;
@@ -34653,12 +34662,6 @@ collections {
                rel2.offset: -2 -4;
                color: 250 250 250 255;
                color3: 20 20 20 20;
-               text {
-                  font: "Sans";
-                  size: 10;
-                  min: 0 1;
-                  align: 0.5 0.0;
-               }
             }
          }
          part {
@@ -34952,17 +34955,18 @@ collections {
                   to_x: "arrow";
                }
                color: 250 250 250 255;
-               color3: 20 20 20 20;
+               color3: 20 20 20 30;
                text {
                   font: "Sans";
                   size: 10;
                   min: 0 1;
                   align: 0.0 0.5;
+                  text_class: "fileman_icon";
                }
             }
             description {
                state: "detail" 0.0;
-               /* inherit: "default" 0.0; */
+               inherit: "default" 0.0;
                rel1 {
                   to_x: "clip";
                   to_y: "base";
@@ -34975,15 +34979,8 @@ collections {
                   to_y: "base";
                   to_x: "arrow";
                }
-               color: 250 250 250 255;
-               color3: 20 20 20 20;
-
-               text {
-                  font: "Sans";
-                  size: 10;
-                  min: 0 1;
-                  align: 0.0 0.0;
-               }
+               color: 255 255 255 255;
+               color3: 20 20 20 30;
             }
          }
          part {
@@ -35009,13 +35006,14 @@ collections {
                   to_y: "base";
                   to_x: "arrow";
                }
-               color: 200 200 200 255;
+               color: 180 180 180 255;
                color3: 0 0 0 0;
                text {
                   font: "Sans";
                   size: 8;
                   min: 0 1;
                   align: 0.0 0.0;
+                  text_class: "fileman_icon";
                }
             }
             description {
