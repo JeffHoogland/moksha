@@ -19560,6 +19560,39 @@ collections {
       }      
       parts {
          part {
+            name: "label2";
+            type: TEXTBLOCK;
+            mouse_events: 0;
+            scale: 1;
+            description {
+               state: "default" 0.0;
+               align: 0.5 0.0;
+               fixed: 0 1;
+	       color: 224 224 224 255;
+               color3: 0 0 0 64;
+               rel1 {
+                  to: "icon0";
+                  relative: 0.0 1.0;
+                  offset: 4 3;
+               }
+               rel2 {
+                  to: "icon0";
+                  relative: 1.0 1.0;
+                  offset: -5 50;
+               }
+               text {
+                  style: "fileman_desktop_icon_name";
+	          text_source: "e.text.label";
+                  min: 0 1;
+               }
+            }
+            description {
+               state: "selected" 0.0;
+               inherit: "default" 0.0;
+               visible: 0;
+            }
+         }
+         part {
             name: "bg";
             mouse_events: 0;
             description {
@@ -19761,6 +19794,7 @@ collections {
                fixed: 0 1;
                color: 224 224 224 255;
                color3: 0 0 0 64;
+               visible: 0;
                rel1 {
                   to: "icon0";
                   relative: 0.0 1.0;
@@ -19769,22 +19803,18 @@ collections {
                rel2 {
                   to: "icon0";
                   relative: 1.0 1.0;
-                  offset: -5 35;
+                  offset: -5 50;
                }
-
-               text {
-                  style: "fileman_desktop_icon_name";
-                  min: 0 1;
-               }
-            }
-            description {
-               state: "selected" 0.0;
-               inherit: "default" 0.0;
                text {
                   style: "fileman_desktop_icon_name_full";
                   min: 0 1;
                   max: 0 1;
                }
+            }
+            description {
+               state: "selected" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
             }
          }
          part {
@@ -19922,6 +19952,7 @@ collections {
             target: "fg1";
             target: "fg2";
             target: "e.text.label";
+            target: "label2";
             transition: LINEAR 0.2;
          }
          program {
@@ -19933,6 +19964,7 @@ collections {
             target: "fg1";
             target: "fg2";
             target: "e.text.label";
+            target: "label2";
             transition: LINEAR 0.1;
          }
          program {
