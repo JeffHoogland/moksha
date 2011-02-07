@@ -18512,11 +18512,11 @@ collections {
       styles {
         style {
             name: "fileman_icon_name";
-            base: "font=Sans font_size=10 text_class=fileman_icon align=center color=#fff wrap=mixed ellipsis=1.0";
+            base: "font=Sans font_size=10 text_class=fileman_icon align=center color=#fff wrap=mixed ellipsis=1.0 style=soft_shadow shadow_color=#0002";
         }
         style {
             name: "fileman_icon_name_full";
-            base: "font=Sans font_size=10 text_class=fileman_icon align=center color=#fff wrap=mixed";
+            base: "font=Sans font_size=10 text_class=fileman_icon align=center color=#fff wrap=mixed style=soft_shadow shadow_color=#0002";
         }
       }
 
@@ -19551,11 +19551,11 @@ collections {
       styles {
         style {
             name: "fileman_desktop_icon_name";
-            base: "font=Sans:style=Bold font_size=10 text_class=desktop_icon align=center color=#fff wrap=mixed ellipsis=1.0";
+            base: "font=Sans:style=Bold font_size=10 text_class=desktop_icon align=center color=#fff wrap=mixed ellipsis=1.0 style=soft_shadow shadow_color=#0002";
         }
         style {
             name: "fileman_desktop_icon_name_full";
-            base: "font=Sans:style=Bold font_size=10 text_class=desktop_icon align=center color=#fff wrap=mixed";
+            base: "font=Sans:style=Bold font_size=10 text_class=desktop_icon align=center color=#fff wrap=mixed style=soft_shadow shadow_color=#0002";
         }
       }      
       parts {
