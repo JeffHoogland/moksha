@@ -11,11 +11,23 @@
  */
 
 /* local structures */
-typedef struct _ACPIDevice ACPIDevice; //  for mapping device names to type
-struct _ACPIDevice 
+/* for simple acpi device mapping */
+typedef struct _E_ACPI_Device_Simple      E_ACPI_Device_Simple; 
+typedef struct _E_ACPI_Device_Multiplexed E_ACPI_Device_Multiplexed;
+ 
+struct _E_ACPI_Device_Simple 
 {
    const char *name;
-   int type;
+   // ->
+   int         type;
+};
+
+struct _E_ACPI_Device_Multiplexed
+{
+   const char *name;
+   int         status;
+   // ->
+   int         type;
 };
 
 /* local function prototypes */
@@ -29,53 +41,48 @@ static Eina_Bool _e_acpi_cb_event(void *data __UNUSED__, int type __UNUSED__, vo
 static int _e_acpi_events_frozen = 0;
 static Ecore_Con_Server *_e_acpid = NULL;
 static Eina_List *_e_acpid_hdls = NULL;
-static Eina_Hash *_e_acpid_devices = NULL;
-static ACPIDevice _devices[] = 
+static Eina_Strbuf *acpibuf = NULL;
+
+static E_ACPI_Device_Simple _devices_simple[] =
 {
    /* NB: DO NOT TRANSLATE THESE. */
-   /* standardized ACPI device name, corresponding E_ACPI_TYPE */
-   {"ac_adapter", E_ACPI_TYPE_AC_ADAPTER},
-   {"battery", E_ACPI_TYPE_BATTERY},
-   {"button/lid", E_ACPI_TYPE_LID},
+   {"ac_adapter",   E_ACPI_TYPE_AC_ADAPTER},
+   {"battery",      E_ACPI_TYPE_BATTERY},
+   {"button/lid",   E_ACPI_TYPE_LID},
    {"button/power", E_ACPI_TYPE_POWER},
    {"button/sleep", E_ACPI_TYPE_SLEEP},
-   {"fan", E_ACPI_TYPE_FAN},
-   {"processor", E_ACPI_TYPE_PROCESSOR},
+   {"fan",          E_ACPI_TYPE_FAN},
+   {"processor",    E_ACPI_TYPE_PROCESSOR},
    {"thermal_zone", E_ACPI_TYPE_THERMAL},
-   {"video", E_ACPI_TYPE_VIDEO},
-   {NULL, E_ACPI_TYPE_UNKNOWN}
+   {"video",        E_ACPI_TYPE_VIDEO},
+   
+   {NULL,           E_ACPI_TYPE_UNKNOWN}
+};
+
+static E_ACPI_Device_Multiplexed _devices_multiplexed[] =
+{
+   /* NB: DO NOT TRANSLATE THESE. */
+   {"sony/hotkey",  0x10, E_ACPI_TYPE_BRIGHTNESS_DOWN},
+   {"sony/hotkey",  0x11, E_ACPI_TYPE_BRIGHTNESS_UP},
+   {"sony/hotkey",  0x12, E_ACPI_TYPE_VIDEO},
+   {"sony/hotkey",  0x14, E_ACPI_TYPE_ZOOM_OUT},
+   {"sony/hotkey",  0x15, E_ACPI_TYPE_ZOOM_IN},
+   {"sony/hotkey",  0x17, E_ACPI_TYPE_HIBERNATE},
+   {"sony/hotkey",  0xa6, E_ACPI_TYPE_ASSIST},
+   {"sony/hotkey",  0x20, E_ACPI_TYPE_S1},
+   {"sony/hotkey",  0xa5, E_ACPI_TYPE_VAIO},
+   
+   {NULL,           0x00, E_ACPI_TYPE_UNKNOWN}
 };
 
 /* public variables */
-EAPI int E_EVENT_ACPI_UNKNOWN = 0;
-EAPI int E_EVENT_ACPI_AC_ADAPTER = 0;
-EAPI int E_EVENT_ACPI_BATTERY = 0;
-EAPI int E_EVENT_ACPI_FAN = 0;
-EAPI int E_EVENT_ACPI_LID = 0;
-EAPI int E_EVENT_ACPI_POWER = 0;
-EAPI int E_EVENT_ACPI_PROCESSOR = 0;
-EAPI int E_EVENT_ACPI_SLEEP = 0;
-EAPI int E_EVENT_ACPI_THERMAL = 0;
-EAPI int E_EVENT_ACPI_VIDEO = 0;
-EAPI int E_EVENT_ACPI_WIFI = 0;
+EAPI int E_EVENT_ACPI = 0;
 
 /* public functions */
 EINTERN int
 e_acpi_init(void) 
 {
-   const ACPIDevice *dev;
-
-   E_EVENT_ACPI_UNKNOWN = ecore_event_type_new();
-   E_EVENT_ACPI_AC_ADAPTER = ecore_event_type_new();
-   E_EVENT_ACPI_BATTERY = ecore_event_type_new();
-   E_EVENT_ACPI_FAN = ecore_event_type_new();
-   E_EVENT_ACPI_LID = ecore_event_type_new();
-   E_EVENT_ACPI_POWER = ecore_event_type_new();
-   E_EVENT_ACPI_PROCESSOR = ecore_event_type_new();
-   E_EVENT_ACPI_SLEEP = ecore_event_type_new();
-   E_EVENT_ACPI_THERMAL = ecore_event_type_new();
-   E_EVENT_ACPI_VIDEO = ecore_event_type_new();
-   E_EVENT_ACPI_WIFI = ecore_event_type_new();
+   E_EVENT_ACPI = ecore_event_type_new();
 
    /* check for running acpid */
    if (!ecore_file_exists("/var/run/acpid.socket")) return 1;
@@ -85,38 +92,21 @@ e_acpi_init(void)
 				       "/var/run/acpid.socket", -1, NULL);
    if (!_e_acpid) return 1;
 
-   /* create new device hash and fill it */
-   _e_acpid_devices = eina_hash_string_superfast_new(NULL);
-   for (dev = _devices; dev->type > E_ACPI_TYPE_UNKNOWN; dev++) 
-     eina_hash_direct_add(_e_acpid_devices, dev->name, dev);
-
    /* setup handlers */
    _e_acpid_hdls = 
-     eina_list_append(_e_acpid_hdls, 
-		      ecore_event_handler_add(ECORE_CON_EVENT_SERVER_DEL, 
-					      _e_acpi_cb_server_del, NULL));
+      eina_list_append(_e_acpid_hdls, 
+                       ecore_event_handler_add(ECORE_CON_EVENT_SERVER_DEL, 
+                                               _e_acpi_cb_server_del, NULL));
    _e_acpid_hdls = 
-     eina_list_append(_e_acpid_hdls, 
-		      ecore_event_handler_add(ECORE_CON_EVENT_SERVER_DATA, 
-					      _e_acpi_cb_server_data, NULL));
-
+      eina_list_append(_e_acpid_hdls, 
+                       ecore_event_handler_add(ECORE_CON_EVENT_SERVER_DATA, 
+                                               _e_acpi_cb_server_data, NULL));
+   
    /* Add handlers for standard acpi events */
    _e_acpid_hdls = 
-     eina_list_append(_e_acpid_hdls, 
-		      ecore_event_handler_add(E_EVENT_ACPI_AC_ADAPTER, 
-					      _e_acpi_cb_event, NULL));
-   _e_acpid_hdls = 
-     eina_list_append(_e_acpid_hdls, 
-		      ecore_event_handler_add(E_EVENT_ACPI_LID, 
-					      _e_acpi_cb_event, NULL));
-   _e_acpid_hdls = 
-     eina_list_append(_e_acpid_hdls, 
-		      ecore_event_handler_add(E_EVENT_ACPI_POWER, 
-					      _e_acpi_cb_event, NULL));
-   _e_acpid_hdls = 
-     eina_list_append(_e_acpid_hdls, 
-		      ecore_event_handler_add(E_EVENT_ACPI_SLEEP, 
-					      _e_acpi_cb_event, NULL));
+      eina_list_append(_e_acpid_hdls, 
+                       ecore_event_handler_add(E_EVENT_ACPI,
+                                               _e_acpi_cb_event, NULL));
    return 1;
 }
 
@@ -125,17 +115,15 @@ e_acpi_shutdown(void)
 {
    Ecore_Event_Handler *hdl;
 
-   /* destroy the device hash */
-   if (_e_acpid_devices) eina_hash_free(_e_acpid_devices);
-   _e_acpid_devices = NULL;
-
    /* cleanup event handlers */
-   EINA_LIST_FREE(_e_acpid_hdls, hdl)
-     ecore_event_handler_del(hdl);
+   EINA_LIST_FREE(_e_acpid_hdls, hdl) ecore_event_handler_del(hdl);
 
    /* kill the server if existing */
-   if (_e_acpid) ecore_con_server_del(_e_acpid);
-   _e_acpid = NULL;
+   if (_e_acpid)
+     {
+        ecore_con_server_del(_e_acpid);
+        _e_acpid = NULL;
+     }
    return 1;
 }
 
@@ -163,12 +151,14 @@ _e_acpi_cb_server_del(void *data __UNUSED__, int type __UNUSED__, void *event)
    if (ev->server != _e_acpid) return ECORE_CALLBACK_PASS_ON;
 
    /* cleanup event handlers */
-   EINA_LIST_FREE(_e_acpid_hdls, hdl)
-     ecore_event_handler_del(hdl);
+   EINA_LIST_FREE(_e_acpid_hdls, hdl) ecore_event_handler_del(hdl);
 
    /* kill the server if existing */
-   if (_e_acpid) ecore_con_server_del(_e_acpid);
-   _e_acpid = NULL;
+   if (_e_acpid)
+     {
+        ecore_con_server_del(_e_acpid);
+        _e_acpid = NULL;
+     }
    return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -176,12 +166,11 @@ static Eina_Bool
 _e_acpi_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Con_Event_Server_Data *ev;
-   ACPIDevice *dev;
    E_Event_Acpi *acpi_event;
-   int sig, status, event_type;
-   char device[1024], bus[1024];
-   char *sdata;
-
+   int sig, status, i, done = 0;
+   char device[1024], bus[1024], *sdata;
+   const char *str, *p;
+   
    ev = event;
 
    /* write out actual acpi received data to stdout for debugging
@@ -190,70 +179,90 @@ _e_acpi_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
    /* data from a server isnt a string - its not 0 byte terminated. it's just
     * a blob of data. copy to string and 0 byte terminate it so it can be
     * string-swizzled/parsed etc. */
-   sdata = alloca(ev->size + 1);
-   memcpy(sdata, ev->data, ev->size);
-   sdata[ev->size] = 0;
-   /* parse out this acpi string into separate pieces */
-   if (sscanf(sdata, "%s %s %d %d", device, bus, &sig, &status) != 4)
-     return ECORE_CALLBACK_PASS_ON;
-
-   /* create new event structure to raise */
-   acpi_event = E_NEW(E_Event_Acpi, 1);
-   acpi_event->bus_id = eina_stringshare_add(bus);
-   acpi_event->signal = sig;
-   acpi_event->status = status;
-
-   /* determine which device this event is for */
-   if ((dev = eina_hash_find(_e_acpid_devices, device))) 
+   if (!acpibuf) acpibuf = eina_strbuf_new();
+   eina_strbuf_append_n(acpibuf, ev->data, ev->size);
+   str = eina_strbuf_string_get(acpibuf);
+   p = strchr(str, '\n');
+   if (!p) return ECORE_CALLBACK_PASS_ON;
+   while (p)
      {
-	acpi_event->device = eina_stringshare_add(dev->name);
-	acpi_event->type = dev->type;
+        sdata = alloca(p - str + 1);
+        strncpy(sdata, str, (int)(p - str));
+        sdata[p - str] = 0;
+        /* parse out this acpi string into separate pieces */
+        if (sscanf(sdata, "%1023s %1023s %x %x", 
+                   device, bus, &sig, &status) == 4)
+          {
+             /* create new event structure to raise */
+             acpi_event = E_NEW(E_Event_Acpi, 1);
+             acpi_event->bus_id = eina_stringshare_add(bus);
+             acpi_event->signal = sig;
+             acpi_event->status = status;
+             
+             /* FIXME: add in a key faking layer */
+             if (!done)
+               {
+                  for (i = 0; _devices_multiplexed[i].name; i++)
+                    {
+                       if ((!strcmp(device, _devices_multiplexed[i].name)) &&
+                           (_devices_multiplexed[i].status == status))
+                         {
+                            acpi_event->type = _devices_multiplexed[i].type;
+                            done = 1;
+                            break;
+                         }
+                    }
+               }
+             if (!done)
+               {
+                  for (i = 0; _devices_simple[i].name; i++)
+                    {
+                       if (!strcmp(device, _devices_simple[i].name))
+                         {
+                            acpi_event->type = _devices_simple[i].type;
+                            done = 1;
+                            break;
+                         }
+                    }
+               }
+             if (!done)
+               {
+                  free(acpi_event);
+                  acpi_event = NULL;
+               }
+             else
+               {
+                  switch (acpi_event->type)
+                    {
+                     case E_ACPI_TYPE_LID:
+                       acpi_event->status = 
+                          _e_acpi_lid_status_get(device, bus);
+                       break;
+                     default:
+                       break;
+                    }
+                  /* actually raise the event */
+                  ecore_event_add(E_EVENT_ACPI, acpi_event, 
+                                  _e_acpi_cb_event_free, NULL);
+               }
+          }
+        str = p + 1;
+        p = strchr(str, '\n');
      }
-   else 
+   if (str[0] == 0)
      {
-	acpi_event->device = eina_stringshare_add(device);
-	acpi_event->type = E_ACPI_TYPE_UNKNOWN;
+        eina_strbuf_free(acpibuf);
+        acpibuf = NULL;
      }
-
-   /* based on device type, determine the event to raise */
-   switch (acpi_event->type) 
+   else
      {
-      case E_ACPI_TYPE_AC_ADAPTER:
-	event_type = E_EVENT_ACPI_AC_ADAPTER;
-	break;
-      case E_ACPI_TYPE_BATTERY:
-	event_type = E_EVENT_ACPI_BATTERY;
-	break;
-      case E_ACPI_TYPE_FAN:
-	event_type = E_EVENT_ACPI_FAN;
-	break;
-      case E_ACPI_TYPE_LID:
-	event_type = E_EVENT_ACPI_LID;
-	acpi_event->status = 
-	  _e_acpi_lid_status_get(acpi_event->device, acpi_event->bus_id);
-	break;
-      case E_ACPI_TYPE_POWER:
-	event_type = E_EVENT_ACPI_POWER;
-	break;
-      case E_ACPI_TYPE_PROCESSOR:
-	event_type = E_EVENT_ACPI_PROCESSOR;
-	break;
-      case E_ACPI_TYPE_SLEEP:
-	event_type = E_EVENT_ACPI_SLEEP;
-	break;
-      case E_ACPI_TYPE_THERMAL:
-	event_type = E_EVENT_ACPI_THERMAL;
-	break;
-      case E_ACPI_TYPE_VIDEO:
-	event_type = E_EVENT_ACPI_VIDEO;
-	break;
-      default:
-	event_type = E_EVENT_ACPI_UNKNOWN;
-	break;
+        Eina_Strbuf *newbuf;
+        
+        newbuf = eina_strbuf_new();
+        eina_strbuf_append(newbuf, str);
+        eina_strbuf_free(acpibuf);
+        acpibuf = newbuf;
      }
-
-   /* actually raise the event */
-   ecore_event_add(event_type, acpi_event, _e_acpi_cb_event_free, NULL);
    return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -297,12 +306,9 @@ _e_acpi_lid_status_get(const char *device, const char *bus)
    while (!isalnum(buff[i])) i++;
 
    /* compare value from state file and return something sane */
-   if (!strcmp(buff, "open"))
-     return E_ACPI_LID_OPEN;
-   else if (!strcmp(buff, "closed"))
-     return E_ACPI_LID_CLOSED;
-   else
-     return E_ACPI_LID_UNKNOWN;
+   if (!strcmp(buff, "open")) return E_ACPI_LID_OPEN;
+   else if (!strcmp(buff, "closed")) return E_ACPI_LID_CLOSED;
+   else return E_ACPI_LID_UNKNOWN;
 }
 
 static Eina_Bool

@@ -4,7 +4,8 @@
 typedef enum _E_Acpi_Type 
 {
    E_ACPI_TYPE_UNKNOWN = 0,
-   E_ACPI_TYPE_AC_ADAPTER,
+      
+   E_ACPI_TYPE_AC_ADAPTER, //
    E_ACPI_TYPE_BATTERY,
    E_ACPI_TYPE_BUTTON,
    E_ACPI_TYPE_FAN,
@@ -14,7 +15,15 @@ typedef enum _E_Acpi_Type
    E_ACPI_TYPE_SLEEP,
    E_ACPI_TYPE_THERMAL,
    E_ACPI_TYPE_VIDEO,
-   E_ACPI_TYPE_WIFI
+   E_ACPI_TYPE_WIFI,
+   E_ACPI_TYPE_HIBERNATE,
+   E_ACPI_TYPE_ZOOM_OUT,
+   E_ACPI_TYPE_ZOOM_IN,
+   E_ACPI_TYPE_BRIGHTNESS_DOWN,
+   E_ACPI_TYPE_BRIGHTNESS_UP,
+   E_ACPI_TYPE_ASSIST,
+   E_ACPI_TYPE_S1,
+   E_ACPI_TYPE_VAIO
 } E_Acpi_Type;
 
 /* enum for acpi signals */
@@ -45,26 +54,16 @@ typedef struct _E_Event_Acpi E_Event_Acpi;
 struct _E_Event_Acpi 
 {
    const char *device, *bus_id;
-   int type, signal, status;
+   int         type, signal, status;
 };
 
 EINTERN int e_acpi_init(void);
 EINTERN int e_acpi_shutdown(void);
+
 EAPI void e_acpi_events_freeze(void);
 EAPI void e_acpi_events_thaw(void);
 
-extern EAPI int E_EVENT_ACPI_UNKNOWN;
-extern EAPI int E_EVENT_ACPI_AC_ADAPTER;
-extern EAPI int E_EVENT_ACPI_BATTERY;
-extern EAPI int E_EVENT_ACPI_BUTTON;
-extern EAPI int E_EVENT_ACPI_FAN;
-extern EAPI int E_EVENT_ACPI_LID;
-extern EAPI int E_EVENT_ACPI_POWER;
-extern EAPI int E_EVENT_ACPI_PROCESSOR;
-extern EAPI int E_EVENT_ACPI_SLEEP;
-extern EAPI int E_EVENT_ACPI_THERMAL;
-extern EAPI int E_EVENT_ACPI_VIDEO;
-extern EAPI int E_EVENT_ACPI_WIFI;
+extern EAPI int E_EVENT_ACPI;
 
 # endif
 #endif

@@ -278,9 +278,9 @@ _fill_actions(E_Config_Dialog_Data *cfdata)
    EINA_LIST_FOREACH(e_action_groups_get(), l, grp)
      {
         if (!grp->acts) continue;
-        if ((strcmp(grp->act_grp, "Acpi")) &&
-            (strcmp(grp->act_grp, "System")) &&
-            (strcmp(grp->act_grp, "Launch"))) continue;
+//        if ((strcmp(grp->act_grp, "Acpi")) &&
+//            (strcmp(grp->act_grp, "System")) &&
+//            (strcmp(grp->act_grp, "Launch"))) continue;
         e_widget_ilist_header_append(cfdata->o_actions, NULL, _(grp->act_grp));
         EINA_LIST_FOREACH(grp->acts, ll, dsc)
           e_widget_ilist_append(cfdata->o_actions, NULL, _(dsc->act_name),
@@ -325,9 +325,9 @@ _selected_action_get(E_Config_Dialog_Data *cfdata)
    EINA_LIST_FOREACH(e_action_groups_get(), l, grp)
      {
         if (!grp->acts) continue;
-        if ((strcmp(grp->act_grp, "Acpi")) &&
-            (strcmp(grp->act_grp, "System")) &&
-            (strcmp(grp->act_grp, "Launch"))) continue;
+//        if ((strcmp(grp->act_grp, "Acpi")) &&
+//            (strcmp(grp->act_grp, "System")) &&
+//            (strcmp(grp->act_grp, "Launch"))) continue;
         EINA_LIST_FOREACH(grp->acts, ll, dsc)
           {
              if ((dsc->act_name) && (!strcmp(dsc->act_name, lbl))) 
@@ -372,6 +372,22 @@ _binding_label_get(E_Config_Binding_Acpi *bind)
      return _("Video");
    if (bind->type == E_ACPI_TYPE_WIFI)
      return _("Wifi");
+   if (bind->type == E_ACPI_TYPE_HIBERNATE)
+     return _("Hibernate");
+   if (bind->type == E_ACPI_TYPE_ZOOM_OUT)
+     return _("Zoom Out");
+   if (bind->type == E_ACPI_TYPE_ZOOM_IN)
+     return _("Zoom In");
+   if (bind->type == E_ACPI_TYPE_BRIGHTNESS_DOWN)
+     return _("Brightness Down");
+   if (bind->type == E_ACPI_TYPE_BRIGHTNESS_UP)
+     return _("Brightness Up");
+   if (bind->type == E_ACPI_TYPE_ASSIST)
+     return _("Assist");
+   if (bind->type == E_ACPI_TYPE_S1)
+     return _("S1");
+   if (bind->type == E_ACPI_TYPE_VAIO)
+     return _("Vaio");
 
    return NULL;
 }
@@ -493,35 +509,7 @@ _cb_add_binding(void       *data,
                                               _cb_grab_key_down, cfdata));
    grab_hdls =
      eina_list_append(grab_hdls,
-                      ecore_event_handler_add(E_EVENT_ACPI_AC_ADAPTER,
-                                              _cb_acpi_event, cfdata));
-   grab_hdls =
-     eina_list_append(grab_hdls,
-                      ecore_event_handler_add(E_EVENT_ACPI_BATTERY,
-                                              _cb_acpi_event, cfdata));
-   grab_hdls =
-     eina_list_append(grab_hdls,
-                      ecore_event_handler_add(E_EVENT_ACPI_FAN,
-                                              _cb_acpi_event, cfdata));
-   grab_hdls =
-     eina_list_append(grab_hdls,
-                      ecore_event_handler_add(E_EVENT_ACPI_LID,
-                                              _cb_acpi_event, cfdata));
-   grab_hdls =
-     eina_list_append(grab_hdls,
-                      ecore_event_handler_add(E_EVENT_ACPI_POWER,
-                                              _cb_acpi_event, cfdata));
-   grab_hdls =
-     eina_list_append(grab_hdls,
-                      ecore_event_handler_add(E_EVENT_ACPI_SLEEP,
-                                              _cb_acpi_event, cfdata));
-   grab_hdls =
-     eina_list_append(grab_hdls,
-                      ecore_event_handler_add(E_EVENT_ACPI_VIDEO,
-                                              _cb_acpi_event, cfdata));
-   grab_hdls =
-     eina_list_append(grab_hdls,
-                      ecore_event_handler_add(E_EVENT_ACPI_WIFI,
+                      ecore_event_handler_add(E_EVENT_ACPI,
                                               _cb_acpi_event, cfdata));
 
    /* freeze all incoming acpi events */
