@@ -8398,8 +8398,8 @@ e_border_under_pointer_get(E_Desk   *desk,
          * (because it will be closed shortly for example), skip */
         if ((exclude) && (cbd == exclude)) continue;
         if ((desk) && (cbd->desk != desk)) continue;
-        if ((x < cbd->x) || (x > (cbd->x + cbd->w)) ||
-            (y < cbd->y) || (y > (cbd->y + cbd->h))) continue;
+        if (!E_INSIDE(x, y, cbd->x, cbd->y, cbd->w, cbd->h))
+          continue;
         /* If the layer is higher, the position of the window is higher
          * (always on top vs always below) */
         if (!bd || (cbd->layer > bd->layer))
