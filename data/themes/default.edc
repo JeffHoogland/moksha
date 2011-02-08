@@ -18512,7 +18512,7 @@ collections {
       styles {
         style {
             name: "fileman_icon_name";
-            base: "font=Sans font_size=10 text_class=fileman_icon align=center color=#fff wrap=mixed ellipsis=1.0 style=soft_shadow shadow_color=#0002";
+            base: "font=Sans font_size=10 text_class=fileman_icon align=center color=#fff wrap=mixed ellipsis=1.0";
         }
         style {
             name: "fileman_icon_name_full";
