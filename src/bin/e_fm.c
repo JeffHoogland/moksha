@@ -3,6 +3,7 @@
 #include "e_fm_op.h"
 
 #define OVERCLIP 128
+#define ICON_BOTTOM_SPACE 100
 
 /* in order to check files (ie: extensions) use simpler and faster
  * strcasecmp version that instead of checking case for each
@@ -4098,24 +4099,29 @@ _e_fm2_icons_place(Evas_Object *obj)
      {
       case E_FM2_VIEW_MODE_ICONS:
         _e_fm2_icons_place_icons(sd);
+	sd->max.h += ICON_BOTTOM_SPACE;
         break;
 
       case E_FM2_VIEW_MODE_GRID_ICONS:
         _e_fm2_icons_place_grid_icons(sd);
+	sd->max.h += ICON_BOTTOM_SPACE;
         break;
 
       case E_FM2_VIEW_MODE_CUSTOM_ICONS:
         _e_fm2_icons_place_custom_icons(sd);
+	sd->max.h += ICON_BOTTOM_SPACE;
         break;
 
       case E_FM2_VIEW_MODE_CUSTOM_GRID_ICONS:
         /* FIXME: not going to implement this at this stage */
         _e_fm2_icons_place_custom_grid_icons(sd);
+	sd->max.h += ICON_BOTTOM_SPACE;
         break;
 
       case E_FM2_VIEW_MODE_CUSTOM_SMART_GRID_ICONS:
         /* FIXME: not going to implement this at this stage */
         _e_fm2_icons_place_custom_smart_grid_icons(sd);
+	sd->max.h += ICON_BOTTOM_SPACE;
         break;
 
       case E_FM2_VIEW_MODE_LIST:
@@ -5103,7 +5109,7 @@ _e_fm2_icon_make_visible(E_Fm2_Icon *ic)
 
         if (
           ((ic->y - ic->sd->pos.y) >= 0) &&
-          ((ic->y + ic->h - ic->sd->pos.y) <= (ic->sd->h)) &&
+          ((ic->y + ic->h + ICON_BOTTOM_SPACE - ic->sd->pos.y) <= (ic->sd->h)) &&
           ((ic->x - ic->sd->pos.x) >= 0) &&
           ((ic->x + ic->w - ic->sd->pos.x) <= (ic->sd->w))
           )
@@ -5116,8 +5122,8 @@ _e_fm2_icon_make_visible(E_Fm2_Icon *ic)
         y = ic->sd->pos.y;
         if ((ic->y - ic->sd->pos.y) < 0)
           y = ic->y;
-        else if ((ic->y + ic->h - ic->sd->pos.y) > (ic->sd->h))
-          y = ic->y + ic->h - ic->sd->h;
+        else if ((ic->y + ic->h + ICON_BOTTOM_SPACE - ic->sd->pos.y) > (ic->sd->h))
+          y = ic->y + ic->h + ICON_BOTTOM_SPACE - ic->sd->h;
         e_fm2_pan_set(ic->sd->obj, x, y);
      }
    evas_object_smart_callback_call(ic->sd->obj, "pan_changed", NULL);
@@ -6514,6 +6520,7 @@ _e_fm2_mouse_1_handler(E_Fm2_Icon *ic, int up, void *evas_event)
           {
              if (!ic->selected) sel_change = EINA_TRUE;
              _e_fm2_icon_select(ic);
+	     _e_fm2_icon_make_visible(ic);
              ic->down_sel = EINA_TRUE;
              ic->last_selected = EINA_TRUE;
           }
