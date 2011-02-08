@@ -18830,8 +18830,7 @@ collections {
             mouse_events: 1;
             description {
                state: "default" 0.0;
-               visible: 0;
-               /* color: 0 0 200 100; */
+               color: 0 0 0 0;
                rel1.offset: 8 8;
                rel2.offset: -9 -9;
             }
@@ -19866,8 +19865,8 @@ collections {
             mouse_events: 1;
             description {
                state: "default" 0.0;
-               visible: 0;
-               /* color: 0 0 200 100; */
+               visible: 1;
+               color: 0 0 0 0;
                rel1.offset: 8 8;
                rel2.offset: -9 -9;
             }
