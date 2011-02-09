@@ -6928,6 +6928,43 @@ _e_fm2_cb_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event
              _e_fm2_file_paste(obj);
              return;
           }
+        else if (!strcmp(ev->key, "h"))
+          {
+	     if (sd->show_hidden_files)
+	       sd->show_hidden_files = EINA_FALSE;
+	     else
+	       sd->show_hidden_files = EINA_TRUE;
+	     sd->inherited_dir_props = EINA_FALSE;
+	     _e_fm2_refresh(data, NULL, NULL);
+             return;
+          }
+        else if (!strcmp(ev->key, "1"))
+          {
+	     if (_e_fm2_view_mode_get(sd) == E_FM2_VIEW_MODE_GRID_ICONS)
+	       return;
+	     sd->view_mode = E_FM2_VIEW_MODE_GRID_ICONS;
+	     sd->inherited_dir_props = EINA_FALSE;
+	     _e_fm2_refresh(sd, NULL, NULL);
+	     return;
+	  }
+        else if (!strcmp(ev->key, "2"))
+          {
+	     if (_e_fm2_view_mode_get(sd) == E_FM2_VIEW_MODE_LIST)
+	       return;
+	     sd->view_mode = E_FM2_VIEW_MODE_LIST;
+	     sd->inherited_dir_props = EINA_FALSE;
+	     _e_fm2_refresh(sd, NULL, NULL);
+	     return;
+	  }
+        else if (!strcmp(ev->key, "3"))
+          {
+	     if (_e_fm2_view_mode_get(sd) == E_FM2_VIEW_MODE_CUSTOM_ICONS)
+	       return;
+	     sd->view_mode = E_FM2_VIEW_MODE_CUSTOM_ICONS;
+	     sd->inherited_dir_props = EINA_FALSE;
+	     _e_fm2_refresh(sd, NULL, NULL);
+	     return;
+	  }
      }
 
    if (!strcmp(ev->key, "Left"))
