@@ -168,14 +168,18 @@ _thumb_idler(void *data)
 
 	     evas_object_smart_callback_add(it->thumb, "e_thumb_gen", _thumb_gen, it);
 
+	     e_thumb_icon_size_set(it->thumb, it->w, it->h);
+	     
 	     if (it->item->icon && it->item->icon[0])
 	       e_thumb_icon_file_set(it->thumb, it->item->icon, NULL);
 	     else if ((suffix = strrchr(file->path, '.')) && (!strncmp(suffix, ".edj", 4)))
-	       e_thumb_icon_file_set(it->thumb, file->path, "e/desktop/background");
+	       {
+		  e_thumb_icon_file_set(it->thumb, file->path, "e/desktop/background");
+		  e_thumb_icon_size_set(it->thumb, 128, 80);
+	       }
 	     else
 	       e_thumb_icon_file_set(it->thumb, file->path, NULL);
 
-	     e_thumb_icon_size_set(it->thumb, it->w, it->h);
 	     e_thumb_icon_begin(it->thumb);
 	     it->do_thumb = EINA_TRUE;
 

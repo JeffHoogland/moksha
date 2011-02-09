@@ -11,11 +11,13 @@
 #define MATCH_LAG 0.15
 #define INITIAL_MATCH_LAG 0.3
 
-/* #undef DBG
- * #define DBG(...) ERR(__VA_ARGS__) */
-
+#ifdef CHECK_TIME
+#undef DBG
+#define DBG(...) ERR(__VA_ARGS__)
+#else
 #undef DBG
 #define DBG(...)
+#endif
 
 static void _evry_matches_update(Evry_Selector *sel, int async);
 static void _evry_plugin_action(Evry_Selector *sel, int finished);
@@ -1249,13 +1251,17 @@ _evry_selector_thumb(Evry_Selector *sel, const Evry_Item *it)
        ((suffix = strrchr(file->path, '.')) && (!strncmp(suffix, ".edj", 4))))
      {
    	sel->o_thumb = e_thumb_icon_add(win->evas);
+   	e_thumb_icon_size_set(sel->o_thumb, 128, 128);
    	evas_object_smart_callback_add(sel->o_thumb, "e_thumb_gen",
 				       _evry_selector_thumb_gen, sel);
 	if (suffix)
-	  e_thumb_icon_file_set(sel->o_thumb, file->path, "e/desktop/background");
+	  {
+	     e_thumb_icon_file_set(sel->o_thumb, file->path, "e/desktop/background");
+	     e_thumb_icon_size_set(sel->o_thumb, 128, 80);
+	  }	
 	else
 	  e_thumb_icon_file_set(sel->o_thumb, file->path, NULL);
-   	e_thumb_icon_size_set(sel->o_thumb, 128, 128);
+
    	e_thumb_icon_begin(sel->o_thumb);
    	sel->do_thumb = EINA_TRUE;
    	return 1;
