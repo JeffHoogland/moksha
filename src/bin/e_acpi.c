@@ -25,6 +25,7 @@ struct _E_ACPI_Device_Simple
 struct _E_ACPI_Device_Multiplexed
 {
    const char *name;
+   const char *bus;
    int         status;
    // ->
    int         type;
@@ -62,17 +63,32 @@ static E_ACPI_Device_Simple _devices_simple[] =
 static E_ACPI_Device_Multiplexed _devices_multiplexed[] =
 {
    /* NB: DO NOT TRANSLATE THESE. */
-   {"sony/hotkey",  0x10, E_ACPI_TYPE_BRIGHTNESS_DOWN},
-   {"sony/hotkey",  0x11, E_ACPI_TYPE_BRIGHTNESS_UP},
-   {"sony/hotkey",  0x12, E_ACPI_TYPE_VIDEO},
-   {"sony/hotkey",  0x14, E_ACPI_TYPE_ZOOM_OUT},
-   {"sony/hotkey",  0x15, E_ACPI_TYPE_ZOOM_IN},
-   {"sony/hotkey",  0x17, E_ACPI_TYPE_HIBERNATE},
-   {"sony/hotkey",  0xa6, E_ACPI_TYPE_ASSIST},
-   {"sony/hotkey",  0x20, E_ACPI_TYPE_S1},
-   {"sony/hotkey",  0xa5, E_ACPI_TYPE_VAIO},
+/* Sony VAIO - VPCF115FM / PCG-81114L - nvidia gfx */
+   {"sony/hotkey", NULL,   0x10, E_ACPI_TYPE_BRIGHTNESS_DOWN},
+   {"sony/hotkey", NULL,   0x11, E_ACPI_TYPE_BRIGHTNESS_UP},
+   {"sony/hotkey", NULL,   0x12, E_ACPI_TYPE_VIDEO},
+   {"sony/hotkey", NULL,   0x14, E_ACPI_TYPE_ZOOM_OUT},
+   {"sony/hotkey", NULL,   0x15, E_ACPI_TYPE_ZOOM_IN},
+   {"sony/hotkey", NULL,   0x17, E_ACPI_TYPE_HIBERNATE},
+   {"sony/hotkey", NULL,   0xa6, E_ACPI_TYPE_ASSIST},
+   {"sony/hotkey", NULL,   0x20, E_ACPI_TYPE_S1},
+   {"sony/hotkey", NULL,   0xa5, E_ACPI_TYPE_VAIO},
+
+/* Sony VAIO - X505 - intel gfx */
+   {"sony/hotkey", NULL,   0x0e, E_ACPI_TYPE_MUTE},
+   {"sony/hotkey", NULL,   0x0f, E_ACPI_TYPE_VOLUME},
+   {"sony/hotkey", NULL,   0x10, E_ACPI_TYPE_BRIGHTNESS},
+   {"sony/hotkey", NULL,   0x12, E_ACPI_TYPE_VIDEO},
    
-   {NULL,           0x00, E_ACPI_TYPE_UNKNOWN}
+/* HP Compaq Presario - CQ61 - intel gfx */
+/** interesting these get auto-mapped to keys in x11. here for documentation
+ ** but not enabled as we can use regular keybinds for these
+   {"video",       "DD03", 0x87, E_ACPI_TYPE_BRIGHTNESS_DOWN},
+   {"video",       "DD03", 0x86, E_ACPI_TYPE_BRIGHTNESS_UP},
+   {"video",       "OVGA", 0x80, E_ACPI_TYPE_VIDEO},
+ */
+/* END */   
+   {NULL,          NULL, 0x00, E_ACPI_TYPE_UNKNOWN}
 };
 
 /* public variables */
@@ -204,7 +220,13 @@ _e_acpi_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
                {
                   for (i = 0; _devices_multiplexed[i].name; i++)
                     {
+                       // if device name matches
                        if ((!strcmp(device, _devices_multiplexed[i].name)) &&
+                           // AND busname not set OR device name matches
+                           (!_devices_multiplexed[i].bus ||
+                               (_devices_multiplexed[i].bus &&
+                                   (!strcmp(bus, _devices_multiplexed[i].bus)))) &&
+                           // AND status matches
                            (_devices_multiplexed[i].status == status))
                          {
                             acpi_event->type = _devices_multiplexed[i].type;
@@ -215,6 +237,7 @@ _e_acpi_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
                }
              if (!done)
                {
+                  // if device name matches
                   for (i = 0; _devices_simple[i].name; i++)
                     {
                        if (!strcmp(device, _devices_simple[i].name))

@@ -23,7 +23,10 @@ typedef enum _E_Acpi_Type
    E_ACPI_TYPE_BRIGHTNESS_UP,
    E_ACPI_TYPE_ASSIST,
    E_ACPI_TYPE_S1,
-   E_ACPI_TYPE_VAIO
+   E_ACPI_TYPE_VAIO,
+   E_ACPI_TYPE_MUTE,
+   E_ACPI_TYPE_VOLUME,
+   E_ACPI_TYPE_BRIGHTNESS
 } E_Acpi_Type;
 
 /* enum for acpi signals */
