@@ -160,14 +160,17 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 {
    Instance *inst;
    Evas_Event_Mouse_Down *ev;
-
+   E_Menu *ma, *mg, *mo;
+   int cx, cy;
+   
+   if (cpufreq_config->menu) return;
+     
    inst = data;
    ev = event_info;
-   if ((ev->button == 3) && (!cpufreq_config->menu))
+
+   if (ev->button == 1)
      {
-	E_Menu *ma, *mg, *mo;
 	E_Menu_Item *mi;
-	int cx, cy;
 	Eina_List *l;
 	char buf[256];
 
@@ -305,12 +308,7 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 	       }
 	  }
 
-	ma = e_menu_new();
-	cpufreq_config->menu = ma;
-	e_menu_post_deactivate_callback_set(ma, _menu_cb_post, inst);
-
 	mg = e_menu_new();
-
 	mi = e_menu_item_new(mg);
 	e_menu_item_label_set(mi, _("Time Between Updates"));
 	e_menu_item_submenu_set(mi, cpufreq_config->menu_poll);
@@ -335,10 +333,30 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 	     e_menu_item_submenu_set(mi, cpufreq_config->menu_powersave);
 	  }
 
-        e_gadcon_client_util_menu_items_append(inst->gcc, ma, mg, 0);
+	e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon,
+					  &cx, &cy, NULL, NULL);
+	cpufreq_config->menu = ma;
+	e_menu_post_deactivate_callback_set(mg, _menu_cb_post, inst);
+
+	e_gadcon_locked_set(inst->gcc->gadcon, 1); 
+
+	e_menu_activate_mouse(mg,
+			      e_util_zone_current_get(e_manager_current_get()),
+			      cx + ev->output.x, cy + ev->output.y, 1, 1,
+			      E_MENU_POP_DIRECTION_AUTO, ev->timestamp);
+     }
+   else if (ev->button == 3)
+     {
+	ma = e_menu_new();
+	mg = e_menu_new();
+	cpufreq_config->menu = ma;
+	e_menu_post_deactivate_callback_set(ma, _menu_cb_post, NULL);
+
+	e_gadcon_client_util_menu_items_append(inst->gcc, ma, mg, 0);
 
 	e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon,
 					  &cx, &cy, NULL, NULL);
+
 	e_menu_activate_mouse(ma,
 			      e_util_zone_current_get(e_manager_current_get()),
 			      cx + ev->output.x, cy + ev->output.y, 1, 1,
@@ -347,8 +365,13 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 }
 
 static void
-_menu_cb_post(void *data __UNUSED__, E_Menu *m __UNUSED__)
+_menu_cb_post(void *data, E_Menu *m __UNUSED__)
 {
+   Instance *inst = data;
+
+   if (inst)
+     e_gadcon_locked_set(inst->gcc->gadcon, 0); 
+
    if (!cpufreq_config->menu) return;
    e_object_del(E_OBJECT(cpufreq_config->menu));
    cpufreq_config->menu = NULL;
