@@ -26548,6 +26548,22 @@ collections {
             }
          }
          part {
+            name: "e.swallow.bar";
+            type: SWALLOW;
+            description { state: "default" 0.0;
+               rel1 {
+                  to_x: "e.dragable.slider";
+                  to_y: "base";
+                  offset: 0 5;
+               }
+               rel2 {
+                  to_x: "e.dragable.slider";
+                  to_y: "base";
+                  offset: -1 -6;
+               }
+            }
+         }
+         part {
             name: "e.dragable.slider";
             type: RECT;
             mouse_events: 1;
@@ -26830,6 +26846,22 @@ collections {
                rel1 {
                   relative: 1.0 0.0;
                   to: "e.dragable.slider";
+               }
+            }
+         }
+         part {
+            name: "e.swallow.bar";
+            type: SWALLOW;
+            description { state: "default" 0.0;
+               rel1 {
+                  to_x: "base";
+                  to_y: "e.dragable.slider";
+                  offset: 5 0;
+               }
+               rel2 {
+                  to_x: "base";
+                  to_y: "e.dragable.slider";
+                  offset: -6 -1;
                }
             }
          }

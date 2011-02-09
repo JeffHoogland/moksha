@@ -14,6 +14,7 @@ struct _E_Smart_Data
 
    Evas_Object   *smart_obj;
    Evas_Object   *edje_obj;
+   Evas_Object   *event;
    double         val, val_min, val_max, val_range, step_size;
    int            reversed, step_count, horizontal;
    int            direction;
@@ -41,6 +42,7 @@ static void _e_smart_signal_cb_drag(void *data, Evas_Object *obj, const char *em
 static void _e_smart_signal_cb_drag_start(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_smart_signal_cb_drag_stop(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_smart_event_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void _e_smart_event_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_smart_reconfigure(E_Smart_Data *sd);
 static void _e_smart_add(Evas_Object *obj);
 static void _e_smart_del(Evas_Object *obj);
@@ -449,6 +451,38 @@ _e_smart_event_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
 }
 
 static void
+_e_smart_event_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   Evas_Event_Mouse_Down *ev = event_info;
+   Evas_Coord x, y, w, h;
+   E_Smart_Data *sd = data;
+   double pos;
+
+   evas_object_geometry_get(sd->event, &x, &y, &w, &h);
+   if (sd->horizontal)
+     {
+        pos = ((double)ev->output.x - (double)x) / (double)w;
+        if (pos > 1.0) pos = 1.0;
+        if (pos < 0.0) pos = 0.0;
+        if (sd->reversed)
+          pos = 1.0 - pos;
+     }
+   else
+     {
+        pos = (((double)ev->output.y - (double)y) / (double)h);
+        if (pos > 1.0) pos = 1.0;
+        if (pos < 0.0) pos = 0.0;
+        if (!sd->reversed)
+          pos = 1.0 - pos;
+     }
+
+   edje_object_part_drag_value_set(sd->edje_obj, "e.dragable.slider", pos, pos);
+   edje_object_message_signal_process(sd->edje_obj); /* really needed or go in infinite loop */
+   evas_event_feed_mouse_cancel(e, 0, NULL);
+   evas_event_feed_mouse_down(e, 1, EVAS_BUTTON_NONE, ev->timestamp, NULL);
+}
+
+static void
 _e_smart_reconfigure(E_Smart_Data *sd)
 {
    evas_object_move(sd->edje_obj, sd->x, sd->y);
@@ -487,6 +521,12 @@ _e_smart_add(Evas_Object *obj)
    edje_object_size_min_calc(sd->edje_obj, &(sd->minw), &(sd->minh));
    evas_object_smart_member_add(sd->edje_obj, obj);
 
+   sd->event = evas_object_rectangle_add(evas_object_evas_get(obj));
+   evas_object_color_set(sd->event, 0, 0, 0, 0);
+   evas_object_pass_events_set(sd->event, EINA_TRUE);
+   edje_object_part_swallow(sd->edje_obj, "e.swallow.bar", sd->event);
+   evas_object_smart_member_add(sd->edje_obj, sd->event);
+
    edje_object_signal_callback_add(sd->edje_obj, "drag", "*", _e_smart_signal_cb_drag, sd);
    edje_object_signal_callback_add(sd->edje_obj, "drag,start", "*", _e_smart_signal_cb_drag_start, sd);
    edje_object_signal_callback_add(sd->edje_obj, "drag,stop", "*", _e_smart_signal_cb_drag_stop, sd);
@@ -496,6 +536,7 @@ _e_smart_add(Evas_Object *obj)
    edje_object_signal_callback_add(sd->edje_obj, "mouse,wheel,0,-1", "*", _e_smart_signal_cb_wheel_down, sd);
 
    evas_object_event_callback_add(obj, EVAS_CALLBACK_KEY_DOWN, _e_smart_event_key_down, sd);
+   evas_object_event_callback_add(sd->event, EVAS_CALLBACK_MOUSE_DOWN, _e_smart_event_mouse_down, sd);
 }
 
 static void
@@ -504,6 +545,7 @@ _e_smart_del(Evas_Object *obj)
    E_Slider_Special_Value *sv;
 
    INTERNAL_ENTRY;
+   evas_object_del(sd->event);
    evas_object_del(sd->edje_obj);
    if (sd->format) eina_stringshare_del(sd->format);
    if (sd->set_timer) ecore_timer_del(sd->set_timer);
