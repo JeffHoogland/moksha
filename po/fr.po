@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-01-25 13:20+0400\n"
-"PO-Revision-Date: 2011-01-25 15:12+0400\n"
+"POT-Creation-Date: 2011-02-09 06:35+0400\n"
+"PO-Revision-Date: 2011-02-09 07:50+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: French <pourunmondesansgourou@gmail.com>\n"
 "Language: fr\n"
@@ -27,8 +27,8 @@ msgstr "À propos de Enlightenment"
 #: src/bin/e_about.c:17
 #: src/bin/e_actions.c:2623
 #: src/bin/e_config_dialog.c:269
-#: src/bin/e_fm.c:966
-#: src/bin/e_int_border_menu.c:242
+#: src/bin/e_fm.c:967
+#: src/bin/e_int_border_menu.c:243
 #: src/bin/e_int_border_prop.c:81
 #: src/bin/e_theme_about.c:17
 #: src/modules/conf/e_conf.c:180
@@ -80,8 +80,8 @@ msgstr "Voulez-vous vraiment tuer cette fenêtre ?"
 #: src/bin/e_actions.c:2191
 #: src/bin/e_confirm_dialog.c:44
 #: src/bin/e_desklock.c:997
-#: src/bin/e_fm.c:9118
-#: src/bin/e_fm.c:9372
+#: src/bin/e_fm.c:9130
+#: src/bin/e_fm.c:9384
 #: src/bin/e_module.c:513
 #: src/bin/e_screensaver.c:141
 msgid "Yes"
@@ -96,8 +96,8 @@ msgstr "Oui"
 #: src/bin/e_actions.c:2193
 #: src/bin/e_confirm_dialog.c:45
 #: src/bin/e_desklock.c:999
-#: src/bin/e_fm.c:9116
-#: src/bin/e_fm.c:9373
+#: src/bin/e_fm.c:9128
+#: src/bin/e_fm.c:9385
 #: src/bin/e_module.c:514
 #: src/bin/e_screensaver.c:143
 msgid "No"
@@ -164,13 +164,13 @@ msgid "Window : Actions"
 msgstr "Fenêtre : actions"
 
 #: src/bin/e_actions.c:2583
-#: src/bin/e_fm.c:6134
-#: src/bin/e_int_border_menu.c:145
+#: src/bin/e_fm.c:6145
+#: src/bin/e_int_border_menu.c:146
 msgid "Move"
 msgstr "Déplacer"
 
 #: src/bin/e_actions.c:2594
-#: src/bin/e_int_border_menu.c:157
+#: src/bin/e_int_border_menu.c:158
 msgid "Resize"
 msgstr "Redimensionner"
 
@@ -189,18 +189,18 @@ msgid "Window Menu"
 msgstr "Menu de la fenêtre"
 
 #: src/bin/e_actions.c:2613
-#: src/bin/e_int_border_menu.c:213
+#: src/bin/e_int_border_menu.c:214
 #: src/modules/conf_winlist/e_int_config_winlist.c:216
 msgid "Raise"
 msgstr "Placer dessus"
 
 #: src/bin/e_actions.c:2618
-#: src/bin/e_int_border_menu.c:205
+#: src/bin/e_int_border_menu.c:206
 msgid "Lower"
 msgstr "Placer dessous"
 
 #: src/bin/e_actions.c:2628
-#: src/bin/e_int_border_menu.c:231
+#: src/bin/e_int_border_menu.c:232
 msgid "Kill"
 msgstr "Tuer"
 
@@ -237,8 +237,8 @@ msgid "Fullscreen Mode Toggle"
 msgstr "Activer/Désactiver le mode plein écran"
 
 #: src/bin/e_actions.c:2654
-#: src/bin/e_int_border_menu.c:175
-#: src/bin/e_int_border_menu.c:396
+#: src/bin/e_int_border_menu.c:176
+#: src/bin/e_int_border_menu.c:397
 msgid "Maximize"
 msgstr "Maximiser"
 
@@ -339,9 +339,9 @@ msgstr "Activer/Désactiver l'épinglage"
 #: src/bin/e_actions.c:2822
 #: src/bin/e_actions.c:2974
 #: src/bin/e_actions.c:2979
-#: src/bin/e_fm.c:3246
-#: src/bin/e_fm.c:3251
-#: src/bin/e_fm.c:9888
+#: src/bin/e_fm.c:3247
+#: src/bin/e_fm.c:3252
+#: src/bin/e_fm.c:9900
 #: src/bin/e_fm_device.c:332
 #: src/bin/e_fm_device.c:356
 #: src/bin/e_fm_device.c:635
@@ -771,18 +771,18 @@ msgid "Color Selector"
 msgstr "Sélecteur de couleur"
 
 #: src/bin/e_color_dialog.c:46
-#: src/bin/e_config.c:1577
-#: src/bin/e_config.c:2164
+#: src/bin/e_config.c:1578
+#: src/bin/e_config.c:2165
 #: src/bin/e_config_dialog.c:259
 #: src/bin/e_eap_editor.c:857
 #: src/bin/e_eap_editor.c:921
 #: src/bin/e_entry_dialog.c:62
 #: src/bin/e_exec.c:361
-#: src/bin/e_fm.c:8630
-#: src/bin/e_fm.c:9274
+#: src/bin/e_fm.c:8642
+#: src/bin/e_fm.c:9286
 #: src/bin/e_fm_prop.c:507
-#: src/bin/e_int_border_remember.c:321
-#: src/bin/e_int_border_remember.c:521
+#: src/bin/e_int_border_remember.c:324
+#: src/bin/e_int_border_remember.c:525
 #: src/bin/e_module.c:410
 #: src/bin/e_sys.c:484
 #: src/bin/e_sys.c:530
@@ -805,7 +805,7 @@ msgstr "OK"
 #: src/bin/e_eap_editor.c:859
 #: src/bin/e_eap_editor.c:923
 #: src/bin/e_entry_dialog.c:63
-#: src/bin/e_fm.c:8632
+#: src/bin/e_fm.c:8644
 #: src/bin/e_fm_prop.c:508
 #: src/bin/e_utils.c:1164
 #: src/modules/conf_imc/e_int_config_imc_import.c:124
@@ -819,106 +819,106 @@ msgstr "OK"
 msgid "Cancel"
 msgstr "Annuler"
 
-#: src/bin/e_config.c:942
-#: src/bin/e_config.c:975
+#: src/bin/e_config.c:943
+#: src/bin/e_config.c:976
 msgid "Settings data needed upgrading. Your old settings have<br>been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means Enlightenment needs new settings<br>data by default for usable functionality that your old<br>settings simply lack. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the hiccup in your settings.<br>"
 msgstr "Les données de configuration ont dû être mises à jour. Votre ancienne<br>configuration a été supprimée et de nouveaux paramètres par<br>défaut sont en place. Cela risque d'arriver en phase de<br>développement, aussi est-il inutile de faire un rapport de bogue.<br>Cela signifie simplement que Enlightenment a besoin<br>de cette mise à niveau pour être à nouveau fonctionnel.<br>Vous pouvez maintenant tout reconfigurer selon votre goût.<br>Désolé pour la gêne occasionnée.<br>"
 
-#: src/bin/e_config.c:959
+#: src/bin/e_config.c:960
 msgid "Your settings are NEWER than Enlightenment. This is very<br>strange. This should not happen unless you downgraded<br>Enlightenment or copied the settings from a place where<br>a newer version of Enlightenment was running. This is bad and<br>as a precaution your settings have been now restored to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr "Votre configuration est PLUS RÉCENTE que Enlightenment.<br>C'est vraiment étonnant. Cela ne devrait pas se produire<br>à moins que vous n'ayez installé une version antérieure<br>ou copié la configuration depuis une machine sur laquelle<br>une version plus récente était en cours. Ce n'est pas bon<br>et, par mesure de précaution, les valeurs par défaut de<br>votre configuration ont été restaurées.<br>Désolé pour le désagrément.<br>"
 
-#: src/bin/e_config.c:1564
-#: src/bin/e_config.c:2151
+#: src/bin/e_config.c:1565
+#: src/bin/e_config.c:2152
 msgid "Enlightenment Settings Write Problems"
 msgstr "Problèmes d'écriture de la configuration de Enlightenment"
 
-#: src/bin/e_config.c:1567
+#: src/bin/e_config.c:1568
 #, c-format
 msgid "Enlightenment has an error while moving config files<br>from:<br>%s<br><br>to:<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr "Enlightenment has an error while moving config files<br>from:<br>%s<br><br>to:<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 
-#: src/bin/e_config.c:2062
+#: src/bin/e_config.c:2063
 msgid "Settings Upgraded"
 msgstr "Configuration mise à niveau"
 
-#: src/bin/e_config.c:2079
+#: src/bin/e_config.c:2080
 msgid "The EET file handle is bad."
 msgstr "Traitement du fichier EET incorrect."
 
-#: src/bin/e_config.c:2082
+#: src/bin/e_config.c:2083
 msgid "The file data is empty."
 msgstr "Aucune donnée dans le fichier."
 
-#: src/bin/e_config.c:2085
+#: src/bin/e_config.c:2086
 msgid "The file is not writable. Perhaps the disk is read-only<br>or you lost permissions to your files."
 msgstr "Le fichier n'est pas éditable. Le disque est peut-être monté<br>en lecture seule ou les permissions ont été modifiées."
 
-#: src/bin/e_config.c:2088
+#: src/bin/e_config.c:2089
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr "Mémoire insuffisante pour l'écriture.<br>Veuillez libérer de la mémoire."
 
-#: src/bin/e_config.c:2091
+#: src/bin/e_config.c:2092
 msgid "This is a generic error."
 msgstr "Erreur générique."
 
-#: src/bin/e_config.c:2093
+#: src/bin/e_config.c:2094
 msgid "The settings file is too large.<br>It should be very small (a few hundred KB at most)."
 msgstr "Le fichier de configuration est trop gros.<br>Il ne devrait pas dépasser quelques centaines de Ko."
 
-#: src/bin/e_config.c:2096
+#: src/bin/e_config.c:2097
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr "Erreurs d'E/S sur le disque.<br>Peut-être devriez-vous le remplacer ?"
 
-#: src/bin/e_config.c:2099
+#: src/bin/e_config.c:2100
 msgid "You ran out of space while writing the file"
 msgstr "Plus assez d'espace disponible pour l'écriture."
 
-#: src/bin/e_config.c:2102
+#: src/bin/e_config.c:2103
 msgid "The file was closed on it while writing."
 msgstr "Le fichier s'est fermé pendant l'écriture."
 
-#: src/bin/e_config.c:2105
+#: src/bin/e_config.c:2106
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Échec du mappage du fichier en mémoire (mmap)."
 
-#: src/bin/e_config.c:2108
+#: src/bin/e_config.c:2109
 msgid "X509 Encoding failed."
 msgstr "Échec de l'encodage X509."
 
-#: src/bin/e_config.c:2111
+#: src/bin/e_config.c:2112
 msgid "Signature failed."
 msgstr " Échec de la signature."
 
-#: src/bin/e_config.c:2114
+#: src/bin/e_config.c:2115
 msgid "The signature was invalid."
 msgstr "Signature invalide."
 
-#: src/bin/e_config.c:2117
+#: src/bin/e_config.c:2118
 msgid "Not signed."
 msgstr "Non signé."
 
-#: src/bin/e_config.c:2120
+#: src/bin/e_config.c:2121
 msgid "Feature not implemented."
 msgstr "Pas encore implémenté."
 
-#: src/bin/e_config.c:2123
+#: src/bin/e_config.c:2124
 msgid "PRNG was not seeded."
 msgstr "Impossible de générer un germe PRNG."
 
-#: src/bin/e_config.c:2126
+#: src/bin/e_config.c:2127
 msgid "Encryption failed."
 msgstr " Échec du cryptage."
 
-#: src/bin/e_config.c:2129
+#: src/bin/e_config.c:2130
 msgid "Decruption failed."
 msgstr "Échec du décryptage."
 
-#: src/bin/e_config.c:2132
+#: src/bin/e_config.c:2133
 msgid "The error is unknown to Enlightenment."
 msgstr "Enlightenment ne reconnaît pas cette erreur."
 
-#: src/bin/e_config.c:2154
+#: src/bin/e_config.c:2155
 #, c-format
 msgid "Enlightenment has an error while writing<br>its config file.<br>%s<br><br>The file where the error occurred was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr "Une erreur s'est produite au niveau du fichier<br>de configuration dans lequel Enlightenment<br>était en train d'écrire.<br>%s<br><br> Le fichier incriminé était :<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption des données.<br>"
@@ -1101,7 +1101,7 @@ msgid "Show in Menus"
 msgstr "Montrer dans les menus"
 
 #: src/bin/e_eap_editor.c:789
-#: src/bin/e_int_border_remember.c:748
+#: src/bin/e_int_border_remember.c:757
 msgid "Options"
 msgstr "Options"
 
@@ -1114,7 +1114,7 @@ msgid "Select an Executable"
 msgstr "Sélectionner un exécutable"
 
 #: src/bin/e_entry.c:493
-#: src/bin/e_fm.c:8122
+#: src/bin/e_fm.c:8134
 #: src/bin/e_shelf.c:1693
 #: src/modules/conf_profiles/e_int_config_profiles.c:135
 #: src/modules/conf_shelves/e_int_config_shelf.c:80
@@ -1123,19 +1123,19 @@ msgid "Delete"
 msgstr "Supprimer"
 
 #: src/bin/e_entry.c:503
-#: src/bin/e_fm.c:8030
+#: src/bin/e_fm.c:8042
 msgid "Cut"
 msgstr "Couper"
 
 #: src/bin/e_entry.c:511
-#: src/bin/e_fm.c:6129
-#: src/bin/e_fm.c:8044
+#: src/bin/e_fm.c:6140
+#: src/bin/e_fm.c:8056
 msgid "Copy"
 msgstr "Copier"
 
 #: src/bin/e_entry.c:519
-#: src/bin/e_fm.c:7868
-#: src/bin/e_fm.c:8057
+#: src/bin/e_fm.c:7880
+#: src/bin/e_fm.c:8069
 msgid "Paste"
 msgstr "Coller"
 
@@ -1274,233 +1274,233 @@ msgstr "Données de sortie"
 msgid "There was no output."
 msgstr "Il n'y a eu aucune sortie."
 
-#: src/bin/e_fm.c:968
+#: src/bin/e_fm.c:969
 msgid "Nonexistent path"
 msgstr "Chemin inexistant"
 
-#: src/bin/e_fm.c:971
+#: src/bin/e_fm.c:972
 #, c-format
 msgid "%s doesn't exist."
 msgstr "%s n'existe pas."
 
-#: src/bin/e_fm.c:3056
+#: src/bin/e_fm.c:3057
 msgid "Mount Error"
 msgstr "Erreur au montage"
 
-#: src/bin/e_fm.c:3056
+#: src/bin/e_fm.c:3057
 msgid "Can't mount device"
 msgstr "Impossible de monter le périphérique"
 
-#: src/bin/e_fm.c:3072
+#: src/bin/e_fm.c:3073
 msgid "Unmount Error"
 msgstr "Erreur lors du démontage"
 
-#: src/bin/e_fm.c:3072
+#: src/bin/e_fm.c:3073
 msgid "Can't unmount device"
 msgstr "Impossible de démonter le périphérique"
 
-#: src/bin/e_fm.c:3087
+#: src/bin/e_fm.c:3088
 msgid "Eject Error"
 msgstr "Erreur pendant l'éjection"
 
-#: src/bin/e_fm.c:3087
+#: src/bin/e_fm.c:3088
 msgid "Can't eject device"
 msgstr "Impossible d'éjecter le périphérique"
 
-#: src/bin/e_fm.c:3724
+#: src/bin/e_fm.c:3725
 #, c-format
 msgid "%i Files"
 msgstr "%i Fichiers"
 
-#: src/bin/e_fm.c:6142
-#: src/bin/e_fm.c:7876
-#: src/bin/e_fm.c:8065
+#: src/bin/e_fm.c:6153
+#: src/bin/e_fm.c:7888
+#: src/bin/e_fm.c:8077
 msgid "Link"
 msgstr "Lien "
 
-#: src/bin/e_fm.c:6150
-#: src/bin/e_fm.c:9056
-#: src/bin/e_fm.c:9197
+#: src/bin/e_fm.c:6161
+#: src/bin/e_fm.c:9068
+#: src/bin/e_fm.c:9209
 msgid "Abort"
 msgstr "Annuler"
 
-#: src/bin/e_fm.c:7795
-#: src/bin/e_fm.c:7955
+#: src/bin/e_fm.c:7807
+#: src/bin/e_fm.c:7967
 msgid "Inherit parent settings"
 msgstr "Hériter des options du parent"
 
-#: src/bin/e_fm.c:7804
-#: src/bin/e_fm.c:7964
+#: src/bin/e_fm.c:7816
+#: src/bin/e_fm.c:7976
 #: src/modules/fileman/e_mod_config.c:219
 msgid "View Mode"
 msgstr "Mode d'affichage"
 
-#: src/bin/e_fm.c:7811
-#: src/bin/e_fm.c:7971
+#: src/bin/e_fm.c:7823
+#: src/bin/e_fm.c:7983
 msgid "Refresh View"
 msgstr "Rafraîchir"
 
-#: src/bin/e_fm.c:7819
-#: src/bin/e_fm.c:7979
+#: src/bin/e_fm.c:7831
+#: src/bin/e_fm.c:7991
 msgid "Show Hidden Files"
 msgstr "Afficher les fichiers cachés"
 
-#: src/bin/e_fm.c:7831
-#: src/bin/e_fm.c:7991
+#: src/bin/e_fm.c:7843
+#: src/bin/e_fm.c:8003
 msgid "Remember Ordering"
 msgstr "Mémoriser l'ordre"
 
-#: src/bin/e_fm.c:7840
-#: src/bin/e_fm.c:8000
+#: src/bin/e_fm.c:7852
+#: src/bin/e_fm.c:8012
 msgid "Sort Now"
 msgstr "Classer maintenant"
 
-#: src/bin/e_fm.c:7852
-#: src/bin/e_fm.c:8015
+#: src/bin/e_fm.c:7864
+#: src/bin/e_fm.c:8027
 #: src/modules/conf_paths/e_int_config_paths.c:205
 msgid "New Directory"
 msgstr "Nouveau dossier"
 
-#: src/bin/e_fm.c:8130
+#: src/bin/e_fm.c:8142
 msgid "Rename"
 msgstr "Renommer"
 
-#: src/bin/e_fm.c:8149
+#: src/bin/e_fm.c:8161
 msgid "Unmount"
 msgstr "Démonter"
 
-#: src/bin/e_fm.c:8154
+#: src/bin/e_fm.c:8166
 msgid "Mount"
 msgstr "Monter"
 
-#: src/bin/e_fm.c:8159
+#: src/bin/e_fm.c:8171
 msgid "Eject"
 msgstr "Éjecter"
 
-#: src/bin/e_fm.c:8171
+#: src/bin/e_fm.c:8183
 msgid "Application Properties"
 msgstr "Propriétés de l'application"
 
-#: src/bin/e_fm.c:8177
+#: src/bin/e_fm.c:8189
 #: src/bin/e_fm_prop.c:105
 msgid "File Properties"
 msgstr "Propriétés du fichier"
 
-#: src/bin/e_fm.c:8414
-#: src/bin/e_fm.c:8467
+#: src/bin/e_fm.c:8426
+#: src/bin/e_fm.c:8479
 msgid "Use default"
 msgstr "Valeur par défaut"
 
-#: src/bin/e_fm.c:8440
+#: src/bin/e_fm.c:8452
 #: src/modules/fileman/e_mod_config.c:224
 msgid "Grid Icons"
 msgstr "Icones alignés"
 
-#: src/bin/e_fm.c:8448
+#: src/bin/e_fm.c:8460
 #: src/modules/fileman/e_mod_config.c:226
 msgid "Custom Icons"
 msgstr "Icones personnalisés"
 
-#: src/bin/e_fm.c:8456
+#: src/bin/e_fm.c:8468
 #: src/modules/everything/evry_config.c:435
 #: src/modules/everything/evry_config.c:488
 #: src/modules/fileman/e_mod_config.c:234
 msgid "List"
 msgstr "Liste"
 
-#: src/bin/e_fm.c:8481
+#: src/bin/e_fm.c:8493
 #, c-format
 msgid "Icon Size (%d)"
 msgstr "Taille de l'icone (%d)"
 
-#: src/bin/e_fm.c:8527
-#: src/bin/e_fm.c:8733
+#: src/bin/e_fm.c:8539
+#: src/bin/e_fm.c:8745
 msgid "Set background..."
 msgstr "Définir le fond d'écran…"
 
-#: src/bin/e_fm.c:8532
-#: src/bin/e_fm.c:8777
+#: src/bin/e_fm.c:8544
+#: src/bin/e_fm.c:8789
 msgid "Set overlay..."
 msgstr "Définir l'incrustation…"
 
-#: src/bin/e_fm.c:8631
+#: src/bin/e_fm.c:8643
 #: src/modules/conf_theme/e_int_config_theme.c:1025
 msgid "Clear"
 msgstr "Effacer"
 
-#: src/bin/e_fm.c:8857
+#: src/bin/e_fm.c:8869
 msgid "Create a new Directory"
 msgstr "Créer un nouveau dossier"
 
-#: src/bin/e_fm.c:8858
+#: src/bin/e_fm.c:8870
 msgid "New Directory Name:"
 msgstr "Nom du nouveau dossier :"
 
-#: src/bin/e_fm.c:8912
+#: src/bin/e_fm.c:8924
 #, c-format
 msgid "Rename %s to:"
 msgstr "Renommer %s en :"
 
-#: src/bin/e_fm.c:8914
+#: src/bin/e_fm.c:8926
 msgid "Rename File"
 msgstr "Renommer le fichier"
 
-#: src/bin/e_fm.c:9055
-#: src/bin/e_fm.c:9196
+#: src/bin/e_fm.c:9067
+#: src/bin/e_fm.c:9208
 msgid "Retry"
 msgstr "Réessayer"
 
-#: src/bin/e_fm.c:9059
-#: src/bin/e_fm.c:9202
+#: src/bin/e_fm.c:9071
+#: src/bin/e_fm.c:9214
 #: src/modules/wizard/page_030.c:82
 msgid "Error"
 msgstr "Erreur"
 
-#: src/bin/e_fm.c:9062
+#: src/bin/e_fm.c:9074
 #, c-format
 msgid "%s"
 msgstr "%s"
 
-#: src/bin/e_fm.c:9117
+#: src/bin/e_fm.c:9129
 msgid "No to all"
 msgstr "Non pour tout"
 
-#: src/bin/e_fm.c:9119
+#: src/bin/e_fm.c:9131
 msgid "Yes to all"
 msgstr "Oui pour tout"
 
-#: src/bin/e_fm.c:9122
+#: src/bin/e_fm.c:9134
 msgid "Warning"
 msgstr "Avertissement"
 
-#: src/bin/e_fm.c:9125
+#: src/bin/e_fm.c:9137
 #, c-format
 msgid "File already exists, overwrite?<br><hilight>%s</hilight>"
 msgstr "Le fichier existe déjà, écraser<br><hilight>%s</hilight> ?"
 
-#: src/bin/e_fm.c:9198
+#: src/bin/e_fm.c:9210
 msgid "Ignore this"
 msgstr "Ignorer"
 
-#: src/bin/e_fm.c:9199
+#: src/bin/e_fm.c:9211
 msgid "Ignore all"
 msgstr "Tout ignorer"
 
-#: src/bin/e_fm.c:9204
+#: src/bin/e_fm.c:9216
 #, c-format
 msgid "An error occurred while performing an operation.<br>%s"
 msgstr "Une erreur s'est produite lors d'une opération.<br>%s"
 
-#: src/bin/e_fm.c:9375
+#: src/bin/e_fm.c:9387
 msgid "Confirm Delete"
 msgstr "Confirmer la suppression"
 
-#: src/bin/e_fm.c:9380
+#: src/bin/e_fm.c:9392
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight> ?"
 msgstr "Voulez-vous vraiment supprimer<br><hilight>%s</hilight> ?"
 
-#: src/bin/e_fm.c:9386
+#: src/bin/e_fm.c:9398
 #, c-format
 msgid "Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</hilight> ?"
 msgstr "Voulez-vous vraiment supprimer<br>les %d fichiers sélectionnés dans :<br><hilight>%s</hilight> ?"
@@ -1682,7 +1682,7 @@ msgstr ""
 "active sur cet écran. Abandon du démarrage.\n"
 
 #: src/bin/e_int_border_locks.c:64
-#: src/bin/e_int_border_menu.c:610
+#: src/bin/e_int_border_menu.c:620
 msgid "Window Locks"
 msgstr "Verrous de la fenêtre"
 
@@ -1716,14 +1716,14 @@ msgstr "Empêcher le programme de changer :"
 
 #: src/bin/e_int_border_locks.c:306
 #: src/bin/e_int_border_locks.c:325
-#: src/bin/e_int_border_remember.c:699
+#: src/bin/e_int_border_remember.c:705
 #: src/bin/e_int_shelf_config.c:174
 msgid "Position"
 msgstr "Position"
 
 #: src/bin/e_int_border_locks.c:308
 #: src/bin/e_int_border_locks.c:327
-#: src/bin/e_int_border_remember.c:702
+#: src/bin/e_int_border_remember.c:708
 #: src/bin/e_int_shelf_config.c:185
 #: src/modules/conf_fonts/e_int_config_fonts.c:439
 #: src/modules/conf_fonts/e_int_config_fonts.c:634
@@ -1733,9 +1733,9 @@ msgstr "Taille"
 
 #: src/bin/e_int_border_locks.c:310
 #: src/bin/e_int_border_locks.c:329
-#: src/bin/e_int_border_menu.c:582
+#: src/bin/e_int_border_menu.c:592
 #: src/bin/e_int_border_prop.c:469
-#: src/bin/e_int_border_remember.c:705
+#: src/bin/e_int_border_remember.c:711
 #: src/bin/e_int_shelf_config.c:132
 msgid "Stacking"
 msgstr "Empilement"
@@ -1747,13 +1747,13 @@ msgstr "État de minimisation"
 
 #: src/bin/e_int_border_locks.c:314
 #: src/bin/e_int_border_locks.c:333
-#: src/bin/e_int_border_remember.c:717
+#: src/bin/e_int_border_remember.c:723
 msgid "Stickiness"
 msgstr "État d'ancrage"
 
 #: src/bin/e_int_border_locks.c:316
 #: src/bin/e_int_border_locks.c:335
-#: src/bin/e_int_border_remember.c:723
+#: src/bin/e_int_border_remember.c:729
 msgid "Shaded state"
 msgstr "État d'enroulement"
 
@@ -1764,7 +1764,7 @@ msgstr "État de maximisation"
 
 #: src/bin/e_int_border_locks.c:320
 #: src/bin/e_int_border_locks.c:339
-#: src/bin/e_int_border_remember.c:726
+#: src/bin/e_int_border_remember.c:732
 msgid "Fullscreen state"
 msgstr "État de plein écran"
 
@@ -1773,7 +1773,7 @@ msgid "Lock me from changing:"
 msgstr "M'empêcher de changer :"
 
 #: src/bin/e_int_border_locks.c:341
-#: src/bin/e_int_border_remember.c:711
+#: src/bin/e_int_border_remember.c:717
 msgid "Border style"
 msgstr "Style de bordure"
 
@@ -1793,142 +1793,147 @@ msgstr "Fermer ma session en conservant cette fenêtre ouverte"
 msgid "Remember these Locks"
 msgstr "Mémoriser ces verrous"
 
-#: src/bin/e_int_border_menu.c:72
+#: src/bin/e_int_border_menu.c:73
 msgid "Edit Icon"
 msgstr "Éditer l'icone"
 
-#: src/bin/e_int_border_menu.c:77
+#: src/bin/e_int_border_menu.c:78
 msgid "Add Application..."
 msgstr "Ajouter l'application…"
 
-#: src/bin/e_int_border_menu.c:88
+#: src/bin/e_int_border_menu.c:89
 msgid "Create Icon"
 msgstr "Créer un icone"
 
-#: src/bin/e_int_border_menu.c:98
+#: src/bin/e_int_border_menu.c:99
 #: src/modules/everything-windows/e_mod_main.c:457
 msgid "Send to Desktop"
 msgstr "Envoyer sur le bureau"
 
-#: src/bin/e_int_border_menu.c:110
+#: src/bin/e_int_border_menu.c:111
 msgid "Pin to Desktop"
 msgstr "Épingler au bureau"
 
-#: src/bin/e_int_border_menu.c:121
+#: src/bin/e_int_border_menu.c:122
 msgid "Unpin from Desktop"
 msgstr "Désépingler du bureau"
 
-#: src/bin/e_int_border_menu.c:130
+#: src/bin/e_int_border_menu.c:131
 msgid "More..."
 msgstr "Plus…"
 
-#: src/bin/e_int_border_menu.c:192
+#: src/bin/e_int_border_menu.c:193
 #: src/modules/everything-windows/e_mod_main.c:436
 msgid "Iconify"
 msgstr "Minimiser"
 
-#: src/bin/e_int_border_menu.c:407
+#: src/bin/e_int_border_menu.c:408
 msgid "Maximize vertically"
 msgstr "Maximiser verticalement"
 
-#: src/bin/e_int_border_menu.c:418
+#: src/bin/e_int_border_menu.c:419
 msgid "Maximize horizontally"
 msgstr "Maximiser horizontalement"
 
-#: src/bin/e_int_border_menu.c:429
+#: src/bin/e_int_border_menu.c:430
 msgid "Unmaximize"
 msgstr "Restaurer"
 
-#: src/bin/e_int_border_menu.c:530
+#: src/bin/e_int_border_menu.c:540
 msgid "Keyboard Shortcut"
 msgstr "Aux raccourcis clavier"
 
-#: src/bin/e_int_border_menu.c:536
+#: src/bin/e_int_border_menu.c:546
 msgid "To Favorites Menu"
 msgstr "Au menu des favoris"
 
-#: src/bin/e_int_border_menu.c:541
+#: src/bin/e_int_border_menu.c:551
 msgid "To Launcher"
 msgstr "Au lanceur"
 
-#: src/bin/e_int_border_menu.c:563
+#: src/bin/e_int_border_menu.c:573
 #: src/modules/conf_borders/e_mod_main.c:20
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:321
 msgid "Border"
 msgstr "Bordure"
 
-#: src/bin/e_int_border_menu.c:572
+#: src/bin/e_int_border_menu.c:582
 msgid "Skip"
 msgstr "Ignorer"
 
-#: src/bin/e_int_border_menu.c:591
+#: src/bin/e_int_border_menu.c:601
 #: src/bin/e_int_border_prop.c:433
 msgid "State"
 msgstr "État"
 
-#: src/bin/e_int_border_menu.c:602
+#: src/bin/e_int_border_menu.c:612
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:128
 msgid "Remember"
 msgstr "Mémoriser"
 
-#: src/bin/e_int_border_menu.c:618
+#: src/bin/e_int_border_menu.c:628
 #: src/bin/e_int_border_prop.c:75
 msgid "Window Properties"
 msgstr "Propriétés de la fenêtre"
 
-#: src/bin/e_int_border_menu.c:853
+#: src/bin/e_int_border_menu.c:863
 msgid "Always On Top"
 msgstr "Toujours au-dessus"
 
-#: src/bin/e_int_border_menu.c:864
+#: src/bin/e_int_border_menu.c:874
 #: src/modules/conf_fonts/e_int_config_fonts.c:98
 #: src/modules/conf_fonts/e_int_config_fonts.c:262
 msgid "Normal"
 msgstr "Normal"
 
-#: src/bin/e_int_border_menu.c:875
+#: src/bin/e_int_border_menu.c:885
 msgid "Always Below"
 msgstr "Toujours en dessous"
 
-#: src/bin/e_int_border_menu.c:966
+#: src/bin/e_int_border_menu.c:976
 msgid "Select Border Style"
 msgstr "Sélectionner un style de bordure"
 
-#: src/bin/e_int_border_menu.c:978
+#: src/bin/e_int_border_menu.c:988
 msgid "Use E17 Default Icon Preference"
 msgstr "Utiliser l'icone proposé par E17"
 
-#: src/bin/e_int_border_menu.c:986
+#: src/bin/e_int_border_menu.c:996
 msgid "Use Application Provided Icon "
 msgstr "Utiliser l'icone fourni par l'application"
 
-#: src/bin/e_int_border_menu.c:994
+#: src/bin/e_int_border_menu.c:1004
 msgid "Use User Defined Icon"
 msgstr "Utiliser l'icone défini par l'utilisateur"
 
-#: src/bin/e_int_border_menu.c:1055
+#: src/bin/e_int_border_menu.c:1013
+#: src/bin/e_int_border_remember.c:747
+msgid "Offer Resistance"
+msgstr "Offrir une résistance"
+
+#: src/bin/e_int_border_menu.c:1076
 #: src/bin/e_int_border_prop.c:473
 msgid "Shaded"
 msgstr "Enroulé(e)"
 
-#: src/bin/e_int_border_menu.c:1068
+#: src/bin/e_int_border_menu.c:1089
 #: src/bin/e_int_border_prop.c:472
 msgid "Sticky"
 msgstr "Ancré(e)"
 
-#: src/bin/e_int_border_menu.c:1084
+#: src/bin/e_int_border_menu.c:1105
 #: src/bin/e_int_border_prop.c:477
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:121
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:145
 msgid "Fullscreen"
 msgstr "Plein écran"
 
-#: src/bin/e_int_border_menu.c:1109
+#: src/bin/e_int_border_menu.c:1130
 #: src/modules/conf_winlist/e_mod_main.c:19
 msgid "Window List"
 msgstr "Liste des fenêtres"
 
-#: src/bin/e_int_border_menu.c:1119
+#: src/bin/e_int_border_menu.c:1140
 #: src/modules/pager/e_mod_main.c:257
 #: src/modules/pager/e_mod_main.c:2800
 #: src/modules/pager/e_mod_main.c:2807
@@ -1947,7 +1952,7 @@ msgstr "Liste des fenêtres"
 msgid "Pager"
 msgstr "Pager"
 
-#: src/bin/e_int_border_menu.c:1129
+#: src/bin/e_int_border_menu.c:1150
 msgid "Taskbar"
 msgstr "Barre des tâches"
 
@@ -1964,7 +1969,7 @@ msgid "ICCCM Properties"
 msgstr "Propriétés ICCCM"
 
 #: src/bin/e_int_border_prop.c:419
-#: src/bin/e_int_border_remember.c:659
+#: src/bin/e_int_border_remember.c:665
 #: src/bin/e_utils.c:1189
 msgid "Title"
 msgstr "Titre"
@@ -2059,12 +2064,12 @@ msgid "Modal"
 msgstr "Modal(e)"
 
 #: src/bin/e_int_border_prop.c:474
-#: src/bin/e_int_border_remember.c:738
+#: src/bin/e_int_border_remember.c:744
 msgid "Skip Taskbar"
 msgstr "Ignorer la barre des tâches"
 
 #: src/bin/e_int_border_prop.c:475
-#: src/bin/e_int_border_remember.c:735
+#: src/bin/e_int_border_remember.c:741
 msgid "Skip Pager"
 msgstr "Ignorer le Pager"
 
@@ -2072,114 +2077,114 @@ msgstr "Ignorer le Pager"
 msgid "Hidden"
 msgstr "Caché(e)"
 
-#: src/bin/e_int_border_remember.c:82
+#: src/bin/e_int_border_remember.c:83
 msgid "Window Remember"
 msgstr "Mémorisation des fenêtres"
 
-#: src/bin/e_int_border_remember.c:304
+#: src/bin/e_int_border_remember.c:307
 msgid "Window properties are not a unique match"
 msgstr "Les propriétés de la fenêtre sont partagées"
 
-#: src/bin/e_int_border_remember.c:307
+#: src/bin/e_int_border_remember.c:310
 msgid "You are trying to ask Enlightenment to remember to apply<br>properties (such as size, location, border style etc.) to<br>a window that <hilight>does not have unique properties</hilight>.<br><br>This means it shares Name/Class, Transience, Role etc. properties<br>with more than 1 other window on the screen and remembering<br>properties for this window will apply to all other windows<br>that match these properties.<br><br>This is just a warning in case you did not intend this to happen.<br>If you did, simply press <hilight>Apply</hilight> or <hilight>OK</hilight> buttons<br>and your settings will be accepted. Press <hilight>Cancel</hilight> if you<br>are not sure and nothing will be affected."
 msgstr "Vous demandez à Enlightenment de mémoriser les<br>propriétés (telles que la taille, la position,<br>le type de bordure, etc.) d'une fenêtre sans<br><hilight>propriétés distinctives</hilight>.<br><br>Ce qui signifie qu'elle partage son nom et classe, sa fugacité,<br>son rôle, etc., avec au moins une autre fenêtre à l'écran et que la<br>mémorisation des propriétés pour cette fenêtre s'appliquera à<br>toutes les autres fenêtres qui partagent les mêmes propriétés.<br><br>Ceci n'est qu'un avertissement au cas où ce<br>n'était pas ce que vous recherchiez.<br>Cliquez sur <hilight>Appliquer</hilight> ou <hilight>OK</hilight> et<br>vos paramètres seront acceptés. Cliquez<br>sur <hilight>Annuler</hilight> si vous n'êtes pas sûr,<br>et rien ne sera modifié."
 
-#: src/bin/e_int_border_remember.c:512
+#: src/bin/e_int_border_remember.c:516
 msgid "No match properties set"
 msgstr "Aucune propriété ne correspond"
 
-#: src/bin/e_int_border_remember.c:515
+#: src/bin/e_int_border_remember.c:519
 msgid "You are trying to ask Enlightenment to remember to apply<br>properties (such as size, location, border style etc.) to<br>a window <hilight>without specifying how to remember it</hilight>.<br><br>You must specify at least 1 way of remembering this window."
 msgstr "Vous demandez à Enlightenment de mémoriser des<br>propriétés (telles que la taille, la position, le style de bordure, etc.)<br>d'une fenêtre <hilight>sans spécifier comment le faire</hilight>.<br><br>Vous devez spécifier au moins une méthode pour<br>mémoriser cette fenêtre."
 
-#: src/bin/e_int_border_remember.c:611
+#: src/bin/e_int_border_remember.c:617
 msgid "Nothing"
 msgstr "Rien"
 
-#: src/bin/e_int_border_remember.c:613
+#: src/bin/e_int_border_remember.c:619
 msgid "Size and Position"
 msgstr "Taille et position"
 
-#: src/bin/e_int_border_remember.c:615
-#: src/bin/e_int_border_remember.c:708
+#: src/bin/e_int_border_remember.c:621
+#: src/bin/e_int_border_remember.c:714
 msgid "Locks"
 msgstr "Verrous"
 
-#: src/bin/e_int_border_remember.c:617
+#: src/bin/e_int_border_remember.c:623
 msgid "Size, Position and Locks"
 msgstr "Taille, position et verrous"
 
-#: src/bin/e_int_border_remember.c:619
+#: src/bin/e_int_border_remember.c:625
 #: src/modules/conf/e_mod_main.c:245
 #: src/modules/everything/evry_plug_aggregator.c:333
 msgid "All"
 msgstr "Tout"
 
-#: src/bin/e_int_border_remember.c:632
+#: src/bin/e_int_border_remember.c:638
 msgid "Remember using"
 msgstr "Mémoriser selon"
 
-#: src/bin/e_int_border_remember.c:635
+#: src/bin/e_int_border_remember.c:641
 msgid "Window name"
 msgstr "Nom de la fenêtre"
 
-#: src/bin/e_int_border_remember.c:647
+#: src/bin/e_int_border_remember.c:653
 msgid "Window class"
 msgstr "Classe de la fenêtre"
 
-#: src/bin/e_int_border_remember.c:671
+#: src/bin/e_int_border_remember.c:677
 msgid "Window Role"
 msgstr "Rôle de la fenêtre"
 
-#: src/bin/e_int_border_remember.c:683
+#: src/bin/e_int_border_remember.c:689
 msgid "Window type"
 msgstr "Type de la fenêtre"
 
-#: src/bin/e_int_border_remember.c:691
+#: src/bin/e_int_border_remember.c:697
 msgid "wildcard matches are allowed"
 msgstr "Caractères jokers autorisés"
 
-#: src/bin/e_int_border_remember.c:693
+#: src/bin/e_int_border_remember.c:699
 msgid "Transience"
 msgstr "Fugacité"
 
-#: src/bin/e_int_border_remember.c:698
+#: src/bin/e_int_border_remember.c:704
 msgid "Properties to remember"
 msgstr "Propriétés à mémoriser"
 
-#: src/bin/e_int_border_remember.c:714
+#: src/bin/e_int_border_remember.c:720
 msgid "Icon Preference"
 msgstr "Préférence de l'icone"
 
-#: src/bin/e_int_border_remember.c:720
+#: src/bin/e_int_border_remember.c:726
 msgid "Virtual Desktop"
 msgstr "Bureau virtuel"
 
-#: src/bin/e_int_border_remember.c:729
+#: src/bin/e_int_border_remember.c:735
 msgid "Current Screen"
 msgstr "Écran actuel"
 
-#: src/bin/e_int_border_remember.c:732
+#: src/bin/e_int_border_remember.c:738
 msgid "Skip Window List"
 msgstr "Ne pas afficher dans la liste des fenêtres"
 
-#: src/bin/e_int_border_remember.c:741
+#: src/bin/e_int_border_remember.c:750
 msgid "Application file or name (.desktop)"
 msgstr "Fichier d'application ou nom (.desktop)"
 
-#: src/bin/e_int_border_remember.c:749
+#: src/bin/e_int_border_remember.c:758
 msgid "Match only one window"
 msgstr "N'appliquer qu'à une seule fenêtre"
 
-#: src/bin/e_int_border_remember.c:753
+#: src/bin/e_int_border_remember.c:762
 msgid "Always focus on start"
 msgstr "Toujours focaliser au démarrage"
 
-#: src/bin/e_int_border_remember.c:757
+#: src/bin/e_int_border_remember.c:766
 msgid "Keep current properties"
 msgstr "Conserver les propriétés actuelles"
 
-#: src/bin/e_int_border_remember.c:763
+#: src/bin/e_int_border_remember.c:772
 msgid "Start this program on login"
 msgstr "Démarrer ce programme à l'ouverture de session"
 
@@ -3067,7 +3072,7 @@ msgstr "Déplacer/Redimensionner des gadgets"
 msgid "Contents"
 msgstr "Contenu"
 
-#: src/bin/e_startup.c:64
+#: src/bin/e_startup.c:66
 msgid "Starting"
 msgstr "Démarrage"
 
