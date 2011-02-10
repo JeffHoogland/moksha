@@ -37,8 +37,7 @@ e_widget_deskpreview_add(Evas *evas, int nx, int ny)
    e_widget_del_hook_set(obj, _e_wid_del_hook);
 
    wd->table = evas_object_table_add(evas);
-   evas_object_table_homogeneous_set(wd->table, EINA_TRUE);
-   evas_object_table_padding_set(wd->table, 1, 1);
+   evas_object_table_padding_set(wd->table, 0, 0);
    evas_object_table_align_set(wd->table, 0.5, 0.5);
    e_widget_resize_object_set(wd->obj, wd->table);
    evas_object_show(wd->table);
@@ -79,15 +78,20 @@ e_widget_deskpreview_desk_add(Evas_Object *obj, E_Zone *zone, int x, int y, int 
    dd->x = x;
    dd->y = y;
 
-   dd->icon = e_icon_add(evas_object_evas_get(obj));
-   evas_object_data_set(dd->icon, "desk_data", dd);
-   e_icon_fill_inside_set(dd->icon, EINA_FALSE);
-   e_icon_file_edje_set(dd->icon, bgfile, "e/desktop/background");
+   dd->icon = edje_object_add(evas_object_evas_get(obj));
+   e_theme_edje_object_set(dd->icon, "base/theme/widgets",
+			   "e/widgets/deskpreview/desk");
+
+   dd->thumb = e_icon_add(evas_object_evas_get(obj));
+   e_icon_fill_inside_set(dd->thumb, EINA_FALSE);
+   e_icon_file_edje_set(dd->thumb, bgfile, "e/desktop/background");
+   evas_object_show(dd->thumb);
+   edje_object_part_swallow(dd->icon, "e.swallow.content", dd->thumb); 
+
    evas_object_size_hint_min_set(dd->icon, w, h);
    evas_object_size_hint_max_set(dd->icon, w, h);
-   evas_object_resize(dd->icon, w, h);
    evas_object_show(dd->icon);
-
+   evas_object_data_set(dd->icon, "desk_data", dd);
    evas_object_event_callback_add(dd->icon, EVAS_CALLBACK_MOUSE_DOWN, 
                                   _e_wid_desk_cb_config, dd);
 
@@ -109,6 +113,7 @@ _e_wid_del_hook(Evas_Object *obj)
         E_Widget_Desk_Data *dd;
 
         if (!(dd = evas_object_data_get(o, "desk_data"))) continue;
+	evas_object_del(dd->thumb);
         evas_object_del(o);
         E_FREE(dd);
      }
@@ -119,56 +124,52 @@ _e_wid_del_hook(Evas_Object *obj)
 static void 
 _e_wid_reconfigure(E_Widget_Data *wd) 
 {
-   Eina_List *l, *del = NULL;
+   Eina_List *l, *ll;
    Evas_Object *dw;
    E_Zone *zone;
-   int tw, th, mw, mh, y;
-
+   int tw, th, mw, mh, x, y;
+   E_Widget_Desk_Data *dd;
+   
    zone = e_util_zone_current_get(e_manager_current_get());
 
    evas_object_geometry_get(wd->table, NULL, NULL, &tw, &th);
 
-   if (wd->dy >= wd->dx) 
+   if (wd->dy > wd->dx) 
      {
         mh = th / wd->dy;
         mw = (mh * zone->w) / zone->h;
      }
-   else 
+   else if (wd->dy < wd->dx) 
      {
         mw = tw / wd->dx;
         mh = (mw * zone->h) / zone->w;
      }
-
-   if (mw > tw) 
+   else 
      {
-        mw = (tw * zone->h) / zone->w;
-        mh = (mw * zone->h) / zone->w;
+   	mw = tw / wd->dx;
+   	mh = th / wd->dy;
      }
-   if (mh > th) 
+   
+   if (mw > tw/wd->dx) 
+     mw = (tw * zone->h) / zone->w;
+   if (mh > th/wd->dy) 
+     mh = (th * zone->w) / zone->h;
+   
+   EINA_LIST_FOREACH_SAFE(wd->desks, l, ll, dw) 
      {
-        mh = (th * zone->w) / zone->h;
-        mw = (mh * zone->w) / zone->h;
-     }
-
-   EINA_LIST_FOREACH(wd->desks, l, dw) 
-     {
-        E_Widget_Desk_Data *dd;
-
         if (!(dd = evas_object_data_get(dw, "desk_data"))) continue;
         if ((dd->x < wd->dx) && (dd->y < wd->dy)) 
           {
              evas_object_size_hint_min_set(dw, mw, mh);
              evas_object_size_hint_max_set(dw, mw, mh);
-             evas_object_resize(dw, mw, mh);
           }
         else
-          del = eina_list_append(del, dw);
-     }
-   EINA_LIST_FREE(del, dw) 
-     {
-        evas_object_table_unpack(wd->table, dw);
-        evas_object_del(dw);
-        wd->desks = eina_list_remove(wd->desks, dw);
+	  {
+	     evas_object_del(dd->thumb);
+	     evas_object_del(dw);
+	     wd->desks = eina_list_remove(wd->desks, dw);
+	     E_FREE(dd);     
+	  }	
      }
 
    for (y = 0; y < wd->dy; y++) 
@@ -182,6 +183,7 @@ _e_wid_reconfigure(E_Widget_Data *wd)
              Evas_Object *dw;
 
              dw = e_widget_deskpreview_desk_add(wd->obj, zone, x, y, mw, mh);
+	     evas_object_size_hint_aspect_set(dw, EVAS_ASPECT_CONTROL_BOTH, zone->w, zone->h);
              evas_object_table_pack(wd->table, dw, x, y, 1, 1);
              wd->desks = eina_list_append(wd->desks, dw);
           }
@@ -245,7 +247,7 @@ _e_wid_cb_bg_update(void *data, int type, void *event)
              const char *bgfile;
 
              bgfile = e_bg_file_get(dd->con, dd->zone, dd->x, dd->y);
-             e_icon_file_edje_set(dd->icon, bgfile, "e/desktop/background");
+             e_icon_file_edje_set(dd->thumb, bgfile, "e/desktop/background");
           }
      }
 
