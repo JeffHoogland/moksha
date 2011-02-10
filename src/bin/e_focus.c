@@ -32,7 +32,7 @@ e_focus_event_mouse_in(E_Border* bd)
      {
 	if (!bd->lock_focus_out)
           {
-             if (!bd->focused)
+             //if (!bd->focused)
                e_border_focus_set(bd, 1, 1);
           }
      }
