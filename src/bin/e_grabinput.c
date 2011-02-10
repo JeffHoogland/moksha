@@ -1,6 +1,7 @@
 #include "e.h"
 
 /* local subsystem functions */
+static void _e_grabinput_focus_job(void *data);
 static void _e_grabinput_focus(Ecore_X_Window win, E_Focus_Method method);
 
 /* local subsystem globals */
@@ -8,6 +9,9 @@ static Ecore_X_Window grab_mouse_win = 0;
 static Ecore_X_Window grab_key_win = 0;
 static Ecore_X_Window focus_win = 0;
 static E_Focus_Method focus_method = E_FOCUS_METHOD_NO_INPUT;
+static Ecore_X_Window do_focus_win = 0;
+static E_Focus_Method do_focus_method = E_FOCUS_METHOD_NO_INPUT;
+static Ecore_Job *focus_job = NULL;
 static double last_focus_time = 0.0;
 
 /* externally accessible functions */
@@ -98,7 +102,11 @@ e_grabinput_focus(Ecore_X_Window win, E_Focus_Method method)
      }
    else
      {
-	_e_grabinput_focus(win, method);
+        do_focus_win = win;
+        do_focus_method = method;
+        if (!focus_job)
+          focus_job = ecore_job_add(_e_grabinput_focus_job, NULL);
+	//_e_grabinput_focus(win, method);
      }
 }
 
@@ -109,6 +117,14 @@ e_grabinput_last_focus_time_get(void)
 }
 
 /* local subsystem functions */
+static void
+_e_grabinput_focus_job(void *data __UNUSED__)
+{
+   focus_job = NULL;
+   _e_grabinput_focus(do_focus_win, do_focus_method);
+   do_focus_win = 0;
+}
+
 static void
 _e_grabinput_focus(Ecore_X_Window win, E_Focus_Method method)
 {
