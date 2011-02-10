@@ -993,10 +993,12 @@ _e_kbd_int_layout_build(E_Kbd_Int *ki)
 
    evas_event_freeze(ki->win->evas);
    e_layout_virtual_size_set(ki->layout_obj, ki->layout.w, ki->layout.h);
-   edje_extern_object_aspect_set(ki->layout_obj, EDJE_ASPECT_CONTROL_BOTH, ki->layout.w, ki->layout.h);
+   edje_extern_object_aspect_set(ki->layout_obj, EDJE_ASPECT_CONTROL_BOTH, 
+                                 ki->layout.w, ki->layout.h);
    edje_object_part_swallow(ki->base_obj, "e.swallow.content", ki->layout_obj);
    evas_object_resize(ki->base_obj, ki->win->w, ki->win->h);
-   edje_object_part_geometry_get(ki->base_obj, "e.swallow.content", NULL, NULL, &lw, &lh);
+   edje_object_part_geometry_get(ki->base_obj, "e.swallow.content", 
+                                 NULL, NULL, &lw, &lh);
    lh = (ki->layout.h * lw) / ki->layout.w;
    edje_extern_object_min_size_set(ki->layout_obj, lw, lh);
    edje_extern_object_max_size_set(ki->layout_obj, ki->win->w, ki->win->h);
@@ -1657,7 +1659,11 @@ e_kbd_int_new(const char *themedir, const char *syskbds, const char *sysdicts)
    ecore_x_netwm_window_state_set(ki->win->evas_win, states, 2);
    ecore_x_icccm_hints_set(ki->win->evas_win, 0, 0, 0, 0, 0, 0, 0);
    e_win_no_remember_set(ki->win, 1);
-   e_win_resize(ki->win, zone->w, zone->h);
+
+   if (zone->w > zone->h)
+     e_win_resize(ki->win, zone->w, (zone->h / 2));
+   else
+     e_win_resize(ki->win, zone->w, zone->h);
 
    e_win_resize_callback_set(ki->win, _e_kbd_int_cb_resize);
    e_win_borderless_set(ki->win, 1);
