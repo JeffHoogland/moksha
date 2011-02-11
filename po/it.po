@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-02-09 20:31+0100\n"
-"PO-Revision-Date: 2011-02-09 20:32+0100\n"
+"POT-Creation-Date: 2011-02-11 17:23+0100\n"
+"PO-Revision-Date: 2011-02-11 17:24+0100\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -706,8 +706,8 @@ msgstr "Selettore colore"
 #: src/modules/conf_theme/e_int_config_theme_import.c:120
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:215
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:345
-#: src/modules/cpufreq/e_mod_main.c:391 src/modules/cpufreq/e_mod_main.c:420
-#: src/modules/cpufreq/e_mod_main.c:445
+#: src/modules/cpufreq/e_mod_main.c:414 src/modules/cpufreq/e_mod_main.c:443
+#: src/modules/cpufreq/e_mod_main.c:468
 msgid "OK"
 msgstr "OK"
 
@@ -4134,10 +4134,8 @@ msgid "Show on screen #:"
 msgstr "Mostra sullo schermo #:"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:239
-#: src/modules/conf_desks/e_int_config_desks.c:229
-#: src/modules/conf_desks/e_int_config_desks.c:234
-#: src/modules/conf_desks/e_int_config_desks.c:262
-#: src/modules/conf_desks/e_int_config_desks.c:266
+#: src/modules/conf_desks/e_int_config_desks.c:172
+#: src/modules/conf_desks/e_int_config_desks.c:177
 #: src/modules/conf_mouse/e_int_config_mouse.c:114
 #: src/modules/conf_mouse/e_int_config_mouse.c:120
 #: src/modules/everything/evry_config.c:407
@@ -4220,79 +4218,74 @@ msgstr "Sfondo"
 msgid "Screen Lock"
 msgstr "Bloccaschermo"
 
-#: src/modules/conf_desks/e_int_config_desks.c:58
+#: src/modules/conf_desks/e_int_config_desks.c:55
 #: src/modules/pager/e_mod_main.c:795
 msgid "Virtual Desktops Settings"
 msgstr "Desktop virtuali"
 
-#: src/modules/conf_desks/e_int_config_desks.c:222
+#: src/modules/conf_desks/e_int_config_desks.c:165
 msgid "Number of Desktops"
 msgstr "Numero di desktop"
 
-#: src/modules/conf_desks/e_int_config_desks.c:241
-#: src/modules/conf_desks/e_int_config_desks.c:280
-msgid "Desktop Mouse Flip"
-msgstr "Cambio desktop con mouse"
+#: src/modules/conf_desks/e_int_config_desks.c:184
+msgid "Desktop Flip"
+msgstr "Cambio desktop"
 
-#: src/modules/conf_desks/e_int_config_desks.c:242
-msgid "Animated flip"
-msgstr "Cambio animato"
-
-#: src/modules/conf_desks/e_int_config_desks.c:270
-msgid "Desktops"
-msgstr "Desktop"
-
-#: src/modules/conf_desks/e_int_config_desks.c:274
+#: src/modules/conf_desks/e_int_config_desks.c:185
 msgid "Flip when dragging objects to the screen edge"
 msgstr "Cambia desktop al trascinamento di oggetti sul limite dello schermo"
 
-#: src/modules/conf_desks/e_int_config_desks.c:277
+#: src/modules/conf_desks/e_int_config_desks.c:188
 msgid "Wrap desktops around when flipping"
 msgstr "Passa al desktop opposto quando oltrepassi gli estremi"
 
-#: src/modules/conf_desks/e_int_config_desks.c:285
+#: src/modules/conf_desks/e_int_config_desks.c:194
+msgid "Desktops"
+msgstr "Desktop"
+
+#: src/modules/conf_desks/e_int_config_desks.c:199
 #: src/modules/everything/evry_config.c:477
 msgid "Off"
 msgstr "Disattivata"
 
-#: src/modules/conf_desks/e_int_config_desks.c:288
+#: src/modules/conf_desks/e_int_config_desks.c:202
 msgid "Pane"
 msgstr "Sovrapposizione"
 
-#: src/modules/conf_desks/e_int_config_desks.c:291
+#: src/modules/conf_desks/e_int_config_desks.c:205
 msgid "Zoom"
 msgstr "Zoom"
 
-#: src/modules/conf_desks/e_int_config_desks.c:295
+#: src/modules/conf_desks/e_int_config_desks.c:209
 msgid "Background panning"
 msgstr "Sfondo panoramico"
 
-#: src/modules/conf_desks/e_int_config_desks.c:301
+#: src/modules/conf_desks/e_int_config_desks.c:215
 msgid "Animation speed"
 msgstr "Velocità animazione"
 
-#: src/modules/conf_desks/e_int_config_desks.c:304
+#: src/modules/conf_desks/e_int_config_desks.c:218
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:168
 #: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:151
 #, c-format
 msgid "%1.1f sec"
 msgstr "%1.1f sec"
 
-#: src/modules/conf_desks/e_int_config_desks.c:310
+#: src/modules/conf_desks/e_int_config_desks.c:224
 msgid "X-Axis pan factor"
 msgstr "Fattore panoramica asse X"
 
-#: src/modules/conf_desks/e_int_config_desks.c:313
-#: src/modules/conf_desks/e_int_config_desks.c:322
+#: src/modules/conf_desks/e_int_config_desks.c:227
+#: src/modules/conf_desks/e_int_config_desks.c:236
 #, c-format
 msgid "%.2f"
 msgstr "%.2f"
 
-#: src/modules/conf_desks/e_int_config_desks.c:319
+#: src/modules/conf_desks/e_int_config_desks.c:233
 msgid "Y-Axis pan factor"
 msgstr "Fattore panoramica asse Y"
 
-#: src/modules/conf_desks/e_int_config_desks.c:328
+#: src/modules/conf_desks/e_int_config_desks.c:242
 msgid "Flip Animation"
 msgstr "Animazione cambio"
 
@@ -4867,7 +4860,7 @@ msgstr "Bytecode"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:657
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:193
-#: src/modules/cpufreq/e_mod_main.c:224 src/modules/cpufreq/e_mod_main.c:256
+#: src/modules/cpufreq/e_mod_main.c:227 src/modules/cpufreq/e_mod_main.c:259
 msgid "Automatic"
 msgstr "Automatico"
 
@@ -6274,77 +6267,77 @@ msgstr "Allineamento"
 msgid "Cpufreq"
 msgstr "Cpufreq"
 
-#: src/modules/cpufreq/e_mod_main.c:178
+#: src/modules/cpufreq/e_mod_main.c:181
 msgid "Fast (4 ticks)"
 msgstr "Veloce (4 tick)"
 
-#: src/modules/cpufreq/e_mod_main.c:185
+#: src/modules/cpufreq/e_mod_main.c:188
 msgid "Medium (8 ticks)"
 msgstr "Medio (8 tick)"
 
-#: src/modules/cpufreq/e_mod_main.c:192
+#: src/modules/cpufreq/e_mod_main.c:195
 msgid "Normal (32 ticks)"
 msgstr "Normale (32 tick)"
 
-#: src/modules/cpufreq/e_mod_main.c:199
+#: src/modules/cpufreq/e_mod_main.c:202
 msgid "Slow (64 ticks)"
 msgstr "Lento (64 tick)"
 
-#: src/modules/cpufreq/e_mod_main.c:206
+#: src/modules/cpufreq/e_mod_main.c:209
 msgid "Very Slow (256 ticks)"
 msgstr "Molto lento (256 tick)"
 
-#: src/modules/cpufreq/e_mod_main.c:222
+#: src/modules/cpufreq/e_mod_main.c:225
 msgid "Manual"
 msgstr "Manuale"
 
-#: src/modules/cpufreq/e_mod_main.c:226 src/modules/cpufreq/e_mod_main.c:258
+#: src/modules/cpufreq/e_mod_main.c:229 src/modules/cpufreq/e_mod_main.c:261
 msgid "Lower Power Automatic"
 msgstr "Minimo Consumo Automatico"
 
-#: src/modules/cpufreq/e_mod_main.c:228 src/modules/cpufreq/e_mod_main.c:260
+#: src/modules/cpufreq/e_mod_main.c:231 src/modules/cpufreq/e_mod_main.c:263
 msgid "Minimum Speed"
 msgstr "Minima velocità"
 
-#: src/modules/cpufreq/e_mod_main.c:230 src/modules/cpufreq/e_mod_main.c:262
+#: src/modules/cpufreq/e_mod_main.c:233 src/modules/cpufreq/e_mod_main.c:265
 msgid "Maximum Speed"
 msgstr "Massima velocità"
 
-#: src/modules/cpufreq/e_mod_main.c:241
+#: src/modules/cpufreq/e_mod_main.c:244
 msgid "Restore CPU Power Policy"
 msgstr "Ripristina regole energia CPU"
 
-#: src/modules/cpufreq/e_mod_main.c:275
+#: src/modules/cpufreq/e_mod_main.c:278
 msgid "Automatic powersaving"
 msgstr "Risparmio energetico automatico"
 
-#: src/modules/cpufreq/e_mod_main.c:294
+#: src/modules/cpufreq/e_mod_main.c:297
 #, c-format
 msgid "%i MHz"
 msgstr "%i MHz"
 
-#: src/modules/cpufreq/e_mod_main.c:296
+#: src/modules/cpufreq/e_mod_main.c:299
 #, c-format
 msgid "%i.%i GHz"
 msgstr "%i,%i GHz"
 
-#: src/modules/cpufreq/e_mod_main.c:315
+#: src/modules/cpufreq/e_mod_main.c:313
 msgid "Time Between Updates"
 msgstr "Intervallo tra aggiornamenti"
 
-#: src/modules/cpufreq/e_mod_main.c:321
+#: src/modules/cpufreq/e_mod_main.c:319
 msgid "Set CPU Power Policy"
 msgstr "Imposta regole energia CPU"
 
-#: src/modules/cpufreq/e_mod_main.c:328
+#: src/modules/cpufreq/e_mod_main.c:326
 msgid "Set CPU Speed"
 msgstr "Imposta velocità CPU"
 
-#: src/modules/cpufreq/e_mod_main.c:334
+#: src/modules/cpufreq/e_mod_main.c:332
 msgid "Powersaving behavior"
 msgstr "Comportamento risparmio energetico"
 
-#: src/modules/cpufreq/e_mod_main.c:388
+#: src/modules/cpufreq/e_mod_main.c:411
 msgid ""
 "There was an error trying to set the<br>cpu frequency governor via the "
 "module's<br>setfreq utility."
@@ -6352,7 +6345,7 @@ msgstr ""
 "C'è stato un errore nell'impostazione del governor<br>della frequenza della "
 "cpu attraverso l'utilità <br>setfreq del modulo."
 
-#: src/modules/cpufreq/e_mod_main.c:416
+#: src/modules/cpufreq/e_mod_main.c:439
 msgid ""
 "Your kernel does not support setting the<br>CPU frequency at all. You may be "
 "missing<br>Kernel modules or features, or your CPU<br>simply does not "
@@ -6362,7 +6355,7 @@ msgstr ""
 "della CPU. Probabilmente mancano<br>funzionalità o moduli del kernel, o più "
 "semplicemente<br>la vostra CPU non supporta questa funzionalità."
 
-#: src/modules/cpufreq/e_mod_main.c:442
+#: src/modules/cpufreq/e_mod_main.c:465
 msgid ""
 "There was an error trying to set the<br>cpu frequency setting via the "
 "module's<br>setfreq utility."
