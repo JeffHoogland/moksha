@@ -90,7 +90,7 @@ static void _e_action_free(E_Action *act);
 static E_Maximize _e_actions_maximize_parse(const char *maximize);
 static int _action_groups_sort_cb(const void *d1, const void *d2);
 
-/* to save writing this in N places - the sctions are defined here */
+/* to save writing this in N places - the sections are defined here */
 /***************************************************************************/
 ACT_FN_GO(window_move, __UNUSED__)
 {
@@ -764,6 +764,28 @@ ACT_FN_GO(window_borderless_toggle, __UNUSED__)
 
 	bd->client.border.changed = 1;
 	bd->changed = 1;
+     }
+}
+
+/***************************************************************************/
+ACT_FN_GO(window_border_set, __UNUSED__)
+{
+   if ((!obj) || (obj->type != E_BORDER_TYPE))
+     obj = E_OBJECT(e_border_focused_get());
+   if (!obj) return;
+   if (!((E_Border *)obj)->lock_border)
+     {
+        E_Border *bd;
+
+        bd = (E_Border *)obj;
+        if (bd && params)
+          {
+             if (bd->bordername)
+                eina_stringshare_del(bd->bordername);
+             bd->bordername = eina_stringshare_add(params);
+             bd->client.border.changed = 1;
+             bd->changed = 1;
+          }
      }
 }
 
@@ -2686,6 +2708,12 @@ e_actions_init(void)
    ACT_GO(window_borderless_toggle);
    e_action_predef_name_set(N_("Window : State"), N_("Toggle Borderless State"),
 			    "window_borderless_toggle", NULL, NULL, 0);
+
+   /* window_border_set */
+   ACT_GO(window_border_set);
+   e_action_predef_name_set(N_("Window : State"), N_("Set Border"),
+                            "window_border_set", NULL,
+                            "syntax: BorderName, example: pixel", 1);
 
    /* window_pinned_toggle */
    ACT_GO(window_pinned_toggle);
