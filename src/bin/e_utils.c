@@ -62,6 +62,7 @@ static void _e_util_image_import_settings_del(void *obj);
 
 static Eina_Bool _e_util_image_import_exit(void *data, int type __UNUSED__, void *event);
 static void _e_util_image_import_handle_free(E_Util_Image_Import_Handle *handle);
+static Evas_Object *_e_util_icon_add(const char *path, Evas *evas, int size);
 
 /* local subsystem globals */
 static Ecore_Timer *_e_util_dummy_timer = NULL;
@@ -953,27 +954,7 @@ e_util_library_path_restore(void)
 EAPI Evas_Object *
 e_util_icon_add(const char *path, Evas *evas)
 {
-   Evas_Object *o = NULL;
-   const char *ext;
-
-   if (!path) return NULL;
-   if (!ecore_file_exists(path)) return NULL;
-
-   o = e_icon_add(evas);
-   e_icon_preload_set(o, 1);
-   ext = strrchr(path, '.');
-   if (ext)
-     {
-	if (!strcmp(ext, ".edj"))
-	  e_icon_file_edje_set(o, path, "icon");
-	else
-	  e_icon_file_set(o, path);
-     }
-   else
-     e_icon_file_set(o, path);
-   e_icon_fill_inside_set(o, 1);
-
-   return o;
+   return _e_util_icon_add(path, evas, 64); 
 }
 
 EAPI Evas_Object *
@@ -996,7 +977,7 @@ e_util_icon_theme_icon_add(const char *icon_name, unsigned int size, Evas *evas)
 	path = efreet_icon_path_find(e_config->icon_theme, icon_name, size);
 	if (path)
 	  {
-	     obj = e_util_icon_add(path, evas);
+	     obj = _e_util_icon_add(path, evas, size);
 	     return obj;
 	  }
      }
@@ -1428,6 +1409,34 @@ e_util_container_desk_count_get(E_Container *con)
 }
 
 /* local subsystem functions */
+
+static Evas_Object *
+_e_util_icon_add(const char *path, Evas *evas, int size)
+{
+   Evas_Object *o = NULL;
+   const char *ext;
+
+   if (!path) return NULL;
+   if (!ecore_file_exists(path)) return NULL;
+
+   o = e_icon_add(evas);
+   e_icon_scale_size_set(o, size); 
+   e_icon_preload_set(o, 1);
+   ext = strrchr(path, '.');
+   if (ext)
+     {
+	if (!strcmp(ext, ".edj"))
+	  e_icon_file_edje_set(o, path, "icon");
+	else
+	  e_icon_file_set(o, path);
+     }
+   else
+     e_icon_file_set(o, path);
+   e_icon_fill_inside_set(o, 1);
+
+   return o;
+}
+
 static Eina_Bool
 _e_util_cb_delayed_del(void *data)
 {
