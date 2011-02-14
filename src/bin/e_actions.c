@@ -789,6 +789,62 @@ ACT_FN_GO(window_border_set, __UNUSED__)
      }
 }
 
+/***************************************************************************/
+ACT_FN_GO(window_border_cycle, __UNUSED__)
+{
+   if ((!obj) || (obj->type != E_BORDER_TYPE))
+     obj = E_OBJECT(e_border_focused_get());
+   if (!obj) return;
+   if (!((E_Border *)obj)->lock_border)
+     {
+        E_Border *bd;
+
+        bd = (E_Border *)obj;
+        if (bd && params)
+          {
+             const char *space;
+
+             while (*params == ' ')
+                params++;
+
+             if (bd->bordername)
+               {
+                  const char *bdname = params;
+
+                  while (bdname && (space = strchr(bdname, ' ')))
+                    {
+                       if (strncmp(bd->bordername, bdname, space - bdname) == 0) {
+                            bdname = space + 1;
+                            while (*bdname == ' ')
+                               bdname++;
+                            space = strchr(bdname, ' ');
+                            if (space)
+                               bd->bordername = eina_stringshare_add_length(
+                                  bdname, space - bdname);
+                            else
+                               bd->bordername = eina_stringshare_add(bdname);
+                            bd->client.border.changed = 1;
+                            bd->changed = 1;
+                            return;
+                       }
+                       bdname = space + 1;
+                       while (*bdname == ' ')
+                          bdname++;
+                    }
+                  eina_stringshare_del(bd->bordername);
+               }
+
+             space = strchr(params, ' ');
+             if (space)
+                bd->bordername = eina_stringshare_add_length(params, space - params);
+             else
+                bd->bordername = eina_stringshare_add(params);
+             bd->client.border.changed = 1;
+             bd->changed = 1;
+          }
+     }
+}
+
  /***************************************************************************/
 ACT_FN_GO(window_pinned_toggle, __UNUSED__)
 {
@@ -2714,6 +2770,12 @@ e_actions_init(void)
    e_action_predef_name_set(N_("Window : State"), N_("Set Border"),
                             "window_border_set", NULL,
                             "syntax: BorderName, example: pixel", 1);
+
+   /* window_border_cycle */
+   ACT_GO(window_border_cycle);
+   e_action_predef_name_set(N_("Window : State"), N_("Cycle between Borders"),
+                            "window_border_cycle", NULL,
+                            "syntax: BorderNames, example: default pixel", 1);
 
    /* window_pinned_toggle */
    ACT_GO(window_pinned_toggle);
