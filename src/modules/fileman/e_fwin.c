@@ -1225,6 +1225,7 @@ _e_fwin_changed(void            *data,
    page = data;
    fwin = page->fwin;
    if (!fwin) return;  //safety
+   EINA_SAFETY_ON_NULL_RETURN(fwin->cur_page);
 
    /* FIXME: first look in E config for a special override for this dir's bg
     * or overlay
