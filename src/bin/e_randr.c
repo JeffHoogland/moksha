@@ -246,8 +246,9 @@ _e_randr_screen_info_11_free(E_Randr_Screen_Info_11 *screen_info)
      }
    if (screen_info->rates)
      {
-        free(eina_list_nth(screen_info->rates, 0));
-        eina_list_free(screen_info->rates);
+       /* this may be leaking, but at least it will be valid */
+       eina_list_free(eina_list_nth(screen_info->rates, 0));
+       eina_list_free(screen_info->rates);
      }
    free(screen_info);
    screen_info = NULL;
