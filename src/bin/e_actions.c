@@ -819,10 +819,11 @@ ACT_FN_GO(window_border_cycle, __UNUSED__)
                                bdname++;
                             space = strchr(bdname, ' ');
                             if (space)
-                               bd->bordername = eina_stringshare_add_length(
+                               eina_stringshare_replace_length(
+                                  &bd->bordername,
                                   bdname, space - bdname);
                             else
-                               bd->bordername = eina_stringshare_add(bdname);
+                               eina_stringshare_replace(&bd->bordername, bdname);
                             bd->client.border.changed = 1;
                             bd->changed = 1;
                             return;
@@ -831,7 +832,15 @@ ACT_FN_GO(window_border_cycle, __UNUSED__)
                        while (*bdname == ' ')
                           bdname++;
                     }
-                  eina_stringshare_del(bd->bordername);
+                  space = strchr(params, ' ');
+                  if (space)
+                     eina_stringshare_replace_length(&bd->bordername,
+                                                     params, space - params);
+                  else
+                     eina_stringshare_replace(&bd->bordername, params);
+                  bd->client.border.changed = 1;
+                  bd->changed = 1;
+                  return;
                }
 
              space = strchr(params, ' ');
