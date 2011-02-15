@@ -127,7 +127,7 @@ _e_wid_reconfigure(E_Widget_Data *wd)
    Eina_List *l, *ll;
    Evas_Object *dw;
    E_Zone *zone;
-   int tw, th, mw, mh, x, y;
+   int tw, th, mw, mh, y;
    E_Widget_Desk_Data *dd;
    
    zone = e_util_zone_current_get(e_manager_current_get());
