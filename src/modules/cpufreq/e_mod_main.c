@@ -160,8 +160,6 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 {
    Instance *inst;
    Evas_Event_Mouse_Down *ev;
-   E_Menu *ma = NULL, *mg = NULL, *mo = NULL;
-   int cx, cy;
    
    if (cpufreq_config->menu) return;
      
@@ -170,8 +168,10 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 
    if (ev->button == 1)
      {
+	E_Menu *mg, *mo;
 	E_Menu_Item *mi;
 	Eina_List *l;
+	int cx, cy;
 	char buf[256];
 
 	mo = e_menu_new();
@@ -335,7 +335,7 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 
 	e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon,
 					  &cx, &cy, NULL, NULL);
-	cpufreq_config->menu = ma;
+	cpufreq_config->menu = mg;
 	e_menu_post_deactivate_callback_set(mg, _menu_cb_post, inst);
 
 	e_gadcon_locked_set(inst->gcc->gadcon, 1); 
@@ -347,6 +347,9 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
      }
    else if (ev->button == 3)
      {
+	E_Menu *ma, *mg;
+	int cx, cy;
+	
 	ma = e_menu_new();
 	mg = e_menu_new();
 	cpufreq_config->menu = ma;
