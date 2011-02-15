@@ -160,7 +160,7 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 {
    Instance *inst;
    Evas_Event_Mouse_Down *ev;
-   E_Menu *ma, *mg, *mo;
+   E_Menu *ma = NULL, *mg = NULL, *mo = NULL;
    int cx, cy;
    
    if (cpufreq_config->menu) return;
