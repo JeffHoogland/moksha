@@ -669,7 +669,7 @@ e_container_border_raise(E_Border *bd)
    else
      {
 	/* Need to check the layers below */
-	for (i = pos - 2; i >= 0; i--)
+	for (i = pos - 1; i >= 0; i--)
 	  {
 	     if ((bd->zone->container->layers[i].clients) &&
 		 (l = eina_list_last(bd->zone->container->layers[i].clients)))
