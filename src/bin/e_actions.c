@@ -780,10 +780,7 @@ ACT_FN_GO(window_border_set, __UNUSED__)
         bd = (E_Border *)obj;
         if (bd && params)
           {
-             if (bd->bordername)
-               eina_stringshare_replace(&bd->bordername, params);
-             else
-               bd->bordername = eina_stringshare_add(params);
+             eina_stringshare_replace(&bd->bordername, params);
              bd->client.border.changed = 1;
              bd->changed = 1;
           }
@@ -833,22 +830,14 @@ ACT_FN_GO(window_border_cycle, __UNUSED__)
                        while (*bdname == ' ')
                           bdname++;
                     }
-                  space = strchr(params, ' ');
-                  if (space)
-                     eina_stringshare_replace_length(&bd->bordername,
-                                                     params, space - params);
-                  else
-                     eina_stringshare_replace(&bd->bordername, params);
-                  bd->client.border.changed = 1;
-                  bd->changed = 1;
-                  return;
                }
 
              space = strchr(params, ' ');
              if (space)
-                bd->bordername = eina_stringshare_add_length(params, space - params);
+                eina_stringshare_replace_length(&bd->bordername,
+                                                params, space - params);
              else
-                bd->bordername = eina_stringshare_add(params);
+                eina_stringshare_replace(&bd->bordername, params);
              bd->client.border.changed = 1;
              bd->changed = 1;
           }
