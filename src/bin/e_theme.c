@@ -165,8 +165,8 @@ e_theme_edje_object_set(Evas_Object *o, const char *category, const char *group)
    return e_theme_edje_object_set(o, buf, group);
 }
 
-EAPI const char *
-e_theme_edje_file_get(const char *category, const char *group)
+const char *
+_e_theme_edje_file_get(const char *category, const char *group, Eina_Bool fallback_icon)
 {
    E_Theme_Result *res;
    char buf[4096];
@@ -176,6 +176,13 @@ e_theme_edje_file_get(const char *category, const char *group)
    /* find category -> edje mapping */
    _e_theme_category_register(category);
    res = eina_hash_find(mappings, category);
+
+   if (e_config->icon_theme &&
+       (!fallback_icon) &&
+       (!strcmp(category, "base")) &&
+       (!strncmp(group, "e/icons", 7)))
+     return "";
+
    if (res)
      {
 	const char *str;
@@ -208,8 +215,9 @@ e_theme_edje_file_get(const char *category, const char *group)
 		       const char *col;
 
 		       res->quickfind = eina_hash_string_superfast_new(NULL);
-		       /* great a quick find hash of all group entires */
+		       /* create a quick find hash of all group entries */
 		       coll = edje_file_collection_list(str);
+
 		       EINA_LIST_FOREACH(coll, l, col)
 			 {
 			    q = eina_stringshare_add(col);
@@ -245,6 +253,18 @@ e_theme_edje_file_get(const char *category, const char *group)
    else return "";
    /* try this category */
    return e_theme_edje_file_get(buf, group);
+}
+
+EAPI const char *
+e_theme_edje_file_get(const char *category, const char *group)
+{
+   return _e_theme_edje_file_get(category, group, EINA_FALSE);
+}
+
+EAPI const char *
+e_theme_edje_icon_fallback_file_get(const char *group)
+{
+   return _e_theme_edje_file_get("base", group, EINA_TRUE);
 }
 
 /*

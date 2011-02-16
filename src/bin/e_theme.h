@@ -8,6 +8,7 @@ EINTERN int         e_theme_shutdown(void);
 
 EAPI int         e_theme_edje_object_set(Evas_Object *o, const char *category, const char *group);
 EAPI const char *e_theme_edje_file_get(const char *category, const char *group);
+EAPI const char *e_theme_edje_icon_fallback_file_get(const char *group);
 EAPI void        e_theme_file_set(const char *category, const char *file);
 
 EAPI int             e_theme_config_set(const char *category, const char *file);

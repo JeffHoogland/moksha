@@ -418,19 +418,25 @@ e_util_edje_icon_set(Evas_Object *obj, const char *name)
 }
 
 static int
-_e_util_icon_theme_set(Evas_Object *obj, const char *icon)
+_e_util_icon_theme_set(Evas_Object *obj, const char *icon, Eina_Bool fallback)
 {
    const char *file;
    char buf[PATH_MAX];
 
    if ((!icon) || (!icon[0])) return 0;
    snprintf(buf, sizeof(buf), "e/icons/%s", icon);
-   file = e_theme_edje_file_get("base/theme/icons", buf);
+
+   if (fallback)
+     file = e_theme_edje_icon_fallback_file_get(buf);
+   else
+     file = e_theme_edje_file_get("base/theme/icons", buf);
+
    if (file[0])
      {
 	e_icon_file_edje_set(obj, file, buf);
 	return 1;
      }
+
    return 0;
 }
 
@@ -455,33 +461,40 @@ e_util_icon_theme_set(Evas_Object *obj, const char *icon)
      {
 	if (_e_util_icon_fdo_set(obj, icon))
 	  return 1;
-	return _e_util_icon_theme_set(obj, icon);
+	if (_e_util_icon_theme_set(obj, icon, EINA_FALSE))
+	  return 1;
+	return _e_util_icon_theme_set(obj, icon, EINA_TRUE);
      }
    else
      {
-	if (_e_util_icon_theme_set(obj, icon))
+	if (_e_util_icon_theme_set(obj, icon, EINA_FALSE))
 	  return 1;
-	return _e_util_icon_fdo_set(obj, icon);
+	if (_e_util_icon_fdo_set(obj, icon))
+	  return 1;
+	return _e_util_icon_theme_set(obj, icon, EINA_TRUE);
      }
 }
 
-/* WARNING This function is deprecated, You should
- * use e_util_menu_item_theme_icon_set() instead.
- * It provide fallback (e theme <-> fdo theme) in both direction */
-EAPI int
-e_util_menu_item_edje_icon_set(E_Menu_Item *mi, const char *name)
+int
+_e_util_menu_item_edje_icon_set(E_Menu_Item *mi, const char *name, Eina_Bool fallback)
 {
    const char *file;
    char buf[PATH_MAX];
 
    if ((!name) || (!name[0])) return 0;
-   if (name[0]=='/' && ecore_file_exists(name))
+
+   if ((!fallback) && (name[0]=='/') && ecore_file_exists(name))
      {
 	e_menu_item_icon_edje_set(mi, name, "icon");
 	return 1;
      }
    snprintf(buf, sizeof(buf), "e/icons/%s", name);
-   file = e_theme_edje_file_get("base/theme/icons", buf);
+
+   if (fallback)
+     file = e_theme_edje_icon_fallback_file_get(buf);
+   else
+     file = e_theme_edje_file_get("base/theme/icons", buf);
+
    if (file[0])
      {
 	e_menu_item_icon_edje_set(mi, file, buf);
@@ -526,13 +539,17 @@ e_util_menu_item_theme_icon_set(E_Menu_Item *mi, const char *icon)
      {
 	if (_e_util_menu_item_fdo_icon_set(mi, icon))
 	  return 1;
-	return e_util_menu_item_edje_icon_set(mi, icon);
+	if (_e_util_menu_item_edje_icon_set(mi, icon, EINA_FALSE))
+	  return 1;
+	return _e_util_menu_item_edje_icon_set(mi, icon, EINA_TRUE);
      }
    else
      {
-	if (e_util_menu_item_edje_icon_set(mi, icon))
+	if (_e_util_menu_item_edje_icon_set(mi, icon, EINA_FALSE))
 	  return 1;
-	return _e_util_menu_item_fdo_icon_set(mi, icon);
+	if (_e_util_menu_item_fdo_icon_set(mi, icon))
+	  return 1;
+	return _e_util_menu_item_edje_icon_set(mi, icon, EINA_TRUE);
      }
 }
 
