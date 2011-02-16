@@ -109,7 +109,8 @@ e_desklock_init(void)
 EINTERN int
 e_desklock_shutdown(void)
 {
-   e_desklock_hide();
+   if (!x_fatal)
+      e_desklock_hide();
    if (e_config->desklock_background)
      e_filereg_deregister(e_config->desklock_background);
 

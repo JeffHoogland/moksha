@@ -45,16 +45,23 @@ e_module_shutdown(void)
 #endif
 
    /* do not use EINA_LIST_FREE! e_object_del modifies list */
-   while (_e_modules)
+   if (x_fatal)
      {
-	m = _e_modules->data;
-	if ((m) && (m->enabled) && !(m->error))
-	  {
-	     m->func.save(m);
-	     m->func.shutdown(m);
-	     m->enabled = 0;
-	  }
-	e_object_del(E_OBJECT(m));
+        e_module_save_all();
+     }
+   else
+     {
+        while (_e_modules)
+          {
+             m = _e_modules->data;
+             if ((m) && (m->enabled) && !(m->error))
+               {
+                  m->func.save(m);
+                  m->func.shutdown(m);
+                  m->enabled = 0;
+               }
+             e_object_del(E_OBJECT(m));
+          }
      }
 
    return 1;

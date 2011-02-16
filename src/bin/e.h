@@ -231,6 +231,8 @@ extern EAPI int     evil;
 extern EAPI int     starting;
 extern EAPI int     stopping;
 
+extern EAPI Eina_Bool x_fatal;
+
 extern EAPI unsigned long e_alert_composite_win;
 
 #endif

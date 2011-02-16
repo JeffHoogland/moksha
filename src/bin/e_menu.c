@@ -176,12 +176,15 @@ e_menu_shutdown(void)
    E_FN_DEL(ecore_event_handler_del, _e_menu_mouse_wheel_handler);
    E_FN_DEL(ecore_event_handler_del, _e_menu_window_shape_handler);
 
-   EINA_LIST_FREE(_e_active_menus, m)
+   if (!x_fatal)
      {
-	m->active = 0;
-	_e_menu_unrealize(m);
-	m->in_active_list = 0;
-	e_object_unref(E_OBJECT(m));
+        EINA_LIST_FREE(_e_active_menus, m)
+          {
+             m->active = 0;
+             _e_menu_unrealize(m);
+             m->in_active_list = 0;
+             e_object_unref(E_OBJECT(m));
+          }
      }
    _e_active_menus = NULL;
    if (_e_menu_categories)

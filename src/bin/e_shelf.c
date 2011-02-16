@@ -42,6 +42,7 @@ e_shelf_init(void)
 EINTERN int
 e_shelf_shutdown(void)
 {
+   if (x_fatal) return 1;
    while (shelves)
      {
 	E_Shelf *es;

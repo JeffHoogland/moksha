@@ -9,6 +9,7 @@
 #endif
 
 #include <fcntl.h>
+#include <setjmp.h>
 
 /*
  * i need to make more use of these when i'm baffled as to when something is
@@ -59,6 +60,7 @@ my_free_hook(void *p, const void *caller)
 */
 
 EAPI int e_precache_end = 0;
+EAPI Eina_Bool x_fatal = EINA_FALSE;
 
 static int really_know = 0;
 
@@ -93,6 +95,9 @@ static int (*_e_main_shutdown_func[MAX_LEVEL]) (void);
 static int _e_main_level = 0;
 static int _e_cacheburst = 0;
 static Eina_Bool locked = EINA_FALSE;
+
+static jmp_buf x_fatal_buf;
+static Eina_Bool inloop = EINA_FALSE;
 
 static Eina_List *_e_main_idler_before_list = NULL;
 
@@ -1155,10 +1160,16 @@ main(int argc, char **argv)
    ecore_timer_add(5.0, stdbg, NULL);
 #endif
 
-   ecore_main_loop_begin();
-
-   e_canvas_idle_flush();
+   inloop = EINA_TRUE;
+   if (!setjmp(x_fatal_buf))
+      ecore_main_loop_begin();
+   else
+      printf("FATAL: X died. Connection gone. abbreviated shutdown\n");
+   inloop = EINA_FALSE;
+   
    stopping = 1;
+
+   if (!x_fatal) e_canvas_idle_flush();
 
    /* ask all modules to save their config and then shutdown */
    /* NB: no need to do this as config shutdown will flush any saves */
@@ -1249,6 +1260,7 @@ _e_main_shutdown(int errorcode)
 static int
 _e_main_x_shutdown(void)
 {
+   if (x_fatal) return 1;
 /* ecore_x_ungrab(); */
    ecore_x_focus_reset();
    ecore_x_events_allow_all();
@@ -1561,8 +1573,13 @@ static void
 _e_main_cb_x_fatal(void *data __UNUSED__)
 {
    e_error_message_show("Lost X connection.");
-   e_sys_action_do(E_SYS_EXIT, NULL);
-//   ecore_main_loop_quit();
+   ecore_main_loop_quit();
+   // x is foobared - best to get the hell out of the mainloop
+   if (!x_fatal)
+     {
+        x_fatal = EINA_TRUE;
+        if (inloop) longjmp(x_fatal_buf, -99);
+     }
 }
 
 static Eina_Bool

@@ -76,10 +76,13 @@ e_alert_init(const char *disp)
 EINTERN int
 e_alert_shutdown(void)
 {
-   XDestroyWindow(dd, win);
-   XFreeGC(dd, gc);
-   XFreeFont(dd, fs);
-   XCloseDisplay(dd);
+   if (!x_fatal)
+     {
+        XDestroyWindow(dd, win);
+        XFreeGC(dd, gc);
+        XFreeFont(dd, fs);
+        XCloseDisplay(dd);
+     }
    title = NULL;
    str1 = NULL;
    str2 = NULL;
