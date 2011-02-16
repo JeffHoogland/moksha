@@ -178,7 +178,8 @@ static void _e_fwin_pan_child_size_get(Evas_Object *obj,
                                        Evas_Coord  *w,
                                        Evas_Coord  *h);
 static void _e_fwin_pan_scroll_update(E_Fwin_Page *page);
-
+static void _e_fwin_cb_page_obj_del(void *data, Evas *evas,
+                                         Evas_Object *obj, void *event_info);
 static void _e_fwin_zone_cb_mouse_down(void        *data,
                                        Evas        *evas,
                                        Evas_Object *obj,
@@ -291,6 +292,8 @@ e_fwin_zone_new(E_Zone     *zone,
                                   _e_fwin_selected, page);
    evas_object_smart_callback_add(o, "selection_change",
                                   _e_fwin_selection_change, page);
+   evas_object_event_callback_add(o, EVAS_CALLBACK_DEL,
+                                  _e_fwin_cb_page_obj_del, page);
    e_fm2_icon_menu_start_extend_callback_set(o, _e_fwin_cb_menu_extend_start, page);
    e_fm2_icon_menu_end_extend_callback_set(o, _e_fwin_menu_extend, page);
    e_fm2_underlay_hide(o);
@@ -556,6 +559,8 @@ _e_fwin_page_create(E_Fwin *fwin)
                                   _e_fwin_selected, page);
    evas_object_smart_callback_add(o, "selection_change",
                                   _e_fwin_selection_change, page);
+   evas_object_event_callback_add(o, EVAS_CALLBACK_DEL,
+                                  _e_fwin_cb_page_obj_del, page);
    e_fm2_icon_menu_start_extend_callback_set(o, _e_fwin_cb_menu_extend_start, page);
    e_fm2_icon_menu_end_extend_callback_set(o, _e_fwin_menu_extend, page);
    e_fm2_window_object_set(o, E_OBJECT(fwin->win));
@@ -1225,7 +1230,6 @@ _e_fwin_changed(void            *data,
    page = data;
    fwin = page->fwin;
    if (!fwin) return;  //safety
-   EINA_SAFETY_ON_NULL_RETURN(fwin->cur_page);
 
    /* FIXME: first look in E config for a special override for this dir's bg
     * or overlay
@@ -1482,6 +1486,28 @@ _e_fwin_cb_key_down(void            *data,
              return;
           }
      }
+}
+
+static void
+_e_fwin_cb_page_obj_del(void            *data,
+                        Evas *evas       __UNUSED__,
+                        Evas_Object *obj __UNUSED__,
+                        void *event_info __UNUSED__)
+{
+   E_Fwin_Page *page;
+   
+   page = data;
+   printf("------ page obj del %p %p\n", page, page->fm_obj);
+   evas_object_smart_callback_del(page->fm_obj, "dir_changed",
+                                  _e_fwin_changed);
+   evas_object_smart_callback_del(page->fm_obj, "dir_deleted",
+                                  _e_fwin_deleted);
+   evas_object_smart_callback_del(page->fm_obj, "selected",
+                                  _e_fwin_selected);
+   evas_object_smart_callback_del(page->fm_obj, "selection_change",
+                                  _e_fwin_selection_change);
+   evas_object_event_callback_del(page->fm_obj, EVAS_CALLBACK_DEL,
+                                  _e_fwin_cb_page_obj_del);
 }
 
 /* fwin zone callbacks */
