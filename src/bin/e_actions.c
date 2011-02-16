@@ -781,8 +781,9 @@ ACT_FN_GO(window_border_set, __UNUSED__)
         if (bd && params)
           {
              if (bd->bordername)
-                eina_stringshare_del(bd->bordername);
-             bd->bordername = eina_stringshare_add(params);
+               eina_stringshare_replace(&bd->bordername, params);
+             else
+               bd->bordername = eina_stringshare_add(params);
              bd->client.border.changed = 1;
              bd->changed = 1;
           }
