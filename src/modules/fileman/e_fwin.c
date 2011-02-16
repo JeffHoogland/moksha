@@ -1246,13 +1246,12 @@ _e_fwin_changed(void            *data,
      }
    else
      {
-        #define RELEASE_STR(x) if (x) { eina_stringshare_del(x); (x) = NULL; \
-  }
+#define RELEASE_STR(x) if (x) {eina_stringshare_del(x); (x) = NULL;}
         RELEASE_STR(fwin->wallpaper_file);
         RELEASE_STR(fwin->overlay_file);
         RELEASE_STR(fwin->scrollframe_file);
         RELEASE_STR(fwin->theme_file);
-        #undef RELEASE_STR
+#undef RELEASE_STR
      }
    if (fwin->under_obj)
      {
