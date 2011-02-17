@@ -391,34 +391,40 @@ evry_util_plugin_items_add(Evry_Plugin *p, Eina_List *items, const char *input,
 
 /* taken from e_utils. just changed 48 to 72.. we need
    evry_icon_theme_set(Evas_Object *obj, const char *icon,
-   size:small, mid, large) imo */
+   size:small, mid, large)  */
 static int
-_evry_icon_theme_set(Evas_Object *obj, const char *icon)
+_evry_util_icon_theme_set(Evas_Object *obj, const char *icon, Eina_Bool fallback)
 {
    const char *file;
-   char buf[4096];
+   char buf[PATH_MAX];
 
    if ((!icon) || (!icon[0])) return 0;
    snprintf(buf, sizeof(buf), "e/icons/%s", icon);
-   file = e_theme_edje_file_get("base/theme/icons", buf);
+
+   if (fallback)
+     file = e_theme_edje_icon_fallback_file_get(buf);
+   else
+     file = e_theme_edje_file_get("base/theme/icons", buf);
+
    if (file[0])
      {
 	e_icon_file_edje_set(obj, file, buf);
 	return 1;
      }
+
    return 0;
 }
 
 static int
-_evry_icon_fdo_set(Evas_Object *obj, const char *icon)
+_evry_util_icon_fdo_set(Evas_Object *obj, const char *icon)
 {
    const char *path = NULL;
+   unsigned int size;
 
    if ((!icon) || (!icon[0])) return 0;
-   path = efreet_icon_path_find(e_config->icon_theme, icon, 128);
-
+   size = e_util_icon_size_normalize(128);
+   path = efreet_icon_path_find(e_config->icon_theme, icon, size);
    if (!path) return 0;
-   e_icon_scale_size_set(obj, 128);
    e_icon_file_set(obj, path);
    return 1;
 }
@@ -426,23 +432,29 @@ _evry_icon_fdo_set(Evas_Object *obj, const char *icon)
 Evas_Object *
 evry_icon_theme_get(const char *icon, Evas *e)
 {
-   Evas_Object *o = e_icon_add(e);
-   e_icon_preload_set(o, 1);
+   Evas_Object *obj = e_icon_add(e);
+   e_icon_preload_set(obj, 1);
 
    if (e_config->icon_theme_overrides)
      {
-	if (_evry_icon_fdo_set(o, icon) ||
-	    _evry_icon_theme_set(o, icon))
-	  return o;
+	if (_evry_util_icon_fdo_set(obj, icon))
+	  return obj;
+	if (_evry_util_icon_theme_set(obj, icon, EINA_FALSE))
+	  return obj;
+        if (_evry_util_icon_theme_set(obj, icon, EINA_TRUE))
+	  return obj;
      }
    else
      {
-	if (_evry_icon_theme_set(o, icon) ||
-	    _evry_icon_fdo_set(o, icon))
-	  return o;
+	if (_evry_util_icon_theme_set(obj, icon, EINA_FALSE))
+	  return obj;
+	if (_evry_util_icon_fdo_set(obj, icon))
+	  return obj;
+        if (_evry_util_icon_theme_set(obj, icon, EINA_TRUE))
+	  return obj;
      }
 
-   evas_object_del(o);
+   evas_object_del(obj);
 
    return NULL;
 }
@@ -512,14 +524,10 @@ _file_icon_get(Evry_Item *it, Evas *e)
 		  o = NULL;
 	       }
 	  }
-	else
-	  {
-	     o = evry_icon_theme_get(it->icon, e);
-	  }
      }
 
    if (!(o) && (!it->icon) && file->mime &&
-       (/* (!strncmp(file->mime, "image/", 6)) || */
+       (/*(!strncmp(file->mime, "image/", 6)) || */
 	(!strncmp(file->mime, "video/", 6)) ||
 	(!strncmp(file->mime, "application/pdf", 15))) &&
        (evry_file_url_get(file)))
