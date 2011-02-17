@@ -811,21 +811,22 @@ ACT_FN_GO(window_border_cycle, __UNUSED__)
 
                   while (bdname && (space = strchr(bdname, ' ')))
                     {
-                       if (strncmp(bd->bordername, bdname, space - bdname) == 0) {
+                       if (strncmp(bd->bordername, bdname, space - bdname) == 0)
+                         {
                             bdname = space + 1;
                             while (*bdname == ' ')
                                bdname++;
                             space = strchr(bdname, ' ');
                             if (space)
-                               eina_stringshare_replace_length(
-                                  &bd->bordername,
-                                  bdname, space - bdname);
+                              eina_stringshare_replace_length(
+                                 &bd->bordername,
+                                 bdname, space - bdname);
                             else
-                               eina_stringshare_replace(&bd->bordername, bdname);
+                              eina_stringshare_replace(&bd->bordername, bdname);
                             bd->client.border.changed = 1;
                             bd->changed = 1;
                             return;
-                       }
+                         }
                        bdname = space + 1;
                        while (*bdname == ' ')
                           bdname++;
@@ -834,10 +835,10 @@ ACT_FN_GO(window_border_cycle, __UNUSED__)
 
              space = strchr(params, ' ');
              if (space)
-                eina_stringshare_replace_length(&bd->bordername,
-                                                params, space - params);
+               eina_stringshare_replace_length(&bd->bordername,
+                                               params, space - params);
              else
-                eina_stringshare_replace(&bd->bordername, params);
+               eina_stringshare_replace(&bd->bordername, params);
              bd->client.border.changed = 1;
              bd->changed = 1;
           }
