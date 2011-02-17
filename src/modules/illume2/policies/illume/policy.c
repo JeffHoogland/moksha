@@ -446,12 +446,14 @@ _policy_zone_layout_home_single(E_Border *bd, E_Illume_Config_Zone *cz)
 //   printf("\tLayout Home Single: %s\n", bd->client.icccm.class);
 
    /* make sure it's the required width & height */
-   nh = (bd->zone->h - cz->indicator.size - cz->softkey.size);
+   if (e_illume_border_is_conformant(bd)) nh = bd->zone->h;
+   else nh = (bd->zone->h - cz->indicator.size - cz->softkey.size);
    if ((bd->w != bd->zone->w) || (bd->h != nh)) 
      _policy_border_resize(bd, bd->zone->w, nh);
 
    /* move to correct position (relative to zone) if needed */
-   ny = (bd->zone->y + cz->indicator.size);
+   if (e_illume_border_is_conformant(bd)) ny = bd->zone->y;
+   else ny = (bd->zone->y + cz->indicator.size);
    if ((bd->x != bd->zone->x) || (bd->y != ny)) 
      _policy_border_move(bd, bd->zone->x, ny);
 
