@@ -59,6 +59,11 @@ _policy_border_set_focus(E_Border *bd)
              /* if the border was hidden due to layout, we need to unhide */
 	     if (!bd->visible) e_illume_border_show(bd);
 
+             if ((bd->iconic) && (!bd->lock_user_iconify)) 
+                e_border_uniconify(bd);
+             
+             if (!bd->lock_user_stacking) e_border_raise(bd);
+
              /* focus the border */
              e_border_focus_set(bd, 1, 1);
 
@@ -367,8 +372,6 @@ _policy_zone_layout_softkey(E_Border *bd, E_Illume_Config_Zone *cz)
 {
    int ny;
 
-//   printf("\tLayout Softkey\n");
-
    if (!bd) return;
 
    /* grab minimum softkey size */
@@ -393,6 +396,10 @@ _policy_zone_layout_softkey(E_Border *bd, E_Illume_Config_Zone *cz)
     * So for now, just disable the ny check until this gets sorted out */
 //   if ((bd->x != bd->zone->x) || (bd->y != ny))
      _policy_border_move(bd, bd->zone->x, ny);
+   // set property for apps to find out they are
+   ecore_x_e_illume_softkey_geometry_set(bd->zone->black_win,
+                                         bd->x, bd->y,
+                                         bd->w, bd->h);
 
    /* set layer if needed */
    if (bd->layer != POL_SOFTKEY_LAYER) 
@@ -1625,8 +1632,6 @@ void
 _policy_focus_home(E_Zone *zone) 
 {
    E_Border *bd;
-
-//   printf("Focus home\n");
 
    if (!zone) return;
    if (!(bd = e_illume_border_home_get(zone))) return;
