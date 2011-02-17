@@ -394,21 +394,14 @@ evry_icon_theme_get(const char *icon, Evas *e)
 {
    Evas_Object *obj = e_icon_add(e);
    e_icon_preload_set(obj, 1);
+   e_icon_scale_size_set(obj, 128); 
 
-   /* just changed 48 to 144.. we need
-      evry_icon_theme_set(Evas_Object *obj, const char *icon,
-      size:small, mid, large)  */
-
-   double tmp = e_scale;
-   e_scale = 3.0;
-   
    if (!e_util_icon_theme_set(obj, icon))
      {
 	evas_object_del(obj);
 	obj = NULL;
      }
-   e_scale = tmp;
-	
+
    return obj;
 }
 
