@@ -445,15 +445,18 @@ _e_util_icon_fdo_set(Evas_Object *obj, const char *icon)
 {
    const char *path = NULL;
    unsigned int size;
-
+   
    if ((!icon) || (!icon[0])) return 0;
-   size = e_util_icon_size_normalize(48 * e_scale);
+   size = e_icon_scale_size_get(obj);
+   if (size < 16) size = 16;
+   size = e_util_icon_size_normalize(size * e_scale);
    path = efreet_icon_path_find(e_config->icon_theme, icon, size);
    if (!path) return 0;
    e_icon_file_set(obj, path);
    return 1;
 }
 
+/* use e_icon_size_scale_set(obj, size) to set the preferred icon size */
 EAPI int
 e_util_icon_theme_set(Evas_Object *obj, const char *icon)
 {
