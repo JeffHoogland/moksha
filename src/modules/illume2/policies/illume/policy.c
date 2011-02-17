@@ -342,6 +342,9 @@ _policy_zone_layout_indicator(E_Border *bd, E_Illume_Config_Zone *cz)
                }
           }
      }
+   ecore_x_e_illume_indicator_geometry_set(bd->zone->black_win,
+                                           bd->x, bd->y,
+                                           bd->w, bd->h);
 
    /* set layer if needed */
    if (bd->layer != POL_INDICATOR_LAYER) 
