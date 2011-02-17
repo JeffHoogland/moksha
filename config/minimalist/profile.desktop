@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Minimalist
+Name[ru]=Минималистский
 Name[cs]=Minimalistický
 Name[it]=Minimalista
 Name[hu]=Minimalista
@@ -13,6 +14,7 @@ Name[zh_CN]=极简
 Name[pt]=Minimalista
 Icon=icon.png
 Comment=A mininimalist setup<br>with very few things on<br>the screen. Should<br>appeal to Those<br>that like as little<br>clutter as possible.
+Comment[ru]=Минималистские настройки<br>с минимум объектов<br>на столе. Обычно подходит<br>любителям порядка и спартанского<br>мировозрения.
 Comment[cs]=Minimální nastavení<br>s velmi málo věcmi<br>na obrazovce. Použitelný<br>pro ty, kteří<br>chtějí co nejčistší<br>plochu.
 Comment[it]=Configurazione minima<br>con pochissime cose<br>sullo schermo.<br>Dovrebbe piacere a chi<br>desidera avere meno<br>roba possibile.
 Comment[hu]=Minimalist beállítások<br>néhány dologgal<br>a képernyőn. Ez egy <br>teljesen alap beállítás.

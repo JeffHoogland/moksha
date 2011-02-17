@@ -1,11 +1,13 @@
 [Desktop Entry]
 Type=Link
 Name=Illume
+Name[ru]=Illume
 Name[el]=Illume
 Name[eo]=Illume
 Name[zh_CN]=Illume
 Icon=icon.png
 Comment=Illume profile for embedded systems like phones and web tablets with tiny<br>touchscreen displays. Only use this if you really have such a device.
+Comment[ru]=Профиль Illume для встроенных систем типа телефон или планшет, с маленькими<br>сенсорными экранами. Используйте его только если вы действительно имеете такое устройство.
 Comment[cs]=Illume profil pro<br>přenosná zařízení<br>jako telefony<br>a webové tablety<br>s malými dotykovými displeji.<br>Použijte jen pokud<br>opravdu máte<br>takové zařízení.
 Comment[it]=Profilo Illume per sistemi embedded come cellulari e webpad con piccoli display<br>touchscreen. Usatelo solo se avete realmente un dispositivo simile.
 Comment[hu]=Illume profil <br>telefonokhoz, érintőképernyőkhöz.<br>Csak akkor használd ezt,<br>ha valóban ilyen eszközöd van.

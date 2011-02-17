@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Power Management
+Name[ru]=Управление питанием
 Name[cs]=Správa napájení
 Name[de]=
 Name[eo]=Potenca Administrado
@@ -16,6 +17,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_dpms
 Comment=Configure the DPMS settings of your system.
+Comment[ru]=Конфигурация и настройка DPMS (управление питанием экрана) для Вашей системы.
 Comment[cs]=Volby DPMS v systému.
 Comment[de]=
 Comment[eo]=Agordi la parametrojn de DPMS (Signalado de potenca administrado de ekrano) de sia sistemo.

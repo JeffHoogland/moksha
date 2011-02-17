@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Borders
+Name[ru]=Бордюры
 Name[cs]=Rámy
 Name[de]=
 Name[el]=Περιγράμματα
@@ -17,6 +18,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_borders
 Comment=Used to select a default border style.
+Comment[ru]=Используется для выбора стиля бордюра по умолчанию.
 Comment[cs]=Volby výchozího rámu okna.
 Comment[de]=
 Comment[el]=Χρησιμοποιείται για την επιλογή προκαθορισμένου στυλ περιγράμματος.

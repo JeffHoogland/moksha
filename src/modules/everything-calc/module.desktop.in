@@ -1,11 +1,13 @@
 [Desktop Entry]
 Type=Link
 Name=Everything Calculator
+Name[ru]=Всё - Калькулятор
 Name[fr]=Omni - Calculatrice
 Name[it]=Everything - Calcolatrice
 Name[pt]=Everything - Calculadora
 Icon=accessories-calculator
 Comment=Frontend for bc. Use '=' as trigger.
+Comment[ru]=Интерфейс к утилите bc. Используйте '=' для запуска.
 Comment[fr]=Frontal pour bc, utilise « = » comme déclencheur.
 Comment[it]=Frontend per bc, usa '=' come richiamo.
 Comment[pt]=Interface gráfica para calculadora. Utiliza "=" como lançador

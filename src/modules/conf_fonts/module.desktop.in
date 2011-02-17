@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Fonts
+Name[ru]=Шрифты
 Name[cs]=Písmo
 Name[de]=
 Name[eo]=Tiparoj
@@ -16,6 +17,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=preferences-desktop-font
 Comment=Font configuration dialog.
+Comment[ru]=Диалог конфигурации шрифтов.
 Comment[cs]=Dialog pro výběr písma.
 Comment[de]=
 Comment[eo]=Dialogo de agordo de tiparoj.

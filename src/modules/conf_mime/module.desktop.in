@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=File Icons
+Name[ru]=Иконки файлов
 Name[cs]=Ikony souborů
 Name[de]=
 Name[eo]=Dosieraj piktogramoj
@@ -16,6 +17,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_mime
 Comment=Configure E17 mime icons.
+Comment[ru]=Настройки иконок MIME для E17.
 Comment[cs]=Určen k nastavení MIME ikon.
 Comment[de]=
 Comment[eo]=Agordi piktogramojn de E17 por MIME.

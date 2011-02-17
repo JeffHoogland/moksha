@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Mouse Bindings
+Name[ru]=Привязки мыши
 Name[cs]=Zkratky myši
 Name[de]=
 Name[eo]=Musaj bindoj
@@ -16,6 +17,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_mousebindings
 Comment=Used to configure your mouse bindings.
+Comment[ru]=Используется для настройки привязок мышки.
 Comment[cs]=Použit k nastavení zkratek myši.
 Comment[de]=
 Comment[eo]=Agordi siajn musajn bindojn.

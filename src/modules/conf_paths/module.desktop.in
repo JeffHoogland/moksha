@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Search Directories
+Name[ru]=Директории поиска
 Name[cs]=Adresáře k hledání
 Name[de]=
 Name[eo]=Dosierujoj de serĉo
@@ -16,6 +17,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_paths
 Comment=Specifies the E17 search paths and default directories.
+Comment[ru]=Позволяет указать стандартные директории и пути поиска данных для Е17
 Comment[cs]=Určuje výchozí složky E17 a cesty k hledání témat aj.
 Comment[de]=
 Comment[eo]=Difini la vojojn de serĉo de E17 kaj defaŭltajn dosierujojn.

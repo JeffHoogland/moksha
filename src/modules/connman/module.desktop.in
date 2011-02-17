@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Connection Manager
+Name[ru]=Менеджер подключений
 Name[cs]=Správce připojení
 Name[de]=Verbindungsmanager
 Name[it]=Gestore connessioni
@@ -11,6 +12,7 @@ Name[tr]=Bağlantı Yöneticisi
 Name[pt]=Gestor de ligações
 Icon=e-module-connman
 Comment=Control Wifi and wired networks as a user.
+Comment[ru]=Управление Wifi и проводной сетями на пользовательском уровне.
 Comment[cs]=Nastavení wifi a drátových sítí jako uživatel.
 Comment[de]=Drahtlose und kabelgebundene Nezwerke als Nutzer verwalten
 Comment[it]=Controlla le reti wireless e cablate come utente.

@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Default
+Name[ru]=Заново
 Name[cs]=Výchozí
 Name[it]=Predefinito
 Name[hu]=Alapértelmezett
@@ -11,6 +12,7 @@ Name[zh_CN]=默认
 Name[pt]=Omissões
 Icon=icon.png
 Comment=Select this to begin<br>the initial setup again.
+Comment[ru]=Выберите это для<br>запуска инициализации настроек (сброс).
 Comment[cs]=Vyberte pro znovuspuštění<br>tohoto průvodce.
 Comment[it]=Selezionare questo per<br>riprendere la<br>configurazione iniziale.
 Comment[hu]=Válaszd ezt az alap<br>beállítáok megismétléséhez.

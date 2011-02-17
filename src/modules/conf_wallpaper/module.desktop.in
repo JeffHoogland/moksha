@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Wallpaper
+Name[ru]=Обои
 Name[cs]=Pozadí plochy
 Name[de]=
 Name[eo]=Tapeto
@@ -16,6 +17,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=preferences-desktop-wallpaper
 Comment=Used to pick a wallpaper.
+Comment[ru]=Используется для выбора обоев.
 Comment[cs]=Použit k volbě pozadí.
 Comment[de]=
 Comment[eo]=Elekti tapeton.

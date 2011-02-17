@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Window Display
+Name[ru]=Показ окна
 Name[cs]=Zobrazení okna
 Name[de]=
 Name[eo]=Vidigo de fenestroj
@@ -16,6 +17,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_window_display
 Comment=Configures default window properties such as default geometries, border icons, placement styles, etc.
+Comment[ru]=Конфигурация стандартных настроек окна, типа геометрия, иконка окна, стили расположения и т.д.
 Comment[cs]=Nastavení vlastností okna jako výchozí geometrie, ikony rámu aj.
 Comment[de]=
 Comment[eo]=Agordi la defaŭltjan ecojn de fenestroj kiel geometrio, stilo de pozicio, randaj piktogramoj, ktp.

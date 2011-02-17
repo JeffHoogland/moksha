@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Screen Lock
+Name[ru]=Блокировка экрана
 Name[cs]=Uzamčení obrazovky
 Name[de]=
 Name[eo]=Ekranŝlosilo
@@ -16,6 +17,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_desklock
 Comment=Configures the integrated desk lock.
+Comment[ru]=Настройка встроенной функции блокировки экрана.
 Comment[cs]=Volby pro integrovanou funkci zamčení obrazovky.
 Comment[de]=
 Comment[eo]=Agordi la integritan labortablan ŝlosilon.

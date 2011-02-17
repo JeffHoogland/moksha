@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Mixer
+Name[ru]=Микшер
 Name[cs]=Ovládání hlasitosti
 Name[eo]=Sonmiksilo
 Name[fr]=Mélangeur
@@ -8,6 +9,7 @@ Name[tr]=Karıştırıcı
 Name[pt]=Misturador
 Icon=preferences-desktop-mixer
 Comment=A module to provide a mixer for changing volume.
+Comment[ru]=Модуль для управления уровнями громкости.
 Comment[cs]=Modul pro ovládání hlasitosti.
 Comment[eo]=<br>Modulo de sonmiksilo por sxangxi la sonfortecon.
 Comment[it]=Un modulo che fornisce un mixer per regolare il volume.

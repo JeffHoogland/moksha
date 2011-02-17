@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Shelves
+Name[ru]=Полки
 Name[cs]=Panely
 Name[de]=
 Name[eo]=Bretoj
@@ -16,6 +17,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_shelves
 Comment=Shelf configuration dialog.
+Comment[ru]=Диалог конфигурации полки.
 Comment[cs]=Dialog nastavení panelů.
 Comment[de]=
 Comment[eo]=Dialogo de agordo de bretoj.

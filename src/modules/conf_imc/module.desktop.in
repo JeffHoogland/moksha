@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Input Methods
+Name[ru]=Методы ввода
 Name[cs]=Vstupní metody
 Name[de]=
 Name[eo]=Tajpo-metodoj
@@ -16,6 +17,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_imc
 Comment=Used to select an input method.
+Comment[ru]=Используется для выбора метода ввода.
 Comment[cs]=Pro výběr vstupní metody.
 Comment[de]=
 Comment[eo]=Elekti tajpo-metodon.

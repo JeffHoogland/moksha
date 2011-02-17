@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Everything (Starter)
+Name[ru]=Всё (Стартер)
 Name[cs]=
 Name[de]=
 Name[eo]=
@@ -16,6 +17,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-everything
 Comment=The run command module provides an application launcher dialog.
+Comment[ru]=Модуль запуска комманды предоставляет диалог запуска приложения.
 Comment[cs]=Poskytuje dialog pro spuštění aplikací.
 Comment[de]=
 Comment[eo]=La modulo de lanĉo de komandoj provizas dialogon de lanĉilo de aplikaĵoj.

@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Desk
+Name[ru]=Столы
 Name[cs]=Plocha
 Name[de]=
 Name[eo]=Labortablo
@@ -16,6 +17,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_desk
 Comment=Used to configure the desktop name and wallpaper for individual virtual desktops.
+Comment[ru]=Используется для настройки имени и фона для индивидуальных виртуальных рабочих столов.
 Comment[cs]=Použit pro nastavení jména plochy a pozadí pro každou virtuální plochu.
 Comment[de]=
 Comment[eo]=Agordi la labortablan nomon kaj etoson por ĉiu virtuala labortablo.

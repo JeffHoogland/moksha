@@ -1,12 +1,14 @@
 [Desktop Entry]
 Type=Link
 Name=Bluetooth Manager
+Name[ru]=Менеджер Bluetooth
 Name[de]=Bluetooth-Manager
 Name[fr]=Gestionnaire Bluetooth
 Name[it]=Gestore Bluetooth
 Name[pt]=Gestor de bluetooth
 Icon=e-module-bluez
 Comment=
+Comment[ru]=Управление Bluetooth устройствами.
 Comment[de]=Bluetooth-Verbindungen verwalten
 Comment[fr]=
 Comment[it]=

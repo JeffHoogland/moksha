@@ -1,10 +1,12 @@
 [Desktop Entry]
 Type=Link
 Name=Everything Files
+Name[ru]=Всё - Файлы
 Name[fr]=Omni - Fichiers
 Name[it]=Everything - File
 Name[pt]=Everything - Ficheiros
 Icon=system-file-manager
+Comment[ru]=Действия для файлов.
 Comment[fr]=Actions sur les fichiers.
 Comment[it]=Azioni sui file.
 Comment[pt]=Ações sobre os ficheiros

@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Settings Panel
+Name[ru]=Панель настроек
 Name[cs]=Ovládací centrum
 Name[de]=Einstellungsleiste
 Name[el]=Πάνελ ρυθμίσεων
@@ -17,6 +18,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf
 Comment=
+Comment[ru]=Модуль панели настроек Enlightenment.
 Comment[cs]=
 Comment[de]=Einstellungen an Enlightenment bequem vornehmen
 Comment[el]=

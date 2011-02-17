@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Key Bindings
+Name[ru]=Привязки клавиатуры
 Name[cs]=Klávesové zkratky
 Name[de]=
 Name[eo]=Klavaraj bindoj
@@ -16,6 +17,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=preferences-desktop-keyboard-shortcuts
 Comment=Configure your keybindings here.
+Comment[ru]=Настройка привязок клавиатуры здесь.
 Comment[cs]=Nastavení klávesových zkratek.
 Comment[de]=
 Comment[eo]=Agordi siajn klavarajn bindojn.

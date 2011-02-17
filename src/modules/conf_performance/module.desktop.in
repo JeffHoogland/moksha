@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Performance
+Name[ru]=Быстродействие
 Name[cs]=Výkon
 Name[de]=
 Name[eo]=Rendimento
@@ -16,6 +17,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_performance
 Comment=Used to configure certain performance related items as frame rates and cache settings.
+Comment[ru]=Используется для конфигурации быстродействия, типа частоты кадров и настроек кэширования.
 Comment[cs]=Použit k nastavení framerate, cache aj.
 Comment[de]=
 Comment[eo]=Agordi kelkajn erojn pri rendimento kiel kadrajn oftecojn kaj kaŝmemorajn agordojn.

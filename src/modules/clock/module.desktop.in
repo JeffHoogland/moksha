@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Clock
+Name[ru]=Часы
 Name[cs]=Hodiny
 Name[de]=Uhr
 Name[el]=Ρολόι
@@ -18,6 +19,7 @@ Name[zh_TW]=
 Icon=e-module-clock
 X-Enlightenment-ModuleType=utils
 Comment=Nice clock gadget to show current time.
+Comment[ru]=Гаджет для показа текущего времени.
 Comment[cs]=Gadget pro zobrazení aktuálního času.
 Comment[de]=Netter Helfer zum Anzeigen der aktuellen Uhrzeit.
 Comment[el]=Ένα όμορφο συστατικό που σας δείχνει την ώρα.

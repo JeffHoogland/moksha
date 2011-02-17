@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Screen Resolution
+Name[ru]=Резолюция экрана
 Name[cs]=Rozlišení obrazovky
 Name[de]=
 Name[eo]=Ekrandistingivo
@@ -16,6 +17,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_display
 Comment=Used to configure your screen's resolution.
+Comment[ru]=Используется для настройки резолюции Вашего экрана.
 Comment[cs]=Použit k nastavení rozlišení obrazovky.
 Comment[de]=
 Comment[eo]=Agordi sian ekrandistingivon.

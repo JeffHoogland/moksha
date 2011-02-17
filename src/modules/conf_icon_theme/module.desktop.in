@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Icon Theme
+Name[ru]=Тема иконок
 Name[cs]=Téma ikon
 Name[de]=
 Name[eo]=Piktograma etoso
@@ -16,6 +17,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_icon_theme
 Comment=Settings applet used to select an icon theme for E17.
+Comment[ru]=Апплет настроек для выбора темы иконок E17.
 Comment[cs]=Určen k výběru tématu ikon freedesktop.org.
 Comment[de]=
 Comment[eo]=Elekti piktograman etoson por E17.

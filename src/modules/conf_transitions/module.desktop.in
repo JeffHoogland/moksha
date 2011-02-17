@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Transitions
+Name[ru]=Переходы
 Name[cs]=Přechody
 Name[de]=
 Name[eo]=Transiroj
@@ -16,6 +17,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_transitions
 Comment=Used to choose a default transition. Transitions are used upon wallpaper changes, among other things.
+Comment[ru]=Используется для выбора эффекта перехода. Переходы срабатывают при смене обоев, так и в других случаях.
 Comment[cs]=Volby přechodů. Použity při změně pozadí plochy a jiných akcích.
 Comment[de]=
 Comment[eo]=Elekti defaŭltan transiron. Transiroj estas uzataj dum ŝanĝoj de tapeto interalie.

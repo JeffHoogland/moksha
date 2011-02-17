@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Startup
+Name[ru]=Запуск
 Name[cs]=Spuštění
 Name[de]=
 Name[eo]=Startigo
@@ -16,6 +17,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_startup
 Comment=Used to configure the E17 splash screen.
+Comment[ru]=Используется для конфигурации стартовой заставки E17.
 Comment[cs]=Použit k nastavení E17 spouštěcí obrazovky.
 Comment[de]=
 Comment[eo]=Agordi la salutŝildon de E17.

@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Edge Bindings
+Name[ru]=Привязки по краям
 Name[cs]=Zkratky okrajù
 Name[eo]=Fulmklavoj de ekranrandoj
 Name[fr]=Raccourcis des bords de l'Ã©cran
@@ -9,6 +10,7 @@ Name[tr]=Kenar BaÄŸlayÄ±cÄ±larÄ±
 Name[pt]=Associações de limites
 Icon=e-module-conf_edgebindings
 Comment=Configure your edge bindings here.
+Comment[ru]=Здесь можно настроить привязки по краям экрана.
 Comment[cs]=Zde mùžete nastavit zkratky pro okraje a rohy obrazovky.
 Comment[eo]=Agordas la fulmklavoj de ekranrandoj.
 Comment[fr]=Configure les raccourcis des bords de l'Ã©cran.

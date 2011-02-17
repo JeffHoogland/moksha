@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Interaction
+Name[ru]=Взаимодействие
 Name[cs]=Interakce
 Name[de]=
 Name[eo]=Interagoj
@@ -16,6 +17,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_interaction
 Comment=Configure default user interaction settings.
+Comment[ru]=Настройка стандартных параметров взаимодействия с пользователем.
 Comment[cs]=Nastavte výchozí volby interakce s uživatelem.
 Comment[de]=
 Comment[eo]=Agordas defaŭltajn uzantajn interagojn.

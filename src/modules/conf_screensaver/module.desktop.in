@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Screen Saver
+Name[ru]=Хранитель экрана
 Name[cs]=Spořič obrazovky
 Name[de]=
 Name[eo]=Ekrankurtenoj
@@ -16,6 +17,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=preferences-desktop-screensaver
 Comment=Configures the X screensaver.
+Comment[ru]=Настройка хранителя экрана X.
 Comment[cs]=Umožňuje nastavení X spořiče.
 Comment[de]=
 Comment[eo]=Agordi la ekrankurtenon de X.

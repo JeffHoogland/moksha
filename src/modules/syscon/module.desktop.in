@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=System Controls
+Name[ru]=Система управления
 Name[cs]=Ovládací prvky
 Name[eo]=Kontroloj de sistemo
 Name[it]=Controlli di sistema
@@ -10,6 +11,7 @@ Name[tr]=Sistem Kontrolleri
 Name[pt]=Controles do sistema
 Icon=e-module-syscon
 Comment=This module provides a unified popup<br>dialog for all the system actions<br>in Enlightenment.
+Comment[ru]=Этот модуль обеспечивает единое<br>диалоговое окно для всех действий<br>системы в Enlightenment.
 Comment[cs]=Poskytuje dialog pro všechny<br>systémové akce v Enlightenmentu.
 Comment[eo]=Tiu modulo vidigas ŝprucfenestron<br>kunigantan ĉiujn sistemajn agadojn<br> en Enlightenment.
 Comment[it]=Questo modulo fornisce una finestra di dialogo popup<br>unificata per tutte le azioni di sistema in Enlightenment.

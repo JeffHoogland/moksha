@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Mouse Settings
+Name[ru]=Настройки мыши
 Name[cs]=Volby myši
 Name[de]=
 Name[eo]=Musa plirapidigo
@@ -16,6 +17,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_mouse
 Comment=Configure mouse behavior.
+Comment[ru]=Конфигурация настроек мышки.
 Comment[cs]=Volby chování myši.
 Comment[de]=
 Comment[eo]=Agordi la musan plirapidigon.

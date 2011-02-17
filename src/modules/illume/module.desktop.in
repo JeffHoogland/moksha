@@ -1,12 +1,14 @@
 [Desktop Entry]
 Type=Link
 Name=Illume
+Name[ru]=Illume
 Name[eo]=Illume
 Name[hu]=Érintő
 Name[tr]=Illume
 Icon=e-module-illume
 X-Enlightenment-ModuleType=mobile
 Comment=This is a module to make Enlightenment tuned for embedded touchscreen<br>displays such as on phones and web-pads with windows always<br>being fullscreen and having a simplified application<br>launcher and manager.
+Comment[ru]=Этот модуль позволяет Enlightenment подстраиваться под встроенные<br>сенсорные экраны типа телефон и планшет, всегда разворачивая окна в полный экран, и предоставляет упрощенный менеджер<br>и запуск приложений.
 Comment[cs]=Modul, který přemění UI Enlightenmentu pro dotykové<br>displeje na zařízeních jako telefony, PDA, kde jsou okna<br>vždy celoobrazovková, a také zjednodušený<br>spouštěč a správce.
 Comment[it]=Questo è un modulo per rendere Enlightenment adatto ai display touchscreen<br>embedded, come sui cellulari e i web-pad, con finestre sempre<br>a tutto schermo e con gestori e lanciatori di applicazioni semplificati.
 Comment[hu]=Ez a modul lehetővé teszi az Enlightenment finomhangolását a különböző érintőképernyő típusokhoz,<br> például telefonokhoz, web-padokhoz,<br> hogy elérhető legyen egy egyszerű alkamazásindító hozzájuk.

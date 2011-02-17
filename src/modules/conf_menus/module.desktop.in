@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Menu Settings
+Name[ru]=Настройки меню
 Name[cs]=Volby menu
 Name[de]=
 Name[eo]=Menuaj agordoj
@@ -16,6 +17,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_menus
 Comment=Configures menu behavior.
+Comment[ru]=Конфигурация настроек меню.
 Comment[cs]=Volby chování menu.
 Comment[de]=
 Comment[eo]=Agordi la konduton de la menuo.

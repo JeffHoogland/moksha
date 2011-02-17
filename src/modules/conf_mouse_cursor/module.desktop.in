@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Mouse Cursor
+Name[ru]=Курсор мыши
 Name[cs]=Kurzor myši
 Name[de]=
 Name[eo]=Musa kursoro
@@ -16,6 +17,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_mouse_cursor
 Comment=Select the mouse cursor style.
+Comment[ru]=Выбор стиля курсора мышки.
 Comment[cs]=Výběr stylu kurzoru myši.
 Comment[de]=
 Comment[eo]=Elekti la stilon de la musa kursoro.

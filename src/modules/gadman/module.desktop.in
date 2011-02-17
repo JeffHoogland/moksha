@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Gadgets
+Name[ru]=Гаджеты
 Name[cs]=Gadgety
 Name[eo]=Akcesoraĵoj
 Name[it]=Gestore gadget
@@ -9,6 +10,7 @@ Name[tr]=Aletler
 Icon=e-module-gadman
 X-Enlightenment-ModuleType=core
 Comment=Module to manage gadgets on the desktop.
+Comment[ru]=Модуль для управления гаджетами на рабочем столе.
 Comment[cs]=Modul pro správu gadgetů na ploše.
 Comment[eo]=
 Comment[it]=Modulo per la gestione dei gadget sul desktop.

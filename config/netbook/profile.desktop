@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Netbook
+Name[ru]=Netbook
 Name[el]=Netbook
 Name[eo]=Komputileto
 Name[ja]=ネットブック
@@ -9,6 +10,7 @@ Name[zh_CN]=上网本
 Name[pt]=Mini-portátil
 Icon=icon.png
 Comment=If you have a very<br>small, low-powered laptop<br>(also known as Netbooks),<br>then this profile is for<br>you. It has heavier<br>features turned off<br>to save resources.
+Comment[ru]=Если у Вас небольшой,<br>маломощный ноутбук<br>(так же Netbook, Недобук),<br>тогда этот профиль для вас.<br>Все тяжелые элементы<br>отключены для сбережения<br>ресурсов системы.
 Comment[cs]=Pokud máte malý<br>laptop s nízkou spotřebou<br>(známé jako Netbooky),<br>pak je tento profil<br>pro vás. Má náročnější<br>funkce vypnuty,<br>aby se ušetřily systémové prostředky.
 Comment[it]=Se avete un portatile molto piccolo e con<br>poca potenza (noti anche come Netbook),<br>allora questo profilo fa per voi.<br>In questo sono state disattivate le<br>funzionalità più pesanti per<br>risparmiare risorse.
 Comment[hu]=Ha egy kicsi erőforrással<br> bíró eszközöd van, laptop,<br>akkor ez a számodra<brylegmegfelelőbb beállítás.<br>Kevés erőforrást igényel.

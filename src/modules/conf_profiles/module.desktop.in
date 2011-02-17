@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Profiles
+Name[ru]=Профили
 Name[cs]=Profily
 Name[de]=
 Name[eo]=Profiloj
@@ -16,6 +17,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_profiles
 Comment=Allows management of configuration profiles.
+Comment[ru]=Позволяет управлять конфигурацией профилей.
 Comment[cs]=Správa profilů.
 Comment[de]=
 Comment[eo]=Administri agordajn profilojn.

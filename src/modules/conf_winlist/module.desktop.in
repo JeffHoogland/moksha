@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Window List
+Name[ru]=Список окон
 Name[cs]=Seznam oken
 Name[de]=
 Name[eo]=Fenestrolisto
@@ -16,6 +17,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_winlist
 Comment=Configure your window list properties.
+Comment[ru]=Позволяет конфигурацию списка окон.
 Comment[cs]=Změna vlastností seznamu oken.
 Comment[de]=
 Comment[eo]=Agordi la ecojn de la fenestrolisto.

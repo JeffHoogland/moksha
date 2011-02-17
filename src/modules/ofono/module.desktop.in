@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Mobile Modems Manager
+Name[ru]=Менеджер мобильных модемов
 Name[pt_BR]=Gerenciador de modems móveis
 Name[es]=Gerenciador de modems moviles
 Name[it]=Gestore di modem mobili
@@ -8,6 +9,7 @@ Name[fr]=Gestionnaire de modems mobiles
 Name[pt]=Gestor de modems móveis
 Icon=e-module-ofono
 Comment=Control mobile modems.
+Comment[ru]=Позволяет контролировать мобильные модемы.
 Comment[pt_BR]=Controla modems móveis.
 Comment[es]=Controla modems móviles
 Comment[it]=Controlla i modem mobili.

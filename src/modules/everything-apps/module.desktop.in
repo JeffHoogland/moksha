@@ -1,10 +1,12 @@
 [Desktop Entry]
 Type=Link
 Name=Everything Applications
+Name[ru]=Всё - Приложения
 Name[fr]=Omni - Applications
 Name[it]=Everything - Applicazioni 
 Name[pt]=Everything - Aplicações
 Icon=e-module
+Comment[ru]=Действия для приложений.
 Comment[fr]=Actions sur les applications.
 Comment[it]=Azioni con le applicazioni.
 X-Enlightenment-ModuleType=launcher

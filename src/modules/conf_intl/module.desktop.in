@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Language
+Name[ru]=Язык
 Name[cs]=Jazyk
 Name[de]=
 Name[eo]=Lingvo
@@ -16,6 +17,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_intl
 Comment=Used to select a default language.
+Comment[ru]=Используется для выбора языка системы по умолчанию.
 Comment[cs]=Použit pro výběr výchozího jazyka.
 Comment[de]=
 Comment[eo]=Elekti propran lingvon.

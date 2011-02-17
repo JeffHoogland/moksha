@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Start
+Name[ru]=Меню запуска
 Name[cs]=Start menu
 Name[el]=Μενού εκκίνησης
 Name[eo]=Starto
@@ -11,6 +12,7 @@ Name[pt]=Iniciar
 Icon=e-module-start
 X-Enlightenment-ModuleType=utils
 Comment=E17's "Start" button equivalent.
+Comment[ru]=Эквивалент кнопки "Пуск" под E17.
 Comment[cs]=E17 Start menu.
 Comment[de]=
 Comment[el]=Το κουμπί για το μενού εκκίνησης του E17.

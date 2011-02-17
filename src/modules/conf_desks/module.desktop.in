@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Virtual Desktops
+Name[ru]=Виртуальные столы
 Name[cs]=Virtuální plochy
 Name[de]=
 Name[eo]=Virtualaj labortabloj
@@ -16,6 +17,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_desks
 Comment=Configure the virtual desktop properties.
+Comment[ru]=Конфигурация и настройки виртуальных рабочих столов.
 Comment[cs]=Volby pro virtuální plochy.
 Comment[de]=
 Comment[eo]=Agordi la ecojn de la virtualaj labortablaj.

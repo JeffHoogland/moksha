@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Dialogs
+Name[ru]=Диалоги
 Name[cs]=Dialogy
 Name[de]=
 Name[eo]=Dialogoj
@@ -16,6 +17,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_dialogs
 Comment=Configure default dialog properties.
+Comment[ru]=Настройка стандартных параметров диалогов.
 Comment[cs]=Volby výchozích vlastností dialogů.
 Comment[de]=
 Comment[eo]=Agordi la defaŭltajn ecojn de dialogoj.

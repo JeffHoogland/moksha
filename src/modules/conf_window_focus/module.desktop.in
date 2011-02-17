@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Window Focus
+Name[ru]=Фокусировка окна
 Name[cs]=Aktivace okna
 Name[de]=
 Name[eo]=Fokuso de fenestroj
@@ -16,6 +17,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_window_focus
 Comment=Configure window focus behavior.
+Comment[ru]=Настройка поведения фокусировки окна.
 Comment[cs]=Volby aktivace okna.
 Comment[de]=
 Comment[eo]=Agordi la konduton de enfokusiĝo de la fenestroj.

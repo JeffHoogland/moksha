@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Window Manipulation
+Name[ru]=Манипуляции с окном
 Name[cs]=Manipulace s okny
 Name[de]=
 Name[eo]=Manipulado de fenestroj
@@ -16,6 +17,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_winmanip
 Comment=Configures window raise, resistance, and maximize policies.
+Comment[ru]=Позволяет настроить политику подъема, сопротивления и увеличения окон.
 Comment[cs]=Nasavení odolnosti okna, maximalizace aj.
 Comment[de]=
 Comment[eo]=Agordi fenestrajn altigon, rezistadon kaj maksimumajn tiparojn.

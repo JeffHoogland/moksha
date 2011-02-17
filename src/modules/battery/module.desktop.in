@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Battery
+Name[ru]=Батарея
 Name[cs]=Baterie
 Name[de]=Batterie
 Name[el]=Μπαταρία
@@ -17,6 +18,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-battery
 Comment=A gadget to visualize your battery status.
+Comment[ru]=Гаджет для показа статуса батареи устройства.
 Comment[de]=Helfer zum Visualisieren des Batteriezustands
 Comment[el]=Συστατικό που σας δείχνει οπτικά την κατάσταση της μπαταρίας σας.
 Comment[eo]=Vidigi staton de sia baterio.

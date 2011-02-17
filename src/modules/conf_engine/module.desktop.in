@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Engine
+Name[ru]=Движок
 Name[cs]=Engine
 Name[de]=
 Name[eo]=Motoro
@@ -16,6 +17,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_engine
 Comment=Used to select the rendering engine.
+Comment[ru]=Используется для выбора движка для системы прорисовки.
 Comment[cs]=Použit pro volbu vykreslovacího enginu.
 Comment[de]=
 Comment[eo]=Elekti la bildigan motoron.

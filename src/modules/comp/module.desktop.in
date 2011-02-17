@@ -1,9 +1,11 @@
 [Desktop Entry]
 Type=Link
 Name=Composite
+Name[ru]=Композитный менеджер
 Name[de]=Composite-Grafik
 Icon=e-module-comp
 Comment=
+Comment[ru]=Композитный менеджер для Enlightenment.
 Comment[de]=Composite-Manager für Enlightenment
 Comment[fr]=Gestionnaire de composite intégré.
 Comment[it]=Composite manager per Enlightenment.

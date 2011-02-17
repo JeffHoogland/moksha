@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Cpufreq
+Name[ru]=Частота процессора
 Name[cs]=Frekvence procesoru
 Name[eo]=Ĉeforgana ofteco
 Name[hu]=Processzor frekvencia
@@ -9,6 +10,7 @@ Name[tr]=İşlemci ölçekleme
 Name[pt]=Frequência do cpu 
 Icon=e-module-cpufreq
 Comment=Gadget to monitor and change the CPU frequency.
+Comment[ru]=Гаджет для показа и смены частоты ЦПУ.
 Comment[cs]=Gadget pro monitorování a změnu frekvence CPU.
 Comment[de]=
 Comment[eo]=Elrigardi kaj ŝanĝi ĉeforganan oftecon.

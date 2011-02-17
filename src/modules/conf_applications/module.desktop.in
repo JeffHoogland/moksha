@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Applications
+Name[ru]=Приложения
 Name[cs]=Aplikace
 Name[de]=
 Name[el]=Εφαρμογές
@@ -17,6 +18,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_applications
 Comment=Allows configuration of Ibar, Restart, and Startup applications.
+Comment[ru]=Позволяет настройку приложений для Ibar, Перезапуск и Стартовые.
 Comment[cs]=Umožňuje nastavit iBar spouštěče, aplikace při restartu a aplikace při startu.
 Comment[de]=
 Comment[el]=Σας επιτρέπει να ρυθμίσετε τις εφαρμογές Ibar, Restart, και Startup.

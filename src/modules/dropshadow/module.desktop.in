@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Dropshadow
+Name[ru]=Отброс тени
 Name[cs]=Stín okna
 Name[eo]=Ĵetita ombro
 Name[hu]=Árnyékvető
@@ -9,6 +10,7 @@ Name[tr]=Pencere gölgesi
 Name[pt]=Sombra
 Icon=e-module-dropshadow
 Comment=Module to add a dropshadow to windows.
+Comment[ru]=Модуль включает отброс теней окнами.
 Comment[cs]=Modul k přidání stínu oknům.
 Comment[de]=
 Comment[eo]=Aldoni ĵetitan ombron al la fenestroj.

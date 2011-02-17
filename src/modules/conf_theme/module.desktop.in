@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Theme
+Name[ru]=Тема
 Name[cs]=Téma
 Name[de]=
 Name[eo]=Etoso
@@ -16,6 +17,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=preferences-desktop-theme
 Comment=Used to configure your theme preferences.
+Comment[ru]=Используется для конфигурации темы на Ваш вкус.
 Comment[cs]=Použit k nastavení vašeho tématu.
 Comment[de]=
 Comment[eo]=Agordi siajn preferojn de etoso.

@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Client List Menu
+Name[ru]=Меню списка клиентов
 Name[cs]=Klientské menu
 Name[de]=
 Name[el]=Μενού λίστας client
@@ -17,6 +18,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_clientlist
 Comment=Allows customization of the client list menu.
+Comment[ru]=Позволяет настройку списка клиентов.
 Comment[cs]=Umožňuje nastavení klientského menu.
 Comment[de]=
 Comment[el]=Επιτρέπει την παραμετροποίηση της client λίστας μενού.

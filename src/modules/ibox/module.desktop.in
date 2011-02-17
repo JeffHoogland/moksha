@@ -1,10 +1,12 @@
 [Desktop Entry]
 Type=Link
 Name=IBox
+Name[ru]=IBox
 Name[eo]=Breto IBox
 Icon=e-module-ibox
 X-Enlightenment-ModuleType=utils
 Comment=A home for your iconified applications.
+Comment[ru]=Место для отображения иконок свёрнутых приложений. 
 Comment[cs]=Zde se zobrazují všechny minimalizované aplikace.
 Comment[de]=
 Comment[eo]=Ujo por siaj piktogramigitaj aplikaĵoj.

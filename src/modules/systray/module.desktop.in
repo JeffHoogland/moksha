@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Systray
+Name[ru]=Панель задач
 Name[el]=Ενδείξεις συστήματος
 Name[eo]=Taskopleto
 Name[fr]=Zone de notification
@@ -9,6 +10,7 @@ Name[tr]=Sistem Çekmecesi
 Name[pt]=Área de notificação
 Icon=e-module-systray
 Comment=system tray that hold applications icons like Skype, Pidgin, Kopete and others.
+Comment[ru]=Системная панель задач, которая держит иконки приложений типа Skype, Pidgin, Kopete и других.
 Comment[cs]=spravuje aplikace jako Skype, Pidgin, Kopete a jiné.
 Comment[el]=Μια μπάρα ενδείξεων που εμφανίζει εφαρμογές όπως το Skype, το Pidgin, το Kopete και άλλα.
 Comment[eo]=zono kiu vidigas la piktogramojn de aplikaĵoj kiel Skajpo, Pidgin, Kopete kaj aliaj.

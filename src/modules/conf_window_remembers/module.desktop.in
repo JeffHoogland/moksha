@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Window Remembers
+Name[ru]=Запоминание окон
 Name[cs]=Paměť
 Name[eo]=Fesnestraj memoroj
 Name[it]=Ricordi finestre
@@ -10,6 +11,7 @@ Name[tr]=Pencere Hatırlamaları
 Name[pt]=Lembranças de janelas
 Icon=e-module-conf_window_remembers
 Comment=Delete existing window remembers.
+Comment[ru]=Стирает существующие запомненные окна.
 Comment[cs]=K vymazání existujících zapamatovaných vlastností oken.
 Comment[eo]=Forviŝas fenestrajn memorojn.
 Comment[it]=Rimuove le impostazioni da ricordare delle finestre.

@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=EFM (Starter)
+Name[ru]=ЕФМ (Стартер)
 Name[cs]=
 Name[de]=
 Name[eo]=
@@ -16,6 +17,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-fileman
 Comment=E17's integrated file manager.<br><hilight>Under Construction!</hilight>
+Comment[ru]=Встроенный в E17 файловый менеджер.<br><hilight>В РАЗРАБОТКЕ!</hilight>
 Comment[cs]=Integrovaný správce souborů v E17.<br><hilight>Ve vývoji!</hilight>
 Comment[de]=
 Comment[eo]=Integrita dosieradministrilo de E17.<br><hilight>Ĉiam en disvolviĝo</hilight>

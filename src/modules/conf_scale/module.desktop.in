@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Scaling
+Name[ru]=Масштабирование
 Name[cs]=Škálování
 Name[de]=
 Name[eo]=Skalado
@@ -16,6 +17,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_scale
 Comment=Used to configure how Display scaling is handled.
+Comment[ru]=Используется для конфигурации поддержки масштабирования экрана.
 Comment[cs]=Použit pro nastavení škálování displeje.
 Comment[de]=
 Comment[eo]=Permesas agordi la skaladon.
