@@ -14,6 +14,7 @@ struct _E_Config_Dialog_Data
    Eina_List *icon_themes;
    const char *themename;
    int overrides;
+   int enable_icon_theme;
    int populating;
    struct 
      {
@@ -73,6 +74,7 @@ _create_data(E_Config_Dialog *cfd)
    cfdata->cfd = cfd;
    cfdata->themename = eina_stringshare_add(e_config->icon_theme);
    cfdata->overrides = e_config->icon_theme_overrides;
+   cfdata->enable_icon_theme = !!(e_config->icon_theme);   
    return cfdata;
 }
 
@@ -90,7 +92,10 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 static int
 _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-   if ((Eina_Bool)cfdata->overrides != e_config->icon_theme_overrides)
+   if (cfdata->overrides != e_config->icon_theme_overrides)
+     return 1;
+
+   if (cfdata->enable_icon_theme != !!(e_config->icon_theme))
      return 1;
 
    if ((!cfdata->themename) && (!e_config->icon_theme))
@@ -110,7 +115,11 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (!_basic_check_changed(cfd, cfdata)) return 1;
 
    eina_stringshare_del(e_config->icon_theme);
-   e_config->icon_theme = eina_stringshare_ref(cfdata->themename);
+   if (cfdata->enable_icon_theme)
+     e_config->icon_theme = eina_stringshare_ref(cfdata->themename);
+   else
+     e_config->icon_theme = NULL;
+   
    e_config->icon_theme_overrides = !!cfdata->overrides;
    e_config_save_queue();
 
@@ -235,7 +244,6 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *ilist, *checkbox, *ol;
    struct _fill_icon_themes_data *d;
-   Evas_Coord mw, mh;
    unsigned int i;
 
    o = e_widget_list_add(evas, 0, 0);
@@ -260,9 +268,14 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
      }
    e_widget_list_object_append(o, ol, 0, 0, 0.5);
 
-   checkbox = e_widget_check_add(evas, _("This overrides general theme"), 
+   checkbox = e_widget_check_add(evas, _("Enable icon theme"), 
+                                 &(cfdata->enable_icon_theme));
+   e_widget_on_change_hook_set(checkbox, _icon_theme_changed, cfdata);
+   e_widget_list_object_append(o, checkbox, 0, 0, 0.0);
+
+   checkbox = e_widget_check_add(evas, _("Icons override general theme"), 
                                  &(cfdata->overrides));
-   e_widget_size_min_get(checkbox, &mw, &mh);
+   e_widget_on_change_hook_set(checkbox, _icon_theme_changed, cfdata);
    e_widget_list_object_append(o, checkbox, 0, 0, 0.0);
 
    e_dialog_resizable_set(cfd->dia, 1);
