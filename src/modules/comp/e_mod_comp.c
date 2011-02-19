@@ -2623,22 +2623,6 @@ _e_mod_comp_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
    return ECORE_CALLBACK_PASS_ON;
 }
 
-static Eina_Bool
-_e_mod_comp_signal_user(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
-{
-   Ecore_Event_Signal_User *e = ev;
-
-   if (e->number == 1)
-     {
-        // core e uses this for popping up config panel
-     }
-   else if (e->number == 2)
-     {
-        _e_mod_comp_fps_toggle();
-     }
-   return ECORE_CALLBACK_RENEW;
-}
-
 //////////////////////////////////////////////////////////////////////////
 static Evas *
 _e_mod_comp_evas_get_func(void *data, E_Manager *man __UNUSED__)
@@ -2962,16 +2946,12 @@ _e_mod_comp_del(E_Comp *c)
 }
 
 //////////////////////////////////////////////////////////////////////////
-static Ecore_Event_Handler *sig_user_handler = NULL;
 
 Eina_Bool
 e_mod_comp_init(void)
 {
    Eina_List *l;
    E_Manager *man;
-
-   sig_user_handler = ecore_event_handler_add(ECORE_EVENT_SIGNAL_USER,
-                                              _e_mod_comp_signal_user, NULL);
 
    windows = eina_hash_string_superfast_new(NULL);
    borders = eina_hash_string_superfast_new(NULL);
@@ -3053,12 +3033,6 @@ e_mod_comp_shutdown(void)
    damages = NULL;
    windows = NULL;
    borders = NULL;
-
-   if (sig_user_handler)
-     {
-        ecore_event_handler_del(sig_user_handler);
-        sig_user_handler = NULL;
-     }
 }
 
 void
