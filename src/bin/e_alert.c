@@ -145,7 +145,7 @@ e_alert_show(const char *text)
    XSync(dd, False);
    
    button = 0;
-   for (; button == 0;)
+   while (button == 0)
      {
 	XNextEvent(dd, &ev);
 	switch (ev.type)
