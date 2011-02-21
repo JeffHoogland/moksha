@@ -159,7 +159,9 @@ _e_wid_focus_steal(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, 
 static void
 _e_wid_cb_scrollframe_resize(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
 {
-   Evas_Coord mw, mh, vw, vh, w, h;    
+   Evas_Coord mw = 0, mh = 0;
+   Evas_Coord vw = 0, vh = 0;
+   Evas_Coord w = 0, h = 0;
 
    e_scrollframe_child_viewport_size_get(obj, &vw, &vh);
    e_widget_size_min_get(data, &mw, &mh);
