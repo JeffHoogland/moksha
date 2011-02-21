@@ -184,13 +184,13 @@ _e_acpi_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
    Ecore_Con_Event_Server_Data *ev;
    E_Event_Acpi *acpi_event;
    int sig, status, i, done = 0;
-   char device[1024], bus[1024], *sdata, *stmp;
+   char device[1024], bus[1024], *sdata;
    const char *str, *p;
    
    ev = event;
 
    if ((!ev->data) || (ev->size < 1)) return ECORE_CALLBACK_PASS_ON;
-   
+
    /* write out actual acpi received data to stdout for debugging
    res = fwrite(ev->data, ev->size, 1, stdout);
     */
@@ -198,10 +198,7 @@ _e_acpi_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
     * a blob of data. copy to string and 0 byte terminate it so it can be
     * string-swizzled/parsed etc. */
    if (!acpibuf) acpibuf = eina_strbuf_new();
-   stmp = alloca(ev->size + 1);
-   memcpy(stmp, ev->data, ev->size);
-   stmp[ev->size] = 0;
-   eina_strbuf_append_n(acpibuf, stmp, ev->size);
+   eina_strbuf_append_length(acpibuf, ev->data, ev->size);
    str = eina_strbuf_string_get(acpibuf);
    p = strchr(str, '\n');
    if (!p) return ECORE_CALLBACK_PASS_ON;
