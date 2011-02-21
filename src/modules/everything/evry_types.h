@@ -16,13 +16,13 @@ typedef unsigned int Evry_Type;
 
 struct _Evry_Item
 {
-  /* label to show for this item */
+  /* label to show for this item (stringshared) */
   const char *label;
 
-  /* optional: more information to be shown */
+  /* optional: (stringshared) more information to be shown */
   const char *detail;
 
-  /* optional: for 'static' fdo icon name, otherwise use _icon_get */
+  /* optional: (stringshared) fdo icon name, otherwise use _icon_get */
   const char *icon;
 
   /* item can be browsed, e.g. folders */
@@ -54,7 +54,7 @@ struct _Evry_Item
   Evas_Object *(*icon_get) (Evry_Item *it, Evas *e);
   void (*free) (Evry_Item *it);
 
-  /* do not set by plugin! */
+  /* do not set! */
   int ref;
   Eina_List *items;
   Eina_Bool selected;
@@ -70,7 +70,7 @@ struct _Evry_Action
 
   /* identifier */
   const char *name;
-
+  
   struct
   {
     /* requested type for action */
@@ -101,16 +101,16 @@ struct _Evry_Action
      default is FALSE */
   Eina_Bool remember_context;
 
+  /* required: do something */
   int  (*action)     (Evry_Action *act);
 
   /* optional: check whether action fits to chosen item */
   int  (*check_item) (Evry_Action *act, const Evry_Item *it);
   /* optional */
   void (*free)       (Evry_Action *act);
-  /* optional: must be defined when  action is browseable */
+  /* optional: must be defined when  action is browseable, return
+     list of Evry_Action items */
   Eina_List *(*fetch) (Evry_Action *act);
-
-  /* int method; */
 };
 
 struct _Evry_Item_App

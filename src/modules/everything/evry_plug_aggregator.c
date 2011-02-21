@@ -58,18 +58,21 @@ _fetch(Evry_Plugin *plugin, const char *input)
    /* collect plugins to be shown in aggregator */
    EINA_LIST_FOREACH(s->cur_plugins, l, pp)
      {
+	/* dont show in aggregator */
 	if (!pp->config->aggregate)
 	  continue;
+	/* do not recurse */
 	if (pp == plugin)
 	  continue;
+	/* dont show plugin in top-level */
 	if (top_level && !pp->config->top_level)
 	  continue;
 	lp = eina_list_append(lp, pp);
      }
 
+   /* show non-top-level plugins as item */
    if (top_level && (!s->trigger_active))
      {
-	/* show non-top-level plugins as item */
 	EINA_LIST_FOREACH(s->plugins, l, pp)
 	  {
 	     int min_fuzz = 0;
@@ -91,9 +94,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 		    evry_history_item_usage_set(it, input, context);
 
 		  if (it->usage && it->usage > max_usage)
-		    {
-		       max_usage = it->usage;
-		    }
+		    max_usage = it->usage;
 
 		  if (it->fuzzy_match == 0)
 		    it->fuzzy_match = evry_fuzzy_match(it->label, input);
@@ -106,17 +107,16 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	     GET_ITEM(it, pp);
 
 	     it->hi = NULL;
-
+	     /* TODO get better usage estimate */
 	     evry_history_item_usage_set(it, NULL, NULL);
 	     it->usage /= 100.0;
 
-	     if (it->usage && max_usage && (it->usage < max_usage))
+	     if ((it->usage && max_usage) && (it->usage < max_usage))
 	       it->usage = max_usage;
 	     it->fuzzy_match = min_fuzz;
 
 	     IF_RELEASE(it->detail);
-	     snprintf(buf, sizeof(buf), "%d %s",
-		      eina_list_count(pp->items), _("Items"));
+	     snprintf(buf, sizeof(buf), "%d %s", eina_list_count(pp->items), _("Items"));
 	     it->detail = eina_stringshare_add(buf);
 
 	     items = eina_list_append(items, it);
@@ -251,7 +251,8 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
    EINA_LIST_FOREACH(items, l, it)
      {
-	/* remove duplicates provided by different plugins */
+	/* remove duplicates provided by different plugins. e.g.
+	   files / places and tracker can find the same files */
 	if (it->id)
 	  {
 	     EINA_LIST_FOREACH(p->base.items, ll, it2)

@@ -420,10 +420,7 @@ _plugins_init(const Evry_API *_api)
 			   EVRY_TYPE_BORDER,
 			   _begin, _finish, _fetch, NULL);
    _plug->transient = EINA_TRUE;
-   if (evry->plugin_register(_plug, EVRY_PLUGIN_SUBJECT, 2))
-     {
-	_plug->config->top_level = EINA_FALSE;
-     }
+   evry->plugin_register(_plug, EVRY_PLUGIN_SUBJECT, 2);
 
    act = EVRY_ACTION_NEW(_("Switch to Window"),
 			 EVRY_TYPE_BORDER, 0, "go-next",
