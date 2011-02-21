@@ -6,6 +6,7 @@ Name[de]=Bluetooth-Manager
 Name[fr]=Gestionnaire Bluetooth
 Name[it]=Gestore Bluetooth
 Name[pt]=Gestor de bluetooth
+Name[tr]=Bluetooth Yöneticisi
 Icon=e-module-bluez
 Comment=
 Comment[ru]=Управление Bluetooth устройствами.

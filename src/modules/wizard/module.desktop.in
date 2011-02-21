@@ -16,5 +16,5 @@ Comment[eo]=<title>Asistanto de unua lanĉo</title><br>La asistanto de unua lan�
 Comment[hu]=<title>Első indítás varázsló</title><br>Ez a varázsló segítséget nyújt a számodra az E beállításához.<br><urgent>FIGYELEM!!! NE HASZNÁLD!!!</urgent>
 Comment[it]=<title>Wizard prima esecuzione</title><br>Wizard che aiuta a configurare E17 la prima volta che questo viene avviato.<br><urgent>ATTENZIONE!!! NON USARE!!!</urgent>
 Comment[fr]=<title>Assistant de prise en main</title><br>Cet assistant vous aidera à configurer E au premier lancement.<br><urgent>ATTENTION !! NE PAS UTILISER !!</urgent>
-Comment[tr]=<title>İlk Açılış Sihirbazı</title><br>E ilk açıldığında onu yapılandırmakta kullanılan bir ilk açılış sihirbazı.<br><urgent>UYARI !! KULLANMAYIN !!</urgent>
+Comment[tr]=<title>İlk Açılış Sihirbazı</title><br>E ilk açıldığında onu yapılandırmakta kullanılan bir ilk açılış sihirbazı.<br><urgent>UYARI!!! KULLANMAYIN!!!</urgent>
 X-Enlightenment-ModuleType=config
