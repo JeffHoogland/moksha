@@ -20,8 +20,6 @@ struct _Plugin
   const char *lang;
   const char *input;
   Eina_Bool is_first;
-
-  unsigned int instances;
 };
 
 struct _Module_Config
@@ -53,6 +51,7 @@ static E_Config_DD *_conf_edd = NULL;
 
 static const char TRIGGER[] = "s ";
 static const char LANG_MODIFIER[] = "lang=";
+static int instances = 0;
 
 static Eina_Bool
 _exe_restart(Plugin *p)
@@ -256,11 +255,14 @@ _cb_del(void *data, int type __UNUSED__, void *event)
 static Evry_Plugin *
 _begin(Evry_Plugin *plugin, const Evry_Item *it __UNUSED__)
 {
-   GET_PLUGIN(p, plugin);
-   p->instances++;
+   Plugin *p;
 
-   if (p->instances > 1)
+   if (instances > 1)
      return NULL;
+
+   EVRY_PLUGIN_INSTANCE(p, plugin);
+
+   instances++;
    
    return EVRY_PLUGIN(p);
 }
@@ -358,30 +360,24 @@ _finish(Evry_Plugin *plugin)
 
    EVRY_PLUGIN_ITEMS_FREE(p);
 
-   p->instances--;
+   instances--;
 
-   if (p->instances > 0)
-     return;
-   
    if (p->handler.data)
-     {
-	ecore_event_handler_del(p->handler.data);
-	p->handler.data = NULL;
-     }
+     ecore_event_handler_del(p->handler.data);
+
    if (p->handler.del)
-     {
-	ecore_event_handler_del(p->handler.del);
-	p->handler.del = NULL;
-     }
+     ecore_event_handler_del(p->handler.del);
+
    if (p->exe)
      {
 	ecore_exe_quit(p->exe);
 	ecore_exe_free(p->exe);
-	p->exe = NULL;
      }
 
    IF_RELEASE(p->lang);
    IF_RELEASE(p->input);
+
+   E_FREE(p);
 }
 
 static int
@@ -395,7 +391,7 @@ _plugins_init(const Evry_API *_api)
    if (!evry->api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
-   _plug = EVRY_PLUGIN_NEW(Plugin, N_("Spell Checker"),
+   _plug = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Spell Checker"),
 		       _module_icon,
 		       EVRY_TYPE_TEXT,
 		       _begin, _finish, _fetch, NULL);

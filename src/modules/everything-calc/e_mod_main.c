@@ -3,6 +3,13 @@
 #include "evry_api.h"
 // TODO - show error when input not parseable
 
+typedef struct _Plugin Plugin;
+
+struct _Plugin
+{
+  Evry_Plugin base;
+};
+
 static Eina_Bool  _cb_data(void *data, int type, void *event);
 static Eina_Bool  _cb_error(void *data, int type, void *event);
 static Eina_Bool  _cb_del(void *data, int type, void *event);
@@ -21,12 +28,15 @@ static char _module_icon[] = "accessories-calculator";
 static Evry_Item *cur_item = NULL;
 
 static Evry_Plugin *
-_begin(Evry_Plugin *p, const Evry_Item *item __UNUSED__)
+_begin(Evry_Plugin *plugin, const Evry_Item *item __UNUSED__)
 {
    Evry_Item *it;
-
+   Plugin *p;
+   
    if (active)
      return NULL;
+
+   EVRY_PLUGIN_INSTANCE(p, plugin)
 
    if (history)
      {
@@ -35,22 +45,22 @@ _begin(Evry_Plugin *p, const Evry_Item *item __UNUSED__)
 	EINA_LIST_FREE(history, result)
 	  {
 	     it = EVRY_ITEM_NEW(Evry_Item, p, result, NULL, NULL);
-	     it->context = eina_stringshare_ref(p->name);
-	     p->items = eina_list_prepend(p->items, it);
+	     it->context = eina_stringshare_ref(p->base.name);
+	     p->base.items = eina_list_prepend(p->base.items, it);
 	     eina_stringshare_del(result);
 	  }
      }
 
    it = EVRY_ITEM_NEW(Evry_Item, p, "0", NULL, NULL);
-   it->context = eina_stringshare_ref(p->name);
+   it->context = eina_stringshare_ref(p->base.name);
    cur_item = it;
-   
    active = EINA_TRUE;
-   return p;
+   
+   return EVRY_PLUGIN(p);
 }
 
 static int
-_run_bc(Evry_Plugin *p)
+_run_bc(Plugin *p)
 {
    handlers = eina_list_append
      (handlers, ecore_event_handler_add
@@ -73,22 +83,17 @@ _run_bc(Evry_Plugin *p)
 }
 
 static void
-_finish(Evry_Plugin *p)
+_finish(Evry_Plugin *plugin)
 {
+   GET_PLUGIN(p, plugin);   
    Ecore_Event_Handler *h;
    Evry_Item *it;
-   int items = 10;
+   int items = 0;
 
-   if (p->items)
+   EINA_LIST_FREE(p->base.items, it)
      {
-   	EVRY_ITEM_FREE(p->items->data);
-   	p->items = eina_list_remove_list(p->items, p->items);
-     }
-
-   EINA_LIST_FREE(p->items, it)
-     {
-	if (items-- > 1)
-	  history = eina_list_prepend(history, eina_stringshare_add(it->label));
+   	if ((items++ > 1) && (items < 10))
+   	  history = eina_list_prepend(history, eina_stringshare_add(it->label));
 
 	EVRY_ITEM_FREE(it);
      }
@@ -103,6 +108,8 @@ _finish(Evry_Plugin *p)
 	exe = NULL;
      }
    active = EINA_FALSE;
+
+   E_FREE(p);
 }
 
 static Eina_Bool
@@ -149,8 +156,10 @@ _cb_action_performed(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 static int
-_fetch(Evry_Plugin *p, const char *input)
+_fetch(Evry_Plugin *plugin, const char *input)
 {
+   GET_PLUGIN(p, plugin);
+   
    char buf[1024];
 
    if (!input) return 0;
@@ -172,7 +181,7 @@ _fetch(Evry_Plugin *p, const char *input)
 	error = 0;
      }
 
-   return !!(p->items);
+   return !!(p->base.items);
 }
 
 static Eina_Bool

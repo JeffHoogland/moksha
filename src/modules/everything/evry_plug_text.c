@@ -1,36 +1,51 @@
 #include "e_mod_main.h"
 
-static Evry_Plugin *p1;
-static Evry_Plugin *p2;
+typedef struct _Plugin Plugin;
+
+struct _Plugin
+{
+  Evry_Plugin base;
+};
+
+static Evry_Plugin *p1, *p2;
 
 static Evry_Plugin *
-_begin(Evry_Plugin *p, const Evry_Item *it __UNUSED__)
+_begin(Evry_Plugin *plugin, const Evry_Item *it __UNUSED__)
 {
-   return p;
+   Plugin *p;
+
+   EVRY_PLUGIN_INSTANCE(p, plugin);
+   
+   return EVRY_PLUGIN(p);
 }
 
 static void
-_finish(Evry_Plugin *p)
+_finish(Evry_Plugin *plugin)
 {
+   GET_PLUGIN(p, plugin);
+   
    EVRY_PLUGIN_ITEMS_FREE(p);
+   E_FREE(p);
 }
 
 static int
-_fetch(Evry_Plugin *p, const char *input)
+_fetch(Evry_Plugin *plugin, const char *input)
 {
    Evry_Item *it;
+   
+   GET_PLUGIN(p, plugin);
 
    if (input)
      {
-	if (!p->items)
+	if (!p->base.items)
 	  {
-	     it = evry_item_new(NULL, p, input, NULL, NULL);
+	     it = evry_item_new(NULL, EVRY_PLUGIN(p), input, NULL, NULL);
 	     it->fuzzy_match = 999;
 	     EVRY_PLUGIN_ITEM_APPEND(p, it);
 	  }
 	else
 	  {
-	     it = p->items->data;
+	     it = p->base.items->data;
 	     EVRY_ITEM_LABEL_SET(it, input);
 	     evry_item_changed(it, 0, 0);
 	  }

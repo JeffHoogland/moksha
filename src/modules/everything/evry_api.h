@@ -232,11 +232,20 @@ struct _Evry_Event_Action_Performed
 #define EVRY_PLUGIN_ITEM_APPEND(_p, _item) \
   EVRY_PLUGIN(_p)->items = eina_list_append(EVRY_PLUGIN(_p)->items, EVRY_ITEM(_item))
 
-#define EVRY_PLUGIN_INSTANCE(_p, _plugin) {			\
-     _p = E_NEW(Plugin, 1);					\
-     _p->base = *_plugin;					\
-     _p->base.items = NULL;					\
-     _p->base.base.plugin = (Evry_Plugin*)_p; }			\
+typedef void (*Evry_Item_Free_Cb) (Evry_Item *it);
+
+#define EVRY_PLUGIN_INSTANCE(_p, _plugin) {                               \
+     _p = E_NEW(Plugin, 1);                                               \
+     _p->base              = *_plugin;                                    \
+     _p->base.items        = NULL;                                        \
+     _p->base.base.ref     = 1;                                           \
+     _p->base.base.free    = (Evry_Item_Free_Cb)_p->base.finish;          \
+     _p->base.base.label   = eina_stringshare_add(_plugin->base.label);   \
+     _p->base.base.detail  = eina_stringshare_add(_plugin->base.detail);  \
+     _p->base.base.icon    = eina_stringshare_add(_plugin->base.icon);    \
+     _p->base.base.context = eina_stringshare_add(_plugin->base.context); \
+     _p->base.base.id      = eina_stringshare_add(_plugin->base.id);      \
+     _p->base.base.plugin  = (Evry_Plugin*)_p; }                          \
 
 #define EVRY_PLUGIN_ITEMS_CLEAR(_p) {				\
      Evry_Item *it;						\

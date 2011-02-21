@@ -11,7 +11,7 @@
 #define MATCH_LAG 0.15
 #define INITIAL_MATCH_LAG 0.3
 
-#ifdef CHECK_TIME
+#if CHECK_TIME || CHECK_REFS
 #undef DBG
 #define DBG(...) ERR(__VA_ARGS__)
 #else
@@ -1501,7 +1501,7 @@ _evry_state_pop(Evry_Selector *sel, int immediate)
 	     p->state = prev;
 	     continue;
 	  }
-	p->finish(p);
+	EVRY_ITEM_FREE(p);
      }
 
    if (!s->delete_me)
@@ -2688,7 +2688,9 @@ _evry_matches_update(Evry_Selector *sel, int async)
    s->changed = 1;
    s->request++;
 
+#ifdef CHECK_TIME
    DBG("matches update %f", ecore_time_get() - _evry_time);
+#endif
    
    if (sel->update_timer)
      {
@@ -2801,8 +2803,9 @@ _evry_matches_update(Evry_Selector *sel, int async)
 
 	if (p->fetch(p, input))
 	  {
+#ifdef CHECK_TIME
 	     DBG("fetch %s %f", p->name, ecore_time_get() - _evry_time);
-
+#endif
 	     s->cur_plugins = eina_list_append(s->cur_plugins, p);
 	     continue;
 	  }
