@@ -1,5 +1,8 @@
 #!/bin/sh
 
+touch README
+touch ABOUT-NLS
+
 echo "Running autopoint..." ; autopoint -f || :
 echo "Running aclocal..." ; aclocal -I m4 $ACLOCAL_FLAGS || exit 1
 echo "Running autoconf..." ; autoconf || exit 1
