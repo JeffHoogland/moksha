@@ -9504,7 +9504,7 @@ _e_fm_string_append_quoted(char *str, size_t *size, size_t *len, const char *src
 static void
 _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog)
 {
-   E_Fm2_Icon *ic;
+   E_Fm2_Icon *ic, *ic_next;
    char buf[PATH_MAX];
    char *files = NULL;
    size_t size = 0;
@@ -9516,11 +9516,15 @@ _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog)
    ic->dialog = NULL;
 
    e_object_del(E_OBJECT(dialog));
+   ic_next = _e_fm2_icon_next_find(ic->sd->obj, 1, NULL, NULL); 
    sel = e_fm2_selected_list_get(ic->sd->obj);
    if (sel && (eina_list_count(sel) != 1))
      {
         EINA_LIST_FOREACH(sel, l, ici)
           {
+	     if (&(ic_next->info) == ici)
+	       ic_next = NULL;
+	     
              snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ici->file);
              if (e_filereg_file_protected(buf)) continue;
 
@@ -9542,6 +9546,13 @@ _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog)
 
    free(files);
 
+   if (ic_next)
+     {
+	_e_fm2_icon_select(ic_next);
+	evas_object_smart_callback_call(ic_next->sd->obj, "selection_change", NULL);
+	_e_fm2_icon_make_visible(ic_next);
+     }
+   
    evas_object_smart_callback_call(ic->sd->obj, "files_deleted", NULL);
 }
 
