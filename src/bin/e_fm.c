@@ -9522,7 +9522,7 @@ _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog)
      {
         EINA_LIST_FOREACH(sel, l, ici)
           {
-	     if (&(ic_next->info) == ici)
+	     if (ic_next && (&(ic_next->info) == ici))
 	       ic_next = NULL;
 	     
              snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ici->file);
