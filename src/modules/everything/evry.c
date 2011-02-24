@@ -11,7 +11,7 @@
 #define MATCH_LAG 0.15
 #define INITIAL_MATCH_LAG 0.3
 
-#if CHECK_TIME || CHECK_REFS
+#if defined (CHECK_TIME) || defined (CHECK_REFS)
 #undef DBG
 #define DBG(...) ERR(__VA_ARGS__)
 #else

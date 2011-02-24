@@ -386,8 +386,8 @@ EAPI E_Config_Dialog *evry_collection_conf_dialog(E_Container *con, const char *
 
 EAPI extern E_Module_Api e_modapi;
 
-#define CHECK_REFS 0
-#define CHECK_TIME 0
+//#define CHECK_REFS 1
+//#define CHECK_TIME 1
 
 #ifdef CHECK_REFS
 extern Eina_List *_refd;
