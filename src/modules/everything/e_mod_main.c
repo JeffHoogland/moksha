@@ -49,26 +49,6 @@ e_modapi_init(E_Module *m)
 	return NULL;
      }
 
-   _evry_type_init("NONE");
-   _evry_type_init("FILE");
-   _evry_type_init("DIRECTORY");
-   _evry_type_init("APPLICATION");
-   _evry_type_init("ACTION");
-   _evry_type_init("PLUGIN");
-   _evry_type_init("BORDER");
-   _evry_type_init("TEXT");
-
-   _config_init();
-
-   evry_history_init();
-   evry_plug_actions_init();
-   evry_plug_collection_init();
-   evry_plug_clipboard_init();
-   evry_plug_text_init();
-   evry_view_init();
-   evry_view_help_init();
-   evry_gadget_init();
-
    /* add module supplied action */
    act = e_action_add("everything");
    if (act)
@@ -77,7 +57,7 @@ e_modapi_init(E_Module *m)
 	act->func.go_edge = _e_mod_action_cb_edge;
 	e_action_predef_name_set
 	  (_("Everything Launcher"),
-	   _("Show Everything Dialog"),
+	   _("Show Everything Launcher"),
 	   "everything", "", NULL, 0);
      }
 
@@ -92,18 +72,23 @@ e_modapi_init(E_Module *m)
       NULL, "system-run", evry_config_dialog);
    evry_init();
 
+   _evry_type_init("NONE");
+   _evry_type_init("FILE");
+   _evry_type_init("DIRECTORY");
+   _evry_type_init("APPLICATION");
+   _evry_type_init("ACTION");
+   _evry_type_init("PLUGIN");
+   _evry_type_init("BORDER");
+   _evry_type_init("TEXT");
 
+   _config_init();
+   
    _evry_events[EVRY_EVENT_ITEMS_UPDATE]     = ecore_event_type_new();
    _evry_events[EVRY_EVENT_ITEM_SELECTED]    = ecore_event_type_new();
    _evry_events[EVRY_EVENT_ITEM_CHANGED]     = ecore_event_type_new();
    _evry_events[EVRY_EVENT_ACTION_PERFORMED] = ecore_event_type_new();
    _evry_events[EVRY_EVENT_PLUGIN_SELECTED]  = ecore_event_type_new();
-
-   e_module_delayed_set(m, 0);
-
-   /* make sure module is loaded before others */
-   e_module_priority_set(m, -1000);
-
+   
    _api = E_NEW(Evry_API, 1);
    _api->log_dom = _e_module_evry_log_dom;
 #define SET(func) (_api->func = &evry_##func);
@@ -144,10 +129,23 @@ e_modapi_init(E_Module *m)
    SET(event_handler_add);
 #undef SET
 
+   evry_history_init();
+   evry_plug_actions_init();
+
    e_datastore_set("everything_loaded", _api);
 
    EINA_LIST_FOREACH(e_datastore_get("everything_modules"), l, em)
      em->active = em->init(_api);
+
+   evry_plug_collection_init();
+   evry_plug_clipboard_init();
+   evry_plug_text_init();
+   evry_view_init();
+   evry_view_help_init();
+   evry_gadget_init();
+
+   e_module_priority_set(m, -1000);
+   e_module_delayed_set(m, 1);
 
    /* cleanup every hour :) */
    cleanup_timer = ecore_timer_add(3600, _cleanup_history, NULL);
