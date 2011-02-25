@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-02-21 20:15+0100\n"
-"PO-Revision-Date: 2011-02-21 20:16+0100\n"
+"POT-Creation-Date: 2011-02-25 20:22+0100\n"
+"PO-Revision-Date: 2011-02-25 20:22+0100\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -299,7 +299,7 @@ msgstr "Commuta stato attaccata"
 #: src/bin/e_actions.c:2897 src/bin/e_actions.c:2899 src/bin/e_actions.c:2901
 #: src/bin/e_actions.c:2903 src/bin/e_actions.c:2905 src/bin/e_actions.c:2907
 #: src/bin/e_actions.c:2909 src/bin/e_actions.c:3061 src/bin/e_actions.c:3066
-#: src/bin/e_fm.c:3247 src/bin/e_fm.c:3252 src/bin/e_fm.c:9937
+#: src/bin/e_fm.c:3247 src/bin/e_fm.c:3252 src/bin/e_fm.c:9948
 #: src/bin/e_fm_device.c:332 src/bin/e_fm_device.c:356
 #: src/bin/e_fm_device.c:635 src/bin/e_fm_device.c:662
 #: src/bin/e_int_menus.c:144 src/bin/e_int_shelf_config.c:247
@@ -904,7 +904,7 @@ msgid "Apply"
 msgstr "Applica"
 
 #: src/bin/e_configure.c:28 src/modules/conf_shelves/e_mod_main.c:21
-#: src/modules/everything/e_mod_main.c:88
+#: src/modules/everything/e_mod_main.c:68
 #: src/modules/everything-apps/e_mod_main.c:1309
 #: src/modules/everything-files/e_mod_main.c:1596
 #: src/modules/gadman/e_mod_main.c:25 src/modules/mixer/e_mod_main.c:1100
@@ -6472,25 +6472,28 @@ msgstr "Molto chiara"
 msgid "Dropshadow"
 msgstr "Dropshadow"
 
-#: src/modules/everything/e_mod_main.c:79
-#: src/modules/everything/e_mod_main.c:195
+#: src/modules/everything/e_mod_main.c:59
+#: src/modules/everything/e_mod_main.c:193
 msgid "Everything Launcher"
 msgstr "Pannello di Everything"
 
-#: src/modules/everything/e_mod_main.c:80
-#: src/modules/everything/e_mod_main.c:196
-msgid "Show Everything Dialog"
-msgstr "Mostra finestra di dialogo di Everything"
+#: src/modules/everything/e_mod_main.c:60
+msgid "Show Everything Launcher"
+msgstr "Mostra lanciatore Everything"
 
-#: src/modules/everything/e_mod_main.c:91
+#: src/modules/everything/e_mod_main.c:71
 msgid "Everything Configuration"
 msgstr "Configurazione di Everything"
 
-#: src/modules/everything/e_mod_main.c:385
+#: src/modules/everything/e_mod_main.c:194
+msgid "Show Everything Dialog"
+msgstr "Mostra finestra di dialogo di Everything"
+
+#: src/modules/everything/e_mod_main.c:383
 msgid "Everything Module"
 msgstr "Modulo Everything"
 
-#: src/modules/everything/e_mod_main.c:567
+#: src/modules/everything/e_mod_main.c:565
 msgid "Run Everything"
 msgstr "Pannello di Everything"
 

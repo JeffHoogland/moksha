@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-02-21 06:42+0400\n"
-"PO-Revision-Date: 2011-02-21 12:28+0400\n"
+"POT-Creation-Date: 2011-02-25 06:42+0400\n"
+"PO-Revision-Date: 2011-02-25 13:26+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: French <pourunmondesansgourou@gmail.com>\n"
 "Language: fr\n"
@@ -35,7 +35,7 @@ msgstr "À propos de Enlightenment"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:845
 #: src/modules/conf_theme/e_int_config_theme_web.c:129
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:237
-#: src/modules/everything-windows/e_mod_main.c:450
+#: src/modules/everything-windows/e_mod_main.c:447
 #: src/modules/fileman/e_fwin.c:2011
 #: src/modules/illume/e_mod_win.c:173
 #: src/modules/mixer/app_mixer.c:514
@@ -351,7 +351,7 @@ msgstr "Activer/Désactiver l'épinglage"
 #: src/bin/e_actions.c:3066
 #: src/bin/e_fm.c:3247
 #: src/bin/e_fm.c:3252
-#: src/bin/e_fm.c:9937
+#: src/bin/e_fm.c:9948
 #: src/bin/e_fm_device.c:332
 #: src/bin/e_fm_device.c:356
 #: src/bin/e_fm_device.c:635
@@ -955,7 +955,7 @@ msgstr "Appliquer"
 
 #: src/bin/e_configure.c:28
 #: src/modules/conf_shelves/e_mod_main.c:21
-#: src/modules/everything/e_mod_main.c:88
+#: src/modules/everything/e_mod_main.c:68
 #: src/modules/everything-apps/e_mod_main.c:1309
 #: src/modules/everything-files/e_mod_main.c:1596
 #: src/modules/gadman/e_mod_main.c:25
@@ -1090,7 +1090,7 @@ msgstr "Fichier desktop"
 #: src/modules/conf_performance/e_int_config_performance.c:115
 #: src/modules/everything/evry_config.c:379
 #: src/modules/everything/evry_config.c:463
-#: src/modules/everything-aspell/e_mod_main.c:476
+#: src/modules/everything-aspell/e_mod_main.c:472
 #: src/modules/everything-files/e_mod_main.c:1488
 #: src/modules/pager/e_mod_config.c:126
 #: src/modules/pager/e_mod_config.c:213
@@ -1108,7 +1108,7 @@ msgstr "Exécuter dans un terminal"
 
 #: src/bin/e_eap_editor.c:786
 msgid "Show in Menus"
-msgstr "Montrer dans les menus"
+msgstr "Afficher dans les menus"
 
 #: src/bin/e_eap_editor.c:789
 #: src/bin/e_int_border_remember.c:757
@@ -1612,7 +1612,7 @@ msgstr "Vignette"
 
 #: src/bin/e_fm_prop.c:432
 #: src/modules/conf_desklock/e_int_config_desklock.c:300
-#: src/modules/everything-aspell/e_mod_main.c:490
+#: src/modules/everything-aspell/e_mod_main.c:486
 msgid "Custom"
 msgstr "Personnalisé"
 
@@ -1816,7 +1816,7 @@ msgid "Create Icon"
 msgstr "Créer un icone"
 
 #: src/bin/e_int_border_menu.c:99
-#: src/modules/everything-windows/e_mod_main.c:457
+#: src/modules/everything-windows/e_mod_main.c:454
 msgid "Send to Desktop"
 msgstr "Envoyer sur le bureau"
 
@@ -1833,7 +1833,7 @@ msgid "More..."
 msgstr "Plus…"
 
 #: src/bin/e_int_border_menu.c:193
-#: src/modules/everything-windows/e_mod_main.c:436
+#: src/modules/everything-windows/e_mod_main.c:433
 msgid "Iconify"
 msgstr "Minimiser"
 
@@ -2126,7 +2126,7 @@ msgstr "Taille, position et verrous"
 
 #: src/bin/e_int_border_remember.c:625
 #: src/modules/conf/e_mod_main.c:245
-#: src/modules/everything/evry_plug_aggregator.c:333
+#: src/modules/everything/evry_plug_aggregator.c:334
 msgid "All"
 msgstr "Tout"
 
@@ -4814,7 +4814,7 @@ msgstr "Enlightenment n'a pas pu importer cette configuration,<br>à cause d'une
 
 #: src/modules/conf_imc/e_mod_main.c:17
 #: src/modules/conf_intl/e_mod_main.c:17
-#: src/modules/everything-aspell/e_mod_main.c:500
+#: src/modules/everything-aspell/e_mod_main.c:496
 #: src/modules/wizard/page_010.c:139
 msgid "Language"
 msgstr "Langue"
@@ -6268,25 +6268,28 @@ msgstr "Très claire"
 msgid "Dropshadow"
 msgstr "Ombre portée"
 
-#: src/modules/everything/e_mod_main.c:79
-#: src/modules/everything/e_mod_main.c:195
+#: src/modules/everything/e_mod_main.c:59
+#: src/modules/everything/e_mod_main.c:193
 msgid "Everything Launcher"
 msgstr "Lanceur Omni"
 
-#: src/modules/everything/e_mod_main.c:80
-#: src/modules/everything/e_mod_main.c:196
-msgid "Show Everything Dialog"
-msgstr "Afficher la boîte de dialogue d'Omni"
+#: src/modules/everything/e_mod_main.c:60
+msgid "Show Everything Launcher"
+msgstr "Afficher Omni"
 
-#: src/modules/everything/e_mod_main.c:91
+#: src/modules/everything/e_mod_main.c:71
 msgid "Everything Configuration"
 msgstr "Configuration d'Omni"
 
-#: src/modules/everything/e_mod_main.c:385
+#: src/modules/everything/e_mod_main.c:194
+msgid "Show Everything Dialog"
+msgstr "Afficher la boîte de dialogue d'Omni"
+
+#: src/modules/everything/e_mod_main.c:383
 msgid "Everything Module"
 msgstr "Module Omni"
 
-#: src/modules/everything/e_mod_main.c:567
+#: src/modules/everything/e_mod_main.c:565
 msgid "Run Everything"
 msgstr "Omni"
 
@@ -6446,7 +6449,7 @@ msgstr "Actions"
 msgid "Items"
 msgstr "Éléments"
 
-#: src/modules/everything/evry_plug_aggregator.c:345
+#: src/modules/everything/evry_plug_aggregator.c:346
 msgid "No plugins loaded"
 msgstr "Aucun greffon activé"
 
@@ -6514,34 +6517,34 @@ msgstr "Commande du terminal"
 msgid "Sudo GUI"
 msgstr "Interface graphique sudo"
 
-#: src/modules/everything-aspell/e_mod_main.c:398
+#: src/modules/everything-aspell/e_mod_main.c:394
 msgid "Spell Checker"
 msgstr "Correcteur orthographique"
 
-#: src/modules/everything-aspell/e_mod_main.c:462
-#: src/modules/everything-aspell/e_mod_main.c:595
-#: src/modules/everything-aspell/e_mod_main.c:614
+#: src/modules/everything-aspell/e_mod_main.c:458
+#: src/modules/everything-aspell/e_mod_main.c:591
+#: src/modules/everything-aspell/e_mod_main.c:610
 msgid "Everything Aspell"
 msgstr "Omni aspell"
 
-#: src/modules/everything-aspell/e_mod_main.c:481
+#: src/modules/everything-aspell/e_mod_main.c:477
 msgid "Spell checker"
 msgstr "Correcteur orthographique"
 
-#: src/modules/everything-aspell/e_mod_main.c:484
+#: src/modules/everything-aspell/e_mod_main.c:480
 msgid "Aspell"
 msgstr "Aspell"
 
-#: src/modules/everything-aspell/e_mod_main.c:487
+#: src/modules/everything-aspell/e_mod_main.c:483
 msgid "Hunspell"
 msgstr "Hunspell"
 
-#: src/modules/everything-aspell/e_mod_main.c:494
+#: src/modules/everything-aspell/e_mod_main.c:490
 #: src/modules/fileman/e_fwin.c:2085
 msgid "Custom Command"
 msgstr "Commande personnalisée"
 
-#: src/modules/everything-calc/e_mod_main.c:246
+#: src/modules/everything-calc/e_mod_main.c:255
 msgid "Calculator"
 msgstr "Calculatrice"
 
@@ -6604,11 +6607,11 @@ msgstr "Vider le cache"
 msgid "Show Dialog"
 msgstr "Afficher la boîte de dialogue"
 
-#: src/modules/everything-windows/e_mod_main.c:428
+#: src/modules/everything-windows/e_mod_main.c:425
 msgid "Switch to Window"
 msgstr "Aller vers la fenêtre"
 
-#: src/modules/everything-windows/e_mod_main.c:443
+#: src/modules/everything-windows/e_mod_main.c:440
 msgid "Toggle Fullscreen"
 msgstr "Activer/Désactiver le plein écran"
 
@@ -6674,11 +6677,11 @@ msgstr "Utiliser des critères de sélection alternatifs"
 
 #: src/modules/fileman/e_mod_config.c:265
 msgid "Show Icon Extension"
-msgstr "Montrer l'extension des icones"
+msgstr "Afficher l'extension des icones"
 
 #: src/modules/fileman/e_mod_config.c:268
 msgid "Show Full Path"
-msgstr "Montrer le chemin d'accès complet"
+msgstr "Afficher le chemin d'accès complet"
 
 #: src/modules/fileman/e_mod_config.c:271
 msgid "Show Desktop Icons"
@@ -6686,7 +6689,7 @@ msgstr "Afficher les icones du bureau"
 
 #: src/modules/fileman/e_mod_config.c:274
 msgid "Show Toolbar"
-msgstr "Montrer la barre d'outils"
+msgstr "Afficher la barre d'outils"
 
 #: src/modules/fileman/e_mod_config.c:278
 #: src/modules/gadman/e_mod_gadman.c:803
@@ -6983,7 +6986,7 @@ msgstr "Étiquettes de l'icone"
 #: src/modules/ibar/e_mod_config.c:120
 #: src/modules/ibox/e_mod_config.c:97
 msgid "Show Icon Label"
-msgstr "Montrer l'étiquette de l'icone"
+msgstr "Afficher l'étiquette de l'icone"
 
 #: src/modules/ibar/e_mod_config.c:126
 msgid "Display App Name"
