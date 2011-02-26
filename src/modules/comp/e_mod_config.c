@@ -425,24 +425,98 @@ _match_sel(void *data __UNUSED__)
 //   E_Config_Dialog *cfd = m->cfd;
 }
 
-const char *
+static const char *
+_match_type_label_get(int type)
+{
+   if (ECORE_X_WINDOW_TYPE_UNKNOWN == type)
+     return _("Unused");
+   if (ECORE_X_WINDOW_TYPE_COMBO == type)
+     return _("Combo");
+   if (ECORE_X_WINDOW_TYPE_DESKTOP == type)
+     return _("Desktop");
+   if (ECORE_X_WINDOW_TYPE_DIALOG == type)
+     return _("Dialog");
+   if (ECORE_X_WINDOW_TYPE_DOCK == type)
+     return _("Dock");
+   if (ECORE_X_WINDOW_TYPE_DND == type)
+     return _("Drag and Drop");
+   if (ECORE_X_WINDOW_TYPE_MENU == type)
+     return _("Menu");
+   if (ECORE_X_WINDOW_TYPE_DROPDOWN_MENU == type)
+     return _("Menu (Dropdown)");
+   if (ECORE_X_WINDOW_TYPE_POPUP_MENU == type)
+     return _("Menu (Popup)");
+   if (ECORE_X_WINDOW_TYPE_NORMAL == type)
+     return _("Normal");
+   if (ECORE_X_WINDOW_TYPE_NOTIFICATION == type)
+     return _("Notification");
+   if (ECORE_X_WINDOW_TYPE_SPLASH == type)
+     return _("Splash");
+   if (ECORE_X_WINDOW_TYPE_TOOLBAR == type)
+     return _("Toolbar");
+   if (ECORE_X_WINDOW_TYPE_TOOLTIP == type)
+     return _("Tooltip");
+   if (ECORE_X_WINDOW_TYPE_UTILITY == type)
+     return _("Utility");
+
+   return _("Unused");
+}
+
+static char *
 _match_label_get(Match_Config *m)
 {
-   const char *name;
+   char *label;
+   Eina_Strbuf *buf = eina_strbuf_new();
+
+   if (m->match.title)
+     {
+	eina_strbuf_append(buf, _("Title:"));
+	eina_strbuf_append(buf, m->match.title);
+	eina_strbuf_append(buf, _(" / "));
+     }
+   if (m->match.primary_type)
+     {
+	eina_strbuf_append(buf, _("Type:"));
+	eina_strbuf_append(buf, _match_type_label_get(m->match.primary_type));
+	eina_strbuf_append(buf, _(" / "));
+     }
+   if (m->match.name)
+     {
+	eina_strbuf_append(buf, _("Name:"));
+	eina_strbuf_append(buf, m->match.name);
+	eina_strbuf_append(buf, _(" / "));
+     }
+   if (m->match.clas)
+     {
+	eina_strbuf_append(buf, _("Class:"));
+	eina_strbuf_append(buf, m->match.clas);
+	eina_strbuf_append(buf, _(" / "));
+     }
+   if (m->match.role)
+     {
+	eina_strbuf_append(buf, _("Role:"));
+	eina_strbuf_append(buf, m->match.role);
+	eina_strbuf_append(buf, _(" / "));
+     }
+   if (m->match.shadow_style)
+     {
+	eina_strbuf_append(buf, _("Style:"));
+	eina_strbuf_append(buf, m->match.shadow_style);
+     }
+
+   if (!eina_strbuf_length_get(buf))
+     return _("Unknown");
    
-   name = _("Unknown");
-   if (m->match.shadow_style) name = m->match.shadow_style;
-   if (m->match.role) name = m->match.role;
-   if (m->match.clas) name = m->match.clas;
-   if (m->match.name) name = m->match.name;
-   if (m->match.title) name = m->match.title;
-   return name;
+   label = strdup(eina_strbuf_string_get(buf));
+   eina_strbuf_free(buf);
+
+   return label;
 }
 
 static void
 _match_ilist_append(Evas_Object *il, Match_Config *m, int pos, int pre)
 {
-   const char *name = _match_label_get(m);
+   char *name = _match_label_get(m);
    if (pos == -1)
      e_widget_ilist_append(il, NULL, name, _match_sel, m, NULL);
    else
@@ -452,6 +526,7 @@ _match_ilist_append(Evas_Object *il, Match_Config *m, int pos, int pre)
         else
           e_widget_ilist_append_relative(il, NULL, name, _match_sel, m, NULL, pos);
      }
+   E_FREE(name);
 }
 
 static void
@@ -502,9 +577,9 @@ _cb_dialog_resize(void *data, Evas *e, Evas_Object *obj, void *event_info)
    evas_object_geometry_get(obj, &x, &y, &w, &h);
 
    evas_object_move(bg, x, y);
-   evas_object_resize(bg, w, h); 
+   evas_object_resize(bg, w, h);
    evas_object_move(of, x, y);
-   evas_object_resize(of, w, h); 
+   evas_object_resize(of, w, h);
 }
 
 static void
@@ -513,6 +588,7 @@ _edit_ok(void *d1, void *d2)
    Match_Config *m = d1;
    Evas_Object *dia, *bg, *of = d2;
    Evas_Object *il;
+   char *label;
    int n;
 
    if (m->match.title) eina_stringshare_del(m->match.title);
@@ -558,8 +634,9 @@ _edit_ok(void *d1, void *d2)
 
    il = m->cfd->cfdata->edit_il;
    n = e_widget_ilist_selected_get(il);
-   e_widget_ilist_nth_label_set(il, n, _match_label_get(m));
-
+   label = _match_label_get(m);
+   e_widget_ilist_nth_label_set(il, n, label);
+   E_FREE(label);
    bg = evas_object_data_get(of, "bg");
    dia = evas_object_data_get(of, "dia");
 
@@ -587,7 +664,7 @@ _create_edit_frame(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdat
    
    of = e_widget_frametable_add(evas, _("Edit Match"), 0);
    evas_object_data_set(of, "bg", o);
-   evas_object_data_set(of, "dia", cfd->dia->bg_object); 
+   evas_object_data_set(of, "dia", cfd->dia->bg_object);
    evas_object_move(of, x, y);
    evas_object_resize(of, w, h);
    evas_object_show(of);
@@ -817,7 +894,7 @@ _create_edit_frame(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdat
    e_widget_toolbook_page_show(tb, 0);
    
    bt = e_widget_button_add(evas, _("OK"), NULL, _edit_ok, m, of);
-   e_widget_frametable_object_append(of, bt, 0, 1, 1, 1, 0, 0, 0, 0); 
+   e_widget_frametable_object_append(of, bt, 0, 1, 1, 1, 0, 0, 0, 0);
 }
 
 static void
