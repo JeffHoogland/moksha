@@ -18,7 +18,8 @@ typedef struct _Match_Config
    Match match;
    E_Config_Dialog *cfd;
    char *title, *name, *clas, *role;
-   int borderless, dialog, accepts_focus, vkbd, quickpanel, argb, fullscreen, modal;
+   int borderless, dialog, accepts_focus, vkbd;
+   int quickpanel, argb, fullscreen, modal;
 } Match_Config;
 
 struct _E_Config_Dialog_Data
@@ -35,22 +36,23 @@ struct _E_Config_Dialog_Data
    int vsync;
 
    const char *shadow_style;
-   
-   struct {   
-      Eina_List *popups;
-      Eina_List *borders;
-      Eina_List *overrides;
-      Eina_List *menus;
-      int changed;
-   } match;
-   
+
+   struct 
+     {
+        Eina_List *popups;
+        Eina_List *borders;
+        Eina_List *overrides;
+        Eina_List *menus;
+        int changed;
+     } match;
+
    Evas_Object *popups_il;
    Evas_Object *borders_il;
    Evas_Object *overrides_il;
    Evas_Object *menus_il;
 
    Evas_Object *edit_il;
-   
+
    int keep_unmapped;
    int max_unmapped_pixels;
    int max_unmapped_time;
@@ -58,7 +60,7 @@ struct _E_Config_Dialog_Data
    int send_flush;
    int send_dump;
    int nocomp_fs;
-   
+
    int fps_show;
    int fps_corner;
    int fps_average_range;
@@ -66,10 +68,10 @@ struct _E_Config_Dialog_Data
 
 
 /* Protos */
-static void        *_create_data          (E_Config_Dialog *cfd);
-static void         _free_data            (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static void *_create_data(E_Config_Dialog *cfd);
+static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static int          _basic_apply_data     (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 
 E_Config_Dialog *
 e_int_config_comp_module(E_Container *con, const char *params __UNUSED__)
@@ -89,10 +91,8 @@ e_int_config_comp_module(E_Container *con, const char *params __UNUSED__)
 
    snprintf(buf, sizeof(buf), "%s/e-module-comp.edj", 
             e_module_dir_get(mod->module));
-   cfd = e_config_dialog_new(con,
-			     _("Composite Settings"),
-			     "E", "appearance/comp",
-			     buf, 0, v, mod);
+   cfd = e_config_dialog_new(con, _("Composite Settings"),
+			     "E", "appearance/comp", buf, 0, v, mod);
    mod->config_dialog = cfd;
    return cfd;
 }
@@ -301,11 +301,11 @@ _style_selector_del(void *data __UNUSED__, Evas *e, Evas_Object *o, void *event_
    if (style_shadows)
      {
         E_Demo_Style_Item *ds_it;
-        
+
         EINA_LIST_FREE(style_shadows, ds_it)
           {
              style_list = eina_list_remove(style_list, ds_it);
-             
+
              evas_object_del(ds_it->client);
              evas_object_del(ds_it->border);
              evas_object_del(ds_it->frame);
@@ -316,7 +316,7 @@ _style_selector_del(void *data __UNUSED__, Evas *e, Evas_Object *o, void *event_
           }
         evas_object_data_set(o, "style_shadows", NULL);
      }
-   
+
    timer = evas_object_data_get(o, "style_timer");
    if (timer)
      {
@@ -336,7 +336,7 @@ _style_selector(Evas *evas, int use_shadow, const char **source)
    int n, sel;
    Evas_Coord wmw, wmh;
    Ecore_Timer *timer;
-   
+
    orec0 = evas_object_name_find(evas, "style_shadows");
    style_list = evas_object_data_get(orec0, "list");
    oi = e_widget_ilist_add(evas, 80, 80, source);
@@ -351,7 +351,7 @@ _style_selector(Evas *evas, int use_shadow, const char **source)
         char buf[PATH_MAX];
 
 	ds_it = malloc(sizeof(E_Demo_Style_Item));
-        
+
         ob = e_livethumb_add(evas);
         ds_it->livethumb = ob;
         e_livethumb_vsize_set(ob, 240, 240);
@@ -379,7 +379,7 @@ _style_selector(Evas *evas, int use_shadow, const char **source)
 	edje_object_part_swallow(ds_it->frame, "e.swallow.preview", ob);
 	evas_object_show(ds_it->frame);
         style_shadows = eina_list_append(style_shadows, ds_it);
-        
+
         obd = edje_object_add(e_livethumb_evas_get(ob));
         ds_it->border = obd;
         e_theme_edje_object_set(obd, "base/theme/borders",
@@ -388,13 +388,13 @@ _style_selector(Evas *evas, int use_shadow, const char **source)
         edje_object_signal_emit(obd, "e,state,focused", "e");
         edje_object_part_swallow(oo, "e.swallow.content", obd);
         evas_object_show(obd);
-        
+
         orec = evas_object_rectangle_add(e_livethumb_evas_get(ob));
         ds_it->client = orec;
         evas_object_color_set(orec, 255, 255, 255, 255);
         edje_object_part_swallow(obd, "e.swallow.client", orec);
         evas_object_show(orec);
-        
+
         e_widget_ilist_append(oi, ds_it->frame, style, NULL, NULL, style);
         evas_object_show(ob);
         if (*source)
@@ -402,7 +402,7 @@ _style_selector(Evas *evas, int use_shadow, const char **source)
              if (!strcmp(*source, style)) sel = n;
           }
         n++;
-        
+
         style_list = eina_list_append(style_list, ds_it);
      }
    evas_object_data_set(orec0, "list", style_list);
@@ -506,7 +506,7 @@ _match_label_get(Match_Config *m)
 
    if (!eina_strbuf_length_get(buf))
      return _("Unknown");
-   
+
    label = strdup(eina_strbuf_string_get(buf));
    eina_strbuf_free(buf);
 
@@ -517,6 +517,7 @@ static void
 _match_ilist_append(Evas_Object *il, Match_Config *m, int pos, int pre)
 {
    char *name = _match_label_get(m);
+
    if (pos == -1)
      e_widget_ilist_append(il, NULL, name, _match_sel, m, NULL);
    else
@@ -533,7 +534,7 @@ static void
 _match_list_up(Eina_List **list, Match_Config *m)
 {
    Eina_List *l, *lp;
-        
+
    l = eina_list_data_find_list(*list, m);
    if (!l) return;
    lp = l->prev;
@@ -546,7 +547,7 @@ static void
 _match_list_down(Eina_List **list, Match_Config *m)
 {
    Eina_List *l, *lp;
-        
+
    l = eina_list_data_find_list(*list, m);
    if (!l) return;
    lp = l->next;
@@ -559,7 +560,7 @@ static void
 _match_list_del(Eina_List **list, Match_Config *m)
 {
    Eina_List *l, *lp;
-        
+
    l = eina_list_data_find_list(*list, m);
    if (!l) return;
    lp = l->next;
@@ -570,9 +571,9 @@ _match_list_del(Eina_List **list, Match_Config *m)
 static void
 _cb_dialog_resize(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
-   int x,y,w,h;
-   
    Evas_Object *bg, *of = data;
+   int x, y, w, h;
+
    bg = evas_object_data_get(of, "bg");
    evas_object_geometry_get(obj, &x, &y, &w, &h);
 
@@ -640,9 +641,7 @@ _edit_ok(void *d1, void *d2)
    bg = evas_object_data_get(of, "bg");
    dia = evas_object_data_get(of, "dia");
 
-   evas_object_event_callback_del(dia,
-   				  EVAS_CALLBACK_RESIZE,
-   				  _cb_dialog_resize);
+   evas_object_event_callback_del(dia, EVAS_CALLBACK_RESIZE, _cb_dialog_resize);
    evas_object_del(bg);
    evas_object_del(of);
 }
@@ -653,7 +652,7 @@ _create_edit_frame(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdat
    Evas_Object *of, *oi, *lb, *en, *bt, *tb, *tab2, *o, *sf, *li;
    E_Radio_Group *rg;
    int row;
-   int x,y,w,h;
+   int x, y, w, h;
 
    o = edje_object_add(evas);
    e_theme_edje_object_set(o, "base/theme/dialog", "e/widgets/dialog/main");
@@ -661,7 +660,7 @@ _create_edit_frame(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdat
    evas_object_move(o, x, y);
    evas_object_resize(o, w, h);
    evas_object_show(o);
-   
+
    of = e_widget_frametable_add(evas, _("Edit Match"), 0);
    evas_object_data_set(of, "bg", o);
    evas_object_data_set(of, "dia", cfd->dia->bg_object);
@@ -669,12 +668,11 @@ _create_edit_frame(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdat
    evas_object_resize(of, w, h);
    evas_object_show(of);
 
-   evas_object_event_callback_add(cfd->dia->bg_object,
-   				  EVAS_CALLBACK_RESIZE,
-   				  _cb_dialog_resize, of);
+   evas_object_event_callback_add(cfd->dia->bg_object, EVAS_CALLBACK_RESIZE,
+                                  _cb_dialog_resize, of);
 
    tb = e_widget_toolbook_add(evas, 48 * e_scale, 48 * e_scale);
-   
+
    tab2 = e_widget_table_add(evas, 0);
    if (cfdata->edit_il == cfdata->borders_il)
      {
@@ -716,19 +714,19 @@ _create_edit_frame(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdat
         e_widget_table_object_append(tab2, en, 1, 3, 1, 1, 1, 0, 1, 0);
      }
    e_widget_toolbook_page_append(tb, NULL, _("Names"), tab2, 1, 1, 1, 1, 0.5, 0.0);
-   
+
    if ((cfdata->edit_il == cfdata->borders_il) ||
        (cfdata->edit_il == cfdata->overrides_il))
      {
         Evas_Coord mw, mh;
-        
+
         rg = e_widget_radio_group_new(&m->match.primary_type);
-        
+
         li = e_widget_list_add(evas, 1, 0);
-        
+
         o = e_widget_radio_add(evas, _("Unused"), ECORE_X_WINDOW_TYPE_UNKNOWN, rg);
         e_widget_list_object_append(li, o, 1, 0, 0.0);
-        
+
         o = e_widget_radio_add(evas, _("Combo"), ECORE_X_WINDOW_TYPE_COMBO, rg);
         e_widget_list_object_append(li, o, 1, 0, 0.0);
         o = e_widget_radio_add(evas, _("Desktop"), ECORE_X_WINDOW_TYPE_DESKTOP, rg);
@@ -760,9 +758,10 @@ _create_edit_frame(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdat
 
         e_widget_size_min_get(li, &mw, &mh);
         evas_object_resize(li, mw, mh);
-        
+
         sf = e_widget_scrollframe_simple_add(evas, li);
-        e_widget_toolbook_page_append(tb, NULL, _("Types"), sf, 1, 1, 1, 1, 0.5, 0.0);
+        e_widget_toolbook_page_append(tb, NULL, _("Types"), sf, 
+                                      1, 1, 1, 1, 0.5, 0.0);
      }
 
    m->borderless = m->match.borderless;
@@ -773,7 +772,7 @@ _create_edit_frame(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdat
    m->argb = m->match.argb;
    m->fullscreen = m->match.fullscreen;
    m->modal = m->match.modal;
-   
+
    row = 0;
    tab2 = e_widget_table_add(evas, 0);
    lb = e_widget_label_add(evas, _("Unused"));
@@ -783,7 +782,7 @@ _create_edit_frame(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdat
    lb = e_widget_label_add(evas, _("Off"));
    e_widget_table_object_append(tab2, lb, 3, row, 1, 1, 0, 0, 0, 0);
    row++;
-   
+
    if (cfdata->edit_il == cfdata->borders_il)
      {
         lb = e_widget_label_add(evas, _("Borderless"));
@@ -885,14 +884,16 @@ _create_edit_frame(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdat
         e_widget_table_object_append(tab2, o, 3, row, 1, 1, 0, 0, 0, 0);
         row++;
      }
-   e_widget_toolbook_page_append(tb, NULL, _("Flags"), tab2, 1, 1, 1, 1, 0.5, 0.0);
-                                                
+   e_widget_toolbook_page_append(tb, NULL, _("Flags"), tab2, 
+                                 1, 1, 1, 1, 0.5, 0.0);
+
    oi = _style_selector(evas, cfdata->use_shadow, &(m->match.shadow_style));
-   e_widget_toolbook_page_append(tb, NULL, _("Style"), oi, 1, 1, 1, 1, 0.5, 0.0);
+   e_widget_toolbook_page_append(tb, NULL, _("Style"), oi, 
+                                 1, 1, 1, 1, 0.5, 0.0);
 
    e_widget_frametable_object_append(of, tb, 0, 0, 1, 1, 1, 1, 1, 1);
    e_widget_toolbook_page_show(tb, 0);
-   
+
    bt = e_widget_button_add(evas, _("OK"), NULL, _edit_ok, m, of);
    e_widget_frametable_object_append(of, bt, 0, 1, 1, 1, 0, 0, 0, 0);
 }
@@ -904,7 +905,7 @@ _but_up(void *d1, void *d2)
    Evas_Object *il = d2;
    Match_Config *m;
    int n;
-   
+
    e_widget_ilist_freeze(il);
    n = e_widget_ilist_selected_get(il);
    if (n < 1) return;
@@ -935,7 +936,7 @@ _but_down(void *d1, void *d2)
    Evas_Object *il = d2;
    Match_Config *m;
    int n;
-   
+
    e_widget_ilist_freeze(il);
    n = e_widget_ilist_selected_get(il);
    if (n >= (e_widget_ilist_count(il) - 1)) return;
@@ -965,7 +966,7 @@ _but_add(void *d1, void *d2)
    Evas_Object *il = d2;
    Match_Config *m;
    int n;
-   
+
    m = E_NEW(Match_Config, 1);
    m->cfd = cfd;
    m->match.title = NULL;
@@ -1002,7 +1003,7 @@ _but_del(void *d1, void *d2)
    Evas_Object *il = d2;
    Match_Config *m;
    int n;
-   
+
    e_widget_ilist_freeze(il);
    n = e_widget_ilist_selected_get(il);
    m = e_widget_ilist_nth_data_get(il, n);
@@ -1028,11 +1029,11 @@ _but_edit(void *d1, void *d2)
    Evas_Object *il = d2;
    int n;
    Match_Config *m;
-   
+
    n = e_widget_ilist_selected_get(il);
    m = e_widget_ilist_nth_data_get(il, n);
    if (!m) return;
-   
+
    cfd->cfdata->edit_il = il;
    _create_edit_frame(cfd, evas_object_evas_get(il), cfd->cfdata, m);
    cfd->cfdata->match.changed = 1;
@@ -1044,20 +1045,20 @@ _create_match_editor(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfd
    Evas_Object *tab, *il, *bt;
    Match_Config *m;
    Eina_List *l;
-   
+
    tab = e_widget_table_add(evas, 0);
-   
+
    il = e_widget_ilist_add(evas, 16, 16, NULL);
    e_widget_size_min_set(il, 160, 100);
-   
+
    EINA_LIST_FOREACH(*matches, l, m)
      {
         _match_ilist_append(il, m, -1, 0);
      }
-   
+
    e_widget_ilist_go(il);
    e_widget_table_object_append(tab, il, 0, 0, 1, 5, 1, 1, 1, 1);
-   
+
    bt = e_widget_button_add(evas, _("Up"), NULL, _but_up, cfd, il);
    e_widget_table_object_append(tab, bt, 1, 0, 1, 1, 1, 1, 0, 0);
    bt = e_widget_button_add(evas, _("Down"), NULL, _but_down, cfd, il);
@@ -1070,7 +1071,7 @@ _create_match_editor(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfd
    e_widget_table_object_append(tab, bt, 1, 4, 1, 1, 1, 1, 0, 0);
 
    *il_ret = il;
-   
+
    return tab;
 }
 
@@ -1078,30 +1079,30 @@ static Evas_Object *
 _create_styles_toolbook(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *tb, *oi, *il;
-   
+
    tb = e_widget_toolbook_add(evas, 48 * e_scale, 48 * e_scale);
-   
+
    oi = _style_selector(evas, cfdata->use_shadow, &(cfdata->shadow_style));
    e_widget_toolbook_page_append(tb, NULL, _("Default"), oi, 1, 1, 1, 1, 0.5, 0.0);
 
    oi = _create_match_editor(cfd, evas, cfdata, &(cfdata->match.borders), &il);
    cfdata->borders_il = il;
    e_widget_toolbook_page_append(tb, NULL, _("Apps"), oi, 1, 1, 1, 1, 0.5, 0.0);
-   
+
    oi = _create_match_editor(cfd, evas, cfdata, &(cfdata->match.popups), &il);
    cfdata->popups_il = il;
    e_widget_toolbook_page_append(tb, NULL, _("E"), oi, 1, 1, 1, 1, 0.5, 0.0);
-   
+
    oi = _create_match_editor(cfd, evas, cfdata, &(cfdata->match.overrides), &il);
    cfdata->overrides_il = il;
    e_widget_toolbook_page_append(tb, NULL, _("Over"), oi, 1, 1, 1, 1, 0.5, 0.0);
-   
+
    oi = _create_match_editor(cfd, evas, cfdata, &(cfdata->match.menus), &il);
    cfdata->menus_il = il;
    e_widget_toolbook_page_append(tb, NULL, _("Menus"), oi, 1, 1, 1, 1, 0.5, 0.0);
-   
+
    e_widget_toolbook_page_show(tb, 0);
-   
+
    return tb;
 }
 
@@ -1113,12 +1114,12 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    orec0 = evas_object_rectangle_add(evas);
    evas_object_name_set(orec0, "style_shadows");
-   
+
    tab = e_widget_table_add(evas, 0);
    evas_object_name_set(tab, "dia_table");
-   
+
    otb = e_widget_toolbook_add(evas, 48 * e_scale, 48 * e_scale);
-   
+
    ///////////////////////////////////////////
    ol = e_widget_list_add(evas, 0, 0);
    ob = e_widget_check_add(evas, _("Shadows"), &(cfdata->use_shadow));
@@ -1128,15 +1129,15 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_list_object_append(ol, ob, 1, 0, 0.5);
    ob = e_widget_check_add(evas, _("Smooth scaling"), &(cfdata->smooth_windows));
    e_widget_list_object_append(ol, ob, 1, 0, 0.5);
-   
+
    of = e_widget_frametable_add(evas, _("Styles"), 0);
    e_widget_frametable_content_align_set(of, 0.5, 0.5);
    oi = _create_styles_toolbook(cfd, evas, cfdata);
    e_widget_frametable_object_append(of, oi, 0, 0, 1, 1, 1, 1, 1, 1);
    e_widget_list_object_append(ol, of, 1, 1, 0.5);
-   
+
    e_widget_toolbook_page_append(otb, NULL, _("Effects"), ol, 1, 1, 1, 1, 0.5, 0.0);
-   
+
    ///////////////////////////////////////////
    ol = e_widget_list_add(evas, 0, 0);
    ob = e_widget_check_add(evas, _("Sync screen (VBlank)"), &(cfdata->vsync));
@@ -1148,7 +1149,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    ob = e_widget_check_add(evas, _("Grab Server during draw"), &(cfdata->grab));
    e_widget_list_object_append(ol, ob, 1, 1, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Sync"), ol, 0, 0, 0, 0, 0.5, 0.0);
-   
+
    ol = e_widget_list_add(evas, 0, 0);
    rg = e_widget_radio_group_new(&(cfdata->engine));
    ob = e_widget_radio_add(evas, _("Software"), E_EVAS_ENGINE_SOFTWARE_X11, rg);
@@ -1167,7 +1168,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
         e_widget_list_object_append(ol, of, 1, 1, 0.5);
      }
    e_widget_toolbook_page_append(otb, NULL, _("Engine"), ol, 0, 0, 0, 0, 0.5, 0.0);
-   
+
    ///////////////////////////////////////////
    ol = e_widget_list_add(evas, 0, 0);
    ob = e_widget_check_add(evas, _("Send flush"), &(cfdata->send_flush));
@@ -1201,7 +1202,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_frametable_object_append(of, ob, 2, 2, 1, 1, 1, 1, 0, 0);
    e_widget_list_object_append(ol, of, 1, 1, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Memory"), ol, 0, 0, 0, 0, 0.5, 0.0);
-   
+
    ///////////////////////////////////////////
    ol = e_widget_list_add(evas, 0, 0);
    ol2 = e_widget_list_add(evas, 1, 1);
@@ -1243,10 +1244,10 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_list_object_append(ol2, of, 1, 1, 0.5);
    e_widget_list_object_append(ol, ol2, 1, 1, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Timeouts"), ol, 0, 0, 0, 0, 0.5, 0.0);
-   
+
    ///////////////////////////////////////////
    ol = e_widget_list_add(evas, 0, 0);
-   
+
    ob = e_widget_check_add(evas, _("Show Framerate"), &(cfdata->fps_show));
    e_widget_list_object_append(ol, ob, 1, 1, 0.5);
    ob = e_widget_label_add(evas, _("Rolling average frame count"));
@@ -1254,7 +1255,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f Frames"), 1, 120, 1, 0,
                             NULL, &(cfdata->fps_average_range), 240);
    e_widget_list_object_append(ol, ob, 1, 1, 0.5);
-   
+
    of = e_widget_frametable_add(evas, _("Corner"), 0);
    e_widget_frametable_content_align_set(of, 0.5, 0.5);
    rg = e_widget_radio_group_new(&(cfdata->fps_corner));
@@ -1271,13 +1272,13 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
                                 24, 24, 3, rg);
    e_widget_frametable_object_append(of, ob, 1, 1, 1, 1, 1, 1, 1, 1);
    e_widget_list_object_append(ol, of, 1, 1, 0.5);
-   
+
    e_widget_toolbook_page_append(otb, NULL, _("Debug"), ol, 0, 0, 0, 0, 0.5, 0.0);
-   
+
    e_widget_toolbook_page_show(otb, 0);
-   
+
    e_dialog_resizable_set(cfd->dia, 1);
-   
+
    e_widget_table_object_append(tab, otb, 0, 0, 1, 1, 1, 1, 1, 1);
    return tab;
 }
@@ -1286,7 +1287,7 @@ static void
 _match_list_free(Eina_List *list)
 {
    Match *m;
-   
+
    EINA_LIST_FREE(list, m)
      {
         if (m->title) eina_stringshare_del(m->title);
@@ -1340,12 +1341,12 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
              _match_list_free(_comp_mod->conf->match.borders);
              _match_list_free(_comp_mod->conf->match.overrides);
              _match_list_free(_comp_mod->conf->match.menus);
-             
+
              _comp_mod->conf->match.popups = NULL;
              _comp_mod->conf->match.borders = NULL;
              _comp_mod->conf->match.overrides = NULL;
              _comp_mod->conf->match.menus = NULL;
-             
+
              EINA_LIST_FOREACH(cfdata->match.popups, l, m2)
                {
                   m = E_NEW(Match, 1);
@@ -1405,14 +1406,14 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
        (cfdata->vsync != _comp_mod->conf->vsync))
      {
         E_Action *a;
-        
+
         _comp_mod->conf->engine = cfdata->engine;
         _comp_mod->conf->indirect = cfdata->indirect;
         _comp_mod->conf->texture_from_pixmap = cfdata->texture_from_pixmap;
         _comp_mod->conf->efl_sync = cfdata->efl_sync;
         _comp_mod->conf->loose_sync = cfdata->loose_sync;
         _comp_mod->conf->vsync = cfdata->vsync;
-        
+
         a = e_action_find("restart");
         if ((a) && (a->func.go)) a->func.go(NULL, NULL);
 //        e_mod_comp_shutdown();
