@@ -796,6 +796,11 @@ _but_up(void *d1, void *d2)
    n = e_widget_ilist_selected_get(il);
    if (n < 1) return;
    m = e_widget_ilist_nth_data_get(il, n);
+   if (!m)
+     {
+	e_widget_ilist_thaw(il);
+	return;
+     }
    e_widget_ilist_remove_num(il, n);
    n--;
    _match_ilist_append(il, m, n, 1);
@@ -822,6 +827,11 @@ _but_down(void *d1, void *d2)
    n = e_widget_ilist_selected_get(il);
    if (n >= (e_widget_ilist_count(il) - 1)) return;
    m = e_widget_ilist_nth_data_get(il, n);
+   if (!m)
+     {
+	e_widget_ilist_thaw(il);
+	return;
+     }
    e_widget_ilist_remove_num(il, n);
    _match_ilist_append(il, m, n, 0);
    e_widget_ilist_nth_show(il, n + 1, 0);
@@ -883,6 +893,11 @@ _but_del(void *d1, void *d2)
    e_widget_ilist_freeze(il);
    n = e_widget_ilist_selected_get(il);
    m = e_widget_ilist_nth_data_get(il, n);
+   if (!m)
+     {
+	e_widget_ilist_thaw(il);
+	return;
+     }
    e_widget_ilist_remove_num(il, n);
    e_widget_ilist_thaw(il);
    e_widget_ilist_go(il);
@@ -903,7 +918,8 @@ _but_edit(void *d1, void *d2)
    
    n = e_widget_ilist_selected_get(il);
    m = e_widget_ilist_nth_data_get(il, n);
-
+   if (!m) return;
+   
    cfd->cfdata->edit_il = il;
    _create_edit_frame(cfd, evas_object_evas_get(il), cfd->cfdata, m);
    cfd->cfdata->match.changed = 1;
