@@ -251,9 +251,9 @@ _style_demo(void *data)
    int demo_state;
    const E_Demo_Style_Item *it;
 
-   demo_state = (int)evas_object_data_get(data, "style_demo_state");
+   demo_state = (long)evas_object_data_get(data, "style_demo_state");
    demo_state = (demo_state + 1) % 4;
-   evas_object_data_set(data, "style_demo_state", (void *)demo_state);
+   evas_object_data_set(data, "style_demo_state", (void *)(long)demo_state);
    
    style_shadows = evas_object_data_get(data, "style_shadows");
    EINA_LIST_FOREACH(style_shadows, l, it)
@@ -495,7 +495,6 @@ _match_list_del(Eina_List **list, Match_Config *m)
 static void
 _cb_dialog_resize(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
-   E_Config_Dialog_Data *cfdata = data;
    int x,y,w,h;
    
    Evas_Object *bg, *of = data;
@@ -574,7 +573,7 @@ _edit_ok(void *d1, void *d2)
 static void
 _create_edit_frame(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata, Match_Config *m)
 {
-   Evas_Object *tab, *of, *oi, *lb, *en, *bt, *tb, *tab2, *o, *sf, *li;
+   Evas_Object *of, *oi, *lb, *en, *bt, *tb, *tab2, *o, *sf, *li;
    E_Radio_Group *rg;
    int row;
    int x,y,w,h;
