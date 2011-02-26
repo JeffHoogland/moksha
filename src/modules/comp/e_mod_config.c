@@ -493,10 +493,26 @@ _match_list_del(Eina_List **list, Match_Config *m)
 }
 
 static void
+_cb_dialog_resize(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   E_Config_Dialog_Data *cfdata = data;
+   int x,y,w,h;
+   
+   Evas_Object *bg, *of = data;
+   bg = evas_object_data_get(of, "bg");
+   evas_object_geometry_get(obj, &x, &y, &w, &h);
+
+   evas_object_move(bg, x, y);
+   evas_object_resize(bg, w, h); 
+   evas_object_move(of, x, y);
+   evas_object_resize(of, w, h); 
+}
+
+static void
 _edit_ok(void *d1, void *d2)
 {
    Match_Config *m = d1;
-   Evas_Object *of = d2;
+   Evas_Object *dia, *bg, *of = d2;
    Evas_Object *il;
    int n;
 
@@ -544,19 +560,42 @@ _edit_ok(void *d1, void *d2)
    il = m->cfd->cfdata->edit_il;
    n = e_widget_ilist_selected_get(il);
    e_widget_ilist_nth_label_set(il, n, _match_label_get(m));
-   
+
+   bg = evas_object_data_get(of, "bg");
+   dia = evas_object_data_get(of, "dia");
+
+   evas_object_event_callback_del(dia,
+   				  EVAS_CALLBACK_RESIZE,
+   				  _cb_dialog_resize);
+   evas_object_del(bg);
    evas_object_del(of);
 }
 
 static void
-_create_edit_frame(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata, Match_Config *m)
+_create_edit_frame(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata, Match_Config *m)
 {
    Evas_Object *tab, *of, *oi, *lb, *en, *bt, *tb, *tab2, *o, *sf, *li;
    E_Radio_Group *rg;
    int row;
+   int x,y,w,h;
 
-   tab = evas_object_name_find(evas, "dia_table");
+   o = edje_object_add(evas);
+   e_theme_edje_object_set(o, "base/theme/dialog", "e/widgets/dialog/main");
+   evas_object_geometry_get(cfd->dia->bg_object, &x, &y, &w, &h);
+   evas_object_move(o, x, y);
+   evas_object_resize(o, w, h);
+   evas_object_show(o);
+   
    of = e_widget_frametable_add(evas, _("Edit Match"), 0);
+   evas_object_data_set(of, "bg", o);
+   evas_object_data_set(of, "dia", cfd->dia->bg_object); 
+   evas_object_move(of, x, y);
+   evas_object_resize(of, w, h);
+   evas_object_show(of);
+
+   evas_object_event_callback_add(cfd->dia->bg_object,
+   				  EVAS_CALLBACK_RESIZE,
+   				  _cb_dialog_resize, of);
 
    tb = e_widget_toolbook_add(evas, 48 * e_scale, 48 * e_scale);
    
@@ -780,8 +819,6 @@ _create_edit_frame(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_
    
    bt = e_widget_button_add(evas, _("OK"), NULL, _edit_ok, m, of);
    e_widget_frametable_object_append(of, bt, 0, 1, 1, 1, 0, 0, 0, 0); 
-  
-   e_widget_table_object_append(tab, of, 0, 0, 1, 1, 1, 0, 1, 0);
 }
 
 static void
