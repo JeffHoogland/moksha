@@ -8214,7 +8214,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
                }
           }
 
-        if (!strcmp(ic->info.mime, "application/x-desktop"))
+        if (ic->info.mime && !strcmp(ic->info.mime, "application/x-desktop"))
           {
              mi = e_menu_item_new(mn);
              e_menu_item_label_set(mi, _("Application Properties"));
