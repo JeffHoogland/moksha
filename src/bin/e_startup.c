@@ -86,5 +86,5 @@ _e_startup_event_cb(void *data, int ev_type __UNUSED__, void *ev __UNUSED__)
       start_app_pos = 0;
    free(buf);
    _e_startup();
-   return ECORE_CALLBACK_CANCEL;
+   return ECORE_CALLBACK_PASS_ON;
 }
