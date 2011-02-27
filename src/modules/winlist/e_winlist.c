@@ -67,6 +67,21 @@ static Ecore_Animator *_animator = NULL;
 static const Ecore_X_Window *_win = NULL;
 static E_Border *_bd_next = NULL;
 
+static Eina_Bool
+_wmclass_picked(const Eina_List *lst, const char *wmclass)
+{
+   const Eina_List *l;
+   const char *s;
+
+   if (!wmclass) return EINA_FALSE;
+
+   EINA_LIST_FOREACH(lst, l, s)
+     if ((s) && (!strcmp(s, wmclass)))
+       return EINA_TRUE;
+
+   return EINA_FALSE;
+}
+
 /* externally accessible functions */
 int
 e_winlist_init(void)
@@ -82,12 +97,14 @@ e_winlist_shutdown(void)
 }
 
 int
-e_winlist_show(E_Zone *zone, Eina_Bool same_class)
+e_winlist_show(E_Zone *zone, E_Winlist_Filter filter)
 {
    int x, y, w, h;
    Evas_Object *o;
    Eina_List *l;
    E_Desk *desk;
+   E_Border *bd;
+   Eina_List *wmclasses = NULL;
 
    E_OBJECT_CHECK_RETURN(zone, 0);
    E_OBJECT_TYPE_CHECK_RETURN(zone, E_ZONE_TYPE, 0);
@@ -155,17 +172,27 @@ e_winlist_show(E_Zone *zone, Eina_Bool same_class)
 
    desk = e_desk_current_get(_winlist->zone);
    e_box_freeze(_list_object);
-   for (l = e_border_focus_stack_get(); l; l = l->next)
+   EINA_LIST_FOREACH(e_border_focus_stack_get(), l, bd)
      {
-	E_Border *bd;
-
-	bd = l->data;
-	if ((!same_class) ||
-	    (!strcmp((const char*) _last_border->client.icccm.class,
-		     (const char*) bd->client.icccm.class)))
-	    _e_winlist_border_add(bd, _winlist->zone, desk);
+        Eina_Bool pick;
+        switch (filter)
+          {
+           case E_WINLIST_FILTER_CLASS_WINDOWS:
+              pick = !strcmp(_last_border->client.icccm.class,
+                             bd->client.icccm.class);
+              break;
+           case E_WINLIST_FILTER_CLASSES:
+              pick = (!_wmclass_picked(wmclasses, bd->client.icccm.class));
+              if (pick)
+                wmclasses = eina_list_append(wmclasses, bd->client.icccm.class);
+              break;
+           default:
+              pick = EINA_TRUE;
+          }
+        if (pick) _e_winlist_border_add(bd, _winlist->zone, desk);
      }
    e_box_thaw(_list_object);
+   eina_list_free(wmclasses);
 
    if (!_wins)
      {
