@@ -64,7 +64,7 @@ _e_startup(void)
      }
    e_exec(NULL, desktop, NULL, NULL, NULL);
    snprintf(buf, sizeof(buf), "%s %s", _("Starting"), desktop->name);
-   e_init_status_set(buf);   
+   e_init_status_set(buf);
    ecore_job_add(_e_startup_next_cb, NULL);
 }
 
@@ -86,5 +86,5 @@ _e_startup_event_cb(void *data, int ev_type __UNUSED__, void *ev __UNUSED__)
       start_app_pos = 0;
    free(buf);
    _e_startup();
-   return ECORE_CALLBACK_PASS_ON;
+   return ECORE_CALLBACK_CANCEL;
 }
