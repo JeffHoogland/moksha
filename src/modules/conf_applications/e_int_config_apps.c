@@ -9,7 +9,7 @@ typedef struct _E_Config_Data
 typedef struct _E_Config_App_List
 {
    E_Config_Dialog_Data *cfdata;
-   Evas_Object *o_list, *o_add, *o_del;
+   Evas_Object *o_list, *o_add, *o_del, *o_desc;
    Eina_List *desks;
 } E_Config_App_List;
 
@@ -227,14 +227,20 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
 	if (mw < (200 * e_scale)) mw = (200 * e_scale);
 	e_widget_size_min_set(cfdata->apps_xdg.o_list, mw, (75 * e_scale));
 	e_widget_table_object_append(ot, cfdata->apps_xdg.o_list, 0, 0, 2, 1, 1, 1, 1, 1);
+
+	cfdata->apps_xdg.o_desc = e_widget_textblock_add(evas);
+	e_widget_size_min_set(cfdata->apps_xdg.o_desc, 100, (45 * e_scale));
+	e_widget_table_object_append(ot, cfdata->apps_xdg.o_desc, 0, 1, 2, 1, 1, 1, 0, 0);
+
 	cfdata->apps_xdg.o_add = e_widget_button_add(evas, _("Add"), "list-add",
 						     _cb_add, &cfdata->apps_xdg, NULL);
 	e_widget_disabled_set(cfdata->apps_xdg.o_add, EINA_TRUE);
-	e_widget_table_object_append(ot, cfdata->apps_xdg.o_add, 0, 1, 1, 1, 1, 1, 1, 0);
+	e_widget_table_object_append(ot, cfdata->apps_xdg.o_add, 0, 2, 1, 1, 1, 1, 1, 0);
 	cfdata->apps_xdg.o_del = e_widget_button_add(evas, _("Remove"), "list-remove",
 						     _cb_del, &cfdata->apps_xdg, NULL);
 	e_widget_disabled_set(cfdata->apps_xdg.o_del, EINA_TRUE);
-	e_widget_table_object_append(ot, cfdata->apps_xdg.o_del, 1, 1, 1, 1, 1, 1, 1, 0);
+	e_widget_table_object_append(ot, cfdata->apps_xdg.o_del, 1, 2, 1, 1, 1, 1, 1, 0);
+
 	e_widget_toolbook_page_append(otb, NULL, _("System"), ot,
 				      1, 1, 1, 1, 0.5, 0.0);
      }
@@ -567,6 +573,18 @@ _cb_apps_list_selected(void *data)
         else
           disabled++;
      }
+
+   if (apps->o_desc)
+     {
+	Efreet_Desktop *desk;
+	int sel;
+
+	sel = e_widget_ilist_selected_get(apps->o_list);
+	desk = eina_list_nth(apps->desks, sel);
+	if (desk)
+	  e_widget_textblock_markup_set(apps->o_desc, desk->comment);
+     }
+
    e_widget_disabled_set(apps->o_add, !disabled);
    e_widget_disabled_set(apps->o_del, !enabled);
 }
@@ -802,14 +820,14 @@ _cb_fill_delay(void *data)
    _fill_apps_list(&cfdata->apps_user);
    e_widget_size_min_get(cfdata->apps_user.o_list, &mw, NULL);
    if (mw < (200 * e_scale)) mw = (200 * e_scale);
-   e_widget_size_min_set(cfdata->apps_user.o_list, mw, (75 * e_scale));
+   e_widget_size_min_set(cfdata->apps_user.o_list, mw, (175 * e_scale));
 
    if (cfdata->data->show_autostart)
      {
 	_fill_xdg_list(&cfdata->apps_xdg);
 	e_widget_size_min_get(cfdata->apps_xdg.o_list, &mw, NULL);
 	if (mw < (200 * e_scale)) mw = (200 * e_scale);
-	e_widget_size_min_set(cfdata->apps_xdg.o_list, mw, (75 * e_scale));
+	e_widget_size_min_set(cfdata->apps_xdg.o_list, mw, (175 * e_scale));
      }
 
    cfdata->fill_delay = NULL;
