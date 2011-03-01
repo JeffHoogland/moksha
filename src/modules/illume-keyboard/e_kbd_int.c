@@ -337,13 +337,11 @@ _e_kbd_int_matches_update(void *data)
 }
 
 static void
-_e_kbd_int_key_press_handle(E_Kbd_Int *ki, Evas_Coord dx, Evas_Coord dy)
+_e_kbd_int_key_press_handle(E_Kbd_Int *ki, E_Kbd_Int_Key *ky)
 {
-   E_Kbd_Int_Key *ky;
    E_Kbd_Int_Key_State *st;
    const char *out = NULL;
 
-   ky = _e_kbd_int_at_coord_get(ki, dx, dy);
    if (!ky) return;
 
    if (ky->is_shift)
@@ -410,7 +408,9 @@ _e_kbd_int_key_press_handle(E_Kbd_Int *ki, Evas_Coord dx, Evas_Coord dy)
 					 ki->layout.state & SHIFT, 
 					 ki->layout.state & CAPSLOCK);
 	     else
-	       e_kbd_buf_pressed_point_add(ki->kbuf, dx, dy, 
+	       e_kbd_buf_pressed_point_add(ki->kbuf,
+                                           ky->x + (ky->w / 2),
+                                           ky->y + (ky->h / 2),
 					   ki->layout.state & SHIFT, 
 					   ki->layout.state & CAPSLOCK);
 	     e_kbd_buf_lookup(ki->kbuf, _e_kbd_int_matches_update, ki);
@@ -765,12 +765,33 @@ _e_kbd_int_cb_mouse_up(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNU
 
    if (ki->down.zoom)
      {
-	_e_kbd_int_key_press_handle(ki, ki->down.clx, ki->down.cly);
+        ky = _e_kbd_int_at_coord_get(ki, ki->down.clx, ki->down.cly);
+	_e_kbd_int_key_press_handle(ki, ky);
 	_e_kbd_int_zoomkey_down(ki);
 	ki->down.zoom = 0;
      }
+   else if (!ki->down.down)
+     {
+        /* case of mouse up event without mouse down when popup appear */
+        Evas_Coord x, y, w, h;
+        evas_object_geometry_get(ki->event_obj, &x, &y, &w, &h);
+        x = ev->canvas.x - x;
+        y = ev->canvas.y - y;
+        x = (x * ki->layout.w) / w;
+        y = (y * ki->layout.h) / h;
+        ky = _e_kbd_int_at_coord_get(ki, x, y);
+        ki->layout.pressed = ky;
+        _e_kbd_int_key_press_handle(ki, ki->layout.pressed);
+        edje_object_signal_emit(ky->obj,
+                                "e,state,pressed", "e");
+        edje_object_message_signal_process(ky->obj);
+     }
    else if (!ki->down.stroke)
-     _e_kbd_int_key_press_handle(ki, ki->down.lx, ki->down.ly);
+     {
+
+        ky = _e_kbd_int_at_coord_get(ki, ki->down.lx, ki->down.ly);
+        _e_kbd_int_key_press_handle(ki, ky);
+     }
    else
      {
 	Evas_Coord dx, dy;
