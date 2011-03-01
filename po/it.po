@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-02-25 20:22+0100\n"
-"PO-Revision-Date: 2011-02-25 20:22+0100\n"
+"POT-Creation-Date: 2011-03-01 23:44+0100\n"
+"PO-Revision-Date: 2011-03-01 23:45+0100\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -623,6 +623,7 @@ msgstr "Commuta modalità disconnessa"
 #: src/bin/e_actions.c:3041 src/bin/e_actions.c:3045 src/bin/e_actions.c:3049
 #: src/bin/e_actions.c:3053 src/bin/e_configure.c:349
 #: src/bin/e_int_config_modules.c:53
+#: src/modules/conf_applications/e_int_config_apps.c:244
 #: src/modules/conf_desklock/e_int_config_desklock_fsel.c:87
 #: src/modules/conf_imc/e_int_config_imc.c:808
 #: src/modules/conf_menus/e_int_config_menus.c:294
@@ -1089,7 +1090,7 @@ msgstr "Seleziona un'icona"
 msgid "Select an Executable"
 msgstr "Seleziona un'eseguibile"
 
-#: src/bin/e_entry.c:493 src/bin/e_fm.c:8171 src/bin/e_shelf.c:1694
+#: src/bin/e_entry.c:493 src/bin/e_fm.c:8171 src/bin/e_shelf.c:1697
 #: src/modules/conf_profiles/e_int_config_profiles.c:135
 #: src/modules/conf_shelves/e_int_config_shelf.c:80
 #: src/modules/ibar/e_mod_config.c:108
@@ -1605,7 +1606,9 @@ msgid "Look"
 msgstr "Aspetto"
 
 #: src/bin/e_gadcon.c:1446 src/bin/e_widget_config_list.c:66
-#: src/modules/conf_applications/e_int_config_apps.c:215
+#: src/modules/conf_applications/e_int_config_apps.c:239
+#: src/modules/conf_applications/e_int_config_apps.c:260
+#: src/modules/conf_applications/e_int_config_apps.c:280
 #: src/modules/gadman/e_mod_gadman.c:815 src/modules/ibar/e_mod_main.c:797
 msgid "Remove"
 msgstr "Elimina"
@@ -2149,7 +2152,7 @@ msgid "Mobile"
 msgstr "Mobile"
 
 #: src/bin/e_int_config_modules.c:59 src/bin/e_int_menus.c:223
-#: src/bin/e_shelf.c:1686 src/modules/battery/e_mod_main.c:188
+#: src/bin/e_shelf.c:1689 src/modules/battery/e_mod_main.c:188
 #: src/modules/conf/e_conf.c:121 src/modules/conf/e_conf.c:131
 #: src/modules/conf/e_mod_main.c:102 src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:133
@@ -2226,12 +2229,14 @@ msgid "Main"
 msgstr "Principale"
 
 #: src/bin/e_int_menus.c:116
-#: src/modules/conf_applications/e_int_config_apps.c:57
+#: src/modules/conf_applications/e_int_config_apps.c:69
 #: src/modules/conf_applications/e_mod_main.c:25
 msgid "Favorite Applications"
 msgstr "Applicazioni preferite"
 
-#: src/bin/e_int_menus.c:127 src/modules/conf_menus/e_int_config_menus.c:98
+#: src/bin/e_int_menus.c:127
+#: src/modules/conf_applications/e_int_config_apps.c:264
+#: src/modules/conf_menus/e_int_config_menus.c:98
 #: src/modules/conf_menus/e_int_config_menus.c:288
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:194
 #: src/modules/everything-apps/e_mod_main.c:1024
@@ -3072,15 +3077,15 @@ msgstr ""
 "modalità <b>presentazione</b> e disabilitare temporaneamente lo screensaver, "
 "il bloccaschermo e la gestione energetica?"
 
-#: src/bin/e_shelf.c:164
+#: src/bin/e_shelf.c:165
 msgid "Shelf #"
 msgstr "Mensola #"
 
-#: src/bin/e_shelf.c:1297 src/modules/conf_shelves/e_int_config_shelf.c:286
+#: src/bin/e_shelf.c:1298 src/modules/conf_shelves/e_int_config_shelf.c:286
 msgid "Are you sure you want to delete this shelf?"
 msgstr "Siete sicuri di voler eliminare questa mensola?"
 
-#: src/bin/e_shelf.c:1298
+#: src/bin/e_shelf.c:1299
 msgid ""
 "You requested to delete this shelf.<br><br>Are you sure you want to delete "
 "it?"
@@ -3088,15 +3093,15 @@ msgstr ""
 "Avete chiesto di eliminare questa mensola.<br><br>Siete sicuri di volerla "
 "eliminare?"
 
-#: src/bin/e_shelf.c:1671
+#: src/bin/e_shelf.c:1674
 msgid "Stop Moving/Resizing Gadgets"
 msgstr "Fine spostamento/ridimensionamento oggetti"
 
-#: src/bin/e_shelf.c:1673
+#: src/bin/e_shelf.c:1676
 msgid "Begin Moving/Resizing Gadgets"
 msgstr "Inizio spostamento/ridimensionamento oggetti"
 
-#: src/bin/e_shelf.c:1681 src/modules/ibar/e_mod_main.c:824
+#: src/bin/e_shelf.c:1684 src/modules/ibar/e_mod_main.c:824
 msgid "Contents"
 msgstr "Contenuti"
 
@@ -3437,7 +3442,8 @@ msgstr ""
 "precauzionale ai valori predefiniti. Ci scusiamo<br>per l'inconveniente.<br>"
 
 #: src/bin/e_widget_config_list.c:60
-#: src/modules/conf_applications/e_int_config_apps.c:211
+#: src/modules/conf_applications/e_int_config_apps.c:235
+#: src/modules/conf_applications/e_int_config_apps.c:256
 #: src/modules/conf_profiles/e_int_config_profiles.c:133
 #: src/modules/conf_shelves/e_int_config_shelf.c:78
 #: src/modules/ibar/e_mod_config.c:106
@@ -3445,12 +3451,12 @@ msgid "Add"
 msgstr "Aggiungi"
 
 #: src/bin/e_widget_config_list.c:80
-#: src/modules/conf_applications/e_int_config_apps.c:227
+#: src/modules/conf_applications/e_int_config_apps.c:272
 msgid "Up"
 msgstr "Su"
 
 #: src/bin/e_widget_config_list.c:86
-#: src/modules/conf_applications/e_int_config_apps.c:231
+#: src/modules/conf_applications/e_int_config_apps.c:276
 msgid "Down"
 msgstr "Giù"
 
@@ -3678,27 +3684,23 @@ msgstr "Modalità"
 msgid "Configuration Panel Configuration Updated"
 msgstr "Impostazioni del pannello di configurazioni aggiornate"
 
-#: src/modules/conf_applications/e_int_config_apps.c:72
-#: src/modules/conf_applications/e_int_config_apps.c:86
+#: src/modules/conf_applications/e_int_config_apps.c:84
+#: src/modules/conf_applications/e_int_config_apps.c:98
 #: src/modules/conf_applications/e_mod_main.c:28
 msgid "IBar Applications"
 msgstr "Applicazioni di IBar"
 
-#: src/modules/conf_applications/e_int_config_apps.c:101
+#: src/modules/conf_applications/e_int_config_apps.c:113
 #: src/modules/conf_applications/e_mod_main.c:36
 msgid "Startup Applications"
 msgstr "Applicazioni per l'avvio"
 
-#: src/modules/conf_applications/e_int_config_apps.c:116
+#: src/modules/conf_applications/e_int_config_apps.c:129
 #: src/modules/conf_applications/e_mod_main.c:32
 msgid "Restart Applications"
 msgstr "Applicazioni per il riavvio"
 
-#: src/modules/conf_applications/e_int_config_apps.c:219
-msgid "Selection"
-msgstr "Selezione"
-
-#: src/modules/conf_applications/e_int_config_apps.c:235
+#: src/modules/conf_applications/e_int_config_apps.c:284
 msgid "Order"
 msgstr "Ordine"
 
@@ -7166,48 +7168,57 @@ msgstr "Mostra/nascondi i gadget"
 
 #: src/modules/winlist/e_mod_main.c:33 src/modules/winlist/e_mod_main.c:35
 #: src/modules/winlist/e_mod_main.c:37 src/modules/winlist/e_mod_main.c:40
-#: src/modules/winlist/e_mod_main.c:43 src/modules/winlist/e_mod_main.c:45
-#: src/modules/winlist/e_mod_main.c:47 src/modules/winlist/e_mod_main.c:49
-#: src/modules/winlist/e_mod_main.c:62 src/modules/winlist/e_mod_main.c:63
-#: src/modules/winlist/e_mod_main.c:64 src/modules/winlist/e_mod_main.c:66
+#: src/modules/winlist/e_mod_main.c:43 src/modules/winlist/e_mod_main.c:46
+#: src/modules/winlist/e_mod_main.c:49 src/modules/winlist/e_mod_main.c:51
+#: src/modules/winlist/e_mod_main.c:53 src/modules/winlist/e_mod_main.c:55
 #: src/modules/winlist/e_mod_main.c:68 src/modules/winlist/e_mod_main.c:69
-#: src/modules/winlist/e_mod_main.c:70 src/modules/winlist/e_mod_main.c:71
+#: src/modules/winlist/e_mod_main.c:70 src/modules/winlist/e_mod_main.c:72
+#: src/modules/winlist/e_mod_main.c:74 src/modules/winlist/e_mod_main.c:75
+#: src/modules/winlist/e_mod_main.c:76 src/modules/winlist/e_mod_main.c:77
 msgid "Window : List"
 msgstr "Finestre : Lista"
 
-#: src/modules/winlist/e_mod_main.c:33 src/modules/winlist/e_mod_main.c:63
+#: src/modules/winlist/e_mod_main.c:33 src/modules/winlist/e_mod_main.c:69
 msgid "Next Window"
 msgstr "Finestra successiva"
 
-#: src/modules/winlist/e_mod_main.c:35 src/modules/winlist/e_mod_main.c:62
+#: src/modules/winlist/e_mod_main.c:35 src/modules/winlist/e_mod_main.c:68
 msgid "Previous Window"
 msgstr "Finestra precedente"
 
-#: src/modules/winlist/e_mod_main.c:38 src/modules/winlist/e_mod_main.c:67
+#: src/modules/winlist/e_mod_main.c:38 src/modules/winlist/e_mod_main.c:73
 msgid "Next window of same class"
 msgstr "Finestra successiva di classe uguale"
 
-#: src/modules/winlist/e_mod_main.c:41 src/modules/winlist/e_mod_main.c:65
+#: src/modules/winlist/e_mod_main.c:41 src/modules/winlist/e_mod_main.c:71
 msgid "Previous window of same class"
 msgstr "Finestra precedente di classe uguale"
 
-#: src/modules/winlist/e_mod_main.c:43 src/modules/winlist/e_mod_main.c:68
+#: src/modules/winlist/e_mod_main.c:44
+msgid "Next window class"
+msgstr "Classe finestre successiva"
+
+#: src/modules/winlist/e_mod_main.c:47
+msgid "Previous window class"
+msgstr "Classe finestre precedente"
+
+#: src/modules/winlist/e_mod_main.c:49 src/modules/winlist/e_mod_main.c:74
 msgid "Window on the Left"
 msgstr "Finestra a sinistra"
 
-#: src/modules/winlist/e_mod_main.c:45 src/modules/winlist/e_mod_main.c:69
+#: src/modules/winlist/e_mod_main.c:51 src/modules/winlist/e_mod_main.c:75
 msgid "Window Down"
 msgstr "Finestra sotto"
 
-#: src/modules/winlist/e_mod_main.c:47 src/modules/winlist/e_mod_main.c:70
+#: src/modules/winlist/e_mod_main.c:53 src/modules/winlist/e_mod_main.c:76
 msgid "Window Up"
 msgstr "Finestra sopra"
 
-#: src/modules/winlist/e_mod_main.c:49 src/modules/winlist/e_mod_main.c:71
+#: src/modules/winlist/e_mod_main.c:55 src/modules/winlist/e_mod_main.c:77
 msgid "Window on the Right"
 msgstr "Finestra a destra"
 
-#: src/modules/winlist/e_winlist.c:151
+#: src/modules/winlist/e_winlist.c:168
 msgid "Select a window"
 msgstr "Seleziona una finestra"
 
@@ -7846,3 +7857,6 @@ msgstr ""
 #: src/modules/systray/e_mod_main.c:1095
 msgid "Systray"
 msgstr "Systray"
+
+#~ msgid "Selection"
+#~ msgstr "Selezione"

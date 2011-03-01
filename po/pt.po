@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e17\n"
 "Report-Msgid-Bugs-To: http://trac.enlightenment.org/e/\n"
-"POT-Creation-Date: 2011-02-23 22:01-0800\n"
-"PO-Revision-Date: 2011-02-24 20:15-0000\n"
+"POT-Creation-Date: 2011-02-27 07:01-0800\n"
+"PO-Revision-Date: 2011-02-28 11:23-0000\n"
 "Last-Translator: Sérgio Marques <smarquespt@gmail.com>\n"
 "Language-Team: Portuguese <>\n"
 "MIME-Version: 1.0\n"
@@ -697,6 +697,7 @@ msgstr "Alternar o modo \"off-line\""
 #: ../src/bin/e_actions.c:3053
 #: ../src/bin/e_configure.c:349
 #: ../src/bin/e_int_config_modules.c:53
+#: ../src/modules/conf_applications/e_int_config_apps.c:244
 #: ../src/modules/conf_desklock/e_int_config_desklock_fsel.c:87
 #: ../src/modules/conf_imc/e_int_config_imc.c:808
 #: ../src/modules/conf_menus/e_int_config_menus.c:294
@@ -1694,7 +1695,9 @@ msgstr "Aspeto"
 
 #: ../src/bin/e_gadcon.c:1446
 #: ../src/bin/e_widget_config_list.c:66
-#: ../src/modules/conf_applications/e_int_config_apps.c:215
+#: ../src/modules/conf_applications/e_int_config_apps.c:239
+#: ../src/modules/conf_applications/e_int_config_apps.c:260
+#: ../src/modules/conf_applications/e_int_config_apps.c:280
 #: ../src/modules/gadman/e_mod_gadman.c:815
 #: ../src/modules/ibar/e_mod_main.c:797
 msgid "Remove"
@@ -2332,12 +2335,13 @@ msgid "Main"
 msgstr "Principal"
 
 #: ../src/bin/e_int_menus.c:116
-#: ../src/modules/conf_applications/e_int_config_apps.c:57
+#: ../src/modules/conf_applications/e_int_config_apps.c:69
 #: ../src/modules/conf_applications/e_mod_main.c:25
 msgid "Favorite Applications"
 msgstr "Aplicações favoritas"
 
 #: ../src/bin/e_int_menus.c:127
+#: ../src/modules/conf_applications/e_int_config_apps.c:264
 #: ../src/modules/conf_menus/e_int_config_menus.c:98
 #: ../src/modules/conf_menus/e_int_config_menus.c:288
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:194
@@ -3397,7 +3401,8 @@ msgid "Your module configuration is NEWER than the module version. This is very<
 msgstr "A configuração do seu módulo é mais recente que a do módulo.<br>Isto é muito estranho e só acontece se reverter o módulo<br>ou caso tenha copiado a configuração de um local em que está instalada uma versão mais recente do módulo.<br>Isto é mau e por precaução, as suas definições foram restauradas para as omissões.<br>Desculpe qualquer inconveniente.<br>"
 
 #: ../src/bin/e_widget_config_list.c:60
-#: ../src/modules/conf_applications/e_int_config_apps.c:211
+#: ../src/modules/conf_applications/e_int_config_apps.c:235
+#: ../src/modules/conf_applications/e_int_config_apps.c:256
 #: ../src/modules/conf_profiles/e_int_config_profiles.c:133
 #: ../src/modules/conf_shelves/e_int_config_shelf.c:78
 #: ../src/modules/ibar/e_mod_config.c:106
@@ -3405,12 +3410,12 @@ msgid "Add"
 msgstr "Adicionar"
 
 #: ../src/bin/e_widget_config_list.c:80
-#: ../src/modules/conf_applications/e_int_config_apps.c:227
+#: ../src/modules/conf_applications/e_int_config_apps.c:272
 msgid "Up"
 msgstr "Subir"
 
 #: ../src/bin/e_widget_config_list.c:86
-#: ../src/modules/conf_applications/e_int_config_apps.c:231
+#: ../src/modules/conf_applications/e_int_config_apps.c:276
 msgid "Down"
 msgstr "Descer"
 
@@ -3615,27 +3620,23 @@ msgstr "Modos"
 msgid "Configuration Panel Configuration Updated"
 msgstr "A configuração do painel de configurações foi atualizada"
 
-#: ../src/modules/conf_applications/e_int_config_apps.c:72
-#: ../src/modules/conf_applications/e_int_config_apps.c:86
+#: ../src/modules/conf_applications/e_int_config_apps.c:84
+#: ../src/modules/conf_applications/e_int_config_apps.c:98
 #: ../src/modules/conf_applications/e_mod_main.c:28
 msgid "IBar Applications"
 msgstr "Aplicações IBar"
 
-#: ../src/modules/conf_applications/e_int_config_apps.c:101
+#: ../src/modules/conf_applications/e_int_config_apps.c:113
 #: ../src/modules/conf_applications/e_mod_main.c:36
 msgid "Startup Applications"
 msgstr "Aplicações de arranque"
 
-#: ../src/modules/conf_applications/e_int_config_apps.c:116
+#: ../src/modules/conf_applications/e_int_config_apps.c:129
 #: ../src/modules/conf_applications/e_mod_main.c:32
 msgid "Restart Applications"
 msgstr "Reiniciar aplicações"
 
-#: ../src/modules/conf_applications/e_int_config_apps.c:219
-msgid "Selection"
-msgstr "Seleção"
-
-#: ../src/modules/conf_applications/e_int_config_apps.c:235
+#: ../src/modules/conf_applications/e_int_config_apps.c:284
 msgid "Order"
 msgstr "Ordem"
 
@@ -6343,7 +6344,6 @@ msgid "Everything Launcher"
 msgstr "Everything - Lançador"
 
 #: ../src/modules/everything/e_mod_main.c:60
-#| msgid "Everything Launcher"
 msgid "Show Everything Launcher"
 msgstr "Mostrar Everything - Lançador"
 
@@ -6995,61 +6995,73 @@ msgstr "Mostrar/ocultar \"gadgets\""
 #: ../src/modules/winlist/e_mod_main.c:37
 #: ../src/modules/winlist/e_mod_main.c:40
 #: ../src/modules/winlist/e_mod_main.c:43
-#: ../src/modules/winlist/e_mod_main.c:45
-#: ../src/modules/winlist/e_mod_main.c:47
+#: ../src/modules/winlist/e_mod_main.c:46
 #: ../src/modules/winlist/e_mod_main.c:49
-#: ../src/modules/winlist/e_mod_main.c:62
-#: ../src/modules/winlist/e_mod_main.c:63
-#: ../src/modules/winlist/e_mod_main.c:64
-#: ../src/modules/winlist/e_mod_main.c:66
+#: ../src/modules/winlist/e_mod_main.c:51
+#: ../src/modules/winlist/e_mod_main.c:53
+#: ../src/modules/winlist/e_mod_main.c:55
 #: ../src/modules/winlist/e_mod_main.c:68
 #: ../src/modules/winlist/e_mod_main.c:69
 #: ../src/modules/winlist/e_mod_main.c:70
-#: ../src/modules/winlist/e_mod_main.c:71
+#: ../src/modules/winlist/e_mod_main.c:72
+#: ../src/modules/winlist/e_mod_main.c:74
+#: ../src/modules/winlist/e_mod_main.c:75
+#: ../src/modules/winlist/e_mod_main.c:76
+#: ../src/modules/winlist/e_mod_main.c:77
 msgid "Window : List"
 msgstr "Janela : Lista"
 
 #: ../src/modules/winlist/e_mod_main.c:33
-#: ../src/modules/winlist/e_mod_main.c:63
+#: ../src/modules/winlist/e_mod_main.c:69
 msgid "Next Window"
 msgstr "Janela seguinte"
 
 #: ../src/modules/winlist/e_mod_main.c:35
-#: ../src/modules/winlist/e_mod_main.c:62
+#: ../src/modules/winlist/e_mod_main.c:68
 msgid "Previous Window"
 msgstr "Janela anterior"
 
 #: ../src/modules/winlist/e_mod_main.c:38
-#: ../src/modules/winlist/e_mod_main.c:67
+#: ../src/modules/winlist/e_mod_main.c:73
 msgid "Next window of same class"
 msgstr "Janela seguinte da mesma classe"
 
 #: ../src/modules/winlist/e_mod_main.c:41
-#: ../src/modules/winlist/e_mod_main.c:65
+#: ../src/modules/winlist/e_mod_main.c:71
 msgid "Previous window of same class"
 msgstr "Janela anterior da mesma classe"
 
-#: ../src/modules/winlist/e_mod_main.c:43
-#: ../src/modules/winlist/e_mod_main.c:68
+#: ../src/modules/winlist/e_mod_main.c:44
+#| msgid "Next window of same class"
+msgid "Next window class"
+msgstr "Classe da janela seguinte"
+
+#: ../src/modules/winlist/e_mod_main.c:47
+#| msgid "Previous window of same class"
+msgid "Previous window class"
+msgstr "Classe da janela anterior"
+
+#: ../src/modules/winlist/e_mod_main.c:49
+#: ../src/modules/winlist/e_mod_main.c:74
 msgid "Window on the Left"
 msgstr "Janela na esquerda"
 
-#: ../src/modules/winlist/e_mod_main.c:45
-#: ../src/modules/winlist/e_mod_main.c:69
+#: ../src/modules/winlist/e_mod_main.c:51
+#: ../src/modules/winlist/e_mod_main.c:75
 msgid "Window Down"
 msgstr "Descer janela"
 
-#: ../src/modules/winlist/e_mod_main.c:47
-#: ../src/modules/winlist/e_mod_main.c:70
+#: ../src/modules/winlist/e_mod_main.c:53
+#: ../src/modules/winlist/e_mod_main.c:76
 msgid "Window Up"
 msgstr "Subir janela"
 
-#: ../src/modules/winlist/e_mod_main.c:49
-#: ../src/modules/winlist/e_mod_main.c:71
+#: ../src/modules/winlist/e_mod_main.c:55
+#: ../src/modules/winlist/e_mod_main.c:77
 msgid "Window on the Right"
 msgstr "Janela na direita"
 
-#: ../src/modules/winlist/e_winlist.c:151
+#: ../src/modules/winlist/e_winlist.c:168
 msgid "Select a window"
 msgstr "Selecione uma janela"
 
@@ -7688,3 +7700,5 @@ msgstr "Apenas pode existir uma bandeja de sistema e você já a tem."
 msgid "Systray"
 msgstr "Bandeja do sistema"
 
+#~ msgid "Selection"
+#~ msgstr "Seleção"
