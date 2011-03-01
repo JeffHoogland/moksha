@@ -564,6 +564,8 @@ struct _E_Border
    unsigned char post_resize : 1;
    unsigned char post_show : 1;
    Ecore_Idle_Enterer *post_job;
+
+   Eina_Bool argb;
 };
 
 struct _E_Border_Pending_Move_Resize 

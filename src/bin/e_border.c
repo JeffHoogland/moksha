@@ -197,6 +197,10 @@ static void      _e_border_hook_call(E_Border_Hook_Point hookpoint,
 
 static void _e_border_client_move_resize_send(E_Border *bd);
 
+static void _e_border_frame_replace(E_Border *bd,
+				    Eina_Bool argb);
+
+
 /* local subsystem globals */
 static Eina_List *handlers = NULL;
 static Eina_List *borders = NULL;
@@ -962,6 +966,95 @@ e_border_hide(E_Border *bd,
         ecore_event_add(E_EVENT_BORDER_HIDE, ev, _e_border_event_border_hide_free, NULL);
      }
    bd->post_show = 0;
+}
+
+static void
+_e_border_frame_replace(E_Border *bd, Eina_Bool argb)
+{
+   Ecore_X_Window win;
+   Ecore_Evas *bg_ecore_evas;
+   char buf[PATH_MAX];
+   
+   bd->argb = argb;
+
+   win = bd->win;
+   bg_ecore_evas = bd->bg_ecore_evas;
+
+   /* unregister old frame window */
+   eina_hash_del(borders_hash, e_util_winid_str_get(bd->bg_win), bd);
+   eina_hash_del(borders_hash, e_util_winid_str_get(bd->win), bd);
+
+   e_focus_setdown(bd);
+   e_bindings_mouse_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
+   e_bindings_wheel_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
+
+   if (bd->icon_object)
+     evas_object_del(bd->icon_object);
+   
+   evas_object_del(bd->bg_object);
+   e_canvas_del(bg_ecore_evas);
+   ecore_evas_free(bg_ecore_evas);
+
+   if (bd->pointer)
+     e_object_del(E_OBJECT(bd->pointer));
+
+   /* create new frame */
+   if (argb)
+     bd->win = ecore_x_window_manager_argb_new(bd->zone->container->win,
+					       bd->x, bd->y, bd->w, bd->h);
+   else
+     {
+        bd->win = ecore_x_window_override_new(bd->zone->container->win,
+					      bd->x, bd->y, bd->w, bd->h);
+        ecore_x_window_shape_events_select(bd->win, 1);
+     }
+   
+   ecore_x_window_configure(bd->win,
+			    ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
+			    ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
+			    0, 0, 0, 0, 0,
+			    win, ECORE_X_WINDOW_STACK_BELOW);
+
+   e_bindings_mouse_grab(E_BINDING_CONTEXT_BORDER, bd->win);
+   e_bindings_wheel_grab(E_BINDING_CONTEXT_BORDER, bd->win);
+   e_focus_setup(bd);
+
+   bd->bg_ecore_evas = e_canvas_new(e_config->evas_engine_borders, bd->win,
+                                    0, 0, bd->w, bd->h, 1, 0,
+                                    &(bd->bg_win));
+
+   e_canvas_add(bd->bg_ecore_evas);
+   ecore_x_window_reparent(bd->event_win, bd->win, 0, 0);
+   
+   bd->bg_evas = ecore_evas_get(bd->bg_ecore_evas);
+   ecore_evas_name_class_set(bd->bg_ecore_evas, "E", "Frame_Window");
+   ecore_evas_title_set(bd->bg_ecore_evas, "Enlightenment Frame");
+
+   ecore_x_window_shape_events_select(bd->bg_win, 1);
+
+   /* move client with shell win over to new frame */
+   ecore_x_window_reparent(bd->client.shell_win, bd->win,
+			   bd->client_inset.l, bd->client_inset.t);
+
+   bd->pointer = e_pointer_window_new(bd->win, 0);
+
+   eina_hash_add(borders_hash, e_util_winid_str_get(bd->bg_win), bd);
+   eina_hash_add(borders_hash, e_util_winid_str_get(bd->win), bd);
+
+   if (bd->visible)
+     {
+	ecore_evas_show(bd->bg_ecore_evas);
+	ecore_x_window_show(bd->win);
+     }
+   
+   bd->bg_object = edje_object_add(bd->bg_evas);
+   snprintf(buf, sizeof(buf), "e/widgets/border/%s/border", bd->client.border.name);
+   e_theme_edje_object_set(bd->bg_object, "base/theme/borders", buf);
+
+   bd->icon_object = e_border_icon_add(bd, bd->bg_evas);
+   
+   /* cleanup old frame */
+   ecore_x_window_free(win);
 }
 
 static void
@@ -6651,17 +6744,34 @@ _e_border_eval0(E_Border *bd)
                         e_config_save_queue();
                     }
                }
-
+	     
              bd->shaped = 0;
              if (ok)
                {
-                  const char *shape_option;
+                  const char *shape_option, *argb_option;
+		  int use_argb = 0;
 
-                  bd->bg_object = o;
-                  shape_option = edje_object_data_get(o, "shaped");
-                  if ((shape_option) && (!strcmp(shape_option, "1")))
-                    bd->shaped = 1;
+		  bd->bg_object = o;
+		  
+		  if (!bd->client.argb)
+		    {
+		       argb_option = edje_object_data_get(o, "argb");
+		       if ((argb_option) && (!strcmp(argb_option, "1")))
+			 use_argb = 1;
 
+		       if (use_argb != bd->argb)
+			 _e_border_frame_replace(bd, use_argb);
+
+		       o = bd->bg_object;
+		    }
+		  
+		  if (!bd->argb)
+		    {
+		       shape_option = edje_object_data_get(o, "shaped");
+		       if ((shape_option) && (!strcmp(shape_option, "1")))
+			 bd->shaped = 1;
+		    }
+		  
                   if (bd->client.netwm.name)
                     edje_object_part_text_set(o, "e.text.title",
                                               bd->client.netwm.name);
