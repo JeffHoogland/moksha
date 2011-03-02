@@ -6060,6 +6060,8 @@ _e_border_eval0(E_Border *bd)
 
    _e_border_hook_call(E_BORDER_HOOK_EVAL_PRE_FETCH, bd);
 
+   bd->changes.border = 0;
+
    /* fetch any info queued to be fetched */
    if (bd->client.icccm.fetch.client_leader)
      {
@@ -6712,6 +6714,7 @@ _e_border_eval0(E_Border *bd)
 
         if ((!bd->client.border.name) || (strcmp(bd->client.border.name, bordername)))
           {
+             bd->changes.border = 1;
              if (bd->client.border.name)
                eina_stringshare_del(bd->client.border.name);
              bd->client.border.name = eina_stringshare_add(bordername);
@@ -7563,7 +7566,6 @@ _e_border_eval(E_Border *bd)
    bd->changed = 0;
    bd->changes.stack = 0;
    bd->changes.prop = 0;
-   bd->changes.border = 0;
 
    if ((bd->take_focus) || (bd->want_focus))
      {
