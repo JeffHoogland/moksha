@@ -165,6 +165,8 @@ evry_show(E_Zone *zone, E_Zone_Edge edge, const char *params)
    e_win_layer_set(win->ewin, 255);
    ecore_x_netwm_window_type_set(win->ewin->evas_win,
    				 ECORE_X_WINDOW_TYPE_UTILITY);
+
+   ecore_evas_name_class_set(win->ewin->ecore_evas, "E", "everything");
    ecore_evas_show(win->ewin->ecore_evas);
 
    if (e_grabinput_get(win->ewin->evas_win, 0, win->ewin->evas_win))
