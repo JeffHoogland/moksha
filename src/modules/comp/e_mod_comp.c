@@ -1520,6 +1520,7 @@ _e_mod_comp_win_mirror_add(E_Comp_Win *cw)
    o = evas_object_image_filled_add(cw->c->evas);
    evas_object_image_colorspace_set(o, EVAS_COLORSPACE_ARGB8888);
    cw->obj_mirror = eina_list_append(cw->obj_mirror, o);
+   evas_object_image_smooth_scale_set(o, _comp_mod->conf->smooth_windows);
 
    evas_object_event_callback_add(o, EVAS_CALLBACK_DEL,
 				  _e_mod_comp_cb_win_mirror_del, cw);
