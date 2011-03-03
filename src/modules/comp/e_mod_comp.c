@@ -1995,7 +1995,7 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
              cw->pw = 0;
              cw->ph = 0;
           }
-        cw->dmg_updates = 1;
+        cw->dmg_updates = 0;
      }
    else
       cw->dmg_updates = 1;
