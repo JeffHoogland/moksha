@@ -6673,11 +6673,7 @@ _e_border_eval0(E_Border *bd)
    if ((bd->client.border.changed) && (!bd->shaded) &&
        (!(((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_FULLSCREEN))))
      {
-        Evas_Object *o;
-        char buf[PATH_MAX];
         const char *bordername;
-        Evas_Coord cx, cy, cw, ch;
-        int l, r, t, b, ok;
 
         if (bd->fullscreen)
           bordername = "borderless";
@@ -6714,6 +6710,11 @@ _e_border_eval0(E_Border *bd)
 
         if ((!bd->client.border.name) || (strcmp(bd->client.border.name, bordername)))
           {
+             Evas_Object *o;
+             char buf[PATH_MAX];
+             Evas_Coord cx, cy, cw, ch;
+             int l, r, t, b, ok;
+
              bd->changes.border = 1;
              if (bd->client.border.name)
                eina_stringshare_del(bd->client.border.name);
@@ -6740,41 +6741,41 @@ _e_border_eval0(E_Border *bd)
                                                "e/widgets/border/default/border");
                   if (ok)
                     {
-     /* Reset default border style to default */
-                        if (e_config->theme_default_border_style)
-                          eina_stringshare_del(e_config->theme_default_border_style);
-                        e_config->theme_default_border_style = eina_stringshare_add("default");
-                        e_config_save_queue();
+                       /* Reset default border style to default */
+                       if (e_config->theme_default_border_style)
+                         eina_stringshare_del(e_config->theme_default_border_style);
+                       e_config->theme_default_border_style = eina_stringshare_add("default");
+                       e_config_save_queue();
                     }
                }
-	     
+
              bd->shaped = 0;
              if (ok)
                {
                   const char *shape_option, *argb_option;
-		  int use_argb = 0;
+                  int use_argb = 0;
 
-		  bd->bg_object = o;
-		  
-		  if (!bd->client.argb)
-		    {
-		       argb_option = edje_object_data_get(o, "argb");
-		       if ((argb_option) && (!strcmp(argb_option, "1")))
-			 use_argb = 1;
+                  bd->bg_object = o;
 
-		       if (use_argb != bd->argb)
-			 _e_border_frame_replace(bd, use_argb);
+                  if (!bd->client.argb)
+                    {
+                       argb_option = edje_object_data_get(o, "argb");
+                       if ((argb_option) && (!strcmp(argb_option, "1")))
+                         use_argb = 1;
 
-		       o = bd->bg_object;
-		    }
-		  
-		  if (!bd->argb)
-		    {
-		       shape_option = edje_object_data_get(o, "shaped");
-		       if ((shape_option) && (!strcmp(shape_option, "1")))
-			 bd->shaped = 1;
-		    }
-		  
+                       if (use_argb != bd->argb)
+                         _e_border_frame_replace(bd, use_argb);
+
+                       o = bd->bg_object;
+                    }
+
+                  if (!bd->argb)
+                    {
+                       shape_option = edje_object_data_get(o, "shaped");
+                       if ((shape_option) && (!strcmp(shape_option, "1")))
+                         bd->shaped = 1;
+                    }
+
                   if (bd->client.netwm.name)
                     edje_object_part_text_set(o, "e.text.title",
                                               bd->client.netwm.name);
@@ -8611,4 +8612,4 @@ e_border_comp_hidden_set(E_Border *bd,
    else
      ecore_x_composite_window_events_enable(bd->win);
 }
-
+/*vim:ts=8 sw=3 sts=3 expandtab cino=>5n-3f0^-2{2(0W1st0*/
