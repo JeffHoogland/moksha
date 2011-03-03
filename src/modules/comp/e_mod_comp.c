@@ -1501,6 +1501,15 @@ _e_mod_comp_win_shadow_setup(E_Comp_Win *cw)
      }
 }
 
+static void
+_e_mod_comp_cb_win_mirror_del(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   E_Comp_Win *cw = data;
+     
+   if (!cw) return;
+   cw->obj_mirror = eina_list_remove(cw->obj_mirror, obj);
+}
+
 static Evas_Object *
 _e_mod_comp_win_mirror_add(E_Comp_Win *cw)
 {
@@ -1512,6 +1521,9 @@ _e_mod_comp_win_mirror_add(E_Comp_Win *cw)
    evas_object_image_colorspace_set(o, EVAS_COLORSPACE_ARGB8888);
    cw->obj_mirror = eina_list_append(cw->obj_mirror, o);
 
+   evas_object_event_callback_add(o, EVAS_CALLBACK_DEL,
+				  _e_mod_comp_cb_win_mirror_del, cw);
+   
    if ((cw->pixmap) && (cw->pw > 0) && (cw->ph > 0))
      {
         unsigned int *pix;
@@ -1557,7 +1569,7 @@ _e_mod_comp_win_mirror_add(E_Comp_Win *cw)
         evas_object_image_size_set(o, w, h);
         evas_object_image_data_update_add(o, 0, 0, w, h);
     }
-
+   evas_object_stack_above(o, cw->shobj);
    return o;
 }
 
@@ -1575,9 +1587,77 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
    if (_comp_mod->conf->grab) ecore_x_grab();
    if (cw->bd)
      {
-        eina_hash_add(borders, e_util_winid_str_get(cw->bd->client.win), cw);
-        cw->dfn = e_object_delfn_add(E_OBJECT(cw->bd), 
-                                     _e_mod_comp_object_del, cw);
+	E_Comp_Win *cw2;
+
+	EINA_INLIST_FOREACH(c->wins, cw2)
+	  if (cw->bd == cw2->bd) break;
+
+	if (cw2)
+	  {
+	     E_FREE(cw);
+	     
+	     cw = cw2;
+
+	     if (cw->inhash)
+	       eina_hash_del(windows, e_util_winid_str_get(cw->win), cw);
+
+	     if (cw->damage)
+	       {
+		  Ecore_X_Region parts;
+
+		  eina_hash_del(damages, e_util_winid_str_get(cw->damage), cw);
+		  parts = ecore_x_region_new(NULL, 0);
+		  ecore_x_damage_subtract(cw->damage, 0, parts);
+		  ecore_x_region_free(parts);
+		  ecore_x_damage_free(cw->damage);
+		  cw->damage = 0;
+	       }
+
+	     if (cw->update_timeout)
+	       {
+		  ecore_timer_del(cw->update_timeout);
+		  cw->update_timeout = NULL;
+	       }
+
+	     if (cw->ready_timeout)
+	       {
+		  ecore_timer_del(cw->ready_timeout);
+		  cw->ready_timeout = NULL;
+	       }
+	     cw->win = win;
+	     
+	     memset((&att), 0, sizeof(Ecore_X_Window_Attributes));
+	     if (!ecore_x_window_attributes_get(cw->win, &att))
+	       {
+		  if (_comp_mod->conf->grab) ecore_x_ungrab();
+		  return NULL;
+	       }
+	     
+	     cw->vis = att.visual;
+	     cw->depth = att.depth;
+	     cw->argb = (cw->bd->argb || cw->bd->client.argb);
+
+	     eina_hash_add(windows, e_util_winid_str_get(cw->win), cw);
+	     cw->inhash = 1;
+
+	     cw->damage = ecore_x_damage_new
+	       (cw->win, ECORE_X_DAMAGE_REPORT_DELTA_RECTANGLES);
+	     eina_hash_add(damages, e_util_winid_str_get(cw->damage), cw);
+
+	     cw->needpix = 1;
+	     cw->dmg_updates = 0;
+	     cw->redirected = 1;
+
+	     evas_object_image_alpha_set(cw->obj, cw->argb);
+
+	     if (_comp_mod->conf->grab) ecore_x_ungrab();
+	     return cw;
+	  }
+	else
+	  {
+	     eina_hash_add(borders, e_util_winid_str_get(cw->bd->client.win), cw);
+	     cw->dfn = e_object_delfn_add(E_OBJECT(cw->bd), _e_mod_comp_object_del, cw);
+	  }
 // setup on show
 //      _e_mod_comp_win_sync_setup(cw, cw->bd->client.win);
      }
@@ -1807,6 +1887,9 @@ _e_mod_comp_win_del(E_Comp_Win *cw)
         EINA_LIST_FREE(cw->obj_mirror, o)
           {
              if (cw->xim) evas_object_image_data_set(o, NULL);
+	     evas_object_event_callback_del(o, EVAS_CALLBACK_DEL,
+					    _e_mod_comp_cb_win_mirror_del);
+
              evas_object_del(o);
           }
      }
@@ -2701,7 +2784,7 @@ _e_mod_comp_src_hidden_set_func(void *data __UNUSED__, E_Manager *man __UNUSED__
 //   E_Comp *c = data;
    E_Comp_Win *cw = (E_Comp_Win *)src;
    if (!cw->c) return;
-   if (!cw->hidden_override == hidden) return;
+   if (cw->hidden_override == hidden) return;
    cw->hidden_override = hidden;
    if (cw->bd) e_border_comp_hidden_set(cw->bd, cw->hidden_override);
    if (cw->visible)
