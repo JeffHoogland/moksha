@@ -1588,6 +1588,7 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
    if (_comp_mod->conf->grab) ecore_x_grab();
    if (cw->bd)
      {
+#if 0
 	E_Comp_Win *cw2;
 
 	EINA_INLIST_FOREACH(c->wins, cw2)
@@ -1655,6 +1656,7 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
 	     return cw;
 	  }
 	else
+#endif
 	  {
 	     eina_hash_add(borders, e_util_winid_str_get(cw->bd->client.win), cw);
 	     cw->dfn = e_object_delfn_add(E_OBJECT(cw->bd), _e_mod_comp_object_del, cw);
