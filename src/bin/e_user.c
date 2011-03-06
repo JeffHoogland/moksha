@@ -131,10 +131,20 @@ EAPI const char *
 e_user_dir_get(void)
 {
    static char dir[PATH_MAX] = "";
+   static char buf[PATH_MAX] = "";
 
    if (!dir[0])
      {
-	_e_user_dir_len = e_user_homedir_concat(dir, sizeof(dir), ".e/e");
+	char *e_home = getenv("E_HOME");
+	if (e_home)
+	  {
+	     snprintf(buf, sizeof(buf), "%s/e", e_home);
+	  }
+	else
+	  {
+	     snprintf(buf, sizeof(buf), ".e/e");
+	  }
+	_e_user_dir_len = e_user_homedir_concat(dir, sizeof(dir), buf);
 	_e_user_dir = dir;
      }
 

@@ -133,9 +133,12 @@ e_config_init(void)
    E_EVENT_CONFIG_MODE_CHANGED = ecore_event_type_new();
 
    _e_config_profile = getenv("E_CONF_PROFILE");
+
    if (_e_config_profile)
-     /* if environment var set - use this profile name */
-    _e_config_profile = strdup(_e_config_profile);
+     {
+	/* if environment var set - use this profile name */
+	_e_config_profile = strdup(_e_config_profile);
+     }
    else
      {
 	Eet_File *ef;

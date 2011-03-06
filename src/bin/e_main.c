@@ -1439,7 +1439,8 @@ _e_main_path_init(void)
 	e_error_message_show("Cannot allocate path for path_images\n");
 	return 0;
      }
-   e_path_default_path_append(path_images, "~/.e/e/images");
+   e_user_dir_snprintf(buf, sizeof(buf), "/images");
+   e_path_default_path_append(path_images, buf);
    e_prefix_data_concat_static(buf, "data/images");
    e_path_default_path_append(path_images, buf);
    e_path_user_path_set(path_images, &(e_config->path_append_images));
@@ -1451,7 +1452,8 @@ _e_main_path_init(void)
 	e_error_message_show("Cannot allocate path for path_fonts\n");
 	return 0;
      }
-   e_path_default_path_append(path_fonts, "~/.e/e/fonts");
+   e_user_dir_snprintf(buf, sizeof(buf), "/fonts");
+   e_path_default_path_append(path_fonts, buf);
    e_prefix_data_concat_static(buf, "data/fonts");
    e_path_default_path_append(path_fonts, buf);
    e_path_user_path_set(path_fonts, &(e_config->path_append_fonts));
@@ -1463,7 +1465,8 @@ _e_main_path_init(void)
 	e_error_message_show("Cannot allocate path for path_themes\n");
 	return 0;
      }
-   e_path_default_path_append(path_themes, "~/.e/e/themes");
+   e_user_dir_snprintf(buf, sizeof(buf), "/themes");
+   e_path_default_path_append(path_themes, buf);
    e_prefix_data_concat_static(buf, "data/themes");
    e_path_default_path_append(path_themes, buf);
    e_path_user_path_set(path_themes, &(e_config->path_append_themes));
@@ -1475,7 +1478,8 @@ _e_main_path_init(void)
 	e_error_message_show("Cannot allocate path for path_icons\n");
 	return 0;
      }
-   e_path_default_path_append(path_icons, "~/.e/e/icons");
+   e_user_dir_snprintf(buf, sizeof(buf), "/icons");
+   e_path_default_path_append(path_icons, buf);
    e_prefix_data_concat_static(buf, "data/icons");
    e_path_default_path_append(path_icons, buf);
    e_path_user_path_set(path_icons, &(e_config->path_append_icons));
@@ -1487,7 +1491,8 @@ _e_main_path_init(void)
 	e_error_message_show("Cannot allocate path for path_modules\n");
 	return 0;
      }
-   e_path_default_path_append(path_modules, "~/.e/e/modules");
+   e_user_dir_snprintf(buf, sizeof(buf), "/modules");
+   e_path_default_path_append(path_modules, buf);
    snprintf(buf, sizeof(buf), "%s/enlightenment/modules", e_prefix_lib_get());
    e_path_default_path_append(path_modules, buf);
    /* FIXME: eventually this has to go - moduels should have installers that
@@ -1505,7 +1510,8 @@ _e_main_path_init(void)
 	e_error_message_show("Cannot allocate path for path_backgrounds\n");
 	return 0;
      }
-   e_path_default_path_append(path_backgrounds, "~/.e/e/backgrounds");
+   e_user_dir_snprintf(buf, sizeof(buf), "/backgrounds");
+   e_path_default_path_append(path_backgrounds, buf);
    e_prefix_data_concat_static(buf, "data/backgrounds");
    e_path_default_path_append(path_backgrounds, buf);
    e_path_user_path_set(path_backgrounds, &(e_config->path_append_backgrounds));
@@ -1516,7 +1522,8 @@ _e_main_path_init(void)
 	e_error_message_show("Cannot allocate path for path_messages\n");
 	return 0;
      }
-   e_path_default_path_append(path_messages, "~/.e/e/locale");   
+   e_user_dir_snprintf(buf, sizeof(buf), "/locale");
+   e_path_default_path_append(path_messages, buf);   
    e_path_default_path_append(path_messages, e_prefix_locale_get());
    e_path_user_path_set(path_messages, &(e_config->path_append_messages));
 
