@@ -1439,7 +1439,7 @@ _e_main_path_init(void)
 	e_error_message_show("Cannot allocate path for path_images\n");
 	return 0;
      }
-   e_user_dir_snprintf(buf, sizeof(buf), "/images");
+   e_user_dir_concat_static(buf, "/images");
    e_path_default_path_append(path_images, buf);
    e_prefix_data_concat_static(buf, "data/images");
    e_path_default_path_append(path_images, buf);
@@ -1452,7 +1452,7 @@ _e_main_path_init(void)
 	e_error_message_show("Cannot allocate path for path_fonts\n");
 	return 0;
      }
-   e_user_dir_snprintf(buf, sizeof(buf), "/fonts");
+   e_user_dir_concat_static(buf, "/fonts");
    e_path_default_path_append(path_fonts, buf);
    e_prefix_data_concat_static(buf, "data/fonts");
    e_path_default_path_append(path_fonts, buf);
@@ -1465,7 +1465,7 @@ _e_main_path_init(void)
 	e_error_message_show("Cannot allocate path for path_themes\n");
 	return 0;
      }
-   e_user_dir_snprintf(buf, sizeof(buf), "/themes");
+   e_user_dir_concat_static(buf, "/themes");
    e_path_default_path_append(path_themes, buf);
    e_prefix_data_concat_static(buf, "data/themes");
    e_path_default_path_append(path_themes, buf);
@@ -1478,7 +1478,7 @@ _e_main_path_init(void)
 	e_error_message_show("Cannot allocate path for path_icons\n");
 	return 0;
      }
-   e_user_dir_snprintf(buf, sizeof(buf), "/icons");
+   e_user_dir_concat_static(buf, "/icons");
    e_path_default_path_append(path_icons, buf);
    e_prefix_data_concat_static(buf, "data/icons");
    e_path_default_path_append(path_icons, buf);
@@ -1491,7 +1491,7 @@ _e_main_path_init(void)
 	e_error_message_show("Cannot allocate path for path_modules\n");
 	return 0;
      }
-   e_user_dir_snprintf(buf, sizeof(buf), "/modules");
+   e_user_dir_concat_static(buf, "/modules");
    e_path_default_path_append(path_modules, buf);
    snprintf(buf, sizeof(buf), "%s/enlightenment/modules", e_prefix_lib_get());
    e_path_default_path_append(path_modules, buf);
@@ -1510,7 +1510,7 @@ _e_main_path_init(void)
 	e_error_message_show("Cannot allocate path for path_backgrounds\n");
 	return 0;
      }
-   e_user_dir_snprintf(buf, sizeof(buf), "/backgrounds");
+   e_user_dir_concat_static(buf, "/backgrounds");
    e_path_default_path_append(path_backgrounds, buf);
    e_prefix_data_concat_static(buf, "data/backgrounds");
    e_path_default_path_append(path_backgrounds, buf);
@@ -1522,7 +1522,7 @@ _e_main_path_init(void)
 	e_error_message_show("Cannot allocate path for path_messages\n");
 	return 0;
      }
-   e_user_dir_snprintf(buf, sizeof(buf), "/locale");
+   e_user_dir_concat_static(buf, "/locale");
    e_path_default_path_append(path_messages, buf);   
    e_path_default_path_append(path_messages, e_prefix_locale_get());
    e_path_user_path_set(path_messages, &(e_config->path_append_messages));
