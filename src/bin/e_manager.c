@@ -969,14 +969,11 @@ _e_manager_cb_client_message(void *data __UNUSED__, int ev_type __UNUSED__, void
 		  if (!bd->lock_user_stacking) e_border_raise(bd);
 		  if (!bd->lock_focus_out)
 		    {
-		       int requestor_id = e->data.l[2];
-		       /* FIXME for now only set pointer when not
-		       requested by a client. ooffice does send this
-		       request for dialogs which should be modal when
-		       the main window gets focus. causing the pointer
-		       to jump back and forth. are there any other
-		       apps that use _net_active_window ? */
-		       if ((requestor_id == 2) && (e_config->focus_policy != E_FOCUS_CLICK))
+		       /* XXX ooffice does send this request for
+		       config dialogs when the main window gets focus.
+		       causing the pointer to jump back and forth.  */
+		       if ((e_config->focus_policy != E_FOCUS_CLICK) &&
+			   !(bd->client.icccm.name && !strcmp(bd->client.icccm.name, "VCLSalFrame")))
 		       	 ecore_x_pointer_warp(bd->zone->container->win,
 					      bd->x + (bd->w / 2), bd->y + (bd->h / 2));
 		       e_border_focus_set(bd, 1, 1);
