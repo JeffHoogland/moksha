@@ -369,14 +369,14 @@ e_desk_last_focused_focus(E_Desk *desk)
    
    EINA_LIST_FOREACH(e_border_focus_stack_get(), l, bd)
      {
-	if ((!bd->iconic) && (bd->visible) && (bd->desk == desk) &&
+	if ((!bd->iconic) && (bd->visible) &&
+	    ((bd->desk == desk) || ((bd->zone == desk->zone) && bd->sticky)) &&
 	    (bd->client.icccm.accepts_focus || bd->client.icccm.take_focus) &&
 	    (bd->client.netwm.type != ECORE_X_WINDOW_TYPE_DOCK) &&
 	    (bd->client.netwm.type != ECORE_X_WINDOW_TYPE_TOOLBAR) &&
 	    (bd->client.netwm.type != ECORE_X_WINDOW_TYPE_MENU) &&
 	    (bd->client.netwm.type != ECORE_X_WINDOW_TYPE_SPLASH) &&
-	    (bd->client.netwm.type != ECORE_X_WINDOW_TYPE_DESKTOP)
-	    )
+	    (bd->client.netwm.type != ECORE_X_WINDOW_TYPE_DESKTOP))
 	  {
 	     /* this was the window last focused in this desktop */
              if (!bd->lock_focus_out)
