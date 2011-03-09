@@ -5956,6 +5956,12 @@ _e_border_eval0(E_Border *bd)
    bd->changes.border = 0;
 
    /* fetch any info queued to be fetched */
+   if (bd->client.netwm.fetch.state)
+     {
+        e_hints_window_state_get(bd);
+        bd->client.netwm.fetch.state = 0;
+        rem_change = 1;
+     }
    if (bd->client.icccm.fetch.client_leader)
      {
         /* TODO: What do to if the client leader isn't mapped yet? */
@@ -5980,7 +5986,7 @@ _e_border_eval0(E_Border *bd)
            {
               bd_leader->group = eina_list_append(bd_leader->group, bd);
               bd->leader = bd_leader;
-     /* Only set the window modal to the leader it there is no parent */
+	      /* Only set the window modal to the leader it there is no parent */
               if ((e_config->modal_windows) && (bd->client.netwm.state.modal) &&
                   ((!bd->parent) || (bd->parent->modal != bd)))
                 {
@@ -6057,12 +6063,6 @@ _e_border_eval0(E_Border *bd)
      {
         bd->client.icccm.state = ecore_x_icccm_state_get(bd->client.win);
         bd->client.icccm.fetch.state = 0;
-        rem_change = 1;
-     }
-   if (bd->client.netwm.fetch.state)
-     {
-        e_hints_window_state_get(bd);
-        bd->client.netwm.fetch.state = 0;
         rem_change = 1;
      }
    if (bd->client.e.fetch.state)
