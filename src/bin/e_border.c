@@ -1936,7 +1936,6 @@ e_border_focus_set(E_Border *bd,
 	e_border_focus_latest_set(bd);
 	e_hints_active_window_set(bd->zone->container->manager, bd);
 
-	e_hints_active_window_set(bd->zone->container->manager, bd);
 	edje_object_signal_emit(bd->bg_object, "e,state,focused", "e");
 	if (bd->icon_object)
 	  edje_object_signal_emit(bd->icon_object, "e,state,focused", "e");
