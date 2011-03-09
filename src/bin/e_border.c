@@ -1868,8 +1868,8 @@ e_border_focus_set(E_Border *bd,
                    int       focus,
                    int       set)
 {
-   int focus_changed = 0;
-
+   E_Border *unfocus = NULL;
+   
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    /* note: this is here as it seems there are enough apps that do not even
@@ -1883,221 +1883,115 @@ e_border_focus_set(E_Border *bd,
    /* dont focus an iconified window. that's silly! */
    if ((focus) && (bd->iconic))
      return;
+
+   if ((focus) && (!bd->visible))
+     return;
+
    if ((bd->modal) && (bd->modal != bd) && (bd->modal->visible))
      {
-        e_border_focus_set(bd->modal, focus, set);
-        return;
+	e_border_focus_set(bd->modal, focus, set);
+	return;
      }
    else if ((bd->leader) && (bd->leader->modal) && (bd->leader->modal != bd))
      {
-        e_border_focus_set(bd->leader->modal, focus, set);
-        return;
+	e_border_focus_set(bd->leader->modal, focus, set);
+	return;
      }
 
-   if ((focus) && (set) && (!bd->focused))
-     {
-        if ((bd->client.icccm.accepts_focus) &&
-            (bd->client.icccm.take_focus))
-          {
-             if ((bd->visible) && (bd->changes.visible))
-               {
-////		  e_border_focus_latest_set(bd);
-                    bd->want_focus = 1;
-                    bd->changed = 1;
-                    return;
-               }
-             e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_LOCALLY_ACTIVE);
-             return;
-          }
-        else if ((!bd->client.icccm.accepts_focus) &&
-                 (bd->client.icccm.take_focus))
-          {
-             if ((bd->visible) && (bd->changes.visible))
-               {
-////		  e_border_focus_latest_set(bd);
-                    bd->want_focus = 1;
-                    bd->changed = 1;
-                    return;
-               }
-             e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_GLOBALLY_ACTIVE);
-             return;
-          }
-     }
-
-   if ((bd->visible) && (bd->changes.visible))
-     {
-        if ((bd->want_focus) && (set) && (!focus))
-          bd->want_focus = 0;
-     }
-   if ((!bd->visible) && (focus))
-     {
-////	e_border_focus_latest_set(bd);
-//	bd->want_focus = 1;
-//	bd->changed = 1;
-              return;
-     }
    if ((focus) && (!bd->focused))
+     {	
+	E_Event_Border_Focus_In *ev;
+	
+	if ((bd->visible) && (bd->changes.visible))
+	  {
+	     bd->want_focus = 1;
+	     bd->changed = 1;
+	     return;
+	  }
+	if (set)
+	  {
+	     if ((bd->client.icccm.take_focus) &&
+		 (bd->client.icccm.accepts_focus))
+	       {
+		  e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_LOCALLY_ACTIVE);
+		  return;
+	       }
+	     else if (!bd->client.icccm.accepts_focus)
+	       {
+		  e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_GLOBALLY_ACTIVE);
+		  return;
+	       }
+	     else if (!bd->client.icccm.take_focus)
+	       {
+		  e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_PASSIVE);
+	       }
+	  }
+
+	if (focused)
+	  unfocus = focused;
+
+	bd->focused = 1;
+	focused = bd;
+	e_focus_event_focus_in(bd);
+	e_border_focus_latest_set(bd);
+	e_hints_active_window_set(bd->zone->container->manager, bd);
+
+	e_hints_active_window_set(bd->zone->container->manager, bd);
+	edje_object_signal_emit(bd->bg_object, "e,state,focused", "e");
+	if (bd->icon_object)
+	  edje_object_signal_emit(bd->icon_object, "e,state,focused", "e");
+
+	ev = E_NEW(E_Event_Border_Focus_In, 1);
+	ev->border = bd;
+	e_object_ref(E_OBJECT(bd));
+
+	ecore_event_add(E_EVENT_BORDER_FOCUS_IN, ev,
+			_e_border_event_border_focus_in_free, NULL);
+     }
+   else if ((!focus) && (bd->want_focus))
      {
-        if ((bd->visible) && (bd->changes.visible))
-          {
-////	     e_border_focus_latest_set(bd);
-               bd->want_focus = 1;
-               bd->changed = 1;
-               return;
-          }
-//	if (bd->visible)
-//	  {
-//	     if (focus_track_frozen == 0)
-//	       {
-////		  e_border_focus_latest_set(bd);
-//	       }
-//	  }
-        e_border_focus_latest_set(bd);
-        edje_object_signal_emit(bd->bg_object, "e,state,focused", "e");
-        if (bd->icon_object)
-          edje_object_signal_emit(bd->icon_object, "e,state,focused", "e");
-        e_focus_event_focus_in(bd);
+	if ((bd->visible) && (bd->changes.visible))
+	  {
+	     bd->want_focus = 0;
+	     return;
+	  }
      }
    else if ((!focus) && (bd->focused))
      {
-        edje_object_signal_emit(bd->bg_object, "e,state,unfocused", "e");
-        if (bd->icon_object)
-          edje_object_signal_emit(bd->icon_object, "e,state,unfocused", "e");
-        e_focus_event_focus_out(bd);
-        /* FIXME: Sometimes we should leave the window fullscreen! */
-//	if (bd->fullscreen)
-//	  e_border_unfullscreen(bd);
-        if (bd->raise_timer)
-          {
-             ecore_timer_del(bd->raise_timer);
-             bd->raise_timer = NULL;
-          }
-     }
-   if (((bd->focused) && (!focus)) || ((!bd->focused) && (focus)))
-     focus_changed = 1;
-   bd->focused = focus;
-   if (set)
-     {
-        if (bd->focused)
-          {
-             if (bd->internal)
-               e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_PASSIVE);
-             else
-               {
-                  if ((!bd->client.icccm.accepts_focus) &&
-                      (!bd->client.icccm.take_focus))
-                    e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_NO_INPUT);
-                  else if ((bd->client.icccm.accepts_focus) &&
-                           (bd->client.icccm.take_focus))
-                    e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_LOCALLY_ACTIVE);
-                  else if ((!bd->client.icccm.accepts_focus) &&
-                           (bd->client.icccm.take_focus))
-                    e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_GLOBALLY_ACTIVE);
-                  else if ((bd->client.icccm.accepts_focus) &&
-                           (!bd->client.icccm.take_focus))
-                    e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_PASSIVE);
-               }
-          }
-        else
-          {
-//	     ecore_x_window_focus(bd->zone->container->manager->root);
-//	     ecore_x_window_focus(bd->zone->container->bg_win);
-                 e_grabinput_focus(bd->zone->container->bg_win, E_FOCUS_METHOD_PASSIVE);
-          }
-     }
-   if ((bd->focused) && (focused != bd))
-     {
-        if (focused)
-          {
-             if ((!e_object_is_del(E_OBJECT(focused))) &&
-                 (e_object_ref_get(E_OBJECT(focused)) > 0))
-               {
-                  E_Event_Border_Focus_Out *ev;
+	unfocus = bd;
+	
+	/* should always be the case. anyway */
+	if (bd == focused)
+	  focused = NULL;
 
-                  edje_object_signal_emit(focused->bg_object, "e,state,unfocused", "e");
-                  if (focused->icon_object)
-                    edje_object_signal_emit(focused->icon_object, "e,state,unfocused", "e");
-                  e_focus_event_focus_out(focused);
-
-                  ev = E_NEW(E_Event_Border_Focus_Out, 1);
-                  ev->border = focused;
-                  e_object_ref(E_OBJECT(focused));
-
-                  ecore_event_add(E_EVENT_BORDER_FOCUS_OUT, ev,
-                                  _e_border_event_border_focus_out_free, NULL);
-
-     /* FIXME: Sometimes we should leave the window fullscreen! */
-//		  if (focused->fullscreen) e_border_unfullscreen(focused);
-                  focused->focused = 0;
-//		  e_border_focus_set(focused, 0, 0);
-                  if (focused->raise_timer)
-                    {
-                       ecore_timer_del(focused->raise_timer);
-                       focused->raise_timer = NULL;
-                    }
-                  focused = NULL;
-               }
-          }
-        e_hints_active_window_set(bd->zone->container->manager, bd);
+	if (set)
+	  e_grabinput_focus(bd->zone->container->bg_win, E_FOCUS_METHOD_PASSIVE);
      }
 
-#if 0
-   /* i'm pretty sure this case is handled above -- this was resulting in the "passive"
-    * event getting sent twice when going from a window to the desktop. --rephorm */
-/*
-   else if ((!bd->focused) && (focused == bd))
-     {
-        if (focused)
-          {
-   //	     printf("unfocus previous 2\n");
-             edje_object_signal_emit(focused->bg_object, "e,state,unfocused", "e");
-             if (focused->icon_object)
-               edje_object_signal_emit(focused->icon_object, "e,state,unfocused", "e");
-             e_focus_event_focus_out(focused);
-             // FIXME: Sometimes we should leave the window fullscreen!
-             if (focused->fullscreen) e_border_unfullscreen(focused);
-             focused->focused = 0;
-   //		  e_border_focus_set(focused, 0, 0);
-             if (focused->raise_timer)
-               {
-                  ecore_timer_del(focused->raise_timer);
-                  focused->raise_timer = NULL;
-               }
-          }
-        e_hints_active_window_set(bd->zone->container->manager, NULL);
-     }
- */
-#endif
-   if (focus_changed)
-     {
-        if (bd->focused)
-          {
-             E_Event_Border_Focus_In *ev;
+   if ((unfocus) &&
+       (!e_object_is_del(E_OBJECT(unfocus)) &&
+	(e_object_ref_get(E_OBJECT(unfocus)) > 0)))
+     {   
+	E_Event_Border_Focus_Out *ev;
 
-             focused = bd;
-             // Let send the focus event iff the focus is set explicitly,
-             // not via callback
-             ev = E_NEW(E_Event_Border_Focus_In, 1);
-             ev->border = bd;
-             e_object_ref(E_OBJECT(bd));
+	bd = unfocus;
+	bd->focused = 0;
+	e_focus_event_focus_out(bd);
 
-             ecore_event_add(E_EVENT_BORDER_FOCUS_IN, ev,
-                             _e_border_event_border_focus_in_free, NULL);
-          }
-        else
-          {
-             E_Event_Border_Focus_Out *ev;
+	if (bd->raise_timer)
+	  ecore_timer_del(bd->raise_timer);
+	bd->raise_timer = NULL;
 
-             focused = NULL;
-             // Let send the focus event iff the focus is set explicitly,
-             // not via callback
-             ev = E_NEW(E_Event_Border_Focus_Out, 1);
-             ev->border = bd;
-             e_object_ref(E_OBJECT(bd));
+	edje_object_signal_emit(bd->bg_object, "e,state,unfocused", "e");
+	if (bd->icon_object)
+	  edje_object_signal_emit(bd->icon_object, "e,state,unfocused", "e");
 
-             ecore_event_add(E_EVENT_BORDER_FOCUS_OUT, ev,
-                             _e_border_event_border_focus_out_free, NULL);
-          }
+	ev = E_NEW(E_Event_Border_Focus_Out, 1);
+	ev->border = bd;
+	e_object_ref(E_OBJECT(bd));
+
+	ecore_event_add(E_EVENT_BORDER_FOCUS_OUT, ev,
+			_e_border_event_border_focus_out_free, NULL);
      }
 }
 
@@ -8594,7 +8488,8 @@ e_border_pointer_warp_to_center(E_Border *bd)
    warp_to = 1;
    warp_to_win = bd->zone->container->win;
    ecore_x_pointer_xy_get(bd->zone->container->win, &warp_x, &warp_y);
-   warp_timer = ecore_timer_add(0.01, _e_border_pointer_warp_to_center_timer, (const void *)bd);
+   if (!warp_timer)
+     warp_timer = ecore_timer_add(0.01, _e_border_pointer_warp_to_center_timer, (const void *)bd);
    return 1;
 }
 
