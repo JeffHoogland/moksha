@@ -106,8 +106,7 @@ ACT_FN_GO_MOUSE(window_move, __UNUSED__)
    if (!obj) obj = E_OBJECT(e_border_focused_get());
    if (!obj) return;
    if (obj->type != E_BORDER_TYPE) return;
-   if (!((E_Border *)obj)->lock_user_location)
-     e_border_act_move_begin((E_Border *)obj, ev);
+   e_border_act_move_begin((E_Border *)obj, ev);
 }
 
 ACT_FN_GO_SIGNAL(window_move, )

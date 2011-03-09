@@ -3418,7 +3418,6 @@ e_border_act_move_begin(E_Border                 *bd,
 {
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
-   if (bd->lock_user_location) return;
    if ((bd->resize_mode != RESIZE_NONE) || (bd->moving)) return;
    if (!_e_border_move_begin(bd))
      return;
