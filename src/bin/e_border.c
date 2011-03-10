@@ -7487,10 +7487,7 @@ _e_border_eval(E_Border *bd)
             (bd->want_focus))
           {
              bd->want_focus = 0;
-             if (!bd->lock_focus_out)
-               {
-                  e_border_focus_set_with_pointer(bd);
-               }
+	     e_border_focus_set_with_pointer(bd);
           }
         else if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DIALOG)
           {
@@ -7499,8 +7496,7 @@ _e_border_eval(E_Border *bd)
                   (e_border_find_by_client_window(bd->client.icccm.transient_for) ==
                    e_border_focused_get())))
                {
-                  if (!bd->lock_focus_out)
-                    e_border_focus_set_with_pointer(bd);
+		  e_border_focus_set_with_pointer(bd);
                }
           }
         else

@@ -30,11 +30,7 @@ e_focus_event_mouse_in(E_Border* bd)
    if ((e_config->focus_policy == E_FOCUS_MOUSE) ||
        (e_config->focus_policy == E_FOCUS_SLOPPY))
      {
-	if (!bd->lock_focus_out)
-          {
-             //if (!bd->focused)
-               e_border_focus_set(bd, 1, 1);
-          }
+	e_border_focus_set(bd, 1, 1);
      }
    if (bd->raise_timer) ecore_timer_del(bd->raise_timer);
    bd->raise_timer = NULL;
@@ -85,11 +81,8 @@ e_focus_event_mouse_down(E_Border* bd)
 {
    if (e_config->focus_policy == E_FOCUS_CLICK)
      {
-	if (!bd->lock_focus_out)
-          {
-             if (!bd->focused)
-               e_border_focus_set(bd, 1, 1);
-          }
+	e_border_focus_set(bd, 1, 1);
+
 	if (!bd->lock_user_stacking)
 	  {
 	     if (e_config->border_raise_on_focus)
@@ -106,11 +99,7 @@ e_focus_event_mouse_down(E_Border* bd)
      }
    else if (e_config->always_click_to_focus)
      {
-	if (!bd->lock_focus_out)
-	  {
-	     if (!bd->focused)
-	       e_border_focus_set(bd, 1, 1);
-	  }
+	e_border_focus_set(bd, 1, 1);
      }
 }
 
