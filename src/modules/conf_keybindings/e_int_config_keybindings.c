@@ -1001,12 +1001,12 @@ _grab_wnd_hide(E_Config_Dialog_Data *cfdata)
    EINA_LIST_FREE(cfdata->locals.handlers, eh)
      ecore_event_handler_del(eh);
 
+   e_object_del(E_OBJECT(cfdata->locals.dia));
+   cfdata->locals.dia = NULL;
+
    e_grabinput_release(cfdata->locals.bind_win, cfdata->locals.bind_win);
    ecore_x_window_free(cfdata->locals.bind_win);
    cfdata->locals.bind_win = 0;
-
-   e_object_del(E_OBJECT(cfdata->locals.dia));
-   cfdata->locals.dia = NULL;
 }
 
 static Eina_Bool
