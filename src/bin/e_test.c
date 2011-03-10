@@ -962,7 +962,7 @@ handler(void *data, const char *name, const char *info, int val,
      {
         printf("%s: %p | %p\n", info, man, src);
      }
-   else if (!strcmp(info, "visible.src"))
+   else if (!strcmp(info, "visibility.src"))
      {
         printf("%s: %p | %p\n", info, man, src);
      }
