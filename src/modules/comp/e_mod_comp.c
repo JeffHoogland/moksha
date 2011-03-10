@@ -674,10 +674,14 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
    if (/*(!cw->update) &&*/(cw->visible) && (cw->dmg_updates >= 1) &&
        (cw->show_ready))
      {
-        if (!evas_object_visible_get(cw->shobj))
+	if (cw->hidden_override)
+	  {
+	     edje_object_signal_emit(cw->shobj, "e,state,visible,on", "e");
+	  }
+        else if (!evas_object_visible_get(cw->shobj))
           {
 //             printf("  real show %x\n", cw->win);
-             if (!cw->hidden_override) evas_object_show(cw->shobj);
+             evas_object_show(cw->shobj);
              edje_object_signal_emit(cw->shobj, "e,state,visible,on", "e");
              if (!cw->animating) cw->c->animating++;
              _e_mod_comp_win_render_queue(cw);
