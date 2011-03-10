@@ -2280,9 +2280,7 @@ ACT_FN_GO(pointer_resize_push, )
 
 	bd = (E_Border *)obj;
 	if ((bd->lock_user_size) || (bd->shaded) || (bd->shading) ||
-	    (bd->fullscreen) ||
-	    ((bd->maximized == E_MAXIMIZE_FULLSCREEN) &&
-	     (!e_config->allow_manip)))
+	    (bd->fullscreen) || ((bd->maximized) && (!e_config->allow_manip)))
 	  return;
 	e_pointer_type_push(bd->pointer, bd, params);
      }
@@ -2298,8 +2296,7 @@ ACT_FN_GO(pointer_resize_pop, )
 
 	bd = (E_Border *)obj;
 	if ((bd->lock_user_size) || (bd->shaded) || (bd->shading) ||
-	    (bd->fullscreen) ||
-		((bd->maximized == E_MAXIMIZE_FULLSCREEN) && (!e_config->allow_manip)))
+	    (bd->fullscreen) || ((bd->maximized) && (!e_config->allow_manip)))
 	  return;
 	e_pointer_type_pop(bd->pointer, bd, params);
      }
