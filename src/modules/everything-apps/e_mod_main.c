@@ -420,11 +420,13 @@ _desktop_list_add(Plugin *p, Eina_List *apps, const char *input)
 
 	if (input)
 	  {
+	     /* strip path and parameter */
 	     exec = ecore_file_file_get(desktop->exec);
-	     if (exec && (end = strchr(exec, '%')))
+	     if ((exec) && (end = strchr(exec, '%')) &&
+		 ((end - exec) - 1 > 0))
 	       {
 		  strncpy(buf, exec, (end - exec) - 1);
-		  buf[(end - exec)-1] = '\0';
+		  buf[(end - exec) - 1] = '\0';
 		  m1 = evry->fuzzy_match(buf, input);
 	       }
 	     else
