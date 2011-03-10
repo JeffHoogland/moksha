@@ -965,7 +965,8 @@ _e_manager_cb_client_message(void *data __UNUSED__, int ev_type __UNUSED__, void
 		       if (!bd->lock_user_iconify)
 			 e_border_uniconify(bd);
 		    }
-		  if (!bd->iconic) e_desk_show(bd->desk);
+		  if ((!bd->iconic) && (!bd->sticky))
+		    e_desk_show(bd->desk);
 		  if (!bd->lock_user_stacking) e_border_raise(bd);
 		  if (!bd->lock_focus_out)
 		    {
