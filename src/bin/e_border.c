@@ -206,6 +206,8 @@ static Eina_List *handlers = NULL;
 static Eina_List *borders = NULL;
 static Eina_Hash *borders_hash = NULL;
 static E_Border *focused = NULL;
+static Eina_List *focus_next = NULL;
+static Ecore_X_Time focus_time = 0;
 
 static E_Border *resize = NULL;
 static E_Border *move = NULL;
@@ -1902,29 +1904,10 @@ e_border_focus_set(E_Border *bd,
      {	
 	E_Event_Border_Focus_In *ev;
 	
-	if ((bd->visible) && (bd->changes.visible))
-	  {
-	     bd->want_focus = 1;
-	     bd->changed = 1;
-	     return;
-	  }
 	if (set)
-	  {
-	     if ((bd->client.icccm.take_focus) &&
-		 (bd->client.icccm.accepts_focus))
-	       {
-		  e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_LOCALLY_ACTIVE);
-		  return;
-	       }
-	     else if (!bd->client.icccm.accepts_focus)
-	       {
-		  e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_GLOBALLY_ACTIVE);
-		  return;
-	       }
-	     else if (!bd->client.icccm.take_focus)
-	       {
-		  e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_PASSIVE);
-	       }
+	  {	     
+	     focus_next = eina_list_prepend(focus_next, bd);
+	     return;
 	  }
 
 	if (focused)
@@ -1932,6 +1915,7 @@ e_border_focus_set(E_Border *bd,
 
 	bd->focused = 1;
 	focused = bd;
+
 	e_focus_event_focus_in(bd);
 	e_border_focus_latest_set(bd);
 	e_hints_active_window_set(bd->zone->container->manager, bd);
@@ -2956,6 +2940,36 @@ e_border_idler_before(void)
                }
              e_container_border_list_free(bl);
           }
+     }
+
+   if (focus_next)
+     {
+	E_Border *bd = NULL, *bd2;
+	
+	EINA_LIST_FREE(focus_next, bd2)
+	  if ((!bd) && (bd2->visible)) bd = bd2;
+
+	if (!bd)
+	  {
+	     /* TODO revert focus when lost here ? */
+	     return;
+	  }
+	
+	focus_time = ecore_x_current_time_get();
+	
+	if ((bd->client.icccm.take_focus) &&
+	    (bd->client.icccm.accepts_focus))
+	  {
+	     e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_LOCALLY_ACTIVE);
+	  }
+	else if (!bd->client.icccm.accepts_focus)
+	  {
+	     e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_GLOBALLY_ACTIVE);
+	  }
+	else if (!bd->client.icccm.take_focus)
+	  {
+	     e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_PASSIVE);
+	  }
      }
 }
 
@@ -4163,6 +4177,11 @@ _e_border_del(E_Border *bd)
    E_Event_Border_Remove *ev;
    E_Border *child;
 
+   if (bd == focused)
+     focused = NULL;
+
+   focus_next = eina_list_remove(focus_next, bd);
+   
    if (bd->fullscreen) bd->desk->fullscreen_borders--;
 
    if ((drag_border) && (drag_border->data == bd))
@@ -5001,7 +5020,8 @@ _e_border_cb_window_focus_in(void *data  __UNUSED__,
      {
         if (e->detail == ECORE_X_EVENT_DETAIL_POINTER) return ECORE_CALLBACK_PASS_ON;
      }
-   e_border_focus_set(bd, 1, 0);
+   if (e->time >= focus_time)
+     e_border_focus_set(bd, 1, 0);
    return ECORE_CALLBACK_PASS_ON;
 }
 
