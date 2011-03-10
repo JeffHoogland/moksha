@@ -1899,16 +1899,26 @@ e_border_focus_set(E_Border *bd,
 	e_border_focus_set(bd->leader->modal, focus, set);
 	return;
      }
+#ifdef INOUTDEBUG_FOCUS
+   printf("%s focus set %d %d\n", e_border_name_get(bd), focus, set);
+#endif
 
-   if ((focus) && (!bd->focused))
-     {	
-	E_Event_Border_Focus_In *ev;
-	
-	if (set)
-	  {	     
-	     focus_next = eina_list_prepend(focus_next, bd);
+   if ((set) && (focus))
+     {
+	if ((!bd->focused) || (focus_next && (bd != eina_list_data_get(focus_next))))
+	  {
+	     Eina_List *l;
+	     
+	     if ((l = eina_list_data_find_list(focus_next, bd)))
+	       focus_next = eina_list_promote_list(focus_next, l); 
+	     else
+	       focus_next = eina_list_prepend(focus_next, bd);
 	     return;
 	  }
+     }
+   else if ((focus) && (!bd->focused))
+     {		
+	E_Event_Border_Focus_In *ev;  
 
 	if (focused)
 	  unfocus = focused;
@@ -2954,6 +2964,11 @@ e_border_idler_before(void)
 	     /* TODO revert focus when lost here ? */
 	     return;
 	  }
+#ifdef INOUTDEBUG_FOCUS
+	printf("%s idler focus\n", e_border_name_get(bd));
+#endif
+	if (bd == focused)
+	  return;
 	
 	focus_time = ecore_x_current_time_get();
 	
@@ -2961,6 +2976,7 @@ e_border_idler_before(void)
 	    (bd->client.icccm.accepts_focus))
 	  {
 	     e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_LOCALLY_ACTIVE);
+	     /* TODO what if the client doesnt took focus ? */
 	  }
 	else if (!bd->client.icccm.accepts_focus)
 	  {
@@ -2969,6 +2985,7 @@ e_border_idler_before(void)
 	else if (!bd->client.icccm.take_focus)
 	  {
 	     e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_PASSIVE);
+	     e_border_focus_set(bd, 1, 0);
 	  }
      }
 }
@@ -5010,6 +5027,11 @@ _e_border_cb_window_focus_in(void *data  __UNUSED__,
              ct,
              modes[e->mode],
              details[e->detail]);
+
+      printf("%s cb focus in %d %d\n",
+	     e_border_name_get(bd),
+	     bd->client.icccm.accepts_focus,
+	     bd->client.icccm.take_focus);
    }
 #endif
    if (e->mode == ECORE_X_EVENT_MODE_GRAB)
@@ -5020,6 +5042,12 @@ _e_border_cb_window_focus_in(void *data  __UNUSED__,
      {
         if (e->detail == ECORE_X_EVENT_DETAIL_POINTER) return ECORE_CALLBACK_PASS_ON;
      }
+
+   /* ignore focus in from !take_focus windows, we just gave it em */
+   if (!bd->client.icccm.take_focus)
+     return ECORE_CALLBACK_PASS_ON;
+
+   /* should be equal, maybe some clients dont reply with the proper timestamp ? */
    if (e->time >= focus_time)
      e_border_focus_set(bd, 1, 0);
    return ECORE_CALLBACK_PASS_ON;
@@ -5066,6 +5094,11 @@ _e_border_cb_window_focus_out(void *data  __UNUSED__,
              ct,
              modes[e->mode],
              details[e->detail]);
+
+      printf("%s cb focus out %d %d\n",
+	     e_border_name_get(bd),
+	     bd->client.icccm.accepts_focus,
+	     bd->client.icccm.take_focus);
    }
 #endif
    if (e->mode == ECORE_X_EVENT_MODE_NORMAL)
