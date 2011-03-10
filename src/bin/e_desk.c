@@ -380,8 +380,10 @@ e_desk_last_focused_focus(E_Desk *desk)
 	  {
 	     /* this was the window last focused in this desktop */
              if (!bd->lock_focus_out)
-	       e_border_focus_set(bd, 1, 1);
-	     break;
+	       {
+		  e_border_focus_set(bd, 1, 1);
+		  break;
+	       }
 	  }
      }
 }
