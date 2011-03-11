@@ -134,7 +134,8 @@ _thumb_idler(void *data)
    Item *it;
    char *suffix;
    int w, h;
-
+   int cnt = 0;
+   
    sd->queue = eina_list_sort(sd->queue, -1, _sort_pos_cb);
 
    EINA_LIST_FOREACH_SAFE(sd->queue, l, ll, it)
@@ -192,9 +193,14 @@ _thumb_idler(void *data)
 	  }
 
 
-	e_util_wakeup();
+
 	sd->queue = eina_list_remove_list(sd->queue, l);
-	return ECORE_CALLBACK_RENEW;
+
+	if (cnt++ > 10)
+	  {
+	     e_util_wakeup();
+	     return ECORE_CALLBACK_RENEW;
+	  }
      }
 
    sd->thumb_idler = NULL;
