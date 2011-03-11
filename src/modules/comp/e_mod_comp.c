@@ -672,13 +672,9 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
 //   printf("==== up %x | %i %i %i %i\n", cw->win, cw->update, cw->visible, cw->dmg_updates, cw->show_ready);
    // FIXME: below cw update check screws with show
    if (/*(!cw->update) &&*/(cw->visible) && (cw->dmg_updates >= 1) &&
-       (cw->show_ready))
+       (cw->show_ready) && (!cw->hidden_override))
      {
-	if (cw->hidden_override)
-	  {
-	     edje_object_signal_emit(cw->shobj, "e,state,visible,on", "e");
-	  }
-        else if (!evas_object_visible_get(cw->shobj))
+	if (!evas_object_visible_get(cw->shobj))
           {
 //             printf("  real show %x\n", cw->win);
              evas_object_show(cw->shobj);
