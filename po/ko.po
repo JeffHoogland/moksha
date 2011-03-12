@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-10-03 18:09+0900\n"
-"PO-Revision-Date: 2009-08-25 14:48+0000\n"
-"Last-Translator: Michael Kim <Unknown>\n"
+"POT-Creation-Date: 2011-03-12 13:37-0800\n"
+"PO-Revision-Date: 2011-03-12 13:51-0800\n"
+"Last-Translator: Daniel Juyung Seo <seojuyung2@gmail.com>\n"
 "Language-Team: Korean <KO@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,23 +20,23 @@ msgstr ""
 
 #: src/bin/e_about.c:14
 msgid "About Enlightenment"
-msgstr "Enlightenment에 대하여"
+msgstr "Enlightenment 정보"
 
-#: src/bin/e_about.c:17 src/bin/e_actions.c:2618 src/bin/e_config_dialog.c:269
-#: src/bin/e_fm.c:945 src/bin/e_int_border_menu.c:242
+#: src/bin/e_about.c:17 src/bin/e_actions.c:2695 src/bin/e_config_dialog.c:272
+#: src/bin/e_fm.c:967 src/bin/e_int_border_menu.c:243
 #: src/bin/e_int_border_prop.c:81 src/bin/e_theme_about.c:17
-#: src/modules/conf/e_conf.c:180
+#: src/modules/conf/e_conf.c:183
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:845
 #: src/modules/conf_theme/e_int_config_theme_web.c:129
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:237
-#: src/modules/everything-windows/e_mod_main.c:450
-#: src/modules/fileman/e_fwin.c:1825 src/modules/illume/e_mod_win.c:173
+#: src/modules/everything-windows/e_mod_main.c:447
+#: src/modules/fileman/e_fwin.c:2011 src/modules/illume/e_mod_win.c:173
 #: src/modules/mixer/app_mixer.c:514
 msgid "Close"
 msgstr "닫기"
 
-#: src/bin/e_about.c:18 src/bin/e_actions.c:2915 src/bin/e_actions.c:2919
-#: src/bin/e_actions.c:2923 src/bin/e_int_menus.c:178 src/bin/e_main.c:672
+#: src/bin/e_about.c:18 src/bin/e_actions.c:3004 src/bin/e_actions.c:3008
+#: src/bin/e_actions.c:3012 src/bin/e_int_menus.c:178 src/bin/e_main.c:669
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:155
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:219
 #: src/modules/wizard/page_000.c:29
@@ -59,7 +59,7 @@ msgstr ""
 msgid "<title>The Team</title>"
 msgstr "<title>Enlightenment 팀</title>"
 
-#: src/bin/e_actions.c:366
+#: src/bin/e_actions.c:365
 #, c-format
 msgid ""
 "You are about to kill %s.<br><br>Please keep in mind that all data from this "
@@ -67,394 +67,404 @@ msgid ""
 "want to kill this window?"
 msgstr ""
 
-#: src/bin/e_actions.c:378
+#: src/bin/e_actions.c:377
 msgid "Are you sure you want to kill this window?"
 msgstr "이 창을 강제종료 하시겠습니까?"
 
-#: src/bin/e_actions.c:381 src/bin/e_actions.c:1837 src/bin/e_actions.c:1934
-#: src/bin/e_actions.c:1997 src/bin/e_actions.c:2060 src/bin/e_actions.c:2123
-#: src/bin/e_actions.c:2186 src/bin/e_confirm_dialog.c:44
-#: src/bin/e_desklock.c:1078 src/bin/e_fm.c:9034 src/bin/e_fm.c:9288
-#: src/bin/e_module.c:513 src/bin/e_screensaver.c:105
+#: src/bin/e_actions.c:380 src/bin/e_actions.c:1912 src/bin/e_actions.c:2009
+#: src/bin/e_actions.c:2072 src/bin/e_actions.c:2135 src/bin/e_actions.c:2203
+#: src/bin/e_actions.c:2266 src/bin/e_confirm_dialog.c:44
+#: src/bin/e_desklock.c:998 src/bin/e_fm.c:9167 src/bin/e_fm.c:9421
+#: src/bin/e_module.c:520 src/bin/e_screensaver.c:141
 msgid "Yes"
 msgstr "예"
 
-#: src/bin/e_actions.c:383 src/bin/e_actions.c:1839 src/bin/e_actions.c:1936
-#: src/bin/e_actions.c:1999 src/bin/e_actions.c:2062 src/bin/e_actions.c:2125
-#: src/bin/e_actions.c:2188 src/bin/e_confirm_dialog.c:45
-#: src/bin/e_desklock.c:1080 src/bin/e_fm.c:9032 src/bin/e_fm.c:9289
-#: src/bin/e_module.c:514 src/bin/e_screensaver.c:107
+#: src/bin/e_actions.c:382 src/bin/e_actions.c:1914 src/bin/e_actions.c:2011
+#: src/bin/e_actions.c:2074 src/bin/e_actions.c:2137 src/bin/e_actions.c:2205
+#: src/bin/e_actions.c:2268 src/bin/e_confirm_dialog.c:45
+#: src/bin/e_desklock.c:1000 src/bin/e_fm.c:9165 src/bin/e_fm.c:9422
+#: src/bin/e_module.c:521 src/bin/e_screensaver.c:143
 msgid "No"
 msgstr "아니오"
 
-#: src/bin/e_actions.c:1831
+#: src/bin/e_actions.c:1906
 msgid "Are you sure you want to exit?"
 msgstr "정말 종료 하시겠습니까?"
 
-#: src/bin/e_actions.c:1833
+#: src/bin/e_actions.c:1908
 msgid ""
 "You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
 msgstr "Enlightement를 종료하시겠습니까?"
 
-#: src/bin/e_actions.c:1928
+#: src/bin/e_actions.c:2003
 msgid "Are you sure you want to log out?"
 msgstr "로그아웃 하시겠습니까?"
 
-#: src/bin/e_actions.c:1930
+#: src/bin/e_actions.c:2005
 msgid "You are about to log out.<br><br>Are you sure you want to do this?"
 msgstr "로그아웃 하시겠습니까?"
 
-#: src/bin/e_actions.c:1991 src/bin/e_actions.c:2117
+#: src/bin/e_actions.c:2066 src/bin/e_actions.c:2197
 msgid "Are you sure you want to turn off?"
 msgstr "시스템을 종료하시겠습니까?"
 
-#: src/bin/e_actions.c:1993
+#: src/bin/e_actions.c:2068
 msgid ""
 "You requested to turn off your Computer.<br><br>Are you sure you want to "
 "shut down?"
 msgstr "시스템을 종료하시겠습니까?"
 
-#: src/bin/e_actions.c:2054
+#: src/bin/e_actions.c:2129
 msgid "Are you sure you want to reboot?"
 msgstr "시스템을 재시작하시겠습니까?"
 
-#: src/bin/e_actions.c:2056
+#: src/bin/e_actions.c:2131
 msgid ""
 "You requested to reboot your Computer.<br><br>Are you sure you want to "
 "restart it?"
 msgstr "시스템을 재시작하시겠습니까?"
 
-#: src/bin/e_actions.c:2119
+#: src/bin/e_actions.c:2199
 msgid ""
 "You requested to suspend your Computer.<br><br>Are you sure you want to "
 "suspend?"
 msgstr "시스템을 정지 상태로 전환하시겠습니까?"
 
-#: src/bin/e_actions.c:2180
+#: src/bin/e_actions.c:2260
 msgid "Are you sure you want to hibernate?"
 msgstr "시스템을 대기 상태로 전환하시겠습니까?"
 
-#: src/bin/e_actions.c:2182
+#: src/bin/e_actions.c:2262
 msgid ""
 "You requested to hibernate your Computer.<br><br>Are you sure you want to "
 "suspend to disk?"
 msgstr "시스템을 대기 상태로 전환하시겠습니까?"
 
-#: src/bin/e_actions.c:2578 src/bin/e_actions.c:2589 src/bin/e_actions.c:2608
-#: src/bin/e_actions.c:2613 src/bin/e_actions.c:2618 src/bin/e_actions.c:2623
-#: src/bin/e_actions.c:2843 src/bin/e_actions.c:2847 src/bin/e_actions.c:2852
-#: src/bin/e_actions.c:2858 src/bin/e_actions.c:2864 src/bin/e_actions.c:2870
+#: src/bin/e_actions.c:2655 src/bin/e_actions.c:2666 src/bin/e_actions.c:2685
+#: src/bin/e_actions.c:2690 src/bin/e_actions.c:2695 src/bin/e_actions.c:2700
+#: src/bin/e_actions.c:2932 src/bin/e_actions.c:2936 src/bin/e_actions.c:2941
+#: src/bin/e_actions.c:2947 src/bin/e_actions.c:2953 src/bin/e_actions.c:2959
 msgid "Window : Actions"
 msgstr "창 : 움직임"
 
-#: src/bin/e_actions.c:2578 src/bin/e_fm.c:6081
-#: src/bin/e_int_border_menu.c:145
+#: src/bin/e_actions.c:2655 src/bin/e_fm.c:6145
+#: src/bin/e_int_border_menu.c:146
 msgid "Move"
 msgstr "이동"
 
-#: src/bin/e_actions.c:2589 src/bin/e_int_border_menu.c:157
+#: src/bin/e_actions.c:2666 src/bin/e_int_border_menu.c:158
 msgid "Resize"
 msgstr "크기변경"
 
-#: src/bin/e_actions.c:2600 src/bin/e_actions.c:2891 src/bin/e_actions.c:2893
-#: src/bin/e_actions.c:2895 src/bin/e_actions.c:2897 src/bin/e_actions.c:2899
+#: src/bin/e_actions.c:2677 src/bin/e_actions.c:2980 src/bin/e_actions.c:2982
+#: src/bin/e_actions.c:2984 src/bin/e_actions.c:2986 src/bin/e_actions.c:2988
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:325
 msgid "Menu"
 msgstr "메뉴"
 
-#: src/bin/e_actions.c:2600
+#: src/bin/e_actions.c:2677
 msgid "Window Menu"
 msgstr "창 메뉴"
 
-#: src/bin/e_actions.c:2608 src/bin/e_int_border_menu.c:213
+#: src/bin/e_actions.c:2685 src/bin/e_int_border_menu.c:214
 #: src/modules/conf_winlist/e_int_config_winlist.c:216
 msgid "Raise"
 msgstr "말아올림"
 
-#: src/bin/e_actions.c:2613 src/bin/e_int_border_menu.c:205
+#: src/bin/e_actions.c:2690 src/bin/e_int_border_menu.c:206
 msgid "Lower"
 msgstr "아래로"
 
-#: src/bin/e_actions.c:2623 src/bin/e_int_border_menu.c:231
+#: src/bin/e_actions.c:2700 src/bin/e_int_border_menu.c:232
 msgid "Kill"
 msgstr "강제종료"
 
-#: src/bin/e_actions.c:2628 src/bin/e_actions.c:2635 src/bin/e_actions.c:2642
-#: src/bin/e_actions.c:2649 src/bin/e_actions.c:2651 src/bin/e_actions.c:2654
-#: src/bin/e_actions.c:2657 src/bin/e_actions.c:2659 src/bin/e_actions.c:2661
-#: src/bin/e_actions.c:2663 src/bin/e_actions.c:2670 src/bin/e_actions.c:2672
-#: src/bin/e_actions.c:2674 src/bin/e_actions.c:2676 src/bin/e_actions.c:2678
-#: src/bin/e_actions.c:2685 src/bin/e_actions.c:2690
+#: src/bin/e_actions.c:2705 src/bin/e_actions.c:2712 src/bin/e_actions.c:2719
+#: src/bin/e_actions.c:2726 src/bin/e_actions.c:2728 src/bin/e_actions.c:2731
+#: src/bin/e_actions.c:2734 src/bin/e_actions.c:2736 src/bin/e_actions.c:2738
+#: src/bin/e_actions.c:2740 src/bin/e_actions.c:2747 src/bin/e_actions.c:2749
+#: src/bin/e_actions.c:2751 src/bin/e_actions.c:2753 src/bin/e_actions.c:2755
+#: src/bin/e_actions.c:2762 src/bin/e_actions.c:2767 src/bin/e_actions.c:2773
+#: src/bin/e_actions.c:2779
 msgid "Window : State"
 msgstr "창 : 상태"
 
-#: src/bin/e_actions.c:2628
+#: src/bin/e_actions.c:2705
 msgid "Sticky Mode Toggle"
 msgstr "고정 상태"
 
-#: src/bin/e_actions.c:2635
+#: src/bin/e_actions.c:2712
 msgid "Iconic Mode Toggle"
 msgstr "아이콘 상태"
 
-#: src/bin/e_actions.c:2642
+#: src/bin/e_actions.c:2719
 msgid "Fullscreen Mode Toggle"
 msgstr "전체화면 상태"
 
-#: src/bin/e_actions.c:2649 src/bin/e_int_border_menu.c:175
-#: src/bin/e_int_border_menu.c:396
+#: src/bin/e_actions.c:2726 src/bin/e_int_border_menu.c:176
+#: src/bin/e_int_border_menu.c:397
 msgid "Maximize"
 msgstr "최대화"
 
-#: src/bin/e_actions.c:2651
+#: src/bin/e_actions.c:2728
 msgid "Maximize Vertically"
 msgstr "세로 최대화"
 
-#: src/bin/e_actions.c:2654
+#: src/bin/e_actions.c:2731
 msgid "Maximize Horizontally"
 msgstr "가로 최대화"
 
-#: src/bin/e_actions.c:2657
+#: src/bin/e_actions.c:2734
 msgid "Maximize Fullscreen"
 msgstr "전체화면"
 
-#: src/bin/e_actions.c:2659
+#: src/bin/e_actions.c:2736
 msgid "Maximize Mode \"Smart\""
 msgstr "최대화 상태 \"일반\""
 
-#: src/bin/e_actions.c:2661
+#: src/bin/e_actions.c:2738
 msgid "Maximize Mode \"Expand\""
 msgstr "최대화 상태 \"확장\""
 
-#: src/bin/e_actions.c:2663
+#: src/bin/e_actions.c:2740
 msgid "Maximize Mode \"Fill\""
 msgstr "최대화 상태 \"채우기\""
 
-#: src/bin/e_actions.c:2670
+#: src/bin/e_actions.c:2747
 msgid "Shade Up Mode Toggle"
 msgstr ""
 
-#: src/bin/e_actions.c:2672
+#: src/bin/e_actions.c:2749
 msgid "Shade Down Mode Toggle"
 msgstr ""
 
-#: src/bin/e_actions.c:2674
+#: src/bin/e_actions.c:2751
 msgid "Shade Left Mode Toggle"
 msgstr ""
 
-#: src/bin/e_actions.c:2676
+#: src/bin/e_actions.c:2753
 msgid "Shade Right Mode Toggle"
 msgstr ""
 
-#: src/bin/e_actions.c:2678
+#: src/bin/e_actions.c:2755
 msgid "Shade Mode Toggle"
 msgstr ""
 
-#: src/bin/e_actions.c:2685
+#: src/bin/e_actions.c:2762
 msgid "Toggle Borderless State"
 msgstr ""
 
-#: src/bin/e_actions.c:2690
+#: src/bin/e_actions.c:2767
+#, fuzzy
+msgid "Set Border"
+msgstr "테두리"
+
+#: src/bin/e_actions.c:2773
+msgid "Cycle between Borders"
+msgstr ""
+
+#: src/bin/e_actions.c:2779
 msgid "Toggle Pinned State"
 msgstr ""
 
-#: src/bin/e_actions.c:2695 src/bin/e_actions.c:2697 src/bin/e_actions.c:2699
-#: src/bin/e_actions.c:2701 src/bin/e_actions.c:2703 src/bin/e_actions.c:2709
-#: src/bin/e_actions.c:2715 src/bin/e_actions.c:2720 src/bin/e_actions.c:2726
-#: src/bin/e_actions.c:2732 src/bin/e_actions.c:2734 src/bin/e_actions.c:2736
-#: src/bin/e_actions.c:2738 src/bin/e_actions.c:2740 src/bin/e_actions.c:2742
-#: src/bin/e_actions.c:2744 src/bin/e_actions.c:2746 src/bin/e_actions.c:2748
-#: src/bin/e_actions.c:2750 src/bin/e_actions.c:2752 src/bin/e_actions.c:2754
-#: src/bin/e_actions.c:2756 src/bin/e_actions.c:2762 src/bin/e_actions.c:2764
-#: src/bin/e_actions.c:2766 src/bin/e_actions.c:2768 src/bin/e_actions.c:2770
-#: src/bin/e_actions.c:2776 src/bin/e_actions.c:2782 src/bin/e_actions.c:2788
-#: src/bin/e_actions.c:2793 src/bin/e_actions.c:2795 src/bin/e_actions.c:2797
-#: src/bin/e_actions.c:2799 src/bin/e_actions.c:2801 src/bin/e_actions.c:2803
-#: src/bin/e_actions.c:2805 src/bin/e_actions.c:2807 src/bin/e_actions.c:2809
-#: src/bin/e_actions.c:2811 src/bin/e_actions.c:2813 src/bin/e_actions.c:2815
-#: src/bin/e_actions.c:2817 src/bin/e_actions.c:2965 src/bin/e_actions.c:2970
-#: src/bin/e_fm.c:3208 src/bin/e_fm.c:3213 src/bin/e_fm.c:9805
-#: src/bin/e_fm_dbus.c:324 src/bin/e_fm_dbus.c:348 src/bin/e_fm_dbus.c:624
-#: src/bin/e_fm_dbus.c:651 src/bin/e_int_menus.c:144
-#: src/bin/e_int_shelf_config.c:247
+#: src/bin/e_actions.c:2784 src/bin/e_actions.c:2786 src/bin/e_actions.c:2788
+#: src/bin/e_actions.c:2790 src/bin/e_actions.c:2792 src/bin/e_actions.c:2798
+#: src/bin/e_actions.c:2804 src/bin/e_actions.c:2809 src/bin/e_actions.c:2815
+#: src/bin/e_actions.c:2821 src/bin/e_actions.c:2823 src/bin/e_actions.c:2825
+#: src/bin/e_actions.c:2827 src/bin/e_actions.c:2829 src/bin/e_actions.c:2831
+#: src/bin/e_actions.c:2833 src/bin/e_actions.c:2835 src/bin/e_actions.c:2837
+#: src/bin/e_actions.c:2839 src/bin/e_actions.c:2841 src/bin/e_actions.c:2843
+#: src/bin/e_actions.c:2845 src/bin/e_actions.c:2851 src/bin/e_actions.c:2853
+#: src/bin/e_actions.c:2855 src/bin/e_actions.c:2857 src/bin/e_actions.c:2859
+#: src/bin/e_actions.c:2865 src/bin/e_actions.c:2871 src/bin/e_actions.c:2877
+#: src/bin/e_actions.c:2882 src/bin/e_actions.c:2884 src/bin/e_actions.c:2886
+#: src/bin/e_actions.c:2888 src/bin/e_actions.c:2890 src/bin/e_actions.c:2892
+#: src/bin/e_actions.c:2894 src/bin/e_actions.c:2896 src/bin/e_actions.c:2898
+#: src/bin/e_actions.c:2900 src/bin/e_actions.c:2902 src/bin/e_actions.c:2904
+#: src/bin/e_actions.c:2906 src/bin/e_actions.c:3058 src/bin/e_actions.c:3063
+#: src/bin/e_fm.c:3247 src/bin/e_fm.c:3252 src/bin/e_fm.c:9948
+#: src/bin/e_fm_device.c:332 src/bin/e_fm_device.c:356
+#: src/bin/e_fm_device.c:635 src/bin/e_fm_device.c:662
+#: src/bin/e_int_menus.c:144 src/bin/e_int_shelf_config.c:247
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:101
-#: src/modules/fileman/e_mod_main.c:325 src/modules/ibox/e_mod_config.c:162
+#: src/modules/fileman/e_mod_main.c:344 src/modules/ibox/e_mod_config.c:162
 msgid "Desktop"
 msgstr "데스크탑"
 
-#: src/bin/e_actions.c:2695
+#: src/bin/e_actions.c:2784
 msgid "Flip Desktop Left"
 msgstr "왼쪽으로 이동"
 
-#: src/bin/e_actions.c:2697
+#: src/bin/e_actions.c:2786
 msgid "Flip Desktop Right"
 msgstr "오른쪽으로 이동"
 
-#: src/bin/e_actions.c:2699
+#: src/bin/e_actions.c:2788
 msgid "Flip Desktop Up"
 msgstr "위로 이동"
 
-#: src/bin/e_actions.c:2701
+#: src/bin/e_actions.c:2790
 msgid "Flip Desktop Down"
 msgstr "아래로 이동"
 
-#: src/bin/e_actions.c:2703
+#: src/bin/e_actions.c:2792
 msgid "Flip Desktop By..."
 msgstr ""
 
-#: src/bin/e_actions.c:2709
+#: src/bin/e_actions.c:2798
 msgid "Show The Desktop"
 msgstr "데스크탑 표시"
 
-#: src/bin/e_actions.c:2715
+#: src/bin/e_actions.c:2804
 msgid "Show The Shelf"
 msgstr ""
 
-#: src/bin/e_actions.c:2720
+#: src/bin/e_actions.c:2809
 msgid "Flip Desktop To..."
 msgstr ""
 
-#: src/bin/e_actions.c:2726
+#: src/bin/e_actions.c:2815
 msgid "Flip Desktop Linearly..."
 msgstr ""
 
-#: src/bin/e_actions.c:2732
+#: src/bin/e_actions.c:2821
 msgid "Switch To Desktop 0"
 msgstr "데스크탑 0 으로 변경"
 
-#: src/bin/e_actions.c:2734
+#: src/bin/e_actions.c:2823
 msgid "Switch To Desktop 1"
 msgstr "데스크탑 1로 변경"
 
-#: src/bin/e_actions.c:2736
+#: src/bin/e_actions.c:2825
 msgid "Switch To Desktop 2"
 msgstr "데스크탑 2로 변경"
 
-#: src/bin/e_actions.c:2738
+#: src/bin/e_actions.c:2827
 msgid "Switch To Desktop 3"
 msgstr "데스크탑 3으로 변경"
 
-#: src/bin/e_actions.c:2740
+#: src/bin/e_actions.c:2829
 msgid "Switch To Desktop 4"
 msgstr "데스크탑 4로 변경"
 
-#: src/bin/e_actions.c:2742
+#: src/bin/e_actions.c:2831
 msgid "Switch To Desktop 5"
 msgstr "데스크탑 5로 변경"
 
-#: src/bin/e_actions.c:2744
+#: src/bin/e_actions.c:2833
 msgid "Switch To Desktop 6"
 msgstr "데스크탑 6으로 변경"
 
-#: src/bin/e_actions.c:2746
+#: src/bin/e_actions.c:2835
 msgid "Switch To Desktop 7"
 msgstr "데스크탑 7로 변경"
 
-#: src/bin/e_actions.c:2748
+#: src/bin/e_actions.c:2837
 msgid "Switch To Desktop 8"
 msgstr "데스크탑 8로 변경"
 
-#: src/bin/e_actions.c:2750
+#: src/bin/e_actions.c:2839
 msgid "Switch To Desktop 9"
 msgstr "데스크탑 9로 변경"
 
-#: src/bin/e_actions.c:2752
+#: src/bin/e_actions.c:2841
 msgid "Switch To Desktop 10"
 msgstr "데스크탑 10으로 변경"
 
-#: src/bin/e_actions.c:2754
+#: src/bin/e_actions.c:2843
 msgid "Switch To Desktop 11"
 msgstr "데스크탑 11로 변경"
 
-#: src/bin/e_actions.c:2756
+#: src/bin/e_actions.c:2845
 msgid "Switch To Desktop..."
 msgstr "데스크탑 변경..."
 
-#: src/bin/e_actions.c:2762
+#: src/bin/e_actions.c:2851
 msgid "Flip Desktop Left (All Screens)"
 msgstr ""
 
-#: src/bin/e_actions.c:2764
+#: src/bin/e_actions.c:2853
 msgid "Flip Desktop Right (All Screens)"
 msgstr ""
 
-#: src/bin/e_actions.c:2766
+#: src/bin/e_actions.c:2855
 msgid "Flip Desktop Up (All Screens)"
 msgstr ""
 
-#: src/bin/e_actions.c:2768
+#: src/bin/e_actions.c:2857
 msgid "Flip Desktop Down (All Screens)"
 msgstr ""
 
-#: src/bin/e_actions.c:2770
+#: src/bin/e_actions.c:2859
 msgid "Flip Desktop By... (All Screens)"
 msgstr ""
 
-#: src/bin/e_actions.c:2776
+#: src/bin/e_actions.c:2865
 msgid "Flip Desktop To... (All Screens)"
 msgstr ""
 
-#: src/bin/e_actions.c:2782
+#: src/bin/e_actions.c:2871
 msgid "Flip Desktop Linearly... (All Screens)"
 msgstr ""
 
-#: src/bin/e_actions.c:2788
+#: src/bin/e_actions.c:2877
 msgid "Flip Desktop In Direction..."
 msgstr ""
 
-#: src/bin/e_actions.c:2793
+#: src/bin/e_actions.c:2882
 msgid "Switch To Desktop 0 (All Screens)"
 msgstr ""
 
-#: src/bin/e_actions.c:2795
+#: src/bin/e_actions.c:2884
 msgid "Switch To Desktop 1 (All Screens)"
 msgstr ""
 
-#: src/bin/e_actions.c:2797
+#: src/bin/e_actions.c:2886
 msgid "Switch To Desktop 2 (All Screens)"
 msgstr ""
 
-#: src/bin/e_actions.c:2799
+#: src/bin/e_actions.c:2888
 msgid "Switch To Desktop 3 (All Screens)"
 msgstr ""
 
-#: src/bin/e_actions.c:2801
+#: src/bin/e_actions.c:2890
 msgid "Switch To Desktop 4 (All Screens)"
 msgstr ""
 
-#: src/bin/e_actions.c:2803
+#: src/bin/e_actions.c:2892
 msgid "Switch To Desktop 5 (All Screens)"
 msgstr ""
 
-#: src/bin/e_actions.c:2805
+#: src/bin/e_actions.c:2894
 msgid "Switch To Desktop 6 (All Screens)"
 msgstr ""
 
-#: src/bin/e_actions.c:2807
+#: src/bin/e_actions.c:2896
 msgid "Switch To Desktop 7 (All Screens)"
 msgstr ""
 
-#: src/bin/e_actions.c:2809
+#: src/bin/e_actions.c:2898
 msgid "Switch To Desktop 8 (All Screens)"
 msgstr ""
 
-#: src/bin/e_actions.c:2811
+#: src/bin/e_actions.c:2900
 msgid "Switch To Desktop 9 (All Screens)"
 msgstr ""
 
-#: src/bin/e_actions.c:2813
+#: src/bin/e_actions.c:2902
 msgid "Switch To Desktop 10 (All Screens)"
 msgstr ""
 
-#: src/bin/e_actions.c:2815
+#: src/bin/e_actions.c:2904
 msgid "Switch To Desktop 11 (All Screens)"
 msgstr ""
 
-#: src/bin/e_actions.c:2817
+#: src/bin/e_actions.c:2906
 msgid "Switch To Desktop... (All Screens)"
 msgstr ""
 
-#: src/bin/e_actions.c:2823 src/bin/e_actions.c:2825 src/bin/e_actions.c:2827
-#: src/bin/e_actions.c:2833 src/bin/e_actions.c:2835 src/bin/e_actions.c:2837
+#: src/bin/e_actions.c:2912 src/bin/e_actions.c:2914 src/bin/e_actions.c:2916
+#: src/bin/e_actions.c:2922 src/bin/e_actions.c:2924 src/bin/e_actions.c:2926
 #: src/modules/conf_desklock/e_mod_main.c:17
 #: src/modules/conf_desks/e_mod_main.c:19
 #: src/modules/conf_display/e_mod_main.c:17
@@ -464,113 +474,145 @@ msgstr ""
 msgid "Screen"
 msgstr "화면"
 
-#: src/bin/e_actions.c:2823
+#: src/bin/e_actions.c:2912
 msgid "Send Mouse To Screen 0"
 msgstr "마우스를 화면 0 으로"
 
-#: src/bin/e_actions.c:2825
+#: src/bin/e_actions.c:2914
 msgid "Send Mouse To Screen 1"
 msgstr "마우스를 화면 1로"
 
-#: src/bin/e_actions.c:2827
+#: src/bin/e_actions.c:2916
 msgid "Send Mouse To Screen..."
 msgstr "마우스를 화면으로 보내기"
 
-#: src/bin/e_actions.c:2833
+#: src/bin/e_actions.c:2922
 msgid "Send Mouse Forward 1 Screen"
 msgstr "마우스를 앞의 화면으로 보내기"
 
-#: src/bin/e_actions.c:2835
+#: src/bin/e_actions.c:2924
 msgid "Send Mouse Back 1 Screen"
 msgstr "마우스를 뒤의 화면으로 보내기"
 
-#: src/bin/e_actions.c:2837
+#: src/bin/e_actions.c:2926
 msgid "Send Mouse Forward/Back Screens..."
 msgstr "마우스 앞/뒤 화면으로 보내기..."
 
-#: src/bin/e_actions.c:2875 src/bin/e_actions.c:2877 src/bin/e_actions.c:2879
-#: src/bin/e_actions.c:2885
+#: src/bin/e_actions.c:2932
+#, fuzzy
+msgid "Move To Center"
+msgstr "창 이동 정보"
+
+#: src/bin/e_actions.c:2936
+#, fuzzy
+msgid "Move To..."
+msgstr "아래로 이동"
+
+#: src/bin/e_actions.c:2941
+#, fuzzy
+msgid "Move By..."
+msgstr "아래로 이동"
+
+#: src/bin/e_actions.c:2947
+#, fuzzy
+msgid "Resize By..."
+msgstr "크기변경"
+
+#: src/bin/e_actions.c:2953
+#, fuzzy
+msgid "Push in Direction..."
+msgstr "아이콘 선택"
+
+#: src/bin/e_actions.c:2959
+#, fuzzy
+msgid "Drag Icon..."
+msgstr "아이콘 생성"
+
+#: src/bin/e_actions.c:2964 src/bin/e_actions.c:2966 src/bin/e_actions.c:2968
+#: src/bin/e_actions.c:2974
 msgid "Window : Moving"
 msgstr "창 : 이동"
 
-#: src/bin/e_actions.c:2875
+#: src/bin/e_actions.c:2964
 msgid "To Next Desktop"
 msgstr "다음 데스크탑으로"
 
-#: src/bin/e_actions.c:2877
+#: src/bin/e_actions.c:2966
 msgid "To Previous Desktop"
 msgstr "이전 데스크탑으로"
 
-#: src/bin/e_actions.c:2879
+#: src/bin/e_actions.c:2968
 msgid "By Desktop #..."
 msgstr ""
 
-#: src/bin/e_actions.c:2885
+#: src/bin/e_actions.c:2974
 msgid "To Desktop..."
 msgstr "데스크탑으로..."
 
-#: src/bin/e_actions.c:2891
+#: src/bin/e_actions.c:2980
 msgid "Show Main Menu"
 msgstr "메인 메뉴 표시"
 
-#: src/bin/e_actions.c:2893
+#: src/bin/e_actions.c:2982
 msgid "Show Favorites Menu"
 msgstr "즐겨찾기 메뉴 표시"
 
-#: src/bin/e_actions.c:2895
+#: src/bin/e_actions.c:2984
 msgid "Show All Applications Menu"
 msgstr "모든 응용프로그램 메뉴 표시"
 
-#: src/bin/e_actions.c:2897
+#: src/bin/e_actions.c:2986
 msgid "Show Clients Menu"
 msgstr "클라이언트 메뉴 표시"
 
-#: src/bin/e_actions.c:2899
+#: src/bin/e_actions.c:2988
 msgid "Show Menu..."
 msgstr "메뉴 표시..."
 
-#: src/bin/e_actions.c:2906 src/bin/e_actions.c:2911
+#: src/bin/e_actions.c:2995 src/bin/e_actions.c:3000
 #: src/modules/conf/e_mod_main.c:264 src/modules/conf/e_mod_main.c:367
-#: src/modules/everything-apps/e_mod_main.c:983
-#: src/modules/fileman/e_mod_main.c:60 src/modules/fileman/e_mod_main.c:143
+#: src/modules/everything-apps/e_mod_main.c:1059
+#: src/modules/fileman/e_mod_main.c:70 src/modules/fileman/e_mod_main.c:153
 msgid "Launch"
 msgstr "실행"
 
-#: src/bin/e_actions.c:2906 src/bin/e_int_border_prop.c:439
+#: src/bin/e_actions.c:2995 src/bin/e_int_border_prop.c:439
 msgid "Command"
 msgstr "명령"
 
-#: src/bin/e_actions.c:2911 src/bin/e_eap_editor.c:695
+#: src/bin/e_actions.c:3000 src/bin/e_eap_editor.c:695
 msgid "Application"
 msgstr "응용프로그램"
 
-#: src/bin/e_actions.c:2915 src/bin/e_int_menus.c:202
+#: src/bin/e_actions.c:3004 src/bin/e_int_menus.c:202
 msgid "Restart"
-msgstr "재 시작"
+msgstr "재시작"
 
-#: src/bin/e_actions.c:2919 src/bin/e_int_menus.c:207
+#: src/bin/e_actions.c:3008 src/bin/e_int_menus.c:207
 msgid "Exit"
 msgstr "종료"
 
-#: src/bin/e_actions.c:2923
+#: src/bin/e_actions.c:3012
 msgid "Exit Now"
 msgstr ""
 
-#: src/bin/e_actions.c:2927 src/bin/e_actions.c:2932
+#: src/bin/e_actions.c:3016 src/bin/e_actions.c:3021
 msgid "Enlightenment : Mode"
 msgstr "Enligtenment : 모드"
 
-#: src/bin/e_actions.c:2928
+#: src/bin/e_actions.c:3017
 msgid "Presentation Mode Toggle"
 msgstr "프리젠테이션 모드 토글"
 
-#: src/bin/e_actions.c:2933
+#: src/bin/e_actions.c:3022
 msgid "Offline Mode Toggle"
 msgstr "오프라인 모드 토글"
 
-#: src/bin/e_actions.c:2937 src/bin/e_actions.c:2941 src/bin/e_actions.c:2945
-#: src/bin/e_actions.c:2949 src/bin/e_actions.c:2953 src/bin/e_actions.c:2957
-#: src/bin/e_configure.c:148 src/bin/e_int_config_modules.c:63
+#: src/bin/e_actions.c:3026 src/bin/e_actions.c:3030 src/bin/e_actions.c:3034
+#: src/bin/e_actions.c:3038 src/bin/e_actions.c:3042 src/bin/e_actions.c:3046
+#: src/bin/e_actions.c:3050 src/bin/e_configure.c:349
+#: src/bin/e_int_config_modules.c:53
+#: src/modules/conf_applications/e_int_config_apps.c:244
 #: src/modules/conf_desklock/e_int_config_desklock_fsel.c:87
 #: src/modules/conf_imc/e_int_config_imc.c:808
 #: src/modules/conf_menus/e_int_config_menus.c:294
@@ -585,56 +627,61 @@ msgstr "오프라인 모드 토글"
 msgid "System"
 msgstr "시스템"
 
-#: src/bin/e_actions.c:2937
+#: src/bin/e_actions.c:3026
 msgid "Log Out"
 msgstr "로그아웃"
 
-#: src/bin/e_actions.c:2941
+#: src/bin/e_actions.c:3030
 msgid "Power Off Now"
 msgstr "바로 끄기"
 
-#: src/bin/e_actions.c:2945
+#: src/bin/e_actions.c:3034
 msgid "Power Off"
 msgstr "끄기"
 
-#: src/bin/e_actions.c:2949
+#: src/bin/e_actions.c:3038
 msgid "Reboot"
 msgstr "재기동"
 
-#: src/bin/e_actions.c:2953
+#: src/bin/e_actions.c:3042
+#, fuzzy
+msgid "Suspend Now"
+msgstr "대기모드"
+
+#: src/bin/e_actions.c:3046
 msgid "Suspend"
 msgstr "대기모드"
 
-#: src/bin/e_actions.c:2957
+#: src/bin/e_actions.c:3050
 msgid "Hibernate"
 msgstr "하이버네이션"
 
-#: src/bin/e_actions.c:2965
+#: src/bin/e_actions.c:3058
 msgid "Lock"
 msgstr ""
 
-#: src/bin/e_actions.c:2970 src/bin/e_int_menus.c:1165
+#: src/bin/e_actions.c:3063 src/bin/e_int_menus.c:1165
 msgid "Cleanup Windows"
 msgstr "창 정리"
 
-#: src/bin/e_actions.c:2975
+#: src/bin/e_actions.c:3068
 msgid "Generic : Actions"
 msgstr ""
 
-#: src/bin/e_actions.c:2975
+#: src/bin/e_actions.c:3068
 msgid "Delayed Action"
 msgstr ""
 
-#: src/bin/e_actions.c:2982 src/bin/e_actions.c:2986
+#: src/bin/e_actions.c:3075 src/bin/e_actions.c:3079
 msgid "Acpi"
 msgstr ""
-  
-#: src/bin/e_actions.c:2982
+
+#: src/bin/e_actions.c:3075
 #, fuzzy
 msgid "Dim Screen"
 msgstr "이 화면"
 
-#: src/bin/e_actions.c:2986
+#: src/bin/e_actions.c:3079
 #, fuzzy
 msgid "Undim Screen"
 msgstr "이 화면"
@@ -647,13 +694,13 @@ msgstr "바탕 화면으로 설정"
 msgid "Color Selector"
 msgstr "색 선택"
 
-#: src/bin/e_color_dialog.c:46 src/bin/e_config.c:2101
-#: src/bin/e_config_dialog.c:259 src/bin/e_eap_editor.c:859
-#: src/bin/e_eap_editor.c:923 src/bin/e_entry_dialog.c:62 src/bin/e_exec.c:361
-#: src/bin/e_fm.c:8546 src/bin/e_fm.c:9190 src/bin/e_fm_prop.c:507
-#: src/bin/e_int_border_remember.c:321 src/bin/e_int_border_remember.c:521
-#: src/bin/e_module.c:409 src/bin/e_sys.c:484 src/bin/e_sys.c:530
-#: src/bin/e_utils.c:691 src/modules/conf_dpms/e_int_config_dpms.c:64
+#: src/bin/e_color_dialog.c:46 src/bin/e_config.c:1581 src/bin/e_config.c:2168
+#: src/bin/e_config_dialog.c:262 src/bin/e_eap_editor.c:857
+#: src/bin/e_eap_editor.c:921 src/bin/e_entry_dialog.c:62 src/bin/e_exec.c:361
+#: src/bin/e_fm.c:8679 src/bin/e_fm.c:9323 src/bin/e_fm_prop.c:507
+#: src/bin/e_int_border_remember.c:324 src/bin/e_int_border_remember.c:525
+#: src/bin/e_module.c:417 src/bin/e_sys.c:484 src/bin/e_sys.c:530
+#: src/bin/e_utils.c:710 src/modules/conf_dpms/e_int_config_dpms.c:64
 #: src/modules/conf_dpms/e_int_config_dpms.c:85
 #: src/modules/conf_imc/e_int_config_imc_import.c:120
 #: src/modules/conf_mime/e_int_config_mime_edit.c:303
@@ -661,14 +708,14 @@ msgstr "색 선택"
 #: src/modules/conf_theme/e_int_config_theme_import.c:120
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:215
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:345
-#: src/modules/cpufreq/e_mod_main.c:391 src/modules/cpufreq/e_mod_main.c:420
-#: src/modules/cpufreq/e_mod_main.c:445
+#: src/modules/cpufreq/e_mod_main.c:417 src/modules/cpufreq/e_mod_main.c:446
+#: src/modules/cpufreq/e_mod_main.c:471
 msgid "OK"
 msgstr "확인"
 
-#: src/bin/e_color_dialog.c:47 src/bin/e_eap_editor.c:861
-#: src/bin/e_eap_editor.c:925 src/bin/e_entry_dialog.c:63 src/bin/e_fm.c:8548
-#: src/bin/e_fm_prop.c:508 src/bin/e_utils.c:1168
+#: src/bin/e_color_dialog.c:47 src/bin/e_eap_editor.c:859
+#: src/bin/e_eap_editor.c:923 src/bin/e_entry_dialog.c:63 src/bin/e_fm.c:8681
+#: src/bin/e_fm_prop.c:508 src/bin/e_utils.c:1165
 #: src/modules/conf_imc/e_int_config_imc_import.c:124
 #: src/modules/conf_mime/e_int_config_mime_edit.c:304
 #: src/modules/conf_profiles/e_int_config_profiles.c:388
@@ -679,7 +726,7 @@ msgstr "확인"
 msgid "Cancel"
 msgstr "취소"
 
-#: src/bin/e_config.c:933 src/bin/e_config.c:966
+#: src/bin/e_config.c:946 src/bin/e_config.c:979
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -694,7 +741,7 @@ msgstr ""
 "로운 기능을 위한 의도로 이해해주시기 바랍니다. <br>번거로우시겠지만, 원하시는"
 "데로 다시 설정해주시길 바랍니다."
 
-#: src/bin/e_config.c:950
+#: src/bin/e_config.c:963
 msgid ""
 "Your settings are NEWER than Enlightenment. This is very<br>strange. This "
 "should not happen unless you downgraded<br>Enlightenment or copied the "
@@ -707,89 +754,141 @@ msgstr ""
 "사용하시던 버전보다 더 낮은 Enlightement를 설치하신 것 같습니다.<br><br>예상"
 "치 못한 에러를 막기 위해 설정을 초기화하였습니다."
 
-#: src/bin/e_config.c:2002
+#: src/bin/e_config.c:1568 src/bin/e_config.c:2155
+msgid "Enlightenment Settings Write Problems"
+msgstr "Enlightenment 설정 저장 중 오류가 발생하였습니다."
+
+#: src/bin/e_config.c:1571
+#, c-format
+msgid ""
+"Enlightenment has an error while moving config files<br>from:<br>%"
+"s<br><br>to:<br>%s<br><br>The rest of the write has been aborted for safety."
+"<br>"
+msgstr ""
+
+#: src/bin/e_config.c:2066
 msgid "Settings Upgraded"
 msgstr "설정이 갱신되었습니다."
 
-#: src/bin/e_config.c:2025
-#, c-format
-msgid ""
-"An error occurred while saving Enlightenment's<br>settings to disk. The "
-"error could not be<br>deterimined.<br><br>The file where the error occurred "
-"was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
+#: src/bin/e_config.c:2083
+msgid "The EET file handle is bad."
 msgstr ""
-"Enlightenment 설정을 저장하다가 <br>알 수 없는 이유로 실패하였습니다.<br><br>"
-"데이터가 손상되는 것을 막기 위해 다음 파일을 삭제하였습니다.<br>%s"
 
-#: src/bin/e_config.c:2036
-#, c-format
+#: src/bin/e_config.c:2086
+msgid "The file data is empty."
+msgstr ""
+
+#: src/bin/e_config.c:2089
 msgid ""
-"Enlightenment's settings files are too big<br>for the file system they are "
-"being saved to.<br>This error is very strange as the files should<br>be "
-"extremely small. Please check the settings<br>for your home directory."
-"<br><br>The file where the error occurred was:<br>%s<br><br>This file has "
+"The file is not writable. Perhaps the disk is read-only<br>or you lost "
+"permissions to your files."
+msgstr ""
+
+#: src/bin/e_config.c:2092
+msgid "Memory ran out while preparing the write.<br>Please free up memory."
+msgstr ""
+
+#: src/bin/e_config.c:2095
+msgid "This is a generic error."
+msgstr ""
+
+#: src/bin/e_config.c:2097
+msgid ""
+"The settings file is too large.<br>It should be very small (a few hundred KB "
+"at most)."
+msgstr ""
+
+#: src/bin/e_config.c:2100
+msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
+msgstr ""
+
+#: src/bin/e_config.c:2103
+msgid "You ran out of space while writing the file"
+msgstr ""
+
+#: src/bin/e_config.c:2106
+msgid "The file was closed on it while writing."
+msgstr ""
+
+#: src/bin/e_config.c:2109
+msgid "Memory-mapping (mmap) of the file failed."
+msgstr ""
+
+#: src/bin/e_config.c:2112
+msgid "X509 Encoding failed."
+msgstr ""
+
+#: src/bin/e_config.c:2115
+msgid "Signature failed."
+msgstr ""
+
+#: src/bin/e_config.c:2118
+msgid "The signature was invalid."
+msgstr ""
+
+#: src/bin/e_config.c:2121
+#, fuzzy
+msgid "Not signed."
+msgstr "(창 없음)"
+
+#: src/bin/e_config.c:2124
+msgid "Feature not implemented."
+msgstr ""
+
+#: src/bin/e_config.c:2127
+msgid "PRNG was not seeded."
+msgstr ""
+
+#: src/bin/e_config.c:2130
+msgid "Encryption failed."
+msgstr ""
+
+#: src/bin/e_config.c:2133
+#, fuzzy
+msgid "Decruption failed."
+msgstr "사용안함"
+
+#: src/bin/e_config.c:2136
+msgid "The error is unknown to Enlightenment."
+msgstr ""
+
+#: src/bin/e_config.c:2158
+#, fuzzy, c-format
+msgid ""
+"Enlightenment has an error while writing<br>its config file.<br>%"
+"s<br><br>The file where the error occurred was:<br>%s<br><br>This file has "
 "been deleted to avoid corrupt data.<br>"
-msgstr ""
-"Enlightenment 설정 파일이 <br>저장되기에 너무 큽니다. 보통 파일 크기가<br>매"
-"우 작아 이런 에러를 내기 어렵습니다.<br><br>데이터가 손상되는걸 막기 위해 다"
-"음 파일을 삭제하였습니다.<br>%s"
-
-#: src/bin/e_config.c:2049
-#, c-format
-msgid ""
-"An output error occurred when writing the settings<br>files for "
-"Enlightenment. Your disk is having troubles<br>and possibly needs "
-"replacement.<br><br>The file where the error occurred was:<br>%s<br><br>This "
-"file has been deleted to avoid corrupt data.<br>"
-msgstr ""
-"Enlightenment 설정을 저장하던 도중 입출력 에러가<br>발생하였습니다. 하드디스"
-"크 이상일 가능성이 높습니다.<br>데이터 손상을 막기 위해 다음 파일을 삭제하였"
-"습니다.<br>%s"
-
-#: src/bin/e_config.c:2060
-#, c-format
-msgid ""
-"Enlightenment cannot write its settings file<br>because it ran out of space "
-"to write the file.<br>You have either run out of disk space or have<br>gone "
-"over your quota limit.<br><br>The file where the error occurred was:<br>%"
-"s<br><br>This file has been deleted to avoid corrupt data.<br>"
-msgstr ""
-"남은 용량이 부족하여 Enlightenment 설정을<br>저장할 수 없습니다.<br>안 쓰는 "
-"파일을 지우거나, Quota 제한을 확인하시기 바랍니다.<br><br>데이터 손상을 막기 "
-"위해 다음 파일을 삭제하였습니다.<br>%s"
-
-#: src/bin/e_config.c:2072
-#, c-format
-msgid ""
-"Enlightenment unexpectedly had the settings file<br>it was writing closed on "
-"it. This is very unusual.<br><br>The file where the error occurred was:<br>%"
-"s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 "Enlightenment 설정 중 저장되다 만 파일이<br>있습니다. (흔히 일어나진 않습니"
 "다.)<br><br>데이터 손상을 막기 위해 다음 파일을 삭제하였습니다.<br>%s"
 
-#: src/bin/e_config.c:2097
-msgid "Enlightenment Settings Write Problems"
-msgstr "Enlightenment 설정 저장 중 오류가 발생하였습니다."
-
-#: src/bin/e_config_dialog.c:207 src/modules/battery/e_mod_main.c:713
+#: src/bin/e_config_dialog.c:210 src/modules/battery/e_mod_main.c:713
 #: src/modules/conf/e_mod_main.c:275 src/modules/conf_engine/e_mod_main.c:17
 #: src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
 msgid "Advanced"
 msgstr "고급설정"
 
-#: src/bin/e_config_dialog.c:236 src/bin/e_eap_editor.c:716
+#: src/bin/e_config_dialog.c:239 src/bin/e_eap_editor.c:716
 msgid "Basic"
 msgstr "기본"
 
-#: src/bin/e_config_dialog.c:261
+#: src/bin/e_config_dialog.c:264
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:844
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_web.c:236
 msgid "Apply"
 msgstr "적용"
 
-#: src/bin/e_configure.c:24 src/bin/e_configure.c:33 src/bin/e_configure.c:36
+#: src/bin/e_configure.c:28 src/modules/conf_shelves/e_mod_main.c:21
+#: src/modules/everything/e_mod_main.c:68
+#: src/modules/everything-apps/e_mod_main.c:1311
+#: src/modules/everything-files/e_mod_main.c:1596
+#: src/modules/gadman/e_mod_main.c:25 src/modules/mixer/e_mod_main.c:1100
+#: src/modules/connman/e_mod_main.c:1733
+msgid "Extensions"
+msgstr "확장"
+
+#: src/bin/e_configure.c:29 src/bin/e_configure.c:32 src/bin/e_configure.c:234
 #: src/modules/conf_colors/e_int_config_color_classes.c:844
 #: src/modules/conf_fonts/e_int_config_fonts.c:96
 #: src/modules/conf_paths/e_int_config_paths.c:80
@@ -797,48 +896,39 @@ msgstr "적용"
 msgid "Modules"
 msgstr "모듈"
 
-#: src/bin/e_configure.c:32 src/modules/conf_shelves/e_mod_main.c:21
-#: src/modules/everything/e_mod_main.c:89
-#: src/modules/everything-apps/e_mod_main.c:1216
-#: src/modules/everything-files/e_mod_main.c:1656
-#: src/modules/gadman/e_mod_main.c:25 src/modules/mixer/e_mod_main.c:1049
-#: src/modules/connman/e_mod_main.c:1733
-msgid "Extensions"
-msgstr "확장"
-
 #: src/bin/e_container.c:129
 #, c-format
 msgid "Container %d"
 msgstr ""
 
-#: src/bin/e_desklock.c:250
+#: src/bin/e_desklock.c:170
 msgid "Error - no PAM support"
 msgstr ""
 
-#: src/bin/e_desklock.c:251
+#: src/bin/e_desklock.c:171
 msgid ""
 "No PAM support was built into Enlightenment, so<br>desk locking is disabled."
 msgstr ""
 
-#: src/bin/e_desklock.c:315
+#: src/bin/e_desklock.c:235
 msgid "Lock Failed"
 msgstr ""
 
-#: src/bin/e_desklock.c:316
+#: src/bin/e_desklock.c:236
 msgid ""
 "Locking the desktop failed because some application<br>has grabbed either "
 "the keyboard or the mouse or both<br>and their grab is unable to be broken."
 msgstr ""
 
-#: src/bin/e_desklock.c:401
+#: src/bin/e_desklock.c:321
 msgid "Please enter your unlock password"
 msgstr "비밀번호를 입력해주세요."
 
-#: src/bin/e_desklock.c:740
+#: src/bin/e_desklock.c:660
 msgid "Authentication System Error"
 msgstr "인증 시스템 에러"
 
-#: src/bin/e_desklock.c:741
+#: src/bin/e_desklock.c:661
 #, c-format
 msgid ""
 "Authentication via PAM had errors setting up the<br>authentication session. "
@@ -846,22 +936,22 @@ msgid ""
 "happening. Please report this bug."
 msgstr ""
 
-#: src/bin/e_desklock.c:1069 src/bin/e_screensaver.c:96
+#: src/bin/e_desklock.c:989 src/bin/e_screensaver.c:132
 msgid "Activate Presentation Mode?"
 msgstr "프리젠테이션 모드를 활성화하시겠습니까?"
 
-#: src/bin/e_desklock.c:1072
+#: src/bin/e_desklock.c:992
 msgid ""
 "You unlocked desktop too fast.<br><br>Would you like to enable "
 "<b>presentation</b> mode and temporarily disable screen saver, lock and "
 "power saving?"
 msgstr ""
 
-#: src/bin/e_desklock.c:1082 src/bin/e_screensaver.c:109
+#: src/bin/e_desklock.c:1002 src/bin/e_screensaver.c:145
 msgid "No, but increase timeout"
 msgstr ""
 
-#: src/bin/e_desklock.c:1084 src/bin/e_screensaver.c:111
+#: src/bin/e_desklock.c:1004 src/bin/e_screensaver.c:147
 msgid "No, and stop asking"
 msgstr ""
 
@@ -926,11 +1016,11 @@ msgstr ""
 
 #: src/bin/e_eap_editor.c:778
 #: src/modules/conf_performance/e_int_config_performance.c:115
-#: src/modules/everything/evry_config.c:380
-#: src/modules/everything/evry_config.c:464
-#: src/modules/everything-aspell/e_mod_main.c:476
-#: src/modules/everything-files/e_mod_main.c:1548
-#: src/modules/pager/e_mod_config.c:125 src/modules/pager/e_mod_config.c:212
+#: src/modules/everything/evry_config.c:379
+#: src/modules/everything/evry_config.c:463
+#: src/modules/everything-aspell/e_mod_main.c:472
+#: src/modules/everything-files/e_mod_main.c:1488
+#: src/modules/pager/e_mod_config.c:126 src/modules/pager/e_mod_config.c:213
 msgid "General"
 msgstr "일반"
 
@@ -938,7 +1028,7 @@ msgstr "일반"
 msgid "Startup Notify"
 msgstr "시작 알림"
 
-#: src/bin/e_eap_editor.c:784 src/modules/everything-apps/e_mod_main.c:997
+#: src/bin/e_eap_editor.c:784 src/modules/everything-apps/e_mod_main.c:1073
 msgid "Run in Terminal"
 msgstr "터미널에서 실행"
 
@@ -946,34 +1036,34 @@ msgstr "터미널에서 실행"
 msgid "Show in Menus"
 msgstr ""
 
-#: src/bin/e_eap_editor.c:789 src/bin/e_int_border_remember.c:748
+#: src/bin/e_eap_editor.c:789 src/bin/e_int_border_remember.c:757
 msgid "Options"
 msgstr "옵션"
 
-#: src/bin/e_eap_editor.c:819
+#: src/bin/e_eap_editor.c:820
 msgid "Select an Icon"
 msgstr "아이콘 선택"
 
-#: src/bin/e_eap_editor.c:888
+#: src/bin/e_eap_editor.c:886
 msgid "Select an Executable"
 msgstr ""
 
-#: src/bin/e_entry.c:493 src/bin/e_fm.c:8038 src/bin/e_shelf.c:1693
+#: src/bin/e_entry.c:493 src/bin/e_fm.c:8171 src/bin/e_shelf.c:1697
 #: src/modules/conf_profiles/e_int_config_profiles.c:135
 #: src/modules/conf_shelves/e_int_config_shelf.c:80
 #: src/modules/ibar/e_mod_config.c:108
 msgid "Delete"
 msgstr "삭제"
 
-#: src/bin/e_entry.c:503 src/bin/e_fm.c:7946
+#: src/bin/e_entry.c:503 src/bin/e_fm.c:8079
 msgid "Cut"
 msgstr "잘라내기"
 
-#: src/bin/e_entry.c:511 src/bin/e_fm.c:6076 src/bin/e_fm.c:7960
+#: src/bin/e_entry.c:511 src/bin/e_fm.c:6140 src/bin/e_fm.c:8093
 msgid "Copy"
 msgstr "복사"
 
-#: src/bin/e_entry.c:519 src/bin/e_fm.c:7785 src/bin/e_fm.c:7973
+#: src/bin/e_entry.c:519 src/bin/e_fm.c:7917 src/bin/e_fm.c:8106
 msgid "Paste"
 msgstr "붙여넣기"
 
@@ -981,13 +1071,13 @@ msgstr "붙여넣기"
 msgid "Select All"
 msgstr "전체 선택"
 
-#: src/bin/e_exec.c:223 src/bin/e_utils.c:234
+#: src/bin/e_exec.c:223 src/bin/e_utils.c:235
 #: src/modules/conf_imc/e_int_config_imc.c:265
 #: src/modules/conf_imc/e_int_config_imc.c:513
 msgid "Run Error"
 msgstr "실행 오류"
 
-#: src/bin/e_exec.c:224 src/bin/e_utils.c:235
+#: src/bin/e_exec.c:224 src/bin/e_utils.c:236
 #: src/modules/conf_imc/e_int_config_imc.c:266
 #: src/modules/conf_imc/e_int_config_imc.c:514
 #, c-format
@@ -1107,248 +1197,248 @@ msgstr "출력 데이터"
 msgid "There was no output."
 msgstr "출력물이 없음."
 
-#: src/bin/e_fm.c:947
+#: src/bin/e_fm.c:969
 msgid "Nonexistent path"
 msgstr "존재하지 않는 경로"
 
-#: src/bin/e_fm.c:950
+#: src/bin/e_fm.c:972
 #, c-format
 msgid "%s doesn't exist."
 msgstr "%s는 존재하지 않음."
 
-#: src/bin/e_fm.c:3018
+#: src/bin/e_fm.c:3057
 msgid "Mount Error"
 msgstr ""
 
-#: src/bin/e_fm.c:3018
+#: src/bin/e_fm.c:3057
 msgid "Can't mount device"
 msgstr ""
 
-#: src/bin/e_fm.c:3034
+#: src/bin/e_fm.c:3073
 msgid "Unmount Error"
 msgstr ""
 
-#: src/bin/e_fm.c:3034
+#: src/bin/e_fm.c:3073
 msgid "Can't unmount device"
 msgstr ""
 
-#: src/bin/e_fm.c:3049
+#: src/bin/e_fm.c:3088
 msgid "Eject Error"
 msgstr ""
 
-#: src/bin/e_fm.c:3049
+#: src/bin/e_fm.c:3088
 msgid "Can't eject device"
 msgstr ""
 
-#: src/bin/e_fm.c:3684
+#: src/bin/e_fm.c:3725
 #, c-format
 msgid "%i Files"
 msgstr "%i개 파일"
 
-#: src/bin/e_fm.c:6089 src/bin/e_fm.c:7793 src/bin/e_fm.c:7981
+#: src/bin/e_fm.c:6153 src/bin/e_fm.c:7925 src/bin/e_fm.c:8114
 msgid "Link"
 msgstr "링크"
 
-#: src/bin/e_fm.c:6097 src/bin/e_fm.c:8972 src/bin/e_fm.c:9113
+#: src/bin/e_fm.c:6161 src/bin/e_fm.c:9105 src/bin/e_fm.c:9246
 msgid "Abort"
 msgstr "중지"
 
-#: src/bin/e_fm.c:7712 src/bin/e_fm.c:7872
+#: src/bin/e_fm.c:7844 src/bin/e_fm.c:8004
 msgid "Inherit parent settings"
 msgstr ""
 
-#: src/bin/e_fm.c:7721 src/bin/e_fm.c:7881
-#: src/modules/fileman/e_mod_config.c:208
+#: src/bin/e_fm.c:7853 src/bin/e_fm.c:8013
+#: src/modules/fileman/e_mod_config.c:219
 msgid "View Mode"
 msgstr ""
 
-#: src/bin/e_fm.c:7728 src/bin/e_fm.c:7888
+#: src/bin/e_fm.c:7860 src/bin/e_fm.c:8020
 msgid "Refresh View"
 msgstr "새로 고침"
 
-#: src/bin/e_fm.c:7736 src/bin/e_fm.c:7896
+#: src/bin/e_fm.c:7868 src/bin/e_fm.c:8028
 msgid "Show Hidden Files"
 msgstr "숨김 파일 표시"
 
-#: src/bin/e_fm.c:7748 src/bin/e_fm.c:7908
+#: src/bin/e_fm.c:7880 src/bin/e_fm.c:8040
 msgid "Remember Ordering"
 msgstr "정렬순서 저장"
 
-#: src/bin/e_fm.c:7757 src/bin/e_fm.c:7917
+#: src/bin/e_fm.c:7889 src/bin/e_fm.c:8049
 msgid "Sort Now"
 msgstr "정렬"
 
-#: src/bin/e_fm.c:7769 src/bin/e_fm.c:7932
+#: src/bin/e_fm.c:7901 src/bin/e_fm.c:8064
 #: src/modules/conf_paths/e_int_config_paths.c:205
 msgid "New Directory"
 msgstr "새 디렉토리"
 
-#: src/bin/e_fm.c:8046
+#: src/bin/e_fm.c:8179
 msgid "Rename"
 msgstr "이름 변경"
 
-#: src/bin/e_fm.c:8065
+#: src/bin/e_fm.c:8198
 msgid "Unmount"
 msgstr ""
 
-#: src/bin/e_fm.c:8070
+#: src/bin/e_fm.c:8203
 msgid "Mount"
 msgstr ""
 
-#: src/bin/e_fm.c:8075
+#: src/bin/e_fm.c:8208
 msgid "Eject"
 msgstr ""
 
-#: src/bin/e_fm.c:8087
+#: src/bin/e_fm.c:8220
 msgid "Application Properties"
 msgstr "응용프로그램 속성"
 
-#: src/bin/e_fm.c:8093 src/bin/e_fm_prop.c:105
+#: src/bin/e_fm.c:8226 src/bin/e_fm_prop.c:105
 msgid "File Properties"
 msgstr "화일 속성"
 
-#: src/bin/e_fm.c:8330 src/bin/e_fm.c:8383
+#: src/bin/e_fm.c:8463 src/bin/e_fm.c:8516
 msgid "Use default"
 msgstr ""
 
-#: src/bin/e_fm.c:8356 src/modules/fileman/e_mod_config.c:213
+#: src/bin/e_fm.c:8489 src/modules/fileman/e_mod_config.c:224
 msgid "Grid Icons"
 msgstr ""
 
-#: src/bin/e_fm.c:8364 src/modules/fileman/e_mod_config.c:215
+#: src/bin/e_fm.c:8497 src/modules/fileman/e_mod_config.c:226
 msgid "Custom Icons"
 msgstr ""
 
-#: src/bin/e_fm.c:8372 src/modules/everything/evry_config.c:436
-#: src/modules/everything/evry_config.c:489
-#: src/modules/fileman/e_mod_config.c:223
+#: src/bin/e_fm.c:8505 src/modules/everything/evry_config.c:435
+#: src/modules/everything/evry_config.c:488
+#: src/modules/fileman/e_mod_config.c:234
 msgid "List"
 msgstr ""
 
-#: src/bin/e_fm.c:8397
+#: src/bin/e_fm.c:8530
 #, c-format
 msgid "Icon Size (%d)"
 msgstr "아이콘 사이즈 (%d)"
 
-#: src/bin/e_fm.c:8443 src/bin/e_fm.c:8649
+#: src/bin/e_fm.c:8576 src/bin/e_fm.c:8782
 msgid "Set background..."
 msgstr ""
 
-#: src/bin/e_fm.c:8448 src/bin/e_fm.c:8693
+#: src/bin/e_fm.c:8581 src/bin/e_fm.c:8826
 msgid "Set overlay..."
 msgstr ""
 
-#: src/bin/e_fm.c:8547 src/modules/conf_theme/e_int_config_theme.c:1025
+#: src/bin/e_fm.c:8680 src/modules/conf_theme/e_int_config_theme.c:1025
 msgid "Clear"
 msgstr ""
 
-#: src/bin/e_fm.c:8773
+#: src/bin/e_fm.c:8906
 msgid "Create a new Directory"
 msgstr "새 디렉토리 작성"
 
-#: src/bin/e_fm.c:8774
+#: src/bin/e_fm.c:8907
 msgid "New Directory Name:"
 msgstr "디렉토리 명:"
 
-#: src/bin/e_fm.c:8828
+#: src/bin/e_fm.c:8961
 #, c-format
 msgid "Rename %s to:"
 msgstr "%s 이름 변경:"
 
-#: src/bin/e_fm.c:8830
+#: src/bin/e_fm.c:8963
 msgid "Rename File"
 msgstr "이름 변경"
 
-#: src/bin/e_fm.c:8971 src/bin/e_fm.c:9112
+#: src/bin/e_fm.c:9104 src/bin/e_fm.c:9245
 msgid "Retry"
 msgstr "재시도"
 
-#: src/bin/e_fm.c:8975 src/bin/e_fm.c:9118 src/modules/wizard/page_030.c:82
+#: src/bin/e_fm.c:9108 src/bin/e_fm.c:9251 src/modules/wizard/page_030.c:82
 msgid "Error"
 msgstr "오류"
 
-#: src/bin/e_fm.c:8978
+#: src/bin/e_fm.c:9111
 #, c-format
 msgid "%s"
 msgstr ""
 
-#: src/bin/e_fm.c:9033
+#: src/bin/e_fm.c:9166
 msgid "No to all"
 msgstr "전부 아니오"
 
-#: src/bin/e_fm.c:9035
+#: src/bin/e_fm.c:9168
 msgid "Yes to all"
 msgstr "전부 예"
 
-#: src/bin/e_fm.c:9038
+#: src/bin/e_fm.c:9171
 msgid "Warning"
 msgstr "경고"
 
-#: src/bin/e_fm.c:9041
+#: src/bin/e_fm.c:9174
 #, c-format
 msgid "File already exists, overwrite?<br><hilight>%s</hilight>"
 msgstr "파일이 이미 존재합니다, 덮어쓰기겠습니까?<br><hilight>%s</hilight>"
 
-#: src/bin/e_fm.c:9114
+#: src/bin/e_fm.c:9247
 msgid "Ignore this"
 msgstr "무시"
 
-#: src/bin/e_fm.c:9115
+#: src/bin/e_fm.c:9248
 msgid "Ignore all"
 msgstr "전부 무시"
 
-#: src/bin/e_fm.c:9120
+#: src/bin/e_fm.c:9253
 #, c-format
 msgid "An error occurred while performing an operation.<br>%s"
 msgstr ""
 
-#: src/bin/e_fm.c:9291
+#: src/bin/e_fm.c:9424
 msgid "Confirm Delete"
 msgstr "삭제 확인"
 
-#: src/bin/e_fm.c:9296
+#: src/bin/e_fm.c:9429
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight> ?"
 msgstr "삭제하시겠습니까<br><hilight>%s</hilight> ?"
 
-#: src/bin/e_fm.c:9302
+#: src/bin/e_fm.c:9435
 #, c-format
 msgid ""
 "Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</"
 "hilight> ?"
 msgstr ""
 
-#: src/bin/e_fm_dbus.c:180
+#: src/bin/e_fm_device.c:33
 #, c-format
 msgid "%llu TiB"
 msgstr ""
 
-#: src/bin/e_fm_dbus.c:182
+#: src/bin/e_fm_device.c:35
 #, c-format
 msgid "%llu GiB"
 msgstr ""
 
-#: src/bin/e_fm_dbus.c:184
+#: src/bin/e_fm_device.c:37
 #, c-format
 msgid "%llu MiB"
 msgstr ""
 
-#: src/bin/e_fm_dbus.c:186
+#: src/bin/e_fm_device.c:39
 #, c-format
 msgid "%llu KiB"
 msgstr ""
 
-#: src/bin/e_fm_dbus.c:188
+#: src/bin/e_fm_device.c:41
 #, c-format
 msgid "%llu B"
 msgstr ""
 
-#: src/bin/e_fm_dbus.c:219
+#: src/bin/e_fm_device.c:72
 #, c-format
 msgid "Unknown Volume"
 msgstr ""
 
-#: src/bin/e_fm_dbus.c:316
+#: src/bin/e_fm_device.c:324
 msgid "Removable Device"
 msgstr "이동식 장치"
 
@@ -1356,7 +1446,7 @@ msgstr "이동식 장치"
 msgid "File:"
 msgstr "파일:"
 
-#: src/bin/e_fm_prop.c:339 src/bin/e_widget_fsel.c:324
+#: src/bin/e_fm_prop.c:339 src/bin/e_widget_fsel.c:328
 msgid "Size:"
 msgstr "크기:"
 
@@ -1372,7 +1462,7 @@ msgstr "화일 형태:"
 msgid "Permissions"
 msgstr "권한"
 
-#: src/bin/e_fm_prop.c:361 src/bin/e_widget_fsel.c:340
+#: src/bin/e_fm_prop.c:361 src/bin/e_widget_fsel.c:344
 msgid "Owner:"
 msgstr "소유자:"
 
@@ -1392,8 +1482,8 @@ msgstr "소유자는 읽을수 있음"
 msgid "Owner can write"
 msgstr "소유자는 쓸수 있음"
 
-#: src/bin/e_fm_prop.c:379 src/bin/e_widget_fsel.c:303
-#: src/modules/conf_icon_theme/e_int_config_icon_themes.c:251
+#: src/bin/e_fm_prop.c:379 src/bin/e_widget_fsel.c:307
+#: src/modules/conf_icon_theme/e_int_config_icon_themes.c:258
 #: src/modules/conf_theme/e_int_config_theme.c:1033
 #: src/modules/conf_transitions/e_int_config_transitions.c:167
 msgid "Preview"
@@ -1402,7 +1492,7 @@ msgstr "미리보기"
 #: src/bin/e_fm_prop.c:426
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:180
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:193
-#: src/modules/everything/evry_config.c:432
+#: src/modules/everything/evry_config.c:431
 msgid "Default"
 msgstr "기본값"
 
@@ -1412,7 +1502,7 @@ msgstr "미리보기"
 
 #: src/bin/e_fm_prop.c:432
 #: src/modules/conf_desklock/e_int_config_desklock.c:300
-#: src/modules/everything-aspell/e_mod_main.c:490
+#: src/modules/everything-aspell/e_mod_main.c:486
 msgid "Custom"
 msgstr "사용자 지정"
 
@@ -1428,42 +1518,54 @@ msgstr ""
 msgid "Select an Image"
 msgstr "이미지 선택"
 
-#: src/bin/e_gadcon.c:1329
+#: src/bin/e_gadcon.c:1366
 msgid "Move to"
 msgstr "이동"
 
-#: src/bin/e_gadcon.c:1354 src/modules/gadman/e_mod_gadman.c:709
+#: src/bin/e_gadcon.c:1393 src/modules/gadman/e_mod_gadman.c:720
 msgid "Begin move/resize"
 msgstr ""
 
-#: src/bin/e_gadcon.c:1360
+#: src/bin/e_gadcon.c:1399
 msgid "Resizeable"
 msgstr "크기변경가능"
 
-#: src/bin/e_gadcon.c:1367
+#: src/bin/e_gadcon.c:1406
 msgid "Automatically scroll contents"
 msgstr ""
 
-#: src/bin/e_gadcon.c:1378 src/modules/gadman/e_mod_gadman.c:720
+#: src/bin/e_gadcon.c:1417 src/modules/gadman/e_mod_gadman.c:731
 msgid "Plain"
 msgstr ""
 
-#: src/bin/e_gadcon.c:1387 src/modules/gadman/e_mod_gadman.c:728
+#: src/bin/e_gadcon.c:1426 src/modules/gadman/e_mod_gadman.c:739
 msgid "Inset"
 msgstr ""
 
-#: src/bin/e_gadcon.c:1396 src/bin/e_int_config_modules.c:59
-#: src/modules/gadman/e_mod_gadman.c:764
-msgid "Appearance"
-msgstr "외관"
+#: src/bin/e_gadcon.c:1435 src/bin/e_int_config_modules.c:54
+#: src/modules/conf_borders/e_mod_main.c:17
+#: src/modules/conf_colors/e_mod_main.c:17
+#: src/modules/conf_fonts/e_mod_main.c:17
+#: src/modules/conf_icon_theme/e_mod_main.c:18
+#: src/modules/conf_mouse_cursor/e_mod_main.c:17
+#: src/modules/conf_scale/e_mod_main.c:18
+#: src/modules/conf_startup/e_mod_main.c:17
+#: src/modules/conf_theme/e_mod_main.c:21
+#: src/modules/conf_transitions/e_mod_main.c:17
+#: src/modules/conf_wallpaper/e_mod_main.c:21
+#: src/modules/dropshadow/e_mod_main.c:89
+msgid "Look"
+msgstr ""
 
-#: src/bin/e_gadcon.c:1407 src/bin/e_widget_config_list.c:66
-#: src/modules/conf_applications/e_int_config_apps.c:211
-#: src/modules/gadman/e_mod_gadman.c:804 src/modules/ibar/e_mod_main.c:797
+#: src/bin/e_gadcon.c:1446 src/bin/e_widget_config_list.c:66
+#: src/modules/conf_applications/e_int_config_apps.c:239
+#: src/modules/conf_applications/e_int_config_apps.c:260
+#: src/modules/conf_applications/e_int_config_apps.c:280
+#: src/modules/gadman/e_mod_gadman.c:815 src/modules/ibar/e_mod_main.c:797
 msgid "Remove"
 msgstr "제거"
 
-#: src/bin/e_gadcon.c:1898
+#: src/bin/e_gadcon.c:1948
 msgid "Stop move/resize this gadget"
 msgstr ""
 
@@ -1475,7 +1577,7 @@ msgstr ""
 "이 창에서 이전 인스턴스가 여전히 실행 중입니다\n"
 "시작을 중지합니다.\n"
 
-#: src/bin/e_int_border_locks.c:64 src/bin/e_int_border_menu.c:610
+#: src/bin/e_int_border_locks.c:64 src/bin/e_int_border_menu.c:620
 msgid "Window Locks"
 msgstr "창 고정"
 
@@ -1509,12 +1611,12 @@ msgid "Lock program changing:"
 msgstr ""
 
 #: src/bin/e_int_border_locks.c:306 src/bin/e_int_border_locks.c:325
-#: src/bin/e_int_border_remember.c:699 src/bin/e_int_shelf_config.c:174
+#: src/bin/e_int_border_remember.c:705 src/bin/e_int_shelf_config.c:174
 msgid "Position"
 msgstr "위치"
 
 #: src/bin/e_int_border_locks.c:308 src/bin/e_int_border_locks.c:327
-#: src/bin/e_int_border_remember.c:702 src/bin/e_int_shelf_config.c:185
+#: src/bin/e_int_border_remember.c:708 src/bin/e_int_shelf_config.c:185
 #: src/modules/conf_fonts/e_int_config_fonts.c:439
 #: src/modules/conf_fonts/e_int_config_fonts.c:634
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:137
@@ -1522,8 +1624,8 @@ msgid "Size"
 msgstr "크기"
 
 #: src/bin/e_int_border_locks.c:310 src/bin/e_int_border_locks.c:329
-#: src/bin/e_int_border_menu.c:582 src/bin/e_int_border_prop.c:469
-#: src/bin/e_int_border_remember.c:705 src/bin/e_int_shelf_config.c:132
+#: src/bin/e_int_border_menu.c:592 src/bin/e_int_border_prop.c:469
+#: src/bin/e_int_border_remember.c:711 src/bin/e_int_shelf_config.c:132
 msgid "Stacking"
 msgstr "고정상태"
 
@@ -1532,12 +1634,12 @@ msgid "Iconified state"
 msgstr "아이콘 상태"
 
 #: src/bin/e_int_border_locks.c:314 src/bin/e_int_border_locks.c:333
-#: src/bin/e_int_border_remember.c:717
+#: src/bin/e_int_border_remember.c:723
 msgid "Stickiness"
 msgstr "화면 고정"
 
 #: src/bin/e_int_border_locks.c:316 src/bin/e_int_border_locks.c:335
-#: src/bin/e_int_border_remember.c:723
+#: src/bin/e_int_border_remember.c:729
 msgid "Shaded state"
 msgstr ""
 
@@ -1546,7 +1648,7 @@ msgid "Maximized state"
 msgstr "최대화 상태"
 
 #: src/bin/e_int_border_locks.c:320 src/bin/e_int_border_locks.c:339
-#: src/bin/e_int_border_remember.c:726
+#: src/bin/e_int_border_remember.c:732
 msgid "Fullscreen state"
 msgstr "전체화면 상태"
 
@@ -1554,7 +1656,7 @@ msgstr "전체화면 상태"
 msgid "Lock me from changing:"
 msgstr ""
 
-#: src/bin/e_int_border_locks.c:341 src/bin/e_int_border_remember.c:711
+#: src/bin/e_int_border_locks.c:341 src/bin/e_int_border_remember.c:717
 msgid "Border style"
 msgstr "테두리 형태"
 
@@ -1574,146 +1676,150 @@ msgstr ""
 msgid "Remember these Locks"
 msgstr "고정 내용을 기억"
 
-#: src/bin/e_int_border_menu.c:72
+#: src/bin/e_int_border_menu.c:73
 msgid "Edit Icon"
 msgstr "아이콘 편집"
 
-#: src/bin/e_int_border_menu.c:77
+#: src/bin/e_int_border_menu.c:78
 msgid "Add Application..."
 msgstr ""
 
-#: src/bin/e_int_border_menu.c:88
+#: src/bin/e_int_border_menu.c:89
 msgid "Create Icon"
 msgstr "아이콘 생성"
 
-#: src/bin/e_int_border_menu.c:98
-#: src/modules/everything-windows/e_mod_main.c:457
+#: src/bin/e_int_border_menu.c:99
+#: src/modules/everything-windows/e_mod_main.c:454
 msgid "Send to Desktop"
 msgstr ""
 
-#: src/bin/e_int_border_menu.c:110
+#: src/bin/e_int_border_menu.c:111
 msgid "Pin to Desktop"
 msgstr ""
 
-#: src/bin/e_int_border_menu.c:121
+#: src/bin/e_int_border_menu.c:122
 msgid "Unpin from Desktop"
 msgstr ""
 
-#: src/bin/e_int_border_menu.c:130
+#: src/bin/e_int_border_menu.c:131
 msgid "More..."
 msgstr ""
 
-#: src/bin/e_int_border_menu.c:192
-#: src/modules/everything-windows/e_mod_main.c:436
+#: src/bin/e_int_border_menu.c:193
+#: src/modules/everything-windows/e_mod_main.c:433
 msgid "Iconify"
 msgstr "아이콘화"
 
-#: src/bin/e_int_border_menu.c:407
+#: src/bin/e_int_border_menu.c:408
 msgid "Maximize vertically"
 msgstr "수직으로 최대화"
 
-#: src/bin/e_int_border_menu.c:418
+#: src/bin/e_int_border_menu.c:419
 msgid "Maximize horizontally"
 msgstr "수평으로 최대화"
 
-#: src/bin/e_int_border_menu.c:429
+#: src/bin/e_int_border_menu.c:430
 msgid "Unmaximize"
 msgstr "최대화에서 복원"
 
-#: src/bin/e_int_border_menu.c:530
+#: src/bin/e_int_border_menu.c:540
 msgid "Keyboard Shortcut"
 msgstr ""
 
-#: src/bin/e_int_border_menu.c:536
+#: src/bin/e_int_border_menu.c:546
 msgid "To Favorites Menu"
 msgstr ""
 
-#: src/bin/e_int_border_menu.c:541
+#: src/bin/e_int_border_menu.c:551
 msgid "To Launcher"
 msgstr ""
 
-#: src/bin/e_int_border_menu.c:563 src/modules/conf_borders/e_mod_main.c:20
+#: src/bin/e_int_border_menu.c:573 src/modules/conf_borders/e_mod_main.c:20
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:321
 msgid "Border"
 msgstr "테두리"
 
-#: src/bin/e_int_border_menu.c:572
+#: src/bin/e_int_border_menu.c:582
 msgid "Skip"
 msgstr ""
 
-#: src/bin/e_int_border_menu.c:591 src/bin/e_int_border_prop.c:433
+#: src/bin/e_int_border_menu.c:601 src/bin/e_int_border_prop.c:433
 msgid "State"
 msgstr "상태"
 
-#: src/bin/e_int_border_menu.c:602
+#: src/bin/e_int_border_menu.c:612
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:128
 msgid "Remember"
 msgstr "기억"
 
-#: src/bin/e_int_border_menu.c:618 src/bin/e_int_border_prop.c:75
+#: src/bin/e_int_border_menu.c:628 src/bin/e_int_border_prop.c:75
 msgid "Window Properties"
 msgstr "창 속성"
 
-#: src/bin/e_int_border_menu.c:853
+#: src/bin/e_int_border_menu.c:863
 msgid "Always On Top"
 msgstr "항상 위에"
 
-#: src/bin/e_int_border_menu.c:864
+#: src/bin/e_int_border_menu.c:874
 #: src/modules/conf_fonts/e_int_config_fonts.c:98
 #: src/modules/conf_fonts/e_int_config_fonts.c:262
 msgid "Normal"
 msgstr "보통"
 
-#: src/bin/e_int_border_menu.c:875
+#: src/bin/e_int_border_menu.c:885
 msgid "Always Below"
 msgstr "항상 아래로"
 
-#: src/bin/e_int_border_menu.c:966
+#: src/bin/e_int_border_menu.c:976
 msgid "Select Border Style"
 msgstr ""
 
-#: src/bin/e_int_border_menu.c:978
+#: src/bin/e_int_border_menu.c:988
 msgid "Use E17 Default Icon Preference"
 msgstr ""
 
-#: src/bin/e_int_border_menu.c:986
+#: src/bin/e_int_border_menu.c:996
 msgid "Use Application Provided Icon "
 msgstr ""
 
-#: src/bin/e_int_border_menu.c:994
+#: src/bin/e_int_border_menu.c:1004
 msgid "Use User Defined Icon"
 msgstr ""
 
-#: src/bin/e_int_border_menu.c:1055 src/bin/e_int_border_prop.c:473
+#: src/bin/e_int_border_menu.c:1013 src/bin/e_int_border_remember.c:747
+msgid "Offer Resistance"
+msgstr ""
+
+#: src/bin/e_int_border_menu.c:1076 src/bin/e_int_border_prop.c:473
 msgid "Shaded"
 msgstr ""
 
-#: src/bin/e_int_border_menu.c:1068 src/bin/e_int_border_prop.c:472
+#: src/bin/e_int_border_menu.c:1089 src/bin/e_int_border_prop.c:472
 msgid "Sticky"
 msgstr ""
 
-#: src/bin/e_int_border_menu.c:1084 src/bin/e_int_border_prop.c:477
+#: src/bin/e_int_border_menu.c:1105 src/bin/e_int_border_prop.c:477
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:121
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:145
 msgid "Fullscreen"
 msgstr "전체화면"
 
-#: src/bin/e_int_border_menu.c:1109 src/modules/conf_winlist/e_mod_main.c:19
+#: src/bin/e_int_border_menu.c:1130 src/modules/conf_winlist/e_mod_main.c:19
 msgid "Window List"
 msgstr "창 목록"
 
-#: src/bin/e_int_border_menu.c:1119 src/modules/pager/e_mod_main.c:257
-#: src/modules/pager/e_mod_main.c:2809 src/modules/pager/e_mod_main.c:2816
-#: src/modules/pager/e_mod_main.c:2823 src/modules/pager/e_mod_main.c:2825
-#: src/modules/pager/e_mod_main.c:2827 src/modules/pager/e_mod_main.c:2829
-#: src/modules/pager/e_mod_main.c:2831 src/modules/pager/e_mod_main.c:2833
-#: src/modules/pager/e_mod_main.c:2866 src/modules/pager/e_mod_main.c:2867
-#: src/modules/pager/e_mod_main.c:2868 src/modules/pager/e_mod_main.c:2869
-#: src/modules/pager/e_mod_main.c:2870 src/modules/pager/e_mod_main.c:2871
+#: src/bin/e_int_border_menu.c:1140 src/modules/pager/e_mod_main.c:257
+#: src/modules/pager/e_mod_main.c:2800 src/modules/pager/e_mod_main.c:2807
+#: src/modules/pager/e_mod_main.c:2814 src/modules/pager/e_mod_main.c:2816
+#: src/modules/pager/e_mod_main.c:2818 src/modules/pager/e_mod_main.c:2820
+#: src/modules/pager/e_mod_main.c:2822 src/modules/pager/e_mod_main.c:2824
+#: src/modules/pager/e_mod_main.c:2857 src/modules/pager/e_mod_main.c:2858
+#: src/modules/pager/e_mod_main.c:2859 src/modules/pager/e_mod_main.c:2860
+#: src/modules/pager/e_mod_main.c:2861 src/modules/pager/e_mod_main.c:2862
 msgid "Pager"
 msgstr "페이저"
 
-#: src/bin/e_int_border_menu.c:1129
+#: src/bin/e_int_border_menu.c:1150
 msgid "Taskbar"
 msgstr ""
 
@@ -1729,8 +1835,8 @@ msgstr ""
 msgid "ICCCM Properties"
 msgstr "ICCM 속성"
 
-#: src/bin/e_int_border_prop.c:419 src/bin/e_int_border_remember.c:659
-#: src/bin/e_utils.c:1193
+#: src/bin/e_int_border_prop.c:419 src/bin/e_int_border_remember.c:665
+#: src/bin/e_utils.c:1190
 msgid "Title"
 msgstr "제목"
 
@@ -1822,11 +1928,11 @@ msgstr ""
 msgid "Modal"
 msgstr ""
 
-#: src/bin/e_int_border_prop.c:474 src/bin/e_int_border_remember.c:738
+#: src/bin/e_int_border_prop.c:474 src/bin/e_int_border_remember.c:744
 msgid "Skip Taskbar"
 msgstr ""
 
-#: src/bin/e_int_border_prop.c:475 src/bin/e_int_border_remember.c:735
+#: src/bin/e_int_border_prop.c:475 src/bin/e_int_border_remember.c:741
 msgid "Skip Pager"
 msgstr ""
 
@@ -1834,15 +1940,15 @@ msgstr ""
 msgid "Hidden"
 msgstr "숨김"
 
-#: src/bin/e_int_border_remember.c:82
+#: src/bin/e_int_border_remember.c:83
 msgid "Window Remember"
 msgstr "창 기억"
 
-#: src/bin/e_int_border_remember.c:304
+#: src/bin/e_int_border_remember.c:307
 msgid "Window properties are not a unique match"
 msgstr ""
 
-#: src/bin/e_int_border_remember.c:307
+#: src/bin/e_int_border_remember.c:310
 msgid ""
 "You are trying to ask Enlightenment to remember to apply<br>properties (such "
 "as size, location, border style etc.) to<br>a window that <hilight>does not "
@@ -1856,11 +1962,11 @@ msgid ""
 "sure and nothing will be affected."
 msgstr ""
 
-#: src/bin/e_int_border_remember.c:512
+#: src/bin/e_int_border_remember.c:516
 msgid "No match properties set"
 msgstr ""
 
-#: src/bin/e_int_border_remember.c:515
+#: src/bin/e_int_border_remember.c:519
 msgid ""
 "You are trying to ask Enlightenment to remember to apply<br>properties (such "
 "as size, location, border style etc.) to<br>a window <hilight>without "
@@ -1868,145 +1974,156 @@ msgid ""
 "way of remembering this window."
 msgstr ""
 
-#: src/bin/e_int_border_remember.c:611
+#: src/bin/e_int_border_remember.c:617
 msgid "Nothing"
 msgstr "없음"
 
-#: src/bin/e_int_border_remember.c:613
+#: src/bin/e_int_border_remember.c:619
 msgid "Size and Position"
 msgstr "크기와 위치"
 
-#: src/bin/e_int_border_remember.c:615 src/bin/e_int_border_remember.c:708
+#: src/bin/e_int_border_remember.c:621 src/bin/e_int_border_remember.c:714
 msgid "Locks"
 msgstr "고정"
 
-#: src/bin/e_int_border_remember.c:617
+#: src/bin/e_int_border_remember.c:623
 msgid "Size, Position and Locks"
 msgstr "크기, 위치, 고정상태"
 
-#: src/bin/e_int_border_remember.c:619 src/modules/conf/e_mod_main.c:245
-#: src/modules/everything/evry_plug_aggregator.c:333
+#: src/bin/e_int_border_remember.c:625 src/modules/conf/e_mod_main.c:245
+#: src/modules/everything/evry_plug_aggregator.c:334
 #, fuzzy
 msgid "All"
 msgstr "허용"
 
-#: src/bin/e_int_border_remember.c:632
+#: src/bin/e_int_border_remember.c:638
 msgid "Remember using"
 msgstr "기억하기 사용"
 
-#: src/bin/e_int_border_remember.c:635
+#: src/bin/e_int_border_remember.c:641
 msgid "Window name"
 msgstr "창 이름"
 
-#: src/bin/e_int_border_remember.c:647
+#: src/bin/e_int_border_remember.c:653
 msgid "Window class"
 msgstr "윈도우 클래스"
 
-#: src/bin/e_int_border_remember.c:671
+#: src/bin/e_int_border_remember.c:677
 msgid "Window Role"
 msgstr ""
 
-#: src/bin/e_int_border_remember.c:683
+#: src/bin/e_int_border_remember.c:689
 msgid "Window type"
 msgstr ""
 
-#: src/bin/e_int_border_remember.c:691
+#: src/bin/e_int_border_remember.c:697
 msgid "wildcard matches are allowed"
 msgstr ""
 
-#: src/bin/e_int_border_remember.c:693
+#: src/bin/e_int_border_remember.c:699
 msgid "Transience"
 msgstr ""
 
-#: src/bin/e_int_border_remember.c:698
+#: src/bin/e_int_border_remember.c:704
 msgid "Properties to remember"
 msgstr "속성 기억"
 
-#: src/bin/e_int_border_remember.c:714
+#: src/bin/e_int_border_remember.c:720
 msgid "Icon Preference"
 msgstr ""
 
-#: src/bin/e_int_border_remember.c:720
+#: src/bin/e_int_border_remember.c:726
 msgid "Virtual Desktop"
 msgstr "가상 데스크탑"
 
-#: src/bin/e_int_border_remember.c:729
+#: src/bin/e_int_border_remember.c:735
 msgid "Current Screen"
 msgstr "현재 스크린"
 
-#: src/bin/e_int_border_remember.c:732
+#: src/bin/e_int_border_remember.c:738
 msgid "Skip Window List"
 msgstr "창 목록 무시"
 
-#: src/bin/e_int_border_remember.c:741
+#: src/bin/e_int_border_remember.c:750
 #, fuzzy
 msgid "Application file or name (.desktop)"
 msgstr "응용프로그램 파일 또는 이름 (.desktop)"
 
-#: src/bin/e_int_border_remember.c:749
+#: src/bin/e_int_border_remember.c:758
 msgid "Match only one window"
 msgstr "하나의 창만 일치"
 
-#: src/bin/e_int_border_remember.c:753
+#: src/bin/e_int_border_remember.c:762
 msgid "Always focus on start"
 msgstr ""
 
-#: src/bin/e_int_border_remember.c:757
+#: src/bin/e_int_border_remember.c:766
 #, fuzzy
 msgid "Keep current properties"
 msgstr "아이콘 속성 변경"
 
-#: src/bin/e_int_border_remember.c:763
+#: src/bin/e_int_border_remember.c:772
 msgid "Start this program on login"
 msgstr "로그인시 이 프로그램 시작"
 
-#: src/bin/e_int_config_modules.c:60 src/bin/e_int_menus.c:223
-#: src/bin/e_shelf.c:1685 src/modules/battery/e_mod_main.c:188
-#: src/modules/conf/e_conf.c:121 src/modules/conf/e_conf.c:131
+#: src/bin/e_int_config_modules.c:52
+msgid "Utilities"
+msgstr ""
+
+#: src/bin/e_int_config_modules.c:55 src/modules/conf_mime/e_mod_main.c:17
+#: src/modules/everything-files/e_mod_main.c:1365
+#: src/modules/everything-files/e_mod_main.c:1374
+#: src/modules/fileman/e_mod_main.c:56 src/modules/fileman/e_mod_main.c:74
+#: src/modules/fileman/e_mod_main.c:406
+msgid "Files"
+msgstr "파일"
+
+#: src/bin/e_int_config_modules.c:56
+#, fuzzy
+msgid "Launcher"
+msgstr "실행"
+
+#: src/bin/e_int_config_modules.c:57
+#: src/modules/conf_fonts/e_int_config_fonts.c:57
+msgid "Core"
+msgstr ""
+
+#: src/bin/e_int_config_modules.c:58
+#, fuzzy
+msgid "Mobile"
+msgstr "모듈"
+
+#: src/bin/e_int_config_modules.c:59 src/bin/e_int_menus.c:223
+#: src/bin/e_shelf.c:1689 src/modules/battery/e_mod_main.c:188
+#: src/modules/conf/e_conf.c:124 src/modules/conf/e_conf.c:134
 #: src/modules/conf/e_mod_main.c:102 src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:133
 #: src/modules/conf_profiles/e_mod_main.c:17
-#: src/modules/everything-settings/e_mod_main.c:188
-#: src/modules/ibar/e_mod_main.c:312 src/modules/ibar/e_mod_main.c:830
+#: src/modules/everything-settings/e_mod_main.c:190
+#: src/modules/ibar/e_mod_main.c:313 src/modules/ibar/e_mod_main.c:830
 #: src/modules/ibox/e_mod_main.c:306 src/modules/ibox/e_mod_main.c:700
 #: src/modules/pager/e_mod_main.c:803 src/modules/temperature/e_mod_main.c:231
-#: src/modules/mixer/e_mod_main.c:643 src/modules/connman/e_mod_main.c:1227
+#: src/modules/mixer/e_mod_main.c:681 src/modules/connman/e_mod_main.c:1227
 msgid "Settings"
 msgstr "설정"
 
-#: src/bin/e_int_config_modules.c:61 src/modules/fileman/e_mod_main.c:48
-#: src/modules/fileman/e_mod_main.c:60 src/modules/fileman/e_mod_main.c:143
-#: src/modules/wizard/page_050.c:23
-msgid "File Manager"
-msgstr "파일관리자"
-
-#: src/bin/e_int_config_modules.c:62
-msgid "Shelf"
-msgstr ""
-
-#: src/bin/e_int_config_modules.c:64 src/modules/everything/e_mod_main.c:80
-#: src/modules/everything/e_mod_main.c:196
-#, fuzzy
-msgid "Everything Launcher"
-msgstr "모두"
-
-#: src/bin/e_int_config_modules.c:96
+#: src/bin/e_int_config_modules.c:98
 msgid "Module Settings"
 msgstr "모듈 설정"
 
-#: src/bin/e_int_config_modules.c:160
+#: src/bin/e_int_config_modules.c:176
 msgid "Load"
 msgstr ""
 
-#: src/bin/e_int_config_modules.c:165
+#: src/bin/e_int_config_modules.c:181
 msgid "Unload"
 msgstr ""
 
-#: src/bin/e_int_config_modules.c:173 src/bin/e_int_config_modules.c:603
+#: src/bin/e_int_config_modules.c:307 src/bin/e_int_config_modules.c:591
 msgid "No modules selected."
 msgstr "선택된 모듈이 없음."
 
-#: src/bin/e_int_config_modules.c:601
+#: src/bin/e_int_config_modules.c:589
 msgid "More than one module selected."
 msgstr ""
 
@@ -2051,16 +2168,18 @@ msgid "Main"
 msgstr "메인"
 
 #: src/bin/e_int_menus.c:116
-#: src/modules/conf_applications/e_int_config_apps.c:55
+#: src/modules/conf_applications/e_int_config_apps.c:69
 #: src/modules/conf_applications/e_mod_main.c:25
 msgid "Favorite Applications"
 msgstr "자주 실행하는 응용프로그램"
 
-#: src/bin/e_int_menus.c:127 src/modules/conf_menus/e_int_config_menus.c:98
+#: src/bin/e_int_menus.c:127
+#: src/modules/conf_applications/e_int_config_apps.c:264
+#: src/modules/conf_menus/e_int_config_menus.c:98
 #: src/modules/conf_menus/e_int_config_menus.c:288
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:194
-#: src/modules/everything-apps/e_mod_main.c:950
-#: src/modules/everything-apps/e_mod_main.c:968
+#: src/modules/everything-apps/e_mod_main.c:1026
+#: src/modules/everything-apps/e_mod_main.c:1044
 #: src/modules/wizard/page_070.c:201
 msgid "Applications"
 msgstr "응용 프로그램"
@@ -2081,7 +2200,7 @@ msgstr "잃어버린 창"
 
 #: src/bin/e_int_menus.c:183
 msgid "About"
-msgstr "대하여"
+msgstr "정보"
 
 #: src/bin/e_int_menus.c:188
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:146
@@ -2111,7 +2230,7 @@ msgstr "(응용프로그램 없음)"
 
 #: src/bin/e_int_menus.c:750
 msgid "Set Virtual Desktops"
-msgstr ""
+msgstr "가상 데스크탑 설정"
 
 #: src/bin/e_int_menus.c:1130 src/bin/e_int_menus.c:1314
 msgid "(No Windows)"
@@ -2155,6 +2274,7 @@ msgid "Allow windows to overlap the shelf"
 msgstr "창이 도구모음 위로 갈 수 있음"
 
 #: src/bin/e_int_shelf_config.c:179
+#, c-format
 msgid "Height (%3.0f pixels)"
 msgstr "높이 (%3.0f 픽셀)"
 
@@ -2224,7 +2344,7 @@ msgid ""
 "%s/enlightenment-%s\n"
 msgstr ""
 
-#: src/bin/e_main.c:325
+#: src/bin/e_main.c:333
 #, c-format
 msgid ""
 "Options:\n"
@@ -2253,7 +2373,7 @@ msgid ""
 "\t\tIf you need this help, you don't need this option.\n"
 msgstr ""
 
-#: src/bin/e_main.c:387
+#: src/bin/e_main.c:395
 msgid ""
 "Enlightenment cannot Initialize Ecore!\n"
 "Perhaps you are out of memory?"
@@ -2261,7 +2381,7 @@ msgstr ""
 "Enlightenment이 Ecore를 초기화 할 수 없습니다!\n"
 "메모리가 부족합니까?"
 
-#: src/bin/e_main.c:411
+#: src/bin/e_main.c:419
 msgid ""
 "Enlightenment cannot initialize the File system.\n"
 "Perhaps you are out of memory?"
@@ -2269,7 +2389,7 @@ msgstr ""
 "Enlightenment이 파일 시스템을 초기화 할 수 없습니다!\n"
 "메모리가 부족합니까?"
 
-#: src/bin/e_main.c:424
+#: src/bin/e_main.c:432
 msgid ""
 "Enlightenment cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
@@ -2277,7 +2397,7 @@ msgstr ""
 "Enlightenment이 종료 시그널 관리자를 설정 할 수 없습니다.\n"
 "메모리가 부족합니까?"
 
-#: src/bin/e_main.c:430
+#: src/bin/e_main.c:438
 msgid ""
 "Enlightenment cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
@@ -2285,7 +2405,7 @@ msgstr ""
 "Enlightenment이 재시작 시그널 관리자를 설정 할 수 없습니다.\n"
 "메모리가 부족합니까?"
 
-#: src/bin/e_main.c:436
+#: src/bin/e_main.c:444
 msgid ""
 "Enlightenment cannot set up a USER signal handler.\n"
 "Perhaps you are out of memory?"
@@ -2293,7 +2413,7 @@ msgstr ""
 "Enlightenment이 USER 시그널 관리자를 설정 할 수 없습니다.\n"
 "메모리가 부족합니까?"
 
-#: src/bin/e_main.c:448
+#: src/bin/e_main.c:456
 msgid ""
 "Enlightenment cannot initialize its X connection.\n"
 "Have you set your DISPLAY variable?"
@@ -2301,7 +2421,7 @@ msgstr ""
 "X 접속을 초기화 할 수 없습니다.\n"
 "DISPLAY 값이 있습니까?"
 
-#: src/bin/e_main.c:456
+#: src/bin/e_main.c:464
 msgid ""
 "Enlightenment cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
@@ -2309,13 +2429,13 @@ msgstr ""
 "비상 경고 시스템을 초기화 할 수 없습니다.\n"
 "DISPLAY 값이 있습니까?"
 
-#: src/bin/e_main.c:479
+#: src/bin/e_main.c:487
 msgid ""
 "Enlightenment cannot initialize the connections system.\n"
 "Perhaps you are out of memory?"
 msgstr ""
 
-#: src/bin/e_main.c:487
+#: src/bin/e_main.c:495
 msgid ""
 "Enlightenment cannot initialize the IPC system.\n"
 "Perhaps you are out of memory?"
@@ -2323,33 +2443,34 @@ msgstr ""
 "Enlightenment가 IPC 시스템을 초기화할 수 없습니다.\n"
 "메모리가 부족합니까?"
 
-#: src/bin/e_main.c:496
+#: src/bin/e_main.c:504
 msgid ""
 "Enlightenment cannot setup xinerama wrapping.\n"
 "This should not happen."
 msgstr "Enlightenment가 xinerama wrapping을 설정할 수 없습니다."
 
-#: src/bin/e_main.c:505
+#: src/bin/e_main.c:513
 msgid ""
 "Enlightenment cannot setup randr wrapping.\n"
 "This should not happen."
 msgstr "Enlightenment가 randr wrapping을 설정할 수 없습니다."
 
-#: src/bin/e_main.c:526
+#: src/bin/e_main.c:534
 msgid ""
 "Enlightenment cannot initialize the Evas system.\n"
 "Perhaps you are out of memory?"
-msgstr "Enlightenment가 Evas system을 초기화할 수 없습니다.\n"
+msgstr ""
+"Enlightenment가 Evas system을 초기화할 수 없습니다.\n"
 "메모리가 부족합니까?"
 
-#: src/bin/e_main.c:533
+#: src/bin/e_main.c:541
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
 "Ecore and check they support the Software X11 rendering engine."
 msgstr ""
 
-#: src/bin/e_main.c:540
+#: src/bin/e_main.c:548
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software Buffer\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -2359,49 +2480,43 @@ msgstr ""
 "설치된 Evas아 Ecore의 소프트웨어 버퍼 렌더링 엔진을 확인 하십\n"
 "시오."
 
-#: src/bin/e_main.c:556
-msgid ""
-"Enlightenment cannot initialize the FDO desktop system.\n"
-"Perhaps you are out of memory?"
-msgstr ""
-
-#: src/bin/e_main.c:570
+#: src/bin/e_main.c:567
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
 msgstr ""
 
-#: src/bin/e_main.c:580
+#: src/bin/e_main.c:577
 msgid "Enlightenment cannot set up its file registry system."
 msgstr "파일 레지스트리 시스템을 설정 할 수 없습니다."
 
-#: src/bin/e_main.c:589
+#: src/bin/e_main.c:586
 msgid "Enlightenment cannot set up its config system."
 msgstr "설정 시스템을 설정 할 수 없습니다."
 
-#: src/bin/e_main.c:605
+#: src/bin/e_main.c:602
 msgid "Enlightenment cannot set up its scale system."
 msgstr ""
 
-#: src/bin/e_main.c:613
+#: src/bin/e_main.c:610
 msgid "Enlightenment cannot set up the pointer system."
 msgstr ""
 
-#: src/bin/e_main.c:622
+#: src/bin/e_main.c:619
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
 msgstr ""
 
-#: src/bin/e_main.c:640
+#: src/bin/e_main.c:637
 msgid "Enlightenment cannot set up its font system."
 msgstr "글꼴 시스템을 설정 할 수 없습니다."
 
-#: src/bin/e_main.c:651
+#: src/bin/e_main.c:648
 msgid "Enlightenment cannot set up its theme system."
 msgstr "테마 시스템을 설정 할 수 없습니다."
 
-#: src/bin/e_main.c:665
+#: src/bin/e_main.c:662
 msgid ""
 "Enlightenment cannot set up init screen.\n"
 "Perhaps you are out of memory?"
@@ -2409,19 +2524,25 @@ msgstr ""
 "스크린을 초기화 할 수 없습니다.\n"
 "메모리가 부족하지 않습니까?"
 
-#: src/bin/e_main.c:678
+#: src/bin/e_main.c:675
 msgid "Starting International Support"
 msgstr ""
 
-#: src/bin/e_main.c:683
+#: src/bin/e_main.c:680
 msgid "Enlightenment cannot set up its intl system."
 msgstr "초기화 시스템을 설정 할 수 없습니다."
 
-#: src/bin/e_main.c:690
+#: src/bin/e_main.c:689
+msgid ""
+"Enlightenment cannot initialize the FDO desktop system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+
+#: src/bin/e_main.c:698
 msgid "Testing Format Support"
 msgstr ""
 
-#: src/bin/e_main.c:701 src/bin/e_main.c:761
+#: src/bin/e_main.c:709 src/bin/e_main.c:769
 msgid ""
 "Enlightenment found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
@@ -2429,7 +2550,7 @@ msgstr ""
 "Evas가 버퍼 캔버스를 만들 수 없는 것을 발견 했습니다. Evas가\n"
 "소프트웨어 버퍼 엔진을 지원하는지 확인 하십시오.\n"
 
-#: src/bin/e_main.c:712
+#: src/bin/e_main.c:720
 msgid ""
 "Enlightenment found Evas can't load PNG files. Check Evas has PNG\n"
 "loader support.\n"
@@ -2437,7 +2558,7 @@ msgstr ""
 "Evas가 PNG 파일을 읽을 수 없는 것을 발견 했습니다. Evas가 PNG\n"
 "를 지원 하는지 확인 하십시오.\n"
 
-#: src/bin/e_main.c:721
+#: src/bin/e_main.c:729
 msgid ""
 "Enlightenment found Evas can't load JPEG files. Check Evas has JPEG\n"
 "loader support.\n"
@@ -2445,7 +2566,7 @@ msgstr ""
 "Evas가 JPEG 파일을 읽을 수 없는 것을 발견 했습니다. Evas가 JPEG\n"
 "를 지원 하는지 확인 하십시오.\n"
 
-#: src/bin/e_main.c:730
+#: src/bin/e_main.c:738
 msgid ""
 "Enlightenment found Evas can't load EET files. Check Evas has EET\n"
 "loader support.\n"
@@ -2453,217 +2574,217 @@ msgstr ""
 "Evas가 EET 파일을 읽을 수 없는 것을 발견 했습니다. Evas가 EET\n"
 "를 지원 하는지 확인 하십시오.\n"
 
-#: src/bin/e_main.c:741
+#: src/bin/e_main.c:749
 msgid ""
 "Enlightenment found Evas can't load the 'Sans' font. Check Evas has "
 "fontconfig\n"
 "support and system fontconfig defines a 'Sans' font.\n"
 msgstr ""
 
-#: src/bin/e_main.c:751
+#: src/bin/e_main.c:759
 msgid "Check SVG Support"
 msgstr ""
 
-#: src/bin/e_main.c:781
+#: src/bin/e_main.c:789
 msgid "Setup Screens"
 msgstr ""
 
-#: src/bin/e_main.c:786
+#: src/bin/e_main.c:794
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
 msgstr ""
 
-#: src/bin/e_main.c:792
+#: src/bin/e_main.c:800
 msgid "Setup Screensaver"
 msgstr ""
 
-#: src/bin/e_main.c:797
+#: src/bin/e_main.c:805
 msgid "Enlightenment cannot configure the X screensaver."
 msgstr "화면 보호기를 설정 할 수 없습니다."
 
-#: src/bin/e_main.c:801
+#: src/bin/e_main.c:810
 msgid "Setup Desklock"
 msgstr ""
 
-#: src/bin/e_main.c:806
+#: src/bin/e_main.c:815
 msgid "Enlightenment cannot set up its desk locking system."
 msgstr "데스크탑 고정 시스템을 설정 할 수 없습니다."
 
-#: src/bin/e_main.c:811
+#: src/bin/e_main.c:820
 msgid "Setup Popups"
 msgstr ""
 
-#: src/bin/e_main.c:816
+#: src/bin/e_main.c:825
 msgid "Enlightenment cannot set up its popup system."
 msgstr "팝업 시스템을 설정 할 수 없습니다."
 
-#: src/bin/e_main.c:829
+#: src/bin/e_main.c:838
 msgid "Setup Paths"
 msgstr ""
 
-#: src/bin/e_main.c:846
+#: src/bin/e_main.c:855
 msgid "Setup System Controls"
 msgstr ""
 
-#: src/bin/e_main.c:851
+#: src/bin/e_main.c:860
 msgid "Enlightenment cannot initialize the System Command system.\n"
 msgstr "시스템 명령 시스템을 초기화 할 수 없습니다.\n"
 
-#: src/bin/e_main.c:856
+#: src/bin/e_main.c:865
 msgid "Setup Actions"
 msgstr ""
 
-#: src/bin/e_main.c:861
+#: src/bin/e_main.c:870
 msgid "Enlightenment cannot set up its actions system."
 msgstr "동작 시스템을 설정 할 수 없습니다."
 
-#: src/bin/e_main.c:865
+#: src/bin/e_main.c:874
 msgid "Setup Execution System"
 msgstr ""
 
-#: src/bin/e_main.c:870
+#: src/bin/e_main.c:879
 msgid "Enlightenment cannot set up its exec system."
 msgstr ""
 
-#: src/bin/e_main.c:878
+#: src/bin/e_main.c:887
 msgid "Setup FM"
 msgstr ""
 
-#: src/bin/e_main.c:883
+#: src/bin/e_main.c:892
 msgid "Enlightenment cannot initialize the File manager.\n"
 msgstr "파일 관리자를 초기화 할 수 없습니다.\n"
 
-#: src/bin/e_main.c:898
+#: src/bin/e_main.c:907
 msgid "Setup Message System"
 msgstr ""
 
-#: src/bin/e_main.c:903
+#: src/bin/e_main.c:912
 msgid "Enlightenment cannot set up its msg system."
 msgstr "메세지 시스템을 설정 할 수 없습니다."
 
-#: src/bin/e_main.c:908
+#: src/bin/e_main.c:917
 msgid "Setup DND"
 msgstr ""
 
-#: src/bin/e_main.c:913
+#: src/bin/e_main.c:922
 msgid "Enlightenment cannot set up its dnd system."
 msgstr "DND 시스템을 설정 할 수 없습니다."
 
-#: src/bin/e_main.c:918
+#: src/bin/e_main.c:927
 msgid "Setup Grab Input Handling"
 msgstr ""
 
-#: src/bin/e_main.c:923
+#: src/bin/e_main.c:932
 msgid "Enlightenment cannot set up its input grab handling system."
 msgstr ""
 
-#: src/bin/e_main.c:928
+#: src/bin/e_main.c:937
 msgid "Setup Modules"
 msgstr ""
 
-#: src/bin/e_main.c:933
+#: src/bin/e_main.c:942
 msgid "Enlightenment cannot set up its module system."
 msgstr "확장 시스템을 설정 할 수 없습니다."
 
-#: src/bin/e_main.c:938
+#: src/bin/e_main.c:947
 msgid "Setup Remembers"
 msgstr ""
 
-#: src/bin/e_main.c:943
+#: src/bin/e_main.c:952
 msgid "Enlightenment cannot setup remember settings."
 msgstr "창 기억 시스템을 설정 할 수 없습니다."
 
-#: src/bin/e_main.c:948
+#: src/bin/e_main.c:957
 msgid "Setup Color Classes"
 msgstr ""
 
-#: src/bin/e_main.c:953
+#: src/bin/e_main.c:962
 msgid "Enlightenment cannot set up its color class system."
 msgstr "색상 클래스 시스템을 설정 할 수 없습니다."
 
-#: src/bin/e_main.c:958
+#: src/bin/e_main.c:967
 msgid "Setup Gadcon"
 msgstr ""
 
-#: src/bin/e_main.c:963
+#: src/bin/e_main.c:972
 msgid "Enlightenment cannot set up its gadget control system."
 msgstr "가젯 관리 시스템을 설정 할 수 없습니다."
 
-#: src/bin/e_main.c:968
+#: src/bin/e_main.c:977
 msgid "Setup ACPI"
 msgstr "ACPI 설정"
 
-#: src/bin/e_main.c:975
+#: src/bin/e_main.c:984
 msgid "Setup DPMS"
 msgstr "DPMS 설정"
 
-#: src/bin/e_main.c:980
+#: src/bin/e_main.c:989
 msgid "Enlightenment cannot configure the DPMS settings."
 msgstr "DPMS 설정을 할 수 없습니다."
 
-#: src/bin/e_main.c:984
+#: src/bin/e_main.c:994
 msgid "Setup Powersave modes"
 msgstr ""
 
-#: src/bin/e_main.c:988
+#: src/bin/e_main.c:998
 msgid "Enlightenment cannot set up its powersave modes."
 msgstr ""
 
-#: src/bin/e_main.c:993
+#: src/bin/e_main.c:1003
 msgid "Setup Wallpaper"
 msgstr "바탕화면 설정"
 
-#: src/bin/e_main.c:998
+#: src/bin/e_main.c:1008
 msgid "Enlightenment cannot set up its desktop background system."
 msgstr "배경화면 시스템을 설정 할 수 없습니다."
 
-#: src/bin/e_main.c:1003
+#: src/bin/e_main.c:1013
 msgid "Setup Mouse"
 msgstr "마우스 설정"
 
-#: src/bin/e_main.c:1008
+#: src/bin/e_main.c:1018
 msgid "Enlightenment cannot configure the mouse settings."
 msgstr ""
 
-#: src/bin/e_main.c:1013
+#: src/bin/e_main.c:1023
 msgid "Setup Bindings"
 msgstr ""
 
-#: src/bin/e_main.c:1018
+#: src/bin/e_main.c:1028
 msgid "Enlightenment cannot set up its bindings system."
 msgstr "바인딩 시스템을 설정 할 수 없습니다."
 
-#: src/bin/e_main.c:1023
+#: src/bin/e_main.c:1033
 msgid "Setup Shelves"
 msgstr ""
 
-#: src/bin/e_main.c:1028
+#: src/bin/e_main.c:1038
 msgid "Enlightenment cannot set up its shelf system."
 msgstr "Shelf 시스템을 설정 할 수 없습니다."
 
-#: src/bin/e_main.c:1033
+#: src/bin/e_main.c:1043
 msgid "Setup Thumbnailer"
 msgstr ""
 
-#: src/bin/e_main.c:1038
+#: src/bin/e_main.c:1048
 msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
 msgstr "썸네일 시스템을 초기화 할 수 없습니다.\n"
 
-#: src/bin/e_main.c:1043
+#: src/bin/e_main.c:1053
 #, fuzzy
 msgid "Setup File Ordering"
 msgstr "정렬순서 저장"
 
-#: src/bin/e_main.c:1047
+#: src/bin/e_main.c:1057
 msgid "Enlightenment cannot set up its order file system."
 msgstr ""
 
-#: src/bin/e_main.c:1062
+#: src/bin/e_main.c:1072
 msgid "Load Modules"
 msgstr ""
 
-#: src/bin/e_main.c:1079
+#: src/bin/e_main.c:1089
 #, c-format
 msgid ""
 "Enlightenment crashed early on start and has<br>been restarted. There was an "
@@ -2671,11 +2792,11 @@ msgid ""
 "not be loaded."
 msgstr ""
 
-#: src/bin/e_main.c:1084 src/bin/e_main.c:1101
+#: src/bin/e_main.c:1094 src/bin/e_main.c:1111
 msgid "Enlightenment crashed early on start and has been restarted"
 msgstr ""
 
-#: src/bin/e_main.c:1085
+#: src/bin/e_main.c:1095
 #, c-format
 msgid ""
 "Enlightenment crashed early on start and has been restarted.<br>There was an "
@@ -2683,7 +2804,7 @@ msgid ""
 "not be loaded."
 msgstr ""
 
-#: src/bin/e_main.c:1094
+#: src/bin/e_main.c:1104
 msgid ""
 "Enlightenment crashed early on start and has<br>been restarted. All modules "
 "have been disabled<br>and will not be loaded to help remove any "
@@ -2694,7 +2815,7 @@ msgstr ""
 "제가 있는 모듈을 설정에서 제거 하십시오.<br>확장 기능 설정에서 기능을<br> 새"
 "로 설정해서문제를 해결 하십시오.<br>."
 
-#: src/bin/e_main.c:1102
+#: src/bin/e_main.c:1112
 msgid ""
 "Enlightenment crashed early on start and has been restarted.<br>All modules "
 "have been disabled and will not be loaded to help<br>remove any problem "
@@ -2702,30 +2823,31 @@ msgid ""
 "should let you select your<br>modules again."
 msgstr ""
 
-#: src/bin/e_main.c:1131
+#: src/bin/e_main.c:1141
 msgid "Configure Shelves"
 msgstr ""
 
-#: src/bin/e_main.c:1142
+#: src/bin/e_main.c:1152
 msgid "Almost Done"
 msgstr ""
 
-#: src/bin/e_module.c:91
+#: src/bin/e_module.c:98
+#, c-format
 msgid "Loading Module: %s"
 msgstr "%s 모듈 읽기"
 
-#: src/bin/e_module.c:129
+#: src/bin/e_module.c:136
 #, c-format
 msgid ""
 "There was an error loading module named: %s<br>No module named %s could be "
 "found in the<br>module search directories.<br>"
 msgstr ""
 
-#: src/bin/e_module.c:132 src/bin/e_module.c:145 src/bin/e_module.c:163
+#: src/bin/e_module.c:139 src/bin/e_module.c:152 src/bin/e_module.c:170
 msgid "Error loading Module"
 msgstr "모듈 읽기 오류"
 
-#: src/bin/e_module.c:140 src/bin/e_module.c:157
+#: src/bin/e_module.c:147 src/bin/e_module.c:164
 #, c-format
 msgid ""
 "There was an error loading module named: %s<br>The full path to this module "
@@ -2734,11 +2856,11 @@ msgstr ""
 "오류가 있는 추가기능: %s<br>이 모듈의 전체 경로:<br>%s<br>오류 보고서:<br>%"
 "s<br>"
 
-#: src/bin/e_module.c:162
+#: src/bin/e_module.c:169
 msgid "Module does not contain all needed functions"
 msgstr "모듈이 필요로하는 기능을 포함하고 있지 않습니다."
 
-#: src/bin/e_module.c:177
+#: src/bin/e_module.c:184
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
@@ -2746,50 +2868,50 @@ msgid ""
 "%i.<br>"
 msgstr ""
 
-#: src/bin/e_module.c:182
+#: src/bin/e_module.c:189
 #, c-format
 msgid "Enlightenment %s Module"
 msgstr "Enlightenment %s 모듈"
 
-#: src/bin/e_module.c:508
+#: src/bin/e_module.c:515
 msgid "Would you like to unload this module?<br>"
 msgstr "이 모듈을 제거 하시겠습니까?<br>"
 
-#: src/bin/e_screensaver.c:99
+#: src/bin/e_screensaver.c:135
 msgid ""
 "You disabled screensaver too fast.<br><br>Would you like to enable "
 "<b>presentation</b> mode and temporarily disable screen saver, lock and "
 "power saving?"
 msgstr ""
 
-#: src/bin/e_shelf.c:163
+#: src/bin/e_shelf.c:165
 msgid "Shelf #"
 msgstr ""
 
-#: src/bin/e_shelf.c:1296 src/modules/conf_shelves/e_int_config_shelf.c:280
+#: src/bin/e_shelf.c:1298 src/modules/conf_shelves/e_int_config_shelf.c:286
 msgid "Are you sure you want to delete this shelf?"
 msgstr "이 도구 막대를 삭제 하시겠습니까?"
 
-#: src/bin/e_shelf.c:1297
+#: src/bin/e_shelf.c:1299
 msgid ""
 "You requested to delete this shelf.<br><br>Are you sure you want to delete "
 "it?"
 msgstr ""
 
-#: src/bin/e_shelf.c:1670
+#: src/bin/e_shelf.c:1674
 msgid "Stop Moving/Resizing Gadgets"
 msgstr ""
 
-#: src/bin/e_shelf.c:1672
+#: src/bin/e_shelf.c:1676
 msgid "Begin Moving/Resizing Gadgets"
 msgstr ""
 
-#: src/bin/e_shelf.c:1680 src/modules/ibar/e_mod_main.c:824
+#: src/bin/e_shelf.c:1684 src/modules/ibar/e_mod_main.c:824
 #, fuzzy
 msgid "Contents"
 msgstr "메모"
 
-#: src/bin/e_startup.c:63
+#: src/bin/e_startup.c:66
 msgid "Starting"
 msgstr ""
 
@@ -2940,137 +3062,137 @@ msgstr ""
 msgid "Set Toolbar Contents"
 msgstr ""
 
-#: src/bin/e_utils.c:279
+#: src/bin/e_utils.c:280
 msgid "Cannot exit - immortal windows."
 msgstr "종료할 수 없음 - 이모탈 창."
 
-#: src/bin/e_utils.c:280
+#: src/bin/e_utils.c:281
 msgid ""
 "Some windows are left still around with the Lifespan lock enabled. This "
 "means<br>that Enlightenment will not allow itself to exit until these "
 "windows have<br>been closed or have the lifespan lock removed.<br>"
 msgstr ""
 
-#: src/bin/e_utils.c:855
+#: src/bin/e_utils.c:874
 #, c-format
 msgid "%'.0f Bytes"
 msgstr ""
 
-#: src/bin/e_utils.c:859
+#: src/bin/e_utils.c:878
 #, c-format
 msgid "%'.0f KB"
 msgstr ""
 
-#: src/bin/e_utils.c:863
+#: src/bin/e_utils.c:882
 #, c-format
 msgid "%'.0f MB"
 msgstr ""
 
-#: src/bin/e_utils.c:867
+#: src/bin/e_utils.c:886
 #, c-format
 msgid "%'.1f GB"
 msgstr ""
 
-#: src/bin/e_utils.c:886
+#: src/bin/e_utils.c:905
 #, c-format
 msgid "In the Future"
 msgstr "향후에"
 
-#: src/bin/e_utils.c:890
+#: src/bin/e_utils.c:909
 #, c-format
 msgid "In the last Minute"
 msgstr "마지막 분에"
 
-#: src/bin/e_utils.c:892
+#: src/bin/e_utils.c:911
 #, c-format
 msgid "%li Years ago"
 msgstr "%li 년전"
 
-#: src/bin/e_utils.c:894
+#: src/bin/e_utils.c:913
 #, c-format
 msgid "%li Months ago"
 msgstr "%li 달전"
 
-#: src/bin/e_utils.c:896
+#: src/bin/e_utils.c:915
 #, c-format
 msgid "%li Weeks ago"
 msgstr "%li 주전"
 
-#: src/bin/e_utils.c:898
+#: src/bin/e_utils.c:917
 #, c-format
 msgid "%li Days ago"
 msgstr "%li 일전"
 
-#: src/bin/e_utils.c:900
+#: src/bin/e_utils.c:919
 #, c-format
 msgid "%li Hours ago"
 msgstr "%li 시간전"
 
-#: src/bin/e_utils.c:902
+#: src/bin/e_utils.c:921
 #, c-format
 msgid "%li Minutes ago"
 msgstr "%li 분전"
 
-#: src/bin/e_utils.c:908
+#: src/bin/e_utils.c:927
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1179
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1152
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1176
 #: src/modules/conf_profiles/e_int_config_profiles.c:274
 #: src/modules/wizard/page_020.c:19 src/modules/wizard/page_020.c:27
 msgid "Unknown"
 msgstr "알수없음"
 
-#: src/bin/e_utils.c:1162
+#: src/bin/e_utils.c:1159
 #, fuzzy
 msgid "Image Import Settings"
 msgstr "시작 설정"
 
-#: src/bin/e_utils.c:1166
+#: src/bin/e_utils.c:1163
 #, fuzzy
 msgid "Import"
 msgstr "가져오기..."
 
-#: src/bin/e_utils.c:1183
+#: src/bin/e_utils.c:1180
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:167
 msgid "Fill and Stretch Options"
 msgstr "채우기와 넓히기 설정"
 
-#: src/bin/e_utils.c:1191
+#: src/bin/e_utils.c:1188
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:170
 msgid "Stretch"
 msgstr ""
 
-#: src/bin/e_utils.c:1192
+#: src/bin/e_utils.c:1189
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:175
 msgid "Center"
 msgstr ""
 
-#: src/bin/e_utils.c:1194
+#: src/bin/e_utils.c:1191
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:185
 msgid "Within"
 msgstr ""
 
-#: src/bin/e_utils.c:1195
+#: src/bin/e_utils.c:1192
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:190
 msgid "Fill"
 msgstr ""
 
-#: src/bin/e_utils.c:1200
+#: src/bin/e_utils.c:1197
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:197
 msgid "File Quality"
 msgstr ""
 
-#: src/bin/e_utils.c:1202
+#: src/bin/e_utils.c:1199
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:199
 msgid "Use original file"
 msgstr ""
 
-#: src/bin/e_utils.c:1206
+#: src/bin/e_utils.c:1203
 #: src/modules/conf_wallpaper/e_int_config_wallpaper_import.c:202
 #, c-format
 msgid "%3.0f%%"
 msgstr ""
 
-#: src/bin/e_utils.c:1507
+#: src/bin/e_utils.c:1532
 #, fuzzy
 msgid ""
 "Configuration data needed upgrading. Your old configuration<br> has been "
@@ -3086,12 +3208,12 @@ msgstr ""
 "로운 기능을 위한 의도로 이해해주시기 바랍니다. <br>번거로우시겠지만, 원하시는"
 "데로 다시 설정해주시길 바랍니다."
 
-#: src/bin/e_utils.c:1520 src/bin/e_utils.c:1544
+#: src/bin/e_utils.c:1545 src/bin/e_utils.c:1569
 #, fuzzy, c-format
 msgid "%s Configuration Updated"
 msgstr "설정이 갱신됨"
 
-#: src/bin/e_utils.c:1533
+#: src/bin/e_utils.c:1558
 #, fuzzy
 msgid ""
 "Your module configuration is NEWER than the module version. This is "
@@ -3106,7 +3228,8 @@ msgstr ""
 "치 못한 에러를 막기 위해 설정을 초기화하였습니다."
 
 #: src/bin/e_widget_config_list.c:60
-#: src/modules/conf_applications/e_int_config_apps.c:207
+#: src/modules/conf_applications/e_int_config_apps.c:235
+#: src/modules/conf_applications/e_int_config_apps.c:256
 #: src/modules/conf_profiles/e_int_config_profiles.c:133
 #: src/modules/conf_shelves/e_int_config_shelf.c:78
 #: src/modules/ibar/e_mod_config.c:106
@@ -3114,20 +3237,20 @@ msgid "Add"
 msgstr "추가"
 
 #: src/bin/e_widget_config_list.c:80
-#: src/modules/conf_applications/e_int_config_apps.c:223
+#: src/modules/conf_applications/e_int_config_apps.c:272
 msgid "Up"
 msgstr ""
 
 #: src/bin/e_widget_config_list.c:86
-#: src/modules/conf_applications/e_int_config_apps.c:227
+#: src/modules/conf_applications/e_int_config_apps.c:276
 msgid "Down"
 msgstr ""
 
-#: src/bin/e_widget_fsel.c:289
+#: src/bin/e_widget_fsel.c:293
 msgid "Add to Favorites"
 msgstr "즐겨찾기에 추가"
 
-#: src/bin/e_widget_fsel.c:295
+#: src/bin/e_widget_fsel.c:299
 #: src/modules/conf_desklock/e_int_config_desklock_fsel.c:91
 #: src/modules/conf_imc/e_int_config_imc.c:815
 #: src/modules/conf_startup/e_int_config_startup.c:266
@@ -3138,36 +3261,36 @@ msgstr "즐겨찾기에 추가"
 msgid "Go up a Directory"
 msgstr "상위 디렉토리로"
 
-#: src/bin/e_widget_fsel.c:356
+#: src/bin/e_widget_fsel.c:360
 msgid "Permissions:"
 msgstr "권한:"
 
-#: src/bin/e_widget_fsel.c:372
+#: src/bin/e_widget_fsel.c:376
 msgid "Modified:"
 msgstr "수정:"
 
-#: src/bin/e_widget_fsel.c:611
+#: src/bin/e_widget_fsel.c:615
 #, c-format
 msgid "You"
 msgstr "당신"
 
-#: src/bin/e_widget_fsel.c:660
+#: src/bin/e_widget_fsel.c:664
 #, c-format
 msgid "Protected"
 msgstr "보호됨"
 
-#: src/bin/e_widget_fsel.c:662 src/bin/e_widget_fsel.c:671
-#: src/bin/e_widget_fsel.c:680
+#: src/bin/e_widget_fsel.c:666 src/bin/e_widget_fsel.c:675
+#: src/bin/e_widget_fsel.c:684
 #, c-format
 msgid "Read Only"
 msgstr "읽기전용"
 
-#: src/bin/e_widget_fsel.c:669 src/bin/e_widget_fsel.c:678
+#: src/bin/e_widget_fsel.c:673 src/bin/e_widget_fsel.c:682
 #, c-format
 msgid "Forbidden"
 msgstr "숨겨짐"
 
-#: src/bin/e_widget_fsel.c:687
+#: src/bin/e_widget_fsel.c:691
 msgid "Read-Write"
 msgstr "읽기-쓰기"
 
@@ -3248,7 +3371,6 @@ msgid "Fuzzy Mode"
 msgstr ""
 
 #: src/modules/battery/e_mod_config.c:265
-#: src/modules/fileman/e_mod_config.c:284
 msgid "HAL"
 msgstr ""
 
@@ -3343,28 +3465,23 @@ msgstr "모드"
 msgid "Configuration Panel Configuration Updated"
 msgstr "설정이 갱신됨"
 
-#: src/modules/conf_applications/e_int_config_apps.c:70
 #: src/modules/conf_applications/e_int_config_apps.c:84
+#: src/modules/conf_applications/e_int_config_apps.c:98
 #: src/modules/conf_applications/e_mod_main.c:28
 msgid "IBar Applications"
 msgstr "IBar 응용프로그램"
 
-#: src/modules/conf_applications/e_int_config_apps.c:99
+#: src/modules/conf_applications/e_int_config_apps.c:113
 #: src/modules/conf_applications/e_mod_main.c:36
 msgid "Startup Applications"
 msgstr "시작 응용프로그램"
 
-#: src/modules/conf_applications/e_int_config_apps.c:114
+#: src/modules/conf_applications/e_int_config_apps.c:129
 #: src/modules/conf_applications/e_mod_main.c:32
 msgid "Restart Applications"
 msgstr "응용프로그램 재시작"
 
-#: src/modules/conf_applications/e_int_config_apps.c:215
-#, fuzzy
-msgid "Selection"
-msgstr "아이콘 선택"
-
-#: src/modules/conf_applications/e_int_config_apps.c:231
+#: src/modules/conf_applications/e_int_config_apps.c:284
 #, fuzzy
 msgid "Order"
 msgstr "테두리"
@@ -3392,20 +3509,6 @@ msgstr "창 테두리 선택"
 
 #: src/modules/conf_borders/e_int_config_borders.c:246
 msgid "Remember this Border for this window next time it appears"
-msgstr ""
-
-#: src/modules/conf_borders/e_mod_main.c:17
-#: src/modules/conf_colors/e_mod_main.c:17
-#: src/modules/conf_fonts/e_mod_main.c:17
-#: src/modules/conf_icon_theme/e_mod_main.c:18
-#: src/modules/conf_mouse_cursor/e_mod_main.c:17
-#: src/modules/conf_scale/e_mod_main.c:18
-#: src/modules/conf_startup/e_mod_main.c:17
-#: src/modules/conf_theme/e_mod_main.c:21
-#: src/modules/conf_transitions/e_mod_main.c:17
-#: src/modules/conf_wallpaper/e_mod_main.c:21
-#: src/modules/dropshadow/e_mod_main.c:89
-msgid "Look"
 msgstr ""
 
 #: src/modules/conf_borders/e_mod_main.c:18
@@ -3843,18 +3946,16 @@ msgid "Show on screen #:"
 msgstr "다음 화면 영역에서 보기 #:"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:239
-#: src/modules/conf_desks/e_int_config_desks.c:229
-#: src/modules/conf_desks/e_int_config_desks.c:234
-#: src/modules/conf_desks/e_int_config_desks.c:262
-#: src/modules/conf_desks/e_int_config_desks.c:266
+#: src/modules/conf_desks/e_int_config_desks.c:169
+#: src/modules/conf_desks/e_int_config_desks.c:174
 #: src/modules/conf_mouse/e_int_config_mouse.c:114
 #: src/modules/conf_mouse/e_int_config_mouse.c:120
-#: src/modules/everything/evry_config.c:408
-#: src/modules/everything/evry_config.c:551
-#: src/modules/everything/evry_config.c:558
-#: src/modules/everything/evry_config.c:583
-#: src/modules/everything/evry_config.c:590
-#: src/modules/fileman/e_mod_config.c:229
+#: src/modules/everything/evry_config.c:407
+#: src/modules/everything/evry_config.c:550
+#: src/modules/everything/evry_config.c:557
+#: src/modules/everything/evry_config.c:582
+#: src/modules/everything/evry_config.c:589
+#: src/modules/fileman/e_mod_config.c:240
 #, c-format
 msgid "%1.0f"
 msgstr ""
@@ -3931,79 +4032,75 @@ msgstr "배경화면"
 msgid "Screen Lock"
 msgstr "화면 잠금"
 
-#: src/modules/conf_desks/e_int_config_desks.c:58
+#: src/modules/conf_desks/e_int_config_desks.c:52
 #: src/modules/pager/e_mod_main.c:795
 msgid "Virtual Desktops Settings"
 msgstr "가상 데스크탑 설정"
 
-#: src/modules/conf_desks/e_int_config_desks.c:222
+#: src/modules/conf_desks/e_int_config_desks.c:162
 msgid "Number of Desktops"
 msgstr "데스크탑 갯수"
 
-#: src/modules/conf_desks/e_int_config_desks.c:241
-#: src/modules/conf_desks/e_int_config_desks.c:280
-msgid "Desktop Mouse Flip"
+#: src/modules/conf_desks/e_int_config_desks.c:181
+#, fuzzy
+msgid "Desktop Flip"
 msgstr "데스크탑 마우스 설정"
 
-#: src/modules/conf_desks/e_int_config_desks.c:242
-msgid "Animated flip"
-msgstr "움직이는 모양 사용"
-
-#: src/modules/conf_desks/e_int_config_desks.c:270
-msgid "Desktops"
-msgstr ""
-
-#: src/modules/conf_desks/e_int_config_desks.c:274
+#: src/modules/conf_desks/e_int_config_desks.c:182
 msgid "Flip when dragging objects to the screen edge"
 msgstr "객체를 화면 가장자리로 끌면 변경"
 
-#: src/modules/conf_desks/e_int_config_desks.c:277
+#: src/modules/conf_desks/e_int_config_desks.c:185
 msgid "Wrap desktops around when flipping"
 msgstr "바꿀때 데스크탑 주변에 있으면 변경"
 
-#: src/modules/conf_desks/e_int_config_desks.c:285
-#: src/modules/everything/evry_config.c:478
+#: src/modules/conf_desks/e_int_config_desks.c:191
+msgid "Desktops"
+msgstr ""
+
+#: src/modules/conf_desks/e_int_config_desks.c:196
+#: src/modules/everything/evry_config.c:477
 msgid "Off"
 msgstr "끄기"
 
-#: src/modules/conf_desks/e_int_config_desks.c:288
+#: src/modules/conf_desks/e_int_config_desks.c:199
 msgid "Pane"
 msgstr ""
 
-#: src/modules/conf_desks/e_int_config_desks.c:291
+#: src/modules/conf_desks/e_int_config_desks.c:202
 msgid "Zoom"
 msgstr "화대"
 
-#: src/modules/conf_desks/e_int_config_desks.c:295
+#: src/modules/conf_desks/e_int_config_desks.c:206
 msgid "Background panning"
 msgstr ""
 
-#: src/modules/conf_desks/e_int_config_desks.c:301
+#: src/modules/conf_desks/e_int_config_desks.c:212
 msgid "Animation speed"
 msgstr "애니메이션 속도"
 
-#: src/modules/conf_desks/e_int_config_desks.c:304
+#: src/modules/conf_desks/e_int_config_desks.c:215
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:168
 #: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:151
 #, c-format
 msgid "%1.1f sec"
 msgstr "%1.1f 초"
 
-#: src/modules/conf_desks/e_int_config_desks.c:310
+#: src/modules/conf_desks/e_int_config_desks.c:221
 msgid "X-Axis pan factor"
 msgstr ""
 
-#: src/modules/conf_desks/e_int_config_desks.c:313
-#: src/modules/conf_desks/e_int_config_desks.c:322
+#: src/modules/conf_desks/e_int_config_desks.c:224
+#: src/modules/conf_desks/e_int_config_desks.c:233
 #, c-format
 msgid "%.2f"
 msgstr ""
 
-#: src/modules/conf_desks/e_int_config_desks.c:319
+#: src/modules/conf_desks/e_int_config_desks.c:230
 msgid "Y-Axis pan factor"
 msgstr ""
 
-#: src/modules/conf_desks/e_int_config_desks.c:328
+#: src/modules/conf_desks/e_int_config_desks.c:239
 msgid "Flip Animation"
 msgstr "바꾸기 효과"
 
@@ -4018,8 +4115,8 @@ msgstr ""
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:109
 #: src/modules/conf_engine/e_int_config_engine.c:95
 #: src/modules/conf_fonts/e_int_config_fonts.c:646
-#: src/modules/everything/evry_config.c:523 src/modules/ibox/e_mod_config.c:96
-#: src/modules/mixer/conf_gadget.c:187 src/modules/mixer/conf_module.c:89
+#: src/modules/everything/evry_config.c:522 src/modules/ibox/e_mod_config.c:96
+#: src/modules/mixer/conf_gadget.c:191 src/modules/mixer/conf_module.c:89
 msgid "General Settings"
 msgstr "일반 설정"
 
@@ -4218,43 +4315,43 @@ msgid "Edge Bindings"
 msgstr ""
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:260
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:226
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:249
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:281
 msgid "Add Binding"
 msgstr "연결 추가"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:263
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:229
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:252
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:283
 msgid "Delete Binding"
 msgstr "연결 삭제"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:267
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:233
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:256
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:287
 msgid "Modify Binding"
 msgstr "연결 수정"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:271
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:237
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:260
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:291
 msgid "Delete All"
 msgstr "모두 삭제"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:275
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:241
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:264
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:295
 msgid "Restore Default Bindings"
 msgstr "기본 설정 복원"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:280
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:246
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:269
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:301
 msgid "Action"
 msgstr "동작"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:287
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:253
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:276
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:308
 msgid "Action Params"
 msgstr "실행 인자"
@@ -4292,30 +4389,30 @@ msgid ""
 msgstr ""
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1312
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1302
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1334
-#: src/modules/gadman/e_mod_gadman.c:828
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1331
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1363
+#: src/modules/gadman/e_mod_gadman.c:839
 msgid "CTRL"
 msgstr ""
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1317
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1307
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1339
-#: src/modules/gadman/e_mod_gadman.c:833
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1336
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1368
+#: src/modules/gadman/e_mod_gadman.c:844
 msgid "ALT"
 msgstr ""
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1323
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1313
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1345
-#: src/modules/gadman/e_mod_gadman.c:839
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1342
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1374
+#: src/modules/gadman/e_mod_gadman.c:850
 msgid "SHIFT"
 msgstr ""
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1329
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1319
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1351
-#: src/modules/gadman/e_mod_gadman.c:845
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1348
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1380
+#: src/modules/gadman/e_mod_gadman.c:856
 msgid "WIN"
 msgstr ""
 
@@ -4333,26 +4430,19 @@ msgid "Engine Settings"
 msgstr ""
 
 #: src/modules/conf_engine/e_int_config_engine.c:96
-msgid "Enable Composite"
-msgstr ""
-
 #: src/modules/conf_engine/e_int_config_engine.c:138
-msgid "Enable Composite Support ?"
+msgid "Use ARGB instead of shaped windows"
 msgstr ""
 
 #: src/modules/conf_engine/e_int_config_engine.c:140
 msgid ""
-"You have chosen to enable composite support,<br>but your current screen does "
-"not support composite.<br><br>Are you sure you wish to enable composite "
+"You have chosen to enable ARGB composite support,<br>but your current screen "
+"does not support composite.<br><br>Are you sure you wish to enable ARGB "
 "support ?"
 msgstr ""
 
 #: src/modules/conf_engine/e_mod_main.c:19
 msgid "Engine"
-msgstr ""
-
-#: src/modules/conf_fonts/e_int_config_fonts.c:57
-msgid "Core"
 msgstr ""
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:58
@@ -4553,7 +4643,7 @@ msgstr "바이트코드"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:657
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:193
-#: src/modules/cpufreq/e_mod_main.c:224 src/modules/cpufreq/e_mod_main.c:256
+#: src/modules/cpufreq/e_mod_main.c:227 src/modules/cpufreq/e_mod_main.c:259
 msgid "Automatic"
 msgstr "자동"
 
@@ -4573,12 +4663,17 @@ msgstr ""
 msgid "Hinting / Fallbacks"
 msgstr ""
 
-#: src/modules/conf_icon_theme/e_int_config_icon_themes.c:52
+#: src/modules/conf_icon_theme/e_int_config_icon_themes.c:53
 msgid "Icon Theme Settings"
 msgstr ""
 
-#: src/modules/conf_icon_theme/e_int_config_icon_themes.c:264
-msgid "This overrides general theme"
+#: src/modules/conf_icon_theme/e_int_config_icon_themes.c:271
+#, fuzzy
+msgid "Enable icon theme"
+msgstr "아이콘 테마 사용"
+
+#: src/modules/conf_icon_theme/e_int_config_icon_themes.c:276
+msgid "Icons override general theme"
 msgstr ""
 
 #: src/modules/conf_icon_theme/e_mod_main.c:19
@@ -4649,7 +4744,7 @@ msgid ""
 msgstr ""
 
 #: src/modules/conf_imc/e_mod_main.c:17 src/modules/conf_intl/e_mod_main.c:17
-#: src/modules/everything-aspell/e_mod_main.c:500
+#: src/modules/everything-aspell/e_mod_main.c:496
 #: src/modules/wizard/page_010.c:139
 msgid "Language"
 msgstr "언어"
@@ -4727,25 +4822,25 @@ msgstr ""
 msgid "Single key"
 msgstr ""
 
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:91
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:110
 #, fuzzy
 msgid "Key Bindings Settings"
 msgstr "단축 글쇠 설정"
 
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:221
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:244
 #: src/modules/conf_keybindings/e_mod_main.c:20
 msgid "Key Bindings"
 msgstr "단축키 설정"
 
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:932
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:966
 msgid "Key Binding Sequence"
 msgstr "단축 글쇠 순서"
 
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1147
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1171
 msgid "Binding Key Error"
 msgstr "단축 글쇠 오류"
 
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1148
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1172
 #, c-format
 msgid ""
 "The binding key sequence, that you choose, is already used by <br><hilight>%"
@@ -4765,7 +4860,7 @@ msgstr "메인 메뉴 표시"
 
 #: src/modules/conf_menus/e_int_config_menus.c:96
 #: src/modules/conf_menus/e_int_config_menus.c:286
-#: src/modules/fileman/e_mod_main.c:331
+#: src/modules/fileman/e_mod_main.c:350
 msgid "Favorites"
 msgstr ""
 
@@ -4840,6 +4935,7 @@ msgid "Click Drag Timeout"
 msgstr "클릭과 끌기 시간"
 
 #: src/modules/conf_menus/e_int_config_menus.c:334
+#, c-format
 msgid "%2.2f sec"
 msgstr "%2.2f 초"
 
@@ -4860,7 +4956,7 @@ msgstr "파일 아이콘"
 msgid "File Types"
 msgstr "파일 형태"
 
-#: src/modules/conf_mime/e_int_config_mime%d _edit.c:71
+#: src/modules/conf_mime/e_int_config_mime_edit.c:71
 msgid "File Icon"
 msgstr "파일 아이콘:"
 
@@ -4900,14 +4996,6 @@ msgstr "Edje 파일 선택"
 msgid "Select an image"
 msgstr "이미지 선택"
 
-#: src/modules/conf_mime/e_mod_main.c:17
-#: src/modules/everything-files/e_mod_main.c:1425
-#: src/modules/everything-files/e_mod_main.c:1434
-#: src/modules/fileman/e_mod_main.c:46 src/modules/fileman/e_mod_main.c:64
-#: src/modules/fileman/e_mod_main.c:386
-msgid "Files"
-msgstr "파일"
-
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:7
 msgid ""
 "Please hold any modifier you want<br>and press any button on your mouse,<br> "
@@ -4938,7 +5026,7 @@ msgid "Win List"
 msgstr "창 목록"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:333
-#: src/modules/pager/e_mod_config.c:134 src/modules/pager/e_mod_config.c:247
+#: src/modules/pager/e_mod_config.c:135 src/modules/pager/e_mod_config.c:248
 msgid "Popup"
 msgstr "팝업"
 
@@ -5017,8 +5105,8 @@ msgid "Themes"
 msgstr "테마"
 
 #: src/modules/conf_paths/e_int_config_paths.c:78
-#: src/modules/everything/evry_config.c:444
-#: src/modules/everything/evry_config.c:493
+#: src/modules/everything/evry_config.c:443
+#: src/modules/everything/evry_config.c:492
 msgid "Icons"
 msgstr "아이콘"
 
@@ -5287,7 +5375,7 @@ msgstr "설정된 도구모음"
 msgid "Setup"
 msgstr ""
 
-#: src/modules/conf_shelves/e_int_config_shelf.c:276
+#: src/modules/conf_shelves/e_int_config_shelf.c:282
 #, c-format
 msgid ""
 "You requested to delete \"%s\".<br><br>Are you sure you want to delete this "
@@ -5747,14 +5835,14 @@ msgid "Fill available space"
 msgstr "사용 가능한 영역에 채움"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:161
-#: src/modules/everything/evry_config.c:572
-#: src/modules/gadman/e_mod_gadman.c:748
+#: src/modules/everything/evry_config.c:571
+#: src/modules/gadman/e_mod_gadman.c:759
 msgid "Horizontal"
 msgstr "수평"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:163
-#: src/modules/everything/evry_config.c:565
-#: src/modules/gadman/e_mod_gadman.c:756
+#: src/modules/everything/evry_config.c:564
+#: src/modules/gadman/e_mod_gadman.c:767
 msgid "Vertical"
 msgstr "수직"
 
@@ -5928,8 +6016,8 @@ msgstr "이동 속도"
 #: src/modules/conf_winlist/e_int_config_winlist.c:251
 #: src/modules/conf_winlist/e_int_config_winlist.c:292
 #: src/modules/conf_winlist/e_int_config_winlist.c:297
-#: src/modules/everything/evry_config.c:567
-#: src/modules/everything/evry_config.c:574
+#: src/modules/everything/evry_config.c:566
+#: src/modules/everything/evry_config.c:573
 #, c-format
 msgid "%1.2f"
 msgstr ""
@@ -5978,7 +6066,7 @@ msgid "Maximum height"
 msgstr "최대 높이"
 
 #: src/modules/conf_winlist/e_int_config_winlist.c:286
-#: src/modules/everything/evry_config.c:597
+#: src/modules/everything/evry_config.c:596
 msgid "Geometry"
 msgstr ""
 
@@ -6001,90 +6089,90 @@ msgstr "X-Axis 정렬"
 msgid "Cpufreq"
 msgstr ""
 
-#: src/modules/cpufreq/e_mod_main.c:178
+#: src/modules/cpufreq/e_mod_main.c:181
 msgid "Fast (4 ticks)"
 msgstr ""
 
-#: src/modules/cpufreq/e_mod_main.c:185
+#: src/modules/cpufreq/e_mod_main.c:188
 msgid "Medium (8 ticks)"
 msgstr ""
 
-#: src/modules/cpufreq/e_mod_main.c:192
+#: src/modules/cpufreq/e_mod_main.c:195
 msgid "Normal (32 ticks)"
 msgstr ""
 
-#: src/modules/cpufreq/e_mod_main.c:199
+#: src/modules/cpufreq/e_mod_main.c:202
 msgid "Slow (64 ticks)"
 msgstr ""
 
-#: src/modules/cpufreq/e_mod_main.c:206
+#: src/modules/cpufreq/e_mod_main.c:209
 msgid "Very Slow (256 ticks)"
 msgstr ""
 
-#: src/modules/cpufreq/e_mod_main.c:222
+#: src/modules/cpufreq/e_mod_main.c:225
 msgid "Manual"
 msgstr "수동"
 
-#: src/modules/cpufreq/e_mod_main.c:226 src/modules/cpufreq/e_mod_main.c:258
+#: src/modules/cpufreq/e_mod_main.c:229 src/modules/cpufreq/e_mod_main.c:261
 msgid "Lower Power Automatic"
 msgstr "저 전력 자동"
 
-#: src/modules/cpufreq/e_mod_main.c:228 src/modules/cpufreq/e_mod_main.c:260
+#: src/modules/cpufreq/e_mod_main.c:231 src/modules/cpufreq/e_mod_main.c:263
 msgid "Minimum Speed"
 msgstr "최소 속도"
 
-#: src/modules/cpufreq/e_mod_main.c:230 src/modules/cpufreq/e_mod_main.c:262
+#: src/modules/cpufreq/e_mod_main.c:233 src/modules/cpufreq/e_mod_main.c:265
 msgid "Maximum Speed"
 msgstr "최대 속도"
 
-#: src/modules/cpufreq/e_mod_main.c:241
+#: src/modules/cpufreq/e_mod_main.c:244
 msgid "Restore CPU Power Policy"
 msgstr "CPU 전력 규칙 복원"
 
-#: src/modules/cpufreq/e_mod_main.c:275
+#: src/modules/cpufreq/e_mod_main.c:278
 msgid "Automatic powersaving"
 msgstr ""
 
-#: src/modules/cpufreq/e_mod_main.c:294
+#: src/modules/cpufreq/e_mod_main.c:297
 #, c-format
 msgid "%i MHz"
 msgstr ""
 
-#: src/modules/cpufreq/e_mod_main.c:296
+#: src/modules/cpufreq/e_mod_main.c:299
 #, c-format
 msgid "%i.%i GHz"
 msgstr ""
 
-#: src/modules/cpufreq/e_mod_main.c:315
+#: src/modules/cpufreq/e_mod_main.c:313
 msgid "Time Between Updates"
 msgstr "갱신할 시간"
 
-#: src/modules/cpufreq/e_mod_main.c:321
+#: src/modules/cpufreq/e_mod_main.c:319
 msgid "Set CPU Power Policy"
 msgstr "CPU 전력 규칙 설정"
 
-#: src/modules/cpufreq/e_mod_main.c:328
+#: src/modules/cpufreq/e_mod_main.c:326
 msgid "Set CPU Speed"
 msgstr "CPU 속도 설정"
 
-#: src/modules/cpufreq/e_mod_main.c:334
+#: src/modules/cpufreq/e_mod_main.c:332
 msgid "Powersaving behavior"
 msgstr ""
 
-#: src/modules/cpufreq/e_mod_main.c:388
+#: src/modules/cpufreq/e_mod_main.c:414
 msgid ""
 "There was an error trying to set the<br>cpu frequency governor via the "
 "module's<br>setfreq utility."
 msgstr ""
 
-#: src/modules/cpufreq/e_mod_main.c:416
+#: src/modules/cpufreq/e_mod_main.c:442
 msgid ""
 "Your kernel does not support setting the<br>CPU frequency at all. You may be "
 "missing<br>Kernel modules or features, or your CPU<br>simply does not "
 "support this feature."
 msgstr ""
 
-#: src/modules/cpufreq/e_mod_main.c:442
+#: src/modules/cpufreq/e_mod_main.c:468
 msgid ""
 "There was an error trying to set the<br>cpu frequency setting via the "
 "module's<br>setfreq utility."
@@ -6186,23 +6274,33 @@ msgstr "매우 밝게"
 msgid "Dropshadow"
 msgstr ""
 
-#: src/modules/everything/e_mod_main.c:81
-#: src/modules/everything/e_mod_main.c:197
+#: src/modules/everything/e_mod_main.c:59
+#: src/modules/everything/e_mod_main.c:193
 #, fuzzy
-msgid "Show Everything Dialog"
+msgid "Everything Launcher"
 msgstr "모두"
 
-#: src/modules/everything/e_mod_main.c:92
+#: src/modules/everything/e_mod_main.c:60
+#, fuzzy
+msgid "Show Everything Launcher"
+msgstr "모두"
+
+#: src/modules/everything/e_mod_main.c:71
 #, fuzzy
 msgid "Everything Configuration"
 msgstr "페이저 설정"
 
-#: src/modules/everything/e_mod_main.c:386
+#: src/modules/everything/e_mod_main.c:194
+#, fuzzy
+msgid "Show Everything Dialog"
+msgstr "모두"
+
+#: src/modules/everything/e_mod_main.c:383
 #, fuzzy
 msgid "Everything Module"
 msgstr "모두"
 
-#: src/modules/everything/e_mod_main.c:563
+#: src/modules/everything/e_mod_main.c:565
 #, fuzzy
 msgid "Run Everything"
 msgstr "모두"
@@ -6212,159 +6310,159 @@ msgstr "모두"
 msgid "Everything Settings"
 msgstr "터미널 설정"
 
-#: src/modules/everything/evry_config.c:362
+#: src/modules/everything/evry_config.c:361
 #, fuzzy
 msgid "Available Plugins"
 msgstr "사용 가능한 응용 프로그램"
 
-#: src/modules/everything/evry_config.c:368
+#: src/modules/everything/evry_config.c:367
 msgid "Move Up"
 msgstr "위로 이동"
 
-#: src/modules/everything/evry_config.c:373
+#: src/modules/everything/evry_config.c:372
 msgid "Move Down"
 msgstr "아래로 이동"
 
-#: src/modules/everything/evry_config.c:381
+#: src/modules/everything/evry_config.c:380
 #, fuzzy
 msgid "Configure"
 msgstr "설정된 도구모음"
 
-#: src/modules/everything/evry_config.c:388
+#: src/modules/everything/evry_config.c:387
 msgid "Enabled"
 msgstr "사용"
 
-#: src/modules/everything/evry_config.c:394
+#: src/modules/everything/evry_config.c:393
 #, fuzzy
 msgid "Show in \"All\""
 msgstr "숨김 파일 표시"
 
-#: src/modules/everything/evry_config.c:400
+#: src/modules/everything/evry_config.c:399
 msgid "Show in top-level"
 msgstr ""
 
-#: src/modules/everything/evry_config.c:406
+#: src/modules/everything/evry_config.c:405
 msgid "Minimum characters for search"
 msgstr ""
 
-#: src/modules/everything/evry_config.c:415
+#: src/modules/everything/evry_config.c:414
 msgid "Plugin Trigger"
 msgstr ""
 
-#: src/modules/everything/evry_config.c:416
+#: src/modules/everything/evry_config.c:415
 #, fuzzy
 msgid "Default is plugin name"
 msgstr "기본 대화창 상태"
 
-#: src/modules/everything/evry_config.c:423
+#: src/modules/everything/evry_config.c:422
 msgid "Search only when triggered"
 msgstr ""
 
-#: src/modules/everything/evry_config.c:430
+#: src/modules/everything/evry_config.c:429
 msgid "Plugin View"
 msgstr ""
 
-#: src/modules/everything/evry_config.c:440
-#: src/modules/everything/evry_config.c:491
+#: src/modules/everything/evry_config.c:439
+#: src/modules/everything/evry_config.c:490
 #, fuzzy
 msgid "Detailed"
 msgstr "사용안함"
 
-#: src/modules/everything/evry_config.c:466
+#: src/modules/everything/evry_config.c:465
 msgid "Hide input when inactive"
 msgstr ""
 
-#: src/modules/everything/evry_config.c:470
+#: src/modules/everything/evry_config.c:469
 #, fuzzy
 msgid "Hide list"
 msgstr "창 목록"
 
-#: src/modules/everything/evry_config.c:474
+#: src/modules/everything/evry_config.c:473
 msgid "Quick Navigation"
 msgstr ""
 
-#: src/modules/everything/evry_config.c:480
+#: src/modules/everything/evry_config.c:479
 msgid "Emacs style (ALT + n,p,f,b,m,i)"
 msgstr ""
 
-#: src/modules/everything/evry_config.c:482
+#: src/modules/everything/evry_config.c:481
 msgid "Vi style (ALT + h,j,k,l,n,p,m,i)"
 msgstr ""
 
-#: src/modules/everything/evry_config.c:487
+#: src/modules/everything/evry_config.c:486
 #, fuzzy
 msgid "Default View"
 msgstr "기본값"
 
-#: src/modules/everything/evry_config.c:496
+#: src/modules/everything/evry_config.c:495
 #, fuzzy
 msgid "Animate scrolling"
 msgstr "움직이는 모양 사용"
 
-#: src/modules/everything/evry_config.c:503
+#: src/modules/everything/evry_config.c:502
 msgid "Up/Down select next item in icon view"
 msgstr ""
 
-#: src/modules/everything/evry_config.c:508
+#: src/modules/everything/evry_config.c:507
 #, fuzzy
 msgid "Sorting"
 msgstr "없음"
 
-#: src/modules/everything/evry_config.c:510
+#: src/modules/everything/evry_config.c:509
 msgid "By usage"
 msgstr ""
 
-#: src/modules/everything/evry_config.c:513
+#: src/modules/everything/evry_config.c:512
 msgid "Most used"
 msgstr ""
 
-#: src/modules/everything/evry_config.c:516
+#: src/modules/everything/evry_config.c:515
 #, fuzzy
 msgid "Last used"
 msgstr "최근 수정:"
 
-#: src/modules/everything/evry_config.c:530
+#: src/modules/everything/evry_config.c:529
 msgid "Subject Plugins"
 msgstr ""
 
-#: src/modules/everything/evry_config.c:534
+#: src/modules/everything/evry_config.c:533
 #, fuzzy
 msgid "Action Plugins"
 msgstr "실행 인자"
 
-#: src/modules/everything/evry_config.c:538
+#: src/modules/everything/evry_config.c:537
 msgid "Object Plugins"
 msgstr ""
 
-#: src/modules/everything/evry_config.c:541
-#: src/modules/everything/evry_config.c:743
+#: src/modules/everything/evry_config.c:540
+#: src/modules/everything/evry_config.c:742
 msgid "Plugins"
 msgstr ""
 
-#: src/modules/everything/evry_config.c:548
+#: src/modules/everything/evry_config.c:547
 msgid "Popup Size"
 msgstr ""
 
-#: src/modules/everything/evry_config.c:549
-#: src/modules/everything/evry_config.c:581
+#: src/modules/everything/evry_config.c:548
+#: src/modules/everything/evry_config.c:580
 msgid "Popup Width"
 msgstr ""
 
-#: src/modules/everything/evry_config.c:556
-#: src/modules/everything/evry_config.c:588
+#: src/modules/everything/evry_config.c:555
+#: src/modules/everything/evry_config.c:587
 #, fuzzy
 msgid "Popup Height"
 msgstr "최소 높이"
 
-#: src/modules/everything/evry_config.c:564
+#: src/modules/everything/evry_config.c:563
 msgid "Popup Align"
 msgstr ""
 
-#: src/modules/everything/evry_config.c:580
+#: src/modules/everything/evry_config.c:579
 msgid "Edge Popup Size"
 msgstr ""
 
-#: src/modules/everything/evry_config.c:638
+#: src/modules/everything/evry_config.c:637
 #, fuzzy
 msgid "Everything Collection"
 msgstr "응용프로그램 재시작"
@@ -6378,7 +6476,7 @@ msgstr "동작"
 msgid "Items"
 msgstr ""
 
-#: src/modules/everything/evry_plug_aggregator.c:345
+#: src/modules/everything/evry_plug_aggregator.c:346
 msgid "No plugins loaded"
 msgstr ""
 
@@ -6407,186 +6505,191 @@ msgid ""
 "toggle thumb view modes"
 msgstr ""
 
-#: src/modules/everything-apps/e_mod_main.c:959
+#: src/modules/everything-apps/e_mod_main.c:1035
 msgid "Exebuf"
 msgstr ""
 
-#: src/modules/everything-apps/e_mod_main.c:976
+#: src/modules/everything-apps/e_mod_main.c:1052
 #, fuzzy
 msgid "Open With..."
 msgstr "다른 프로그램으로 열기.."
 
-#: src/modules/everything-apps/e_mod_main.c:990
+#: src/modules/everything-apps/e_mod_main.c:1066
 #, fuzzy
 msgid "Open File..."
 msgstr "다른 프로그램으로 열기.."
 
-#: src/modules/everything-apps/e_mod_main.c:1004
+#: src/modules/everything-apps/e_mod_main.c:1080
 #, fuzzy
 msgid "Edit Application Entry"
 msgstr "응용프로그램 편집"
 
-#: src/modules/everything-apps/e_mod_main.c:1011
+#: src/modules/everything-apps/e_mod_main.c:1087
 #, fuzzy
 msgid "New Application Entry"
 msgstr "응용프로그램"
 
-#: src/modules/everything-apps/e_mod_main.c:1018
+#: src/modules/everything-apps/e_mod_main.c:1094
 msgid "Run with Sudo"
 msgstr ""
 
-#: src/modules/everything-apps/e_mod_main.c:1024
-#: src/modules/fileman/e_fwin.c:1502 src/modules/fileman/e_fwin.c:1821
+#: src/modules/everything-apps/e_mod_main.c:1100
+#: src/modules/fileman/e_fwin.c:1682 src/modules/fileman/e_fwin.c:2007
 msgid "Open with..."
 msgstr "다른 프로그램으로 열기.."
 
-#: src/modules/everything-apps/e_mod_main.c:1031
+#: src/modules/everything-apps/e_mod_main.c:1107
 #, fuzzy
 msgid "Open Terminal here"
 msgstr "터미널에서 실행"
 
-#: src/modules/everything-apps/e_mod_main.c:1096
-#: src/modules/everything-apps/e_mod_main.c:1221
-#: src/modules/everything-apps/e_mod_main.c:1240
+#: src/modules/everything-apps/e_mod_main.c:1113
+#, fuzzy
+msgid "Run Executable"
+msgstr "실행"
+
+#: src/modules/everything-apps/e_mod_main.c:1191
+#: src/modules/everything-apps/e_mod_main.c:1316
+#: src/modules/everything-apps/e_mod_main.c:1335
 #, fuzzy
 msgid "Everything Applications"
 msgstr "응용프로그램 재시작"
 
-#: src/modules/everything-apps/e_mod_main.c:1129
+#: src/modules/everything-apps/e_mod_main.c:1224
 #, fuzzy
 msgid "Commands"
 msgstr "명령"
 
-#: src/modules/everything-apps/e_mod_main.c:1130
+#: src/modules/everything-apps/e_mod_main.c:1225
 msgid "Terminal Command"
 msgstr "터미널 명령"
 
-#: src/modules/everything-apps/e_mod_main.c:1135
+#: src/modules/everything-apps/e_mod_main.c:1230
 msgid "Sudo GUI"
 msgstr ""
 
-#: src/modules/everything-aspell/e_mod_main.c:398
+#: src/modules/everything-aspell/e_mod_main.c:394
 msgid "Spell Checker"
 msgstr ""
 
-#: src/modules/everything-aspell/e_mod_main.c:462
-#: src/modules/everything-aspell/e_mod_main.c:595
-#: src/modules/everything-aspell/e_mod_main.c:614
+#: src/modules/everything-aspell/e_mod_main.c:458
+#: src/modules/everything-aspell/e_mod_main.c:591
+#: src/modules/everything-aspell/e_mod_main.c:610
 #, fuzzy
 msgid "Everything Aspell"
 msgstr "모두"
 
-#: src/modules/everything-aspell/e_mod_main.c:481
+#: src/modules/everything-aspell/e_mod_main.c:477
 msgid "Spell checker"
 msgstr ""
 
-#: src/modules/everything-aspell/e_mod_main.c:484
+#: src/modules/everything-aspell/e_mod_main.c:480
 msgid "Aspell"
 msgstr ""
 
-#: src/modules/everything-aspell/e_mod_main.c:487
+#: src/modules/everything-aspell/e_mod_main.c:483
 msgid "Hunspell"
 msgstr ""
 
-#: src/modules/everything-aspell/e_mod_main.c:494
-#: src/modules/fileman/e_fwin.c:1899
+#: src/modules/everything-aspell/e_mod_main.c:490
+#: src/modules/fileman/e_fwin.c:2085
 msgid "Custom Command"
 msgstr ""
 
-#: src/modules/everything-calc/e_mod_main.c:237
+#: src/modules/everything-calc/e_mod_main.c:255
 msgid "Calculator"
 msgstr ""
 
-#: src/modules/everything-files/e_mod_main.c:1387
+#: src/modules/everything-files/e_mod_main.c:1327
 msgid "Copy To ..."
 msgstr ""
 
-#: src/modules/everything-files/e_mod_main.c:1392
+#: src/modules/everything-files/e_mod_main.c:1332
 #, fuzzy
 msgid "Move To ..."
 msgstr "아래로 이동"
 
-#: src/modules/everything-files/e_mod_main.c:1397
+#: src/modules/everything-files/e_mod_main.c:1337
 msgid "Move to Trash"
 msgstr ""
 
-#: src/modules/everything-files/e_mod_main.c:1401
+#: src/modules/everything-files/e_mod_main.c:1341
 msgid "Open Folder (EFM)"
 msgstr ""
 
-#: src/modules/everything-files/e_mod_main.c:1405
+#: src/modules/everything-files/e_mod_main.c:1345
 msgid "Sort by Date"
 msgstr ""
 
-#: src/modules/everything-files/e_mod_main.c:1410
+#: src/modules/everything-files/e_mod_main.c:1350
 #, fuzzy
 msgid "Sort by Name"
 msgstr "정렬"
 
-#: src/modules/everything-files/e_mod_main.c:1442
-#: src/modules/everything-files/e_mod_main.c:1451
+#: src/modules/everything-files/e_mod_main.c:1382
+#: src/modules/everything-files/e_mod_main.c:1391
 #, fuzzy
 msgid "Recent Files"
 msgstr "이름 변경"
 
-#: src/modules/everything-files/e_mod_main.c:1528
-#: src/modules/everything-files/e_mod_main.c:1659
-#: src/modules/everything-files/e_mod_main.c:1680
+#: src/modules/everything-files/e_mod_main.c:1468
+#: src/modules/everything-files/e_mod_main.c:1599
+#: src/modules/everything-files/e_mod_main.c:1620
 #, fuzzy
 msgid "Everything Files"
 msgstr "모두"
 
-#: src/modules/everything-files/e_mod_main.c:1551
-#, fuzzy
-msgid "Show home directory"
-msgstr "상위 디렉토리로 이동"
-
-#: src/modules/everything-files/e_mod_main.c:1555
+#: src/modules/everything-files/e_mod_main.c:1495
 #, fuzzy
 msgid "Show recent files"
 msgstr "숨김 파일 표시"
 
-#: src/modules/everything-files/e_mod_main.c:1559
+#: src/modules/everything-files/e_mod_main.c:1499
 #, fuzzy
 msgid "Search recent files"
 msgstr "디렉토리 검색"
 
-#: src/modules/everything-files/e_mod_main.c:1563
+#: src/modules/everything-files/e_mod_main.c:1503
 msgid "Search cached files"
 msgstr ""
 
-#: src/modules/everything-files/e_mod_main.c:1567
+#: src/modules/everything-files/e_mod_main.c:1507
 #, fuzzy
 msgid "Cache visited directories"
 msgstr "사용자 정의 디렉토리"
 
-#: src/modules/everything-files/e_mod_main.c:1571
+#: src/modules/everything-files/e_mod_main.c:1511
 msgid "Clear cache"
 msgstr ""
 
-#: src/modules/everything-settings/e_mod_main.c:194
+#: src/modules/everything-settings/e_mod_main.c:196
 #, fuzzy
 msgid "Show Dialog"
 msgstr "그림자 간격"
 
-#: src/modules/everything-windows/e_mod_main.c:428
+#: src/modules/everything-windows/e_mod_main.c:425
 msgid "Switch to Window"
 msgstr ""
 
-#: src/modules/everything-windows/e_mod_main.c:443
+#: src/modules/everything-windows/e_mod_main.c:440
 #, fuzzy
 msgid "Toggle Fullscreen"
 msgstr "전체화면"
 
-#: src/modules/fileman/e_mod_main.c:319 src/modules/illume/e_mod_win.c:176
+#: src/modules/fileman/e_mod_main.c:58 src/modules/fileman/e_mod_main.c:70
+#: src/modules/fileman/e_mod_main.c:153 src/modules/wizard/page_050.c:23
+msgid "File Manager"
+msgstr "파일관리자"
+
+#: src/modules/fileman/e_mod_main.c:338 src/modules/illume/e_mod_win.c:176
 msgid "Home"
 msgstr ""
 
-#: src/modules/fileman/e_mod_main.c:343
+#: src/modules/fileman/e_mod_main.c:362
 msgid "Root"
 msgstr ""
 
-#: src/modules/fileman/e_mod_main.c:440
+#: src/modules/fileman/e_mod_main.c:460
 msgid ""
 "Fileman Module Settings data needed upgrading. Your old configuration<br>has "
 "been wiped and a new set of defaults initialized. This<br>will happen "
@@ -6597,7 +6700,7 @@ msgid ""
 "to your<br>liking. Sorry for the hiccup in your configuration.<br>"
 msgstr ""
 
-#: src/modules/fileman/e_mod_main.c:453
+#: src/modules/fileman/e_mod_main.c:473
 msgid ""
 "Your Fileman Module configuration is NEWER than Fileman Module version. This "
 "is very<br>strange. This should not happen unless you downgraded<br>the "
@@ -6607,165 +6710,171 @@ msgid ""
 "for the inconvenience.<br>"
 msgstr ""
 
-#: src/modules/fileman/e_mod_main.c:522
+#: src/modules/fileman/e_mod_main.c:542
 msgid "Fileman Settings Updated"
 msgstr ""
 
-#: src/modules/fileman/e_mod_config.c:95
+#: src/modules/fileman/e_mod_config.c:101
 msgid "Fileman Settings"
 msgstr ""
 
-#: src/modules/fileman/e_mod_config.c:227
+#: src/modules/fileman/e_mod_config.c:238
 msgid "Icon Size"
 msgstr ""
 
-#: src/modules/fileman/e_mod_config.c:233
+#: src/modules/fileman/e_mod_config.c:244
 msgid "View"
 msgstr ""
 
-#: src/modules/fileman/e_mod_config.c:236
+#: src/modules/fileman/e_mod_config.c:247
 msgid "Open Dirs In Place"
 msgstr ""
 
-#: src/modules/fileman/e_mod_config.c:240
+#: src/modules/fileman/e_mod_config.c:251
 msgid "Sort Dirs First"
 msgstr ""
 
-#: src/modules/fileman/e_mod_config.c:243
+#: src/modules/fileman/e_mod_config.c:254
 msgid "Case Sensitive"
 msgstr ""
 
-#: src/modules/fileman/e_mod_config.c:247
+#: src/modules/fileman/e_mod_config.c:258
 msgid "Use Single Click"
 msgstr ""
 
-#: src/modules/fileman/e_mod_config.c:250
+#: src/modules/fileman/e_mod_config.c:261
 msgid "Use Alternate Selection Modifiers"
 msgstr ""
 
-#: src/modules/fileman/e_mod_config.c:254
+#: src/modules/fileman/e_mod_config.c:265
 msgid "Show Icon Extension"
 msgstr ""
 
-#: src/modules/fileman/e_mod_config.c:257
+#: src/modules/fileman/e_mod_config.c:268
 msgid "Show Full Path"
 msgstr ""
 
-#: src/modules/fileman/e_mod_config.c:260
+#: src/modules/fileman/e_mod_config.c:271
 msgid "Show Desktop Icons"
 msgstr ""
 
-#: src/modules/fileman/e_mod_config.c:263
+#: src/modules/fileman/e_mod_config.c:274
 msgid "Show Toolbar"
 msgstr ""
 
-#: src/modules/fileman/e_mod_config.c:267
-#: src/modules/gadman/e_mod_gadman.c:792
+#: src/modules/fileman/e_mod_config.c:278
+#: src/modules/gadman/e_mod_gadman.c:803
 msgid "Behavior"
 msgstr ""
 
-#: src/modules/fileman/e_mod_config.c:271
+#: src/modules/fileman/e_mod_config.c:282
 #, fuzzy
 msgid "Show UDisks icons on desktop"
 msgstr "모든 데스크탑에서 창 표시"
 
-#: src/modules/fileman/e_mod_config.c:273
-msgid "Show HAL icons on desktop"
-msgstr ""
+#: src/modules/fileman/e_mod_config.c:284
+#, fuzzy
+msgid "Show device icons on desktop"
+msgstr "모든 데스크탑에서 창 표시"
 
-#: src/modules/fileman/e_mod_config.c:277
+#: src/modules/fileman/e_mod_config.c:288
 msgid "Mount volumes on insert"
 msgstr ""
 
-#: src/modules/fileman/e_mod_config.c:280
+#: src/modules/fileman/e_mod_config.c:291
 msgid "Open filemanager on mount"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:1416
+#: src/modules/fileman/e_mod_config.c:295
+#, fuzzy
+msgid "Device"
+msgstr "미리보기"
+
+#: src/modules/fileman/e_fwin.c:1588
 msgid "Go to Parent Directory"
 msgstr "상위 디렉토리로 이동"
 
-#: src/modules/fileman/e_fwin.c:1478
+#: src/modules/fileman/e_fwin.c:1655
 msgid "Other application..."
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:1497 src/modules/fileman/e_fwin.c:1823
+#: src/modules/fileman/e_fwin.c:1677 src/modules/fileman/e_fwin.c:2009
 msgid "Open"
 msgstr "열기"
 
-#: src/modules/fileman/e_fwin.c:1841
+#: src/modules/fileman/e_fwin.c:2027
 msgid "Known Applications"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:1851
+#: src/modules/fileman/e_fwin.c:2037
 msgid "Specific Applications"
 msgstr "정의된 응용프로그램"
 
-#: src/modules/fileman/e_fwin.c:1876
+#: src/modules/fileman/e_fwin.c:2062
 msgid "All Applications"
 msgstr "모든 응용프로그램"
 
-#: src/modules/fileman/e_fwin.c:2165
+#: src/modules/fileman/e_fwin.c:2370
 #: src/modules/fileman_opinfo/e_mod_main.c:89
 #, c-format
 msgid "Copying is aborted"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2168
+#: src/modules/fileman/e_fwin.c:2374
 #: src/modules/fileman_opinfo/e_mod_main.c:92
 #, c-format
 msgid "Moving is aborted"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2171
+#: src/modules/fileman/e_fwin.c:2378
 #: src/modules/fileman_opinfo/e_mod_main.c:95
 #, c-format
 msgid "Deleting is aborted"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2174
+#: src/modules/fileman/e_fwin.c:2382
 #: src/modules/fileman_opinfo/e_mod_main.c:98
 #, c-format
 msgid "Unknown operation from slave is aborted"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2184
+#: src/modules/fileman/e_fwin.c:2392
 #: src/modules/fileman_opinfo/e_mod_main.c:108
 #, c-format
 msgid "Copy of %s done"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2186
+#: src/modules/fileman/e_fwin.c:2394
 #: src/modules/fileman_opinfo/e_mod_main.c:110
 #, c-format
 msgid "Copying %s (eta: %d sec)"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2190
+#: src/modules/fileman/e_fwin.c:2399
 #: src/modules/fileman_opinfo/e_mod_main.c:114
 #, c-format
 msgid "Move of %s done"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2192
+#: src/modules/fileman/e_fwin.c:2401
 #: src/modules/fileman_opinfo/e_mod_main.c:116
 #, c-format
 msgid "Moving %s (eta: %d sec)"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2196
+#: src/modules/fileman/e_fwin.c:2406
 #: src/modules/fileman_opinfo/e_mod_main.c:120
 #, c-format
 msgid "Delete done"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2198
+#: src/modules/fileman/e_fwin.c:2408
 #: src/modules/fileman_opinfo/e_mod_main.c:122
 #, c-format
 msgid "Deleting files..."
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2201
+#: src/modules/fileman/e_fwin.c:2412
 #: src/modules/fileman_opinfo/e_mod_main.c:125
 #, c-format
 msgid "Unknow operation from slave %d"
@@ -6835,7 +6944,7 @@ msgstr ""
 
 #: src/modules/gadman/e_mod_config.c:163 src/modules/gadman/e_mod_main.c:27
 #: src/modules/gadman/e_mod_main.c:77 src/modules/gadman/e_mod_main.c:84
-#: src/modules/gadman/e_mod_main.c:120 src/modules/gadman/e_mod_main.c:149
+#: src/modules/gadman/e_mod_main.c:120 src/modules/gadman/e_mod_main.c:150
 msgid "Gadgets"
 msgstr ""
 
@@ -6844,19 +6953,23 @@ msgstr ""
 msgid "Background Options"
 msgstr "배경"
 
-#: src/modules/gadman/e_mod_gadman.c:740
+#: src/modules/gadman/e_mod_gadman.c:751
 msgid "Free"
 msgstr ""
 
-#: src/modules/gadman/e_mod_gadman.c:772
+#: src/modules/gadman/e_mod_gadman.c:775
+msgid "Appearance"
+msgstr "외관"
+
+#: src/modules/gadman/e_mod_gadman.c:783
 msgid "Always on desktop"
 msgstr ""
 
-#: src/modules/gadman/e_mod_gadman.c:782
+#: src/modules/gadman/e_mod_gadman.c:793
 msgid "On top pressing"
 msgstr ""
 
-#: src/modules/gadman/e_mod_gadman.c:813
+#: src/modules/gadman/e_mod_gadman.c:824
 msgid "Add other gadgets"
 msgstr ""
 
@@ -6866,54 +6979,65 @@ msgstr ""
 
 #: src/modules/winlist/e_mod_main.c:33 src/modules/winlist/e_mod_main.c:35
 #: src/modules/winlist/e_mod_main.c:37 src/modules/winlist/e_mod_main.c:40
-#: src/modules/winlist/e_mod_main.c:43 src/modules/winlist/e_mod_main.c:45
-#: src/modules/winlist/e_mod_main.c:47 src/modules/winlist/e_mod_main.c:49
-#: src/modules/winlist/e_mod_main.c:62 src/modules/winlist/e_mod_main.c:63
-#: src/modules/winlist/e_mod_main.c:64 src/modules/winlist/e_mod_main.c:66
+#: src/modules/winlist/e_mod_main.c:43 src/modules/winlist/e_mod_main.c:46
+#: src/modules/winlist/e_mod_main.c:49 src/modules/winlist/e_mod_main.c:51
+#: src/modules/winlist/e_mod_main.c:53 src/modules/winlist/e_mod_main.c:55
 #: src/modules/winlist/e_mod_main.c:68 src/modules/winlist/e_mod_main.c:69
-#: src/modules/winlist/e_mod_main.c:70 src/modules/winlist/e_mod_main.c:71
+#: src/modules/winlist/e_mod_main.c:70 src/modules/winlist/e_mod_main.c:72
+#: src/modules/winlist/e_mod_main.c:74 src/modules/winlist/e_mod_main.c:75
+#: src/modules/winlist/e_mod_main.c:76 src/modules/winlist/e_mod_main.c:77
 msgid "Window : List"
 msgstr "창 : 목록"
 
-#: src/modules/winlist/e_mod_main.c:33 src/modules/winlist/e_mod_main.c:63
+#: src/modules/winlist/e_mod_main.c:33 src/modules/winlist/e_mod_main.c:69
 msgid "Next Window"
 msgstr "다음 창"
 
-#: src/modules/winlist/e_mod_main.c:35 src/modules/winlist/e_mod_main.c:62
+#: src/modules/winlist/e_mod_main.c:35 src/modules/winlist/e_mod_main.c:68
 msgid "Previous Window"
 msgstr "이전 창"
 
-#: src/modules/winlist/e_mod_main.c:38 src/modules/winlist/e_mod_main.c:67
+#: src/modules/winlist/e_mod_main.c:38 src/modules/winlist/e_mod_main.c:73
 #, fuzzy
 msgid "Next window of same class"
 msgstr "창 이름과 클래스"
 
-#: src/modules/winlist/e_mod_main.c:41 src/modules/winlist/e_mod_main.c:65
+#: src/modules/winlist/e_mod_main.c:41 src/modules/winlist/e_mod_main.c:71
 #, fuzzy
 msgid "Previous window of same class"
 msgstr "이전 창"
 
-#: src/modules/winlist/e_mod_main.c:43 src/modules/winlist/e_mod_main.c:68
+#: src/modules/winlist/e_mod_main.c:44
+#, fuzzy
+msgid "Next window class"
+msgstr "창 이름과 클래스"
+
+#: src/modules/winlist/e_mod_main.c:47
+#, fuzzy
+msgid "Previous window class"
+msgstr "이전 창"
+
+#: src/modules/winlist/e_mod_main.c:49 src/modules/winlist/e_mod_main.c:74
 #, fuzzy
 msgid "Window on the Left"
 msgstr "마우스가 위로 가면 촛점 이동"
 
-#: src/modules/winlist/e_mod_main.c:45 src/modules/winlist/e_mod_main.c:69
+#: src/modules/winlist/e_mod_main.c:51 src/modules/winlist/e_mod_main.c:75
 #, fuzzy
 msgid "Window Down"
 msgstr "창 메뉴"
 
-#: src/modules/winlist/e_mod_main.c:47 src/modules/winlist/e_mod_main.c:70
+#: src/modules/winlist/e_mod_main.c:53 src/modules/winlist/e_mod_main.c:76
 #, fuzzy
 msgid "Window Up"
 msgstr "창"
 
-#: src/modules/winlist/e_mod_main.c:49 src/modules/winlist/e_mod_main.c:71
+#: src/modules/winlist/e_mod_main.c:55 src/modules/winlist/e_mod_main.c:77
 #, fuzzy
 msgid "Window on the Right"
 msgstr "마우스가 위로 가면 촛점 이동"
 
-#: src/modules/winlist/e_winlist.c:149
+#: src/modules/winlist/e_winlist.c:168
 msgid "Select a window"
 msgstr "창 선택"
 
@@ -6964,7 +7088,7 @@ msgstr ""
 msgid "Are you sure you want to delete this bar source?"
 msgstr "이 막대의 원본을 삭제 하시겠습니까?"
 
-#: src/modules/ibar/e_mod_main.c:212
+#: src/modules/ibar/e_mod_main.c:213
 msgid "IBar"
 msgstr ""
 
@@ -7024,138 +7148,143 @@ msgstr ""
 msgid "Pager Settings"
 msgstr ""
 
-#: src/modules/pager/e_mod_config.c:126 src/modules/pager/e_mod_config.c:178
+#: src/modules/pager/e_mod_config.c:127 src/modules/pager/e_mod_config.c:179
 msgid "Flip desktop on mouse wheel"
 msgstr "마우스 휠로 화면 변경"
 
-#: src/modules/pager/e_mod_config.c:129 src/modules/pager/e_mod_config.c:181
+#: src/modules/pager/e_mod_config.c:130 src/modules/pager/e_mod_config.c:182
 msgid "Show desktop names"
 msgstr ""
 
-#: src/modules/pager/e_mod_config.c:135 src/modules/pager/e_mod_config.c:217
+#: src/modules/pager/e_mod_config.c:136 src/modules/pager/e_mod_config.c:218
 msgid "Show popup on desktop change"
 msgstr ""
 
-#: src/modules/pager/e_mod_config.c:138
+#: src/modules/pager/e_mod_config.c:139
 msgid "Show popup for urgent windows"
 msgstr ""
 
-#: src/modules/pager/e_mod_config.c:184
+#: src/modules/pager/e_mod_config.c:185
 msgid "Resistance to dragging"
 msgstr ""
 
-#: src/modules/pager/e_mod_config.c:186 src/modules/pager/e_mod_config.c:225
-#: src/modules/pager/e_mod_config.c:244
+#: src/modules/pager/e_mod_config.c:187 src/modules/pager/e_mod_config.c:226
+#: src/modules/pager/e_mod_config.c:245
 #, c-format
 msgid "%.0f px"
 msgstr ""
 
-#: src/modules/pager/e_mod_config.c:191
+#: src/modules/pager/e_mod_config.c:192
 msgid "Select and Slide button"
 msgstr ""
 
-#: src/modules/pager/e_mod_config.c:193 src/modules/pager/e_mod_config.c:201
-#: src/modules/pager/e_mod_config.c:207 src/modules/pager/e_mod_config.c:324
-#: src/modules/pager/e_mod_config.c:329 src/modules/pager/e_mod_config.c:333
+#: src/modules/pager/e_mod_config.c:194 src/modules/pager/e_mod_config.c:202
+#: src/modules/pager/e_mod_config.c:208 src/modules/pager/e_mod_config.c:335
+#: src/modules/pager/e_mod_config.c:340 src/modules/pager/e_mod_config.c:344
 #, c-format
 msgid "Click to set"
 msgstr "클릭 후 설정"
 
-#: src/modules/pager/e_mod_config.c:199
+#: src/modules/pager/e_mod_config.c:200
 msgid "Drag and Drop button"
 msgstr ""
 
-#: src/modules/pager/e_mod_config.c:205
+#: src/modules/pager/e_mod_config.c:206
 msgid "Drag whole desktop"
 msgstr ""
 
-#: src/modules/pager/e_mod_config.c:221
+#: src/modules/pager/e_mod_config.c:222
 msgid "Popup pager height"
 msgstr ""
 
-#: src/modules/pager/e_mod_config.c:231
+#: src/modules/pager/e_mod_config.c:232
 msgid "Popup speed"
 msgstr ""
 
-#: src/modules/pager/e_mod_config.c:235 src/modules/pager/e_mod_config.c:264
+#: src/modules/pager/e_mod_config.c:236 src/modules/pager/e_mod_config.c:273
 #, c-format
 msgid "%1.1f seconds"
 msgstr "%1.1f 초"
 
-#: src/modules/pager/e_mod_config.c:242
+#: src/modules/pager/e_mod_config.c:243
 msgid "Pager action popup height"
 msgstr ""
 
-#: src/modules/pager/e_mod_config.c:252
+#: src/modules/pager/e_mod_config.c:253
 msgid "Show popup on urgent window"
 msgstr ""
 
-#: src/modules/pager/e_mod_config.c:255
+#: src/modules/pager/e_mod_config.c:257
 msgid "Urgent popup sticks on screen"
 msgstr ""
 
-#: src/modules/pager/e_mod_config.c:260
+#: src/modules/pager/e_mod_config.c:263
+#, fuzzy
+msgid "Show popup for focused windows"
+msgstr "아이콘화 된 창 표시"
+
+#: src/modules/pager/e_mod_config.c:269
 msgid "Urgent popup speed"
 msgstr ""
 
-#: src/modules/pager/e_mod_config.c:271
+#: src/modules/pager/e_mod_config.c:280
 #, fuzzy
 msgid "Urgent Windows"
 msgstr "다음 창"
 
-#: src/modules/pager/e_mod_config.c:326 src/modules/pager/e_mod_config.c:331
-#: src/modules/pager/e_mod_config.c:335
+#: src/modules/pager/e_mod_config.c:337 src/modules/pager/e_mod_config.c:342
+#: src/modules/pager/e_mod_config.c:346
 #, c-format
 msgid "Button %i"
 msgstr "단추 %i"
 
-#: src/modules/pager/e_mod_config.c:358
+#: src/modules/pager/e_mod_config.c:369
 msgid "Pager Button Grab"
 msgstr ""
 
-#: src/modules/pager/e_mod_config.c:360
+#: src/modules/pager/e_mod_config.c:371
 msgid ""
 "Please press a mouse button<br>Press <hilight>Escape</hilight> to abort."
 "<br>Or <hilight>Del</hilight> to reset the button."
 msgstr ""
 
-#: src/modules/pager/e_mod_config.c:415
+#: src/modules/pager/e_mod_config.c:426
 #, fuzzy
 msgid "Attention"
 msgstr "동작"
 
-#: src/modules/pager/e_mod_config.c:416
+#: src/modules/pager/e_mod_config.c:427
 msgid ""
 "You cannot use the right mouse button in the<br>shelf for this as it is "
 "already taken by internal<br>code for context menus.<br>This button only "
 "works in the popup."
 msgstr ""
 
-#: src/modules/pager/e_mod_main.c:2816
+#: src/modules/pager/e_mod_main.c:2807
 msgid "Show Pager Popup"
 msgstr ""
 
-#: src/modules/pager/e_mod_main.c:2823 src/modules/pager/e_mod_main.c:2866
+#: src/modules/pager/e_mod_main.c:2814 src/modules/pager/e_mod_main.c:2857
 msgid "Popup Desk Right"
 msgstr ""
 
-#: src/modules/pager/e_mod_main.c:2825 src/modules/pager/e_mod_main.c:2867
+#: src/modules/pager/e_mod_main.c:2816 src/modules/pager/e_mod_main.c:2858
 msgid "Popup Desk Left"
 msgstr ""
 
-#: src/modules/pager/e_mod_main.c:2827 src/modules/pager/e_mod_main.c:2868
+#: src/modules/pager/e_mod_main.c:2818 src/modules/pager/e_mod_main.c:2859
 msgid "Popup Desk Up"
 msgstr ""
 
-#: src/modules/pager/e_mod_main.c:2829 src/modules/pager/e_mod_main.c:2869
+#: src/modules/pager/e_mod_main.c:2820 src/modules/pager/e_mod_main.c:2860
 msgid "Popup Desk Down"
 msgstr ""
 
-#: src/modules/pager/e_mod_main.c:2831 src/modules/pager/e_mod_main.c:2870
+#: src/modules/pager/e_mod_main.c:2822 src/modules/pager/e_mod_main.c:2861
 msgid "Popup Desk Next"
 msgstr ""
 
-#: src/modules/pager/e_mod_main.c:2833 src/modules/pager/e_mod_main.c:2871
+#: src/modules/pager/e_mod_main.c:2824 src/modules/pager/e_mod_main.c:2862
 msgid "Popup Desk Previous"
 msgstr ""
 
@@ -7314,7 +7443,7 @@ msgstr ""
 msgid "Cards"
 msgstr ""
 
-#: src/modules/mixer/app_mixer.c:369 src/modules/mixer/conf_gadget.c:270
+#: src/modules/mixer/app_mixer.c:369 src/modules/mixer/conf_gadget.c:278
 msgid "Channels"
 msgstr ""
 
@@ -7338,11 +7467,11 @@ msgstr ""
 msgid "Right:"
 msgstr ""
 
-#: src/modules/mixer/app_mixer.c:401 src/modules/mixer/e_mod_main.c:576
+#: src/modules/mixer/app_mixer.c:401 src/modules/mixer/e_mod_main.c:583
 msgid "Mute"
 msgstr ""
 
-#: src/modules/mixer/app_mixer.c:404 src/modules/mixer/conf_gadget.c:190
+#: src/modules/mixer/app_mixer.c:404 src/modules/mixer/conf_gadget.c:194
 msgid "Lock Sliders"
 msgstr ""
 
@@ -7350,15 +7479,19 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: src/modules/mixer/conf_gadget.c:196
+#: src/modules/mixer/conf_gadget.c:200
 msgid "Show both sliders when locked"
 msgstr ""
 
-#: src/modules/mixer/conf_gadget.c:308
+#: src/modules/mixer/conf_gadget.c:205
+msgid "Show Popup on volume change via keybindings"
+msgstr ""
+
+#: src/modules/mixer/conf_gadget.c:316
 msgid "Sound Cards"
 msgstr ""
 
-#: src/modules/mixer/conf_gadget.c:363
+#: src/modules/mixer/conf_gadget.c:371
 msgid "Mixer Settings"
 msgstr ""
 
@@ -7374,15 +7507,15 @@ msgstr ""
 msgid "Mixer Module Settings"
 msgstr ""
 
-#: src/modules/mixer/e_mod_main.c:123
+#: src/modules/mixer/e_mod_main.c:127
 msgid "Mixer Settings Updated"
 msgstr ""
 
-#: src/modules/mixer/e_mod_main.c:586 src/modules/connman/e_mod_main.c:1165
+#: src/modules/mixer/e_mod_main.c:593 src/modules/connman/e_mod_main.c:1165
 msgid "Controls"
 msgstr ""
 
-#: src/modules/mixer/e_mod_main.c:1127
+#: src/modules/mixer/e_mod_main.c:1179
 msgid ""
 "Mixer Module Settings data changed.<br>Your old configuration has been "
 "replaced with new default.<br>Sorry for the inconvenience."
@@ -7530,18 +7663,67 @@ msgstr ""
 msgid "There can be only one systray gadget and another one already exists."
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:1094
+#: src/modules/systray/e_mod_main.c:1095
 msgid "Systray"
 msgstr ""
+
+#~ msgid ""
+#~ "An error occurred while saving Enlightenment's<br>settings to disk. The "
+#~ "error could not be<br>deterimined.<br><br>The file where the error "
+#~ "occurred was:<br>%s<br><br>This file has been deleted to avoid corrupt "
+#~ "data.<br>"
+#~ msgstr ""
+#~ "Enlightenment 설정을 저장하다가 <br>알 수 없는 이유로 실패하였습니다."
+#~ "<br><br>데이터가 손상되는 것을 막기 위해 다음 파일을 삭제하였습니다.<br>%s"
+
+#~ msgid ""
+#~ "Enlightenment's settings files are too big<br>for the file system they "
+#~ "are being saved to.<br>This error is very strange as the files "
+#~ "should<br>be extremely small. Please check the settings<br>for your home "
+#~ "directory.<br><br>The file where the error occurred was:<br>%"
+#~ "s<br><br>This file has been deleted to avoid corrupt data.<br>"
+#~ msgstr ""
+#~ "Enlightenment 설정 파일이 <br>저장되기에 너무 큽니다. 보통 파일 크기가<br>"
+#~ "매우 작아 이런 에러를 내기 어렵습니다.<br><br>데이터가 손상되는걸 막기 위"
+#~ "해 다음 파일을 삭제하였습니다.<br>%s"
+
+#~ msgid ""
+#~ "An output error occurred when writing the settings<br>files for "
+#~ "Enlightenment. Your disk is having troubles<br>and possibly needs "
+#~ "replacement.<br><br>The file where the error occurred was:<br>%"
+#~ "s<br><br>This file has been deleted to avoid corrupt data.<br>"
+#~ msgstr ""
+#~ "Enlightenment 설정을 저장하던 도중 입출력 에러가<br>발생하였습니다. 하드디"
+#~ "스크 이상일 가능성이 높습니다.<br>데이터 손상을 막기 위해 다음 파일을 삭제"
+#~ "하였습니다.<br>%s"
+
+#~ msgid ""
+#~ "Enlightenment cannot write its settings file<br>because it ran out of "
+#~ "space to write the file.<br>You have either run out of disk space or "
+#~ "have<br>gone over your quota limit.<br><br>The file where the error "
+#~ "occurred was:<br>%s<br><br>This file has been deleted to avoid corrupt "
+#~ "data.<br>"
+#~ msgstr ""
+#~ "남은 용량이 부족하여 Enlightenment 설정을<br>저장할 수 없습니다.<br>안 쓰"
+#~ "는 파일을 지우거나, Quota 제한을 확인하시기 바랍니다.<br><br>데이터 손상"
+#~ "을 막기 위해 다음 파일을 삭제하였습니다.<br>%s"
+
+#, fuzzy
+#~ msgid "Selection"
+#~ msgstr "아이콘 선택"
+
+#~ msgid "Animated flip"
+#~ msgstr "움직이는 모양 사용"
+
+#, fuzzy
+#~ msgid "Show home directory"
+#~ msgstr "상위 디렉토리로 이동"
 
 #~ msgid "Change Icon Properties"
 #~ msgstr "아이콘 속성 변경"
 
 #~ msgid "Remove Icon"
 #~ msgstr "아이콘 제거"
-
-#~ msgid "Executable"
-#~ msgstr "실행"
 
 #, fuzzy
 #~ msgid "Screen Lock Timers"
@@ -7713,9 +7895,6 @@ msgstr ""
 
 #~ msgid "Only new dialogs get focus if the parent has focus"
 #~ msgstr "부모가 포커스를 가지고 있을경우 새로운 대화상자가 촛점을 가짐"
-
-#~ msgid "Show iconified windows"
-#~ msgstr "아이콘화 된 창 표시"
 
 #~ msgid "Selection Settings"
 #~ msgstr "선택 설정"
@@ -7953,9 +8132,6 @@ msgstr ""
 
 #~ msgid "Window Title"
 #~ msgstr "창 제모"
-
-#~ msgid "Use Icon Theme"
-#~ msgstr "아이콘 테마 사용"
 
 #~ msgid "Misc"
 #~ msgstr "기타"
