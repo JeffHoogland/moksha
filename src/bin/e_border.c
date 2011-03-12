@@ -2990,7 +2990,7 @@ e_border_idler_before(void)
 	else if (!bd->client.icccm.take_focus)
 	  {
 	     e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_PASSIVE);
-	     e_border_focus_set(bd, 1, 0);
+	     /* e_border_focus_set(bd, 1, 0); */
 	  }
      }
 }
@@ -5049,8 +5049,8 @@ _e_border_cb_window_focus_in(void *data  __UNUSED__,
      }
 
    /* ignore focus in from !take_focus windows, we just gave it em */
-   if (!bd->client.icccm.take_focus)
-     return ECORE_CALLBACK_PASS_ON;
+   /* if (!bd->client.icccm.take_focus)
+    *   return ECORE_CALLBACK_PASS_ON; */
 
    /* should be equal, maybe some clients dont reply with the proper timestamp ? */
    if (e->time >= focus_time)
@@ -7525,6 +7525,9 @@ _e_border_eval(E_Border *bd)
             (bd->want_focus))
           {
              bd->want_focus = 0;
+#ifdef INOUTDEBUG_FOCUS	     
+	     printf("__________ focus new window _________\n");
+#endif
 	     e_border_focus_set_with_pointer(bd);
           }
         else if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DIALOG)
@@ -7534,11 +7537,18 @@ _e_border_eval(E_Border *bd)
                   (e_border_find_by_client_window(bd->client.icccm.transient_for) ==
                    e_border_focused_get())))
                {
+#ifdef INOUTDEBUG_FOCUS	     
+		  printf("__________ focus new dialog _________\n");
+#endif
+
 		  e_border_focus_set_with_pointer(bd);
                }
           }
         else
           {
+#ifdef INOUTDEBUG_FOCUS	     
+	     printf("__________ window takes focus _________\n");
+#endif
              /* focus window by default when it is the only one on desk */
               E_Border *bd2 = NULL;
               Eina_List *l;
