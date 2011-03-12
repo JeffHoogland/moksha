@@ -93,7 +93,7 @@ e_config_dialog_find(const char *name, const char *class)
 
 	     z = e_util_zone_current_get(e_manager_current_get());
 	     e_border_uniconify(cfd->dia->win->border);
-	     e_win_raise(cfd->dia->win);
+	     e_win_raise(cfd->dia->win);	     
 	     if (z->container == cfd->dia->win->border->zone->container)
 	       e_border_desk_set(cfd->dia->win->border, e_desk_current_get(z));
 	     else
@@ -105,6 +105,9 @@ e_config_dialog_find(const char *name, const char *class)
 				       cfd->dia->win->border->zone->y + (cfd->dia->win->border->zone->h / 2));
 	       }
 	     e_border_unshade(cfd->dia->win->border, E_DIRECTION_DOWN);
+	     if ((e_config->focus_setting == E_FOCUS_NEW_DIALOG) ||
+		 (e_config->focus_setting == E_FOCUS_NEW_WINDOW))
+	       e_border_focus_set(cfd->dia->win->border, 1, 1);
 	     return 1;
 	  }
      }

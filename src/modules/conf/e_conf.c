@@ -90,6 +90,9 @@ e_configure_show(E_Container *con)
 				  z2->x + (z2->w / 2), z2->y + (z2->h / 2));
 	  }
 	e_border_unshade(eco->win->border, E_DIRECTION_DOWN);
+	if ((e_config->focus_setting == E_FOCUS_NEW_DIALOG) ||
+	    (e_config->focus_setting == E_FOCUS_NEW_WINDOW))
+	  e_border_focus_set(eco->win->border, 1, 1);
 	return;
      }
 
