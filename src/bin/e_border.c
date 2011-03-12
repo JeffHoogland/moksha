@@ -1905,6 +1905,11 @@ e_border_focus_set(E_Border *bd,
 
    if ((set) && (focus))
      {
+	if (bd->visible && bd->changes.visible)
+	  {
+	     bd->want_focus = 1;
+	     return;
+	  }
 	if ((!bd->focused) || (focus_next && (bd != eina_list_data_get(focus_next))))
 	  {
 	     Eina_List *l;
