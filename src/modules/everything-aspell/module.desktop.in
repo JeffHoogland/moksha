@@ -2,12 +2,14 @@
 Type=Link
 Name=Everything Aspell
 Name[ru]=Всё - Aspell
+Name[de]=Everything - Aspell
 Name[fr]=Omni - Aspell
 Name[it]=Everything - Aspell
 Name[tr]=Everything - Aspell
 Icon=accessories-dictionary
 Comment=Aspell Frontend, use 'aspell ' as trigger.
 Comment[ru]=Графический интерфейс к утилите Aspell, используйте 'aspell ' для запуска.
+Comment[de]=Bedienung von Aspell. Verwenden Sie 'aspell ' als Auslöser.
 Comment[fr]=Frontal pour Aspell, utilise « aspell » comme déclencheur.
 Comment[it]=Frontend, usa 'aspell' come richiamo.
 Comment[pt]=Interface gráfica para o Aspell. Utiliza "aspell" como lançador

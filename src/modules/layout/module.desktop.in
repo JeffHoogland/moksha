@@ -2,6 +2,7 @@
 Type=Link
 Name=Layout
 Name[cs]=Rozvržení
+Name[de]=Anordnung
 Name[eo]=Aranĝo
 Name[hu]=Kimenet
 Name[tr]=Yerleşim
@@ -9,7 +10,7 @@ Name[pt]=Disposição
 Icon=e-module-layout
 Comment=Used to enforce layout policies. Generally not applicable for a desktop PC.
 Comment[cs]=Použit k vynucení politiky rozvržení. Nepoužitelné na desktopovém PC.
-Comment[de]=
+Comment[de]=Setzt die Vorgaben zur Anordnung um. Normalerweise nicht anwendbar auf Desktop-Rechnern.
 Comment[eo]=Efiikigi aranĝajn tiparojn. Kutime ne aplikebla por surtabla komputilo.
 Comment[es]=Usado para forzar las reglas de la distribución en la pantalla. Generalmente no útil para computadoras de escritorio.
 Comment[fr]=

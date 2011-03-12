@@ -2,6 +2,7 @@
 Type=Link
 Name=Everything Settings
 Name[ru]=Всё - Настройки
+Name[de]=Everything - Einstellungen
 Name[fr]=Omni - Configuration
 Name[it]=Everything - Impostazioni
 Name[pt]=Everything - Definições
@@ -9,6 +10,7 @@ Name[tr]=Everything - Ayarlar
 Icon=configure
 Comment=Quickly open e17 settings dialogs.
 Comment[ru]=Быстрый доступ к диалогам настроек E17.
+Comment[de]=Schnell den Einstellungsdialog für E17 öffnen.
 Comment[fr]=Accès rapide au panneau de configuration de E17.
 Comment[it]=Apre rapidamente il pannello impostazioni di e17.
 Comment[pt]=Início rápido para as definições do E17

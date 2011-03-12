@@ -2,13 +2,14 @@
 Type=Link
 Name=IBox
 Name[ru]=IBox
+Name[de]=IBox
 Name[eo]=Breto IBox
 Icon=e-module-ibox
 X-Enlightenment-ModuleType=utils
 Comment=A home for your iconified applications.
 Comment[ru]=Место для отображения иконок свёрнутых приложений. 
 Comment[cs]=Zde se zobrazují všechny minimalizované aplikace.
-Comment[de]=
+Comment[de]=Ein Platz für Ihre minimierten Anwendungen.
 Comment[eo]=Ujo por siaj piktogramigitaj aplikaĵoj.
 Comment[es]=Un contenedor para sus aplicaciones iconificadas.
 Comment[fr]=Un réceptacle pour vos applications minimisées.

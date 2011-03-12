@@ -2,12 +2,15 @@
 Type=Link
 Name=Everything Files
 Name[ru]=Всё - Файлы
+Name[de]=Everything - Dateien
 Name[fr]=Omni - Fichiers
 Name[it]=Everything - File
 Name[pt]=Everything - Ficheiros
 Name[tr]=Everything - Dosyalar
 Icon=system-file-manager
+Comment=File actions.
 Comment[ru]=Действия для файлов.
+Comment[de]=Aktionen auf Ihren Dateien.
 Comment[fr]=Actions sur les fichiers.
 Comment[it]=Azioni sui file.
 Comment[pt]=Ações sobre os ficheiros
