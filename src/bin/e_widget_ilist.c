@@ -12,7 +12,7 @@ struct _E_Widget_Data
    struct 
      {
         Eina_List *queue;
-        Ecore_Timer *timer;
+        Ecore_Idler *idler;
         int count;
         int show_nth;
         int select_nth;
@@ -48,13 +48,13 @@ static void _e_wid_cb_item_hilight(void *data, void *data2);
 static void _e_wid_cb_selected(void *data, Evas_Object *obj, void *event_info);
 static void _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *event_info);
 
-static Eina_Bool _queue_timer(void *data);
+static Eina_Bool _queue_idler(void *data);
 static void _queue_queue(Evas_Object *obj);
 static void _queue_append(Evas_Object *obj, int command, Evas_Object *icon, Evas_Object *end, const char *label, int header, void (*func) (void *data), void *data, const char *val, int relative, int use_relative, int item);
 static void _queue_remove(Evas_Object *obj, E_Widget_Queue_Item *qi, int del);
 
 static Eina_Bool
-_queue_timer(void *data)
+_queue_idler(void *data)
 {
    Evas_Object *obj;
    E_Widget_Data *wd;
@@ -62,7 +62,7 @@ _queue_timer(void *data)
 
    obj = data;
    wd = e_widget_data_get(obj);
-   wd->queue.timer = NULL;
+   wd->queue.idler = NULL;
    e_widget_ilist_freeze(obj);
    num = 0;
    while (wd->queue.queue)
@@ -189,8 +189,9 @@ _queue_queue(Evas_Object *obj)
 
    wd = e_widget_data_get(obj);
    if (!wd->queue.queue) return;
-   if (wd->queue.timer) return;
-   wd->queue.timer = ecore_timer_add(0.05, _queue_timer, obj);
+   if (wd->queue.idler) return;
+   e_util_wakeup();
+   wd->queue.idler = ecore_idler_add(_queue_idler, obj);
 }
 
 static void
@@ -244,8 +245,8 @@ _queue_clear(Evas_Object *obj)
    wd = e_widget_data_get(obj);
    while (wd->queue.queue)
      _queue_remove(obj, eina_list_data_get(wd->queue.queue), 1);
-   if (wd->queue.timer) ecore_timer_del(wd->queue.timer);
-   wd->queue.timer = NULL;
+   if (wd->queue.idler) ecore_idler_del(wd->queue.idler);
+   wd->queue.idler = NULL;
 }
 
 /* externally accessible functions */
@@ -510,8 +511,9 @@ e_widget_ilist_count(Evas_Object *obj)
    E_Widget_Data *wd;
 
    wd = e_widget_data_get(obj);
+   
    if (wd->queue.queue) 
-     return eina_list_count(wd->queue.queue);
+     return (eina_list_count(wd->queue.queue) + e_ilist_count(wd->o_ilist));
    else
      return e_ilist_count(wd->o_ilist);
 }
