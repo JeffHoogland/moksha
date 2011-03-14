@@ -988,8 +988,8 @@ _but_add(void *d1, void *d2)
    e_widget_ilist_thaw(il);
    e_widget_ilist_go(il);
    n = e_widget_ilist_count(il);
-   e_widget_ilist_nth_show(il, n, 0);
-   e_widget_ilist_selected_set(il, n);
+   e_widget_ilist_nth_show(il, n-1, 0);
+   e_widget_ilist_selected_set(il, n-1);
    
    cfd->cfdata->edit_il = il;
    _create_edit_frame(cfd, evas_object_evas_get(il), cfd->cfdata, m);
