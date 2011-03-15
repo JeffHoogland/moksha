@@ -64,6 +64,7 @@ struct _E_Config_Dialog_Data
    int fps_show;
    int fps_corner;
    int fps_average_range;
+   double first_draw_delay;
 };
 
 
@@ -147,7 +148,8 @@ _create_data(E_Config_Dialog *cfd)
    cfdata->fps_average_range = _comp_mod->conf->fps_average_range;
    if (cfdata->fps_average_range < 1) cfdata->fps_average_range = 12;
    else if (cfdata->fps_average_range > 120) cfdata->fps_average_range = 120;
-   
+   cfdata->first_draw_delay = _comp_mod->conf->first_draw_delay;
+
    EINA_LIST_FOREACH(_comp_mod->conf->match.popups, l, m)
      {
         m2 = E_NEW(Match_Config, 1);
@@ -1148,6 +1150,10 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_list_object_append(ol, ob, 1, 1, 0.5);
    ob = e_widget_check_add(evas, _("Grab Server during draw"), &(cfdata->grab));
    e_widget_list_object_append(ol, ob, 1, 1, 0.5);
+   ob = e_widget_label_add(evas, _("Initial draw timeout")); 
+   e_widget_list_object_append(ol, ob, 1, 1, 0.5);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.2f Seconds"), 0.01, 0.5, 0.01, 0, &(cfdata->first_draw_delay), NULL, 150); 
+   e_widget_list_object_append(ol, ob, 1, 1, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Sync"), ol, 0, 0, 0, 0, 0.5, 0.0);
 
    ol = e_widget_list_add(evas, 0, 0);
@@ -1328,6 +1334,7 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
        (cfdata->fps_show != _comp_mod->conf->fps_show) ||
        (cfdata->fps_corner != _comp_mod->conf->fps_corner) ||
        (cfdata->fps_average_range != _comp_mod->conf->fps_average_range) ||
+       (cfdata->first_draw_delay != _comp_mod->conf->first_draw_delay) ||
        (cfdata->match.changed)
        )
      {
@@ -1391,6 +1398,7 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
         _comp_mod->conf->fps_show = cfdata->fps_show;
         _comp_mod->conf->fps_corner = cfdata->fps_corner;
         _comp_mod->conf->fps_average_range = cfdata->fps_average_range;
+	_comp_mod->conf->first_draw_delay = cfdata->first_draw_delay;
         if (_comp_mod->conf->shadow_style)
           eina_stringshare_del(_comp_mod->conf->shadow_style);
         _comp_mod->conf->shadow_style = NULL;

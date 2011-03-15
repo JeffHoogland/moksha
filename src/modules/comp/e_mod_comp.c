@@ -375,9 +375,8 @@ _e_mod_comp_win_ready_timeout_setup(E_Comp_Win *cw)
      }
    else
      {
-        // FIXME 0.2 -> make config val
         cw->ready_timeout = ecore_timer_add
-           (0.2, _e_mod_comp_cb_win_show_ready_timeout, cw);
+	  (_comp_mod->conf->first_draw_delay, _e_mod_comp_cb_win_show_ready_timeout, cw);
      }
 }
 

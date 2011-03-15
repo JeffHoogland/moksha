@@ -30,8 +30,9 @@ struct _Config
    unsigned char    send_dump;
    unsigned char    nocomp_fs;
    unsigned char    smooth_windows;
+   double           first_draw_delay;
 
-   struct {
+  struct {
       Eina_List    *popups; // used for e popups
       Eina_List    *borders; // used for borders
       Eina_List    *overrides; // used for client menus, tooltips etc.

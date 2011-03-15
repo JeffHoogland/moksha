@@ -90,6 +90,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, send_dump, UCHAR);
    E_CONFIG_VAL(D, T, nocomp_fs, UCHAR);
    E_CONFIG_VAL(D, T, smooth_windows, UCHAR);
+   E_CONFIG_VAL(D, T, first_draw_delay, DOUBLE);
    E_CONFIG_LIST(D, T, match.popups,    mod->conf_match_edd);
    E_CONFIG_LIST(D, T, match.borders,   mod->conf_match_edd);
    E_CONFIG_LIST(D, T, match.overrides, mod->conf_match_edd);
@@ -103,6 +104,9 @@ e_modapi_init(E_Module *m)
         e_config->use_composite = 1;
         e_config_save_queue();
      }
+   /* XXX remove: update old configs. add config versioning */
+   if (mod->conf->first_draw_delay == 0)
+     mod->conf->first_draw_delay = 0.05;
    
    _comp_mod = mod;
 
@@ -145,6 +149,7 @@ _e_mod_config_new(E_Module *m)
    mod->conf->send_dump = 0; // implement
    mod->conf->nocomp_fs = 0; // buggy
    mod->conf->smooth_windows = 0;
+   mod->conf->first_draw_delay = 0.05;
    
    mod->conf->match.popups = NULL;
    mat = E_NEW(Match, 1);
@@ -163,6 +168,11 @@ _e_mod_config_new(E_Module *m)
    mat->name = eina_stringshare_add("E");
    mat->clas = eina_stringshare_add("Background_Window");
    mat->shadow_style = eina_stringshare_add("none");
+   mat = E_NEW(Match, 1);
+   mod->conf->match.overrides = eina_list_append(mod->conf->match.overrides, mat);
+   mat->name = eina_stringshare_add("E");
+   mat->clas = eina_stringshare_add("everything");
+   mat->shadow_style = eina_stringshare_add("popup");
    mat = E_NEW(Match, 1);
    mod->conf->match.overrides = eina_list_append(mod->conf->match.overrides, mat);
    mat->primary_type = ECORE_X_WINDOW_TYPE_DROPDOWN_MENU;
