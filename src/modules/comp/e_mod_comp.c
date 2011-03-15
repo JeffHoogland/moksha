@@ -1661,45 +1661,43 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
 	     eina_hash_add(borders, e_util_winid_str_get(cw->bd->client.win), cw);
 	     cw->dfn = e_object_delfn_add(E_OBJECT(cw->bd), _e_mod_comp_object_del, cw);
 	  }
-// setup on show
-//      _e_mod_comp_win_sync_setup(cw, cw->bd->client.win);
+	// setup on show
+	// _e_mod_comp_win_sync_setup(cw, cw->bd->client.win);
+     }
+   else if ((cw->pop = e_popup_find_by_window(cw->win)))
+     {
+	cw->dfn = e_object_delfn_add(E_OBJECT(cw->pop), 
+				     _e_mod_comp_object_del, cw);
+	cw->show_ready = 1;
+     }
+   else if ((cw->menu = e_menu_find_by_window(cw->win)))
+     {
+	  cw->dfn = e_object_delfn_add(E_OBJECT(cw->menu), 
+				       _e_mod_comp_object_del, cw);
+	  cw->show_ready = 1;
      }
    else
      {
-        cw->pop = e_popup_find_by_window(cw->win);
-        if (cw->pop)
-          cw->dfn = e_object_delfn_add(E_OBJECT(cw->pop), 
-                                       _e_mod_comp_object_del, cw);
-        else
-          {
-             cw->menu = e_menu_find_by_window(cw->win);
-             if (cw->menu)
-               cw->dfn = e_object_delfn_add(E_OBJECT(cw->menu), 
-                                            _e_mod_comp_object_del, cw);
-             else
-               {
-                  char *netwm_title = NULL;
+	char *netwm_title = NULL;
 
-                  cw->title = ecore_x_icccm_title_get(cw->win);
-                  if (ecore_x_netwm_name_get(cw->win, &netwm_title))
-                    {
-                       if (cw->title) free(cw->title);
-                       cw->title = netwm_title;
-                    }
-                  ecore_x_icccm_name_class_get(cw->win, &cw->name, &cw->clas);
-                  cw->role = ecore_x_icccm_window_role_get(cw->win);
-                  if (!ecore_x_netwm_window_type_get(cw->win, &cw->primary_type))
-                    cw->primary_type = ECORE_X_WINDOW_TYPE_UNKNOWN;
-               }
-          }
-// setup on show
-//        _e_mod_comp_win_sync_setup(cw, cw->win);
+	cw->title = ecore_x_icccm_title_get(cw->win);
+	if (ecore_x_netwm_name_get(cw->win, &netwm_title))
+	  {
+	     if (cw->title) free(cw->title);
+	     cw->title = netwm_title;
+	  }
+	ecore_x_icccm_name_class_get(cw->win, &cw->name, &cw->clas);
+	cw->role = ecore_x_icccm_window_role_get(cw->win);
+	if (!ecore_x_netwm_window_type_get(cw->win, &cw->primary_type))
+	  cw->primary_type = ECORE_X_WINDOW_TYPE_UNKNOWN;
+	// setup on show
+	// _e_mod_comp_win_sync_setup(cw, cw->win);
      }
-//   printf("CW ADD %x\n", cw->win);
+
    if (!cw->counter)
      {
         // FIXME: config - disable ready timeout for non-counter wins
-//        cw->show_ready = 1;
+	//        cw->show_ready = 1;
      }
    // fixme: could use bd/pop/menu for this too
    memset((&att), 0, sizeof(Ecore_X_Window_Attributes));
@@ -1997,10 +1995,13 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
              cw->pw = 0;
              cw->ph = 0;
           }
-        cw->dmg_updates = 0;
+	if (cw->pop)
+	  cw->dmg_updates = 1;
+	else
+	  cw->dmg_updates = 0;
      }
    else
-      cw->dmg_updates = 1;
+     cw->dmg_updates = 1;
    if ((!cw->redirected) || (!cw->pixmap))
      {
 //        printf("^^^^ redirect5 %x\n", cw->win);
