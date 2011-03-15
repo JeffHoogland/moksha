@@ -1150,7 +1150,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_list_object_append(ol, ob, 1, 1, 0.5);
    ob = e_widget_check_add(evas, _("Grab Server during draw"), &(cfdata->grab));
    e_widget_list_object_append(ol, ob, 1, 1, 0.5);
-   ob = e_widget_label_add(evas, _("Initial draw timeout")); 
+   ob = e_widget_label_add(evas, _("Initial draw timeout for newly mapped windows")); 
    e_widget_list_object_append(ol, ob, 1, 1, 0.5);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.2f Seconds"), 0.01, 0.5, 0.01, 0, &(cfdata->first_draw_delay), NULL, 150); 
    e_widget_list_object_append(ol, ob, 1, 1, 0.5);
