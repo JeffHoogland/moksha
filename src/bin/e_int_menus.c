@@ -883,15 +883,12 @@ _e_int_menus_clients_group_class_cb(const void *d1, const void *d2)
    bd1 = d1;
    bd2 = d2;
 
-   if (strcmp((const char*)bd1->client.icccm.class, 
-	      (const char*)bd2->client.icccm.class) > 0) 
+   if (!bd1->client.icccm.class)
+     return -1;
+   if (!bd2->client.icccm.class)
      return 1;
 
-   if (strcmp((const char*)bd1->client.icccm.class, 
-	      (const char*)bd2->client.icccm.class) < 0) 
-     return -1;
-
-   return -1;   /* Returning '-1' on equal is intentional */
+   return (strcmp(bd1->client.icccm.class, bd2->client.icccm.class) > 0 ? 1 : -1);
 }
 
 static int
