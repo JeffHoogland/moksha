@@ -1695,7 +1695,6 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
 	  cw->primary_type = ECORE_X_WINDOW_TYPE_UNKNOWN;
 	// setup on show
 	// _e_mod_comp_win_sync_setup(cw, cw->win);
-	ecore_x_window_sniff(cw->win);
      }
 
    if (!cw->counter)
@@ -1738,6 +1737,9 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
         if (cw->argb) evas_object_image_alpha_set(cw->obj, 1);
         else evas_object_image_alpha_set(cw->obj, 0);
 
+	if ((!cw->bd) && (!cw->pop) && (!cw->menu))
+	  ecore_x_window_sniff(cw->win);
+	
         _e_mod_comp_win_shadow_setup(cw);
 
         edje_object_signal_callback_add(cw->shobj, "e,action,show,done", "e",
