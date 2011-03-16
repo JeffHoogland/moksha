@@ -511,9 +511,18 @@ e_widget_ilist_count(Evas_Object *obj)
    E_Widget_Data *wd;
 
    wd = e_widget_data_get(obj);
-   
-   if (wd->queue.queue) 
-     return (eina_list_count(wd->queue.queue) + e_ilist_count(wd->o_ilist));
+
+   if (wd->queue.queue)
+     {
+	E_Widget_Queue_Item *qi;
+	Eina_List *l;
+	int cnt = 0;
+
+	EINA_LIST_FOREACH(wd->queue.queue, l, qi)
+	  if (qi->command == 0) cnt++;
+
+	return (cnt + e_ilist_count(wd->o_ilist));
+     }
    else
      return e_ilist_count(wd->o_ilist);
 }
