@@ -446,21 +446,23 @@ _delete_key_binding_cb(void       *data,
 
    _update_key_binding_list(cfdata, NULL);
 
-   /* FIXME this wont work here as the list will be created when ilist queue is
-      done an ilist_count will always return 0 here */
    if (sel >= e_widget_ilist_count(cfdata->gui.o_binding_list))
      sel = e_widget_ilist_count(cfdata->gui.o_binding_list) - 1;
 
    eina_stringshare_del(cfdata->locals.cur);
    cfdata->locals.cur = NULL;
 
-   e_widget_ilist_selected_set(cfdata->gui.o_binding_list, sel);
    if (sel < 0)
      {
         e_widget_ilist_unselect(cfdata->gui.o_action_list);
         e_widget_entry_clear(cfdata->gui.o_params);
         e_widget_disabled_set(cfdata->gui.o_params, 1);
         _update_buttons(cfdata);
+     }
+   else
+     {
+	e_widget_ilist_selected_set(cfdata->gui.o_binding_list, sel);
+	e_widget_ilist_nth_show(cfdata->gui.o_binding_list, sel, 0);
      }
 }
 
@@ -652,7 +654,7 @@ static void
 _update_action_list(E_Config_Dialog_Data *cfdata)
 {
    E_Config_Binding_Key *bi;
-   int j = -1, i, n;
+   int j = -1, i, n, cnt;
    const char *action, *params;
 
    if (!cfdata->locals.cur) return;
@@ -678,7 +680,8 @@ _update_action_list(E_Config_Dialog_Data *cfdata)
 
    if (j >= 0)
      {
-        for (i = 0; i < e_widget_ilist_count(cfdata->gui.o_action_list); i++)
+	cnt = e_widget_ilist_count(cfdata->gui.o_action_list);
+        for (i = 0; i < cnt; i++)
           {
              if (i > j) break;
              if (e_widget_ilist_nth_is_header(cfdata->gui.o_action_list, i)) j++;

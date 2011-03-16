@@ -535,7 +535,6 @@ _delete_mouse_binding_cb(void *data, void *data2 __UNUSED__)
    if (sel >= e_widget_ilist_count(cfdata->gui.o_binding_list))
      sel = e_widget_ilist_count(cfdata->gui.o_binding_list) - 1;
 
-
    eina_stringshare_del(cfdata->locals.cur);
    cfdata->locals.cur = NULL;
 
@@ -552,6 +551,7 @@ _delete_mouse_binding_cb(void *data, void *data2 __UNUSED__)
      { 
 	if (e_widget_ilist_nth_is_header(cfdata->gui.o_binding_list, sel)) sel++;
 	e_widget_ilist_selected_set(cfdata->gui.o_binding_list, sel);
+	e_widget_ilist_nth_show(cfdata->gui.o_binding_list, sel, 0);
      }
 }
 

@@ -645,7 +645,7 @@ _cb_adv_categories_change(void *data, Evas_Object *obj __UNUSED__)
    Eina_List *themes = NULL;
    E_Config_Theme *t;
    Evas_Object *ic = NULL;
-   int n;
+   int n, cnt;
 
    if (!(cfdata = data)) return;
 
@@ -671,7 +671,8 @@ _cb_adv_categories_change(void *data, Evas_Object *obj __UNUSED__)
      }
    if (!file) return;
 
-   for (n = 0; n < e_widget_ilist_count(cfdata->o_files_ilist); n++)
+   cnt = e_widget_ilist_count(cfdata->o_files_ilist);
+   for (n = 0; n < cnt; n++)
      {
 	const char *tmp;
 
@@ -843,7 +844,7 @@ _cb_adv_btn_assign(void *data1, void *data2 __UNUSED__)
    Evas_Object *ic = NULL, *oc = NULL, *of = NULL;
    char buf[1024];
    const char *label;
-   int n;
+   int n, cnt;
 
    if (!(cfdata = data1)) return;
 
@@ -882,7 +883,8 @@ _cb_adv_btn_assign(void *data1, void *data2 __UNUSED__)
 
 		  if (!_theme_file_used(cfdata->theme_list, filename))
 		    {
-		       for (n = 0; n < e_widget_ilist_count(of); n++)
+		       cnt = e_widget_ilist_count(of);
+		       for (n = 0; n < cnt; n++)
 			 {
 			    const char *tmp;
 
@@ -920,7 +922,7 @@ _cb_adv_btn_clear(void *data1, void *data2 __UNUSED__)
    char cat[1024];
    const char *label;
    const char *filename = NULL;
-   int n;
+   int n, cnt;
 
    if (!(cfdata = data1)) return;
 
@@ -948,7 +950,8 @@ _cb_adv_btn_clear(void *data1, void *data2 __UNUSED__)
 
    if ((filename) && (!_theme_file_used(cfdata->theme_list, filename)))
      {
-	for (n = 0; n < e_widget_ilist_count(of); n++)
+	cnt = e_widget_ilist_count(of);
+	for (n = 0; n < cnt; n++)
 	  {
 	     const char *tmp;
 
