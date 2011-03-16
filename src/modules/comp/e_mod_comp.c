@@ -44,7 +44,8 @@ struct _E_Comp
    int             frameskip;
 
    E_Manager_Comp  comp;
-
+   Ecore_X_Window  cm_selection;
+  
    Eina_Bool       gl : 1;
    Eina_Bool       grabbed : 1;
    Eina_Bool       nocomp : 1;
@@ -2861,8 +2862,15 @@ _e_mod_comp_add(E_Manager *man)
      }
 
    /* FIXME check if already composited? */
-   ecore_x_screen_is_composited_set(man->num, c->win);
-
+   c->cm_selection = ecore_x_window_input_new(man->root, 0, 0, 1, 1);
+   if (!c->cm_selection)
+     {
+	ecore_x_composite_render_window_disable(c->win);
+	free(c);
+	return NULL;
+     }
+   ecore_x_screen_is_composited_set(c->man->num, c->cm_selection);
+   
    if (c->man->num == 0) e_alert_composite_win = c->win;
 
    if (_comp_mod->conf->engine == E_EVAS_ENGINE_GL_X11)
@@ -3029,6 +3037,8 @@ _e_mod_comp_del(E_Comp *c)
    if (c->update_job) ecore_job_del(c->update_job);
    if (c->wins_list) eina_list_free(c->wins_list);
 
+   ecore_x_window_free(c->cm_selection); 
+   ecore_x_screen_is_composited_set(c->man->num, 0);
    ecore_x_e_comp_sync_supported_set(c->man->root, 0);
 
    free(c);
