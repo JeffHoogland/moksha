@@ -120,6 +120,8 @@ struct _E_Comp_Win
    Eina_Bool             real_hid : 1; // last hide was a real window unmap
    Eina_Bool             inhash : 1; // is in the windows hash
    Eina_Bool             show_ready : 1; // is this window ready for its first show
+
+   unsigned int          opacity; // opacity set with _NET_WM_WINDOW_OPACITY
 };
 
 static Eina_List *handlers = NULL;
@@ -1584,6 +1586,7 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
    if (!cw) return NULL;
    cw->win = win;
    cw->c = c;
+   cw->opacity = 255.0;
    cw->bd = e_border_find_by_window(cw->win);
    if (_comp_mod->conf->grab) ecore_x_grab();
    if (cw->bd)
@@ -1692,6 +1695,7 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
 	  cw->primary_type = ECORE_X_WINDOW_TYPE_UNKNOWN;
 	// setup on show
 	// _e_mod_comp_win_sync_setup(cw, cw->win);
+	ecore_x_window_sniff(cw->win);
      }
 
    if (!cw->counter)
@@ -2423,10 +2427,29 @@ _e_mod_comp_stack(void *data __UNUSED__, int type __UNUSED__, void *event)
    return ECORE_CALLBACK_PASS_ON;
 }
 
+static void
+_e_mod_comp_win_opacity_set(E_Comp_Win *cw)
+{
+   unsigned int val;
+
+   if (ecore_x_window_prop_card32_get(cw->win, ECORE_X_ATOM_NET_WM_WINDOW_OPACITY, &val, 1) > 0)
+     {
+	cw->opacity = (val >> 24);
+	evas_object_color_set(cw->shobj, cw->opacity, cw->opacity, cw->opacity, cw->opacity);
+     }
+}
+
 static Eina_Bool
 _e_mod_comp_property(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
-//   Ecore_X_Event_Window_Property *ev = event;
+   Ecore_X_Event_Window_Property *ev = event;
+
+   if (ev->atom == ECORE_X_ATOM_NET_WM_WINDOW_OPACITY)
+     {
+	E_Comp_Win *cw = _e_mod_comp_win_find(ev->win);
+	if (!cw) return ECORE_CALLBACK_PASS_ON;
+	_e_mod_comp_win_opacity_set(cw);
+     }
    return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -2435,6 +2458,14 @@ _e_mod_comp_message(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Client_Message *ev = event;
    E_Comp_Win *cw = NULL;
+   if (ev->message_type == ECORE_X_ATOM_NET_WM_WINDOW_OPACITY)
+     {
+	E_Comp_Win *cw = _e_mod_comp_win_find(ev->win);
+	if (!cw) return ECORE_CALLBACK_PASS_ON;
+	_e_mod_comp_win_opacity_set(cw);
+	return ECORE_CALLBACK_PASS_ON;
+     }
+
    if ((ev->message_type != ECORE_X_ATOM_E_COMP_SYNC_DRAW_DONE) ||
        (ev->format != 32)) return ECORE_CALLBACK_PASS_ON;
    cw = _e_mod_comp_border_client_find(ev->data.l[0]);
