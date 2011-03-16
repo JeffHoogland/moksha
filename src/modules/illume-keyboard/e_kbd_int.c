@@ -174,6 +174,7 @@ _e_kbd_int_layout_state_update(E_Kbd_Int *ki)
 	if ((ki->layout.state & CTRL) && (ky->is_ctrl)) selected = 1;
 	if ((ki->layout.state & ALT) && (ky->is_alt)) selected = 1;
 	if ((ki->layout.state & CAPSLOCK) && (ky->is_capslock)) selected = 1;
+	if ((ki->layout.state & (SHIFT | CAPSLOCK)) && (ky->is_multi_shift)) selected = 1;
 	if (selected)
 	  {
 	     if (!ky->selected)
@@ -351,6 +352,24 @@ _e_kbd_int_key_press_handle(E_Kbd_Int *ki, E_Kbd_Int_Key *ky)
 	_e_kbd_int_layout_state_update(ki);
 	return;
      }
+   if (ky->is_multi_shift)
+     {
+	if (ki->layout.state & SHIFT)
+          {
+             ki->layout.state &= (~(SHIFT));
+             ki->layout.state |= CAPSLOCK;
+          }
+	else if (ki->layout.state & CAPSLOCK)
+               {
+                ki->layout.state &= (~(CAPSLOCK));
+               }
+             else
+               {
+                ki->layout.state |= SHIFT;
+               }
+	_e_kbd_int_layout_state_update(ki);
+	return;
+     }
    if (ky->is_ctrl)
      {
 	if (ki->layout.state & CTRL) ki->layout.state &= (~(CTRL));
@@ -426,7 +445,7 @@ _e_kbd_int_key_press_handle(E_Kbd_Int *ki, E_Kbd_Int_Key *ky)
      }
    if (ki->layout.state & (SHIFT | CTRL | ALT))
      {
-	ki->layout.state &= (~(SHIFT | CTRL | ALT));
+	if( !(ky->is_multi_shift) ) ki->layout.state &= (~(SHIFT | CTRL | ALT));
 	_e_kbd_int_layout_state_update(ki);
      }
 }
@@ -574,6 +593,7 @@ _e_kbd_int_zoomkey_up(E_Kbd_Int *ki)
 	if ((ki->layout.state & CTRL) && (ky->is_ctrl)) selected = 1;
 	if ((ki->layout.state & ALT) && (ky->is_alt)) selected = 1;
 	if ((ki->layout.state & CAPSLOCK) && (ky->is_capslock)) selected = 1;
+	if ((ki->layout.state & (SHIFT|CAPSLOCK)) && (ky->is_multi_shift)) selected = 1;
 	if (selected)
 	  edje_object_signal_emit(o, "e,state,selected", "e");
 	if (!selected)
@@ -997,6 +1017,7 @@ _e_kbd_int_layout_parse(E_Kbd_Int *ki, const char *layout)
 	     st->out = eina_stringshare_add(str);
 	  }
 	if (!strcmp(str, "is_shift")) ky->is_shift = 1;
+	if (!strcmp(str, "is_multi_shift")) ky->is_multi_shift = 1;
 	if (!strcmp(str, "is_ctrl")) ky->is_ctrl = 1;
 	if (!strcmp(str, "is_alt")) ky->is_alt = 1;
 	if (!strcmp(str, "is_capslock")) ky->is_capslock = 1;

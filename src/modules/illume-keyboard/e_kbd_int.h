@@ -96,6 +96,7 @@ struct _E_Kbd_Int_Key
    unsigned char selected : 1;
    
    unsigned char is_shift : 1;
+   unsigned char is_multi_shift : 1;
    unsigned char is_ctrl : 1;
    unsigned char is_alt : 1;
    unsigned char is_capslock : 1;
