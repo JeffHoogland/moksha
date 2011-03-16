@@ -2,6 +2,7 @@
 #include "e_mod_main.h"
 #include "e_mod_comp.h"
 #include "e_mod_comp_update.h"
+#include <X11/Xlib.h>
 
 #define OVER_FLOW 4
 
@@ -1737,6 +1738,9 @@ _e_mod_comp_win_add(E_Comp *c, Ecore_X_Window win)
         if (cw->argb) evas_object_image_alpha_set(cw->obj, 1);
         else evas_object_image_alpha_set(cw->obj, 0);
 
+	if (!(cw->bd || cw->pop || cw->menu))
+	  XSelectInput(ecore_x_display_get(), cw->win, (att.event_mask.mine | PropertyChangeMask));
+	
         _e_mod_comp_win_shadow_setup(cw);
 
         edje_object_signal_callback_add(cw->shobj, "e,action,show,done", "e",
