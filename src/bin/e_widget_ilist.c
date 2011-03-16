@@ -71,8 +71,6 @@ static enum _Queue_Command
   CMD_SHOW
 } Queue_Command;
 
-
-
 static Eina_Bool
 _queue_idler(void *data)
 {
@@ -154,7 +152,8 @@ _queue_idler(void *data)
         else if (qi->command == CMD_SHOW)
           {
              Evas_Coord x, y, w, h;
-
+	     if (num > 0) break;
+	     
              e_ilist_nth_geometry_get(wd->o_ilist, qi->item, &x, &y, &w, &h);
              if (qi->use_relative)
                e_scrollframe_child_pos_set(wd->o_scrollframe, x, y);
