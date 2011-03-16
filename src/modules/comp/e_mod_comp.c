@@ -2860,6 +2860,9 @@ _e_mod_comp_add(E_Manager *man)
         return NULL;
      }
 
+   /* FIXME check if already composited? */
+   ecore_x_screen_is_composited_set(man->num, c->win);
+
    if (c->man->num == 0) e_alert_composite_win = c->win;
 
    if (_comp_mod->conf->engine == E_EVAS_ENGINE_GL_X11)
