@@ -71,13 +71,15 @@ static enum _Queue_Command
   CMD_SHOW
 } Queue_Command;
 
-  
+
+
 static Eina_Bool
 _queue_idler(void *data)
 {
    Evas_Object *obj;
    E_Widget_Data *wd;
    int num;
+   double start = ecore_time_get();
 
    obj = data;
    wd = e_widget_data_get(obj);
@@ -194,8 +196,9 @@ _queue_idler(void *data)
 	else if (qi->command == CMD_END_SET)
 	  e_ilist_nth_end_set(wd->o_ilist, qi->item, qi->end);
         _queue_remove(obj, qi, 0);
-        num++;
-        if (num >= 10) break;
+
+        if ((num++ >= 10) && (ecore_time_get() - start > 0.01))
+	  break;
      }
    e_widget_ilist_thaw(obj);
    e_widget_ilist_go(obj);
