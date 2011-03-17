@@ -174,7 +174,8 @@ _e_kbd_int_layout_state_update(E_Kbd_Int *ki)
 	if ((ki->layout.state & CTRL) && (ky->is_ctrl)) selected = 1;
 	if ((ki->layout.state & ALT) && (ky->is_alt)) selected = 1;
 	if ((ki->layout.state & CAPSLOCK) && (ky->is_capslock)) selected = 1;
-	if ((ki->layout.state & (SHIFT | CAPSLOCK)) && (ky->is_multi_shift)) selected = 1;
+	if ((ki->layout.state & (SHIFT | CAPSLOCK)) && (ky->is_multi_shift)) 
+          selected = 1;
 	if (selected)
 	  {
 	     if (!ky->selected)
@@ -360,13 +361,9 @@ _e_kbd_int_key_press_handle(E_Kbd_Int *ki, E_Kbd_Int_Key *ky)
              ki->layout.state |= CAPSLOCK;
           }
 	else if (ki->layout.state & CAPSLOCK)
-               {
-                ki->layout.state &= (~(CAPSLOCK));
-               }
-             else
-               {
-                ki->layout.state |= SHIFT;
-               }
+          ki->layout.state &= (~(CAPSLOCK));
+        else
+          ki->layout.state |= SHIFT;
 	_e_kbd_int_layout_state_update(ki);
 	return;
      }
@@ -445,7 +442,8 @@ _e_kbd_int_key_press_handle(E_Kbd_Int *ki, E_Kbd_Int_Key *ky)
      }
    if (ki->layout.state & (SHIFT | CTRL | ALT))
      {
-	if( !(ky->is_multi_shift) ) ki->layout.state &= (~(SHIFT | CTRL | ALT));
+	if (!ky->is_multi_shift) 
+          ki->layout.state &= (~(SHIFT | CTRL | ALT));
 	_e_kbd_int_layout_state_update(ki);
      }
 }
@@ -593,7 +591,8 @@ _e_kbd_int_zoomkey_up(E_Kbd_Int *ki)
 	if ((ki->layout.state & CTRL) && (ky->is_ctrl)) selected = 1;
 	if ((ki->layout.state & ALT) && (ky->is_alt)) selected = 1;
 	if ((ki->layout.state & CAPSLOCK) && (ky->is_capslock)) selected = 1;
-	if ((ki->layout.state & (SHIFT|CAPSLOCK)) && (ky->is_multi_shift)) selected = 1;
+	if ((ki->layout.state & (SHIFT|CAPSLOCK)) && (ky->is_multi_shift)) 
+          selected = 1;
 	if (selected)
 	  edje_object_signal_emit(o, "e,state,selected", "e");
 	if (!selected)
