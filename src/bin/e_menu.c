@@ -584,6 +584,39 @@ e_menu_item_new(E_Menu *m)
 }
 
 EAPI E_Menu_Item *
+e_menu_item_new_relative(E_Menu *m, E_Menu_Item *rel)
+{
+   E_Menu_Item *mi;
+   E_OBJECT_CHECK_RETURN(m, NULL);
+   E_OBJECT_TYPE_CHECK_RETURN(m, E_MENU_TYPE, NULL);
+   if (rel)
+     {
+	E_OBJECT_CHECK_RETURN(rel, NULL);
+	E_OBJECT_TYPE_CHECK_RETURN(rel, E_MENU_ITEM_TYPE, NULL);
+	if (rel->menu != m) return NULL;
+     }
+   
+   mi = E_OBJECT_ALLOC(E_Menu_Item, E_MENU_ITEM_TYPE, _e_menu_item_free);
+   mi->menu = m;
+
+   if (rel)
+     {
+	Eina_List *l;
+	
+	l = eina_list_data_find_list(m->items, rel);
+	m->items = eina_list_append_relative_list(m->items, mi, l);
+	mi->list_position = eina_list_data_find_list(m->items, mi);	     
+     }
+   else
+     {
+	m->items = eina_list_prepend(m->items, mi);
+	mi->list_position = m->items;
+     }
+   
+   return mi;
+}
+
+EAPI E_Menu_Item *
 e_menu_item_nth(E_Menu *m, int n)
 {
    E_OBJECT_CHECK_RETURN(m, NULL);

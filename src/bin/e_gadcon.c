@@ -1370,16 +1370,21 @@ e_gadcon_client_add_location_menu(E_Gadcon_Client *gcc, E_Menu *menu)
      }
 }
 
-EAPI void
-e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu_main, E_Menu *menu_gadget, int flags __UNUSED__)
+EAPI E_Menu *
+e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu_gadget, int flags __UNUSED__)
 {
-   E_Menu *mo;
+   E_Menu *mo, *menu_main = NULL;
    E_Menu_Item *mi;
    char buf[256];
 
    E_OBJECT_CHECK(gcc);
    E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
 
+   if (e_config->menu_gadcon_client_toplevel)
+     menu_main = menu_gadget;
+   else
+     menu_main = e_menu_new();
+   
    if ((gcc->gadcon->shelf) || (gcc->gadcon->toolbar))
      {
         if (e_menu_item_nth(menu_gadget, 0))
@@ -1387,7 +1392,7 @@ e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu_main, 
              mi = e_menu_item_new(menu_gadget);
              e_menu_item_separator_set(mi, 1);
           }
-	if (!gcc->o_control) 
+	if (!gcc->o_control)
 	  {
              mi = e_menu_item_new(menu_gadget);
              e_menu_item_label_set(mi, _("Begin move/resize"));
@@ -1448,24 +1453,36 @@ e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu_main, 
 	e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_remove, gcc);
      }
 
-   mi = e_menu_item_new(menu_main);
-   if (gcc->client_class->func.label)
-     snprintf(buf, sizeof(buf), "Gadget %s", 
-              gcc->client_class->func.label((E_Gadcon_Client_Class *)gcc->client_class));
-   else
-     snprintf(buf, sizeof(buf), "Gadget %s", gcc->name);
+   if (!e_config->menu_gadcon_client_toplevel)
+     {
+	mi = e_menu_item_new(menu_main);
+	if (gcc->client_class->func.label)
+	  snprintf(buf, sizeof(buf), "Gadget %s", 
+		   gcc->client_class->func.label((E_Gadcon_Client_Class *)gcc->client_class));
+	else
+	  snprintf(buf, sizeof(buf), "Gadget %s", gcc->name);
 
-   e_menu_item_label_set(mi, _(buf));
-   e_menu_item_realize_callback_set(mi, _e_gadcon_client_cb_menu_pre, gcc);
-   e_menu_item_submenu_set(mi, menu_gadget);
-
+	e_menu_item_label_set(mi, _(buf));
+	e_menu_item_realize_callback_set(mi, _e_gadcon_client_cb_menu_pre, gcc);
+	e_menu_item_submenu_set(mi, menu_gadget);
+     }
+   
    if (gcc->gadcon->menu_attach.func)
      {
         if ((gcc->gadcon->shelf) || (gcc->gadcon->toolbar))
-          gcc->gadcon->menu_attach.func(gcc->gadcon->menu_attach.data, gcc, menu_main);
+	  {
+	     if (e_config->menu_gadcon_client_toplevel)
+	       {
+	          mi = e_menu_item_new(menu_main);
+	          e_menu_item_separator_set(mi, 1);	
+	       }	     
+	     gcc->gadcon->menu_attach.func(gcc->gadcon->menu_attach.data, gcc, menu_main);
+	  }	
         else
           gcc->gadcon->menu_attach.func(gcc->gadcon->menu_attach.data, gcc, menu_gadget);
      }
+   
+   return menu_main;
 }
     
 EAPI void
@@ -2593,22 +2610,22 @@ _e_gadcon_client_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj 
    if (gcc->menu) return;
    if (ev->button == 3)
      {
-	E_Menu *ma, *mg;
+	E_Menu *m;
         E_Zone *zone;
 	int cx, cy, cw, ch;
 
 	e_gadcon_locked_set(gcc->gadcon, 1);
-	ma = e_menu_new();
-	mg = e_menu_new();
-	e_menu_post_deactivate_callback_set(ma, _e_gadcon_client_cb_menu_post,
-					    gcc);
-	gcc->menu = ma;
+	m = e_menu_new();
 
-	e_gadcon_client_util_menu_items_append(gcc, ma, mg, 0);
+	m = e_gadcon_client_util_menu_items_append(gcc, m, 0);
+	e_menu_post_deactivate_callback_set(m, _e_gadcon_client_cb_menu_post,
+					    gcc);
+	gcc->menu = m;
+
 	e_gadcon_canvas_zone_geometry_get(gcc->gadcon, &cx, &cy, &cw, &ch);
         zone = gcc->gadcon->zone;
         if (!zone) zone = e_util_zone_current_get(e_manager_current_get());
-	e_menu_activate_mouse(ma, zone, 
+	e_menu_activate_mouse(m, zone, 
 			      cx + ev->output.x, 
                               cy + ev->output.y, 1, 1,
 			      E_MENU_POP_DIRECTION_AUTO, ev->timestamp);

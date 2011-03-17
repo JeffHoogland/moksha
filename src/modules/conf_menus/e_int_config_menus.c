@@ -5,6 +5,7 @@ struct _E_Config_Dialog_Data
 {
    int show_favs, show_apps;
    int show_name, show_generic, show_comment;
+   int menu_gadcon_client_toplevel;
    double scroll_speed, fast_mouse_move_threshhold;
    double click_drag_timeout;
    int autoscroll_margin, autoscroll_cursor_margin;
@@ -69,6 +70,7 @@ _fill_data(E_Config_Dialog_Data *cfdata __UNUSED__)
    cfdata->show_name = e_config->menu_eap_name_show;
    cfdata->show_generic = e_config->menu_eap_generic_show;
    cfdata->show_comment = e_config->menu_eap_comment_show;
+   cfdata->menu_gadcon_client_toplevel = e_config->menu_gadcon_client_toplevel;
    cfdata->scroll_speed = e_config->menus_scroll_speed;
    cfdata->fast_mouse_move_threshhold = 
      e_config->menus_fast_mouse_move_threshhold;
@@ -108,6 +110,11 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ow);
    e_widget_list_object_append(o, of, 1, 0, 0.5);
 
+   of = e_widget_framelist_add(evas, _("Gadgets"), 0);
+   ow = e_widget_check_add(evas, _("Show gadget settings in top-level"), &(cfdata->menu_gadcon_client_toplevel));
+   e_widget_framelist_object_append(of, ow);
+   e_widget_list_object_append(o, of, 1, 0, 0.5);
+   
    return o;
 }
 
@@ -119,6 +126,7 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    e_config->menu_eap_name_show = cfdata->show_name;
    e_config->menu_eap_generic_show = cfdata->show_generic;
    e_config->menu_eap_comment_show = cfdata->show_comment;
+   e_config->menu_gadcon_client_toplevel = cfdata->menu_gadcon_client_toplevel;
    e_config_save_queue();
    return 1;
 }
@@ -130,7 +138,8 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
 	   (e_config->menu_apps_show != cfdata->show_apps) ||
 	   (e_config->menu_eap_name_show != cfdata->show_name) ||
 	   (e_config->menu_eap_generic_show != cfdata->show_generic) ||
-	   (e_config->menu_eap_comment_show != cfdata->show_comment));
+	   (e_config->menu_eap_comment_show != cfdata->show_comment) ||
+	   (e_config->menu_gadcon_client_toplevel != cfdata->menu_gadcon_client_toplevel));
 }
 
 static void

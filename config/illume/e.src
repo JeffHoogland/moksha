@@ -484,6 +484,7 @@ group "E_Config" struct {
   value "menu_eap_name_show" int: 1;
   value "menu_eap_generic_show" int: 1;
   value "menu_eap_comment_show" int: 0;
+  value "menu_gadcon_client_toplevel" int: 0;
   value "fullscreen_policy" int: 0;
   value "exebuf_max_exe_list" int: 20;
   value "exebuf_max_eap_list" int: 20;

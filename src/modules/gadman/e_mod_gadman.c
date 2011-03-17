@@ -1062,15 +1062,14 @@ on_frame_click(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void
 
    if (ev->button == 5)
      {
-	E_Menu *ma, *mg;
+	E_Menu *m;
 	int cx, cy, cw, ch;
 
-	ma = e_menu_new();
-	gcc->menu = ma;
-	mg = e_menu_new();
-	e_gadcon_client_util_menu_items_append(gcc, ma, mg, 0);
+	m = e_menu_new();
+	m = e_gadcon_client_util_menu_items_append(gcc, m, 0);
+	gcc->menu = m;
 	e_gadcon_canvas_zone_geometry_get(gcc->gadcon, &cx, &cy, &cw, &ch);
-	e_menu_activate_mouse(ma,
+	e_menu_activate_mouse(m,
 			      e_util_zone_current_get(e_manager_current_get()),
 			      cx + ev->output.x, cy + ev->output.y, 1, 1,
 			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);

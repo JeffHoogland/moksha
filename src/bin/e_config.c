@@ -843,7 +843,8 @@ e_config_init(void)
 
    E_CONFIG_VAL(D, T, menu_favorites_show, INT);
    E_CONFIG_VAL(D, T, menu_apps_show, INT);
-
+   E_CONFIG_VAL(D, T, menu_gadcon_client_toplevel, INT);
+   
    E_CONFIG_VAL(D, T, ping_clients_interval, INT);
    E_CONFIG_VAL(D, T, cache_flush_poll_interval, INT);
 
@@ -1286,6 +1287,7 @@ e_config_load(void)
 
    E_CONFIG_LIMIT(e_config->menu_favorites_show, 0, 1);
    E_CONFIG_LIMIT(e_config->menu_apps_show, 0, 1);
+   E_CONFIG_LIMIT(e_config->menu_gadcon_client_toplevel, 0, 1);
 
    E_CONFIG_LIMIT(e_config->ping_clients_interval, 16, 1024);
 

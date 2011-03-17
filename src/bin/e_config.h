@@ -188,6 +188,7 @@ struct _E_Config
    int         menu_eap_comment_show; // GUI
    int         menu_favorites_show; // GUI
    int         menu_apps_show; // GUI
+   int         menu_gadcon_client_toplevel; // GUI
    int         fullscreen_policy; // GUI
    const char *exebuf_term_cmd; // GUI
    Eina_List  *color_classes; // GUI

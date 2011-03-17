@@ -176,7 +176,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
 
    /* size */
    ol = e_widget_list_add(evas, 0, 0);
-   ow = e_widget_slider_add(evas, 1, 0, _("Height (%3.0f pixels)"), 4, 120, 4, 0, 
+   ow = e_widget_slider_add(evas, 1, 0, _("Height (%3.0f pixels)"), 4, 256, 4, 0, 
                             NULL, &(cfdata->size), 100);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
    ow = e_widget_check_add(evas, _("Shrink to Content Width"), 
@@ -224,7 +224,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    cfdata->autohide_list = eina_list_append(cfdata->autohide_list, ow);
    e_widget_disabled_set(ow, !cfdata->autohide);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
-   ow = e_widget_slider_add(evas, 1, 0, _("%.1f seconds"), 0.2, 6.0, 0.2, 0, 
+   ow = e_widget_slider_add(evas, 1, 0, _("%.2f seconds"), 0.05, 6.0, 0.05, 0, 
                             &(cfdata->hide_duration), NULL, 100);
    cfdata->autohide_list = eina_list_append(cfdata->autohide_list, ow);
    e_widget_disabled_set(ow, !cfdata->autohide);

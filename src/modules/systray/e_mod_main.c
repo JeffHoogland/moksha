@@ -143,20 +143,17 @@ static void
 _systray_menu_new(Instance *inst, Evas_Event_Mouse_Down *ev)
 {
    E_Zone *zone;
-   E_Menu *ma, *mg;
+   E_Menu *m;
    int x, y;
 
    zone = e_util_zone_current_get(e_manager_current_get());
 
-   ma = e_menu_new();
-   e_menu_post_deactivate_callback_set(ma, _systray_menu_cb_post, inst);
-   inst->menu = ma;
-
-   mg = e_menu_new();
-
-   e_gadcon_client_util_menu_items_append(inst->gcc, ma, mg, 0);
+   m = e_menu_new();
+   m = e_gadcon_client_util_menu_items_append(inst->gcc, m, 0);
+   e_menu_post_deactivate_callback_set(m, _systray_menu_cb_post, inst);
+   inst->menu = m;
    e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &x, &y, NULL, NULL);
-   e_menu_activate_mouse(ma, zone, x + ev->output.x, y + ev->output.y,
+   e_menu_activate_mouse(m, zone, x + ev->output.x, y + ev->output.y,
 			 1, 1, E_MENU_POP_DIRECTION_AUTO, ev->timestamp);
 }
 

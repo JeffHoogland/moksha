@@ -423,6 +423,7 @@ group "E_Config" struct {
   value "menu_eap_name_show" int: 1;
   value "menu_eap_generic_show" int: 1;
   value "menu_eap_comment_show" int: 0;
+  value "menu_gadcon_client_toplevel" int: 0;
   value "fullscreen_policy" int: 0;
   value "exebuf_term_cmd" string: "xterm -hold -e";
   value "use_app_icon" int: 0;
