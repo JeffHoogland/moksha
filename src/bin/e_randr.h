@@ -31,6 +31,7 @@ struct _E_Randr_Crtc_Info
    int gamma_ramp_size;
    Eina_List *outputs;
    Eina_List *possible_outputs;
+   Eina_List *outputs_common_modes;
    Ecore_X_Randr_Mode_Info *current_mode;
 };
 

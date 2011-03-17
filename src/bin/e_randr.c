@@ -531,6 +531,7 @@ _e_randr_crtc_info_set(E_Randr_Crtc_Info *crtc_info)
    if (crtc_info->current_mode)
      fprintf(stderr, "found CRTC %d in mode %d\n", crtc_info->xid, crtc_info->current_mode->xid);
    crtc_info->current_orientation = ecore_x_randr_crtc_orientation_get(e_randr_screen_info->root, crtc_info->xid);
+   crtc_info->outputs_common_modes = _e_randr_outputs_common_modes_get(crtc_info->outputs, NULL);
 }
 
 /*
@@ -548,6 +549,9 @@ _e_randr_output_modes_add(E_Randr_Output_Info *output_info)
 
    if (E_RANDR_NO_12 || !(modes = ecore_x_randr_output_modes_get(e_randr_screen_info->root, output_info->xid, &nmodes, &npreferred))) return EINA_FALSE;
 
+   //In case the monitor does not have any preferred mode at all
+   if (nmodes > 0 && npreferred == 0) npreferred = 1;
+
    while (--nmodes >= 0)
      {
         added_yet = EINA_FALSE;
@@ -562,10 +566,10 @@ _e_randr_output_modes_add(E_Randr_Output_Info *output_info)
         if(!added_yet)
           {
              mode_info = ecore_x_randr_mode_info_get(e_randr_screen_info->root, modes[nmodes]);
-             e_randr_screen_info->rrvd_info.randr_info_12->modes = eina_list_append(e_randr_screen_info->rrvd_info.randr_info_12->modes, mode_info);
+             e_randr_screen_info->rrvd_info.randr_info_12->modes = eina_list_prepend(e_randr_screen_info->rrvd_info.randr_info_12->modes, mode_info);
           }
-        output_info->modes = eina_list_append(output_info->modes, mode_info);
-        if (nmodes < npreferred) output_info->preferred_modes = eina_list_append(output_info->preferred_modes, mode_info);
+        output_info->modes = eina_list_prepend(output_info->modes, mode_info);
+        if (nmodes < npreferred) output_info->preferred_modes = eina_list_prepend(output_info->preferred_modes, mode_info);
 
      }
 
@@ -1282,7 +1286,12 @@ _e_randr_try_enable_output(E_Randr_Output_Info *output_info, Eina_Bool force)
         if ((usable_crtc && (!usable_crtc->current_mode)) || force)
           {
              //enable and position according to used policies
-             mode_info = ((Ecore_X_Randr_Mode_Info*)eina_list_nth(output_info->preferred_modes, 0));
+             if(!(mode_info = ((Ecore_X_Randr_Mode_Info*)eina_list_nth(output_info->preferred_modes, 0))))
+               {
+                  fprintf(stderr, "E_RANDR: Could not enable output(%d), as it has no preferred (and there for none at all) modes.!\n", output_info->xid);
+                  ret = EINA_FALSE;
+                  break;
+               }
              if((ret = ecore_x_randr_crtc_mode_set(e_randr_screen_info->root, usable_crtc->xid, &output_info->xid, 1, mode_info->xid)))
                {
                   usable_crtc->geometry.w = mode_info->width;
@@ -1515,20 +1524,20 @@ static Eina_Bool
 _e_randr_crtc_outputs_mode_max_set(E_Randr_Crtc_Info *crtc_info)
 {
    Ecore_X_Randr_Mode_Info *mode_info;
-   Eina_List *common_modes, *iter;
+   Eina_List *iter;
    Eina_Bool ret = EINA_TRUE;
    Ecore_X_Randr_Output *outputs;
 
-   if (!crtc_info || !crtc_info->outputs || !(common_modes = _e_randr_outputs_common_modes_get(crtc_info->outputs, NULL))) return EINA_FALSE;
+   if (!crtc_info || !crtc_info->outputs || !crtc_info->outputs_common_modes) return EINA_FALSE;
 
-   EINA_LIST_REVERSE_FOREACH(common_modes, iter, mode_info)
+   EINA_LIST_REVERSE_FOREACH(crtc_info->outputs_common_modes, iter, mode_info)
      {
         if (!_e_randr_crtc_mode_intersects_crtcs(crtc_info, mode_info))
           break;
      }
    if (!mode_info)
      {
-        eina_list_free(common_modes);
+        eina_list_free(crtc_info->outputs_common_modes);
         return EINA_FALSE;
      }
    if ((outputs = _e_randr_outputs_to_array(crtc_info->outputs)))
@@ -1536,7 +1545,7 @@ _e_randr_crtc_outputs_mode_max_set(E_Randr_Crtc_Info *crtc_info)
         ret = ecore_x_randr_crtc_mode_set(e_randr_screen_info->root, crtc_info->xid, outputs, eina_list_count(crtc_info->outputs), mode_info->xid);
         free(outputs);
      }
-   eina_list_free(common_modes);
+   eina_list_free(crtc_info->outputs_common_modes);
 
    ecore_x_randr_screen_reset(e_randr_screen_info->root);
 
