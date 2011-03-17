@@ -287,30 +287,38 @@ _create_menus_list(Evas *evas, E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _adv_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   Evas_Object *otb, *ol, *ow;
+   Evas_Object *otb, *ol, *of, *ow;
 
    otb = e_widget_toolbook_add(evas, (24 * e_scale), (24 * e_scale));
 
    ol = e_widget_list_add(evas, 0, 0);
+   of = e_widget_framelist_add(evas, _("Main Menu"), 0); 
    ow = e_widget_check_add(evas, _("Favorites"), &(cfdata->show_favs));
-   e_widget_list_object_append(ol, ow, 1, 0, 0.5);
+   e_widget_framelist_object_append(of, ow); 
    ow = e_widget_check_add(evas, _("Applications"), &(cfdata->show_apps));
-   e_widget_list_object_append(ol, ow, 1, 0, 0.5);
-   e_widget_toolbook_page_append(otb, NULL, _("Main Menu"), ol, 1, 0, 1, 0, 
-                                 0.5, 0.0);
+   e_widget_framelist_object_append(of, ow);
+   e_widget_list_object_append(ol, of, 1, 0, 0.5);
 
-   ol = _create_menus_list(evas, cfdata);
-   e_widget_toolbook_page_append(otb, NULL, _("System"), ol, 1, 0, 1, 0, 
+   of = e_widget_framelist_add(evas, _("Gadgets"), 0); 
+   ow = e_widget_check_add(evas, _("Show gadget settings in top-level"), &(cfdata->menu_gadcon_client_toplevel));
+   e_widget_framelist_object_append(of, ow);
+   e_widget_list_object_append(ol, of, 1, 0, 0.5);
+   e_widget_toolbook_page_append(otb, NULL, _("Menus"), ol, 1, 0, 1, 0, 
                                  0.5, 0.0);
 
    ol = e_widget_list_add(evas, 0, 0);
+   ow = _create_menus_list(evas, cfdata);
+   e_widget_list_object_append(ol, ow, 1, 0, 0.5);
+   of = e_widget_framelist_add(evas, _("Display"), 0); 
    ow = e_widget_check_add(evas, _("Name"), &(cfdata->show_name));
-   e_widget_list_object_append(ol, ow, 1, 0, 0.5);
+   e_widget_framelist_object_append(of, ow); 
    ow = e_widget_check_add(evas, _("Generic"), &(cfdata->show_generic));
-   e_widget_list_object_append(ol, ow, 1, 0, 0.5);
+   e_widget_framelist_object_append(of, ow); 
    ow = e_widget_check_add(evas, _("Comments"), &(cfdata->show_comment));
-   e_widget_list_object_append(ol, ow, 1, 0, 0.5);
-   e_widget_toolbook_page_append(otb, NULL, _("Display"), ol, 1, 0, 1, 0, 
+   e_widget_framelist_object_append(of, ow); 
+   e_widget_list_object_append(ol, of, 1, 0, 0.5);
+
+   e_widget_toolbook_page_append(otb, NULL, _("Applications"), ol, 1, 0, 1, 0, 
                                  0.5, 0.0);
 
    ol = e_widget_list_add(evas, 0, 0);
