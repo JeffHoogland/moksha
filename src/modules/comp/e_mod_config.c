@@ -571,11 +571,12 @@ _match_list_del(Eina_List **list, Match_Config *m)
 }
 
 static void
-_cb_dialog_resize(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_cb_dialog_resize(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
 {
-   Evas_Object *bg, *of = data;
+   Evas_Object *bg, *of;
    int x, y, w, h;
 
+   of = data;
    bg = evas_object_data_get(of, "bg");
    evas_object_geometry_get(obj, &x, &y, &w, &h);
 
