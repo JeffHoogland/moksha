@@ -13,4 +13,5 @@ Comment[ru]=Управление Bluetooth устройствами.
 Comment[de]=Bluetooth-Verbindungen verwalten
 Comment[fr]=Configure les périphériques Bluetooth.
 Comment[it]=Configura i dispositivi Bluetooth.
+Comment[pt]=Configuração dos dispositivos Bluetooth
 X-Enlightenment-ModuleType=system
