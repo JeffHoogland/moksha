@@ -1560,7 +1560,7 @@ _e_mod_comp_win_mirror_add(E_Comp_Win *cw)
                   evas_object_image_native_surface_set(o, &ns);
                   evas_object_image_data_update_add(o, 0, 0, w, h);
                }
-             else
+             else if (cw->xim)
                {
                   pix = ecore_x_image_data_get(cw->xim, NULL, NULL, NULL);
                   evas_object_image_data_set(o, pix);
