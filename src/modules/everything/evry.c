@@ -1474,6 +1474,18 @@ _evry_state_pop(Evry_Selector *sel, int immediate)
 
    _evry_item_desel(s);
 
+   if (s->selector->update_timer)
+     {
+	ecore_timer_del(s->selector->update_timer);
+	s->selector->update_timer = NULL;
+     }
+
+   if (s->selector->action_timer)
+     {
+	ecore_timer_del(s->selector->action_timer);
+	s->selector->action_timer = NULL;
+     }
+     
    if (s->view)
      {
 	if (immediate)
