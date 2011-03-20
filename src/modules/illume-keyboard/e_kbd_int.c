@@ -10,7 +10,8 @@ enum
    SHIFT = (1 << 0),
    CAPSLOCK = (1 << 1),
    CTRL = (1 << 2),
-   ALT = (1 << 3)
+   ALT = (1 << 3),
+   ALTGR = (1 << 4)
 };
 
 static Evas_Object *_theme_obj_new(Evas *e, const char *custom_dir, const char *group);
@@ -102,11 +103,12 @@ _e_kbd_int_layout_buf_update(E_Kbd_Int *ki)
    EINA_LIST_FOREACH(ki->layout.keys, l, ky)
      {
 	E_Kbd_Int_Key_State *st;
-	const char *out, *out_shift, *out_capslock;
+	const char *out, *out_shift, *out_capslock, *out_altgr;
 
 	out = NULL;
 	out_shift = NULL;
 	out_capslock = NULL;
+	out_altgr = NULL;
 
 	EINA_LIST_FOREACH(ky->states, l2, st)
 	  {
@@ -116,6 +118,8 @@ _e_kbd_int_layout_buf_update(E_Kbd_Int *ki)
 	       out_shift = st->out;
 	     else if (st->state == CAPSLOCK)
 	       out_capslock = st->out;
+	     else if (st->state == ALTGR)
+	       out_altgr = st->out;
 	  }
 	if (out)
 	  {
@@ -125,6 +129,8 @@ _e_kbd_int_layout_buf_update(E_Kbd_Int *ki)
 	       s1 = strdup(_e_kbd_int_str_unquote(out));
 	     if ((out_shift) && (out_shift[0] == '"')) 
 	       s2 = strdup(_e_kbd_int_str_unquote(out_shift));
+	     if ((out_altgr) && (out_altgr[0] == '"')) 
+	       s2 = strdup(_e_kbd_int_str_unquote(out_altgr));
 	     if ((out_capslock) && (out_capslock[0] == '"')) 
 	       s3 = strdup(_e_kbd_int_str_unquote(out_capslock));
 	     e_kbd_buf_layout_key_add(ki->kbuf, s1, s2, s3, 
@@ -173,6 +179,7 @@ _e_kbd_int_layout_state_update(E_Kbd_Int *ki)
 	if ((ki->layout.state & SHIFT) && (ky->is_shift)) selected = 1;
 	if ((ki->layout.state & CTRL) && (ky->is_ctrl)) selected = 1;
 	if ((ki->layout.state & ALT) && (ky->is_alt)) selected = 1;
+	if ((ki->layout.state & ALTGR) && (ky->is_altgr)) selected = 1;
 	if ((ki->layout.state & CAPSLOCK) && (ky->is_capslock)) selected = 1;
 	if ((ki->layout.state & (SHIFT | CAPSLOCK)) && (ky->is_multi_shift)) 
           selected = 1;
@@ -236,9 +243,9 @@ _e_kbd_int_cb_match_select(void *data, Evas_Object *obj __UNUSED__, const char *
    _e_kbd_int_string_send(km->ki, km->str);
    e_kbd_buf_clear(km->ki->kbuf);
    e_kbd_send_keysym_press("space", 0);
-   if (km->ki->layout.state & (SHIFT | CTRL | ALT))
+   if (km->ki->layout.state & (SHIFT | CTRL | ALT | ALTGR))
      {
-	km->ki->layout.state &= (~(SHIFT | CTRL | ALT));
+	km->ki->layout.state &= (~(SHIFT | CTRL | ALT | ALTGR));
 	_e_kbd_int_layout_state_update(km->ki);
      }
    _e_kbd_int_matches_update(km->ki);
@@ -387,6 +394,13 @@ _e_kbd_int_key_press_handle(E_Kbd_Int *ki, E_Kbd_Int_Key *ky)
 	_e_kbd_int_matches_update(ki);
 	return;
      }
+   if (ky->is_altgr)
+     {
+	if (ki->layout.state & ALTGR) ki->layout.state &= (~(ALTGR));
+	else ki->layout.state |= ALTGR;
+	_e_kbd_int_layout_state_update(ki);
+	return;
+     }
    if (ky->is_capslock)
      {
 	if (ki->layout.state & CAPSLOCK) ki->layout.state &= (~CAPSLOCK);
@@ -409,7 +423,7 @@ _e_kbd_int_key_press_handle(E_Kbd_Int *ki, E_Kbd_Int_Key *ky)
 	     else
 	       e_kbd_send_keysym_press(out, mods);
 	  }
-	ki->layout.state &= (~(SHIFT | CTRL | ALT));
+	ki->layout.state &= (~(SHIFT | CTRL | ALT | ALTGR));
 	_e_kbd_int_layout_state_update(ki);
 	e_kbd_buf_lookup(ki->kbuf, _e_kbd_int_matches_update, ki);
 	return;
@@ -440,10 +454,11 @@ _e_kbd_int_key_press_handle(E_Kbd_Int *ki, E_Kbd_Int_Key *ky)
 	     _e_kbd_int_matches_update(ki);
 	  }
      }
-   if (ki->layout.state & (SHIFT | CTRL | ALT))
+   if (ki->layout.state & (SHIFT | CTRL | ALT | ALTGR))
      {
+	printf("CLEARING STATE\n");
 	if (!ky->is_multi_shift) 
-          ki->layout.state &= (~(SHIFT | CTRL | ALT));
+          ki->layout.state &= (~(SHIFT | CTRL | ALT | ALTGR));
 	_e_kbd_int_layout_state_update(ki);
      }
 }
@@ -590,6 +605,7 @@ _e_kbd_int_zoomkey_up(E_Kbd_Int *ki)
 	if ((ki->layout.state & SHIFT) && (ky->is_shift)) selected = 1;
 	if ((ki->layout.state & CTRL) && (ky->is_ctrl)) selected = 1;
 	if ((ki->layout.state & ALT) && (ky->is_alt)) selected = 1;
+	if ((ki->layout.state & ALTGR) && (ky->is_altgr)) selected = 1;
 	if ((ki->layout.state & CAPSLOCK) && (ky->is_capslock)) selected = 1;
 	if ((ki->layout.state & (SHIFT|CAPSLOCK)) && (ky->is_multi_shift)) 
           selected = 1;
@@ -993,7 +1009,7 @@ _e_kbd_int_layout_parse(E_Kbd_Int *ki, const char *layout)
 	  }
 	if (!ky) continue;
 	if ((!strcmp(str, "normal")) || (!strcmp(str, "shift")) ||
-	    (!strcmp(str, "capslock")))
+	    (!strcmp(str, "capslock")) || (!strcmp(str, "altgr")))
 	  {
 	     char *p;
 	     char label[PATH_MAX];
@@ -1005,6 +1021,7 @@ _e_kbd_int_layout_parse(E_Kbd_Int *ki, const char *layout)
 	     if (!strcmp(str, "normal")) st->state = NORMAL;
 	     if (!strcmp(str, "shift")) st->state = SHIFT;
 	     if (!strcmp(str, "capslock")) st->state = CAPSLOCK;
+	     if (!strcmp(str, "altgr")) st->state = ALTGR;
 	     p = strrchr(label, '.');
 	     if ((p) && (!strcmp(p, ".png")))
 	       st->icon = eina_stringshare_add(label);
@@ -1019,6 +1036,7 @@ _e_kbd_int_layout_parse(E_Kbd_Int *ki, const char *layout)
 	if (!strcmp(str, "is_multi_shift")) ky->is_multi_shift = 1;
 	if (!strcmp(str, "is_ctrl")) ky->is_ctrl = 1;
 	if (!strcmp(str, "is_alt")) ky->is_alt = 1;
+	if (!strcmp(str, "is_altgr")) ky->is_altgr = 1;
 	if (!strcmp(str, "is_capslock")) ky->is_capslock = 1;
      }
    fclose(f);
@@ -1406,9 +1424,9 @@ _e_kbd_int_cb_dictlist_item_sel(void *data)
    i = e_widget_ilist_selected_get(ki->dictlist.ilist_obj);
    str = eina_list_nth(ki->dictlist.matches, i);
    e_kbd_buf_clear(ki->kbuf);
-   if (ki->layout.state & (SHIFT | CTRL | ALT))
+   if (ki->layout.state & (SHIFT | CTRL | ALT | ALTGR))
      {
-	ki->layout.state &= (~(SHIFT | CTRL | ALT));
+	ki->layout.state &= (~(SHIFT | CTRL | ALT | ALTGR));
 	_e_kbd_int_layout_state_update(ki);
      }
 
@@ -1560,9 +1578,9 @@ _e_kbd_int_cb_matchlist_item_sel(void *data)
    _e_kbd_int_string_send(ki, str);
    e_kbd_buf_clear(ki->kbuf);
    e_kbd_send_keysym_press("space", 0);
-   if (ki->layout.state & (SHIFT | CTRL | ALT))
+   if (ki->layout.state & (SHIFT | CTRL | ALT | ALTGR))
      {
-	ki->layout.state &= (~(SHIFT | CTRL | ALT));
+	ki->layout.state &= (~(SHIFT | CTRL | ALT | ALTGR));
 	_e_kbd_int_layout_state_update(ki);
      }
    _e_kbd_int_matches_update(ki);

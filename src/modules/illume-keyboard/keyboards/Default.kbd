@@ -15,6 +15,7 @@ key  5  5  10  10
   normal   q "q"
   shift    Q "Q"
   capslock    Q "Q"
+  altgr    Ω Ω
 key 15  5  10  10
   normal   w "w"
   shift    W "W"
@@ -22,11 +23,13 @@ key 15  5  10  10
 key 25  5  10  10
   normal   e "e"
   shift    E "E"
+  altgr    € €
   capslock    E "E"
 key 35  5  10  10
   normal   r "r"
   shift    R "R"
   capslock    R "R"
+  altgr    ® ®
 key 45  5  10  10
   normal   t "t"
   shift    T "T"
@@ -89,6 +92,9 @@ key 90 15  10  10
   shift    L "L"
   capslock    L "L"
 
+key 5 25  10  10
+  normal   ⎇
+  is_altgr
 key 15 25  10  10
   normal   z "z"
   shift    Z "Z"
@@ -101,6 +107,7 @@ key 35 25  10  10
   normal   c "c"
   shift    C "C"
   capslock    C "C"
+  altgr    ¢ ¢
 key 45 25  10  10
   normal   v "v"
   shift    V "V"
@@ -117,6 +124,7 @@ key 75 25  10  10
   normal   m "m"
   shift    M "M"
   capslock    M "M"
+  altgr    µ µ
 key 105 25 10  10
 #  normal   shift.png
   normal   ↑

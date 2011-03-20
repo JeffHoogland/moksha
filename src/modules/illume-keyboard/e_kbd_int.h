@@ -99,6 +99,7 @@ struct _E_Kbd_Int_Key
    unsigned char is_multi_shift : 1;
    unsigned char is_ctrl : 1;
    unsigned char is_alt : 1;
+   unsigned char is_altgr : 1;
    unsigned char is_capslock : 1;
 };
 
