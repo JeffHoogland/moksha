@@ -3141,13 +3141,13 @@ _e_border_move_key_down(void *data __UNUSED__,
    x = action_border->x;
    y = action_border->y;
 
-   if (strcmp(ev->key, "Up") == 0)
+   if ((strcmp(ev->key, "Up") == 0) || (strcmp(ev->key, "k") == 0))
      y -= _e_border_key_down_modifier_apply(ev->modifiers, e_config->border_keyboard.move.dy);
-   else if (strcmp(ev->key, "Down") == 0)
+   else if ((strcmp(ev->key, "Down") == 0) || (strcmp(ev->key, "j") == 0))
      y += _e_border_key_down_modifier_apply(ev->modifiers, e_config->border_keyboard.move.dy);
-   else if (strcmp(ev->key, "Left") == 0)
+   else if ((strcmp(ev->key, "Left") == 0) || (strcmp(ev->key, "h") == 0))
      x -= _e_border_key_down_modifier_apply(ev->modifiers, e_config->border_keyboard.move.dx);
-   else if (strcmp(ev->key, "Right") == 0)
+   else if ((strcmp(ev->key, "Right") == 0) || (strcmp(ev->key, "l") == 0))
      x += _e_border_key_down_modifier_apply(ev->modifiers, e_config->border_keyboard.move.dx);
    else if (strcmp(ev->key, "Return") == 0)
      goto stop;
@@ -3266,13 +3266,13 @@ _e_border_resize_key_down(void *data __UNUSED__,
    if (dy < action_border->client.icccm.step_h)
      dy = action_border->client.icccm.step_h;
 
-   if (strcmp(ev->key, "Up") == 0)
+   if ((strcmp(ev->key, "Up") == 0) || (strcmp(ev->key, "k") == 0))
      h -= dy;
-   else if (strcmp(ev->key, "Down") == 0)
+   else if ((strcmp(ev->key, "Down") == 0) || (strcmp(ev->key, "j") == 0))
      h += dy;
-   else if (strcmp(ev->key, "Left") == 0)
+   else if ((strcmp(ev->key, "Left") == 0) || (strcmp(ev->key, "h") == 0))
      w -= dx;
-   else if (strcmp(ev->key, "Right") == 0)
+   else if ((strcmp(ev->key, "Right") == 0) || (strcmp(ev->key, "l") == 0))
      w += dx;
    else if (strcmp(ev->key, "Return") == 0)
      goto stop;
