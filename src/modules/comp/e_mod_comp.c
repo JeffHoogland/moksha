@@ -2941,8 +2941,18 @@ _e_mod_comp_add(E_Manager *man)
           }
      }
    if (!c->ee)
-     c->ee = ecore_evas_software_x11_new(NULL, c->win, 0, 0, man->w, man->h);
-
+     {
+	if (_comp_mod->conf->engine == E_EVAS_ENGINE_GL_X11)
+	  {
+	     e_util_dialog_internal
+	       (_("Compositor Warning"),
+		_("Your screen does not support OpenGL.<br>"
+		  "Falling back to software engine."));
+	  }
+	
+	c->ee = ecore_evas_software_x11_new(NULL, c->win, 0, 0, man->w, man->h);
+     }
+   
    ecore_evas_comp_sync_set(c->ee, 0);
    ecore_evas_manual_render_set(c->ee, _comp_mod->conf->lock_fps);
    c->evas = ecore_evas_get(c->ee);
