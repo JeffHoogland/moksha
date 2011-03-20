@@ -64,7 +64,7 @@ struct _E_Comp_Win
    int                  x, y, w, h;  // geometry
    struct
    {
-      int x, y, w, h;                // hidden geometry (used when its unmapped and re-instated on map)
+      int x, y, w, h; // hidden geometry (used when its unmapped and re-instated on map)
    } hidden;
    int                  pw, ph;  // pixmap w/h
    int                  border;  // border width
@@ -179,19 +179,19 @@ _e_mod_comp_fullscreen_check(E_Comp *c)
 
    if (!c->wins) return NULL;
    EINA_INLIST_REVERSE_FOREACH(c->wins, cw)
-   {
-      if ((!cw->visible) || (cw->input_only) || (cw->invalid))
-        continue;
-      if ((cw->x == 0) && (cw->y == 0) &&
-          ((cw->x + cw->w) >= c->man->w) &&
-          ((cw->y + cw->h) >= c->man->h) &&
-          (!cw->argb) && (!cw->shaped)
-          )
-        {
-           return cw;
-        }
-      return NULL;
-   }
+     {
+        if ((!cw->visible) || (cw->input_only) || (cw->invalid))
+          continue;
+        if ((cw->x == 0) && (cw->y == 0) &&
+            ((cw->x + cw->w) >= c->man->w) &&
+            ((cw->y + cw->h) >= c->man->h) &&
+            (!cw->argb) && (!cw->shaped)
+            )
+          {
+             return cw;
+          }
+        return NULL;
+     }
    return NULL;
 }
 
