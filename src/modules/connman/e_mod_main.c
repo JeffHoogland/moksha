@@ -354,7 +354,7 @@ _connman_service_changed(void                    *data,
    GSTR(security, e_connman_service_security_get);
    GSTR(ipv4_method, e_connman_service_ipv4_configuration_method_get);
 
-   if (strcmp(service->ipv4_method, "dhcp") == 0)
+   if (service->ipv4_method && strcmp(service->ipv4_method, "dhcp") == 0)
      {
         GSTR(ipv4_address, e_connman_service_ipv4_address_get);
         GSTR(ipv4_netmask, e_connman_service_ipv4_netmask_get);
