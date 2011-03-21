@@ -21,7 +21,7 @@ e_ofono_theme_path(void)
 
    dirlen = strlen(ofono_mod->dir);
    if (dirlen >= sizeof(tmpbuf) - sizeof(TF))
-      return NULL;
+     return NULL;
 
    memcpy(tmpbuf, ofono_mod->dir, dirlen);
    memcpy(tmpbuf + dirlen, TF, sizeof(TF));
@@ -33,13 +33,15 @@ e_ofono_theme_path(void)
 static void _ofono_popup_del(E_Ofono_Instance *inst);
 
 static Eina_Bool
-_ofono_popup_input_window_mouse_up_cb(void *data, int type __UNUSED__, void *event)
+_ofono_popup_input_window_mouse_up_cb(void    *data,
+                                      int type __UNUSED__,
+                                      void    *event)
 {
    Ecore_Event_Mouse_Button *ev = event;
    E_Ofono_Instance *inst = data;
 
    if (ev->window != inst->ui.input.win)
-      return ECORE_CALLBACK_PASS_ON;
+     return ECORE_CALLBACK_PASS_ON;
 
    _ofono_popup_del(inst);
 
@@ -47,18 +49,20 @@ _ofono_popup_input_window_mouse_up_cb(void *data, int type __UNUSED__, void *eve
 }
 
 static Eina_Bool
-_ofono_popup_input_window_key_down_cb(void *data, int type __UNUSED__, void *event)
+_ofono_popup_input_window_key_down_cb(void    *data,
+                                      int type __UNUSED__,
+                                      void    *event)
 {
    Ecore_Event_Key *ev = event;
    E_Ofono_Instance *inst = data;
    const char *keysym;
 
    if (ev->window != inst->ui.input.win)
-      return ECORE_CALLBACK_PASS_ON;
+     return ECORE_CALLBACK_PASS_ON;
 
    keysym = ev->key;
    if (!strcmp(keysym, "Escape"))
-      _ofono_popup_del(inst);
+     _ofono_popup_del(inst);
 
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -94,18 +98,20 @@ _ofono_popup_input_window_create(E_Ofono_Instance *inst)
    ecore_x_window_show(w);
 
    inst->ui.input.mouse_up =
-      ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP,
-                              _ofono_popup_input_window_mouse_up_cb, inst);
+     ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP,
+                             _ofono_popup_input_window_mouse_up_cb, inst);
 
    inst->ui.input.key_down =
-      ecore_event_handler_add(ECORE_EVENT_KEY_DOWN,
-                              _ofono_popup_input_window_key_down_cb, inst);
+     ecore_event_handler_add(ECORE_EVENT_KEY_DOWN,
+                             _ofono_popup_input_window_key_down_cb, inst);
 
    inst->ui.input.win = w;
 }
 
 static void
-_ofono_toggle_powered_cb(void *data, DBusMessage *msg __UNUSED__, DBusError *error)
+_ofono_toggle_powered_cb(void            *data,
+                         DBusMessage *msg __UNUSED__,
+                         DBusError       *error)
 {
    E_Ofono_Instance *inst = data;
 
@@ -121,7 +127,9 @@ _ofono_toggle_powered_cb(void *data, DBusMessage *msg __UNUSED__, DBusError *err
 }
 
 static void
-_ofono_popup_cb_powered_changed(void *data, Evas_Object *obj, void *event __UNUSED__)
+_ofono_popup_cb_powered_changed(void        *data,
+                                Evas_Object *obj,
+                                void *event  __UNUSED__)
 {
    E_Ofono_Instance *inst = data;
    E_Ofono_Module_Context *ctxt = inst->ctxt;
@@ -129,15 +137,15 @@ _ofono_popup_cb_powered_changed(void *data, Evas_Object *obj, void *event __UNUS
 
    if ((!ctxt) || (!ctxt->has_manager))
      {
-	_ofono_operation_error_show(_("oFono Daemon is not running."));
-	return;
+        _ofono_operation_error_show(_("oFono Daemon is not running."));
+        return;
      }
 
    if (!e_ofono_modem_powered_set(inst->modem_element, powered,
-				  _ofono_toggle_powered_cb, inst))
+                                  _ofono_toggle_powered_cb, inst))
      {
-	_ofono_operation_error_show(_("Cannot toggle modem's powered state."));
-	return;
+        _ofono_operation_error_show(_("Cannot toggle modem's powered state."));
+        return;
      }
    e_widget_disabled_set(obj, EINA_TRUE);
    inst->powered_pending = EINA_TRUE;
@@ -170,8 +178,8 @@ _ofono_popup_new(E_Ofono_Instance *inst)
 
    if (inst->popup)
      {
-	e_gadcon_popup_show(inst->popup);
-	return;
+        e_gadcon_popup_show(inst->popup);
+        return;
      }
 
    inst->popup = e_gadcon_popup_new(inst->gcc);
@@ -184,19 +192,19 @@ _ofono_popup_new(E_Ofono_Instance *inst)
    else
      inst->ui.name = e_widget_label_add(evas, "No modem available");
    e_widget_table_object_append(inst->ui.table, inst->ui.name,
-				0, 0, 1, 1, 1, 1, 1, 1);
+                                0, 0, 1, 1, 1, 1, 1, 1);
    evas_object_show(inst->ui.name);
 
    inst->int_powered = inst->powered;
    inst->ui.powered = e_widget_check_add(evas, _("Powered"),
-					 &inst->int_powered);
+                                         &inst->int_powered);
    e_widget_table_object_append(inst->ui.table, inst->ui.powered,
-				0, 1, 1, 1, 1, 1, 1, 1);
+                                0, 1, 1, 1, 1, 1, 1, 1);
    if (inst->powered_pending)
      e_widget_disabled_set(inst->ui.powered, (int)EINA_TRUE);
    evas_object_show(inst->ui.powered);
    evas_object_smart_callback_add(inst->ui.powered, "changed",
-				  _ofono_popup_cb_powered_changed, inst);
+                                  _ofono_popup_cb_powered_changed, inst);
 
    _ofono_popup_update(inst);
 
@@ -209,20 +217,22 @@ _ofono_popup_new(E_Ofono_Instance *inst)
 }
 
 static void
-_ofono_menu_cb_post(void *data, E_Menu *menu __UNUSED__)
+_ofono_menu_cb_post(void        *data,
+                    E_Menu *menu __UNUSED__)
 {
    E_Ofono_Instance *inst = data;
    if ((!inst) || (!inst->menu))
-      return;
+     return;
    if (inst->menu)
      {
-	e_object_del(E_OBJECT(inst->menu));
-	inst->menu = NULL;
+        e_object_del(E_OBJECT(inst->menu));
+        inst->menu = NULL;
      }
 }
 
 static void
-_ofono_menu_new(E_Ofono_Instance *inst, Evas_Event_Mouse_Down *ev)
+_ofono_menu_new(E_Ofono_Instance      *inst,
+                Evas_Event_Mouse_Down *ev)
 {
    E_Zone *zone;
    E_Menu *m;
@@ -253,7 +263,7 @@ _ofono_tip_new(E_Ofono_Instance *inst)
 
    inst->o_tip = edje_object_add(e);
    e_theme_edje_object_set(inst->o_tip, "base/theme/modules/ofono/tip",
-			   "e/modules/ofono/tip");
+                           "e/modules/ofono/tip");
 
    _ofono_tip_update(inst);
 
@@ -271,22 +281,25 @@ _ofono_tip_del(E_Ofono_Instance *inst)
 }
 
 static void
-_ofono_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event)
+_ofono_cb_mouse_down(void            *data,
+                     Evas *evas       __UNUSED__,
+                     Evas_Object *obj __UNUSED__,
+                     void            *event)
 {
    E_Ofono_Instance *inst;
    Evas_Event_Mouse_Down *ev;
 
    inst = data;
    if (!inst)
-      return;
+     return;
 
    ev = event;
    if (ev->button == 1)
      {
-	if (!inst->popup)
-	  _ofono_popup_new(inst);
-	else
-	  _ofono_popup_del(inst);
+        if (!inst->popup)
+          _ofono_popup_new(inst);
+        else
+          _ofono_popup_del(inst);
      }
    else if (ev->button == 2)
      _ofono_popup_cb_powered_changed(inst, inst->ui.powered, NULL);
@@ -295,7 +308,10 @@ _ofono_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSE
 }
 
 static void
-_ofono_cb_mouse_in(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event __UNUSED__)
+_ofono_cb_mouse_in(void            *data,
+                   Evas *evas       __UNUSED__,
+                   Evas_Object *obj __UNUSED__,
+                   void *event      __UNUSED__)
 {
    E_Ofono_Instance *inst = data;
 
@@ -306,7 +322,10 @@ _ofono_cb_mouse_in(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED_
 }
 
 static void
-_ofono_cb_mouse_out(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event __UNUSED__)
+_ofono_cb_mouse_out(void            *data,
+                    Evas *evas       __UNUSED__,
+                    Evas_Object *obj __UNUSED__,
+                    void *event      __UNUSED__)
 {
    E_Ofono_Instance *inst = data;
 
@@ -317,16 +336,17 @@ _ofono_cb_mouse_out(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED
 }
 
 static void
-_ofono_edje_view_update(E_Ofono_Instance *inst, Evas_Object *o)
+_ofono_edje_view_update(E_Ofono_Instance *inst,
+                        Evas_Object      *o)
 {
    Edje_Message_Int msg;
    char buf[128];
 
    if (!inst->ctxt->has_manager)
      {
-	edje_object_signal_emit(o, "e,unavailable", "e");
-	edje_object_part_text_set(o, "e.text.error", _("ofonod is not running"));
-	return;
+        edje_object_signal_emit(o, "e,unavailable", "e");
+        edje_object_part_text_set(o, "e.text.error", _("ofonod is not running"));
+        return;
      }
 
    edje_object_signal_emit(o, "e,available", "e");
@@ -338,25 +358,25 @@ _ofono_edje_view_update(E_Ofono_Instance *inst, Evas_Object *o)
 
    if (!inst->powered)
      {
-	edje_object_part_text_set(o, "e.text.error", _("Modem powered off"));
-	edje_object_signal_emit(o, "e,netinfo,unavailable", "e");
-	return;
+        edje_object_part_text_set(o, "e.text.error", _("Modem powered off"));
+        edje_object_signal_emit(o, "e,netinfo,unavailable", "e");
+        return;
      }
 
    if (inst->status)
      {
-	snprintf(buf, sizeof(buf), "%c%s",
-		 toupper(inst->status[0]), inst->status + 1);
-	edje_object_part_text_set(o, "e.text.status", buf);
-	edje_object_signal_emit(o, "e,netinfo,available", "e");
+        snprintf(buf, sizeof(buf), "%c%s",
+                 toupper(inst->status[0]), inst->status + 1);
+        edje_object_part_text_set(o, "e.text.status", buf);
+        edje_object_signal_emit(o, "e,netinfo,available", "e");
      }
    else
      edje_object_part_text_set(o, "e.text.status", _("Unknown status"));
 
    if (inst->op)
      {
-	edje_object_part_text_set(o, "e.text.op", inst->op);
-	edje_object_signal_emit(o, "e,netinfo,available", "e");
+        edje_object_part_text_set(o, "e.text.op", inst->op);
+        edje_object_signal_emit(o, "e,netinfo,available", "e");
      }
    else
      edje_object_part_text_set(o, "e.text.op", _("Unknown operator"));
@@ -390,13 +410,16 @@ _ofono_gadget_update(E_Ofono_Instance *inst)
 /* Gadcon Api Functions */
 
 static E_Gadcon_Client *
-_gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
+_gc_init(E_Gadcon   *gc,
+         const char *name,
+         const char *id,
+         const char *style)
 {
    E_Ofono_Instance *inst;
    E_Ofono_Module_Context *ctxt;
 
    if (!ofono_mod)
-      return NULL;
+     return NULL;
 
    ctxt = ofono_mod->data;
 
@@ -440,20 +463,20 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    E_Ofono_Instance *inst;
 
    if (!ofono_mod)
-      return;
+     return;
 
    ctxt = ofono_mod->data;
    if (!ctxt)
-      return;
+     return;
 
    inst = gcc->data;
    if (!inst)
-      return;
+     return;
 
    if (inst->menu)
      {
-	e_menu_post_deactivate_callback_set(inst->menu, NULL, NULL);
-	e_object_del(E_OBJECT(inst->menu));
+        e_menu_post_deactivate_callback_set(inst->menu, NULL, NULL);
+        e_object_del(E_OBJECT(inst->menu));
      }
    if (inst->popup)
      _ofono_popup_del(inst);
@@ -473,7 +496,8 @@ _gc_shutdown(E_Gadcon_Client *gcc)
 }
 
 static void
-_gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient __UNUSED__)
+_gc_orient(E_Gadcon_Client       *gcc,
+           E_Gadcon_Orient orient __UNUSED__)
 {
    e_gadcon_client_aspect_set(gcc, 16, 16);
    e_gadcon_client_min_size_set(gcc, 16, 16);
@@ -486,7 +510,8 @@ _gc_label(E_Gadcon_Client_Class *client_class __UNUSED__)
 }
 
 static Evas_Object *
-_gc_icon(E_Gadcon_Client_Class *client_class __UNUSED__, Evas *evas)
+_gc_icon(E_Gadcon_Client_Class *client_class __UNUSED__,
+         Evas                               *evas)
 {
    Evas_Object *o;
 
@@ -502,11 +527,11 @@ _gc_id_new(E_Gadcon_Client_Class *client_class __UNUSED__)
    Eina_List *instances;
 
    if (!ofono_mod)
-      return NULL;
+     return NULL;
 
    ctxt = ofono_mod->data;
    if (!ctxt)
-      return NULL;
+     return NULL;
 
    instances = ctxt->instances;
    snprintf(tmpbuf, sizeof(tmpbuf), "ofono.%d", eina_list_count(instances));
@@ -517,8 +542,8 @@ static const E_Gadcon_Client_Class _gc_class =
 {
    GADCON_CLIENT_CLASS_VERSION, _e_ofono_name,
    {
-     _gc_init, _gc_shutdown, _gc_orient, _gc_label, _gc_icon, _gc_id_new, NULL,
-     e_gadcon_site_is_not_toolbar
+      _gc_init, _gc_shutdown, _gc_orient, _gc_label, _gc_icon, _gc_id_new, NULL,
+      e_gadcon_site_is_not_toolbar
    },
    E_GADCON_CLIENT_STYLE_PLAIN
 };
@@ -535,17 +560,20 @@ _ofono_manager_changed_do(void *data)
 }
 
 static void
-_ofono_manager_changed(void *data, const E_Ofono_Element *element __UNUSED__)
+_ofono_manager_changed(void                          *data,
+                       const E_Ofono_Element *element __UNUSED__)
 {
    E_Ofono_Module_Context *ctxt = data;
    if (ctxt->poller.manager_changed)
      ecore_poller_del(ctxt->poller.manager_changed);
    ctxt->poller.manager_changed = ecore_poller_add
-     (ECORE_POLLER_CORE, 1, _ofono_manager_changed_do, ctxt);
+       (ECORE_POLLER_CORE, 1, _ofono_manager_changed_do, ctxt);
 }
 
 static Eina_Bool
-_ofono_event_manager_in(void *data, int type __UNUSED__, void *event __UNUSED__)
+_ofono_event_manager_in(void       *data,
+                        int type    __UNUSED__,
+                        void *event __UNUSED__)
 {
    E_Ofono_Element *element;
    E_Ofono_Module_Context *ctxt = data;
@@ -560,13 +588,15 @@ _ofono_event_manager_in(void *data, int type __UNUSED__, void *event __UNUSED__)
    e_ofono_element_listener_add(element, _ofono_manager_changed, ctxt, NULL);
 
    EINA_LIST_FOREACH(ctxt->instances, l, inst)
-       _ofono_gadget_update(inst);
+     _ofono_gadget_update(inst);
 
    return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool
-_ofono_event_manager_out(void *data, int type __UNUSED__, void *event __UNUSED__)
+_ofono_event_manager_out(void       *data,
+                         int type    __UNUSED__,
+                         void *event __UNUSED__)
 {
    E_Ofono_Module_Context *ctxt = data;
    E_Ofono_Instance *inst;
@@ -577,13 +607,15 @@ _ofono_event_manager_out(void *data, int type __UNUSED__, void *event __UNUSED__
    ctxt->has_manager = EINA_FALSE;
 
    EINA_LIST_FOREACH(ctxt->instances, l, inst)
-      _ofono_gadget_update(inst);
+     _ofono_gadget_update(inst);
 
    return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool
-_eofono_event_element_add(void *data, int type __UNUSED__, void *info)
+_eofono_event_element_add(void    *data,
+                          int type __UNUSED__,
+                          void    *info)
 {
    E_Ofono_Element *element = info;
    E_Ofono_Module_Context *ctxt = data;
@@ -595,22 +627,22 @@ _eofono_event_element_add(void *data, int type __UNUSED__, void *info)
 
    /* is there any instance taking care of this modem already? */
    EINA_LIST_FOREACH(ctxt->instances, l, inst)
-      if ((inst->path) && (inst->path == element->path))
-	{
-	   have_inst = EINA_TRUE;
-	   break;
-	}
+     if ((inst->path) && (inst->path == element->path))
+       {
+          have_inst = EINA_TRUE;
+          break;
+       }
 
    /* if no instance is handling this, is there any instance available */
    if ((!have_inst) && (e_ofono_element_is_modem(element)))
      EINA_LIST_FOREACH(ctxt->instances, l, inst)
-	if (!inst->path)
-	  {
-	     inst->path = eina_stringshare_ref(element->path);
-	     DBG("bound %s to an ofono module instance", inst->path);
-	     have_inst = EINA_TRUE;
-	     break;
-	  }
+       if (!inst->path)
+         {
+            inst->path = eina_stringshare_ref(element->path);
+            DBG("bound %s to an ofono module instance", inst->path);
+            have_inst = EINA_TRUE;
+            break;
+         }
 
    /* if still orphan, do nothing */
    if (!have_inst)
@@ -627,7 +659,9 @@ _eofono_event_element_add(void *data, int type __UNUSED__, void *info)
 }
 
 static Eina_Bool
-_eofono_event_element_del(void *data, int type __UNUSED__, void *info)
+_eofono_event_element_del(void    *data,
+                          int type __UNUSED__,
+                          void    *info)
 {
    E_Ofono_Element *element = info;
    E_Ofono_Module_Context *ctxt = data;
@@ -638,27 +672,27 @@ _eofono_event_element_del(void *data, int type __UNUSED__, void *info)
    DBG("<<< %s %s", element->path, element->interface);
 
    EINA_LIST_FOREACH(ctxt->instances, l, inst)
-      if ((inst->path) && (inst->path == element->path))
-	{
-	   inst_found = EINA_TRUE;
-	   break;
-	}
+     if ((inst->path) && (inst->path == element->path))
+       {
+          inst_found = EINA_TRUE;
+          break;
+       }
 
    if (!inst_found)
      return ECORE_CALLBACK_PASS_ON;
 
    if (e_ofono_element_is_modem(element))
      {
-	inst->modem_element = NULL;
-	eina_stringshare_replace(&inst->name, NULL);
-	inst->powered = EINA_FALSE;
+        inst->modem_element = NULL;
+        eina_stringshare_replace(&inst->name, NULL);
+        inst->powered = EINA_FALSE;
      }
    else if (e_ofono_element_is_netreg(element))
      {
-	inst->netreg_element = NULL;
-	eina_stringshare_replace(&inst->status, NULL);
-	eina_stringshare_replace(&inst->op, NULL);
-	inst->strength = 0;
+        inst->netreg_element = NULL;
+        eina_stringshare_replace(&inst->status, NULL);
+        eina_stringshare_replace(&inst->op, NULL);
+        inst->strength = 0;
      }
 
    _ofono_gadget_update(inst);
@@ -667,7 +701,9 @@ _eofono_event_element_del(void *data, int type __UNUSED__, void *info)
 }
 
 static Eina_Bool
-_eofono_event_element_updated(void *data, int type __UNUSED__, void *event_info)
+_eofono_event_element_updated(void    *data,
+                              int type __UNUSED__,
+                              void    *event_info)
 {
    E_Ofono_Element *element = event_info;
    E_Ofono_Module_Context *ctxt = data;
@@ -679,43 +715,43 @@ _eofono_event_element_updated(void *data, int type __UNUSED__, void *event_info)
    DBG("!!! %s %s", element->path, element->interface);
 
    EINA_LIST_FOREACH(ctxt->instances, l, inst)
-      if ((inst->path) && (inst->path == element->path))
-	{
-	   inst_found = EINA_TRUE;
-	   break;
-	}
+     if ((inst->path) && (inst->path == element->path))
+       {
+          inst_found = EINA_TRUE;
+          break;
+       }
 
    if (!inst_found)
      return ECORE_CALLBACK_PASS_ON;
 
    if (e_ofono_element_is_modem(element))
      {
-	if (!e_ofono_modem_powered_get(element, &(inst->powered)))
-	  inst->powered = 0;
+        if (!e_ofono_modem_powered_get(element, &(inst->powered)))
+          inst->powered = 0;
 
-	if (!e_ofono_modem_name_get(element, &tmp))
-	  tmp = NULL;
-	if ((!tmp) || (!tmp[0]))
-	  tmp = inst->path;
-	eina_stringshare_replace(&inst->name, tmp);
+        if (!e_ofono_modem_name_get(element, &tmp))
+          tmp = NULL;
+        if ((!tmp) || (!tmp[0]))
+          tmp = inst->path;
+        eina_stringshare_replace(&inst->name, tmp);
 
-	DBG("!!! powered = %d, name = %s", inst->powered, inst->name);
+        DBG("!!! powered = %d, name = %s", inst->powered, inst->name);
      }
    else if (e_ofono_element_is_netreg(element))
      {
-	if (!e_ofono_netreg_status_get(element, &tmp))
-	  tmp = NULL;
-	eina_stringshare_replace(&inst->status, tmp);
+        if (!e_ofono_netreg_status_get(element, &tmp))
+          tmp = NULL;
+        eina_stringshare_replace(&inst->status, tmp);
 
-	if (!e_ofono_netreg_operator_get(element, &tmp))
-	  tmp = NULL;
-	eina_stringshare_replace(&inst->op, tmp);
+        if (!e_ofono_netreg_operator_get(element, &tmp))
+          tmp = NULL;
+        eina_stringshare_replace(&inst->op, tmp);
 
-	if (!e_ofono_netreg_strength_get(element, &(inst->strength)))
-	  inst->strength = 0;
+        if (!e_ofono_netreg_strength_get(element, &(inst->strength)))
+          inst->strength = 0;
 
-	DBG("!!! status = %s, operator = %s, strength = %d",
-	    inst->status, inst->op, inst->strength);
+        DBG("!!! status = %s, operator = %s, strength = %d",
+            inst->status, inst->op, inst->strength);
      }
 
    _ofono_gadget_update(inst);
@@ -727,15 +763,15 @@ static void
 _ofono_events_register(E_Ofono_Module_Context *ctxt)
 {
    ctxt->event.manager_in = ecore_event_handler_add
-      (E_OFONO_EVENT_MANAGER_IN, _ofono_event_manager_in, ctxt);
+       (E_OFONO_EVENT_MANAGER_IN, _ofono_event_manager_in, ctxt);
    ctxt->event.manager_out = ecore_event_handler_add
-      (E_OFONO_EVENT_MANAGER_OUT, _ofono_event_manager_out, ctxt);
+       (E_OFONO_EVENT_MANAGER_OUT, _ofono_event_manager_out, ctxt);
    ctxt->event.element_add = ecore_event_handler_add
-      (E_OFONO_EVENT_ELEMENT_ADD, _eofono_event_element_add, ctxt);
+       (E_OFONO_EVENT_ELEMENT_ADD, _eofono_event_element_add, ctxt);
    ctxt->event.element_del = ecore_event_handler_add
-      (E_OFONO_EVENT_ELEMENT_DEL, _eofono_event_element_del, ctxt);
+       (E_OFONO_EVENT_ELEMENT_DEL, _eofono_event_element_del, ctxt);
    ctxt->event.element_updated = ecore_event_handler_add
-      (E_OFONO_EVENT_ELEMENT_UPDATED, _eofono_event_element_updated, ctxt);
+       (E_OFONO_EVENT_ELEMENT_UPDATED, _eofono_event_element_updated, ctxt);
 }
 
 static void
@@ -773,13 +809,13 @@ e_modapi_init(E_Module *m)
 
    if (_e_ofono_module_log_dom < 0)
      {
-	_e_ofono_module_log_dom = eina_log_domain_register("e_module_ofono",
-							   EINA_COLOR_ORANGE);
-	if (_e_ofono_module_log_dom < 0)
-	  {
-	     EINA_LOG_CRIT("could not register logging domain e_module_ofono");
-	     goto error_log_domain;
-	  }
+        _e_ofono_module_log_dom = eina_log_domain_register("e_module_ofono",
+                                                           EINA_COLOR_ORANGE);
+        if (_e_ofono_module_log_dom < 0)
+          {
+             EINA_LOG_CRIT("could not register logging domain e_module_ofono");
+             goto error_log_domain;
+          }
      }
 
    e_gadcon_provider_register(&_gc_class);
@@ -808,10 +844,10 @@ _ofono_instances_free(E_Ofono_Module_Context *ctxt)
 
         inst = ctxt->instances->data;
 
-	if (inst->popup)
-	  _ofono_popup_del(inst);
-	if (inst->tip)
-	  _ofono_tip_del(inst);
+        if (inst->popup)
+          _ofono_popup_del(inst);
+        if (inst->tip)
+          _ofono_tip_del(inst);
 
         e_object_del(E_OBJECT(inst->gcc));
      }
@@ -857,3 +893,4 @@ e_modapi_save(E_Module *m)
      return 0;
    return 1;
 }
+
