@@ -5,10 +5,11 @@ extern const char _e_bluez_Name[];
 struct _E_Config_Dialog_Data
 {
    E_Bluez_Instance *inst;
-   const char *name;
-   Eina_Bool mode;
-   unsigned int timeout;
-   struct {
+   const char       *name;
+   Eina_Bool         mode;
+   unsigned int      timeout;
+   struct
+   {
       Evas_Object *label;
       Evas_Object *slider;
       Evas_Object *help;
@@ -16,13 +17,18 @@ struct _E_Config_Dialog_Data
 };
 
 /* Local Function Prototypes */
-static void *_create_data(E_Config_Dialog *dialog);
-static void _free_data(E_Config_Dialog *dialog, E_Config_Dialog_Data *cfdata);
-static Evas_Object *_basic_create(E_Config_Dialog *dialog, Evas *evas, E_Config_Dialog_Data *cfdata);
-static int _basic_apply(E_Config_Dialog *dialog, E_Config_Dialog_Data *cfdata);
+static void        *_create_data(E_Config_Dialog *dialog);
+static void         _free_data(E_Config_Dialog      *dialog,
+                               E_Config_Dialog_Data *cfdata);
+static Evas_Object *_basic_create(E_Config_Dialog      *dialog,
+                                  Evas                 *evas,
+                                  E_Config_Dialog_Data *cfdata);
+static int _basic_apply(E_Config_Dialog      *dialog,
+                        E_Config_Dialog_Data *cfdata);
 
 E_Config_Dialog *
-e_bluez_config_dialog_new(E_Container *con, E_Bluez_Instance *inst)
+e_bluez_config_dialog_new(E_Container      *con,
+                          E_Bluez_Instance *inst)
 {
    E_Config_Dialog *dialog;
    E_Config_Dialog_View *view;
@@ -62,7 +68,7 @@ _create_data(E_Config_Dialog *dialog)
      cfdata->mode = 0;
 
    if (!e_bluez_adapter_discoverable_timeout_get
-       (inst->adapter, &cfdata->timeout))
+         (inst->adapter, &cfdata->timeout))
      cfdata->timeout = 0;
    cfdata->timeout /= 60;
 
@@ -74,7 +80,8 @@ _create_data(E_Config_Dialog *dialog)
 }
 
 static void
-_free_data(E_Config_Dialog *dialog, E_Config_Dialog_Data *cfdata)
+_free_data(E_Config_Dialog      *dialog,
+           E_Config_Dialog_Data *cfdata)
 {
    E_Bluez_Instance *inst = dialog->data;
 
@@ -83,7 +90,8 @@ _free_data(E_Config_Dialog *dialog, E_Config_Dialog_Data *cfdata)
 }
 
 static void
-_cb_disable_timeout(void *data, Evas_Object *obj __UNUSED__)
+_cb_disable_timeout(void            *data,
+                    Evas_Object *obj __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata = data;
    Eina_Bool disable = !cfdata->mode;
@@ -94,7 +102,9 @@ _cb_disable_timeout(void *data, Evas_Object *obj __UNUSED__)
 }
 
 static Evas_Object *
-_basic_create(E_Config_Dialog *dialog __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
+_basic_create(E_Config_Dialog *dialog __UNUSED__,
+              Evas                   *evas,
+              E_Config_Dialog_Data   *cfdata)
 {
    Evas_Object *o, *ob;
    Evas_Object *check;
@@ -113,7 +123,7 @@ _basic_create(E_Config_Dialog *dialog __UNUSED__, Evas *evas, E_Config_Dialog_Da
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
 
    check = e_widget_check_add
-     (evas, _("Discoverable mode"), (int *)&cfdata->mode);
+       (evas, _("Discoverable mode"), (int *)&cfdata->mode);
    e_widget_list_object_append(o, check, 1, 1, 0.5);
 
    ob = e_widget_label_add(evas, _("Discovarable Timeout"));
@@ -121,7 +131,7 @@ _basic_create(E_Config_Dialog *dialog __UNUSED__, Evas *evas, E_Config_Dialog_Da
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
 
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f minutes"), 0, 30, 1, 0,
-                            NULL, (int*)&cfdata->timeout, 100);
+                            NULL, (int *)&cfdata->timeout, 100);
    e_widget_slider_special_value_add(ob, 0.0, 0.0, _("Forever"));
    cfdata->gui.slider = ob;
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
@@ -137,7 +147,9 @@ _basic_create(E_Config_Dialog *dialog __UNUSED__, Evas *evas, E_Config_Dialog_Da
 }
 
 static void
-_method_success_check(void *data, DBusMessage *msg __UNUSED__, DBusError *error)
+_method_success_check(void            *data,
+                      DBusMessage *msg __UNUSED__,
+                      DBusError       *error)
 {
    const char *name = data;
 
@@ -150,24 +162,26 @@ _method_success_check(void *data, DBusMessage *msg __UNUSED__, DBusError *error)
 }
 
 static int
-_basic_apply(E_Config_Dialog *dialog __UNUSED__, E_Config_Dialog_Data *cfdata)
+_basic_apply(E_Config_Dialog *dialog __UNUSED__,
+             E_Config_Dialog_Data   *cfdata)
 {
    E_Bluez_Instance *inst = cfdata->inst;
 
    if (!e_bluez_adapter_discoverable_set
-       (inst->adapter, cfdata->mode,
-	_method_success_check, "e_bluez_adapter_discoverable_get"))
+         (inst->adapter, cfdata->mode,
+         _method_success_check, "e_bluez_adapter_discoverable_get"))
      ERR("Can't set Discoverable on adapter");
 
    if (!e_bluez_adapter_discoverable_timeout_set
-       (inst->adapter, cfdata->timeout * 60,
-	_method_success_check, "e_bluez_adapter_discoverable_timeout_get"))
+         (inst->adapter, cfdata->timeout * 60,
+         _method_success_check, "e_bluez_adapter_discoverable_timeout_get"))
      ERR("Can't set DiscoverableTimeout on adapter");
 
    if (!e_bluez_adapter_name_set
-       (inst->adapter, cfdata->name,
-	_method_success_check, "e_bluez_adapter_name_get"))
+         (inst->adapter, cfdata->name,
+         _method_success_check, "e_bluez_adapter_name_get"))
      ERR("Can't set Name on adapter");
 
    return 1;
 }
+

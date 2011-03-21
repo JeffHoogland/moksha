@@ -13,29 +13,29 @@ extern int _e_bluez_log_dom;
 #define WRN(...) EINA_LOG_DOM_WARN(_e_bluez_log_dom, __VA_ARGS__)
 #define ERR(...) EINA_LOG_DOM_ERR(_e_bluez_log_dom, __VA_ARGS__)
 
-typedef struct E_Bluez_Instance E_Bluez_Instance;
+typedef struct E_Bluez_Instance        E_Bluez_Instance;
 typedef struct E_Bluez_Instance_Device E_Bluez_Instance_Device;
-typedef struct E_Bluez_Module_Context E_Bluez_Module_Context;
+typedef struct E_Bluez_Module_Context  E_Bluez_Module_Context;
 
 struct E_Bluez_Instance
 {
    E_Bluez_Module_Context *ctxt;
-   E_Gadcon_Client *gcc;
-   E_Gadcon_Popup *popup;
-   E_Menu *menu;
+   E_Gadcon_Client        *gcc;
+   E_Gadcon_Popup         *popup;
+   E_Menu                 *menu;
 
    /* used by popup */
-   int powered;
-   Eina_Bool first_selection;
-   const char *address;
-   const char *alias;
+   int                     powered;
+   Eina_Bool               first_selection;
+   const char             *address;
+   const char             *alias;
 
-   Eina_List *devices;
-   E_Bluez_Element *adapter;
-   double last_scan;
-   Eina_Bool discovering:1;
-   Eina_Bool powered_pending:1;
-   Eina_Bool discoverable:1;
+   Eina_List              *devices;
+   E_Bluez_Element        *adapter;
+   double                  last_scan;
+   Eina_Bool               discovering : 1;
+   Eina_Bool               powered_pending : 1;
+   Eina_Bool               discoverable : 1;
 
    struct
    {
@@ -46,14 +46,14 @@ struct E_Bluez_Instance
       Evas_Object *control;
       struct
       {
-         Ecore_X_Window win;
+         Ecore_X_Window       win;
          Ecore_Event_Handler *mouse_up;
          Ecore_Event_Handler *key_down;
       } input;
    } ui;
 
-   E_Gadcon_Popup *tip;
-   Evas_Object *o_tip;
+   E_Gadcon_Popup  *tip;
+   Evas_Object     *o_tip;
 
    E_Config_Dialog *conf_dialog;
 };
@@ -70,14 +70,15 @@ struct E_Bluez_Instance_Device
 
 struct E_Bluez_Module_Context
 {
-   Eina_List *instances;
+   Eina_List  *instances;
    const char *default_adapter;
 
-   struct {
+   struct
+   {
       E_DBus_Connection *conn;
-      E_DBus_Interface *iface;
-      E_DBus_Object *obj;
-      Eina_List *pending;
+      E_DBus_Interface  *iface;
+      E_DBus_Object     *obj;
+      Eina_List         *pending;
    } agent;
 
    struct
@@ -98,21 +99,22 @@ struct E_Bluez_Module_Context
       Ecore_Poller *manager_changed;
    } poller;
 
-   Eina_Bool has_manager:1;
+   Eina_Bool has_manager : 1;
 };
 
 EAPI extern E_Module_Api e_modapi;
-EAPI void *e_modapi_init     (E_Module *m);
-EAPI int   e_modapi_shutdown (E_Module *m);
-EAPI int   e_modapi_save     (E_Module *m);
+EAPI void       *e_modapi_init(E_Module *m);
+EAPI int         e_modapi_shutdown(E_Module *m);
+EAPI int         e_modapi_save(E_Module *m);
 
-const char *e_bluez_theme_path(void);
-E_Config_Dialog *e_bluez_config_dialog_new(E_Container *con, E_Bluez_Instance *inst);
-void _bluez_toggle_powered(E_Bluez_Instance *inst);
-
+const char      *e_bluez_theme_path(void);
+E_Config_Dialog *e_bluez_config_dialog_new(E_Container      *con,
+                                           E_Bluez_Instance *inst);
+void             _bluez_toggle_powered(E_Bluez_Instance *inst);
 
 static inline void
-_bluez_dbus_error_show(const char *msg, const DBusError *error)
+_bluez_dbus_error_show(const char      *msg,
+                       const DBusError *error)
 {
    const char *name;
 
@@ -121,22 +123,22 @@ _bluez_dbus_error_show(const char *msg, const DBusError *error)
 
    name = error->name;
    if (strncmp(name, "org.bluez.Error.",
-	       sizeof("org.bluez.Error.") - 1) == 0)
+               sizeof("org.bluez.Error.") - 1) == 0)
      name += sizeof("org.bluez.Error.") - 1;
 
    e_util_dialog_show(_("Bluez Server Operation Failed"),
-		      _("Could not execute remote operation:<br>"
-			"%s<br>"
-			"Server Error <hilight>%s:</hilight> %s"),
-		      msg, name, error->message);
+                      _("Could not execute remote operation:<br>"
+                        "%s<br>"
+                        "Server Error <hilight>%s:</hilight> %s"),
+                      msg, name, error->message);
 }
 
 static inline void
 _bluez_operation_error_show(const char *msg)
 {
    e_util_dialog_show(_("Bluez Operation Failed"),
-		      _("Could not execute local operation:<br>%s"),
-		      msg);
+                      _("Could not execute local operation:<br>%s"),
+                      msg);
 }
 
 #endif
