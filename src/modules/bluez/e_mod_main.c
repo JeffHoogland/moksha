@@ -1183,6 +1183,8 @@ _bluez_event_manager_in(void *data, int type __UNUSED__, void *event __UNUSED__)
 {
    E_Bluez_Module_Context *ctxt = data;
    E_Bluez_Element *element;
+   Eina_List *l;
+   E_Bluez_Instance *inst;
 
    ctxt->has_manager = EINA_TRUE;
 
@@ -1192,6 +1194,9 @@ _bluez_event_manager_in(void *data, int type __UNUSED__, void *event __UNUSED__)
 
    e_bluez_element_listener_add(element, _bluez_manager_changed, ctxt, NULL);
 
+   EINA_LIST_FOREACH(ctxt->instances, l, inst)
+     _bluez_gadget_update(inst);
+
    return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -1199,9 +1204,14 @@ static Eina_Bool
 _bluez_event_manager_out(void *data, int type __UNUSED__, void *event __UNUSED__)
 {
    E_Bluez_Module_Context *ctxt = data;
+   E_Bluez_Instance *inst;
+   Eina_List *l;
 
    ctxt->has_manager = EINA_FALSE;
    eina_stringshare_replace(&ctxt->default_adapter, NULL);
+
+   EINA_LIST_FOREACH(ctxt->instances, l, inst)
+     _bluez_gadget_update(inst);
 
    return ECORE_CALLBACK_PASS_ON;
 }
