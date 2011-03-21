@@ -353,8 +353,19 @@ _connman_service_changed(void                    *data,
    GSTR(error, e_connman_service_error_get);
    GSTR(security, e_connman_service_security_get);
    GSTR(ipv4_method, e_connman_service_ipv4_configuration_method_get);
-   GSTR(ipv4_address, e_connman_service_ipv4_configuration_address_get);
-   GSTR(ipv4_netmask, e_connman_service_ipv4_configuration_netmask_get);
+
+   if (strcmp(service->ipv4_method, "dhcp") == 0)
+     {
+        GSTR(ipv4_address, e_connman_service_ipv4_address_get);
+        GSTR(ipv4_netmask, e_connman_service_ipv4_netmask_get);
+     }
+   else
+     {
+        GSTR(ipv4_address,
+             e_connman_service_ipv4_configuration_address_get);
+        GSTR(ipv4_netmask,
+             e_connman_service_ipv4_configuration_netmask_get);
+     }
 #undef GSTR
 
    if ((service->state != e_str_failure) && (service->error))
