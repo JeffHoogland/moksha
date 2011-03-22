@@ -86,6 +86,46 @@ e_int_border_menu_create(E_Border *bd)
                                                    "e/widgets/border/default/window"),
                                                    "e/widgets/border/default/window");
 
+   mi = e_menu_item_new(m);
+   e_menu_item_separator_set(mi, 1);
+
+   if (!bd->sticky)
+     {
+        mi = e_menu_item_new(m);
+        e_menu_item_label_set(mi, _("Move to"));
+        e_menu_item_submenu_pre_callback_set(mi, _e_border_menu_cb_sendto_pre, bd);
+        e_menu_item_icon_edje_set(mi,
+                                  e_theme_edje_file_get("base/theme/borders",
+                                                        "e/widgets/border/default/sendto"),
+                                                        "e/widgets/border/default/sendto");
+     }
+
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Always on Top"));
+   e_menu_item_check_set(mi, 1);
+   e_menu_item_toggle_set(mi, (bd->layer == 150 ? 1 : 0));
+   if (bd->layer == 150)
+     e_menu_item_callback_set(mi, _e_border_menu_cb_normal, bd);
+   else
+     e_menu_item_callback_set(mi, _e_border_menu_cb_on_top, bd);
+   e_menu_item_icon_edje_set(mi,
+			     e_theme_edje_file_get("base/theme/borders",
+						   "e/widgets/border/default/stack_on_top"),
+                                                   "e/widgets/border/default/stack_on_top");
+
+   if (!bd->lock_user_sticky)
+     {
+        mi = e_menu_item_new(m);
+        e_menu_item_label_set(mi, _("Sticky"));
+        e_menu_item_check_set(mi, 1);
+        e_menu_item_toggle_set(mi, (bd->sticky ? 1 : 0));
+        e_menu_item_callback_set(mi, _e_border_menu_cb_stick, bd);
+        e_menu_item_icon_edje_set(mi,
+                                  e_theme_edje_file_get("base/theme/borders",
+                                                        "e/widgets/border/default/stick"),
+                                                        "e/widgets/border/default/stick");
+     }
+
    if (!bd->lock_close)
      {
         mi = e_menu_item_new(m);
