@@ -506,6 +506,9 @@ _e_border_menu_cb_window_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
      }
 
    submi = e_menu_item_new(subm);
+   e_menu_item_separator_set(submi, 1);
+
+   submi = e_menu_item_new(subm);
    e_menu_item_label_set(submi, _("Locks"));
    e_menu_item_callback_set(submi, _e_border_menu_cb_locks, bd);
    e_menu_item_icon_edje_set(submi,
