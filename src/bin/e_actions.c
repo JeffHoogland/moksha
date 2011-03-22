@@ -434,6 +434,8 @@ ACT_FN_GO(window_sticky, )
 /***************************************************************************/
 ACT_FN_GO(window_iconic_toggle, __UNUSED__)
 {
+   E_Border *bd;
+
    if (!obj) obj = E_OBJECT(e_border_focused_get());
    if (!obj) return;
    if (obj->type != E_BORDER_TYPE)
@@ -441,11 +443,12 @@ ACT_FN_GO(window_iconic_toggle, __UNUSED__)
 	obj = E_OBJECT(e_border_focused_get());
 	if (!obj) return;
      }
-   if (!((E_Border *)obj)->lock_user_iconify)
-     {
-	E_Border *bd;
+   bd = (E_Border *)obj;
 
-	bd = (E_Border *)obj;
+   if ((!bd->lock_user_iconify) && (!bd->fullscreen) &&
+       ((bd->client.netwm.type == ECORE_X_WINDOW_TYPE_NORMAL) ||
+        (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_UNKNOWN)))
+     {
 	if (bd->iconic) e_border_uniconify(bd);
 	else e_border_iconify(bd);
      }
@@ -544,6 +547,8 @@ ACT_FN_GO(window_fullscreen, )
 /***************************************************************************/
 ACT_FN_GO(window_maximized_toggle, )
 {
+   E_Border *bd;
+
    if (!obj) obj = E_OBJECT(e_border_focused_get());
    if (!obj) return;
    if (obj->type != E_BORDER_TYPE)
@@ -551,11 +556,12 @@ ACT_FN_GO(window_maximized_toggle, )
 	obj = E_OBJECT(e_border_focused_get());
 	if (!obj) return;
      }
-   if (!((E_Border *)obj)->lock_user_maximize)
-     {
-	E_Border *bd;
+   bd = (E_Border *)obj;
 
-	bd = (E_Border *)obj;
+   if ((!bd->lock_user_maximize) && (!bd->fullscreen) &&
+       ((bd->client.netwm.type == ECORE_X_WINDOW_TYPE_NORMAL) ||
+        (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_UNKNOWN)))
+     {
 	if ((bd->maximized & E_MAXIMIZE_TYPE) != E_MAXIMIZE_NONE)
 	  {
 	     if (!params)
