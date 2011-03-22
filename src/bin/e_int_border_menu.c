@@ -89,7 +89,7 @@ e_int_border_menu_create(E_Border *bd)
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
 
-   if (!bd->sticky)
+   if ((!bd->sticky) && (bd->zone->desk_x_count > 1)) 
      {
         mi = e_menu_item_new(m);
         e_menu_item_label_set(mi, _("Move to"));
@@ -589,7 +589,7 @@ _e_border_menu_cb_placement_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *m
    e_object_data_set(E_OBJECT(subm), bd);
    e_menu_item_submenu_set(mi, subm);
 
-   if (!bd->sticky)
+   if ((!bd->sticky) && (bd->zone->desk_x_count > 1)) 
      {
         submi = e_menu_item_new(subm);
         e_menu_item_label_set(submi, _("Move to"));
