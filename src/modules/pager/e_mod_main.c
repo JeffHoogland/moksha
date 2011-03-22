@@ -785,16 +785,7 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 	E_Menu_Item *mi;
 	int cx, cy;
 
-	m = e_menu_new();
-	
-	if (e_configure_registry_exists("screen/virtual_desktops"))
-	  {
-	     mi = e_menu_item_new(m);
-	     e_menu_item_label_set(mi, _("Virtual Desktops Settings"));
-	     e_util_menu_item_theme_icon_set(mi, "preferences-desktop");
-	     e_menu_item_callback_set(mi, _pager_inst_cb_menu_virtual_desktops_dialog, inst);
-	  }
-
+	m = e_menu_new();	
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("Settings"));
 	e_util_menu_item_theme_icon_set(mi, "configure");
@@ -803,6 +794,14 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 	m = e_gadcon_client_util_menu_items_append(inst->gcc, m, 0);
 	e_menu_post_deactivate_callback_set(m, _menu_cb_post, inst);
 	pager_config->menu = m;
+
+    	if (e_configure_registry_exists("screen/virtual_desktops"))
+	  {
+	     mi = e_menu_item_new_relative(m, NULL);
+	     e_menu_item_label_set(mi, _("Virtual Desktops Settings"));
+	     e_util_menu_item_theme_icon_set(mi, "preferences-desktop");
+	     e_menu_item_callback_set(mi, _pager_inst_cb_menu_virtual_desktops_dialog, inst);
+	  }
 
 	e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &cx, &cy, 
                                           NULL, NULL);
