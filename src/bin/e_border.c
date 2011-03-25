@@ -1244,11 +1244,9 @@ e_border_fx_offset(E_Border *bd,
    bd->fx.x = x;
    bd->fx.y = y;
 
-   ecore_x_window_move(bd->win, bd->x + bd->fx.start.x, bd->y + bd->fx.start.y);
-   bd->changes.pos = 0;
-
-   /* client doesnt need to know fx offset, or does it? */
-   /* _e_border_client_move_resize_send(bd); */
+   bd->changes.pos = 1;
+   bd->changed = 1;
+   
    if (bd->moving) _e_border_move_update(bd);
 }
 
