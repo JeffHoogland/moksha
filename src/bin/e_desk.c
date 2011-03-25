@@ -576,6 +576,11 @@ _e_desk_show_begin(E_Desk *desk, int mode, int dx, int dy)
    E_Border *bd;
    double t;
 
+   if (dx < 0) dx = -1;
+   if (dx > 0) dx = 1;
+   if (dy < 0) dy = -1;
+   if (dy > 0) dy = 1;
+   
    t = ecore_loop_time_get();
    bl = e_container_border_list_first(desk->zone->container);
    while ((bd = e_container_border_list_next(bl)))
@@ -595,8 +600,8 @@ _e_desk_show_begin(E_Desk *desk, int mode, int dx, int dy)
 		  bd->fx.start.t = t;
 		  if (mode == 1)
 		    {
-		       bd->fx.start.x = bd->zone->w * dx;
-		       bd->fx.start.y = bd->zone->h * dy;
+		       bd->fx.start.x = bd->zone->w * (dx * 1.5);
+		       bd->fx.start.y = bd->zone->h * (dy * 1.5);
 		    }
 		  else if (mode == 2)
 		    {
@@ -633,13 +638,14 @@ _e_desk_show_begin(E_Desk *desk, int mode, int dx, int dy)
 		  else
 		    bd->fx.start.y += bd->zone->container->h - (bd->zone->y + bd->zone->h);
 		  e_border_fx_offset(bd, bd->fx.start.x, bd->fx.start.y);
-		  e_border_show(bd);
+		  e_border_comp_hidden_set(bd, EINA_TRUE);
 	       }
 	  }
      }
    e_container_border_list_free(bl);
    if (desk->animator) ecore_animator_del(desk->animator);
    desk->animator = ecore_animator_add(_e_desk_show_animator, desk);
+   desk->animating = EINA_TRUE;
 }
 
 static void
@@ -657,9 +663,19 @@ _e_desk_show_end(E_Desk *desk)
 	     if (bd->moving)
 	       e_border_fx_offset(bd, 0, 0);
 	     else if ((bd->desk == desk) && (!bd->sticky))
-	       e_border_fx_offset(bd, 0, 0);
+	       {
+		  e_border_fx_offset(bd, 0, 0);
+		  e_border_comp_hidden_set(bd, EINA_FALSE);
+
+		  if (!bd->visible)
+		    e_border_show(bd);
+	       }
 	  }
      }
+
+   if (e_config->focus_last_focused_per_desktop)
+     e_desk_last_focused_focus(desk);
+
    e_container_border_list_free(bl);
    ecore_x_window_shadow_tree_flush();
    ev = E_NEW(E_Event_Desk_After_Show, 1);
@@ -678,6 +694,14 @@ _e_desk_show_animator(void *data)
    double t, dt, spd;
 
    desk = data;
+
+   if (!desk->animating)
+     {
+	_e_desk_show_end(desk);
+	desk->animator = NULL;
+	return ECORE_CALLBACK_CANCEL;
+     }
+
    t = ecore_loop_time_get();
    dt = -1.0;
    spd = e_config->desk_flip_animate_time;
@@ -691,11 +715,14 @@ _e_desk_show_animator(void *data)
 	       }
 	     else if ((bd->desk == desk) && (!bd->sticky))
 	       {
+		  if (!bd->visible)
+		    e_border_show(bd);
+		  
 		  dt = (t - bd->fx.start.t) / spd;
 		  if (dt > 1.0) dt = 1.0;
 		  dt = 1.0 - dt;
 		  dt *= dt; /* decelerate - could be a better hack */
-                  e_border_fx_offset(bd, 
+		  e_border_fx_offset(bd,
 				     ((double)bd->fx.start.x * dt),
 				     ((double)bd->fx.start.y * dt));
 	       }
@@ -703,11 +730,8 @@ _e_desk_show_animator(void *data)
      }
    e_container_border_list_free(bl);
    if (dt <= 0.0)
-     {
-	_e_desk_show_end(desk);
-	desk->animator = NULL;
-	return ECORE_CALLBACK_CANCEL;
-     }
+     desk->animating = EINA_FALSE;
+
    return ECORE_CALLBACK_RENEW;
 }
 
@@ -717,6 +741,11 @@ _e_desk_hide_begin(E_Desk *desk, int mode, int dx, int dy)
    E_Border_List *bl;
    E_Border *bd;
    double t;
+
+   if (dx < 0) dx = -1;
+   if (dx > 0) dx = 1;
+   if (dy < 0) dy = -1;
+   if (dy > 0) dy = 1;
 
    t = ecore_loop_time_get();
    bl = e_container_border_list_first(desk->zone->container);
@@ -735,8 +764,8 @@ _e_desk_hide_begin(E_Desk *desk, int mode, int dx, int dy)
 		  bd->fx.start.t = t;
 		  if (mode == 1)
 		    {
-		       bd->fx.start.x = bd->zone->w * -dx;
-		       bd->fx.start.y = bd->zone->h * -dy;
+		       bd->fx.start.x = bd->zone->w * (-dx * 1.5);
+		       bd->fx.start.y = bd->zone->h * (-dy * 1.5);
 		    }
 		  else if (mode == 2)
 		    {
@@ -773,12 +802,14 @@ _e_desk_hide_begin(E_Desk *desk, int mode, int dx, int dy)
 		  else
 		    bd->fx.start.y += bd->zone->container->h - (bd->zone->y + bd->zone->h);
 		  e_border_fx_offset(bd, 0, 0);
+		  e_border_comp_hidden_set(bd, EINA_TRUE);
 	       }
 	  }
      }
    e_container_border_list_free(bl);
    if (desk->animator) ecore_animator_del(desk->animator);
    desk->animator = ecore_animator_add(_e_desk_hide_animator, desk);
+   desk->animating = EINA_TRUE;
 }
 
 static void
@@ -797,6 +828,7 @@ _e_desk_hide_end(E_Desk *desk)
 	     else if ((bd->desk == desk) && (!bd->sticky))
 	       {
 		  e_border_fx_offset(bd, 0, 0);
+		  e_border_comp_hidden_set(bd, EINA_FALSE);
 		  e_border_hide(bd, 2);
 	       }
 	  }
@@ -814,6 +846,14 @@ _e_desk_hide_animator(void *data)
    double t, dt, spd;
 
    desk = data;
+
+   if (!desk->animating)
+     {
+	_e_desk_hide_end(desk);
+	desk->animator = NULL;
+	return ECORE_CALLBACK_CANCEL;
+     }
+   
    t = ecore_loop_time_get();
    dt = -1.0;
    spd = e_config->desk_flip_animate_time;
@@ -837,11 +877,9 @@ _e_desk_hide_animator(void *data)
 	  }
      }
    e_container_border_list_free(bl);
+
    if ((dt < 0.0) || (dt >= 1.0))
-     {
-	_e_desk_hide_end(desk);
-	desk->animator = NULL;
-	return ECORE_CALLBACK_CANCEL;
-     }
+     desk->animating = EINA_FALSE;
+
    return ECORE_CALLBACK_RENEW;
 }
