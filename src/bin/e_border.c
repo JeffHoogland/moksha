@@ -2898,10 +2898,7 @@ e_border_idler_before(void)
                       (!bd->changes.size))
                     {
                        ecore_evas_show(bd->bg_ecore_evas);
-                       if ((1) &&
-                           ((bd->changes.pos && !bd->changes.size) ||
-                            (!bd->changes.pos && bd->changes.size) ||
-                            (bd->post_job)))
+                       if (bd->post_job)
                          {
                             bd->post_show = 1;
                          }
@@ -2935,14 +2932,10 @@ e_border_idler_before(void)
                        bd->changes.visible = 0;
                     }
                   if (bd->changed) _e_border_eval(bd);
-                  if ((bd->changes.visible) && (bd->visible) &&
-                      (!bd->new_client))
+                  if ((bd->changes.visible) && (bd->visible))
                     {
                        ecore_evas_show(bd->bg_ecore_evas);
-                       if ((1) &&
-                           ((bd->changes.pos && !bd->changes.size) ||
-                            (!bd->changes.pos && bd->changes.size) ||
-                            (bd->post_job)))
+                       if (bd->post_job)
                          {
                             bd->post_show = 1;
                          }
@@ -7337,17 +7330,10 @@ _e_border_eval(E_Border *bd)
      }
    else if (bd->changes.pos)
      {
-        if (1)
-          {
-             if (bd->post_job) ecore_idle_enterer_del(bd->post_job);
-             bd->post_job = ecore_idle_enterer_add(_e_border_post_move_resize_job,
-                                                   bd);
-             bd->post_move = 1;
-          }
-        else
-          {
-             ecore_x_window_move(bd->win, bd->x + bd->fx.x, bd->y + bd->fx.y);
-          }
+	if (bd->post_job) ecore_idle_enterer_del(bd->post_job);
+	bd->post_job = ecore_idle_enterer_add(_e_border_post_move_resize_job, bd);
+	bd->post_move = 1;
+
         e_container_shape_move(bd->shape, bd->x + bd->fx.x, bd->y + bd->fx.y);
 
         _e_border_client_move_resize_send(bd);
