@@ -1883,11 +1883,22 @@ e_border_focus_set(E_Border *bd,
      return;
    if ((set) && (focus) && (bd->lock_focus_out)) return;
    /* dont focus an iconified window. that's silly! */
-   if ((focus) && (bd->iconic))
-     return;
+   if (focus)
+     {
+	if (bd->iconic)
+	  return;
 
-   if ((focus) && (!bd->visible))
-     return;
+	if (!bd->visible)
+	  return;
+
+	/* FIXME: hack for deskflip animation:
+	 * dont update focus when sliding previous desk */
+	if (bd->desk != e_desk_current_get(bd->desk->zone))
+	  return;
+
+	/* TODO */
+	/* if !set and no other window is focused 'revert focus when lost' */
+     }
 
    if ((bd->modal) && (bd->modal != bd) && (bd->modal->visible))
      {
