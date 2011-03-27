@@ -1893,7 +1893,7 @@ e_border_focus_set(E_Border *bd,
 
 	/* FIXME: hack for deskflip animation:
 	 * dont update focus when sliding previous desk */
-	if (bd->desk != e_desk_current_get(bd->desk->zone))
+	if ((!bd->sticky) && (bd->desk != e_desk_current_get(bd->desk->zone)))
 	  return;
 
 	/* TODO */
