@@ -83,7 +83,7 @@ e_container_new(E_Manager *man)
 				     0, 0, con->w, con->h, 1, 1,
 				     &(con->bg_win));
    e_canvas_add(con->bg_ecore_evas);
-   con->event_win = ecore_x_window_input_new(con->bg_win, 0, 0, con->w, con->h);
+   con->event_win = ecore_x_window_input_new(con->win, 0, 0, con->w, con->h);
    ecore_x_window_show(con->event_win);
    con->bg_evas = ecore_evas_get(con->bg_ecore_evas);
    ecore_evas_name_class_set(con->bg_ecore_evas, "E", "Background_Window");
@@ -189,8 +189,14 @@ e_container_show(E_Container *con)
    E_OBJECT_TYPE_CHECK(con, E_CONTAINER_TYPE);
 
    if (con->visible) return;
-   ecore_evas_show(con->bg_ecore_evas);
+   if (!e_config->null_container_win)
+      ecore_evas_show(con->bg_ecore_evas);
    ecore_x_window_configure(con->bg_win,
+			    ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
+			    ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
+			    0, 0, 0, 0, 0,
+			    con->layers[0].win, ECORE_X_WINDOW_STACK_BELOW);
+   ecore_x_window_configure(con->event_win,
 			    ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
 			    ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
 			    0, 0, 0, 0, 0,
@@ -272,7 +278,9 @@ e_container_resize(E_Container *con, int w, int h)
    con->h = h;
    if (con->win != con->manager->win)
      ecore_x_window_resize(con->win, con->w, con->h);
-   ecore_evas_resize(con->bg_ecore_evas, con->w, con->h);
+   ecore_x_window_resize(con->event_win, con->w, con->h);
+   if (!e_config->null_container_win)
+      ecore_evas_resize(con->bg_ecore_evas, con->w, con->h);
    evas_object_resize(con->bg_blank_object, con->w, con->h);
    _e_container_resize_handle(con);
 }
@@ -289,7 +297,9 @@ e_container_move_resize(E_Container *con, int x, int y, int w, int h)
    con->h = h;
    if (con->win != con->manager->win)
      ecore_x_window_move_resize(con->win, con->x, con->y, con->w, con->h);
-   ecore_evas_resize(con->bg_ecore_evas, con->w, con->h);
+   ecore_x_window_move_resize(con->event_win, con->x, con->y, con->w, con->h);
+   if (!e_config->null_container_win)
+      ecore_evas_resize(con->bg_ecore_evas, con->w, con->h);
    evas_object_move(con->bg_blank_object, con->x, con->y);
    evas_object_resize(con->bg_blank_object, con->w, con->h);
    _e_container_resize_handle(con);

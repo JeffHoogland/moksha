@@ -338,6 +338,8 @@ struct _E_Config
       Eina_Bool show_run_dialog;
       Eina_Bool show_exit_dialog;
    } exec;
+   
+   unsigned char null_container_win;
 };
 
 struct _E_Config_Syscon_Action

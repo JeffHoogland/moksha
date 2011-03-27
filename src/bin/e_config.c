@@ -891,6 +891,8 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, exec.show_run_dialog, UCHAR);
    E_CONFIG_VAL(D, T, exec.show_exit_dialog, UCHAR);
 
+   E_CONFIG_VAL(D, T, null_container_win, UCHAR);
+   
    e_config_load();
 
    e_config_save_queue();
@@ -1298,6 +1300,8 @@ e_config_load(void)
    E_CONFIG_LIMIT(e_config->exec.show_run_dialog, 0, 1);
    E_CONFIG_LIMIT(e_config->exec.show_exit_dialog, 0, 1);
 
+   E_CONFIG_LIMIT(e_config->null_container_win, 0, 1);
+   
    /* FIXME: disabled auto apply because it causes problems */
    e_config->cfgdlg_auto_apply = 0;
    /* FIXME: desklock personalized password id disabled for security reasons */
