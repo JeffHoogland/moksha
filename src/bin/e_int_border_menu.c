@@ -836,34 +836,53 @@ _e_border_menu_cb_sendto_icon_pre(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_sendto_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
+_e_border_menu_cb_sendto_pre(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Menu *subm;
    E_Menu_Item *submi;
    E_Border *bd;
    E_Desk *desk_cur;
-   int i;
+   E_Zone *zone;
+   Eina_List *l = NULL;
+   char buf[128];
+   int zones, i, x;
 
    bd = data;
    desk_cur = e_desk_current_get(bd->zone);
+   zones = eina_list_count(bd->zone->container->zones);
 
    subm = e_menu_new();
    e_object_data_set(E_OBJECT(subm), bd);
    e_menu_item_submenu_set(mi, subm);
 
-   // FIXME: allow to move to different zones
-   for (i = 0; i < bd->zone->desk_x_count * bd->zone->desk_y_count; i++)
+   EINA_LIST_FOREACH(bd->zone->container->zones, l, zone)
      {
-	E_Desk *desk;
+        if (zones > 1)
+          {
+             snprintf (buf, sizeof(buf), _("Screen %d"), zone->num);
+             submi = e_menu_item_new(subm);
+             e_menu_item_label_set(submi, buf);
+             e_menu_item_disabled_set(submi, EINA_TRUE);
+          }
+		  
+// FIXME: Remove labels and add deskpreview to menu.
+// Evas_Object *o = e_widget_deskpreview_add(m->evas, 4, 2);
 
-	desk = bd->zone->desks[i];
-	submi = e_menu_item_new(subm);
-	e_menu_item_label_set(submi, desk->name);
-        e_menu_item_radio_set(submi, 1);
-        e_menu_item_radio_group_set(submi, 2);
-        e_menu_item_toggle_set(submi, (desk_cur == desk ? 1 : 0));
-	e_menu_item_callback_set(submi, _e_border_menu_cb_sendto, desk);
-        e_menu_item_realize_callback_set(submi, _e_border_menu_cb_sendto_icon_pre, desk);
+        for (i = 0; i < zone->desk_x_count * zone->desk_y_count; i++)
+          {
+             E_Desk *desk;
+
+             desk = zone->desks[i];
+             submi = e_menu_item_new(subm);
+             e_menu_item_label_set(submi, desk->name);
+             e_menu_item_radio_set(submi, 1);
+             e_menu_item_radio_group_set(submi, 2);
+             if ((bd->zone == zone) && (desk_cur == desk))
+               e_menu_item_toggle_set(submi, 1);
+             else
+               e_menu_item_callback_set(submi, _e_border_menu_cb_sendto, desk);
+             e_menu_item_realize_callback_set(submi, _e_border_menu_cb_sendto_icon_pre, desk);
+          }
      }
 }
 
@@ -875,7 +894,11 @@ _e_border_menu_cb_sendto(void *data, E_Menu *m, E_Menu_Item *mi __UNUSED__)
 
    desk = data;
    bd = e_object_data_get(E_OBJECT(m));
-   if ((bd) && (desk)) e_border_desk_set(bd, desk);
+   if ((bd) && (desk))
+     {
+        e_border_zone_set(bd, desk->zone);
+        e_border_desk_set(bd, desk);
+     }
 }
 
 static void
