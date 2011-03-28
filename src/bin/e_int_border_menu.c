@@ -131,17 +131,6 @@ e_int_border_menu_create(E_Border *bd)
         mi = e_menu_item_new(m);
         e_menu_item_separator_set(mi, 1);
 
-        if (!bd->internal)
-          {
-             mi = e_menu_item_new(m);
-             e_menu_item_label_set(mi, _("Kill"));
-             e_menu_item_callback_set(mi, _e_border_menu_cb_kill, bd);
-             e_menu_item_icon_edje_set(mi,
-                                       e_theme_edje_file_get("base/theme/borders",
-							     "e/widgets/border/default/kill"),
-                                                             "e/widgets/border/default/kill");
-          }
-
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("Close"));
 	e_menu_item_callback_set(mi, _e_border_menu_cb_close, bd);
@@ -566,6 +555,17 @@ _e_border_menu_cb_window_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
 
    submi = e_menu_item_new(subm);
    e_menu_item_separator_set(submi, 1);
+
+   if ((!bd->internal) && (!bd->lock_close))
+     {
+        submi = e_menu_item_new(subm);
+        e_menu_item_label_set(submi, _("Kill"));
+        e_menu_item_callback_set(submi, _e_border_menu_cb_kill, bd);
+        e_menu_item_icon_edje_set(submi,
+                                  e_theme_edje_file_get("base/theme/borders",
+                                                        "e/widgets/border/default/kill"),
+                                                        "e/widgets/border/default/kill");
+     }
 
    submi = e_menu_item_new(subm);
    e_menu_item_label_set(submi, _("ICCCM/NetWM"));
