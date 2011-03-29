@@ -687,6 +687,19 @@ AC_E_OPTIONAL_MODULE([comp], true)
 
 AC_E_CHECK_PKG(ENOTIFY, [edbus >= 1.0.0 enotify >= 1.0.0], [], [])
 
+AC_PATH_PROGS([SUSPEND], [sleep.sh pm-suspend zzz],[/etc/acpi/sleep.sh], [/etc/acpi:/sbin:/usr/sbin:$PATH])
+if test $SUSPEND = /etc/acpi/sleep.sh ; then
+   SUSPEND="/etc/acpi/sleep.sh force"
+    AC_MSG_NOTICE([use suspend method: $SUSPEND])
+fi
+
+AC_PATH_PROGS([HIBERNATE], [hibernate.sh pm-hibernate],[/etc/acpi/hibernate.sh], [/etc/acpi:/sbin:/usr/sbin:$PATH])
+if test $HIBERNATE = "/etc/acpi/hibernate.sh" ; then
+   HIBERNATE="/etc/acpi/hibernate.sh force"
+   AC_MSG_NOTICE([use hibernate method: $HIBERNATE])
+fi
+
+
 AC_OUTPUT([
 Makefile
 enlightenment.spec
@@ -879,6 +892,7 @@ data/xsession/Makefile
 data/xsession/enlightenment.desktop
 data/tools/Makefile
 data/etc/Makefile
+data/etc/sysactions.conf
 data/icons/Makefile
 data/backgrounds/Makefile
 doc/Makefile

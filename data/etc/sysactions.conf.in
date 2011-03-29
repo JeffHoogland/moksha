@@ -45,8 +45,8 @@
 
 action:   halt      /sbin/shutdown -h now
 action:   reboot    /sbin/shutdown -r now
-action:   suspend   /etc/acpi/sleep.sh force
-action:   hibernate /etc/acpi/hibernate.sh force
+action:   suspend   @SUSPEND@
+action:   hibernate @HIBERNATE@
 
 # on FreeBSD use this instead of the above.
 #action suspend  /usr/sbin/zzz 
