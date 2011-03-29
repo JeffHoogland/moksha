@@ -692,9 +692,11 @@ HIBERNATE=""
 case "$host_os" in
    freebsd*|pcbsd*)
       SUSPEND="acpiconf -s3"
-      HIBERNATE="acpiconf -s3"
       AC_MSG_NOTICE([use suspend method: $SUSPEND])
+      AC_SUBST(SUSPEND)
+      HIBERNATE="acpiconf -s4"
       AC_MSG_NOTICE([use hibernate method: $HIBERNATE])
+      AC_SUBST(HIBERNATE)
       ;;
    *)
       AC_PATH_PROGS([SUSPEND], [sleep.sh pm-suspend zzz],[/etc/acpi/sleep.sh], [/etc/acpi:/sbin:/usr/sbin:$PATH])
