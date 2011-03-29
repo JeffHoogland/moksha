@@ -836,7 +836,7 @@ _e_border_menu_cb_sendto_icon_pre(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_border_menu_cb_sendto_pre(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_sendto_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
 {
    E_Menu *subm;
    E_Menu_Item *submi;
@@ -845,7 +845,7 @@ _e_border_menu_cb_sendto_pre(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Zone *zone;
    Eina_List *l = NULL;
    char buf[128];
-   int zones, i, x;
+   int zones, i;
 
    bd = data;
    desk_cur = e_desk_current_get(bd->zone);
@@ -881,7 +881,8 @@ _e_border_menu_cb_sendto_pre(void *data, E_Menu *m, E_Menu_Item *mi)
                e_menu_item_toggle_set(submi, 1);
              else
                e_menu_item_callback_set(submi, _e_border_menu_cb_sendto, desk);
-             e_menu_item_realize_callback_set(submi, _e_border_menu_cb_sendto_icon_pre, desk);
+             e_menu_item_realize_callback_set(submi, _e_border_menu_cb_sendto_icon_pre, 
+                                              desk);
           }
      }
 }
