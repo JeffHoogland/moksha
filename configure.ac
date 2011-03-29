@@ -687,17 +687,29 @@ AC_E_OPTIONAL_MODULE([comp], true)
 
 AC_E_CHECK_PKG(ENOTIFY, [edbus >= 1.0.0 enotify >= 1.0.0], [], [])
 
-AC_PATH_PROGS([SUSPEND], [sleep.sh pm-suspend zzz],[/etc/acpi/sleep.sh], [/etc/acpi:/sbin:/usr/sbin:$PATH])
-if test $SUSPEND = /etc/acpi/sleep.sh ; then
-   SUSPEND="/etc/acpi/sleep.sh force"
-    AC_MSG_NOTICE([use suspend method: $SUSPEND])
-fi
+SUSPEND=""
+HIBERNATE=""
+case "$host_os" in
+   freebsd*|pcbsd*)
+      SUSPEND="acpiconf -s3"
+      HIBERNATE="acpiconf -s3"
+      AC_MSG_NOTICE([use suspend method: $SUSPEND])
+      AC_MSG_NOTICE([use hibernate method: $HIBERNATE])
+      ;;
+   *)
+      AC_PATH_PROGS([SUSPEND], [sleep.sh pm-suspend zzz],[/etc/acpi/sleep.sh], [/etc/acpi:/sbin:/usr/sbin:$PATH])
+      if test $SUSPEND = /etc/acpi/sleep.sh ; then
+         SUSPEND="/etc/acpi/sleep.sh force"
+         AC_MSG_NOTICE([use suspend method: $SUSPEND])
+      fi
 
-AC_PATH_PROGS([HIBERNATE], [hibernate.sh pm-hibernate],[/etc/acpi/hibernate.sh], [/etc/acpi:/sbin:/usr/sbin:$PATH])
-if test $HIBERNATE = "/etc/acpi/hibernate.sh" ; then
-   HIBERNATE="/etc/acpi/hibernate.sh force"
-   AC_MSG_NOTICE([use hibernate method: $HIBERNATE])
-fi
+      AC_PATH_PROGS([HIBERNATE], [hibernate.sh pm-hibernate],[/etc/acpi/hibernate.sh], [/etc/acpi:/sbin:/usr/sbin:$PATH])
+      if test $HIBERNATE = "/etc/acpi/hibernate.sh" ; then
+         HIBERNATE="/etc/acpi/hibernate.sh force"
+         AC_MSG_NOTICE([use hibernate method: $HIBERNATE])
+      fi
+      ;;
+esac
 
 
 AC_OUTPUT([
