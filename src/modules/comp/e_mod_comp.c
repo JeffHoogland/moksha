@@ -2308,6 +2308,14 @@ _e_mod_comp_win_configure(E_Comp_Win *cw,
      {
         if (!((w == cw->w) && (h == cw->h)))
           {
+#if 1             
+             cw->w = w;
+             cw->h = h;
+             cw->needpix = 1;
+             // was cw->w / cw->h
+             evas_object_resize(cw->shobj, cw->pw, cw->ph);
+             _e_mod_comp_win_damage(cw, 0, 0, cw->w, cw->h, 0);
+#else             
              if (cw->bd)
                {
                   if ((cw->bd->shading) || (cw->bd->shaded))
@@ -2328,6 +2336,7 @@ _e_mod_comp_win_configure(E_Comp_Win *cw,
 //                     (_comp_mod->conf->first_draw_delay, 
 //                         _e_mod_comp_cb_win_show_ready_timeout, cw);
                }
+#endif             
           }
         if (cw->border != border)
           {
