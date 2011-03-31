@@ -2317,6 +2317,8 @@ _e_mod_comp_win_configure(E_Comp_Win *cw,
                        evas_object_resize(cw->shobj, cw->pw, cw->ph);
                        _e_mod_comp_win_damage(cw, 0, 0, cw->w, cw->h, 0);
                     }
+                  else
+                     cw->update = 0;
                }
              else
                {
