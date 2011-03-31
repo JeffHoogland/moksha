@@ -92,20 +92,23 @@ struct _E_Comp_Win
    double               last_draw_time;  // last time window was damaged
 
    int                  pending_count;  // pending event count
+   
+   unsigned int         opacity;  // opacity set with _NET_WM_WINDOW_OPACITY
 
    char                *title, *name, *clas, *role;  // fetched for override-redirect windowa
    Ecore_X_Window_Type  primary_type;  // fetched for override-redirect windowa
 
+   unsigned char        misses; // number of sync misses
+   
    Eina_Bool            delete_pending : 1;  // delete pendig
    Eina_Bool            hidden_override : 1;  // hidden override
-
    Eina_Bool            animating : 1;  // it's busy animating - defer hides/dels
    Eina_Bool            force : 1;  // force del/hide even if animating
    Eina_Bool            defer_hide : 1;  // flag to get hide to work on deferred hide
    Eina_Bool            delete_me : 1;  // delete me!
-
    Eina_Bool            visible : 1;  // is visible
    Eina_Bool            input_only : 1;  // is input_only
+   
    Eina_Bool            override : 1;  // is override-redirect
    Eina_Bool            argb : 1;  // is argb
    Eina_Bool            shaped : 1;  // is shaped
@@ -114,6 +117,7 @@ struct _E_Comp_Win
    Eina_Bool            shape_changed : 1;  // shape changed
    Eina_Bool            native : 1;  // native
    Eina_Bool            drawme : 1;  // drawme flag fo syncing rendering
+   
    Eina_Bool            invalid : 1;  // invalid depth used - just use as marker
    Eina_Bool            nocomp : 1;  // nocomp applied
    Eina_Bool            needpix : 1;  // need new pixmap
@@ -121,8 +125,6 @@ struct _E_Comp_Win
    Eina_Bool            real_hid : 1;  // last hide was a real window unmap
    Eina_Bool            inhash : 1;  // is in the windows hash
    Eina_Bool            show_ready : 1;  // is this window ready for its first show
-
-   unsigned int         opacity;  // opacity set with _NET_WM_WINDOW_OPACITY
 };
 
 static Eina_List *handlers = NULL;
@@ -359,20 +361,17 @@ _e_mod_comp_cb_win_show_ready_timeout(void *data)
 {
    E_Comp_Win *cw = data;
    cw->show_ready = 1;
-//   printf("_e_mod_comp_cb_win_show_ready_timeout %x\n", cw->win);
    if (cw->visible)
      {
-//        printf("  vis\n");
           if (!cw->update)
             {
-//             printf("    not update\n");
-                 if (cw->update_timeout)
-                   {
-                      ecore_timer_del(cw->update_timeout);
-                      cw->update_timeout = NULL;
-                   }
-                 cw->update = 1;
-                 cw->c->updates = eina_list_append(cw->c->updates, cw);
+               if (cw->update_timeout)
+                 {
+                    ecore_timer_del(cw->update_timeout);
+                    cw->update_timeout = NULL;
+                 }
+               cw->update = 1;
+               cw->c->updates = eina_list_append(cw->c->updates, cw);
             }
           _e_mod_comp_win_render_queue(cw);
      }
@@ -390,7 +389,6 @@ _e_mod_comp_win_ready_timeout_setup(E_Comp_Win *cw)
      }
    if (cw->show_ready) return;
    if (cw->counter) return;
-//   printf("_e_mod_comp_win_ready_timeout_setup %x\n", cw->win);
 // FIXME: make show_ready option
    if (0)
      {
@@ -482,6 +480,8 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
                {
                   ecore_x_pixmap_geometry_get(cw->pixmap, NULL, NULL, &(cw->pw), &(cw->ph));
                   _e_mod_comp_win_ready_timeout_setup(cw);
+                  if ((cw->pw > 0) && (cw->ph > 0))
+                     evas_object_resize(cw->obj, cw->pw, cw->ph);
                }
              else
                {
@@ -543,9 +543,7 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
 
    evas_object_move(cw->shobj, cw->x, cw->y);
    // was cw->w / cw->h
-   evas_object_resize(cw->shobj,
-                      cw->pw + (cw->border * 2),
-                      cw->ph + (cw->border * 2));
+   evas_object_resize(cw->shobj, cw->pw, cw->ph);
 
    if ((cw->c->gl) && (_comp_mod->conf->texture_from_pixmap) &&
        (!cw->shaped) && (!cw->rects))
@@ -691,24 +689,25 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
 //             cw->update = 1;
           }
      }
-//   printf("==== up %x | %i %i %i %i\n", cw->win, cw->update, cw->visible, cw->dmg_updates, cw->show_ready);
 // FIXME: below cw update check screws with show
    if (/*(!cw->update) &&*/ (cw->visible) && (cw->dmg_updates >= 1) &&
                             (cw->show_ready) && (!cw->hidden_override))
      {
         if (!evas_object_visible_get(cw->shobj))
           {
-//             printf("  real show %x\n", cw->win);
-               evas_object_show(cw->shobj);
-               edje_object_signal_emit(cw->shobj, "e,state,visible,on", "e");
-               if (!cw->animating) cw->c->animating++;
-               _e_mod_comp_win_render_queue(cw);
-               cw->animating = 1;
-
-               cw->pending_count++;
-               e_manager_comp_event_src_visibility_send
-                 (cw->c->man, (E_Manager_Comp_Source *)cw,
-                 _e_mod_comp_cb_pending_after, cw->c);
+             evas_object_show(cw->shobj);
+             edje_object_signal_emit(cw->shobj, "e,state,visible,on", "e");
+             if (!cw->animating)
+               {
+                  cw->c->animating++;
+               }
+             _e_mod_comp_win_render_queue(cw);
+             cw->animating = 1;
+             
+             cw->pending_count++;
+             e_manager_comp_event_src_visibility_send
+                (cw->c->man, (E_Manager_Comp_Source *)cw,
+                    _e_mod_comp_cb_pending_after, cw->c);
           }
      }
    if ((cw->shobj) && (cw->obj))
@@ -804,7 +803,6 @@ _e_mod_comp_cb_update(E_Comp *c)
         ecore_x_sync();
         c->grabbed = 1;
      }
-//   printf("UPAAAAAAAAAAAAAAAAAL\n");
    EINA_LIST_FREE(c->updates, cw)
      {
         if (_comp_mod->conf->efl_sync)
@@ -813,8 +811,10 @@ _e_mod_comp_cb_update(E_Comp *c)
                {
                   _e_mod_comp_win_update(cw);
                   if (cw->drawme)
-                    update_done = eina_list_append(update_done, cw);
-                  cw->drawme = 0;
+                    {
+                       update_done = eina_list_append(update_done, cw);
+                       cw->drawme = 0;
+                    }
                }
              else
                cw->update = 0;
@@ -822,7 +822,9 @@ _e_mod_comp_cb_update(E_Comp *c)
         else
           _e_mod_comp_win_update(cw);
         if (cw->update)
-          new_updates = eina_list_append(new_updates, cw);
+          {
+             new_updates = eina_list_append(new_updates, cw);
+          }
      }
    _e_mod_comp_fps_update(c);
    if (_comp_mod->conf->fps_show)
@@ -1281,7 +1283,10 @@ _e_mod_comp_object_del(void *data,
 static void
 _e_mod_comp_done_defer(E_Comp_Win *cw)
 {
-   if (cw->animating) cw->c->animating--;
+   if (cw->animating)
+     {
+        cw->c->animating--;
+     }
    cw->animating = 0;
    _e_mod_comp_win_render_queue(cw);
    cw->force = 1;
@@ -1842,7 +1847,6 @@ _e_mod_comp_win_add(E_Comp        *c,
      (cw->up, E_UPDATE_POLICY_HALF_WIDTH_OR_MORE_ROUND_UP_TO_FULL_WIDTH);
    if (((!cw->input_only) && (!cw->invalid)) && (cw->override))
      {
-//        printf("^^^^ redirect3 %x\n", cw->win);
           cw->redirected = 1;
 // we redirect all subwindows anyway
 //        ecore_x_composite_redirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
@@ -1858,6 +1862,11 @@ _e_mod_comp_win_del(E_Comp_Win *cw)
 {
    int pending_count;
 
+   if (cw->animating)
+     {
+        cw->c->animating--;
+     }
+   cw->animating = 0;
    if ((!cw->input_only) && (!cw->invalid))
      {
         cw->pending_count++;
@@ -1914,7 +1923,6 @@ _e_mod_comp_win_del(E_Comp_Win *cw)
      }
    if (cw->redirected)
      {
-//        printf("^^^^ undirect4 %x\n", cw->win);
 // we redirect all subwindows anyway
 //        ecore_x_composite_unredirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
               cw->redirected = 0;
@@ -2048,7 +2056,6 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
      cw->dmg_updates = 1;
    if ((!cw->redirected) || (!cw->pixmap))
      {
-//        printf("^^^^ redirect5 %x\n", cw->win);
 // we redirect all subwindows anyway
 //        ecore_x_composite_redirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
               cw->pixmap = ecore_x_composite_name_window_pixmap_get(cw->win);
@@ -2087,7 +2094,10 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
         cw->defer_hide = 0;
         if (!cw->hidden_override) evas_object_show(cw->shobj);
         edje_object_signal_emit(cw->shobj, "e,state,visible,on", "e");
-        if (!cw->animating) cw->c->animating++;
+        if (!cw->animating)
+          {
+             cw->c->animating++;
+          }
         cw->animating = 1;
         _e_mod_comp_win_render_queue(cw);
 
@@ -2125,7 +2135,10 @@ _e_mod_comp_win_hide(E_Comp_Win *cw)
      {
         cw->defer_hide = 1;
         edje_object_signal_emit(cw->shobj, "e,state,visible,off", "e");
-        if (!cw->animating) cw->c->animating++;
+        if (!cw->animating)
+          {
+             cw->c->animating++;
+          }
         cw->animating = 1;
         _e_mod_comp_win_render_queue(cw);
 
@@ -2196,7 +2209,6 @@ _e_mod_comp_win_hide(E_Comp_Win *cw)
      }
    if (cw->redirected)
      {
-//        printf("^^^^ undirect6 %x\n", cw->win);
 // we redirect all subwindows anyway
 //        ecore_x_composite_unredirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
               cw->redirected = 0;
@@ -2290,30 +2302,64 @@ _e_mod_comp_win_configure(E_Comp_Win *cw,
         cw->hidden.x = x;
         cw->hidden.y = y;
      }
-   if (!((w == cw->w) && (h == cw->h)))
+   cw->hidden.w = w;
+   cw->hidden.h = h;
+   if (cw->counter)
      {
-        DBG("  [0x%x] rsz %4ix%4i\n", cw->win, w, h);
-        cw->w = w;
-        cw->h = h;
-        cw->needpix = 1;
-        // was cw->w / cw->h
-        evas_object_resize(cw->shobj,
-                           cw->pw + (cw->border * 2),
-                           cw->ph + (cw->border * 2));
-        _e_mod_comp_win_damage(cw, 0, 0, cw->w, cw->h, 0);
+        if (!((w == cw->w) && (h == cw->h)))
+          {
+             if (cw->bd)
+               {
+                  if ((cw->bd->shading) || (cw->bd->shaded))
+                    {
+                       cw->needpix = 1;
+                       // was cw->w / cw->h
+                       evas_object_resize(cw->shobj, cw->pw, cw->ph);
+                       _e_mod_comp_win_damage(cw, 0, 0, cw->w, cw->h, 0);
+                    }
+               }
+             else
+               {
+                  cw->update = 0;
+//                  if (cw->ready_timeout) ecore_timer_del(cw->ready_timeout);
+//                  cw->ready_timeout = ecore_timer_add
+//                     (_comp_mod->conf->first_draw_delay, 
+//                         _e_mod_comp_cb_win_show_ready_timeout, cw);
+               }
+          }
+        if (cw->border != border)
+          {
+             cw->border = border;
+             cw->needpix = 1;
+             // was cw->w / cw->h
+             evas_object_resize(cw->shobj, cw->pw, cw->ph);
+             _e_mod_comp_win_damage(cw, 0, 0, cw->w, cw->h, 0);
+          }
+        if ((cw->input_only) || (cw->invalid)) return;
      }
-   if (cw->border != border)
+   else
      {
-        cw->border = border;
-        // was cw->w / cw->h
-        evas_object_resize(cw->shobj,
-                           cw->pw + (cw->border * 2),
-                           cw->ph + (cw->border * 2));
+        if (!((w == cw->w) && (h == cw->h)))
+          {
+             DBG("  [0x%x] rsz %4ix%4i\n", cw->win, w, h);
+             cw->w = w;
+             cw->h = h;
+             cw->needpix = 1;
+             // was cw->w / cw->h
+             evas_object_resize(cw->shobj, cw->pw, cw->ph);
+             _e_mod_comp_win_damage(cw, 0, 0, cw->w, cw->h, 0);
+          }
+        if (cw->border != border)
+          {
+             cw->border = border;
+             cw->needpix = 1;
+             evas_object_resize(cw->shobj, cw->pw, cw->ph);
+             _e_mod_comp_win_damage(cw, 0, 0, cw->w, cw->h, 0);
+          }
+        if ((cw->input_only) || (cw->invalid)) return;
+        _e_mod_comp_win_render_queue(cw);
      }
-   cw->hidden.w = cw->w;
-   cw->hidden.h = cw->h;
-   if ((cw->input_only) || (cw->invalid)) return;
-   _e_mod_comp_win_render_queue(cw);
+   // add pending manager comp event count to match below config send
    cw->pending_count++;
    e_manager_comp_event_src_config_send(cw->c->man,
                                         (E_Manager_Comp_Source *)cw,
@@ -2527,6 +2573,9 @@ _e_mod_comp_message(void *data __UNUSED__,
 {
    Ecore_X_Event_Client_Message *ev = event;
    E_Comp_Win *cw = NULL;
+   int version, w = 0, h = 0;
+   Eina_Bool force = 0;
+   
    if (ev->message_type == ECORE_X_ATOM_NET_WM_WINDOW_OPACITY)
      {
         E_Comp_Win *cw = _e_mod_comp_win_find(ev->win);
@@ -2537,6 +2586,7 @@ _e_mod_comp_message(void *data __UNUSED__,
 
    if ((ev->message_type != ECORE_X_ATOM_E_COMP_SYNC_DRAW_DONE) ||
        (ev->format != 32)) return ECORE_CALLBACK_PASS_ON;
+   version = ev->data.l[1];
    cw = _e_mod_comp_border_client_find(ev->data.l[0]);
    if (cw)
      {
@@ -2548,6 +2598,50 @@ _e_mod_comp_message(void *data __UNUSED__,
         cw = _e_mod_comp_win_find(ev->data.l[0]);
         if (!cw) return ECORE_CALLBACK_PASS_ON;
         if (ev->data.l[0] != cw->win) return ECORE_CALLBACK_PASS_ON;
+     }
+   if (version == 1) // v 0 was first, v1 added size params
+     {
+        w = ev->data.l[2];
+        h = ev->data.l[3];
+        if (cw->bd)
+          {
+             int clw, clh;
+             
+             if ((cw->bd->shading) || (cw->bd->shaded)) force = 1;
+             clw = cw->hidden.w - 
+                cw->bd->client_inset.l - 
+                cw->bd->client_inset.r;
+             clh = cw->hidden.h - 
+                cw->bd->client_inset.t - 
+                cw->bd->client_inset.b;
+             DBG("  [0x%x] sync draw done @%4ix%4i, bd %4ix%4i\n", cw->win, 
+                 w, h, cw->bd->client.w, cw->bd->client.h);
+             if ((w != clw) ||  (h != clh))
+               {
+                  cw->misses++;
+                  if (cw->misses > 1)
+                    {
+                       cw->misses = 0;
+                       force = 1;
+                    }
+                  else return ECORE_CALLBACK_PASS_ON;
+               }
+             cw->misses = 0;
+          }
+        else
+          {
+             DBG("  [0x%x] sync draw done @%4ix%4i, cw %4ix%4i\n", cw->win, w, h, cw->hidden.w, cw->hidden.h);
+             if ((w != cw->hidden.w) || (h != cw->hidden.h))
+               {
+                  if (cw->misses > 1)
+                    {
+                       cw->misses = 0;
+                       force = 1;
+                    }
+                  else return ECORE_CALLBACK_PASS_ON;
+               }
+             cw->misses = 0;
+          }
      }
    DBG("  [0x%x] sync draw done %4ix%4i\n", cw->win, cw->w, cw->h);
 //   if (cw->bd)
@@ -2567,6 +2661,18 @@ _e_mod_comp_message(void *data __UNUSED__,
                   }
                 cw->update = 1;
                 cw->c->updates = eina_list_append(cw->c->updates, cw);
+             }
+           if ((cw->w != cw->hidden.w) ||
+               (cw->h != cw->hidden.h) ||
+               (force))
+             {
+                DBG("  [0x%x] rsz done msg %4ix%4i\n", cw->win, cw->hidden.w, cw->hidden.h);
+                cw->w = cw->hidden.w;
+                cw->h = cw->hidden.h;
+                cw->needpix = 1;
+                // was cw->w / cw->h
+                evas_object_resize(cw->shobj, cw->pw, cw->ph);
+                _e_mod_comp_win_damage(cw, 0, 0, cw->w, cw->h, 0);
              }
            cw->drawme = 1;
            _e_mod_comp_win_render_queue(cw);
@@ -3315,7 +3421,10 @@ e_mod_comp_shadow_set(void)
                   if (cw->visible)
                     {
                        edje_object_signal_emit(cw->shobj, "e,state,visible,on", "e");
-                       if (!cw->animating) cw->c->animating++;
+                       if (!cw->animating)
+                         {
+                            cw->c->animating++;
+                         }
                        _e_mod_comp_win_render_queue(cw);
                        cw->animating = 1;
 
