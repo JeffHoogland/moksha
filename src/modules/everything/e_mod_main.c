@@ -132,9 +132,9 @@ e_modapi_init(E_Module *m)
    evry_history_init();
    evry_plug_actions_init();
 
-   e_datastore_set("everything_loaded", _api);
+   e_datastore_set("evry_api", _api);
 
-   EINA_LIST_FOREACH(e_datastore_get("everything_modules"), l, em)
+   EINA_LIST_FOREACH(e_datastore_get("evry_modules"), l, em)
      em->active = em->init(_api);
 
    evry_plug_collection_init();
@@ -161,10 +161,10 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    Eina_List *l;
    Evry_Module *em;
 
-   EINA_LIST_FOREACH(e_datastore_get("everything_modules"), l, em)
+   EINA_LIST_FOREACH(e_datastore_get("evry_modules"), l, em)
      em->shutdown();
 
-   e_datastore_del("everything_loaded");
+   e_datastore_del("evry_api");
    E_FREE(_api);
 
    evry_gadget_shutdown();

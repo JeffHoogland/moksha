@@ -1361,13 +1361,7 @@ e_modapi_init(E_Module *m)
 {
    _conf_init(m);
 
-   evry_module = E_NEW(Evry_Module, 1);
-   evry_module->init     = &_plugins_init;
-   evry_module->shutdown = &_plugins_shutdown;
-   EVRY_MODULE_REGISTER(evry_module);
-
-   if ((evry = e_datastore_get("everything_loaded")))
-     evry_module->active = _plugins_init(evry);
+   EVRY_MODULE_NEW(evry_module, evry, _plugins_init, _plugins_shutdown);
 
    /* taken from e_exebuf.c */
    exelist_exe_edd = E_CONFIG_DD_NEW("E_Exe", E_Exe);
@@ -1392,10 +1386,7 @@ e_modapi_init(E_Module *m)
 EAPI int
 e_modapi_shutdown(E_Module *m __UNUSED__)
 {
-   _plugins_shutdown();
-
-   EVRY_MODULE_UNREGISTER(evry_module);
-   E_FREE(evry_module);
+   EVRY_MODULE_FREE(evry_module);
 
    _conf_shutdown();
 

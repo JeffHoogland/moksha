@@ -260,16 +260,28 @@ typedef void (*Evry_Item_Free_Cb) (Evry_Item *it);
 #define EVRY_ACTION_FREE(_act) if (_act) evry->action_free(EVRY_ACTN(_act))
 #endif
 
-#define EVRY_MODULE_REGISTER(_module) {				\
-     Eina_List *l = e_datastore_get("everything_modules");	\
+#define EVRY_MODULE_NEW(_module, _evry_api, _init, _shutdown)	\
+  {								\
+     _module = E_NEW(Evry_Module, 1);				\
+     _module->init     = &_init;				\
+     _module->shutdown = &_shutdown;				\
+     Eina_List *l = e_datastore_get("evry_modules");		\
      l = eina_list_append(l, _module);				\
-     e_datastore_set("everything_modules", l); }
+     e_datastore_set("evry_modules", l);			\
+     if ((_evry_api = e_datastore_get("evry_api")))		\
+       evry_module->active = _init(_evry_api);			\
+  }
 
-#define EVRY_MODULE_UNREGISTER(_module) {			\
-     Eina_List *l = e_datastore_get("everything_modules");	\
-     l = eina_list_remove(l, _module);				\
-     if (l) e_datastore_set("everything_modules", l);           \
-     else e_datastore_del("everything_modules"); }
+#define EVRY_MODULE_FREE(_module)			\
+  {							\
+     _module->shutdown();				\
+     Eina_List *l = e_datastore_get("evry_modules");	\
+     l = eina_list_remove(l, _module);			\
+     if (l) e_datastore_set("evry_modules", l);		\
+     else e_datastore_del("evry_modules");		\
+     E_FREE(_module);					\
+  }
+
 
 /*** handy macros ***/
 
