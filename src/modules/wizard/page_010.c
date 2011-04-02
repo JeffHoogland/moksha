@@ -143,7 +143,9 @@ wizard_page_show(E_Wizard_Page *pg)
 
    e_widget_ilist_freeze(ob);
 
-   for (i = 0, l = blang_list; l; l = l->next, i++)
+   e_widget_ilist_append(ob, NULL, _("System Default"), 
+                         NULL, NULL, NULL);
+   for (i = 1, l = blang_list; l; l = l->next, i++)
      {
 	E_Intl_Pair *pair;
         Evas_Object *ic;

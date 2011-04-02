@@ -3,10 +3,7 @@
 static Ecore_Exe *_e_intl_input_method_exec = NULL;
 static Ecore_Event_Handler *_e_intl_exit_handler = NULL;
 
-static char *_e_intl_orig_lc_messages = NULL;
-static char *_e_intl_orig_language = NULL;
 static char *_e_intl_orig_lc_all = NULL;
-static char *_e_intl_orig_lang = NULL;
 static char *_e_intl_language = NULL;
 
 static char *_e_intl_language_alias = NULL;
@@ -57,10 +54,7 @@ e_intl_init(void)
 
    e_intl_data_init();
 
-   if ((s = getenv("LC_MESSAGES"))) _e_intl_orig_lc_messages = strdup(s);
-   if ((s = getenv("LANGUAGE"))) _e_intl_orig_language = strdup(s);
    if ((s = getenv("LC_ALL"))) _e_intl_orig_lc_all = strdup(s);
-   if ((s = getenv("LANG"))) _e_intl_orig_lang = strdup(s);
 
    if ((s = getenv("GTK_IM_MODULE"))) _e_intl_orig_gtk_im_module = strdup(s);
    if ((s = getenv("QT_IM_MODULE"))) _e_intl_orig_qt_im_module = strdup(s);
@@ -73,10 +67,7 @@ EINTERN int
 e_intl_shutdown(void)
 {
    E_FREE(_e_intl_language);
-   E_FREE(_e_intl_orig_lc_messages);
-   E_FREE(_e_intl_orig_language);
    E_FREE(_e_intl_orig_lc_all);
-   E_FREE(_e_intl_orig_lang);
 
    E_FREE(_e_intl_orig_gtk_im_module);
    E_FREE(_e_intl_orig_qt_im_module);
@@ -148,15 +139,9 @@ e_intl_language_set(const char *lang)
     */
    if (!lang)
      {
-	e_util_env_set("LC_MESSAGES", _e_intl_orig_lc_messages);
-	e_util_env_set("LANGUAGE", _e_intl_orig_language);
 	e_util_env_set("LC_ALL", _e_intl_orig_lc_all);
-	e_util_env_set("LANG", _e_intl_orig_lang);
 
-	lang = getenv("LC_MESSAGES");
-	if (!lang) lang = getenv("LANGUAGE");
 	if (!lang) lang = getenv("LC_ALL");
-	if (!lang) lang = getenv("LANG");
 
 	set_envars = 0;
      }
@@ -197,10 +182,7 @@ e_intl_language_set(const char *lang)
 	/* Only set env vars is a non NULL locale was passed */
 	if (set_envars)
 	  {
-	     e_util_env_set("LANGUAGE", _e_intl_language);
-	     e_util_env_set("LANG", _e_intl_language);
 	     e_util_env_set("LC_ALL", _e_intl_language);
-	     e_util_env_set("LC_MESSAGES", _e_intl_language);
 	  }
 
     	setlocale(LC_ALL, _e_intl_language);
