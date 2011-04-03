@@ -1,9 +1,7 @@
 #ifdef E_INTERNAL
 #if E_INTERNAL
 
-#ifndef E_INTL_H
-#define E_INTL_H
-
+#ifdef E_TYPEDEFS
 #ifdef HAVE_GETTEXT
 #define _(str) gettext(str)
 #define d_(str, dom) dgettext(PACKAGE dom, str)
@@ -16,9 +14,11 @@
  */
 #define N_(str) (str)
 
-#ifdef E_TYPEDEFS
 typedef struct _E_Locale_Parts E_Locale_Parts;
-#endif
+
+#else
+#ifndef E_INTL_H
+#define E_INTL_H
 
 #define E_INTL_LOC_CODESET   1 << 0
 #define E_INTL_LOC_REGION    1 << 1
@@ -57,5 +57,7 @@ EAPI char               *e_intl_locale_parts_combine(E_Locale_Parts *locale_part
 EAPI char		*e_intl_locale_charset_canonic_get(const char *charset);
 
 #endif
+#endif
+
 #endif
 #endif
