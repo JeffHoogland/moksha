@@ -1,3 +1,8 @@
+#ifdef E_INTERNAL
+#if E_INTERNAL
+
+#ifndef E_INTL_H
+#define E_INTL_H
 
 #ifdef HAVE_GETTEXT
 #define _(str) gettext(str)
@@ -11,15 +16,9 @@
  */
 #define N_(str) (str)
 
-#ifdef E_INTERNAL
-#if E_INTERNAL
-
 #ifdef E_TYPEDEFS
 typedef struct _E_Locale_Parts E_Locale_Parts;
 #endif
-
-#ifndef E_INTL_H
-#define E_INTL_H
 
 #define E_INTL_LOC_CODESET   1 << 0
 #define E_INTL_LOC_REGION    1 << 1
@@ -56,6 +55,7 @@ EAPI E_Locale_Parts	*e_intl_locale_parts_get(const char *locale);
 EAPI void		 e_intl_locale_parts_free(E_Locale_Parts *locale_parts);
 EAPI char               *e_intl_locale_parts_combine(E_Locale_Parts *locale_parts, int mask);
 EAPI char		*e_intl_locale_charset_canonic_get(const char *charset);
+
 #endif
 #endif
 #endif
