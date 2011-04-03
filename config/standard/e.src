@@ -154,14 +154,6 @@ group "E_Config" struct {
   }
   group "modules" list {
     group "E_Config_Module" struct {
-      value "name" string: "conf_screensaver";
-      value "enabled" uchar: 1;
-      value "delayed" uchar: 1;
-      value "priority" int: 0;
-    }
-  }
-  group "modules" list {
-    group "E_Config_Module" struct {
       value "name" string: "conf_profiles";
       value "enabled" uchar: 1;
       value "delayed" uchar: 1;
@@ -274,14 +266,6 @@ group "E_Config" struct {
   }
   group "modules" list {
     group "E_Config_Module" struct {
-      value "name" string: "conf_dpms";
-      value "enabled" uchar: 1;
-      value "delayed" uchar: 1;
-      value "priority" int: 0;
-    }
-  }
-  group "modules" list {
-    group "E_Config_Module" struct {
       value "name" string: "conf_display";
       value "enabled" uchar: 1;
       value "delayed" uchar: 1;
@@ -291,30 +275,6 @@ group "E_Config" struct {
   group "modules" list {
     group "E_Config_Module" struct {
       value "name" string: "conf_dialogs";
-      value "enabled" uchar: 1;
-      value "delayed" uchar: 1;
-      value "priority" int: 0;
-    }
-  }
-  group "modules" list {
-    group "E_Config_Module" struct {
-      value "name" string: "conf_desks";
-      value "enabled" uchar: 1;
-      value "delayed" uchar: 1;
-      value "priority" int: 0;
-    }
-  }
-  group "modules" list {
-    group "E_Config_Module" struct {
-      value "name" string: "conf_desklock";
-      value "enabled" uchar: 1;
-      value "delayed" uchar: 1;
-      value "priority" int: 0;
-    }
-  }
-  group "modules" list {
-    group "E_Config_Module" struct {
-      value "name" string: "conf_desk";
       value "enabled" uchar: 1;
       value "delayed" uchar: 1;
       value "priority" int: 0;

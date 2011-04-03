@@ -122,28 +122,8 @@ if USE_MODULE_CONF_APPLICATIONS
 SUBDIRS += conf_applications
 endif
 
-if USE_MODULE_CONF_DESKS
-SUBDIRS += conf_desks
-endif
-
-if USE_MODULE_CONF_DESK
-SUBDIRS += conf_desk
-endif
-
 if USE_MODULE_CONF_DISPLAY
 SUBDIRS += conf_display
-endif
-
-if USE_MODULE_CONF_DESKLOCK
-SUBDIRS += conf_desklock
-endif
-
-if USE_MODULE_CONF_SCREENSAVER
-SUBDIRS += conf_screensaver
-endif
-
-if USE_MODULE_CONF_DPMS
-SUBDIRS += conf_dpms
 endif
 
 if USE_MODULE_CONF_SHELVES

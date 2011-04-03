@@ -642,12 +642,7 @@ AC_E_OPTIONAL_MODULE([conf_profiles], true)
 AC_E_OPTIONAL_MODULE([msgbus], true)
 AC_E_OPTIONAL_MODULE([conf_engine], true)
 AC_E_OPTIONAL_MODULE([conf_applications], true)
-AC_E_OPTIONAL_MODULE([conf_desks], true)
-AC_E_OPTIONAL_MODULE([conf_desk], true)
 AC_E_OPTIONAL_MODULE([conf_display], true)
-AC_E_OPTIONAL_MODULE([conf_desklock], true)
-AC_E_OPTIONAL_MODULE([conf_screensaver], true)
-AC_E_OPTIONAL_MODULE([conf_dpms], true)
 AC_E_OPTIONAL_MODULE([conf_shelves], true)
 AC_E_OPTIONAL_MODULE([conf_keybindings], true)
 AC_E_OPTIONAL_MODULE([conf_mousebindings], true)
@@ -782,18 +777,8 @@ src/modules/conf_engine/Makefile
 src/modules/conf_engine/module.desktop
 src/modules/conf_applications/Makefile
 src/modules/conf_applications/module.desktop
-src/modules/conf_desks/Makefile
-src/modules/conf_desks/module.desktop
-src/modules/conf_desk/Makefile
-src/modules/conf_desk/module.desktop
 src/modules/conf_display/Makefile
 src/modules/conf_display/module.desktop
-src/modules/conf_desklock/Makefile
-src/modules/conf_desklock/module.desktop
-src/modules/conf_screensaver/Makefile
-src/modules/conf_screensaver/module.desktop
-src/modules/conf_dpms/Makefile
-src/modules/conf_dpms/module.desktop
 src/modules/conf_shelves/Makefile
 src/modules/conf_shelves/module.desktop
 src/modules/conf_keybindings/Makefile
