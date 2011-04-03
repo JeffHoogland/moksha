@@ -1,5 +1,6 @@
 #ifdef E_TYPEDEFS
 
+#ifdef E_INTERNAL
 #if E_INTERNAL
 #ifdef HAVE_GETTEXT
 #define _(str) gettext(str)
@@ -9,9 +10,10 @@
 #define d_(str, dom) (str)
 #endif
 #endif
+#endif
 
 /* This macro is used to just mark string for translation, this is useful
- * for string lists which are not dynamically allocated 
+ * for string lists which are not dynamically allocated
  */
 #define N_(str) (str)
 
