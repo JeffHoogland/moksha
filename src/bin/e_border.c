@@ -8382,11 +8382,12 @@ _e_border_cb_kill_timer(void *data)
    E_Border *bd;
 
    bd = data;
-   if (bd->hung)
-     {
+// dont wait until it's hung -    
+//   if (bd->hung)
+//     {
         if (bd->client.netwm.pid > 1)
           kill(bd->client.netwm.pid, SIGKILL);
-     }
+//     }
    bd->kill_timer = NULL;
    return ECORE_CALLBACK_CANCEL;
 }
