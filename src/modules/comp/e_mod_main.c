@@ -104,7 +104,19 @@ e_modapi_init(E_Module *m)
         e_config->use_composite = 1;
         e_config_save_queue();
      }
-   /* XXX remove: update old configs. add config versioning */
+
+   /* XXX: disabled dropshadow module when comp is running */
+   {
+      Eina_List *l;
+      E_Module *m2;
+      EINA_LIST_FOREACH(e_module_list(), l, m2)
+	{
+	   if (m2->enabled && (!strcmp(m2->name, "dropshadow")))
+	     e_module_disable(m2);
+	}
+   }
+
+   /* XXX: update old configs. add config versioning */
    if (mod->conf->first_draw_delay == 0)
      mod->conf->first_draw_delay = 0.05;
 
