@@ -1,14 +1,15 @@
 # Portuguese translation of e17
 # This file is put in the public domain.
-# Sérgio Marques <smarquespt@gmail.com>, 2010.
+# Sérgio Marques <smarquespt@gmail.com>, 2010-2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: e17\n"
 "Report-Msgid-Bugs-To: http://trac.enlightenment.org/e/\n"
-"POT-Creation-Date: 2011-03-22 12:01-0700\n"
-"PO-Revision-Date: 2011-03-22 19:11-0000\n"
+"POT-Creation-Date: 2011-03-28 08:01-0700\n"
+"PO-Revision-Date: 2011-04-05 10:57-0000\n"
 "Last-Translator: Sérgio Marques <smarquespt@gmail.com>\n"
 "Language-Team: Portuguese <>\n"
+"Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -26,7 +27,7 @@ msgstr "Sobre o Enlightenment"
 #: ../src/bin/e_actions.c:2701
 #: ../src/bin/e_config_dialog.c:272
 #: ../src/bin/e_fm.c:967
-#: ../src/bin/e_int_border_menu.c:146
+#: ../src/bin/e_int_border_menu.c:135
 #: ../src/bin/e_int_border_prop.c:81
 #: ../src/bin/e_theme_about.c:17
 #: ../src/modules/conf/e_conf.c:183
@@ -187,18 +188,18 @@ msgid "Window Menu"
 msgstr "Menu da janela"
 
 #: ../src/bin/e_actions.c:2691
-#: ../src/bin/e_int_border_menu.c:957
+#: ../src/bin/e_int_border_menu.c:980
 #: ../src/modules/conf_winlist/e_int_config_winlist.c:216
 msgid "Raise"
 msgstr "Erguer"
 
 #: ../src/bin/e_actions.c:2696
-#: ../src/bin/e_int_border_menu.c:965
+#: ../src/bin/e_int_border_menu.c:988
 msgid "Lower"
 msgstr "Baixar"
 
 #: ../src/bin/e_actions.c:2706
-#: ../src/bin/e_int_border_menu.c:137
+#: ../src/bin/e_int_border_menu.c:562
 msgid "Kill"
 msgstr "Terminar"
 
@@ -237,7 +238,7 @@ msgid "Fullscreen Mode Toggle"
 msgstr "Alternar modo de ecrã completo"
 
 #: ../src/bin/e_actions.c:2732
-#: ../src/bin/e_int_border_menu.c:315
+#: ../src/bin/e_int_border_menu.c:304
 #: ../src/bin/e_int_border_menu.c:629
 msgid "Maximize"
 msgstr "Maximizar"
@@ -784,8 +785,8 @@ msgstr "Seletor de cor"
 
 #. buttons at the bottom
 #: ../src/bin/e_color_dialog.c:46
-#: ../src/bin/e_config.c:1583
-#: ../src/bin/e_config.c:2170
+#: ../src/bin/e_config.c:1587
+#: ../src/bin/e_config.c:2174
 #: ../src/bin/e_config_dialog.c:262
 #: ../src/bin/e_eap_editor.c:857
 #: ../src/bin/e_eap_editor.c:921
@@ -832,107 +833,107 @@ msgstr "OK"
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: ../src/bin/e_config.c:947
-#: ../src/bin/e_config.c:980
+#: ../src/bin/e_config.c:949
+#: ../src/bin/e_config.c:982
 msgid "Settings data needed upgrading. Your old settings have<br>been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means Enlightenment needs new settings<br>data by default for usable functionality that your old<br>settings simply lack. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the hiccup in your settings.<br>"
 msgstr "As definições precisam de ser atualizadas. As suas antigas definições foram apagadas e foram iniciados novos valores padrão.<br>Isto irá ocorrer recorrentemente durante o desenvolvimento e não deve reportar nenhum erro.<br>Isto apenas significa que o Enlightenment precisa de dados que as suas antigas definições não possuem.<br>Este conjunto de valores irá corrigir esse facto.<br> Mais tarde poderá configurar o Enlightenment ao seu gosto. Desculpe qualquer inconveniente.<br>"
 
-#: ../src/bin/e_config.c:964
+#: ../src/bin/e_config.c:966
 msgid "Your settings are NEWER than Enlightenment. This is very<br>strange. This should not happen unless you downgraded<br>Enlightenment or copied the settings from a place where<br>a newer version of Enlightenment was running. This is bad and<br>as a precaution your settings have been now restored to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr "As suas definições são mais recentes que as do Enlightenment.<br>Isto é muito estranho e só acontece se reverter o Enlightenment ou caso tenha copiado as definições de um local em que está instalada uma versão mais recente do Enlightenment.<br>Isto é mau e por precaução, as suas definições foram restauradas para as omissões.<br>Desculpe qualquer inconveniente.<br>"
 
-#: ../src/bin/e_config.c:1570
-#: ../src/bin/e_config.c:2157
+#: ../src/bin/e_config.c:1574
+#: ../src/bin/e_config.c:2161
 msgid "Enlightenment Settings Write Problems"
 msgstr "Problemas ao escrever as definições do Enlightenment"
 
-#: ../src/bin/e_config.c:1573
+#: ../src/bin/e_config.c:1577
 #, c-format
 msgid "Enlightenment has an error while moving config files<br>from:<br>%s<br><br>to:<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr "Ocorreu um erro ao mover os ficheiros de configuração<br>de:<br>%s<br><br>para:<br>%s<br><br>A tarefa foi terminada para sua segurança.<br>"
 
-#: ../src/bin/e_config.c:2068
+#: ../src/bin/e_config.c:2072
 msgid "Settings Upgraded"
 msgstr "Definições atualizadas"
 
-#: ../src/bin/e_config.c:2085
+#: ../src/bin/e_config.c:2089
 msgid "The EET file handle is bad."
 msgstr "O identificador do ficheiro EET está errado."
 
-#: ../src/bin/e_config.c:2088
+#: ../src/bin/e_config.c:2092
 msgid "The file data is empty."
 msgstr "Os dados do ficheiro estão vazios."
 
-#: ../src/bin/e_config.c:2091
+#: ../src/bin/e_config.c:2095
 msgid "The file is not writable. Perhaps the disk is read-only<br>or you lost permissions to your files."
 msgstr "Não pode escrever no ficheiro. Pode ser que o ficheiro seja de leitura<br>ou não tenha acesso aos ficheiros."
 
-#: ../src/bin/e_config.c:2094
+#: ../src/bin/e_config.c:2098
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr "Ficou sem memória ao preparar o ficheiro.<br>Por favor, liberte espaço de memória."
 
-#: ../src/bin/e_config.c:2097
+#: ../src/bin/e_config.c:2101
 msgid "This is a generic error."
 msgstr "Este é um erro genérico."
 
-#: ../src/bin/e_config.c:2099
+#: ../src/bin/e_config.c:2103
 msgid "The settings file is too large.<br>It should be very small (a few hundred KB at most)."
 msgstr "O ficheiro das definições é muito grande.<br>Em princípio seria pequeno (algumas centenas de KB)."
 
-#: ../src/bin/e_config.c:2102
+#: ../src/bin/e_config.c:2106
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr "Possui erros de E/S no disco.<br>Talvez precise de ser substituído?"
 
-#: ../src/bin/e_config.c:2105
+#: ../src/bin/e_config.c:2109
 msgid "You ran out of space while writing the file"
 msgstr "Ficou sem espaço durante a escrita do ficheiro"
 
-#: ../src/bin/e_config.c:2108
+#: ../src/bin/e_config.c:2112
 msgid "The file was closed on it while writing."
 msgstr "O ficheiro foi fechado durante a escrita."
 
-#: ../src/bin/e_config.c:2111
+#: ../src/bin/e_config.c:2115
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Falha ao fazer \"memory-mapping (mmap)\" do ficheiro."
 
-#: ../src/bin/e_config.c:2114
+#: ../src/bin/e_config.c:2118
 msgid "X509 Encoding failed."
 msgstr "Falha na codificação X509."
 
-#: ../src/bin/e_config.c:2117
+#: ../src/bin/e_config.c:2121
 msgid "Signature failed."
 msgstr "Falha de assinatura"
 
-#: ../src/bin/e_config.c:2120
+#: ../src/bin/e_config.c:2124
 msgid "The signature was invalid."
 msgstr "A assinatura era inválida."
 
-#: ../src/bin/e_config.c:2123
+#: ../src/bin/e_config.c:2127
 msgid "Not signed."
 msgstr "Não assinado"
 
-#: ../src/bin/e_config.c:2126
+#: ../src/bin/e_config.c:2130
 msgid "Feature not implemented."
 msgstr "Funcionalidade não implementada."
 
-#: ../src/bin/e_config.c:2129
+#: ../src/bin/e_config.c:2133
 msgid "PRNG was not seeded."
 msgstr "O PRNG não foi semeado."
 
-#: ../src/bin/e_config.c:2132
+#: ../src/bin/e_config.c:2136
 msgid "Encryption failed."
 msgstr "Falha de encriptação."
 
-#: ../src/bin/e_config.c:2135
+#: ../src/bin/e_config.c:2139
 msgid "Decruption failed."
 msgstr "Falha de decriptação."
 
 #. if we get here eet added errors we don't know
-#: ../src/bin/e_config.c:2138
+#: ../src/bin/e_config.c:2142
 msgid "The error is unknown to Enlightenment."
 msgstr "O erro não é reconhecido pelo Enlightenment."
 
-#: ../src/bin/e_config.c:2160
+#: ../src/bin/e_config.c:2164
 #, c-format
 msgid "Enlightenment has an error while writing<br>its config file.<br>%s<br><br>The file where the error occurred was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr "Ocorreu um erro ao escrever o<br>ficheiro de configurações.<br>%s<br>O erro ocorreu no ficheiro:<br>%s<br><br>Este ficheiro foi apagado para evitar a danificação dos dados.<br>"
@@ -1132,7 +1133,7 @@ msgstr "Selecione um executável"
 
 #: ../src/bin/e_entry.c:493
 #: ../src/bin/e_fm.c:8171
-#: ../src/bin/e_shelf.c:1692
+#: ../src/bin/e_shelf.c:1697
 #: ../src/modules/conf_profiles/e_int_config_profiles.c:135
 #: ../src/modules/conf_shelves/e_int_config_shelf.c:80
 #: ../src/modules/ibar/e_mod_config.c:108
@@ -1769,7 +1770,7 @@ msgstr "Tamanho"
 
 #: ../src/bin/e_int_border_locks.c:310
 #: ../src/bin/e_int_border_locks.c:329
-#: ../src/bin/e_int_border_menu.c:518
+#: ../src/bin/e_int_border_menu.c:507
 #: ../src/bin/e_int_border_prop.c:469
 #: ../src/bin/e_int_border_remember.c:711
 #: ../src/bin/e_int_shelf_config.c:132
@@ -1834,7 +1835,7 @@ msgid "Window"
 msgstr "Janela"
 
 #: ../src/bin/e_int_border_menu.c:104
-#: ../src/bin/e_int_border_menu.c:917
+#: ../src/bin/e_int_border_menu.c:940
 msgid "Always on Top"
 msgstr "Sempre por cima"
 
@@ -1844,67 +1845,67 @@ msgstr "Sempre por cima"
 msgid "Sticky"
 msgstr "Fixa"
 
-#: ../src/bin/e_int_border_menu.c:302
+#: ../src/bin/e_int_border_menu.c:291
 #: ../src/bin/e_int_border_prop.c:477
 #: ../src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:121
 #: ../src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:145
 msgid "Fullscreen"
 msgstr "Ecrã completo"
 
-#: ../src/bin/e_int_border_menu.c:326
+#: ../src/bin/e_int_border_menu.c:315
 msgid "Maximize vertically"
 msgstr "Maximizar verticalmente"
 
-#: ../src/bin/e_int_border_menu.c:337
+#: ../src/bin/e_int_border_menu.c:326
 msgid "Maximize horizontally"
 msgstr "Maximizar horizontalmente"
 
-#: ../src/bin/e_int_border_menu.c:348
+#: ../src/bin/e_int_border_menu.c:337
 msgid "Unmaximize"
 msgstr "Restaurar"
 
-#: ../src/bin/e_int_border_menu.c:459
+#: ../src/bin/e_int_border_menu.c:448
 msgid "Edit Icon"
 msgstr "Editar ícone"
 
-#: ../src/bin/e_int_border_menu.c:467
+#: ../src/bin/e_int_border_menu.c:456
 msgid "Create Icon"
 msgstr "Criar ícone"
 
-#: ../src/bin/e_int_border_menu.c:475
+#: ../src/bin/e_int_border_menu.c:464
 msgid "Add to Favorites Menu"
 msgstr "Adicionar ao menu de favoritos"
 
-#: ../src/bin/e_int_border_menu.c:480
+#: ../src/bin/e_int_border_menu.c:469
 msgid "Add to IBar"
 msgstr "Adicionar à IBar"
 
-#: ../src/bin/e_int_border_menu.c:488
+#: ../src/bin/e_int_border_menu.c:477
 msgid "Create Keyboard Shortcut"
 msgstr "Criar atalho de teclado"
 
-#: ../src/bin/e_int_border_menu.c:508
+#: ../src/bin/e_int_border_menu.c:497
 #: ../src/modules/conf_window_display/e_int_config_window_display.c:161
 msgid "Placement"
 msgstr "Colocação"
 
-#: ../src/bin/e_int_border_menu.c:530
+#: ../src/bin/e_int_border_menu.c:519
 msgid "Skip"
 msgstr "Ignorar"
 
-#: ../src/bin/e_int_border_menu.c:540
+#: ../src/bin/e_int_border_menu.c:529
 #: ../src/modules/conf_borders/e_mod_main.c:20
 #: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:321
 msgid "Border"
 msgstr "Contorno"
 
-#: ../src/bin/e_int_border_menu.c:552
+#: ../src/bin/e_int_border_menu.c:541
 #: ../src/bin/e_int_border_remember.c:621
 #: ../src/bin/e_int_border_remember.c:714
 msgid "Locks"
 msgstr "Bloqueios"
 
-#: ../src/bin/e_int_border_menu.c:560
+#: ../src/bin/e_int_border_menu.c:549
 #: ../src/modules/conf_dialogs/e_int_config_dialogs.c:128
 msgid "Remember"
 msgstr "Lembrar"
@@ -1922,70 +1923,76 @@ msgstr "Minimizar"
 msgid "Shade"
 msgstr "Enrolar"
 
-#: ../src/bin/e_int_border_menu.c:928
+#: ../src/bin/e_int_border_menu.c:862
+#, c-format
+#| msgid "Screen"
+msgid "Screen %d"
+msgstr "Ecrã %d"
+
+#: ../src/bin/e_int_border_menu.c:951
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:98
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:262
 msgid "Normal"
 msgstr "Normal"
 
-#: ../src/bin/e_int_border_menu.c:939
+#: ../src/bin/e_int_border_menu.c:962
 msgid "Always Below"
 msgstr "Sempre por baixo"
 
-#: ../src/bin/e_int_border_menu.c:983
+#: ../src/bin/e_int_border_menu.c:1006
 msgid "Pin to Desktop"
 msgstr "Fixar na área de trabalho"
 
-#: ../src/bin/e_int_border_menu.c:994
+#: ../src/bin/e_int_border_menu.c:1017
 msgid "Unpin from Desktop"
 msgstr "Desfixar da área de trabalho"
 
-#: ../src/bin/e_int_border_menu.c:1084
+#: ../src/bin/e_int_border_menu.c:1107
 msgid "Select Border Style"
 msgstr "Selecione o tipo de contorno"
 
-#: ../src/bin/e_int_border_menu.c:1096
+#: ../src/bin/e_int_border_menu.c:1119
 msgid "Use E17 Default Icon Preference"
 msgstr "Utilizar as preferências dos ícones E17"
 
-#: ../src/bin/e_int_border_menu.c:1104
+#: ../src/bin/e_int_border_menu.c:1127
 msgid "Use Application Provided Icon "
 msgstr "Utilizar ícone da aplicação"
 
-#: ../src/bin/e_int_border_menu.c:1112
+#: ../src/bin/e_int_border_menu.c:1135
 msgid "Use User Defined Icon"
 msgstr "Utilizar ícone definido pelo utilizador"
 
-#: ../src/bin/e_int_border_menu.c:1121
+#: ../src/bin/e_int_border_menu.c:1144
 #: ../src/bin/e_int_border_remember.c:747
 msgid "Offer Resistance"
 msgstr "Criar resistência"
 
-#: ../src/bin/e_int_border_menu.c:1181
+#: ../src/bin/e_int_border_menu.c:1204
 #: ../src/modules/conf_winlist/e_mod_main.c:19
 msgid "Window List"
 msgstr "Lista de janelas"
 
-#: ../src/bin/e_int_border_menu.c:1191
+#: ../src/bin/e_int_border_menu.c:1214
 #: ../src/modules/pager/e_mod_main.c:257
-#: ../src/modules/pager/e_mod_main.c:2798
-#: ../src/modules/pager/e_mod_main.c:2805
-#: ../src/modules/pager/e_mod_main.c:2812
-#: ../src/modules/pager/e_mod_main.c:2814
-#: ../src/modules/pager/e_mod_main.c:2816
-#: ../src/modules/pager/e_mod_main.c:2818
-#: ../src/modules/pager/e_mod_main.c:2820
-#: ../src/modules/pager/e_mod_main.c:2822
+#: ../src/modules/pager/e_mod_main.c:2797
+#: ../src/modules/pager/e_mod_main.c:2804
+#: ../src/modules/pager/e_mod_main.c:2811
+#: ../src/modules/pager/e_mod_main.c:2813
+#: ../src/modules/pager/e_mod_main.c:2815
+#: ../src/modules/pager/e_mod_main.c:2817
+#: ../src/modules/pager/e_mod_main.c:2819
+#: ../src/modules/pager/e_mod_main.c:2821
+#: ../src/modules/pager/e_mod_main.c:2854
 #: ../src/modules/pager/e_mod_main.c:2855
 #: ../src/modules/pager/e_mod_main.c:2856
 #: ../src/modules/pager/e_mod_main.c:2857
 #: ../src/modules/pager/e_mod_main.c:2858
 #: ../src/modules/pager/e_mod_main.c:2859
-#: ../src/modules/pager/e_mod_main.c:2860
 msgid "Pager"
 msgstr "Paginador"
 
-#: ../src/bin/e_int_border_menu.c:1201
+#: ../src/bin/e_int_border_menu.c:1224
 msgid "Taskbar"
 msgstr "Barra de tarefas"
 
@@ -2259,7 +2266,7 @@ msgstr "Móvel"
 
 #: ../src/bin/e_int_config_modules.c:59
 #: ../src/bin/e_int_menus.c:223
-#: ../src/bin/e_shelf.c:1684
+#: ../src/bin/e_shelf.c:1689
 #: ../src/modules/battery/e_mod_main.c:183
 #: ../src/modules/conf/e_conf.c:124
 #: ../src/modules/conf/e_conf.c:134
@@ -2272,7 +2279,7 @@ msgstr "Móvel"
 #: ../src/modules/ibar/e_mod_main.c:807
 #: ../src/modules/ibox/e_mod_main.c:301
 #: ../src/modules/ibox/e_mod_main.c:694
-#: ../src/modules/pager/e_mod_main.c:799
+#: ../src/modules/pager/e_mod_main.c:790
 #: ../src/modules/temperature/e_mod_main.c:226
 #: ../src/modules/mixer/e_mod_main.c:677
 #: ../src/modules/connman/e_mod_main.c:1277
@@ -2432,7 +2439,6 @@ msgid "Delete A Shelf"
 msgstr "Apagar um painel"
 
 #: ../src/bin/e_int_shelf_config.c:43
-#: ../src/bin/e_shelf.c:1172
 #: ../src/modules/conf_shelves/e_int_config_shelf.c:43
 msgid "Shelf Settings"
 msgstr "Definições do painel"
@@ -3108,24 +3114,24 @@ msgstr "Desativou a proteção de ecrã muito rapidamente.<br><br>Pretende ativa
 msgid "Shelf #"
 msgstr "Painel #"
 
-#: ../src/bin/e_shelf.c:1293
+#: ../src/bin/e_shelf.c:1298
 #: ../src/modules/conf_shelves/e_int_config_shelf.c:286
 msgid "Are you sure you want to delete this shelf?"
 msgstr "Tem a certeza que quer apagar este painel?"
 
-#: ../src/bin/e_shelf.c:1294
+#: ../src/bin/e_shelf.c:1299
 msgid "You requested to delete this shelf.<br><br>Are you sure you want to delete it?"
 msgstr "Pediu para apagar este painel.<br><br>Tem a certeza que o quer apagar?"
 
-#: ../src/bin/e_shelf.c:1669
+#: ../src/bin/e_shelf.c:1674
 msgid "Stop Moving/Resizing Gadgets"
 msgstr "Parar a deslocar/ajustar os \"gadgets\""
 
-#: ../src/bin/e_shelf.c:1671
+#: ../src/bin/e_shelf.c:1676
 msgid "Begin Moving/Resizing Gadgets"
 msgstr "Iniciar a deslocação/ajustamento de \"gadgets\""
 
-#: ../src/bin/e_shelf.c:1679
+#: ../src/bin/e_shelf.c:1684
 #: ../src/modules/ibar/e_mod_main.c:801
 msgid "Contents"
 msgstr "Conteúdo"
@@ -4192,7 +4198,7 @@ msgstr "Bloqueio de ecrã"
 
 #. create config diaolg for NULL object/data
 #: ../src/modules/conf_desks/e_int_config_desks.c:52
-#: ../src/modules/pager/e_mod_main.c:793
+#: ../src/modules/pager/e_mod_main.c:801
 msgid "Virtual Desktops Settings"
 msgstr "Definições das área de trabalho virtuais"
 
@@ -7306,37 +7312,37 @@ msgstr "Atenção"
 msgid "You cannot use the right mouse button in the<br>shelf for this as it is already taken by internal<br>code for context menus.<br>This button only works in the popup."
 msgstr "Não pode utilizar o botão direito do rato neste<br>painel pois este já é objeto de manipulação pelos<br>menus de contexto.<br>Este botão só funciona nos alertas."
 
-#: ../src/modules/pager/e_mod_main.c:2805
+#: ../src/modules/pager/e_mod_main.c:2804
 msgid "Show Pager Popup"
 msgstr "Mostrar alerta do paginador"
 
-#: ../src/modules/pager/e_mod_main.c:2812
-#: ../src/modules/pager/e_mod_main.c:2855
+#: ../src/modules/pager/e_mod_main.c:2811
+#: ../src/modules/pager/e_mod_main.c:2854
 msgid "Popup Desk Right"
 msgstr "Na área de trabalho à direita"
 
-#: ../src/modules/pager/e_mod_main.c:2814
-#: ../src/modules/pager/e_mod_main.c:2856
+#: ../src/modules/pager/e_mod_main.c:2813
+#: ../src/modules/pager/e_mod_main.c:2855
 msgid "Popup Desk Left"
 msgstr "Na área de trabalho à esquerda"
 
-#: ../src/modules/pager/e_mod_main.c:2816
-#: ../src/modules/pager/e_mod_main.c:2857
+#: ../src/modules/pager/e_mod_main.c:2815
+#: ../src/modules/pager/e_mod_main.c:2856
 msgid "Popup Desk Up"
 msgstr "Na área de trabalho de cima"
 
-#: ../src/modules/pager/e_mod_main.c:2818
-#: ../src/modules/pager/e_mod_main.c:2858
+#: ../src/modules/pager/e_mod_main.c:2817
+#: ../src/modules/pager/e_mod_main.c:2857
 msgid "Popup Desk Down"
 msgstr "Na área de trabalho de baixa"
 
-#: ../src/modules/pager/e_mod_main.c:2820
-#: ../src/modules/pager/e_mod_main.c:2859
+#: ../src/modules/pager/e_mod_main.c:2819
+#: ../src/modules/pager/e_mod_main.c:2858
 msgid "Popup Desk Next"
 msgstr "Na área de trabalho seguinte"
 
-#: ../src/modules/pager/e_mod_main.c:2822
-#: ../src/modules/pager/e_mod_main.c:2860
+#: ../src/modules/pager/e_mod_main.c:2821
+#: ../src/modules/pager/e_mod_main.c:2859
 msgid "Popup Desk Previous"
 msgstr "Na área de trabalho anterior"
 
