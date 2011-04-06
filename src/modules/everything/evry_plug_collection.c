@@ -11,7 +11,7 @@ struct _Plugin
 };
 
 static Eina_List *plugins = NULL;
-static const char _module_icon[] = "application-other";
+static const char _module_icon[] = "preferences-plugin";
 static Evry_Type COLLECTION_PLUGIN;
 static Plugin_Config plugin_config;
 
