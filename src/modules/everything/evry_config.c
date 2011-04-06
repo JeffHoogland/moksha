@@ -462,12 +462,17 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdat
    /// GENERAL SETTNGS ///
    of = e_widget_framelist_add(e, _("General"), 0);
 
+   /* FIXME no theme supports this currently, need to add info to themes
+      data section to know whether this option should be enabled */
+   cfdata->hide_input = 0;
    ob = e_widget_check_add(e, _("Hide input when inactive"),
    			   &(cfdata->hide_input));
+   e_widget_disabled_set(ob, 1); 
    e_widget_framelist_object_append(of, ob);
-
+   cfdata->hide_list = 0;
    ob = e_widget_check_add(e, _("Hide list"),
    			   &(cfdata->hide_list));
+   e_widget_disabled_set(ob, 1); 
    e_widget_framelist_object_append(of, ob);
 
    ob = e_widget_label_add(e, _("Quick Navigation"));
