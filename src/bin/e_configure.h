@@ -24,12 +24,14 @@ struct _E_Configure_It
    const char        *label;
    const char        *icon_file;
    const char        *icon;
+   const char        *params;
    E_Config_Dialog *(*func) (E_Container *con, const char *params);
    void             (*generic_func) (E_Container *con, const char *params);
    Efreet_Desktop    *desktop;
 };
 
 EAPI void e_configure_registry_item_add(const char *path, int pri, const char *label, const char *icon_file, const char *icon, E_Config_Dialog *(*func) (E_Container *con, const char *params));
+EAPI void e_configure_registry_item_params_add(const char *path, int pri, const char *label, const char *icon_file, const char *icon, E_Config_Dialog *(*func) (E_Container *con, const char *params), const char *params);
 EAPI void e_configure_registry_generic_item_add(const char *path, int pri, const char *label, const char *icon_file, const char *icon, void (*generic_func) (E_Container *con, const char *params));
 EAPI void e_configure_registry_item_del(const char *path);
 EAPI void e_configure_registry_category_add(const char *path, int pri, const char *label, const char *icon_file, const char *icon);

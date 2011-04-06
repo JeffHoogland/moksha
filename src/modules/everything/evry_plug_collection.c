@@ -148,8 +148,8 @@ _add_plugin(const char *name)
 
    snprintf(title, sizeof(title), "Everything %s", p->name);
 
-   e_configure_registry_item_add
-     (path, 110, title, NULL, NULL/*icon*/, evry_collection_conf_dialog);
+   e_configure_registry_item_params_add
+     (path, 110, title, NULL, p->base.icon, evry_collection_conf_dialog, p->name);
 
    p->config_path = eina_stringshare_add(path);
 

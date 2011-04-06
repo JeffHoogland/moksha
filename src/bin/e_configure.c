@@ -5,7 +5,7 @@ static void _e_configure_menu_add(void *data, E_Menu *m);
 static void _e_configure_efreet_desktop_cleanup(void);
 static void _e_configure_efreet_desktop_update(void);
 static Eina_Bool _e_configure_cb_efreet_desktop_cache_update(void *data, int type, void *event);
-static void _e_configure_registry_item_full_add(const char *path, int pri, const char *label, const char *icon_file, const char *icon, E_Config_Dialog *(*func) (E_Container *con, const char *params), void (*generic_func) (E_Container *con, const char *params), Efreet_Desktop *desktop);
+static void _e_configure_registry_item_full_add(const char *path, int pri, const char *label, const char *icon_file, const char *icon, E_Config_Dialog *(*func) (E_Container *con, const char *params), void (*generic_func) (E_Container *con, const char *params), Efreet_Desktop *desktop, const char *params);
 static void _e_configure_registry_item_free(E_Configure_It *eci);
 
 static void _configure_job(void *data);
@@ -60,6 +60,8 @@ e_configure_registry_call(const char *path, E_Container *con, const char *params
 	  EINA_LIST_FOREACH(ecat->items, ll, eci)
 	    if (!strcmp(item, eci->item))
 	      {
+		 if (!params) params = eci->params;
+		 
 		 if (eci->func) eci->func(con, params);
 		 else if (eci->generic_func) eci->generic_func(con, params);
 		 else if (eci->desktop)
@@ -81,13 +83,19 @@ e_configure_registry_call(const char *path, E_Container *con, const char *params
 EAPI void
 e_configure_registry_item_add(const char *path, int pri, const char *label, const char *icon_file, const char *icon, E_Config_Dialog *(*func) (E_Container *con, const char *params))
 {
-   _e_configure_registry_item_full_add(path, pri, label, icon_file, icon, func, NULL, NULL);
+   _e_configure_registry_item_full_add(path, pri, label, icon_file, icon, func, NULL, NULL, NULL);
 }
 
 EAPI void
 e_configure_registry_generic_item_add(const char *path, int pri, const char *label, const char *icon_file, const char *icon, void (*generic_func) (E_Container *con, const char *params))
 {
-   _e_configure_registry_item_full_add(path, pri, label, icon_file, icon, NULL, generic_func, NULL);
+   _e_configure_registry_item_full_add(path, pri, label, icon_file, icon, NULL, generic_func, NULL, NULL);
+}
+
+EAPI void
+e_configure_registry_item_params_add(const char *path, int pri, const char *label, const char *icon_file, const char *icon, E_Config_Dialog *(*func) (E_Container *con, const char *params), const char *params)
+{
+   _e_configure_registry_item_full_add(path, pri, label, icon_file, icon, func, NULL, NULL, params);
 }
 
 EAPI void
@@ -365,7 +373,7 @@ _e_configure_efreet_desktop_update(void)
 	  }
 	_e_configure_registry_item_full_add(cfg_cat_cfg, cfg_pri, label,
 					    NULL, cfg_icon,
-					    NULL, NULL, desktop);
+					    NULL, NULL, desktop, NULL);
      }
    EINA_LIST_FREE(settings_desktops, desktop)
       efreet_desktop_free(desktop);
@@ -383,7 +391,7 @@ _e_configure_cb_efreet_desktop_cache_update(void *data __UNUSED__, int type __UN
 }
 
 static void
-_e_configure_registry_item_full_add(const char *path, int pri, const char *label, const char *icon_file, const char *icon, E_Config_Dialog *(*func) (E_Container *con, const char *params), void (*generic_func) (E_Container *con, const char *params), Efreet_Desktop *desktop)
+_e_configure_registry_item_full_add(const char *path, int pri, const char *label, const char *icon_file, const char *icon, E_Config_Dialog *(*func) (E_Container *con, const char *params), void (*generic_func) (E_Container *con, const char *params), Efreet_Desktop *desktop, const char *params)
 {
    Eina_List *l;
    char *cat;
@@ -403,6 +411,7 @@ _e_configure_registry_item_full_add(const char *path, int pri, const char *label
    eci->label = eina_stringshare_add(label);
    if (icon_file) eci->icon_file = eina_stringshare_add(icon_file);
    if (icon) eci->icon = eina_stringshare_add(icon);
+   if (params) eci->params = eina_stringshare_add(params);
    eci->func = func;
    eci->generic_func = generic_func;
    eci->desktop = desktop;
@@ -436,5 +445,6 @@ _e_configure_registry_item_free(E_Configure_It *eci)
    eina_stringshare_del(eci->icon);
    if (eci->icon_file) eina_stringshare_del(eci->icon_file);
    if (eci->desktop) efreet_desktop_free(eci->desktop);
+   if (eci->params) eina_stringshare_del(eci->params);
    free(eci);
 }
