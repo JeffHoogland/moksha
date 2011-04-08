@@ -144,7 +144,7 @@ _add_plugin(const char *name)
 		       _begin, _finish, _fetch, NULL);
    p->browse = &_browse;
 
-   snprintf(path, sizeof(path), "extensions/everything-%s", p->name);
+   snprintf(path, sizeof(path), "launcher/everything-%s", p->name);
 
    snprintf(title, sizeof(title), "%s: %s", _("Everything Plugin"), p->base.label);
 
@@ -171,9 +171,6 @@ evry_plug_collection_init(void)
    plugin_config.view_mode = VIEW_MODE_DETAIL;
 
    COLLECTION_PLUGIN = evry_type_register("COLLECTION_PLUGIN");
-
-   e_configure_registry_category_add
-     ("extensions", 80, _("Extensions"), NULL, "preferences-extensions");
 
    p = _add_plugin("Plugins");
    p->begin = &_begin_all;

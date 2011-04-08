@@ -1599,13 +1599,10 @@ static void
 _conf_init(E_Module *m)
 {
    char title[4096];
-   
-   e_configure_registry_category_add("extensions", 80, _("Extensions"),
-				     NULL, "preferences-extensions");
 
    snprintf(title, sizeof(title), "%s: %s", _("Everything Plugin"), _("Files"));
 
-   e_configure_registry_item_add("extensions/everything-files", 110, title,
+   e_configure_registry_item_add("launcher/everything-files", 110, title,
 				 NULL, _module_icon, _conf_dialog);
 
    conf_edd = E_CONFIG_DD_NEW("Module_Config", Module_Config);
@@ -1638,6 +1635,8 @@ _conf_init(E_Module *m)
 static void
 _conf_shutdown(void)
 {
+   e_configure_registry_item_del("launcher/everything-files");
+   
    E_FREE(_conf);
    E_CONFIG_DD_FREE(conf_edd);
 }

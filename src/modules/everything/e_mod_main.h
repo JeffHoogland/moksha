@@ -381,6 +381,13 @@ extern int  _evry_events[NUM_EVRY_EVENTS];
 #define EVRY_PLUGIN_ITEMS_ADD(_plugin, _items, _input, _match_detail, _set_usage) \
   evry_util_plugin_items_add(EVRY_PLUGIN(_plugin), _items, _input, _match_detail, _set_usage)
 
+/*** E Module ***/
+EAPI void *e_modapi_init     (E_Module *m);
+EAPI int   e_modapi_shutdown (E_Module *m);
+EAPI int   e_modapi_save     (E_Module *m);
+EAPI E_Config_Dialog *evry_config_dialog(E_Container *con, const char *params);
+EAPI E_Config_Dialog *evry_collection_conf_dialog(E_Container *con, const char *params);
+EAPI extern E_Module_Api e_modapi;
 
 /*** Common Logging  ***/
 extern int _e_module_evry_log_dom;
@@ -399,17 +406,10 @@ extern int _e_module_evry_log_dom;
 #define WRN(...) EINA_LOG_DOM_WARN(_e_module_evry_log_dom, __VA_ARGS__)
 #define ERR(...) EINA_LOG_DOM_ERR(_e_module_evry_log_dom, __VA_ARGS__)
 
-/*** E Module ***/
-EAPI void *e_modapi_init     (E_Module *m);
-EAPI int   e_modapi_shutdown (E_Module *m);
-EAPI int   e_modapi_save     (E_Module *m);
-EAPI E_Config_Dialog *evry_config_dialog(E_Container *con, const char *params);
-EAPI E_Config_Dialog *evry_collection_conf_dialog(E_Container *con, const char *params);
-
-EAPI extern E_Module_Api e_modapi;
-
 //#define CHECK_REFS 1
 //#define CHECK_TIME 1
+//#undef DBG
+//#define DBG(...) ERR(__VA_ARGS__)
 
 #ifdef CHECK_REFS
 extern Eina_List *_refd;

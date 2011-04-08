@@ -17,7 +17,7 @@ static Eina_List *_evry_types = NULL;
 static E_Int_Menu_Augmentation *maug = NULL;
 static E_Action *act = NULL;
 static Ecore_Timer *cleanup_timer;
-
+static const char *module_icon = NULL;
 static E_Config_DD *conf_edd = NULL;
 static E_Config_DD *plugin_conf_edd = NULL;
 
@@ -39,6 +39,7 @@ e_modapi_init(E_Module *m)
 {
    Eina_List *l;
    Evry_Module *em;
+   char buf[4096];
 
    _e_module_evry_log_dom = eina_log_domain_register
      ("e_module_everything", EINA_LOG_DEFAULT_COLOR);
@@ -66,11 +67,14 @@ e_modapi_init(E_Module *m)
      ("main/1", _e_mod_menu_add, NULL, NULL, NULL);
 
    e_configure_registry_category_add
-     ("extensions", 80, _("Extensions"), NULL, "preferences-extensions");
+     ("launcher", 80, _("Launcher"), NULL, "modules-launcher");
 
+   snprintf(buf, sizeof(buf), "%s/e-module-everything.edj", e_module_dir_get(m));
+   module_icon = eina_stringshare_add(buf);
+   
    e_configure_registry_item_add
-     ("extensions/run_everything", 40, _("Everything Configuration"),
-      NULL, "system-run", evry_config_dialog);
+     ("launcher/run_everything", 40, _("Everything Configuration"),
+      NULL, module_icon, evry_config_dialog);
    evry_init();
 
    _evry_type_init("NONE");
@@ -196,8 +200,8 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    EINA_LIST_FREE(_evry_types, t)
      eina_stringshare_del(t);
 
-   e_configure_registry_item_del("extensions/run_everything");
-   e_configure_registry_category_del("extensions");
+   e_configure_registry_item_del("launcher/run_everything");
+   e_configure_registry_category_del("launcher");
 
    while ((cfd = e_config_dialog_get("E", "_config_everything_dialog")))
      e_object_del(E_OBJECT(cfd));
@@ -215,6 +219,9 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    	maug = NULL;
      }
 
+   if (module_icon)
+     eina_stringshare_del(module_icon);
+   
    /* Clean EET */
    E_CONFIG_DD_FREE(conf_edd);
    E_CONFIG_DD_FREE(plugin_conf_edd);

@@ -58,7 +58,7 @@ static Evry_Module      *evry_module     = NULL;
 static Eina_List        *handlers        = NULL;
 
 static Module_Config	*_conf;
-
+static char _module_icon[] = "system-run";
 static Eina_List 	*_plugins	 = NULL;
 static Eina_List	*_actions	 = NULL;
 static Evry_Item	*_act_open_with  = NULL;
@@ -1029,7 +1029,7 @@ _plugins_init(const Evry_API *api)
      return EINA_FALSE;
 
    p = EVRY_PLUGIN_NEW(Plugin, N_("Applications"),
-		       "system-run", EVRY_TYPE_APP,
+		       _module_icon, EVRY_TYPE_APP,
 		       _begin, _finish, _fetch, NULL);
    p->complete = &_complete;
    p->config_path = "extensions/everything-apps";
@@ -1038,7 +1038,7 @@ _plugins_init(const Evry_API *api)
 
 
    p = EVRY_PLUGIN_NEW(Plugin, N_("Exebuf"),
-		       "system-run", EVRY_TYPE_APP,
+		       _module_icon, EVRY_TYPE_APP,
 		       _begin_exe, _finish_exe, _fetch_exe, NULL);
    p->complete = &_complete;
    p->config_path = "extensions/everything-apps";
@@ -1047,7 +1047,7 @@ _plugins_init(const Evry_API *api)
      p->config->min_query = 5;
 
    p = EVRY_PLUGIN_NEW(Plugin, N_("Applications"),
-		       "system-run", EVRY_TYPE_APP,
+		       _module_icon, EVRY_TYPE_APP,
 		       _begin_mime, _finish, _fetch, NULL);
    p->complete = &_complete;
    p->config_path = "extensions/everything-apps";
@@ -1055,7 +1055,7 @@ _plugins_init(const Evry_API *api)
    _plugins = eina_list_append(_plugins, p);
 
    p = EVRY_PLUGIN_NEW(Plugin, N_("Open With..."),
-		       "system-run", EVRY_TYPE_APP,
+		       _module_icon, EVRY_TYPE_APP,
 		       _begin_mime, _finish_mime, _fetch_mime, NULL);
    p->config_path = "extensions/everything-apps";
    evry->plugin_register(p, EVRY_PLUGIN_ACTION, 1);
@@ -1179,9 +1179,8 @@ _conf_dialog(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd = NULL;
    E_Config_Dialog_View *v = NULL;
-   char buf[4096];
 
-   if (e_config_dialog_find("everything-apps", "extensions/everything-apps")) return NULL;
+   if (e_config_dialog_find("everything-apps", "launcher/everything-apps")) return NULL;
 
    v = E_NEW(E_Config_Dialog_View, 1);
    if (!v) return NULL;
@@ -1191,10 +1190,8 @@ _conf_dialog(E_Container *con, const char *params __UNUSED__)
    v->basic.create_widgets = _basic_create;
    v->basic.apply_cfdata = _basic_apply;
 
-   snprintf(buf, sizeof(buf), "%s/e-module.edj", _conf->module->dir);
-
    cfd = e_config_dialog_new(con, _("Everything Applications"), "everything-apps",
-			     "extensions/everything-apps", buf, 0, v, NULL);
+			     "launcher/everything-apps", _module_icon, 0, v, NULL);
 
    /* e_dialog_resizable_set(cfd->dia, 1); */
    _conf->cfd = cfd;
@@ -1309,19 +1306,12 @@ _conf_free(void)
 static void
 _conf_init(E_Module *m)
 {
-   char buf[4096];
    char title[4096];
-
-   snprintf(buf, sizeof(buf), "%s/e-module.edj", m->dir);
-
-   e_configure_registry_category_add
-     ("extensions", 80, _("Extensions"), NULL,
-      "preferences-extensions");
 
    snprintf(title, sizeof(title), "%s: %s", _("Everything Plugin"), _("Applications"));
    
-   e_configure_registry_item_add("extensions/everything-apps", 110, title,
-				 NULL, buf, _conf_dialog);
+   e_configure_registry_item_add("launcher/everything-apps", 110, title,
+				 NULL, _module_icon, _conf_dialog);
 
    conf_edd = E_CONFIG_DD_NEW("Module_Config", Module_Config);
 
@@ -1350,6 +1340,8 @@ _conf_init(E_Module *m)
 static void
 _conf_shutdown(void)
 {
+   e_configure_registry_item_del("launcher/everything-apps");
+   
    _conf_free();
 
    E_CONFIG_DD_FREE(conf_edd);
