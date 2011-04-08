@@ -560,6 +560,31 @@ define([CHECK_MODULE_CONF_THEME],
   fi
 ])
 
+
+have_enotify=no
+AM_CONDITIONAL([HAVE_ENOTIFY], [false])
+AC_ARG_ENABLE([enotify],
+  AC_HELP_STRING([--disable-enotify], [disable Enotify support @<:@default=detect@:>@]),
+  [e_cv_want_enotify=$enableval],
+  AC_CACHE_VAL([e_cv_want_enotify], [e_cv_want_enotify=yes])
+)
+if test "x$e_cv_want_enotify" != "xno" ; then
+  AC_E_CHECK_PKG(ENOTIFY, [edbus >= 1.0.0 enotify >= 1.0.0], 
+  [
+    AC_DEFINE_UNQUOTED([HAVE_ENOTIFY], [1], [enable enotify])
+  ], 
+  [
+    AC_MSG_NOTICE([enotify disabled])
+    e_cv_want_enotify=no
+  ])
+else
+  AC_MSG_NOTICE([enotify disabled])
+    e_cv_want_enotify=no
+fi
+AC_SUBST([ENOTIFY_CFLAGS])
+AC_SUBST([ENOTIFY_LIBS])
+
+
 AM_CONDITIONAL(HAVE_ALSA, false)
 define([CHECK_MODULE_MIXER],
 [
@@ -611,6 +636,7 @@ define([CHECK_MODULE_OFONO],
 ])
 AC_SUBST(EOFONO_CFLAGS)
 AC_SUBST(EOFONO_LIBS)
+
 
 AC_E_OPTIONAL_MODULE([ibar], true)
 AC_E_OPTIONAL_MODULE([dropshadow], true)
@@ -679,8 +705,6 @@ AC_E_OPTIONAL_MODULE([everything-settings], true)
 AC_E_OPTIONAL_MODULE([everything-windows], true)
 AC_E_OPTIONAL_MODULE([systray], true)
 AC_E_OPTIONAL_MODULE([comp], true)
-
-AC_E_CHECK_PKG(ENOTIFY, [edbus >= 1.0.0 enotify >= 1.0.0], [], [])
 
 SUSPEND=""
 HIBERNATE=""
