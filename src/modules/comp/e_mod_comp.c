@@ -1541,14 +1541,11 @@ _e_mod_comp_win_shadow_setup(E_Comp_Win *cw)
 }
 
 static void
-_e_mod_comp_cb_win_mirror_del(void        *data,
-                              Evas        *e,
-                              Evas_Object *obj,
-                              void        *event_info)
+_e_mod_comp_cb_win_mirror_del(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
 {
-   E_Comp_Win *cw = data;
+   E_Comp_Win *cw;
 
-   if (!cw) return;
+   if (!(cw = data)) return;
    cw->obj_mirror = eina_list_remove(cw->obj_mirror, obj);
 }
 

@@ -929,19 +929,17 @@ _e_int_menus_clients_sort_z_order_cb(const void *d1, const void *d2)
 static void
 _e_int_menus_clients_menu_add_iconified(Eina_List *borders, E_Menu *m)
 {
-   Eina_List *l = NULL;
-   E_Border *bd;
-   E_Menu_Item *mi;
-
    if (eina_list_count(borders) > 0)
      { 
+        Eina_List *l = NULL;
+        E_Border *bd = NULL;
+        E_Menu_Item *mi = NULL;
+
 	mi = e_menu_item_new(m); 
 	e_menu_item_separator_set(mi, 1); 
 
 	EINA_LIST_FOREACH(borders, l, bd)
-	  { 
-	     _e_int_menus_clients_item_create(bd, m);
-	  }
+          _e_int_menus_clients_item_create(bd, m);
      }
 }
 
@@ -951,7 +949,7 @@ _e_int_menus_clients_add_by_class(Eina_List *borders, E_Menu *m)
    Eina_List *l = NULL, *ico = NULL;
    E_Border *bd; 
    E_Menu *subm = NULL;
-   E_Menu_Item *mi;
+   E_Menu_Item *mi = NULL;
    char *class = NULL;
 
    class = strdup("");
@@ -1002,7 +1000,7 @@ _e_int_menus_clients_add_by_desk(E_Desk *curr_desk, Eina_List *borders, E_Menu *
    Eina_List *l = NULL, *alt = NULL, *ico = NULL;
    E_Border *bd;
    E_Menu *subm;
-   E_Menu_Item *mi;
+   E_Menu_Item *mi = NULL;
 
    /* Deal with present desk first */
    EINA_LIST_FOREACH(borders, l, bd)
@@ -1093,7 +1091,7 @@ static void
 _e_int_menus_clients_pre_cb(void *data __UNUSED__, E_Menu *m)
 {
    E_Menu *subm;
-   E_Menu_Item *mi;
+   E_Menu_Item *mi = NULL;
    Eina_List *l = NULL, *borders = NULL;
    E_Border *border;
    E_Zone *zone = NULL;

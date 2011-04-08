@@ -3689,7 +3689,7 @@ _e_gadcon_layout_smart_gadcons_width_adjust(E_Smart_Data *sd, int min, int cur)
    E_Gadcon_Layout_Item *bi = NULL;
    Eina_List *l, *l2;
    Evas_Object *item, *item2;
-   int need, limit, reduce_total, reduce;
+   int need, limit = 0, reduce_total, reduce;
    int max_size, c;
 
    if (sd->w < cur)
@@ -3764,7 +3764,7 @@ _e_gadcon_layout_smart_gadcons_width_adjust(E_Smart_Data *sd, int min, int cur)
 		  c2 = c;
 		  EINA_LIST_REVERSE_FOREACH(sd->items, l2, item)
 		    { 
-		       if(!c2 || !need) break;
+		       if ((!c2) || (!need)) break;
 		       bi2 = evas_object_data_get(item, "e_gadcon_layout_data");
 		       bi2->ask.size2 -= reduce_by; 
 		       need -= reduce_by; 
@@ -3790,7 +3790,7 @@ _e_gadcon_layout_smart_gadcons_width_adjust(E_Smart_Data *sd, int min, int cur)
 	     c2 = c;
 	     EINA_LIST_FOREACH(sd->items, l2, item)
 	       {
-		  if(!c2 || !need) break;
+                  if ((!c2) || (!need)) break;
 		  bi2 = evas_object_data_get(item, "e_gadcon_layout_data");
 		  bi2->ask.size2 -= reduce_by; 
 		  need -= reduce_by;
