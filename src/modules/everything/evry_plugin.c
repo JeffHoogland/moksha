@@ -116,7 +116,6 @@ _evry_plugin_action_browse(Evry_Action *act)
    return 0;
 }
 
-/* FIXME check for name already used */
 int
 evry_plugin_register(Evry_Plugin *p, int type, int priority)
 {
@@ -125,32 +124,8 @@ evry_plugin_register(Evry_Plugin *p, int type, int priority)
    Eina_List *conf[3];
    int new_conf = 0;
 
-   if (type < 0 || type > 2)
+   if ((type < 0) || (type > 2))
      return 0;
-
-   if ((type == EVRY_PLUGIN_SUBJECT) &&
-       (strcmp(p->name, "All")))
-     {
-	char buf[256];
-	snprintf(buf, sizeof(buf), _("Show %s Plugin"), p->name);
-
-	e_action_predef_name_set(_("Everything Launcher"), buf,
-				 "everything", p->name, NULL, 1);
-     }
-
-   if (p->input_type)
-     {
-	Evry_Action *act;
-	char buf[256];
-	snprintf(buf, sizeof(buf), _("Browse %s"), EVRY_ITEM(p)->label);
-
-	act = EVRY_ACTION_NEW(buf, p->input_type, 0, EVRY_ITEM(p)->icon,
-			      _evry_plugin_action_browse, NULL);
-	EVRY_ITEM(act)->icon_get = EVRY_ITEM(p)->icon_get;
-	EVRY_ITEM(act)->data = p;
-	evry_action_register(act, 1);
-	actions = eina_list_append(actions, act);
-     }
 
    conf[0] = evry_conf->conf_subjects;
    conf[1] = evry_conf->conf_actions;
@@ -160,6 +135,10 @@ evry_plugin_register(Evry_Plugin *p, int type, int priority)
      if (pc->name && p->name && !strcmp(pc->name, p->name))
        break;
 
+   /* check if module of same name is already loaded */
+   if ((pc) && (pc->plugin))
+     return 0;
+   
    /* collection plugin sets its own config */
    if (!pc && p->config)
      {
@@ -190,12 +169,33 @@ evry_plugin_register(Evry_Plugin *p, int type, int priority)
 
    conf[type] = eina_list_sort(conf[type], -1, _evry_cb_plugin_sort);
 
-   /* EINA_LIST_FOREACH(conf[type], l, pc)
-    *   pc->priority = i++; */
-
    evry_conf->conf_subjects = conf[0];
    evry_conf->conf_actions = conf[1];
    evry_conf->conf_objects = conf[2];
+   
+   if ((type == EVRY_PLUGIN_SUBJECT) &&
+       (strcmp(p->name, "All")))
+     {
+	char buf[256];
+	snprintf(buf, sizeof(buf), _("Show %s Plugin"), p->name);
+
+	e_action_predef_name_set(_("Everything Launcher"), buf,
+				 "everything", p->name, NULL, 1);
+     }
+
+   if (p->input_type)
+     {
+	Evry_Action *act;
+	char buf[256];
+	snprintf(buf, sizeof(buf), _("Browse %s"), EVRY_ITEM(p)->label);
+
+	act = EVRY_ACTION_NEW(buf, p->input_type, 0, EVRY_ITEM(p)->icon,
+			      _evry_plugin_action_browse, NULL);
+	EVRY_ITEM(act)->icon_get = EVRY_ITEM(p)->icon_get;
+	EVRY_ITEM(act)->data = p;
+	evry_action_register(act, 1);
+	actions = eina_list_append(actions, act);
+     }
 
    return new_conf;
 }

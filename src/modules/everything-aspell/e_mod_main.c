@@ -588,7 +588,10 @@ _conf_free(void)
 static void
 _conf_init(E_Module *m)
 {
-   e_configure_registry_item_add(_config_path, 110, _("Everything Aspell"),
+   char title[4096];
+
+   snprintf(title, sizeof(title), "%s: %s", _("Everything Plugin"), _("Aspell"));
+   e_configure_registry_item_add(_config_path, 110, title,
 				 NULL, _module_icon, _conf_dialog);
 
    _conf_edd = E_CONFIG_DD_NEW("Module_Config", Module_Config);

@@ -1,6 +1,19 @@
 #include "e.h"
 #include "e_mod_main.h"
 
+typedef struct _Instance Instance;
+
+struct _Instance
+{
+  E_Gadcon_Client *gcc;
+  Evas_Object     *o_button;
+
+  E_Object_Delfn *del_fn;
+  Evry_Window *win;
+};
+
+static void _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
+
 /* gadcon requirements */
 static E_Gadcon_Client *_gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style);
 static void _gc_shutdown(E_Gadcon_Client *gcc);
@@ -8,7 +21,7 @@ static void _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient);
 static char *_gc_label(E_Gadcon_Client_Class *client_class);
 static Evas_Object *_gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas);
 static const char *_gc_id_new(E_Gadcon_Client_Class *client_class);
-/* and actually define the gadcon class that this module provides (just 1) */
+
 static const E_Gadcon_Client_Class _gadcon_class =
 {
    GADCON_CLIENT_CLASS_VERSION,
@@ -20,18 +33,8 @@ static const E_Gadcon_Client_Class _gadcon_class =
    E_GADCON_CLIENT_STYLE_PLAIN
 };
 
-typedef struct _Instance Instance;
+static E_Menu *_menu = NULL;
 
-struct _Instance
-{
-   E_Gadcon_Client *gcc;
-   Evas_Object     *o_button;
-
-   E_Object_Delfn *del_fn;
-   Evry_Window *win;
-};
-
-static void _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 
 static E_Gadcon_Client *
 _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
@@ -51,8 +54,6 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 
    inst->gcc = gcc;
    inst->o_button = o;
-
-   e_gadcon_client_util_menu_attach(gcc);
 
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN,
 				  _button_cb_mouse_down, inst);
@@ -126,6 +127,20 @@ static void _del_func(void *data, void *obj __UNUSED__)
    inst->del_fn = NULL;
    inst->win = NULL;
    edje_object_signal_emit(inst->o_button, "e,state,unfocused", "e");
+}
+
+static void
+_cb_menu_post(void *data __UNUSED__, E_Menu *m __UNUSED__)
+{
+   if (!_menu) return;
+   e_object_del(E_OBJECT(_menu));
+   _menu = NULL;
+}
+
+static void
+_cb_menu_configure(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
+{
+   evry_collection_conf_dialog(e_container_current_get(e_manager_current_get()), "Start");
 }
 
 static void
@@ -205,6 +220,29 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 	inst->del_fn = e_object_delfn_add(E_OBJECT(win->ewin), _del_func, inst);
 
 	edje_object_signal_emit(inst->o_button, "e,state,focused", "e");
+     }
+   else if ((ev->button == 3) && (!_menu))
+     {
+	E_Menu *m;
+	E_Menu_Item *mi;
+	int cx, cy;
+
+	m = e_menu_new();	
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, _("Settings"));
+	e_util_menu_item_theme_icon_set(mi, "configure");
+	e_menu_item_callback_set(mi, _cb_menu_configure, NULL);
+
+	m = e_gadcon_client_util_menu_items_append(inst->gcc, m, 0);
+	e_menu_post_deactivate_callback_set(m, _cb_menu_post, inst);
+	_menu = m;
+
+	e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &cx, &cy, 
+                                          NULL, NULL);
+	e_menu_activate_mouse(m,
+			      e_util_zone_current_get(e_manager_current_get()),
+			      cx + ev->output.x, cy + ev->output.y, 1, 1,
+			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
      }
 }
 

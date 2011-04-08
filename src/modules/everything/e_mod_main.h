@@ -157,7 +157,7 @@ struct _Tab_View
   double align;
   double align_to;
   Ecore_Animator *animator;
-  Ecore_Idle_Exiter *timer;
+  Ecore_Timer *timer;
 };
 
 struct _Config
@@ -324,6 +324,28 @@ int   evry_view_toggle(Evry_State *s, const char *trigger);
 
 int evry_gadget_init(void);
 void evry_gadget_shutdown(void);
+
+#ifndef USE_MODULE_EVERYTHING_AS_MODULES
+Eina_Bool evry_plug_apps_init(E_Module *m);
+void evry_plug_apps_shutdown(void);
+void evry_plug_apps_save(void);
+
+Eina_Bool evry_plug_files_init(E_Module *m);
+void evry_plug_files_shutdown(void);
+void evry_plug_files_save(void);
+
+Eina_Bool evry_plug_windows_init(E_Module *m);
+void evry_plug_windows_shutdown(void);
+void evry_plug_windows_save(void);
+
+Eina_Bool evry_plug_settings_init(E_Module *m);
+void evry_plug_settings_shutdown(void);
+void evry_plug_settings_save(void);
+
+Eina_Bool evry_plug_calc_init(E_Module *m);
+void evry_plug_calc_shutdown(void);
+void evry_plug_calc_save(void);
+#endif
 
 Ecore_Event_Handler *evry_event_handler_add(int type, Eina_Bool (*func) (void *data, int type, void *event), const void *data);
 

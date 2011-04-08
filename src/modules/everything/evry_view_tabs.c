@@ -125,9 +125,8 @@ _tabs_update(Tab_View *v)
 
    if (!w && !v->timer)
      {
-	v->timer = ecore_idle_exiter_add(_timer_cb, v); 
-	e_util_wakeup();
-	return;
+   	v->timer = ecore_timer_add(0.001, _timer_cb, v); 
+   	return;
      }
 
    /* remove tabs for not active plugins */
@@ -393,7 +392,7 @@ evry_tab_view_free(Tab_View *v)
      ecore_animator_del(v->animator);
 
    if (v->timer)
-     ecore_idle_exiter_del(v->timer); 
+     ecore_timer_del(v->timer);
 
    E_FREE(v);
 }

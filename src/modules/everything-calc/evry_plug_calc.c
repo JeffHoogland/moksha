@@ -289,6 +289,8 @@ _plugins_shutdown(void)
 
 /***************************************************************************/
 
+#ifdef USE_MODULE_EVERYTHING_AS_MODULES
+
 EAPI E_Module_Api e_modapi =
 {
    E_MODULE_API_VERSION,
@@ -319,4 +321,22 @@ e_modapi_save(E_Module *m __UNUSED__)
    return 1;
 }
 
-/***************************************************************************/
+#else
+
+Eina_Bool
+evry_plug_calc_init(E_Module *m)
+{
+   EVRY_MODULE_NEW(evry_module, evry, _plugins_init, _plugins_shutdown);
+
+   return EINA_TRUE;
+}
+
+void
+evry_plug_calc_shutdown(void)
+{
+   EVRY_MODULE_FREE(evry_module);
+}
+
+void
+evry_plug_calc_save(void){}
+#endif

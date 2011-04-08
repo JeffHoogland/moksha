@@ -146,7 +146,7 @@ _add_plugin(const char *name)
 
    snprintf(path, sizeof(path), "extensions/everything-%s", p->name);
 
-   snprintf(title, sizeof(title), "Everything %s", p->name);
+   snprintf(title, sizeof(title), "%s: %s", _("Everything Plugin"), p->base.label);
 
    e_configure_registry_item_params_add
      (path, 110, title, NULL, p->base.icon, evry_collection_conf_dialog, p->name);

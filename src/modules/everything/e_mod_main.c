@@ -1,4 +1,5 @@
 #include "e_mod_main.h"
+#include "../everything-apps/e_mod_main.h"
 
 
 static void _e_mod_action_cb(E_Object *obj, const char *params);
@@ -131,7 +132,13 @@ e_modapi_init(E_Module *m)
 
    evry_history_init();
    evry_plug_actions_init();
-
+#ifndef USE_MODULE_EVERYTHING_AS_MODULES
+   evry_plug_apps_init(m);
+   evry_plug_files_init(m);
+   evry_plug_windows_init(m);
+   evry_plug_settings_init(m);
+   evry_plug_calc_init(m);
+#endif   
    e_datastore_set("evry_api", _api);
 
    EINA_LIST_FOREACH(e_datastore_get("evry_modules"), l, em)
@@ -167,6 +174,13 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    e_datastore_del("evry_api");
    E_FREE(_api);
 
+#ifndef USE_MODULE_EVERYTHING_AS_MODULES
+   evry_plug_apps_shutdown();
+   evry_plug_files_shutdown();
+   evry_plug_settings_shutdown();
+   evry_plug_windows_shutdown();
+   evry_plug_calc_shutdown();
+#endif
    evry_gadget_shutdown();
    evry_shutdown();
    evry_view_shutdown();
@@ -221,6 +235,15 @@ EAPI int
 e_modapi_save(E_Module *m __UNUSED__)
 {
    e_config_domain_save("module.everything", conf_edd, evry_conf);
+
+#ifndef USE_MODULE_EVERYTHING_AS_MODULES
+   evry_plug_apps_save();
+   evry_plug_files_save();
+   evry_plug_settings_save();
+   evry_plug_windows_save();
+   evry_plug_calc_save();
+#endif
+   
    return 1;
 }
 

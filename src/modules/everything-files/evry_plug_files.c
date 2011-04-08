@@ -9,6 +9,11 @@ FIXME
 #include "evry_api.h"
 #include <Efreet_Trash.h>
 
+#define MOD_CONFIG_FILE_EPOCH 0x0001
+#define MOD_CONFIG_FILE_GENERATION 0x008d
+#define MOD_CONFIG_FILE_VERSION					\
+  ((MOD_CONFIG_FILE_EPOCH << 16) | MOD_CONFIG_FILE_GENERATION)
+
 #define MAX_ITEMS 10
 #define MAX_SHOWN 300
 #define TERM_ACTION_DIR "%s"
@@ -1593,10 +1598,14 @@ _conf_free(void)
 static void
 _conf_init(E_Module *m)
 {
+   char title[4096];
+   
    e_configure_registry_category_add("extensions", 80, _("Extensions"),
 				     NULL, "preferences-extensions");
 
-   e_configure_registry_item_add("extensions/everything-files", 110, _("Everything Files"),
+   snprintf(title, sizeof(title), "%s: %s", _("Everything Plugin"), _("Files"));
+
+   e_configure_registry_item_add("extensions/everything-files", 110, title,
 				 NULL, _module_icon, _conf_dialog);
 
    conf_edd = E_CONFIG_DD_NEW("Module_Config", Module_Config);
@@ -1635,6 +1644,8 @@ _conf_shutdown(void)
 
 /***************************************************************************/
 
+#ifdef USE_MODULE_EVERYTHING_AS_MODULES
+
 EAPI E_Module_Api e_modapi =
 {
    E_MODULE_API_VERSION,
@@ -1670,3 +1681,30 @@ e_modapi_save(E_Module *m __UNUSED__)
    e_config_domain_save("module.everything-files", conf_edd, _conf);
    return 1;
 }
+
+#else
+
+Eina_Bool
+evry_plug_files_init(E_Module *m)
+{
+   _conf_init(m);
+
+   EVRY_MODULE_NEW(evry_module, evry, _plugins_init, _plugins_shutdown);
+
+   return EINA_TRUE;
+}
+
+void
+evry_plug_files_shutdown(void)
+{
+   EVRY_MODULE_FREE(evry_module);
+
+   _conf_shutdown();
+}
+
+void
+evry_plug_files_save(void)
+{
+   e_config_domain_save("module.everything-files", conf_edd, _conf);
+}
+#endif

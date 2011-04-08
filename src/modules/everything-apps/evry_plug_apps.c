@@ -3,6 +3,11 @@
 #include "evry_api.h"
 #include "e_mod_main.h"
 
+#define MOD_CONFIG_FILE_EPOCH 0x0001
+#define MOD_CONFIG_FILE_GENERATION 0x009d
+#define MOD_CONFIG_FILE_VERSION					\
+  ((MOD_CONFIG_FILE_EPOCH << 16) | MOD_CONFIG_FILE_GENERATION)
+
 // FIXME clear cache on .desktop chage event
 
 /* #undef DBG
@@ -1305,16 +1310,18 @@ static void
 _conf_init(E_Module *m)
 {
    char buf[4096];
+   char title[4096];
+
    snprintf(buf, sizeof(buf), "%s/e-module.edj", m->dir);
 
    e_configure_registry_category_add
      ("extensions", 80, _("Extensions"), NULL,
       "preferences-extensions");
 
-   e_configure_registry_item_add
-     ("extensions/everything-apps", 110,
-      _("Everything Applications"),
-      NULL, buf, _conf_dialog);
+   snprintf(title, sizeof(title), "%s: %s", _("Everything Plugin"), _("Applications"));
+   
+   e_configure_registry_item_add("extensions/everything-apps", 110, title,
+				 NULL, buf, _conf_dialog);
 
    conf_edd = E_CONFIG_DD_NEW("Module_Config", Module_Config);
 
@@ -1350,14 +1357,8 @@ _conf_shutdown(void)
 
 /***************************************************************************/
 
-EAPI E_Module_Api e_modapi =
-  {
-    E_MODULE_API_VERSION,
-    "everything-apps"
-  };
-
-EAPI void *
-e_modapi_init(E_Module *m)
+Eina_Bool
+evry_plug_apps_init(E_Module *m)
 {
    _conf_init(m);
 
@@ -1378,6 +1379,39 @@ e_modapi_init(E_Module *m)
 #define D exelist_edd
    E_CONFIG_LIST(D, T, list, exelist_exe_edd);
 
+   return EINA_TRUE;
+}
+
+void
+evry_plug_apps_shutdown(void)
+{
+   EVRY_MODULE_FREE(evry_module);
+
+   _conf_shutdown();
+
+   E_CONFIG_DD_FREE(exelist_edd);
+   E_CONFIG_DD_FREE(exelist_exe_edd);
+}
+
+void
+evry_plug_apps_save(void)
+{
+   e_config_domain_save("module.everything-apps", conf_edd, _conf);
+}
+
+#ifdef USE_MODULE_EVERYTHING_AS_MODULES
+
+EAPI E_Module_Api e_modapi =
+  {
+    E_MODULE_API_VERSION,
+    "everything-apps"
+  };
+
+EAPI void *
+e_modapi_init(E_Module *m)
+{
+   evry_plug_apps_init(m);
+
    e_module_delayed_set(m, 1);
 
    return m;
@@ -1386,22 +1420,19 @@ e_modapi_init(E_Module *m)
 EAPI int
 e_modapi_shutdown(E_Module *m __UNUSED__)
 {
-   EVRY_MODULE_FREE(evry_module);
-
-   _conf_shutdown();
-
-   E_CONFIG_DD_FREE(exelist_edd);
-   E_CONFIG_DD_FREE(exelist_exe_edd);
-
+   evry_plug_apps_shutdown();
+   
    return 1;
 }
 
 EAPI int
 e_modapi_save(E_Module *m __UNUSED__)
 {
-   e_config_domain_save("module.everything-apps", conf_edd, _conf);
+   evry_plug_apps_save();
+   
    return 1;
 }
+#endif
 
 /***************************************************************************/
 
