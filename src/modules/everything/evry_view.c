@@ -183,16 +183,11 @@ _thumb_idler(void *data)
 
 	     e_thumb_icon_begin(it->thumb);
 	     it->do_thumb = EINA_TRUE;
-
-	     if (it->image)
-	       edje_object_signal_emit(it->frame, "e,action,thumb,show_delayed", "e");
 	  }
 	else
 	  {
 	     edje_object_signal_emit(it->frame, "e,action,thumb,show", "e");
 	  }
-
-
 
 	sd->queue = eina_list_remove_list(sd->queue, l);
 
@@ -536,8 +531,8 @@ _e_smart_reconfigure_do(void *data)
 	xx = sd->x - sd->cx + it->x + ox;
 	yy = sd->y - sd->cy + it->y + oy;
 
-	if (E_INTERSECTS(xx, yy, it->w, it->h, 0, sd->y - (it->h*4),
-			 sd->x + sd->w, sd->y + sd->h + it->h*8))
+	if (E_INTERSECTS(xx, yy, it->w, it->h, 0, sd->y - it->h,
+			 sd->x + sd->w, sd->y + sd->h + it->h))
 	  {
 	     if (!it->visible)
 	       _item_show(sd->view, it, obj);
