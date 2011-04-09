@@ -89,6 +89,7 @@ enum _Conmman_Move_Direction {
    SERVICE_MOVE_UP
 };
 
+#if 0
 static void
 _connman_service_move_cb(void            *data,
                          DBusMessage *msg __UNUSED__,
@@ -108,7 +109,9 @@ _connman_service_move_cb(void            *data,
    eina_stringshare_del(d->service_path);
    E_FREE(d);
 }
+#endif
 
+#if 0
 static void
 _connman_service_move(E_Connman_Service           *service,
                       const E_Connman_Service     *service_ref,
@@ -144,6 +147,7 @@ _connman_service_move(E_Connman_Service           *service,
         _connman_operation_error_show(_("Re-order preferred services"));
      }
 }
+#endif
 
 struct _connman_technology_onoff_data
 {
@@ -461,6 +465,7 @@ _networks_list_fill(Evas                 *evas,
    return eina_inlist_count(ctxt->services);
 }
 
+#if 0
 static void
 _networks_button_up_cb(void       *data,
                        void *data2 __UNUSED__)
@@ -512,14 +517,13 @@ _networks_button_down_cb(void       *data,
 
    _connman_service_move(service, service_ref, SERVICE_MOVE_DOWN);
 }
+#endif
 
 static void
-_networks_list_create(Evas                 *evas,
+_networks_list_create(Evas                 *evas, 
                       E_Config_Dialog_Data *cfdata)
 {
    struct connman_config_network_ui *ui;
-   Evas_Object *ot;
-   Evas_Coord mw, mh;
 
    ui = &cfdata->networks;
    ui->netframe = e_widget_framelist_add(evas, _("All networks"), 0);
@@ -531,6 +535,9 @@ _networks_list_create(Evas                 *evas,
    e_widget_framelist_object_append(ui->netframe, ui->netlist);
 
 #if 0
+   Evas_Object *ot;
+   Evas_Coord mw, mh;
+
    /* Buttons */
    ot = e_widget_table_add(evas, 0);
    ui->o_up = e_widget_button_add
