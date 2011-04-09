@@ -893,8 +893,6 @@ src/modules/everything-settings/Makefile
 src/modules/everything-settings/module.desktop
 src/modules/everything-calc/Makefile
 src/modules/everything-calc/module.desktop
-src/modules/everything-aspell/Makefile
-src/modules/everything-aspell/module.desktop
 src/modules/systray/Makefile
 src/modules/systray/module.desktop
 src/modules/comp/Makefile
