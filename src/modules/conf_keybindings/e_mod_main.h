@@ -3,9 +3,13 @@
 
 #define E_TYPEDEFS 1
 #include "e_int_config_keybindings.h"
+#include "e_int_config_mousebindings.h"
+#include "e_int_config_acpibindings.h"
 
 #undef E_TYPEDEFS
 #include "e_int_config_keybindings.h"
+#include "e_int_config_mousebindings.h"
+#include "e_int_config_acpibindings.h"
 
 EAPI extern E_Module_Api e_modapi;
 

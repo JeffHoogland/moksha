@@ -21,7 +21,11 @@ pkg_LTLIBRARIES        = module.la
 module_la_SOURCES      = e_mod_main.c \
                          e_mod_main.h \
 			 e_int_config_keybindings.c \
-                         e_int_config_keybindings.h
+                         e_int_config_keybindings.h \
+			 e_int_config_mousebindings.c \
+                         e_int_config_mousebindings.h \
+			 e_int_config_acpibindings.c \
+                         e_int_config_acpibindings.h
 
 module_la_LIBADD       = @e_libs@ @dlopen_libs@
 module_la_LDFLAGS      = -module -avoid-version

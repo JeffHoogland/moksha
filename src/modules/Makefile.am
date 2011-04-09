@@ -134,20 +134,8 @@ if USE_MODULE_CONF_KEYBINDINGS
 SUBDIRS += conf_keybindings
 endif
 
-if USE_MODULE_CONF_MOUSEBINDINGS
-SUBDIRS += conf_mousebindings
-endif
-
 if USE_MODULE_CONF_EDGEBINDINGS
 SUBDIRS += conf_edgebindings
-endif
-
-if USE_MODULE_CONF_ACPIBINDINGS
-SUBDIRS += conf_acpibindings
-endif
-
-if USE_MODULE_CONF_MOUSE
-SUBDIRS += conf_mouse
 endif
 
 if USE_MODULE_CONF_WINDOW_DISPLAY
