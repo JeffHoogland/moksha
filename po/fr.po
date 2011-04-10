@@ -7,12 +7,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-04-09 13:13+0400\n"
-"PO-Revision-Date: 2011-04-09 14:12+0400\n"
+"POT-Creation-Date: 2011-04-10 09:59+0400\n"
+"PO-Revision-Date: 2011-04-10 11:43+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment French Team <pourunmondesansgourou@gmail.com>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: fr\n"
 "X-Poedit-Language: French\n"
@@ -180,7 +180,7 @@ msgstr "Redimensionner"
 #: src/bin/e_actions.c:2990
 #: src/bin/e_actions.c:2992
 #: src/bin/e_actions.c:2994
-#: src/modules/conf_mousebindings/e_int_config_mousebindings.c:325
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:325
 msgid "Menu"
 msgstr "Menu"
 
@@ -1864,7 +1864,7 @@ msgstr "Ignorer"
 
 #: src/bin/e_int_border_menu.c:529
 #: src/modules/conf_borders/e_mod_main.c:20
-#: src/modules/conf_mousebindings/e_int_config_mousebindings.c:321
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:321
 msgid "Border"
 msgstr "Bordure"
 
@@ -3660,7 +3660,7 @@ msgstr "Grouper par"
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:112
 #: src/modules/conf_clientlist/e_int_config_clientlist.c:126
 #: src/modules/conf_fonts/e_int_config_fonts.c:661
-#: src/modules/conf_mousebindings/e_int_config_mousebindings.c:349
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:349
 #: src/modules/conf_transitions/e_int_config_transitions.c:153
 #: src/modules/conf_transitions/e_int_config_transitions.c:204
 #: src/modules/conf_transitions/e_int_config_transitions.c:236
@@ -4127,8 +4127,8 @@ msgstr "Nombre de bureaux"
 #: src/modules/conf_display/e_int_config_desks.c:169
 #: src/modules/conf_display/e_int_config_desks.c:174
 #: src/modules/conf_display/e_int_config_desklock.c:239
-#: src/modules/conf_mouse/e_int_config_mouse.c:114
-#: src/modules/conf_mouse/e_int_config_mouse.c:120
+#: src/modules/conf_interaction/e_int_config_mouse.c:114
+#: src/modules/conf_interaction/e_int_config_mouse.c:120
 #: src/modules/everything/evry_config.c:407
 #: src/modules/everything/evry_config.c:555
 #: src/modules/everything/evry_config.c:562
@@ -4449,7 +4449,7 @@ msgstr "Bureau"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:10
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:3
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:7
-#: src/modules/conf_mousebindings/e_int_config_mousebindings.c:3
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:3
 msgid "<None>"
 msgstr "<Aucun>"
 
@@ -4468,43 +4468,43 @@ msgstr "Raccourcis des bords"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:260
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:249
-#: src/modules/conf_mousebindings/e_int_config_mousebindings.c:281
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:281
 msgid "Add Binding"
 msgstr "Ajouter un raccourci"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:263
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:252
-#: src/modules/conf_mousebindings/e_int_config_mousebindings.c:283
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:283
 msgid "Delete Binding"
 msgstr "Supprimer le raccourci"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:267
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:256
-#: src/modules/conf_mousebindings/e_int_config_mousebindings.c:287
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:287
 msgid "Modify Binding"
 msgstr "Modifier le raccourci"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:271
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:260
-#: src/modules/conf_mousebindings/e_int_config_mousebindings.c:291
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:291
 msgid "Delete All"
 msgstr "Tout supprimer"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:275
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:264
-#: src/modules/conf_mousebindings/e_int_config_mousebindings.c:295
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:295
 msgid "Restore Default Bindings"
 msgstr "Restaurer les raccourcis par défaut"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:280
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:269
-#: src/modules/conf_mousebindings/e_int_config_mousebindings.c:301
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:301
 msgid "Action"
 msgstr "Action"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:287
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:276
-#: src/modules/conf_mousebindings/e_int_config_mousebindings.c:308
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:308
 msgid "Action Params"
 msgstr "Paramètres de l'action"
 
@@ -4564,8 +4564,6 @@ msgstr "Logo"
 #: src/modules/conf_edgebindings/e_mod_main.c:17
 #: src/modules/conf_interaction/e_mod_main.c:17
 #: src/modules/conf_keybindings/e_mod_main.c:17
-#: src/modules/conf_mousebindings/e_mod_main.c:17
-#: src/modules/conf_mouse/e_mod_main.c:17
 #: src/modules/mixer/app_mixer.c:277
 #: src/modules/mixer/app_mixer.c:295
 msgid "Input"
@@ -4661,6 +4659,7 @@ msgid "Label"
 msgstr "Étiquette"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:83
+#: src/modules/conf_keybindings/e_mod_main.c:29
 msgid "Buttons"
 msgstr "Boutons"
 
@@ -4929,9 +4928,34 @@ msgstr "Inertie"
 msgid "%1.2f sec"
 msgstr "%1.2f s"
 
+#: src/modules/conf_interaction/e_int_config_mouse.c:36
+msgid "Mouse Settings"
+msgstr "Paramétrage de la souris"
+
+#: src/modules/conf_interaction/e_int_config_mouse.c:102
+msgid "Mouse Hand"
+msgstr "Latéralité"
+
+#: src/modules/conf_interaction/e_int_config_mouse.c:110
+msgid "Mouse Acceleration"
+msgstr "Accélération de la souris"
+
+#: src/modules/conf_interaction/e_int_config_mouse.c:112
+msgid "Acceleration"
+msgstr "Accélération"
+
+#: src/modules/conf_interaction/e_int_config_mouse.c:118
+msgid "Threshold"
+msgstr "Seuil"
+
 #: src/modules/conf_interaction/e_mod_main.c:20
-msgid "Interaction"
-msgstr "Interaction"
+msgid "Touch"
+msgstr "Tactile"
+
+#: src/modules/conf_interaction/e_mod_main.c:24
+#: src/modules/conf_keybindings/e_mod_main.c:25
+msgid "Mouse"
+msgstr "Souris"
 
 #: src/modules/conf_intl/e_int_config_intl.c:579
 #: src/modules/conf_intl/e_mod_main.c:20
@@ -4974,7 +4998,6 @@ msgid "Key Bindings Settings"
 msgstr "Paramétrage des raccourcis clavier"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:244
-#: src/modules/conf_keybindings/e_mod_main.c:20
 msgid "Key Bindings"
 msgstr "Raccourcis clavier"
 
@@ -4990,6 +5013,56 @@ msgstr "Erreur de raccourci clavier"
 #, c-format
 msgid "The binding key sequence, that you choose, is already used by <br><hilight>%s</hilight> action.<br>Please choose another binding key sequence."
 msgstr "La séquence de raccourci clavier que vous avez choisie est déjà utilisée<br>par l'action <hilight>%s</hilight>.<br>Veuillez choisir une autre séquence de raccourci clavier."
+
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:7
+msgid "Please hold any modifier you want<br>and press any button on your mouse,<br> or roll a wheel, to assign mouse binding.<br>Press <hilight>Escape</highlight> to abort."
+msgstr "Veuillez appuyer sur le modificateur de votre choix et<br>sur un bouton de votre souris, ou tourner la molette,<br>afin d'assigner un raccourci souris.<br>Appuyez sur  <hilight>Échap</hilight> pour annuler."
+
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:112
+msgid "Mouse Bindings Settings"
+msgstr "Paramétrage des raccourcis souris"
+
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:275
+msgid "Mouse Bindings"
+msgstr "Raccourcis souris"
+
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:315
+msgid "Action Context"
+msgstr "Contexte de l'action"
+
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:317
+msgid "Any"
+msgstr "Tous"
+
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:329
+msgid "Win List"
+msgstr "Liste de fenêtres"
+
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:333
+#: src/modules/pager/e_mod_config.c:135
+#: src/modules/pager/e_mod_config.c:248
+msgid "Popup"
+msgstr "Pop-up"
+
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:337
+msgid "Zone"
+msgstr "Zone"
+
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:341
+msgid "Container"
+msgstr "Conteneur"
+
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:345
+msgid "Manager"
+msgstr "Gestionnaire"
+
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1272
+msgid "Mouse Binding Sequence"
+msgstr "Séquence du raccourci souris"
+
+#: src/modules/conf_keybindings/e_mod_main.c:21
+msgid "Keys"
+msgstr "Touches"
 
 #: src/modules/conf_menus/e_int_config_menus.c:44
 #: src/modules/conf_menus/e_mod_main.c:18
@@ -5140,53 +5213,6 @@ msgstr "Sélectionner un fichier edj"
 msgid "Select an image"
 msgstr "Sélectionner une image"
 
-#: src/modules/conf_mousebindings/e_int_config_mousebindings.c:7
-msgid "Please hold any modifier you want<br>and press any button on your mouse,<br> or roll a wheel, to assign mouse binding.<br>Press <hilight>Escape</highlight> to abort."
-msgstr "Veuillez appuyer sur le modificateur de votre choix et<br>sur un bouton de votre souris, ou tourner la molette,<br>afin d'assigner un raccourci souris.<br>Appuyez sur  <hilight>Échap</hilight> pour annuler."
-
-#: src/modules/conf_mousebindings/e_int_config_mousebindings.c:112
-msgid "Mouse Bindings Settings"
-msgstr "Paramétrage des raccourcis souris"
-
-#: src/modules/conf_mousebindings/e_int_config_mousebindings.c:275
-#: src/modules/conf_mousebindings/e_mod_main.c:20
-msgid "Mouse Bindings"
-msgstr "Raccourcis souris"
-
-#: src/modules/conf_mousebindings/e_int_config_mousebindings.c:315
-msgid "Action Context"
-msgstr "Contexte de l'action"
-
-#: src/modules/conf_mousebindings/e_int_config_mousebindings.c:317
-msgid "Any"
-msgstr "Tous"
-
-#: src/modules/conf_mousebindings/e_int_config_mousebindings.c:329
-msgid "Win List"
-msgstr "Liste de fenêtres"
-
-#: src/modules/conf_mousebindings/e_int_config_mousebindings.c:333
-#: src/modules/pager/e_mod_config.c:135
-#: src/modules/pager/e_mod_config.c:248
-msgid "Popup"
-msgstr "Pop-up"
-
-#: src/modules/conf_mousebindings/e_int_config_mousebindings.c:337
-msgid "Zone"
-msgstr "Zone"
-
-#: src/modules/conf_mousebindings/e_int_config_mousebindings.c:341
-msgid "Container"
-msgstr "Conteneur"
-
-#: src/modules/conf_mousebindings/e_int_config_mousebindings.c:345
-msgid "Manager"
-msgstr "Gestionnaire"
-
-#: src/modules/conf_mousebindings/e_int_config_mousebindings.c:1272
-msgid "Mouse Binding Sequence"
-msgstr "Séquence du raccourci souris"
-
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:38
 msgid "Cursor Settings"
 msgstr "Paramétrage du curseur"
@@ -5206,27 +5232,6 @@ msgstr "Effets quand inactif"
 #: src/modules/conf_mouse_cursor/e_mod_main.c:18
 msgid "Mouse Cursor"
 msgstr "Curseur de souris"
-
-#: src/modules/conf_mouse/e_int_config_mouse.c:36
-#: src/modules/conf_mouse/e_mod_main.c:20
-msgid "Mouse Settings"
-msgstr "Paramétrage de la souris"
-
-#: src/modules/conf_mouse/e_int_config_mouse.c:102
-msgid "Mouse Hand"
-msgstr "Latéralité"
-
-#: src/modules/conf_mouse/e_int_config_mouse.c:110
-msgid "Mouse Acceleration"
-msgstr "Accélération de la souris"
-
-#: src/modules/conf_mouse/e_int_config_mouse.c:112
-msgid "Acceleration"
-msgstr "Accélération"
-
-#: src/modules/conf_mouse/e_int_config_mouse.c:118
-msgid "Threshold"
-msgstr "Seuil"
 
 #: src/modules/conf_paths/e_int_config_paths.c:59
 msgid "Search Path Settings"
@@ -7619,6 +7624,8 @@ msgstr "Il y a déjà une zone de notification active et seule une instance de c
 msgid "Systray"
 msgstr "Zone de notification"
 
+#~ msgid "Interaction"
+#~ msgstr "Interaction"
 #~ msgid "Spell Checker"
 #~ msgstr "Correcteur orthographique"
 #~ msgid "Everything Aspell"
@@ -7635,8 +7642,6 @@ msgstr "Zone de notification"
 #~ msgstr "Plus…"
 #~ msgid "To Favorites Menu"
 #~ msgstr "Au menu des favoris"
-#~ msgid "To Launcher"
-#~ msgstr "Au lanceur"
 #~ msgid "Selection"
 #~ msgstr "Sélection"
 #~ msgid "Animated flip"

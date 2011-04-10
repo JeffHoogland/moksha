@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: http://trac.enlightenment.org/e/\n"
-"POT-Creation-Date: 2011-04-09 06:01-0700\n"
-"PO-Revision-Date: 2011-04-09 15:25+0200\n"
+"POT-Creation-Date: 2011-04-10 01:03-0700\n"
+"PO-Revision-Date: 2011-04-10 11:45+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -183,7 +183,7 @@ msgstr "Ridimensiona"
 #: ../src/bin/e_actions.c:2683 ../src/bin/e_actions.c:2986
 #: ../src/bin/e_actions.c:2988 ../src/bin/e_actions.c:2990
 #: ../src/bin/e_actions.c:2992 ../src/bin/e_actions.c:2994
-#: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:325
+#: ../src/modules/conf_keybindings/e_int_config_mousebindings.c:325
 msgid "Menu"
 msgstr "Menù"
 
@@ -1838,7 +1838,7 @@ msgstr "Salta"
 
 #: ../src/bin/e_int_border_menu.c:529
 #: ../src/modules/conf_borders/e_mod_main.c:20
-#: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:321
+#: ../src/modules/conf_keybindings/e_int_config_mousebindings.c:321
 msgid "Border"
 msgstr "Bordo"
 
@@ -3852,7 +3852,7 @@ msgstr "Criterio di raggruppamento"
 #: ../src/modules/conf_clientlist/e_int_config_clientlist.c:112
 #: ../src/modules/conf_clientlist/e_int_config_clientlist.c:126
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:661
-#: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:349
+#: ../src/modules/conf_keybindings/e_int_config_mousebindings.c:349
 #: ../src/modules/conf_transitions/e_int_config_transitions.c:153
 #: ../src/modules/conf_transitions/e_int_config_transitions.c:204
 #: ../src/modules/conf_transitions/e_int_config_transitions.c:236
@@ -4369,8 +4369,8 @@ msgstr "Numero di desktop"
 #: ../src/modules/conf_display/e_int_config_desks.c:169
 #: ../src/modules/conf_display/e_int_config_desks.c:174
 #: ../src/modules/conf_display/e_int_config_desklock.c:239
-#: ../src/modules/conf_mouse/e_int_config_mouse.c:114
-#: ../src/modules/conf_mouse/e_int_config_mouse.c:120
+#: ../src/modules/conf_interaction/e_int_config_mouse.c:114
+#: ../src/modules/conf_interaction/e_int_config_mouse.c:120
 #: ../src/modules/everything/evry_config.c:407
 #: ../src/modules/everything/evry_config.c:555
 #: ../src/modules/everything/evry_config.c:562
@@ -4693,7 +4693,7 @@ msgstr "Desktop"
 #: ../src/modules/conf_edgebindings/e_int_config_edgebindings.c:10
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:3
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:7
-#: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:3
+#: ../src/modules/conf_keybindings/e_int_config_mousebindings.c:3
 msgid "<None>"
 msgstr "<Nessuna>"
 
@@ -4719,43 +4719,43 @@ msgstr "Bordi dello schermo"
 
 #: ../src/modules/conf_edgebindings/e_int_config_edgebindings.c:260
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:249
-#: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:281
+#: ../src/modules/conf_keybindings/e_int_config_mousebindings.c:281
 msgid "Add Binding"
 msgstr "Aggiungi combinazione"
 
 #: ../src/modules/conf_edgebindings/e_int_config_edgebindings.c:263
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:252
-#: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:283
+#: ../src/modules/conf_keybindings/e_int_config_mousebindings.c:283
 msgid "Delete Binding"
 msgstr "Elimina combinazione"
 
 #: ../src/modules/conf_edgebindings/e_int_config_edgebindings.c:267
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:256
-#: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:287
+#: ../src/modules/conf_keybindings/e_int_config_mousebindings.c:287
 msgid "Modify Binding"
 msgstr "Modifica combinazione"
 
 #: ../src/modules/conf_edgebindings/e_int_config_edgebindings.c:271
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:260
-#: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:291
+#: ../src/modules/conf_keybindings/e_int_config_mousebindings.c:291
 msgid "Delete All"
 msgstr "Cancella tutto"
 
 #: ../src/modules/conf_edgebindings/e_int_config_edgebindings.c:275
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:264
-#: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:295
+#: ../src/modules/conf_keybindings/e_int_config_mousebindings.c:295
 msgid "Restore Default Bindings"
 msgstr "Ripristina associazioni predefinite"
 
 #: ../src/modules/conf_edgebindings/e_int_config_edgebindings.c:280
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:269
-#: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:301
+#: ../src/modules/conf_keybindings/e_int_config_mousebindings.c:301
 msgid "Action"
 msgstr "Azione"
 
 #: ../src/modules/conf_edgebindings/e_int_config_edgebindings.c:287
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:276
-#: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:308
+#: ../src/modules/conf_keybindings/e_int_config_mousebindings.c:308
 msgid "Action Params"
 msgstr "Parametri azione"
 
@@ -4820,8 +4820,6 @@ msgstr "Windows"
 #: ../src/modules/conf_edgebindings/e_mod_main.c:17
 #: ../src/modules/conf_interaction/e_mod_main.c:17
 #: ../src/modules/conf_keybindings/e_mod_main.c:17
-#: ../src/modules/conf_mousebindings/e_mod_main.c:17
-#: ../src/modules/conf_mouse/e_mod_main.c:17
 #: ../src/modules/mixer/app_mixer.c:277 ../src/modules/mixer/app_mixer.c:295
 msgid "Input"
 msgstr "Input"
@@ -4923,6 +4921,7 @@ msgid "Label"
 msgstr "Etichetta"
 
 #: ../src/modules/conf_fonts/e_int_config_fonts.c:83
+#: ../src/modules/conf_keybindings/e_mod_main.c:29
 msgid "Buttons"
 msgstr "Bottone"
 
@@ -5200,9 +5199,34 @@ msgstr "Rallentamento frizione"
 msgid "%1.2f sec"
 msgstr "%1.2f sec"
 
+#: ../src/modules/conf_interaction/e_int_config_mouse.c:36
+msgid "Mouse Settings"
+msgstr "Impostazioni del mouse"
+
+#: ../src/modules/conf_interaction/e_int_config_mouse.c:102
+msgid "Mouse Hand"
+msgstr "Mano utilizzata"
+
+#: ../src/modules/conf_interaction/e_int_config_mouse.c:110
+msgid "Mouse Acceleration"
+msgstr "Accelerazione mouse"
+
+#: ../src/modules/conf_interaction/e_int_config_mouse.c:112
+msgid "Acceleration"
+msgstr "Accelerazione"
+
+#: ../src/modules/conf_interaction/e_int_config_mouse.c:118
+msgid "Threshold"
+msgstr "Soglia"
+
 #: ../src/modules/conf_interaction/e_mod_main.c:20
-msgid "Interaction"
-msgstr "Interazione"
+msgid "Touch"
+msgstr "Tocco"
+
+#: ../src/modules/conf_interaction/e_mod_main.c:24
+#: ../src/modules/conf_keybindings/e_mod_main.c:25
+msgid "Mouse"
+msgstr "Mouse"
 
 #: ../src/modules/conf_intl/e_int_config_intl.c:579
 #: ../src/modules/conf_intl/e_mod_main.c:20
@@ -5248,7 +5272,6 @@ msgid "Key Bindings Settings"
 msgstr "Configurazione combinazioni della tastiera"
 
 #: ../src/modules/conf_keybindings/e_int_config_keybindings.c:244
-#: ../src/modules/conf_keybindings/e_mod_main.c:20
 msgid "Key Bindings"
 msgstr "Combinazioni della tastiera"
 
@@ -5268,6 +5291,62 @@ msgid ""
 msgstr ""
 "La combinazione di tasti che avete scelto è già usata<br>dall'azione "
 "<hilight>%s</hilight>.<br>Si prega di scegliere una combinazione diversa."
+
+#: ../src/modules/conf_keybindings/e_int_config_mousebindings.c:7
+msgid ""
+"Please hold any modifier you want<br>and press any button on your mouse,<br> "
+"or roll a wheel, to assign mouse binding.<br>Press <hilight>Escape</"
+"highlight> to abort."
+msgstr ""
+"Tenere premuto il modificatore desiderato<br>e premere un bottone del mouse, "
+"o girare<br>una rotella, per assegnare un'associazione.<br>Premere "
+"<hilight>Escape</highlight> per abortire."
+
+#: ../src/modules/conf_keybindings/e_int_config_mousebindings.c:112
+msgid "Mouse Bindings Settings"
+msgstr "Configurazione combinazioni del mouse"
+
+#: ../src/modules/conf_keybindings/e_int_config_mousebindings.c:275
+msgid "Mouse Bindings"
+msgstr "Combinazioni del mouse"
+
+#: ../src/modules/conf_keybindings/e_int_config_mousebindings.c:315
+msgid "Action Context"
+msgstr "Contesto azione"
+
+#: ../src/modules/conf_keybindings/e_int_config_mousebindings.c:317
+msgid "Any"
+msgstr "Qualunque"
+
+#: ../src/modules/conf_keybindings/e_int_config_mousebindings.c:329
+msgid "Win List"
+msgstr "Lista finestre"
+
+#: ../src/modules/conf_keybindings/e_int_config_mousebindings.c:333
+#: ../src/modules/pager/e_mod_config.c:135
+#: ../src/modules/pager/e_mod_config.c:248
+msgid "Popup"
+msgstr "Popup"
+
+#: ../src/modules/conf_keybindings/e_int_config_mousebindings.c:337
+msgid "Zone"
+msgstr "Zona"
+
+#: ../src/modules/conf_keybindings/e_int_config_mousebindings.c:341
+msgid "Container"
+msgstr "Contenitore"
+
+#: ../src/modules/conf_keybindings/e_int_config_mousebindings.c:345
+msgid "Manager"
+msgstr "Manager"
+
+#: ../src/modules/conf_keybindings/e_int_config_mousebindings.c:1272
+msgid "Mouse Binding Sequence"
+msgstr "Sequenza associazione del mouse"
+
+#: ../src/modules/conf_keybindings/e_mod_main.c:21
+msgid "Keys"
+msgstr "Tasti"
 
 #: ../src/modules/conf_menus/e_int_config_menus.c:44
 #: ../src/modules/conf_menus/e_mod_main.c:18
@@ -5417,59 +5496,6 @@ msgstr "Seleziona un file Edje"
 msgid "Select an image"
 msgstr "Seleziona un'immagine"
 
-#: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:7
-msgid ""
-"Please hold any modifier you want<br>and press any button on your mouse,<br> "
-"or roll a wheel, to assign mouse binding.<br>Press <hilight>Escape</"
-"highlight> to abort."
-msgstr ""
-"Tenere premuto il modificatore desiderato<br>e premere un bottone del mouse, "
-"o girare<br>una rotella, per assegnare un'associazione.<br>Premere "
-"<hilight>Escape</highlight> per abortire."
-
-#: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:112
-msgid "Mouse Bindings Settings"
-msgstr "Configurazione combinazioni del mouse"
-
-#: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:275
-#: ../src/modules/conf_mousebindings/e_mod_main.c:20
-msgid "Mouse Bindings"
-msgstr "Combinazioni del mouse"
-
-#: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:315
-msgid "Action Context"
-msgstr "Contesto azione"
-
-#: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:317
-msgid "Any"
-msgstr "Qualunque"
-
-#: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:329
-msgid "Win List"
-msgstr "Lista finestre"
-
-#: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:333
-#: ../src/modules/pager/e_mod_config.c:135
-#: ../src/modules/pager/e_mod_config.c:248
-msgid "Popup"
-msgstr "Popup"
-
-#: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:337
-msgid "Zone"
-msgstr "Zona"
-
-#: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:341
-msgid "Container"
-msgstr "Contenitore"
-
-#: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:345
-msgid "Manager"
-msgstr "Manager"
-
-#: ../src/modules/conf_mousebindings/e_int_config_mousebindings.c:1272
-msgid "Mouse Binding Sequence"
-msgstr "Sequenza associazione del mouse"
-
 #: ../src/modules/conf_mouse_cursor/e_int_config_cursor.c:38
 msgid "Cursor Settings"
 msgstr "Puntatore del mouse"
@@ -5489,27 +5515,6 @@ msgstr "Effetti inattività"
 #: ../src/modules/conf_mouse_cursor/e_mod_main.c:18
 msgid "Mouse Cursor"
 msgstr "Puntatore del mouse"
-
-#: ../src/modules/conf_mouse/e_int_config_mouse.c:36
-#: ../src/modules/conf_mouse/e_mod_main.c:20
-msgid "Mouse Settings"
-msgstr "Impostazioni del mouse"
-
-#: ../src/modules/conf_mouse/e_int_config_mouse.c:102
-msgid "Mouse Hand"
-msgstr "Mano utilizzata"
-
-#: ../src/modules/conf_mouse/e_int_config_mouse.c:110
-msgid "Mouse Acceleration"
-msgstr "Accelerazione mouse"
-
-#: ../src/modules/conf_mouse/e_int_config_mouse.c:112
-msgid "Acceleration"
-msgstr "Accelerazione"
-
-#: ../src/modules/conf_mouse/e_int_config_mouse.c:118
-msgid "Threshold"
-msgstr "Soglia"
 
 #: ../src/modules/conf_paths/e_int_config_paths.c:59
 msgid "Search Path Settings"
