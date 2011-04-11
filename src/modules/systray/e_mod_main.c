@@ -1116,7 +1116,7 @@ static const E_Gadcon_Client_Class _gc_class =
   GADCON_CLIENT_CLASS_VERSION, _name,
   {
      _gc_init, _gc_shutdown, _gc_orient, _gc_label, _gc_icon, _gc_id_new, NULL,
-     e_gadcon_site_is_not_toolbar
+     e_gadcon_site_is_shelf
   },
   E_GADCON_CLIENT_STYLE_INSET
 };
