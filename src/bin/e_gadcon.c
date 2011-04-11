@@ -1343,10 +1343,14 @@ _e_gadcon_gadget_move_to_pre_cb(void *data, E_Menu *m)
    e_menu_pre_activate_callback_set(m, NULL, NULL);
    gcc = data;
 
-   _e_gadcon_add_locations_menu_for_site(m, gcc, E_GADCON_SITE_SHELF, &n);
-   _e_gadcon_add_locations_menu_for_site(m, gcc, E_GADCON_SITE_DESKTOP, &n);
-   _e_gadcon_add_locations_menu_for_site(m, gcc, E_GADCON_SITE_TOOLBAR, &n);
-   _e_gadcon_add_locations_menu_for_site(m, gcc, E_GADCON_SITE_EFM_TOOLBAR, &n);
+   if (gcc->client_class->func.is_site && gcc->client_class->func.is_site(E_GADCON_SITE_SHELF))
+     _e_gadcon_add_locations_menu_for_site(m, gcc, E_GADCON_SITE_SHELF, &n);
+   if (gcc->client_class->func.is_site && gcc->client_class->func.is_site(E_GADCON_SITE_DESKTOP))
+     _e_gadcon_add_locations_menu_for_site(m, gcc, E_GADCON_SITE_DESKTOP, &n);
+   if (gcc->client_class->func.is_site && gcc->client_class->func.is_site(E_GADCON_SITE_TOOLBAR))
+     _e_gadcon_add_locations_menu_for_site(m, gcc, E_GADCON_SITE_TOOLBAR, &n);
+   if (gcc->client_class->func.is_site && gcc->client_class->func.is_site(E_GADCON_SITE_EFM_TOOLBAR))
+     _e_gadcon_add_locations_menu_for_site(m, gcc, E_GADCON_SITE_EFM_TOOLBAR, &n);
    _e_gadcon_add_locations_menu_for_site(m, gcc, E_GADCON_SITE_UNKNOWN, &n);
 }
 
