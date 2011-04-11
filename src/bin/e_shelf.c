@@ -1334,7 +1334,7 @@ _e_shelf_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNU
 	e_menu_post_deactivate_callback_set(mn, _e_shelf_cb_menu_post, es);
 	es->menu = mn;
 
-	_e_shelf_menu_append(es, mn);
+	_e_shelf_menu_pre_cb(es, mn);
 
         e_gadcon_canvas_zone_geometry_get(es->gadcon, &cx, &cy, NULL, NULL);
 	e_menu_activate_mouse(mn,
