@@ -200,6 +200,8 @@ static void _e_border_client_move_resize_send(E_Border *bd);
 static void _e_border_frame_replace(E_Border *bd,
 				    Eina_Bool argb);
 
+static void _e_border_show(E_Border *bd);
+static void _e_border_hide(E_Border *bd);
 
 /* local subsystem globals */
 static Eina_List *handlers = NULL;
@@ -2907,20 +2909,10 @@ e_border_idler_before(void)
                   if ((bd->changes.visible) && (bd->visible) &&
                       (!bd->new_client) && (!bd->changes.pos) &&
                       (!bd->changes.size))
-                    {
-                       ecore_evas_show(bd->bg_ecore_evas);
-                       if (bd->post_job)
-                         {
-                            bd->post_show = 1;
-                         }
-                       else
-                         {
-                            if (!bd->comp_hidden)
-                              ecore_x_composite_window_events_enable(bd->win);
-                            ecore_x_window_show(bd->win);
-                         }
-                       bd->changes.visible = 0;
-                    }
+		    {
+		       _e_border_show(bd);
+		       bd->changes.visible = 0;
+		    }		  
                }
              e_container_border_list_free(bl);
 
@@ -2929,35 +2921,21 @@ e_border_idler_before(void)
              while ((bd = e_container_border_list_next(bl)))
                {
                   if (e_object_is_del(E_OBJECT(bd))) continue;
-                  if ((bd->changes.visible) && (!bd->visible))
-                    {
-                       if (!e_manager_comp_evas_get(bd->zone->container->manager))
-                         {
-                            ecore_x_window_hide(bd->win);
-                            ecore_evas_hide(bd->bg_ecore_evas);
-                         }
-                       else
-                         {
-                            ecore_x_composite_window_events_disable(bd->win);
-                         }
-                       bd->changes.visible = 0;
-                    }
+
+		  if ((bd->changes.visible) && (!bd->visible))
+		    {
+		       _e_border_hide(bd);
+		       bd->changes.visible = 0;
+		    }
+
                   if (bd->changed) _e_border_eval(bd);
+
                   if ((bd->changes.visible) && (bd->visible))
-                    {
-                       ecore_evas_show(bd->bg_ecore_evas);
-                       if (bd->post_job)
-                         {
-                            bd->post_show = 1;
-                         }
-                       else
-                         {
-                            if (!bd->comp_hidden)
-                              ecore_x_composite_window_events_enable(bd->win);
-                            ecore_x_window_show(bd->win);
-                         }
-                       bd->changes.visible = 0;
-                    }
+		    {
+		       _e_border_show(bd);
+		       bd->changes.visible = 0;
+		    }
+		  
                }
              e_container_border_list_free(bl);
           }
@@ -3014,6 +2992,41 @@ static Ecore_Event_Handler *action_handler_key = NULL;
 static Ecore_Event_Handler *action_handler_mouse = NULL;
 static Ecore_Timer *action_timer = NULL;
 static Ecore_X_Rectangle action_orig;
+
+static void
+_e_border_show(E_Border *bd)
+{			    
+   ecore_evas_show(bd->bg_ecore_evas);
+   
+   if (bd->post_job)
+     {	
+	bd->post_show = 1;
+	return;
+     }
+   
+   if (!bd->comp_hidden)
+     {
+	ecore_x_composite_window_events_enable(bd->win);
+	ecore_x_window_ignore_set(bd->win, EINA_FALSE);
+     }
+			    
+   ecore_x_window_show(bd->win);
+}
+
+static void
+_e_border_hide(E_Border *bd)
+{   
+   if (!e_manager_comp_evas_get(bd->zone->container->manager))
+     {
+	ecore_x_window_hide(bd->win);
+	ecore_evas_hide(bd->bg_ecore_evas);
+     }
+   else
+     {
+	ecore_x_composite_window_events_disable(bd->win);
+	ecore_x_window_ignore_set(bd->win, EINA_TRUE);
+     }
+}
 
 static int
 _e_border_action_input_win_del(void)
@@ -5980,13 +5993,13 @@ _e_border_post_move_resize_job(void *data)
      {
         ecore_x_window_resize(bd->win, bd->w, bd->h);
      }
+   
    if (bd->post_show)
      {
         if (bd->visible)
           {
-             ecore_x_window_show(bd->win);
-             if (!bd->comp_hidden)
-               ecore_x_composite_window_events_enable(bd->win);
+	     bd->post_job = NULL;
+	     _e_border_show(bd);
           }
      }
    bd->post_show = 0;
@@ -7520,17 +7533,9 @@ _e_border_eval(E_Border *bd)
                      }
                 }
           }
-        ecore_evas_show(bd->bg_ecore_evas);
-        if (bd->post_job)
-          {
-             bd->post_show = 1;
-          }
-        else
-          {
-             if (!bd->comp_hidden)
-               ecore_x_composite_window_events_enable(bd->win);
-             ecore_x_window_show(bd->win);
-          }
+
+	_e_border_show(bd);
+	
         if (bd->cur_mouse_action)
           {
              bd->moveinfo.down.x = bd->x + bd->fx.x;
@@ -8683,9 +8688,18 @@ e_border_comp_hidden_set(E_Border *bd,
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
 
    if (bd->comp_hidden == hidden) return;
+
+   bd->comp_hidden = hidden;
+   
    if (bd->comp_hidden)
-     ecore_x_composite_window_events_disable(bd->win);
+     {
+	ecore_x_composite_window_events_disable(bd->win);
+	ecore_x_window_ignore_set(bd->win, EINA_TRUE);
+     }
    else
-     ecore_x_composite_window_events_enable(bd->win);
+     {
+	ecore_x_composite_window_events_enable(bd->win);
+	ecore_x_window_ignore_set(bd->win, EINA_FALSE);
+     }
 }
 /*vim:ts=8 sw=3 sts=3 expandtab cino=>5n-3f0^-2{2(0W1st0*/
