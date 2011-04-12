@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: http://trac.enlightenment.org/e/\n"
-"POT-Creation-Date: 2011-04-10 01:03-0700\n"
-"PO-Revision-Date: 2011-04-10 11:45+0200\n"
+"POT-Creation-Date: 2011-04-12 04:01-0700\n"
+"PO-Revision-Date: 2011-04-12 13:09+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -1045,8 +1045,7 @@ msgstr "Editor file desktop"
 #: ../src/bin/e_eap_editor.c:674 ../src/bin/e_int_border_prop.c:420
 #: ../src/bin/e_int_border_prop.c:467
 #: ../src/modules/conf_imc/e_int_config_imc.c:891
-#: ../src/modules/conf_menus/e_int_config_menus.c:105
-#: ../src/modules/conf_menus/e_int_config_menus.c:313
+#: ../src/modules/conf_menus/e_int_config_menus.c:242
 msgid "Name"
 msgstr "Nome"
 
@@ -1616,32 +1615,32 @@ msgstr "Informazioni collegamento"
 msgid "Select an Image"
 msgstr "Seleziona un'immagine"
 
-#: ../src/bin/e_gadcon.c:1366 ../src/bin/e_int_border_menu.c:95
+#: ../src/bin/e_gadcon.c:1370 ../src/bin/e_int_border_menu.c:95
 #: ../src/bin/e_int_border_menu.c:595
 msgid "Move to"
 msgstr "Sposta in"
 
-#: ../src/bin/e_gadcon.c:1398 ../src/modules/gadman/e_mod_gadman.c:720
+#: ../src/bin/e_gadcon.c:1402 ../src/modules/gadman/e_mod_gadman.c:720
 msgid "Begin move/resize"
 msgstr "Inizio spostamento/ridimensionamento"
 
-#: ../src/bin/e_gadcon.c:1404
+#: ../src/bin/e_gadcon.c:1408
 msgid "Resizeable"
 msgstr "Ridimensionabile"
 
-#: ../src/bin/e_gadcon.c:1411
+#: ../src/bin/e_gadcon.c:1415
 msgid "Automatically scroll contents"
 msgstr "Scorri automaticamente contenuto"
 
-#: ../src/bin/e_gadcon.c:1422 ../src/modules/gadman/e_mod_gadman.c:731
+#: ../src/bin/e_gadcon.c:1426 ../src/modules/gadman/e_mod_gadman.c:731
 msgid "Plain"
 msgstr "Liscio"
 
-#: ../src/bin/e_gadcon.c:1431 ../src/modules/gadman/e_mod_gadman.c:739
+#: ../src/bin/e_gadcon.c:1435 ../src/modules/gadman/e_mod_gadman.c:739
 msgid "Inset"
 msgstr "Incassato"
 
-#: ../src/bin/e_gadcon.c:1440 ../src/bin/e_int_config_modules.c:54
+#: ../src/bin/e_gadcon.c:1444 ../src/bin/e_int_config_modules.c:54
 #: ../src/modules/conf_borders/e_mod_main.c:17
 #: ../src/modules/conf_colors/e_mod_main.c:17
 #: ../src/modules/conf_fonts/e_mod_main.c:17
@@ -1656,7 +1655,7 @@ msgstr "Incassato"
 msgid "Look"
 msgstr "Aspetto"
 
-#: ../src/bin/e_gadcon.c:1451 ../src/bin/e_widget_config_list.c:66
+#: ../src/bin/e_gadcon.c:1455 ../src/bin/e_widget_config_list.c:66
 #: ../src/modules/conf_applications/e_int_config_apps.c:239
 #: ../src/modules/conf_applications/e_int_config_apps.c:260
 #: ../src/modules/conf_applications/e_int_config_apps.c:280
@@ -1665,7 +1664,7 @@ msgstr "Aspetto"
 msgid "Remove"
 msgstr "Elimina"
 
-#: ../src/bin/e_gadcon.c:1965
+#: ../src/bin/e_gadcon.c:1969
 msgid "Stop move/resize this gadget"
 msgstr "Fine spostamento/ridimensionamento di questo gadget"
 
@@ -2319,9 +2318,8 @@ msgstr "Applicazioni preferite"
 
 #: ../src/bin/e_int_menus.c:127
 #: ../src/modules/conf_applications/e_int_config_apps.c:264
-#: ../src/modules/conf_menus/e_int_config_menus.c:100
-#: ../src/modules/conf_menus/e_int_config_menus.c:298
-#: ../src/modules/conf_menus/e_int_config_menus.c:321
+#: ../src/modules/conf_menus/e_int_config_menus.c:237
+#: ../src/modules/conf_menus/e_int_config_menus.c:260
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:194
 #: ../src/modules/everything-apps/evry_plug_apps.c:1031
 #: ../src/modules/everything-apps/evry_plug_apps.c:1049
@@ -3929,7 +3927,7 @@ msgid "Captions"
 msgstr "Didascalie"
 
 #: ../src/modules/conf_clientlist/e_mod_main.c:17
-#: ../src/modules/conf_menus/e_int_config_menus.c:306
+#: ../src/modules/conf_menus/e_int_config_menus.c:254
 #: ../src/modules/conf_menus/e_mod_main.c:17
 #: ../src/modules/wizard/page_030.c:78
 msgid "Menus"
@@ -4626,7 +4624,7 @@ msgid "Don't Allow"
 msgstr "Non consentire"
 
 #: ../src/modules/conf_display/e_int_config_screensaver.c:204
-#: ../src/modules/conf_menus/e_int_config_menus.c:354
+#: ../src/modules/conf_menus/e_int_config_menus.c:293
 #: ../src/modules/conf_window_focus/e_int_config_focus.c:262
 #: ../src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:186
 msgid "Miscellaneous"
@@ -5221,7 +5219,7 @@ msgstr "Soglia"
 
 #: ../src/modules/conf_interaction/e_mod_main.c:20
 msgid "Touch"
-msgstr "Tocco"
+msgstr "Touchscreen"
 
 #: ../src/modules/conf_interaction/e_mod_main.c:24
 #: ../src/modules/conf_keybindings/e_mod_main.c:25
@@ -5240,7 +5238,7 @@ msgstr "Selettore lingua"
 
 #: ../src/modules/conf_intl/e_int_config_intl.c:929
 #: ../src/modules/conf_intl/e_int_config_intl.c:1365
-#: ../src/modules/conf_menus/e_int_config_menus.c:223
+#: ../src/modules/conf_menus/e_int_config_menus.c:162
 #: ../src/modules/wizard/page_010.c:146 ../src/modules/wizard/page_030.c:121
 msgid "System Default"
 msgstr "Predefinito dal sistema"
@@ -5348,41 +5346,33 @@ msgstr "Sequenza associazione del mouse"
 msgid "Keys"
 msgstr "Tasti"
 
-#: ../src/modules/conf_menus/e_int_config_menus.c:44
+#: ../src/modules/conf_menus/e_int_config_menus.c:38
 #: ../src/modules/conf_menus/e_mod_main.c:18
 msgid "Menu Settings"
 msgstr "Impostazioni del menù"
 
-#: ../src/modules/conf_menus/e_int_config_menus.c:97
-#: ../src/modules/conf_menus/e_int_config_menus.c:295
+#: ../src/modules/conf_menus/e_int_config_menus.c:234
 msgid "Main Menu"
 msgstr "Menù principale"
 
-#: ../src/modules/conf_menus/e_int_config_menus.c:98
-#: ../src/modules/conf_menus/e_int_config_menus.c:296
+#: ../src/modules/conf_menus/e_int_config_menus.c:235
 #: ../src/modules/fileman/e_mod_main.c:350
 msgid "Favorites"
 msgstr "Preferiti"
 
-#: ../src/modules/conf_menus/e_int_config_menus.c:104
-#: ../src/modules/conf_menus/e_int_config_menus.c:312
-#: ../src/modules/conf_window_display/e_int_config_window_display.c:146
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:210
-msgid "Display"
-msgstr "Visualizzazioni"
+#: ../src/modules/conf_menus/e_int_config_menus.c:241
+msgid "Applications Display"
+msgstr "Visualizzazione applicazioni"
 
-#: ../src/modules/conf_menus/e_int_config_menus.c:107
-#: ../src/modules/conf_menus/e_int_config_menus.c:315
+#: ../src/modules/conf_menus/e_int_config_menus.c:244
 msgid "Generic"
 msgstr "Nome generico"
 
-#: ../src/modules/conf_menus/e_int_config_menus.c:109
-#: ../src/modules/conf_menus/e_int_config_menus.c:317
+#: ../src/modules/conf_menus/e_int_config_menus.c:246
 msgid "Comments"
 msgstr "Commenti"
 
-#: ../src/modules/conf_menus/e_int_config_menus.c:113
-#: ../src/modules/conf_menus/e_int_config_menus.c:302
+#: ../src/modules/conf_menus/e_int_config_menus.c:250
 #: ../src/modules/gadman/e_mod_config.c:163
 #: ../src/modules/gadman/e_mod_main.c:27 ../src/modules/gadman/e_mod_main.c:77
 #: ../src/modules/gadman/e_mod_main.c:84
@@ -5391,17 +5381,16 @@ msgstr "Commenti"
 msgid "Gadgets"
 msgstr "Gadget"
 
-#: ../src/modules/conf_menus/e_int_config_menus.c:114
-#: ../src/modules/conf_menus/e_int_config_menus.c:303
+#: ../src/modules/conf_menus/e_int_config_menus.c:251
 msgid "Show gadget settings in top-level"
 msgstr "Mostra impostazioni gadget al livello più alto"
 
-#: ../src/modules/conf_menus/e_int_config_menus.c:325
+#: ../src/modules/conf_menus/e_int_config_menus.c:264
 msgid "Margin"
 msgstr "Margine"
 
-#: ../src/modules/conf_menus/e_int_config_menus.c:327
-#: ../src/modules/conf_menus/e_int_config_menus.c:332
+#: ../src/modules/conf_menus/e_int_config_menus.c:266
+#: ../src/modules/conf_menus/e_int_config_menus.c:271
 #: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:136
 #: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:145
 #: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:154
@@ -5411,38 +5400,38 @@ msgstr "Margine"
 msgid "%2.0f pixels"
 msgstr "%2.0f pixel"
 
-#: ../src/modules/conf_menus/e_int_config_menus.c:330
+#: ../src/modules/conf_menus/e_int_config_menus.c:269
 msgid "Cursor Margin"
 msgstr "Margine cursore"
 
-#: ../src/modules/conf_menus/e_int_config_menus.c:335
+#: ../src/modules/conf_menus/e_int_config_menus.c:274
 msgid "Autoscroll"
 msgstr "Autoscorrimento"
 
-#: ../src/modules/conf_menus/e_int_config_menus.c:339
+#: ../src/modules/conf_menus/e_int_config_menus.c:278
 msgid "Menu Scroll Speed"
 msgstr "Velocità di scorrimento menù"
 
-#: ../src/modules/conf_menus/e_int_config_menus.c:341
+#: ../src/modules/conf_menus/e_int_config_menus.c:280
 #, c-format
 msgid "%5.0f pixels/sec"
 msgstr "%5.0f pixel/sec"
 
-#: ../src/modules/conf_menus/e_int_config_menus.c:344
+#: ../src/modules/conf_menus/e_int_config_menus.c:283
 msgid "Fast Mouse Move Threshhold"
 msgstr "Soglia movimento veloce del mouse"
 
-#: ../src/modules/conf_menus/e_int_config_menus.c:346
+#: ../src/modules/conf_menus/e_int_config_menus.c:285
 #: ../src/modules/conf_window_display/e_int_config_window_display.c:187
 #, c-format
 msgid "%4.0f pixels/sec"
 msgstr "%4.0f pixel/sec"
 
-#: ../src/modules/conf_menus/e_int_config_menus.c:349
+#: ../src/modules/conf_menus/e_int_config_menus.c:288
 msgid "Click Drag Timeout"
 msgstr "Timeout del trascinamento"
 
-#: ../src/modules/conf_menus/e_int_config_menus.c:351
+#: ../src/modules/conf_menus/e_int_config_menus.c:290
 #, c-format
 msgid "%2.2f sec"
 msgstr "%2.2f sec"
@@ -5981,6 +5970,11 @@ msgstr "Segui la finestra"
 #: ../src/modules/conf_window_display/e_int_config_window_display.c:136
 msgid "Resize Geometry"
 msgstr "Geometria ridimensionamento"
+
+#: ../src/modules/conf_window_display/e_int_config_window_display.c:146
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:210
+msgid "Display"
+msgstr "Visualizzazioni"
 
 #: ../src/modules/conf_window_display/e_int_config_window_display.c:152
 msgid "User defined"
