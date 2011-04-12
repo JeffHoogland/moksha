@@ -2598,12 +2598,7 @@ e_border_unfullscreen(E_Border *bd)
         bd->need_fullscreen = 0;
         bd->desk->fullscreen_borders--;
 
-        if (bd->maximized)
-          {
-             e_border_maximize(bd, (e_config->maximize_policy & E_MAXIMIZE_TYPE) |
-                                    (bd->maximized & E_MAXIMIZE_DIRECTION));
-          }
-        else
+        if (!bd->maximized)
           {
              if ((screen_size.width != -1) && (screen_size.height != -1))
                {
