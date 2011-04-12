@@ -2485,8 +2485,6 @@ e_border_fullscreen(E_Border    *bd,
 
    if ((bd->shaded) || (bd->shading)) return;
    ecore_x_window_shadow_tree_flush();
-   if (bd->maximized)
-     e_border_unmaximize(bd, E_MAXIMIZE_BOTH);
    if (bd->new_client)
      {
         bd->need_fullscreen = 1;
@@ -2496,12 +2494,15 @@ e_border_fullscreen(E_Border    *bd,
      {
         bd->pre_res_change.valid = 0;
 
-        bd->saved.x = bd->x - bd->zone->x;
-        bd->saved.y = bd->y - bd->zone->y;
-        bd->saved.w = bd->client.w;
-        bd->saved.h = bd->client.h;
-        bd->saved.zone = bd->zone->num;
-        e_hints_window_size_set(bd);
+        if (!bd->maximized)
+          {
+             bd->saved.x = bd->x - bd->zone->x;
+             bd->saved.y = bd->y - bd->zone->y;
+             bd->saved.w = bd->client.w;
+             bd->saved.h = bd->client.h;
+             bd->saved.zone = bd->zone->num;
+             e_hints_window_size_set(bd);
+          }
 
         bd->client_inset.l = 0;
         bd->client_inset.r = 0;
@@ -2597,16 +2598,24 @@ e_border_unfullscreen(E_Border *bd)
         bd->need_fullscreen = 0;
         bd->desk->fullscreen_borders--;
 
-        if ((screen_size.width != -1) && (screen_size.height != -1))
+        if (bd->maximized)
           {
-             ecore_x_randr_screen_primary_output_size_set(bd->zone->container->manager->root, screen_size_index);
-             screen_size.width = -1;
-             screen_size.height = -1;
+             e_border_maximize(bd, (e_config->maximize_policy & E_MAXIMIZE_TYPE) |
+                                    (bd->maximized & E_MAXIMIZE_DIRECTION));
           }
-        e_border_move_resize(bd,
-                             bd->saved.x + bd->zone->x,
-                             bd->saved.y + bd->zone->y,
-                             bd->saved.w, bd->saved.h);
+        else
+          {
+             if ((screen_size.width != -1) && (screen_size.height != -1))
+               {
+                  ecore_x_randr_screen_primary_output_size_set(bd->zone->container->manager->root, screen_size_index);
+                  screen_size.width = -1;
+                  screen_size.height = -1;
+               }
+             e_border_move_resize(bd,
+                                  bd->saved.x + bd->zone->x,
+                                  bd->saved.y + bd->zone->y,
+                                  bd->saved.w, bd->saved.h);
+          }
 
         e_border_layer_set(bd, bd->saved.layer);
 
