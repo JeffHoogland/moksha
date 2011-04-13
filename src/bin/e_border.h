@@ -489,6 +489,7 @@ struct _E_Border
       int x, y, w, h;
       unsigned int layer;
       int zone;
+	  E_Maximize maximized;
    } saved;
 
    struct {
