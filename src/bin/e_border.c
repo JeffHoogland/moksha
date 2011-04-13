@@ -200,6 +200,7 @@ static void _e_border_client_move_resize_send(E_Border *bd);
 static void _e_border_frame_replace(E_Border *bd,
 				    Eina_Bool argb);
 
+static void _e_border_shape_input_rectangle_set(E_Border* bd);
 static void _e_border_show(E_Border *bd);
 static void _e_border_hide(E_Border *bd);
 
@@ -599,6 +600,7 @@ e_border_new(E_Container   *con,
    bd->changes.icon = 1;
    bd->changes.size = 1;
    bd->changes.shape = 1;
+   bd->changes.shape_input = 1;
    
    bd->offer_resistance = 1;
 
@@ -1304,6 +1306,10 @@ _e_border_move_resize_internal(E_Border *bd,
      {
         bd->need_shape_merge = 1;
         bd->need_shape_export = 1;
+     }
+   if (bd->shaped_input)
+     {
+        bd->need_shape_merge = 1;
      }
 
    if (bd->internal_ecore_evas)
@@ -2074,15 +2080,15 @@ e_border_shade(E_Border   *bd,
              bd->need_shape_merge = 1;
              bd->need_shape_export = 1;
           }
+        if (bd->shaped_input)
+          {
+             bd->need_shape_merge = 1;
+          }
+        
         bd->changes.size = 1;
         bd->shaded = 1;
         bd->changes.shaded = 1;
         bd->changed = 1;
-        if ((bd->shaped) || (bd->client.shaped))
-          {
-             bd->need_shape_merge = 1;
-             bd->need_shape_export = 1;
-          }
         edje_object_signal_emit(bd->bg_object, "e,state,shaded", "e");
         e_border_frame_recalc(bd);
         ev = E_NEW(E_Event_Border_Resize, 1);
@@ -2182,15 +2188,15 @@ e_border_unshade(E_Border   *bd,
              bd->need_shape_merge = 1;
              bd->need_shape_export = 1;
           }
+        if (bd->shaped_input)
+          {
+             bd->need_shape_merge = 1;
+          }
+        
         bd->changes.size = 1;
         bd->shaded = 0;
         bd->changes.shaded = 1;
         bd->changed = 1;
-        if ((bd->shaped) || (bd->client.shaped))
-          {
-             bd->need_shape_merge = 1;
-             bd->need_shape_export = 1;
-          }
         edje_object_signal_emit(bd->bg_object, "e,state,unshaded", "e");
         e_border_frame_recalc(bd);
         ev = E_NEW(E_Event_Border_Resize, 1);
@@ -2876,6 +2882,68 @@ e_border_focused_get(void)
    return focused;
 }
 
+static void 
+_e_border_shape_input_rectangle_set(E_Border* bd)
+{
+   if (!bd) return;
+
+   if (bd->shaped_input)
+     {
+        Ecore_X_Rectangle rects[4];
+        Ecore_X_Window twin, twin2;
+        int x, y;
+        
+        twin = ecore_x_window_override_new(bd->zone->container->scratch_win, 
+                                           0, 0, bd->w, bd->h);
+        rects[0].x = 0;
+        rects[0].y = 0;
+        rects[0].width = bd->w;
+        rects[0].height = bd->client_inset.t;
+        rects[1].x = 0;
+        rects[1].y = bd->client_inset.t;
+        rects[1].width = bd->client_inset.l;
+        rects[1].height = bd->h - bd->client_inset.t - bd->client_inset.b;
+        rects[2].x = bd->w - bd->client_inset.r;
+        rects[2].y = bd->client_inset.t;
+        rects[2].width = bd->client_inset.r;
+        rects[2].height = bd->h - bd->client_inset.t - bd->client_inset.b;
+        rects[3].x = 0;
+        rects[3].y = bd->h - bd->client_inset.b;
+        rects[3].width = bd->w;
+        rects[3].height = bd->client_inset.b;
+        ecore_x_window_shape_input_rectangles_set(twin, rects, 4);
+        
+        twin2 = ecore_x_window_override_new
+           (bd->zone->container->scratch_win, 0, 0,
+               bd->w - bd->client_inset.l - bd->client_inset.r,
+               bd->h - bd->client_inset.t - bd->client_inset.b);
+        x = 0;
+        y = 0;
+        if ((bd->shading) || (bd->shaded))
+          {
+             if (bd->shade.dir == E_DIRECTION_UP)
+                y = bd->h - bd->client_inset.t - bd->client_inset.b - 
+                bd->client.h;
+             else if (bd->shade.dir == E_DIRECTION_LEFT)
+                x = bd->w - bd->client_inset.l - bd->client_inset.r - 
+                bd->client.w;
+          }
+        ecore_x_window_shape_input_window_set_xy(twin2, bd->client.win,
+                                                 x, y);
+        ecore_x_window_shape_input_rectangle_clip(twin2, 0, 0,
+                                                  bd->w - bd->client_inset.l - bd->client_inset.r,
+                                                  bd->h - bd->client_inset.t - bd->client_inset.b);
+        ecore_x_window_shape_input_window_add_xy(twin, twin2,
+                                                 bd->client_inset.l,
+                                                 bd->client_inset.t);
+        ecore_x_window_shape_input_window_set(bd->win, twin);
+        ecore_x_window_free(twin2);
+        ecore_x_window_free(twin);
+     }
+   else
+      ecore_x_composite_window_events_enable(bd->win);
+}
+
 EAPI void
 e_border_idler_before(void)
 {
@@ -2939,7 +3007,6 @@ e_border_idler_before(void)
 		       _e_border_show(bd);
 		       bd->changes.visible = 0;
 		    }
-		  
                }
              e_container_border_list_free(bl);
           }
@@ -3010,7 +3077,9 @@ _e_border_show(E_Border *bd)
    
    if (!bd->comp_hidden)
      {
-	ecore_x_composite_window_events_enable(bd->win);
+        _e_border_shape_input_rectangle_set(bd);
+// not anymore        
+//	ecore_x_composite_window_events_enable(bd->win);
 	ecore_x_window_ignore_set(bd->win, EINA_FALSE);
      }
 			    
@@ -3813,6 +3882,10 @@ e_border_frame_recalc(E_Border *bd)
      {
         bd->need_shape_merge = 1;
         bd->need_shape_export = 1;
+     }
+   if (bd->shaped_input)
+     {
+        bd->need_shape_merge = 1;
      }
    _e_border_client_move_resize_send(bd);
 }
@@ -4991,6 +5064,20 @@ _e_border_cb_window_shape(void *data  __UNUSED__,
 
    e = ev;
    bd = e_border_find_by_client_window(e->win);
+
+   if (e->type == ECORE_X_SHAPE_INPUT)
+     {
+        if (bd)
+          {
+             bd->need_shape_merge = 1;
+// YYY             bd->shaped_input = 1;
+             bd->changes.shape_input = 1;
+             bd->changed = 1;
+          }
+
+        return ECORE_CALLBACK_PASS_ON;
+     }
+
    if (bd)
      {
         bd->changes.shape = 1;
@@ -6536,9 +6623,60 @@ _e_border_eval0(E_Border *bd)
           }
         else
           {
+             // FIXME: no rects i think can mean... totally empty window
              bd->client.shaped = 0;
              if (!bd->bordername)
                bd->client.border.changed = 1;
+          }
+        bd->need_shape_merge = 1;
+     }
+   if (bd->changes.shape_input)
+     {
+        Ecore_X_Rectangle *rects;
+        int num;
+        
+        bd->changes.shape_input = 0;
+        rects = ecore_x_window_shape_input_rectangles_get(bd->client.win, &num);
+        if (rects)
+          {
+             int cw = 0, ch = 0;
+
+             /* This doesn't fix the race, but makes it smaller. we detect
+              * this and if cw and ch != client w/h then mark this as needing
+              * a shape change again to fixup next event loop.
+              */
+             ecore_x_window_size_get(bd->client.win, &cw, &ch);
+             if ((cw != bd->client.w) || (ch != bd->client.h))
+                bd->changes.shape_input = 1;
+             if ((num == 1) &&
+                 (rects[0].x == 0) &&
+                 (rects[0].y == 0) &&
+                 ((int)rects[0].width == cw) &&
+                 ((int)rects[0].height == ch))
+               {
+                  if (bd->shaped_input)
+                    {
+                       bd->shaped_input = 0;
+                       if (!bd->bordername)
+                          bd->client.border.changed = 1;
+                    }
+               }
+             else
+               {
+                  if (!bd->shaped_input)
+                    {
+                       bd->shaped_input = 1;
+                       if (!bd->bordername)
+                          bd->client.border.changed = 1;
+                    }
+               }
+             free(rects);
+          }
+        else
+          {
+             bd->shaped_input = 1;
+             if (!bd->bordername)
+                bd->client.border.changed = 1;
           }
         bd->need_shape_merge = 1;
      }
@@ -7379,12 +7517,14 @@ _e_border_eval(E_Border *bd)
 
    if (bd->need_shape_merge)
      {
+        _e_border_shape_input_rectangle_set(bd);
         if ((bd->shaped) || (bd->client.shaped))
           {
              Ecore_X_Window twin, twin2;
              int x, y;
 
-             twin = ecore_x_window_override_new(bd->win, 0, 0, bd->w, bd->h);
+             twin = ecore_x_window_override_new
+                (bd->zone->container->scratch_win, 0, 0, bd->w, bd->h);
              if (bd->shaped)
                ecore_x_window_shape_window_set(twin, bd->bg_win);
              else
@@ -7409,9 +7549,10 @@ _e_border_eval(E_Border *bd)
                   rects[3].height = bd->client_inset.b;
                   ecore_x_window_shape_rectangles_set(twin, rects, 4);
                }
-             twin2 = ecore_x_window_override_new(bd->win, 0, 0,
-                                                 bd->w - bd->client_inset.l - bd->client_inset.r,
-                                                 bd->h - bd->client_inset.t - bd->client_inset.b);
+             twin2 = ecore_x_window_override_new
+                (bd->zone->container->scratch_win, 0, 0,
+                    bd->w - bd->client_inset.l - bd->client_inset.r,
+                    bd->h - bd->client_inset.t - bd->client_inset.b);
              x = 0;
              y = 0;
              if ((bd->shading) || (bd->shaded))
@@ -7903,6 +8044,10 @@ _e_border_shade_animator(void *data)
      {
         bd->need_shape_merge = 1;
         bd->need_shape_export = 1;
+     }
+   if (bd->shaped_input)
+     {
+        bd->need_shape_merge = 1;
      }
    bd->changes.size = 1;
    bd->changed = 1;
@@ -8702,7 +8847,7 @@ e_border_comp_hidden_set(E_Border *bd,
      }
    else
      {
-	ecore_x_composite_window_events_enable(bd->win);
+        _e_border_shape_input_rectangle_set(bd);
 	ecore_x_window_ignore_set(bd->win, EINA_FALSE);
      }
 }

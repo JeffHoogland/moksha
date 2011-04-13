@@ -134,6 +134,9 @@ e_container_new(E_Manager *man)
    snprintf(name, sizeof(name), _("Container %d"), con->num);
    con->name = eina_stringshare_add(name);
 
+   /* create a scratch window for putting stuff into */
+   con->scratch_win = ecore_x_window_override_new(con->win, 0, 0, 7, 7);
+   
    /* init layers */
    for (i = 0; i < 7; i++)
      {
@@ -931,24 +934,25 @@ static void
 _e_container_free(E_Container *con)
 {
    Eina_List *l;
+   int i;
 
+   ecore_x_window_free(con->scratch_win);
    ecore_x_window_free(con->event_win);
    /* We can't use e_object_del here, because border adds a ref to itself
     * when it is removed, and the ref is never unref'ed */
+   for (i = 0; i < 7; i++)
+     {
+        ecore_x_window_free(con->layers[i].win);
 /* FIXME: had to disable this as it was freeing already freed items during
  * looping (particularly remember/lock config dialogs). this is just
  * disabled until we put in some special handling for this
  *
-   int i;
-
-   for (i = 0; i < 7; i++)
-     {
 	EINA_LiST_FOREACH(con->layers[i].clients, l, tmp)
 	  {
 	     e_object_free(E_OBJECT(tmp));
 	  }
-     }
  */   
+     }
    l = con->zones;
    con->zones = NULL;
    E_FREE_LIST(l, e_object_del);
