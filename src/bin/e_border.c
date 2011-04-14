@@ -601,7 +601,7 @@ e_border_new(E_Container   *con,
    bd->changes.size = 1;
    bd->changes.shape = 1;
    bd->changes.shape_input = 1;
-   
+
    bd->offer_resistance = 1;
 
    /* just to friggin make java happy - we're DELAYING the reparent until
@@ -980,7 +980,7 @@ _e_border_frame_replace(E_Border *bd, Eina_Bool argb)
    Ecore_X_Window win;
    Ecore_Evas *bg_ecore_evas;
    char buf[PATH_MAX];
-   
+
    bd->argb = argb;
 
    win = bd->win;
@@ -996,7 +996,7 @@ _e_border_frame_replace(E_Border *bd, Eina_Bool argb)
 
    if (bd->icon_object)
      evas_object_del(bd->icon_object);
-   
+
    evas_object_del(bd->bg_object);
    e_canvas_del(bg_ecore_evas);
    ecore_evas_free(bg_ecore_evas);
@@ -1014,7 +1014,7 @@ _e_border_frame_replace(E_Border *bd, Eina_Bool argb)
 					      bd->x, bd->y, bd->w, bd->h);
         ecore_x_window_shape_events_select(bd->win, 1);
      }
-   
+
    ecore_x_window_configure(bd->win,
 			    ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
 			    ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
@@ -1031,7 +1031,7 @@ _e_border_frame_replace(E_Border *bd, Eina_Bool argb)
 
    e_canvas_add(bd->bg_ecore_evas);
    ecore_x_window_reparent(bd->event_win, bd->win, 0, 0);
-   
+
    bd->bg_evas = ecore_evas_get(bd->bg_ecore_evas);
    ecore_evas_name_class_set(bd->bg_ecore_evas, "E", "Frame_Window");
    ecore_evas_title_set(bd->bg_ecore_evas, "Enlightenment Frame");
@@ -1052,13 +1052,13 @@ _e_border_frame_replace(E_Border *bd, Eina_Bool argb)
 	ecore_evas_show(bd->bg_ecore_evas);
 	ecore_x_window_show(bd->win);
      }
-   
+
    bd->bg_object = edje_object_add(bd->bg_evas);
    snprintf(buf, sizeof(buf), "e/widgets/border/%s/border", bd->client.border.name);
    e_theme_edje_object_set(bd->bg_object, "base/theme/borders", buf);
 
    bd->icon_object = e_border_icon_add(bd, bd->bg_evas);
-   
+
    /* cleanup old frame */
    ecore_x_window_free(win);
 }
@@ -1265,7 +1265,7 @@ e_border_fx_offset(E_Border *bd,
 
    bd->changes.pos = 1;
    bd->changed = 1;
-   
+
    if (bd->moving) _e_border_move_update(bd);
 }
 
@@ -1915,7 +1915,7 @@ e_border_focus_set(E_Border *bd,
                    int       set)
 {
    E_Border *unfocus = NULL;
-   
+
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    /* note: this is here as it seems there are enough apps that do not even
@@ -1969,17 +1969,17 @@ e_border_focus_set(E_Border *bd,
 	if ((!bd->focused) || (focus_next && (bd != eina_list_data_get(focus_next))))
 	  {
 	     Eina_List *l;
-	     
+
 	     if ((l = eina_list_data_find_list(focus_next, bd)))
-	       focus_next = eina_list_promote_list(focus_next, l); 
+	       focus_next = eina_list_promote_list(focus_next, l);
 	     else
 	       focus_next = eina_list_prepend(focus_next, bd);
 	     return;
 	  }
      }
    else if ((focus) && (!bd->focused))
-     {		
-	E_Event_Border_Focus_In *ev;  
+     {
+	E_Event_Border_Focus_In *ev;
 
 	if (focused)
 	  unfocus = focused;
@@ -2014,7 +2014,7 @@ e_border_focus_set(E_Border *bd,
    else if ((!focus) && (bd->focused))
      {
 	unfocus = bd;
-	
+
 	/* should always be the case. anyway */
 	if (bd == focused)
 	  focused = NULL;
@@ -2026,7 +2026,7 @@ e_border_focus_set(E_Border *bd,
    if ((unfocus) &&
        (!e_object_is_del(E_OBJECT(unfocus)) &&
 	(e_object_ref_get(E_OBJECT(unfocus)) > 0)))
-     {   
+     {
 	E_Event_Border_Focus_Out *ev;
 
 	bd = unfocus;
@@ -2120,7 +2120,7 @@ e_border_shade(E_Border   *bd,
           {
              bd->need_shape_merge = 1;
           }
-        
+
         bd->changes.size = 1;
         bd->shaded = 1;
         bd->changes.shaded = 1;
@@ -2228,7 +2228,7 @@ e_border_unshade(E_Border   *bd,
           {
              bd->need_shape_merge = 1;
           }
-        
+
         bd->changes.size = 1;
         bd->shaded = 0;
         bd->changes.shaded = 1;
@@ -2924,7 +2924,7 @@ e_border_focused_get(void)
    return focused;
 }
 
-static void 
+static void
 _e_border_shape_input_rectangle_set(E_Border* bd)
 {
    if (!bd) return;
@@ -2934,8 +2934,8 @@ _e_border_shape_input_rectangle_set(E_Border* bd)
         Ecore_X_Rectangle rects[4];
         Ecore_X_Window twin, twin2;
         int x, y;
-        
-        twin = ecore_x_window_override_new(bd->zone->container->scratch_win, 
+
+        twin = ecore_x_window_override_new(bd->zone->container->scratch_win,
                                            0, 0, bd->w, bd->h);
         rects[0].x = 0;
         rects[0].y = 0;
@@ -2954,7 +2954,7 @@ _e_border_shape_input_rectangle_set(E_Border* bd)
         rects[3].width = bd->w;
         rects[3].height = bd->client_inset.b;
         ecore_x_window_shape_input_rectangles_set(twin, rects, 4);
-        
+
         twin2 = ecore_x_window_override_new
            (bd->zone->container->scratch_win, 0, 0,
                bd->w - bd->client_inset.l - bd->client_inset.r,
@@ -2964,10 +2964,10 @@ _e_border_shape_input_rectangle_set(E_Border* bd)
         if ((bd->shading) || (bd->shaded))
           {
              if (bd->shade.dir == E_DIRECTION_UP)
-                y = bd->h - bd->client_inset.t - bd->client_inset.b - 
+                y = bd->h - bd->client_inset.t - bd->client_inset.b -
                 bd->client.h;
              else if (bd->shade.dir == E_DIRECTION_LEFT)
-                x = bd->w - bd->client_inset.l - bd->client_inset.r - 
+                x = bd->w - bd->client_inset.l - bd->client_inset.r -
                 bd->client.w;
           }
         ecore_x_window_shape_input_window_set_xy(twin2, bd->client.win,
@@ -3026,7 +3026,7 @@ e_border_idler_before(void)
 		    {
 		       _e_border_show(bd);
 		       bd->changes.visible = 0;
-		    }		  
+		    }
                }
              e_container_border_list_free(bl);
 
@@ -3057,7 +3057,7 @@ e_border_idler_before(void)
    if (focus_next)
      {
 	E_Border *bd = NULL, *bd2;
-	
+
 	EINA_LIST_FREE(focus_next, bd2)
 	  if ((!bd) && (bd2->visible)) bd = bd2;
 
@@ -3071,9 +3071,9 @@ e_border_idler_before(void)
 #endif
 	if (bd == focused)
 	  return;
-	
+
 	focus_time = ecore_x_current_time_get();
-	
+
 	if ((bd->client.icccm.take_focus) &&
 	    (bd->client.icccm.accepts_focus))
 	  {
@@ -3108,29 +3108,29 @@ static Ecore_X_Rectangle action_orig;
 
 static void
 _e_border_show(E_Border *bd)
-{			    
+{
    ecore_evas_show(bd->bg_ecore_evas);
-   
+
    if (bd->post_job)
-     {	
+     {
 	bd->post_show = 1;
 	return;
      }
-   
+
    if (!bd->comp_hidden)
      {
         _e_border_shape_input_rectangle_set(bd);
-// not anymore        
+// not anymore
 //	ecore_x_composite_window_events_enable(bd->win);
 	ecore_x_window_ignore_set(bd->win, EINA_FALSE);
      }
-			    
+
    ecore_x_window_show(bd->win);
 }
 
 static void
 _e_border_hide(E_Border *bd)
-{   
+{
    if (!e_manager_comp_evas_get(bd->zone->container->manager))
      {
 	ecore_x_window_hide(bd->win);
@@ -4341,7 +4341,7 @@ _e_border_del(E_Border *bd)
      focused = NULL;
 
    focus_next = eina_list_remove(focus_next, bd);
-   
+
    if (bd->fullscreen) bd->desk->fullscreen_borders--;
 
    if ((drag_border) && (drag_border->data == bd))
@@ -6125,7 +6125,7 @@ _e_border_post_move_resize_job(void *data)
      {
         ecore_x_window_resize(bd->win, bd->w, bd->h);
      }
-   
+
    if (bd->post_show)
      {
         if (bd->visible)
@@ -6675,7 +6675,7 @@ _e_border_eval0(E_Border *bd)
      {
         Ecore_X_Rectangle *rects;
         int num;
-        
+
         bd->changes.shape_input = 0;
         rects = ecore_x_window_shape_input_rectangles_get(bd->client.win, &num);
         if (rects)
@@ -7724,7 +7724,7 @@ _e_border_eval(E_Border *bd)
           }
 
 	_e_border_show(bd);
-	
+
         if (bd->cur_mouse_action)
           {
              bd->moveinfo.down.x = bd->x + bd->fx.x;
@@ -7837,7 +7837,7 @@ _e_border_eval(E_Border *bd)
             (bd->want_focus))
           {
              bd->want_focus = 0;
-#ifdef INOUTDEBUG_FOCUS	     
+#ifdef INOUTDEBUG_FOCUS
 	     printf("__________ focus new window _________\n");
 #endif
 	     e_border_focus_set_with_pointer(bd);
@@ -7849,7 +7849,7 @@ _e_border_eval(E_Border *bd)
                   (e_border_find_by_client_window(bd->client.icccm.transient_for) ==
                    e_border_focused_get())))
                {
-#ifdef INOUTDEBUG_FOCUS	     
+#ifdef INOUTDEBUG_FOCUS
 		  printf("__________ focus new dialog _________\n");
 #endif
 
@@ -7858,7 +7858,7 @@ _e_border_eval(E_Border *bd)
           }
         else
           {
-#ifdef INOUTDEBUG_FOCUS	     
+#ifdef INOUTDEBUG_FOCUS
 	     printf("__________ window takes focus _________\n");
 #endif
              /* focus window by default when it is the only one on desk */
@@ -8574,7 +8574,7 @@ _e_border_cb_kill_timer(void *data)
    E_Border *bd;
 
    bd = data;
-// dont wait until it's hung -    
+// dont wait until it's hung -
 //   if (bd->hung)
 //     {
         if (bd->client.netwm.pid > 1)
@@ -8877,7 +8877,7 @@ e_border_comp_hidden_set(E_Border *bd,
    if (bd->comp_hidden == hidden) return;
 
    bd->comp_hidden = hidden;
-   
+
    if (bd->comp_hidden)
      {
 	ecore_x_composite_window_events_disable(bd->win);
