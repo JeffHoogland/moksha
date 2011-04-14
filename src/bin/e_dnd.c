@@ -658,7 +658,7 @@ _e_drag_win_get(const E_Drop_Handler *h, int xdnd)
 	     /* Not quite sure about this, probably need to set up 
 	      * E_Container to pass DND events from event_win to bg_win. */
 	     // hwin = ((E_Zone *)(h->obj))->container->event_win;
-	     hwin = ((E_Zone *)(h->obj))->container->bg_win;
+	     hwin = ((E_Zone *)(h->obj))->container->event_win;
 	     break;
 	   case E_BORDER_TYPE:
 	     hwin = ((E_Border *)(h->obj))->event_win;

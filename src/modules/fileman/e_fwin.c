@@ -301,7 +301,7 @@ e_fwin_zone_new(E_Zone     *zone,
 
    o = e_scrollframe_add(zone->container->bg_evas);
    ecore_x_icccm_state_set(zone->container->bg_win, ECORE_X_WINDOW_STATE_HINT_NORMAL);
-   e_drop_xdnd_register_set(zone->container->bg_win, 1);
+   e_drop_xdnd_register_set(zone->container->event_win, 1);
    e_scrollframe_custom_theme_set(o, "base/theme/fileman",
                                   "e/fileman/desktop/scrollframe");
    /* FIXME: this theme object will have more versions and options later
