@@ -300,7 +300,7 @@ AC_ARG_ENABLE([device-udev],
   AC_CACHE_VAL([e_cv_want_device_udev], [e_cv_want_device_udev=yes]))
 
 if test "x$e_cv_want_device_udev" != "xno";then
-  PKG_CHECK_EXISTS([eeze >= 1.0.0],
+  PKG_CHECK_EXISTS([eeze >= 1.0.999],
     [
       device_backend=eeze
       AC_DEFINE_UNQUOTED([HAVE_EEZE],[1],[enable udev support])
@@ -315,14 +315,14 @@ test "x${device_backend}" = "xeeze" || AC_DEFINE_UNQUOTED([HAVE_HAL],[1],[enable
 
 DBUS_MOUNT_CONFIG=1
 dbus_mount="dbus-1"
-hal_mount="ehal >= 1.0.0, edbus >= 1.0.0"
-udisks_mount="eukit >= 1.0.0"
+hal_mount="ehal >= 1.0.999, edbus >= 1.0.999"
+udisks_mount="eukit >= 1.0.999"
 AC_ARG_ENABLE([mount-hal],
   AS_HELP_STRING([--enable-mount-hal],[enable hal mounting support @<:@default=enabled@:>@]),
   [e_cv_want_mount_hal=$enableval],
   AC_CACHE_VAL([e_cv_want_mount_hal], [e_cv_want_mount_hal=yes]))
 if test "x$e_cv_want_mount_hal" != "xno";then
-  PKG_CHECK_EXISTS([ehal >= 1.0.0],
+  PKG_CHECK_EXISTS([ehal >= 1.0.999],
     [],[
       hal_mount=
       AC_MSG_NOTICE([HAL mounting disabled])
@@ -337,7 +337,7 @@ AC_ARG_ENABLE([mount-udisks],
   [e_cv_want_mount_udisks=$enableval],
   AC_CACHE_VAL([e_cv_want_mount_udisks], [e_cv_want_mount_udisks=yes]))
 if test "x$e_cv_want_mount_udisks" != "xno";then
-  PKG_CHECK_EXISTS([eukit >= 1.0.0],
+  PKG_CHECK_EXISTS([eukit >= 1.0.999],
     [],[
       udisks_mount=
       AC_MSG_NOTICE([udisks mounting disabled])
@@ -394,88 +394,112 @@ EFL_CHECK_DOXYGEN([build_doc="yes"], [build_doc="no"])
 
 # explicit libs for each binary to reduce linkage requirements
 PKG_CHECK_MODULES(E_REMOTE, [
-  ecore >= 1.0.0
-  ecore-ipc >= 1.0.0
+  ecore >= 1.0.999
+  ecore-ipc >= 1.0.999
   eet >= 1.4.0
-  eina >= 1.0.0
+  eina >= 1.0.999
 ])
 
 PKG_CHECK_MODULES(E_IMC, [
-  ecore-file >= 1.0.0
+  ecore-file >= 1.0.999
   eet >= 1.4.0
-  eina >= 1.0.0
+  eina >= 1.0.999
 ])
 
 PKG_CHECK_MODULES(E_THUMB, [
-  eina >= 1.0.0
-  evas >= 1.0.0
-  ecore >= 1.0.0
-  ecore-evas >= 1.0.0
-  edje >= 1.0.0
-  ecore-file >= 1.0.0
-  ecore-ipc >= 1.0.0
+  eina >= 1.0.999
+  evas >= 1.0.999
+  ecore >= 1.0.999
+  ecore-evas >= 1.0.999
+  edje >= 1.0.999
+  ecore-file >= 1.0.999
+  ecore-ipc >= 1.0.999
   eet >= 1.4.0
-  efreet >= 1.0.0
+  efreet >= 1.0.999
 ])
 
-efm_requires="ecore >= 1.0.0 ecore-file >= 1.0.0 ecore-ipc >= 1.0.0 eet >= 1.4.0 efreet >= 1.0.0 eina >= 1.0.0"
+efm_requires="\
+ecore >= 1.0.999 \
+ecore-file >= 1.0.999 \
+ecore-ipc >= 1.0.999 \
+eet >= 1.4.0 \
+efreet >= 1.0.999 \
+eina >= 1.0.999"
 efm_requires+=" $eeze_mount $dbus_mount $hal_mount $udisks_mount"
 
 PKG_CHECK_MODULES(E_FM, [$efm_requires])
 
 PKG_CHECK_MODULES(E_FM_OP, [
-  ecore >= 1.0.0
-  ecore-file >= 1.0.0
-  eina >= 1.0.0
+  ecore >= 1.0.999
+  ecore-file >= 1.0.999
+  eina >= 1.0.999
 ])
 
 PKG_CHECK_MODULES(E_FM_OPEN, [
-  ecore >= 1.0.0
-  ecore-ipc >= 1.0.0
+  ecore >= 1.0.999
+  ecore-ipc >= 1.0.999
   eet >= 1.4.0
-  eina >= 1.0.0
+  eina >= 1.0.999
 ])
 
 PKG_CHECK_MODULES(E_SYS, [
-  eina >= 1.0.0
+  eina >= 1.0.999
 ])
 
 PKG_CHECK_MODULES(E_INIT, [
-  evas >= 1.0.0
-  ecore >= 1.0.0
-  ecore-evas >= 1.0.0
-  ecore-x >= 1.0.0
-  edje >= 1.0.0
-  ecore-ipc >= 1.0.0
-  eina >= 1.0.0
+  evas >= 1.0.999
+  ecore >= 1.0.999
+  ecore-evas >= 1.0.999
+  ecore-x >= 1.0.999
+  edje >= 1.0.999
+  ecore-ipc >= 1.0.999
+  eina >= 1.0.999
 ])
 
 PKG_CHECK_MODULES(E, [
-  evas >= 1.0.0
-  ecore >= 1.0.0
-  ecore-x >= 1.0.0
-  ecore-evas >= 1.0.0
-  ecore-input >= 1.0.0
-  ecore-input-evas >= 1.0.0
-  ecore-con >= 1.0.0
-  ecore-ipc >= 1.0.0
-  ecore-file >= 1.0.0
+  evas >= 1.0.999
+  ecore >= 1.0.999
+  ecore-x >= 1.0.999
+  ecore-evas >= 1.0.999
+  ecore-input >= 1.0.999
+  ecore-input-evas >= 1.0.999
+  ecore-con >= 1.0.999
+  ecore-ipc >= 1.0.999
+  ecore-file >= 1.0.999
   eet >= 1.4.0
-  edje >= 1.0.0
-  efreet >= 1.0.0
-  efreet-mime >= 1.0.0
-  efreet-trash >= 1.0.0
-  eina >= 1.0.0
+  edje >= 1.0.999
+  efreet >= 1.0.999
+  efreet-mime >= 1.0.999
+  efreet-trash >= 1.0.999
+  eina >= 1.0.999
   dbus-1
-  edbus >= 1.0.0
+  edbus >= 1.0.999
   $hal_mount
   $eeze_mount
   $udisks_mount
   $device_backend
 ])
-requirements_e="evas >= 1.0.0 ecore >= 1.0.0 ecore-x >= 1.0.0 ecore-evas >= 1.0.0 ecore-con >= 1.0.0 ecore-ipc >= 1.0.0 ecore-file >= 1.0.0 eet >= 1.4.0 edje >= 1.0.0 efreet >= 1.0.0 efreet-mime >= 1.0.0 eina >= 1.0.0 dbus-1 edbus >= 1.0.0 $hal_mount $udisks_mount $eeze_mount $device_backend"
+requirements_e="\
+evas >= 1.0.999 \
+ecore >= 1.0.999 \
+ecore-x >= 1.0.999 \
+ecore-evas >= 1.0.999 \
+ecore-con >= 1.0.999 \
+ecore-ipc >= 1.0.999 \
+ecore-file >= 1.0.999 \
+eet >= 1.4.0 \
+edje >= 1.0.999 \
+efreet >= 1.0.999 \
+efreet-mime >= 1.0.999 \
+eina >= 1.0.999 \
+dbus-1 \
+edbus >= 1.0.999 \
+$hal_mount \
+$udisks_mount \
+$eeze_mount \
+$device_backend"
 
-AC_E_CHECK_PKG(ECORE_IMF, [ecore-imf >= 1.0.0 ecore-imf-evas >= 1.0.0], [], [:])
+AC_E_CHECK_PKG(ECORE_IMF, [ ecore-imf >= 1.0.999 ecore-imf-evas >= 1.0.999 ], [], [:])
 
 e_libs=$E_LIBS" "$LIBINTL" "$fnmatch_libs" "$ECORE_IMF_LIBS" "$execinfo_libs
 e_cflags="-DUSE_E_CONFIG_H "$E_CFLAGS" "$ECORE_IMF_CFLAGS
@@ -525,7 +549,7 @@ AC_DEFINE(E_INTERNAL, 1, "This define can be used to wrap internal E stuff, as c
 AM_CONDITIONAL(HAVE_BATTERY, false)
 define([CHECK_MODULE_BATTERY],
 [
-  AC_E_CHECK_PKG(BATTERY, [ecore >= 1.0.0 ecore-file >= 1.0.0 ecore-con >= 1.0.0 eina >= 1.0.0], [], [BATTERY=false])
+  AC_E_CHECK_PKG(BATTERY, [ ecore >= 1.0.999 ecore-file >= 1.0.999 ecore-con >= 1.0.999 eina >= 1.0.999 ], [], [BATTERY=false])
 ])
 
 BATTERY_LDFLAGS=
@@ -540,7 +564,7 @@ AC_SUBST(BATTERY_LDFLAGS)
 AM_CONDITIONAL(HAVE_TEMPERATURE, false)
 define([CHECK_MODULE_TEMPERATURE],
 [
-  AC_E_CHECK_PKG(TEMPERATURE, [ecore >= 1.0.0 ecore-file >= 1.0.0 eina >= 1.0.0], [], [TEMPERATURE=false])
+  AC_E_CHECK_PKG(TEMPERATURE, [ ecore >= 1.0.999 ecore-file >= 1.0.999 eina >= 1.0.999 ], [], [TEMPERATURE=false])
 ])
 
 have_exchange=no
@@ -569,7 +593,7 @@ AC_ARG_ENABLE([enotify],
   AC_CACHE_VAL([e_cv_want_enotify], [e_cv_want_enotify=yes])
 )
 if test "x$e_cv_want_enotify" != "xno" ; then
-  AC_E_CHECK_PKG(ENOTIFY, [edbus >= 1.0.0 enotify >= 1.0.0], 
+  AC_E_CHECK_PKG(ENOTIFY, [ edbus >= 1.0.999 enotify >= 1.0.999 ], 
   [
     AC_DEFINE_UNQUOTED([HAVE_ENOTIFY], [1], [enable enotify])
   ], 
@@ -616,7 +640,7 @@ AC_SUBST(SOUND_LIBS)
 AM_CONDITIONAL(HAVE_ECONNMAN, false)
 define([CHECK_MODULE_CONNMAN],
 [
-  AC_E_CHECK_PKG(ECONNMAN, [edbus >= 1.0.0 econnman >= 1.0.0], [], [CONNMAN=false])
+  AC_E_CHECK_PKG(ECONNMAN, [ edbus >= 1.0.999 econnman >= 1.0.999 ], [], [CONNMAN=false])
 ])
 AC_SUBST(ECONNMAN_CFLAGS)
 AC_SUBST(ECONNMAN_LIBS)
@@ -624,7 +648,7 @@ AC_SUBST(ECONNMAN_LIBS)
 AM_CONDITIONAL(HAVE_EBLUEZ, false)
 define([CHECK_MODULE_BLUEZ],
 [
-  AC_E_CHECK_PKG(EBLUEZ, [edbus >= 1.0.0 ebluez >= 1.0.0], [], [BLUEZ=false])
+  AC_E_CHECK_PKG(EBLUEZ, [ edbus >= 1.0.999 ebluez >= 1.0.999 ], [], [BLUEZ=false])
 ])
 AC_SUBST(EBLUEZ_CFLAGS)
 AC_SUBST(EBLUEZ_LIBS)
@@ -632,7 +656,7 @@ AC_SUBST(EBLUEZ_LIBS)
 AM_CONDITIONAL(HAVE_EOFONO, false)
 define([CHECK_MODULE_OFONO],
 [
-  AC_E_CHECK_PKG(EOFONO, [edbus >= 1.0.0 eofono >= 1.0.0], [], [OFONO=false])
+  AC_E_CHECK_PKG(EOFONO, [ edbus >= 1.0.999 eofono >= 1.0.999 ], [], [OFONO=false])
 ])
 AC_SUBST(EOFONO_CFLAGS)
 AC_SUBST(EOFONO_LIBS)
