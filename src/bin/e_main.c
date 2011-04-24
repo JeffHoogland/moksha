@@ -216,37 +216,6 @@ main(int argc, char **argv)
 		"       This is because it is not on Linux AND has been\n"
 		"       Executed strangely. This is unusual.\n"
 		);
-	e_prefix_fallback();
-     }
-   else
-     {
-	/* do some extra tests to see if the prefix really is right */
-	char buf[PATH_MAX];
-
-	e_prefix_data_concat_static(buf, "data/themes/default.edj");
-	if (!ecore_file_exists(buf))
-	  {
-	     printf("WARNING: Prefix guess was wrong. Guessed:\n"
-		    "         %s\n"
-		    "         Tried to find file:\n"
-		    "         %s\n",
-		    e_prefix_get(), buf);
-	     e_prefix_fallback();
-	  }
-	else
-	  {
-	     snprintf(buf, sizeof(buf), "%s/enlightenment/modules",
-		      e_prefix_lib_get());
-	     if (!ecore_file_is_dir(buf))
-	       {
-		  printf("WARNING: Prefix guess was wrong. Guessed:\n"
-			 "         %s\n"
-			 "         Tried to find directory:\n"
-			 "         %s\n",
-			 e_prefix_get(), buf);
-		  e_prefix_fallback();
-	       }
-	  }
      }
    TS("prefix done");
 

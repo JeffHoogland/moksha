@@ -5,7 +5,7 @@
 #define E_PREFIX_H
 
 EAPI int         e_prefix_determine(char *argv0);
-EINTERN void        e_prefix_shutdown(void);
+EINTERN void     e_prefix_shutdown(void);
 EAPI void        e_prefix_fallback(void);
 EAPI const char *e_prefix_get(void);
 EAPI const char *e_prefix_locale_get(void);
