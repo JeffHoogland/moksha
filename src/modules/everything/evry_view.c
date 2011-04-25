@@ -857,9 +857,7 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
      }
    else scroll = 0;
 
-   if (sd->mouse_act &&
-       ((sd->view->mode == VIEW_MODE_LIST ||
-	 sd->view->mode == VIEW_MODE_DETAIL)))
+   if (sd->mouse_act)
      return;
 
    if (sd->view->mode == VIEW_MODE_THUMB)
