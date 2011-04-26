@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e17\n"
 "Report-Msgid-Bugs-To: http://trac.enlightenment.org/e/\n"
-"POT-Creation-Date: 2011-04-09 14:01-0700\n"
-"PO-Revision-Date: 2011-04-10 02:49-0000\n"
+"POT-Creation-Date: 2011-04-11 13:01-0700\n"
+"PO-Revision-Date: 2011-04-25 22:24-0000\n"
 "Last-Translator: Sérgio Marques <smarquespt@gmail.com>\n"
 "Language-Team: Portuguese <>\n"
 "Language: pt\n"
@@ -1042,8 +1042,7 @@ msgstr "Editor de itens da área de trabalho"
 #: ../src/bin/e_int_border_prop.c:420
 #: ../src/bin/e_int_border_prop.c:467
 #: ../src/modules/conf_imc/e_int_config_imc.c:891
-#: ../src/modules/conf_menus/e_int_config_menus.c:105
-#: ../src/modules/conf_menus/e_int_config_menus.c:313
+#: ../src/modules/conf_menus/e_int_config_menus.c:242
 msgid "Name"
 msgstr "Nome"
 
@@ -2347,9 +2346,8 @@ msgstr "Aplicações favoritas"
 
 #: ../src/bin/e_int_menus.c:127
 #: ../src/modules/conf_applications/e_int_config_apps.c:264
-#: ../src/modules/conf_menus/e_int_config_menus.c:100
-#: ../src/modules/conf_menus/e_int_config_menus.c:298
-#: ../src/modules/conf_menus/e_int_config_menus.c:321
+#: ../src/modules/conf_menus/e_int_config_menus.c:237
+#: ../src/modules/conf_menus/e_int_config_menus.c:260
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:194
 #: ../src/modules/everything-apps/evry_plug_apps.c:1031
 #: ../src/modules/everything-apps/evry_plug_apps.c:1049
@@ -3770,7 +3768,7 @@ msgid "Captions"
 msgstr "Títulos"
 
 #: ../src/modules/conf_clientlist/e_mod_main.c:17
-#: ../src/modules/conf_menus/e_int_config_menus.c:306
+#: ../src/modules/conf_menus/e_int_config_menus.c:254
 #: ../src/modules/conf_menus/e_mod_main.c:17
 #: ../src/modules/wizard/page_030.c:78
 msgid "Menus"
@@ -4422,7 +4420,7 @@ msgid "Don't Allow"
 msgstr "Não permitir"
 
 #: ../src/modules/conf_display/e_int_config_screensaver.c:204
-#: ../src/modules/conf_menus/e_int_config_menus.c:354
+#: ../src/modules/conf_menus/e_int_config_menus.c:293
 #: ../src/modules/conf_window_focus/e_int_config_focus.c:262
 #: ../src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:186
 msgid "Miscellaneous"
@@ -4997,7 +4995,6 @@ msgstr "Touch"
 
 #: ../src/modules/conf_interaction/e_mod_main.c:24
 #: ../src/modules/conf_keybindings/e_mod_main.c:25
-#| msgid "Mouse Hand"
 msgid "Mouse"
 msgstr "Rato"
 
@@ -5013,7 +5010,7 @@ msgstr "Seletor de idioma"
 
 #: ../src/modules/conf_intl/e_int_config_intl.c:929
 #: ../src/modules/conf_intl/e_int_config_intl.c:1365
-#: ../src/modules/conf_menus/e_int_config_menus.c:223
+#: ../src/modules/conf_menus/e_int_config_menus.c:162
 #: ../src/modules/wizard/page_010.c:146
 #: ../src/modules/wizard/page_030.c:121
 msgid "System Default"
@@ -5109,41 +5106,34 @@ msgstr "Combinação dos atalhos do rato"
 msgid "Keys"
 msgstr "Teclas"
 
-#: ../src/modules/conf_menus/e_int_config_menus.c:44
+#: ../src/modules/conf_menus/e_int_config_menus.c:38
 #: ../src/modules/conf_menus/e_mod_main.c:18
 msgid "Menu Settings"
 msgstr "Definições de menu"
 
-#: ../src/modules/conf_menus/e_int_config_menus.c:97
-#: ../src/modules/conf_menus/e_int_config_menus.c:295
+#: ../src/modules/conf_menus/e_int_config_menus.c:234
 msgid "Main Menu"
 msgstr "Menu principal"
 
-#: ../src/modules/conf_menus/e_int_config_menus.c:98
-#: ../src/modules/conf_menus/e_int_config_menus.c:296
+#: ../src/modules/conf_menus/e_int_config_menus.c:235
 #: ../src/modules/fileman/e_mod_main.c:350
 msgid "Favorites"
 msgstr "Favoritos"
 
-#: ../src/modules/conf_menus/e_int_config_menus.c:104
-#: ../src/modules/conf_menus/e_int_config_menus.c:312
-#: ../src/modules/conf_window_display/e_int_config_window_display.c:146
-#: ../src/modules/conf_winlist/e_int_config_winlist.c:210
-msgid "Display"
-msgstr "Exibição"
+#: ../src/modules/conf_menus/e_int_config_menus.c:241
+#| msgid "Applications"
+msgid "Applications Display"
+msgstr "Exibição de aplicações"
 
-#: ../src/modules/conf_menus/e_int_config_menus.c:107
-#: ../src/modules/conf_menus/e_int_config_menus.c:315
+#: ../src/modules/conf_menus/e_int_config_menus.c:244
 msgid "Generic"
 msgstr "Genérico"
 
-#: ../src/modules/conf_menus/e_int_config_menus.c:109
-#: ../src/modules/conf_menus/e_int_config_menus.c:317
+#: ../src/modules/conf_menus/e_int_config_menus.c:246
 msgid "Comments"
 msgstr "Comentários"
 
-#: ../src/modules/conf_menus/e_int_config_menus.c:113
-#: ../src/modules/conf_menus/e_int_config_menus.c:302
+#: ../src/modules/conf_menus/e_int_config_menus.c:250
 #: ../src/modules/gadman/e_mod_config.c:163
 #: ../src/modules/gadman/e_mod_main.c:27
 #: ../src/modules/gadman/e_mod_main.c:77
@@ -5153,17 +5143,16 @@ msgstr "Comentários"
 msgid "Gadgets"
 msgstr "\"Gadgets\""
 
-#: ../src/modules/conf_menus/e_int_config_menus.c:114
-#: ../src/modules/conf_menus/e_int_config_menus.c:303
+#: ../src/modules/conf_menus/e_int_config_menus.c:251
 msgid "Show gadget settings in top-level"
 msgstr "Mostrar definições do \"gadget\" no nível superior"
 
-#: ../src/modules/conf_menus/e_int_config_menus.c:325
+#: ../src/modules/conf_menus/e_int_config_menus.c:264
 msgid "Margin"
 msgstr "Margem"
 
-#: ../src/modules/conf_menus/e_int_config_menus.c:327
-#: ../src/modules/conf_menus/e_int_config_menus.c:332
+#: ../src/modules/conf_menus/e_int_config_menus.c:266
+#: ../src/modules/conf_menus/e_int_config_menus.c:271
 #: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:136
 #: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:145
 #: ../src/modules/conf_window_manipulation/e_int_config_window_geometry.c:154
@@ -5173,38 +5162,38 @@ msgstr "Margem"
 msgid "%2.0f pixels"
 msgstr "%2.0f pixeis"
 
-#: ../src/modules/conf_menus/e_int_config_menus.c:330
+#: ../src/modules/conf_menus/e_int_config_menus.c:269
 msgid "Cursor Margin"
 msgstr "Margem do cursor"
 
-#: ../src/modules/conf_menus/e_int_config_menus.c:335
+#: ../src/modules/conf_menus/e_int_config_menus.c:274
 msgid "Autoscroll"
 msgstr "Deslocamento automático"
 
-#: ../src/modules/conf_menus/e_int_config_menus.c:339
+#: ../src/modules/conf_menus/e_int_config_menus.c:278
 msgid "Menu Scroll Speed"
 msgstr "Velocidade da deslocação do menu"
 
-#: ../src/modules/conf_menus/e_int_config_menus.c:341
+#: ../src/modules/conf_menus/e_int_config_menus.c:280
 #, c-format
 msgid "%5.0f pixels/sec"
 msgstr "%5.0f pixeis/seg"
 
-#: ../src/modules/conf_menus/e_int_config_menus.c:344
+#: ../src/modules/conf_menus/e_int_config_menus.c:283
 msgid "Fast Mouse Move Threshhold"
 msgstr "Limite para a deslocação rápida do rato"
 
-#: ../src/modules/conf_menus/e_int_config_menus.c:346
+#: ../src/modules/conf_menus/e_int_config_menus.c:285
 #: ../src/modules/conf_window_display/e_int_config_window_display.c:187
 #, c-format
 msgid "%4.0f pixels/sec"
 msgstr "%4.0f pixeis/seg"
 
-#: ../src/modules/conf_menus/e_int_config_menus.c:349
+#: ../src/modules/conf_menus/e_int_config_menus.c:288
 msgid "Click Drag Timeout"
 msgstr "Tempo para o clique e arrastamento"
 
-#: ../src/modules/conf_menus/e_int_config_menus.c:351
+#: ../src/modules/conf_menus/e_int_config_menus.c:290
 #, c-format
 msgid "%2.2f sec"
 msgstr "%2.2f seg"
@@ -5722,6 +5711,11 @@ msgstr "Segue a janela"
 #: ../src/modules/conf_window_display/e_int_config_window_display.c:136
 msgid "Resize Geometry"
 msgstr "Ao ajustar o tamanho"
+
+#: ../src/modules/conf_window_display/e_int_config_window_display.c:146
+#: ../src/modules/conf_winlist/e_int_config_winlist.c:210
+msgid "Display"
+msgstr "Exibição"
 
 #: ../src/modules/conf_window_display/e_int_config_window_display.c:152
 msgid "User defined"
@@ -6629,7 +6623,6 @@ msgstr "Interface Sudo"
 
 #: ../src/modules/everything-apps/evry_plug_apps.c:1311
 #: ../src/modules/everything-files/evry_plug_files.c:1603
-#| msgid "Everything Collection"
 msgid "Everything Plugin"
 msgstr "Everything - \"Plug-in\""
 
@@ -7710,35 +7703,3 @@ msgstr "Apenas pode existir uma bandeja de sistema e você já a tem."
 msgid "Systray"
 msgstr "Bandeja do sistema"
 
-#~ msgid "Interaction"
-#~ msgstr "Interação"
-
-#~ msgid "Spell Checker"
-#~ msgstr "Corretor ortográfico"
-
-#~ msgid "Everything Aspell"
-#~ msgstr "Everything - Aspell"
-
-#~ msgid "Spell checker"
-#~ msgstr "Corretor ortográfico"
-
-#~ msgid "Aspell"
-#~ msgstr "Aspell"
-
-#~ msgid "Hunspell"
-#~ msgstr "Hunspell"
-
-#~ msgid "Add Application..."
-#~ msgstr "Adicionar aplicação..."
-
-#~ msgid "More..."
-#~ msgstr "Mais..."
-
-#~ msgid "To Favorites Menu"
-#~ msgstr "Para o menu de favoritos"
-
-#~ msgid "To Launcher"
-#~ msgstr "Para o iniciador"
-
-#~ msgid "Selection"
-#~ msgstr "Seleção"
