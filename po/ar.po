@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment HEAD\n"
 "Report-Msgid-Bugs-To: http://trac.enlightenment.org/e/\n"
-"POT-Creation-Date: 2011-04-16 22:01-0700\n"
-"PO-Revision-Date: 2011-04-18 21:58+0300\n"
+"POT-Creation-Date: 2011-04-26 21:01-0700\n"
+"PO-Revision-Date: 2011-04-27 07:33+0300\n"
 "Last-Translator: سمير حسين <almusalimalmusalimah@gmail.com>\n"
 "Language-Team: Arabic <almusalimalmusalimah@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -48,7 +48,7 @@ msgstr "إغلاق"
 #: ../src/bin/e_actions.c:3014
 #: ../src/bin/e_actions.c:3018
 #: ../src/bin/e_int_menus.c:178
-#: ../src/bin/e_main.c:669
+#: ../src/bin/e_main.c:638
 #: ../src/modules/conf_mouse_cursor/e_int_config_cursor.c:155
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:219
 #: ../src/modules/wizard/page_000.c:29
@@ -56,8 +56,8 @@ msgid "Enlightenment"
 msgstr "إنلايتنمينت"
 
 #: ../src/bin/e_about.c:23
-msgid "Copyright &copy; 1999-2010, by the Enlightenment Development Team.<br><br>We hope you enjoy using this software as much as we enjoyed writing it.<br><br>This software is provided as-is with no explicit or implied warranty. This software is governed by licensing conditions, so please see the COPYING and COPYING-PLAIN licence files installed on your system.<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</hilight> and it is not stable. Many features are incomplete or even non-existent yet and may have many bugs. You have been <hilight>WARNED!</hilight>"
-msgstr "حقوق التأليف والنشر © 1999-2009 ، من قبل فريق تطوير إنلايتنمنت. <br><br>نأمل أن تستمتع باستخدام هذا البرنامج بقدر ما تمتعنا به حتى كتابة هذا التقرير. <br><br>تم توفير هذا البرنامج بدون أي ضمان . كما أن هذا البرنامج مقيد بشروط الترخيص ، لذلك يرجى اﻹطلاع على ملفات الترخيص المثبتة على نظامك. <br><br>لايزال انلايتنمنت  <hilight>تحت التطوير الضخم</ hilight>كما أنه ليس مستقرا بشكل كامل. يجدر بنا اﻹشارة هنا أن العديد من الميزات غير مكتملة أو حتى غير موجودة بعد وربما تكون بها العديد من اﻷخطاء. لذا تم <hilight>تحذيرك! </ hilight>"
+msgid "Copyright &copy; 1999-2011, by the Enlightenment Development Team.<br><br>We hope you enjoy using this software as much as we enjoyed writing it.<br><br>This software is provided as-is with no explicit or implied warranty. This software is governed by licensing conditions, so please see the COPYING and COPYING-PLAIN licence files installed on your system.<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</hilight> and it is not stable. Many features are incomplete or even non-existent yet and may have many bugs. You have been <hilight>WARNED!</hilight>"
+msgstr "حقوق التأليف والنشر © 1999-2011 ، من قبل فريق تطوير إنلايتنمنت. <br><br>نأمل أن تستمتع باستخدام هذا البرنامج بقدر ما تمتعنا به حتى كتابة هذا التقرير. <br><br>تم توفير هذا البرنامج بدون أي ضمان . كما أن هذا البرنامج مقيد بشروط الترخيص ، لذلك يرجى اﻹطلاع على ملفات الترخيص المثبتة على نظامك. <br><br>لايزال انلايتنمنت  <hilight>تحت التطوير الضخم</ hilight>كما أنه ليس مستقرا بشكل كامل. يجدر بنا اﻹشارة هنا أن العديد من الميزات غير مكتملة أو حتى غير موجودة بعد وربما تكون بها العديد من اﻷخطاء. لذا تم <hilight>تحذيرك! </ hilight>"
 
 #: ../src/bin/e_about.c:47
 msgid "<title>The Team</title>"
@@ -629,15 +629,15 @@ msgstr "إظهار قائمة المفضلات"
 
 #: ../src/bin/e_actions.c:2990
 msgid "Show All Applications Menu"
-msgstr "أظهر قائمة كل البرامج"
+msgstr "اظهر قائمة كل البرامج"
 
 #: ../src/bin/e_actions.c:2992
 msgid "Show Clients Menu"
-msgstr "أظهر قائمة العملاء"
+msgstr "اظهر قائمة العملاء"
 
 #: ../src/bin/e_actions.c:2994
 msgid "Show Menu..."
-msgstr "أظهر القائمة..."
+msgstr "اظهر القائمة..."
 
 #: ../src/bin/e_actions.c:3001
 #: ../src/bin/e_actions.c:3006
@@ -749,7 +749,7 @@ msgstr "اقفل"
 #: ../src/bin/e_actions.c:3069
 #: ../src/bin/e_int_menus.c:1160
 msgid "Cleanup Windows"
-msgstr "تنظيف النوافذ"
+msgstr "نظِّم النوافذ"
 
 #: ../src/bin/e_actions.c:3074
 msgid "Generic : Actions"
@@ -1016,7 +1016,7 @@ msgstr "تفعيل نمط العرض؟"
 
 #: ../src/bin/e_desklock.c:992
 msgid "You unlocked desktop too fast.<br><br>Would you like to enable <b>presentation</b> mode and temporarily disable screen saver, lock and power saving?"
-msgstr "لقد قمت بإلغاء قفل سطح المكتب بشكل صحيح.<br><br>هل تريد تمكين <b>وضع</b> العرض و إيقاف قفل و حافظة الشاشة , وإدارة طاقتها بشكل مؤقت؟"
+msgstr "لقد قمت بإلغاء قفل سطح المكتب بشكل سريع جدا.<br><br>هل تريد تمكين وضع<b>العرض</b>  و إيقاف قفل و حافظة الشاشة , وإدارة طاقتها بشكل مؤقت؟"
 
 #: ../src/bin/e_desklock.c:1002
 #: ../src/bin/e_screensaver.c:145
@@ -2404,7 +2404,7 @@ msgstr "الدروج"
 
 #: ../src/bin/e_int_menus.c:291
 msgid "Show/Hide All Windows"
-msgstr "أظهر\\أخفي"
+msgstr "اظهر/ أخف كل النوافذ"
 
 #: ../src/bin/e_int_menus.c:604
 msgid "(No Applications)"
@@ -2477,11 +2477,11 @@ msgstr "إخفاء تلقائي للدرج"
 
 #: ../src/bin/e_int_shelf_config.c:204
 msgid "Show on mouse in"
-msgstr "أظهر عند دخول الفأرة"
+msgstr "اظهر عند دخول الفأرة"
 
 #: ../src/bin/e_int_shelf_config.c:208
 msgid "Show on mouse click"
-msgstr "أظهر عند الضغط بالفأرة"
+msgstr "اظهر عند الضغط بالفأرة"
 
 #: ../src/bin/e_int_shelf_config.c:213
 msgid "Hide timeout"
@@ -2508,11 +2508,11 @@ msgstr "إخفاء تلقائي"
 
 #: ../src/bin/e_int_shelf_config.c:238
 msgid "Show on all Desktops"
-msgstr "أظهر في كل أسطح المكتب"
+msgstr "اظهر في كل أسطح المكتب"
 
 #: ../src/bin/e_int_shelf_config.c:240
 msgid "Show on specified Desktops"
-msgstr "أظهر في أسطح مكتب محددة"
+msgstr "اظهر في أسطح مكتب محددة"
 
 #: ../src/bin/e_ipc.c:47
 #, fuzzy, c-format
@@ -2540,7 +2540,7 @@ msgid ""
 "%s/enlightenment-%s\n"
 msgstr ""
 
-#: ../src/bin/e_main.c:333
+#: ../src/bin/e_main.c:302
 #, c-format
 msgid ""
 "Options:\n"
@@ -2567,7 +2567,7 @@ msgid ""
 "\t\tIf you need this help, you don't need this option.\n"
 msgstr ""
 
-#: ../src/bin/e_main.c:395
+#: ../src/bin/e_main.c:364
 msgid ""
 "Enlightenment cannot Initialize Ecore!\n"
 "Perhaps you are out of memory?"
@@ -2575,7 +2575,7 @@ msgstr ""
 "لا يستطيع إنلايتنمينت بدء Ecore!\n"
 "ربما ﻷنك لا تملك المقدار الكافي من الذاكرة؟"
 
-#: ../src/bin/e_main.c:419
+#: ../src/bin/e_main.c:388
 msgid ""
 "Enlightenment cannot initialize the File system.\n"
 "Perhaps you are out of memory?"
@@ -2583,7 +2583,7 @@ msgstr ""
 "لاسيتطيع إنلايتنمينت بدء نظام الملف.\n"
 "ربما ﻷنك لا تملك المقدار الكافي من الذاكرة؟"
 
-#: ../src/bin/e_main.c:432
+#: ../src/bin/e_main.c:401
 msgid ""
 "Enlightenment cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
@@ -2591,7 +2591,7 @@ msgstr ""
 "لا يستطيع إنلايتنمينت ضبط معالج إشارة الخروج.\n"
 "ربما ﻷنك لا تملك المقدار الكافي من الذاكرة؟"
 
-#: ../src/bin/e_main.c:438
+#: ../src/bin/e_main.c:407
 msgid ""
 "Enlightenment cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
@@ -2599,7 +2599,7 @@ msgstr ""
 "لا يستطيع إنلايتنمينت ضبط معالج إشارة HUP.\n"
 "ربما ﻷنك لا تملك المقدار الكافي من الذاكرة؟"
 
-#: ../src/bin/e_main.c:444
+#: ../src/bin/e_main.c:413
 msgid ""
 "Enlightenment cannot set up a USER signal handler.\n"
 "Perhaps you are out of memory?"
@@ -2607,7 +2607,7 @@ msgstr ""
 "لا يستطيع إنلايتنمينت ضبط معالج إشارة المستخدم.\n"
 "ربما ﻷنك لا تملك المقدار الكافي من الذاكرة؟"
 
-#: ../src/bin/e_main.c:456
+#: ../src/bin/e_main.c:425
 msgid ""
 "Enlightenment cannot initialize its X connection.\n"
 "Have you set your DISPLAY variable?"
@@ -2615,7 +2615,7 @@ msgstr ""
 "لا يستطيع إنلايتنمينت بدء نظام اتصال إكس .\n"
 "هل قمت بتحديد متغير العرض أي شاشة العرض ؟ "
 
-#: ../src/bin/e_main.c:464
+#: ../src/bin/e_main.c:433
 #, fuzzy
 msgid ""
 "Enlightenment cannot initialize its emergency alert system.\n"
@@ -2624,7 +2624,7 @@ msgstr ""
 "لا يستطيع إنلايتنمينت بدء نظام تنبيه الطوارئ.\n"
 "هل قمت بضبط متغير العرض"
 
-#: ../src/bin/e_main.c:487
+#: ../src/bin/e_main.c:456
 msgid ""
 "Enlightenment cannot initialize the connections system.\n"
 "Perhaps you are out of memory?"
@@ -2632,7 +2632,7 @@ msgstr ""
 "لا يستطيع إنلايتنمينت بدء نظام اﻹتصالات.\n"
 "ربما ﻷنك لا تملك المقدار الكافي من الذاكرة ؟"
 
-#: ../src/bin/e_main.c:495
+#: ../src/bin/e_main.c:464
 msgid ""
 "Enlightenment cannot initialize the IPC system.\n"
 "Perhaps you are out of memory?"
@@ -2640,7 +2640,7 @@ msgstr ""
 "لا يستطيع إنلايتنمينت بدء نظام IPC  .\n"
 "ربما ﻷنك لاتملك المقدار الكافي من الذاكرة؟"
 
-#: ../src/bin/e_main.c:504
+#: ../src/bin/e_main.c:473
 #, fuzzy
 msgid ""
 "Enlightenment cannot setup xinerama wrapping.\n"
@@ -2649,7 +2649,7 @@ msgstr ""
 "لا يستطيع إنلايتنمينت إعداد التفاف  xinerama.\n"
 " يجب عدم حدوث هذا."
 
-#: ../src/bin/e_main.c:513
+#: ../src/bin/e_main.c:482
 msgid ""
 "Enlightenment cannot setup randr wrapping.\n"
 "This should not happen."
@@ -2657,7 +2657,7 @@ msgstr ""
 "لا يستطيع إنلايتنمينت إعداد تغليف الرف.\n"
 "يجب أن لا يحدث هذا."
 
-#: ../src/bin/e_main.c:534
+#: ../src/bin/e_main.c:503
 msgid ""
 "Enlightenment cannot initialize the Evas system.\n"
 "Perhaps you are out of memory?"
@@ -2665,7 +2665,7 @@ msgstr ""
 "لا يستطيع إنلايتنمينت بدء نظام Evas.\n"
 "ربما ﻷنك لا تملك المقدار الكافي من الذاكرة؟"
 
-#: ../src/bin/e_main.c:541
+#: ../src/bin/e_main.c:510
 #, fuzzy
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software X11\n"
@@ -2676,7 +2676,7 @@ msgstr ""
 "في Evas. رجاء تفقد تثبيت Evas و Ecore \n"
 "و تفقد دعمهما ﻷداء محرك X11 ."
 
-#: ../src/bin/e_main.c:548
+#: ../src/bin/e_main.c:517
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software Buffer\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -2686,7 +2686,7 @@ msgstr ""
 "في Evas. رجاءا تفحص تنصيبك لـ Evas و Ecore\n"
 " و تفحص دعمهما لمحرك أداء الرقعة البرمجية."
 
-#: ../src/bin/e_main.c:567
+#: ../src/bin/e_main.c:536
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
@@ -2694,23 +2694,23 @@ msgstr ""
 "لا يستطيع إنلايتنمينت إنشاء مسارات في مسار المنزل \n"
 "ربما ﻷنك لا تملك مسار منزل أو أن القرص ممتلئ"
 
-#: ../src/bin/e_main.c:577
+#: ../src/bin/e_main.c:546
 msgid "Enlightenment cannot set up its file registry system."
 msgstr "لا يستطيع إنلايتنمينت ضبط نظام تسجيل ملفاته"
 
-#: ../src/bin/e_main.c:586
+#: ../src/bin/e_main.c:555
 msgid "Enlightenment cannot set up its config system."
 msgstr "لا يستطيع إنلايتنمينت ضبط نظام اﻹعداد."
 
-#: ../src/bin/e_main.c:602
+#: ../src/bin/e_main.c:571
 msgid "Enlightenment cannot set up its scale system."
 msgstr "لا يستطيع إنلايتنمينت ضبط نظام المسطرة."
 
-#: ../src/bin/e_main.c:610
+#: ../src/bin/e_main.c:579
 msgid "Enlightenment cannot set up the pointer system."
 msgstr "لا يستطيع إنلايتنمينت على ضبط نظام المؤشر."
 
-#: ../src/bin/e_main.c:619
+#: ../src/bin/e_main.c:588
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -2718,15 +2718,15 @@ msgstr ""
 "لا يستطيع إنلايتنمينت ضبط مسارات للملفات التي عثر عليها.\n"
 "ربما ﻷنك لا تيملك المقدار الكافي من الذاكرة؟"
 
-#: ../src/bin/e_main.c:637
+#: ../src/bin/e_main.c:606
 msgid "Enlightenment cannot set up its font system."
 msgstr "لا يستطيع إنلايتنمينت ضبط نظام الخطوط."
 
-#: ../src/bin/e_main.c:648
+#: ../src/bin/e_main.c:617
 msgid "Enlightenment cannot set up its theme system."
 msgstr "لا يستطيع إنلايتنمينت ضبط نظام السمات."
 
-#: ../src/bin/e_main.c:662
+#: ../src/bin/e_main.c:631
 msgid ""
 "Enlightenment cannot set up init screen.\n"
 "Perhaps you are out of memory?"
@@ -2734,16 +2734,16 @@ msgstr ""
 "لا يستطيع إنلايتنمسنت ضبط شاشة التهيئة.\n"
 "ربما ﻷنك لا تملك المقدار الكافي من الذاكرة؟"
 
-#: ../src/bin/e_main.c:675
+#: ../src/bin/e_main.c:644
 msgid "Starting International Support"
 msgstr "جاري بدء الدعم الدولي"
 
-#: ../src/bin/e_main.c:680
+#: ../src/bin/e_main.c:649
 #, fuzzy
 msgid "Enlightenment cannot set up its intl system."
 msgstr "لا يستطيع إنلايتنمينت ضبط نظام intl الخاص به."
 
-#: ../src/bin/e_main.c:689
+#: ../src/bin/e_main.c:658
 msgid ""
 "Enlightenment cannot initialize the FDO desktop system.\n"
 "Perhaps you are out of memory?"
@@ -2751,12 +2751,12 @@ msgstr ""
 "لا يستطيع إنلايتنمينت بدء نظام سطح مكتب FDO.\n"
 "ربما ﻷنك لاتملك المقدار الكافي من الذاكرة؟"
 
-#: ../src/bin/e_main.c:698
+#: ../src/bin/e_main.c:667
 msgid "Testing Format Support"
 msgstr "جاري فحص دعم الصيغة"
 
-#: ../src/bin/e_main.c:709
-#: ../src/bin/e_main.c:769
+#: ../src/bin/e_main.c:678
+#: ../src/bin/e_main.c:738
 #, fuzzy
 msgid ""
 "Enlightenment found Evas can't create a buffer canvas. Please check\n"
@@ -2765,7 +2765,7 @@ msgstr ""
 "وجد إنلايتنمينت أن Evas لا يستطيع إنشاء رقعة الصوان. رجاء تفقد\n"
 "هل لدى Evas دعم لمحرك الصوان.\n"
 
-#: ../src/bin/e_main.c:720
+#: ../src/bin/e_main.c:689
 msgid ""
 "Enlightenment found Evas can't load PNG files. Check Evas has PNG\n"
 "loader support.\n"
@@ -2773,7 +2773,7 @@ msgstr ""
 "وجد إنلايتنمينت أن Evas لا يستطيع  تحميل ملفات PNG. قم بتفقد دعم  PNG \n"
 "على Evas.\n"
 
-#: ../src/bin/e_main.c:729
+#: ../src/bin/e_main.c:698
 msgid ""
 "Enlightenment found Evas can't load JPEG files. Check Evas has JPEG\n"
 "loader support.\n"
@@ -2781,7 +2781,7 @@ msgstr ""
 "وجد إنلايتنمينت أن Evas لا يستطيع  تحميل ملفات JPEG. قم بتفقد دعم  JPEG \n"
 "على Evas.\n"
 
-#: ../src/bin/e_main.c:738
+#: ../src/bin/e_main.c:707
 msgid ""
 "Enlightenment found Evas can't load EET files. Check Evas has EET\n"
 "loader support.\n"
@@ -2789,7 +2789,7 @@ msgstr ""
 "وجد إنلايتنمينت أن Evas لا يستطيع  تحميل ملفات EET. قم بتفقد دعم  EET \n"
 "على Evas.\n"
 
-#: ../src/bin/e_main.c:749
+#: ../src/bin/e_main.c:718
 #, fuzzy
 msgid ""
 "Enlightenment found Evas can't load the 'Sans' font. Check Evas has fontconfig\n"
@@ -2798,15 +2798,15 @@ msgstr ""
 "وجد إنلايتنمينت أن Evas لا يستطيع  تحميل الخط 'Sans'. تفقد هل يملك Evas دعم تكوين الخط\n"
 "و تعرف نظام تكوين الخط لخط 'Sans' .\n"
 
-#: ../src/bin/e_main.c:759
+#: ../src/bin/e_main.c:728
 msgid "Check SVG Support"
 msgstr "تفقد دعم SVG"
 
-#: ../src/bin/e_main.c:789
+#: ../src/bin/e_main.c:758
 msgid "Setup Screens"
 msgstr "ضبط الشاشات"
 
-#: ../src/bin/e_main.c:794
+#: ../src/bin/e_main.c:763
 #, fuzzy
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
@@ -2815,63 +2815,63 @@ msgstr ""
 "فشل إنلايتنمينت في ضبط إدارة النافذة لكل الشاشات التي على نظامك\n"
 "ربما ﻷن هنالك مدير نافذة لا يزال قيد التشغيل؟\n"
 
-#: ../src/bin/e_main.c:800
+#: ../src/bin/e_main.c:769
 msgid "Setup Screensaver"
 msgstr "ضبط حافظة الشاشة"
 
-#: ../src/bin/e_main.c:805
+#: ../src/bin/e_main.c:774
 msgid "Enlightenment cannot configure the X screensaver."
 msgstr "لا يستطيع إنلايتنمينت إعداد حافظة الشاشة إكس."
 
-#: ../src/bin/e_main.c:810
+#: ../src/bin/e_main.c:779
 msgid "Setup Desklock"
 msgstr "اضبط قفل سطح المكتب"
 
-#: ../src/bin/e_main.c:815
+#: ../src/bin/e_main.c:784
 msgid "Enlightenment cannot set up its desk locking system."
 msgstr "لا يستطيع إنلايتنمينت ضبط نظام قفل سطح مكتبه"
 
-#: ../src/bin/e_main.c:820
+#: ../src/bin/e_main.c:789
 msgid "Setup Popups"
 msgstr "ضبط النوافذ المنبثقة"
 
-#: ../src/bin/e_main.c:825
+#: ../src/bin/e_main.c:794
 msgid "Enlightenment cannot set up its popup system."
 msgstr "لا يستطيع إنلايتنمينت ضبط نظام النوافذ المنبثقة"
 
-#: ../src/bin/e_main.c:838
+#: ../src/bin/e_main.c:807
 msgid "Setup Paths"
 msgstr "ضبط المسارات"
 
-#: ../src/bin/e_main.c:855
+#: ../src/bin/e_main.c:824
 msgid "Setup System Controls"
 msgstr "ضبط متحكمات النظام"
 
-#: ../src/bin/e_main.c:860
+#: ../src/bin/e_main.c:829
 msgid "Enlightenment cannot initialize the System Command system.\n"
 msgstr "لا يستطيع إنلايتنمينت بدء نظام أوامر النظام \n"
 
-#: ../src/bin/e_main.c:865
+#: ../src/bin/e_main.c:834
 msgid "Setup Actions"
 msgstr "إجراءات الضبظ"
 
-#: ../src/bin/e_main.c:870
+#: ../src/bin/e_main.c:839
 msgid "Enlightenment cannot set up its actions system."
 msgstr "لا يستطيع إنلايتنمينت ضبط نظام إﻹجراءات الخاصة به"
 
-#: ../src/bin/e_main.c:874
+#: ../src/bin/e_main.c:843
 msgid "Setup Execution System"
 msgstr "ضبط نظام اﻹعدام"
 
-#: ../src/bin/e_main.c:879
+#: ../src/bin/e_main.c:848
 msgid "Enlightenment cannot set up its exec system."
 msgstr "لا يستطيع إنلايتنمينت ضبط نظام exec."
 
-#: ../src/bin/e_main.c:887
+#: ../src/bin/e_main.c:856
 msgid "Setup FM"
 msgstr "اضبط FM "
 
-#: ../src/bin/e_main.c:892
+#: ../src/bin/e_main.c:861
 msgid "Enlightenment cannot initialize the File manager.\n"
 msgstr "لا يستطيع إنلايتنمينت بدء مدير الملفات.\n"
 
@@ -2884,169 +2884,169 @@ msgstr "لا يستطيع إنلايتنمينت بدء مدير الملفات.
 #. }
 #. _e_main_shutdown_push(e_fwin_shutdown);
 #.
-#: ../src/bin/e_main.c:907
+#: ../src/bin/e_main.c:876
 msgid "Setup Message System"
 msgstr "ضبط نظام الرسائل"
 
-#: ../src/bin/e_main.c:912
+#: ../src/bin/e_main.c:881
 msgid "Enlightenment cannot set up its msg system."
 msgstr "لا يستطيع إنلايتنمينت ضبط نظام الرسائل."
 
-#: ../src/bin/e_main.c:917
+#: ../src/bin/e_main.c:886
 msgid "Setup DND"
 msgstr "اضبط DND "
 
-#: ../src/bin/e_main.c:922
+#: ../src/bin/e_main.c:891
 msgid "Enlightenment cannot set up its dnd system."
 msgstr "لا يستطيع إنلايتنمينت ضبط نظام dnd."
 
-#: ../src/bin/e_main.c:927
+#: ../src/bin/e_main.c:896
 #, fuzzy
 msgid "Setup Grab Input Handling"
 msgstr "اضبط معالجة إدخال القبض"
 
-#: ../src/bin/e_main.c:932
+#: ../src/bin/e_main.c:901
 #, fuzzy
 msgid "Enlightenment cannot set up its input grab handling system."
 msgstr "لا يستطيع إنلايتنمينت ضبط نظام معالجة أنتزاع المدخلات."
 
-#: ../src/bin/e_main.c:937
+#: ../src/bin/e_main.c:906
 msgid "Setup Modules"
 msgstr "ضبط الوحدات"
 
-#: ../src/bin/e_main.c:942
+#: ../src/bin/e_main.c:911
 msgid "Enlightenment cannot set up its module system."
 msgstr "لا يستطيع إنلايتنمينت ضبط نظام الوحدات."
 
-#: ../src/bin/e_main.c:947
+#: ../src/bin/e_main.c:916
 #, fuzzy
 msgid "Setup Remembers"
 msgstr "اضبط المتذكرين"
 
-#: ../src/bin/e_main.c:952
+#: ../src/bin/e_main.c:921
 msgid "Enlightenment cannot setup remember settings."
 msgstr "لا يستطيع إنلايتنمينت ضبط إعدادات التذكر."
 
-#: ../src/bin/e_main.c:957
+#: ../src/bin/e_main.c:926
 msgid "Setup Color Classes"
 msgstr "ضبط أصناف اﻷلوان"
 
-#: ../src/bin/e_main.c:962
+#: ../src/bin/e_main.c:931
 msgid "Enlightenment cannot set up its color class system."
 msgstr "لا يستطيع إنلايتنمينت ضبط نظام اﻷلوان."
 
-#: ../src/bin/e_main.c:967
+#: ../src/bin/e_main.c:936
 msgid "Setup Gadcon"
 msgstr "ضبط Gadcon"
 
-#: ../src/bin/e_main.c:972
+#: ../src/bin/e_main.c:941
 msgid "Enlightenment cannot set up its gadget control system."
 msgstr "لا يستطيع إنلايتنمينت ضبط نظام تحكم أداته"
 
-#: ../src/bin/e_main.c:977
+#: ../src/bin/e_main.c:946
 msgid "Setup ACPI"
 msgstr "ضبط إدارة الطاقة "
 
-#: ../src/bin/e_main.c:984
+#: ../src/bin/e_main.c:953
 msgid "Setup DPMS"
 msgstr "ضبط DPMS"
 
-#: ../src/bin/e_main.c:989
+#: ../src/bin/e_main.c:958
 msgid "Enlightenment cannot configure the DPMS settings."
 msgstr "لا يستطيع إنلايتنمينت تكوين إعدادات DPMS ."
 
-#: ../src/bin/e_main.c:994
+#: ../src/bin/e_main.c:963
 msgid "Setup Powersave modes"
 msgstr "اضبط أوضاع حفظ الطاقة"
 
-#: ../src/bin/e_main.c:998
+#: ../src/bin/e_main.c:967
 msgid "Enlightenment cannot set up its powersave modes."
 msgstr "لا يستطيع إنلايتنمينت ضبط أوضاع حفظ الطاقة"
 
-#: ../src/bin/e_main.c:1003
+#: ../src/bin/e_main.c:972
 msgid "Setup Wallpaper"
 msgstr "ضبط الخلفية"
 
-#: ../src/bin/e_main.c:1008
+#: ../src/bin/e_main.c:977
 msgid "Enlightenment cannot set up its desktop background system."
 msgstr "لا يستطيع إنلايتنمينت ضبط نظام خلفية سطح المكتب"
 
-#: ../src/bin/e_main.c:1013
+#: ../src/bin/e_main.c:982
 msgid "Setup Mouse"
 msgstr "ضبط الفأرة"
 
-#: ../src/bin/e_main.c:1018
+#: ../src/bin/e_main.c:987
 msgid "Enlightenment cannot configure the mouse settings."
 msgstr "لا يستطيع إنلايتنمينت إعداد خيارات ضبط الفأرة"
 
-#: ../src/bin/e_main.c:1023
+#: ../src/bin/e_main.c:992
 msgid "Setup Bindings"
 msgstr "ضبط اﻷغلفة"
 
-#: ../src/bin/e_main.c:1028
+#: ../src/bin/e_main.c:997
 #, fuzzy
 msgid "Enlightenment cannot set up its bindings system."
 msgstr "لا يستطيع إنلايتنمينت ضبط نظام اﻹرتباطات"
 
-#: ../src/bin/e_main.c:1033
+#: ../src/bin/e_main.c:1002
 msgid "Setup Shelves"
 msgstr "ضبط الدروج"
 
-#: ../src/bin/e_main.c:1038
+#: ../src/bin/e_main.c:1007
 msgid "Enlightenment cannot set up its shelf system."
 msgstr "لا يستطيع إنلايتنمينت ضبط نظام الدروج"
 
-#: ../src/bin/e_main.c:1043
+#: ../src/bin/e_main.c:1012
 msgid "Setup Thumbnailer"
 msgstr "ضبط مصغر الصور"
 
-#: ../src/bin/e_main.c:1048
+#: ../src/bin/e_main.c:1017
 #, fuzzy
 msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
 msgstr "لا يستطيع إنلايتنمينت بدء نظام التقييم\n"
 
-#: ../src/bin/e_main.c:1053
+#: ../src/bin/e_main.c:1022
 msgid "Setup File Ordering"
 msgstr "ضبط ترتيب الملفات"
 
-#: ../src/bin/e_main.c:1057
+#: ../src/bin/e_main.c:1026
 msgid "Enlightenment cannot set up its order file system."
 msgstr "لا يستطيع إنلايتنمينت ضبط نظام ترتيب الملفات."
 
 #. ecore_x_ungrab();
 #. load modules
-#: ../src/bin/e_main.c:1072
+#: ../src/bin/e_main.c:1041
 msgid "Load Modules"
 msgstr "تحميل الوحدات"
 
-#: ../src/bin/e_main.c:1089
+#: ../src/bin/e_main.c:1058
 #, c-format
 msgid "Enlightenment crashed early on start and has<br>been restarted. There was an error loading<br>module named: %s. This module has been disabled<br>and will not be loaded."
 msgstr "تحطم إنلايتنمينت للتو عند التشغيل و قد تم <br>إعادة تشغيله. كان هنالك تحميل خاطئ<br>لوحدة تدعى بـ: %s. هذه الوحدة قد تم تعطيلها<br>و لن يتم تحميلها."
 
-#: ../src/bin/e_main.c:1094
-#: ../src/bin/e_main.c:1111
+#: ../src/bin/e_main.c:1063
+#: ../src/bin/e_main.c:1080
 msgid "Enlightenment crashed early on start and has been restarted"
 msgstr "تحطم إنلايتنمينت للتو عند التشغيل و تم إعادة تشغيله "
 
-#: ../src/bin/e_main.c:1095
+#: ../src/bin/e_main.c:1064
 #, c-format
 msgid "Enlightenment crashed early on start and has been restarted.<br>There was an error loading module named: %s<br><br>This module has been disabled and will not be loaded."
 msgstr "تحطم إنلايتنمينت للتو عند التشغيل و تم إعادة تشغيله.<br>كان هناك تحميل خاطئ لوحدة تدعى: %s<br><br>Tهذه الوحدة قد تم تعطيلها و لن يتم تحميلها."
 
-#: ../src/bin/e_main.c:1104
+#: ../src/bin/e_main.c:1073
 msgid "Enlightenment crashed early on start and has<br>been restarted. All modules have been disabled<br>and will not be loaded to help remove any problem<br>modules from your configuration. The module<br>configuration dialog should let you select your<br>modules again."
 msgstr "تحطم إنلايتنمينت للتو عند التشغيل<br>و تم إعادة تشغيله. كل الوحدات قد تم تعطيلها<br>و لن يتم تحميلها  ﻷجل المساعدة في إزالة أي مشكلة<br>وحدات من تكويناتك. حوارات تكوين الوحدة<br>ستدعك تختار<br>وحداتك مجددا."
 
-#: ../src/bin/e_main.c:1112
+#: ../src/bin/e_main.c:1081
 msgid "Enlightenment crashed early on start and has been restarted.<br>All modules have been disabled and will not be loaded to help<br>remove any problem modules from your configuration.<br><br>The module configuration dialog should let you select your<br>modules again."
 msgstr "تحطم إنلايتنمينت للتو عند التشغيل و تم إعادة تشغيله.<br> كل الوحدات قد تم تعطيلها و لن يتم تحميلها ﻷجل المساعدة<br> في إزالة أي مشكلة وحدات من تكويناتك.<br><br>حوارات تكوين الوحدة ستدعك تختار<br>وحداتك مجددا.."
 
-#: ../src/bin/e_main.c:1141
+#: ../src/bin/e_main.c:1110
 msgid "Configure Shelves"
 msgstr "التحكم في الدروج"
 
-#: ../src/bin/e_main.c:1152
+#: ../src/bin/e_main.c:1121
 msgid "Almost Done"
 msgstr "بقي القليل لتكتمل"
 
@@ -3479,7 +3479,7 @@ msgstr "إعدادات مرقب البطارية"
 
 #: ../src/modules/battery/e_mod_config.c:124
 msgid "Show alert when battery is low"
-msgstr "أظهر تنبيه عندما تكون البطارية ضعيفة"
+msgstr "اظهر تنبيه عندما تكون البطارية ضعيفة"
 
 #: ../src/modules/battery/e_mod_config.c:209
 msgid "Check every:"
@@ -4320,7 +4320,7 @@ msgstr "اعرض في الشاشة الحالية"
 
 #: ../src/modules/conf_display/e_int_config_desklock.c:233
 msgid "Show on screen #:"
-msgstr "أعرض على الشاشة #:"
+msgstr "اعرض على الشاشة #:"
 
 #: ../src/modules/conf_display/e_int_config_desklock.c:243
 msgid "Login Box"
@@ -5228,7 +5228,7 @@ msgstr "سرعة لف القائمة"
 #: ../src/modules/conf_menus/e_int_config_menus.c:280
 #, c-format
 msgid "%5.0f pixels/sec"
-msgstr "%5.0f بسكل\\ثانية"
+msgstr "%5.0f بسكل/ثانية"
 
 #: ../src/modules/conf_menus/e_int_config_menus.c:283
 #, fuzzy
@@ -6269,23 +6269,23 @@ msgstr "نسبة المعالج"
 
 #: ../src/modules/cpufreq/e_mod_main.c:181
 msgid "Fast (4 ticks)"
-msgstr "سريع (4 دقات)"
+msgstr "سريع (4 نبضات)"
 
 #: ../src/modules/cpufreq/e_mod_main.c:188
 msgid "Medium (8 ticks)"
-msgstr "متوسط (8 دقات)"
+msgstr "متوسط (8 نبضات)"
 
 #: ../src/modules/cpufreq/e_mod_main.c:195
 msgid "Normal (32 ticks)"
-msgstr "عادي (32 دقة)"
+msgstr "عادي (32 نبضة)"
 
 #: ../src/modules/cpufreq/e_mod_main.c:202
 msgid "Slow (64 ticks)"
-msgstr "بطيء (64 دقة)"
+msgstr "بطيء (64 نبضة)"
 
 #: ../src/modules/cpufreq/e_mod_main.c:209
 msgid "Very Slow (256 ticks)"
-msgstr "بطيء جدا (256 دقة)"
+msgstr "بطيء جدا (256 نبضة)"
 
 #: ../src/modules/cpufreq/e_mod_main.c:225
 msgid "Manual"
@@ -6342,7 +6342,7 @@ msgstr "سلوك توفير الطاقة"
 
 #: ../src/modules/cpufreq/e_mod_main.c:412
 msgid "There was an error trying to set the<br>cpu frequency governor via the module's<br>setfreq utility."
-msgstr "هنالك محاولة خاطئة عبر<br>وحدة ضبط النسبة<br>ﻷجل ضبط المتحكم بنسبة المعالج."
+msgstr "هنالك محاولة خاطئة ﻷجل ضبط<br>المتحكم بنسبة المعالج عبر وحدة<br>ضبط النسبة."
 
 #: ../src/modules/cpufreq/e_mod_main.c:440
 msgid "Your kernel does not support setting the<br>CPU frequency at all. You may be missing<br>Kernel modules or features, or your CPU<br>simply does not support this feature."
@@ -6350,7 +6350,7 @@ msgstr "نواة النظام لا تدعم ضبط<br>نسبة المعالج ب
 
 #: ../src/modules/cpufreq/e_mod_main.c:466
 msgid "There was an error trying to set the<br>cpu frequency setting via the module's<br>setfreq utility."
-msgstr "هنالك محاولة خاطئة لضبط<br>إعدادات نسبة المعالج عبر وحدة<br> ضبط النسبة ."
+msgstr "هنالك محاولة خاطئة لأجل ضبط<br>إعدادات نسبة المعالج عبر وحدة<br>ضبط النسبة ."
 
 #: ../src/modules/dropshadow/e_mod_config.c:39
 msgid "Dropshadow Settings"
@@ -6378,11 +6378,11 @@ msgstr "نوع الغشاوة"
 
 #: ../src/modules/dropshadow/e_mod_config.c:121
 msgid "Very Fuzzy"
-msgstr "غير واضحجدا"
+msgstr "غير واضح جدا"
 
 #: ../src/modules/dropshadow/e_mod_config.c:123
 msgid "Fuzzy"
-msgstr "مبهم"
+msgstr "غير واضح"
 
 #: ../src/modules/dropshadow/e_mod_config.c:125
 msgid "Medium"
@@ -6464,7 +6464,7 @@ msgstr "إعدادات كل شيء"
 
 #: ../src/modules/everything/e_mod_main.c:212
 msgid "Show Everything Dialog"
-msgstr "أظهر حوارات كل شيء"
+msgstr "اظهر حوارات كل شيء"
 
 #: ../src/modules/everything/e_mod_main.c:413
 msgid "Everything Module"
@@ -6835,16 +6835,15 @@ msgstr "عرض"
 
 #: ../src/modules/fileman/e_mod_config.c:247
 msgid "Open Dirs In Place"
-msgstr "إفتح مسارات في مكان"
+msgstr "افتح المسارات في مكان واحد"
 
 #: ../src/modules/fileman/e_mod_config.c:251
 msgid "Sort Dirs First"
 msgstr "رتب المسارات أولا "
 
 #: ../src/modules/fileman/e_mod_config.c:254
-#, fuzzy
 msgid "Case Sensitive"
-msgstr "حساس لحالة الحرف"
+msgstr "حساس لحالة أو نوع الحرف"
 
 #: ../src/modules/fileman/e_mod_config.c:258
 msgid "Use Single Click"
@@ -6852,7 +6851,7 @@ msgstr "استخدم نقرة واحدة"
 
 #: ../src/modules/fileman/e_mod_config.c:261
 msgid "Use Alternate Selection Modifiers"
-msgstr "استخدم معدلات اﻹختيار البديلة"
+msgstr "استخدم معدِّلات اﻹختيار البديلة"
 
 #: ../src/modules/fileman/e_mod_config.c:265
 msgid "Show Icon Extension"
@@ -7084,7 +7083,7 @@ msgstr "أضف أدوات أخرى"
 #: ../src/modules/gadman/e_mod_main.c:84
 #: ../src/modules/gadman/e_mod_main.c:120
 msgid "Show/hide gadgets"
-msgstr "أعرض/أخفِ اﻷدوات"
+msgstr "اعرض/أخفِ اﻷدوات"
 
 #: ../src/modules/winlist/e_mod_main.c:33
 #: ../src/modules/winlist/e_mod_main.c:35
@@ -7180,11 +7179,11 @@ msgstr "اعرض تسمية اﻷيقونة"
 
 #: ../src/modules/ibar/e_mod_config.c:126
 msgid "Display App Name"
-msgstr "أعرض اسم التطبيق"
+msgstr "اعرض اسم التطبيق"
 
 #: ../src/modules/ibar/e_mod_config.c:130
 msgid "Display App Comment"
-msgstr "أعرض تعليق التطبيق"
+msgstr "اعرض تعليق التطبيق"
 
 #: ../src/modules/ibar/e_mod_config.c:134
 #, fuzzy
@@ -7193,7 +7192,7 @@ msgstr "اعرض عام التطبيق "
 
 #: ../src/modules/ibar/e_mod_config.c:164
 msgid "Create new IBar source"
-msgstr "أنشئ مصدر جديد لشريط التشغيل السريع (( IBar )) "
+msgstr "انشئ مصدر جديد لشريط التشغيل السريع (( IBar )) "
 
 #: ../src/modules/ibar/e_mod_config.c:165
 msgid "Enter a name for this new source:"
@@ -7259,7 +7258,7 @@ msgstr "اظهر النوافذ من كلً أسطح المكاتب"
 
 #: ../src/modules/ibox/e_mod_config.c:170
 msgid "Show windows from active desktop"
-msgstr "أظهر النوافذ من سطح المكتب المفعل"
+msgstr "اظهر النوافذ من سطح المكتب المفعل"
 
 #: ../src/modules/ibox/e_mod_main.c:218
 msgid "IBox"
@@ -7272,21 +7271,21 @@ msgstr "إعدادات عارض أسطح المكاتب"
 #: ../src/modules/pager/e_mod_config.c:127
 #: ../src/modules/pager/e_mod_config.c:179
 msgid "Flip desktop on mouse wheel"
-msgstr "إقلب سطح المكتب عند حركة عجلة الفأرة"
+msgstr "إاقلب سطح المكتب عند حركة عجلة الفأرة"
 
 #: ../src/modules/pager/e_mod_config.c:130
 #: ../src/modules/pager/e_mod_config.c:182
 msgid "Show desktop names"
-msgstr "أعرض أسماء اﻷسطح"
+msgstr "اعرض أسماء اﻷسطح"
 
 #: ../src/modules/pager/e_mod_config.c:136
 #: ../src/modules/pager/e_mod_config.c:218
 msgid "Show popup on desktop change"
-msgstr "أعرض نافذة منبيثقة عند تغيير سطح المكتب"
+msgstr "اعرض نافذة منبيثقة عند تغيير سطح المكتب"
 
 #: ../src/modules/pager/e_mod_config.c:139
 msgid "Show popup for urgent windows"
-msgstr "أظهر النوافذ المنبثقة من النوافذ العاجلة"
+msgstr "اظهر النوافذ المنبثقة من النوافذ العاجلة"
 
 #: ../src/modules/pager/e_mod_config.c:185
 msgid "Resistance to dragging"
@@ -7352,7 +7351,7 @@ msgstr "منبثقة مستعجلة مثبتة على الشاشة"
 
 #: ../src/modules/pager/e_mod_config.c:263
 msgid "Show popup for focused windows"
-msgstr "أعرض النوافذ المنبثقة للنوافذ المحددة"
+msgstr "اعرض النوافذ المنبثقة للنوافذ المحددة"
 
 #: ../src/modules/pager/e_mod_config.c:269
 msgid "Urgent popup speed"
