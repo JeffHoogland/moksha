@@ -125,6 +125,7 @@ struct _E_Comp_Win
    Eina_Bool            real_hid : 1;  // last hide was a real window unmap
    Eina_Bool            inhash : 1;  // is in the windows hash
    Eina_Bool            show_ready : 1;  // is this window ready for its first show
+   Eina_Bool            show_anim : 1; // ran show animation   
 };
 
 static Eina_List *handlers = NULL;
@@ -691,24 +692,34 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
      }
 // FIXME: below cw update check screws with show
    if (/*(!cw->update) &&*/ (cw->visible) && (cw->dmg_updates >= 1) &&
-                            (cw->show_ready) && (!cw->hidden_override))
+                            (cw->show_ready))
      {
         if (!evas_object_visible_get(cw->shobj))
           {
-             evas_object_show(cw->shobj);
-             edje_object_signal_emit(cw->shobj, "e,state,visible,on", "e");
-             if (!cw->animating)
-               {
-                  cw->c->animating++;
-               }
-             _e_mod_comp_win_render_queue(cw);
-             cw->animating = 1;
+	     if (!cw->hidden_override)
+	       {
+		  evas_object_show(cw->shobj);
+		  _e_mod_comp_win_render_queue(cw);
+	       }
+
+	     if (!cw->show_anim)
+	       {
+		  edje_object_signal_emit(cw->shobj, "e,state,visible,on", "e");
+		  if (!cw->animating)
+		    {
+		       cw->c->animating++;
+		    }
+
+		  cw->animating = 1;
              
-             cw->pending_count++;
-             e_manager_comp_event_src_visibility_send
-                (cw->c->man, (E_Manager_Comp_Source *)cw,
-                    _e_mod_comp_cb_pending_after, cw->c);
-          }
+		  cw->pending_count++;
+		  e_manager_comp_event_src_visibility_send
+		    (cw->c->man, (E_Manager_Comp_Source *)cw,
+		     _e_mod_comp_cb_pending_after, cw->c);
+
+		  cw->show_anim = EINA_TRUE;
+	       }
+	  }
      }
    if ((cw->shobj) && (cw->obj))
      {
@@ -1999,6 +2010,8 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
    _e_mod_comp_win_configure(cw, cw->hidden.x, cw->hidden.y, cw->w, cw->h, cw->border);
    if ((cw->input_only) || (cw->invalid)) return;
 
+   cw->show_anim = EINA_FALSE;
+   
 // setup on show
    if (cw->bd)
      _e_mod_comp_win_sync_setup(cw, cw->bd->client.win);
