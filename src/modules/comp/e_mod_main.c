@@ -184,7 +184,7 @@ _e_mod_config_new(E_Module *m)
    mod->conf->match.overrides = eina_list_append(mod->conf->match.overrides, mat);
    mat->name = eina_stringshare_add("E");
    mat->clas = eina_stringshare_add("everything");
-   mat->shadow_style = eina_stringshare_add("popup");
+   mat->shadow_style = eina_stringshare_add("everything");
    mat = E_NEW(Match, 1);
    mod->conf->match.overrides = eina_list_append(mod->conf->match.overrides, mat);
    mat->primary_type = ECORE_X_WINDOW_TYPE_DROPDOWN_MENU;
