@@ -2929,7 +2929,7 @@ _e_border_shape_input_rectangle_set(E_Border* bd)
 {
    if (!bd) return;
 
-   if (bd->shaped_input)
+   if ((bd->visible) && (bd->shaped_input))
      {
         Ecore_X_Rectangle rects[4];
         Ecore_X_Window twin, twin2;
@@ -2983,7 +2983,22 @@ _e_border_shape_input_rectangle_set(E_Border* bd)
         ecore_x_window_free(twin);
      }
    else
-      ecore_x_composite_window_events_enable(bd->win);
+     {
+        if (bd->visible) // not shaped input
+          {
+             if (!bd->comp_hidden)
+                ecore_x_composite_window_events_enable(bd->win);
+             else
+                ecore_x_composite_window_events_disable(bd->win);
+          }
+        else
+          {
+             if (!e_manager_comp_evas_get(bd->zone->container->manager))
+                ecore_x_composite_window_events_enable(bd->win);
+             else
+                ecore_x_composite_window_events_disable(bd->win);
+          }
+     }
 }
 
 EAPI void
