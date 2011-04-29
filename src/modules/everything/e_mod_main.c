@@ -475,9 +475,9 @@ _config_init()
    pcc->plugins = eina_list_append(pcc->plugins, pc);
    IFMODCFGEND;
 
-   IFMODCFG(0x0002);
-   evry_conf->width = 365;
-   evry_conf->height = 360;
+   IFMODCFG(0x0003);
+   evry_conf->width = 464;
+   evry_conf->height = 366;
    IFMODCFGEND;
    
    evry_conf->version = MOD_CONFIG_FILE_VERSION;
