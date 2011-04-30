@@ -204,8 +204,6 @@ src/modules/conf_window_manipulation/e_int_config_window_stacking.c
 src/modules/conf_window_manipulation/e_mod_main.c
 src/modules/conf_window_remembers/e_int_config_remembers.c
 src/modules/conf_window_remembers/e_mod_main.c
-src/modules/conf_winlist/e_int_config_winlist.c
-src/modules/conf_winlist/e_mod_main.c
 src/modules/cpufreq/e_mod_main.c
 src/modules/cpufreq/freqset.c
 src/modules/dropshadow/e_mod_config.c
@@ -230,6 +228,7 @@ src/modules/fileman_opinfo/e_mod_main.c
 src/modules/gadman/e_mod_config.c
 src/modules/gadman/e_mod_gadman.c
 src/modules/gadman/e_mod_main.c
+src/modules/winlist/e_int_config_winlist.c
 src/modules/winlist/e_mod_main.c
 src/modules/winlist/e_winlist.c
 src/modules/ibar/e_mod_config.c

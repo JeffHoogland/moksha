@@ -22,6 +22,8 @@ EAPI void *
 e_modapi_init(E_Module *m)
 {
    conf_module = m;
+   e_configure_registry_category_add("windows", 50, _("Windows"), NULL, "preferences-system-windows");
+   e_configure_registry_item_add("windows/window_list", 70, _("Window List"), NULL, "preferences-winlist", e_int_config_winlist);
    e_winlist_init();
    /* add module supplied action */
    act = e_action_add("winlist");
@@ -62,6 +64,8 @@ e_modapi_init(E_Module *m)
 EAPI int
 e_modapi_shutdown(E_Module *m __UNUSED__)
 {
+   E_Config_Dialog *cfd;
+   
    /* remove module-supplied action */
    if (act)
      {
@@ -79,6 +83,10 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 	act = NULL;
      }
    e_winlist_shutdown();
+   
+   while ((cfd = e_config_dialog_get("E", "windows/window_list"))) e_object_del(E_OBJECT(cfd));
+   e_configure_registry_item_del("windows/window_list");
+   e_configure_registry_category_del("windows");
    conf_module = NULL;
    return 1;
 }

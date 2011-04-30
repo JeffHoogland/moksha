@@ -3,10 +3,11 @@
 
 #define E_TYPEDEFS 1
 #include "e_winlist.h"
+#include "e_int_config_winlist.h"
 
 #undef E_TYPEDEFS
 #include "e_winlist.h"
-
+#include "e_int_config_winlist.h"
 
 EAPI extern E_Module_Api e_modapi;
 

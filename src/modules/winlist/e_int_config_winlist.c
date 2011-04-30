@@ -46,7 +46,7 @@ e_int_config_winlist(E_Container *con, const char *params __UNUSED__)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
 
-   if (e_config_dialog_find("E", "advanced/window_list")) return NULL;
+   if (e_config_dialog_find("E", "windows/window_list")) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
 
    v->create_cfdata = _create_data;
@@ -56,7 +56,7 @@ e_int_config_winlist(E_Container *con, const char *params __UNUSED__)
    v->basic.check_changed = _basic_check_changed;
 
    cfd = e_config_dialog_new(con, _("Window List Settings"),
-			     "E", "advanced/window_list",
+			     "E", "windows/window_list",
 			     "preferences-winlist", 0, v, NULL);
    return cfd;
 }

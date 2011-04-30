@@ -158,10 +158,6 @@ if USE_MODULE_CONF_PERFORMANCE
 SUBDIRS += conf_performance
 endif
 
-if USE_MODULE_CONF_WINLIST
-SUBDIRS += conf_winlist
-endif
-
 if USE_MODULE_CONF_PATHS
 SUBDIRS += conf_paths
 endif

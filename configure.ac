@@ -701,7 +701,6 @@ AC_E_OPTIONAL_MODULE([conf_window_manipulation], true)
 AC_E_OPTIONAL_MODULE([conf_menus], true)
 AC_E_OPTIONAL_MODULE([conf_dialogs], true)
 AC_E_OPTIONAL_MODULE([conf_performance], true)
-AC_E_OPTIONAL_MODULE([conf_winlist], true)
 AC_E_OPTIONAL_MODULE([conf_paths], true)
 AC_E_OPTIONAL_MODULE([conf_mime], true)
 AC_E_OPTIONAL_MODULE([conf_interaction], true)
@@ -832,8 +831,6 @@ src/modules/conf_dialogs/Makefile
 src/modules/conf_dialogs/module.desktop
 src/modules/conf_performance/Makefile
 src/modules/conf_performance/module.desktop
-src/modules/conf_winlist/Makefile
-src/modules/conf_winlist/module.desktop
 src/modules/conf_paths/Makefile
 src/modules/conf_paths/module.desktop
 src/modules/conf_mime/Makefile
