@@ -155,12 +155,11 @@ src/modules/conf_fonts/e_int_config_fonts.c
 src/modules/conf_fonts/e_mod_main.c
 src/modules/conf_icon_theme/e_int_config_icon_themes.c
 src/modules/conf_icon_theme/e_mod_main.c
-src/modules/conf_imc/e_int_config_imc.c
-src/modules/conf_imc/e_int_config_imc_import.c
-src/modules/conf_imc/e_mod_main.c
 src/modules/conf_interaction/e_int_config_interaction.c
 src/modules/conf_interaction/e_int_config_mouse.c
 src/modules/conf_interaction/e_mod_main.c
+src/modules/conf_intl/e_int_config_imc.c
+src/modules/conf_intl/e_int_config_imc_import.c
 src/modules/conf_intl/e_int_config_intl.c
 src/modules/conf_intl/e_mod_main.c
 src/modules/conf_keybindings/e_int_config_keybindings.c

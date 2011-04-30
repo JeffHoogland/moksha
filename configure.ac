@@ -687,7 +687,6 @@ AC_E_OPTIONAL_MODULE([conf_mouse_cursor], true)
 AC_E_OPTIONAL_MODULE([conf_transitions], true)
 AC_E_OPTIONAL_MODULE([conf_startup], true)
 AC_E_OPTIONAL_MODULE([conf_intl], true)
-AC_E_OPTIONAL_MODULE([conf_imc], true)
 AC_E_OPTIONAL_MODULE([conf_profiles], true)
 AC_E_OPTIONAL_MODULE([msgbus], true)
 AC_E_OPTIONAL_MODULE([conf_engine], true)
@@ -803,8 +802,6 @@ src/modules/conf_startup/Makefile
 src/modules/conf_startup/module.desktop
 src/modules/conf_intl/Makefile
 src/modules/conf_intl/module.desktop
-src/modules/conf_imc/Makefile
-src/modules/conf_imc/module.desktop
 src/modules/conf_profiles/Makefile
 src/modules/conf_profiles/module.desktop
 src/modules/msgbus/Makefile
