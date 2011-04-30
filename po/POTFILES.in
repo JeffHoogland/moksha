@@ -135,8 +135,6 @@ src/modules/conf_applications/e_int_config_apps.c
 src/modules/conf_applications/e_mod_main.c
 src/modules/conf_borders/e_int_config_borders.c
 src/modules/conf_borders/e_mod_main.c
-src/modules/conf_clientlist/e_int_config_clientlist.c
-src/modules/conf_clientlist/e_mod_main.c
 src/modules/conf_colors/e_int_config_color_classes.c
 src/modules/conf_colors/e_mod_main.c
 src/modules/conf_dialogs/e_int_config_dialogs.c
@@ -197,10 +195,9 @@ src/modules/conf_wallpaper/e_int_config_wallpaper.c
 src/modules/conf_wallpaper/e_int_config_wallpaper_import.c
 src/modules/conf_wallpaper/e_int_config_wallpaper_web.c
 src/modules/conf_wallpaper/e_mod_main.c
-src/modules/conf_window_display/e_int_config_window_display.c
-src/modules/conf_window_display/e_mod_main.c
-src/modules/conf_window_focus/e_int_config_focus.c
-src/modules/conf_window_focus/e_mod_main.c
+src/modules/conf_window_manipulation/e_int_config_clientlist.c
+src/modules/conf_window_manipulation/e_int_config_window_display.c
+src/modules/conf_window_manipulation/e_int_config_focus.c
 src/modules/conf_window_manipulation/e_int_config_window_geometry.c
 src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c
 src/modules/conf_window_manipulation/e_int_config_window_stacking.c

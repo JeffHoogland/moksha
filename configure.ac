@@ -696,12 +696,9 @@ AC_E_OPTIONAL_MODULE([conf_display], true)
 AC_E_OPTIONAL_MODULE([conf_shelves], true)
 AC_E_OPTIONAL_MODULE([conf_keybindings], true)
 AC_E_OPTIONAL_MODULE([conf_edgebindings], true)
-AC_E_OPTIONAL_MODULE([conf_window_display], true)
-AC_E_OPTIONAL_MODULE([conf_window_focus], true)
 AC_E_OPTIONAL_MODULE([conf_window_remembers], true)
 AC_E_OPTIONAL_MODULE([conf_window_manipulation], true)
 AC_E_OPTIONAL_MODULE([conf_menus], true)
-AC_E_OPTIONAL_MODULE([conf_clientlist], true)
 AC_E_OPTIONAL_MODULE([conf_dialogs], true)
 AC_E_OPTIONAL_MODULE([conf_performance], true)
 AC_E_OPTIONAL_MODULE([conf_winlist], true)
@@ -825,18 +822,12 @@ src/modules/conf_keybindings/Makefile
 src/modules/conf_keybindings/module.desktop
 src/modules/conf_edgebindings/Makefile
 src/modules/conf_edgebindings/module.desktop
-src/modules/conf_window_display/Makefile
-src/modules/conf_window_display/module.desktop
-src/modules/conf_window_focus/Makefile
-src/modules/conf_window_focus/module.desktop
 src/modules/conf_window_remembers/Makefile
 src/modules/conf_window_remembers/module.desktop
 src/modules/conf_window_manipulation/Makefile
 src/modules/conf_window_manipulation/module.desktop
 src/modules/conf_menus/Makefile
 src/modules/conf_menus/module.desktop
-src/modules/conf_clientlist/Makefile
-src/modules/conf_clientlist/module.desktop
 src/modules/conf_dialogs/Makefile
 src/modules/conf_dialogs/module.desktop
 src/modules/conf_performance/Makefile

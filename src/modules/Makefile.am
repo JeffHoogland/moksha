@@ -138,14 +138,6 @@ if USE_MODULE_CONF_EDGEBINDINGS
 SUBDIRS += conf_edgebindings
 endif
 
-if USE_MODULE_CONF_WINDOW_DISPLAY
-SUBDIRS += conf_window_display
-endif
-
-if USE_MODULE_CONF_WINDOW_FOCUS
-SUBDIRS += conf_window_focus
-endif
-
 if USE_MODULE_CONF_WINDOW_REMEMBERS
 SUBDIRS += conf_window_remembers
 endif
@@ -156,10 +148,6 @@ endif
 
 if USE_MODULE_CONF_MENUS
 SUBDIRS += conf_menus
-endif
-
-if USE_MODULE_CONF_CLIENTLIST
-SUBDIRS += conf_clientlist
 endif
 
 if USE_MODULE_CONF_DIALOGS
