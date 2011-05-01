@@ -149,8 +149,6 @@ src/modules/conf_display/e_int_config_dpms.c
 src/modules/conf_display/e_mod_main.c
 src/modules/conf_edgebindings/e_int_config_edgebindings.c
 src/modules/conf_edgebindings/e_mod_main.c
-src/modules/conf_engine/e_int_config_engine.c
-src/modules/conf_engine/e_mod_main.c
 src/modules/conf_fonts/e_int_config_fonts.c
 src/modules/conf_fonts/e_mod_main.c
 src/modules/conf_icon_theme/e_int_config_icon_themes.c
@@ -174,6 +172,7 @@ src/modules/conf_mouse_cursor/e_int_config_cursor.c
 src/modules/conf_mouse_cursor/e_mod_main.c
 src/modules/conf_paths/e_int_config_paths.c
 src/modules/conf_paths/e_mod_main.c
+src/modules/conf_performance/e_int_config_engine.c
 src/modules/conf_performance/e_int_config_performance.c
 src/modules/conf_performance/e_mod_main.c
 src/modules/conf_profiles/e_int_config_profiles.c

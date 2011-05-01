@@ -110,10 +110,6 @@ if USE_MODULE_MSGBUS
 SUBDIRS += msgbus
 endif
 
-if USE_MODULE_CONF_ENGINE
-SUBDIRS += conf_engine
-endif
-
 if USE_MODULE_CONF_APPLICATIONS
 SUBDIRS += conf_applications
 endif

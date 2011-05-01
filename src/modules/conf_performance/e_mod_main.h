@@ -3,9 +3,11 @@
 
 #define E_TYPEDEFS 1
 #include "e_int_config_performance.h"
+#include "e_int_config_engine.h"
 
 #undef E_TYPEDEFS
 #include "e_int_config_performance.h"
+#include "e_int_config_engine.h"
 
 EAPI extern E_Module_Api e_modapi;
 

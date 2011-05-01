@@ -689,7 +689,6 @@ AC_E_OPTIONAL_MODULE([conf_startup], true)
 AC_E_OPTIONAL_MODULE([conf_intl], true)
 AC_E_OPTIONAL_MODULE([conf_profiles], true)
 AC_E_OPTIONAL_MODULE([msgbus], true)
-AC_E_OPTIONAL_MODULE([conf_engine], true)
 AC_E_OPTIONAL_MODULE([conf_applications], true)
 AC_E_OPTIONAL_MODULE([conf_display], true)
 AC_E_OPTIONAL_MODULE([conf_shelves], true)
@@ -806,8 +805,6 @@ src/modules/conf_profiles/Makefile
 src/modules/conf_profiles/module.desktop
 src/modules/msgbus/Makefile
 src/modules/msgbus/module.desktop
-src/modules/conf_engine/Makefile
-src/modules/conf_engine/module.desktop
 src/modules/conf_applications/Makefile
 src/modules/conf_applications/module.desktop
 src/modules/conf_display/Makefile
