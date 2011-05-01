@@ -58,44 +58,12 @@ if USE_MODULE_CONF
 SUBDIRS += conf
 endif
 
-if USE_MODULE_CONF_WALLPAPER
-SUBDIRS += conf_wallpaper
-endif
-
 if USE_MODULE_CONF_WALLPAPER2
 SUBDIRS += conf_wallpaper2
 endif
 
 if USE_MODULE_CONF_THEME
 SUBDIRS += conf_theme
-endif
-
-if USE_MODULE_CONF_COLORS
-SUBDIRS += conf_colors
-endif
-
-if USE_MODULE_CONF_FONTS
-SUBDIRS += conf_fonts
-endif
-
-if USE_MODULE_CONF_BORDERS
-SUBDIRS += conf_borders
-endif
-
-if USE_MODULE_CONF_ICON_THEME
-SUBDIRS += conf_icon_theme
-endif
-
-if USE_MODULE_CONF_MOUSE_CURSOR
-SUBDIRS += conf_mouse_cursor
-endif
-
-if USE_MODULE_CONF_TRANSITIONS
-SUBDIRS += conf_transitions
-endif
-
-if USE_MODULE_CONF_STARTUP
-SUBDIRS += conf_startup
 endif
 
 if USE_MODULE_CONF_INTL
@@ -152,10 +120,6 @@ endif
 
 if USE_MODULE_CONF_INTERACTION
 SUBDIRS += conf_interaction
-endif
-
-if USE_MODULE_CONF_SCALE
-SUBDIRS += conf_scale
 endif
 
 if USE_MODULE_GADMAN

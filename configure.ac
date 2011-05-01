@@ -676,16 +676,8 @@ AC_E_OPTIONAL_MODULE([fileman], true)
 AC_E_OPTIONAL_MODULE([fileman_opinfo], true)
 AC_E_OPTIONAL_MODULE([wizard], true)
 AC_E_OPTIONAL_MODULE([conf], true)
-AC_E_OPTIONAL_MODULE([conf_wallpaper], true)
 AC_E_OPTIONAL_MODULE([conf_wallpaper2], true)
 AC_E_OPTIONAL_MODULE([conf_theme], true, [CHECK_MODULE_CONF_THEME])
-AC_E_OPTIONAL_MODULE([conf_colors], true)
-AC_E_OPTIONAL_MODULE([conf_fonts], true)
-AC_E_OPTIONAL_MODULE([conf_borders], true)
-AC_E_OPTIONAL_MODULE([conf_icon_theme], true)
-AC_E_OPTIONAL_MODULE([conf_mouse_cursor], true)
-AC_E_OPTIONAL_MODULE([conf_transitions], true)
-AC_E_OPTIONAL_MODULE([conf_startup], true)
 AC_E_OPTIONAL_MODULE([conf_intl], true)
 AC_E_OPTIONAL_MODULE([msgbus], true)
 AC_E_OPTIONAL_MODULE([conf_applications], true)
@@ -700,7 +692,6 @@ AC_E_OPTIONAL_MODULE([conf_dialogs], true)
 AC_E_OPTIONAL_MODULE([conf_performance], true)
 AC_E_OPTIONAL_MODULE([conf_paths], true)
 AC_E_OPTIONAL_MODULE([conf_interaction], true)
-AC_E_OPTIONAL_MODULE([conf_scale], true)
 AC_E_OPTIONAL_MODULE([gadman], true)
 AC_E_OPTIONAL_MODULE([mixer], true, [CHECK_MODULE_MIXER])
 AC_E_OPTIONAL_MODULE([connman], true, [CHECK_MODULE_CONNMAN])
@@ -777,30 +768,12 @@ src/modules/fileman_opinfo/module.desktop
 src/modules/wizard/Makefile
 src/modules/conf/Makefile
 src/modules/conf/module.desktop
-src/modules/conf_wallpaper/Makefile
-src/modules/conf_wallpaper/module.desktop
 src/modules/conf_wallpaper2/Makefile
 src/modules/conf_wallpaper2/module.desktop
 src/modules/conf_theme/Makefile
 src/modules/conf_theme/module.desktop
-src/modules/conf_colors/Makefile
-src/modules/conf_colors/module.desktop
-src/modules/conf_fonts/Makefile
-src/modules/conf_fonts/module.desktop
-src/modules/conf_borders/Makefile
-src/modules/conf_borders/module.desktop
-src/modules/conf_icon_theme/Makefile
-src/modules/conf_icon_theme/module.desktop
-src/modules/conf_mouse_cursor/Makefile
-src/modules/conf_mouse_cursor/module.desktop
-src/modules/conf_transitions/Makefile
-src/modules/conf_transitions/module.desktop
-src/modules/conf_startup/Makefile
-src/modules/conf_startup/module.desktop
 src/modules/conf_intl/Makefile
 src/modules/conf_intl/module.desktop
-src/modules/msgbus/Makefile
-src/modules/msgbus/module.desktop
 src/modules/conf_applications/Makefile
 src/modules/conf_applications/module.desktop
 src/modules/conf_display/Makefile
@@ -825,8 +798,8 @@ src/modules/conf_paths/Makefile
 src/modules/conf_paths/module.desktop
 src/modules/conf_interaction/Makefile
 src/modules/conf_interaction/module.desktop
-src/modules/conf_scale/Makefile
-src/modules/conf_scale/module.desktop
+src/modules/msgbus/Makefile
+src/modules/msgbus/module.desktop
 src/modules/gadman/Makefile
 src/modules/gadman/module.desktop
 src/modules/mixer/Makefile
