@@ -137,6 +137,7 @@ src/modules/conf_borders/e_int_config_borders.c
 src/modules/conf_borders/e_mod_main.c
 src/modules/conf_colors/e_int_config_color_classes.c
 src/modules/conf_colors/e_mod_main.c
+src/modules/conf_dialogs/e_int_config_profiles.c
 src/modules/conf_dialogs/e_int_config_dialogs.c
 src/modules/conf_dialogs/e_mod_main.c
 src/modules/conf_display/e_int_config_display.c
@@ -172,8 +173,6 @@ src/modules/conf_paths/e_mod_main.c
 src/modules/conf_performance/e_int_config_engine.c
 src/modules/conf_performance/e_int_config_performance.c
 src/modules/conf_performance/e_mod_main.c
-src/modules/conf_profiles/e_int_config_profiles.c
-src/modules/conf_profiles/e_mod_main.c
 src/modules/conf_scale/e_int_config_scale.c
 src/modules/conf_scale/e_mod_main.c
 src/modules/conf_shelves/e_int_config_shelf.c

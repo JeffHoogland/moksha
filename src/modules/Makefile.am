@@ -102,10 +102,6 @@ if USE_MODULE_CONF_INTL
 SUBDIRS += conf_intl
 endif
 
-if USE_MODULE_CONF_PROFILES
-SUBDIRS += conf_profiles
-endif
-
 if USE_MODULE_MSGBUS
 SUBDIRS += msgbus
 endif
