@@ -154,10 +154,6 @@ if USE_MODULE_CONF_PATHS
 SUBDIRS += conf_paths
 endif
 
-if USE_MODULE_CONF_MIME
-SUBDIRS += conf_mime
-endif
-
 if USE_MODULE_CONF_INTERACTION
 SUBDIRS += conf_interaction
 endif

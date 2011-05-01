@@ -165,9 +165,6 @@ src/modules/conf_keybindings/e_int_config_mousebindings.c
 src/modules/conf_keybindings/e_mod_main.c
 src/modules/conf_menus/e_int_config_menus.c
 src/modules/conf_menus/e_mod_main.c
-src/modules/conf_mime/e_int_config_mime.c
-src/modules/conf_mime/e_int_config_mime_edit.c
-src/modules/conf_mime/e_mod_main.c
 src/modules/conf_mouse_cursor/e_int_config_cursor.c
 src/modules/conf_mouse_cursor/e_mod_main.c
 src/modules/conf_paths/e_int_config_paths.c
@@ -219,6 +216,8 @@ src/modules/everything-calc/evry_plug_calc.c
 src/modules/everything-files/evry_plug_files.c
 src/modules/everything-settings/evry_plug_settings.c
 src/modules/everything-windows/evry_plug_windows.c
+src/modules/fileman/e_int_config_mime.c
+src/modules/fileman/e_int_config_mime_edit.c
 src/modules/fileman/e_mod_main.c
 src/modules/fileman/e_mod_config.c
 src/modules/fileman/e_fwin.c

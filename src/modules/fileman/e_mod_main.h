@@ -11,9 +11,13 @@ typedef struct _Config Config;
 
 #define E_TYPEDEFS 1
 #include "e_fwin.h"
+#include "e_int_config_mime_edit.h"
+#include "e_int_config_mime.h"
 
 #undef E_TYPEDEFS
 #include "e_fwin.h"
+#include "e_int_config_mime_edit.h"
+#include "e_int_config_mime.h"
 
 struct _Config 
 {

@@ -700,7 +700,6 @@ AC_E_OPTIONAL_MODULE([conf_menus], true)
 AC_E_OPTIONAL_MODULE([conf_dialogs], true)
 AC_E_OPTIONAL_MODULE([conf_performance], true)
 AC_E_OPTIONAL_MODULE([conf_paths], true)
-AC_E_OPTIONAL_MODULE([conf_mime], true)
 AC_E_OPTIONAL_MODULE([conf_interaction], true)
 AC_E_OPTIONAL_MODULE([conf_scale], true)
 AC_E_OPTIONAL_MODULE([gadman], true)
@@ -827,8 +826,6 @@ src/modules/conf_performance/Makefile
 src/modules/conf_performance/module.desktop
 src/modules/conf_paths/Makefile
 src/modules/conf_paths/module.desktop
-src/modules/conf_mime/Makefile
-src/modules/conf_mime/module.desktop
 src/modules/conf_interaction/Makefile
 src/modules/conf_interaction/module.desktop
 src/modules/conf_scale/Makefile

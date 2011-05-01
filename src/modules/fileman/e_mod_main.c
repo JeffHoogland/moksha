@@ -58,7 +58,9 @@ e_modapi_init(E_Module *m)
    e_configure_registry_item_add("fileman/fileman", 10, _("File Manager"),
                                  NULL, "system-file-manager",
                                  e_int_config_fileman);
-
+   e_configure_registry_item_add("fileman/file_icons", 20, _("File Icons"),
+                                 NULL, "preferences-file-icons",
+                                 e_int_config_mime);
    /* Setup Config edd */
    _e_mod_fileman_config_load();
 
@@ -119,6 +121,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    E_Manager *man;
    E_Container *con;
    E_Zone *zone;
+   E_Config_Dialog *cfd;
 
    e_fileman_dbus_shutdown();
 
@@ -154,7 +157,14 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
         e_action_del("fileman");
         act = NULL;
      }
-   /* remove fileman category from config panel */
+   while ((cfd = e_config_dialog_get("E", "fileman/mime_edit_dialog")))
+      e_object_del(E_OBJECT(cfd));
+   while ((cfd = e_config_dialog_get("E", "fileman/file_icons")))
+      e_object_del(E_OBJECT(cfd));
+   while ((cfd = e_config_dialog_get("E", "fileman/fileman")))
+      e_object_del(E_OBJECT(cfd));
+   
+   e_configure_registry_item_del("fileman/file_icons");
    e_configure_registry_item_del("fileman/fileman");
    e_configure_registry_category_del("fileman");
 
