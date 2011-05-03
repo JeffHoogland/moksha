@@ -18512,7 +18512,7 @@ collections {
       styles {
         style {
             name: "fileman_icon_name";
-            base: "font=Sans font_size=10 text_class=fileman_icon align=center color=#fff wrap=mixed ellipsis=1.0";
+            base: "font=Sans font_size=10 align=center text_class=fileman_icon align=center color=#fff wrap=mixed ellipsis=1.0";
         }
         style {
             name: "fileman_icon_name_full";
@@ -18529,7 +18529,7 @@ collections {
             description {
                state: "default" 0.0;
                align: 0.5 0.0;
-               fixed: 0 1;
+               fixed: 1 1;
                color: 0 0 0 255;
                rel1 {
                   to: "icon0";
