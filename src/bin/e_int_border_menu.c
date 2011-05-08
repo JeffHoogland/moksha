@@ -647,7 +647,8 @@ _e_border_menu_cb_placement_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *m
           }
      }
 
-   if ((!bd->lock_user_location) && (!bd->fullscreen) && (!bd->maximized || e_config->allow_manip))
+   if ((!bd->lock_user_location) && (!bd->fullscreen) &&
+       (((bd->maximized & E_MAXIMIZE_DIRECTION) != E_MAXIMIZE_BOTH) || e_config->allow_manip))
      {
         submi = e_menu_item_new(subm);
         e_menu_item_label_set(submi, _("Move"));
@@ -658,7 +659,8 @@ _e_border_menu_cb_placement_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *m
                                                         "e/widgets/border/default/move_icon");
      }
 
-   if (((!bd->lock_user_size) && (!bd->fullscreen) && (!bd->maximized || e_config->allow_manip)) &&
+   if (((!bd->lock_user_size) && (!bd->fullscreen) &&
+       (((bd->maximized & E_MAXIMIZE_DIRECTION) != E_MAXIMIZE_BOTH) || e_config->allow_manip)) &&
        ((bd->client.netwm.type == ECORE_X_WINDOW_TYPE_NORMAL) ||
         (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_UNKNOWN)))
      {
