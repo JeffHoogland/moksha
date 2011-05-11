@@ -497,7 +497,6 @@ e_winlist_left(E_Zone *zone)
 
 	ecore_x_pointer_xy_get(zone->container->win, &_warp_x, &_warp_y);
 	_win = &zone->container->win;
-	e_border_focus_latest_set(_bd_next);
 	_warp_to = 1;
 	if (!_warp_timer)
 	  _warp_timer = ecore_timer_add(0.01, _e_winlist_warp_timer, NULL);
@@ -617,7 +616,6 @@ e_winlist_down(E_Zone *zone)
 
 	ecore_x_pointer_xy_get(zone->container->win, &_warp_x, &_warp_y);
 	_win = &zone->container->win;
-	e_border_focus_latest_set(_bd_next);
 	_warp_to = 1;
 	if (!_warp_timer)
 	  _warp_timer = ecore_timer_add(0.01, _e_winlist_warp_timer, NULL);
@@ -737,7 +735,6 @@ e_winlist_up(E_Zone *zone)
 
 	ecore_x_pointer_xy_get(zone->container->win, &_warp_x, &_warp_y);
 	_win = &zone->container->win;
-	e_border_focus_latest_set(_bd_next);
 	_warp_to = 1;
 	if (!_warp_timer)
 	  _warp_timer = ecore_timer_add(0.01, _e_winlist_warp_timer, NULL);
@@ -857,7 +854,6 @@ e_winlist_right(E_Zone *zone)
 
 	ecore_x_pointer_xy_get(zone->container->win, &_warp_x, &_warp_y);
 	_win = &zone->container->win;
-	e_border_focus_latest_set(_bd_next);
 	_warp_to = 1;
 	if (!_warp_timer)
 	  _warp_timer = ecore_timer_add(0.01, _e_winlist_warp_timer, NULL);
