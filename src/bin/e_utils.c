@@ -450,8 +450,25 @@ _e_util_icon_fdo_set(Evas_Object *obj, const char *icon)
    size = e_icon_scale_size_get(obj);
    if (size < 16) size = 16;
    size = e_util_icon_size_normalize(size * e_scale);
+
    path = efreet_icon_path_find(e_config->icon_theme, icon, size);
+   if (!path) 
+     {
+        path = efreet_icon_path_find("default", icon, size);
+        if (!path) 
+          {
+             path = efreet_icon_path_find("hicolor", icon, size);
+             if (!path) 
+               {
+                  path = efreet_icon_path_find("gnome", icon, size);
+                  if (!path) 
+                    path = efreet_icon_path_find("Human", icon, size);
+               }
+          }
+     }
+
    if (!path) return 0;
+
    e_icon_file_set(obj, path);
    return 1;
 }
