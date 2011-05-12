@@ -190,12 +190,13 @@ e_manager_manage_windows(E_Manager *man)
 		  else
                     continue;
 	       }
-	     if (!ecore_x_window_prop_property_get(windows[i],
-						   atom_xmbed,
-						   atom_xmbed, 32,
-						   &data, &count))
-	       data = NULL;
-	     if (!data)
+	     /* XXX manage xembed windows as long as they are not override_redirect..
+	     /* if (!ecore_x_window_prop_property_get(windows[i],
+	      * 					   atom_xmbed,
+	      * 					   atom_xmbed, 32,
+	      * 					   &data, &count))
+	      *   data = NULL;
+	      * if (!data) */
 	       {
 		  if (!ecore_x_window_prop_property_get(windows[i],
 							atom_kde_netwm_systray,
