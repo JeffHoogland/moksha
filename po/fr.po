@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-05-01 10:10+0400\n"
-"PO-Revision-Date: 2011-05-02 14:02+0400\n"
+"POT-Creation-Date: 2011-05-12 09:36+0400\n"
+"PO-Revision-Date: 2011-05-12 12:10+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment French Team <pourunmondesansgourou@gmail.com>\n"
 "Language: fr\n"
@@ -165,12 +165,12 @@ msgstr "Fenêtre : actions"
 
 #: src/bin/e_actions.c:2661
 #: src/bin/e_fm.c:6145
-#: src/bin/e_int_border_menu.c:653
+#: src/bin/e_int_border_menu.c:654
 msgid "Move"
 msgstr "Déplacer"
 
 #: src/bin/e_actions.c:2672
-#: src/bin/e_int_border_menu.c:666
+#: src/bin/e_int_border_menu.c:668
 msgid "Resize"
 msgstr "Redimensionner"
 
@@ -189,13 +189,13 @@ msgid "Window Menu"
 msgstr "Menu de la fenêtre"
 
 #: src/bin/e_actions.c:2691
-#: src/bin/e_int_border_menu.c:981
+#: src/bin/e_int_border_menu.c:983
 #: src/modules/winlist/e_int_config_winlist.c:216
 msgid "Raise"
 msgstr "Placer dessus"
 
 #: src/bin/e_actions.c:2696
-#: src/bin/e_int_border_menu.c:989
+#: src/bin/e_int_border_menu.c:991
 msgid "Lower"
 msgstr "Placer dessous"
 
@@ -794,7 +794,7 @@ msgstr "Sélecteur de couleur"
 #: src/bin/e_module.c:417
 #: src/bin/e_sys.c:484
 #: src/bin/e_sys.c:530
-#: src/bin/e_utils.c:710
+#: src/bin/e_utils.c:712
 #: src/modules/conf_dialogs/e_int_config_profiles.c:387
 #: src/modules/conf_display/e_int_config_dpms.c:64
 #: src/modules/conf_display/e_int_config_dpms.c:85
@@ -815,7 +815,7 @@ msgstr "OK"
 #: src/bin/e_entry_dialog.c:63
 #: src/bin/e_fm.c:8681
 #: src/bin/e_fm_prop.c:508
-#: src/bin/e_utils.c:1165
+#: src/bin/e_utils.c:1167
 #: src/modules/conf_dialogs/e_int_config_profiles.c:388
 #: src/modules/conf_intl/e_int_config_imc_import.c:124
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:219
@@ -1037,7 +1037,7 @@ msgstr "Éditeur de fichier desktop"
 #: src/bin/e_int_border_prop.c:420
 #: src/bin/e_int_border_prop.c:467
 #: src/modules/conf_intl/e_int_config_imc.c:891
-#: src/modules/conf_menus/e_int_config_menus.c:242
+#: src/modules/conf_menus/e_int_config_menus.c:265
 msgid "Name"
 msgstr "Nom"
 
@@ -1454,7 +1454,7 @@ msgstr "Réessayer"
 
 #: src/bin/e_fm.c:9108
 #: src/bin/e_fm.c:9251
-#: src/modules/wizard/page_030.c:82
+#: src/modules/wizard/page_030.c:85
 msgid "Error"
 msgstr "Erreur"
 
@@ -1793,7 +1793,7 @@ msgid "Window"
 msgstr "Fenêtre"
 
 #: src/bin/e_int_border_menu.c:104
-#: src/bin/e_int_border_menu.c:941
+#: src/bin/e_int_border_menu.c:943
 msgid "Always on Top"
 msgstr "Toujours au-dessus"
 
@@ -1877,60 +1877,60 @@ msgstr "ICCCM/NetWM"
 msgid "Iconify"
 msgstr "Minimiser"
 
-#: src/bin/e_int_border_menu.c:678
+#: src/bin/e_int_border_menu.c:680
 msgid "Shade"
 msgstr "Enroulé(e)"
 
-#: src/bin/e_int_border_menu.c:862
+#: src/bin/e_int_border_menu.c:864
 #, c-format
 msgid "Screen %d"
 msgstr "Écran %d"
 
-#: src/bin/e_int_border_menu.c:952
+#: src/bin/e_int_border_menu.c:954
 #: src/modules/conf_theme/e_int_config_fonts.c:98
 #: src/modules/conf_theme/e_int_config_fonts.c:262
 msgid "Normal"
 msgstr "Normal"
 
-#: src/bin/e_int_border_menu.c:963
+#: src/bin/e_int_border_menu.c:965
 msgid "Always Below"
 msgstr "Toujours en dessous"
 
-#: src/bin/e_int_border_menu.c:1007
+#: src/bin/e_int_border_menu.c:1009
 msgid "Pin to Desktop"
 msgstr "Épingler au bureau"
 
-#: src/bin/e_int_border_menu.c:1018
+#: src/bin/e_int_border_menu.c:1020
 msgid "Unpin from Desktop"
 msgstr "Désépingler du bureau"
 
-#: src/bin/e_int_border_menu.c:1108
+#: src/bin/e_int_border_menu.c:1110
 msgid "Select Border Style"
 msgstr "Sélectionner un style de bordure"
 
-#: src/bin/e_int_border_menu.c:1120
+#: src/bin/e_int_border_menu.c:1122
 msgid "Use E17 Default Icon Preference"
 msgstr "Utiliser l'icone proposé par E17"
 
-#: src/bin/e_int_border_menu.c:1128
+#: src/bin/e_int_border_menu.c:1130
 msgid "Use Application Provided Icon "
 msgstr "Utiliser l'icone fourni par l'appli"
 
-#: src/bin/e_int_border_menu.c:1136
+#: src/bin/e_int_border_menu.c:1138
 msgid "Use User Defined Icon"
 msgstr "Utiliser l'icone défini par l'utilisateur"
 
-#: src/bin/e_int_border_menu.c:1145
+#: src/bin/e_int_border_menu.c:1147
 #: src/bin/e_int_border_remember.c:747
 msgid "Offer Resistance"
 msgstr "Offrir une résistance"
 
-#: src/bin/e_int_border_menu.c:1205
+#: src/bin/e_int_border_menu.c:1207
 #: src/modules/winlist/e_mod_main.c:26
 msgid "Window List"
 msgstr "Liste des fenêtres"
 
-#: src/bin/e_int_border_menu.c:1215
+#: src/bin/e_int_border_menu.c:1217
 #: src/modules/pager/e_mod_main.c:257
 #: src/modules/pager/e_mod_main.c:2797
 #: src/modules/pager/e_mod_main.c:2804
@@ -1949,7 +1949,7 @@ msgstr "Liste des fenêtres"
 msgid "Pager"
 msgstr "Pager"
 
-#: src/bin/e_int_border_menu.c:1225
+#: src/bin/e_int_border_menu.c:1227
 msgid "Taskbar"
 msgstr "Barre des tâches"
 
@@ -1971,7 +1971,7 @@ msgstr "Propriétés ICCCM"
 
 #: src/bin/e_int_border_prop.c:419
 #: src/bin/e_int_border_remember.c:665
-#: src/bin/e_utils.c:1190
+#: src/bin/e_utils.c:1192
 msgid "Title"
 msgstr "Titre"
 
@@ -2309,8 +2309,8 @@ msgstr "Applications favorites"
 
 #: src/bin/e_int_menus.c:127
 #: src/modules/conf_applications/e_int_config_apps.c:264
-#: src/modules/conf_menus/e_int_config_menus.c:237
 #: src/modules/conf_menus/e_int_config_menus.c:260
+#: src/modules/conf_menus/e_int_config_menus.c:283
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:194
 #: src/modules/everything-apps/evry_plug_apps.c:1031
 #: src/modules/everything-apps/evry_plug_apps.c:1049
@@ -3231,67 +3231,67 @@ msgstr "Impossible de quitter : fenêtres immortelles."
 msgid "Some windows are left still around with the Lifespan lock enabled. This means<br>that Enlightenment will not allow itself to exit until these windows have<br>been closed or have the lifespan lock removed.<br>"
 msgstr "Des fenêtres sont toujours présentes car elles ont été verrouillées.<br>Enlightenment n'autorisera pas la fin de session tant que ces<br>fenêtres n'auront pas été fermées, ou déverrouillées.<br>"
 
-#: src/bin/e_utils.c:874
+#: src/bin/e_utils.c:876
 #, c-format
 msgid "%'.0f Bytes"
 msgstr "%'.0f octets"
 
-#: src/bin/e_utils.c:878
+#: src/bin/e_utils.c:880
 #, c-format
 msgid "%'.0f KB"
 msgstr "%'.0f Ko"
 
-#: src/bin/e_utils.c:882
+#: src/bin/e_utils.c:884
 #, c-format
 msgid "%'.0f MB"
 msgstr "%'.0f Mo"
 
-#: src/bin/e_utils.c:886
+#: src/bin/e_utils.c:888
 #, c-format
 msgid "%'.1f GB"
 msgstr "%'.1f Go"
 
-#: src/bin/e_utils.c:905
+#: src/bin/e_utils.c:907
 #, c-format
 msgid "In the Future"
 msgstr "Dans le futur"
 
-#: src/bin/e_utils.c:909
+#: src/bin/e_utils.c:911
 #, c-format
 msgid "In the last Minute"
 msgstr "Durant la dernière minute"
 
-#: src/bin/e_utils.c:911
+#: src/bin/e_utils.c:913
 #, c-format
 msgid "%li Years ago"
 msgstr "il y a %li année(s)"
 
-#: src/bin/e_utils.c:913
+#: src/bin/e_utils.c:915
 #, c-format
 msgid "%li Months ago"
 msgstr "il y a %li mois"
 
-#: src/bin/e_utils.c:915
+#: src/bin/e_utils.c:917
 #, c-format
 msgid "%li Weeks ago"
 msgstr "il y a %li semaine(s)"
 
-#: src/bin/e_utils.c:917
+#: src/bin/e_utils.c:919
 #, c-format
 msgid "%li Days ago"
 msgstr "il y a %li jour(s)"
 
-#: src/bin/e_utils.c:919
+#: src/bin/e_utils.c:921
 #, c-format
 msgid "%li Hours ago"
 msgstr "il y a %li heure(s)"
 
-#: src/bin/e_utils.c:921
+#: src/bin/e_utils.c:923
 #, c-format
 msgid "%li Minutes ago"
 msgstr "il y a %li minutes"
 
-#: src/bin/e_utils.c:927
+#: src/bin/e_utils.c:929
 #: src/modules/conf_dialogs/e_int_config_profiles.c:274
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1179
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1179
@@ -3300,66 +3300,66 @@ msgstr "il y a %li minutes"
 msgid "Unknown"
 msgstr "Inconnu"
 
-#: src/bin/e_utils.c:1159
+#: src/bin/e_utils.c:1161
 msgid "Image Import Settings"
 msgstr "Paramétrage de l'importation d'image"
 
-#: src/bin/e_utils.c:1163
+#: src/bin/e_utils.c:1165
 msgid "Import"
 msgstr "Importer"
 
-#: src/bin/e_utils.c:1180
+#: src/bin/e_utils.c:1182
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:167
 msgid "Fill and Stretch Options"
 msgstr "Options de remplissage et d'étirage"
 
-#: src/bin/e_utils.c:1188
+#: src/bin/e_utils.c:1190
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:170
 msgid "Stretch"
 msgstr "Étirer"
 
-#: src/bin/e_utils.c:1189
+#: src/bin/e_utils.c:1191
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:175
 msgid "Center"
 msgstr "Centrer"
 
-#: src/bin/e_utils.c:1191
+#: src/bin/e_utils.c:1193
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:185
 msgid "Within"
 msgstr "Contenir"
 
-#: src/bin/e_utils.c:1192
+#: src/bin/e_utils.c:1194
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:190
 msgid "Fill"
 msgstr "Remplir"
 
-#: src/bin/e_utils.c:1197
+#: src/bin/e_utils.c:1199
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:197
 msgid "File Quality"
 msgstr "Qualité du fichier"
 
-#: src/bin/e_utils.c:1199
+#: src/bin/e_utils.c:1201
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:199
 msgid "Use original file"
 msgstr "Utiliser le fichier original"
 
-#: src/bin/e_utils.c:1203
+#: src/bin/e_utils.c:1205
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:202
 #, c-format
 msgid "%3.0f%%"
 msgstr "%3.0f%%"
 
-#: src/bin/e_utils.c:1532
+#: src/bin/e_utils.c:1534
 msgid "Configuration data needed upgrading. Your old configuration<br> has been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means the module needs new configuration<br>data by default for usable functionality that your old<br>configuration simply lacks. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the inconvenience.<br>"
 msgstr "La configuration a dû être mise à jour. Votre ancienne configuration<br>a été supprimée et de nouveaux paramètres par défaut sont en place.<br>Cela risque d'arriver en phase de développement, aussi est-il inutile<br>de faire un rapport de bogue. Cela signifie simplement que le module a besoin<br>de cette mise à niveau pour être à nouveau fonctionnel.<br>Vous pouvez maintenant tout reconfigurer selon votre goût.<br>Désolé pour la gêne occasionnée.<br>"
 
-#: src/bin/e_utils.c:1545
-#: src/bin/e_utils.c:1569
+#: src/bin/e_utils.c:1547
+#: src/bin/e_utils.c:1571
 #, c-format
 msgid "%s Configuration Updated"
 msgstr "Configuration de %s actualisée"
 
-#: src/bin/e_utils.c:1558
+#: src/bin/e_utils.c:1560
 msgid "Your module configuration is NEWER than the module version. This is very<br>strange. This should not happen unless you downgraded<br>the module or copied the configuration from a place where<br>a newer version of the module was running. This is bad and<br>as a precaution your configuration has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr "Votre configuration du module est PLUS RÉCENTE que la version<br>actuelle du module. C'est vraiment étonnant. Cela ne devrait<br>pas se produire à moins que vous n'ayez installé une version<br>antérieure ou copié la configuration du module depuis une machine sur<br>laquelle une version plus récente était en cours. Ce n'est<br>pas bon et, par mesure de précaution, les valeurs par<br>défaut de votre configuration ont été restaurées.<br>Désolé pour le désagrément.<br>"
 
@@ -4044,7 +4044,7 @@ msgid "Don't Allow"
 msgstr "Ne pas autoriser"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:204
-#: src/modules/conf_menus/e_int_config_menus.c:293
+#: src/modules/conf_menus/e_int_config_menus.c:316
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:262
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:186
 msgid "Miscellaneous"
@@ -4372,11 +4372,11 @@ msgstr "Sélecteur de langue"
 
 #: src/modules/conf_intl/e_int_config_intl.c:929
 #: src/modules/conf_intl/e_int_config_intl.c:1365
-#: src/modules/conf_menus/e_int_config_menus.c:162
+#: src/modules/conf_menus/e_int_config_menus.c:169
 #: src/modules/wizard/page_010.c:146
-#: src/modules/wizard/page_030.c:121
+#: src/modules/wizard/page_030.c:128
 msgid "System Default"
-msgstr "Paramètres par défaut"
+msgstr "Système (par défaut)"
 
 #: src/modules/conf_intl/e_int_config_intl.c:956
 #: src/modules/conf_intl/e_int_config_intl.c:1034
@@ -4493,28 +4493,38 @@ msgstr "Boutons"
 msgid "Menu Settings"
 msgstr "Paramétrage du menu"
 
-#: src/modules/conf_menus/e_int_config_menus.c:234
+#: src/modules/conf_menus/e_int_config_menus.c:174
+#: src/modules/wizard/page_030.c:133
+msgid "Enlightenment Default"
+msgstr "Enlightenment (par défaut)"
+
+#: src/modules/conf_menus/e_int_config_menus.c:182
+#: src/modules/wizard/page_030.c:138
+msgid "Personal Default"
+msgstr "Personnel (par défaut)"
+
+#: src/modules/conf_menus/e_int_config_menus.c:257
 msgid "Main Menu"
 msgstr "Menu principal"
 
-#: src/modules/conf_menus/e_int_config_menus.c:235
+#: src/modules/conf_menus/e_int_config_menus.c:258
 #: src/modules/fileman/e_mod_main.c:360
 msgid "Favorites"
 msgstr "Favoris"
 
-#: src/modules/conf_menus/e_int_config_menus.c:241
+#: src/modules/conf_menus/e_int_config_menus.c:264
 msgid "Applications Display"
 msgstr "Affichage des applications"
 
-#: src/modules/conf_menus/e_int_config_menus.c:244
+#: src/modules/conf_menus/e_int_config_menus.c:267
 msgid "Generic"
 msgstr "Générique"
 
-#: src/modules/conf_menus/e_int_config_menus.c:246
+#: src/modules/conf_menus/e_int_config_menus.c:269
 msgid "Comments"
 msgstr "Commentaires"
 
-#: src/modules/conf_menus/e_int_config_menus.c:250
+#: src/modules/conf_menus/e_int_config_menus.c:273
 #: src/modules/gadman/e_mod_config.c:163
 #: src/modules/gadman/e_mod_main.c:27
 #: src/modules/gadman/e_mod_main.c:77
@@ -4524,22 +4534,22 @@ msgstr "Commentaires"
 msgid "Gadgets"
 msgstr "Gadgets"
 
-#: src/modules/conf_menus/e_int_config_menus.c:251
+#: src/modules/conf_menus/e_int_config_menus.c:274
 msgid "Show gadget settings in top-level"
 msgstr "Paramétrage du gadget au premier niveau"
 
-#: src/modules/conf_menus/e_int_config_menus.c:254
+#: src/modules/conf_menus/e_int_config_menus.c:277
 #: src/modules/conf_menus/e_mod_main.c:17
-#: src/modules/wizard/page_030.c:78
+#: src/modules/wizard/page_030.c:81
 msgid "Menus"
 msgstr "Menus"
 
-#: src/modules/conf_menus/e_int_config_menus.c:264
+#: src/modules/conf_menus/e_int_config_menus.c:287
 msgid "Margin"
 msgstr "Marge"
 
-#: src/modules/conf_menus/e_int_config_menus.c:266
-#: src/modules/conf_menus/e_int_config_menus.c:271
+#: src/modules/conf_menus/e_int_config_menus.c:289
+#: src/modules/conf_menus/e_int_config_menus.c:294
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:136
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:145
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:154
@@ -4549,38 +4559,38 @@ msgstr "Marge"
 msgid "%2.0f pixels"
 msgstr "%2.0f pixels"
 
-#: src/modules/conf_menus/e_int_config_menus.c:269
+#: src/modules/conf_menus/e_int_config_menus.c:292
 msgid "Cursor Margin"
 msgstr "Marge du curseur"
 
-#: src/modules/conf_menus/e_int_config_menus.c:274
+#: src/modules/conf_menus/e_int_config_menus.c:297
 msgid "Autoscroll"
 msgstr "Défilement"
 
-#: src/modules/conf_menus/e_int_config_menus.c:278
+#: src/modules/conf_menus/e_int_config_menus.c:301
 msgid "Menu Scroll Speed"
 msgstr "Vitesse de défilement du menu"
 
-#: src/modules/conf_menus/e_int_config_menus.c:280
+#: src/modules/conf_menus/e_int_config_menus.c:303
 #, c-format
 msgid "%5.0f pixels/sec"
 msgstr "%5.0f pixels/s"
 
-#: src/modules/conf_menus/e_int_config_menus.c:283
+#: src/modules/conf_menus/e_int_config_menus.c:306
 msgid "Fast Mouse Move Threshhold"
 msgstr "Seuil d'accélération de la souris"
 
-#: src/modules/conf_menus/e_int_config_menus.c:285
+#: src/modules/conf_menus/e_int_config_menus.c:308
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:187
 #, c-format
 msgid "%4.0f pixels/sec"
 msgstr "%4.0f pixels/s"
 
-#: src/modules/conf_menus/e_int_config_menus.c:288
+#: src/modules/conf_menus/e_int_config_menus.c:311
 msgid "Click Drag Timeout"
 msgstr "Délai d'expiration du glisser"
 
-#: src/modules/conf_menus/e_int_config_menus.c:290
+#: src/modules/conf_menus/e_int_config_menus.c:313
 #, c-format
 msgid "%2.2f sec"
 msgstr "%2.2f s"
@@ -7310,11 +7320,11 @@ msgstr "Choisissez"
 msgid "Profile"
 msgstr "Profil"
 
-#: src/modules/wizard/page_030.c:88
+#: src/modules/wizard/page_030.c:91
 msgid "No menu files were<br>found on your system.<br>Please see the<br>documentation on<br>www.enlightenment.org<br>for more details on<br>how to get your<br>application menus<br>working."
 msgstr "Aucun fichier de menus<br>n'a été détecté.<br>Veuillez consulter la<br>documentation disponible<br>sur wiki.enlightenment.org<br>pour savoir comment<br>générer les menus<br>d'applications."
 
-#: src/modules/wizard/page_030.c:104
+#: src/modules/wizard/page_030.c:107
 msgid "Select application menu"
 msgstr "Sélectionnez l'agencement du menu"
 
