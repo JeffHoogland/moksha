@@ -6,4 +6,11 @@ if INSTALL_SYSACTIONS
 files_DATA += sysactions.conf
 endif
 
-EXTRA_DIST = $(files_DATA)
+menusdir = $(sysconfdir)/xdg/menus
+menus_DATA =
+
+if INSTALL_ENLIGHTENMENT_MENU
+menus_DATA += enlightenment.menu
+endif
+
+EXTRA_DIST = $(files_DATA) $(menus_DATA)

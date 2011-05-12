@@ -278,6 +278,14 @@ AC_ARG_ENABLE([install-sysactions],
 AC_MSG_RESULT([$e_cv_enable_install_sysactions])
 AM_CONDITIONAL(INSTALL_SYSACTIONS, test x${e_cv_enable_install_sysactions} = xyes)
 
+AC_MSG_CHECKING([whether to install enlightenment.menu])
+AC_ARG_ENABLE([install-enlightenment-menu],
+  AS_HELP_STRING([--disable-enlightenment-menu],[disable installing /etc/xdg/menus/enlightenment.menu @<:@default=enabled@:>@]),
+    [e_cv_enable_install_enlightenment_menu=$enableval],
+    AC_CACHE_VAL([e_cv_enable_install_enlightenment_menu], [e_cv_enable_install_enlightenment_menu=yes]))
+AC_MSG_RESULT([$e_cv_enable_install_enlightenment_menu])
+AM_CONDITIONAL(INSTALL_ENLIGHTENMENT_MENU, test x${e_cv_enable_install_enlightenment_menu} = xyes)
+
 AC_MSG_CHECKING([whether to enable Files menu item])
 AC_ARG_ENABLE([files],
   AS_HELP_STRING([--disable-files],[disable Files menu item @<:@default=enabled@:>@]),

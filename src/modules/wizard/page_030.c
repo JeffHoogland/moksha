@@ -113,7 +113,7 @@ wizard_page_show(E_Wizard_Page *pg)
 
 	EINA_LIST_FREE(menus, file)
 	  {
-	     char buf[PATH_MAX], *p, *p2, *tlabel, *tdesc;
+	     char buf[PATH_MAX], buf2[PATH_MAX], *p, *p2, *tlabel, *tdesc;
 	     const char *label;
 
 	     label = file;
@@ -121,11 +121,18 @@ wizard_page_show(E_Wizard_Page *pg)
 	     tdesc = NULL;
              e_user_homedir_concat(buf, sizeof(buf),
                                    ".config/menus/applications.menu");
+             snprintf(buf2, sizeof(buf2), "%s/etc/xdg/enlightenment.menu", 
+                      e_prefix_get());
              if (!strcmp("/etc/xdg/menus/applications.menu", file))
 	       {
 		  label = _("System Default");
 		  sel = i;
 	       }
+             else if (!strcmp(buf2, file))
+               {
+                  label = _("Enlightenment Default");
+                  sel = i;
+               }
              else if (!strcmp(buf, file))
                {
                   label = _("Personal Default");
