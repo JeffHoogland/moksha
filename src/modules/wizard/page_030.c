@@ -44,8 +44,11 @@ wizard_page_init(E_Wizard_Page *pg __UNUSED__)
      };
    int i, newdir;
 
-   for (i = 0; dirs[i]; i++) 
-     check_menu_dir(dirs[i]);
+   e_user_homedir_concat(buf, sizeof(buf), ".config");
+   check_menu_dir(buf);
+   
+   for (i = 0; dirs[i]; i++) check_menu_dir(dirs[i]);
+   
    newdir = 1;
    snprintf(buf, sizeof(buf), "%s/etc/xdg", e_prefix_get());
    for (i = 0; dirs[i]; i++)
@@ -116,12 +119,18 @@ wizard_page_show(E_Wizard_Page *pg)
 	     label = file;
 	     tlabel = NULL;
 	     tdesc = NULL;
-	     if (!strcmp("/etc/xdg/menus/applications.menu", file))
+             e_user_homedir_concat(buf, sizeof(buf),
+                                   ".config/menus/applications.menu");
+             if (!strcmp("/etc/xdg/menus/applications.menu", file))
 	       {
 		  label = _("System Default");
 		  sel = i;
 	       }
-	     else
+             else if (!strcmp(buf, file))
+               {
+                  label = _("Personal Default");
+               }
+             else
 	       {
 		  p = strrchr(file, '/');
 		  if (p)

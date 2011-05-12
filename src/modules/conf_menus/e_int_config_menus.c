@@ -120,8 +120,11 @@ get_menus(Eina_List **menus)
      };
    int i, newdir;
    
-   for (i = 0; dirs[i]; i++)
-     check_menu_dir(dirs[i], menus);
+   e_user_homedir_concat(buf, sizeof(buf), ".config");
+   check_menu_dir(buf, menus);
+   
+   for (i = 0; dirs[i]; i++) check_menu_dir(dirs[i], menus);
+   
    newdir = 1;
    snprintf(buf, sizeof(buf), "%s/etc/xdg", e_prefix_get());
    for (i = 0; dirs[i]; i++)
@@ -157,10 +160,20 @@ _create_menus_list(Evas *evas, E_Config_Dialog_Data *cfdata)
         label = file;
         tlabel = NULL;
         tdesc = NULL;
+        e_user_homedir_concat(buf, sizeof(buf), 
+                              ".config/menus/applications.menu");
         if (!strcmp("/etc/xdg/menus/applications.menu", file))
           {
              label = _("System Default");
              if (!cfdata->default_system_menu) sel = i;
+          }
+        else if (!strcmp(buf, file))
+          {
+             label = _("Personal Default");
+             if (cfdata->default_system_menu)
+               {
+                  if (!strcmp(cfdata->default_system_menu, file)) sel = i;
+               }
           }
         else
           {
