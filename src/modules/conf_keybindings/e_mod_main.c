@@ -26,7 +26,7 @@ e_modapi_init(E_Module *m)
                                  "preferences-desktop-mouse",
                                  e_int_config_mousebindings);
    e_configure_registry_item_add("keyboard_and_mouse/acpi_bindings", 30,
-                                 _("Buttons"), NULL,
+                                 _("Hardware Switches"), NULL,
                                  "preferences-system-power-management",
                                  e_int_config_acpibindings);
    conf_module = m;
