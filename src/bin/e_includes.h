@@ -137,3 +137,4 @@
 #include "e_widget_toolbar.h"
 #include "e_widget_toolbook.h"
 #include "e_acpi.h"
+#include "e_env.h"

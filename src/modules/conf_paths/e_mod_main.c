@@ -20,6 +20,10 @@ e_modapi_init(E_Module *m)
                                  _("Search Directories"), NULL, 
                                  "preferences-directories", 
                                  e_int_config_paths);
+   e_configure_registry_item_add("advanced/environment_variables", 120,
+                                 _("Environment Variables"), NULL, 
+                                 "preferences-system", 
+                                 e_int_config_env);
    conf_module = m;
    e_module_delayed_set(m, 1);
    return m;
@@ -30,8 +34,11 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    E_Config_Dialog *cfd;
 
+   while ((cfd = e_config_dialog_get("E", "advanced/environment_variables"))) 
+     e_object_del(E_OBJECT(cfd));
    while ((cfd = e_config_dialog_get("E", "advanced/search_directories"))) 
      e_object_del(E_OBJECT(cfd));
+   e_configure_registry_item_del("advanced/environment_variables");
    e_configure_registry_item_del("advanced/search_directories");
    e_configure_registry_category_del("advanced");
    conf_module = NULL;

@@ -19,6 +19,7 @@ typedef struct _E_Config_Shelf              E_Config_Shelf;
 typedef struct _E_Config_Shelf_Desk         E_Config_Shelf_Desk;
 typedef struct _E_Config_Mime_Icon          E_Config_Mime_Icon;
 typedef struct _E_Config_Syscon_Action      E_Config_Syscon_Action;
+typedef struct _E_Config_Env_Var            E_Config_Env_Var;
 typedef struct _E_Event_Config_Icon_Theme   E_Event_Config_Icon_Theme;
 
 #else
@@ -340,6 +341,15 @@ struct _E_Config
    } exec;
    
    unsigned char null_container_win;
+   
+   Eina_List *env_vars;
+};
+
+struct _E_Config_Env_Var
+{
+   const char *var;
+   const char *val;
+   unsigned char unset;
 };
 
 struct _E_Config_Syscon_Action

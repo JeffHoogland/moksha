@@ -64,6 +64,7 @@ static E_Config_DD *_e_config_shelf_edd = NULL;
 static E_Config_DD *_e_config_shelf_desk_edd = NULL;
 static E_Config_DD *_e_config_mime_icon_edd = NULL;
 static E_Config_DD *_e_config_syscon_action_edd = NULL;
+static E_Config_DD *_e_config_env_var_edd = NULL;
 static E_Config_DD *_e_config_screen_size_edd = NULL;
 static E_Config_DD *_e_config_screen_size_mm_edd = NULL;
 static E_Config_DD *_e_config_eina_rectangle_edd = NULL;
@@ -515,6 +516,16 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, icon, STR);
    E_CONFIG_VAL(D, T, is_main, INT);
 
+   _e_config_env_var_edd = E_CONFIG_DD_NEW("E_Config_Env_Var",
+                                           E_Config_Env_Var);
+#undef T
+#undef D
+#define T E_Config_Env_Var
+#define D _e_config_env_var_edd
+   E_CONFIG_VAL(D, T, var, STR);
+   E_CONFIG_VAL(D, T, val, STR);
+   E_CONFIG_VAL(D, T, unset, UCHAR);
+
    _e_config_screen_size_edd = E_CONFIG_DD_NEW("Ecore_X_Randr_Screen_Size", Ecore_X_Randr_Screen_Size);
 #undef T
 #undef D
@@ -893,6 +904,8 @@ e_config_init(void)
 
    E_CONFIG_VAL(D, T, null_container_win, UCHAR);
    
+   E_CONFIG_LIST(D, T, env_vars, _e_config_env_var_edd);
+   
    e_config_load();
 
    e_config_save_queue();
@@ -924,6 +937,7 @@ e_config_shutdown(void)
    E_CONFIG_DD_FREE(_e_config_shelf_desk_edd);
    E_CONFIG_DD_FREE(_e_config_mime_icon_edd);
    E_CONFIG_DD_FREE(_e_config_syscon_action_edd);
+   E_CONFIG_DD_FREE(_e_config_env_var_edd);
    E_CONFIG_DD_FREE(_e_config_screen_info_edd);
    return 1;
 }
@@ -1883,6 +1897,7 @@ _e_config_free(E_Config *ecf)
    E_Randr_Crtc_Restore_Info *crtc_info;
    E_Randr_Output_Info *output_info;
    E_Randr_Screen_Restore_Info_12 *restore_info_12;
+   E_Config_Env_Var *evr;
 
 
    if (!ecf) return;
@@ -2062,6 +2077,12 @@ _e_config_free(E_Config *ecf)
 	       }
 	     free(screen_info);
 	  }
+     }
+   EINA_LIST_FREE(ecf->env_vars, evr)
+     {
+        if (evr->var) eina_stringshare_del(evr->var);
+        if (evr->val) eina_stringshare_del(evr->val);
+        E_FREE(evr);
      }
    E_FREE(ecf);
 }

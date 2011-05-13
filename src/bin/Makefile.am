@@ -59,8 +59,9 @@ e_dnd.h \
 e_dpms.h \
 e_eap_editor.h \
 e_editable.h \
-e_entry_dialog.h \
 e_entry.h \
+e_entry_dialog.h \
+e_env.h \
 e_error.h \
 e_exec.h \
 e_exehist.h \
@@ -207,6 +208,7 @@ e_eap_editor.c \
 e_editable.c \
 e_entry.c \
 e_entry_dialog.c \
+e_env.c \
 e_error.c \
 e_exec.c \
 e_exehist.c \

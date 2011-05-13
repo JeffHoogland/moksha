@@ -557,6 +557,15 @@ main(int argc, char **argv)
      }
    _e_main_shutdown_push(e_config_shutdown);
 
+   TS("env");
+   /* init config system */
+   if (!e_env_init())
+     {
+	e_error_message_show(_("Enlightenment cannot set up its environment."));
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_env_shutdown);
+
    e_util_env_set("E_ICON_THEME", e_config->icon_theme);
 
    locked |= e_config->desklock_start_locked;
