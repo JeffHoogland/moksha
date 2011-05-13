@@ -14,12 +14,37 @@ static Eina_List *handlers = NULL;
 EINTERN int
 e_order_init(void)
 {
+   char *menu_file = NULL;
+   
    handlers = 
      eina_list_append(handlers, 
                       ecore_event_handler_add(EFREET_EVENT_DESKTOP_CACHE_UPDATE, 
                                               _e_order_cb_efreet_cache_update, 
                                               NULL));
-   efreet_menu_file_set(e_config->default_system_menu);
+   if (e_config->default_system_menu)
+      menu_file = strdup(e_config->default_system_menu);
+   if (!menu_file)
+      menu_file = strdup("/etc/xdg/menus/applications.menu");
+   if (menu_file)
+     {
+        if (!ecore_file_exists(menu_file))
+          {
+             char buf[PATH_MAX];
+             
+             free(menu_file);
+             snprintf(buf, sizeof(buf), "/etc/xdg/menus/enlightenment.menu");
+             if (ecore_file_exists(buf)) menu_file = strdup(buf);
+             else
+               {
+                  snprintf(buf, sizeof(buf), 
+                           "%s/etc/xdg/menus/enlightenment.menu",
+                           e_prefix_get());
+                  if (ecore_file_exists(buf)) menu_file = strdup(buf);
+               }
+          }
+     }
+   efreet_menu_file_set(menu_file);
+   if (menu_file) free(menu_file);
    return 1;
 }
 
