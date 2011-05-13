@@ -121,7 +121,8 @@ wizard_page_show(E_Wizard_Page *pg)
 	     tdesc = NULL;
              e_user_homedir_concat(buf, sizeof(buf),
                                    ".config/menus/applications.menu");
-             snprintf(buf2, sizeof(buf2), "%s/etc/xdg/enlightenment.menu", 
+             snprintf(buf2, sizeof(buf2), 
+                      "%s/etc/xdg/menus/enlightenment.menu", 
                       e_prefix_get());
              if (!strcmp("/etc/xdg/menus/applications.menu", file))
 	       {
