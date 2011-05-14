@@ -120,90 +120,116 @@ _e_backtrace_int(int fd __UNUSED__, const char *msg __UNUSED__, size_t msg_len _
 EAPI void
 e_sigseg_act(int x __UNUSED__, siginfo_t *info __UNUSED__, void *data __UNUSED__)
 {
+    char msg[1024];
+
    _e_backtrace("**** SEGMENTATION FAULT ****");
    _e_x_composite_shutdown();
    ecore_x_pointer_ungrab();
    ecore_x_keyboard_ungrab();
    ecore_x_ungrab();
    ecore_x_sync();
-   e_alert_show("This is very bad. Enlightenment SEGV'd.\n"
-		"\n"
-		"This is not meant to happen and is likely a sign of\n"
-		"a bug in Enlightenment or the libraries it relies\n"
-		"on. You can gdb attach to this process now to try\n"
-		"debug it or you could exit, or just hit restart to\n"
-		"try and get your desktop back the way it was.\n"
-		"\n"
-		"Please compile everything with -g in your CFLAGS\n");
-   exit(-11); 
+   snprintf(msg, sizeof(msg),
+            "This is very bad. Enlightenment SEGV'd.\n"
+            "\n"
+            "This is not meant to happen and is likely a sign of\n"
+            "a bug in Enlightenment or the libraries it relies\n"
+            "on. You can gdb attach to this process (%d) now\n"
+            "to try debug it or you could exit, or just hit\n"
+            "restart to try and get your desktop back the way\n"
+            "it was.\n"
+            "\n"
+            "Please compile everything with -g in your CFLAGS.\n",
+            getpid());
+   e_alert_show(msg);
+   exit(-11);
 }
 
 EAPI void
 e_sigill_act(int x __UNUSED__, siginfo_t *info __UNUSED__, void *data __UNUSED__)
 {
+    char msg[1024];
+
    _e_backtrace("**** ILLEGAL INSTRUCTION ****");
    _e_x_composite_shutdown();
    ecore_x_pointer_ungrab();
    ecore_x_keyboard_ungrab();
    ecore_x_ungrab();
    ecore_x_sync();
-   e_alert_show("This is very bad. Enlightenment SIGILL'd.\n"
-		"\n"
-		"This is not meant to happen and is likely a sign of\n"
-		"a bug in Enlightenment or the libraries it relies\n"
-		"on. You can gdb attach to this process now to try\n"
-		"debug it or you could exit, or just hit restart to\n"
-		"try and get your desktop back the way it was.\n"
-		"\n"
-		"Please compile everything with -g in your CFLAGS\n");
+   snprintf(msg, sizeof(msg),
+            "This is very bad. Enlightenment SIGILL'd.\n"
+            "\n"
+            "This is not meant to happen and is likely a sign of\n"
+            "a bug in Enlightenment or the libraries it relies\n"
+            "on. You can gdb attach to this process (%d) now\n"
+            "to try debug it or you could exit, or just hit\n"
+            "restart to try and get your desktop back the way\n"
+            "it was.\n"
+            "\n"
+            "Please compile everything with -g in your CFLAGS.\n",
+            getpid());
+   e_alert_show(msg);
    exit(-11);
 }
 
 EAPI void
 e_sigfpe_act(int x __UNUSED__, siginfo_t *info __UNUSED__, void *data __UNUSED__)
 {
+    char msg[1024];
+
    _e_backtrace("**** FLOATING POINT EXCEPTION ****");
    _e_x_composite_shutdown();
    ecore_x_pointer_ungrab();
    ecore_x_keyboard_ungrab();
    ecore_x_ungrab();
    ecore_x_sync();
-   e_alert_show("This is very bad. Enlightenment SIGFPE'd.\n"
-		"\n"
-		"This is not meant to happen and is likely a sign of\n"
-		"a bug in Enlightenment or the libraries it relies\n"
-		"on. You can gdb attach to this process now to try\n"
-		"debug it or you could exit, or just hit restart to\n"
-		"try and get your desktop back the way it was.\n"
-		"\n"
-		"Please compile everything with -g in your CFLAGS\n");
+   snprintf(msg, sizeof(msg),
+            "This is very bad. Enlightenment SIGFPE'd.\n"
+            "\n"
+            "This is not meant to happen and is likely a sign of\n"
+            "a bug in Enlightenment or the libraries it relies\n"
+            "on. You can gdb attach to this process (%d) now\n"
+            "to try debug it or you could exit, or just hit\n"
+            "restart to try and get your desktop back the way\n"
+            "it was.\n"
+            "\n"
+            "Please compile everything with -g in your CFLAGS.\n",
+            getpid());
+   e_alert_show(msg);
    exit(-11);
 }
 
 EAPI void
 e_sigbus_act(int x __UNUSED__, siginfo_t *info __UNUSED__, void *data __UNUSED__)
 {
+    char msg[1024];
+
    _e_backtrace("**** BUS ERROR ****");
    _e_x_composite_shutdown();
    ecore_x_pointer_ungrab();
    ecore_x_keyboard_ungrab();
    ecore_x_ungrab();
    ecore_x_sync();
-   e_alert_show("This is very bad. Enlightenment SIGILL'd.\n"
-		"\n"
-		"This is not meant to happen and is likely a sign of\n"
-		"a bug in Enlightenment or the libraries it relies\n"
-		"on. You can gdb attach to this process now to try\n"
-		"debug it or you could exit, or just hit restart to\n"
-		"try and get your desktop back the way it was.\n"
-		"\n"
-		"Please compile everything with -g in your CFLAGS\n");
+   snprintf(msg, sizeof(msg),
+            "This is very bad. Enlightenment SIGBUS'd.\n"
+            "\n"
+            "This is not meant to happen and is likely a sign of\n"
+            "a bug in Enlightenment or the libraries it relies\n"
+            "on. You can gdb attach to this process (%d) now\n"
+            "to try debug it or you could exit, or just hit\n"
+            "restart to try and get your desktop back the way\n"
+            "it was.\n"
+            "\n"
+            "Please compile everything with -g in your CFLAGS.\n",
+            getpid());
+   e_alert_show(msg);
    exit(-11);
 }
 
 EAPI void
 e_sigabrt_act(int x __UNUSED__, siginfo_t *info __UNUSED__, void *data __UNUSED__)
 {
+    char msg[1024];
+
    _e_backtrace("**** ABORT ****");
    _e_x_composite_shutdown();
    ecore_x_pointer_ungrab();
