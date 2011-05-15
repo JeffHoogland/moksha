@@ -37,6 +37,7 @@ main(int argc,
 {
    int i, gn;
    int test = 0;
+   Eina_Bool mnt = EINA_FALSE;
    char *action, *cmd;
    uid_t uid;
    gid_t gid, gl[65536], egid;
@@ -54,10 +55,23 @@ main(int argc,
              exit(0);
           }
      }
-   if (argc == 3)
+   if (argc >= 3)
      {
-        if (!strcmp(argv[1], "-t")) test = 1;
-        action = argv[2];
+        if ((argc == 3) && (!strcmp(argv[1], "-t")))
+          {
+             test = 1;
+             action = argv[2];
+          }
+        else
+          {
+             const char *s;
+
+             s = strrchr(argv[1], '/');
+             if ((!s) || (!(++s))) exit(1); /* eeze always uses complete path */
+             if (strcmp(s, "mount") && strcmp(s, "umount")) exit(1);
+             mnt = EINA_TRUE;
+             action = argv[1];
+          }
      }
    else if (argc == 2)
      {
@@ -97,17 +111,36 @@ main(int argc,
      }
    /* we can add more levels of auth here */
 
+   /* when mounting, this will match the exact path to the exe,
+    * as required in sysactions.conf
+    * this is intentionally pedantic for security
+    */
    cmd = eina_hash_find(actions, action);
    if (!cmd)
      {
         printf("ERROR: UNDEFINED ACTION: %s\n", action);
         exit(20);
      }
-   if (!test) return system(cmd);
+   if ((!test) && (!mnt)) return system(cmd);
+   if (mnt)
+     {
+        Eina_Strbuf *buf;
 
+        buf = eina_strbuf_new();
+        if (!buf) goto err;
+        for (i = 1; i < argc; i++)
+          eina_strbuf_append_printf(buf, "%s ", argv[i]);
+        return system(eina_strbuf_string_get(buf));
+     }
+     
    eina_shutdown();
 
    return 0;
+
+err:
+   printf("ERROR: MEMORY CRISIS\n");
+   eina_shutdown();
+   return 30;
 }
 
 /* local subsystem functions */
