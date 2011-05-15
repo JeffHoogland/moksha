@@ -79,12 +79,12 @@ main(int argc,
      }
    if (setuid(0) != 0)
      {
-        printf("ERROR: UNABLE TO ASSUME ROOT PRIVILEDGES\n");
+        printf("ERROR: UNABLE TO ASSUME ROOT PRIVILEGES\n");
         exit(5);
      }
    if (setgid(0) != 0)
      {
-        printf("ERROR: UNABLE TO ASSUME ROOT GROUP PRIVILEDGES\n");
+        printf("ERROR: UNABLE TO ASSUME ROOT GROUP PRIVILEGES\n");
         exit(7);
      }
 
