@@ -69,7 +69,7 @@ main(int argc,
 
              s = strrchr(argv[1], '/');
              if ((!s) || (!(++s))) exit(1); /* eeze always uses complete path */
-             if (strcmp(s, "mount") && strcmp(s, "umount")) exit(1);
+             if (strcmp(s, "mount") && strcmp(s, "umount") && strcmp(s, "eject")) exit(1);
              mnt = EINA_TRUE;
              action = argv[1];
           }
