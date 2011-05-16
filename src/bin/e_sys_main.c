@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <sys/types.h>
+#include <sys/stat.h>
 #include <pwd.h>
 #include <grp.h>
 #include <fnmatch.h>
@@ -125,14 +126,68 @@ main(int argc,
    if (mnt)
      {
         Eina_Strbuf *buf;
+        int ret;
+        const char *mp;
 
         buf = eina_strbuf_new();
         if (!buf) goto err;
         for (i = 1; i < argc; i++)
-          eina_strbuf_append_printf(buf, "%s ", argv[i]);
-        return system(eina_strbuf_string_get(buf));
+          {
+             if (!strncmp(argv[i], "/media/", 7))
+               {
+                  mp = argv[i];
+                  if (!strcmp(action, "mount"))
+                    {
+                       struct stat s;
+
+                       if (stat("/media", &s))
+                         {
+                            mode_t um;
+
+                            um = umask(0);
+                            if (mkdir("/media", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH))
+                              {
+                                 printf("ERROR: COULD NOT CREATE DIRECTORY /media\n");
+                                 exit(40);
+                              }
+                            umask(um);
+                         }
+                       else if (!S_ISDIR(s.st_mode))
+                         {
+                            printf("ERROR: NOT A DIRECTORY: /media\n");
+                            exit(40);
+                         }
+
+                       if (stat(argv[i], &s))
+                         {
+                            mode_t um;
+
+                            um = umask(0);
+                            if (mkdir(argv[i], S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH))
+                              {
+                                 printf("ERROR: COULD NOT CREATE DIRECTORY %s\n", argv[i]);
+                                 exit(40);
+                              }
+                            umask(um);
+                         }
+                       else if (!S_ISDIR(s.st_mode))
+                         {
+                            printf("ERROR: NOT A DIRECTORY: %s\n", argv[i]);
+                            exit(40);
+                         }
+                    }
+               }
+             eina_strbuf_append_printf(buf, "%s ", argv[i]);
+          }
+        ret = system(eina_strbuf_string_get(buf));
+        if ((!strcmp(action, "umount")) && (!ret))
+          {
+               if (rmdir(mp))
+                 printf("ERROR: COULD NOT UNLINK MOUNT POINT %s\n", mp);
+          }
+        return ret;
      }
-     
+
    eina_shutdown();
 
    return 0;
