@@ -22,7 +22,7 @@ e_modapi_init(E_Module *m)
                                  "preferences-desktop-keyboard-shortcuts", 
                                  e_int_config_keybindings);
    e_configure_registry_item_add("keyboard_and_mouse/mouse_bindings", 20,
-                                 _("Mouse"), NULL,
+                                 _("Mouse Buttons"), NULL,
                                  "preferences-desktop-mouse",
                                  e_int_config_mousebindings);
    e_configure_registry_item_add("keyboard_and_mouse/acpi_bindings", 30,
