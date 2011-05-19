@@ -17,6 +17,7 @@ e_modapi_init(E_Module *m)
 
    msgbus_lang_init(ifaces);
    msgbus_desktop_init(ifaces);
+   msgbus_audit_init(ifaces);
 
    return m;
 }

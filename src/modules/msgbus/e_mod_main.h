@@ -12,5 +12,6 @@ EAPI int   e_modapi_save     (E_Module *m);
 /* sub-module initializers */
 void msgbus_lang_init(Eina_Array *ifaces);
 void msgbus_desktop_init(Eina_Array *ifaces);
+void msgbus_audit_init(Eina_Array *ifaces);
 
 #endif
