@@ -1431,19 +1431,25 @@ EAPI void
 e_hints_window_e_state_get(E_Border *bd)
 {
    /* Remember to update the count if we add more states! */
-    Ecore_X_Atom state[1];
-    int num, i;
+   Ecore_X_Atom state[1];
+   int num = 0, i = 0;
+   int size = 0;
 
-    memset(state, 0, sizeof(state));
-    num = ecore_x_window_prop_card32_get(bd->client.win, E_ATOM_WINDOW_STATE,
-      state, sizeof(state) / sizeof(state[0])); /* ugly, but avoids possible future overflow if more states are added */
-    if (!num) return;
+   memset(state, 0, sizeof(state));
 
-    for (i = 0; (i < num) && (i < sizeof(state) / sizeof(state[0])); i++)
-      {
-         if (state[i] == E_ATOM_WINDOW_STATE_CENTERED)
-           bd->client.e.state.centered = 1;
-      }
+   /* ugly, but avoids possible future overflow if more states are added */
+   size = (sizeof(state) / sizeof(state[0]));
+
+   num = 
+     ecore_x_window_prop_card32_get(bd->client.win, E_ATOM_WINDOW_STATE,
+                                    state, size);
+   if (!num) return;
+
+   for (i = 0; (i < num) && (i < size); i++)
+     {
+        if (state[i] == E_ATOM_WINDOW_STATE_CENTERED)
+          bd->client.e.state.centered = 1;
+     }
 }
 
 EAPI void
