@@ -85,10 +85,11 @@ main(int    argc,
         else if (!strncmp(argv[i], "--nice=", 7))
           {
              const char *val;
+             int ret = 0;
 
              val = argv[i] + 7;
              if (*val)
-               nice(atoi(val));
+               ret = nice(atoi(val));
           }
      }
 
