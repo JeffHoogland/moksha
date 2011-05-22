@@ -158,10 +158,10 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 static int 
 _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
 {
-   if (pager_config->popup != cfdata->popup.show) return 1;
-   if (pager_config->flip_desk != cfdata->flip_desk) return 1;
-   if (pager_config->show_desk_names != cfdata->show_desk_names) return 1;
-   if (pager_config->popup_urgent != cfdata->popup.urgent_show) return 1;
+   if ((int)pager_config->popup != cfdata->popup.show) return 1;
+   if ((int)pager_config->flip_desk != cfdata->flip_desk) return 1;
+   if ((int)pager_config->show_desk_names != cfdata->show_desk_names) return 1;
+   if ((int)pager_config->popup_urgent != cfdata->popup.urgent_show) return 1;
 
    return 0;
 }
@@ -308,17 +308,20 @@ _adv_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 static int 
 _adv_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
 {
-   if (pager_config->popup != cfdata->popup.show) return 1;
-   if (pager_config->flip_desk != cfdata->flip_desk) return 1;
-   if (pager_config->show_desk_names != cfdata->show_desk_names) return 1;
-   if (pager_config->popup_urgent != cfdata->popup.urgent_show) return 1;
+   if ((int)pager_config->popup != cfdata->popup.show) return 1;
+   if ((int)pager_config->flip_desk != cfdata->flip_desk) return 1;
+   if ((int)pager_config->show_desk_names != cfdata->show_desk_names) return 1;
+   if ((int)pager_config->popup_urgent != cfdata->popup.urgent_show) return 1;
    if (pager_config->popup_speed != cfdata->popup.speed) return 1;
-   if (pager_config->popup_urgent_stick != cfdata->popup.urgent_stick) return 1;
-   if (pager_config->popup_urgent_focus != cfdata->popup.urgent_focus) return 1;
-   if (pager_config->popup_urgent_speed != cfdata->popup.urgent_speed) return 1;
+   if ((int)pager_config->popup_urgent_stick != cfdata->popup.urgent_stick) 
+     return 1;
+   if ((int)pager_config->popup_urgent_focus != cfdata->popup.urgent_focus) 
+     return 1;
+   if (pager_config->popup_urgent_speed != cfdata->popup.urgent_speed) 
+     return 1;
    if (pager_config->popup_height != cfdata->popup.height) return 1;
    if (pager_config->popup_act_height != cfdata->popup.act_height) return 1;
-   if (pager_config->drag_resist != cfdata->drag_resist) return 1;
+   if ((int)pager_config->drag_resist != cfdata->drag_resist) return 1;
    if (pager_config->btn_drag != cfdata->btn.drag) return 1;
    if (pager_config->btn_noplace != cfdata->btn.noplace) return 1;
    if (pager_config->btn_desk != cfdata->btn.desk) return 1;
