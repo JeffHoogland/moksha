@@ -1590,7 +1590,7 @@ e_fm2_icons_update(Evas_Object *obj)
    if (strcmp(evas_object_type_get(obj), "e_fm")) return;  // safety
 
    bufused = eina_strlcpy(buf, sd->realpath, sizeof(buf));
-   if (bufused >= sizeof(buf) - 2)
+   if (bufused >= (int)(sizeof(buf) - 2))
      return;
 
    if ((bufused > 0) && (buf[bufused - 1] != '/'))
@@ -1613,7 +1613,7 @@ e_fm2_icons_update(Evas_Object *obj)
         if (_e_fm2_file_is_desktop(ic->info.file))
           _e_fm2_icon_desktop_load(ic);
 
-        if (eina_strlcpy(pfile, ic->info.file, buffree) >= buffree)
+        if ((int)eina_strlcpy(pfile, ic->info.file, buffree) >= buffree)
           continue;
 
         cf = e_fm2_custom_file_get(buf);
@@ -2054,7 +2054,8 @@ _e_fm2_icon_mime_theme_get(Evas *evas, const E_Fm2_Icon *ic, const char **type_r
    char buf[1024];
    const char *file;
 
-   if (snprintf(buf, sizeof(buf), "e/icons/fileman/mime/%s", ic->info.mime) >= sizeof(buf))
+   if (snprintf(buf, sizeof(buf), "e/icons/fileman/mime/%s", ic->info.mime) >= 
+       (int)sizeof(buf))
      return NULL;
 
    file = e_theme_edje_file_get("base/theme/icons", buf);
@@ -2568,6 +2569,12 @@ _e_fm2_client_file_symlink(const char *path, const char *dest, const char *rel, 
    free(args);
    return r;
 #endif
+   rel = NULL;
+   rel_to = 0;
+   x = 0;
+   y= 0;
+   res_w = 0;
+   res_h = 0;
 }
 
 static int
@@ -3210,19 +3217,20 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
           {
              if (dev[1] == '\0')
                {
-                  if (eina_strlcpy(buf, path, sizeof(buf)) >= sizeof(buf))
+                  if (eina_strlcpy(buf, path, sizeof(buf)) >= 
+                      (int)sizeof(buf))
                     return NULL;
                }
              else
                {
-                  if (PRT("%s/%s", dev, path) >= sizeof(buf))
+                  if (PRT("%s/%s", dev, path) >= (int)sizeof(buf))
                     return NULL;
                }
           }
         else if ((dev[0] == '~') && (dev[1] == '/') && (dev[2] == '\0'))
           {
              s = (char *)e_user_homedir_get();
-             if (PRT("%s/%s", s, path) >= sizeof(buf))
+             if (PRT("%s/%s", s, path) >= (int)sizeof(buf))
                return NULL;
           }
         else if (strcmp(dev, "favorites") == 0)
@@ -3257,7 +3265,7 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
         else if (strcmp(dev, "temp") == 0)
           PRT("/tmp");
         /* FIXME: replace all this removable, dvd and like with hal */
-        else if (strncmp(dev, "removable:", sizeof("removable:") - 1) == 0)
+        else if (!strncmp(dev, "removable:", sizeof("removable:") - 1))
           {
              E_Volume *v;
 
@@ -3268,7 +3276,7 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
                     v->mount_point = e_fm2_device_volume_mountpoint_get(v);
                   else if (!v->mount_point) return NULL;
 
-                  if (PRT("%s/%s", v->mount_point, path) >= sizeof(buf))
+                  if (PRT("%s/%s", v->mount_point, path) >= (int)sizeof(buf))
                     return NULL;
                }
           }
@@ -3450,7 +3458,7 @@ _e_fm2_buffer_fill(Evas_Object *obj)
    if (!realpath) return EINA_FALSE;
 
    bufused = eina_strlcpy(buf, realpath, sizeof(buf));
-   if (bufused >= sizeof(buf) - 2) return EINA_FALSE;
+   if (bufused >= (int)sizeof(buf) - 2) return EINA_FALSE;
 
    if ((bufused > 0) && (buf[bufused - 1] != '/'))
      {
@@ -3464,7 +3472,7 @@ _e_fm2_buffer_fill(Evas_Object *obj)
    EINA_LIST_FREE(sel, ici)
      {
         if (!ici) continue;
-        if (eina_strlcpy(pfile, ici->file, buffree) >= buffree) continue;
+        if ((int)eina_strlcpy(pfile, ici->file, buffree) >= buffree) continue;
         _e_fm_file_buffer = eina_list_append(_e_fm_file_buffer, _e_fm2_uri_escape(buf));
      }
 
@@ -3807,7 +3815,7 @@ _e_fm2_regions_populate(Evas_Object *obj)
                   rg->h += (ic->y + ic->h) - (rg->y + rg->h);
                }
           }
-        if (eina_list_count(rg->list) > sd->regions.member_max)
+        if ((int)eina_list_count(rg->list) > sd->regions.member_max)
           rg = NULL;
      }
    _e_fm2_regions_eval(obj);
@@ -6753,7 +6761,7 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
              evas_object_geometry_get(ic->obj, &x, &y, &w, &h);
              realpath = e_fm2_real_path_get(ic->sd->obj);
              p_offset = eina_strlcpy(buf, realpath, sizeof(buf));
-             if ((p_offset < 1) || (p_offset >= sizeof(buf) - 2)) return;
+             if ((p_offset < 1) || (p_offset >= (int)sizeof(buf) - 2)) return;
              if (buf[p_offset - 1] != '/')
                {
                   buf[p_offset] = '/';
@@ -6769,7 +6777,8 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
                   const char *s;
                   int s_len;
 
-                  if (eina_strlcpy(p, ici->file, p_length) >= p_length) continue;
+                  if ((int)eina_strlcpy(p, ici->file, p_length) >= p_length) 
+                    continue;
                   s = _e_fm2_uri_escape(buf);
                   if (!s) continue;
                   s_len = strlen(s);
