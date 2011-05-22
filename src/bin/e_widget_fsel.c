@@ -75,6 +75,7 @@ _e_wid_fsel_favorites_add(void *data1, void *data2 __UNUSED__)
    struct stat st;
    FILE *f;
    size_t len;
+   int ret = 0;
 
    wd = data1;
    current_path = e_fm2_real_path_get(wd->o_files_fm);
@@ -84,7 +85,7 @@ _e_wid_fsel_favorites_add(void *data1, void *data2 __UNUSED__)
 			     ecore_file_file_get(current_path));
    if (len >= sizeof(buf)) return;
    if (stat(buf, &st) < 0) 
-     symlink(current_path, buf);
+     ret = symlink(current_path, buf);
    else
      {
 	int i = 1, maxlen;
@@ -100,7 +101,7 @@ _e_wid_fsel_favorites_add(void *data1, void *data2 __UNUSED__)
 	     i++;
 	  }
         while (stat(buf, &st) == 0);
-	symlink(current_path, buf);
+	ret = symlink(current_path, buf);
      }
    fn = ecore_file_file_get(buf);
    len = strlen(fn) + 1;
