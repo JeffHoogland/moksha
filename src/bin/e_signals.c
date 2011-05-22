@@ -228,8 +228,6 @@ e_sigbus_act(int x __UNUSED__, siginfo_t *info __UNUSED__, void *data __UNUSED__
 EAPI void
 e_sigabrt_act(int x __UNUSED__, siginfo_t *info __UNUSED__, void *data __UNUSED__)
 {
-    char msg[1024];
-
    _e_backtrace("**** ABORT ****");
    _e_x_composite_shutdown();
    ecore_x_pointer_ungrab();
