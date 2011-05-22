@@ -218,11 +218,13 @@ _cb_entry_ok(char *text, void *data)
 	f = fopen(buf, "w");
 	if (f)
 	  {
+             int ret = 0;
+
 	     /* Populate this .order file with some defaults */
 	     snprintf(tmp, sizeof(tmp), "xterm.desktop\n" "sylpheed.desktop\n" 
 		      "firefox.desktop\n" "openoffice.desktop\n" "xchat.desktop\n"
 		      "gimp.desktop\n" "xmms.desktop\n");
-	     fwrite(tmp, sizeof(char), strlen(tmp), f);
+	     ret = fwrite(tmp, sizeof(char), strlen(tmp), f);
 	     fclose(f);
 	  }
      }
