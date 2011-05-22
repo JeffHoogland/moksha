@@ -126,8 +126,8 @@ main(int argc,
    if (mnt)
      {
         Eina_Strbuf *buf;
-        int ret;
-        const char *mp;
+        int ret = 0;
+        const char *mp = NULL;
 
         buf = eina_strbuf_new();
         if (!buf) goto err;
