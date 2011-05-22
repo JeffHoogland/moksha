@@ -417,8 +417,7 @@ _e_fm_op_stdin_data(void *data __UNUSED__, Ecore_Fd_Handler * fd_handler)
    static int length = 0;
    char *begin = NULL;
    ssize_t num = 0;
-   int msize;
-   int identity;
+   int msize, identity;
 
    fd = ecore_main_fd_handler_fd_get(fd_handler);
    if (!buf) 
@@ -446,7 +445,7 @@ _e_fm_op_stdin_data(void *data __UNUSED__, Ecore_Fd_Handler * fd_handler)
         buf = _e_fm_op_stdin_buffer;
         begin = _e_fm_op_stdin_buffer;
 
-	while (length >= 3 * sizeof(int))
+	while (length >= ((int)(3 * sizeof(int))))
 	  {
              begin = buf;
 
@@ -466,7 +465,7 @@ _e_fm_op_stdin_data(void *data __UNUSED__, Ecore_Fd_Handler * fd_handler)
 	     memcpy(&msize, buf, sizeof(int));
 	     buf += sizeof(int);
 
-	     if ((length - 3 * sizeof(int)) < msize)
+	     if ((length - 3 * (int)sizeof(int)) < msize)
 	       {
 		  /* There is not enough data to read the whole message. */
                   break;
@@ -866,6 +865,8 @@ _e_fm_op_send_error(E_Fm_Op_Task *task __UNUSED__, E_Fm_Op_Type type, const char
      }
    else
      {
+        int ret = 0;
+
         vsnprintf(str, READBUFSIZE - 3 * sizeof(int), fmt, ap);
         len = strlen(str);
 
@@ -873,7 +874,7 @@ _e_fm_op_send_error(E_Fm_Op_Task *task __UNUSED__, E_Fm_Op_Type type, const char
         *((int *)(buf + sizeof(int))) = type;
         *((int *)(buf + (2 * sizeof(int)))) = len + 1;
 
-        write(STDOUT_FILENO, buf, (3 * sizeof(int)) + len + 1);
+        ret = write(STDOUT_FILENO, buf, (3 * sizeof(int)) + len + 1);
 
         E_FM_OP_DEBUG("%s", str);
 	E_FM_OP_DEBUG(" Error sent.\n");
@@ -923,6 +924,7 @@ _e_fm_op_update_progress_report(int percent, int eta, double elapsed, off_t done
    const int id = E_FM_OP_PROGRESS;
    char *p, *data;
    int size, src_len, dst_len;
+   int ret = 0;
 
    src_len = strlen(src);
    dst_len = strlen(dst);
@@ -950,7 +952,7 @@ _e_fm_op_update_progress_report(int percent, int eta, double elapsed, off_t done
    P(dst);
 #undef P
 
-   write(STDOUT_FILENO, data, (3 * sizeof(int)) + size);
+   ret = write(STDOUT_FILENO, data, (3 * sizeof(int)) + size);
 
    E_FM_OP_DEBUG("Time left: %d at %e\n", eta, elapsed);
    E_FM_OP_DEBUG("Progress %d. \n", percent);
@@ -1026,11 +1028,12 @@ static void
 _e_fm_op_copy_stat_info(E_Fm_Op_Task *task)
 {
    struct utimbuf ut;
+   int ret = 0;
 
    if (!task->dst.name) return;
 
    chmod(task->dst.name, task->src.st.st_mode);
-   chown(task->dst.name, task->src.st.st_uid, task->src.st.st_gid);
+   ret = chown(task->dst.name, task->src.st.st_uid, task->src.st.st_gid);
    ut.actime = task->src.st.st_atime;
    ut.modtime = task->src.st.st_mtime;
    utime(task->dst.name, &ut);
