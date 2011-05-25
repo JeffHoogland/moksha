@@ -14377,8 +14377,8 @@ collections {
                aspect: 1.0 1.0;
                aspect_preference: VERTICAL;
                align: 0.5 0.0;
-               min: 32 32;
-               fixed: 1 1;
+               min: 24 24;
+               max: 24 24;
                rel1 {
                   relative: 0.0 1.0;
                   offset: 1     6;
@@ -14386,7 +14386,7 @@ collections {
                }
                rel2 {
                   relative: 1.0 1.0;
-                  offset: -2    6;
+                  offset: -2    30;
                   to_y: "title_back";
                }
             }
