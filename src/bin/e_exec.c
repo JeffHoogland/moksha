@@ -210,7 +210,7 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
 //			    ECORE_EXE_PIPE_AUTO | ECORE_EXE_PIPE_READ | ECORE_EXE_PIPE_ERROR |
 //			    ECORE_EXE_PIPE_READ_LINE_BUFFERED | ECORE_EXE_PIPE_ERROR_LINE_BUFFERED,
 //			    inst);
-   if (desktop->path)
+   if ((desktop) && (desktop->path))
      {
         if (!getcwd(buf, sizeof(buf))) return NULL;
         if (chdir(desktop->path)) return NULL;
