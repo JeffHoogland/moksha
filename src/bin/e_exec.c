@@ -210,7 +210,18 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
 //			    ECORE_EXE_PIPE_AUTO | ECORE_EXE_PIPE_READ | ECORE_EXE_PIPE_ERROR |
 //			    ECORE_EXE_PIPE_READ_LINE_BUFFERED | ECORE_EXE_PIPE_ERROR_LINE_BUFFERED,
 //			    inst);
-   exe = ecore_exe_run(exec, inst);
+   if (desktop->path)
+     {
+        if (!getcwd(buf, sizeof(buf))) return NULL;
+        if (chdir(desktop->path)) return NULL;
+        exe = ecore_exe_run(exec, inst);
+        if (chdir(buf)) return NULL;
+     }
+   else
+     {
+        exe = ecore_exe_run(exec, inst);
+     }
+
    e_util_library_path_restore();
    if (penv_display)
      {
