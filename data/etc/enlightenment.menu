@@ -289,7 +289,6 @@
 <Layout>
   <Merge type="menus"/>
   <Merge type="files"/>
-  <Separator/>
 </Layout>
 
 </Menu> <!-- End Applications -->
