@@ -611,7 +611,7 @@ _mixer_popup_timer_new(E_Mixer_Instance *inst)
    if (inst->popup)
      {
         if (inst->popup_timer)
-		  {
+          {
              ecore_timer_del(inst->popup_timer); 
              inst->popup_timer = ecore_timer_add(1.0, _mixer_popup_timer_cb, inst);
           }
