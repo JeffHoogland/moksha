@@ -328,6 +328,7 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    e_config->menu_eap_name_show = cfdata->show_name;
    e_config->menu_eap_generic_show = cfdata->show_generic;
    e_config->menu_eap_comment_show = cfdata->show_comment;
+   e_config->menu_gadcon_client_toplevel = cfdata->menu_gadcon_client_toplevel;
 
    if (cfdata->scroll_speed == 0) e_config->menus_scroll_speed = 1.0;
    else e_config->menus_scroll_speed = cfdata->scroll_speed;
