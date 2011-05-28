@@ -562,9 +562,13 @@ EAPI const char *
 e_widget_fsel_selection_path_get(Evas_Object *obj)
 {
    E_Widget_Data *wd;
-
+   const char *s;
+   
    if (!obj) return NULL;
    wd = e_widget_data_get(obj);
+   E_FREE(wd->path);
+   s = e_widget_entry_text_get(wd->o_entry);
+   if (s) wd->path = strdup(s);
    return wd->path;
 }
 

@@ -712,6 +712,7 @@ AC_E_OPTIONAL_MODULE([everything], true)
 AC_E_OPTIONAL_MODULE([everything-as-modules], false)
 AC_E_OPTIONAL_MODULE([systray], true)
 AC_E_OPTIONAL_MODULE([comp], true)
+AC_E_OPTIONAL_MODULE([shot], true)
 
 SUSPEND=""
 HIBERNATE=""
@@ -869,6 +870,8 @@ src/modules/systray/Makefile
 src/modules/systray/module.desktop
 src/modules/comp/Makefile
 src/modules/comp/module.desktop
+src/modules/shot/Makefile
+src/modules/shot/module.desktop
 src/preload/Makefile
 data/Makefile
 data/images/Makefile

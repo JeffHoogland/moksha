@@ -183,3 +183,8 @@ endif
 if USE_MODULE_OFONO
 SUBDIRS += ofono
 endif
+
+if USE_MODULE_SHOT
+SUBDIRS += shot
+endif
+

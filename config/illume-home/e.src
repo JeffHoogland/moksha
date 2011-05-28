@@ -1059,6 +1059,13 @@ group "E_Config" struct {
             value "params" string: "3";
             value "any_mod" uchar: 0;
         }
+        group "E_Config_Binding_Key" struct {
+            value "context" int: 9;
+            value "modifiers" int: 0;
+            value "key" string: "Print";
+            value "action" string: "shot";
+            value "any_mod" uchar: 0;
+        }
     }
     group "mouse_bindings" list {
         group "E_Config_Binding_Mouse" struct {
@@ -1221,6 +1228,12 @@ group "E_Config" struct {
             value "enabled" uchar: 1;
             value "delayed" uchar: 0;
             value "priority" int: -1000;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "shot";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
         }
     }
     value "config_version" int: 65847;

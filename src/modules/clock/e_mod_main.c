@@ -26,10 +26,44 @@ typedef struct _Instance Instance;
 struct _Instance
 {
    E_Gadcon_Client *gcc;
-   Evas_Object     *o_clock;
+   Evas_Object     *o_clock, *o_cal;
+   E_Gadcon_Popup  *popup;
 }; 
 
 static E_Module *clock_module = NULL;
+
+static void
+_clock_popup_new(Instance *inst)
+{
+   Evas *evas;
+
+   if (inst->popup) return;
+   inst->popup = e_gadcon_popup_new(inst->gcc);
+   evas = inst->popup->win->evas;
+   inst->o_cal = e_widget_table_add(evas, 0);
+   e_widget_size_min_set(inst->o_cal, 100, 100);
+   e_gadcon_popup_content_set(inst->popup, inst->o_cal);
+   e_gadcon_popup_show(inst->popup);
+}
+
+static void
+_clock_popup_free(Instance *inst)
+{
+   if (!inst->popup) return;
+   if (inst->popup) e_object_del(E_OBJECT(inst->popup));
+   inst->popup = NULL;
+}
+
+static void
+_clock_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event)
+{
+   Instance *inst = data;
+   Evas_Event_Mouse_Down *ev = event;
+   
+   if (ev->button != 1) return;
+   if (inst->popup) _clock_popup_free(inst);
+   else _clock_popup_new(inst);
+}
 
 static E_Gadcon_Client *
 _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
@@ -50,6 +84,11 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    
    inst->gcc = gcc;
    inst->o_clock = o;
+
+   evas_object_event_callback_add(inst->o_clock, 
+                                  EVAS_CALLBACK_MOUSE_DOWN,
+                                  _clock_cb_mouse_down,
+                                  inst);
    
    e_gadcon_client_util_menu_attach(gcc);
    
@@ -63,6 +102,7 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    
    inst = gcc->data;
    evas_object_del(inst->o_clock);
+   _clock_popup_free(inst);
    free(inst);
 }
 

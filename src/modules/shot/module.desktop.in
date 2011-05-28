@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Link
+Name=Shot
+Icon=e-module-shot
+X-Enlightenment-ModuleType=utils
+Comment=Simple screenshot+save/upload module

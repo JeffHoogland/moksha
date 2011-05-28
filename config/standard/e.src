@@ -272,6 +272,14 @@ group "E_Config" struct {
       value "priority" int: -1000;
     }
   }
+  group "modules" list {
+    group "E_Config_Module" struct {
+      value "name" string: "shot";
+      value "enabled" uchar: 1;
+      value "delayed" uchar: 1;
+      value "priority" int: 0;
+    }
+  }
   group "themes" list {
     group "E_Config_Theme" struct {
       value "category" string: "theme";
@@ -825,6 +833,15 @@ group "E_Config" struct {
       value "modifiers" int: 0;
       value "key" string: "XF86AudioMute";
       value "action" string: "volume_mute";
+      value "any_mod" uchar: 0;
+    }
+  }
+  group "key_bindings" list {
+    group "E_Config_Binding_Key" struct {
+      value "context" int: 9;
+      value "modifiers" int: 0;
+      value "key" string: "Print";
+      value "action" string: "shot";
       value "any_mod" uchar: 0;
     }
   }
