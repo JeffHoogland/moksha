@@ -121,28 +121,31 @@ evry_plugin_register(Evry_Plugin *p, int type, int priority)
 {
    Eina_List *l;
    Plugin_Config *pc;
-   Eina_List *conf[3];
+   Eina_List *conf;
    int new_conf = 0;
 
    if ((type < 0) || (type > 2))
      return 0;
 
-   conf[0] = evry_conf->conf_subjects;
-   conf[1] = evry_conf->conf_actions;
-   conf[2] = evry_conf->conf_objects;
+   if (type == EVRY_PLUGIN_SUBJECT)
+     conf = evry_conf->conf_subjects;
+   else if (type == EVRY_PLUGIN_ACTION)
+     conf = evry_conf->conf_actions;
+   else if (type == EVRY_PLUGIN_OBJECT)
+     conf = evry_conf->conf_objects;
 
-   EINA_LIST_FOREACH(conf[type], l, pc)
+   EINA_LIST_FOREACH(conf, l, pc)
      if (pc->name && p->name && !strcmp(pc->name, p->name))
        break;
 
    /* check if module of same name is already loaded */
-   if ((pc) && (pc->plugin))
-     return 0;
+   /* if ((pc) && (pc->plugin))
+    *   return 0; */
    
    /* collection plugin sets its own config */
    if (!pc && p->config)
      {
-	conf[type] = eina_list_append(conf[type], p->config);
+	conf = eina_list_append(conf, p->config);
 	pc = p->config;
      }
    else if (!pc)
@@ -156,7 +159,7 @@ evry_plugin_register(Evry_Plugin *p, int type, int priority)
 	pc->aggregate = EINA_TRUE;
 	pc->top_level = EINA_TRUE;
 
-	conf[type] = eina_list_append(conf[type], pc);
+	conf = eina_list_append(conf, pc);
      }
    if (pc->trigger && strlen(pc->trigger) == 0)
      {
@@ -167,14 +170,16 @@ evry_plugin_register(Evry_Plugin *p, int type, int priority)
    p->config = pc;
    pc->plugin = p;
 
-   conf[type] = eina_list_sort(conf[type], -1, _evry_cb_plugin_sort);
+   conf = eina_list_sort(conf, -1, _evry_cb_plugin_sort);
 
-   evry_conf->conf_subjects = conf[0];
-   evry_conf->conf_actions = conf[1];
-   evry_conf->conf_objects = conf[2];
+   if (type == EVRY_PLUGIN_SUBJECT)
+     evry_conf->conf_subjects = conf;
+   else if (type == EVRY_PLUGIN_ACTION)
+     evry_conf->conf_actions = conf;
+   else if (type == EVRY_PLUGIN_OBJECT)
+     evry_conf->conf_objects = conf;
    
-   if ((type == EVRY_PLUGIN_SUBJECT) &&
-       (strcmp(p->name, "All")))
+   if ((type == EVRY_PLUGIN_SUBJECT) && (strcmp(p->name, "All")))
      {
 	char buf[256];
 	snprintf(buf, sizeof(buf), _("Show %s Plugin"), p->name);
