@@ -116,7 +116,7 @@ _screen_change_cb(void *data __UNUSED__, Evas_Object *obj __UNUSED__, void *even
         else if (screen == (int)z->num)
            evas_object_color_set(o_rectdim[z->num], 0, 0, 0, 0);
         else
-           evas_object_color_set(o_rectdim[z->num], 0, 0, 0, 128);
+           evas_object_color_set(o_rectdim[z->num], 0, 0, 0, 200);
      }
 }
 
