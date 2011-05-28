@@ -297,9 +297,15 @@ _upload_data_cb(void *data __UNUSED__, int ev_type __UNUSED__, void *event)
    if ((o_label) && (ev->size < 1024))
      {
         char *txt = alloca(ev->size + 1);
-        
+
         memcpy(txt, ev->data, ev->size);
         txt[ev->size] = 0;
+/*        
+        printf("GOT %i bytes: '%s'\n", ev->size, txt);
+        int i;
+        for (i = 0; i < ev->size; i++) printf("%02x.", ev->data[i]);
+        printf("\n");
+ */
         if (!url_ret) url_ret = strdup(txt);
         else
           {
@@ -345,7 +351,7 @@ _upload_complete_cb(void *data __UNUSED__, int ev_type __UNUSED__, void *event)
      {
         e_util_dialog_show
            (_("Error - Upload Failed"),
-               _("Upload failed with status code:\n"
+               _("Upload failed with status code:<br>"
                  "%i"),
                ev->status);
         _share_done();
