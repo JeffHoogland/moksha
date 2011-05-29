@@ -15,6 +15,7 @@ static int quality = 90;
 static int screen = -1;
 #define MAXZONES 64
 static Evas_Object *o_rectdim[MAXZONES] = { NULL };
+static Evas_Object *o_radio[MAXZONES] = { NULL };
 static Evas_Object *o_fsel = NULL;
 static Evas_Object *o_label = NULL;
 static Evas_Object *o_entry = NULL;
@@ -476,10 +477,6 @@ _win_share_cb(void *data __UNUSED__, void *data2 __UNUSED__)
    e_dialog_resizable_set(dia, 1);
    e_win_centered_set(dia->win, 1);
    e_dialog_show(dia);
-   
-   // FIXME: start upload
-   // FIXME: on upload complete, show URL
-   // FIXME: cleanup tmp file
 }
 
 static void
@@ -489,6 +486,36 @@ _win_cancel_cb(void *data __UNUSED__, void *data2 __UNUSED__)
      {
         e_object_del(E_OBJECT(win));
         win = NULL;
+     }
+}
+
+static void
+_rect_down_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
+{
+   Evas_Event_Mouse_Down *ev = event_info;
+   Eina_List *l;
+   E_Zone *z;
+   
+   if (ev->button != 1) return;
+   
+   EINA_LIST_FOREACH(scon->zones, l, z)
+     {
+        if (obj == o_rectdim[z->num])
+          {
+             screen = z->num;
+             e_widget_radio_toggle_set(o_radio[z->num], 1);
+             break;
+          }
+     }
+   
+   EINA_LIST_FOREACH(scon->zones, l, z)
+     {
+        if (screen == -1)
+           evas_object_color_set(o_rectdim[z->num], 0, 0, 0, 0);
+        else if (screen == (int)z->num)
+           evas_object_color_set(o_rectdim[z->num], 0, 0, 0, 0);
+        else
+           evas_object_color_set(o_rectdim[z->num], 0, 0, 0, 200);
      }
 }
 
@@ -616,10 +643,13 @@ _shot_now(E_Zone *zone)
              if (z->num >= MAXZONES) continue;
              snprintf(buf, sizeof(buf), "%i", z->num);
              o = e_widget_radio_add(evas, buf, z->num, rg);
+             o_radio[z->num] = o;
              evas_object_smart_callback_add(o, "changed", _screen_change_cb, NULL);
              e_widget_framelist_object_append(ol, o);
              
              o = evas_object_rectangle_add(evas2);
+             evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, 
+                                            _rect_down_cb, NULL);
              o_rectdim[z->num] = o;
              evas_object_color_set(o, 0, 0, 0, 0);
              evas_object_show(o);
