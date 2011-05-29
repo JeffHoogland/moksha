@@ -239,9 +239,9 @@ _e_wid_fsel_files_selection_change(void *data, Evas_Object *obj __UNUSED__, void
    if (stat(wd->path, &st) == 0)
      {
 	if (wd->preview) _e_wid_fsel_preview_file(wd);
-	if (!S_ISDIR(st.st_mode))
-	  e_widget_entry_text_set(wd->o_entry, ici->file);
-	else
+//	if (!S_ISDIR(st.st_mode))
+//	  e_widget_entry_text_set(wd->o_entry, ici->file);
+//	else
 	  e_widget_entry_text_set(wd->o_entry, wd->path);
      }
    eina_list_free(selected);
