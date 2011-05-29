@@ -15,6 +15,7 @@ static int quality = 90;
 static int screen = -1;
 #define MAXZONES 64
 static Evas_Object *o_rectdim[MAXZONES] = { NULL };
+static Evas_Object *o_radio_all = NULL;
 static Evas_Object *o_radio[MAXZONES] = { NULL };
 static Evas_Object *o_fsel = NULL;
 static Evas_Object *o_label = NULL;
@@ -498,14 +499,16 @@ _rect_down_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj __UNUS
    
    if (ev->button != 1) return;
    
+   e_widget_radio_toggle_set(o_radio_all, 0);
    EINA_LIST_FOREACH(scon->zones, l, z)
      {
         if (obj == o_rectdim[z->num])
           {
              screen = z->num;
              e_widget_radio_toggle_set(o_radio[z->num], 1);
-             break;
           }
+        else
+           e_widget_radio_toggle_set(o_radio[z->num], 0);
      }
    
    EINA_LIST_FOREACH(scon->zones, l, z)
@@ -633,6 +636,7 @@ _shot_now(E_Zone *zone)
         
         rg = e_widget_radio_group_new(&screen);
         o = e_widget_radio_add(evas, _("All"), -1, rg);
+        o_radio_all = o;
         evas_object_smart_callback_add(o, "changed", _screen_change_cb, NULL);
         e_widget_framelist_object_append(ol, o);
         i = 0;
