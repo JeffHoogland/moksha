@@ -26,7 +26,7 @@ typedef struct _Instance Instance;
 struct _Instance
 {
    E_Gadcon_Client *gcc;
-   Evas_Object     *o_clock, *o_cal;
+   Evas_Object     *o_clock, *o_table, *o_popclock, *o_cal;
    E_Gadcon_Popup  *popup;
 }; 
 
@@ -36,13 +36,25 @@ static void
 _clock_popup_new(Instance *inst)
 {
    Evas *evas;
-
+   Evas_Object *o, *oi;
+   
    if (inst->popup) return;
    inst->popup = e_gadcon_popup_new(inst->gcc);
    evas = inst->popup->win->evas;
-   inst->o_cal = e_widget_table_add(evas, 0);
-   e_widget_size_min_set(inst->o_cal, 100, 100);
-   e_gadcon_popup_content_set(inst->popup, inst->o_cal);
+   
+   inst->o_table = e_widget_table_add(evas, 0);
+
+   oi = edje_object_add(evas);
+   inst->o_popclock = oi;
+   e_theme_edje_object_set(oi, "base/theme/modules/clock",
+                           "e/modules/clock/main");
+   o = e_widget_image_add_from_object(evas, oi, 128, 128);
+   evas_object_show(oi);
+                                       
+   e_widget_table_object_align_append(inst->o_table, o, 
+                                      0, 0, 1, 1, 0, 0, 0, 0, 0.5, 0.5);
+   
+   e_gadcon_popup_content_set(inst->popup, inst->o_table);
    e_gadcon_popup_show(inst->popup);
 }
 

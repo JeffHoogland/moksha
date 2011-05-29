@@ -203,7 +203,6 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
    // need a way to still inherit from parent env of wm.
    e_util_env_set("__GL_SYNC_TO_VBLANK", NULL);
    
-   e_util_library_path_strip();
 //// FIXME: seem to be some issues with the pipe and filling up ram - need to
 //// check. for now disable.   
 //   exe = ecore_exe_pipe_run(exec,
@@ -212,17 +211,44 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
 //			    inst);
    if ((desktop) && (desktop->path))
      {
-        if (!getcwd(buf, sizeof(buf))) return NULL;
-        if (chdir(desktop->path)) return NULL;
+        if (!getcwd(buf, sizeof(buf)))
+          {
+             E_FREE(inst);
+             e_util_dialog_show(_("Run Error"),
+                                _("Enlightenment was unable to get current directory"));
+             return NULL;
+          }
+        if (chdir(desktop->path))
+          {
+             E_FREE(inst);
+             e_util_dialog_show(_("Run Error"),
+                                _("Enlightenment was unable to change to directory:<br>"
+                                  "<br>"
+                                  "%s"),
+			   buf);
+             return NULL;
+          }
+        e_util_library_path_strip();
         exe = ecore_exe_run(exec, inst);
-        if (chdir(buf)) return NULL;
+        e_util_library_path_restore();
+        if (chdir(buf))
+          {
+             e_util_dialog_show(_("Run Error"),
+                                _("Enlightenment was unable to restore to directory:<br>"
+                                  "<br>"
+                                  "%s"),
+			   buf);
+             E_FREE(inst);
+             return NULL;
+          }
      }
    else
      {
+        e_util_library_path_strip();
         exe = ecore_exe_run(exec, inst);
+        e_util_library_path_restore();
      }
 
-   e_util_library_path_restore();
    if (penv_display)
      {
        	e_util_env_set("DISPLAY", penv_display);
@@ -234,7 +260,7 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
 	e_util_dialog_show(_("Run Error"),
 			   _("Enlightenment was unable to fork a child process:<br>"
 			     "<br>"
-			     "%s<br>"),
+			     "%s"),
 			   exec);
 	return NULL;
      }
