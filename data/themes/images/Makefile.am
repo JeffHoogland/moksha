@@ -256,6 +256,7 @@ icon_screen_right.png \
 icon_screensaver.png \
 icon_screen_setup.png \
 icon_screen_vflip.png \
+icon_screenshot.png \
 icon_shelf_bottom_desk.png \
 icon_shelf_bottom_left.png \
 icon_shelf_bottom.png \
