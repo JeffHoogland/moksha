@@ -191,7 +191,7 @@ e_manager_manage_windows(E_Manager *man)
                     continue;
 	       }
 	     /* XXX manage xembed windows as long as they are not override_redirect..
-	     /* if (!ecore_x_window_prop_property_get(windows[i],
+	      * if (!ecore_x_window_prop_property_get(windows[i],
 	      * 					   atom_xmbed,
 	      * 					   atom_xmbed, 32,
 	      * 					   &data, &count))
