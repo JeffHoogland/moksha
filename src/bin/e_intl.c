@@ -142,6 +142,7 @@ e_intl_language_set(const char *lang)
 	e_util_env_set("LC_ALL", _e_intl_orig_lc_all);
 
 	if (!lang) lang = getenv("LC_ALL");
+	if (!lang) lang = getenv("LANG");
 
 	set_envars = 0;
      }
