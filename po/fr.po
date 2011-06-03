@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-05-30 10:28+0400\n"
-"PO-Revision-Date: 2011-05-30 14:38+0400\n"
+"POT-Creation-Date: 2011-06-03 13:34+0400\n"
+"PO-Revision-Date: 2011-06-03 20:14+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment French Team <pourunmondesansgourou@gmail.com>\n"
 "Language: fr\n"
@@ -2303,11 +2303,11 @@ msgstr "Paramétrage de la barre d'outils"
 msgid "Layout"
 msgstr "Présentation"
 
-#: src/bin/e_intl.c:341
+#: src/bin/e_intl.c:342
 msgid "Input Method Error"
 msgstr "Erreur du système de saisie"
 
-#: src/bin/e_intl.c:342
+#: src/bin/e_intl.c:343
 msgid "Error starting the input method executable<br><br>please make sure that your input<br>method configuration is correct and<br>that your configuration's<br>executable is in your PATH<br>"
 msgstr "Erreur lors du démarrage du système de saisie.<br><br>Veuillez vérifier que la configuration du système<br>de saisie est correcte et que l'exécutable est<br>dans votre PATH.<br>"
 
@@ -3682,7 +3682,7 @@ msgstr "Ajouter un nouveau profil"
 #: src/modules/conf_display/e_int_config_desk.c:154
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:137
 msgid "Name:"
-msgstr "Nom : "
+msgstr "Nom :"
 
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:38
 msgid "Dialog Settings"
@@ -5134,7 +5134,7 @@ msgstr "Gestionnaire de fenêtres"
 #: src/modules/conf_theme/e_int_config_color_classes.c:844
 #: src/modules/conf_theme/e_int_config_fonts.c:79
 msgid "Widgets"
-msgstr "Composants graphiques"
+msgstr "Objets graphiques"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:850
 msgid "Others"
@@ -5146,7 +5146,7 @@ msgstr "Barre de titre"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:61
 msgid "Textblock Plain"
-msgstr "Bloc de texte"
+msgstr "Bloc de texte simple"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:62
 msgid "Textblock Light"
@@ -5154,7 +5154,7 @@ msgstr "Bloc de texte fin"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:63
 msgid "Textblock Big"
-msgstr "Bloc de texte large"
+msgstr "Bloc de texte gros"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:67
 msgid "Settings Heading"
@@ -5271,7 +5271,7 @@ msgstr "Style normal"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:102
 msgid "Large Styled"
-msgstr "Style gros"
+msgstr "Style grand"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:165
 msgid "Font Settings"
@@ -5958,7 +5958,7 @@ msgstr "<Sans Nom>"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:144
 msgid "Class:"
-msgstr "Classe : "
+msgstr "Classe :"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:148
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:308
@@ -5967,7 +5967,7 @@ msgstr "<Sans Classe>"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:151
 msgid "Title:"
-msgstr "Titre : "
+msgstr "Titre :"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:155
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:310
@@ -5976,7 +5976,7 @@ msgstr "<Sans Titre>"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:158
 msgid "Role:"
-msgstr "Rôle : "
+msgstr "Rôle :"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:162
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:312
@@ -7438,7 +7438,7 @@ msgstr "Canal :"
 
 #: src/modules/mixer/app_mixer.c:387
 msgid "Type:"
-msgstr "Type : "
+msgstr "Type :"
 
 #: src/modules/mixer/app_mixer.c:391
 msgid "Left:"
