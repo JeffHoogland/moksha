@@ -36,7 +36,7 @@ static void
 _clock_popup_new(Instance *inst)
 {
    Evas *evas;
-   Evas_Object *o, *oi;
+   Evas_Object *o, *oi, *od;
    
    if (inst->popup) return;
    inst->popup = e_gadcon_popup_new(inst->gcc);
@@ -50,9 +50,28 @@ _clock_popup_new(Instance *inst)
                            "e/modules/clock/main");
    o = e_widget_image_add_from_object(evas, oi, 128, 128);
    evas_object_show(oi);
-                                       
    e_widget_table_object_align_append(inst->o_table, o, 
                                       0, 0, 1, 1, 0, 0, 0, 0, 0.5, 0.5);
+   
+   oi = edje_object_add(evas);
+   inst->o_popclock = oi;
+   e_theme_edje_object_set(oi, "base/theme/modules/clock",
+                           "e/modules/clock/calendar");
+   // FIXME: set text part for month name and year
+   // FIXME: hook signal callbacks for next and prev month
+   
+   // FIXME: set up day names (mon, tue, wed, ... sat, sun)
+   
+   // FIXME: calendar has a 7x5 grid, set up all the cells to ve either
+   // hidden, visible, be weekend or weekday and have right date, be 
+   // neighbouring month, be "active" today)
+   od = edje_object_part_table_child_get(oi, "e.table.days", 0, 0);
+   edje_object_part_text_set(od, "e.text.label", "0");
+   
+   o = e_widget_image_add_from_object(evas, oi, 182, 128);
+   evas_object_show(oi);
+   e_widget_table_object_align_append(inst->o_table, o, 
+                                      1, 0, 1, 1, 0, 0, 0, 0, 0.5, 0.5);
    
    e_gadcon_popup_content_set(inst->popup, inst->o_table);
    e_gadcon_popup_show(inst->popup);
