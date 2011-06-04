@@ -201,11 +201,11 @@ src/modules/everything/evry_plug_aggregator.c
 src/modules/everything/evry_plug_clipboard.c
 src/modules/everything/evry_view_help.c
 src/modules/everything/evry_util.c
-src/modules/everything-apps/evry_plug_apps.c
-src/modules/everything-calc/evry_plug_calc.c
-src/modules/everything-files/evry_plug_files.c
-src/modules/everything-settings/evry_plug_settings.c
-src/modules/everything-windows/evry_plug_windows.c
+src/modules/everything/evry_plug_apps.c
+src/modules/everything/evry_plug_calc.c
+src/modules/everything/evry_plug_files.c
+src/modules/everything/evry_plug_settings.c
+src/modules/everything/evry_plug_windows.c
 src/modules/fileman/e_int_config_mime.c
 src/modules/fileman/e_int_config_mime_edit.c
 src/modules/fileman/e_mod_main.c

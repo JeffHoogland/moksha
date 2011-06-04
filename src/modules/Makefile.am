@@ -159,15 +159,6 @@ if USE_MODULE_EVERYTHING
 SUBDIRS += everything
 endif
 
-if USE_MODULE_EVERYTHING_AS_MODULES
-SUBDIRS += \
-	everything-files \
-	everything-apps \
-	everything-settings \
-	everything-calc \
-	everything-windows
-endif
-
 if USE_MODULE_SYSTRAY
 SUBDIRS += systray
 endif

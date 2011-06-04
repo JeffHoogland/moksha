@@ -1,12 +1,10 @@
 #include "e.h"
-#include "e_mod_main.h"
 #include "evry_api.h"
-#include "e_mod_main.h"
 
 #define MOD_CONFIG_FILE_EPOCH 0x0001
 #define MOD_CONFIG_FILE_GENERATION 0x009d
-#define MOD_CONFIG_FILE_VERSION					\
-  ((MOD_CONFIG_FILE_EPOCH << 16) | MOD_CONFIG_FILE_GENERATION)
+#define MOD_CONFIG_FILE_VERSION                                 \
+     ((MOD_CONFIG_FILE_EPOCH << 16) | MOD_CONFIG_FILE_GENERATION)
 
 // FIXME clear cache on .desktop chage event
 
@@ -1390,41 +1388,6 @@ evry_plug_apps_save(void)
 {
    e_config_domain_save("module.everything-apps", conf_edd, _conf);
 }
-
-#ifdef USE_MODULE_EVERYTHING_AS_MODULES
-
-EAPI E_Module_Api e_modapi =
-  {
-    E_MODULE_API_VERSION,
-    "everything-apps"
-  };
-
-EAPI void *
-e_modapi_init(E_Module *m)
-{
-   evry_plug_apps_init(m);
-
-   e_module_delayed_set(m, 1);
-
-   return m;
-}
-
-EAPI int
-e_modapi_shutdown(E_Module *m __UNUSED__)
-{
-   evry_plug_apps_shutdown();
-   
-   return 1;
-}
-
-EAPI int
-e_modapi_save(E_Module *m __UNUSED__)
-{
-   evry_plug_apps_save();
-   
-   return 1;
-}
-#endif
 
 /***************************************************************************/
 

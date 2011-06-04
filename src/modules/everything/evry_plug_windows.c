@@ -1,5 +1,4 @@
 #include "e.h"
-#include "e_mod_main.h"
 #include "evry_api.h"
 
 #define BORDER_SHOW		1
@@ -478,40 +477,6 @@ _plugins_shutdown(void)
 
 /***************************************************************************/
 
-#ifdef USE_MODULE_EVERYTHING_AS_MODULES
-
-EAPI E_Module_Api e_modapi =
-{
-   E_MODULE_API_VERSION,
-   "everything-windows"
-};
-
-EAPI void *
-e_modapi_init(E_Module *m)
-{
-   EVRY_MODULE_NEW(evry_module, evry, _plugins_init, _plugins_shutdown);
-
-   e_module_delayed_set(m, 1);
-
-   return m;
-}
-
-EAPI int
-e_modapi_shutdown(E_Module *m __UNUSED__)
-{
-   EVRY_MODULE_FREE(evry_module);
-
-   return 1;
-}
-
-EAPI int
-e_modapi_save(E_Module *m __UNUSED__)
-{
-   return 1;
-}
-
-#else
-
 Eina_Bool
 evry_plug_windows_init(E_Module *m)
 {
@@ -528,4 +493,3 @@ evry_plug_windows_shutdown(void)
 
 void
 evry_plug_windows_save(void){}
-#endif

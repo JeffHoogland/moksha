@@ -708,7 +708,6 @@ AC_E_OPTIONAL_MODULE([ofono], true, [CHECK_MODULE_OFONO])
 AC_E_OPTIONAL_MODULE([illume2], true)
 AC_E_OPTIONAL_MODULE([syscon], true)
 AC_E_OPTIONAL_MODULE([everything], true)
-AC_E_OPTIONAL_MODULE([everything-as-modules], false)
 AC_E_OPTIONAL_MODULE([systray], true)
 AC_E_OPTIONAL_MODULE([comp], true)
 AC_E_OPTIONAL_MODULE([shot], true)
@@ -851,16 +850,6 @@ src/modules/syscon/module.desktop
 src/modules/everything/Makefile
 src/modules/everything/module.desktop
 src/modules/everything/everything.pc
-src/modules/everything-files/Makefile
-src/modules/everything-files/module.desktop
-src/modules/everything-apps/Makefile
-src/modules/everything-apps/module.desktop
-src/modules/everything-windows/Makefile
-src/modules/everything-windows/module.desktop
-src/modules/everything-settings/Makefile
-src/modules/everything-settings/module.desktop
-src/modules/everything-calc/Makefile
-src/modules/everything-calc/module.desktop
 src/modules/systray/Makefile
 src/modules/systray/module.desktop
 src/modules/comp/Makefile

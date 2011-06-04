@@ -39,16 +39,13 @@ module_la_SOURCES      = $(EVRYHEADERS) \
 			 evry_plug_text.c \
 			 evry_plug_collection.c \
 			 evry_gadget.c \
-			 md5.c
-
-if !USE_MODULE_EVERYTHING_AS_MODULES 
-module_la_SOURCES     += \
-			 ../everything-apps/evry_plug_apps.c \
-			 ../everything-files/evry_plug_files.c \
-			 ../everything-windows/evry_plug_windows.c \
-			 ../everything-settings/evry_plug_settings.c \
-			 ../everything-calc/evry_plug_calc.c
-endif
+			 md5.c \
+                         md5.h \
+			 evry_plug_apps.c \
+			 evry_plug_files.c \
+			 evry_plug_windows.c \
+			 evry_plug_settings.c \
+			 evry_plug_calc.c
 
 module_la_LIBADD       = @e_libs@ @dlopen_libs@
 module_la_LDFLAGS      = -module -avoid-version
