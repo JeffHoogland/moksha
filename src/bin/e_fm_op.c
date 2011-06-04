@@ -214,7 +214,7 @@ main(int argc, char **argv)
 
 		  /* Don't move a dir into itself */
 		  if (ecore_file_is_dir(p) &&
-		      (strncmp(p, p2, p2_len) == 0) &&
+		      (strncmp(p, p2, PATH_MAX) == 0) &&
 		      ((p[p2_len] == '/') || (p[p2_len] == '\0')))
 		    goto skip_arg;
 
