@@ -12184,7 +12184,10 @@ collections {
          part { name: "day"; type: RECT;
             mouse_events: 0;
             description { state: "default" 0.0;
-               color: 255 255 0 128;
+               color: 255 255 255 128;
+            }
+            description { state: "today" 0.0;
+               color: 0 0 0 128;
             }
          }
          part { name: "e.text.label";
@@ -12203,7 +12206,6 @@ collections {
                }
                color: 0 0 0 255;
                text {
-                  text: "XXXabcde";
                   font: "Sans";
                   align: 0.5 0.5;
                   ellipsis: 0.0;
@@ -12217,16 +12219,40 @@ collections {
    }
    group { name: "e/modules/clock/calendar/day";
       parts {
-         part { name: "day"; type: RECT;
+         part { name: "hidden"; type: RECT;
             mouse_events: 0;
             description { state: "default" 0.0;
-               color: 0 0 255 128;
+               color: 255 255 255 255;
+            }
+            description { state: "hidden" 0.0;
+               color: 255 255 255 64;
+            }
+         }
+         part { name: "weekend"; type: RECT;
+            mouse_events: 0;
+            clip_to: "hidden";
+            description { state: "default" 0.0;
+               color: 0 0 0 0;
+            }
+            description { state: "weekend" 0.0;
+               color: 255 0 0 128;
+            }
+         }
+         part { name: "day"; type: RECT;
+            mouse_events: 0;
+            clip_to: "hidden";
+            description { state: "default" 0.0;
+               color: 255 255 255 128;
+            }
+            description { state: "today" 0.0;
+               color: 0 0 0 128;
             }
          }
          part { name: "e.text.label";
             type: TEXT;
             effect: SOFT_SHADOW;
             mouse_events: 0;
+            clip_to: "hidden";
             description { state: "default" 0.0;
                fixed: 1 1;
                align: 0.5 0.5;
@@ -12241,7 +12267,6 @@ collections {
                color: 255 255 255 255;
                color3: 0 0 0 32;
                text {
-                  text: "XX";
                   font: "Sans:style=Bold";
                   align: 0.5 0.5;
                   size: 10;
@@ -12251,13 +12276,51 @@ collections {
             }
          }
       }
+      programs {
+         program { name: "weekend";
+            signal: "e,state,weekend";
+            source: "e";
+            action: STATE_SET "weekend" 0.0;
+            target: "weekend";
+         }
+         program { name: "weekday";
+            signal: "e,state,weekday";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "weekend";
+         }
+         program { name: "hidden";
+            signal: "e,state,hidden";
+            source: "e";
+            action: STATE_SET "hidden" 0.0;
+            target: "hidden";
+         }
+         program { name: "visible";
+            signal: "e,state,visible";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "hidden";
+         }
+         program { name: "today";
+            signal: "e,state,today";
+            source: "e";
+            action: STATE_SET "today" 0.0;
+            target: "day";
+         }
+         program { name: "someday";
+            signal: "e,state,someday";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "day";
+         }
+      }
    }
    group { name: "e/modules/clock/calendar";
       parts {
          part { name: "names"; type: RECT;
             mouse_events: 0;
             description { state: "default" 0.0;
-               color: 0 255 0 128;
+               color: 0 0 0 64;
                rel1.relative: 0.0 0.10;
                rel2.relative: 1.0 0.25;
               step: 7 5;
@@ -12266,10 +12329,58 @@ collections {
          part { name: "cal"; type: RECT;
             mouse_events: 0;
             description { state: "default" 0.0;
-               color: 255 0 0 128;
+               color: 0 0 0 64;
                rel1.to_y: "names";
                rel1.relative: 0.0 1.0;
                step: 7 5;
+            }
+         }
+         part { name: "e.text.month";
+            type: TEXT;
+            effect: SOFT_SHADOW;
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               fixed: 0 1;
+               align: 0.0 0.5;
+               rel1 {
+                  relative: 0.0 0.0;
+               }
+               rel2 {
+                  relative: 1.0 0.10;
+               }
+               color: 255 255 255 255;
+               color3: 0 0 0 32;
+               text {
+                  font: "Sans:style=Bold";
+                  align: 0.0 0.5;
+                  size: 10;
+                  min: 0 1;
+                  text_class: "module_normal";
+               }
+            }
+         }
+         part { name: "e.text.year";
+            type: TEXT;
+            effect: SOFT_SHADOW;
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               fixed: 0 1;
+               align: 1.0 0.5;
+               rel1 {
+                  relative: 0.0 0.0;
+               }
+               rel2 {
+                  relative: 1.0 0.10;
+               }
+               color: 255 255 255 255;
+               color3: 0 0 0 32;
+               text {
+                  font: "Sans:style=Bold";
+                  align: 1.0 0.5;
+                  size: 10;
+                  min: 0 1;
+                  text_class: "module_normal";
+               }
             }
          }
          part { name: "e.table.daynames"; type: TABLE;

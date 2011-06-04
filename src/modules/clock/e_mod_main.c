@@ -1,6 +1,9 @@
 #include "e.h"
 #include "e_mod_main.h"
 
+#include <sys/time.h>
+#include <time.h>
+
 /* gadcon requirements */
 static E_Gadcon_Client *_gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style);
 static void _gc_shutdown(E_Gadcon_Client *gcc);
@@ -28,17 +31,159 @@ struct _Instance
    E_Gadcon_Client *gcc;
    Evas_Object     *o_clock, *o_table, *o_popclock, *o_cal;
    E_Gadcon_Popup  *popup;
-}; 
+   struct {
+      int           start, len; // 0->6 0 == sun, 6 == sat, number of days
+   } weekend;
+   struct {
+      int           start; // 0->6 0 == sun, 6 == sat
+   } week;
+   
+   int madj;
+   
+   char year[8];
+   char month[32];
+   const char *daynames[7];
+   unsigned char daynums[7][5];
+   Eina_Bool dayweekends[7][5];
+   Eina_Bool dayvalids[7][5];
+   Eina_Bool daytoday[7][5];
+};
 
 static E_Module *clock_module = NULL;
+
+static void
+_clear_timestrs(Instance *inst)
+{
+   int x;
+   
+   for (x = 0; x < 7; x++)
+     {
+        if (inst->daynames[x])
+          {
+             eina_stringshare_del(inst->daynames[x]);
+             inst->daynames[x] = NULL;
+          }
+     }
+}
+
+static void
+_time_eval(Instance *inst)
+{
+   struct timeval      timev;
+   struct tm          *tm, tms, tmm, tm2;
+   time_t              tt;
+   int                 started = 0, num, i;
+   
+   tzset();
+   gettimeofday(&timev, NULL);
+   tt = (time_t)(timev.tv_sec);
+   tm = localtime(&tt);
+   
+   _clear_timestrs(inst);
+   if (tm)
+     {
+        int day;
+        
+        // tms == current date time "saved"
+        // tm2 == date to look at adjusting for madj
+        // tm2 == month baseline @ 1st
+        memcpy(&tms, tm, sizeof(struct tm));
+        num = 0;
+        for (day = (0 - 6); day < (31 + 6); day++)
+          {
+             memcpy(&tmm, &tms, sizeof(struct tm));
+             tmm.tm_sec = 0;
+             tmm.tm_min = 0;
+             tmm.tm_hour = 10;
+             tmm.tm_mon += inst->madj;
+             tmm.tm_mday = 1; // start at the 1st of the month
+             tmm.tm_wday = 0; // ignored by mktime
+             tmm.tm_yday = 0; // ignored by mktime
+             tmm.tm_isdst = 0; // ignored by mktime
+             tt = mktime(&tmm);
+             tm = localtime(&tt);
+             memcpy(&tm2, tm, sizeof(struct tm));
+             
+             tt = mktime(&tmm);
+             tt += (day * 60 * 60 * 24);
+             tm = localtime(&tt);
+             memcpy(&tmm, tm, sizeof(struct tm));
+             if (!started)
+               {
+                  if (tm->tm_wday == inst->week.start) started = 1;
+               }
+             if (started)
+               {
+                  int y = num / 7;
+                  int x = num % 7;
+                  
+                  if (y < 5)
+                    {
+                       inst->daynums[x][y] = tmm.tm_mday;
+                       
+                       inst->dayvalids[x][y] = 0;
+                       if (tmm.tm_mon == tm2.tm_mon) inst->dayvalids[x][y] = 1;
+                       
+                       inst->daytoday[x][y] = 0;
+                       if ((tmm.tm_mon == tms.tm_mon) &&
+                           (tmm.tm_year == tms.tm_year) &&
+                           (tmm.tm_mday == tms.tm_mday))
+                          inst->daytoday[x][y] = 1;
+                       
+                       inst->dayweekends[x][y] = 0;
+                       for (i = inst->weekend.start; 
+                            i < (inst->weekend.start + inst->weekend.len);
+                            i++)
+                         {
+                            if (tmm.tm_wday == (i % 7))
+                              {
+                                 inst->dayweekends[x][y] = 1;
+                                 break;
+                              }
+                         }
+                       if (!inst->daynames[x])
+                         {
+                            char buf[32];
+                            
+                            buf[sizeof(buf) - 1] = 0;
+                            strftime(buf, sizeof(buf) - 1, "%a", (const struct tm *)&tmm); // %A full weekeday
+                            inst->daynames[x] = eina_stringshare_add(buf);
+                         }
+                    }
+                  num++;
+               }
+          }
+        
+        memcpy(&tmm, &tms, sizeof(struct tm));
+        tmm.tm_sec = 0;
+        tmm.tm_min = 0;
+        tmm.tm_hour = 10;
+        tmm.tm_mon += inst->madj;
+        tmm.tm_mday = 1; // start at the 1st of the month
+        tmm.tm_wday = 0; // ignored by mktime
+        tmm.tm_yday = 0; // ignored by mktime
+        tmm.tm_isdst = 0; // ignored by mktime
+        tt = mktime(&tmm);
+        tm = localtime(&tt);
+        memcpy(&tm2, tm, sizeof(struct tm));
+        inst->year[sizeof(inst->year) - 1] = 0;
+        strftime(inst->year, sizeof(inst->year) - 1, "%Y", (const struct tm *)&tm2);
+        inst->month[sizeof(inst->month) - 1] = 0;
+        strftime(inst->month, sizeof(inst->month) - 1, "%B", (const struct tm *)&tm2); // %b for short month
+     }
+}
 
 static void
 _clock_popup_new(Instance *inst)
 {
    Evas *evas;
    Evas_Object *o, *oi, *od;
+   int x, y;
    
    if (inst->popup) return;
+   
+   _time_eval(inst);
+   
    inst->popup = e_gadcon_popup_new(inst->gcc);
    evas = inst->popup->win->evas;
    
@@ -57,6 +202,39 @@ _clock_popup_new(Instance *inst)
    inst->o_popclock = oi;
    e_theme_edje_object_set(oi, "base/theme/modules/clock",
                            "e/modules/clock/calendar");
+   
+   edje_object_part_text_set(oi, "e.text.month", inst->month);
+   edje_object_part_text_set(oi, "e.text.year", inst->year);
+   for (x = 0; x < 7; x++)
+     {
+        od = edje_object_part_table_child_get(oi, "e.table.daynames", x, 0);
+        edje_object_part_text_set(od, "e.text.label", inst->daynames[x]);
+     }
+   
+   for (y = 0; y < 5; y++)
+     {
+        for (x = 0; x < 7; x++)
+          {
+             char buf[32];
+             
+             od = edje_object_part_table_child_get(oi, "e.table.days", x, y);
+             snprintf(buf, sizeof(buf), "%i", (int)inst->daynums[x][y]);
+             edje_object_part_text_set(od, "e.text.label", buf);
+             if (inst->dayweekends[x][y])
+                edje_object_signal_emit(od, "e,state,weekend", "e");
+             else
+                edje_object_signal_emit(od, "e,state,weekday", "e");
+             if (inst->dayvalids[x][y])
+                edje_object_signal_emit(od, "e,state,visible", "e");
+             else
+                edje_object_signal_emit(od, "e,state,hidden", "e");
+             if (inst->daytoday[x][y])
+                edje_object_signal_emit(od, "e,state,today", "e");
+             else
+                edje_object_signal_emit(od, "e,state,someday", "e");
+          }
+     }
+   
    // FIXME: set text part for month name and year
    // FIXME: hook signal callbacks for next and prev month
    
@@ -65,8 +243,6 @@ _clock_popup_new(Instance *inst)
    // FIXME: calendar has a 7x5 grid, set up all the cells to ve either
    // hidden, visible, be weekend or weekday and have right date, be 
    // neighbouring month, be "active" today)
-   od = edje_object_part_table_child_get(oi, "e.table.days", 0, 0);
-   edje_object_part_text_set(od, "e.text.label", "0");
    
    o = e_widget_image_add_from_object(evas, oi, 182, 128);
    evas_object_show(oi);
@@ -115,6 +291,10 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    
    inst->gcc = gcc;
    inst->o_clock = o;
+   
+   inst->weekend.start = 6; // start weekend on sat
+   inst->weekend.len = 2; // 2 days of weeked
+   inst->week.start = 1; // start mon
 
    evas_object_event_callback_add(inst->o_clock, 
                                   EVAS_CALLBACK_MOUSE_DOWN,
@@ -134,6 +314,7 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    inst = gcc->data;
    evas_object_del(inst->o_clock);
    _clock_popup_free(inst);
+   _clear_timestrs(inst);
    free(inst);
 }
 
