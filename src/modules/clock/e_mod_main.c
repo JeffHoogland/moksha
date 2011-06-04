@@ -234,15 +234,23 @@ _clock_popup_new(Instance *inst)
                 edje_object_signal_emit(od, "e,state,someday", "e");
           }
      }
-   
-   // FIXME: set text part for month name and year
-   // FIXME: hook signal callbacks for next and prev month
-   
-   // FIXME: set up day names (mon, tue, wed, ... sat, sun)
-   
-   // FIXME: calendar has a 7x5 grid, set up all the cells to ve either
-   // hidden, visible, be weekend or weekday and have right date, be 
-   // neighbouring month, be "active" today)
+   // FIXME: add next/prev buttons to calendar theme element
+   // FIXME: hook up next/prev signals to callbacks
+   // FIXME: give cal theme 2 tables that it swaps back and forth
+   //        when goign next/prev and then update each cal accordingly
+   //        so u can have a kind of theme-drive slide in/out effect
+   //        to the left/right for example
+   // FIXME: hook up signal callbacks to each day and be able to exec
+   //        something on click and pass in date
+   // FIXME: add set time/date/timezone button
+   // FIXME: add button for settings panel bringup
+   // FIXME: add settings panel that can change:
+   //        digital vs analogue
+   //        weekend start and # of days
+   //        week start day
+   //        if digital 24h or 12h
+   //        app to run when date clicked
+   //        app to run to set time+date+timezone
    
    o = e_widget_image_add_from_object(evas, oi, 182, 128);
    evas_object_show(oi);
