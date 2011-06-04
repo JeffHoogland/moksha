@@ -14,7 +14,7 @@ EXTRA_DIST = \
         module.illume2.src \
         module.conf.src
 
-filesdir = $(datadir)/enlightenment/data/config/illume-home
+filesdir = $(datadir)/enlightenment/data/config/illume
 files_DATA = \
         profile.desktop \
         icon.png \
@@ -31,7 +31,7 @@ SUFFIXES = .cfg
 
 .src.cfg:
 	$(EET_EET) -e \
-	$(top_builddir)/config/illume-home/$@ config \
+	$(top_builddir)/config/illume/$@ config \
 	$< 1
 
 clean-local:
