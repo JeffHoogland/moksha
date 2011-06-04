@@ -1,5 +1,5 @@
 MAINTAINERCLEANFILES = Makefile.in
-SUBDIRS = default standard minimalist scaleable netbook illume
+SUBDIRS = default standard illume
 
 EET_EET = @eet_eet@
 

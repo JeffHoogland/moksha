@@ -886,9 +886,6 @@ doc/e.dox
 config/Makefile
 config/default/Makefile
 config/standard/Makefile
-config/minimalist/Makefile
-config/scaleable/Makefile
-config/netbook/Makefile
 config/illume/Makefile
 $po_makefile_in
 ])

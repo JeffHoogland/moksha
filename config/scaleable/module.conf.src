@@ -1,4 +1,0 @@
-group "Config" struct {
-    value "version" int: 65677;
-    value "menu_augmentation" int: 0;
-}
