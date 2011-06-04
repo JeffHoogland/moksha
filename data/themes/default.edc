@@ -12179,6 +12179,71 @@ collections {
       }
    }
 
+   group {
+      name: "e/modules/clock/calendar";
+      parts {
+         part { name: "cal"; type: RECT;
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               color: 255 0 0 128;
+               rel1.relative: 0.0 0.20;
+            }
+         }
+         // 7x5 grid
+#define CALDAY(x, y) \
+   part { name: "d"#x.#y; type: RECT; \
+      mouse_events: 0; \
+      description { state: "default" 0.0; \
+         color: 0 255 0 128; \
+         rel1.relative: ((x+0)/7) ((y+0)/5); \
+         rel1.to: "cal"; \
+         rel1.offset: 1 1; \
+         rel2.relative: ((x+1)/7) ((y+1)/5); \
+         rel2.offset: -2 -2; \
+         rel2.to: "cal"; \
+      } \
+   }
+         CALDAY(0, 0)
+         CALDAY(1, 0)
+         CALDAY(2, 0)
+         CALDAY(3, 0)
+         CALDAY(4, 0)
+         CALDAY(5, 0)
+         CALDAY(6, 0)
+
+         CALDAY(0, 1)
+         CALDAY(1, 1)
+         CALDAY(2, 1)
+         CALDAY(3, 1)
+         CALDAY(4, 1)
+         CALDAY(5, 1)
+         CALDAY(6, 1)
+
+         CALDAY(0, 2)
+         CALDAY(1, 2)
+         CALDAY(2, 2)
+         CALDAY(3, 2)
+         CALDAY(4, 2)
+         CALDAY(5, 2)
+         CALDAY(6, 2)
+
+         CALDAY(0, 3)
+         CALDAY(1, 3)
+         CALDAY(2, 3)
+         CALDAY(3, 3)
+         CALDAY(4, 3)
+         CALDAY(5, 3)
+         CALDAY(6, 3)
+
+         CALDAY(0, 4)
+         CALDAY(1, 4)
+         CALDAY(2, 4)
+         CALDAY(3, 4)
+         CALDAY(4, 4)
+         CALDAY(5, 4)
+         CALDAY(6, 4)
+      }
+   }
 
 /////////////////////////////////////////////////////////////////////////////
 /*** MOD: CPUFREQ ***/
