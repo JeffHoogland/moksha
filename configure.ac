@@ -705,7 +705,6 @@ AC_E_OPTIONAL_MODULE([mixer], true, [CHECK_MODULE_MIXER])
 AC_E_OPTIONAL_MODULE([connman], true, [CHECK_MODULE_CONNMAN])
 AC_E_OPTIONAL_MODULE([bluez], true, [CHECK_MODULE_BLUEZ])
 AC_E_OPTIONAL_MODULE([ofono], true, [CHECK_MODULE_OFONO])
-AC_E_OPTIONAL_MODULE([illume], true)
 AC_E_OPTIONAL_MODULE([illume2], true)
 AC_E_OPTIONAL_MODULE([syscon], true)
 AC_E_OPTIONAL_MODULE([everything], true)
@@ -819,10 +818,6 @@ src/modules/bluez/Makefile
 src/modules/bluez/module.desktop
 src/modules/ofono/Makefile
 src/modules/ofono/module.desktop
-src/modules/illume/Makefile
-src/modules/illume/module.desktop
-src/modules/illume/keyboards/Makefile
-src/modules/illume/dicts/Makefile
 src/modules/illume2/Makefile
 src/modules/illume2/doc/illume.dox
 src/modules/illume2/doc/Makefile
@@ -895,7 +890,6 @@ config/minimalist/Makefile
 config/scaleable/Makefile
 config/netbook/Makefile
 config/illume/Makefile
-config/illume-home/Makefile
 $po_makefile_in
 ])
 
