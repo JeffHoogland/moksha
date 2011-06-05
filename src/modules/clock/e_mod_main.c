@@ -321,6 +321,7 @@ e_int_clock_instances_redo(void)
    EINA_LIST_FOREACH(clock_instances, l, inst)
      {
         Evas_Object *o = inst->o_clock;
+        Evas_Coord mw, mh;
 
         if (clock_cfg->digital_clock)
            e_theme_edje_object_set(o, "base/theme/modules/clock",
@@ -336,6 +337,15 @@ e_int_clock_instances_redo(void)
            edje_object_signal_emit(o, "e,state,seconds,on", "e");
         else
            edje_object_signal_emit(o, "e,state,seconds,off", "e");
+        edje_object_message_signal_process(o);
+        mw = 0, mh = 0;
+        edje_object_size_min_get(o, &mw, &mh);
+        if ((mw < 1) || (mh < 1))
+           edje_object_size_min_calc(o, &mw, &mh);
+        if (mw < 4) mw = 4;
+        if (mh < 4) mh = 4;
+        e_gadcon_client_aspect_set(inst->gcc, mw, mh);
+        e_gadcon_client_min_size_set(inst->gcc, mw, mh);
      }
 }
 
