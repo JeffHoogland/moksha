@@ -31,12 +31,6 @@ struct _Instance
    E_Gadcon_Client *gcc;
    Evas_Object     *o_clock, *o_table, *o_popclock, *o_cal;
    E_Gadcon_Popup  *popup;
-   struct {
-      int           start, len; // 0->6 0 == sun, 6 == sat, number of days
-   } weekend;
-   struct {
-      int           start; // 0->6 0 == sun, 6 == sat
-   } week;
    
    int madj;
    
@@ -49,7 +43,12 @@ struct _Instance
    Eina_Bool daytoday[7][6];
 };
 
-static E_Module *clock_module = NULL;
+E_Module *clock_module = NULL;
+E_Config_Dialog *clock_config = NULL;
+Config *clock_cfg = NULL;
+
+static E_Config_DD *clock_cfg_edd = NULL;
+static Eina_List *clock_instances = NULL;
 
 static void
 _clear_timestrs(Instance *inst)
@@ -110,7 +109,7 @@ _time_eval(Instance *inst)
              memcpy(&tmm, tm, sizeof(struct tm));
              if (!started)
                {
-                  if (tm->tm_wday == inst->week.start) started = 1;
+                  if (tm->tm_wday == clock_cfg->week.start) started = 1;
                }
              if (started)
                {
@@ -131,8 +130,8 @@ _time_eval(Instance *inst)
                           inst->daytoday[x][y] = 1;
                        
                        inst->dayweekends[x][y] = 0;
-                       for (i = inst->weekend.start; 
-                            i < (inst->weekend.start + inst->weekend.len);
+                       for (i = clock_cfg->weekend.start; 
+                            i < (clock_cfg->weekend.start + clock_cfg->weekend.len);
                             i++)
                          {
                             if (tmm.tm_wday == (i % 7))
@@ -232,6 +231,15 @@ _clock_month_next_cb(void *data, Evas_Object *obj __UNUSED__, const char *emissi
 }
 
 static void
+_clock_settings_cb(void *d1, void *d2 __UNUSED__)
+{
+   Instance *inst = d1;
+   e_int_config_clock_module(inst->popup->win->zone->container, NULL);
+   e_object_del(E_OBJECT(inst->popup));
+   inst->popup = NULL;
+}
+   
+static void
 _clock_popup_new(Instance *inst)
 {
    Evas *evas;
@@ -239,6 +247,8 @@ _clock_popup_new(Instance *inst)
    Evas_Coord mw = 128, mh = 128;
    
    if (inst->popup) return;
+
+   inst->madj = 0;
    
    _time_eval(inst);
    
@@ -255,6 +265,11 @@ _clock_popup_new(Instance *inst)
    evas_object_show(oi);
    e_widget_table_object_align_append(inst->o_table, o, 
                                       0, 0, 1, 1, 0, 0, 0, 0, 0.5, 0.5);
+
+   o = e_widget_button_add(evas, _("Settings"), "preferences-system",
+                           _clock_settings_cb, inst, NULL);
+   e_widget_table_object_align_append(inst->o_table, o, 
+                                      0, 1, 1, 1, 0, 0, 0, 0, 0.5, 1.0);
    
    oi = edje_object_add(evas);
    inst->o_cal = oi;
@@ -266,25 +281,43 @@ _clock_popup_new(Instance *inst)
                                    _clock_month_prev_cb, inst);
    edje_object_signal_callback_add(oi, "e,action,next", "*", 
                                    _clock_month_next_cb, inst);
-   // FIXME: add set time/date/timezone button
-   // FIXME: add button for settings panel bringup
-   // FIXME: add settings panel that can change:
-   //        digital vs analogue
-   //        weekend start and # of days
-   //        week start day
-   //        if digital 24h or 12h
-   //        app to run when date clicked
-   //        app to run to set time+date+timezone
    evas_object_resize(oi, 500, 500);
    edje_object_size_min_restricted_calc(oi, &mw, &mh, 128, 128);
    
    o = e_widget_image_add_from_object(evas, oi, mw, mh);
    evas_object_show(oi);
    e_widget_table_object_align_append(inst->o_table, o, 
-                                      1, 0, 1, 1, 0, 0, 0, 0, 0.5, 0.5);
+                                      1, 0, 1, 2, 0, 0, 0, 0, 0.5, 0.5);
    
    e_gadcon_popup_content_set(inst->popup, inst->o_table);
    e_gadcon_popup_show(inst->popup);
+}
+
+void
+e_int_clock_instances_redo(void)
+{
+   Eina_List *l;
+   Instance *inst;
+   
+   EINA_LIST_FOREACH(clock_instances, l, inst)
+     {
+        Evas_Object *o = inst->o_clock;
+
+        if (clock_cfg->digital_clock)
+           e_theme_edje_object_set(o, "base/theme/modules/clock",
+                                   "e/modules/clock/digital");
+        else
+           e_theme_edje_object_set(o, "base/theme/modules/clock",
+                                   "e/modules/clock/main");
+        if (clock_cfg->digital_24h)
+           edje_object_signal_emit(o, "e,state,24h,on", "e");
+        else
+           edje_object_signal_emit(o, "e,state,24h,off", "e");
+        if (clock_cfg->show_seconds)
+           edje_object_signal_emit(o, "e,state,seconds,on", "e");
+        else
+           edje_object_signal_emit(o, "e,state,seconds,off", "e");
+     }
 }
 
 static void
@@ -316,8 +349,20 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    inst = E_NEW(Instance, 1);
    
    o = edje_object_add(gc->evas);
-   e_theme_edje_object_set(o, "base/theme/modules/clock",
-			   "e/modules/clock/main");
+   if (clock_cfg->digital_clock)
+      e_theme_edje_object_set(o, "base/theme/modules/clock",
+                              "e/modules/clock/digital");
+   else
+      e_theme_edje_object_set(o, "base/theme/modules/clock",
+                              "e/modules/clock/main");
+   if (clock_cfg->digital_24h)
+      edje_object_signal_emit(o, "e,state,24h,on", "e");
+   else
+      edje_object_signal_emit(o, "e,state,24h,off", "e");
+   if (clock_cfg->show_seconds)
+      edje_object_signal_emit(o, "e,state,seconds,on", "e");
+   else
+      edje_object_signal_emit(o, "e,state,seconds,off", "e");
    evas_object_show(o);
    
    gcc = e_gadcon_client_new(gc, name, id, style, o);
@@ -326,17 +371,14 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    inst->gcc = gcc;
    inst->o_clock = o;
    
-   inst->weekend.start = 6; // start weekend on sat
-   inst->weekend.len = 2; // 2 days of weeked
-   inst->week.start = 1; // start mon
-
    evas_object_event_callback_add(inst->o_clock, 
                                   EVAS_CALLBACK_MOUSE_DOWN,
                                   _clock_cb_mouse_down,
                                   inst);
    
    e_gadcon_client_util_menu_attach(gcc);
-   
+
+   clock_instances = eina_list_append(clock_instances, inst);
    return gcc;
 }
 
@@ -346,6 +388,7 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    Instance *inst;
    
    inst = gcc->data;
+   clock_instances = eina_list_remove(clock_instances, inst);
    evas_object_del(inst->o_clock);
    _clock_popup_free(inst);
    _clear_timestrs(inst);
@@ -404,6 +447,31 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m)
 {
+   clock_cfg_edd = E_CONFIG_DD_NEW("Config", Config);
+#undef T
+#undef D
+#define T Config
+#define D clock_cfg_edd
+   E_CONFIG_VAL(D, T, weekend.start, INT);
+   E_CONFIG_VAL(D, T, weekend.len, INT);
+   E_CONFIG_VAL(D, T, week.start, INT);
+   E_CONFIG_VAL(D, T, digital_clock, INT);
+   E_CONFIG_VAL(D, T, digital_24h, INT);
+   E_CONFIG_VAL(D, T, show_seconds, INT);
+
+   clock_cfg = e_config_domain_load("module.clock", clock_cfg_edd);
+   if (!clock_cfg)
+     {
+        clock_cfg = E_NEW(Config, 1);
+        clock_cfg->weekend.start = 6;
+        clock_cfg->weekend.len = 2;
+        clock_cfg->week.start = 1;
+        clock_cfg->digital_clock = 0;
+        clock_cfg->digital_24h = 0;
+        clock_cfg->show_seconds = 1;
+        e_config_save_queue();
+     }
+   
    clock_module = m;
    e_gadcon_provider_register(&_gadcon_class);
    return m;
@@ -412,6 +480,18 @@ e_modapi_init(E_Module *m)
 EAPI int
 e_modapi_shutdown(E_Module *m __UNUSED__)
 {
+   if (clock_config)
+     {
+        e_object_del(E_OBJECT(clock_config));
+        clock_config = NULL;
+     }
+   if (clock_cfg)
+     {
+        free(clock_cfg);
+        clock_cfg = NULL;
+     }
+   E_CONFIG_DD_FREE(clock_cfg_edd);
+   clock_cfg_edd = NULL;
    clock_module = NULL;
    e_gadcon_provider_unregister(&_gadcon_class);
    return 1;
@@ -420,5 +500,6 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 EAPI int
 e_modapi_save(E_Module *m __UNUSED__)
 {
+   e_config_domain_save("module.clock", clock_cfg_edd, clock_cfg);
    return 1;
 }
