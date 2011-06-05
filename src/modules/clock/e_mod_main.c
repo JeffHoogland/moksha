@@ -31,6 +31,7 @@ struct _Instance
    E_Gadcon_Client *gcc;
    Evas_Object     *o_clock, *o_table, *o_popclock, *o_cal;
    E_Gadcon_Popup  *popup;
+   E_Menu          *menu;
    
    int madj;
    
@@ -347,14 +348,70 @@ _clock_popup_free(Instance *inst)
 }
 
 static void
+_clock_menu_cb_post(void *data, E_Menu *menu __UNUSED__)
+{
+   Instance *inst = data;
+   if ((!inst) || (!inst->menu))
+      return;
+   if (inst->menu)
+     {
+        e_object_del(E_OBJECT(inst->menu));
+        inst->menu = NULL;
+     }
+}
+
+static void
+_clock_menu_cb_cfg(void *data, E_Menu *menu __UNUSED__, E_Menu_Item *mi __UNUSED__)
+{
+   Instance *inst = data;
+   E_Container *con;
+   
+   if (inst->popup)
+     {
+        e_object_del(E_OBJECT(inst->popup));
+        inst->popup = NULL;
+     }
+   con = e_container_current_get(e_manager_current_get());
+   e_int_config_clock_module(con, NULL);
+}
+
+static void
 _clock_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event)
 {
    Instance *inst = data;
    Evas_Event_Mouse_Down *ev = event;
    
-   if (ev->button != 1) return;
-   if (inst->popup) _clock_popup_free(inst);
-   else _clock_popup_new(inst);
+   if (ev->button == 1)
+     {
+        if (inst->popup) _clock_popup_free(inst);
+        else _clock_popup_new(inst);
+     }
+   else if ((ev->button == 3) && (!inst->menu))
+     {
+        E_Zone *zone;
+        E_Menu *m;
+        E_Menu_Item *mi;
+        int x, y;
+        
+        zone = e_util_zone_current_get(e_manager_current_get());
+        
+        m = e_menu_new();
+        
+        mi = e_menu_item_new(m);
+        e_menu_item_label_set(mi, _("Settings"));
+        e_util_menu_item_theme_icon_set(mi, "configure");
+        e_menu_item_callback_set(mi, _clock_menu_cb_cfg, inst);
+        
+        m = e_gadcon_client_util_menu_items_append(inst->gcc, m, 0);
+        e_menu_post_deactivate_callback_set(m, _clock_menu_cb_post, inst);
+        inst->menu = m;
+        
+        e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &x, &y, NULL, NULL);
+        e_menu_activate_mouse(m, zone, x + ev->output.x, y + ev->output.y,
+                              1, 1, E_MENU_POP_DIRECTION_AUTO, ev->timestamp);
+        evas_event_feed_mouse_up(inst->gcc->gadcon->evas, ev->button,
+                                 EVAS_BUTTON_NONE, ev->timestamp, NULL);
+     }
 }
 
 static E_Gadcon_Client *
@@ -406,6 +463,11 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    Instance *inst;
    
    inst = gcc->data;
+   if (inst->menu)
+     {
+        e_object_del(E_OBJECT(inst->menu));
+        inst->menu = NULL;
+     }
    clock_instances = eina_list_remove(clock_instances, inst);
    evas_object_del(inst->o_clock);
    _clock_popup_free(inst);
