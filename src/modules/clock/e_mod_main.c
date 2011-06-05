@@ -43,10 +43,10 @@ struct _Instance
    char year[8];
    char month[32];
    const char *daynames[7];
-   unsigned char daynums[7][5];
-   Eina_Bool dayweekends[7][5];
-   Eina_Bool dayvalids[7][5];
-   Eina_Bool daytoday[7][5];
+   unsigned char daynums[7][6];
+   Eina_Bool dayweekends[7][6];
+   Eina_Bool dayvalids[7][6];
+   Eina_Bool daytoday[7][6];
 };
 
 static E_Module *clock_module = NULL;
@@ -89,7 +89,7 @@ _time_eval(Instance *inst)
         // tm2 == month baseline @ 1st
         memcpy(&tms, tm, sizeof(struct tm));
         num = 0;
-        for (day = (0 - 6); day < (31 + 6); day++)
+        for (day = (0 - 6); day < (31 + 16); day++)
           {
              memcpy(&tmm, &tms, sizeof(struct tm));
              tmm.tm_sec = 0;
@@ -117,7 +117,7 @@ _time_eval(Instance *inst)
                   int y = num / 7;
                   int x = num % 7;
                   
-                  if (y < 5)
+                  if (y < 6)
                     {
                        inst->daynums[x][y] = tmm.tm_mday;
                        
@@ -174,35 +174,12 @@ _time_eval(Instance *inst)
 }
 
 static void
-_clock_popup_new(Instance *inst)
+_clock_moth_update(Instance *inst)
 {
-   Evas *evas;
-   Evas_Object *o, *oi, *od;
+   Evas_Object *od, *oi;
    int x, y;
-   
-   if (inst->popup) return;
-   
-   _time_eval(inst);
-   
-   inst->popup = e_gadcon_popup_new(inst->gcc);
-   evas = inst->popup->win->evas;
-   
-   inst->o_table = e_widget_table_add(evas, 0);
 
-   oi = edje_object_add(evas);
-   inst->o_popclock = oi;
-   e_theme_edje_object_set(oi, "base/theme/modules/clock",
-                           "e/modules/clock/main");
-   o = e_widget_image_add_from_object(evas, oi, 128, 128);
-   evas_object_show(oi);
-   e_widget_table_object_align_append(inst->o_table, o, 
-                                      0, 0, 1, 1, 0, 0, 0, 0, 0.5, 0.5);
-   
-   oi = edje_object_add(evas);
-   inst->o_popclock = oi;
-   e_theme_edje_object_set(oi, "base/theme/modules/clock",
-                           "e/modules/clock/calendar");
-   
+   oi = inst->o_cal;
    edje_object_part_text_set(oi, "e.text.month", inst->month);
    edje_object_part_text_set(oi, "e.text.year", inst->year);
    for (x = 0; x < 7; x++)
@@ -211,7 +188,7 @@ _clock_popup_new(Instance *inst)
         edje_object_part_text_set(od, "e.text.label", inst->daynames[x]);
      }
    
-   for (y = 0; y < 5; y++)
+   for (y = 0; y < 6; y++)
      {
         for (x = 0; x < 7; x++)
           {
@@ -234,14 +211,61 @@ _clock_popup_new(Instance *inst)
                 edje_object_signal_emit(od, "e,state,someday", "e");
           }
      }
-   // FIXME: add next/prev buttons to calendar theme element
-   // FIXME: hook up next/prev signals to callbacks
-   // FIXME: give cal theme 2 tables that it swaps back and forth
-   //        when goign next/prev and then update each cal accordingly
-   //        so u can have a kind of theme-drive slide in/out effect
-   //        to the left/right for example
-   // FIXME: hook up signal callbacks to each day and be able to exec
-   //        something on click and pass in date
+}
+
+static void
+_clock_month_prev_cb(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
+{
+   Instance *inst = data;
+   inst->madj--;
+   _time_eval(inst);
+   _clock_moth_update(inst);
+}
+
+static void
+_clock_month_next_cb(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
+{
+   Instance *inst = data;
+   inst->madj++;
+   _time_eval(inst);
+   _clock_moth_update(inst);
+}
+
+static void
+_clock_popup_new(Instance *inst)
+{
+   Evas *evas;
+   Evas_Object *o, *oi;
+   Evas_Coord mw = 128, mh = 128;
+   
+   if (inst->popup) return;
+   
+   _time_eval(inst);
+   
+   inst->popup = e_gadcon_popup_new(inst->gcc);
+   evas = inst->popup->win->evas;
+   
+   inst->o_table = e_widget_table_add(evas, 0);
+
+   oi = edje_object_add(evas);
+   inst->o_popclock = oi;
+   e_theme_edje_object_set(oi, "base/theme/modules/clock",
+                           "e/modules/clock/main");
+   o = e_widget_image_add_from_object(evas, oi, 128, 128);
+   evas_object_show(oi);
+   e_widget_table_object_align_append(inst->o_table, o, 
+                                      0, 0, 1, 1, 0, 0, 0, 0, 0.5, 0.5);
+   
+   oi = edje_object_add(evas);
+   inst->o_cal = oi;
+   e_theme_edje_object_set(oi, "base/theme/modules/clock",
+                           "e/modules/clock/calendar");
+   _clock_moth_update(inst);
+   
+   edje_object_signal_callback_add(oi, "e,action,prev", "*", 
+                                   _clock_month_prev_cb, inst);
+   edje_object_signal_callback_add(oi, "e,action,next", "*", 
+                                   _clock_month_next_cb, inst);
    // FIXME: add set time/date/timezone button
    // FIXME: add button for settings panel bringup
    // FIXME: add settings panel that can change:
@@ -251,8 +275,10 @@ _clock_popup_new(Instance *inst)
    //        if digital 24h or 12h
    //        app to run when date clicked
    //        app to run to set time+date+timezone
+   evas_object_resize(oi, 500, 500);
+   edje_object_size_min_restricted_calc(oi, &mw, &mh, 128, 128);
    
-   o = e_widget_image_add_from_object(evas, oi, 182, 128);
+   o = e_widget_image_add_from_object(evas, oi, mw, mh);
    evas_object_show(oi);
    e_widget_table_object_align_append(inst->o_table, o, 
                                       1, 0, 1, 1, 0, 0, 0, 0, 0.5, 0.5);
