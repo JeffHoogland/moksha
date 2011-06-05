@@ -34,7 +34,7 @@ e_int_config_clock_module(E_Container       *con,
 
    snprintf(buf, sizeof(buf), "%s/e-module-clock.edj",
             e_module_dir_get(clock_module));
-   cfd = e_config_dialog_new(con, _("Composite Settings"),
+   cfd = e_config_dialog_new(con, _("Clock Settings"),
                              "E", "utils/clock", buf, 0, v, clock_module);
    clock_config = cfd;
    return cfd;
