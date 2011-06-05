@@ -11886,8 +11886,39 @@ collections {
 #define CLOCK_SECONDS 1
 /*** MOD: CLOCK ***/
 
-   group {
-      name: "e/modules/clock/main";
+/*
+   group { name: "e/modules/clock/digital";
+      parts {
+      }
+      programs {
+         program {
+            name: "init";
+            signal: "load";
+            source: "";
+            script {
+               clock_cb(0);
+            }
+         }
+         program { name: "secon";
+            signal: "e,state,seconds,on";
+            source: "e";
+         }
+         program { name: "secoff";
+            signal: "e,state,seconds,off";
+            source: "e";
+         }
+         program { name: "24h";
+            signal: "e,state,24h,on";
+            source: "e";
+         }
+         program { name: "12h";
+            signal: "e,state,24h,off";
+            source: "e";
+         }
+      }
+   }
+ */
+   group { name: "e/modules/clock/main";
       images {
          image: "clock_base.png" COMP;
          image: "tacho_fg.png" COMP;
@@ -11919,40 +11950,49 @@ collections {
       min: 16 16;
       max: 128 128;
       script {
-	      public clock_cb(val) {
-	         new year, month, day, yearday, weekday, hour, minute;
-	         new Float:second;
-            new v;
+         public do_seconds, tick_timer;
+         
+         public clock_cb(val) {
+            new year, month, day, yearday, weekday, hour, minute;
+            new Float:second;
+            new v, dosec, tim;
             new x, y, w, h;
 
-	         date(year, month, day, yearday, weekday, hour, minute, second);
+            date(year, month, day, yearday, weekday, hour, minute, second);
             get_geometry(PART:"hour", x, y, w, h);
+            dosec = get_int(do_seconds);
 #ifdef CLOCK_SECONDS
-            v = round(second);
-            timer(1.0 - (second - v), "clock_cb", 1);
-            
-            custom_state(PART:"seconds", "default", 0.0);
-            set_state_val(PART:"seconds", STATE_MAP_ROT_Z, (v * 360.0) / 60.0);
-            if (h < 22) 
-               set_state_val(PART:"seconds", STATE_IMAGE, IMAGE:"ch-s1-3.png");
-            else if (h < 44) 
-               set_state_val(PART:"seconds", STATE_IMAGE, IMAGE:"ch-s1-2.png");
-            else 
-               set_state_val(PART:"seconds", STATE_IMAGE, IMAGE:"ch-s1.png");
-            set_state(PART:"seconds", "custom", 0.0);
-
-            custom_state(PART:"seconds-sh", "default", 0.0);
-            set_state_val(PART:"seconds-sh", STATE_MAP_ROT_Z, (v * 360.0) / 60.0);
-            if (h < 22) 
-               set_state_val(PART:"seconds-sh", STATE_IMAGE, IMAGE:"ch-s2-3.png");
-            else if (h < 44) 
-               set_state_val(PART:"seconds-sh", STATE_IMAGE, IMAGE:"ch-s2-2.png");
-            else 
-               set_state_val(PART:"seconds-sh", STATE_IMAGE, IMAGE:"ch-s2.png");
-            set_state(PART:"seconds-sh", "custom", 0.0);
+            if (dosec) {
+               v = round(second);
+               tim = timer(1.0 - (second - v), "clock_cb", 1);
+               
+               custom_state(PART:"seconds", "default", 0.0);
+               set_state_val(PART:"seconds", STATE_MAP_ROT_Z, (v * 360.0) / 60.0);
+               if (h < 22) 
+                  set_state_val(PART:"seconds", STATE_IMAGE, IMAGE:"ch-s1-3.png");
+               else if (h < 44) 
+                  set_state_val(PART:"seconds", STATE_IMAGE, IMAGE:"ch-s1-2.png");
+               else 
+                  set_state_val(PART:"seconds", STATE_IMAGE, IMAGE:"ch-s1.png");
+               set_state(PART:"seconds", "custom", 0.0);
+               
+               custom_state(PART:"seconds-sh", "default", 0.0);
+               set_state_val(PART:"seconds-sh", STATE_MAP_ROT_Z, (v * 360.0) / 60.0);
+               if (h < 22) 
+                  set_state_val(PART:"seconds-sh", STATE_IMAGE, IMAGE:"ch-s2-3.png");
+               else if (h < 44) 
+                  set_state_val(PART:"seconds-sh", STATE_IMAGE, IMAGE:"ch-s2-2.png");
+               else 
+                  set_state_val(PART:"seconds-sh", STATE_IMAGE, IMAGE:"ch-s2.png");
+               set_state(PART:"seconds-sh", "custom", 0.0);
+            }
+            else
 #else
-            timer(60.0 - (second), "clock_cb", 1);
+              {
+                 tim = timer(60.0 - (second), "clock_cb", 1);
+              }
 #endif
+            set_int(tick_timer, tim);
 
             custom_state(PART:"minutes", "default", 0.0);
             set_state_val(PART:"minutes", STATE_MAP_ROT_Z, (float(minute) * 360.0) / 60.0);
@@ -12026,8 +12066,7 @@ collections {
          part {
             name: "seconds-sh";
             mouse_events: 0;
-            description {
-               state: "default" 0.0;
+            description { state: "default" 0.0;
                rel1 {
                   to: "base2";
                   relative: 0.3125 0.0;
@@ -12044,12 +12083,15 @@ collections {
                   }
                }
             }
+            description { state: "hidden" 0.0;
+               inherit: "default" 0.0;
+               visible: 0;
+            }
          }
          part {
             name: "seconds";
             mouse_events: 0;
-            description {
-               state: "default" 0.0;
+            description { state: "default" 0.0;
                rel1 {
                   to: "base";
                   relative: 0.3125 0.0;
@@ -12065,6 +12107,10 @@ collections {
                      center: "base";
                   }
                }
+            }
+            description { state: "hidden" 0.0;
+               inherit: "default" 0.0;
+               visible: 0;
             }
          }
 #endif
@@ -12176,6 +12222,48 @@ collections {
                clock_cb(0);
             }
          }
+         program { name: "secon";
+            signal: "e,state,seconds,on";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "seconds";
+            target: "seconds-sh";
+            after: "sec2";
+         }
+         program { name: "sec2";
+            script {
+               new tim;
+               
+               set_int(do_seconds, 1);
+               tim = get_int(tick_timer);
+               if (tim) {
+                  cancel_timer(tim);
+                  set_int(tick_timer, 0);
+               }
+               clock_cb(0);
+            }
+         }
+         program { name: "secoff";
+            signal: "e,state,seconds,off";
+            source: "e";
+            action: STATE_SET "hidden" 0.0;
+            target: "seconds";
+            target: "seconds-sh";
+            after: "sec3";
+         }
+         program { name: "sec3";
+            script {
+               new tim;
+               
+               set_int(do_seconds, 0);
+               tim = get_int(tick_timer);
+               if (tim) {
+                  cancel_timer(tim);
+                  set_int(tick_timer, 0);
+               }
+               clock_cb(0);
+            }
+         }
       }
    }
 
@@ -12251,7 +12339,7 @@ collections {
             description { state: "default" 0.0;
                align: 0.5 0.5;
                color: 0 0 0 255;
-               color3: 0 0 0 32;
+              color3: 0 0 0 32;
                rel1.offset: 2 2;
                rel2.offset: -3 -3;
                text {

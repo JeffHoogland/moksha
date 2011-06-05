@@ -259,8 +259,26 @@ _clock_popup_new(Instance *inst)
 
    oi = edje_object_add(evas);
    inst->o_popclock = oi;
-   e_theme_edje_object_set(oi, "base/theme/modules/clock",
-                           "e/modules/clock/main");
+   if (clock_cfg->digital_clock)
+      e_theme_edje_object_set(oi, "base/theme/modules/clock",
+                              "e/modules/clock/digital");
+   else
+      e_theme_edje_object_set(oi, "base/theme/modules/clock",
+                              "e/modules/clock/main");
+   if (clock_cfg->digital_clock)
+      e_theme_edje_object_set(oi, "base/theme/modules/clock",
+                              "e/modules/clock/digital");
+   else
+      e_theme_edje_object_set(oi, "base/theme/modules/clock",
+                              "e/modules/clock/main");
+   if (clock_cfg->digital_24h)
+      edje_object_signal_emit(oi, "e,state,24h,on", "e");
+   else
+      edje_object_signal_emit(oi, "e,state,24h,off", "e");
+   if (clock_cfg->show_seconds)
+      edje_object_signal_emit(oi, "e,state,seconds,on", "e");
+   else
+      edje_object_signal_emit(oi, "e,state,seconds,off", "e");
    o = e_widget_image_add_from_object(evas, oi, 128, 128);
    evas_object_show(oi);
    e_widget_table_object_align_append(inst->o_table, o, 
