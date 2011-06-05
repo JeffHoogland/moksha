@@ -423,4 +423,34 @@ connman-connecting-4.png \
 comp-sh1.png \
 shelf_alt_vert_bg.png \
 icon_look.png \
-icon_gadget.png
+icon_gadget.png \
+flip_0b.png \
+flip_0t.png \
+flip_1b.png \
+flip_1t.png \
+flip_2b.png \
+flip_2t.png \
+flip_3b.png \
+flip_3t.png \
+flip_4b.png \
+flip_4t.png \
+flip_5b.png \
+flip_5t.png \
+flip_6b.png \
+flip_6t.png \
+flip_7b.png \
+flip_7t.png \
+flip_8b.png \
+flip_8t.png \
+flip_9b.png \
+flip_9t.png \
+flip_amb.png \
+flip_amt.png \
+flip_base.png \
+flip_base_shad.png \
+flip_b.png \
+flip_pmb.png \
+flip_pmt.png \
+flip_shad.png \
+flip_t.png \
+flip_colon.png

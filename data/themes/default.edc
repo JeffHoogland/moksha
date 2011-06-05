@@ -11886,13 +11886,950 @@ collections {
 #define CLOCK_SECONDS 1
 /*** MOD: CLOCK ***/
 
-/*
    group { name: "e/modules/clock/digital";
+      min: 56 16;
+      max: 512 128;
+      images {
+         image: "flip_base.png" COMP;
+         image: "flip_base_shad.png" COMP;
+         image: "flip_shad.png" COMP;
+         image: "flip_0t.png" COMP;
+         image: "flip_0b.png" COMP;
+         image: "flip_1t.png" COMP;
+         image: "flip_1b.png" COMP;
+         image: "flip_2t.png" COMP;
+         image: "flip_2b.png" COMP;
+         image: "flip_3t.png" COMP;
+         image: "flip_3b.png" COMP;
+         image: "flip_4t.png" COMP;
+         image: "flip_4b.png" COMP;
+         image: "flip_5t.png" COMP;
+         image: "flip_5b.png" COMP;
+         image: "flip_6t.png" COMP;
+         image: "flip_6b.png" COMP;
+         image: "flip_7t.png" COMP;
+         image: "flip_7b.png" COMP;
+         image: "flip_8t.png" COMP;
+         image: "flip_8b.png" COMP;
+         image: "flip_9t.png" COMP;
+         image: "flip_9b.png" COMP;
+         image: "flip_amt.png" COMP;
+         image: "flip_amb.png" COMP;
+         image: "flip_pmt.png" COMP;
+         image: "flip_pmb.png" COMP;
+         image: "flip_colon.png" COMP;
+      }
+      script {
+#define DIGPRG(nom, ns) \
+         public ns ## v0_cur, ns ## v0_pre, ns ## v0_lock, ns ## v0_next; \
+         public ns ## animator2(val, Float:pos) { \
+            new st1[11], st2[11], v; \
+            v = get_int(ns ## v0_cur); \
+            snprintf(st1, 10, "%ih", v); \
+            snprintf(st2, 10, "%i", v); \
+            set_tween_state(PART:nom"bot", pos, st1, 0.0, st2, 0.0); \
+            set_tween_state(PART:nom"sh", pos, "half", 0.0, "full", 0.0); \
+            if (pos >= 1.0) { \
+               set_state(PART:nom"sh", "default", 0.0); \
+               set_int(ns ## v0_lock, 0); \
+               v = get_int(ns ## v0_next); \
+               if (v >= 0) { \
+                  set_int(ns ## v0_next, -1); \
+               } \
+            } \
+         } \
+         public ns ## animator1(val, Float:pos) { \
+            new st1[11], st2[11], v; \
+            v = get_int(ns ## v0_pre); \
+            snprintf(st1, 10, "%i", v); \
+            snprintf(st2, 10, "%ih", v); \
+            set_tween_state(PART:nom"top", pos, st1, 0.0, st2, 0.0); \
+            set_tween_state(PART:nom"sh", pos, "default", 0.0, "half", 0.0); \
+            if (pos >= 1.0) anim(0.1, #ns"animator2", val); \
+         } \
+         public ns ## valset(value) { \
+            new v, buf[11]; \
+            if (get_int(ns ## v0_lock) == 1) { \
+               set_int(ns ## v0_next, value); \
+               return; \
+            } \
+            v = get_int(ns ## v0_cur); \
+            if (v == value) return; \
+            set_int(ns ## v0_pre, v); \
+            set_int(ns ## v0_cur, value); \
+            set_int(ns ## v0_lock, 1); \
+            snprintf(buf, 10, "%i", get_int(ns ## v0_pre)); \
+            set_state(PART:nom"bot0", buf, 0.0); \
+            snprintf(buf, 10, "%ih", get_int(ns ## v0_cur)); \
+            set_state(PART:nom"bot", buf, 0.0); \
+            snprintf(buf, 10, "%i", get_int(ns ## v0_cur)); \
+            set_state(PART:nom"top0", buf, 0.0); \
+            snprintf(buf, 10, "%i", get_int(ns ## v0_pre)); \
+            set_state(PART:nom"top", buf, 0.0); \
+            set_state(PART:nom"sh", "default", 0.0); \
+            anim(0.1, #ns"animator1", 1); \
+         }
+
+         DIGPRG("s1", s1)
+         DIGPRG("s2", s2)
+
+         DIGPRG("m1", m1)
+         DIGPRG("m2", m2)
+
+         DIGPRG("h1", h1)
+         DIGPRG("h2", h2)
+
+         DIGPRG("ap", ap)
+                           
+         public do_seconds, do_24h, tick_timer;
+         
+         public clock_cb(val) {
+            new year, month, day, yearday, weekday, hour, minute;
+            new Float:second;
+            new v, dosec, do24h, tim;
+
+            date(year, month, day, yearday, weekday, hour, minute, second);
+            dosec = get_int(do_seconds);
+            if (dosec) {
+               v = round(second);
+               tim = timer(1.0 - (second - v), "clock_cb", 1);
+               // set seconds to v
+               s1valset(v / 10);
+               s2valset(v % 10);
+            }
+            else {
+               tim = timer(60.0 - (second), "clock_cb", 1);
+            }
+            set_int(tick_timer, tim);
+
+            // set minutes to minute
+            m1valset(minute / 10);
+            m2valset(minute % 10);
+
+            // set hours to hour
+            do24h = get_int(do_24h);
+            if (do24h) {
+               h1valset(hour / 10);
+               h2valset(hour % 10);
+            }
+            else {
+               new pm;
+               
+               if (hour > 12) pm = 1;
+               else pm = 0;
+               hour = hour % 12;
+               h1valset(hour / 10);
+               h2valset(hour % 10);
+               if (pm)
+                  hour = 0;
+               else
+                  hour = 0;
+            }
+         }
+         
+         public eval_fields() {
+            new do24h, dosec;
+            
+            dosec = get_int(do_seconds);
+            do24h = get_int(do_24h);
+            custom_state(PART:"hours1", "default", 0.0);
+            custom_state(PART:"hours2", "default", 0.0);
+            custom_state(PART:"mins1", "default", 0.0);
+            custom_state(PART:"mins2", "default", 0.0);
+            custom_state(PART:"secs1", "default", 0.0);
+            custom_state(PART:"secs2", "default", 0.0);
+            custom_state(PART:"ampm", "default", 0.0);
+            if ((dosec) && (!do24h)) { // sec + ampm
+               set_state_val(PART:"hours1", STATE_REL1, (0.0/16.0), 0.0);
+               set_state_val(PART:"hours1", STATE_REL2, (2.0/16.0), 1.0);
+               set_state_val(PART:"hours2", STATE_REL1, (2.0/16.0), 0.0);
+               set_state_val(PART:"hours2", STATE_REL2, (4.0/16.0), 1.0);
+               set_state_val(PART:"mins1", STATE_REL1, (5.0/16.0), 0.0);
+               set_state_val(PART:"mins1", STATE_REL2, (7.0/16.0), 1.0);
+               set_state_val(PART:"mins2", STATE_REL1, (7.0/16.0), 0.0);
+               set_state_val(PART:"mins2", STATE_REL2, (9.0/16.0), 1.0);
+               set_state_val(PART:"secs1", STATE_REL1, (10.0/16.0), 0.0);
+               set_state_val(PART:"secs1", STATE_REL2, (12.0/16.0), 1.0);
+               set_state_val(PART:"secs2", STATE_REL1, (12.0/16.0), 0.0);
+               set_state_val(PART:"secs2", STATE_REL2, (14.0/16.0), 1.0);
+               set_state_val(PART:"ampm", STATE_REL1, (14.0/16.0), 0.0);
+               set_state_val(PART:"ampm", STATE_REL2, (16.0/16.0), 1.0);
+               set_min_size(16 * 4, 16);
+               set_max_size(16 * 32, 128);
+            }
+            else if ((dosec) && (do24h)) { // sec + -
+               set_state_val(PART:"hours1", STATE_REL1, (0.0/14.0), 0.0);
+               set_state_val(PART:"hours1", STATE_REL2, (2.0/14.0), 1.0);
+               set_state_val(PART:"hours2", STATE_REL1, (2.0/14.0), 0.0);
+               set_state_val(PART:"hours2", STATE_REL2, (4.0/14.0), 1.0);
+               set_state_val(PART:"mins1", STATE_REL1, (5.0/14.0), 0.0);
+               set_state_val(PART:"mins1", STATE_REL2, (7.0/14.0), 1.0);
+               set_state_val(PART:"mins2", STATE_REL1, (7.0/14.0), 0.0);
+               set_state_val(PART:"mins2", STATE_REL2, (9.0/14.0), 1.0);
+               set_state_val(PART:"secs1", STATE_REL1, (10.0/14.0), 0.0);
+               set_state_val(PART:"secs1", STATE_REL2, (12.0/14.0), 1.0);
+               set_state_val(PART:"secs2", STATE_REL1, (12.0/14.0), 0.0);
+               set_state_val(PART:"secs2", STATE_REL2, (14.0/14.0), 1.0);
+               set_state_val(PART:"ampm", STATE_REL1, (0.0/1.0), 0.0);
+               set_state_val(PART:"ampm", STATE_REL2, (0.0/1.0), 1.0);
+               set_min_size(14 * 4, 16);
+               set_max_size(14 * 32, 128);
+            }
+            else if ((!dosec) && (!do24h)) { // - + ampm
+               set_state_val(PART:"hours1", STATE_REL1, (0.0/11.0), 0.0);
+               set_state_val(PART:"hours1", STATE_REL2, (2.0/11.0), 1.0);
+               set_state_val(PART:"hours2", STATE_REL1, (2.0/11.0), 0.0);
+               set_state_val(PART:"hours2", STATE_REL2, (4.0/11.0), 1.0);
+               set_state_val(PART:"mins1", STATE_REL1, (5.0/11.0), 0.0);
+               set_state_val(PART:"mins1", STATE_REL2, (7.0/11.0), 1.0);
+               set_state_val(PART:"mins2", STATE_REL1, (7.0/11.0), 0.0);
+               set_state_val(PART:"mins2", STATE_REL2, (9.0/11.0), 1.0);
+               set_state_val(PART:"secs1", STATE_REL1, (0.0/1.0), 0.0);
+               set_state_val(PART:"secs1", STATE_REL2, (0.0/1.0), 1.0);
+               set_state_val(PART:"secs2", STATE_REL1, (0.0/1.0), 0.0);
+               set_state_val(PART:"secs2", STATE_REL2, (0.0/1.0), 1.0);
+               set_state_val(PART:"ampm", STATE_REL1, (9.0/11.0), 0.0);
+               set_state_val(PART:"ampm", STATE_REL2, (11.0/11.0), 1.0);
+               set_min_size(11 * 4, 16);
+               set_max_size(11 * 32, 128);
+            }
+            else if ((!dosec) && (do24h)) { // - + -
+               set_state_val(PART:"hours1", STATE_REL1, (0.0/9.0), 0.0);
+               set_state_val(PART:"hours1", STATE_REL2, (2.0/9.0), 1.0);
+               set_state_val(PART:"hours2", STATE_REL1, (2.0/9.0), 0.0);
+               set_state_val(PART:"hours2", STATE_REL2, (4.0/9.0), 1.0);
+               set_state_val(PART:"mins1", STATE_REL1, (5.0/9.0), 0.0);
+               set_state_val(PART:"mins1", STATE_REL2, (7.0/9.0), 1.0);
+               set_state_val(PART:"mins2", STATE_REL1, (7.0/9.0), 0.0);
+               set_state_val(PART:"mins2", STATE_REL2, (9.0/9.0), 1.0);
+               set_state_val(PART:"secs1", STATE_REL1, (0.0/1.0), 0.0);
+               set_state_val(PART:"secs1", STATE_REL2, (0.0/1.0), 1.0);
+               set_state_val(PART:"secs2", STATE_REL1, (0.0/1.0), 0.0);
+               set_state_val(PART:"secs2", STATE_REL2, (0.0/1.0), 1.0);
+               set_state_val(PART:"ampm", STATE_REL1, (0.0/1.0), 0.0);
+               set_state_val(PART:"ampm", STATE_REL2, (0.0/1.0), 1.0);
+               set_min_size(9 * 4, 16);
+               set_max_size(9 * 32, 128);
+            }
+            set_state(PART:"hours1", "custom", 0.0);
+            set_state(PART:"hours2", "custom", 0.0);
+            set_state(PART:"mins1", "custom", 0.0);
+            set_state(PART:"mins2", "custom", 0.0);
+            set_state(PART:"secs1", "custom", 0.0);
+            set_state(PART:"secs2", "custom", 0.0);
+            set_state(PART:"ampm", "custom", 0.0);
+            emit("e,state,sizing,changed", "");
+         }
+      }
       parts {
+         part { name: "hclip"; type: RECT;
+            description { state: "default" 0.0;
+            }
+            description { state: "hidden" 0.0;
+               visible: 0;
+            }
+         }
+         part { name: "mclip"; type: RECT;
+            description { state: "default" 0.0;
+            }
+            description { state: "hidden" 0.0;
+               visible: 0;
+            }
+         }
+         part { name: "sclip"; type: RECT;
+            description { state: "default" 0.0;
+            }
+            description { state: "hidden" 0.0;
+               visible: 0;
+            }
+         }
+         part { name: "ampmclip"; type: RECT;
+            description { state: "default" 0.0;
+            }
+            description { state: "hidden" 0.0;
+               visible: 0;
+            }
+         }
+         part { name: "hours1"; type: RECT;
+            description { state: "default" 0.0;
+               visible: 0;
+               rel1.relative: (0/16) 0.0;
+               rel2.relative: (2/16) 1.0;
+            }
+         }
+         part { name: "hours2"; type: RECT;
+            description { state: "default" 0.0;
+               visible: 0;
+               rel1.relative: (2/16) 0.0;
+               rel2.relative: (4/16) 1.0;
+            }
+         }
+         part { name: "hcolon1";
+            clip_to: "mclip";
+            description { state: "default" 0.0;
+               rel1.to: "hours2";
+               rel1.relative: 1.0 0.0;
+               rel1.offset: 1 1;
+               rel2.to: "mins1";
+               rel2.relative: 0.0 1.0;
+               rel2.offset: 0 0;
+               image.normal: "flip_colon.png";
+               min: 2 4;
+               aspect: 0.25 0.25;
+               aspect_preference: BOTH;
+            }
+         }
+         part { name: "hcolon2";
+            clip_to: "mclip";
+            description { state: "default" 0.0;
+               rel1.to: "hcolon1";
+               rel1.offset: -1 -1;
+               rel2.to: "hcolon1";
+               rel2.offset: -2 -2;
+               color: 0 0 0 255;
+               image.normal: "flip_colon.png";
+            }
+         }
+         part { name: "mins1"; type: RECT;
+            description { state: "default" 0.0;
+               visible: 0;
+               rel1.relative: (5/16) 0.0;
+               rel2.relative: (7/16) 1.0;
+            }
+         }
+         part { name: "mins2"; type: RECT;
+            description { state: "default" 0.0;
+               visible: 0;
+               rel1.relative: (7/16) 0.0;
+               rel2.relative: (9/16) 1.0;
+            }
+         }
+         part { name: "mcolon1";
+            clip_to: "sclip";
+            description { state: "default" 0.0;
+               rel1.to: "mins2";
+               rel1.relative: 1.0 0.0;
+               rel1.offset: 1 1;
+               rel2.to: "secs1";
+               rel2.relative: 0.0 1.0;
+               rel2.offset: 0 0;
+               image.normal: "flip_colon.png";
+               min: 2 4;
+               aspect: 0.25 0.25;
+               aspect_preference: BOTH;
+            }
+         }
+         part { name: "mcolon2";
+            clip_to: "sclip";
+            description { state: "default" 0.0;
+               rel1.to: "mcolon1";
+               rel1.offset: -1 -1;
+               rel2.to: "mcolon1";
+               rel2.offset: -2 -2;
+               color: 0 0 0 255;
+               image.normal: "flip_colon.png";
+            }
+         }
+         part { name: "secs1"; type: RECT;
+            description { state: "default" 0.0;
+               visible: 0;
+               rel1.relative: (10/16) 0.0;
+               rel2.relative: (12/16) 1.0;
+           }
+         }
+         part { name: "secs2"; type: RECT;
+            description { state: "default" 0.0;
+               visible: 0;
+               rel1.relative: (12/16) 0.0;
+               rel2.relative: (14/16) 1.0;
+           }
+         }
+         part { name: "ampm"; type: RECT;
+            description { state: "default" 0.0;
+               visible: 0;
+               rel1.relative: (14/16) 0.0;
+               rel2.relative: (16/16) 1.0;
+            }
+         }
+         
+#define DIGIT(nom, relto, clipto) \
+         part { name: nom"base"; \
+            scale: 1; \
+            description { state: "default" 0.0; \
+               rel1.to: relto; \
+               rel1.offset: 1 1; \
+               rel2.to: relto; \
+               rel2.offset: -2 -2; \
+               min: 2 4; \
+               aspect: 0.5 0.5; \
+               aspect_preference: BOTH; \
+            } \
+         } \
+         part { name: nom"shad"; \
+            clip_to: clipto; \
+            description { state: "default" 0.0; \
+               rel1.offset: -4 -4; \
+               rel1.to: nom"base"; \
+               rel2.offset: 3 3; \
+               rel2.to: nom"base"; \
+               image { \
+                  normal: "flip_base_shad.png"; \
+                  border: 8 8 8 8; \
+               } \
+            } \
+         } \
+         part { name: nom"b"; type: RECT; \
+            description { state: "default" 0.0; \
+               visible: 0; \
+               rel1.to: nom"base"; \
+               rel1.relative: 0.0 0.5; \
+               rel2.to: nom"base"; \
+            } \
+         } \
+         part { name: nom"t"; type: RECT; \
+            description { state: "default" 0.0; \
+               visible: 0; \
+               rel1.to: nom"base"; \
+               rel2.to: nom"base"; \
+               rel2.relative: 1.0 0.5; \
+            } \
+         } \
+         part { name: nom"bot0"; \
+            clip_to: clipto; \
+            description { state: "default" 0.0; \
+               rel1.to: nom"b"; \
+               rel2.to: nom"b"; \
+               image.normal: "flip_0b.png"; \
+            } \
+            description { state: "0" 0.0; \
+               inherit: "default" 0.0; \
+               image.normal: "flip_0b.png"; \
+            } \
+            description { state: "1" 0.0; \
+               inherit: "default" 0.0; \
+               image.normal: "flip_1b.png"; \
+            } \
+            description { state: "2" 0.0; \
+               inherit: "default" 0.0; \
+               image.normal: "flip_2b.png"; \
+            } \
+            description { state: "3" 0.0; \
+               inherit: "default" 0.0; \
+               image.normal: "flip_3b.png"; \
+            } \
+            description { state: "4" 0.0; \
+               inherit: "default" 0.0; \
+               image.normal: "flip_4b.png"; \
+            } \
+            description { state: "5" 0.0; \
+               inherit: "default" 0.0; \
+               image.normal: "flip_5b.png"; \
+            } \
+            description { state: "6" 0.0; \
+               inherit: "default" 0.0; \
+               image.normal: "flip_6b.png"; \
+            } \
+            description { state: "7" 0.0; \
+               inherit: "default" 0.0; \
+               image.normal: "flip_7b.png"; \
+            } \
+            description { state: "8" 0.0; \
+               inherit: "default" 0.0; \
+               image.normal: "flip_8b.png"; \
+            } \
+            description { state: "9" 0.0; \
+               inherit: "default" 0.0; \
+               image.normal: "flip_9b.png"; \
+            } \
+         } \
+         part { name: nom"sh"; \
+            clip_to: clipto; \
+            description { state: "default" 0.0; \
+               rel1.to: nom"b"; \
+               rel2.to: nom"b"; \
+               rel2.relative: 1.0 0.0; \
+               image.normal: "flip_shad.png"; \
+            } \
+            description { state: "half" 0.0; \
+               inherit: "default" 0.0; \
+               rel2.relative: 1.0 0.5; \
+            } \
+            description { state: "full" 0.0; \
+               inherit: "default" 0.0; \
+               rel2.relative: 1.0 1.0; \
+            } \
+         } \
+         part { name: nom"bot"; \
+            clip_to: clipto; \
+            description { state: "default" 0.0; \
+               rel1.to: nom"b"; \
+               rel2.to: nom"b"; \
+               image.normal: "flip_0b.png"; \
+            } \
+            description { state: "0" 0.0; \
+               inherit: "default" 0.0; \
+               rel2.relative: 1.0 1.0; \
+               image.normal: "flip_0b.png"; \
+            } \
+            description { state: "0h" 0.0; \
+               inherit: "default" 0.0; \
+               visible: 0; \
+               rel2.relative: 1.0 0.0; \
+               image.normal: "flip_0b.png"; \
+            } \
+            description { state: "1" 0.0; \
+               inherit: "default" 0.0; \
+               rel2.relative: 1.0 1.0; \
+               image.normal: "flip_1b.png"; \
+            } \
+            description { state: "1h" 0.0; \
+               inherit: "default" 0.0; \
+               visible: 0; \
+               rel2.relative: 1.0 0.0; \
+               image.normal: "flip_1b.png"; \
+            } \
+            description { state: "2" 0.0; \
+               inherit: "default" 0.0; \
+               rel2.relative: 1.0 1.0; \
+               image.normal: "flip_2b.png"; \
+            } \
+            description { state: "2h" 0.0; \
+               inherit: "default" 0.0; \
+               visible: 0; \
+               rel2.relative: 1.0 0.0; \
+               image.normal: "flip_2b.png"; \
+            } \
+            description { state: "3" 0.0; \
+               inherit: "default" 0.0; \
+               rel2.relative: 1.0 1.0; \
+               image.normal: "flip_3b.png"; \
+            } \
+            description { state: "3h" 0.0; \
+               inherit: "default" 0.0; \
+               visible: 0; \
+               rel2.relative: 1.0 0.0; \
+               image.normal: "flip_3b.png"; \
+            } \
+            description { state: "4" 0.0; \
+               inherit: "default" 0.0; \
+               rel2.relative: 1.0 1.0; \
+               image.normal: "flip_4b.png"; \
+            } \
+            description { state: "4h" 0.0; \
+               inherit: "default" 0.0; \
+               visible: 0; \
+               rel2.relative: 1.0 0.0; \
+               image.normal: "flip_4b.png"; \
+            } \
+            description { state: "5" 0.0; \
+               inherit: "default" 0.0; \
+               rel2.relative: 1.0 1.0; \
+               image.normal: "flip_5b.png"; \
+            } \
+            description { state: "5h" 0.0; \
+               inherit: "default" 0.0; \
+               visible: 0; \
+               rel2.relative: 1.0 0.0; \
+               image.normal: "flip_5b.png"; \
+            } \
+            description { state: "6" 0.0; \
+               inherit: "default" 0.0; \
+               rel2.relative: 1.0 1.0; \
+               image.normal: "flip_6b.png"; \
+            } \
+            description { state: "6h" 0.0; \
+               inherit: "default" 0.0; \
+               visible: 0; \
+               rel2.relative: 1.0 0.0; \
+               image.normal: "flip_6b.png"; \
+            } \
+            description { state: "7" 0.0; \
+               inherit: "default" 0.0; \
+               rel2.relative: 1.0 1.0; \
+               image.normal: "flip_7b.png"; \
+            } \
+            description { state: "7h" 0.0; \
+               inherit: "default" 0.0; \
+               visible: 0; \
+               rel2.relative: 1.0 0.0; \
+               image.normal: "flip_7b.png"; \
+            } \
+            description { state: "8" 0.0; \
+               inherit: "default" 0.0; \
+               rel2.relative: 1.0 1.0; \
+               image.normal: "flip_8b.png"; \
+            } \
+            description { state: "8h" 0.0; \
+               inherit: "default" 0.0; \
+               visible: 0; \
+               rel2.relative: 1.0 0.0; \
+               image.normal: "flip_8b.png"; \
+            } \
+            description { state: "9" 0.0; \
+               inherit: "default" 0.0; \
+               rel2.relative: 1.0 1.0; \
+               image.normal: "flip_9b.png"; \
+            } \
+            description { state: "9h" 0.0; \
+               inherit: "default" 0.0; \
+               visible: 0; \
+               rel2.relative: 1.0 0.0; \
+               image.normal: "flip_9b.png"; \
+            } \
+         } \
+         part { name: nom"top0"; \
+            clip_to: clipto; \
+            description { state: "default" 0.0; \
+               rel1.to: nom"t"; \
+               rel2.to: nom"t"; \
+               image.normal: "flip_0t.png"; \
+            } \
+            description { state: "0" 0.0; \
+               inherit: "default" 0.0; \
+               image.normal: "flip_0t.png"; \
+            } \
+            description { state: "1" 0.0; \
+               inherit: "default" 0.0; \
+               image.normal: "flip_1t.png"; \
+            } \
+            description { state: "2" 0.0; \
+               inherit: "default" 0.0; \
+               image.normal: "flip_2t.png"; \
+            } \
+            description { state: "3" 0.0; \
+               inherit: "default" 0.0; \
+               image.normal: "flip_3t.png"; \
+            } \
+            description { state: "4" 0.0; \
+               inherit: "default" 0.0; \
+               image.normal: "flip_4t.png"; \
+            } \
+            description { state: "5" 0.0; \
+               inherit: "default" 0.0; \
+               image.normal: "flip_5t.png"; \
+            } \
+            description { state: "6" 0.0; \
+               inherit: "default" 0.0; \
+               image.normal: "flip_6t.png"; \
+            } \
+            description { state: "7" 0.0; \
+               inherit: "default" 0.0; \
+               image.normal: "flip_7t.png"; \
+            } \
+            description { state: "8" 0.0; \
+               inherit: "default" 0.0; \
+               image.normal: "flip_8t.png"; \
+            } \
+            description { state: "9" 0.0; \
+               inherit: "default" 0.0; \
+               image.normal: "flip_9t.png"; \
+            } \
+         } \
+         part { name: nom"top"; \
+            clip_to: clipto; \
+            description { state: "default" 0.0; \
+               rel1.to: nom"t"; \
+               rel2.to: nom"t"; \
+               image.normal: "flip_0t.png"; \
+            } \
+            description { state: "0" 0.0; \
+               inherit: "default" 0.0; \
+               rel1.relative: 0.0 0.0; \
+               image.normal: "flip_0t.png"; \
+            } \
+            description { state: "0h" 0.0; \
+               inherit: "default" 0.0; \
+               color: 128 128 128 255; \
+               visible: 0; \
+               rel1.relative: 0.0 1.0; \
+               image.normal: "flip_0t.png"; \
+            } \
+            description { state: "1" 0.0; \
+               inherit: "default" 0.0; \
+               rel1.relative: 0.0 0.0; \
+               image.normal: "flip_1t.png"; \
+            } \
+            description { state: "1h" 0.0; \
+               inherit: "default" 0.0; \
+               color: 128 128 128 255; \
+               visible: 0; \
+               rel1.relative: 0.0 1.0; \
+               image.normal: "flip_1t.png"; \
+            } \
+            description { state: "2" 0.0; \
+               inherit: "default" 0.0; \
+               rel1.relative: 0.0 0.0; \
+               image.normal: "flip_2t.png"; \
+            } \
+            description { state: "2h" 0.0; \
+               inherit: "default" 0.0; \
+               color: 128 128 128 255; \
+               visible: 0; \
+               rel1.relative: 0.0 1.0; \
+               image.normal: "flip_2t.png"; \
+            } \
+            description { state: "3" 0.0; \
+               inherit: "default" 0.0; \
+               rel1.relative: 0.0 0.0; \
+               image.normal: "flip_3t.png"; \
+            } \
+            description { state: "3h" 0.0; \
+               inherit: "default" 0.0; \
+               color: 128 128 128 255; \
+               visible: 0; \
+               rel1.relative: 0.0 1.0; \
+               image.normal: "flip_3t.png"; \
+            } \
+            description { state: "4" 0.0; \
+               inherit: "default" 0.0; \
+               rel1.relative: 0.0 0.0; \
+               image.normal: "flip_4t.png"; \
+            } \
+            description { state: "4h" 0.0; \
+               inherit: "default" 0.0; \
+               color: 128 128 128 255; \
+               visible: 0; \
+               rel1.relative: 0.0 1.0; \
+               image.normal: "flip_4t.png"; \
+            } \
+            description { state: "5" 0.0; \
+               inherit: "default" 0.0; \
+               rel1.relative: 0.0 0.0; \
+               image.normal: "flip_5t.png"; \
+            } \
+            description { state: "5h" 0.0; \
+               inherit: "default" 0.0; \
+               color: 128 128 128 255; \
+               visible: 0; \
+               rel1.relative: 0.0 1.0; \
+               image.normal: "flip_5t.png"; \
+            } \
+            description { state: "6" 0.0; \
+               inherit: "default" 0.0; \
+               rel1.relative: 0.0 0.0; \
+               image.normal: "flip_6t.png"; \
+            } \
+            description { state: "6h" 0.0; \
+               inherit: "default" 0.0; \
+               color: 128 128 128 255; \
+               visible: 0; \
+               rel1.relative: 0.0 1.0; \
+               image.normal: "flip_6t.png"; \
+            } \
+            description { state: "7" 0.0; \
+               inherit: "default" 0.0; \
+               rel1.relative: 0.0 0.0; \
+               image.normal: "flip_7t.png"; \
+            } \
+            description { state: "7h" 0.0; \
+               inherit: "default" 0.0; \
+               color: 128 128 128 255; \
+               visible: 0; \
+               rel1.relative: 0.0 1.0; \
+               image.normal: "flip_7t.png"; \
+            } \
+            description { state: "8" 0.0; \
+               inherit: "default" 0.0; \
+               rel1.relative: 0.0 0.0; \
+               image.normal: "flip_8t.png"; \
+            } \
+            description { state: "8h" 0.0; \
+               inherit: "default" 0.0; \
+               color: 128 128 128 255; \
+               visible: 0; \
+               rel1.relative: 0.0 1.0; \
+               image.normal: "flip_8t.png"; \
+            } \
+            description { state: "9" 0.0; \
+               inherit: "default" 0.0; \
+               rel1.relative: 0.0 0.0; \
+               image.normal: "flip_9t.png"; \
+            } \
+            description { state: "9h" 0.0; \
+               inherit: "default" 0.0; \
+               color: 128 128 128 255; \
+               visible: 0; \
+               rel1.relative: 0.0 1.0; \
+               image.normal: "flip_9t.png"; \
+            } \
+         }
+         
+         DIGIT("h1", "hours1", "hclip");
+         DIGIT("h2", "hours2", "hclip");
+
+         DIGIT("m1", "mins1", "mclip");
+         DIGIT("m2", "mins2", "mclip");
+
+         DIGIT("s1", "secs1", "sclip");
+         DIGIT("s2", "secs2", "sclip");
+
+#define DIGAP(nom, relto, clipto) \
+         part { name: nom"base"; \
+            scale: 1; \
+            description { state: "default" 0.0; \
+               rel1.to: relto; \
+               rel1.offset: 1 1; \
+               rel2.to: relto; \
+               rel2.offset: -2 -2; \
+               min: 2 4; \
+               aspect: 0.5 0.5; \
+               aspect_preference: BOTH; \
+            } \
+         } \
+         part { name: nom"shad"; \
+            clip_to: clipto; \
+            description { state: "default" 0.0; \
+               rel1.offset: -4 -4; \
+               rel1.to: nom"base"; \
+               rel2.offset: 3 3; \
+               rel2.to: nom"base"; \
+               image { \
+                  normal: "flip_base_shad.png"; \
+                  border: 8 8 8 8; \
+               } \
+            } \
+         } \
+         part { name: nom"b"; type: RECT; \
+            description { state: "default" 0.0; \
+               visible: 0; \
+               rel1.to: nom"base"; \
+               rel1.relative: 0.0 0.5; \
+               rel2.to: nom"base"; \
+            } \
+         } \
+         part { name: nom"t"; type: RECT; \
+            description { state: "default" 0.0; \
+               visible: 0; \
+               rel1.to: nom"base"; \
+               rel2.to: nom"base"; \
+               rel2.relative: 1.0 0.5; \
+            } \
+         } \
+         part { name: nom"bot0"; \
+            clip_to: clipto; \
+            description { state: "default" 0.0; \
+               rel1.to: nom"b"; \
+               rel2.to: nom"b"; \
+               image.normal: "flip_amb.png"; \
+            } \
+            description { state: "0" 0.0; \
+               inherit: "default" 0.0; \
+               image.normal: "flip_amb.png"; \
+            } \
+            description { state: "1" 0.0; \
+               inherit: "default" 0.0; \
+               image.normal: "flip_pmb.png"; \
+            } \
+         } \
+         part { name: nom"sh"; \
+            clip_to: clipto; \
+            description { state: "default" 0.0; \
+               rel1.to: nom"b"; \
+               rel2.to: nom"b"; \
+               rel2.relative: 1.0 0.0; \
+               image.normal: "flip_shad.png"; \
+            } \
+            description { state: "half" 0.0; \
+               inherit: "default" 0.0; \
+               rel2.relative: 1.0 0.5; \
+            } \
+            description { state: "full" 0.0; \
+               inherit: "default" 0.0; \
+               rel2.relative: 1.0 1.0; \
+            } \
+         } \
+         part { name: nom"bot"; \
+            clip_to: clipto; \
+            description { state: "default" 0.0; \
+               rel1.to: nom"b"; \
+               rel2.to: nom"b"; \
+               image.normal: "flip_amb.png"; \
+            } \
+            description { state: "0" 0.0; \
+               inherit: "default" 0.0; \
+               rel2.relative: 1.0 1.0; \
+               image.normal: "flip_amb.png"; \
+            } \
+            description { state: "0h" 0.0; \
+               inherit: "default" 0.0; \
+               visible: 0; \
+               rel2.relative: 1.0 0.0; \
+               image.normal: "flip_amb.png"; \
+            } \
+            description { state: "1" 0.0; \
+               inherit: "default" 0.0; \
+               rel2.relative: 1.0 1.0; \
+               image.normal: "flip_pmb.png"; \
+            } \
+            description { state: "1h" 0.0; \
+               inherit: "default" 0.0; \
+               visible: 0; \
+               rel2.relative: 1.0 0.0; \
+               image.normal: "flip_pmb.png"; \
+            } \
+         } \
+         part { name: nom"top0"; \
+            clip_to: clipto; \
+            description { state: "default" 0.0; \
+               rel1.to: nom"t"; \
+               rel2.to: nom"t"; \
+               image.normal: "flip_amt.png"; \
+            } \
+            description { state: "0" 0.0; \
+               inherit: "default" 0.0; \
+               image.normal: "flip_amt.png"; \
+            } \
+            description { state: "1" 0.0; \
+               inherit: "default" 0.0; \
+               image.normal: "flip_pmt.png"; \
+            } \
+         } \
+         part { name: nom"top"; \
+            clip_to: clipto; \
+            description { state: "default" 0.0; \
+               rel1.to: nom"t"; \
+               rel2.to: nom"t"; \
+               image.normal: "flip_amt.png"; \
+            } \
+            description { state: "0" 0.0; \
+               inherit: "default" 0.0; \
+               rel1.relative: 0.0 0.0; \
+               image.normal: "flip_amt.png"; \
+            } \
+            description { state: "0h" 0.0; \
+               inherit: "default" 0.0; \
+               color: 128 128 128 255; \
+               visible: 0; \
+               rel1.relative: 0.0 1.0; \
+               image.normal: "flip_amt.png"; \
+            } \
+            description { state: "1" 0.0; \
+               inherit: "default" 0.0; \
+               rel1.relative: 0.0 0.0; \
+               image.normal: "flip_pmt.png"; \
+            } \
+            description { state: "1h" 0.0; \
+               inherit: "default" 0.0; \
+               color: 128 128 128 255; \
+               visible: 0; \
+               rel1.relative: 0.0 1.0; \
+               image.normal: "flip_pmt.png"; \
+            } \
+         }
+
+         DIGAP("ap", "ampm", "ampmclip");
+         
+///////////////////////////////////////////////////////////////////         
+         
+         part { name: "event"; type: RECT;
+            mouse_events: 1;
+            description { state: "default" 0.0;
+               color: 0 0 0 0;
+            }
+         }
       }
       programs {
-         program {
-            name: "init";
+         program { name: "init";
             signal: "load";
             source: "";
             script {
@@ -11902,22 +12839,83 @@ collections {
          program { name: "secon";
             signal: "e,state,seconds,on";
             source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "secs1";
+            after: "sec2";
+         }
+         program { name: "sec2";
+            script {
+               new tim;
+               
+               set_int(do_seconds, 1);
+               set_state(PART:"sclip", "default", 0.0);
+               eval_fields();
+               tim = get_int(tick_timer);
+               if (tim) {
+                  cancel_timer(tim);
+                  set_int(tick_timer, 0);
+               }
+               clock_cb(0);
+            }
          }
          program { name: "secoff";
             signal: "e,state,seconds,off";
             source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "secs1";
+            after: "sec3";
+         }
+         program { name: "sec3";
+            script {
+               new tim;
+               
+               set_int(do_seconds, 0);
+               set_state(PART:"sclip", "hidden", 0.0);
+               eval_fields();
+               tim = get_int(tick_timer);
+               if (tim) {
+                  cancel_timer(tim);
+                  set_int(tick_timer, 0);
+               }
+               clock_cb(0);
+            }
          }
          program { name: "24h";
             signal: "e,state,24h,on";
             source: "e";
+            script {
+               new tim;
+               
+               set_int(do_24h, 1);
+               set_state(PART:"ampmclip", "hidden", 0.0);
+               eval_fields();
+               tim = get_int(tick_timer);
+               if (tim) {
+                  cancel_timer(tim);
+                  set_int(tick_timer, 0);
+               }
+               clock_cb(0);
+            }
          }
          program { name: "12h";
             signal: "e,state,24h,off";
             source: "e";
+            script {
+               new tim;
+               
+               set_int(do_24h, 0);
+               set_state(PART:"ampmclip", "default", 0.0);
+               eval_fields();
+               tim = get_int(tick_timer);
+               if (tim) {
+                  cancel_timer(tim);
+                  set_int(tick_timer, 0);
+               }
+               clock_cb(0);
+            }
          }
       }
    }
- */
    group { name: "e/modules/clock/main";
       images {
          image: "clock_base.png" COMP;
@@ -12214,8 +13212,7 @@ collections {
          }
       }
       programs {
-         program {
-            name: "init";
+         program { name: "init";
             signal: "load";
             source: "";
             script {

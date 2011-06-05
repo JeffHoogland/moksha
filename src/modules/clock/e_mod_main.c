@@ -413,6 +413,21 @@ _clock_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSE
                                  EVAS_BUTTON_NONE, ev->timestamp, NULL);
      }
 }
+static void
+_clock_sizing_changed_cb(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
+{
+   Instance *inst = data;
+   Evas_Coord mw, mh;
+   
+   mw = 0, mh = 0;
+   edje_object_size_min_get(inst->o_clock, &mw, &mh);
+   if ((mw < 1) || (mh < 1))
+     edje_object_size_min_calc(inst->o_clock, &mw, &mh);
+   if (mw < 4) mw = 4;
+   if (mh < 4) mh = 4;
+   e_gadcon_client_aspect_set(inst->gcc, mw, mh);
+   e_gadcon_client_min_size_set(inst->gcc, mw, mh);
+}
 
 static E_Gadcon_Client *
 _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
@@ -424,6 +439,8 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    inst = E_NEW(Instance, 1);
    
    o = edje_object_add(gc->evas);
+   edje_object_signal_callback_add(o, "e,state,sizing,changed", "*", 
+                                   _clock_sizing_changed_cb, inst);
    if (clock_cfg->digital_clock)
       e_theme_edje_object_set(o, "base/theme/modules/clock",
                               "e/modules/clock/digital");
