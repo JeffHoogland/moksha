@@ -845,6 +845,93 @@ group "E_Config" struct {
       value "any_mod" uchar: 0;
     }
   }
+  group "key_bindings" list {
+    group "E_Config_Binding_Key" struct {
+      value "context" int: 9;
+      value "modifiers" int: 0;
+      value "key" string: "XF86Standby";
+      value "action" string: "suspend";
+      value "params" string: "now";
+      value "any_mod" uchar: 0;
+    }
+  }
+  group "key_bindings" list {
+    group "E_Config_Binding_Key" struct {
+      value "context" int: 9;
+      value "modifiers" int: 0;
+      value "key" string: "XF86Start";
+      value "action" string: "menu_show";
+      value "params" string: "all";
+      value "any_mod" uchar: 0;
+    }
+  }
+  group "key_bindings" list {
+    group "E_Config_Binding_Key" struct {
+      value "context" int: 9;
+      value "modifiers" int: 0;
+      value "key" string: "XF86PowerDown";
+      value "action" string: "hibernate";
+      value "params" string: "now";
+      value "any_mod" uchar: 0;
+    }
+  }
+  group "key_bindings" list {
+    group "E_Config_Binding_Key" struct {
+      value "context" int: 9;
+      value "modifiers" int: 0;
+      value "key" string: "XF86PowerOff";
+      value "action" string: "halt";
+      value "any_mod" uchar: 0;
+    }
+  }
+  group "key_bindings" list {
+    group "E_Config_Binding_Key" struct {
+      value "context" int: 9;
+      value "modifiers" int: 0;
+      value "key" string: "XF86Sleep";
+      value "action" string: "suspend";
+      value "params" string: "now";
+      value "any_mod" uchar: 0;
+    }
+  }
+  group "key_bindings" list {
+    group "E_Config_Binding_Key" struct {
+      value "context" int: 9;
+      value "modifiers" int: 0;
+      value "key" string: "XF86Suspend";
+      value "action" string: "suspend";
+      value "params" string: "now";
+      value "any_mod" uchar: 0;
+    }
+  }
+  group "key_bindings" list {
+    group "E_Config_Binding_Key" struct {
+      value "context" int: 9;
+      value "modifiers" int: 0;
+      value "key" string: "XF86Hibernate";
+      value "action" string: "hibernate";
+      value "params" string: "now";
+      value "any_mod" uchar: 0;
+    }
+  }
+  group "key_bindings" list {
+    group "E_Config_Binding_Key" struct {
+      value "context" int: 9;
+      value "modifiers" int: 0;
+      value "key" string: "Execute";
+      value "action" string: "everything";
+      value "any_mod" uchar: 0;
+    }
+  }
+  group "key_bindings" list {
+    group "E_Config_Binding_Key" struct {
+      value "context" int: 9;
+      value "modifiers" int: 0;
+      value "key" string: "Execute";
+      value "action" string: "everything";
+      value "any_mod" uchar: 0;
+    }
+  }
   group "edge_bindings" list {
     group "E_Config_Binding_Edge" struct {
       value "context" int: 3;
