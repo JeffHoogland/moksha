@@ -266,12 +266,6 @@ _clock_popup_new(Instance *inst)
    else
       e_theme_edje_object_set(oi, "base/theme/modules/clock",
                               "e/modules/clock/main");
-   if (clock_cfg->digital_clock)
-      e_theme_edje_object_set(oi, "base/theme/modules/clock",
-                              "e/modules/clock/digital");
-   else
-      e_theme_edje_object_set(oi, "base/theme/modules/clock",
-                              "e/modules/clock/main");
    if (clock_cfg->digital_24h)
       edje_object_signal_emit(oi, "e,state,24h,on", "e");
    else
