@@ -12015,9 +12015,17 @@ collections {
             else {
                new pm;
                
-               if (hour > 12) pm = 1;
-               else pm = 0;
-               hour = hour % 12;
+               // if 12 or later, its pm
+               if (hour >= 12) {
+                  pm = 1;
+                  // if we are after 12 (1, 2, 3 etc.) then mod by 12
+                  if (hour > 12) hour = hour % 12;
+               }
+               else {
+                  pm = 0;
+                  // make after midnight be 12:XX AM :)
+                  if (hour == 0) hour = 12;
+               }
                h1valset(hour / 10);
                h2valset(hour % 10);
                apvalset(pm);
