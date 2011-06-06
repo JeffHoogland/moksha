@@ -174,7 +174,7 @@ _time_eval(Instance *inst)
 }
 
 static void
-_clock_moth_update(Instance *inst)
+_clock_month_update(Instance *inst)
 {
    Evas_Object *od, *oi;
    int x, y;
@@ -219,7 +219,7 @@ _clock_month_prev_cb(void *data, Evas_Object *obj __UNUSED__, const char *emissi
    Instance *inst = data;
    inst->madj--;
    _time_eval(inst);
-   _clock_moth_update(inst);
+   _clock_month_update(inst);
 }
 
 static void
@@ -228,7 +228,7 @@ _clock_month_next_cb(void *data, Evas_Object *obj __UNUSED__, const char *emissi
    Instance *inst = data;
    inst->madj++;
    _time_eval(inst);
-   _clock_moth_update(inst);
+   _clock_month_update(inst);
 }
 
 static void
@@ -288,7 +288,7 @@ _clock_popup_new(Instance *inst)
    inst->o_cal = oi;
    e_theme_edje_object_set(oi, "base/theme/modules/clock",
                            "e/modules/clock/calendar");
-   _clock_moth_update(inst);
+   _clock_month_update(inst);
    
    edje_object_signal_callback_add(oi, "e,action,prev", "*", 
                                    _clock_month_prev_cb, inst);
