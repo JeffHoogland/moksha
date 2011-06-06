@@ -1405,36 +1405,67 @@ group "E_Config" struct {
     group "acpi_bindings" list {
         group "E_Config_Binding_Acpi" struct {
             value "context" int: 0;
-            value "type" int: 1;
+            value "type" int: 15;
+            value "status" int: -1;
+            value "action" string: "dim_screen";
+        }
+        group "E_Config_Binding_Acpi" struct {
+            value "context" int: 0;
+            value "type" int: 16;
+            value "status" int: -1;
+            value "action" string: "undim_screen";
+        }
+        group "E_Config_Binding_Acpi" struct {
+            value "context" int: 0;
+            value "type" int: 22;
             value "status" int: 0;
             value "action" string: "dim_screen";
         }
         group "E_Config_Binding_Acpi" struct {
             value "context" int: 0;
-            value "type" int: 1;
+            value "type" int: 22;
             value "status" int: 1;
             value "action" string: "undim_screen";
         }
         group "E_Config_Binding_Acpi" struct {
             value "context" int: 0;
-            value "type" int: 5;
-            value "status" int: 0;
-            value "action" string: "suspend_now";
-            value "params" string: "now";
+            value "type" int: 3;
+            value "status" int: -1;
+            value "action" string: "syscon";
         }
         group "E_Config_Binding_Acpi" struct {
             value "context" int: 0;
             value "type" int: 6;
             value "status" int: -1;
-            value "action" string: "halt_now";
+            value "action" string: "halt";
             value "params" string: "now";
         }
         group "E_Config_Binding_Acpi" struct {
             value "context" int: 0;
             value "type" int: 8;
             value "status" int: -1;
-            value "action" string: "suspend_now";
+            value "action" string: "suspend";
             value "params" string: "now";
+        }
+        group "E_Config_Binding_Acpi" struct {
+            value "context" int: 0;
+            value "type" int: 12;
+            value "status" int: -1;
+            value "action" string: "hiberate";
+            value "params" string: "now";
+        }
+        group "E_Config_Binding_Acpi" struct {
+            value "context" int: 0;
+            value "type" int: 5;
+            value "status" int: 1;
+            value "action" string: "suspend";
+            value "params" string: "now";
+        }
+        group "E_Config_Binding_Acpi" struct {
+            value "context" int: 0;
+            value "type" int: 20;
+            value "status" int: -1;
+            value "action" string: "volume_mute";
         }
     }
   value "window_placement_policy" int: 0;
