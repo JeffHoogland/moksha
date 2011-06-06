@@ -12020,10 +12020,7 @@ collections {
                hour = hour % 12;
                h1valset(hour / 10);
                h2valset(hour % 10);
-               if (pm)
-                  hour = 0;
-               else
-                  hour = 0;
+               apvalset(pm);
             }
          }
          
