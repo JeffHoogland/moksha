@@ -50,6 +50,7 @@ Config *clock_cfg = NULL;
 
 static E_Config_DD *clock_cfg_edd = NULL;
 static Eina_List *clock_instances = NULL;
+static E_Action *act = NULL;
 
 static void
 _clear_timestrs(Instance *inst)
@@ -538,6 +539,52 @@ _gc_id_new(E_Gadcon_Client_Class *client_class __UNUSED__)
    return _gadcon_class.name;
 }
 
+static void
+_e_mod_action(const char *params)
+{
+   Eina_List *l;
+   Instance *inst;
+
+   if (!params) return ;
+   if (strcmp(params, "show_calendar")) return ;
+
+   EINA_LIST_FOREACH(clock_instances, l, inst)
+     if (inst->popup)
+       _clock_popup_free(inst);
+     else
+       _clock_popup_new(inst);
+}
+
+static void
+_e_mod_action_cb_edge(E_Object *obj,
+		      const char *params,
+                      E_Event_Zone_Edge *ev)
+{
+   _e_mod_action(params);
+}
+
+static void
+_e_mod_action_cb(E_Object *obj, const char *params)
+{
+   _e_mod_action(params);
+}
+
+static void
+_e_mod_action_cb_key(E_Object *obj,
+                     const char *params,
+                     Ecore_Event_Key *ev)
+{
+   _e_mod_action(params);
+}
+
+static void
+_e_mod_action_cb_mouse(E_Object *obj,
+                       const char *params,
+                       Ecore_Event_Mouse_Button *ev)
+{
+   _e_mod_action(params);
+}
+
 /* module setup */
 EAPI E_Module_Api e_modapi =
 {
@@ -572,7 +619,18 @@ e_modapi_init(E_Module *m)
         clock_cfg->show_seconds = 1;
         e_config_save_queue();
      }
-   
+
+   act = e_action_add("clock");
+   if (act)
+     {
+       act->func.go = _e_mod_action_cb;
+       act->func.go_key = _e_mod_action_cb_key;
+       act->func.go_mouse = _e_mod_action_cb_mouse;
+       act->func.go_edge = _e_mod_action_cb_edge;
+
+       e_action_predef_name_set(_("Clock"), _("Show calendar"), "clock", "show_calendar", NULL, 0);
+     }
+
    clock_module = m;
    e_gadcon_provider_register(&_gadcon_class);
    return m;
