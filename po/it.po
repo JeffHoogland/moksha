@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-06-04 10:05+0900\n"
-"PO-Revision-Date: 2011-05-30 18:54+0200\n"
+"POT-Creation-Date: 2011-06-08 18:03+0200\n"
+"PO-Revision-Date: 2011-06-08 18:05+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -2161,6 +2161,7 @@ msgstr "Mobile"
 
 #: src/bin/e_int_config_modules.c:59 src/bin/e_int_menus.c:223
 #: src/bin/e_shelf.c:1689 src/modules/battery/e_mod_main.c:183
+#: src/modules/clock/e_mod_main.c:283 src/modules/clock/e_mod_main.c:406
 #: src/modules/conf/e_conf.c:124 src/modules/conf/e_conf.c:134
 #: src/modules/conf/e_mod_main.c:102 src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_theme/e_int_config_cursor.c:133
@@ -3642,9 +3643,13 @@ msgstr "ERRORE"
 msgid "Battery Meter"
 msgstr "Indicatore di carica"
 
-#: src/modules/clock/e_mod_main.c:149
+#: src/modules/clock/e_mod_main.c:520 src/modules/clock/e_mod_main.c:631
 msgid "Clock"
 msgstr "Clock"
+
+#: src/modules/clock/e_mod_main.c:631
+msgid "Show calendar"
+msgstr "Mostra calendario"
 
 #: src/modules/conf/e_mod_main.c:264 src/modules/conf/e_mod_main.c:268
 #: src/modules/conf/e_mod_main.c:367 src/modules/conf/e_mod_main.c:474
