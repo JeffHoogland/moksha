@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2011-06-04 10:05+0900\n"
-"PO-Revision-Date: 2011-05-08 22:37+0200\n"
+"PO-Revision-Date: 2011-06-09 15:31+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@gmail.com>\n"
 "Language-Team: Dutch <kde-i18n-doc@kde.org>\n"
 "MIME-Version: 1.0\n"
@@ -45,7 +45,6 @@ msgid "Enlightenment"
 msgstr "Enlightenment"
 
 #: src/bin/e_about.c:23
-#, fuzzy
 msgid ""
 "Copyright &copy; 1999-2011, by the Enlightenment Development Team.<br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
@@ -56,7 +55,7 @@ msgid ""
 "is not stable. Many features are incomplete or even non-existent yet and may "
 "have many bugs. You have been <hilight>WARNED!</hilight>"
 msgstr ""
-"Copyright &copy; 1999-2010, door het Enlightenment Ontwikkelings-team."
+"Copyright &copy; 1999-2010, door het Enlightenment Ontwikkeling-team."
 "<br><br>Wij hopen dat u plezier heeft van het gebruik van onze software, net "
 "zoveel als wij dat hebben om het te schrijven. <br><br>Deze software is "
 "beschikbaar zoals ie is zonder expliciete of vastgestelde garantie. Deze "
@@ -341,7 +340,7 @@ msgstr "Bureaublad Weergeven"
 
 #: src/bin/e_actions.c:2810
 msgid "Show The Shelf"
-msgstr "Toon de shelf"
+msgstr "Toon de Schelf"
 
 #: src/bin/e_actions.c:2815
 msgid "Flip Desktop To..."
@@ -1118,32 +1117,30 @@ msgid "Run Error"
 msgstr "Start Fout"
 
 #: src/bin/e_exec.c:218
-#, fuzzy
 msgid "Enlightenment was unable to get current directory"
-msgstr ""
-"Enlightenment was niet in staat om de afbeelding te importeren<br>door "
-"conversiefouten."
+msgstr "Enlightenment was niet in staat om de huidige map te verkrijgen."
 
 #: src/bin/e_exec.c:225
-#, fuzzy, c-format
+#, c-format
 msgid "Enlightenment was unable to change to directory:<br><br>%s"
 msgstr ""
-"Enlightenment was niet in staat om een kinderproces te vertakken:<br><br>%"
-"s<br>"
+"Enlightenment was niet in staat om naar de volgende map te veranderen:<br><br>"
+"%s"
 
 #: src/bin/e_exec.c:237
-#, fuzzy, c-format
+#, c-format
 msgid "Enlightenment was unable to restore to directory:<br><br>%s"
 msgstr ""
-"Enlightenment was niet in staat om een kinderproces te vertakken:<br><br>%"
-"s<br>"
+"Enlightenment was niet in staat om naar de volgende map te herstellen:<br><br>"
+"%"
+"s"
 
 #: src/bin/e_exec.c:261
-#, fuzzy, c-format
+#, c-format
 msgid "Enlightenment was unable to fork a child process:<br><br>%s"
 msgstr ""
 "Enlightenment was niet in staat om een kinderproces te vertakken:<br><br>%"
-"s<br>"
+"s"
 
 #: src/bin/e_exec.c:389
 msgid "Application run error"
@@ -2351,7 +2348,7 @@ msgstr "Onder alles"
 
 #: src/bin/e_int_shelf_config.c:129
 msgid "Allow windows to overlap the shelf"
-msgstr "Sta toe dat vensters de schelf overlappen"
+msgstr "Sta toe dat vensters de Schelf overlappen"
 
 #: src/bin/e_int_shelf_config.c:179
 #, c-format
@@ -2626,9 +2623,8 @@ msgid "Enlightenment cannot set up its config system."
 msgstr "Enlightenment kan haar configuratiesysteem niet instellen."
 
 #: src/bin/e_main.c:564
-#, fuzzy
 msgid "Enlightenment cannot set up its environment."
-msgstr "Enlightenment kan haar thema-systeem niet initialiseren."
+msgstr "Enlightenment kan haar omgeving niet initialiseren."
 
 #: src/bin/e_main.c:580
 msgid "Enlightenment cannot set up its scale system."
@@ -2907,7 +2903,7 @@ msgstr "Stel schelven in"
 
 #: src/bin/e_main.c:1016
 msgid "Enlightenment cannot set up its shelf system."
-msgstr "Enlightenment kan haar schelf-systeem niet instellen."
+msgstr "Enlightenment kan haar Schelf-systeem niet instellen."
 
 #: src/bin/e_main.c:1021
 msgid "Setup Thumbnailer"
@@ -3057,14 +3053,14 @@ msgstr "Schelf #"
 
 #: src/bin/e_shelf.c:1298 src/modules/conf_shelves/e_int_config_shelf.c:286
 msgid "Are you sure you want to delete this shelf?"
-msgstr "Weet u zeker dat u deze schelf wilt verwijderen?"
+msgstr "Weet u zeker dat u deze Schelf wilt verwijderen?"
 
 #: src/bin/e_shelf.c:1299
 msgid ""
 "You requested to delete this shelf.<br><br>Are you sure you want to delete "
 "it?"
 msgstr ""
-"U heeft gevraagd om deze schelf te verwijderen.<br><br>Weet u zeker dat u "
+"U heeft gevraagd om deze Schelf te verwijderen.<br><br>Weet u zeker dat u "
 "hem wilt verwijderen?"
 
 #: src/bin/e_shelf.c:1674
@@ -3456,9 +3452,8 @@ msgid "Go up a Directory"
 msgstr "Ga een map omhoog"
 
 #: src/bin/e_widget_fsel.c:332
-#, fuzzy
 msgid "Resolution:"
-msgstr "Resolutie"
+msgstr "Resolutie:"
 
 #: src/bin/e_widget_fsel.c:380
 msgid "Permissions:"
@@ -4636,14 +4631,12 @@ msgid "Keys"
 msgstr "Toetsen"
 
 #: src/modules/conf_keybindings/e_mod_main.c:25
-#, fuzzy
 msgid "Mouse Buttons"
-msgstr "Muis-instellingen"
+msgstr "Muisknoppen"
 
 #: src/modules/conf_keybindings/e_mod_main.c:29
-#, fuzzy
 msgid "Hardware Switches"
-msgstr "Hardware"
+msgstr "Hardware-schakelingen"
 
 #: src/modules/conf_menus/e_int_config_menus.c:38
 #: src/modules/conf_menus/e_mod_main.c:18
@@ -4652,15 +4645,13 @@ msgstr "Menu-instellingen"
 
 #: src/modules/conf_menus/e_int_config_menus.c:174
 #: src/modules/wizard/page_030.c:134
-#, fuzzy
 msgid "Enlightenment Default"
-msgstr "Enlightenment"
+msgstr "Enlightenment Standaard"
 
 #: src/modules/conf_menus/e_int_config_menus.c:182
 #: src/modules/wizard/page_030.c:139
-#, fuzzy
 msgid "Personal Default"
-msgstr "Persoonlijk"
+msgstr "Persoonlijke Standaard"
 
 #: src/modules/conf_menus/e_int_config_menus.c:257
 msgid "Main Menu"
@@ -4804,9 +4795,8 @@ msgid "Search Directories"
 msgstr "Zoekmappen"
 
 #: src/modules/conf_paths/e_mod_main.c:24
-#, fuzzy
 msgid "Environment Variables"
-msgstr "Geëxporteerde omgevingsvariabelen"
+msgstr "Omgevingsvariabelen"
 
 #: src/modules/conf_performance/e_int_config_engine.c:38
 msgid "Engine Settings"
@@ -4916,7 +4906,7 @@ msgid ""
 "shelf?"
 msgstr ""
 "U heeft gevraagd om \"%s\" te verwijderen.<br><br>Weet u zeker dat u deze "
-"schelf wilt verwijderen?"
+"Schelf wilt verwijderen?"
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:105
 msgid "Wallpaper Settings"
@@ -5120,7 +5110,7 @@ msgstr "Basisachtergrond dialoogvenster"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:93
 msgid "Shelf Background Base"
-msgstr "Basisachtergrond schelf"
+msgstr "Basisachtergrond van Schelf"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:94
 msgid "File Manager Background Base"
@@ -5756,7 +5746,7 @@ msgstr "Aparte groep"
 
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:151
 msgid "Warp to owning desktop"
-msgstr "Schakel naar eigenaarbureaublad"
+msgstr "Schakel naar eigenaarsbureaublad"
 
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:154
 msgid "Iconified Windows"
@@ -5778,7 +5768,7 @@ msgstr "Opschriften"
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:45
 #: src/modules/conf_window_manipulation/e_mod_main.c:18
 msgid "Window Display"
-msgstr "Venster Uiterlijk"
+msgstr "Vensteruiterlijk"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:125
 msgid "Move Geometry"
@@ -5787,7 +5777,7 @@ msgstr "Verplaats-afmetingen"
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:126
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:137
 msgid "Display information"
-msgstr "Display informatie"
+msgstr "Scherminformatie"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:129
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:140
@@ -5801,7 +5791,7 @@ msgstr "Herschaal-afmetingen"
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:146
 #: src/modules/winlist/e_int_config_winlist.c:210
 msgid "Display"
-msgstr "Display"
+msgstr "Scherm"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:152
 msgid "User defined"
@@ -5825,7 +5815,7 @@ msgstr "Verberg Gadgets niet"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:169
 msgid "Place at mouse pointer"
-msgstr "Plaats bij muis aanwijzer"
+msgstr "Plaats bij muisaanwijzer"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:172
 msgid "Place manually with the mouse"
@@ -5861,23 +5851,23 @@ msgstr "Vertraging"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:212
 msgid "Shading"
-msgstr "Schaduwen"
+msgstr "Oprolling"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:51
 msgid "Focus Settings"
-msgstr "Activerings Instellingen"
+msgstr "Focusinstellingen"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:189
 msgid "Click Window to Focus"
-msgstr "Klik venster voor Activatie"
+msgstr "Klik venster om te focussen"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:191
 msgid "Window under the Mouse"
-msgstr "Vensters onder de Muis"
+msgstr "Vensters onder de muis"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:193
 msgid "Most recent Window under the Mouse"
-msgstr "Meest recente Venster onder de Muis activeren"
+msgstr "Meest recente venster onder de muis"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:211
 msgid "Click"
@@ -5893,7 +5883,7 @@ msgstr "Slordig"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:218
 msgid "New Window Focus"
-msgstr "Nieuw Venster Activatie"
+msgstr "Nieuwe vensterfocus"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:220
 msgid "No window"
@@ -5914,11 +5904,11 @@ msgstr "Alleen dialoogvensters met gefocuste ouder"
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:230
 #: src/modules/winlist/e_int_config_winlist.c:214
 msgid "Focus"
-msgstr "Activeren"
+msgstr "Focus"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:235
 msgid "Other Settings"
-msgstr "Andere Instellingen"
+msgstr "Andere instellingen"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:236
 msgid "Always pass click events to programs"
@@ -6038,7 +6028,7 @@ msgstr "Sta manipulatie van gemaximaliseerde vensters toe"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:183
 msgid "Adjust windows on shelf hide"
-msgstr "Pas vensters aan wanneer de schelf verborgen wordt"
+msgstr "Pas vensters aan wanneer de Schelf verborgen wordt"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:49
 #: src/modules/conf_window_manipulation/e_mod_main.c:21
@@ -6557,8 +6547,21 @@ msgid ""
 "</hilight> toggle list view modes<br>    <hilight>&lt;ctrl+3&gt;</hilight> "
 "toggle thumb view modes"
 msgstr ""
-" Oké, hier komt de uitleg van <hilight>alles</hilight>...<br> Typ gewoon een "
-"paar letters van het ding dat u zoekt.<br>Gebruik de "
+" Oké, hier komt de uitleg van <hilight>Alles</hilight>...<br> Typ gewoon een "
+"paar letters van het item dat u zoekt. <br> Gebruik pijltjestoetsen "
+"<hilight>&lt;omhoog/omlaag&gt;</hilight> om een actie te selecteren. Druk "
+"daarna op "
+"<hilight>&lt;Enter&gt;</hilight> Deze pagina zal niet worden weergegeven "
+"wanneer "
+"u de volgende keer <hilight>Alles</hilight> opstart.<br>  <hilight>"
+"&lt;Esc&gt;</hilight> "
+"sluit dit dialoogvenster<br>  <hilight>&lt;?&gt</hilight> toon deze pagina<br>"
+" "
+"<hilight>&lt;Enter&gt;</hilight> voer actie uit<br>  <hilight>"
+"&lt;CTRL+Enter&gt;</hilight> "
+"voer actie uit en ga door<br>  <hilight>&lt;Tab&gt;</hilight> schakel tussen "
+"selecteerders<br> "
+"  <hilight>"
 
 #: src/modules/everything/evry_plug_apps.c:1038
 msgid "Exebuf"
@@ -7033,7 +7036,7 @@ msgstr "Achtergrondopties"
 
 #: src/modules/gadman/e_mod_gadman.c:751
 msgid "Free"
-msgstr "Gratis"
+msgstr "Vrij"
 
 #: src/modules/gadman/e_mod_gadman.c:775
 msgid "Appearance"
@@ -7422,7 +7425,7 @@ msgid ""
 "already taken by internal<br>code for context menus.<br>This button only "
 "works in the popup."
 msgstr ""
-"U kunt de rechtermuisknop niet gebruiken<br>in de schelf voor dit omdat het "
+"U kunt de rechtermuisknop niet gebruiken<br>in de Schelf voor dit omdat het "
 "reeds gebruikt wordt door een interne<br>code voor contextmenu's.<br>Alleen "
 "deze knop werkt in de popup."
 
