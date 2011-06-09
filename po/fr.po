@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2011-06-08 17:27+0400\n"
-"PO-Revision-Date: 2011-06-08 18:04+0400\n"
+"PO-Revision-Date: 2011-06-09 09:43+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment French Team <pourunmondesansgourou@gmail.com>\n"
 "Language: fr\n"
@@ -4324,7 +4324,7 @@ msgstr "Seuil"
 
 #: src/modules/conf_interaction/e_mod_main.c:20
 msgid "Touch"
-msgstr "Tactile"
+msgstr "Interface tactile"
 
 #: src/modules/conf_interaction/e_mod_main.c:24
 msgid "Mouse"
