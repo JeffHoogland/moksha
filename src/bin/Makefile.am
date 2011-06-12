@@ -37,6 +37,7 @@ e_acpi.h \
 e_actions.h \
 e_alert.h \
 e_atoms.h \
+e_backlight.h \
 e_bg.h \
 e_bindings.h \
 e_border.h \
@@ -184,6 +185,7 @@ e_acpi.c \
 e_actions.c \
 e_alert.c \
 e_atoms.c \
+e_backlight.c \
 e_bg.c \
 e_bindings.c \
 e_border.c \

@@ -11883,9 +11883,29 @@ collections {
 
 
 /////////////////////////////////////////////////////////////////////////////
+/*** MOD: BACKLIGHT ***/
+   group { name: "e/modules/backlight/main";
+      images {
+         image: "bulb.png" COMP;
+      }
+      min: 16 16;
+      max: 128 128;
+      parts {
+         part {
+            name: "base";
+            description {
+               state: "default" 0.0;
+               aspect: 1.0 1.0;
+               aspect_preference: BOTH;
+               image.normal: "bulb.png";
+            }
+         }
+      }
+   }
+
+/////////////////////////////////////////////////////////////////////////////
 #define CLOCK_SECONDS 1
 /*** MOD: CLOCK ***/
-
    group { name: "e/modules/clock/digital";
       min: 56 16;
       max: 512 128;

@@ -138,3 +138,4 @@
 #include "e_widget_toolbook.h"
 #include "e_acpi.h"
 #include "e_env.h"
+#include "e_backlight.h"

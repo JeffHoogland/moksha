@@ -343,6 +343,12 @@ struct _E_Config
    unsigned char null_container_win;
    
    Eina_List *env_vars;
+   
+   struct {
+      double normal;
+      double dim;
+      double transition;
+   } backlight;
 };
 
 struct _E_Config_Env_Var

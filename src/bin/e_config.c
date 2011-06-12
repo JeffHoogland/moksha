@@ -906,6 +906,10 @@ e_config_init(void)
    
    E_CONFIG_LIST(D, T, env_vars, _e_config_env_var_edd);
    
+   E_CONFIG_VAL(D, T, backlight.normal, DOUBLE);
+   E_CONFIG_VAL(D, T, backlight.dim, DOUBLE);
+   E_CONFIG_VAL(D, T, backlight.transition, DOUBLE);
+   
    e_config_load();
 
    e_config_save_queue();

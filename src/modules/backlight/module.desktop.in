@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Link
+Name=Backlight
+Icon=e-module-backlight
+X-Enlightenment-ModuleType=utils
+Comment=Backlight control slider gadget

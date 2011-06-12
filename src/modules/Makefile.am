@@ -175,3 +175,6 @@ if USE_MODULE_SHOT
 SUBDIRS += shot
 endif
 
+if USE_MODULE_BACKLIGHT
+SUBDIRS += backlight
+endif

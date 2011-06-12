@@ -223,6 +223,7 @@ _e_wid_cb_changed(void *data, Evas_Object *obj __UNUSED__, void *event_info __UN
    if (wd->dval) *(wd->dval) = e_slider_value_get(wd->o_slider);
    else if (wd->ival) *(wd->ival) = e_slider_value_get(wd->o_slider);
    e_widget_change(wd->o_widget);
+   evas_object_smart_callback_call(wd->o_widget, "changed", NULL);
 }
 
 static void

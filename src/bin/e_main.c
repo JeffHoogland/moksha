@@ -959,6 +959,16 @@ main(int argc, char **argv)
    e_acpi_init();
    _e_main_shutdown_push(e_acpi_shutdown);
 
+   e_init_status_set(_("Setup Backlight"));
+   TS("backlight");     
+   /* setup dpms */
+   if (!e_backlight_init())
+     {
+	e_error_message_show(_("Enlightenment cannot configure the backlight."));
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_backlight_shutdown);
+
    e_init_status_set(_("Setup DPMS"));
    TS("dpms");     
    /* setup dpms */

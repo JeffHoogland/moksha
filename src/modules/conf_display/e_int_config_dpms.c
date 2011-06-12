@@ -36,20 +36,30 @@ struct _E_Config_Dialog_Data
    double suspend_timeout;
    double off_timeout;
    Eina_List *dpms_list;
+   
+   double backlight_normal;
+   double backlight_dim;
+   double backlight_transition;
 };
 
 static E_Dialog *dpms_dialog = NULL;
 
+/* always allow as dmps now has backlight too
 static void
 _cb_dpms_dialog_ok(void *data __UNUSED__, E_Dialog *dia __UNUSED__)
 {
    e_object_del(E_OBJECT(dpms_dialog));
    dpms_dialog = NULL;
 }
+*/
 
 static int
 _e_int_config_dpms_capable(void)
 {
+   return 1;
+/* always allow as dmps now has backlight too 
+ * this all needs to merge with screensaver too into a simple screen blank+
+ * dim+brightness etc. config
    if (ecore_x_dpms_capable_get()) return 1;
 
    if (dpms_dialog) e_object_del(E_OBJECT(dpms_dialog));
@@ -65,12 +75,15 @@ _e_int_config_dpms_capable(void)
    e_dialog_button_focus_num(dpms_dialog, 1);
    e_win_centered_set(dpms_dialog->win, 1);
    e_dialog_show(dpms_dialog);
+ */
    return 0;
 }
 
 static int
 _e_int_config_dpms_available(void)
 {
+   return 1;
+/* always allow as dmps now has backlight too
    if (ecore_x_dpms_query()) return 1;
 
    if (dpms_dialog) e_object_del(E_OBJECT(dpms_dialog));
@@ -87,6 +100,7 @@ _e_int_config_dpms_available(void)
    e_win_centered_set(dpms_dialog->win, 1);
    e_dialog_show(dpms_dialog);
    return 0;
+ */
 }
 
 E_Config_Dialog *
@@ -125,6 +139,9 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->suspend_timeout = e_config->dpms_suspend_timeout / 60;
    cfdata->enable_off = e_config->dpms_off_enable;
    cfdata->off_timeout = e_config->dpms_off_timeout / 60;
+   cfdata->backlight_normal = e_config->backlight.normal * 100.0;
+   cfdata->backlight_dim = e_config->backlight.dim * 100.0;
+   cfdata->backlight_transition = e_config->backlight.transition;
 }
 
 static void
@@ -156,8 +173,8 @@ _create_data(E_Config_Dialog *cfd)
 static void
 _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-  eina_list_free(cfdata->dpms_list);
-  E_FREE(cfdata);
+   eina_list_free(cfdata->dpms_list);
+   E_FREE(cfdata);
 }
 
 static int
@@ -171,7 +188,14 @@ _apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    e_config->dpms_standby_timeout = cfdata->standby_timeout * 60;
    e_config->dpms_suspend_timeout = cfdata->suspend_timeout * 60;
    e_config->dpms_off_timeout = cfdata->off_timeout * 60;
+   
+   e_config->backlight.normal = cfdata->backlight_normal / 100.0;
+   e_config->backlight.dim = cfdata->backlight_dim / 100.0;
+   e_config->backlight.transition = cfdata->backlight_transition;
 
+   e_backlight_mode_set(NULL, E_BACKLIGHT_MODE_NORMAL);
+   e_backlight_level_set(NULL, e_config->backlight.normal, -1.0);
+   
    e_config_save_queue();
    e_dpms_update();
    return 1;
@@ -187,7 +211,10 @@ _advanced_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *c
 	  (e_config->dpms_off_enable != cfdata->enable_off) ||
 	  (e_config->dpms_standby_timeout / 60 != cfdata->standby_timeout) ||
 	  (e_config->dpms_suspend_timeout / 60 != cfdata->suspend_timeout) ||
-	  (e_config->dpms_off_timeout / 60 != cfdata->off_timeout);
+	  (e_config->dpms_off_timeout / 60 != cfdata->off_timeout) ||
+          (e_config->backlight.normal * 100.0 != cfdata->backlight_normal) ||
+          (e_config->backlight.dim * 100.0 != cfdata->backlight_dim) ||
+          (e_config->backlight.transition != cfdata->backlight_transition);
 }
 
 static int
@@ -200,9 +227,12 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   Evas_Object *o, *of, *ob;
+   Evas_Object *o, *of, *ob, *otb;
    Evas_Object *dpms_check;
 
+   otb = e_widget_toolbook_add(evas, (24 * e_scale), (24 * e_scale));
+   
+   /* dpms */
    o = e_widget_list_add(evas, 0, 0);
 
    dpms_check = e_widget_check_add(evas, _("Enable Display Power Management"),
@@ -253,7 +283,36 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
    _list_disabled_state_apply(cfdata->dpms_list, !cfdata->enable_dpms);
 
    e_widget_list_object_append(o, of, 1, 1, 0.5);
-   return o;
+   
+   e_widget_toolbook_page_append(otb, NULL, _("DPMS"), o,
+                                 1, 0, 1, 0, 0.5, 0.0);
+
+   o = e_widget_list_add(evas, 0, 0);
+
+   ob = e_widget_label_add(evas, _("Normal Backlight"));
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   ob = e_widget_slider_add(evas, 1, 0, _("%3.0f"), 0.0, 100.0, 1.0, 0,
+			    &(cfdata->backlight_normal), NULL, 100);
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   
+   ob = e_widget_label_add(evas, _("Dim Backlight"));
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   ob = e_widget_slider_add(evas, 1, 0, _("%3.0f"), 0.0, 100.0, 1.0, 0,
+			    &(cfdata->backlight_dim), NULL, 100);
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   
+   ob = e_widget_label_add(evas, _("Fade Time"));
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.1f sec"), 0.0, 5.0, 0.1, 0,
+			    &(cfdata->backlight_transition), NULL, 100);
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   
+   e_widget_toolbook_page_append(otb, NULL, _("Backlight"), o,
+                                 1, 0, 1, 0, 0.5, 0.0);
+   
+   e_widget_toolbook_page_show(otb, 0);
+   
+   return otb;
 }
 
 /* general functionality/callbacks */

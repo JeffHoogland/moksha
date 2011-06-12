@@ -1237,14 +1237,13 @@ _e_actions_zone_get(E_Object *obj)
 {
    if (obj)
      {
-	if (obj->type == E_MANAGER_TYPE)
-	  return e_util_zone_current_get((E_Manager *)obj);
-	else if (obj->type == E_CONTAINER_TYPE)
-	  return e_util_zone_current_get(((E_Container *)obj)->manager);
-	else if (obj->type == E_ZONE_TYPE)
-	  return e_util_zone_current_get(((E_Zone *)obj)->container->manager);
-	else
-	  return e_util_zone_current_get(e_manager_current_get());
+	if      (obj->type == (int)E_MANAGER_TYPE)   return e_util_zone_current_get((E_Manager *)obj);
+	else if (obj->type == (int)E_CONTAINER_TYPE) return e_util_zone_current_get(((E_Container *)obj)->manager);
+	else if (obj->type == (int)E_ZONE_TYPE)      return (E_Zone *)obj;
+	else if (obj->type == (int)E_BORDER_TYPE)    return ((E_Border *)obj)->zone;
+	else if (obj->type == (int)E_SHELF_TYPE)     return ((E_Shelf *)obj)->zone;
+	else if (obj->type == (int)E_POPUP_TYPE)     return ((E_Popup *)obj)->zone;
+	else if (obj->type == (int)E_WIN_TYPE)       return ((E_Win *)obj)->border->zone;
      }
    return e_util_zone_current_get(e_manager_current_get());
 }
@@ -2635,12 +2634,30 @@ ACT_FN_END_MOUSE(delayed_action, )
 
 ACT_FN_GO_ACPI(dim_screen, __UNUSED__)
 {
-   printf("Dim Screen\n");
+   E_Zone *zone = _e_actions_zone_get(obj);
+   e_backlight_mode_set(zone, E_BACKLIGHT_MODE_DIM);
 }
 
 ACT_FN_GO_ACPI(undim_screen, __UNUSED__)
 {
-   printf("Undim Screen\n");
+   E_Zone *zone = _e_actions_zone_get(obj);
+   e_backlight_mode_set(zone, E_BACKLIGHT_MODE_NORMAL);
+}
+
+ACT_FN_GO_ACPI(backlight_set, )
+{
+   E_Zone *zone = _e_actions_zone_get(obj);
+   double v = atof(params);
+   e_backlight_mode_set(zone, E_BACKLIGHT_MODE_NORMAL);
+   e_backlight_level_set(zone, v, -1.0);
+}
+
+ACT_FN_GO_ACPI(backlight_adjust, )
+{
+   E_Zone *zone = _e_actions_zone_get(obj);
+   double v = atof(params);
+   e_backlight_mode_set(zone, E_BACKLIGHT_MODE_NORMAL);
+   e_backlight_level_set(zone, e_backlight_level_get(zone) + v, -1.0);
 }
 
 /* local subsystem globals */
@@ -2933,6 +2950,29 @@ e_actions_init(void)
 			    "screen_send_by", NULL,
 			    "syntax: N-offset, example: -2", 1);
 
+   ACT_GO_ACPI(dim_screen);
+   e_action_predef_name_set(N_("Screen"), N_("Dim"), "dim_screen",
+			    NULL, NULL, 0);
+   ACT_GO_ACPI(undim_screen);
+   e_action_predef_name_set(N_("Screen"), N_("Undim"), "undim_screen",
+			    NULL, NULL, 0);
+   ACT_GO_ACPI(backlight_set);
+   e_action_predef_name_set(N_("Screen"), N_("Backlight Set"), "backlight_set",
+			    NULL, "syntax: brightness(0.0 - 1.0), example: 0.5", 1);
+   e_action_predef_name_set(N_("Screen"), N_("Backlight Min"), "backlight_set",
+			    "0.0", NULL, 0);
+   e_action_predef_name_set(N_("Screen"), N_("Backlight Mid"), "backlight_set",
+			    "0.5", NULL, 0);
+   e_action_predef_name_set(N_("Screen"), N_("Backlight Max"), "backlight_set",
+			    "1.0", NULL, 0);
+   ACT_GO_ACPI(backlight_adjust);
+   e_action_predef_name_set(N_("Screen"), N_("Backlight Adjust"), "backlight_adjust",
+			    NULL, "syntax: brightness(-1.0 - 1.0), example: -0.2", 1);
+   e_action_predef_name_set(N_("Screen"), N_("Backlight Up"), "backlight_adjust",
+			    "0.1", NULL, 0);
+   e_action_predef_name_set(N_("Screen"), N_("Backlight Down"), "backlight_adjust",
+			    "-0.1", NULL, 0);
+
    /* window_move_to_center */
    ACT_GO(window_move_to_center);
    e_action_predef_name_set(N_("Window : Actions"), N_("Move To Center"),
@@ -3076,14 +3116,6 @@ e_actions_init(void)
    ACT_GO_MOUSE(delayed_action);
    ACT_END_KEY(delayed_action);
    ACT_END_MOUSE(delayed_action);
-
-   ACT_GO_ACPI(dim_screen);
-   e_action_predef_name_set(N_("Acpi"), N_("Dim Screen"), "dim_screen",
-			    NULL, NULL, 0);
-
-   ACT_GO_ACPI(undim_screen);
-   e_action_predef_name_set(N_("Acpi"), N_("Undim Screen"), "undim_screen",
-			    NULL, NULL, 0);
 
    return 1;
 }

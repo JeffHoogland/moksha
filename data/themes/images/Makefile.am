@@ -453,4 +453,5 @@ flip_pmb.png \
 flip_pmt.png \
 flip_shad.png \
 flip_t.png \
-flip_colon.png
+flip_colon.png \
+bulb.png
