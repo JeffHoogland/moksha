@@ -1,6 +1,8 @@
 #include "e.h"
 #include <E_DBus.h>
+#ifdef HAVE_HAL
 #include <E_Hal.h>
+#endif
 
 // FIXME: backlight should be tied per zone but this implementation is just
 // a signleton right now as thats 99% of use cases. but api supports
@@ -51,7 +53,9 @@ e_backlight_shutdown(void)
      {
         e_dbus_connection_close(_hal_conn);
         _hal_conn = NULL;
+#ifdef HAVE_HAL
         e_hal_shutdown();
+#endif
         e_dbus_shutdown();
         if (_hal_bl_dev)
           {
@@ -158,6 +162,7 @@ e_backlight_mode_get(E_Zone *zone __UNUSED__)
 
 /* local subsystem functions */
 #ifdef HAL_BL        
+#ifdef HAVE_HAL
 void
 _e_backlight_hal_val_reply(void *data __UNUSED__, 
                            DBusMessage *reply, 
@@ -288,6 +293,7 @@ _e_backlight_panel_found(void *user_data __UNUSED__,
      }
 }
 #endif
+#endif
 
 static void
 _e_backlight_update(E_Zone *zone)
@@ -311,6 +317,7 @@ _e_backlight_update(E_Zone *zone)
    else
      {
 #ifdef HAL_BL        
+#ifdef HAVE_HAL
         sysmode = MODE_HAL;
         if (!_hal_conn)
            {
@@ -325,6 +332,7 @@ _e_backlight_update(E_Zone *zone)
                 (_hal_conn, "laptop_panel",
                     _e_backlight_panel_found, NULL);
           }
+#endif
 #endif        
      }
 }
@@ -349,7 +357,9 @@ _e_backlight_set(E_Zone *zone, double val)
    else if (sysmode == MODE_HAL)
      {
 #ifdef HAL_BL        
+#ifdef HAVE_HAL
         _e_backlight_hal_val_set(val);
+#endif
 #endif        
      }
 }
