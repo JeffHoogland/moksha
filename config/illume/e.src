@@ -1,4 +1,37 @@
 group "E_Config" struct {
+    value "config_version" int: 65847;
+    value "show_splash" int: 1;
+    value "init_default_theme" string: "default.edj";
+    value "desktop_default_name" string: "Desktop %i, %i";
+    value "menus_scroll_speed" double: 1000.0000000000000000000000000;
+    value "menus_fast_mouse_move_threshhold" double: 300.0000000000000000000000000;
+    value "menus_click_drag_timeout" double: 0.2500000000000000000000000;
+    value "border_shade_animate" int: 1;
+    value "border_shade_transition" int: 1;
+    value "border_shade_speed" double: 1800.0000000000000000000000000;
+    value "framerate" double: 60.0000000000000000000000000;
+    value "priority" int: 1;
+    value "image_cache" int: 4096;
+    value "font_cache" int: 512;
+    value "edje_cache" int: 32;
+    value "edje_collection_cache" int: 64;
+    value "zone_desks_x_count" int: 1;
+    value "zone_desks_y_count" int: 1;
+    value "use_virtual_roots" int: 0;
+    value "show_desktop_icons" int: 1;
+    value "edge_flip_dragging" int: 1;
+    value "evas_engine_default" int: 1;
+    value "evas_engine_container" int: 0;
+    value "evas_engine_init" int: 0;
+    value "evas_engine_menus" int: 0;
+    value "evas_engine_borders" int: 0;
+    value "evas_engine_errors" int: 0;
+    value "evas_engine_popups" int: 0;
+    value "evas_engine_drag" int: 0;
+    value "evas_engine_win" int: 0;
+    value "evas_engine_zone" int: 0;
+    value "use_composite" int: 0;
+    value "language" string: "en_US.UTF-8";
     group "syscon.actions" list {
         group "E_Config_Syscon_Action" struct {
             value "action" string: "halt";
@@ -84,8 +117,25 @@ group "E_Config" struct {
         group "E_Config_Gadcon" struct {
             group "clients" list {
                 group "E_Config_Gadcon_Client" struct {
-                    value "name" string: "illume-home-toggle";
-                    value "id" string: "illume-home-toggle.0";
+                    value "name" string: "start";
+                    value "id" string: "start";
+                    value "geom.pos" int: 0;
+                    value "geom.size" int: 41;
+                    value "geom.res" int: 474;
+                    value "geom.pos_x" double: 0.0000000000000000000000000;
+                    value "geom.pos_y" double: 0.0000000000000000000000000;
+                    value "geom.size_w" double: 0.0000000000000000000000000;
+                    value "geom.size_h" double: 0.0000000000000000000000000;
+                    value "state_info.seq" int: 1;
+                    value "state_info.flags" int: 3;
+                    value "style" string: "plain";
+                    value "orient" int: 0;
+                    value "autoscroll" uchar: 0;
+                    value "resizable" uchar: 0;
+                }
+                group "E_Config_Gadcon_Client" struct {
+                    value "name" string: "backlight";
+                    value "id" string: "backlight";
                     value "geom.pos" int: 41;
                     value "geom.size" int: 41;
                     value "geom.res" int: 474;
@@ -101,8 +151,8 @@ group "E_Config" struct {
                     value "resizable" uchar: 0;
                 }
                 group "E_Config_Gadcon_Client" struct {
-                    value "name" string: "illume-mode-toggle";
-                    value "id" string: "illume-mode-toggle.0";
+                    value "name" string: "illume-home-toggle";
+                    value "id" string: "illume-home-toggle.0";
                     value "geom.pos" int: 82;
                     value "geom.size" int: 41;
                     value "geom.res" int: 474;
@@ -118,8 +168,8 @@ group "E_Config" struct {
                     value "resizable" uchar: 0;
                 }
                 group "E_Config_Gadcon_Client" struct {
-                    value "name" string: "illume-kbd-toggle";
-                    value "id" string: "illume-kbd-toggle.0";
+                    value "name" string: "illume-mode-toggle";
+                    value "id" string: "illume-mode-toggle.0";
                     value "geom.pos" int: 123;
                     value "geom.size" int: 41;
                     value "geom.res" int: 474;
@@ -135,16 +185,16 @@ group "E_Config" struct {
                     value "resizable" uchar: 0;
                 }
                 group "E_Config_Gadcon_Client" struct {
-                    value "name" string: "battery";
-                    value "id" string: "battery";
-                    value "geom.pos" int: 433;
+                    value "name" string: "illume-kbd-toggle";
+                    value "id" string: "illume-kbd-toggle.0";
+                    value "geom.pos" int: 164;
                     value "geom.size" int: 41;
                     value "geom.res" int: 474;
                     value "geom.pos_x" double: 0.0000000000000000000000000;
                     value "geom.pos_y" double: 0.0000000000000000000000000;
                     value "geom.size_w" double: 0.0000000000000000000000000;
                     value "geom.size_h" double: 0.0000000000000000000000000;
-                    value "state_info.seq" int: 6;
+                    value "state_info.seq" int: 5;
                     value "state_info.flags" int: 3;
                     value "style" string: "plain";
                     value "orient" int: 0;
@@ -161,7 +211,7 @@ group "E_Config" struct {
                     value "geom.pos_y" double: 0.0000000000000000000000000;
                     value "geom.size_w" double: 0.0000000000000000000000000;
                     value "geom.size_h" double: 0.0000000000000000000000000;
-                    value "state_info.seq" int: 5;
+                    value "state_info.seq" int: 6;
                     value "state_info.flags" int: 1;
                     value "style" string: "plain";
                     value "orient" int: 0;
@@ -169,16 +219,16 @@ group "E_Config" struct {
                     value "resizable" uchar: 0;
                 }
                 group "E_Config_Gadcon_Client" struct {
-                    value "name" string: "start";
-                    value "id" string: "start";
-                    value "geom.pos" int: 0;
+                    value "name" string: "battery";
+                    value "id" string: "battery";
+                    value "geom.pos" int: 433;
                     value "geom.size" int: 41;
                     value "geom.res" int: 474;
                     value "geom.pos_x" double: 0.0000000000000000000000000;
                     value "geom.pos_y" double: 0.0000000000000000000000000;
                     value "geom.size_w" double: 0.0000000000000000000000000;
                     value "geom.size_h" double: 0.0000000000000000000000000;
-                    value "state_info.seq" int: 1;
+                    value "state_info.seq" int: 7;
                     value "state_info.flags" int: 3;
                     value "style" string: "plain";
                     value "orient" int: 0;
@@ -408,6 +458,72 @@ group "E_Config" struct {
             value "any_mod" uchar: 0;
             value "action" string: "desk_linear_flip_by";
             value "params" string: "1";
+        }
+    }
+    group "acpi_bindings" list {
+        group "E_Config_Binding_Acpi" struct {
+            value "context" int: 0;
+            value "type" int: 15;
+            value "status" int: -1;
+            value "action" string: "dim_screen";
+        }
+        group "E_Config_Binding_Acpi" struct {
+            value "context" int: 0;
+            value "type" int: 16;
+            value "status" int: -1;
+            value "action" string: "undim_screen";
+        }
+        group "E_Config_Binding_Acpi" struct {
+            value "context" int: 0;
+            value "type" int: 22;
+            value "status" int: 0;
+            value "action" string: "dim_screen";
+        }
+        group "E_Config_Binding_Acpi" struct {
+            value "context" int: 0;
+            value "type" int: 22;
+            value "status" int: 1;
+            value "action" string: "undim_screen";
+        }
+        group "E_Config_Binding_Acpi" struct {
+            value "context" int: 0;
+            value "type" int: 3;
+            value "status" int: -1;
+            value "action" string: "syscon";
+        }
+        group "E_Config_Binding_Acpi" struct {
+            value "context" int: 0;
+            value "type" int: 6;
+            value "status" int: -1;
+            value "action" string: "halt";
+            value "params" string: "now";
+        }
+        group "E_Config_Binding_Acpi" struct {
+            value "context" int: 0;
+            value "type" int: 8;
+            value "status" int: -1;
+            value "action" string: "suspend";
+            value "params" string: "now";
+        }
+        group "E_Config_Binding_Acpi" struct {
+            value "context" int: 0;
+            value "type" int: 12;
+            value "status" int: -1;
+            value "action" string: "hiberate";
+            value "params" string: "now";
+        }
+        group "E_Config_Binding_Acpi" struct {
+            value "context" int: 0;
+            value "type" int: 5;
+            value "status" int: 1;
+            value "action" string: "suspend";
+            value "params" string: "now";
+        }
+        group "E_Config_Binding_Acpi" struct {
+            value "context" int: 0;
+            value "type" int: 20;
+            value "status" int: -1;
+            value "action" string: "volume_mute";
         }
     }
     group "signal_bindings" list {
@@ -1059,13 +1175,112 @@ group "E_Config" struct {
             value "params" string: "3";
             value "any_mod" uchar: 0;
         }
-        group "E_Config_Binding_Key" struct {
-            value "context" int: 9;
-            value "modifiers" int: 0;
-            value "key" string: "Print";
-            value "action" string: "shot";
-            value "any_mod" uchar: 0;
-        }
+       group "E_Config_Binding_Key" struct {
+          value "context" int: 9;
+          value "modifiers" int: 0;
+          value "key" string: "XF86AudioLowerVolume";
+          value "action" string: "volume_decrease";
+          value "any_mod" uchar: 0;
+       }
+       group "E_Config_Binding_Key" struct {
+          value "context" int: 9;
+          value "modifiers" int: 0;
+          value "key" string: "XF86AudioRaiseVolume";
+          value "action" string: "volume_increase";
+          value "any_mod" uchar: 0;
+       }
+       group "E_Config_Binding_Key" struct {
+          value "context" int: 9;
+          value "modifiers" int: 0;
+          value "key" string: "XF86AudioMute";
+          value "action" string: "volume_mute";
+          value "any_mod" uchar: 0;
+       }
+       group "E_Config_Binding_Key" struct {
+          value "context" int: 9;
+          value "modifiers" int: 0;
+          value "key" string: "Print";
+          value "action" string: "shot";
+          value "any_mod" uchar: 0;
+       }
+       group "E_Config_Binding_Key" struct {
+          value "context" int: 9;
+          value "modifiers" int: 0;
+          value "key" string: "XF86Standby";
+          value "action" string: "suspend";
+          value "params" string: "now";
+          value "any_mod" uchar: 0;
+       }
+       group "E_Config_Binding_Key" struct {
+          value "context" int: 9;
+          value "modifiers" int: 0;
+          value "key" string: "XF86Start";
+          value "action" string: "menu_show";
+          value "params" string: "all";
+          value "any_mod" uchar: 0;
+       }
+       group "E_Config_Binding_Key" struct {
+          value "context" int: 9;
+          value "modifiers" int: 0;
+          value "key" string: "XF86PowerDown";
+          value "action" string: "hibernate";
+          value "params" string: "now";
+          value "any_mod" uchar: 0;
+       }
+       group "E_Config_Binding_Key" struct {
+          value "context" int: 9;
+          value "modifiers" int: 0;
+          value "key" string: "XF86PowerOff";
+          value "action" string: "halt";
+          value "any_mod" uchar: 0;
+       }
+       group "E_Config_Binding_Key" struct {
+          value "context" int: 9;
+          value "modifiers" int: 0;
+          value "key" string: "XF86Sleep";
+          value "action" string: "suspend";
+          value "params" string: "now";
+          value "any_mod" uchar: 0;
+       }
+       group "E_Config_Binding_Key" struct {
+          value "context" int: 9;
+          value "modifiers" int: 0;
+          value "key" string: "XF86Suspend";
+          value "action" string: "suspend";
+          value "params" string: "now";
+          value "any_mod" uchar: 0;
+       }
+       group "E_Config_Binding_Key" struct {
+          value "context" int: 9;
+          value "modifiers" int: 0;
+          value "key" string: "XF86Hibernate";
+          value "action" string: "hibernate";
+          value "params" string: "now";
+          value "any_mod" uchar: 0;
+       }
+       group "E_Config_Binding_Key" struct {
+          value "context" int: 9;
+          value "modifiers" int: 0;
+          value "key" string: "Execute";
+          value "action" string: "everything";
+          value "any_mod" uchar: 0;
+       }
+       group "E_Config_Binding_Key" struct {
+          value "context" int: 9;
+          value "modifiers" int: 0;
+          value "key" string: "XF86MonBrightnessUp";
+          value "action" string: "backlight_adjust";
+          value "params" string: "0.1";
+          value "any_mod" uchar: 0;
+       }
+       group "E_Config_Binding_Key" struct {
+          value "context" int: 9;
+          value "modifiers" int: 0;
+          value "key" string: "XF86MonBrightnessDown";
+          value "action" string: "backlight_adjust";
+          value "params" string: "-0.1";
+          value "any_mod" uchar: 0;
+       }
     }
     group "mouse_bindings" list {
         group "E_Config_Binding_Mouse" struct {
@@ -1235,40 +1450,13 @@ group "E_Config" struct {
             value "delayed" uchar: 1;
             value "priority" int: 0;
         }
+        group "E_Config_Module" struct {
+            value "name" string: "backlight";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 0;
+            value "priority" int: 0;
+        }
     }
-    value "config_version" int: 65847;
-    value "show_splash" int: 1;
-    value "init_default_theme" string: "default.edj";
-    value "desktop_default_name" string: "Desktop %i, %i";
-    value "menus_scroll_speed" double: 1000.0000000000000000000000000;
-    value "menus_fast_mouse_move_threshhold" double: 300.0000000000000000000000000;
-    value "menus_click_drag_timeout" double: 0.2500000000000000000000000;
-    value "border_shade_animate" int: 1;
-    value "border_shade_transition" int: 1;
-    value "border_shade_speed" double: 1800.0000000000000000000000000;
-    value "framerate" double: 60.0000000000000000000000000;
-    value "priority" int: 1;
-    value "image_cache" int: 4096;
-    value "font_cache" int: 512;
-    value "edje_cache" int: 32;
-    value "edje_collection_cache" int: 64;
-    value "zone_desks_x_count" int: 1;
-    value "zone_desks_y_count" int: 1;
-    value "use_virtual_roots" int: 0;
-    value "show_desktop_icons" int: 1;
-    value "edge_flip_dragging" int: 1;
-    value "evas_engine_default" int: 1;
-    value "evas_engine_container" int: 0;
-    value "evas_engine_init" int: 0;
-    value "evas_engine_menus" int: 0;
-    value "evas_engine_borders" int: 0;
-    value "evas_engine_errors" int: 0;
-    value "evas_engine_popups" int: 0;
-    value "evas_engine_drag" int: 0;
-    value "evas_engine_win" int: 0;
-    value "evas_engine_zone" int: 0;
-    value "use_composite" int: 0;
-    value "language" string: "en_US.UTF-8";
     value "window_placement_policy" int: 0;
     value "focus_policy" int: 0;
     value "focus_setting" int: 1;
@@ -1436,7 +1624,7 @@ group "E_Config" struct {
     value "scale.use_custom" uchar: 0;
     value "show_cursor" uchar: 1;
     value "idle_cursor" uchar: 0;
-    value "default_system_menu" string: "/etc/xdg/menus/gnome-applications.menu";
+    value "default_system_menu" string: "";
     value "cfgdlg_normal_wins" uchar: 1;
     value "syscon.main.icon_size" int: 64;
     value "syscon.secondary.icon_size" int: 48;
@@ -1448,4 +1636,7 @@ group "E_Config" struct {
     value "exec.expire_timeout" double: 60.0000000000000000000000000;
     value "exec.show_run_dialog" uchar: 0;
     value "exec.show_exit_dialog" uchar: 0;
+    value "backlight.normal" double: 1.0;
+    value "backlight.dim" double: 0.3;
+    value "backlight.transition" double: 0.5;
 }
