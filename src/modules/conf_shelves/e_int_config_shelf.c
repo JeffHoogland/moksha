@@ -10,6 +10,7 @@ static void _cb_delete(void *data, void *data2);
 static void _cb_dialog_yes(void *data);
 static void _cb_dialog_destroy(void *data);
 static void _cb_config(void *data, void *data2);
+static void _cb_contents(void *data, void *data2);
 
 struct _E_Config_Dialog_Data 
 {
@@ -80,10 +81,14 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    cfdata->o_delete = e_widget_button_add(evas, _("Delete"), "list-remove", 
 					  _cb_delete, cfdata, NULL);
    e_widget_table_object_append(ot, cfdata->o_delete, 1, 0, 1, 1, 1, 1, 0, 0);
+   cfdata->o_config = e_widget_button_add(evas, _("Contents"), "preferences-desktop-shelf", 
+					  _cb_contents, cfdata, NULL);
+   e_widget_table_object_align_append(ot, cfdata->o_config, 
+                                      2, 0, 1, 1, 0, 1, 1, 1, 1.0, 0.5);
    cfdata->o_config = e_widget_button_add(evas, _("Setup"), "configure", 
 					  _cb_config, cfdata, NULL);
    e_widget_table_object_align_append(ot, cfdata->o_config, 
-                                      2, 0, 1, 1, 0, 1, 1, 1, 1.0, 0.5);
+                                      3, 0, 1, 1, 0, 1, 1, 1, 1.0, 0.5);
    e_widget_list_object_append(ol, ot, 1, 0, 0.0);
 
    e_widget_disabled_set(cfdata->o_delete, 1);
@@ -322,4 +327,17 @@ _cb_config(void *data, void *data2 __UNUSED__)
 		      e_widget_ilist_selected_get(cfdata->o_list));
    if (!es) return;
    if (!es->config_dialog) e_int_shelf_config(es);
+}
+
+static void 
+_cb_contents(void *data, void *data2 __UNUSED__) 
+{
+   E_Config_Dialog_Data *cfdata;
+   E_Shelf *es;
+
+   if (!(cfdata = data)) return;
+   es = eina_list_nth(e_shelf_list(), 
+		      e_widget_ilist_selected_get(cfdata->o_list));
+   if (!es) return;
+   if (!es->config_dialog) e_int_gadcon_config_shelf(es->gadcon);
 }
