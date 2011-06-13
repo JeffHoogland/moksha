@@ -125,6 +125,37 @@ _backlight_input_win_key_down_cb(void *data, int type __UNUSED__, void *event)
         e_backlight_mode_set(inst->gcc->gadcon->zone, E_BACKLIGHT_MODE_NORMAL);
         e_backlight_level_set(inst->gcc->gadcon->zone, v, 0.0);
      }
+   else
+     {
+        Eina_List *l;
+        E_Config_Binding_Key *bind;
+        E_Binding_Modifier mod;
+        
+        for (l = e_config->key_bindings; l; l = l->next)
+          {
+             bind = l->data;
+             
+             if (bind->action && strcmp(bind->action, "backlight")) continue;
+             
+             mod = 0;
+             
+             if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
+                mod |= E_BINDING_MODIFIER_SHIFT;
+             if (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)
+                mod |= E_BINDING_MODIFIER_CTRL;
+             if (ev->modifiers & ECORE_EVENT_MODIFIER_ALT)
+                mod |= E_BINDING_MODIFIER_ALT;
+             if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN)
+                mod |= E_BINDING_MODIFIER_WIN;
+             
+             if (bind->key && (!strcmp(bind->key, ev->keyname)) &&
+                 ((bind->modifiers == mod) || (bind->any_mod)))
+               {
+                  _backlight_popup_free(inst);
+                  break;
+               }
+          }
+     }
    return ECORE_CALLBACK_PASS_ON;
 }
 
