@@ -874,6 +874,7 @@ data/etc/sysactions.conf
 data/icons/Makefile
 data/backgrounds/Makefile
 doc/Makefile
+doc/Doxyfile
 doc/e.dox
 config/Makefile
 config/default/Makefile
