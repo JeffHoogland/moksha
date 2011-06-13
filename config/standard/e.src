@@ -951,6 +951,24 @@ group "E_Config" struct {
       value "any_mod" uchar: 0;
     }
   }
+  group "key_bindings" list {
+    group "E_Config_Binding_Key" struct {
+      value "context" int: 9;
+      value "modifiers" int: 0;
+      value "key" string: "XF86LightBulb";
+      value "action" string: "backlight";
+      value "any_mod" uchar: 0;
+    }
+  }
+  group "key_bindings" list {
+    group "E_Config_Binding_Key" struct {
+      value "context" int: 9;
+      value "modifiers" int: 0;
+      value "key" string: "XF86BrightnessAdjust";
+      value "action" string: "backlight";
+      value "any_mod" uchar: 0;
+    }
+  }
   group "edge_bindings" list {
     group "E_Config_Binding_Edge" struct {
       value "context" int: 3;
@@ -1487,6 +1505,12 @@ group "E_Config" struct {
             value "type" int: 20;
             value "status" int: -1;
             value "action" string: "volume_mute";
+        }
+        group "E_Config_Binding_Acpi" struct {
+            value "context" int: 0;
+            value "type" int: 22;
+            value "status" int: -1;
+            value "action" string: "backlight";
         }
     }
   value "window_placement_policy" int: 0;

@@ -525,6 +525,12 @@ group "E_Config" struct {
             value "status" int: -1;
             value "action" string: "volume_mute";
         }
+        group "E_Config_Binding_Acpi" struct {
+            value "context" int: 0;
+            value "type" int: 22;
+            value "status" int: -1;
+            value "action" string: "backlight";
+        }
     }
     group "signal_bindings" list {
         group "E_Config_Binding_Signal" struct {
@@ -1279,6 +1285,20 @@ group "E_Config" struct {
           value "key" string: "XF86MonBrightnessDown";
           value "action" string: "backlight_adjust";
           value "params" string: "-0.1";
+          value "any_mod" uchar: 0;
+       }
+       group "E_Config_Binding_Key" struct {
+          value "context" int: 9;
+          value "modifiers" int: 0;
+          value "key" string: "XF86LightBulb";
+          value "action" string: "backlight";
+          value "any_mod" uchar: 0;
+       }
+       group "E_Config_Binding_Key" struct {
+          value "context" int: 9;
+          value "modifiers" int: 0;
+          value "key" string: "XF86BrightnessAdjust";
+          value "action" string: "backlight";
           value "any_mod" uchar: 0;
        }
     }
