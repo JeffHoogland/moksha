@@ -6412,7 +6412,28 @@ _e_border_eval0(E_Border *bd)
         if (bd->client.icccm.base_h > 32767) bd->client.icccm.base_h = 32767;
 //	if (bd->client.icccm.step_w < 1) bd->client.icccm.step_w = 1;
 //	if (bd->client.icccm.step_h < 1) bd->client.icccm.step_h = 1;
-
+        // if doing a resize, fix it up
+        if (bd->resize_mode != RESIZE_NONE)
+          {
+             int x, y, w, h, new_w, new_h;
+             
+             x = bd->x;
+             y = bd->y;
+             w = bd->client.w;
+             h = bd->client.h;
+             new_w = w;
+             new_h = h;
+             e_border_resize_limit(bd, &new_w, &new_h);
+             if ((bd->resize_mode == RESIZE_TL) ||
+                 (bd->resize_mode == RESIZE_L) ||
+                 (bd->resize_mode == RESIZE_BL))
+                x += (w - new_w);
+             if ((bd->resize_mode == RESIZE_TL) ||
+                 (bd->resize_mode == RESIZE_T) ||
+                 (bd->resize_mode == RESIZE_TR))
+                y += (h - new_h);
+             e_border_move_resize(bd, x, y, new_w, new_h);
+          }
         bd->client.icccm.fetch.size_pos_hints = 0;
         rem_change = 1;
      }
