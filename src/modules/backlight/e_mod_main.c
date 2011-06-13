@@ -44,7 +44,7 @@ static void _backlight_popup_free(Instance *inst);
 static void
 _backlight_input_win_del(Instance *inst)
 {
-   e_grabinput_release(inst->input_win, inst->input_win);
+   e_grabinput_release(0, inst->input_win);
    ecore_x_window_free(inst->input_win);
    inst->input_win = 0;
    ecore_event_handler_del(inst->hand_mouse_down);
@@ -135,7 +135,7 @@ _backlight_input_win_new(Instance *inst)
    Ecore_X_Window w, popup_w;
    E_Manager *man;
    
-   man = e_manager_current_get();
+   man = inst->gcc->gadcon->zone->container->manager;
    
    w = ecore_x_window_input_new(man->root, 0, 0, man->w, man->h);
    mask = (ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE |
@@ -152,7 +152,7 @@ _backlight_input_win_new(Instance *inst)
       ecore_event_handler_add(ECORE_EVENT_KEY_DOWN,
                               _backlight_input_win_key_down_cb, inst);
    inst->input_win = w;
-   e_grabinput_get(inst->input_win, 0, inst->input_win);
+   e_grabinput_get(0, 0, inst->input_win);
 }
 
 static void
