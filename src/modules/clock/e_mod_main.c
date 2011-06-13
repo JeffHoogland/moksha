@@ -639,6 +639,12 @@ e_modapi_init(E_Module *m)
 EAPI int
 e_modapi_shutdown(E_Module *m __UNUSED__)
 {
+   if (act)
+     {
+        e_action_predef_name_del(_("Clock"), _("Show calendar"));
+        e_action_del("clock");
+        act = NULL;
+     }
    if (clock_config)
      {
         e_object_del(E_OBJECT(clock_config));
