@@ -11886,18 +11886,55 @@ collections {
 /*** MOD: BACKLIGHT ***/
    group { name: "e/modules/backlight/main";
       images {
-         image: "bulb.png" COMP;
+         image: "bulb-0.png" COMP;
+         image: "bulb-1.png" COMP;
+         image: "bulb-2.png" COMP;
       }
       min: 16 16;
       max: 128 128;
+      script {      
+       public message(Msg_Type:type, id, ...) {
+          if ((type == MSG_FLOAT) && (id == 0)) {
+             new Float:val;
+             val = getfarg(2);
+             set_tween_state(PART:"glow", val, "default", 0.0, "full", 0.0);
+             set_tween_state(PART:"glow2", val, "default", 0.0, "full", 0.0);
+          }
+       }
+      }
       parts {
          part {
+            name: "glow";
+            description { state: "default" 0.0;
+               rel1.to: "base";
+               rel2.to: "base";
+               image.normal: "bulb-1.png";
+               color: 255 255 255 0;
+            }
+            description { state: "full" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+         }
+         part {
             name: "base";
-            description {
-               state: "default" 0.0;
+            description { state: "default" 0.0;
                aspect: 1.0 1.0;
                aspect_preference: BOTH;
-               image.normal: "bulb.png";
+               image.normal: "bulb-0.png";
+            }
+         }
+         part {
+            name: "glow2";
+            description { state: "default" 0.0;
+               rel1.to: "base";
+               rel2.to: "base";
+               image.normal: "bulb-2.png";
+               color: 255 255 255 0;
+            }
+            description { state: "full" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
             }
          }
       }

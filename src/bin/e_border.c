@@ -2986,7 +2986,7 @@ _e_border_shape_input_rectangle_set(E_Border* bd)
      {
         if (bd->visible) // not shaped input
           {
-             if (!bd->comp_hidden)
+             if (!((bd->comp_hidden) || (bd->tmp_input_hidden > 0)))
                 ecore_x_composite_window_events_enable(bd->win);
              else
                 ecore_x_composite_window_events_disable(bd->win);
@@ -3132,7 +3132,7 @@ _e_border_show(E_Border *bd)
 	return;
      }
 
-   if (!bd->comp_hidden)
+   if (!((bd->comp_hidden) || (bd->tmp_input_hidden > 0)))
      {
         _e_border_shape_input_rectangle_set(bd);
 // not anymore
@@ -8914,7 +8914,49 @@ e_border_comp_hidden_set(E_Border *bd,
 
    bd->comp_hidden = hidden;
 
-   if (bd->comp_hidden)
+   if ((bd->comp_hidden) || (bd->tmp_input_hidden > 0))
+     {
+	ecore_x_composite_window_events_disable(bd->win);
+	ecore_x_window_ignore_set(bd->win, EINA_TRUE);
+     }
+   else
+     {
+        _e_border_shape_input_rectangle_set(bd);
+	ecore_x_window_ignore_set(bd->win, EINA_FALSE);
+     }
+}
+
+EAPI void
+e_border_tmp_input_hidden_push(E_Border *bd)
+{
+   E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
+
+   bd->tmp_input_hidden++;
+   if (bd->tmp_input_hidden != 1) return;
+   
+   if ((bd->comp_hidden) || (bd->tmp_input_hidden > 0))
+     {
+	ecore_x_composite_window_events_disable(bd->win);
+	ecore_x_window_ignore_set(bd->win, EINA_TRUE);
+     }
+   else
+     {
+        _e_border_shape_input_rectangle_set(bd);
+	ecore_x_window_ignore_set(bd->win, EINA_FALSE);
+     }
+}
+
+EAPI void
+e_border_tmp_input_hidden_pop(E_Border *bd)
+{
+   E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
+
+   bd->tmp_input_hidden--;
+   if (bd->tmp_input_hidden != 0) return;
+   
+   if ((bd->comp_hidden) || (bd->tmp_input_hidden > 0))
      {
 	ecore_x_composite_window_events_disable(bd->win);
 	ecore_x_window_ignore_set(bd->win, EINA_TRUE);

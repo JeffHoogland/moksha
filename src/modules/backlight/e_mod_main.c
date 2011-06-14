@@ -42,6 +42,18 @@ static E_Action *act = NULL;
 static void _backlight_popup_free(Instance *inst);
 
 static void
+_backlight_gadget_update(Instance *inst)
+{
+   Edje_Message_Float msg;
+   
+   msg.val = inst->val;
+   if (msg.val < 0.0) msg.val = 0.0;
+   else if (msg.val > 1.0) msg.val = 1.0;
+   printf("%3.3f\n", msg.val);
+   edje_object_message_send(inst->o_backlight, EDJE_MESSAGE_FLOAT, 0, &msg);
+}
+
+static void
 _backlight_input_win_del(Instance *inst)
 {
    e_grabinput_release(0, inst->input_win);
@@ -91,6 +103,7 @@ _backlight_input_win_key_down_cb(void *data, int type __UNUSED__, void *event)
         inst->val = v;
         e_backlight_mode_set(inst->gcc->gadcon->zone, E_BACKLIGHT_MODE_NORMAL);
         e_backlight_level_set(inst->gcc->gadcon->zone, v, 0.0);
+        _backlight_gadget_update(inst);
      }
    else if ((!strcmp(keysym, "Down")) ||
             (!strcmp(keysym, "Right")) ||
@@ -107,6 +120,7 @@ _backlight_input_win_key_down_cb(void *data, int type __UNUSED__, void *event)
         inst->val = v;
         e_backlight_mode_set(inst->gcc->gadcon->zone, E_BACKLIGHT_MODE_NORMAL);
         e_backlight_level_set(inst->gcc->gadcon->zone, v, 0.0);
+        _backlight_gadget_update(inst);
      }
    else if ((!strcmp(keysym, "0")) ||
             (!strcmp(keysym, "1")) ||
@@ -124,6 +138,7 @@ _backlight_input_win_key_down_cb(void *data, int type __UNUSED__, void *event)
         inst->val = v;
         e_backlight_mode_set(inst->gcc->gadcon->zone, E_BACKLIGHT_MODE_NORMAL);
         e_backlight_level_set(inst->gcc->gadcon->zone, v, 0.0);
+        _backlight_gadget_update(inst);
      }
    else
      {
@@ -149,7 +164,7 @@ _backlight_input_win_key_down_cb(void *data, int type __UNUSED__, void *event)
                 mod |= E_BINDING_MODIFIER_WIN;
              
              if (bind->key && (!strcmp(bind->key, ev->keyname)) &&
-                 ((bind->modifiers == mod) || (bind->any_mod)))
+                 ((bind->modifiers == (int)mod) || (bind->any_mod)))
                {
                   _backlight_popup_free(inst);
                   break;
@@ -199,9 +214,9 @@ static void
 _slider_cb(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    Instance *inst = data;
-   printf("ch cb %3.3f\n", inst->val);
    e_backlight_mode_set(inst->gcc->gadcon->zone, E_BACKLIGHT_MODE_NORMAL);
    e_backlight_level_set(inst->gcc->gadcon->zone, inst->val, 0.0);
+   _backlight_gadget_update(inst);
 }
 
 static void
@@ -215,6 +230,7 @@ _backlight_popup_new(Instance *inst)
    e_backlight_update();
    e_backlight_mode_set(inst->gcc->gadcon->zone, E_BACKLIGHT_MODE_NORMAL);
    inst->val = e_backlight_level_get(inst->gcc->gadcon->zone);
+   _backlight_gadget_update(inst);
    
    inst->popup = e_gadcon_popup_new(inst->gcc);
    evas = inst->popup->win->evas;

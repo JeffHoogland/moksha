@@ -597,6 +597,7 @@ _e_desk_show_begin(E_Desk *desk, int mode, int dx, int dy)
 	       }
 	     else if ((bd->desk == desk) && (!bd->sticky))
 	       {
+                  e_border_tmp_input_hidden_push(bd);
 		  bd->fx.start.t = t;
 		  if (mode == 1)
 		    {
@@ -670,11 +671,19 @@ _e_desk_show_end(E_Desk *desk)
 		  if (!bd->visible)
 		    e_border_show(bd);
 	       }
+             e_border_tmp_input_hidden_pop(bd);
 	  }
      }
 
-   if (e_config->focus_last_focused_per_desktop)
-     e_desk_last_focused_focus(desk);
+   if ((e_config->focus_policy == E_FOCUS_MOUSE) ||
+       (e_config->focus_policy == E_FOCUS_SLOPPY))
+     {
+        if (e_config->focus_last_focused_per_desktop)
+          {
+             if (!e_border_under_pointer_get(desk, NULL))
+                e_desk_last_focused_focus(desk);
+          }
+     }
 
    e_container_border_list_free(bl);
    ecore_x_window_shadow_tree_flush();
