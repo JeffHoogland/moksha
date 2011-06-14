@@ -90,6 +90,14 @@ cb_desktop_lock(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 
    return dbus_message_new_method_return(msg);
 }
+static DBusMessage *
+cb_desktop_unlock(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
+{
+   DBG("deskunlock requested");
+   e_desklock_hide();
+
+   return dbus_message_new_method_return(msg);
+}
 
 static DBusMessage*
 cb_desktop_bgadd(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
@@ -212,6 +220,8 @@ void msgbus_desktop_init(Eina_Array *ifaces)
 				    cb_desktop_show_by_name);
         e_dbus_interface_method_add(iface, "Lock", "", "",
                                     cb_desktop_lock);
+	e_dbus_interface_method_add(iface, "Unlock", "", "",
+                                    cb_desktop_unlock);
 	e_msgbus_interface_attach(iface);
 	eina_array_push(ifaces, iface);
      }
