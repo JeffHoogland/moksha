@@ -49,7 +49,6 @@ _backlight_gadget_update(Instance *inst)
    msg.val = inst->val;
    if (msg.val < 0.0) msg.val = 0.0;
    else if (msg.val > 1.0) msg.val = 1.0;
-   printf("%3.3f\n", msg.val);
    edje_object_message_send(inst->o_backlight, EDJE_MESSAGE_FLOAT, 0, &msg);
 }
 
@@ -349,6 +348,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 
    e_backlight_update();
    inst->val = e_backlight_level_get(inst->gcc->gadcon->zone);
+   _backlight_gadget_update(inst);
    
    evas_object_event_callback_add(inst->o_backlight, 
                                   EVAS_CALLBACK_MOUSE_DOWN,
