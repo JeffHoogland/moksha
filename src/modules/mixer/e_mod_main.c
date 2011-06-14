@@ -440,6 +440,7 @@ _mixer_popup_input_window_key_down_cb(void *data, int type __UNUSED__, void *eve
 static void
 _mixer_popup_input_window_destroy(E_Mixer_Instance *inst)
 {
+   e_grabinput_release(0, inst->ui.input.win);
    ecore_x_window_free(inst->ui.input.win);
    inst->ui.input.win = 0;
 
@@ -476,6 +477,7 @@ _mixer_popup_input_window_create(E_Mixer_Instance *inst)
                               _mixer_popup_input_window_key_down_cb, inst);
 
    inst->ui.input.win = w;
+   e_grabinput_get(0, 0, inst->ui.input.win);
 }
 
 static void
