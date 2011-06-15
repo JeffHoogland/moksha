@@ -2,8 +2,10 @@
 Type=Link
 Name=Backlight
 Name[fr]=Rétroéclairage
+Name[pt]=Iluminação
 Icon=e-module-backlight
 X-Enlightenment-ModuleType=utils
 Comment=Backlight control slider gadget
 Comment[fr]=Slider de contrôle du rétroéclairage.
 Comment[it]=Fornisce un cursore per il controllo della retroilluminazione.
+Comment[pt]=Um cursor para controlar a iluminação do monitor
