@@ -2644,20 +2644,20 @@ ACT_FN_GO_ACPI(undim_screen, __UNUSED__)
    e_backlight_mode_set(zone, E_BACKLIGHT_MODE_NORMAL);
 }
 
-ACT_FN_GO_ACPI(backlight_set, )
+ACT_FN_GO(backlight_set, )
 {
    E_Zone *zone = _e_actions_zone_get(obj);
-   double v = atof(params);
+   int v = atoi(params);
    e_backlight_mode_set(zone, E_BACKLIGHT_MODE_NORMAL);
-   e_backlight_level_set(zone, v, -1.0);
+   e_backlight_level_set(zone, ((double)v / 100.0), -1.0);
 }
 
-ACT_FN_GO_ACPI(backlight_adjust, )
+ACT_FN_GO(backlight_adjust, )
 {
    E_Zone *zone = _e_actions_zone_get(obj);
-   double v = atof(params);
+   int v = atoi(params);
    e_backlight_mode_set(zone, E_BACKLIGHT_MODE_NORMAL);
-   e_backlight_level_set(zone, e_backlight_level_get(zone) + v, -1.0);
+   e_backlight_level_set(zone, e_backlight_level_get(zone) + ((double)v / 100.0), -1.0);
 }
 
 /* local subsystem globals */
@@ -2956,22 +2956,22 @@ e_actions_init(void)
    ACT_GO_ACPI(undim_screen);
    e_action_predef_name_set(N_("Screen"), N_("Undim"), "undim_screen",
 			    NULL, NULL, 0);
-   ACT_GO_ACPI(backlight_set);
+   ACT_GO(backlight_set);
    e_action_predef_name_set(N_("Screen"), N_("Backlight Set"), "backlight_set",
-			    NULL, "syntax: brightness(0.0 - 1.0), example: 0.5", 1);
+			    NULL, "syntax: brightness(0 - 100), example: 50", 1);
    e_action_predef_name_set(N_("Screen"), N_("Backlight Min"), "backlight_set",
-			    "0.0", NULL, 0);
+			    "0", NULL, 0);
    e_action_predef_name_set(N_("Screen"), N_("Backlight Mid"), "backlight_set",
-			    "0.5", NULL, 0);
+			    "50", NULL, 0);
    e_action_predef_name_set(N_("Screen"), N_("Backlight Max"), "backlight_set",
-			    "1.0", NULL, 0);
-   ACT_GO_ACPI(backlight_adjust);
+			    "100", NULL, 0);
+   ACT_GO(backlight_adjust);
    e_action_predef_name_set(N_("Screen"), N_("Backlight Adjust"), "backlight_adjust",
-			    NULL, "syntax: brightness(-1.0 - 1.0), example: -0.2", 1);
+			    NULL, "syntax: brightness(-100 - 100), example: -20", 1);
    e_action_predef_name_set(N_("Screen"), N_("Backlight Up"), "backlight_adjust",
-			    "0.1", NULL, 0);
+			    "10", NULL, 0);
    e_action_predef_name_set(N_("Screen"), N_("Backlight Down"), "backlight_adjust",
-			    "-0.1", NULL, 0);
+			    "-10", NULL, 0);
 
    /* window_move_to_center */
    ACT_GO(window_move_to_center);

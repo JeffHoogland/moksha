@@ -29,7 +29,8 @@ internal_bin_PROGRAMS = \
 enlightenment_fm_op \
 enlightenment_init \
 enlightenment_sys \
-enlightenment_thumb
+enlightenment_thumb \
+enlightenment_backlight
 
 ENLIGHTENMENTHEADERS = \
 e_about.h \
@@ -361,6 +362,11 @@ e_sys_main.c
 
 enlightenment_sys_LDADD = @E_SYS_LIBS@
 
+enlightenment_backlight_SOURCES = \
+e_backlight_main.c
+
+enlightenment_backlight_LDADD = 
+
 enlightenment_init_SOURCES = \
 e_init_main.c \
 e_xinerama.c
@@ -373,6 +379,7 @@ enlightenment_init_LDADD = @E_INIT_LIBS@
 setuid_root_mode = a=rx,u+xs
 install-data-hook:
 	@chmod $(setuid_root_mode) $(DESTDIR)$(libdir)/enlightenment/utils/enlightenment_sys$(EXEEXT) || true
+	@chmod $(setuid_root_mode) $(DESTDIR)$(libdir)/enlightenment/utils/enlightenment_backlight$(EXEEXT) || true
 
 installed_headersdir = $(prefix)/include/enlightenment
 installed_headers_DATA = $(ENLIGHTENMENTHEADERS)
