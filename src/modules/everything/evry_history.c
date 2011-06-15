@@ -4,6 +4,9 @@
 
 #define SEVEN_DAYS 604800.0
 
+/* old history entries will be removed when threshold is reached */
+#define CLEANUP_THRESHOLD 500
+
 #define TIME_FACTOR(_now) (1.0 - (evry_hist->begin / _now)) / 1000000000000000.0
 
 typedef struct _Cleanup_Data Cleanup_Data;
@@ -164,22 +167,20 @@ _hist_cleanup_cb(const Eina_Hash *hash __UNUSED__, const void *key, void *data, 
 void
 evry_history_free(void)
 {
-   Cleanup_Data *d;
-
    evry_hist = e_config_domain_load("module.everything.cache", hist_edd);
-   if (evry_hist)
+
+   if ((evry_hist) && (evry_hist->subjects) &&
+       (eina_hash_population(evry_hist->subjects) > CLEANUP_THRESHOLD))
      {
+	Cleanup_Data *d;
+
 	d = E_NEW(Cleanup_Data, 1);
 	d->time = ecore_time_unix_get();
-
-	if (evry_hist->subjects)
-	  {
-	     eina_hash_foreach(evry_hist->subjects, _hist_cleanup_cb, d);
-	  }
-
+	eina_hash_foreach(evry_hist->subjects, _hist_cleanup_cb, d);
 	E_FREE(d);
-	evry_history_unload();
      }
+
+   evry_history_unload();
 
    E_CONFIG_DD_FREE(hist_item_edd);
    E_CONFIG_DD_FREE(hist_entry_edd);
