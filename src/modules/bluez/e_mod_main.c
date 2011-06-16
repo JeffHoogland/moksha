@@ -575,7 +575,7 @@ _bluez_popup_device_selected(void *data)
 static Eina_Bool
 _bluez_event_devicefound(void       *data,
                          int type    __UNUSED__,
-                         void *event __UNUSED__)
+                         void *event)
 {
    E_Bluez_Module_Context *ctxt = data;
    E_Bluez_Device_Found *device = event;
