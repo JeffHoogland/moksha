@@ -2647,7 +2647,15 @@ ACT_FN_GO_ACPI(undim_screen, __UNUSED__)
 ACT_FN_GO(backlight_set, )
 {
    E_Zone *zone = _e_actions_zone_get(obj);
-   int v = atoi(params);
+   int v;
+   if (params)
+      v = atoi(params);
+   else
+     {
+        v = e_backlight_level_get(zone) * 100.0;
+        if (v == 0) v = 100;
+        else v = 0;
+     }
    e_backlight_mode_set(zone, E_BACKLIGHT_MODE_NORMAL);
    e_backlight_level_set(zone, ((double)v / 100.0), -1.0);
 }
@@ -2655,7 +2663,9 @@ ACT_FN_GO(backlight_set, )
 ACT_FN_GO(backlight_adjust, )
 {
    E_Zone *zone = _e_actions_zone_get(obj);
-   int v = atoi(params);
+   int v;
+   if (!params) return;
+   v = atoi(params);
    e_backlight_mode_set(zone, E_BACKLIGHT_MODE_NORMAL);
    e_backlight_level_set(zone, e_backlight_level_get(zone) + ((double)v / 100.0), -1.0);
 }

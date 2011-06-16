@@ -487,6 +487,7 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    inst = gcc->data;
    if (inst->menu)
      {
+        e_menu_post_deactivate_callback_set(inst->menu, NULL, NULL);
         e_object_del(E_OBJECT(inst->menu));
         inst->menu = NULL;
      }
