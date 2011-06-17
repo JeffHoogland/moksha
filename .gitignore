@@ -77,6 +77,7 @@ Makefile.in
 /src/bin/e_fm/enlightenment_fm
 /src/bin/e_fm_shared_types.h
 /src/bin/enlightenment
+/src/bin/enlightenment_backlight
 /src/bin/enlightenment_fm_op
 /src/bin/enlightenment_imc
 /src/bin/enlightenment_init
@@ -89,3 +90,5 @@ Makefile.in
 /src/modules/illume2/doc/illume.dox
 /src/modules/temperature/tempget
 /stamp-h1
+/doc/Doxyfile
+
