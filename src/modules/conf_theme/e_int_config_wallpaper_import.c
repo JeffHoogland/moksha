@@ -112,7 +112,7 @@ e_int_config_wallpaper_import(void *data, const char *path)
    import->fsel = data;
 
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
-   cfdata->method = IMPORT_STRETCH;
+   cfdata->method = IMPORT_SCALE_ASPECT_OUT;
    cfdata->external = 0;
    cfdata->quality = 90;
    cfdata->file = strdup(path);
