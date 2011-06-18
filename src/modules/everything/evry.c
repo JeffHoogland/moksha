@@ -562,8 +562,15 @@ evry_item_select(const Evry_State *state, Evry_Item *it)
    if (s == sel->state)
      {
 	_evry_selector_update(sel);
-	if (CUR_SEL ==  SUBJ_SEL)
+
+	if (CUR_SEL == SUBJ_SEL)
 	  _evry_selector_update_actions(ACTN_SEL);
+
+	if (CUR_SEL == ACTN_SEL)
+	  {
+	     while (OBJ_SEL->state)
+	       _evry_state_pop(OBJ_SEL, 1);
+	  }
      }
 }
 
@@ -2343,8 +2350,7 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
    if (!(it_subj = s_subj->cur_item))
      return;
 
-   if (CUR_SEL == SUBJ_SEL &&
-       (ACTN_SEL)->update_timer)
+   if ((CUR_SEL == SUBJ_SEL) && (ACTN_SEL)->update_timer)
      {
 	/* _evry_selector_actions_get(it_subj); */
 	_evry_selector_plugins_get(ACTN_SEL, it_subj, NULL);
@@ -2373,7 +2379,7 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 	if (act->it2.type)
 	  {
 	     /* check if object is provided */
-	     if ((s_obj = (OBJ_SEL)->state))
+	     if ((s_obj = (OBJ_SEL)->state) && (!s_obj->delete_me))
 	       {
 		  it_obj = s_obj->cur_item;
 	       }
