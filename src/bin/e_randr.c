@@ -1608,8 +1608,10 @@ _e_randr_outputs_common_modes_get(Eina_List *outputs, Ecore_X_Randr_Mode_Info *m
      }
 
    //sort modes desc. by their sizes
-   EINA_LIST_REVERSE_FOREACH(common_modes, iter, mode_info)
+   for (iter = eina_list_last(common_modes); iter;)
      {
+        mode_info = iter->data;
+        iter = iter->prev;
         outputs_mode_found = 0;
         EINA_LIST_FOREACH(outputs, output_iter, output_info)
           {
