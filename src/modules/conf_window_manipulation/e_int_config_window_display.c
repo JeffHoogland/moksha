@@ -192,23 +192,52 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
 
    rg = e_widget_radio_group_new(&(cfdata->border_shade_transition));
+   
    ow = e_widget_radio_add(evas, _("Linear"), E_TRANSITION_LINEAR, rg);
    e_widget_disabled_set(ow, !cfdata->border_shade_animate);
    cfdata->shading_list = eina_list_append(cfdata->shading_list, ow);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
-   ow = e_widget_radio_add(evas, _("Accelerate, then decelerate"), 
-                           E_TRANSITION_SINUSOIDAL, rg);
+   
+   ow = e_widget_radio_add(evas, _("Accelerate, then decelerate"), E_TRANSITION_SINUSOIDAL, rg);
    e_widget_disabled_set(ow, !cfdata->border_shade_animate);
    cfdata->shading_list = eina_list_append(cfdata->shading_list, ow);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
+   
    ow = e_widget_radio_add(evas, _("Accelerate"), E_TRANSITION_ACCELERATE, rg);
    e_widget_disabled_set(ow, !cfdata->border_shade_animate);
    cfdata->shading_list = eina_list_append(cfdata->shading_list, ow);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
+   
    ow = e_widget_radio_add(evas, _("Decelerate"), E_TRANSITION_DECELERATE, rg);
    e_widget_disabled_set(ow, !cfdata->border_shade_animate);
    cfdata->shading_list = eina_list_append(cfdata->shading_list, ow);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
+   
+   ow = e_widget_radio_add(evas, _("Pronounced Accelerate"), E_TRANSITION_ACCELERATE_LOTS, rg);
+   e_widget_disabled_set(ow, !cfdata->border_shade_animate);
+   cfdata->shading_list = eina_list_append(cfdata->shading_list, ow);
+   e_widget_list_object_append(ol, ow, 1, 1, 0.5);
+   
+   ow = e_widget_radio_add(evas, _("Pronounced Decelerate"), E_TRANSITION_DECELERATE_LOTS, rg);
+   e_widget_disabled_set(ow, !cfdata->border_shade_animate);
+   cfdata->shading_list = eina_list_append(cfdata->shading_list, ow);
+   e_widget_list_object_append(ol, ow, 1, 1, 0.5);
+   
+   ow = e_widget_radio_add(evas, _("Pronounced Acceleratem then decelerate"), E_TRANSITION_SINUSOIDAL_LOTS, rg);
+   e_widget_disabled_set(ow, !cfdata->border_shade_animate);
+   cfdata->shading_list = eina_list_append(cfdata->shading_list, ow);
+   e_widget_list_object_append(ol, ow, 1, 1, 0.5);
+   
+   ow = e_widget_radio_add(evas, _("Bounce"), E_TRANSITION_BOUNCE, rg);
+   e_widget_disabled_set(ow, !cfdata->border_shade_animate);
+   cfdata->shading_list = eina_list_append(cfdata->shading_list, ow);
+   e_widget_list_object_append(ol, ow, 1, 1, 0.5);
+   
+   ow = e_widget_radio_add(evas, _("Bounce more"), E_TRANSITION_BOUNCE_LOTS, rg);
+   e_widget_disabled_set(ow, !cfdata->border_shade_animate);
+   cfdata->shading_list = eina_list_append(cfdata->shading_list, ow);
+   e_widget_list_object_append(ol, ow, 1, 1, 0.5);
+   
    e_widget_toolbook_page_append(otb, NULL, _("Shading"), ol, 
                                  0, 0, 1, 0, 0.5, 0.0);
 

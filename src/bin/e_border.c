@@ -8066,38 +8066,69 @@ _e_border_shade_animator(void *data)
    val = dt / dur;
 
    if (val < 0.0) val = 0.0;
-   else if (val > 1.0)
-     val = 1.0;
+   else if (val > 1.0) val = 1.0;
 
    if (e_config->border_shade_transition == E_TRANSITION_SINUSOIDAL)
      {
-        if (bd->shaded)
-          bd->shade.val = (1 - cos(val * M_PI)) / 2.0;
-        else
-          bd->shade.val = 0.5 + (cos(val * M_PI) / 2.0);
+        bd->shade.val = 
+           ecore_animator_pos_map(val, ECORE_POS_MAP_SINUSOIDAL, 0.0, 0.0);
+        if (!bd->shaded) bd->shade.val = 1.0 - bd->shade.val;
      }
    else if (e_config->border_shade_transition == E_TRANSITION_DECELERATE)
      {
-        if (bd->shaded)
-          bd->shade.val = sin(val * M_PI / 2.0);
-        else
-          bd->shade.val = 1 - sin(val * M_PI / 2.0);
+        bd->shade.val = 
+           ecore_animator_pos_map(val, ECORE_POS_MAP_DECELERATE, 0.0, 0.0);
+        if (!bd->shaded) bd->shade.val = 1.0 - bd->shade.val;
      }
    else if (e_config->border_shade_transition == E_TRANSITION_ACCELERATE)
      {
-        if (bd->shaded)
-          bd->shade.val = 1 - cos(val * M_PI / 2.0);
-        else
-          bd->shade.val = cos(val * M_PI / 2.0);
+        bd->shade.val = 
+           ecore_animator_pos_map(val, ECORE_POS_MAP_ACCELERATE, 0.0, 0.0);
+        if (!bd->shaded) bd->shade.val = 1.0 - bd->shade.val;
      }
-   else /* LINEAR if none of the others */
+   else if (e_config->border_shade_transition == E_TRANSITION_LINEAR)
      {
-        if (bd->shaded)
-          bd->shade.val = val;
-        else
-          bd->shade.val = 1 - val;
+        bd->shade.val = 
+           ecore_animator_pos_map(val, ECORE_POS_MAP_LINEAR, 0.0, 0.0);
+        if (!bd->shaded) bd->shade.val = 1.0 - bd->shade.val;
      }
-
+   else if (e_config->border_shade_transition == E_TRANSITION_ACCELERATE_LOTS)
+     {
+        bd->shade.val = 
+           ecore_animator_pos_map(val, ECORE_POS_MAP_ACCELERATE_FACTOR, 1.7, 0.0);
+        if (!bd->shaded) bd->shade.val = 1.0 - bd->shade.val;
+     }
+   else if (e_config->border_shade_transition == E_TRANSITION_DECELERATE_LOTS)
+     {
+        bd->shade.val = 
+           ecore_animator_pos_map(val, ECORE_POS_MAP_DECELERATE_FACTOR, 1.7, 0.0);
+        if (!bd->shaded) bd->shade.val = 1.0 - bd->shade.val;
+     }
+   else if (e_config->border_shade_transition == E_TRANSITION_SINUSOIDAL_LOTS)
+     {
+        bd->shade.val = 
+           ecore_animator_pos_map(val, ECORE_POS_MAP_SINUSOIDAL_FACTOR, 1.7, 0.0);
+        if (!bd->shaded) bd->shade.val = 1.0 - bd->shade.val;
+     }
+   else if (e_config->border_shade_transition == E_TRANSITION_BOUNCE)
+     {
+        bd->shade.val = 
+           ecore_animator_pos_map(val, ECORE_POS_MAP_BOUNCE, 1.2, 3.0);
+        if (!bd->shaded) bd->shade.val = 1.0 - bd->shade.val;
+     }
+   else if (e_config->border_shade_transition == E_TRANSITION_BOUNCE_LOTS)
+     {
+        bd->shade.val = 
+           ecore_animator_pos_map(val, ECORE_POS_MAP_BOUNCE, 1.2, 5.0);
+        if (!bd->shaded) bd->shade.val = 1.0 - bd->shade.val;
+     }
+   else
+     {
+        bd->shade.val = 
+           ecore_animator_pos_map(val, ECORE_POS_MAP_LINEAR, 0.0, 0.0);
+        if (!bd->shaded) bd->shade.val = 1.0 - bd->shade.val;
+     }
+   
    /* due to M_PI's innacuracy, cos(M_PI/2) != 0.0, so we need this */
    if (bd->shade.val < 0.001) bd->shade.val = 0.0;
    else if (bd->shade.val > .999)
@@ -8133,8 +8164,7 @@ _e_border_shade_animator(void *data)
    bd->changed = 1;
 
    /* we're done */
-   if ((bd->shaded && (bd->shade.val == 1)) ||
-       ((!bd->shaded) && (bd->shade.val == 0)))
+   if (val == 1)
      {
         E_Event_Border_Resize *ev;
 
