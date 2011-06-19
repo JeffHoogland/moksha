@@ -9,14 +9,6 @@ arrow_right.png \
 arrow_up.png \
 ball.png \
 base_bg.png \
-bat_content1b.png \
-bat_content1.png \
-bat_content2b.png \
-bat_content2.png \
-bat_content3b.png \
-bat_content3.png \
-bat_over.png \
-bat_shadow.png \
 bd_bottom.png \
 bd_button_close_focused.png \
 bd_button_close_shadow.png \
@@ -362,8 +354,6 @@ pointer_glint_12.png \
 pointer_glow.png \
 pointer_mono.png \
 pointer.png \
-power_glow.png \
-power.png \
 radio_base.png \
 radio_on.png \
 radio_sel.png \
@@ -456,4 +446,9 @@ flip_t.png \
 flip_colon.png \
 bulb-0.png \
 bulb-1.png \
-bulb-2.png
+bulb-2.png \
+batt_base.png \
+batt_level.png \
+batt_over.png \
+batt_power.png
+
