@@ -143,7 +143,7 @@ typedef struct _E_Rect E_Rect;
 #define E_SPANS_COMMON(x1, w1, x2, w2) (!((((x2) + (w2)) <= (x1)) || ((x2) >= ((x1) + (w1)))))
 #define E_REALLOC(p, s, n) p = (s *)realloc(p, sizeof(s) * n)
 #define E_NEW(s, n) (s *)calloc(n, sizeof(s))
-#define E_NEW_BIG(s, n) (s *)malloc(n * sizeof(s))
+#define E_NEW_RAW(s, n) (s *)malloc(n * sizeof(s))
 #define E_FREE(p) do { free(p); p = NULL; } while (0)
 #define E_FREE_LIST(list, free) \
   do \
