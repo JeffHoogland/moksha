@@ -102,7 +102,7 @@ e_backlight_level_set(E_Zone *zone, double val, double tim)
 }
 
 EAPI double
-e_backlight_level_get(E_Zone *zone)
+e_backlight_level_get(E_Zone *zone __UNUSED__)
 {
    // zone == NULL == everything
    return bl_val;
