@@ -42,7 +42,7 @@ struct _E_Config_Dialog_Data
    double backlight_transition;
 };
 
-static E_Dialog *dpms_dialog = NULL;
+/* static E_Dialog *dpms_dialog = NULL; */
 
 /* always allow as dmps now has backlight too
 static void
