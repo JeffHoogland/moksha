@@ -557,31 +557,25 @@ _e_mod_action(const char *params)
 }
 
 static void
-_e_mod_action_cb_edge(E_Object *obj,
-		      const char *params,
-                      E_Event_Zone_Edge *ev)
+_e_mod_action_cb_edge(E_Object *obj __UNUSED__, const char *params, E_Event_Zone_Edge *ev __UNUSED__)
 {
    _e_mod_action(params);
 }
 
 static void
-_e_mod_action_cb(E_Object *obj, const char *params)
+_e_mod_action_cb(E_Object *obj __UNUSED__, const char *params)
 {
    _e_mod_action(params);
 }
 
 static void
-_e_mod_action_cb_key(E_Object *obj,
-                     const char *params,
-                     Ecore_Event_Key *ev)
+_e_mod_action_cb_key(E_Object *obj __UNUSED__, const char *params, Ecore_Event_Key *ev __UNUSED__)
 {
    _e_mod_action(params);
 }
 
 static void
-_e_mod_action_cb_mouse(E_Object *obj,
-                       const char *params,
-                       Ecore_Event_Mouse_Button *ev)
+_e_mod_action_cb_mouse(E_Object *obj __UNUSED__, const char *params, Ecore_Event_Mouse_Button *ev __UNUSED__)
 {
    _e_mod_action(params);
 }
