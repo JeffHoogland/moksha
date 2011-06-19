@@ -151,7 +151,7 @@ main(int argc,
      }
    if (maxlevel > 0)
      {
-        curlevel = (maxlevel * level) / 1000;
+        curlevel = ((maxlevel * level) + (500 / maxlevel)) / 1000;
         return write_file(file, curlevel);
      }
    return -1;
