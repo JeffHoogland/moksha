@@ -326,6 +326,46 @@ _backlight_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __U
      }
 }
 
+static void
+_backlight_level_decrease(Instance *inst)
+{
+   double v = inst->val - 0.1;
+   if (v < 0.0) v = 0.0;
+   e_backlight_level_set(inst->gcc->gadcon->zone, v, 0.0);
+}
+
+static void
+_backlight_level_increase(Instance *inst)
+{
+   double v = inst->val + 0.1;
+   if (v > 1.0) v = 1.0;
+   e_backlight_level_set(inst->gcc->gadcon->zone, v, 0.0);
+}
+
+static void
+_backlight_cb_mouse_wheel(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event)
+{
+   Eina_List *l;
+   Evas_Event_Mouse_Wheel *ev = event;
+   double v;
+   Instance *inst = data;
+
+   e_backlight_update();
+   inst->val = e_backlight_level_get(inst->gcc->gadcon->zone);
+   if (ev->z > 0)
+     _backlight_level_decrease(inst);
+   else if (ev->z < 0)
+     _backlight_level_increase(inst);
+   
+   v = inst->val;
+
+   EINA_LIST_FOREACH(backlight_instances, l, inst)
+     {
+        inst->val = v;
+        _backlight_gadget_update(inst);
+     }
+}
+
 static E_Gadcon_Client *
 _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 {
@@ -353,6 +393,10 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    evas_object_event_callback_add(inst->o_backlight, 
                                   EVAS_CALLBACK_MOUSE_DOWN,
                                   _backlight_cb_mouse_down,
+                                  inst);
+   evas_object_event_callback_add(inst->o_backlight, 
+                                  EVAS_CALLBACK_MOUSE_WHEEL,
+                                  _backlight_cb_mouse_wheel,
                                   inst);
    
    e_gadcon_client_util_menu_attach(gcc);
