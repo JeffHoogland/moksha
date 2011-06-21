@@ -11782,10 +11782,6 @@ collections {
             if (pos >= 1.0) { \
                set_state(PART:nom"sh", "default", 0.0); \
                set_int(ns ## v0_lock, 0); \
-               v = get_int(ns ## v0_next); \
-               if (v >= 0) { \
-                  set_int(ns ## v0_next, -1); \
-               } \
             } \
          } \
          public ns ## animator1(val, Float:pos) { \
@@ -11799,12 +11795,11 @@ collections {
          } \
          public ns ## valset(value) { \
             new v, buf[11]; \
-            if (get_int(ns ## v0_lock) == 1) { \
-               set_int(ns ## v0_next, value); \
-               return; \
-            } \
             v = get_int(ns ## v0_cur); \
             if (v == value) return; \
+            if (get_int(ns ## v0_lock) == 1) { \
+               set_state(PART:nom"sh", "default", 0.0); \
+            } \
             set_int(ns ## v0_pre, v); \
             set_int(ns ## v0_cur, value); \
             set_int(ns ## v0_lock, 1); \
