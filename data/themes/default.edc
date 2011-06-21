@@ -11734,7 +11734,7 @@ collections {
    }
 
 /////////////////////////////////////////////////////////////////////////////
-#define CLOCK_SECONDS 1
+
 /*** MOD: CLOCK ***/
    group { name: "e/modules/clock/digital";
       min: 56 16;
@@ -12774,26 +12774,20 @@ collections {
          image: "ch-h2.png" COMP;
          image: "ch-m1.png" COMP;
          image: "ch-m2.png" COMP;
-#ifdef CLOCK_SECONDS
          image: "ch-s1.png" COMP;
          image: "ch-s2.png" COMP;
-#endif
          image: "ch-h1-2.png" COMP;
          image: "ch-h2-2.png" COMP;
          image: "ch-m1-2.png" COMP;
          image: "ch-m2-2.png" COMP;
-#ifdef CLOCK_SECONDS
          image: "ch-s1-2.png" COMP;
          image: "ch-s2-2.png" COMP;
-#endif
          image: "ch-h1-3.png" COMP;
          image: "ch-h2-3.png" COMP;
          image: "ch-m1-3.png" COMP;
          image: "ch-m2-3.png" COMP;
-#ifdef CLOCK_SECONDS
          image: "ch-s1-3.png" COMP;
          image: "ch-s2-3.png" COMP;
-#endif
       }
       min: 16 16;
       max: 128 128;
@@ -12809,7 +12803,6 @@ collections {
             date(year, month, day, yearday, weekday, hour, minute, second);
             get_geometry(PART:"hour", x, y, w, h);
             dosec = get_int(do_seconds);
-#ifdef CLOCK_SECONDS
             if (dosec) {
                v = round(second);
                tim = timer(1.0 - (second - v), "clock_cb", 1);
@@ -12834,12 +12827,9 @@ collections {
                   set_state_val(PART:"seconds-sh", STATE_IMAGE, IMAGE:"ch-s2.png");
                set_state(PART:"seconds-sh", "custom", 0.0);
             }
-            else
-#else
-              {
-                 tim = timer(60.0 - (second), "clock_cb", 1);
-              }
-#endif
+            else {
+               tim = timer(60.0 - (second), "clock_cb", 1);
+            }
             set_int(tick_timer, tim);
 
             custom_state(PART:"minutes", "default", 0.0);
@@ -12910,7 +12900,6 @@ collections {
                }
             }
          }
-#ifdef CLOCK_SECONDS
          part {
             name: "seconds-sh";
             mouse_events: 0;
@@ -12961,7 +12950,6 @@ collections {
                visible: 0;
             }
          }
-#endif
          part {
             name: "minutes-sh";
             mouse_events: 0;
