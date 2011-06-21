@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-06-04 10:05+0900\n"
-"PO-Revision-Date: 2011-06-09 15:31+0200\n"
+"POT-Creation-Date: 2011-06-21 14:43+0200\n"
+"PO-Revision-Date: 2011-06-21 17:07+0100\n"
 "Last-Translator: Heimen Stoffels <vistausss@gmail.com>\n"
 "Language-Team: Dutch <kde-i18n-doc@kde.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "X-Launchpad-Export-Date: 2009-08-27 10:00+0000\n"
 "X-Generator: Lokalize 1.2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -24,20 +24,29 @@ msgstr ""
 msgid "About Enlightenment"
 msgstr "Over Enlightenment"
 
-#: src/bin/e_about.c:17 src/bin/e_actions.c:2701 src/bin/e_config_dialog.c:272
-#: src/bin/e_fm.c:967 src/bin/e_int_border_menu.c:135
-#: src/bin/e_int_border_prop.c:81 src/bin/e_theme_about.c:17
+#: src/bin/e_about.c:17
+#: src/bin/e_actions.c:2728
+#: src/bin/e_config_dialog.c:272
+#: src/bin/e_fm.c:967
+#: src/bin/e_int_border_menu.c:135
+#: src/bin/e_int_border_prop.c:81
+#: src/bin/e_theme_about.c:17
 #: src/modules/conf/e_conf.c:183
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:845
 #: src/modules/conf_theme/e_int_config_wallpaper_web.c:237
 #: src/modules/conf_theme/e_int_config_theme_web.c:129
 #: src/modules/everything/evry_plug_windows.c:446
-#: src/modules/fileman/e_fwin.c:2011 src/modules/mixer/app_mixer.c:514
+#: src/modules/fileman/e_fwin.c:2011
+#: src/modules/mixer/app_mixer.c:514
 msgid "Close"
 msgstr "Sluiten"
 
-#: src/bin/e_about.c:18 src/bin/e_actions.c:3010 src/bin/e_actions.c:3014
-#: src/bin/e_actions.c:3018 src/bin/e_int_menus.c:178 src/bin/e_main.c:647
+#: src/bin/e_about.c:18
+#: src/bin/e_actions.c:3060
+#: src/bin/e_actions.c:3064
+#: src/bin/e_actions.c:3068
+#: src/bin/e_int_menus.c:178
+#: src/bin/e_main.c:647
 #: src/modules/conf_theme/e_int_config_cursor.c:155
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:219
 #: src/modules/wizard/page_000.c:29
@@ -45,25 +54,8 @@ msgid "Enlightenment"
 msgstr "Enlightenment"
 
 #: src/bin/e_about.c:23
-msgid ""
-"Copyright &copy; 1999-2011, by the Enlightenment Development Team.<br><br>We "
-"hope you enjoy using this software as much as we enjoyed writing it."
-"<br><br>This software is provided as-is with no explicit or implied "
-"warranty. This software is governed by licensing conditions, so please see "
-"the COPYING and COPYING-PLAIN licence files installed on your system."
-"<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</hilight> and it "
-"is not stable. Many features are incomplete or even non-existent yet and may "
-"have many bugs. You have been <hilight>WARNED!</hilight>"
-msgstr ""
-"Copyright &copy; 1999-2010, door het Enlightenment Ontwikkeling-team."
-"<br><br>Wij hopen dat u plezier heeft van het gebruik van onze software, net "
-"zoveel als wij dat hebben om het te schrijven. <br><br>Deze software is "
-"beschikbaar zoals ie is zonder expliciete of vastgestelde garantie. Deze "
-"software is gedekt door licentie-overeenkomsten. Zie hiervoor de COPYING en "
-"COPYING-PLAIN-licentiebestanden op uw geïnstalleerde systeem. "
-"<br><br>Enlightenment staat onder <hilight>HEVIGE ONTWIKKELING</hilight> en "
-"het is niet stabiel. Vele features zijn niet compleet of bestaan nog niet "
-"eens en kunnen vele bugs hebben. U bent <hilight>GEWAARSCHUWD!</hilight>"
+msgid "Copyright &copy; 1999-2011, by the Enlightenment Development Team.<br><br>We hope you enjoy using this software as much as we enjoyed writing it.<br><br>This software is provided as-is with no explicit or implied warranty. This software is governed by licensing conditions, so please see the COPYING and COPYING-PLAIN licence files installed on your system.<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</hilight> and it is not stable. Many features are incomplete or even non-existent yet and may have many bugs. You have been <hilight>WARNED!</hilight>"
+msgstr "Copyright &copy; 1999-2010, door het Enlightenment Ontwikkeling-team.<br><br>Wij hopen dat u plezier heeft van het gebruik van onze software, net zoveel als wij dat hebben om het te schrijven. <br><br>Deze software is beschikbaar zoals ie is zonder expliciete of vastgestelde garantie. Deze software is gedekt door licentie-overeenkomsten. Zie hiervoor de COPYING en COPYING-PLAIN-licentiebestanden op uw geïnstalleerde systeem. <br><br>Enlightenment staat onder <hilight>HEVIGE ONTWIKKELING</hilight> en het is niet stabiel. Vele features zijn niet compleet of bestaan nog niet eens en kunnen vele bugs hebben. U bent <hilight>GEWAARSCHUWD!</hilight>"
 
 #: src/bin/e_about.c:47
 msgid "<title>The Team</title>"
@@ -71,561 +63,682 @@ msgstr "<title>Het Team</title>"
 
 #: src/bin/e_actions.c:365
 #, c-format
-msgid ""
-"You are about to kill %s.<br><br>Please keep in mind that all data from this "
-"window<br>which has not yet been saved will be lost!<br><br>Are you sure you "
-"want to kill this window?"
-msgstr ""
-"U staat op het punt om %s geforceerd te sluiten.<br><br>Bemerk dat alle data "
-"in dit venster,<br>die niet opgeslagen is, verloren zal gaan!<br><br>Weet u "
-"zeker dat u dit venster wilt forceren af te sluiten?"
+msgid "You are about to kill %s.<br><br>Please keep in mind that all data from this window<br>which has not yet been saved will be lost!<br><br>Are you sure you want to kill this window?"
+msgstr "U staat op het punt om %s geforceerd te sluiten.<br><br>Bemerk dat alle data in dit venster,<br>die niet opgeslagen is, verloren zal gaan!<br><br>Weet u zeker dat u dit venster wilt forceren af te sluiten?"
 
 #: src/bin/e_actions.c:377
 msgid "Are you sure you want to kill this window?"
 msgstr "Weet u zeker dat u dit venster wilt forceren af te sluiten?"
 
-#: src/bin/e_actions.c:380 src/bin/e_actions.c:1918 src/bin/e_actions.c:2015
-#: src/bin/e_actions.c:2078 src/bin/e_actions.c:2141 src/bin/e_actions.c:2209
-#: src/bin/e_actions.c:2272 src/bin/e_confirm_dialog.c:44
-#: src/bin/e_desklock.c:998 src/bin/e_fm.c:9176 src/bin/e_fm.c:9430
-#: src/bin/e_module.c:520 src/bin/e_screensaver.c:141
+#: src/bin/e_actions.c:380
+#: src/bin/e_actions.c:1917
+#: src/bin/e_actions.c:2014
+#: src/bin/e_actions.c:2077
+#: src/bin/e_actions.c:2140
+#: src/bin/e_actions.c:2208
+#: src/bin/e_actions.c:2271
+#: src/bin/e_confirm_dialog.c:44
+#: src/bin/e_desklock.c:998
+#: src/bin/e_fm.c:9176
+#: src/bin/e_fm.c:9430
+#: src/bin/e_module.c:520
+#: src/bin/e_screensaver.c:141
 msgid "Yes"
 msgstr "Ja"
 
-#: src/bin/e_actions.c:382 src/bin/e_actions.c:1920 src/bin/e_actions.c:2017
-#: src/bin/e_actions.c:2080 src/bin/e_actions.c:2143 src/bin/e_actions.c:2211
-#: src/bin/e_actions.c:2274 src/bin/e_confirm_dialog.c:45
-#: src/bin/e_desklock.c:1000 src/bin/e_fm.c:9174 src/bin/e_fm.c:9431
-#: src/bin/e_module.c:521 src/bin/e_screensaver.c:143
+#: src/bin/e_actions.c:382
+#: src/bin/e_actions.c:1919
+#: src/bin/e_actions.c:2016
+#: src/bin/e_actions.c:2079
+#: src/bin/e_actions.c:2142
+#: src/bin/e_actions.c:2210
+#: src/bin/e_actions.c:2273
+#: src/bin/e_confirm_dialog.c:45
+#: src/bin/e_desklock.c:1000
+#: src/bin/e_fm.c:9174
+#: src/bin/e_fm.c:9431
+#: src/bin/e_module.c:521
+#: src/bin/e_screensaver.c:143
 msgid "No"
 msgstr "Nee"
 
-#: src/bin/e_actions.c:1912
+#: src/bin/e_actions.c:1911
 msgid "Are you sure you want to exit?"
 msgstr "Weet u zeker dat u wilt afsluiten?"
 
-#: src/bin/e_actions.c:1914
-msgid ""
-"You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
-msgstr ""
-"U vroeg Enlightenment om af te sluiten.<br><br>Weet u zeker dat u wilt "
-"afsluiten?"
+#: src/bin/e_actions.c:1913
+msgid "You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
+msgstr "U vroeg Enlightenment om af te sluiten.<br><br>Weet u zeker dat u wilt afsluiten?"
 
-#: src/bin/e_actions.c:2009
+#: src/bin/e_actions.c:2008
 msgid "Are you sure you want to log out?"
 msgstr "Weet u zeker dat u wilt afmelden?"
 
-#: src/bin/e_actions.c:2011
+#: src/bin/e_actions.c:2010
 msgid "You are about to log out.<br><br>Are you sure you want to do this?"
-msgstr ""
-"U staat op het punt om af te melden.<br><br>Weet u zeker dat u dit wil doen?"
+msgstr "U staat op het punt om af te melden.<br><br>Weet u zeker dat u dit wil doen?"
 
-#: src/bin/e_actions.c:2072 src/bin/e_actions.c:2203
+#: src/bin/e_actions.c:2071
+#: src/bin/e_actions.c:2202
 msgid "Are you sure you want to turn off?"
-msgstr "Weet u zeker dat u wilt afsluiten?"
+msgstr "Weet u zeker dat u uit wilt schakelen?"
 
-#: src/bin/e_actions.c:2074
-msgid ""
-"You requested to turn off your Computer.<br><br>Are you sure you want to "
-"shut down?"
-msgstr ""
-"U heeft gevraagd om uw computer uit te schakelen.<br><br>Weet u zeker dat u "
-"wilt afsluiten?"
+#: src/bin/e_actions.c:2073
+msgid "You requested to turn off your Computer.<br><br>Are you sure you want to shut down?"
+msgstr "U heeft gevraagd om uw computer uit te schakelen.<br><br>Weet u zeker dat u wilt uitschakelen?"
 
-#: src/bin/e_actions.c:2135
+#: src/bin/e_actions.c:2134
 msgid "Are you sure you want to reboot?"
 msgstr "Weet u zeker dat u wilt herstarten?"
 
-#: src/bin/e_actions.c:2137
-msgid ""
-"You requested to reboot your Computer.<br><br>Are you sure you want to "
-"restart it?"
-msgstr ""
-"U heeft gevraagd om uw computer te herstarten.<br><br>Weet u zeker dat u "
-"wilt herstarten?"
+#: src/bin/e_actions.c:2136
+msgid "You requested to reboot your Computer.<br><br>Are you sure you want to restart it?"
+msgstr "U heeft gevraagd om uw computer te herstarten.<br><br>Weet u zeker dat u wilt herstarten?"
 
-#: src/bin/e_actions.c:2205
-msgid ""
-"You requested to suspend your Computer.<br><br>Are you sure you want to "
-"suspend?"
-msgstr ""
-"U heeft gevraagd om uw computer in de pauzestand te zetten.<br><br>Weet u "
-"zeker dat u uw computer in de pauzestand wil zetten?"
+#: src/bin/e_actions.c:2204
+msgid "You requested to suspend your Computer.<br><br>Are you sure you want to suspend?"
+msgstr "U heeft gevraagd om uw computer in de pauzestand te zetten.<br><br>Weet u zeker dat u uw computer in de pauzestand wil zetten?"
 
-#: src/bin/e_actions.c:2266
+#: src/bin/e_actions.c:2265
 msgid "Are you sure you want to hibernate?"
 msgstr "Weet u zeker dat u in slaapstand wilt gaan?"
 
-#: src/bin/e_actions.c:2268
-msgid ""
-"You requested to hibernate your Computer.<br><br>Are you sure you want to "
-"suspend to disk?"
-msgstr ""
-"U heeft gevraagd om de computer in slaapstand te zetten.<br><br>Weet u zeker "
-"dat u alles op de schijf wilt bewaren?"
+#: src/bin/e_actions.c:2267
+msgid "You requested to hibernate your Computer.<br><br>Are you sure you want to suspend to disk?"
+msgstr "U heeft gevraagd om de computer in slaapstand te zetten.<br><br>Weet u zeker dat u alles op de schijf wilt bewaren?"
 
-#: src/bin/e_actions.c:2661 src/bin/e_actions.c:2672 src/bin/e_actions.c:2691
-#: src/bin/e_actions.c:2696 src/bin/e_actions.c:2701 src/bin/e_actions.c:2706
-#: src/bin/e_actions.c:2938 src/bin/e_actions.c:2942 src/bin/e_actions.c:2947
-#: src/bin/e_actions.c:2953 src/bin/e_actions.c:2959 src/bin/e_actions.c:2965
+#: src/bin/e_actions.c:2688
+#: src/bin/e_actions.c:2699
+#: src/bin/e_actions.c:2718
+#: src/bin/e_actions.c:2723
+#: src/bin/e_actions.c:2728
+#: src/bin/e_actions.c:2733
+#: src/bin/e_actions.c:2988
+#: src/bin/e_actions.c:2992
+#: src/bin/e_actions.c:2997
+#: src/bin/e_actions.c:3003
+#: src/bin/e_actions.c:3009
+#: src/bin/e_actions.c:3015
 msgid "Window : Actions"
-msgstr "Venster: Acties"
+msgstr "Venster : Acties"
 
-#: src/bin/e_actions.c:2661 src/bin/e_fm.c:6153
+#: src/bin/e_actions.c:2688
+#: src/bin/e_fm.c:6153
 #: src/bin/e_int_border_menu.c:654
 msgid "Move"
 msgstr "Verplaatsen"
 
-#: src/bin/e_actions.c:2672 src/bin/e_int_border_menu.c:668
+#: src/bin/e_actions.c:2699
+#: src/bin/e_int_border_menu.c:668
 msgid "Resize"
-msgstr "Verander formaat"
+msgstr "Herschalen"
 
-#: src/bin/e_actions.c:2683 src/bin/e_actions.c:2986 src/bin/e_actions.c:2988
-#: src/bin/e_actions.c:2990 src/bin/e_actions.c:2992 src/bin/e_actions.c:2994
+#: src/bin/e_actions.c:2710
+#: src/bin/e_actions.c:3036
+#: src/bin/e_actions.c:3038
+#: src/bin/e_actions.c:3040
+#: src/bin/e_actions.c:3042
+#: src/bin/e_actions.c:3044
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:325
 msgid "Menu"
 msgstr "Menu"
 
-#: src/bin/e_actions.c:2683
+#: src/bin/e_actions.c:2710
 msgid "Window Menu"
-msgstr "Venster menu"
+msgstr "Venstermenu"
 
-#: src/bin/e_actions.c:2691 src/bin/e_int_border_menu.c:983
+#: src/bin/e_actions.c:2718
+#: src/bin/e_int_border_menu.c:983
 #: src/modules/winlist/e_int_config_winlist.c:216
 msgid "Raise"
 msgstr "Verhoog"
 
-#: src/bin/e_actions.c:2696 src/bin/e_int_border_menu.c:991
+#: src/bin/e_actions.c:2723
+#: src/bin/e_int_border_menu.c:991
 msgid "Lower"
 msgstr "Verlaag"
 
-#: src/bin/e_actions.c:2706 src/bin/e_int_border_menu.c:562
+#: src/bin/e_actions.c:2733
+#: src/bin/e_int_border_menu.c:562
 msgid "Kill"
-msgstr "Vernietigen"
+msgstr "Beëindigen"
 
-#: src/bin/e_actions.c:2711 src/bin/e_actions.c:2718 src/bin/e_actions.c:2725
-#: src/bin/e_actions.c:2732 src/bin/e_actions.c:2734 src/bin/e_actions.c:2737
-#: src/bin/e_actions.c:2740 src/bin/e_actions.c:2742 src/bin/e_actions.c:2744
-#: src/bin/e_actions.c:2746 src/bin/e_actions.c:2753 src/bin/e_actions.c:2755
-#: src/bin/e_actions.c:2757 src/bin/e_actions.c:2759 src/bin/e_actions.c:2761
-#: src/bin/e_actions.c:2768 src/bin/e_actions.c:2773 src/bin/e_actions.c:2779
-#: src/bin/e_actions.c:2785
+#: src/bin/e_actions.c:2738
+#: src/bin/e_actions.c:2745
+#: src/bin/e_actions.c:2752
+#: src/bin/e_actions.c:2759
+#: src/bin/e_actions.c:2761
+#: src/bin/e_actions.c:2764
+#: src/bin/e_actions.c:2767
+#: src/bin/e_actions.c:2769
+#: src/bin/e_actions.c:2771
+#: src/bin/e_actions.c:2773
+#: src/bin/e_actions.c:2780
+#: src/bin/e_actions.c:2782
+#: src/bin/e_actions.c:2784
+#: src/bin/e_actions.c:2786
+#: src/bin/e_actions.c:2788
+#: src/bin/e_actions.c:2795
+#: src/bin/e_actions.c:2800
+#: src/bin/e_actions.c:2806
+#: src/bin/e_actions.c:2812
 msgid "Window : State"
 msgstr "Venster : Status"
 
-#: src/bin/e_actions.c:2711
+#: src/bin/e_actions.c:2738
 msgid "Sticky Mode Toggle"
 msgstr "Schakelen Vastgezette Modus"
 
-#: src/bin/e_actions.c:2718
+#: src/bin/e_actions.c:2745
 msgid "Iconic Mode Toggle"
 msgstr "Schakelen Icoon-modus"
 
-#: src/bin/e_actions.c:2725
+#: src/bin/e_actions.c:2752
 msgid "Fullscreen Mode Toggle"
 msgstr "Schakelen Volledig scherm-modus"
 
-#: src/bin/e_actions.c:2732 src/bin/e_int_border_menu.c:304
+#: src/bin/e_actions.c:2759
+#: src/bin/e_int_border_menu.c:304
 #: src/bin/e_int_border_menu.c:629
 msgid "Maximize"
-msgstr "Maximaliseer"
+msgstr "Maximaliseren"
 
-#: src/bin/e_actions.c:2734
+#: src/bin/e_actions.c:2761
 msgid "Maximize Vertically"
 msgstr "Verticaal maximaliseren"
 
-#: src/bin/e_actions.c:2737
+#: src/bin/e_actions.c:2764
 msgid "Maximize Horizontally"
 msgstr "Horizontaal maximaliseren"
 
-#: src/bin/e_actions.c:2740
+#: src/bin/e_actions.c:2767
 msgid "Maximize Fullscreen"
 msgstr "Maximaliseer over het volledig scherm"
 
-#: src/bin/e_actions.c:2742
+#: src/bin/e_actions.c:2769
 msgid "Maximize Mode \"Smart\""
-msgstr "Maximaliseer mode \"Slim\""
+msgstr "Maximaliseer-modus \"Slim\""
 
-#: src/bin/e_actions.c:2744
+#: src/bin/e_actions.c:2771
 msgid "Maximize Mode \"Expand\""
-msgstr "Maximaliseer mode \"Vergroot\""
+msgstr "Maximaliseer modus \"Vergroot\""
 
-#: src/bin/e_actions.c:2746
+#: src/bin/e_actions.c:2773
 msgid "Maximize Mode \"Fill\""
-msgstr "Maximaliseer mode \"Vul\""
+msgstr "Maximaliseer modus \"Vul\""
 
-#: src/bin/e_actions.c:2753
+#: src/bin/e_actions.c:2780
 msgid "Shade Up Mode Toggle"
 msgstr "Schakelen Oprollen-modus"
 
-#: src/bin/e_actions.c:2755
+#: src/bin/e_actions.c:2782
 msgid "Shade Down Mode Toggle"
 msgstr "Schakelen Afrollen-modus"
 
-#: src/bin/e_actions.c:2757
+#: src/bin/e_actions.c:2784
 msgid "Shade Left Mode Toggle"
 msgstr "Schakelen Linksrollen-modus"
 
-#: src/bin/e_actions.c:2759
+#: src/bin/e_actions.c:2786
 msgid "Shade Right Mode Toggle"
 msgstr "Schakelen Rechtsrollen-modus"
 
-#: src/bin/e_actions.c:2761
+#: src/bin/e_actions.c:2788
 msgid "Shade Mode Toggle"
 msgstr "Schakelen Rol-modus"
 
-#: src/bin/e_actions.c:2768
+#: src/bin/e_actions.c:2795
 msgid "Toggle Borderless State"
 msgstr "Schakelen Vensterrandloze-status"
 
-#: src/bin/e_actions.c:2773
+#: src/bin/e_actions.c:2800
 msgid "Set Border"
 msgstr "Stel rand in"
 
-#: src/bin/e_actions.c:2779
+#: src/bin/e_actions.c:2806
 msgid "Cycle between Borders"
 msgstr "Schakel tussen randen"
 
-#: src/bin/e_actions.c:2785
+#: src/bin/e_actions.c:2812
 msgid "Toggle Pinned State"
 msgstr "Schakelen Vastgezette Status"
 
-#: src/bin/e_actions.c:2790 src/bin/e_actions.c:2792 src/bin/e_actions.c:2794
-#: src/bin/e_actions.c:2796 src/bin/e_actions.c:2798 src/bin/e_actions.c:2804
-#: src/bin/e_actions.c:2810 src/bin/e_actions.c:2815 src/bin/e_actions.c:2821
-#: src/bin/e_actions.c:2827 src/bin/e_actions.c:2829 src/bin/e_actions.c:2831
-#: src/bin/e_actions.c:2833 src/bin/e_actions.c:2835 src/bin/e_actions.c:2837
-#: src/bin/e_actions.c:2839 src/bin/e_actions.c:2841 src/bin/e_actions.c:2843
-#: src/bin/e_actions.c:2845 src/bin/e_actions.c:2847 src/bin/e_actions.c:2849
-#: src/bin/e_actions.c:2851 src/bin/e_actions.c:2857 src/bin/e_actions.c:2859
-#: src/bin/e_actions.c:2861 src/bin/e_actions.c:2863 src/bin/e_actions.c:2865
-#: src/bin/e_actions.c:2871 src/bin/e_actions.c:2877 src/bin/e_actions.c:2883
-#: src/bin/e_actions.c:2888 src/bin/e_actions.c:2890 src/bin/e_actions.c:2892
-#: src/bin/e_actions.c:2894 src/bin/e_actions.c:2896 src/bin/e_actions.c:2898
-#: src/bin/e_actions.c:2900 src/bin/e_actions.c:2902 src/bin/e_actions.c:2904
-#: src/bin/e_actions.c:2906 src/bin/e_actions.c:2908 src/bin/e_actions.c:2910
-#: src/bin/e_actions.c:2912 src/bin/e_actions.c:3064 src/bin/e_actions.c:3069
-#: src/bin/e_fm.c:3255 src/bin/e_fm.c:3260 src/bin/e_fm.c:9957
-#: src/bin/e_fm_device.c:332 src/bin/e_fm_device.c:356
-#: src/bin/e_fm_device.c:635 src/bin/e_fm_device.c:662
-#: src/bin/e_int_menus.c:144 src/bin/e_int_shelf_config.c:247
+#: src/bin/e_actions.c:2817
+#: src/bin/e_actions.c:2819
+#: src/bin/e_actions.c:2821
+#: src/bin/e_actions.c:2823
+#: src/bin/e_actions.c:2825
+#: src/bin/e_actions.c:2831
+#: src/bin/e_actions.c:2837
+#: src/bin/e_actions.c:2842
+#: src/bin/e_actions.c:2848
+#: src/bin/e_actions.c:2854
+#: src/bin/e_actions.c:2856
+#: src/bin/e_actions.c:2858
+#: src/bin/e_actions.c:2860
+#: src/bin/e_actions.c:2862
+#: src/bin/e_actions.c:2864
+#: src/bin/e_actions.c:2866
+#: src/bin/e_actions.c:2868
+#: src/bin/e_actions.c:2870
+#: src/bin/e_actions.c:2872
+#: src/bin/e_actions.c:2874
+#: src/bin/e_actions.c:2876
+#: src/bin/e_actions.c:2878
+#: src/bin/e_actions.c:2884
+#: src/bin/e_actions.c:2886
+#: src/bin/e_actions.c:2888
+#: src/bin/e_actions.c:2890
+#: src/bin/e_actions.c:2892
+#: src/bin/e_actions.c:2898
+#: src/bin/e_actions.c:2904
+#: src/bin/e_actions.c:2910
+#: src/bin/e_actions.c:2915
+#: src/bin/e_actions.c:2917
+#: src/bin/e_actions.c:2919
+#: src/bin/e_actions.c:2921
+#: src/bin/e_actions.c:2923
+#: src/bin/e_actions.c:2925
+#: src/bin/e_actions.c:2927
+#: src/bin/e_actions.c:2929
+#: src/bin/e_actions.c:2931
+#: src/bin/e_actions.c:2933
+#: src/bin/e_actions.c:2935
+#: src/bin/e_actions.c:2937
+#: src/bin/e_actions.c:2939
+#: src/bin/e_actions.c:3114
+#: src/bin/e_actions.c:3119
+#: src/bin/e_fm.c:3255
+#: src/bin/e_fm.c:3260
+#: src/bin/e_fm.c:9957
+#: src/bin/e_fm_device.c:332
+#: src/bin/e_fm_device.c:356
+#: src/bin/e_fm_device.c:635
+#: src/bin/e_fm_device.c:662
+#: src/bin/e_int_menus.c:144
+#: src/bin/e_int_shelf_config.c:247
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
-#: src/modules/fileman/e_mod_main.c:354 src/modules/ibox/e_mod_config.c:162
+#: src/modules/fileman/e_mod_main.c:354
+#: src/modules/ibox/e_mod_config.c:162
 msgid "Desktop"
 msgstr "Bureaublad"
 
-#: src/bin/e_actions.c:2790
+#: src/bin/e_actions.c:2817
 msgid "Flip Desktop Left"
 msgstr "Draai Bureaublad Links"
 
-#: src/bin/e_actions.c:2792
+#: src/bin/e_actions.c:2819
 msgid "Flip Desktop Right"
 msgstr "Draai Bureaublad Rechts"
 
-#: src/bin/e_actions.c:2794
+#: src/bin/e_actions.c:2821
 msgid "Flip Desktop Up"
 msgstr "Draai Bureaublad Boven"
 
-#: src/bin/e_actions.c:2796
+#: src/bin/e_actions.c:2823
 msgid "Flip Desktop Down"
 msgstr "Draai Bureaublad Onder"
 
-#: src/bin/e_actions.c:2798
+#: src/bin/e_actions.c:2825
 msgid "Flip Desktop By..."
 msgstr "Draai Bureaublad met..."
 
-#: src/bin/e_actions.c:2804
+#: src/bin/e_actions.c:2831
 msgid "Show The Desktop"
 msgstr "Bureaublad Weergeven"
 
-#: src/bin/e_actions.c:2810
+#: src/bin/e_actions.c:2837
 msgid "Show The Shelf"
 msgstr "Toon de Schelf"
 
-#: src/bin/e_actions.c:2815
+#: src/bin/e_actions.c:2842
 msgid "Flip Desktop To..."
 msgstr "Draai Bureaublad naar..."
 
-#: src/bin/e_actions.c:2821
+#: src/bin/e_actions.c:2848
 msgid "Flip Desktop Linearly..."
 msgstr "Draai Bureaublad Lineair..."
 
-#: src/bin/e_actions.c:2827
+#: src/bin/e_actions.c:2854
 msgid "Switch To Desktop 0"
 msgstr "Wissel Naar Bureaublad 0"
 
-#: src/bin/e_actions.c:2829
+#: src/bin/e_actions.c:2856
 msgid "Switch To Desktop 1"
 msgstr "Wissel Naar Bureaublad 1"
 
-#: src/bin/e_actions.c:2831
+#: src/bin/e_actions.c:2858
 msgid "Switch To Desktop 2"
 msgstr "Wissel Naar Bureaublad 2"
 
-#: src/bin/e_actions.c:2833
+#: src/bin/e_actions.c:2860
 msgid "Switch To Desktop 3"
 msgstr "Wissel Naar Bureaublad 3"
 
-#: src/bin/e_actions.c:2835
+#: src/bin/e_actions.c:2862
 msgid "Switch To Desktop 4"
 msgstr "Wissel Naar Bureaublad 4"
 
-#: src/bin/e_actions.c:2837
+#: src/bin/e_actions.c:2864
 msgid "Switch To Desktop 5"
 msgstr "Wissel Naar Bureaublad 5"
 
-#: src/bin/e_actions.c:2839
+#: src/bin/e_actions.c:2866
 msgid "Switch To Desktop 6"
 msgstr "Wissel Naar Bureaublad 6"
 
-#: src/bin/e_actions.c:2841
+#: src/bin/e_actions.c:2868
 msgid "Switch To Desktop 7"
 msgstr "Wissel Naar Bureaublad 7"
 
-#: src/bin/e_actions.c:2843
+#: src/bin/e_actions.c:2870
 msgid "Switch To Desktop 8"
 msgstr "Wissel Naar Bureaublad 8"
 
-#: src/bin/e_actions.c:2845
+#: src/bin/e_actions.c:2872
 msgid "Switch To Desktop 9"
 msgstr "Wissel Naar Bureaublad 9"
 
-#: src/bin/e_actions.c:2847
+#: src/bin/e_actions.c:2874
 msgid "Switch To Desktop 10"
 msgstr "Wissel Naar Bureaublad 10"
 
-#: src/bin/e_actions.c:2849
+#: src/bin/e_actions.c:2876
 msgid "Switch To Desktop 11"
 msgstr "Wissel Naar Bureaublad 11"
 
-#: src/bin/e_actions.c:2851
+#: src/bin/e_actions.c:2878
 msgid "Switch To Desktop..."
 msgstr "Wissel Naar Bureaublad..."
 
-#: src/bin/e_actions.c:2857
+#: src/bin/e_actions.c:2884
 msgid "Flip Desktop Left (All Screens)"
 msgstr "Draai Bureaublad Links (Alle Schermen)"
 
-#: src/bin/e_actions.c:2859
+#: src/bin/e_actions.c:2886
 msgid "Flip Desktop Right (All Screens)"
 msgstr "Draai Bureaublad Rechts (Alle Schermen)"
 
-#: src/bin/e_actions.c:2861
+#: src/bin/e_actions.c:2888
 msgid "Flip Desktop Up (All Screens)"
 msgstr "Draai Bureaublad Boven (Alle Schermen)"
 
-#: src/bin/e_actions.c:2863
+#: src/bin/e_actions.c:2890
 msgid "Flip Desktop Down (All Screens)"
 msgstr "Draai Bureaublad Onder (Alle Schermen)"
 
-#: src/bin/e_actions.c:2865
+#: src/bin/e_actions.c:2892
 msgid "Flip Desktop By... (All Screens)"
 msgstr "Draai Bureaublad Met... (Alle Schermen)"
 
-#: src/bin/e_actions.c:2871
+#: src/bin/e_actions.c:2898
 msgid "Flip Desktop To... (All Screens)"
 msgstr "Draai Bureaublad naar... (Alle Schermen)"
 
-#: src/bin/e_actions.c:2877
+#: src/bin/e_actions.c:2904
 msgid "Flip Desktop Linearly... (All Screens)"
 msgstr "Draai Bureaublad Lineair... (Alle Schermen)"
 
-#: src/bin/e_actions.c:2883
+#: src/bin/e_actions.c:2910
 msgid "Flip Desktop In Direction..."
 msgstr "Draai Bureaublad in richting..."
 
-#: src/bin/e_actions.c:2888
+#: src/bin/e_actions.c:2915
 msgid "Switch To Desktop 0 (All Screens)"
 msgstr "Wissel Naar Bureaublad 0 (Alle Schermen)"
 
-#: src/bin/e_actions.c:2890
+#: src/bin/e_actions.c:2917
 msgid "Switch To Desktop 1 (All Screens)"
 msgstr "Wissel Naar Bureaublad 1 (Alle Schermen)"
 
-#: src/bin/e_actions.c:2892
+#: src/bin/e_actions.c:2919
 msgid "Switch To Desktop 2 (All Screens)"
 msgstr "Wissel Naar Bureaublad 2 (Alle Schermen)"
 
-#: src/bin/e_actions.c:2894
+#: src/bin/e_actions.c:2921
 msgid "Switch To Desktop 3 (All Screens)"
 msgstr "Wissel Naar Bureaublad 3 (Alle Schermen)"
 
-#: src/bin/e_actions.c:2896
+#: src/bin/e_actions.c:2923
 msgid "Switch To Desktop 4 (All Screens)"
 msgstr "Wissel Naar Bureaublad 4 (Alle Schermen)"
 
-#: src/bin/e_actions.c:2898
+#: src/bin/e_actions.c:2925
 msgid "Switch To Desktop 5 (All Screens)"
 msgstr "Wissel Naar Bureaublad 5 (Alle Schermen)"
 
-#: src/bin/e_actions.c:2900
+#: src/bin/e_actions.c:2927
 msgid "Switch To Desktop 6 (All Screens)"
 msgstr "Wissel Naar Bureaublad 6 (Alle Schermen)"
 
-#: src/bin/e_actions.c:2902
+#: src/bin/e_actions.c:2929
 msgid "Switch To Desktop 7 (All Screens)"
 msgstr "Wissel Naar Bureaublad 7 (Alle Schermen)"
 
-#: src/bin/e_actions.c:2904
+#: src/bin/e_actions.c:2931
 msgid "Switch To Desktop 8 (All Screens)"
 msgstr "Wissel Naar Bureaublad 8 (Alle Schermen)"
 
-#: src/bin/e_actions.c:2906
+#: src/bin/e_actions.c:2933
 msgid "Switch To Desktop 9 (All Screens)"
 msgstr "Wissel Naar Bureaublad 9 (Alle Schermen)"
 
-#: src/bin/e_actions.c:2908
+#: src/bin/e_actions.c:2935
 msgid "Switch To Desktop 10 (All Screens)"
 msgstr "Wissel Naar Bureaublad 10 (Alle Schermen)"
 
-#: src/bin/e_actions.c:2910
+#: src/bin/e_actions.c:2937
 msgid "Switch To Desktop 11 (All Screens)"
 msgstr "Wissel Naar Bureaublad 11 (Alle Schermen)"
 
-#: src/bin/e_actions.c:2912
+#: src/bin/e_actions.c:2939
 msgid "Switch To Desktop... (All Screens)"
 msgstr "Wissel Naar Bureaublad...  (Alle Schermen)"
 
-#: src/bin/e_actions.c:2918 src/bin/e_actions.c:2920 src/bin/e_actions.c:2922
-#: src/bin/e_actions.c:2928 src/bin/e_actions.c:2930 src/bin/e_actions.c:2932
+#: src/bin/e_actions.c:2945
+#: src/bin/e_actions.c:2947
+#: src/bin/e_actions.c:2949
+#: src/bin/e_actions.c:2955
+#: src/bin/e_actions.c:2957
+#: src/bin/e_actions.c:2959
+#: src/bin/e_actions.c:2964
+#: src/bin/e_actions.c:2967
+#: src/bin/e_actions.c:2970
+#: src/bin/e_actions.c:2972
+#: src/bin/e_actions.c:2974
+#: src/bin/e_actions.c:2976
+#: src/bin/e_actions.c:2979
+#: src/bin/e_actions.c:2981
+#: src/bin/e_actions.c:2983
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/ibox/e_mod_config.c:131
 msgid "Screen"
 msgstr "Scherm"
 
-#: src/bin/e_actions.c:2918
+#: src/bin/e_actions.c:2945
 msgid "Send Mouse To Screen 0"
 msgstr "Zend Muis Naar Scherm 0"
 
-#: src/bin/e_actions.c:2920
+#: src/bin/e_actions.c:2947
 msgid "Send Mouse To Screen 1"
 msgstr "Zend Muis Naar Scherm 1"
 
-#: src/bin/e_actions.c:2922
+#: src/bin/e_actions.c:2949
 msgid "Send Mouse To Screen..."
 msgstr "Zend Muis Naar Scherm..."
 
-#: src/bin/e_actions.c:2928
+#: src/bin/e_actions.c:2955
 msgid "Send Mouse Forward 1 Screen"
 msgstr "Zend Muis 1 Scherm Verder"
 
-#: src/bin/e_actions.c:2930
+#: src/bin/e_actions.c:2957
 msgid "Send Mouse Back 1 Screen"
 msgstr "Zend Muis 1 Scherm Terug"
 
-#: src/bin/e_actions.c:2932
+#: src/bin/e_actions.c:2959
 msgid "Send Mouse Forward/Back Screens..."
 msgstr "Zend Muis Scherm Verder/Terug..."
 
-#: src/bin/e_actions.c:2938
+#: src/bin/e_actions.c:2964
+msgid "Dim"
+msgstr "Dim"
+
+#: src/bin/e_actions.c:2967
+msgid "Undim"
+msgstr "Ontdim"
+
+#: src/bin/e_actions.c:2970
+msgid "Backlight Set"
+msgstr "Stel achtergrondlicht in"
+
+#: src/bin/e_actions.c:2972
+msgid "Backlight Min"
+msgstr "Achtergrondlicht Min"
+
+#: src/bin/e_actions.c:2974
+msgid "Backlight Mid"
+msgstr "Achtergrondlicht Mid"
+
+#: src/bin/e_actions.c:2976
+msgid "Backlight Max"
+msgstr "Achtergrondlicht Max"
+
+#: src/bin/e_actions.c:2979
+msgid "Backlight Adjust"
+msgstr "Achtergrondlicht verstellen"
+
+#: src/bin/e_actions.c:2981
+msgid "Backlight Up"
+msgstr "Achtergrondlicht omhoog"
+
+#: src/bin/e_actions.c:2983
+msgid "Backlight Down"
+msgstr "Achtergrondlicht omlaag"
+
+#: src/bin/e_actions.c:2988
 msgid "Move To Center"
 msgstr "Verplaats naar het midden"
 
-#: src/bin/e_actions.c:2942
+#: src/bin/e_actions.c:2992
 msgid "Move To..."
 msgstr "Verplaats naar..."
 
-#: src/bin/e_actions.c:2947
+#: src/bin/e_actions.c:2997
 msgid "Move By..."
-msgstr " Verplaats door..."
+msgstr "Verplaats door..."
 
-#: src/bin/e_actions.c:2953
+#: src/bin/e_actions.c:3003
 msgid "Resize By..."
 msgstr "Herschaal door..."
 
-#: src/bin/e_actions.c:2959
+#: src/bin/e_actions.c:3009
 msgid "Push in Direction..."
 msgstr "Duw in richting..."
 
-#: src/bin/e_actions.c:2965
+#: src/bin/e_actions.c:3015
 msgid "Drag Icon..."
 msgstr "Versleep icoon..."
 
-#: src/bin/e_actions.c:2970 src/bin/e_actions.c:2972 src/bin/e_actions.c:2974
-#: src/bin/e_actions.c:2980
+#: src/bin/e_actions.c:3020
+#: src/bin/e_actions.c:3022
+#: src/bin/e_actions.c:3024
+#: src/bin/e_actions.c:3030
 msgid "Window : Moving"
 msgstr "Venster : Verplaatsen"
 
-#: src/bin/e_actions.c:2970
+#: src/bin/e_actions.c:3020
 msgid "To Next Desktop"
 msgstr "Naar Volgend Bureaublad"
 
-#: src/bin/e_actions.c:2972
+#: src/bin/e_actions.c:3022
 msgid "To Previous Desktop"
 msgstr "Naar Vorig Bureaublad"
 
-#: src/bin/e_actions.c:2974
+#: src/bin/e_actions.c:3024
 msgid "By Desktop #..."
 msgstr "Per Bureaublad #..."
 
-#: src/bin/e_actions.c:2980
+#: src/bin/e_actions.c:3030
 msgid "To Desktop..."
 msgstr "Naar Bureaublad..."
 
-#: src/bin/e_actions.c:2986
+#: src/bin/e_actions.c:3036
 msgid "Show Main Menu"
 msgstr "Hoofdmenu weergeven"
 
-#: src/bin/e_actions.c:2988
+#: src/bin/e_actions.c:3038
 msgid "Show Favorites Menu"
 msgstr "Favorietenmenu Weergeven"
 
-#: src/bin/e_actions.c:2990
+#: src/bin/e_actions.c:3040
 msgid "Show All Applications Menu"
 msgstr "Alle Applicatiesmenu Weergeven"
 
-#: src/bin/e_actions.c:2992
+#: src/bin/e_actions.c:3042
 msgid "Show Clients Menu"
 msgstr "Clientmenu Weergeven"
 
-#: src/bin/e_actions.c:2994
+#: src/bin/e_actions.c:3044
 msgid "Show Menu..."
 msgstr "Weergeven van Menu..."
 
-#: src/bin/e_actions.c:3001 src/bin/e_actions.c:3006
-#: src/modules/conf/e_mod_main.c:264 src/modules/conf/e_mod_main.c:367
+#: src/bin/e_actions.c:3051
+#: src/bin/e_actions.c:3056
+#: src/modules/conf/e_mod_main.c:264
+#: src/modules/conf/e_mod_main.c:367
 #: src/modules/everything/evry_plug_apps.c:1062
-#: src/modules/fileman/e_mod_main.c:72 src/modules/fileman/e_mod_main.c:156
+#: src/modules/fileman/e_mod_main.c:72
+#: src/modules/fileman/e_mod_main.c:156
 msgid "Launch"
-msgstr "Uitvoeren"
+msgstr "Voer uit"
 
-#: src/bin/e_actions.c:3001 src/bin/e_int_border_prop.c:439
+#: src/bin/e_actions.c:3051
+#: src/bin/e_int_border_prop.c:439
 msgid "Command"
 msgstr "Commando"
 
-#: src/bin/e_actions.c:3006 src/bin/e_eap_editor.c:695
+#: src/bin/e_actions.c:3056
+#: src/bin/e_eap_editor.c:695
 #: src/bin/e_int_border_menu.c:73
 #, c-format
 msgid "Application"
 msgstr "Applicatie"
 
-#: src/bin/e_actions.c:3010 src/bin/e_int_menus.c:202
+#: src/bin/e_actions.c:3060
+#: src/bin/e_int_menus.c:202
 msgid "Restart"
 msgstr "Herstarten"
 
-#: src/bin/e_actions.c:3014 src/bin/e_int_menus.c:207
+#: src/bin/e_actions.c:3064
+#: src/bin/e_int_menus.c:207
 msgid "Exit"
 msgstr "Afsluiten"
 
-#: src/bin/e_actions.c:3018
+#: src/bin/e_actions.c:3068
 msgid "Exit Now"
 msgstr "Nu Afsluiten"
 
-#: src/bin/e_actions.c:3022 src/bin/e_actions.c:3027
+#: src/bin/e_actions.c:3072
+#: src/bin/e_actions.c:3077
 msgid "Enlightenment : Mode"
 msgstr "Enlightenment : Modus"
 
-#: src/bin/e_actions.c:3023
+#: src/bin/e_actions.c:3073
 msgid "Presentation Mode Toggle"
 msgstr "Schakel Presentatie-modus"
 
-#: src/bin/e_actions.c:3028
+#: src/bin/e_actions.c:3078
 msgid "Offline Mode Toggle"
 msgstr "Schakel Offline-modus"
 
-#: src/bin/e_actions.c:3032 src/bin/e_actions.c:3036 src/bin/e_actions.c:3040
-#: src/bin/e_actions.c:3044 src/bin/e_actions.c:3048 src/bin/e_actions.c:3052
-#: src/bin/e_actions.c:3056 src/bin/e_configure.c:357
+#: src/bin/e_actions.c:3082
+#: src/bin/e_actions.c:3086
+#: src/bin/e_actions.c:3090
+#: src/bin/e_actions.c:3094
+#: src/bin/e_actions.c:3098
+#: src/bin/e_actions.c:3102
+#: src/bin/e_actions.c:3106
+#: src/bin/e_configure.c:357
 #: src/bin/e_int_config_modules.c:53
 #: src/modules/conf_applications/e_int_config_apps.c:244
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:87
@@ -635,67 +748,58 @@ msgstr "Schakel Offline-modus"
 #: src/modules/conf_theme/e_int_config_startup.c:258
 #: src/modules/conf_theme/e_int_config_theme.c:396
 #: src/modules/conf_theme/e_int_config_theme.c:795
-#: src/modules/gadman/e_mod_config.c:183 src/modules/syscon/e_mod_main.c:31
-#: src/modules/syscon/e_mod_main.c:35 src/modules/syscon/e_mod_main.c:52
+#: src/modules/gadman/e_mod_config.c:183
+#: src/modules/syscon/e_mod_main.c:31
+#: src/modules/syscon/e_mod_main.c:35
+#: src/modules/syscon/e_mod_main.c:52
 #: src/modules/syscon/e_mod_main.c:119
 msgid "System"
 msgstr "Systeem"
 
-#: src/bin/e_actions.c:3032
+#: src/bin/e_actions.c:3082
 msgid "Log Out"
 msgstr "Afmelden"
 
-#: src/bin/e_actions.c:3036
+#: src/bin/e_actions.c:3086
 msgid "Power Off Now"
 msgstr "Nu Uitschakelen"
 
-#: src/bin/e_actions.c:3040
+#: src/bin/e_actions.c:3090
 msgid "Power Off"
 msgstr "Uitschakelen"
 
-#: src/bin/e_actions.c:3044
+#: src/bin/e_actions.c:3094
 msgid "Reboot"
 msgstr "Herstarten"
 
-#: src/bin/e_actions.c:3048
+#: src/bin/e_actions.c:3098
 msgid "Suspend Now"
 msgstr "Pauzeer nu"
 
-#: src/bin/e_actions.c:3052
+#: src/bin/e_actions.c:3102
 msgid "Suspend"
 msgstr "Stand-by stand"
 
-#: src/bin/e_actions.c:3056
+#: src/bin/e_actions.c:3106
 msgid "Hibernate"
 msgstr "Slaapstand"
 
-#: src/bin/e_actions.c:3064
+#: src/bin/e_actions.c:3114
 msgid "Lock"
 msgstr "Vergrendelen"
 
-#: src/bin/e_actions.c:3069 src/bin/e_int_menus.c:1160
+#: src/bin/e_actions.c:3119
+#: src/bin/e_int_menus.c:1160
 msgid "Cleanup Windows"
 msgstr "Vensters Opruimen"
 
-#: src/bin/e_actions.c:3074
+#: src/bin/e_actions.c:3124
 msgid "Generic : Actions"
 msgstr "Generiek : Acties"
 
-#: src/bin/e_actions.c:3074
+#: src/bin/e_actions.c:3124
 msgid "Delayed Action"
 msgstr "Uitgestelde Acties"
-
-#: src/bin/e_actions.c:3081 src/bin/e_actions.c:3085
-msgid "Acpi"
-msgstr "ACPI"
-
-#: src/bin/e_actions.c:3081
-msgid "Dim Screen"
-msgstr "Dim Scherm"
-
-#: src/bin/e_actions.c:3085
-msgid "Undim Screen"
-msgstr "Ontdim Scherm"
 
 #: src/bin/e_bg.c:50
 msgid "Set As Background"
@@ -705,196 +809,167 @@ msgstr "Als Achtergrond Instellen"
 msgid "Color Selector"
 msgstr "Kleurenkiezer"
 
-#: src/bin/e_color_dialog.c:46 src/bin/e_config.c:1601 src/bin/e_config.c:2195
-#: src/bin/e_config_dialog.c:262 src/bin/e_eap_editor.c:857
-#: src/bin/e_eap_editor.c:921 src/bin/e_entry_dialog.c:62 src/bin/e_exec.c:398
-#: src/bin/e_fm.c:8688 src/bin/e_fm.c:9332 src/bin/e_fm_prop.c:507
-#: src/bin/e_int_border_remember.c:324 src/bin/e_int_border_remember.c:525
-#: src/bin/e_module.c:417 src/bin/e_sys.c:484 src/bin/e_sys.c:530
-#: src/bin/e_utils.c:712 src/modules/conf_dialogs/e_int_config_profiles.c:387
-#: src/modules/conf_display/e_int_config_dpms.c:64
-#: src/modules/conf_display/e_int_config_dpms.c:85
+#: src/bin/e_color_dialog.c:46
+#: src/bin/e_config.c:1605
+#: src/bin/e_config.c:2199
+#: src/bin/e_config_dialog.c:262
+#: src/bin/e_eap_editor.c:857
+#: src/bin/e_eap_editor.c:921
+#: src/bin/e_entry_dialog.c:62
+#: src/bin/e_exec.c:398
+#: src/bin/e_fm.c:8688
+#: src/bin/e_fm.c:9332
+#: src/bin/e_fm_prop.c:507
+#: src/bin/e_int_border_remember.c:324
+#: src/bin/e_int_border_remember.c:525
+#: src/bin/e_module.c:417
+#: src/bin/e_sys.c:484
+#: src/bin/e_sys.c:530
+#: src/bin/e_utils.c:712
+#: src/modules/conf_dialogs/e_int_config_profiles.c:387
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:215
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:345
 #: src/modules/conf_theme/e_int_config_theme_import.c:120
-#: src/modules/cpufreq/e_mod_main.c:415 src/modules/cpufreq/e_mod_main.c:444
+#: src/modules/cpufreq/e_mod_main.c:415
+#: src/modules/cpufreq/e_mod_main.c:444
 #: src/modules/cpufreq/e_mod_main.c:469
 #: src/modules/fileman/e_int_config_mime_edit.c:303
 msgid "OK"
 msgstr "OK"
 
-#: src/bin/e_color_dialog.c:47 src/bin/e_eap_editor.c:859
-#: src/bin/e_eap_editor.c:923 src/bin/e_entry_dialog.c:63 src/bin/e_fm.c:8690
-#: src/bin/e_fm_prop.c:508 src/bin/e_utils.c:1167
+#: src/bin/e_color_dialog.c:47
+#: src/bin/e_eap_editor.c:859
+#: src/bin/e_eap_editor.c:923
+#: src/bin/e_entry_dialog.c:63
+#: src/bin/e_fm.c:8690
+#: src/bin/e_fm_prop.c:508
+#: src/bin/e_utils.c:1167
 #: src/modules/conf_dialogs/e_int_config_profiles.c:388
 #: src/modules/conf_intl/e_int_config_imc_import.c:124
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:219
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:349
 #: src/modules/conf_theme/e_int_config_theme_import.c:124
 #: src/modules/fileman/e_int_config_mime_edit.c:304
-#: src/modules/syscon/e_syscon.c:94 src/modules/connman/e_mod_main.c:300
+#: src/modules/syscon/e_syscon.c:94
+#: src/modules/connman/e_mod_main.c:300
 msgid "Cancel"
 msgstr "Annuleer"
 
-#: src/bin/e_config.c:963 src/bin/e_config.c:996
-msgid ""
-"Settings data needed upgrading. Your old settings have<br>been wiped and a "
-"new set of defaults initialized. This<br>will happen regularly during "
-"development, so don't report a<br>bug. This simply means Enlightenment needs "
-"new settings<br>data by default for usable functionality that your "
-"old<br>settings simply lack. This new set of defaults will fix<br>that by "
-"adding it in. You can re-configure things now to your<br>liking. Sorry for "
-"the hiccup in your settings.<br>"
-msgstr ""
-"Instellingen-data heeft een upgrade nodig. Uw oude instellingen "
-"zijn<br>gewist en een nieuwe set van standaarden is geïnitialiseerd. "
-"Dit<br>zal regelmatig gebeuren tijdens de ontwikkeling, dus rapporteer "
-"geen<br>bug. Dit betekent simpelweg dat Enlightenment nieuwe instellingen-"
-"data<br>als standaard nodig heeft voor bruikbare functionaliteit die uw "
-"oude<br>simpelweg niet heeft. Deze nieuwe set van standaarden zal dit "
-"oplossen<br>door het toe te voegen. U kunt uw dingen nu her-instellen naar "
-"uw<br>wensen. Excuses voor de wijzigingen in uw instellingen.<br>"
+#: src/bin/e_config.c:967
+#: src/bin/e_config.c:1000
+msgid "Settings data needed upgrading. Your old settings have<br>been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means Enlightenment needs new settings<br>data by default for usable functionality that your old<br>settings simply lack. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the hiccup in your settings.<br>"
+msgstr "Instellingen-data heeft een upgrade nodig. Uw oude instellingen zijn<br>gewist en een nieuwe set van standaarden is geïnitialiseerd. Dit<br>zal regelmatig gebeuren tijdens de ontwikkeling, dus rapporteer geen<br>bug. Dit betekent simpelweg dat Enlightenment nieuwe instellingen-data<br>als standaard nodig heeft voor bruikbare functionaliteit die uw oude<br>simpelweg niet heeft. Deze nieuwe set van standaarden zal dit oplossen<br>door het toe te voegen. U kunt uw dingen nu her-instellen naar uw<br>wensen. Excuses voor de wijzigingen in uw instellingen.<br>"
 
-#: src/bin/e_config.c:980
-msgid ""
-"Your settings are NEWER than Enlightenment. This is very<br>strange. This "
-"should not happen unless you downgraded<br>Enlightenment or copied the "
-"settings from a place where<br>a newer version of Enlightenment was running. "
-"This is bad and<br>as a precaution your settings have been now restored "
-"to<br>defaults. Sorry for the inconvenience.<br>"
-msgstr ""
-"Uw instellingen zijn NIEUWER dan Enlightenment. Dit is heel erg<br>vreemd. "
-"Dit zou niet moeten gebeuren tenzij u Enlightenment<br>hebt gedowngrade of "
-"uw instellingen gekopieerd heeft van een plaats waar<br>een nieuwere versie "
-"van Enlightenment aan het draaien was. Dit is slecht en<br>uit voorzorg zijn "
-"uw instellingen nu teruggezet naar de<br>standaarden. Excuses voor het "
-"ongemak.<br>"
+#: src/bin/e_config.c:984
+msgid "Your settings are NEWER than Enlightenment. This is very<br>strange. This should not happen unless you downgraded<br>Enlightenment or copied the settings from a place where<br>a newer version of Enlightenment was running. This is bad and<br>as a precaution your settings have been now restored to<br>defaults. Sorry for the inconvenience.<br>"
+msgstr "Uw instellingen zijn NIEUWER dan Enlightenment. Dit is heel erg<br>vreemd. Dit zou niet moeten gebeuren tenzij u Enlightenment<br>hebt gedowngrade of uw instellingen gekopieerd heeft van een plaats waar<br>een nieuwere versie van Enlightenment aan het draaien was. Dit is slecht en<br>uit voorzorg zijn uw instellingen nu teruggezet naar de<br>standaarden. Excuses voor het ongemak.<br>"
 
-#: src/bin/e_config.c:1588 src/bin/e_config.c:2182
+#: src/bin/e_config.c:1592
+#: src/bin/e_config.c:2186
 msgid "Enlightenment Settings Write Problems"
 msgstr "Enlightenment Instellingen Schrijfproblemen"
 
-#: src/bin/e_config.c:1591
+#: src/bin/e_config.c:1595
 #, c-format
-msgid ""
-"Enlightenment has an error while moving config files<br>from:<br>%"
-"s<br><br>to:<br>%s<br><br>The rest of the write has been aborted for safety."
-"<br>"
-msgstr ""
-"Enlightenment ervaarde een fout tijdens het verplaatsen van de "
-"instellingenbestanden<br>van:<br> %s<br><br>naar:<br>%s<br><br>De rest van "
-"het schrijven is afgebroken voor uw veiligheid. <br>"
+msgid "Enlightenment has an error while moving config files<br>from:<br>%s<br><br>to:<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
+msgstr "Enlightenment ervaarde een fout tijdens het verplaatsen van de instellingenbestanden<br>van:<br> %s<br><br>naar:<br>%s<br><br>De rest van het schrijven is afgebroken voor uw veiligheid. <br>"
 
-#: src/bin/e_config.c:2093
+#: src/bin/e_config.c:2097
 msgid "Settings Upgraded"
-msgstr "Instellingen geupgrade"
+msgstr "Instellingen geüpgrade"
 
-#: src/bin/e_config.c:2110
+#: src/bin/e_config.c:2114
 msgid "The EET file handle is bad."
 msgstr "De EET-bestandsafhandelaar is slecht."
 
-#: src/bin/e_config.c:2113
+#: src/bin/e_config.c:2117
 msgid "The file data is empty."
 msgstr "De bestandsdata is leeg."
 
-#: src/bin/e_config.c:2116
-msgid ""
-"The file is not writable. Perhaps the disk is read-only<br>or you lost "
-"permissions to your files."
-msgstr ""
-"Het bestand is niet schrijfbaar. Wellicht is de schijf alleen-lezen<br>of u "
-"bent de rechten op uw bestanden kwijt."
+#: src/bin/e_config.c:2120
+msgid "The file is not writable. Perhaps the disk is read-only<br>or you lost permissions to your files."
+msgstr "Het bestand is niet schrijfbaar. Wellicht is de schijf alleen-lezen<br>of u bent de rechten op uw bestanden kwijt."
 
-#: src/bin/e_config.c:2119
+#: src/bin/e_config.c:2123
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
-msgstr ""
-"Geheugen raakte op tijdens het voorbereiden van het schrijven.<br>Maak "
-"alstublieft geheugen vrij."
+msgstr "Geheugen raakte op tijdens het voorbereiden van het schrijven.<br>Maak alstublieft geheugen vrij."
 
-#: src/bin/e_config.c:2122
+#: src/bin/e_config.c:2126
 msgid "This is a generic error."
 msgstr "Dit is een algemene fout."
 
-#: src/bin/e_config.c:2124
-msgid ""
-"The settings file is too large.<br>It should be very small (a few hundred KB "
-"at most)."
-msgstr ""
-"Het instellingenbestand is te groot.<br>Het zou heel klein moeten zijn "
-"(hooguit een paar honderd KB)."
+#: src/bin/e_config.c:2128
+msgid "The settings file is too large.<br>It should be very small (a few hundred KB at most)."
+msgstr "Het instellingenbestand is te groot.<br>Het zou heel klein moeten zijn (hooguit een paar honderd KB)."
 
-#: src/bin/e_config.c:2127
+#: src/bin/e_config.c:2131
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
-msgstr ""
-"U heeft I/O-fouten op uw schijf.<br>Misschien is ie aan vervanging toe?"
+msgstr "U heeft I/O-fouten op uw schijf.<br>Misschien is ie aan vervanging toe?"
 
-#: src/bin/e_config.c:2130
+#: src/bin/e_config.c:2134
 msgid "You ran out of space while writing the file"
 msgstr "U raakte uit geheugen terwijl het bestand geschreven werd"
 
-#: src/bin/e_config.c:2133
+#: src/bin/e_config.c:2137
 msgid "The file was closed on it while writing."
 msgstr "Het bestand werd gesloten tijdens het schrijven."
 
-#: src/bin/e_config.c:2136
+#: src/bin/e_config.c:2140
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Geheugen-toewijzing (mmap) van bestand faalde."
 
-#: src/bin/e_config.c:2139
+#: src/bin/e_config.c:2143
 msgid "X509 Encoding failed."
 msgstr "X509 Encoding gefaald."
 
-#: src/bin/e_config.c:2142
+#: src/bin/e_config.c:2146
 msgid "Signature failed."
 msgstr "Handtekening faalde."
 
-#: src/bin/e_config.c:2145
+#: src/bin/e_config.c:2149
 msgid "The signature was invalid."
 msgstr "De handtekening was ongeldig."
 
-#: src/bin/e_config.c:2148
+#: src/bin/e_config.c:2152
 msgid "Not signed."
 msgstr "Niet ondertekend."
 
-#: src/bin/e_config.c:2151
+#: src/bin/e_config.c:2155
 msgid "Feature not implemented."
 msgstr "Feature niet ingebouwd."
 
-#: src/bin/e_config.c:2154
+#: src/bin/e_config.c:2158
 msgid "PRNG was not seeded."
 msgstr "PRNG was niet seeded."
 
-#: src/bin/e_config.c:2157
+#: src/bin/e_config.c:2161
 msgid "Encryption failed."
 msgstr "Encryptie gefaald."
 
-#: src/bin/e_config.c:2160
+#: src/bin/e_config.c:2164
 msgid "Decruption failed."
 msgstr "Decryptie gefaald."
 
-#: src/bin/e_config.c:2163
+#: src/bin/e_config.c:2167
 msgid "The error is unknown to Enlightenment."
 msgstr "De fout is onbekend voor Enlightenment."
 
-#: src/bin/e_config.c:2185
+#: src/bin/e_config.c:2189
 #, c-format
-msgid ""
-"Enlightenment has an error while writing<br>its config file.<br>%"
-"s<br><br>The file where the error occurred was:<br>%s<br><br>This file has "
-"been deleted to avoid corrupt data.<br>"
-msgstr ""
-"Enlightenment heeft een fout tijdens het schrijven van<br>haar "
-"instellingenbestand.<br> %s<br><br>Het bestand waar de fout plaatsvond was:"
-"<br>%s<br><br>Dit bestand is verwijderd om corrupte data te voorkomen."
+msgid "Enlightenment has an error while writing<br>its config file.<br>%s<br><br>The file where the error occurred was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
+msgstr "Enlightenment heeft een fout tijdens het schrijven van<br>haar instellingenbestand.<br> %s<br><br>Het bestand waar de fout plaatsvond was:<br>%s<br><br>Dit bestand is verwijderd om corrupte data te voorkomen."
 
-#: src/bin/e_config_dialog.c:210 src/modules/battery/e_mod_main.c:710
-#: src/modules/conf/e_mod_main.c:275 src/modules/conf_paths/e_mod_main.c:17
+#: src/bin/e_config_dialog.c:210
+#: src/modules/battery/e_mod_main.c:710
+#: src/modules/conf/e_mod_main.c:275
+#: src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
 msgid "Advanced"
 msgstr "Geavanceerd"
 
-#: src/bin/e_config_dialog.c:239 src/bin/e_eap_editor.c:716
+#: src/bin/e_config_dialog.c:239
+#: src/bin/e_eap_editor.c:716
 msgid "Basic"
 msgstr "Eenvoudig"
 
@@ -904,13 +979,17 @@ msgstr "Eenvoudig"
 msgid "Apply"
 msgstr "Toepassen"
 
-#: src/bin/e_configure.c:28 src/modules/conf_shelves/e_mod_main.c:21
-#: src/modules/gadman/e_mod_main.c:25 src/modules/mixer/e_mod_main.c:1099
+#: src/bin/e_configure.c:28
+#: src/modules/conf_shelves/e_mod_main.c:21
+#: src/modules/gadman/e_mod_main.c:25
+#: src/modules/mixer/e_mod_main.c:1140
 #: src/modules/connman/e_mod_main.c:1806
 msgid "Extensions"
 msgstr "Extensies"
 
-#: src/bin/e_configure.c:29 src/bin/e_configure.c:32 src/bin/e_configure.c:242
+#: src/bin/e_configure.c:29
+#: src/bin/e_configure.c:32
+#: src/bin/e_configure.c:242
 #: src/modules/conf_paths/e_int_config_paths.c:80
 #: src/modules/conf_theme/e_int_config_color_classes.c:846
 #: src/modules/conf_theme/e_int_config_fonts.c:96
@@ -928,24 +1007,16 @@ msgid "Error - no PAM support"
 msgstr "Fout - Geen PAM-ondersteuning"
 
 #: src/bin/e_desklock.c:171
-msgid ""
-"No PAM support was built into Enlightenment, so<br>desk locking is disabled."
-msgstr ""
-"PAM-ondersteuning is niet ingebouwd in Enlightenment, "
-"dus<br>bureaubladvergrendeling is uitgeschakeld."
+msgid "No PAM support was built into Enlightenment, so<br>desk locking is disabled."
+msgstr "PAM-ondersteuning is niet ingebouwd in Enlightenment, dus<br>bureaubladvergrendeling is uitgeschakeld."
 
 #: src/bin/e_desklock.c:235
 msgid "Lock Failed"
 msgstr "Vergrendeling Mislukt"
 
 #: src/bin/e_desklock.c:236
-msgid ""
-"Locking the desktop failed because some application<br>has grabbed either "
-"the keyboard or the mouse or both<br>and their grab is unable to be broken."
-msgstr ""
-"Het vergrendelen van het bureaublad is mislukt omdat een programma<br>óf het "
-"toetsenbord óf de muis óf beiden<br>vasthoudt en dit kan niet doorbroken "
-"worden."
+msgid "Locking the desktop failed because some application<br>has grabbed either the keyboard or the mouse or both<br>and their grab is unable to be broken."
+msgstr "Het vergrendelen van het bureaublad is mislukt omdat een programma<br>óf het toetsenbord óf de muis óf beiden<br>vasthoudt en dit kan niet doorbroken worden."
 
 #: src/bin/e_desklock.c:321
 msgid "Please enter your unlock password"
@@ -953,38 +1024,29 @@ msgstr "Voer alstublieft uw ontgrendelingswachtwoord in"
 
 #: src/bin/e_desklock.c:660
 msgid "Authentication System Error"
-msgstr "Authenticatie-systeemfout"
+msgstr "Authenticatiesysteem-fout"
 
 #: src/bin/e_desklock.c:661
 #, c-format
-msgid ""
-"Authentication via PAM had errors setting up the<br>authentication session. "
-"The error code was <hilight>%i</hilight>.<br>This is bad and should not be "
-"happening. Please report this bug."
-msgstr ""
-"Authenticatie via PAM ervoer fouten tijdens het instellen van "
-"de<br>authenticatiesessie. De foutcode was <hilight>%i</hilight>.<br>Dit is "
-"slecht en zou niet moeten gebeuren. Rapporteer alstublieft deze bug."
+msgid "Authentication via PAM had errors setting up the<br>authentication session. The error code was <hilight>%i</hilight>.<br>This is bad and should not be happening. Please report this bug."
+msgstr "Authenticatie via PAM ervoer fouten tijdens het instellen van de<br>authenticatiesessie. De foutcode was <hilight>%i</hilight>.<br>Dit is slecht en zou niet moeten gebeuren. Rapporteer alstublieft deze bug."
 
-#: src/bin/e_desklock.c:989 src/bin/e_screensaver.c:132
+#: src/bin/e_desklock.c:989
+#: src/bin/e_screensaver.c:132
 msgid "Activate Presentation Mode?"
 msgstr "Presentatiemodus activeren?"
 
 #: src/bin/e_desklock.c:992
-msgid ""
-"You unlocked desktop too fast.<br><br>Would you like to enable "
-"<b>presentation</b> mode and temporarily disable screen saver, lock and "
-"power saving?"
-msgstr ""
-"U vergrendelde het bureaublad te snel.<br><br>Wilt u de <b>presentatie</b>-"
-"modus inschakelen en tijdelijk de schermbeveiliging, vergrendelen en "
-"energiebesparing uitschakelen?"
+msgid "You unlocked desktop too fast.<br><br>Would you like to enable <b>presentation</b> mode and temporarily disable screen saver, lock and power saving?"
+msgstr "U ontgrendelde het bureaublad te snel.<br><br>Wilt u de <b>presentatie</b>-modus inschakelen en tijdelijk de schermbeveiliging, vergrendelen en energiebesparing uitschakelen?"
 
-#: src/bin/e_desklock.c:1002 src/bin/e_screensaver.c:145
+#: src/bin/e_desklock.c:1002
+#: src/bin/e_screensaver.c:145
 msgid "No, but increase timeout"
 msgstr "Neen, maar vergroot time-out"
 
-#: src/bin/e_desklock.c:1004 src/bin/e_screensaver.c:147
+#: src/bin/e_desklock.c:1004
+#: src/bin/e_screensaver.c:147
 msgid "No, and stop asking"
 msgstr "Neen en stop met vragen"
 
@@ -993,25 +1055,15 @@ msgid "Incomplete Window Properties"
 msgstr "Niet-complete venstereigenschappen"
 
 #: src/bin/e_eap_editor.c:175
-msgid ""
-"The window you are creating an icon for<br>does not contain window name and "
-"class<br>properties, so the needed properties for<br>the icon so that it "
-"will be used for this<br>window cannot be guessed. You will need to<br>use "
-"the window title instead. This will only<br>work if the window title is the "
-"same at<br>the time the window starts up, and does not<br>change."
-msgstr ""
-"Het venster waar u een icoon voor probeert te<br>creëren, bevat geen "
-"vensternaam en klasse-<br> eigenschappen. De nodige eigenschappen "
-"voor<br>het icoon, zodat het gebruikt zal worden voor dit <br>venster, "
-"kunnen niet geraden worden. U zult daarom een venstertitel<br>moeten "
-"gebruiken. Dit zal alleen<br>werken wanneer de venstertitel niet hetzelfde "
-"is op het<br> moment dat het venster opstart en niet<br>verandert."
+msgid "The window you are creating an icon for<br>does not contain window name and class<br>properties, so the needed properties for<br>the icon so that it will be used for this<br>window cannot be guessed. You will need to<br>use the window title instead. This will only<br>work if the window title is the same at<br>the time the window starts up, and does not<br>change."
+msgstr "Het venster waar u een icoon voor probeert te<br>creëren, bevat geen vensternaam en klasse-<br> eigenschappen. De nodige eigenschappen voor<br>het icoon, zodat het gebruikt zal worden voor dit <br>venster, kunnen niet geraden worden. U zult daarom een venstertitel<br>moeten gebruiken. Dit zal alleen<br>werken wanneer de venstertitel niet hetzelfde is op het<br> moment dat het venster opstart en niet<br>verandert."
 
 #: src/bin/e_eap_editor.c:230
 msgid "Desktop Entry Editor"
 msgstr "Bureaublad-invulling-bewerker"
 
-#: src/bin/e_eap_editor.c:674 src/bin/e_int_border_prop.c:420
+#: src/bin/e_eap_editor.c:674
+#: src/bin/e_int_border_prop.c:420
 #: src/bin/e_int_border_prop.c:467
 #: src/modules/conf_intl/e_int_config_imc.c:891
 #: src/modules/conf_menus/e_int_config_menus.c:265
@@ -1026,11 +1078,13 @@ msgstr "Commentaar"
 msgid "URL"
 msgstr "URL"
 
-#: src/bin/e_eap_editor.c:729 src/bin/e_eap_editor.c:738
-#: src/bin/e_fm_prop.c:394 src/modules/conf_theme/e_int_config_fonts.c:93
+#: src/bin/e_eap_editor.c:729
+#: src/bin/e_eap_editor.c:738
+#: src/bin/e_fm_prop.c:394
+#: src/modules/conf_theme/e_int_config_fonts.c:93
 #: src/modules/fileman/e_int_config_mime_edit.c:147
 msgid "Icon"
-msgstr "Icon"
+msgstr "Icoon"
 
 #: src/bin/e_eap_editor.c:742
 msgid "Generic Name"
@@ -1041,7 +1095,8 @@ msgstr "Generieke Naam"
 msgid "Window Class"
 msgstr "Venster Klasse"
 
-#: src/bin/e_eap_editor.c:754 src/modules/fileman/e_int_config_mime.c:176
+#: src/bin/e_eap_editor.c:754
+#: src/modules/fileman/e_int_config_mime.c:176
 msgid "Categories"
 msgstr "Categorieën"
 
@@ -1058,7 +1113,8 @@ msgstr "Desktopbestand"
 #: src/modules/everything/evry_config.c:379
 #: src/modules/everything/evry_config.c:463
 #: src/modules/everything/evry_plug_files.c:1492
-#: src/modules/pager/e_mod_config.c:126 src/modules/pager/e_mod_config.c:213
+#: src/modules/pager/e_mod_config.c:126
+#: src/modules/pager/e_mod_config.c:213
 msgid "General"
 msgstr "Algemeen"
 
@@ -1066,7 +1122,8 @@ msgstr "Algemeen"
 msgid "Startup Notify"
 msgstr "Opstart Melding"
 
-#: src/bin/e_eap_editor.c:784 src/modules/everything/evry_plug_apps.c:1076
+#: src/bin/e_eap_editor.c:784
+#: src/modules/everything/evry_plug_apps.c:1076
 msgid "Run in Terminal"
 msgstr "Uitvoeren in terminal"
 
@@ -1074,7 +1131,8 @@ msgstr "Uitvoeren in terminal"
 msgid "Show in Menus"
 msgstr "Weergeven in Menus"
 
-#: src/bin/e_eap_editor.c:789 src/bin/e_int_border_remember.c:757
+#: src/bin/e_eap_editor.c:789
+#: src/bin/e_int_border_remember.c:757
 msgid "Options"
 msgstr "Opties"
 
@@ -1086,22 +1144,29 @@ msgstr "Selecteer een Icoon"
 msgid "Select an Executable"
 msgstr "Selecteer een Uitvoerbaar bestand"
 
-#: src/bin/e_entry.c:493 src/bin/e_fm.c:8180 src/bin/e_shelf.c:1697
+#: src/bin/e_entry.c:493
+#: src/bin/e_fm.c:8180
+#: src/bin/e_shelf.c:1697
 #: src/modules/conf_dialogs/e_int_config_profiles.c:135
-#: src/modules/conf_shelves/e_int_config_shelf.c:80
+#: src/modules/conf_shelves/e_int_config_shelf.c:81
 #: src/modules/ibar/e_mod_config.c:108
 msgid "Delete"
 msgstr "Wis"
 
-#: src/bin/e_entry.c:503 src/bin/e_fm.c:8088
+#: src/bin/e_entry.c:503
+#: src/bin/e_fm.c:8088
 msgid "Cut"
 msgstr "Knippen"
 
-#: src/bin/e_entry.c:511 src/bin/e_fm.c:6148 src/bin/e_fm.c:8102
+#: src/bin/e_entry.c:511
+#: src/bin/e_fm.c:6148
+#: src/bin/e_fm.c:8102
 msgid "Copy"
 msgstr "Kopieer"
 
-#: src/bin/e_entry.c:519 src/bin/e_fm.c:7926 src/bin/e_fm.c:8115
+#: src/bin/e_entry.c:519
+#: src/bin/e_fm.c:7926
+#: src/bin/e_fm.c:8115
 msgid "Paste"
 msgstr "Plakken"
 
@@ -1109,8 +1174,11 @@ msgstr "Plakken"
 msgid "Select All"
 msgstr "Alles selecteren"
 
-#: src/bin/e_exec.c:217 src/bin/e_exec.c:224 src/bin/e_exec.c:236
-#: src/bin/e_exec.c:260 src/bin/e_utils.c:235
+#: src/bin/e_exec.c:217
+#: src/bin/e_exec.c:224
+#: src/bin/e_exec.c:236
+#: src/bin/e_exec.c:260
+#: src/bin/e_utils.c:235
 #: src/modules/conf_intl/e_int_config_imc.c:265
 #: src/modules/conf_intl/e_int_config_imc.c:513
 msgid "Run Error"
@@ -1118,29 +1186,22 @@ msgstr "Start Fout"
 
 #: src/bin/e_exec.c:218
 msgid "Enlightenment was unable to get current directory"
-msgstr "Enlightenment was niet in staat om de huidige map te verkrijgen."
+msgstr "Enlightenment was niet in staat om de huidige map te verkrijgen"
 
 #: src/bin/e_exec.c:225
 #, c-format
 msgid "Enlightenment was unable to change to directory:<br><br>%s"
-msgstr ""
-"Enlightenment was niet in staat om naar de volgende map te veranderen:<br><br>"
-"%s"
+msgstr "Enlightenment was niet in staat om naar de volgende map te veranderen:<br><br>%s"
 
 #: src/bin/e_exec.c:237
 #, c-format
 msgid "Enlightenment was unable to restore to directory:<br><br>%s"
-msgstr ""
-"Enlightenment was niet in staat om naar de volgende map te herstellen:<br><br>"
-"%"
-"s"
+msgstr "Enlightenment was niet in staat om naar de volgende map te herstellen:<br><br>%s"
 
 #: src/bin/e_exec.c:261
 #, c-format
 msgid "Enlightenment was unable to fork a child process:<br><br>%s"
-msgstr ""
-"Enlightenment was niet in staat om een kinderproces te vertakken:<br><br>%"
-"s"
+msgstr "Enlightenment was niet in staat om een kinderproces te vertakken:<br><br>%s"
 
 #: src/bin/e_exec.c:389
 msgid "Application run error"
@@ -1148,12 +1209,8 @@ msgstr "Toepassings-uitvoerfout"
 
 #: src/bin/e_exec.c:391
 #, c-format
-msgid ""
-"Enlightenment was unable to run the application:<br><br>%s<br><br>The "
-"application failed to start."
-msgstr ""
-"Enlightenment was niet in staat om het programma te starten:<br><br>%"
-"s<br><br>Het programma starten mislukte."
+msgid "Enlightenment was unable to run the application:<br><br>%s<br><br>The application failed to start."
+msgstr "Enlightenment was niet in staat om het programma te starten:<br><br>%s<br><br>Het programma starten mislukte."
 
 #: src/bin/e_exec.c:495
 msgid "Application Execution Error"
@@ -1172,72 +1229,75 @@ msgstr "Een afsluitcode van %i is teruggekomen van %s."
 #: src/bin/e_exec.c:521
 #, c-format
 msgid "%s was interrupted by an Interrupt Signal."
-msgstr "%s was onderbroken door een Onderbrekingssignaal."
+msgstr "%s werd onderbroken door een Onderbrekingssignaal."
 
 #: src/bin/e_exec.c:524
 #, c-format
 msgid "%s was interrupted by a Quit Signal."
-msgstr "%s was onderbroken door een Afsluitsignaal."
+msgstr "%s werd onderbroken door een Afsluitsignaal."
 
 #: src/bin/e_exec.c:528
 #, c-format
 msgid "%s was interrupted by an Abort Signal."
-msgstr "%s was onderbroken door een Afbreeksignaal."
+msgstr "%s werd onderbroken door een Afbreeksignaal."
 
 #: src/bin/e_exec.c:531
 #, c-format
 msgid "%s was interrupted by a Floating Point Error."
-msgstr "%s was onderbroken door een Zwevende Punt-fout."
+msgstr "%s werd onderbroken door een Zwevende Punt-fout."
 
 #: src/bin/e_exec.c:535
 #, c-format
 msgid "%s was interrupted by an Uninterruptable Kill Signal."
-msgstr "%s was onderbroken door een ononderbreekbaar Afsluitsignaal."
+msgstr "%s werd onderbroken door een ononderbreekbaar Afsluitsignaal."
 
 #: src/bin/e_exec.c:539
 #, c-format
 msgid "%s was interrupted by a Segmentation Fault."
-msgstr "%s was onderbroken door een segmentatiefout."
+msgstr "%s werd onderbroken door een segmentatiefout."
 
 #: src/bin/e_exec.c:543
 #, c-format
 msgid "%s was interrupted by a Broken Pipe."
-msgstr "%s was onderbroken door een gebroken pijp."
+msgstr "%swerd onderbroken door een gebroken pijp."
 
 #: src/bin/e_exec.c:546
 #, c-format
 msgid "%s was interrupted by a Termination Signal."
-msgstr "%s was onderbroken door een Beëindigingssignaal."
+msgstr "%s werd onderbroken door een Beëindigingssignaal."
 
 #: src/bin/e_exec.c:550
 #, c-format
 msgid "%s was interrupted by a Bus Error."
-msgstr "%s was onderbroken door een Busfout."
+msgstr "%s werd onderbroken door een Busfout."
 
 #: src/bin/e_exec.c:553
 #, c-format
 msgid "%s was interrupted by the signal number %i."
-msgstr "%s was onderbroken door het signaalnummer %i."
+msgstr "%s werd onderbroken door het signaalnummer %i."
 
 #: src/bin/e_exec.c:609
-msgid ""
-"***The remaining output has been truncated. Save the output to view.***\n"
-msgstr ""
-"***De resterende uitvoer is afgeknot. Sla de uitvoer op om deze te zien.***\n"
+msgid "***The remaining output has been truncated. Save the output to view.***\n"
+msgstr "***De resterende uitvoer is afgeknot. Sla de uitvoer op om deze te zien.***\n"
 
-#: src/bin/e_exec.c:671 src/bin/e_exec.c:745 src/bin/e_exec.c:752
+#: src/bin/e_exec.c:671
+#: src/bin/e_exec.c:745
+#: src/bin/e_exec.c:752
 msgid "Error Logs"
-msgstr "Fout-logbestanden"
+msgstr "Foutlog-bestanden"
 
-#: src/bin/e_exec.c:677 src/bin/e_exec.c:753
+#: src/bin/e_exec.c:677
+#: src/bin/e_exec.c:753
 msgid "There was no error message."
 msgstr "Er was geen foutmelding."
 
-#: src/bin/e_exec.c:681 src/bin/e_exec.c:760
+#: src/bin/e_exec.c:681
+#: src/bin/e_exec.c:760
 msgid "Save This Message"
 msgstr "Bewaar deze melding"
 
-#: src/bin/e_exec.c:685 src/bin/e_exec.c:764
+#: src/bin/e_exec.c:685
+#: src/bin/e_exec.c:764
 #, c-format
 msgid "This error log will be saved as %s/%s.log"
 msgstr "Deze foutmelding zal worden opgeslagen als %s/%s.log"
@@ -1250,7 +1310,8 @@ msgstr "Fout-informatie"
 msgid "Error Signal Information"
 msgstr "Fout-signaalinformatie"
 
-#: src/bin/e_exec.c:729 src/bin/e_exec.c:736
+#: src/bin/e_exec.c:729
+#: src/bin/e_exec.c:736
 msgid "Output Data"
 msgstr "Uitvoer-data"
 
@@ -1296,40 +1357,51 @@ msgstr "Kan apparaat niet uitwerpen"
 msgid "%i Files"
 msgstr "%i Bestanden"
 
-#: src/bin/e_fm.c:6161 src/bin/e_fm.c:7934 src/bin/e_fm.c:8123
+#: src/bin/e_fm.c:6161
+#: src/bin/e_fm.c:7934
+#: src/bin/e_fm.c:8123
 msgid "Link"
 msgstr "Link"
 
-#: src/bin/e_fm.c:6169 src/bin/e_fm.c:9114 src/bin/e_fm.c:9255
+#: src/bin/e_fm.c:6169
+#: src/bin/e_fm.c:9114
+#: src/bin/e_fm.c:9255
 msgid "Abort"
 msgstr "Afbreken"
 
-#: src/bin/e_fm.c:7853 src/bin/e_fm.c:8013
+#: src/bin/e_fm.c:7853
+#: src/bin/e_fm.c:8013
 msgid "Inherit parent settings"
 msgstr "Erf ouderinstellingen"
 
-#: src/bin/e_fm.c:7862 src/bin/e_fm.c:8022
+#: src/bin/e_fm.c:7862
+#: src/bin/e_fm.c:8022
 #: src/modules/fileman/e_mod_config.c:219
 msgid "View Mode"
 msgstr "Weergavemodus"
 
-#: src/bin/e_fm.c:7869 src/bin/e_fm.c:8029
+#: src/bin/e_fm.c:7869
+#: src/bin/e_fm.c:8029
 msgid "Refresh View"
 msgstr "Ververs weergave"
 
-#: src/bin/e_fm.c:7877 src/bin/e_fm.c:8037
+#: src/bin/e_fm.c:7877
+#: src/bin/e_fm.c:8037
 msgid "Show Hidden Files"
 msgstr "Toon verborgen bestanden"
 
-#: src/bin/e_fm.c:7889 src/bin/e_fm.c:8049
+#: src/bin/e_fm.c:7889
+#: src/bin/e_fm.c:8049
 msgid "Remember Ordering"
 msgstr "Onthoudt sortering"
 
-#: src/bin/e_fm.c:7898 src/bin/e_fm.c:8058
+#: src/bin/e_fm.c:7898
+#: src/bin/e_fm.c:8058
 msgid "Sort Now"
 msgstr "Sorteer nu"
 
-#: src/bin/e_fm.c:7910 src/bin/e_fm.c:8073
+#: src/bin/e_fm.c:7910
+#: src/bin/e_fm.c:8073
 #: src/modules/conf_paths/e_int_config_paths.c:205
 msgid "New Directory"
 msgstr "Nieuwe map"
@@ -1352,25 +1424,30 @@ msgstr "Uitwerpen"
 
 #: src/bin/e_fm.c:8229
 msgid "Application Properties"
-msgstr "Programmaeigenschappen"
+msgstr "Programma-eigenschappen"
 
-#: src/bin/e_fm.c:8235 src/bin/e_fm_prop.c:105
+#: src/bin/e_fm.c:8235
+#: src/bin/e_fm_prop.c:105
 msgid "File Properties"
 msgstr "Bestandseigenschappen"
 
-#: src/bin/e_fm.c:8472 src/bin/e_fm.c:8525
+#: src/bin/e_fm.c:8472
+#: src/bin/e_fm.c:8525
 msgid "Use default"
 msgstr "Gebruik standaard"
 
-#: src/bin/e_fm.c:8498 src/modules/fileman/e_mod_config.c:224
+#: src/bin/e_fm.c:8498
+#: src/modules/fileman/e_mod_config.c:224
 msgid "Grid Icons"
 msgstr "Raster pictogrammen"
 
-#: src/bin/e_fm.c:8506 src/modules/fileman/e_mod_config.c:226
+#: src/bin/e_fm.c:8506
+#: src/modules/fileman/e_mod_config.c:226
 msgid "Custom Icons"
 msgstr "Aangepaste pictogrammen"
 
-#: src/bin/e_fm.c:8514 src/modules/everything/evry_config.c:435
+#: src/bin/e_fm.c:8514
+#: src/modules/everything/evry_config.c:435
 #: src/modules/everything/evry_config.c:493
 #: src/modules/fileman/e_mod_config.c:234
 msgid "List"
@@ -1381,15 +1458,18 @@ msgstr "Lijst"
 msgid "Icon Size (%d)"
 msgstr "Pictogramgrootte (%d)"
 
-#: src/bin/e_fm.c:8585 src/bin/e_fm.c:8791
+#: src/bin/e_fm.c:8585
+#: src/bin/e_fm.c:8791
 msgid "Set background..."
 msgstr "Stel achtergrond in..."
 
-#: src/bin/e_fm.c:8590 src/bin/e_fm.c:8835
+#: src/bin/e_fm.c:8590
+#: src/bin/e_fm.c:8835
 msgid "Set overlay..."
 msgstr "Stel overlap in..."
 
-#: src/bin/e_fm.c:8689 src/modules/conf_theme/e_int_config_theme.c:1031
+#: src/bin/e_fm.c:8689
+#: src/modules/conf_theme/e_int_config_theme.c:1031
 msgid "Clear"
 msgstr "Wis"
 
@@ -1410,11 +1490,14 @@ msgstr "Hernoem %s naar:"
 msgid "Rename File"
 msgstr "Hernoem bestand"
 
-#: src/bin/e_fm.c:9113 src/bin/e_fm.c:9254
+#: src/bin/e_fm.c:9113
+#: src/bin/e_fm.c:9254
 msgid "Retry"
 msgstr "Probeer opnieuw"
 
-#: src/bin/e_fm.c:9117 src/bin/e_fm.c:9260 src/modules/wizard/page_030.c:85
+#: src/bin/e_fm.c:9117
+#: src/bin/e_fm.c:9260
+#: src/modules/wizard/page_030.c:85
 msgid "Error"
 msgstr "Fout"
 
@@ -1464,12 +1547,8 @@ msgstr "Weet u zeker dat u <br><hilight>%s</hilight> wilt verwijderen?"
 
 #: src/bin/e_fm.c:9444
 #, c-format
-msgid ""
-"Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</"
-"hilight> ?"
-msgstr ""
-"Weet u zeker dat u<br>de %d geselecteerde bestanden in:<br><hilight>%s</ "
-"hilight> wilt verwijderen?"
+msgid "Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</hilight> ?"
+msgstr "Weet u zeker dat u<br>de %d geselecteerde bestanden in:<br><hilight>%s</ hilight> wilt verwijderen?"
 
 #: src/bin/e_fm_device.c:33
 #, c-format
@@ -1509,7 +1588,8 @@ msgstr "Verwijderbaar apparaat"
 msgid "File:"
 msgstr "Bestand:"
 
-#: src/bin/e_fm_prop.c:339 src/bin/e_widget_fsel.c:348
+#: src/bin/e_fm_prop.c:339
+#: src/bin/e_widget_fsel.c:348
 msgid "Size:"
 msgstr "Grootte:"
 
@@ -1525,7 +1605,8 @@ msgstr "Bestandstype:"
 msgid "Permissions"
 msgstr "Rechten"
 
-#: src/bin/e_fm_prop.c:361 src/bin/e_widget_fsel.c:364
+#: src/bin/e_fm_prop.c:361
+#: src/bin/e_widget_fsel.c:364
 msgid "Owner:"
 msgstr "Eigenaar:"
 
@@ -1545,7 +1626,8 @@ msgstr "Eigenaar kan lezen"
 msgid "Owner can write"
 msgstr "Eigenaar kan schrijven"
 
-#: src/bin/e_fm_prop.c:379 src/bin/e_widget_fsel.c:311
+#: src/bin/e_fm_prop.c:379
+#: src/bin/e_widget_fsel.c:311
 #: src/modules/conf_theme/e_int_config_icon_themes.c:258
 #: src/modules/conf_theme/e_int_config_transitions.c:167
 #: src/modules/conf_theme/e_int_config_theme.c:1039
@@ -1580,12 +1662,14 @@ msgstr "Link-informatie"
 msgid "Select an Image"
 msgstr "Selecteer een afbeelding"
 
-#: src/bin/e_gadcon.c:1370 src/bin/e_int_border_menu.c:95
+#: src/bin/e_gadcon.c:1370
+#: src/bin/e_int_border_menu.c:95
 #: src/bin/e_int_border_menu.c:595
 msgid "Move to"
 msgstr "Verplaatsen naar"
 
-#: src/bin/e_gadcon.c:1402 src/modules/gadman/e_mod_gadman.c:720
+#: src/bin/e_gadcon.c:1402
+#: src/modules/gadman/e_mod_gadman.c:720
 msgid "Begin move/resize"
 msgstr "Start verplaatsen/herschalen"
 
@@ -1597,25 +1681,30 @@ msgstr "Herschaalbaar"
 msgid "Automatically scroll contents"
 msgstr "Scroll inhoud automatisch"
 
-#: src/bin/e_gadcon.c:1426 src/modules/gadman/e_mod_gadman.c:731
+#: src/bin/e_gadcon.c:1426
+#: src/modules/gadman/e_mod_gadman.c:731
 msgid "Plain"
 msgstr "Vlak"
 
-#: src/bin/e_gadcon.c:1435 src/modules/gadman/e_mod_gadman.c:739
+#: src/bin/e_gadcon.c:1435
+#: src/modules/gadman/e_mod_gadman.c:739
 msgid "Inset"
 msgstr "Inleg"
 
-#: src/bin/e_gadcon.c:1444 src/bin/e_int_config_modules.c:54
+#: src/bin/e_gadcon.c:1444
+#: src/bin/e_int_config_modules.c:54
 #: src/modules/conf_theme/e_mod_main.c:30
 #: src/modules/dropshadow/e_mod_main.c:89
 msgid "Look"
 msgstr "Uiterlijk"
 
-#: src/bin/e_gadcon.c:1455 src/bin/e_widget_config_list.c:66
+#: src/bin/e_gadcon.c:1455
+#: src/bin/e_widget_config_list.c:66
 #: src/modules/conf_applications/e_int_config_apps.c:239
 #: src/modules/conf_applications/e_int_config_apps.c:260
 #: src/modules/conf_applications/e_int_config_apps.c:280
-#: src/modules/gadman/e_mod_gadman.c:815 src/modules/ibar/e_mod_main.c:821
+#: src/modules/gadman/e_mod_gadman.c:815
+#: src/modules/ibar/e_mod_main.c:821
 msgid "Remove"
 msgstr "Verwijder"
 
@@ -1633,11 +1722,11 @@ msgstr ""
 
 #: src/bin/e_int_border_locks.c:64
 msgid "Window Locks"
-msgstr "Venster vergrendeling"
+msgstr "Venstersloten"
 
 #: src/bin/e_int_border_locks.c:282
 msgid "Generic Locks"
-msgstr "Algemeen slot"
+msgstr "Algemene sloten"
 
 #: src/bin/e_int_border_locks.c:283
 msgid "Lock the Window so it does only what I tell it to"
@@ -1648,14 +1737,12 @@ msgid "Protect this window from me accidentally changing it"
 msgstr "Bescherm dit venster tegen mijn veranderingen die per ongeluk gebeuren"
 
 #: src/bin/e_int_border_locks.c:287
-msgid ""
-"Protect this window from being accidentally closed because it is important"
-msgstr ""
-"Bescherm dit venster tegen per ongeluk afsluiten omdat het belangrijk is"
+msgid "Protect this window from being accidentally closed because it is important"
+msgstr "Bescherm dit venster tegen per ongeluk afsluiten omdat het belangrijk is"
 
 #: src/bin/e_int_border_locks.c:289
 msgid "Do not allow the border to change on this window"
-msgstr "Sta niet toe dat het raamwerk verandert op dit venster"
+msgstr "Sta niet toe dat de rand verandert op dit venster"
 
 #: src/bin/e_int_border_locks.c:292
 msgid "Remember these Locks for this window next time it appears"
@@ -1663,69 +1750,82 @@ msgstr "Onthoud deze Sloten voor dit venster de volgende keer dat het opkomt"
 
 #: src/bin/e_int_border_locks.c:305
 msgid "Lock program changing:"
-msgstr "Vergrendel programma verandering:"
+msgstr "Vergrendel programmaverandering:"
 
-#: src/bin/e_int_border_locks.c:306 src/bin/e_int_border_locks.c:325
-#: src/bin/e_int_border_remember.c:705 src/bin/e_int_shelf_config.c:174
+#: src/bin/e_int_border_locks.c:306
+#: src/bin/e_int_border_locks.c:325
+#: src/bin/e_int_border_remember.c:705
+#: src/bin/e_int_shelf_config.c:174
 msgid "Position"
 msgstr "Positie"
 
-#: src/bin/e_int_border_locks.c:308 src/bin/e_int_border_locks.c:327
-#: src/bin/e_int_border_remember.c:708 src/bin/e_int_shelf_config.c:185
+#: src/bin/e_int_border_locks.c:308
+#: src/bin/e_int_border_locks.c:327
+#: src/bin/e_int_border_remember.c:708
+#: src/bin/e_int_shelf_config.c:185
 #: src/modules/conf_theme/e_int_config_fonts.c:439
 #: src/modules/conf_theme/e_int_config_fonts.c:634
 #: src/modules/conf_theme/e_int_config_cursor.c:137
 msgid "Size"
-msgstr "Grote"
+msgstr "Grootte"
 
-#: src/bin/e_int_border_locks.c:310 src/bin/e_int_border_locks.c:329
-#: src/bin/e_int_border_menu.c:507 src/bin/e_int_border_prop.c:469
-#: src/bin/e_int_border_remember.c:711 src/bin/e_int_shelf_config.c:132
+#: src/bin/e_int_border_locks.c:310
+#: src/bin/e_int_border_locks.c:329
+#: src/bin/e_int_border_menu.c:507
+#: src/bin/e_int_border_prop.c:469
+#: src/bin/e_int_border_remember.c:711
+#: src/bin/e_int_shelf_config.c:132
 msgid "Stacking"
 msgstr "Gestapeld"
 
-#: src/bin/e_int_border_locks.c:312 src/bin/e_int_border_locks.c:331
+#: src/bin/e_int_border_locks.c:312
+#: src/bin/e_int_border_locks.c:331
 msgid "Iconified state"
-msgstr "Geminimaliseerde staat"
+msgstr "Geiconiseerde staat"
 
-#: src/bin/e_int_border_locks.c:314 src/bin/e_int_border_locks.c:333
+#: src/bin/e_int_border_locks.c:314
+#: src/bin/e_int_border_locks.c:333
 #: src/bin/e_int_border_remember.c:723
 msgid "Stickiness"
 msgstr "Vastzetten"
 
-#: src/bin/e_int_border_locks.c:316 src/bin/e_int_border_locks.c:335
+#: src/bin/e_int_border_locks.c:316
+#: src/bin/e_int_border_locks.c:335
 #: src/bin/e_int_border_remember.c:729
 msgid "Shaded state"
-msgstr "Ingeklapt"
+msgstr "Ingeklapte status"
 
-#: src/bin/e_int_border_locks.c:318 src/bin/e_int_border_locks.c:337
+#: src/bin/e_int_border_locks.c:318
+#: src/bin/e_int_border_locks.c:337
 msgid "Maximized state"
-msgstr "Maximaliseren"
+msgstr "Gemaximaliseerde status"
 
-#: src/bin/e_int_border_locks.c:320 src/bin/e_int_border_locks.c:339
+#: src/bin/e_int_border_locks.c:320
+#: src/bin/e_int_border_locks.c:339
 #: src/bin/e_int_border_remember.c:732
 msgid "Fullscreen state"
-msgstr "Volledig Scherm"
+msgstr "Volledig Scherm-status"
 
 #: src/bin/e_int_border_locks.c:324
 msgid "Lock me from changing:"
-msgstr "Sluit mij uit van verandering:"
+msgstr "Weerhoudt mij van verandering:"
 
-#: src/bin/e_int_border_locks.c:341 src/bin/e_int_border_remember.c:717
+#: src/bin/e_int_border_locks.c:341
+#: src/bin/e_int_border_remember.c:717
 msgid "Border style"
-msgstr "Vensterraam stijl"
+msgstr "Randstijl:"
 
 #: src/bin/e_int_border_locks.c:345
 msgid "Stop me from:"
-msgstr "Stop mij van:"
+msgstr "Weerhoudt mij van:"
 
 #: src/bin/e_int_border_locks.c:346
 msgid "Closing the window"
-msgstr "Venster sluiten"
+msgstr "Sluiten van het venster"
 
 #: src/bin/e_int_border_locks.c:348
 msgid "Exiting my login with this window open"
-msgstr "Sluit mijn aanmelding met dit venster open"
+msgstr "Sluiten van mijn aanmelding met dit venster open"
 
 #: src/bin/e_int_border_locks.c:352
 msgid "Remember these Locks"
@@ -1735,16 +1835,19 @@ msgstr "Onthoud deze Sloten"
 msgid "Window"
 msgstr "Venster"
 
-#: src/bin/e_int_border_menu.c:104 src/bin/e_int_border_menu.c:943
+#: src/bin/e_int_border_menu.c:104
+#: src/bin/e_int_border_menu.c:943
 msgid "Always on Top"
 msgstr "Altijd op voorgrond"
 
-#: src/bin/e_int_border_menu.c:119 src/bin/e_int_border_menu.c:606
+#: src/bin/e_int_border_menu.c:119
+#: src/bin/e_int_border_menu.c:606
 #: src/bin/e_int_border_prop.c:472
 msgid "Sticky"
 msgstr "Vastgezet"
 
-#: src/bin/e_int_border_menu.c:291 src/bin/e_int_border_prop.c:477
+#: src/bin/e_int_border_menu.c:291
+#: src/bin/e_int_border_prop.c:477
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:121
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:145
 msgid "Fullscreen"
@@ -1797,7 +1900,8 @@ msgstr "Overslaan"
 msgid "Border"
 msgstr "Rand"
 
-#: src/bin/e_int_border_menu.c:541 src/bin/e_int_border_remember.c:621
+#: src/bin/e_int_border_menu.c:541
+#: src/bin/e_int_border_remember.c:621
 #: src/bin/e_int_border_remember.c:714
 msgid "Locks"
 msgstr "Sloten"
@@ -1814,7 +1918,7 @@ msgstr "ICCCM/NetWM"
 #: src/bin/e_int_border_menu.c:641
 #: src/modules/everything/evry_plug_windows.c:432
 msgid "Iconify"
-msgstr "Minimaliseren"
+msgstr "Iconiseer"
 
 #: src/bin/e_int_border_menu.c:680
 msgid "Shade"
@@ -1859,22 +1963,32 @@ msgstr "Gebruik door programma gegeven pictogram"
 msgid "Use User Defined Icon"
 msgstr "Gebruik gebruikergedefineerd pictogram"
 
-#: src/bin/e_int_border_menu.c:1147 src/bin/e_int_border_remember.c:747
+#: src/bin/e_int_border_menu.c:1147
+#: src/bin/e_int_border_remember.c:747
 msgid "Offer Resistance"
 msgstr "Bied weerstand aan"
 
-#: src/bin/e_int_border_menu.c:1207 src/modules/winlist/e_mod_main.c:26
+#: src/bin/e_int_border_menu.c:1207
+#: src/modules/winlist/e_mod_main.c:26
 msgid "Window List"
 msgstr "Vensterlijst"
 
-#: src/bin/e_int_border_menu.c:1217 src/modules/pager/e_mod_main.c:257
-#: src/modules/pager/e_mod_main.c:2797 src/modules/pager/e_mod_main.c:2804
-#: src/modules/pager/e_mod_main.c:2811 src/modules/pager/e_mod_main.c:2813
-#: src/modules/pager/e_mod_main.c:2815 src/modules/pager/e_mod_main.c:2817
-#: src/modules/pager/e_mod_main.c:2819 src/modules/pager/e_mod_main.c:2821
-#: src/modules/pager/e_mod_main.c:2854 src/modules/pager/e_mod_main.c:2855
-#: src/modules/pager/e_mod_main.c:2856 src/modules/pager/e_mod_main.c:2857
-#: src/modules/pager/e_mod_main.c:2858 src/modules/pager/e_mod_main.c:2859
+#: src/bin/e_int_border_menu.c:1217
+#: src/modules/pager/e_mod_main.c:257
+#: src/modules/pager/e_mod_main.c:2797
+#: src/modules/pager/e_mod_main.c:2804
+#: src/modules/pager/e_mod_main.c:2811
+#: src/modules/pager/e_mod_main.c:2813
+#: src/modules/pager/e_mod_main.c:2815
+#: src/modules/pager/e_mod_main.c:2817
+#: src/modules/pager/e_mod_main.c:2819
+#: src/modules/pager/e_mod_main.c:2821
+#: src/modules/pager/e_mod_main.c:2854
+#: src/modules/pager/e_mod_main.c:2855
+#: src/modules/pager/e_mod_main.c:2856
+#: src/modules/pager/e_mod_main.c:2857
+#: src/modules/pager/e_mod_main.c:2858
+#: src/modules/pager/e_mod_main.c:2859
 msgid "Pager"
 msgstr "Pager"
 
@@ -1898,7 +2012,8 @@ msgstr "ICCCM"
 msgid "ICCCM Properties"
 msgstr "ICCCM-eigenschappen"
 
-#: src/bin/e_int_border_prop.c:419 src/bin/e_int_border_remember.c:665
+#: src/bin/e_int_border_prop.c:419
+#: src/bin/e_int_border_remember.c:665
 #: src/bin/e_utils.c:1192
 msgid "Title"
 msgstr "Titel"
@@ -1907,7 +2022,8 @@ msgstr "Titel"
 msgid "Class"
 msgstr "Klasse"
 
-#: src/bin/e_int_border_prop.c:422 src/bin/e_int_border_prop.c:468
+#: src/bin/e_int_border_prop.c:422
+#: src/bin/e_int_border_prop.c:468
 msgid "Icon Name"
 msgstr "Pictogramnaam"
 
@@ -1957,7 +2073,7 @@ msgstr "Venstergroep"
 
 #: src/bin/e_int_border_prop.c:436
 msgid "Transient For"
-msgstr "Van voorbijgaande aard voor"
+msgstr "Doorlopend voor"
 
 #: src/bin/e_int_border_prop.c:437
 msgid "Client Leader"
@@ -1981,11 +2097,11 @@ msgstr "Dringend"
 
 #: src/bin/e_int_border_prop.c:444
 msgid "Request Delete"
-msgstr "Verwijderverzoek"
+msgstr "Verzoek verwijdering"
 
 #: src/bin/e_int_border_prop.c:445
 msgid "Request Position"
-msgstr "Positieverzoek"
+msgstr "Verzoek positie"
 
 #: src/bin/e_int_border_prop.c:466
 msgid "NetWM Properties"
@@ -1999,11 +2115,13 @@ msgstr "Modaal"
 msgid "Shaded"
 msgstr "Ingeklapt"
 
-#: src/bin/e_int_border_prop.c:474 src/bin/e_int_border_remember.c:744
+#: src/bin/e_int_border_prop.c:474
+#: src/bin/e_int_border_remember.c:744
 msgid "Skip Taskbar"
 msgstr "Sla taakbalk over"
 
-#: src/bin/e_int_border_prop.c:475 src/bin/e_int_border_remember.c:741
+#: src/bin/e_int_border_prop.c:475
+#: src/bin/e_int_border_remember.c:741
 msgid "Skip Pager"
 msgstr "Sla pager over"
 
@@ -2020,44 +2138,16 @@ msgid "Window properties are not a unique match"
 msgstr "Venstereigenschappen zijn geen unieke match"
 
 #: src/bin/e_int_border_remember.c:310
-msgid ""
-"You are trying to ask Enlightenment to remember to apply<br>properties (such "
-"as size, location, border style etc.) to<br>a window that <hilight>does not "
-"have unique properties</hilight>.<br><br>This means it shares Name/Class, "
-"Transience, Role etc. properties<br>with more than 1 other window on the "
-"screen and remembering<br>properties for this window will apply to all other "
-"windows<br>that match these properties.<br><br>This is just a warning in "
-"case you did not intend this to happen.<br>If you did, simply press "
-"<hilight>Apply</hilight> or <hilight>OK</hilight> buttons<br>and your "
-"settings will be accepted. Press <hilight>Cancel</hilight> if you<br>are not "
-"sure and nothing will be affected."
-msgstr ""
-"U probeert Enlightenment het toepassen van<br>eigenschappen (zoals grootte, "
-"locatie, randstijl, etc) op<br>een venster dat <hilight>geen unieke "
-"eigenschappen</hilight>heeft te onthouden<br><br>Dit betekent dat het Naam/"
-"klasse, Doorlopendheid, Rol, etc. eigenschappen deelt met<br>met meer dan 1 "
-"ander venster op het scherm en het herinneren<br>van deze eigenschappen zal "
-"dan op alle vensters van programma zijn<br>die overeenkomen hiermee."
-"<br><br>Dit is een waarschuwing voor als u niet wilt dat dit gebeurt.<br>Als "
-"dit wel de bedoeling is druk op<hilight>Toepassen</hilight> of <hilight>OK</"
-"hilight>-knoppen<br>en uw instellingen worden geaccepteerd. Druk op "
-"<hilight>Annuleren</hilight> als u<br>niet zeker bent en niets veranderd."
+msgid "You are trying to ask Enlightenment to remember to apply<br>properties (such as size, location, border style etc.) to<br>a window that <hilight>does not have unique properties</hilight>.<br><br>This means it shares Name/Class, Transience, Role etc. properties<br>with more than 1 other window on the screen and remembering<br>properties for this window will apply to all other windows<br>that match these properties.<br><br>This is just a warning in case you did not intend this to happen.<br>If you did, simply press <hilight>Apply</hilight> or <hilight>OK</hilight> buttons<br>and your settings will be accepted. Press <hilight>Cancel</hilight> if you<br>are not sure and nothing will be affected."
+msgstr "U probeert Enlightenment het toepassen van<br>eigenschappen (zoals grootte, locatie, randstijl, etc) op<br>een venster dat <hilight>geen unieke eigenschappen</hilight>heeft te onthouden<br><br>Dit betekent dat het Naam/klasse, Doorlopendheid, Rol, etc. eigenschappen deelt met<br>met meer dan 1 ander venster op het scherm en het herinneren<br>van deze eigenschappen zal dan op alle vensters van programma zijn<br>die overeenkomen hiermee.<br><br>Dit is een waarschuwing voor als u niet wilt dat dit gebeurt.<br>Als dit wel de bedoeling is druk op<hilight>Toepassen</hilight> of <hilight>OK</hilight>-knoppen<br>en uw instellingen worden geaccepteerd. Druk op <hilight>Annuleren</hilight> als u<br>niet zeker bent en niets veranderd."
 
 #: src/bin/e_int_border_remember.c:516
 msgid "No match properties set"
 msgstr "Geen overeenkomende eigenschappen ingesteld"
 
 #: src/bin/e_int_border_remember.c:519
-msgid ""
-"You are trying to ask Enlightenment to remember to apply<br>properties (such "
-"as size, location, border style etc.) to<br>a window <hilight>without "
-"specifying how to remember it</hilight>.<br><br>You must specify at least 1 "
-"way of remembering this window."
-msgstr ""
-"U probeert Enlightenment eigenschappen te laten herinneren die toegepast "
-"moeten worden<br> (zoals grootte, locatie, randstijl, etc.) op<br>een "
-"venster<hilight>zonder aan te geven hoe</hilight>.<br><br>Geef alstublieft 1 "
-"manier aan hoe dit venster herinnerd moet worden."
+msgid "You are trying to ask Enlightenment to remember to apply<br>properties (such as size, location, border style etc.) to<br>a window <hilight>without specifying how to remember it</hilight>.<br><br>You must specify at least 1 way of remembering this window."
+msgstr "U probeert Enlightenment eigenschappen te laten herinneren die toegepast moeten worden<br> (zoals grootte, locatie, randstijl, etc.) op<br>een venster<hilight>zonder aan te geven hoe</hilight>.<br><br>Geef alstublieft 1 manier aan hoe dit venster herinnerd moet worden."
 
 #: src/bin/e_int_border_remember.c:617
 msgid "Nothing"
@@ -2071,7 +2161,8 @@ msgstr "Grootte en Positie"
 msgid "Size, Position and Locks"
 msgstr "Grootte, Positie en Sloten"
 
-#: src/bin/e_int_border_remember.c:625 src/modules/conf/e_mod_main.c:245
+#: src/bin/e_int_border_remember.c:625
+#: src/modules/conf/e_mod_main.c:245
 #: src/modules/everything/evry_plug_aggregator.c:334
 msgid "All"
 msgstr "Alles"
@@ -2094,11 +2185,11 @@ msgstr "Vensterrol"
 
 #: src/bin/e_int_border_remember.c:689
 msgid "Window type"
-msgstr "Venster type"
+msgstr "Venstertype"
 
 #: src/bin/e_int_border_remember.c:697
 msgid "wildcard matches are allowed"
-msgstr "Wildcard-overeenkomsten zijn toegestaan"
+msgstr "wildcard-overeenkomsten zijn toegestaan"
 
 #: src/bin/e_int_border_remember.c:699
 msgid "Transience"
@@ -2152,12 +2243,14 @@ msgstr "Gereedschap"
 #: src/modules/everything/evry_plug_files.c:1369
 #: src/modules/everything/evry_plug_files.c:1378
 #: src/modules/everything/evry_plug_files.c:1602
-#: src/modules/fileman/e_mod_main.c:56 src/modules/fileman/e_mod_main.c:76
+#: src/modules/fileman/e_mod_main.c:56
+#: src/modules/fileman/e_mod_main.c:76
 #: src/modules/fileman/e_mod_main.c:416
 msgid "Files"
 msgstr "Bestanden"
 
-#: src/bin/e_int_config_modules.c:56 src/modules/everything/e_mod_main.c:68
+#: src/bin/e_int_config_modules.c:56
+#: src/modules/everything/e_mod_main.c:68
 msgid "Launcher"
 msgstr "Starter"
 
@@ -2170,16 +2263,26 @@ msgstr "Kern"
 msgid "Mobile"
 msgstr "Mobiel "
 
-#: src/bin/e_int_config_modules.c:59 src/bin/e_int_menus.c:223
-#: src/bin/e_shelf.c:1689 src/modules/battery/e_mod_main.c:183
-#: src/modules/conf/e_conf.c:124 src/modules/conf/e_conf.c:134
-#: src/modules/conf/e_mod_main.c:102 src/modules/conf_dialogs/e_mod_main.c:17
+#: src/bin/e_int_config_modules.c:59
+#: src/bin/e_int_menus.c:223
+#: src/bin/e_shelf.c:1689
+#: src/modules/battery/e_mod_main.c:183
+#: src/modules/clock/e_mod_main.c:283
+#: src/modules/clock/e_mod_main.c:406
+#: src/modules/conf/e_conf.c:124
+#: src/modules/conf/e_conf.c:134
+#: src/modules/conf/e_mod_main.c:102
+#: src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_theme/e_int_config_cursor.c:133
 #: src/modules/everything/evry_plug_settings.c:189
-#: src/modules/ibar/e_mod_main.c:309 src/modules/ibar/e_mod_main.c:807
-#: src/modules/ibox/e_mod_main.c:301 src/modules/ibox/e_mod_main.c:694
-#: src/modules/pager/e_mod_main.c:790 src/modules/temperature/e_mod_main.c:226
-#: src/modules/mixer/e_mod_main.c:677 src/modules/connman/e_mod_main.c:1277
+#: src/modules/ibar/e_mod_main.c:309
+#: src/modules/ibar/e_mod_main.c:807
+#: src/modules/ibox/e_mod_main.c:301
+#: src/modules/ibox/e_mod_main.c:694
+#: src/modules/pager/e_mod_main.c:790
+#: src/modules/temperature/e_mod_main.c:226
+#: src/modules/mixer/e_mod_main.c:718
+#: src/modules/connman/e_mod_main.c:1277
 msgid "Settings"
 msgstr "Instellingen"
 
@@ -2195,7 +2298,8 @@ msgstr "Laad"
 msgid "Unload"
 msgstr "Ontlaad"
 
-#: src/bin/e_int_config_modules.c:307 src/bin/e_int_config_modules.c:591
+#: src/bin/e_int_config_modules.c:307
+#: src/bin/e_int_config_modules.c:591
 msgid "No modules selected."
 msgstr "Geen modules geselecteerd"
 
@@ -2211,7 +2315,8 @@ msgstr "Schelf-inhoud"
 msgid "Toolbar Contents"
 msgstr "Werkbalk-inhoud"
 
-#: src/bin/e_int_gadcon_config.c:155 src/modules/gadman/e_mod_config.c:118
+#: src/bin/e_int_gadcon_config.c:155
+#: src/modules/gadman/e_mod_config.c:118
 #: src/modules/gadman/e_mod_config.c:134
 msgid "Add Gadget"
 msgstr "Voeg gadget toe"
@@ -2220,27 +2325,22 @@ msgstr "Voeg gadget toe"
 msgid "Remove Gadget"
 msgstr "Verwijder gadget"
 
-#: src/bin/e_int_toolbar_config.c:30 src/bin/e_toolbar.c:335
+#: src/bin/e_int_toolbar_config.c:30
+#: src/bin/e_toolbar.c:335
 msgid "Toolbar Settings"
 msgstr "Werkbalk-instellingen"
 
 #: src/bin/e_int_toolbar_config.c:82
 msgid "Layout"
-msgstr "Opmaak"
+msgstr "Indeling"
 
 #: src/bin/e_intl.c:342
 msgid "Input Method Error"
 msgstr "Invoermethode-fout"
 
 #: src/bin/e_intl.c:343
-msgid ""
-"Error starting the input method executable<br><br>please make sure that your "
-"input<br>method configuration is correct and<br>that your "
-"configuration's<br>executable is in your PATH<br>"
-msgstr ""
-"Fout bij het starten van het invoermethode uitvoerbare bestand<br><br>Zorg "
-"alstublieft dat uw invoer-<br>methode-configuratie correct is en<br>dat uw "
-"configuratie<br>uitvoerbare bestand in uw PATH is<br>"
+msgid "Error starting the input method executable<br><br>please make sure that your input<br>method configuration is correct and<br>that your configuration's<br>executable is in your PATH<br>"
+msgstr "Fout bij het starten van het invoermethode uitvoerbare bestand<br><br>Zorg alstublieft dat uw invoer-<br>methode-configuratie correct is en<br>dat uw configuratie<br>uitvoerbare bestand in uw PATH is<br>"
 
 #: src/bin/e_int_menus.c:99
 msgid "Main"
@@ -2264,7 +2364,8 @@ msgstr "Favoriete Programma's"
 msgid "Applications"
 msgstr "Programma's"
 
-#: src/bin/e_int_menus.c:151 src/bin/e_int_menus.c:1119
+#: src/bin/e_int_menus.c:151
+#: src/bin/e_int_menus.c:1119
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:417
@@ -2272,7 +2373,8 @@ msgstr "Programma's"
 msgid "Windows"
 msgstr "Vensters"
 
-#: src/bin/e_int_menus.c:161 src/bin/e_int_menus.c:1173
+#: src/bin/e_int_menus.c:161
+#: src/bin/e_int_menus.c:1173
 msgid "Lost Windows"
 msgstr "Verloren Vensters"
 
@@ -2280,7 +2382,8 @@ msgstr "Verloren Vensters"
 msgid "About"
 msgstr "Over"
 
-#: src/bin/e_int_menus.c:188 src/modules/conf_theme/e_int_config_cursor.c:146
+#: src/bin/e_int_menus.c:188
+#: src/modules/conf_theme/e_int_config_cursor.c:146
 #: src/modules/conf_theme/e_mod_main.c:35
 #: src/modules/conf_theme/e_mod_main.c:67
 #: src/modules/conf_theme/e_mod_main.c:173
@@ -2291,7 +2394,8 @@ msgstr "Thema"
 msgid "Virtual"
 msgstr "Virtueel"
 
-#: src/bin/e_int_menus.c:282 src/modules/conf_shelves/e_mod_main.c:23
+#: src/bin/e_int_menus.c:282
+#: src/modules/conf_shelves/e_mod_main.c:23
 #: src/modules/conf_shelves/e_mod_main.c:27
 #: src/modules/conf_shelves/e_mod_main.c:74
 msgid "Shelves"
@@ -2309,11 +2413,13 @@ msgstr "(Geen toepassingen)"
 msgid "Set Virtual Desktops"
 msgstr "Stel virtuele bureaubladen in"
 
-#: src/bin/e_int_menus.c:1125 src/bin/e_int_menus.c:1309
+#: src/bin/e_int_menus.c:1125
+#: src/bin/e_int_menus.c:1309
 msgid "(No Windows)"
 msgstr "(Geen Vensters)"
 
-#: src/bin/e_int_menus.c:1219 src/bin/e_int_menus.c:1321
+#: src/bin/e_int_menus.c:1219
+#: src/bin/e_int_menus.c:1321
 msgid "No name!!"
 msgstr "Geen naam!!"
 
@@ -2330,7 +2436,7 @@ msgid "Delete A Shelf"
 msgstr "Verwijder een Schelf"
 
 #: src/bin/e_int_shelf_config.c:43
-#: src/modules/conf_shelves/e_int_config_shelf.c:43
+#: src/modules/conf_shelves/e_int_config_shelf.c:44
 msgid "Shelf Settings"
 msgstr "Schelf-instellingen"
 
@@ -2378,7 +2484,7 @@ msgstr "Toon bij muisklik"
 
 #: src/bin/e_int_shelf_config.c:213
 msgid "Hide timeout"
-msgstr "Verberg time-out"
+msgstr "Verberg-time-out"
 
 #: src/bin/e_int_shelf_config.c:217
 #, c-format
@@ -2387,7 +2493,7 @@ msgstr "%.1f seconden"
 
 #: src/bin/e_int_shelf_config.c:223
 msgid "Hide duration"
-msgstr "Verberg voortduring"
+msgstr "Verberg-voortduring"
 
 #: src/bin/e_int_shelf_config.c:227
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:854
@@ -2449,11 +2555,9 @@ msgid ""
 "\t\tgiven the geometry. Add as many as you like. They all\n"
 "\t\treplace the real xinerama screens, if any. This can\n"
 "\t\tbe used to simulate xinerama.\n"
-"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
-"+0\n"
+"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800+0\n"
 "\t-profile CONF_PROFILE\n"
-"\t\tUse the configuration profile CONF_PROFILE instead of the user selected "
-"default or just \"default\".\n"
+"\t\tUse the configuration profile CONF_PROFILE instead of the user selected default or just \"default\".\n"
 "\t-good\n"
 "\t\tBe good.\n"
 "\t-evil\n"
@@ -2474,11 +2578,9 @@ msgstr ""
 "\t\tmet de opgegeven afmetingen. Voeg zoveel toe als u wilt. Ze\n"
 "\t\tvervangen allemaal de echte xinerama-schermen, indien aanwezig. Dit kan\n"
 "gebruikt worden om xinerama te simuleren.\n"
-"\t\tBijv.: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600"
-"+800+0\n"
+"\t\tBijv.: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800+0\n"
 "\t-profile CONF_PROFILE\n"
-"\t\tGebruikt het instellingenprofiel CONF_PROFILE in plaats van de door de "
-"gebruiker geselecteerde of gewoon \"standaard\".\n"
+"\t\tGebruikt het instellingenprofiel CONF_PROFILE in plaats van de door de gebruiker geselecteerde of gewoon \"standaard\".\n"
 "\t-good\n"
 "\t\tWees goed.\n"
 "\t-evil\n"
@@ -2678,7 +2780,8 @@ msgstr ""
 msgid "Testing Format Support"
 msgstr "Testen van formaat-ondersteuning"
 
-#: src/bin/e_main.c:687 src/bin/e_main.c:747
+#: src/bin/e_main.c:687
+#: src/bin/e_main.c:747
 msgid ""
 "Enlightenment found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
@@ -2712,12 +2815,10 @@ msgstr ""
 
 #: src/bin/e_main.c:727
 msgid ""
-"Enlightenment found Evas can't load the 'Sans' font. Check Evas has "
-"fontconfig\n"
+"Enlightenment found Evas can't load the 'Sans' font. Check Evas has fontconfig\n"
 "support and system fontconfig defines a 'Sans' font.\n"
 msgstr ""
-"Enlightenment merkte op dat Evas het 'Sans'-lettertype niet kan laden. "
-"Controleer\n"
+"Enlightenment merkte op dat Evas het 'Sans'-lettertype niet kan laden. Controleer\n"
 "alstublieft of Evas lettertypeinstel-\n"
 "ondersteuning heeft en of dat het 'Sans'-lettertype definieert.\n"
 
@@ -2858,130 +2959,109 @@ msgid "Setup ACPI"
 msgstr "Stel ACPI in"
 
 #: src/bin/e_main.c:962
+msgid "Setup Backlight"
+msgstr "Stel achtergrondlicht in"
+
+#: src/bin/e_main.c:967
+msgid "Enlightenment cannot configure the backlight."
+msgstr "Enlightenment kan het achtergrondlicht niet instellen."
+
+#: src/bin/e_main.c:972
 msgid "Setup DPMS"
 msgstr "Stel DPMS in"
 
-#: src/bin/e_main.c:967
+#: src/bin/e_main.c:977
 msgid "Enlightenment cannot configure the DPMS settings."
 msgstr "Enlightenment kan de DPMS-instellingen niet instellen."
 
-#: src/bin/e_main.c:972
+#: src/bin/e_main.c:982
 msgid "Setup Powersave modes"
 msgstr "Stel energiebesparing-modi in"
 
-#: src/bin/e_main.c:976
+#: src/bin/e_main.c:986
 msgid "Enlightenment cannot set up its powersave modes."
 msgstr "Enlightenment kan haar energiebesparings-modi niet instellen."
 
-#: src/bin/e_main.c:981
+#: src/bin/e_main.c:991
 msgid "Setup Wallpaper"
 msgstr "Stel achtergrond in"
 
-#: src/bin/e_main.c:986
+#: src/bin/e_main.c:996
 msgid "Enlightenment cannot set up its desktop background system."
 msgstr "Enlightenment kan haar bureaubladachtergrond-systeem niet instellen."
 
-#: src/bin/e_main.c:991
+#: src/bin/e_main.c:1001
 msgid "Setup Mouse"
 msgstr "Stel muis in"
 
-#: src/bin/e_main.c:996
+#: src/bin/e_main.c:1006
 msgid "Enlightenment cannot configure the mouse settings."
 msgstr "Enlightenment kan de muisinstellingen niet instellen."
 
-#: src/bin/e_main.c:1001
+#: src/bin/e_main.c:1011
 msgid "Setup Bindings"
 msgstr "Stel bindingen in"
 
-#: src/bin/e_main.c:1006
+#: src/bin/e_main.c:1016
 msgid "Enlightenment cannot set up its bindings system."
 msgstr "Enlightenment kan haar bindingssysteem niet instellen."
 
-#: src/bin/e_main.c:1011
+#: src/bin/e_main.c:1021
 msgid "Setup Shelves"
 msgstr "Stel schelven in"
 
-#: src/bin/e_main.c:1016
+#: src/bin/e_main.c:1026
 msgid "Enlightenment cannot set up its shelf system."
 msgstr "Enlightenment kan haar Schelf-systeem niet instellen."
 
-#: src/bin/e_main.c:1021
+#: src/bin/e_main.c:1031
 msgid "Setup Thumbnailer"
 msgstr "Stel miniaturen in"
 
-#: src/bin/e_main.c:1026
+#: src/bin/e_main.c:1036
 msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
 msgstr "Enlightenment kan haar miniatuur-systeem niet instellen\n"
 
-#: src/bin/e_main.c:1031
+#: src/bin/e_main.c:1041
 msgid "Setup File Ordering"
 msgstr "Stel bestandssortering in"
 
-#: src/bin/e_main.c:1035
+#: src/bin/e_main.c:1045
 msgid "Enlightenment cannot set up its order file system."
 msgstr "Enlightenment kan haar bestandssortering-systeem niet instellen."
 
-#: src/bin/e_main.c:1050
+#: src/bin/e_main.c:1060
 msgid "Load Modules"
 msgstr "Laad modules"
 
-#: src/bin/e_main.c:1067
+#: src/bin/e_main.c:1077
 #, c-format
-msgid ""
-"Enlightenment crashed early on start and has<br>been restarted. There was an "
-"error loading<br>module named: %s. This module has been disabled<br>and will "
-"not be loaded."
-msgstr ""
-"Enlightenment crashte vroeg in het startstadium en is<br>herstart. Er was "
-"een fout tijdens het laden van <br>de module genaamd: %s. Deze module is "
-"uitgeschakeld<br>en zal niet worden geladen."
+msgid "Enlightenment crashed early on start and has<br>been restarted. There was an error loading<br>module named: %s. This module has been disabled<br>and will not be loaded."
+msgstr "Enlightenment crashte vroeg in het startstadium en is<br>herstart. Er was een fout tijdens het laden van <br>de module genaamd: %s. Deze module is uitgeschakeld<br>en zal niet worden geladen."
 
-#: src/bin/e_main.c:1072 src/bin/e_main.c:1089
+#: src/bin/e_main.c:1082
+#: src/bin/e_main.c:1099
 msgid "Enlightenment crashed early on start and has been restarted"
 msgstr "Enlightenment crashte vroeg in het startstadium en is herstart"
 
-#: src/bin/e_main.c:1073
+#: src/bin/e_main.c:1083
 #, c-format
-msgid ""
-"Enlightenment crashed early on start and has been restarted.<br>There was an "
-"error loading module named: %s<br><br>This module has been disabled and will "
-"not be loaded."
-msgstr ""
-"Enlightenment crashte vroeg in het startstadium en is herstart.<br>Er was "
-"een fout tijdens het laden van de module genaamd: %s<br><br> Deze module is "
-"uitgeschakeld en zal niet worden geladen."
+msgid "Enlightenment crashed early on start and has been restarted.<br>There was an error loading module named: %s<br><br>This module has been disabled and will not be loaded."
+msgstr "Enlightenment crashte vroeg in het startstadium en is herstart.<br>Er was een fout tijdens het laden van de module genaamd: %s<br><br> Deze module is uitgeschakeld en zal niet worden geladen."
 
-#: src/bin/e_main.c:1082
-msgid ""
-"Enlightenment crashed early on start and has<br>been restarted. All modules "
-"have been disabled<br>and will not be loaded to help remove any "
-"problem<br>modules from your configuration. The module<br>configuration "
-"dialog should let you select your<br>modules again."
-msgstr ""
-"Enlightenment crashte vroeg in het startstadium en is<br>herstart. Alle "
-"modules zijn uitgeschakeld<br>en zullen niet geladen worden om te helpen de "
-"probleem-<br>modules uit uw instellingen te verwijderen. Het module-"
-"<br>instellingen- dialoogvenster zou u uw<br>modules weer moeten laten "
-"selecteren."
+#: src/bin/e_main.c:1092
+msgid "Enlightenment crashed early on start and has<br>been restarted. All modules have been disabled<br>and will not be loaded to help remove any problem<br>modules from your configuration. The module<br>configuration dialog should let you select your<br>modules again."
+msgstr "Enlightenment crashte vroeg in het startstadium en is<br>herstart. Alle modules zijn uitgeschakeld<br>en zullen niet geladen worden om te helpen de probleem-<br>modules uit uw instellingen te verwijderen. Het module-<br>instellingen- dialoogvenster zou u uw<br>modules weer moeten laten selecteren."
 
-#: src/bin/e_main.c:1090
-msgid ""
-"Enlightenment crashed early on start and has been restarted.<br>All modules "
-"have been disabled and will not be loaded to help<br>remove any problem "
-"modules from your configuration.<br><br>The module configuration dialog "
-"should let you select your<br>modules again."
-msgstr ""
-"Enlightenment crashte vroeg in het startstadium en is herstart.<br>Alle "
-"modules zijn uitgeschakeld en zullen niet geladen worden om te helpen<br> de "
-"probleemmodules uit uw instellingen te verwijderen.<br><br>Het "
-"moduleinstellingen- dialoogvenster zou u uw<br>modules weer moeten laten "
-"selecteren."
+#: src/bin/e_main.c:1100
+msgid "Enlightenment crashed early on start and has been restarted.<br>All modules have been disabled and will not be loaded to help<br>remove any problem modules from your configuration.<br><br>The module configuration dialog should let you select your<br>modules again."
+msgstr "Enlightenment crashte vroeg in het startstadium en is herstart.<br>Alle modules zijn uitgeschakeld en zullen niet geladen worden om te helpen<br> de probleemmodules uit uw instellingen te verwijderen.<br><br>Het moduleinstellingen- dialoogvenster zou u uw<br>modules weer moeten laten selecteren."
 
-#: src/bin/e_main.c:1119
+#: src/bin/e_main.c:1129
 msgid "Configure Shelves"
 msgstr "Stel schelven in"
 
-#: src/bin/e_main.c:1130
+#: src/bin/e_main.c:1140
 msgid "Almost Done"
 msgstr "Bijna klaar"
 
@@ -2992,25 +3072,21 @@ msgstr "Laden van module: %s"
 
 #: src/bin/e_module.c:136
 #, c-format
-msgid ""
-"There was an error loading module named: %s<br>No module named %s could be "
-"found in the<br>module search directories.<br>"
-msgstr ""
-"Bij het Laden van Module %s is een Fout opgetreden.<br>Er was geen Module "
-"met de Naam %s in de<br>Module-map gevonden.<br>"
+msgid "There was an error loading module named: %s<br>No module named %s could be found in the<br>module search directories.<br>"
+msgstr "Bij het Laden van Module %s is een Fout opgetreden.<br>Er was geen Module met de Naam %s in de<br>Module-map gevonden.<br>"
 
-#: src/bin/e_module.c:139 src/bin/e_module.c:152 src/bin/e_module.c:170
+#: src/bin/e_module.c:139
+#: src/bin/e_module.c:152
+#: src/bin/e_module.c:170
 msgid "Error loading Module"
 msgstr "Fout bij het Laden van de Module"
 
-#: src/bin/e_module.c:147 src/bin/e_module.c:164
+#: src/bin/e_module.c:147
+#: src/bin/e_module.c:164
 #, c-format
-msgid ""
-"There was an error loading module named: %s<br>The full path to this module "
-"is:<br>%s<br>The error reported was:<br>%s<br>"
+msgid "There was an error loading module named: %s<br>The full path to this module is:<br>%s<br>The error reported was:<br>%s<br>"
 msgstr ""
-"Bij het Laden van Module %s is een Fout opgetreden.<br>Het volledige Pad "
-"naar de Module is:\n"
+"Bij het Laden van Module %s is een Fout opgetreden.<br>Het volledige Pad naar de Module is:\n"
 "%s<br>De gemelde fout was:<br>%s<br>"
 
 #: src/bin/e_module.c:169
@@ -3019,14 +3095,8 @@ msgstr "Module bevat niet alle benodigde functies"
 
 #: src/bin/e_module.c:184
 #, c-format
-msgid ""
-"Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
-"module API version of: %i.<br>The module API advertized by Enlightenment is: "
-"%i.<br>"
-msgstr ""
-"Fout bij Module API<br>Fout bij opstarten van module: %s<br>Het heeft een "
-"minimum versie van Module API nodig van %i.<br>De module API die "
-"Enlightenment aangeeft is:  %i.<br>"
+msgid "Module API Error<br>Error initializing Module: %s<br>It requires a minimum module API version of: %i.<br>The module API advertized by Enlightenment is: %i.<br>"
+msgstr "Fout bij Module API<br>Fout bij opstarten van module: %s<br>Het heeft een minimum versie van Module API nodig van %i.<br>De module API die Enlightenment aangeeft is:  %i.<br>"
 
 #: src/bin/e_module.c:189
 #, c-format
@@ -3038,30 +3108,21 @@ msgid "Would you like to unload this module?<br>"
 msgstr "Wilt u deze module ontladen?<br>"
 
 #: src/bin/e_screensaver.c:135
-msgid ""
-"You disabled screensaver too fast.<br><br>Would you like to enable "
-"<b>presentation</b> mode and temporarily disable screen saver, lock and "
-"power saving?"
-msgstr ""
-"U schakelde de schermbeveiliging te snel uit.<br><br>Wilt u de "
-"<b>presentatie</b>modus inschakelen en tijdelijk de schermbeveiliging, "
-"vergrendeling en energiebesparing uitscchakelen?"
+msgid "You disabled screensaver too fast.<br><br>Would you like to enable <b>presentation</b> mode and temporarily disable screen saver, lock and power saving?"
+msgstr "U schakelde de schermbeveiliging te snel uit.<br><br>Wilt u de <b>presentatie</b>modus inschakelen en tijdelijk de schermbeveiliging, vergrendeling en energiebesparing uitscchakelen?"
 
 #: src/bin/e_shelf.c:165
 msgid "Shelf #"
 msgstr "Schelf #"
 
-#: src/bin/e_shelf.c:1298 src/modules/conf_shelves/e_int_config_shelf.c:286
+#: src/bin/e_shelf.c:1298
+#: src/modules/conf_shelves/e_int_config_shelf.c:291
 msgid "Are you sure you want to delete this shelf?"
 msgstr "Weet u zeker dat u deze Schelf wilt verwijderen?"
 
 #: src/bin/e_shelf.c:1299
-msgid ""
-"You requested to delete this shelf.<br><br>Are you sure you want to delete "
-"it?"
-msgstr ""
-"U heeft gevraagd om deze Schelf te verwijderen.<br><br>Weet u zeker dat u "
-"hem wilt verwijderen?"
+msgid "You requested to delete this shelf.<br><br>Are you sure you want to delete it?"
+msgstr "U heeft gevraagd om deze Schelf te verwijderen.<br><br>Weet u zeker dat u hem wilt verwijderen?"
 
 #: src/bin/e_shelf.c:1674
 msgid "Stop Moving/Resizing Gadgets"
@@ -3071,7 +3132,9 @@ msgstr "Stop verplaatsen/herschalen van gadgets"
 msgid "Begin Moving/Resizing Gadgets"
 msgstr "Start verplaatsen/herschalen van gadgets"
 
-#: src/bin/e_shelf.c:1684 src/modules/ibar/e_mod_main.c:801
+#: src/bin/e_shelf.c:1684
+#: src/modules/conf_shelves/e_int_config_shelf.c:84
+#: src/modules/ibar/e_mod_main.c:801
 msgid "Contents"
 msgstr "Inhoud"
 
@@ -3083,21 +3146,17 @@ msgstr "Bezig met starten"
 msgid "Checking System Permissions"
 msgstr "Controleren van systeemrechten"
 
-#: src/bin/e_sys.c:209 src/bin/e_sys.c:220 src/bin/e_sys.c:229
+#: src/bin/e_sys.c:209
+#: src/bin/e_sys.c:220
+#: src/bin/e_sys.c:229
 #: src/bin/e_sys.c:238
 msgid "System Check Done"
 msgstr "Systeemcontrole is klaar"
 
 #: src/bin/e_sys.c:305
 #, c-format
-msgid ""
-"Logout is taking too long.<br>Some applications refuse to close.<br>Do you "
-"want to finish the logout<br>anyway without closing these<br>applications "
-"first?<br><br>Auto logout in %d seconds."
-msgstr ""
-"Afmelden duurt te lang.<br>Sommige programma's weigeren te sluiten.<br>Wilt "
-"u alsnog het afmelden afmaken<br>zonder deze<br>programma's eerst te "
-"sluiten? <br><br>Automatisch afmelden in %d seconden."
+msgid "Logout is taking too long.<br>Some applications refuse to close.<br>Do you want to finish the logout<br>anyway without closing these<br>applications first?<br><br>Auto logout in %d seconds."
+msgstr "Afmelden duurt te lang.<br>Sommige programma's weigeren te sluiten.<br>Wilt u alsnog het afmelden afmaken<br>zonder deze<br>programma's eerst te sluiten? <br><br>Automatisch afmelden in %d seconden."
 
 #: src/bin/e_sys.c:366
 msgid "Logout problems"
@@ -3123,51 +3182,33 @@ msgstr "Bezig met afmelden"
 msgid "Logout in progress.<br><hilight>Please wait.</hilight>"
 msgstr "Bezig met afmelden.<br><hilight>Een moment geduld.</hilight>"
 
-#: src/bin/e_sys.c:438 src/bin/e_sys.c:499
+#: src/bin/e_sys.c:438
+#: src/bin/e_sys.c:499
 msgid "Enlightenment is busy with another request"
 msgstr "Enlightenment is bezig met een andere aanvraag"
 
 #: src/bin/e_sys.c:444
-msgid ""
-"Logging out.<br>You cannot perform other system actions<br>once a logout has "
-"begun."
-msgstr ""
-"Bezig met afmelden.<br>U kunt geen andere systeemacties uitvoeren<br>wanneer "
-"het afmelden is begonnen."
+msgid "Logging out.<br>You cannot perform other system actions<br>once a logout has begun."
+msgstr "Bezig met afmelden.<br>U kunt geen andere systeemacties uitvoeren<br>wanneer het afmelden is begonnen."
 
 #: src/bin/e_sys.c:452
-msgid ""
-"Powering off.<br>You cannot do any other system actions<br>once a shutdown "
-"has been started."
-msgstr ""
-"Bezig met uitschakelen.<br>U kunt geen andere systeemacties "
-"uitvoeren<br>wanneer het uitschakelen is begonnen."
+msgid "Powering off.<br>You cannot do any other system actions<br>once a shutdown has been started."
+msgstr "Bezig met uitschakelen.<br>U kunt geen andere systeemacties uitvoeren<br>wanneer het uitschakelen is begonnen."
 
 #: src/bin/e_sys.c:459
-msgid ""
-"Resetting.<br>You cannot do any other system actions<br>once a reboot has "
-"begun."
-msgstr ""
-"Bezig met herstarten.<br>U kunt geen andere systeemacties "
-"uitvoeren<br>wanneer het herstarten is begonnen."
+msgid "Resetting.<br>You cannot do any other system actions<br>once a reboot has begun."
+msgstr "Bezig met herstarten.<br>U kunt geen andere systeemacties uitvoeren<br>wanneer het herstarten is begonnen."
 
 #: src/bin/e_sys.c:466
-msgid ""
-"Suspending.<br>Until suspend is complete you cannot perform<br>any other "
-"system actions."
-msgstr ""
-"Bezig met pauzeren.<br>U kunt geen andere systeemacties uitvoeren<br>wanneer "
-"het pauzeren is begonnen."
+msgid "Suspending.<br>Until suspend is complete you cannot perform<br>any other system actions."
+msgstr "Bezig met pauzeren.<br>U kunt geen andere systeemacties uitvoeren<br>wanneer het pauzeren is begonnen."
 
 #: src/bin/e_sys.c:473
-msgid ""
-"Hibernating.<br>You cannot perform an other system actions<br>until this is "
-"complete."
-msgstr ""
-"Bezig met slapen.<br>U kunt geen andere systeemacties uitvoeren<br>wanneer "
-"het slapen is begonnen."
+msgid "Hibernating.<br>You cannot perform an other system actions<br>until this is complete."
+msgstr "Bezig met slapen.<br>U kunt geen andere systeemacties uitvoeren<br>wanneer het slapen is begonnen."
 
-#: src/bin/e_sys.c:480 src/bin/e_sys.c:526
+#: src/bin/e_sys.c:480
+#: src/bin/e_sys.c:526
 msgid "EEK! This should not happen"
 msgstr "EEK! Dit zou niet moeten gebeuren"
 
@@ -3221,11 +3262,11 @@ msgstr "Bezig met slapen.<br><hilight>Een moment geduld.</hilight>"
 
 #: src/bin/e_theme_about.c:14
 msgid "About Theme"
-msgstr "Over thema"
+msgstr "Over Thema"
 
 #: src/bin/e_theme.c:40
 msgid "Set As Theme"
-msgstr "Stel in als thema"
+msgstr "Stel in als Thema"
 
 #: src/bin/e_toolbar.c:325
 msgid "Stop Moving/Resizing Items"
@@ -3239,28 +3280,20 @@ msgstr "Begin verplaatsen/herschalen van items"
 msgid "Set Toolbar Contents"
 msgstr "Stel werkbalkinhoud in"
 
-#: src/bin/e_utils.c:236 src/modules/conf_intl/e_int_config_imc.c:266
+#: src/bin/e_utils.c:236
+#: src/modules/conf_intl/e_int_config_imc.c:266
 #: src/modules/conf_intl/e_int_config_imc.c:514
 #, c-format
 msgid "Enlightenment was unable to fork a child process:<br><br>%s<br>"
-msgstr ""
-"Enlightenment was niet in staat om een kinderproces te vertakken:<br><br>%"
-"s<br>"
+msgstr "Enlightenment was niet in staat om een kinderproces te vertakken:<br><br>%s<br>"
 
 #: src/bin/e_utils.c:280
 msgid "Cannot exit - immortal windows."
 msgstr "Kan niet afsluiten - onsterfelijke vensters."
 
 #: src/bin/e_utils.c:281
-msgid ""
-"Some windows are left still around with the Lifespan lock enabled. This "
-"means<br>that Enlightenment will not allow itself to exit until these "
-"windows have<br>been closed or have the lifespan lock removed.<br>"
-msgstr ""
-"Sommige vensters zijn nog steeds aanwezig met de Lifespan-vergrendeling "
-"ingeschakeld. Dit betekent<br>dat Enlightenment niet toe zal staan zichzelf "
-"af te sluiten totdat deze venster<br>afgesloten zijn of de Lifespan-"
-"vergrendeling verwijderd is."
+msgid "Some windows are left still around with the Lifespan lock enabled. This means<br>that Enlightenment will not allow itself to exit until these windows have<br>been closed or have the lifespan lock removed.<br>"
+msgstr "Sommige vensters zijn nog steeds aanwezig met de Lifespan-vergrendeling ingeschakeld. Dit betekent<br>dat Enlightenment niet toe zal staan zichzelf af te sluiten totdat deze venster<br>afgesloten zijn of de Lifespan-vergrendeling verwijderd is."
 
 #: src/bin/e_utils.c:876
 #, c-format
@@ -3322,10 +3355,12 @@ msgstr "%li uren geleden"
 msgid "%li Minutes ago"
 msgstr "%li minuten geleden"
 
-#: src/bin/e_utils.c:929 src/modules/conf_dialogs/e_int_config_profiles.c:274
+#: src/bin/e_utils.c:929
+#: src/modules/conf_dialogs/e_int_config_profiles.c:274
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1179
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1179
-#: src/modules/wizard/page_020.c:19 src/modules/wizard/page_020.c:27
+#: src/modules/wizard/page_020.c:19
+#: src/modules/wizard/page_020.c:27
 msgid "Unknown"
 msgstr "Onbekend"
 
@@ -3379,49 +3414,24 @@ msgid "%3.0f%%"
 msgstr "%3.0f%%"
 
 #: src/bin/e_utils.c:1534
-msgid ""
-"Configuration data needed upgrading. Your old configuration<br> has been "
-"wiped and a new set of defaults initialized. This<br>will happen regularly "
-"during development, so don't report a<br>bug. This simply means the module "
-"needs new configuration<br>data by default for usable functionality that "
-"your old<br>configuration simply lacks. This new set of defaults will "
-"fix<br>that by adding it in. You can re-configure things now to "
-"your<br>liking. Sorry for the inconvenience.<br>"
-msgstr ""
-"Instellingen-data heeft een upgrade nodig. Uw oude instellingen "
-"zijn<br>gewist en een nieuwe set van standaarden is geïnitialiseerd. "
-"Dit<br>zal regelmatig gebeuren tijdens de ontwikkeling, dus rapporteer "
-"geen<br>bug. Dit betekent simpelweg dat de module nieuwe instellingen-"
-"data<br>als standaard nodig heeft voor bruikbare functionaliteit die uw "
-"oude<br>simpelweg niet heeft. Deze nieuwe set van standaarden zal dit "
-"oplossen<br>door het toe te voegen. U kunt uw dingen nu her-instellen naar "
-"uw<br>wensen. Excuses voor het ongemak.<br>"
+msgid "Configuration data needed upgrading. Your old configuration<br> has been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means the module needs new configuration<br>data by default for usable functionality that your old<br>configuration simply lacks. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the inconvenience.<br>"
+msgstr "Instellingen-data heeft een upgrade nodig. Uw oude instellingen zijn<br>gewist en een nieuwe set van standaarden is geïnitialiseerd. Dit<br>zal regelmatig gebeuren tijdens de ontwikkeling, dus rapporteer geen<br>bug. Dit betekent simpelweg dat de module nieuwe instellingen-data<br>als standaard nodig heeft voor bruikbare functionaliteit die uw oude<br>simpelweg niet heeft. Deze nieuwe set van standaarden zal dit oplossen<br>door het toe te voegen. U kunt uw dingen nu her-instellen naar uw<br>wensen. Excuses voor het ongemak.<br>"
 
-#: src/bin/e_utils.c:1547 src/bin/e_utils.c:1571
+#: src/bin/e_utils.c:1547
+#: src/bin/e_utils.c:1571
 #, c-format
 msgid "%s Configuration Updated"
 msgstr "%s Instellingen geüpdate"
 
 #: src/bin/e_utils.c:1560
-msgid ""
-"Your module configuration is NEWER than the module version. This is "
-"very<br>strange. This should not happen unless you downgraded<br>the module "
-"or copied the configuration from a place where<br>a newer version of the "
-"module was running. This is bad and<br>as a precaution your configuration "
-"has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
-msgstr ""
-"Uw module-instellingen zijn NIEUWER dan de module-versie. Dit is heel "
-"erg<br>vreemd. Dit zou niet moeten gebeuren tenzij u de module<br>hebt "
-"gedowngrade of uw instellingen gekopieerd heeft van een plaats waar<br>een "
-"nieuwere versie van de moduleaan het draaien was. Dit is slecht en<br>uit "
-"voorzorg zijn uw instellingen nu teruggezet naar de<br> standaarden. Excuses "
-"voor het ongemak.<br>"
+msgid "Your module configuration is NEWER than the module version. This is very<br>strange. This should not happen unless you downgraded<br>the module or copied the configuration from a place where<br>a newer version of the module was running. This is bad and<br>as a precaution your configuration has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
+msgstr "Uw module-instellingen zijn NIEUWER dan de module-versie. Dit is heel erg<br>vreemd. Dit zou niet moeten gebeuren tenzij u de module<br>hebt gedowngrade of uw instellingen gekopieerd heeft van een plaats waar<br>een nieuwere versie van de moduleaan het draaien was. Dit is slecht en<br>uit voorzorg zijn uw instellingen nu teruggezet naar de<br> standaarden. Excuses voor het ongemak.<br>"
 
 #: src/bin/e_widget_config_list.c:60
 #: src/modules/conf_applications/e_int_config_apps.c:235
 #: src/modules/conf_applications/e_int_config_apps.c:256
 #: src/modules/conf_dialogs/e_int_config_profiles.c:133
-#: src/modules/conf_shelves/e_int_config_shelf.c:78
+#: src/modules/conf_shelves/e_int_config_shelf.c:79
 #: src/modules/ibar/e_mod_config.c:106
 msgid "Add"
 msgstr "Toevoegen"
@@ -3473,13 +3483,15 @@ msgstr "U"
 msgid "Protected"
 msgstr "Beschermd"
 
-#: src/bin/e_widget_fsel.c:705 src/bin/e_widget_fsel.c:714
+#: src/bin/e_widget_fsel.c:705
+#: src/bin/e_widget_fsel.c:714
 #: src/bin/e_widget_fsel.c:723
 #, c-format
 msgid "Read Only"
 msgstr "Alleen-lezen"
 
-#: src/bin/e_widget_fsel.c:712 src/bin/e_widget_fsel.c:721
+#: src/bin/e_widget_fsel.c:712
+#: src/bin/e_widget_fsel.c:721
 #, c-format
 msgid "Forbidden"
 msgstr "Verboden"
@@ -3588,8 +3600,10 @@ msgstr "AC-stroom is aangeraden."
 msgid "N/A"
 msgstr "N/A"
 
-#: src/modules/battery/e_mod_main.c:604 src/modules/battery/e_mod_main.c:606
-#: src/modules/battery/e_mod_main.c:613 src/modules/battery/e_mod_main.c:615
+#: src/modules/battery/e_mod_main.c:604
+#: src/modules/battery/e_mod_main.c:606
+#: src/modules/battery/e_mod_main.c:613
+#: src/modules/battery/e_mod_main.c:615
 msgid "ERROR"
 msgstr "FOUT"
 
@@ -3597,12 +3611,21 @@ msgstr "FOUT"
 msgid "Battery Meter"
 msgstr "Accu-meter"
 
-#: src/modules/clock/e_mod_main.c:149
+#: src/modules/clock/e_mod_main.c:521
+#: src/modules/clock/e_mod_main.c:632
+#: src/modules/clock/e_mod_main.c:645
 msgid "Clock"
 msgstr "Klok"
 
-#: src/modules/conf/e_mod_main.c:264 src/modules/conf/e_mod_main.c:268
-#: src/modules/conf/e_mod_main.c:367 src/modules/conf/e_mod_main.c:474
+#: src/modules/clock/e_mod_main.c:632
+#: src/modules/clock/e_mod_main.c:645
+msgid "Show calendar"
+msgstr "Toon kalender"
+
+#: src/modules/conf/e_mod_main.c:264
+#: src/modules/conf/e_mod_main.c:268
+#: src/modules/conf/e_mod_main.c:367
+#: src/modules/conf/e_mod_main.c:474
 msgid "Settings Panel"
 msgstr "Instellingenpaneel"
 
@@ -3611,39 +3634,12 @@ msgid "Configuration Panel"
 msgstr "Instellingenpaneel"
 
 #: src/modules/conf/e_mod_main.c:295
-msgid ""
-"Configuration Panel Module Configuration data needed upgrading. Your old "
-"configuration<br> has been wiped and a new set of defaults initialized. "
-"This<br>will happen regularly during development, so don't report a<br>bug. "
-"This simply means the module needs new configuration<br>data by default for "
-"usable functionality that your old<br>configuration simply lacks. This new "
-"set of defaults will fix<br>that by adding it in. You can re-configure "
-"things now to your<br>liking. Sorry for the inconvenience.<br>"
-msgstr ""
-"Instelleningpaneel Module Instellingen had een upgrade nodig. Uw oude "
-"instellingen zijn<br>gewist en een nieuwe set van standaarden is "
-"geïnitialiseerd. Dit<br>zal regelmatig gebeuren tijdens de ontwikkeling, dus "
-"rapporteer geen<br>bug. Dit betekent simpelweg dat de module nieuwe "
-"instellingen-data<br>als standaard nodig heeft voor bruikbare "
-"functionaliteit die uw oude<br>simpelweg niet heeft. Deze nieuwe set van "
-"standaarden zal dit oplossen<br>door het toe te voegen. U kunt uw dingen nu "
-"her-instellen naar uw<br>wensen. Excuses voor het ongemak.<br>"
+msgid "Configuration Panel Module Configuration data needed upgrading. Your old configuration<br> has been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means the module needs new configuration<br>data by default for usable functionality that your old<br>configuration simply lacks. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the inconvenience.<br>"
+msgstr "Instelleningpaneel Module Instellingen had een upgrade nodig. Uw oude instellingen zijn<br>gewist en een nieuwe set van standaarden is geïnitialiseerd. Dit<br>zal regelmatig gebeuren tijdens de ontwikkeling, dus rapporteer geen<br>bug. Dit betekent simpelweg dat de module nieuwe instellingen-data<br>als standaard nodig heeft voor bruikbare functionaliteit die uw oude<br>simpelweg niet heeft. Deze nieuwe set van standaarden zal dit oplossen<br>door het toe te voegen. U kunt uw dingen nu her-instellen naar uw<br>wensen. Excuses voor het ongemak.<br>"
 
 #: src/modules/conf/e_mod_main.c:312
-msgid ""
-"Your Configuration Panel Module configuration is NEWER than the module "
-"version. This is very<br>strange. This should not happen unless you "
-"downgraded<br>the module or copied the configuration from a place where<br>a "
-"newer version of the module was running. This is bad and<br>as a precaution "
-"your configuration has been now restored to<br>defaults. Sorry for the "
-"inconvenience.<br>"
-msgstr ""
-"Uw Instellingenpaneel Module Instellingen zijn NIEUWER dan de moduleversie. "
-"Dit is heel erg<br>vreemd. Dit zou niet moeten gebeuren tenzij u de "
-"module<br>hebt gedowngrade of uw instellingen gekopieerd heeft van een "
-"plaats waar<br>een nieuwere versie van de module aan het draaien was. Dit is "
-"slecht en<br>uit voorzorg zijn uw instellingen nu teruggezet naar "
-"de<br>standaarden. Excuses voor het ongemak.<br>"
+msgid "Your Configuration Panel Module configuration is NEWER than the module version. This is very<br>strange. This should not happen unless you downgraded<br>the module or copied the configuration from a place where<br>a newer version of the module was running. This is bad and<br>as a precaution your configuration has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
+msgstr "Uw Instellingenpaneel Module Instellingen zijn NIEUWER dan de moduleversie. Dit is heel erg<br>vreemd. Dit zou niet moeten gebeuren tenzij u de module<br>hebt gedowngrade of uw instellingen gekopieerd heeft van een plaats waar<br>een nieuwere versie van de module aan het draaien was. Dit is slecht en<br>uit voorzorg zijn uw instellingen nu teruggezet naar de<br>standaarden. Excuses voor het ongemak.<br>"
 
 #: src/modules/conf/e_mod_main.c:443
 msgid "Presentation"
@@ -3718,8 +3714,7 @@ msgstr "Geselecteerd profiel: %s"
 #: src/modules/conf_dialogs/e_int_config_profiles.c:304
 #, c-format
 msgid "You want to delete the \"%s\" profile.<br><br>Are you sure?"
-msgstr ""
-"U staat op het punt om profiel \"%s\" te verwijderen. Weet u dit zeker?"
+msgstr "U staat op het punt om profiel \"%s\" te verwijderen. Weet u dit zeker?"
 
 #: src/modules/conf_dialogs/e_int_config_profiles.c:306
 msgid "Delete OK?"
@@ -3742,8 +3737,10 @@ msgstr "Dialoog-instellingen"
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:109
 #: src/modules/conf_performance/e_int_config_engine.c:95
 #: src/modules/conf_theme/e_int_config_fonts.c:646
-#: src/modules/everything/evry_config.c:527 src/modules/ibox/e_mod_config.c:96
-#: src/modules/mixer/conf_gadget.c:191 src/modules/mixer/conf_module.c:89
+#: src/modules/everything/evry_config.c:527
+#: src/modules/ibox/e_mod_config.c:96
+#: src/modules/mixer/conf_gadget.c:191
+#: src/modules/mixer/conf_module.c:89
 msgid "General Settings"
 msgstr "Algemene instellingen"
 
@@ -3787,48 +3784,23 @@ msgstr "Profielen"
 
 #: src/modules/conf_display/e_int_config_display.c:136
 #, c-format
-msgid ""
-"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
-"<br>If you do not press a button, the old resolution of<br>%dx%d at %d Hz "
-"will be restored in %d seconds."
-msgstr ""
-"Lijkt dit OK? <hilight>Opslaan</hilight> indien dit werkelijk zo is of "
-"Terugzetten indien dit niet zo is.<br>Als u niet op een knop drukt, zal de "
-"oude resolutie van<br>%dx%d at %d Hz teruggezet worden in %d seconden."
+msgid "Does this look OK? <hilight>Save</hilight> if it does, or Restore if not.<br>If you do not press a button, the old resolution of<br>%dx%d at %d Hz will be restored in %d seconds."
+msgstr "Lijkt dit OK? <hilight>Opslaan</hilight> indien dit werkelijk zo is of Terugzetten indien dit niet zo is.<br>Als u niet op een knop drukt, zal de oude resolutie van<br>%dx%d at %d Hz teruggezet worden in %d seconden."
 
 #: src/modules/conf_display/e_int_config_display.c:143
 #, c-format
-msgid ""
-"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
-"<br>If you do not press a button, the old resolution of<br>%dx%d will be "
-"restored in %d seconds."
-msgstr ""
-"Lijkt dit OK? <hilight>Opslaan</hilight> indien dit werkelijk zo is of "
-"Terugzetten indien dit niet zo is.<br>Als u niet op een knop drukt, zal de "
-"oude resolutie van<br>%dx%d teruggezet worden in %d seconden."
+msgid "Does this look OK? <hilight>Save</hilight> if it does, or Restore if not.<br>If you do not press a button, the old resolution of<br>%dx%d will be restored in %d seconds."
+msgstr "Lijkt dit OK? <hilight>Opslaan</hilight> indien dit werkelijk zo is of Terugzetten indien dit niet zo is.<br>Als u niet op een knop drukt, zal de oude resolutie van<br>%dx%d teruggezet worden in %d seconden."
 
 #: src/modules/conf_display/e_int_config_display.c:153
 #, c-format
-msgid ""
-"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
-"<br>If you do not press a button, the old resolution of<br>%dx%d at %d Hz "
-"will be restored <hilight>IMMEDIATELY</hilight>."
-msgstr ""
-"Lijkt dit OK? <hilight>Opslaan</hilight> indien dit werkelijk zo is of "
-"Terugzetten indien dit niet zo is.<br>Als u niet op een knop drukt, zal de "
-"oude resolutie van<br>%dx%d at %d Hz teruggezet worden <hilight>NU METEEN</"
-"hilight>."
+msgid "Does this look OK? <hilight>Save</hilight> if it does, or Restore if not.<br>If you do not press a button, the old resolution of<br>%dx%d at %d Hz will be restored <hilight>IMMEDIATELY</hilight>."
+msgstr "Lijkt dit OK? <hilight>Opslaan</hilight> indien dit werkelijk zo is of Terugzetten indien dit niet zo is.<br>Als u niet op een knop drukt, zal de oude resolutie van<br>%dx%d at %d Hz teruggezet worden <hilight>NU METEEN</hilight>."
 
 #: src/modules/conf_display/e_int_config_display.c:160
 #, c-format
-msgid ""
-"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
-"<br>If you do not press a button, the old resolution of<br>%dx%d will be "
-"restored <hilight>IMMEDIATELY</hilight>."
-msgstr ""
-"Lijkt dit OK? <hilight>Opslaan</hilight> indien dit werkelijk zo is of "
-"Terugzetten indien dit niet zo is.<br>Als u niet op een knop drukt, zal de "
-"oude resolutie van<br>%dx%dz teruggezet worden <hilight>NU METEEN</hilight>."
+msgid "Does this look OK? <hilight>Save</hilight> if it does, or Restore if not.<br>If you do not press a button, the old resolution of<br>%dx%d will be restored <hilight>IMMEDIATELY</hilight>."
+msgstr "Lijkt dit OK? <hilight>Opslaan</hilight> indien dit werkelijk zo is of Terugzetten indien dit niet zo is.<br>Als u niet op een knop drukt, zal de oude resolutie van<br>%dx%dz teruggezet worden <hilight>NU METEEN</hilight>."
 
 #: src/modules/conf_display/e_int_config_display.c:197
 msgid "Resolution change"
@@ -3871,36 +3843,16 @@ msgid "Missing Features"
 msgstr "Ontbrekende features"
 
 #: src/modules/conf_display/e_int_config_display.c:677
-msgid ""
-"Your X Display Server is missing support for<br>the <hilight>XRandR</"
-"hilight> (X Resize and Rotate) extension.<br>You cannot change screen "
-"resolutions without<br>the support of this extension. It could also "
-"be<br>that at the time <hilight>ecore</hilight> was built, there<br>was no "
-"XRandR support detected."
-msgstr ""
-"Uw X Display Server mist ondersteuning voor <br>de <hilight>XRandR</ "
-"hilight> (X Herschaal en Oriënteer)-extensie.<br>U kunt geen "
-"schermresoluties aanpassen zonder<br>de ondersteuning van deze extensie. Het "
-"kan ook zo zijn dat<br>op het moment dat <hilight>ecore</hilight> gebouwd "
-"was, er<br>nog geen XRandR-ondersteuning gedecteerd was."
+msgid "Your X Display Server is missing support for<br>the <hilight>XRandR</hilight> (X Resize and Rotate) extension.<br>You cannot change screen resolutions without<br>the support of this extension. It could also be<br>that at the time <hilight>ecore</hilight> was built, there<br>was no XRandR support detected."
+msgstr "Uw X Display Server mist ondersteuning voor <br>de <hilight>XRandR</ hilight> (X Herschaal en Oriënteer)-extensie.<br>U kunt geen schermresoluties aanpassen zonder<br>de ondersteuning van deze extensie. Het kan ook zo zijn dat<br>op het moment dat <hilight>ecore</hilight> gebouwd was, er<br>nog geen XRandR-ondersteuning gedecteerd was."
 
 #: src/modules/conf_display/e_int_config_display.c:689
 msgid "No Refresh Rates Found"
 msgstr "Geen verversrates gevonden"
 
 #: src/modules/conf_display/e_int_config_display.c:690
-msgid ""
-"No refresh rates were reported by your X Display Server.<br>If you are "
-"running a nested X Display Server, then<br>this is to be expected. However, "
-"if you are not, then<br>the current refresh rate will be used when "
-"setting<br>the resolution, which may cause <hilight>damage</hilight> to your "
-"screen."
-msgstr ""
-"Er zijn geen verversrates gerapporteerd door uw X Display Server.<br>Indien "
-"u een geneste X Display Server draait, dan<br>is dit de verwachting. Maar, "
-"indien u dat niet doet, dan<br>zal de huidige verversrate gebruikt worden "
-"wanneer de resolutie<br> ingesteld wordt, welke <hilight>schade</hilight> "
-"kan veroorzaken aan uw scherm."
+msgid "No refresh rates were reported by your X Display Server.<br>If you are running a nested X Display Server, then<br>this is to be expected. However, if you are not, then<br>the current refresh rate will be used when setting<br>the resolution, which may cause <hilight>damage</hilight> to your screen."
+msgstr "Er zijn geen verversrates gerapporteerd door uw X Display Server.<br>Indien u een geneste X Display Server draait, dan<br>is dit de verwachting. Maar, indien u dat niet doet, dan<br>zal de huidige verversrate gebruikt worden wanneer de resolutie<br> ingesteld wordt, welke <hilight>schade</hilight> kan veroorzaken aan uw scherm."
 
 #: src/modules/conf_display/e_int_config_desks.c:52
 #: src/modules/pager/e_mod_main.c:801
@@ -3964,6 +3916,7 @@ msgid "Animation speed"
 msgstr "Animatiesnelheid"
 
 #: src/modules/conf_display/e_int_config_desks.c:215
+#: src/modules/conf_display/e_int_config_dpms.c:306
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:168
 #: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:151
 #, c-format
@@ -4074,16 +4027,16 @@ msgstr "Vergrendel wanneer inactieve tijd wordt overschreden"
 
 #: src/modules/conf_display/e_int_config_desklock.c:265
 #: src/modules/conf_display/e_int_config_screensaver.c:146
-#: src/modules/conf_display/e_int_config_dpms.c:218
-#: src/modules/conf_display/e_int_config_dpms.c:230
-#: src/modules/conf_display/e_int_config_dpms.c:242
+#: src/modules/conf_display/e_int_config_dpms.c:248
+#: src/modules/conf_display/e_int_config_dpms.c:260
+#: src/modules/conf_display/e_int_config_dpms.c:272
 #, c-format
 msgid "%1.0f minutes"
 msgstr "%1.0f van minuten"
 
 #: src/modules/conf_display/e_int_config_desklock.c:270
 #: src/modules/conf_display/e_int_config_screensaver.c:157
-#: src/modules/conf_display/e_int_config_dpms.c:212
+#: src/modules/conf_display/e_int_config_dpms.c:242
 msgid "Timers"
 msgstr "Tijdklokken"
 
@@ -4169,38 +4122,51 @@ msgstr "Sta niet toe"
 msgid "Miscellaneous"
 msgstr "Divers"
 
-#: src/modules/conf_display/e_int_config_dpms.c:60
-#: src/modules/conf_display/e_int_config_dpms.c:81
-msgid "Display Power Management Signaling"
-msgstr "Scherm-energiebeheer-signalering"
-
-#: src/modules/conf_display/e_int_config_dpms.c:61
-msgid "The current display server is not <br>DPMS capable."
-msgstr "De huidige display-server is niet <br>DPMS-capabel."
-
-#: src/modules/conf_display/e_int_config_dpms.c:82
-msgid "The current display server does not <br>have the DPMS extension."
-msgstr "De huidige display-server heeft niet <br>de DPMS-extensie."
-
-#: src/modules/conf_display/e_int_config_dpms.c:112
+#: src/modules/conf_display/e_int_config_dpms.c:126
 msgid "Display Power Management Settings"
 msgstr "Scherm-energiebeheer-instellingen"
 
-#: src/modules/conf_display/e_int_config_dpms.c:208
+#: src/modules/conf_display/e_int_config_dpms.c:238
 msgid "Enable Display Power Management"
 msgstr "Schakel Scherm-energiebeheer in"
 
-#: src/modules/conf_display/e_int_config_dpms.c:214
+#: src/modules/conf_display/e_int_config_dpms.c:244
 msgid "Standby time"
 msgstr "Stand-bytijd"
 
-#: src/modules/conf_display/e_int_config_dpms.c:226
+#: src/modules/conf_display/e_int_config_dpms.c:256
 msgid "Suspend time"
 msgstr "Slaapstandtijd"
 
-#: src/modules/conf_display/e_int_config_dpms.c:238
+#: src/modules/conf_display/e_int_config_dpms.c:268
 msgid "Off time"
 msgstr "Uittijd"
+
+#: src/modules/conf_display/e_int_config_dpms.c:287
+msgid "DPMS"
+msgstr "DPMS"
+
+#: src/modules/conf_display/e_int_config_dpms.c:292
+msgid "Normal Backlight"
+msgstr "Normaal achtergrondlicht"
+
+#: src/modules/conf_display/e_int_config_dpms.c:294
+#: src/modules/conf_display/e_int_config_dpms.c:300
+#, c-format
+msgid "%3.0f"
+msgstr "%3.0f"
+
+#: src/modules/conf_display/e_int_config_dpms.c:298
+msgid "Dim Backlight"
+msgstr "Dim achtergrondlicht"
+
+#: src/modules/conf_display/e_int_config_dpms.c:304
+msgid "Fade Time"
+msgstr "Vaag tijd uit"
+
+#: src/modules/conf_display/e_int_config_dpms.c:310
+msgid "Backlight"
+msgstr "Achtergrondlicht"
 
 #: src/modules/conf_display/e_mod_main.c:21
 msgid "Virtual Desktops"
@@ -4235,15 +4201,8 @@ msgid "<None>"
 msgstr "<Geen>"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:4
-msgid ""
-"Please select an edge,<br>or click <hilight>Close</hilight> to abort."
-"<br><br>You can either specify a delay of this<br> action using the slider, "
-"or make it<br>respond to edge clicks:"
-msgstr ""
-"Selecteer alstublieft een rand,<br>of klik <hilight>Sluiten</hilight> om af "
-"te breken. <br><br>U kunt ofwel een vertraging van deze<br>actie "
-"specificeren gebruikmakende van de slider of laat het<br>beantwoorden via "
-"randklikken:"
+msgid "Please select an edge,<br>or click <hilight>Close</hilight> to abort.<br><br>You can either specify a delay of this<br> action using the slider, or make it<br>respond to edge clicks:"
+msgstr "Selecteer alstublieft een rand,<br>of klik <hilight>Sluiten</hilight> om af te breken. <br><br>U kunt ofwel een vertraging van deze<br>actie specificeren gebruikmakende van de slider of laat het<br>beantwoorden via randklikken:"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:102
 msgid "Edge Bindings Settings"
@@ -4318,13 +4277,8 @@ msgstr "Randbindings-fout"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1175
 #, c-format
-msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>%"
-"s</hilight> action.<br>Please choose another binding edge sequence."
-msgstr ""
-"De toetsencombinatie-sequentie die u gekozen heeft, is al in gebruik door de "
-"<br><hilight> %s</hilight>-actie. Kies alstublieft een andere "
-"toetsencombinatie-sequentie."
+msgid "The binding key sequence, that you choose, is already used by <br><hilight>%s</hilight> action.<br>Please choose another binding edge sequence."
+msgstr "De toetsencombinatie-sequentie die u gekozen heeft, is al in gebruik door de <br><hilight> %s</hilight>-actie. Kies alstublieft een andere toetsencombinatie-sequentie."
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1312
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1334
@@ -4357,7 +4311,8 @@ msgstr "WIN"
 #: src/modules/conf_edgebindings/e_mod_main.c:17
 #: src/modules/conf_interaction/e_mod_main.c:17
 #: src/modules/conf_keybindings/e_mod_main.c:17
-#: src/modules/mixer/app_mixer.c:277 src/modules/mixer/app_mixer.c:295
+#: src/modules/mixer/app_mixer.c:277
+#: src/modules/mixer/app_mixer.c:295
 msgid "Input"
 msgstr "Invoer"
 
@@ -4482,19 +4437,12 @@ msgid "Input Method Config Import Error"
 msgstr "Invoermethode-instellingen importeerfout"
 
 #: src/modules/conf_intl/e_int_config_imc_import.c:284
-msgid ""
-"Enlightenment was unable to import the configuration.<br><br>Are you sure "
-"this is really a valid configuration?"
-msgstr ""
-"Enlightenment was niet in staat om de instellingen te importeren."
-"<br><br>Weet u zeker dat dit de juiste instellingen zijn?"
+msgid "Enlightenment was unable to import the configuration.<br><br>Are you sure this is really a valid configuration?"
+msgstr "Enlightenment was niet in staat om de instellingen te importeren.<br><br>Weet u zeker dat dit de juiste instellingen zijn?"
 
 #: src/modules/conf_intl/e_int_config_imc_import.c:300
-msgid ""
-"Enlightenment was unable to import the configuration<br>due to a copy error."
-msgstr ""
-"Enlightenment was niet in staat om de instellingen te importeren<br>door een "
-"kopieerfout."
+msgid "Enlightenment was unable to import the configuration<br>due to a copy error."
+msgstr "Enlightenment was niet in staat om de instellingen te importeren<br>door een kopieerfout."
 
 #: src/modules/conf_intl/e_int_config_intl.c:579
 #: src/modules/conf_intl/e_mod_main.c:20
@@ -4509,7 +4457,8 @@ msgstr "Taal-kiezer"
 #: src/modules/conf_intl/e_int_config_intl.c:929
 #: src/modules/conf_intl/e_int_config_intl.c:1365
 #: src/modules/conf_menus/e_int_config_menus.c:169
-#: src/modules/wizard/page_010.c:146 src/modules/wizard/page_030.c:129
+#: src/modules/wizard/page_010.c:146
+#: src/modules/wizard/page_030.c:129
 msgid "System Default"
 msgstr "Systeemstandaard"
 
@@ -4523,16 +4472,14 @@ msgstr "Taal geselecteerd"
 msgid "Locale"
 msgstr "Taal"
 
-#: src/modules/conf_intl/e_mod_main.c:17 src/modules/wizard/page_010.c:139
+#: src/modules/conf_intl/e_mod_main.c:17
+#: src/modules/wizard/page_010.c:139
 msgid "Language"
 msgstr "Taal"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:4
-msgid ""
-"Please press key sequence,<br><br>or <hilight>Escape</hilight> to abort."
-msgstr ""
-"Druk alstublieft op een toetsencombinatie,<br><br>of op <hilight>Escape</"
-"higlight> om af te breken."
+msgid "Please press key sequence,<br><br>or <hilight>Escape</hilight> to abort."
+msgstr "Druk alstublieft op een toetsencombinatie,<br><br>of op <hilight>Escape</higlight> om af te breken."
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:8
 msgid "Single key"
@@ -4556,23 +4503,12 @@ msgstr "Toestenbindings-fout"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1175
 #, c-format
-msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>%"
-"s</hilight> action.<br>Please choose another binding key sequence."
-msgstr ""
-"The toetsencombinatie-binding die u gekozen heeft, wordt reeds gebruikt door "
-"de <br><hilight> %s</hilight>-actie.<br>Kies alstublieft voor een andere "
-"toetsencombinatie-binding."
+msgid "The binding key sequence, that you choose, is already used by <br><hilight>%s</hilight> action.<br>Please choose another binding key sequence."
+msgstr "The toetsencombinatie-binding die u gekozen heeft, wordt reeds gebruikt door de <br><hilight> %s</hilight>-actie.<br>Kies alstublieft voor een andere toetsencombinatie-binding."
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:7
-msgid ""
-"Please hold any modifier you want<br>and press any button on your mouse,<br> "
-"or roll a wheel, to assign mouse binding.<br>Press <hilight>Escape</"
-"highlight> to abort."
-msgstr ""
-"Houdt alstublieft elke aanpasser die u wilt ingedrukt<br>en klik op eender "
-"welke muisknop,<br> of scroll uw wiel, om een muisbinding aan te wijzen."
-"<br>Klik op <hilight>Escape</ highlight> om af te breken."
+msgid "Please hold any modifier you want<br>and press any button on your mouse,<br> or roll a wheel, to assign mouse binding.<br>Press <hilight>Escape</highlight> to abort."
+msgstr "Houdt alstublieft elke aanpasser die u wilt ingedrukt<br>en klik op eender welke muisknop,<br> of scroll uw wiel, om een muisbinding aan te wijzen.<br>Klik op <hilight>Escape</ highlight> om af te breken."
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:112
 msgid "Mouse Bindings Settings"
@@ -4595,7 +4531,8 @@ msgid "Win List"
 msgstr "Vensterlijst"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:333
-#: src/modules/pager/e_mod_config.c:135 src/modules/pager/e_mod_config.c:248
+#: src/modules/pager/e_mod_config.c:135
+#: src/modules/pager/e_mod_config.c:248
 msgid "Popup"
 msgstr "Popup"
 
@@ -4675,9 +4612,12 @@ msgid "Comments"
 msgstr "Commentaren"
 
 #: src/modules/conf_menus/e_int_config_menus.c:273
-#: src/modules/gadman/e_mod_config.c:163 src/modules/gadman/e_mod_main.c:27
-#: src/modules/gadman/e_mod_main.c:77 src/modules/gadman/e_mod_main.c:84
-#: src/modules/gadman/e_mod_main.c:120 src/modules/gadman/e_mod_main.c:150
+#: src/modules/gadman/e_mod_config.c:163
+#: src/modules/gadman/e_mod_main.c:27
+#: src/modules/gadman/e_mod_main.c:77
+#: src/modules/gadman/e_mod_main.c:84
+#: src/modules/gadman/e_mod_main.c:120
+#: src/modules/gadman/e_mod_main.c:150
 msgid "Gadgets"
 msgstr "Gadgets"
 
@@ -4686,7 +4626,8 @@ msgid "Show gadget settings in top-level"
 msgstr "Toon gadget-instellingen in hoogste niveau"
 
 #: src/modules/conf_menus/e_int_config_menus.c:277
-#: src/modules/conf_menus/e_mod_main.c:17 src/modules/wizard/page_030.c:81
+#: src/modules/conf_menus/e_mod_main.c:17
+#: src/modules/wizard/page_030.c:81
 msgid "Menus"
 msgstr "Menu's"
 
@@ -4808,14 +4749,8 @@ msgid "Use ARGB instead of shaped windows"
 msgstr "Gebruik ARGB in plaats van geschapen vensters"
 
 #: src/modules/conf_performance/e_int_config_engine.c:140
-msgid ""
-"You have chosen to enable ARGB composite support,<br>but your current screen "
-"does not support composite.<br><br>Are you sure you wish to enable ARGB "
-"support ?"
-msgstr ""
-"U heeft gekozen om ARGB-compositingondersteuning in te schekelen,<br>maar u "
-"huidige scherm ondersteunt geen compositing.<br><br>Weet u zeker dat u ARGB-"
-"ondersteuning wenst in te schakelen?"
+msgid "You have chosen to enable ARGB composite support,<br>but your current screen does not support composite.<br><br>Are you sure you wish to enable ARGB support ?"
+msgstr "U heeft gekozen om ARGB-compositingondersteuning in te schekelen,<br>maar u huidige scherm ondersteunt geen compositing.<br><br>Weet u zeker dat u ARGB-ondersteuning wenst in te schakelen?"
 
 #: src/modules/conf_performance/e_int_config_performance.c:35
 msgid "Performance Settings"
@@ -4890,23 +4825,19 @@ msgstr "Prestaties"
 msgid "Engine"
 msgstr "Machine"
 
-#: src/modules/conf_shelves/e_int_config_shelf.c:71
+#: src/modules/conf_shelves/e_int_config_shelf.c:72
 msgid "Configured Shelves"
 msgstr "Configureer schelven"
 
-#: src/modules/conf_shelves/e_int_config_shelf.c:83
+#: src/modules/conf_shelves/e_int_config_shelf.c:88
 #: src/modules/ibar/e_mod_config.c:110
 msgid "Setup"
 msgstr "Instellen"
 
-#: src/modules/conf_shelves/e_int_config_shelf.c:282
+#: src/modules/conf_shelves/e_int_config_shelf.c:287
 #, c-format
-msgid ""
-"You requested to delete \"%s\".<br><br>Are you sure you want to delete this "
-"shelf?"
-msgstr ""
-"U heeft gevraagd om \"%s\" te verwijderen.<br><br>Weet u zeker dat u deze "
-"Schelf wilt verwijderen?"
+msgid "You requested to delete \"%s\".<br><br>Are you sure you want to delete this shelf?"
+msgstr "U heeft gevraagd om \"%s\" te verwijderen.<br><br>Weet u zeker dat u deze Schelf wilt verwijderen?"
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:105
 msgid "Wallpaper Settings"
@@ -4960,11 +4891,8 @@ msgid "Picture Import Error"
 msgstr "Afbeeldings-importeerfout"
 
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:629
-msgid ""
-"Enlightenment was unable to import the picture<br>due to conversion errors."
-msgstr ""
-"Enlightenment was niet in staat om de afbeelding te importeren<br>door "
-"conversiefouten."
+msgid "Enlightenment was unable to import the picture<br>due to conversion errors."
+msgstr "Enlightenment was niet in staat om de afbeelding te importeren<br>door conversiefouten."
 
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:716
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:726
@@ -4975,20 +4903,13 @@ msgstr "Achtergrond-importeerfout"
 
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:717
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:809
-msgid ""
-"Enlightenment was unable to import the wallpaper<br>due to a copy error."
-msgstr ""
-"Enlightenment was niet in staat om de achtergrond te importeren<br>door een "
-"kopieerfout."
+msgid "Enlightenment was unable to import the wallpaper<br>due to a copy error."
+msgstr "Enlightenment was niet in staat om de achtergrond te importeren<br>door een kopieerfout."
 
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:727
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:819
-msgid ""
-"Enlightenment was unable to import the wallpaper.<br><br>Are you sure this "
-"is a valid wallpaper?"
-msgstr ""
-"Enlightenment was niet in staat om de achtergrond te importeren.<br><br>Weet "
-"u zeker dat dit een juiste achtergrond is?"
+msgid "Enlightenment was unable to import the wallpaper.<br><br>Are you sure this is a valid wallpaper?"
+msgstr "Enlightenment was niet in staat om de achtergrond te importeren.<br><br>Weet u zeker dat dit een juiste achtergrond is?"
 
 #: src/modules/conf_theme/e_int_config_wallpaper_web.c:162
 msgid "By"
@@ -5333,7 +5254,7 @@ msgstr "Opstartscherm-titel"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:76
 msgid "Splash Text"
-msgstr " Opstartscherm-tekst"
+msgstr "Opstartscherm-tekst"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:77
 msgid "Splash Version"
@@ -5471,7 +5392,8 @@ msgstr "Bytecode"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:657
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:193
-#: src/modules/cpufreq/e_mod_main.c:227 src/modules/cpufreq/e_mod_main.c:259
+#: src/modules/cpufreq/e_mod_main.c:227
+#: src/modules/cpufreq/e_mod_main.c:259
 msgid "Automatic"
 msgstr "Automatisch"
 
@@ -5655,18 +5577,12 @@ msgid "Theme Import Error"
 msgstr "Thema-importeerfout"
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:285
-msgid ""
-"Enlightenment was unable to import the theme.<br><br>Are you sure this is "
-"really a valid theme?"
-msgstr ""
-"Enlightenment was niet in staat om het thema te importeren.<br><br>Weet u "
-"zeker dat dit een juist thema is?"
+msgid "Enlightenment was unable to import the theme.<br><br>Are you sure this is really a valid theme?"
+msgstr "Enlightenment was niet in staat om het thema te importeren.<br><br>Weet u zeker dat dit een juist thema is?"
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:294
 msgid "Enlightenment was unable to import the theme<br>due to a copy error."
-msgstr ""
-"Enlightenment was niet in staat om het thema te importeren<br>door een "
-"kopieerfout."
+msgstr "Enlightenment was niet in staat om het thema te importeren<br>door een kopieerfout."
 
 #: src/modules/conf_theme/e_int_config_theme_web.c:126
 msgid "Exchange themes"
@@ -5833,23 +5749,43 @@ msgstr "Nieuwe vensters"
 msgid "Animate"
 msgstr "Animeren"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_display.c:195
+#: src/modules/conf_window_manipulation/e_int_config_window_display.c:196
 msgid "Linear"
 msgstr "Lineair"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_display.c:199
+#: src/modules/conf_window_manipulation/e_int_config_window_display.c:201
 msgid "Accelerate, then decelerate"
 msgstr "Versnel, daarna vertragen"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_display.c:204
+#: src/modules/conf_window_manipulation/e_int_config_window_display.c:206
 msgid "Accelerate"
 msgstr "Versnelling"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_display.c:208
+#: src/modules/conf_window_manipulation/e_int_config_window_display.c:211
 msgid "Decelerate"
 msgstr "Vertraging"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_display.c:212
+#: src/modules/conf_window_manipulation/e_int_config_window_display.c:216
+msgid "Pronounced Accelerate"
+msgstr "Uitgesproken acceleratie"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_display.c:221
+msgid "Pronounced Decelerate"
+msgstr "Uitgesproken vertraging"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_display.c:226
+msgid "Pronounced Acceleratem then decelerate"
+msgstr "Uitgesproken versnelling, daarna vertragen"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_display.c:231
+msgid "Bounce"
+msgstr "Stuiteren"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_display.c:236
+msgid "Bounce more"
+msgstr "Stuiter meer"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_display.c:241
 msgid "Shading"
 msgstr "Oprolling"
 
@@ -6155,15 +6091,18 @@ msgstr "Erg sloom (256 tikken)"
 msgid "Manual"
 msgstr "Handmatig"
 
-#: src/modules/cpufreq/e_mod_main.c:229 src/modules/cpufreq/e_mod_main.c:261
+#: src/modules/cpufreq/e_mod_main.c:229
+#: src/modules/cpufreq/e_mod_main.c:261
 msgid "Lower Power Automatic"
 msgstr "Verlaag energie automatisch"
 
-#: src/modules/cpufreq/e_mod_main.c:231 src/modules/cpufreq/e_mod_main.c:263
+#: src/modules/cpufreq/e_mod_main.c:231
+#: src/modules/cpufreq/e_mod_main.c:263
 msgid "Minimum Speed"
 msgstr "Minimum snelheid"
 
-#: src/modules/cpufreq/e_mod_main.c:233 src/modules/cpufreq/e_mod_main.c:265
+#: src/modules/cpufreq/e_mod_main.c:233
+#: src/modules/cpufreq/e_mod_main.c:265
 msgid "Maximum Speed"
 msgstr "Maximale Snelheid"
 
@@ -6202,30 +6141,16 @@ msgid "Powersaving behavior"
 msgstr "Energiebesparing-gedrag"
 
 #: src/modules/cpufreq/e_mod_main.c:412
-msgid ""
-"There was an error trying to set the<br>cpu frequency governor via the "
-"module's<br>setfreq utility."
-msgstr ""
-"Er was een fout tijdens het proberen om de <br>CPU-frequentie-governor te "
-"kiezen via de <br>setfreq-gereedschapsmodule"
+msgid "There was an error trying to set the<br>cpu frequency governor via the module's<br>setfreq utility."
+msgstr "Er was een fout tijdens het proberen om de <br>CPU-frequentie-governor te kiezen via de <br>setfreq-gereedschapsmodule"
 
 #: src/modules/cpufreq/e_mod_main.c:440
-msgid ""
-"Your kernel does not support setting the<br>CPU frequency at all. You may be "
-"missing<br>Kernel modules or features, or your CPU<br>simply does not "
-"support this feature."
-msgstr ""
-"Uw kernel ondersteunt niet het instellen van de <br>CPU-frequentie. Het is "
-"mogelijk dat u <br>kernel-modules of -features mist. Het kan ook zijn <br> "
-"dat uw CPU dit simpelweg niet ondersteunt."
+msgid "Your kernel does not support setting the<br>CPU frequency at all. You may be missing<br>Kernel modules or features, or your CPU<br>simply does not support this feature."
+msgstr "Uw kernel ondersteunt niet het instellen van de <br>CPU-frequentie. Het is mogelijk dat u <br>kernel-modules of -features mist. Het kan ook zijn <br> dat uw CPU dit simpelweg niet ondersteunt."
 
 #: src/modules/cpufreq/e_mod_main.c:466
-msgid ""
-"There was an error trying to set the<br>cpu frequency setting via the "
-"module's<br>setfreq utility."
-msgstr ""
-"Er was een fout tijdens het proberen om de <br>CPU-frequentie-governor te "
-"kiezen via de <br>setfreq-gereedschapsmodule"
+msgid "There was an error trying to set the<br>cpu frequency setting via the module's<br>setfreq utility."
+msgstr "Er was een fout tijdens het proberen om de <br>CPU-frequentie-governor te kiezen via de <br>setfreq-gereedschapsmodule"
 
 #: src/modules/dropshadow/e_mod_config.c:39
 msgid "Dropshadow Settings"
@@ -6528,40 +6453,8 @@ msgid "Copy to Clipboard"
 msgstr "Kopieer naar klembord"
 
 #: src/modules/everything/evry_view_help.c:67
-msgid ""
-"  Ok, here comes the explanation of <hilight>everything</hilight>...<br>  "
-"Just type a few letters of the thing you are looking for. <br>  Use cursor "
-"<hilight>&lt;up/down&gt;</hilight> to choose from the list of things.<br>  "
-"Press  <hilight>&lt;tab&gt;</hilight> to select an action, then press  "
-"<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
-"you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
-"close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
-"right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
-"down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
-"hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
-"</hilight> toggle list view modes<br>    <hilight>&lt;ctrl+3&gt;</hilight> "
-"toggle thumb view modes"
-msgstr ""
-" Oké, hier komt de uitleg van <hilight>Alles</hilight>...<br> Typ gewoon een "
-"paar letters van het item dat u zoekt. <br> Gebruik pijltjestoetsen "
-"<hilight>&lt;omhoog/omlaag&gt;</hilight> om een actie te selecteren. Druk "
-"daarna op "
-"<hilight>&lt;Enter&gt;</hilight> Deze pagina zal niet worden weergegeven "
-"wanneer "
-"u de volgende keer <hilight>Alles</hilight> opstart.<br>  <hilight>"
-"&lt;Esc&gt;</hilight> "
-"sluit dit dialoogvenster<br>  <hilight>&lt;?&gt</hilight> toon deze pagina<br>"
-" "
-"<hilight>&lt;Enter&gt;</hilight> voer actie uit<br>  <hilight>"
-"&lt;CTRL+Enter&gt;</hilight> "
-"voer actie uit en ga door<br>  <hilight>&lt;Tab&gt;</hilight> schakel tussen "
-"selecteerders<br> "
-"  <hilight>"
+msgid "  Ok, here comes the explanation of <hilight>everything</hilight>...<br>  Just type a few letters of the thing you are looking for. <br>  Use cursor <hilight>&lt;up/down&gt;</hilight> to choose from the list of things.<br>  Press  <hilight>&lt;tab&gt;</hilight> to select an action, then press  <hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    <hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;</hilight> toggle list view modes<br>    <hilight>&lt;ctrl+3&gt;</hilight> toggle thumb view modes"
+msgstr " Oké, hier komt de uitleg van <hilight>Alles</hilight>...<br> Typ gewoon een paar letters van het item dat u zoekt. <br> Gebruik pijltjestoetsen <hilight>&lt;omhoog/omlaag&gt;</hilight> om een actie te selecteren. Druk daarna op <hilight>&lt;Enter&gt;</hilight> Deze pagina zal niet worden weergegeven wanneer u de volgende keer <hilight>Alles</hilight> opstart.<br>  <hilight>&lt;Esc&gt;</hilight> sluit dit dialoogvenster<br>  <hilight>&lt;?&gt</hilight> toon deze pagina<br> <hilight>&lt;Enter&gt;</hilight> voer actie uit<br>  <hilight>&lt;CTRL+Enter&gt;</hilight> voer actie uit en ga door<br>  <hilight>&lt;Tab&gt;</hilight> schakel tussen selecteerders<br>   <hilight>"
 
 #: src/modules/everything/evry_plug_apps.c:1038
 msgid "Exebuf"
@@ -6588,7 +6481,8 @@ msgid "Run with Sudo"
 msgstr "Openen met Sudo"
 
 #: src/modules/everything/evry_plug_apps.c:1103
-#: src/modules/fileman/e_fwin.c:1682 src/modules/fileman/e_fwin.c:2007
+#: src/modules/fileman/e_fwin.c:1682
+#: src/modules/fileman/e_fwin.c:2007
 msgid "Open with..."
 msgstr "Openen met..."
 
@@ -6745,8 +6639,10 @@ msgstr "Selecteer een Edje-bestand"
 msgid "Select an image"
 msgstr "Selecteer een afbeelding"
 
-#: src/modules/fileman/e_mod_main.c:58 src/modules/fileman/e_mod_main.c:72
-#: src/modules/fileman/e_mod_main.c:156 src/modules/wizard/page_050.c:23
+#: src/modules/fileman/e_mod_main.c:58
+#: src/modules/fileman/e_mod_main.c:72
+#: src/modules/fileman/e_mod_main.c:156
+#: src/modules/wizard/page_050.c:23
 msgid "File Manager"
 msgstr "Bestandsbeheerder"
 
@@ -6759,39 +6655,12 @@ msgid "Root"
 msgstr "Systeem (Root)"
 
 #: src/modules/fileman/e_mod_main.c:470
-msgid ""
-"Fileman Module Settings data needed upgrading. Your old configuration<br>has "
-"been wiped and a new set of defaults initialized. This<br>will happen "
-"regularly during development, so don't report a<br>bug. This simply means "
-"Fileman module needs new configuration<br>data by default for usable "
-"functionality that your old<br>configuration simply lacks. This new set of "
-"defaults will fix<br>that by adding it in. You can re-configure things now "
-"to your<br>liking. Sorry for the hiccup in your configuration.<br>"
-msgstr ""
-"Fileman moduleinstellingen-data had een upgrade nodig. Uw oude "
-"instellingen<br>zijn gewist en een nieuw set van standaarden is "
-"geïnitialiseerd. Dit<br>zal regelmatig gebeuren tijdens de ontwikkeling, dus "
-"rapporteer geen<br>bug. Dit betekent simpelweg dat de Fileman-module nieuwe "
-"standaardinstellingen<br>nodig heeft voor werkende functionaliteit die uw "
-"oude simpelweg niet heeft. Deze nieuwe set van standaarden zal dit "
-"oplossen<br>door het toe te voegen. U kunt nu uw dingen terug instellen naar "
-"uw<br> voorkeuren. Sorry voor de overlast in uw instellingen."
+msgid "Fileman Module Settings data needed upgrading. Your old configuration<br>has been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means Fileman module needs new configuration<br>data by default for usable functionality that your old<br>configuration simply lacks. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the hiccup in your configuration.<br>"
+msgstr "Fileman moduleinstellingen-data had een upgrade nodig. Uw oude instellingen<br>zijn gewist en een nieuw set van standaarden is geïnitialiseerd. Dit<br>zal regelmatig gebeuren tijdens de ontwikkeling, dus rapporteer geen<br>bug. Dit betekent simpelweg dat de Fileman-module nieuwe standaardinstellingen<br>nodig heeft voor werkende functionaliteit die uw oude simpelweg niet heeft. Deze nieuwe set van standaarden zal dit oplossen<br>door het toe te voegen. U kunt nu uw dingen terug instellen naar uw<br> voorkeuren. Sorry voor de overlast in uw instellingen."
 
 #: src/modules/fileman/e_mod_main.c:483
-msgid ""
-"Your Fileman Module configuration is NEWER than Fileman Module version. This "
-"is very<br>strange. This should not happen unless you downgraded<br>the "
-"Fileman Module or copied the configuration from a place where<br>a newer "
-"version of the Fileman Module was running. This is bad and<br>as a "
-"precaution your configuration has been now restored to<br>defaults. Sorry "
-"for the inconvenience.<br>"
-msgstr ""
-"Uw Fileman-moduleinstellingen zijn NIEUWER dan de Fileman-moduleversie. Dit "
-"is heel erg<br>vreemd. Dit zou niet moeten gebeuren tenzij u de "
-"module<br>hebt gedowngrade of uw instellingen gekopieerd heeft van een "
-"plaats waar<br>een nieuwere versie van de module aan het draaien was. Dit is "
-"slecht en<br>uit voorzorg zijn uw instellingen nu teruggezet naar "
-"de<br>standaarden. Excuses voor het ongemak.<br>"
+msgid "Your Fileman Module configuration is NEWER than Fileman Module version. This is very<br>strange. This should not happen unless you downgraded<br>the Fileman Module or copied the configuration from a place where<br>a newer version of the Fileman Module was running. This is bad and<br>as a precaution your configuration has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
+msgstr "Uw Fileman-moduleinstellingen zijn NIEUWER dan de Fileman-moduleversie. Dit is heel erg<br>vreemd. Dit zou niet moeten gebeuren tenzij u de module<br>hebt gedowngrade of uw instellingen gekopieerd heeft van een plaats waar<br>een nieuwere versie van de module aan het draaien was. Dit is slecht en<br>uit voorzorg zijn uw instellingen nu teruggezet naar de<br>standaarden. Excuses voor het ongemak.<br>"
 
 #: src/modules/fileman/e_mod_main.c:552
 msgid "Fileman Settings Updated"
@@ -6878,7 +6747,8 @@ msgstr "Ga naar hoofdmap"
 msgid "Other application..."
 msgstr "Ander programma..."
 
-#: src/modules/fileman/e_fwin.c:1677 src/modules/fileman/e_fwin.c:2009
+#: src/modules/fileman/e_fwin.c:1677
+#: src/modules/fileman/e_fwin.c:2009
 msgid "Open"
 msgstr "Open"
 
@@ -7009,11 +6879,13 @@ msgstr "Beschikbare Gadgets"
 msgid "Mode"
 msgstr "Modus"
 
-#: src/modules/gadman/e_mod_config.c:144 src/modules/gadman/e_mod_config.c:176
+#: src/modules/gadman/e_mod_config.c:144
+#: src/modules/gadman/e_mod_config.c:176
 msgid "Custom Image"
 msgstr "Aangepaste afbeelding"
 
-#: src/modules/gadman/e_mod_config.c:148 src/modules/gadman/e_mod_config.c:169
+#: src/modules/gadman/e_mod_config.c:148
+#: src/modules/gadman/e_mod_config.c:169
 msgid "Custom Color"
 msgstr "Aangepaste kleur"
 
@@ -7054,7 +6926,8 @@ msgstr "Op bovenkant drukkende"
 msgid "Add other gadgets"
 msgstr "Voeg andere Gadgets toe"
 
-#: src/modules/gadman/e_mod_main.c:84 src/modules/gadman/e_mod_main.c:120
+#: src/modules/gadman/e_mod_main.c:84
+#: src/modules/gadman/e_mod_main.c:120
 msgid "Show/hide gadgets"
 msgstr "Toon/verberg Gadgets"
 
@@ -7150,31 +7023,44 @@ msgstr "Verticale plaatsing"
 msgid "Alignment"
 msgstr "Plaatsing"
 
-#: src/modules/winlist/e_mod_main.c:35 src/modules/winlist/e_mod_main.c:37
-#: src/modules/winlist/e_mod_main.c:39 src/modules/winlist/e_mod_main.c:42
-#: src/modules/winlist/e_mod_main.c:45 src/modules/winlist/e_mod_main.c:48
-#: src/modules/winlist/e_mod_main.c:51 src/modules/winlist/e_mod_main.c:53
-#: src/modules/winlist/e_mod_main.c:55 src/modules/winlist/e_mod_main.c:57
-#: src/modules/winlist/e_mod_main.c:72 src/modules/winlist/e_mod_main.c:73
-#: src/modules/winlist/e_mod_main.c:74 src/modules/winlist/e_mod_main.c:76
-#: src/modules/winlist/e_mod_main.c:78 src/modules/winlist/e_mod_main.c:79
-#: src/modules/winlist/e_mod_main.c:80 src/modules/winlist/e_mod_main.c:81
+#: src/modules/winlist/e_mod_main.c:35
+#: src/modules/winlist/e_mod_main.c:37
+#: src/modules/winlist/e_mod_main.c:39
+#: src/modules/winlist/e_mod_main.c:42
+#: src/modules/winlist/e_mod_main.c:45
+#: src/modules/winlist/e_mod_main.c:48
+#: src/modules/winlist/e_mod_main.c:51
+#: src/modules/winlist/e_mod_main.c:53
+#: src/modules/winlist/e_mod_main.c:55
+#: src/modules/winlist/e_mod_main.c:57
+#: src/modules/winlist/e_mod_main.c:72
+#: src/modules/winlist/e_mod_main.c:73
+#: src/modules/winlist/e_mod_main.c:74
+#: src/modules/winlist/e_mod_main.c:76
+#: src/modules/winlist/e_mod_main.c:78
+#: src/modules/winlist/e_mod_main.c:79
+#: src/modules/winlist/e_mod_main.c:80
+#: src/modules/winlist/e_mod_main.c:81
 msgid "Window : List"
 msgstr "Venster : Lijst"
 
-#: src/modules/winlist/e_mod_main.c:35 src/modules/winlist/e_mod_main.c:73
+#: src/modules/winlist/e_mod_main.c:35
+#: src/modules/winlist/e_mod_main.c:73
 msgid "Next Window"
 msgstr "Volgend venster"
 
-#: src/modules/winlist/e_mod_main.c:37 src/modules/winlist/e_mod_main.c:72
+#: src/modules/winlist/e_mod_main.c:37
+#: src/modules/winlist/e_mod_main.c:72
 msgid "Previous Window"
 msgstr "Vorig venster"
 
-#: src/modules/winlist/e_mod_main.c:40 src/modules/winlist/e_mod_main.c:77
+#: src/modules/winlist/e_mod_main.c:40
+#: src/modules/winlist/e_mod_main.c:77
 msgid "Next window of same class"
 msgstr "Volgend venster van dezelfde klasse"
 
-#: src/modules/winlist/e_mod_main.c:43 src/modules/winlist/e_mod_main.c:75
+#: src/modules/winlist/e_mod_main.c:43
+#: src/modules/winlist/e_mod_main.c:75
 msgid "Previous window of same class"
 msgstr "Vorig venster van dezelfde klasse"
 
@@ -7186,19 +7072,23 @@ msgstr "Volgende vensterklasse"
 msgid "Previous window class"
 msgstr "Vorige vensterklasse"
 
-#: src/modules/winlist/e_mod_main.c:51 src/modules/winlist/e_mod_main.c:78
+#: src/modules/winlist/e_mod_main.c:51
+#: src/modules/winlist/e_mod_main.c:78
 msgid "Window on the Left"
 msgstr "Venster aan de linkerkant"
 
-#: src/modules/winlist/e_mod_main.c:53 src/modules/winlist/e_mod_main.c:79
+#: src/modules/winlist/e_mod_main.c:53
+#: src/modules/winlist/e_mod_main.c:79
 msgid "Window Down"
 msgstr "Venster omlaag"
 
-#: src/modules/winlist/e_mod_main.c:55 src/modules/winlist/e_mod_main.c:80
+#: src/modules/winlist/e_mod_main.c:55
+#: src/modules/winlist/e_mod_main.c:80
 msgid "Window Up"
 msgstr "Venster omhoog"
 
-#: src/modules/winlist/e_mod_main.c:57 src/modules/winlist/e_mod_main.c:81
+#: src/modules/winlist/e_mod_main.c:57
+#: src/modules/winlist/e_mod_main.c:81
 msgid "Window on the Right"
 msgstr "Venster aan de rechterkant"
 
@@ -7218,7 +7108,8 @@ msgstr "Geselecteerde Bar-bron"
 msgid "Icon Labels"
 msgstr "Pictogram-labels"
 
-#: src/modules/ibar/e_mod_config.c:120 src/modules/ibox/e_mod_config.c:97
+#: src/modules/ibar/e_mod_config.c:120
+#: src/modules/ibox/e_mod_config.c:97
 msgid "Show Icon Label"
 msgstr "Toon pictogramlabel"
 
@@ -7244,12 +7135,8 @@ msgstr "Vul een naam in voor deze nieuwe bron:"
 
 #: src/modules/ibar/e_mod_config.c:179
 #, c-format
-msgid ""
-"You requested to delete \"%s\".<br><br>Are you sure you want to delete this "
-"bar source?"
-msgstr ""
-"U heeft gevraagd voor verwijdering van \"%s\".<br><br>Weet u zeker dat u "
-"deze bron wilt verwijderen?"
+msgid "You requested to delete \"%s\".<br><br>Are you sure you want to delete this bar source?"
+msgstr "U heeft gevraagd voor verwijdering van \"%s\".<br><br>Weet u zeker dat u deze bron wilt verwijderen?"
 
 #: src/modules/ibar/e_mod_config.c:183
 msgid "Are you sure you want to delete this bar source?"
@@ -7315,15 +7202,18 @@ msgstr "IBox"
 msgid "Pager Settings"
 msgstr "Pager-instellingen"
 
-#: src/modules/pager/e_mod_config.c:127 src/modules/pager/e_mod_config.c:179
+#: src/modules/pager/e_mod_config.c:127
+#: src/modules/pager/e_mod_config.c:179
 msgid "Flip desktop on mouse wheel"
 msgstr "Schakel bureaublad met muiswiel"
 
-#: src/modules/pager/e_mod_config.c:130 src/modules/pager/e_mod_config.c:182
+#: src/modules/pager/e_mod_config.c:130
+#: src/modules/pager/e_mod_config.c:182
 msgid "Show desktop names"
 msgstr "Toon bureaubladnamen"
 
-#: src/modules/pager/e_mod_config.c:136 src/modules/pager/e_mod_config.c:218
+#: src/modules/pager/e_mod_config.c:136
+#: src/modules/pager/e_mod_config.c:218
 msgid "Show popup on desktop change"
 msgstr "Toon popup bij bureaubladverandering"
 
@@ -7335,7 +7225,8 @@ msgstr "Toon popup voor belangrijke vensters"
 msgid "Resistance to dragging"
 msgstr "Weerstand tegen verslepen"
 
-#: src/modules/pager/e_mod_config.c:187 src/modules/pager/e_mod_config.c:226
+#: src/modules/pager/e_mod_config.c:187
+#: src/modules/pager/e_mod_config.c:226
 #: src/modules/pager/e_mod_config.c:245
 #, c-format
 msgid "%.0f px"
@@ -7345,9 +7236,12 @@ msgstr "%.0f px"
 msgid "Select and Slide button"
 msgstr "Selecteer en Slide-knop"
 
-#: src/modules/pager/e_mod_config.c:194 src/modules/pager/e_mod_config.c:202
-#: src/modules/pager/e_mod_config.c:208 src/modules/pager/e_mod_config.c:338
-#: src/modules/pager/e_mod_config.c:343 src/modules/pager/e_mod_config.c:347
+#: src/modules/pager/e_mod_config.c:194
+#: src/modules/pager/e_mod_config.c:202
+#: src/modules/pager/e_mod_config.c:208
+#: src/modules/pager/e_mod_config.c:338
+#: src/modules/pager/e_mod_config.c:343
+#: src/modules/pager/e_mod_config.c:347
 #, c-format
 msgid "Click to set"
 msgstr "Klik om in te stellen"
@@ -7368,7 +7262,8 @@ msgstr "Popup pager-hoogte"
 msgid "Popup speed"
 msgstr "Popup-snelheid"
 
-#: src/modules/pager/e_mod_config.c:236 src/modules/pager/e_mod_config.c:273
+#: src/modules/pager/e_mod_config.c:236
+#: src/modules/pager/e_mod_config.c:273
 #, c-format
 msgid "%1.1f seconds"
 msgstr "%1.1f seconds"
@@ -7397,7 +7292,8 @@ msgstr "Belangrijke popup-snelheid"
 msgid "Urgent Windows"
 msgstr "Belangrijke vensters"
 
-#: src/modules/pager/e_mod_config.c:340 src/modules/pager/e_mod_config.c:345
+#: src/modules/pager/e_mod_config.c:340
+#: src/modules/pager/e_mod_config.c:345
 #: src/modules/pager/e_mod_config.c:349
 #, c-format
 msgid "Button %i"
@@ -7408,52 +7304,48 @@ msgid "Pager Button Grab"
 msgstr "Pager-knop vastpakken"
 
 #: src/modules/pager/e_mod_config.c:374
-msgid ""
-"Please press a mouse button<br>Press <hilight>Escape</hilight> to abort."
-"<br>Or <hilight>Del</hilight> to reset the button."
-msgstr ""
-"Druk alstublieft op een muisknop.<br>Druk op <hilight>Escape</hilight> om af "
-"te breken. <br>Of op <higlight>Del</hilight> om terug te draaien."
+msgid "Please press a mouse button<br>Press <hilight>Escape</hilight> to abort.<br>Or <hilight>Del</hilight> to reset the button."
+msgstr "Druk alstublieft op een muisknop.<br>Druk op <hilight>Escape</hilight> om af te breken. <br>Of op <higlight>Del</hilight> om terug te draaien."
 
 #: src/modules/pager/e_mod_config.c:429
 msgid "Attention"
 msgstr "Attentie"
 
 #: src/modules/pager/e_mod_config.c:430
-msgid ""
-"You cannot use the right mouse button in the<br>shelf for this as it is "
-"already taken by internal<br>code for context menus.<br>This button only "
-"works in the popup."
-msgstr ""
-"U kunt de rechtermuisknop niet gebruiken<br>in de Schelf voor dit omdat het "
-"reeds gebruikt wordt door een interne<br>code voor contextmenu's.<br>Alleen "
-"deze knop werkt in de popup."
+msgid "You cannot use the right mouse button in the<br>shelf for this as it is already taken by internal<br>code for context menus.<br>This button only works in the popup."
+msgstr "U kunt de rechtermuisknop niet gebruiken<br>in de Schelf voor dit omdat het reeds gebruikt wordt door een interne<br>code voor contextmenu's.<br>Alleen deze knop werkt in de popup."
 
 #: src/modules/pager/e_mod_main.c:2804
 msgid "Show Pager Popup"
 msgstr "Toon pager-popup"
 
-#: src/modules/pager/e_mod_main.c:2811 src/modules/pager/e_mod_main.c:2854
+#: src/modules/pager/e_mod_main.c:2811
+#: src/modules/pager/e_mod_main.c:2854
 msgid "Popup Desk Right"
 msgstr "Popup bureaublad rechts"
 
-#: src/modules/pager/e_mod_main.c:2813 src/modules/pager/e_mod_main.c:2855
+#: src/modules/pager/e_mod_main.c:2813
+#: src/modules/pager/e_mod_main.c:2855
 msgid "Popup Desk Left"
 msgstr "Popup bureaublad links"
 
-#: src/modules/pager/e_mod_main.c:2815 src/modules/pager/e_mod_main.c:2856
+#: src/modules/pager/e_mod_main.c:2815
+#: src/modules/pager/e_mod_main.c:2856
 msgid "Popup Desk Up"
 msgstr "Popup bureaublad omhoog"
 
-#: src/modules/pager/e_mod_main.c:2817 src/modules/pager/e_mod_main.c:2857
+#: src/modules/pager/e_mod_main.c:2817
+#: src/modules/pager/e_mod_main.c:2857
 msgid "Popup Desk Down"
 msgstr "Popup bureaublad omlaag"
 
-#: src/modules/pager/e_mod_main.c:2819 src/modules/pager/e_mod_main.c:2858
+#: src/modules/pager/e_mod_main.c:2819
+#: src/modules/pager/e_mod_main.c:2858
 msgid "Popup Desk Next"
 msgstr "Popup volgende bureaublad"
 
-#: src/modules/pager/e_mod_main.c:2821 src/modules/pager/e_mod_main.c:2859
+#: src/modules/pager/e_mod_main.c:2821
+#: src/modules/pager/e_mod_main.c:2859
 msgid "Popup Desk Previous"
 msgstr "Popup vorige bureaublad"
 
@@ -7533,7 +7425,8 @@ msgstr "Volgende"
 msgid "Welcome to Enlightenment"
 msgstr "Welkom in Enlightenment"
 
-#: src/modules/wizard/page_010.c:140 src/modules/wizard/page_020.c:56
+#: src/modules/wizard/page_010.c:140
+#: src/modules/wizard/page_020.c:56
 msgid "Select one"
 msgstr "Selecteer er één"
 
@@ -7542,14 +7435,8 @@ msgid "Profile"
 msgstr "Profiel"
 
 #: src/modules/wizard/page_030.c:91
-msgid ""
-"No menu files were<br>found on your system.<br>Please see "
-"the<br>documentation on<br>www.enlightenment.org<br>for more details "
-"on<br>how to get your<br>application menus<br>working."
-msgstr ""
-"Er waren geen menubestanden<br>gevonden op uw systeem.<br>Zie "
-"de<br>documentatie op<br>www.enlightenment.org<br> voor meer informatie "
-"over<br>hoe u uw<br>programmamenu's<br>werkend krijgt."
+msgid "No menu files were<br>found on your system.<br>Please see the<br>documentation on<br>www.enlightenment.org<br>for more details on<br>how to get your<br>application menus<br>working."
+msgstr "Er waren geen menubestanden<br>gevonden op uw systeem.<br>Zie de<br>documentatie op<br>www.enlightenment.org<br> voor meer informatie over<br>hoe u uw<br>programmamenu's<br>werkend krijgt."
 
 #: src/modules/wizard/page_030.c:107
 msgid "Select application menu"
@@ -7589,7 +7476,7 @@ msgstr "Cursor overheen een venster focust het"
 
 #: src/modules/wizard/page_070.c:203
 msgid "Select Icons to Add"
-msgstr "Selecteer pictogrammen om te te voegen"
+msgstr "Selecteer pictogrammen om toe te voegen"
 
 #: src/modules/wizard/page_080.c:59
 msgid "Quick Launch"
@@ -7615,7 +7502,8 @@ msgstr "Uitvoer"
 msgid "Cards"
 msgstr "Kaarten"
 
-#: src/modules/mixer/app_mixer.c:369 src/modules/mixer/conf_gadget.c:278
+#: src/modules/mixer/app_mixer.c:369
+#: src/modules/mixer/conf_gadget.c:278
 msgid "Channels"
 msgstr "Kanalen"
 
@@ -7639,11 +7527,13 @@ msgstr "Links:"
 msgid "Right:"
 msgstr "Rechts:"
 
-#: src/modules/mixer/app_mixer.c:401 src/modules/mixer/e_mod_main.c:583
+#: src/modules/mixer/app_mixer.c:401
+#: src/modules/mixer/e_mod_main.c:625
 msgid "Mute"
 msgstr "Dempen"
 
-#: src/modules/mixer/app_mixer.c:404 src/modules/mixer/conf_gadget.c:194
+#: src/modules/mixer/app_mixer.c:404
+#: src/modules/mixer/conf_gadget.c:194
 msgid "Lock Sliders"
 msgstr "Vergrendel sliders"
 
@@ -7683,24 +7573,19 @@ msgstr "Mixer-moduleinstellingen"
 msgid "Mixer Settings Updated"
 msgstr "Mixer-instellingen geüpdate"
 
-#: src/modules/mixer/e_mod_main.c:593 src/modules/connman/e_mod_main.c:1216
-msgid "Controls"
-msgstr "Bediening"
+#: src/modules/mixer/e_mod_main.c:1219
+msgid "Mixer Module Settings data changed.<br>Your old configuration has been replaced with new default.<br>Sorry for the inconvenience."
+msgstr "Mixer-moduleinstellingen gewijzigd.<br>Uw oude instellingen zijn vervangen door nieuwe standaarden.<br>Excuses voor het ongemak."
 
-#: src/modules/mixer/e_mod_main.c:1178
-msgid ""
-"Mixer Module Settings data changed.<br>Your old configuration has been "
-"replaced with new default.<br>Sorry for the inconvenience."
-msgstr ""
-"Mixer-moduleinstellingen gewijzigd.<br>Uw oude instellingen zijn vervangen "
-"door nieuwe standaarden.<br>Excuses voor het ongemak."
-
-#: src/modules/connman/e_mod_main.c:85 src/modules/connman/e_mod_main.c:112
-#: src/modules/connman/e_mod_main.c:1019 src/modules/connman/e_mod_main.c:1773
+#: src/modules/connman/e_mod_main.c:85
+#: src/modules/connman/e_mod_main.c:112
+#: src/modules/connman/e_mod_main.c:1019
+#: src/modules/connman/e_mod_main.c:1773
 msgid "Cannot toggle system's offline mode."
 msgstr "Kan systeem-offlinemodus niet schakelen"
 
-#: src/modules/connman/e_mod_main.c:96 src/modules/connman/e_mod_main.c:1011
+#: src/modules/connman/e_mod_main.c:96
+#: src/modules/connman/e_mod_main.c:1011
 msgid "ConnMan Daemon is not running."
 msgstr "ConnMan-daemon draait niet."
 
@@ -7714,12 +7599,8 @@ msgstr "ConnMan heeft uw wachtwoord nodig."
 
 #: src/modules/connman/e_mod_main.c:258
 #, c-format
-msgid ""
-"Connection Manager needs your passphrase for <br>the service <hilight>%s</"
-"hilight>"
-msgstr ""
-"Verbingsbeheerder heeft uw wachtwoord nodig voor <br>de service <hilight>%"
-"s</ hilight>"
+msgid "Connection Manager needs your passphrase for <br>the service <hilight>%s</hilight>"
+msgstr "Verbindingsbeheerder heeft uw wachtwoord nodig voor <br>de service <hilight>%s</ hilight>"
 
 #: src/modules/connman/e_mod_main.c:282
 msgid "Show passphrase as clear text"
@@ -7729,16 +7610,19 @@ msgstr "Toon wachtwoord als lege tekst"
 msgid "Ok"
 msgstr "OK"
 
-#: src/modules/connman/e_mod_main.c:559 src/modules/connman/e_mod_main.c:572
+#: src/modules/connman/e_mod_main.c:559
+#: src/modules/connman/e_mod_main.c:572
 msgid "Disconnect from network service."
 msgstr "Verbreek de netwerkverbinding."
 
-#: src/modules/connman/e_mod_main.c:604 src/modules/connman/e_mod_main.c:665
+#: src/modules/connman/e_mod_main.c:604
+#: src/modules/connman/e_mod_main.c:665
 #: src/modules/connman/e_mod_main.c:691
 msgid "Service does not exist anymore"
 msgstr "Service bestaat niet meer."
 
-#: src/modules/connman/e_mod_main.c:612 src/modules/connman/e_mod_main.c:617
+#: src/modules/connman/e_mod_main.c:612
+#: src/modules/connman/e_mod_main.c:617
 #: src/modules/connman/e_mod_main.c:644
 msgid "Connect to network service."
 msgstr "Verbindt met netwerkverbinding."
@@ -7751,13 +7635,17 @@ msgstr "Kan het wachtwoord van de service niet instellen"
 msgid "Offline mode"
 msgstr "Offline-modus"
 
+#: src/modules/connman/e_mod_main.c:1216
+msgid "Controls"
+msgstr "Bediening"
+
 #: src/modules/connman/e_mod_main.c:1387
 msgid "No ConnMan"
 msgstr "Geen ConnMan"
 
 #: src/modules/connman/e_mod_main.c:1389
 msgid "No ConnMan server found."
-msgstr "Geen ConnMan-server gevonden"
+msgstr "Geen ConnMan-server gevonden."
 
 #: src/modules/connman/e_mod_main.c:1402
 msgid "Offline mode: all radios are turned off"
@@ -7771,7 +7659,8 @@ msgstr "Geen verbinding"
 msgid "Not connected"
 msgstr "Niet verbonden"
 
-#: src/modules/connman/e_mod_main.c:1434 src/modules/connman/e_mod_main.c:1851
+#: src/modules/connman/e_mod_main.c:1434
+#: src/modules/connman/e_mod_main.c:1851
 msgid "disconnect"
 msgstr "verbreken"
 
@@ -7785,7 +7674,7 @@ msgstr "Geen fout"
 
 #: src/modules/connman/e_mod_main.c:1845
 msgid "idle"
-msgstr "Inactief"
+msgstr "inactief"
 
 #: src/modules/connman/e_mod_main.c:1846
 msgid "association"
@@ -7793,7 +7682,7 @@ msgstr "toewijzing"
 
 #: src/modules/connman/e_mod_main.c:1847
 msgid "configuration"
-msgstr "configuratie"
+msgstr "instellingen"
 
 #: src/modules/connman/e_mod_main.c:1848
 msgid "ready"
@@ -7838,6 +7727,24 @@ msgstr "Er kan maar 1 systeemvak-gadget zijn en een andere bestaat reeds."
 #: src/modules/systray/e_mod_main.c:1092
 msgid "Systray"
 msgstr "Systeemvak"
+
+#~ msgid "Acpi"
+#~ msgstr "ACPI"
+
+#~ msgid "Dim Screen"
+#~ msgstr "Dim Scherm"
+
+#~ msgid "Undim Screen"
+#~ msgstr "Ontdim Scherm"
+
+#~ msgid "Display Power Management Signaling"
+#~ msgstr "Scherm-energiebeheer-signalering"
+
+#~ msgid "The current display server is not <br>DPMS capable."
+#~ msgstr "De huidige display-server is niet <br>DPMS-capabel."
+
+#~ msgid "The current display server does not <br>have the DPMS extension."
+#~ msgstr "De huidige display-server heeft niet <br>de DPMS-extensie."
 
 #, fuzzy
 #~ msgid "Selection"
@@ -8348,15 +8255,15 @@ msgstr "Systeemvak"
 #~ "Keep new resolution <hilight>%dx%d</hilight>?<br><br>Restoring old "
 #~ "resolution %dx%d in %d seconds."
 #~ msgstr ""
-#~ "Onthoud nieuwe Resolutie <hilight>%dx%d</hilight>?<br><br>Oude resolutie %"
-#~ "dx%d terugzetten in %d seconden."
+#~ "Onthoud nieuwe Resolutie <hilight>%dx%d</hilight>?<br><br>Oude resolutie "
+#~ "%dx%d terugzetten in %d seconden."
 
 #~ msgid ""
 #~ "Keep new resolution <hilight>%dx%d</hilight>?<br><br>Restoring old "
 #~ "resolution %dx%d NOW!"
 #~ msgstr ""
-#~ "Onthoud nieuwe Resolutie <hilight>%dx%d</hilight>?<br><br>Oude resolutie %"
-#~ "dx%d terugzetten SNEL!!"
+#~ "Onthoud nieuwe Resolutie <hilight>%dx%d</hilight>?<br><br>Oude resolutie "
+#~ "%dx%d terugzetten SNEL!!"
 
 #~ msgid "Test Face Menu Item"
 #~ msgstr "Test Face Menu Item"
@@ -8381,9 +8288,6 @@ msgstr "Systeemvak"
 
 #~ msgid "220 F"
 #~ msgstr "220 F"
-
-#~ msgid "Alarm Time"
-#~ msgstr "Alarm Tijd"
 
 #~ msgid "10 Mins"
 #~ msgstr "10 min"
