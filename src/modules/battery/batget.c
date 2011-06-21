@@ -547,9 +547,9 @@ linux_sys_class_power_supply_sysev_init(Sys_Class_Power_Supply_Uevent *sysev)
    snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/current_now", sysev->name);
    if (ecore_file_exists(buf)) sysev->have_current_now = 1;
 
-   snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/voltage_full", sysev->name);
+   snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/voltage_max", sysev->name);
    if (ecore_file_exists(buf)) sysev->basis = BASIS_VOLTAGE;
-   snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/voltage_full_design", sysev->name);
+   snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/voltage_max_design", sysev->name);
    if (ecore_file_exists(buf)) sysev->basis = BASIS_VOLTAGE;
 
    snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/energy_full", sysev->name);
@@ -598,18 +598,18 @@ linux_sys_class_power_supply_sysev_init(Sys_Class_Power_Supply_Uevent *sysev)
      }
    else if (sysev->basis == BASIS_VOLTAGE)
      {
-        snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/voltage_full", sysev->name);
+        snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/voltage_max", sysev->name);
         sysev->basis_full = int_file_get(buf);
-        snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/voltage_empty", sysev->name);
+        snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/voltage_min", sysev->name);
         sysev->basis_empty = int_file_get(buf);
         if (sysev->basis_full < 0)
           {
-             snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/voltage_full_design", sysev->name);
+             snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/voltage_max_design", sysev->name);
              sysev->basis_full = int_file_get(buf);
           }
         if (sysev->basis_empty < 0)
           {
-             snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/voltage_empty_design", sysev->name);
+             snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/voltage_min_design", sysev->name);
              sysev->basis_empty = int_file_get(buf);
           }
      }
@@ -800,53 +800,66 @@ linux_sys_class_power_supply_check(void)
 
              if (pwr_empty < 0) pwr_empty = 0;
 
-             if (full) pwr_now = pwr_full;
-             else
+             if ((pwr_full > 0) && (pwr_full > pwr_empty))
                {
-                  if (pwr_now < 0)
-                    pwr_now = (((long long)capacity * ((long long)pwr_full - (long long)pwr_empty)) / 100) + pwr_empty;
-               }
-
-             if (sysev->present) have_battery = 1;
-             if (charging)
-               {
-                  pwr_now = pwr_now;
-                  have_power = 1;
-                  if (time_to_full >= 0)
-                    {
-                       if (time_to_full > time_left)
-                         time_left = time_to_full;
-                    }
+                  if (full) pwr_now = pwr_full;
                   else
                     {
-                       if (current == 0) time_left = 0;
-                       else if (current < 0)
-                         time_left = -1;
+                       if (pwr_now < 0)
+                          pwr_now = (((long long)capacity * ((long long)pwr_full - (long long)pwr_empty)) / 100) + pwr_empty;
+                    }
+                  
+                  if (sysev->present) have_battery = 1;
+                  if (charging)
+                    {
+                       pwr_now = pwr_now;
+                       have_power = 1;
+                       if (time_to_full >= 0)
+                         {
+                            if (time_to_full > time_left)
+                               time_left = time_to_full;
+                         }
                        else
                          {
-                            pwr = (((long long)pwr_full - (long long)pwr_now) * 3600) / -current;
-                            if (pwr > time_left) time_left = pwr;
-                         }
-                    }
-               }
-             else
-               {
-                  have_power = 0;
-                  if (time_to_empty >= 0) time_left += time_to_empty;
-                  else
-                    {
-                       if (time_to_empty < 0)
-                         {
-                            if (current > 0)
+                            if (current == 0) time_left = 0;
+                            else if (current < 0)
+                               time_left = -1;
+                            else
                               {
-                                 pwr = (((long long)pwr_now - (long long)pwr_empty) * 3600) / current;
-                                 time_left += pwr;
+                                 pwr = (((long long)pwr_full - (long long)pwr_now) * 3600) / -current;
+                                 if (pwr > time_left) time_left = pwr;
                               }
                          }
                     }
+                  else
+                    {
+                       have_power = 0;
+                       if (time_to_empty >= 0) time_left += time_to_empty;
+                       else
+                         {
+                            if (time_to_empty < 0)
+                              {
+                                 if (current > 0)
+                                   {
+                                      pwr = (((long long)pwr_now - (long long)pwr_empty) * 3600) / current;
+                                      time_left += pwr;
+                                   }
+                              }
+                         }
+                    }
+                  total_pwr_now += pwr_now - pwr_empty;
+                  total_pwr_max += pwr_full - pwr_empty;
                }
-             total_pwr_now += pwr_now - pwr_empty;
-             total_pwr_max += pwr_full - pwr_empty;
+             /* simple current battery fallback */
+             else
+               {
+                  if (sysev->present) have_battery = 1;
+                  if (charging) have_power = 1;
+                  else have_power = 0;
+                  total_pwr_max = 100;
+                  total_pwr_now = current;
+                  nofull = 0;
+               }
           }
         if (total_pwr_max > 0)
           battery_full = ((long long)total_pwr_now * 100) / total_pwr_max;
