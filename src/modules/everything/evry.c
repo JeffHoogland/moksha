@@ -610,8 +610,8 @@ evry_plugin_update(Evry_Plugin *p, int action)
    if (!(win = sel->win))
      return;
 
-   // if (s->request != p->request)
-   //   return;
+   if (sel->state->request != p->request)
+     return;
 
    DBG("update %d %d %s", s->request, p->request, p->name);
 
@@ -1481,16 +1481,16 @@ _evry_state_pop(Evry_Selector *sel, int immediate)
 
    _evry_item_desel(s);
 
-   if (s->selector->update_timer)
+   if (sel->update_timer)
      {
-	ecore_timer_del(s->selector->update_timer);
-	s->selector->update_timer = NULL;
+   	ecore_timer_del(sel->update_timer);
+   	sel->update_timer = NULL;
      }
-
-   if (s->selector->action_timer)
+   
+   if (sel->action_timer)
      {
-	ecore_timer_del(s->selector->action_timer);
-	s->selector->action_timer = NULL;
+   	ecore_timer_del(sel->action_timer);
+   	sel->action_timer = NULL;
      }
      
    if (s->view)
