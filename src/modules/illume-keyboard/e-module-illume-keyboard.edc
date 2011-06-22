@@ -1,0 +1,891 @@
+collections 
+{
+   group 
+     {
+        images.image: "module_icon.png" COMP;
+        name: "icon";
+        max: 128 128;
+        parts 
+          {
+             part 
+               {
+                  name: "base";
+                  mouse_events: 0;
+                  description 
+                    {
+                       state: "default" 0.0;
+                       aspect: 1.0 1.0;
+                       aspect_preference: BOTH;
+                       image.normal: "module_icon.png";
+                    }
+               }
+          }
+     }
+   group { name: "e/modules/kbd/base/default";
+      images {
+	 image: "k_wtgr.png" COMP;
+	 image: "k_tpsh.png" COMP;
+	 image: "k_tabl.png" COMP;
+	 image: "k_tabr.png" COMP;
+	 image: "k_tabhl.png" COMP;
+	 image: "k_tabhm.png" COMP;
+	 image: "k_tabhr.png" COMP;
+	 image: "k_grad.png" COMP;
+//	 image: "k_ltgry.png" COMP;
+//	 image: "grill_dark_tiny_pattern.png" COMP;
+	 image: "big_arrow_up.png" COMP;
+         image: "bt_basew.png" COMP;
+         image: "bt_base2.png" COMP;
+	 image: "bt_hilightw.png" COMP;
+      }
+//      data.item: "shaped" "1";
+      parts {
+	 part { name: "base";
+	    description { state: "default" 0.0;
+	       rel1 {
+		  to_y: "compose_bg";
+		  relative: 0.0 1.0;
+		  offset: 0 0;
+	       }
+	       image.normal: "k_grad.png";
+	        fill {
+		   smooth: 0;
+		   size {
+		      relative: 0 1.0;
+		      offset: 36 0;
+		   }
+		}
+	    }
+	 }
+/*	 
+	 part { name: "base";
+	    type: RECT;
+	    description { state: "default" 0.0;
+	       color: 51 51 51 255;
+	    }
+	 }
+	 part { name: "grill";
+	    description { state: "default" 0.0;
+	       rel1 {
+		  to_y: "compose_bg";
+		  relative: 0.0 1.0;
+		  offset: 0 0;
+	       }
+	       image.normal: "grill_dark_tiny_pattern.png";
+	        fill {
+		   size {
+		      relative: 0 0;
+		      offset: 144 144;
+		   }
+		}
+	    }
+	 }
+	 part { name: "light";
+	    description { state: "default" 0.0;
+	       rel1.to: "grill";
+	       rel2.to: "grill";
+	       image.normal: "k_ltgry.png";
+	       fill {
+		  smooth: 0;
+		  size {
+		     relative: 0 1.0;
+		     offset: 36 0;
+		  }
+	       }
+	    }
+	 }
+ */
+	 part { name: "compose_bg";
+	    description { state: "default" 0.0;
+	       image.normal: "k_wtgr.png";
+	       rel2.to: "e.swallow.label";
+	       rel2.offset: 1 2;
+	       fill {
+		  smooth: 0;
+		  size {
+		     relative: 0 1.0;
+		     offset: 36 0;
+		  }
+	       }
+	    }
+	 }
+	 part { name: "e.text.label";
+	    type: TEXT;
+	    mouse_events: 0;
+	    scale: 1;
+	    description { state: "default" 0.0;
+	       visible: 0;
+	       rel1.to_x: "tl_tab";
+	       rel1.relative: 1.0 0.0;
+               rel1.offset: 1 8;
+	       rel2.to_x: "rt_tab";
+	       rel2.relative: 0.0 0.0;
+	       rel2.offset: -2 8;
+	       align: 0.5 0.0;
+	       fixed: 0 1;
+	       text {
+                  font: "Sans";
+		  size: 10;
+		  min: 0 1;
+	       }
+	    }
+	 }
+	 part { name: "e.swallow.label";
+	    type: SWALLOW;
+	    description { state: "default" 0.0;
+               rel1.to: "e.text.label";
+	       rel1.offset: -8 -8;
+               rel2.to: "e.text.label";
+	       rel2.offset: 7 7;
+	       align: 0.5 0.0;
+	    }
+	 }
+	 part { name: "compose_sh";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       image.normal: "k_tpsh.png";
+	       rel1 {
+		  to_x: "tl_tab";
+		  relative: 1.0 0.0;
+		  offset: -12 0;
+	       }
+	       rel2 {
+		  to_x: "rt_tab";
+		  to_y: "compose_bg";
+		  relative: 0.0 1.0;
+		  offset: 11 -1;
+	       }
+	       image.border: 12 12 12 12;
+	       fill.smooth: 0;
+	    }
+	 }
+	 part { name: "tl_tab";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       image.normal: "k_tabl.png";
+	       image.border: 0 12 6 6;
+	       fill.smooth: 0;
+	       rel1.to: "lprev";
+	       rel2.to: "lprev";
+	       rel2.offset: 13 -1;
+	    }
+	 }
+	 part { name: "rt_tab";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       image.normal: "k_tabr.png";
+	       image.border: 12 0 6 6;
+	       fill.smooth: 0;
+	       rel1.to: "lnext";
+	       rel1.offset: -12 0;
+	       rel2.to: "lnext";
+	    }
+	 }
+	 part { name: "lprev";
+	    type: RECT;
+	    description { state: "default" 0.0;
+	       aspect: 1.5 1.5;
+	       align: 0.0 0.5;
+	       aspect_preference: VERTICAL;
+	       color: 0 0 0 0;
+               rel2 {
+		  to_y: "compose_bg";
+		  relative: 0.0 1.0;
+		  offset: 0 -1;
+	       }
+	    }
+	 }
+	 part { name: "lnext";
+	    type: RECT;
+	    description { state: "default" 0.0;
+	       aspect: 1.5 1.5;
+	       align: 1.0 0.5;
+	       aspect_preference: VERTICAL;
+	       color: 0 0 0 0;
+	       rel1 {
+		  relative: 1.0 0.0;
+		  offset: -1 0;
+	       }
+	       rel2 {
+		  to_y: "compose_bg";
+		  relative: 1.0 1.0;
+		  offset: -1 -1;
+	       }
+	    }
+	 }
+	 
+	 part { name: "tl_tabh";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       image.normal: "k_tabhl.png";
+	       image.border: 0 12 6 20;
+	       fill.smooth: 0;
+	       rel1.to: "tl_tab";
+	       rel2.to: "tl_tab";
+	       rel2.offset: -2 15;
+	    }
+	 }
+	 part { name: "tr_tabh";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       image.normal: "k_tabhr.png";
+	       image.border: 12 0 6 20;
+	       fill.smooth: 0;
+	       rel1.to: "rt_tab";
+	       rel1.offset: 1 0;
+	       rel2.to: "rt_tab";
+	       rel2.offset: -1 15;
+	    }
+	 }
+	 part { name: "t_h";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       image.normal: "k_tabhm.png";
+	       fill.smooth: 0;
+	       rel1 {
+		  to: "tl_tabh";
+		  relative: 1.0 1.0;
+		  offset: 0 -15;
+	       }
+	       rel2 {
+		  to: "tr_tabh";
+		  relative: 0.0 1.0;
+		  offset: -1 -1;
+	       }
+	    }
+	 }
+	 // dict/selection selector
+	 part { name: "lprev2";
+	    mouse_events: 0;
+	    scale: 1;
+	    description { state: "default" 0.0;
+	       max: 22 22;
+	       aspect: 1.39393939 1.39393939;
+	       aspect_preference: BOTH;
+	       image.normal: "big_arrow_up.png";
+	       color: 255 255 255 255;
+	       align: 0.5 0.5;
+	       rel1.to: "lprev";
+	       rel2.to: "lprev";
+	    }
+	 }
+	 
+	 // layout selector icon/config	
+         part { name: "button_image";
+            type: IMAGE;
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               rel1.to: "lnext";
+               rel1.offset: 0 1;
+               rel2.to: "lnext";
+rel2.offset: -4 -1;
+               image.normal: "bt_basew.png";
+               image.border: 7 7 7 7;
+               fill.smooth: 0;
+            }
+            description { state: "active" 0.0;
+               inherit: "default" 0.0;
+               image.normal: "bt_base2.png";
+               image.border: 7 7 7 7;
+               fill.smooth: 0;
+            }
+         }
+	 part { name: "e.swallow.layout";
+	    type: SWALLOW;
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+               rel1.to: "button_image";
+               rel2.to: "button_image";
+	    }
+	 }
+         part { name: "over";
+            type: IMAGE;
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               rel1.to: "button_image";	 
+               rel2.to: "button_image";
+               rel2.relative: 1.0 0.5;
+               image.normal: "bt_hilightw.png";
+               image.border: 7 7 7 0;
+               fill.smooth: 0;
+            }
+         }
+	 part { name: "e.swallow.content";
+	    type: SWALLOW;
+	    description { state: "default" 0.0;
+	       rel1 {
+		  to_y: "e.swallow.label";
+		  relative: 0.0 1.0;
+		  offset: 0 4;
+	       }
+	       rel2 {
+		  relative: 1.0 1.0;
+		  offset: -1 -1;
+	       }
+	    }
+	 }
+      }
+      programs {
+	 program { name: "lprev";
+	    signal: "mouse,down,1";
+	    source: "lprev";
+            action: SIGNAL_EMIT "e,action,do,matches" "";
+	 }
+	 program { name: "lnext";
+	    signal: "mouse,up,1";
+	    source: "lnext";
+            action: SIGNAL_EMIT "e,action,do,layouts" "";
+	 }
+         program { name: "clicked";
+            signal: "mouse,down,1";
+            source: "lnext";
+            action: STATE_SET active 0.0;
+            target: "button_image";
+         }
+         program { name: "released";
+            signal: "mouse,up,1";
+            source: "lnext";
+            action: STATE_SET default 0.0;
+            target: "button_image";
+         }
+      }
+   }
+
+   group { name: "e/modules/kbd/match/word";
+      images {
+         image: "bt_basew.png" COMP;
+	 image: "bt_base2.png" COMP;
+	 image: "bt_hilight.png" COMP;
+	 image: "bt_shine.png" COMP;
+	 image: "bt_glow.png" COMP;
+image: "bt_dis_hilight.png" COMP;
+      }
+      parts {
+	 part { name: "button_image";
+	    mouse_events: 1;
+	    description { state: "default" 0.0;
+	       rel1.to: "e.text.label";
+	       rel1.offset: -3 -3;
+	       rel2.to_x: "e.text.label";
+	       rel2.offset: 2 2;
+	       image {
+		  normal: "bt_basew.png";
+		  border: 7 7 7 7;
+	       }
+	       fill.smooth: 0;
+	    }
+	    description { state: "active" 0.0;
+	       inherit: "default" 0.0;
+	       image.normal: "bt_base2.png";
+	    }
+	 }
+	 part { name: "e.text.label";
+	    type: TEXT;
+            effect: SOFT_SHADOW;
+	    mouse_events: 0;
+	    scale: 1;
+	    description { state: "default" 0.0;
+	       color: 0 0 0 255;
+               color3: 0 0 0 0;
+	       min: 32 0;
+	       rel1 {
+		  relative: 0.0 0.0;
+		  offset:   3   3;
+	       }
+	       rel2 {
+		  relative: 1.0 1.0;
+		  offset:   -4  -4;
+	       }
+	       text {
+                  font: "Sans"; 
+		  size: 10;
+		  min: 1 1;
+	       }
+	    }
+	    description { state: "active" 0.0;
+	       inherit: "default" 0.0;
+	       color: 224 224 224 255;
+	       color3: 0 0 0 64;
+	    }
+	 }
+         part { name: "over1";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "button_image";
+	       rel2.to: "button_image";
+	       rel2.relative: 1.0 0.5;
+	       image {
+		  normal: "bt_hilight.png";
+		  border: 7 7 7 0;
+	       }
+	       fill.smooth: 0;
+	    }
+	    description { state: "disabled" 0.0;
+	       inherit:  "default" 0.0;
+	       image {
+		  normal: "bt_dis_hilight.png";
+		  border: 4 4 4 0;
+	       }
+	    }
+	 }
+	 part { name: "over2";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "button_image";
+	       rel2.to: "button_image";
+	       image {
+		  normal: "bt_shine.png";
+		  border: 7 7 7 7;
+	       }
+	       fill.smooth: 0;
+	    }
+	    description { state: "disabled" 0.0;
+	       inherit:  "default" 0.0;
+	       visible: 0;
+	    }
+	 }
+	 part { name: "over3";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+               visible: 0;
+               color: 255 255 255 0;
+	       image {
+		  normal: "bt_glow.png";
+		  border: 12 12 12 12;
+	       }
+               fill.smooth : 0;
+	    }
+	    description { state: "clicked" 0.0;
+	       inherit:  "default" 0.0;
+	       visible: 1;
+               color: 255 255 255 255;
+	    }
+	 }
+      }
+      programs {
+	 program { name: "select";
+	    signal: "mouse,up,1";
+	    source: "button_image";
+            action: SIGNAL_EMIT "e,action,do,select" "";
+	 }
+	 program { name: "default";
+	    signal: "e,state,selected";
+	    source: "e";
+            action: STATE_SET "active" 0.0;
+	    target: "button_image";
+            target: "e.text.label";
+	 }
+	 program { name: "select2";
+	    signal: "mouse,down,1";
+	    source: "button_image";
+            action: STATE_SET "active" 0.0;
+	    target: "button_image";
+	    target: "e.text.label";
+	 }
+	 program { name: "select3";
+	    signal: "mouse,up,1";
+	    source: "button_image";
+            action: STATE_SET "default" 0.0;
+	    target: "button_image";
+	    target: "over3";
+	    target: "e.text.label";
+	 }
+	 program { name: "select4";
+	    signal: "mouse,down,1";
+	    source: "button_image";
+            action: STATE_SET "clicked" 0.0;
+	    target: "over3";
+	 }
+      }
+   }
+
+   group { name: "e/modules/kbd/key/default";
+      images {
+	 image: "bt_base2.png" COMP;
+         image: "bt_basew.png" COMP;
+         image: "bt_hilightw.png" COMP;
+	 image: "bt_shine.png" COMP;
+      }
+      parts {
+	 part { name: "button_image";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "e.swallow.content";
+	       rel1.offset: -3 -3;
+	       rel2.to_x: "e.swallow.content";
+	       rel2.offset: 2 2;
+	       image {
+		  normal: "bt_basew.png";
+		  border: 7 7 7 7;
+	       }
+	       fill.smooth: 0;
+	    }
+	    description { state: "active" 0.0;
+	       inherit: "default" 0.0;
+	       image {
+		  normal: "bt_base2.png";
+		  border: 7 7 7 7;
+	       }
+	    }
+	 }
+	 part { name: "content_clip";
+            type: RECT;
+	    description { state: "default" 0.0;
+	       color: 0 0 0 255;
+	       rel1.to: "button_image";
+	       rel2.to: "button_image";
+	    }
+	    description { state: "active" 0.0;
+               inherit: "default" 0.0;
+	       color: 255 255 255 255;
+	    }
+	 }
+	 part {
+	    name: "e.swallow.content";
+	    type: SWALLOW;
+	    clip_to: "content_clip";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1 {
+		  relative: 0.0 0.0;
+		  offset:   3   3;
+	       }
+	       rel2 {
+		  relative: 1.0 1.0;
+		  offset:   -4  -4;
+	       }
+	    }
+	    description { state: "selected" 0.0;
+	       inherit: "default" 0.0;
+	       rel1 {
+		  relative: -0.5 -2.0;
+		  offset:   3   3;
+	       }
+	       rel2 {
+		  relative: 1.5 0.0;
+		  offset:   -4  -4;
+	       }
+	    }
+	 }
+	 part { name: "e.text.label";
+	    type: TEXT;
+	    clip_to: "content_clip";
+	    mouse_events: 0;
+	    scale: 1;
+	    description { state: "default" 0.0;
+	       rel1.to: "e.swallow.content";
+	       rel2.to: "e.swallow.content";
+	       color: 255 255 255 255;
+	       text {
+                  font: "Sans"; 
+		  size: 10;
+		  min: 1 1;
+	       }
+	    }
+	    description { state: "selected" 0.0;
+	       inherit: "default" 0.0;
+	       text {
+		  size: 24;
+	       }
+	    }
+	 }
+         part { name: "over1";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "button_image";
+	       rel2.to: "button_image";
+	       rel2.relative: 1.0 0.5;
+	       image {
+		  normal: "bt_hilightw.png";
+		  border: 7 7 7 0;
+	       }
+	       fill.smooth: 0;
+	    }
+	 }
+	 part { name: "over2";
+	    mouse_events: 1;
+	    description { state: "default" 0.0;
+	       rel1.to: "button_image";
+	       rel2.to: "button_image";
+	       image {
+		  normal: "bt_shine.png";
+		  border: 7 7 7 7;
+	       }
+	       fill.smooth: 0;
+	    }
+	    description { state: "disabled" 0.0;
+	       inherit:  "default" 0.0;
+	       visible: 0;
+	    }
+	 }
+      }
+      programs {
+	 program { name: "down";
+	    signal: "e,state,pressed";
+	    source: "e";
+	    action: STATE_SET "selected" 0.0;
+	    target: "e.swallow.content";
+	    target: "e.text.label";
+	 }
+	 program { name: "up";
+	    signal: "e,state,released";
+	    source: "e";
+	    action: STATE_SET "default" 0.0;
+	    transition: DECELERATE 0.25;
+	    target: "e.swallow.content";
+	    target: "e.text.label";
+	 }
+	 program { name: "selected";
+	    signal: "e,state,selected";
+	    source: "e";
+	    action: STATE_SET "active" 0.0;
+	    target: "button_image";
+	    target: "content_clip";
+	 }
+	 program { name: "sunelected";
+	    signal: "e,state,unselected";
+	    source: "e";
+	    action: STATE_SET "default" 0.0;
+	    target: "button_image";
+	    target: "content_clip";
+	 }
+      }
+   }
+
+   group { name: "e/modules/kbd/zoomkey/default";
+      images {
+	 image: "bt_base2.png" COMP;
+         image: "bt_basew.png" COMP;
+         image: "bt_hilightw.png" COMP;
+	 image: "bt_shine.png" COMP;
+      }
+      parts {
+	 part { name: "button_image";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "e.swallow.content";
+	       rel1.offset: -3 -3;
+	       rel2.to: "e.swallow.content";
+	       rel2.offset: 2 2;
+	       image {
+		  normal: "bt_basew.png";
+		  border: 7 7 7 7;
+	       }
+	       fill.smooth: 0;
+	    }
+	    description { state: "active" 0.0;
+	       inherit: "default" 0.0;
+	       image {
+		  normal: "bt_base2.png";
+		  border: 7 7 7 7;
+	       }
+	    }
+	 }
+	 part { name: "content_clip";
+	    type: RECT;
+	    description { state: "default" 0.0;
+	       color: 0 0 0 255;
+	       rel1.to: "button_image";
+	       rel2.to: "button_image";
+	    }
+	    description { state: "active" 0.0;
+               inherit: "default" 0.0;
+	       color: 255 255 255 255;
+	    }
+	 }
+	 part {
+	    name: "e.swallow.content";
+	    type: SWALLOW;
+	    clip_to: "content_clip";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1 {
+		  relative: 0.0 0.0;
+		  offset:   3   3;
+	       }
+	       rel2 {
+		  relative: 1.0 1.0;
+		  offset:   -4  -4;
+	       }
+	    }
+	    description { state: "selected" 0.0;
+	       inherit: "default" 0.0;
+	       rel1 {
+		  relative: -0.25 -0.25;
+		  offset:   3   3;
+	       }
+	       rel2 {
+		  relative: 1.25 1.25;
+		  offset:   -4  -4;
+	       }
+	    }
+	 }
+	 part { name: "e.text.label";
+	    type: TEXT;
+	    clip_to: "content_clip";
+	    mouse_events: 0;
+	    scale: 1;
+	    description { state: "default" 0.0;
+	       rel1.to: "e.swallow.content";
+	       rel2.to: "e.swallow.content";
+	       color: 255 255 255 255;
+	       text {
+                  font: "Sans"; 
+		  size: 40;
+		  min: 1 1;
+	       }
+	    }
+	    description { state: "selected" 0.0;
+	       inherit: "default" 0.0;
+	       text {
+		  size: 60;
+	       }
+	    }
+	 }
+         part { name: "over1";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "button_image";
+	       rel2.to: "button_image";
+	       rel2.relative: 1.0 0.5;
+	       image {
+		  normal: "bt_hilightw.png";
+		  border: 7 7 7 0;
+	       }
+	       fill.smooth: 0;
+	    }
+	 }
+	 part { name: "over2";
+	    mouse_events: 1;
+	    description { state: "default" 0.0;
+	       rel1.to: "button_image";
+	       rel2.to: "button_image";
+	       image {
+		  normal: "bt_shine.png";
+		  border: 7 7 7 7;
+	       }
+	       fill.smooth: 0;
+	    }
+	    description { state: "disabled" 0.0;
+	       inherit:  "default" 0.0;
+	       visible: 0;
+	    }
+	 }
+      }
+      programs {
+	 program { name: "down";
+	    signal: "e,state,pressed";
+	    source: "e";
+	    action: STATE_SET "selected" 0.0;
+	    target: "e.swallow.content";
+	    target: "e.text.label";
+	 }
+	 program { name: "up";
+	    signal: "e,state,released";
+	    source: "e";
+	    action: STATE_SET "default" 0.0;
+	    transition: DECELERATE 0.25;
+	    target: "e.swallow.content";
+	    target: "e.text.label";
+	 }
+	 program { name: "selected";
+	    signal: "e,state,selected";
+	    source: "e";
+	    action: STATE_SET "active" 0.0;
+	    target: "button_image";
+	    target: "content_clip";
+	 }
+	 program { name: "sunelected";
+	    signal: "e,state,unselected";
+	    source: "e";
+	    action: STATE_SET "default" 0.0;
+	    target: "button_image";
+	    target: "content_clip";
+	 }
+      }
+   }
+
+   group { name: "e/modules/kbd/zoom/default";
+//      data.item: "shaped" "1";
+//      max: 320 320; // hmm size here should be determined some other way
+      images {
+	 image: "base_bg.png" COMP;
+	 image: "inset_sunk.png" COMP;
+      }
+      parts {
+         part {	  name: "base";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       image.normal: "base_bg.png";
+	       image.border: 2 2 2 2;
+	       fill.smooth: 0;
+	    }
+	 }
+	 part { name: "clip";
+	    type: RECT;
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.to: "border";
+	       rel2.to: "border";
+	       rel1.offset: 1 1;
+	       rel2.offset: -2 -2;
+	    }
+	 }
+      	 part { name: "e.swallow.content";
+	    clip_to: "clip";
+	    type: SWALLOW;
+	    scale: 1;
+	    description { state: "default" 0.0;
+	       min: 120 120;
+	       max: 120 120;
+	       rel1.offset: 4 4;
+	       rel2.offset: -5 -5;
+	    }
+	 }
+	 part { name: "border";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       rel1.offset: 3 3;
+	       rel2.offset: -4 -4;
+	       image {
+		  normal: "inset_sunk.png";
+		  border: 7 7 7 7;
+		  middle: 0;
+	       }
+	       fill.smooth : 0;
+	    }
+	 }
+      }
+   }
+
+   group { name: "e/modules/kbd/match/default";
+//      data.item: "shaped" "1";
+      images {
+	 image: "base_bg.png" COMP;
+      }
+      parts {
+         part {	  name: "base";
+	    mouse_events: 0;
+	    description { state: "default" 0.0;
+	       image.normal: "base_bg.png";
+	       image.border: 2 2 2 2;
+	       fill.smooth: 0;
+	    }
+	 }
+	 part { name: "e.swallow.content";
+	    type: SWALLOW;
+	    description { state: "default" 0.0;
+	       rel1 {
+		  relative: 0.0 0.0;
+		  offset: 4 4;
+	       }
+	       rel2 {
+		  relative: 1.0 1.0;
+		  offset: -5 -5;
+	       }
+	    }
+	 }
+      }
+   }
+
+}
