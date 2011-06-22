@@ -7,7 +7,6 @@ arrow_down.png \
 arrow_left.png \
 arrow_right.png \
 arrow_up.png \
-ball.png \
 base_bg.png \
 bd_bottom.png \
 bd_button_close_focused.png \
@@ -26,7 +25,6 @@ bd_top_hilight.png \
 bd_top.png \
 big_arrow_down.png \
 big_arrow_up.png \
-bluetooth.png \
 bluetooth-powered.png \
 bluetooth-inactive.png \
 bluetooth-hidden.png \
@@ -54,7 +52,6 @@ busy-6.png \
 busy-7.png \
 busy-8.png \
 busy-9.png \
-cfg.png \
 check_base.png \
 check_on.png \
 check_sel.png \
@@ -304,8 +301,6 @@ illume-kbd-on.png \
 illume-mode-dual-left.png \
 illume-mode-dual-top.png \
 illume-mode-single.png \
-init_check1.png \
-init_check2.png \
 inset_raised.png \
 inset_sunk_dark.png \
 inset_sunk.png \
@@ -380,11 +375,6 @@ topsh.png \
 transition_vswipe.png \
 vgrad_dark.png \
 vgrad_light.png \
-wifi_0.png \
-wifi_1.png \
-wifi_2.png \
-wifi_3.png \
-wifi_4.png \
 wp-tb1.png \
 wp-bot1.png \
 wp-tb2.png \
