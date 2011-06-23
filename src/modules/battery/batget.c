@@ -46,6 +46,8 @@
 #define CHECK_PMU                    3
 #define CHECK_SYS_CLASS_POWER_SUPPLY 4
 
+#define SYS_PWR
+
 static void      init(void);
 static Eina_Bool poll_cb(void *data);
 
@@ -58,6 +60,8 @@ static int time_left = -2;
 static int battery_full = -2;
 static int have_battery = -2;
 static int have_power = -2;
+
+static const char *sys_power_dir = "/sys/class/power_supply";
 
 /* UTILS */
 static int
@@ -533,83 +537,84 @@ static void
 linux_sys_class_power_supply_sysev_init(Sys_Class_Power_Supply_Uevent *sysev)
 {
    char buf[4096];
+   const char *dir = sys_power_dir;
 
    sysev->basis = 0;
    sysev->have_current_avg = 0;
    sysev->have_current_now = 0;
 
-   snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/present", sysev->name);
+   snprintf(buf, sizeof(buf), "%s/%s/present", dir, sysev->name);
    sysev->present = int_file_get(buf);
    if (!sysev->present) return;
 
-   snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/current_avg", sysev->name);
+   snprintf(buf, sizeof(buf), "%s/%s/current_avg", dir, sysev->name);
    if (ecore_file_exists(buf)) sysev->have_current_avg = 1;
-   snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/current_now", sysev->name);
+   snprintf(buf, sizeof(buf), "%s/%s/current_now", dir, sysev->name);
    if (ecore_file_exists(buf)) sysev->have_current_now = 1;
 
-   snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/voltage_max", sysev->name);
+   snprintf(buf, sizeof(buf), "%s/%s/voltage_max", dir, sysev->name);
    if (ecore_file_exists(buf)) sysev->basis = BASIS_VOLTAGE;
-   snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/voltage_max_design", sysev->name);
+   snprintf(buf, sizeof(buf), "%s/%s/voltage_max_design", dir, sysev->name);
    if (ecore_file_exists(buf)) sysev->basis = BASIS_VOLTAGE;
 
-   snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/energy_full", sysev->name);
+   snprintf(buf, sizeof(buf), "%s/%s/energy_full", dir, sysev->name);
    if (ecore_file_exists(buf)) sysev->basis = BASIS_ENERGY;
-   snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/energy_full_design", sysev->name);
+   snprintf(buf, sizeof(buf), "%s/%s/energy_full_design", dir, sysev->name);
    if (ecore_file_exists(buf)) sysev->basis = BASIS_ENERGY;
 
-   snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/charge_full", sysev->name);
+   snprintf(buf, sizeof(buf), "%s/%s/charge_full", dir, sysev->name);
    if (ecore_file_exists(buf)) sysev->basis = BASIS_CHARGE;
-   snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/charge_full_design", sysev->name);
+   snprintf(buf, sizeof(buf), "%s/%s/charge_full_design", dir, sysev->name);
    if (ecore_file_exists(buf)) sysev->basis = BASIS_CHARGE;
 
    if (sysev->basis == BASIS_CHARGE)
      {
-        snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/charge_full", sysev->name);
+        snprintf(buf, sizeof(buf), "%s/%s/charge_full", dir, sysev->name);
         sysev->basis_full = int_file_get(buf);
-        snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/charge_empty", sysev->name);
+        snprintf(buf, sizeof(buf), "%s/%s/charge_empty", dir, sysev->name);
         sysev->basis_empty = int_file_get(buf);
         if (sysev->basis_full < 0)
           {
-             snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/charge_full_design", sysev->name);
+             snprintf(buf, sizeof(buf), "%s/%s/charge_full_design", dir, sysev->name);
              sysev->basis_full = int_file_get(buf);
           }
         if (sysev->basis_empty < 0)
           {
-             snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/charge_empty_design", sysev->name);
+             snprintf(buf, sizeof(buf), "%s/%s/charge_empty_design", dir, sysev->name);
              sysev->basis_empty = int_file_get(buf);
           }
      }
    else if (sysev->basis == BASIS_ENERGY)
      {
-        snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/energy_full", sysev->name);
+        snprintf(buf, sizeof(buf), "%s/%s/energy_full", dir, sysev->name);
         sysev->basis_full = int_file_get(buf);
-        snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/energy_empty", sysev->name);
+        snprintf(buf, sizeof(buf), "%s/%s/energy_empty", dir, sysev->name);
         sysev->basis_empty = int_file_get(buf);
         if (sysev->basis_full < 0)
           {
-             snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/energy_full_design", sysev->name);
+             snprintf(buf, sizeof(buf), "%s/%s/energy_full_design", dir, sysev->name);
              sysev->basis_full = int_file_get(buf);
           }
         if (sysev->basis_empty < 0)
           {
-             snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/energy_empty_design", sysev->name);
+             snprintf(buf, sizeof(buf), "%s/%s/energy_empty_design", dir, sysev->name);
              sysev->basis_empty = int_file_get(buf);
           }
      }
    else if (sysev->basis == BASIS_VOLTAGE)
      {
-        snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/voltage_max", sysev->name);
+        snprintf(buf, sizeof(buf), "%s/%s/voltage_max", dir, sysev->name);
         sysev->basis_full = int_file_get(buf);
-        snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/voltage_min", sysev->name);
+        snprintf(buf, sizeof(buf), "%s/%s/voltage_min", dir, sysev->name);
         sysev->basis_empty = int_file_get(buf);
         if (sysev->basis_full < 0)
           {
-             snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/voltage_max_design", sysev->name);
+             snprintf(buf, sizeof(buf), "%s/%s/voltage_max_design", dir, sysev->name);
              sysev->basis_full = int_file_get(buf);
           }
         if (sysev->basis_empty < 0)
           {
-             snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/voltage_min_design", sysev->name);
+             snprintf(buf, sizeof(buf), "%s/%s/voltage_min_design", dir, sysev->name);
              sysev->basis_empty = int_file_get(buf);
           }
      }
@@ -621,8 +626,9 @@ linux_sys_class_power_supply_is_battery(char *name)
    int fd;
    int ret = 0;
    char buf[256];
+   const char *dir = sys_power_dir;
 
-   snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/type", name);
+   snprintf(buf, sizeof(buf), "%s/%s/type", dir, name);
    fd = open(buf, O_RDONLY);
    if (fd < 0)
      {
@@ -659,6 +665,7 @@ linux_sys_class_power_supply_init(void)
 //	char buf[4096];
 
         bats = ecore_file_ls("/sys/class/power_supply/");
+//        bats = ecore_file_ls("./TST");
         if (bats)
           {
              events = NULL;
@@ -696,6 +703,7 @@ linux_sys_class_power_supply_check(void)
    Eina_List *l;
    char *name;
    char buf[4096];
+   const char *dir = sys_power_dir;
 
    battery_full = -1;
    time_left = -1;
@@ -734,22 +742,22 @@ linux_sys_class_power_supply_check(void)
              present = sysev->present;
              if (!present) continue;
 
-             snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/capacity", name);
+             snprintf(buf, sizeof(buf), "%s/%s/capacity", dir, name);
              capacity = int_file_get(buf);
              if (sysev->have_current_avg)
                {
-                  snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/current_avg", name);
+                  snprintf(buf, sizeof(buf), "%s/%s/current_avg", dir, name);
                   current = int_file_get(buf);
                }
              else if (sysev->have_current_now)
                {
-                  snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/current_now", name);
+                  snprintf(buf, sizeof(buf), "%s/%s/current_now", dir, name);
                   current = int_file_get(buf);
                }
 
              /* FIXME: do we get a uevent on going from charging to full?
               * if so, move this to init */
-             snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/status", name);
+             snprintf(buf, sizeof(buf), "%s/%s/status", dir, name);
              tmp = str_file_get(buf);
              if (tmp)
                {
@@ -776,12 +784,12 @@ linux_sys_class_power_supply_check(void)
                   nofull++;
                   if (charging)
                     {
-                       snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/time_to_full_now", name);
+                       snprintf(buf, sizeof(buf), "%s/%s/time_to_full_now", dir, name);
                        time_to_full = int_file_get(buf);
                     }
                   else
                     {
-                       snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/time_to_empty_now", name);
+                       snprintf(buf, sizeof(buf), "%s/%s/time_to_empty_now", dir, name);
                        time_to_empty = int_file_get(buf);
                     }
                }
@@ -789,14 +797,23 @@ linux_sys_class_power_supply_check(void)
              /* now get charge, energy and voltage. take the one that provides
               * the best info (charge first, then energy, then voltage */
              if (sysev->basis == BASIS_CHARGE)
-               snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/charge_now", name);
+               snprintf(buf, sizeof(buf), "%s/%s/charge_now", dir, name);
              else if (sysev->basis == BASIS_ENERGY)
-               snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/energy_now", name);
+               snprintf(buf, sizeof(buf), "%s/%s/energy_now", dir, name);
              else if (sysev->basis == BASIS_VOLTAGE)
-               snprintf(buf, sizeof(buf), "/sys/class/power_supply/%s/voltage_now", name);
+                snprintf(buf, sizeof(buf), "%s/%s/voltage_now", dir, name);
              pwr_now = int_file_get(buf);
              pwr_empty = sysev->basis_empty;
              pwr_full = sysev->basis_full;
+             if ((sysev->basis == BASIS_VOLTAGE) &&
+                 (capacity >= 0))
+               {
+                  /* if we use voltage as basis.. we're not very accurate
+                   * so we should prefer capacity readings */
+                  pwr_empty = -1;
+                  pwr_full = -1;
+                  pwr_now = -1;
+               }
 
              if (pwr_empty < 0) pwr_empty = 0;
 
@@ -855,10 +872,9 @@ linux_sys_class_power_supply_check(void)
                {
                   if (sysev->present) have_battery = 1;
                   if (charging) have_power = 1;
-                  else have_power = 0;
                   total_pwr_max = 100;
-                  total_pwr_now = current;
-                  nofull = 0;
+                  total_pwr_now = capacity;
+                  if (total_pwr_now < 100) nofull = 1;
                }
           }
         if (total_pwr_max > 0)
@@ -1440,8 +1456,7 @@ init(void)
 #elif defined(HAVE_CFBASE_H) /* OS X */
    darwin_init();
 #else
-   if ((ecore_file_is_dir("/sys/class/power_supply")) &&
-       (dir_has_contents("/sys/class/power_supply")))
+   if ((ecore_file_is_dir(sys_power_dir)) && (dir_has_contents(sys_power_dir)))
      {
         mode = CHECK_SYS_CLASS_POWER_SUPPLY;
         linux_sys_class_power_supply_init();
