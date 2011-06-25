@@ -6419,8 +6419,8 @@ _e_border_eval0(E_Border *bd)
              
              x = bd->x;
              y = bd->y;
-             w = bd->client.w;
-             h = bd->client.h;
+             w = bd->w;
+             h = bd->h;
              new_w = w;
              new_h = h;
              e_border_resize_limit(bd, &new_w, &new_h);
