@@ -78,38 +78,31 @@ e_int_config_mime_edit_done(void *data)
 static void
 _fill_data(E_Config_Dialog_Data *cfdata) 
 {
-   const char *homedir;
+   const char *s, *homedir;
+   Eina_List *l;
    char buf[4096];
 
    if (!cfdata) return;
    homedir = e_user_homedir_get();
 
    snprintf(buf, sizeof(buf), "/usr/local/etc/mime.types");
-   if (ecore_file_exists(buf))
-     _load_mimes(cfdata, buf);
-
+   if (ecore_file_exists(buf)) _load_mimes(cfdata, buf);
    snprintf(buf, sizeof(buf), "/etc/mime.types");
-   if (ecore_file_exists(buf))
-     _load_mimes(cfdata, buf);
+   if (ecore_file_exists(buf)) _load_mimes(cfdata, buf);
 
-   snprintf(buf, sizeof(buf), "/usr/local/share/mime/globs");
-   if (ecore_file_exists(buf))
-     _load_globs(cfdata, buf);
-
-   snprintf(buf, sizeof(buf), "/usr/share/mime/globs");
-   if (ecore_file_exists(buf))
-     _load_globs(cfdata, buf);
-
+   EINA_LIST_FOREACH(efreet_config_dirs_get(), l, s)
+     {
+        snprintf(buf, sizeof(buf), "%s/mime/globs", s);
+        if (ecore_file_exists(buf)) _load_globs(cfdata, buf);
+     }
+   
    snprintf(buf, sizeof(buf), "%s/.mime.types", homedir);
-   if (ecore_file_exists(buf))
-     _load_mimes(cfdata, buf);
-
-   snprintf(buf, sizeof(buf), "%s/.local/share/mime/globs", homedir);
-   if (ecore_file_exists(buf))
-     _load_globs(cfdata, buf);
-
+   if (ecore_file_exists(buf)) _load_mimes(cfdata, buf);
+   
+   snprintf(buf, sizeof(buf), "%s/mime/globs", efreet_data_home_get());
+   if (ecore_file_exists(buf)) _load_globs(cfdata, buf);
+   
    cfdata->mimes = eina_list_sort(cfdata->mimes, 0, _sort_mimes);
-
    _fill_types(cfdata);
 }
 
