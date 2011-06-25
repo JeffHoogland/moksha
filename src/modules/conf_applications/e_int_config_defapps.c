@@ -17,7 +17,7 @@ struct _Config_Mime
 struct _E_Config_Dialog_Data
 {
    struct {
-      Evas_Object *deflist, *mimelist;
+      Evas_Object *deflist, *mimelist, *entry;
    } obj;
    Efreet_Ini *ini;
    Eina_List *mimes;
@@ -133,10 +133,7 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
         if (!strcmp(evr->var, "BROWSER"))
           {
              if ((evr->val) && (!evr->unset))
-               {
-                  cfdata->browser_custom = strdup(evr->val);
-                  printf("@@@custom cmd: %s\n", evr->val);
-               }
+                cfdata->browser_custom = strdup(evr->val);
              break;
           }
      }
@@ -258,6 +255,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    e_widget_table_object_append(ot, ob, 0, 0, 1, 1, 1, 1, 0, 0);
    
    ob = e_widget_entry_add(evas, &(cfdata->browser_custom), NULL, NULL, NULL);
+   cfdata->obj.entry = ob;
    e_widget_table_object_append(ot, ob, 1, 0, 1, 1, 1, 1, 1, 0);
    
    of = e_widget_framelist_add(evas, _("Default Applications"), 0);
@@ -309,7 +307,6 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    il = e_widget_ilist_add(evas, 24, 24, &(cfdata->selapp));
    cfdata->obj.mimelist = il;
    e_widget_ilist_selector_set(il, 1);
-   // FIXME: fill in apps
    e_widget_ilist_go(il);
    e_widget_framelist_object_append_full(of, il, 1, 1, 1, 1, 0.5, 0.5, 120, 200, 9999, 9999);
    e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
@@ -606,6 +603,46 @@ _sel_desk_cb(void *data)
         if (*(cfdata->seldest)) eina_stringshare_del(*(cfdata->seldest));
         *(cfdata->seldest) = NULL;
         if (s) *(cfdata->seldest) = eina_stringshare_add(s);
+        if ((*(cfdata->seldest)) &&
+            (cfdata->seldest == &(cfdata->browser_desktop)))
+          {
+             Eina_List *l;
+             Efreet_Desktop *desk;
+             
+             EINA_LIST_FOREACH(cfdata->desks, l, desk)
+               {
+                  if ((!strcmp(desk->orig_path, *(cfdata->seldest))) ||
+                      (!strcmp(ecore_file_file_get(desk->orig_path), *(cfdata->seldest))))
+                    {
+                       if (desk->exec)
+                         {
+                            char *p;
+                            
+                            free(cfdata->browser_custom);
+                            cfdata->browser_custom = strdup(desk->exec);
+                            for (p = cfdata->browser_custom; *p; p++)
+                              {
+                                 if (p > cfdata->browser_custom)
+                                   {
+                                      if ((isspace(*p)) &&
+                                          (p[-1] != '\\'))
+                                        {
+                                           *p = 0;
+                                           break;
+                                        }
+                                   }
+                              }
+                            p = strdup(cfdata->browser_custom);
+                            if (p)
+                              {
+                                 e_widget_entry_text_set(cfdata->obj.entry, p);
+                                 free(p);
+                              }
+                         }
+                       break;
+                    }
+               }
+          }
      }
 }
 
