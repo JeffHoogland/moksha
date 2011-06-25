@@ -21,21 +21,26 @@ e_modapi_init(E_Module *m)
                                  _("New Application"), NULL, 
                                  "preferences-applications-add", 
                                  e_int_config_apps_add);
-   e_configure_registry_item_add("applications/favorite_applications", 10, 
+   e_configure_registry_item_add("applications/favorite_applications", 20, 
                                  _("Favorite Applications"), NULL, 
-                                 "user-bookmarks", e_int_config_apps_favs);
-   e_configure_registry_item_add("applications/ibar_applications", 20, 
+                                 "user-bookmarks",
+                                 e_int_config_apps_favs);
+   e_configure_registry_item_add("applications/ibar_applications", 30, 
                                  _("IBar Applications"), NULL, 
                                  "preferences-applications-ibar", 
                                  e_int_config_apps_ibar);
-   e_configure_registry_item_add("applications/restart_applications", 30, 
+   e_configure_registry_item_add("applications/restart_applications", 40, 
                                  _("Restart Applications"), NULL, 
                                  "preferences-applications-restart", 
                                  e_int_config_apps_restart);
-   e_configure_registry_item_add("applications/startup_applications", 40, 
+   e_configure_registry_item_add("applications/startup_applications", 50, 
                                  _("Startup Applications"), NULL, 
                                  "preferences-applications-startup", 
                                  e_int_config_apps_startup);
+   e_configure_registry_item_add("applications/default_applications", 60,
+                                 _("Default Applications"), NULL, 
+                                 "preferences-applications-default", 
+                                 e_int_config_defapps);
    e_configure_registry_category_add("internal", -1, _("Internal"), NULL, 
                                      "enlightenment/internal");
    e_configure_registry_item_add("internal/ibar_other", -1, _("IBar Other"), 
@@ -61,6 +66,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    e_configure_registry_item_del("applications/ibar_applications");
    e_configure_registry_item_del("applications/restart_applications");
    e_configure_registry_item_del("applications/startup_applications");
+   e_configure_registry_item_del("applications/default_applications");
    e_configure_registry_category_del("applications");
    conf_module = NULL;
    return 1;
