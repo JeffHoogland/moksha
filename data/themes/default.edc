@@ -31296,6 +31296,8 @@ collections {
    ICON("preferences-applications-ibar","icon_applications_ibar.png",64)       // *** // "enlightenment/ibar_applications"
    ICON("preferences-applications-restart","icon_applications_restart.png",64) // *** // "enlightenment/restart_applications"
    ICON("preferences-applications-startup","icon_applications_startup.png",64) // *** // "enlightenment/startup_applications"
+   ICON("preferences-applications-default","icon_advanced.png",64)
+   ICON("preferences-preferences","icon_config.png",64)                             // "enlightenment/configuration" "enlightenment/settings"
    ICON("preferences-plugin","icon_modules.png",64)                                   // "enlightenment/modules"
    ICON("preferences-system","icon_configuration.png",64)                             // "enlightenment/configuration" "enlightenment/settings"
    ICON("preferences-system-windows","icon_windows.png",64)                           // "enlightenment/windows" "enlightenment/showhide"
