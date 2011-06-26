@@ -430,7 +430,9 @@ e_win_border_icon_key_set(E_Win *win, const char *key)
 static void
 _e_win_free(E_Win *win)
 {
-   e_object_del(E_OBJECT(win->pointer));
+   if (win->pointer)
+     e_object_del(E_OBJECT(win->pointer));
+
    e_canvas_del(win->ecore_evas);
    ecore_evas_free(win->ecore_evas);
    if (win->border)
