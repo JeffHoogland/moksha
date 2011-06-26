@@ -295,7 +295,7 @@ _e_configure_efreet_desktop_update(void)
    /* get desktops */
    settings_desktops = efreet_util_desktop_category_list("Settings");
    system_desktops = efreet_util_desktop_category_list("System");
-   if ((!settings_desktops) || (!system_desktops))
+   if ((!settings_desktops) && (!system_desktops))
      {
 	EINA_LIST_FREE(settings_desktops, desktop)
 	   efreet_desktop_free(desktop);
@@ -315,8 +315,9 @@ _e_configure_efreet_desktop_update(void)
 	const char *cfg_icon;
 	char *label;
 	int cfg_pri;
-
-	if (!eina_list_data_find(system_desktops, desktop)) continue;
+        int dopref;
+        
+        dopref = 0;
 	cfg_cat = NULL;
 	cfg_icon = NULL;
 	cfg_cat_cfg = NULL;
@@ -324,6 +325,11 @@ _e_configure_efreet_desktop_update(void)
 	cfg_cat_name = NULL;
 	cfg_cat_icon = NULL;
 	label = NULL;
+	if (!eina_list_data_find(system_desktops, desktop))
+          {
+             /* settings desktop but not in system -> put in preferened */
+             dopref = 1;
+          }
 	if (desktop->x)
 	  {
 	     cfg_cat_cfg = eina_hash_find(desktop->x, "X-Enlightenment-Config-Category");
@@ -346,34 +352,45 @@ _e_configure_efreet_desktop_update(void)
 	if (desktop->name) label = desktop->name;
 	else if (desktop->generic_name) label = desktop->generic_name;
 	else label = "???";
-	if (!cfg_cat_cfg)
-	  {
-	     const char *ic;
-
-	     snprintf(buf, sizeof(buf), "system/%s", label);
-	     cfg_cat_cfg = buf;
-	     ic = cfg_cat_icon;
-	     if (!ic) ic = "system";
-	     e_configure_registry_category_add("system", 1000, _("System"),
-					       NULL, ic);
-	  }
-	else
-	  {
-	     cfg_cat = ecore_file_dir_get(cfg_cat_cfg);
-	     if (!cfg_cat) cfg_cat = strdup(cfg_cat_cfg);
-	     if (cfg_cat)
-	       {
-		  if (!cfg_cat_name) cfg_cat_name = cfg_cat;
-		  e_configure_registry_category_add(cfg_cat,
-						    1000, cfg_cat_name,
-						    NULL, cfg_cat_icon);
-		  free(cfg_cat);
-		  cfg_cat = NULL;
-	       }
-	  }
-	_e_configure_registry_item_full_add(cfg_cat_cfg, cfg_pri, label,
-					    NULL, cfg_icon,
-					    NULL, NULL, desktop, NULL);
+        if (!cfg_cat_cfg)
+          {
+             const char *ic = cfg_cat_icon;
+             
+             if (dopref)
+               {
+                  snprintf(buf, sizeof(buf), "preferences/%s", label);
+                  if (!ic) ic = "preferences-preferences";
+                  e_configure_registry_category_add("preferences", 900,
+                                                    _("Preferences"),
+                                                    NULL, ic);
+               }
+             else
+               {
+                  snprintf(buf, sizeof(buf), "system/%s", label);
+                  if (!ic) ic = "preferences-system";
+                  e_configure_registry_category_add("system", 1000, 
+                                                    _("System"),
+                                                    NULL, ic);
+               }
+             cfg_cat_cfg = buf;
+          }
+        else
+          {
+             cfg_cat = ecore_file_dir_get(cfg_cat_cfg);
+             if (!cfg_cat) cfg_cat = strdup(cfg_cat_cfg);
+             if (cfg_cat)
+               {
+                  if (!cfg_cat_name) cfg_cat_name = cfg_cat;
+                  e_configure_registry_category_add(cfg_cat,
+                                                    1000, cfg_cat_name,
+                                                    NULL, cfg_cat_icon);
+                  free(cfg_cat);
+                  cfg_cat = NULL;
+               }
+          }
+        _e_configure_registry_item_full_add(cfg_cat_cfg, cfg_pri, label,
+                                            NULL, cfg_icon,
+                                            NULL, NULL, desktop, NULL);
      }
    EINA_LIST_FREE(settings_desktops, desktop)
       efreet_desktop_free(desktop);
