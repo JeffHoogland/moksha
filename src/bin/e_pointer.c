@@ -132,8 +132,9 @@ e_pointers_size_set(int size)
 EAPI void
 e_pointer_hide(E_Pointer *p)
 {
-    if (p->win) ecore_x_window_cursor_set(p->win, 0);
-    if (p->evas) _e_pointer_canvas_del(p);
+   if (!p) return;
+   if (p->win) ecore_x_window_cursor_set(p->win, 0);
+   if (p->evas) _e_pointer_canvas_del(p);
 }
 
 EAPI void
@@ -141,6 +142,7 @@ e_pointer_type_push(E_Pointer *p, void *obj, const char *type)
 {
    E_Pointer_Stack *stack;
 
+   if (!p) return;
    p->e_cursor = e_config->use_e_cursor;
 
    _e_pointer_type_set(p, type);
@@ -162,6 +164,7 @@ e_pointer_type_pop(E_Pointer *p, void *obj, const char *type)
    Eina_List *l;
    E_Pointer_Stack *stack;
 
+   if (!p) return;
    EINA_LIST_FOREACH(p->stack, l, stack)
      {
 	if ((stack->obj == obj) && ((!type) || (!strcmp(stack->type, type))))
@@ -229,6 +232,7 @@ _e_pointer_canvas_add(E_Pointer *p)
    Evas_Object *o;
    int rmethod;
 
+   if (!p) return;
    p->w = e_config->cursor_size;
    p->h = e_config->cursor_size;
 
@@ -283,6 +287,7 @@ _e_pointer_canvas_add(E_Pointer *p)
 static void
 _e_pointer_canvas_del(E_Pointer *p)
 {
+   if (!p) return;
    if (p->pointer_object) evas_object_del(p->pointer_object);
    if (p->hot_object) evas_object_del(p->hot_object);
    if (p->evas) evas_free(p->evas);
@@ -301,7 +306,7 @@ _e_pointer_cb_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, 
 
    if (!e_config->show_cursor) return;
 
-   p = data;
+   if (!(p = data)) return;
    if (!p->e_cursor) return;
    edje_object_part_geometry_get(p->pointer_object, "e.swallow.hotspot",
 				 &x, &y, NULL, NULL);
@@ -316,6 +321,7 @@ _e_pointer_cb_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, 
 static void
 _e_pointer_free(E_Pointer *p)
 {
+   if (!p) return;
    _e_pointers = eina_list_remove(_e_pointers, p);
 
    _e_pointer_canvas_del(p);
@@ -342,6 +348,8 @@ _e_pointer_stack_free(E_Pointer_Stack *elem)
 static void 
 _e_pointer_type_set(E_Pointer *p, const char *type)
 {
+   if (!p) return;
+
    /* Check if this pointer is already set */
    if ((p->type) && (!strcmp(p->type, type))) return;
 
@@ -429,6 +437,8 @@ _e_pointer_type_set(E_Pointer *p, const char *type)
 static void
 _e_pointer_active_handle(E_Pointer *p)
 {
+   if (!p) return;
+
    /* we got some mouse event - if there was an idle timer emit an active
     * signal as we WERE idle, NOW we are active */
    if (p->idle_timer)
@@ -535,7 +545,7 @@ _e_pointer_cb_idle_timer_pre(void *data)
    E_Pointer *p;
    int x, y;
 
-   p = data;
+   if (!(p = data)) return;
    ecore_x_pointer_xy_get(p->win, &x, &y);
    p->x = x;
    p->y = y;
@@ -548,7 +558,7 @@ _e_pointer_cb_idle_timer_wait(void *data)
 {
    E_Pointer *p;
 
-   p = data;
+   if (!(p = data)) return;
    if ((e_powersave_mode_get() >= E_POWERSAVE_MODE_MEDIUM) ||
        (!e_config->idle_cursor))
      {
@@ -570,7 +580,7 @@ _e_pointer_cb_idle_poller(void *data)
    E_Pointer *p;
    int x, y;
 
-   p = data;
+   if (!(p = data)) return;
    if ((e_powersave_mode_get() >= E_POWERSAVE_MODE_MEDIUM) ||
        (!e_config->idle_cursor))
      {
