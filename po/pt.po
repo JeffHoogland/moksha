@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e17\n"
 "Report-Msgid-Bugs-To: http://trac.enlightenment.org/e/\n"
-"POT-Creation-Date: 2011-06-18 08:01-0700\n"
-"PO-Revision-Date: 2011-06-17 14:33-0000\n"
+"POT-Creation-Date: 2011-06-25 20:01-0700\n"
+"PO-Revision-Date: 2011-06-27 18:46-0000\n"
 "Last-Translator: Sérgio Marques <smarquespt@gmail.com>\n"
 "Language-Team: Portuguese <>\n"
 "Language: pt\n"
@@ -738,7 +738,7 @@ msgstr "Alternar o modo \"off-line\""
 #: ../src/bin/e_actions.c:3098
 #: ../src/bin/e_actions.c:3102
 #: ../src/bin/e_actions.c:3106
-#: ../src/bin/e_configure.c:357
+#: ../src/bin/e_configure.c:372
 #: ../src/bin/e_int_config_modules.c:53
 #: ../src/modules/conf_applications/e_int_config_apps.c:244
 #: ../src/modules/conf_display/e_int_config_desklock_fsel.c:87
@@ -1000,6 +1000,11 @@ msgstr "Extensões"
 msgid "Modules"
 msgstr "Módulos"
 
+#: ../src/bin/e_configure.c:364
+#| msgid "Icon Preference"
+msgid "Preferences"
+msgstr "Preferências"
+
 #: ../src/bin/e_container.c:134
 #, c-format
 msgid "Container %d"
@@ -1101,7 +1106,7 @@ msgid "Window Class"
 msgstr "Classe da janela"
 
 #: ../src/bin/e_eap_editor.c:754
-#: ../src/modules/fileman/e_int_config_mime.c:176
+#: ../src/modules/fileman/e_int_config_mime.c:169
 msgid "Categories"
 msgstr "Categorias"
 
@@ -2992,12 +2997,10 @@ msgid "Setup ACPI"
 msgstr "Configurar ACPI"
 
 #: ../src/bin/e_main.c:962
-#| msgid "Setup Bindings"
 msgid "Setup Backlight"
 msgstr "Configurar iluminação"
 
 #: ../src/bin/e_main.c:967
-#| msgid "Enlightenment cannot configure the DPMS settings."
 msgid "Enlightenment cannot configure the backlight."
 msgstr "O Enlightenment não consegue configurar a iluminação."
 
@@ -3595,7 +3598,7 @@ msgid "Auto Detect"
 msgstr "Deteção automática"
 
 #: ../src/modules/battery/e_mod_config.c:254
-#: ../src/modules/conf_applications/e_mod_main.c:39
+#: ../src/modules/conf_applications/e_mod_main.c:44
 #: ../src/modules/conf_display/e_mod_main.c:40
 #: ../src/modules/conf_theme/e_mod_main.c:23
 #: ../src/modules/temperature/e_mod_config.c:246
@@ -3648,14 +3651,13 @@ msgid "Battery Meter"
 msgstr "Medidor de bateria"
 
 #: ../src/modules/clock/e_mod_main.c:521
-#: ../src/modules/clock/e_mod_main.c:632
-#: ../src/modules/clock/e_mod_main.c:645
+#: ../src/modules/clock/e_mod_main.c:626
+#: ../src/modules/clock/e_mod_main.c:639
 msgid "Clock"
 msgstr "Relógio"
 
-#: ../src/modules/clock/e_mod_main.c:632
-#: ../src/modules/clock/e_mod_main.c:645
-#| msgid "Show Toolbar"
+#: ../src/modules/clock/e_mod_main.c:626
+#: ../src/modules/clock/e_mod_main.c:639
 msgid "Show calendar"
 msgstr "Mostrar calendário"
 
@@ -3696,17 +3698,17 @@ msgstr "A configuração do painel de configurações foi atualizada"
 
 #: ../src/modules/conf_applications/e_int_config_apps.c:84
 #: ../src/modules/conf_applications/e_int_config_apps.c:98
-#: ../src/modules/conf_applications/e_mod_main.c:28
+#: ../src/modules/conf_applications/e_mod_main.c:29
 msgid "IBar Applications"
 msgstr "Aplicações IBar"
 
 #: ../src/modules/conf_applications/e_int_config_apps.c:113
-#: ../src/modules/conf_applications/e_mod_main.c:36
+#: ../src/modules/conf_applications/e_mod_main.c:37
 msgid "Startup Applications"
 msgstr "Aplicações de arranque"
 
 #: ../src/modules/conf_applications/e_int_config_apps.c:129
-#: ../src/modules/conf_applications/e_mod_main.c:32
+#: ../src/modules/conf_applications/e_mod_main.c:33
 msgid "Restart Applications"
 msgstr "Reiniciar aplicações"
 
@@ -3723,6 +3725,11 @@ msgid "New Application"
 msgstr "Nova aplicação"
 
 #: ../src/modules/conf_applications/e_mod_main.c:41
+#| msgid "Select Applications"
+msgid "Default Applications"
+msgstr "Aplicações predefinidas"
+
+#: ../src/modules/conf_applications/e_mod_main.c:46
 msgid "IBar Other"
 msgstr "Outras IBar"
 
@@ -3996,7 +4003,7 @@ msgid "Desktop Wallpaper"
 msgstr "Imagem da área de trabalho"
 
 #: ../src/modules/conf_display/e_int_config_desk.c:166
-#: ../src/modules/fileman/e_int_config_mime.c:190
+#: ../src/modules/fileman/e_int_config_mime.c:183
 msgid "Set"
 msgstr "Definir"
 
@@ -4197,7 +4204,6 @@ msgstr "Normal"
 #: ../src/modules/conf_display/e_int_config_dpms.c:294
 #: ../src/modules/conf_display/e_int_config_dpms.c:300
 #, c-format
-#| msgid "%3.0f%%"
 msgid "%3.0f"
 msgstr "%3.0f"
 
@@ -5817,17 +5823,14 @@ msgid "Decelerate"
 msgstr "Desacelerar"
 
 #: ../src/modules/conf_window_manipulation/e_int_config_window_display.c:216
-#| msgid "Mouse Acceleration"
 msgid "Pronounced Accelerate"
 msgstr "Acelerar"
 
 #: ../src/modules/conf_window_manipulation/e_int_config_window_display.c:221
-#| msgid "Decelerate"
 msgid "Pronounced Decelerate"
 msgstr "Desacelerar"
 
 #: ../src/modules/conf_window_manipulation/e_int_config_window_display.c:226
-#| msgid "Accelerate, then decelerate"
 msgid "Pronounced Acceleratem then decelerate"
 msgstr "Acelerar e depois desacelerar"
 
@@ -6680,7 +6683,7 @@ msgstr "Enviar para a área de trabalho"
 msgid "File Icons"
 msgstr "Ícones de ficheiros"
 
-#: ../src/modules/fileman/e_int_config_mime.c:183
+#: ../src/modules/fileman/e_int_config_mime.c:176
 msgid "File Types"
 msgstr "Tipos de ficheiro"
 
