@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-06-19 18:49+0200\n"
-"PO-Revision-Date: 2011-06-19 18:55+0200\n"
+"POT-Creation-Date: 2011-06-27 12:46+0200\n"
+"PO-Revision-Date: 2011-06-27 12:48+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -657,7 +657,7 @@ msgstr "Commuta modalità disconnessa"
 
 #: src/bin/e_actions.c:3082 src/bin/e_actions.c:3086 src/bin/e_actions.c:3090
 #: src/bin/e_actions.c:3094 src/bin/e_actions.c:3098 src/bin/e_actions.c:3102
-#: src/bin/e_actions.c:3106 src/bin/e_configure.c:357
+#: src/bin/e_actions.c:3106 src/bin/e_configure.c:372
 #: src/bin/e_int_config_modules.c:53
 #: src/modules/conf_applications/e_int_config_apps.c:244
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:87
@@ -938,6 +938,10 @@ msgstr "Estensioni"
 msgid "Modules"
 msgstr "Moduli"
 
+#: src/bin/e_configure.c:364
+msgid "Preferences"
+msgstr "Preferenze"
+
 #: src/bin/e_container.c:134
 #, c-format
 msgid "Container %d"
@@ -1061,7 +1065,7 @@ msgstr "Descrizione"
 msgid "Window Class"
 msgstr "Classe"
 
-#: src/bin/e_eap_editor.c:754 src/modules/fileman/e_int_config_mime.c:176
+#: src/bin/e_eap_editor.c:754 src/modules/fileman/e_int_config_mime.c:169
 msgid "Categories"
 msgstr "Categorie"
 
@@ -3627,7 +3631,7 @@ msgid "Auto Detect"
 msgstr "Rileva automaticamente"
 
 #: src/modules/battery/e_mod_config.c:254
-#: src/modules/conf_applications/e_mod_main.c:39
+#: src/modules/conf_applications/e_mod_main.c:44
 #: src/modules/conf_display/e_mod_main.c:40
 #: src/modules/conf_theme/e_mod_main.c:23
 #: src/modules/temperature/e_mod_config.c:246
@@ -3750,17 +3754,17 @@ msgstr "Impostazioni del pannello di configurazioni aggiornate"
 
 #: src/modules/conf_applications/e_int_config_apps.c:84
 #: src/modules/conf_applications/e_int_config_apps.c:98
-#: src/modules/conf_applications/e_mod_main.c:28
+#: src/modules/conf_applications/e_mod_main.c:29
 msgid "IBar Applications"
 msgstr "Applicazioni di IBar"
 
 #: src/modules/conf_applications/e_int_config_apps.c:113
-#: src/modules/conf_applications/e_mod_main.c:36
+#: src/modules/conf_applications/e_mod_main.c:37
 msgid "Startup Applications"
 msgstr "Applicazioni per l'avvio"
 
 #: src/modules/conf_applications/e_int_config_apps.c:129
-#: src/modules/conf_applications/e_mod_main.c:32
+#: src/modules/conf_applications/e_mod_main.c:33
 msgid "Restart Applications"
 msgstr "Applicazioni per il riavvio"
 
@@ -3777,6 +3781,10 @@ msgid "New Application"
 msgstr "Nuova applicazione"
 
 #: src/modules/conf_applications/e_mod_main.c:41
+msgid "Default Applications"
+msgstr "Applicazioni predefinite"
+
+#: src/modules/conf_applications/e_mod_main.c:46
 msgid "IBar Other"
 msgstr "IBar, altri"
 
@@ -4090,7 +4098,7 @@ msgid "Desktop Wallpaper"
 msgstr "Sfondo desktop"
 
 #: src/modules/conf_display/e_int_config_desk.c:166
-#: src/modules/fileman/e_int_config_mime.c:190
+#: src/modules/fileman/e_int_config_mime.c:183
 msgid "Set"
 msgstr "Imposta"
 
@@ -4294,7 +4302,7 @@ msgstr "%3.0f"
 
 #: src/modules/conf_display/e_int_config_dpms.c:298
 msgid "Dim Backlight"
-msgstr "Regola retroilluminazione"
+msgstr "Retroilluminazione bassa"
 
 #: src/modules/conf_display/e_int_config_dpms.c:304
 msgid "Fade Time"
@@ -6824,7 +6832,7 @@ msgstr "Invia al desktop"
 msgid "File Icons"
 msgstr "Icone dei file"
 
-#: src/modules/fileman/e_int_config_mime.c:183
+#: src/modules/fileman/e_int_config_mime.c:176
 msgid "File Types"
 msgstr "Tipi di file"
 

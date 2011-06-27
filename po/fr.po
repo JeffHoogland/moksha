@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-06-19 19:34+0400\n"
-"PO-Revision-Date: 2011-06-19 20:00+0400\n"
+"POT-Creation-Date: 2011-06-27 08:40+0200\n"
+"PO-Revision-Date: 2011-06-27 08:59+0100\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment French Team <pourunmondesansgourou@gmail.com>\n"
 "Language: fr\n"
@@ -738,7 +738,7 @@ msgstr "Activer/Désactiver le mode hors ligne"
 #: src/bin/e_actions.c:3098
 #: src/bin/e_actions.c:3102
 #: src/bin/e_actions.c:3106
-#: src/bin/e_configure.c:357
+#: src/bin/e_configure.c:372
 #: src/bin/e_int_config_modules.c:53
 #: src/modules/conf_applications/e_int_config_apps.c:244
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:87
@@ -997,6 +997,10 @@ msgstr "Extensions"
 msgid "Modules"
 msgstr "Modules"
 
+#: src/bin/e_configure.c:364
+msgid "Preferences"
+msgstr "Préférences"
+
 #: src/bin/e_container.c:134
 #, c-format
 msgid "Container %d"
@@ -1096,7 +1100,7 @@ msgid "Window Class"
 msgstr "Classe de fenêtre"
 
 #: src/bin/e_eap_editor.c:754
-#: src/modules/fileman/e_int_config_mime.c:176
+#: src/modules/fileman/e_int_config_mime.c:169
 msgid "Categories"
 msgstr "Catégories"
 
@@ -3560,7 +3564,7 @@ msgid "Auto Detect"
 msgstr "Auto-détection"
 
 #: src/modules/battery/e_mod_config.c:254
-#: src/modules/conf_applications/e_mod_main.c:39
+#: src/modules/conf_applications/e_mod_main.c:44
 #: src/modules/conf_display/e_mod_main.c:40
 #: src/modules/conf_theme/e_mod_main.c:23
 #: src/modules/temperature/e_mod_config.c:246
@@ -3613,13 +3617,13 @@ msgid "Battery Meter"
 msgstr "Surveillance de la batterie"
 
 #: src/modules/clock/e_mod_main.c:521
-#: src/modules/clock/e_mod_main.c:632
-#: src/modules/clock/e_mod_main.c:645
+#: src/modules/clock/e_mod_main.c:626
+#: src/modules/clock/e_mod_main.c:639
 msgid "Clock"
 msgstr "Horloge"
 
-#: src/modules/clock/e_mod_main.c:632
-#: src/modules/clock/e_mod_main.c:645
+#: src/modules/clock/e_mod_main.c:626
+#: src/modules/clock/e_mod_main.c:639
 msgid "Show calendar"
 msgstr "Afficher le calendrier"
 
@@ -3660,17 +3664,17 @@ msgstr "Configuration de Panneau de contrôle actualisée"
 
 #: src/modules/conf_applications/e_int_config_apps.c:84
 #: src/modules/conf_applications/e_int_config_apps.c:98
-#: src/modules/conf_applications/e_mod_main.c:28
+#: src/modules/conf_applications/e_mod_main.c:29
 msgid "IBar Applications"
 msgstr "Applications dans l'IBar"
 
 #: src/modules/conf_applications/e_int_config_apps.c:113
-#: src/modules/conf_applications/e_mod_main.c:36
+#: src/modules/conf_applications/e_mod_main.c:37
 msgid "Startup Applications"
 msgstr "Applications au démarrage"
 
 #: src/modules/conf_applications/e_int_config_apps.c:129
-#: src/modules/conf_applications/e_mod_main.c:32
+#: src/modules/conf_applications/e_mod_main.c:33
 msgid "Restart Applications"
 msgstr "Applications à redémarrer"
 
@@ -3687,6 +3691,10 @@ msgid "New Application"
 msgstr "Nouvelle application"
 
 #: src/modules/conf_applications/e_mod_main.c:41
+msgid "Default Applications"
+msgstr "Applications par défaut"
+
+#: src/modules/conf_applications/e_mod_main.c:46
 msgid "IBar Other"
 msgstr "IBar (autres)"
 
@@ -3955,7 +3963,7 @@ msgid "Desktop Wallpaper"
 msgstr "Fond d'écran du bureau"
 
 #: src/modules/conf_display/e_int_config_desk.c:166
-#: src/modules/fileman/e_int_config_mime.c:190
+#: src/modules/fileman/e_int_config_mime.c:183
 msgid "Set"
 msgstr "Définir"
 
@@ -6596,7 +6604,7 @@ msgstr "Envoyer sur le bureau"
 msgid "File Icons"
 msgstr "Icones des fichiers"
 
-#: src/modules/fileman/e_int_config_mime.c:183
+#: src/modules/fileman/e_int_config_mime.c:176
 msgid "File Types"
 msgstr "Types de fichiers"
 
