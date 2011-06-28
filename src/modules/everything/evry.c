@@ -650,7 +650,7 @@ evry_plugin_update(Evry_Plugin *p, int action)
 	     _evry_plugin_select(s, NULL);
 	  }
 
-	if ((s->plugin && sel->state == s) &&
+	if ((s->plugin && (sel->state == s)) &&
 	    /* plugin is current */
 	    ((s->plugin == p) ||
 	     /* plugin items are shown in aggregator */
@@ -1952,8 +1952,7 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	     if (win->level > 0)
 	       return ECORE_CALLBACK_PASS_ON;
 
-	     if (!(bind->params) &&
-		 (CUR_SEL == OBJ_SEL) &&
+	     if (!(bind->params) && (CUR_SEL == OBJ_SEL) &&
 		 ((CUR_SEL)->state && (CUR_SEL)->state->cur_item))
 	       {
 		  _evry_selectors_shift(win, 1);
@@ -1962,6 +1961,7 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 
 	     evry_hide(win, 1);
 
+#if 0 /* FIXME this causes segv when triggering a plugin keybinding twice */
 	     if (win && CUR_SEL && bind->params)
 	       {
 		  Eina_List *ll;
@@ -1977,7 +1977,7 @@ _evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 		       _evry_view_update(win, (CUR_SEL)->state);
 		    }
 	       }
-
+#endif
 	     return ECORE_CALLBACK_PASS_ON;
 	  }
      }
