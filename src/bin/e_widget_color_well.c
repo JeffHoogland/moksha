@@ -120,7 +120,7 @@ _e_wid_disable_hook(Evas_Object *obj)
 /**
  * Add a color well widget to an evas.
  * An optional E_Container may be passed in. 
- If not NULL, when clicked a color dialog will pop up.
+ * If not NULL, when clicked a color dialog will pop up.
  */
 Evas_Object *
 e_widget_color_well_add_full(Evas *evas, E_Color *color, Eina_Bool show_color_dialog, Eina_Bool alpha_enabled)
