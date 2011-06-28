@@ -299,9 +299,10 @@ e_illume_border_is_splash(E_Border *bd)
    /* check for transient flag */
 //   if (bd->client.icccm.transient_for != 0) return EINA_TRUE;
 
-   /* NB: may or may not need to handle these. Needs Testing */
+   /* NB: may or may not need to handle these. Needs Testing
    if (bd->client.netwm.extra_types) 
      printf("\t\tBorder has extra types: %s\n", bd->client.icccm.class);
+   */
 
    /* return a fallback */
    return EINA_FALSE;
@@ -334,9 +335,10 @@ e_illume_border_is_dialog(E_Border *bd)
     * not a dialog. */
 //   if (bd->client.icccm.client_leader) return EINA_TRUE;
 
-   /* NB: may or may not need to handle these. Needs Testing */
+   /* NB: may or may not need to handle these. Needs Testing
    if (bd->client.netwm.extra_types) 
      printf("\t\tBorder has extra types: %s\n", bd->client.icccm.class);
+   */
 
    /* return a fallback */
    return EINA_FALSE;
