@@ -468,7 +468,7 @@ _policy_zone_layout_home_single(E_Border *bd, E_Illume_Config_Zone *cz)
    /* no point in adjusting size or position if it's not visible */
    if (!bd->visible) return;
 
-   printf("\tLayout Home Single: %s\n", bd->client.icccm.class);
+//   printf("\tLayout Home Single: %s\n", bd->client.icccm.class);
 
    indsz = cz->indicator.size;
    sftsz = cz->softkey.size;
@@ -621,7 +621,7 @@ _policy_zone_layout_fullscreen(E_Border *bd)
 {
    int kh;
 
-   printf("\tLayout Fullscreen: %s\n", bd->client.icccm.name);
+//   printf("\tLayout Fullscreen: %s\n", bd->client.icccm.name);
 
    if (!bd) return;
 
@@ -1098,7 +1098,7 @@ _policy_border_add(E_Border *bd)
 void 
 _policy_border_del(E_Border *bd) 
 {
-//   printf("Border deleted: %s\n", bd->client.icccm.class);
+//   printf("Policy Border deleted: %s\n", bd->client.icccm.class);
 
    if (!bd) return;
 
@@ -1562,8 +1562,6 @@ void
 _policy_zone_close(E_Zone *zone) 
 {
    E_Border *bd;
-
-//   printf("Zone close\n");
 
    if (!zone) return;
 
