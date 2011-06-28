@@ -153,6 +153,8 @@ e_mod_ind_win_new(E_Zone *zone)
    /* set this window on proper zone */
    e_border_zone_set(iwin->win->border, zone);
    iwin->win->border->user_skip_winlist = 1;
+   iwin->win->border->lock_focus_in = 1;
+   iwin->win->border->lock_focus_out = 1;
 
    /* set this window to be a dock window. This needs to be done after show 
     * as E will sometimes reset the window type */
