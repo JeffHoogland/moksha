@@ -2,9 +2,15 @@
 
 #ifdef USE_IPC
 /* local subsystem functions */
-static Eina_Bool _e_ipc_cb_client_add(void *data __UNUSED__, int type __UNUSED__, void *event);
-static Eina_Bool _e_ipc_cb_client_del(void *data __UNUSED__, int type __UNUSED__, void *event);
-static Eina_Bool _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event);
+static Eina_Bool _e_ipc_cb_client_add(void *data __UNUSED__,
+                                      int   type __UNUSED__,
+                                      void *event);
+static Eina_Bool _e_ipc_cb_client_del(void *data __UNUSED__,
+                                      int   type __UNUSED__,
+                                      void *event);
+static Eina_Bool _e_ipc_cb_client_data(void *data __UNUSED__,
+                                       int   type __UNUSED__,
+                                       void *event);
 
 /* local subsystem globals */
 static Ecore_Ipc_Server *_e_ipc_server = NULL;
@@ -32,35 +38,35 @@ e_ipc_init(void)
      }
    else
      {
-	struct stat st;
+        struct stat st;
 
-	if (stat(buf, &st) == 0)
-	  {
-	     if ((st.st_uid ==
-		  getuid()) &&
-		 ((st.st_mode & (S_IFDIR|S_IRWXU|S_IRWXG|S_IRWXO)) ==
-		  (S_IRWXU|S_IFDIR)))
-	       {
-	       }
-	     else
-	       {
-		  e_error_message_show(_("Possible IPC Hack Attempt. The IPC socket\n"
-					 "directory already exists BUT has permissions\n"
-					 "that are too leanient (must only be readable\n" "and writable by the owner, and nobody else)\n"
-					 "or is not owned by you. Please check:\n"
-					 "%s/enlightenment-%s\n"), tmp, user);
-		  return 0;
-	       }
-	  }
-	else
-	  {
-	     e_error_message_show(_("The IPC socket directory cannot be created or\n"
-				    "examined.\n"
-				    "Please check:\n"
-				    "%s/enlightenment-%s\n"),
-				  tmp, user);
-	     return 0;
-	  }
+        if (stat(buf, &st) == 0)
+          {
+             if ((st.st_uid ==
+                  getuid()) &&
+                 ((st.st_mode & (S_IFDIR | S_IRWXU | S_IRWXG | S_IRWXO)) ==
+                  (S_IRWXU | S_IFDIR)))
+               {
+               }
+             else
+               {
+                  e_error_message_show(_("Possible IPC Hack Attempt. The IPC socket\n"
+                                         "directory already exists BUT has permissions\n"
+                                         "that are too leanient (must only be readable\n" "and writable by the owner, and nobody else)\n"
+                                                                                          "or is not owned by you. Please check:\n"
+                                                                                          "%s/enlightenment-%s\n"), tmp, user);
+                  return 0;
+               }
+          }
+        else
+          {
+             e_error_message_show(_("The IPC socket directory cannot be created or\n"
+                                    "examined.\n"
+                                    "Please check:\n"
+                                    "%s/enlightenment-%s\n"),
+                                  tmp, user);
+             return 0;
+          }
      }
    snprintf(buf, sizeof(buf), "%s/enlightenment-%s/disp-%s-%i", tmp, user, disp, pid);
    _e_ipc_server = ecore_ipc_server_add(ECORE_IPC_LOCAL_SYSTEM, buf, 0, NULL);
@@ -84,8 +90,8 @@ e_ipc_shutdown(void)
    e_ipc_codec_shutdown();
    if (_e_ipc_server)
      {
-	ecore_ipc_server_del(_e_ipc_server);
-	_e_ipc_server = NULL;
+        ecore_ipc_server_del(_e_ipc_server);
+        _e_ipc_server = NULL;
      }
 #endif
    return 1;
@@ -94,7 +100,9 @@ e_ipc_shutdown(void)
 #ifdef USE_IPC
 /* local subsystem globals */
 static Eina_Bool
-_e_ipc_cb_client_add(void *data __UNUSED__, int type __UNUSED__, void *event)
+_e_ipc_cb_client_add(void *data __UNUSED__,
+                     int   type __UNUSED__,
+                     void *event)
 {
    Ecore_Ipc_Event_Client_Add *e;
 
@@ -104,7 +112,9 @@ _e_ipc_cb_client_add(void *data __UNUSED__, int type __UNUSED__, void *event)
 }
 
 static Eina_Bool
-_e_ipc_cb_client_del(void *data __UNUSED__, int type __UNUSED__, void *event)
+_e_ipc_cb_client_del(void *data __UNUSED__,
+                     int   type __UNUSED__,
+                     void *event)
 {
    Ecore_Ipc_Event_Client_Del *e;
 
@@ -119,7 +129,9 @@ _e_ipc_cb_client_del(void *data __UNUSED__, int type __UNUSED__, void *event)
 }
 
 static Eina_Bool
-_e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
+_e_ipc_cb_client_data(void *data __UNUSED__,
+                      int   type __UNUSED__,
+                      void *event)
 {
    Ecore_Ipc_Event_Client_Data *e;
 
@@ -133,67 +145,73 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
       case E_IPC_DOMAIN_EVENT:
         switch (e->minor)
           {
-          case E_IPC_OP_EXEC_ACTION:
-               {
-                  E_Ipc_2Str *req = NULL;
+           case E_IPC_OP_EXEC_ACTION:
+           {
+              E_Ipc_2Str *req = NULL;
 
-                  if (e_ipc_codec_2str_dec(e->data, e->size, &req))
-                    {
-                       Eina_List *m = e_manager_list();
-                       int len, ok = 0;
-                       void *d;
+              if (e_ipc_codec_2str_dec(e->data, e->size, &req))
+                {
+                   Eina_List *m = e_manager_list();
+                   int len, ok = 0;
+                   void *d;
 
-                       if (m)
-                         {
-                            E_Manager *man = eina_list_data_get(m);
+                   if (m)
+                     {
+                        E_Manager *man = eina_list_data_get(m);
 
-                            if (man)
-                              {
-                                 E_Action *act = e_action_find(req->str1);
+                        if (man)
+                          {
+                             E_Action *act = e_action_find(req->str1);
 
-                                 if (act && act->func.go)
-                                   {
-                                      act->func.go(E_OBJECT(man), req->str2);
-                                      ok = 1;
-                                   }
-                              }
-                         }
+                             if (act && act->func.go)
+                               {
+                                  act->func.go(E_OBJECT(man), req->str2);
+                                  ok = 1;
+                               }
+                          }
+                     }
 
-                       d = e_ipc_codec_int_enc(ok, &len);
-                       if (d)
-                         {
-                            ecore_ipc_client_send(e->client,
-                                                  E_IPC_DOMAIN_REPLY,
-                                                  E_IPC_OP_EXEC_ACTION_REPLY,
-                                                  0, 0, 0, d, len);
-                            free(d);
-                         }
+                   d = e_ipc_codec_int_enc(ok, &len);
+                   if (d)
+                     {
+                        ecore_ipc_client_send(e->client,
+                                              E_IPC_DOMAIN_REPLY,
+                                              E_IPC_OP_EXEC_ACTION_REPLY,
+                                              0, 0, 0, d, len);
+                        free(d);
+                     }
 
-                       if (req)
-                         {
-                            E_FREE(req->str1);
-                            E_FREE(req->str2);
-                            E_FREE(req);
-                         }
-                    }
-               }
-             break;
-          default:
+                   if (req)
+                     {
+                        E_FREE(req->str1);
+                        E_FREE(req->str2);
+                        E_FREE(req);
+                     }
+                }
+           }
+           break;
+
+           default:
              break;
           }
-	break;
+        break;
+
       case E_IPC_DOMAIN_THUMB:
-	e_thumb_client_data(e);
-	break;
+        e_thumb_client_data(e);
+        break;
+
       case E_IPC_DOMAIN_FM:
-	e_fm2_client_data(e);
-	break;
+        e_fm2_client_data(e);
+        break;
+
       case E_IPC_DOMAIN_INIT:
-	e_init_client_data(e);
-	break;
+        e_init_client_data(e);
+        break;
+
       default:
-	break;
+        break;
      }
    return 1;
 }
+
 #endif
