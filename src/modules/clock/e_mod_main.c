@@ -473,8 +473,6 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
                                   _clock_cb_mouse_down,
                                   inst);
    
-   e_gadcon_client_util_menu_attach(gcc);
-
    clock_instances = eina_list_append(clock_instances, inst);
    return gcc;
 }
