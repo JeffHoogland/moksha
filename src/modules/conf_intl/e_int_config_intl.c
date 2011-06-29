@@ -724,7 +724,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 		            /* Add codeset to the region hash node if it exists */
 			    if (locale_parts->codeset)
 			      {
-				 const char * cs;
+				 const char * cs = NULL;
 				 const char * cs_trans;
 			    
 				 cs_trans = _intl_charset_upper_get(locale_parts->codeset);
@@ -737,6 +737,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 				 /* Linear Search */
 				 if (!eina_list_data_find(region_node->available_codesets, cs))
 				   region_node->available_codesets = eina_list_append(region_node->available_codesets, cs);
+                                 else eina_stringshare_del(cs);
 			      }
 
 			    /* Add modifier to the region hash node if it exists */
@@ -869,15 +870,16 @@ _lc_check(void)
    if (getenv("LC_NUMERIC"))  strcat(buf, "LC_NUMERIC<br>");
    if (getenv("LC_TIME"))     strcat(buf, "LC_TIME<br>");
    
-   e_util_dialog_show(_("Possible Locale problems"), 
-                      _("You have some extra locale environment<br>"
-                        "variables set that may interfere with<br>"
-                        "correct display of your chosen language.<br>"
-                        "If you don't want these affected, use the<br>"
-                        "Enviornment variable settings to unset them.<br>"
-                        "The variables that may affect you are<br>"
-                        "as follows:<br>"
-                        "%s"), buf);
+   if (buf[0] != 0)
+      e_util_dialog_show(_("Possible Locale problems"), 
+                         _("You have some extra locale environment<br>"
+                           "variables set that may interfere with<br>"
+                           "correct display of your chosen language.<br>"
+                           "If you don't want these affected, use the<br>"
+                           "Enviornment variable settings to unset them.<br>"
+                           "The variables that may affect you are<br>"
+                           "as follows:<br>"
+                           "%s"), buf);
 }
 
 static int
