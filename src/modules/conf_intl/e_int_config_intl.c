@@ -855,6 +855,31 @@ _region_hash_free_cb(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED_
    return 1;
 }
 
+static void
+_lc_check(void)
+{
+   char buf[8192];
+   
+   buf[0] = 0;
+   
+   if (getenv("LC_COLLATE"))  strcat(buf, "LC_COLLATE<br>");
+   if (getenv("LC_CTYPE"))    strcat(buf, "LC_CTYPE<br>");
+   if (getenv("LC_MESSAGES")) strcat(buf, "LC_MESSAGES<br>");
+   if (getenv("LC_MONETARY")) strcat(buf, "LC_MONETARY<br>");
+   if (getenv("LC_NUMERIC"))  strcat(buf, "LC_NUMERIC<br>");
+   if (getenv("LC_TIME"))     strcat(buf, "LC_TIME<br>");
+   
+   e_util_dialog_show(_("Possible Locale problems"), 
+                      _("You have some extra locale environment<br>"
+                        "variables set that may interfere with<br>"
+                        "correct display of your chosen language.<br>"
+                        "If you don't want these affected, use the<br>"
+                        "Enviornment variable settings to unset them.<br>"
+                        "The variables that may affect you are<br>"
+                        "as follows:<br>"
+                        "%s"), buf);
+}
+
 static int
 _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
@@ -865,6 +890,7 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
         if ((cfdata->cur_language) && (cfdata->cur_language[0]))
            e_config->language = eina_stringshare_add(cfdata->cur_language);
 	e_intl_language_set(e_config->language);
+        _lc_check();
      }
 
    e_config_save_queue();
@@ -881,6 +907,7 @@ _advanced_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
         if ((cfdata->cur_language) && (cfdata->cur_language[0]))
            e_config->language = eina_stringshare_add(cfdata->cur_language);
 	e_intl_language_set(e_config->language);
+        _lc_check();
      }
 
    e_config_save_queue();
