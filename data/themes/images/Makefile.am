@@ -440,5 +440,7 @@ bulb-2.png \
 batt_base.png \
 batt_level.png \
 batt_over.png \
-batt_power.png
-
+batt_power.png \
+bg_shadow.png \
+bg_over.png \
+bg_base.png

@@ -279,11 +279,14 @@ collections {
       /* this section defines that images are to be included and how to
        * encode them */
       images {
-         image: "vgrad_dark.png" COMP;
+         image: "bg_shadow.png" COMP;
          /* the encoding method is "COMP". this
           * is lossless, but compressed */
-         image: "grill_dark_tiny_pattern.png" COMP;
-         //    image: "circle_shade.png" COMP;
+         image: "bg_over.png" LOSSY 80;
+         /* the encoding is "LOSSY". this loses quality (80% quality level)
+          * but uses less space in return. uses JPEG and can do alpha channels
+          * too */
+         image: "bg_base.png" COMP;
       }
       /* this section actually contains the list of parts from bottom to top
        * (defining the layering/stacking order) */
@@ -312,7 +315,7 @@ collections {
                 * parent.child: blah; in a key to avoid doing
                 * parent { child: blah; }
                 */
-               image.normal: "vgrad_dark.png";
+               image.normal: "bg_base.png";
                /* use the vgrad_dark.png im */
                fill {
                   /* now specify how the image is to fill the part */
@@ -323,7 +326,7 @@ collections {
                      /* X and Y point relative to the part
                       * as a whole for the size (dont scale
                       * in X but scale 100% in Y */
-                     offset: 36 0;
+                     offset: 761 0;
                      /* offsets from the relative scale point
                       * so here offset is 36 to the right in
                       * X and at the Y relative point. this
@@ -334,32 +337,23 @@ collections {
             }
          }
          part {
-            name: "grill";
-            /* this is the overlay to look like a grill */
+            name: "over";
             description {
                state: "default" 0.0;
-               image.normal: "grill_dark_tiny_pattern.png";
-               /* use the grill */
-               fill {
-                  /* set the fill to only tile - never scale at all */
-                  size {
-                     relative: 0 0;
-                     /* relative 0 0 so it never scales */
-                     offset: 144 144;
-                     /* we know the grill image is 144x144
-                      * so set the offset to this so it
-                      * tiles perfectly */
-                  }
-               }
-            }
-         }
-         /* part { name: "shade";
-               mouse_events: 0;
-               description { state: "default" 0.0;
-               image.normal: "circle_shade.png";
+               image.normal: "bg_over.png";
+               /* tiled at 800x600 */
+               fill.size.relative: 0 0;
+               fill.size.offset: 800 600;
                fill.smooth: 0;
             }
-         } */
+         }
+         /* a circular shadow on top */
+         part { name: "shadow";
+            description { state: "default" 0.0;
+               image.normal: "bg_shadow.png";
+               fill.smooth: 0;
+            }
+         }
       }
    }
    group {
