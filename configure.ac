@@ -373,7 +373,7 @@ EEZE_MOUNT_CONFIG=0
 if test "x$e_cv_want_mount_eeze" != "xno" ; then
       AC_CHECK_LIB([eeze], [eeze_disk_function],
         [
-           eeze_mount="eeze >= 1.0.99"
+           eeze_mount="eeze >= 1.0.99 ecore-con >= 1.0.999"
            EEZE_MOUNT_CONFIG=1
            AC_DEFINE_UNQUOTED([HAVE_EEZE_MOUNT], [1], [enable eeze mounting])
            AC_MSG_NOTICE([eeze mounting enabled])
@@ -426,7 +426,6 @@ efm_requires="\
 ecore >= 1.0.999 \
 ecore-file >= 1.0.999 \
 ecore-ipc >= 1.0.999 \
-ecore-con >= 1.0.999 \
 eet >= 1.4.0 \
 efreet >= 1.0.999 \
 eina >= 1.0.999"
