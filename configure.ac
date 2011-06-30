@@ -426,6 +426,7 @@ efm_requires="\
 ecore >= 1.0.999 \
 ecore-file >= 1.0.999 \
 ecore-ipc >= 1.0.999 \
+ecore-con >= 1.0.999 \
 eet >= 1.4.0 \
 efreet >= 1.0.999 \
 eina >= 1.0.999"
