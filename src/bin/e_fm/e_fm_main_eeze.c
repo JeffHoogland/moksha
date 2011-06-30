@@ -56,6 +56,7 @@ static Ecore_Exe *scanner = NULL;
 static Ecore_Con_Server *svr = NULL;
 static Eet_Data_Descriptor *es_edd = NULL;
 static Eet_Connection *es_con = NULL;
+static Eina_Prefix *pfx = NULL;
 
 void
 e_util_env_set(const char *var, const char *val)
@@ -440,7 +441,7 @@ _e_fm_main_eeze_volume_unmount(E_Volume *v)
      {
         char buf[PATH_MAX];
 
-        snprintf(buf, sizeof(buf), "%s/enlightenment/utils/enlightenment_sys", e_prefix_lib_get());
+        snprintf(buf, sizeof(buf), "%s/enlightenment/utils/enlightenment_sys", eina_prefix_lib_get(pfx));
         eeze_disk_mount_wrapper_set(v->disk, buf);
      }
    v->guard = ecore_timer_add(E_FM_UNMOUNT_TIMEOUT, (Ecore_Task_Cb)_e_fm_main_eeze_vol_unmount_timeout, v);
@@ -484,7 +485,7 @@ _e_fm_main_eeze_volume_mount(E_Volume *v)
      {
         char buf[PATH_MAX];
 
-        snprintf(buf, sizeof(buf), "%s/enlightenment/utils/enlightenment_sys", e_prefix_lib_get());
+        snprintf(buf, sizeof(buf), "%s/enlightenment/utils/enlightenment_sys", eina_prefix_lib_get(pfx));
         eeze_disk_mount_wrapper_set(v->disk, buf);
      }
    v->guard = ecore_timer_add(E_FM_MOUNT_TIMEOUT, (Ecore_Task_Cb)_e_fm_main_eeze_vol_mount_timeout, v);
@@ -588,9 +589,8 @@ _scanner_run(void)
 {
    char buf[1024];
    struct stat st;
-
    snprintf(buf, sizeof(buf),
-            "%s/enlightenment/utils/eeze_scanner", e_prefix_lib_get());
+            "%s/enlightenment/utils/eeze_scanner", eina_prefix_lib_get(pfx));
 
    if (stat(buf, &st))
      {
@@ -635,9 +635,22 @@ void
 _e_fm_main_eeze_init(void)
 {
    const char *tmp;
-   char buf[1024];
+   char **argv, buf[1024];
    struct stat st;
-   
+   int argc;
+
+   ecore_app_args_get(&argc, &argv);
+   pfx = eina_prefix_new(argv[0], e_storage_find,
+                    "E", "enlightenment", "AUTHORS",
+                    PACKAGE_BIN_DIR,
+                    PACKAGE_LIB_DIR,
+                    PACKAGE_DATA_DIR,
+                    LOCALE_DIR);
+   if (!pfx)
+     {
+        ERR("Could not determine prefix!");
+        exit(1);
+     }
    if (_e_fm_eeze_init) return;
    _e_fm_eeze_init = EINA_TRUE;
    eeze_init();
