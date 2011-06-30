@@ -34,8 +34,6 @@ EINTERN int         e_popup_shutdown(void);
 
 EAPI E_Popup    *e_popup_new(E_Zone *zone, int x, int y, int w, int h);
 EAPI void        e_popup_name_set(E_Popup *pop, const char *name);
-EAPI void        e_popup_alpha_set(E_Popup *pop, Eina_Bool alpha);
-EAPI Eina_Bool   e_popup_alpha_get(E_Popup *pop);
 EAPI void        e_popup_show(E_Popup *pop);
 EAPI void        e_popup_hide(E_Popup *pop);
 EAPI void        e_popup_move(E_Popup *pop, int x, int y);
