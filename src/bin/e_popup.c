@@ -75,6 +75,18 @@ e_popup_new(E_Zone *zone, int x, int y, int w, int h)
 }
 
 EAPI void
+e_popup_alpha_set(E_Popup *pop, Eina_Bool alpha)
+{
+   ecore_evas_alpha_set(pop->ecore_evas, alpha);
+}
+
+EAPI Eina_Bool
+e_popup_alpha_get(E_Popup *pop)
+{
+   return ecore_evas_alpha_get(pop->ecore_evas);
+}
+
+EAPI void
 e_popup_name_set(E_Popup *pop, const char *name)
 {
    if (eina_stringshare_replace(&pop->name, name))
