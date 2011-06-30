@@ -810,6 +810,7 @@ _e_fm_ipc_slave_data_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
    if (!e) return ECORE_CALLBACK_PASS_ON;
 
    slave = ecore_exe_data_get(e->exe);
+   if (!slave) return ECORE_CALLBACK_RENEW;
 
    sdata = e->data;
    ssize = e->size;
@@ -859,6 +860,7 @@ _e_fm_ipc_slave_error_cb(void *data __UNUSED__, int type __UNUSED__, void *event
    if (!e) return 1;
 
    slave = ecore_exe_data_get(e->exe);
+   if (!slave) return ECORE_CALLBACK_RENEW;
 
    printf("EFM: Data from STDERR of slave #%d: %.*s", slave->id, e->size, (char *)e->data);
 
@@ -874,9 +876,8 @@ _e_fm_ipc_slave_del_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
    if (!e) return 1;
 
    slave = ecore_exe_data_get(e->exe);
-   _e_fm_ipc_client_send(slave->id, E_FM_OP_QUIT, NULL, 0);
-
    if (!slave) return 1;
+   _e_fm_ipc_client_send(slave->id, E_FM_OP_QUIT, NULL, 0);
 
    _e_fm_ipc_slaves = eina_list_remove(_e_fm_ipc_slaves, (void *)slave);
    free(slave);
