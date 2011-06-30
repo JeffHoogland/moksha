@@ -143,6 +143,11 @@ _e_fm_main_eeze_cb_vol_mounted(void *user_data __UNUSED__,
         v->guard = NULL;
      }
 
+   if (!eeze_disk_mounted_get(ev->disk))
+     {
+        ERR("Mount of '%s' failed!", v->udi);
+        return ECORE_CALLBACK_RENEW;
+     }
    v->mounted = EINA_TRUE;
    INF("MOUNT: %s from %s", v->udi, v->mount_point);
    size = strlen(v->udi) + 1 + strlen(v->mount_point) + 1;
@@ -217,6 +222,8 @@ _e_fm_main_eeze_cb_vol_unmounted(void *user_data __UNUSED__,
 
    v->mounted = EINA_FALSE;
    INF("UNMOUNT: %s from %s", v->udi, v->mount_point);
+   if (!memcmp(v->mount_point, "/media/", 7))
+     unlink(v->mount_point);
    size = strlen(v->udi) + 1 + strlen(v->mount_point) + 1;
    buf = alloca(size);
    strcpy(buf, v->udi);
@@ -261,7 +268,9 @@ _e_fm_main_eeze_cb_vol_ejected(void *user_data __UNUSED__,
      }
 
    v->mounted = EINA_TRUE;
-   INF("MOUNT: %s from %s", v->udi, v->mount_point);
+   INF("EJECT: %s from %s", v->udi, v->mount_point);
+   if (!memcmp(v->mount_point, "/media/", 7))
+     unlink(v->mount_point);
    size = strlen(v->udi) + 1 + strlen(v->mount_point) + 1;
    buf = alloca(size);
    strcpy(buf, v->udi);
