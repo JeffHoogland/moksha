@@ -53,9 +53,6 @@ void *alloca(size_t);
 #ifdef HAVE_UDISKS_MOUNT
 # include "e_fm_main_udisks.h"
 #endif
-#ifdef HAVE_EEZE_MOUNT
-# include "e_fm_main_eeze.h"
-#endif
 
 #include "e_fm_shared_codec.h"
 #include "e_fm_shared_device.h"
@@ -161,9 +158,7 @@ _e_fm_main_hal_test(void *data       __UNUSED__,
 #ifdef HAVE_UDISKS_MOUNT
         _e_fm_main_udisks_init(); /* check for udisks while listening for hal */
 #else
-# ifdef HAVE_EEZE_MOUNT
-        _e_fm_main_eeze_init(); /* check for eeze while listening for hal */
-# endif
+        _e_fm_main_hal_catch(EINA_FALSE);
 #endif
         return;
      }

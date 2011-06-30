@@ -45,7 +45,7 @@ void *alloca (size_t);
 #include <Ecore_Ipc.h>
 #include <Ecore_File.h>
 #include <Eet.h>
-#include <Evas.h>
+#include <Ecore_Con.h>
 
 #define E_TYPEDEFS
 #include "e_config_data.h"
@@ -90,6 +90,8 @@ static Efm_Mode mode = EFM_MODE_USING_RASTER_MOUNT;
 #include "e_fm_shared_codec.h"
 #include "e_fm_ipc.h"
 
+int efm_log_dom = -1;
+
 static void
 _e_fm_init(void)
 {
@@ -101,6 +103,7 @@ _e_fm_init(void)
 # else
 #  ifdef HAVE_EEZE_MOUNT
    _e_fm_main_eeze_init();
+   mode = EFM_MODE_USING_EEZE_MOUNT; /* this gets overridden if the others are available */
 #  endif
 # endif
 #endif
@@ -136,16 +139,19 @@ main(int argc, char **argv)
      }
 
    eina_init();
+   eet_init();
    ecore_init();
+   ecore_con_init();
    ecore_app_args_set(argc, (const char **)argv);
-
-   _e_fm_init();
 
    ecore_file_init();
    ecore_ipc_init();
    _e_storage_volume_edd_init();
    _e_fm_ipc_init();
-   
+   efm_log_dom = eina_log_domain_register("efm", EINA_COLOR_GREEN);
+   eina_log_domain_level_set("efm", EINA_LOG_LEVEL_DBG);
+   _e_fm_init();
+
    ecore_event_handler_add(ECORE_EXE_EVENT_DATA, _e_fm_ipc_slave_data_cb, NULL);
    ecore_event_handler_add(ECORE_EXE_EVENT_ERROR, _e_fm_ipc_slave_error_cb, NULL);
    ecore_event_handler_add(ECORE_EXE_EVENT_DEL, _e_fm_ipc_slave_del_cb, NULL);
@@ -170,21 +176,30 @@ main(int argc, char **argv)
 void
 _e_fm_main_hal_catch(Eina_Bool usable)
 {
-   if (usable) mode = EFM_MODE_USING_HAL_MOUNT;
+   if (usable)
+     {
+        mode = EFM_MODE_USING_HAL_MOUNT;
+        return;
+     }
+# ifdef HAVE_EEZE_MOUNT
+   _e_fm_main_eeze_init();
+   mode = EFM_MODE_USING_EEZE_MOUNT;
+# endif
 }
 #endif
 #ifdef HAVE_UDISKS_MOUNT
 void
 _e_fm_main_udisks_catch(Eina_Bool usable)
 {
-   if (usable) mode = EFM_MODE_USING_UDISKS_MOUNT;
-}
-#endif
-#ifdef HAVE_EEZE_MOUNT
-void
-_e_fm_main_eeze_catch(Eina_Bool usable)
-{
-   if (usable) mode = EFM_MODE_USING_EEZE_MOUNT;
+   if (usable)
+     {
+        mode = EFM_MODE_USING_UDISKS_MOUNT;
+        return;
+     }
+# ifdef HAVE_EEZE_MOUNT
+   _e_fm_main_eeze_init();
+   mode = EFM_MODE_USING_EEZE_MOUNT;
+# endif
 }
 #endif
 

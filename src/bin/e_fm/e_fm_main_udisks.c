@@ -50,9 +50,6 @@ void *alloca(size_t);
 
 #include "e_fm_main.h"
 #include "e_fm_main_udisks.h"
-#ifdef HAVE_EEZE_MOUNT
-# include "e_fm_main_eeze.h"
-#endif
 
 #include "e_fm_shared_codec.h"
 #include "e_fm_shared_device.h"
@@ -140,10 +137,7 @@ _e_fm_main_udisks_test(void *data       __UNUSED__,
    if ((error) && (dbus_error_is_set(error)))
      {
         dbus_error_free(error);
-
-#ifdef HAVE_EEZE_MOUNT
-        _e_fm_main_eeze_init(); /* check for eeze while listening for udisks */
-#endif
+        _e_fm_main_udisks_catch(EINA_FALSE);
         return;
      }
    if (_udisks_poll)
@@ -184,7 +178,7 @@ _e_fm_main_udisks_cb_dev_all(void *user_data __UNUSED__,
 
    EINA_LIST_FOREACH(ret->strings, l, udi)
      {
-//	printf("DB INIT DEV+: %s\n", udi);
+	printf("DB INIT DEV+: %s\n", udi);
           e_udisks_get_property(_e_fm_main_udisks_conn, udi, "IdUsage",
                                 (E_DBus_Callback_Func)_e_fm_main_udisks_cb_dev_verify, (void*)eina_stringshare_add(udi));
      }
@@ -208,7 +202,7 @@ _e_fm_main_udisks_cb_dev_verify(const char *udi,
      _e_fm_main_udisks_storage_add(udi);
    else if (!strcmp(ret->val.s, "filesystem"))
      {
-//	printf("DB VOL+: %s\n", udi);
+	printf("DB VOL+: %s\n", udi);
           _e_fm_main_udisks_volume_add(udi, EINA_TRUE);
      }
    //eina_stringshare_del(udi);
@@ -231,7 +225,7 @@ _e_fm_main_udisks_cb_dev_add_verify(const char *udi,
      _e_fm_main_udisks_storage_add(udi);
    else if (!strcmp(ret->val.s, "filesystem"))
      {
-//	printf("DB VOL+: %s\n", udi);
+	printf("DB VOL+: %s\n", udi);
           _e_fm_main_udisks_volume_add(udi, EINA_FALSE);
      }
    //eina_stringshare_del(udi);
@@ -264,7 +258,7 @@ _e_fm_main_udisks_cb_dev_del(void *data   __UNUSED__,
    dbus_message_get_args(msg,
                          &err, DBUS_TYPE_OBJECT_PATH,
                          &udi, DBUS_TYPE_INVALID);
-//   printf("DB DEV-: %s\n", udi);
+   printf("DB DEV-: %s\n", udi);
    if ((v = _e_fm_main_udisks_volume_find(udi)))
      {
         if (v->optype == E_VOLUME_OP_TYPE_EJECT)
@@ -287,7 +281,7 @@ _e_fm_main_udisks_cb_dev_chg(void *data   __UNUSED__,
                          DBUS_TYPE_OBJECT_PATH, &udi,
                          DBUS_TYPE_INVALID);
 
-//        printf("DB STORE CAP+: %s\n", udi);
+        printf("DB STORE CAP+: %s\n", udi);
    e_udisks_get_property(_e_fm_main_udisks_conn, udi, "IdUsage",
                          (E_DBus_Callback_Func)_e_fm_main_udisks_cb_dev_add_verify, (void*)eina_stringshare_add(udi));
 }

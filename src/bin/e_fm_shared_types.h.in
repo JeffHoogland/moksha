@@ -98,6 +98,9 @@ struct _E_Volume
    DBusPendingCall *op;                // d-bus call handle
    void *prop_handler;
 #endif
+#if @EEZE_MOUNT_CONFIG@
+   Eeze_Disk *disk;
+#endif
 };
 
 struct _E_Fm2_Mount
