@@ -47,6 +47,9 @@ action:   halt      /sbin/shutdown -h now
 action:   reboot    /sbin/shutdown -r now
 action:   suspend   @SUSPEND@
 action:   hibernate @HIBERNATE@
+action:   /bin/mount /bin/mount
+action:   /bin/umount /bin/umount
+action:   /usr/bin/eject /usr/bin/eject
 
 # on FreeBSD use this instead of the above.
 #action suspend  /usr/sbin/zzz 
@@ -71,5 +74,11 @@ group:    plugdev   allow: *
 # e.g.
 # user:     myuser     allow:  *
 # user:     another    allow:  suspend hibernate
+#
+#
+# uncomment this line to enable eeze mounting for users
+# user:   someuser allow: /bin/mount /bin/umount /usr/bin/eject
+#
+#
 # deny everyone else by default
 user:     *         deny:  *
