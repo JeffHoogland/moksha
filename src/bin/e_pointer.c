@@ -545,7 +545,7 @@ _e_pointer_cb_idle_timer_pre(void *data)
    E_Pointer *p;
    int x, y;
 
-   if (!(p = data)) return;
+   if (!(p = data)) return ECORE_CALLBACK_RENEW;
    ecore_x_pointer_xy_get(p->win, &x, &y);
    p->x = x;
    p->y = y;
@@ -558,7 +558,7 @@ _e_pointer_cb_idle_timer_wait(void *data)
 {
    E_Pointer *p;
 
-   if (!(p = data)) return;
+   if (!(p = data)) return ECORE_CALLBACK_RENEW;
    if ((e_powersave_mode_get() >= E_POWERSAVE_MODE_MEDIUM) ||
        (!e_config->idle_cursor))
      {
@@ -580,7 +580,7 @@ _e_pointer_cb_idle_poller(void *data)
    E_Pointer *p;
    int x, y;
 
-   if (!(p = data)) return;
+   if (!(p = data)) return ECORE_CALLBACK_RENEW;
    if ((e_powersave_mode_get() >= E_POWERSAVE_MODE_MEDIUM) ||
        (!e_config->idle_cursor))
      {
