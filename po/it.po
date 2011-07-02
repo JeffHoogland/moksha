@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-06-27 12:46+0200\n"
-"PO-Revision-Date: 2011-06-27 12:48+0200\n"
+"POT-Creation-Date: 2011-07-02 14:57+0200\n"
+"PO-Revision-Date: 2011-07-02 15:07+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -2247,11 +2247,11 @@ msgstr "Impostazioni barra strumenti"
 msgid "Layout"
 msgstr "Posizione"
 
-#: src/bin/e_intl.c:342
+#: src/bin/e_intl.c:373
 msgid "Input Method Error"
 msgstr "Errore del metodo di input"
 
-#: src/bin/e_intl.c:343
+#: src/bin/e_intl.c:374
 msgid ""
 "Error starting the input method executable<br><br>please make sure that your "
 "input<br>method configuration is correct and<br>that your "
@@ -2426,7 +2426,7 @@ msgstr "Mostra su tutti i desktop"
 msgid "Show on specified Desktops"
 msgstr "Mostra sui desktop specificati"
 
-#: src/bin/e_ipc.c:47
+#: src/bin/e_ipc.c:53
 #, c-format
 msgid ""
 "Possible IPC Hack Attempt. The IPC socket\n"
@@ -2443,7 +2443,7 @@ msgstr ""
 "non ne siete proprietari. Controllare:\n"
 "%s/enlightenment-%s\n"
 
-#: src/bin/e_ipc.c:57
+#: src/bin/e_ipc.c:63
 #, c-format
 msgid ""
 "The IPC socket directory cannot be created or\n"
@@ -3681,12 +3681,12 @@ msgstr "ERRORE"
 msgid "Battery Meter"
 msgstr "Indicatore di carica"
 
-#: src/modules/clock/e_mod_main.c:521 src/modules/clock/e_mod_main.c:626
-#: src/modules/clock/e_mod_main.c:639
+#: src/modules/clock/e_mod_main.c:519 src/modules/clock/e_mod_main.c:624
+#: src/modules/clock/e_mod_main.c:637
 msgid "Clock"
 msgstr "Clock"
 
-#: src/modules/clock/e_mod_main.c:626 src/modules/clock/e_mod_main.c:639
+#: src/modules/clock/e_mod_main.c:624 src/modules/clock/e_mod_main.c:637
 msgid "Show calendar"
 msgstr "Mostra calendario"
 
@@ -4611,25 +4611,43 @@ msgstr ""
 msgid "Language Settings"
 msgstr "Localizzazione"
 
-#: src/modules/conf_intl/e_int_config_intl.c:900
-#: src/modules/conf_intl/e_int_config_intl.c:983
+#: src/modules/conf_intl/e_int_config_intl.c:874
+msgid "Possible Locale problems"
+msgstr "Possibili problemi di localizzazione"
+
+#: src/modules/conf_intl/e_int_config_intl.c:875
+#, c-format
+msgid ""
+"You have some extra locale environment<br>variables set that may interfere "
+"with<br>correct display of your chosen language.<br>If you don't want these "
+"affected, use the<br>Enviornment variable settings to unset them.<br>The "
+"variables that may affect you are<br>as follows:<br>%s"
+msgstr ""
+"Attualmente sono impostate alcune variabili<br>d'ambiente extra per la "
+"localizzazione che<br>potrebbero interferire con la corretta<br>"
+"visualizzazione della lingua scelta.<br>Se non volete che questo si "
+"verifichi<br>rimuovete le variabili dalla configurazione.<br>Le variabili "
+"in questione sono le seguenti:<br>%s"
+
+#: src/modules/conf_intl/e_int_config_intl.c:929
+#: src/modules/conf_intl/e_int_config_intl.c:1012
 msgid "Language Selector"
 msgstr "Selettore lingua"
 
-#: src/modules/conf_intl/e_int_config_intl.c:929
-#: src/modules/conf_intl/e_int_config_intl.c:1365
+#: src/modules/conf_intl/e_int_config_intl.c:958
+#: src/modules/conf_intl/e_int_config_intl.c:1394
 #: src/modules/conf_menus/e_int_config_menus.c:169
 #: src/modules/wizard/page_010.c:146 src/modules/wizard/page_030.c:129
 msgid "System Default"
 msgstr "Predefinito dal sistema"
 
-#: src/modules/conf_intl/e_int_config_intl.c:956
-#: src/modules/conf_intl/e_int_config_intl.c:1034
+#: src/modules/conf_intl/e_int_config_intl.c:985
+#: src/modules/conf_intl/e_int_config_intl.c:1063
 msgid "Locale Selected"
 msgstr "Localizzazione selezionata"
 
-#: src/modules/conf_intl/e_int_config_intl.c:957
-#: src/modules/conf_intl/e_int_config_intl.c:1035
+#: src/modules/conf_intl/e_int_config_intl.c:986
+#: src/modules/conf_intl/e_int_config_intl.c:1064
 msgid "Locale"
 msgstr "Localizzazione"
 
