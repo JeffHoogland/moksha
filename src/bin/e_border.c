@@ -16,6 +16,8 @@
 #define RESIZE_NONE 11
 
 /* local subsystem functions */
+static void _e_border_pri_raise(E_Border *bd);
+static void _e_border_pri_norm(E_Border *bd);
 static void _e_border_free(E_Border *bd);
 static void _e_border_del(E_Border *bd);
 
@@ -972,6 +974,40 @@ e_border_hide(E_Border *bd,
         ecore_event_add(E_EVENT_BORDER_HIDE, ev, _e_border_event_border_hide_free, NULL);
      }
    bd->post_show = 0;
+}
+
+static void
+_e_border_pri_raise(E_Border *bd)
+{
+   if (bd->client.netwm.pid > 0)
+     {
+        int newpri;
+        
+//             newpri = getpriority(PRIO_PROCESS, bd->client.netwm.pid) - 1;
+        newpri = e_config->priority - 1;
+        setpriority(PRIO_PROCESS, bd->client.netwm.pid, newpri);
+        printf("WIN: pid %i, title %s TO: %i (HI!!!)\n",
+               bd->client.netwm.pid,
+               e_border_name_get(bd),
+               newpri);
+     }
+}
+
+static void
+_e_border_pri_norm(E_Border *bd)
+{
+   if (bd->client.netwm.pid > 0)
+     {
+        int newpri;
+        
+//             newpri = getpriority(PRIO_PROCESS, bd->client.netwm.pid) + 1;
+        newpri = e_config->priority;
+        setpriority(PRIO_PROCESS, bd->client.netwm.pid, newpri);
+        printf("WIN: pid %i, title %s TO: %i\n",
+               bd->client.netwm.pid,
+               e_border_name_get(bd),
+               newpri);
+     }
 }
 
 static void
@@ -5206,6 +5242,7 @@ _e_border_cb_window_focus_in(void *data  __UNUSED__,
 	     bd->client.icccm.take_focus);
    }
 #endif
+   _e_border_pri_raise(bd);
    if (e->mode == ECORE_X_EVENT_MODE_GRAB)
      {
         if (e->detail == ECORE_X_EVENT_DETAIL_POINTER) return ECORE_CALLBACK_PASS_ON;
@@ -5273,6 +5310,7 @@ _e_border_cb_window_focus_out(void *data  __UNUSED__,
 	     bd->client.icccm.take_focus);
    }
 #endif
+   _e_border_pri_norm(bd);
    if (e->mode == ECORE_X_EVENT_MODE_NORMAL)
      {
         if (e->detail == ECORE_X_EVENT_DETAIL_INFERIOR) return ECORE_CALLBACK_PASS_ON;

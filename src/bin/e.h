@@ -59,6 +59,8 @@ void *alloca (size_t);
 #include <errno.h>
 #include <signal.h>
 #include <inttypes.h>
+#include <sys/time.h>
+#include <sys/resource.h>
 
 #ifdef HAVE_GETTEXT
 # include <libintl.h>
