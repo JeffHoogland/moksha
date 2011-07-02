@@ -662,6 +662,7 @@ _e_fm_main_eeze_init(void)
      }
    if (_e_fm_eeze_init) return;
    _e_fm_eeze_init = EINA_TRUE;
+   ecore_con_init();
    eeze_init();
    eina_log_domain_level_set("eeze_disk", EINA_LOG_LEVEL_DBG);
    eeze_mount_tabs_watch();
@@ -698,6 +699,7 @@ _e_fm_main_eeze_shutdown(void)
 {
    eeze_mount_tabs_unwatch();
    eeze_shutdown();
+   ecore_con_shutdown();
 }
 
 

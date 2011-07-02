@@ -45,7 +45,6 @@ void *alloca (size_t);
 #include <Ecore_Ipc.h>
 #include <Ecore_File.h>
 #include <Eet.h>
-#include <Ecore_Con.h>
 
 #define E_TYPEDEFS
 #include "e_config_data.h"
@@ -141,7 +140,6 @@ main(int argc, char **argv)
    eina_init();
    eet_init();
    ecore_init();
-   ecore_con_init();
    ecore_app_args_set(argc, (const char **)argv);
 
    ecore_file_init();
