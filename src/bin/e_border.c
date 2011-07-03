@@ -977,37 +977,77 @@ e_border_hide(E_Border *bd,
 }
 
 static void
+_pri_adj(int pid, int set, int adj, Eina_Bool use_adj, Eina_Bool adj_children, Eina_Bool do_children)
+{
+   int newpri = set;
+
+   if (use_adj) newpri = getpriority(PRIO_PROCESS, pid) + adj;
+   setpriority(PRIO_PROCESS, pid, newpri);
+// shouldnt need to do this as default ionice class is "none" (0), and
+// this inherits io priority FROM nice level
+//        ioprio_set(IOPRIO_WHO_PROCESS, pid, 
+//                   IOPRIO_PRIO_VALUE(2, 5));
+   if (do_children)
+     {
+        Eina_List *files;
+        char *file, buf[PATH_MAX];
+        FILE *f;
+        int pid2, ppid;
+
+        // yes - this is /proc specific... so this may not work on some
+        // os's - works on linux. too bad for others.
+        files = ecore_file_ls("/proc");
+        EINA_LIST_FREE(files, file)
+          {
+             if (isdigit(file[0]))
+               {
+                  snprintf(buf, sizeof(buf), "/proc/%s/stat", file);
+                  f = fopen(buf, "r");
+                  if (f)
+                    {
+                       pid2 = -1;
+                       ppid = -1;
+                       if (fscanf(f, "%i %*s %*s %i %*s", &pid2, &ppid) == 2)
+                         {
+                            fclose(f);
+                            if (ppid == pid)
+                              {
+                                 if (adj_children)
+                                    _pri_adj(pid2, set, adj, EINA_TRUE, 
+                                             adj_children, do_children);
+                                 else
+                                    _pri_adj(pid2, set, adj, use_adj, 
+                                             adj_children, do_children);
+                              }
+                         }
+                       else fclose(f);
+                    }
+               }
+             free(file);
+          }
+     }
+}
+
+static void
 _e_border_pri_raise(E_Border *bd)
 {
-   if (bd->client.netwm.pid > 0)
-     {
-        int newpri;
-        
-//             newpri = getpriority(PRIO_PROCESS, bd->client.netwm.pid) - 1;
-        newpri = e_config->priority - 1;
-        setpriority(PRIO_PROCESS, bd->client.netwm.pid, newpri);
-        printf("WIN: pid %i, title %s TO: %i (HI!!!)\n",
-               bd->client.netwm.pid,
-               e_border_name_get(bd),
-               newpri);
-     }
+   if (bd->client.netwm.pid <= 0) return;
+   _pri_adj(bd->client.netwm.pid, 
+            e_config->priority - 1, -1, EINA_FALSE, 
+            EINA_TRUE, EINA_TRUE);
+//   printf("WIN: pid %i, title %s (HI!!!!!!!!!!!!!!!!!!)\n",
+//          bd->client.netwm.pid, e_border_name_get(bd));
 }
 
 static void
 _e_border_pri_norm(E_Border *bd)
 {
-   if (bd->client.netwm.pid > 0)
-     {
-        int newpri;
-        
-//             newpri = getpriority(PRIO_PROCESS, bd->client.netwm.pid) + 1;
-        newpri = e_config->priority;
-        setpriority(PRIO_PROCESS, bd->client.netwm.pid, newpri);
-        printf("WIN: pid %i, title %s TO: %i\n",
-               bd->client.netwm.pid,
-               e_border_name_get(bd),
-               newpri);
-     }
+   if (bd->client.netwm.pid <= 0) return;
+   _pri_adj(bd->client.netwm.pid, 
+            e_config->priority, 1, EINA_FALSE, 
+            EINA_TRUE, EINA_TRUE);
+//   printf("WIN: pid %i, title %s (NORMAL)\n",
+//          bd->client.netwm.pid, e_border_name_get(bd));
 }
 
 static void
