@@ -268,7 +268,7 @@ group "E_Config" struct {
     group "E_Config_Module" struct {
       value "name" string: "everything";
       value "enabled" uchar: 1;
-      value "delayed" uchar: 0;
+      value "delayed" uchar: 1;
       value "priority" int: -1000;
     }
   }
@@ -285,6 +285,14 @@ group "E_Config" struct {
       value "name" string: "backlight";
       value "enabled" uchar: 1;
       value "delayed" uchar: 1;
+      value "priority" int: 0;
+    }
+  }
+  group "modules" list {
+    group "E_Config_Module" struct {
+      value "name" string: "connman";
+      value "enabled" uchar: 1;
+      value "delayed" uchar: 0;
       value "priority" int: 0;
     }
   }
@@ -1750,6 +1758,24 @@ group "E_Config" struct {
           value "geom.size_w" double: 0.0000000000000000000000000;
           value "geom.size_h" double: 0.0000000000000000000000000;
           value "state_info.seq" int: 10;
+          value "state_info.flags" int: 0;
+          value "style" string: "plain";
+          value "autoscroll" uchar: 0;
+          value "resizable" uchar: 0;
+        }
+      }
+      group "clients" list {
+        group "E_Config_Gadcon_Client" struct {
+          value "name" string: "connman";
+          value "id" string: "connman";
+          value "geom.pos" int: 768;
+          value "geom.size" int: 32;
+          value "geom.res" int: 800;
+          value "geom.pos_x" double: 0.0000000000000000000000000;
+          value "geom.pos_y" double: 0.0000000000000000000000000;
+          value "geom.size_w" double: 0.0000000000000000000000000;
+          value "geom.size_h" double: 0.0000000000000000000000000;
+          value "state_info.seq" int: 11;
           value "state_info.flags" int: 0;
           value "style" string: "plain";
           value "autoscroll" uchar: 0;

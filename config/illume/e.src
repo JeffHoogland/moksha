@@ -235,67 +235,9 @@ group "E_Config" struct {
                     value "autoscroll" uchar: 0;
                     value "resizable" uchar: 0;
                 }
-            }
-            value "name" string: "illume-indicator";
-            value "id" int: 0;
-            value "zone" int: 0;
-        }
-        group "E_Config_Gadcon" struct {
-            group "clients" list {
                 group "E_Config_Gadcon_Client" struct {
-                    value "name" string: "illume-home-toggle";
-                    value "id" string: "illume-home-toggle.1";
-                    value "geom.pos" int: 41;
-                    value "geom.size" int: 41;
-                    value "geom.res" int: 474;
-                    value "geom.pos_x" double: 0.0000000000000000000000000;
-                    value "geom.pos_y" double: 0.0000000000000000000000000;
-                    value "geom.size_w" double: 0.0000000000000000000000000;
-                    value "geom.size_h" double: 0.0000000000000000000000000;
-                    value "state_info.seq" int: 2;
-                    value "state_info.flags" int: 3;
-                    value "style" string: "plain";
-                    value "orient" int: 0;
-                    value "autoscroll" uchar: 0;
-                    value "resizable" uchar: 0;
-                }
-                group "E_Config_Gadcon_Client" struct {
-                    value "name" string: "illume-mode-toggle";
-                    value "id" string: "illume-mode-toggle.1";
-                    value "geom.pos" int: 82;
-                    value "geom.size" int: 41;
-                    value "geom.res" int: 474;
-                    value "geom.pos_x" double: 0.0000000000000000000000000;
-                    value "geom.pos_y" double: 0.0000000000000000000000000;
-                    value "geom.size_w" double: 0.0000000000000000000000000;
-                    value "geom.size_h" double: 0.0000000000000000000000000;
-                    value "state_info.seq" int: 3;
-                    value "state_info.flags" int: 3;
-                    value "style" string: "plain";
-                    value "orient" int: 0;
-                    value "autoscroll" uchar: 0;
-                    value "resizable" uchar: 0;
-                }
-                group "E_Config_Gadcon_Client" struct {
-                    value "name" string: "illume-kbd-toggle";
-                    value "id" string: "illume-kbd-toggle.1";
-                    value "geom.pos" int: 123;
-                    value "geom.size" int: 41;
-                    value "geom.res" int: 474;
-                    value "geom.pos_x" double: 0.0000000000000000000000000;
-                    value "geom.pos_y" double: 0.0000000000000000000000000;
-                    value "geom.size_w" double: 0.0000000000000000000000000;
-                    value "geom.size_h" double: 0.0000000000000000000000000;
-                    value "state_info.seq" int: 4;
-                    value "state_info.flags" int: 3;
-                    value "style" string: "plain";
-                    value "orient" int: 0;
-                    value "autoscroll" uchar: 0;
-                    value "resizable" uchar: 0;
-                }
-                group "E_Config_Gadcon_Client" struct {
-                    value "name" string: "battery";
-                    value "id" string: "battery";
+                    value "name" string: "connman";
+                    value "id" string: "connman";
                     value "geom.pos" int: 433;
                     value "geom.size" int: 41;
                     value "geom.res" int: 474;
@@ -303,41 +245,7 @@ group "E_Config" struct {
                     value "geom.pos_y" double: 0.0000000000000000000000000;
                     value "geom.size_w" double: 0.0000000000000000000000000;
                     value "geom.size_h" double: 0.0000000000000000000000000;
-                    value "state_info.seq" int: 6;
-                    value "state_info.flags" int: 3;
-                    value "style" string: "plain";
-                    value "orient" int: 0;
-                    value "autoscroll" uchar: 0;
-                    value "resizable" uchar: 0;
-                }
-                group "E_Config_Gadcon_Client" struct {
-                    value "name" string: "configuration";
-                    value "id" string: "configuration";
-                    value "geom.pos" int: 720;
-                    value "geom.size" int: 80;
-                    value "geom.res" int: 800;
-                    value "geom.pos_x" double: 0.0000000000000000000000000;
-                    value "geom.pos_y" double: 0.0000000000000000000000000;
-                    value "geom.size_w" double: 0.0000000000000000000000000;
-                    value "geom.size_h" double: 0.0000000000000000000000000;
-                    value "state_info.seq" int: 5;
-                    value "state_info.flags" int: 0;
-                    value "style" string: "plain";
-                    value "orient" int: 0;
-                    value "autoscroll" uchar: 0;
-                    value "resizable" uchar: 0;
-                }
-                group "E_Config_Gadcon_Client" struct {
-                    value "name" string: "start";
-                    value "id" string: "start";
-                    value "geom.pos" int: 0;
-                    value "geom.size" int: 41;
-                    value "geom.res" int: 474;
-                    value "geom.pos_x" double: 0.0000000000000000000000000;
-                    value "geom.pos_y" double: 0.0000000000000000000000000;
-                    value "geom.size_w" double: 0.0000000000000000000000000;
-                    value "geom.size_h" double: 0.0000000000000000000000000;
-                    value "state_info.seq" int: 1;
+                    value "state_info.seq" int: 8;
                     value "state_info.flags" int: 3;
                     value "style" string: "plain";
                     value "orient" int: 0;
@@ -346,8 +254,8 @@ group "E_Config" struct {
                 }
             }
             value "name" string: "illume-indicator";
-            value "id" int: 1;
-            value "zone" int: 1;
+            value "id" int: 0;
+            value "zone" int: 0;
         }
     }
     group "wheel_bindings" list {
@@ -1382,6 +1290,12 @@ group "E_Config" struct {
         }
         group "E_Config_Module" struct {
             value "name" string: "battery";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 0;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "connman";
             value "enabled" uchar: 1;
             value "delayed" uchar: 0;
             value "priority" int: 0;
