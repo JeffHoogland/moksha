@@ -203,10 +203,10 @@ main(int argc, char **argv)
    snprintf(buf, sizeof(buf), "%1.1f", tstart);
    e_util_env_set("E_START_TIME", buf);
 
-   /* FIXME: this is the init code for letting e be relocatable. right now
-    * its not used - so i want to see if it can reliably determine its exe
-    * prefix
-    */
+   TS("eina init");
+   eina_init();
+   _e_main_shutdown_push(eina_shutdown);
+
    TS("determine prefix");
    if (!e_prefix_determine(argv[0]))
      {
@@ -233,10 +233,6 @@ main(int argc, char **argv)
    /* envrionment varabiles so you know E is running/launched you */
    e_util_env_set("PANTS", "ON");
    e_util_env_set("DESKTOP", "Enlightenment-0.17.0");
-
-   TS("eina init");
-   eina_init();
-   _e_main_shutdown_push(eina_shutdown);
 
    TS("intl init");
    e_intl_init();
