@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2011-07-02 07:24+0400\n"
-"PO-Revision-Date: 2011-07-02 13:54+0400\n"
+"PO-Revision-Date: 2011-07-04 11:10+0400\n"
 "Last-Translator: batden <batden@orange.fr>\n"
 "Language-Team: Enlightenment French Team <pourunmondesansgourou@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -2407,7 +2407,7 @@ msgstr "Racks"
 
 #: src/bin/e_int_menus.c:291
 msgid "Show/Hide All Windows"
-msgstr "Afficher/Masquer les fenêtres"
+msgstr "Voir/Cacher les fenêtres"
 
 #: src/bin/e_int_menus.c:604
 msgid "(No Applications)"
@@ -6052,7 +6052,7 @@ msgstr "Détails"
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:141
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:306
 msgid "<No Name>"
-msgstr "<Sans Nom>"
+msgstr "<sans nom>"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:144
 msgid "Class:"
@@ -6061,7 +6061,7 @@ msgstr "Classe :"
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:148
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:308
 msgid "<No Class>"
-msgstr "<Sans Classe>"
+msgstr "<sans classe>"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:151
 msgid "Title:"
@@ -6070,7 +6070,7 @@ msgstr "Titre :"
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:155
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:310
 msgid "<No Title>"
-msgstr "<Sans Titre>"
+msgstr "<sans titre>"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:158
 msgid "Role:"
@@ -6079,7 +6079,7 @@ msgstr "Rôle :"
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:162
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:312
 msgid "<No Role>"
-msgstr "<Sans Rôle>"
+msgstr "<sans rôle>"
 
 #: src/modules/cpufreq/e_mod_main.c:132
 msgid "Cpufreq"
@@ -6947,7 +6947,7 @@ msgstr "Ajouter un autre gadget"
 #: src/modules/gadman/e_mod_main.c:84
 #: src/modules/gadman/e_mod_main.c:120
 msgid "Show/hide gadgets"
-msgstr "Afficher/Masquer les gadgets"
+msgstr "Voir/Cacher les gadgets"
 
 #: src/modules/winlist/e_int_config_winlist.c:58
 msgid "Window List Settings"
