@@ -260,6 +260,9 @@ _e_kbd_dict_open(E_Kbd_Dict *kd)
 	return 0;
      }
    kd->file.size = st.st_size;
+   
+   eina_mmap_safety_enabled_set(EINA_TRUE);
+   
    kd->file.dict = mmap(NULL, kd->file.size, PROT_READ, MAP_SHARED,
 			kd->file.fd, 0);
    if ((kd->file.dict== MAP_FAILED) || (!kd->file.dict))
