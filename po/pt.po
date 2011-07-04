@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e17\n"
 "Report-Msgid-Bugs-To: http://trac.enlightenment.org/e/\n"
-"POT-Creation-Date: 2011-06-25 20:01-0700\n"
-"PO-Revision-Date: 2011-06-27 18:46-0000\n"
+"POT-Creation-Date: 2011-06-29 06:01-0700\n"
+"PO-Revision-Date: 2011-07-04 19:00-0000\n"
 "Last-Translator: Sérgio Marques <smarquespt@gmail.com>\n"
 "Language-Team: Portuguese <>\n"
 "Language: pt\n"
@@ -1001,7 +1001,6 @@ msgid "Modules"
 msgstr "Módulos"
 
 #: ../src/bin/e_configure.c:364
-#| msgid "Icon Preference"
 msgid "Preferences"
 msgstr "Preferências"
 
@@ -3650,14 +3649,14 @@ msgstr "ERRO"
 msgid "Battery Meter"
 msgstr "Medidor de bateria"
 
-#: ../src/modules/clock/e_mod_main.c:521
-#: ../src/modules/clock/e_mod_main.c:626
-#: ../src/modules/clock/e_mod_main.c:639
+#: ../src/modules/clock/e_mod_main.c:519
+#: ../src/modules/clock/e_mod_main.c:624
+#: ../src/modules/clock/e_mod_main.c:637
 msgid "Clock"
 msgstr "Relógio"
 
-#: ../src/modules/clock/e_mod_main.c:626
-#: ../src/modules/clock/e_mod_main.c:639
+#: ../src/modules/clock/e_mod_main.c:624
+#: ../src/modules/clock/e_mod_main.c:637
 msgid "Show calendar"
 msgstr "Mostrar calendário"
 
@@ -3725,7 +3724,6 @@ msgid "New Application"
 msgstr "Nova aplicação"
 
 #: ../src/modules/conf_applications/e_mod_main.c:41
-#| msgid "Select Applications"
 msgid "Default Applications"
 msgstr "Aplicações predefinidas"
 
@@ -4502,13 +4500,22 @@ msgstr "O Enlightenment não conseguiu importar a configuração<br>devido a err
 msgid "Language Settings"
 msgstr "Definições de idioma"
 
-#: ../src/modules/conf_intl/e_int_config_intl.c:900
-#: ../src/modules/conf_intl/e_int_config_intl.c:983
+#: ../src/modules/conf_intl/e_int_config_intl.c:872
+msgid "Possible Locale problems"
+msgstr "Problemas com idiomas"
+
+#: ../src/modules/conf_intl/e_int_config_intl.c:873
+#, c-format
+msgid "You have some extra locale environment<br>variables set that may interfere with<br>correct display of your chosen language.<br>If you don't want these affected, use the<br>Enviornment variable settings to unset them.<br>The variables that may affect you are<br>as follows:<br>%s"
+msgstr "Você tem definidas algumas variáveis<br>adicionais de localização que<br>podem interferir com o idioma escolhido.<br>Se não as quiser afetar, utilize as definições das variáveis de ambiente<br> para não as utilizar. As variáveis de ambiente que podem afetar o seu idioma são as seguintes:<br><br>%s."
+
+#: ../src/modules/conf_intl/e_int_config_intl.c:927
+#: ../src/modules/conf_intl/e_int_config_intl.c:1010
 msgid "Language Selector"
 msgstr "Seletor de idioma"
 
-#: ../src/modules/conf_intl/e_int_config_intl.c:929
-#: ../src/modules/conf_intl/e_int_config_intl.c:1365
+#: ../src/modules/conf_intl/e_int_config_intl.c:956
+#: ../src/modules/conf_intl/e_int_config_intl.c:1392
 #: ../src/modules/conf_menus/e_int_config_menus.c:169
 #: ../src/modules/wizard/page_010.c:146
 #: ../src/modules/wizard/page_030.c:129
@@ -4516,13 +4523,13 @@ msgid "System Default"
 msgstr "Omissões do sistema"
 
 #. Locale selector
-#: ../src/modules/conf_intl/e_int_config_intl.c:956
-#: ../src/modules/conf_intl/e_int_config_intl.c:1034
+#: ../src/modules/conf_intl/e_int_config_intl.c:983
+#: ../src/modules/conf_intl/e_int_config_intl.c:1061
 msgid "Locale Selected"
 msgstr "Idioma selecionado"
 
-#: ../src/modules/conf_intl/e_int_config_intl.c:957
-#: ../src/modules/conf_intl/e_int_config_intl.c:1035
+#: ../src/modules/conf_intl/e_int_config_intl.c:984
+#: ../src/modules/conf_intl/e_int_config_intl.c:1062
 msgid "Locale"
 msgstr "Idioma"
 
