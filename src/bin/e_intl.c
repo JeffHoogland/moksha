@@ -39,7 +39,7 @@ static Eina_Hash	*_e_intl_locale_alias_hash_get(void);
 static char		*_e_intl_locale_alias_get(const char *language);
 static Eina_List	*_e_intl_locale_system_locales_get(void);
 static Eina_List	*_e_intl_locale_search_order_get(const char *locale);
-static int		 _e_intl_locale_validate(const char *locale, char **chset);
+static int		 _e_intl_locale_validate(const char *locale);
 static void 		 _e_intl_locale_hash_free(Eina_Hash *language_hash);
 static Eina_Bool 	 _e_intl_locale_hash_free_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata);
 
@@ -118,25 +118,6 @@ e_intl_post_shutdown(void)
    return 1;
 }
 
-static char *
-_fix_chset(char *lang, char *chset)
-{
-   char *p, *new_lang;
-   
-   if (!chset) return lang;
-	     
-   p = strchr(lang, '.');
-   if (p) *p = 0;
-   new_lang = malloc(strlen(lang) + 1 + strlen(chset));
-   strcpy(new_lang, lang);
-   strcat(new_lang, ".");
-   strcat(new_lang, chset);
-   free(chset);
-   E_FREE(lang);
-   lang = new_lang;
-   return lang;
-}
-
 /*
  * TODO
  * - Add error dialogs explaining any errors while setting the locale
@@ -178,11 +159,7 @@ e_intl_language_set(const char *lang)
    ok = 1;
    if (strcmp(_e_intl_language_alias, "C"))
      {
-        char *chset = NULL;
-        
-	ok = _e_intl_locale_validate(_e_intl_language_alias, &chset);
-        _e_intl_language_alias = _fix_chset(_e_intl_language_alias, chset);
-        chset = NULL;
+	ok = _e_intl_locale_validate(_e_intl_language_alias);
 	if (!ok)
 	  {
 	     char *p, *new_lang;
@@ -192,9 +169,7 @@ e_intl_language_set(const char *lang)
 	     if (p) *p = 0;
 	     _e_intl_language_alias = strdup(new_lang);
 	     E_FREE(new_lang);
-	     ok = _e_intl_locale_validate(_e_intl_language_alias, &chset);
-             _e_intl_language_alias = _fix_chset(_e_intl_language_alias, chset);
-             chset = NULL;
+	     ok = _e_intl_locale_validate(_e_intl_language_alias);
 	  }
      }
    if (!ok)
@@ -205,11 +180,6 @@ e_intl_language_set(const char *lang)
      }
    else
      {
-        char *chset = NULL;
-        
-	ok = _e_intl_locale_validate(_e_intl_language, &chset);
-        _e_intl_language = _fix_chset(_e_intl_language, chset);
-        chset = NULL;
 	/* Only set env vars is a non NULL locale was passed */
 	if (set_envars)
 	  {
@@ -303,8 +273,7 @@ e_intl_language_list(void)
 
 	EINA_LIST_FREE(dir_languages, language)
 	     if ((_e_intl_language_list_find(all_languages, language)) || 
-		 ((strlen(language) > 2) && 
-                     (!_e_intl_locale_validate(language, NULL))))
+		 ((strlen(language) > 2) && (!_e_intl_locale_validate(language))))
 	       {
 		  free(language);
 	       }
@@ -878,7 +847,7 @@ _e_intl_locale_system_locales_get(void)
  * must be an un aliased locale;
  */
 static int
-_e_intl_locale_validate(const char *locale, char **chset)
+_e_intl_locale_validate(const char *locale)
 {
    Eina_List *all_locales;
    E_Locale_Parts *locale_parts;
@@ -971,16 +940,6 @@ _e_intl_locale_validate(const char *locale, char **chset)
 				      found = 1;
 				   }
 			      }
-                            if ((found) && (chset))
-                              {
-                                 if (*chset) free(*chset);
-                                 if ((!strcmp(locale_parts->codeset, "UTF-8")) &&
-                                     (!strcmp(locale_parts_next->codeset, "utf8")))
-                                    *chset = strdup("utf8");
-                                 else if ((!strcmp(locale_parts->codeset, "utf8")) &&
-                                          (!strcmp(locale_parts_next->codeset, "UTF-8")))
-                                    *chset = strdup("UTF-8");
-                              }
 			 }
 		    }
 	       }
