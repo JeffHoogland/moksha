@@ -99,7 +99,7 @@ main(int argc,
         exit(7);
      }
    
-   maxstr = read_file("/sys/devices/virtual/backlight/acpi_video0/max_brightness_max");
+   maxstr = read_file("/sys/devices/virtual/backlight/acpi_video0/max_brightness");
    if (maxstr)
      {
         maxlevel = atoi(maxstr);
