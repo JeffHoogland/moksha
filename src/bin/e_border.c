@@ -1035,7 +1035,8 @@ _e_border_pri_raise(E_Border *bd)
    if (bd->client.netwm.pid == getpid()) return;
    _pri_adj(bd->client.netwm.pid, 
             e_config->priority - 1, -1, EINA_FALSE, 
-            EINA_TRUE, EINA_TRUE);
+//            EINA_TRUE, EINA_TRUE);
+            EINA_TRUE, EINA_FALSE);
 //   printf("WIN: pid %i, title %s (HI!!!!!!!!!!!!!!!!!!)\n",
 //          bd->client.netwm.pid, e_border_name_get(bd));
 }
@@ -1047,7 +1048,8 @@ _e_border_pri_norm(E_Border *bd)
    if (bd->client.netwm.pid == getpid()) return;
    _pri_adj(bd->client.netwm.pid, 
             e_config->priority, 1, EINA_FALSE, 
-            EINA_TRUE, EINA_TRUE);
+//            EINA_TRUE, EINA_TRUE);
+            EINA_TRUE, EINA_FALSE);
 //   printf("WIN: pid %i, title %s (NORMAL)\n",
 //          bd->client.netwm.pid, e_border_name_get(bd));
 }
