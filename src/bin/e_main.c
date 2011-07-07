@@ -661,7 +661,8 @@ main(int argc, char **argv)
    if (!efreet_init())
      {
         e_error_message_show(_("Enlightenment cannot initialize the FDO desktop system.\n"
-                               "Perhaps you are out of memory?"));
+                               "Perhaps you lack permissions on ~/.cache/efreet or are\n"
+                               "out of memory or disk space?"));
         _e_main_shutdown(-1);
      }
    _e_main_shutdown_push(efreet_shutdown);
