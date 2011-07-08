@@ -149,6 +149,18 @@ main(int argc,
           }
         closedir(dirp);
      }
+   if (maxlevel <= 0)
+     {
+        struct stat st;
+        
+        snprintf(file, sizeof(file), "/sys/class/leds/lcd-backlight/brightness");
+        if (stat(file, &st) >= 0)
+          {
+             maxstr = read_file("/sys/devices/leds/lcd-backlight/max_brightness");
+             maxlevel = 255;
+             if (maxstr) maxlevel = atoi(maxstr);
+          }
+     }
    if (maxlevel > 0)
      {
         curlevel = ((maxlevel * level) + (500 / maxlevel)) / 1000;
