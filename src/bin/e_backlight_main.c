@@ -156,9 +156,13 @@ main(int argc,
         snprintf(file, sizeof(file), "/sys/class/leds/lcd-backlight/brightness");
         if (stat(file, &st) >= 0)
           {
-             maxstr = read_file("/sys/devices/leds/lcd-backlight/max_brightness");
              maxlevel = 255;
-             if (maxstr) maxlevel = atoi(maxstr);
+             maxstr = read_file("/sys/devices/leds/lcd-backlight/max_brightness");
+             if (maxstr)
+               {
+                  maxlevel = atoi(maxstr);
+                  free(maxstr);
+               }
           }
      }
    if (maxlevel > 0)
