@@ -69,6 +69,7 @@ static Eina_Bool _e_desklock_cb_key_down(void *data, int type, void *event);
 static Eina_Bool _e_desklock_cb_mouse_move(void *data, int type, void *event);
 static Eina_Bool _e_desklock_cb_custom_desklock_exit(void *data, int type, void *event);
 static Eina_Bool _e_desklock_cb_idle_poller(void *data);
+static Eina_Bool _e_desklock_cb_window_stack(void *data, int type, void *event);
 
 static void _e_desklock_null(void);
 static void _e_desklock_passwd_update(void);
@@ -362,6 +363,18 @@ e_desklock_show(void)
      eina_list_append(edd->handlers,
 		      ecore_event_handler_add(ECORE_EVENT_KEY_DOWN,
 					      _e_desklock_cb_key_down, NULL));
+   edd->handlers =
+     eina_list_append(edd->handlers,
+		      ecore_event_handler_add(ECORE_X_EVENT_WINDOW_STACK,
+					      _e_desklock_cb_window_stack, NULL));
+   edd->handlers =
+     eina_list_append(edd->handlers,
+		      ecore_event_handler_add(ECORE_X_EVENT_WINDOW_CONFIGURE,
+					      _e_desklock_cb_window_stack, NULL));
+   edd->handlers =
+     eina_list_append(edd->handlers,
+		      ecore_event_handler_add(ECORE_X_EVENT_WINDOW_CREATE,
+					      _e_desklock_cb_window_stack, NULL));
 
    if ((total_zone_num > 1) && (e_config->desklock_login_box_zone == -2)) 
      {
@@ -442,6 +455,43 @@ e_desklock_hide(void)
 
 	_e_desklock_autolock_time = 0.0;
      }
+}
+
+static Eina_Bool
+_e_desklock_cb_window_stack(void *data __UNUSED__,
+			    int   type,
+			    void *event)
+{
+   Ecore_X_Window win;
+   E_Desklock_Popup_Data *edp;
+   Eina_List *l;
+   Eina_Bool raise = EINA_TRUE;
+
+   if (type == ECORE_X_EVENT_WINDOW_STACK)
+     win = ((Ecore_X_Event_Window_Stack*) event)->event_win;
+   else if (type == ECORE_X_EVENT_WINDOW_STACK)
+     win = ((Ecore_X_Event_Window_Configure*) event)->event_win;
+   else if (type == ECORE_X_EVENT_WINDOW_CREATE)
+     win = ((Ecore_X_Event_Window_Create*) event)->win;
+   else 
+     return ECORE_CALLBACK_PASS_ON;
+   
+   EINA_LIST_FOREACH(edd->elock_wnd_list, l, edp)
+     {
+	if (win == edp->popup_wnd->evas_win)
+	  {
+	     raise = EINA_FALSE;	     
+	     break;
+	  }
+     }
+
+   if (raise)
+     {
+	EINA_LIST_FOREACH(edd->elock_wnd_list, l, edp)
+	  ecore_evas_raise(edp->popup_wnd->ecore_evas);
+     }
+
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool
