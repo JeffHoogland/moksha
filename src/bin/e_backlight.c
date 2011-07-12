@@ -285,6 +285,20 @@ _bl_sys_find(void)
                   free(file);
                }
           }
+        if (maxval <= 0)
+          {
+             struct stat st;
+             
+             tryfile = "/sys/class/leds/lcd-backlight/brightness";
+             if (stat(tryfile, &st) == 0)
+               {
+                  tryfile = "/sys/class/leds/lcd-backlight/max_brightness";
+                  bl_sysval = eina_stringshare_add(tryfile);
+                  maxval = _bl_sys_num_get(tryfile);
+                  if (maxval <= 0) maxval = 255;
+                  return;
+               }
+          }
      }
 }
 
@@ -304,12 +318,12 @@ _bl_sys_level_get(void)
         strcat(p, "brightness");
      }
    maxval = _bl_sys_num_get(maxfile);
-   if (maxval > 0)
-     {
-        val = _bl_sys_num_get(valfile);
-        if ((val >= 0) && (val <= maxval))
-           bl_val = (double)val / (double)maxval;
-     }
+   if (maxval < 0) maxval = 255;
+   val = _bl_sys_num_get(valfile);
+   if ((val >= 0) && (val <= maxval))
+      bl_val = (double)val / (double)maxval;
+   printf("GET: %i/%i (%1.3f)\n", val, maxval, bl_val);
+   free(valfile);
 }
 
 static Eina_Bool
@@ -343,6 +357,7 @@ _bl_sys_level_set(double val)
         bl_sys_pending_set = EINA_TRUE;
         return;
      }
+   printf("SET: %1.3f\n", val);
    snprintf(buf, sizeof(buf), 
             "%s/enlightenment/utils/enlightenment_backlight %i", 
             e_prefix_lib_get(), (int)(val * 1000.0));

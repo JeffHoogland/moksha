@@ -350,7 +350,6 @@ _backlight_cb_mouse_wheel(void *data, Evas *evas __UNUSED__, Evas_Object *obj __
    double v;
    Instance *inst = data;
 
-   e_backlight_update();
    inst->val = e_backlight_level_get(inst->gcc->gadcon->zone);
    if (ev->z > 0)
      _backlight_level_decrease(inst);

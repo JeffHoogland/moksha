@@ -154,7 +154,7 @@ main(int argc,
         struct stat st;
         
         snprintf(file, sizeof(file), "/sys/class/leds/lcd-backlight/brightness");
-        if (stat(file, &st) >= 0)
+        if (stat(file, &st) == 0)
           {
              maxlevel = 255;
              maxstr = read_file("/sys/devices/leds/lcd-backlight/max_brightness");
@@ -162,6 +162,7 @@ main(int argc,
                {
                   maxlevel = atoi(maxstr);
                   free(maxstr);
+                  if (maxlevel <= 0) maxlevel = 255;
                }
           }
      }
