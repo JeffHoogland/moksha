@@ -557,8 +557,9 @@ _e_kbd_int_zoomkey_up(E_Kbd_Int *ki)
    e_layout_virtual_size_set(o, vw, vh);
    e_layout_pack(ki->zoomkey.layout_obj, o);
    e_layout_child_move(o, 0, 0);
-   // FIXME dimension * 4 is a magic number - make config
-   e_layout_child_resize(o, vw * 4, vh * 4);
+   e_layout_child_resize(o,
+                         vw * il_kbd_cfg->zoom_level,
+                         vh * il_kbd_cfg->zoom_level);
    evas_object_show(o);
    ki->zoomkey.sublayout_obj = o;
 
@@ -648,11 +649,12 @@ _e_kbd_int_zoomkey_update(E_Kbd_Int *ki)
    evas_object_geometry_get(ki->zoomkey.layout_obj, NULL, NULL, &w, &h);
    evas_object_geometry_get(ki->layout_obj, NULL, NULL, &ww, &hh);
    e_layout_virtual_size_set(ki->zoomkey.layout_obj, w, h);
-   // FIXME dimension * 4 is a magic number - make config
-   e_layout_child_resize(ki->zoomkey.sublayout_obj, ww * 4, hh * 4);
+   e_layout_child_resize(ki->zoomkey.sublayout_obj,
+                         ww * il_kbd_cfg->zoom_level,
+                         hh * il_kbd_cfg->zoom_level);
    e_layout_child_move(ki->zoomkey.sublayout_obj, 
-		       (w / 2) - (ki->down.cx * 4), 
-		       (h / 2) - (ki->down.cy * 4));
+		       (w / 2) - (ki->down.cx * il_kbd_cfg->zoom_level),
+		       (h / 2) - (ki->down.cy * il_kbd_cfg->zoom_level));
    ky = _e_kbd_int_at_coord_get(ki, ki->down.clx, ki->down.cly);
    if (ky != ki->zoomkey.pressed)
      {
@@ -729,8 +731,8 @@ _e_kbd_int_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __U
    ki->down.cly = y;
 
    if (ki->down.hold_timer) ecore_timer_del(ki->down.hold_timer);
-   // FIXME 0.25 - magic value. make config.
-   ki->down.hold_timer = ecore_timer_add(0.25, _e_kbd_int_cb_hold_timeout, ki);
+   ki->down.hold_timer = ecore_timer_add(il_kbd_cfg->hold_timer,
+                                         _e_kbd_int_cb_hold_timeout, ki);
 
    ky = _e_kbd_int_at_coord_get(ki, x, y);
    ki->layout.pressed = ky;
@@ -774,11 +776,14 @@ _e_kbd_int_cb_mouse_move(void *data, Evas *evas __UNUSED__, Evas_Object *obj __U
    evas_object_geometry_get(ki->event_obj, &x, &y, &w, &h);
    dx = (dx * ki->layout.w) / w;
    dy = (dy * ki->layout.h) / h;
-   // FIXME: slide 1/4 of dimension is a magic number - make config
-   if ((dx > 0) && (dx > (ki->layout.w / 4))) ki->down.stroke = 1;
-   else if ((dx < 0) && (-dx > (ki->layout.w / 4))) ki->down.stroke = 1;
-   if ((dy > 0) && (dy > (ki->layout.h / 4))) ki->down.stroke = 1;
-   else if ((dy < 0) && (-dy > (ki->layout.w / 4))) ki->down.stroke = 1;
+   if ((dx > 0) && (dx > (ki->layout.w / il_kbd_cfg->slide_dim)))
+     ki->down.stroke = 1;
+   else if ((dx < 0) && (-dx > (ki->layout.w / il_kbd_cfg->slide_dim)))
+     ki->down.stroke = 1;
+   if ((dy > 0) && (dy > (ki->layout.h / il_kbd_cfg->slide_dim)))
+     ki->down.stroke = 1;
+   else if ((dy < 0) && (-dy > (ki->layout.w / il_kbd_cfg->slide_dim)))
+     ki->down.stroke = 1;
    if ((ki->down.stroke) && (ki->down.hold_timer))
      {
 	ecore_timer_del(ki->down.hold_timer);

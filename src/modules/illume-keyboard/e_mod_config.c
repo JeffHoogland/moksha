@@ -29,6 +29,9 @@ il_kbd_config_init(E_Module *m)
    E_CONFIG_VAL(D, T, use_internal, INT);
    E_CONFIG_VAL(D, T, run_keyboard, STR);
    E_CONFIG_VAL(D, T, dict, STR);
+   E_CONFIG_VAL(D, T, zoom_level, INT);
+   E_CONFIG_VAL(D, T, hold_timer, DOUBLE);
+   E_CONFIG_VAL(D, T, slide_dim, INT);
 
    il_kbd_cfg = e_config_domain_load("module.illume-keyboard", conf_edd);
    if ((il_kbd_cfg) && 
@@ -44,11 +47,21 @@ il_kbd_config_init(E_Module *m)
         il_kbd_cfg->use_internal = 1;
         il_kbd_cfg->run_keyboard = NULL;
         il_kbd_cfg->dict = eina_stringshare_add("English_(US).dic");
+        il_kbd_cfg->zoom_level = 4;
+        il_kbd_cfg->slide_dim = 4;
+        il_kbd_cfg->hold_timer = 0.25;
+
      }
    if (il_kbd_cfg) 
      {
         /* Add new config variables here */
         /* if ((il_kbd_cfg->version & 0xffff) < 1) */
+        if ((il_kbd_cfg->version >> 16) < IL_CONFIG_MAJ)
+          {
+             il_kbd_cfg->zoom_level = 4;
+             il_kbd_cfg->slide_dim = 4;
+             il_kbd_cfg->hold_timer = 0.25;
+          }
         il_kbd_cfg->version = (IL_CONFIG_MAJ << 16) | IL_CONFIG_MIN;
      }
 
@@ -128,7 +141,7 @@ _il_kbd_config_free(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdat
 static Evas_Object *
 _il_kbd_config_ui(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata __UNUSED__) 
 {
-   Evas_Object *list, *of, *ow;
+   Evas_Object *list, *of, *ow, *sl, *ol;
    E_Radio_Group *rg;
    Eina_List *l;
 
@@ -193,6 +206,25 @@ _il_kbd_config_ui(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_D
              nn++;
 	  }
      }
+
+   ol = e_widget_label_add(evas, _("Displacement ratio"));
+   e_widget_framelist_object_append(of, ol);
+   sl = e_widget_slider_add(evas, EINA_TRUE, 0, "1/%.0f", 1.0, 10.0, 1.0, 0,
+                            NULL, &(il_kbd_cfg->slide_dim), 150);
+   e_widget_framelist_object_append(of, sl);
+
+   ol = e_widget_label_add(evas, _("Delay for zoom popup"));
+   e_widget_framelist_object_append(of, ol);
+   sl = e_widget_slider_add(evas, EINA_TRUE, 0, "%.2f second(s)", 0.0, 3.0, 0.01, 0,
+                            &(il_kbd_cfg->hold_timer), NULL, 150);
+   e_widget_framelist_object_append(of, sl);
+
+   ol = e_widget_label_add(evas, _("Zoom level"));
+   e_widget_framelist_object_append(of, ol);
+   sl = e_widget_slider_add(evas, EINA_TRUE, 0, "%.0f", 1.0, 10.0, 1.0, 0,
+                            NULL, &(il_kbd_cfg->zoom_level), 150);
+   e_widget_framelist_object_append(of, sl);
+
    e_widget_list_object_append(list, of, 1, 0, 0.0);
    return list;
 }
