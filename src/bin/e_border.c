@@ -7392,10 +7392,10 @@ _e_border_eval(E_Border *bd)
                   if (bd->y < zy)
                     bd->y = zy;
 
-                  if (bd->x + bd->w > zw)
+                  if (bd->x + bd->w > zx + zw)
                     bd->x = zx + zw - bd->w;
 
-                  if (bd->y + bd->h > zh)
+                  if (bd->y + bd->h > zy + zh)
                     bd->y = zy + zh - bd->h;
      // <--
 
