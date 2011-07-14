@@ -909,6 +909,11 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, backlight.normal, DOUBLE);
    E_CONFIG_VAL(D, T, backlight.dim, DOUBLE);
    E_CONFIG_VAL(D, T, backlight.transition, DOUBLE);
+
+   E_CONFIG_VAL(D, T, deskenv.load_xrdb, UCHAR);
+   E_CONFIG_VAL(D, T, deskenv.load_xmodmap, UCHAR);
+   E_CONFIG_VAL(D, T, deskenv.load_gnome, UCHAR);
+   E_CONFIG_VAL(D, T, deskenv.load_kde, UCHAR);
    
    e_config_load();
 

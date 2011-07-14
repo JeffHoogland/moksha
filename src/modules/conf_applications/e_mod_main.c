@@ -41,6 +41,10 @@ e_modapi_init(E_Module *m)
                                  _("Default Applications"), NULL, 
                                  "preferences-applications-default", 
                                  e_int_config_defapps);
+   e_configure_registry_item_add("applications/desktop_environments", 70,
+                                 _("Desktop Environments"), NULL, 
+                                 "preferences-desktop-environments", 
+                                 e_int_config_deskenv);
    e_configure_registry_category_add("internal", -1, _("Internal"), NULL, 
                                      "enlightenment/internal");
    e_configure_registry_item_add("internal/ibar_other", -1, _("IBar Other"), 
@@ -67,6 +71,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    e_configure_registry_item_del("applications/restart_applications");
    e_configure_registry_item_del("applications/startup_applications");
    e_configure_registry_item_del("applications/default_applications");
+   e_configure_registry_item_del("applications/desktop_environments");
    e_configure_registry_category_del("applications");
    conf_module = NULL;
    return 1;

@@ -139,3 +139,4 @@
 #include "e_acpi.h"
 #include "e_env.h"
 #include "e_backlight.h"
+#include "e_deskenv.h"

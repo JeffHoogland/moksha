@@ -55,6 +55,7 @@ e_confirm_dialog.h \
 e_container.h \
 e_datastore.h \
 e_desk.h \
+e_deskenv.h \
 e_desklock.h \
 e_dialog.h \
 e_dnd.h \
@@ -203,6 +204,7 @@ e_confirm_dialog.c \
 e_container.c \
 e_datastore.c \
 e_desk.c \
+e_deskenv.c \
 e_desklock.c \
 e_dialog.c \
 e_dnd.c \

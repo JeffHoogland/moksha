@@ -1035,6 +1035,18 @@ main(int argc, char **argv)
     }
    _e_main_shutdown_push(e_thumb_shutdown);
 
+   if (!after_restart)
+     {
+        TS("deskenv");
+        /* init deskenv system */
+        if (!e_deskenv_init())
+          {
+             e_error_message_show(_("Enlightenment cannot set up its desktop environment system."));
+             _e_main_shutdown(-1);
+          }
+        _e_main_shutdown_push(e_deskenv_shutdown);
+     }
+
    e_init_status_set(_("Setup File Ordering"));
    TS("order");
    if (!e_order_init())

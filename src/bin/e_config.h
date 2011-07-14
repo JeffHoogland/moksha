@@ -349,6 +349,13 @@ struct _E_Config
       double dim;
       double transition;
    } backlight;
+   
+   struct {
+      unsigned char load_xrdb;
+      unsigned char load_xmodmap;
+      unsigned char load_gnome;
+      unsigned char load_kde;
+   } deskenv;
 };
 
 struct _E_Config_Env_Var

@@ -4,10 +4,12 @@
 #define E_TYPEDEFS 1
 #include "e_int_config_apps.h"
 #include "e_int_config_defapps.h"
+#include "e_int_config_deskenv.h"
 
 #undef E_TYPEDEFS
 #include "e_int_config_apps.h"
 #include "e_int_config_defapps.h"
+#include "e_int_config_deskenv.h"
 
 
 EAPI extern E_Module_Api e_modapi;
