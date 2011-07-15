@@ -17,8 +17,9 @@ struct _E_Entry_Smart_Data
    Ecore_IMF_Context *imf_context;
 #endif
    Ecore_Event_Handler *imf_ee_commit_handler;
+   Ecore_Event_Handler *imf_ee_preedit_changed_handler;
    Ecore_Event_Handler *imf_ee_delete_handler;
-   
+
    int enabled;
    int focused;
    int selection_dragging;
@@ -26,6 +27,9 @@ struct _E_Entry_Smart_Data
    float valign;
    int min_width;
    int height;
+   int preedit_start_pos;
+   int preedit_end_pos;
+   Eina_Bool have_preedit : 1;
 };
 
 /* local subsystem functions */
@@ -58,6 +62,7 @@ static void _e_entry_cb_delete(void *data, E_Menu *m, E_Menu_Item *mi);
 #ifdef HAVE_ECORE_IMF
 static Eina_Bool _e_entry_cb_imf_retrieve_surrounding(void *data, Ecore_IMF_Context *ctx, char **text, int *cursor_pos);
 static Eina_Bool _e_entry_cb_imf_event_commit(void *data, int type, void *event);
+static Eina_Bool _e_entry_cb_imf_event_preedit_changed(void *data, int type, void *event);
 static Eina_Bool _e_entry_cb_imf_event_delete_surrounding(void *data, int type, void *event);
 #endif
 
@@ -1069,6 +1074,9 @@ _e_entry_smart_add(Evas_Object *object)
         sd->imf_ee_commit_handler = 
           ecore_event_handler_add(ECORE_IMF_EVENT_COMMIT,
                                   _e_entry_cb_imf_event_commit, object);
+        sd->imf_ee_preedit_changed_handler =
+           ecore_event_handler_add(ECORE_IMF_EVENT_PREEDIT_CHANGED,
+                                   _e_entry_cb_imf_event_preedit_changed, object);
         sd->imf_ee_delete_handler = 
           ecore_event_handler_add(ECORE_IMF_EVENT_DELETE_SURROUNDING,
                                   _e_entry_cb_imf_event_delete_surrounding, sd);
@@ -1125,6 +1133,8 @@ _e_entry_smart_del(Evas_Object *object)
      {
 	if (sd->imf_ee_commit_handler) 
           ecore_event_handler_del(sd->imf_ee_commit_handler);
+	if (sd->imf_ee_preedit_changed_handler)
+          ecore_event_handler_del(sd->imf_ee_preedit_changed_handler);
 	if (sd->imf_ee_delete_handler) 
           ecore_event_handler_del(sd->imf_ee_delete_handler);
 	ecore_imf_context_del(sd->imf_context);
@@ -1396,7 +1406,7 @@ _e_entry_cb_imf_event_commit(void *data, int type __UNUSED__, void *event)
    if ((!(entry = data)) || (!(sd = evas_object_smart_data_get(entry))))
      return ECORE_CALLBACK_PASS_ON;
 
-   if (sd->imf_context != ev->ctx)
+   if ((!sd->imf_context) || (sd->imf_context != ev->ctx))
      return ECORE_CALLBACK_PASS_ON;
 
    editable = sd->editable_object;
@@ -1408,10 +1418,82 @@ _e_entry_cb_imf_event_commit(void *data, int type __UNUSED__, void *event)
 
    if (selecting)
      changed |= e_editable_delete(editable, start_pos, end_pos);
+
+   /* delete preedit characters */
+   if (sd->have_preedit)
+     {
+        if (sd->preedit_start_pos != sd->preedit_end_pos)
+          e_editable_delete(editable, sd->preedit_start_pos, sd->preedit_end_pos);
+        sd->have_preedit = EINA_FALSE;
+        start_pos = sd->preedit_start_pos;
+     }
+
    changed |= e_editable_insert(editable, start_pos, ev->str);
 
    if (changed)
      evas_object_smart_callback_call(entry, "changed", NULL);
+
+   return ECORE_CALLBACK_DONE;
+}
+
+static Eina_Bool
+_e_entry_cb_imf_event_preedit_changed(void *data, int type, void *event)
+{
+   Evas_Object *entry;
+   E_Entry_Smart_Data *sd;
+   Ecore_IMF_Event_Preedit_Changed *ev = event;
+   Evas_Object *editable;
+   int cursor_pos, selection_pos;
+   char *preedit_string = NULL;
+   int preedit_start_pos, preedit_end_pos;
+   int start_pos, end_pos;
+   int selecting;
+   int changed = 0;
+
+   if ((!(entry = data)) || (!(sd = evas_object_smart_data_get(entry))))
+     return ECORE_CALLBACK_PASS_ON;
+
+   if ((!sd->imf_context) || (sd->imf_context != ev->ctx))
+     return ECORE_CALLBACK_PASS_ON;
+
+   /* Get the preedit string from IMF */
+   ecore_imf_context_preedit_string_get(sd->imf_context, &preedit_string, &cursor_pos);
+   if (!preedit_string) return ECORE_CALLBACK_PASS_ON;
+
+   editable = sd->editable_object;
+   cursor_pos = e_editable_cursor_pos_get(editable);
+   selection_pos = e_editable_selection_pos_get(editable);
+   start_pos = (cursor_pos <= selection_pos) ? cursor_pos : selection_pos;
+   end_pos = (cursor_pos >= selection_pos) ? cursor_pos : selection_pos;
+   selecting = (start_pos != end_pos);
+
+   if (selecting)
+     changed |= e_editable_delete(editable, start_pos, end_pos);
+
+   /* delete preedit characters */
+   if (sd->have_preedit)
+     {
+        if (sd->preedit_start_pos != sd->preedit_end_pos)
+          e_editable_delete(editable, sd->preedit_start_pos, sd->preedit_end_pos);
+     }
+
+   cursor_pos = e_editable_cursor_pos_get(editable);
+   sd->preedit_start_pos = cursor_pos;
+
+   /* insert preedit character(s) */
+   changed |= e_editable_insert(editable, cursor_pos, preedit_string);
+
+   sd->preedit_end_pos = e_editable_cursor_pos_get(editable);
+
+   if (!strcmp(preedit_string, ""))
+     sd->have_preedit = EINA_FALSE;
+   else
+     sd->have_preedit = EINA_TRUE;
+
+   if (changed)
+     evas_object_smart_callback_call(entry, "preedit,changed", NULL);
+
+   free(preedit_string);
 
    return ECORE_CALLBACK_DONE;
 }
