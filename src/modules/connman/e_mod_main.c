@@ -554,8 +554,10 @@ _connman_service_disconnect_cb(void            *data,
 
    if (error && dbus_error_is_set(error))
      {
-        if (strcmp(error->name,
-                   "org.moblin.connman.Error.NotConnected") != 0)
+        if ((strcmp(error->name,
+                    "org.moblin.connman.Error.NotConnected") != 0) ||
+	    (strcmp(error->name,
+                    "net.connman.Error.NotConnected") != 0))
           _connman_dbus_error_show(_("Disconnect from network service."),
                                    error);
         dbus_error_free(error);
@@ -593,7 +595,11 @@ _connman_service_connect_cb(void            *data,
           if ((strcmp(error->name,
                       "org.moblin.connman.Error.PassphraseRequired") == 0) ||
               (strcmp(error->name,
-                      "org.moblin.connman.Error.Failed") == 0))
+                      "org.moblin.connman.Error.Failed") == 0) ||
+              (strcmp(error->name,
+                      "net.connman.Error.PassphraseRequired") == 0) ||
+              (strcmp(error->name,
+                      "net.connman.Error.Failed") == 0))
             {
                E_Connman_Service *service;
 
@@ -612,8 +618,10 @@ _connman_service_connect_cb(void            *data,
                  _connman_dbus_error_show(_("Connect to network service."),
                                           error);
             }
-          else if (strcmp(error->name,
-                          "org.moblin.connman.Error.AlreadyConnected") != 0)
+          else if ((strcmp(error->name,
+                           "org.moblin.connman.Error.AlreadyConnected") != 0) ||
+                   (strcmp(error->name,
+                           "net.connman.Error.AlreadyConnected") != 0))
             _connman_dbus_error_show(_("Connect to network service."), error);
 
           dbus_error_free(error);
