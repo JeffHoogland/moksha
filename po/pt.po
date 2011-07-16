@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e17\n"
 "Report-Msgid-Bugs-To: http://trac.enlightenment.org/e/\n"
-"POT-Creation-Date: 2011-07-06 20:01-0700\n"
-"PO-Revision-Date: 2011-07-09 16:02-0000\n"
+"POT-Creation-Date: 2011-07-14 02:02-0700\n"
+"PO-Revision-Date: 2011-07-16 16:45-0000\n"
 "Last-Translator: Sérgio Marques <smarquespt@gmail.com>\n"
 "Language-Team: Portuguese <>\n"
 "Language: pt\n"
@@ -77,7 +77,7 @@ msgstr "Tem a certeza que quer fechar esta janela?"
 #: ../src/bin/e_actions.c:2208
 #: ../src/bin/e_actions.c:2271
 #: ../src/bin/e_confirm_dialog.c:44
-#: ../src/bin/e_desklock.c:998
+#: ../src/bin/e_desklock.c:1048
 #: ../src/bin/e_fm.c:9176
 #: ../src/bin/e_fm.c:9430
 #: ../src/bin/e_module.c:520
@@ -93,7 +93,7 @@ msgstr "Sim"
 #: ../src/bin/e_actions.c:2210
 #: ../src/bin/e_actions.c:2273
 #: ../src/bin/e_confirm_dialog.c:45
-#: ../src/bin/e_desklock.c:1000
+#: ../src/bin/e_desklock.c:1050
 #: ../src/bin/e_fm.c:9174
 #: ../src/bin/e_fm.c:9431
 #: ../src/bin/e_module.c:521
@@ -812,8 +812,8 @@ msgstr "Seletor de cor"
 
 #. buttons at the bottom
 #: ../src/bin/e_color_dialog.c:46
-#: ../src/bin/e_config.c:1605
-#: ../src/bin/e_config.c:2199
+#: ../src/bin/e_config.c:1610
+#: ../src/bin/e_config.c:2204
 #: ../src/bin/e_config_dialog.c:262
 #: ../src/bin/e_eap_editor.c:857
 #: ../src/bin/e_eap_editor.c:921
@@ -858,107 +858,107 @@ msgstr "OK"
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: ../src/bin/e_config.c:967
-#: ../src/bin/e_config.c:1000
+#: ../src/bin/e_config.c:972
+#: ../src/bin/e_config.c:1005
 msgid "Settings data needed upgrading. Your old settings have<br>been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means Enlightenment needs new settings<br>data by default for usable functionality that your old<br>settings simply lack. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the hiccup in your settings.<br>"
 msgstr "As definições precisam de ser atualizadas. As suas antigas definições foram apagadas e foram iniciados novos valores padrão.<br>Isto irá ocorrer recorrentemente durante o desenvolvimento e não deve reportar nenhum erro.<br>Isto apenas significa que o Enlightenment precisa de dados que as suas antigas definições não possuem.<br>Este conjunto de valores irá corrigir esse facto.<br> Mais tarde poderá configurar o Enlightenment ao seu gosto. Desculpe qualquer inconveniente.<br>"
 
-#: ../src/bin/e_config.c:984
+#: ../src/bin/e_config.c:989
 msgid "Your settings are NEWER than Enlightenment. This is very<br>strange. This should not happen unless you downgraded<br>Enlightenment or copied the settings from a place where<br>a newer version of Enlightenment was running. This is bad and<br>as a precaution your settings have been now restored to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr "As suas definições são mais recentes que as do Enlightenment.<br>Isto é muito estranho e só acontece se reverter o Enlightenment ou caso tenha copiado as definições de um local em que está instalada uma versão mais recente do Enlightenment.<br>Isto é mau e por precaução, as suas definições foram restauradas para as omissões.<br>Desculpe qualquer inconveniente.<br>"
 
-#: ../src/bin/e_config.c:1592
-#: ../src/bin/e_config.c:2186
+#: ../src/bin/e_config.c:1597
+#: ../src/bin/e_config.c:2191
 msgid "Enlightenment Settings Write Problems"
 msgstr "Problemas ao escrever as definições do Enlightenment"
 
-#: ../src/bin/e_config.c:1595
+#: ../src/bin/e_config.c:1600
 #, c-format
 msgid "Enlightenment has an error while moving config files<br>from:<br>%s<br><br>to:<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr "Ocorreu um erro ao mover os ficheiros de configuração<br>de:<br>%s<br><br>para:<br>%s<br><br>A tarefa foi terminada para sua segurança.<br>"
 
-#: ../src/bin/e_config.c:2097
+#: ../src/bin/e_config.c:2102
 msgid "Settings Upgraded"
 msgstr "Definições atualizadas"
 
-#: ../src/bin/e_config.c:2114
+#: ../src/bin/e_config.c:2119
 msgid "The EET file handle is bad."
 msgstr "O identificador do ficheiro EET está errado."
 
-#: ../src/bin/e_config.c:2117
+#: ../src/bin/e_config.c:2122
 msgid "The file data is empty."
 msgstr "Os dados do ficheiro estão vazios."
 
-#: ../src/bin/e_config.c:2120
+#: ../src/bin/e_config.c:2125
 msgid "The file is not writable. Perhaps the disk is read-only<br>or you lost permissions to your files."
 msgstr "Não pode escrever no ficheiro. Pode ser que o ficheiro seja de leitura<br>ou não tenha acesso aos ficheiros."
 
-#: ../src/bin/e_config.c:2123
+#: ../src/bin/e_config.c:2128
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr "Ficou sem memória ao preparar o ficheiro.<br>Por favor, liberte espaço de memória."
 
-#: ../src/bin/e_config.c:2126
+#: ../src/bin/e_config.c:2131
 msgid "This is a generic error."
 msgstr "Este é um erro genérico."
 
-#: ../src/bin/e_config.c:2128
+#: ../src/bin/e_config.c:2133
 msgid "The settings file is too large.<br>It should be very small (a few hundred KB at most)."
 msgstr "O ficheiro das definições é muito grande.<br>Em princípio seria pequeno (algumas centenas de KB)."
 
-#: ../src/bin/e_config.c:2131
+#: ../src/bin/e_config.c:2136
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr "Possui erros de E/S no disco.<br>Talvez precise de ser substituído?"
 
-#: ../src/bin/e_config.c:2134
+#: ../src/bin/e_config.c:2139
 msgid "You ran out of space while writing the file"
 msgstr "Ficou sem espaço durante a escrita do ficheiro"
 
-#: ../src/bin/e_config.c:2137
+#: ../src/bin/e_config.c:2142
 msgid "The file was closed on it while writing."
 msgstr "O ficheiro foi fechado durante a escrita."
 
-#: ../src/bin/e_config.c:2140
+#: ../src/bin/e_config.c:2145
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Falha ao fazer \"memory-mapping (mmap)\" do ficheiro."
 
-#: ../src/bin/e_config.c:2143
+#: ../src/bin/e_config.c:2148
 msgid "X509 Encoding failed."
 msgstr "Falha na codificação X509."
 
-#: ../src/bin/e_config.c:2146
+#: ../src/bin/e_config.c:2151
 msgid "Signature failed."
 msgstr "Falha de assinatura"
 
-#: ../src/bin/e_config.c:2149
+#: ../src/bin/e_config.c:2154
 msgid "The signature was invalid."
 msgstr "A assinatura era inválida."
 
-#: ../src/bin/e_config.c:2152
+#: ../src/bin/e_config.c:2157
 msgid "Not signed."
 msgstr "Não assinado"
 
-#: ../src/bin/e_config.c:2155
+#: ../src/bin/e_config.c:2160
 msgid "Feature not implemented."
 msgstr "Funcionalidade não implementada."
 
-#: ../src/bin/e_config.c:2158
+#: ../src/bin/e_config.c:2163
 msgid "PRNG was not seeded."
 msgstr "O PRNG não foi semeado."
 
-#: ../src/bin/e_config.c:2161
+#: ../src/bin/e_config.c:2166
 msgid "Encryption failed."
 msgstr "Falha de encriptação."
 
-#: ../src/bin/e_config.c:2164
+#: ../src/bin/e_config.c:2169
 msgid "Decruption failed."
 msgstr "Falha de decriptação."
 
 #. if we get here eet added errors we don't know
-#: ../src/bin/e_config.c:2167
+#: ../src/bin/e_config.c:2172
 msgid "The error is unknown to Enlightenment."
 msgstr "O erro não é reconhecido pelo Enlightenment."
 
-#: ../src/bin/e_config.c:2189
+#: ../src/bin/e_config.c:2194
 #, c-format
 msgid "Enlightenment has an error while writing<br>its config file.<br>%s<br><br>The file where the error occurred was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr "Ocorreu um erro ao escrever o<br>ficheiro de configurações.<br>%s<br>O erro ocorreu no ficheiro:<br>%s<br><br>Este ficheiro foi apagado para evitar a danificação dos dados.<br>"
@@ -1009,51 +1009,51 @@ msgstr "Preferências"
 msgid "Container %d"
 msgstr "Contentor %d"
 
-#: ../src/bin/e_desklock.c:170
+#: ../src/bin/e_desklock.c:171
 msgid "Error - no PAM support"
 msgstr "Erro - sem suporte a PAM"
 
-#: ../src/bin/e_desklock.c:171
+#: ../src/bin/e_desklock.c:172
 msgid "No PAM support was built into Enlightenment, so<br>desk locking is disabled."
 msgstr "O Enlightenment não foi compilado com suporte a PAM, logo<br>o bloqueio não é permitido."
 
 #. everything failed - can't lock
-#: ../src/bin/e_desklock.c:235
+#: ../src/bin/e_desklock.c:236
 msgid "Lock Failed"
 msgstr "Falha ao bloquear"
 
-#: ../src/bin/e_desklock.c:236
+#: ../src/bin/e_desklock.c:237
 msgid "Locking the desktop failed because some application<br>has grabbed either the keyboard or the mouse or both<br>and their grab is unable to be broken."
 msgstr "O bloqueio da área de trabalho falhou pois uma aplicação<br>apoderou-se do teclado, do rato ou de ambos e<br>essa posse não pode ser quebrada."
 
-#: ../src/bin/e_desklock.c:321
+#: ../src/bin/e_desklock.c:322
 msgid "Please enter your unlock password"
 msgstr "Por favor, indique a senha de desbloqueio"
 
-#: ../src/bin/e_desklock.c:660
+#: ../src/bin/e_desklock.c:710
 msgid "Authentication System Error"
 msgstr "Erro de autenticação"
 
-#: ../src/bin/e_desklock.c:661
+#: ../src/bin/e_desklock.c:711
 #, c-format
 msgid "Authentication via PAM had errors setting up the<br>authentication session. The error code was <hilight>%i</hilight>.<br>This is bad and should not be happening. Please report this bug."
 msgstr "Ocorreram erros durante a autenticação da sessão<br>através de PAM. O código do erro foi <hilight>%i</hilight>.<br>Isto é mau e não deveria acontecer. Por favor, reporte este erro."
 
-#: ../src/bin/e_desklock.c:989
+#: ../src/bin/e_desklock.c:1039
 #: ../src/bin/e_screensaver.c:132
 msgid "Activate Presentation Mode?"
 msgstr "Ativar o modo de demonstração?"
 
-#: ../src/bin/e_desklock.c:992
+#: ../src/bin/e_desklock.c:1042
 msgid "You unlocked desktop too fast.<br><br>Would you like to enable <b>presentation</b> mode and temporarily disable screen saver, lock and power saving?"
 msgstr "Desbloqueou a área de trabalho muito depressa.<br><br>Pretende ativar o modo de <b>demonstração</b> e inativar temporariamente a proteção de ecrã, os bloqueios e a poupança de energia?"
 
-#: ../src/bin/e_desklock.c:1002
+#: ../src/bin/e_desklock.c:1052
 #: ../src/bin/e_screensaver.c:145
 msgid "No, but increase timeout"
 msgstr "Não, mas aumentar o tempo limite"
 
-#: ../src/bin/e_desklock.c:1004
+#: ../src/bin/e_desklock.c:1054
 #: ../src/bin/e_screensaver.c:147
 msgid "No, and stop asking"
 msgstr "Não e parar de perguntar"
@@ -2798,9 +2798,6 @@ msgid "Enlightenment cannot set up its intl system."
 msgstr "O Enlightenment não consegue configurar o sistema de internacionalização"
 
 #: ../src/bin/e_main.c:663
-#| msgid ""
-#| "Enlightenment cannot initialize the FDO desktop system.\n"
-#| "Perhaps you are out of memory?"
 msgid ""
 "Enlightenment cannot initialize the FDO desktop system.\n"
 "Perhaps you lack permissions on ~/.cache/efreet or are\n"
@@ -3064,48 +3061,53 @@ msgstr "Configurar miniaturas"
 msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
 msgstr "O Enlightenment não consegue configurar o sistema de miniaturas.\n"
 
-#: ../src/bin/e_main.c:1038
+#: ../src/bin/e_main.c:1044
+#| msgid "Enlightenment cannot set up its desktop background system."
+msgid "Enlightenment cannot set up its desktop environment system."
+msgstr "O Enlightenment não consegue configurar o ambiente de trabalho."
+
+#: ../src/bin/e_main.c:1050
 msgid "Setup File Ordering"
 msgstr "Configurar organização de ficheiros"
 
-#: ../src/bin/e_main.c:1042
+#: ../src/bin/e_main.c:1054
 msgid "Enlightenment cannot set up its order file system."
 msgstr "O Enlightenment não consegue configurar o sistema de organização dos ficheiros."
 
 #. ecore_x_ungrab();
 #. load modules
-#: ../src/bin/e_main.c:1057
+#: ../src/bin/e_main.c:1069
 msgid "Load Modules"
 msgstr "Carregar módulos"
 
-#: ../src/bin/e_main.c:1074
+#: ../src/bin/e_main.c:1086
 #, c-format
 msgid "Enlightenment crashed early on start and has<br>been restarted. There was an error loading<br>module named: %s. This module has been disabled<br>and will not be loaded."
 msgstr "O Enlightenment terminou ao iniciar e<br>foi reiniciado. Ocorreu um erro ao carregar o<br>módulo: %s. Este módulo foi desativado<br>e não será carregado."
 
-#: ../src/bin/e_main.c:1079
-#: ../src/bin/e_main.c:1096
+#: ../src/bin/e_main.c:1091
+#: ../src/bin/e_main.c:1108
 msgid "Enlightenment crashed early on start and has been restarted"
 msgstr "O Enlightenment terminou ao iniciar e foi reiniciado."
 
-#: ../src/bin/e_main.c:1080
+#: ../src/bin/e_main.c:1092
 #, c-format
 msgid "Enlightenment crashed early on start and has been restarted.<br>There was an error loading module named: %s<br><br>This module has been disabled and will not be loaded."
 msgstr "O Enlightenment terminou ao iniciar e foi reiniciado.<br> Ocorreu um erro ao carregar o módulo: %s.<br><br>Este módulo foi desativado e não será carregado."
 
-#: ../src/bin/e_main.c:1089
+#: ../src/bin/e_main.c:1101
 msgid "Enlightenment crashed early on start and has<br>been restarted. All modules have been disabled<br>and will not be loaded to help remove any problem<br>modules from your configuration. The module<br>configuration dialog should let you select your<br>modules again."
 msgstr "O Enlightenment terminou ao iniciar e<br>foi reiniciado. Todos os módulos foram desativados<br>e não serão carregados de modo a que você possa corrigir os problemas<br>dos módulos. O diálogo de configuração<br>dos módulos deve permitir-lhe escolher<br>os módulos a carregar."
 
-#: ../src/bin/e_main.c:1097
+#: ../src/bin/e_main.c:1109
 msgid "Enlightenment crashed early on start and has been restarted.<br>All modules have been disabled and will not be loaded to help<br>remove any problem modules from your configuration.<br><br>The module configuration dialog should let you select your<br>modules again."
 msgstr "O Enlightenment terminou ao iniciar e foi reiniciado.<br>Todos os módulos foram desativados e não serão carregados de modo<br>a que você possa corrigir os problemas dos módulos.<br><br>O diálogo de configuração dos módulos deve permitir-lhe escolher<br>os módulos a carregar."
 
-#: ../src/bin/e_main.c:1126
+#: ../src/bin/e_main.c:1138
 msgid "Configure Shelves"
 msgstr "Configurar painéis"
 
-#: ../src/bin/e_main.c:1137
+#: ../src/bin/e_main.c:1149
 msgid "Almost Done"
 msgstr "Quase terminado"
 
@@ -3602,7 +3604,7 @@ msgid "Auto Detect"
 msgstr "Deteção automática"
 
 #: ../src/modules/battery/e_mod_config.c:254
-#: ../src/modules/conf_applications/e_mod_main.c:44
+#: ../src/modules/conf_applications/e_mod_main.c:48
 #: ../src/modules/conf_display/e_mod_main.c:40
 #: ../src/modules/conf_theme/e_mod_main.c:23
 #: ../src/modules/temperature/e_mod_config.c:246
@@ -3732,7 +3734,12 @@ msgstr "Nova aplicação"
 msgid "Default Applications"
 msgstr "Aplicações predefinidas"
 
-#: ../src/modules/conf_applications/e_mod_main.c:46
+#: ../src/modules/conf_applications/e_mod_main.c:45
+#| msgid "Desktop Files"
+msgid "Desktop Environments"
+msgstr "Ambientes de trabalho"
+
+#: ../src/modules/conf_applications/e_mod_main.c:50
 msgid "IBar Other"
 msgstr "Outras IBar"
 

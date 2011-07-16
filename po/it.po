@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-07-07 19:00+0200\n"
-"PO-Revision-Date: 2011-07-07 19:02+0200\n"
+"POT-Creation-Date: 2011-07-16 18:54+0200\n"
+"PO-Revision-Date: 2011-07-16 19:50+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -81,7 +81,7 @@ msgstr "Siete sicuri di voler uccidere questa finestra?"
 #: src/bin/e_actions.c:380 src/bin/e_actions.c:1917 src/bin/e_actions.c:2014
 #: src/bin/e_actions.c:2077 src/bin/e_actions.c:2140 src/bin/e_actions.c:2208
 #: src/bin/e_actions.c:2271 src/bin/e_confirm_dialog.c:44
-#: src/bin/e_desklock.c:998 src/bin/e_fm.c:9176 src/bin/e_fm.c:9430
+#: src/bin/e_desklock.c:1048 src/bin/e_fm.c:9176 src/bin/e_fm.c:9430
 #: src/bin/e_module.c:520 src/bin/e_screensaver.c:141
 msgid "Yes"
 msgstr "Sì"
@@ -89,7 +89,7 @@ msgstr "Sì"
 #: src/bin/e_actions.c:382 src/bin/e_actions.c:1919 src/bin/e_actions.c:2016
 #: src/bin/e_actions.c:2079 src/bin/e_actions.c:2142 src/bin/e_actions.c:2210
 #: src/bin/e_actions.c:2273 src/bin/e_confirm_dialog.c:45
-#: src/bin/e_desklock.c:1000 src/bin/e_fm.c:9174 src/bin/e_fm.c:9431
+#: src/bin/e_desklock.c:1050 src/bin/e_fm.c:9174 src/bin/e_fm.c:9431
 #: src/bin/e_module.c:521 src/bin/e_screensaver.c:143
 msgid "No"
 msgstr "No"
@@ -725,12 +725,12 @@ msgstr "Imposta come sfondo"
 msgid "Color Selector"
 msgstr "Selettore colore"
 
-#: src/bin/e_color_dialog.c:46 src/bin/e_config.c:1605 src/bin/e_config.c:2199
+#: src/bin/e_color_dialog.c:46 src/bin/e_config.c:1610 src/bin/e_config.c:2204
 #: src/bin/e_config_dialog.c:262 src/bin/e_eap_editor.c:857
 #: src/bin/e_eap_editor.c:921 src/bin/e_entry_dialog.c:62 src/bin/e_exec.c:398
 #: src/bin/e_fm.c:8688 src/bin/e_fm.c:9332 src/bin/e_fm_prop.c:507
 #: src/bin/e_int_border_remember.c:324 src/bin/e_int_border_remember.c:525
-#: src/bin/e_module.c:417 src/bin/e_sys.c:484 src/bin/e_sys.c:530
+#: src/bin/e_module.c:417 src/bin/e_sys.c:483 src/bin/e_sys.c:520
 #: src/bin/e_utils.c:712 src/modules/conf_dialogs/e_int_config_profiles.c:387
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:215
@@ -755,7 +755,7 @@ msgstr "OK"
 msgid "Cancel"
 msgstr "Annulla"
 
-#: src/bin/e_config.c:967 src/bin/e_config.c:1000
+#: src/bin/e_config.c:972 src/bin/e_config.c:1005
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -775,7 +775,7 @@ msgstr ""
 "funzionalità.<br>Adesso è possibile riconfigurare le cose a proprio "
 "piacimento.<br>Ci scusiamo per il disagio.<br>"
 
-#: src/bin/e_config.c:984
+#: src/bin/e_config.c:989
 msgid ""
 "Your settings are NEWER than Enlightenment. This is very<br>strange. This "
 "should not happen unless you downgraded<br>Enlightenment or copied the "
@@ -790,11 +790,11 @@ msgstr ""
 "male, quindi la vostra configurazione è<br>stata ripristinata a scopo "
 "precauzionale ai valori predefiniti. Ci<br>scusiamo per l'inconveniente.<br>"
 
-#: src/bin/e_config.c:1592 src/bin/e_config.c:2186
+#: src/bin/e_config.c:1597 src/bin/e_config.c:2191
 msgid "Enlightenment Settings Write Problems"
 msgstr "Problemi scrittura configurazione di Enlightenment"
 
-#: src/bin/e_config.c:1595
+#: src/bin/e_config.c:1600
 #, c-format
 msgid ""
 "Enlightenment has an error while moving config files<br>from:<br>%"
@@ -805,19 +805,19 @@ msgstr ""
 "configurazione da:<br>%s<br><br>a:<br>%s<br><br>Il resto della scrittura è "
 "stato abortito per sicurezza.<br>"
 
-#: src/bin/e_config.c:2097
+#: src/bin/e_config.c:2102
 msgid "Settings Upgraded"
 msgstr "Impostazioni aggiornate"
 
-#: src/bin/e_config.c:2114
+#: src/bin/e_config.c:2119
 msgid "The EET file handle is bad."
 msgstr "La gestione del file EET è errata."
 
-#: src/bin/e_config.c:2117
+#: src/bin/e_config.c:2122
 msgid "The file data is empty."
 msgstr "Il file non contiene dati."
 
-#: src/bin/e_config.c:2120
+#: src/bin/e_config.c:2125
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
@@ -825,17 +825,17 @@ msgstr ""
 "Il file non è scrivibile. Forse il disco e' montato in sola<br>lettura o non "
 "si hanno più i propri permessi."
 
-#: src/bin/e_config.c:2123
+#: src/bin/e_config.c:2128
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr ""
 "La memoria è andata esaurita mentre si preparava<br>la scrittura. Si prega "
 "di liberare memoria."
 
-#: src/bin/e_config.c:2126
+#: src/bin/e_config.c:2131
 msgid "This is a generic error."
 msgstr "Questo è un errore generico."
 
-#: src/bin/e_config.c:2128
+#: src/bin/e_config.c:2133
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
 "at most)."
@@ -843,60 +843,60 @@ msgstr ""
 "Il file di impostazioni è troppo grande.<br>Dovrebbe essere molto piccolo "
 "(al massimo qualche centinaio di KB)."
 
-#: src/bin/e_config.c:2131
+#: src/bin/e_config.c:2136
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr ""
 "Ci sono errori di I/O sul disco.<br>Forse ha bisogno di essere sostituito?"
 
-#: src/bin/e_config.c:2134
+#: src/bin/e_config.c:2139
 msgid "You ran out of space while writing the file"
 msgstr "Lo spazio è andato esaurito mentre si scriveva il file."
 
-#: src/bin/e_config.c:2137
+#: src/bin/e_config.c:2142
 msgid "The file was closed on it while writing."
 msgstr "Il file è stato chiuso mentre lo si scriveva."
 
-#: src/bin/e_config.c:2140
+#: src/bin/e_config.c:2145
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "La mappatura in memoria (mmap) del file è fallita."
 
-#: src/bin/e_config.c:2143
+#: src/bin/e_config.c:2148
 msgid "X509 Encoding failed."
 msgstr "La codifica X509 è fallita."
 
-#: src/bin/e_config.c:2146
+#: src/bin/e_config.c:2151
 msgid "Signature failed."
 msgstr "Firma fallita."
 
-#: src/bin/e_config.c:2149
+#: src/bin/e_config.c:2154
 msgid "The signature was invalid."
 msgstr "La firma non era valida."
 
-#: src/bin/e_config.c:2152
+#: src/bin/e_config.c:2157
 msgid "Not signed."
 msgstr "Non firmato."
 
-#: src/bin/e_config.c:2155
+#: src/bin/e_config.c:2160
 msgid "Feature not implemented."
 msgstr "Funzionalità non implementata."
 
-#: src/bin/e_config.c:2158
+#: src/bin/e_config.c:2163
 msgid "PRNG was not seeded."
 msgstr "Non è stato fornito il seme al PRNG."
 
-#: src/bin/e_config.c:2161
+#: src/bin/e_config.c:2166
 msgid "Encryption failed."
 msgstr "Crittazione fallita."
 
-#: src/bin/e_config.c:2164
+#: src/bin/e_config.c:2169
 msgid "Decruption failed."
 msgstr "Decrittazione fallita."
 
-#: src/bin/e_config.c:2167
+#: src/bin/e_config.c:2172
 msgid "The error is unknown to Enlightenment."
 msgstr "L'errore è sconosciuto a Enlightenment."
 
-#: src/bin/e_config.c:2189
+#: src/bin/e_config.c:2194
 #, c-format
 msgid ""
 "Enlightenment has an error while writing<br>its config file.<br>%"
@@ -926,7 +926,7 @@ msgstr "Applica"
 
 #: src/bin/e_configure.c:28 src/modules/conf_shelves/e_mod_main.c:21
 #: src/modules/gadman/e_mod_main.c:25 src/modules/mixer/e_mod_main.c:1140
-#: src/modules/connman/e_mod_main.c:1806
+#: src/modules/connman/e_mod_main.c:1814
 msgid "Extensions"
 msgstr "Estensioni"
 
@@ -947,22 +947,22 @@ msgstr "Preferenze"
 msgid "Container %d"
 msgstr "Contenitore %d"
 
-#: src/bin/e_desklock.c:170
+#: src/bin/e_desklock.c:171
 msgid "Error - no PAM support"
 msgstr "Errore - supporto PAM mancante"
 
-#: src/bin/e_desklock.c:171
+#: src/bin/e_desklock.c:172
 msgid ""
 "No PAM support was built into Enlightenment, so<br>desk locking is disabled."
 msgstr ""
 "Il supporto per PAM non è stato compilato in Enlightenment,<br>quindi il "
 "blocco dello schermo viene disabilitato."
 
-#: src/bin/e_desklock.c:235
+#: src/bin/e_desklock.c:236
 msgid "Lock Failed"
 msgstr "Blocco non riuscito"
 
-#: src/bin/e_desklock.c:236
+#: src/bin/e_desklock.c:237
 msgid ""
 "Locking the desktop failed because some application<br>has grabbed either "
 "the keyboard or the mouse or both<br>and their grab is unable to be broken."
@@ -971,15 +971,15 @@ msgstr ""
 "impossessata della tastiera e/o del<br>mouse e Enlightenment non può "
 "riappropiarsene."
 
-#: src/bin/e_desklock.c:321
+#: src/bin/e_desklock.c:322
 msgid "Please enter your unlock password"
 msgstr "Inserire la password di sblocco"
 
-#: src/bin/e_desklock.c:660
+#: src/bin/e_desklock.c:710
 msgid "Authentication System Error"
 msgstr "Errore del sistema di autenticazione"
 
-#: src/bin/e_desklock.c:661
+#: src/bin/e_desklock.c:711
 #, c-format
 msgid ""
 "Authentication via PAM had errors setting up the<br>authentication session. "
@@ -990,11 +990,11 @@ msgstr ""
 "di autenticazione. Il codice d'errore è <hilight>%i</hilight>.<br>Questo è "
 "male e non dovrebbe succedere.<br>Si prega di riportare questo bug."
 
-#: src/bin/e_desklock.c:989 src/bin/e_screensaver.c:132
+#: src/bin/e_desklock.c:1039 src/bin/e_screensaver.c:132
 msgid "Activate Presentation Mode?"
 msgstr "Attivare modalità presentazione?"
 
-#: src/bin/e_desklock.c:992
+#: src/bin/e_desklock.c:1042
 msgid ""
 "You unlocked desktop too fast.<br><br>Would you like to enable "
 "<b>presentation</b> mode and temporarily disable screen saver, lock and "
@@ -1004,11 +1004,11 @@ msgstr ""
 "modalità <b>presentazione</b> e disabilitare temporaneamente lo screensaver, "
 "il bloccaschermo e la gestione energetica?"
 
-#: src/bin/e_desklock.c:1002 src/bin/e_screensaver.c:145
+#: src/bin/e_desklock.c:1052 src/bin/e_screensaver.c:145
 msgid "No, but increase timeout"
 msgstr "No, ma aumenta la temporizzazione"
 
-#: src/bin/e_desklock.c:1004 src/bin/e_screensaver.c:147
+#: src/bin/e_desklock.c:1054 src/bin/e_screensaver.c:147
 msgid "No, and stop asking"
 msgstr "No, e non chiedere più"
 
@@ -1110,26 +1110,26 @@ msgstr "Seleziona un'icona"
 msgid "Select an Executable"
 msgstr "Seleziona un'eseguibile"
 
-#: src/bin/e_entry.c:493 src/bin/e_fm.c:8180 src/bin/e_shelf.c:1697
+#: src/bin/e_entry.c:498 src/bin/e_fm.c:8180 src/bin/e_shelf.c:1697
 #: src/modules/conf_dialogs/e_int_config_profiles.c:135
 #: src/modules/conf_shelves/e_int_config_shelf.c:81
 #: src/modules/ibar/e_mod_config.c:108
 msgid "Delete"
 msgstr "Elimina"
 
-#: src/bin/e_entry.c:503 src/bin/e_fm.c:8088
+#: src/bin/e_entry.c:508 src/bin/e_fm.c:8088
 msgid "Cut"
 msgstr "Taglia"
 
-#: src/bin/e_entry.c:511 src/bin/e_fm.c:6148 src/bin/e_fm.c:8102
+#: src/bin/e_entry.c:516 src/bin/e_fm.c:6148 src/bin/e_fm.c:8102
 msgid "Copy"
 msgstr "Copia"
 
-#: src/bin/e_entry.c:519 src/bin/e_fm.c:7926 src/bin/e_fm.c:8115
+#: src/bin/e_entry.c:524 src/bin/e_fm.c:7926 src/bin/e_fm.c:8115
 msgid "Paste"
 msgstr "Incolla"
 
-#: src/bin/e_entry.c:529
+#: src/bin/e_entry.c:534
 msgid "Select All"
 msgstr "Seleziona tutto"
 
@@ -2198,7 +2198,7 @@ msgstr "Mobile"
 #: src/modules/ibar/e_mod_main.c:309 src/modules/ibar/e_mod_main.c:807
 #: src/modules/ibox/e_mod_main.c:301 src/modules/ibox/e_mod_main.c:694
 #: src/modules/pager/e_mod_main.c:790 src/modules/temperature/e_mod_main.c:226
-#: src/modules/mixer/e_mod_main.c:718 src/modules/connman/e_mod_main.c:1277
+#: src/modules/mixer/e_mod_main.c:718 src/modules/connman/e_mod_main.c:1285
 msgid "Settings"
 msgstr "Impostazioni"
 
@@ -2997,21 +2997,27 @@ msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di thumbnailing (anteprime).\n"
 
-#: src/bin/e_main.c:1038
+#: src/bin/e_main.c:1044
+msgid "Enlightenment cannot set up its desktop environment system."
+msgstr ""
+"Enlightenment non riesce a configurare il suo\n"
+"sistema di ambienti desktop."
+
+#: src/bin/e_main.c:1050
 msgid "Setup File Ordering"
 msgstr "Ordinamento dei file"
 
-#: src/bin/e_main.c:1042
+#: src/bin/e_main.c:1054
 msgid "Enlightenment cannot set up its order file system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di ordinamento file."
 
-#: src/bin/e_main.c:1057
+#: src/bin/e_main.c:1069
 msgid "Load Modules"
 msgstr "Carica moduli"
 
-#: src/bin/e_main.c:1074
+#: src/bin/e_main.c:1086
 #, c-format
 msgid ""
 "Enlightenment crashed early on start and has<br>been restarted. There was an "
@@ -3022,11 +3028,11 @@ msgstr ""
 "C'è stato un errore nel<br>caricamento del modulo: %s. Questo modulo è "
 "stato<br>disabilitato e non verrà caricato."
 
-#: src/bin/e_main.c:1079 src/bin/e_main.c:1096
+#: src/bin/e_main.c:1091 src/bin/e_main.c:1108
 msgid "Enlightenment crashed early on start and has been restarted"
 msgstr "Enlightenment è andato subito in crash ed è stato riavviato"
 
-#: src/bin/e_main.c:1080
+#: src/bin/e_main.c:1092
 #, c-format
 msgid ""
 "Enlightenment crashed early on start and has been restarted.<br>There was an "
@@ -3037,7 +3043,7 @@ msgstr ""
 "<br>C'è stato un errore nel caricamento del modulo: %s.<br><br>Questo modulo "
 "è stato disabilitato e non verrà caricato."
 
-#: src/bin/e_main.c:1089
+#: src/bin/e_main.c:1101
 msgid ""
 "Enlightenment crashed early on start and has<br>been restarted. All modules "
 "have been disabled<br>and will not be loaded to help remove any "
@@ -3050,7 +3056,7 @@ msgstr ""
 "finestra di configurazione<br>dei moduli dovrebbe permettervi di "
 "selezionare<br>nuovamente i vostri moduli."
 
-#: src/bin/e_main.c:1097
+#: src/bin/e_main.c:1109
 msgid ""
 "Enlightenment crashed early on start and has been restarted.<br>All modules "
 "have been disabled and will not be loaded to help<br>remove any problem "
@@ -3063,11 +3069,11 @@ msgstr ""
 "finestra di configurazione<br>dei moduli dovrebbe permettervi di "
 "selezionare<br>nuovamente i vostri moduli."
 
-#: src/bin/e_main.c:1126
+#: src/bin/e_main.c:1138
 msgid "Configure Shelves"
 msgstr "Configura mensole porta-gadget"
 
-#: src/bin/e_main.c:1137
+#: src/bin/e_main.c:1149
 msgid "Almost Done"
 msgstr "Quasi fatto"
 
@@ -3169,12 +3175,12 @@ msgstr "Avvio"
 msgid "Checking System Permissions"
 msgstr "Controllo permessi del sistema"
 
-#: src/bin/e_sys.c:209 src/bin/e_sys.c:220 src/bin/e_sys.c:229
-#: src/bin/e_sys.c:238
+#: src/bin/e_sys.c:217 src/bin/e_sys.c:228 src/bin/e_sys.c:237
+#: src/bin/e_sys.c:246
 msgid "System Check Done"
 msgstr "Controllo sistema eseguito"
 
-#: src/bin/e_sys.c:305
+#: src/bin/e_sys.c:313
 #, c-format
 msgid ""
 "Logout is taking too long.<br>Some applications refuse to close.<br>Do you "
@@ -3186,35 +3192,35 @@ msgstr ""
 "senza aspettare<br>prima la chiusura di queste applicazioni?<br><br>Chiusura "
 "automatica tra %d secondi."
 
-#: src/bin/e_sys.c:366
+#: src/bin/e_sys.c:373
 msgid "Logout problems"
 msgstr "Problemi chiusura sessione"
 
-#: src/bin/e_sys.c:368
+#: src/bin/e_sys.c:375
 msgid "Logout now"
 msgstr "Esci adesso"
 
-#: src/bin/e_sys.c:369
+#: src/bin/e_sys.c:377
 msgid "Wait longer"
 msgstr "Attendi ancora"
 
-#: src/bin/e_sys.c:370
+#: src/bin/e_sys.c:379
 msgid "Cancel Logout"
 msgstr "Annulla chiusura"
 
-#: src/bin/e_sys.c:409
+#: src/bin/e_sys.c:419
 msgid "Logout in progress"
 msgstr "Chiusura in corso"
 
-#: src/bin/e_sys.c:412
+#: src/bin/e_sys.c:422
 msgid "Logout in progress.<br><hilight>Please wait.</hilight>"
 msgstr "Chiusura in corso.<br><hilight>Attendere prego.</hilight>"
 
-#: src/bin/e_sys.c:438 src/bin/e_sys.c:499
+#: src/bin/e_sys.c:449 src/bin/e_sys.c:499
 msgid "Enlightenment is busy with another request"
 msgstr "Enlightenment è occupato con un'altra richiesta"
 
-#: src/bin/e_sys.c:444
+#: src/bin/e_sys.c:454
 msgid ""
 "Logging out.<br>You cannot perform other system actions<br>once a logout has "
 "begun."
@@ -3222,7 +3228,7 @@ msgstr ""
 "Chiusura un corso.<br>Non è possibile richiedere ulteriori azioni di "
 "sistema<br>una volta che è stata richiesta la chiusura di sessione."
 
-#: src/bin/e_sys.c:452
+#: src/bin/e_sys.c:460
 msgid ""
 "Powering off.<br>You cannot do any other system actions<br>once a shutdown "
 "has been started."
@@ -3230,7 +3236,7 @@ msgstr ""
 "Spegnimento in corso.<br>Non è possibile eseguire ulteriori azioni di "
 "sistema<br>una volta che è iniziato l'arresto del sistema."
 
-#: src/bin/e_sys.c:459
+#: src/bin/e_sys.c:465
 msgid ""
 "Resetting.<br>You cannot do any other system actions<br>once a reboot has "
 "begun."
@@ -3238,7 +3244,7 @@ msgstr ""
 "Riavvio in corso.<br>Non è possibile eseguire ulteriori azioni di "
 "sistema<br>una volta che è iniziato il riavvio del sistema."
 
-#: src/bin/e_sys.c:466
+#: src/bin/e_sys.c:470
 msgid ""
 "Suspending.<br>Until suspend is complete you cannot perform<br>any other "
 "system actions."
@@ -3246,63 +3252,63 @@ msgstr ""
 "Sospensione in corso.<br>Non è possibile eseguire ulteriori azioni di "
 "sistema<br>finchè non è terminata la procedura di sospensione."
 
-#: src/bin/e_sys.c:473
+#: src/bin/e_sys.c:475
 msgid ""
-"Hibernating.<br>You cannot perform an other system actions<br>until this is "
+"Hibernating.<br>You cannot perform any other system actions<br>until this is "
 "complete."
 msgstr ""
-"Ibernazione in corso.<br>Non è possibile eseguire ulteriori azioni di "
-"sistema<br>finchè non è terminata la procedura di ibernazione."
+"Ibernazione in corso.<br>Non è possibile eseguire ulteriori azioni di sistema"
+"<br>finchè non è terminata questa procedura."
 
-#: src/bin/e_sys.c:480 src/bin/e_sys.c:526
+#: src/bin/e_sys.c:480 src/bin/e_sys.c:517
 msgid "EEK! This should not happen"
 msgstr "EEK! Questo non dovrebbe succedere"
 
-#: src/bin/e_sys.c:506
+#: src/bin/e_sys.c:505
 msgid "Power off failed."
 msgstr "Spegnimento fallito."
 
-#: src/bin/e_sys.c:511
+#: src/bin/e_sys.c:508
 msgid "Reset failed."
 msgstr "Riavvio fallito."
 
-#: src/bin/e_sys.c:516
+#: src/bin/e_sys.c:511
 msgid "Suspend failed."
 msgstr "Sospensione fallita."
 
-#: src/bin/e_sys.c:521
+#: src/bin/e_sys.c:514
 msgid "Hibernate failed."
 msgstr "Ibernazione fallita."
 
-#: src/bin/e_sys.c:578
+#: src/bin/e_sys.c:569
 msgid "Power off"
 msgstr "Spegnimento"
 
-#: src/bin/e_sys.c:581
+#: src/bin/e_sys.c:572
 msgid "Power off.<br><hilight>Please wait.</hilight>"
 msgstr "Spegnimento in corso.<br><hilight>Attendere prego.</hilight>"
 
-#: src/bin/e_sys.c:605
+#: src/bin/e_sys.c:597
 msgid "Resetting"
 msgstr "Riavvio"
 
-#: src/bin/e_sys.c:608
+#: src/bin/e_sys.c:600
 msgid "Resetting.<br><hilight>Please wait.</hilight>"
 msgstr "Riavvio in corso.<br><hilight>Attendere prego.</hilight>"
 
-#: src/bin/e_sys.c:633
+#: src/bin/e_sys.c:626
 msgid "Suspending"
 msgstr "Sospensione"
 
-#: src/bin/e_sys.c:636
+#: src/bin/e_sys.c:629
 msgid "Suspending.<br><hilight>Please wait.</hilight>"
 msgstr "Sospensione in corso.<br><hilight>Attendere prego.</hilight>"
 
-#: src/bin/e_sys.c:661
+#: src/bin/e_sys.c:655
 msgid "Hibernating"
 msgstr "Ibernazione in corso"
 
-#: src/bin/e_sys.c:664
+#: src/bin/e_sys.c:658
 msgid "Hibernating.<br><hilight>Please wait.</hilight>"
 msgstr "Ibernazione in corso.<br><hilight>Attendere prego.</hilight>"
 
@@ -3633,7 +3639,7 @@ msgid "Auto Detect"
 msgstr "Rileva automaticamente"
 
 #: src/modules/battery/e_mod_config.c:254
-#: src/modules/conf_applications/e_mod_main.c:44
+#: src/modules/conf_applications/e_mod_main.c:48
 #: src/modules/conf_display/e_mod_main.c:40
 #: src/modules/conf_theme/e_mod_main.c:23
 #: src/modules/temperature/e_mod_config.c:246
@@ -3786,7 +3792,11 @@ msgstr "Nuova applicazione"
 msgid "Default Applications"
 msgstr "Applicazioni predefinite"
 
-#: src/modules/conf_applications/e_mod_main.c:46
+#: src/modules/conf_applications/e_mod_main.c:45
+msgid "Desktop Environments"
+msgstr "Ambienti desktop"
+
+#: src/modules/conf_applications/e_mod_main.c:50
 msgid "IBar Other"
 msgstr "IBar, altri"
 
@@ -7846,11 +7856,11 @@ msgstr ""
 "per l'inconveniente."
 
 #: src/modules/connman/e_mod_main.c:85 src/modules/connman/e_mod_main.c:112
-#: src/modules/connman/e_mod_main.c:1019 src/modules/connman/e_mod_main.c:1773
+#: src/modules/connman/e_mod_main.c:1027 src/modules/connman/e_mod_main.c:1781
 msgid "Cannot toggle system's offline mode."
 msgstr "Impossibile commutare modalità disconnessa del sistema"
 
-#: src/modules/connman/e_mod_main.c:96 src/modules/connman/e_mod_main.c:1011
+#: src/modules/connman/e_mod_main.c:96 src/modules/connman/e_mod_main.c:1019
 msgid "ConnMan Daemon is not running."
 msgstr "Il demone Connman non è in esecuzione"
 
@@ -7879,105 +7889,105 @@ msgstr "Mostra passphrase come testo"
 msgid "Ok"
 msgstr "Ok"
 
-#: src/modules/connman/e_mod_main.c:559 src/modules/connman/e_mod_main.c:572
+#: src/modules/connman/e_mod_main.c:561 src/modules/connman/e_mod_main.c:574
 msgid "Disconnect from network service."
 msgstr "Disconnetti dal servizio di rete"
 
-#: src/modules/connman/e_mod_main.c:604 src/modules/connman/e_mod_main.c:665
-#: src/modules/connman/e_mod_main.c:691
+#: src/modules/connman/e_mod_main.c:610 src/modules/connman/e_mod_main.c:673
+#: src/modules/connman/e_mod_main.c:699
 msgid "Service does not exist anymore"
 msgstr "Il servizio non esiste più"
 
-#: src/modules/connman/e_mod_main.c:612 src/modules/connman/e_mod_main.c:617
-#: src/modules/connman/e_mod_main.c:644
+#: src/modules/connman/e_mod_main.c:618 src/modules/connman/e_mod_main.c:625
+#: src/modules/connman/e_mod_main.c:652
 msgid "Connect to network service."
 msgstr "Connetti al servizio di rete"
 
-#: src/modules/connman/e_mod_main.c:713
+#: src/modules/connman/e_mod_main.c:721
 msgid "Could not set service's passphrase"
 msgstr "Impossibile impostare la passphrase per il servizio"
 
-#: src/modules/connman/e_mod_main.c:1207
+#: src/modules/connman/e_mod_main.c:1215
 msgid "Offline mode"
 msgstr "Modalità disconnessa"
 
-#: src/modules/connman/e_mod_main.c:1216
+#: src/modules/connman/e_mod_main.c:1224
 msgid "Controls"
 msgstr "Controlli"
 
-#: src/modules/connman/e_mod_main.c:1387
+#: src/modules/connman/e_mod_main.c:1395
 msgid "No ConnMan"
 msgstr "Nessun Connman"
 
-#: src/modules/connman/e_mod_main.c:1389
+#: src/modules/connman/e_mod_main.c:1397
 msgid "No ConnMan server found."
 msgstr "Non è stato trovato nessun server Connman"
 
-#: src/modules/connman/e_mod_main.c:1402
+#: src/modules/connman/e_mod_main.c:1410
 msgid "Offline mode: all radios are turned off"
 msgstr "Modalità disconnessa: le funzioni di rete sono disattivate"
 
-#: src/modules/connman/e_mod_main.c:1427
+#: src/modules/connman/e_mod_main.c:1435
 msgid "No Connection"
 msgstr "Nessuna connessione"
 
-#: src/modules/connman/e_mod_main.c:1431
+#: src/modules/connman/e_mod_main.c:1439
 msgid "Not connected"
 msgstr "Disconnesso"
 
-#: src/modules/connman/e_mod_main.c:1434 src/modules/connman/e_mod_main.c:1851
+#: src/modules/connman/e_mod_main.c:1442 src/modules/connman/e_mod_main.c:1859
 msgid "disconnect"
 msgstr "Disconnetti"
 
-#: src/modules/connman/e_mod_main.c:1457
+#: src/modules/connman/e_mod_main.c:1465
 msgid "Unknown Name"
 msgstr "Nome sconosciuto"
 
-#: src/modules/connman/e_mod_main.c:1466
+#: src/modules/connman/e_mod_main.c:1474
 msgid "No error"
 msgstr "Nessun errore"
 
-#: src/modules/connman/e_mod_main.c:1845
+#: src/modules/connman/e_mod_main.c:1853
 msgid "idle"
 msgstr "In attesa"
 
-#: src/modules/connman/e_mod_main.c:1846
+#: src/modules/connman/e_mod_main.c:1854
 msgid "association"
 msgstr "Connessione"
 
-#: src/modules/connman/e_mod_main.c:1847
+#: src/modules/connman/e_mod_main.c:1855
 msgid "configuration"
 msgstr "Configurazione"
 
-#: src/modules/connman/e_mod_main.c:1848
+#: src/modules/connman/e_mod_main.c:1856
 msgid "ready"
 msgstr "Pronto"
 
-#: src/modules/connman/e_mod_main.c:1849
+#: src/modules/connman/e_mod_main.c:1857
 msgid "login"
 msgstr "Login"
 
-#: src/modules/connman/e_mod_main.c:1850
+#: src/modules/connman/e_mod_main.c:1858
 msgid "online"
 msgstr "Connesso"
 
-#: src/modules/connman/e_mod_main.c:1852
+#: src/modules/connman/e_mod_main.c:1860
 msgid "failure"
 msgstr "Errore"
 
-#: src/modules/connman/e_mod_main.c:1853
+#: src/modules/connman/e_mod_main.c:1861
 msgid "enabled"
 msgstr "Abilitato"
 
-#: src/modules/connman/e_mod_main.c:1854
+#: src/modules/connman/e_mod_main.c:1862
 msgid "available"
 msgstr "Disponibile"
 
-#: src/modules/connman/e_mod_main.c:1855
+#: src/modules/connman/e_mod_main.c:1863
 msgid "connected"
 msgstr "Connesso"
 
-#: src/modules/connman/e_mod_main.c:1856
+#: src/modules/connman/e_mod_main.c:1864
 msgid "offline"
 msgstr "Disconnesso"
 
