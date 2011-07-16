@@ -89,7 +89,7 @@ e_sys_action_possible_get(E_Sys_Action a)
 EAPI int
 e_sys_action_do(E_Sys_Action a, char *param)
 {
-   int ret;
+   int ret = 0;
 
    if (_e_sys_action_current != E_SYS_NONE)
      {
@@ -113,9 +113,12 @@ e_sys_action_do(E_Sys_Action a, char *param)
 	return 1;
 	break;
       default:
-	return 0;
+        break;
      }
-   _e_sys_action_current = a;
+
+   if (ret) _e_sys_action_current = a;
+   else _e_sys_action_current = E_SYS_NONE;
+
    return ret;
 }
 
@@ -533,7 +536,10 @@ _e_sys_action_do(E_Sys_Action a, char *param __UNUSED__)
      {
       case E_SYS_EXIT:
 	// XXX TODO: check for e_fm_op_registry entries and confirm
-	if (!e_util_immortal_check()) ecore_main_loop_quit();
+	if (!e_util_immortal_check()) 
+          ecore_main_loop_quit();
+        else 
+          return 0;
 	break;
       case E_SYS_RESTART:
 	// XXX TODO: check for e_fm_op_registry entries and confirm
@@ -542,6 +548,8 @@ _e_sys_action_do(E_Sys_Action a, char *param __UNUSED__)
 	     restart = 1;
 	     ecore_main_loop_quit();
 	  }
+        else
+          return 0;
 	break;
       case E_SYS_EXIT_NOW:
 	exit(0);
