@@ -5171,7 +5171,7 @@ _e_border_cb_window_property(void *data  __UNUSED__,
     */
    else if (e->atom == ECORE_X_ATOM_NET_WM_SYNC_REQUEST_COUNTER)
      {
-        printf("ECORE_X_ATOM_NET_WM_SYNC_REQUEST_COUNTER\n");
+        //printf("ECORE_X_ATOM_NET_WM_SYNC_REQUEST_COUNTER\n");
      }
 
    return ECORE_CALLBACK_PASS_ON;
