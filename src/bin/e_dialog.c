@@ -73,9 +73,6 @@ _e_dialog_internal_new(E_Container *con, const char *name, const char *class, in
    if (!kg)
       fprintf(stderr,"ERROR: unable to redirect \"KP_Enter\" key events to object %p.\n", o);
    mask = 0;
-   kg = evas_object_key_grab(o, "space", mask, ~mask, 0);
-   if (!kg)
-      fprintf(stderr,"ERROR: unable to redirect \"space\" key events to object %p.\n", o);
 
    evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN, _e_dialog_cb_key_down, dia);
 
@@ -332,8 +329,7 @@ _e_dialog_cb_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 	  }
      }
    else if (((!strcmp(ev->keyname, "Return")) || 
-	     (!strcmp(ev->keyname, "KP_Enter")) || 
-	     (!strcmp(ev->keyname, "space"))))
+	     (!strcmp(ev->keyname, "KP_Enter"))))
      {
 	Evas_Object *o = NULL;
 	
