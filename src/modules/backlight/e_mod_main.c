@@ -398,8 +398,6 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
                                   _backlight_cb_mouse_wheel,
                                   inst);
    
-   e_gadcon_client_util_menu_attach(gcc);
-
    backlight_instances = eina_list_append(backlight_instances, inst);
    return gcc;
 }
