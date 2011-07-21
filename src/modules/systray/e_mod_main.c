@@ -10,8 +10,6 @@
  */
 
 #include "e.h"
-#include <X11/Xlib.h>
-#include <X11/Xatom.h>
 #include "e_mod_main.h"
 
 #define RETRY_TIMEOUT 2.0
@@ -378,7 +376,7 @@ _systray_icon_del_list(Instance *inst, Eina_List *l, Icon *icon)
    inst->icons = eina_list_remove_list(inst->icons, l);
 
    ecore_x_window_save_set_del(icon->win);
-   ecore_x_window_reparent(icon->win, None, 0, 0);
+   ecore_x_window_reparent(icon->win, 0, 0, 0);
    evas_object_del(icon->o);
    free(icon);
 
@@ -404,14 +402,14 @@ static Eina_Bool
 _systray_selection_owner_set(int screen_num, Ecore_X_Window win)
 {
    Ecore_X_Atom atom;
-   Ecore_X_Display *disp = ecore_x_display_get();
+//   Ecore_X_Display *disp = ecore_x_display_get();
    Ecore_X_Window cur_selection;
    Eina_Bool ret;
 
    atom = _systray_atom_st_get(screen_num);
-   XSetSelectionOwner(disp, atom, win, ecore_x_current_time_get());
+   ecore_x_selection_owner_set(win, atom, ecore_x_current_time_get());
    ecore_x_sync();
-   cur_selection = XGetSelectionOwner(disp, atom);
+   cur_selection = ecore_x_selection_owner_get(atom);
 
    ret = (cur_selection == win);
    if (!ret)
@@ -433,7 +431,7 @@ _systray_deactivate(Instance *inst)
 {
    Ecore_X_Window old;
 
-   if (inst->win.selection == None) return;
+   if (inst->win.selection == 0) return;
 
    edje_object_signal_emit(inst->ui.gadget, _sig_disable, _sig_source);
 
@@ -441,12 +439,12 @@ _systray_deactivate(Instance *inst)
      _systray_icon_del_list(inst, inst->icons, inst->icons->data);
 
    old = inst->win.selection;
-   inst->win.selection = None;
+   inst->win.selection = 0;
    _systray_selection_owner_set_current(inst);
    ecore_x_sync();
    ecore_x_window_free(old);
    ecore_x_window_free(inst->win.base);
-   inst->win.base = None;
+   inst->win.base = 0;
 }
 
 static Eina_Bool
@@ -493,41 +491,41 @@ _systray_activate(Instance *inst)
    Ecore_X_Window_Attributes attr;
    Ecore_X_Display *dpy;
 
-   if (inst->win.selection != None) return 1;
+   if (inst->win.selection != 0) return 1;
 
    atom = _systray_atom_st_get(inst->con->manager->num);
    dpy = ecore_x_display_get();
-   old_win = XGetSelectionOwner(dpy, atom);
-   if (old_win != None) return 0;
+   old_win = ecore_x_selection_owner_get(atom);
+   if (old_win != 0) return 0;
 
-   if (inst->win.base == None)
+   if (inst->win.base == 0)
      {
 	if (!_systray_base_create(inst))
 	  return 0;
      }
 
    inst->win.selection = ecore_x_window_input_new(inst->win.base, 0, 0, 1, 1);
-   if (inst->win.selection == None)
+   if (inst->win.selection == 0)
      {
 	ecore_x_window_free(inst->win.base);
-	inst->win.base = None;
+	inst->win.base = 0;
 	return 0;
      }
 
    if (!_systray_selection_owner_set_current(inst))
      {
 	ecore_x_window_free(inst->win.selection);
-	inst->win.selection = None;
+	inst->win.selection = 0;
 	ecore_x_window_free(inst->win.base);
-	inst->win.base = None;
+	inst->win.base = 0;
 	return 0;
      }
 
    ecore_x_window_attributes_get(inst->win.base, &attr);
 
-   visual = XVisualIDFromVisual(attr.visual);
-   XChangeProperty(dpy, inst->win.selection, _atom_st_visual, XA_VISUALID,
-		   32, PropModeReplace, (void *)&visual, 1);
+   visual = ecore_x_visual_id_get(attr.visual);
+   ecore_x_window_prop_card32_set(inst->win.selection, _atom_st_visual,
+                                  (void *)&visual, 1);
 
    ecore_x_client_message32_send(inst->con->manager->root, _atom_manager,
 				 ECORE_X_EVENT_MASK_WINDOW_CONFIGURE,
@@ -784,7 +782,7 @@ _systray_cb_selection_clear(void *data, int type __UNUSED__, void *event)
    Ecore_X_Event_Selection_Clear *ev = event;
    Instance *inst = data;
 
-   if ((ev->win == inst->win.selection) && (inst->win.selection != None) &&
+   if ((ev->win == inst->win.selection) && (inst->win.selection != 0) &&
        (ev->atom == _systray_atom_st_get(inst->con->manager->num)))
      {
 	edje_object_signal_emit(inst->ui.gadget, _sig_disable, _sig_source);
@@ -793,9 +791,9 @@ _systray_cb_selection_clear(void *data, int type __UNUSED__, void *event)
 	  _systray_icon_del_list(inst, inst->icons, inst->icons->data);
 
 	ecore_x_window_free(inst->win.selection);
-	inst->win.selection = None;
+	inst->win.selection = 0;
 	ecore_x_window_free(inst->win.base);
-	inst->win.base = None;
+	inst->win.base = 0;
 	_systray_retry(inst);
      }
    return ECORE_CALLBACK_PASS_ON;
@@ -907,8 +905,8 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    else
      inst->win.parent = (Ecore_X_Window) ecore_evas_window_get(gc->ecore_evas);
 
-   inst->win.base = None;
-   inst->win.selection = None;
+   inst->win.base = 0;
+   inst->win.selection = 0;
 
    inst->ui.gadget = edje_object_add(inst->evas);
 
