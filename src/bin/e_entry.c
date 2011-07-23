@@ -62,7 +62,7 @@ static void _e_entry_cb_delete(void *data, E_Menu *m, E_Menu_Item *mi);
 #ifdef HAVE_ECORE_IMF
 static Eina_Bool _e_entry_cb_imf_retrieve_surrounding(void *data, Ecore_IMF_Context *ctx, char **text, int *cursor_pos);
 static Eina_Bool _e_entry_cb_imf_event_commit(void *data, int type, void *event);
-static Eina_Bool _e_entry_cb_imf_event_preedit_changed(void *data, int type, void *event);
+static Eina_Bool _e_entry_cb_imf_event_preedit_changed(void *data, int type __UNUSED__, void *event);
 static Eina_Bool _e_entry_cb_imf_event_delete_surrounding(void *data, int type, void *event);
 #endif
 
@@ -1437,7 +1437,7 @@ _e_entry_cb_imf_event_commit(void *data, int type __UNUSED__, void *event)
 }
 
 static Eina_Bool
-_e_entry_cb_imf_event_preedit_changed(void *data, int type, void *event)
+_e_entry_cb_imf_event_preedit_changed(void *data, int type __UNUSED__, void *event)
 {
    Evas_Object *entry;
    E_Entry_Smart_Data *sd;
@@ -1445,7 +1445,6 @@ _e_entry_cb_imf_event_preedit_changed(void *data, int type, void *event)
    Evas_Object *editable;
    int cursor_pos, selection_pos;
    char *preedit_string = NULL;
-   int preedit_start_pos, preedit_end_pos;
    int start_pos, end_pos;
    int selecting;
    int changed = 0;
