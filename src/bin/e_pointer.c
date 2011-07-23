@@ -374,8 +374,7 @@ _e_pointer_type_set(E_Pointer  *p,
    /* Check if this pointer is already set */
    if ((p->type) && (!strcmp(p->type, type))) return;
 
-   if (p->type) eina_stringshare_del(p->type);
-   p->type = eina_stringshare_add(type);
+   eina_stringshare_replace(&p->type, type);
 
    /* Do not set type if in "hidden mode" */
    if (!e_config->show_cursor)
