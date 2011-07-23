@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e17\n"
 "Report-Msgid-Bugs-To: http://trac.enlightenment.org/e/\n"
-"POT-Creation-Date: 2011-07-14 02:02-0700\n"
-"PO-Revision-Date: 2011-07-16 16:45-0000\n"
+"POT-Creation-Date: 2011-07-16 11:01-0700\n"
+"PO-Revision-Date: 2011-07-23 17:40-0000\n"
 "Last-Translator: Sérgio Marques <smarquespt@gmail.com>\n"
 "Language-Team: Portuguese <>\n"
 "Language: pt\n"
@@ -825,8 +825,8 @@ msgstr "Seletor de cor"
 #: ../src/bin/e_int_border_remember.c:324
 #: ../src/bin/e_int_border_remember.c:525
 #: ../src/bin/e_module.c:417
-#: ../src/bin/e_sys.c:484
-#: ../src/bin/e_sys.c:530
+#: ../src/bin/e_sys.c:486
+#: ../src/bin/e_sys.c:523
 #: ../src/bin/e_utils.c:712
 #: ../src/modules/conf_dialogs/e_int_config_profiles.c:387
 #: ../src/modules/conf_intl/e_int_config_imc_import.c:120
@@ -986,7 +986,7 @@ msgstr "Aplicar"
 #: ../src/modules/conf_shelves/e_mod_main.c:21
 #: ../src/modules/gadman/e_mod_main.c:25
 #: ../src/modules/mixer/e_mod_main.c:1140
-#: ../src/modules/connman/e_mod_main.c:1806
+#: ../src/modules/connman/e_mod_main.c:1814
 msgid "Extensions"
 msgstr "Extensões"
 
@@ -1154,7 +1154,7 @@ msgstr "Selecione um ícone"
 msgid "Select an Executable"
 msgstr "Selecione um executável"
 
-#: ../src/bin/e_entry.c:493
+#: ../src/bin/e_entry.c:498
 #: ../src/bin/e_fm.c:8180
 #: ../src/bin/e_shelf.c:1697
 #: ../src/modules/conf_dialogs/e_int_config_profiles.c:135
@@ -1163,24 +1163,24 @@ msgstr "Selecione um executável"
 msgid "Delete"
 msgstr "Apagar"
 
-#: ../src/bin/e_entry.c:503
+#: ../src/bin/e_entry.c:508
 #: ../src/bin/e_fm.c:8088
 msgid "Cut"
 msgstr "Cortar"
 
-#: ../src/bin/e_entry.c:511
+#: ../src/bin/e_entry.c:516
 #: ../src/bin/e_fm.c:6148
 #: ../src/bin/e_fm.c:8102
 msgid "Copy"
 msgstr "Copiar"
 
-#: ../src/bin/e_entry.c:519
+#: ../src/bin/e_entry.c:524
 #: ../src/bin/e_fm.c:7926
 #: ../src/bin/e_fm.c:8115
 msgid "Paste"
 msgstr "Colar"
 
-#: ../src/bin/e_entry.c:529
+#: ../src/bin/e_entry.c:534
 msgid "Select All"
 msgstr "Selecionar tudo"
 
@@ -2310,7 +2310,7 @@ msgstr "Móvel"
 #: ../src/modules/pager/e_mod_main.c:790
 #: ../src/modules/temperature/e_mod_main.c:226
 #: ../src/modules/mixer/e_mod_main.c:718
-#: ../src/modules/connman/e_mod_main.c:1277
+#: ../src/modules/connman/e_mod_main.c:1285
 msgid "Settings"
 msgstr "Definições"
 
@@ -3062,7 +3062,6 @@ msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
 msgstr "O Enlightenment não consegue configurar o sistema de miniaturas.\n"
 
 #: ../src/bin/e_main.c:1044
-#| msgid "Enlightenment cannot set up its desktop background system."
 msgid "Enlightenment cannot set up its desktop environment system."
 msgstr "O Enlightenment não consegue configurar o ambiente de trabalho."
 
@@ -3186,77 +3185,80 @@ msgstr "Conteúdo"
 msgid "Starting"
 msgstr "A iniciar"
 
-#: ../src/bin/e_sys.c:171
+#: ../src/bin/e_sys.c:174
 msgid "Checking System Permissions"
 msgstr "A verificar as permissões do sistema"
 
-#: ../src/bin/e_sys.c:209
 #: ../src/bin/e_sys.c:220
-#: ../src/bin/e_sys.c:229
-#: ../src/bin/e_sys.c:238
+#: ../src/bin/e_sys.c:231
+#: ../src/bin/e_sys.c:240
+#: ../src/bin/e_sys.c:249
 msgid "System Check Done"
 msgstr "Terminadas as verificações"
 
-#: ../src/bin/e_sys.c:305
+#: ../src/bin/e_sys.c:316
 #, c-format
 msgid "Logout is taking too long.<br>Some applications refuse to close.<br>Do you want to finish the logout<br>anyway without closing these<br>applications first?<br><br>Auto logout in %d seconds."
 msgstr "Está a levar muito tempo para sair da sessão.<br>Algumas aplicações não querem ser fechadas.<br>Pretende continuar<br>apesar das aplicações<br>não terem sido fechadas?<br><br>Saída automática em %d segundos."
 
-#: ../src/bin/e_sys.c:366
+#: ../src/bin/e_sys.c:376
 msgid "Logout problems"
 msgstr "Erro ao sair da sessão"
 
-#: ../src/bin/e_sys.c:368
+#: ../src/bin/e_sys.c:378
 msgid "Logout now"
 msgstr "Sair agora"
 
-#: ../src/bin/e_sys.c:369
+#: ../src/bin/e_sys.c:380
 msgid "Wait longer"
 msgstr "Esperar um pouco"
 
-#: ../src/bin/e_sys.c:370
+#: ../src/bin/e_sys.c:382
 msgid "Cancel Logout"
 msgstr "Cancelar"
 
-#: ../src/bin/e_sys.c:409
+#: ../src/bin/e_sys.c:422
 msgid "Logout in progress"
 msgstr "A sair da sessão"
 
-#: ../src/bin/e_sys.c:412
+#: ../src/bin/e_sys.c:425
 msgid "Logout in progress.<br><hilight>Please wait.</hilight>"
 msgstr "A sair da sessão.<br><hilight>Por favor, aguarde.</hilight>"
 
-#: ../src/bin/e_sys.c:438
-#: ../src/bin/e_sys.c:499
+#: ../src/bin/e_sys.c:452
+#: ../src/bin/e_sys.c:502
 msgid "Enlightenment is busy with another request"
 msgstr "O Enlightenment está ocupado com outro pedido"
 
-#: ../src/bin/e_sys.c:444
+#: ../src/bin/e_sys.c:457
 msgid "Logging out.<br>You cannot perform other system actions<br>once a logout has begun."
 msgstr "A sair da sessão.<br>Não pode executar quaisquer outras ações<br>após o início do processo."
 
-#: ../src/bin/e_sys.c:452
+#: ../src/bin/e_sys.c:463
 msgid "Powering off.<br>You cannot do any other system actions<br>once a shutdown has been started."
 msgstr "A desligar.<br>Não pode executar quaisquer outras ações<br>após o início do processo."
 
-#: ../src/bin/e_sys.c:459
+#: ../src/bin/e_sys.c:468
 msgid "Resetting.<br>You cannot do any other system actions<br>once a reboot has begun."
 msgstr "Restaurando.<br>Não pode executar quaisquer outras ações<br>após o início do processo."
 
-#: ../src/bin/e_sys.c:466
+#: ../src/bin/e_sys.c:473
 msgid "Suspending.<br>Until suspend is complete you cannot perform<br>any other system actions."
 msgstr "A suspender.<br>Não pode executar quaisquer outras ações<br>após o início do processo."
 
-#: ../src/bin/e_sys.c:473
-msgid "Hibernating.<br>You cannot perform an other system actions<br>until this is complete."
+#: ../src/bin/e_sys.c:478
+#| msgid ""
+#| "Hibernating.<br>You cannot perform an other system actions<br>until this "
+#| "is complete."
+msgid "Hibernating.<br>You cannot perform any other system actions<br>until this is complete."
 msgstr "A hibernar.<br>Não pode executar quaisquer outras ações<br>após o início do processo."
 
-#: ../src/bin/e_sys.c:480
-#: ../src/bin/e_sys.c:526
+#: ../src/bin/e_sys.c:483
+#: ../src/bin/e_sys.c:520
 msgid "EEK! This should not happen"
 msgstr "EEK! Não é suposto isto acontecer"
 
-#: ../src/bin/e_sys.c:506
+#: ../src/bin/e_sys.c:508
 msgid "Power off failed."
 msgstr "Falha ao desligar."
 
@@ -3264,19 +3266,19 @@ msgstr "Falha ao desligar."
 msgid "Reset failed."
 msgstr "Falha ao repor."
 
-#: ../src/bin/e_sys.c:516
+#: ../src/bin/e_sys.c:514
 msgid "Suspend failed."
 msgstr "Falha ao suspender."
 
-#: ../src/bin/e_sys.c:521
+#: ../src/bin/e_sys.c:517
 msgid "Hibernate failed."
 msgstr "Falha ao hibernar."
 
-#: ../src/bin/e_sys.c:578
+#: ../src/bin/e_sys.c:577
 msgid "Power off"
 msgstr "Desligar"
 
-#: ../src/bin/e_sys.c:581
+#: ../src/bin/e_sys.c:580
 msgid "Power off.<br><hilight>Please wait.</hilight>"
 msgstr "A desligar.<br><hilight>Por favor, aguarde.</hilight>"
 
@@ -3288,19 +3290,19 @@ msgstr "A repor"
 msgid "Resetting.<br><hilight>Please wait.</hilight>"
 msgstr "A repor.<br><hilight>Por favor, aguarde.</hilight>"
 
-#: ../src/bin/e_sys.c:633
+#: ../src/bin/e_sys.c:634
 msgid "Suspending"
 msgstr "A suspender"
 
-#: ../src/bin/e_sys.c:636
+#: ../src/bin/e_sys.c:637
 msgid "Suspending.<br><hilight>Please wait.</hilight>"
 msgstr "A suspender<br><hilight>Por favor, aguarde.</hilight>"
 
-#: ../src/bin/e_sys.c:661
+#: ../src/bin/e_sys.c:663
 msgid "Hibernating"
 msgstr "A hibernar"
 
-#: ../src/bin/e_sys.c:664
+#: ../src/bin/e_sys.c:666
 msgid "Hibernating.<br><hilight>Please wait.</hilight>"
 msgstr "A hibernar.<br><hilight>Por favor, aguarde.</hilight>"
 
@@ -3735,7 +3737,6 @@ msgid "Default Applications"
 msgstr "Aplicações predefinidas"
 
 #: ../src/modules/conf_applications/e_mod_main.c:45
-#| msgid "Desktop Files"
 msgid "Desktop Environments"
 msgstr "Ambientes de trabalho"
 
@@ -7692,13 +7693,13 @@ msgstr "As definições do módulo de mistura foram alterados.<br>A sua configur
 
 #: ../src/modules/connman/e_mod_main.c:85
 #: ../src/modules/connman/e_mod_main.c:112
-#: ../src/modules/connman/e_mod_main.c:1019
-#: ../src/modules/connman/e_mod_main.c:1773
+#: ../src/modules/connman/e_mod_main.c:1027
+#: ../src/modules/connman/e_mod_main.c:1781
 msgid "Cannot toggle system's offline mode."
 msgstr "Não foi possível alternar para o modo \"off-line\"."
 
 #: ../src/modules/connman/e_mod_main.c:96
-#: ../src/modules/connman/e_mod_main.c:1011
+#: ../src/modules/connman/e_mod_main.c:1019
 msgid "ConnMan Daemon is not running."
 msgstr "O serviço ConnMan não está em execução."
 
@@ -7723,110 +7724,110 @@ msgstr "Mostrar senha como texto simples"
 msgid "Ok"
 msgstr "Ok"
 
-#: ../src/modules/connman/e_mod_main.c:559
-#: ../src/modules/connman/e_mod_main.c:572
+#: ../src/modules/connman/e_mod_main.c:561
+#: ../src/modules/connman/e_mod_main.c:574
 msgid "Disconnect from network service."
 msgstr "Desligar do serviço de rede."
 
-#: ../src/modules/connman/e_mod_main.c:604
-#: ../src/modules/connman/e_mod_main.c:665
-#: ../src/modules/connman/e_mod_main.c:691
+#: ../src/modules/connman/e_mod_main.c:610
+#: ../src/modules/connman/e_mod_main.c:673
+#: ../src/modules/connman/e_mod_main.c:699
 msgid "Service does not exist anymore"
 msgstr "O serviço já não existe"
 
 #. TODO: cellular might ask for user and pass
-#: ../src/modules/connman/e_mod_main.c:612
-#: ../src/modules/connman/e_mod_main.c:617
-#: ../src/modules/connman/e_mod_main.c:644
+#: ../src/modules/connman/e_mod_main.c:618
+#: ../src/modules/connman/e_mod_main.c:625
+#: ../src/modules/connman/e_mod_main.c:652
 msgid "Connect to network service."
 msgstr "Ligar a um serviço de rede."
 
-#: ../src/modules/connman/e_mod_main.c:713
+#: ../src/modules/connman/e_mod_main.c:721
 msgid "Could not set service's passphrase"
 msgstr "Não foi possível definir a senha do serviço"
 
-#: ../src/modules/connman/e_mod_main.c:1207
+#: ../src/modules/connman/e_mod_main.c:1215
 msgid "Offline mode"
 msgstr "Modo \"off-line\""
 
-#: ../src/modules/connman/e_mod_main.c:1216
+#: ../src/modules/connman/e_mod_main.c:1224
 msgid "Controls"
 msgstr "Controlos"
 
-#: ../src/modules/connman/e_mod_main.c:1387
+#: ../src/modules/connman/e_mod_main.c:1395
 msgid "No ConnMan"
 msgstr "Sem ConnMan"
 
-#: ../src/modules/connman/e_mod_main.c:1389
+#: ../src/modules/connman/e_mod_main.c:1397
 msgid "No ConnMan server found."
 msgstr "O servidor ConnMan não foi encontrado."
 
-#: ../src/modules/connman/e_mod_main.c:1402
+#: ../src/modules/connman/e_mod_main.c:1410
 msgid "Offline mode: all radios are turned off"
 msgstr "Modo \"off-line\": todas as caixas de opção desligadas"
 
-#: ../src/modules/connman/e_mod_main.c:1427
+#: ../src/modules/connman/e_mod_main.c:1435
 msgid "No Connection"
 msgstr "Sem ligação"
 
-#: ../src/modules/connman/e_mod_main.c:1431
+#: ../src/modules/connman/e_mod_main.c:1439
 msgid "Not connected"
 msgstr "Não ligado"
 
-#: ../src/modules/connman/e_mod_main.c:1434
-#: ../src/modules/connman/e_mod_main.c:1851
+#: ../src/modules/connman/e_mod_main.c:1442
+#: ../src/modules/connman/e_mod_main.c:1859
 msgid "disconnect"
 msgstr "desligar"
 
-#: ../src/modules/connman/e_mod_main.c:1457
+#: ../src/modules/connman/e_mod_main.c:1465
 msgid "Unknown Name"
 msgstr "Nome desconhecido"
 
-#: ../src/modules/connman/e_mod_main.c:1466
+#: ../src/modules/connman/e_mod_main.c:1474
 msgid "No error"
 msgstr "Sem erro"
 
-#: ../src/modules/connman/e_mod_main.c:1845
+#: ../src/modules/connman/e_mod_main.c:1853
 msgid "idle"
 msgstr "inativo"
 
-#: ../src/modules/connman/e_mod_main.c:1846
+#: ../src/modules/connman/e_mod_main.c:1854
 msgid "association"
 msgstr "associação"
 
-#: ../src/modules/connman/e_mod_main.c:1847
+#: ../src/modules/connman/e_mod_main.c:1855
 msgid "configuration"
 msgstr "configuração"
 
-#: ../src/modules/connman/e_mod_main.c:1848
+#: ../src/modules/connman/e_mod_main.c:1856
 msgid "ready"
 msgstr "pronto"
 
-#: ../src/modules/connman/e_mod_main.c:1849
+#: ../src/modules/connman/e_mod_main.c:1857
 msgid "login"
 msgstr "início de sessão"
 
-#: ../src/modules/connman/e_mod_main.c:1850
+#: ../src/modules/connman/e_mod_main.c:1858
 msgid "online"
 msgstr "\"on-line\""
 
-#: ../src/modules/connman/e_mod_main.c:1852
+#: ../src/modules/connman/e_mod_main.c:1860
 msgid "failure"
 msgstr "falha"
 
-#: ../src/modules/connman/e_mod_main.c:1853
+#: ../src/modules/connman/e_mod_main.c:1861
 msgid "enabled"
 msgstr "ativo"
 
-#: ../src/modules/connman/e_mod_main.c:1854
+#: ../src/modules/connman/e_mod_main.c:1862
 msgid "available"
 msgstr "disponível"
 
-#: ../src/modules/connman/e_mod_main.c:1855
+#: ../src/modules/connman/e_mod_main.c:1863
 msgid "connected"
 msgstr "ligado"
 
-#: ../src/modules/connman/e_mod_main.c:1856
+#: ../src/modules/connman/e_mod_main.c:1864
 msgid "offline"
 msgstr "desligado"
 
