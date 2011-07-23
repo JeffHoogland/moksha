@@ -2,7 +2,7 @@
 
 #define e_error_message_show(args...) \
 { \
-   char __tmpbuf[4096]; \
+   char __tmpbuf[PATH_MAX]; \
  \
    snprintf(__tmpbuf, sizeof(__tmpbuf), ##args); \
    e_error_message_show_internal(__tmpbuf); \
