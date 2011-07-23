@@ -57,8 +57,7 @@ write_file(const char *file, int val)
 
 /* externally accessible functions */
 int
-main(int argc,
-     char **argv)
+main(int argc, char **argv)
 {
    int i;
    int level;
@@ -72,21 +71,15 @@ main(int argc,
             (!strcmp(argv[i], "-help")) ||
             (!strcmp(argv[i], "--help")))
           {
-             printf(
-               "This is an internal tool for Enlightenment.\n"
-               "do not use it.\n"
-               );
+             printf("This is an internal tool for Enlightenment.\n"
+                    "do not use it.\n");
              exit(0);
           }
      }
    if (argc == 2)
-     {
-        level = atoi(argv[1]);
-     }
+     level = atoi(argv[1]);
    else
-     {
-        exit(1);
-     }
+     exit(1);
 
    if (setuid(0) != 0)
      {
@@ -99,7 +92,7 @@ main(int argc,
         exit(7);
      }
    
-   maxstr = read_file("/sys/devices/virtual/backlight/acpi_video0/max_brightness");
+   maxstr = read_file("/sys/devices/virtual/backlight/acpi_video0/max_brightness_max");
    if (maxstr)
      {
         maxlevel = atoi(maxstr);
@@ -110,7 +103,8 @@ main(int argc,
           }
         else
           {
-             snprintf(file, sizeof(file), "/sys/devices/virtual/backlight/acpi_video0/brightness");
+             snprintf(file, sizeof(file), 
+                      "/sys/devices/virtual/backlight/acpi_video0/brightness");
              free(maxstr);
              maxstr = NULL;
           }
@@ -126,8 +120,10 @@ main(int argc,
              if ((strcmp(dp->d_name, ".")) && (strcmp(dp->d_name, "..")))
                {
                   char buf[4096];
-                  
-                  snprintf(buf, sizeof(buf), "/sys/devices/virtual/backlight/%s/max_brightness", dp->d_name);
+
+                  snprintf(buf, sizeof(buf), 
+                           "/sys/devices/virtual/backlight/%s/max_brightness", 
+                           dp->d_name);
                   maxstr = read_file(buf);
                   if (maxstr)
                     {
@@ -139,7 +135,9 @@ main(int argc,
                          }
                        else
                          {
-                            snprintf(file, sizeof(file), "/sys/devices/virtual/backlight/%s/brightness", dp->d_name);
+                            snprintf(file, sizeof(file), 
+                                     "/sys/devices/virtual/backlight/%s/brightness", 
+                                     dp->d_name);
                             free(maxstr);
                             maxstr = NULL;
                             break;
@@ -148,23 +146,6 @@ main(int argc,
                }
           }
         closedir(dirp);
-     }
-   if (maxlevel <= 0)
-     {
-        struct stat st;
-        
-        snprintf(file, sizeof(file), "/sys/class/leds/lcd-backlight/brightness");
-        if (stat(file, &st) == 0)
-          {
-             maxlevel = 255;
-             maxstr = read_file("/sys/devices/leds/lcd-backlight/max_brightness");
-             if (maxstr)
-               {
-                  maxlevel = atoi(maxstr);
-                  free(maxstr);
-                  if (maxlevel <= 0) maxlevel = 255;
-               }
-          }
      }
    if (maxlevel > 0)
      {
