@@ -118,7 +118,8 @@ _e_randr_init(void)
    root = roots[0];
    free(roots);
 
-   if (!ecore_x_randr_query() || !(e_randr_screen_info = _e_randr_screen_info_new())) 
+   if ((!ecore_x_randr_query()) || 
+       !(e_randr_screen_info = _e_randr_screen_info_new()))
      goto ecore_x_randr_init_fail_free_screen;
 
    if ((e_randr_screen_info->randr_version = ecore_x_randr_version_get())) 
@@ -942,6 +943,7 @@ _e_randr_policy_crtc_get(E_Randr_Crtc_Info *but, E_Randr_Crtc_Info *hint __UNUSE
              break;
           }
      }
+
    if (!ret && (policy != ECORE_X_RANDR_OUTPUT_POLICY_CLONE)) return NULL;
 
    switch (policy)
@@ -949,39 +951,37 @@ _e_randr_policy_crtc_get(E_Randr_Crtc_Info *but, E_Randr_Crtc_Info *hint __UNUSE
       case ECORE_X_RANDR_OUTPUT_POLICY_ABOVE:
         EINA_LIST_FOREACH(e_randr_screen_info->rrvd_info.randr_info_12->crtcs, iter, crtc_info)
           {
-             if (crtc_info && (crtc_info != but) && (crtc_info->geometry.y <= ret->geometry.y))
-               {
-                  ret = crtc_info;
-                }
+             if (crtc_info && (crtc_info != but) && 
+                 (crtc_info->geometry.y <= ret->geometry.y))
+               ret = crtc_info;
            }
         break;
       case ECORE_X_RANDR_OUTPUT_POLICY_RIGHT:
         EINA_LIST_FOREACH(e_randr_screen_info->rrvd_info.randr_info_12->crtcs, iter, crtc_info)
           {
-             if (crtc_info && (crtc_info != but) && ((crtc_info->geometry.x + crtc_info->geometry.w) >= (ret->geometry.x + ret->geometry.w)))
-               {
-                  ret = crtc_info;
-                }
+             if (crtc_info && (crtc_info != but) && 
+                 ((crtc_info->geometry.x + crtc_info->geometry.w) >= 
+                     (ret->geometry.x + ret->geometry.w)))
+               ret = crtc_info;
            }
         break;
 
       case ECORE_X_RANDR_OUTPUT_POLICY_BELOW:
         EINA_LIST_FOREACH(e_randr_screen_info->rrvd_info.randr_info_12->crtcs, iter, crtc_info)
           {
-             if (crtc_info && (crtc_info != but) && ((crtc_info->geometry.y + crtc_info->geometry.h) >= (ret->geometry.y + ret->geometry.h)))
-               {
-                  ret = crtc_info;
-                }
+             if (crtc_info && (crtc_info != but) && 
+                 ((crtc_info->geometry.y + crtc_info->geometry.h) >= 
+                     (ret->geometry.y + ret->geometry.h)))
+               ret = crtc_info;
            }
         break;
 
       case ECORE_X_RANDR_OUTPUT_POLICY_LEFT:
         EINA_LIST_FOREACH(e_randr_screen_info->rrvd_info.randr_info_12->crtcs, iter, crtc_info)
           {
-             if (crtc_info && (crtc_info != but) && (crtc_info->geometry.x <= ret->geometry.x))
-               {
-                  ret = crtc_info;
-                }
+             if (crtc_info && (crtc_info != but) && 
+                 (crtc_info->geometry.x <= ret->geometry.x))
+               ret = crtc_info;
            }
         break;
 
