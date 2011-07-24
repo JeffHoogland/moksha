@@ -900,7 +900,7 @@ _e_mod_comp_cb_update(E_Comp *c)
    if (_comp_mod->conf->lock_fps)
      {
         DBG("MANUAL RENDER...\n");
-        ecore_evas_manual_render(c->ee);
+//        ecore_evas_manual_render(c->ee);
      }
    if (_comp_mod->conf->efl_sync)
      {
@@ -3189,7 +3189,7 @@ _e_mod_comp_add(E_Manager *man)
      }
 
    ecore_evas_comp_sync_set(c->ee, 0);
-   ecore_evas_manual_render_set(c->ee, _comp_mod->conf->lock_fps);
+//   ecore_evas_manual_render_set(c->ee, _comp_mod->conf->lock_fps);
    c->evas = ecore_evas_get(c->ee);
    ecore_evas_show(c->ee);
 
@@ -3422,7 +3422,7 @@ e_mod_comp_shadow_set(void)
      {
         E_Comp_Win *cw;
 
-        ecore_evas_manual_render_set(c->ee, _comp_mod->conf->lock_fps);
+//        ecore_evas_manual_render_set(c->ee, _comp_mod->conf->lock_fps);
         _e_mod_comp_fps_update(c);
         EINA_INLIST_FOREACH(c->wins, cw)
           {
