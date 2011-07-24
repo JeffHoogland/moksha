@@ -19906,18 +19906,18 @@ collections {
                fixed: 1 1;
                color: 0 0 0 255;
                rel1 {
-                  to: "icon0";
+                  to_y: "icon0";
                   relative: 0.0 1.0;
                   offset: 3 3;
                }
                rel2 {
-                  to: "icon0";
                   relative: 1.0 1.0;
-                  offset: -3 35;
+                  offset: -3 -1;
                }
                text {
                   text_source: "e.text.label";
                   style: "fileman_icon_name";
+	          align: 0.5 0.0;
                   min: 0 1;
                   text_class: "fileman_icon";
                }
@@ -20053,7 +20053,7 @@ collections {
                }
                rel2 {
                   relative: 1.0 1.0;
-                  offset: -6 -30;
+                  offset: -6 -40;
                }
             }
          }
@@ -20132,14 +20132,13 @@ collections {
                color3: 0 0 0 64;
                visible: 0;
                rel1 {
-                  to: "icon0";
+                  to_y: "icon0";
                   relative: 0.0 1.0;
-                  offset: 4 3;
+                  offset: 3 3;
                }
                rel2 {
-                  to: "icon0";
                   relative: 1.0 1.0;
-                  offset: -5 35;
+                  offset: -3 -1;
                }
 
                text {
@@ -20944,18 +20943,18 @@ collections {
 	       color: 224 224 224 255;
                color3: 0 0 0 64;
                rel1 {
-                  to: "icon0";
+                  to_y: "icon0";
                   relative: 0.0 1.0;
-                  offset: 4 3;
+                  offset: 3 3;
                }
                rel2 {
-                  to: "icon0";
                   relative: 1.0 1.0;
-                  offset: -5 50;
+                  offset: -3 -1;
                }
                text {
                   style: "fileman_desktop_icon_name";
 	          text_source: "e.text.label";
+	          align: 0.5 0.0;
                   min: 0 1;
                }
             }
@@ -21090,7 +21089,7 @@ collections {
                }
                rel2 {
                   relative: 1.0 1.0;
-                  offset: -6 -30;
+                  offset: -6 -40;
                }
             }
          }
@@ -21169,14 +21168,13 @@ collections {
                color3: 0 0 0 64;
                visible: 0;
                rel1 {
-                  to: "icon0";
+                  to_y: "icon0";
                   relative: 0.0 1.0;
                   offset: 4 3;
                }
                rel2 {
-                  to: "icon0";
                   relative: 1.0 1.0;
-                  offset: -5 50;
+                  offset: -3 -1;
                }
                text {
                   style: "fileman_desktop_icon_name_full";
