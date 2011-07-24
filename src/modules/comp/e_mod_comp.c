@@ -3098,16 +3098,7 @@ _e_mod_comp_add(E_Manager *man)
 
    c = calloc(1, sizeof(E_Comp));
    if (!c) return NULL;
-
-   if (_comp_mod->conf->vsync)
-     {
-        e_util_env_set("__GL_SYNC_TO_VBLANK", "1");
-     }
-   else
-     {
-        e_util_env_set("__GL_SYNC_TO_VBLANK", NULL);
-     }
-
+   
    ecore_x_e_comp_sync_supported_set(man->root, _comp_mod->conf->efl_sync);
 
    c->man = man;
