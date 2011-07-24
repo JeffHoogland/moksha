@@ -124,10 +124,26 @@ e_widget_size_min_get(Evas_Object *obj, Evas_Coord *minw, Evas_Coord *minh)
    if (minh) *minh = sd->minh;
 }
 
+static void
+_sub_obj_del(void        *data,
+             Evas        *e __UNUSED__,
+             Evas_Object *obj,
+             void        *event_info __UNUSED__)
+{
+   E_Smart_Data *sd = data;
+   
+   sd->subobjs = eina_list_remove(sd->subobjs, obj);
+   evas_object_event_callback_del(obj, EVAS_CALLBACK_DEL, _sub_obj_del);
+}
+
 EAPI void
 e_widget_sub_object_add(Evas_Object *obj, Evas_Object *sobj)
 {
    API_ENTRY return;
+   
+   evas_object_event_callback_del(sobj, EVAS_CALLBACK_DEL, _sub_obj_del);
+   evas_object_event_callback_add(sobj, EVAS_CALLBACK_DEL, _sub_obj_del, sd);
+   
    sd->subobjs = eina_list_append(sd->subobjs, sobj);
    if (!sd->child_can_focus)
      {
@@ -496,7 +512,7 @@ _e_smart_del(Evas_Object *obj)
 {
    INTERNAL_ENTRY;
    if (sd->del_func) sd->del_func(obj);
-   E_FREE_LIST(sd->subobjs, evas_object_del);
+   while (sd->subobjs) evas_object_del(sd->subobjs->data);
    free(sd);
 }
 
