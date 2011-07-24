@@ -117,6 +117,29 @@ _fill_data_tempget(E_Config_Dialog_Data *cfdata)
                     }
                   break;
                }
+           case SENSOR_TYPE_LINUX_SYS: 
+               {
+                  Eina_List *l;
+                  
+                  if ((l = ecore_file_ls("/sys/class/thermal")))
+                    {
+                       char *name;
+                       int n = 0;
+                       
+                       EINA_LIST_FREE(l, name) 
+                         {
+                            if (!strncmp(name, "thermal", 7))
+                              {
+                                 cfdata->sensors = 
+                                    eina_list_append(cfdata->sensors, name);
+                                 if (!strcmp(cfdata->inst->sensor_name, name))
+                                    cfdata->sensor = n;
+                                 n++;
+                              }
+                         }
+                    }
+                  break;
+               }
            default:
              break;
           }
