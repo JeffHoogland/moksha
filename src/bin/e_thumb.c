@@ -259,9 +259,13 @@ e_thumb_client_data(Ecore_Ipc_Event_Client_Data *e)
 		       _pending--;
 		       eth->done = 1;
 		       if (_pending == 0) _e_thumb_thumbnailers_kill();
-                       e_icon_preload_set(obj, 1);
-		       e_icon_file_key_set(obj, icon, "/thumbnail/data");
-                       _e_thumb_key_load(eth, icon);
+		       if (ecore_file_exists(icon))
+			 {
+			    e_icon_preload_set(obj, 1);
+			    e_icon_file_key_set(obj, icon, "/thumbnail/data");
+			    _e_thumb_key_load(eth, icon);
+			 }
+
 		       evas_object_smart_callback_call(obj, "e_thumb_gen", NULL);
 		    }
 	       }
