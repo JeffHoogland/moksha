@@ -26,7 +26,6 @@ static void _e_container_resize_handle(E_Container *con);
 static void _e_container_event_container_resize_free(void *data, void *ev);
 
 EAPI int E_EVENT_CONTAINER_RESIZE = 0;
-static int container_count;
 static Eina_List *handlers = NULL;
 
 /* externally accessible functions */
@@ -34,7 +33,6 @@ EINTERN int
 e_container_init(void)
 {
    E_EVENT_CONTAINER_RESIZE = ecore_event_type_new();
-   container_count = 0;
 
    handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_MOUSE_IN, _e_container_cb_mouse_in, NULL));
    handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_MOUSE_OUT, _e_container_cb_mouse_out, NULL));
