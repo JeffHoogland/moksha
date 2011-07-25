@@ -6,7 +6,6 @@ AM_CFLAGS = \
 -I$(top_srcdir) \
 -I$(top_srcdir)/src/bin \
 @e_cflags@ \
-@x_cflags@ \
 @cf_cflags@ \
 @VALGRIND_CFLAGS@ \
 @EDJE_DEF@ \
@@ -61,4 +60,3 @@ $(eeze_s) \
 ../e_sha1.c
 
 enlightenment_fm_LDADD = @E_FM_LIBS@
-

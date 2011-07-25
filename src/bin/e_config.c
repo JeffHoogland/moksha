@@ -903,9 +903,9 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, exec.show_exit_dialog, UCHAR);
 
    E_CONFIG_VAL(D, T, null_container_win, UCHAR);
-   
+
    E_CONFIG_LIST(D, T, env_vars, _e_config_env_var_edd);
-   
+
    E_CONFIG_VAL(D, T, backlight.normal, DOUBLE);
    E_CONFIG_VAL(D, T, backlight.dim, DOUBLE);
    E_CONFIG_VAL(D, T, backlight.transition, DOUBLE);
@@ -914,7 +914,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, deskenv.load_xmodmap, UCHAR);
    E_CONFIG_VAL(D, T, deskenv.load_gnome, UCHAR);
    E_CONFIG_VAL(D, T, deskenv.load_kde, UCHAR);
-   
+
    e_config_load();
 
    e_config_save_queue();
@@ -1021,15 +1021,13 @@ e_config_load(void)
      {
         printf("EEEK! no config of any sort! abort abort abort!\n");
         fprintf(stderr, "EEEK! no config of any sort! abort abort abort!\n");
-        e_alert_show("Enlightenment was started without any configuration\n"
-                     "files available for the given profile (normally\n"
-                     "default or the last profile used or provided on the\n"
-                     "command-line with -profile etc.)\n"
-                     "\n"
-                     "Cannot contiue without configuration to work with.\n"
-                     "Please ensure you have system or user configuration\n"
-                     "for the profile you are using before proceeeding."
-                     );
+        e_error_message_show("Enlightenment was started without any configuration\n"
+                             "files available for the given profile (normally\n"
+                             "default or the last profile used or provided on the\n"
+                             "command-line with -profile etc.)\n\n"
+                             "Cannot contiue without configuration to work with.\n"
+                             "Please ensure you have system or user configuration\n"
+                             "for the profile you are using before proceeeding.");
         abort();
      }
    if (e_config->config_version < E_CONFIG_FILE_VERSION)

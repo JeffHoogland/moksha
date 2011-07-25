@@ -15,6 +15,7 @@ typedef enum _E_Ipc_Domain
    E_IPC_DOMAIN_THUMB,
    E_IPC_DOMAIN_FM,
    E_IPC_DOMAIN_INIT,
+   E_IPC_DOMAIN_ALERT,
    E_IPC_DOMAIN_LAST
 } E_Ipc_Domain;
 

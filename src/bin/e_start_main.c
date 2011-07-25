@@ -527,21 +527,48 @@ main(int argc, char **argv)
 	void *lib, *func;
 
 	/* sanity checks - if precache might fail - check here first */
-	lib = dlopen("libevas.so", RTLD_GLOBAL | RTLD_LAZY);
-	if (!lib) dlopen("libevas.so.1", RTLD_GLOBAL | RTLD_LAZY);
+	lib = dlopen("libeina.so", RTLD_GLOBAL | RTLD_LAZY);
+	if (!lib) dlopen("libeina.so.1", RTLD_GLOBAL | RTLD_LAZY);
 	if (!lib) goto done;
-	func = dlsym(lib, "evas_init");
+	func = dlsym(lib, "eina_init");
 	if (!func) goto done;
+
+	lib = dlopen("libecore.so", RTLD_GLOBAL | RTLD_LAZY);
+	if (!lib) dlopen("libecore.so.1", RTLD_GLOBAL | RTLD_LAZY);
+	if (!lib) goto done;
+	func = dlsym(lib, "ecore_init");
+	if (!func) goto done;
+
 	lib = dlopen("libecore_file.so", RTLD_GLOBAL | RTLD_LAZY);
 	if (!lib) dlopen("libecore_file.so.1", RTLD_GLOBAL | RTLD_LAZY);
 	if (!lib) goto done;
 	func = dlsym(lib, "ecore_file_init");
 	if (!func) goto done;
+
+	lib = dlopen("libecore_x.so", RTLD_GLOBAL | RTLD_LAZY);
+	if (!lib) dlopen("libecore_x.so.1", RTLD_GLOBAL | RTLD_LAZY);
+	if (!lib) goto done;
+	func = dlsym(lib, "ecore_x_init");
+	if (!func) goto done;
+
+	lib = dlopen("libevas.so", RTLD_GLOBAL | RTLD_LAZY);
+	if (!lib) dlopen("libevas.so.1", RTLD_GLOBAL | RTLD_LAZY);
+	if (!lib) goto done;
+	func = dlsym(lib, "evas_init");
+	if (!func) goto done;
+
+	lib = dlopen("libedje.so", RTLD_GLOBAL | RTLD_LAZY);
+	if (!lib) dlopen("libedje.so.1", RTLD_GLOBAL | RTLD_LAZY);
+	if (!lib) goto done;
+	func = dlsym(lib, "edje_init");
+	if (!func) goto done;
+
 	lib = dlopen("libeet.so", RTLD_GLOBAL | RTLD_LAZY);
 	if (!lib) dlopen("libeet.so.0", RTLD_GLOBAL | RTLD_LAZY);
 	if (!lib) goto done;
 	func = dlsym(lib, "eet_init");
 	if (!func) goto done;
+
 	/* precache SHOULD work */
 	snprintf(buf, sizeof(buf), "%s/lib/enlightenment/preload/e_precache.so", _prefix_path);
 	env_set("LD_PRELOAD", buf);

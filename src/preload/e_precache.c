@@ -1,8 +1,12 @@
 #include "config.h"
 #include "e_precache.h"
 
-static void *lib_evas = NULL;
+static void *lib_eina = NULL;
+static void *lib_ecore = NULL;
 static void *lib_ecore_file = NULL;
+static void *lib_ecore_x = NULL;
+static void *lib_evas = NULL;
+static void *lib_edje = NULL;
 static void *lib_eet = NULL;
 
 static int *e_precache_end = NULL;
@@ -105,21 +109,35 @@ lib_func(const char *lib1, const char *lib2, const char *fname, const char *libn
 }
 
 /* intercepts */
-void
-evas_object_image_file_set(Evas_Object *obj, const char *file, const char *key)
+Eina_Module *
+eina_module_find(const Eina_Array *array, const char *module) 
 {
-   static void (*func) (Evas_Object *obj, const char *file, const char *key) = NULL;
-   if (!func)
-     func = lib_func("libevas.so", "libevas.so.1", 
-		     "evas_object_image_file_set", "lib_evas", &lib_evas);
-   if (do_log) log_write("o", file);
-   (*func) (obj, file, key);
+   static Eina_Module *(*func) (const Eina_Array *array, const char *module) = NULL;
+
+   if (!func) 
+     func = lib_func("libeina.so", "libeina.so.1", 
+                     "eina_module_find", "lib_eina", &lib_eina);
+   if (do_log) log_write("o", module);
+   return (*func) (array, module);
+}
+
+void 
+ecore_app_args_set(int argc, const char **argv)
+{
+   static void (*func) (int argc, const char **argv) = NULL;
+
+   if (!func) 
+     func = lib_func("libecore.so", "libecore.so.1", 
+                     "ecore_app_args_set", "lib_ecore", &lib_ecore);
+   if (do_log) log_write("o", (const char *)argv);
+   (*func) (argc, argv);
 }
 
 long long
 ecore_file_mod_time(const char *file)
 {
    static long long (*func) (const char *file) = NULL;
+
    if (!func)
      func = lib_func("libecore_file.so", "libecore_file.so.1", 
 		     "ecore_file_mod_time", "lib_ecore_file", &lib_ecore_file);
@@ -131,6 +149,7 @@ long long
 ecore_file_size(const char *file)
 {
    static int (*func) (const char *file) = NULL;
+
    if (!func)
      func = lib_func("libecore_file.so", "libecore_file.so.1", 
 		     "ecore_file_size", "lib_ecore_file", &lib_ecore_file);
@@ -142,6 +161,7 @@ Eina_Bool
 ecore_file_exists(const char *file)
 {
    static int (*func) (const char *file) = NULL;
+
    if (!func)
      func = lib_func("libecore_file.so", "libecore_file.so.1", 
 		     "ecore_file_exists", "lib_ecore_file", &lib_ecore_file);
@@ -153,6 +173,7 @@ Eina_Bool
 ecore_file_is_dir(const char *file)
 {
    static int (*func) (const char *file) = NULL;
+
    if (!func)
      func = lib_func("libecore_file.so", "libecore_file.so.1", 
 		     "ecore_file_is_dir", "lib_ecore_file", &lib_ecore_file);
@@ -164,6 +185,7 @@ Eina_Bool
 ecore_file_can_read(const char *file)
 {
    static int (*func) (const char *file) = NULL;
+
    if (!func)
      func = lib_func("libecore_file.so", "libecore_file.so.1", 
 		     "ecore_file_can_read", "lib_ecore_file", &lib_ecore_file);
@@ -175,6 +197,7 @@ Eina_Bool
 ecore_file_can_write(const char *file)
 {
    static int (*func) (const char *file) = NULL;
+
    if (!func)
      func = lib_func("libecore_file.so", "libecore_file.so.1", 
 		     "ecore_file_can_write", "lib_ecore_file", &lib_ecore_file);
@@ -186,6 +209,7 @@ Eina_Bool
 ecore_file_can_exec(const char *file)
 {
    static int (*func) (const char *file) = NULL;
+
    if (!func)
      func = lib_func("libecore_file.so", "libecore_file.so.1", 
 		     "ecore_file_can_exec", "lib_ecore_file", &lib_ecore_file);
@@ -197,6 +221,7 @@ Eina_List *
 ecore_file_ls(const char *file)
 {
    static Eina_List * (*func) (const char *file) = NULL;
+
    if (!func)
      func = lib_func("libecore_file.so", "libecore_file.so.1", 
 		     "ecore_file_ls", "lib_ecore_file", &lib_ecore_file);
@@ -204,13 +229,52 @@ ecore_file_ls(const char *file)
    return (*func) (file);
 }
 
+int 
+ecore_x_init(const char *name) 
+{
+   static int (*func) (const char *name) = NULL;
+
+   if (!func) 
+     func = lib_func("libecore_x.so", "libecore_x.so.1", 
+                     "ecore_x_init", "lib_ecore_x", &lib_ecore_x);
+   if (do_log) log_write("o", name);
+   return (*func) (name);
+}
+
+void
+evas_object_image_file_set(Evas_Object *obj, const char *file, const char *key)
+{
+   static void (*func) (Evas_Object *obj, const char *file, const char *key) = NULL;
+
+   if (!func)
+     func = lib_func("libevas.so", "libevas.so.1", 
+		     "evas_object_image_file_set", "lib_evas", &lib_evas);
+   if (do_log) log_write("o", file);
+   (*func) (obj, file, key);
+}
+
+/* edje */
+Eina_Bool 
+edje_object_file_set(Evas_Object *obj, const char *file, const char *group) 
+{
+   static Eina_Bool (*func) (Evas_Object *obj, const char *file, const char *group) = NULL;
+
+   if (!func)
+     func = lib_func("libedje.so", "libedje.so.1", 
+                     "edje_object_file_set", "lib_edje", &lib_edje);
+   if (do_log) log_write("o", file);
+   return (*func) (obj, file, group);
+}
+
 Eet_File *
 eet_open(const char *file, Eet_File_Mode mode)
 {
    static Eet_File * (*func) (const char *file, Eet_File_Mode mode) = NULL;
+
    if (!func)
      func = lib_func("libeet.so", "libeet.so.0", 
 		     "eet_open", "lib_eet", &lib_eet);
    if (do_log) log_write("o", file);
    return (*func) (file, mode);
 }
+

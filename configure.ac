@@ -77,7 +77,7 @@ EFL_CHECK_PATH_MAX
 AC_CHECK_FUNCS(setenv)
 AC_CHECK_FUNCS(unsetenv)
 
-AC_CHECK_HEADERS(X11/extensions/shape.h,, AC_MSG_ERROR([Cannot find X11/extensions/shape.h. Make sure your CFLAGS environment variable contains include lines for the location of this file]))
+dnl AC_CHECK_HEADERS(X11/extensions/shape.h,, AC_MSG_ERROR([Cannot find X11/extensions/shape.h. Make sure your CFLAGS environment variable contains include lines for the location of this file]))
 
 AC_CHECK_HEADERS(fnmatch.h,, AC_MSG_ERROR([Cannot find fnmatch.h. Make sure your CFLAGS environment variable contains include lines for the location of this file]))
 
@@ -160,25 +160,25 @@ AC_ARG_ENABLE(simple-x11,
   [ want_evas_simple_x11=$enableval ]
 )
     
-x_dir=""
-x_cflags=""
-x_libs=""
-AC_PATH_XTRA
-AC_CHECK_HEADER(X11/X.h,
-  [
-    if test "x$want_evas_simple_x11" = "xyes"; then
-      x_libs="${x_libs} -lX11 -lXext"
-    else
-      x_dir=${x_dir:-/usr/X11R6}
-      x_cflags=${x_cflags:--I${x_includes:-$x_dir/include}}
-      x_libs="${x_libs:--L${x_libraries:-$x_dir/lib}} -lX11 -lXext"
-    fi
-  ],[
-    AC_MSG_ERROR([Cannot find X headers and libraries.])
-  ]
-)
-AC_SUBST(x_cflags)
-AC_SUBST(x_libs)
+dnl x_dir=""
+dnl x_cflags=""
+dnl x_libs=""
+dnl AC_PATH_XTRA
+dnl AC_CHECK_HEADER(X11/X.h,
+dnl   [
+dnl     if test "x$want_evas_simple_x11" = "xyes"; then
+dnl       x_libs="${x_libs} -lX11 -lXext"
+dnl     else
+dnl       x_dir=${x_dir:-/usr/X11R6}
+dnl       x_cflags=${x_cflags:--I${x_includes:-$x_dir/include}}
+dnl       x_libs="${x_libs:--L${x_libraries:-$x_dir/lib}} -lX11 -lXext"
+dnl     fi
+dnl   ],[
+dnl     AC_MSG_ERROR([Cannot find X headers and libraries.])
+dnl   ]
+dnl )
+dnl AC_SUBST(x_cflags)
+dnl AC_SUBST(x_libs)
 
 cf_cflags=""
 cf_libs=""
@@ -372,12 +372,16 @@ eeze_mount=
 EEZE_MOUNT_CONFIG=0
 if test "x$e_cv_want_mount_eeze" != "xno" ; then
       AC_CHECK_LIB([eeze], [eeze_disk_function],
+##        [
+##           eeze_mount="eeze >= 1.1.0"
+##           EEZE_MOUNT_CONFIG=1
+##           AC_DEFINE_UNQUOTED([HAVE_EEZE_MOUNT], [1], [enable eeze mounting])
+##           AC_MSG_NOTICE([eeze mounting enabled])
+##        ],
         [
-           eeze_mount="eeze >= 1.0.99 ecore-con >= 1.0.999"
-           EEZE_MOUNT_CONFIG=1
-           AC_DEFINE_UNQUOTED([HAVE_EEZE_MOUNT], [1], [enable eeze mounting])
-           AC_MSG_NOTICE([eeze mounting enabled])
-        ],
+           AC_MSG_NOTICE([eeze mounting disabled])
+           e_cv_want_mount_eeze=no
+        ]
       )
 else
   AC_MSG_NOTICE([eeze mounting disabled])
@@ -390,7 +394,7 @@ AM_CONDITIONAL([HAVE_EEZE_MOUNT], [false])
 test -n "$hal_mount" && AC_DEFINE_UNQUOTED([HAVE_HAL_MOUNT], [1], [enable HAL mounting])
 test -n "$udisks_mount" && AC_DEFINE_UNQUOTED([HAVE_UDISKS_MOUNT], [1], [enable Udisks mounting])
 AM_CONDITIONAL([HAVE_UDISKS_MOUNT], [test -n "$udisks_mount"])
-AM_CONDITIONAL([HAVE_EEZE_MOUNT], [test -n "$eeze_mount"])
+##AM_CONDITIONAL([HAVE_EEZE_MOUNT], [test -n "$eeze_mount"])
 
 # doxygen program for documentation building
 
@@ -442,6 +446,7 @@ PKG_CHECK_MODULES(E_FM_OP, [
 PKG_CHECK_MODULES(E_FM_OPEN, [
   ecore >= 1.0.999
   ecore-ipc >= 1.0.999
+  ecore-con >= 1.0.999
   eet >= 1.4.0
   eina >= 1.0.999
 ])
@@ -458,6 +463,13 @@ PKG_CHECK_MODULES(E_INIT, [
   edje >= 1.0.999
   ecore-ipc >= 1.0.999
   eina >= 1.0.999
+])
+
+PKG_CHECK_MODULES(E_ALERT, [
+  xcb
+  eina >= 1.0.999
+  ecore >= 1.0.999
+  ecore-ipc >= 1.0.999
 ])
 
 PKG_CHECK_MODULES(E, [

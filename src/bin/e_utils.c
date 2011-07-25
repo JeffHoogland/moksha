@@ -8,11 +8,6 @@ EAPI E_Path *path_icons = NULL;
 EAPI E_Path *path_modules = NULL;
 EAPI E_Path *path_backgrounds = NULL;
 EAPI E_Path *path_messages = NULL;
-EAPI int restart = 0;
-EAPI int good = 0;
-EAPI int evil = 0;
-EAPI int starting = 1;
-EAPI int stopping = 0;
 
 typedef struct _E_Util_Fake_Mouse_Up_Info E_Util_Fake_Mouse_Up_Info;
 typedef struct _E_Util_Image_Import_Settings E_Util_Image_Import_Settings;
