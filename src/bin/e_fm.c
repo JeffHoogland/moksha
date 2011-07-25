@@ -1001,33 +1001,30 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
         sd->mount = NULL;
      }
 
-   if (!realpath)
+   /* If the path is of type removable: we add a new mountpoint */
+   if (sd->dev && !sd->mount && !strncmp(sd->dev, "removable:", 10))
      {
-	/* If the path is of type removable: we add a new mountpoint */
-	if (sd->dev && !sd->mount && !strncmp(sd->dev, "removable:", 10))
-	  {
-	     E_Volume *v = NULL;
+	E_Volume *v = NULL;
 
-	     v = e_fm2_device_volume_find(sd->dev + sizeof("removable:") - 1);
-	     if (v)
-	       {
-		  sd->mount = e_fm2_device_mount(v,
-						 _e_fm2_cb_mount_ok, _e_fm2_cb_mount_fail,
-						 _e_fm2_cb_unmount_ok, NULL, obj);
-		  if (v->efm_mode != EFM_MODE_USING_HAL_MOUNT) return;
-	       }
-	  }
-	else if (sd->config->view.open_dirs_in_place == 0)
+	v = e_fm2_device_volume_find(sd->dev + sizeof("removable:") - 1);
+	if (v)
 	  {
-	     E_Fm2_Mount *m;
-	     m = e_fm2_device_mount_find(sd->realpath);
-	     if (m)
-	       sd->mount = e_fm2_device_mount(m->volume,
-					      _e_fm2_cb_mount_ok, _e_fm2_cb_mount_fail,
-					      _e_fm2_cb_unmount_ok, NULL, obj);
+	     sd->mount = e_fm2_device_mount(v,
+					    _e_fm2_cb_mount_ok, _e_fm2_cb_mount_fail,
+					    _e_fm2_cb_unmount_ok, NULL, obj);
+	     if (v->efm_mode != EFM_MODE_USING_HAL_MOUNT) return;
 	  }
      }
-   
+   else if (sd->config->view.open_dirs_in_place == 0)
+     {
+	E_Fm2_Mount *m;
+	m = e_fm2_device_mount_find(sd->realpath);
+	if (m)
+	  sd->mount = e_fm2_device_mount(m->volume,
+					 _e_fm2_cb_mount_ok, _e_fm2_cb_mount_fail,
+					 _e_fm2_cb_unmount_ok, NULL, obj);
+     }
+
    if (!sd->mount || sd->mount->mounted)
      {
         sd->id = _e_fm2_client_monitor_add(sd->realpath);
