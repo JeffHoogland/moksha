@@ -141,8 +141,9 @@ e_widget_sub_object_add(Evas_Object *obj, Evas_Object *sobj)
 {
    API_ENTRY return;
    
+   if (eina_list_data_find(sd->subobjs, obj)) return;
+   
    evas_object_event_callback_del(sobj, EVAS_CALLBACK_DEL, _sub_obj_del);
-   evas_object_event_callback_add(sobj, EVAS_CALLBACK_DEL, _sub_obj_del, sd);
    
    sd->subobjs = eina_list_append(sd->subobjs, sobj);
    if (!sd->child_can_focus)
@@ -158,12 +159,14 @@ e_widget_sub_object_add(Evas_Object *obj, Evas_Object *sobj)
 	     sd->parent_obj = obj;
 	  }
      }
+   evas_object_event_callback_add(sobj, EVAS_CALLBACK_DEL, _sub_obj_del, sd);
 }
 
 EAPI void
 e_widget_sub_object_del(Evas_Object *obj, Evas_Object *sobj)
 {
    API_ENTRY return;
+   evas_object_event_callback_del(sobj, EVAS_CALLBACK_DEL, _sub_obj_del);
    sd->subobjs = eina_list_remove(sd->subobjs, sobj);
    if (!sd->child_can_focus)
      {
@@ -511,8 +514,20 @@ static void
 _e_smart_del(Evas_Object *obj)
 {
    INTERNAL_ENTRY;
+   void *po = NULL;
+   
    if (sd->del_func) sd->del_func(obj);
-   while (sd->subobjs) evas_object_del(sd->subobjs->data);
+   while (sd->subobjs)
+     {
+        if (sd->subobjs->data == po)
+          {
+             po = sd->subobjs->data;
+             sd->subobjs = eina_list_remove_list(sd->subobjs, sd->subobjs);
+             continue;
+          }
+        po = sd->subobjs->data;
+        evas_object_del(sd->subobjs->data);
+     }
    free(sd);
 }
 
