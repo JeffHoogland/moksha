@@ -750,11 +750,5 @@ _e_wid_del_hook(Evas_Object *obj)
    E_FREE(wd->preview_time_text);
    E_FREE(wd->path);
 
-   // XXX FIXME workaround for e_widget _sub_obj_del not being called
-   e_widget_sub_object_del(obj, wd->o_favorites_fm);
-   e_widget_sub_object_del(obj, wd->o_files_fm);
-   evas_object_del(wd->o_favorites_fm);
-   evas_object_del(wd->o_files_fm);
-   
    free(wd);
 }
