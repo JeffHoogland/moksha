@@ -372,12 +372,12 @@ eeze_mount=
 EEZE_MOUNT_CONFIG=0
 if test "x$e_cv_want_mount_eeze" != "xno" ; then
       AC_CHECK_LIB([eeze], [eeze_disk_function],
-##        [
-##           eeze_mount="eeze >= 1.1.0"
-##           EEZE_MOUNT_CONFIG=1
-##           AC_DEFINE_UNQUOTED([HAVE_EEZE_MOUNT], [1], [enable eeze mounting])
-##           AC_MSG_NOTICE([eeze mounting enabled])
-##        ],
+        [
+           eeze_mount="eeze >= 1.1.0 ecore-con >= 1.0.999"
+           EEZE_MOUNT_CONFIG=1
+           AC_DEFINE_UNQUOTED([HAVE_EEZE_MOUNT], [1], [enable eeze mounting])
+           AC_MSG_NOTICE([eeze mounting enabled])
+        ],
         [
            AC_MSG_NOTICE([eeze mounting disabled])
            e_cv_want_mount_eeze=no
@@ -394,7 +394,7 @@ AM_CONDITIONAL([HAVE_EEZE_MOUNT], [false])
 test -n "$hal_mount" && AC_DEFINE_UNQUOTED([HAVE_HAL_MOUNT], [1], [enable HAL mounting])
 test -n "$udisks_mount" && AC_DEFINE_UNQUOTED([HAVE_UDISKS_MOUNT], [1], [enable Udisks mounting])
 AM_CONDITIONAL([HAVE_UDISKS_MOUNT], [test -n "$udisks_mount"])
-##AM_CONDITIONAL([HAVE_EEZE_MOUNT], [test -n "$eeze_mount"])
+AM_CONDITIONAL([HAVE_EEZE_MOUNT], [test -n "$eeze_mount"])
 
 # doxygen program for documentation building
 
