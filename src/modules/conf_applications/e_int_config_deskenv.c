@@ -22,8 +22,9 @@ e_int_config_deskenv(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
-   
-   if (e_config_dialog_find("E", "windows/window_focus")) return NULL;
+
+   if (e_config_dialog_find("E", "windows/desktop_environments")) 
+     return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
    
    /* methods */
@@ -33,9 +34,9 @@ e_int_config_deskenv(E_Container *con, const char *params __UNUSED__)
    v->basic.create_widgets = _basic_create;
 
    /* create config diaolg for NULL object/data */
-   cfd = e_config_dialog_new(con, _("Focus Settings"), "E", 
-                             "windows/desktop_environments", "preferences-desktop-environments",
-                             0, v, NULL);
+   cfd = e_config_dialog_new(con, _("Desktop Environments"), "E", 
+                             "windows/desktop_environments", 
+                             "preferences-desktop-environments", 0, v, NULL);
    return cfd;
 }
 
@@ -69,7 +70,6 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 static int
 _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-   
    e_config->deskenv.load_xrdb = cfdata->load_xrdb;
    e_config->deskenv.load_xmodmap = cfdata->load_xmodmap;
    e_config->deskenv.load_gnome = cfdata->load_gnome;
