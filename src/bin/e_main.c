@@ -392,7 +392,9 @@ main(int argc, char **argv)
 
    TS("E_Randr Init");
    if (!e_randr_init()) 
-     e_error_message_show(_("Enlightenment cannot initialize E_Randr!\n"));
+     {
+        e_error_message_show(_("Enlightenment cannot initialize E_Randr!\n"));
+     }
    else 
      _e_main_shutdown_push(e_randr_shutdown);
    TS("E_Randr Init Done");
