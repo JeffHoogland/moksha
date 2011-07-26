@@ -2082,7 +2082,7 @@ _e_fm2_icon_mime_theme_get(Evas *evas, const E_Fm2_Icon *ic, const char **type_r
  * Use mime type information to set icon.
  */
 static Evas_Object *
-_e_fm2_icon_mime_get(Evas *evas, const E_Fm2_Icon *ic, Evas_Smart_Cb gen_func, void *data, int force_gen, const char **type_ret)
+_e_fm2_icon_mime_get(Evas *evas, const E_Fm2_Icon *ic, Evas_Smart_Cb gen_func __UNUSED__, void *data __UNUSED__, int force_gen __UNUSED__, const char **type_ret)
 {
    Evas_Object *o;
 
@@ -2257,7 +2257,7 @@ e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
         if (o) return o;
      }
 
-fallback:
+//fallback:
    o = _e_fm2_icon_explicit_theme_icon_get(evas, ic, "unknown", type_ret);
    if (o) return o;
    
