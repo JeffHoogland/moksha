@@ -1,12 +1,5 @@
 [Desktop Entry]
 Type=Link
-Name=Illume
-Name[ru]=Illume
-Name[zh_CN]=Illume
+Name=Touchscreen
 Icon=icon.png
-Comment=Illume profile for embedded systems like phones and web tablets with tiny<br>touchscreen displays. Only use this if you really have such a device.
-Comment[ru]=Профиль Illume для встроенных систем типа телефон или планшет, с маленькими<br>сенсорными экранами. Используйте его только если вы действительно имеете такое устройство.
-Comment[fr]=Illume pour les systèmes embarqués<br>comme les téléphones et les tablettes<br>Internet pourvus d'un petit écran<br>tactile. À n'utiliser que si vous<br>disposez d'un tel matériel.
-Comment[it]=Profilo Illume per sistemi embedded come cellulari e webpad con piccoli display<br>touchscreen. Usatelo solo se avete realmente un dispositivo simile.
-Comment[zh_CN]=为带有小型触屏的嵌入式系统如手机和上网本设计的 Illume 设置主题。
-Comment[pt]=Perfil para telemóveis e tablets com pequenos ecrãs tácteis.<br>Só deve ser utilizado se possuir dispositivos deste tipo
+Comment=EXPERIMENTAL!<br>Configuration set up to work best with touchscreen<br>phones, tablets and similar devices.

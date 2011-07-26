@@ -1,25 +1,5 @@
 [Desktop Entry]
 Type=Link
-Name=Standard
-Name[ru]=Стандартный
-Name[cs]=Standartní
-Name[hu]=Általános
-Name[el]=Κανονικό
-Name[eo]=Kutima
-Name[ja]=スタンダード
-Name[tr_TR]=Standart
-Name[zh_CN]=标准
-Name[pt]=Padrão
+Name=Computer
 Icon=icon.png
-Comment=This is the standard profile that is universal for most desktop and laptop<br>systems. Choose this if you are not sure what to choose.
-Comment[ru]=Этот стандартный профиль<br>универсален для большинства<br>стационарных и переносных<br>систем. Выберите его<br>если вы не знаете<br>что надо выбрать.
-Comment[cs]=Toto je standartní<br>univerzální<br>profil pro většinu<br>stolních a přenosných<br>počítačů. Vyberte pokud<br>si nejste jisti<br>co vybrat.
-Comment[it]=Questo è il profilo standard, universale<br>per la maggior parte dei sistemi<br>desktop e portatili. Scegliete questo se<br>non siete sicuri di cosa scegliere.
-Comment[hu]=Ez az általános,<br>alap beállítás,<br>amely megfelelő a<br>legtöbb laptop és<br>asztali gép számára.
-Comment[fr]=Le profil standard adapté à la quasi totalité des<br>systèmes de bureau et ordinateurs portables.<br>Choisissez ce profil si vous êtes indécis.
-Comment[el]=Αυτό είναι το κανονικό <br>προφίλ που είναι κοινό<br>για τα περισσότερα συστήματα. Επιλέξτε αυτό<br>αν δεν είστε σίγουροι για <br>την επιλογή σας.
-Comment[eo]=Tio estas la kutima profilo<br>taŭga por preskaŭ ĉiuj<br>oficejaj sistemoj kaj<br>porteblaj sistemoj.<br>Elektu ĝin se vi ne certas.
-Comment[ja]=これはスタンダードプロファイルです。<br>デスクトップシステムやラップトップシステムならほぼどれでも使えます。<br>どれを選べばいいかわからなければこれを選んでください。
-Comment[tr_TR]=Çoğu masaüstü ve dizüstü sistemler<br>için tasarlanmış standart kurulumdur.<br>Hangisini seçeceğinizden emin değilseniz bu seçeneği öneririz.
-Comment[zh_CN]=适用于大多数台式机和笔记本的设置主题，如果您不清楚如何选择则请使用这个。
-Comment[pt]= O perfil de configuração padrão utilizado para a maioria dos computadores e portáteis.<br>Escolha-o se não souber o que escolher
+Comment=Configuration for devices with keyboards and mice<br>like your average PC Desktop, Laptop or Netbook.
