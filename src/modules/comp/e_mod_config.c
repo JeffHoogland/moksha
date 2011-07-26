@@ -1205,18 +1205,21 @@ _basic_create_widgets(E_Config_Dialog      *cfd,
    rg = e_widget_radio_group_new(&(cfdata->engine));
    ob = e_widget_radio_add(evas, _("Software"), E_EVAS_ENGINE_SOFTWARE_X11, rg);
    e_widget_list_object_append(ol, ob, 1, 1, 0.5);
-   if (ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_OPENGL_X11))
+   if (!getenv("ECORE_X_NO_XLIB")) 
      {
-        ob = e_widget_radio_add(evas, _("OpenGL"), E_EVAS_ENGINE_GL_X11, rg);
-        e_widget_list_object_append(ol, ob, 1, 1, 0.5);
+        if (ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_OPENGL_X11))
+          {
+             ob = e_widget_radio_add(evas, _("OpenGL"), E_EVAS_ENGINE_GL_X11, rg);
+             e_widget_list_object_append(ol, ob, 1, 1, 0.5);
 
-        of = e_widget_framelist_add(evas, _("OpenGL options"), 0);
-        e_widget_framelist_content_align_set(of, 0.5, 0.0);
-        ob = e_widget_check_add(evas, _("Texture from pixmap"), &(cfdata->texture_from_pixmap));
-        e_widget_framelist_object_append(of, ob);
-        ob = e_widget_check_add(evas, _("Indirect OpenGL"), &(cfdata->indirect));
-        e_widget_framelist_object_append(of, ob);
-        e_widget_list_object_append(ol, of, 1, 1, 0.5);
+             of = e_widget_framelist_add(evas, _("OpenGL options"), 0);
+             e_widget_framelist_content_align_set(of, 0.5, 0.0);
+             ob = e_widget_check_add(evas, _("Texture from pixmap"), &(cfdata->texture_from_pixmap));
+             e_widget_framelist_object_append(of, ob);
+             ob = e_widget_check_add(evas, _("Indirect OpenGL"), &(cfdata->indirect));
+             e_widget_framelist_object_append(of, ob);
+             e_widget_list_object_append(ol, of, 1, 1, 0.5);
+          }
      }
    e_widget_toolbook_page_append(otb, NULL, _("Engine"), ol, 0, 0, 0, 0, 0.5, 0.0);
 
