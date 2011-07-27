@@ -11,6 +11,7 @@ static char *_e_intl_language_alias = NULL;
 static char *_e_intl_orig_xmodifiers = NULL;
 static char *_e_intl_orig_qt_im_module = NULL;
 static char *_e_intl_orig_gtk_im_module = NULL;
+static char *_e_intl_orig_ecore_imf_module = NULL;
 
 static const char *_e_intl_imc_personal_path = NULL;
 static const char *_e_intl_imc_system_path = NULL;
@@ -59,6 +60,7 @@ e_intl_init(void)
    if ((s = getenv("GTK_IM_MODULE"))) _e_intl_orig_gtk_im_module = strdup(s);
    if ((s = getenv("QT_IM_MODULE"))) _e_intl_orig_qt_im_module = strdup(s);
    if ((s = getenv("XMODIFIERS"))) _e_intl_orig_xmodifiers = strdup(s);
+   if ((s = getenv("ECORE_IMF_MODULE"))) _e_intl_orig_ecore_imf_module = strdup(s);
 
    return 1;
 }
@@ -72,6 +74,7 @@ e_intl_shutdown(void)
    E_FREE(_e_intl_orig_gtk_im_module);
    E_FREE(_e_intl_orig_qt_im_module);
    E_FREE(_e_intl_orig_xmodifiers);
+   E_FREE(_e_intl_orig_ecore_imf_module);
 
    if (_e_intl_imc_personal_path)
      eina_stringshare_del(_e_intl_imc_personal_path);
@@ -309,6 +312,7 @@ e_intl_input_method_set(const char *imc_path)
 	e_util_env_set("GTK_IM_MODULE", _e_intl_orig_gtk_im_module);
         e_util_env_set("QT_IM_MODULE", _e_intl_orig_qt_im_module);
         e_util_env_set("XMODIFIERS", _e_intl_orig_xmodifiers);
+	e_util_env_set("ECORE_IMF_MODULE", _e_intl_orig_ecore_imf_module);
      }
 
    if (imc_path)
@@ -327,6 +331,7 @@ e_intl_input_method_set(const char *imc_path)
 	          e_util_env_set("GTK_IM_MODULE", imc->gtk_im_module);
 	          e_util_env_set("QT_IM_MODULE", imc->qt_im_module);
 	          e_util_env_set("XMODIFIERS", imc->xmodifiers);
+	          e_util_env_set("ECORE_IMF_MODULE", imc->ecore_imf_module);
 
 		  E_EXE_STOP(_e_intl_input_method_exec);
 

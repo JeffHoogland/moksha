@@ -15,6 +15,7 @@ e_intl_data_init(void)
    E_CONFIG_VAL(_e_intl_input_method_config_edd, E_Input_Method_Config, gtk_im_module, STR);
    E_CONFIG_VAL(_e_intl_input_method_config_edd, E_Input_Method_Config, qt_im_module, STR);
    E_CONFIG_VAL(_e_intl_input_method_config_edd, E_Input_Method_Config, xmodifiers, STR);
+   E_CONFIG_VAL(_e_intl_input_method_config_edd, E_Input_Method_Config, ecore_imf_module, STR);
    E_CONFIG_VAL(_e_intl_input_method_config_edd, E_Input_Method_Config, e_im_exec, STR);
    E_CONFIG_VAL(_e_intl_input_method_config_edd, E_Input_Method_Config, e_im_setup_exec, STR);
 
@@ -66,6 +67,7 @@ e_intl_input_method_config_free(E_Input_Method_Config *imc)
 	if (imc->gtk_im_module) eina_stringshare_del(imc->gtk_im_module);
 	if (imc->qt_im_module) eina_stringshare_del(imc->qt_im_module);
 	if (imc->xmodifiers) eina_stringshare_del(imc->xmodifiers);
+	if (imc->ecore_imf_module) eina_stringshare_del(imc->ecore_imf_module);
 	if (imc->e_im_exec) eina_stringshare_del(imc->e_im_exec);
 	if (imc->e_im_setup_exec) eina_stringshare_del(imc->e_im_setup_exec);
 	E_FREE(imc);

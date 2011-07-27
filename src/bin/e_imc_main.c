@@ -21,6 +21,7 @@ main(int argc, char **argv)
    char *set_gtk_im_module = NULL;
    char *set_qt_im_module = NULL;
    char *set_xmodifiers = NULL;
+   char *set_ecore_imf_module = NULL;
    int list = 0;
 
    /* handle some command-line parameters */
@@ -65,6 +66,13 @@ main(int argc, char **argv)
 	  {
 	     i++;
 	     set_xmodifiers = argv[i];
+             valid_args++;
+             write_ops++;
+	  }
+	else if ((!strcmp(argv[i], "-set-ecore-imf-module")) && (i < (argc - 1)))
+	  {
+	     i++;
+	     set_ecore_imf_module = argv[i];
              valid_args++;
              write_ops++;
 	  }
@@ -115,7 +123,8 @@ main(int argc, char **argv)
    
    if (!ef)
      {
-	printf("ERROR: cannot open file %s for READ/WRITE (%d:%s)\n", file, errno, strerror(errno));
+	printf("ERROR: cannot open file %s for READ/WRITE (%i:%s)\n", 
+               file, errno, strerror(errno));
 	return -1;
      }
 
@@ -133,6 +142,7 @@ main(int argc, char **argv)
 	     write_imc->gtk_im_module = read_imc->gtk_im_module;
 	     write_imc->qt_im_module = read_imc->qt_im_module;
 	     write_imc->xmodifiers = read_imc->xmodifiers;
+	     write_imc->ecore_imf_module = read_imc->ecore_imf_module;
 	     write_imc->e_im_exec = read_imc->e_im_exec;
 	     write_imc->e_im_setup_exec = read_imc->e_im_setup_exec;
 	  }
@@ -145,6 +155,8 @@ main(int argc, char **argv)
 	  write_imc->qt_im_module = set_qt_im_module;
 	if (set_xmodifiers)     
 	  write_imc->xmodifiers = set_xmodifiers;
+	if (set_ecore_imf_module)     
+	  write_imc->ecore_imf_module = set_ecore_imf_module;
 	if (set_exe)
 	  write_imc->e_im_exec = set_exe;
 	if (set_setup)
@@ -159,13 +171,14 @@ main(int argc, char **argv)
    if (list)
      {
 	printf("Config File List:\n");
-	printf("Config Version:\t%d\n", read_imc->version);
-	printf("Config Name:\t%s\n", read_imc->e_im_name);
-	printf("Command Line:\t%s\n", read_imc->e_im_exec);
-	printf("Setup Line:\t%s\n", read_imc->e_im_setup_exec);
-	printf("gtk_im_module:\t%s\n", read_imc->gtk_im_module);
-	printf("qt_im_module:\t%s\n", read_imc->qt_im_module);
-	printf("xmodifiers:\t%s\n", read_imc->xmodifiers);
+	printf("Config Version:    %i\n", read_imc->version);
+	printf("Config Name:       %s\n", read_imc->e_im_name);
+	printf("Command Line:      %s\n", read_imc->e_im_exec);
+	printf("Setup Line:        %s\n", read_imc->e_im_setup_exec);
+	printf("gtk_im_module:     %s\n", read_imc->gtk_im_module);
+	printf("qt_im_module:      %s\n", read_imc->qt_im_module);
+	printf("xmodifiers:        %s\n", read_imc->xmodifiers);
+	printf("ecore_imf_module:  %s\n", read_imc->ecore_imf_module);
      }
    
    e_intl_input_method_config_free(read_imc);
@@ -186,6 +199,7 @@ _e_help(void)
 	  "  -set-setup EXE             Set the setup application execute line\n"
 	  "  -set-gtk-im-module         Set the gtk_im_module env var\n"
 	  "  -set-qt-im-module          Set the qt_im_module env var\n"
+	  "  -set-ecore-imf-module      Set the ecore_imf_module env var\n"
 	  "  -set-xmodifiers            Set the xmodifiers env var\n"
 	  "  -list                      List Contents of Input Method Config file\n"
 	  );
