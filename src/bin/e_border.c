@@ -2034,9 +2034,6 @@ e_border_focus_set(E_Border *bd,
 	e_border_focus_set(bd->leader->modal, focus, set);
 	return;
      }
-#ifdef INOUTDEBUG_FOCUS
-   printf("%s focus set %d %d\n", e_border_name_get(bd), focus, set);
-#endif
 
    if ((set) && (focus))
      {
@@ -3161,9 +3158,7 @@ e_border_idler_before(void)
 	     /* TODO revert focus when lost here ? */
 	     return;
 	  }
-#ifdef INOUTDEBUG_FOCUS
-	printf("%s idler focus\n", e_border_name_get(bd));
-#endif
+
 	if (bd == focused)
 	  return;
 
@@ -7958,9 +7953,6 @@ _e_border_eval(E_Border *bd)
             (bd->want_focus))
           {
              bd->want_focus = 0;
-#ifdef INOUTDEBUG_FOCUS
-	     printf("__________ focus new window _________\n");
-#endif
 	     e_border_focus_set_with_pointer(bd);
           }
         else if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DIALOG)
@@ -7970,18 +7962,11 @@ _e_border_eval(E_Border *bd)
                   (e_border_find_by_client_window(bd->client.icccm.transient_for) ==
                    e_border_focused_get())))
                {
-#ifdef INOUTDEBUG_FOCUS
-		  printf("__________ focus new dialog _________\n");
-#endif
-
 		  e_border_focus_set_with_pointer(bd);
                }
           }
         else
           {
-#ifdef INOUTDEBUG_FOCUS
-	     printf("__________ window takes focus _________\n");
-#endif
              /* focus window by default when it is the only one on desk */
               E_Border *bd2 = NULL;
               Eina_List *l;
