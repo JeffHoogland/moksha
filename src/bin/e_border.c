@@ -6974,6 +6974,9 @@ _e_border_eval0(E_Border *bd)
         else if ((bd->client.netwm.state.skip_taskbar) ||
                  (bd->client.netwm.state.skip_pager))
           bordername = "skipped";
+        else if ((bd->internal) && (bd->client.icccm.class) &&
+		 (!strncmp(bd->client.icccm.class, "e_fwin", 6)))
+          bordername = "internal_fileman";
         else
           bordername = e_config->theme_default_border_style;
         if (!bordername) bordername = "default";
