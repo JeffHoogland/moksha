@@ -258,9 +258,11 @@ e_desk_show(E_Desk *desk)
 
    if (e_config->desk_flip_animate_mode > 0)
      _e_desk_show_begin(desk, e_config->desk_flip_animate_mode, dx, dy);
-
-   if (e_config->focus_last_focused_per_desktop)
-     e_desk_last_focused_focus(desk);
+   else
+     {
+        if (e_config->focus_last_focused_per_desktop)
+           e_desk_last_focused_focus(desk);
+     }
 
    if (was_zone)
      {
@@ -683,6 +685,11 @@ _e_desk_show_end(E_Desk *desk)
              if (!e_border_under_pointer_get(desk, NULL))
                 e_desk_last_focused_focus(desk);
           }
+     }
+   else
+     {
+        if (e_config->focus_last_focused_per_desktop)
+           e_desk_last_focused_focus(desk);
      }
 
    e_container_border_list_free(bl);
