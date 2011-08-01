@@ -75,44 +75,240 @@ group "E_Config" struct {
             value "is_main" int: 0;
         }
     }
-    group "mime_icons" list {
-        group "E_Config_Mime_Icon" struct {
-            value "mime" string: "image/jpeg";
-            value "icon" string: "THUMB";
-        }
-        group "E_Config_Mime_Icon" struct {
-            value "mime" string: "image/png";
-            value "icon" string: "THUMB";
-        }
-        group "E_Config_Mime_Icon" struct {
-            value "mime" string: "image/x-pixmap";
-            value "icon" string: "THUMB";
-        }
-        group "E_Config_Mime_Icon" struct {
-            value "mime" string: "image/x-xpixmap";
-            value "icon" string: "THUMB";
-        }
-        group "E_Config_Mime_Icon" struct {
-            value "mime" string: "image/svg+xml";
-            value "icon" string: "THUMB";
-        }
-        group "E_Config_Mime_Icon" struct {
-            value "mime" string: "image/gif";
-            value "icon" string: "THUMB";
-        }
-        group "E_Config_Mime_Icon" struct {
-            value "mime" string: "image/tiff";
-            value "icon" string: "THUMB";
-        }
-        group "E_Config_Mime_Icon" struct {
-            value "mime" string: "application/x-edje";
-            value "icon" string: "THUMB";
-        }
-        group "E_Config_Mime_Icon" struct {
-            value "mime" string: "application/x-desktop";
-            value "icon" string: "DESKTOP";
-        }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
+      value "mime" string: "image/jpeg";
+      value "icon" string: "THUMB";
     }
+  }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
+      value "mime" string: "image/png";
+      value "icon" string: "THUMB";
+    }
+  }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
+      value "mime" string: "image/x-pixmap";
+      value "icon" string: "THUMB";
+    }
+  }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
+      value "mime" string: "image/x-xpixmap";
+      value "icon" string: "THUMB";
+    }
+  }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
+      value "mime" string: "image/svg+xml";
+      value "icon" string: "THUMB";
+    }
+  }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
+      value "mime" string: "image/gif";
+      value "icon" string: "THUMB";
+    }
+  }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
+      value "mime" string: "image/tiff";
+      value "icon" string: "THUMB";
+    }
+  }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
+      value "mime" string: "application/x-edje";
+      value "icon" string: "THUMB";
+    }
+  }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
+      value "mime" string: "application/pdf";
+      value "icon" string: "THUMB";
+    }
+  }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
+      value "mime" string: "application/postscript";
+      value "icon" string: "THUMB";
+    }
+  }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
+      value "mime" string: "image/x-photoshop";
+      value "icon" string: "THUMB";
+    }
+  }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
+      value "mime" string: "image/x-portable-anymap";
+      value "icon" string: "THUMB";
+    }
+  }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
+      value "mime" string: "image/x-portable-bitmap";
+      value "icon" string: "THUMB";
+    }
+  }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
+      value "mime" string: "image/x-portable-graymap";
+      value "icon" string: "THUMB";
+    }
+  }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
+      value "mime" string: "image/x-portable-pixmap";
+      value "icon" string: "THUMB";
+    }
+  }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
+      value "mime" string: "image/vnd.wap.wbmp";
+      value "icon" string: "THUMB";
+    }
+  }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
+      value "mime" string: "image/x-ms-bmp";
+      value "icon" string: "THUMB";
+    }
+  }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
+      value "mime" string: "image/x-icon";
+      value "icon" string: "THUMB";
+    }
+  }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
+      value "mime" string: "image/x-tga";
+      value "icon" string: "THUMB";
+    }
+  }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
+      value "mime" string: "image/svg+xml-compressed";
+      value "icon" string: "THUMB";
+    }
+  }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
+      value "mime" string: "application/x-xcf";
+      value "icon" string: "THUMB";
+    }
+  }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
+      value "mime" string: "image/x-compressed-xcf";
+      value "icon" string: "THUMB";
+    }
+  }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
+      value "mime" string: "video/3gpp";
+      value "icon" string: "THUMB";
+    }
+  }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
+      value "mime" string: "video/x-ms-asf";
+      value "icon" string: "THUMB";
+    }
+  }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
+      value "mime" string: "video/x-msvideo";
+      value "icon" string: "THUMB";
+    }
+  }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
+      value "mime" string: "video/x-flv";
+      value "icon" string: "THUMB";
+    }
+  }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
+      value "mime" string: "video/x-matroska";
+      value "icon" string: "THUMB";
+    }
+  }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
+      value "mime" string: "video/quicktime";
+      value "icon" string: "THUMB";
+    }
+  }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
+      value "mime" string: "video/mp4";
+      value "icon" string: "THUMB";
+    }
+  }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
+      value "mime" string: "video/mpeg";
+      value "icon" string: "THUMB";
+    }
+  }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
+      value "mime" string: "video/mp2t";
+      value "icon" string: "THUMB";
+    }
+  }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
+      value "mime" string: "application/mxf";
+      value "icon" string: "THUMB";
+    }
+  }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
+      value "mime" string: "video/x-ogm+ogg";
+      value "icon" string: "THUMB";
+    }
+  }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
+      value "mime" string: "video/ogg";
+      value "icon" string: "THUMB";
+    }
+  }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
+      value "mime" string: "video/x-theora+ogg";
+      value "icon" string: "THUMB";
+    }
+  }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
+      value "mime" string: "application/vnd.rn-realmedia";
+      value "icon" string: "THUMB";
+    }
+  }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
+      value "mime" string: "application/x-shockwave-flash";
+      value "icon" string: "THUMB";
+    }
+  }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
+      value "mime" string: "video/x-ms-wmv";
+      value "icon" string: "THUMB";
+    }
+  }
+  group "mime_icons" list {
+    group "E_Config_Mime_Icon" struct {
+      value "mime" string: "application/x-desktop";
+      value "icon" string: "DESKTOP";
+    }
+  }
     group "gadcons" list {
         group "E_Config_Gadcon" struct {
             group "clients" list {
