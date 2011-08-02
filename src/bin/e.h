@@ -76,9 +76,9 @@ void *alloca (size_t);
 
 # ifdef __GLIBC__
 #  include <execinfo.h>
-#  include <setjmp.h>
 # endif
 
+# include <setjmp.h>
 # include <Eina.h>
 # include <Eet.h>
 # include <Evas.h>
