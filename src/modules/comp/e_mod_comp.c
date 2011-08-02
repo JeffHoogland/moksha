@@ -3,7 +3,7 @@
 #include "e_mod_comp.h"
 #include "e_mod_comp_update.h"
 
-#define OVER_FLOW 4
+#define OVER_FLOW 2
 
 //////////////////////////////////////////////////////////////////////////
 //
@@ -592,7 +592,8 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
           }
         else
           {
-             cw->update = 1;
+             DBG("UPDATE [0x%x] NO RECTS!!! %i %i - %i %i\n", cw->win, cw->up->w, cw->up->h, cw->up->tw, cw->up->th);
+//             cw->update = 1;
           }
      }
    else
@@ -2744,9 +2745,9 @@ _e_mod_comp_damage_win(void *data __UNUSED__,
         if (ev->win == c->ee_win)
           {
              // expose on comp win - init win or some other bypass win did it
-               DBG("JOB4...\n");
-               _e_mod_comp_render_queue(c);
-               break;
+             DBG("JOB4...\n");
+             _e_mod_comp_render_queue(c);
+             break;
           }
      }
    return ECORE_CALLBACK_PASS_ON;
