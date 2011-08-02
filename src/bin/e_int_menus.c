@@ -174,6 +174,10 @@ e_int_menus_main_new(void)
 
    subm = e_menu_new();
    dat->enlightenment = subm;
+   
+   l = _e_int_menus_augmentation_find("enlightenment/0");
+   if (l) _e_int_menus_augmentation_add(subm, l);
+   
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Enlightenment"));
    e_util_menu_item_theme_icon_set(mi, "enlightenment");
@@ -189,14 +193,14 @@ e_int_menus_main_new(void)
    e_util_menu_item_theme_icon_set(mi, "preferences-desktop-theme");
    e_menu_item_callback_set(mi, _e_int_menus_themes_about, NULL);
 
-   l = _e_int_menus_augmentation_find("main/5");
-   if (l) _e_int_menus_augmentation_add(m, l);
+   l = _e_int_menus_augmentation_find("enlightenment/1");
+   if (l) _e_int_menus_augmentation_add(subm, l);
 
    mi = e_menu_item_new(subm);
    e_menu_item_separator_set(mi, 1);
 
-   l = _e_int_menus_augmentation_find("main/6");
-   if (l) _e_int_menus_augmentation_add(m, l);
+   l = _e_int_menus_augmentation_find("enlightenment/2");
+   if (l) _e_int_menus_augmentation_add(subm, l);
 
    mi = e_menu_item_new(subm);
    e_menu_item_label_set(mi, _("Restart"));
@@ -208,13 +212,16 @@ e_int_menus_main_new(void)
    e_util_menu_item_theme_icon_set(mi, "application-exit");
    e_menu_item_callback_set(mi, _e_int_menus_main_exit, NULL);
 
-   l = _e_int_menus_augmentation_find("main/7");
+   l = _e_int_menus_augmentation_find("enlightenment/3");
+   if (l) _e_int_menus_augmentation_add(subm, l);
+   
+   l = _e_int_menus_augmentation_find("main/5");
    if (l) _e_int_menus_augmentation_add(m, l);
 
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
 
-   l = _e_int_menus_augmentation_find("main/8");
+   l = _e_int_menus_augmentation_find("main/6");
    if (l) _e_int_menus_augmentation_add(m, l);
 
    subm = e_int_menus_config_new();
@@ -224,10 +231,10 @@ e_int_menus_main_new(void)
    e_util_menu_item_theme_icon_set(mi, "preferences-system");
    e_menu_item_submenu_set(mi, subm);
 
-   l = _e_int_menus_augmentation_find("main/9");
+   l = _e_int_menus_augmentation_find("main/7");
    if (l) _e_int_menus_augmentation_add(m, l);
 
-   l = eina_hash_find(_e_int_menus_augmentation, "main/10");
+   l = eina_hash_find(_e_int_menus_augmentation, "main/8");
    if (l) 
      {
         separator = 1;
@@ -236,7 +243,7 @@ e_int_menus_main_new(void)
         _e_int_menus_augmentation_add(m, l);
      }
 
-   l = eina_hash_find(_e_int_menus_augmentation, "main/11");
+   l = eina_hash_find(_e_int_menus_augmentation, "main/9");
    if (l) 
      {
         if (!separator) 
