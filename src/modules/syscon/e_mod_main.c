@@ -43,7 +43,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    /* remove module-supplied menu additions */
    if (maug)
      {
-	e_int_menus_menu_augmentation_del("main/10", maug);
+	e_int_menus_menu_augmentation_del("main/8", maug);
 	maug = NULL;
      }
    /* remove module-supplied action */
