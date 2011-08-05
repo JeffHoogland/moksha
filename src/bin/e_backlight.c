@@ -322,7 +322,7 @@ _bl_sys_level_get(void)
    val = _bl_sys_num_get(valfile);
    if ((val >= 0) && (val <= maxval))
       bl_val = (double)val / (double)maxval;
-   printf("GET: %i/%i (%1.3f)\n", val, maxval, bl_val);
+//   printf("GET: %i/%i (%1.3f)\n", val, maxval, bl_val);
    free(valfile);
 }
 
@@ -357,7 +357,7 @@ _bl_sys_level_set(double val)
         bl_sys_pending_set = EINA_TRUE;
         return;
      }
-   printf("SET: %1.3f\n", val);
+//   printf("SET: %1.3f\n", val);
    snprintf(buf, sizeof(buf), 
             "%s/enlightenment/utils/enlightenment_backlight %i", 
             e_prefix_lib_get(), (int)(val * 1000.0));
