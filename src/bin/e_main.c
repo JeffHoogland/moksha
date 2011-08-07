@@ -115,6 +115,16 @@ EAPI Eina_Bool starting = EINA_TRUE;
 EAPI Eina_Bool stopping = EINA_FALSE;
 EAPI Eina_Bool restart = EINA_FALSE;
 
+static void
+_fix_user_default_edj(void)
+{
+   char buff[PATH_MAX];
+   
+   /* fix for FOOLS that keep cp'ing default.edj into ~/.e/e/themes */
+   e_user_dir_concat_static(buff, "themes/default.edj");
+   if (ecore_file_exists(buff)) ecore_file_unlink(buff);
+}
+
 /* externally accessible functions */
 int 
 main(int argc, char **argv) 
@@ -123,7 +133,7 @@ main(int argc, char **argv)
    Eina_Bool safe_mode = EINA_FALSE;
    Eina_Bool after_restart = EINA_FALSE;
    double t = 0.0, tstart = 0.0;
-   char *s = NULL, buff[PATH_MAX];
+   char *s = NULL, buff[32];
    struct sigaction action;
 #ifdef TS_DO
    t0 = t1 = t2 = ecore_time_unix_get();
@@ -436,9 +446,7 @@ main(int argc, char **argv)
    TS("E_Config Init Done");
    _e_main_shutdown_push(e_config_shutdown);
 
-   /* fix for FOOLS that keep cp'ing default.edj into ~/.e/e/themes */
-   e_user_dir_concat_static(buff, "themes/default.edj");
-   if (ecore_file_exists(buff)) ecore_file_unlink(buff);
+   _fix_user_default_edj();
 
    TS("E_Env Init");
    if (!e_env_init())
