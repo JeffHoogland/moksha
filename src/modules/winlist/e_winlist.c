@@ -999,14 +999,12 @@ _e_winlist_border_add(E_Border *bd, E_Zone *zone, E_Desk *desk)
 static void
 _e_winlist_border_del(E_Border *bd)
 {
+   E_Winlist_Win *ww;
    Eina_List *l;
 
    if (bd == _last_border) _last_border = NULL;
-   for (l = _wins; l; l = l->next)
+   EINA_LIST_FOREACH(_wins, l, ww)
      {
-	E_Winlist_Win *ww;
-
-	ww = l->data;
 	if (ww->border == bd)
 	  {
              e_object_unref(E_OBJECT(ww->border));

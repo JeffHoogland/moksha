@@ -142,7 +142,6 @@ _battery_udev_ac_add(const char *syspath)
 static void 
 _battery_udev_battery_del(const char *syspath)
 {
-   Eina_List *l;
    Battery *bat;
 
    if (!(bat = _battery_battery_find(syspath)))
@@ -152,20 +151,18 @@ _battery_udev_battery_del(const char *syspath)
         return;
      }
 
-   l = eina_list_data_find(device_batteries, bat);
+   device_batteries = eina_list_remove(device_batteries, bat);
    eina_stringshare_del(bat->udi);
    eina_stringshare_del(bat->technology);
    eina_stringshare_del(bat->model);
    eina_stringshare_del(bat->vendor);
    ecore_poller_del(bat->poll);
    free(bat);
-   device_batteries = eina_list_remove_list(device_batteries, l);
 }
 
 static void 
 _battery_udev_ac_del(const char *syspath)
 {
-   Eina_List *l;
    Ac_Adapter *ac;
 
    if (!(ac = _battery_ac_adapter_find(syspath)))
@@ -175,10 +172,9 @@ _battery_udev_ac_del(const char *syspath)
         return;
      }
 
-   l = eina_list_data_find(device_ac_adapters, ac);
+   device_ac_adapters = eina_list_remove(device_ac_adapters, ac);
    eina_stringshare_del(ac->udi);
    free(ac);
-   device_ac_adapters = eina_list_remove_list(device_ac_adapters, l);
 }
 
 static Eina_Bool 

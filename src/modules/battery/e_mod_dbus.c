@@ -224,14 +224,13 @@ _battery_dbus_battery_add(const char *udi)
 static void
 _battery_dbus_battery_del(const char *udi)
 {
-   Eina_List *l;
    Battery *bat;
    
    bat = _battery_battery_find(udi);
    if (bat)
      {
         e_dbus_signal_handler_del(e_dbus_conn, bat->prop_change);
-        l = eina_list_data_find(device_batteries, bat);
+	device_batteries = eina_list_remove(device_batteries, bat);
         eina_stringshare_del(bat->udi);
         eina_stringshare_del(bat->technology);
         eina_stringshare_del(bat->type);
@@ -239,7 +238,6 @@ _battery_dbus_battery_del(const char *udi)
         eina_stringshare_del(bat->model);
         eina_stringshare_del(bat->vendor);
         free(bat);
-        device_batteries = eina_list_remove_list(device_batteries, l);
         return;
      }
    _battery_device_update();
@@ -268,18 +266,16 @@ _battery_dbus_ac_adapter_add(const char *udi)
 static void
 _battery_dbus_ac_adapter_del(const char *udi)
 {
-   Eina_List *l;
    Ac_Adapter *ac;
    
    ac = _battery_ac_adapter_find(udi);
    if (ac)
      {
         e_dbus_signal_handler_del(e_dbus_conn, ac->prop_change);
-        l = eina_list_data_find(device_ac_adapters, ac);
+	device_ac_adapters = eina_list_remove(device_ac_adapters, ac);
         eina_stringshare_del(ac->udi);
         eina_stringshare_del(ac->product);
         free(ac);
-        device_ac_adapters = eina_list_remove_list(device_ac_adapters, l);
         return;
      }
    _battery_device_update();
