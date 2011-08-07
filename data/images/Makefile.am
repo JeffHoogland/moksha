@@ -6,6 +6,7 @@ test.png \
 test.jpg \
 test.edj \
 test.svg \
+lang-system.png \
 lang-bg_BG.png \
 lang-ca_ES.png \
 lang-cs_CZ.png \
