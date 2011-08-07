@@ -30,6 +30,7 @@ lang-sk_SK.png \
 lang-sl_SI.png \
 lang-sv_SE.png \
 lang-zh_CN.png \
+lang-zh_HK.png \
 lang-zh_TW.png
 
 EXTRA_DIST = $(files_DATA)
