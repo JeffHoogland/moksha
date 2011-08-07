@@ -34,6 +34,9 @@ struct _E_Config_Dialog_Data
    const char *mailto_desktop;
    const char *file_desktop;
    const char *trash_desktop;
+   
+   Ecore_Event_Handler *desk_change_handler;
+   int gen;
 };
 
 /* local function prototypes */
@@ -42,6 +45,7 @@ static void _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cf
 static Evas_Object *_basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata);
 static int _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
 
+static Eina_Bool _desks_update(void *data, int ev_type __UNUSED__, void *ev __UNUSED__);
 static void _load_mimes(E_Config_Dialog_Data *cfdata, char *file);
 static void _load_globs(E_Config_Dialog_Data *cfdata, char *file);
 static int _sort_mimes(const void *data1, const void *data2);
@@ -84,6 +88,9 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
    
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    if (!cfdata) return NULL;
+   
+   cfdata->desk_change_handler = ecore_event_handler_add
+      (EFREET_EVENT_DESKTOP_CACHE_UPDATE, _desks_update, cfdata);
    
    snprintf(buf, sizeof(buf), "%s/applications/defaults.list",
             efreet_data_home_get());
@@ -191,7 +198,23 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    if (cfdata->ini) efreet_ini_free(cfdata->ini);
    EINA_LIST_FREE(cfdata->desks, desk)
       efreet_desktop_free(desk);
+   if (cfdata->desk_change_handler)
+      ecore_event_handler_del(cfdata->desk_change_handler);
    E_FREE(cfdata);
+}
+
+static Eina_Bool
+_desks_update(void *data, int ev_type __UNUSED__, void *ev __UNUSED__)
+{
+   E_Config_Dialog_Data *cfdata = data;
+   Efreet_Desktop *desk;
+   EINA_LIST_FREE(cfdata->desks, desk)
+      efreet_desktop_free(desk);
+   if (cfdata->gen)
+      _fill_apps_list(cfdata, cfdata->obj.deflist, &(cfdata->selapp), 1);
+   else
+      _fill_apps_list(cfdata, cfdata->obj.deflist, cfdata->seldest, 0);
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static void
@@ -200,6 +223,7 @@ _def_browser_cb(void *data)
    E_Config_Dialog_Data *cfdata = data;
    cfdata->seldest = &(cfdata->browser_desktop);
    _fill_apps_list(cfdata, cfdata->obj.deflist, cfdata->seldest, 0);
+   cfdata->gen = 0;
 }
 
 static void
@@ -208,6 +232,7 @@ _def_mailto_cb(void *data)
    E_Config_Dialog_Data *cfdata = data;
    cfdata->seldest = &(cfdata->mailto_desktop);
    _fill_apps_list(cfdata, cfdata->obj.deflist, cfdata->seldest, 0);
+   cfdata->gen = 0;
 }
 
 static void
@@ -216,6 +241,7 @@ _def_file_cb(void *data)
    E_Config_Dialog_Data *cfdata = data;
    cfdata->seldest = &(cfdata->file_desktop);
    _fill_apps_list(cfdata, cfdata->obj.deflist, cfdata->seldest, 0);
+   cfdata->gen = 0;
 }
 
 static void
@@ -224,6 +250,7 @@ _def_trash_cb(void *data)
    E_Config_Dialog_Data *cfdata = data;
    cfdata->seldest = &(cfdata->trash_desktop);
    _fill_apps_list(cfdata, cfdata->obj.deflist, cfdata->seldest, 0);
+   cfdata->gen = 0;
 }
 
 static void
@@ -238,6 +265,7 @@ _sel_mime_cb(void *data)
         if (s) cfdata->selapp = eina_stringshare_add(s);
      }
    _fill_apps_list(cfdata, cfdata->obj.mimelist, &(cfdata->selapp), 1);
+   cfdata->gen = 1;
 }
 
 static Evas_Object *
