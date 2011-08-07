@@ -239,6 +239,6 @@ extern EAPI Eina_Bool restart;
 extern EAPI Eina_Bool e_precache_end;
 extern EAPI Eina_Bool x_fatal;
 
-//extern EAPI unsigned long e_alert_composite_win;
+extern EAPI unsigned long e_alert_composite_win;
 
 #endif

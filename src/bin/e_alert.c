@@ -7,6 +7,9 @@ static Eina_Bool _e_alert_cb_exe_del(void *data __UNUSED__, int type __UNUSED__,
 static Ecore_Exe *alert_exe = NULL;
 static Ecore_Event_Handler *alert_exe_hdl = NULL;
 
+/* public variables */
+EAPI unsigned long e_alert_composite_win = 0;
+
 EINTERN int 
 e_alert_init(void) 
 {
@@ -33,8 +36,8 @@ e_alert_show(int sig)
    char buf[8192];
 
    snprintf(buf, sizeof(buf), 
-            "%s/enlightenment/utils/enlightenment_alert %d %d",
-	    e_prefix_lib_get(), sig, getpid());
+            "%s/enlightenment/utils/enlightenment_alert %d %d %d",
+	    e_prefix_lib_get(), sig, getpid(), e_alert_composite_win);
 
    alert_exe = ecore_exe_run(buf, NULL);
    pause();

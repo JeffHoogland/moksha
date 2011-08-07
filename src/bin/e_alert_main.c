@@ -10,6 +10,7 @@
 #include <Ecore.h>
 #include <Ecore_Ipc.h>
 #include <xcb/xcb.h>
+#include <xcb/shape.h>
 
 #define WINDOW_WIDTH 320
 #define WINDOW_HEIGHT 240
@@ -43,7 +44,7 @@ static Ecore_Ipc_Server *_ipc_server = NULL;
 static Ecore_Ipc_Server *_server = NULL;
 static xcb_connection_t *conn = NULL;
 static xcb_screen_t *screen = NULL;
-static xcb_window_t win = 0;
+static xcb_window_t win = 0, comp_win = 0;
 static xcb_window_t btn1 = 0;
 static xcb_window_t btn2 = 0;
 static xcb_font_t font = 0;
@@ -73,6 +74,8 @@ main(int argc, char **argv)
           sig = atoi(argv[i]); // signal
         else if ((i == 2)) 
           pid = atoi(argv[i]); // E's pid
+        else if ((i == 3))
+          comp_win = atoi(argv[i]); // Composite Alert Window
      }
 
    if (!ecore_init()) return EXIT_FAILURE;
@@ -253,21 +256,25 @@ _e_alert_display(void)
    _e_alert_button_move_resize(btn2, x, WINDOW_HEIGHT - 20 - (fh + 20), 
                                w, (fh + 20));
 
-   /* FIXME: May need e_alert_composite_win here and checks for shapedinput */
-   /* if (e_alert_composite_win) */
-   /*   { */
-/* #ifdef ShapeInput         */
-   /*      XRectangle rect; */
+   if (comp_win)
+     {
+        xcb_rectangle_t rect;
+        int wx = 0, wy = 0;
 
-   /*      rect.x = wx; */
-   /*      rect.y = wy; */
-   /*      rect.width = ww; */
-   /*      rect.height = hh; */
-   /*      XShapeCombineRectangles(dd, e_alert_composite_win, ShapeInput,  */
-   /*                              0, 0, &rect, 1, ShapeSet, Unsorted); */
-/* #endif         */
-   /*      XReparentWindow(dd, win, e_alert_composite_win, wx, wy); */
-   /*   } */
+        wx = ((sw - WINDOW_WIDTH) / 2);
+        wy = ((sh - WINDOW_HEIGHT) / 2);
+
+        rect.x = wx;
+        rect.y = wy;
+        rect.width = WINDOW_WIDTH;
+        rect.height = WINDOW_HEIGHT;
+
+        xcb_shape_rectangles(conn, XCB_SHAPE_SO_SET, 
+                             XCB_SHAPE_SK_INPUT, XCB_CLIP_ORDERING_UNSORTED, 
+                             comp_win, 0, 0, 1, &rect);
+
+        xcb_reparent_window(conn, win, comp_win, wx, wy);
+     }
 
    /* map and raise main window */
    xcb_map_window(conn, win);
@@ -332,6 +339,7 @@ _e_alert_shutdown(void)
    xcb_destroy_window(conn, btn1);
    xcb_destroy_window(conn, btn2);
    xcb_destroy_window(conn, win);
+   if (comp_win) xcb_destroy_window(conn, comp_win);
    xcb_free_gc(conn, gc);
    xcb_disconnect(conn);
 }

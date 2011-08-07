@@ -467,6 +467,7 @@ PKG_CHECK_MODULES(E_INIT, [
 
 PKG_CHECK_MODULES(E_ALERT, [
   xcb
+  xcb-shape
   eina >= 1.0.999
   ecore >= 1.0.999
   ecore-ipc >= 1.0.999
