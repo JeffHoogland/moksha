@@ -757,8 +757,8 @@ _desklock_auth(char *passwd)
 	sigaction(SIGABRT, &action, NULL);
 
 	current_user = _desklock_auth_get_current_user();
-	eina_strlcpy(da.user, current_user, PATH_MAX);
-	eina_strlcpy(da.passwd, passwd, PATH_MAX);
+	eina_strlcpy(da.user, current_user, sizeof(da.user));
+	eina_strlcpy(da.passwd, passwd, sizeof(da.passwd));
 	/* security - null out passwd string once we are done with it */
 	for (p = passwd; *p; p++) *p = 0;
 	da.pam.handle = NULL;
