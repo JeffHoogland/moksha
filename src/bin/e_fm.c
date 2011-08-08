@@ -577,6 +577,12 @@ _e_fm2_icon_h_get(const E_Fm2_Smart_Data *sd)
    return sd->config->icon.list.h;
 }
 
+static inline unsigned int
+_e_fm2_icon_mime_size_normalize(const E_Fm2_Icon *ic)
+{
+   return e_util_icon_size_normalize(_e_fm2_icon_w_get(ic->sd));
+}
+
 static Eina_Bool
 _e_fm2_mime_flush_cb(void *data __UNUSED__)
 {
@@ -1814,6 +1820,8 @@ _e_fm2_icon_explicit_theme_icon_get(Evas *evas, const E_Fm2_Icon *ic __UNUSED__,
 
    if (!o) return NULL;
 
+   e_icon_scale_size_set(o, _e_fm2_icon_mime_size_normalize(ic)); 
+
    if (!e_util_icon_theme_set(o, name))
      {
         evas_object_del(o);
@@ -1879,6 +1887,7 @@ _e_fm2_icon_explicit_get(Evas *evas, const E_Fm2_Icon *ic, const char *icon, con
         if (!o)
           return NULL;
 
+	e_icon_scale_size_set(o, _e_fm2_icon_mime_size_normalize(ic)); 
         e_icon_file_set(o, iconpath);
         e_icon_fill_inside_set(o, 1);
         if (type_ret) *type_ret = "CUSTOM";
@@ -2027,12 +2036,6 @@ _e_fm2_icon_mime_type_special_match(const E_Fm2_Icon *ic)
        return mi->icon;
 
    return NULL;
-}
-
-static inline unsigned int
-_e_fm2_icon_mime_size_normalize(const E_Fm2_Icon *ic)
-{
-   return e_util_icon_size_normalize(_e_fm2_icon_w_get(ic->sd));
 }
 
 static Evas_Object *
@@ -8526,8 +8529,9 @@ _e_fm2_view_menu_common(E_Menu *subm, E_Fm2_Smart_Data *sd)
    char buf[64];
    int icon_size = _e_fm2_icon_w_get(sd);
 
-   if (e_scale > 0.0)
-     icon_size /= e_scale;
+   // show the icon size as selected (even if it might be influnced by e_scale)
+   /* if (e_scale > 0.0)
+    *   icon_size /= e_scale; */
 
    snprintf(buf, sizeof(buf), _("Icon Size (%d)"), icon_size);
 
