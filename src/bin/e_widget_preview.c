@@ -121,6 +121,15 @@ e_widget_preview_thumb_set(Evas_Object *obj, const char *file, const char *key _
    return 1;
 }
 
+EAPI void
+e_widget_preview_vsize_set(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
+{
+   E_Widget_Data *wd;
+
+   wd = e_widget_data_get(obj);
+   e_livethumb_vsize_set(wd->img, w, h);
+}
+
 static void
 _e_wid_preview_thumb_gen(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
