@@ -589,18 +589,27 @@ _connman_service_connect_cb(void            *data,
 
    if (error && dbus_error_is_set(error))
      {
-        /* TODO: cellular might ask for SetupRequired to enter APN,
-         * username and password
-         */
-          if ((strcmp(error->name,
-                      "org.moblin.connman.Error.PassphraseRequired") == 0) ||
-              (strcmp(error->name,
-                      "org.moblin.connman.Error.Failed") == 0) ||
-              (strcmp(error->name,
-                      "net.connman.Error.PassphraseRequired") == 0) ||
-              (strcmp(error->name,
-                      "net.connman.Error.Failed") == 0))
+        char *password_needed[] = {
+          "org.moblin.connman.Error.PassphraseRequired",
+          "org.moblin.connman.Error.Failed",
+          "net.connman.Error.PassphraseRequired",
+          "net.connman.Error.Failed",
+          NULL
+        };
+        char *dont_display_error[] = {
+          "org.moblin.connman.Error.AlreadyConnected",
+          "net.connman.Error.AlreadyConnected",
+          "net.connman.Error.OperationAborted",
+          NULL
+        };
+        int i;
+
+        for (i = 0; password_needed[i]; ++i)
+          if (strcmp(error->name, password_needed[i]) == 0)
             {
+               /* TODO: cellular might ask for SetupRequired to enter APN,
+                * username and password
+                */
                E_Connman_Service *service;
 
                service = _connman_ctxt_find_service_stringshare
@@ -614,17 +623,23 @@ _connman_service_connect_cb(void            *data,
                     _connman_service_ask_pass_and_connect(service);
                  }
                else
-     /* TODO: cellular might ask for user and pass */
+                 /* TODO: cellular might ask for user and pass */
                  _connman_dbus_error_show(_("Connect to network service."),
                                           error);
+               break;
             }
-          else if ((strcmp(error->name,
-                           "org.moblin.connman.Error.AlreadyConnected") != 0) ||
-                   (strcmp(error->name,
-                           "net.connman.Error.AlreadyConnected") != 0))
-            _connman_dbus_error_show(_("Connect to network service."), error);
 
-          dbus_error_free(error);
+        if (password_needed[i] == NULL)
+          {
+             for (i = 0; dont_display_error[i]; ++i)
+               if (strcmp(error->name, dont_display_error[i]) == 0)
+                 break;
+
+             if (dont_display_error[i] == NULL)
+               _connman_dbus_error_show(_("Connect to network service."), error);
+          }
+
+        dbus_error_free(error);
      }
 
    _connman_default_service_changed_delayed(d->ctxt);
