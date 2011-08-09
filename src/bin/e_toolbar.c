@@ -174,6 +174,8 @@ e_toolbar_resize(E_Toolbar *tbar, int w, int h)
    E_OBJECT_TYPE_CHECK(tbar, E_TOOLBAR_TYPE);
    tbar->w = w;
    tbar->h = h;
+   if (tbar->gadcon)
+     e_gadcon_swallowed_min_size_set(tbar->gadcon, w, h);
    evas_object_resize(tbar->o_event, tbar->w, tbar->h);
    evas_object_resize(tbar->o_base, tbar->w, tbar->h);
 }
@@ -187,6 +189,8 @@ e_toolbar_move_resize(E_Toolbar *tbar, int x, int y, int w, int h)
    tbar->y = y;
    tbar->w = w;
    tbar->h = h;
+   if (tbar->gadcon)
+     e_gadcon_swallowed_min_size_set(tbar->gadcon, w, h);
    evas_object_move(tbar->o_event, x, y);
    evas_object_move(tbar->o_base, x, y);
    evas_object_resize(tbar->o_event, w, h);
