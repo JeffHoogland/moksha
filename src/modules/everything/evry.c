@@ -2386,8 +2386,10 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 
 	     if (!it_obj)
 	       {
-		  if (ACTN_SEL == CUR_SEL)
+		  if (SUBJ_SEL == CUR_SEL)
 		    _evry_selectors_switch(win, 1);
+		  if (ACTN_SEL == CUR_SEL)
+		    _evry_selectors_switch(win, 1);		  
 		  return;
 	       }
 
