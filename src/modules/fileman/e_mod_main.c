@@ -111,6 +111,8 @@ e_modapi_init(E_Module *m)
 
    e_fileman_dbus_init();
 
+   e_fwin_nav_init();
+   
    return m;
 }
 
@@ -144,6 +146,8 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
           }
      }
 
+   e_fwin_nav_shutdown();
+   
    /* remove module-supplied menu additions */
    if (maug)
      {
@@ -518,8 +522,9 @@ _e_mod_fileman_config_load(void)
     fileman_config->selection.windows_modifiers = 0;
     IFMODCFGEND;
 
-    IFMODCFG(0x0101);
-    fileman_config->view.show_toolbar = 0;
+    IFMODCFG(0x0103);
+    fileman_config->view.show_toolbar = 1;
+    fileman_config->view.open_dirs_in_place = 1;
     IFMODCFGEND;
 
     fileman_config->config_version = MOD_CONFIG_FILE_VERSION;

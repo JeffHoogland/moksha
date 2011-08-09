@@ -39066,4 +39066,518 @@ collections {
       }
    }
  */
+
+
+   group {
+   name: "modules/efm_navigation/main";
+      
+      images {
+      image: "bt_base1.png" COMP;
+      image: "bt_base2.png" COMP;
+      image: "bt_dis_base.png" COMP;
+      image: "bt_hilight.png" COMP;
+      image: "bt_shine.png" COMP;
+      image: "bt_dis_hilight.png" COMP;
+      image: "bt_dis_shine.png" COMP;
+      image: "icon_left_arrow.png" COMP;
+      image: "icon_right_arrow.png" COMP;
+      image: "icon_up_arrow.png" COMP;
+      image: "refresh.png" COMP;
+      image: "favorites.png" COMP;
+      }
+
+      parts {
+	 part {
+	 name: "base";
+	 type: RECT;
+	 mouse_events: 1;
+
+	    description {
+	    state: "default" 0.0;
+	    color: 0 0 0 0;
+	    }
+	 }
+	 part {
+	 name: "begin";
+	 type: RECT;
+	 mouse_events: 0;
+	    description {
+	    state: "default" 0.0;
+	    max: 1 1;
+	    align: 0.0 0.0;
+	    color: 0 0 0 0;
+	    }
+	 }
+
+#define NAV_BUTTON(NAME, ICON, REL_TO, OFF_X)	\
+	 part {					\
+	 name: NAME"_bg";			\
+	 mouse_events: 1;			\
+	 repeat_events: 1;			\
+	 type: IMAGE;				\
+	    description	{			\
+	    state: "default" 0.0;		\
+	    min: 28 28;				\
+	    max: 28 28;				\
+	    aspect: 1.0 1.0;			\
+	    aspect_preference: VERTICAL;	\
+	    align: 0.0 0.5;			\
+	       rel1 {				\
+	       to_x: REL_TO;			\
+	       relative: 1.0 0.0;		\
+	       offset: OFF_X 0;			\
+	       }				\
+	       image {				\
+	       normal: "bt_base2.png";		\
+	       border: 7 7 7 7;			\
+	       }				\
+	    }					\
+	    description {			\
+	    state: "down" 0.0;			\
+	    inherit: "default" 0.0;		\
+	    image.normal: "bt_base1.png";	\
+	    }					\
+	    description	{			\
+	    state: "disabled" 0.0;		\
+	    inherit: "default" 0.0;		\
+	    image.normal: "bt_dis_base.png";	\
+	    image.border: 4 4 4 4;		\
+	    }					\
+	 }					\
+	 part {					\
+	 name: NAME"_img";			\
+	 mouse_events: 0;			\
+	 type: IMAGE;				\
+	    description	{			\
+	    state: "default" 0.0;		\
+	    min: 16 16;				\
+	    max: 16 16;				\
+	       rel1 {				\
+	       offset: 7 7;			\
+	       to: NAME"_bg";			\
+	       }				\
+	       rel2 {				\
+	       offset: -8 -8;			\
+	       to: NAME"_bg";			\
+	       }				\
+	    image.normal: ICON".png";		\
+	    }					\
+	 }					\
+	 part {					\
+	 name: NAME"_fg1";			\
+	 type: IMAGE;				\
+	 mouse_events: 1;			\
+	 repeat_events: 1;			\
+	    description {			\
+	    state: "default" 0.0;		\
+	    rel1.to: NAME"_bg";			\
+	    rel2.to: NAME"_bg";			\
+	    rel2.relative: 1.0 0.5;		\
+	       image {				\
+	       normal: "bt_hilight.png";	\
+	       border: 7 7 7 0;			\
+	       }				\
+	    }					\
+	    description {			\
+	    state: "disabled" 0.0;		\
+	    inherit: "default" 0.0;		\
+	    image.normal: "bt_dis_hilight.png";	\
+	    image.border: 4 4 4 0;		\
+	    }					\
+	 }					\
+	 part {					\
+	 name: NAME"_fg2";			\
+	 type: IMAGE;				\
+	 mouse_events: 1;			\
+	 repeat_events: 1;			\
+	    description {			\
+	    state: "default" 0.0;		\
+	    rel1.to: NAME"_bg";			\
+	    rel2.to: NAME"_bg";			\
+	       image {				\
+	       normal: "bt_shine.png";		\
+	       border: 7 7 7 7;			\
+	       }				\
+	    }					\
+	    description {			\
+	    state: "disabled" 0.0;		\
+	    inherit: "default" 0.0;		\
+	    image.normal: "bt_dis_shine.png";	\
+	    }					\
+	 }					\
+	 part {					\
+	 name: NAME"_event_eater";		\
+	 type: RECT;				\
+	 mouse_events: 1;			\
+	 repeat_events: 0;			\
+	    description {			\
+	    state: "default" 0.0;		\
+	    visible: 0;				\
+	    color: 255 255 255 0;		\
+	    rel1.to: NAME"_bg";			\
+	    rel2.to: NAME"_bg";			\
+	    }					\
+	    description	{			\
+	    state: "disabled" 0.0;		\
+	    inherit: "default" 0.0;		\
+	    visible: 1;				\
+	    }					\
+	 }					\
+
+	 
+	 NAV_BUTTON("back",       "icon_left_arrow",  "begin", 5);
+	 NAV_BUTTON("forward",    "icon_right_arrow", "back_bg", 1);
+	 NAV_BUTTON("up",         "icon_up_arrow",    "forward_bg", 10);
+	 NAV_BUTTON("refresh",    "refresh",          "up_bg", 1);
+	 NAV_BUTTON("favorites",  "favorites",        "refresh_bg", 1);
+
+	 part {
+	 name: "e.swallow.pathbar";
+	 type: SWALLOW;
+	    description {
+	    state: "default" 0.0;
+	    align: 0.0 0.5;
+
+	       /* rel1.to_x: "favorites_base"; */
+	    rel1.to_x: "favorites_bg";
+	    rel1.relative: 1.0 0.0;
+	    rel1.offset: 10 0;
+	    rel2.offset: -40 -1;
+	    color: 200 0 0 200;
+	    }
+	 }
+			
+      }
+
+      programs {
+#define NAV_BUTTON_PROG(NAME)					\
+	 program {						\
+	 name: NAME"_click";					\
+	 signal: "mouse,down,1";				\
+	 source: "bg";						\
+	 action: STATE_SET "down" 0.0;				\
+	 target: NAME"_bg";					\
+	 }							\
+	 program {						\
+	 name: NAME"_unclick";					\
+	 signal: "mouse,up,1";					\
+	 source: "bg";						\
+	 action: STATE_SET "default" 0.0;			\
+	 target: NAME"_bg";					\
+	 }							\
+	 program	{					\
+	 name: NAME"_send";					\
+	 signal: "mouse,clicked,1";				\
+	 source: NAME"_bg";					\
+	 action: SIGNAL_EMIT "e,action,"NAME",click" "";	\
+	 }							\
+	 program	{					\
+	 name: NAME"_disable";					\
+	 signal: "e,state,"NAME",disabled";			\
+	 source: "e";						\
+	 action: STATE_SET "disabled" 0.0;			\
+	 target: NAME"_bg";					\
+	 target: NAME"_fg1";					\
+	 target: NAME"_fg2";					\
+	 target: NAME"_event_eater";				\
+	 }							\
+	 program	{					\
+	 name: NAME"_enable";					\
+	 signal: "e,state,"NAME",enabled";			\
+	 source: "e";						\
+	 action: STATE_SET "default" 0.0;			\
+	 target: NAME"_bg";					\
+	 target: NAME"_fg1";					\
+	 target: NAME"_fg2";					\
+	 target: NAME"_event_eater";				\
+	 }							\
+
+	 NAV_BUTTON_PROG("back");
+	 NAV_BUTTON_PROG("forward");
+	 NAV_BUTTON_PROG("up");
+	 NAV_BUTTON_PROG("refresh");
+	 NAV_BUTTON_PROG("favorites");
+      }
+   }
+
+
+   group {
+   name: "modules/efm_navigation/pathbar_scrollframe";
+      images {
+      image: "icon_left_arrow.png" COMP;
+      image: "icon_right_arrow.png" COMP;
+      }
+
+      parts {
+	 part {
+	 name: "base";
+	 type: RECT;
+	 mouse_events: 1;
+	    description {
+	    state: "default" 0.0;
+	       rel1 {
+	       to_x: "left_arrow";
+	       relative: 1.0 0.0;
+	       }
+	       rel2 {
+	       to_x: "right_arrow";
+	       relative: 0.0 1.0;
+	       }
+	    color: 0 0 0 0;
+	    }
+	 }
+	 part {
+	 name: "clipper";
+	 type: RECT;
+	 mouse_events: 0;
+	    description {
+	    state: "default" 0.0;
+	    rel1.to: "base";
+	    rel2.to: "base";
+	    }
+	 }
+	 part {
+	 name: "e.swallow.content";
+	 type: SWALLOW;
+	 clip_to: "clipper";
+	    description {
+	    state: "default" 0.0;
+	    rel1.to: "clipper";
+	    rel2.to: "clipper";
+	    }
+	 }
+	 part {
+	 name: "left_arrow";
+	 type: IMAGE;
+	 mouse_events: 1;
+	 scale: 1;
+	    description {
+	    state: "default" 0.0;
+	       /* aspect: 1.0 1.0;
+		* aspect_preference: VERTICAL; */
+	    align: 0.0 0.5;
+	    min: 16 16;
+	    max: 16 16;
+	    image.normal: "icon_left_arrow.png";
+	    }
+	 }
+	 part {
+	 name: "right_arrow";
+	 type: IMAGE;
+	 mouse_events: 1;
+	 scale: 1;
+	    description {
+	    state: "default" 0.0;
+	    align: 1.0 0.5;
+	    min: 16 16;
+	    max: 16 16;
+	    image.normal: "icon_right_arrow.png";
+	    }
+	 }
+	 part {
+	 name: "e.dragable.hbar";
+	 mouse_events: 0;
+	    dragable {
+	    x: 1 1 0;
+	    y: 0 0 0;
+	    confine: "base";
+	    }
+	    description {
+	    state: "default" 0.0;
+	    visible: 0;
+	    rel1.to: "base";
+	    rel2.to: "base";
+	    }
+	 }
+	 part {
+	 name: "event";
+	 mouse_events: 1;
+	 repeat_events: 1;
+	    description {
+	    state: "default" 0.0;
+	    color: 0 0 0 0;
+	    }
+	 }
+      }
+      program {
+      name: "sb_left";
+      signal: "mouse,down,1";
+      source: "left_arrow";
+      action: DRAG_VAL_STEP -5.0 0.0;
+      target: "e.dragable.hbar";
+      }
+      program {
+      name: "sb_right";
+      signal: "mouse,down,1";
+      source: "right_arrow";
+      action: DRAG_VAL_STEP 5.0 0.0;
+      target: "e.dragable.hbar";
+      }
+
+   }
+
+   group {
+   name: "modules/efm_navigation/pathbar_button";
+      images {
+      image: "bt_base1.png" COMP;
+      image: "bt_base2.png" COMP;
+      image: "bt_dis_base.png" COMP;
+      image: "bt_hilight.png" COMP;
+      image: "bt_shine.png" COMP;
+      image: "bt_dis_hilight.png" COMP;
+      image: "bt_dis_shine.png" COMP;
+      }
+
+      parts {
+	 part {
+	 name: "bg";
+	 type: IMAGE;
+	 mouse_events: 0;
+	    description {
+	    state: "default" 0.0;
+	    min: 28 28;
+	       image {
+	       normal: "bt_base2.png";
+	       border: 7 7 7 7;
+	       }
+	    }
+	    description {
+	    state: "down" 0.0;
+	    inherit: "default" 0.0;
+	    image.normal: "bt_base1.png";
+	    }
+	 }
+	 part {
+	 name: "label2";
+	 type: TEXT;
+	 mouse_events: 0;
+	 scale: 1;
+	    description {
+	    state: "default" 0.0;
+	    max: 150 32;
+	    rel1.to: "e.text.label";
+	    rel2.to: "e.text.label";
+	    color: 224 224 224 255;
+	       text {
+	       font: "Sans";
+	       text_source: "e.text.label";
+	       size: 10;
+	       min: 1 1;
+	       align: 0.5 0.5;
+	       elipsis: 0.0;
+	       }
+	    }
+	    description {
+	    state: "selected" 0.0;
+	    inherit: "default" 0.0;
+	    visible: 0;
+	    }
+	 }
+	 part {
+	 name: "e.text.label";
+	 type: TEXT;
+	 mouse_events: 0;
+	 scale: 1;
+	    description {
+	    state: "default" 0.0;
+	    max: 150 32;
+	    rel1.offset: 7 0;
+	    rel2.offset: -8 -1;
+	    visible: 0;
+	    color: 255 255 255 255;
+	       text {
+	       font: "Sans:style=Bold";
+	       size: 10;
+	       min: 1 1;
+	       align: 0.5 0.5;
+	       elipsis: 0.0;
+	       }
+	    }
+	    description {
+	    state: "selected" 0.0;
+	    inherit: "default" 0.0;
+	    visible: 1;
+	    }
+	 }
+	 part {
+	 name: "fg1";
+	 type: IMAGE;
+	 mouse_events: 0;
+	    description {
+	    state: "default" 0.0;
+	    rel1.to: "bg";
+	       rel2 {
+	       to: "bg";
+	       relative: 1.0 0.5;
+	       }
+	       image {
+	       normal: "bt_hilight.png";
+	       border: 7 7 7 0;
+	       }
+	    }
+	 }
+	 part {
+	 name: "fg2";
+	 type: IMAGE;
+	 mouse_events: 0;
+	    description {
+	    state: "default" 0.0;
+	    rel1.to: "bg";
+	    rel2.to: "bg";
+	       image {
+	       normal: "bt_shine.png";
+	       border: 7 7 7 7;
+	       }
+	    }
+	 }
+	 part {
+	 name: "event";
+	 type: RECT;
+	 mouse_events: 1;
+	 ignore_flags: ON_HOLD;
+	    description {
+	    state: "default" 0.0;
+	    color: 0 0 0 0;
+	    }
+	 }
+      }
+      programs {
+	 program {
+	 name: "click";
+	 signal: "mouse,down,1";
+	 source: "event";
+	 action: STATE_SET "down" 0.0;
+	 target: "bg";
+	 }
+	 program {
+	 name: "unclick";
+	 signal: "mouse,up,1";
+	 source: "event";
+	 action: STATE_SET "default" 0.0;
+	 target: "bg";
+	 }
+	 program {
+	 name: "send";
+	 signal: "mouse,clicked,1";
+	 source: "event";
+	 action: SIGNAL_EMIT "e,action,click" "";
+	 }
+	 program {
+	 name: "select";
+	 signal: "e,state,selected";
+	 source: "e";
+	 action: STATE_SET "selected" 0.0;
+	 target: "e.text.label";
+	 target: "label2";
+	 }
+	 program {
+	 name: "normal";
+	 signal: "e,state,default";
+	 source: "e";
+	 action: STATE_SET "default" 0.0;
+	 target: "e.text.label";
+	 target: "label2";
+	 }
+      }
+   }
 }

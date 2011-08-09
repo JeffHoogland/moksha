@@ -29,7 +29,8 @@ module_la_SOURCES      = e_mod_main.c \
                          e_int_config_mime.c \
                          e_int_config_mime.h \
                          e_int_config_mime_edit.c \
-                         e_int_config_mime_edit.h
+                         e_int_config_mime_edit.h \
+			 e_fwin_nav.c
 
 module_la_LIBADD       = @e_libs@ @dlopen_libs@
 module_la_LDFLAGS      = -module -avoid-version

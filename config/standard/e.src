@@ -1782,6 +1782,29 @@ group "E_Config" struct {
         }
       }
     }
+    group "E_Config_Gadcon" struct {
+      group "clients" list {
+	 group "E_Config_Gadcon_Client" struct {
+	   value "name" string: "efm_navigation";
+	   value "id" string: "efm_navigation.1";
+	   value "geom.pos" int: 720;
+	   value "geom.size" int: 80;
+	   value "geom.res" int: 800;
+	   value "geom.pos_x" double: 0.0000000000000000000000000;
+	   value "geom.pos_y" double: 0.0000000000000000000000000;
+	   value "geom.size_w" double: 0.0000000000000000000000000;
+	   value "geom.size_h" double: 0.0000000000000000000000000;
+	   value "state_info.seq" int: 2;
+	   value "state_info.flags" int: 0;
+	   value "orient" int: 0;
+	   value "autoscroll" uchar: 0;
+	   value "resizable" uchar: 0;
+	 }
+      }
+      value "name" string: "toolbar";
+      value "id" int: 1;
+      value "zone" int: 0;
+    }
   }
   group "gadcons" list {
     group "E_Config_Gadcon" struct {

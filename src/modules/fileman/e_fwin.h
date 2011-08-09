@@ -13,5 +13,9 @@ void e_fwin_all_unsel     (void *data);
 void e_fwin_reload_all    (void);
 int  e_fwin_zone_find     (E_Zone *zone);
 
+Eina_Bool e_fwin_nav_init(void);
+Eina_Bool e_fwin_nav_shutdown(void);
+
+
 #endif
 #endif
