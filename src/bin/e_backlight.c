@@ -31,7 +31,7 @@ EINTERN int
 e_backlight_init(void)
 {
    e_backlight_update();
-   e_backlight_level_set(NULL, 1.0, 0.0);
+   e_backlight_level_set(NULL, 0.0, 0.0);
    e_backlight_level_set(NULL, e_config->backlight.normal, 1.0);
    return 1;
 }
