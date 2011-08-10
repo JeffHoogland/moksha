@@ -51,6 +51,9 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	  }
 	return 1;
      }
+
+   EVRY_PLUGIN_ITEMS_FREE(p);
+   
    return 0;
 }
 
@@ -65,9 +68,8 @@ evry_plug_text_init(void)
 			"accessories-text-editor", EVRY_TYPE_TEXT,
 			_begin, _finish, _fetch, NULL);
 
-   if (evry_plugin_register(p1, EVRY_PLUGIN_OBJECT,999))
+   if (evry_plugin_register(p1, EVRY_PLUGIN_OBJECT, 999))
      {
-	/* p1->config->trigger_only = 1; */
 	p1->config->trigger = eina_stringshare_add(" ");
 	p1->config->aggregate = EINA_FALSE;
 	p1->config->top_level = EINA_FALSE;
@@ -76,7 +78,6 @@ evry_plug_text_init(void)
 
    if (evry_plugin_register(p2, EVRY_PLUGIN_SUBJECT, 999))
      {
-	/* p2->config->trigger_only = 1; */
 	p2->config->trigger = eina_stringshare_add(" ");
 	p2->config->aggregate = EINA_FALSE;
 	p2->config->top_level = EINA_FALSE;
