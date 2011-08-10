@@ -693,7 +693,7 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
      }
 // FIXME: below cw update check screws with show
    if (/*(!cw->update) &&*/ (cw->visible) && (cw->dmg_updates >= 1) &&
-                            (cw->show_ready))
+       (cw->show_ready) && (!cw->bd || cw->bd->visible))
      {
         if (!evas_object_visible_get(cw->shobj))
           {
@@ -3069,8 +3069,10 @@ _e_mod_comp_src_hidden_set_func(void *data             __UNUSED__,
      if (cw->bd) e_border_comp_hidden_set(cw->bd, cw->hidden_override);
      if (cw->visible)
        {
-          if (cw->hidden_override) evas_object_hide(cw->shobj);
-          else evas_object_show(cw->shobj);
+          if (cw->hidden_override)
+	    evas_object_hide(cw->shobj);
+          else if (!cw->bd || cw->bd->visible)
+	    evas_object_show(cw->shobj);
        }
      else
        {
