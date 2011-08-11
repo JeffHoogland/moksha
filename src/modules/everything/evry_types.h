@@ -137,6 +137,11 @@ struct _Evry_Plugin
 {
   Evry_Item base;
 
+  /* not to be set by plugin! */
+  Plugin_Config *config;
+  unsigned int request;
+  Evry_State *state;
+
   /* identifier */
   const char *name;
 
@@ -201,11 +206,6 @@ struct _Evry_Plugin
   const char *theme_path;
 
   Evry_View *view;
-  
-  /* not to be set by plugin! */
-  Plugin_Config *config;
-  unsigned int request;
-  Evry_State *state;
 };
 
 struct _Plugin_Config
