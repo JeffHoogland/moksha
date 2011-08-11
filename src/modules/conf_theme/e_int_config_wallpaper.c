@@ -114,9 +114,7 @@ _bg_set(E_Config_Dialog_Data *cfdata)
    if (!cfdata->o_preview) return;
    if (cfdata->bg)
      {
-        const char *ext = strrchr(cfdata->bg, '.');
-        
-        if ((ext) && (!strcasecmp(ext, ".edj")))
+        if (eina_str_has_extension(cfdata->bg, ".edj"))
            e_widget_preview_edje_set(cfdata->o_preview, cfdata->bg, 
                                      "e/desktop/background");
         else

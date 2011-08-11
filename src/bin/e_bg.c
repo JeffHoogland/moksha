@@ -118,7 +118,6 @@ e_bg_config_get(int container_num, int zone_num, int desk_x, int desk_y)
 	EINA_LIST_FOREACH(e_config->desktop_backgrounds, l, cfbg)
 	  {
 	     int spec;
-             const char *ext;
              
 	     if (!cfbg) continue;
 	     spec = 0;
@@ -143,8 +142,7 @@ e_bg_config_get(int container_num, int zone_num, int desk_x, int desk_y)
 		       if (bf) bgfile = bf;
 		    }
 	       }
-             ext = strrchr(bgfile, '.');
-             if ((ext) && (!strcasecmp(ext, ".edj")))
+             if (eina_str_has_extension(bgfile, ".edj"))
                {
                   entries = edje_file_collection_list(bgfile);
                   if (entries)
@@ -198,8 +196,6 @@ e_bg_file_get(int container_num, int zone_num, int desk_x, int desk_y)
      }
    else
      {
-        const char *ext;
-        
 	bgfile = e_config->desktop_default_background;
 	if (bgfile)
 	  {
@@ -211,8 +207,7 @@ e_bg_file_get(int container_num, int zone_num, int desk_x, int desk_y)
 		  if (bf) bgfile = bf;
 	       }
 	  }
-        ext = strrchr(bgfile, '.');
-        if ((ext) && (!strcasecmp(ext, ".edj")))
+        if (eina_str_has_extension(bgfile, ".edj"))
           {
              entries = edje_file_collection_list(bgfile);
              if (entries)
