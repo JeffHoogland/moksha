@@ -2919,14 +2919,15 @@ _evry_plugin_select(Evry_State *s, Evry_Plugin *p)
    if (p)
      {
 	s->plugin_auto_selected = EINA_FALSE;
+	s->plugin = p;
      }
    else
      {
 	p = eina_list_data_get(s->cur_plugins);
 	s->plugin_auto_selected = EINA_TRUE;
+	s->plugin = NULL;
+	return;
      }
-
-   s->plugin = p;
 
    if ((s->view && s->plugin->view) &&
        (s->view->name != s->plugin->view->name))
