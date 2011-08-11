@@ -238,7 +238,6 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
    Evas_Object *o;
    const char *bgfile = "";
    const char *trans = "";
-   const char *ext;
    E_Desk *desk;
 
    if (transition == E_BG_TRANSITION_START) trans = e_config->transition_start;
@@ -296,8 +295,7 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
 	evas_object_clip_set(o, zone->bg_clip_object);
 	evas_object_show(o);
      }
-   if (bgfile) ext = strrchr(bgfile, '.');
-   if ((ext) && (!strcasecmp(ext, ".edj")))
+   if (eina_str_has_extension(bgfile, ".edj"))
      {
         o = edje_object_add(zone->container->bg_evas);
         evas_object_data_set(o, "e_zone", zone);
