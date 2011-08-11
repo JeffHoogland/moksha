@@ -7,7 +7,9 @@ struct _E_Smart_Data
    Evas_Coord x, y, w, h;
    Evas_Object *obj;
    Evas_Object *eventarea;
+   Ecore_Timer *timer;
    int size;
+   int frame, frame_count;
    const char *fdo;
    unsigned char fill_inside : 1;
    unsigned char scale_up : 1;
@@ -61,6 +63,47 @@ _e_icon_obj_prepare(Evas_Object *obj, E_Smart_Data *sd)
      }
 }
 
+static Eina_Bool
+_frame_anim(void *data)
+{
+   E_Smart_Data *sd = data;
+   double t;
+   int fr;
+
+   sd->frame++;
+   fr = (sd->frame % (sd->frame_count)) + 1;
+   evas_object_image_animated_frame_set(sd->obj, fr);
+   t = evas_object_image_animated_frame_duration_get(sd->obj, fr, 0);
+   sd->timer = ecore_timer_add(t, _frame_anim, sd);
+   return EINA_FALSE;
+}
+
+static int
+_handle_anim(E_Smart_Data *sd)
+{
+   double t;
+   
+   if (sd->timer) ecore_timer_del(sd->timer);
+   sd->timer = NULL;
+   sd->frame = 0;
+   sd->frame_count = 0;
+   if (!evas_object_image_animated_get(sd->obj)) return 0;
+   // FIXME: hack around jiyouns BUG!!!!!!!!
+     {
+        const char *file;
+        char buf[256];
+        snprintf(buf, sizeof(buf), "%ld", (long)sd);
+        evas_object_image_file_get(sd->obj, &file, NULL);
+        evas_object_image_file_set(sd->obj, file, buf);
+     }
+   sd->frame_count = evas_object_image_animated_frame_count_get(sd->obj);
+   if (sd->frame_count < 2) return 0;
+   evas_object_show(sd->obj);
+   t = evas_object_image_animated_frame_duration_get(sd->obj, sd->frame, 0);
+   sd->timer = ecore_timer_add(t, _frame_anim, sd);
+   return 1;
+}
+
 EAPI Eina_Bool
 e_icon_file_set(Evas_Object *obj, const char *file)
 {
@@ -85,19 +128,27 @@ e_icon_file_set(Evas_Object *obj, const char *file)
         sd->fdo = NULL;
      }
 
+   if (sd->timer) ecore_timer_del(sd->timer);
+   sd->timer = NULL;
+   sd->frame = 0;
+   sd->frame_count = 0;
+   
    if (sd->size != 0)
      evas_object_image_load_size_set(sd->obj, sd->size, sd->size);
    if (sd->preload) evas_object_hide(sd->obj);
    evas_object_image_file_set(sd->obj, file, NULL);
    if (evas_object_image_load_error_get(sd->obj) != EVAS_LOAD_ERROR_NONE)
      return EINA_FALSE;
-   if (sd->preload)
+   if (!_handle_anim(sd))
      {
-        sd->loading = 1;
-        evas_object_image_preload(sd->obj, EINA_FALSE);
+        if (sd->preload)
+          {
+             sd->loading = 1;
+             evas_object_image_preload(sd->obj, EINA_FALSE);
+          }
+        else if (evas_object_visible_get(obj))
+           evas_object_show(sd->obj);
      }
-   else if (evas_object_visible_get(obj))
-     evas_object_show(sd->obj);
 
    _e_icon_smart_reconfigure(sd);
    return EINA_TRUE;
@@ -118,6 +169,12 @@ e_icon_file_key_set(Evas_Object *obj, const char *file, const char *key)
         eina_stringshare_del(sd->fdo);
         sd->fdo = NULL;
      }
+   
+   if (sd->timer) ecore_timer_del(sd->timer);
+   sd->timer = NULL;
+   sd->frame = 0;
+   sd->frame_count = 0;
+   
    _e_icon_obj_prepare(obj, sd);
    if (sd->size != 0)
      evas_object_image_load_size_set(sd->obj, sd->size, sd->size);
@@ -125,13 +182,16 @@ e_icon_file_key_set(Evas_Object *obj, const char *file, const char *key)
    evas_object_image_file_set(sd->obj, file, key);
    if (evas_object_image_load_error_get(sd->obj) != EVAS_LOAD_ERROR_NONE)
      return EINA_FALSE;
-   if (sd->preload)
+   if (!_handle_anim(sd))
      {
-        sd->loading = 1;
-        evas_object_image_preload(sd->obj, 0);
+        if (sd->preload)
+          {
+             sd->loading = 1;
+             evas_object_image_preload(sd->obj, 0);
+          }
+        else if (evas_object_visible_get(obj))
+           evas_object_show(sd->obj);
      }
-   else if (evas_object_visible_get(obj))
-     evas_object_show(sd->obj);
    _e_icon_smart_reconfigure(sd);
    return EINA_TRUE;
 }
@@ -152,6 +212,12 @@ e_icon_file_edje_set(Evas_Object *obj, const char *file, const char *part)
         eina_stringshare_del(sd->fdo);
         sd->fdo = NULL;
      }
+   
+   if (sd->timer) ecore_timer_del(sd->timer);
+   sd->timer = NULL;
+   sd->frame = 0;
+   sd->frame_count = 0;
+   
    sd->obj = edje_object_add(evas_object_evas_get(obj));
    edje_object_file_set(sd->obj, file, part);
    if (evas_object_image_load_error_get(sd->obj) != EVAS_LOAD_ERROR_NONE)
@@ -175,6 +241,11 @@ e_icon_fdo_icon_set(Evas_Object *obj, const char *icon)
    if (!(sd = evas_object_smart_data_get(obj))) 
      return EINA_FALSE;
 
+   if (sd->timer) ecore_timer_del(sd->timer);
+   sd->timer = NULL;
+   sd->frame = 0;
+   sd->frame_count = 0;
+   
    eina_stringshare_replace(&sd->fdo, icon);
    if (!sd->fdo) return EINA_FALSE;
 
@@ -212,6 +283,11 @@ e_icon_object_set(Evas_Object *obj, Evas_Object *o)
 
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
+   if (sd->timer) ecore_timer_del(sd->timer);
+   sd->timer = NULL;
+   sd->frame = 0;
+   sd->frame_count = 0;
+   
    /* smart code here */
    if (sd->obj) evas_object_del(sd->obj);
    sd->loading = 0;
@@ -539,6 +615,7 @@ _e_icon_smart_del(Evas_Object *obj)
    evas_object_del(sd->obj);
    evas_object_del(sd->eventarea);
    if (sd->fdo) eina_stringshare_del(sd->fdo);
+   if (sd->timer) ecore_timer_del(sd->timer);
    free(sd);
 }
 

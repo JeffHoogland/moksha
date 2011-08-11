@@ -118,7 +118,8 @@ e_bg_config_get(int container_num, int zone_num, int desk_x, int desk_y)
 	EINA_LIST_FOREACH(e_config->desktop_backgrounds, l, cfbg)
 	  {
 	     int spec;
-
+             const char *ext;
+             
 	     if (!cfbg) continue;
 	     spec = 0;
 	     if (cfbg->container == container_num) spec++;
@@ -142,19 +143,28 @@ e_bg_config_get(int container_num, int zone_num, int desk_x, int desk_y)
 		       if (bf) bgfile = bf;
 		    }
 	       }
-	     entries = edje_file_collection_list(bgfile);
-	     if (entries)
-	       {
-		  EINA_LIST_FOREACH(entries, ll, entry)
-		    {
-		       if (!strcmp(entry, "e/desktop/background"))
-			 {
-			    bg = cfbg;
-			    current_spec = spec;
-			 }
-		    }
-		  edje_file_collection_list_free(entries);
-	       }
+             ext = strrchr(bgfile, '.');
+             if ((ext) && (!strcasecmp(ext, ".edj")))
+               {
+                  entries = edje_file_collection_list(bgfile);
+                  if (entries)
+                    {
+                       EINA_LIST_FOREACH(entries, ll, entry)
+                         {
+                            if (!strcmp(entry, "e/desktop/background"))
+                              {
+                                 bg = cfbg;
+                                 current_spec = spec;
+                              }
+                         }
+                       edje_file_collection_list_free(entries);
+                    }
+               }
+             else
+               {
+                  bg = cfbg;
+                  current_spec = spec;
+               }
 	  }
      }
    return bg;
@@ -188,6 +198,8 @@ e_bg_file_get(int container_num, int zone_num, int desk_x, int desk_y)
      }
    else
      {
+        const char *ext;
+        
 	bgfile = e_config->desktop_default_background;
 	if (bgfile)
 	  {
@@ -199,19 +211,24 @@ e_bg_file_get(int container_num, int zone_num, int desk_x, int desk_y)
 		  if (bf) bgfile = bf;
 	       }
 	  }
-	entries = edje_file_collection_list(bgfile);
-	if (entries)
-	  {
-	     EINA_LIST_FOREACH(entries, l, entry)
-	       {
-		  if (!strcmp(entry, "e/desktop/background"))
-		    {
-		       ok = 1;
-		       break;
-		    }
-	       }
-	     edje_file_collection_list_free(entries);
-	  }
+        ext = strrchr(bgfile, '.');
+        if ((ext) && (!strcasecmp(ext, ".edj")))
+          {
+             entries = edje_file_collection_list(bgfile);
+             if (entries)
+               {
+                  EINA_LIST_FOREACH(entries, l, entry)
+                    {
+                       if (!strcmp(entry, "e/desktop/background"))
+                         {
+                            ok = 1;
+                            break;
+                         }
+                    }
+                  edje_file_collection_list_free(entries);
+               }
+          }
+        else ok = 1;
 	if (!ok)
 	  bgfile = e_theme_edje_file_get("base/theme/background",
 					 "e/desktop/background");
@@ -226,6 +243,7 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
    Evas_Object *o;
    const char *bgfile = "";
    const char *trans = "";
+   const char *ext;
    E_Desk *desk;
 
    if (transition == E_BG_TRANSITION_START) trans = e_config->transition_start;
@@ -283,10 +301,21 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
 	evas_object_clip_set(o, zone->bg_clip_object);
 	evas_object_show(o);
      }
-   o = edje_object_add(zone->container->bg_evas);
+   ext = strrchr(bgfile, '.');
+   if ((ext) && (!strcasecmp(ext, ".edj")))
+     {
+        o = edje_object_add(zone->container->bg_evas);
+        evas_object_data_set(o, "e_zone", zone);
+        edje_object_file_set(o, bgfile, "e/desktop/background");
+     }
+   else
+     {
+        o = e_icon_add(zone->container->bg_evas);
+        evas_object_data_set(o, "e_zone", zone);
+        e_icon_file_key_set(o, bgfile, NULL);
+        e_icon_fill_inside_set(o, 0);
+     }
    zone->bg_object = o;
-   evas_object_data_set(o, "e_zone", zone);
-   edje_object_file_set(o, bgfile, "e/desktop/background");
    if (transition == E_BG_TRANSITION_NONE)
      {
 	evas_object_move(o, zone->x, zone->y);

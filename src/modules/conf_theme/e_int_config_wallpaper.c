@@ -108,6 +108,32 @@ _e_int_config_wallpaper_desk(E_Container *con, int con_num, int zone_num, int de
    return cfd;
 }
 
+static void
+_bg_set(E_Config_Dialog_Data *cfdata)
+{
+   if (!cfdata->o_preview) return;
+   if (cfdata->bg)
+     {
+        const char *ext = strrchr(cfdata->bg, '.');
+        
+        if ((ext) && (!strcasecmp(ext, ".edj")))
+           e_widget_preview_edje_set(cfdata->o_preview, cfdata->bg, 
+                                     "e/desktop/background");
+        else
+           e_widget_preview_file_set(cfdata->o_preview, cfdata->bg, 
+                                     NULL);
+     }
+   else
+     {
+        const char *f;
+        
+        f = e_theme_edje_file_get("base/theme/backgrounds", 
+                                  "e/desktop/background");
+        e_widget_preview_edje_set(cfdata->o_preview, f, 
+                                  "e/desktop/background");
+     }
+}
+
 void
 e_int_config_wallpaper_update(E_Config_Dialog *dia, char *file)
 {
@@ -124,9 +150,7 @@ e_int_config_wallpaper_update(E_Config_Dialog *dia, char *file)
    if (cfdata->o_theme_bg)
      e_widget_check_checked_set(cfdata->o_theme_bg, cfdata->use_theme_bg);
    if (cfdata->o_fm) e_widget_flist_path_set(cfdata->o_fm, path, "/");
-   if (cfdata->o_preview)
-     e_widget_preview_edje_set(cfdata->o_preview, cfdata->bg, 
-                               "e/desktop/background");
+   _bg_set(cfdata);
    if (cfdata->o_fm) e_widget_change(cfdata->o_fm);
 }
 
@@ -195,8 +219,7 @@ _cb_files_selection_change(void *data, Evas_Object *obj __UNUSED__, void *event_
    E_FREE(cfdata->bg);
 
    cfdata->bg = strdup(buf);
-   if (cfdata->o_preview)
-     e_widget_preview_edje_set(cfdata->o_preview, buf, "e/desktop/background");
+   _bg_set(cfdata);
    if (cfdata->o_theme_bg)
      e_widget_check_checked_set(cfdata->o_theme_bg, 0);
    cfdata->use_theme_bg = 0;
@@ -281,20 +304,13 @@ _cb_theme_wallpaper(void *data, Evas_Object *obj __UNUSED__, void *event_info __
                                   "e/desktop/background");
 	E_FREE(cfdata->bg);
 	cfdata->bg = strdup(f);
-	if (cfdata->o_preview)
-	  e_widget_preview_edje_set(cfdata->o_preview, f, 
-                                    "e/desktop/background");
+        _bg_set(cfdata);
      }
    else
      {
 	evas_object_smart_callback_call(cfdata->o_fm, "selection_change", 
                                         cfdata);
-	if (cfdata->bg)
-	  {
-	     if (cfdata->o_preview)
-	       e_widget_preview_edje_set(cfdata->o_preview, cfdata->bg, 
-                                         "e/desktop/background");
-	  }
+        _bg_set(cfdata);
      }
 }
 
@@ -434,7 +450,6 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    E_Radio_Group *rg;
    char path[PATH_MAX];
    int mw, mh, online;
-   const char *f;
 
    online = ecore_file_download_protocol_available("http://");
 
@@ -506,11 +521,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    oa = e_widget_aspect_add(evas, mw, mh);
    ow = e_widget_preview_add(evas, mw, mh);
    cfdata->o_preview = ow;
-   if (cfdata->bg)
-     f = cfdata->bg;
-   else
-     f = e_theme_edje_file_get("base/theme/backgrounds", "e/desktop/background");
-   e_widget_preview_edje_set(ow, f, "e/desktop/background");
+   _bg_set(cfdata);
    e_widget_aspect_child_set(oa, ow);
    evas_object_show(ow);
    evas_object_show(oa);
@@ -564,7 +575,6 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    E_Radio_Group *rg;
    char path[PATH_MAX];
    int mw, mh, online;
-   const char *f;
 
    online = ecore_file_download_protocol_available("http://");
 
@@ -634,11 +644,7 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    oa = e_widget_aspect_add(evas, mw, mh);
    ow = e_widget_preview_add(evas, mw, mh);
    cfdata->o_preview = ow;
-   if (cfdata->bg)
-     f = cfdata->bg;
-   else
-     f = e_theme_edje_file_get("base/theme/backgrounds", "e/desktop/background");
-   e_widget_preview_edje_set(ow, f, "e/desktop/background");
+   _bg_set(cfdata);
    e_widget_aspect_child_set(oa, ow);
    e_widget_table_object_append(ot, oa, 0, 2, 2 + online, 1, 1, 1, 1, 1);
 
