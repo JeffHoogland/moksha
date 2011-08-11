@@ -528,7 +528,7 @@ group "E_Config" struct {
   value "exec.expire_timeout" double: 30.0;
   value "exec.show_run_dialog" uchar: 1;
   value "exec.show_exit_dialog" uchar: 1;
-  value "backlight.normal" double: 0.0;
+  value "backlight.normal" double: 1.0;
   value "backlight.dim" double: 0.3;
   value "backlight.transition" double: 0.5;
 }
