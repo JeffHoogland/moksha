@@ -11,6 +11,7 @@ typedef struct _History_Item		History_Item;
 typedef struct _History_Entry		History_Entry;
 typedef struct _History_Types		History_Types;
 typedef struct _Evry_State	        Evry_State;
+typedef struct _Evry_View	        Evry_View;
 
 typedef unsigned int Evry_Type;
 
@@ -199,6 +200,8 @@ struct _Evry_Plugin
   /* set theme file to fetch icons from */
   const char *theme_path;
 
+  Evry_View *view;
+  
   /* not to be set by plugin! */
   Plugin_Config *config;
   unsigned int request;
@@ -240,6 +243,26 @@ struct _Plugin_Config
   Evry_Plugin *plugin;
 
   Eina_List *plugins;
+};
+
+struct _Evry_View
+{
+  Evry_View  *id;
+  const char *name;
+  const char *trigger;
+  int active;
+  Evas_Object *o_list;
+  Evas_Object *o_bar;
+
+  Evry_View *(*create) (Evry_View *view, const Evry_State *s, const Evas_Object *swallow);
+  void (*destroy)      (Evry_View *view);
+  int  (*cb_key_down)  (Evry_View *view, const Ecore_Event_Key *ev);
+  int  (*update)       (Evry_View *view);
+  void (*clear)        (Evry_View *view);
+
+  int priority;
+
+  Evry_State *state;
 };
 
 struct _History_Item

@@ -12,7 +12,6 @@
 #define SLIDE_LEFT   1
 #define SLIDE_RIGHT -1
 
-typedef struct _Evry_View	Evry_View;
 typedef struct _History		Evry_History;
 typedef struct _Config		Evry_Config;
 typedef struct _Evry_Selector	Evry_Selector;
@@ -118,26 +117,6 @@ struct _Evry_State
   Ecore_Timer *clear_timer;
 
   Eina_Bool delete_me;
-};
-
-struct _Evry_View
-{
-  Evry_View  *id;
-  const char *name;
-  const char *trigger;
-  int active;
-  Evas_Object *o_list;
-  Evas_Object *o_bar;
-
-  Evry_View *(*create) (Evry_View *view, const Evry_State *s, const Evas_Object *swallow);
-  void (*destroy)      (Evry_View *view);
-  int  (*cb_key_down)  (Evry_View *view, const Ecore_Event_Key *ev);
-  int  (*update)       (Evry_View *view);
-  void (*clear)        (Evry_View *view);
-
-  int priority;
-
-  Evry_State *state;
 };
 
 struct _Tab_View

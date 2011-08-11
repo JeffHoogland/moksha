@@ -52,6 +52,7 @@ static void _evry_list_win_show(Evry_Window *win);
 static void _evry_list_win_hide(Evry_Window *win);
 static void _evry_list_win_update(Evry_State *s);
 
+static int  _evry_view_create(Evry_State *s);
 static void _evry_view_clear(Evry_State *s);
 static int  _evry_view_update(Evry_Window *win, Evry_State *s);
 static int  _evry_view_key_press(Evry_State *s, Ecore_Event_Key *ev);
@@ -1192,14 +1193,7 @@ _evry_selector_activate(Evry_Selector *sel, int slide)
 	  _evry_selector_label_set(sel, "e.text.plugin",
 				   EVRY_ITEM(s->cur_item->plugin)->label);
 
-	if (!s->view)
-	  {
-	     Evry_View *view = evry_conf->views->data;
-	     s->view = view->create(view, s, win->o_main);
-	     s->view->state = s;
-	  }
-
-	if (s->view)
+	if (_evry_view_create(s))
 	  {
 	     _evry_view_show(win, s->view, slide);
 	     s->view->update(s->view);
@@ -2594,23 +2588,46 @@ _evry_view_hide(Evry_Window *win, Evry_View *v, int slide)
 }
 
 static int
-_evry_view_update(Evry_Window *win, Evry_State *s)
+_evry_view_create(Evry_State *s)
 {
-   if (!win->visible) return 0;
+   Evry_View *view;
 
-   if (!s->view)
+   if (s->view)
+     return 1;
+   
+   if (s->plugin && s->plugin->view)
+     view = s->plugin->view;
+   else
+     view = eina_list_data_get(evry_conf->views);
+
+   s->view = view->create(view, s, s->selector->win->o_main);
+     
+   if (s->view)
      {
-	Evry_View *view = evry_conf->views->data;
-	if (!(s->view = view->create(view, s, win->o_main)))
-	  return 0;
-
 	s->view->state = s;
-	s->view->update(s->view);
 	return 1;
      }
 
+   return 0;
+}
+
+
+static int
+_evry_view_update(Evry_Window *win, Evry_State *s)
+{
+   if (!win->visible) return 0;
+   /* TODO check this again !!!!*/
    if (s->view)
-     s->view->update(s->view);
+     {
+	s->view->update(s->view);
+	return 0;
+     }
+   
+   if (_evry_view_create(s))
+     {
+	s->view->update(s->view);
+	return 1;
+     }
 
    return 0;
 }
@@ -2896,6 +2913,19 @@ _evry_plugin_select(Evry_State *s, Evry_Plugin *p)
      }
 
    s->plugin = p;
+
+   if ((s->view && s->plugin->view) &&
+       (s->view->name != s->plugin->view->name))
+     {
+	s->view->destroy(s->view);
+	s->view = NULL;
+	if (_evry_view_create(s))
+	  {
+	     _evry_view_show(s->selector->win, s->view, 0);
+	     s->view->update(s->view);
+	  }
+	
+     }
 }
 
 static void
