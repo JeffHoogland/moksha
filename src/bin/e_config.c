@@ -1174,6 +1174,12 @@ e_config_load(void)
 	COPYVAL(geometry_auto_move);
         IFCFGEND;
 
+        IFCFG(0x0142);
+        COPYVAL(backlight.normal);
+        COPYVAL(backlight.dim);
+        COPYVAL(backlight.transition);
+        IFCFGEND;
+
         e_config->config_version = E_CONFIG_FILE_VERSION;
         _e_config_free(tcfg);
      }
