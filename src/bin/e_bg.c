@@ -296,7 +296,7 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
 	evas_object_clip_set(o, zone->bg_clip_object);
 	evas_object_show(o);
      }
-   ext = strrchr(bgfile, '.');
+   if (bgfile) ext = strrchr(bgfile, '.');
    if ((ext) && (!strcasecmp(ext, ".edj")))
      {
         o = edje_object_add(zone->container->bg_evas);
