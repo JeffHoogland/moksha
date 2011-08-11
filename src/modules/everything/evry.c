@@ -1879,7 +1879,7 @@ _evry_cheat_history(Evry_State *s, int promote, int delete)
 }
 
 static Eina_Bool
-_evry_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
+_evry_cb_key_down(void *data, int type __UNUSED__, void *event)
 {
    Ecore_Event_Key *ev = event;
    Evry_State *s;
@@ -2294,8 +2294,9 @@ static int
 _evry_action_do(Evry_Action *act)
 {
    Evry_Event_Action_Performed *ev;
-
-   if (act->action(act))
+   int ret;
+   
+   if ((ret = act->action(act)))
      {
 	ev = E_NEW(Evry_Event_Action_Performed, 1);
 	ev->action = eina_stringshare_ref(act->name);
@@ -2309,7 +2310,7 @@ _evry_action_do(Evry_Action *act)
 
 	ecore_event_add(_evry_events[EVRY_EVENT_ACTION_PERFORMED], ev,
 			_evry_cb_free_action_performed, NULL);
-	return 1;
+	return ret;
      }
    return 0;
 }
@@ -2327,7 +2328,8 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
    Evry_Item *it, *it_subj, *it_act, *it_obj = NULL;
    Evry_Window *win = sel->win;
    Eina_List *l;
-
+   int ret = 0;
+   
    if ((SUBJ_SEL)->update_timer)
      {
 	_evry_matches_update(SUBJ_SEL, 0);
@@ -2426,7 +2428,9 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 	     if (s_obj)
 	       act->it2.items = s_obj->sel_items;
 
-	     if (!_evry_action_do(act))
+	     ret = _evry_action_do(act);
+
+	     if (ret == EVRY_ACTION_OTHER)
 	       return;
 	  }
      }
@@ -2441,9 +2445,19 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
    if (s_obj && it_obj && it_obj->plugin->history)
      evry_history_item_add(it_obj, it_act->context, s_obj->input);
 
-   if (finished && win->grab)
-     evry_hide(win, 0);
+   if (ret == EVRY_ACTION_CONTINUE)
+     return;
+
+   if (ret == EVRY_ACTION_CLEAR)
+     {
+	_evry_clear(CUR_SEL);
+     }
+   else if ((finished) && win->grab)
+     {
+	evry_hide(win, 0);
+     }
 }
+
 
 static void
 _evry_view_show(Evry_Window *win, Evry_View *v, int slide)

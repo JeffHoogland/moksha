@@ -8,6 +8,7 @@
 #define EVRY_ACTION_OTHER    0
 #define EVRY_ACTION_FINISHED 1
 #define EVRY_ACTION_CONTINUE 2
+#define EVRY_ACTION_CLEAR    3
 
 #define EVRY_UPDATE_ADD	     0
 #define EVRY_UPDATE_CLEAR    1
