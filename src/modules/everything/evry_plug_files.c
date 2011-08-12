@@ -1325,30 +1325,30 @@ _plugins_init(const Evry_API *api)
    if (_register) evry->action_register(act, prio++);			\
    _actions = eina_list_append(_actions, act);				\
 
-   ACTION_NEW(N_("Copy To ..."), EVRY_TYPE_FILE, "go-next",
+   ACTION_NEW("Copy To ...", EVRY_TYPE_FILE, "go-next",
 	      _file_copy_action, NULL, 1);
    act->it2.subtype = EVRY_TYPE_DIR;
    EVRY_ITEM_DATA_INT_SET(act, ACT_COPY);
 
-   ACTION_NEW(N_("Move To ..."), EVRY_TYPE_FILE, "go-next",
+   ACTION_NEW("Move To ...", EVRY_TYPE_FILE, "go-next",
 	      _file_copy_action, NULL, 1);
    act->it2.subtype = EVRY_TYPE_DIR;
    EVRY_ITEM_DATA_INT_SET(act, ACT_MOVE);
 
-   ACTION_NEW(N_("Move to Trash"), 0, "user-trash",
+   ACTION_NEW("Move to Trash", 0, "user-trash",
 	      _file_trash_action, NULL, 1);
    EVRY_ITEM_DATA_INT_SET(act, ACT_TRASH);
 
-   ACTION_NEW(N_("Open Folder (EFM)"), 0, "folder-open",
+   ACTION_NEW("Open Folder (EFM)", 0, "folder-open",
 	      _open_folder_action, _open_folder_check, 1);
    act->remember_context = EINA_TRUE;
 
-   ACTION_NEW(N_("Sort by Date"), 0, "go-up",
+   ACTION_NEW("Sort by Date", 0, "go-up",
 	      _file_sort_action, NULL, 0);
    EVRY_ITEM_DATA_INT_SET(act, ACT_SORT_DATE);
    act_sort_date = act;
 
-   ACTION_NEW(N_("Sort by Name"), 0, "go-up",
+   ACTION_NEW("Sort by Name", 0, "go-up",
 	      _file_sort_action, NULL, 0);
    EVRY_ITEM_DATA_INT_SET(act, ACT_SORT_NAME);
    act_sort_name = act;

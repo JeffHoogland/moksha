@@ -167,7 +167,12 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    Evry_Module *em;
 
    EINA_LIST_FOREACH(e_datastore_get("evry_modules"), l, em)
-     em->shutdown();
+     {
+	if (em->active)
+	  em->shutdown();
+
+	em->active = EINA_FALSE;
+     }
    
    evry_plug_apps_shutdown();
    evry_plug_files_shutdown();

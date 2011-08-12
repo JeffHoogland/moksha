@@ -1052,61 +1052,61 @@ _plugins_init(const Evry_API *api)
    evry->plugin_register(p, EVRY_PLUGIN_ACTION, 1);
    _plugins = eina_list_append(_plugins, p);
 
-   act = EVRY_ACTION_NEW(N_("Launch"),
+   act = EVRY_ACTION_NEW("Launch",
 			 EVRY_TYPE_APP, 0,
 			 "system-run",
 			 _exec_app_action,
 			 _exec_app_check_item);
    _actions = eina_list_append(_actions, act);
 
-   act = EVRY_ACTION_NEW(N_("Open File..."),
+   act = EVRY_ACTION_NEW("Open File...",
 			 EVRY_TYPE_APP, EVRY_TYPE_FILE,
 			 "document-open",
 			 _exec_app_action,
 			 _exec_app_check_item);
    _actions = eina_list_append(_actions, act);
 
-   act = EVRY_ACTION_NEW(N_("Run in Terminal"),
+   act = EVRY_ACTION_NEW("Run in Terminal",
 			 EVRY_TYPE_APP, 0,
 			 "system-run",
 			 _exec_term_action,
 			 _exec_term_check_item);
    _actions = eina_list_append(_actions, act);
 
-   act = EVRY_ACTION_NEW(N_("Edit Application Entry"),
+   act = EVRY_ACTION_NEW("Edit Application Entry",
 			 EVRY_TYPE_APP, 0,
 			 "everything-launch",
 			 _edit_app_action,
 			 _edit_app_check_item);
    _actions = eina_list_append(_actions, act);
 
-   act = EVRY_ACTION_NEW(N_("New Application Entry"),
+   act = EVRY_ACTION_NEW("New Application Entry",
 			 EVRY_TYPE_APP, 0,
 			 "everything-launch",
 			 _new_app_action,
 			 _new_app_check_item);
    _actions = eina_list_append(_actions, act);
 
-   act = EVRY_ACTION_NEW(N_("Run with Sudo"),
+   act = EVRY_ACTION_NEW("Run with Sudo",
 			 EVRY_TYPE_APP, 0,
 			 "system-run",
 			 _exec_sudo_action, NULL);
    _actions = eina_list_append(_actions, act);
 
-   act = EVRY_ACTION_NEW(N_("Open with..."),
+   act = EVRY_ACTION_NEW("Open with...",
 			 EVRY_TYPE_FILE, EVRY_TYPE_APP,
 			 "everything-launch",
 			 _exec_file_action, NULL);
    _act_open_with = EVRY_ITEM(act);
    _actions = eina_list_append(_actions, act);
 
-   act = EVRY_ACTION_NEW(N_("Open Terminal here"),
+   act = EVRY_ACTION_NEW("Open Terminal here",
 			 EVRY_TYPE_FILE, 0,
 			 "system-run",
 			 _open_term_action, NULL);
    _actions = eina_list_append(_actions, act);
 
-   act = EVRY_ACTION_NEW(N_("Run Executable"),
+   act = EVRY_ACTION_NEW("Run Executable",
 			 EVRY_TYPE_FILE, 0,
 			 "system-run",
 			 _run_executable,

@@ -187,11 +187,9 @@ _plugins_init(const Evry_API *_api)
    p->browse = &_browse;
    evry->plugin_register(p, EVRY_PLUGIN_SUBJECT, 10);
 
-   act = EVRY_ACTION_NEW(N_("Show Dialog"), E_SETTINGS, 0,
+   act = EVRY_ACTION_NEW("Show Dialog", E_SETTINGS, 0,
 			 "preferences-advanced", _action, _action_check);
 
-   /* p->actions = eina_list_append(p->actions, act); */
-   
    evry->action_register(act, 0);
 
    return EINA_TRUE;

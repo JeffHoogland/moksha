@@ -416,7 +416,7 @@ _plugins_init(const Evry_API *_api)
    _plug->transient = EINA_TRUE;
    evry->plugin_register(_plug, EVRY_PLUGIN_SUBJECT, 2);
 
-   act = EVRY_ACTION_NEW(_("Switch to Window"),
+   act = EVRY_ACTION_NEW("Switch to Window",
 			 EVRY_TYPE_BORDER, 0, "go-next",
 			 _act_border, _check_border);
    EVRY_ITEM_DATA_INT_SET(act, BORDER_SHOW);
@@ -424,28 +424,28 @@ _plugins_init(const Evry_API *_api)
 
    _actions = eina_list_append(_actions, act);
 
-   act = EVRY_ACTION_NEW(_("Iconify"),
+   act = EVRY_ACTION_NEW("Iconify",
 			 EVRY_TYPE_BORDER, 0, "go-down",
 			 _act_border, _check_border);
    EVRY_ITEM_DATA_INT_SET(act, BORDER_HIDE);
    _actions = eina_list_append(_actions, act);
    evry->action_register(act, 2);
 
-   act = EVRY_ACTION_NEW(_("Toggle Fullscreen"),
+   act = EVRY_ACTION_NEW("Toggle Fullscreen",
 			 EVRY_TYPE_BORDER, 0, "view-fullscreen",
 			 _act_border, _check_border);
    EVRY_ITEM_DATA_INT_SET(act, BORDER_FULLSCREEN);
    _actions = eina_list_append(_actions, act);
    evry->action_register(act, 4);
 
-   act = EVRY_ACTION_NEW(_("Close"),
+   act = EVRY_ACTION_NEW("Close",
 			 EVRY_TYPE_BORDER, 0, "list-remove",
 			 _act_border, _check_border);
    EVRY_ITEM_DATA_INT_SET(act, BORDER_CLOSE);
    _actions = eina_list_append(_actions, act);
    evry->action_register(act, 3);
 
-   act = EVRY_ACTION_NEW(_("Send to Desktop"),
+   act = EVRY_ACTION_NEW("Send to Desktop",
 			 EVRY_TYPE_BORDER, 0, "go-previous",
 			 _act_border, _check_border);
    EVRY_ITEM_DATA_INT_SET(act, BORDER_TODESK);
