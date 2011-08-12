@@ -207,7 +207,7 @@ e_bg_file_get(int container_num, int zone_num, int desk_x, int desk_y)
 		  if (bf) bgfile = bf;
 	       }
 	  }
-        if (eina_str_has_extension(bgfile, ".edj"))
+        if (bgfile && eina_str_has_extension(bgfile, ".edj"))
           {
              entries = edje_file_collection_list(bgfile);
              if (entries)
