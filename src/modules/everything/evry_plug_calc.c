@@ -31,7 +31,7 @@ _begin(Evry_Plugin *plugin, const Evry_Item *item __UNUSED__)
 {
    Evry_Item *it;
    Plugin *p;
-   
+
    if (active)
      return NULL;
 
@@ -54,7 +54,7 @@ _begin(Evry_Plugin *plugin, const Evry_Item *item __UNUSED__)
    it->context = eina_stringshare_ref(p->base.name);
    cur_item = it;
    active = EINA_TRUE;
-   
+
    return EVRY_PLUGIN(p);
 }
 
@@ -84,7 +84,7 @@ _run_bc(Plugin *p)
 static void
 _finish(Evry_Plugin *plugin)
 {
-   GET_PLUGIN(p, plugin);   
+   GET_PLUGIN(p, plugin);
    Ecore_Event_Handler *h;
    Evry_Item *it;
    int items = 0;
@@ -158,7 +158,7 @@ static int
 _fetch(Evry_Plugin *plugin, const char *input)
 {
    GET_PLUGIN(p, plugin);
-   
+
    char buf[1024];
 
    if (!input) return 0;
@@ -214,7 +214,7 @@ _cb_error(void *data, int type __UNUSED__, void *event)
 {
    Ecore_Exe_Event_Data *ev = event;
    Evry_Plugin *p = data;
-   
+
    if (ev->exe != exe)
      return ECORE_CALLBACK_PASS_ON;
 
@@ -248,10 +248,8 @@ _plugins_init(const Evry_API *_api)
    action_handler = evry->event_handler_add(EVRY_EVENT_ACTION_PERFORMED,
 					    _cb_action_performed, NULL);
 
-   _plug = EVRY_PLUGIN_NEW(Evry_Plugin, N_("Calculator"),
-			_module_icon,
-			EVRY_TYPE_TEXT,
-			_begin, _finish, _fetch, NULL);
+   _plug = EVRY_PLUGIN_BASE("Calculator", _module_icon, EVRY_TYPE_TEXT,
+			    _begin, _finish, _fetch);
 
    _plug->history     = EINA_FALSE;
    _plug->async_fetch = EINA_TRUE;

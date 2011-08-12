@@ -331,7 +331,7 @@ evry_aggregator_new(Evry_Window *win, int type)
 {
    Evry_Plugin *p;
 
-   p = EVRY_PLUGIN_NEW(Plugin, N_("All"), NULL, 0, _begin, _finish, _fetch, _free);
+   p = EVRY_PLUGIN_NEW(Plugin, "All", NULL, 0, _begin, _finish, _fetch, _free);
 
    if (evry_plugin_register(p, type, -1))
      {

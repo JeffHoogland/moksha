@@ -169,9 +169,8 @@ _fetch(Evry_Plugin *plugin, const char *input)
 int
 evry_plug_actions_init()
 {
-   _plug = EVRY_PLUGIN_NEW(Plugin, N_("Actions"), NULL,
-			   EVRY_TYPE_ACTION,
-			   _begin, _finish, _fetch, NULL);
+   _plug = EVRY_PLUGIN_BASE("Actions", NULL, EVRY_TYPE_ACTION,
+			   _begin, _finish, _fetch);
 
    _plug->browse = &_browse;
 

@@ -411,10 +411,8 @@ _plugins_init(const Evry_API *_api)
    if (!evry->api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
-   _plug = EVRY_PLUGIN_NEW(Plugin, N_("Windows"),
-			   "preferences-system-windows",
-			   EVRY_TYPE_BORDER,
-			   _begin, _finish, _fetch, NULL);
+   _plug = EVRY_PLUGIN_BASE("Windows", "preferences-system-windows",
+			    EVRY_TYPE_BORDER, _begin, _finish, _fetch);
    _plug->transient = EINA_TRUE;
    evry->plugin_register(_plug, EVRY_PLUGIN_SUBJECT, 2);
 

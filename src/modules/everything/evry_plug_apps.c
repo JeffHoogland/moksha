@@ -1023,35 +1023,31 @@ _plugins_init(const Evry_API *api)
    if (!evry->api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
-   p = EVRY_PLUGIN_NEW(Plugin, N_("Applications"),
-		       _module_icon, EVRY_TYPE_APP,
-		       _begin, _finish, _fetch, NULL);
+   p = EVRY_PLUGIN_BASE("Applications", _module_icon, EVRY_TYPE_APP,
+			_begin, _finish, _fetch);
    p->complete = &_complete;
    p->config_path = "extensions/everything-apps";
    evry->plugin_register(p, EVRY_PLUGIN_SUBJECT, 1);
    _plugins = eina_list_append(_plugins, p);
 
 
-   p = EVRY_PLUGIN_NEW(Plugin, N_("Exebuf"),
-		       _module_icon, EVRY_TYPE_APP,
-		       _begin_exe, _finish_exe, _fetch_exe, NULL);
+   p = EVRY_PLUGIN_BASE("Exebuf", _module_icon, EVRY_TYPE_APP,
+			_begin_exe, _finish_exe, _fetch_exe);
    p->complete = &_complete;
    p->config_path = "extensions/everything-apps";
    _plugins = eina_list_append(_plugins, p);
    if (evry->plugin_register(p, EVRY_PLUGIN_SUBJECT, 3))
      p->config->min_query = 5;
 
-   p = EVRY_PLUGIN_NEW(Plugin, N_("Applications"),
-		       _module_icon, EVRY_TYPE_APP,
-		       _begin_mime, _finish, _fetch, NULL);
+   p = EVRY_PLUGIN_BASE("Applications", _module_icon, EVRY_TYPE_APP,
+			_begin_mime, _finish, _fetch);
    p->complete = &_complete;
    p->config_path = "extensions/everything-apps";
    evry->plugin_register(p, EVRY_PLUGIN_OBJECT, 1);
    _plugins = eina_list_append(_plugins, p);
 
-   p = EVRY_PLUGIN_NEW(Plugin, N_("Open With..."),
-		       _module_icon, EVRY_TYPE_APP,
-		       _begin_mime, _finish_mime, _fetch_mime, NULL);
+   p = EVRY_PLUGIN_BASE("Open With...", _module_icon, EVRY_TYPE_APP,
+			_begin_mime, _finish_mime, _fetch_mime);
    p->config_path = "extensions/everything-apps";
    evry->plugin_register(p, EVRY_PLUGIN_ACTION, 1);
    _plugins = eina_list_append(_plugins, p);

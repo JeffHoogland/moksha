@@ -139,9 +139,8 @@ _add_plugin(const char *name)
    char path[4096];
    char title[4096];
 
-   p = EVRY_PLUGIN_NEW(Evry_Plugin, N_(name),
-		       _module_icon, COLLECTION_PLUGIN,
-		       _begin, _finish, _fetch, NULL);
+   p = EVRY_PLUGIN_BASE(name, _module_icon, COLLECTION_PLUGIN,
+			_begin, _finish, _fetch);
    p->browse = &_browse;
 
    snprintf(path, sizeof(path), "launcher/everything-%s", p->name);

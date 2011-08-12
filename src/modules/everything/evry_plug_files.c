@@ -1355,51 +1355,55 @@ _plugins_init(const Evry_API *api)
 
 #undef ACTION_NEW
 
-#define PLUGIN_NEW(_name, _icon, _begin, _finish, _fetch, _browse) \
-   p = EVRY_PLUGIN_NEW(Evry_Plugin, _name, _icon, EVRY_TYPE_FILE,  \
-		       _begin, _finish, _fetch, NULL);		   \
-   p->browse = &_browse;					   \
-   p->config_path = "extensions/everything-files";		   \
-   _plugins = eina_list_append(_plugins, p);			   \
 
-
-   PLUGIN_NEW(N_("Files"), _module_icon, _begin, _finish, _fetch, _browse);
+   p = EVRY_PLUGIN_BASE("Files", _module_icon, EVRY_TYPE_FILE,
+			_begin, _finish, _fetch);
    p->input_type = EVRY_TYPE_FILE;
    p->cb_key_down = &_cb_key_down;
+   p->browse = &_browse;
+   p->config_path = "extensions/everything-files";
    p->actions = eina_list_append(p->actions, act_sort_date);
    p->actions = eina_list_append(p->actions, act_sort_name);
+   _plugins = eina_list_append(_plugins, p);
+
    if (evry->plugin_register(p, EVRY_PLUGIN_SUBJECT, 2))
      p->config->min_query = 1;
 
 
-   PLUGIN_NEW(N_("Files"), _module_icon, _begin, _finish, _fetch, _browse);
+   p = EVRY_PLUGIN_BASE("Files", _module_icon, EVRY_TYPE_FILE,
+			_begin, _finish, _fetch);
    p->cb_key_down = &_cb_key_down;
+   p->browse = &_browse;
+   p->config_path = "extensions/everything-files";
    p->actions = eina_list_append(p->actions, act_sort_date);
    p->actions = eina_list_append(p->actions, act_sort_name);
+   _plugins = eina_list_append(_plugins, p);
    evry->plugin_register(p, EVRY_PLUGIN_OBJECT, 2);
 
-   if (_conf->show_recent || _conf->search_recent)
+   if (!_conf->show_recent && !_conf->search_recent)
+     return EINA_TRUE;
+
+   p = EVRY_PLUGIN_BASE("Recent Files", _module_icon, EVRY_TYPE_FILE,
+			_recentf_begin, _finish, _recentf_fetch);
+   p->browse = &_recentf_browse;
+   p->config_path = "extensions/everything-files";
+
+   if (evry->plugin_register(p, EVRY_PLUGIN_SUBJECT, 3))
      {
-	PLUGIN_NEW(N_("Recent Files"), _module_icon,
-		   _recentf_begin, _finish, _recentf_fetch, _recentf_browse);
-
-	if (evry->plugin_register(p, EVRY_PLUGIN_SUBJECT, 3))
-	  {
-	     p->config->top_level = EINA_FALSE;
-	     p->config->min_query = 3;
-	  }
-
-	PLUGIN_NEW(N_("Recent Files"), _module_icon,
-		   _recentf_begin, _finish, _recentf_fetch, _recentf_browse);
-
-	if (evry->plugin_register(p, EVRY_PLUGIN_OBJECT, 3))
-	  {
-	     p->config->top_level = EINA_FALSE;
-	     p->config->min_query = 3;
-	  }
+	p->config->top_level = EINA_FALSE;
+	p->config->min_query = 3;
      }
 
-#undef PLUGIN_NEW
+   p = EVRY_PLUGIN_BASE("Recent Files", _module_icon, EVRY_TYPE_FILE,
+			_recentf_begin, _finish, _recentf_fetch);
+   p->browse = &_recentf_browse;
+   p->config_path = "extensions/everything-files";
+
+   if (evry->plugin_register(p, EVRY_PLUGIN_OBJECT, 3))
+     {
+	p->config->top_level = EINA_FALSE;
+	p->config->min_query = 3;
+     }
 
    return EINA_TRUE;
 }
@@ -1627,7 +1631,7 @@ static void
 _conf_shutdown(void)
 {
    e_configure_registry_item_del("launcher/everything-files");
-   
+
    E_FREE(_conf);
    E_CONFIG_DD_FREE(conf_edd);
 }
