@@ -35982,7 +35982,6 @@ collections {
             type: RECT;
             description {
                state: "default" 0.0;
-               /* visible: 0; */
                rel1 {
                   relative: 0.0 0.0;
                   offset: 0   4;
@@ -35991,12 +35990,6 @@ collections {
                   relative: 1.0 1.0;
                   offset: -5  -5;
                }
-               color: 255 255 255 128;
-            }
-            description {
-               state: "visible" 0.0;
-               inherit: "default" 0.0;
-               visible: 1;
                color: 255 255 255 255;
             }
          }
@@ -36009,7 +36002,12 @@ collections {
                state: "default" 0.0;
                rel1.to: "base";
                rel2.to: "base";
-               color: 225 225 225 255;
+               color: 225 225 225 0;
+            }
+            description {
+               state: "visible" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
             }
          }
          part {
@@ -36173,7 +36171,7 @@ collections {
             signal: "e,action,thumb,show_delayed";
             source: "e";
             action: STATE_SET "default" 0.0;
-            target: "base";
+            target: "clip";
             transition: DECELERATE 0.1;
             after: "thumb_show2";
          }
@@ -36183,7 +36181,7 @@ collections {
             source: "e";
             action: STATE_SET "default" 0.0;
             /* transition: DECELERATE 0.02; */
-            target: "base";
+            target: "clip";
             after: "thumb_show2";
          }
          program {
@@ -36270,7 +36268,7 @@ collections {
             type: RECT;
             description {
                state: "default" 0.0;
-               color: 255 255 255 0;
+               color: 255 255 255 255;
                rel1 {
                   relative: 0.0 0.0;
                   offset: 0   3;
@@ -36280,12 +36278,6 @@ collections {
                   offset: -5  -4;
                }
             }
-            description {
-               state: "visible" 0.0;
-               inherit: "default" 0.0;
-               visible: 1;
-               color: 255 255 255 255;
-            }
          }
          part {
             name: "clip";
@@ -36294,7 +36286,7 @@ collections {
             clip_to: "base";
             description {
                state: "default" 0.0;
-               color: 225 225 225 255;
+               color: 225 225 225 0;
                rel1 {
                   to: "base";
                   relative: 0.0 0.0;
@@ -36305,6 +36297,11 @@ collections {
                   relative: 0.0 1.0;
                   offset: 40   -1;
                }
+            }
+            description {
+               state: "visible" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
             }
          }
          part {
@@ -36517,7 +36514,7 @@ collections {
             signal: "e,action,thumb,show_delayed";
             source: "e";
             action: STATE_SET "visible" 0.0;
-            target: "base";
+            target: "clip";
             transition: ACCELERATE 0.02;
          }
          program {
@@ -36526,7 +36523,7 @@ collections {
             source: "e";
             action: STATE_SET "visible" 0.0;
             transition: ACCELERATE 0.0;
-            target: "base";
+            target: "clip";
          }
          program {
             name: "detail_show";
