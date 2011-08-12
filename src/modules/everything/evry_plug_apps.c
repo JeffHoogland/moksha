@@ -51,6 +51,7 @@ struct _Module_Config
   E_Module	  *module;
 };
 
+static const Evry_API   *evry            = NULL;
 static Evry_Module      *evry_module     = NULL;
 static Eina_List        *handlers        = NULL;
 
@@ -1010,7 +1011,7 @@ _desktop_cache_update(void *data __UNUSED__, int type __UNUSED__, void *event __
 }
 
 static int
-_plugins_init(void)
+_plugins_init(const Evry_API *api)
 {
    Evry_Plugin *p;
    int prio = 0;
@@ -1019,6 +1020,8 @@ _plugins_init(void)
 
    if (evry_module->active)
      return EINA_TRUE;
+
+   evry = api;
 
    if (!evry->api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
@@ -1349,7 +1352,7 @@ evry_plug_apps_init(E_Module *m)
 {
    _conf_init(m);
 
-   EVRY_MODULE_NEW(evry_module, _plugins_init, _plugins_shutdown);
+   EVRY_MODULE_NEW(evry_module, evry, _plugins_init, _plugins_shutdown);
 
    /* taken from e_exebuf.c */
    exelist_exe_edd = E_CONFIG_DD_NEW("E_Exe", E_Exe);

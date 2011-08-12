@@ -13,6 +13,7 @@ static Eina_Bool  _cb_data(void *data, int type, void *event);
 static Eina_Bool  _cb_error(void *data, int type, void *event);
 static Eina_Bool  _cb_del(void *data, int type, void *event);
 
+static const Evry_API *evry = NULL;
 static Evry_Module *evry_module = NULL;
 static Evry_Plugin *_plug;
 static Ecore_Event_Handler *action_handler = NULL;
@@ -30,7 +31,7 @@ _begin(Evry_Plugin *plugin, const Evry_Item *item __UNUSED__)
 {
    Evry_Item *it;
    Plugin *p;
-
+   
    if (active)
      return NULL;
 
@@ -53,7 +54,7 @@ _begin(Evry_Plugin *plugin, const Evry_Item *item __UNUSED__)
    it->context = eina_stringshare_ref(p->base.name);
    cur_item = it;
    active = EINA_TRUE;
-
+   
    return EVRY_PLUGIN(p);
 }
 
@@ -83,13 +84,10 @@ _run_bc(Plugin *p)
 static void
 _finish(Evry_Plugin *plugin)
 {
-   GET_PLUGIN(p, plugin);
+   GET_PLUGIN(p, plugin);   
    Ecore_Event_Handler *h;
    Evry_Item *it;
    int items = 0;
-
-   if (!eina_list_data_find(p->base.items, cur_item))
-     EVRY_ITEM_FREE(cur_item);
 
    EINA_LIST_FREE(p->base.items, it)
      {
@@ -108,9 +106,7 @@ _finish(Evry_Plugin *plugin)
 	ecore_exe_free(exe);
 	exe = NULL;
      }
-
    active = EINA_FALSE;
-   cur_item = NULL;
 
    E_FREE(p);
 }
@@ -162,7 +158,7 @@ static int
 _fetch(Evry_Plugin *plugin, const char *input)
 {
    GET_PLUGIN(p, plugin);
-
+   
    char buf[1024];
 
    if (!input) return 0;
@@ -218,7 +214,7 @@ _cb_error(void *data, int type __UNUSED__, void *event)
 {
    Ecore_Exe_Event_Data *ev = event;
    Evry_Plugin *p = data;
-
+   
    if (ev->exe != exe)
      return ECORE_CALLBACK_PASS_ON;
 
@@ -242,10 +238,12 @@ _cb_del(void *data __UNUSED__, int type __UNUSED__, void *event)
 }
 
 static int
-_plugins_init(void)
+_plugins_init(const Evry_API *_api)
 {
    if (evry_module->active)
      return EINA_TRUE;
+
+   evry = _api;
 
    if (!evry->api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
@@ -293,7 +291,7 @@ _plugins_shutdown(void)
 Eina_Bool
 evry_plug_calc_init(E_Module *m)
 {
-   EVRY_MODULE_NEW(evry_module, _plugins_init, _plugins_shutdown);
+   EVRY_MODULE_NEW(evry_module, evry, _plugins_init, _plugins_shutdown);
 
    return EINA_TRUE;
 }

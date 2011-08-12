@@ -326,6 +326,7 @@ void evry_plug_calc_save(void);
 
 Ecore_Event_Handler *evry_event_handler_add(int type, Eina_Bool (*func) (void *data, int type, void *event), const void *data);
 
+extern Evry_API *evry;
 extern Evry_History *evry_hist;
 extern Evry_Config  *evry_conf;
 extern int  _evry_events[NUM_EVRY_EVENTS];
@@ -338,26 +339,9 @@ EAPI E_Config_Dialog *evry_config_dialog(E_Container *con, const char *params);
 EAPI E_Config_Dialog *evry_collection_conf_dialog(E_Container *con, const char *params);
 EAPI extern E_Module_Api e_modapi;
 
-/*** Common Logging  ***/
-extern int _e_module_evry_log_dom;
-
-#ifndef EINA_LOG_DEFAULT_COLOR
-#define EINA_LOG_DEFAULT_COLOR EINA_COLOR_CYAN
-#endif
-
-#undef DBG
-#undef INF
-#undef WRN
-#undef ERR
-
-#define DBG(...) EINA_LOG_DOM_DBG(_e_module_evry_log_dom, __VA_ARGS__)
-#define INF(...) EINA_LOG_DOM_INFO(_e_module_evry_log_dom, __VA_ARGS__)
-#define WRN(...) EINA_LOG_DOM_WARN(_e_module_evry_log_dom, __VA_ARGS__)
-#define ERR(...) EINA_LOG_DOM_ERR(_e_module_evry_log_dom, __VA_ARGS__)
-
-/* #define CHECK_REFS 1
- * #define PRINT_REFS 1
- * #define CHECK_TIME 1 */
+//#define CHECK_REFS 1
+//#define PRINT_REFS 1
+//#define CHECK_TIME 1
 //#undef DBG
 //#define DBG(...) ERR(__VA_ARGS__)
 

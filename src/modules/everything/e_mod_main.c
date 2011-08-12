@@ -16,12 +16,11 @@ static Ecore_Timer *cleanup_timer;
 static const char *module_icon = NULL;
 static E_Config_DD *conf_edd = NULL;
 static E_Config_DD *plugin_conf_edd = NULL;
-
-Evry_Config *evry_conf = NULL;
-int _evry_events[NUM_EVRY_EVENTS];
-int _e_module_evry_log_dom = -1;
+static int _e_module_evry_log_dom = -1;
 
 Evry_API *evry = NULL;
+Evry_Config *evry_conf = NULL;
+int _evry_events[NUM_EVRY_EVENTS];
 
 /* module setup */
 EAPI E_Module_Api e_modapi =
@@ -138,10 +137,10 @@ e_modapi_init(E_Module *m)
    evry_plug_windows_init(m);
    evry_plug_settings_init(m);
    evry_plug_calc_init(m);
-   e_datastore_set("evry_active", evry);
+   e_datastore_set("evry_api", evry);
 
    EINA_LIST_FOREACH(e_datastore_get("evry_modules"), l, em)
-     em->active = em->init();
+     em->active = em->init(evry);
 
    evry_plug_collection_init();
    evry_plug_clipboard_init();
@@ -169,26 +168,24 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 
    EINA_LIST_FOREACH(e_datastore_get("evry_modules"), l, em)
      em->shutdown();
-
-   e_datastore_del("evry_active");
-   E_FREE(evry);
-   evry = NULL;
    
-#ifndef USE_MODULE_EVERYTHING_AS_MODULES
    evry_plug_apps_shutdown();
    evry_plug_files_shutdown();
    evry_plug_settings_shutdown();
    evry_plug_windows_shutdown();
    evry_plug_calc_shutdown();
-#endif
-   evry_gadget_shutdown();
-   evry_shutdown();
-   evry_view_shutdown();
-   evry_view_help_shutdown();
    evry_plug_clipboard_shutdown();
    evry_plug_text_shutdown();
    evry_plug_collection_shutdown();
    evry_plug_actions_shutdown();
+   evry_view_shutdown();
+   evry_view_help_shutdown();
+   evry_gadget_shutdown();
+   evry_shutdown();
+
+   e_datastore_del("evry_api");
+   E_FREE(evry);
+   evry = NULL;
 
    _config_free();
    evry_history_free();
@@ -239,13 +236,11 @@ e_modapi_save(E_Module *m __UNUSED__)
 {
    e_config_domain_save("module.everything", conf_edd, evry_conf);
 
-#ifndef USE_MODULE_EVERYTHING_AS_MODULES
    evry_plug_apps_save();
    evry_plug_files_save();
    evry_plug_settings_save();
    evry_plug_windows_save();
    evry_plug_calc_save();
-#endif
    
    return 1;
 }

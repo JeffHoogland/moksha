@@ -20,6 +20,7 @@ struct _Settings_Item
   E_Configure_It *eci;  
 };
 
+static const Evry_API *evry = NULL;
 static Evry_Module *evry_module = NULL;
 static Evry_Plugin *p;
 static Evry_Action *act;
@@ -173,11 +174,13 @@ _action(Evry_Action *act)
 }
 
 static int
-_plugins_init(void)
+_plugins_init(const Evry_API *_api)
 {   
    if (evry_module->active) 
      return EINA_TRUE;
 
+   evry = _api;
+   
    if (!evry->api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
@@ -217,7 +220,7 @@ _plugins_shutdown(void)
 Eina_Bool
 evry_plug_settings_init(E_Module *m)
 {
-   EVRY_MODULE_NEW(evry_module, _plugins_init, _plugins_shutdown);
+   EVRY_MODULE_NEW(evry_module, evry, _plugins_init, _plugins_shutdown);
 
    e_module_delayed_set(m, 1);
 

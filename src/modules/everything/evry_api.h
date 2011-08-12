@@ -51,13 +51,11 @@ typedef struct _Evry_Event_Item_Changed     Evry_Event_Item_Changed;
 typedef struct _Evry_Event_Item_Selected    Evry_Event_Item_Selected;
 typedef struct _Evry_Event_Action_Performed Evry_Event_Action_Performed;
 
-extern Evry_API *evry;
-
 struct _Evry_Module
 {
   Eina_Bool active;
 
-  int  (*init)(void);
+  int  (*init)(const Evry_API *api);
   void (*shutdown)(void);
 };
 
@@ -257,16 +255,16 @@ typedef void (*Evry_Item_Free_Cb) (Evry_Item *it);
 
 #define EVRY_ACTION_FREE(_act) if (_act) evry->action_free(EVRY_ACTN(_act))
 
-#define EVRY_MODULE_NEW(_module, _init, _shutdown)	\
-  {							\
-     _module = E_NEW(Evry_Module, 1);			\
-     _module->init     = &_init;			\
-     _module->shutdown = &_shutdown;			\
-     Eina_List *l = e_datastore_get("evry_modules");	\
-     l = eina_list_append(l, _module);			\
-     e_datastore_set("evry_modules", l);		\
-     if ((e_datastore_get("evry_active")))		\
-       evry_module->active = _init();			\
+#define EVRY_MODULE_NEW(_module, _evry, _init, _shutdown)	\
+  {								\
+     _module = E_NEW(Evry_Module, 1);				\
+     _module->init     = &_init;				\
+     _module->shutdown = &_shutdown;				\
+     Eina_List *l = e_datastore_get("evry_modules");		\
+     l = eina_list_append(l, _module);				\
+     e_datastore_set("evry_modules", l);			\
+     if ((_evry = e_datastore_get("evry_api")))			\
+       evry_module->active = _init(_evry);				\
   }
 
 #define EVRY_MODULE_FREE(_module)			\
@@ -291,7 +289,6 @@ typedef void (*Evry_Item_Free_Cb) (Evry_Item *it);
   } while (0)
 
 
-#ifndef EVRY_H
 
 #ifndef EINA_LOG_DEFAULT_COLOR
 #define EINA_LOG_DEFAULT_COLOR EINA_COLOR_CYAN
@@ -307,5 +304,4 @@ typedef void (*Evry_Item_Free_Cb) (Evry_Item *it);
 #define WRN(...) EINA_LOG_DOM_WARN(evry->log_dom , __VA_ARGS__)
 #define ERR(...) EINA_LOG_DOM_ERR(evry->log_dom , __VA_ARGS__)
 
-#endif
 #endif
