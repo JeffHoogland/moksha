@@ -90,7 +90,6 @@ struct _Module_Config
   E_Module *module;
 };
 
-static const Evry_API *evry = NULL;
 static Evry_Module *evry_module = NULL;
 
 static Module_Config *_conf;
@@ -1305,7 +1304,7 @@ _cb_key_down(Evry_Plugin *plugin, const Ecore_Event_Key *ev)
 
 
 static int
-_plugins_init(const Evry_API *api)
+_plugins_init(void)
 {
    Evry_Action *act, *act_sort_date, *act_sort_name;
    Evry_Plugin *p;
@@ -1313,8 +1312,6 @@ _plugins_init(const Evry_API *api)
 
    if (evry_module->active)
      return EINA_TRUE;
-
-   evry = api;
 
    if (!evry->api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
@@ -1647,7 +1644,7 @@ evry_plug_files_init(E_Module *m)
 {
    _conf_init(m);
 
-   EVRY_MODULE_NEW(evry_module, evry, _plugins_init, _plugins_shutdown);
+   EVRY_MODULE_NEW(evry_module, _plugins_init, _plugins_shutdown);
 
    return EINA_TRUE;
 }

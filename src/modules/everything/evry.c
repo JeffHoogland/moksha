@@ -419,16 +419,11 @@ _evry_selectors_shift(Evry_Window *win, int dir)
 }
 
 Evry_Item *
-evry_item_new(Evry_Item *base, Evry_Plugin *p, const char *label,
+evry_item_new(Evry_Item *it, Evry_Plugin *p, const char *label,
 	      Evas_Object *(*icon_get) (Evry_Item *it, Evas *e),
 	      void (*cb_free) (Evry_Item *item))
 {
-   Evry_Item *it;
-   if (base)
-     {
-	it = base;
-     }
-   else
+   if (!it)
      {
 	it = E_NEW(Evry_Item, 1);
 	if (!it) return NULL;
@@ -463,7 +458,7 @@ evry_item_free(Evry_Item *it)
    it->ref--;
 
 #ifdef PRINT_REFS
-    printf("%d, %d\t unref: %s\n", it->ref, _item_cnt - 1, it->label);
+    printf("%d, %d\t unref: %s\n", it->ref, _item_cnt, it->label);
 #endif
 
    if (it->ref > 0) return;
@@ -539,7 +534,8 @@ _evry_selector_update_actions(Evry_Selector *sel)
    if (sel->action_timer)
      ecore_timer_del(sel->action_timer);
 
-   sel->action_timer = ecore_timer_add(0.1, _evry_timer_cb_actions_get, sel);
+   _evry_selector_item_clear(sel); 
+   sel->action_timer = ecore_timer_add(0.2, _evry_timer_cb_actions_get, sel);
 }
 
 void
@@ -1325,7 +1321,7 @@ _evry_selector_item_update(Evry_Selector *sel)
 	if (!_evry_selector_thumb(sel, it))
 	  {
 	     o = evry_util_icon_get(it, win->evas);
-
+	     
 	     if ((!o) && it->plugin)
 	       o = evry_util_icon_get(EVRY_ITEM(it->plugin), win->evas);
 	  }

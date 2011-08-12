@@ -330,34 +330,6 @@ extern Evry_History *evry_hist;
 extern Evry_Config  *evry_conf;
 extern int  _evry_events[NUM_EVRY_EVENTS];
 
-#define EVRY_ITEM_NEW(_base, _plugin, _label, _icon_get, _free)		\
-  (_base *) evry_item_new(EVRY_ITEM(E_NEW(_base, 1)), EVRY_PLUGIN(_plugin), \
-			  _label, _icon_get, _free)
-
-#define EVRY_ITEM_FREE(_item) evry_item_free((Evry_Item *)_item)
-#define EVRY_ITEM_REF(_item) evry_item_ref((Evry_Item *)_item)
-
-#define EVRY_PLUGIN_NEW(_base, _name, _icon, _item_type, _begin, _cleanup, _fetch, _free) \
-  evry_plugin_new(EVRY_PLUGIN(E_NEW(_base, 1)), _name, _(_name), _icon, _item_type, \
-		  _begin, _cleanup, _fetch, _free)
-
-#define EVRY_ACTION_NEW(_name, _in1, _in2, _icon, _action, _check)	\
-  evry_action_new(_name, _(_name), _in1, _in2, _icon, _action, _check)
-
-#define EVRY_PLUGIN_FREE(_p)			\
-  if (_p) evry_plugin_free(EVRY_PLUGIN(_p))
-
-#define EVRY_PLUGIN_UPDATE(_p, _action)			\
-  if (_p) evry_plugin_update(EVRY_PLUGIN(_p), _action)
-
-#define EVRY_PLUGIN_ITEMS_FREE(_p) {		\
-     Evry_Item *it;				\
-     EINA_LIST_FREE(EVRY_PLUGIN(_p)->items, it) \
-       evry_item_free(it); }
-
-#define EVRY_PLUGIN_ITEMS_ADD(_plugin, _items, _input, _match_detail, _set_usage) \
-  evry_util_plugin_items_add(EVRY_PLUGIN(_plugin), _items, _input, _match_detail, _set_usage)
-
 /*** E Module ***/
 EAPI void *e_modapi_init     (E_Module *m);
 EAPI int   e_modapi_shutdown (E_Module *m);
@@ -383,8 +355,9 @@ extern int _e_module_evry_log_dom;
 #define WRN(...) EINA_LOG_DOM_WARN(_e_module_evry_log_dom, __VA_ARGS__)
 #define ERR(...) EINA_LOG_DOM_ERR(_e_module_evry_log_dom, __VA_ARGS__)
 
-//#define CHECK_REFS 1
-//#define CHECK_TIME 1
+/* #define CHECK_REFS 1
+ * #define PRINT_REFS 1
+ * #define CHECK_TIME 1 */
 //#undef DBG
 //#define DBG(...) ERR(__VA_ARGS__)
 

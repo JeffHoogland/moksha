@@ -26,7 +26,6 @@ struct _Border_Item
 
 #define GET_BORDER(_bd, _it) Border_Item *_bd = (Border_Item *)_it;
 
-static const Evry_API *evry = NULL;
 static Evry_Module *evry_module = NULL;
 static Evry_Plugin *_plug;
 static Eina_List *_actions = NULL;
@@ -402,14 +401,12 @@ _act_border(Evry_Action *act)
 }
 
 static int
-_plugins_init(const Evry_API *_api)
+_plugins_init(void)
 {
    Evry_Action *act;
 
    if (evry_module->active)
      return EINA_TRUE;
-
-   evry = _api;
 
    if (!evry->api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
@@ -480,7 +477,7 @@ _plugins_shutdown(void)
 Eina_Bool
 evry_plug_windows_init(E_Module *m)
 {
-   EVRY_MODULE_NEW(evry_module, evry, _plugins_init, _plugins_shutdown);
+   EVRY_MODULE_NEW(evry_module, _plugins_init, _plugins_shutdown);
 
    return EINA_TRUE;
 }

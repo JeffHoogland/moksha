@@ -9,8 +9,6 @@ static void _config_init(void);
 static void _config_free(void);
 static Eina_Bool  _cleanup_history(void *data);
 static void _evry_type_init(const char *type);
-
-static Evry_API *_api = NULL;
 static Eina_List *_evry_types = NULL;
 static E_Int_Menu_Augmentation *maug = NULL;
 static E_Action *act = NULL;
@@ -23,6 +21,7 @@ Evry_Config *evry_conf = NULL;
 int _evry_events[NUM_EVRY_EVENTS];
 int _e_module_evry_log_dom = -1;
 
+Evry_API *evry = NULL;
 
 /* module setup */
 EAPI E_Module_Api e_modapi =
@@ -92,9 +91,9 @@ e_modapi_init(E_Module *m)
    _evry_events[EVRY_EVENT_ACTION_PERFORMED] = ecore_event_type_new();
    _evry_events[EVRY_EVENT_PLUGIN_SELECTED]  = ecore_event_type_new();
    
-   _api = E_NEW(Evry_API, 1);
-   _api->log_dom = _e_module_evry_log_dom;
-#define SET(func) (_api->func = &evry_##func);
+   evry = E_NEW(Evry_API, 1);
+   evry->log_dom = _e_module_evry_log_dom;
+#define SET(func) (evry->func = &evry_##func);
    SET(api_version_check);
    SET(item_new);
    SET(item_free);
@@ -139,10 +138,10 @@ e_modapi_init(E_Module *m)
    evry_plug_windows_init(m);
    evry_plug_settings_init(m);
    evry_plug_calc_init(m);
-   e_datastore_set("evry_api", _api);
+   e_datastore_set("evry_active", evry);
 
    EINA_LIST_FOREACH(e_datastore_get("evry_modules"), l, em)
-     em->active = em->init(_api);
+     em->active = em->init();
 
    evry_plug_collection_init();
    evry_plug_clipboard_init();
@@ -171,9 +170,10 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    EINA_LIST_FOREACH(e_datastore_get("evry_modules"), l, em)
      em->shutdown();
 
-   e_datastore_del("evry_api");
-   E_FREE(_api);
-
+   e_datastore_del("evry_active");
+   E_FREE(evry);
+   evry = NULL;
+   
 #ifndef USE_MODULE_EVERYTHING_AS_MODULES
    evry_plug_apps_shutdown();
    evry_plug_files_shutdown();
