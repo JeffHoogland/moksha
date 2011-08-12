@@ -240,9 +240,6 @@ _cb_del(void *data __UNUSED__, int type __UNUSED__, void *event)
 static int
 _plugins_init(const Evry_API *_api)
 {
-   if (evry_module->active)
-     return EINA_TRUE;
-
    evry = _api;
 
    if (!evry->api_version_check(EVRY_API_VERSION))
@@ -276,14 +273,10 @@ _plugins_init(const Evry_API *_api)
 static void
 _plugins_shutdown(void)
 {
-   if (!evry_module->active) return;
-
    ecore_event_handler_del(action_handler);
    action_handler = NULL;
 
    EVRY_PLUGIN_FREE(_plug);
-
-   evry_module->active = EINA_FALSE;
 }
 
 /***************************************************************************/

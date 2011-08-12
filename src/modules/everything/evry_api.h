@@ -264,12 +264,13 @@ typedef void (*Evry_Item_Free_Cb) (Evry_Item *it);
      l = eina_list_append(l, _module);				\
      e_datastore_set("evry_modules", l);			\
      if ((_evry = e_datastore_get("evry_api")))			\
-       evry_module->active = _init(_evry);				\
+       _module->active = _init(_evry);				\
   }
 
 #define EVRY_MODULE_FREE(_module)			\
   {							\
-     _module->shutdown();				\
+     if (_module->active) _module->shutdown();		\
+     _module->active = EINA_FALSE;			\
      Eina_List *l = e_datastore_get("evry_modules");	\
      l = eina_list_remove(l, _module);			\
      if (l) e_datastore_set("evry_modules", l);		\

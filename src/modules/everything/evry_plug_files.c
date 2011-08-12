@@ -1311,9 +1311,6 @@ _plugins_init(const Evry_API *api)
    Evry_Plugin *p;
    int prio = 0;
 
-   if (evry_module->active)
-     return EINA_TRUE;
-
    evry = api;
 
    if (!evry->api_version_check(EVRY_API_VERSION))
@@ -1413,9 +1410,6 @@ _plugins_shutdown(void)
    Evry_Action *act;
    Evry_Plugin *p;
 
-   if (!evry_module->active)
-     return;
-
    eina_stringshare_del(_mime_dir);
    eina_stringshare_del(_mime_mount);
    eina_stringshare_del(_mime_unknown);
@@ -1429,8 +1423,6 @@ _plugins_shutdown(void)
 
    EINA_LIST_FREE(_actions, act)
      evry->action_free(act);
-
-   evry_module->active = EINA_FALSE;
 }
 
 
