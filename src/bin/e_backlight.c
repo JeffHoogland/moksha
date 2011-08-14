@@ -4,13 +4,14 @@
 // a signleton right now as thats 99% of use cases. but api supports
 // doing more. for now make it work in the singleton
 
+#define MODE_NONE  -1
 #define MODE_RANDR 0
 #define MODE_SYS   1
 
 static double bl_val = 1.0;
 static double bl_animval = 1.0;
 static E_Backlight_Mode bl_mode = E_BACKLIGHT_MODE_NORMAL;
-static int sysmode = MODE_RANDR;
+static int sysmode = MODE_NONE;
 static Ecore_Animator *bl_anim = NULL;
 static const char *bl_sysval = NULL;
 static Ecore_Event_Handler *bl_sys_exit_handler = NULL;
@@ -48,6 +49,13 @@ e_backlight_shutdown(void)
    bl_sys_set_exe = NULL;
    bl_sys_pending_set = EINA_FALSE;
    return 1;
+}
+
+EAPI Eina_Bool
+e_backlight_exists(void)
+{
+   if (sysmode == MODE_NONE) return EINA_FALSE;
+   return EINA_TRUE;
 }
 
 EAPI void

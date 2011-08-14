@@ -26,6 +26,7 @@ typedef enum _E_Backlight_Mode
 
 EINTERN int              e_backlight_init(void);
 EINTERN int              e_backlight_shutdown(void);
+EAPI Eina_Bool           e_backlight_exists(void);
 EAPI void                e_backlight_update(void);
 EAPI void                e_backlight_level_set(E_Zone *zone, double val, double tim);
 EAPI double              e_backlight_level_get(E_Zone *zone);
