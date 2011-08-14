@@ -75,6 +75,7 @@ const E_Text_Class_Pair text_class_predefined_names[ ] = {
      { "init_title",      N_("Splash Title")},
      { "init_text",       N_("Splash Text")},
      { "init_version",    N_("Splash Version")},
+     { "clock",           N_("Digital Clock")},
 
      {  NULL,		  N_("Widgets")},
      { "entry",           N_("Entry")},
