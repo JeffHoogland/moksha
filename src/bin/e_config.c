@@ -143,7 +143,7 @@ e_config_init(void)
    else
      {
 	Eet_File *ef;
-	char buf[4096];
+	char buf[PATH_MAX];
 
 	/* try user profile config */
 	e_user_dir_concat_static(buf, "config/profile.cfg");
