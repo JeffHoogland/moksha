@@ -13251,7 +13251,7 @@ collections {
          part { name: "e.text.month";
             type: TEXT;
             effect: SOFT_SHADOW;
-            mouse_events: 0;
+            mouse_events: 1;
             description { state: "default" 0.0;
                fixed: 0 1;
                align: 0.0 0.0;
@@ -13539,7 +13539,7 @@ collections {
             } }
          }
          part { name: "inset";
-            mouse_events: 0;
+            mouse_events: 1;
             description { state: "default" 0.0;
                image.normal: "inset_sunk.png";
                image.middle: 0;
@@ -13550,6 +13550,20 @@ collections {
                rel2.to: "e.table.days";
                rel2.offset: 2 2;
             }
+         }
+      }
+      programs {
+         program {
+            name: "mw_next";
+            source: "*";
+            signal: "mouse,wheel,0,-1";
+            action: SIGNAL_EMIT "e,action,prev" "";
+         }
+         program {
+            name: "mw_right";
+            source: "*";
+            signal: "mouse,wheel,0,1";
+            action: SIGNAL_EMIT "e,action,next" "";
          }
       }
    }
