@@ -131,9 +131,10 @@ wizard_page_shutdown(E_Wizard_Page *pg __UNUSED__)
 EAPI int
 wizard_page_show(E_Wizard_Page *pg)
 {
-   Evas_Object *o, *of, *ob;
+   Evas_Object *o, *of, *ob, *ic;
    Eina_List *l;
    int i, sel = -1;
+   char buf[PATH_MAX];
 
    o = e_widget_list_add(pg->evas, 1, 0);
    e_wizard_title_set(_("Language"));
@@ -143,13 +144,13 @@ wizard_page_show(E_Wizard_Page *pg)
 
    e_widget_ilist_freeze(ob);
 
-   e_widget_ilist_append(ob, NULL, _("System Default"), 
+   e_prefix_data_snprintf(buf, sizeof(buf), "data/images/%s", "lang-system.png");
+   ic = e_util_icon_add(buf, pg->evas);
+   e_widget_ilist_append(ob, ic, _("System Default"), 
                          NULL, NULL, NULL);
    for (i = 1, l = blang_list; l; l = l->next, i++)
      {
 	E_Intl_Pair *pair;
-        Evas_Object *ic;
-	char buf[PATH_MAX];
 
 	pair = l->data;
 	e_prefix_data_snprintf(buf, sizeof(buf), "data/images/%s", pair->locale_icon);

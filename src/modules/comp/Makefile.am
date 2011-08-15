@@ -26,7 +26,9 @@ module_la_SOURCES      = e_mod_main.c \
                          e_mod_comp.c \
                          e_mod_comp.h \
                          e_mod_comp_update.c \
-                         e_mod_comp_update.h
+                         e_mod_comp_update.h \
+                         e_mod_comp_cfdata.c \
+                         e_mod_comp_cfdata.h
                          
 module_la_LIBADD       = @e_libs@ @dlopen_libs@
 module_la_LDFLAGS      = -module -avoid-version

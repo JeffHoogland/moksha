@@ -194,7 +194,10 @@ e_wizard_page_add(void *handle,
 EAPI void
 e_wizard_page_del(E_Wizard_Page *pg)
 {
-   if (pg->handle) dlclose(pg->handle);
+// rare thing.. if we do e_wizard_next() from a page and we end up finishing
+// ther page seq.. we cant REALLY dlclose... not a problem as wizard runs
+// once only then e restarts itself with final wizard page
+//   if (pg->handle) dlclose(pg->handle);
    pages = eina_list_remove(pages, pg);
    free(pg);
 }
@@ -216,6 +219,12 @@ EAPI void
 e_wizard_labels_update(void)
 {
    edje_object_part_text_set(o_bg, "e.text.label", _("Next"));
+}
+
+EAPI const char *
+e_wizard_dir_get(void)
+{
+   return e_module_dir_get(wiz_module);
 }
 
 static void

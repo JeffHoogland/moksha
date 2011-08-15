@@ -92,6 +92,7 @@ wizard_page_show(E_Wizard_Page *pg)
 	     free(prof);
 	     continue;
 	  }
+        if (!strcmp(prof, "standard")) sel = i;
 	snprintf(buf, sizeof(buf), "%s/profile.desktop", dir);
         desk = efreet_desktop_new(buf);
 	label = prof;
@@ -135,24 +136,20 @@ wizard_page_show(E_Wizard_Page *pg)
 EAPI int
 wizard_page_hide(E_Wizard_Page *pg)
 {
+   char buf[PATH_MAX];
+   
    evas_object_del(pg->data);
    // actually apply profile
-   if (e_config_profile_get())
-     {
-	char buf[PATH_MAX];
-	if (e_user_dir_snprintf(buf, sizeof(buf), "config/%s", 
-                                e_config_profile_get()) >= sizeof(buf))
-	  return 1;
-	ecore_file_recursive_rm(buf);
-     }
    if (!profile) profile = "standard";
    e_config_profile_set(profile);
+   e_config_profile_del(e_config_profile_get());
+   e_config_load();
+   e_config_save();
    return 1;
 }
 
 EAPI int
 wizard_page_apply(E_Wizard_Page *pg __UNUSED__)
 {
-   // no need. done in page_070's wizard_page_show()
    return 1;
 }

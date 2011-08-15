@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Root
+Comment=The Root Filesystem base
+Comment[it]=Il filesystem principale
+Comment[fr]=Le système de fichiers à la base
+Type=Link
+X-Enlightenment-Type=Mount
+URL=file:/
+Icon=computer
+NotShowIn=GNOME;KDE;LXDE;ROX;XFCE;

@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Temp
+Comment=Temporary files
+Comment[it]=File temporanei
+Comment[fr]=Les fichiers temporaires
+Type=Link
+X-Enlightenment-Type=Mount
+URL=file:/tmp
+Icon=user-temp
+NotShowIn=GNOME;KDE;LXDE;ROX;XFCE;

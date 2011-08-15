@@ -2,7 +2,7 @@
 #include "e_mod_main.h"
 
 /* actual module specifics */
-static E_Module *conf_module = NULL;
+E_Module *wiz_module = NULL;
 
 /*
  * These are the currently planned wizard pages:
@@ -50,33 +50,36 @@ e_modapi_init(E_Module *m)
    char buf[PATH_MAX];
    char *file;
    
-   conf_module = m;
+   wiz_module = m;
    e_wizard_init();
    
    snprintf(buf, sizeof(buf), "%s/%s", e_module_dir_get(m), MODULE_ARCH);
    files = ecore_file_ls(buf);
    files = eina_list_sort(files, 0, (Eina_Compare_Cb)_cb_sort_files);
    EINA_LIST_FREE(files, file)
-	  {
-	     if (!strncmp(file, "page_", 5))
-	       {
-		  void *handle;
-		  
-		  snprintf(buf, sizeof(buf), "%s/%s/%s",
-			   e_module_dir_get(m), MODULE_ARCH, file);
-		  handle = dlopen(buf, RTLD_NOW | RTLD_GLOBAL);
-		  if (handle)
-		    {
-		       e_wizard_page_add(handle,
-					 dlsym(handle, "wizard_page_init"),
-					 dlsym(handle, "wizard_page_shutdown"),
-					 dlsym(handle, "wizard_page_show"),
-					 dlsym(handle, "wizard_page_hide"),
-					 dlsym(handle, "wizard_page_apply"));
-		    }
-                  else
-                    printf("%s\n", dlerror());
-	       }
+     {
+        if (!strncmp(file, "page_", 5))
+          {
+             void *handle;
+             
+             snprintf(buf, sizeof(buf), "%s/%s/%s",
+                      e_module_dir_get(m), MODULE_ARCH, file);
+             handle = dlopen(buf, RTLD_NOW | RTLD_GLOBAL);
+             if (handle)
+                e_wizard_page_add(handle,
+                                  dlsym(handle, "wizard_page_init"),
+                                  dlsym(handle, "wizard_page_shutdown"),
+                                  dlsym(handle, "wizard_page_show"),
+                                  dlsym(handle, "wizard_page_hide"),
+                                  dlsym(handle, "wizard_page_apply"));
+             else
+               {
+                  // if its an executable...
+                  // XXX
+                  // else...
+                  printf("%s\n", dlerror());
+               }
+          }
 	free(file);
      }
    e_wizard_go();
@@ -88,7 +91,7 @@ EAPI int
 e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    e_wizard_shutdown();
-   conf_module = NULL;
+   wiz_module = NULL;
 // FIXME: wrong place   
 //   e_module_disable(m); /* disable - on restart this won't be loaded now */
 //   e_sys_action_do(E_SYS_RESTART, NULL); /* restart e - cleanly try settings */

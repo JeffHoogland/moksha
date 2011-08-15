@@ -1,916 +1,189 @@
 group "E_Config" struct {
-    value "config_version" int: 65847;
-    value "show_splash" int: 1;
-    value "init_default_theme" string: "default.edj";
-    value "desktop_default_name" string: "Desktop %i, %i";
-    value "menus_scroll_speed" double: 1000.0000000000000000000000000;
-    value "menus_fast_mouse_move_threshhold" double: 300.0000000000000000000000000;
-    value "menus_click_drag_timeout" double: 0.2500000000000000000000000;
-    value "border_shade_animate" int: 1;
-    value "border_shade_transition" int: 1;
-    value "border_shade_speed" double: 1800.0000000000000000000000000;
-    value "framerate" double: 60.0000000000000000000000000;
-    value "priority" int: 3;
-    value "image_cache" int: 4096;
-    value "font_cache" int: 512;
-    value "edje_cache" int: 32;
-    value "edje_collection_cache" int: 64;
-    value "zone_desks_x_count" int: 1;
-    value "zone_desks_y_count" int: 1;
-    value "use_virtual_roots" int: 0;
-    value "show_desktop_icons" int: 1;
-    value "edge_flip_dragging" int: 1;
-    value "evas_engine_default" int: 1;
-    value "evas_engine_container" int: 0;
-    value "evas_engine_init" int: 0;
-    value "evas_engine_menus" int: 0;
-    value "evas_engine_borders" int: 0;
-    value "evas_engine_errors" int: 0;
-    value "evas_engine_popups" int: 0;
-    value "evas_engine_drag" int: 0;
-    value "evas_engine_win" int: 0;
-    value "evas_engine_zone" int: 0;
-    value "use_composite" int: 0;
-    value "language" string: "en_US.UTF-8";
-    group "syscon.actions" list {
-        group "E_Config_Syscon_Action" struct {
-            value "action" string: "halt";
-            value "params" string: "now";
-            value "button" string: "button";
-            value "icon" string: "system-shutdown";
-            value "is_main" int: 1;
+    group "modules" list {
+        group "E_Config_Module" struct {
+            value "name" string: "comp";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 0;
+            value "priority" int: -1000;
         }
-        group "E_Config_Syscon_Action" struct {
-            value "action" string: "suspend";
-            value "params" string: "now";
-            value "button" string: "button";
-            value "icon" string: "system-suspend";
-            value "is_main" int: 1;
+        group "E_Config_Module" struct {
+            value "name" string: "illume2";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 0;
+            value "priority" int: 100;
         }
-        group "E_Config_Syscon_Action" struct {
-            value "action" string: "desk_lock";
-            value "button" string: "button";
-            value "icon" string: "system-lock-screen";
-            value "is_main" int: 1;
-        }
-        group "E_Config_Syscon_Action" struct {
-            value "action" string: "reboot";
-            value "params" string: "now";
-            value "button" string: "button";
-            value "icon" string: "system-restart";
-            value "is_main" int: 0;
-        }
-        group "E_Config_Syscon_Action" struct {
-            value "action" string: "hibernate";
-            value "params" string: "now";
-            value "button" string: "button";
-            value "icon" string: "system-suspend-hibernate";
-            value "is_main" int: 0;
-        }
-        group "E_Config_Syscon_Action" struct {
-            value "action" string: "logout";
-            value "params" string: "now";
-            value "button" string: "button";
-            value "icon" string: "system-log-out";
-            value "is_main" int: 0;
-        }
-    }
-  group "mime_icons" list {
-    group "E_Config_Mime_Icon" struct {
-      value "mime" string: "image/jpeg";
-      value "icon" string: "THUMB";
-    }
-  }
-  group "mime_icons" list {
-    group "E_Config_Mime_Icon" struct {
-      value "mime" string: "image/png";
-      value "icon" string: "THUMB";
-    }
-  }
-  group "mime_icons" list {
-    group "E_Config_Mime_Icon" struct {
-      value "mime" string: "image/x-pixmap";
-      value "icon" string: "THUMB";
-    }
-  }
-  group "mime_icons" list {
-    group "E_Config_Mime_Icon" struct {
-      value "mime" string: "image/x-xpixmap";
-      value "icon" string: "THUMB";
-    }
-  }
-  group "mime_icons" list {
-    group "E_Config_Mime_Icon" struct {
-      value "mime" string: "image/svg+xml";
-      value "icon" string: "THUMB";
-    }
-  }
-  group "mime_icons" list {
-    group "E_Config_Mime_Icon" struct {
-      value "mime" string: "image/gif";
-      value "icon" string: "THUMB";
-    }
-  }
-  group "mime_icons" list {
-    group "E_Config_Mime_Icon" struct {
-      value "mime" string: "image/tiff";
-      value "icon" string: "THUMB";
-    }
-  }
-  group "mime_icons" list {
-    group "E_Config_Mime_Icon" struct {
-      value "mime" string: "application/x-edje";
-      value "icon" string: "THUMB";
-    }
-  }
-  group "mime_icons" list {
-    group "E_Config_Mime_Icon" struct {
-      value "mime" string: "application/pdf";
-      value "icon" string: "THUMB";
-    }
-  }
-  group "mime_icons" list {
-    group "E_Config_Mime_Icon" struct {
-      value "mime" string: "application/postscript";
-      value "icon" string: "THUMB";
-    }
-  }
-  group "mime_icons" list {
-    group "E_Config_Mime_Icon" struct {
-      value "mime" string: "image/x-photoshop";
-      value "icon" string: "THUMB";
-    }
-  }
-  group "mime_icons" list {
-    group "E_Config_Mime_Icon" struct {
-      value "mime" string: "image/x-portable-anymap";
-      value "icon" string: "THUMB";
-    }
-  }
-  group "mime_icons" list {
-    group "E_Config_Mime_Icon" struct {
-      value "mime" string: "image/x-portable-bitmap";
-      value "icon" string: "THUMB";
-    }
-  }
-  group "mime_icons" list {
-    group "E_Config_Mime_Icon" struct {
-      value "mime" string: "image/x-portable-graymap";
-      value "icon" string: "THUMB";
-    }
-  }
-  group "mime_icons" list {
-    group "E_Config_Mime_Icon" struct {
-      value "mime" string: "image/x-portable-pixmap";
-      value "icon" string: "THUMB";
-    }
-  }
-  group "mime_icons" list {
-    group "E_Config_Mime_Icon" struct {
-      value "mime" string: "image/vnd.wap.wbmp";
-      value "icon" string: "THUMB";
-    }
-  }
-  group "mime_icons" list {
-    group "E_Config_Mime_Icon" struct {
-      value "mime" string: "image/x-ms-bmp";
-      value "icon" string: "THUMB";
-    }
-  }
-  group "mime_icons" list {
-    group "E_Config_Mime_Icon" struct {
-      value "mime" string: "image/x-icon";
-      value "icon" string: "THUMB";
-    }
-  }
-  group "mime_icons" list {
-    group "E_Config_Mime_Icon" struct {
-      value "mime" string: "image/x-tga";
-      value "icon" string: "THUMB";
-    }
-  }
-  group "mime_icons" list {
-    group "E_Config_Mime_Icon" struct {
-      value "mime" string: "image/svg+xml-compressed";
-      value "icon" string: "THUMB";
-    }
-  }
-  group "mime_icons" list {
-    group "E_Config_Mime_Icon" struct {
-      value "mime" string: "application/x-xcf";
-      value "icon" string: "THUMB";
-    }
-  }
-  group "mime_icons" list {
-    group "E_Config_Mime_Icon" struct {
-      value "mime" string: "image/x-compressed-xcf";
-      value "icon" string: "THUMB";
-    }
-  }
-  group "mime_icons" list {
-    group "E_Config_Mime_Icon" struct {
-      value "mime" string: "video/3gpp";
-      value "icon" string: "THUMB";
-    }
-  }
-  group "mime_icons" list {
-    group "E_Config_Mime_Icon" struct {
-      value "mime" string: "video/x-ms-asf";
-      value "icon" string: "THUMB";
-    }
-  }
-  group "mime_icons" list {
-    group "E_Config_Mime_Icon" struct {
-      value "mime" string: "video/x-msvideo";
-      value "icon" string: "THUMB";
-    }
-  }
-  group "mime_icons" list {
-    group "E_Config_Mime_Icon" struct {
-      value "mime" string: "video/x-flv";
-      value "icon" string: "THUMB";
-    }
-  }
-  group "mime_icons" list {
-    group "E_Config_Mime_Icon" struct {
-      value "mime" string: "video/x-matroska";
-      value "icon" string: "THUMB";
-    }
-  }
-  group "mime_icons" list {
-    group "E_Config_Mime_Icon" struct {
-      value "mime" string: "video/quicktime";
-      value "icon" string: "THUMB";
-    }
-  }
-  group "mime_icons" list {
-    group "E_Config_Mime_Icon" struct {
-      value "mime" string: "video/mp4";
-      value "icon" string: "THUMB";
-    }
-  }
-  group "mime_icons" list {
-    group "E_Config_Mime_Icon" struct {
-      value "mime" string: "video/mpeg";
-      value "icon" string: "THUMB";
-    }
-  }
-  group "mime_icons" list {
-    group "E_Config_Mime_Icon" struct {
-      value "mime" string: "video/mp2t";
-      value "icon" string: "THUMB";
-    }
-  }
-  group "mime_icons" list {
-    group "E_Config_Mime_Icon" struct {
-      value "mime" string: "application/mxf";
-      value "icon" string: "THUMB";
-    }
-  }
-  group "mime_icons" list {
-    group "E_Config_Mime_Icon" struct {
-      value "mime" string: "video/x-ogm+ogg";
-      value "icon" string: "THUMB";
-    }
-  }
-  group "mime_icons" list {
-    group "E_Config_Mime_Icon" struct {
-      value "mime" string: "video/ogg";
-      value "icon" string: "THUMB";
-    }
-  }
-  group "mime_icons" list {
-    group "E_Config_Mime_Icon" struct {
-      value "mime" string: "video/x-theora+ogg";
-      value "icon" string: "THUMB";
-    }
-  }
-  group "mime_icons" list {
-    group "E_Config_Mime_Icon" struct {
-      value "mime" string: "application/vnd.rn-realmedia";
-      value "icon" string: "THUMB";
-    }
-  }
-  group "mime_icons" list {
-    group "E_Config_Mime_Icon" struct {
-      value "mime" string: "application/x-shockwave-flash";
-      value "icon" string: "THUMB";
-    }
-  }
-  group "mime_icons" list {
-    group "E_Config_Mime_Icon" struct {
-      value "mime" string: "video/x-ms-wmv";
-      value "icon" string: "THUMB";
-    }
-  }
-  group "mime_icons" list {
-    group "E_Config_Mime_Icon" struct {
-      value "mime" string: "application/x-desktop";
-      value "icon" string: "DESKTOP";
-    }
-  }
-    group "gadcons" list {
-        group "E_Config_Gadcon" struct {
-            group "clients" list {
-                group "E_Config_Gadcon_Client" struct {
-                    value "name" string: "start";
-                    value "id" string: "start";
-                    value "geom.pos" int: 0;
-                    value "geom.size" int: 41;
-                    value "geom.res" int: 474;
-                    value "geom.pos_x" double: 0.0000000000000000000000000;
-                    value "geom.pos_y" double: 0.0000000000000000000000000;
-                    value "geom.size_w" double: 0.0000000000000000000000000;
-                    value "geom.size_h" double: 0.0000000000000000000000000;
-                    value "state_info.seq" int: 1;
-                    value "state_info.flags" int: 3;
-                    value "style" string: "plain";
-                    value "orient" int: 0;
-                    value "autoscroll" uchar: 0;
-                    value "resizable" uchar: 0;
-                }
-                group "E_Config_Gadcon_Client" struct {
-                    value "name" string: "backlight";
-                    value "id" string: "backlight";
-                    value "geom.pos" int: 41;
-                    value "geom.size" int: 41;
-                    value "geom.res" int: 474;
-                    value "geom.pos_x" double: 0.0000000000000000000000000;
-                    value "geom.pos_y" double: 0.0000000000000000000000000;
-                    value "geom.size_w" double: 0.0000000000000000000000000;
-                    value "geom.size_h" double: 0.0000000000000000000000000;
-                    value "state_info.seq" int: 2;
-                    value "state_info.flags" int: 3;
-                    value "style" string: "plain";
-                    value "orient" int: 0;
-                    value "autoscroll" uchar: 0;
-                    value "resizable" uchar: 0;
-                }
-                group "E_Config_Gadcon_Client" struct {
-                    value "name" string: "illume-home-toggle";
-                    value "id" string: "illume-home-toggle.0";
-                    value "geom.pos" int: 82;
-                    value "geom.size" int: 41;
-                    value "geom.res" int: 474;
-                    value "geom.pos_x" double: 0.0000000000000000000000000;
-                    value "geom.pos_y" double: 0.0000000000000000000000000;
-                    value "geom.size_w" double: 0.0000000000000000000000000;
-                    value "geom.size_h" double: 0.0000000000000000000000000;
-                    value "state_info.seq" int: 3;
-                    value "state_info.flags" int: 3;
-                    value "style" string: "plain";
-                    value "orient" int: 0;
-                    value "autoscroll" uchar: 0;
-                    value "resizable" uchar: 0;
-                }
-                group "E_Config_Gadcon_Client" struct {
-                    value "name" string: "illume-mode-toggle";
-                    value "id" string: "illume-mode-toggle.0";
-                    value "geom.pos" int: 123;
-                    value "geom.size" int: 41;
-                    value "geom.res" int: 474;
-                    value "geom.pos_x" double: 0.0000000000000000000000000;
-                    value "geom.pos_y" double: 0.0000000000000000000000000;
-                    value "geom.size_w" double: 0.0000000000000000000000000;
-                    value "geom.size_h" double: 0.0000000000000000000000000;
-                    value "state_info.seq" int: 4;
-                    value "state_info.flags" int: 3;
-                    value "style" string: "plain";
-                    value "orient" int: 0;
-                    value "autoscroll" uchar: 0;
-                    value "resizable" uchar: 0;
-                }
-                group "E_Config_Gadcon_Client" struct {
-                    value "name" string: "illume-kbd-toggle";
-                    value "id" string: "illume-kbd-toggle.0";
-                    value "geom.pos" int: 164;
-                    value "geom.size" int: 41;
-                    value "geom.res" int: 474;
-                    value "geom.pos_x" double: 0.0000000000000000000000000;
-                    value "geom.pos_y" double: 0.0000000000000000000000000;
-                    value "geom.size_w" double: 0.0000000000000000000000000;
-                    value "geom.size_h" double: 0.0000000000000000000000000;
-                    value "state_info.seq" int: 5;
-                    value "state_info.flags" int: 3;
-                    value "style" string: "plain";
-                    value "orient" int: 0;
-                    value "autoscroll" uchar: 0;
-                    value "resizable" uchar: 0;
-                }
-                group "E_Config_Gadcon_Client" struct {
-                    value "name" string: "configuration";
-                    value "id" string: "configuration";
-                    value "geom.pos" int: 410;
-                    value "geom.size" int: 64;
-                    value "geom.res" int: 474;
-                    value "geom.pos_x" double: 0.0000000000000000000000000;
-                    value "geom.pos_y" double: 0.0000000000000000000000000;
-                    value "geom.size_w" double: 0.0000000000000000000000000;
-                    value "geom.size_h" double: 0.0000000000000000000000000;
-                    value "state_info.seq" int: 6;
-                    value "state_info.flags" int: 1;
-                    value "style" string: "plain";
-                    value "orient" int: 0;
-                    value "autoscroll" uchar: 0;
-                    value "resizable" uchar: 0;
-                }
-                group "E_Config_Gadcon_Client" struct {
-                    value "name" string: "battery";
-                    value "id" string: "battery";
-                    value "geom.pos" int: 433;
-                    value "geom.size" int: 41;
-                    value "geom.res" int: 474;
-                    value "geom.pos_x" double: 0.0000000000000000000000000;
-                    value "geom.pos_y" double: 0.0000000000000000000000000;
-                    value "geom.size_w" double: 0.0000000000000000000000000;
-                    value "geom.size_h" double: 0.0000000000000000000000000;
-                    value "state_info.seq" int: 7;
-                    value "state_info.flags" int: 3;
-                    value "style" string: "plain";
-                    value "orient" int: 0;
-                    value "autoscroll" uchar: 0;
-                    value "resizable" uchar: 0;
-                }
-                group "E_Config_Gadcon_Client" struct {
-                    value "name" string: "connman";
-                    value "id" string: "connman";
-                    value "geom.pos" int: 433;
-                    value "geom.size" int: 41;
-                    value "geom.res" int: 474;
-                    value "geom.pos_x" double: 0.0000000000000000000000000;
-                    value "geom.pos_y" double: 0.0000000000000000000000000;
-                    value "geom.size_w" double: 0.0000000000000000000000000;
-                    value "geom.size_h" double: 0.0000000000000000000000000;
-                    value "state_info.seq" int: 8;
-                    value "state_info.flags" int: 3;
-                    value "style" string: "plain";
-                    value "orient" int: 0;
-                    value "autoscroll" uchar: 0;
-                    value "resizable" uchar: 0;
-                }
-            }
+        group "E_Config_Module" struct {
             value "name" string: "illume-indicator";
-            value "id" int: 0;
-            value "zone" int: 0;
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 0;
+            value "priority" int: 90;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "illume-softkey";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 0;
+            value "priority" int: 85;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "fileman";
+            value "enabled" uchar: 0;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "battery";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 0;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "connman";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 0;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "illume-keyboard";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 0;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "illume-home";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 0;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "illume-home-toggle";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 0;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "illume-kbd-toggle";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 0;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "illume-mode-toggle";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 0;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "syscon";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "conf";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "conf_interaction";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "conf_performance";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "conf_display";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "start";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "clock";
+            value "enabled" uchar: 0;
+            value "delayed" uchar: 0;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "comp";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 0;
+            value "priority" int: -1000;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "shot";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "backlight";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 0;
+            value "priority" int: 0;
         }
     }
-    group "wheel_bindings" list {
-        group "E_Config_Binding_Wheel" struct {
-            value "context" int: 4;
-            value "direction" int: 0;
-            value "z" int: -1;
-            value "modifiers" int: 4;
-            value "any_mod" uchar: 0;
-            value "action" string: "desk_linear_flip_by";
-            value "params" string: "-1";
-        }
-        group "E_Config_Binding_Wheel" struct {
-            value "context" int: 4;
-            value "direction" int: 1;
-            value "z" int: -1;
-            value "modifiers" int: 4;
-            value "any_mod" uchar: 0;
-            value "action" string: "desk_linear_flip_by";
-            value "params" string: "-1";
-        }
-        group "E_Config_Binding_Wheel" struct {
-            value "context" int: 4;
-            value "direction" int: 0;
-            value "z" int: 1;
-            value "modifiers" int: 4;
-            value "any_mod" uchar: 0;
-            value "action" string: "desk_linear_flip_by";
-            value "params" string: "1";
-        }
-        group "E_Config_Binding_Wheel" struct {
-            value "context" int: 4;
-            value "direction" int: 1;
-            value "z" int: 1;
-            value "modifiers" int: 4;
-            value "any_mod" uchar: 0;
-            value "action" string: "desk_linear_flip_by";
-            value "params" string: "1";
-        }
-        group "E_Config_Binding_Wheel" struct {
-            value "context" int: 2;
-            value "direction" int: 0;
-            value "z" int: -1;
-            value "modifiers" int: 4;
-            value "any_mod" uchar: 0;
-            value "action" string: "desk_linear_flip_by";
-            value "params" string: "-1";
-        }
-        group "E_Config_Binding_Wheel" struct {
-            value "context" int: 2;
-            value "direction" int: 1;
-            value "z" int: -1;
-            value "modifiers" int: 4;
-            value "any_mod" uchar: 0;
-            value "action" string: "desk_linear_flip_by";
-            value "params" string: "-1";
-        }
-        group "E_Config_Binding_Wheel" struct {
-            value "context" int: 2;
-            value "direction" int: 0;
-            value "z" int: 1;
-            value "modifiers" int: 4;
-            value "any_mod" uchar: 0;
-            value "action" string: "desk_linear_flip_by";
-            value "params" string: "1";
-        }
-        group "E_Config_Binding_Wheel" struct {
-            value "context" int: 2;
-            value "direction" int: 1;
-            value "z" int: 1;
-            value "modifiers" int: 4;
-            value "any_mod" uchar: 0;
-            value "action" string: "desk_linear_flip_by";
-            value "params" string: "1";
-        }
-        group "E_Config_Binding_Wheel" struct {
-            value "context" int: 8;
-            value "direction" int: 0;
-            value "z" int: -1;
-            value "modifiers" int: 4;
-            value "any_mod" uchar: 0;
-            value "action" string: "desk_linear_flip_by";
-            value "params" string: "-1";
-        }
-        group "E_Config_Binding_Wheel" struct {
-            value "context" int: 8;
-            value "direction" int: 1;
-            value "z" int: -1;
-            value "modifiers" int: 4;
-            value "any_mod" uchar: 0;
-            value "action" string: "desk_linear_flip_by";
-            value "params" string: "-1";
-        }
-        group "E_Config_Binding_Wheel" struct {
-            value "context" int: 8;
-            value "direction" int: 0;
-            value "z" int: 1;
-            value "modifiers" int: 4;
-            value "any_mod" uchar: 0;
-            value "action" string: "desk_linear_flip_by";
-            value "params" string: "1";
-        }
-        group "E_Config_Binding_Wheel" struct {
-            value "context" int: 8;
-            value "direction" int: 1;
-            value "z" int: 1;
-            value "modifiers" int: 4;
-            value "any_mod" uchar: 0;
-            value "action" string: "desk_linear_flip_by";
-            value "params" string: "1";
+    group "themes" list {
+        group "E_Config_Theme" struct {
+            value "category" string: "theme";
+            value "file" string: "default.edj";
         }
     }
-    group "acpi_bindings" list {
-        group "E_Config_Binding_Acpi" struct {
-            value "context" int: 0;
-            value "type" int: 15;
-            value "status" int: -1;
-            value "action" string: "dim_screen";
-        }
-        group "E_Config_Binding_Acpi" struct {
-            value "context" int: 0;
-            value "type" int: 16;
-            value "status" int: -1;
-            value "action" string: "undim_screen";
-        }
-        group "E_Config_Binding_Acpi" struct {
-            value "context" int: 0;
-            value "type" int: 22;
-            value "status" int: 0;
-            value "action" string: "dim_screen";
-        }
-        group "E_Config_Binding_Acpi" struct {
-            value "context" int: 0;
-            value "type" int: 22;
-            value "status" int: 1;
-            value "action" string: "undim_screen";
-        }
-        group "E_Config_Binding_Acpi" struct {
-            value "context" int: 0;
-            value "type" int: 3;
-            value "status" int: -1;
-            value "action" string: "syscon";
-        }
-        group "E_Config_Binding_Acpi" struct {
-            value "context" int: 0;
-            value "type" int: 6;
-            value "status" int: -1;
-            value "action" string: "halt";
-        }
-        group "E_Config_Binding_Acpi" struct {
-            value "context" int: 0;
-            value "type" int: 8;
-            value "status" int: -1;
-            value "action" string: "suspend";
-            value "params" string: "now";
-        }
-        group "E_Config_Binding_Acpi" struct {
-            value "context" int: 0;
-            value "type" int: 12;
-            value "status" int: -1;
-            value "action" string: "hiberate";
-            value "params" string: "now";
-        }
-        group "E_Config_Binding_Acpi" struct {
-            value "context" int: 0;
-            value "type" int: 5;
-            value "status" int: 1;
-            value "action" string: "suspend";
-            value "params" string: "now";
-        }
-        group "E_Config_Binding_Acpi" struct {
-            value "context" int: 0;
-            value "type" int: 20;
-            value "status" int: -1;
-            value "action" string: "volume_mute";
-        }
-        group "E_Config_Binding_Acpi" struct {
-            value "context" int: 0;
-            value "type" int: 22;
-            value "status" int: -1;
-            value "action" string: "backlight";
-        }
-    }
-    group "signal_bindings" list {
-        group "E_Config_Binding_Signal" struct {
+    group "mouse_bindings" list {
+        group "E_Config_Binding_Mouse" struct {
             value "context" int: 2;
-            value "signal" string: "mouse,down,1,double";
-            value "source" string: "e.event.titlebar";
-            value "modifiers" int: 0;
-            value "any_mod" uchar: 1;
-            value "action" string: "window_shaded_toggle";
-            value "params" string: "up";
+            value "modifiers" int: 4;
+            value "action" string: "window_move";
+            value "button" uchar: 1;
+            value "any_mod" uchar: 0;
         }
-        group "E_Config_Binding_Signal" struct {
+        group "E_Config_Binding_Mouse" struct {
             value "context" int: 2;
-            value "signal" string: "mouse,down,2";
-            value "source" string: "e.event.titlebar";
-            value "modifiers" int: 0;
-            value "any_mod" uchar: 1;
-            value "action" string: "window_shaded_toggle";
-            value "params" string: "up";
+            value "modifiers" int: 4;
+            value "action" string: "window_resize";
+            value "button" uchar: 2;
+            value "any_mod" uchar: 0;
         }
-        group "E_Config_Binding_Signal" struct {
+        group "E_Config_Binding_Mouse" struct {
             value "context" int: 2;
-            value "signal" string: "mouse,wheel,?,1";
-            value "source" string: "e.event.titlebar";
-            value "modifiers" int: 0;
-            value "any_mod" uchar: 1;
-            value "action" string: "window_shaded";
-            value "params" string: "0 up";
-        }
-        group "E_Config_Binding_Signal" struct {
-            value "context" int: 2;
-            value "signal" string: "mouse,wheel,?,-1";
-            value "source" string: "e.event.titlebar";
-            value "modifiers" int: 0;
-            value "any_mod" uchar: 1;
-            value "action" string: "window_shaded";
-            value "params" string: "1 up";
-        }
-        group "E_Config_Binding_Signal" struct {
-            value "context" int: 2;
-            value "signal" string: "mouse,clicked,3";
-            value "source" string: "e.event.titlebar";
-            value "modifiers" int: 0;
-            value "any_mod" uchar: 1;
+            value "modifiers" int: 4;
             value "action" string: "window_menu";
+            value "button" uchar: 3;
+            value "any_mod" uchar: 0;
         }
-        group "E_Config_Binding_Signal" struct {
-            value "context" int: 2;
-            value "signal" string: "mouse,clicked,?";
-            value "source" string: "e.event.icon";
-            value "modifiers" int: 0;
-            value "any_mod" uchar: 1;
-            value "action" string: "window_menu";
-        }
-        group "E_Config_Binding_Signal" struct {
-            value "context" int: 2;
-            value "signal" string: "mouse,clicked,[12]";
-            value "source" string: "e.event.close";
-            value "modifiers" int: 0;
-            value "any_mod" uchar: 1;
-            value "action" string: "window_close";
-        }
-        group "E_Config_Binding_Signal" struct {
-            value "context" int: 2;
-            value "signal" string: "mouse,clicked,3";
-            value "source" string: "e.event.close";
-            value "modifiers" int: 0;
-            value "any_mod" uchar: 1;
-            value "action" string: "window_kill";
-        }
-        group "E_Config_Binding_Signal" struct {
-            value "context" int: 2;
-            value "signal" string: "mouse,clicked,1";
-            value "source" string: "e.event.maximize";
-            value "modifiers" int: 0;
-            value "any_mod" uchar: 1;
-            value "action" string: "window_maximized_toggle";
-        }
-        group "E_Config_Binding_Signal" struct {
-            value "context" int: 2;
-            value "signal" string: "mouse,clicked,2";
-            value "source" string: "e.event.maximize";
-            value "modifiers" int: 0;
-            value "any_mod" uchar: 1;
-            value "action" string: "window_maximized_toggle";
-            value "params" string: "smart";
-        }
-        group "E_Config_Binding_Signal" struct {
-            value "context" int: 2;
-            value "signal" string: "mouse,clicked,3";
-            value "source" string: "e.event.maximize";
-            value "modifiers" int: 0;
-            value "any_mod" uchar: 1;
-            value "action" string: "window_maximized_toggle";
-            value "params" string: "expand";
-        }
-        group "E_Config_Binding_Signal" struct {
-            value "context" int: 2;
-            value "signal" string: "mouse,clicked,?";
-            value "source" string: "e.event.minimize";
-            value "modifiers" int: 0;
-            value "any_mod" uchar: 1;
-            value "action" string: "window_iconic_toggle";
-        }
-        group "E_Config_Binding_Signal" struct {
-            value "context" int: 2;
-            value "signal" string: "mouse,clicked,?";
-            value "source" string: "e.event.shade";
-            value "modifiers" int: 0;
-            value "any_mod" uchar: 1;
-            value "action" string: "window_shaded_toggle";
-            value "params" string: "up";
-        }
-        group "E_Config_Binding_Signal" struct {
-            value "context" int: 2;
-            value "signal" string: "mouse,clicked,?";
-            value "source" string: "e.event.lower";
-            value "modifiers" int: 0;
-            value "any_mod" uchar: 1;
-            value "action" string: "window_lower";
-        }
-        group "E_Config_Binding_Signal" struct {
-            value "context" int: 2;
-            value "signal" string: "mouse,down,1";
-            value "source" string: "e.event.icon";
-            value "modifiers" int: 0;
-            value "any_mod" uchar: 1;
-            value "action" string: "window_drag_icon";
-        }
-        group "E_Config_Binding_Signal" struct {
-            value "context" int: 2;
-            value "signal" string: "mouse,down,1";
-            value "source" string: "e.event.titlebar";
-            value "modifiers" int: 0;
-            value "any_mod" uchar: 1;
-            value "action" string: "window_move";
-        }
-        group "E_Config_Binding_Signal" struct {
-            value "context" int: 2;
-            value "signal" string: "mouse,up,1";
-            value "source" string: "e.event.titlebar";
-            value "modifiers" int: 0;
-            value "any_mod" uchar: 1;
-            value "action" string: "window_move";
-            value "params" string: "end";
-        }
-        group "E_Config_Binding_Signal" struct {
-            value "context" int: 2;
-            value "signal" string: "mouse,down,1";
-            value "source" string: "e.event.resize.tl";
-            value "modifiers" int: 0;
-            value "any_mod" uchar: 1;
-            value "action" string: "window_resize";
-            value "params" string: "tl";
-        }
-        group "E_Config_Binding_Signal" struct {
-            value "context" int: 2;
-            value "signal" string: "mouse,down,1";
-            value "source" string: "e.event.resize.t";
-            value "modifiers" int: 0;
-            value "any_mod" uchar: 1;
-            value "action" string: "window_resize";
-            value "params" string: "t";
-        }
-        group "E_Config_Binding_Signal" struct {
-            value "context" int: 2;
-            value "signal" string: "mouse,down,1";
-            value "source" string: "e.event.resize.tr";
-            value "modifiers" int: 0;
-            value "any_mod" uchar: 1;
-            value "action" string: "window_resize";
-            value "params" string: "tr";
-        }
-        group "E_Config_Binding_Signal" struct {
-            value "context" int: 2;
-            value "signal" string: "mouse,down,1";
-            value "source" string: "e.event.resize.r";
-            value "modifiers" int: 0;
-            value "any_mod" uchar: 1;
-            value "action" string: "window_resize";
-            value "params" string: "r";
-        }
-        group "E_Config_Binding_Signal" struct {
-            value "context" int: 2;
-            value "signal" string: "mouse,down,1";
-            value "source" string: "e.event.resize.br";
-            value "modifiers" int: 0;
-            value "any_mod" uchar: 1;
-            value "action" string: "window_resize";
-            value "params" string: "br";
-        }
-        group "E_Config_Binding_Signal" struct {
-            value "context" int: 2;
-            value "signal" string: "mouse,down,1";
-            value "source" string: "e.event.resize.b";
-            value "modifiers" int: 0;
-            value "any_mod" uchar: 1;
-            value "action" string: "window_resize";
-            value "params" string: "b";
-        }
-        group "E_Config_Binding_Signal" struct {
-            value "context" int: 2;
-            value "signal" string: "mouse,down,1";
-            value "source" string: "e.event.resize.bl";
-            value "modifiers" int: 0;
-            value "any_mod" uchar: 1;
-            value "action" string: "window_resize";
-            value "params" string: "bl";
-        }
-        group "E_Config_Binding_Signal" struct {
-            value "context" int: 2;
-            value "signal" string: "mouse,down,1";
-            value "source" string: "e.event.resize.l";
-            value "modifiers" int: 0;
-            value "any_mod" uchar: 1;
-            value "action" string: "window_resize";
-            value "params" string: "l";
-        }
-        group "E_Config_Binding_Signal" struct {
-            value "context" int: 2;
-            value "signal" string: "mouse,up,1";
-            value "source" string: "e.event.resize.*";
-            value "modifiers" int: 0;
-            value "any_mod" uchar: 1;
-            value "action" string: "window_resize";
-            value "params" string: "end";
-        }
-        group "E_Config_Binding_Signal" struct {
-            value "context" int: 2;
-            value "signal" string: "mouse,down,3";
-            value "source" string: "e.event.resize.*";
-            value "modifiers" int: 0;
-            value "any_mod" uchar: 1;
-            value "action" string: "window_move";
-        }
-        group "E_Config_Binding_Signal" struct {
-            value "context" int: 2;
-            value "signal" string: "mouse,up,3";
-            value "source" string: "e.event.resize.*";
-            value "modifiers" int: 0;
-            value "any_mod" uchar: 1;
-            value "action" string: "window_move";
-            value "params" string: "end";
-        }
-    }
-    group "edge_bindings" list {
-        group "E_Config_Binding_Edge" struct {
+        group "E_Config_Binding_Mouse" struct {
             value "context" int: 3;
             value "modifiers" int: 0;
-            value "action" string: "desk_flip_in_direction";
-            value "edge" uchar: 1;
+            value "action" string: "menu_show";
+            value "params" string: "main";
+            value "button" uchar: 1;
             value "any_mod" uchar: 0;
-            value "delay" float: 0.3000000119209289550781250;
         }
-        group "E_Config_Binding_Edge" struct {
+        group "E_Config_Binding_Mouse" struct {
             value "context" int: 3;
             value "modifiers" int: 0;
-            value "action" string: "desk_flip_in_direction";
-            value "edge" uchar: 2;
+            value "action" string: "menu_show";
+            value "params" string: "clients";
+            value "button" uchar: 2;
             value "any_mod" uchar: 0;
-            value "delay" float: 0.3000000119209289550781250;
         }
-        group "E_Config_Binding_Edge" struct {
+        group "E_Config_Binding_Mouse" struct {
             value "context" int: 3;
             value "modifiers" int: 0;
-            value "action" string: "desk_flip_in_direction";
-            value "edge" uchar: 3;
+            value "action" string: "menu_show";
+            value "params" string: "favorites";
+            value "button" uchar: 3;
             value "any_mod" uchar: 0;
-            value "delay" float: 0.3000000119209289550781250;
-        }
-        group "E_Config_Binding_Edge" struct {
-            value "context" int: 3;
-            value "modifiers" int: 0;
-            value "action" string: "desk_flip_in_direction";
-            value "edge" uchar: 4;
-            value "any_mod" uchar: 0;
-            value "delay" float: 0.3000000119209289550781250;
         }
     }
     group "key_bindings" list {
@@ -1284,308 +557,965 @@ group "E_Config" struct {
             value "params" string: "3";
             value "any_mod" uchar: 0;
         }
-       group "E_Config_Binding_Key" struct {
-          value "context" int: 9;
-          value "modifiers" int: 0;
-          value "key" string: "XF86AudioLowerVolume";
-          value "action" string: "volume_decrease";
-          value "any_mod" uchar: 0;
-       }
-       group "E_Config_Binding_Key" struct {
-          value "context" int: 9;
-          value "modifiers" int: 0;
-          value "key" string: "XF86AudioRaiseVolume";
-          value "action" string: "volume_increase";
-          value "any_mod" uchar: 0;
-       }
-       group "E_Config_Binding_Key" struct {
-          value "context" int: 9;
-          value "modifiers" int: 0;
-          value "key" string: "XF86AudioMute";
-          value "action" string: "volume_mute";
-          value "any_mod" uchar: 0;
-       }
-       group "E_Config_Binding_Key" struct {
-          value "context" int: 9;
-          value "modifiers" int: 0;
-          value "key" string: "Print";
-          value "action" string: "shot";
-          value "any_mod" uchar: 0;
-       }
-       group "E_Config_Binding_Key" struct {
-          value "context" int: 9;
-          value "modifiers" int: 0;
-          value "key" string: "XF86Standby";
-          value "action" string: "suspend";
-          value "params" string: "now";
-          value "any_mod" uchar: 0;
-       }
-       group "E_Config_Binding_Key" struct {
-          value "context" int: 9;
-          value "modifiers" int: 0;
-          value "key" string: "XF86Start";
-          value "action" string: "menu_show";
-          value "params" string: "all";
-          value "any_mod" uchar: 0;
-       }
-       group "E_Config_Binding_Key" struct {
-          value "context" int: 9;
-          value "modifiers" int: 0;
-          value "key" string: "XF86PowerDown";
-          value "action" string: "hibernate";
-          value "params" string: "now";
-          value "any_mod" uchar: 0;
-       }
-       group "E_Config_Binding_Key" struct {
-          value "context" int: 9;
-          value "modifiers" int: 0;
-          value "key" string: "XF86PowerOff";
-          value "action" string: "halt";
-          value "any_mod" uchar: 0;
-       }
-       group "E_Config_Binding_Key" struct {
-          value "context" int: 9;
-          value "modifiers" int: 0;
-          value "key" string: "XF86Sleep";
-          value "action" string: "suspend";
-          value "params" string: "now";
-          value "any_mod" uchar: 0;
-       }
-       group "E_Config_Binding_Key" struct {
-          value "context" int: 9;
-          value "modifiers" int: 0;
-          value "key" string: "XF86Suspend";
-          value "action" string: "suspend";
-          value "params" string: "now";
-          value "any_mod" uchar: 0;
-       }
-       group "E_Config_Binding_Key" struct {
-          value "context" int: 9;
-          value "modifiers" int: 0;
-          value "key" string: "XF86Hibernate";
-          value "action" string: "hibernate";
-          value "params" string: "now";
-          value "any_mod" uchar: 0;
-       }
-       group "E_Config_Binding_Key" struct {
-          value "context" int: 9;
-          value "modifiers" int: 0;
-          value "key" string: "Execute";
-          value "action" string: "everything";
-          value "any_mod" uchar: 0;
-       }
-       group "E_Config_Binding_Key" struct {
-          value "context" int: 9;
-          value "modifiers" int: 0;
-          value "key" string: "XF86MonBrightnessUp";
-          value "action" string: "backlight_adjust";
-          value "params" string: "0.1";
-          value "any_mod" uchar: 0;
-       }
-       group "E_Config_Binding_Key" struct {
-          value "context" int: 9;
-          value "modifiers" int: 0;
-          value "key" string: "XF86MonBrightnessDown";
-          value "action" string: "backlight_adjust";
-          value "params" string: "-0.1";
-          value "any_mod" uchar: 0;
-       }
-       group "E_Config_Binding_Key" struct {
-          value "context" int: 9;
-          value "modifiers" int: 0;
-          value "key" string: "XF86LightBulb";
-          value "action" string: "backlight";
-          value "any_mod" uchar: 0;
-       }
-       group "E_Config_Binding_Key" struct {
-          value "context" int: 9;
-          value "modifiers" int: 0;
-          value "key" string: "XF86BrightnessAdjust";
-          value "action" string: "backlight";
-          value "any_mod" uchar: 0;
-       }
+        group "E_Config_Binding_Key" struct {
+            value "context" int: 9;
+            value "modifiers" int: 0;
+            value "key" string: "XF86AudioLowerVolume";
+            value "action" string: "volume_decrease";
+            value "any_mod" uchar: 0;
+        }
+        group "E_Config_Binding_Key" struct {
+            value "context" int: 9;
+            value "modifiers" int: 0;
+            value "key" string: "XF86AudioRaiseVolume";
+            value "action" string: "volume_increase";
+            value "any_mod" uchar: 0;
+        }
+        group "E_Config_Binding_Key" struct {
+            value "context" int: 9;
+            value "modifiers" int: 0;
+            value "key" string: "XF86AudioMute";
+            value "action" string: "volume_mute";
+            value "any_mod" uchar: 0;
+        }
+        group "E_Config_Binding_Key" struct {
+            value "context" int: 9;
+            value "modifiers" int: 0;
+            value "key" string: "Print";
+            value "action" string: "shot";
+            value "any_mod" uchar: 0;
+        }
+        group "E_Config_Binding_Key" struct {
+            value "context" int: 9;
+            value "modifiers" int: 0;
+            value "key" string: "XF86Standby";
+            value "action" string: "suspend";
+            value "params" string: "now";
+            value "any_mod" uchar: 0;
+        }
+        group "E_Config_Binding_Key" struct {
+            value "context" int: 9;
+            value "modifiers" int: 0;
+            value "key" string: "XF86Start";
+            value "action" string: "menu_show";
+            value "params" string: "all";
+            value "any_mod" uchar: 0;
+        }
+        group "E_Config_Binding_Key" struct {
+            value "context" int: 9;
+            value "modifiers" int: 0;
+            value "key" string: "XF86PowerDown";
+            value "action" string: "hibernate";
+            value "params" string: "now";
+            value "any_mod" uchar: 0;
+        }
+        group "E_Config_Binding_Key" struct {
+            value "context" int: 9;
+            value "modifiers" int: 0;
+            value "key" string: "XF86PowerOff";
+            value "action" string: "halt";
+            value "any_mod" uchar: 0;
+        }
+        group "E_Config_Binding_Key" struct {
+            value "context" int: 9;
+            value "modifiers" int: 0;
+            value "key" string: "XF86Sleep";
+            value "action" string: "suspend";
+            value "params" string: "now";
+            value "any_mod" uchar: 0;
+        }
+        group "E_Config_Binding_Key" struct {
+            value "context" int: 9;
+            value "modifiers" int: 0;
+            value "key" string: "XF86Suspend";
+            value "action" string: "suspend";
+            value "params" string: "now";
+            value "any_mod" uchar: 0;
+        }
+        group "E_Config_Binding_Key" struct {
+            value "context" int: 9;
+            value "modifiers" int: 0;
+            value "key" string: "XF86Hibernate";
+            value "action" string: "hibernate";
+            value "params" string: "now";
+            value "any_mod" uchar: 0;
+        }
+        group "E_Config_Binding_Key" struct {
+            value "context" int: 9;
+            value "modifiers" int: 0;
+            value "key" string: "Execute";
+            value "action" string: "everything";
+            value "any_mod" uchar: 0;
+        }
+        group "E_Config_Binding_Key" struct {
+            value "context" int: 9;
+            value "modifiers" int: 0;
+            value "key" string: "XF86MonBrightnessUp";
+            value "action" string: "backlight_adjust";
+            value "params" string: "0.1";
+            value "any_mod" uchar: 0;
+        }
+        group "E_Config_Binding_Key" struct {
+            value "context" int: 9;
+            value "modifiers" int: 0;
+            value "key" string: "XF86MonBrightnessDown";
+            value "action" string: "backlight_adjust";
+            value "params" string: "-0.1";
+            value "any_mod" uchar: 0;
+        }
+        group "E_Config_Binding_Key" struct {
+            value "context" int: 9;
+            value "modifiers" int: 0;
+            value "key" string: "XF86LightBulb";
+            value "action" string: "backlight";
+            value "any_mod" uchar: 0;
+        }
+        group "E_Config_Binding_Key" struct {
+            value "context" int: 9;
+            value "modifiers" int: 0;
+            value "key" string: "XF86BrightnessAdjust";
+            value "action" string: "backlight";
+            value "any_mod" uchar: 0;
+        }
     }
-    group "mouse_bindings" list {
-        group "E_Config_Binding_Mouse" struct {
-            value "context" int: 2;
-            value "modifiers" int: 4;
-            value "action" string: "window_move";
-            value "button" uchar: 1;
+    group "edge_bindings" list {
+        group "E_Config_Binding_Edge" struct {
+            value "context" int: 3;
+            value "modifiers" int: 0;
+            value "action" string: "desk_flip_in_direction";
+            value "edge" uchar: 1;
             value "any_mod" uchar: 0;
+            value "delay" float: 0.3000000119209289550781250;
         }
-        group "E_Config_Binding_Mouse" struct {
-            value "context" int: 2;
-            value "modifiers" int: 4;
-            value "action" string: "window_resize";
-            value "button" uchar: 2;
+        group "E_Config_Binding_Edge" struct {
+            value "context" int: 3;
+            value "modifiers" int: 0;
+            value "action" string: "desk_flip_in_direction";
+            value "edge" uchar: 2;
             value "any_mod" uchar: 0;
+            value "delay" float: 0.3000000119209289550781250;
         }
-        group "E_Config_Binding_Mouse" struct {
+        group "E_Config_Binding_Edge" struct {
+            value "context" int: 3;
+            value "modifiers" int: 0;
+            value "action" string: "desk_flip_in_direction";
+            value "edge" uchar: 3;
+            value "any_mod" uchar: 0;
+            value "delay" float: 0.3000000119209289550781250;
+        }
+        group "E_Config_Binding_Edge" struct {
+            value "context" int: 3;
+            value "modifiers" int: 0;
+            value "action" string: "desk_flip_in_direction";
+            value "edge" uchar: 4;
+            value "any_mod" uchar: 0;
+            value "delay" float: 0.3000000119209289550781250;
+        }
+    }
+    group "signal_bindings" list {
+        group "E_Config_Binding_Signal" struct {
             value "context" int: 2;
-            value "modifiers" int: 4;
+            value "signal" string: "mouse,down,1,double";
+            value "source" string: "e.event.titlebar";
+            value "modifiers" int: 0;
+            value "any_mod" uchar: 1;
+            value "action" string: "window_shaded_toggle";
+            value "params" string: "up";
+        }
+        group "E_Config_Binding_Signal" struct {
+            value "context" int: 2;
+            value "signal" string: "mouse,down,2";
+            value "source" string: "e.event.titlebar";
+            value "modifiers" int: 0;
+            value "any_mod" uchar: 1;
+            value "action" string: "window_shaded_toggle";
+            value "params" string: "up";
+        }
+        group "E_Config_Binding_Signal" struct {
+            value "context" int: 2;
+            value "signal" string: "mouse,wheel,?,1";
+            value "source" string: "e.event.titlebar";
+            value "modifiers" int: 0;
+            value "any_mod" uchar: 1;
+            value "action" string: "window_shaded";
+            value "params" string: "0 up";
+        }
+        group "E_Config_Binding_Signal" struct {
+            value "context" int: 2;
+            value "signal" string: "mouse,wheel,?,-1";
+            value "source" string: "e.event.titlebar";
+            value "modifiers" int: 0;
+            value "any_mod" uchar: 1;
+            value "action" string: "window_shaded";
+            value "params" string: "1 up";
+        }
+        group "E_Config_Binding_Signal" struct {
+            value "context" int: 2;
+            value "signal" string: "mouse,clicked,3";
+            value "source" string: "e.event.titlebar";
+            value "modifiers" int: 0;
+            value "any_mod" uchar: 1;
             value "action" string: "window_menu";
-            value "button" uchar: 3;
-            value "any_mod" uchar: 0;
         }
-        group "E_Config_Binding_Mouse" struct {
-            value "context" int: 3;
+        group "E_Config_Binding_Signal" struct {
+            value "context" int: 2;
+            value "signal" string: "mouse,clicked,?";
+            value "source" string: "e.event.icon";
             value "modifiers" int: 0;
-            value "action" string: "menu_show";
-            value "params" string: "main";
-            value "button" uchar: 1;
-            value "any_mod" uchar: 0;
+            value "any_mod" uchar: 1;
+            value "action" string: "window_menu";
         }
-        group "E_Config_Binding_Mouse" struct {
-            value "context" int: 3;
+        group "E_Config_Binding_Signal" struct {
+            value "context" int: 2;
+            value "signal" string: "mouse,clicked,[12]";
+            value "source" string: "e.event.close";
             value "modifiers" int: 0;
-            value "action" string: "menu_show";
-            value "params" string: "clients";
-            value "button" uchar: 2;
-            value "any_mod" uchar: 0;
+            value "any_mod" uchar: 1;
+            value "action" string: "window_close";
         }
-        group "E_Config_Binding_Mouse" struct {
-            value "context" int: 3;
+        group "E_Config_Binding_Signal" struct {
+            value "context" int: 2;
+            value "signal" string: "mouse,clicked,3";
+            value "source" string: "e.event.close";
             value "modifiers" int: 0;
-            value "action" string: "menu_show";
-            value "params" string: "favorites";
-            value "button" uchar: 3;
-            value "any_mod" uchar: 0;
+            value "any_mod" uchar: 1;
+            value "action" string: "window_kill";
+        }
+        group "E_Config_Binding_Signal" struct {
+            value "context" int: 2;
+            value "signal" string: "mouse,clicked,1";
+            value "source" string: "e.event.maximize";
+            value "modifiers" int: 0;
+            value "any_mod" uchar: 1;
+            value "action" string: "window_maximized_toggle";
+        }
+        group "E_Config_Binding_Signal" struct {
+            value "context" int: 2;
+            value "signal" string: "mouse,clicked,2";
+            value "source" string: "e.event.maximize";
+            value "modifiers" int: 0;
+            value "any_mod" uchar: 1;
+            value "action" string: "window_maximized_toggle";
+            value "params" string: "smart";
+        }
+        group "E_Config_Binding_Signal" struct {
+            value "context" int: 2;
+            value "signal" string: "mouse,clicked,3";
+            value "source" string: "e.event.maximize";
+            value "modifiers" int: 0;
+            value "any_mod" uchar: 1;
+            value "action" string: "window_maximized_toggle";
+            value "params" string: "expand";
+        }
+        group "E_Config_Binding_Signal" struct {
+            value "context" int: 2;
+            value "signal" string: "mouse,clicked,?";
+            value "source" string: "e.event.minimize";
+            value "modifiers" int: 0;
+            value "any_mod" uchar: 1;
+            value "action" string: "window_iconic_toggle";
+        }
+        group "E_Config_Binding_Signal" struct {
+            value "context" int: 2;
+            value "signal" string: "mouse,clicked,?";
+            value "source" string: "e.event.shade";
+            value "modifiers" int: 0;
+            value "any_mod" uchar: 1;
+            value "action" string: "window_shaded_toggle";
+            value "params" string: "up";
+        }
+        group "E_Config_Binding_Signal" struct {
+            value "context" int: 2;
+            value "signal" string: "mouse,clicked,?";
+            value "source" string: "e.event.lower";
+            value "modifiers" int: 0;
+            value "any_mod" uchar: 1;
+            value "action" string: "window_lower";
+        }
+        group "E_Config_Binding_Signal" struct {
+            value "context" int: 2;
+            value "signal" string: "mouse,down,1";
+            value "source" string: "e.event.icon";
+            value "modifiers" int: 0;
+            value "any_mod" uchar: 1;
+            value "action" string: "window_drag_icon";
+        }
+        group "E_Config_Binding_Signal" struct {
+            value "context" int: 2;
+            value "signal" string: "mouse,down,1";
+            value "source" string: "e.event.titlebar";
+            value "modifiers" int: 0;
+            value "any_mod" uchar: 1;
+            value "action" string: "window_move";
+        }
+        group "E_Config_Binding_Signal" struct {
+            value "context" int: 2;
+            value "signal" string: "mouse,up,1";
+            value "source" string: "e.event.titlebar";
+            value "modifiers" int: 0;
+            value "any_mod" uchar: 1;
+            value "action" string: "window_move";
+            value "params" string: "end";
+        }
+        group "E_Config_Binding_Signal" struct {
+            value "context" int: 2;
+            value "signal" string: "mouse,down,1";
+            value "source" string: "e.event.resize.tl";
+            value "modifiers" int: 0;
+            value "any_mod" uchar: 1;
+            value "action" string: "window_resize";
+            value "params" string: "tl";
+        }
+        group "E_Config_Binding_Signal" struct {
+            value "context" int: 2;
+            value "signal" string: "mouse,down,1";
+            value "source" string: "e.event.resize.t";
+            value "modifiers" int: 0;
+            value "any_mod" uchar: 1;
+            value "action" string: "window_resize";
+            value "params" string: "t";
+        }
+        group "E_Config_Binding_Signal" struct {
+            value "context" int: 2;
+            value "signal" string: "mouse,down,1";
+            value "source" string: "e.event.resize.tr";
+            value "modifiers" int: 0;
+            value "any_mod" uchar: 1;
+            value "action" string: "window_resize";
+            value "params" string: "tr";
+        }
+        group "E_Config_Binding_Signal" struct {
+            value "context" int: 2;
+            value "signal" string: "mouse,down,1";
+            value "source" string: "e.event.resize.r";
+            value "modifiers" int: 0;
+            value "any_mod" uchar: 1;
+            value "action" string: "window_resize";
+            value "params" string: "r";
+        }
+        group "E_Config_Binding_Signal" struct {
+            value "context" int: 2;
+            value "signal" string: "mouse,down,1";
+            value "source" string: "e.event.resize.br";
+            value "modifiers" int: 0;
+            value "any_mod" uchar: 1;
+            value "action" string: "window_resize";
+            value "params" string: "br";
+        }
+        group "E_Config_Binding_Signal" struct {
+            value "context" int: 2;
+            value "signal" string: "mouse,down,1";
+            value "source" string: "e.event.resize.b";
+            value "modifiers" int: 0;
+            value "any_mod" uchar: 1;
+            value "action" string: "window_resize";
+            value "params" string: "b";
+        }
+        group "E_Config_Binding_Signal" struct {
+            value "context" int: 2;
+            value "signal" string: "mouse,down,1";
+            value "source" string: "e.event.resize.bl";
+            value "modifiers" int: 0;
+            value "any_mod" uchar: 1;
+            value "action" string: "window_resize";
+            value "params" string: "bl";
+        }
+        group "E_Config_Binding_Signal" struct {
+            value "context" int: 2;
+            value "signal" string: "mouse,down,1";
+            value "source" string: "e.event.resize.l";
+            value "modifiers" int: 0;
+            value "any_mod" uchar: 1;
+            value "action" string: "window_resize";
+            value "params" string: "l";
+        }
+        group "E_Config_Binding_Signal" struct {
+            value "context" int: 2;
+            value "signal" string: "mouse,up,1";
+            value "source" string: "e.event.resize.*";
+            value "modifiers" int: 0;
+            value "any_mod" uchar: 1;
+            value "action" string: "window_resize";
+            value "params" string: "end";
+        }
+        group "E_Config_Binding_Signal" struct {
+            value "context" int: 2;
+            value "signal" string: "mouse,down,3";
+            value "source" string: "e.event.resize.*";
+            value "modifiers" int: 0;
+            value "any_mod" uchar: 1;
+            value "action" string: "window_move";
+        }
+        group "E_Config_Binding_Signal" struct {
+            value "context" int: 2;
+            value "signal" string: "mouse,up,3";
+            value "source" string: "e.event.resize.*";
+            value "modifiers" int: 0;
+            value "any_mod" uchar: 1;
+            value "action" string: "window_move";
+            value "params" string: "end";
         }
     }
-    group "themes" list {
-        group "E_Config_Theme" struct {
-            value "category" string: "theme";
-            value "file" string: "default.edj";
+    group "acpi_bindings" list {
+        group "E_Config_Binding_Acpi" struct {
+            value "context" int: 0;
+            value "type" int: 15;
+            value "status" int: -1;
+            value "action" string: "dim_screen";
+        }
+        group "E_Config_Binding_Acpi" struct {
+            value "context" int: 0;
+            value "type" int: 16;
+            value "status" int: -1;
+            value "action" string: "undim_screen";
+        }
+        group "E_Config_Binding_Acpi" struct {
+            value "context" int: 0;
+            value "type" int: 22;
+            value "status" int: 0;
+            value "action" string: "dim_screen";
+        }
+        group "E_Config_Binding_Acpi" struct {
+            value "context" int: 0;
+            value "type" int: 22;
+            value "status" int: 1;
+            value "action" string: "undim_screen";
+        }
+        group "E_Config_Binding_Acpi" struct {
+            value "context" int: 0;
+            value "type" int: 3;
+            value "status" int: -1;
+            value "action" string: "syscon";
+        }
+        group "E_Config_Binding_Acpi" struct {
+            value "context" int: 0;
+            value "type" int: 6;
+            value "status" int: -1;
+            value "action" string: "halt";
+        }
+        group "E_Config_Binding_Acpi" struct {
+            value "context" int: 0;
+            value "type" int: 8;
+            value "status" int: -1;
+            value "action" string: "suspend";
+            value "params" string: "now";
+        }
+        group "E_Config_Binding_Acpi" struct {
+            value "context" int: 0;
+            value "type" int: 12;
+            value "status" int: -1;
+            value "action" string: "hiberate";
+            value "params" string: "now";
+        }
+        group "E_Config_Binding_Acpi" struct {
+            value "context" int: 0;
+            value "type" int: 5;
+            value "status" int: 1;
+            value "action" string: "suspend";
+            value "params" string: "now";
+        }
+        group "E_Config_Binding_Acpi" struct {
+            value "context" int: 0;
+            value "type" int: 20;
+            value "status" int: -1;
+            value "action" string: "volume_mute";
+        }
+        group "E_Config_Binding_Acpi" struct {
+            value "context" int: 0;
+            value "type" int: 22;
+            value "status" int: -1;
+            value "action" string: "backlight";
         }
     }
-    group "modules" list {
-        group "E_Config_Module" struct {
-            value "name" string: "illume2";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 0;
-            value "priority" int: 100;
+    group "wheel_bindings" list {
+        group "E_Config_Binding_Wheel" struct {
+            value "context" int: 4;
+            value "direction" int: 0;
+            value "z" int: -1;
+            value "modifiers" int: 4;
+            value "any_mod" uchar: 0;
+            value "action" string: "desk_linear_flip_by";
+            value "params" string: "-1";
         }
-        group "E_Config_Module" struct {
+        group "E_Config_Binding_Wheel" struct {
+            value "context" int: 4;
+            value "direction" int: 1;
+            value "z" int: -1;
+            value "modifiers" int: 4;
+            value "any_mod" uchar: 0;
+            value "action" string: "desk_linear_flip_by";
+            value "params" string: "-1";
+        }
+        group "E_Config_Binding_Wheel" struct {
+            value "context" int: 4;
+            value "direction" int: 0;
+            value "z" int: 1;
+            value "modifiers" int: 4;
+            value "any_mod" uchar: 0;
+            value "action" string: "desk_linear_flip_by";
+            value "params" string: "1";
+        }
+        group "E_Config_Binding_Wheel" struct {
+            value "context" int: 4;
+            value "direction" int: 1;
+            value "z" int: 1;
+            value "modifiers" int: 4;
+            value "any_mod" uchar: 0;
+            value "action" string: "desk_linear_flip_by";
+            value "params" string: "1";
+        }
+        group "E_Config_Binding_Wheel" struct {
+            value "context" int: 2;
+            value "direction" int: 0;
+            value "z" int: -1;
+            value "modifiers" int: 4;
+            value "any_mod" uchar: 0;
+            value "action" string: "desk_linear_flip_by";
+            value "params" string: "-1";
+        }
+        group "E_Config_Binding_Wheel" struct {
+            value "context" int: 2;
+            value "direction" int: 1;
+            value "z" int: -1;
+            value "modifiers" int: 4;
+            value "any_mod" uchar: 0;
+            value "action" string: "desk_linear_flip_by";
+            value "params" string: "-1";
+        }
+        group "E_Config_Binding_Wheel" struct {
+            value "context" int: 2;
+            value "direction" int: 0;
+            value "z" int: 1;
+            value "modifiers" int: 4;
+            value "any_mod" uchar: 0;
+            value "action" string: "desk_linear_flip_by";
+            value "params" string: "1";
+        }
+        group "E_Config_Binding_Wheel" struct {
+            value "context" int: 2;
+            value "direction" int: 1;
+            value "z" int: 1;
+            value "modifiers" int: 4;
+            value "any_mod" uchar: 0;
+            value "action" string: "desk_linear_flip_by";
+            value "params" string: "1";
+        }
+        group "E_Config_Binding_Wheel" struct {
+            value "context" int: 8;
+            value "direction" int: 0;
+            value "z" int: -1;
+            value "modifiers" int: 4;
+            value "any_mod" uchar: 0;
+            value "action" string: "desk_linear_flip_by";
+            value "params" string: "-1";
+        }
+        group "E_Config_Binding_Wheel" struct {
+            value "context" int: 8;
+            value "direction" int: 1;
+            value "z" int: -1;
+            value "modifiers" int: 4;
+            value "any_mod" uchar: 0;
+            value "action" string: "desk_linear_flip_by";
+            value "params" string: "-1";
+        }
+        group "E_Config_Binding_Wheel" struct {
+            value "context" int: 8;
+            value "direction" int: 0;
+            value "z" int: 1;
+            value "modifiers" int: 4;
+            value "any_mod" uchar: 0;
+            value "action" string: "desk_linear_flip_by";
+            value "params" string: "1";
+        }
+        group "E_Config_Binding_Wheel" struct {
+            value "context" int: 8;
+            value "direction" int: 1;
+            value "z" int: 1;
+            value "modifiers" int: 4;
+            value "any_mod" uchar: 0;
+            value "action" string: "desk_linear_flip_by";
+            value "params" string: "1";
+        }
+    }
+    group "gadcons" list {
+        group "E_Config_Gadcon" struct {
+            group "clients" list {
+                group "E_Config_Gadcon_Client" struct {
+                    value "name" string: "start";
+                    value "id" string: "start";
+                    value "geom.pos" int: 0;
+                    value "geom.size" int: 41;
+                    value "geom.res" int: 474;
+                    value "geom.pos_x" double: 0.0000000000000000000000000;
+                    value "geom.pos_y" double: 0.0000000000000000000000000;
+                    value "geom.size_w" double: 0.0000000000000000000000000;
+                    value "geom.size_h" double: 0.0000000000000000000000000;
+                    value "state_info.seq" int: 1;
+                    value "state_info.flags" int: 3;
+                    value "style" string: "plain";
+                    value "orient" int: 0;
+                    value "autoscroll" uchar: 0;
+                    value "resizable" uchar: 0;
+                }
+                group "E_Config_Gadcon_Client" struct {
+                    value "name" string: "backlight";
+                    value "id" string: "backlight";
+                    value "geom.pos" int: 41;
+                    value "geom.size" int: 41;
+                    value "geom.res" int: 474;
+                    value "geom.pos_x" double: 0.0000000000000000000000000;
+                    value "geom.pos_y" double: 0.0000000000000000000000000;
+                    value "geom.size_w" double: 0.0000000000000000000000000;
+                    value "geom.size_h" double: 0.0000000000000000000000000;
+                    value "state_info.seq" int: 2;
+                    value "state_info.flags" int: 3;
+                    value "style" string: "plain";
+                    value "orient" int: 0;
+                    value "autoscroll" uchar: 0;
+                    value "resizable" uchar: 0;
+                }
+                group "E_Config_Gadcon_Client" struct {
+                    value "name" string: "illume-home-toggle";
+                    value "id" string: "illume-home-toggle.0";
+                    value "geom.pos" int: 82;
+                    value "geom.size" int: 41;
+                    value "geom.res" int: 474;
+                    value "geom.pos_x" double: 0.0000000000000000000000000;
+                    value "geom.pos_y" double: 0.0000000000000000000000000;
+                    value "geom.size_w" double: 0.0000000000000000000000000;
+                    value "geom.size_h" double: 0.0000000000000000000000000;
+                    value "state_info.seq" int: 3;
+                    value "state_info.flags" int: 3;
+                    value "style" string: "plain";
+                    value "orient" int: 0;
+                    value "autoscroll" uchar: 0;
+                    value "resizable" uchar: 0;
+                }
+                group "E_Config_Gadcon_Client" struct {
+                    value "name" string: "illume-mode-toggle";
+                    value "id" string: "illume-mode-toggle.0";
+                    value "geom.pos" int: 123;
+                    value "geom.size" int: 41;
+                    value "geom.res" int: 474;
+                    value "geom.pos_x" double: 0.0000000000000000000000000;
+                    value "geom.pos_y" double: 0.0000000000000000000000000;
+                    value "geom.size_w" double: 0.0000000000000000000000000;
+                    value "geom.size_h" double: 0.0000000000000000000000000;
+                    value "state_info.seq" int: 4;
+                    value "state_info.flags" int: 3;
+                    value "style" string: "plain";
+                    value "orient" int: 0;
+                    value "autoscroll" uchar: 0;
+                    value "resizable" uchar: 0;
+                }
+                group "E_Config_Gadcon_Client" struct {
+                    value "name" string: "illume-kbd-toggle";
+                    value "id" string: "illume-kbd-toggle.0";
+                    value "geom.pos" int: 164;
+                    value "geom.size" int: 41;
+                    value "geom.res" int: 474;
+                    value "geom.pos_x" double: 0.0000000000000000000000000;
+                    value "geom.pos_y" double: 0.0000000000000000000000000;
+                    value "geom.size_w" double: 0.0000000000000000000000000;
+                    value "geom.size_h" double: 0.0000000000000000000000000;
+                    value "state_info.seq" int: 5;
+                    value "state_info.flags" int: 3;
+                    value "style" string: "plain";
+                    value "orient" int: 0;
+                    value "autoscroll" uchar: 0;
+                    value "resizable" uchar: 0;
+                }
+                group "E_Config_Gadcon_Client" struct {
+                    value "name" string: "configuration";
+                    value "id" string: "configuration";
+                    value "geom.pos" int: 410;
+                    value "geom.size" int: 64;
+                    value "geom.res" int: 474;
+                    value "geom.pos_x" double: 0.0000000000000000000000000;
+                    value "geom.pos_y" double: 0.0000000000000000000000000;
+                    value "geom.size_w" double: 0.0000000000000000000000000;
+                    value "geom.size_h" double: 0.0000000000000000000000000;
+                    value "state_info.seq" int: 6;
+                    value "state_info.flags" int: 1;
+                    value "style" string: "plain";
+                    value "orient" int: 0;
+                    value "autoscroll" uchar: 0;
+                    value "resizable" uchar: 0;
+                }
+                group "E_Config_Gadcon_Client" struct {
+                    value "name" string: "battery";
+                    value "id" string: "battery";
+                    value "geom.pos" int: 433;
+                    value "geom.size" int: 41;
+                    value "geom.res" int: 474;
+                    value "geom.pos_x" double: 0.0000000000000000000000000;
+                    value "geom.pos_y" double: 0.0000000000000000000000000;
+                    value "geom.size_w" double: 0.0000000000000000000000000;
+                    value "geom.size_h" double: 0.0000000000000000000000000;
+                    value "state_info.seq" int: 7;
+                    value "state_info.flags" int: 3;
+                    value "style" string: "plain";
+                    value "orient" int: 0;
+                    value "autoscroll" uchar: 0;
+                    value "resizable" uchar: 0;
+                }
+                group "E_Config_Gadcon_Client" struct {
+                    value "name" string: "connman";
+                    value "id" string: "connman";
+                    value "geom.pos" int: 433;
+                    value "geom.size" int: 41;
+                    value "geom.res" int: 474;
+                    value "geom.pos_x" double: 0.0000000000000000000000000;
+                    value "geom.pos_y" double: 0.0000000000000000000000000;
+                    value "geom.size_w" double: 0.0000000000000000000000000;
+                    value "geom.size_h" double: 0.0000000000000000000000000;
+                    value "state_info.seq" int: 8;
+                    value "state_info.flags" int: 3;
+                    value "style" string: "plain";
+                    value "orient" int: 0;
+                    value "autoscroll" uchar: 0;
+                    value "resizable" uchar: 0;
+                }
+            }
             value "name" string: "illume-indicator";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 0;
-            value "priority" int: 90;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "illume-softkey";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 0;
-            value "priority" int: 85;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "fileman";
-            value "enabled" uchar: 0;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "battery";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 0;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "connman";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 0;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "illume-keyboard";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 0;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "illume-home";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 0;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "illume-home-toggle";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 0;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "illume-kbd-toggle";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 0;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "illume-mode-toggle";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 0;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "syscon";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "conf";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "conf_interaction";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "conf_performance";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "conf_display";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "start";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "clock";
-            value "enabled" uchar: 0;
-            value "delayed" uchar: 0;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "comp";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 0;
-            value "priority" int: -1000;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "shot";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "backlight";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 0;
-            value "priority" int: 0;
+            value "id" int: 0;
+            value "zone" int: 0;
         }
     }
+    group "mime_icons" list {
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "image/jpeg";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "image/png";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "image/x-pixmap";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "image/x-xpixmap";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "image/svg+xml";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "image/gif";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "image/tiff";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "application/x-edje";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "application/pdf";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "application/postscript";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "image/x-photoshop";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "image/x-portable-anymap";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "image/x-portable-bitmap";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "image/x-portable-graymap";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "image/x-portable-pixmap";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "image/vnd.wap.wbmp";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "image/x-ms-bmp";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "image/x-icon";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "image/x-tga";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "image/svg+xml-compressed";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "application/x-xcf";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "image/x-compressed-xcf";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "video/3gpp";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "video/x-ms-asf";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "video/x-msvideo";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "video/x-flv";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "video/x-matroska";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "video/quicktime";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "video/mp4";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "video/mpeg";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "video/mp2t";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "application/mxf";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "video/x-ogm+ogg";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "video/ogg";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "video/x-theora+ogg";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "application/vnd.rn-realmedia";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "application/x-shockwave-flash";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "video/x-ms-wmv";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "application/x-desktop";
+            value "icon" string: "DESKTOP";
+        }
+    }
+    group "syscon.actions" list {
+        group "E_Config_Syscon_Action" struct {
+            value "action" string: "halt";
+            value "params" string: "now";
+            value "button" string: "button";
+            value "icon" string: "system-shutdown";
+            value "is_main" int: 1;
+        }
+        group "E_Config_Syscon_Action" struct {
+            value "action" string: "suspend";
+            value "params" string: "now";
+            value "button" string: "button";
+            value "icon" string: "system-suspend";
+            value "is_main" int: 1;
+        }
+        group "E_Config_Syscon_Action" struct {
+            value "action" string: "desk_lock";
+            value "button" string: "button";
+            value "icon" string: "system-lock-screen";
+            value "is_main" int: 1;
+        }
+        group "E_Config_Syscon_Action" struct {
+            value "action" string: "reboot";
+            value "params" string: "now";
+            value "button" string: "button";
+            value "icon" string: "system-restart";
+            value "is_main" int: 0;
+        }
+        group "E_Config_Syscon_Action" struct {
+            value "action" string: "hibernate";
+            value "params" string: "now";
+            value "button" string: "button";
+            value "icon" string: "system-suspend-hibernate";
+            value "is_main" int: 0;
+        }
+        group "E_Config_Syscon_Action" struct {
+            value "action" string: "logout";
+            value "params" string: "now";
+            value "button" string: "button";
+            value "icon" string: "system-log-out";
+            value "is_main" int: 0;
+        }
+    }
+    value "config_version" int: 65847;
+    value "show_splash" int: 1;
+    value "init_default_theme" string: "default.edj";
+    value "desktop_default_name" string: "Desktop %i, %i";
+    value "menus_scroll_speed" double: 1000.0000000000000000000000000;
+    value "menus_fast_mouse_move_threshhold" double: 300.0000000000000000000000000;
+    value "menus_click_drag_timeout" double: 0.2500000000000000000000000;
+    value "border_shade_animate" int: 1;
+    value "border_shade_transition" int: 1;
+    value "border_shade_speed" double: 1800.0000000000000000000000000;
+    value "framerate" double: 60.0000000000000000000000000;
+    value "priority" int: 3;
+    value "image_cache" int: 4096;
+    value "font_cache" int: 512;
+    value "edje_cache" int: 32;
+    value "edje_collection_cache" int: 64;
+    value "zone_desks_x_count" int: 1;
+    value "zone_desks_y_count" int: 1;
+    value "use_virtual_roots" int: 0;
+    value "show_desktop_icons" int: 1;
+    value "edge_flip_dragging" int: 1;
+    value "evas_engine_default" int: 1;
+    value "evas_engine_container" int: 0;
+    value "evas_engine_init" int: 0;
+    value "evas_engine_menus" int: 0;
+    value "evas_engine_borders" int: 0;
+    value "evas_engine_errors" int: 0;
+    value "evas_engine_popups" int: 0;
+    value "evas_engine_drag" int: 0;
+    value "evas_engine_win" int: 0;
+    value "evas_engine_zone" int: 0;
+    value "use_composite" int: 0;
+    value "language" string: "en_US.UTF-8";
     value "window_placement_policy" int: 0;
     value "focus_policy" int: 0;
     value "focus_setting" int: 1;
@@ -1765,7 +1695,7 @@ group "E_Config" struct {
     value "exec.expire_timeout" double: 60.0000000000000000000000000;
     value "exec.show_run_dialog" uchar: 0;
     value "exec.show_exit_dialog" uchar: 0;
-    value "backlight.normal" double: 1.0;
-    value "backlight.dim" double: 0.3;
-    value "backlight.transition" double: 0.5;
+    value "backlight.normal" double: 1.0000000000000000000000000;
+    value "backlight.dim" double: 0.2999999999999999888977698;
+    value "backlight.transition" double: 0.5000000000000000000000000;
 }

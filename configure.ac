@@ -875,7 +875,6 @@ data/images/Makefile
 data/input_methods/Makefile
 data/themes/Makefile
 data/themes/images/Makefile
-data/other/Makefile
 data/xsession/Makefile
 data/xsession/enlightenment.desktop
 data/tools/Makefile

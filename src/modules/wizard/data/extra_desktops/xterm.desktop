@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Name=XTerm
+GenericName=Terminal
+Comment=Run commands in a shell
+Exec=xterm
+Icon=xterm.png
+StartupWMClass=XTerm
+Categories=Utility;TerminalEmulator;

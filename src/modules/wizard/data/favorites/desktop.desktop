@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Desktop
+Name[fr]=Bureau
+Comment=Files on your Desktop
+Comment[it]=I file sul vostro desktop
+Comment[fr]=Les fichiers sur votre bureau
+Type=Link
+X-Enlightenment-Type=Mount
+URL=file:$HOME/Desktop
+Icon=user-desktop
+NotShowIn=GNOME;KDE;LXDE;ROX;XFCE;
