@@ -33,7 +33,7 @@ struct _Smart_Data
   Eina_List   *items;
   Item        *cur_item;
   Ecore_Idle_Enterer *idle_enter;
-  Ecore_Idle_Enterer *thumb_idler;
+  Ecore_Timer *thumb_idler;
   Evas_Coord   x, y, w, h;
   Evas_Coord   cx, cy, cw, ch;
   Evas_Coord   sx, sy;
@@ -152,7 +152,6 @@ _thumb_idler(void *data)
 
 		  edje_object_part_swallow(it->frame, "e.swallow.icon", it->image);
 		  evas_object_show(it->image);
-		  edje_object_signal_emit(it->frame, "e,action,thumb,show", "e");
 	       }
 	     else it->have_thumb = EINA_TRUE;
 	  }
@@ -186,6 +185,8 @@ _thumb_idler(void *data)
 	     it->do_thumb = EINA_TRUE;
 	  }
 
+	edje_object_signal_emit(it->frame, "e,action,thumb,show", "e");
+	
 	sd->queue = eina_list_remove_list(sd->queue, l);
 
 	if (cnt++ > 10)
@@ -553,7 +554,7 @@ _e_smart_reconfigure_do(void *data)
      evas_object_smart_callback_call(obj, "changed", NULL);
 
    if (!sd->thumb_idler)
-     sd->thumb_idler = ecore_idle_enterer_add(_thumb_idler, sd);
+     sd->thumb_idler = ecore_timer_add(0.0001, _thumb_idler, sd);
 
    sd->idle_enter = NULL;
 
@@ -588,7 +589,7 @@ _e_smart_del(Evas_Object *obj)
      ecore_idle_enterer_del(sd->idle_enter);
 
    if (sd->thumb_idler)
-     ecore_idle_enterer_del(sd->thumb_idler);
+     ecore_timer_del(sd->thumb_idler);
 
    _animator_del(obj);
 
@@ -869,7 +870,7 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
      }
    else
      {
-	align = _child_region_get(obj, it->y - it->h*2, it->h * 5);
+	align = _child_region_get(obj, it->y - it->h * 2, it->h * 5);
      }
 
    if (scroll && evry_conf->scroll_animate)
@@ -914,7 +915,7 @@ _clear_items(Evas_Object *obj)
    sd->queue = NULL;
 
    if (sd->thumb_idler)
-     ecore_idle_enterer_del(sd->thumb_idler);
+     ecore_timer_del(sd->thumb_idler);
    sd->thumb_idler = NULL;
 }
 
@@ -1444,7 +1445,7 @@ _cb_item_changed(void *data, int type __UNUSED__, void *event)
 	  sd->queue = eina_list_append(sd->queue, it);
 
 	if (!sd->thumb_idler)
-	  sd->thumb_idler = ecore_idle_enterer_add(_thumb_idler, sd);
+	  sd->thumb_idler = ecore_timer_add(0.0001, _thumb_idler, sd);
      }
 
    return ECORE_CALLBACK_PASS_ON;
