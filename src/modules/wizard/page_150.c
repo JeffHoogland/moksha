@@ -61,6 +61,14 @@ wizard_page_show(E_Wizard_Page *pg)
 {
    Evas_Object *o, *of, *ob;
    Ecore_Evas *ee;
+   Ecore_X_Window_Attributes att;
+   
+   if (!ecore_x_composite_query()) return 0;
+   if (!ecore_x_damage_query()) return 0;
+   
+   memset((&att), 0, sizeof(Ecore_X_Window_Attributes));
+   ecore_x_window_attributes_get(ecore_x_window_root_first_get(), &att);
+   if ((att.depth != 24) && (att.depth != 32)) return 0;
    
    ee = ecore_evas_gl_x11_new(NULL, 0, 0, 0, 320, 240);
    if (ee)
@@ -192,7 +200,7 @@ wizard_page_hide(E_Wizard_Page *pg)
         E_CONFIG_DD_FREE(conf_edd);
      }
    e_config_save_queue();
-   evas_object_del(pg->data);
+   if (pg->data) evas_object_del(pg->data);
    return 1;
 }
 
