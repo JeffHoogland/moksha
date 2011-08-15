@@ -225,7 +225,7 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
                                 _("Enlightenment was unable to change to directory:<br>"
                                   "<br>"
                                   "%s"),
-			   buf);
+			   desktop->path);
              return NULL;
           }
         e_util_library_path_strip();
