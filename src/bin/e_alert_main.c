@@ -41,7 +41,6 @@ static void _e_alert_exit_e(void);
 
 /* local variables */
 static Ecore_Ipc_Server *_ipc_server = NULL;
-static Ecore_Ipc_Server *_server = NULL;
 static xcb_connection_t *conn = NULL;
 static xcb_screen_t *screen = NULL;
 static xcb_window_t win = 0, comp_win = 0;
@@ -79,6 +78,7 @@ main(int argc, char **argv)
      }
 
    if (!ecore_init()) return EXIT_FAILURE;
+   ecore_app_args_set(argc, (const char **)argv);
    if (!ecore_ipc_init()) 
      {
         ecore_shutdown();
@@ -134,20 +134,7 @@ _e_alert_ipc_init(void)
    _ipc_server = 
      ecore_ipc_server_connect(ECORE_IPC_LOCAL_SYSTEM, edir, 0, NULL);
    if (!_ipc_server) return 0;
-
-   ecore_event_handler_add(ECORE_IPC_EVENT_SERVER_ADD, 
-                           _e_alert_ipc_server_add, NULL);
    return 1;
-}
-
-static Eina_Bool 
-_e_alert_ipc_server_add(void *data, int type, void *event) 
-{
-   Ecore_Ipc_Event_Server_Add *e;
-
-   e = event;
-   _server = e->server;
-   return ECORE_CALLBACK_PASS_ON;
 }
 
 static int 
@@ -376,7 +363,7 @@ _e_alert_run(void)
              break;
           }
         free(event);
-        if (ret > 0) break;
+        if (ret > 0) return;
      }
 }
 
@@ -609,15 +596,15 @@ _e_alert_draw_button_text(void)
 static void 
 _e_alert_restart_e(void) 
 {
-   kill(getppid(), SIGUSR2);
-   ecore_ipc_server_send(_server, 8, 0, 0, 0, 0, NULL, 0);
-   ecore_ipc_server_flush(_server);
+   kill(pid, SIGUSR2);
+   ecore_ipc_server_send(_ipc_server, 8, 0, 0, 0, 0, NULL, 0);
+   ecore_ipc_server_flush(_ipc_server);
 }
 
 static void 
 _e_alert_exit_e(void) 
 {
-   kill(getppid(), SIGUSR2);
-   ecore_ipc_server_send(_server, 8, 1, 0, 0, 0, NULL, 0);
-   ecore_ipc_server_flush(_server);
+   kill(pid, SIGUSR2);
+   ecore_ipc_server_send(_ipc_server, 8, 1, 0, 0, 0, NULL, 0);
+   ecore_ipc_server_flush(_ipc_server);
 }

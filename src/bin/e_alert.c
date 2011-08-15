@@ -37,7 +37,8 @@ e_alert_show(int sig)
 
    snprintf(buf, sizeof(buf), 
             "%s/enlightenment/utils/enlightenment_alert %d %lu %lu",
-	    e_prefix_lib_get(), sig, (long unsigned int)getpid(), e_alert_composite_win);
+	    e_prefix_lib_get(), sig, (long unsigned int)getpid(), 
+            e_alert_composite_win);
 
    alert_exe = ecore_exe_run(buf, NULL);
    pause();

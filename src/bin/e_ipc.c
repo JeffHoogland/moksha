@@ -212,7 +212,7 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
                   a = e_action_find("restart");
                   break;
                 case E_ALERT_OP_EXIT:
-                  a = e_action_find("exit");
+                  a = e_action_find("exit_now");
                   break;
                }
              if ((a) && (a->func.go)) a->func.go(NULL, NULL);
