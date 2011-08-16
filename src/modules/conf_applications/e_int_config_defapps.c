@@ -204,8 +204,12 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 }
 
 static Eina_Bool
-_desks_update(void *data, int ev_type __UNUSED__, void *ev __UNUSED__)
+_desks_update(void *data, int ev_type __UNUSED__, void *event)
 {
+   Efreet_Event_Cache_Update *ev = event;
+
+   if (!ev->changed) return ECORE_CALLBACK_PASS_ON;
+
    E_Config_Dialog_Data *cfdata = data;
    Efreet_Desktop *desk;
    EINA_LIST_FREE(cfdata->desks, desk)

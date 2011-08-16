@@ -561,8 +561,12 @@ _il_home_cb_selected(void *data, Evas_Object *obj __UNUSED__, void *event __UNUS
 }
 
 static Eina_Bool
-_il_home_desktop_cache_update(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__) 
+_il_home_desktop_cache_update(void *data __UNUSED__, int type __UNUSED__, void *event) 
 {
+   Efreet_Event_Cache_Update *ev = event;
+
+   if (!ev->changed) return ECORE_CALLBACK_PASS_ON;
+
    if (defer) ecore_timer_del(defer);
    defer = ecore_timer_add(0.5, _il_home_update_deferred, NULL);
    return ECORE_CALLBACK_PASS_ON;

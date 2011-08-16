@@ -278,10 +278,13 @@ _e_order_save(E_Order *eo)
 }
 
 static Eina_Bool
-_e_order_cb_efreet_cache_update(void *data __UNUSED__, int ev_type __UNUSED__, void *ev __UNUSED__)
+_e_order_cb_efreet_cache_update(void *data __UNUSED__, int ev_type __UNUSED__, void *event)
 {
+   Efreet_Event_Cache_Update *ev = event;
    Eina_List *l;
    E_Order *eo;
+
+   if (!ev->changed) return ECORE_CALLBACK_PASS_ON;
 
    /* reread all .order files */
    EINA_LIST_FOREACH(orders, l, eo)

@@ -5638,10 +5638,13 @@ _e_border_cb_sync_alarm(void *data  __UNUSED__,
 static Eina_Bool
 _e_border_cb_efreet_cache_update(void *data  __UNUSED__,
                                  int ev_type __UNUSED__,
-                                 void *ev    __UNUSED__)
+                                 void *event)
 {
+   Efreet_Event_Cache_Update *ev = event;
    Eina_List *l;
    E_Border *bd;
+
+   if (!ev->changed) return ECORE_CALLBACK_PASS_ON;
 
    /* mark all borders for desktop/icon updates */
    EINA_LIST_FOREACH(borders, l, bd)
