@@ -110,7 +110,6 @@ e_modapi_init(E_Module *m)
    SET(action_find);
    SET(api_version_check);
    SET(type_register);
-   SET(icon_mime_get);
    SET(icon_theme_get);
    SET(fuzzy_match);
    SET(util_exec_app);
@@ -526,7 +525,7 @@ _e_mod_run_defer_cb(void *data)
    E_Zone *zone;
 
    zone = data;
-   if (zone) evry_show(zone, E_ZONE_EDGE_NONE, _params);
+   if (zone) evry_show(zone, E_ZONE_EDGE_NONE, _params, EINA_TRUE);
 
    _idler = NULL;
    return ECORE_CALLBACK_CANCEL;
@@ -570,7 +569,7 @@ _e_mod_action_cb_edge(E_Object *obj  __UNUSED__, const char *params, E_Event_Zon
 
    if (_idler) ecore_idle_enterer_del(_idler);
 
-   evry_show(ev->zone, ev->edge, _params);
+   evry_show(ev->zone, ev->edge, _params, EINA_TRUE);
 }
 
 /* menu item callback(s) */

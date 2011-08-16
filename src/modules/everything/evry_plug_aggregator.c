@@ -93,7 +93,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 		  if (it->usage >= 0)
 		    evry_history_item_usage_set(it, input, context);
 
-		  if (it->usage && it->usage > max_usage)
+		  if (it->usage && (it->usage > max_usage))
 		    max_usage = it->usage;
 
 		  if (it->fuzzy_match == 0)
@@ -222,9 +222,8 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	 {
 	   EINA_LIST_FOREACH(pp->items, ll, it)
 	     {
-		if (((it->usage >= 0) &&
-		     (evry_history_item_usage_set(it, input, context))) ||
-		    (!subj_sel))
+		if ((!subj_sel) || (it->usage < 0) || 
+		    (evry_history_item_usage_set(it, input, context)))
 		 {
 		    it->fuzzy_match = 0;
 		    items = eina_list_append(items, it);

@@ -46,19 +46,16 @@ _finish(Evry_Plugin *plugin)
 static Evas_Object *
 _icon_get(Evry_Item *item, Evas *e)
 {
-   Evas_Object *o;
    Settings_Item *it = (Settings_Item *) item;
+
+   if (!item->icon)
+     {
+	if (it->eci && it->eci->icon)
+	  item->icon = eina_stringshare_add(it->eci->icon); 
+	else if (it->ecat->icon)
+	  item->icon = eina_stringshare_add(it->ecat->icon);
+     }
    
-   if (it->eci && it->eci->icon &&
-       ((o = evry->icon_theme_get(it->eci->icon, e)) ||
-	(o = e_util_icon_add(it->eci->icon, e))))
-     return o;
-
-   if (it->ecat->icon &&
-       ((o = evry->icon_theme_get(it->ecat->icon, e)) ||
-	(o = e_util_icon_add(it->ecat->icon, e))))
-     return o;
-
    return NULL;
 }
 

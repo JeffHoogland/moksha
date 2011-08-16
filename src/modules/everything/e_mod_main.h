@@ -205,7 +205,7 @@ void  evry_plugin_update(Evry_Plugin *plugin, int state);
 void  evry_clear_input(Evry_Plugin *p);
 
 /* evry_util.c */
-Evas_Object *evry_icon_mime_get(const char *mime, Evas *e);
+/* Evas_Object *evry_icon_mime_get(const char *mime, Evas *e); */
 Evas_Object *evry_icon_theme_get(const char *icon, Evas *e);
 int   evry_fuzzy_match(const char *str, const char *match);
 Eina_List *evry_fuzzy_match_sort(Eina_List *items);
@@ -281,7 +281,7 @@ void  evry_plug_collection_shutdown(void);
 
 int   evry_init(void);
 int   evry_shutdown(void);
-Evry_Window *evry_show(E_Zone *zone, E_Zone_Edge edge, const char *params);
+Evry_Window *evry_show(E_Zone *zone, E_Zone_Edge edge, const char *params, Eina_Bool popup);
 void  evry_hide(Evry_Window *win, int clear);
 
 int   evry_plug_actions_init();

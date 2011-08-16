@@ -17,17 +17,21 @@ typedef struct _Plugin Plugin;
 typedef struct _Module_Config Module_Config;
 typedef struct _E_Exe E_Exe;
 typedef struct _E_Exe_List E_Exe_List;
+typedef struct _Item_Menu Item_Menu;
 
 struct _Plugin
 {
   Evry_Plugin	 base;
+  Eina_Bool      browse;
   const char    *input;
   Eina_List	*apps_mime;
   Eina_List	*apps_all;
   Eina_List	*apps_hist;
+  Eina_List	*menu_items;
 
   Eina_Hash	*added;
-
+  Efreet_Menu   *menu;;
+  
   Evry_Item_App *command;
 };
 
@@ -51,6 +55,13 @@ struct _Module_Config
   E_Module	  *module;
 };
 
+struct _Item_Menu
+{
+  Evry_Item base;
+
+  Efreet_Menu *menu;;
+};
+
 static const Evry_API   *evry            = NULL;
 static Evry_Module      *evry_module     = NULL;
 static Eina_List        *handlers        = NULL;
@@ -70,45 +81,15 @@ static Eina_List	*exe_list2	 = NULL;
 static Eina_List        *apps_cache      = NULL;
 static void _scan_executables();
 
+
+#define GET_MENU(_m, _it) Item_Menu *_m = (Item_Menu *)_it
+		  
 /***************************************************************************/
 
 static void _hash_free(void *data)
 {
    GET_APP(app, data);
    EVRY_ITEM_FREE(app);
-}
-
-static Evas_Object *
-_icon_get(Evry_Item *it, Evas *e)
-{
-   GET_APP(app, it);
-   Evas_Object *o = NULL;
-
-   if (app->desktop && app->desktop->icon)
-     {
-	if (app->desktop->icon[0] == '/')
-	  {
-	     o = e_icon_add(e);
-	     e_icon_preload_set(o, 1);
-
-	     if (!e_icon_file_set(o, app->desktop->icon))
-	       {
-		  evas_object_del(o);
-		  o = NULL;
-	       }
-	  }
-
-	if (!o)
-	  o = evry->icon_theme_get(app->desktop->icon, e);
-
-	if (!o)
-	  o = e_util_desktop_icon_add(app->desktop, 128, e);
-     }
-
-   if (!o)
-     o = evry->icon_theme_get("system-run", e);
-
-   return o;
 }
 
 static int
@@ -118,7 +99,7 @@ _exec_open_file_action(Evry_Action *act)
 }
 
 static void
-_item_free(Evry_Item *item)
+_cb_item_free(Evry_Item *item)
 {
    GET_APP(app, item);
 
@@ -135,7 +116,7 @@ _item_new(Plugin *p, const char *label, const char *id)
 {
    Evry_Item_App *app;
 
-   app = EVRY_ITEM_NEW(Evry_Item_App, p, label, _icon_get, _item_free);
+   app = EVRY_ITEM_NEW(Evry_Item_App, p, label, NULL, _cb_item_free);
    EVRY_ACTN(app)->action = &_exec_open_file_action;
    EVRY_ACTN(app)->it1.type = EVRY_TYPE_FILE;
    EVRY_ITEM(app)->id = eina_stringshare_add(id);
@@ -146,6 +127,24 @@ _item_new(Plugin *p, const char *label, const char *id)
    EVRY_ITEM(app)->subtype = EVRY_TYPE_ACTION;
 
    return app;
+}
+
+static Item_Menu *
+_item_menu_add(Plugin *p, Efreet_Menu *menu)
+{
+   Item_Menu *m;
+
+   m = EVRY_ITEM_NEW(Item_Menu, p, NULL, NULL, NULL);
+   EVRY_ITEM(m)->type = EVRY_TYPE_NONE;
+   EVRY_ITEM(m)->browseable = EINA_TRUE;
+   EVRY_ITEM(m)->label = eina_stringshare_add(menu->name);
+   EVRY_ITEM(m)->icon = eina_stringshare_add(menu->icon);
+   EVRY_ITEM(m)->usage = -1;
+
+   m->menu = menu;
+   p->menu_items = eina_list_append(p->menu_items, m); 
+
+   return m;
 }
 
 static int
@@ -331,7 +330,7 @@ _begin_exe(Evry_Plugin *plugin, const Evry_Item *item)
 
    p->added = eina_hash_string_small_new(_hash_free);
 
-   app = EVRY_ITEM_NEW(Evry_Item_App, p, NULL, _icon_get, _item_free);
+   app = EVRY_ITEM_NEW(Evry_Item_App, p, NULL, NULL, _cb_item_free);
    EVRY_ACTN(app)->action = &_exec_open_file_action;
    EVRY_ACTN(app)->remember_context = EINA_TRUE;
    EVRY_ITEM(app)->subtype = EVRY_TYPE_ACTION;
@@ -532,27 +531,55 @@ static Evry_Plugin *
 _begin(Evry_Plugin *plugin, const Evry_Item *item)
 {
    Plugin *p;
-
+   
    if (item && (item != _act_open_with))
      return NULL;
 
-   EVRY_PLUGIN_INSTANCE(p, plugin)
+   EVRY_PLUGIN_INSTANCE(p, plugin);
    p->added = eina_hash_string_small_new(_hash_free);
+   p->menu = efreet_menu_get();
+   
+   return EVRY_PLUGIN(p);
+}
 
+static Evry_Plugin *
+_browse(Evry_Plugin *plugin, const Evry_Item *item)
+{
+   Plugin *p;
+   
+   if (!item)
+     return NULL;
+
+   if (!CHECK_TYPE(item, EVRY_TYPE_NONE))
+     return NULL;
+   
+   EVRY_PLUGIN_INSTANCE(p, plugin);
+   GET_MENU(m, item);
+   
+   p->added = eina_hash_string_small_new(_hash_free);
+   p->menu = m->menu;
+   p->browse = EINA_TRUE;
+   
    return EVRY_PLUGIN(p);
 }
 
 static void
 _finish(Evry_Plugin *plugin)
 {
-   GET_PLUGIN(p, plugin);
    Efreet_Desktop *desktop;
-
+   Evry_Item *it;
+   
+   GET_PLUGIN(p, plugin);
+   
    EVRY_PLUGIN_ITEMS_CLEAR(p);
 
+   /* TODO share with browse instances */
    if (p->added)
      eina_hash_free(p->added);
 
+   if ((!p->browse) && (p->menu))
+     efreet_menu_free(p->menu);
+   
    EINA_LIST_FREE(p->apps_all, desktop)
      efreet_desktop_free(desktop);
 
@@ -560,6 +587,9 @@ _finish(Evry_Plugin *plugin)
 
    EINA_LIST_FREE(p->apps_mime, desktop)
      efreet_desktop_free(desktop);
+
+   EINA_LIST_FREE(p->menu_items, it)
+     EVRY_ITEM_FREE(it);
 
    E_FREE(p);
 }
@@ -572,36 +602,64 @@ _fetch(Evry_Plugin *plugin, const char *input)
    Evry_Item *it;
    History_Types *ht;
 
+   Efreet_Menu *entry;
+   int i = 1;
+
    EVRY_PLUGIN_ITEMS_CLEAR(p);
 
-   if (input)
+   if (!p->browse)
      {
-	if (!p->apps_all)
-	  p->apps_all = _desktop_list_get();
-
-	_desktop_list_add(p, p->apps_all, input);
-     }
-   else
-     {
-	_desktop_list_add(p, p->apps_mime, input);
-     }
-
-   if (!input && !(plugin->items))
-     {
-	if (!p->apps_hist)
+	if (input)
 	  {
-	     ht = evry->history_types_get(EVRY_TYPE_APP);
-	     if (ht) eina_hash_foreach(ht->types, _hist_items_get_cb, p);
+	     if (!p->apps_all)
+	       p->apps_all = _desktop_list_get();
+
+	     _desktop_list_add(p, p->apps_all, input);
+	  }
+	else
+	  {
+	     _desktop_list_add(p, p->apps_mime, input);
 	  }
 
-	_desktop_list_add(p, p->apps_hist, NULL);
+	if ((!input) && (!plugin->items))
+	  {
+	     if (!p->apps_hist)
+	       {
+		  ht = evry->history_types_get(EVRY_TYPE_APP);
+		  if (ht) eina_hash_foreach(ht->types, _hist_items_get_cb, p);
+	       }
+
+	     _desktop_list_add(p, p->apps_hist, NULL);
+	  }
+
+	EINA_LIST_FOREACH(plugin->items, l, it)
+	  evry->history_item_usage_set(it, input, NULL);
+
+	EVRY_PLUGIN_ITEMS_SORT(p, _cb_sort);
+     }
+   
+   if ((p->menu) && (!p->menu_items))
+     {
+	EINA_LIST_FOREACH(p->menu->entries, l, entry)
+	  {
+	     if (entry->type == EFREET_MENU_ENTRY_DESKTOP)
+	       {
+	     	  _item_desktop_add(p, entry->desktop, i++); 	     
+	       }
+	     else if (entry->type == EFREET_MENU_ENTRY_MENU)
+	       {
+		  _item_menu_add(p, entry);	     
+	       }
+	     /* else if (entry->type == EFREET_MENU_ENTRY_SEPARATOR)
+	      *   continue;
+	      * else if (entry->type == EFREET_MENU_ENTRY_HEADER)
+	      *   continue; */
+	  }
      }
 
-   EINA_LIST_FOREACH(plugin->items, l, it)
-     evry->history_item_usage_set(it, input, NULL);
-
-   EVRY_PLUGIN_ITEMS_SORT(p, _cb_sort);
-
+   EINA_LIST_FOREACH(p->menu_items, l, it)
+     EVRY_PLUGIN_ITEM_APPEND(p, it);
+   
    return !!(plugin->items);
 }
 
@@ -1029,6 +1087,7 @@ _plugins_init(const Evry_API *api)
    p = EVRY_PLUGIN_BASE("Applications", _module_icon, EVRY_TYPE_APP,
 			_begin, _finish, _fetch);
    p->complete = &_complete;
+   p->browse = &_browse;
    p->config_path = "extensions/everything-apps";
    evry->plugin_register(p, EVRY_PLUGIN_SUBJECT, 1);
    _plugins = eina_list_append(_plugins, p);

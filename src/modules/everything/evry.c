@@ -147,7 +147,7 @@ _evry_cb_item_changed(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 }
 
 Evry_Window *
-evry_show(E_Zone *zone, E_Zone_Edge edge, const char *params)
+evry_show(E_Zone *zone, E_Zone_Edge edge, const char *params, Eina_Bool popup)
 {
    Evry_Window *win;
    Evry_Selector *sel;
@@ -163,18 +163,22 @@ evry_show(E_Zone *zone, E_Zone_Edge edge, const char *params)
    if (!(win = _evry_window_new(zone, edge)))
      return NULL;
 
-   e_win_layer_set(win->ewin, 255);
-   ecore_x_netwm_window_type_set(win->ewin->evas_win,
-   				 ECORE_X_WINDOW_TYPE_UTILITY);
+   if (popup)
+     {
+	e_win_layer_set(win->ewin, 255);
+	ecore_x_netwm_window_type_set(win->ewin->evas_win,
+				      ECORE_X_WINDOW_TYPE_UTILITY);
 
-   ecore_evas_name_class_set(win->ewin->ecore_evas, "E", "everything");
-   ecore_evas_show(win->ewin->ecore_evas);
+	ecore_evas_name_class_set(win->ewin->ecore_evas, "E", "everything");
+	
+	ecore_evas_show(win->ewin->ecore_evas);
 
-   if (e_grabinput_get(win->ewin->evas_win, 0, win->ewin->evas_win))
-     win->grab = 1;
-   else
-     ERR("could not acquire grab");
-
+	if (e_grabinput_get(win->ewin->evas_win, 0, win->ewin->evas_win))
+	  win->grab = 1;
+	else
+	  ERR("could not acquire grab");
+     }
+   
    evry_history_load();
 
    if (params)
@@ -1236,7 +1240,8 @@ _evry_selector_thumb(Evry_Selector *sel, const Evry_Item *it)
      evas_object_del(sel->o_thumb);
    sel->o_thumb = NULL;
 
-   if (it->type != EVRY_TYPE_FILE) return 0;
+   if (it->type != EVRY_TYPE_FILE)
+     return 0;
 
    GET_FILE(file, it);
 
@@ -1605,23 +1610,26 @@ evry_browse_item(Evry_Item *it)
      }
    else
      {
-	if ((it->plugin->browse) &&
-	    (pp = it->plugin->browse(it->plugin, it)))
+	if ((it->plugin->browse) && (pp = it->plugin->browse(it->plugin, it)))
 	  {
 	     plugins = eina_list_append(plugins, pp);
 	     pref = pp;
 	  }
 
-	EINA_LIST_FOREACH(sel->plugins, l, p)
+	/* items of type NONE can only be browsed by their own plugin */
+	if (!CHECK_TYPE(it, EVRY_TYPE_NONE))
 	  {
-	     if (!p->browse)
-	       continue;
+	     EINA_LIST_FOREACH(sel->plugins, l, p)
+	       {
+		  if (!p->browse)
+		    continue;
 
-	     if ((pref) && (!strcmp(p->name, pref->name)))
-	       continue;
+		  if ((pref) && (!strcmp(p->name, pref->name)))
+		    continue;
 
-	     if ((pp = p->browse(p, it)))
-	       plugins = eina_list_append(plugins, pp);
+		  if ((pp = p->browse(p, it)))
+		    plugins = eina_list_append(plugins, pp);
+	       }
 	  }
      }
 

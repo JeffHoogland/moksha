@@ -393,9 +393,8 @@ _e_smart_reconfigure_do(void *data)
    Smart_Data *sd = evas_object_smart_data_get(obj);
    Eina_List *l;
    Item *it;
-   int iw, changed = 0;
-   Evas_Coord x, y, xx, yy, ww, hh, mw, mh, ox = 0, oy = 0;
-   Evas_Coord aspect_w, aspect_h;
+   int changed = 0;
+   Evas_Coord x = 0, y = 0, xx, yy, ww, hh, mw = 0, mh = 0;
 
    if (!sd) return ECORE_CALLBACK_CANCEL;
 
@@ -407,86 +406,41 @@ _e_smart_reconfigure_do(void *data)
    if (sd->cx < 0) sd->cx = 0;
    if (sd->cy < 0) sd->cy = 0;
 
-   aspect_w = sd->w;
-   aspect_h = sd->h;
-
    if (sd->view->mode == VIEW_MODE_LIST)
      {
-	iw = sd->w;
+	ww = sd->w;
 	hh = SIZE_LIST;
      }
    else if (sd->view->mode == VIEW_MODE_DETAIL)
      {
-	iw = sd->w;
+	ww = sd->w;
 	hh = SIZE_DETAIL;
      }
    else
      {
-	int size;
-	int cnt = eina_list_count(sd->items);
-	double col = 1;
-	int width = sd->w - 8;
+	int div;
 
-	if (cnt < 5)
-	  {
-	     col = 2;
-	     aspect_w = width * 2;
-	  }
-	else if ((cnt < 9) && (sd->w < (double)sd->h * 1.2))
-	  {
-	     col = 2;
-	     aspect_w = width * 3;
-	  }
-	else if (cnt < 10)
-	  {
-	     col = 3;
-	     aspect_w = width * 3;
-	  }
-	else if (sd->view->zoom == 0)
-	  {
-	     size = 96;
-	     aspect_w = width  * (1 + (sd->h / size));
-	     col = width / size;
-	  }
+	if (sd->view->zoom == 0)
+	  ww = 96;
 	else if (sd->view->zoom == 1)
-	  {
-	     size = 128;
-	     col = width / size;
-	     aspect_w = width  * (1 + (sd->h / size));
-	  }
-
+	  ww = 128;
 	else /* if (sd->view->zoom == 2) */
-	  {
-	     size = 192;
-	     col = width / size;
-	     aspect_w = width * (1 + (sd->h / size));
-	  }
+	  ww = 192;
 
-	if (col < 1) col = 1;
+	div = sd->w / ww;
+	if (div < 1) div = 1;
+	ww += (sd->w - div * ww) / div;
 
-	iw = width / col;
-	aspect_w /= col;
+	div = sd->h / div;
+	if (div < 1) div = 1;
+	hh = ww + (sd->h - div * ww) / div;
+
+	if (hh > ww)
+	  hh = ww + (sd->h - (div + 1) * ww) / (div + 1);
      }
 
-   if (aspect_w <= 0) aspect_w = 1;
-   if (aspect_h <= 0) aspect_h = 1;
-
-   x = 0;
-   y = 0;
-   ww = iw;
-
-   if (sd->view->mode == VIEW_MODE_THUMB)
-     hh = (aspect_h * iw) / (aspect_w);
-
-   mw = mh = 0;
    EINA_LIST_FOREACH(sd->items, l, it)
      {
-	if (x > (sd->w - ww))
-	  {
-	     x = 0;
-	     y += hh;
-	  }
-
 	it->x = x;
 	it->y = y;
 	it->w = ww;
@@ -495,10 +449,16 @@ _e_smart_reconfigure_do(void *data)
 	if ((x + ww) > mw) mw = x + ww;
 	if ((y + hh) > mh) mh = y + hh;
 	x += ww;
+
+	if (x <= (sd->w - ww))
+	  continue;
+	
+	x = 0;
+	y += hh;
      }
 
-   if (sd->view->mode == VIEW_MODE_LIST ||
-       sd->view->mode == VIEW_MODE_DETAIL)
+   if ((sd->view->mode == VIEW_MODE_LIST) ||
+       (sd->view->mode == VIEW_MODE_DETAIL))
      mh += sd->h % hh;
 
    if ((mw != sd->cw) || (mh != sd->ch))
@@ -518,16 +478,10 @@ _e_smart_reconfigure_do(void *data)
 	changed = 1;
      }
 
-   if (sd->view->mode == VIEW_MODE_THUMB)
-     {
-	if (sd->w > sd->cw) ox = (sd->w - sd->cw) / 2;
-	if (sd->h > sd->ch) oy = (sd->h - sd->ch) / 2;
-     }
-
    EINA_LIST_FOREACH(sd->items, l, it)
      {
-	xx = sd->x - sd->cx + it->x + ox;
-	yy = sd->y - sd->cy + it->y + oy;
+	xx = sd->x - sd->cx + it->x;
+	yy = sd->y - sd->cy + it->y;
 
 	if (E_INTERSECTS(xx, yy, it->w, it->h, 0, sd->y - it->h,
 			 sd->x + sd->w, sd->y + sd->h + it->h))

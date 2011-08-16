@@ -153,19 +153,28 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
    ev = event_info;
    if (ev->button == 1)
      {
-	Evas_Coord x, y, w, h;
-	int cx, cy, pw, ph;
+	/* Evas_Coord x, y, w, h; */
+	/* int cx, cy, pw, ph; */
 	Evry_Window *win;
 
+	if (inst->win)
+	  {
+	     evry_hide(inst->win, 0); 
+	     return;
+	  }
 
-	win = evry_show(e_util_zone_current_get(e_manager_current_get()), 0, "Start");
+	win = evry_show(e_util_zone_current_get(e_manager_current_get()), 0, "Start", EINA_FALSE);
 	if (!win) return;
 
-	evas_object_geometry_get(inst->o_button, &x, &y, &w, &h);
-	e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon,
-					  &cx, &cy, NULL, NULL);
-	x += cx;
-	y += cy;
+	e_win_show(win->ewin);
+	
+	
+	/* evas_object_geometry_get(inst->o_button, &x, &y, &w, &h);
+	 * e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon,
+	 * 				  &cx, &cy, NULL, NULL);
+	 * x += cx;
+	 * y += cy; */
+
 	/* evas_object_resize(win->o_main,
 	 * 		   evry_conf->edge_width,
 	 * 		   evry_conf->edge_height);
@@ -174,46 +183,46 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 	 * 	       evry_conf->edge_width,
 	 * 	       evry_conf->edge_height); */
 
-	pw = win->ewin->w;
-	ph = win->ewin->h;
-
-	switch (inst->gcc->gadcon->orient)
-	  {
-
-	   case E_GADCON_ORIENT_TOP:
-	   case E_GADCON_ORIENT_CORNER_TL:
-	   case E_GADCON_ORIENT_CORNER_TR:
-	      e_win_move(win->ewin, x, y + h);
-	      break;
-	   case E_GADCON_ORIENT_BOTTOM:
-	   case E_GADCON_ORIENT_CORNER_BR:
-	   case E_GADCON_ORIENT_CORNER_BL:
-	      e_win_move(win->ewin, x, y - ph);
-	      break;
-	   case E_GADCON_ORIENT_LEFT:
-	   case E_GADCON_ORIENT_CORNER_LT:
-	   case E_GADCON_ORIENT_CORNER_LB:
-	      e_win_move(win->ewin, x + w, y);
-	      break;
-	   case E_GADCON_ORIENT_RIGHT:
-	   case E_GADCON_ORIENT_CORNER_RT:
-	   case E_GADCON_ORIENT_CORNER_RB:
-	      e_win_move(win->ewin, x - pw, y);
-	      break;
-	   case E_GADCON_ORIENT_FLOAT:
-	   case E_GADCON_ORIENT_HORIZ:
-	   case E_GADCON_ORIENT_VERT:
-	   default:
-	      break;
-	  }
+	/* pw = win->ewin->w;
+	 * ph = win->ewin->h;
+	 * 
+	 * switch (inst->gcc->gadcon->orient)
+	 *   {
+	 * 
+	 *    case E_GADCON_ORIENT_TOP:
+	 *    case E_GADCON_ORIENT_CORNER_TL:
+	 *    case E_GADCON_ORIENT_CORNER_TR:
+	 *       e_win_move(win->ewin, x, y + h);
+	 *       break;
+	 *    case E_GADCON_ORIENT_BOTTOM:
+	 *    case E_GADCON_ORIENT_CORNER_BR:
+	 *    case E_GADCON_ORIENT_CORNER_BL:
+	 *       e_win_move(win->ewin, x, y - ph);
+	 *       break;
+	 *    case E_GADCON_ORIENT_LEFT:
+	 *    case E_GADCON_ORIENT_CORNER_LT:
+	 *    case E_GADCON_ORIENT_CORNER_LB:
+	 *       e_win_move(win->ewin, x + w, y);
+	 *       break;
+	 *    case E_GADCON_ORIENT_RIGHT:
+	 *    case E_GADCON_ORIENT_CORNER_RT:
+	 *    case E_GADCON_ORIENT_CORNER_RB:
+	 *       e_win_move(win->ewin, x - pw, y);
+	 *       break;
+	 *    case E_GADCON_ORIENT_FLOAT:
+	 *    case E_GADCON_ORIENT_HORIZ:
+	 *    case E_GADCON_ORIENT_VERT:
+	 *    default:
+	 *       break;
+	 *   } */
 
 	inst->win = win;
 
-	if (win->ewin->x + pw > win->zone->w)
-	  e_win_move(win->ewin, win->zone->w - pw, win->ewin->y);
-
-	if (win->ewin->y + ph > win->zone->h)
-	  e_win_move(win->ewin, win->ewin->x, win->zone->h - ph);
+	/* if (win->ewin->x + pw > win->zone->w)
+	 *   e_win_move(win->ewin, win->zone->w - pw, win->ewin->y);
+	 * 
+	 * if (win->ewin->y + ph > win->zone->h)
+	 *   e_win_move(win->ewin, win->ewin->x, win->zone->h - ph); */
 
 	e_gadcon_locked_set(inst->gcc->gadcon, 1);
 

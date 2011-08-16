@@ -3,7 +3,7 @@
 
 #include "evry_types.h"
 
-#define EVRY_API_VERSION     27
+#define EVRY_API_VERSION     28
 
 #define EVRY_ACTION_OTHER    0
 #define EVRY_ACTION_FINISHED 1
@@ -101,8 +101,8 @@ struct _Evry_API
   Evry_Type (*type_register)(const char *type);
 
   /* evry_util.c */
-  Evas_Object *(*icon_mime_get)(const char *mime, Evas *e);
   Evas_Object *(*icon_theme_get)(const char *icon, Evas *e);
+
   int   (*fuzzy_match)(const char *str, const char *match);
   int   (*util_exec_app)(const Evry_Item *it_app, const Evry_Item *it_file);
   char *(*util_url_escape)(const char *string, int inlength);
@@ -197,10 +197,10 @@ struct _Evry_Event_Action_Performed
   EVRY_ITEM(_it)->icon = eina_stringshare_add(_icon);
 
 #define CHECK_TYPE(_item, _type) \
-  (((Evry_Item *)_item)->type && ((Evry_Item *)_item)->type == _type)
+  (((Evry_Item *)_item)->type == _type)
 
 #define CHECK_SUBTYPE(_item, _type) \
-  (((Evry_Item *)_item)->subtype && ((Evry_Item *)_item)->subtype == _type)
+  (((Evry_Item *)_item)->subtype == _type)
 
 #define IS_BROWSEABLE(_item) ((Evry_Item *)_item)->browseable
 
