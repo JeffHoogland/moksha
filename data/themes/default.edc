@@ -36186,23 +36186,20 @@ collections {
             source: "e";
             action: STATE_SET "default" 0.0;
             target: "clip";
-            transition: DECELERATE 0.1;
             after: "thumb_show2";
          }
          program {
             name: "thumb_show";
             signal: "e,action,thumb,show";
             source: "e";
-            action: STATE_SET "default" 0.0;
-            /* transition: DECELERATE 0.02; */
+            action: STATE_SET "visible" 0.0;
             target: "clip";
-            after: "thumb_show2";
          }
          program {
             name: "thumb_show2";
             action: STATE_SET "visible" 0.0;
-            /* transition: ACCELERATE 0.05; */
-            target: "base";
+	    transition: DECELERATE 0.1;
+            target: "clip";
          }
       }
    }
@@ -36529,14 +36526,13 @@ collections {
             source: "e";
             action: STATE_SET "visible" 0.0;
             target: "clip";
-            transition: ACCELERATE 0.02;
+            transition: DECELERATE 0.1;
          }
          program {
             name: "thumb_show";
             signal: "e,action,thumb,show";
             source: "e";
             action: STATE_SET "visible" 0.0;
-            transition: ACCELERATE 0.0;
             target: "clip";
          }
          program {
