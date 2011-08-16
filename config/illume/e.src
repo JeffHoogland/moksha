@@ -1563,7 +1563,7 @@ group "E_Config" struct {
     value "move_info_visible" int: 0;
     value "resize_info_visible" int: 0;
     value "focus_last_focused_per_desktop" int: 1;
-    value "focus_revert_on_hide_or_close" int: 1;
+    value "focus_revert_on_hide_or_close" int: 0;
     value "pointer_slide" int: 0;
     value "use_e_cursor" int: 1;
     value "cursor_size" int: 32;
