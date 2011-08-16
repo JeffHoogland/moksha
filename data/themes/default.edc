@@ -35799,7 +35799,8 @@ collections {
       parts {
          part {
             name: "clip";
-            mouse_events: 0;
+	    type: RECT;
+	    mouse_events: 0;
             description {
                state: "default" 0.0;
             rel1.relative: 0.05 0.0;
