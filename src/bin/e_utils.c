@@ -985,7 +985,7 @@ EAPI Evas_Object *
 e_util_icon_theme_icon_add(const char *icon_name, unsigned int size, Evas *evas)
 {
    if (!icon_name) return NULL;
-   if (icon_name[0] == '/') return e_util_icon_add(icon_name, evas);
+   if (icon_name[0] == '/') return _e_util_icon_add(icon_name, evas, size);
    else
      {
 	Evas_Object *obj;
