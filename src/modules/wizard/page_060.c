@@ -21,6 +21,8 @@ wizard_page_show(E_Wizard_Page *pg)
 {
    Evas_Object *o, *of, *ob;
    E_Radio_Group *rg;
+
+   if (e_config->focus_policy == E_FOCUS_CLICK) focus_mode = 0;
    
    o = e_widget_list_add(pg->evas, 1, 0);
    e_wizard_title_set(_("Window Focus"));
@@ -55,7 +57,6 @@ wizard_page_hide(E_Wizard_Page *pg)
         e_config->always_click_to_raise = 0;
         e_config->always_click_to_focus = 0;
         e_config->focus_last_focused_per_desktop = 1;
-        e_config->focus_revert_on_hide_or_close = 1;
         e_config->pointer_slide = 0;
      }
    else
@@ -66,7 +67,6 @@ wizard_page_hide(E_Wizard_Page *pg)
         e_config->always_click_to_raise = 0;
         e_config->always_click_to_focus = 0;
         e_config->focus_last_focused_per_desktop = 1;
-        e_config->focus_revert_on_hide_or_close = 1;
         e_config->pointer_slide = 1;
      }
    evas_object_del(pg->data);
