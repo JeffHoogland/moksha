@@ -393,7 +393,7 @@ _e_smart_reconfigure_do(void *data)
    Smart_Data *sd = evas_object_smart_data_get(obj);
    Eina_List *l;
    Item *it;
-   int changed = 0;
+   int div, changed = 0;
    Evas_Coord x = 0, y = 0, xx, yy, ww, hh, mw = 0, mh = 0;
 
    if (!sd) return ECORE_CALLBACK_CANCEL;
@@ -418,20 +418,18 @@ _e_smart_reconfigure_do(void *data)
      }
    else
      {
-	int div;
-
 	if (sd->view->zoom == 0)
 	  ww = 96;
 	else if (sd->view->zoom == 1)
 	  ww = 128;
-	else /* if (sd->view->zoom == 2) */
+	else 
 	  ww = 192;
 
 	div = sd->w / ww;
 	if (div < 1) div = 1;
 	ww += (sd->w - div * ww) / div;
 
-	div = sd->h / div;
+	div = sd->h / ww;
 	if (div < 1) div = 1;
 	hh = ww + (sd->h - div * ww) / div;
 
