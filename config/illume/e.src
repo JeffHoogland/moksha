@@ -115,12 +115,6 @@ group "E_Config" struct {
             value "priority" int: 0;
         }
         group "E_Config_Module" struct {
-            value "name" string: "comp";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 0;
-            value "priority" int: -1000;
-        }
-        group "E_Config_Module" struct {
             value "name" string: "shot";
             value "enabled" uchar: 1;
             value "delayed" uchar: 1;
