@@ -159,7 +159,18 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 
 	if (inst->win)
 	  {
-	     evry_hide(inst->win, 0); 
+	     win = inst->win;
+	     
+	     if (ev->flags == EVAS_BUTTON_DOUBLE_CLICK)
+	       {
+		  evry_hide(win, 0); 
+	       }
+	     else
+	       {
+		  e_win_show(win->ewin);
+		  e_border_focus_set(win->ewin->border, 1, 1); 
+	       }
+	     
 	     return;
 	  }
 
@@ -167,7 +178,7 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 	if (!win) return;
 
 	e_win_show(win->ewin);
-	
+	e_border_focus_set(win->ewin->border, 1, 1); 
 	
 	/* evas_object_geometry_get(inst->o_button, &x, &y, &w, &h);
 	 * e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon,
