@@ -54,6 +54,7 @@ static E_Config_DD *conf_item_edd = NULL;
 static Eina_List *clock_instances = NULL;
 static E_Action *act = NULL;
 static int uuid = 0;
+static Ecore_Timer *update_today = NULL;
 
 static void
 _clear_timestrs(Instance *inst)
@@ -250,6 +251,13 @@ _clock_popup_new(Instance *inst)
    Evas *evas;
    Evas_Object *o, *oi;
    Evas_Coord mw = 128, mh = 128;
+   char todaystr[32];
+   time_t t;
+   struct tm *tm;
+
+   t = time(NULL);
+   tm = localtime(&t);
+   strftime(todaystr, sizeof(todaystr) - 1, "%a, %x", tm);
 
    if (inst->popup) return;
 
@@ -278,6 +286,9 @@ _clock_popup_new(Instance *inst)
       edje_object_signal_emit(oi, "e,state,seconds,on", "e");
    else
       edje_object_signal_emit(oi, "e,state,seconds,off", "e");
+
+   edje_object_part_text_set(oi, "e.text.today", todaystr);
+
    o = e_widget_image_add_from_object(evas, oi, 128, 128);
    evas_object_show(oi);
    e_widget_table_object_align_append(inst->o_table, o,
@@ -315,11 +326,19 @@ e_int_clock_instances_redo(void)
 {
    Eina_List *l;
    Instance *inst;
+   char todaystr[32];
+   time_t t;
+   struct tm *tm;
+
+   t = time(NULL);
+   tm = localtime(&t);
+   strftime(todaystr, sizeof(todaystr) - 1, "%a, %x", tm);
 
    EINA_LIST_FOREACH(clock_instances, l, inst)
      {
         Evas_Object *o = inst->o_clock;
         Evas_Coord mw, mh;
+
 
         if (inst->cfg->digital_clock)
            e_theme_edje_object_set(o, "base/theme/modules/clock",
@@ -335,6 +354,8 @@ e_int_clock_instances_redo(void)
            edje_object_signal_emit(o, "e,state,seconds,on", "e");
         else
            edje_object_signal_emit(o, "e,state,seconds,off", "e");
+
+        edje_object_part_text_set(o, "e.text.today", todaystr);
         edje_object_message_signal_process(o);
         mw = 0, mh = 0;
         edje_object_size_min_get(o, &mw, &mh);
@@ -344,7 +365,56 @@ e_int_clock_instances_redo(void)
         if (mh < 4) mh = 4;
         e_gadcon_client_aspect_set(inst->gcc, mw, mh);
         e_gadcon_client_min_size_set(inst->gcc, mw, mh);
+
+        if (inst->o_popclock)
+          {
+             o = inst->o_popclock;
+
+             if (inst->cfg->digital_clock)
+               e_theme_edje_object_set(o, "base/theme/modules/clock",
+                                       "e/modules/clock/digital");
+             else
+               e_theme_edje_object_set(o, "base/theme/modules/clock",
+                                       "e/modules/clock/main");
+             if (inst->cfg->digital_24h)
+               edje_object_signal_emit(o, "e,state,24h,on", "e");
+             else
+               edje_object_signal_emit(o, "e,state,24h,off", "e");
+             if (inst->cfg->show_seconds)
+               edje_object_signal_emit(o, "e,state,seconds,on", "e");
+             else
+               edje_object_signal_emit(o, "e,state,seconds,off", "e");
+
+             edje_object_part_text_set(o, "e.text.today", todaystr);
+             edje_object_message_signal_process(o);
+          }
      }
+}
+
+static Eina_Bool
+_update_today_timer(void *data __UNUSED__)
+{
+   time_t t, t_tomorrow;
+   const struct tm *now;
+   struct tm today;
+
+   e_int_clock_instances_redo();
+   if (!clock_instances)
+     {
+        update_today = NULL;
+        return EINA_FALSE;
+     }
+
+   t = time(NULL);
+   now = localtime(&t);
+   memcpy(&today, now, sizeof(today));
+   today.tm_sec = 1;
+   today.tm_min = 0;
+   today.tm_hour = 0;
+
+   t_tomorrow = mktime(&today) + 24 * 60 * 60;
+   update_today = ecore_timer_add(t_tomorrow - t, _update_today_timer, NULL);
+   return EINA_FALSE;
 }
 
 static void
@@ -353,6 +423,7 @@ _clock_popup_free(Instance *inst)
    if (!inst->popup) return;
    if (inst->popup) e_object_del(E_OBJECT(inst->popup));
    inst->popup = NULL;
+   inst->o_popclock = NULL;
 }
 
 static void
@@ -443,6 +514,13 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    Evas_Object *o;
    E_Gadcon_Client *gcc;
    Instance *inst;
+   char todaystr[32];
+   time_t t;
+   struct tm *tm;
+
+   t = time(NULL);
+   tm = localtime(&t);
+   strftime(todaystr, sizeof(todaystr) - 1, "%a, %x", tm);
 
    inst = E_NEW(Instance, 1);
    inst->cfg = _conf_item_get(id);
@@ -464,6 +542,8 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
       edje_object_signal_emit(o, "e,state,seconds,on", "e");
    else
       edje_object_signal_emit(o, "e,state,seconds,off", "e");
+
+   edje_object_part_text_set(o, "e.text.today", todaystr);
    evas_object_show(o);
 
    gcc = e_gadcon_client_new(gc, name, id, style, o);
@@ -478,6 +558,9 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
                                   inst);
 
    clock_instances = eina_list_append(clock_instances, inst);
+
+   if (!update_today) _update_today_timer(NULL);
+
    return gcc;
 }
 
@@ -498,6 +581,12 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    _clock_popup_free(inst);
    _clear_timestrs(inst);
    free(inst);
+
+   if ((!clock_instances) && (update_today))
+     {
+        ecore_timer_del(update_today);
+        update_today = NULL;
+     }
 }
 
 static void
@@ -702,6 +791,13 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    conf_edd = NULL;
 
    e_gadcon_provider_unregister(&_gadcon_class);
+
+   if (update_today)
+     {
+        ecore_timer_del(update_today);
+        update_today = NULL;
+     }
+
    return 1;
 }
 
