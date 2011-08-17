@@ -314,7 +314,6 @@ _e_alert_window_raise(xcb_window_t win)
 static void 
 _e_alert_sync(void) 
 {
-   xcb_flush(conn);
    free(xcb_get_input_focus_reply(conn, 
                                   xcb_get_input_focus(conn), NULL));
 }
@@ -322,13 +321,16 @@ _e_alert_sync(void)
 static void 
 _e_alert_shutdown(void) 
 {
-   xcb_close_font(conn, font);
-   xcb_destroy_window(conn, btn1);
-   xcb_destroy_window(conn, btn2);
-   xcb_destroy_window(conn, win);
-   if (comp_win) xcb_destroy_window(conn, comp_win);
-   xcb_free_gc(conn, gc);
-   xcb_disconnect(conn);
+   if (!xcb_connection_has_error(conn)) 
+     {
+        xcb_close_font(conn, font);
+        xcb_destroy_window(conn, btn1);
+        xcb_destroy_window(conn, btn2);
+        xcb_destroy_window(conn, win);
+        if (comp_win) xcb_destroy_window(conn, comp_win);
+        xcb_free_gc(conn, gc);
+        xcb_disconnect(conn);
+     }
 }
 
 static void 
