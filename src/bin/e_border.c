@@ -3160,8 +3160,12 @@ e_border_idler_before(void)
 	  }
 
 	if (bd == focused)
-	  return;
-
+	  {
+	     /* already focused. but anyway dont be so strict, this
+		fcks up illume setting focus on internal windows */
+	     // return;
+	  }
+	
 	focus_time = ecore_x_current_time_get();
 
 	if ((bd->client.icccm.take_focus) &&
