@@ -204,21 +204,17 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 
       case E_IPC_DOMAIN_ALERT: 
           {
-             E_Action *a = NULL;
-
              switch (e->minor) 
                {
                 case E_ALERT_OP_RESTART:
-                  a = e_action_find("restart");
+                  ecore_app_restart();
                   break;
                 case E_ALERT_OP_EXIT:
-                  a = e_action_find("exit_now");
+                  exit(-11);
                   break;
                }
-             if ((a) && (a->func.go)) a->func.go(NULL, NULL);
-             break;
           }
-
+        break;
       default:
         break;
      }
