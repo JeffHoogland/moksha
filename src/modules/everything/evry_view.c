@@ -89,6 +89,7 @@ _thumb_gen(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 
    e_icon_size_get(it->thumb, &w, &h);
    edje_extern_object_aspect_set(it->thumb, EDJE_ASPECT_CONTROL_BOTH, w, h);
+   edje_object_part_unswallow(it->frame, it->image); 
    edje_object_part_swallow(it->frame, "e.swallow.thumb", it->thumb);
    evas_object_show(it->thumb);
    edje_object_signal_emit(it->frame, "e,action,thumb,show_delayed", "e");
@@ -1403,6 +1404,35 @@ _cb_item_changed(void *data, int type __UNUSED__, void *event)
    return ECORE_CALLBACK_PASS_ON;
 }
 
+static Eina_Bool
+_cb_action_performed(void *data, int type __UNUSED__, void *event)
+{
+   Evry_Event_Action_Performed *ev = event;
+   View *v = data;
+   Eina_List *l;
+   Item *it;
+   Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(v->span);
+   if (!sd) return ECORE_CALLBACK_PASS_ON;
+
+   EINA_LIST_FOREACH(sd->items, l, it)
+     {
+	
+	if ((it->item == ev->it1) ||
+	    (it->item == ev->it2))
+	  break;
+     }
+   
+   if (it && it->visible)
+     {
+	evas_object_raise(it->frame); 
+	edje_object_signal_emit(it->frame, "e,action,go", "e");
+     }
+   
+   return ECORE_CALLBACK_PASS_ON;
+}
+
 static void
 _view_cb_mouse_wheel(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj, void *event_info)
 {
@@ -1600,7 +1630,9 @@ _view_create(Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
 
    h = evry_event_handler_add(EVRY_EVENT_ITEM_CHANGED, _cb_item_changed, v);
    v->handlers = eina_list_append(v->handlers, h);
-
+   h = evry_event_handler_add(EVRY_EVENT_ACTION_PERFORMED, _cb_action_performed, v);
+   v->handlers = eina_list_append(v->handlers, h);
+   
    return EVRY_VIEW(v);
 }
 
