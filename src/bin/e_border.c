@@ -211,6 +211,7 @@ static Eina_List *handlers = NULL;
 static Eina_List *borders = NULL;
 static Eina_Hash *borders_hash = NULL;
 static E_Border *focused = NULL;
+static E_Border *focusing = NULL;
 static Eina_List *focus_next = NULL;
 static Ecore_X_Time focus_time = 0;
 
@@ -2009,121 +2010,124 @@ e_border_focus_set(E_Border *bd,
    /* dont focus an iconified window. that's silly! */
    if (focus)
      {
-	if (bd->iconic)
-	  return;
+        if (bd->iconic)
+          return;
 
-	if (!bd->visible)
-	  return;
+        if (!bd->visible)
+          return;
 
-	/* FIXME: hack for deskflip animation:
-	 * dont update focus when sliding previous desk */
-	if ((!bd->sticky) && (bd->desk != e_desk_current_get(bd->desk->zone)))
-	  return;
+        /* FIXME: hack for deskflip animation:
+         * dont update focus when sliding previous desk */
+        if ((!bd->sticky) && (bd->desk != e_desk_current_get(bd->desk->zone)))
+          return;
 
-	/* TODO */
-	/* if !set and no other window is focused 'revert focus when lost' */
+        /* TODO */
+        /* if !set and no other window is focused 'revert focus when lost' */
      }
 
    if ((bd->modal) && (bd->modal != bd) && (bd->modal->visible))
      {
-	e_border_focus_set(bd->modal, focus, set);
-	return;
+        e_border_focus_set(bd->modal, focus, set);
+        return;
      }
    else if ((bd->leader) && (bd->leader->modal) && (bd->leader->modal != bd))
      {
-	e_border_focus_set(bd->leader->modal, focus, set);
-	return;
+        e_border_focus_set(bd->leader->modal, focus, set);
+        return;
      }
 
-   if ((set) && (focus))
+   if (focus)
      {
-	if (bd->visible && bd->changes.visible)
-	  {
-	     bd->want_focus = 1;
-	     bd->changed = 1;
-	     return;
-	  }
-	if ((!bd->focused) || (focus_next && (bd != eina_list_data_get(focus_next))))
-	  {
-	     Eina_List *l;
+        if (set)
+          {
+             if (bd->visible && bd->changes.visible)
+               {
+                  bd->want_focus = 1;
+                  bd->changed = 1;
+               }
+             else if ((!bd->focused) || (focus_next && (bd != eina_list_data_get(focus_next))))
+               {
+                  Eina_List *l;
+             
+                  if ((l = eina_list_data_find_list(focus_next, bd)))
+                    focus_next = eina_list_promote_list(focus_next, l);
+                  else
+                    focus_next = eina_list_prepend(focus_next, bd);
+               }
+             
+             return;
+          }
 
-	     if ((l = eina_list_data_find_list(focus_next, bd)))
-	       focus_next = eina_list_promote_list(focus_next, l);
-	     else
-	       focus_next = eina_list_prepend(focus_next, bd);
-	     return;
-	  }
+        if (!bd->focused)
+          {
+             E_Event_Border_Focus_In *ev;
+
+             if (focused) unfocus = focused;
+             if (focusing == bd) focusing = NULL;
+             
+             bd->focused = 1;
+             focused = bd;
+
+             e_focus_event_focus_in(bd);
+             e_border_focus_latest_set(bd);
+             e_hints_active_window_set(bd->zone->container->manager, bd);
+
+             edje_object_signal_emit(bd->bg_object, "e,state,focused", "e");
+             if (bd->icon_object)
+               edje_object_signal_emit(bd->icon_object, "e,state,focused", "e");
+
+             ev = E_NEW(E_Event_Border_Focus_In, 1);
+             ev->border = bd;
+             e_object_ref(E_OBJECT(bd));
+
+             ecore_event_add(E_EVENT_BORDER_FOCUS_IN, ev,
+                             _e_border_event_border_focus_in_free, NULL);
+          }
      }
-   else if ((focus) && (!bd->focused))
+   else
      {
-	E_Event_Border_Focus_In *ev;
+        bd->want_focus = 0;
+	focus_next = eina_list_remove(focus_next, bd);
+	if (bd == focusing) focusing = NULL;
+	
+        if (bd->focused)
+          {
+             unfocus = bd;
 
-	if (focused)
-	  unfocus = focused;
+             /* should always be the case. anyway */
+             if (bd == focused) focused = NULL;
 
-	bd->focused = 1;
-	focused = bd;
-
-	e_focus_event_focus_in(bd);
-	e_border_focus_latest_set(bd);
-	e_hints_active_window_set(bd->zone->container->manager, bd);
-
-	edje_object_signal_emit(bd->bg_object, "e,state,focused", "e");
-	if (bd->icon_object)
-	  edje_object_signal_emit(bd->icon_object, "e,state,focused", "e");
-
-	ev = E_NEW(E_Event_Border_Focus_In, 1);
-	ev->border = bd;
-	e_object_ref(E_OBJECT(bd));
-
-	ecore_event_add(E_EVENT_BORDER_FOCUS_IN, ev,
-			_e_border_event_border_focus_in_free, NULL);
+             if ((set) && (!focus_next) && (!focusing))
+               {
+                  e_grabinput_focus(bd->zone->container->bg_win, E_FOCUS_METHOD_PASSIVE);
+               }
+          }
      }
-   else if ((!focus) && (bd->want_focus))
-     {
-	if ((bd->visible) && (bd->changes.visible))
-	  {
-	     bd->want_focus = 0;
-	     bd->changed = 1;
-	     return;
-	  }
-     }
-   else if ((!focus) && (bd->focused))
-     {
-	unfocus = bd;
-
-	/* should always be the case. anyway */
-	if (bd == focused)
-	  focused = NULL;
-
-	if (set)
-	  e_grabinput_focus(bd->zone->container->bg_win, E_FOCUS_METHOD_PASSIVE);
-     }
-
+   
    if ((unfocus) &&
        (!e_object_is_del(E_OBJECT(unfocus)) &&
-	(e_object_ref_get(E_OBJECT(unfocus)) > 0)))
+        (e_object_ref_get(E_OBJECT(unfocus)) > 0)))
      {
-	E_Event_Border_Focus_Out *ev;
+        E_Event_Border_Focus_Out *ev;
 
-	bd = unfocus;
-	bd->focused = 0;
-	e_focus_event_focus_out(bd);
+        bd = unfocus;
+        bd->focused = 0;
+        e_focus_event_focus_out(bd);
 
-	if (bd->raise_timer)
-	  ecore_timer_del(bd->raise_timer);
-	bd->raise_timer = NULL;
+        if (bd->raise_timer)
+          ecore_timer_del(bd->raise_timer);
+        bd->raise_timer = NULL;
 
-	edje_object_signal_emit(bd->bg_object, "e,state,unfocused", "e");
-	if (bd->icon_object)
-	  edje_object_signal_emit(bd->icon_object, "e,state,unfocused", "e");
+        edje_object_signal_emit(bd->bg_object, "e,state,unfocused", "e");
+        if (bd->icon_object)
+          edje_object_signal_emit(bd->icon_object, "e,state,unfocused", "e");
 
-	ev = E_NEW(E_Event_Border_Focus_Out, 1);
-	ev->border = bd;
-	e_object_ref(E_OBJECT(bd));
+        ev = E_NEW(E_Event_Border_Focus_Out, 1);
+        ev->border = bd;
+        e_object_ref(E_OBJECT(bd));
 
-	ecore_event_add(E_EVENT_BORDER_FOCUS_OUT, ev,
-			_e_border_event_border_focus_out_free, NULL);
+        ecore_event_add(E_EVENT_BORDER_FOCUS_OUT, ev,
+                	_e_border_event_border_focus_out_free, NULL);
      }
 }
 
@@ -3163,11 +3167,13 @@ e_border_idler_before(void)
 	  {
 	     /* already focused. but anyway dont be so strict, this
 		fcks up illume setting focus on internal windows */
-	     // return;
+	     return;
 	  }
-	
+
 	focus_time = ecore_x_current_time_get();
 
+	focusing = bd;
+	
 	if ((bd->client.icccm.take_focus) &&
 	    (bd->client.icccm.accepts_focus))
 	  {
@@ -4330,12 +4336,18 @@ _e_border_free(E_Border *bd)
 
    e_int_border_menu_del(bd);
 
+   if (focusing == bd)
+     focusing = NULL;
+   
    if (focused == bd)
      {
-//	ecore_x_window_focus(bd->zone->container->manager->root);
-          e_grabinput_focus(bd->zone->container->bg_win, E_FOCUS_METHOD_PASSIVE);
-          e_hints_active_window_set(bd->zone->container->manager, NULL);
-          focused = NULL;
+	if ((!focus_next) && (!focusing))
+	  {
+	     e_grabinput_focus(bd->zone->container->bg_win, E_FOCUS_METHOD_PASSIVE);
+	     e_hints_active_window_set(bd->zone->container->manager, NULL);
+	  }
+	
+	focused = NULL;
      }
    E_FREE_LIST(bd->handlers, ecore_event_handler_del);
    if (bd->remember)
@@ -4433,6 +4445,9 @@ _e_border_del(E_Border *bd)
 
    if (bd == focused)
      focused = NULL;
+
+   if (bd == focusing)
+     focusing = NULL;
 
    focus_next = eina_list_remove(focus_next, bd);
 
