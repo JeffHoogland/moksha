@@ -123,7 +123,6 @@ e_sigseg_act(int x __UNUSED__, siginfo_t *info __UNUSED__, void *data __UNUSED__
    ecore_x_ungrab();
    ecore_x_sync();
    e_alert_show(SIGSEGV);
-   exit(-11);
 }
 
 EAPI void
@@ -136,7 +135,6 @@ e_sigill_act(int x __UNUSED__, siginfo_t *info __UNUSED__, void *data __UNUSED__
    ecore_x_ungrab();
    ecore_x_sync();
    e_alert_show(SIGILL);
-   exit(-11);
 }
 
 EAPI void
@@ -149,7 +147,6 @@ e_sigfpe_act(int x __UNUSED__, siginfo_t *info __UNUSED__, void *data __UNUSED__
    ecore_x_ungrab();
    ecore_x_sync();
    e_alert_show(SIGFPE);
-   exit(-11);
 }
 
 EAPI void
@@ -162,7 +159,6 @@ e_sigbus_act(int x __UNUSED__, siginfo_t *info __UNUSED__, void *data __UNUSED__
    ecore_x_ungrab();
    ecore_x_sync();
    e_alert_show(SIGBUS);
-   exit(-11);
 }
 
 EAPI void
@@ -175,5 +171,4 @@ e_sigabrt_act(int x __UNUSED__, siginfo_t *info __UNUSED__, void *data __UNUSED_
    ecore_x_ungrab();
    ecore_x_sync();
    e_alert_show(SIGABRT);
-   exit(-11);
 }
