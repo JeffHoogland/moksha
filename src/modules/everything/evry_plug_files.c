@@ -57,7 +57,7 @@ struct _Plugin
 
   Ecore_Thread *thread;
   Ecore_File_Monitor *dir_mon;
-  int wait_finish;
+  int waiting_to_finish;
 };
 
 struct _Data
@@ -280,8 +280,8 @@ _scan_cancel_func(void *data, Ecore_Thread *thread __UNUSED__)
    Plugin *p = d->plugin;
    Evry_Item_File *file;
 
-   EINA_LIST_FREE(p->files, file)
-     EVRY_ITEM_FREE(file);
+   /* EINA_LIST_FREE(p->files, file)
+    *   EVRY_ITEM_FREE(file); */
 
    EINA_LIST_FREE(d->files, file)
      {
@@ -292,7 +292,7 @@ _scan_cancel_func(void *data, Ecore_Thread *thread __UNUSED__)
 
    p->thread = NULL;
 
-   if (p->wait_finish)
+   if (p->waiting_to_finish)
      E_FREE(p);
 
    free(d->directory);
@@ -645,15 +645,11 @@ _finish(Evry_Plugin *plugin)
    IF_RELEASE(p->directory);
 
    if (p->thread)
-     {
-	ecore_thread_cancel(p->thread);
-	p->wait_finish = 1;
-	p->thread = NULL;
-     }
+     p->waiting_to_finish = 1;
 
    _free_files(p);
 
-   if (!p->wait_finish)
+   if (!p->waiting_to_finish)
      E_FREE(p);
 }
 
@@ -869,13 +865,11 @@ _recentf_cancel_func(void *data)
    Evry_Item_File *file;
 
    EINA_LIST_FREE(d->files, file)
-     {
-	EVRY_ITEM_FREE(file);
-     }
+     EVRY_ITEM_FREE(file);
 
    E_FREE(d);
 
-   if (p->wait_finish)
+   if (p->waiting_to_finish)
      E_FREE(p);
 }
 
