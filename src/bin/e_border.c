@@ -1995,8 +1995,9 @@ e_border_focus_set(E_Border *bd,
                    int       focus,
                    int       set)
 {
-   E_Border *unfocus = NULL;
-
+   E_Border *bd_unfocus = NULL;
+   Eina_Bool focus_changed = EINA_FALSE;
+   
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    /* note: this is here as it seems there are enough apps that do not even
@@ -2020,9 +2021,6 @@ e_border_focus_set(E_Border *bd,
          * dont update focus when sliding previous desk */
         if ((!bd->sticky) && (bd->desk != e_desk_current_get(bd->desk->zone)))
           return;
-
-        /* TODO */
-        /* if !set and no other window is focused 'revert focus when lost' */
      }
 
    if ((bd->modal) && (bd->modal != bd) && (bd->modal->visible))
@@ -2060,29 +2058,14 @@ e_border_focus_set(E_Border *bd,
 
         if (!bd->focused)
           {
-             E_Event_Border_Focus_In *ev;
-
-             if (focused) unfocus = focused;
+             if (focused) bd_unfocus = focused;
              if (focusing == bd) focusing = NULL;
              
              bd->focused = 1;
              focused = bd;
 
-             e_focus_event_focus_in(bd);
-             e_border_focus_latest_set(bd);
-             e_hints_active_window_set(bd->zone->container->manager, bd);
-
-             edje_object_signal_emit(bd->bg_object, "e,state,focused", "e");
-             if (bd->icon_object)
-               edje_object_signal_emit(bd->icon_object, "e,state,focused", "e");
-
-             ev = E_NEW(E_Event_Border_Focus_In, 1);
-             ev->border = bd;
-             e_object_ref(E_OBJECT(bd));
-
-             ecore_event_add(E_EVENT_BORDER_FOCUS_IN, ev,
-                             _e_border_event_border_focus_in_free, NULL);
-          }
+	     focus_changed = EINA_TRUE;
+	  }
      }
    else
      {
@@ -2092,7 +2075,7 @@ e_border_focus_set(E_Border *bd,
 	
         if (bd->focused)
           {
-             unfocus = bd;
+             bd_unfocus = bd;
 
              /* should always be the case. anyway */
              if (bd == focused) focused = NULL;
@@ -2103,31 +2086,51 @@ e_border_focus_set(E_Border *bd,
                }
           }
      }
-   
-   if ((unfocus) &&
-       (!e_object_is_del(E_OBJECT(unfocus)) &&
-        (e_object_ref_get(E_OBJECT(unfocus)) > 0)))
+
+   if ((bd_unfocus) &&
+       (!e_object_is_del(E_OBJECT(bd_unfocus)) &&
+	(e_object_ref_get(E_OBJECT(bd_unfocus)) > 0)))
      {
-        E_Event_Border_Focus_Out *ev;
+	E_Event_Border_Focus_Out *ev;
+	E_Border *bd = bd_unfocus;
 
-        bd = unfocus;
-        bd->focused = 0;
-        e_focus_event_focus_out(bd);
+	bd->focused = 0;
+	e_focus_event_focus_out(bd);
 
-        if (bd->raise_timer)
-          ecore_timer_del(bd->raise_timer);
-        bd->raise_timer = NULL;
+	if (bd->raise_timer)
+	  ecore_timer_del(bd->raise_timer);
+	bd->raise_timer = NULL;
 
-        edje_object_signal_emit(bd->bg_object, "e,state,unfocused", "e");
-        if (bd->icon_object)
-          edje_object_signal_emit(bd->icon_object, "e,state,unfocused", "e");
+	edje_object_signal_emit(bd->bg_object, "e,state,unfocused", "e");
+	if (bd->icon_object)
+	  edje_object_signal_emit(bd->icon_object, "e,state,unfocused", "e");
 
-        ev = E_NEW(E_Event_Border_Focus_Out, 1);
-        ev->border = bd;
-        e_object_ref(E_OBJECT(bd));
+	ev = E_NEW(E_Event_Border_Focus_Out, 1);
+	ev->border = bd;
+	e_object_ref(E_OBJECT(bd));
 
-        ecore_event_add(E_EVENT_BORDER_FOCUS_OUT, ev,
-                	_e_border_event_border_focus_out_free, NULL);
+	ecore_event_add(E_EVENT_BORDER_FOCUS_OUT, ev,
+			_e_border_event_border_focus_out_free, NULL);
+     }
+
+   if (focus_changed)
+     {
+	E_Event_Border_Focus_In *ev;
+
+	e_focus_event_focus_in(bd);
+	e_border_focus_latest_set(bd);
+	e_hints_active_window_set(bd->zone->container->manager, bd);
+
+	edje_object_signal_emit(bd->bg_object, "e,state,focused", "e");
+	if (bd->icon_object)
+	  edje_object_signal_emit(bd->icon_object, "e,state,focused", "e");
+
+	ev = E_NEW(E_Event_Border_Focus_In, 1);
+	ev->border = bd;
+	e_object_ref(E_OBJECT(bd));
+
+	ecore_event_add(E_EVENT_BORDER_FOCUS_IN, ev,
+			_e_border_event_border_focus_in_free, NULL);
      }
 }
 
