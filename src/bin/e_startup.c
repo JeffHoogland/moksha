@@ -34,7 +34,7 @@ e_startup(E_Startup_Mode mode)
 	  e_prefix_data_concat_static(buf, "data/applications/restart/.order");
      }
    desktop_cache_update_handler =
-      ecore_event_handler_add(EFREET_EVENT_DESKTOP_CACHE_UPDATE,
+      ecore_event_handler_add(EFREET_EVENT_DESKTOP_CACHE_BUILD,
                               _e_startup_event_cb,
                               strdup(buf));
    e_init_undone();
