@@ -3241,7 +3241,7 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
                  }
                else
                  {
-                    if (e_user_homedir_snprintf(buf, sizeof(buf), "%s-%s", _("Desktop"), path) >= sizeof(buf))
+                    if (e_user_homedir_snprintf(buf, sizeof(buf), "%s/%s", _("Desktop"), path) >= sizeof(buf))
                       return NULL;
                  }
                ecore_file_mkpath(buf);
