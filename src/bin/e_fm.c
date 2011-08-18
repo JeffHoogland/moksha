@@ -3229,21 +3229,55 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
           }
         else if (strcmp(dev, "desktop") == 0)
           {
+             char *custom_desktop_dir = getenv("XDG_DESKTOP_DIR");
              /* this is a virtual device - it's where your favorites list is
               * stored - a dir with
                 .desktop files or symlinks (in fact anything
               * you like
               */
-               if (strcmp(path, "/") == 0)
-                 {
-                    if (e_user_homedir_concat(buf, sizeof(buf), _("Desktop")) >= sizeof(buf))
+             if (custom_desktop_dir)
+               {
+                 int len;
+
+                 custom_desktop_dir = e_util_shell_env_path_eval(custom_desktop_dir);
+                 len = strlen(custom_desktop_dir);
+
+                 if (len >= sizeof(buf))
+                   {
+                      free(custom_desktop_dir);
                       return NULL;
-                 }
-               else
-                 {
-                    if (e_user_homedir_snprintf(buf, sizeof(buf), "%s/%s", _("Desktop"), path) >= sizeof(buf))
-                      return NULL;
-                 }
+                   }
+
+                 strncpy(buf, custom_desktop_dir, sizeof(buf));
+
+                 if (strcmp(path, "/"))
+                   {
+                      if (len + 1 + strlen(path) >= sizeof(buf))
+                        {
+                           free(custom_desktop_dir);
+                           return NULL;
+                        }
+                      buf[len++] = '/';
+                      strncpy(buf + len, path, sizeof(buf) - len);
+                   }
+                   free(custom_desktop_dir);
+               }
+             else
+               {
+                 if (strcmp(path, "/") == 0)
+                   {
+                      if (e_user_homedir_concat(buf, sizeof(buf),
+                                                _("Desktop")) >= sizeof(buf))
+                        return NULL;
+                   }
+                 else
+                   {
+                      if (e_user_homedir_snprintf(buf, sizeof(buf), "%s/%s",
+                                                  _("Desktop"), path)
+                          >= sizeof(buf))
+                        return NULL;
+                   }
+               }
                ecore_file_mkpath(buf);
           }
         else if (strcmp(dev, "temp") == 0)
