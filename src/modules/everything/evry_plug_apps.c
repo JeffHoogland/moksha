@@ -1058,17 +1058,14 @@ _run_executable(Evry_Action *act)
 
 /***************************************************************************/
 static Eina_Bool
-_desktop_cache_update(void *data __UNUSED__, int type __UNUSED__, void *event)
+_desktop_cache_update(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
-   Efreet_Event_Cache_Update *ev = event;
    Efreet_Desktop *d;
-
-   if (!ev->changed) return ECORE_CALLBACK_PASS_ON;
 
    EINA_LIST_FREE(apps_cache, d)
      efreet_desktop_unref(d);
 
-   return ECORE_CALLBACK_PASS_ON;
+   return EINA_TRUE;
 }
 
 static int

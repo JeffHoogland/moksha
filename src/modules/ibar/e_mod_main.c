@@ -1314,13 +1314,10 @@ e_modapi_save(E_Module *m __UNUSED__)
 }
 
 static Eina_Bool
-_ibar_cb_config_icons(__UNUSED__ void *data, __UNUSED__ int ev_type, void *event)
+_ibar_cb_config_icons(__UNUSED__ void *data, __UNUSED__ int ev_type, __UNUSED__ void *ev)
 {
-   Efreet_Event_Cache_Update *ev = event;
    const Eina_List *l;
    Instance *inst;
-
-   if (!ev->changed) return ECORE_CALLBACK_PASS_ON;
 
    EINA_LIST_FOREACH(ibar_config->instances, l, inst)
      {
