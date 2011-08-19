@@ -89,7 +89,7 @@ _thumb_gen(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 
    e_icon_size_get(it->thumb, &w, &h);
    edje_extern_object_aspect_set(it->thumb, EDJE_ASPECT_CONTROL_BOTH, w, h);
-   edje_object_part_unswallow(it->frame, it->image); 
+   edje_object_part_unswallow(it->frame, it->image);
    edje_object_part_swallow(it->frame, "e.swallow.thumb", it->thumb);
    evas_object_show(it->thumb);
    edje_object_signal_emit(it->frame, "e,action,thumb,show_delayed", "e");
@@ -136,7 +136,7 @@ _thumb_idler(void *data)
    char *suffix;
    int w, h;
    int cnt = 0;
-   
+
    sd->queue = eina_list_sort(sd->queue, -1, _sort_pos_cb);
 
    EINA_LIST_FOREACH_SAFE(sd->queue, l, ll, it)
@@ -171,7 +171,7 @@ _thumb_idler(void *data)
 	     evas_object_smart_callback_add(it->thumb, "e_thumb_gen", _thumb_gen, it);
 
 	     e_thumb_icon_size_set(it->thumb, it->w, it->h);
-	     
+
 	     if (it->item->icon && it->item->icon[0])
 	       e_thumb_icon_file_set(it->thumb, it->item->icon, NULL);
 	     else if ((suffix = strrchr(file->path, '.')) && (!strncmp(suffix, ".edj", 4)))
@@ -187,7 +187,7 @@ _thumb_idler(void *data)
 	  }
 
 	edje_object_signal_emit(it->frame, "e,action,thumb,show", "e");
-	
+
 	sd->queue = eina_list_remove_list(sd->queue, l);
 
 	if (cnt++ > 10)
@@ -419,12 +419,20 @@ _e_smart_reconfigure_do(void *data)
      }
    else
      {
-	if (sd->view->zoom == 0)
-	  ww = 96;
-	else if (sd->view->zoom == 1)
-	  ww = 128;
-	else 
-	  ww = 192;
+	Evas_Object *o = edje_object_add(sd->view->evas);
+	e_theme_edje_object_set(o, "base/theme/modules/everything",
+				"e/modules/everything/thumbview/item/thumb");
+	edje_object_size_min_get(o, &ww, &hh);
+	evas_object_del(o);
+	if (!ww)
+	  {
+	     if (sd->view->zoom == 0)
+	       ww = 96;
+	     else if (sd->view->zoom == 1)
+	       ww = 128;
+	     else
+	       ww = 192;
+	  }
 
 	div = sd->w / ww;
 	if (div < 1) div = 1;
@@ -451,7 +459,7 @@ _e_smart_reconfigure_do(void *data)
 
 	if (x <= (sd->w - ww))
 	  continue;
-	
+
 	x = 0;
 	y += hh;
      }
@@ -1412,24 +1420,24 @@ _cb_action_performed(void *data, int type __UNUSED__, void *event)
    Eina_List *l;
    Item *it;
    Smart_Data *sd;
-   
+
    sd = evas_object_smart_data_get(v->span);
    if (!sd) return ECORE_CALLBACK_PASS_ON;
 
    EINA_LIST_FOREACH(sd->items, l, it)
      {
-	
+
 	if ((it->item == ev->it1) ||
 	    (it->item == ev->it2))
 	  break;
      }
-   
+
    if (it && it->visible)
      {
-	evas_object_raise(it->frame); 
+	evas_object_raise(it->frame);
 	edje_object_signal_emit(it->frame, "e,action,go", "e");
      }
-   
+
    return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -1632,7 +1640,7 @@ _view_create(Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
    v->handlers = eina_list_append(v->handlers, h);
    h = evry_event_handler_add(EVRY_EVENT_ACTION_PERFORMED, _cb_action_performed, v);
    v->handlers = eina_list_append(v->handlers, h);
-   
+
    return EVRY_VIEW(v);
 }
 

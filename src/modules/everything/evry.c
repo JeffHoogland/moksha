@@ -156,7 +156,7 @@ evry_show(E_Zone *zone, E_Zone_Edge edge, const char *params, Eina_Bool popup)
    _evry_time = ecore_time_get();
    DBG("_____evry_show______");
 #endif
-   
+
    E_OBJECT_CHECK_RETURN(zone, 0);
    E_OBJECT_TYPE_CHECK_RETURN(zone, E_ZONE_TYPE, 0);
 
@@ -170,7 +170,7 @@ evry_show(E_Zone *zone, E_Zone_Edge edge, const char *params, Eina_Bool popup)
 				      ECORE_X_WINDOW_TYPE_UTILITY);
 
 	ecore_evas_name_class_set(win->ewin->ecore_evas, "E", "everything");
-	
+
 	ecore_evas_show(win->ewin->ecore_evas);
 
 	if (e_grabinput_get(win->ewin->evas_win, 0, win->ewin->evas_win))
@@ -178,7 +178,7 @@ evry_show(E_Zone *zone, E_Zone_Edge edge, const char *params, Eina_Bool popup)
 	else
 	  ERR("could not acquire grab");
      }
-   
+
    evry_history_load();
 
    if (params)
@@ -538,7 +538,7 @@ _evry_selector_update_actions(Evry_Selector *sel)
    if (sel->action_timer)
      ecore_timer_del(sel->action_timer);
 
-   _evry_selector_item_clear(sel); 
+   _evry_selector_item_clear(sel);
    sel->action_timer = ecore_timer_add(0.2, _evry_timer_cb_actions_get, sel);
 }
 
@@ -1262,7 +1262,7 @@ _evry_selector_thumb(Evry_Selector *sel, const Evry_Item *it)
 	  {
 	     e_thumb_icon_file_set(sel->o_thumb, file->path, "e/desktop/background");
 	     e_thumb_icon_size_set(sel->o_thumb, 128, 80);
-	  }	
+	  }
 	else
 	  e_thumb_icon_file_set(sel->o_thumb, file->path, NULL);
 
@@ -1326,7 +1326,7 @@ _evry_selector_item_update(Evry_Selector *sel)
 	if (!_evry_selector_thumb(sel, it))
 	  {
 	     o = evry_util_icon_get(it, win->evas);
-	     
+
 	     if ((!o) && it->plugin)
 	       o = evry_util_icon_get(EVRY_ITEM(it->plugin), win->evas);
 	  }
@@ -1481,13 +1481,13 @@ _evry_state_pop(Evry_Selector *sel, int immediate)
    	ecore_timer_del(sel->update_timer);
    	sel->update_timer = NULL;
      }
-   
+
    if (sel->action_timer)
      {
    	ecore_timer_del(sel->action_timer);
    	sel->action_timer = NULL;
      }
-     
+
    if (s->view)
      {
 	if (immediate)
@@ -1691,8 +1691,8 @@ evry_browse_item(Evry_Item *it)
 	if (s->view)
 	  {
 	     s->view->state = s;
-	     _evry_view_show(win, s->view, SLIDE_LEFT);
 	     s->view->update(s->view);
+	     _evry_view_show(win, s->view, SLIDE_LEFT);
 	  }
      }
 
@@ -1704,16 +1704,20 @@ evry_browse_item(Evry_Item *it)
 int
 evry_browse_back(Evry_Selector *sel)
 {
-   Evry_Window *win = sel->win;
+   Evry_Window *win;
+   Evry_State *s;
 
-   if (!sel) sel = CUR_SEL;
+   if (!sel) return 0;
 
-   Evry_State *s = sel->state;
 
-   DBG("%p", sel);
-
-   if (!s || !sel->states->next)
+   if ((!sel) || !(win = sel->win))
      return 0;
+
+   if (!(s = sel->state) || (!sel->states->next))
+     return 0;
+
+   /* next = eina_list_data_get(sel->states->next);
+    * edje_object_part_unswallow(win->o_main, next->view->o_list); */
 
    _evry_state_pop(sel, 0);
 
@@ -2299,7 +2303,7 @@ _evry_action_do(Evry_Action *act)
 {
    Evry_Event_Action_Performed *ev;
    int ret;
-   
+
    if ((ret = act->action(act)))
      {
 	ev = E_NEW(Evry_Event_Action_Performed, 1);
@@ -2333,7 +2337,7 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
    Evry_Window *win = sel->win;
    Eina_List *l;
    int ret = 0;
-   
+
    if ((SUBJ_SEL)->update_timer)
      {
 	_evry_matches_update(SUBJ_SEL, 0);
@@ -2389,7 +2393,7 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
 		  if (SUBJ_SEL == CUR_SEL)
 		    _evry_selectors_switch(win, 1);
 		  if (ACTN_SEL == CUR_SEL)
-		    _evry_selectors_switch(win, 1);		  
+		    _evry_selectors_switch(win, 1);
 		  return;
 	       }
 
@@ -2462,6 +2466,22 @@ _evry_plugin_action(Evry_Selector *sel, int finished)
      }
 }
 
+static void
+_evry_view_list_swallow_set(Evas_Object *obj, const char *part, Evas_Object *swallow)
+{
+   Evas_Object *o;
+
+   o = edje_object_part_swallow_get(obj, part);
+   if (o != swallow)
+     {
+	evas_object_hide(o);
+	edje_object_part_unswallow(obj, o);
+
+	edje_object_part_unswallow(obj, swallow);
+	edje_object_part_swallow(obj, part, swallow);
+	evas_object_show(swallow);
+     }
+}
 
 static void
 _evry_view_show(Evry_Window *win, Evry_View *v, int slide)
@@ -2479,24 +2499,21 @@ _evry_view_show(Evry_Window *win, Evry_View *v, int slide)
 
    if (slide == SLIDE_LEFT)
      {
-	edje_object_part_swallow(win->o_main, "list:e.swallow.list2", v->o_list);
-	evas_object_show(v->o_list);
+	_evry_view_list_swallow_set(win->o_main, "list:e.swallow.list2", v->o_list);
 
 	edje_object_signal_emit(win->o_main, "list:e,action,slide,left", "e");
 	edje_object_signal_emit(v->o_list, "e,action,show,list", "e");
      }
    else if (slide == SLIDE_RIGHT)
      {
-	edje_object_part_swallow(win->o_main, "list:e.swallow.list", v->o_list);
-	evas_object_show(v->o_list);
+	_evry_view_list_swallow_set(win->o_main, "list:e.swallow.list", v->o_list);
 
 	edje_object_signal_emit(win->o_main, "list:e,action,slide,right", "e");
 	edje_object_signal_emit(v->o_list, "e,action,show,list", "e");
      }
    else
      {
-	edje_object_part_swallow(win->o_main, "list:e.swallow.list", v->o_list);
-	evas_object_show(v->o_list);
+	_evry_view_list_swallow_set(win->o_main, "list:e.swallow.list", v->o_list);
 
 	edje_object_signal_emit(win->o_main, "list:e,action,slide,default", "e");
 	edje_object_signal_emit(v->o_list, "e,action,show,list", "e");
@@ -2540,8 +2557,8 @@ _evry_state_clear(Evry_Window *win)
 
 	if (v->o_list)
 	  {
-	     edje_object_part_unswallow(win->o_main, v->o_list);
 	     evas_object_hide(v->o_list);
+	     edje_object_part_unswallow(win->o_main, v->o_list);
 	  }
      }
 
@@ -2559,32 +2576,26 @@ _evry_view_hide(Evry_Window *win, Evry_View *v, int slide)
 
    if (slide && v->o_list)
      {
-	evas_object_hide(v->o_list);
-	edje_object_part_unswallow(win->o_main, v->o_list);
+	win->state_clearing = v->state;
 
 	if (slide == SLIDE_RIGHT)
 	  {
-	     edje_object_part_swallow(win->o_main, "list:e.swallow.list2",
-				      v->o_list);
-
-	     win->state_clearing = v->state;
+	     _evry_view_list_swallow_set(win->o_main, "list:e.swallow.list2", v->o_list);
 	  }
 	else /* if (slide == SLIDE_LEFT) */
 	  {
-	     edje_object_part_swallow(win->o_main, "list:e.swallow.list",
-				      v->o_list);
-	     win->state_clearing = v->state;
+	     _evry_view_list_swallow_set(win->o_main, "list:e.swallow.list", v->o_list);
 	  }
 
-	evas_object_show(v->o_list);
 	edje_object_signal_emit(v->o_list, "e,action,hide,list", "e");
+
 	/* FIXME get signal from theme when anim finished */
-	v->state->clear_timer = ecore_timer_add(0.5, _clear_timer, win);
+	v->state->clear_timer = ecore_timer_add(1.5, _clear_timer, win);
 
 	if (v->o_bar)
 	  {
-	     edje_object_part_unswallow(win->o_main, v->o_bar);
 	     evas_object_hide(v->o_bar);
+	     edje_object_part_unswallow(win->o_main, v->o_bar);
 	  }
 
 	return;
@@ -2594,14 +2605,14 @@ _evry_view_hide(Evry_Window *win, Evry_View *v, int slide)
 
    if (v->o_list)
      {
-	edje_object_part_unswallow(win->o_main, v->o_list);
 	evas_object_hide(v->o_list);
+	edje_object_part_unswallow(win->o_main, v->o_list);
      }
 
    if (v->o_bar)
      {
-	edje_object_part_unswallow(win->o_main, v->o_bar);
 	evas_object_hide(v->o_bar);
+	edje_object_part_unswallow(win->o_main, v->o_bar);
      }
 }
 
@@ -2612,14 +2623,14 @@ _evry_view_create(Evry_State *s)
 
    if (s->view)
      return 1;
-   
+
    if (s->plugin && s->plugin->view)
      view = s->plugin->view;
    else
      view = eina_list_data_get(evry_conf->views);
 
    s->view = view->create(view, s, s->selector->win->o_main);
-     
+
    if (s->view)
      {
 	s->view->state = s;
@@ -2640,7 +2651,7 @@ _evry_view_update(Evry_Window *win, Evry_State *s)
 	s->view->update(s->view);
 	return 0;
      }
-   
+
    if (_evry_view_create(s))
      {
 	s->view->update(s->view);
@@ -2748,7 +2759,7 @@ _evry_matches_update(Evry_Selector *sel, int async)
 #ifdef CHECK_TIME
    DBG("matches update %f", ecore_time_get() - _evry_time);
 #endif
-   
+
    if (sel->update_timer)
      {
 	ecore_timer_del(sel->update_timer);
@@ -2942,7 +2953,7 @@ _evry_plugin_select(Evry_State *s, Evry_Plugin *p)
 	     _evry_view_show(s->selector->win, s->view, 0);
 	     s->view->update(s->view);
 	  }
-	
+
      }
 }
 
