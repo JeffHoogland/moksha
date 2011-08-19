@@ -419,12 +419,22 @@ _e_smart_reconfigure_do(void *data)
      }
    else
      {
+	int w, h;
+	
 	Evas_Object *o = edje_object_add(sd->view->evas);
 	e_theme_edje_object_set(o, "base/theme/modules/everything",
 				"e/modules/everything/thumbview/item/thumb");
-	edje_object_size_min_get(o, &ww, &hh);
+	edje_object_size_min_get(o, &w, &h);
 	evas_object_del(o);
-	if (!ww)
+
+	if ((w > 0) && (h > 0))
+	  {
+	     div = sd->w / w;
+	     if (div < 1) div = 1;
+	     ww = w + (sd->w - div * w) / div;
+	     hh = ((double)h/(double)w * (double)ww);
+	  }
+	else
 	  {
 	     if (sd->view->zoom == 0)
 	       ww = 96;
@@ -432,18 +442,19 @@ _e_smart_reconfigure_do(void *data)
 	       ww = 128;
 	     else
 	       ww = 192;
+
+	     div = sd->w / ww;
+	     if (div < 1) div = 1;
+	     ww += (sd->w - div * ww) / div;
+
+	     div = sd->h / ww;
+	     if (div < 1) div = 1;
+	     hh = ww + (sd->h - div * ww) / div;
+
+	     if (hh > ww)
+	       hh = ww + (sd->h - (div + 1) * ww) / (div + 1);
+
 	  }
-
-	div = sd->w / ww;
-	if (div < 1) div = 1;
-	ww += (sd->w - div * ww) / div;
-
-	div = sd->h / ww;
-	if (div < 1) div = 1;
-	hh = ww + (sd->h - div * ww) / div;
-
-	if (hh > ww)
-	  hh = ww + (sd->h - (div + 1) * ww) / (div + 1);
      }
 
    EINA_LIST_FOREACH(sd->items, l, it)
