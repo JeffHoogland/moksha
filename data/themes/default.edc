@@ -8166,6 +8166,15 @@ collections {
          }
          programs {
             program {
+               name: "e,changed,state,online";
+               signal: "e,changed,state,online";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "state-clipper";
+               target: "state-inverted-clipper";
+               after: "state-connecting-stop";
+            }
+            program {
                name: "e,changed,state,ready";
                signal: "e,changed,state,ready";
                source: "e";
@@ -8583,6 +8592,15 @@ collections {
             }
          }
          programs {
+            program {
+               name: "e,changed,state,online";
+               signal: "e,changed,state,online";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "state-clipper";
+               target: "state-inverted-clipper";
+               after: "state-connecting-stop";
+            }
             program {
                name: "e,changed,state,ready";
                signal: "e,changed,state,ready";
