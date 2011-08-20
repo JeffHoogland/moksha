@@ -3750,9 +3750,11 @@ e_border_icon_add(E_Border *bd,
    o = NULL;
    if (bd->internal)
      {
-        o = edje_object_add(evas);
         if (!bd->internal_icon)
-          e_util_edje_icon_set(o, "enlightenment");
+	  {
+	     o = e_icon_add(evas);     
+	     e_util_icon_theme_set(o, "enlightenment");
+	  }
         else
           {
              if (!bd->internal_icon_key)
@@ -3762,18 +3764,17 @@ e_border_icon_add(E_Border *bd,
                   ext = strrchr(bd->internal_icon, '.');
                   if ((ext) && ((!strcmp(ext, ".edj"))))
                     {
+		       o = edje_object_add(evas);
                        if (!edje_object_file_set(o, bd->internal_icon, "icon"))
-                         e_util_edje_icon_set(o, "enlightenment");
+                         e_util_icon_theme_set(o, "enlightenment");
                     }
                   else if (ext)
                     {
-                       evas_object_del(o);
                        o = e_icon_add(evas);
                        e_icon_file_set(o, bd->internal_icon);
                     }
                   else
                     {
-                       evas_object_del(o);
                        o = e_icon_add(evas);
                        if (!e_util_icon_theme_set(o, bd->internal_icon))
                          e_util_icon_theme_set(o, "enlightenment");
@@ -3781,6 +3782,7 @@ e_border_icon_add(E_Border *bd,
                }
              else
                {
+		  o = edje_object_add(evas);
                   edje_object_file_set(o, bd->internal_icon,
                                        bd->internal_icon_key);
                }
