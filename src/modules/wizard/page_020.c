@@ -136,8 +136,6 @@ wizard_page_show(E_Wizard_Page *pg)
 EAPI int
 wizard_page_hide(E_Wizard_Page *pg)
 {
-   char buf[PATH_MAX];
-   
    evas_object_del(pg->data);
    // actually apply profile
    if (!profile) profile = "standard";
