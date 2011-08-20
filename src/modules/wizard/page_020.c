@@ -22,10 +22,12 @@ _profile_change(void *data __UNUSED__, Evas_Object *obj __UNUSED__)
    snprintf(buf, sizeof(buf), "%s/profile.desktop", dir);
    desk = efreet_desktop_new(buf);
    if (desk)
-     e_widget_textblock_markup_set(textblock, desk->comment);
+     {
+        e_widget_textblock_markup_set(textblock, desk->comment);
+        efreet_desktop_free(desk);
+     }
    else
      e_widget_textblock_markup_set(textblock, _("Unknown"));
-   if (desk) efreet_desktop_free(desk);
 
    // enable next once you choose a profile
    e_wizard_button_next_enable_set(1);
