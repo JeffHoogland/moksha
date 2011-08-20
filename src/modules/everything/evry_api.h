@@ -246,6 +246,10 @@ struct _Evry_Event_Action_Performed
 #define EVRY_PLUGIN_ITEM_APPEND(_p, _item) \
   EVRY_PLUGIN(_p)->items = eina_list_append(EVRY_PLUGIN(_p)->items, EVRY_ITEM(_item))
 
+#define EVRY_PLUGIN_MIN_QUERY(_p, _input)				\
+  if (!(EVRY_PLUGIN(_p)->config->min_query) ||				\
+      (_input && (strlen(_input) >= EVRY_PLUGIN(_p)->config->min_query)))
+
 typedef void (*Evry_Item_Free_Cb) (Evry_Item *it);
 
 #define EVRY_PLUGIN_ITEMS_CLEAR(_p) {				\

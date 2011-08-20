@@ -24,8 +24,6 @@ struct _Border_Item
   E_Border *border;
 };
 
-#define GET_BORDER(_bd, _it) Border_Item *_bd = (Border_Item *)_it;
-
 static const Evry_API *evry = NULL;
 static Evry_Module *evry_module = NULL;
 static Evry_Plugin *_plug;
@@ -34,6 +32,9 @@ static Eina_List *_actions = NULL;
 static Evas_Object *_icon_get(Evry_Item *it, Evas *e);
 
 /***************************************************************************/
+
+#define GET_BORDER(_bd, _it) Border_Item *_bd = (Border_Item *)_it;
+
 
 static void
 _border_item_free(Evry_Item *it)
@@ -56,7 +57,9 @@ _border_item_add(Plugin *p, E_Border *bd)
    if (bd->client.netwm.state.skip_pager)
      return 0;
 
-   bi = EVRY_ITEM_NEW(Border_Item, p, e_border_name_get(bd), _icon_get, _border_item_free);
+   bi = EVRY_ITEM_NEW(Border_Item, p, e_border_name_get(bd),
+		      _icon_get, _border_item_free);
+
    snprintf(buf, sizeof(buf), "%d:%d %s",
 	    bd->desk->x, bd->desk->y,
 	    (bd->desktop ? bd->desktop->name : ""));
@@ -84,9 +87,12 @@ _cb_border_remove(void *data, __UNUSED__ int type,  void *event)
 
    if (!bi) return ECORE_CALLBACK_PASS_ON;
 
+   EVRY_PLUGIN_ITEMS_CLEAR(p);
+
    p->borders = eina_list_remove(p->borders, bi);
-   p->base.items = eina_list_remove(p->base.items, bi);
    EVRY_ITEM_FREE(bi);
+
+   EVRY_PLUGIN_ITEMS_ADD(p, p->borders, p->input, 1, 0);
 
    EVRY_PLUGIN_UPDATE(p, EVRY_UPDATE_ADD);
 
@@ -97,31 +103,28 @@ _cb_border_add(void *data, __UNUSED__ int type,  void *event)
 {
    E_Event_Border_Add *ev = event;
    Plugin *p = data;
-   unsigned int min;
 
    if (!_border_item_add(p, ev->border))
      return ECORE_CALLBACK_PASS_ON;
 
    EVRY_PLUGIN_ITEMS_CLEAR(p);
 
-   min = EVRY_PLUGIN(p)->config->min_query;
+   EVRY_PLUGIN_ITEMS_ADD(p, p->borders, p->input, 1, 0);
 
-   if ((!p->input && (min == 0)) ||
-       (p->input && (strlen(p->input) >= min)))
-     {
-	EVRY_PLUGIN_ITEMS_ADD(p, p->borders, p->input, 1, 0);
-
-	EVRY_PLUGIN_UPDATE(p, EVRY_UPDATE_ADD);
-     }
+   EVRY_PLUGIN_UPDATE(p, EVRY_UPDATE_ADD);
 
    return ECORE_CALLBACK_PASS_ON;
 }
 
-static void
-_get_borderlist(Plugin *p)
+
+static Evry_Plugin *
+_begin(Evry_Plugin *plugin, const Evry_Item *item __UNUSED__)
 {
+   Plugin *p;
    E_Border *bd;
    Eina_List *l;
+
+   EVRY_PLUGIN_INSTANCE(p, plugin);
 
    p->handlers = eina_list_append
      (p->handlers, ecore_event_handler_add
@@ -133,13 +136,6 @@ _get_borderlist(Plugin *p)
 
    EINA_LIST_FOREACH(e_border_focus_stack_get(), l, bd)
      _border_item_add(p, bd);
-}
-
-static Evry_Plugin *
-_begin(Evry_Plugin *plugin, const Evry_Item *item __UNUSED__)
-{
-   Plugin *p;
-   EVRY_PLUGIN_INSTANCE(p, plugin);
 
    return EVRY_PLUGIN(p);
 }
@@ -168,26 +164,21 @@ _finish(Evry_Plugin *plugin)
 static int
 _fetch(Evry_Plugin *plugin, const char *input)
 {
-   int len = (input ? strlen(input) : 0);
-
    GET_PLUGIN(p, plugin);
 
    EVRY_PLUGIN_ITEMS_CLEAR(p);
 
-   if (len >= plugin->config->min_query)
+   EVRY_PLUGIN_MIN_QUERY(p, input)
      {
 	IF_RELEASE(p->input);
 
 	if (input)
 	  p->input = eina_stringshare_add(input);
 
-	if (!p->handlers)
-	  _get_borderlist(p);
-
-	EVRY_PLUGIN_ITEMS_ADD(p, p->borders, input, 1, 0);
+	return EVRY_PLUGIN_ITEMS_ADD(p, p->borders, input, 1, 0);
      }
 
-   return !!(p->base.items);
+   return 0;
 }
 
 static Evas_Object *
@@ -200,66 +191,87 @@ _icon_get(Evry_Item *it, Evas *e)
 
    if (bd->internal)
      {
-	o = edje_object_add(e);
-	if (!bd->internal_icon)
-	  e_util_edje_icon_set(o, "enlightenment/e");
-	else if (!bd->internal_icon_key)
+        if (!bd->internal_icon)
+	  {
+	     o = e_icon_add(e);
+	     e_util_icon_theme_set(o, "enlightenment");
+	  }
+        else if (!bd->internal_icon_key)
 	  {
 	     char *ext;
 	     ext = strrchr(bd->internal_icon, '.');
 	     if ((ext) && ((!strcmp(ext, ".edj"))))
 	       {
+		  o = edje_object_add(e);
 		  if (!edje_object_file_set(o, bd->internal_icon, "icon"))
-		    e_util_edje_icon_set(o, "enlightenment/e");
+		    e_util_icon_theme_set(o, "enlightenment");
 	       }
 	     else if (ext)
 	       {
-		  evas_object_del(o);
 		  o = e_icon_add(e);
 		  e_icon_file_set(o, bd->internal_icon);
 	       }
 	     else
 	       {
-		  if (!e_util_edje_icon_set(o, bd->internal_icon))
-		    e_util_edje_icon_set(o, "enlightenment/e");
+		  o = e_icon_add(e);
+		  e_icon_scale_size_set(o, 128);
+		  if (!e_util_icon_theme_set(o, bd->internal_icon))
+		    e_util_icon_theme_set(o, "enlightenment");
 	       }
 	  }
 	else
 	  {
-	     edje_object_file_set(o, bd->internal_icon,
-				  bd->internal_icon_key);
+	     o = edje_object_add(e);
+	     edje_object_file_set(o, bd->internal_icon, bd->internal_icon_key);
 	  }
+
 	return o;
      }
 
-   if (!o && bd->desktop)
-     o = e_util_desktop_icon_add(bd->desktop, 128, e);
-
-   if (!o && bd->client.netwm.icons)
+   if (bd->client.netwm.icons)
      {
-	int i, size, tmp, found = 0;
-	o = e_icon_add(e);
+	if (e_config->use_app_icon)
+	  goto _use_netwm_icon;
 
-	size = bd->client.netwm.icons[0].width;
-
-	for (i = 1; i < bd->client.netwm.num_icons; i++)
-	  {
-	     if ((tmp = bd->client.netwm.icons[i].width) > size)
-	       {
-		  size = tmp;
-		  found = i;
-	       }
-	  }
-
-	e_icon_data_set(o, bd->client.netwm.icons[found].data,
-			bd->client.netwm.icons[found].width,
-			bd->client.netwm.icons[found].height);
-	e_icon_alpha_set(o, 1);
-	return o;
+	if (bd->remember && (bd->remember->prop.icon_preference == E_ICON_PREF_NETWM))
+	  goto _use_netwm_icon;
      }
 
-   if (!o)
-     o = e_border_icon_add(bd, e);
+   if (bd->desktop)
+     {
+        o = e_util_desktop_icon_add(bd->desktop, 128, e);
+	if (o) return o;
+     }
+
+ _use_netwm_icon:
+   if (bd->client.netwm.icons)
+     {
+        int i, size, tmp, found = 0;
+        o = e_icon_add(e);
+
+        size = bd->client.netwm.icons[0].width;
+
+        for (i = 1; i < bd->client.netwm.num_icons; i++)
+          {
+             if ((tmp = bd->client.netwm.icons[i].width) > size)
+               {
+                  size = tmp;
+                  found = i;
+               }
+          }
+
+        e_icon_data_set(o, bd->client.netwm.icons[found].data,
+                        bd->client.netwm.icons[found].width,
+                        bd->client.netwm.icons[found].height);
+        e_icon_alpha_set(o, 1);
+        return o;
+     }
+
+   o = e_border_icon_add(bd, e);
+   if (o) return o;
+
+   o = edje_object_add(e);
+   e_util_icon_theme_set(o, "unknown");
 
    return o;
 }
