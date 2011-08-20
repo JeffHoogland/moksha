@@ -1038,7 +1038,7 @@ _e_entry_smart_add(Evas_Object *object)
    if ((!object) || !(evas = evas_object_evas_get(object)))
      return;
 
-   sd = malloc(sizeof(E_Entry_Smart_Data));
+   sd = calloc(1, sizeof(E_Entry_Smart_Data));
    if (!sd) return;
    
    evas_object_smart_data_set(object, sd);
