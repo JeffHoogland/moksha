@@ -979,7 +979,7 @@ _e_kbd_int_layout_parse(E_Kbd_Int *ki, const char *layout)
 	if (sscanf(buf, "%4000s", str) != 1) continue;
 	if (!strcmp(str, "kbd"))
 	  {
-	     if (sscanf(buf, "%*s %i %i\n", &(ki->layout.w), &(ki->layout.h)) != 2)
+	     if (sscanf(buf, "%*s %i %i\n", &(ki->layout.w), &(ki->layout.orig_h)) != 2)
 	       continue;
 	  }
 	if (!strcmp(str, "fuzz"))
@@ -1004,7 +1004,7 @@ _e_kbd_int_layout_parse(E_Kbd_Int *ki, const char *layout)
 	  {
 	     ky = calloc(1, sizeof(E_Kbd_Int_Key));
 	     if (!ky) continue;
-	     if (sscanf(buf, "%*s %i %i %i %i\n", &(ky->x), &(ky->y), &(ky->w), &(ky->h)) != 4)
+	     if (sscanf(buf, "%*s %i %i %i %i\n", &(ky->x), &(ky->orig_y), &(ky->w), &(ky->orig_h)) != 4)
 	       {
 		  free(ky);
 		  ky = NULL;
@@ -1055,6 +1055,8 @@ _e_kbd_int_layout_build(E_Kbd_Int *ki)
    Evas_Coord lw, lh;
    Eina_List *l;
 
+   ki->layout.h = ki->layout.orig_h * il_kbd_cfg->scale_height;
+
    evas_event_freeze(ki->win->evas);
    e_layout_virtual_size_set(ki->layout_obj, ki->layout.w, ki->layout.h);
    edje_extern_object_aspect_set(ki->layout_obj, EDJE_ASPECT_CONTROL_BOTH, 
@@ -1072,6 +1074,9 @@ _e_kbd_int_layout_build(E_Kbd_Int *ki)
      {
 	E_Kbd_Int_Key_State *st;
 	const char *label, *icon;
+
+	ky->y = ky->orig_y * il_kbd_cfg->scale_height;
+	ky->h = ky->orig_h * il_kbd_cfg->scale_height;
 
 	o = _theme_obj_new(ki->win->evas, ki->themedir,
 			   "e/modules/kbd/key/default");

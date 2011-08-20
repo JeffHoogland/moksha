@@ -46,7 +46,7 @@ struct _E_Kbd_Int
    struct {
       char             *directory;
       const char       *file;
-      int               w, h;
+      int               w, h, orig_h;
       int               fuzz;
       int		direction;
       E_Kbd_Int_Type    type;
@@ -87,7 +87,7 @@ struct _E_Kbd_Int
 
 struct _E_Kbd_Int_Key
 {
-   int x, y, w, h;
+   int x, y, w, h, orig_y, orig_h;
    
    Eina_List *states;
    Evas_Object *obj, *zoom_obj, *icon_obj, *zoom_icon_obj;
