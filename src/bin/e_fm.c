@@ -2047,11 +2047,7 @@ _e_fm2_icon_mime_fdo_get(Evas *evas, const E_Fm2_Icon *ic, const char **type_ret
    size = _e_fm2_icon_mime_size_normalize(ic);
    icon = efreet_mime_type_icon_get(ic->info.mime, e_config->icon_theme, size);
    if (icon)
-     {
-        Evas_Object *o;
-        o = _e_fm2_icon_explicit_get(evas, ic, icon, type_ret);
-        return o;
-     }
+      return _e_fm2_icon_explicit_get(evas, ic, icon, type_ret);
    return NULL;
 }
 
@@ -2068,14 +2064,14 @@ _e_fm2_icon_mime_theme_get(Evas *evas, const E_Fm2_Icon *ic, const char **type_r
    file = e_theme_edje_file_get("base/theme/icons", buf);
    if (file && file[0])
      {
-        Evas_Object *obj = edje_object_add(evas);
-        if (!obj) return NULL;
-        if (!edje_object_file_set(obj, file, buf))
+        Evas_Object *o = edje_object_add(evas);
+        if (!o) return NULL;
+        if (!edje_object_file_set(o, file, buf))
           {
-             evas_object_del(obj);
+             evas_object_del(o);
              return NULL;
           }
-        return obj;
+        return o;
      }
 
    return NULL;
@@ -2087,7 +2083,7 @@ _e_fm2_icon_mime_theme_get(Evas *evas, const E_Fm2_Icon *ic, const char **type_r
 static Evas_Object *
 _e_fm2_icon_mime_get(Evas *evas, const E_Fm2_Icon *ic, Evas_Smart_Cb gen_func __UNUSED__, void *data __UNUSED__, int force_gen __UNUSED__, const char **type_ret)
 {
-   Evas_Object *o;
+   Evas_Object *o = NULL;
 
    if (e_config->icon_theme_overrides)
      o = _e_fm2_icon_mime_fdo_get(evas, ic, type_ret);
@@ -2101,9 +2097,7 @@ _e_fm2_icon_mime_get(Evas *evas, const E_Fm2_Icon *ic, Evas_Smart_Cb gen_func __
    else
      o = _e_fm2_icon_mime_theme_get(evas, ic, type_ret);
 
-   if (o) return o;
-
-   return NULL;
+   return o;
 }
 
 /**
@@ -2158,8 +2152,7 @@ _e_fm2_icon_discover_get(Evas *evas, const E_Fm2_Icon *ic, Evas_Smart_Cb gen_fun
    const char *p;
 
    p = strrchr(ic->info.file, '.');
-   if (!p)
-     return NULL;
+   if (!p) return NULL;
 
    p++;
    if (_e_fm2_ext_is_edje(p))
@@ -2169,8 +2162,7 @@ _e_fm2_icon_discover_get(Evas *evas, const E_Fm2_Icon *ic, Evas_Smart_Cb gen_fun
      return _e_fm2_icon_desktop_get(evas, ic, type_ret);
    else if (_e_fm2_ext_is_imc(p))
      return _e_fm2_icon_imc_get(evas, ic, type_ret);
-   else
-     return NULL;
+   return NULL;
 }
 
 /**
@@ -2190,7 +2182,7 @@ e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
                void *data, int force_gen, const char **type_ret)
 {
    const char *icon;
-   Evas_Object *o;
+   Evas_Object *o = NULL;
    
    if (ic->info.icon)
      {
