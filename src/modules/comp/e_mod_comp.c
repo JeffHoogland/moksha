@@ -1543,6 +1543,9 @@ _e_mod_comp_win_shadow_setup(E_Comp_Win *cw)
         else
           edje_object_signal_emit(cw->shobj, "e,state,shadow,off", "e");
      }
+   else
+     edje_object_signal_emit(cw->shobj, "e,state,shadow,off", "e");
+
    if (cw->bd)
      {
         if (cw->bd->focused)
