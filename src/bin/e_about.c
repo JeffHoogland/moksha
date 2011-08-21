@@ -30,9 +30,9 @@ e_about_new(E_Container *con)
 	"so please see the COPYING and COPYING-PLAIN licence files "
 	"installed on your system.<br>"
 	"<br>"
-	"Enlightenment is under <hilight>HEAVY DEVELOPMENT</hilight> and it "
+	"Enlightenment is under <hilight>HEAVY DEVELOPMENT</> and it "
 	"is not stable. Many features are incomplete or even non-existent "
-	"yet and may have many bugs. You have been <hilight>WARNED!</hilight>"
+	"yet and may have many bugs. You have been <hilight>WARNED!</>"
 	)
       );
    
@@ -44,7 +44,7 @@ e_about_new(E_Container *con)
 	f = fopen(buf, "r");
 	if (f)
 	  {
-	     tbuf = strdup(_("<title>The Team</title>"));
+	     tbuf = strdup(_("<title>The Team</><br><br>"));
 	     while (fgets(buf, sizeof(buf), f))
 	       {
 		  int len;
