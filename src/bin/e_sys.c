@@ -27,6 +27,7 @@ static int _e_sys_can_hibernate = 0;
 static E_Sys_Action _e_sys_action_current = E_SYS_NONE;
 static E_Sys_Action _e_sys_action_after = E_SYS_NONE;
 static Ecore_Exe *_e_sys_exe = NULL;
+static double _e_sys_begin_time = 0.0;
 static double _e_sys_logout_begin_time = 0.0;
 static Ecore_Timer *_e_sys_logout_timer = NULL;
 static E_Obj_Dialog *_e_sys_dialog = NULL;
@@ -543,13 +544,14 @@ _e_sys_action_do(E_Sys_Action a, char *param __UNUSED__)
 	break;
       case E_SYS_RESTART:
 	// XXX TODO: check for e_fm_op_registry entries and confirm
-	if (!e_util_immortal_check())
+        // FIXME: we dont   share out immortal info to restarted e. :(
+//	if (!e_util_immortal_check())
 	  {
 	     restart = 1;
 	     ecore_main_loop_quit();
 	  }
-        else
-          return 0;
+//        else
+//          return 0;
 	break;
       case E_SYS_EXIT_NOW:
 	exit(0);
@@ -567,11 +569,13 @@ _e_sys_action_do(E_Sys_Action a, char *param __UNUSED__)
                  e_prefix_lib_get());
 	if (_e_sys_exe)
 	  {
-	     _e_sys_current_action();
+             if ((ecore_time_get() - _e_sys_begin_time) > 2.0)
+                _e_sys_current_action();
 	     return 0;
 	  }
 	else
 	  {
+             _e_sys_begin_time = ecore_time_get();
 	     _e_sys_exe = ecore_exe_run(buf, NULL);
 	     od = e_obj_dialog_new(e_container_current_get(e_manager_current_get()),
 				   _("Power off"), "E", "_sys_halt");
@@ -595,11 +599,13 @@ _e_sys_action_do(E_Sys_Action a, char *param __UNUSED__)
 		 e_prefix_lib_get());
 	if (_e_sys_exe)
 	  {
-	     _e_sys_current_action();
+             if ((ecore_time_get() - _e_sys_begin_time) > 2.0)
+                _e_sys_current_action();
 	     return 0;
 	  }
 	else
 	  {
+             _e_sys_begin_time = ecore_time_get();
 	     _e_sys_exe = ecore_exe_run(buf, NULL);
 	     od = e_obj_dialog_new(e_container_current_get(e_manager_current_get()),
 				   _("Resetting"), "E", "_sys_reboot");
@@ -622,13 +628,15 @@ _e_sys_action_do(E_Sys_Action a, char *param __UNUSED__)
 		 e_prefix_lib_get());
 	if (_e_sys_exe)
 	  {
-	     _e_sys_current_action();
+             if ((ecore_time_get() - _e_sys_begin_time) > 2.0)
+                _e_sys_current_action();
 	     return 0;
 	  }
 	else
 	  {
              if (e_config->desklock_on_suspend) e_desklock_show();
              
+             _e_sys_begin_time = ecore_time_get();
 	     _e_sys_exe = ecore_exe_run(buf, NULL);
 	     od = e_obj_dialog_new(e_container_current_get(e_manager_current_get()),
 				   _("Suspending"), "E", "_sys_suspend");
@@ -651,13 +659,15 @@ _e_sys_action_do(E_Sys_Action a, char *param __UNUSED__)
 		 e_prefix_lib_get());
 	if (_e_sys_exe)
 	  {
-	     _e_sys_current_action();
+             if ((ecore_time_get() - _e_sys_begin_time) > 2.0)
+                _e_sys_current_action();
 	     return 0;
 	  }
 	else
 	  {
              if (e_config->desklock_on_suspend) e_desklock_show();
              
+             _e_sys_begin_time = ecore_time_get();
 	     _e_sys_exe = ecore_exe_run(buf, NULL);
 	     od = e_obj_dialog_new(e_container_current_get(e_manager_current_get()),
 				   _("Hibernating"), "E", "_sys_hibernate");
