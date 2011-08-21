@@ -129,7 +129,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
    EVRY_PLUGIN_ITEMS_ADD(p, p->plugins, input, 1, 0);
 
-   return !!(plugin->items);
+   return EVRY_PLUGIN_HAS_ITEMS(p);
 }
 
 static Evry_Plugin *

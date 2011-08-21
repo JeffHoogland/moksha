@@ -16,6 +16,7 @@ static Ecore_Timer *cleanup_timer;
 static const char *module_icon = NULL;
 static E_Config_DD *conf_edd = NULL;
 static E_Config_DD *plugin_conf_edd = NULL;
+static E_Config_DD *gadget_conf_edd = NULL;
 static int _e_module_evry_log_dom = -1;
 
 Evry_API *evry = NULL;
@@ -222,6 +223,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    /* Clean EET */
    E_CONFIG_DD_FREE(conf_edd);
    E_CONFIG_DD_FREE(plugin_conf_edd);
+   E_CONFIG_DD_FREE(gadget_conf_edd);
 
    if (cleanup_timer)
      ecore_timer_del(cleanup_timer);
@@ -375,6 +377,15 @@ _config_init()
    E_CONFIG_LIST(D, T, plugins, plugin_conf_edd);
 #undef T
 #undef D
+#define T Gadget_Config
+#define D gadget_conf_edd
+   gadget_conf_edd = E_CONFIG_DD_NEW("Gadget_Config", Gadget_Config);
+   E_CONFIG_VAL(D, T, id, STR);
+   E_CONFIG_VAL(D, T, plugin, STR);
+   E_CONFIG_VAL(D, T, hide_after_action, INT);
+   E_CONFIG_VAL(D, T, popup, INT);
+#undef T
+#undef D
 #define T Evry_Config
 #define D conf_edd
    conf_edd = E_CONFIG_DD_NEW("Config", Evry_Config);
@@ -399,6 +410,7 @@ _config_init()
    E_CONFIG_LIST(D, T, conf_objects, plugin_conf_edd);
    E_CONFIG_LIST(D, T, conf_views,   plugin_conf_edd);
    E_CONFIG_LIST(D, T, collections,  plugin_conf_edd);
+   E_CONFIG_LIST(D, T, gadgets,      gadget_conf_edd);
    E_CONFIG_VAL(D, T, first_run, UCHAR);
 #undef T
 #undef D
@@ -482,7 +494,8 @@ static void
 _config_free(void)
 {
    Plugin_Config *pc, *pc2;
-
+   Gadget_Config *gc;
+   
    EINA_LIST_FREE(evry_conf->collections, pc)
      EINA_LIST_FREE(pc->plugins, pc2)
      {
@@ -490,7 +503,6 @@ _config_free(void)
 	IF_RELEASE(pc2->trigger);
 	E_FREE(pc2);
      }
-
    EINA_LIST_FREE(evry_conf->conf_subjects, pc)
      {
 	IF_RELEASE(pc->name);
@@ -508,6 +520,12 @@ _config_free(void)
 	IF_RELEASE(pc->name);
 	IF_RELEASE(pc->trigger);
 	E_FREE(pc);
+     }
+   EINA_LIST_FREE(evry_conf->gadgets, gc)
+     {
+	IF_RELEASE(gc->id);
+	IF_RELEASE(gc->plugin);
+	E_FREE(gc);
      }
 
    E_FREE(evry_conf);

@@ -108,21 +108,21 @@ _evry_aggregator_fetch(Evry_State *s)
 	ERR("no state");
    	return 0;
      }
-
+   
    if (s->aggregator->fetch(s->aggregator, s->input))
      {
 	l = eina_list_data_find_list(s->cur_plugins, s->aggregator);
 
-	if (l && l->prev)
-	  s->cur_plugins = eina_list_promote_list(s->cur_plugins, l);
-	else if (!l)
+	if (!l)
 	  s->cur_plugins = eina_list_prepend(s->cur_plugins, s->aggregator);
-     }
-   else
-     {
-	s->cur_plugins = eina_list_remove(s->cur_plugins, s->aggregator);
+	else
+	  s->cur_plugins = eina_list_promote_list(s->cur_plugins, l);
+
+	return 1;
      }
 
+   s->cur_plugins = eina_list_remove(s->cur_plugins, s->aggregator);
+   
    return 1;
 }
 
@@ -1067,7 +1067,7 @@ _evry_selector_new(Evry_Window *win, int type)
    Evry_Selector *sel = E_NEW(Evry_Selector, 1);
    Evas_Object *o = NULL;
 
-   sel->aggregator = evry_aggregator_new(win, type);
+   sel->aggregator = evry_aggregator_new(type);
 
    if (type == EVRY_PLUGIN_SUBJECT)
      {

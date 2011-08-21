@@ -257,6 +257,8 @@ typedef void (*Evry_Item_Free_Cb) (Evry_Item *it);
      EINA_LIST_FREE(EVRY_PLUGIN(_p)->items, it)			\
        if (it) it->fuzzy_match = 0; }
 
+#define EVRY_PLUGIN_HAS_ITEMS(_p) !!(EVRY_PLUGIN(_p)->items)
+
 /*** Evry_Action macros ***/
 #define EVRY_ACTION_NEW(_name, _in1, _in2, _icon, _action, _check) \
   evry->action_new(N_(_name), _(_name), _in1, _in2, _icon, _action, _check)

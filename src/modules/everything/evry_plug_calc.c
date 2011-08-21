@@ -180,7 +180,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	error = 0;
      }
 
-   return !!(p->base.items);
+   return EVRY_PLUGIN_HAS_ITEMS(p);
 }
 
 static Eina_Bool

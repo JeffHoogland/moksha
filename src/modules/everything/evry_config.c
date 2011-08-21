@@ -184,6 +184,7 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
      }
 
    e_config_save_queue();
+
    return 1;
 }
 

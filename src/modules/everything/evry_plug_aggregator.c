@@ -9,8 +9,6 @@ typedef struct _Plugin Plugin;
 struct _Plugin
 {
   Evry_Plugin base;
-  int type;
-  Evry_Window *win;
 
   Evry_Item *warning;
 };
@@ -20,41 +18,42 @@ _fetch(Evry_Plugin *plugin, const char *input)
 {
    Plugin *p = (Plugin *) plugin;
    Evry_Plugin *pp;
-   Evry_State *s;
    Eina_List *l, *ll, *lp = NULL;
    Evry_Item *it, *it2;
-   int i, top_level = 0, subj_sel = 0, inp_len = 0, cnt = 0;
+   int top_level = 0, subj_sel = 0, inp_len = 0, cnt = 0;
    Eina_List *items = NULL;
    const char *context = NULL;
    char buf[128];
-   Evry_Selector *sel = p->win->selectors[p->type];
-
+   Evry_State *s = plugin->state;
+   Evry_Selector *sel = s->selector;
+   Evry_Selector **sels = sel->win->selectors;
+   
    if (input && input[0])
      inp_len = strlen(input);
    else
      input = NULL;
 
-   EVRY_PLUGIN_ITEMS_FREE(p);
-
-   s = sel->state;
-   if (!s) return 0;
-
-   if (sel == p->win->selectors[0])
-     subj_sel = 1;
-
    if (!sel->states->next)
      top_level = 1;
 
-   /* get current items' context ... */
-   for (i = 1; i < 3; i++)
+   /* get current items' context */
+   if (sel == sels[0])
+     {	
+	subj_sel = 1;
+     }
+   else if (sel == sels[1])
      {
-	if (sel == p->win->selectors[i])
-	  {
-	     it = p->win->selectors[i-1]->state->cur_item;
-	     if (it) context = it->context;
-	  }
+	it = sels[0]->state->cur_item;
+	if (it) context = it->context;
+     }
+   else if (sel == sels[2])
+     {
+	it = sels[1]->state->cur_item;
+	if (it) context = it->context;
      }
 
+   EVRY_PLUGIN_ITEMS_FREE(p);
+   
    /* collect plugins to be shown in aggregator */
    EINA_LIST_FOREACH(s->cur_plugins, l, pp)
      {
@@ -287,7 +286,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	EVRY_PLUGIN_ITEM_APPEND(p, p->warning);
      }
 
-   return !!(p->base.items);
+   return EVRY_PLUGIN_HAS_ITEMS(p);
 }
 
 static void
@@ -308,8 +307,6 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it __UNUSED__)
    GET_PLUGIN(base, plugin);
    EVRY_PLUGIN_INSTANCE(p, plugin);
 
-   p->type = base->type;
-   p->win  = base->win;
    p->warning = base->warning;
 
    return EVRY_PLUGIN(p);
@@ -326,7 +323,7 @@ _free(Evry_Plugin *plugin)
 }
 
 Evry_Plugin *
-evry_aggregator_new(Evry_Window *win, int type)
+evry_aggregator_new(int type)
 {
    Evry_Plugin *p;
 
@@ -334,13 +331,10 @@ evry_aggregator_new(Evry_Window *win, int type)
 
    if (evry_plugin_register(p, type, -1))
      {
-	if (type == EVRY_PLUGIN_SUBJECT)
-	  p->config->view_mode = VIEW_MODE_THUMB;
+	p->config->view_mode = VIEW_MODE_THUMB;
      }
 
    GET_PLUGIN(pa, p);
-   pa->win = win;
-   pa->type = type;
 
    pa->warning = evry_item_new(NULL, p, N_("No plugins loaded"), NULL, NULL);
    pa->warning->type = EVRY_TYPE_NONE;

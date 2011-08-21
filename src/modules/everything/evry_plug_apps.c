@@ -314,7 +314,7 @@ _fetch_exe(Evry_Plugin *plugin, const char *input)
 
    EVRY_PLUGIN_ITEMS_SORT(p, _cb_sort);
 
-   return !!(plugin->items);
+   return EVRY_PLUGIN_HAS_ITEMS(p);
 }
 
 static Evry_Plugin *
@@ -464,6 +464,8 @@ _desktop_list_get(void)
 	     efreet_desktop_free(d);
 	     apps = eina_list_remove_list(apps, ll);
 	  }
+	printf("%d %s\n", d->ref, d->name);
+
 	efreet_desktop_free(d);
      }
 
@@ -657,10 +659,20 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	  }
      }
 
+
    EINA_LIST_FOREACH(p->menu_items, l, it)
-     EVRY_PLUGIN_ITEM_APPEND(p, it);
+     {
+	if (!input)
+	  {
+	     EVRY_PLUGIN_ITEM_APPEND(p, it);
+	     continue;
+	  }
+
+	if ((it->fuzzy_match = evry->fuzzy_match(it->label, input)))
+	  EVRY_PLUGIN_ITEM_APPEND(p, it);
+     }
    
-   return !!(plugin->items);
+   return EVRY_PLUGIN_HAS_ITEMS(p);
 }
 
 /***************************************************************************/
@@ -1243,7 +1255,6 @@ _conf_dialog(E_Container *con, const char *params __UNUSED__)
    return cfd;
 }
 
-/* Local Functions */
 static void *
 _create_data(E_Config_Dialog *cfd __UNUSED__)
 {

@@ -17,6 +17,7 @@ typedef struct _Config		Evry_Config;
 typedef struct _Evry_Selector	Evry_Selector;
 typedef struct _Tab_View	Tab_View;
 typedef struct _Evry_Window	Evry_Window;
+typedef struct _Gadget_Config   Gadget_Config;
 
 struct _Evry_Window
 {
@@ -175,8 +176,9 @@ struct _Config
   /* use up/down keys for prev/next in thumb view */
   int cycle_mode;
 
+  Eina_List *gadgets;
+  
   unsigned char first_run;
-
   /* not saved data */
   Eina_List *actions;
   Eina_List *views;
@@ -184,6 +186,14 @@ struct _Config
   int min_w, min_h;
 };
 
+struct _Gadget_Config
+{
+  const char *id;
+  const char *plugin;
+  int hide_after_action;
+  int popup;
+};
+  
 struct _History
 {
   int version;
@@ -284,10 +294,10 @@ int   evry_shutdown(void);
 Evry_Window *evry_show(E_Zone *zone, E_Zone_Edge edge, const char *params, Eina_Bool popup);
 void  evry_hide(Evry_Window *win, int clear);
 
-int   evry_plug_actions_init();
-void  evry_plug_actions_shutdown();
+int   evry_plug_actions_init(void);
+void  evry_plug_actions_shutdown(void);
 
-Evry_Plugin *evry_aggregator_new(Evry_Window *win, int type);
+Evry_Plugin *evry_aggregator_new(int type);
 
 void  evry_history_init(void);
 void  evry_history_free(void);

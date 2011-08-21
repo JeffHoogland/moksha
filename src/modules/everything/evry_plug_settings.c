@@ -146,7 +146,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
    if (input || p->parent)
      EVRY_PLUGIN_ITEMS_ADD(p, p->items, input, 1, 1);
 
-   return !!(plugin->items);
+   return EVRY_PLUGIN_HAS_ITEMS(p);
 }
 
 static int

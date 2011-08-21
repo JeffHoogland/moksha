@@ -762,7 +762,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
    if ((p->command) || (!p->min_query) || (len >= p->min_query))
      _files_filter(p);
 
-   return !!(EVRY_PLUGIN(p)->items);
+   return EVRY_PLUGIN_HAS_ITEMS(p);
 }
 
 /***************************************************************************/
@@ -1086,7 +1086,7 @@ _recentf_fetch(Evry_Plugin *plugin, const char *input)
     * p->thread = NULL; */
 
    if (input && isspace(input[len - 1]))
-     return !!(plugin->items);
+     return EVRY_PLUGIN_HAS_ITEMS(p);
 
    if (len >= plugin->config->min_query)
      {
@@ -1109,7 +1109,7 @@ _recentf_fetch(Evry_Plugin *plugin, const char *input)
 	     /* p->thread = ecore_thread_run(_recentf_func, _recentf_end_func,
 	      * 				  _recentf_cancel_func, d); */
 	  }
-	return !!(plugin->items);
+	return EVRY_PLUGIN_HAS_ITEMS(p);
      }
 
    EVRY_PLUGIN_ITEMS_CLEAR(p);
