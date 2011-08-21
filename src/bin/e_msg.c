@@ -143,4 +143,6 @@ _e_msg_event_free(void *data __UNUSED__, void *ev)
 
    e = ev;
    if (e->obj) e_object_unref(e->obj);
+
+   E_FREE(ev);
 }
