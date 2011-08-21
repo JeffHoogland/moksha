@@ -6887,7 +6887,7 @@ collections {
                }
                rel2 {
                   relative: 1.0 1.0;
-                  offset: 3 1;
+                  offset: -1 1;
                }
                color_class: "menu_item";
                text {
@@ -6967,7 +6967,7 @@ collections {
                max: 9 12;
                rel1 {
                   relative: 0.0 0.0;
-                  offset: 0 1;
+                  offset: 4 1;
                }
                rel2 {
                   relative: 1.0 1.0;
