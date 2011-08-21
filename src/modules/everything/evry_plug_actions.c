@@ -21,6 +21,8 @@ _finish(Evry_Plugin *plugin)
    GET_PLUGIN(p, plugin);
    Evry_Action *act;
 
+   EVRY_PLUGIN_ITEMS_CLEAR(p);
+
    EINA_LIST_FREE(p->actions, act);
    E_FREE(p);
 }
