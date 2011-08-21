@@ -311,6 +311,7 @@ _advanced_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
      battery_config->alert_timeout = 0;
 
    battery_config->force_mode = cfdata->force_mode;
+   battery_config->suspend_below = cfdata->suspend_below;
 
    _battery_config_updated();
    e_config_save_queue();
