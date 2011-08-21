@@ -863,12 +863,13 @@ _lc_check(void)
    
    buf[0] = 0;
    
-   if (getenv("LC_COLLATE"))  strcat(buf, "LC_COLLATE<br>");
    if (getenv("LC_CTYPE"))    strcat(buf, "LC_CTYPE<br>");
-   if (getenv("LC_MESSAGES")) strcat(buf, "LC_MESSAGES<br>");
-   if (getenv("LC_MONETARY")) strcat(buf, "LC_MONETARY<br>");
    if (getenv("LC_NUMERIC"))  strcat(buf, "LC_NUMERIC<br>");
    if (getenv("LC_TIME"))     strcat(buf, "LC_TIME<br>");
+   if (getenv("LC_COLLATE"))  strcat(buf, "LC_COLLATE<br>");
+   if (getenv("LC_MONETARY")) strcat(buf, "LC_MONETARY<br>");
+   if (getenv("LC_MESSAGES")) strcat(buf, "LC_MESSAGES<br>");
+   if (getenv("LC_ALL"))      strcat(buf, "LC_ALL<br>");
    
    if (buf[0] != 0)
       e_util_dialog_show(_("Possible Locale problems"), 
