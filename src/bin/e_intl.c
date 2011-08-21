@@ -194,7 +194,7 @@ e_intl_language_set(const char *lang)
              e_util_env_set("LANGUAGE", NULL);
 	  }
 
-    	setlocale(LC_ALL, "");
+	setlocale(LC_ALL, lang);
         if (_e_intl_language)
 	  {
              char *locale_path;
