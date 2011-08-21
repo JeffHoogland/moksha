@@ -127,8 +127,6 @@ e_backlight_mode_set(E_Zone *zone, E_Backlight_Mode mode)
    else if (bl_mode == E_BACKLIGHT_MODE_OFF)
       e_backlight_level_set(zone, 0.0, -1.0);
    else if (bl_mode == E_BACKLIGHT_MODE_DIM)
-      e_backlight_level_set(zone, 0.0, -1.0);
-   else if (bl_mode == E_BACKLIGHT_MODE_DIM)
       e_backlight_level_set(zone, e_config->backlight.dim, -1.0);
    else if (bl_mode == E_BACKLIGHT_MODE_MAX)
       e_backlight_level_set(zone, 1.0, -1.0);
