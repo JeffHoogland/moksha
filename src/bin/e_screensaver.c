@@ -9,6 +9,7 @@ static Ecore_Event_Handler *_e_screensaver_handler_border_iconify = NULL;
 static Ecore_Event_Handler *_e_screensaver_handler_border_uniconify = NULL;
 static Ecore_Event_Handler *_e_screensaver_handler_border_desk_set = NULL;
 static Ecore_Event_Handler *_e_screensaver_handler_desk_show = NULL;
+static Ecore_Event_Handler *_e_screensaver_handler_powersave = NULL;
 static E_Dialog *_e_screensaver_ask_presentation_dia = NULL;
 static int _e_screensaver_ask_presentation_count = 0;
 
@@ -18,6 +19,7 @@ static int _e_screensaver_blanking = 0;
 static int _e_screensaver_expose = 0;
 
 static Ecore_Timer *_e_screensaver_suspend_timer = NULL;
+static Eina_Bool _e_screensaver_on = EINA_FALSE;
 
 EAPI void
 e_screensaver_update(void)
@@ -161,11 +163,30 @@ _e_screensaver_ask_presentation_mode(void)
 }
 
 static Eina_Bool
+_e_screensaver_handler_powersave_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
+{
+   if ((_e_screensaver_on) && (!_e_screensaver_suspend_timer))
+     {
+        if (e_config->screensaver_suspend)
+          {
+             if ((e_config->screensaver_suspend_on_ac) ||
+                 (e_powersave_mode_get() > E_POWERSAVE_MODE_LOW))
+                e_sys_action_do(E_SYS_SUSPEND, NULL);
+          }
+     }
+   return ECORE_CALLBACK_PASS_ON;
+}
+
+static Eina_Bool
 _e_screensaver_suspend_cb(void *data __UNUSED__)
 {
    _e_screensaver_suspend_timer = NULL;
    if (e_config->screensaver_suspend)
-      e_sys_action_do(E_SYS_SUSPEND, NULL);
+     {
+        if ((e_config->screensaver_suspend_on_ac) ||
+            (e_powersave_mode_get() > E_POWERSAVE_MODE_LOW))
+           e_sys_action_do(E_SYS_SUSPEND, NULL);
+     }
    return EINA_FALSE;
 }
 
@@ -177,6 +198,7 @@ _e_screensaver_handler_screensaver_notify_cb(void *data __UNUSED__, int type __U
 
    if (e->on)
      {
+        _e_screensaver_on = EINA_TRUE;
         if (_e_screensaver_suspend_timer)
           {
              ecore_timer_del(_e_screensaver_suspend_timer);
@@ -189,6 +211,7 @@ _e_screensaver_handler_screensaver_notify_cb(void *data __UNUSED__, int type __U
      }
    else
      {
+        _e_screensaver_on = EINA_FALSE;
         if (_e_screensaver_suspend_timer)
           {
              ecore_timer_del(_e_screensaver_suspend_timer);
@@ -266,6 +289,9 @@ e_screensaver_init(void)
    _e_screensaver_handler_desk_show = ecore_event_handler_add
      (E_EVENT_DESK_SHOW, _e_screensaver_handler_desk_show_cb, NULL);
 
+   _e_screensaver_handler_powersave = ecore_event_handler_add
+     (E_EVENT_POWERSAVE_UPDATE, _e_screensaver_handler_powersave_cb, NULL);
+   
    _e_screensaver_timeout = ecore_x_screensaver_timeout_get();
    _e_screensaver_interval = ecore_x_screensaver_interval_get();
    _e_screensaver_blanking = ecore_x_screensaver_blank_get();
@@ -284,6 +310,13 @@ e_screensaver_shutdown(void)
         ecore_timer_del(_e_screensaver_suspend_timer);
         _e_screensaver_suspend_timer = NULL;
      }
+   
+   if (_e_screensaver_handler_powersave)
+     {
+        ecore_event_handler_del(_e_screensaver_handler_powersave);
+        _e_screensaver_handler_powersave = NULL;
+     }
+   
    if (_e_screensaver_handler_config_mode)
      {
         ecore_event_handler_del(_e_screensaver_handler_config_mode);

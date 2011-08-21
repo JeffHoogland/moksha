@@ -570,8 +570,10 @@ _battery_update(int full, int time_left, int time_full, Eina_Bool have_battery, 
      e_powersave_mode_set(E_POWERSAVE_MODE_LOW);
    else
      {
-        if ((have_power) || (full > 95))
+        if (have_power)
           e_powersave_mode_set(E_POWERSAVE_MODE_LOW);
+        else if (full > 95)
+          e_powersave_mode_set(E_POWERSAVE_MODE_MEDIUM);
         else if (full > 30)
           e_powersave_mode_set(E_POWERSAVE_MODE_HIGH);
         else

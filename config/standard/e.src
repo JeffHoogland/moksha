@@ -1773,6 +1773,7 @@ group "E_Config" struct {
     value "screensaver_ask_presentation" uchar: 1;
     value "screensaver_ask_presentation_timeout" double: 30.0000000000000000000000000;
     value "screensaver_suspend" uchar: 0;
+    value "screensaver_suspend_on_ac" uchar: 0;
     value "screensaver_suspend_delay" double: 15.0000000000000000000000000;
     value "dpms_enable" int: 1;
     value "dpms_standby_enable" int: 1;

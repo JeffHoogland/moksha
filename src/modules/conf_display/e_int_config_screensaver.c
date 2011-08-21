@@ -29,6 +29,7 @@ struct _E_Config_Dialog_Data
    double ask_presentation_timeout;
    
    int screensaver_suspend;
+   int screensaver_suspend_on_ac;
    double screensaver_suspend_delay;
 
    Eina_List *disable_list;
@@ -73,6 +74,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->ask_presentation = e_config->screensaver_ask_presentation;
    cfdata->ask_presentation_timeout = e_config->screensaver_ask_presentation_timeout;
    cfdata->screensaver_suspend = e_config->screensaver_suspend;
+   cfdata->screensaver_suspend_on_ac = e_config->screensaver_suspend_on_ac;
    cfdata->screensaver_suspend_delay = e_config->screensaver_suspend_delay;
 }
 
@@ -105,6 +107,7 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    e_config->screensaver_ask_presentation = cfdata->ask_presentation;
    e_config->screensaver_ask_presentation_timeout = cfdata->ask_presentation_timeout;
    e_config->screensaver_suspend = cfdata->screensaver_suspend;
+   e_config->screensaver_suspend_on_ac = cfdata->screensaver_suspend_on_ac;
    e_config->screensaver_suspend_delay = cfdata->screensaver_suspend_delay;
    
    /* Apply settings */
@@ -125,6 +128,7 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
 	   (e_config->screensaver_ask_presentation != cfdata->ask_presentation) ||
 	   (e_config->screensaver_ask_presentation_timeout != cfdata->ask_presentation_timeout) ||
 	   (e_config->screensaver_suspend != cfdata->screensaver_suspend) ||
+	   (e_config->screensaver_suspend_on_ac != cfdata->screensaver_suspend_on_ac) ||
 	   (e_config->screensaver_suspend_delay != cfdata->screensaver_suspend_delay));
 }
 
@@ -145,6 +149,10 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    
    ow = e_widget_check_add(evas, _("Suspend on blank"), 
                            &(cfdata->screensaver_suspend));
+   cfdata->disable_list = eina_list_append(cfdata->disable_list, ow);
+   e_widget_list_object_append(ol, ow, 1, 1, 0.5);
+   ow = e_widget_check_add(evas, _("Even if on power"), 
+                           &(cfdata->screensaver_suspend_on_ac));
    cfdata->disable_list = eina_list_append(cfdata->disable_list, ow);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
    ow = e_widget_label_add(evas, _("Delay until suspend"));

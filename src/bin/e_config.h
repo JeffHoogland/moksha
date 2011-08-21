@@ -225,6 +225,7 @@ struct _E_Config
    double        screensaver_ask_presentation_timeout; // GUI
    
    unsigned char screensaver_suspend;
+   unsigned char screensaver_suspend_on_ac;
    double        screensaver_suspend_delay;
 
    int         dpms_enable; // GUI
