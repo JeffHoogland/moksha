@@ -12,6 +12,7 @@ struct _E_Config_Dialog_Data
    int alert_percent;
    int dismiss_alert;
    int alert_timeout;
+   int suspend_below;
    int force_mode; // 0 == auto, 1 == batget, 2 == subsystem
    struct 
      {
@@ -71,6 +72,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->alert_percent = battery_config->alert_p;
    cfdata->poll_interval = battery_config->poll_interval;
    cfdata->alert_timeout = battery_config->alert_timeout;
+   cfdata->suspend_below = battery_config->suspend_below;
    cfdata->force_mode = battery_config->force_mode;
 #ifdef HAVE_EEZE
    cfdata->fuzzy = battery_config->fuzzy;
@@ -211,6 +213,13 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f ticks"), 1, 256, 4, 0, 
                             NULL, &(cfdata->poll_interval), 100);
    e_widget_table_object_append(o, ob, 0, 1, 1, 1, 1, 0, 1, 0);
+   
+   ob = e_widget_label_add(evas, _("Suspend when below:"));
+   e_widget_table_object_append(o, ob, 0, 2, 1, 1, 1, 0, 1, 0);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f %%"), 0, 50, 1, 0, 
+                            NULL, &(cfdata->suspend_below), 100);
+   e_widget_table_object_append(o, ob, 0, 3, 1, 1, 1, 0, 1, 0);
+   
    e_widget_toolbook_page_append(otb, NULL, _("Polling"), o, 1, 0, 1, 0, 
                                  0.5, 0.0);
 
@@ -319,6 +328,7 @@ _advanced_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *c
 	   (cfdata->alert_percent != battery_config->alert_p) ||
 	   (cfdata->poll_interval != battery_config->poll_interval) ||
 	   (cfdata->alert_timeout != battery_config->alert_timeout) ||
+	   (cfdata->suspend_below != battery_config->suspend_below) ||
 #ifdef HAVE_EEZE
            (cfdata->fuzzy != battery_config->fuzzy) ||
 #endif           

@@ -797,6 +797,9 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, screensaver_ask_presentation, UCHAR);
    E_CONFIG_VAL(D, T, screensaver_ask_presentation_timeout, DOUBLE);
 
+   E_CONFIG_VAL(D, T, screensaver_suspend, UCHAR);
+   E_CONFIG_VAL(D, T, screensaver_suspend_delay, DOUBLE);
+   
    E_CONFIG_VAL(D, T, dpms_enable, INT);
    E_CONFIG_VAL(D, T, dpms_standby_enable, INT);
    E_CONFIG_VAL(D, T, dpms_suspend_enable, INT);

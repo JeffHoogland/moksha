@@ -213,16 +213,19 @@ struct _E_Config
    double      desklock_autolock_idle_timeout; // GUI
    int         desklock_use_custom_desklock; // GUI
    const char *desklock_custom_desklock_cmd; // GUI
-   Eina_Bool   desklock_ask_presentation; // GUI
-   double      desklock_ask_presentation_timeout; // GUI
+   unsigned char desklock_ask_presentation; // GUI
+   double        desklock_ask_presentation_timeout; // GUI
 
    int         screensaver_enable; // GUI
    int         screensaver_timeout; // GUI
    int         screensaver_interval; // GUI
    int         screensaver_blanking; // GUI
    int         screensaver_expose; // GUI
-   Eina_Bool   screensaver_ask_presentation; // GUI
-   double      screensaver_ask_presentation_timeout; // GUI
+   unsigned char screensaver_ask_presentation; // GUI
+   double        screensaver_ask_presentation_timeout; // GUI
+   
+   unsigned char screensaver_suspend;
+   double        screensaver_suspend_delay;
 
    int         dpms_enable; // GUI
    int         dpms_standby_enable; // GUI
@@ -253,15 +256,15 @@ struct _E_Config
    int         desk_flip_wrap; // GUI
    int         fullscreen_flip; // GUI
 
-   const char *icon_theme; // GUI
-   Eina_Bool   icon_theme_overrides; // GUI
+   const char    *icon_theme; // GUI
+   unsigned char  icon_theme_overrides; // GUI
 
-   int         desk_flip_animate_mode; // GUI
-   int         desk_flip_animate_interpolation; // GUI
-   double      desk_flip_animate_time; // GUI
-   Eina_Bool   desk_flip_pan_bg;
-   double      desk_flip_pan_x_axis_factor;
-   double      desk_flip_pan_y_axis_factor;
+   int           desk_flip_animate_mode; // GUI
+   int           desk_flip_animate_interpolation; // GUI
+   double        desk_flip_animate_time; // GUI
+   unsigned char desk_flip_pan_bg;
+   double        desk_flip_pan_x_axis_factor;
+   double        desk_flip_pan_y_axis_factor;
 
    const char *wallpaper_import_last_dev; // INTERNAL
    const char *wallpaper_import_last_path; // INTERNAL
@@ -322,22 +325,22 @@ struct _E_Config
 
    struct {
       struct {
-         int icon_size;
+         int         icon_size;
       } main, secondary, extra;
-      double timeout;
-      unsigned char do_input;
-      Eina_List *actions;
+      double         timeout;
+      unsigned char  do_input;
+      Eina_List     *actions;
    } syscon;
 
    struct {
-      Eina_Bool presentation;
-      Eina_Bool offline;
+      unsigned char presentation;
+      unsigned char offline;
    } mode;
 
    struct {
-      double    expire_timeout;
-      Eina_Bool show_run_dialog;
-      Eina_Bool show_exit_dialog;
+      double        expire_timeout;
+      unsigned char show_run_dialog;
+      unsigned char show_exit_dialog;
    } exec;
    
    unsigned char null_container_win;

@@ -28,6 +28,7 @@ struct _Config
    int              alert;	/* Alert on minutes remaining */
    int	            alert_p;    /* Alert on percentage remaining */
    int              alert_timeout;  /* Popup dismissal timeout */
+   int              suspend_below;  /* Suspend if batter drops below this level */
    int              force_mode; /* force use of batget or hal */
    /* just config state */
    E_Module        *module;

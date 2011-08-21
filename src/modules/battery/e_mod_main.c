@@ -561,6 +561,10 @@ _battery_update(int full, int time_left, int time_full, Eina_Bool have_battery, 
           }
         else if (have_power || ((time_left / 60) > battery_config->alert))
           _battery_warning_popup_destroy(inst);
+        if ((have_battery) && (!have_power) && (full >= 0) &&
+            (battery_config->suspend_below > 0) &&
+            (full < battery_config->suspend_below))
+           e_sys_action_do(E_SYS_SUSPEND, NULL);
      }
    if (!have_battery)
      e_powersave_mode_set(E_POWERSAVE_MODE_LOW);
@@ -624,9 +628,9 @@ _battery_cb_exe_data(void *data __UNUSED__, int type __UNUSED__, void *event)
                   int have_power = 0;
            
                   if (sscanf(ev->lines[i].line, "%i %i %i %i %i", &full, &time_left, &time_full, 
-                                    &have_battery, &have_power) == 5)
+                             &have_battery, &have_power) == 5)
                     _battery_update(full, time_left, time_full,
-                                           have_battery, have_power);
+                                    have_battery, have_power);
                   else
                     e_powersave_mode_set(E_POWERSAVE_MODE_LOW);
                }
@@ -666,6 +670,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, alert, INT);
    E_CONFIG_VAL(D, T, alert_p, INT);
    E_CONFIG_VAL(D, T, alert_timeout, INT);
+   E_CONFIG_VAL(D, T, suspend_below, INT);
    E_CONFIG_VAL(D, T, force_mode, INT);
 #ifdef HAVE_EEZE
    E_CONFIG_VAL(D, T, fuzzy, INT);
@@ -679,6 +684,7 @@ e_modapi_init(E_Module *m)
 	battery_config->alert = 30;
 	battery_config->alert_p = 10;
 	battery_config->alert_timeout = 0;
+	battery_config->suspend_below = 0;
 	battery_config->force_mode = 0;
 #ifdef HAVE_EEZE
 	battery_config->fuzzy = 0;
@@ -688,6 +694,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_LIMIT(battery_config->alert, 0, 60);
    E_CONFIG_LIMIT(battery_config->alert_p, 0, 100);
    E_CONFIG_LIMIT(battery_config->alert_timeout, 0, 300);
+   E_CONFIG_LIMIT(battery_config->suspend_below, 0, 50);
    E_CONFIG_LIMIT(battery_config->force_mode, 0, 2);
 
    battery_config->module = m;

@@ -17,6 +17,8 @@ static int _e_screensaver_interval = 0;
 static int _e_screensaver_blanking = 0;
 static int _e_screensaver_expose = 0;
 
+static Ecore_Timer *_e_screensaver_suspend_timer = NULL;
+
 EAPI void
 e_screensaver_update(void)
 {
@@ -159,11 +161,41 @@ _e_screensaver_ask_presentation_mode(void)
 }
 
 static Eina_Bool
+_e_screensaver_suspend_cb(void *data __UNUSED__)
+{
+   _e_screensaver_suspend_timer = NULL;
+   if (e_config->screensaver_suspend)
+      e_sys_action_do(E_SYS_SUSPEND, NULL);
+   return EINA_FALSE;
+}
+
+static Eina_Bool
 _e_screensaver_handler_screensaver_notify_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Screensaver_Notify *e = event;
    static double last_start = 0.0;
 
+   if (e->on)
+     {
+        if (_e_screensaver_suspend_timer)
+          {
+             ecore_timer_del(_e_screensaver_suspend_timer);
+             _e_screensaver_suspend_timer = NULL;
+          }
+        if (e_config->screensaver_suspend)
+           _e_screensaver_suspend_timer = 
+           ecore_timer_add(e_config->screensaver_suspend_delay,
+                           _e_screensaver_suspend_cb, NULL);
+     }
+   else
+     {
+        if (_e_screensaver_suspend_timer)
+          {
+             ecore_timer_del(_e_screensaver_suspend_timer);
+             _e_screensaver_suspend_timer = NULL;
+          }
+     }
+   
    if (e->on)
      {
 	last_start = ecore_loop_time_get();
@@ -247,6 +279,11 @@ e_screensaver_init(void)
 EINTERN int
 e_screensaver_shutdown(void)
 {
+   if (_e_screensaver_suspend_timer)
+     {
+        ecore_timer_del(_e_screensaver_suspend_timer);
+        _e_screensaver_suspend_timer = NULL;
+     }
    if (_e_screensaver_handler_config_mode)
      {
         ecore_event_handler_del(_e_screensaver_handler_config_mode);
