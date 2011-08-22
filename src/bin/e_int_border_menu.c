@@ -77,10 +77,10 @@ e_int_border_menu_create(E_Border *bd)
 	e_menu_item_submenu_pre_callback_set(mi, _e_border_menu_cb_application_pre, bd);
 	if (bd->desktop)
 	  e_util_desktop_menu_item_icon_add(bd->desktop, 16, mi);
-     }
 
-   mi = e_menu_item_new(m);
-   e_menu_item_separator_set(mi, 1);
+	mi = e_menu_item_new(m);
+	e_menu_item_separator_set(mi, 1);
+     }
 
    if ((!bd->lock_user_stacking) && (!bd->fullscreen))
      {
