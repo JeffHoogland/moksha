@@ -400,6 +400,26 @@ e_editable_cursor_pos_get(Evas_Object *editable)
 }
 
 /**
+ * Gets the geometry of the cursor of the editable object
+ *
+ * @param editable an editable object
+ * @param cx the x of the cursor
+ * @param cy the y of the cursor
+ * @param cw the width of the cursor
+ * @param ch the height of the cursor
+ */
+EAPI void
+e_editable_cursor_geometry_get(Evas_Object *editable, Evas_Coord *cx, Evas_Coord *cy, Evas_Coord *cw, Evas_Coord *ch)
+{
+   E_Editable_Smart_Data *sd;
+
+   if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
+     return;
+
+   evas_object_geometry_get(sd->cursor_object, cx, cy, cw, ch);
+}
+
+/**
  * Moves the cursor to the start of the editable object
  *
  * @param editable an editable object

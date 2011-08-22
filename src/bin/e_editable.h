@@ -17,6 +17,7 @@ EAPI int          e_editable_delete                  (Evas_Object *editable, int
 
 EAPI void         e_editable_cursor_pos_set          (Evas_Object *editable, int pos);
 EAPI int          e_editable_cursor_pos_get          (Evas_Object *editable);
+EAPI void         e_editable_cursor_geometry_get     (Evas_Object *editable, Evas_Coord *cx, Evas_Coord *cy, Evas_Coord *cw, Evas_Coord *ch);
 EAPI void         e_editable_cursor_move_to_start    (Evas_Object *editable);
 EAPI void         e_editable_cursor_move_to_end      (Evas_Object *editable);
 EAPI void         e_editable_cursor_move_left        (Evas_Object *editable);
