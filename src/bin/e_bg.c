@@ -223,7 +223,7 @@ e_bg_file_get(int container_num, int zone_num, int desk_x, int desk_y)
                   edje_file_collection_list_free(entries);
                }
           }
-        else ok = 1;
+        else if ((bgfile) && (bgfile[0])) ok = 1;
 	if (!ok)
 	  bgfile = e_theme_edje_file_get("base/theme/background",
 					 "e/desktop/background");
