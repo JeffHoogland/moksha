@@ -3249,7 +3249,7 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
                            free(custom_desktop_dir);
                            return NULL;
                         }
-                      buf[len++] = '/';
+                      buf[len++] = '-';
                       strncpy(buf + len, path, sizeof(buf) - len);
                    }
                    free(custom_desktop_dir);
@@ -3264,7 +3264,7 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
                    }
                  else
                    {
-                      if (e_user_homedir_snprintf(buf, sizeof(buf), "%s/%s",
+                      if (e_user_homedir_snprintf(buf, sizeof(buf), "%s-%s",
                                                   _("Desktop"), path)
                           >= sizeof(buf))
                         return NULL;
