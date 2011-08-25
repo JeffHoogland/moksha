@@ -1506,6 +1506,9 @@ _evry_state_pop(Evry_Selector *sel, int immediate)
    if (s->sel_items)
      eina_list_free(s->sel_items);
 
+   if (s->cur_plugins)
+     eina_list_free(s->cur_plugins); 
+
    sel->states = eina_list_remove_list(sel->states, sel->states);
    prev = eina_list_data_get(sel->states);
 
