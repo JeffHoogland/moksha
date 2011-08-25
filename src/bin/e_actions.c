@@ -3135,7 +3135,8 @@ e_actions_shutdown(void)
 {
    e_action_predef_name_all_del();
 
-   E_FREE_LIST(action_list, e_object_del);
+   while(action_list)
+     e_object_del(action_list->data);
 
    action_names = eina_list_free(action_names);
    eina_hash_free(actions);
