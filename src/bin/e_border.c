@@ -1954,40 +1954,20 @@ e_border_focus_set_with_pointer(E_Border *bd)
        (!bd->client.icccm.take_focus)) return;
    if (bd->lock_focus_out) return;
 
-   /* Try to grab the pointer to make sure it's not "in use" */
-/*
- * this causes problems as the grab can cause an in/out event (by grab) that
- * normally would be like a grab from a menu or something else and e gets into
- * a self-feeding loop. sorry - can't grab :(
-   if (!ecore_x_pointer_grab(bd->zone->container->win))
+   e_border_focus_set(bd, 1, 1);
+   
+   if (e_config->focus_policy == E_FOCUS_CLICK)
      return;
- */
-
+   
    if (e_config->focus_policy == E_FOCUS_SLOPPY)
      {
-        if (e_border_under_pointer_get(bd->desk, bd))
-          {
-             if (!e_border_pointer_warp_to_center(bd))
-               {
-                  e_border_focus_set(bd, 1, 1);
-               }
-          }
-        else
-          {
-             e_border_focus_set(bd, 1, 1);
-          }
-     }
-   else if (e_config->focus_policy == E_FOCUS_CLICK)
-     {
-        e_border_focus_set(bd, 1, 1);
+	if (e_border_under_pointer_get(bd->desk, bd))
+	  e_border_pointer_warp_to_center(bd);
      }
    else
-   if (!e_border_pointer_warp_to_center(bd))
      {
-        e_border_focus_set(bd, 1, 1);
+	e_border_pointer_warp_to_center(bd);
      }
-
-   //ecore_x_pointer_ungrab();
 }
 
 EAPI void
@@ -2037,7 +2017,7 @@ e_border_focus_set(E_Border *bd,
    if (focus)
      {
         if (set)
-          {
+          {	     
              if (bd->visible && bd->changes.visible)
                {
                   bd->want_focus = 1;
@@ -2046,6 +2026,9 @@ e_border_focus_set(E_Border *bd,
              else if ((!bd->focused) || (focus_next && (bd != eina_list_data_get(focus_next))))
                {
                   Eina_List *l;
+		  
+		  /* waiting for pointer warp timer to reach its window...*/
+		  if (warp_timer) return;
              
                   if ((l = eina_list_data_find_list(focus_next, bd)))
                     focus_next = eina_list_promote_list(focus_next, l);
@@ -2118,7 +2101,10 @@ e_border_focus_set(E_Border *bd,
 	E_Event_Border_Focus_In *ev;
 
 	e_focus_event_focus_in(bd);
-	e_border_focus_latest_set(bd);
+
+	if (focus_track_frozen)
+	  e_border_focus_latest_set(bd);
+
 	e_hints_active_window_set(bd->zone->container->manager, bd);
 
 	edje_object_signal_emit(bd->bg_object, "e,state,focused", "e");
@@ -8965,8 +8951,9 @@ _e_border_pointer_warp_to_center_timer(void *data __UNUSED__)
             (y - warp_y) > 5 || (y - warp_y) < -5)
           {
              /* User moved the mouse, so stop warping */
-              warp_to = 0;
-              goto cleanup;
+	     printf("user stopped pinter warp\n");
+	     warp_to = 0;
+	     goto cleanup;
           }
 
         /* We just use the same warp speed as configured
