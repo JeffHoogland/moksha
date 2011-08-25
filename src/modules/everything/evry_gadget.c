@@ -41,7 +41,6 @@ static const E_Gadcon_Client_Class _gadcon_class =
 
 static int uuid = 0;
 
-
 static E_Gadcon_Client *
 _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 {
@@ -49,12 +48,12 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    E_Gadcon_Client *gcc;
    Instance *inst;
    /* Evry_Plugin *p; */
-   
+
    inst = E_NEW(Instance, 1);
    inst->cfg = _conf_item_get(id);
-   
+
    o = edje_object_add(gc->evas);
-   
+
    /* if ((p = evry_plugin_find(id->name)))
     *   o = evry_util_icon_get(EVRY_ITEM(p), gc->evas) */
    e_theme_edje_object_set(o, "base/theme/modules/start", "e/modules/start/main");
@@ -140,7 +139,7 @@ _conf_item_get(const char *id)
      }
    ci = E_NEW(Gadget_Config, 1);
    ci->id = eina_stringshare_add(id);
-   ci->plugin = eina_stringshare_add("Start");
+   /* ci->plugin = eina_stringshare_add("Start"); */
 
    evry_conf->gadgets = eina_list_append(evry_conf->gadgets, ci);
 
@@ -177,7 +176,7 @@ static void
 _cb_menu_post(void *data, E_Menu *m __UNUSED__)
 {
    Instance *inst = data;
-   
+
    if (!inst->menu) return;
    e_object_del(E_OBJECT(inst->menu));
    inst->menu = NULL;
@@ -186,7 +185,7 @@ _cb_menu_post(void *data, E_Menu *m __UNUSED__)
 static void
 _cb_menu_configure(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
-   _conf_dialog(data); 
+   _conf_dialog(data);
 }
 
 static void
@@ -199,25 +198,25 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
    ev = event_info;
    if (ev->button == 1)
      {
-	/* Evas_Coord x, y, w, h; */
-	/* int cx, cy, pw, ph; */
+	Evas_Coord x, y, w, h;
+	int cx, cy, pw, ph;
 	Evry_Window *win;
 
 	if (inst->win)
 	  {
 	     win = inst->win;
 	     evry_hide(win, 0);
-	     
+
 	     /* if (ev->flags == EVAS_BUTTON_DOUBLE_CLICK)
 	      *   {
-	      * 	  evry_hide(win, 0); 
+	      * 	  evry_hide(win, 0);
 	      *   }
 	      * else
 	      *   {
-	      * 	  e_border_show(win->ewin->border); 
-	      * 	  e_border_focus_set(win->ewin->border, 1, 1); 
+	      * 	  e_border_show(win->ewin->border);
+	      * 	  e_border_focus_set(win->ewin->border, 1, 1);
 	      *   } */
-	     
+
 	     return;
 	  }
 
@@ -225,63 +224,60 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 			0, inst->cfg->plugin, EINA_FALSE);
 	if (!win) return;
 
-	e_win_show(win->ewin);
-	e_border_focus_set(win->ewin->border, 1, 1); 
-	
-	/* evas_object_geometry_get(inst->o_button, &x, &y, &w, &h);
-	 * e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon,
-	 * 				  &cx, &cy, NULL, NULL);
-	 * x += cx;
-	 * y += cy; */
+	evas_object_geometry_get(inst->o_button, &x, &y, &w, &h);
+	e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon,
+					  &cx, &cy, NULL, NULL);
+	x += cx;
+	y += cy;
 
 	/* evas_object_resize(win->o_main,
 	 * 		   evry_conf->edge_width,
-	 * 		   evry_conf->edge_height);
-	 * 
-	 * e_popup_resize(win->popup,
-	 * 	       evry_conf->edge_width,
-	 * 	       evry_conf->edge_height); */
+	 * 		   evry_conf->edge_height); */
 
-	/* pw = win->ewin->w;
-	 * ph = win->ewin->h;
-	 * 
-	 * switch (inst->gcc->gadcon->orient)
-	 *   {
-	 * 
-	 *    case E_GADCON_ORIENT_TOP:
-	 *    case E_GADCON_ORIENT_CORNER_TL:
-	 *    case E_GADCON_ORIENT_CORNER_TR:
-	 *       e_win_move(win->ewin, x, y + h);
-	 *       break;
-	 *    case E_GADCON_ORIENT_BOTTOM:
-	 *    case E_GADCON_ORIENT_CORNER_BR:
-	 *    case E_GADCON_ORIENT_CORNER_BL:
-	 *       e_win_move(win->ewin, x, y - ph);
-	 *       break;
-	 *    case E_GADCON_ORIENT_LEFT:
-	 *    case E_GADCON_ORIENT_CORNER_LT:
-	 *    case E_GADCON_ORIENT_CORNER_LB:
-	 *       e_win_move(win->ewin, x + w, y);
-	 *       break;
-	 *    case E_GADCON_ORIENT_RIGHT:
-	 *    case E_GADCON_ORIENT_CORNER_RT:
-	 *    case E_GADCON_ORIENT_CORNER_RB:
-	 *       e_win_move(win->ewin, x - pw, y);
-	 *       break;
-	 *    case E_GADCON_ORIENT_FLOAT:
-	 *    case E_GADCON_ORIENT_HORIZ:
-	 *    case E_GADCON_ORIENT_VERT:
-	 *    default:
-	 *       break;
-	 *   } */
+	pw = win->ewin->w;
+	ph = win->ewin->h;
+
+	switch (inst->gcc->gadcon->orient)
+	  {
+
+	   case E_GADCON_ORIENT_TOP:
+	   case E_GADCON_ORIENT_CORNER_TL:
+	   case E_GADCON_ORIENT_CORNER_TR:
+	      e_win_move(win->ewin, x, y + h);
+	      break;
+	   case E_GADCON_ORIENT_BOTTOM:
+	   case E_GADCON_ORIENT_CORNER_BR:
+	   case E_GADCON_ORIENT_CORNER_BL:
+	      e_win_move(win->ewin, x, y - ph);
+	      break;
+	   case E_GADCON_ORIENT_LEFT:
+	   case E_GADCON_ORIENT_CORNER_LT:
+	   case E_GADCON_ORIENT_CORNER_LB:
+	      e_win_move(win->ewin, x + w, y);
+	      break;
+	   case E_GADCON_ORIENT_RIGHT:
+	   case E_GADCON_ORIENT_CORNER_RT:
+	   case E_GADCON_ORIENT_CORNER_RB:
+	      e_win_move(win->ewin, x - pw, y);
+	      break;
+	   case E_GADCON_ORIENT_FLOAT:
+	   case E_GADCON_ORIENT_HORIZ:
+	   case E_GADCON_ORIENT_VERT:
+	   default:
+	      break;
+	  }
+
+	if (win->ewin->x + pw > win->zone->w)
+	  e_win_move(win->ewin, win->zone->w - pw, win->ewin->y);
+
+	if (win->ewin->y + ph > win->zone->h)
+	  e_win_move(win->ewin, win->ewin->x, win->zone->h - ph);
+
+
+	e_win_show(win->ewin);
+	e_border_focus_set(win->ewin->border, 1, 1);
 
 	inst->win = win;
-
-	/* if (win->ewin->x + pw > win->zone->w)
-	 *   e_win_move(win->ewin, win->zone->w - pw, win->ewin->y);
-	 * 
-	 * if (win->ewin->y + ph > win->zone->h)
-	 *   e_win_move(win->ewin, win->ewin->x, win->zone->h - ph); */
 
 	e_gadcon_locked_set(inst->gcc->gadcon, 1);
 
@@ -295,7 +291,7 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 	E_Menu_Item *mi;
 	int cx, cy;
 
-	m = e_menu_new();	
+	m = e_menu_new();
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("Settings"));
 	e_util_menu_item_theme_icon_set(mi, "configure");
@@ -305,7 +301,7 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 	e_menu_post_deactivate_callback_set(m, _cb_menu_post, inst);
 	inst->menu = m;
 
-	e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &cx, &cy, 
+	e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &cx, &cy,
                                           NULL, NULL);
 	e_menu_activate_mouse(m,
 			      e_util_zone_current_get(e_manager_current_get()),
@@ -347,7 +343,7 @@ _conf_dialog(Instance *inst)
 {
    E_Config_Dialog_View *v = NULL;
    E_Container *con;
-   
+
    if (inst->cfd)
      return;
 
@@ -362,7 +358,7 @@ _conf_dialog(Instance *inst)
    v->basic.create_widgets = _basic_create;
    v->basic.apply_cfdata = _basic_apply;
 
-   con = e_container_current_get(e_manager_current_get()); 
+   con = e_container_current_get(e_manager_current_get());
    inst->cfd = e_config_dialog_new(con, _("Everything Gadgets"), "everything-gadgets",
 				   "launcher/everything-gadgets", NULL, 0, v, inst);
 
@@ -376,10 +372,10 @@ _create_data(E_Config_Dialog *cfd)
    E_Config_Dialog_Data *cfdata = NULL;
    Instance *inst = cfd->data;
    Gadget_Config *gc = inst->cfg;
-   
+
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
 
-#define CP(_name) cfdata->_name = strdup(gc->_name);
+#define CP(_name) cfdata->_name = (gc->_name ? strdup(gc->_name) : NULL);
 #define C(_name) cfdata->_name = gc->_name;
       CP(plugin);
       C(hide_after_action);
@@ -394,7 +390,7 @@ static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    Instance *inst = cfd->data;
-   
+
    inst->cfd = NULL;
    if (cfdata->plugin) free(cfdata->plugin);
    E_FREE(cfdata);
@@ -411,18 +407,18 @@ _basic_create(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o = NULL, *of = NULL, *ow = NULL;
    Instance *inst = cfd->data;
-   
+
    o = e_widget_list_add(e, 0, 0);
 
    of = e_widget_framelist_add(e, _("Plugin"), 0);
    ow = e_widget_entry_add(e, &(cfdata->plugin), NULL, NULL, NULL);
    e_widget_framelist_object_append(of, ow);
 
-   ow = e_widget_button_add(e, _("Settings"), NULL, _cb_button_settings, inst, NULL); 
+   ow = e_widget_button_add(e, _("Settings"), NULL, _cb_button_settings, inst, NULL);
    e_widget_framelist_object_append(of, ow);
-   
+
    e_widget_list_object_append(o, of, 1, 1, 0.5);
-   
+
    return o;
 }
 
@@ -431,7 +427,7 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    Instance *inst = cfd->data;
    Gadget_Config *gc = inst->cfg;
-   
+
 #define CP(_name)					\
    if (gc->_name)					\
      eina_stringshare_del(gc->_name);		\
