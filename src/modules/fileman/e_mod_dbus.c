@@ -197,7 +197,7 @@ _e_fileman_dbus_daemon_new(void)
       E_DBus_Method_Cb func;
    } *itr, desc[] = {
       {"OpenDirectory", "s", "", _e_fileman_dbus_daemon_open_directory_cb},
-      {NULL}
+      {NULL, NULL, NULL, NULL}
    };
 
    for (itr = desc; itr->method; itr++)
