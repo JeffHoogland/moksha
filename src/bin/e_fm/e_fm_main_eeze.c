@@ -136,7 +136,8 @@ _e_fm_main_eeze_cb_vol_mounted(void *user_data __UNUSED__,
    char *buf;
    int size;
 
-   v = eeze_disk_data_get(ev->disk);
+   //v = eeze_disk_data_get(ev->disk); THIS IS BROKEN DON'T ASK WHY
+   v = _e_fm_main_eeze_volume_find_fast(eeze_disk_syspath_get(ev->disk));
    if (v->guard)
      {
         ecore_timer_del(v->guard);
@@ -186,8 +187,8 @@ _e_fm_main_eeze_cb_vol_error(void *user_data __UNUSED__,
    char *buf;
    int size;
 
-   v = eeze_disk_data_get(ev->disk);
-   
+   //v = eeze_disk_data_get(ev->disk); THIS IS BROKEN DON'T ASK WHY
+   v = _e_fm_main_eeze_volume_find_fast(eeze_disk_syspath_get(ev->disk));
    if (v->mounted)
      {
         size = _e_fm_main_eeze_format_error_msg(&buf, v, "org.enlightenment.fm2.UnmountError", ev->message);
@@ -213,7 +214,8 @@ _e_fm_main_eeze_cb_vol_unmounted(void *user_data __UNUSED__,
    int size;
    E_Volume *v;
 
-   v = eeze_disk_data_get(ev->disk);
+   v = _e_fm_main_eeze_volume_find_fast(eeze_disk_syspath_get(ev->disk));
+   //v = eeze_disk_data_get(ev->disk); THIS IS BROKEN DON'T ASK WHY
    if (v->guard)
      {
         ecore_timer_del(v->guard);
@@ -317,7 +319,10 @@ _e_fm_main_eeze_volume_add(const char *syspath,
    v->uuid = eeze_disk_uuid_get(v->disk);
    v->label = eeze_disk_label_get(v->disk);
    v->fstype = eeze_disk_fstype_get(v->disk);
+   v->parent = eeze_disk_udev_get_parent(v->disk);
    str = eeze_disk_udev_get_sysattr(v->disk, "queue/hw_sector_size");
+   if (!str)
+     str = eeze_udev_syspath_get_sysattr(v->parent, "queue/hw_sector_size");
    if (str)
      {
         int64_t sector_size, size;
@@ -348,7 +353,6 @@ _e_fm_main_eeze_volume_add(const char *syspath,
         v->partition_label = eeze_disk_udev_get_property(v->disk, "ID_FS_LABEL");
      }
 
-   v->parent = eeze_disk_udev_get_parent(v->disk);
    {
       E_Storage *s;
       s = e_storage_find(v->parent);
@@ -357,8 +361,12 @@ _e_fm_main_eeze_volume_add(const char *syspath,
           v->udi, v->uuid, v->fstype, v->size, v->label, v->partition, v->partition_number,
           v->partition ? v->partition_label : "(not a partition)", v->mounted, v->mount_point);
       if (s)
+        v->storage = s;
+      else if (v->parent)
+        s = v->storage = _e_fm_main_eeze_storage_add(v->parent);
+
+      if (s)
         {
-           v->storage = s;
            s->volumes = eina_list_append(s->volumes, v);
            INF("  for storage: %s", s->udi);
         }
@@ -526,7 +534,8 @@ _scanner_poll(void *data __UNUSED__)
    const char *tmp;
    struct stat st;
    char buf[1024];
-   
+
+   if (svr) return EINA_FALSE;
    tmp = getenv("TMPDIR");
    if (!tmp) tmp = "/tmp";
 
@@ -540,16 +549,19 @@ _scanner_poll(void *data __UNUSED__)
 }
 
 static Eina_Bool
-_scanner_add(void *data __UNUSED__, int type __UNUSED__, Ecore_Exe_Event_Add *ev __UNUSED__)
+_scanner_add(void *data, int type __UNUSED__, Ecore_Exe_Event_Add *ev)
 {
-   if (!_scanner_poll(NULL))
+   if (data != ecore_exe_data_get(ev->exe)) return ECORE_CALLBACK_PASS_ON;
+   INF("Scanner started");
+   if (_scanner_poll(NULL))
      ecore_poller_add(ECORE_POLLER_CORE, 32, (Ecore_Task_Cb)_scanner_poll, NULL);
    return ECORE_CALLBACK_RENEW;
 }
 
 static Eina_Bool
-_scanner_del(void *data __UNUSED__, int type __UNUSED__, Ecore_Exe_Event_Del *ev __UNUSED__)
+_scanner_del(void *data, int type __UNUSED__, Ecore_Exe_Event_Del *ev)
 {
+   if (data != ecore_exe_data_get(ev->exe)) return ECORE_CALLBACK_PASS_ON;
    if (!svr)
      {
         INF("scanner connection dead, exiting");
@@ -606,7 +618,7 @@ _scanner_run(void)
         CRI("Could not locate scanner at '%s'! EFM exiting.", buf);
         exit(1);
      }
-   scanner = ecore_exe_pipe_run(buf, ECORE_EXE_NOT_LEADER, NULL);
+   scanner = ecore_exe_pipe_run(buf, ECORE_EXE_NOT_LEADER, pfx);
 }
  
 
@@ -671,8 +683,8 @@ _e_fm_main_eeze_init(void)
    ecore_event_handler_add(EEZE_EVENT_DISK_EJECT, (Ecore_Event_Handler_Cb)_e_fm_main_eeze_cb_vol_ejected, NULL);
    ecore_event_handler_add(EEZE_EVENT_DISK_ERROR, (Ecore_Event_Handler_Cb)_e_fm_main_eeze_cb_vol_error, NULL);
    
-   ecore_event_handler_add(ECORE_EXE_EVENT_ADD, (Ecore_Event_Handler_Cb)_scanner_add, NULL);
-   ecore_event_handler_add(ECORE_EXE_EVENT_DEL, (Ecore_Event_Handler_Cb)_scanner_del, NULL);
+   ecore_event_handler_add(ECORE_EXE_EVENT_ADD, (Ecore_Event_Handler_Cb)_scanner_add, pfx);
+   ecore_event_handler_add(ECORE_EXE_EVENT_DEL, (Ecore_Event_Handler_Cb)_scanner_del, pfx);
 
    ecore_event_handler_add(ECORE_CON_EVENT_SERVER_ADD, (Ecore_Event_Handler_Cb)_scanner_con, NULL);
    ecore_event_handler_add(ECORE_CON_EVENT_SERVER_DEL, (Ecore_Event_Handler_Cb)_scanner_disc, NULL);
@@ -733,7 +745,20 @@ _e_fm_main_eeze_storage_add(const char *syspath)
    if (_e_fm_main_eeze_storage_find_fast(syspath)) return NULL;
 
    str = eeze_udev_syspath_get_property(syspath, "ID_TYPE");
-   if (!str) return NULL;
+   if (!str)
+     {
+        const char *p, *subsystem;
+
+        p = eeze_udev_syspath_get_parent(syspath);
+        if (!p) return NULL;
+        subsystem = eeze_udev_syspath_get_subsystem(p);
+        if ((!subsystem) || strcmp(subsystem, "mmc"))
+          {
+             eina_stringshare_del(subsystem);
+             return NULL;
+          }
+        eina_stringshare_del(subsystem);
+     }
    eina_stringshare_del(str);
    s = calloc(1, sizeof(E_Storage));
    if (!s) return NULL;
@@ -746,15 +771,21 @@ _e_fm_main_eeze_storage_add(const char *syspath)
      {
       case EEZE_DISK_TYPE_CDROM:
         s->drive_type = eina_stringshare_add("cdrom");
+        break;
       case EEZE_DISK_TYPE_USB:
         s->drive_type = eina_stringshare_add("usb");
+        break;
       case EEZE_DISK_TYPE_INTERNAL:
         s->drive_type = eina_stringshare_add("ata");
+        break;
+      case EEZE_DISK_TYPE_FLASH:
+        s->drive_type = eina_stringshare_add("sd_mmc");
+        break;
       default:
         s->drive_type = eina_stringshare_add("unknown");
+        break;
      }
    s->model = eina_stringshare_add(eeze_disk_model_get(s->disk));
-   if (!s->model) goto error;
    s->vendor = eina_stringshare_add(eeze_disk_vendor_get(s->disk));
    s->serial = eina_stringshare_add(eeze_disk_serial_get(s->disk));
    if (!s->serial) ERR("Error getting serial for %s", s->udi);

@@ -68,6 +68,8 @@ _e_fm2_device_volume_setup(E_Volume *v)
         else
           snprintf(label, sizeof(label) - 1, "%s", v->storage->vendor);
      }
+   else if (v->storage->drive_type && (!strcmp(v->storage->drive_type, "sd_mmc")))
+     snprintf(label, sizeof(label) - 1, "Flash Card - %s", size);
    else
      snprintf(label, sizeof(label), _("Unknown Volume"));
 
@@ -79,7 +81,7 @@ _e_fm2_device_volume_setup(E_Volume *v)
      icon = v->storage->icon.volume;
    else
      {
-        if ((!v->storage->drive_type) || (!strcmp(v->storage->drive_type, "disk")))
+        if ((!v->storage->drive_type) || (!strcmp(v->storage->drive_type, "disk")) || (!strcmp(v->storage->drive_type, "partition")))
           {
              if (v->storage->removable == 0)
                icon = "drive-harddisk";
