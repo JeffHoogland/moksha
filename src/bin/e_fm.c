@@ -3229,7 +3229,7 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
               */
              if (custom_desktop_dir)
                {
-                 int len;
+                 size_t len;
 
                  custom_desktop_dir = e_util_shell_env_path_eval(custom_desktop_dir);
                  len = strlen(custom_desktop_dir);
