@@ -1,3 +1,6 @@
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -460,7 +463,7 @@ error:
 }
 
 static Eina_Bool
-poll_cb(void *data)
+poll_cb(void *data __UNUSED__)
 {
    int t, pp;
 
