@@ -405,7 +405,7 @@ struct _E_Config_Binding_Mouse
 struct _E_Config_Binding_Key
 {
    int            context;
-   int            modifiers;
+   unsigned int   modifiers;
    const char    *key;
    const char    *action;
    const char    *params;
