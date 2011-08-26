@@ -201,8 +201,6 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 
    EINA_LIST_FOREACH(cfdata->binding.edge, l, bi2)
      {
-	if (bi2->edge < 0) continue;
-
 	bi = E_NEW(E_Config_Binding_Edge, 1);
 	bi->context = bi2->context;
 	bi->edge = bi2->edge;
