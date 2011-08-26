@@ -856,7 +856,7 @@ _update_key_binding_list(E_Config_Dialog_Data *cfdata,
         if (bi == bi_new) ret = bi_pos;
         if (ret < 0) bi_pos++;
 
-        if (modifiers != bi->modifiers)
+        if (modifiers != (int)bi->modifiers)
           {
              modifiers = bi->modifiers;
              b = _key_binding_header_get(modifiers);
@@ -1052,7 +1052,7 @@ _grab_key_down_cb(void          *data,
           {
              E_Config_Binding_Key *bi = NULL, *bi2 = NULL;
              Eina_List *l = NULL;
-             int mod = E_BINDING_MODIFIER_NONE;
+             unsigned int mod = E_BINDING_MODIFIER_NONE;
              int found = 0, n;
 
              if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
