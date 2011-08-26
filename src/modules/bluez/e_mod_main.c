@@ -1069,7 +1069,7 @@ _gc_orient(E_Gadcon_Client       *gcc,
 static char *
 _gc_label(E_Gadcon_Client_Class *client_class __UNUSED__)
 {
-   return _(_e_bluez_Name);
+   return (char*)_(_e_bluez_Name);
 }
 
 static Evas_Object *
