@@ -1644,79 +1644,9 @@ _e_mod_comp_win_add(E_Comp        *c,
    if (_comp_mod->conf->grab) ecore_x_grab();
    if (cw->bd)
      {
-#if 0
-        E_Comp_Win *cw2;
+	eina_hash_add(borders, e_util_winid_str_get(cw->bd->client.win), cw);
+	cw->dfn = e_object_delfn_add(E_OBJECT(cw->bd), _e_mod_comp_object_del, cw);
 
-        EINA_INLIST_FOREACH(c->wins, cw2)
-          if (cw->bd == cw2->bd) break;
-
-        if (cw2)
-          {
-             E_FREE(cw);
-
-             cw = cw2;
-
-             if (cw->inhash)
-               eina_hash_del(windows, e_util_winid_str_get(cw->win), cw);
-
-             if (cw->damage)
-               {
-                  Ecore_X_Region parts;
-
-                  eina_hash_del(damages, e_util_winid_str_get(cw->damage), cw);
-                  parts = ecore_x_region_new(NULL, 0);
-                  ecore_x_damage_subtract(cw->damage, 0, parts);
-                  ecore_x_region_free(parts);
-                  ecore_x_damage_free(cw->damage);
-                  cw->damage = 0;
-               }
-
-             if (cw->update_timeout)
-               {
-                  ecore_timer_del(cw->update_timeout);
-                  cw->update_timeout = NULL;
-               }
-
-             if (cw->ready_timeout)
-               {
-                  ecore_timer_del(cw->ready_timeout);
-                  cw->ready_timeout = NULL;
-               }
-             cw->win = win;
-
-             memset((&att), 0, sizeof(Ecore_X_Window_Attributes));
-             if (!ecore_x_window_attributes_get(cw->win, &att))
-               {
-                  if (_comp_mod->conf->grab) ecore_x_ungrab();
-                  return NULL;
-               }
-
-             cw->vis = att.visual;
-             cw->depth = att.depth;
-             cw->argb = (cw->bd->argb || cw->bd->client.argb);
-
-             eina_hash_add(windows, e_util_winid_str_get(cw->win), cw);
-             cw->inhash = 1;
-
-             cw->damage = ecore_x_damage_new
-                 (cw->win, ECORE_X_DAMAGE_REPORT_DELTA_RECTANGLES);
-             eina_hash_add(damages, e_util_winid_str_get(cw->damage), cw);
-
-             cw->needpix = 1;
-             cw->dmg_updates = 0;
-             cw->redirected = 1;
-
-             evas_object_image_alpha_set(cw->obj, cw->argb);
-
-             if (_comp_mod->conf->grab) ecore_x_ungrab();
-             return cw;
-          }
-        else
-#endif
-        {
-           eina_hash_add(borders, e_util_winid_str_get(cw->bd->client.win), cw);
-           cw->dfn = e_object_delfn_add(E_OBJECT(cw->bd), _e_mod_comp_object_del, cw);
-        }
         // setup on show
         // _e_mod_comp_win_sync_setup(cw, cw->bd->client.win);
      }
@@ -1790,7 +1720,7 @@ _e_mod_comp_win_add(E_Comp        *c,
         if (cw->argb) evas_object_image_alpha_set(cw->obj, 1);
         else evas_object_image_alpha_set(cw->obj, 0);
 
-        if (att.override && !(att.event_mask.mine & ECORE_X_EVENT_MASK_WINDOW_PROPERTY))
+        if (cw->override && !(att.event_mask.mine & ECORE_X_EVENT_MASK_WINDOW_PROPERTY))
           ecore_x_event_mask_set(cw->win, ECORE_X_EVENT_MASK_WINDOW_PROPERTY);
 
         _e_mod_comp_win_shadow_setup(cw);
@@ -1806,25 +1736,15 @@ _e_mod_comp_win_add(E_Comp        *c,
           {
              int i;
 
-             if (rects)
-               {
-                  for (i = 0; i < num; i++)
-                    {
-                       E_RECTS_CLIP_TO_RECT(rects[i].x, rects[i].y,
-                                            rects[i].width, rects[i].height,
-                                            0, 0, att.w, att.h);
-                    }
-               }
-             if (!_e_mod_comp_shaped_check(att.w, att.h, rects, num))
-               {
-                  free(rects);
-                  rects = NULL;
-               }
-             if (rects)
-               {
-                  cw->shape_changed = 1;
-                  free(rects);
-               }
+	     for (i = 0; i < num; i++)
+	       E_RECTS_CLIP_TO_RECT(rects[i].x, rects[i].y,
+				    rects[i].width, rects[i].height,
+				    0, 0, att.w, att.h);
+
+             if (_e_mod_comp_shaped_check(att.w, att.h, rects, num))
+	       cw->shape_changed = 1;
+
+	     free(rects);
           }
 
         if (cw->bd) evas_object_data_set(cw->shobj, "border", cw->bd);
@@ -1860,8 +1780,8 @@ _e_mod_comp_win_add(E_Comp        *c,
    if (((!cw->input_only) && (!cw->invalid)) && (cw->override))
      {
           cw->redirected = 1;
-// we redirect all subwindows anyway
-//        ecore_x_composite_redirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
+	  // we redirect all subwindows anyway
+	  // ecore_x_composite_redirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
           cw->dmg_updates = 0;
      }
    DBG("  [0x%x] add\n", cw->win);
