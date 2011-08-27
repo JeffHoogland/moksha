@@ -39,7 +39,7 @@ static void _fill_order_list(E_Config_Dialog_Data *cfdata);
 static void _cb_apps_list_selected(void *data);
 static void _cb_order_list_selected(void *data);
 static int _cb_desks_sort(const void *data1, const void *data2);
-static int _cb_desks_name(const void *data1, const void *data2) ;
+static int _cb_desks_name(const void *data1, const void *data2);
 static int _cb_desks_sort(const void *data1, const void *data2);
 static void _cb_add(void *data, void *data2 __UNUSED__);
 static void _cb_del(void *data, void *data2 __UNUSED__);

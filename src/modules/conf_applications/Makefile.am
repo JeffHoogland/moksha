@@ -25,7 +25,9 @@ module_la_SOURCES      = e_mod_main.c \
 			 e_int_config_defapps.c \
                          e_int_config_defapps.h \
 			 e_int_config_deskenv.c \
-			 e_int_config_deskenv.h
+			 e_int_config_deskenv.h \
+			 e_int_config_delapps.c \
+                         e_int_config_delapps.h
 
 module_la_LIBADD       = @e_libs@ @dlopen_libs@
 module_la_LDFLAGS      = -module -avoid-version
