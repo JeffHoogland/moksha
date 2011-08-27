@@ -408,6 +408,10 @@ PKG_CHECK_MODULES(E_REMOTE, [
   eina >= 1.0.999
 ])
 
+PKG_CHECK_MODULES(E_START, [
+  eina >= 1.0.999
+])
+
 PKG_CHECK_MODULES(E_IMC, [
   ecore-file >= 1.0.999
   eet >= 1.4.0

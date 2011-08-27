@@ -343,8 +343,8 @@ enlightenment_imc_LDADD = @E_IMC_LIBS@
 
 enlightenment_start_SOURCES = \
 e_start_main.c
-
-enlightenment_start_LDADD = @dlopen_libs@
+enlightenment_start_CFLAGS = $(INCLUDES) @E_START_CFLAGS@
+enlightenment_start_LDADD = @dlopen_libs@ @E_START_LIBS@
 
 enlightenment_thumb_SOURCES = \
 e_sha1.c \
