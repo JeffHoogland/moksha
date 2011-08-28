@@ -18,7 +18,7 @@ static void _policy_zone_layout_fullscreen(E_Border *bd);
 static void _policy_zone_layout_app_single(E_Border *bd, E_Illume_Config_Zone *cz);
 static void _policy_zone_layout_app_dual_top(E_Border *bd, E_Illume_Config_Zone *cz);
 static void _policy_zone_layout_app_dual_custom(E_Border *bd, E_Illume_Config_Zone *cz);
-static void _policy_zone_layout_app_dual_left(E_Border *bd, E_Illume_Config_Zone *cz);
+static void _policy_zone_layout_app_dual_left(E_Border *bd, E_Illume_Config_Zone *cz, Eina_Bool force);
 static void _policy_zone_layout_dialog(E_Border *bd, E_Illume_Config_Zone *cz);
 static void _policy_zone_layout_splash(E_Border *bd, E_Illume_Config_Zone *cz);
 static void _policy_zone_layout_conformant_single(E_Border *bd, E_Illume_Config_Zone *cz);
@@ -577,7 +577,7 @@ _policy_zone_layout_app_dual_custom(E_Border *bd, E_Illume_Config_Zone *cz)
 }
 
 static void
-_policy_zone_layout_app_dual_left(E_Border *bd, E_Illume_Config_Zone *cz)
+_policy_zone_layout_app_dual_left(E_Border *bd, E_Illume_Config_Zone *cz, Eina_Bool force)
 {
    E_Border *bd2;
    int ky, kh, nx, nw;
@@ -597,10 +597,13 @@ _policy_zone_layout_app_dual_left(E_Border *bd, E_Illume_Config_Zone *cz)
    nx = x;
    nw = w / 2;
 
-   /* see if there is a border already there. if so, place at right */
-   bd2 = e_illume_border_at_xy_get(bd->zone, nx, y);
-   if ((bd2) && (bd != bd2)) nx = x + nw;
-
+   if (!force)
+     {
+	/* see if there is a border already there. if so, place at right */
+	bd2 = e_illume_border_at_xy_get(bd->zone, nx, y);
+	if ((bd2) && (bd != bd2)) nx = x + nw;
+     }
+   
    _border_geometry_set(bd, nx, y, nw, kh, POL_APP_LAYER);
 }
 
@@ -1073,29 +1076,32 @@ _policy_zone_layout(E_Zone *zone)
 
 	else if (e_illume_border_is_fixed_size(bd))
 	  _policy_zone_layout_dialog(bd, cz);
-	else
+	else if (bd->internal && bd->client.icccm.class &&
+		 (!strcmp(bd->client.icccm.class, "everything-window")))
 	  {
-	     /* are we in single mode ? */
-	     if (!cz->mode.dual)
+	     if (bd->client.vkbd.state == ECORE_X_VIRTUAL_KEYBOARD_STATE_ON)
 	       _policy_zone_layout_app_single(bd, cz);
 	     else
+	       _policy_zone_layout_app_dual_left(bd, cz, EINA_TRUE);
+	  }
+	else if (!cz->mode.dual)
+	  _policy_zone_layout_app_single(bd, cz);
+	else
+	  {
+	     if (cz->mode.side == 0)
 	       {
-		  /* we are in dual-mode, check orientation */
-		  if (cz->mode.side == 0)
-		    {
-		       int ty;
+		  int ty;
 
-		       /* grab the indicator position so we can tell if it
-			* is in a custom position or not (user dragged it) */
-		       e_illume_border_indicator_pos_get(bd->zone, NULL, &ty);
-		       if (ty <= bd->zone->y)
-			 _policy_zone_layout_app_dual_top(bd, cz);
-		       else
-			 _policy_zone_layout_app_dual_custom(bd, cz);
-		    }
+		  /* grab the indicator position so we can tell if it
+		   * is in a custom position or not (user dragged it) */
+		  e_illume_border_indicator_pos_get(bd->zone, NULL, &ty);
+		  if (ty <= bd->zone->y)
+		    _policy_zone_layout_app_dual_top(bd, cz);
 		  else
-		    _policy_zone_layout_app_dual_left(bd, cz);
+		    _policy_zone_layout_app_dual_custom(bd, cz);
 	       }
+	     else
+	       _policy_zone_layout_app_dual_left(bd, cz, EINA_FALSE);
 	  }
      }
 }
@@ -1106,16 +1112,12 @@ _policy_zone_move_resize(E_Zone *zone)
    Eina_List *l;
    E_Border *bd;
 
-   //	printf("Zone move resize\n");
-
    if (!zone) return;
 
    EINA_LIST_FOREACH(e_border_client_list(), l, bd)
      {
-	/* skip borders not on this zone */
 	if (bd->zone != zone) continue;
 
-	/* signal a changed pos here so layout gets updated */
 	bd->changes.pos = 1;
 	bd->changed = 1;
      }
@@ -1125,18 +1127,14 @@ void
 _policy_zone_mode_change(E_Zone *zone, Ecore_X_Atom mode)
 {
    E_Illume_Config_Zone *cz;
-   Eina_List *homes = NULL;
+   /* Eina_List *homes = NULL; */
    E_Border *bd;
-   int count;
-
-   //	printf("Zone mode change: %d\n", zone->id);
+   /* int count; */
 
    if (!zone) return;
 
-   /* get the config for this zone */
    cz = e_illume_zone_config_get(zone->id);
 
-   /* update config with new mode */
    if (mode == ECORE_X_ATOM_E_ILLUME_MODE_SINGLE)
      cz->mode.dual = 0;
    else
@@ -1167,12 +1165,11 @@ _policy_zone_mode_change(E_Zone *zone, Ecore_X_Atom mode)
 	       ecore_x_e_illume_drag_locked_set(bd->client.win, 1);
 	  }
      }
-
+#if 0 /* split home window? wtf?! go home! */
    if (!(homes = e_illume_border_home_borders_get(zone))) return;
 
    count = eina_list_count(homes);
 
-#if 0 /* split home window? wtf?! go home! */
    /* create a new home window (if needed) for dual mode */
    if (cz->mode.dual == 1)
      {
@@ -1192,7 +1189,7 @@ _policy_zone_mode_change(E_Zone *zone, Ecore_X_Atom mode)
 	  }
      }
 #endif
-   /* Need to trigger a layout update here */
+
    _policy_zone_layout_update(zone);
 }
 
@@ -1214,17 +1211,11 @@ _policy_zone_close(E_Zone *zone)
 void
 _policy_drag_start(E_Border *bd)
 {
-   //	printf("Drag start\n");
-
    if (!bd) return;
 
-   /* ignore stolen borders */
    if (bd->stolen) return;
 
-   /* set property on this border to say we are dragging */
    ecore_x_e_illume_drag_set(bd->client.win, 1);
-
-   /* set property on zone window that a drag is happening */
    ecore_x_e_illume_drag_set(bd->zone->black_win, 1);
 }
 
