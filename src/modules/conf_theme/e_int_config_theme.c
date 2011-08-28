@@ -447,6 +447,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
       mh = (mw * z->h) / z->w;
       oa = e_widget_aspect_add(evas, mw, mh);
       o = e_widget_preview_add(evas, mw, mh);
+      evas_object_size_hint_min_set(o, mw, mh); 
       cfdata->o_preview = o;
       if (cfdata->theme)
 	e_widget_preview_edje_set(o, cfdata->theme, "e/desktop/background");
