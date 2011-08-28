@@ -2096,7 +2096,7 @@ e_border_focus_set(E_Border *bd,
 
         e_focus_event_focus_in(bd);
 
-        if (focus_track_frozen)
+        if (!focus_track_frozen)
           e_border_focus_latest_set(bd);
 
         e_hints_active_window_set(bd->zone->container->manager, bd);
