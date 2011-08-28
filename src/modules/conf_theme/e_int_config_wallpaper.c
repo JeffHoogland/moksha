@@ -443,7 +443,7 @@ static Evas_Object *
 _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *rt, *ot;
-   Evas_Object *ow, *oa;
+   Evas_Object *ow;
    E_Zone *zone = NULL;
    E_Radio_Group *rg;
    char path[PATH_MAX];
@@ -516,17 +516,13 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 
    mw = 320;
    mh = (320 * zone->h) / zone->w;
-   oa = e_widget_aspect_add(evas, mw, mh);
    ow = e_widget_preview_add(evas, mw, mh);
-   evas_object_size_hint_min_set(oa, mw, mh);
    cfdata->o_preview = ow;
    _bg_set(cfdata);
-   e_widget_aspect_child_set(oa, ow);
    evas_object_show(ow);
-   evas_object_show(oa);
-   e_widget_table_object_append(ot, oa, 0, 2, 2 + online, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(ot, ow, 0, 2, 2 + online, 1, 1, 1, 1, 1);
    e_widget_list_object_append(o, ot, 1, 1, 0.5);
-   e_dialog_resizable_set(cfd->dia, 1);
+   e_dialog_resizable_set(cfd->dia, 0);
    return o;
 }
 
@@ -569,7 +565,7 @@ static Evas_Object *
 _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *rt, *ot;
-   Evas_Object *ow, *of, *oa;
+   Evas_Object *ow, *of;
    E_Zone *zone = NULL;
    E_Radio_Group *rg;
    char path[PATH_MAX];
@@ -640,12 +636,11 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 
    mw = 320;
    mh = (320 * zone->h) / zone->w;
-   oa = e_widget_aspect_add(evas, mw, mh);
    ow = e_widget_preview_add(evas, mw, mh);
+   evas_object_size_hint_aspect_set(ow, EVAS_ASPECT_CONTROL_BOTH, zone->w, zone->h); 
    cfdata->o_preview = ow;
    _bg_set(cfdata);
-   e_widget_aspect_child_set(oa, ow);
-   e_widget_table_object_append(ot, oa, 0, 2, 2 + online, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(ot, ow, 0, 2, 2 + online, 1, 1, 1, 1, 1);
 
    rg = e_widget_radio_group_new(&(cfdata->all_this_desk_screen));
    of = e_widget_frametable_add(evas, _("Where to place the Wallpaper"), 0);
@@ -658,10 +653,11 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
          (e_util_container_zone_number_get(1, 0))))
      e_widget_disabled_set(ow, 1);
    e_widget_frametable_object_append(of, ow, 0, 2, 1, 1, 1, 0, 1, 0);
-   e_widget_table_object_append(ot, of, 0, 3, 2 + online, 1, 1, 1, 1, 0);
+   e_widget_table_object_append(ot, of, 0, 3, 2 + online, 1, 1, 0, 1, 0);
 
-   e_widget_list_object_append(o, ot, 1, 1, 0.5);
-   e_dialog_resizable_set(cfd->dia, 1);
+   e_widget_list_object_append(o, ot, 1, 1, 0.0);
+   e_dialog_resizable_set(cfd->dia, 0);
+   
    return o;
 }
 
