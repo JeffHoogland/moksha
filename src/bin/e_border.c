@@ -2026,10 +2026,7 @@ e_border_focus_set(E_Border *bd,
              else if ((!bd->focused) || (focus_next && (bd != eina_list_data_get(focus_next))))
                {
                   Eina_List *l;
-		  
-		  /* waiting for pointer warp timer to reach its window...*/
-		  if (warp_timer) return;
-             
+
                   if ((l = eina_list_data_find_list(focus_next, bd)))
                     focus_next = eina_list_promote_list(focus_next, l);
                   else
