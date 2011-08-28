@@ -201,10 +201,12 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 	Evas_Coord x, y, w, h;
 	int cx, cy, pw, ph;
 	Evry_Window *win;
-
+	E_Border *bd;
+	
 	if (inst->win)
 	  {
 	     win = inst->win;
+	     bd = win->ewin->border;
 	     /* evry_hide(win, 0); */
 
 	     if (ev->flags == EVAS_BUTTON_DOUBLE_CLICK)
@@ -213,8 +215,9 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 	       }
 	     else
 	       {
-	     	  e_border_show(win->ewin->border);
-	     	  e_border_focus_set(win->ewin->border, 1, 1);
+	     	  e_border_show(bd);
+		  e_border_raise(bd);
+	     	  e_border_focus_set(bd, 1, 1);
 	       }
 	     return;
 	  }
@@ -275,9 +278,10 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 
 
 	e_win_show(win->ewin);
-	e_border_focus_set(win->ewin->border, 1, 1);
-	win->ewin->border->client.netwm.state.skip_taskbar = 1;
-	win->ewin->border->client.netwm.state.skip_pager = 1;
+	bd = win->ewin->border;
+	e_border_focus_set(bd, 1, 1);
+	bd->client.netwm.state.skip_taskbar = 1;
+	bd->client.netwm.state.skip_pager = 1;
 	inst->win = win;
 
 	e_gadcon_locked_set(inst->gcc->gadcon, 1);
