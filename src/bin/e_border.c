@@ -2314,6 +2314,146 @@ e_border_unshade(E_Border   *bd,
    e_remember_update(bd);
 }
 
+static void
+_e_border_client_inset_calc(E_Border *bd)
+{
+   /* int w, h; */
+   Evas_Coord cx, cy, cw, ch;
+
+   if (bd->bg_object)
+     {
+	evas_object_resize(bd->bg_object, 1000, 1000);
+	edje_object_calc_force(bd->bg_object);
+	edje_object_part_geometry_get(bd->bg_object, "e.swallow.client", &cx, &cy, &cw, &ch);
+	bd->client_inset.l = cx;
+	bd->client_inset.r = 1000 - (cx + cw);
+	bd->client_inset.t = cy;
+	bd->client_inset.b = 1000 - (cy + ch);
+     }
+   else
+     {
+	bd->client_inset.l = 0;
+	bd->client_inset.r = 0;
+	bd->client_inset.t = 0;
+	bd->client_inset.b = 0;
+     }
+   
+   ecore_x_netwm_frame_size_set(bd->client.win,
+				bd->client_inset.l, bd->client_inset.r,
+				bd->client_inset.t, bd->client_inset.b);
+   ecore_x_e_frame_size_set(bd->client.win,
+			    bd->client_inset.l, bd->client_inset.r,
+			    bd->client_inset.t, bd->client_inset.b);
+}
+
+static void
+_e_border_maximize(E_Border *bd, E_Maximize max)
+{
+   int x1, y1, x2, y2;
+   int w, h, pw, ph;
+   int zx, zy, zw, zh;
+
+   zx = zy = zw = zh = 0;
+
+   switch (max & E_MAXIMIZE_TYPE)
+     {
+      case E_MAXIMIZE_NONE:
+	 /* Ignore */
+	 max = E_MAXIMIZE_NONE;
+	 break;
+
+      case E_MAXIMIZE_FULLSCREEN:
+	 w = bd->zone->w;
+	 h = bd->zone->h;
+
+	 if (bd->bg_object)
+	   {
+	      edje_object_signal_emit(bd->bg_object, "e,action,maximize,fullscreen", "e");
+	      _e_border_client_inset_calc(bd);
+	   }
+	 e_border_resize_limit(bd, &w, &h);
+	 /* center x-direction */
+	 x1 = bd->zone->x + (bd->zone->w - w) / 2;
+	 /* center y-direction */
+	 y1 = bd->zone->y + (bd->zone->h - h) / 2;
+
+	 if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_BOTH)
+	   e_border_move_resize(bd, x1, y1, w, h);
+	 else if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_VERTICAL)
+	   e_border_move_resize(bd, bd->x, y1, bd->w, h);
+	 else if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_HORIZONTAL)
+	   e_border_move_resize(bd, x1, bd->y, w, bd->h);
+	 break;
+
+      case E_MAXIMIZE_SMART:
+      case E_MAXIMIZE_EXPAND:
+	 if (bd->zone)
+	   e_zone_useful_geometry_get(bd->zone, &zx, &zy, &zw, &zh);
+
+	 if (bd->w < zw)
+	   w = bd->w;
+	 else
+	   w = zw;
+
+	 if (bd->h < zh)
+	   h = bd->h;
+	 else
+	   h = zh;
+
+	 if (bd->x < zx) // window left not useful coordinates
+	   x1 = zx;
+	 else if (bd->x + bd->w > zx + zw) // window right not useful coordinates
+	   x1 = zx + zw - bd->w;
+	 else // window normal position
+	   x1 = bd->x;
+
+	 if (bd->y < zy) // window top not useful coordinates
+	   y1 = zy;
+	 else if (bd->y + bd->h > zy + zh) // window bottom not useful coordinates
+	   y1 = zy + zh - bd->h;
+	 else // window normal position
+	   y1 = bd->y;
+
+	 if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_BOTH)
+	   e_border_move_resize(bd, zx, zy, zw, zh);
+	 else if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_VERTICAL)
+	   e_border_move_resize(bd, x1, zy, w, zh);
+	 else if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_HORIZONTAL)
+	   e_border_move_resize(bd, zx, y1, zw, h);
+	 edje_object_signal_emit(bd->bg_object, "e,action,maximize", "e");
+	 break;
+
+      case E_MAXIMIZE_FILL:
+	 x1 = bd->zone->x;
+	 y1 = bd->zone->y;
+	 x2 = bd->zone->x + bd->zone->w;
+	 y2 = bd->zone->y + bd->zone->h;
+
+	 /* walk through all shelves */
+	 e_maximize_border_shelf_fill(bd, &x1, &y1, &x2, &y2, max);
+
+	 /* walk through all windows */
+	 e_maximize_border_border_fill(bd, &x1, &y1, &x2, &y2, max);
+
+	 w = x2 - x1;
+	 h = y2 - y1;
+	 pw = w;
+	 ph = h;
+	 e_border_resize_limit(bd, &w, &h);
+	 /* center x-direction */
+	 x1 = x1 + (pw - w) / 2;
+	 /* center y-direction */
+	 y1 = y1 + (ph - h) / 2;
+	 if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_BOTH)
+	   e_border_move_resize(bd, x1, y1, w, h);
+	 else if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_VERTICAL)
+	   e_border_move_resize(bd, bd->x, y1, bd->w, h);
+	 else if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_HORIZONTAL)
+	   e_border_move_resize(bd, x1, bd->y, w, bd->h);
+	 break;
+     }
+}
+
 EAPI void
 e_border_maximize(E_Border  *bd,
                   E_Maximize max)
@@ -2337,152 +2477,35 @@ e_border_maximize(E_Border  *bd,
         bd->maximized |= max;
         return;
      }
+ 
+   bd->pre_res_change.valid = 0;
+   if (!(bd->maximized & E_MAXIMIZE_HORIZONTAL))
+     {
+	/* Horizontal hasn't been set */
+	bd->saved.x = bd->x - bd->zone->x;
+	bd->saved.w = bd->w;
+     }
+   if (!(bd->maximized & E_MAXIMIZE_VERTICAL))
+     {
+	/* Vertical hasn't been set */
+	bd->saved.y = bd->y - bd->zone->y;
+	bd->saved.h = bd->h;
+     }
+   bd->saved.zone = bd->zone->num;
+   e_hints_window_size_set(bd);
 
-   {
-      int x1, y1, x2, y2;
-      int w, h, pw, ph;
-      int zx, zy, zw, zh;
+   e_border_raise(bd);
 
-      zx = zy = zw = zh = 0;
+   _e_border_maximize(bd, max);
 
-      bd->pre_res_change.valid = 0;
-      if (!(bd->maximized & E_MAXIMIZE_HORIZONTAL))
-        {
-           /* Horizontal hasn't been set */
-           bd->saved.x = bd->x - bd->zone->x;
-           bd->saved.w = bd->w;
-        }
-      if (!(bd->maximized & E_MAXIMIZE_VERTICAL))
-        {
-           /* Vertical hasn't been set */
-           bd->saved.y = bd->y - bd->zone->y;
-           bd->saved.h = bd->h;
-        }
-      bd->saved.zone = bd->zone->num;
-      e_hints_window_size_set(bd);
 
-      e_border_raise(bd);
-      switch (max & E_MAXIMIZE_TYPE)
-        {
-         case E_MAXIMIZE_NONE:
-           /* Ignore */
-           max = E_MAXIMIZE_NONE;
-           break;
+   /* Remove previous type */
+   bd->maximized &= ~E_MAXIMIZE_TYPE;
+   /* Add new maximization. It must be added, so that VERTICAL + HORIZONTAL == BOTH */
+   bd->maximized |= max;
 
-         case E_MAXIMIZE_FULLSCREEN:
-           w = bd->zone->w;
-           h = bd->zone->h;
-
-           if (bd->bg_object)
-             {
-                Evas_Coord cx, cy, cw, ch;
-
-                edje_object_signal_emit(bd->bg_object, "e,action,maximize,fullscreen", "e");
-
-                evas_object_resize(bd->bg_object, w, h);
-                edje_object_calc_force(bd->bg_object);
-                edje_object_part_geometry_get(bd->bg_object, "e.swallow.client", &cx, &cy, &cw, &ch);
-                bd->client_inset.l = cx;
-                bd->client_inset.r = w - (cx + cw);
-                bd->client_inset.t = cy;
-                bd->client_inset.b = h - (cy + ch);
-                ecore_x_netwm_frame_size_set(bd->client.win,
-                                             bd->client_inset.l, bd->client_inset.r,
-                                             bd->client_inset.t, bd->client_inset.b);
-                ecore_x_e_frame_size_set(bd->client.win,
-                                         bd->client_inset.l, bd->client_inset.r,
-                                         bd->client_inset.t, bd->client_inset.b);
-             }
-           e_border_resize_limit(bd, &w, &h);
-           /* center x-direction */
-           x1 = bd->zone->x + (bd->zone->w - w) / 2;
-           /* center y-direction */
-           y1 = bd->zone->y + (bd->zone->h - h) / 2;
-
-           if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_BOTH)
-             e_border_move_resize(bd, x1, y1, w, h);
-           else if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_VERTICAL)
-             e_border_move_resize(bd, bd->x, y1, bd->w, h);
-           else if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_HORIZONTAL)
-             e_border_move_resize(bd, x1, bd->y, w, bd->h);
-           break;
-
-         case E_MAXIMIZE_SMART:
-         case E_MAXIMIZE_EXPAND:
-           if (bd->zone)
-             e_zone_useful_geometry_get(bd->zone, &zx, &zy, &zw, &zh);
-
-           if (bd->w < zw)
-             w = bd->w;
-           else
-             w = zw;
-
-           if (bd->h < zh)
-             h = bd->h;
-           else
-             h = zh;
-
-           if (bd->x < zx) // window left not useful coordinates
-             x1 = zx;
-           else if (bd->x + bd->w > zx + zw) // window right not useful coordinates
-             x1 = zx + zw - bd->w;
-           else // window normal position
-             x1 = bd->x;
-
-           if (bd->y < zy) // window top not useful coordinates
-             y1 = zy;
-           else if (bd->y + bd->h > zy + zh) // window bottom not useful coordinates
-             y1 = zy + zh - bd->h;
-           else // window normal position
-             y1 = bd->y;
-
-           if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_BOTH)
-             e_border_move_resize(bd, zx, zy, zw, zh);
-           else if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_VERTICAL)
-             e_border_move_resize(bd, x1, zy, w, zh);
-           else if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_HORIZONTAL)
-             e_border_move_resize(bd, zx, y1, zw, h);
-           edje_object_signal_emit(bd->bg_object, "e,action,maximize", "e");
-           break;
-
-         case E_MAXIMIZE_FILL:
-           x1 = bd->zone->x;
-           y1 = bd->zone->y;
-           x2 = bd->zone->x + bd->zone->w;
-           y2 = bd->zone->y + bd->zone->h;
-
-           /* walk through all shelves */
-           e_maximize_border_shelf_fill(bd, &x1, &y1, &x2, &y2, max);
-
-           /* walk through all windows */
-           e_maximize_border_border_fill(bd, &x1, &y1, &x2, &y2, max);
-
-           w = x2 - x1;
-           h = y2 - y1;
-           pw = w;
-           ph = h;
-           e_border_resize_limit(bd, &w, &h);
-           /* center x-direction */
-           x1 = x1 + (pw - w) / 2;
-           /* center y-direction */
-           y1 = y1 + (ph - h) / 2;
-           if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_BOTH)
-             e_border_move_resize(bd, x1, y1, w, h);
-           else if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_VERTICAL)
-             e_border_move_resize(bd, bd->x, y1, bd->w, h);
-           else if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_HORIZONTAL)
-             e_border_move_resize(bd, x1, bd->y, w, bd->h);
-           break;
-        }
-
-      /* Remove previous type */
-      bd->maximized &= ~E_MAXIMIZE_TYPE;
-      /* Add new maximization. It must be added, so that VERTICAL + HORIZONTAL == BOTH */
-      bd->maximized |= max;
-
-      e_hints_window_maximized_set(bd, bd->maximized & E_MAXIMIZE_HORIZONTAL,
-                                   bd->maximized & E_MAXIMIZE_VERTICAL);
-   }
+   e_hints_window_maximized_set(bd, bd->maximized & E_MAXIMIZE_HORIZONTAL,
+				bd->maximized & E_MAXIMIZE_VERTICAL);
    e_remember_update(bd);
 }
 
@@ -2513,23 +2536,8 @@ e_border_unmaximize(E_Border  *bd,
           {
              if (bd->bg_object)
                {
-                  Evas_Coord cx, cy, cw, ch;
-
                   edje_object_signal_emit(bd->bg_object, "e,action,unmaximize,fullscreen", "e");
-
-                  evas_object_resize(bd->bg_object, 1000, 1000);
-                  edje_object_calc_force(bd->bg_object);
-                  edje_object_part_geometry_get(bd->bg_object, "e.swallow.client", &cx, &cy, &cw, &ch);
-                  bd->client_inset.l = cx;
-                  bd->client_inset.r = 1000 - (cx + cw);
-                  bd->client_inset.t = cy;
-                  bd->client_inset.b = 1000 - (cy + ch);
-                  ecore_x_netwm_frame_size_set(bd->client.win,
-                                               bd->client_inset.l, bd->client_inset.r,
-                                               bd->client_inset.t, bd->client_inset.b);
-                  ecore_x_e_frame_size_set(bd->client.win,
-                                           bd->client_inset.l, bd->client_inset.r,
-                                           bd->client_inset.t, bd->client_inset.b);
+		  _e_border_client_inset_calc(bd);
                }
 
              bd->maximized = E_MAXIMIZE_NONE;
@@ -3982,26 +3990,12 @@ e_border_resize_cancel(void)
 EAPI void
 e_border_frame_recalc(E_Border *bd)
 {
-   Evas_Coord cx, cy, cw, ch;
-
    if (!bd->bg_object) return;
 
    bd->w -= (bd->client_inset.l + bd->client_inset.r);
    bd->h -= (bd->client_inset.t + bd->client_inset.b);
 
-   evas_object_resize(bd->bg_object, 1000, 1000);
-   edje_object_calc_force(bd->bg_object);
-   edje_object_part_geometry_get(bd->bg_object, "e.swallow.client", &cx, &cy, &cw, &ch);
-   bd->client_inset.l = cx;
-   bd->client_inset.r = 1000 - (cx + cw);
-   bd->client_inset.t = cy;
-   bd->client_inset.b = 1000 - (cy + ch);
-   ecore_x_netwm_frame_size_set(bd->client.win,
-                                bd->client_inset.l, bd->client_inset.r,
-                                bd->client_inset.t, bd->client_inset.b);
-   ecore_x_e_frame_size_set(bd->client.win,
-                            bd->client_inset.l, bd->client_inset.r,
-                            bd->client_inset.t, bd->client_inset.b);
+   _e_border_client_inset_calc(bd);
 
    bd->w += (bd->client_inset.l + bd->client_inset.r);
    bd->h += (bd->client_inset.t + bd->client_inset.b);
@@ -6987,22 +6981,15 @@ _e_border_eval0(E_Border *bd)
           {
              Evas_Object *o;
              char buf[PATH_MAX];
-             Evas_Coord cx, cy, cw, ch;
-             int l, r, t, b, ok;
+             int ok;
 
              bd->changes.border = 1;
-             if (bd->client.border.name)
-               eina_stringshare_del(bd->client.border.name);
-             bd->client.border.name = eina_stringshare_add(bordername);
+	     eina_stringshare_replace(&bd->client.border.name, bordername);
 
              if (bd->bg_object)
                {
                   bd->w -= (bd->client_inset.l + bd->client_inset.r);
                   bd->h -= (bd->client_inset.t + bd->client_inset.b);
-                  bd->client_inset.l = 0;
-                  bd->client_inset.r = 0;
-                  bd->client_inset.t = 0;
-                  bd->client_inset.b = 0;
                   bd->changes.size = 1;
                   evas_object_del(bd->bg_object);
                }
@@ -7017,9 +7004,7 @@ _e_border_eval0(E_Border *bd)
                   if (ok)
                     {
                        /* Reset default border style to default */
-                       if (e_config->theme_default_border_style)
-                         eina_stringshare_del(e_config->theme_default_border_style);
-                       e_config->theme_default_border_style = eina_stringshare_add("default");
+		       eina_stringshare_replace(&e_config->theme_default_border_style, "default"); 
                        e_config_save_queue();
                     }
                }
@@ -7057,155 +7042,33 @@ _e_border_eval0(E_Border *bd)
                   else if (bd->client.icccm.title)
                     edje_object_part_text_set(o, "e.text.title",
                                               bd->client.icccm.title);
-                  evas_object_resize(o, 1000, 1000);
-                  edje_object_calc_force(o);
-                  edje_object_part_geometry_get(o, "e.swallow.client",
-                                                &cx, &cy, &cw, &ch);
-                  l = cx;
-                  r = 1000 - (cx + cw);
-                  t = cy;
-                  b = 1000 - (cy + ch);
                }
              else
                {
                   evas_object_del(o);
                   bd->bg_object = NULL;
-                  l = 0;
-                  r = 0;
-                  t = 0;
-                  b = 0;
                }
-             bd->client_inset.l = l;
-             bd->client_inset.r = r;
-             bd->client_inset.t = t;
-             bd->client_inset.b = b;
-             ecore_x_netwm_frame_size_set(bd->client.win, l, r, t, b);
-             ecore_x_e_frame_size_set(bd->client.win, l, r, t, b);
+
+	     _e_border_client_inset_calc(bd);
+
              bd->w += (bd->client_inset.l + bd->client_inset.r);
              bd->h += (bd->client_inset.t + bd->client_inset.b);
              ecore_evas_shaped_set(bd->bg_ecore_evas, bd->shaped);
              bd->changes.size = 1;
-             ecore_x_window_move(bd->client.shell_win, l, t);
+	     /*  really needed ? */
+             ecore_x_window_move(bd->client.shell_win,
+				 bd->client_inset.l,
+				 bd->client_inset.t);
 
              if (bd->maximized != E_MAXIMIZE_NONE)
                {
-                  int x1, y1, x2, y2;
-                  int w, h, pw, ph;
-                  int zx, zy, zw, zh;
                   E_Maximize maximized = bd->maximized;
 
                   /* to force possible resizes */
                   bd->maximized = E_MAXIMIZE_NONE;
 
-                  zx = zy = zw = zh = 0;
+		  _e_border_maximize(bd, maximized); 
 
-                  switch (maximized & E_MAXIMIZE_TYPE)
-                    {
-                     case E_MAXIMIZE_FULLSCREEN:
-                        w = bd->zone->w;
-                        h = bd->zone->h;
-
-                        if (bd->bg_object)
-                          {
-                             Evas_Coord cx, cy, cw, ch;
-
-                             edje_object_signal_emit(bd->bg_object, "e,action,maximize,fullscreen", "e");
-
-                             evas_object_resize(bd->bg_object, w, h);
-                             edje_object_calc_force(bd->bg_object);
-                             edje_object_part_geometry_get(bd->bg_object, "e.swallow.client", &cx, &cy, &cw, &ch);
-                             bd->client_inset.l = cx;
-                             bd->client_inset.r = w - (cx + cw);
-                             bd->client_inset.t = cy;
-                             bd->client_inset.b = h - (cy + ch);
-                             ecore_x_netwm_frame_size_set(bd->client.win,
-                                                          bd->client_inset.l, bd->client_inset.r,
-                                                          bd->client_inset.t, bd->client_inset.b);
-                             ecore_x_e_frame_size_set(bd->client.win,
-                                                      bd->client_inset.l, bd->client_inset.r,
-                                                      bd->client_inset.t, bd->client_inset.b);
-                          }
-                        e_border_resize_limit(bd, &w, &h);
-                        /* center x-direction */
-                        x1 = bd->zone->x + (bd->zone->w - w) / 2;
-                        /* center y-direction */
-                        y1 = bd->zone->y + (bd->zone->h - h) / 2;
-
-                        if ((maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_BOTH)
-                          _e_border_move_resize_internal(bd, x1, y1, w, h, 0, 1);
-                        else if ((maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_VERTICAL)
-                          _e_border_move_resize_internal(bd, bd->x, y1, bd->w, h, 0, 1);
-
-                        else if ((maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_HORIZONTAL)
-                          _e_border_move_resize_internal(bd, x1, bd->y, w, bd->h, 0, 1);
-                        break;
-
-                     case E_MAXIMIZE_SMART:
-                     case E_MAXIMIZE_EXPAND:
-                        if (bd->zone)
-                          e_zone_useful_geometry_get(bd->zone, &zx, &zy, &zw, &zh);
-
-                        if (bd->w < zw)
-                          w = bd->w;
-                        else
-                          w = zw;
-
-                        if (bd->h < zh)
-                          h = bd->h;
-                        else
-                          h = zh;
-
-                        if (bd->x < zx) // window left not useful coordinates
-                          x1 = zx;
-                        else if (bd->x + bd->w > zx + zw) // window right not useful coordinates
-                          x1 = zx + zw - bd->w;
-                        else // window normal position
-                          x1 = bd->x;
-
-                        if (bd->y < zy) // window top not useful coordinates
-                          y1 = zy;
-                        else if (bd->y + bd->h > zy + zh) // window bottom not useful coordinates
-                          y1 = zy + zh - bd->h;
-                        else // window normal position
-                          y1 = bd->y;
-
-                        if ((maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_BOTH)
-                          _e_border_move_resize_internal(bd, zx, zy, zw, zh, 0, 1);
-                        else if ((maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_VERTICAL)
-                          _e_border_move_resize_internal(bd, x1, zy, w, zh, 0, 1);
-                        else if ((maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_HORIZONTAL)
-                          _e_border_move_resize_internal(bd, zx, y1, zw, h, 0, 1);
-                        break;
-
-                     case E_MAXIMIZE_FILL:
-                        x1 = bd->zone->x;
-                        y1 = bd->zone->y;
-                        x2 = bd->zone->x + bd->zone->w;
-                        y2 = bd->zone->y + bd->zone->h;
-
-                        /* walk through all shelves */
-                        e_maximize_border_shelf_fill(bd, &x1, &y1, &x2, &y2, maximized);
-
-                        /* walk through all windows */
-                        e_maximize_border_border_fill(bd, &x1, &y1, &x2, &y2, maximized);
-
-                        w = x2 - x1;
-                        h = y2 - y1;
-                        pw = w;
-                        ph = h;
-                        e_border_resize_limit(bd, &w, &h);
-                        /* center x-direction */
-                        x1 = x1 + (pw - w) / 2;
-                        /* center y-direction */
-                        y1 = y1 + (ph - h) / 2;
-                        if ((maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_BOTH)
-                          _e_border_move_resize_internal(bd, x1, y1, w, h, 0, 1);
-                        else if ((maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_VERTICAL)
-                          _e_border_move_resize_internal(bd, bd->x, y1, bd->w, h, 0, 1);
-                        else if ((maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_HORIZONTAL)
-                          _e_border_move_resize_internal(bd, x1, bd->y, w, bd->h, 0, 1);
-                        break;
-                    }
                   /* restore maximized state */
                   bd->maximized = maximized;
 
