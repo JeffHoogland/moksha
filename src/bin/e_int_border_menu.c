@@ -19,7 +19,6 @@ static void _e_border_menu_cb_resistance(void *data, E_Menu *m, E_Menu_Item *mi)
 static void _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_application_pre(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_window_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi);
-static void _e_border_menu_cb_placement_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi);
 static void _e_border_menu_cb_prop(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_stick(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_stacking_pre(void *data, E_Menu *m, E_Menu_Item *mi);
