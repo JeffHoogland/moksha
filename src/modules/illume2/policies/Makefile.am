@@ -1,2 +1,2 @@
 MAINTAINERCLEANFILES = Makefile.in
-SUBDIRS = illume
+SUBDIRS = illume tablet

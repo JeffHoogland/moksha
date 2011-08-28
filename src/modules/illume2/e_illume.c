@@ -433,6 +433,35 @@ e_illume_border_is_quickpanel(E_Border *bd)
 }
 
 /**
+ * Determine if the border request a fixed size.
+ * 
+ * @param bd The border to get the minium space for.
+ * @return EINA_TRUE if border requested fixed size, EINA_FALSE otherwise.
+ *
+ * @note If @p bd is NULL then this function will return EINA_FALSE.
+ *
+ * @ingroup E_Illume_Main_Group
+ */
+
+EAPI Eina_Bool e_illume_border_is_fixed_size(E_Border *bd)
+{
+   /* make sure we have a border */
+   if (!bd) return EINA_FALSE;
+
+   if ((bd->client.icccm.min_w == bd->client.icccm.max_w) &&
+       (bd->client.icccm.min_h == bd->client.icccm.max_h))
+     return EINA_TRUE;
+   
+   if ((bd->client.mwm.exists) && 
+       !((bd->client.mwm.func & ECORE_X_MWM_HINT_FUNC_ALL) ||
+	 (bd->client.mwm.func & ECORE_X_MWM_HINT_FUNC_MAXIMIZE) ||
+	 (bd->client.mwm.func & ECORE_X_MWM_HINT_FUNC_RESIZE)))
+     return EINA_TRUE;
+
+   return EINA_FALSE;
+}
+
+/**
  * Retrieves the minimum space required to display this border.
  * 
  * @param bd The border to get the minium space for.

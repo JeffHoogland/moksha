@@ -839,6 +839,7 @@ src/modules/illume2/module.desktop
 src/modules/illume2/keyboards/Makefile
 src/modules/illume2/policies/Makefile
 src/modules/illume2/policies/illume/Makefile
+src/modules/illume2/policies/tablet/Makefile
 src/modules/illume-home/Makefile
 src/modules/illume-home/module.desktop
 src/modules/illume-home-toggle/Makefile
