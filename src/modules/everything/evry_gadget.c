@@ -205,18 +205,17 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 	if (inst->win)
 	  {
 	     win = inst->win;
-	     evry_hide(win, 0);
+	     /* evry_hide(win, 0); */
 
-	     /* if (ev->flags == EVAS_BUTTON_DOUBLE_CLICK)
-	      *   {
-	      * 	  evry_hide(win, 0);
-	      *   }
-	      * else
-	      *   {
-	      * 	  e_border_show(win->ewin->border);
-	      * 	  e_border_focus_set(win->ewin->border, 1, 1);
-	      *   } */
-
+	     if (ev->flags == EVAS_BUTTON_DOUBLE_CLICK)
+	       {
+	     	  evry_hide(win, 0);
+	       }
+	     else
+	       {
+	     	  e_border_show(win->ewin->border);
+	     	  e_border_focus_set(win->ewin->border, 1, 1);
+	       }
 	     return;
 	  }
 
@@ -224,15 +223,16 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 			0, inst->cfg->plugin, EINA_FALSE);
 	if (!win) return;
 
+	ecore_x_netwm_window_type_set(win->ewin->evas_win,
+				      ECORE_X_WINDOW_TYPE_UTILITY);
+
+	ecore_evas_name_class_set(win->ewin->ecore_evas, "E", "everything-window");
+
 	evas_object_geometry_get(inst->o_button, &x, &y, &w, &h);
 	e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon,
 					  &cx, &cy, NULL, NULL);
 	x += cx;
 	y += cy;
-
-	/* evas_object_resize(win->o_main,
-	 * 		   evry_conf->edge_width,
-	 * 		   evry_conf->edge_height); */
 
 	pw = win->ewin->w;
 	ph = win->ewin->h;
@@ -276,7 +276,8 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 
 	e_win_show(win->ewin);
 	e_border_focus_set(win->ewin->border, 1, 1);
-
+	win->ewin->border->client.netwm.state.skip_taskbar = 1;
+	win->ewin->border->client.netwm.state.skip_pager = 1;
 	inst->win = win;
 
 	e_gadcon_locked_set(inst->gcc->gadcon, 1);
