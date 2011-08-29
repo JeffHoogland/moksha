@@ -59,7 +59,7 @@ _policy_border_set_focus(E_Border *bd)
 
 	     /* focus the border */
 	     e_border_focus_set(bd, 1, 1);
-
+	     /* e_border_raise(bd); */
 	     /* hide the border below this one */
 	     _policy_border_hide_below(bd);
 
@@ -120,6 +120,8 @@ _policy_border_hide_below(E_Border *bd)
 {
    int pos = 0, i;
 
+   return;
+   
    //	printf("Hide Borders Below: %s %d %d\n",
    //	       bd->client.icccm.name, bd->x, bd->y);
 
@@ -360,12 +362,11 @@ _border_geometry_set(E_Border *bd, int x, int y, int w, int h, int layer)
 {
    if ((bd->w != w) || (bd->h != h))
      _policy_border_resize(bd, w, h);
-
+   
    if ((bd->x != x) || (bd->y != y))
      _policy_border_move(bd, x, y);
-
+   
    if (bd->layer != layer) e_border_layer_set(bd, layer);
-
 }
 
 static void
@@ -488,15 +489,16 @@ _policy_zone_layout_app_single(E_Border *bd, E_Illume_Config_Zone *cz)
 
    e_illume_keyboard_safe_app_region_get(bd->zone, NULL, &ky, NULL, &kh);
 
-   if (kh >= bd->zone->h)
+   if (kh >= h)
      nh = (kh - cz->indicator.size - cz->softkey.size);
    else
      nh = (kh - cz->indicator.size);
-
+   if (h > nh) h = nh;
+   
    ny = (bd->zone->y + cz->indicator.size);
-   if (ny > y) y = ny;
+   if (y < ny) y = ny;
 
-   _border_geometry_set(bd, x, ny, w, nh, POL_APP_LAYER);
+   _border_geometry_set(bd, x, y, w, h, POL_APP_LAYER);
 }
 
 static void
@@ -724,6 +726,27 @@ _policy_zone_layout_conformant_dual_left(E_Border *bd, E_Illume_Config_Zone *cz)
 }
 #endif
 
+#if 0
+typedef struct _App_Desk App_Desk;
+
+struct _App_Desk
+{
+  E_Desk *desk;
+  const char *class;
+  Eina_List *borders;
+};
+
+static Eina_List *desks = NULL;
+
+#define EINA_LIST_FIND(_list, _item, _match)	\
+  {						\
+     Eina_List *_l;				\
+     EINA_LIST_FOREACH(_list, _l, _item)	\
+       if (_match) break;			\
+  }
+#endif    
+
+
 /* policy functions */
 void
 _policy_border_add(E_Border *bd)
@@ -752,26 +775,43 @@ _policy_border_add(E_Border *bd)
      {
 	E_Border *ind, *sft;
 
-	/* try to get the Indicator on this zone */
 	if ((ind = e_illume_border_indicator_get(bd->zone)))
 	  {
-	     /* we have the indicator, hide it if needed */
 	     if (ind->visible) e_illume_border_hide(ind);
 	  }
-	/* conformant - may not need softkey */
 	if ((sft = e_illume_border_softkey_get(bd->zone)))
 	  {
 	     if (e_illume_border_is_conformant(bd))
 	       {
-		  if (sft->visible) e_illume_border_hide(sft);
-	       }
-	     else
-	       {
-		  if (!sft->visible) e_illume_border_show(sft);
-	       }
+		  if (sft->visible)
+		    e_illume_border_hide(sft);
+		  else if (!sft->visible)
+		    e_illume_border_show(sft);
+	       }   
 	  }
      }
 
+#if 0
+   if (bd->client.icccm.class)
+     {
+   	Eina_List *l;
+   	App_Desk *d;
+   
+   	EINA_LIST_FIND(desks, d, (d->class == bd->client.icccm.class));
+   
+   	if (!d)
+   	  {
+   	     d = E_NEW(App_Desk, 1);
+   	     d->desk 
+   	  }
+   
+   	d->borders = eina_list_append(d->borders, bd);
+   	e_border_desk_set(bd, d->desk); 
+     }
+#endif
+   
+
+   
    /* Add this border to our focus stack if it can accept or take focus */
    if ((bd->client.icccm.accepts_focus) || (bd->client.icccm.take_focus))
      _pol_focus_stack = eina_list_append(_pol_focus_stack, bd);
@@ -1338,9 +1378,6 @@ _policy_focus_home(E_Zone *zone)
 void
 _policy_property_change(Ecore_X_Event_Window_Property *event)
 {
-   //	printf("Property Change\n");
-
-   /* we are interested in state changes here */
    if (event->atom == ECORE_X_ATOM_NET_WM_STATE)
      {
 	E_Border *bd, *ind;
