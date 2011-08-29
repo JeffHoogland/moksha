@@ -28,7 +28,7 @@ struct _E_Smart_Data
 struct _Cache_Item
 {
   unsigned int timestamp;
-  
+
   Evas_Object *icon, *obj;
   const char *id;
   Eina_List *objs;
@@ -82,7 +82,6 @@ e_icon_init(void)
 #ifdef USE_ICON_CACHE
 
    Eet_File *ef;
-   void *data = NULL;
    char buf[PATH_MAX];
 
 #undef T
@@ -115,7 +114,7 @@ e_icon_init(void)
    eet_close(ef);
 
    _cache->file = strdup(buf);
-   
+
    _cache->ef = NULL;
 #endif
    return 1;
@@ -127,25 +126,25 @@ e_icon_shutdown(void)
 #ifdef USE_ICON_CACHE
    if (_cache)
      {
-        E_FREE(_cache->file);
+	E_FREE(_cache->file);
 
-        if (_cache->ef)
-          eet_close(_cache->ef);
+	if (_cache->ef)
+	  eet_close(_cache->ef);
 
-        if (_cache->load_queue)
-          {
-             printf("EEEK!!! e_icons in load queue...\n");
-             eina_list_free(_cache->load_queue);
-          }
-        
-        eina_hash_free(_cache->hash);
-        E_FREE(_cache);
+	if (_cache->load_queue)
+	  {
+	     printf("EEEK!!! e_icons in load queue...\n");
+	     eina_list_free(_cache->load_queue);
+	  }
+
+	eina_hash_free(_cache->hash);
+	E_FREE(_cache);
      }
 
    E_CONFIG_DD_FREE(cache_item_edd);
    E_CONFIG_DD_FREE(cache_edd);
 #endif
-   
+
    return 1;
 }
 
@@ -164,19 +163,19 @@ _e_icon_obj_prepare(Evas_Object *obj, E_Smart_Data *sd)
 
    if (!strcmp(evas_object_type_get(sd->obj), "edje"))
      {
-        Evas_Object *pclip;
+	Evas_Object *pclip;
 
-        pclip = evas_object_clip_get(sd->obj);
-        evas_object_del(sd->obj);
+	pclip = evas_object_clip_get(sd->obj);
+	evas_object_del(sd->obj);
 #ifdef USE_ICON_CACHE
-        eina_stringshare_replace(&sd->file, NULL);
+	eina_stringshare_replace(&sd->file, NULL);
 #endif
-        sd->obj = evas_object_image_add(evas_object_evas_get(obj));
-        evas_object_image_scale_hint_set(sd->obj, EVAS_IMAGE_SCALE_HINT_STATIC);
-        evas_object_smart_member_add(sd->obj, obj);
-        evas_object_event_callback_add(sd->obj, EVAS_CALLBACK_IMAGE_PRELOADED,
-                                       _e_icon_preloaded, obj);
-        evas_object_clip_set(sd->obj, pclip);
+	sd->obj = evas_object_image_add(evas_object_evas_get(obj));
+	evas_object_image_scale_hint_set(sd->obj, EVAS_IMAGE_SCALE_HINT_STATIC);
+	evas_object_smart_member_add(sd->obj, obj);
+	evas_object_event_callback_add(sd->obj, EVAS_CALLBACK_IMAGE_PRELOADED,
+				       _e_icon_preloaded, obj);
+	evas_object_clip_set(sd->obj, pclip);
      }
 }
 
@@ -199,7 +198,7 @@ static int
 _handle_anim(E_Smart_Data *sd)
 {
    double t;
-   
+
    if (sd->timer) ecore_timer_del(sd->timer);
    sd->timer = NULL;
    sd->frame = 0;
@@ -207,11 +206,11 @@ _handle_anim(E_Smart_Data *sd)
    if (!evas_object_image_animated_get(sd->obj)) return 0;
    // FIXME: hack around jiyouns BUG!!!!!!!!
      {
-        const char *file;
-        char buf[256];
-        snprintf(buf, sizeof(buf), "%ld", (long)sd);
-        evas_object_image_file_get(sd->obj, &file, NULL);
-        evas_object_image_file_set(sd->obj, file, buf);
+	const char *file;
+	char buf[256];
+	snprintf(buf, sizeof(buf), "%ld", (long)sd);
+	evas_object_image_file_get(sd->obj, &file, NULL);
+	evas_object_image_file_set(sd->obj, file, buf);
      }
    sd->frame_count = evas_object_image_animated_frame_count_get(sd->obj);
    if (sd->frame_count < 2) return 0;
@@ -228,28 +227,28 @@ e_icon_file_set(Evas_Object *obj, const char *file)
    int len;
 
    if (!file) return EINA_FALSE;
-   if (!(sd = evas_object_smart_data_get(obj))) 
+   if (!(sd = evas_object_smart_data_get(obj)))
      return EINA_FALSE;
 
    len = strlen(file);
    if ((len > 4) && (!strcasecmp(file + len - 4, ".edj")))
       return e_icon_file_edje_set(obj, file, "icon");
-   
+
    /* smart code here */
    _e_icon_obj_prepare(obj, sd);
    /* FIXME: 64x64 - unhappy about this. use icon size */
    sd->loading = 0;
    if (sd->fdo)
      {
-        eina_stringshare_del(sd->fdo);
-        sd->fdo = NULL;
+	eina_stringshare_del(sd->fdo);
+	sd->fdo = NULL;
      }
 
    if (sd->timer) ecore_timer_del(sd->timer);
    sd->timer = NULL;
    sd->frame = 0;
    sd->frame_count = 0;
-   
+
    if (sd->size != 0)
      evas_object_image_load_size_set(sd->obj, sd->size, sd->size);
    if (sd->preload) evas_object_hide(sd->obj);
@@ -257,26 +256,26 @@ e_icon_file_set(Evas_Object *obj, const char *file)
 #ifdef USE_ICON_CACHE
    if (_e_icon_cache_find(obj, file))
      {
-        _e_icon_smart_reconfigure(sd);
-        return EINA_TRUE;
+	_e_icon_smart_reconfigure(sd);
+	return EINA_TRUE;
      }
 #endif
-   
+
    evas_object_image_file_set(sd->obj, file, NULL);
    if (evas_object_image_load_error_get(sd->obj) != EVAS_LOAD_ERROR_NONE)
      return EINA_FALSE;
    if (!_handle_anim(sd))
      {
-        if (sd->preload)
-          {
-             sd->loading = 1;
-             evas_object_image_preload(sd->obj, EINA_FALSE);
-          }
-        else if (evas_object_visible_get(obj))
-          {	     	     
-             evas_object_show(sd->obj);
+	if (sd->preload)
+	  {
+	     sd->loading = 1;
+	     evas_object_image_preload(sd->obj, EINA_FALSE);
+	  }
+	else if (evas_object_visible_get(obj))
+	  {
+	     evas_object_show(sd->obj);
 #ifdef USE_ICON_CACHE
-             _e_icon_cache_icon_loaded(sd->ci);
+	     _e_icon_cache_icon_loaded(sd->ci);
 #endif
 	  }
      }
@@ -290,7 +289,7 @@ e_icon_file_set(Evas_Object *obj, const char *file)
 	E_FREE(sd->ci);
      }
 #endif
-   
+
    _e_icon_smart_reconfigure(sd);
    return EINA_TRUE;
 }
@@ -300,22 +299,22 @@ e_icon_file_key_set(Evas_Object *obj, const char *file, const char *key)
 {
    E_Smart_Data *sd;
 
-   if (!(sd = evas_object_smart_data_get(obj))) 
+   if (!(sd = evas_object_smart_data_get(obj)))
      return EINA_FALSE;
 
    /* smart code here */
    sd->loading = 0;
    if (sd->fdo)
      {
-        eina_stringshare_del(sd->fdo);
-        sd->fdo = NULL;
+	eina_stringshare_del(sd->fdo);
+	sd->fdo = NULL;
      }
-   
+
    if (sd->timer) ecore_timer_del(sd->timer);
    sd->timer = NULL;
    sd->frame = 0;
    sd->frame_count = 0;
-   
+
    _e_icon_obj_prepare(obj, sd);
    if (sd->size != 0)
      evas_object_image_load_size_set(sd->obj, sd->size, sd->size);
@@ -325,13 +324,13 @@ e_icon_file_key_set(Evas_Object *obj, const char *file, const char *key)
      return EINA_FALSE;
    if (!_handle_anim(sd))
      {
-        if (sd->preload)
-          {
-             sd->loading = 1;
-             evas_object_image_preload(sd->obj, 0);
-          }
-        else if (evas_object_visible_get(obj))
-           evas_object_show(sd->obj);
+	if (sd->preload)
+	  {
+	     sd->loading = 1;
+	     evas_object_image_preload(sd->obj, 0);
+	  }
+	else if (evas_object_visible_get(obj))
+	   evas_object_show(sd->obj);
      }
    _e_icon_smart_reconfigure(sd);
    return EINA_TRUE;
@@ -342,7 +341,7 @@ e_icon_file_edje_set(Evas_Object *obj, const char *file, const char *part)
 {
    E_Smart_Data *sd;
 
-   if (!(sd = evas_object_smart_data_get(obj))) 
+   if (!(sd = evas_object_smart_data_get(obj)))
      return EINA_FALSE;
 
    /* smart code here */
@@ -350,15 +349,15 @@ e_icon_file_edje_set(Evas_Object *obj, const char *file, const char *part)
    sd->loading = 0;
    if (sd->fdo)
      {
-        eina_stringshare_del(sd->fdo);
-        sd->fdo = NULL;
+	eina_stringshare_del(sd->fdo);
+	sd->fdo = NULL;
      }
-   
+
    if (sd->timer) ecore_timer_del(sd->timer);
    sd->timer = NULL;
    sd->frame = 0;
    sd->frame_count = 0;
-   
+
    sd->obj = edje_object_add(evas_object_evas_get(obj));
    edje_object_file_set(sd->obj, file, part);
    if (evas_object_image_load_error_get(sd->obj) != EVAS_LOAD_ERROR_NONE)
@@ -375,18 +374,18 @@ e_icon_fdo_icon_set(Evas_Object *obj, const char *icon)
    E_Smart_Data *sd;
    const char *path;
    int len;
-   
+
    if (!icon) return EINA_TRUE;
    if (icon[0] == '/') return e_icon_file_set(obj, icon);
 
-   if (!(sd = evas_object_smart_data_get(obj))) 
+   if (!(sd = evas_object_smart_data_get(obj)))
      return EINA_FALSE;
 
    if (sd->timer) ecore_timer_del(sd->timer);
    sd->timer = NULL;
    sd->frame = 0;
    sd->frame_count = 0;
-   
+
    eina_stringshare_replace(&sd->fdo, icon);
    if (!sd->fdo) return EINA_FALSE;
 
@@ -396,7 +395,7 @@ e_icon_fdo_icon_set(Evas_Object *obj, const char *icon)
    len = strlen(icon);
    if ((len > 4) && (!strcasecmp(icon + len - 4, ".edj")))
       return e_icon_file_edje_set(obj, path, "icon");
-   
+
    /* smart code here */
    _e_icon_obj_prepare(obj, sd);
    sd->loading = 0;
@@ -408,8 +407,8 @@ e_icon_fdo_icon_set(Evas_Object *obj, const char *icon)
      return EINA_FALSE;
    if (sd->preload)
      {
-        sd->loading = 1;
-        evas_object_image_preload(sd->obj, 0);
+	sd->loading = 1;
+	evas_object_image_preload(sd->obj, 0);
      }
    else if (evas_object_visible_get(obj))
      evas_object_show(sd->obj);
@@ -428,7 +427,7 @@ e_icon_object_set(Evas_Object *obj, Evas_Object *o)
    sd->timer = NULL;
    sd->frame = 0;
    sd->frame_count = 0;
-   
+
    /* smart code here */
    if (sd->obj) evas_object_del(sd->obj);
    sd->loading = 0;
@@ -521,7 +520,7 @@ e_icon_size_get(const Evas_Object *obj, int *w, int *h)
 {
    E_Smart_Data *sd;
 
-   if (!(sd = evas_object_smart_data_get(obj))) 
+   if (!(sd = evas_object_smart_data_get(obj)))
      {
 	if (w) *w = 0;
 	if (h) *h = 0;
@@ -742,7 +741,7 @@ _e_icon_smart_add(Evas_Object *obj)
 
    sd->obj = evas_object_image_add(evas_object_evas_get(obj));
    evas_object_event_callback_add(sd->obj, EVAS_CALLBACK_IMAGE_PRELOADED,
-                                  _e_icon_preloaded, obj);
+				  _e_icon_preloaded, obj);
    sd->x = 0;
    sd->y = 0;
    sd->w = 0;
@@ -793,20 +792,20 @@ _e_icon_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
    sd->h = h;
    if (sd->fdo)
      {
-        const char *path;
+	const char *path;
 
-        sd->size = MAX(w, h);
-        path = efreet_icon_path_find(e_config->icon_theme, sd->fdo, sd->size);
-        if (!path) return;
+	sd->size = MAX(w, h);
+	path = efreet_icon_path_find(e_config->icon_theme, sd->fdo, sd->size);
+	if (!path) return;
 
-        /* smart code here */
-        evas_object_image_load_size_set(sd->obj, sd->size, sd->size);
-        evas_object_image_file_set(sd->obj, path, NULL);
-        if (sd->preload)
-          {
-             sd->loading = 1;
-             evas_object_image_preload(sd->obj, 0);
-          }
+	/* smart code here */
+	evas_object_image_load_size_set(sd->obj, sd->size, sd->size);
+	evas_object_image_file_set(sd->obj, path, NULL);
+	if (sd->preload)
+	  {
+	     sd->loading = 1;
+	     evas_object_image_preload(sd->obj, 0);
+	  }
      }
 
    _e_icon_smart_reconfigure(sd);
@@ -819,13 +818,13 @@ _e_icon_smart_show(Evas_Object *obj)
 
    if (!(sd = evas_object_smart_data_get(obj))) return;
    if (!((sd->preload) && (sd->loading)))
-     {	
+     {
 	evas_object_show(sd->obj);
 #ifdef USE_ICON_CACHE
 	_e_icon_cache_icon_loaded(sd->ci);
 #endif
      }
-   
+
    evas_object_show(sd->eventarea);
 }
 
@@ -886,14 +885,16 @@ _e_icon_cache_find(Evas_Object *obj, const char *file)
    char buf[PATH_MAX];
    const char *id;
    Eina_List *l;
-   
-   if (!(sd = evas_object_smart_data_get(obj))) 
+
+   if (!_cache) return EINA_FALSE;
+
+   if (!(sd = evas_object_smart_data_get(obj)))
      return EINA_FALSE;
 
    snprintf(buf, PATH_MAX, "%d:%s", sd->size, file);
 
    if ((ci = eina_hash_find(_cache->hash, buf)))
-     {	
+     {
 	unsigned int w, h, alpha;
 	void *data;
 	int found = 0;
@@ -906,12 +907,12 @@ _e_icon_cache_find(Evas_Object *obj, const char *file)
 						      NULL, NULL, NULL)))
 	  {
 	     evas_object_image_size_set(sd->obj, w, h);
-	     evas_object_image_alpha_set(sd->obj, alpha); 
+	     evas_object_image_alpha_set(sd->obj, alpha);
 	     evas_object_image_data_copy_set(sd->obj, data);
 	     evas_object_smart_callback_call(obj, "preloaded", NULL);
 	     evas_object_show(sd->obj);
 	     free(data);
-	     found = 1;     
+	     found = 1;
 	  }
 
 	if ((_cache->ef) && !(_cache->timer))
@@ -927,12 +928,12 @@ _e_icon_cache_find(Evas_Object *obj, const char *file)
 	ci = NULL;
      }
 
-   id = eina_stringshare_add(buf);   
+   id = eina_stringshare_add(buf);
 
    /* not found in cache, check load queue */
    EINA_LIST_FOREACH(_cache->load_queue, l, ci)
      {
-	if (ci->id != id) continue;	     
+	if (ci->id != id) continue;
 	ci->objs = eina_list_append(ci->objs, obj);
 	sd->ci = ci;
 	evas_object_event_callback_add(sd->obj, EVAS_CALLBACK_DEL,
@@ -960,24 +961,24 @@ _e_icon_cache_save(void *data)
 {
    if (_cache->load_queue)
      {
-	DBG("wating for icon load queue to write\n");
+	printf("wating for icon load queue to write\n");
 	Cache_Item *ci;
 	Eina_List *l;
-	
+
 	EINA_LIST_FOREACH(_cache->load_queue, l, ci)
-	  DBG("  : %s\n", ci->id);
-	
+	  printf("  : %s\n", ci->id);
+
 	return ECORE_CALLBACK_RENEW;
      }
 
    eet_sync(_cache->ef);
    eet_close(_cache->ef);
-   
+
    _cache->ef = NULL;
    _cache->timer = NULL;
 
-   DBG("icon cache written\n");
-   
+   printf("icon cache written\n");
+
    return ECORE_CALLBACK_CANCEL;
 }
 
@@ -988,26 +989,26 @@ _e_icon_cache_icon_try_next(Cache_Item *ci)
    E_Smart_Data *sd;
 
    if (!ci->objs)
-     {	
+     {
 	/* no more e_icon wait for this object to bet loaded */
 	_cache->load_queue = eina_list_remove(_cache->load_queue, ci);
 	_e_icon_cache_item_free(ci);
 	return;
      }
-   
+
    obj = eina_list_data_get(ci->objs);
    ci->objs = eina_list_remove_list(ci->objs, ci->objs);
-   
+
    if (!obj)
      goto __try_next;
-   
+
    if (!(sd = evas_object_smart_data_get(obj)))
      goto __try_next;
-   
+
    evas_object_image_file_set(sd->obj, sd->file, NULL);
    if (evas_object_image_load_error_get(sd->obj) != EVAS_LOAD_ERROR_NONE)
      goto __try_next;
-   
+
    sd->ci->icon = sd->obj;
    sd->ci->obj = obj;
    evas_object_image_preload(sd->obj, EINA_FALSE);
@@ -1026,15 +1027,18 @@ _e_icon_obj_del(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event_in
 
    if (!(sd = evas_object_smart_data_get(data))) return;
    if (!sd->ci) return;
-   
+
    /* check if the deleted object is the one that is used for
       preloading.  when other objs wait for this image data start
       preloading again with the next. */
 
    if (sd->ci->icon == obj)
-     _e_icon_cache_icon_try_next(sd->ci); 
+     _e_icon_cache_icon_try_next(sd->ci);
    else
-     sd->ci->objs = eina_list_remove(sd->ci->objs, data);
+     {
+	sd->ci->objs = eina_list_remove(sd->ci->objs, data);
+	sd->ci = NULL;
+     }
 }
 
 static void
@@ -1042,28 +1046,30 @@ _e_icon_cache_icon_loaded(Cache_Item *ci)
 {
    int w, h, alpha;
    E_Smart_Data *sd;
-   Evas_Object *obj, *so;
+   Evas_Object *obj;
    void *data;
 
-   if (!ci || !ci->id) return;   
-   _cache->load_queue = eina_list_remove(_cache->load_queue, ci); 
-   
+   if (!_cache) return;
+
+   if (!ci || !ci->id) return;
+   _cache->load_queue = eina_list_remove(_cache->load_queue, ci);
+
    data = evas_object_image_data_get(ci->icon, EINA_FALSE);
-   evas_object_image_size_get(ci->icon, &w, &h); 
-   alpha = evas_object_image_alpha_get(ci->icon); 
+   evas_object_image_size_get(ci->icon, &w, &h);
+   alpha = evas_object_image_alpha_get(ci->icon);
 
    evas_object_event_callback_del_full(ci->icon, EVAS_CALLBACK_DEL,
 				       _e_icon_obj_del, ci->obj);
    evas_object_smart_callback_call(ci->obj, "preloaded", NULL);
-   
-   DBG("icon loaded %p, %s\n", data, ci->id);
+
+   printf("icon loaded %p, %s\n", data, ci->id);
 
    sd = evas_object_smart_data_get(ci->obj);
    sd->ci = NULL;
-   
+
    /* pass loaded data to other e_icon wating for this */
    EINA_LIST_FREE(ci->objs, obj)
-     {	     
+     {
 	sd = evas_object_smart_data_get(obj);
 	sd->ci = NULL;
 	evas_object_event_callback_del_full(sd->obj, EVAS_CALLBACK_DEL,
@@ -1085,7 +1091,7 @@ _e_icon_cache_icon_loaded(Cache_Item *ci)
 					       w, h, alpha, 1, 100, 0))
 	  {
 	     eina_hash_add(_cache->hash, ci->id, ci);
-	     int ok = eet_data_write(_cache->ef, cache_edd, "idx", _cache, 1);
+	     eet_data_write(_cache->ef, cache_edd, "idx", _cache, 1);
 
 	     if (!_cache->timer)
 	       _cache->timer = ecore_timer_add(3.0, _e_icon_cache_save, NULL);
@@ -1094,7 +1100,7 @@ _e_icon_cache_icon_loaded(Cache_Item *ci)
 	     return;
 	  }
      }
-   
+
    DBG("couldnt write cache %p !!!\n", _cache->ef);
    _e_icon_cache_item_free(ci);
 }
