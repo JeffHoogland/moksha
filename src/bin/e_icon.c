@@ -70,11 +70,12 @@ static void _e_icon_obj_del(void *data, Evas *e, Evas_Object *obj, void *event_i
 /* local subsystem globals */
 static Evas_Smart *_e_smart = NULL;
 
+#ifdef USE_ICON_CACHE
 static Cache *_cache = NULL;
 static E_Config_DD *cache_edd = NULL;
 static E_Config_DD *cache_item_edd = NULL;
-
 #define DBG(...)
+#endif
 
 EINTERN int
 e_icon_init(void)
