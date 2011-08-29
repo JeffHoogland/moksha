@@ -20,6 +20,7 @@ e_modapi_init(E_Module *m)
 {
    if (!il_kbd_config_init(m)) return NULL;
    _il_kbd_start();
+   e_module_delayed_set(m, 1); 
    return m;
 }
 

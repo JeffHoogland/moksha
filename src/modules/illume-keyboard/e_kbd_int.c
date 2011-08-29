@@ -899,6 +899,10 @@ _e_kbd_int_layouts_list_default_get(E_Kbd_Int *ki)
    Eina_List *l;
 
    EINA_LIST_FOREACH(ki->layouts, l, kil)
+     if (kil->type == il_kbd_cfg->layout)
+       return kil;
+
+   EINA_LIST_FOREACH(ki->layouts, l, kil)
      if ((!strcmp(ecore_file_file_get(kil->path), "Default.kbd")))
        return kil;
    return NULL;
@@ -1729,10 +1733,14 @@ e_kbd_int_new(const char *themedir, const char *syskbds, const char *sysdicts)
    ecore_x_icccm_hints_set(ki->win->evas_win, 0, 0, 0, 0, 0, 0, 0);
    e_win_no_remember_set(ki->win, 1);
 
-   if (zone->w > zone->h)
-     e_win_resize(ki->win, zone->w, (zone->h / 2));
+   mw = zone->useful_geometry.w;
+   if (mw < 100) mw = zone->w;
+   mh = zone->useful_geometry.h;
+   if (mh < 100) mh = zone->h;
+   if (mw > mh)
+     e_win_resize(ki->win, mw, (mh / 2));
    else
-     e_win_resize(ki->win, zone->w, zone->h);
+     e_win_resize(ki->win, mw, mh);
 
    e_win_resize_callback_set(ki->win, _e_kbd_int_cb_resize);
    e_win_borderless_set(ki->win, 1);
@@ -1789,7 +1797,7 @@ e_kbd_int_new(const char *themedir, const char *syskbds, const char *sysdicts)
    evas_object_resize(ki->base_obj, mw, mh);
    evas_object_show(ki->base_obj);
 
-   e_win_size_min_set(ki->win, zone->w, mh);
+   e_win_size_min_set(ki->win, zone->useful_geometry.w, mh);
    ecore_x_e_virtual_keyboard_set(ki->win->evas_win, 1);
 
    ki->client_message_handler = 

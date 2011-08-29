@@ -1,6 +1,7 @@
 #include "e.h"
 #include "e_mod_main.h"
 #include "e_mod_config.h"
+#include "e_kbd_int.h"
 
 /* local function prototypes */
 static void *_il_kbd_config_create(E_Config_Dialog *cfd);
@@ -33,7 +34,7 @@ il_kbd_config_init(E_Module *m)
    E_CONFIG_VAL(D, T, hold_timer, DOUBLE);
    E_CONFIG_VAL(D, T, slide_dim, INT);
    E_CONFIG_VAL(D, T, scale_height, DOUBLE);
-   
+   E_CONFIG_VAL(D, T, layout, INT);
    il_kbd_cfg = e_config_domain_load("module.illume-keyboard", conf_edd);
    if ((il_kbd_cfg) && 
        ((il_kbd_cfg->version >> 16) < IL_CONFIG_MAJ)) 
@@ -56,13 +57,18 @@ il_kbd_config_init(E_Module *m)
      {
         /* Add new config variables here */
         /* if ((il_kbd_cfg->version & 0xffff) < 1) */
-        if ((il_kbd_cfg->version & 0xffff) < IL_CONFIG_MIN)
+        if ((il_kbd_cfg->version & 0xffff) < 2)
           {
              il_kbd_cfg->zoom_level = 4;
              il_kbd_cfg->slide_dim = 4;
              il_kbd_cfg->hold_timer = 0.25;
 	     il_kbd_cfg->scale_height = 1.0;
           }
+        if ((il_kbd_cfg->version & 0xffff) < IL_CONFIG_MIN)
+          {
+	     il_kbd_cfg->layout = E_KBD_INT_TYPE_ALPHA;
+          }
+
         il_kbd_cfg->version = (IL_CONFIG_MAJ << 16) | IL_CONFIG_MIN;
      }
 
@@ -207,7 +213,7 @@ _il_kbd_config_ui(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_D
              nn++;
 	  }
      }
-
+   
    ol = e_widget_label_add(evas, _("Displacement ratio"));
    e_widget_framelist_object_append(of, ol);
    sl = e_widget_slider_add(evas, EINA_TRUE, 0, "1/%.0f", 1.0, 10.0, 1.0, 0,
@@ -236,6 +242,17 @@ _il_kbd_config_ui(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_D
    e_widget_framelist_object_append(of, sl);
 
    e_widget_list_object_append(list, of, 1, 0, 0.0);
+
+   of = e_widget_framelist_add(evas, _("Layout"), 0);
+   rg = e_widget_radio_group_new(&(il_kbd_cfg->layout));
+   ow = e_widget_radio_add(evas, _("Default"), E_KBD_INT_TYPE_ALPHA, rg);
+   e_widget_framelist_object_append(of, ow);
+   evas_object_smart_callback_add(ow, "changed", _il_kbd_config_changed, NULL);
+   ow = e_widget_radio_add(evas, _("Terminal"), E_KBD_INT_TYPE_TERMINAL, rg);
+   e_widget_framelist_object_append(of, ow);
+   evas_object_smart_callback_add(ow, "changed", _il_kbd_config_changed, NULL);
+   e_widget_list_object_append(list, of, 1, 0, 0.0);
+   
    return list;
 }
 
