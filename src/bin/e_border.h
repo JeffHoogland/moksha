@@ -195,11 +195,11 @@ struct _E_Border
       
       /* ICCCM */
       struct {
-         char *title;
-         char *name;
-         char *class;
-         char *icon_name;
-         char *machine;
+	 const char *title;
+	 const char *name;
+	 const char *class;
+         const char *icon_name;
+         const char *machine;
          int min_w, min_h;
          int max_w, max_h;
          int base_w, base_h;
@@ -215,7 +215,7 @@ struct _E_Border
          Ecore_X_Window transient_for;
          Ecore_X_Window client_leader;
          Ecore_X_Gravity gravity;
-         char *window_role;
+         const char *window_role;
          unsigned char take_focus : 1;
          unsigned char accepts_focus : 1;
          unsigned char urgent : 1;
@@ -257,8 +257,8 @@ struct _E_Border
       struct {
          pid_t         pid;
          unsigned int  desktop;
-         char         *name;
-         char         *icon_name;
+         const char         *name;
+         const char         *icon_name;
          Ecore_X_Icon *icons;
          int           num_icons;
          unsigned int  user_time;

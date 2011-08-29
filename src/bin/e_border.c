@@ -4362,14 +4362,23 @@ _e_border_free(E_Border *bd)
      }
    if (bd->client.netwm.extra_types)
      free(bd->client.netwm.extra_types);
-   if (bd->client.border.name) eina_stringshare_del(bd->client.border.name);
-   if (bd->bordername) eina_stringshare_del(bd->bordername);
-   if (bd->client.icccm.title) free(bd->client.icccm.title);
-   if (bd->client.icccm.name) free(bd->client.icccm.name);
-   if (bd->client.icccm.class) free(bd->client.icccm.class);
-   if (bd->client.icccm.icon_name) free(bd->client.icccm.icon_name);
-   if (bd->client.icccm.machine) free(bd->client.icccm.machine);
-   if (bd->client.icccm.window_role) free(bd->client.icccm.window_role);
+   if (bd->client.border.name)
+     eina_stringshare_del(bd->client.border.name);
+   if (bd->bordername)
+     eina_stringshare_del(bd->bordername);
+   if (bd->client.icccm.name)
+     eina_stringshare_del(bd->client.icccm.name);
+   if (bd->client.icccm.class)
+     eina_stringshare_del(bd->client.icccm.class);
+   if (bd->client.icccm.title)
+     eina_stringshare_del(bd->client.icccm.title);
+   if (bd->client.icccm.icon_name)
+     eina_stringshare_del(bd->client.icccm.icon_name);
+   if (bd->client.icccm.machine)
+     eina_stringshare_del(bd->client.icccm.machine);
+   if (bd->client.icccm.window_role)
+     eina_stringshare_del(bd->client.icccm.window_role);
+
    if ((bd->client.icccm.command.argc > 0) && (bd->client.icccm.command.argv))
      {
         int i;
@@ -4378,8 +4387,10 @@ _e_border_free(E_Border *bd)
           free(bd->client.icccm.command.argv[i]);
         free(bd->client.icccm.command.argv);
      }
-   if (bd->client.netwm.name) free(bd->client.netwm.name);
-   if (bd->client.netwm.icon_name) free(bd->client.netwm.icon_name);
+   if (bd->client.netwm.name)
+     eina_stringshare_del(bd->client.netwm.name);
+   if (bd->client.netwm.icon_name)
+     eina_stringshare_del(bd->client.netwm.icon_name);
    e_object_del(E_OBJECT(bd->shape));
    if (bd->internal_icon) eina_stringshare_del(bd->internal_icon);
    if (bd->internal_icon_key) eina_stringshare_del(bd->internal_icon_key);
@@ -6315,51 +6326,50 @@ _e_border_eval0(E_Border *bd)
      }
    if (bd->client.icccm.fetch.title)
      {
-        if (bd->client.icccm.title) free(bd->client.icccm.title);
-        bd->client.icccm.title = ecore_x_icccm_title_get(bd->client.win);
-
-        bd->client.icccm.fetch.title = 0;
+        char *title = ecore_x_icccm_title_get(bd->client.win);
+        eina_stringshare_replace(&bd->client.icccm.title, title);
+        if (title) free(title);
+                                 
         if (bd->bg_object)
           edje_object_part_text_set(bd->bg_object, "e.text.title",
                                     bd->client.icccm.title);
+        bd->client.icccm.fetch.title = 0;
         rem_change = 1;
      }
    if (bd->client.netwm.fetch.name)
      {
-        if (bd->client.netwm.name) free(bd->client.netwm.name);
-        ecore_x_netwm_name_get(bd->client.win, &bd->client.netwm.name);
+        char *name;
+        ecore_x_netwm_name_get(bd->client.win, &name);
+        eina_stringshare_replace(&bd->client.netwm.name, name);
+        if (name) free(name);
 
-        bd->client.netwm.fetch.name = 0;
         if (bd->bg_object)
           edje_object_part_text_set(bd->bg_object, "e.text.title",
                                     bd->client.netwm.name);
+        bd->client.netwm.fetch.name = 0;
         rem_change = 1;
      }
    if (bd->client.icccm.fetch.name_class)
      {
-        int nc_change = 0;
-        char *pname, *pclass;
+        const char *pname, *pclass;
+        char *nname, *nclass;
 
         pname = bd->client.icccm.name;
         pclass = bd->client.icccm.class;
-        ecore_x_icccm_name_class_get(bd->client.win, &bd->client.icccm.name, &bd->client.icccm.class);
-        if ((pname) && (bd->client.icccm.name) &&
-            (pclass) && (bd->client.icccm.class))
-          {
-             if (!((!strcmp(bd->client.icccm.name, pname)) &&
-                   (!strcmp(bd->client.icccm.class, pclass))))
-               nc_change = 1;
-          }
-        else if (((!pname) || (!pclass)) &&
-                 ((bd->client.icccm.name) || (bd->client.icccm.class)))
-          nc_change = 1;
-        else if (((bd->client.icccm.name) || (bd->client.icccm.class)) &&
-                 ((!pname) || (!pclass)))
-          nc_change = 1;
-        if (pname) free(pname);
-        if (pclass) free(pclass);
-        if (nc_change)
+
+        ecore_x_icccm_name_class_get(bd->client.win, &nname, &nclass);
+
+        eina_stringshare_replace(&bd->client.icccm.name, nname);
+        eina_stringshare_replace(&bd->client.icccm.class, nclass);
+        if (nname) free(nname);
+        if (nclass) free(nclass);
+
+        if (!((bd->client.icccm.name == pname) &&
+              (bd->client.icccm.class == pclass)))
           bd->changes.icon = 1;
+        
+        if (pname) eina_stringshare_del(pname);
+        if (pclass) eina_stringshare_del(pclass);
         bd->client.icccm.fetch.name_class = 0;
         rem_change = 1;
      }
@@ -6398,11 +6408,14 @@ _e_border_eval0(E_Border *bd)
      }
    if (bd->client.icccm.fetch.machine)
      {
-        if (bd->client.icccm.machine) free(bd->client.icccm.machine);
-        bd->client.icccm.machine = ecore_x_icccm_client_machine_get(bd->client.win);
-        if ((bd->client.icccm.client_leader) &&
-            (!bd->client.icccm.machine))
-          ecore_x_icccm_client_machine_get(bd->client.icccm.client_leader);
+        char *machine = ecore_x_icccm_client_machine_get(bd->client.win);
+
+        if ((!machine) && (bd->client.icccm.client_leader))
+          machine = ecore_x_icccm_client_machine_get(bd->client.icccm.client_leader);
+        
+        eina_stringshare_replace(&bd->client.icccm.machine, machine);
+        if (machine) free(machine);
+        
         bd->client.icccm.fetch.machine = 0;
         rem_change = 1;
      }
@@ -6590,22 +6603,29 @@ _e_border_eval0(E_Border *bd)
      }
    if (bd->client.icccm.fetch.window_role)
      {
-        if (bd->client.icccm.window_role) free(bd->client.icccm.window_role);
-        bd->client.icccm.window_role = ecore_x_icccm_window_role_get(bd->client.win);
+        char *role = ecore_x_icccm_window_role_get(bd->client.win);
+        eina_stringshare_replace(&bd->client.icccm.window_role, role);
+        if (role) free(role);
+
         bd->client.icccm.fetch.window_role = 0;
         rem_change = 1;
      }
    if (bd->client.icccm.fetch.icon_name)
      {
-        if (bd->client.icccm.icon_name) free(bd->client.icccm.icon_name);
-        bd->client.icccm.icon_name = ecore_x_icccm_icon_name_get(bd->client.win);
+        char *icon_name = ecore_x_icccm_icon_name_get(bd->client.win);
+        eina_stringshare_replace(&bd->client.icccm.icon_name, icon_name); 
+        if (icon_name) free(icon_name);
+        
         bd->client.icccm.fetch.icon_name = 0;
         rem_change = 1;
      }
    if (bd->client.netwm.fetch.icon_name)
      {
-        if (bd->client.netwm.icon_name) free(bd->client.netwm.icon_name);
-        ecore_x_netwm_icon_name_get(bd->client.win, &bd->client.netwm.icon_name);
+        char *icon_name;
+        ecore_x_netwm_icon_name_get(bd->client.win, &icon_name);
+        eina_stringshare_replace(&bd->client.netwm.icon_name, icon_name); 
+        if (icon_name) free(icon_name);
+        
         bd->client.netwm.fetch.icon_name = 0;
         rem_change = 1;
      }
