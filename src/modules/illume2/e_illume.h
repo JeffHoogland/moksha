@@ -247,7 +247,8 @@ struct _E_Illume_Config
         struct 
           {
              int duration;
-             /**< integer specifying the amount of time it takes for an 
+	     int resize_before; /* resize app window before hide animation */
+	     /**< integer specifying the amount of time it takes for an 
               * animation to complete. */
           } vkbd, quickpanel;
      } animation;

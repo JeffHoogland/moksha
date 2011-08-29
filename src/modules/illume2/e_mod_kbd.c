@@ -95,7 +95,7 @@ e_mod_kbd_new(void)
    if (!kbd) return NULL;
 
    /* set default layout on new keyboard */
-   kbd->layout = E_ILLUME_KEYBOARD_LAYOUT_ALPHA;
+   kbd->layout = E_ILLUME_KEYBOARD_LAYOUT_DEFAULT;
    kbd->visible = 0;
 
    return kbd;
@@ -188,6 +188,10 @@ e_mod_kbd_hide(void)
 //   if (!_e_illume_kbd->visible) return;
 
    /* create new hide timer if it doesn't exist */
+   if (_e_illume_kbd->disabled) return;
+   
+   _e_illume_kbd->visible = 0;
+
    if (!_e_illume_kbd->timer) 
      _e_illume_kbd->timer = ecore_timer_add(0.2, _e_mod_kbd_cb_delay_hide, NULL);
 }
@@ -293,8 +297,6 @@ _e_mod_kbd_cb_border_focus_in(void *data __UNUSED__, int type __UNUSED__, void *
    ev = event;
    if (_e_mod_kbd_by_border_get(ev->border)) return ECORE_CALLBACK_PASS_ON;
 
-//   printf("Kbd Focus in: %s\n", ev->border->client.icccm.name);
-
    /* set focused border for kbd */
    _focused_border = ev->border;
    _focused_state = ev->border->client.vkbd.state;
@@ -314,8 +316,6 @@ _e_mod_kbd_cb_border_focus_out(void *data __UNUSED__, int type __UNUSED__, void 
 
    ev = event;
    if (_e_mod_kbd_by_border_get(ev->border)) return ECORE_CALLBACK_PASS_ON;
-
-//   printf("Kbd Focus Out: %s\n", ev->border->client.icccm.name);
 
    _prev_focused_border = _focused_border;
 
@@ -466,14 +466,15 @@ _e_mod_kbd_hide(void)
                                 _e_illume_kbd->border->h);
              e_border_hide(_e_illume_kbd->border, 2);
           }
-        _e_illume_kbd->visible = 0;
-
-        _e_mod_kbd_geometry_send();
-
-        _e_mod_kbd_changes_send();
      }
    else  
      _e_mod_kbd_slide(0, (double)_e_illume_cfg->animation.vkbd.duration / 1000.0);
+
+   if (_e_illume_cfg->animation.vkbd.resize_before)
+     {
+	_e_mod_kbd_geometry_send();
+	_e_mod_kbd_changes_send();
+     }
 }
 
 static void 
@@ -528,7 +529,6 @@ _e_mod_kbd_cb_animate(void *data __UNUSED__)
           _e_illume_kbd->visible = 1;
 
         _e_mod_kbd_geometry_send();
-
         _e_mod_kbd_changes_send();
 
         return ECORE_CALLBACK_CANCEL;
@@ -622,17 +622,26 @@ _e_mod_kbd_geometry_send(void)
    /* make sure we have a keyboard border */
    if (!_e_illume_kbd->border) return;
 
+   /* no need. we send geometry only when kbd is visible or invisible */
    /* adjust Y for keyboard visibility */
-   if (_e_illume_kbd->border->fx.y <= 0) 
-     y = _e_illume_kbd->border->y;
+   //if (_e_illume_kbd->border->fx.y <= 0) 
+   y = _e_illume_kbd->border->y;
 
    if (_focused_border) zone = _focused_border->zone;
    else zone = _e_illume_kbd->border->zone;
 
-   ecore_x_e_illume_keyboard_geometry_set(zone->black_win, 
-                                          _e_illume_kbd->border->x, y, 
-                                          _e_illume_kbd->border->w, 
-                                          _e_illume_kbd->border->h);
+   if (_e_illume_kbd->visible)
+     ecore_x_e_illume_keyboard_geometry_set(zone->black_win, 
+					    _e_illume_kbd->border->x,
+					    y, 
+					    _e_illume_kbd->border->w, 
+					    _e_illume_kbd->border->h);
+   else
+     ecore_x_e_illume_keyboard_geometry_set(zone->black_win, 
+					    _e_illume_kbd->border->x,
+					    _e_illume_kbd->border->h + y, 
+					    _e_illume_kbd->border->w, 
+					    _e_illume_kbd->border->h);     
 }
 
 static void 

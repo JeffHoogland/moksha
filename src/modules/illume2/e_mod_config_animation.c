@@ -81,6 +81,11 @@ _e_mod_illume_config_animation_ui(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E
    e_widget_framelist_object_append(of, ow);
    evas_object_smart_callback_add(ow, "changed", 
                                   _e_mod_illume_config_animation_change, NULL);
+   ow = e_widget_check_add(evas, _("Resize Window before Animation"),
+			   &_e_illume_cfg->animation.vkbd.resize_before); 
+   e_widget_framelist_object_append(of, ow);
+   evas_object_smart_callback_add(ow, "changed", 
+                                  _e_mod_illume_config_animation_change, NULL);
    e_widget_list_object_append(list, of, 1, 0, 0.0);
 
    of = e_widget_framelist_add(evas, _("Quickpanel"), 0);
@@ -105,6 +110,12 @@ _e_mod_illume_config_animation_ui(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E
    e_widget_framelist_object_append(of, ow);
    evas_object_smart_callback_add(ow, "changed", 
                                   _e_mod_illume_config_animation_change, NULL);
+
+   /* ow = e_widget_check_add(evas, _("Resize Window before Animation"),
+    * 			   &_e_illume_cfg->animation.quickpanel.resize_before); 
+    * e_widget_framelist_object_append(of, ow);
+    * evas_object_smart_callback_add(ow, "changed", 
+    *                                _e_mod_illume_config_animation_change, NULL); */
    e_widget_list_object_append(list, of, 1, 0, 0.0);
 
    return list;
