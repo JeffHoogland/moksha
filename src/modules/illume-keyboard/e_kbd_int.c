@@ -1734,9 +1734,9 @@ e_kbd_int_new(const char *themedir, const char *syskbds, const char *sysdicts)
    e_win_no_remember_set(ki->win, 1);
 
    mw = zone->useful_geometry.w;
-   if (mw < 100) mw = zone->w;
+   if (mw < 48) mw = zone->w;
    mh = zone->useful_geometry.h;
-   if (mh < 100) mh = zone->h;
+   if (mh < 48) mh = zone->h;
    if (mw > mh)
      e_win_resize(ki->win, mw, (mh / 2));
    else
@@ -1794,10 +1794,15 @@ e_kbd_int_new(const char *themedir, const char *syskbds, const char *sysdicts)
    if (mw < 48) mw = 48;
    if (mh < 48) mh = 48;
    evas_object_move(ki->base_obj, 0, 0);
-   evas_object_resize(ki->base_obj, mw, mh);
+   
+   if (zone->useful_geometry.w)
+     evas_object_resize(ki->base_obj, zone->useful_geometry.w, mh);
+   else
+     evas_object_resize(ki->base_obj, zone->w, mh);
+   
    evas_object_show(ki->base_obj);
-
-   e_win_size_min_set(ki->win, zone->useful_geometry.w, mh);
+   
+   e_win_size_min_set(ki->win, mw, mh);
    ecore_x_e_virtual_keyboard_set(ki->win->evas_win, 1);
 
    ki->client_message_handler = 
