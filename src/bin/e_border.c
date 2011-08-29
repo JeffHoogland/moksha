@@ -6354,13 +6354,11 @@ _e_border_eval0(E_Border *bd)
         const char *pname, *pclass;
         char *nname, *nclass;
 
+	ecore_x_icccm_name_class_get(bd->client.win, &nname, &nclass);
         pname = bd->client.icccm.name;
         pclass = bd->client.icccm.class;
-
-        ecore_x_icccm_name_class_get(bd->client.win, &nname, &nclass);
-
-        eina_stringshare_replace(&bd->client.icccm.name, nname);
-        eina_stringshare_replace(&bd->client.icccm.class, nclass);
+        bd->client.icccm.name = eina_stringshare_add(nname);
+        bd->client.icccm.class = eina_stringshare_add(nclass);
         if (nname) free(nname);
         if (nclass) free(nclass);
 
