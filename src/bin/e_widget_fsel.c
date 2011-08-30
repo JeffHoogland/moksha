@@ -62,8 +62,8 @@ _e_wid_fsel_button_up(void *data1, void *data2 __UNUSED__)
      e_fm2_parent_go(wd->o_files_fm);
    if (wd->o_files_frame)
      e_widget_scrollframe_child_pos_set(wd->o_files_frame, 0, 0);
-   e_widget_entry_text_set(wd->o_entry, 
-			   e_fm2_real_path_get(wd->o_files_fm));
+//   e_widget_entry_text_set(wd->o_entry, 
+//			   e_fm2_real_path_get(wd->o_files_fm));
 }
 
 static void
@@ -155,7 +155,7 @@ _e_wid_fsel_favorites_files_changed(void *data, Evas_Object *obj __UNUSED__, voi
 	  }
      }
    done:
-   e_widget_entry_text_set(wd->o_entry, rp);
+//   e_widget_entry_text_set(wd->o_entry, rp);
    E_FREE(p1);
    eina_list_free(icons);
 }
@@ -179,8 +179,8 @@ _e_wid_fsel_favorites_selected(void *data, Evas_Object *obj __UNUSED__, void *ev
      e_fm2_path_set(wd->o_files_fm, NULL, ici->real_link);
    eina_list_free(selected);
    e_widget_scrollframe_child_pos_set(wd->o_files_frame, 0, 0);
-   e_widget_entry_text_set(wd->o_entry, 
-			   e_fm2_real_path_get(wd->o_files_fm));
+//   e_widget_entry_text_set(wd->o_entry, 
+//			   e_fm2_real_path_get(wd->o_files_fm));
 }
 
 static void
@@ -203,8 +203,8 @@ _e_wid_fsel_files_changed(void *data, Evas_Object *obj __UNUSED__, void *event_i
      }
    if (wd->o_files_frame)
      e_widget_scrollframe_child_pos_set(wd->o_files_frame, 0, 0);
-   if ((wd->path) && (stat(wd->path, &st) == 0))
-     e_widget_entry_text_set(wd->o_entry, wd->path);
+//   if ((wd->path) && (stat(wd->path, &st) == 0))
+//     e_widget_entry_text_set(wd->o_entry, ecore_file_file_get(wd->path));
    E_FREE(wd->path);
    if (wd->chg_func) wd->chg_func(wd->chg_data, wd->obj);
 }
@@ -239,10 +239,10 @@ _e_wid_fsel_files_selection_change(void *data, Evas_Object *obj __UNUSED__, void
    if (stat(wd->path, &st) == 0)
      {
 	if (wd->preview) _e_wid_fsel_preview_file(wd);
-//	if (!S_ISDIR(st.st_mode))
-//	  e_widget_entry_text_set(wd->o_entry, ici->file);
+	if (!S_ISDIR(st.st_mode))
+	  e_widget_entry_text_set(wd->o_entry, ici->file);
 //	else
-	  e_widget_entry_text_set(wd->o_entry, wd->path);
+//	  e_widget_entry_text_set(wd->o_entry, wd->path);
      }
    eina_list_free(selected);
    if (wd->chg_func) wd->chg_func(wd->chg_data, wd->obj);
@@ -262,7 +262,7 @@ _e_wid_fsel_files_selected(void *data, Evas_Object *obj __UNUSED__, void *event_
 
 /* externally accessible functions */
 EAPI Evas_Object *
-e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected __UNUSED__, char *filter __UNUSED__, 
+e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected, char *filter __UNUSED__, 
 		  void (*sel_func) (void *data, Evas_Object *obj), void *sel_data,
 		  void (*chg_func) (void *data, Evas_Object *obj), void *chg_data,
 		  int preview)
@@ -497,9 +497,10 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected 
    o = e_widget_entry_add(evas, &(wd->entry_text), NULL, NULL, NULL);
    wd->o_entry = o;
    e_widget_sub_object_add(obj, o);
+   if (selected) e_widget_entry_text_set(o, selected);
    
-  if (preview)
-    {
+   if (preview)
+     {
 	e_widget_frametable_object_append(wd->o_preview_frame, 
 					  wd->o_preview_preview_table,
 					  0, 0, 1, 1, 0, 0, 1, 1);
@@ -509,8 +510,8 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected 
         e_widget_table_object_append(wd->o_table2, 
 				     wd->o_preview_frame,
                                      2, 1, 1, 1, 0, 1, 0, 1);
-    }
-
+     }
+   
    e_widget_table_object_append(wd->o_table, wd->o_table2,
                                 0, 0, 1, 1, 1, 1, 1, 1);
    e_widget_table_object_append(wd->o_table, wd->o_entry,
@@ -562,13 +563,23 @@ EAPI const char *
 e_widget_fsel_selection_path_get(Evas_Object *obj)
 {
    E_Widget_Data *wd;
-   const char *s;
+   const char *s, *dir;
+   char buf[PATH_MAX];
    
    if (!obj) return NULL;
    wd = e_widget_data_get(obj);
    E_FREE(wd->path);
    s = e_widget_entry_text_get(wd->o_entry);
-   if (s) wd->path = strdup(s);
+   dir = e_fm2_real_path_get(wd->o_files_fm);
+   if (s)
+     {
+        snprintf(buf, sizeof(buf), "%s/%s", dir, s);
+        wd->path = strdup(buf);
+     }
+   else
+     {
+        wd->path = strdup(dir);
+     }
    return wd->path;
 }
 
