@@ -1148,7 +1148,7 @@ _policy_border_del(E_Border *bd)
 }
 
 void 
-_policy_border_focus_in(E_Border *bd __UNUSED__) 
+_policy_border_focus_in(E_Border *bd) 
 {
    E_Border *ind;
 
