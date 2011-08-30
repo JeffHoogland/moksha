@@ -442,8 +442,8 @@ e_illume_border_is_quickpanel(E_Border *bd)
  *
  * @ingroup E_Illume_Main_Group
  */
-
-EAPI Eina_Bool e_illume_border_is_fixed_size(E_Border *bd)
+EAPI Eina_Bool 
+e_illume_border_is_fixed_size(E_Border *bd)
 {
    /* make sure we have a border */
    if (!bd) return EINA_FALSE;
