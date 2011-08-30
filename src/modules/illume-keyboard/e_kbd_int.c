@@ -1814,6 +1814,8 @@ e_kbd_int_new(const char *themedir, const char *syskbds, const char *sysdicts)
 
    e_win_show(ki->win);
    ki->win->border->user_skip_winlist = 1;
+   ki->win->border->lock_focus_in = 1;
+   ki->win->border->lock_focus_out = 1;
 
    return ki;
 }
