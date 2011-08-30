@@ -23,17 +23,6 @@ static void _e_kbd_int_dictlist_down(E_Kbd_Int *ki);
 static void _e_kbd_int_matchlist_down(E_Kbd_Int *ki);
 static Eina_Bool _e_kbd_int_cb_border_move(void *data, int type, void *event);
 
-static void
-_e_kbd_int_cb_resize(E_Win *win)
-{
-   E_Kbd_Int *ki;
-   
-   ki = win->data;
-   evas_object_resize(ki->base_obj, ki->win->w, ki->win->h);
-   _e_kbd_int_zoomkey_down(ki);
-   _e_kbd_int_dictlist_down(ki);
-   _e_kbd_int_matchlist_down(ki);
-}
 
 static const char *
 _e_kbd_int_str_unquote(const char *str)
@@ -1070,9 +1059,10 @@ _e_kbd_int_layout_build(E_Kbd_Int *ki)
    edje_object_part_geometry_get(ki->base_obj, "e.swallow.content", 
                                  NULL, NULL, &lw, &lh);
    lh = (ki->layout.h * lw) / ki->layout.w;
+   if (lw > ki->win->w) lw = ki->win->w;
+   if (lh > ki->win->h) lh = ki->win->h;
    edje_extern_object_min_size_set(ki->layout_obj, lw, lh);
    edje_extern_object_max_size_set(ki->layout_obj, ki->win->w, ki->win->h);
-   edje_object_part_swallow(ki->base_obj, "e.swallow.content", ki->layout_obj);
 
    EINA_LIST_FOREACH(ki->layout.keys, l, ky)
      {
@@ -1710,6 +1700,27 @@ _e_kbd_int_cb_layouts(void *data, Evas_Object *obj __UNUSED__, const char *emiss
    _e_kbd_int_layout_next(ki);
 }
 
+static void
+_e_kbd_int_cb_resize(E_Win *win)
+{
+   E_Kbd_Int *ki;
+   E_Kbd_Int_Key *ky;
+   Eina_List *l;
+   
+   ki = win->data;
+   EINA_LIST_FOREACH(ki->layout.keys, l, ky)
+     {
+   	if (ky->obj) evas_object_del(ky->obj);
+   	if (ky->icon_obj) evas_object_del(ky->icon_obj);
+     }
+   if (ki->event_obj) evas_object_del(ki->event_obj);
+   ki->event_obj = NULL;
+   
+   _e_kbd_int_layout_build(ki);
+   _e_kbd_int_layout_buf_update(ki);
+   _e_kbd_int_layout_state_update(ki);
+}
+
 EAPI E_Kbd_Int *
 e_kbd_int_new(const char *themedir, const char *syskbds, const char *sysdicts)
 {
@@ -1733,10 +1744,9 @@ e_kbd_int_new(const char *themedir, const char *syskbds, const char *sysdicts)
    ecore_x_icccm_hints_set(ki->win->evas_win, 0, 0, 0, 0, 0, 0, 0);
    e_win_no_remember_set(ki->win, 1);
 
-   mw = zone->useful_geometry.w;
-   if (mw < 48) mw = zone->w;
-   mh = zone->useful_geometry.h;
-   if (mh < 48) mh = zone->h;
+   mw = zone->w;
+   mh = zone->h;
+
    if (mw > mh)
      e_win_resize(ki->win, mw, (mh / 2));
    else
@@ -1794,12 +1804,7 @@ e_kbd_int_new(const char *themedir, const char *syskbds, const char *sysdicts)
    if (mw < 48) mw = 48;
    if (mh < 48) mh = 48;
    evas_object_move(ki->base_obj, 0, 0);
-   
-   if (zone->useful_geometry.w)
-     evas_object_resize(ki->base_obj, zone->useful_geometry.w, mh);
-   else
-     evas_object_resize(ki->base_obj, zone->w, mh);
-   
+   evas_object_resize(ki->base_obj, zone->w, mh);
    evas_object_show(ki->base_obj);
    
    e_win_size_min_set(ki->win, mw, mh);
