@@ -1,4 +1,5 @@
 #include "e.h"
+#include <sys/wait.h>
 
 /* public variables */
 EAPI unsigned long e_alert_composite_win = 0;
