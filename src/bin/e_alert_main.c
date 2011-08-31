@@ -16,8 +16,6 @@
 #define WINDOW_HEIGHT 240
 
 /* local function prototypes */
-static int _e_alert_ipc_init(void);
-static Eina_Bool _e_alert_ipc_server_add(void *data, int type, void *event);
 static int _e_alert_connect(void);
 static void _e_alert_create(void);
 static void _e_alert_display(void);
@@ -36,11 +34,8 @@ static void _e_alert_draw_title(void);
 static void _e_alert_draw_text(void);
 static void _e_alert_draw_button_outlines(void);
 static void _e_alert_draw_button_text(void);
-static void _e_alert_restart_e(void);
-static void _e_alert_exit_e(void);
 
 /* local variables */
-static Ecore_Ipc_Server *_ipc_server = NULL;
 static xcb_connection_t *conn = NULL;
 static xcb_screen_t *screen = NULL;
 static xcb_window_t win = 0, comp_win = 0;
@@ -54,8 +49,8 @@ static const char *title = NULL, *str1 = NULL, *str2 = NULL;
 static int ret = 0, sig = 0;
 static pid_t pid;
 
-int 
-main(int argc, char **argv) 
+int
+main(int argc, char **argv)
 {
    int i = 0;
 
@@ -69,9 +64,9 @@ main(int argc, char **argv)
 		    "do not use it.\n");
 	     exit(0);
 	  }
-	else if ((i == 1)) 
+	else if ((i == 1))
           sig = atoi(argv[i]); // signal
-        else if ((i == 2)) 
+        else if ((i == 2))
           pid = atoi(argv[i]); // E's pid
         else if ((i == 3))
           comp_win = atoi(argv[i]); // Composite Alert Window
@@ -79,24 +74,10 @@ main(int argc, char **argv)
 
    if (!ecore_init()) return EXIT_FAILURE;
    ecore_app_args_set(argc, (const char **)argv);
-   if (!ecore_ipc_init()) 
-     {
-        ecore_shutdown();
-        return EXIT_FAILURE;
-     }
 
-   if (!_e_alert_connect()) 
+   if (!_e_alert_connect())
      {
         printf("FAILED TO INIT ALERT SYSTEM!!!\n");
-        ecore_ipc_shutdown();
-        ecore_shutdown();
-        return EXIT_FAILURE;
-     }
-
-   if (!_e_alert_ipc_init()) 
-     {
-        printf("Failed to Connect to Enlightenment!!!\n");
-        ecore_ipc_shutdown();
         ecore_shutdown();
         return EXIT_FAILURE;
      }
@@ -110,35 +91,16 @@ main(int argc, char **argv)
    _e_alert_run();
    _e_alert_shutdown();
 
-   if (ret == 1)
-     _e_alert_restart_e();
-   else if (ret == 2)
-     _e_alert_exit_e();
-
-   if (_ipc_server) 
-     ecore_ipc_server_del(_ipc_server);
-
-   ecore_ipc_shutdown();
    ecore_shutdown();
 
-   return EXIT_SUCCESS;
+   /* ret == 1 => restart e => exit code 1 */
+   /* ret == 2 => exit e => any code will do that */
+   return ret;
 }
 
 /* local functions */
-static int 
-_e_alert_ipc_init(void) 
-{
-   char *edir = NULL;
-
-   if (!(edir = getenv("E_IPC_SOCKET"))) return 0;
-   _ipc_server = 
-     ecore_ipc_server_connect(ECORE_IPC_LOCAL_SYSTEM, edir, 0, NULL);
-   if (!_ipc_server) return 0;
-   return 1;
-}
-
-static int 
-_e_alert_connect(void) 
+static int
+_e_alert_connect(void)
 {
    conn = xcb_connect(NULL, NULL);
    if ((!conn) || (xcb_connection_has_error(conn)))
@@ -302,13 +264,13 @@ _e_alert_button_move_resize(xcb_window_t btn, int x, int y, int w, int h)
    xcb_configure_window(conn, btn, mask, (const uint32_t *)&list);
 }
 
-static void 
-_e_alert_window_raise(xcb_window_t win) 
+static void
+_e_alert_window_raise(xcb_window_t window)
 {
    uint32_t list[] = { XCB_STACK_MODE_ABOVE };
 
-   if (!win) return;
-   xcb_configure_window(conn, win, XCB_CONFIG_WINDOW_STACK_MODE, list);
+   if (!window) return;
+   xcb_configure_window(conn, window, XCB_CONFIG_WINDOW_STACK_MODE, list);
 }
 
 static void 
@@ -411,21 +373,21 @@ _e_alert_handle_button_press(xcb_generic_event_t *event)
 }
 
 static xcb_char2b_t *
-_e_alert_build_string(const char *str) 
+_e_alert_build_string(const char *str)
 {
    unsigned int i = 0;
-   xcb_char2b_t *ret = NULL;
+   xcb_char2b_t *r = NULL;
 
-   if (!(ret = malloc(strlen(str) * sizeof(xcb_char2b_t)))) 
+   if (!(r = malloc(strlen(str) * sizeof(xcb_char2b_t))))
      return NULL;
 
-   for (i = 0; i < strlen(str); i++) 
+   for (i = 0; i < strlen(str); i++)
      {
-        ret[i].byte1 = 0;
-        ret[i].byte2 = str[i];
+        r[i].byte1 = 0;
+        r[i].byte2 = str[i];
      }
 
-   return ret;
+   return r;
 }
 
 static void 
@@ -468,14 +430,25 @@ _e_alert_draw_title(void)
      xcb_image_text_8(conn, strlen(title), win, gc, x, y, title);
 }
 
-static void 
-_e_alert_draw_text(void) 
+struct {
+  int signal;
+  const char *name;
+} signal_name[5] = {
+  { SIGSEGV, "SEGV" },
+  { SIGILL, "SIGILL" },
+  { SIGFPE, "SIGFPE" },
+  { SIGBUS, "SIGBUS" },
+  { SIGABRT, "SIGABRT" }
+};
+
+static void
+_e_alert_draw_text(void)
 {
    xcb_void_cookie_t cookie;
    char warn[1024], msg[PATH_MAX], line[1024];
-   int i = 0, j = 0, k = 0;
+   unsigned int i = 0, j = 0, k = 0;
 
-   snprintf(msg, sizeof(msg), 
+   snprintf(msg, sizeof(msg),
             "This is not meant to happen and is likely a sign of \n"
             "a bug in Enlightenment or the libraries it relies \n"
             "on. You can gdb attach to this process (%d) now \n"
@@ -485,55 +458,37 @@ _e_alert_draw_text(void)
             "\n"
             "Please compile everything with -g in your CFLAGS.", pid);
 
-   switch (sig) 
-     {
-      case SIGSEGV:
-        snprintf(warn, sizeof(warn), 
-                 "This is very bad. Enlightenment SEGV'd.");
-        break;
-      case SIGILL:
-        snprintf(warn, sizeof(warn), 
-                 "This is very bad. Enlightenment SIGILL'd.");
-        break;
-      case SIGFPE:
-        snprintf(warn, sizeof(warn), 
-                 "This is very bad. Enlightenment SIGFPE'd.");
-        break;
-      case SIGBUS:
-        snprintf(warn, sizeof(warn), 
-                 "This is very bad. Enlightenment SIGBUS'd.");
-        break;
-      case SIGABRT:
-        snprintf(warn, sizeof(warn), 
-                 "This is very bad. Enlightenment SIGABRT'd.");
-        break;
-      default:
-        break;
-     }
+   strcpy(warn, "");
+
+   for (i = 0; i < sizeof(signal_name) / sizeof(signal_name[0]); ++i)
+     if (signal_name[i].signal == sig)
+       snprintf(warn, sizeof(warn),
+		"This is very bad. Enlightenment %s'd.",
+		signal_name[i].name);
 
    /* draw text */
    k = (fh + 12);
-   cookie = 
-     xcb_image_text_8(conn, strlen(warn), win, gc, 
+   cookie =
+     xcb_image_text_8(conn, strlen(warn), win, gc,
                       4, (k + fa), warn);
    k += (2 * (fh + 2));
-   while (msg[i]) 
+   while (msg[i])
      {
         line[j++] = msg[i++];
-        if (line[j - 1] == '\n') 
+        if (line[j - 1] == '\n')
           {
              line[j - 1] = 0;
              j = 0;
-             cookie = 
-               xcb_image_text_8(conn, strlen(line), win, gc, 
+             cookie =
+               xcb_image_text_8(conn, strlen(line), win, gc,
                                 4, (k + fa), line);
              k += (fh + 2);
           }
      }
 }
 
-static void 
-_e_alert_draw_button_outlines(void) 
+static void
+_e_alert_draw_button_outlines(void)
 {
    xcb_rectangle_t rect;
 
@@ -547,8 +502,8 @@ _e_alert_draw_button_outlines(void)
    xcb_poly_rectangle(conn, btn2, gc, 1, &rect);
 }
 
-static void 
-_e_alert_draw_button_text(void) 
+static void
+_e_alert_draw_button_text(void)
 {
    xcb_void_cookie_t dcookie;
    xcb_char2b_t *str = NULL;
@@ -561,10 +516,10 @@ _e_alert_draw_button_text(void)
    /* draw button1 text */
    str = _e_alert_build_string(str1);
 
-   cookie = 
+   cookie =
      xcb_query_text_extents_unchecked(conn, font, strlen(str1), str);
    reply = xcb_query_text_extents_reply(conn, cookie, NULL);
-   if (reply) 
+   if (reply)
      {
         w = reply->overall_width;
         free(reply);
@@ -573,16 +528,16 @@ _e_alert_draw_button_text(void)
 
    x = (5 + ((bw - w) / 2));
 
-   dcookie = 
+   dcookie =
      xcb_image_text_8(conn, strlen(str1), btn1, gc, x, (10 + fa), str1);
 
    /* draw button2 text */
    str = _e_alert_build_string(str2);
 
-   cookie = 
+   cookie =
      xcb_query_text_extents_unchecked(conn, font, strlen(str2), str);
    reply = xcb_query_text_extents_reply(conn, cookie, NULL);
-   if (reply) 
+   if (reply)
      {
         w = reply->overall_width;
         free(reply);
@@ -591,22 +546,6 @@ _e_alert_draw_button_text(void)
 
    x = (5 + ((bw - w) / 2));
 
-   dcookie = 
+   dcookie =
      xcb_image_text_8(conn, strlen(str2), btn2, gc, x, (10 + fa), str2);
-}
-
-static void 
-_e_alert_restart_e(void) 
-{
-   kill(pid, SIGUSR2);
-   ecore_ipc_server_send(_ipc_server, 8, 0, 0, 0, 0, NULL, 0);
-   ecore_ipc_server_flush(_ipc_server);
-}
-
-static void 
-_e_alert_exit_e(void) 
-{
-   kill(pid, SIGUSR2);
-   ecore_ipc_server_send(_ipc_server, 8, 1, 0, 0, 0, NULL, 0);
-   ecore_ipc_server_flush(_ipc_server);
 }

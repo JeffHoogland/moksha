@@ -202,9 +202,9 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
         e_init_client_data(e);
         break;
 
-      case E_IPC_DOMAIN_ALERT: 
+      case E_IPC_DOMAIN_ALERT:
           {
-             switch (e->minor) 
+             switch (e->minor)
                {
                 case E_ALERT_OP_RESTART:
                   ecore_app_restart();

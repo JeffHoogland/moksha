@@ -1,64 +1,77 @@
 #include "e.h"
 
-/* local function prototypes */
-static Eina_Bool _e_alert_cb_exe_del(void *data __UNUSED__, int type __UNUSED__, void *event);
-
-/* local variables */
-static Ecore_Exe *alert_exe = NULL;
-static Ecore_Event_Handler *alert_exe_hdl = NULL;
-
 /* public variables */
 EAPI unsigned long e_alert_composite_win = 0;
 
-EINTERN int 
-e_alert_init(void) 
+EINTERN int
+e_alert_init(void)
 {
-   alert_exe_hdl = 
-     ecore_event_handler_add(ECORE_EXE_EVENT_DEL, _e_alert_cb_exe_del, NULL);
-
    return 1;
 }
 
-EINTERN int 
-e_alert_shutdown(void) 
+EINTERN int
+e_alert_shutdown(void)
 {
-   e_alert_hide();
-
-   if (alert_exe_hdl) ecore_event_handler_del(alert_exe_hdl);
-   alert_exe_hdl = NULL;
-
    return 1;
 }
 
 EAPI void 
 e_alert_show(int sig) 
 {
-   char buf[8192];
+   char *args[4];
+   pid_t pid;
 
-   snprintf(buf, sizeof(buf), 
-            "%s/enlightenment/utils/enlightenment_alert %d %lu %lu",
-	    e_prefix_lib_get(), sig, (long unsigned int)getpid(), 
-            e_alert_composite_win);
+#define E_ALERT_EXE "/enlightenment/utils/enlightenment_alert"
 
-   alert_exe = ecore_exe_run(buf, NULL);
-   pause();
+   args[0] = alloca(strlen(e_prefix_lib_get()) + strlen(E_ALERT_EXE) + 1);
+   strcpy(args[0], e_prefix_lib_get());
+   strcat(args[0], E_ALERT_EXE);
+
+   args[1] = alloca(10);
+   snprintf(args[1], 10, "%d", sig);
+
+   args[2] = alloca(21);
+   snprintf(args[2], 21, "%lu", (long unsigned int)getpid());
+
+   args[3] = alloca(21);
+   snprintf(args[3], 21, "%lu", e_alert_composite_win);
+
+   pid = fork();
+   if (pid < -1)
+     goto restart_e;
+
+   if (pid == 0)
+     {
+        /* The child process */
+        execvp(args[0], args);
+     }
+   else
+     {
+        /* The parent process */
+        pid_t ret;
+        int status = 0;
+
+        do
+          {
+             ret = waitpid(pid, &status, 0);
+             if (errno == ECHILD)
+               break ;
+          }
+        while (ret != pid);
+
+        if (status == 0)
+          goto restart_e;
+
+        if (!WIFEXITED(status))
+          goto restart_e;
+
+        if (WEXITSTATUS(status) == 1)
+          goto restart_e;
+
+        exit(-11);
+     }
+
+ restart_e:
+   ecore_app_restart();
 }
 
-EAPI void 
-e_alert_hide(void) 
-{
-   if (alert_exe) ecore_exe_terminate(alert_exe);
-}
-
-/* local functions */
-static Eina_Bool 
-_e_alert_cb_exe_del(void *data __UNUSED__, int type __UNUSED__, void *event) 
-{
-   Ecore_Exe_Event_Del *ev;
-
-   ev = event;
-   if (!alert_exe) return ECORE_CALLBACK_RENEW;
-   if (ev->exe == alert_exe) alert_exe = NULL;
-
-   return ECORE_CALLBACK_RENEW;
-}

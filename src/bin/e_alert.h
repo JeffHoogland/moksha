@@ -14,7 +14,6 @@ EINTERN int e_alert_init(void);
 EINTERN int e_alert_shutdown(void);
 
 EAPI void e_alert_show(int sig);
-EAPI void e_alert_hide(void);
 
 #endif
 #endif
