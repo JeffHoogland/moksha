@@ -6263,6 +6263,7 @@ _e_border_eval0(E_Border *bd)
    if (e_object_is_del(E_OBJECT(bd)))
      {
         fprintf(stderr, "ERROR: _e_border_eval(%p) with deleted border!\n", bd);
+	bd->changed = 0;
         return;
      }
 
