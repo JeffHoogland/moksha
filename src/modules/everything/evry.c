@@ -642,37 +642,41 @@ evry_plugin_update(Evry_Plugin *p, int action)
 	     _evry_plugin_list_insert(s, p);
 	  }
 
-	_evry_aggregator_fetch(s);
-
-	/* select first plugin */
-	if ((!s->plugin) || (s->plugin_auto_selected) ||
-	    !(eina_list_data_find(s->cur_plugins, s->plugin)))
+	if (sel->state == s)
 	  {
-	     _evry_plugin_select(s, NULL);
-	  }
+	     _evry_aggregator_fetch(s);
 
-	if ((s->plugin && (sel->state == s)) &&
-	    /* plugin is current */
-	    ((s->plugin == p) ||
-	     /* plugin items are shown in aggregator */
-	     ((s->plugin == s->aggregator) && p->config->aggregate)))
-	  {
-	     _evry_selector_update(sel);
+	     /* select first plugin */
+	     if ((!s->plugin) || (s->plugin_auto_selected) ||
+		 !(eina_list_data_find(s->cur_plugins, s->plugin)))
+	       {
+		  _evry_plugin_select(s, NULL);
+	       }
 
-	     if (_evry_view_update(win, s))
-	       /* XXX when there is a case where view disappears
-		  check this one! is swallow always visible ? */
-	       _evry_view_show(win, s->view, 0);
-	  }
+	     if ((s->plugin && (sel->state == s)) &&
+		 /* plugin is current */
+		 ((s->plugin == p) ||
+		  /* plugin items are shown in aggregator */
+		  ((s->plugin == s->aggregator) && p->config->aggregate)))
+	       {
+		  _evry_selector_update(sel);
 
-	/* switch back to subject selector when no current items */
-	if ((sel == SUBJ_SEL) &&
-	    (!(s->plugin) || !(s->plugin->items)) &&
-	    (CUR_SEL == ACTN_SEL))
-	  {
-	     _evry_selectors_switch(win, -1);
-	     _evry_clear(SUBJ_SEL);
+		  if (_evry_view_update(win, s))
+		    /* XXX when there is a case where view disappears
+		       check this one! is swallow always visible ? */
+		    _evry_view_show(win, s->view, 0);
+	       }
+
+	     /* switch back to subject selector when no current items */
+	     if ((sel == SUBJ_SEL) &&
+		 (!(s->plugin) || !(s->plugin->items)) &&
+		 (CUR_SEL == ACTN_SEL))
+	       {
+		  _evry_selectors_switch(win, -1);
+		  _evry_clear(SUBJ_SEL);
+	       }
 	  }
+	
      }
    else if (action == EVRY_UPDATE_REFRESH)
      {
@@ -1725,7 +1729,9 @@ evry_browse_back(Evry_Selector *sel)
    _evry_state_pop(sel, 0);
 
    s = sel->state;
+
    /* _evry_aggregator_fetch(s); */
+   
    _evry_selector_update(sel);
    if (sel == SUBJ_SEL)
      _evry_selector_update_actions(ACTN_SEL);
@@ -2548,8 +2554,7 @@ _evry_state_clear(Evry_Window *win)
 
    if (s->delete_me)
      {
-	if (s->view)
-	  s->view->destroy(s->view);
+	if (s->view) s->view->destroy(s->view);
 	s->clear_timer = NULL;
 	E_FREE(s->inp);
 	E_FREE(s);
@@ -2573,6 +2578,12 @@ _evry_state_clear(Evry_Window *win)
 static void
 _evry_view_hide(Evry_Window *win, Evry_View *v, int slide)
 {
+   if (v->state->delete_me)
+     {
+	_evry_state_clear(win);
+	return;
+     }
+
    _evry_state_clear(win);
 
    if (!v) return;
