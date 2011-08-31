@@ -33,10 +33,11 @@ _fetch(Evry_Plugin *plugin, const char *input)
    else
      input = NULL;
 
-   if (eina_list_data_get(sel->states) == s)
+   if ((eina_list_count(sel->states) == 1))
      top_level = 1;
 
-   /* get current items' context */
+   /* get current items' context,
+    * which is the previous selectors selected item */
    if (sel == sels[0])
      {	
 	subj_sel = 1;

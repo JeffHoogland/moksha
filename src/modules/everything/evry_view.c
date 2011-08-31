@@ -124,13 +124,6 @@ _check_item(const Evry_Item *it)
    return 0;
 }
 
-static int _sort_pos_cb(const void *d1, const void *d2)
-{
-   const Item *it1 = d1;
-   const Item *it2 = d2;
-   return ((it1->x + it1->y * 4) - (it2->x + it2->y * 4));
-}
-
 static void
 _item_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
