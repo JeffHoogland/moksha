@@ -824,6 +824,7 @@ _e_shelf_free(E_Shelf *es)
    _e_shelf_bindings_del(es);
 
    e_gadcon_location_unregister(es->gadcon->location);
+   e_gadcon_location_free(es->gadcon->location); 
    e_zone_useful_geometry_dirty(es->zone);
    E_FREE_LIST(es->handlers, ecore_event_handler_del);
 
