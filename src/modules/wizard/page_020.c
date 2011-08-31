@@ -130,7 +130,7 @@ wizard_page_show(E_Wizard_Page *pg)
    evas_object_show(ob);
    evas_object_show(of);
    e_wizard_page_show(o);
-   pg->data = of;
+//   pg->data = o;
    e_wizard_button_next_enable_set(0);
    return 1; /* 1 == show ui, and wait for user, 0 == just continue */
 }
@@ -138,7 +138,7 @@ wizard_page_show(E_Wizard_Page *pg)
 EAPI int
 wizard_page_hide(E_Wizard_Page *pg)
 {
-   evas_object_del(pg->data);
+//   evas_object_del(pg->data);
    // actually apply profile
    if (!profile) profile = "standard";
    e_config_profile_set(profile);

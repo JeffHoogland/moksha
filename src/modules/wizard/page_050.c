@@ -166,7 +166,7 @@ wizard_page_show(E_Wizard_Page *pg)
    evas_object_show(of);
    
    e_wizard_page_show(o);
-   pg->data = of;
+//   pg->data = o;
    return 1; /* 1 == show ui, and wait for user, 0 == just continue */
 }
 
@@ -174,7 +174,7 @@ EAPI int
 wizard_page_hide(E_Wizard_Page *pg)
 {
    obs = eina_list_free(obs);
-   evas_object_del(pg->data);
+//   evas_object_del(pg->data);
    
    e_config->scale.use_dpi = 0;
    e_config->scale.use_custom = 1;

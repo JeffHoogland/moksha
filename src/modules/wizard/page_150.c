@@ -129,7 +129,7 @@ wizard_page_show(E_Wizard_Page *pg)
    evas_object_show(of);
 
    e_wizard_page_show(o);
-   pg->data = of;
+//   pg->data = o;
    return 1; /* 1 == show ui, and wait for user, 0 == just continue */
 }
 
@@ -200,7 +200,7 @@ wizard_page_hide(E_Wizard_Page *pg)
         E_CONFIG_DD_FREE(conf_edd);
      }
    e_config_save_queue();
-   if (pg->data) evas_object_del(pg->data);
+//   if (pg->data) evas_object_del(pg->data);
    return 1;
 }
 

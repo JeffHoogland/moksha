@@ -42,7 +42,7 @@ wizard_page_show(E_Wizard_Page *pg)
    evas_object_show(of);
 
    e_wizard_page_show(o);
-   pg->data = of;
+//   pg->data = o;
    return 1; /* 1 == show ui, and wait for user, 0 == just continue */
 }
 
@@ -69,7 +69,7 @@ wizard_page_hide(E_Wizard_Page *pg)
         e_config->focus_last_focused_per_desktop = 1;
         e_config->pointer_slide = 1;
      }
-   evas_object_del(pg->data);
+//   evas_object_del(pg->data);
    return 1;
 }
 

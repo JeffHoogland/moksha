@@ -29,7 +29,7 @@ _recommend_connman(E_Wizard_Page *pg)
    evas_object_show(of);
    
    e_wizard_page_show(o);
-   pg->data = of;
+//   pg->data = o;
    
    e_wizard_button_next_enable_set(1);
 }
@@ -152,7 +152,7 @@ wizard_page_hide(E_Wizard_Page *pg __UNUSED__)
         ecore_timer_del(connman_timeout);
         connman_timeout = NULL;
      }
-   if (pg->data) evas_object_del(pg->data);
+//   if (pg->data) evas_object_del(pg->data);
    return 1;
 }
 

@@ -171,14 +171,14 @@ wizard_page_show(E_Wizard_Page *pg)
    evas_object_show(ob);
    evas_object_show(of);
    e_wizard_page_show(o);
-   pg->data = of;
+//   pg->data = o;
    return 1; /* 1 == show ui, and wait for user, 0 == just continue */
 }
 
 EAPI int
 wizard_page_hide(E_Wizard_Page *pg)
 {
-   evas_object_del(pg->data);
+//   evas_object_del(pg->data);
    /* special - language inits its stuff the moment it goes away */
    eina_stringshare_del(e_config->language);
    e_config->language = eina_stringshare_ref(lang);
