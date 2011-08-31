@@ -13,7 +13,6 @@ EAPI Eina_Bool    e_icon_file_edje_set    (Evas_Object *obj, const char *file, c
 EAPI Eina_Bool    e_icon_fdo_icon_set     (Evas_Object *obj, const char *icon);
 EAPI void         e_icon_object_set       (Evas_Object *obj, Evas_Object *o);
 EAPI const char  *e_icon_file_get         (const Evas_Object *obj);
-EAPI const char  *e_icon_file_key_get     (const Evas_Object *obj, const char **key);
 EAPI void         e_icon_smooth_scale_set (Evas_Object *obj, Eina_Bool smooth);
 EAPI Eina_Bool    e_icon_smooth_scale_get (const Evas_Object *obj);
 EAPI void         e_icon_alpha_set        (Evas_Object *obj, Eina_Bool smooth);
