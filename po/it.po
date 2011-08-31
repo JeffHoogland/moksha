@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: http://trac.enlightenment.org/e/\n"
-"POT-Creation-Date: 2011-08-28 04:01-0700\n"
-"PO-Revision-Date: 2011-08-28 13:38+0200\n"
+"POT-Creation-Date: 2011-08-31 08:02-0700\n"
+"PO-Revision-Date: 2011-08-31 17:40+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -685,10 +685,10 @@ msgstr "Commuta modalità disconnessa"
 #: ../src/modules/conf_display/e_int_config_desklock_fsel.c:87
 #: ../src/modules/conf_intl/e_int_config_imc.c:808
 #: ../src/modules/conf_theme/e_int_config_wallpaper.c:466
-#: ../src/modules/conf_theme/e_int_config_wallpaper.c:591
+#: ../src/modules/conf_theme/e_int_config_wallpaper.c:588
 #: ../src/modules/conf_theme/e_int_config_startup.c:258
 #: ../src/modules/conf_theme/e_int_config_theme.c:396
-#: ../src/modules/conf_theme/e_int_config_theme.c:795
+#: ../src/modules/conf_theme/e_int_config_theme.c:796
 #: ../src/modules/gadman/e_mod_config.c:183
 #: ../src/modules/syscon/e_mod_main.c:31 ../src/modules/syscon/e_mod_main.c:35
 #: ../src/modules/syscon/e_mod_main.c:52
@@ -956,7 +956,7 @@ msgstr "Applica"
 
 #: ../src/bin/e_configure.c:28 ../src/modules/conf_shelves/e_mod_main.c:21
 #: ../src/modules/gadman/e_mod_main.c:25
-#: ../src/modules/mixer/e_mod_main.c:1140
+#: ../src/modules/mixer/e_mod_main.c:1182
 #: ../src/modules/connman/e_mod_main.c:1829
 msgid "Extensions"
 msgstr "Estensioni"
@@ -1118,7 +1118,7 @@ msgstr "File desktop"
 #: ../src/modules/conf_performance/e_int_config_performance.c:115
 #: ../src/modules/everything/evry_config.c:380
 #: ../src/modules/everything/evry_config.c:464
-#: ../src/modules/everything/evry_plug_files.c:1482
+#: ../src/modules/everything/evry_plug_files.c:1483
 #: ../src/modules/pager/e_mod_config.c:126
 #: ../src/modules/pager/e_mod_config.c:213
 msgid "General"
@@ -1148,7 +1148,7 @@ msgstr "Seleziona un'icona"
 msgid "Select an Executable"
 msgstr "Seleziona un'eseguibile"
 
-#: ../src/bin/e_entry.c:496 ../src/bin/e_fm.c:8202 ../src/bin/e_shelf.c:1697
+#: ../src/bin/e_entry.c:496 ../src/bin/e_fm.c:8202 ../src/bin/e_shelf.c:1698
 #: ../src/modules/conf_dialogs/e_int_config_profiles.c:135
 #: ../src/modules/conf_shelves/e_int_config_shelf.c:81
 #: ../src/modules/ibar/e_mod_config.c:108
@@ -1461,7 +1461,7 @@ msgstr "Imposta sfondo..."
 msgid "Set overlay..."
 msgstr "Imposta sfumatura..."
 
-#: ../src/bin/e_fm.c:8712 ../src/modules/conf_theme/e_int_config_theme.c:1031
+#: ../src/bin/e_fm.c:8712 ../src/modules/conf_theme/e_int_config_theme.c:1032
 msgid "Clear"
 msgstr "Pulisci"
 
@@ -1620,7 +1620,7 @@ msgstr "Proprietario può scrivere"
 #: ../src/bin/e_fm_prop.c:379 ../src/bin/e_widget_fsel.c:311
 #: ../src/modules/conf_theme/e_int_config_icon_themes.c:258
 #: ../src/modules/conf_theme/e_int_config_transitions.c:167
-#: ../src/modules/conf_theme/e_int_config_theme.c:1039
+#: ../src/modules/conf_theme/e_int_config_theme.c:1040
 msgid "Preview"
 msgstr "Anteprima"
 
@@ -1810,7 +1810,7 @@ msgid "Window"
 msgstr "Finestra"
 
 #: ../src/bin/e_int_border_menu.c:138 ../src/bin/e_int_config_modules.c:59
-#: ../src/bin/e_int_menus.c:230 ../src/bin/e_shelf.c:1689
+#: ../src/bin/e_int_menus.c:230 ../src/bin/e_shelf.c:1690
 #: ../src/modules/battery/e_mod_main.c:183
 #: ../src/modules/clock/e_mod_main.c:297 ../src/modules/clock/e_mod_main.c:541
 #: ../src/modules/conf/e_conf.c:124 ../src/modules/conf/e_conf.c:134
@@ -1821,7 +1821,7 @@ msgstr "Finestra"
 #: ../src/modules/ibox/e_mod_main.c:301 ../src/modules/ibox/e_mod_main.c:694
 #: ../src/modules/pager/e_mod_main.c:790
 #: ../src/modules/temperature/e_mod_main.c:226
-#: ../src/modules/mixer/e_mod_main.c:718
+#: ../src/modules/mixer/e_mod_main.c:760
 #: ../src/modules/connman/e_mod_main.c:1300
 msgid "Settings"
 msgstr "Impostazioni"
@@ -2242,7 +2242,7 @@ msgstr "Utilità"
 #. eina_init();
 #. Setup Entry in Config Panel
 #: ../src/bin/e_int_config_modules.c:55
-#: ../src/modules/everything/evry_plug_files.c:1592
+#: ../src/modules/everything/evry_plug_files.c:1593
 #: ../src/modules/fileman/e_mod_main.c:56
 #: ../src/modules/fileman/e_mod_main.c:76
 #: ../src/modules/fileman/e_mod_main.c:420
@@ -3218,12 +3218,12 @@ msgstr ""
 msgid "Shelf #"
 msgstr "Mensola #"
 
-#: ../src/bin/e_shelf.c:1298
+#: ../src/bin/e_shelf.c:1299
 #: ../src/modules/conf_shelves/e_int_config_shelf.c:291
 msgid "Are you sure you want to delete this shelf?"
 msgstr "Siete sicuri di voler eliminare questa mensola?"
 
-#: ../src/bin/e_shelf.c:1299
+#: ../src/bin/e_shelf.c:1300
 msgid ""
 "You requested to delete this shelf.<br><br>Are you sure you want to delete "
 "it?"
@@ -3231,15 +3231,15 @@ msgstr ""
 "Avete chiesto di eliminare questa mensola.<br><br>Siete sicuri di volerla "
 "eliminare?"
 
-#: ../src/bin/e_shelf.c:1674
+#: ../src/bin/e_shelf.c:1675
 msgid "Stop Moving/Resizing Gadgets"
 msgstr "Fine spostamento/ridimensionamento oggetti"
 
-#: ../src/bin/e_shelf.c:1676
+#: ../src/bin/e_shelf.c:1677
 msgid "Begin Moving/Resizing Gadgets"
 msgstr "Inizio spostamento/ridimensionamento oggetti"
 
-#: ../src/bin/e_shelf.c:1684
+#: ../src/bin/e_shelf.c:1685
 #: ../src/modules/conf_shelves/e_int_config_shelf.c:84
 #: ../src/modules/ibar/e_mod_main.c:801
 msgid "Contents"
@@ -3616,7 +3616,7 @@ msgstr "Aggiungi ai preferiti"
 #: ../src/modules/conf_display/e_int_config_desklock_fsel.c:91
 #: ../src/modules/conf_intl/e_int_config_imc.c:815
 #: ../src/modules/conf_theme/e_int_config_wallpaper.c:472
-#: ../src/modules/conf_theme/e_int_config_wallpaper.c:597
+#: ../src/modules/conf_theme/e_int_config_wallpaper.c:594
 #: ../src/modules/conf_theme/e_int_config_startup.c:266
 #: ../src/modules/conf_theme/e_int_config_theme.c:403
 #: ../src/modules/gadman/e_mod_config.c:187
@@ -3635,28 +3635,28 @@ msgstr "Permessi:"
 msgid "Modified:"
 msgstr "Modificato:"
 
-#: ../src/bin/e_widget_fsel.c:654
+#: ../src/bin/e_widget_fsel.c:665
 #, c-format
 msgid "You"
 msgstr "Tu"
 
-#: ../src/bin/e_widget_fsel.c:703
+#: ../src/bin/e_widget_fsel.c:714
 #, c-format
 msgid "Protected"
 msgstr "Protetto"
 
-#: ../src/bin/e_widget_fsel.c:705 ../src/bin/e_widget_fsel.c:714
-#: ../src/bin/e_widget_fsel.c:723
+#: ../src/bin/e_widget_fsel.c:716 ../src/bin/e_widget_fsel.c:725
+#: ../src/bin/e_widget_fsel.c:734
 #, c-format
 msgid "Read Only"
 msgstr "Sola lettura"
 
-#: ../src/bin/e_widget_fsel.c:712 ../src/bin/e_widget_fsel.c:721
+#: ../src/bin/e_widget_fsel.c:723 ../src/bin/e_widget_fsel.c:732
 #, c-format
 msgid "Forbidden"
 msgstr "Proibito"
 
-#: ../src/bin/e_widget_fsel.c:730
+#: ../src/bin/e_widget_fsel.c:741
 msgid "Read-Write"
 msgstr "Lettura-scrittura"
 
@@ -3944,7 +3944,7 @@ msgstr "Impostazioni finestre di dialogo"
 #: ../src/modules/everything/evry_config.c:528
 #: ../src/modules/ibox/e_mod_config.c:96
 #: ../src/modules/mixer/conf_gadget.c:191
-#: ../src/modules/mixer/conf_module.c:89
+#: ../src/modules/mixer/conf_module.c:91
 msgid "General Settings"
 msgstr "Impostazioni generali"
 
@@ -4220,10 +4220,10 @@ msgstr "Seleziona uno sfondo..."
 #: ../src/modules/conf_display/e_int_config_desklock_fsel.c:84
 #: ../src/modules/conf_intl/e_int_config_imc.c:803
 #: ../src/modules/conf_theme/e_int_config_wallpaper.c:462
-#: ../src/modules/conf_theme/e_int_config_wallpaper.c:587
+#: ../src/modules/conf_theme/e_int_config_wallpaper.c:584
 #: ../src/modules/conf_theme/e_int_config_startup.c:253
 #: ../src/modules/conf_theme/e_int_config_theme.c:392
-#: ../src/modules/conf_theme/e_int_config_theme.c:791
+#: ../src/modules/conf_theme/e_int_config_theme.c:792
 #: ../src/modules/gadman/e_mod_config.c:179
 msgid "Personal"
 msgstr "Personali"
@@ -5017,7 +5017,7 @@ msgid "Fonts"
 msgstr "Font"
 
 #: ../src/modules/conf_paths/e_int_config_paths.c:76
-#: ../src/modules/conf_theme/e_int_config_theme.c:1019
+#: ../src/modules/conf_theme/e_int_config_theme.c:1020
 msgid "Themes"
 msgstr "Temi"
 
@@ -5171,33 +5171,33 @@ msgid "Wallpaper Settings"
 msgstr "Impostazioni sfondo"
 
 #: ../src/modules/conf_theme/e_int_config_wallpaper.c:499
-#: ../src/modules/conf_theme/e_int_config_wallpaper.c:622
+#: ../src/modules/conf_theme/e_int_config_wallpaper.c:619
 msgid "Use Theme Wallpaper"
 msgstr "Usa sfondo del tema"
 
 #: ../src/modules/conf_theme/e_int_config_wallpaper.c:504
-#: ../src/modules/conf_theme/e_int_config_wallpaper.c:627
+#: ../src/modules/conf_theme/e_int_config_wallpaper.c:624
 msgid "Picture..."
 msgstr "Immagine..."
 
 #: ../src/modules/conf_theme/e_int_config_wallpaper.c:511
-#: ../src/modules/conf_theme/e_int_config_wallpaper.c:634
+#: ../src/modules/conf_theme/e_int_config_wallpaper.c:631
 msgid "Online..."
 msgstr "Online..."
 
-#: ../src/modules/conf_theme/e_int_config_wallpaper.c:650
+#: ../src/modules/conf_theme/e_int_config_wallpaper.c:646
 msgid "Where to place the Wallpaper"
 msgstr "Posizionamento dello sfondo"
 
-#: ../src/modules/conf_theme/e_int_config_wallpaper.c:651
+#: ../src/modules/conf_theme/e_int_config_wallpaper.c:647
 msgid "All Desktops"
 msgstr "Tutti i desktop"
 
-#: ../src/modules/conf_theme/e_int_config_wallpaper.c:653
+#: ../src/modules/conf_theme/e_int_config_wallpaper.c:649
 msgid "This Desktop"
 msgstr "Questo desktop"
 
-#: ../src/modules/conf_theme/e_int_config_wallpaper.c:655
+#: ../src/modules/conf_theme/e_int_config_wallpaper.c:651
 msgid "This Screen"
 msgstr "Questo schermo"
 
@@ -5896,15 +5896,15 @@ msgstr "Importa..."
 msgid " Online..."
 msgstr "Online..."
 
-#: ../src/modules/conf_theme/e_int_config_theme.c:1010
+#: ../src/modules/conf_theme/e_int_config_theme.c:1011
 msgid "Theme Categories"
 msgstr "Categorie dei temi"
 
-#: ../src/modules/conf_theme/e_int_config_theme.c:1028
+#: ../src/modules/conf_theme/e_int_config_theme.c:1029
 msgid "Assign"
 msgstr "Assegna"
 
-#: ../src/modules/conf_theme/e_int_config_theme.c:1034
+#: ../src/modules/conf_theme/e_int_config_theme.c:1035
 msgid "Clear All"
 msgstr "Pulisci tutto"
 
@@ -6655,7 +6655,7 @@ msgstr "Configurazione di Everything"
 msgid "Show Everything Dialog"
 msgstr "Mostra finestra di dialogo di Everything"
 
-#: ../src/modules/everything/e_mod_main.c:420
+#: ../src/modules/everything/e_mod_main.c:419
 msgid "Everything Module"
 msgstr "Modulo Everything"
 
@@ -6829,11 +6829,11 @@ msgstr "Geometria"
 msgid "Everything Collection"
 msgstr "Raccolta di Everything"
 
-#: ../src/modules/everything/evry_plug_aggregator.c:118
+#: ../src/modules/everything/evry_plug_aggregator.c:119
 msgid "Items"
 msgstr "Elementi"
 
-#: ../src/modules/everything/evry_plug_aggregator.c:339
+#: ../src/modules/everything/evry_plug_aggregator.c:340
 msgid "No plugins loaded"
 msgstr "Nessun plugin caricato"
 
@@ -6876,7 +6876,7 @@ msgstr ""
 "hilight> cambia visualizzazione a miniature"
 
 #: ../src/modules/everything/evry_plug_apps.c:1250
-#: ../src/modules/everything/evry_plug_apps.c:1388
+#: ../src/modules/everything/evry_plug_apps.c:1387
 msgid "Everything Applications"
 msgstr "Modulo applicazioni di Everything"
 
@@ -6893,11 +6893,11 @@ msgid "Sudo GUI"
 msgstr "Interfaccia sudo"
 
 #: ../src/modules/everything/evry_plug_apps.c:1367
-#: ../src/modules/everything/evry_plug_files.c:1592
+#: ../src/modules/everything/evry_plug_files.c:1593
 msgid "Everything Plugin"
 msgstr "Plugin di Everything"
 
-#: ../src/modules/everything/evry_plug_files.c:1462
+#: ../src/modules/everything/evry_plug_files.c:1463
 #: ../src/modules/everything/evry_plug_files.c:1615
 msgid "Everything Files"
 msgstr "Modulo file di Everything"
@@ -6905,23 +6905,23 @@ msgstr "Modulo file di Everything"
 #. ow = e_widget_check_add(evas, _("Show home directory"),
 #. * 			   &(cfdata->show_homedir));
 #. * e_widget_framelist_object_append(of, ow);
-#: ../src/modules/everything/evry_plug_files.c:1489
+#: ../src/modules/everything/evry_plug_files.c:1490
 msgid "Show recent files"
 msgstr "Mostra file recenti"
 
-#: ../src/modules/everything/evry_plug_files.c:1493
+#: ../src/modules/everything/evry_plug_files.c:1494
 msgid "Search recent files"
 msgstr "Cerca file recenti"
 
-#: ../src/modules/everything/evry_plug_files.c:1497
+#: ../src/modules/everything/evry_plug_files.c:1498
 msgid "Search cached files"
 msgstr "Cerca file in cache"
 
-#: ../src/modules/everything/evry_plug_files.c:1501
+#: ../src/modules/everything/evry_plug_files.c:1502
 msgid "Cache visited directories"
 msgstr "Cache per directory visitate"
 
-#: ../src/modules/everything/evry_plug_files.c:1505
+#: ../src/modules/everything/evry_plug_files.c:1506
 msgid "Clear cache"
 msgstr "Svuota cache"
 
@@ -7876,7 +7876,7 @@ msgstr "Sinistro:"
 msgid "Right:"
 msgstr "Destro:"
 
-#: ../src/modules/mixer/app_mixer.c:401 ../src/modules/mixer/e_mod_main.c:625
+#: ../src/modules/mixer/app_mixer.c:401 ../src/modules/mixer/e_mod_main.c:667
 msgid "Mute"
 msgstr "Muto"
 
@@ -7904,30 +7904,41 @@ msgstr "Schede audio"
 msgid "Mixer Settings"
 msgstr "Impostazioni di Mixer"
 
-#: ../src/modules/mixer/conf_module.c:91
+#: ../src/modules/mixer/conf_module.c:93
 msgid "Mixer to use for global actions:"
 msgstr "Mixer da usare per le azioni globali:"
 
-#: ../src/modules/mixer/conf_module.c:145
+#: ../src/modules/mixer/conf_module.c:118
+msgid "Diplay desktop notifications on volume change"
+msgstr "Visualizza notifica al cambio di volume"
+
+#: ../src/modules/mixer/conf_module.c:154
 msgid "Launch mixer..."
 msgstr "Lancia mixer..."
 
-#: ../src/modules/mixer/conf_module.c:180
+#: ../src/modules/mixer/conf_module.c:189
 msgid "Mixer Module Settings"
 msgstr "Impostazioni del modulo Mixer"
 
-#: ../src/modules/mixer/e_mod_main.c:127
+#: ../src/modules/mixer/e_mod_main.c:32
+msgid "New volume"
+msgstr "Nuovo livello audio"
+
+#: ../src/modules/mixer/e_mod_main.c:45
+msgid "Mixer"
+msgstr "Mixer"
+
+#: ../src/modules/mixer/e_mod_main.c:45
+msgid "Volume changed"
+msgstr "Il volume dell'audio è cambiato"
+
+#: ../src/modules/mixer/e_mod_main.c:165
 msgid "Mixer Settings Updated"
 msgstr "Impostazioni di Mixer aggiornate"
 
-#: ../src/modules/mixer/e_mod_main.c:1219
-msgid ""
-"Mixer Module Settings data changed.<br>Your old configuration has been "
-"replaced with new default.<br>Sorry for the inconvenience."
-msgstr ""
-"La configurazione del modulo Mixer è cambiata.<br>La vostra vecchia "
-"configurazione è stata rimpiazzatata con<br>quella predefinita. Ci scusiamo "
-"per l'inconveniente."
+#: ../src/modules/mixer/e_mod_main.c:1255
+msgid "Mixer Module"
+msgstr "Modulo Mixer"
 
 #: ../src/modules/connman/e_mod_main.c:85
 #: ../src/modules/connman/e_mod_main.c:112
