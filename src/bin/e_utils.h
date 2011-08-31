@@ -67,7 +67,9 @@ EAPI int          e_util_dir_check(const char *dir);
 EAPI void         e_util_defer_object_del(E_Object *obj);
 EAPI const char  *e_util_winid_str_get(Ecore_X_Window win);
 EAPI void         e_util_win_auto_resize_fill(E_Win *win);
-EAPI Eina_Bool    e_util_module_config_check(const char *module_name, int conf, int epoch, int version);
+/* check if loaded config version matches the current version, show a
+   dialog warning if loaded version is older or newer than current */
+EAPI Eina_Bool    e_util_module_config_check(const char *module_name, int loaded, int current);
 
 EAPI E_Dialog                   *e_util_image_import_settings_new(const char *path, void (*cb)(void *data, const char *path, Eina_Bool ok, Eina_Bool external, int quality, E_Image_Import_Mode mode), const void *data);
 EAPI E_Util_Image_Import_Handle *e_util_image_import(const char *image_path, const char *edje_path, const char *edje_group, Eina_Bool external, int quality, E_Image_Import_Mode mode, void (*cb)(void *data, Eina_Bool ok, const char *image_path, const char *edje_path), const void *data);

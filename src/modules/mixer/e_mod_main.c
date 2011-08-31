@@ -1253,7 +1253,7 @@ _mixer_module_configuration_load(E_Config_DD *module_conf_edd)
      return _mixer_module_configuration_new();
    
    if (conf && !e_util_module_config_check (_("Mixer Module"), conf->version,
-					    MOD_CONFIG_FILE_EPOCH, MOD_CONFIG_FILE_VERSION))
+					    MOD_CONFIG_FILE_VERSION))
      {
 	_mixer_module_configuration_free(conf);
 	return _mixer_module_configuration_new();

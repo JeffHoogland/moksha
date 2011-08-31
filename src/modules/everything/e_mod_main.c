@@ -416,9 +416,9 @@ _config_init()
 #undef D
    evry_conf = e_config_domain_load("module.everything", conf_edd);
 
-   if (evry_conf && !e_util_module_config_check
-       (_("Everything Module"), evry_conf->version,
-	MOD_CONFIG_FILE_EPOCH, MOD_CONFIG_FILE_VERSION))
+   if (evry_conf && !e_util_module_config_check(_("Everything Module"),
+						evry_conf->version,
+						MOD_CONFIG_FILE_VERSION))
      _config_free();
 
    if (!evry_conf)

@@ -473,7 +473,6 @@ _dir_watcher(void *data, Ecore_File_Monitor *em __UNUSED__, Ecore_File_Event eve
 
 	 _item_fill(file);
 	 p->files = eina_list_append(p->files, file);
-
 	 break;
 
       case ECORE_FILE_EVENT_DELETED_FILE:
@@ -1387,7 +1386,8 @@ _plugins_init(const Evry_API *api)
 	p->config->top_level = EINA_FALSE;
 	p->config->min_query = 3;
      }
-
+   _plugins = eina_list_append(_plugins, p);
+   
    p = EVRY_PLUGIN_BASE("Recent Files", _module_icon, EVRY_TYPE_FILE,
 			_recentf_begin, _finish, _recentf_fetch);
    p->browse = &_recentf_browse;
@@ -1398,7 +1398,8 @@ _plugins_init(const Evry_API *api)
 	p->config->top_level = EINA_FALSE;
 	p->config->min_query = 3;
      }
-
+   _plugins = eina_list_append(_plugins, p);
+   
    return EINA_TRUE;
 }
 
@@ -1611,9 +1612,9 @@ _conf_init(E_Module *m)
 
    _conf = e_config_domain_load("module.everything-files", conf_edd);
 
-   if (_conf && !e_util_module_config_check
-       (_("Everything Files"), _conf->version,
-	MOD_CONFIG_FILE_EPOCH, MOD_CONFIG_FILE_VERSION))
+   if (_conf && !e_util_module_config_check(_("Everything Files"),
+					    _conf->version,
+					    MOD_CONFIG_FILE_VERSION))
 	  _conf_free();
 
    if (!_conf) _conf_new();
