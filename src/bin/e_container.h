@@ -58,8 +58,8 @@ struct _E_Container
 struct _E_Border_List
 {
    E_Container *container;
-   int layer;
-   Eina_List *clients;
+   Eina_Array   client_array;
+   int          pos;
 };
 
 struct _E_Container_Shape

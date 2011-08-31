@@ -819,18 +819,46 @@ e_container_border_stack_below(E_Border *bd, E_Border *below)
       eina_list_prepend_relative(bd->zone->container->layers[pos].clients, bd, below);
 }
 
+static E_Border_List *
+_e_container_border_list_new(E_Container *con)
+{
+   E_Border_List *list = NULL;
+   E_Border *bd;
+   int i;
+   Eina_List *l;
+   
+   if (!(list = E_NEW(E_Border_List, 1))) return NULL;
+   list->container = con;
+   e_object_ref(E_OBJECT(list->container));
+   eina_array_step_set(&(list->client_array), sizeof(list->client_array), 256);
+   for (i = 0; i < 7; i++)
+     {
+        EINA_LIST_FOREACH(con->layers[i].clients, l, bd)
+           eina_array_push(&(list->client_array), bd);
+     }
+   return list;
+}
+
+static E_Border *
+_e_container_border_list_jump(E_Border_List *list, int dir)
+{
+   E_Border *bd;
+   
+   if ((list->pos < 0) || 
+       (list->pos >= eina_array_count_get(&(list->client_array))))
+      return NULL;
+   bd = eina_array_data_get(&(list->client_array), list->pos);
+   list->pos += dir;
+   return bd;
+}
+
 EAPI E_Border_List *
 e_container_border_list_first(E_Container *con)
 {
    E_Border_List *list = NULL;
-
-   if (!(list = E_NEW(E_Border_List, 1))) return NULL;
-   list->container = con;
-   e_object_ref(E_OBJECT(con));
-   list->layer = 0;
-   list->clients = list->container->layers[list->layer].clients;
-   while ((list->layer < 6) && (!list->clients))
-     list->clients = list->container->layers[++list->layer].clients;
+   
+   list = _e_container_border_list_new(con);
+   list->pos = 0;
    return list;
 }
 
@@ -839,59 +867,28 @@ e_container_border_list_last(E_Container *con)
 {
    E_Border_List *list = NULL;
 
-   if (!(list = E_NEW(E_Border_List, 1))) return NULL;
-   list->container = con;
-   e_object_ref(E_OBJECT(con));
-   list->layer = 6;
-   if (list->container->layers[list->layer].clients)
-     list->clients = eina_list_last(list->container->layers[list->layer].clients);
-   while ((list->layer > 0) && (!list->clients))
-     {
-	list->layer--;
-	if (list->container->layers[list->layer].clients)
-	  list->clients = eina_list_last(list->container->layers[list->layer].clients);
-     }
+   list = _e_container_border_list_new(con);
+   list->pos = eina_array_count_get(&(list->client_array)) - 1;
    return list;
 }
 
 EAPI E_Border *
 e_container_border_list_next(E_Border_List *list)
 {
-   E_Border *bd;
-
-   if (!list->clients) return NULL;
-
-   bd = eina_list_data_get(list->clients);
-
-   list->clients = eina_list_next(list->clients);
-   while ((list->layer < 6) && (!list->clients))
-     list->clients = list->container->layers[++list->layer].clients;
-   return bd;
+   return _e_container_border_list_jump(list, 1);
 }
 
 EAPI E_Border *
 e_container_border_list_prev(E_Border_List *list)
 {
-   E_Border *bd;
-
-   if (!list->clients) return NULL;
-
-   bd = eina_list_data_get(list->clients);
-
-   list->clients = eina_list_prev(list->clients);
-   while ((list->layer > 0) && (!list->clients))
-     {
-	list->layer--;
-	if (list->container->layers[list->layer].clients)
-	  list->clients = eina_list_last(list->container->layers[list->layer].clients);
-     }
-   return bd;
+   return _e_container_border_list_jump(list, -1);
 }
 
 EAPI void
 e_container_border_list_free(E_Border_List *list)
 {
    e_object_unref(E_OBJECT(list->container));
+   eina_array_flush(&(list->client_array));
    free(list);
 }
 
