@@ -1,5 +1,8 @@
 #include "e_mod_main.h"
 #include "e_mod_system.h"
+#ifdef HAVE_ENOTIFY
+#include <E_Notify.h>
+#endif
 
 static void _mixer_popup_timer_new(E_Mixer_Instance *inst);
 static Eina_Bool _mixer_popup_timer_cb(void *data);
@@ -10,6 +13,41 @@ static char tmpbuf[PATH_MAX]; /* general purpose buffer, just use immediately */
 static const char _conf_domain[] = "module.mixer";
 static const char _name[] = "mixer";
 const char _e_mixer_Name[] = "Mixer";
+
+static void
+_mixer_notify(const float val, E_Mixer_Instance *inst)
+{
+#ifdef HAVE_ENOTIFY
+   E_Notification *n;
+   E_Mixer_Module_Context *ctxt;
+   char *icon, buf[56];
+   int ret;
+
+   if (val > 100.0 || val < 0.0)
+     return;
+
+   if (!(ctxt = (E_Mixer_Module_Context*)mixer_mod->data) || !ctxt->desktop_notification)
+     return;
+
+   ret = snprintf(buf, (sizeof(buf) - 1), "%s: %d%%", _("New volume"), (int)(val + 0.5));
+   if ((ret < 0) || (ret > sizeof(buf)))
+     return;
+   //Names are taken from FDO icon naming scheme
+   if (val == 0.0)
+     icon = "audio-volume-muted";
+   else if (val > 66.6)
+     icon = "audio-volume-high";
+   else if ((val > 33.3) && (val < 66.6))
+     icon = "audio-volume-medium";
+   else if (val < 33.3)
+     icon = "audio-volume-low";
+
+   n = e_notification_full_new(_("Mixer"), 0, icon, _("Volume changed"), buf, 2000);
+   e_notification_replaces_id_set(n, EINA_TRUE);
+   e_notification_send(n, NULL, NULL);
+   e_notification_unref(n);
+#endif
+}
 
 const char *
 e_mixer_theme_path(void)
@@ -137,8 +175,6 @@ _mixer_module_configuration_new(void)
    if (!conf)
       return NULL;
 
-   conf->version = MOD_CONF_VERSION;
-
    return conf;
 }
 
@@ -249,7 +285,7 @@ _mixer_balance_right(E_Mixer_Instance *inst)
 }
 
 static void
-_mixer_volume_increase(E_Mixer_Instance *inst)
+_mixer_volume_increase(E_Mixer_Instance *inst, Eina_Bool non_ui)
 {
    E_Mixer_Channel_State *state;
 
@@ -275,10 +311,12 @@ _mixer_volume_increase(E_Mixer_Instance *inst)
    e_mixer_system_set_volume(inst->sys, inst->channel,
                              state->left, state->right);
    _mixer_gadget_update(inst);
+   if (non_ui)
+     _mixer_notify(((float)state->left + (float)state->right) / 2.0, inst);
 }
 
 static void
-_mixer_volume_decrease(E_Mixer_Instance *inst)
+_mixer_volume_decrease(E_Mixer_Instance *inst, Eina_Bool non_ui)
 {
    E_Mixer_Channel_State *state;
 
@@ -303,10 +341,12 @@ _mixer_volume_decrease(E_Mixer_Instance *inst)
    e_mixer_system_set_volume(inst->sys, inst->channel,
                              state->left, state->right);
    _mixer_gadget_update(inst);
+   if (non_ui)
+     _mixer_notify(((float)state->left + (float)state->right) / 2.0, inst);
 }
 
 static void
-_mixer_toggle_mute(E_Mixer_Instance *inst)
+_mixer_toggle_mute(E_Mixer_Instance *inst, Eina_Bool non_ui)
 {
    E_Mixer_Channel_State *state;
 
@@ -318,6 +358,8 @@ _mixer_toggle_mute(E_Mixer_Instance *inst)
    state->mute = !state->mute;
    e_mixer_system_set_mute(inst->sys, inst->channel, state->mute);
    _mixer_gadget_update(inst);
+   if (non_ui)
+     _mixer_notify(0.0, inst);
 }
 
 static void
@@ -425,12 +467,12 @@ _mixer_popup_input_window_key_down_cb(void *data, int type __UNUSED__, void *eve
    if (strcmp(keysym, "Escape") == 0)
       _mixer_popup_del(inst);
    else if (strcmp(keysym, "Up") == 0)
-      _mixer_volume_increase(inst);
+      _mixer_volume_increase(inst, EINA_FALSE);
    else if (strcmp(keysym, "Down") == 0)
-      _mixer_volume_decrease(inst);
+      _mixer_volume_decrease(inst, EINA_FALSE);
    else if ((strcmp(keysym, "Return") == 0) ||
             (strcmp(keysym, "KP_Enter") == 0))
-      _mixer_toggle_mute(inst);
+      _mixer_toggle_mute(inst, EINA_FALSE);
    else
      {
         E_Action *act;
@@ -744,7 +786,7 @@ _mixer_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSE
          _mixer_popup_del(inst);
    }
    else if (ev->button == 2)
-      _mixer_toggle_mute(inst);
+      _mixer_toggle_mute(inst, EINA_FALSE);
    else if ((ev->button == 3) && (!inst->menu))
       _mixer_menu_new(inst, ev);
 }
@@ -758,9 +800,9 @@ _mixer_cb_mouse_wheel(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUS
    if (ev->direction == 0)
    {
       if (ev->z > 0)
-         _mixer_volume_decrease(inst);
+         _mixer_volume_decrease(inst, EINA_FALSE);
       else if (ev->z < 0)
-         _mixer_volume_increase(inst);
+         _mixer_volume_increase(inst, EINA_FALSE);
    }
    else if (ev->direction == 1)
    {
@@ -1062,7 +1104,7 @@ _mixer_cb_volume_increase(E_Object *obj __UNUSED__, const char *params __UNUSED_
 
    if (ctxt->default_instance->conf->keybindings_popup)
      _mixer_popup_timer_new(ctxt->default_instance);
-   _mixer_volume_increase(ctxt->default_instance);
+   _mixer_volume_increase(ctxt->default_instance, EINA_TRUE);
 }
 
 static void
@@ -1082,7 +1124,7 @@ _mixer_cb_volume_decrease(E_Object *obj __UNUSED__, const char *params __UNUSED_
 
    if (ctxt->default_instance->conf->keybindings_popup)
      _mixer_popup_timer_new(ctxt->default_instance);
-   _mixer_volume_decrease(ctxt->default_instance);
+   _mixer_volume_decrease(ctxt->default_instance, EINA_TRUE);
 }
 
 static void
@@ -1102,7 +1144,7 @@ _mixer_cb_volume_mute(E_Object *obj __UNUSED__, const char *params __UNUSED__)
 
    if (ctxt->default_instance->conf->keybindings_popup)
      _mixer_popup_timer_new(ctxt->default_instance);
-   _mixer_toggle_mute(ctxt->default_instance);
+   _mixer_toggle_mute(ctxt->default_instance, EINA_TRUE);
 }
 
 static E_Config_Dialog *
@@ -1162,6 +1204,7 @@ _mixer_module_configuration_descriptor_new(E_Config_DD *gadget_conf_edd)
    E_CONFIG_VAL(conf_edd, E_Mixer_Module_Config, version, INT);
    E_CONFIG_VAL(conf_edd, E_Mixer_Module_Config, default_gc_id, STR);
    E_CONFIG_HASH(conf_edd, E_Mixer_Module_Config, gadgets, gadget_conf_edd);
+   E_CONFIG_VAL(conf_edd, E_Mixer_Module_Config, desktop_notification, INT);
 
    return conf_edd;
 }
@@ -1205,22 +1248,16 @@ _mixer_module_configuration_load(E_Config_DD *module_conf_edd)
    E_Mixer_Module_Config *conf;
 
    conf = e_config_domain_load(_conf_domain, module_conf_edd);
+
    if (!conf)
-      return _mixer_module_configuration_new();
-
-   if (conf->version != MOD_CONF_VERSION)
-   {
-      _mixer_module_configuration_free(conf);
-      conf = _mixer_module_configuration_new();
-      if (!conf)
-         return NULL;
-
-      ecore_timer_add(1.0, _mixer_module_configuration_alert,
-                      _("Mixer Module Settings data changed.<br>"
-                        "Your old configuration has been replaced with "
-                        "new default.<br>Sorry for the inconvenience."));
-      return conf;
-   }
+     return _mixer_module_configuration_new();
+   
+   if (conf && !e_util_module_config_check (_("Mixer Module"), conf->version,
+					    MOD_CONFIG_FILE_EPOCH, MOD_CONFIG_FILE_VERSION))
+     {
+	_mixer_module_configuration_free(conf);
+	return _mixer_module_configuration_new();
+     }
 
    return conf;
 }
@@ -1235,6 +1272,15 @@ _mixer_module_configuration_setup(E_Mixer_Module_Context *ctxt)
    ctxt->gadget_conf_edd = gadget_edd;
    ctxt->module_conf_edd = module_edd;
    ctxt->conf = _mixer_module_configuration_load(module_edd);
+
+#define IFMODCFG(v) if ((ctxt->conf->version & 0xffff) < v) {
+#define IFMODCFGEND } 
+
+   IFMODCFG(0x0003);
+   ctxt->conf->desktop_notification = 1;
+   IFMODCFGEND;
+
+   ctxt->conf->version = MOD_CONFIG_FILE_VERSION;
 }
 
 static const char _act_increase[] = "volume_increase";
@@ -1303,6 +1349,10 @@ e_modapi_init(E_Module *m)
    if (!ctxt)
       return NULL;
 
+#ifdef HAVE_ENOTIFY
+   e_notification_init();
+#endif
+
    _mixer_configure_registry_register();
    _mixer_actions_register(ctxt);
    e_gadcon_provider_register(&_gc_class);
@@ -1347,6 +1397,10 @@ e_modapi_shutdown(E_Module *m)
       _mixer_gadget_configuration_descriptor_free(ctxt->gadget_conf_edd);
       _mixer_module_configuration_descriptor_free(ctxt->module_conf_edd);
    }
+
+#ifdef HAVE_ENOTIFY
+   e_notification_shutdown();
+#endif
 
    E_FREE(ctxt);
    mixer_mod = NULL;

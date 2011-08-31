@@ -72,6 +72,8 @@ _basic_apply(E_Config_Dialog *dialog, E_Config_Dialog_Data *cfdata)
 
 	id = ctxt->default_instance->gcc->cf->id;
 	conf->default_gc_id = eina_stringshare_add(id);
+
+        conf->desktop_notification = ctxt->desktop_notification;
      }
 
    return 1;
@@ -82,7 +84,7 @@ _basic_create_general(E_Config_Dialog *dialog, Evas *evas, E_Config_Dialog_Data 
 {
    struct mixer_config_ui_general *ui = &cfdata->ui.general;
    E_Mixer_Module_Context *ctxt = dialog->data;
-   Evas_Object *label;
+   Evas_Object *label, *chk;
    Eina_List *l;
    int i;
 
@@ -111,7 +113,14 @@ _basic_create_general(E_Config_Dialog *dialog, Evas *evas, E_Config_Dialog_Data 
 	e_widget_framelist_object_append(ui->frame, o);
      }
 
+
    e_widget_list_object_append(cfdata->ui.list, ui->frame, 1, 1, 0.5);
+   chk = e_widget_check_add(evas, _("Diplay desktop notifications on volume change"), &ctxt->desktop_notification);
+   e_widget_check_checked_set(chk, ctxt->conf->desktop_notification);
+#ifndef HAVE_ENOTIFY
+   e_widget_disabled_set(chk, EINA_TRUE);
+#endif
+   e_widget_list_object_append(cfdata->ui.list, chk, 1, 1, 0.5);
 }
 
 static void

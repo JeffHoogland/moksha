@@ -15,6 +15,10 @@ INCLUDES          = -I. \
                     -I$(top_builddir)/src/bin \
                     -I$(top_srcdir)/src/modules \
                     @e_cflags@ @SOUND_CFLAGS@
+if HAVE_ENOTIFY
+INCLUDES          += @ENOTIFY_CFLAGS@
+endif
+
 pkgdir            = $(libdir)/enlightenment/modules/$(MODULE)/$(MODULE_ARCH)
 pkg_LTLIBRARIES   = module.la
 
@@ -32,6 +36,10 @@ module_la_SOURCES += sys_dummy.c
 endif
 
 module_la_LIBADD       = @SOUND_LIBS@ @e_libs@ @dlopen_libs@
+if HAVE_ENOTIFY
+module_la_LIBADD       += @ENOTIFY_LIBS@
+endif
+
 module_la_LDFLAGS      = -module -avoid-version
 module_la_DEPENDENCIES = $(top_builddir)/config.h
 
