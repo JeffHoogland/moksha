@@ -13,8 +13,12 @@ struct _Instance
   Gadget_Config *cfg;
   E_Config_Dialog *cfd;
   E_Menu *menu;
+
+  int mouse_down;
+  
 };
 
+static void _button_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 
 /* gadcon requirements */
@@ -56,7 +60,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 
    /* if ((p = evry_plugin_find(id->name)))
     *   o = evry_util_icon_get(EVRY_ITEM(p), gc->evas) */
-   e_theme_edje_object_set(o, "base/theme/modules/start", "e/modules/start/main");
+   e_theme_edje_object_set(o, "base/theme/modules/everything", "e/modules/everything/gadget");
    edje_object_signal_emit(o, "e,state,unfocused", "e");
 
    gcc = e_gadcon_client_new(gc, name, id, style, o);
@@ -64,6 +68,9 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 
    inst->gcc = gcc;
    inst->o_button = o;
+
+   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_UP,
+				  _button_cb_mouse_up, inst);
 
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN,
 				  _button_cb_mouse_down, inst);
@@ -195,6 +202,21 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
    Evas_Event_Mouse_Down *ev;
 
    inst = data;
+   inst->mouse_down = 1;
+}
+
+static void
+_button_cb_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
+{
+   Instance *inst;
+   Evas_Event_Mouse_Down *ev;
+
+   inst = data;
+   if (!inst->mouse_down)
+     return;
+   
+   inst->mouse_down = 0;
+   
    ev = event_info;
    if (ev->button == 1)
      {
@@ -280,8 +302,9 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 	e_win_show(win->ewin);
 	bd = win->ewin->border;
 	e_border_focus_set(bd, 1, 1);
-	bd->client.netwm.state.skip_taskbar = 1;
+	/* bd->client.netwm.state.skip_taskbar = 1; */
 	bd->client.netwm.state.skip_pager = 1;
+	bd->sticky = 1;
 	inst->win = win;
 
 	e_gadcon_locked_set(inst->gcc->gadcon, 1);

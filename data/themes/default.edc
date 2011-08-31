@@ -10412,6 +10412,7 @@ collections {
 
    group {
       name: "e/modules/start/main";
+      alias: "e/modules/everything/gadget";
       max: 128 128;
       images {
          image: "logo_white_128.png" COMP;
