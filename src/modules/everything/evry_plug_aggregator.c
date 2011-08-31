@@ -33,7 +33,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
    else
      input = NULL;
 
-   if (!sel->states->next)
+   if (eina_list_data_get(sel->states) == s)
      top_level = 1;
 
    /* get current items' context */
@@ -70,7 +70,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
      }
 
    /* show non-top-level plugins as item */
-   if (top_level && (!s->trigger_active))
+   if ((top_level) && (!s->trigger_active))
      {
 	EINA_LIST_FOREACH(s->plugins, l, pp)
 	  {
