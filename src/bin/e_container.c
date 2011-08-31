@@ -845,7 +845,7 @@ _e_container_border_list_jump(E_Border_List *list, int dir)
    E_Border *bd;
    
    if ((list->pos < 0) || 
-       (list->pos >= eina_array_count_get(&(list->client_array))))
+       (list->pos >= (int)eina_array_count_get(&(list->client_array))))
       return NULL;
    bd = eina_array_data_get(&(list->client_array), list->pos);
    list->pos += dir;
