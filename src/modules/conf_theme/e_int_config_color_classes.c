@@ -96,6 +96,7 @@ static const CFColor_Class_Description _color_classes_wm[] =
 };
 static const CFColor_Class_Description _color_classes_widgets[] =
 {
+  CCDESC_S("focus",                  N_("Focus")),
   CCDESC_T("button_text",            N_("Button Text")),
   CCDESC_T("button_text_disabled",   N_("Button Text Disabled")),
   CCDESC_T("check_text",             N_("Check Text")),
