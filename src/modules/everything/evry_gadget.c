@@ -229,23 +229,35 @@ _button_cb_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__,
 	  {
 	     win = inst->win;
 	     bd = win->ewin->border;
-	     /* evry_hide(win, 0); */
 
-	     if (ev->flags == EVAS_BUTTON_DOUBLE_CLICK)
-	       {
-	     	  evry_hide(win, 0);
-	       }
-	     else
+	     if (!bd->focused)
 	       {
 	     	  e_border_show(bd);
 		  e_border_raise(bd);
 	     	  e_border_focus_set(bd, 1, 1);
+		  return;
 	       }
-	     return;
+	     else
+	       {
+	     	  evry_hide(win, 1);		  
+		  return;
+	       }
 	  }
 
+	/* hack to find out out if illume is running, dont grab if
+	   this is the case... */
+	int show_windowed = 0;
+	Eina_List *l;
+	E_Module *m;
+
+	EINA_LIST_FOREACH(e_module_list(), l, m)
+	     if (!strcmp(m->name, "illume2") && m->enabled)
+	       break;
+	
+	if (m) show_windowed = 1;
+
 	win = evry_show(e_util_zone_current_get(e_manager_current_get()),
-			0, inst->cfg->plugin, EINA_FALSE);
+			0, inst->cfg->plugin, !show_windowed);
 	if (!win) return;
 
 	ecore_x_netwm_window_type_set(win->ewin->evas_win,
@@ -298,13 +310,16 @@ _button_cb_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__,
 	if (win->ewin->y + ph > win->zone->h)
 	  e_win_move(win->ewin, win->ewin->x, win->zone->h - ph);
 
-
-	e_win_show(win->ewin);
-	bd = win->ewin->border;
-	e_border_focus_set(bd, 1, 1);
-	/* bd->client.netwm.state.skip_taskbar = 1; */
-	bd->client.netwm.state.skip_pager = 1;
-	bd->sticky = 1;
+	if (show_windowed)
+	  {
+	     e_win_show(win->ewin);
+	     bd = win->ewin->border;
+	     e_border_focus_set(bd, 1, 1);
+	     /* bd->client.netwm.state.skip_taskbar = 1; */
+	     bd->client.netwm.state.skip_pager = 1;
+	     bd->sticky = 1;
+	  }
+	
 	inst->win = win;
 
 	e_gadcon_locked_set(inst->gcc->gadcon, 1);
