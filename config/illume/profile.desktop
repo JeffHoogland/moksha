@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Touchscreen
-Name[fr]=Tactile
+Name[fr]=Écran tactile
 Name[pt]=Ecrã táctil
 Icon=icon.png
 Comment=EXPERIMENTAL!<br>Configuration set up to work best with touchscreen<br>phones, tablets and similar devices.
