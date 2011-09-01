@@ -696,11 +696,11 @@ _adv_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
           }
         else if (cfdata->all_this_desk_screen == E_CONFIG_WALLPAPER_DESK)
           {
-             e_bg_del(z->container->num, z->id, d->x, d->y);
+             e_bg_del(z->container->num, z->num, d->x, d->y);
              e_bg_del(z->container->num, -1, d->x, d->y);
-             e_bg_del(-1, z->id, d->x, d->y);
+             e_bg_del(-1, z->num, d->x, d->y);
              e_bg_del(-1, -1, d->x, d->y);
-             e_bg_add(z->container->num, z->id, d->x, d->y, cfdata->bg);
+             e_bg_add(z->container->num, z->num, d->x, d->y, cfdata->bg);
           }
         else if (cfdata->all_this_desk_screen == E_CONFIG_WALLPAPER_SCREEN)
           {
@@ -710,7 +710,7 @@ _adv_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 
                   cfbg = l->data;
                   if ((cfbg->container == (int)z->container->num) &&
-                      (cfbg->zone == z->id))
+                      (cfbg->zone == z->num))
                     fl = eina_list_append(fl, cfbg);
                }
              while (fl)
@@ -722,7 +722,7 @@ _adv_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
                            cfbg->desk_y);
                   fl = eina_list_remove_list(fl, fl);
                }
-             e_bg_add(z->container->num, z->id, -1, -1, cfdata->bg);
+             e_bg_add(z->container->num, z->num, -1, -1, cfdata->bg);
           }
      }
    e_bg_update();
