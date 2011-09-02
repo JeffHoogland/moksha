@@ -7837,8 +7837,10 @@ _e_border_eval(E_Border *bd)
 
    if ((bd->take_focus) || (bd->want_focus))
      {
+        bd->take_focus = 0;
         if ((e_config->focus_setting == E_FOCUS_NEW_WINDOW) || (bd->want_focus))
           {
+	     bd->want_focus = 0;
              e_border_focus_set_with_pointer(bd);
           }
         else if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DIALOG)
@@ -7867,8 +7869,6 @@ _e_border_eval(E_Border *bd)
              if (!bd2)
                e_border_focus_set_with_pointer(bd);
           }
-        bd->want_focus = 0;
-        bd->take_focus = 0;
      }
 
    if (bd->need_maximize)
