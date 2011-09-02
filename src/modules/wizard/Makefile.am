@@ -31,7 +31,7 @@ data/desktop/tmp.desktop
 # e-module-$(MODULE).edj 
 # module.desktop
 
-EXTRA_DIST = $(files_DATA) $(desks_DATA)
+EXTRA_DIST = $(files_DATA) $(desks_DATA) $(favs_DATA) $(desktop_DATA)
 
 # the module .so file
 INCLUDES               = -I. \

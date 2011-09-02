@@ -85,6 +85,7 @@ everything_box.png \
 outline.png \
 everything_item_bg.png \
 exclam.png \
+favorites.png \
 frame_1.png \
 frame_2.png \
 gadman_border.png \
@@ -352,6 +353,7 @@ pointer.png \
 radio_base.png \
 radio_on.png \
 radio_sel.png \
+refresh.png \
 sb_runnerh.png \
 sb_runnerv.png \
 shelf_alt_bg.png \
