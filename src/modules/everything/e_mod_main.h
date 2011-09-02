@@ -45,6 +45,14 @@ struct _Evry_Window
   Eina_Bool grab;
 
   Evry_State *state_clearing;
+
+  struct
+  {
+      void (*hide) (Evry_Window *win, int finished);
+  } func;    
+
+  /* only to be used by creator of win */
+  void *data;
 };
 
 struct _Evry_Selector
@@ -226,9 +234,9 @@ void  evry_util_file_detail_set(Evry_Item_File *file);
 int   evry_util_module_config_check(const char *module_name, int conf, int epoch, int version);
 Evas_Object *evry_util_icon_get(Evry_Item *it, Evas *e);
 int   evry_util_plugin_items_add(Evry_Plugin *p, Eina_List *items, const char *input, int match_detail, int set_usage);
-int   evry_items_sort_func(const void *data1, const void *data2);
 void  evry_item_changed(Evry_Item *it, int change_icon, int change_selected);
 char *evry_util_md5_sum(const char *str);
+void evry_util_items_sort(Eina_List **items, int flags);
 
 const char *evry_file_path_get(Evry_Item_File *file);
 const char *evry_file_url_get(Evry_Item_File *file);

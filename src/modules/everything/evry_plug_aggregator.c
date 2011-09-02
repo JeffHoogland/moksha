@@ -3,6 +3,7 @@
 //TODO min input for items not in history
 
 #define MAX_ITEMS 50
+#define MAX_PLUGIN 15
 
 typedef struct _Plugin Plugin;
 
@@ -36,8 +37,8 @@ _fetch(Evry_Plugin *plugin, const char *input)
    if ((eina_list_count(sel->states) == 1))
      top_level = 1;
 
-   /* get current items' context,
-    * which is the previous selectors selected item */
+   /* get current items' context, which is
+    * the previous selectors selected item */
    if (sel == sels[0])
      {	
 	subj_sel = 1;
@@ -134,7 +135,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 		    evry_history_item_usage_set(it, input, context);
 		  if (it->fuzzy_match == 0)
 		    it->fuzzy_match = evry_fuzzy_match(it->label, input);
-
+	
 		  items = eina_list_append(items, it);
 	       }
 	  }
@@ -178,24 +179,8 @@ _fetch(Evry_Plugin *plugin, const char *input)
    if (!lp && !items)
      return 0;
 
-   /* if there is only one plugin append all items */
-   if (lp && !lp->next)
-     {
-	pp = eina_list_data_get(lp);
-
-	EINA_LIST_FOREACH(pp->items, l, it)
-	  {
-	     if (it->usage >= 0)
-	       evry_history_item_usage_set(it, input, context);
-
-	     if (it->fuzzy_match == 0)
-	       it->fuzzy_match = evry_fuzzy_match(it->label, input);
-
-	     items = eina_list_append(items, it);
-	  }
-     }
    /* if there is input append all items that match */
-   else if (input)
+   if (input)
      {
        EINA_LIST_FOREACH(lp, l, pp)
 	  {
@@ -218,15 +203,17 @@ _fetch(Evry_Plugin *plugin, const char *input)
    /* no input: append all items that are in history */
    else
      {
-       EINA_LIST_FOREACH(lp, l, pp)
+	EINA_LIST_FOREACH(lp, l, pp)
 	 {
-	   EINA_LIST_FOREACH(pp->items, ll, it)
+	    int cnt = 1;
+	    EINA_LIST_FOREACH(pp->items, ll, it)
 	     {
 		if ((!subj_sel) || (it->usage < 0) || 
 		    (evry_history_item_usage_set(it, input, context)))
 		 {
 		    it->fuzzy_match = 0;
 		    items = eina_list_append(items, it);
+		    if (++cnt > MAX_PLUGIN) break;
 		 }
 	     }
 	 }
@@ -246,8 +233,8 @@ _fetch(Evry_Plugin *plugin, const char *input)
    	  }
      }
 
-   items = eina_list_sort(items, -1, evry_items_sort_func);
-
+   evry_util_items_sort(&items, 0 /* !input */);
+   
    EINA_LIST_FOREACH(items, l, it)
      {
 	/* remove duplicates provided by different plugins. e.g.

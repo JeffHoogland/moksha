@@ -251,58 +251,70 @@ evry_fuzzy_match_sort(Eina_List *items)
    return eina_list_sort(items, -1, _evry_fuzzy_match_sort_cb);
 }
 
-int
-evry_items_sort_func(const void *data1, const void *data2)
+
+static int _sort_flags = 0;
+
+static int
+_evry_items_sort_func(const void *data1, const void *data2)
 {
    const Evry_Item *it1 = data1;
    const Evry_Item *it2 = data2;
 
-   if ((it1->type == EVRY_TYPE_ACTION ||
-	it1->subtype == EVRY_TYPE_ACTION) &&
-       (it2->type == EVRY_TYPE_ACTION ||
-	it2->subtype == EVRY_TYPE_ACTION))
+   if (!((!_sort_flags) &&
+	 (it1->type == EVRY_TYPE_ACTION) &&
+	 (it2->type == EVRY_TYPE_ACTION)))
      {
-	const Evry_Action *act1 = data1;
-	const Evry_Action *act2 = data2;
+	/* only sort actions when there is input otherwise show default order */
 
-	/* sort actions that match the specific type before
-	   those matching general type */
-	if (act1->it1.item && act2->it1.item)
+	if (((it1->type == EVRY_TYPE_ACTION) || (it1->subtype == EVRY_TYPE_ACTION)) &&
+	    ((it2->type == EVRY_TYPE_ACTION) || (it2->subtype == EVRY_TYPE_ACTION)))
 	  {
-	     if ((act1->it1.type == act1->it1.item->type) &&
-		 (act2->it1.type != act2->it1.item->type))
-	       return -1;
+	     const Evry_Action *act1 = data1;
+	     const Evry_Action *act2 = data2;
 
-	     if ((act1->it1.type != act1->it1.item->type) &&
-		 (act2->it1.type == act2->it1.item->type))
-	       return 1;
-	  }
+	     /* sort actions that match the specific type before
+		those matching general type */
+	     if (act1->it1.item && act2->it1.item)
+	       {
+		  if ((act1->it1.type == act1->it1.item->type) &&
+		      (act2->it1.type != act2->it1.item->type))
+		    return -1;
 
-	/* sort context specific actions before
-	   general actions */
-	if (act1->remember_context)
-	  {
-	     if (!act2->remember_context)
-	       return -1;
-	  }
-	else
-	  {
-	     if (act2->remember_context)
-	       return 1;
+		  if ((act1->it1.type != act1->it1.item->type) &&
+		      (act2->it1.type == act2->it1.item->type))
+		    return 1;
+	       }
+
+	     /* sort context specific actions before
+		general actions */
+	     if (act1->remember_context)
+	       {
+		  if (!act2->remember_context)
+		    return -1;
+	       }
+	     else
+	       {
+		  if (act2->remember_context)
+		    return 1;
+	       }
 	  }
      }
+   
+   if (_sort_flags)
+     {
+	/* when there is no input sort items with higher
+	 * plugin priority first */
+	if (it1->type != EVRY_TYPE_ACTION &&
+	    it2->type != EVRY_TYPE_ACTION)
+	  {
+	     int prio1 = it1->plugin->config->priority;
+	     int prio2 = it2->plugin->config->priority;
 
-   /* if (it1->type == EVRY_TYPE_PLUGIN &&
-    *     it2->type != EVRY_TYPE_PLUGIN)
-    *   {
-    * 	return (it1->usage > it2->usage ? -1 : 1);
-    *   }
-    * else if (it2->type == EVRY_TYPE_PLUGIN &&
-    * 	    it1->type != EVRY_TYPE_PLUGIN)
-    *   {
-    * 	return (it1->usage > it2->usage ? -1 : 1);
-    *   } */
-
+	     if (prio1 - prio2)
+	       return (prio1 - prio2);
+	  }
+     }
+   
    /* sort items which match input or which
       match much better first */
    if (it1->fuzzy_match > 0 || it2->fuzzy_match > 0)
@@ -349,6 +361,14 @@ evry_items_sort_func(const void *data1, const void *data2)
    return strcasecmp(it1->label, it2->label);
 }
 
+void
+evry_util_items_sort(Eina_List **items, int flags)
+{
+   _sort_flags = flags;
+   *items = eina_list_sort(*items, -1, _evry_items_sort_func);   
+   _sort_flags = 0;
+}
+
 int
 evry_util_plugin_items_add(Evry_Plugin *p, Eina_List *items, const char *input,
 		      int match_detail, int set_usage)
@@ -384,7 +404,7 @@ evry_util_plugin_items_add(Evry_Plugin *p, Eina_List *items, const char *input,
 	  p->items = eina_list_append(p->items, it);
      }
 
-   p->items = eina_list_sort(p->items, -1, evry_items_sort_func);
+   p->items = eina_list_sort(p->items, -1, _evry_items_sort_func);
 
    return !!(p->items);
 }

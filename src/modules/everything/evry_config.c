@@ -512,6 +512,9 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdat
 
    of = e_widget_framelist_add(e, _("Sorting"), 0);
    rg = e_widget_radio_group_new(&cfdata->history_sort_mode);
+   ob = e_widget_radio_add(e, _("No Sorting"), 3, rg);
+   e_widget_radio_toggle_set(ob, (cfdata->history_sort_mode == 3));
+   e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(e, _("By usage"), 0, rg);
    e_widget_radio_toggle_set(ob, (cfdata->history_sort_mode == 0));
    e_widget_framelist_object_append(of, ob);

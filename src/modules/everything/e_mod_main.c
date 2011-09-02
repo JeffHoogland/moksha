@@ -30,7 +30,6 @@ EAPI E_Module_Api e_modapi =
     "Everything"
   };
 
-
 EAPI void *
 e_modapi_init(E_Module *m)
 {
@@ -120,7 +119,6 @@ e_modapi_init(E_Module *m)
    SET(util_plugin_items_add);
    SET(util_md5_sum);
    SET(util_icon_get);
-   SET(items_sort_func);
    SET(item_changed);
    SET(file_path_get);
    SET(file_url_get);

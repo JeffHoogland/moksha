@@ -362,7 +362,14 @@ evry_history_item_usage_set(Evry_Item *it, const char *input, const char *ctxt)
    History_Item *hi = NULL;
    Eina_List *l;
    int rem_ctxt = 1;
-   it->usage = 0.0;
+
+   if (evry_conf->history_sort_mode == 3)
+     {	
+	it->usage = -1;
+	return 1;
+     }
+   else
+     it->usage = 0.0;
 
    if ((!it->plugin->history) && (!CHECK_TYPE(it, EVRY_TYPE_PLUGIN)))
      return 0;

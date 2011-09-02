@@ -83,7 +83,7 @@ static void _animator_del(Evas_Object *obj);
 static Eina_Bool _animator(void *data);
 
 static void
-_thumb_gen(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
+_cb_thumb_gen(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    Evas_Coord w, h;
    Item *it = data;
@@ -103,6 +103,18 @@ _thumb_gen(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 
    if (it->image) evas_object_del(it->image);
    it->image = NULL;
+}
+
+static void
+_cb_preload(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
+{
+   Item *it = data;
+
+   if (!it->frame) return;
+   printf("preload callback!!!!\n");
+
+   edje_object_part_swallow(it->frame, "e.swallow.icon", it->image);
+   /* evas_object_show(it->image); */
 }
 
 static int
@@ -309,10 +321,15 @@ _item_show(View *v, Item *it, Evas_Object *list)
 	     else
 	       it->max_w = -1;
 
-	     edje_object_part_swallow(it->frame, "e.swallow.icon", it->image);
-
-	     if (!e_icon_preload_get(it->image))
-	       evas_object_show(it->image);
+	     if (0 && e_icon_preload_get(it->image) && !evas_object_visible_get(it->image))
+	       {
+		  evas_object_smart_callback_add(it->image, "preloaded", _cb_preload, it);
+	       }
+	     else
+	       {
+		  edje_object_part_swallow(it->frame, "e.swallow.icon", it->image);
+		  evas_object_show(it->image);
+	       }
 	  }
 	else it->have_thumb = EINA_TRUE;
      }
@@ -328,7 +345,7 @@ _item_show(View *v, Item *it, Evas_Object *list)
 
 	GET_FILE(file, it->item);
 
-	evas_object_smart_callback_add(it->thumb, "e_thumb_gen", _thumb_gen, it);
+	evas_object_smart_callback_add(it->thumb, "e_thumb_gen", _cb_thumb_gen, it);
 
 	e_thumb_icon_size_set(it->thumb, it->w, it->h);
 

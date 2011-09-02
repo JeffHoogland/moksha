@@ -3,7 +3,7 @@
 
 #include "evry_types.h"
 
-#define EVRY_API_VERSION     28
+#define EVRY_API_VERSION     29
 
 #define EVRY_ACTION_OTHER    0
 #define EVRY_ACTION_FINISHED 1
@@ -111,7 +111,6 @@ struct _Evry_API
   int   (*util_plugin_items_add)(Evry_Plugin *p, Eina_List *items, const char *input, int match_detail, int set_usage);
   char *(*util_md5_sum)(const char *str);
   Evas_Object *(*util_icon_get)(Evry_Item *it, Evas *e);
-  int   (*items_sort_func)(const void *data1, const void *data2);
 
   const char *(*file_path_get)(Evry_Item_File *file);
   const char *(*file_url_get)(Evry_Item_File *file);

@@ -804,6 +804,14 @@ _recentf_files_filter(Plugin *p)
 	if (p->dirs_only && !it->browseable)
 	  continue;
 
+	if (!p->input)
+	  {
+	     if (!it->browseable)
+	       it->priority = 1;
+	     new = eina_list_append(new, it);
+	     continue;
+	  }
+
 	if (it->fuzzy_match <= 0)
 	  {
 	     if ((match = evry->fuzzy_match(it->label, p->input)) ||
@@ -815,7 +823,7 @@ _recentf_files_filter(Plugin *p)
 	     DBG("check match %d %s", it->fuzzy_match, it->label);
 	  }
 
-	if (_conf->show_recent || it->fuzzy_match)
+	if (it->fuzzy_match)
 	  {
 	     if (!it->browseable)
 	       it->priority = 1;
