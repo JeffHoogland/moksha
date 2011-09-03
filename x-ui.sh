@@ -191,7 +191,7 @@ if [ ! -z "$TEST_HOME" ]; then
     mkdir -p "$TEST_HOME"
 fi
 
-unset E_RESTART E_START E_IPC_SOCKET E_START_TIME E_CONF_PROFILE
+unset E_RESTART E_START E_IPC_SOCKET E_START_TIME E_CONF_PROFILE E_PREFIX
 
 if [ $VERBOSE -ne 0 ]; then
     cat <<EOF
