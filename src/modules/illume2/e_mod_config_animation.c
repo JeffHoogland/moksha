@@ -17,7 +17,7 @@ e_mod_illume_config_animation_show(E_Container *con, const char *params __UNUSED
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
 
-   if (e_config_dialog_find("E", "_config_illume_animation_settings")) return;
+   if (e_config_dialog_find("E", "illume/animation")) return;
 
    v = E_NEW(E_Config_Dialog_View, 1);
    if (!v) return;
@@ -30,7 +30,7 @@ e_mod_illume_config_animation_show(E_Container *con, const char *params __UNUSED
    v->scroll = 1;
 
    cfd = e_config_dialog_new(con, _("Animation Settings"), "E", 
-                             "_config_illume_animation_settings", 
+                             "illume/animation", 
                              "enlightenment/animation_settings", 0, v, NULL);
    if (!cfd) return;
 

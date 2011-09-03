@@ -24,7 +24,7 @@ e_mod_illume_config_windows_show(E_Container *con, const char *params __UNUSED__
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
 
-   if (e_config_dialog_find("E", "_config_illume_windows_settings")) return;
+   if (e_config_dialog_find("E", "illume/windows")) return;
 
    v = E_NEW(E_Config_Dialog_View, 1);
    if (!v) return;
@@ -36,7 +36,7 @@ e_mod_illume_config_windows_show(E_Container *con, const char *params __UNUSED__
    v->normal_win = 1;
    v->scroll = 1;
    cfd = e_config_dialog_new(con, _("Window Settings"), "E", 
-                             "_config_illume_windows_settings", 
+                             "illume/windows", 
                              "preferences-system-windows", 0, v, NULL);
    if (!cfd) return;
    e_dialog_resizable_set(cfd->dia, 1);

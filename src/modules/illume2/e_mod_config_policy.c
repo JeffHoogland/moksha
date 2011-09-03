@@ -20,7 +20,7 @@ e_mod_illume_config_policy_show(E_Container *con, const char *params __UNUSED__)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
 
-   if (e_config_dialog_find("E", "_config_illume_policy")) return;
+   if (e_config_dialog_find("E", "illume/policy")) return;
 
    v = E_NEW(E_Config_Dialog_View, 1);
    if (!v) return;
@@ -31,7 +31,7 @@ e_mod_illume_config_policy_show(E_Container *con, const char *params __UNUSED__)
    v->basic_only = 1;
    v->normal_win = 1;
    v->scroll = 1;
-   cfd = e_config_dialog_new(con, _("Policy"), "E", "_config_illume_policy", 
+   cfd = e_config_dialog_new(con, _("Policy"), "E", "illume/policy", 
                              "enlightenment/policy", 0, v, NULL);
    if (!cfd) return;
    e_dialog_resizable_set(cfd->dia, 1);
