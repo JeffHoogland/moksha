@@ -53,8 +53,6 @@ static const E_Gadcon_Client_Class _gadcon_class =
     E_GADCON_CLIENT_STYLE_PLAIN
 };
 
-static int uuid = 0;
-
 static E_Gadcon_Client *
 _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 {
@@ -145,24 +143,12 @@ _gc_icon(E_Gadcon_Client_Class *client_class __UNUSED__, Evas *evas __UNUSED__)
 static Gadget_Config *
 _conf_item_get(const char *id)
 {
-   Eina_List *l = NULL;
-   Gadget_Config *ci = NULL;
-   char buf[128];
+   Gadget_Config *ci;
 
-   if (!id)
-     {
-        snprintf(buf, sizeof(buf), "%s.%d", _gadcon_class.name, ++uuid);
-        id = buf;
-     }
-   else
-     {
-        uuid++;
-	EINA_LIST_FOREACH(evry_conf->gadgets, l, ci)
-	  if ((ci->id) && (!strcmp(ci->id, id))) return ci;
-     }
+   GADCON_CLIENT_CONFIG_GET(Gadget_Config, evry_conf->gadgets, _gadcon_class, id);
+
    ci = E_NEW(Gadget_Config, 1);
    ci->id = eina_stringshare_add(id);
-   /* ci->plugin = eina_stringshare_add("Start"); */
 
    evry_conf->gadgets = eina_list_append(evry_conf->gadgets, ci);
 
@@ -203,7 +189,7 @@ _cb_menu_post(void *data, E_Menu *m __UNUSED__)
    Instance *inst = data;
 
    if (!inst->menu) return;
-   e_object_del(E_OBJECT(inst->menu));
+   /* e_object_del(E_OBJECT(inst->menu)); */
    inst->menu = NULL;
 }
 
