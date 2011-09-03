@@ -53,7 +53,6 @@ static E_Config_DD *conf_edd = NULL;
 static E_Config_DD *conf_item_edd = NULL;
 static Eina_List *clock_instances = NULL;
 static E_Action *act = NULL;
-static int uuid = 0;
 static Ecore_Timer *update_today = NULL;
 
 static void
@@ -679,21 +678,10 @@ _gc_id_new(E_Gadcon_Client_Class *client_class __UNUSED__)
 static Config_Item *
 _conf_item_get(const char *id)
 {
-   Eina_List *l = NULL;
-   Config_Item *ci = NULL;
-   char buf[128];
+   Config_Item *ci;
 
-   if (!id)
-     {
-        snprintf(buf, sizeof(buf), "%s.%d", _gadcon_class.name, ++uuid);
-        id = buf;
-     }
-   else
-     {
-        uuid++;
-	EINA_LIST_FOREACH(clock_config->items, l, ci)
-	  if ((ci->id) && (!strcmp(ci->id, id))) return ci;
-     }
+   GADCON_CLIENT_CONFIG_GET(Config_Item, clock_config->items, _gadcon_class, id);
+
    ci = E_NEW(Config_Item, 1);
    ci->id = eina_stringshare_add(id);
    ci->weekend.start = 6;

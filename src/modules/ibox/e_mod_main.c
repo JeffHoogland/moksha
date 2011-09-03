@@ -117,8 +117,6 @@ static Config_Item *_ibox_config_item_get(const char *id);
 static E_Config_DD *conf_edd = NULL;
 static E_Config_DD *conf_item_edd = NULL;
 
-static int uuid = 0;
-
 Config *ibox_config = NULL;
 
 static E_Gadcon_Client *
@@ -1229,25 +1227,10 @@ _ibox_cb_event_desk_show(void *data __UNUSED__, int type __UNUSED__, void *event
 static Config_Item *
 _ibox_config_item_get(const char *id)
 {
-   Eina_List *l;
    Config_Item *ci;
-   char buf[128];
 
-   if (!id)
-     {
-	snprintf(buf, sizeof(buf), "%s.%d", _gadcon_class.name, ++uuid);
-	id = buf;
-     }
-   else
-     {
-	/* Find old config */
-	for (l = ibox_config->items; l; l = l->next)
-	  {
-	     ci = l->data;
-	     if ((ci->id) && (!strcmp(ci->id, id)))
-	       return ci;
-	  }
-     }
+   GADCON_CLIENT_CONFIG_GET(Config_Item, ibox_config->items, _gadcon_class, id);
+
    ci = E_NEW(Config_Item, 1);
    ci->id = eina_stringshare_add(id);
    ci->show_label = 0;
@@ -1342,56 +1325,6 @@ e_modapi_init(E_Module *m)
 	ci->show_desk = 0;
 	ci->icon_label = 0;
 	ibox_config->items = eina_list_append(ibox_config->items, ci);
-     }
-   else
-     {
-    Eina_List *removes = NULL;
-	Eina_List *l;
-	
-	for (l = ibox_config->items; l; l = l->next)
-	  {
-	     Config_Item *ci = l->data;
-	     if (!ci->id)
-	       removes = eina_list_append(removes, ci);
-	     else
-	       {
-		  Eina_List *ll;
-		  
-		  for (ll = l->next; ll; ll = ll->next)
-		    {
-		       Config_Item *ci2 = ll->data;
-		       if ((ci2->id) && (!strcmp(ci->id, ci2->id)))
-			 {
-			    removes = eina_list_append(removes, ci);
-			    break;
-			 }
-		    }
-	       }
-	  }
-	while (removes)
-	  {
-	     Config_Item *ci = removes->data;
-	     removes = eina_list_remove_list(removes, removes);
-	     ibox_config->items = eina_list_remove(ibox_config->items, ci);
-	     if (ci->id) eina_stringshare_del(ci->id);
-	     free(ci);
-	  }
-	for (l = ibox_config->items; l; l = l->next)
-	  {
-	     Config_Item *ci = l->data;
-	     if (ci->id)
-	       {
-		  const char *p;
-		  p = strrchr(ci->id, '.');
-		  if (p)
-		    {
-		       int id;
-		       
-		       id = atoi(p + 1);
-		       if (id > uuid) uuid = id;
-		    }
-	       }
-	  }
      }
    
    ibox_config->module = m;
