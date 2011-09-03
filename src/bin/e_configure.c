@@ -327,7 +327,7 @@ _e_configure_efreet_desktop_update(void)
 	label = NULL;
 	if (!eina_list_data_find(system_desktops, desktop))
           {
-             /* settings desktop but not in system -> put in preferened */
+             /* settings desktop but not in system -> put in preferences */
              dopref = 1;
           }
 	if (desktop->x)
