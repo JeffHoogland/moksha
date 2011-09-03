@@ -95,7 +95,7 @@ _policy_border_move(E_Border *bd, int x, int y)
    /* NB: Seems something similar happens with elementary windows also
     * so for now just set bd->placed on all windows until this
     * gets investigated */
-   bd->placed = 1;
+   /* bd->placed = 1; */
    bd->x = x;
    bd->y = y;
    bd->changes.pos = 1;
@@ -121,7 +121,7 @@ _policy_border_hide_below(E_Border *bd)
    int pos = 0, i;
 
    return;
-   
+
    //	printf("Hide Borders Below: %s %d %d\n",
    //	       bd->client.icccm.name, bd->x, bd->y);
 
@@ -362,10 +362,10 @@ _border_geometry_set(E_Border *bd, int x, int y, int w, int h, int layer)
 {
    if ((bd->w != w) || (bd->h != h))
      _policy_border_resize(bd, w, h);
-   
+
    if ((bd->x != x) || (bd->y != y))
      _policy_border_move(bd, x, y);
-   
+
    if (bd->layer != layer) e_border_layer_set(bd, layer);
 }
 
@@ -445,16 +445,11 @@ _policy_zone_layout_keyboard(E_Border *bd, E_Illume_Config_Zone *cz)
      layer = POL_KEYBOARD_LAYER;
 
    _border_geometry_set(bd, x, ny, w, cz->vkbd.size, layer);
-
 }
 
 static void
 _policy_zone_layout_home_single(E_Border *bd, E_Illume_Config_Zone *cz)
 {
-   /* int ny, nh; */
-   /* int indsz = 0, sftsz = 0; */
-   /* E_Border *ind, *sft; */
-
    if ((!bd) || (!cz) || (!bd->visible)) return;
 
    ZONE_GEOMETRY;
@@ -462,41 +457,79 @@ _policy_zone_layout_home_single(E_Border *bd, E_Illume_Config_Zone *cz)
    _border_geometry_set(bd, x, y, w, h, POL_HOME_LAYER);
 }
 
+
+#define MIN_HEIGHT 100
+
+static Eina_Bool
+_policy_layout_app_check(E_Border *bd)
+{
+   if (!bd)
+     return EINA_FALSE;
+
+   if (!bd->visible)
+     return EINA_FALSE;
+
+   if ((bd->desk != e_desk_current_get(bd->zone)) && (!bd->sticky))
+     return EINA_FALSE;
+
+   return EINA_TRUE;
+}
+
+
 static void
-_policy_zone_layout_fullscreen(E_Border *bd)
+_policy_keyboard_restrict(E_Border *bd, int *h)
 {
    int kh;
 
-   if (!bd) return;
+   if (bd->client.vkbd.state > ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF)
+     {
+	e_illume_keyboard_safe_app_region_get(bd->zone, NULL, NULL, NULL, &kh);
+	kh -= bd->zone->h - *h;
+	if ((kh < *h) && (kh > MIN_HEIGHT))
+	  *h = kh;
+     }
+}
+
+static void
+_policy_indicator_restrict(E_Illume_Config_Zone *cz, int *y, int *h)
+{
+   if ((cz->indicator.size) && (*y < cz->indicator.size))
+     {
+	*h -= cz->indicator.size;
+	*y = cz->indicator.size;
+     }
+}
+
+static void
+_policy_softkey_restrict(E_Illume_Config_Zone *cz, int *y, int *h)
+{
+   if ((cz->softkey.size) && ((*y + *h) > cz->softkey.size))
+     *h -= (*y + *h) - cz->softkey.size;
+}
+
+static void
+_policy_zone_layout_fullscreen(E_Border *bd)
+{
+   if (!_policy_layout_app_check(bd)) return;
 
    ZONE_GEOMETRY;
 
-   e_illume_keyboard_safe_app_region_get(bd->zone, NULL, NULL, NULL, &kh);
-   if (kh < h) h = kh;
 
-   _border_geometry_set(bd, x, y, w, kh, POL_FULLSCREEN_LAYER);
+   _policy_keyboard_restrict(bd, &h);
+
+   _border_geometry_set(bd, x, y, w, h, POL_FULLSCREEN_LAYER);
 }
 
 static void
 _policy_zone_layout_app_single(E_Border *bd, E_Illume_Config_Zone *cz)
 {
-   int ky, kh, ny, nh;
-
-   if ((!bd) || (!cz)) return;
-   if ((!bd->new_client) && (!bd->visible)) return;
+   if (!_policy_layout_app_check(bd)) return;
 
    ZONE_GEOMETRY;
 
-   e_illume_keyboard_safe_app_region_get(bd->zone, NULL, &ky, NULL, &kh);
-
-   if (kh >= h)
-     nh = (kh - cz->indicator.size - cz->softkey.size);
-   else
-     nh = (kh - cz->indicator.size);
-   if (h > nh) h = nh;
-   
-   ny = (bd->zone->y + cz->indicator.size);
-   if (y < ny) y = ny;
+   _policy_keyboard_restrict(bd, &h);
+   _policy_indicator_restrict(cz, &y, &h);
+   _policy_softkey_restrict(cz, &y, &h);
 
    _border_geometry_set(bd, x, y, w, h, POL_APP_LAYER);
 }
@@ -505,51 +538,25 @@ static void
 _policy_zone_layout_app_dual_top(E_Border *bd, E_Illume_Config_Zone *cz)
 {
    E_Border *bd2;
-   int kh, ny, nh;
 
-   if ((!bd) || (!cz)) return;
-   if ((!bd->new_client) && (!bd->visible)) return;
+   if (!_policy_layout_app_check(bd)) return;
 
    ZONE_GEOMETRY;
 
-   ny = (bd->zone->y + cz->indicator.size);
+   _policy_keyboard_restrict(bd, &h);
+   _policy_indicator_restrict(cz, &y, &h);
+   _policy_softkey_restrict(cz, &y, &h);
 
-   if ((bd->focused) &&
-       (bd->client.vkbd.state > ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF))
-     {
-	e_illume_keyboard_safe_app_region_get(bd->zone, NULL, NULL, NULL, &kh);
-	nh = (kh - cz->indicator.size);
-     }
-   else
-     {
-	nh = ((bd->zone->h - cz->indicator.size - cz->softkey.size) / 2);
-     }
-
-   /* see if there is a border already there. if so, check placement based on
-    * virtual keyboard usage */
-   bd2 = e_illume_border_at_xy_get(bd->zone, x, ny);
+   bd2 = e_illume_border_at_xy_get(bd->zone, x, y);
    if ((bd2) && (bd2 != bd))
      {
-	/* does this border need keyboard ? */
-	if ((bd->focused) &&
-	    (bd->client.vkbd.state > ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF))
-	  {
-	     int hh;
-
-	     /* move existing border to bottom if needed */
-	     hh = ((h - cz->indicator.size - cz->softkey.size) / 2);
-	     if ((bd2->x != x) || (bd2->y != (ny + hh)))
-	       _policy_border_move(bd2, x, (ny + hh));
-
-	     /* resize existing border if needed */
-	     if ((bd2->w != w) || (bd2->h != hh))
-	       _policy_border_resize(bd2, bd2->zone->w, hh);
-	  }
+	if ((bd->focused) && (bd->client.vkbd.state > ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF))
+	  _border_geometry_set(bd2, x, h/2 + y, w, h/2, POL_APP_LAYER);
 	else
-	  ny = bd2->y + nh;
+	  y += h/2;
      }
 
-   _border_geometry_set(bd, x, ny, w, nh, POL_APP_LAYER);
+   _border_geometry_set(bd, x, y, w, h/2, POL_APP_LAYER);
 }
 
 static void
@@ -558,8 +565,7 @@ _policy_zone_layout_app_dual_custom(E_Border *bd, E_Illume_Config_Zone *cz)
    E_Border *app;
    int iy, ny, nh;
 
-   if ((!bd) || (!cz)) return;
-   if ((!bd->new_client) && (!bd->visible)) return;
+   if (!_policy_layout_app_check(bd)) return;
 
    ZONE_GEOMETRY;
 
@@ -584,8 +590,7 @@ _policy_zone_layout_app_dual_left(E_Border *bd, E_Illume_Config_Zone *cz, Eina_B
    E_Border *bd2;
    int ky, kh, nx, nw;
 
-   if ((!bd) || (!cz)) return;
-   if ((!bd->new_client) && (!bd->visible)) return;
+   if (!_policy_layout_app_check(bd)) return;
 
    ZONE_GEOMETRY;
 
@@ -605,7 +610,7 @@ _policy_zone_layout_app_dual_left(E_Border *bd, E_Illume_Config_Zone *cz, Eina_B
 	bd2 = e_illume_border_at_xy_get(bd->zone, nx, y);
 	if ((bd2) && (bd != bd2)) nx = x + nw;
      }
-   
+
    _border_geometry_set(bd, nx, y, nw, kh, POL_APP_LAYER);
 }
 
@@ -615,7 +620,9 @@ _policy_zone_layout_dialog(E_Border *bd, E_Illume_Config_Zone *cz)
    E_Border *parent;
    int mw, mh, nx, ny;
 
+   /* if (!_policy_layout_app_check(bd)) return; */
    if ((!bd) || (!cz)) return;
+   printf("place dialog %d - %dx%d\n", bd->placed, bd->w, bd->h);
 
    if (bd->placed)
      return;
@@ -625,8 +632,19 @@ _policy_zone_layout_dialog(E_Border *bd, E_Illume_Config_Zone *cz)
    mw = bd->w;
    mh = bd->h;
 
-   if (mw > w) mw = w;
-   if (mh > h) mh = h;
+   if (e_illume_border_is_fixed_size(bd))
+     {
+	if (mw > w) mw = w;
+	if (mh > h) mh = h;
+     }
+   else
+     {
+	if (w * 2/3 > bd->w)
+	  mw = w * 2/3;
+
+	if (h * 2/3 > bd->h)
+	  mh = h * 2/3;
+     }
 
    parent = e_illume_border_parent_get(bd);
 
@@ -644,9 +662,10 @@ _policy_zone_layout_dialog(E_Border *bd, E_Illume_Config_Zone *cz)
 	ny = (parent->y + ((parent->h - mh) / 2));
      }
 
-   _border_geometry_set(bd, nx, ny, mw, mh, POL_DIALOG_LAYER);
-
    bd->placed = 1;
+   
+   _border_geometry_set(bd, nx, ny, mw, mh, POL_DIALOG_LAYER);
+   printf("set geom %d %d\n", mw, mh);
 }
 
 static void
@@ -660,71 +679,12 @@ _policy_zone_layout_splash(E_Border *bd, E_Illume_Config_Zone *cz)
 static void
 _policy_zone_layout_conformant_single(E_Border *bd, E_Illume_Config_Zone *cz)
 {
-   if ((!bd) || (!cz)) return;
-   if ((!bd->new_client) && (!bd->visible)) return;
+   if (!_policy_layout_app_check(bd)) return;
 
    _border_geometry_set(bd, bd->zone->x, bd->zone->y,
 			bd->zone->w, bd->zone->h,
 			POL_CONFORMANT_LAYER);
 }
-
-#if 0
-static void
-_policy_zone_layout_conformant_dual_top(E_Border *bd, E_Illume_Config_Zone *cz)
-{
-   int nh, ny;
-
-   /* according to the docs I have, conformant windows are always on the
-    * bottom in dual-top mode */
-   if ((!bd) || (!cz)) return;
-   if ((!bd->new_client) && (!bd->visible)) return;
-
-
-   nh = ((bd->zone->h - cz->indicator.size - cz->softkey.size) / 2);
-   ny = (bd->zone->y + cz->indicator.size) + nh;
-   nh += cz->softkey.size;
-
-   _border_geometry_set(bd, bd->zone->x, ny,
-			bd->zone->w, nh,
-			POL_CONFORMANT_LAYER);
-}
-
-static void
-_policy_zone_layout_conformant_dual_custom(E_Border *bd, E_Illume_Config_Zone *cz)
-{
-   int iy, nh;
-
-   if ((!bd) || (!cz)) return;
-   if ((!bd->new_client) && (!bd->visible)) return;
-
-   ZONE_GEOMETRY;
-
-   e_illume_border_indicator_pos_get(bd->zone, NULL, &iy);
-
-   nh = ((bd->zone->y + bd->zone->h) - iy);
-
-   _border_geometry_set(bd, x, iy, w, nh, POL_CONFORMANT_LAYER);
-}
-
-
-static void
-_policy_zone_layout_conformant_dual_left(E_Border *bd, E_Illume_Config_Zone *cz)
-{
-   int nw, nx;
-
-   /* according to the docs I have, conformant windows are always on the
-    * left in dual-left mode */
-   if ((!bd) || (!cz)) return;
-   if ((!bd->new_client) && (!bd->visible)) return;
-
-   ZONE_GEOMETRY;
-
-   nw = w/2;
-   nx = x;
-
-   _border_geometry_set(bd, x, y, nw, h, POL_CONFORMANT_LAYER);
-}
-#endif
 
 #if 0
 typedef struct _App_Desk App_Desk;
@@ -744,7 +704,7 @@ static Eina_List *desks = NULL;
      EINA_LIST_FOREACH(_list, _l, _item)	\
        if (_match) break;			\
   }
-#endif    
+#endif
 
 
 /* policy functions */
@@ -764,6 +724,9 @@ _policy_border_add(E_Border *bd)
     * messages (or back messages to cycle focus) that should pertain just
     * to it's current zone */
    ecore_x_e_illume_zone_set(bd->client.win, bd->zone->black_win);
+
+   if (e_illume_border_is_keyboard(bd))
+     e_hints_window_sticky_set(bd, 1);
 
    /* ignore stolen borders. These are typically quickpanel or keyboards */
    if (bd->stolen) return;
@@ -787,31 +750,30 @@ _policy_border_add(E_Border *bd)
 		    e_illume_border_hide(sft);
 		  else if (!sft->visible)
 		    e_illume_border_show(sft);
-	       }   
+	       }
 	  }
      }
+
 
 #if 0
    if (bd->client.icccm.class)
      {
    	Eina_List *l;
    	App_Desk *d;
-   
+
    	EINA_LIST_FIND(desks, d, (d->class == bd->client.icccm.class));
-   
+
    	if (!d)
    	  {
    	     d = E_NEW(App_Desk, 1);
-   	     d->desk 
+   	     d->desk
    	  }
-   
+
    	d->borders = eina_list_append(d->borders, bd);
-   	e_border_desk_set(bd, d->desk); 
+   	e_border_desk_set(bd, d->desk);
      }
 #endif
-   
 
-   
    /* Add this border to our focus stack if it can accept or take focus */
    if ((bd->client.icccm.accepts_focus) || (bd->client.icccm.take_focus))
      _pol_focus_stack = eina_list_append(_pol_focus_stack, bd);
@@ -842,13 +804,12 @@ _policy_border_del(E_Border *bd)
 	/* try to get the Indicator on this zone */
 	if ((ind = e_illume_border_indicator_get(bd->zone)))
 	  {
-	     /* we have the indicator, show it if needed */
 	     if (!ind->visible) e_illume_border_show(ind);
 	  }
 	_policy_zone_layout_update(bd->zone);
      }
 
-   /* remove from our focus stack */
+   /* remove from focus stack */
    if ((bd->client.icccm.accepts_focus) || (bd->client.icccm.take_focus))
      _pol_focus_stack = eina_list_remove(_pol_focus_stack, bd);
 
@@ -856,7 +817,6 @@ _policy_border_del(E_Border *bd)
      {
 	E_Illume_Config_Zone *cz;
 
-	/* get the config for this zone */
 	cz = e_illume_zone_config_get(bd->zone->id);
 	cz->softkey.size = 0;
 	_policy_zone_layout_update(bd->zone);
@@ -865,16 +825,14 @@ _policy_border_del(E_Border *bd)
      {
 	E_Illume_Config_Zone *cz;
 
-	/* get the config for this zone */
 	cz = e_illume_zone_config_get(bd->zone->id);
 	cz->indicator.size = 0;
 	_policy_zone_layout_update(bd->zone);
      }
-   else
-     {
-	/* show the border below this one */
-	_policy_border_show_below(bd);
-     }
+   /* else
+    *   {
+    * 	_policy_border_show_below(bd);
+    *   } */
 }
 
 void
@@ -954,6 +912,8 @@ _policy_border_activate(E_Border *bd)
    /* NB: We cannot use our set_focus function here because it does,
     * occasionally fall through wrt E's focus policy, so cherry pick the good
     * parts and use here :) */
+   if (bd->desk != e_desk_current_get(bd->zone))
+     e_desk_show(bd->desk);
 
    /* if the border is iconified then uniconify if allowed */
    if ((bd->iconic) && (!bd->lock_user_iconify))
@@ -985,6 +945,30 @@ _policy_border_activate(E_Border *bd)
     e_focus_event_focus_in(bd);
    */
 }
+static Eina_Bool
+_policy_border_is_dialog(E_Border *bd)
+{
+   if (e_illume_border_is_dialog(bd))
+     return EINA_TRUE;
+
+   if (bd->client.e.state.centered)
+     return EINA_TRUE;
+
+   if (bd->internal)
+     {
+	if (bd->client.icccm.class)
+	  {
+	     if (!strncmp(bd->client.icccm.class, "e_fwin", 6))
+	       return EINA_FALSE;
+	     if (!strncmp(bd->client.icccm.class, "every", 5))
+	       return EINA_FALSE;
+
+	  }
+	return EINA_TRUE;
+     }
+
+   return EINA_FALSE;
+}
 
 void
 _policy_border_post_fetch(E_Border *bd)
@@ -995,7 +979,7 @@ _policy_border_post_fetch(E_Border *bd)
    if (bd->remember) e_remember_del(bd->remember);
    bd->remember = NULL;
 
-   if (e_illume_border_is_dialog(bd))
+   if (_policy_border_is_dialog(bd))
      {
 	return;
      }
@@ -1003,7 +987,7 @@ _policy_border_post_fetch(E_Border *bd)
      {
 	return;
      }
-   else
+   else if (!bd->borderless)
      {
 	bd->borderless = 1;
 	bd->client.border.changed = 1;
@@ -1017,7 +1001,7 @@ _policy_border_post_assign(E_Border *bd)
 
    bd->internal_no_remember = 1;
 
-   if (e_illume_border_is_dialog(bd) ||
+   if (_policy_border_is_dialog(bd) ||
        e_illume_border_is_fixed_size(bd))
      return;
 
@@ -1108,7 +1092,7 @@ _policy_zone_layout(E_Zone *zone)
 	else if (e_illume_border_is_splash(bd))
 	  _policy_zone_layout_splash(bd, cz);
 
-	else if (e_illume_border_is_dialog(bd))
+	else if (_policy_border_is_dialog(bd))
 	  _policy_zone_layout_dialog(bd, cz);
 
 	else if (e_illume_border_is_conformant(bd))
@@ -1116,14 +1100,20 @@ _policy_zone_layout(E_Zone *zone)
 
 	else if (e_illume_border_is_fixed_size(bd))
 	  _policy_zone_layout_dialog(bd, cz);
+
 	else if (bd->internal && bd->client.icccm.class &&
 		 (!strcmp(bd->client.icccm.class, "everything-window")))
 	  {
 	     if (bd->client.vkbd.state == ECORE_X_VIRTUAL_KEYBOARD_STATE_ON)
 	       _policy_zone_layout_app_single(bd, cz);
-	     else
-	       _policy_zone_layout_app_dual_left(bd, cz, EINA_TRUE);
+	     /* else
+	      *   _policy_zone_layout_app_dual_left(bd, cz, EINA_TRUE); */
+
+	     if (bd->layer != POL_SPLASH_LAYER)
+	       e_border_layer_set(bd, POL_SPLASH_LAYER);
 	  }
+	else if (bd->client.e.state.centered)
+	  _policy_zone_layout_dialog(bd, cz);
 	else if (!cz->mode.dual)
 	  _policy_zone_layout_app_single(bd, cz);
 	else
