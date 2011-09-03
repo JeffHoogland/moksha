@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: http://trac.enlightenment.org/e/\n"
-"POT-Creation-Date: 2011-08-31 08:02-0700\n"
-"PO-Revision-Date: 2011-08-31 17:40+0200\n"
+"POT-Creation-Date: 2011-09-03 03:03-0700\n"
+"PO-Revision-Date: 2011-09-03 12:12+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -32,7 +32,7 @@ msgstr "Chiudi"
 
 #: ../src/bin/e_about.c:18 ../src/bin/e_actions.c:3060
 #: ../src/bin/e_actions.c:3064 ../src/bin/e_actions.c:3068
-#: ../src/bin/e_int_menus.c:182 ../src/bin/e_main.c:543
+#: ../src/bin/e_int_menus.c:182 ../src/bin/e_main.c:532
 #: ../src/modules/conf_theme/e_int_config_cursor.c:155
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:219
 #: ../src/modules/wizard/page_000.c:29
@@ -964,7 +964,7 @@ msgstr "Estensioni"
 #: ../src/bin/e_configure.c:29 ../src/bin/e_configure.c:32
 #: ../src/bin/e_configure.c:242
 #: ../src/modules/conf_paths/e_int_config_paths.c:80
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:846
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:847
 #: ../src/modules/conf_theme/e_int_config_fonts.c:97
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:234
 msgid "Modules"
@@ -1118,7 +1118,7 @@ msgstr "File desktop"
 #: ../src/modules/conf_performance/e_int_config_performance.c:115
 #: ../src/modules/everything/evry_config.c:380
 #: ../src/modules/everything/evry_config.c:464
-#: ../src/modules/everything/evry_plug_files.c:1483
+#: ../src/modules/everything/evry_plug_files.c:1491
 #: ../src/modules/pager/e_mod_config.c:126
 #: ../src/modules/pager/e_mod_config.c:213
 msgid "General"
@@ -2242,7 +2242,7 @@ msgstr "Utilità"
 #. eina_init();
 #. Setup Entry in Config Panel
 #: ../src/bin/e_int_config_modules.c:55
-#: ../src/modules/everything/evry_plug_files.c:1593
+#: ../src/modules/everything/evry_plug_files.c:1601
 #: ../src/modules/fileman/e_mod_main.c:56
 #: ../src/modules/fileman/e_mod_main.c:76
 #: ../src/modules/fileman/e_mod_main.c:420
@@ -2250,7 +2250,7 @@ msgid "Files"
 msgstr "File"
 
 #: ../src/bin/e_int_config_modules.c:56
-#: ../src/modules/everything/e_mod_main.c:67
+#: ../src/modules/everything/e_mod_main.c:66
 msgid "Launcher"
 msgstr "Lanciatore"
 
@@ -2596,24 +2596,14 @@ msgstr ""
 "Ecore e il loro supporto per il motore di rendering software Buffer."
 
 #: ../src/bin/e_main.c:354
-msgid ""
-"Enlightenment cannot initialize the FDO desktop system.\n"
-"Perhaps you lack permissions on ~/.cache/efreet or are\n"
-"out of memory or disk space?"
-msgstr ""
-"Enlightenment non riesce ad inizializzare il sistema desktop FDO.\n"
-"Forse non avete permessi per accedere a ~/.cache/efreet o\n"
-"siete a corto di spazio su disco?"
-
-#: ../src/bin/e_main.c:365
 msgid "Enlightenment cannot initialize Edje!\n"
 msgstr "Enlightenment non riesce ad inizializzare Edje!\n"
 
-#: ../src/bin/e_main.c:377
+#: ../src/bin/e_main.c:366
 msgid "Enlightenment cannot initialize E_Intl!\n"
 msgstr "Enlightenment non riesce ad inizializzare E_Intl!\n"
 
-#: ../src/bin/e_main.c:387
+#: ../src/bin/e_main.c:376
 msgid ""
 "Enlightenment cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
@@ -2622,15 +2612,15 @@ msgstr ""
 "di allarme d'emergenza.\n"
 "Avete impostato la variabile DISPLAY?"
 
-#: ../src/bin/e_main.c:397
+#: ../src/bin/e_main.c:386
 msgid "Enlightenment cannot initialize E_Xinerama!\n"
 msgstr "Enlightenment non riesce ad inizializzare E_Xinerama!\n"
 
-#: ../src/bin/e_main.c:406
+#: ../src/bin/e_main.c:395
 msgid "Enlightenment cannot initialize E_Randr!\n"
 msgstr "Enlightenment non riesce ad inizializzare E_Randr!\n"
 
-#: ../src/bin/e_main.c:424
+#: ../src/bin/e_main.c:413
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
@@ -2638,35 +2628,35 @@ msgstr ""
 "Enlightenment non riesce a creare directory nella vostra home.\n"
 "Forse non avete home directory, o il disco è pieno?"
 
-#: ../src/bin/e_main.c:434
+#: ../src/bin/e_main.c:423
 msgid "Enlightenment cannot set up its file registry system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di file registry."
 
-#: ../src/bin/e_main.c:443
+#: ../src/bin/e_main.c:432
 msgid "Enlightenment cannot set up its config system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di configurazione."
 
-#: ../src/bin/e_main.c:454
+#: ../src/bin/e_main.c:443
 msgid "Enlightenment cannot set up its environment."
 msgstr "Enlightenment non riesce ad impostare il suo ambiente."
 
-#: ../src/bin/e_main.c:467
+#: ../src/bin/e_main.c:456
 msgid "Enlightenment cannot set up its scale system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di scaling."
 
-#: ../src/bin/e_main.c:476
+#: ../src/bin/e_main.c:465
 msgid "Enlightenment cannot set up its pointer system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di puntatore."
 
-#: ../src/bin/e_main.c:485
+#: ../src/bin/e_main.c:474
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -2674,33 +2664,43 @@ msgstr ""
 "Enlightenment non riesce a configurare i percorsi per la\n"
 "ricerca dei file. Forse siete a corto di memoria?"
 
-#: ../src/bin/e_main.c:502
+#: ../src/bin/e_main.c:491
 msgid "Enlightenment cannot set up its font system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di font."
 
-#: ../src/bin/e_main.c:519
+#: ../src/bin/e_main.c:508
 msgid "Enlightenment cannot set up its theme system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di temi."
 
-#: ../src/bin/e_main.c:535
+#: ../src/bin/e_main.c:524
 msgid "Enlightenment cannot set up its init screen."
 msgstr ""
 "Enlightenment non riesce a configurare la sua\n"
 "schermata di iniziazione."
 
-#: ../src/bin/e_main.c:550
+#: ../src/bin/e_main.c:539
 msgid "Starting International Support"
 msgstr "Avvio supporto internazionalizzazione"
 
-#: ../src/bin/e_main.c:554
+#: ../src/bin/e_main.c:543
 msgid "Enlightenment cannot set up its intl system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di intl (internazionalizzazione)."
+
+#: ../src/bin/e_main.c:552
+msgid ""
+"Enlightenment cannot initialize the FDO desktop system.\n"
+"Perhaps you lack permissions on ~/.cache/efreet or are\n"
+"out of memory or disk space?"
+msgstr ""
+"Enlightenment non riesce ad inizializzare il sistema desktop FDO.\n"
+"Forse non avete permessi per accedere a ~/.cache/efreet o\n"
+"siete a corto di spazio su disco?"
 
 #: ../src/bin/e_main.c:575
 msgid "Setup Screens"
@@ -3941,7 +3941,7 @@ msgstr "Impostazioni finestre di dialogo"
 #: ../src/modules/conf_dialogs/e_int_config_dialogs.c:109
 #: ../src/modules/conf_performance/e_int_config_engine.c:95
 #: ../src/modules/conf_theme/e_int_config_fonts.c:647
-#: ../src/modules/everything/evry_config.c:528
+#: ../src/modules/everything/evry_config.c:531
 #: ../src/modules/ibox/e_mod_config.c:96
 #: ../src/modules/mixer/conf_gadget.c:191
 #: ../src/modules/mixer/conf_module.c:91
@@ -4123,10 +4123,10 @@ msgstr "Numero di desktop"
 #: ../src/modules/conf_interaction/e_int_config_mouse.c:114
 #: ../src/modules/conf_interaction/e_int_config_mouse.c:120
 #: ../src/modules/everything/evry_config.c:408
-#: ../src/modules/everything/evry_config.c:556
-#: ../src/modules/everything/evry_config.c:563
-#: ../src/modules/everything/evry_config.c:588
-#: ../src/modules/everything/evry_config.c:595
+#: ../src/modules/everything/evry_config.c:559
+#: ../src/modules/everything/evry_config.c:566
+#: ../src/modules/everything/evry_config.c:591
+#: ../src/modules/everything/evry_config.c:598
 #: ../src/modules/fileman/e_mod_config.c:240
 #, c-format
 msgid "%1.0f"
@@ -5375,165 +5375,171 @@ msgid "File Manager Background Base"
 msgstr "Sfondo base file manager"
 
 #: ../src/modules/conf_theme/e_int_config_color_classes.c:99
+#: ../src/modules/conf_window_manipulation/e_int_config_focus.c:230
+#: ../src/modules/winlist/e_int_config_winlist.c:214
+msgid "Focus"
+msgstr "Cambio del fuoco"
+
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:100
 msgid "Button Text"
 msgstr "Testo bottone"
 
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:100
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:101
 msgid "Button Text Disabled"
 msgstr "Testo bottone disabilitato"
 
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:101
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:102
 msgid "Check Text"
 msgstr "Testo casella di spunta"
 
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:102
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:103
 msgid "Check Text Disabled"
 msgstr "Testo casella di spunta disabilitata"
 
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:103
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:104
 msgid "Entry Text"
 msgstr "Testo voce"
 
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:104
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:105
 msgid "Entry Text Disabled"
 msgstr "Testo voce disabilitata"
 
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:105
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:106
 msgid "Label Text"
 msgstr "Testo etichetta"
 
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:106
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:107
 msgid "List Item Text Selected"
 msgstr "Testo voce lista selezionata"
 
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:107
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:108
 msgid "List Item Text (Even)"
 msgstr "Testo voce lista (pari)"
 
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:108
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:109
 msgid "List Item Background Base (Even)"
 msgstr "Sfondo base voce lista (pari)"
 
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:109
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:110
 msgid "List Item Text (Odd)"
 msgstr "Testo voce lista (dispari)"
 
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:110
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:111
 msgid "List Item Background Base (Odd)"
 msgstr "Sfondo base voce lista (dispari)"
 
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:111
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:112
 msgid "List Header Text (Even)"
 msgstr "Testo intestazione lista (pari)"
 
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:112
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:113
 msgid "List Header Background Base (Even)"
 msgstr "Sfondo base intestazione lista (pari)"
 
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:113
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:114
 msgid "List Header Text (Odd)"
 msgstr "Testo intestazione lista (dispari)"
 
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:115
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:116
 msgid "List Header Background Base (Odd)"
 msgstr "Sfondo base intestazione lista (dispari)"
 
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:116
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:117
 msgid "Radio Text"
 msgstr "Testo casella di opzione"
 
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:117
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:118
 msgid "Radio Text Disabled"
 msgstr "Testo casella di opzione disabilitata"
 
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:118
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:119
 msgid "Slider Text"
 msgstr "Testo cursore"
 
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:119
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:120
 msgid "Slider Text Disabled"
 msgstr "Testo cursore disabilitato"
 
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:120
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:121
 msgid "Frame Background Base"
 msgstr "Sfondo base cornice"
 
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:121
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:122
 msgid "Scroller Frame Background Base"
 msgstr "Sfondo base cornice scorritore"
 
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:126
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:127
 msgid "Module Label"
 msgstr "Etichetta del modulo"
 
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:127
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:128
 msgid "Composite Focus-out Color"
 msgstr "Fuori fuoco in Composite"
 
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:160
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:161
 #: ../src/modules/conf_theme/e_mod_main.c:38
 msgid "Colors"
 msgstr "Colori"
 
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:268
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:269
 #, c-format
 msgid "Color class: %s"
 msgstr "Classe colore: %s"
 
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:275
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:276
 #, c-format
 msgid "Selected %u mixed colors classes"
 msgstr "Selezionate %u classi colore miste"
 
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:278
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:279
 #, c-format
 msgid "Selected %u unset colors classes"
 msgstr "Selezionate %u classi colore non impostate"
 
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:281
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:282
 #, c-format
 msgid "Selected %u uniform colors classes"
 msgstr "Selezionate %u classi colore uniformi"
 
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:285
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:544
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:286
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:545
 msgid "No selected color class"
 msgstr "Nessuna classe colore selezionata"
 
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:547
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:548
 msgid "Custom colors"
 msgstr "Colori personalizzato"
 
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:553
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:554
 msgid "Object:"
 msgstr "Oggetto:"
 
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:559
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:560
 msgid "Outline:"
 msgstr "Contorno:"
 
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:565
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:566
 msgid "Shadow:"
 msgstr "Ombra:"
 
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:597
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:598
 msgid "Text with applied colors."
 msgstr "Testo con colore applicato."
 
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:603
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:604
 msgid "Colors depend on theme capabilities."
 msgstr "I colori dipendono dalle funzionalità del tema."
 
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:842
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:843
 msgid "Window Manager"
 msgstr "Window manager"
 
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:844
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:845
 #: ../src/modules/conf_theme/e_int_config_fonts.c:80
 msgid "Widgets"
 msgstr "Widget"
 
-#: ../src/modules/conf_theme/e_int_config_color_classes.c:850
+#: ../src/modules/conf_theme/e_int_config_color_classes.c:851
 msgid "Others"
 msgstr "Altri"
 
@@ -6191,11 +6197,6 @@ msgstr "Solo finestre di dialogo"
 msgid "Only dialogs with focused parent"
 msgstr "Solo finestre di dialogo con genitore a fuoco"
 
-#: ../src/modules/conf_window_manipulation/e_int_config_focus.c:230
-#: ../src/modules/winlist/e_int_config_winlist.c:214
-msgid "Focus"
-msgstr "Cambio del fuoco"
-
 #: ../src/modules/conf_window_manipulation/e_int_config_focus.c:235
 msgid "Other Settings"
 msgstr "Altre impostazioni"
@@ -6306,13 +6307,13 @@ msgid "Fill available space"
 msgstr "Riempitiva"
 
 #: ../src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:161
-#: ../src/modules/everything/evry_config.c:577
+#: ../src/modules/everything/evry_config.c:580
 #: ../src/modules/gadman/e_mod_gadman.c:759
 msgid "Horizontal"
 msgstr "Orizzontale"
 
 #: ../src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:163
-#: ../src/modules/everything/evry_config.c:570
+#: ../src/modules/everything/evry_config.c:573
 #: ../src/modules/gadman/e_mod_gadman.c:767
 msgid "Vertical"
 msgstr "Verticale"
@@ -6638,28 +6639,28 @@ msgstr "Molto chiara"
 msgid "Dropshadow"
 msgstr "Dropshadow"
 
-#: ../src/modules/everything/e_mod_main.c:58
-#: ../src/modules/everything/e_mod_main.c:209
+#: ../src/modules/everything/e_mod_main.c:57
+#: ../src/modules/everything/e_mod_main.c:207
 msgid "Everything Launcher"
 msgstr "Pannello di Everything"
 
-#: ../src/modules/everything/e_mod_main.c:59
+#: ../src/modules/everything/e_mod_main.c:58
 msgid "Show Everything Launcher"
 msgstr "Mostra lanciatore Everything"
 
-#: ../src/modules/everything/e_mod_main.c:73
+#: ../src/modules/everything/e_mod_main.c:72
 msgid "Everything Configuration"
 msgstr "Configurazione di Everything"
 
-#: ../src/modules/everything/e_mod_main.c:210
+#: ../src/modules/everything/e_mod_main.c:208
 msgid "Show Everything Dialog"
 msgstr "Mostra finestra di dialogo di Everything"
 
-#: ../src/modules/everything/e_mod_main.c:419
+#: ../src/modules/everything/e_mod_main.c:417
 msgid "Everything Module"
 msgstr "Modulo Everything"
 
-#: ../src/modules/everything/e_mod_main.c:608
+#: ../src/modules/everything/e_mod_main.c:606
 msgid "Run Everything"
 msgstr "Pannello di Everything"
 
@@ -6760,54 +6761,58 @@ msgid "Sorting"
 msgstr "Ordinamento"
 
 #: ../src/modules/everything/evry_config.c:515
+msgid "No Sorting"
+msgstr "Nessun ordinamento"
+
+#: ../src/modules/everything/evry_config.c:518
 msgid "By usage"
 msgstr "In base all'uso"
 
-#: ../src/modules/everything/evry_config.c:518
+#: ../src/modules/everything/evry_config.c:521
 msgid "Most used"
 msgstr "Più usati"
 
-#: ../src/modules/everything/evry_config.c:521
+#: ../src/modules/everything/evry_config.c:524
 msgid "Last used"
 msgstr "Usati per ultimi"
 
-#: ../src/modules/everything/evry_config.c:535
+#: ../src/modules/everything/evry_config.c:538
 msgid "Subject Plugins"
 msgstr "Plugin soggetto"
 
-#: ../src/modules/everything/evry_config.c:539
+#: ../src/modules/everything/evry_config.c:542
 msgid "Action Plugins"
 msgstr "Plugin azione"
 
-#: ../src/modules/everything/evry_config.c:543
+#: ../src/modules/everything/evry_config.c:546
 msgid "Object Plugins"
 msgstr "Plugin oggetto"
 
-#: ../src/modules/everything/evry_config.c:546
-#: ../src/modules/everything/evry_config.c:748
+#: ../src/modules/everything/evry_config.c:549
+#: ../src/modules/everything/evry_config.c:751
 msgid "Plugins"
 msgstr "Plugin"
 
-#: ../src/modules/everything/evry_config.c:553
+#: ../src/modules/everything/evry_config.c:556
 msgid "Popup Size"
 msgstr "Dimensione popup"
 
-#: ../src/modules/everything/evry_config.c:554
-#: ../src/modules/everything/evry_config.c:586
+#: ../src/modules/everything/evry_config.c:557
+#: ../src/modules/everything/evry_config.c:589
 msgid "Popup Width"
 msgstr "Larghezza popup"
 
-#: ../src/modules/everything/evry_config.c:561
-#: ../src/modules/everything/evry_config.c:593
+#: ../src/modules/everything/evry_config.c:564
+#: ../src/modules/everything/evry_config.c:596
 msgid "Popup Height"
 msgstr "Altezza popup"
 
-#: ../src/modules/everything/evry_config.c:569
+#: ../src/modules/everything/evry_config.c:572
 msgid "Popup Align"
 msgstr "Allineamento popup"
 
-#: ../src/modules/everything/evry_config.c:572
-#: ../src/modules/everything/evry_config.c:579
+#: ../src/modules/everything/evry_config.c:575
+#: ../src/modules/everything/evry_config.c:582
 #: ../src/modules/winlist/e_int_config_winlist.c:238
 #: ../src/modules/winlist/e_int_config_winlist.c:251
 #: ../src/modules/winlist/e_int_config_winlist.c:292
@@ -6816,24 +6821,24 @@ msgstr "Allineamento popup"
 msgid "%1.2f"
 msgstr "%1.2f"
 
-#: ../src/modules/everything/evry_config.c:585
+#: ../src/modules/everything/evry_config.c:588
 msgid "Edge Popup Size"
 msgstr "Dimensione popup bordo"
 
-#: ../src/modules/everything/evry_config.c:602
+#: ../src/modules/everything/evry_config.c:605
 #: ../src/modules/winlist/e_int_config_winlist.c:286
 msgid "Geometry"
 msgstr "Geometria"
 
-#: ../src/modules/everything/evry_config.c:643
+#: ../src/modules/everything/evry_config.c:646
 msgid "Everything Collection"
 msgstr "Raccolta di Everything"
 
-#: ../src/modules/everything/evry_plug_aggregator.c:119
+#: ../src/modules/everything/evry_plug_aggregator.c:120
 msgid "Items"
 msgstr "Elementi"
 
-#: ../src/modules/everything/evry_plug_aggregator.c:340
+#: ../src/modules/everything/evry_plug_aggregator.c:327
 msgid "No plugins loaded"
 msgstr "Nessun plugin caricato"
 
@@ -6893,35 +6898,35 @@ msgid "Sudo GUI"
 msgstr "Interfaccia sudo"
 
 #: ../src/modules/everything/evry_plug_apps.c:1367
-#: ../src/modules/everything/evry_plug_files.c:1593
+#: ../src/modules/everything/evry_plug_files.c:1601
 msgid "Everything Plugin"
 msgstr "Plugin di Everything"
 
-#: ../src/modules/everything/evry_plug_files.c:1463
-#: ../src/modules/everything/evry_plug_files.c:1615
+#: ../src/modules/everything/evry_plug_files.c:1471
+#: ../src/modules/everything/evry_plug_files.c:1623
 msgid "Everything Files"
 msgstr "Modulo file di Everything"
 
 #. ow = e_widget_check_add(evas, _("Show home directory"),
 #. * 			   &(cfdata->show_homedir));
 #. * e_widget_framelist_object_append(of, ow);
-#: ../src/modules/everything/evry_plug_files.c:1490
+#: ../src/modules/everything/evry_plug_files.c:1498
 msgid "Show recent files"
 msgstr "Mostra file recenti"
 
-#: ../src/modules/everything/evry_plug_files.c:1494
+#: ../src/modules/everything/evry_plug_files.c:1502
 msgid "Search recent files"
 msgstr "Cerca file recenti"
 
-#: ../src/modules/everything/evry_plug_files.c:1498
+#: ../src/modules/everything/evry_plug_files.c:1506
 msgid "Search cached files"
 msgstr "Cerca file in cache"
 
-#: ../src/modules/everything/evry_plug_files.c:1502
+#: ../src/modules/everything/evry_plug_files.c:1510
 msgid "Cache visited directories"
 msgstr "Cache per directory visitate"
 
-#: ../src/modules/everything/evry_plug_files.c:1506
+#: ../src/modules/everything/evry_plug_files.c:1514
 msgid "Clear cache"
 msgstr "Svuota cache"
 
@@ -8084,16 +8089,16 @@ msgstr "Connesso"
 msgid "offline"
 msgstr "Disconnesso"
 
-#: ../src/modules/systray/e_mod_main.c:886
+#: ../src/modules/systray/e_mod_main.c:900
 msgid "Another systray exists"
 msgstr "Esiste un'altra istanza di Systray"
 
-#: ../src/modules/systray/e_mod_main.c:887
+#: ../src/modules/systray/e_mod_main.c:901
 msgid "There can be only one systray gadget and another one already exists."
 msgstr ""
 "Può esserci una sola istanza di Systray, e attualmente ne esiste già "
 "un'altra."
 
-#: ../src/modules/systray/e_mod_main.c:1090
+#: ../src/modules/systray/e_mod_main.c:1104
 msgid "Systray"
 msgstr "Systray"
