@@ -694,6 +694,11 @@ _e_randr_event_cb(void *data __UNUSED__, int type, void *ev)
    E_Randr_Crtc_Info *crtc_info;
    Eina_Bool enabled;
 
+   // FIXME: ecore_x_randr_screen_primary_output_orientation_get() should
+   // get regularly called to push x into polling outputs so we get these
+   // event callbacks - maybe do this every 100 mouse move events, or every
+   // mouse release or event mouse in or out, and in addition add a "poller"
+   // that runs every 256 ticks maybe?
    if (!e_randr_screen_info) return ECORE_CALLBACK_RENEW;
    if (type == ECORE_X_EVENT_RANDR_CRTC_CHANGE)
      {
