@@ -426,36 +426,6 @@ _policy_zone_layout_softkey(E_Border *bd, E_Illume_Config_Zone *cz)
    if (bd->layer != POL_SOFTKEY_LAYER) e_border_layer_set(bd, POL_SOFTKEY_LAYER);
 }
 
-static void
-_policy_zone_layout_keyboard(E_Border *bd, E_Illume_Config_Zone *cz)
-{
-   int ny, layer;
-
-   if ((!bd) || (!cz) || (!bd->visible)) return;
-
-   ZONE_GEOMETRY;
-
-   e_illume_border_min_get(bd, NULL, &cz->vkbd.size);
-
-   ny = ((bd->zone->y + h) - cz->vkbd.size);
-
-   if ((bd->fullscreen) || (bd->need_fullscreen))
-     layer = POL_FULLSCREEN_LAYER;
-   else
-     layer = POL_KEYBOARD_LAYER;
-
-   _border_geometry_set(bd, x, ny, w, cz->vkbd.size, layer);
-}
-
-static void
-_policy_zone_layout_home_single(E_Border *bd, E_Illume_Config_Zone *cz)
-{
-   if ((!bd) || (!cz) || (!bd->visible)) return;
-
-   ZONE_GEOMETRY;
-
-   _border_geometry_set(bd, x, y, w, h, POL_HOME_LAYER);
-}
 
 
 #define MIN_HEIGHT 100
@@ -508,12 +478,42 @@ _policy_softkey_restrict(E_Illume_Config_Zone *cz, int *y, int *h)
 }
 
 static void
+_policy_zone_layout_keyboard(E_Border *bd, E_Illume_Config_Zone *cz)
+{
+   int ny, layer;
+
+   if ((!bd) || (!cz) || (!bd->visible)) return;
+
+   ZONE_GEOMETRY;
+
+   e_illume_border_min_get(bd, NULL, &cz->vkbd.size);
+
+   ny = ((bd->zone->y + h) - cz->vkbd.size);
+
+   /* if ((bd->fullscreen) || (bd->need_fullscreen))
+    *   layer = POL_FULLSCREEN_LAYER;
+    * else */
+   layer = POL_KEYBOARD_LAYER;
+
+   _border_geometry_set(bd, x, ny, w, cz->vkbd.size, layer);
+}
+
+static void
+_policy_zone_layout_home_single(E_Border *bd, E_Illume_Config_Zone *cz)
+{
+   if ((!bd) || (!cz) || (!bd->visible)) return;
+
+   ZONE_GEOMETRY;
+   _policy_indicator_restrict(cz, &y, &h);
+   _border_geometry_set(bd, x, y, w, h, POL_HOME_LAYER);
+}
+
+static void
 _policy_zone_layout_fullscreen(E_Border *bd)
 {
    if (!_policy_layout_app_check(bd)) return;
 
    ZONE_GEOMETRY;
-
 
    _policy_keyboard_restrict(bd, &h);
 
@@ -726,7 +726,28 @@ _policy_border_add(E_Border *bd)
    ecore_x_e_illume_zone_set(bd->client.win, bd->zone->black_win);
 
    if (e_illume_border_is_keyboard(bd))
-     e_hints_window_sticky_set(bd, 1);
+     {
+	bd->sticky = 1;
+	e_hints_window_sticky_set(bd, 1);
+     }
+   
+   if (e_illume_border_is_home(bd))
+     {
+	bd->sticky = 1;
+	e_hints_window_sticky_set(bd, 1);
+     }
+
+   if (e_illume_border_is_indicator(bd))
+     {
+	bd->sticky = 1;
+	e_hints_window_sticky_set(bd, 1);
+     }
+
+   if (e_illume_border_is_softkey(bd))
+     {
+	bd->sticky = 1;
+	e_hints_window_sticky_set(bd, 1);
+     }
 
    /* ignore stolen borders. These are typically quickpanel or keyboards */
    if (bd->stolen) return;
@@ -958,6 +979,8 @@ _policy_border_is_dialog(E_Border *bd)
      {
 	if (bd->client.icccm.class)
 	  {
+	     if (!strncmp(bd->client.icccm.class, "Illume", 6))
+	       return EINA_FALSE;
 	     if (!strncmp(bd->client.icccm.class, "e_fwin", 6))
 	       return EINA_FALSE;
 	     if (!strncmp(bd->client.icccm.class, "every", 5))
@@ -1108,9 +1131,11 @@ _policy_zone_layout(E_Zone *zone)
 	       _policy_zone_layout_app_single(bd, cz);
 	     /* else
 	      *   _policy_zone_layout_app_dual_left(bd, cz, EINA_TRUE); */
-
-	     if (bd->layer != POL_SPLASH_LAYER)
-	       e_border_layer_set(bd, POL_SPLASH_LAYER);
+	     if (bd->layer != POL_ACTIVATE_LAYER)
+	       e_border_layer_set(bd, POL_ACTIVATE_LAYER);
+	     
+	     /* if (bd->layer != POL_SPLASH_LAYER)
+	      *   e_border_layer_set(bd, POL_SPLASH_LAYER); */
 	  }
 	else if (bd->client.e.state.centered)
 	  _policy_zone_layout_dialog(bd, cz);
