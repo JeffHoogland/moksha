@@ -13,32 +13,33 @@ struct _E_Intl_Pair
    const char *locale_translation;
 };
 
-const E_Intl_Pair basic_language_predefined_pairs[ ] = {
-     {"bg_BG.UTF-8", "lang-bg_BG.png", "Български"},
-     {"ca_ES.UTF-8", "lang-ca_ES.png", "Català"},
-     {"zh_CN.UTF-8", "lang-zh_CN.png", "Chinese (Simplified)"},
-     {"zh_TW.UTF-8", "lang-zh_TW.png", "Chinese (Traditional)"},
-     {"cs_CZ.UTF-8", "lang-cs_CZ.png", "Čeština"},
-     {"da_DK.UTF-8", "lang-da_DK.png", "Dansk"},
-     {"nl_NL.UTF-8", "lang-nl_NL.png", "Nederlands"},
-     {"en_US.UTF-8", "lang-en_US.png", "English"},
-     {"fi_FI.UTF-8", "lang-fi_FI.png", "Suomi"},
-     {"fr_FR.UTF-8", "lang-fr_FR.png", "Français"},
-     {"de_DE.UTF-8", "lang-de_DE.png", "Deutsch"},
-     {"hu_HU.UTF-8", "lang-hu_HU.png", "Magyar"},
-     {"it_IT.UTF-8", "lang-it_IT.png", "Italiano"},
-     {"ja_JP.UTF-8", "lang-ja_JP.png", "日本語"},
-     {"ko_KR.UTF-8", "lang-ko_KR.png", "한국어"},
-     {"nb_NO.UTF-8", "lang-nb_NO.png", "Norsk Bokmål"},
-     {"pl_PL.UTF-8", "lang-pl_PL.png", "Polski"},
-     {"pt_BR.UTF-8", "lang-pt_BR.png", "Português"},
-     {"ru_RU.UTF-8", "lang-ru_RU.png", "Русский"},
-     {"sk_SK.UTF-8", "lang-sk_SK.png", "Slovenčina"},
-     {"sl_SI.UTF-8", "lang-sl_SI.png", "Slovenščina"},
-     {"es_AR.UTF-8", "lang-es_AR.png", "Español"},
-     {"sv_SE.UTF-8", "lang-sv_SE.png", "Svenska"},
-     {"el_GR.UTF-8", "lang-el_GR.png", "Ελληνικά"},
-     { NULL, NULL, NULL }
+const E_Intl_Pair basic_language_predefined_pairs[ ] = 
+{
+   {"bg_BG.UTF-8", "lang-bg_BG.png", "Български"},
+   {"ca_ES.UTF-8", "lang-ca_ES.png", "Català"},
+   {"zh_CN.UTF-8", "lang-zh_CN.png", "Chinese (Simplified)"},
+   {"zh_TW.UTF-8", "lang-zh_TW.png", "Chinese (Traditional)"},
+   {"cs_CZ.UTF-8", "lang-cs_CZ.png", "Čeština"},
+   {"da_DK.UTF-8", "lang-da_DK.png", "Dansk"},
+   {"nl_NL.UTF-8", "lang-nl_NL.png", "Nederlands"},
+   {"en_US.UTF-8", "lang-en_US.png", "English"},
+   {"fi_FI.UTF-8", "lang-fi_FI.png", "Suomi"},
+   {"fr_FR.UTF-8", "lang-fr_FR.png", "Français"},
+   {"de_DE.UTF-8", "lang-de_DE.png", "Deutsch"},
+   {"hu_HU.UTF-8", "lang-hu_HU.png", "Magyar"},
+   {"it_IT.UTF-8", "lang-it_IT.png", "Italiano"},
+   {"ja_JP.UTF-8", "lang-ja_JP.png", "日本語"},
+   {"ko_KR.UTF-8", "lang-ko_KR.png", "한국어"},
+   {"nb_NO.UTF-8", "lang-nb_NO.png", "Norsk Bokmål"},
+   {"pl_PL.UTF-8", "lang-pl_PL.png", "Polski"},
+   {"pt_BR.UTF-8", "lang-pt_BR.png", "Português"},
+   {"ru_RU.UTF-8", "lang-ru_RU.png", "Русский"},
+   {"sk_SK.UTF-8", "lang-sk_SK.png", "Slovenčina"},
+   {"sl_SI.UTF-8", "lang-sl_SI.png", "Slovenščina"},
+   {"es_AR.UTF-8", "lang-es_AR.png", "Español"},
+   {"sv_SE.UTF-8", "lang-sv_SE.png", "Svenska"},
+   {"el_GR.UTF-8", "lang-el_GR.png", "Ελληνικά"},
+   { NULL, NULL, NULL }
 };
 
 static const char *lang = NULL;
@@ -176,7 +177,7 @@ wizard_page_show(E_Wizard_Page *pg)
 }
 
 EAPI int
-wizard_page_hide(E_Wizard_Page *pg)
+wizard_page_hide(E_Wizard_Page *pg __UNUSED__)
 {
 //   evas_object_del(pg->data);
    /* special - language inits its stuff the moment it goes away */
