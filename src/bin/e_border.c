@@ -7066,7 +7066,7 @@ _e_border_eval0(E_Border *bd)
 
                   bd->bg_object = o;
 
-                  if (!bd->client.argb)
+                  if ((e_config->use_composite) && (!bd->client.argb))
                     {
                        argb_option = edje_object_data_get(o, "argb");
                        if ((argb_option) && (!strcmp(argb_option, "1")))
