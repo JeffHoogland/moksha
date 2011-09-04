@@ -171,7 +171,7 @@ wizard_page_show(E_Wizard_Page *pg)
 }
 
 EAPI int
-wizard_page_hide(E_Wizard_Page *pg)
+wizard_page_hide(E_Wizard_Page *pg __UNUSED__)
 {
    obs = eina_list_free(obs);
 //   evas_object_del(pg->data);
