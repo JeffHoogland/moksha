@@ -445,9 +445,15 @@ _cb_signal_action_extra(void *data, Evas_Object *obj __UNUSED__, const char *emi
 static Eina_Bool
 _cb_timeout_defaction(void *data __UNUSED__)
 {
+   const char *defact = NULL;
    deftimer = NULL;
    if (!do_defact) return ECORE_CALLBACK_CANCEL;
+   defact = eina_stringshare_add(do_defact);
    e_syscon_hide();
-   _do_action_name(do_defact);
+   if (defact)
+     {
+        _do_action_name(defact);
+        eina_stringshare_del(defact);
+     }
    return ECORE_CALLBACK_CANCEL;
 }
