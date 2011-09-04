@@ -134,7 +134,7 @@ wizard_page_show(E_Wizard_Page *pg)
 }
 
 EAPI int
-wizard_page_hide(E_Wizard_Page *pg)
+wizard_page_hide(E_Wizard_Page *pg __UNUSED__)
 {
    if (!do_comp)
      {
@@ -178,8 +178,7 @@ wizard_page_hide(E_Wizard_Page *pg)
         
         e_config->use_composite = 1;
         
-        e_mod_comp_cfdata_edd_init(&(conf_edd),
-                                   &(conf_match_edd));
+        e_mod_comp_cfdata_edd_init(&(conf_edd), &(conf_match_edd));
         cfg = e_mod_comp_cfdata_config_new();
         
         if (do_gl)
