@@ -187,7 +187,6 @@ static void
 _e_wid_fsel_files_changed(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Widget_Data *wd;
-   struct stat st;
 
    wd = data;
    if (!wd->o_files_fm) return;
