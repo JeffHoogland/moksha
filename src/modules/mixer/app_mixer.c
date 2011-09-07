@@ -271,41 +271,41 @@ _populate_channels(E_Mixer_App_Dialog_Data *app)
 
    if (app->channels_infos)
      {
-	struct channel_info *info = app->channels_infos->data;
-	if (info->has_capture)
-	  {
-	     e_widget_ilist_header_append(ilist, NULL, _("Input"));
-	     header_input = 1;
-	     i = 1;
-	  }
-	else
-	  {
-	     e_widget_ilist_header_append(ilist, NULL, _("Output"));
-	     header_input = 0;
-	     i = 1;
-	  }
+        struct channel_info *info = app->channels_infos->data;
+        if (info->has_capture)
+          {
+             e_widget_ilist_header_append(ilist, NULL, _("Input"));
+             header_input = 1;
+             i = 1;
+          }
+        else
+          {
+             e_widget_ilist_header_append(ilist, NULL, _("Output"));
+             header_input = 0;
+             i = 1;
+          }
      }
 
    for (l = app->channels_infos; l; l = l->next, i++)
      {
-	struct channel_info *info = l->data;
+        struct channel_info *info = l->data;
 
-	if ((!header_input) && info->has_capture)
-	  {
-	     e_widget_ilist_header_append(ilist, NULL, _("Input"));
-	     header_input = 1;
-	     i++;
-	  }
+        if ((!header_input) && info->has_capture)
+          {
+             e_widget_ilist_header_append(ilist, NULL, _("Input"));
+             header_input = 1;
+             i++;
+          }
 
-	info->app = app;
-	e_widget_ilist_append(ilist, NULL, info->name, _cb_channel_selected,
-			      info, info->name);
-	if (app->channel_name && info->name &&
-            (strcmp(app->channel_name, info->name) == 0))
-	  {
-	     e_widget_ilist_selected_set(ilist, i);
-	     app->channel_info = info;
-	  }
+        info->app = app;
+        e_widget_ilist_append(ilist, NULL, info->name, _cb_channel_selected,
+                info, info->name);
+        if (app->channel_name && info->name &&
+                   (strcmp(app->channel_name, info->name) == 0))
+          {
+             e_widget_ilist_selected_set(ilist, i);
+             app->channel_info = info;
+          }
      }
 
    e_widget_ilist_go(ilist);
