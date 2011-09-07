@@ -245,10 +245,12 @@ _fill_bindings(E_Config_Dialog_Data *cfdata)
         char buff[32];
 
         i++;
-        if (!(lbl = _binding_label_get(bind))) continue;
         snprintf(buff, sizeof(buff), "%d", i);
+
+        lbl = _binding_label_get(bind);
+
         e_widget_ilist_append(cfdata->o_bindings, NULL, lbl,
-                              _cb_bindings_changed, cfdata, buff);
+                                _cb_bindings_changed, cfdata, buff);
      }
 
    e_widget_ilist_go(cfdata->o_bindings);
@@ -389,7 +391,7 @@ _binding_label_get(E_Config_Binding_Acpi *bind)
    if (bind->type == E_ACPI_TYPE_VAIO)
      return _("Vaio");
 
-   return NULL;
+   return _("Unknown");
 }
 
 static void
