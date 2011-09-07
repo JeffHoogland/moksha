@@ -649,8 +649,6 @@ _cb_acpi_event(void          *data,
    bind->status = ev->status;
    bind->action = eina_stringshare_add("dim_screen");
    bind->params = NULL;
-   e_config->acpi_bindings = eina_list_append(e_config->acpi_bindings, bind);
-   e_config_save_queue();
 
    cfdata->bindings = eina_list_append(cfdata->bindings, bind);
    _fill_bindings(cfdata);
