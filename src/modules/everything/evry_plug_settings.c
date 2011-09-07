@@ -44,7 +44,7 @@ _finish(Evry_Plugin *plugin)
 }
 
 static Evas_Object *
-_icon_get(Evry_Item *item, Evas *e)
+_icon_get(Evry_Item *item, Evas *e __UNUSED__)
 {
    Settings_Item *it = (Settings_Item *) item;
 

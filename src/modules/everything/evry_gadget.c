@@ -200,10 +200,9 @@ _cb_menu_configure(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 }
 
 static void
-_button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
+_button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    Instance *inst;
-   Evas_Event_Mouse_Down *ev;
 
    inst = data;
    inst->mouse_down = 1;
@@ -239,7 +238,7 @@ _hide_animator(void *data)
 }
 
 static void
-_evry_hide_func(Evry_Window *win, int finished)
+_evry_hide_func(Evry_Window *win, int finished __UNUSED__)
 {
    Instance *inst = win->data;
 
@@ -602,7 +601,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 }
 
 static void
-_cb_button_settings(void *data, void *data2 __UNUSED__)
+_cb_button_settings(void *data __UNUSED__, void *data2 __UNUSED__)
 {
    /* evry_collection_conf_dialog(e_container_current_get(e_manager_current_get()), "Start"); */
 }

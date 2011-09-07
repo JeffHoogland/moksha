@@ -280,7 +280,7 @@ _plugins_shutdown(void)
 /***************************************************************************/
 
 Eina_Bool
-evry_plug_calc_init(E_Module *m)
+evry_plug_calc_init(E_Module *m __UNUSED__)
 {
    EVRY_MODULE_NEW(evry_module, evry, _plugins_init, _plugins_shutdown);
 

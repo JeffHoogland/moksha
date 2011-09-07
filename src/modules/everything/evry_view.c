@@ -1579,14 +1579,14 @@ _view_cb_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__,
    sd->mouse_x = 0;
    sd->mouse_y = 0;
 }
-static void _cb_list_hide(void *data, Evas_Object *obj, const char *emission, const char *source)
+static void _cb_list_hide(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    View *v = data;
 
    v->hiding = EINA_TRUE;
 }
 
-static void _cb_list_show(void *data, Evas_Object *obj, const char *emission, const char *source)
+static void _cb_list_show(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    View *v = data;
 
