@@ -1055,7 +1055,9 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_ilist_selected_set(cfdata->o_files_ilist, 1);
    e_widget_ilist_selected_set(cfdata->o_categories_ilist, 0);
 
-   e_dialog_resizable_set(cfd->dia, 1);
+   /* FIXME this makes the preview disappear at the beginning and
+      when resizing (Issue is caused by e_widget_aspect i guess) */
+   // e_dialog_resizable_set(cfd->dia, 1);
    return ot;
 }
 
