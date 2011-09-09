@@ -49,7 +49,7 @@ e_bindings_init(void)
    Eina_List *l;
 
    mapping_handler = ecore_event_handler_add
-   (ECORE_X_EVENT_WINDOW_MAPPING, _e_bindings_mapping_change_event_cb, NULL);
+   (ECORE_X_EVENT_MAPPING_CHANGE, _e_bindings_mapping_change_event_cb, NULL);
   
    EINA_LIST_FOREACH(e_config->mouse_bindings, l, ebm)
      e_bindings_mouse_add(ebm->context, ebm->button, ebm->modifiers,
@@ -977,7 +977,6 @@ static Eina_Bool
 _e_bindings_mapping_change_event_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
 //  Ecore_X_Event_Mapping_Change *ev = event;
-  
   e_managers_keys_ungrab();
   e_border_button_bindings_ungrab_all();
   e_border_button_bindings_grab_all();
