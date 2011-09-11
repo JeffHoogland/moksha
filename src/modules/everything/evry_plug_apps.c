@@ -1108,7 +1108,7 @@ _plugins_init(const Evry_API *api)
    p->config_path = "extensions/everything-apps";
    _plugins = eina_list_append(_plugins, p);
    if (evry->plugin_register(p, EVRY_PLUGIN_SUBJECT, 3))
-     p->config->min_query = 5;
+     p->config->min_query = 3;
 
    p = EVRY_PLUGIN_BASE("Applications", _module_icon, EVRY_TYPE_APP,
 			_begin_mime, _finish, _fetch);
