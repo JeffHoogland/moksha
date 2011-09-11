@@ -6938,7 +6938,7 @@ _e_border_eval0(E_Border *bd)
         if ((!bd->lock_border) || (!bd->client.border.name))
           bd->client.border.changed = 1;
 
-	EINA_LIST_FREE(bd->pending_move_resize, pnd)
+        EINA_LIST_FREE(bd->pending_move_resize, pnd)
           {
              if ((!bd->lock_client_location) && (pnd->move))
                {
@@ -6960,7 +6960,6 @@ _e_border_eval0(E_Border *bd)
                   bd->client.h = pnd->h;
                   bd->changes.size = 1;
                }
-	     printf("free pendig %dx%d\n", bd->w, bd->h);
 
              free(pnd);
           }
