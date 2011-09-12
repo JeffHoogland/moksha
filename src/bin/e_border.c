@@ -6927,7 +6927,6 @@ _e_border_eval0(E_Border *bd)
    if (bd->new_client)
      {
         E_Event_Border_Add *ev;
-        E_Border_Pending_Move_Resize *pnd;
 
         ev = E_NEW(E_Event_Border_Add, 1);
         ev->border = bd;
@@ -6937,32 +6936,6 @@ _e_border_eval0(E_Border *bd)
 
         if ((!bd->lock_border) || (!bd->client.border.name))
           bd->client.border.changed = 1;
-
-        EINA_LIST_FREE(bd->pending_move_resize, pnd)
-          {
-             if ((!bd->lock_client_location) && (pnd->move))
-               {
-                  bd->x = pnd->x;
-                  bd->y = pnd->y;
-                  bd->changes.pos = 1;
-                  bd->placed = 1;
-                  if (pnd->without_border)
-                    {
-                       bd->x -= bd->client_inset.l;
-                       bd->y -= bd->client_inset.t;
-                    }
-               }
-             if ((!bd->lock_client_size) && (pnd->resize))
-               {
-                  bd->w = pnd->w + (bd->client_inset.l + bd->client_inset.r);
-                  bd->h = pnd->h + (bd->client_inset.t + bd->client_inset.b);
-                  bd->client.w = pnd->w;
-                  bd->client.h = pnd->h;
-                  bd->changes.size = 1;
-               }
-
-             free(pnd);
-          }
      }
 
    /* PRE_POST_FETCH calls e_remember apply for new client */
@@ -7189,6 +7162,7 @@ static void
 _e_border_eval(E_Border *bd)
 {
    E_Event_Border_Property *event;
+   E_Border_Pending_Move_Resize *pnd;
    int rem_change = 0;
    int send_event = 1;
 
@@ -7380,6 +7354,32 @@ _e_border_eval(E_Border *bd)
              bd->x = new_x;
              bd->y = new_y;
              bd->changes.pos = 1;
+          }
+
+        EINA_LIST_FREE(bd->pending_move_resize, pnd)
+          {
+             if ((!bd->lock_client_location) && (pnd->move))
+               {
+                  bd->x = pnd->x;
+                  bd->y = pnd->y;
+                  bd->changes.pos = 1;
+                  bd->placed = 1;
+                  if (pnd->without_border)
+                    {
+                       bd->x -= bd->client_inset.l;
+                       bd->y -= bd->client_inset.t;
+                    }
+               }
+             if ((!bd->lock_client_size) && (pnd->resize))
+               {
+                  bd->w = pnd->w + (bd->client_inset.l + bd->client_inset.r);
+                  bd->h = pnd->h + (bd->client_inset.t + bd->client_inset.b);
+                  bd->client.w = pnd->w;
+                  bd->client.h = pnd->h;
+                  bd->changes.size = 1;
+               }
+
+             free(pnd);
           }
 
         /* Recreate state */
