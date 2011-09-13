@@ -5693,10 +5693,6 @@ _e_border_cb_config_icon_theme(void *data  __UNUSED__,
    return ECORE_CALLBACK_PASS_ON;
 }
 
-/* FIXME:
- * Using '2' is bad, may change in zone flip code.
- * Calculate pos from e->x and e->y
- */
 static Eina_Bool
 _e_border_cb_pointer_warp(void *data  __UNUSED__,
                           int ev_type __UNUSED__,
