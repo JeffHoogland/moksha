@@ -215,8 +215,8 @@ static E_Border *focusing = NULL;
 static Eina_List *focus_next = NULL;
 static Ecore_X_Time focus_time = 0;
 
-static E_Border *resize = NULL;
-static E_Border *move = NULL;
+static E_Border *bdresize = NULL;
+static E_Border *bdmove = NULL;
 static E_Drag *drag_border = NULL;
 
 static int grabbed = 0;
@@ -1439,7 +1439,7 @@ _e_border_move_resize_internal(E_Border *bd,
      }
    else
      {
-        if (resize && bd->client.netwm.sync.request)
+        if (bdresize && bd->client.netwm.sync.request)
           {
              bd->client.netwm.sync.wait++;
              /* Don't use x and y as supplied to this function, as it is called with 0, 0
@@ -3942,13 +3942,13 @@ e_border_ping(E_Border *bd)
 EAPI void
 e_border_move_cancel(void)
 {
-   if (move)
+   if (bdmove)
      {
-        if (move->cur_mouse_action)
+        if (bdmove->cur_mouse_action)
           {
              E_Border *bd;
 
-             bd = move;
+             bd = bdmove;
              e_object_ref(E_OBJECT(bd));
              if (bd->cur_mouse_action->func.end_mouse)
                bd->cur_mouse_action->func.end_mouse(E_OBJECT(bd), "", NULL);
@@ -3959,20 +3959,20 @@ e_border_move_cancel(void)
              e_object_unref(E_OBJECT(bd));
           }
         else
-          _e_border_move_end(move);
+          _e_border_move_end(bdmove);
      }
 }
 
 EAPI void
 e_border_resize_cancel(void)
 {
-   if (resize)
+   if (bdresize)
      {
-        if (resize->cur_mouse_action)
+        if (bdresize->cur_mouse_action)
           {
              E_Border *bd;
 
-             bd = resize;
+             bd = bdresize;
              e_object_ref(E_OBJECT(bd));
              if (bd->cur_mouse_action->func.end_mouse)
                bd->cur_mouse_action->func.end_mouse(E_OBJECT(bd), "", NULL);
@@ -3984,8 +3984,8 @@ e_border_resize_cancel(void)
           }
         else
           {
-             resize->resize_mode = RESIZE_NONE;
-             _e_border_resize_end(resize);
+             bdresize->resize_mode = RESIZE_NONE;
+             _e_border_resize_end(bdresize);
           }
      }
 }
@@ -4262,9 +4262,9 @@ _e_border_free(E_Border *bd)
         e_object_del(E_OBJECT(bd->pointer));
         bd->pointer = NULL;
      }
-   if (resize == bd)
+   if (bdresize == bd)
      _e_border_resize_end(bd);
-   if (move == bd)
+   if (bdmove == bd)
      _e_border_move_end(bd);
    /* TODO: Other states to end before dying? */
 
@@ -5705,8 +5705,8 @@ _e_border_cb_pointer_warp(void *data  __UNUSED__,
    E_Event_Pointer_Warp *e;
 
    e = ev;
-   if (!move) return ECORE_CALLBACK_PASS_ON;
-   e_border_move(move, move->x + (e->curr.x - e->prev.x), move->y + (e->curr.y - e->prev.y));
+   if (!bdmove) return ECORE_CALLBACK_PASS_ON;
+   e_border_move(bdmove, bdmove->x + (e->curr.x - e->prev.x), bdmove->y + (e->curr.y - e->prev.y));
    return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -7705,7 +7705,7 @@ _e_border_eval(E_Border *bd)
             (e_config->window_placement_policy == E_WINDOW_PLACEMENT_MANUAL) &&
             (!((bd->client.icccm.transient_for != 0) ||
                (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DIALOG))) &&
-            (!move) && (!resize))
+            (!bdmove) && (!bdresize))
           {
              /* Set this window into moving state */
 
@@ -8447,7 +8447,7 @@ _e_border_resize_begin(E_Border *bd)
 
    _e_border_hook_call(E_BORDER_HOOK_RESIZE_BEGIN, bd);
 
-   resize = bd;
+   bdresize = bd;
    return 1;
 }
 
@@ -8480,7 +8480,7 @@ _e_border_resize_end(E_Border *bd)
 
    _e_border_hook_call(E_BORDER_HOOK_RESIZE_END, bd);
 
-   resize = NULL;
+   bdresize = NULL;
 
    /* If this border was maximized, we need to unset Maximized state or
     * on restart, E still thinks it's maximized */
@@ -8523,7 +8523,7 @@ _e_border_move_begin(E_Border *bd)
 #endif
    _e_border_hook_call(E_BORDER_HOOK_MOVE_BEGIN, bd);
 
-   move = bd;
+   bdmove = bd;
    return 1;
 }
 
@@ -8544,7 +8544,7 @@ _e_border_move_end(E_Border *bd)
 #endif
    _e_border_hook_call(E_BORDER_HOOK_MOVE_END, bd);
 
-   move = NULL;
+   bdmove = NULL;
    return 1;
 }
 
