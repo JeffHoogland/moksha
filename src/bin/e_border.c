@@ -6580,7 +6580,8 @@ _e_border_eval0(E_Border *bd)
              else
                bd_parent = NULL;
           }
-        if ((bd_parent) && (bd_parent != bd))
+        if ((bd_parent) && (bd_parent != bd) &&
+            (eina_list_data_find(bd->transients, bd_parent) != bd_parent))
           {
              bd_parent->transients = eina_list_append(bd_parent->transients, bd);
              bd->parent = bd_parent;
