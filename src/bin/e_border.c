@@ -1588,14 +1588,14 @@ EAPI void
 e_border_layer_set(E_Border *bd,
                    int       layer)
 {
-   int raise;
+   int oldraise;
 
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
 
    ecore_x_window_shadow_tree_flush();
 
-   raise = e_config->transient.raise;
+   oldraise = e_config->transient.raise;
 
    bd->saved.layer = bd->layer;
    bd->layer = layer;
@@ -1616,7 +1616,7 @@ e_border_layer_set(E_Border *bd,
           }
      }
    e_border_raise(bd);
-   e_config->transient.raise = raise;
+   e_config->transient.raise = oldraise;
 }
 
 EAPI void
@@ -2069,22 +2069,21 @@ e_border_focus_set(E_Border *bd,
         (e_object_ref_get(E_OBJECT(bd_unfocus)) > 0)))
      {
         E_Event_Border_Focus_Out *ev;
-        E_Border *bd = bd_unfocus;
 
-        bd->focused = 0;
-        e_focus_event_focus_out(bd);
+        bd_unfocus->focused = 0;
+        e_focus_event_focus_out(bd_unfocus);
 
-        if (bd->raise_timer)
-          ecore_timer_del(bd->raise_timer);
-        bd->raise_timer = NULL;
+        if (bd_unfocus->raise_timer)
+          ecore_timer_del(bd_unfocus->raise_timer);
+        bd_unfocus->raise_timer = NULL;
 
-        edje_object_signal_emit(bd->bg_object, "e,state,unfocused", "e");
-        if (bd->icon_object)
-          edje_object_signal_emit(bd->icon_object, "e,state,unfocused", "e");
+        edje_object_signal_emit(bd_unfocus->bg_object, "e,state,unfocused", "e");
+        if (bd_unfocus->icon_object)
+          edje_object_signal_emit(bd_unfocus->icon_object, "e,state,unfocused", "e");
 
         ev = E_NEW(E_Event_Border_Focus_Out, 1);
-        ev->border = bd;
-        e_object_ref(E_OBJECT(bd));
+        ev->border = bd_unfocus;
+        e_object_ref(E_OBJECT(bd_unfocus));
 
         ecore_event_add(E_EVENT_BORDER_FOCUS_OUT, ev,
                         _e_border_event_border_focus_out_free, NULL);
