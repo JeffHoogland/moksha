@@ -98,7 +98,7 @@ wizard_page_show(E_Wizard_Page *pg)
           _("Compositing provides translucency<br>"
             "for windows, window effects like<br>"
             "fading in and out and zooming<br>"
-            "when they appea and dissapear.<br>"
+            "when they appear and dissapear.<br>"
             "It is highly recommended to<br>"
             "enable this for a better<br>"
             "experience, but it comes at a<br>"
