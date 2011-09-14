@@ -1,9 +1,9 @@
 // TODO:
 //   Formatting review.
 //   Formatting Process: 1. http://tools.arantius.com/tabifier in C mode
-//                         2. sed 's/\t/   /g' default.edc > formatted.edc
-//                         3. Fix up defines, script{}, comments and other nicknacks.
-//									4. Replace ":    " with ": " and "//      " with "// " and so on.
+//                       2. sed 's/\t/   /g' default.edc > formatted.edc
+//                       3. Fix up defines, script{}, comments and other nicknacks.
+//                       4. Replace ":    " with ": " and "//      " with "// " and so on.
 //
 //   Icons:
 //      EFM - All popup icons ... eg, paste copy delete properties
@@ -41,7 +41,7 @@
  * and make sure you have replaced/provided everything here.
  */
 
-/* Specturm used in all the gradient icons
+/* Spectrum used in all the gradient icons
  * This needs to be defined outside of the collections
  *
  * FIXME: this is bad. namespacing! FIXME!
@@ -63,7 +63,7 @@ spectra {
  *
  * color: Font color     (Defaults to black)
  * color2: Outline color  (Defaults to transparent)
- * color3: Shadow color   (defaults to transparent)
+ * color3: Shadow color   (Defaults to transparent)
  *
  */
 
@@ -127,7 +127,7 @@ color_classes {
       color: 255 255 255 255;
    }
    // this seems totaly bogus, should be per module or really used as
-   // an unique color for all modules!
+   // a unique color for all modules!
    //    color_class {
    //       name: "module_label";
    //       color: 0 0 0 0;
@@ -264,7 +264,7 @@ color_classes {
 }
 
 /*
- * this section defined all the theme elements (a collection of groupings of
+ * this section defines all the theme elements (a collection of groupings of
  * parts (images, text, rects etc.))
  */
 
@@ -36405,11 +36405,11 @@ collections {
                state: "default" 0.0;
                align: 0.0 1.0;
                fixed: 0 1;
-               rel1.to:   "e.swallow.icons";
-               rel1.relative:  1.0 0.0;
-               rel2.to:   "clip";
-               rel1.offset:   2 3;
-               rel2.offset:   -6 -7;
+               rel1.to: "e.swallow.icons";
+               rel1.relative: 1.0 0.0;
+               rel2.to: "clip";
+               rel1.offset: 2 3;
+               rel2.offset: -6 -7;
                /* visible: 0; */
                color: 24 24 24 255;
                text {
@@ -36598,10 +36598,10 @@ collections {
                state: "default" 0.0;
                align: 0.5 0.5;
                fixed: 0 1;
-               rel1.to:   "clip";
-               rel2.to:   "clip";
-               rel1.offset:   5 3;
-               rel2.offset:   -6 -1;
+               rel1.to: "clip";
+               rel2.to: "clip";
+               rel1.offset: 5 3;
+               rel2.offset: -6 -1;
                visible: 0;
                color: 245 245 245 255;
                text {
@@ -36722,10 +36722,10 @@ collections {
                state: "default" 0.0;
                align: 0.5 0.5;
                fixed: 0 1;
-               rel1.to:   "clip";
-               rel2.to:   "clip";
-               rel1.offset:   5 3;
-               rel2.offset:   -6 -1;
+               rel1.to: "clip";
+               rel2.to: "clip";
+               rel1.offset: 5 3;
+               rel2.offset: -6 -1;
                visible: 0;
                color: 245 245 245 255;
                text {
@@ -37970,10 +37970,10 @@ collections {
          style {
             name: "everything_textblock_style";
             base: "font=Sans font_size=10 align=left color=#000";
-            tag:  "hilight" "+ font=Sans:style=Bold color=#0c0c0c";
-            tag:  "b" "+ font=Sans:style=Bold font_size=9";
-            tag:  "br" "\n";
-            tag:  "/title" "- \n \n";
+            tag: "hilight" "+ font=Sans:style=Bold color=#0c0c0c";
+            tag: "b" "+ font=Sans:style=Bold font_size=9";
+            tag: "br" "\n";
+            tag: "/title" "- \n \n";
          }
       }
       parts {
