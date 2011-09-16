@@ -25,10 +25,12 @@ struct _Instance
   Eina_List *handlers;
 
   Eina_Bool hidden;
+  Eina_Bool illume_mode;
 };
 
-static void _button_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
+/* static void _button_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info); */
 static void _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static Eina_Bool _cb_focus_out(void *data, int type __UNUSED__, void *event);
 
 /* gadcon requirements */
 static E_Gadcon_Client *_gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style);
@@ -53,22 +55,42 @@ static const E_Gadcon_Client_Class _gadcon_class =
     E_GADCON_CLIENT_STYLE_PLAIN
 };
 
+static Eina_Bool
+_illume_running()
+{
+   /* hack to find out out if illume is running, dont grab if
+      this is the case... */
+
+   Eina_List *l;
+   E_Module *m;
+
+   EINA_LIST_FOREACH(e_module_list(), l, m)
+     if (!strcmp(m->name, "illume2") && m->enabled)
+       return EINA_TRUE;
+
+   return EINA_FALSE;
+}
+
 static E_Gadcon_Client *
 _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 {
    Evas_Object *o;
    E_Gadcon_Client *gcc;
    Instance *inst;
-   /* Evry_Plugin *p; */
+   Evry_Plugin *p;
 
    inst = E_NEW(Instance, 1);
    inst->cfg = _conf_item_get(id);
 
    o = edje_object_add(gc->evas);
-
-   /* if ((p = evry_plugin_find(id->name)))
-    *   o = evry_util_icon_get(EVRY_ITEM(p), gc->evas) */
    e_theme_edje_object_set(o, "base/theme/modules/everything", "e/modules/everything/gadget");
+   
+   if ((p = evry_plugin_find(inst->cfg->plugin)))
+     {
+	Evas_Object *oo = evry_util_icon_get(EVRY_ITEM(p), gc->evas);
+	if (oo) edje_object_part_swallow(o, "e.swallow.icon", oo); 
+     }
+
    edje_object_signal_emit(o, "e,state,unfocused", "e");
 
    gcc = e_gadcon_client_new(gc, name, id, style, o);
@@ -77,12 +99,22 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    inst->gcc = gcc;
    inst->o_button = o;
 
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_UP,
-				  _button_cb_mouse_up, inst);
+   /* evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_UP,
+    * 				  _button_cb_mouse_up, inst); */
 
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN,
 				  _button_cb_mouse_down, inst);
 
+
+   if (_illume_running())
+     {
+	inst->illume_mode = EINA_TRUE;
+
+	inst->handlers = eina_list_append(inst->handlers,
+					  ecore_event_handler_add(E_EVENT_BORDER_FOCUS_OUT,
+								  _cb_focus_out, inst));
+     }
+   
    instances = eina_inlist_append(instances, EINA_INLIST_GET(inst));
 
    return gcc;
@@ -92,14 +124,21 @@ static void
 _gc_shutdown(E_Gadcon_Client *gcc)
 {
    Instance *inst;
-
+   Ecore_Event_Handler *h;
+   
    inst = gcc->data;
 
    instances = eina_inlist_remove(instances, EINA_INLIST_GET(inst));
 
-   if (inst->del_fn && inst->win)
-     e_object_delfn_del(E_OBJECT(inst->win->ewin), inst->del_fn);
+   EINA_LIST_FREE(inst->handlers, h)
+     ecore_event_handler_del(h);
 
+   if (inst->del_fn && inst->win)
+     {
+	e_object_delfn_del(E_OBJECT(inst->win->ewin), inst->del_fn);
+	evry_hide(inst->win, 0);
+     }
+   
    evas_object_del(inst->o_button);
    free(inst);
 }
@@ -199,15 +238,6 @@ _cb_menu_configure(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
    _conf_dialog(data);
 }
 
-static void
-_button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
-{
-   Instance *inst;
-
-   inst = data;
-   inst->mouse_down = 1;
-}
-
 static Eina_Bool
 _hide_animator(void *data)
 {
@@ -224,10 +254,16 @@ _hide_animator(void *data)
 
    val = ecore_animator_pos_map(val, ECORE_POS_MAP_DECELERATE, 0.0, 0.0);
 
-   e_border_fx_offset(ewin->border, (val * inst->hide_x), (val * inst->hide_y));
+   e_border_fx_offset(ewin->border,
+		      (val * (inst->hide_x * ewin->w)),
+		      (val * (inst->hide_y * ewin->h)));
 
    if (finished)
      {
+	/* go bac to subject selector */
+	evry_selectors_switch(inst->win, -1, 0);
+	evry_selectors_switch(inst->win, -1, 0);
+
 	inst->hide_animator = NULL;
 	e_border_iconify(ewin->border);
 	e_border_fx_offset(ewin->border, 0, 0);
@@ -244,7 +280,6 @@ _evry_hide_func(Evry_Window *win, int finished __UNUSED__)
 
    inst->hide_start = 0;
    inst->hide_animator = ecore_animator_add(_hide_animator, inst);
-
    inst->hidden = EINA_TRUE;
 }
 
@@ -293,25 +328,25 @@ _gadget_popup_show(Instance *inst)
       case E_GADCON_ORIENT_CORNER_TL:
       case E_GADCON_ORIENT_CORNER_TR:
 	 e_win_move(ewin, x, y + h);
-	 inst->hide_y = -ph;
+	 inst->hide_y = -1;
 	 break;
       case E_GADCON_ORIENT_BOTTOM:
       case E_GADCON_ORIENT_CORNER_BR:
       case E_GADCON_ORIENT_CORNER_BL:
 	 e_win_move(ewin, x, y - ph);
-	 inst->hide_y = ph;
+	 inst->hide_y = 1;
 	 break;
       case E_GADCON_ORIENT_LEFT:
       case E_GADCON_ORIENT_CORNER_LT:
       case E_GADCON_ORIENT_CORNER_LB:
 	 e_win_move(ewin, x + w, y);
-	 inst->hide_x = -pw;
+	 inst->hide_x = -1;
 	 break;
       case E_GADCON_ORIENT_RIGHT:
       case E_GADCON_ORIENT_CORNER_RT:
       case E_GADCON_ORIENT_CORNER_RB:
 	 e_win_move(ewin, x - pw, y);
-	 inst->hide_x = pw;
+	 inst->hide_x = 1;
 	 break;
       case E_GADCON_ORIENT_FLOAT:
       case E_GADCON_ORIENT_HORIZ:
@@ -352,7 +387,7 @@ _gadget_window_show(Instance *inst)
       case E_GADCON_ORIENT_CORNER_TR:
 	 pw = zw/2;
 	 ph = zh/2;
-	 inst->hide_y = -ph;
+	 inst->hide_y = -1;
 	 e_win_move(ewin, zx, gy + gh);
 	 break;
       case E_GADCON_ORIENT_BOTTOM:
@@ -360,7 +395,7 @@ _gadget_window_show(Instance *inst)
       case E_GADCON_ORIENT_CORNER_BL:
 	 pw = zw/2;
 	 ph = zh/2;
-	 inst->hide_y = ph;
+	 inst->hide_y = 1;
 	 e_win_move(ewin, zx, gy - ph);
 	 break;
       case E_GADCON_ORIENT_LEFT:
@@ -368,7 +403,7 @@ _gadget_window_show(Instance *inst)
       case E_GADCON_ORIENT_CORNER_LB:
 	 pw = zw/2.5;
 	 ph = zh;
-	 inst->hide_x = -pw;
+	 inst->hide_x = -1;
 	 e_win_move(ewin, gx + gw, zy);
 	 break;
       case E_GADCON_ORIENT_RIGHT:
@@ -376,7 +411,7 @@ _gadget_window_show(Instance *inst)
       case E_GADCON_ORIENT_CORNER_RB:
 	 pw = zw/2.5;
 	 ph = zh;
-	 inst->hide_x = pw;
+	 inst->hide_x = 1;
 	 e_win_move(ewin, gx - pw, zy);
 	 break;
       case E_GADCON_ORIENT_FLOAT:
@@ -391,39 +426,21 @@ _gadget_window_show(Instance *inst)
 
    e_border_focus_set(ewin->border, 1, 1);
    ewin->border->client.netwm.state.skip_pager = 1;
+   ewin->border->client.netwm.state.skip_taskbar = 1;
    ewin->border->sticky = 1;
 
    inst->hidden = EINA_FALSE;
-   inst->handlers = eina_list_append(inst->handlers,
-				     ecore_event_handler_add(E_EVENT_BORDER_FOCUS_OUT,
-							     _cb_focus_out, inst));
-}
-
-static Eina_Bool
-_illume_running()
-{
-   /* hack to find out out if illume is running, dont grab if
-      this is the case... */
-
-   Eina_List *l;
-   E_Module *m;
-
-   EINA_LIST_FOREACH(e_module_list(), l, m)
-     if (!strcmp(m->name, "illume2") && m->enabled)
-       return EINA_TRUE;
-
-   return EINA_FALSE;
 }
 
 static void
-_button_cb_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
+_button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
    Instance *inst;
    Evas_Event_Mouse_Down *ev;
 
    inst = data;
-   if (!inst->mouse_down)
-     return;
+   /* if (!inst->mouse_down)
+    *   return; */
 
    inst->mouse_down = 0;
 
@@ -432,7 +449,6 @@ _button_cb_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__,
      {
 	Evry_Window *win;
 	E_Border *bd;
-	Eina_Bool show_windowed;
 
 	if (inst->win)
 	  {
@@ -456,20 +472,13 @@ _button_cb_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__,
 	       }
 	     else
 	       {
-		  Ecore_Event_Handler *h;
-
-		  EINA_LIST_FREE(inst->handlers, h)
-		    ecore_event_handler_del(h);
-
 	     	  evry_hide(win, 1);
 		  return;
 	       }
 	  }
 
-	show_windowed = _illume_running();
-
 	win = evry_show(e_util_zone_current_get(e_manager_current_get()),
-			0, inst->cfg->plugin, !show_windowed);
+			0, inst->cfg->plugin, !inst->illume_mode);
 	if (!win) return;
 
 	inst->win = win;
@@ -478,7 +487,7 @@ _button_cb_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__,
 
 	ecore_evas_name_class_set(win->ewin->ecore_evas, "E", "everything-window");
 
-	if (show_windowed)
+	if (inst->illume_mode)
 	  _gadget_window_show(inst);
 	else
 	  _gadget_popup_show(inst);
@@ -513,6 +522,16 @@ _button_cb_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__,
 			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
      }
 }
+
+/* static void
+ * _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
+ * {
+ *    Instance *inst;
+ *    Evas_Event_Mouse_Down *ev;
+ * 
+ *    inst = data;
+ *    inst->mouse_down = 1;
+ * } */
 
 
 int
