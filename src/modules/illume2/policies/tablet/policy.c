@@ -87,15 +87,6 @@ _policy_border_move(E_Border *bd, int x, int y)
 {
    if (!bd) return;
 
-   /* NB: Qt uses a weird window type called 'VCLSalFrame' that needs to
-    * have bd->placed set else it doesn't position correctly...
-    * this could be a result of E honoring the icccm request position,
-    * not sure */
-
-   /* NB: Seems something similar happens with elementary windows also
-    * so for now just set bd->placed on all windows until this
-    * gets investigated */
-   /* bd->placed = 1; */
    bd->x = x;
    bd->y = y;
    bd->changes.pos = 1;
@@ -488,13 +479,13 @@ _policy_zone_layout_keyboard(E_Border *bd, E_Illume_Config_Zone *cz)
 
    e_illume_border_min_get(bd, NULL, &cz->vkbd.size);
 
-   ny = ((bd->zone->y + h) - cz->vkbd.size);
+   ny = ((bd->zone->y + bd->zone->h) - cz->vkbd.size);
 
    /* if ((bd->fullscreen) || (bd->need_fullscreen))
     *   layer = POL_FULLSCREEN_LAYER;
     * else */
    layer = POL_KEYBOARD_LAYER;
-
+   
    _border_geometry_set(bd, x, ny, w, cz->vkbd.size, layer);
 }
 
@@ -1046,6 +1037,9 @@ _policy_border_post_assign(E_Border *bd)
 
    /* lock the border type so user/client cannot change */
    bd->lock_border = 1;
+
+   /* disable e's placement (and honoring of icccm.request_pos) */
+   bd->placed = 1;
 }
 
 void
@@ -1068,11 +1062,7 @@ _policy_border_show(E_Border *bd)
    _policy_border_hide_below(bd);
 }
 
-void
-_policy_border_hide(E_Border *bd)
-{
-}
-
+/* called on E_BORDER_HOOK_CONTAINER_LAYOUT (after e_border/eval0) */
 void
 _policy_zone_layout(E_Zone *zone)
 {
