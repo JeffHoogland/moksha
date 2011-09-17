@@ -1216,7 +1216,9 @@ _basic_create_widgets(E_Config_Dialog      *cfd,
              e_widget_framelist_content_align_set(of, 0.5, 0.0);
              ob = e_widget_check_add(evas, _("Texture from pixmap"), &(cfdata->texture_from_pixmap));
              e_widget_framelist_object_append(of, ob);
-             ob = e_widget_check_add(evas, _("Indirect OpenGL"), &(cfdata->indirect));
+	     ob = e_widget_label_add(evas, _("Use Ctrl+Alt+Shift+Home to reset config in case Indirect OpenGL does not work"));
+	     e_widget_framelist_object_append(of, ob);
+             ob = e_widget_check_add(evas, _("Indirect OpenGL (EXPERIMENTAL)"), &(cfdata->indirect));
              e_widget_framelist_object_append(of, ob);
              e_widget_list_object_append(ol, of, 1, 1, 0.5);
           }
