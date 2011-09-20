@@ -531,4 +531,7 @@ group "E_Config" struct {
   value "backlight.normal" double: 1.0;
   value "backlight.dim" double: 0.3;
   value "backlight.transition" double: 0.5;
+  value "device_desktop" int: 0;
+  value "device_auto_mount" int: 0;
+  value "device_auto_open" int: 0;
 }
