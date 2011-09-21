@@ -115,6 +115,7 @@ EAPI E_Action   *e_bindings_mouse_up_event_handle(E_Binding_Context ctxt, E_Obje
 EAPI void        e_bindings_key_add(E_Binding_Context ctxt, const char *key, E_Binding_Modifier mod, int any_mod, const char *action, const char *params);
 EAPI void        e_bindings_key_del(E_Binding_Context ctxt, const char *key, E_Binding_Modifier mod, int any_mod, const char *action, const char *params);
 EAPI E_Binding_Key *e_bindings_key_get(const char *action);
+EAPI E_Binding_Key *e_bindings_key_find(const char *key, E_Binding_Modifier mod, int any_mod);
 EAPI void        e_bindings_key_grab(E_Binding_Context ctxt, Ecore_X_Window win);
 EAPI void        e_bindings_key_ungrab(E_Binding_Context ctxt, Ecore_X_Window win);
 EAPI E_Action   *e_bindings_key_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_Event_Key *ev);

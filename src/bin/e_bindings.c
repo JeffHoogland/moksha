@@ -306,6 +306,24 @@ e_bindings_key_get(const char *action)
    return NULL;
 }
 
+EAPI E_Binding_Key *
+e_bindings_key_find(const char *key, E_Binding_Modifier mod, int any_mod)
+{
+   E_Binding_Key *bind;
+   Eina_List *l;
+
+   if (!key) return NULL;
+
+   EINA_LIST_FOREACH(key_bindings, l, bind)
+     {
+	if ((bind->key) && (!strcmp(key, bind->key)) && 
+            (bind->mod == mod) && (bind->any_mod == any_mod))
+	  return bind;
+     }
+
+   return NULL;
+}
+
 EAPI void
 e_bindings_key_del(E_Binding_Context ctxt, const char *key, E_Binding_Modifier mod, int any_mod, const char *action, const char *params)
 {
