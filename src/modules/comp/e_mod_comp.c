@@ -1142,6 +1142,9 @@ _e_mod_comp_cb_animator(void *data)
 static void
 _e_mod_comp_render_queue(E_Comp *c)
 {
+   /* FIXME workaround */
+   if (!c) return;
+
    if (_comp_mod->conf->lock_fps)
      {
         if (c->render_animator)
