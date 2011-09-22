@@ -22,10 +22,6 @@ static Eina_Hash *mappings = NULL;
 static Eina_Hash *group_cache = NULL;
 
 static Eina_List *categories = NULL;
-static Eina_List *transitions = NULL;
-static Eina_List *borders = NULL;
-static Eina_List *shelfs = NULL;
-static Eina_List *comps = NULL;
 static E_Fm2_Mime_Handler *theme_hdl = NULL;
 
 /* externally accessible functions */
@@ -55,11 +51,6 @@ e_theme_init(void)
 	e_theme_file_set(buf, et->file);
      }
 
-   /* Find transitions */
-   transitions = _e_theme_collection_items_find("base/theme/transitions", "e/transitions");
-   borders = _e_theme_collection_items_find("base/theme/borders", "e/widgets/border");
-   shelfs = _e_theme_collection_items_find("base/theme/shelf", "e/shelf");
-   comps = _e_theme_collection_items_find("base/theme/borders", "e/comp");
    if (!mappings) mappings = eina_hash_string_superfast_new(NULL);
    group_cache = eina_hash_string_superfast_new(NULL);
 
@@ -89,14 +80,7 @@ e_theme_shutdown(void)
      }
    EINA_LIST_FREE(categories, str)
      eina_stringshare_del(str);
-   EINA_LIST_FREE(transitions, str)
-     eina_stringshare_del(str);
-   EINA_LIST_FREE(borders, str)
-     eina_stringshare_del(str);
-   EINA_LIST_FREE(shelfs, str)
-     eina_stringshare_del(str);
-   EINA_LIST_FREE(comps, str)
-     eina_stringshare_del(str);
+
    return 1;
 }
 
@@ -425,57 +409,102 @@ e_theme_category_list(void)
 EAPI int
 e_theme_transition_find(const char *transition)
 {
-   if (eina_list_search_sorted(transitions, EINA_COMPARE_CB(strcmp), transition))
-     return 1;
-   return 0;
+   Eina_List *trans = NULL;
+   int found = 0;
+   const char *str;
+
+   trans = 
+     _e_theme_collection_items_find("base/theme/transitions", "e/transitions");
+
+   if (eina_list_search_sorted(trans, EINA_COMPARE_CB(strcmp), transition))
+     found = 1;
+
+   EINA_LIST_FREE(trans, str)
+     eina_stringshare_del(str);
+
+   return found;
 }
 
 EAPI Eina_List *
 e_theme_transition_list(void)
 {
-   return transitions;
+   return _e_theme_collection_items_find("base/theme/transitions", 
+                                         "e/transitions");
 }
 
 EAPI int
 e_theme_border_find(const char *border)
 {
-   if (eina_list_search_sorted(borders, EINA_COMPARE_CB(strcmp), border))
-     return 1;
-   return 0;
+   Eina_List *bds = NULL;
+   int found = 0;
+   const char *str;
+
+   bds = 
+     _e_theme_collection_items_find("base/theme/borders", "e/widgets/border");
+
+   if (eina_list_search_sorted(bds, EINA_COMPARE_CB(strcmp), border))
+     found = 1;
+
+   EINA_LIST_FREE(bds, str)
+     eina_stringshare_del(str);
+
+   return found;
 }
 
 EAPI Eina_List *
 e_theme_border_list(void)
 {
-   return borders;
+   return _e_theme_collection_items_find("base/theme/borders", 
+                                         "e/widgets/border");
 }
 
 EAPI int
 e_theme_shelf_find(const char *shelf)
 {
+   Eina_List *shelfs = NULL;
+   int found = 0;
+   const char *str;
+
+   shelfs = 
+     _e_theme_collection_items_find("base/theme/shelf", "e/shelf");
+
    if (eina_list_search_sorted(shelfs, EINA_COMPARE_CB(strcmp), shelf))
-     return 1;
-   return 0;
+     found = 1;
+
+   EINA_LIST_FREE(shelfs, str)
+     eina_stringshare_del(str);
+
+   return found;
 }
 
 EAPI Eina_List *
 e_theme_shelf_list(void)
 {
-   return shelfs;
+   return _e_theme_collection_items_find("base/theme/shelf", "e/shelf");
 }
 
 EAPI int
 e_theme_comp_find(const char *comp)
 {
+   Eina_List *comps = NULL;
+   int found = 0;
+   const char *str;
+
+   comps = _e_theme_collection_items_find("base/theme/borders", "e/comp");
+
    if (eina_list_search_sorted(comps, EINA_COMPARE_CB(strcmp), comp))
-     return 1;
-   return 0;
+     found = 1;
+
+   EINA_LIST_FREE(comps, str)
+     eina_stringshare_del(str);
+
+   return found;
 }
 
 EAPI Eina_List *
 e_theme_comp_list(void)
 {
-   return comps;
+   return _e_theme_collection_items_find("base/theme/borders", "e/comp");
 }
 
 EAPI void
@@ -597,10 +626,8 @@ _e_theme_collection_items_find(const char *base, const char *collname)
 {
    Eina_List *list = NULL;
    E_Theme_Result *res;
-   char *category, *p, *p2;
-   int collname_len;
+   char *category, *p;
 
-   collname_len = strlen(collname);
    category = alloca(strlen(base) + 1);
    strcpy(category, base);
    do
@@ -629,12 +656,14 @@ _e_theme_collection_items_find(const char *base, const char *collname)
 		  if (coll)
 		    {
 		       const char *c;
+                       int collname_len;
 
+                       collname_len = strlen(collname);
 		       EINA_LIST_FOREACH(coll, l, c)
 			 {
 			    if (!strncmp(c, collname, collname_len))
 			      {
-				 char *trans;
+				 char *trans, *p2;
 
 				 trans = strdup(c);
 				 p = trans + collname_len + 1;

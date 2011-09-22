@@ -410,6 +410,7 @@ _fill_styles(E_Config_Dialog_Data *cfdata, Evas_Object *obj)
    Evas *evas;
    Eina_List *l, *styles;
    char *style;
+   const char *str;
    int mw, n = 0;
 
    evas = evas_object_evas_get(obj);
@@ -443,6 +444,9 @@ _fill_styles(E_Config_Dialog_Data *cfdata, Evas_Object *obj)
    e_widget_ilist_thaw(obj);
    edje_thaw();
    evas_event_thaw(evas);
+
+   EINA_LIST_FREE(styles, str)
+     eina_stringshare_del(str);
 }
 
 static void 

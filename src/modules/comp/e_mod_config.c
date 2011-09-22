@@ -353,6 +353,7 @@ _style_selector(Evas        *evas,
    Evas_Object *oi, *ob, *oo, *obd, *orec, *oly, *orec0;
    Eina_List *styles, *l, *style_shadows = NULL, *style_list;
    char *style;
+   const char *str;
    int n, sel;
    Evas_Coord wmw, wmh;
    Ecore_Timer *timer;
@@ -434,6 +435,9 @@ _style_selector(Evas        *evas,
    e_widget_size_min_set(oi, 160, 100);
    e_widget_ilist_selected_set(oi, sel);
    e_widget_ilist_go(oi);
+
+   EINA_LIST_FREE(styles, str)
+     eina_stringshare_del(str);
 
    return oi;
 }

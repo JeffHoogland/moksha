@@ -190,7 +190,8 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    Eina_List *borders, *l;
    int n, sel = 0;
    char *tmp;
-   
+   const char *str;
+
    if (cfdata->border)
      tmp = strdup(cfdata->border->client.border.name);
    else
@@ -247,7 +248,10 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                 &(cfdata->remember_border));
 	e_widget_list_object_append(o, ob, 1, 0, 0.0);
      }
-   
+
+   EINA_LIST_FREE(borders, str)
+     eina_stringshare_del(str);
+
    E_FREE(tmp);
    e_dialog_resizable_set(cfd->dia, 1);
    return o;

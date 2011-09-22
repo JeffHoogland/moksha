@@ -80,14 +80,25 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 static int 
 _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
 {
+   Eina_List *trans = NULL;
+   const char *str;
+
+   trans = e_theme_transition_list();
+
    if (e_config->transition_start)
      eina_stringshare_del(e_config->transition_start);
    e_config->transition_start = NULL;
    if (cfdata->transition_start) 
      {
-	if (e_theme_transition_find(cfdata->transition_start)) 
-	  e_config->transition_start = 
-          eina_stringshare_add(cfdata->transition_start);
+        if (eina_list_search_sorted(trans, EINA_COMPARE_CB(strcmp), 
+                                    cfdata->transition_start)) 
+          {
+             e_config->transition_start = 
+               eina_stringshare_add(cfdata->transition_start);
+          }
+	/* if (e_theme_transition_find(cfdata->transition_start))  */
+	/*   e_config->transition_start =  */
+        /*   eina_stringshare_add(cfdata->transition_start); */
      }
 
    if (e_config->transition_desk)
@@ -95,8 +106,14 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    e_config->transition_desk = NULL;
    if (cfdata->transition_desk) 
      {
-	if (e_theme_transition_find(cfdata->transition_desk)) 
-	  e_config->transition_desk = eina_stringshare_add(cfdata->transition_desk);
+        if (eina_list_search_sorted(trans, EINA_COMPARE_CB(strcmp), 
+                                    cfdata->transition_desk)) 
+          {
+             e_config->transition_desk = 
+               eina_stringshare_add(cfdata->transition_desk);
+          }
+	/* if (e_theme_transition_find(cfdata->transition_desk))  */
+	/*   e_config->transition_desk = eina_stringshare_add(cfdata->transition_desk); */
      }
 
    if (e_config->transition_change)
@@ -104,11 +121,21 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    e_config->transition_change = NULL;
    if (cfdata->transition_change) 
      {   
-	if (e_theme_transition_find(cfdata->transition_change)) 
-	  e_config->transition_change = eina_stringshare_add(cfdata->transition_change);
+        if (eina_list_search_sorted(trans, EINA_COMPARE_CB(strcmp), 
+                                    cfdata->transition_change)) 
+          {
+             e_config->transition_change = 
+               eina_stringshare_add(cfdata->transition_change);
+          }
+	/* if (e_theme_transition_find(cfdata->transition_change))  */
+	/*   e_config->transition_change = eina_stringshare_add(cfdata->transition_change); */
      }
 
    e_config_save_queue();
+
+   EINA_LIST_FREE(trans, str)
+     eina_stringshare_del(str);
+
    return 1;
 }
 
@@ -151,12 +178,17 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    edje_freeze();
    e_widget_ilist_freeze(il);
    e_widget_ilist_append(il, NULL, _("None"), _trans_cb_changed, cfdata, NULL);
+
    for (l = e_theme_transition_list(); l; l = l->next) 
      {
-	t = l->data;
-	if (!t) continue;
-	e_widget_ilist_append(il, NULL, t, _trans_cb_changed, cfdata, NULL);
+   	t = l->data;
+   	if (!t) continue;
+   	e_widget_ilist_append(il, NULL, t, _trans_cb_changed, cfdata, NULL);
      }
+
+   EINA_LIST_FREE(l, t) 
+     eina_stringshare_del(t);
+
    e_widget_ilist_go(il);
    e_widget_ilist_thaw(il);
    edje_thaw();
@@ -170,6 +202,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    e_dialog_resizable_set(cfd->dia, 1);
+
    return o;
 }
 
