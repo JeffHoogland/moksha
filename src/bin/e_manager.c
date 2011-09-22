@@ -84,7 +84,6 @@ EAPI E_Manager *
 e_manager_new(Ecore_X_Window root, int num)
 {
    E_Manager *man;
-   Ecore_Event_Handler *h;
 
    if (!ecore_x_window_manage(root)) return NULL;
    ecore_x_window_background_color_set(root, 0, 0, 0);
@@ -106,22 +105,46 @@ e_manager_new(Ecore_X_Window root, int num)
 	man->win = man->root;
      }
 
-   h = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHOW_REQUEST, _e_manager_cb_window_show_request, man);
-   if (h) man->handlers = eina_list_append(man->handlers, h);
-   h = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_CONFIGURE, _e_manager_cb_window_configure, man);
-   if (h) man->handlers = eina_list_append(man->handlers, h);
-   h = ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, _e_manager_cb_key_down, man);
-   if (h) man->handlers = eina_list_append(man->handlers, h);
-   h = ecore_event_handler_add(ECORE_EVENT_KEY_UP, _e_manager_cb_key_up, man);
-   if (h) man->handlers = eina_list_append(man->handlers, h);
-   h = ecore_event_handler_add(ECORE_X_EVENT_FRAME_EXTENTS_REQUEST, _e_manager_cb_frame_extents_request, man);
-   if (h) man->handlers = eina_list_append(man->handlers, h);
-   h = ecore_event_handler_add(ECORE_X_EVENT_PING, _e_manager_cb_ping, man);
-   if (h) man->handlers = eina_list_append(man->handlers, h);
-   h = ecore_event_handler_add(ECORE_X_EVENT_SCREENSAVER_NOTIFY, _e_manager_cb_screensaver_notify, man);
-   if (h) man->handlers = eina_list_append(man->handlers, h);
-   h = ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE, _e_manager_cb_client_message, man);
-   if (h) man->handlers = eina_list_append(man->handlers, h);
+   man->handlers = 
+     eina_list_append(man->handlers, 
+                      ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHOW_REQUEST, 
+                                              _e_manager_cb_window_show_request, 
+                                              man));
+   man->handlers = 
+     eina_list_append(man->handlers, 
+                      ecore_event_handler_add(ECORE_X_EVENT_WINDOW_CONFIGURE, 
+                                              _e_manager_cb_window_configure, 
+                                              man));
+   man->handlers = 
+     eina_list_append(man->handlers, 
+                      ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, 
+                                              _e_manager_cb_key_down, 
+                                              man));
+   man->handlers = 
+     eina_list_append(man->handlers, 
+                      ecore_event_handler_add(ECORE_EVENT_KEY_UP, 
+                                              _e_manager_cb_key_up, 
+                                              man));
+   man->handlers = 
+     eina_list_append(man->handlers, 
+                      ecore_event_handler_add(ECORE_X_EVENT_FRAME_EXTENTS_REQUEST, 
+                                              _e_manager_cb_frame_extents_request, 
+                                              man));
+   man->handlers = 
+     eina_list_append(man->handlers, 
+                      ecore_event_handler_add(ECORE_X_EVENT_PING, 
+                                              _e_manager_cb_ping, 
+                                              man));
+   man->handlers = 
+     eina_list_append(man->handlers, 
+                      ecore_event_handler_add(ECORE_X_EVENT_SCREENSAVER_NOTIFY, 
+                                              _e_manager_cb_screensaver_notify, 
+                                              man));
+   man->handlers = 
+     eina_list_append(man->handlers, 
+                      ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE, 
+                                              _e_manager_cb_client_message, 
+                                              man));
 
    man->pointer = e_pointer_window_new(man->root, 1);
 
