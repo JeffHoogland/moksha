@@ -48,7 +48,7 @@ e_desk_new(E_Zone *zone, int x, int y)
    Eina_List *l;
    E_Config_Desktop_Name *cfname;
    char name[40];
-   int ok;
+   int ok = 0;
 
    E_OBJECT_CHECK_RETURN(zone, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(zone, E_ZONE_TYPE, NULL);
@@ -61,7 +61,6 @@ e_desk_new(E_Zone *zone, int x, int y)
    desk->y = y;
 
    /* Get current desktop's name */
-   ok = 0;
    EINA_LIST_FOREACH(e_config->desktop_names, l, cfname)
      {
 	if ((cfname->container >= 0) &&
@@ -91,8 +90,8 @@ e_desk_name_set(E_Desk *desk, const char *name)
 
    E_OBJECT_CHECK(desk);
    E_OBJECT_TYPE_CHECK(desk, E_DESK_TYPE);
-   if (desk->name) eina_stringshare_del(desk->name);
-   desk->name = eina_stringshare_add(name);
+
+   eina_stringshare_replace(&desk->name, name);
 
    ev = E_NEW(E_Event_Desk_Name_Change, 1);
    ev->desk = desk;
@@ -107,12 +106,14 @@ e_desk_name_add(int container, int zone, int desk_x, int desk_y, const char *nam
    E_Config_Desktop_Name *cfname;
 
    e_desk_name_del(container, zone, desk_x, desk_y);
+
    cfname = E_NEW(E_Config_Desktop_Name, 1);
    cfname->container = container;
    cfname->zone = zone;
    cfname->desk_x = desk_x;
    cfname->desk_y = desk_y;
    if (name) cfname->name = eina_stringshare_add(name);
+   else cfname->name = NULL;
    e_config->desktop_names = eina_list_append(e_config->desktop_names, cfname);
 }
 
@@ -130,7 +131,7 @@ e_desk_name_del(int container, int zone, int desk_x, int desk_y)
 	     e_config->desktop_names = 
 	       eina_list_remove_list(e_config->desktop_names, l);
 	     if (cfname->name) eina_stringshare_del(cfname->name);
-	     free(cfname);
+	     E_FREE(cfname);
 	     break;
 	  }
      }
@@ -169,7 +170,7 @@ e_desk_name_update(void)
 	    			     ((int) zone->num != cfname->zone)) continue;
 				 if ((cfname->desk_x != d_x) || 
 				     (cfname->desk_y != d_y)) continue;
-				 e_desk_name_set(desk,cfname->name);
+				 e_desk_name_set(desk, cfname->name);
 				 ok = 1;
 				 break;
 		       	      }
@@ -179,7 +180,7 @@ e_desk_name_update(void)
 				 snprintf(name, sizeof(name), 
 					  _(e_config->desktop_default_name), 
 					  d_x, d_y);
-				 e_desk_name_set(desk,name);
+				 e_desk_name_set(desk, name);
 			      }
 			 }
 		    }
@@ -517,7 +518,9 @@ static void
 _e_desk_free(E_Desk *desk)
 {
    if (desk->name) eina_stringshare_del(desk->name);
+   desk->name = NULL;
    if (desk->animator) ecore_animator_del(desk->animator);
+   desk->animator = NULL;
    free(desk);
 }
 
