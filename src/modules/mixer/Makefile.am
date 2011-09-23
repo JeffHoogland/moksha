@@ -29,11 +29,11 @@ module_la_SOURCES = e_mod_main.h \
                     conf_module.c \
                     sys_pulse.c \
                     app_mixer.c \
-																				msg.c \
-																				pa.c \
-																				serial.c \
-																				sink.c \
-																				tag.c
+                    msg.c \
+                    pa.c \
+                    serial.c \
+                    sink.c \
+                    tag.c
 
 if HAVE_ALSA
 module_la_SOURCES += sys_alsa.c
