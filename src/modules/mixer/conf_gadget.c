@@ -50,11 +50,11 @@ _mixer_fill_cards_info(E_Config_Dialog_Data *cfdata)
    int i = 0;
 
    cfdata->card_num = -1;
-   cfdata->cards = e_mixer_system_get_cards();
+   cfdata->cards = e_mod_mixer_cards_get();
    cfdata->cards_names = NULL;
    EINA_LIST_FOREACH(cfdata->cards, l, card)
      {
-	name = e_mixer_system_get_card_name(card);
+	name = e_mod_mixer_card_name_get(card);
 	if ((cfdata->card_num < 0) && card && cfdata->card &&
             (strcmp(card, cfdata->card) == 0))
 	  cfdata->card_num = i;
@@ -76,13 +76,13 @@ _mixer_fill_channels_info(E_Config_Dialog_Data *cfdata)
    Eina_List *l;
    int i = 0;
 
-   sys = e_mixer_system_new(cfdata->card);
+   sys = e_mod_mixer_new(cfdata->card);
    if (!sys)
      return;
 
    cfdata->channel = 0;
    cfdata->channel_name = eina_stringshare_add(cfdata->conf->channel_name);
-   cfdata->channels_names = e_mixer_system_get_channels_names(sys);
+   cfdata->channels_names = e_mod_mixer_channels_names_get(sys);
    EINA_LIST_FOREACH(cfdata->channels_names, l, channel)
      {
 	if (channel && cfdata->channel_name &&
@@ -95,7 +95,7 @@ _mixer_fill_channels_info(E_Config_Dialog_Data *cfdata)
 
 	i++;
      }
-   e_mixer_system_del(sys);
+   e_mod_mixer_del(sys);
 }
 
 static void *
@@ -136,9 +136,9 @@ _free_data(E_Config_Dialog *dialog, E_Config_Dialog_Data *cfdata)
      eina_stringshare_del(card);
 
    if (cfdata->channels_names)
-     e_mixer_system_free_channels_names(cfdata->channels_names);
+     e_mod_mixer_channels_free(cfdata->channels_names);
    if (cfdata->cards)
-     e_mixer_system_free_cards(cfdata->cards);
+     e_mod_mixer_cards_free(cfdata->cards);
 
    eina_stringshare_del(cfdata->card);
    eina_stringshare_del(cfdata->channel_name);
@@ -292,7 +292,7 @@ _card_change(void *data, Evas_Object *obj, void *event __UNUSED__)
 
    eina_stringshare_del(cfdata->card);
 
-   e_mixer_system_free_channels_names(cfdata->channels_names);
+   e_mod_mixer_channels_free(cfdata->channels_names);
 
    eina_stringshare_del(cfdata->channel_name);
 
@@ -348,6 +348,12 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
                                 0, 2, 1, 1, 1, 1, 1, 1);
 
    return cfdata->ui.table;
+}
+
+void
+e_mixer_config_pulse_toggle(void)
+{
+
 }
 
 E_Config_Dialog *

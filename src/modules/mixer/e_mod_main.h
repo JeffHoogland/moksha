@@ -78,6 +78,14 @@ typedef struct E_Mixer_Module_Context
    int desktop_notification;
 } E_Mixer_Module_Context;
 
+typedef int (*E_Mixer_Volume_Set_Cb)(E_Mixer_System *, E_Mixer_Channel *, int, int);
+typedef int (*E_Mixer_Volume_Get_Cb)(E_Mixer_System *, E_Mixer_Channel *, int *, int *);
+typedef int (*E_Mixer_Mute_Get_Cb)(E_Mixer_System *, E_Mixer_Channel *, int *);
+typedef int (*E_Mixer_Mute_Set_Cb)(E_Mixer_System *, E_Mixer_Channel *, int);
+typedef int (*E_Mixer_State_Get_Cb)(E_Mixer_System *, E_Mixer_Channel *, E_Mixer_Channel_State *);
+typedef int (*E_Mixer_Capture_Cb)(E_Mixer_System *, E_Mixer_Channel *);
+typedef void *(*E_Mixer_Cb)();
+
 EAPI extern E_Module_Api e_modapi;
 EAPI void *e_modapi_init(E_Module *m);
 EAPI int e_modapi_shutdown(E_Module *m);
@@ -89,6 +97,33 @@ E_Dialog *e_mixer_app_dialog_new(E_Container *con, void (*func)(E_Dialog *dialog
 int e_mixer_app_dialog_select(E_Dialog *dialog, const char *card_name, const char *channel_name);
 
 int e_mixer_update(E_Mixer_Instance *inst);
+void e_mixer_default_setup(void);
+void e_mixer_pulse_setup(void);
 const char *e_mixer_theme_path(void);
 
+void e_mod_mixer_pulse_ready(Eina_Bool);
+void e_mod_mixer_pulse_update(void);
+
+extern Eina_Bool _mixer_using_default;
+extern E_Mixer_Volume_Get_Cb e_mod_mixer_volume_get;
+extern E_Mixer_Volume_Set_Cb e_mod_mixer_volume_set;
+extern E_Mixer_Mute_Get_Cb e_mod_mixer_mute_get;
+extern E_Mixer_Mute_Set_Cb e_mod_mixer_mute_set;
+extern E_Mixer_Capture_Cb e_mod_mixer_mutable_get;
+extern E_Mixer_State_Get_Cb e_mod_mixer_state_get;
+extern E_Mixer_Capture_Cb e_mod_mixer_capture_get;
+extern E_Mixer_Cb e_mod_mixer_new;
+extern E_Mixer_Cb e_mod_mixer_del;
+extern E_Mixer_Cb e_mod_mixer_channel_default_name_get;
+extern E_Mixer_Cb e_mod_mixer_channel_get_by_name;
+extern E_Mixer_Cb e_mod_mixer_channel_name_get;
+extern E_Mixer_Cb e_mod_mixer_channel_del;
+extern E_Mixer_Cb e_mod_mixer_channel_free;
+extern E_Mixer_Cb e_mod_mixer_channels_free;
+extern E_Mixer_Cb e_mod_mixer_channels_get;
+extern E_Mixer_Cb e_mod_mixer_channels_names_get;
+extern E_Mixer_Cb e_mod_mixer_card_name_get;
+extern E_Mixer_Cb e_mod_mixer_cards_get;
+extern E_Mixer_Cb e_mod_mixer_cards_free;
+extern E_Mixer_Cb e_mod_mixer_card_default_get;
 #endif

@@ -73,7 +73,7 @@ _cb_changed_left(void *data, Evas_Object *obj __UNUSED__)
 				      state->right);
      }
 
-   e_mixer_system_set_volume(app->sys, app->channel_info->id,
+   e_mod_mixer_volume_set(app->sys, app->channel_info->id,
                              state->left, state->right);
 }
 
@@ -91,7 +91,7 @@ _cb_changed_right(void *data, Evas_Object *obj __UNUSED__)
 				      state->left);
      }
 
-   e_mixer_system_set_volume(app->sys, app->channel_info->id,
+   e_mod_mixer_volume_set(app->sys, app->channel_info->id,
                              state->left, state->right);
 }
 
@@ -100,7 +100,7 @@ _cb_changed_mute(void *data, Evas_Object *obj __UNUSED__)
 {
    E_Mixer_App_Dialog_Data *app = data;
 
-   e_mixer_system_set_mute(app->sys, app->channel_info->id, app->state.mute);
+   e_mod_mixer_mute_set(app->sys, app->channel_info->id, app->state.mute);
 }
 
 static void
@@ -120,7 +120,7 @@ _cb_changed_lock_sliders(void *data, Evas_Object *obj __UNUSED__)
 
    e_widget_slider_value_int_set(app->ui.channel_editor.left, state->left);
    e_widget_slider_value_int_set(app->ui.channel_editor.right, state->right);
-   e_mixer_system_set_volume(app->sys, app->channel_info->id,
+   e_mod_mixer_volume_set(app->sys, app->channel_info->id,
                              state->left, state->right);
 }
 
@@ -132,7 +132,7 @@ _update_channel_editor_state(E_Mixer_App_Dialog_Data *app, const E_Mixer_Channel
    e_widget_slider_value_int_set(ui->left, state.left);
    e_widget_slider_value_int_set(ui->right, state.right);
 
-   if (e_mixer_system_can_mute(app->sys, app->channel_info->id))
+   if (e_mod_mixer_mutable_get(app->sys, app->channel_info->id))
      {
 	e_widget_disabled_set(ui->mute, 0);
 	e_widget_check_checked_set(ui->mute, state.mute);
@@ -151,18 +151,18 @@ _populate_channel_editor(E_Mixer_App_Dialog_Data *app)
    E_Mixer_Channel_State state;
    const char *card_name;
 
-   card_name = e_mixer_system_get_card_name(app->card);
+   card_name = e_mod_mixer_card_name_get(app->card);
    e_widget_entry_text_set(ui->card, card_name);
    eina_stringshare_del(card_name);
 
    e_widget_entry_text_set(ui->channel, app->channel_name);
 
-   if (e_mixer_system_has_capture(app->sys, app->channel_info->id))
+   if (e_mod_mixer_capture_get(app->sys, app->channel_info->id))
      e_widget_entry_text_set(ui->type, _("Capture"));
    else
      e_widget_entry_text_set(ui->type, _("Playback"));
 
-   e_mixer_system_get_state(app->sys, app->channel_info->id, &state);
+   e_mod_mixer_state_get(app->sys, app->channel_info->id, &state);
    _update_channel_editor_state(app, state);
 
    app->lock_sliders = (state.left == state.right);
@@ -198,7 +198,7 @@ _channels_info_new(E_Mixer_System *sys)
 {
    Eina_List *channels, *channels_infos, *l;
 
-   channels = e_mixer_system_get_channels(sys);
+   channels = e_mod_mixer_channels_get(sys);
    channels_infos = NULL;
    for (l = channels; l; l = l->next)
      {
@@ -206,12 +206,12 @@ _channels_info_new(E_Mixer_System *sys)
 
 	info = malloc(sizeof(*info));
 	info->id = l->data;
-	info->name = e_mixer_system_get_channel_name(sys, info->id);
-	info->has_capture = e_mixer_system_has_capture(sys, info->id);
+	info->name = e_mod_mixer_channel_name_get(sys, info->id);
+	info->has_capture = e_mod_mixer_capture_get(sys, info->id);
 
 	channels_infos = eina_list_append(channels_infos, info);
      }
-   e_mixer_system_free_channels(channels);
+   e_mod_mixer_channels_free(channels);
 
    return eina_list_sort(channels_infos, -1, _channel_info_cmp);
 }
@@ -237,12 +237,11 @@ _cb_system_update(void *data, E_Mixer_System *sys __UNUSED__)
    if ((!app->sys) || (!app->channel_info))
      return 1;
 
-   e_mixer_system_get_state(app->sys, app->channel_info->id, &state);
+   e_mod_mixer_state_get(app->sys, app->channel_info->id, &state);
    _update_channel_editor_state(app, state);
 
    return 1;
 }
-
 
 static void
 _populate_channels(E_Mixer_App_Dialog_Data *app)
@@ -258,12 +257,13 @@ _populate_channels(E_Mixer_App_Dialog_Data *app)
    e_widget_ilist_clear(ilist);
 
    if (app->sys)
-     e_mixer_system_del(app->sys);
-   app->sys = e_mixer_system_new(app->card);
-   e_mixer_system_callback_set(app->sys, _cb_system_update, app);
+     e_mod_mixer_del(app->sys);
+   app->sys = e_mod_mixer_new(app->card);
+   if (_mixer_using_default)
+     e_mixer_system_callback_set(app->sys, _cb_system_update, app);
 
    eina_stringshare_del(app->channel_name);
-   app->channel_name = e_mixer_system_get_default_channel_name(app->sys);
+   app->channel_name = e_mod_mixer_channel_default_name_get(app->sys);
 
    if (app->channels_infos)
      _channels_info_free(app->channels_infos);
@@ -333,8 +333,8 @@ _create_cards(E_Dialog *dialog __UNUSED__, Evas *evas, E_Mixer_App_Dialog_Data *
    const char *card;
    Eina_List *l;
 
-   app->card = e_mixer_system_get_default_card();
-   app->cards = e_mixer_system_get_cards();
+   app->card = e_mod_mixer_card_default_get();
+   app->cards = e_mod_mixer_cards_get();
    if (eina_list_count(app->cards) < 2)
      return;
 
@@ -345,7 +345,7 @@ _create_cards(E_Dialog *dialog __UNUSED__, Evas *evas, E_Mixer_App_Dialog_Data *
      {
 	const char *card_name;
 
-	card_name = e_mixer_system_get_card_name(card);
+	card_name = e_mod_mixer_card_name_get(card);
 
 	e_widget_ilist_append(ui->list, NULL, card_name, _cb_card_selected,
 			      app, card);
@@ -459,10 +459,10 @@ _mixer_app_dialog_del(E_Dialog *dialog, E_Mixer_App_Dialog_Data *app)
    eina_stringshare_del(app->card);
    eina_stringshare_del(app->channel_name);
    if (app->cards)
-     e_mixer_system_free_cards(app->cards);
+     e_mod_mixer_cards_free(app->cards);
    if (app->channels_infos)
      _channels_info_free(app->channels_infos);
-   e_mixer_system_del(app->sys);
+   e_mod_mixer_del(app->sys);
 
    e_util_defer_object_del(E_OBJECT(dialog));
    dialog->data = NULL;
