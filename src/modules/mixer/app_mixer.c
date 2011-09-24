@@ -264,7 +264,7 @@ _populate_channels(E_Mixer_App_Dialog_Data *app)
 
    eina_stringshare_del(app->channel_name);
    app->channel_name = e_mod_mixer_channel_default_name_get(app->sys);
-
+   
    if (app->channels_infos)
      _channels_info_free(app->channels_infos);
    app->channels_infos = _channels_info_new(app->sys);

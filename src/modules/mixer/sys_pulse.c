@@ -294,8 +294,8 @@ e_mixer_pulse_get_channels(E_Mixer_System *self)
    uintptr_t id;
    Eina_List *ret = NULL;
 
-   for (id=0; id < pulse_sink_channels_count((void*)self); id++)
-     ret = eina_list_append(ret, (void*)id);
+   for (id = 0; id < pulse_sink_channels_count((void *)self); id++)
+     ret = eina_list_append(ret, (void *)(id + 1));
    return ret;
 }
 
@@ -308,30 +308,29 @@ e_mixer_pulse_free_channels(Eina_List *channels)
 Eina_List *
 e_mixer_pulse_get_channels_names(E_Mixer_System *self)
 {
-   return pulse_sink_channel_names_get((void*)self);;
+   return pulse_sink_channel_names_get((void *)self);
 }
 
 void
 e_mixer_pulse_free_channels_names(Eina_List *channels_names)
 {
    const char *str;
-   EINA_LIST_FREE(channels_names, str)
-     eina_stringshare_del(str);
+   EINA_LIST_FREE(channels_names, str) eina_stringshare_del(str);
 }
 
 const char *
-e_mixer_pulse_get_default_channel_name(E_Mixer_System *self __UNUSED__)
+e_mixer_pulse_get_default_channel_name(E_Mixer_System *self)
 {
-   return eina_stringshare_add("Front");
+   return e_mixer_pulse_get_channel_name(self, 0);
 }
 
 E_Mixer_Channel *
 e_mixer_pulse_get_channel_by_name(E_Mixer_System *self, const char *name)
 {
    unsigned int x;
-   x = pulse_sink_channel_name_get_id((void*)self, name);
-   if (x == UINT_MAX) return (intptr_t*)-2;
-   return (uintptr_t*)((uintptr_t)x);
+   x = pulse_sink_channel_name_get_id((void *)self, name);
+   if (x == UINT_MAX) return NULL;
+   return (E_Mixer_Channel *)((uintptr_t)(x + 1));
 }
 
 void
@@ -342,8 +341,9 @@ e_mixer_pulse_channel_del(E_Mixer_Channel *channel __UNUSED__)
 const char *
 e_mixer_pulse_get_channel_name(E_Mixer_System *self, E_Mixer_Channel *channel)
 {
-   if (channel == (E_Mixer_Channel *)-2) return NULL;
-   return pulse_sink_channel_id_get_name((void*)self, (uintptr_t)channel);
+   if (!channel) return NULL;
+   return pulse_sink_channel_id_get_name((void *)self, 
+                                         ((uintptr_t)channel) - 1);
 }
 
 int
@@ -351,10 +351,11 @@ e_mixer_pulse_get_volume(E_Mixer_System *self, E_Mixer_Channel *channel, int *le
 {
    double volume;
 
-   volume = pulse_sink_channel_volume_get((void*)self, (uintptr_t)channel);
+   if (!channel) return 0;
+   volume = pulse_sink_channel_volume_get((void *)self, 
+                                          ((uintptr_t)channel) - 1);
    if (left) *left = (int)volume;
    if (right) *right = (int)volume;
-
    return 1;
 }
 
@@ -363,7 +364,10 @@ e_mixer_pulse_set_volume(E_Mixer_System *self, E_Mixer_Channel *channel, int lef
 {
    uint32_t id;
 
-   id = pulse_sink_channel_volume_set(conn, (void*)self, (uintptr_t)channel, (left + right) / 2);
+   if (!channel) return 0;
+   id = pulse_sink_channel_volume_set(conn, (void *)self, 
+                                      ((uintptr_t)channel) - 1, 
+                                      (left + right) / 2);
    if (!id) return 0;
    pulse_cb_set(conn, id, (Pulse_Cb)_pulse_result_cb);
    return 1;
@@ -378,7 +382,7 @@ e_mixer_pulse_can_mute(E_Mixer_System *self __UNUSED__, E_Mixer_Channel *channel
 int
 e_mixer_pulse_get_mute(E_Mixer_System *self, E_Mixer_Channel *channel __UNUSED__, int *mute)
 {
-   if (mute) *mute = pulse_sink_muted_get((void*)self);
+   if (mute) *mute = pulse_sink_muted_get((void *)self);
 
    return 1;
 }
@@ -388,8 +392,8 @@ e_mixer_pulse_set_mute(E_Mixer_System *self, E_Mixer_Channel *channel __UNUSED__
 {
    uint32_t idx, id;
 
-   idx = pulse_sink_idx_get((void*)self);
-   id = pulse_sink_mute_set(conn, pulse_sink_idx_get((void*)self), mute);
+   idx = pulse_sink_idx_get((void *)self);
+   id = pulse_sink_mute_set(conn, pulse_sink_idx_get((void *)self), mute);
    if (!id) return 0;
    pulse_cb_set(conn, id, (Pulse_Cb)_pulse_result_cb);
    return 1;
@@ -402,8 +406,10 @@ e_mixer_pulse_get_state(E_Mixer_System *self, E_Mixer_Channel *channel, E_Mixer_
    
    if (!state) return 0;
 
-   vol = pulse_sink_channel_volume_get((void*)self, (uintptr_t)channel);
-   state->mute = pulse_sink_muted_get((void*)self);
+   if (!channel) return 0;
+   vol = pulse_sink_channel_volume_get((void *)self, 
+                                       ((uintptr_t)channel) - 1);
+   state->mute = pulse_sink_muted_get((void *)self);
    state->left = state->right = (int)vol;
    
    return 1;
@@ -414,7 +420,10 @@ e_mixer_pulse_set_state(E_Mixer_System *self, E_Mixer_Channel *channel, const E_
 {
    uint32_t id;
 
-   id = pulse_sink_channel_volume_set(conn, (void*)self, (uintptr_t)channel, (state->left + state->right) / 2);
+   if (!channel) return 0;
+   id = pulse_sink_channel_volume_set(conn, (void *)self, 
+                                      ((uintptr_t)channel) - 1, 
+                                      (state->left + state->right) / 2);
    if (!id) return 0;
    pulse_cb_set(conn, id, (Pulse_Cb)_pulse_result_cb);
    return 1;
