@@ -1189,7 +1189,7 @@ e_config_load(void)
         COPYVAL(backlight.transition);
         IFCFGEND;
 
-        IFCFG(0x0143);
+        IFCFG(0x0144);
         COPYVAL(xsettings.match_e17_theme);
         COPYVAL(xsettings.match_e17_icon_theme);
         IFCFGEND;
