@@ -6,6 +6,8 @@
 #include <Ecore.h>
 #include "Pulse.h"
 
+//#define BAD_CH_MAPPING 1
+
 #define PULSE_BUS "org.PulseAudio.Core1"
 #define PULSE_PATH "/org/pulseaudio/core1"
 #define PULSE_INTERFACE "org.PulseAudio.Core1"
@@ -294,8 +296,12 @@ e_mixer_pulse_get_channels(E_Mixer_System *self)
    uintptr_t id;
    Eina_List *ret = NULL;
 
+#ifdef BAD_CH_MAPPING
    for (id = 0; id < pulse_sink_channels_count((void *)self); id++)
      ret = eina_list_append(ret, (void *)(id + 1));
+#else
+   ret = eina_list_append(ret, (void *)(1));
+#endif
    return ret;
 }
 
@@ -308,7 +314,11 @@ e_mixer_pulse_free_channels(Eina_List *channels)
 Eina_List *
 e_mixer_pulse_get_channels_names(E_Mixer_System *self)
 {
+#ifdef BAD_CH_MAPPING
    return pulse_sink_channel_names_get((void *)self);
+#else
+   return eina_list_append(NULL, eina_stringshare_add("Output"));
+#endif   
 }
 
 void
@@ -321,16 +331,24 @@ e_mixer_pulse_free_channels_names(Eina_List *channels_names)
 const char *
 e_mixer_pulse_get_default_channel_name(E_Mixer_System *self)
 {
+#ifdef BAD_CH_MAPPING
    return e_mixer_pulse_get_channel_name(self, 0);
+#else
+   return eina_stringshare_add("Output");
+#endif   
 }
 
 E_Mixer_Channel *
 e_mixer_pulse_get_channel_by_name(E_Mixer_System *self, const char *name)
 {
+#ifdef BAD_CH_MAPPING
    unsigned int x;
    x = pulse_sink_channel_name_get_id((void *)self, name);
    if (x == UINT_MAX) return NULL;
    return (E_Mixer_Channel *)((uintptr_t)(x + 1));
+#else
+   return (E_Mixer_Channel *)1;
+#endif   
 }
 
 void
@@ -342,34 +360,76 @@ const char *
 e_mixer_pulse_get_channel_name(E_Mixer_System *self, E_Mixer_Channel *channel)
 {
    if (!channel) return NULL;
+#ifdef BAD_CH_MAPPING
    return pulse_sink_channel_id_get_name((void *)self, 
                                          ((uintptr_t)channel) - 1);
+#else
+   return eina_stringshare_add("Output");
+#endif   
 }
 
 int
 e_mixer_pulse_get_volume(E_Mixer_System *self, E_Mixer_Channel *channel, int *left, int *right)
 {
    double volume;
-
+   
+#ifdef BAD_CH_MAPPING
    if (!channel) return 0;
    volume = pulse_sink_channel_volume_get((void *)self, 
                                           ((uintptr_t)channel) - 1);
    if (left) *left = (int)volume;
    if (right) *right = (int)volume;
+#else
+   int x, n;
+   
+   if (!channel) return 0;
+   n = pulse_sink_channels_count((void *)self);
+   for (x = 0; x < n; x++)
+     {
+        volume = pulse_sink_channel_volume_get((void *)self, 
+                                               ((uintptr_t)channel) - 1);
+        if (x == 0)
+          {
+             if (left) *left = (int)volume;
+          }
+        else if (x == 1)
+          {
+             if (right) *right = (int)volume;
+          }
+     }
+#endif   
    return 1;
 }
 
 int
 e_mixer_pulse_set_volume(E_Mixer_System *self, E_Mixer_Channel *channel, int left, int right)
 {
-   uint32_t id;
+   uint32_t id = 0;
 
+#ifdef BAD_CH_MAPPING
    if (!channel) return 0;
    id = pulse_sink_channel_volume_set(conn, (void *)self, 
                                       ((uintptr_t)channel) - 1, 
                                       (left + right) / 2);
    if (!id) return 0;
    pulse_cb_set(conn, id, (Pulse_Cb)_pulse_result_cb);
+#else
+   int x, n;
+   
+   if (!channel) return 0;
+   n = pulse_sink_channels_count((void *)self); 
+   for (x = 0; x < n; x++)
+     {
+        if (x == 0)
+          {
+             id |= pulse_sink_channel_volume_set(conn, (void *)self, x, left);
+          }
+        else if (x == 1)
+          {
+             id |= pulse_sink_channel_volume_set(conn, (void *)self, x, right);
+          }
+     }
+#endif   
    return 1;
 }
 
@@ -383,7 +443,6 @@ int
 e_mixer_pulse_get_mute(E_Mixer_System *self, E_Mixer_Channel *channel __UNUSED__, int *mute)
 {
    if (mute) *mute = pulse_sink_muted_get((void *)self);
-
    return 1;
 }
 
@@ -403,15 +462,19 @@ int
 e_mixer_pulse_get_state(E_Mixer_System *self, E_Mixer_Channel *channel, E_Mixer_Channel_State *state)
 {
    double vol;
-   
+#ifdef BAD_CH_MAPPING
    if (!state) return 0;
-
    if (!channel) return 0;
    vol = pulse_sink_channel_volume_get((void *)self, 
                                        ((uintptr_t)channel) - 1);
    state->mute = pulse_sink_muted_get((void *)self);
    state->left = state->right = (int)vol;
-   
+#else
+   if (!state) return 0;
+   if (!channel) return 0;
+   e_mixer_pulse_get_mute(self, channel, &(state->mute));
+   e_mixer_pulse_get_volume(self, channel, &(state->left), &(state->right));
+#endif   
    return 1;
 }
 
@@ -419,13 +482,17 @@ int
 e_mixer_pulse_set_state(E_Mixer_System *self, E_Mixer_Channel *channel, const E_Mixer_Channel_State *state)
 {
    uint32_t id;
-
+#ifdef BAD_CH_MAPPING
    if (!channel) return 0;
    id = pulse_sink_channel_volume_set(conn, (void *)self, 
                                       ((uintptr_t)channel) - 1, 
                                       (state->left + state->right) / 2);
    if (!id) return 0;
    pulse_cb_set(conn, id, (Pulse_Cb)_pulse_result_cb);
+#else
+   e_mixer_pulse_set_volume(self, channel, state->left, state->right);
+   e_mixer_pulse_set_mute(self, channel, state->mute);
+#endif   
    return 1;
 }
 
