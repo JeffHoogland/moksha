@@ -242,27 +242,24 @@ evry_show(E_Zone *zone, E_Zone_Edge edge, const char *params, Eina_Bool popup)
 
    windows = eina_list_append(windows, win);
 
-   if (!evry_conf->hide_list || edge)
+   _evry_selector_activate(SUBJ_SEL, 0);
+   
+   if ((!evry_conf->hide_list) || (edge))
      {
-	_evry_selector_activate(SUBJ_SEL, 0);
 	sel = CUR_SEL;
 
 	if (sel && sel->state && evry_conf->views)
 	  {
-	     if (evry_conf->first_run)
-	       {
-		  evry_view_toggle(sel->state, "?");
-		  evry_conf->first_run = EINA_FALSE;
-	       }
+	     /* if (evry_conf->first_run)
+	      *   {
+	      *      evry_view_toggle(sel->state, "?");
+	      *      evry_conf->first_run = EINA_FALSE;
+	      *   } */
 
 	     edje_object_signal_emit(win->o_main, "list:e,state,list_show", "e");
 	     edje_object_signal_emit(win->o_main, "list:e,state,entry_show", "e");
 	     win->visible = EINA_TRUE;
 	  }
-     }
-   else
-     {
-	_evry_selector_activate(SUBJ_SEL, 0);
      }
 
    win->func.hide = &_evry_hide_func;
