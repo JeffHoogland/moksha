@@ -179,7 +179,9 @@ e_widget_toolbar.h \
 e_widget_toolbook.h \
 e_win.h \
 e_xinerama.h \
+e_xsettings.h \
 e_zone.h
+
 
 enlightenment_src = \
 e_about.c \
@@ -323,6 +325,7 @@ e_widget_toolbar.c \
 e_widget_toolbook.c \
 e_win.c \
 e_xinerama.c \
+e_xsettings.c \
 e_zone.c \
 $(ENLIGHTENMENTHEADERS)
 

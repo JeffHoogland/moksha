@@ -860,6 +860,15 @@ main(int argc, char **argv)
    TS("E_Thumb Init Done");
    _e_main_shutdown_push(e_icon_shutdown);
 
+   TS("E_XSettings Init");
+   if (!e_xsettings_init()) 
+     {
+        e_error_message_show(_("Enlightenment cannot initialize the XSettings system.\n"));
+        _e_main_shutdown(-1);
+     }
+   TS("E_XSettings Init Done");
+   _e_main_shutdown_push(e_xsettings_shutdown);
+
    if (!after_restart) 
      {
         if (e_config->show_splash)

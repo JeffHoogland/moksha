@@ -140,3 +140,4 @@
 #include "e_env.h"
 #include "e_backlight.h"
 #include "e_deskenv.h"
+#include "e_xsettings.h"

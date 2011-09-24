@@ -919,6 +919,11 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, deskenv.load_gnome, UCHAR);
    E_CONFIG_VAL(D, T, deskenv.load_kde, UCHAR);
 
+   E_CONFIG_VAL(D, T, xsettings.match_e17_theme, UCHAR);
+   E_CONFIG_VAL(D, T, xsettings.match_e17_icon_theme, UCHAR);
+   E_CONFIG_VAL(D, T, xsettings.gtk_theme, STR);
+   E_CONFIG_VAL(D, T, xsettings.icon_theme, STR);
+
    e_config_load();
 
    e_config_save_queue();
@@ -1182,6 +1187,11 @@ e_config_load(void)
         COPYVAL(backlight.normal);
         COPYVAL(backlight.dim);
         COPYVAL(backlight.transition);
+        IFCFGEND;
+
+        IFCFG(0x0143);
+        COPYVAL(xsettings.match_e17_theme);
+        COPYVAL(xsettings.match_e17_icon_theme);
         IFCFGEND;
 
         e_config->config_version = E_CONFIG_FILE_VERSION;
@@ -2101,6 +2111,9 @@ _e_config_free(E_Config *ecf)
         if (evr->val) eina_stringshare_del(evr->val);
         E_FREE(evr);
      }
+   if (ecf->xsettings.icon_theme) eina_stringshare_del(ecf->xsettings.icon_theme);
+   if (ecf->xsettings.gtk_theme) eina_stringshare_del(ecf->xsettings.gtk_theme);
+   
    E_FREE(ecf);
 }
 

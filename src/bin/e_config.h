@@ -33,7 +33,7 @@ typedef struct _E_Event_Config_Icon_Theme   E_Event_Config_Icon_Theme;
 /* increment this whenever a new set of config values are added but the users
  * config doesn't need to be wiped - simply new values need to be put in
  */
-#define E_CONFIG_FILE_GENERATION 0x0143
+#define E_CONFIG_FILE_GENERATION 0x0144
 #define E_CONFIG_FILE_VERSION    ((E_CONFIG_FILE_EPOCH << 16) | E_CONFIG_FILE_GENERATION)
 
 #define E_EVAS_ENGINE_DEFAULT         0
@@ -360,6 +360,13 @@ struct _E_Config
       unsigned char load_gnome;
       unsigned char load_kde;
    } deskenv;
+
+   struct {
+      unsigned char match_e17_theme;
+      unsigned char match_e17_icon_theme;
+      const char *gtk_theme;
+      const char *icon_theme;
+   } xsettings;
 };
 
 struct _E_Config_Env_Var
@@ -492,6 +499,7 @@ struct _E_Config_Gadcon_Client
    int            orient;
    unsigned char  autoscroll;
    unsigned char  resizable;
+   const char *theme;
 };
 
 struct _E_Config_Shelf
