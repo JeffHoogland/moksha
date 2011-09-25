@@ -2881,18 +2881,23 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 //             printf("E_FM_OP_FILE_DEL\n");
              path = e->data;
              evdir = ecore_file_dir_get(path);
-             if ((sd->id == e->ref_to) && (!strcmp(dir, evdir)))
+             if ((dir) && (evdir) && (sd->id == e->ref_to) && (!strcmp(dir, evdir)))
                {
                   _e_fm2_live_file_del
                     (obj, ecore_file_file_get(path));
                }
-             free(evdir);
+             if (evdir) free(evdir);
              break;
 
            case E_FM_OP_MONITOR_END: /*mon dir del*/
 //             printf("E_FM_OP_MONITOR_END\n");
              path = e->data;
-             if ((sd->id == e->ref_to) && (!strcmp(dir, path)))
+             /* FIXME dir should not be null but can. fix segv
+                when mounting cdrom with udisk here
+                btw monitor end seems to be a strange event for
+                mounting disks.
+             */
+             if ((dir) && (path) && (sd->id == e->ref_to) && (!strcmp(dir, path)))
                {
                   dels = eina_list_append(dels, obj);
                }
