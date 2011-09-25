@@ -285,9 +285,10 @@ e_mixer_pulse_get_default_card(void)
 const char *
 e_mixer_pulse_get_card_name(const char *card)
 {
-   Pulse_Sink *sink;
-   sink = _pulse_sink_find(card);
-   return eina_stringshare_add(pulse_sink_name_get(sink));
+   Pulse_Sink *sink = _pulse_sink_find(card);
+   const char *s = pulse_sink_desc_get(sink);
+   if ((!s) || (!s[0])) s = pulse_sink_name_get(sink);
+   return eina_stringshare_add(s);
 }
 
 Eina_List *
