@@ -52,7 +52,7 @@ e_int_config_window_geometry(E_Container *con, const char *params __UNUSED__)
    /* create config diaolg for NULL object/data */
    cfd = e_config_dialog_new(con, _("Window Geometry"),
 			     "E", "windows/window_geometry",
-			     "preferences-window-manipulation", 0, v, NULL);
+			     "preferences-window-geometry", 0, v, NULL);
    return cfd;
 }
 
