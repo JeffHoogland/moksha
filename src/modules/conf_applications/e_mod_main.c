@@ -43,7 +43,7 @@ e_modapi_init(E_Module *m)
                                  e_int_config_apps_startup);
    e_configure_registry_item_add("applications/default_applications", 70,
                                  _("Default Applications"), NULL, 
-                                 "preferences-applications-default", 
+                                 "preferences-desktop-default-applications", 
                                  e_int_config_defapps);
    e_configure_registry_item_add("applications/desktop_environments", 80,
                                  _("Desktop Environments"), NULL, 

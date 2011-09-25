@@ -74,7 +74,7 @@ e_int_config_desklock(E_Container *con, const char *params __UNUSED__)
    v->override_auto_apply = 1;
 
    cfd = e_config_dialog_new(con, _("Screen Lock Settings"), "E",
-			     "screen/screen_lock", "preferences-desklock",
+			     "screen/screen_lock", "preferences-system-lock-screen",
 			     0, v, NULL);
    return cfd;
 }

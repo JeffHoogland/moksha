@@ -32130,7 +32130,7 @@ collections {
    ICON("preferences-dialogs","icon_dummy.png",64)               // *** // "enlightenment/dialogs"
    ICON("preferences-interaction","icon_interaction.png",64)     // *** // "enlightenment/interaction"
    ICON("preferences-imc","icon_imc.png",64)                     // *** // "enlightenment/imc"
-   ICON("preferences-desklock","icon_desklock.png",64)           // *** // "enlightenment/desklock"
+   ICON("preferences-system-lock-screen","icon_desklock.png",64) // *** // "enlightenment/desklock"
    ICON("preferences-icon-theme","icon_icon_theme.png",64)       // *** // "enlightenment/icon_theme"
    ICON("preferences-transitions","icon_transitions.png",64)     // *** // "enlightenment/transitions"
    ICON("preferences-toolbar","icon_toolbar.png",64)             // *** // "enlightenment/toolbar"
@@ -32159,7 +32159,7 @@ collections {
    ICON("preferences-applications-ibar","icon_applications_ibar.png",64)       // *** // "enlightenment/ibar_applications"
    ICON("preferences-applications-restart","icon_applications_restart.png",64) // *** // "enlightenment/restart_applications"
    ICON("preferences-applications-startup","icon_applications_startup.png",64) // *** // "enlightenment/startup_applications"
-   ICON("preferences-applications-default","icon_advanced.png",64)
+   ICON("preferences-desktop-default-applications","icon_advanced.png",64)
    ICON("preferences-preferences","icon_config.png",64)                             // "enlightenment/configuration" "enlightenment/settings"
    ICON("preferences-plugin","icon_modules.png",64)                                   // "enlightenment/modules"
    ICON("preferences-system","icon_configuration.png",64)                             // "enlightenment/configuration" "enlightenment/settings"

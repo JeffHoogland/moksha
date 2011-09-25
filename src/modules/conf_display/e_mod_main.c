@@ -26,7 +26,7 @@ e_modapi_init(E_Module *m)
                                  e_int_config_display);
    e_configure_registry_item_add("screen/screen_lock", 30,
                                  _("Screen Lock"), NULL,
-                                 "preferences-desklock",
+                                 "preferences-system-lock-screen",
                                  e_int_config_desklock);
    e_configure_registry_item_add("screen/screen_saver", 40, 
                                  _("Screen Saver"), NULL, 
