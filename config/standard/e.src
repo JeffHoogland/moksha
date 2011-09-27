@@ -1849,6 +1849,7 @@ group "E_Config" struct {
     value "device_desktop" int: 1;
     value "device_auto_mount" int: 0;
     value "device_auto_open" int: 0;
+    value "xsettings.enabled" uchar: 1;
     value "xsettings.match_e17_theme" uchar: 1;
     value "xsettings.match_e17_icon_theme" uchar: 1;
 }

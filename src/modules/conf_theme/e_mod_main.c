@@ -35,6 +35,9 @@ e_modapi_init(E_Module *m)
    e_configure_registry_item_add("appearance/theme", 20, _("Theme"), NULL, 
                                  "preferences-desktop-theme", 
                                  e_int_config_theme);
+   e_configure_registry_item_add("appearance/xsettings", 20, _("Applications"), NULL, 
+                                 "preferences-desktop-theme", 
+                                 e_int_config_xsettings);
    e_configure_registry_item_add("appearance/colors", 30, _("Colors"), NULL,
                                  "preferences-desktop-color",
                                  e_int_config_color_classes);

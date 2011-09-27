@@ -919,10 +919,16 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, deskenv.load_gnome, UCHAR);
    E_CONFIG_VAL(D, T, deskenv.load_kde, UCHAR);
 
+   E_CONFIG_VAL(D, T, xsettings.enabled, UCHAR);
    E_CONFIG_VAL(D, T, xsettings.match_e17_theme, UCHAR);
    E_CONFIG_VAL(D, T, xsettings.match_e17_icon_theme, UCHAR);
-   E_CONFIG_VAL(D, T, xsettings.gtk_theme, STR);
-   E_CONFIG_VAL(D, T, xsettings.icon_theme, STR);
+   E_CONFIG_VAL(D, T, xsettings.xft_antialias, INT);
+   E_CONFIG_VAL(D, T, xsettings.xft_hinting, INT);
+   E_CONFIG_VAL(D, T, xsettings.xft_hint_style, STR);
+   E_CONFIG_VAL(D, T, xsettings.xft_rgba, STR);
+   E_CONFIG_VAL(D, T, xsettings.net_theme_name, STR);
+   E_CONFIG_VAL(D, T, xsettings.net_icon_theme_name, STR);
+   E_CONFIG_VAL(D, T, xsettings.gtk_font_name, STR);
 
    e_config_load();
 
@@ -1189,7 +1195,8 @@ e_config_load(void)
         COPYVAL(backlight.transition);
         IFCFGEND;
 
-        IFCFG(0x0144);
+        IFCFG(0x0145);
+        COPYVAL(xsettings.enabled);
         COPYVAL(xsettings.match_e17_theme);
         COPYVAL(xsettings.match_e17_icon_theme);
         IFCFGEND;
@@ -2111,9 +2118,13 @@ _e_config_free(E_Config *ecf)
         if (evr->val) eina_stringshare_del(evr->val);
         E_FREE(evr);
      }
-   if (ecf->xsettings.icon_theme) eina_stringshare_del(ecf->xsettings.icon_theme);
-   if (ecf->xsettings.gtk_theme) eina_stringshare_del(ecf->xsettings.gtk_theme);
-   
+   if (ecf->xsettings.net_icon_theme_name)
+     eina_stringshare_del(ecf->xsettings.net_icon_theme_name);
+   if (ecf->xsettings.net_theme_name)
+     eina_stringshare_del(ecf->xsettings.net_theme_name);
+   if (ecf->xsettings.gtk_font_name)
+     eina_stringshare_del(ecf->xsettings.gtk_font_name);
+
    E_FREE(ecf);
 }
 

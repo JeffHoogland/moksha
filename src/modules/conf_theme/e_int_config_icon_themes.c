@@ -20,7 +20,6 @@ struct _E_Config_Dialog_Data
    struct 
      {
         Evas_Object *list;
-        Evas_Object *checkbox;
         Evas_Object *preview[4]; /* same size as _icon_previews */
      } gui;
    Ecore_Idler *fill_icon_themes_delayed;

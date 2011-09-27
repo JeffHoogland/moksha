@@ -33,7 +33,7 @@ typedef struct _E_Event_Config_Icon_Theme   E_Event_Config_Icon_Theme;
 /* increment this whenever a new set of config values are added but the users
  * config doesn't need to be wiped - simply new values need to be put in
  */
-#define E_CONFIG_FILE_GENERATION 0x0144
+#define E_CONFIG_FILE_GENERATION 0x0145
 #define E_CONFIG_FILE_VERSION    ((E_CONFIG_FILE_EPOCH << 16) | E_CONFIG_FILE_GENERATION)
 
 #define E_EVAS_ENGINE_DEFAULT         0
@@ -362,10 +362,16 @@ struct _E_Config
    } deskenv;
 
    struct {
-      unsigned char match_e17_theme;
-      unsigned char match_e17_icon_theme;
-      const char *gtk_theme;
-      const char *icon_theme;
+      unsigned char  enabled;
+      unsigned char  match_e17_theme;
+      unsigned char  match_e17_icon_theme;
+      int            xft_antialias;
+      int            xft_hinting;
+      const char    *xft_hint_style;
+      const char    *xft_rgba;
+      const char    *net_theme_name;
+      const char    *net_icon_theme_name;
+      const char    *gtk_font_name;
    } xsettings;
 };
 
