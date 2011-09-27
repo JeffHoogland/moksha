@@ -18,8 +18,8 @@ EAPI void         e_fm2_device_mount_del(E_Volume *v);
 EAPI E_Fm2_Mount *e_fm2_device_mount_find(const char *path);
 EAPI E_Fm2_Mount *e_fm2_device_mount(E_Volume *v,
                                   Ecore_Cb mount_ok, Ecore_Cb mount_fail, 
-				  Ecore_Cb unmount_ok, Ecore_Cb unmount_fail, 
-				  void *data);
+                                  Ecore_Cb unmount_ok, Ecore_Cb unmount_fail, 
+                                  void *data);
 EAPI void         e_fm2_device_mount_fail(E_Volume *v);
 EAPI void         e_fm2_device_unmount(E_Fm2_Mount *m);
 EAPI void         e_fm2_device_unmount_fail(E_Volume *v);
