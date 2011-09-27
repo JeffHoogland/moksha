@@ -20,8 +20,6 @@ struct _E_Config_Dialog_Data
   {
     Evas_Object *list;
   } gui;
-
-  /* Ecore_Idler *fill_widget_themes_delayed; */
 };
 
 E_Config_Dialog *
@@ -62,9 +60,6 @@ _create_data(E_Config_Dialog *cfd)
 static void
 _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-   /* if (cfdata->fill_widget_themes_delayed)
-    *   free(ecore_idler_del(cfdata->fill_widget_themes_delayed)); */
-
    eina_stringshare_del(cfdata->widget_theme);
    E_FREE(cfdata);
 }
@@ -88,8 +83,6 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
      return 1;
 
    return strcmp(cfdata->widget_theme, e_config->xsettings.net_theme_name) != 0;
-
-   return 1;
 }
 
 static int
@@ -98,15 +91,11 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    E_Event_Config_Icon_Theme *ev;
 
    if (!_basic_check_changed(cfd, cfdata)) return 1;
-   printf("is    %s \n", e_config->xsettings.net_icon_theme_name);
-   printf("chose %s \n", cfdata->widget_theme);
-   printf("...   %s \n", e_widget_ilist_selected_label_get(cfdata->gui.list));
 
    e_widget_ilist_selected_label_get(cfdata->gui.list);
 
    eina_stringshare_del(e_config->xsettings.net_icon_theme_name);
-   e_config->xsettings.net_theme_name =
-     eina_stringshare_ref(e_widget_ilist_selected_label_get(cfdata->gui.list));
+   e_config->xsettings.net_theme_name = eina_stringshare_ref(cfdata->widget_theme);
 
    e_config->xsettings.match_e17_icon_theme = cfdata->match_e17_icon_theme;
    e_config->xsettings.match_e17_theme = cfdata->match_e17_theme;
@@ -169,16 +158,8 @@ _fill_files_ilist(void *data)
    Eina_List *xdg_dirs, *l;
    const char *dir;
 
-   /* cfdata->fill_widget_themes_delayed = NULL; */
-
    if (!(o = cfdata->gui.list))
      return ECORE_CALLBACK_CANCEL;
-
-   evas = evas_object_evas_get(o);
-   evas_event_freeze(evas);
-   edje_freeze();
-   e_widget_ilist_freeze(o);
-   e_widget_ilist_clear(o);
 
    e_user_homedir_concat_static(theme_dir, ".themes");
    _ilist_files_add(cfdata, theme_dir);
@@ -190,9 +171,15 @@ _fill_files_ilist(void *data)
         _ilist_files_add(cfdata, theme_dir);
      }
 
+   evas = evas_object_evas_get(o);
+   evas_event_freeze(evas);
+   edje_freeze();
+   e_widget_ilist_freeze(o);
+   e_widget_ilist_clear(o);
+
    if (cfdata->widget_themes)
      {
-        const char *theme;
+        const char *theme, *label;
         int cnt = 0;
 
         cfdata->widget_themes = eina_list_sort(cfdata->widget_themes, -1, _cb_sort);
@@ -200,10 +187,15 @@ _fill_files_ilist(void *data)
         EINA_LIST_FREE(cfdata->widget_themes, theme)
           {
              char *tmp = strdup(strrchr(theme, '/') + 1);
+             const char *label;
 
              if (tmp)
                {
-                  e_widget_ilist_append(o, NULL, tmp, NULL, NULL, NULL);
+                  /* label pointer will exist as long as ilist item
+                     so val remains valid */
+                  label = eina_stringshare_add(tmp);
+                  e_widget_ilist_append(o, NULL, label, NULL, NULL, label /* val */);
+                  eina_stringshare_del(label);
                   free(tmp);
                   if (cfdata->widget_theme && !strcmp(cfdata->widget_theme, tmp))
                     e_widget_ilist_selected_set(cfdata->gui.list, cnt);
@@ -257,10 +249,6 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 
 
    e_dialog_resizable_set(cfd->dia, 1);
-
-   /* if (cfdata->fill_widget_themes_delayed)
-    *   free(ecore_idler_del(cfdata->fill_widget_themes_delayed)); */
-   /* cfdata->fill_widget_themes_delayed = ecore_idler_add(_fill_files_ilist, cfdata); */
 
    _fill_files_ilist(cfdata);
 
