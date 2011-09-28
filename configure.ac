@@ -308,7 +308,7 @@ AC_ARG_ENABLE([device-udev],
   AC_CACHE_VAL([e_cv_want_device_udev], [e_cv_want_device_udev=yes]))
 
 if test "x$e_cv_want_device_udev" != "xno";then
-  PKG_CHECK_EXISTS([eeze >= 1.0.999],
+  PKG_CHECK_EXISTS([eeze >= 1.0.0],
     [
       device_backend=eeze
       AC_DEFINE_UNQUOTED([HAVE_EEZE],[1],[enable udev support])
@@ -323,14 +323,14 @@ test "x${device_backend}" = "xeeze" || AC_DEFINE_UNQUOTED([HAVE_HAL],[1],[enable
 
 DBUS_MOUNT_CONFIG=1
 dbus_mount="dbus-1"
-hal_mount="ehal >= 1.0.999, edbus >= 1.0.999"
-udisks_mount="eukit >= 1.0.999"
+hal_mount="ehal >= 1.0.0, edbus >= 1.0.0"
+udisks_mount="eukit >= 1.0.0"
 AC_ARG_ENABLE([mount-hal],
   AS_HELP_STRING([--enable-mount-hal],[enable hal mounting support @<:@default=enabled@:>@]),
   [e_cv_want_mount_hal=$enableval],
   AC_CACHE_VAL([e_cv_want_mount_hal], [e_cv_want_mount_hal=yes]))
 if test "x$e_cv_want_mount_hal" != "xno";then
-  PKG_CHECK_EXISTS([ehal >= 1.0.999],
+  PKG_CHECK_EXISTS([ehal >= 1.0.0],
     [],[
       hal_mount=
       AC_MSG_NOTICE([HAL mounting disabled])
@@ -345,7 +345,7 @@ AC_ARG_ENABLE([mount-udisks],
   [e_cv_want_mount_udisks=$enableval],
   AC_CACHE_VAL([e_cv_want_mount_udisks], [e_cv_want_mount_udisks=yes]))
 if test "x$e_cv_want_mount_udisks" != "xno";then
-  PKG_CHECK_EXISTS([eukit >= 1.0.999],
+  PKG_CHECK_EXISTS([eukit >= 1.0.0],
     [],[
       udisks_mount=
       AC_MSG_NOTICE([udisks mounting disabled])
