@@ -373,6 +373,8 @@ _gadget_window_show(Instance *inst)
 
    E_Win *ewin = inst->win->ewin;
 
+   inst->win->func.hide = &_evry_hide_func;
+   
    e_zone_useful_geometry_get(inst->win->zone, &zx, &zy, &zw, &zh);
 
    evas_object_geometry_get(inst->o_button, &gx, &gy, &gw, &gh);
@@ -483,7 +485,6 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 
 	inst->win = win;
 	win->data = inst;
-	win->func.hide = &_evry_hide_func;
 
 	ecore_evas_name_class_set(win->ewin->ecore_evas, "E", "everything-window");
 
