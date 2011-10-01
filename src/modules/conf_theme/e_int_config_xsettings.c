@@ -39,7 +39,7 @@ e_int_config_xsettings(E_Container *con, const char *params __UNUSED__)
 
    cfd = e_config_dialog_new(con, _("Application Theme Settings"),
                              "E", "appearance/xsettings",
-                             "preferences-dekstop-theme", 0, v, NULL);
+                             "preferences-desktop-theme", 0, v, NULL);
    return cfd;
 }
 
