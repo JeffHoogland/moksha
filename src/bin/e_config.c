@@ -2198,7 +2198,7 @@ _e_config_eet_close_handle(Eet_File *ef, char *file)
 	erstr = _("Encryption failed.");
 	break;
       case EET_ERROR_DECRYPT_FAILED:
-	erstr = _("Decruption failed.");
+	erstr = _("Decryption failed.");
 	break;
       default: /* if we get here eet added errors we don't know */
 	erstr = _("The error is unknown to Enlightenment.");
