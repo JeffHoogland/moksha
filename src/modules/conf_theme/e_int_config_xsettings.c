@@ -229,7 +229,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    /* e_widget_on_change_hook_set(ilist, _icon_theme_changed, cfdata); */
    e_widget_list_object_append(o, ilist, 1, 1, 0.5);
 
-   ow = e_widget_check_add(evas, _("Use E17 icon theme for applications"),
+   ow = e_widget_check_add(evas, _("Use icon theme for applications"),
                                  &(cfdata->match_e17_icon_theme));
    e_widget_list_object_append(o, ow, 0, 0, 0.0);
 
