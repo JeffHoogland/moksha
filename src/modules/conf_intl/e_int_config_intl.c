@@ -864,13 +864,13 @@ _lc_check(void)
    
    buf[0] = 0;
    
-   if (getenv("LC_CTYPE"))    strcat(buf, "LC_CTYPE<br>");
-   if (getenv("LC_NUMERIC"))  strcat(buf, "LC_NUMERIC<br>");
-   if (getenv("LC_TIME"))     strcat(buf, "LC_TIME<br>");
-   if (getenv("LC_COLLATE"))  strcat(buf, "LC_COLLATE<br>");
-   if (getenv("LC_MONETARY")) strcat(buf, "LC_MONETARY<br>");
-   if (getenv("LC_MESSAGES")) strcat(buf, "LC_MESSAGES<br>");
-   if (getenv("LC_ALL"))      strcat(buf, "LC_ALL<br>");
+   if (getenv("LC_CTYPE"))    strcat(buf, "<br>LC_CTYPE");
+   if (getenv("LC_NUMERIC"))  strcat(buf, "<br>LC_NUMERIC");
+   if (getenv("LC_TIME"))     strcat(buf, "<br>LC_TIME");
+   if (getenv("LC_COLLATE"))  strcat(buf, "<br>LC_COLLATE");
+   if (getenv("LC_MONETARY")) strcat(buf, "<br>LC_MONETARY");
+   if (getenv("LC_MESSAGES")) strcat(buf, "<br>LC_MESSAGES");
+   if (getenv("LC_ALL"))      strcat(buf, "<br>LC_ALL");
    
    if (buf[0] != 0)
       e_util_dialog_show(_("Possible Locale problems"), 
@@ -878,7 +878,7 @@ _lc_check(void)
                            "variables set that may interfere with<br>"
                            "correct display of your chosen language.<br>"
                            "If you don't want these affected, use the<br>"
-                           "Enviornment variable settings to unset them.<br>"
+                           "Environment variable settings to unset them.<br>"
                            "The variables that may affect you are<br>"
                            "as follows:<br>"
                            "%s"), buf);
