@@ -23,6 +23,7 @@ const E_Intl_Pair basic_language_predefined_pairs[ ] =
    {"da_DK.UTF-8", "lang-da_DK.png", "Dansk"},
    {"nl_NL.UTF-8", "lang-nl_NL.png", "Nederlands"},
    {"en_US.UTF-8", "lang-en_US.png", "English"},
+   {"en_GB.UTF-8", NULL,             "British English"},
    {"fi_FI.UTF-8", "lang-fi_FI.png", "Suomi"},
    {"fr_FR.UTF-8", "lang-fr_FR.png", "Français"},
    {"de_DE.UTF-8", "lang-de_DE.png", "Deutsch"},
@@ -154,8 +155,13 @@ wizard_page_show(E_Wizard_Page *pg)
 	E_Intl_Pair *pair;
 
 	pair = l->data;
-	e_prefix_data_snprintf(buf, sizeof(buf), "data/images/%s", pair->locale_icon);
-	ic = e_util_icon_add(buf, pg->evas);
+	if (pair->locale_icon)
+	  {
+	     e_prefix_data_snprintf(buf, sizeof(buf), "data/images/%s", pair->locale_icon);
+	     ic = e_util_icon_add(buf, pg->evas);
+	  }
+        else
+	  ic = NULL;
 	e_widget_ilist_append(ob, ic, _(pair->locale_translation), 
 			      NULL, NULL, pair->locale_key);
 	if (e_intl_language_get())
