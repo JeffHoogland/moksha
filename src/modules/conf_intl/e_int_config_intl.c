@@ -1126,6 +1126,8 @@ _ilist_language_cb_change(void *data, Evas_Object *obj __UNUSED__)
    e_widget_entry_text_set(cfdata->gui.locale_entry, cfdata->cur_lang);
    eina_stringshare_del(cfdata->cur_cs);
    eina_stringshare_del(cfdata->cur_mod);
+   cfdata->cur_cs = NULL;
+   cfdata->cur_mod = NULL;
 }
 
 static void
@@ -1147,6 +1149,8 @@ _ilist_region_cb_change(void *data, Evas_Object *obj __UNUSED__)
       e_widget_entry_text_set(cfdata->gui.locale_entry, "");
    eina_stringshare_del(cfdata->cur_cs);
    eina_stringshare_del(cfdata->cur_mod);
+   cfdata->cur_cs = NULL;
+   cfdata->cur_mod = NULL;
 }
 
 static void 
