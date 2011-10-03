@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e17\n"
 "Report-Msgid-Bugs-To: http://trac.enlightenment.org/e/\n"
-"POT-Creation-Date: 2011-09-25 13:01-0700\n"
-"PO-Revision-Date: 2011-09-27 12:42-0000\n"
+"POT-Creation-Date: 2011-10-02 08:01-0700\n"
+"PO-Revision-Date: 2011-10-03 17:44-0000\n"
 "Last-Translator: Sérgio Marques <smarquespt@gmail.com>\n"
 "Language-Team: Portuguese <>\n"
 "Language: pt\n"
@@ -52,15 +52,6 @@ msgid "Enlightenment"
 msgstr "Enlightenment"
 
 #: ../src/bin/e_about.c:23
-#| msgid ""
-#| "Copyright &copy; 1999-2011, by the Enlightenment Development Team."
-#| "<br><br>We hope you enjoy using this software as much as we enjoyed "
-#| "writing it.<br><br>This software is provided as-is with no explicit or "
-#| "implied warranty. This software is governed by licensing conditions, so "
-#| "please see the COPYING and COPYING-PLAIN licence files installed on your "
-#| "system.<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</> and "
-#| "it is not stable. Many features are incomplete or even non-existent yet "
-#| "and may have many bugs. You have been <hilight>WARNED!</>"
 msgid "<title>Copyright &copy; 1999-2011, by the Enlightenment Development Team</><br><br>We hope you enjoy using this software as much as we enjoyed writing it.<br><br>This software is provided as-is with no explicit or implied warranty. This software is governed by licensing conditions, so please see the COPYING and COPYING-PLAIN licence files installed on your system.<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</> and it is not stable. Many features are incomplete or even non-existent yet and may have many bugs. You have been <hilight>WARNED!</>"
 msgstr "<title>Direitos de autor &copy; 1999-2011, pela equipa de desenvolvimento do Enlightenment.<br><br>Esperamos que aprecie esta aplicação tanto quanto nós gostámos de a desenvolver.<br><br>A aplicação é disponibilizada no modo \"AS-IS\" e não possui qualquer garantia, explicita ou implícita. A aplicação está restringida às condições de licenciamento, por isso não se esqueça de ler os ficheiros COPYING e COPYING-PLAIN instalados no seu sistema.<br><br>O Enlightenment <hilight>ainda está em desenvolvimento</> e não é estável. Algumas funcionalidades não estão concluídas e podem existir diversos erros. Considere-se <hilight>AVISADO!</>"
 
@@ -819,8 +810,8 @@ msgstr "Seletor de cor"
 
 #. buttons at the bottom
 #: ../src/bin/e_color_dialog.c:46
-#: ../src/bin/e_config.c:1628
-#: ../src/bin/e_config.c:2225
+#: ../src/bin/e_config.c:1635
+#: ../src/bin/e_config.c:2236
 #: ../src/bin/e_config_dialog.c:262
 #: ../src/bin/e_eap_editor.c:857
 #: ../src/bin/e_eap_editor.c:921
@@ -865,107 +856,108 @@ msgstr "OK"
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: ../src/bin/e_config.c:981
-#: ../src/bin/e_config.c:1014
+#: ../src/bin/e_config.c:987
+#: ../src/bin/e_config.c:1020
 msgid "Settings data needed upgrading. Your old settings have<br>been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means Enlightenment needs new settings<br>data by default for usable functionality that your old<br>settings simply lack. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the hiccup in your settings.<br>"
 msgstr "As definições precisam de ser atualizadas. As suas antigas definições foram apagadas e foram iniciados novos valores padrão.<br>Isto irá ocorrer recorrentemente durante o desenvolvimento e não deve reportar nenhum erro.<br>Isto apenas significa que o Enlightenment precisa de dados que as suas antigas definições não possuem.<br>Este conjunto de valores irá corrigir esse facto.<br> Mais tarde poderá configurar o Enlightenment ao seu gosto. Desculpe qualquer inconveniente.<br>"
 
-#: ../src/bin/e_config.c:998
+#: ../src/bin/e_config.c:1004
 msgid "Your settings are NEWER than Enlightenment. This is very<br>strange. This should not happen unless you downgraded<br>Enlightenment or copied the settings from a place where<br>a newer version of Enlightenment was running. This is bad and<br>as a precaution your settings have been now restored to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr "As suas definições são mais recentes que as do Enlightenment.<br>Isto é muito estranho e só acontece se reverter o Enlightenment ou caso tenha copiado as definições de um local em que está instalada uma versão mais recente do Enlightenment.<br>Isto é mau e por precaução, as suas definições foram restauradas para as omissões.<br>Desculpe qualquer inconveniente.<br>"
 
-#: ../src/bin/e_config.c:1615
-#: ../src/bin/e_config.c:2212
+#: ../src/bin/e_config.c:1622
+#: ../src/bin/e_config.c:2223
 msgid "Enlightenment Settings Write Problems"
 msgstr "Problemas ao escrever as definições do Enlightenment"
 
-#: ../src/bin/e_config.c:1618
+#: ../src/bin/e_config.c:1625
 #, c-format
 msgid "Enlightenment has an error while moving config files<br>from:<br>%s<br><br>to:<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr "Ocorreu um erro ao mover os ficheiros de configuração<br>de:<br>%s<br><br>para:<br>%s<br><br>A tarefa foi terminada para sua segurança.<br>"
 
-#: ../src/bin/e_config.c:2123
+#: ../src/bin/e_config.c:2134
 msgid "Settings Upgraded"
 msgstr "Definições atualizadas"
 
-#: ../src/bin/e_config.c:2140
+#: ../src/bin/e_config.c:2151
 msgid "The EET file handle is bad."
 msgstr "O identificador do ficheiro EET está errado."
 
-#: ../src/bin/e_config.c:2143
+#: ../src/bin/e_config.c:2154
 msgid "The file data is empty."
 msgstr "Os dados do ficheiro estão vazios."
 
-#: ../src/bin/e_config.c:2146
+#: ../src/bin/e_config.c:2157
 msgid "The file is not writable. Perhaps the disk is read-only<br>or you lost permissions to your files."
 msgstr "Não pode escrever no ficheiro. Pode ser que o ficheiro seja de leitura<br>ou não tenha acesso aos ficheiros."
 
-#: ../src/bin/e_config.c:2149
+#: ../src/bin/e_config.c:2160
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr "Ficou sem memória ao preparar o ficheiro.<br>Por favor, liberte espaço de memória."
 
-#: ../src/bin/e_config.c:2152
+#: ../src/bin/e_config.c:2163
 msgid "This is a generic error."
 msgstr "Este é um erro genérico."
 
-#: ../src/bin/e_config.c:2154
+#: ../src/bin/e_config.c:2165
 msgid "The settings file is too large.<br>It should be very small (a few hundred KB at most)."
 msgstr "O ficheiro das definições é muito grande.<br>Em princípio seria pequeno (algumas centenas de KB)."
 
-#: ../src/bin/e_config.c:2157
+#: ../src/bin/e_config.c:2168
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr "Possui erros de E/S no disco.<br>Talvez precise de ser substituído?"
 
-#: ../src/bin/e_config.c:2160
+#: ../src/bin/e_config.c:2171
 msgid "You ran out of space while writing the file"
 msgstr "Ficou sem espaço durante a escrita do ficheiro"
 
-#: ../src/bin/e_config.c:2163
+#: ../src/bin/e_config.c:2174
 msgid "The file was closed on it while writing."
 msgstr "O ficheiro foi fechado durante a escrita."
 
-#: ../src/bin/e_config.c:2166
+#: ../src/bin/e_config.c:2177
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Falha ao fazer \"memory-mapping (mmap)\" do ficheiro."
 
-#: ../src/bin/e_config.c:2169
+#: ../src/bin/e_config.c:2180
 msgid "X509 Encoding failed."
 msgstr "Falha na codificação X509."
 
-#: ../src/bin/e_config.c:2172
+#: ../src/bin/e_config.c:2183
 msgid "Signature failed."
 msgstr "Falha de assinatura"
 
-#: ../src/bin/e_config.c:2175
+#: ../src/bin/e_config.c:2186
 msgid "The signature was invalid."
 msgstr "A assinatura era inválida."
 
-#: ../src/bin/e_config.c:2178
+#: ../src/bin/e_config.c:2189
 msgid "Not signed."
 msgstr "Não assinado"
 
-#: ../src/bin/e_config.c:2181
+#: ../src/bin/e_config.c:2192
 msgid "Feature not implemented."
 msgstr "Funcionalidade não implementada."
 
-#: ../src/bin/e_config.c:2184
+#: ../src/bin/e_config.c:2195
 msgid "PRNG was not seeded."
 msgstr "O PRNG não foi semeado."
 
-#: ../src/bin/e_config.c:2187
+#: ../src/bin/e_config.c:2198
 msgid "Encryption failed."
-msgstr "Falha de encriptação."
+msgstr "Falha ao cifrar."
 
-#: ../src/bin/e_config.c:2190
-msgid "Decruption failed."
-msgstr "Falha de decriptação."
+#: ../src/bin/e_config.c:2201
+#| msgid "Decruption failed."
+msgid "Decryption failed."
+msgstr "Falha ao decifrar."
 
 #. if we get here eet added errors we don't know
-#: ../src/bin/e_config.c:2193
+#: ../src/bin/e_config.c:2204
 msgid "The error is unknown to Enlightenment."
 msgstr "O erro não é reconhecido pelo Enlightenment."
 
-#: ../src/bin/e_config.c:2215
+#: ../src/bin/e_config.c:2226
 #, c-format
 msgid "Enlightenment has an error while writing<br>its config file.<br>%s<br><br>The file where the error occurred was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr "Ocorreu um erro ao escrever o<br>ficheiro de configurações.<br>%s<br>O erro ocorreu no ficheiro:<br>%s<br><br>Este ficheiro foi apagado para evitar a danificação dos dados.<br>"
@@ -1659,7 +1651,7 @@ msgstr "Dono pode escrever"
 
 #: ../src/bin/e_fm_prop.c:379
 #: ../src/bin/e_widget_fsel.c:310
-#: ../src/modules/conf_theme/e_int_config_icon_themes.c:264
+#: ../src/modules/conf_theme/e_int_config_icon_themes.c:263
 #: ../src/modules/conf_theme/e_int_config_transitions.c:199
 #: ../src/modules/conf_theme/e_int_config_theme.c:1040
 msgid "Preview"
@@ -2382,6 +2374,7 @@ msgstr "Aplicações favoritas"
 #: ../src/modules/conf_applications/e_int_config_apps.c:264
 #: ../src/modules/conf_menus/e_int_config_menus.c:260
 #: ../src/modules/conf_menus/e_int_config_menus.c:283
+#: ../src/modules/conf_theme/e_mod_main.c:38
 #: ../src/modules/conf_window_remembers/e_int_config_remembers.c:194
 #: ../src/modules/everything/evry_plug_apps.c:1367
 msgid "Applications"
@@ -2407,8 +2400,8 @@ msgstr "Sobre"
 #: ../src/bin/e_int_menus.c:192
 #: ../src/modules/conf_theme/e_int_config_cursor.c:146
 #: ../src/modules/conf_theme/e_mod_main.c:35
-#: ../src/modules/conf_theme/e_mod_main.c:67
-#: ../src/modules/conf_theme/e_mod_main.c:173
+#: ../src/modules/conf_theme/e_mod_main.c:70
+#: ../src/modules/conf_theme/e_mod_main.c:179
 msgid "Theme"
 msgstr "Tema"
 
@@ -2937,7 +2930,6 @@ msgid "Enlightenment cannot initialize the Icon Cache system.\n"
 msgstr "O Enlightenment não consegue iniciar a cache de ícones.\n"
 
 #: ../src/bin/e_main.c:866
-#| msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
 msgid "Enlightenment cannot initialize the XSettings system.\n"
 msgstr "O Enlightenment não consegue iniciar o sistema XSettings.\n"
 
@@ -4118,8 +4110,8 @@ msgstr "Papel de parede atual"
 #: ../src/modules/conf_display/e_int_config_desklock.c:311
 #: ../src/modules/conf_theme/e_mod_main.c:25
 #: ../src/modules/conf_theme/e_mod_main.c:32
-#: ../src/modules/conf_theme/e_mod_main.c:64
-#: ../src/modules/conf_theme/e_mod_main.c:156
+#: ../src/modules/conf_theme/e_mod_main.c:67
+#: ../src/modules/conf_theme/e_mod_main.c:162
 msgid "Wallpaper"
 msgstr "Papel de parede"
 
@@ -4510,45 +4502,50 @@ msgstr "O Enlightenment não conseguiu importar a configuração.<br><br>Tem a c
 msgid "Enlightenment was unable to import the configuration<br>due to a copy error."
 msgstr "O Enlightenment não conseguiu importar a configuração<br>devido a erros de cópia."
 
-#: ../src/modules/conf_intl/e_int_config_intl.c:579
+#: ../src/modules/conf_intl/e_int_config_intl.c:580
 #: ../src/modules/conf_intl/e_mod_main.c:20
 msgid "Language Settings"
 msgstr "Definições de idioma"
 
-#: ../src/modules/conf_intl/e_int_config_intl.c:875
+#: ../src/modules/conf_intl/e_int_config_intl.c:876
 msgid "Possible Locale problems"
 msgstr "Problemas com idiomas"
 
-#: ../src/modules/conf_intl/e_int_config_intl.c:876
+#: ../src/modules/conf_intl/e_int_config_intl.c:877
 #, c-format
-msgid "You have some extra locale environment<br>variables set that may interfere with<br>correct display of your chosen language.<br>If you don't want these affected, use the<br>Enviornment variable settings to unset them.<br>The variables that may affect you are<br>as follows:<br>%s"
-msgstr "Você tem definidas algumas variáveis<br>adicionais de localização que<br>podem interferir com o idioma escolhido.<br>Se não as quiser afetar, utilize as definições das variáveis de ambiente<br> para não as utilizar. As variáveis de ambiente que podem afetar o seu idioma são as seguintes:<br><br>%s."
+#| msgid ""
+#| "You have some extra locale environment<br>variables set that may "
+#| "interfere with<br>correct display of your chosen language.<br>If you "
+#| "don't want these affected, use the<br>Enviornment variable settings to "
+#| "unset them.<br>The variables that may affect you are<br>as follows:<br>%s"
+msgid "You have some extra locale environment<br>variables set that may interfere with<br>correct display of your chosen language.<br>If you don't want these affected, use the<br>Environment variable settings to unset them.<br>The variables that may affect you are<br>as follows:<br>%s"
+msgstr "Você definiu algumas variáveis de localização<br>que podem interferir com o idioma escolhido.<br>Se não as quiser afetar, utilize as definições das variáveis de ambiente<br> para não as utilizar. As variáveis de ambiente que podem afetar o seu idioma são as seguintes:<br><br>%s."
 
-#: ../src/modules/conf_intl/e_int_config_intl.c:930
-#: ../src/modules/conf_intl/e_int_config_intl.c:1013
+#: ../src/modules/conf_intl/e_int_config_intl.c:932
+#: ../src/modules/conf_intl/e_int_config_intl.c:1024
 msgid "Language Selector"
 msgstr "Seletor de idioma"
 
-#: ../src/modules/conf_intl/e_int_config_intl.c:959
-#: ../src/modules/conf_intl/e_int_config_intl.c:1395
+#: ../src/modules/conf_intl/e_int_config_intl.c:963
+#: ../src/modules/conf_intl/e_int_config_intl.c:1414
 #: ../src/modules/conf_menus/e_int_config_menus.c:169
-#: ../src/modules/wizard/page_010.c:150
+#: ../src/modules/wizard/page_010.c:151
 msgid "System Default"
 msgstr "Omissões do sistema"
 
 #. Locale selector
-#: ../src/modules/conf_intl/e_int_config_intl.c:986
-#: ../src/modules/conf_intl/e_int_config_intl.c:1064
+#: ../src/modules/conf_intl/e_int_config_intl.c:997
+#: ../src/modules/conf_intl/e_int_config_intl.c:1075
 msgid "Locale Selected"
 msgstr "Idioma selecionado"
 
-#: ../src/modules/conf_intl/e_int_config_intl.c:987
-#: ../src/modules/conf_intl/e_int_config_intl.c:1065
+#: ../src/modules/conf_intl/e_int_config_intl.c:998
+#: ../src/modules/conf_intl/e_int_config_intl.c:1076
 msgid "Locale"
 msgstr "Idioma"
 
 #: ../src/modules/conf_intl/e_mod_main.c:17
-#: ../src/modules/wizard/page_010.c:141
+#: ../src/modules/wizard/page_010.c:142
 msgid "Language"
 msgstr "Idioma"
 
@@ -4768,7 +4765,7 @@ msgstr "Imagens"
 
 #: ../src/modules/conf_paths/e_int_config_paths.c:74
 #: ../src/modules/conf_theme/e_int_config_fonts.c:432
-#: ../src/modules/conf_theme/e_mod_main.c:41
+#: ../src/modules/conf_theme/e_mod_main.c:44
 msgid "Fonts"
 msgstr "Tipo de letra"
 
@@ -5214,7 +5211,7 @@ msgid "Composite Focus-out Color"
 msgstr "Cor ao retirar o realçe"
 
 #: ../src/modules/conf_theme/e_int_config_color_classes.c:161
-#: ../src/modules/conf_theme/e_mod_main.c:38
+#: ../src/modules/conf_theme/e_mod_main.c:41
 msgid "Colors"
 msgstr "Cores"
 
@@ -5497,20 +5494,19 @@ msgstr "Ativar opções de recurso"
 msgid "Hinting / Fallbacks"
 msgstr "Sugestões/Recursos"
 
-#: ../src/modules/conf_theme/e_int_config_icon_themes.c:54
+#: ../src/modules/conf_theme/e_int_config_icon_themes.c:53
 msgid "Icon Theme Settings"
 msgstr "Definições dos ícones"
 
-#: ../src/modules/conf_theme/e_int_config_icon_themes.c:277
+#: ../src/modules/conf_theme/e_int_config_icon_themes.c:276
 msgid "Enable icon theme"
 msgstr "Ativar tema de ícones"
 
-#: ../src/modules/conf_theme/e_int_config_icon_themes.c:282
-#| msgid "Select applications"
+#: ../src/modules/conf_theme/e_int_config_icon_themes.c:281
 msgid "Use icon theme for applications"
 msgstr "Utilizar tema de ícones para as aplicações"
 
-#: ../src/modules/conf_theme/e_int_config_icon_themes.c:286
+#: ../src/modules/conf_theme/e_int_config_icon_themes.c:285
 msgid "Icons override general theme"
 msgstr "Os ícones substituem o tema geral"
 
@@ -5615,7 +5611,7 @@ msgid "Events"
 msgstr "Eventos"
 
 #: ../src/modules/conf_theme/e_int_config_transitions.c:162
-#: ../src/modules/conf_theme/e_mod_main.c:59
+#: ../src/modules/conf_theme/e_mod_main.c:62
 msgid "Startup"
 msgstr "Arranque"
 
@@ -5628,7 +5624,7 @@ msgid "Background Change"
 msgstr "Alteração do fundo"
 
 #: ../src/modules/conf_theme/e_int_config_transitions.c:172
-#: ../src/modules/conf_theme/e_mod_main.c:53
+#: ../src/modules/conf_theme/e_mod_main.c:56
 msgid "Transitions"
 msgstr "Transições"
 
@@ -5677,19 +5673,19 @@ msgstr "O Enlightenment não conseguiu importar o tema<br>devido a erros de cóp
 msgid "Exchange themes"
 msgstr "Trocar temas"
 
-#: ../src/modules/conf_theme/e_mod_main.c:44
+#: ../src/modules/conf_theme/e_mod_main.c:47
 msgid "Borders"
 msgstr "Contornos"
 
-#: ../src/modules/conf_theme/e_mod_main.c:47
+#: ../src/modules/conf_theme/e_mod_main.c:50
 msgid "Icon Theme"
 msgstr "Tema de ícones"
 
-#: ../src/modules/conf_theme/e_mod_main.c:50
+#: ../src/modules/conf_theme/e_mod_main.c:53
 msgid "Mouse Cursor"
 msgstr "Cursor do rato"
 
-#: ../src/modules/conf_theme/e_mod_main.c:56
+#: ../src/modules/conf_theme/e_mod_main.c:59
 msgid "Scaling"
 msgstr "Escala"
 
@@ -7464,7 +7460,7 @@ msgstr "Seguinte"
 msgid "Welcome to Enlightenment"
 msgstr "Bem-vindo ao Enlightenment"
 
-#: ../src/modules/wizard/page_010.c:142
+#: ../src/modules/wizard/page_010.c:143
 #: ../src/modules/wizard/page_020.c:58
 msgid "Select one"
 msgstr "Selecione um"

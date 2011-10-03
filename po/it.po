@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: http://trac.enlightenment.org/e/\n"
-"POT-Creation-Date: 2011-09-27 04:01-0700\n"
-"PO-Revision-Date: 2011-09-27 13:18+0200\n"
+"POT-Creation-Date: 2011-10-03 10:03-0700\n"
+"PO-Revision-Date: 2011-10-03 19:53+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -50,12 +50,12 @@ msgid ""
 "stable. Many features are incomplete or even non-existent yet and may have "
 "many bugs. You have been <hilight>WARNED!</>"
 msgstr ""
-"<title>Copyright &copy; 1999-2011, dell'Enlightenment Development Team.</>"
-"<br><br>Ci auguriamo che vi piacerà usare questo software tanto quanto a noi "
-"è piaciuto scriverlo.<br><br>Questo software viene fornito così-com'è senza "
-"alcuna garanzia esplicita o implicita. Questo software è regolato dalle "
-"condizioni di licenza, quindi si prega di leggere i file di licenza COPYING "
-"e COPYING-PLAIN installati sul sistema.<br><br>Enlightenment è sotto "
+"<title>Copyright &copy; 1999-2011, dell'Enlightenment Development Team.</"
+"><br><br>Ci auguriamo che vi piacerà usare questo software tanto quanto a "
+"noi è piaciuto scriverlo.<br><br>Questo software viene fornito così-com'è "
+"senza alcuna garanzia esplicita o implicita. Questo software è regolato "
+"dalle condizioni di licenza, quindi si prega di leggere i file di licenza "
+"COPYING e COPYING-PLAIN installati sul sistema.<br><br>Enlightenment è sotto "
 "<hilight>PIENO SVILUPPO</> e non è stabile. Molte funzionalità sono "
 "incomplete o ancora inesistenti e possono presentare molti difetti. Siete "
 "stati <hilight>AVVERTITI!</>"
@@ -917,7 +917,7 @@ msgid "Encryption failed."
 msgstr "Crittazione fallita."
 
 #: ../src/bin/e_config.c:2201
-msgid "Decruption failed."
+msgid "Decryption failed."
 msgstr "Decrittazione fallita."
 
 #. if we get here eet added errors we don't know
@@ -4738,54 +4738,54 @@ msgstr ""
 "Enlightenment non ha potuto importare la configurazione<br>a causa di un "
 "errore di copia."
 
-#: ../src/modules/conf_intl/e_int_config_intl.c:579
+#: ../src/modules/conf_intl/e_int_config_intl.c:580
 #: ../src/modules/conf_intl/e_mod_main.c:20
 msgid "Language Settings"
 msgstr "Localizzazione"
 
-#: ../src/modules/conf_intl/e_int_config_intl.c:875
+#: ../src/modules/conf_intl/e_int_config_intl.c:876
 msgid "Possible Locale problems"
 msgstr "Possibili problemi di localizzazione"
 
-#: ../src/modules/conf_intl/e_int_config_intl.c:876
+#: ../src/modules/conf_intl/e_int_config_intl.c:877
 #, c-format
 msgid ""
 "You have some extra locale environment<br>variables set that may interfere "
 "with<br>correct display of your chosen language.<br>If you don't want these "
-"affected, use the<br>Enviornment variable settings to unset them.<br>The "
+"affected, use the<br>Environment variable settings to unset them.<br>The "
 "variables that may affect you are<br>as follows:<br>%s"
 msgstr ""
 "Attualmente sono impostate alcune variabili<br>d'ambiente extra per la "
-"localizzazione che<br>potrebbero interferire con la "
-"corretta<br>visualizzazione della lingua scelta.<br>Se non volete che questo "
-"si verifichi<br>rimuovete le variabili dalla configurazione.<br>Le variabili "
-"in questione sono le seguenti:<br>%s"
+"localizzazione che<br>potrebbero interferire con la corretta<br>"
+"visualizzazione della lingua scelta.<br>Se non volete che questo si verifichi"
+"<br>rimuovete le variabili tramite l'apposita<br>voce del pannello impostazioni."
+"<br>Le variabili in questione sono le seguenti:<br>%s"
 
-#: ../src/modules/conf_intl/e_int_config_intl.c:930
-#: ../src/modules/conf_intl/e_int_config_intl.c:1013
+#: ../src/modules/conf_intl/e_int_config_intl.c:932
+#: ../src/modules/conf_intl/e_int_config_intl.c:1024
 msgid "Language Selector"
 msgstr "Selettore lingua"
 
-#: ../src/modules/conf_intl/e_int_config_intl.c:959
-#: ../src/modules/conf_intl/e_int_config_intl.c:1395
+#: ../src/modules/conf_intl/e_int_config_intl.c:963
+#: ../src/modules/conf_intl/e_int_config_intl.c:1414
 #: ../src/modules/conf_menus/e_int_config_menus.c:169
-#: ../src/modules/wizard/page_010.c:150
+#: ../src/modules/wizard/page_010.c:151
 msgid "System Default"
 msgstr "Predefinito dal sistema"
 
 #. Locale selector
-#: ../src/modules/conf_intl/e_int_config_intl.c:986
-#: ../src/modules/conf_intl/e_int_config_intl.c:1064
+#: ../src/modules/conf_intl/e_int_config_intl.c:997
+#: ../src/modules/conf_intl/e_int_config_intl.c:1075
 msgid "Locale Selected"
 msgstr "Localizzazione selezionata"
 
-#: ../src/modules/conf_intl/e_int_config_intl.c:987
-#: ../src/modules/conf_intl/e_int_config_intl.c:1065
+#: ../src/modules/conf_intl/e_int_config_intl.c:998
+#: ../src/modules/conf_intl/e_int_config_intl.c:1076
 msgid "Locale"
 msgstr "Localizzazione"
 
 #: ../src/modules/conf_intl/e_mod_main.c:17
-#: ../src/modules/wizard/page_010.c:141
+#: ../src/modules/wizard/page_010.c:142
 msgid "Language"
 msgstr "Lingua"
 
@@ -7826,7 +7826,7 @@ msgstr "Avanti"
 msgid "Welcome to Enlightenment"
 msgstr "Benvenuti in Enlightenment"
 
-#: ../src/modules/wizard/page_010.c:142 ../src/modules/wizard/page_020.c:58
+#: ../src/modules/wizard/page_010.c:143 ../src/modules/wizard/page_020.c:58
 msgid "Select one"
 msgstr "Selezionare un'opzione"
 

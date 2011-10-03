@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-09-27 07:33+0200\n"
-"PO-Revision-Date: 2011-09-27 10:48+0100\n"
-"Last-Translator: dazibaldo <dazibaldo@sfr.fr>\n"
+"POT-Creation-Date: 2011-10-03 07:30+0200\n"
+"PO-Revision-Date: 2011-10-03 17:59+0100\n"
+"Last-Translator: dazibao <dazibao@sfr.fr>\n"
 "Language-Team: French <sansgourou@gmail.com>\n"
-"Language: fr\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
 "X-Poedit-Language: French\n"
 "X-Poedit-Country: FRANCE\n"
 "Plural-Forms: nplurals=2; plural=n>1;\n"
@@ -947,7 +947,7 @@ msgid "Encryption failed."
 msgstr "Échec du cryptage."
 
 #: src/bin/e_config.c:2201
-msgid "Decruption failed."
+msgid "Decryption failed."
 msgstr "Échec du décryptage."
 
 #: src/bin/e_config.c:2204
@@ -4468,44 +4468,44 @@ msgstr "Enlightenment n'a pu importer la configuration.<br><br>Êtes-vous sûr q
 msgid "Enlightenment was unable to import the configuration<br>due to a copy error."
 msgstr "Enlightenment n'a pas pu importer cette configuration,<br>à cause d'une erreur de copie."
 
-#: src/modules/conf_intl/e_int_config_intl.c:579
+#: src/modules/conf_intl/e_int_config_intl.c:580
 #: src/modules/conf_intl/e_mod_main.c:20
 msgid "Language Settings"
 msgstr "Paramétrage de la langue"
 
-#: src/modules/conf_intl/e_int_config_intl.c:875
+#: src/modules/conf_intl/e_int_config_intl.c:876
 msgid "Possible Locale problems"
 msgstr "Les paramètres régionaux peuvent poser problème"
 
-#: src/modules/conf_intl/e_int_config_intl.c:876
+#: src/modules/conf_intl/e_int_config_intl.c:877
 #, c-format
-msgid "You have some extra locale environment<br>variables set that may interfere with<br>correct display of your chosen language.<br>If you don't want these affected, use the<br>Enviornment variable settings to unset them.<br>The variables that may affect you are<br>as follows:<br>%s"
+msgid "You have some extra locale environment<br>variables set that may interfere with<br>correct display of your chosen language.<br>If you don't want these affected, use the<br>Environment variable settings to unset them.<br>The variables that may affect you are<br>as follows:<br>%s"
 msgstr "Certaines variantes de localisation<br>sont susceptibles de perturber le<br>rendu de la langue sélectionnée.<br>Pour éviter cela, utilisez la<br>configuration des Variables<br>d'environnement pour les désactiver.<br>Les variantes problématiques sont :<br>%s"
 
-#: src/modules/conf_intl/e_int_config_intl.c:930
-#: src/modules/conf_intl/e_int_config_intl.c:1013
+#: src/modules/conf_intl/e_int_config_intl.c:932
+#: src/modules/conf_intl/e_int_config_intl.c:1024
 msgid "Language Selector"
 msgstr "Sélecteur de langue"
 
-#: src/modules/conf_intl/e_int_config_intl.c:959
-#: src/modules/conf_intl/e_int_config_intl.c:1395
+#: src/modules/conf_intl/e_int_config_intl.c:963
+#: src/modules/conf_intl/e_int_config_intl.c:1414
 #: src/modules/conf_menus/e_int_config_menus.c:169
-#: src/modules/wizard/page_010.c:150
+#: src/modules/wizard/page_010.c:151
 msgid "System Default"
 msgstr "Système (par défaut)"
 
-#: src/modules/conf_intl/e_int_config_intl.c:986
-#: src/modules/conf_intl/e_int_config_intl.c:1064
+#: src/modules/conf_intl/e_int_config_intl.c:997
+#: src/modules/conf_intl/e_int_config_intl.c:1075
 msgid "Locale Selected"
 msgstr "Paramètres régionaux"
 
-#: src/modules/conf_intl/e_int_config_intl.c:987
-#: src/modules/conf_intl/e_int_config_intl.c:1065
+#: src/modules/conf_intl/e_int_config_intl.c:998
+#: src/modules/conf_intl/e_int_config_intl.c:1076
 msgid "Locale"
 msgstr "Localisation"
 
 #: src/modules/conf_intl/e_mod_main.c:17
-#: src/modules/wizard/page_010.c:141
+#: src/modules/wizard/page_010.c:142
 msgid "Language"
 msgstr "Langue"
 
@@ -7381,7 +7381,7 @@ msgstr "Suivant"
 msgid "Welcome to Enlightenment"
 msgstr "Bienvenue dans Enlightenment"
 
-#: src/modules/wizard/page_010.c:142
+#: src/modules/wizard/page_010.c:143
 #: src/modules/wizard/page_020.c:58
 msgid "Select one"
 msgstr "Choisissez"
@@ -7671,42 +7671,36 @@ msgstr "Zone de notification"
 #~ "Les données de configuration du mélangeur ont été modifiées.<br>De "
 #~ "nouveaux paramètres par défaut remplacent votre ancienne configuration."
 #~ "<br>Désolé pour le désagrément."
-
 #~ msgid ""
 #~ "Enlightenment cannot Initialize Ecore!\n"
 #~ "Perhaps you are out of memory?"
 #~ msgstr ""
 #~ "Enlightenment ne peut pas initialiser Ecore !\n"
 #~ "Peut-être êtes-vous à court de mémoire ?"
-
 #~ msgid ""
 #~ "Enlightenment cannot initialize the File system.\n"
 #~ "Perhaps you are out of memory?"
 #~ msgstr ""
 #~ "Enlightenment ne peut pas initialiser le système de fichiers.\n"
 #~ "Peut-être êtes-vous à court de mémoire ?"
-
 #~ msgid ""
 #~ "Enlightenment cannot initialize its X connection.\n"
 #~ "Have you set your DISPLAY variable?"
 #~ msgstr ""
 #~ "Enlightenment ne peut pas initialiser sa connexion à X.\n"
 #~ "Avez-vous défini la variable d'environnement DISPLAY ?"
-
 #~ msgid ""
 #~ "Enlightenment cannot initialize the connections system.\n"
 #~ "Perhaps you are out of memory?"
 #~ msgstr ""
 #~ "Enlightenment ne peut pas initialiser le gestionnaire de connexions.\n"
 #~ "Peut-être êtes-vous à court de mémoire ?"
-
 #~ msgid ""
 #~ "Enlightenment cannot initialize the IPC system.\n"
 #~ "Perhaps you are out of memory?"
 #~ msgstr ""
 #~ "Enlightenment ne peut pas initialiser le système IPC.\n"
 #~ "Peut-être êtes-vous à court de mémoire ?"
-
 #~ msgid ""
 #~ "Enlightenment cannot setup xinerama wrapping.\n"
 #~ "This should not happen."
@@ -7714,106 +7708,76 @@ msgstr "Zone de notification"
 #~ "Enlightenment ne peut pas initialiser l'adaptateur (wrapper) pour "
 #~ "xinerama.\n"
 #~ "Cela ne devrait pas se produire."
-
 #~ msgid ""
 #~ "Enlightenment cannot setup randr wrapping.\n"
 #~ "This should not happen."
 #~ msgstr ""
 #~ "Enlightenment ne peut pas initialiser l'adaptateur (wrapper) pour randr.\n"
 #~ "Cela ne devrait pas se produire."
-
 #~ msgid ""
 #~ "Enlightenment cannot initialize the Evas system.\n"
 #~ "Perhaps you are out of memory?"
 #~ msgstr ""
 #~ "Enlightenment ne peut pas initialiser le système Evas.\n"
 #~ "Peut-être êtes-vous à court de mémoire ?"
-
 #~ msgid ""
 #~ "Enlightenment cannot set up init screen.\n"
 #~ "Perhaps you are out of memory?"
 #~ msgstr ""
 #~ "Enlightenment ne peut pas configurer l'écran de démarrage.\n"
 #~ "Peut-être êtes-vous à court de mémoire ?"
-
 #~ msgid "Check SVG Support"
 #~ msgstr "Vérification du support SVG"
-
 #~ msgid "Setup FM"
 #~ msgstr "Configuration du gestionnaire de fichiers"
-
 #~ msgid "Enlightenment cannot set up its shelf system."
 #~ msgstr "Enlightenment ne peut pas configurer son gestionnaire de racks."
-
 #~ msgid "New Application"
 #~ msgstr "Nouvelle application"
-
 #~ msgid "Actions"
 #~ msgstr "Actions"
-
 #~ msgid "Copy to Clipboard"
 #~ msgstr "Copier dans le presse-papiers "
-
 #~ msgid "Exebuf"
 #~ msgstr "Exebuf"
-
 #~ msgid "Open With..."
 #~ msgstr "Ouvrir avec…"
-
 #~ msgid "Open File..."
 #~ msgstr "Ouvrir le fichier…"
-
 #~ msgid "Edit Application Entry"
 #~ msgstr "Éditer le fichier d'application"
-
 #~ msgid "New Application Entry"
 #~ msgstr "Nouveau fichier d'application"
-
 #~ msgid "Run with Sudo"
 #~ msgstr "Exécuter avec sudo"
-
 #~ msgid "Open Terminal here"
 #~ msgstr "Ouvrir dans un terminal"
-
 #~ msgid "Run Executable"
 #~ msgstr "Lancer l'exécutable"
-
 #~ msgid "Calculator"
 #~ msgstr "Calculatrice"
-
 #~ msgid "Copy To ..."
 #~ msgstr "Copier dans..."
-
 #~ msgid "Move To ..."
 #~ msgstr "Déplacer vers..."
-
 #~ msgid "Move to Trash"
 #~ msgstr "Mettre à la corbeille"
-
 #~ msgid "Open Folder (EFM)"
 #~ msgstr "Ouvrir le dossier avec EFM"
-
 #~ msgid "Sort by Date"
 #~ msgstr "Classer par date"
-
 #~ msgid "Sort by Name"
 #~ msgstr "Classer par nom"
-
 #~ msgid "Recent Files"
 #~ msgstr "Documents récents"
-
 #~ msgid "Show Dialog"
 #~ msgstr "Afficher la boîte de dialogue"
-
 #~ msgid "Switch to Window"
 #~ msgstr "Aller vers la fenêtre"
-
 #~ msgid "Toggle Fullscreen"
 #~ msgstr "Activer/Désactiver le plein écran"
-
 #~ msgid "Send to Desktop"
 #~ msgstr "Envoyer sur le bureau"
-
 #~ msgid ""
 #~ "No menu files were<br>found on your system.<br>Please see "
 #~ "the<br>documentation on<br>www.enlightenment.org<br>for more details "
@@ -7822,91 +7786,62 @@ msgstr "Zone de notification"
 #~ "Aucun fichier de menus<br>n'a été détecté.<br>Veuillez consulter "
 #~ "la<br>documentation disponible<br>sur wiki.enlightenment.org<br>pour "
 #~ "savoir comment<br>générer les menus<br>d'applications."
-
 #~ msgid "Select application menu"
 #~ msgstr "Sélectionnez l'agencement du menu"
-
 #~ msgid "Launcher Bar"
 #~ msgstr "Barre de lancement"
-
 #~ msgid "Desktop Files"
 #~ msgstr "Fichiers desktop"
-
 #~ msgid "No icons on desktop"
 #~ msgstr "Pas d'icones sur le bureau"
-
 #~ msgid "Enable desktop icons"
 #~ msgstr "Afficher les icones du bureau"
-
 #~ msgid "Focus mode"
 #~ msgstr "Type de focus"
-
 #~ msgid "Click to focus windows"
 #~ msgstr "Cliquer pour focaliser les fenêtres"
-
 #~ msgid "Mouse over focuses windows"
 #~ msgstr "Focalisation des fenêtres au passage de la souris "
-
 #~ msgid "Select Icons to Add"
 #~ msgstr "Sélectionnez les icones à ajouter"
-
 #~ msgid "Quick Launch"
 #~ msgstr "Lanceur"
-
 #~ msgid "Select Applications"
 #~ msgstr "Sélectionnez les applications dans la barre"
-
 #~ msgid "Acpi"
 #~ msgstr "Acpi"
-
 #~ msgid "Dim Screen"
 #~ msgstr "Assombrir l'écran"
-
 #~ msgid "Undim Screen"
 #~ msgstr "Éclaicir l'écran"
-
 #~ msgid "Display Power Management Signaling"
 #~ msgstr "Display Power Management Signaling"
-
 #~ msgid "The current display server is not <br>DPMS capable."
 #~ msgstr "L'affichage actuel ne supporte<br>pas le DPMS."
-
 #~ msgid "The current display server does not <br>have the DPMS extension."
 #~ msgstr "L'affichage actuel n'a pas le support<br>de l'extension DPMS."
-
 #~ msgid "Interaction"
 #~ msgstr "Interaction"
-
 #~ msgid "Spell Checker"
 #~ msgstr "Correcteur orthographique"
-
 #~ msgid "Everything Aspell"
 #~ msgstr "Omni aspell"
-
 #~ msgid "Spell checker"
 #~ msgstr "Correcteur orthographique"
-
 #~ msgid "Aspell"
 #~ msgstr "Aspell"
-
 #~ msgid "Hunspell"
 #~ msgstr "Hunspell"
-
 #~ msgid "Add Application..."
 #~ msgstr "Ajouter l'application…"
-
 #~ msgid "More..."
 #~ msgstr "Plus…"
-
 #~ msgid "To Favorites Menu"
 #~ msgstr "Au menu des favoris"
-
 #~ msgid "Selection"
 #~ msgstr "Sélection"
-
 #~ msgid "Animated flip"
 #~ msgstr "Basculement animé"
-
 #~ msgid ""
 #~ "An error occurred while saving Enlightenment's<br>settings to disk. The "
 #~ "error could not be<br>deterimined.<br><br>The file where the error "
@@ -7917,13 +7852,12 @@ msgstr "Zone de notification"
 #~ "de Enlightenment sur le disque.<br>L'origine de cette erreur n'a pu être "
 #~ "déterminée.<br><br>Le fichier incriminé était :<br>%s<br><br>Ce fichier a "
 #~ "été supprimé pour éviter la corruption<br>des données.<br>"
-
 #~ msgid ""
 #~ "Enlightenment's settings files are too big<br>for the file system they "
 #~ "are being saved to.<br>This error is very strange as the files "
 #~ "should<br>be extremely small. Please check the settings<br>for your home "
-#~ "directory.<br><br>The file where the error occurred was:<br>"
-#~ "%s<br><br>This file has been deleted to avoid corrupt data.<br>"
+#~ "directory.<br><br>The file where the error occurred was:<br>%"
+#~ "s<br><br>This file has been deleted to avoid corrupt data.<br>"
 #~ msgstr ""
 #~ "Les fichiers de configuration de Enlightenment sont trop<br>gros pour le "
 #~ "système de fichiers où ils doivent être<br>enregistrés. Une erreur tout à "
@@ -7931,19 +7865,17 @@ msgstr "Zone de notification"
 #~ "<br>Veuillez vérifier les paramètres de<br>votre dossier personnel."
 #~ "<br><br>Le fichier incriminé était :<br>%s<br><br>Ce fichier a été "
 #~ "supprimé pour éviter la corruption<br>des données.<br>"
-
 #~ msgid ""
 #~ "An output error occurred when writing the settings<br>files for "
 #~ "Enlightenment. Your disk is having troubles<br>and possibly needs "
-#~ "replacement.<br><br>The file where the error occurred was:<br>"
-#~ "%s<br><br>This file has been deleted to avoid corrupt data.<br>"
+#~ "replacement.<br><br>The file where the error occurred was:<br>%"
+#~ "s<br><br>This file has been deleted to avoid corrupt data.<br>"
 #~ msgstr ""
 #~ "Une erreur d'entrée/sortie est survenue lors de l'écriture<br>des "
 #~ "fichiers de configuration de Enlightenment. Votre disque dur<br>est en "
 #~ "cause et devra vraisemblablement être remplacé.<br><br>Le fichier "
 #~ "incriminé était :<br>%s<br><br>Ce fichier a été supprimé pour éviter la "
 #~ "corruption<br>des données.<br>"
-
 #~ msgid ""
 #~ "Enlightenment cannot write its settings file<br>because it ran out of "
 #~ "space to write the file.<br>You have either run out of disk space or "
@@ -7956,571 +7888,384 @@ msgstr "Zone de notification"
 #~ "disque,<br>soit vous avez dépassé votre quota.<br><br>Le fichier "
 #~ "incriminé était :<br>%s<br><br>Ce fichier a été supprimé pour éviter la "
 #~ "corruption<br>des données.<br>"
-
 #~ msgid "Enable Composite Support ?"
 #~ msgstr "Activer le support de l'extension composite ?"
-
 #~ msgid "Fileman"
 #~ msgstr "EFM"
-
 #~ msgid "Shelf"
 #~ msgstr "Rack"
-
 #~ msgid "Show home directory"
 #~ msgstr "Afficher le dossier personnel"
-
 #~ msgid "Move this gadget to"
 #~ msgstr "Déplacer ce gadget vers"
-
 #~ msgid "Able to be resized"
 #~ msgstr "Permettre le redimensionnement"
-
 #~ msgid "Remove this gadget"
 #~ msgstr "Supprimer ce gadget"
-
 #~ msgid "Powersaving policy"
 #~ msgstr "Stratégie"
-
 #~ msgid "Change Icon Properties"
 #~ msgstr "Changer les propriétés de l'icone"
-
 #~ msgid "Remove Icon"
 #~ msgstr "Supprimer l'icone"
-
 #~ msgid "Add An Icon"
 #~ msgstr "Ajouter un icone"
-
 #~ msgid "Create a gradient..."
 #~ msgstr "Créer un dégradé…"
-
 #~ msgid "Color 1:"
 #~ msgstr "Couleur 1 :"
-
 #~ msgid "Color 2:"
 #~ msgstr "Couleur 2 :"
-
 #~ msgid "Fill Options"
 #~ msgstr "Options de remplissage"
-
 #~ msgid "Diagonal Up"
 #~ msgstr "Diagonale montante"
-
 #~ msgid "Diagonal Down"
 #~ msgstr "Diagonale descendante"
-
 #~ msgid "Radial"
 #~ msgstr "Radial"
-
 #~ msgid "Gradient Creation Error"
 #~ msgstr "Erreur de création du dégradé"
-
 #~ msgid "For some reason, Enlightenment was unable to create a gradient."
 #~ msgstr "Sans raison bien déterminée, Enlightenment n'a pu créer un dégradé."
-
 #~ msgid "Set Shelf Contents"
 #~ msgstr "Définir le contenu du rack"
-
 #~ msgid "Delete this Shelf"
 #~ msgstr "Supprimer ce rack"
-
 #~ msgid "Add Application"
 #~ msgstr "Ajouter une application"
-
 #~ msgid "Screensaver Timer"
 #~ msgstr "Minuteur de l'écran de veille"
-
 #~ msgid "Geometry when moving or resizing"
 #~ msgstr "Géométrie en déplacement ou redimensionnement"
-
 #~ msgid "Animated shading"
 #~ msgstr "Enroulement animé"
-
 #~ msgid "New Window Placement"
 #~ msgstr "Positionnement des nouvelles fenêtres"
-
 #~ msgid "Border Icon Preference"
 #~ msgstr "Préférence de l'icone en bordure"
-
 #~ msgid "Keyboard move and resize"
 #~ msgstr "Déplacement et redimensionnement au clavier"
-
 #~ msgid "Automatic move and resize"
 #~ msgstr "Déplacement et redimensionnement automatiques"
-
 #~ msgid "Move after resize on window configure request"
 #~ msgstr "Déplacer après redimensionnement"
-
 #~ msgid "Maximize Directions"
 #~ msgstr "Directions de maximisation"
-
 #~ msgid "Miscellaneous Options"
 #~ msgstr "Autres options"
-
 #~ msgid "From other desks"
 #~ msgstr "Des autres bureaux"
-
 #~ msgid "From other screens"
 #~ msgstr "Des autres écrans"
-
 #~ msgid "Warp mouse"
 #~ msgstr "Déplacer le curseur"
-
 #~ msgid "Lock when Enlightenment starts"
 #~ msgstr "Verrouiller au démarrage de Enlightenment"
-
 #~ msgid "Screen Lock Timers"
 #~ msgstr "Minuteurs du verrouillage d'écran"
-
 #~ msgid "Wallpaper Mode"
 #~ msgstr "Type de fond d'écran"
-
 #~ msgid "User Wallpaper"
 #~ msgstr "Fond d'écran utilisateur"
-
 #~ msgid "Directory up"
 #~ msgstr "Remonter d'un niveau"
-
 #~ msgid "Enter Presentation Mode"
 #~ msgstr "Entrer en mode présentation"
-
 #~ msgid "Gradient..."
 #~ msgstr "Dégradé…"
-
 #~ msgid "Automatic Locking"
 #~ msgstr "Verrouillage automatique"
-
 #~ msgid "Time after screensaver activated"
 #~ msgstr "Délai après activation de l'écran de veille"
-
 #~ msgid "Idle time to exceed"
 #~ msgstr "Durée d'inactivité à dépasser"
-
 #~ msgid "Suggest entering presentation mode"
 #~ msgstr "Suggérer l'entrée en mode présentation"
-
 #~ msgid "If deactivated before"
 #~ msgstr "Si désactivé avant"
-
 #~ msgid "Use custom screenlock"
 #~ msgstr "Utiliser un verrouillage d'écran personnalisé"
-
 #~ msgid "Show %s Plugin"
 #~ msgstr "Afficher le greffon %s"
-
 #~ msgid "Browse Folder..."
 #~ msgstr "Parcourir un dossier..."
-
 #~ msgid "Show Executables"
 #~ msgstr "Afficher les exécutables"
-
 #~ msgid "Set as Wallpaper"
 #~ msgstr "Utiliser comme fond d'écran"
-
 #~ msgid "UPower"
 #~ msgstr "UPower"
-
 #~ msgid "Add Edge"
 #~ msgstr "Ajouter un bord"
-
 #~ msgid "Delete Edge"
 #~ msgstr "Supprimer un bord"
-
 #~ msgid "Modify Edge"
 #~ msgstr "Modifier un bord"
-
 #~ msgid "Restore Mouse and Wheel Binding Defaults"
 #~ msgstr "Restaurer les raccourcis souris par défaut"
-
 #~ msgid "Add Key"
 #~ msgstr "Ajouter"
-
 #~ msgid "Delete Key"
 #~ msgstr "Supprimer"
-
 #~ msgid "Modify Key"
 #~ msgstr "Modifier"
-
 #~ msgid "Set Contents..."
 #~ msgstr "Définir le contenu…"
-
 #~ msgid "Select Action"
 #~ msgstr "Choisir une action"
-
 #~ msgid "Send to Deskop"
 #~ msgstr "Envoyer sur le bureau"
-
 #~ msgid "Uniconify"
 #~ msgstr "Restaurer"
-
 #~ msgid "Unfullscreen"
 #~ msgstr "Sortir du plein écran"
-
 #~ msgid "Window Action"
 #~ msgstr "Action de fenêtre"
-
 #~ msgid "Background Mode"
 #~ msgstr "Type de fond"
-
 #~ msgid "Active Plugins"
 #~ msgstr "Greffons actifs"
-
 #~ msgid "Run Command Settings"
 #~ msgstr "Paramétrage de la ligne de commande"
-
 #~ msgid "Maximum Apps to List"
 #~ msgstr "Nombre max d'applis à lister"
-
 #~ msgid "Maximum Exes to List"
 #~ msgstr "Nombre max d'exécutables à lister"
-
 #~ msgid "Maximum History to List"
 #~ msgstr "Longueur max de l'historique à lister"
-
 #~ msgid "Speed"
 #~ msgstr "Vitesse"
-
 #~ msgid "Minimum Width"
 #~ msgstr "Largeur minimale"
-
 #~ msgid "Minimum Height"
 #~ msgstr "Hauteur minimale"
-
 #~ msgid "Maximum Width"
 #~ msgstr "Largeur maximale"
-
 #~ msgid "Maximum Height"
 #~ msgstr "Hauteur maximale"
-
 #~ msgid "X-Axis Alignment"
 #~ msgstr "Alignement horizontal"
-
 #~ msgid "Y-Axis Alignment"
 #~ msgstr "Alignement vertical"
-
 #~ msgid "Command (CTRL+RETURN to utilize)"
 #~ msgstr "Commande (Ctrl+Entrée pour utiliser)"
-
 #~ msgid "Terminal"
 #~ msgstr "Terminal"
-
 #~ msgid "Run Command"
 #~ msgstr "Ligne de commande"
-
 #~ msgid "Run Command Dialog"
 #~ msgstr "Fenêtre de commande"
-
 #~ msgid "History Sort"
 #~ msgstr "Tri de l'historique"
-
 #~ msgid "%1.1f"
 #~ msgstr "%1.1f"
-
 #~ msgid "Position / Size"
 #~ msgstr "Position/Taille"
-
 #~ msgid "Description: Unavailable"
 #~ msgstr "Description : non disponible"
-
 #~ msgid "More than one gadget selected."
 #~ msgstr "Plus d'un gadget sélectionné."
-
 #~ msgid "No gadget selected."
 #~ msgstr "Aucun gadget sélectionné."
-
 #~ msgid "Styles"
 #~ msgstr "Styles"
-
 #~ msgid "Selected Gadgets"
 #~ msgstr "Gadgets sélectionnés"
-
 #~ msgid "Fast"
 #~ msgstr "Rapide"
-
 #~ msgid "Slow"
 #~ msgstr "Lent"
-
 #~ msgid "Very Slow"
 #~ msgstr "Très lent"
-
 #~ msgid "200 F"
 #~ msgstr "200 °F"
-
 #~ msgid "150 F"
 #~ msgstr "150 °F"
-
 #~ msgid "110 F"
 #~ msgstr "110 °F"
-
 #~ msgid "130 F"
 #~ msgstr "130 °F"
-
 #~ msgid "90 F"
 #~ msgstr "90 °F"
-
 #~ msgid "93 C"
 #~ msgstr "93 °C"
-
 #~ msgid "65 C"
 #~ msgstr "65 °C"
-
 #~ msgid "43 C"
 #~ msgstr "43 °C"
-
 #~ msgid "55 C"
 #~ msgstr "55 °C"
-
 #~ msgid "32 C"
 #~ msgstr "32 °C"
-
 #~ msgid "Favorites Menu"
 #~ msgstr "Menu des favoris"
-
 #~ msgid "Selected Applications"
 #~ msgstr "Applications sélectionnées"
-
 #~ msgid "Desktop files scan done"
 #~ msgstr "Analyse des fichiers desktop terminée"
-
 #~ msgid "Desktop file scan"
 #~ msgstr "Analyse des fichiers desktop"
-
 #~ msgid "Basic Settings"
 #~ msgstr "Paramètres basiques"
-
 #~ msgid "Maximum Number of Matched Apps to List"
 #~ msgstr "Nombre maximal d'applications à lister"
-
 #~ msgid "Maximum Number of Matched Exes to List"
 #~ msgstr "Nombre maximal d'exécutables à lister"
-
 #~ msgid "Scroll Settings"
 #~ msgstr "Paramétrage du défilement"
-
 #~ msgid "Scroll Animate"
 #~ msgstr "Animer le défilement"
-
 #~ msgid "Scroll Speed"
 #~ msgstr "Vitesse du défilement"
-
 #~ msgid "Position Settings"
 #~ msgstr "Paramétrage de la position"
-
 #~ msgid "Icon Themes"
 #~ msgstr "Thèmes d'icones"
-
 #~ msgid "Filename"
 #~ msgstr "Nom de fichier"
-
 #~ msgid "Available Modules"
 #~ msgstr "Modules disponibles"
-
 #~ msgid "Load Module"
 #~ msgstr "Activer le module"
-
 #~ msgid "Loaded Modules"
 #~ msgstr "Modules activés"
-
 #~ msgid "Menu Item Captions"
 #~ msgstr "Apparence des entrées dans le menu"
-
 #~ msgid "About Dialog Title"
 #~ msgstr "Titre de la fenêtre à propos"
-
 #~ msgid "About Dialog Version"
 #~ msgstr "Version de la fenêtre à propos"
-
 #~ msgid "Settings Dialog Title"
 #~ msgstr "Titre de la fenêtre de configuration"
-
 #~ msgid "List Item Odd Text"
 #~ msgstr "Texte de la liste des éléments impairs"
-
 #~ msgid "Window Manager Colors"
 #~ msgstr "Couleurs du gestionnaire de fenêtres"
-
 #~ msgid "Disabled"
 #~ msgstr "Désactivé"
-
 #~ msgid "Widget Colors"
 #~ msgstr "Couleurs des composants graphiques"
-
 #~ msgid "Module Colors"
 #~ msgstr "Couleurs des modules"
-
 #~ msgid "Outline Color"
 #~ msgstr "Couleur de la bordure"
-
 #~ msgid "Defaults"
 #~ msgstr "Valeurs par défaut"
-
 #~ msgid "Main Menu Settings"
 #~ msgstr "Paramétrage du menu principal"
-
 #~ msgid "Show Favorites"
 #~ msgstr "Afficher les favoris"
-
 #~ msgid "Show Applications"
 #~ msgstr "Afficher les applications"
-
 #~ msgid "Show Generic"
 #~ msgstr "Afficher l'information générique"
-
 #~ msgid "Show Comments"
 #~ msgstr "Afficher le commentaire"
-
 #~ msgid "General Menu"
 #~ msgstr "Menu général"
-
 #~ msgid "Autoscroll Margin"
 #~ msgstr "Marge du défilement automatique"
-
 #~ msgid "Idle Cursor"
 #~ msgstr "Curseur inactif"
-
 #~ msgid "Use Enlightenment Cursor"
 #~ msgstr "Utiliser le curseur de Enlightenment"
-
 #~ msgid "Use X Cursor"
 #~ msgstr "Utiliser le curseur du serveur X"
-
 #~ msgid "Cursor Size"
 #~ msgstr "Taille du curseur"
-
 #~ msgid "Cache Settings"
 #~ msgstr "Paramétrage des tampons"
-
 #~ msgid "Size Of Font Cache"
 #~ msgstr "Taille du tampon de polices"
-
 #~ msgid "Size Of Image Cache"
 #~ msgstr "Taille du tampon d'images"
-
 #~ msgid "Time until X screensaver starts"
 #~ msgstr "Délai avant le démarrage de l'écran de veille de X"
-
 #~ msgid "Time until X screensaver alternates"
 #~ msgstr "Délai avant le changement d'écran de veille de X"
-
 #~ msgid "Follow the window as it moves"
 #~ msgstr "Suivre la fenêtre lors de son déplacement"
-
 #~ msgid "Follow the window as it resizes"
 #~ msgstr "Suivre la fenêtre lors de son redimensionnement"
-
 #~ msgid "Window Shading"
 #~ msgstr "Enroulement de la fenêtre"
-
 #~ msgid "Animate the shading and unshading of windows"
 #~ msgstr "Animer l'enroulement et le déroulement des fenêtres"
-
 #~ msgid "Automatically switch to desktop of new window"
 #~ msgstr "Basculer automatiquement vers le bureau de la nouvelle fenêtre"
-
 #~ msgid "Window Border"
 #~ msgstr "Bordure de la fenêtre"
-
 #~ msgid "Prefer user defined icon"
 #~ msgstr "Préférer l'icone défini par l'utilisateur"
-
 #~ msgid "Prefer application provided icon"
 #~ msgstr "Préférer l'icone fourni par l'application"
-
 #~ msgid "Click to focus"
 #~ msgstr "Cliquer pour focaliser"
-
 #~ msgid "No new windows get focus"
 #~ msgstr "Les nouvelles fenêtres ne sont pas focalisées"
-
 #~ msgid "All new windows get focus"
 #~ msgstr "Toutes les nouvelles fenêtres sont focalisées"
-
 #~ msgid "Only new dialogs get focus if the parent has focus"
 #~ msgstr ""
 #~ "Seules les nouvelles boîtes de dialogue dont le parent est focalisé sont "
 #~ "focalisées"
-
 #~ msgid "A click on a window always raises it"
 #~ msgstr "Un clic sur une fenêtre la met toujours au premier plan"
-
 #~ msgid "A click in a window always focuses it"
 #~ msgstr "Un clic dans une fenêtre la focalise toujours"
-
 #~ msgid "Resist moving or resizing a window over an obstacle"
 #~ msgstr "Résister lors du déplacement/redimensionnement sur un obstacle"
-
 #~ msgid "Resistance between windows:"
 #~ msgstr "Résistance entre les fenêtres :"
-
 #~ msgid "Resistance to desktop gadgets:"
 #~ msgstr "Résistance aux gadgets du bureau :"
-
 #~ msgid "Show iconified windows"
 #~ msgstr "Afficher les fenêtres minimisées"
-
 #~ msgid "Selection Settings"
 #~ msgstr "Paramétrage de la sélection"
-
 #~ msgid "Focus window while selecting"
 #~ msgstr "Focaliser la fenêtre lors de la sélection"
-
 #~ msgid "Raise window while selecting"
 #~ msgstr "Fenêtre au premier plan lors de la sélection"
-
 #~ msgid "Uncover windows while selecting"
 #~ msgstr "Découvrir les fenêtres lors de la sélection"
-
 #~ msgid "Warp Settings"
 #~ msgstr "Paramétrage de l'apparition"
-
 #~ msgid "Show Favorites In Main Menu"
 #~ msgstr "Afficher les favoris dans le menu principal"
-
 #~ msgid "Show Applications In Main Menu"
 #~ msgstr "Afficher les applications dans le menu principal"
-
 #~ msgid "Autoscroll Settings"
 #~ msgstr "Paramétrage du défilement automatique"
-
 #~ msgid "%2.2f seconds"
 #~ msgstr "%2.2f secondes"
-
 #~ msgid "Connman Server Operation Failed"
 #~ msgstr "Connman : échec de l'opération sur le serveur."
-
 #~ msgid ""
 #~ "Could not execute remote operation:<br>%s<br>Server Error <hilight>%s:</"
 #~ "hilight> %s"
 #~ msgstr ""
 #~ "Impossible d'exécuter l'opération distante :<br>%s<br>Erreur du serveur "
 #~ "<hilight>%s:</hilight> %s"
-
 #~ msgid "Connman Operation Failed"
 #~ msgstr "Connman : échec de l'opération."
-
 #~ msgid "Could not execute local operation:<br>%s"
 #~ msgstr "Impossible d'exécuter l'opération locale :<br>%s"
-
 #~ msgid "Connection Manager"
 #~ msgstr "Gestionnaire de connexion"
-
 #~ msgid "Wifi"
 #~ msgstr "Wi-Fi"
-
 #~ msgid "LAN"
 #~ msgstr "LAN"
-
 #~ msgid "Specific Device"
 #~ msgstr "Périphérique spécifique"
-
 #~ msgid "Networks"
 #~ msgstr "Réseaux"
-
 #~ msgid "Expand the window"
 #~ msgstr "Étendre la fenêtre"
-
 #~ msgid "Allow window manipulation"
 #~ msgstr "Autoriser la manipulation des fenêtres"
-
 #~ msgid ""
 #~ "You are trying to ask Enlightenment to remember to apply<br>properties "
 #~ "(such as size, location, border style etc.) to<br>a window that "
@@ -8551,224 +8296,153 @@ msgstr "Zone de notification"
 #~ "<hilight>OK</hilight> et<br>vos paramètres seront acceptés. "
 #~ "Cliquez<br>sur <hilight>Annuler</hilight> si vous n'êtes pas sûr<br>et "
 #~ "rien ne sera modifié."
-
 #~ msgid "Mount of device failed"
 #~ msgstr "Impossible de monter le périphérique"
-
 #~ msgid "Shelf Size"
 #~ msgstr "Taille du rack"
-
 #~ msgid "Scaling Factors"
 #~ msgstr "Facteurs d'échelle"
-
 #~ msgid "Personal scaling factor"
 #~ msgstr "Facteur d'échelle personnel"
-
 #~ msgid "Custom Grid Icons"
 #~ msgstr "Alignement d'icones personnalisé"
-
 #~ msgid "Custom Smart Grid Icons"
 #~ msgstr "Alignement intelligent personnalisé"
-
 #~ msgid "Configure Virtual Desktops"
 #~ msgstr "Configurer les bureaux virtuels"
-
 #~ msgid "Configure Contents..."
 #~ msgstr "Configurer le contenu..."
-
 #~ msgid "Configure Shelf Contents"
 #~ msgstr "Configurer le contenu du rack"
-
 #~ msgid "Configure Toolbar Contents"
 #~ msgstr "Configurer le contenu de la barre d'outils"
-
 #~ msgid "Configure Dialog Title"
 #~ msgstr "Titre de la boîte de dialogue de configuration"
-
 #~ msgid "Configure Heading"
 #~ msgstr "Configuration de l'en-tête"
-
 #~ msgid "Done %ld / %ld byte"
 #~ msgstr "Fait %ld / %ld octet"
-
 #~ msgid "Complete"
 #~ msgstr "Complet"
-
 #~ msgid "Temporary"
 #~ msgstr "Temporaire"
-
 #~ msgid "Flip desktops when mouse at screen edge"
 #~ msgstr "Basculer les bureaux lorsque la souris est au bord de l'écran"
-
 #~ msgid "Flip when moving mouse to the screen edge"
 #~ msgstr "Basculer lorsque la souris est au bord de l'écran"
-
 #~ msgid "Time the mouse is at the edge before flipping:"
 #~ msgstr "Délai avant le basculement quand la souris est au bord de l'écran:"
-
 #~ msgid "Polling (Internal)"
 #~ msgstr "Interrogation (interne]"
-
 #~ msgid "%1.0f percent"
 #~ msgstr "%1.0f pour cent"
-
 #~ msgid "Dismiss alert automatically"
 #~ msgstr "Effacer l'alerte automatiquement"
-
 #~ msgid "Dismiss alert after:"
 #~ msgstr "Effacer l'alerte après:"
-
 #~ msgid "Choose a website from list..."
 #~ msgstr "Choisir un site web depuis une liste..."
-
 #~ msgid "get-e.org - Static"
 #~ msgstr "get-e.org - Statique"
-
 #~ msgid "get-e.org  - Animated"
 #~ msgstr "get-e.org - Animé"
-
 #~ msgid "[%s] Getting feed... DONE!"
 #~ msgstr "[%s] Recherche du flux... SUCCÈS !"
-
 #~ msgid "[%s] Getting feed... FAILED!"
 #~ msgstr "[%s] Recherche du flux... ÉCHEC !"
-
 #~ msgid "[%s] Parsing feed... DONE!"
 #~ msgstr "[%s] Analyse du flux... SUCCÈS !"
-
 #~ msgid "[%s] Parsing feed... FAILED!"
 #~ msgstr "[%s] Analyse du flux... ÉCHEC !"
-
 #~ msgid "[%s] Downloading of edje file..."
 #~ msgstr "[%s] Téléchargement du fichier edj..."
-
 #~ msgid "[%s] Download %d images of %d"
 #~ msgstr "[%s] Télécharge %d images de %d"
-
 #~ msgid "[%s] Choose an image from list"
 #~ msgstr "[%s] Choisir une image dans la liste"
-
 #~ msgid "[%s] Downloading of edje file... %d%% done"
 #~ msgstr "[%s] Téléchargement du fichier edj... %d%% OK"
-
 #~ msgid "[%s] Getting feed..."
 #~ msgstr "[%s] Recherche du flux..."
-
 #~ msgid "Advanced Settings"
 #~ msgstr "Paramètres avancés"
-
 #~ msgid ""
 #~ "You requested to delete \"%s\".<br><br>Are you sure you want to delete "
 #~ "this profile?"
 #~ msgstr ""
 #~ "Vous avez demandé à supprimer \"%s\".<br><br>Êtes-vous sûr de vouloir "
 #~ "supprimer ce profil ?"
-
 #~ msgid "Are you sure you want to delete this profile?"
 #~ msgstr "Êtes-vous sûr de vouloir supprimer ce profil ?"
-
 #~ msgid "Plain Profile"
 #~ msgstr "Profil complet"
-
 #~ msgid "Clone Current Profile"
 #~ msgstr "Copier le profil courant"
-
 #~ msgid "Exit Immediately"
 #~ msgstr "Quitter immédiatement"
-
 #~ msgid "Shutting down of your system failed."
 #~ msgstr "L'arrêt de votre système a échoué."
-
 #~ msgid "Rebooting your system failed."
 #~ msgstr "Le redémarrage de votre système a échoué."
-
 #~ msgid "Suspend of your system failed."
 #~ msgstr "La mise en veille de votre système a échoué."
-
 #~ msgid "Shutting down"
 #~ msgstr "Arrêt"
-
 #~ msgid "Shutting down your Computer.<br><hilight>Please wait.</hilight>"
 #~ msgstr ""
 #~ "Arrêt de votre ordinateur.<br><hilight>Veuillez patienter.</hilight>"
-
 #~ msgid "Rebooting"
 #~ msgstr "Rédémarrage"
-
 #~ msgid "Shut Down Immediately"
 #~ msgstr "Éteindre immédiatement"
-
 #~ msgid "Desktop Lock"
 #~ msgstr "Verrouillage du bureau"
-
 #~ msgid "get-e.org"
 #~ msgstr "get-e.org"
-
 #~ msgid "Lock Screen"
 #~ msgstr "Écran de verrouillage"
-
 #~ msgid "Logout"
 #~ msgstr "Fermer la session"
-
 #~ msgid "Desktop %i, %i"
 #~ msgstr "Bureau %i, %i"
-
 #~ msgid "Toolbar Configuration"
 #~ msgstr "Configuration de la barre d'outils"
-
 #~ msgid "Shelf Configuration"
 #~ msgstr "Configuration du rack"
-
 #~ msgid "Enlightenment Configuration"
 #~ msgstr "Configuration de Enlightenment"
-
 #~ msgid "Default Configuration Dialogs Mode"
 #~ msgstr "Configuration par défaut des boîtes de dialogue"
-
 #~ msgid "Input Method Configuration"
 #~ msgstr "Configuration de la méthode de saisie"
-
 #~ msgid "Language Configuration"
 #~ msgstr "Configuration de la langue"
-
 #~ msgid "Search Path Configuration"
 #~ msgstr "Configuration des chemins de recherche"
-
 #~ msgid "Dropshadow Configuration"
 #~ msgstr "Configuration de l'ombre portée"
-
 #~ msgid "IBar Configuration"
 #~ msgstr "Configuration de l'IBar"
-
 #~ msgid "IBox Configuration"
 #~ msgstr "Configuration IBox"
-
 #~ msgid "Virtual Desktops Configuration"
 #~ msgstr "Configuration des bureaux virtuels"
-
 #~ msgid "Temperature Configuration"
 #~ msgstr "Configuration de la température"
-
 #~ msgid "Mixer Configuration"
 #~ msgstr "Configuration du mélangeur"
-
 #~ msgid "Mixer Module Configuration"
 #~ msgstr "Configuration du module de mixage"
-
 #~ msgid "Choose Language"
 #~ msgstr "Choisir la langue"
-
 #~ msgid "X reports there are no root windows and %i screens!\n"
 #~ msgstr ""
 #~ "Le serveur X rapporte qu'il n'y a pas de fenêtres racine\n"
 #~ "alors qu'il y a %i écrans !\n"
-
 #~ msgid "Disable splash screen"
 #~ msgstr "Désactiver l'écran d'accueil"
-
 #~ msgid "Theme Bug Detected"
 #~ msgstr "Bogue dans le thème détecté"
-
 #~ msgid ""
 #~ "The theme you are using for your init splash<br>has a bug. It does not "
 #~ "respond to signals when<br>startup is complete. You should use an "
@@ -8778,22 +8452,17 @@ msgstr "Zone de notification"
 #~ "signaux au terme de la<br> mise en route. Vous devriez utiliser un thème "
 #~ "de<br>démarrage valide, ou corriger celui<br>que vous utilisez "
 #~ "actuellement."
-
 #~ msgid "Init"
 #~ msgstr "Initialisation"
-
 #~ msgid "Window Manipulation"
 #~ msgstr "Manipulation de la fenêtre"
-
 #~ msgid "When moving or resizing windows, resist at the boundaries"
 #~ msgstr ""
 #~ "Résister aux bords lors du déplacement/redimensionnement des fenêtres"
-
 #~ msgid "Both directions"
 #~ msgstr "Dans les deux directions"
-
 #~ msgid "Enlightenment cannot configure the mouse acceleration settings."
 #~ msgstr "Enlightenment ne peut pas configurer l'accélération de la souris."
-
 #~ msgid "Mouse Acceleration Settings"
 #~ msgstr "Paramètres de l'accélération souris"
+
