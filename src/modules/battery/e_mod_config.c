@@ -214,7 +214,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
                             NULL, &(cfdata->poll_interval), 100);
    e_widget_table_object_append(o, ob, 0, 1, 1, 1, 1, 0, 1, 0);
    
-   ob = e_widget_label_add(evas, _("Suspend when below:"));
+   ob = e_widget_label_add(evas, _("Hibernate when below:"));
    e_widget_table_object_append(o, ob, 0, 2, 1, 1, 1, 0, 1, 0);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f %%"), 0, 50, 1, 0, 
                             NULL, &(cfdata->suspend_below), 100);

@@ -564,7 +564,7 @@ _battery_update(int full, int time_left, int time_full, Eina_Bool have_battery, 
         if ((have_battery) && (!have_power) && (full >= 0) &&
             (battery_config->suspend_below > 0) &&
             (full < battery_config->suspend_below))
-           e_sys_action_do(E_SYS_SUSPEND, NULL);
+           e_sys_action_do(E_SYS_HIBERNATE, NULL);
      }
    if (!have_battery)
      e_powersave_mode_set(E_POWERSAVE_MODE_LOW);
