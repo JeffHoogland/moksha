@@ -674,6 +674,14 @@ _e_fm_op_work_idler(void *data __UNUSED__)
         if ((!_e_fm_op_scan_idler_p) && (!_e_fm_op_work_error) && 
             (!_e_fm_op_scan_error))
           ecore_main_loop_quit();
+        // if 
+        // _e_fm_op_scan_idler_p == NULL &&
+        // _e_fm_op_work_error == NULL &&
+        // _e_fm_op_scan_error == 1
+        // we can spin forever. why are we spinning at all? there are no
+        // tasks to be done. we have an error. wait for it to be handled
+        if (!_e_fm_op_work_queue)
+           ecore_main_loop_quit();
 
         return ECORE_CALLBACK_RENEW;
      }
