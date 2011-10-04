@@ -625,7 +625,6 @@ _e_randr_screen_outputs_init(void)
      {
         outputs_info[noutputs].xid = outputs[noutputs];
         _e_randr_output_info_set(&outputs_info[noutputs]);
-        outputs_info[noutputs].connection_status = ecore_x_randr_output_connection_status_get(e_randr_screen_info->root, outputs_info[noutputs].xid);
         if (outputs_info[noutputs].connection_status == ECORE_X_RANDR_CONNECTION_STATUS_CONNECTED)
           _e_randr_output_info_hw_info_set(&outputs_info[noutputs]);
 
