@@ -429,7 +429,7 @@ e_bindings_key_up_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_Even
              if (_e_bindings_context_match(bind->ctxt, ctxt))
                {
                   E_Action *act;
-
+                  
                   act = e_action_find(bind->action);
                   if (act)
                     {
@@ -440,6 +440,56 @@ e_bindings_key_up_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_Even
                        return act;
                     }
                   return NULL;
+               }
+          }
+     }
+   return NULL;
+}
+
+EAPI E_Action *
+e_bindings_key_down_event_find(E_Binding_Context ctxt, Ecore_Event_Key *ev)
+{
+   E_Binding_Modifier mod = 0;
+   E_Binding_Key *bind;
+   Eina_List *l;
+
+   mod = _e_bindings_modifiers(ev->modifiers);
+   EINA_LIST_FOREACH(key_bindings, l, bind)
+     {
+        if ((bind->key) && (!strcmp(bind->key, ev->keyname)) &&
+            ((bind->any_mod) || (bind->mod == mod)))
+          {
+             if (_e_bindings_context_match(bind->ctxt, ctxt))
+               {
+                  E_Action *act;
+
+                  act = e_action_find(bind->action);
+                  return act;
+               }
+          }
+     }
+   return NULL;
+}
+
+EAPI E_Action *
+e_bindings_key_up_event_find(E_Binding_Context ctxt, Ecore_Event_Key *ev)
+{
+   E_Binding_Modifier mod = 0;
+   E_Binding_Key *bind;
+   Eina_List *l;
+
+   mod = _e_bindings_modifiers(ev->modifiers);
+   EINA_LIST_FOREACH(key_bindings, l, bind)
+     {
+        if ((bind->key) && (!strcmp(bind->key, ev->keyname)) &&
+            ((bind->any_mod) || (bind->mod == mod)))
+          {
+             if (_e_bindings_context_match(bind->ctxt, ctxt))
+               {
+                  E_Action *act;
+
+                  act = e_action_find(bind->action);
+                  return act;
                }
           }
      }

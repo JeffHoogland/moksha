@@ -5,7 +5,7 @@ group "E_Config" struct {
             value "params" string: "now";
             value "button" string: "button";
             value "icon" string: "system-shutdown";
-            value "is_main" int: 1;
+            value "is_main" int: 2;
         }
         group "E_Config_Syscon_Action" struct {
             value "action" string: "suspend";

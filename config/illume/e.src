@@ -1,4 +1,47 @@
 group "E_Config" struct {
+    group "syscon.actions" list {
+        group "E_Config_Syscon_Action" struct {
+            value "action" string: "halt";
+            value "params" string: "now";
+            value "button" string: "button";
+            value "icon" string: "system-shutdown";
+            value "is_main" int: 1;
+        }
+        group "E_Config_Syscon_Action" struct {
+            value "action" string: "suspend";
+            value "params" string: "now";
+            value "button" string: "button";
+            value "icon" string: "system-suspend";
+            value "is_main" int: 2;
+        }
+        group "E_Config_Syscon_Action" struct {
+            value "action" string: "desk_lock";
+            value "button" string: "button";
+            value "icon" string: "system-lock-screen";
+            value "is_main" int: 1;
+        }
+        group "E_Config_Syscon_Action" struct {
+            value "action" string: "reboot";
+            value "params" string: "now";
+            value "button" string: "button";
+            value "icon" string: "system-restart";
+            value "is_main" int: 0;
+        }
+        group "E_Config_Syscon_Action" struct {
+            value "action" string: "hibernate";
+            value "params" string: "now";
+            value "button" string: "button";
+            value "icon" string: "system-suspend-hibernate";
+            value "is_main" int: 0;
+        }
+        group "E_Config_Syscon_Action" struct {
+            value "action" string: "logout";
+            value "params" string: "now";
+            value "button" string: "button";
+            value "icon" string: "system-log-out";
+            value "is_main" int: 0;
+        }
+    }
     group "modules" list {
         group "E_Config_Module" struct {
             value "name" string: "comp";
@@ -1432,49 +1475,6 @@ group "E_Config" struct {
         group "E_Config_Mime_Icon" struct {
             value "mime" string: "application/x-desktop";
             value "icon" string: "DESKTOP";
-        }
-    }
-    group "syscon.actions" list {
-        group "E_Config_Syscon_Action" struct {
-            value "action" string: "halt";
-            value "params" string: "now";
-            value "button" string: "button";
-            value "icon" string: "system-shutdown";
-            value "is_main" int: 1;
-        }
-        group "E_Config_Syscon_Action" struct {
-            value "action" string: "suspend";
-            value "params" string: "now";
-            value "button" string: "button";
-            value "icon" string: "system-suspend";
-            value "is_main" int: 1;
-        }
-        group "E_Config_Syscon_Action" struct {
-            value "action" string: "desk_lock";
-            value "button" string: "button";
-            value "icon" string: "system-lock-screen";
-            value "is_main" int: 1;
-        }
-        group "E_Config_Syscon_Action" struct {
-            value "action" string: "reboot";
-            value "params" string: "now";
-            value "button" string: "button";
-            value "icon" string: "system-restart";
-            value "is_main" int: 0;
-        }
-        group "E_Config_Syscon_Action" struct {
-            value "action" string: "hibernate";
-            value "params" string: "now";
-            value "button" string: "button";
-            value "icon" string: "system-suspend-hibernate";
-            value "is_main" int: 0;
-        }
-        group "E_Config_Syscon_Action" struct {
-            value "action" string: "logout";
-            value "params" string: "now";
-            value "button" string: "button";
-            value "icon" string: "system-log-out";
-            value "is_main" int: 0;
         }
     }
     value "config_version" int: 65847;
