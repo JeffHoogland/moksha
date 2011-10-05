@@ -94,10 +94,8 @@ _e_xsettings_deactivate(Settings_Manager *sm)
 static Eina_Bool
 _e_xsettings_activate(Settings_Manager *sm)
 {
-   unsigned int visual;
    Ecore_X_Atom atom;
    Ecore_X_Window old_win;
-   Ecore_X_Window_Attributes attr;
 
    if (sm->selection != 0) return 1;
 
@@ -203,6 +201,7 @@ _e_xsettings_string_set(const char *name, const char *value)
    s->last_change = ecore_x_current_time_get();
 }
 
+/* not used!!!
 static void
 _e_xsettings_int_set(const char *name, int value)
 {
@@ -243,11 +242,12 @@ _e_xsettings_int_set(const char *name, int value)
 	settings = eina_list_append(settings, s);
      }
    
-   /* type + pad + name-len + last-change-serial + value */
+   // type + pad + name-len + last-change-serial + value
    s->length = 12;
    s->length += OFFSET_ADD(strlen(name));
 }
-
+*/
+   
 static unsigned char *
 _e_xsettings_copy(unsigned char *buffer, Setting *s)
 {
@@ -352,7 +352,7 @@ _e_xsettings_update(void)
 }
 
 static Eina_Bool
-_cb_icon_theme_change(void *data, int type __UNUSED__, void *event)
+_cb_icon_theme_change(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    E_Event_Config_Icon_Theme *ev = event;
 

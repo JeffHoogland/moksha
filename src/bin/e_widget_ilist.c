@@ -53,7 +53,7 @@ static void _queue_queue(Evas_Object *obj);
 static void _queue_append(Evas_Object *obj, int command, Evas_Object *icon, Evas_Object *end, const char *label, int header, void (*func) (void *data), void *data, const char *val, int relative, int use_relative, int item);
 static void _queue_remove(Evas_Object *obj, E_Widget_Queue_Item *qi, int del);
 
-static enum _Queue_Command
+enum
 {
   CMD_ADD,
   CMD_REMOVE,
@@ -69,7 +69,7 @@ static enum _Queue_Command
   CMD_ICON_SET,
   CMD_END_SET,
   CMD_SHOW
-} Queue_Command;
+};
 
 static Eina_Bool
 _queue_timer(void *data)
