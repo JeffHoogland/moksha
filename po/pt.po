@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e17\n"
 "Report-Msgid-Bugs-To: http://trac.enlightenment.org/e/\n"
-"POT-Creation-Date: 2011-10-02 08:01-0700\n"
-"PO-Revision-Date: 2011-10-03 17:44-0000\n"
+"POT-Creation-Date: 2011-10-04 08:02-0700\n"
+"PO-Revision-Date: 2011-10-06 17:57-0000\n"
 "Last-Translator: Sérgio Marques <smarquespt@gmail.com>\n"
 "Language-Team: Portuguese <>\n"
 "Language: pt\n"
@@ -948,7 +948,6 @@ msgid "Encryption failed."
 msgstr "Falha ao cifrar."
 
 #: ../src/bin/e_config.c:2201
-#| msgid "Decruption failed."
 msgid "Decryption failed."
 msgstr "Falha ao decifrar."
 
@@ -3539,8 +3538,9 @@ msgid "%1.0f ticks"
 msgstr "%1.0f toques"
 
 #: ../src/modules/battery/e_mod_config.c:217
-msgid "Suspend when below:"
-msgstr "Suspender se inferior a:"
+#| msgid "Suspend when below:"
+msgid "Hibernate when below:"
+msgstr "Hibernar se inferior a:"
 
 #: ../src/modules/battery/e_mod_config.c:219
 #: ../src/modules/battery/e_mod_config.c:238
@@ -4502,45 +4502,40 @@ msgstr "O Enlightenment não conseguiu importar a configuração.<br><br>Tem a c
 msgid "Enlightenment was unable to import the configuration<br>due to a copy error."
 msgstr "O Enlightenment não conseguiu importar a configuração<br>devido a erros de cópia."
 
-#: ../src/modules/conf_intl/e_int_config_intl.c:580
+#: ../src/modules/conf_intl/e_int_config_intl.c:593
 #: ../src/modules/conf_intl/e_mod_main.c:20
 msgid "Language Settings"
 msgstr "Definições de idioma"
 
-#: ../src/modules/conf_intl/e_int_config_intl.c:876
+#: ../src/modules/conf_intl/e_int_config_intl.c:889
 msgid "Possible Locale problems"
 msgstr "Problemas com idiomas"
 
-#: ../src/modules/conf_intl/e_int_config_intl.c:877
+#: ../src/modules/conf_intl/e_int_config_intl.c:890
 #, c-format
-#| msgid ""
-#| "You have some extra locale environment<br>variables set that may "
-#| "interfere with<br>correct display of your chosen language.<br>If you "
-#| "don't want these affected, use the<br>Enviornment variable settings to "
-#| "unset them.<br>The variables that may affect you are<br>as follows:<br>%s"
 msgid "You have some extra locale environment<br>variables set that may interfere with<br>correct display of your chosen language.<br>If you don't want these affected, use the<br>Environment variable settings to unset them.<br>The variables that may affect you are<br>as follows:<br>%s"
 msgstr "Você definiu algumas variáveis de localização<br>que podem interferir com o idioma escolhido.<br>Se não as quiser afetar, utilize as definições das variáveis de ambiente<br> para não as utilizar. As variáveis de ambiente que podem afetar o seu idioma são as seguintes:<br><br>%s."
 
-#: ../src/modules/conf_intl/e_int_config_intl.c:932
-#: ../src/modules/conf_intl/e_int_config_intl.c:1024
+#: ../src/modules/conf_intl/e_int_config_intl.c:945
+#: ../src/modules/conf_intl/e_int_config_intl.c:1037
 msgid "Language Selector"
 msgstr "Seletor de idioma"
 
-#: ../src/modules/conf_intl/e_int_config_intl.c:963
-#: ../src/modules/conf_intl/e_int_config_intl.c:1414
+#: ../src/modules/conf_intl/e_int_config_intl.c:976
+#: ../src/modules/conf_intl/e_int_config_intl.c:1427
 #: ../src/modules/conf_menus/e_int_config_menus.c:169
 #: ../src/modules/wizard/page_010.c:151
 msgid "System Default"
 msgstr "Omissões do sistema"
 
 #. Locale selector
-#: ../src/modules/conf_intl/e_int_config_intl.c:997
-#: ../src/modules/conf_intl/e_int_config_intl.c:1075
+#: ../src/modules/conf_intl/e_int_config_intl.c:1010
+#: ../src/modules/conf_intl/e_int_config_intl.c:1088
 msgid "Locale Selected"
 msgstr "Idioma selecionado"
 
-#: ../src/modules/conf_intl/e_int_config_intl.c:998
-#: ../src/modules/conf_intl/e_int_config_intl.c:1076
+#: ../src/modules/conf_intl/e_int_config_intl.c:1011
+#: ../src/modules/conf_intl/e_int_config_intl.c:1089
 msgid "Locale"
 msgstr "Idioma"
 
