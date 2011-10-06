@@ -96,6 +96,10 @@ void *alloca (size_t);
 # include <Edje.h>
 # include <E_DBus.h>
 
+# ifdef HAVE_HAL
+#  include <E_Hal.h>
+# endif
+
 # ifdef EAPI
 #  undef EAPI
 # endif

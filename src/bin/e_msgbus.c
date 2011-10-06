@@ -374,4 +374,3 @@ _e_msgbus_profile_delete_cb(E_DBus_Object *obj __UNUSED__,
 
    return dbus_message_new_method_return(msg);
 }
-
