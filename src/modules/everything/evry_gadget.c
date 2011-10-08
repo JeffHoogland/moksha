@@ -88,7 +88,11 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    if ((p = evry_plugin_find(inst->cfg->plugin)))
      {
 	Evas_Object *oo = evry_util_icon_get(EVRY_ITEM(p), gc->evas);
-	if (oo) edje_object_part_swallow(o, "e.swallow.icon", oo); 
+	if (oo)
+          {
+             edje_object_part_swallow(o, "e.swallow.icon", oo);
+             edje_object_signal_emit(o, "e,state,icon,plugin", "e"); 
+          }
      }
 
    edje_object_signal_emit(o, "e,state,unfocused", "e");
@@ -651,7 +655,9 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    Instance *inst = cfd->data;
    Gadget_Config *gc = inst->cfg;
-
+   Evry_Plugin *p;
+   Evas_Object *oo;
+   
 #define CP(_name)					\
    if (gc->_name)					\
      eina_stringshare_del(gc->_name);			\
@@ -669,5 +675,20 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
    e_config_save_queue();
 
+   oo = edje_object_part_swallow_get(inst->o_button, "e.swallow.icon");
+   if (oo) evas_object_del(oo);
+
+   edje_object_signal_emit(inst->o_button, "e,state,icon,default", "e");
+   
+   if ((p = evry_plugin_find(inst->cfg->plugin)))
+     {
+        oo = evry_util_icon_get(EVRY_ITEM(p), evas_object_evas_get(inst->o_button));
+	if (oo)
+          {
+             edje_object_part_swallow(inst->o_button, "e.swallow.icon", oo);
+             edje_object_signal_emit(inst->o_button, "e,state,icon,plugin", "e"); 
+          }
+     }
+   
    return 1;
 }
