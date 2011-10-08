@@ -366,14 +366,14 @@ _create_plugin_page(E_Config_Dialog_Data *cfdata __UNUSED__, Evas *e, Plugin_Pag
    page->list = e_widget_ilist_add(e, 24, 24, NULL);
    e_widget_on_change_hook_set(page->list, _list_select_cb, page);
    _fill_list(page->configs, page->list, 0);
-   e_widget_frametable_object_append(of, page->list, 0, 0, 1, 1, 1, 1, 0, 1); 
+   e_widget_frametable_object_append(of, page->list, 0, 0, 1, 1, 1, 1, 1, 1); 
 
    o = e_widget_button_add(e, _("Move Up"), NULL,
                            _plugin_move_up_cb, page, NULL);
-   e_widget_frametable_object_append(of, o, 0, 1, 1, 1, 1, 0, 0, 0); 
+   e_widget_frametable_object_append(of, o, 0, 1, 1, 1, 1, 0, 1, 0); 
    o = e_widget_button_add(e, _("Move Down"), NULL,
                            _plugin_move_down_cb, page, NULL);
-   e_widget_frametable_object_append(of, o, 0, 2, 1, 1, 1, 0, 0, 0); 
+   e_widget_frametable_object_append(of, o, 0, 2, 1, 1, 1, 0, 1, 0); 
    e_widget_table_object_append(ob, of, 0, 0, 1, 3, 1, 1, 1, 0);
 
    of = e_widget_framelist_add(e, _("General"), 0);
@@ -595,10 +595,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdat
    e_widget_toolbook_page_append(otb, NULL, _("Geometry"),
 				 o, 1, 0, 1, 0, 0.5, 0.0);
 
-
    e_widget_toolbook_page_show(otb, 0);
-
-   e_dialog_resizable_set(cfd->dia, 1);
+   e_dialog_resizable_set(cfd->dia, 0);
    return otb;
 }
 
