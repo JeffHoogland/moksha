@@ -206,25 +206,27 @@ _fill_list(Eina_List *plugins, Evas_Object *obj, int enabled __UNUSED__)
 
    EINA_LIST_FOREACH(plugins, l, pc)
      {
-	if (!(end = edje_object_add(evas))) break;
+	/* if (!(end = edje_object_add(evas))) break; */
 
-	if (e_theme_edje_object_set(end, "base/theme/widgets",
-				    "e/widgets/ilist/toggle_end"))
-	  {
-	     char *sig = pc->plugin ? "e,state,checked" : "e,state,unchecked";
-	     edje_object_signal_emit(end, sig, "e");
-	  }
-	else
-	  {
-	     evas_object_del(end);
-	     end = NULL;
-	  }
-	e_widget_ilist_append_full(obj, NULL, end, pc->name, NULL, pc, NULL);
+	if (!pc->plugin) continue;
+	
+	/* if (e_theme_edje_object_set(end, "base/theme/widgets",
+	 * 			    "e/widgets/ilist/toggle_end"))
+	 *   {
+	 *      char *sig = pc->plugin ? "e,state,checked" : "e,state,unchecked";
+	 *      edje_object_signal_emit(end, sig, "e");
+	 *   }
+	 * else
+	 *   {
+	 *      evas_object_del(end);
+	 *      end = NULL;
+	 *   } */
+	e_widget_ilist_append(obj, NULL, pc->name, NULL, pc, NULL);
      }
 
    e_widget_ilist_go(obj);
    e_widget_size_min_get(obj, &w, NULL);
-   e_widget_size_min_set(obj, w > 180 ? w : 180, 260);
+   e_widget_size_min_set(obj, w > 180 ? w : 180, 140);
    e_widget_ilist_thaw(obj);
    edje_thaw();
    evas_event_thaw(evas);
@@ -359,28 +361,24 @@ _create_plugin_page(E_Config_Dialog_Data *cfdata __UNUSED__, Evas *e, Plugin_Pag
    Evas_Object *o, *of, *ob;
    E_Radio_Group *rg;
 
-   of = e_widget_framelist_add(e, _("Available Plugins"), 0);
+   ob = e_widget_table_add(e, 0);
+   of = e_widget_frametable_add(e, _("Available Plugins"), 0);
    page->list = e_widget_ilist_add(e, 24, 24, NULL);
    e_widget_on_change_hook_set(page->list, _list_select_cb, page);
    _fill_list(page->configs, page->list, 0);
-   e_widget_framelist_object_append(of, page->list);
+   e_widget_frametable_object_append(of, page->list, 0, 0, 1, 1, 1, 1, 0, 1); 
 
    o = e_widget_button_add(e, _("Move Up"), NULL,
-			   _plugin_move_up_cb,
-			   page, NULL);
-   e_widget_framelist_object_append(of, o);
-
+                           _plugin_move_up_cb, page, NULL);
+   e_widget_frametable_object_append(of, o, 0, 1, 1, 1, 1, 0, 0, 0); 
    o = e_widget_button_add(e, _("Move Down"), NULL,
-			   _plugin_move_down_cb,
-			   page, NULL);
-   e_widget_framelist_object_append(of, o);
-   ob = e_widget_table_add(e, 0);
+                           _plugin_move_down_cb, page, NULL);
+   e_widget_frametable_object_append(of, o, 0, 2, 1, 1, 1, 0, 0, 0); 
    e_widget_table_object_append(ob, of, 0, 0, 1, 3, 1, 1, 1, 0);
 
    of = e_widget_framelist_add(e, _("General"), 0);
    o = e_widget_button_add(e, _("Configure"), NULL,
-   			   _plugin_config_cb,
-   			   page, NULL);
+                           _plugin_config_cb, page, NULL);
    e_widget_disabled_set(o, 1);
    page->o_cfg_btn = o;
    e_widget_framelist_object_append(of, o);
@@ -413,9 +411,6 @@ _create_plugin_page(E_Config_Dialog_Data *cfdata __UNUSED__, Evas *e, Plugin_Pag
    e_widget_table_object_append(ob, of, 1, 0, 1, 1, 1, 1, 1, 0);
 
    of = e_widget_framelist_add(e, _("Plugin Trigger"), 0);
-   o = e_widget_label_add(e, _("Default is plugin name"));
-   e_widget_framelist_object_append(of, o);
-
    o = e_widget_entry_add(e, &(page->trigger), NULL, NULL, NULL);
    e_widget_disabled_set(o, 1);
    page->o_trigger = o;
@@ -427,24 +422,24 @@ _create_plugin_page(E_Config_Dialog_Data *cfdata __UNUSED__, Evas *e, Plugin_Pag
    e_widget_framelist_object_append(of, o);
    e_widget_table_object_append(ob, of, 1, 1, 1, 1, 1, 1, 1, 0);
 
-   of = e_widget_framelist_add(e, _("Plugin View"), 0);
+   of = e_widget_frametable_add(e, _("Plugin View"), 0);
    rg = e_widget_radio_group_new(&page->view_mode);
    o = e_widget_radio_add(e, _("Default"), -1, rg);
    e_widget_disabled_set(o, 1);
    page->o_view_default = o;
-   e_widget_framelist_object_append(of, o);
+   e_widget_frametable_object_append(of, o, 0, 0, 1, 1, 1, 1, 0, 0); 
    o = e_widget_radio_add(e, _("List"), 0, rg);
-   e_widget_framelist_object_append(of, o);
+   e_widget_frametable_object_append(of, o, 0, 1, 1, 1, 1, 1, 0, 0); 
    e_widget_disabled_set(o, 1);
    page->o_view_list = o;
    o = e_widget_radio_add(e, _("Detailed"), 1, rg);
    e_widget_disabled_set(o, 1);
    page->o_view_detail = o;
-   e_widget_framelist_object_append(of, o);
+   e_widget_frametable_object_append(of, o, 1, 1, 1, 1, 1, 1, 0, 0); 
    o = e_widget_radio_add(e, _("Icons"), 2, rg);
    e_widget_disabled_set(o, 1);
    page->o_view_thumb = o;
-   e_widget_framelist_object_append(of, o);
+   e_widget_frametable_object_append(of, o, 1, 0, 1, 1, 1, 1, 0, 0); 
    e_widget_table_object_append(ob, of, 1, 2, 1, 1, 1, 1, 1, 0);
 
    return ob;
@@ -461,34 +456,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdat
    o = e_widget_table_add(e, 0);
 
    /// GENERAL SETTNGS ///
-   of = e_widget_framelist_add(e, _("General"), 0);
-
-   /* FIXME no theme supports this currently, need to add info to themes
-      data section to know whether this option should be enabled */
-   cfdata->hide_input = 0;
-   ob = e_widget_check_add(e, _("Hide input when inactive"),
-   			   &(cfdata->hide_input));
-   e_widget_disabled_set(ob, 1); 
-   e_widget_framelist_object_append(of, ob);
-   cfdata->hide_list = 0;
-   ob = e_widget_check_add(e, _("Hide list"),
-   			   &(cfdata->hide_list));
-   e_widget_disabled_set(ob, 1); 
-   e_widget_framelist_object_append(of, ob);
-
-   ob = e_widget_label_add(e, _("Quick Navigation"));
-   e_widget_framelist_object_append(of, ob);
-
-   rg = e_widget_radio_group_new(&cfdata->quick_nav);
-   ob = e_widget_radio_add(e, _("Off"), 0, rg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(e, _("Emacs style (ALT + n,p,f,b,m,i)"), 3, rg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(e, _("Vi style (ALT + h,j,k,l,n,p,m,i)"), 1, rg);
-   e_widget_framelist_object_append(of, ob);
-
-   e_widget_table_object_append(o, of, 0, 0, 1, 1, 0, 0, 0, 0);
-
    of = e_widget_framelist_add(e, _("Default View"), 0);
    rg = e_widget_radio_group_new(&cfdata->view_mode);
    ob = e_widget_radio_add(e, _("List"), 0, rg);
@@ -508,7 +475,31 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdat
    ob = e_widget_check_add(e, _("Up/Down select next item in icon view"),
    			   &(cfdata->cycle_mode));
    e_widget_framelist_object_append(of, ob);
-   e_widget_table_object_append(o, of, 1, 0, 1, 1, 0, 1, 0, 0);
+   e_widget_table_object_append(o, of, 0, 0, 1, 1, 1, 0, 1, 0);
+   
+#if 0
+   /* FIXME no theme supports this currently, need to add info to themes
+      data section to know whether this option should be enabled */
+   cfdata->hide_input = 0;
+   ob = e_widget_check_add(e, _("Hide input when inactive"),
+   			   &(cfdata->hide_input));
+   e_widget_disabled_set(ob, 1); 
+   e_widget_framelist_object_append(of, ob);
+   cfdata->hide_list = 0;
+   ob = e_widget_check_add(e, _("Hide list"),
+   			   &(cfdata->hide_list));
+   e_widget_disabled_set(ob, 1); 
+   e_widget_framelist_object_append(of, ob);
+#endif
+   of = e_widget_framelist_add(e, _("Quick Navigation"), 0);
+   rg = e_widget_radio_group_new(&cfdata->quick_nav);
+   ob = e_widget_radio_add(e, _("Off"), 0, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(e, _("Emacs style (ALT + n,p,f,b,m,i)"), 3, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(e, _("Vi style (ALT + h,j,k,l,n,p,m,i)"), 1, rg);
+   e_widget_framelist_object_append(of, ob);
+   e_widget_table_object_append(o, of, 0, 1, 1, 1, 1, 0, 1, 0);
 
    of = e_widget_framelist_add(e, _("Sorting"), 0);
    rg = e_widget_radio_group_new(&cfdata->history_sort_mode);
@@ -524,9 +515,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdat
    ob = e_widget_radio_add(e, _("Last used"), 2, rg);
    e_widget_radio_toggle_set(ob, (cfdata->history_sort_mode == 2));
    e_widget_framelist_object_append(of, ob);
-
-   e_widget_table_object_append(o, of, 0, 1, 2, 1, 1, 0, 0, 0);
-
+   e_widget_table_object_append(o, of, 0, 2, 1, 1, 1, 0, 1, 0);
 
    e_widget_toolbook_page_append(otb, NULL, _("General Settings"),
 				 o, 1, 0, 1, 0, 0.5, 0.0);
@@ -585,6 +574,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdat
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
+#if 1
    of = e_widget_framelist_add(e, _("Edge Popup Size"), 0);
    ob = e_widget_label_add(e, _("Popup Width"));
    e_widget_framelist_object_append(of, ob);
@@ -600,7 +590,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdat
    			    &(cfdata->edge_height), 200);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
-
+#endif
 
    e_widget_toolbook_page_append(otb, NULL, _("Geometry"),
 				 o, 1, 0, 1, 0, 0.5, 0.0);
