@@ -68,6 +68,8 @@ e_syscon_show(E_Zone *zone, const char *defact)
                   if (sca->is_main == 2)
                     {
                        a->func.go(NULL, sca->params);
+                       e_syscon_hide();
+                       break;
                     }
                }
           }
@@ -373,15 +375,12 @@ _cb_key_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
         if (t - show_time > 0.5)
           {
              act = e_bindings_key_down_event_find(E_BINDING_CONTEXT_ANY, ev);
-             printf("%p\n", act);
              if ((act) && (act->name))
                {
-                  printf("%s\n", act->name);
                   if (!strcmp(act->name, "syscon"))
                     {
                        if (popup)
                          {
-                            printf("sy show again\n");
                             e_syscon_show(popup->zone, do_defact);
                          }
                     }
@@ -401,6 +400,7 @@ _cb_key_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
                                  if (act_count > 2)
                                    {
                                       act->func.go(NULL, sca->params);
+                                      e_syscon_hide();
                                       break;
                                    }
                               }
