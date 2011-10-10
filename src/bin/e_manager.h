@@ -9,23 +9,7 @@ typedef struct _E_Manager_Comp_Source E_Manager_Comp_Source;
 #define E_MANAGER_H
 
 #define E_MANAGER_TYPE (int) 0xE0b01008
-
-struct _E_Manager_Comp
-{
-   struct {
-      Evas             * (*evas_get)             (void *data, E_Manager *man);
-      void               (*update)               (void *data, E_Manager *man);
-      const Eina_List  * (*src_list_get)         (void *data, E_Manager *man);
-      Evas_Object      * (*src_image_get)        (void *data, E_Manager *man, E_Manager_Comp_Source *src);
-      Evas_Object      * (*src_shadow_get)       (void *data, E_Manager *man, E_Manager_Comp_Source *src);
-      Evas_Object      * (*src_image_mirror_add) (void *data, E_Manager *man, E_Manager_Comp_Source *src);
-      Eina_Bool          (*src_visible_get)      (void *data, E_Manager *man, E_Manager_Comp_Source *src);
-      void               (*src_hidden_set)       (void *data, E_Manager *man, E_Manager_Comp_Source *src, Eina_Bool hidden);
-      Eina_Bool          (*src_hidden_get)       (void *data, E_Manager *man, E_Manager_Comp_Source *src);
-   } func;
-   void                   *data;
-};
-
+  
 struct _E_Manager
 {
    E_Object             e_obj_inherit;
@@ -42,6 +26,35 @@ struct _E_Manager
    Ecore_X_Window       initwin;
    
    E_Manager_Comp      *comp;
+};
+
+struct _E_Manager_Comp
+{
+  struct {
+    Evas             * (*evas_get)             (void *data, E_Manager *man);
+    void               (*update)               (void *data, E_Manager *man);
+    const Eina_List  * (*src_list_get)         (void *data, E_Manager *man);
+    Evas_Object      * (*src_image_get)        (void *data, E_Manager *man, E_Manager_Comp_Source *src);
+    Evas_Object      * (*src_shadow_get)       (void *data, E_Manager *man, E_Manager_Comp_Source *src);
+    Evas_Object      * (*src_image_mirror_add) (void *data, E_Manager *man, E_Manager_Comp_Source *src);
+    Eina_Bool          (*src_visible_get)      (void *data, E_Manager *man, E_Manager_Comp_Source *src);
+    void               (*src_hidden_set)       (void *data, E_Manager *man, E_Manager_Comp_Source *src, Eina_Bool hidden);
+    Eina_Bool          (*src_hidden_get)       (void *data, E_Manager *man, E_Manager_Comp_Source *src);
+    E_Manager_Comp_Source * (*src_get)         (void *data, E_Manager *man, Ecore_X_Window win);
+  } func;
+  void                   *data;
+};
+
+struct _E_Manager_Comp_Source
+{
+  EINA_INLIST;
+
+  void                *__c;  // parent compositor
+  Ecore_X_Window       win;  // raw window - for menus etc.
+  E_Border            *bd;  // if its a border - later
+  E_Popup             *pop;  // if its a popup - later
+  E_Menu              *menu;  // if it is a menu - later
+  int                  x, y, w, h;  // geometry
 };
 
 EINTERN int        e_manager_init(void);
@@ -120,6 +133,7 @@ EAPI void             e_manager_comp_event_src_add_send(E_Manager *man, E_Manage
 EAPI void             e_manager_comp_event_src_del_send(E_Manager *man, E_Manager_Comp_Source *src, void (*afterfunc) (void *data, E_Manager *man, E_Manager_Comp_Source *src), void *data);
 EAPI void             e_manager_comp_event_src_config_send(E_Manager *man, E_Manager_Comp_Source *src, void (*afterfunc) (void *data, E_Manager *man, E_Manager_Comp_Source *src), void *data);
 EAPI void             e_manager_comp_event_src_visibility_send(E_Manager *man, E_Manager_Comp_Source *src, void (*afterfunc) (void *data, E_Manager *man, E_Manager_Comp_Source *src), void *data);
+EAPI E_Manager_Comp_Source *e_manager_comp_src_get(E_Manager *man, Ecore_X_Window win);
 
 #endif
 #endif

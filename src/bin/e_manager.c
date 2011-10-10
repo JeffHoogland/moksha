@@ -566,6 +566,12 @@ e_manager_comp_src_list(E_Manager *man)
    return man->comp->func.src_list_get(man->comp->data, man);
 }
 
+EAPI E_Manager_Comp_Source*
+e_manager_comp_src_get(E_Manager *man, Ecore_X_Window win)
+{
+   return man->comp->func.src_get(man->comp->data, man, win);
+}
+
 EAPI Evas_Object *
 e_manager_comp_src_image_get(E_Manager *man, E_Manager_Comp_Source *src)
 {
