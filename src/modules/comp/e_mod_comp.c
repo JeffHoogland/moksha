@@ -3025,6 +3025,39 @@ _e_mod_comp_src_hidden_get_func(void *data             __UNUSED__,
      return cw->hidden_override;
 }
 
+static E_Popup *
+_e_mod_comp_src_popup_get_func(void *data             __UNUSED__,
+                             E_Manager *man         __UNUSED__,
+                             E_Manager_Comp_Source *src)
+{
+   //   E_Comp *c = data;
+   E_Comp_Win *cw = (E_Comp_Win *)src;
+   if (!cw->c) return 0;
+   return cw->pop;
+}
+
+static E_Border *
+_e_mod_comp_src_border_get_func(void *data             __UNUSED__,
+                              E_Manager *man         __UNUSED__,
+                              E_Manager_Comp_Source *src)
+{
+   //   E_Comp *c = data;
+   E_Comp_Win *cw = (E_Comp_Win *)src;
+   if (!cw->c) return 0;
+   return cw->bd;
+}
+
+static Ecore_X_Window
+_e_mod_comp_src_window_get_func(void *data             __UNUSED__,
+                                E_Manager *man         __UNUSED__,
+                                E_Manager_Comp_Source *src)
+{
+   //   E_Comp *c = data;
+   E_Comp_Win *cw = (E_Comp_Win *)src;
+   if (!cw->c) return 0;
+   return cw->win;
+}
+
 static E_Comp *
 _e_mod_comp_add(E_Manager *man)
 {
@@ -3192,6 +3225,9 @@ _e_mod_comp_add(E_Manager *man)
    c->comp.func.src_visible_get = _e_mod_comp_src_visible_get_func;
    c->comp.func.src_hidden_set = _e_mod_comp_src_hidden_set_func;
    c->comp.func.src_hidden_get = _e_mod_comp_src_hidden_get_func;
+   c->comp.func.src_window_get = _e_mod_comp_src_window_get_func;
+   c->comp.func.src_border_get = _e_mod_comp_src_border_get_func;
+   c->comp.func.src_popup_get = _e_mod_comp_src_popup_get_func;
 
    e_manager_comp_set(c->man, &(c->comp));
    return c;

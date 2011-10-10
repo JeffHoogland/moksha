@@ -608,6 +608,24 @@ e_manager_comp_src_hidden_get(E_Manager *man, E_Manager_Comp_Source *src)
    return man->comp->func.src_hidden_get(man->comp->data, man, src);
 }
 
+EAPI Ecore_X_Window
+e_manager_comp_src_window_get(E_Manager *man, E_Manager_Comp_Source *src)
+{
+   return man->comp->func.src_window_get(man->comp->data, man, src);
+}
+
+EAPI E_Popup *
+e_manager_comp_src_popup_get(E_Manager *man, E_Manager_Comp_Source *src)
+{
+   return man->comp->func.src_popup_get(man->comp->data, man, src);
+}
+
+EAPI E_Border *
+e_manager_comp_src_border_get(E_Manager *man, E_Manager_Comp_Source *src)
+{
+   return man->comp->func.src_border_get(man->comp->data, man, src);
+}
+
 EAPI void
 e_manager_comp_event_resize_send(E_Manager *man)
 {

@@ -41,20 +41,11 @@ struct _E_Manager_Comp
     void               (*src_hidden_set)       (void *data, E_Manager *man, E_Manager_Comp_Source *src, Eina_Bool hidden);
     Eina_Bool          (*src_hidden_get)       (void *data, E_Manager *man, E_Manager_Comp_Source *src);
     E_Manager_Comp_Source * (*src_get)         (void *data, E_Manager *man, Ecore_X_Window win);
+    E_Popup          * (*src_popup_get)        (void *data, E_Manager *man, E_Manager_Comp_Source *src);
+    E_Border         * (*src_border_get)       (void *data, E_Manager *man, E_Manager_Comp_Source *src);
+    Ecore_X_Window     (*src_window_get)       (void *data, E_Manager *man, E_Manager_Comp_Source *src);
   } func;
   void                   *data;
-};
-
-struct _E_Manager_Comp_Source
-{
-  EINA_INLIST;
-
-  void                *__c;  // parent compositor
-  Ecore_X_Window       win;  // raw window - for menus etc.
-  E_Border            *bd;  // if its a border - later
-  E_Popup             *pop;  // if its a popup - later
-  E_Menu              *menu;  // if it is a menu - later
-  int                  x, y, w, h;  // geometry
 };
 
 EINTERN int        e_manager_init(void);
@@ -134,6 +125,8 @@ EAPI void             e_manager_comp_event_src_del_send(E_Manager *man, E_Manage
 EAPI void             e_manager_comp_event_src_config_send(E_Manager *man, E_Manager_Comp_Source *src, void (*afterfunc) (void *data, E_Manager *man, E_Manager_Comp_Source *src), void *data);
 EAPI void             e_manager_comp_event_src_visibility_send(E_Manager *man, E_Manager_Comp_Source *src, void (*afterfunc) (void *data, E_Manager *man, E_Manager_Comp_Source *src), void *data);
 EAPI E_Manager_Comp_Source *e_manager_comp_src_get(E_Manager *man, Ecore_X_Window win);
-
+EAPI E_Popup         *e_manager_comp_src_popup_get(E_Manager *man, E_Manager_Comp_Source *src);
+EAPI E_Border        *e_manager_comp_src_border_get(E_Manager *man, E_Manager_Comp_Source *src);
+EAPI Ecore_X_Window   e_manager_comp_src_window_get(E_Manager *man, E_Manager_Comp_Source *src);
 #endif
 #endif
