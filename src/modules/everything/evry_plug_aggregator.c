@@ -266,7 +266,9 @@ _fetch(Evry_Plugin *plugin, const char *input)
    if (items)
      {
 	eina_list_free(items);
+        return EVRY_PLUGIN_HAS_ITEMS(p);
      }
+   
    /* 'text' and 'actions' are always loaded */
    else if ((subj_sel) && (eina_list_count(s->plugins) == 2))
      {
@@ -274,7 +276,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
 	EVRY_PLUGIN_ITEM_APPEND(p, p->warning);
      }
 
-   return EVRY_PLUGIN_HAS_ITEMS(p);
+   return 0;
 }
 
 static void

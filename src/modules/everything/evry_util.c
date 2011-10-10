@@ -260,10 +260,10 @@ _evry_items_sort_func(const void *data1, const void *data2)
    const Evry_Item *it1 = data1;
    const Evry_Item *it2 = data2;
 
-   if (!((!_sort_flags) &&
-	 (it1->type == EVRY_TYPE_ACTION) &&
-	 (it2->type == EVRY_TYPE_ACTION)))
-     {
+   /* if (!((!_sort_flags) &&
+    *       (it1->type == EVRY_TYPE_ACTION) &&
+    *       (it2->type == EVRY_TYPE_ACTION)))
+    *   { */
 	/* only sort actions when there is input otherwise show default order */
 
 	if (((it1->type == EVRY_TYPE_ACTION) || (it1->subtype == EVRY_TYPE_ACTION)) &&
@@ -298,7 +298,7 @@ _evry_items_sort_func(const void *data1, const void *data2)
 		    return 1;
 	       }
 	  }
-     }
+     /* } */
    
    if (_sort_flags)
      {

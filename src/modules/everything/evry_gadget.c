@@ -556,9 +556,10 @@ evry_gadget_shutdown(void)
 
 struct _E_Config_Dialog_Data
 {
-  char *plugin;
+  const char *plugin;
   int hide_after_action;
   int popup;
+  Evas_Object *list;
 };
 
 static void *_create_data(E_Config_Dialog *cfd);
@@ -605,7 +606,7 @@ _create_data(E_Config_Dialog *cfd)
 
 #define CP(_name) cfdata->_name = (gc->_name ? strdup(gc->_name) : NULL);
 #define C(_name) cfdata->_name = gc->_name;
-   CP(plugin);
+   /* CP(plugin); */
    C(hide_after_action);
    C(popup);
 #undef CP
@@ -620,7 +621,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    Instance *inst = cfd->data;
 
    inst->cfd = NULL;
-   if (cfdata->plugin) free(cfdata->plugin);
+   /* if (cfdata->plugin) free(cfdata->plugin); */
    E_FREE(cfdata);
 }
 
@@ -628,6 +629,52 @@ static void
 _cb_button_settings(void *data __UNUSED__, void *data2 __UNUSED__)
 {
    /* evry_collection_conf_dialog(e_container_current_get(e_manager_current_get()), "Start"); */
+}
+
+static void
+_fill_list(Eina_List *plugins, Evas_Object *obj, E_Config_Dialog_Data *cfdata)
+{
+   Evas *evas;
+   Evas_Coord w;
+   Eina_List *l;
+   Plugin_Config *pc;
+   int sel = 0, cnt = 1;
+   
+   evas = evas_object_evas_get(obj);
+   evas_event_freeze(evas);
+   edje_freeze();
+   e_widget_ilist_freeze(obj);
+   e_widget_ilist_clear(obj);
+
+   e_widget_ilist_append(obj, NULL, _("All"), NULL, NULL, NULL);
+
+   EINA_LIST_FOREACH(plugins, l, pc)
+     {
+	if (!pc->plugin) continue;
+        e_widget_ilist_append(obj, NULL, pc->plugin->base.label, NULL, NULL, pc->name);
+        if (cfdata->plugin && !strcmp(pc->name, cfdata->plugin))
+          sel = cnt;
+
+        cnt++;
+     }
+
+   e_widget_ilist_selected_set(obj, sel); 
+   
+   e_widget_ilist_go(obj);
+   e_widget_size_min_get(obj, &w, NULL);
+   e_widget_size_min_set(obj, w > 180 ? w : 180, 140);
+   e_widget_ilist_thaw(obj);
+   edje_thaw();
+   evas_event_thaw(evas);
+}
+static void
+_list_select_cb (void *data, Evas_Object *obj)
+{
+   int sel = e_widget_ilist_selected_get(obj);
+   E_Config_Dialog_Data *cfdata = data;
+
+   e_widget_ilist_nth_data_get(obj, sel);
+   
 }
 
 static Evas_Object *
@@ -639,9 +686,15 @@ _basic_create(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdata)
    o = e_widget_list_add(e, 0, 0);
 
    of = e_widget_framelist_add(e, _("Plugin"), 0);
-   ow = e_widget_entry_add(e, &(cfdata->plugin), NULL, NULL, NULL);
-   e_widget_framelist_object_append(of, ow);
+   /* ow = e_widget_entry_add(e, &(cfdata->plugin), NULL, NULL, NULL);
+    * e_widget_framelist_object_append(of, ow); */
 
+   ow = e_widget_ilist_add(e, 24, 24, &cfdata->plugin);
+   /* e_widget_on_change_hook_set(ow, _list_select_cb, cfdata); */
+   _fill_list(evry_conf->conf_subjects, ow, cfdata);
+   e_widget_framelist_object_append(of, ow);
+   cfdata->list = ow;
+   
    ow = e_widget_button_add(e, _("Settings"), NULL, _cb_button_settings, inst, NULL);
    e_widget_framelist_object_append(of, ow);
 
@@ -657,6 +710,7 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    Gadget_Config *gc = inst->cfg;
    Evry_Plugin *p;
    Evas_Object *oo;
+   const char *plugin;
    
 #define CP(_name)					\
    if (gc->_name)					\
@@ -664,7 +718,8 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    gc->_name = eina_stringshare_add(cfdata->_name);
 #define C(_name) gc->_name = cfdata->_name;
    eina_stringshare_del(gc->plugin);			\
-   if (cfdata->plugin[0])
+   plugin = e_widget_ilist_selected_label_get(cfdata->list);
+   if (plugin && plugin[0])
      gc->plugin = eina_stringshare_add(cfdata->plugin);
    else
      gc->plugin = NULL;
