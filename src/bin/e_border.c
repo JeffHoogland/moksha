@@ -6365,6 +6365,7 @@ _e_border_eval0(E_Border *bd)
         if (pname) eina_stringshare_del(pname);
         if (pclass) eina_stringshare_del(pclass);
         bd->client.icccm.fetch.name_class = 0;
+        bd->changes.icon = 1;
         rem_change = 1;
      }
    if (bd->client.icccm.fetch.state)
@@ -7773,6 +7774,17 @@ _e_border_eval(E_Border *bd)
              if ((bd->client.icccm.name) && (bd->client.icccm.class))
                bd->desktop = efreet_util_desktop_wm_class_find(bd->client.icccm.name,
                                                                bd->client.icccm.class);
+          }
+        if (!bd->desktop)
+          {
+             /* libreoffice and maybe others match window class
+                with .desktop file name */
+             if (bd->client.icccm.class)
+               {
+                  char buf[128];
+                  snprintf(buf, sizeof(buf), "%s.desktop", bd->client.icccm.class);
+                  bd->desktop = efreet_util_desktop_file_id_find(buf);
+               }             
           }
         if (!bd->desktop)
           {
