@@ -202,13 +202,14 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    ob = e_widget_radio_add(evas, _("Zoom"), 2, rg);
    e_widget_on_change_hook_set(ob, _cb_disable_flip_anim, cfdata);
    e_widget_list_object_append(o, ob, 1, 0, 0.5);
-
+   
+/* this is broken in e so disable in config dialog.
    ob = e_widget_check_add(evas, _("Background panning"), 
                            &(cfdata->flip_pan_bg));
    e_widget_disabled_set(ob, !cfdata->flip_mode);
    cfdata->flip_anim_list = eina_list_append(cfdata->flip_anim_list, ob);
    e_widget_list_object_append(o, ob, 1, 0, 0.5);
-
+ */
    ob = e_widget_label_add(evas, _("Animation speed"));
    cfdata->flip_anim_list = eina_list_append(cfdata->flip_anim_list, ob);
    e_widget_list_object_append(o, ob, 1, 0, 0.5);
@@ -217,7 +218,7 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    e_widget_disabled_set(ob, !cfdata->flip_mode);
    cfdata->flip_anim_list = eina_list_append(cfdata->flip_anim_list, ob);
    e_widget_list_object_append(o, ob, 1, 0, 0.5);
-
+/*
    ob = e_widget_label_add(evas, _("X-Axis pan factor"));
    cfdata->flip_anim_list = eina_list_append(cfdata->flip_anim_list, ob);
    e_widget_list_object_append(o, ob, 1, 0, 0.5);
@@ -235,7 +236,7 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    e_widget_disabled_set(ob, !cfdata->flip_mode);
    e_widget_list_object_append(o, ob, 1, 0, 0.5);
    cfdata->flip_anim_list = eina_list_append(cfdata->flip_anim_list, ob);
-
+ */
    e_widget_toolbook_page_append(otb, NULL, _("Flip Animation"), o, 
                                  1, 0, 1, 0, 0.5, 0.0);
 
