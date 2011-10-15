@@ -143,6 +143,7 @@ EAPI void       e_zone_edge_new(E_Zone_Edge edge);
 EAPI void       e_zone_edge_free(E_Zone_Edge edge);
 EAPI void       e_zone_edge_enable(void);
 EAPI void       e_zone_edge_disable(void);
+EAPI Eina_Bool  e_zone_exists_direction(E_Zone *zone, E_Zone_Edge edge);
 EAPI void	e_zone_edge_win_layer_set(E_Zone *zone, int layer);
 
 EAPI void       e_zone_useful_geometry_dirty(E_Zone *zone);

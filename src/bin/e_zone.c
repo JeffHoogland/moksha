@@ -815,6 +815,78 @@ e_zone_edge_disable(void)
      }
 }
 
+EAPI Eina_Bool
+e_zone_exists_direction(E_Zone *zone, E_Zone_Edge edge)
+{
+   Eina_List *l;
+   E_Zone *z2;
+   
+   EINA_LIST_FOREACH(zone->container->zones, l, z2)
+     {
+        if (zone == z2) continue;
+        
+        switch (edge)
+          {
+           case E_ZONE_EDGE_TOP_LEFT:
+             if (((E_SPANS_COMMON(0, zone->x + zone->w, z2->x, z2->w)) &&
+                  (z2->y < zone->y)) ||
+                 ((E_SPANS_COMMON(0, zone->y + zone->h, z2->y, z2->h)) &&
+                  (z2->x < zone->x)))
+                return EINA_TRUE;
+             break;
+           case E_ZONE_EDGE_TOP:
+             if ((E_SPANS_COMMON(zone->x, zone->w, z2->x, z2->w)) &&
+                 (z2->y < zone->y))
+                return EINA_TRUE;
+             break;
+           case E_ZONE_EDGE_TOP_RIGHT:
+             if (((E_SPANS_COMMON(zone->x, 99999, z2->x, z2->w)) &&
+                  (z2->y < zone->y)) ||
+                 ((E_SPANS_COMMON(0, zone->y + zone->h, z2->y, z2->h)) &&
+                  (z2->x >= (zone->x + zone->w))))
+                return EINA_TRUE;
+             break;
+             
+           case E_ZONE_EDGE_LEFT:
+             if ((E_SPANS_COMMON(zone->y, zone->h, z2->y, z2->h)) &&
+                 (z2->x < zone->x))
+                return EINA_TRUE;
+             break;
+             
+           case E_ZONE_EDGE_RIGHT:
+             if ((E_SPANS_COMMON(zone->y, zone->h, z2->y, z2->h)) &&
+                 (z2->x >= (zone->x + zone->w)))
+                return EINA_TRUE;
+             break;
+             
+           case E_ZONE_EDGE_BOTTOM_LEFT:
+             if (((E_SPANS_COMMON(0, zone->x + zone->w, z2->x, z2->w)) &&
+                  (z2->y >= (zone->y + zone->h))) ||
+                 ((E_SPANS_COMMON(zone->y, 99999, z2->y, z2->h)) &&
+                  (z2->x < zone->x)))
+                return EINA_TRUE;
+             break;
+           case E_ZONE_EDGE_BOTTOM:
+             if ((E_SPANS_COMMON(zone->x, zone->w, z2->x, z2->w)) &&
+                 (z2->y >= (zone->y + zone->h)))
+                return EINA_TRUE;
+             break;
+           case E_ZONE_EDGE_BOTTOM_RIGHT:
+             if (((E_SPANS_COMMON(zone->x, 99999, z2->x, z2->w)) &&
+                  (z2->y >= (zone->y + zone->h))) ||
+                 ((E_SPANS_COMMON(zone->y, 99999, z2->y, z2->h)) &&
+                  (z2->x < zone->x)))
+                return EINA_TRUE;
+             break;
+             
+           default:
+             break;
+          }
+     }
+      
+   return EINA_FALSE;
+}
+
 EAPI void
 e_zone_edge_new(E_Zone_Edge edge)
 {
@@ -824,18 +896,25 @@ e_zone_edge_new(E_Zone_Edge edge)
    E_Zone *zone;
    int cw, ch;
 
+   // explicitly disallow edge bindings when we have more than 1 root
+   // window (ie pure old multihead) since we don't know which direction
+   // other root windows are in
+   if (eina_list_count(e_manager_list()) > 1) return;
    EINA_LIST_FOREACH(e_manager_list(), l, man)
      {
         EINA_LIST_FOREACH(man->containers, ll, con)
           {
              EINA_LIST_FOREACH(con->zones, lll, zone)
                {
+                  // don't allow bindings on edges that are on the boundary
+                  // between zones
+                  if (e_zone_exists_direction(zone, edge)) continue;
                   cw = zone->w * E_ZONE_CORNER_RATIO;
                   ch = zone->h * E_ZONE_CORNER_RATIO;
                   switch (edge)
                     {
                      case E_ZONE_EDGE_NONE:
-     /* noop */
+                       /* noop */
                        break;
 
                      case E_ZONE_EDGE_LEFT:
@@ -971,7 +1050,7 @@ e_zone_edge_free(E_Zone_Edge edge)
                   switch (edge)
                     {
                      case E_ZONE_EDGE_NONE:
-     /* noop */
+                       /* noop */
                        break;
 
                      case E_ZONE_EDGE_LEFT:
