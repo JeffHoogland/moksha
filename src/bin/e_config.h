@@ -263,9 +263,6 @@ struct _E_Config
    int           desk_flip_animate_mode; // GUI
    int           desk_flip_animate_interpolation; // GUI
    double        desk_flip_animate_time; // GUI
-   unsigned char desk_flip_pan_bg;
-   double        desk_flip_pan_x_axis_factor;
-   double        desk_flip_pan_y_axis_factor;
 
    const char *wallpaper_import_last_dev; // INTERNAL
    const char *wallpaper_import_last_path; // INTERNAL

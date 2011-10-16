@@ -197,9 +197,10 @@ e_desk_show(E_Desk *desk)
    E_Event_Desk_Show *ev;
    E_Event_Desk_Before_Show *eev;
    E_Event_Desk_After_Show *eeev;
+   Edje_Message_Float_Set *msg;
    Eina_List *l;
    E_Shelf *es;
-   int was_zone = 0, x, y, dx = 0, dy = 0, prev_x = 0, prev_y = 0;
+   int was_zone = 0, x, y, dx = 0, dy = 0;
 
    E_OBJECT_CHECK(desk);
    E_OBJECT_TYPE_CHECK(desk, E_DESK_TYPE);
@@ -222,8 +223,6 @@ e_desk_show(E_Desk *desk)
 	     if (desk2->visible)
 	       {
 		  desk2->visible = 0;
-		  prev_x = desk2->x;
-		  prev_y = desk2->y;
 		  dx = desk->x - desk2->x;
 		  dy = desk->y - desk2->y;
 		  if (e_config->desk_flip_animate_mode > 0)
@@ -237,6 +236,15 @@ e_desk_show(E_Desk *desk)
    desk->zone->desk_x_current = desk->x;
    desk->zone->desk_y_current = desk->y;
    desk->visible = 1;
+
+   msg = alloca(sizeof(Edje_Message_Float_Set) + sizeof(double));
+   msg->count = 1;
+   msg->val[0] = e_config->desk_flip_animate_time;
+   msg->val[1] = (double) desk->x;
+   msg->val[2] = (double) desk->zone->desk_x_count;
+   msg->val[3] = (double) desk->y;
+   msg->val[4] = (double) desk->zone->desk_y_count;
+   edje_object_message_send(desk->zone->bg_object, EDJE_MESSAGE_FLOAT_SET, 0, msg);
 
    if (desk->zone->bg_object) was_zone = 1;
    if (e_config->desk_flip_animate_mode == 0)
@@ -266,12 +274,7 @@ e_desk_show(E_Desk *desk)
      }
 
    if (was_zone)
-     {
-	if (e_config->desk_flip_pan_bg)
-	  e_bg_zone_slide(desk->zone, prev_x, prev_y);
-	else
-	  e_bg_zone_update(desk->zone, E_BG_TRANSITION_DESK);
-     }
+     e_bg_zone_update(desk->zone, E_BG_TRANSITION_DESK);
    else
      e_bg_zone_update(desk->zone, E_BG_TRANSITION_START);
 

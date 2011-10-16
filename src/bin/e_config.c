@@ -834,9 +834,6 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, desk_flip_animate_mode, INT);
    E_CONFIG_VAL(D, T, desk_flip_animate_interpolation, INT);
    E_CONFIG_VAL(D, T, desk_flip_animate_time, DOUBLE);
-   E_CONFIG_VAL(D, T, desk_flip_pan_bg, UCHAR);
-   E_CONFIG_VAL(D, T, desk_flip_pan_x_axis_factor, DOUBLE);
-   E_CONFIG_VAL(D, T, desk_flip_pan_y_axis_factor, DOUBLE);
 
    E_CONFIG_VAL(D, T, wallpaper_import_last_dev, STR);
    E_CONFIG_VAL(D, T, wallpaper_import_last_path, STR);
@@ -1164,12 +1161,6 @@ e_config_load(void)
 	COPYVAL(screensaver_ask_presentation_timeout);
 	IFCFGEND;
 
-        IFCFG(0x0133);
-        COPYVAL(desk_flip_pan_bg);
-        COPYVAL(desk_flip_pan_x_axis_factor);
-        COPYVAL(desk_flip_pan_y_axis_factor);
-        IFCFGEND;
-
         IFCFG(0x0134);
         COPYVAL(exec.expire_timeout);
         COPYVAL(exec.show_run_dialog);
@@ -1300,9 +1291,6 @@ e_config_load(void)
    E_CONFIG_LIMIT(e_config->desk_flip_wrap, 0, 1);
    E_CONFIG_LIMIT(e_config->fullscreen_flip, 0, 1);
    E_CONFIG_LIMIT(e_config->icon_theme_overrides, 0, 1);
-   E_CONFIG_LIMIT(e_config->desk_flip_pan_bg, 0, 1);
-   E_CONFIG_LIMIT(e_config->desk_flip_pan_x_axis_factor, 0.0, 1.0);
-   E_CONFIG_LIMIT(e_config->desk_flip_pan_y_axis_factor, 0.0, 1.0);
    E_CONFIG_LIMIT(e_config->remember_internal_windows, 0, 3);
    E_CONFIG_LIMIT(e_config->desk_auto_switch, 0, 1);
 

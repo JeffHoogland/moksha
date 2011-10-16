@@ -19,10 +19,7 @@ struct _E_Config_Dialog_Data
    int flip_wrap;
    int flip_mode;
    int flip_interp;
-   int flip_pan_bg;
    double flip_speed;
-   double x_axis_pan;
-   double y_axis_pan;
 
    /*- GUI -*/
    Evas_Object *preview;
@@ -65,10 +62,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->flip_wrap = e_config->desk_flip_wrap;
    cfdata->flip_mode = e_config->desk_flip_animate_mode;
    cfdata->flip_interp = e_config->desk_flip_animate_interpolation;
-   cfdata->flip_pan_bg = e_config->desk_flip_pan_bg;
    cfdata->flip_speed = e_config->desk_flip_animate_time;
-   cfdata->x_axis_pan = e_config->desk_flip_pan_x_axis_factor;
-   cfdata->y_axis_pan = e_config->desk_flip_pan_y_axis_factor;
 }
 
 static void *
@@ -106,10 +100,7 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 
    e_config->desk_flip_animate_mode = cfdata->flip_mode;
    e_config->desk_flip_animate_interpolation = cfdata->flip_interp;
-   e_config->desk_flip_pan_bg = cfdata->flip_pan_bg;
    e_config->desk_flip_animate_time = cfdata->flip_speed;
-   e_config->desk_flip_pan_x_axis_factor = cfdata->x_axis_pan;
-   e_config->desk_flip_pan_y_axis_factor = cfdata->y_axis_pan;
    
    e_config->edge_flip_dragging = cfdata->edge_flip_dragging;
    e_config->desk_flip_wrap = cfdata->flip_wrap;
@@ -139,10 +130,7 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
 
    return ((e_config->desk_flip_animate_mode != cfdata->flip_mode) ||
 	   (e_config->desk_flip_animate_interpolation != cfdata->flip_interp) ||
-	   (e_config->desk_flip_pan_bg != cfdata->flip_pan_bg) ||
 	   (e_config->desk_flip_animate_time != cfdata->flip_speed) ||
-	   (e_config->desk_flip_pan_x_axis_factor != cfdata->x_axis_pan) ||
-	   (e_config->desk_flip_pan_y_axis_factor != cfdata->y_axis_pan) ||
 	   (e_config->edge_flip_dragging != cfdata->edge_flip_dragging) ||
 	   (e_config->desk_flip_wrap != cfdata->flip_wrap));
 }
@@ -203,13 +191,6 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    e_widget_on_change_hook_set(ob, _cb_disable_flip_anim, cfdata);
    e_widget_list_object_append(o, ob, 1, 0, 0.5);
    
-/* this is broken in e so disable in config dialog.
-   ob = e_widget_check_add(evas, _("Background panning"), 
-                           &(cfdata->flip_pan_bg));
-   e_widget_disabled_set(ob, !cfdata->flip_mode);
-   cfdata->flip_anim_list = eina_list_append(cfdata->flip_anim_list, ob);
-   e_widget_list_object_append(o, ob, 1, 0, 0.5);
- */
    ob = e_widget_label_add(evas, _("Animation speed"));
    cfdata->flip_anim_list = eina_list_append(cfdata->flip_anim_list, ob);
    e_widget_list_object_append(o, ob, 1, 0, 0.5);
@@ -218,25 +199,6 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    e_widget_disabled_set(ob, !cfdata->flip_mode);
    cfdata->flip_anim_list = eina_list_append(cfdata->flip_anim_list, ob);
    e_widget_list_object_append(o, ob, 1, 0, 0.5);
-/*
-   ob = e_widget_label_add(evas, _("X-Axis pan factor"));
-   cfdata->flip_anim_list = eina_list_append(cfdata->flip_anim_list, ob);
-   e_widget_list_object_append(o, ob, 1, 0, 0.5);
-   ob = e_widget_slider_add(evas, 1, 0, _("%.2f"), 0, 1, 0.01, 0, 
-                            &(cfdata->x_axis_pan), NULL, 150);
-   e_widget_disabled_set(ob, !cfdata->flip_mode);
-   e_widget_list_object_append(o, ob, 1, 0, 0.5);
-   cfdata->flip_anim_list = eina_list_append(cfdata->flip_anim_list, ob);
-
-   ob = e_widget_label_add(evas, _("Y-Axis pan factor"));
-   cfdata->flip_anim_list = eina_list_append(cfdata->flip_anim_list, ob);
-   e_widget_list_object_append(o, ob, 1, 0, 0.5);
-   ob = e_widget_slider_add(evas, 1, 0, _("%.2f"), 0, 1, 0.01, 0, 
-                            &(cfdata->y_axis_pan), NULL, 150);
-   e_widget_disabled_set(ob, !cfdata->flip_mode);
-   e_widget_list_object_append(o, ob, 1, 0, 0.5);
-   cfdata->flip_anim_list = eina_list_append(cfdata->flip_anim_list, ob);
- */
    e_widget_toolbook_page_append(otb, NULL, _("Flip Animation"), o, 
                                  1, 0, 1, 0, 0.5, 0.0);
 

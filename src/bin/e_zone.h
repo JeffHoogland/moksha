@@ -45,7 +45,6 @@ struct _E_Zone
    Evas_Object         *bg_event_object;
    Evas_Object         *bg_clip_object;
    Evas_Object         *prev_bg_object;
-   Evas_Object	       *bg_scrollframe;
    Evas_Object         *transition_object;
    
    int                  desk_x_count, desk_y_count;

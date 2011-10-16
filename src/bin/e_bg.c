@@ -3,7 +3,6 @@
 /* local subsystem functions */
 static void _e_bg_signal(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_bg_event_bg_update_free(void *data, void *event);
-static Eina_Bool  _e_bg_slide_animator(void *data);
 
 static void _e_bg_image_import_dialog_done(void *data, const char *path, Eina_Bool ok, Eina_Bool external, int quality, E_Image_Import_Mode mode);
 static void _e_bg_image_import_done(void *data, Eina_Bool ok, const char *image_path, const char *edje_path);
@@ -12,21 +11,6 @@ static void _e_bg_handler_image_imported(void *data, const char *image_path);
 /* local subsystem globals */
 EAPI int E_EVENT_BG_UPDATE = 0;
 static E_Fm2_Mime_Handler *bg_hdl = NULL;
-
-typedef struct _E_Bg_Anim_Params E_Bg_Anim_Params;
-struct _E_Bg_Anim_Params
-{
-   E_Zone *zone;
-   double start_time;
-   int start_x;
-   int start_y;
-   int end_x;
-   int end_y;
-
-   struct {
-      Eina_Bool x, y;
-   } freedom;
-};
 
 struct _E_Bg_Image_Import_Handle
 {
@@ -244,7 +228,6 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
    else if (transition == E_BG_TRANSITION_DESK) trans = e_config->transition_desk;
    else if (transition == E_BG_TRANSITION_CHANGE) trans = e_config->transition_change;
    if ((!trans) || (!trans[0])) transition = E_BG_TRANSITION_NONE;
-   if (e_config->desk_flip_pan_bg) transition = E_BG_TRANSITION_NONE;
 
    desk = e_desk_current_get(zone);
    if (desk)
@@ -257,7 +240,7 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
 	const char *pfile = "";
 
 	edje_object_file_get(zone->bg_object, &pfile, NULL);
-	if ((!e_util_strcmp(pfile, bgfile)) && !e_config->desk_flip_pan_bg) return;
+	if (!e_util_strcmp(pfile, bgfile)) return;
      }
 
    if (transition == E_BG_TRANSITION_NONE)
@@ -317,30 +300,6 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
      }
    evas_object_clip_set(o, zone->bg_clip_object);
    evas_object_show(o);
-   if (e_config->desk_flip_pan_bg)
-     {
-	int x = 0, y = 0;
-
-	o = zone->bg_scrollframe;
-	if (!o)
-	  {
-	     o = e_scrollframe_add(zone->container->bg_evas);
-	     zone->bg_scrollframe = o;
-	     e_scrollframe_custom_theme_set(o, "base/theme/background",
-					    "e/desktop/background/scrollframe");
-	     e_scrollframe_policy_set(o, E_SCROLLFRAME_POLICY_OFF, E_SCROLLFRAME_POLICY_OFF);
-	     e_scrollframe_child_pos_set(o, 0, 0);
-	     evas_object_show(o);
-	  }
-	e_scrollframe_child_set(o, zone->bg_object);
-	if (desk)
-	  {
-	     x = desk->x;
-	     y = desk->y;
-	  }
-	e_bg_zone_slide(zone, x, y);
-	return;
-     }
 
    if (transition != E_BG_TRANSITION_NONE)
      {
@@ -354,71 +313,6 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
 				 zone->bg_object);
 	edje_object_signal_emit(zone->transition_object, "e,action,start", "e");
      }
-}
-
-EAPI void
-e_bg_zone_slide(E_Zone *zone, int prev_x, int prev_y)
-{
-   Evas_Object *o;
-   E_Desk *desk;
-   Evas_Coord w, h, maxw, maxh, step_w, step_h;
-   Ecore_Animator *anim;
-   E_Bg_Anim_Params *params;
-   Evas_Coord vw, vh, px, py;
-   int fx, fy;
-   const void *data;
-
-   desk = e_desk_current_get(zone);
-   edje_object_size_max_get(zone->bg_object, &w, &h);
-   maxw = zone->w * zone->desk_x_count;
-   maxh = zone->h * zone->desk_y_count;
-   if (!w) w = maxw;
-   if (!h) h = maxh;
-   evas_object_resize(zone->bg_object, w, h);
-   if (zone->desk_x_count > 1)
-     step_w = ((double) (w - zone->w)) / (zone->desk_x_count - 1);
-   else step_w = 0;
-   if (zone->desk_y_count > 1)
-     step_h = ((double) (h - zone->h)) / (zone->desk_y_count - 1);
-   else step_h = 0;
-
-   o = zone->bg_scrollframe;
-   evas_object_move(o, zone->x, zone->y);
-   evas_object_resize(o, zone->w, zone->h);
-   evas_object_layer_set(o, -1);
-   evas_object_clip_set(o, zone->bg_clip_object);
-
-   data = edje_object_data_get(zone->bg_object, "directional_freedom");
-   e_scrollframe_child_viewport_size_get(o, &vw, &vh);
-   e_scrollframe_child_pos_get(o, &px, &py);
-   params = evas_object_data_get(zone->bg_object, "switch_animator_params");
-   if (!params)
-     params = E_NEW(E_Bg_Anim_Params, 1);
-   params->zone = zone;
-   params->start_x = px;
-   params->start_y = py;
-   params->end_x = desk->x * step_w * e_config->desk_flip_pan_x_axis_factor;
-   params->end_y = desk->y * step_h * e_config->desk_flip_pan_y_axis_factor;
-   params->start_time = 0.0;
-   if ((data) && (sscanf(data, "%d %d", &fx, &fy) == 2))
-     {
-	if (fx)
-	  {
-	     params->freedom.x = EINA_TRUE;
-	     params->start_x = prev_x * step_w * e_config->desk_flip_pan_x_axis_factor;
-	  }
-	if (fy)
-	  {
-	     params->freedom.y = EINA_TRUE;
-	     params->start_y = prev_y * step_h * e_config->desk_flip_pan_y_axis_factor;
-	  }
-     }
-
-   anim = evas_object_data_get(zone->bg_object, "switch_animator");
-   if (anim) ecore_animator_del(anim);
-   anim = ecore_animator_add(_e_bg_slide_animator, params);
-   evas_object_data_set(zone->bg_object, "switch_animator", anim);
-   evas_object_data_set(zone->bg_object, "switch_animator_params", params);
 }
 
 EAPI void
@@ -761,74 +655,6 @@ static void
 _e_bg_event_bg_update_free(void *data __UNUSED__, void *event)
 {
    free(event);
-}
-
-static Eina_Bool
-_e_bg_slide_animator(void *data)
-{
-   E_Bg_Anim_Params *params;
-   E_Zone *zone;
-   Evas_Object *o;
-   double st;
-   double t, dt, spd;
-   Evas_Coord px, py, rx, ry, bw, bh, panw, panh;
-   Edje_Message_Int_Set *msg;
-
-   params = data;
-   zone = params->zone;
-   t = ecore_loop_time_get();
-   spd = e_config->desk_flip_animate_time;
-
-   o = zone->bg_scrollframe;
-   if (!params->start_time)
-     st = params->start_time = t;
-   else
-     st = params->start_time;
-
-   dt = (t - st) / spd;
-   if (dt > 1.0) dt = 1.0;
-   dt = 1.0 - dt;
-   dt *= dt; /* decelerate - could be a better hack */
-
-   if (params->end_x > params->start_x)
-     rx = params->start_x + (params->end_x - params->start_x) * (1.0 - dt);
-   else
-     rx = params->end_x + (params->start_x - params->end_x) * dt;
-   if (params->freedom.x) px = zone->x;
-   else px = rx;
-
-   if (params->end_y > params->start_y)
-     ry = params->start_y + (params->end_y - params->start_y) * (1.0 - dt);
-   else
-     ry = params->end_y + (params->start_y - params->end_y) * dt;
-   if (params->freedom.y) py = zone->y;
-   else py = ry;
-
-   e_scrollframe_child_pos_set(o, px, py);
-
-   evas_object_geometry_get(zone->bg_object, NULL, NULL, &bw, &bh);
-   panw = bw - zone->w;
-   if (panw < 0) panw = 0;
-   panh = bh - zone->h;
-   if (panh < 0) panh = 0;
-   msg = alloca(sizeof(Edje_Message_Int_Set) + (5 * sizeof(int)));
-   msg->count = 6;
-   msg->val[0] = rx;
-   msg->val[1] = ry;
-   msg->val[2] = panw;
-   msg->val[3] = panh;
-   msg->val[4] = bw;
-   msg->val[5] = bh;
-   edje_object_message_send(zone->bg_object, EDJE_MESSAGE_INT_SET, 0, msg);
-
-   if (dt <= 0.0)
-     {
-	evas_object_data_del(zone->bg_object, "switch_animator");
-	evas_object_data_del(zone->bg_object, "switch_animator_params");
-	E_FREE(params);
-	return ECORE_CALLBACK_CANCEL;
-     }
-   return ECORE_CALLBACK_RENEW;
 }
 
 static void
