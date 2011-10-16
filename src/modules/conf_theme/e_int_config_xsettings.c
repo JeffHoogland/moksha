@@ -5,8 +5,8 @@ static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static int _sort_widget_themes(const void *data1, const void *data2);
-static Evas_Object *_icon_new(Evas *evas, const char *theme, const char *icon, unsigned int size);
+//static int _sort_widget_themes(const void *data1, const void *data2);
+//static Evas_Object *_icon_new(Evas *evas, const char *theme, const char *icon, unsigned int size);
 
 struct _E_Config_Dialog_Data
 {
@@ -88,8 +88,6 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
 static int
 _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
-   E_Event_Config_Icon_Theme *ev;
-
    if (!_basic_check_changed(cfd, cfdata)) return 1;
 
    e_widget_ilist_selected_label_get(cfdata->gui.list);
@@ -179,7 +177,7 @@ _fill_files_ilist(void *data)
 
    if (cfdata->widget_themes)
      {
-        const char *theme, *label;
+        const char *theme;
         int cnt = 0;
 
         cfdata->widget_themes = eina_list_sort(cfdata->widget_themes, -1, _cb_sort);
@@ -218,8 +216,7 @@ _fill_files_ilist(void *data)
 static Evas_Object *
 _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   Evas_Object *o, *ilist, *ol, *ow;
-   unsigned int i;
+   Evas_Object *o, *ilist, *ow;
 
    o = e_widget_list_add(evas, 0, 0);
    ilist = e_widget_ilist_add(evas, 24, 24, &(cfdata->widget_theme));
