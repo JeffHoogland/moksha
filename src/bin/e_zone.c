@@ -1429,8 +1429,6 @@ static void
 _e_zone_free(E_Zone *zone)
 {
    E_Container *con;
-   Ecore_Animator *anim;
-   void *data;
    int x, y;
 
    /* Delete the edge windows if they exist */
