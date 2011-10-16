@@ -148,7 +148,7 @@ _e_kbd_buf_actual_string_update(E_Kbd_Buf *kb)
    Eina_List *l;
    char *actual = NULL;
    int actual_len = 0;
-   int actual_size = 0;
+   unsigned int actual_size = 0;
    
    _e_kbd_buf_actual_string_clear(kb);
    for (l = kb->keystrokes; l; l = l->next)

@@ -1363,7 +1363,7 @@ _e_kbd_int_cb_client_message(void *data, __UNUSED__ int type, void *event)
      {
 	E_Kbd_Int_Layout *kil = NULL;
 
-	if (ev->data.l[0] == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_OFF)
+	if ((unsigned int)ev->data.l[0] == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_OFF)
 	  {
 	     _e_kbd_int_zoomkey_down(ki);
 	     _e_kbd_int_dictlist_down(ki);
@@ -1373,9 +1373,9 @@ _e_kbd_int_cb_client_message(void *data, __UNUSED__ int type, void *event)
 	  {
 	     // do nothing - leave kbd as-is
 	  }
-	else if (ev->data.l[0] == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_ALPHA)
+	else if ((unsigned int)ev->data.l[0] == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_ALPHA)
           kil = _e_kbd_int_layouts_type_get(ki, E_KBD_INT_TYPE_ALPHA);
-	else if (ev->data.l[0] == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_NUMERIC)
+	else if ((unsigned int)ev->data.l[0] == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_NUMERIC)
           kil = _e_kbd_int_layouts_type_get(ki, E_KBD_INT_TYPE_NUMERIC);
 	else if (ev->data.l[0] == ECORE_X_VIRTUAL_KEYBOARD_STATE_PIN)
           kil = _e_kbd_int_layouts_type_get(ki, E_KBD_INT_TYPE_PIN);
