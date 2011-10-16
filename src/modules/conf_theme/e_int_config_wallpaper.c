@@ -710,7 +710,7 @@ _adv_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 
                   cfbg = l->data;
                   if ((cfbg->container == (int)z->container->num) &&
-                      (cfbg->zone == z->num))
+                      (cfbg->zone == (int)z->num))
                     fl = eina_list_append(fl, cfbg);
                }
              while (fl)
