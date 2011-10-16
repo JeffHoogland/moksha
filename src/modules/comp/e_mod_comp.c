@@ -207,7 +207,7 @@ _e_mod_comp_shaped_check(int                      w,
    if ((!rects) || (num < 1)) return EINA_FALSE;
    if (num > 1) return EINA_TRUE;
    if ((rects[0].x == 0) && (rects[0].y == 0) &&
-       (rects[0].width == w) && (rects[0].height == h))
+       ((int)rects[0].width == w) && ((int)rects[0].height == h))
      return EINA_FALSE;
    return EINA_TRUE;
 }
@@ -1421,7 +1421,7 @@ _e_mod_comp_win_shadow_setup(E_Comp_Win *cw)
           continue;
         if ((primary_type != ECORE_X_WINDOW_TYPE_UNKNOWN) &&
             (m->primary_type != ECORE_X_WINDOW_TYPE_UNKNOWN) &&
-            (primary_type != m->primary_type))
+            ((int)primary_type != m->primary_type))
           continue;
         if (cw->bd)
           {
@@ -2539,13 +2539,13 @@ _e_mod_comp_message(void *data __UNUSED__,
    if (cw)
      {
         if (!cw->bd) return ECORE_CALLBACK_PASS_ON;
-        if (ev->data.l[0] != cw->bd->client.win) return ECORE_CALLBACK_PASS_ON;
+        if (ev->data.l[0] != (int)cw->bd->client.win) return ECORE_CALLBACK_PASS_ON;
      }
    else
      {
         cw = _e_mod_comp_win_find(ev->data.l[0]);
         if (!cw) return ECORE_CALLBACK_PASS_ON;
-        if (ev->data.l[0] != cw->win) return ECORE_CALLBACK_PASS_ON;
+        if (ev->data.l[0] != (int)cw->win) return ECORE_CALLBACK_PASS_ON;
      }
    if (version == 1) // v 0 was first, v1 added size params
      {
