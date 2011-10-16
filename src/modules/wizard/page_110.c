@@ -34,6 +34,7 @@ _recommend_connman(E_Wizard_Page *pg)
    e_wizard_button_next_enable_set(1);
 }
 
+#ifdef HAVE_ECONNMAN
 static Eina_Bool
 _connman_in(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
@@ -81,6 +82,7 @@ _connman_timeout(void *data)
    _recommend_connman(pg);
    return EINA_FALSE;
 }
+#endif
 
 EAPI int
 wizard_page_init(E_Wizard_Page *pg __UNUSED__)
@@ -97,25 +99,25 @@ wizard_page_shutdown(E_Wizard_Page *pg __UNUSED__)
 EAPI int
 wizard_page_show(E_Wizard_Page *pg)
 {
-   int hav_connman = 0;
+   int have_connman = 0;
    E_DBus_Connection *c;
    
    c = e_dbus_bus_get(DBUS_BUS_SYSTEM);
    if (c)
      {
+#ifdef HAVE_ECONNMAN             
         if (e_connman_system_init(c))
           {
-#ifdef HAVE_ECONNMAN             
              handler = ecore_event_handler_add
                 (E_CONNMAN_EVENT_MANAGER_IN, _connman_in, NULL);
              if (connman_timeout) ecore_timer_del(connman_timeout);
              connman_timeout = ecore_timer_add(2.0, _connman_timeout, pg);
-             hav_connman = 1;
+             have_connman = 1;
              e_wizard_button_next_enable_set(0);
-#endif             
           }
+#endif             
      }
-   if (!hav_connman)
+   if (!have_connman)
      {
         E_Config_Module *em;
         Eina_List *l;
