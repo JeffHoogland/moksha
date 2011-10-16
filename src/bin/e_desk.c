@@ -11,7 +11,7 @@ static void _e_desk_event_desk_before_show_free(void *data, void *ev);
 static void _e_desk_event_desk_after_show_free(void *data, void *ev);
 static void _e_desk_event_desk_deskshow_free(void *data, void *ev);
 static void _e_desk_event_desk_name_change_free(void *data, void *ev);
-static void _e_desk_show_begin(E_Desk *desk, int mode, int dx, int dy);
+static void _e_desk_show_begin(E_Desk *desk, int mode, int x, int dy);
 static void _e_desk_show_end(E_Desk *desk);
 static Eina_Bool _e_desk_show_animator(void *data);
 static void _e_desk_hide_begin(E_Desk *desk, int mode, int dx, int dy);
@@ -319,7 +319,7 @@ e_desk_show(E_Desk *desk)
 	ecore_event_add(E_EVENT_DESK_AFTER_SHOW, eeev, 
 			_e_desk_event_desk_after_show_free, NULL);
      }
-
+   e_zone_edge_flip_eval(desk->zone);
 }
 
 EAPI void

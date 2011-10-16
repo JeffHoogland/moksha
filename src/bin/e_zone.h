@@ -139,10 +139,12 @@ EAPI void       e_zone_desk_flip_by(E_Zone *zone, int dx, int dy);
 EAPI void       e_zone_desk_flip_to(E_Zone *zone, int x, int y);
 EAPI void       e_zone_desk_linear_flip_by(E_Zone *zone, int dx);
 EAPI void       e_zone_desk_linear_flip_to(E_Zone *zone, int x);
+EAPI void       e_zone_edge_flip_eval(E_Zone *zone);
 EAPI void       e_zone_edge_new(E_Zone_Edge edge);
 EAPI void       e_zone_edge_free(E_Zone_Edge edge);
 EAPI void       e_zone_edge_enable(void);
 EAPI void       e_zone_edge_disable(void);
+EAPI void       e_zone_edges_desk_flip_capable(E_Zone *zone, Eina_Bool l, Eina_Bool r, Eina_Bool t, Eina_Bool b);
 EAPI Eina_Bool  e_zone_exists_direction(E_Zone *zone, E_Zone_Edge edge);
 EAPI void	e_zone_edge_win_layer_set(E_Zone *zone, int layer);
 
