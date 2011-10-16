@@ -195,7 +195,6 @@ _fill_list(Eina_List *plugins, Evas_Object *obj, int enabled __UNUSED__)
    Evas_Coord w;
    Eina_List *l;
    Plugin_Config *pc;
-   Evas_Object *end;
 
    /* freeze evas, edje, and list widget */
    evas = evas_object_evas_get(obj);
