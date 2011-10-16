@@ -179,7 +179,7 @@ typedef struct _E_Rect E_Rect;
 	     { \
 		_w += _x - (_cx); \
 		_x = (_cx); \
-		if (_w < 0) _w = 0; \
+		if ((int)_w < 0) _w = 0; \
 	     } \
 	   if ((_x + _w) > ((_cx) + (_cw))) \
 	     _w = (_cx) + (_cw) - _x; \
@@ -187,7 +187,7 @@ typedef struct _E_Rect E_Rect;
 	     { \
 		_h += _y - (_cy); \
 		_y = (_cy); \
-		if (_h < 0) _h = 0; \
+		if ((int)_h < 0) _h = 0; \
 	     } \
 	   if ((_y + _h) > ((_cy) + (_ch))) \
 	     _h = (_cy) + (_ch) - _y; \
