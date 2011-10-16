@@ -357,7 +357,7 @@ _border_geometry_set(E_Border *bd, int x, int y, int w, int h, int layer)
    if ((bd->x != x) || (bd->y != y))
      _policy_border_move(bd, x, y);
 
-   if (bd->layer != layer) e_border_layer_set(bd, layer);
+   if ((int)bd->layer != layer) e_border_layer_set(bd, layer);
 }
 
 static void
@@ -668,7 +668,7 @@ _policy_zone_layout_splash(E_Border *bd, E_Illume_Config_Zone *cz)
 }
 
 static void
-_policy_zone_layout_conformant_single(E_Border *bd, E_Illume_Config_Zone *cz)
+_policy_zone_layout_conformant_single(E_Border *bd, E_Illume_Config_Zone *cz __UNUSED__)
 {
    if (!_policy_layout_app_check(bd)) return;
 
