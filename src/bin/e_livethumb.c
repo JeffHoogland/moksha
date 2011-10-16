@@ -117,6 +117,7 @@ _e_smart_add(Evas_Object *obj)
    sd->vh = 1;
 
    sd->evas_obj = ecore_evas_object_image_new(ecore_evas_ecore_evas_get(evas_object_evas_get(obj)));
+   ecore_evas_alpha_set(evas_object_data_get(sd->evas_obj, "Ecore_Evas"), 1);
    evas_object_smart_member_add(sd->evas_obj, obj);
    evas_object_image_size_set(sd->evas_obj, sd->vw, sd->vh);
    sd->evas = ecore_evas_get(evas_object_data_get(sd->evas_obj, "Ecore_Evas"));
