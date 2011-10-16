@@ -667,11 +667,11 @@ _fill_list(Eina_List *plugins, Evas_Object *obj, E_Config_Dialog_Data *cfdata)
    edje_thaw();
    evas_event_thaw(evas);
 }
+
 static void
-_list_select_cb (void *data, Evas_Object *obj)
+_list_select_cb(void *data __UNUSED__, Evas_Object *obj)
 {
    int sel = e_widget_ilist_selected_get(obj);
-   E_Config_Dialog_Data *cfdata = data;
 
    e_widget_ilist_nth_data_get(obj, sel);
    
