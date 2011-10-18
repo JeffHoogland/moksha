@@ -1355,6 +1355,7 @@ _mixer_module_configuration_setup(E_Mixer_Module_Context *ctxt)
    IFMODCFGEND;
 
    ctxt->conf->version = MOD_CONFIG_FILE_VERSION;
+   ctxt->desktop_notification = ctxt->conf->desktop_notification;
 }
 
 static const char _act_increase[] = "volume_increase";
