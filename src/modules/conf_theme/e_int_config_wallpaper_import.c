@@ -6,6 +6,7 @@
 #define IMPORT_CENTER 2
 #define IMPORT_SCALE_ASPECT_IN 3
 #define IMPORT_SCALE_ASPECT_OUT 4
+#define IMPORT_PAN 5
 
 typedef struct _FSel FSel;
 
@@ -44,6 +45,7 @@ struct _Import
    Evas_Object *fill_center_obj;
    Evas_Object *fill_tile_obj;
    Evas_Object *fill_within_obj;
+   Evas_Object *fill_pan_obj;
    Evas_Object *fill_fill_obj;
    Evas_Object *external_obj;
    Evas_Object *quality_obj;
@@ -190,8 +192,13 @@ e_int_config_wallpaper_import(void *data, const char *path)
    ord = e_widget_radio_icon_add(evas, _("Fill"),
 				 "enlightenment/wallpaper_scale_aspect_out",
 				 24, 24, IMPORT_SCALE_ASPECT_OUT, rg);
-   import->fill_fill_obj = ord;
+   import->fill_pan_obj = ord;
    e_widget_frametable_object_append(of, ord, 4, 0, 1, 1, 1, 0, 1, 0);
+   ord = e_widget_radio_icon_add(evas, _("Pan"),
+				 "enlightenment/wallpaper_pan",
+				 24, 24, IMPORT_PAN, rg);
+   import->fill_fill_obj = ord;
+   e_widget_frametable_object_append(of, ord, 5, 0, 1, 1, 1, 0, 1, 0);
    e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 0);
 
    of = e_widget_frametable_add(evas, _("File Quality"), 0);
@@ -588,6 +595,67 @@ _import_edj_gen(Import *import)
 		"aspect: %1.9f %1.9f; aspect_preference: NONE;\n"
 		"image { normal: \"%s\";  scale_hint: STATIC; }\n"
 		"} } } } }\n"
+		, fstrip, enc, w, h, (double)w / (double)h, (double)w / (double)h, fstrip);
+	setlocale(LC_NUMERIC, locale);
+	break;
+      case IMPORT_PAN:
+	locale = e_intl_language_get();
+	setlocale(LC_NUMERIC, "C");
+	fprintf(f, 
+		"images { image: \"%s\" %s; }\n"
+		"collections {\n"
+		"group { name: \"e/desktop/background\";\n"
+		"data { item: \"style\" \"4\"; }\n"
+		"max: %i %i;\n"
+                "script {\n"
+                "public cur_anim; public cur_x; public cur_y; public prev_x;\n"
+                "public prev_y; public total_x; public total_y; \n"
+                "public pan_bg(val, Float:v) {\n"
+                "new Float:x, Float:y, Float:px, Float: py;\n"
+
+                "px = get_float(prev_x); py = get_float(prev_y);\n"
+                "if (get_int(total_x) > 1) {\n"
+                "x = float(get_int(cur_x)) / (get_int(total_x) - 1);\n"
+                "x = px - (px - x) * v;\n"
+                "} else { x = 0.0; v = 1.0; }\n"
+                "if (get_int(total_y) > 1) {\n"
+                "y = float(get_int(cur_y)) / (get_int(total_y) - 1);\n"
+                "y = py - (py - y) * v;\n"
+                "} else { y = 0.0; v = 1.0; }\n"
+
+                "set_state_val(PART:\"bg\", STATE_ALIGNMENT, x, y);\n"
+
+                "if (v >= 1.0) {\n"
+                "set_int(cur_anim, 0); set_float(prev_x, x);\n"
+                "set_float(prev_y, y); return 0;\n"
+                "}\n"
+                "return 1;\n"
+                "}\n"
+                "public message(Msg_Type:type, id, ...) {\n"
+                "if ((type == MSG_FLOAT_SET) && (id == 0)) {\n"
+                "new ani;\n"
+
+                "get_state_val(PART:\"bg\", STATE_ALIGNMENT, prev_x, prev_y);\n"
+                "set_int(cur_x, round(getfarg(3))); set_int(total_x, round(getfarg(4)));\n"
+                "set_int(cur_y, round(getfarg(5))); set_int(total_y, round(getfarg(6)));\n"
+
+                "ani = get_int(cur_anim); if (ani > 0) cancel_anim(ani);\n"
+                "ani = anim(getfarg(2), \"pan_bg\", 0); set_int(cur_anim, ani);\n"
+                "} } }\n"
+		"parts {\n"
+		"part { name: \"bg\"; mouse_events: 0;\n"
+		"description { state: \"default\" 0.0;\n"
+		"aspect: %1.9f %1.9f; aspect_preference: NONE;\n"
+		"image { normal: \"%s\";  scale_hint: STATIC; }\n"
+		"} } }\n"
+                "programs { program {\n"
+                " name: \"init\";\n"
+                " signal: \"load\";\n"
+                " source: \"\";\n"
+                " script { custom_state(PART:\"bg\", \"default\", 0.0);\n"
+                " set_state(PART:\"bg\", \"custom\", 0.0);\n"
+                " set_float(prev_x, 0.0); set_float(prev_y, 0.0);\n"
+                "} } } } }\n"
 		, fstrip, enc, w, h, (double)w / (double)h, (double)w / (double)h, fstrip);
 	setlocale(LC_NUMERIC, locale);
 	break;
