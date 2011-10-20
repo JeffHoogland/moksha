@@ -303,7 +303,7 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      }
    else if (cfdata->layer == 1) 
      {
-        if ((cfdata->escfg->popup != 0) || (cfdata->escfg->layer != 1)) 
+        if ((cfdata->escfg->popup != 1) || (cfdata->escfg->layer != 0)) 
           {
              cfdata->escfg->popup = 1;
              cfdata->escfg->layer = 0;
