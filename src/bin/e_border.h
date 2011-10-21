@@ -343,11 +343,23 @@ struct _E_Border
       /* Extra e stuff */
       struct {
          struct {
+            struct {
+               int x, y;
+
+               unsigned char updated : 1;
+            } video_position;
+            Ecore_X_Window video_parent;
+            E_Border *video_parent_border;
+            Eina_List *video_child;
+
             unsigned char centered : 1;
+            unsigned char video : 1;
          } state;
 
          struct {
             unsigned char state : 1;
+            unsigned char video_parent : 1;
+            unsigned char video_position : 1;
          } fetch;
       } e;
       

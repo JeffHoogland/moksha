@@ -110,6 +110,8 @@ e_hints_init(void)
         supported[supported_num++] = ECORE_X_ATOM_NET_WM_PING;
         supported[supported_num++] = ECORE_X_ATOM_NET_WM_SYNC_REQUEST;
         supported[supported_num++] = ECORE_X_ATOM_NET_WM_SYNC_REQUEST_COUNTER;
+        supported[supported_num++] = ECORE_X_ATOM_E_VIDEO_PARENT;
+        supported[supported_num++] = ECORE_X_ATOM_E_VIDEO_POSITION;
 
         for (i = 0; i < num; i++)
           {

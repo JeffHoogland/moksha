@@ -473,6 +473,9 @@ e_border_new(E_Container   *con,
       bd->client.icccm.fetch.command = 1;
       if (atoms)
         {
+           Eina_Bool video_parent = EINA_FALSE;
+           Eina_Bool video_position = EINA_FALSE;
+
            /* icccm */
             for (i = 0; i < at_num; i++)
               {
@@ -585,6 +588,20 @@ e_border_new(E_Container   *con,
                     bd->client.illume.drag.fetch.locked = 1;
                   else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_DRAG)
                     bd->client.illume.drag.fetch.drag = 1;
+                  else if (atoms[i] == ECORE_X_ATOM_E_VIDEO_PARENT)
+                    video_parent = EINA_TRUE;
+                  else if (atoms[i] == ECORE_X_ATOM_E_VIDEO_POSITION)
+                    video_position = EINA_TRUE;
+              }
+            if (video_position && video_parent)
+              {
+                 bd->client.e.state.video = 1;
+                 bd->client.e.fetch.video_parent = 1;
+                 bd->client.e.fetch.video_position = 1;
+                 ecore_x_window_lower(bd->win);
+                 ecore_x_composite_window_events_disable(bd->win);
+                 ecore_x_window_ignore_set(bd->win, EINA_TRUE);
+                 fprintf(stderr, "We found a video window \\o/ %x\n", win);
               }
             free(atoms);
         }
@@ -1130,8 +1147,14 @@ _e_border_frame_replace(E_Border *bd, Eina_Bool argb)
 
    if (bd->visible)
      {
-  ecore_evas_show(bd->bg_ecore_evas);
-  ecore_x_window_show(bd->win);
+        E_Border *tmp;
+        Eina_List *l;
+
+        ecore_evas_show(bd->bg_ecore_evas);
+        ecore_x_window_show(bd->win);
+
+        EINA_LIST_FOREACH(bd->client.e.state.video_child, l, tmp)
+          ecore_x_window_show(tmp->win);
      }
 
    bd->bg_object = edje_object_add(bd->bg_evas);
@@ -3205,6 +3228,9 @@ static Ecore_X_Rectangle action_orig;
 static void
 _e_border_show(E_Border *bd)
 {
+   Eina_List *l;
+   E_Border *tmp;
+
    ecore_evas_show(bd->bg_ecore_evas);
 
    if (bd->post_job)
@@ -3222,15 +3248,24 @@ _e_border_show(E_Border *bd)
      }
 
    ecore_x_window_show(bd->win);
+
+   EINA_LIST_FOREACH(bd->client.e.state.video_child, l, tmp)
+     ecore_x_window_show(tmp->win);
 }
 
 static void
 _e_border_hide(E_Border *bd)
 {
+   E_Border *tmp;
+   Eina_List *l;
+
    if (!e_manager_comp_evas_get(bd->zone->container->manager))
      {
         ecore_x_window_hide(bd->win);
         ecore_evas_hide(bd->bg_ecore_evas);
+
+        EINA_LIST_FOREACH(bd->client.e.state.video_child, l, tmp)
+          ecore_x_window_hide(tmp->win);
      }
    else
      {
@@ -4246,6 +4281,20 @@ e_border_resize_limit(E_Border *bd,
 static void
 _e_border_free(E_Border *bd)
 {
+   if (bd->client.e.state.video_parent)
+     {
+        Eina_List *l;
+        E_Border *tmp;
+
+        EINA_LIST_FOREACH(bd->client.e.state.video_child, l, tmp)
+          {
+             /* FIXME: cleanup memory */
+          }
+     }
+   if (bd->client.e.state.video_child)
+     {
+        /* FIXME: cleanup also */
+     }
    if (bd->desktop)
      {
         efreet_desktop_free(bd->desktop);
@@ -4990,10 +5039,21 @@ _e_border_cb_window_stack_request(void *data  __UNUSED__,
         if (e_stolen_win_get(e->win)) return ECORE_CALLBACK_PASS_ON;
         if (!e_util_container_window_find(e->win))
           {
+             Eina_List *l;
+             E_Border *tmp;
+
              if (e->detail == ECORE_X_WINDOW_STACK_ABOVE)
-               ecore_x_window_raise(e->win);
+               {
+                  EINA_LIST_FOREACH(bd->client.e.state.video_child, l, tmp)
+                    ecore_x_window_raise(tmp->win);
+                  ecore_x_window_raise(e->win);
+               }
              else if (e->detail == ECORE_X_WINDOW_STACK_BELOW)
-               ecore_x_window_lower(e->win);
+               {
+                  EINA_LIST_FOREACH(bd->client.e.state.video_child, l, tmp)
+                    ecore_x_window_lower(tmp->win);
+                  ecore_x_window_lower(e->win);
+               }
           }
         return ECORE_CALLBACK_PASS_ON;
      }
@@ -5181,6 +5241,16 @@ _e_border_cb_window_property(void *data  __UNUSED__,
    else if (e->atom == ECORE_X_ATOM_NET_WM_SYNC_REQUEST_COUNTER)
      {
         //printf("ECORE_X_ATOM_NET_WM_SYNC_REQUEST_COUNTER\n");
+     }
+   else if (e->atom == ECORE_X_ATOM_E_VIDEO_POSITION)
+     {
+        bd->client.e.fetch.video_position = 1;
+        bd->changed = 1;
+     }
+   else if (e->atom == ECORE_X_ATOM_E_VIDEO_PARENT)
+     {
+        bd->client.e.fetch.video_parent = 1;
+        bd->changed = 1;
      }
 
    return ECORE_CALLBACK_PASS_ON;
@@ -6212,7 +6282,38 @@ _e_border_post_move_resize_job(void *data)
    E_Border *bd;
 
    bd = (E_Border *)data;
-   if ((bd->post_move) && (bd->post_resize))
+   if (bd->post_move)
+     {
+        E_Border *tmp;
+        Eina_List *l;
+
+        EINA_LIST_FOREACH(bd->client.e.state.video_child, l, tmp)
+          ecore_x_window_move(tmp->win,
+                              bd->x +
+                              bd->client_inset.l +
+                              bd->fx.x +
+                              tmp->client.e.state.video_position.x,
+                              bd->y +
+                              bd->client_inset.t +
+                              bd->fx.y +
+                              tmp->client.e.state.video_position.y);
+     }
+   if (bd->client.e.state.video)
+     {
+        E_Border *parent;
+
+        parent = bd->client.e.state.video_parent_border;
+        ecore_x_window_move(bd->win,
+                            parent->x +
+                            parent->client_inset.l +
+                            parent->fx.x +
+                            bd->client.e.state.video_position.x,
+                            parent->y +
+                            parent->client_inset.t +
+                            parent->fx.y +
+                            bd->client.e.state.video_position.y);
+     }
+   else if ((bd->post_move) && (bd->post_resize))
      {
         ecore_x_window_move_resize(bd->win,
                                    bd->x + bd->fx.x,
@@ -6226,6 +6327,21 @@ _e_border_post_move_resize_job(void *data)
    else if (bd->post_resize)
      {
         ecore_x_window_resize(bd->win, bd->w, bd->h);
+     }
+
+   if (bd->client.e.state.video)
+     {
+        fprintf(stderr, "%x: [%i, %i] [%i, %i]\n",
+                bd->win,
+                bd->client.e.state.video_parent_border->x +
+                bd->client.e.state.video_parent_border->client_inset.l +
+                bd->client.e.state.video_parent_border->fx.x +
+                bd->client.e.state.video_position.x,
+                bd->client.e.state.video_parent_border->y +
+                bd->client.e.state.video_parent_border->client_inset.t +
+                bd->client.e.state.video_parent_border->fx.y +
+                bd->client.e.state.video_position.y,
+                bd->w, bd->h);
      }
 
    if (bd->post_show)
@@ -6880,6 +6996,59 @@ _e_border_eval0(E_Border *bd)
         bd->client.mwm.fetch.hints = 0;
         rem_change = 1;
      }
+   if (bd->client.e.fetch.video_parent)
+     {
+        /* unlinking child/parent */
+        if (bd->client.e.state.video_parent_border != NULL)
+          {
+             bd->client.e.state.video_parent_border->client.e.state.video_child = eina_list_remove(bd->client.e.state.video_parent_border->client.e.state.video_child,
+                                                                                                   bd);
+          }
+
+        ecore_x_window_prop_card32_get(bd->client.win,
+                                       ECORE_X_ATOM_E_VIDEO_PARENT,
+                                       &bd->client.e.state.video_parent,
+                                       1);
+
+        /* linking child/parent */
+        if (bd->client.e.state.video_parent != 0)
+          {
+             E_Border *tmp;
+             Eina_List *l;
+
+             EINA_LIST_FOREACH(borders, l, tmp)
+               if (tmp->client.win == bd->client.e.state.video_parent)
+                 {
+                    fprintf(stderr, "child added to parent \\o/\n");
+                    bd->client.e.state.video_parent_border = tmp;
+                    tmp->client.e.state.video_child = eina_list_append(tmp->client.e.state.video_child,
+                                                                       bd);
+                    break;
+                 }
+          }
+
+        fprintf(stderr, "new parent %x => %p\n", bd->client.e.state.video_parent, bd->client.e.state.video_parent_border);
+
+        if (bd->client.e.state.video_parent_border) bd->client.e.fetch.video_parent = 0;
+	rem_change = 1;
+     }
+   if (bd->client.e.fetch.video_position && bd->client.e.fetch.video_parent == 0)
+     {
+        unsigned int xy[2];
+
+        ecore_x_window_prop_card32_get(bd->client.win,
+                                       ECORE_X_ATOM_E_VIDEO_POSITION,
+                                       xy,
+                                       2);
+        bd->client.e.state.video_position.x = xy[0];
+        bd->client.e.state.video_position.y = xy[1];
+        bd->client.e.state.video_position.updated = 1;
+        bd->client.e.fetch.video_position = 0;
+        bd->x = bd->client.e.state.video_position.x;
+        bd->y = bd->client.e.state.video_position.y;
+
+        fprintf(stderr, "internal position has been updated [%i, %i]\n", bd->client.e.state.video_position.x, bd->client.e.state.video_position.y);
+     }
    if (bd->client.netwm.update.state)
      {
         e_hints_window_state_set(bd);
@@ -7502,7 +7671,23 @@ _e_border_eval(E_Border *bd)
                }
           }
 
-        if (!bd->changes.pos)
+        if (bd->client.e.state.video)
+          {
+             if (bd->client.e.state.video_position.updated)
+               {
+                  ecore_x_window_move(bd->win,
+                                      bd->client.e.state.video_parent_border->x +
+                                      bd->client.e.state.video_parent_border->client_inset.l +
+                                      bd->client.e.state.video_parent_border->fx.x +
+                                      bd->client.e.state.video_position.x,
+                                      bd->client.e.state.video_parent_border->y +
+                                      bd->client.e.state.video_parent_border->client_inset.t +
+                                      bd->client.e.state.video_parent_border->fx.y +
+                                      bd->client.e.state.video_position.y);
+                  bd->client.e.state.video_position.updated = 0;
+               }
+          }
+        else if (!bd->changes.pos)
           {
              if (bd->post_job) ecore_idle_enterer_del(bd->post_job);
              bd->post_job = ecore_idle_enterer_add(_e_border_post_move_resize_job, bd);
@@ -7510,10 +7695,18 @@ _e_border_eval(E_Border *bd)
           }
         else
           {
+             E_Border *tmp;
+             Eina_List *l;
+
              ecore_x_window_move_resize(bd->win,
                                         bd->x + bd->fx.x,
                                         bd->y + bd->fx.y,
                                         bd->w, bd->h);
+
+             EINA_LIST_FOREACH(bd->client.e.state.video_child, l, tmp)
+               ecore_x_window_move(tmp->win,
+                                   bd->x + bd->fx.x + bd->client_inset.l + tmp->client.e.state.video_position.x,
+                                   bd->y + bd->fx.y + bd->client_inset.t + tmp->client.e.state.video_position.y);
           }
 
         ecore_x_window_move_resize(bd->event_win, 0, 0, bd->w, bd->h);
@@ -7524,7 +7717,7 @@ _e_border_eval(E_Border *bd)
 
         if (bd->internal_ecore_evas)
           ecore_evas_move_resize(bd->internal_ecore_evas, x, y, bd->client.w, bd->client.h);
-        else
+        else if (!bd->client.e.state.video)
           ecore_x_window_move_resize(bd->client.win, x, y, bd->client.w, bd->client.h);
 
         ecore_evas_move_resize(bd->bg_ecore_evas, 0, 0, bd->w, bd->h);
@@ -8904,8 +9097,19 @@ EAPI void
 e_border_comp_hidden_set(E_Border *bd,
                          Eina_Bool hidden)
 {
+   E_Border *tmp;
+   Eina_List *l;
+
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
+
+   EINA_LIST_FOREACH(bd->client.e.state.video_child, l, tmp)
+     {
+       if (hidden)
+	 ecore_x_window_hide(tmp->win);
+       else
+	 ecore_x_window_show(tmp->win);
+     }
 
    if (bd->comp_hidden == hidden) return;
 
@@ -8926,8 +9130,14 @@ e_border_comp_hidden_set(E_Border *bd,
 EAPI void
 e_border_tmp_input_hidden_push(E_Border *bd)
 {
+   E_Border *tmp;
+   Eina_List *l;
+
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
+
+   EINA_LIST_FOREACH(bd->client.e.state.video_child, l, tmp)
+     e_border_tmp_input_hidden_push(tmp);
 
    bd->tmp_input_hidden++;
    if (bd->tmp_input_hidden != 1) return;
@@ -8947,8 +9157,14 @@ e_border_tmp_input_hidden_push(E_Border *bd)
 EAPI void
 e_border_tmp_input_hidden_pop(E_Border *bd)
 {
+   E_Border *tmp;
+   Eina_List *l;
+
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
+
+   EINA_LIST_FOREACH(bd->client.e.state.video_child, l, tmp)
+     e_border_tmp_input_hidden_pop(tmp);
 
    bd->tmp_input_hidden--;
    if (bd->tmp_input_hidden != 0) return;

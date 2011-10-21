@@ -1512,6 +1512,13 @@ _e_mod_comp_win_shadow_setup(E_Comp_Win *cw)
              if (ok) break;
           }
      }
+   if (!ok)
+     {
+        if (cw->bd && cw->bd->client.e.state.video)
+          ok = e_theme_edje_object_set(cw->shobj,
+                                       "base/theme/borders",
+                                       "e/comp/none");
+     }
    // use different shadow objects/group per window type?
    if (!ok)
      {
@@ -1539,15 +1546,18 @@ _e_mod_comp_win_shadow_setup(E_Comp_Win *cw)
         ok = edje_object_file_set(cw->shobj, buf, "shadow");
      }
    edje_object_part_swallow(cw->shobj, "e.swallow.content", cw->obj);
-   if (_comp_mod->conf->use_shadow)
+   if (!_comp_mod->conf->use_shadow
+       || (cw->bd && cw->bd->client.e.state.video))
+     {
+        edje_object_signal_emit(cw->shobj, "e,state,shadow,off", "e");
+     }
+   else
      {
         if (_e_mod_comp_win_do_shadow(cw))
           edje_object_signal_emit(cw->shobj, "e,state,shadow,on", "e");
         else
           edje_object_signal_emit(cw->shobj, "e,state,shadow,off", "e");
      }
-   else
-     edje_object_signal_emit(cw->shobj, "e,state,shadow,off", "e");
 
    if (cw->bd)
      {
