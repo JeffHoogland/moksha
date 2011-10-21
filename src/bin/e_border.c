@@ -2141,6 +2141,8 @@ e_border_shade(E_Border   *bd,
                E_Direction dir)
 {
    E_Event_Border_Resize *ev;
+   Eina_List *l;
+   E_Border *tmp;
 
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
@@ -2148,6 +2150,9 @@ e_border_shade(E_Border   *bd,
        ((bd->maximized) && (!e_config->allow_manip))) return;
    if ((bd->client.border.name) &&
        (!strcmp("borderless", bd->client.border.name))) return;
+
+   EINA_LIST_FOREACH(bd->client.e.state.video_child, l, tmp)
+     ecore_x_window_hide(tmp->win);
 
    ecore_x_window_shadow_tree_flush();
 
@@ -2230,11 +2235,16 @@ e_border_unshade(E_Border   *bd,
                  E_Direction dir)
 {
    E_Event_Border_Resize *ev;
+   Eina_List *l;
+   E_Border *tmp;
 
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if ((!bd->shaded) || (bd->shading))
      return;
+
+   EINA_LIST_FOREACH(bd->client.e.state.video_child, l, tmp)
+     ecore_x_window_show(tmp->win);
 
    ecore_x_window_shadow_tree_flush();
 
