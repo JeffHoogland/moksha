@@ -33,7 +33,7 @@ e_hints_init(void)
    roots = ecore_x_window_root_list(&num);
    if (roots)
      {
-        Ecore_X_Atom supported[41];
+        Ecore_X_Atom supported[43];
         int supported_num, i;
 
         supported_num = 0;
