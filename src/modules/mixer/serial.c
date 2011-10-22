@@ -23,7 +23,7 @@ deserialize_sinks_watcher(Pulse *conn, Pulse_Tag *tag)
 Pulse_Sink *
 deserialize_sink(Pulse *conn __UNUSED__, Pulse_Tag *tag)
 {
-   Pulse_Sink *sink;
+   Pulse_Sink *sink = NULL;
    Eina_Bool mute, exist;
    pa_sample_spec spec;
    uint32_t owner_module, monitor_source, flags, base_volume, state, n_volume_steps, card, n_ports;

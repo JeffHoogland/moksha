@@ -574,7 +574,7 @@ pulse_new(void)
 {
    Pulse *conn;
    Eina_Iterator *it;
-   const char *dir, *prev, *buf = NULL;;
+   const char *dir, *prev = NULL, *buf = NULL;;
    time_t time = 0;
    char *home, h[4096];
 
