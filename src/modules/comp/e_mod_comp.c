@@ -99,7 +99,7 @@ struct _E_Comp_Win
    Ecore_X_Window_Type  primary_type;  // fetched for override-redirect windowa
 
    unsigned char        misses; // number of sync misses
-   
+
    Eina_Bool            delete_pending : 1;  // delete pendig
    Eina_Bool            hidden_override : 1;  // hidden override
    Eina_Bool            animating : 1;  // it's busy animating - defer hides/dels
@@ -160,6 +160,48 @@ static void _e_mod_comp_win_configure(E_Comp_Win *cw,
                                       int         w,
                                       int         h,
                                       int         border);
+
+static void
+_e_mod_comp_child_show(E_Comp_Win *cw)
+{
+   evas_object_show(cw->shobj);
+   if (cw->bd)
+     {
+        Eina_List *l;
+        E_Border *tmp;
+
+        EINA_LIST_FOREACH(cw->bd->client.e.state.video_child, l, tmp)
+          {
+             E_Comp_Win *tcw;
+
+             tcw = eina_hash_find(borders, e_util_winid_str_get(tmp->client.win));
+             if (!tcw) continue ;
+
+             evas_object_show(tcw->shobj);
+          }
+     }
+}
+
+static void
+_e_mod_comp_child_hide(E_Comp_Win *cw)
+{
+   evas_object_hide(cw->shobj);
+   if (cw->bd)
+     {
+        Eina_List *l;
+        E_Border *tmp;
+
+        EINA_LIST_FOREACH(cw->bd->client.e.state.video_child, l, tmp)
+          {
+             E_Comp_Win *tcw;
+
+             tcw = eina_hash_find(borders, e_util_winid_str_get(tmp->client.win));
+             if (!tcw) continue ;
+
+             evas_object_hide(tcw->shobj);
+          }
+     }
+}
 
 static void
 _e_mod_comp_cb_pending_after(void *data             __UNUSED__,
@@ -699,7 +741,7 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
           {
 	     if (!cw->hidden_override)
 	       {
-		  evas_object_show(cw->shobj);
+                  _e_mod_comp_child_show(cw);
 		  _e_mod_comp_win_render_queue(cw);
 	       }
 
@@ -1093,7 +1135,7 @@ nocomp:
 //                  _e_mod_comp_win_damage(cw, 0, 0, cw->w, cw->h, 0);
                   if (cw->visible)
                     {
-                       if (!cw->hidden_override) evas_object_show(cw->shobj);
+                       if (!cw->hidden_override) _e_mod_comp_child_show(cw);
                        cw->pending_count++;
                        e_manager_comp_event_src_visibility_send
                          (cw->c->man, (E_Manager_Comp_Source *)cw,
@@ -2039,7 +2081,7 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
    if ((cw->dmg_updates >= 1) && (cw->show_ready))
      {
         cw->defer_hide = 0;
-        if (!cw->hidden_override) evas_object_show(cw->shobj);
+        if (!cw->hidden_override) _e_mod_comp_child_show(cw);
         edje_object_signal_emit(cw->shobj, "e,state,visible,on", "e");
         if (!cw->animating)
           {
@@ -2097,7 +2139,7 @@ _e_mod_comp_win_hide(E_Comp_Win *cw)
      }
    cw->defer_hide = 0;
    cw->force = 0;
-   evas_object_hide(cw->shobj);
+   _e_mod_comp_child_hide(cw);
 
    if (cw->update_timeout)
      {
@@ -2186,6 +2228,22 @@ _e_mod_comp_win_raise_above(E_Comp_Win *cw,
                                              EINA_INLIST_GET(cw),
                                              EINA_INLIST_GET(cw2));
    evas_object_stack_above(cw->shobj, cw2->shobj);
+   if (cw->bd)
+     {
+        Eina_List *l;
+        E_Border *tmp;
+
+        EINA_LIST_FOREACH(cw->bd->client.e.state.video_child, l, tmp)
+          {
+             E_Comp_Win *tcw;
+
+             tcw = eina_hash_find(borders, e_util_winid_str_get(tmp->client.win));
+             if (!tcw) continue ;
+
+             evas_object_stack_below(tcw->shobj, cw->shobj);
+          }
+     }
+
    _e_mod_comp_win_render_queue(cw);
    cw->pending_count++;
    e_manager_comp_event_src_config_send
@@ -2201,6 +2259,22 @@ _e_mod_comp_win_raise(E_Comp_Win *cw)
    cw->c->wins = eina_inlist_remove(cw->c->wins, EINA_INLIST_GET(cw));
    cw->c->wins = eina_inlist_append(cw->c->wins, EINA_INLIST_GET(cw));
    evas_object_raise(cw->shobj);
+   if (cw->bd)
+     {
+        Eina_List *l;
+        E_Border *tmp;
+
+        EINA_LIST_FOREACH(cw->bd->client.e.state.video_child, l, tmp)
+          {
+             E_Comp_Win *tcw;
+
+             tcw = eina_hash_find(borders, e_util_winid_str_get(tmp->client.win));
+             if (!tcw) continue ;
+
+             evas_object_stack_below(tcw->shobj, cw->shobj);
+          }
+     }
+
    _e_mod_comp_win_render_queue(cw);
    cw->pending_count++;
    e_manager_comp_event_src_config_send
@@ -2216,6 +2290,22 @@ _e_mod_comp_win_lower(E_Comp_Win *cw)
    cw->c->wins = eina_inlist_remove(cw->c->wins, EINA_INLIST_GET(cw));
    cw->c->wins = eina_inlist_prepend(cw->c->wins, EINA_INLIST_GET(cw));
    evas_object_lower(cw->shobj);
+   if (cw->bd)
+     {
+        Eina_List *l;
+        E_Border *tmp;
+
+        EINA_LIST_FOREACH(cw->bd->client.e.state.video_child, l, tmp)
+          {
+             E_Comp_Win *tcw;
+
+             tcw = eina_hash_find(borders, e_util_winid_str_get(tmp->client.win));
+             if (!tcw) continue ;
+
+             evas_object_stack_below(tcw->shobj, cw->shobj);
+          }
+     }
+
    _e_mod_comp_win_render_queue(cw);
    cw->pending_count++;
    e_manager_comp_event_src_config_send
@@ -3014,13 +3104,13 @@ _e_mod_comp_src_hidden_set_func(void *data             __UNUSED__,
      if (cw->visible)
        {
           if (cw->hidden_override)
-	    evas_object_hide(cw->shobj);
+	    _e_mod_comp_child_hide(cw);
           else if (!cw->bd || cw->bd->visible)
-	    evas_object_show(cw->shobj);
+	    _e_mod_comp_child_show(cw);
        }
      else
        {
-          if (cw->hidden_override) evas_object_hide(cw->shobj);
+          if (cw->hidden_override) _e_mod_comp_child_hide(cw);
        }
 }
 
