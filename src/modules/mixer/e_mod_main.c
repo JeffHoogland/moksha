@@ -382,7 +382,12 @@ _mixer_toggle_mute(E_Mixer_Instance *inst, Eina_Bool non_ui)
    if (!state->mute) e_mod_mixer_volume_set(inst->sys, inst->channel, state->left, state->right);
    _mixer_gadget_update(inst);
    if (non_ui)
-     _mixer_notify(0.0, inst);
+     {
+        if (state->mute)
+          _mixer_notify(0.0, inst);
+        else
+          _mixer_notify(((float)state->left + (float)state->right) / 2.0, inst);
+     }
 }
 
 static void
