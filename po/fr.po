@@ -8,13 +8,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-10-06 08:43+0200\n"
-"PO-Revision-Date: 2011-10-06 09:04+0100\n"
+"POT-Creation-Date: 2011-10-22 14:30+0200\n"
+"PO-Revision-Date: 2011-10-23 08:44+0100\n"
 "Last-Translator: dazibao <dazibao@sfr.fr>\n"
 "Language-Team: Enlightenment French Team <sansgourou@gmail.com>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: French\n"
 "X-Poedit-Country: FRANCE\n"
@@ -800,7 +800,7 @@ msgstr "Générique : actions"
 msgid "Delayed Action"
 msgstr "Action reportée"
 
-#: src/bin/e_bg.c:50
+#: src/bin/e_bg.c:34
 msgid "Set As Background"
 msgstr "Utiliser comme fond d'écran"
 
@@ -809,8 +809,8 @@ msgid "Color Selector"
 msgstr "Sélecteur de couleur"
 
 #: src/bin/e_color_dialog.c:46
-#: src/bin/e_config.c:1635
-#: src/bin/e_config.c:2236
+#: src/bin/e_config.c:1623
+#: src/bin/e_config.c:2224
 #: src/bin/e_config_dialog.c:262
 #: src/bin/e_eap_editor.c:857
 #: src/bin/e_eap_editor.c:921
@@ -827,8 +827,8 @@ msgstr "Sélecteur de couleur"
 #: src/bin/e_utils.c:707
 #: src/modules/conf_dialogs/e_int_config_profiles.c:387
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:215
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:345
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:222
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:352
 #: src/modules/conf_theme/e_int_config_theme_import.c:120
 #: src/modules/cpufreq/e_mod_main.c:415
 #: src/modules/cpufreq/e_mod_main.c:444
@@ -846,115 +846,115 @@ msgstr "OK"
 #: src/bin/e_utils.c:1162
 #: src/modules/conf_dialogs/e_int_config_profiles.c:388
 #: src/modules/conf_intl/e_int_config_imc_import.c:124
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:219
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:349
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:226
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:356
 #: src/modules/conf_theme/e_int_config_theme_import.c:124
 #: src/modules/fileman/e_int_config_mime_edit.c:304
-#: src/modules/syscon/e_syscon.c:118
+#: src/modules/syscon/e_syscon.c:120
 #: src/modules/connman/e_mod_main.c:300
 msgid "Cancel"
 msgstr "Annuler"
 
-#: src/bin/e_config.c:987
-#: src/bin/e_config.c:1020
+#: src/bin/e_config.c:984
+#: src/bin/e_config.c:1017
 msgid "Settings data needed upgrading. Your old settings have<br>been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means Enlightenment needs new settings<br>data by default for usable functionality that your old<br>settings simply lack. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the hiccup in your settings.<br>"
 msgstr "Les données de configuration ont dû être mises à jour. Votre ancienne<br>configuration a été supprimée et de nouveaux paramètres par<br>défaut sont en place. Cela risque d'arriver en phase de<br>développement, aussi est-il inutile de faire un rapport de bogue.<br>Cela signifie simplement que Enlightenment a besoin<br>de cette mise à niveau pour être à nouveau fonctionnel.<br>Vous pouvez maintenant tout reconfigurer selon votre goût.<br>Désolé pour la gêne occasionnée.<br>"
 
-#: src/bin/e_config.c:1004
+#: src/bin/e_config.c:1001
 msgid "Your settings are NEWER than Enlightenment. This is very<br>strange. This should not happen unless you downgraded<br>Enlightenment or copied the settings from a place where<br>a newer version of Enlightenment was running. This is bad and<br>as a precaution your settings have been now restored to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr "Votre configuration est PLUS RÉCENTE que Enlightenment.<br>C'est vraiment étonnant. Cela ne devrait pas se produire<br>à moins que vous n'ayez installé une version antérieure<br>ou copié la configuration depuis une machine sur laquelle<br>une version plus récente était en cours. Ce n'est pas bon<br>et, par mesure de précaution, les valeurs par défaut de<br>votre configuration ont été restaurées.<br>Désolé pour le désagrément.<br>"
 
-#: src/bin/e_config.c:1622
-#: src/bin/e_config.c:2223
+#: src/bin/e_config.c:1610
+#: src/bin/e_config.c:2211
 msgid "Enlightenment Settings Write Problems"
 msgstr "Problèmes d'écriture de la configuration de Enlightenment"
 
-#: src/bin/e_config.c:1625
+#: src/bin/e_config.c:1613
 #, c-format
 msgid "Enlightenment has an error while moving config files<br>from:<br>%s<br><br>to:<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr "Enlightenment a rencontré une erreur pendant<br>le déplacement de données de configuration<br>de :<br>%s<br><br>vers :<br>%s<br><br>L'écriture a été abandonnée par sécurité.<br>"
 
-#: src/bin/e_config.c:2134
+#: src/bin/e_config.c:2122
 msgid "Settings Upgraded"
 msgstr "Configuration mise à niveau"
 
-#: src/bin/e_config.c:2151
+#: src/bin/e_config.c:2139
 msgid "The EET file handle is bad."
 msgstr "Traitement du fichier EET incorrect."
 
-#: src/bin/e_config.c:2154
+#: src/bin/e_config.c:2142
 msgid "The file data is empty."
 msgstr "Aucune donnée dans le fichier."
 
-#: src/bin/e_config.c:2157
+#: src/bin/e_config.c:2145
 msgid "The file is not writable. Perhaps the disk is read-only<br>or you lost permissions to your files."
 msgstr "Le fichier n'est pas éditable. Le disque est peut-être monté<br>en lecture seule ou les permissions ont été modifiées."
 
-#: src/bin/e_config.c:2160
+#: src/bin/e_config.c:2148
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr "Mémoire insuffisante pour l'écriture.<br>Veuillez libérer de la mémoire."
 
-#: src/bin/e_config.c:2163
+#: src/bin/e_config.c:2151
 msgid "This is a generic error."
 msgstr "Erreur générique."
 
-#: src/bin/e_config.c:2165
+#: src/bin/e_config.c:2153
 msgid "The settings file is too large.<br>It should be very small (a few hundred KB at most)."
 msgstr "Le fichier de configuration est trop gros.<br>Il ne devrait pas dépasser quelques centaines de Ko."
 
-#: src/bin/e_config.c:2168
+#: src/bin/e_config.c:2156
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr "Erreurs d'E/S sur le disque.<br>Peut-être devriez-vous le remplacer ?"
 
-#: src/bin/e_config.c:2171
+#: src/bin/e_config.c:2159
 msgid "You ran out of space while writing the file"
 msgstr "Plus assez d'espace disponible pour l'écriture."
 
-#: src/bin/e_config.c:2174
+#: src/bin/e_config.c:2162
 msgid "The file was closed on it while writing."
 msgstr "Le fichier s'est fermé pendant l'écriture."
 
-#: src/bin/e_config.c:2177
+#: src/bin/e_config.c:2165
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Échec du mappage du fichier en mémoire (mmap)."
 
-#: src/bin/e_config.c:2180
+#: src/bin/e_config.c:2168
 msgid "X509 Encoding failed."
 msgstr "Échec de l'encodage X509."
 
-#: src/bin/e_config.c:2183
+#: src/bin/e_config.c:2171
 msgid "Signature failed."
 msgstr "Échec de la signature."
 
-#: src/bin/e_config.c:2186
+#: src/bin/e_config.c:2174
 msgid "The signature was invalid."
 msgstr "Signature invalide."
 
-#: src/bin/e_config.c:2189
+#: src/bin/e_config.c:2177
 msgid "Not signed."
 msgstr "Non signé."
 
-#: src/bin/e_config.c:2192
+#: src/bin/e_config.c:2180
 msgid "Feature not implemented."
 msgstr "Pas encore implémenté."
 
-#: src/bin/e_config.c:2195
+#: src/bin/e_config.c:2183
 msgid "PRNG was not seeded."
 msgstr "Impossible de générer un germe PRNG."
 
-#: src/bin/e_config.c:2198
+#: src/bin/e_config.c:2186
 msgid "Encryption failed."
 msgstr "Échec du cryptage."
 
-#: src/bin/e_config.c:2201
+#: src/bin/e_config.c:2189
 msgid "Decryption failed."
 msgstr "Échec du décryptage."
 
-#: src/bin/e_config.c:2204
+#: src/bin/e_config.c:2192
 msgid "The error is unknown to Enlightenment."
 msgstr "Enlightenment ne reconnaît pas cette erreur."
 
-#: src/bin/e_config.c:2226
+#: src/bin/e_config.c:2214
 #, c-format
 msgid "Enlightenment has an error while writing<br>its config file.<br>%s<br><br>The file where the error occurred was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr "Une erreur s'est produite au niveau du fichier<br>de configuration dans lequel Enlightenment<br>était en train d'écrire.<br>%s<br><br> Le fichier incriminé était :<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption des données.<br>"
@@ -981,7 +981,7 @@ msgstr "Appliquer"
 #: src/bin/e_configure.c:28
 #: src/modules/conf_shelves/e_mod_main.c:21
 #: src/modules/gadman/e_mod_main.c:25
-#: src/modules/mixer/e_mod_main.c:1256
+#: src/modules/mixer/e_mod_main.c:1261
 #: src/modules/connman/e_mod_main.c:1829
 msgid "Extensions"
 msgstr "Extensions"
@@ -1113,8 +1113,7 @@ msgstr "Fichier desktop"
 
 #: src/bin/e_eap_editor.c:778
 #: src/modules/conf_performance/e_int_config_performance.c:115
-#: src/modules/everything/evry_config.c:380
-#: src/modules/everything/evry_config.c:464
+#: src/modules/everything/evry_config.c:378
 #: src/modules/everything/evry_plug_files.c:1491
 #: src/modules/pager/e_mod_config.c:126
 #: src/modules/pager/e_mod_config.c:213
@@ -1449,8 +1448,8 @@ msgid "Custom Icons"
 msgstr "Icones personnalisés"
 
 #: src/bin/e_fm.c:8541
-#: src/modules/everything/evry_config.c:436
-#: src/modules/everything/evry_config.c:494
+#: src/modules/everything/evry_config.c:430
+#: src/modules/everything/evry_config.c:460
 #: src/modules/fileman/e_mod_config.c:234
 msgid "List"
 msgstr "Liste"
@@ -1638,7 +1637,7 @@ msgstr "Aperçu"
 #: src/bin/e_fm_prop.c:426
 #: src/modules/conf_display/e_int_config_screensaver.c:208
 #: src/modules/conf_display/e_int_config_screensaver.c:221
-#: src/modules/everything/evry_config.c:432
+#: src/modules/everything/evry_config.c:426
 msgid "Default"
 msgstr "Par défaut"
 
@@ -1712,7 +1711,7 @@ msgstr "Supprimer"
 msgid "Stop move/resize this gadget"
 msgstr "Finir de déplacer/redimensionner"
 
-#: src/bin/e_hints.c:150
+#: src/bin/e_hints.c:152
 msgid ""
 "A previous instance of Enlightenment is still active\n"
 "on this screen. Aborting startup.\n"
@@ -1853,7 +1852,7 @@ msgstr "Fenêtre"
 #: src/modules/ibox/e_mod_main.c:692
 #: src/modules/pager/e_mod_main.c:790
 #: src/modules/temperature/e_mod_main.c:226
-#: src/modules/mixer/e_mod_main.c:784
+#: src/modules/mixer/e_mod_main.c:789
 #: src/modules/connman/e_mod_main.c:1300
 msgid "Settings"
 msgstr "Configuration"
@@ -3367,42 +3366,42 @@ msgid "Import"
 msgstr "Importer"
 
 #: src/bin/e_utils.c:1177
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:167
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:169
 msgid "Fill and Stretch Options"
 msgstr "Options de remplissage et d'étirage"
 
 #: src/bin/e_utils.c:1185
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:170
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:172
 msgid "Stretch"
 msgstr "Étirer"
 
 #: src/bin/e_utils.c:1186
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:175
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:177
 msgid "Center"
 msgstr "Centrer"
 
 #: src/bin/e_utils.c:1188
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:185
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:187
 msgid "Within"
 msgstr "Contenir"
 
 #: src/bin/e_utils.c:1189
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:190
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:192
 msgid "Fill"
 msgstr "Remplir"
 
 #: src/bin/e_utils.c:1194
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:197
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:204
 msgid "File Quality"
 msgstr "Qualité du fichier"
 
 #: src/bin/e_utils.c:1196
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:199
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:206
 msgid "Use original file"
 msgstr "Utiliser le fichier original"
 
 #: src/bin/e_utils.c:1200
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:202
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:209
 #, c-format
 msgid "%3.0f%%"
 msgstr "%3.0f%%"
@@ -3748,7 +3747,7 @@ msgstr "Paramétrage des boîtes de dialogue"
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:109
 #: src/modules/conf_performance/e_int_config_engine.c:95
 #: src/modules/conf_theme/e_int_config_fonts.c:647
-#: src/modules/everything/evry_config.c:531
+#: src/modules/everything/evry_config.c:519
 #: src/modules/ibox/e_mod_config.c:96
 #: src/modules/mixer/conf_gadget.c:191
 #: src/modules/mixer/conf_module.c:91
@@ -3865,68 +3864,64 @@ msgstr "Aucun taux de rafraîchissement détecté"
 msgid "No refresh rates were reported by your X Display Server.<br>If you are running a nested X Display Server, then<br>this is to be expected. However, if you are not, then<br>the current refresh rate will be used when setting<br>the resolution, which may cause <hilight>damage</hilight> to your screen."
 msgstr "Aucun taux de rafraîchissement n'a été rapporté par votre serveur X.<br>Si vous utilisez un serveur X imbriqué (nested), alors cela est normal.<br>Néanmoins, si ce n'est pas le cas, le taux de rafraîchissement actuel<br>sera utilisé lors de la sélection de la résolution, ce qui pourrait<br><hilight>endommager</hilight> votre écran."
 
-#: src/modules/conf_display/e_int_config_desks.c:52
+#: src/modules/conf_display/e_int_config_desks.c:49
 #: src/modules/pager/e_mod_main.c:801
 msgid "Virtual Desktops Settings"
 msgstr "Paramétrage des bureaux virtuels"
 
-#: src/modules/conf_display/e_int_config_desks.c:162
+#: src/modules/conf_display/e_int_config_desks.c:150
 msgid "Number of Desktops"
 msgstr "Nombre de bureaux"
 
-#: src/modules/conf_display/e_int_config_desks.c:169
-#: src/modules/conf_display/e_int_config_desks.c:174
+#: src/modules/conf_display/e_int_config_desks.c:157
+#: src/modules/conf_display/e_int_config_desks.c:162
 #: src/modules/conf_display/e_int_config_desklock.c:239
 #: src/modules/conf_interaction/e_int_config_mouse.c:114
 #: src/modules/conf_interaction/e_int_config_mouse.c:120
-#: src/modules/everything/evry_config.c:408
-#: src/modules/everything/evry_config.c:559
-#: src/modules/everything/evry_config.c:566
-#: src/modules/everything/evry_config.c:591
-#: src/modules/everything/evry_config.c:598
+#: src/modules/everything/evry_config.c:405
+#: src/modules/everything/evry_config.c:547
+#: src/modules/everything/evry_config.c:554
+#: src/modules/everything/evry_config.c:580
+#: src/modules/everything/evry_config.c:587
 #: src/modules/fileman/e_mod_config.c:240
 #, c-format
 msgid "%1.0f"
 msgstr "%1.0f"
 
-#: src/modules/conf_display/e_int_config_desks.c:181
+#: src/modules/conf_display/e_int_config_desks.c:169
 msgid "Desktop Flip"
 msgstr "Basculement des bureaux"
 
-#: src/modules/conf_display/e_int_config_desks.c:182
+#: src/modules/conf_display/e_int_config_desks.c:170
 msgid "Flip when dragging objects to the screen edge"
 msgstr "Basculer lors du glissement d'objets au bord de l'écran"
 
-#: src/modules/conf_display/e_int_config_desks.c:185
+#: src/modules/conf_display/e_int_config_desks.c:173
 msgid "Wrap desktops around when flipping"
 msgstr "Mise en boucle des bureaux adjacents"
 
-#: src/modules/conf_display/e_int_config_desks.c:191
+#: src/modules/conf_display/e_int_config_desks.c:179
 msgid "Desktops"
 msgstr "Bureaux"
 
-#: src/modules/conf_display/e_int_config_desks.c:196
-#: src/modules/everything/evry_config.c:483
+#: src/modules/conf_display/e_int_config_desks.c:184
+#: src/modules/everything/evry_config.c:495
 msgid "Off"
 msgstr "Aucune"
 
-#: src/modules/conf_display/e_int_config_desks.c:199
+#: src/modules/conf_display/e_int_config_desks.c:187
 msgid "Pane"
 msgstr "Panneau"
 
-#: src/modules/conf_display/e_int_config_desks.c:202
+#: src/modules/conf_display/e_int_config_desks.c:190
 msgid "Zoom"
 msgstr "Zoom"
 
-#: src/modules/conf_display/e_int_config_desks.c:206
-msgid "Background panning"
-msgstr "Fond d'écran panoramique"
-
-#: src/modules/conf_display/e_int_config_desks.c:212
+#: src/modules/conf_display/e_int_config_desks.c:194
 msgid "Animation speed"
 msgstr "Vitesse de l'animation"
 
-#: src/modules/conf_display/e_int_config_desks.c:215
+#: src/modules/conf_display/e_int_config_desks.c:197
 #: src/modules/conf_display/e_int_config_dpms.c:306
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:168
 #: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:151
@@ -3934,21 +3929,7 @@ msgstr "Vitesse de l'animation"
 msgid "%1.1f sec"
 msgstr "%1.1f s"
 
-#: src/modules/conf_display/e_int_config_desks.c:221
-msgid "X-Axis pan factor"
-msgstr "Facteur horizontal"
-
-#: src/modules/conf_display/e_int_config_desks.c:224
-#: src/modules/conf_display/e_int_config_desks.c:233
-#, c-format
-msgid "%.2f"
-msgstr "%.2f"
-
-#: src/modules/conf_display/e_int_config_desks.c:230
-msgid "Y-Axis pan factor"
-msgstr "Facteur vertical"
-
-#: src/modules/conf_display/e_int_config_desks.c:239
+#: src/modules/conf_display/e_int_config_desks.c:202
 msgid "Flip Animation"
 msgstr "Animation du basculement"
 
@@ -4735,8 +4716,8 @@ msgid "Themes"
 msgstr "Thèmes"
 
 #: src/modules/conf_paths/e_int_config_paths.c:78
-#: src/modules/everything/evry_config.c:444
-#: src/modules/everything/evry_config.c:498
+#: src/modules/everything/evry_config.c:438
+#: src/modules/everything/evry_config.c:464
 msgid "Icons"
 msgstr "Icones"
 
@@ -4903,40 +4884,44 @@ msgstr "Ce bureau"
 msgid "This Screen"
 msgstr "Cet écran"
 
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:124
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:126
 msgid "Wallpaper settings..."
 msgstr "Paramétrage du fond d'écran…"
 
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:180
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:182
 msgid "Tile"
 msgstr "Répéter"
 
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:279
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:197
+msgid "Pan"
+msgstr "Pano"
+
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:286
 msgid "Select a Picture..."
 msgstr "Choisir une image…"
 
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:628
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:696
 msgid "Picture Import Error"
 msgstr "Erreur lors de l'importation du fichier"
 
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:629
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:697
 msgid "Enlightenment was unable to import the picture<br>due to conversion errors."
 msgstr "Enlightenment n'a pu importer l'image<br>à cause d'erreurs de conversion."
 
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:716
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:726
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:808
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:818
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:784
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:794
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:876
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:886
 msgid "Wallpaper Import Error"
 msgstr "Erreur d'importation du fond d'écran"
 
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:717
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:809
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:785
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:877
 msgid "Enlightenment was unable to import the wallpaper<br>due to a copy error."
 msgstr "Enlightenment n'a pu importer le fond d'écran<br>à cause d'une erreur de copie."
 
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:727
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:819
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:795
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:887
 msgid "Enlightenment was unable to import the wallpaper.<br><br>Are you sure this is a valid wallpaper?"
 msgstr "Enlightenment n'a pu importer le fond d'écran.<br><br>Êtes-vous sûr qu'il s'agit d'un fond d'écran valide ?"
 
@@ -5982,13 +5967,13 @@ msgid "Fill available space"
 msgstr "Remplir l'espace disponible"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:161
-#: src/modules/everything/evry_config.c:580
+#: src/modules/everything/evry_config.c:568
 #: src/modules/gadman/e_mod_gadman.c:759
 msgid "Horizontal"
 msgstr "Horizontal(e)"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:163
-#: src/modules/everything/evry_config.c:573
+#: src/modules/everything/evry_config.c:561
 #: src/modules/gadman/e_mod_gadman.c:767
 msgid "Vertical"
 msgstr "Vertical(e)"
@@ -6320,11 +6305,11 @@ msgstr "Omni"
 msgid "Everything Settings"
 msgstr "Paramétrage d'Omni"
 
-#: src/modules/everything/evry_config.c:362
+#: src/modules/everything/evry_config.c:364
 msgid "Available Plugins"
 msgstr "Greffons disponibles"
 
-#: src/modules/everything/evry_config.c:368
+#: src/modules/everything/evry_config.c:370
 msgid "Move Up"
 msgstr "Monter"
 
@@ -6332,136 +6317,132 @@ msgstr "Monter"
 msgid "Move Down"
 msgstr "Descendre"
 
-#: src/modules/everything/evry_config.c:381
+#: src/modules/everything/evry_config.c:379
 msgid "Configure"
 msgstr "Configurer"
 
-#: src/modules/everything/evry_config.c:388
+#: src/modules/everything/evry_config.c:385
 msgid "Enabled"
 msgstr "Activé"
 
-#: src/modules/everything/evry_config.c:394
+#: src/modules/everything/evry_config.c:391
 msgid "Show in \"All\""
 msgstr "Afficher dans « Tout »"
 
-#: src/modules/everything/evry_config.c:400
+#: src/modules/everything/evry_config.c:397
 msgid "Show in top-level"
 msgstr "Afficher au premier niveau"
 
-#: src/modules/everything/evry_config.c:406
+#: src/modules/everything/evry_config.c:403
 msgid "Minimum characters for search"
 msgstr "Nombre minimal de caractères pour la recherche"
 
-#: src/modules/everything/evry_config.c:415
+#: src/modules/everything/evry_config.c:412
 msgid "Plugin Trigger"
 msgstr "Déclencheur"
 
-#: src/modules/everything/evry_config.c:416
-msgid "Default is plugin name"
-msgstr "Correspond au nom du greffon par défaut"
-
-#: src/modules/everything/evry_config.c:423
+#: src/modules/everything/evry_config.c:417
 msgid "Search only when triggered"
 msgstr "Rechercher uniquement si assigné"
 
-#: src/modules/everything/evry_config.c:430
+#: src/modules/everything/evry_config.c:424
 msgid "Plugin View"
 msgstr "Affichage du greffon"
 
-#: src/modules/everything/evry_config.c:440
-#: src/modules/everything/evry_config.c:496
+#: src/modules/everything/evry_config.c:434
+#: src/modules/everything/evry_config.c:462
 msgid "Detailed"
 msgstr "détaillé"
 
-#: src/modules/everything/evry_config.c:469
-msgid "Hide input when inactive"
-msgstr "Masquer l'entrée quand inactif"
-
-#: src/modules/everything/evry_config.c:474
-msgid "Hide list"
-msgstr "Masquer la liste"
-
-#: src/modules/everything/evry_config.c:479
-msgid "Quick Navigation"
-msgstr "Navigation rapide"
-
-#: src/modules/everything/evry_config.c:485
-msgid "Emacs style (ALT + n,p,f,b,m,i)"
-msgstr "Style Emacs (Alt + n,p,f,b,m,i)"
-
-#: src/modules/everything/evry_config.c:487
-msgid "Vi style (ALT + h,j,k,l,n,p,m,i)"
-msgstr "Style Vi (Alt + h,j,k,l,n,p,m,i)"
-
-#: src/modules/everything/evry_config.c:492
+#: src/modules/everything/evry_config.c:458
 msgid "Default View"
 msgstr "Affichage par défaut"
 
-#: src/modules/everything/evry_config.c:501
+#: src/modules/everything/evry_config.c:467
 msgid "Animate scrolling"
 msgstr "Défilement animé"
 
-#: src/modules/everything/evry_config.c:508
+#: src/modules/everything/evry_config.c:474
 msgid "Up/Down select next item in icon view"
 msgstr "Flèche haut/bas va à l'élément suivant dans la vue en icones"
 
-#: src/modules/everything/evry_config.c:513
+#: src/modules/everything/evry_config.c:483
+msgid "Hide input when inactive"
+msgstr "Masquer l'entrée quand inactif"
+
+#: src/modules/everything/evry_config.c:488
+msgid "Hide list"
+msgstr "Masquer la liste"
+
+#: src/modules/everything/evry_config.c:493
+msgid "Quick Navigation"
+msgstr "Navigation rapide"
+
+#: src/modules/everything/evry_config.c:497
+msgid "Emacs style (ALT + n,p,f,b,m,i)"
+msgstr "Style Emacs (Alt + n,p,f,b,m,i)"
+
+#: src/modules/everything/evry_config.c:499
+msgid "Vi style (ALT + h,j,k,l,n,p,m,i)"
+msgstr "Style Vi (Alt + h,j,k,l,n,p,m,i)"
+
+#: src/modules/everything/evry_config.c:503
 msgid "Sorting"
 msgstr "Tri"
 
-#: src/modules/everything/evry_config.c:515
+#: src/modules/everything/evry_config.c:505
 msgid "No Sorting"
 msgstr "Pas de tri"
 
-#: src/modules/everything/evry_config.c:518
+#: src/modules/everything/evry_config.c:508
 msgid "By usage"
 msgstr "Selon l'utilisation"
 
-#: src/modules/everything/evry_config.c:521
+#: src/modules/everything/evry_config.c:511
 msgid "Most used"
 msgstr "Le plus utilisé"
 
-#: src/modules/everything/evry_config.c:524
+#: src/modules/everything/evry_config.c:514
 msgid "Last used"
 msgstr "Dernier utilisé"
 
-#: src/modules/everything/evry_config.c:538
+#: src/modules/everything/evry_config.c:526
 msgid "Subject Plugins"
 msgstr "Sujet"
 
-#: src/modules/everything/evry_config.c:542
+#: src/modules/everything/evry_config.c:530
 msgid "Action Plugins"
 msgstr "Action"
 
-#: src/modules/everything/evry_config.c:546
+#: src/modules/everything/evry_config.c:534
 msgid "Object Plugins"
 msgstr "Objet"
 
-#: src/modules/everything/evry_config.c:549
-#: src/modules/everything/evry_config.c:751
+#: src/modules/everything/evry_config.c:537
+#: src/modules/everything/evry_config.c:738
 msgid "Plugins"
 msgstr "Greffons"
 
-#: src/modules/everything/evry_config.c:556
+#: src/modules/everything/evry_config.c:544
 msgid "Popup Size"
 msgstr "Taille du pop-up"
 
-#: src/modules/everything/evry_config.c:557
-#: src/modules/everything/evry_config.c:589
+#: src/modules/everything/evry_config.c:545
+#: src/modules/everything/evry_config.c:578
 msgid "Popup Width"
 msgstr "Largeur du pop-up"
 
-#: src/modules/everything/evry_config.c:564
-#: src/modules/everything/evry_config.c:596
+#: src/modules/everything/evry_config.c:552
+#: src/modules/everything/evry_config.c:585
 msgid "Popup Height"
 msgstr "Hauteur du pop-up"
 
-#: src/modules/everything/evry_config.c:572
+#: src/modules/everything/evry_config.c:560
 msgid "Popup Align"
 msgstr "Alignement du pop-up"
 
-#: src/modules/everything/evry_config.c:575
-#: src/modules/everything/evry_config.c:582
+#: src/modules/everything/evry_config.c:563
+#: src/modules/everything/evry_config.c:570
 #: src/modules/winlist/e_int_config_winlist.c:238
 #: src/modules/winlist/e_int_config_winlist.c:251
 #: src/modules/winlist/e_int_config_winlist.c:292
@@ -6470,16 +6451,16 @@ msgstr "Alignement du pop-up"
 msgid "%1.2f"
 msgstr "%1.2f"
 
-#: src/modules/everything/evry_config.c:588
+#: src/modules/everything/evry_config.c:577
 msgid "Edge Popup Size"
 msgstr "Taille du bord du pop-up"
 
-#: src/modules/everything/evry_config.c:605
+#: src/modules/everything/evry_config.c:594
 #: src/modules/winlist/e_int_config_winlist.c:286
 msgid "Geometry"
 msgstr "Géométrie"
 
-#: src/modules/everything/evry_config.c:646
+#: src/modules/everything/evry_config.c:633
 msgid "Everything Collection"
 msgstr "Collection Omni "
 
@@ -6487,7 +6468,7 @@ msgstr "Collection Omni "
 msgid "Items"
 msgstr "Éléments"
 
-#: src/modules/everything/evry_plug_aggregator.c:327
+#: src/modules/everything/evry_plug_aggregator.c:329
 msgid "No plugins loaded"
 msgstr "Aucun greffon activé"
 
@@ -7448,7 +7429,7 @@ msgid "Right:"
 msgstr "Droit :"
 
 #: src/modules/mixer/app_mixer.c:401
-#: src/modules/mixer/e_mod_main.c:691
+#: src/modules/mixer/e_mod_main.c:696
 msgid "Mute"
 msgstr "Sourdine"
 
@@ -7509,7 +7490,7 @@ msgstr "Volume modifié"
 msgid "Mixer Settings Updated"
 msgstr "Configuration du mélangeur à jour"
 
-#: src/modules/mixer/e_mod_main.c:1329
+#: src/modules/mixer/e_mod_main.c:1334
 msgid "Mixer Module"
 msgstr "Module de mixage"
 
@@ -7663,6 +7644,21 @@ msgstr "Il y a déjà une zone de notification active et seule une instance de c
 #: src/modules/systray/e_mod_main.c:1104
 msgid "Systray"
 msgstr "Zone de notification"
+
+#~ msgid "Background panning"
+#~ msgstr "Fond d'écran panoramique"
+
+#~ msgid "X-Axis pan factor"
+#~ msgstr "Facteur horizontal"
+
+#~ msgid "%.2f"
+#~ msgstr "%.2f"
+
+#~ msgid "Y-Axis pan factor"
+#~ msgstr "Facteur vertical"
+
+#~ msgid "Default is plugin name"
+#~ msgstr "Correspond au nom du greffon par défaut"
 
 #~ msgid ""
 #~ "Mixer Module Settings data changed.<br>Your old configuration has been "
