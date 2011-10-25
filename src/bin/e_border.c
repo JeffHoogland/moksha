@@ -4923,13 +4923,35 @@ _e_border_cb_window_configure_request(void *data  __UNUSED__,
                {
                   obd = e_border_find_by_client_window(e->abovewin);
                   if (obd)
-                    e_border_stack_above(bd, obd);
+                    {
+                       e_border_stack_above(bd, obd);
+                    }
+                  else
+                    {
+                       ecore_x_window_configure(bd->win,
+                                                ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
+                                                ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
+                                                0, 0, 0, 0, 0,
+                                                e->abovewin, ECORE_X_WINDOW_STACK_ABOVE);
+                       /* FIXME: need to rebuiuld border list from current stacking */
+                    }
                }
              else if (e->detail == ECORE_X_WINDOW_STACK_BELOW)
                {
                   obd = e_border_find_by_client_window(e->abovewin);
                   if (obd)
-                    e_border_stack_below(bd, obd);
+                    {
+                       e_border_stack_below(bd, obd);
+                    }
+                  else
+                    {
+                       ecore_x_window_configure(bd->win,
+                                                ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
+                                                ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
+                                                0, 0, 0, 0, 0,
+                                                e->abovewin, ECORE_X_WINDOW_STACK_BELOW);
+                       /* FIXME: need to rebuiuld border list from current stacking */
+                    }
                }
              else if (e->detail == ECORE_X_WINDOW_STACK_TOP_IF)
                {
@@ -4969,6 +4991,7 @@ _e_border_cb_window_configure_request(void *data  __UNUSED__,
           }
      }
 
+   /* FIXME: need to send synthetic stacking event too as well as move/resize */
    _e_border_client_move_resize_send(bd);
    return ECORE_CALLBACK_PASS_ON;
 }
