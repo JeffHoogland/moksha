@@ -237,7 +237,7 @@ e_desk_show(E_Desk *desk)
    desk->zone->desk_y_current = desk->y;
    desk->visible = 1;
 
-   msg = alloca(sizeof(Edje_Message_Float_Set) + sizeof(double));
+   msg = alloca(sizeof(Edje_Message_Float_Set) + (4 * sizeof(double)));
    msg->count = 5;
    msg->val[0] = e_config->desk_flip_animate_time;
    msg->val[1] = (double) desk->x;
