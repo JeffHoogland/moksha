@@ -104,8 +104,8 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    ow = e_widget_label_add(evas, _("Base DPI to scale relative to"));
    cfdata->gui.basic.o_lbl = ow;
    e_widget_framelist_object_append(of, ow);
-   ow = e_widget_slider_add(evas, 1, 0, _("%1.0f DPI"), 30, 1200, 1, 0, 
-                            NULL, &(cfdata->base_dpi), 150);
+   ow = e_widget_slider_add(evas, 1, 0, _("%1.0f DPI"), 30, 600, 1, 0, 
+                            NULL, &(cfdata->base_dpi), 100);
    cfdata->gui.basic.o_slider = ow;
    e_widget_framelist_object_append(of, ow);
    snprintf(buff, sizeof(buff), _("Currently %i DPI"), ecore_x_dpi_get());
@@ -179,15 +179,15 @@ _adv_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *c
    ow = e_widget_label_add(evas, buff);
    cfdata->gui.adv.dpi_lbl = ow;
    e_widget_list_object_append(o, ow, 1, 1, 0.5);
-   ow = e_widget_slider_add(evas, 1, 0, _("%1.0f DPI"), 30, 1200, 1, 0, 
-                            NULL, &(cfdata->base_dpi), 150);
+   ow = e_widget_slider_add(evas, 1, 0, _("%1.0f DPI"), 30, 600, 1, 0, 
+                            NULL, &(cfdata->base_dpi), 100);
    cfdata->gui.adv.dpi_slider = ow;
    e_widget_list_object_append(o, ow, 1, 1, 0.5);
    ow = e_widget_radio_add(evas, _("Custom scaling factor"), 2, rg);
    e_widget_on_change_hook_set(ow, _adv_policy_changed, cfdata);
    e_widget_list_object_append(o, ow, 1, 1, 0.5);
-   ow = e_widget_slider_add(evas, 1, 0, _("%1.2f times"), 0.25, 8.0, 0.05, 
-                            0, &(cfdata->factor), NULL, 150);
+   ow = e_widget_slider_add(evas, 1, 0, _("%1.2f x"), 0.25, 8.0, 0.05, 
+                            0, &(cfdata->factor), NULL, 100);
    cfdata->gui.adv.custom_slider = ow;
    e_widget_list_object_append(o, ow, 1, 1, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Policy"), o, 
@@ -270,8 +270,4 @@ _adv_policy_changed(void *data, Evas_Object *obj __UNUSED__)
    e_widget_disabled_set(cfdata->gui.adv.dpi_lbl, (cfdata->use_mode != 1));
    e_widget_disabled_set(cfdata->gui.adv.dpi_slider, (cfdata->use_mode != 1));
    e_widget_disabled_set(cfdata->gui.adv.custom_slider, (cfdata->use_mode != 2));
-   e_widget_disabled_set(cfdata->gui.adv.min_lbl, (cfdata->use_mode == 0));
-   e_widget_disabled_set(cfdata->gui.adv.min_slider, (cfdata->use_mode == 0));
-   e_widget_disabled_set(cfdata->gui.adv.max_lbl, (cfdata->use_mode == 0));
-   e_widget_disabled_set(cfdata->gui.adv.max_slider, (cfdata->use_mode == 0));
 }
