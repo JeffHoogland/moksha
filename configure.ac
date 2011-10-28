@@ -635,6 +635,13 @@ fi
 AC_SUBST([ENOTIFY_CFLAGS])
 AC_SUBST([ENOTIFY_LIBS])
 
+AM_CONDITIONAL(HAVE_NOTIFICATION, false)
+define([CHECK_MODULE_NOTIFICATION],
+[
+  if test "x$e_cv_want_enotify" = "xno" ; then
+    NOTIFICATION=false
+  fi
+])
 
 AM_CONDITIONAL(HAVE_ALSA, false)
 define([CHECK_MODULE_MIXER],
@@ -695,6 +702,7 @@ AC_E_OPTIONAL_MODULE([clock], true)
 AC_E_OPTIONAL_MODULE([pager], true)
 AC_E_OPTIONAL_MODULE([battery], true, [CHECK_MODULE_BATTERY])
 AC_E_OPTIONAL_MODULE([temperature], true, [CHECK_MODULE_TEMPERATURE])
+AC_E_OPTIONAL_MODULE([notification], true, [CHECK_MODULE_NOTIFICATION])
 AC_E_OPTIONAL_MODULE([cpufreq], true)
 AC_E_OPTIONAL_MODULE([ibox], true)
 AC_E_OPTIONAL_MODULE([start], true)
@@ -780,6 +788,8 @@ src/modules/battery/Makefile
 src/modules/battery/module.desktop
 src/modules/temperature/Makefile
 src/modules/temperature/module.desktop
+src/modules/notification/Makefile
+src/modules/notification/module.desktop
 src/modules/cpufreq/Makefile
 src/modules/cpufreq/module.desktop
 src/modules/ibox/Makefile

@@ -1,0 +1,28 @@
+Notification
+
+This module provide a notification daemon for E.
+It implements the galago specification :
+http://www.galago-project.org/specs/notification/0.9/index.html
+
+You can be notified in two ways, by popups or by icons. Popups are the usual way
+of notifying, you can configure where they should appear and some other options
+in E's configuration panel -> extensions -> notification. Notification box is a
+gadget with the same style as ibox and go into a shelf. If an event occur the
+image associated with the event (or this modules's logo if none) will appear
+inside the box. A click on it will try to focus the source application of the
+event, by matching the "application name" field with any windows class/name.
+Configure a notification box is done by right clicking on it and selecting
+"configuration".
+
+By configuring which level of urgency popups and box should show, you can avoid
+having both showing up everytime.
+
+The icon displayed in the box may be ugly and aliased. It's due to the fact that
+some apps use really small icons. An easy way to fix this is to make sure that
+the application doesn't send a pixbuf but a path to the icon instead. And if this
+icon is too small, replace it by a bigger one.
+
+If you want to fire up a notification and make the module focus an application,
+the easiest way is to use e-notify-send (in e_dbus if built with enotify) like
+in this example:
+e-notify-send -n classname_of_your_app -i "file:///path/to/an/icon" "foo" "bar"

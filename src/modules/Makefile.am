@@ -26,6 +26,10 @@ if USE_MODULE_TEMPERATURE
 SUBDIRS += temperature
 endif
 
+if USE_MODULE_NOTIFICATION
+SUBDIRS += notification
+endif
+
 if USE_MODULE_CPUFREQ
 SUBDIRS += cpufreq
 endif
