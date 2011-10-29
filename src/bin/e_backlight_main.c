@@ -11,7 +11,7 @@
 
 /* local subsystem functions */
 static char *
-read_file(const char *file)
+_bl_read_file(const char *file)
 {
    FILE *f = fopen(file, "r");
    size_t len;
@@ -33,7 +33,7 @@ read_file(const char *file)
 }
 
 static int
-write_file(const char *file, int val)
+_bl_write_file(const char *file, int val)
 {
    char buf[256];
    int fd = open(file, O_WRONLY);
@@ -54,6 +54,22 @@ write_file(const char *file, int val)
 }
 
 /* local subsystem globals */
+typedef struct _Bl_Entry
+{
+   char type;
+   const char *base;
+   const char *max;
+   const char *set;
+} Bl_Entry;
+
+static const Bl_Entry search[] =
+{
+   { 'F', "/sys/devices/virtual/backlight/acpi_video0", "max_brightness", "brightness" },
+   { 'D', "/sys/devices/virtual/backlight", "max_brightness", "brightness" },
+   { 'F', "/sys/class/leds/lcd-backlight", "max_brightness", "brightness" },
+   { 'F', "/sys/class/backlight/acpi_video0", "max_brightness", "brightness" },
+   { 'D', "/sys/class/backlight", "max_brightness", "brightness" }
+};
 
 /* externally accessible functions */
 int
@@ -61,9 +77,10 @@ main(int argc, char **argv)
 {
    int i;
    int level;
-   char *maxstr;
-   int maxlevel = 0, curlevel;
+   char *valstr;
+   int maxlevel = 0, curlevel = -1;
    char file[4096] = "";
+   char buf[4096] = "";
    
    for (i = 1; i < argc; i++)
      {
@@ -91,66 +108,92 @@ main(int argc, char **argv)
         printf("ERROR: UNABLE TO ASSUME ROOT GROUP PRIVILEGES\n");
         exit(7);
      }
-   
-   maxstr = read_file("/sys/devices/virtual/backlight/acpi_video0/max_brightness_max");
-   if (maxstr)
-     {
-        maxlevel = atoi(maxstr);
-        if (maxlevel <= 0)
-          {
-             free(maxstr);
-             maxstr = NULL;
-          }
-        else
-          {
-             snprintf(file, sizeof(file), 
-                      "/sys/devices/virtual/backlight/acpi_video0/brightness");
-             free(maxstr);
-             maxstr = NULL;
-          }
-     }
-   if (maxlevel <= 0)
-     {
-        DIR *dirp = opendir("/sys/devices/virtual/backlight");
-        struct dirent *dp;
-        
-        if (!dirp) return 1;
-        while ((dp = readdir(dirp)))
-          {
-             if ((strcmp(dp->d_name, ".")) && (strcmp(dp->d_name, "..")))
-               {
-                  char buf[4096];
 
-                  snprintf(buf, sizeof(buf), 
-                           "/sys/devices/virtual/backlight/%s/max_brightness", 
-                           dp->d_name);
-                  maxstr = read_file(buf);
-                  if (maxstr)
+   for (i = 0; i < (int)(sizeof(search) / sizeof(Bl_Entry)); i++)
+     {
+        const Bl_Entry *b = &(search[i]);
+        
+        if (b->type == 'F')
+          {
+             snprintf(buf, sizeof(buf), "%s/%s", b->base, b->set);
+             valstr = _bl_read_file(buf);
+             if (valstr)
+               {
+                  curlevel = atoi(valstr);
+                  if (curlevel < 0)
                     {
-                       maxlevel = atoi(maxstr);
-                       if (maxlevel <= 0)
+                       free(valstr);
+                       valstr = NULL;
+                    }
+                  else
+                    {
+                       snprintf(file, sizeof(file), "%s/%s", b->base, b->max);
+                       free(valstr);
+                       valstr = _bl_read_file(file);
+                       if (valstr)
                          {
-                            free(maxstr);
-                            maxstr = NULL;
-                         }
-                       else
-                         {
-                            snprintf(file, sizeof(file), 
-                                     "/sys/devices/virtual/backlight/%s/brightness", 
-                                     dp->d_name);
-                            free(maxstr);
-                            maxstr = NULL;
-                            break;
+                            maxlevel = atoi(valstr);
+                            free(valstr);
+                            valstr = NULL;
                          }
                     }
                }
           }
-        closedir(dirp);
+        else if (b->type == 'D')
+          {
+             DIR *dirp = opendir(b->base);
+             struct dirent *dp;
+             
+             if (dirp)
+               {
+                  while ((dp = readdir(dirp)))
+                    {
+                       if ((strcmp(dp->d_name, ".")) && 
+                           (strcmp(dp->d_name, "..")))
+                         {
+                            snprintf(buf, sizeof(buf), "%s/%s/%s", 
+                                     b->base, dp->d_name, b->set);
+                            valstr = _bl_read_file(buf);
+                            if (valstr)
+                              {
+                                 curlevel = atoi(valstr);
+                                 if (curlevel < 0)
+                                   {
+                                      free(valstr);
+                                      valstr = NULL;
+                                   }
+                                 else
+                                   {
+                                      snprintf(file, sizeof(file), "%s/%s/%s",
+                                                b->base, dp->d_name, b->max);
+                                      free(valstr);
+                                      valstr = _bl_read_file(file);
+                                      if (valstr)
+                                        {
+                                           maxlevel = atoi(valstr);
+                                           free(valstr);
+                                           valstr = NULL;
+                                        }
+                                      break;
+                                   }
+                              }
+                         }
+                    }
+                  closedir(dirp);
+               }
+          }
+        if (file[0]) break;
      }
-   if (maxlevel > 0)
+   if (maxlevel <= 0) maxlevel = 255;
+   printf("curlevel = %i\n", curlevel);
+   printf("maxlevel = %i\n", maxlevel);
+   printf("file = %s\n", file);
+   printf("buf = %s\n", buf);
+   if (curlevel >= 0)
      {
         curlevel = ((maxlevel * level) + (500 / maxlevel)) / 1000;
-        return write_file(file, curlevel);
+        printf("SET: %i, %i/%i\n", level, curlevel, maxlevel);
+        return _bl_write_file(buf, curlevel);
      }
    return -1;
 }

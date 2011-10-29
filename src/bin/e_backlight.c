@@ -13,10 +13,12 @@ static double bl_animval = 1.0;
 static E_Backlight_Mode bl_mode = E_BACKLIGHT_MODE_NORMAL;
 static int sysmode = MODE_NONE;
 static Ecore_Animator *bl_anim = NULL;
+static const char *bl_sysvalmax = NULL;
 static const char *bl_sysval = NULL;
 static Ecore_Event_Handler *bl_sys_exit_handler = NULL;
 static Ecore_Exe *bl_sys_set_exe = NULL;
 static Eina_Bool bl_sys_pending_set = EINA_FALSE;
+static Eina_Bool bl_sys_set_exe_ready = EINA_TRUE;
 
 static void _e_backlight_update(E_Zone *zone);
 static void _e_backlight_set(E_Zone *zone, double val);
@@ -42,6 +44,8 @@ e_backlight_shutdown(void)
 {
    if (bl_anim) ecore_animator_del(bl_anim);
    bl_anim = NULL;
+   if (bl_sysval) eina_stringshare_del(bl_sysvalmax);
+   bl_sysvalmax = NULL;
    if (bl_sysval) eina_stringshare_del(bl_sysval);
    bl_sysval = NULL;
    if (bl_sys_exit_handler) ecore_event_handler_del(bl_sys_exit_handler);
@@ -252,84 +256,125 @@ _bl_sys_num_get(const char *file)
    return maxval;
 }
 
+typedef struct _Bl_Entry
+{
+   char type;
+   const char *base;
+   const char *max;
+   const char *set;
+} Bl_Entry;
+
+static const Bl_Entry search[] =
+{
+   { 'F', "/sys/devices/virtual/backlight/acpi_video0", "max_brightness", "brightness" },
+   { 'D', "/sys/devices/virtual/backlight", "max_brightness", "brightness" },
+   { 'F', "/sys/class/leds/lcd-backlight", "max_brightness", "brightness" },
+   { 'F', "/sys/class/backlight/acpi_video0", "max_brightness", "brightness" },
+   { 'D', "/sys/class/backlight", "max_brightness", "brightness" }
+};
+
 static void
 _bl_sys_find(void)
 {
-   int maxval = 0;
-   const char *tryfile;
-   
-   if (bl_sysval) return;
-   tryfile = "/sys/devices/virtual/backlight/acpi_video0/max_brightness";
-   maxval = _bl_sys_num_get(tryfile);
-   if (maxval > 0)
+   int i, curlevel = 0;
+   char *valstr;
+   char file[4096] = "";
+
+   for (i = 0; i < (int)(sizeof(search) / sizeof(Bl_Entry)); i++)
      {
-        bl_sysval = eina_stringshare_add(tryfile);
-        return;
-     }
-   else
-     {
-        Eina_List *files;
-        const char *dir = "/sys/devices/virtual/backlight";
+        char buf[4096];
+        const Bl_Entry *b = &(search[i]);
         
-        files = ecore_file_ls(dir);
-        if (files)
+        if (b->type == 'F')
           {
-             char *file;
-             
-             EINA_LIST_FREE(files, file)
+             snprintf(buf, sizeof(buf), "%s/%s", b->base, b->set);
+             valstr = _bl_read_file(buf);
+             if (valstr)
                {
-                  if (!bl_sysval)
+                  curlevel = atoi(valstr);
+                  if (curlevel < 0)
                     {
-                       char buf[PATH_MAX];
-                       
-                       snprintf(buf, sizeof(buf), 
-                                "%s/%s/max_brightness", dir, file);
-                       maxval = _bl_sys_num_get(buf);
-                       if (maxval > 0)
-                          bl_sysval = eina_stringshare_add(buf);
+                       free(valstr);
+                       valstr = NULL;
                     }
-                  free(file);
+                  else
+                    {
+                       bl_sysval = eina_stringshare_add(buf);
+                       snprintf(file, sizeof(file), "%s/%s", b->base, b->max);
+                       bl_sysvalmax = eina_stringshare_add(file);
+                       free(valstr);
+                       valstr = NULL;
+                    }
                }
           }
-        if (maxval <= 0)
+        else if (b->type == 'D')
           {
-             struct stat st;
+             DIR *dirp = opendir(b->base);
+             struct dirent *dp;
              
-             tryfile = "/sys/class/leds/lcd-backlight/brightness";
-             if (stat(tryfile, &st) == 0)
+             if (dirp)
                {
-                  tryfile = "/sys/class/leds/lcd-backlight/max_brightness";
-                  bl_sysval = eina_stringshare_add(tryfile);
-                  maxval = _bl_sys_num_get(tryfile);
-                  if (maxval <= 0) maxval = 255;
-                  return;
+                  while ((dp = readdir(dirp)))
+                    {
+                       if ((strcmp(dp->d_name, ".")) &&
+                           (strcmp(dp->d_name, "..")))
+                         {
+                            snprintf(buf, sizeof(buf), "%s/%s/%s",
+                                     b->base, dp->d_name, b->set);
+                            valstr = _bl_read_file(buf);
+                            if (valstr)
+                              {
+                                 curlevel = atoi(valstr);
+                                 if (curlevel < 0)
+                                   {
+                                      free(valstr);
+                                      valstr = NULL;
+                                   }
+                                 else
+                                   {
+                                      bl_sysval = eina_stringshare_add(buf);
+                                      snprintf(file, sizeof(file), "%s/%s/%s",
+                                               b->base, dp->d_name, b->max);
+                                      bl_sysvalmax = eina_stringshare_add(file);
+                                      free(valstr);
+                                      valstr = NULL;
+                                      break;
+                                   }
+                              }
+                         }
+                    }
+                  closedir(dirp);
                }
           }
+        if (file[0]) break;
      }
 }
 
 static void
 _bl_sys_level_get(void)
 {
-   const char *maxfile = bl_sysval;
-   char *valfile, *p;
    int maxval, val;
    
    if (!bl_sysval) return;
-   valfile = strdup(maxfile);
-   p = strrchr(valfile, '/');
-   if (p)
-     {
-        p[1] = 0;
-        strcat(p, "brightness");
-     }
-   maxval = _bl_sys_num_get(maxfile);
-   if (maxval < 0) maxval = 255;
-   val = _bl_sys_num_get(valfile);
+   maxval = _bl_sys_num_get(bl_sysvalmax);
+   if (maxval <= 0) maxval = 255;
+   val = _bl_sys_num_get(bl_sysval);
    if ((val >= 0) && (val <= maxval))
       bl_val = (double)val / (double)maxval;
-//   printf("GET: %i/%i (%1.3f)\n", val, maxval, bl_val);
-   free(valfile);
+   printf("%s, %s\n", bl_sysvalmax, bl_sysval);
+   printf("GET: %i/%i (%1.3f)\n", val, maxval, bl_val);
+}
+
+static Eina_Bool
+_e_bl_cb_ext_delay(void *data __UNUSED__)
+{
+   bl_sys_set_exe_ready = EINA_TRUE;
+   if (bl_sys_pending_set)
+     {
+        bl_sys_pending_set = EINA_FALSE;
+        _bl_sys_level_set(bl_val);
+     }
+   return EINA_FALSE;
 }
 
 static Eina_Bool
@@ -340,12 +385,9 @@ _e_bl_cb_exit(void *data __UNUSED__, int type __UNUSED__, void *event)
    ev = event;
    if (ev->exe == bl_sys_set_exe)
      {
+        bl_sys_set_exe_ready = EINA_FALSE;
         bl_sys_set_exe = NULL;
-        if (bl_sys_pending_set)
-          {
-             bl_sys_pending_set = EINA_FALSE;
-             _bl_sys_level_set(bl_val);
-          }
+        ecore_timer_add(0.1, _e_bl_cb_ext_delay, NULL);
      }
    return ECORE_CALLBACK_RENEW;
 }
@@ -358,7 +400,7 @@ _bl_sys_level_set(double val)
    if (!bl_sys_exit_handler)
       bl_sys_exit_handler = ecore_event_handler_add(ECORE_EXE_EVENT_DEL,
                                                     _e_bl_cb_exit, NULL);
-   if (bl_sys_set_exe)
+   if ((bl_sys_set_exe) || (!bl_sys_set_exe_ready))
      {
         bl_sys_pending_set = EINA_TRUE;
         return;
