@@ -9,29 +9,9 @@
 #include <dirent.h>
 #include <fcntl.h>
 
-/* local subsystem functions */
-static char *
-_bl_read_file(const char *file)
-{
-   FILE *f = fopen(file, "r");
-   size_t len;
-   char buf[4096], *p;
-   if (!f) return NULL;
-   len = fread(buf, 1, sizeof(buf) - 1, f);
-   if (len == 0)
-     {
-        fclose(f);
-        return NULL;
-     }
-   buf[len] = 0;
-   for (p = buf; *p; p++)
-     {
-        if (p[0] == '\n') p[0] = 0;
-     }
-   fclose(f);
-   return strdup(buf);
-}
+#include <Eeze.h>
 
+/* local subsystem functions */
 static int
 _bl_write_file(const char *file, int val)
 {
@@ -78,8 +58,9 @@ main(int argc, char **argv)
    int i;
    int level;
    char *valstr;
+   const char *f;
    int maxlevel = 0, curlevel = -1;
-   char file[4096] = "";
+   Eina_List *devs;
    char buf[4096] = "";
    
    for (i = 1; i < argc; i++)
@@ -109,87 +90,36 @@ main(int argc, char **argv)
         exit(7);
      }
 
-   for (i = 0; i < (int)(sizeof(search) / sizeof(Bl_Entry)); i++)
+   eeze_init();
+   devs = eeze_udev_find_by_filter("backlight", NULL, NULL);
+   if (!devs) return -1;
+   EINA_LIST_FREE(devs, f)
      {
-        const Bl_Entry *b = &(search[i]);
-        
-        if (b->type == 'F')
+        const char *str;
+
+        str = eeze_udev_syspath_get_sysattr(f, "max_brightness");
+        if (str)
           {
-             snprintf(buf, sizeof(buf), "%s/%s", b->base, b->set);
-             valstr = _bl_read_file(buf);
-             if (valstr)
+             maxlevel = atoi(str);
+             eina_stringshare_del(str);
+             str = eeze_udev_syspath_get_sysattr(f, "brightness");
+             if (str)
                {
-                  curlevel = atoi(valstr);
-                  if (curlevel < 0)
-                    {
-                       free(valstr);
-                       valstr = NULL;
-                    }
-                  else
-                    {
-                       snprintf(file, sizeof(file), "%s/%s", b->base, b->max);
-                       free(valstr);
-                       valstr = _bl_read_file(file);
-                       if (valstr)
-                         {
-                            maxlevel = atoi(valstr);
-                            free(valstr);
-                            valstr = NULL;
-                         }
-                    }
+                  curlevel = atoi(str);
+                  eina_stringshare_del(str);
                }
           }
-        else if (b->type == 'D')
+
+        if (maxlevel <= 0) maxlevel = 255;
+        if (curlevel >= 0)
           {
-             DIR *dirp = opendir(b->base);
-             struct dirent *dp;
-             
-             if (dirp)
-               {
-                  while ((dp = readdir(dirp)))
-                    {
-                       if ((strcmp(dp->d_name, ".")) && 
-                           (strcmp(dp->d_name, "..")))
-                         {
-                            snprintf(buf, sizeof(buf), "%s/%s/%s", 
-                                     b->base, dp->d_name, b->set);
-                            valstr = _bl_read_file(buf);
-                            if (valstr)
-                              {
-                                 curlevel = atoi(valstr);
-                                 if (curlevel < 0)
-                                   {
-                                      free(valstr);
-                                      valstr = NULL;
-                                   }
-                                 else
-                                   {
-                                      snprintf(file, sizeof(file), "%s/%s/%s",
-                                                b->base, dp->d_name, b->max);
-                                      free(valstr);
-                                      valstr = _bl_read_file(file);
-                                      if (valstr)
-                                        {
-                                           maxlevel = atoi(valstr);
-                                           free(valstr);
-                                           valstr = NULL;
-                                        }
-                                      break;
-                                   }
-                              }
-                         }
-                    }
-                  closedir(dirp);
-               }
+             curlevel = ((maxlevel * level) + (500 / maxlevel)) / 1000;
+     //        printf("SET: %i, %i/%i\n", level, curlevel, maxlevel);
+             snprintf(buf, sizeof(buf), "%s/brightness", f);
+             return _bl_write_file(buf, curlevel);
           }
-        if (file[0]) break;
+        eina_stringshare_del(f);
      }
-   if (maxlevel <= 0) maxlevel = 255;
-   if (curlevel >= 0)
-     {
-        curlevel = ((maxlevel * level) + (500 / maxlevel)) / 1000;
-//        printf("SET: %i, %i/%i\n", level, curlevel, maxlevel);
-        return _bl_write_file(buf, curlevel);
-     }
+
    return -1;
 }

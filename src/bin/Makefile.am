@@ -29,8 +29,11 @@ enlightenment_fm_op \
 enlightenment_init \
 enlightenment_sys \
 enlightenment_thumb \
-enlightenment_backlight \
 enlightenment_alert
+
+if HAVE_EEZE
+internal_bin_PROGRAMS += enlightenment_backlight
+endif
 
 ENLIGHTENMENTHEADERS = \
 e_about.h \
@@ -367,10 +370,13 @@ e_sys_main.c
 
 enlightenment_sys_LDADD = @E_SYS_LIBS@
 
+if HAVE_EEZE
 enlightenment_backlight_SOURCES = \
 e_backlight_main.c
 
-enlightenment_backlight_LDADD = 
+enlightenment_backlight_CFLAGS = @EEZE_CFLAGS@
+enlightenment_backlight_LDADD = @EEZE_LIBS@
+endif
 
 enlightenment_init_SOURCES = \
 e_init_main.c \
@@ -388,9 +394,13 @@ enlightenment_alert_CFLAGS = @E_ALERT_CFLAGS@
 # and before internal_bin_PROGRAMS are installed. install-data-hook is
 # run after both
 setuid_root_mode = a=rx,u+xs
+if HAVE_EEZE
 install-data-hook:
 	@chmod $(setuid_root_mode) $(DESTDIR)$(libdir)/enlightenment/utils/enlightenment_sys$(EXEEXT) || true
 	@chmod $(setuid_root_mode) $(DESTDIR)$(libdir)/enlightenment/utils/enlightenment_backlight$(EXEEXT) || true
-
+else
+install-data-hook:
+	@chmod $(setuid_root_mode) $(DESTDIR)$(libdir)/enlightenment/utils/enlightenment_sys$(EXEEXT) || true
+endif
 installed_headersdir = $(prefix)/include/enlightenment
 installed_headers_DATA = $(ENLIGHTENMENTHEADERS)
