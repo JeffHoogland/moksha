@@ -432,12 +432,6 @@ typedef struct pa_cvolume {
     pa_volume_t values[PA_CHANNELS_MAX];  /**< Per-channel volume  */
 } pa_cvolume;
 
-typedef struct pa_sink_port_info {
-    const char *name;                   /**< Name of this port */
-    const char *description;            /**< Description of this port */
-    uint32_t priority;                  /**< The higher this value is the more useful this port is as a default */
-} pa_sink_port_info;
-
 typedef struct pa_channel_map {
     uint8_t channels;
     /**< Number of channels */
@@ -460,8 +454,11 @@ struct Pulse_Sink {
     pa_channel_map channel_map;        /**< Channel map */
 //    uint32_t owner_module;             /**< Index of the owning module of this sink, or PA_INVALID_INDEX */
     pa_cvolume volume;                 /**< Volume of the sink */
+    Eina_List *ports;                  /**< output ports */
+    const char *active_port;           /**< currently active port */
     Eina_Bool mute : 1;                          /**< Mute switch of the sink */
     Eina_Bool update : 1;
+    Eina_Bool source : 1; /**< sink is actually a source */
 };
 
 typedef uint32_t pa_pstream_descriptor[PA_PSTREAM_DESCRIPTOR_MAX];
@@ -537,5 +534,6 @@ void msg_send_creds(Pulse *conn, Pulse_Tag *tag);
 Eina_Bool msg_send(Pulse *conn, Pulse_Tag *tag);
 
 extern Eina_Hash *pulse_sinks;
+extern Eina_Hash *pulse_sources;
 
 #endif

@@ -14,25 +14,34 @@ deserialize_sinks_watcher(Pulse *conn, Pulse_Tag *tag)
         Pulse_Sink *sink;
 
         sink = eina_hash_find(pulse_sinks, &idx);
-        if (!sink) return;
-        if (pulse_sink_get(conn, idx))
-          sink->update = EINA_TRUE;
+        if (sink)
+          {
+             if (pulse_sink_get(conn, idx))
+               sink->update = EINA_TRUE;
+          }
+        else
+          {
+             sink = eina_hash_find(pulse_sources, &idx);
+             if (!sink) return;
+             if (pulse_source_get(conn, idx))
+               sink->update = EINA_TRUE;
+          }
      }
 }
 
-Pulse_Sink *
-deserialize_sink(Pulse *conn __UNUSED__, Pulse_Tag *tag)
+static Pulse_Sink *
+deserialize_sink(Pulse *conn __UNUSED__, Pulse_Tag *tag, Eina_Bool source)
 {
    Pulse_Sink *sink = NULL;
    Eina_Bool mute, exist;
    pa_sample_spec spec;
    uint32_t owner_module, monitor_source, flags, base_volume, state, n_volume_steps, card, n_ports;
    uint64_t latency, configured_latency;
-   const char *monitor_source_name, *driver, *active_port;
+   const char *monitor_source_name, *driver;
    Eina_Hash *props;
    unsigned int x;
 
-   monitor_source_name = driver = active_port = NULL;
+   monitor_source_name = driver = NULL;
    EINA_SAFETY_ON_FALSE_GOTO(untag_uint32(tag, &x), error);
    sink = eina_hash_find(pulse_sinks, &x);
    exist = !!sink;
@@ -63,21 +72,26 @@ deserialize_sink(Pulse *conn __UNUSED__, Pulse_Tag *tag)
 
    for (x = 0; x < n_ports; x++)
      {
-        pa_sink_port_info pi = {NULL, NULL, 0};
+        Pulse_Sink_Port_Info *pi;
 
-        EINA_SAFETY_ON_FALSE_GOTO(untag_string(tag, &pi.name), error);
-        eina_stringshare_del(pi.name);
-        EINA_SAFETY_ON_FALSE_GOTO(untag_string(tag, &pi.description), error);
-        eina_stringshare_del(pi.description);
-        EINA_SAFETY_ON_FALSE_GOTO(untag_uint32(tag, &pi.priority), error);
+        pi = calloc(1, sizeof(Pulse_Sink_Port_Info));
+        EINA_SAFETY_ON_FALSE_GOTO(untag_string(tag, &pi->name), error);
+        eina_stringshare_del(pi->name);
+        EINA_SAFETY_ON_FALSE_GOTO(untag_string(tag, &pi->description), error);
+        eina_stringshare_del(pi->description);
+        EINA_SAFETY_ON_FALSE_GOTO(untag_uint32(tag, &pi->priority), error);
+        sink->ports = eina_list_append(sink->ports, pi);
      }
-   EINA_SAFETY_ON_FALSE_GOTO(untag_string(tag, &active_port), error);
+   EINA_SAFETY_ON_FALSE_GOTO(untag_string(tag, &sink->active_port), error);
    if (exist)
      ecore_event_add(PULSE_EVENT_CHANGE, sink, pulse_fake_free, NULL);
    else
      {
-        if (!pulse_sinks) pulse_sinks = eina_hash_int32_new(NULL);
-        eina_hash_add(pulse_sinks, (uintptr_t*)&sink->index, sink);
+        if (source && (!pulse_sources))
+          pulse_sources = eina_hash_int32_new((Eina_Free_Cb)pulse_sink_free);
+        else if ((!source) && (!pulse_sinks))
+          pulse_sinks = eina_hash_int32_new((Eina_Free_Cb)pulse_sink_free);
+        eina_hash_add(source ? pulse_sources : pulse_sinks, (uintptr_t*)&sink->index, sink);
      }
    return sink;
 error:
@@ -97,13 +111,14 @@ deserialize_tag(Pulse *conn, PA_Commands command, Pulse_Tag *tag)
    switch (command)
      {
       case PA_COMMAND_GET_SINK_INFO_LIST:
+      case PA_COMMAND_GET_SOURCE_INFO_LIST:
         if (!cb) return EINA_TRUE;
         ev = NULL;
         while (tag->size < tag->dsize - PA_TAG_SIZE_STRING_NULL)
           {
              Pulse_Sink *sink;
 
-             sink = deserialize_sink(conn, tag);
+             sink = deserialize_sink(conn, tag, (command == PA_COMMAND_GET_SOURCE_INFO_LIST));
              if (!sink)
                {
                   EINA_LIST_FREE(ev, sink)
@@ -114,8 +129,9 @@ deserialize_tag(Pulse *conn, PA_Commands command, Pulse_Tag *tag)
           }
         break;
       case PA_COMMAND_GET_SINK_INFO:
+      case PA_COMMAND_GET_SOURCE_INFO:
         if ((!cb) && (!conn->watching)) return EINA_TRUE;
-        ev = deserialize_sink(conn, tag);
+        ev = deserialize_sink(conn, tag, (command == PA_COMMAND_GET_SOURCE_INFO));
         break;
       case 0:
         deserialize_sinks_watcher(conn, tag);

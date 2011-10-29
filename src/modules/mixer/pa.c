@@ -15,6 +15,7 @@ int PULSE_EVENT_CONNECTED = -1;
 int PULSE_EVENT_DISCONNECTED = -1;
 int PULSE_EVENT_CHANGE = -1;
 Eina_Hash *pulse_sinks = NULL;
+Eina_Hash *pulse_sources = NULL;
 
 void
 pulse_fake_free(void *d __UNUSED__, void *d2 __UNUSED__)
@@ -390,11 +391,11 @@ pulse_cb_set(Pulse *conn, uint32_t tagnum, Pulse_Cb cb)
 }
 
 uint32_t
-pulse_sink_get(Pulse *conn, uint32_t sink_num)
+pulse_type_get(Pulse *conn, uint32_t idx, Eina_Bool source)
 {
    Pulse_Tag *tag;
    int read;
-   uint32_t type = PA_COMMAND_GET_SINK_INFO;
+   uint32_t type = source ? PA_COMMAND_GET_SOURCE_INFO : PA_COMMAND_GET_SINK_INFO;
 
    EINA_SAFETY_ON_NULL_RETURN_VAL(conn, 0);
    tag = calloc(1, sizeof(Pulse_Tag));
@@ -403,7 +404,7 @@ pulse_sink_get(Pulse *conn, uint32_t sink_num)
    tag->data = malloc(tag->dsize);
    tag->tag_count = conn->tag_count;
    tag_simple_init(conn, tag, type, PA_TAG_U32);
-   tag_uint32(tag, sink_num);
+   tag_uint32(tag, idx);
    tag_string(tag, NULL);
    tag_finish(tag);
    read = !!ecore_main_fd_handler_active_get(conn->fdh, ECORE_FD_READ) * ECORE_FD_READ;
@@ -414,11 +415,11 @@ pulse_sink_get(Pulse *conn, uint32_t sink_num)
 }
 
 uint32_t
-pulse_sinks_get(Pulse *conn)
+pulse_types_get(Pulse *conn, Eina_Bool source)
 {
    Pulse_Tag *tag;
    int read;
-   uint32_t type = PA_COMMAND_GET_SINK_INFO_LIST;
+   uint32_t type = source ? PA_COMMAND_GET_SOURCE_INFO_LIST : PA_COMMAND_GET_SINK_INFO_LIST;
 
    EINA_SAFETY_ON_NULL_RETURN_VAL(conn, 0);
    tag = calloc(1, sizeof(Pulse_Tag));
@@ -436,11 +437,12 @@ pulse_sinks_get(Pulse *conn)
 }
 
 uint32_t
-pulse_sink_mute_set(Pulse *conn, uint32_t sink_num, Eina_Bool mute)
+pulse_type_mute_set(Pulse *conn, uint32_t sink_num, Eina_Bool mute, Eina_Bool source)
 {
    Pulse_Tag *tag;
    int read;
-   uint32_t type = PA_COMMAND_SET_SINK_MUTE;
+   uint32_t type = source ? PA_COMMAND_SET_SOURCE_MUTE : PA_COMMAND_SET_SINK_MUTE;
+   Eina_Hash *h;
 
    EINA_SAFETY_ON_NULL_RETURN_VAL(conn, 0);
    tag = calloc(1, sizeof(Pulse_Tag));
@@ -457,22 +459,23 @@ pulse_sink_mute_set(Pulse *conn, uint32_t sink_num, Eina_Bool mute)
    ecore_main_fd_handler_active_set(conn->fdh, read | ECORE_FD_WRITE);
    conn->oq = eina_list_append(conn->oq, tag);
    eina_hash_add(conn->tag_handlers, &tag->tag_count, (uintptr_t*)((uintptr_t)type));
-   if (pulse_sinks)
+   h = (source == EINA_TRUE) ? pulse_sources : pulse_sinks;
+   if (h)
      {
         Pulse_Sink *sink;
 
-        sink = eina_hash_find(pulse_sinks, &sink_num);
+        sink = eina_hash_find(h, &sink_num);
         if (sink) sink->mute = !!mute;
      }
    return tag->tag_count;
 }
 
 uint32_t
-pulse_sink_volume_set(Pulse *conn, uint32_t sink_num, uint8_t channels, double vol)
+pulse_type_volume_set(Pulse *conn, uint32_t sink_num, uint8_t channels, double vol, Eina_Bool source)
 {
    Pulse_Tag *tag;
    int read;
-   uint32_t type = PA_COMMAND_SET_SINK_VOLUME;
+   uint32_t type = source ? PA_COMMAND_SET_SOURCE_MUTE : PA_COMMAND_SET_SINK_VOLUME;
 
    EINA_SAFETY_ON_NULL_RETURN_VAL(conn, 0);
    tag = calloc(1, sizeof(Pulse_Tag));
@@ -497,12 +500,13 @@ pulse_sink_channel_volume_set(Pulse *conn, Pulse_Sink *sink, uint32_t id, double
 {
    Pulse_Tag *tag;
    int read;
-   uint32_t type = PA_COMMAND_SET_SINK_VOLUME;
+   uint32_t type;
 
    EINA_SAFETY_ON_NULL_RETURN_VAL(conn, 0);
    EINA_SAFETY_ON_TRUE_RETURN_VAL(id >= sink->channel_map.channels, 0);
    tag = calloc(1, sizeof(Pulse_Tag));
    EINA_SAFETY_ON_NULL_RETURN_VAL(tag, 0);
+   type = sink->source ? PA_COMMAND_SET_SOURCE_VOLUME : PA_COMMAND_SET_SINK_VOLUME;
    tag->dsize = 3 * PA_TAG_SIZE_U32 + PA_TAG_SIZE_STRING_NULL + PA_TAG_SIZE_CVOLUME + sink->channel_map.channels * sizeof(uint32_t);
    tag->data = malloc(tag->dsize);
    tag->tag_count = conn->tag_count;
@@ -512,6 +516,42 @@ pulse_sink_channel_volume_set(Pulse *conn, Pulse_Sink *sink, uint32_t id, double
    tag_uint32(tag, sink->index);
    tag_string(tag, NULL);
    tag_cvol(tag, &sink->volume);
+   tag_finish(tag);
+   read = !!ecore_main_fd_handler_active_get(conn->fdh, ECORE_FD_READ) * ECORE_FD_READ;
+   ecore_main_fd_handler_active_set(conn->fdh, read | ECORE_FD_WRITE);
+   conn->oq = eina_list_append(conn->oq, tag);
+   eina_hash_add(conn->tag_handlers, &tag->tag_count, (uintptr_t*)((uintptr_t)type));
+   return tag->tag_count;
+}
+
+uint32_t
+pulse_sink_port_set(Pulse *conn, Pulse_Sink *sink, const char *port)
+{
+   Pulse_Tag *tag;
+   int read;
+   uint32_t type;
+   Eina_List *l;
+   const char *p;
+   Eina_Bool match = EINA_FALSE;
+
+   EINA_SAFETY_ON_NULL_RETURN_VAL(conn, 0);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(port, 0);
+   EINA_LIST_FOREACH(sink->ports, l, p)
+     {
+        match = !strcmp(p, port);
+        if (match) break;
+     }
+   EINA_SAFETY_ON_TRUE_RETURN_VAL(!match, 0);
+   tag = calloc(1, sizeof(Pulse_Tag));
+   EINA_SAFETY_ON_NULL_RETURN_VAL(tag, 0);
+   type = sink->source ? PA_COMMAND_SET_SOURCE_PORT : PA_COMMAND_SET_SINK_PORT;
+   tag->dsize = PA_TAG_SIZE_U32 + 2 * PA_TAG_SIZE_STRING + strlen(sink->name) + strlen(port);
+   tag->data = malloc(tag->dsize);
+   tag->tag_count = conn->tag_count;
+   tag_simple_init(conn, tag, type, PA_TAG_U32);
+   tag_uint32(tag, sink->index);
+   tag_string(tag, sink->name);
+   tag_string(tag, port);
    tag_finish(tag);
    read = !!ecore_main_fd_handler_active_get(conn->fdh, ECORE_FD_READ) * ECORE_FD_READ;
    ecore_main_fd_handler_active_set(conn->fdh, read | ECORE_FD_WRITE);
@@ -563,6 +603,9 @@ pulse_shutdown(void)
 {
    if ((!pulse_init_count) || (!--pulse_init_count)) return;
 
+   if (pulse_sinks) eina_hash_free(pulse_sinks);
+   if (pulse_sources) eina_hash_free(pulse_sources);
+   pulse_sinks = pulse_sources = NULL;
    eina_log_domain_unregister(pa_log_dom);
    ecore_con_shutdown();
    ecore_shutdown();

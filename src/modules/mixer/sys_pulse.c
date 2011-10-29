@@ -17,6 +17,7 @@ static Ecore_Event_Handler *ph = NULL;
 static Ecore_Event_Handler *pch = NULL;
 static Ecore_Event_Handler *pdh = NULL;
 static Eina_List *sinks = NULL;
+static Eina_List *sources = NULL;
 
 static E_DBus_Connection *dbus = NULL;
 static E_DBus_Signal_Handler *dbus_handler = NULL;
@@ -105,6 +106,25 @@ _pulse_sinks_get(Pulse *p __UNUSED__, Pulse_Tag_Id id __UNUSED__, Eina_List *ev)
    e_mod_mixer_pulse_ready(EINA_TRUE);
 }
 
+static void
+_pulse_sources_get(Pulse *p __UNUSED__, Pulse_Tag_Id id __UNUSED__, Eina_List *ev)
+{
+   Eina_List *l;
+   Pulse_Sink *sink;
+   sources = ev;
+   EINA_LIST_FOREACH(ev, l, sink)
+     {
+        printf("Sink:\n");
+        printf("\tname: %s\n", pulse_sink_name_get(sink));
+        printf("\tidx: %"PRIu32"\n", pulse_sink_idx_get(sink));
+        printf("\tdesc: %s\n", pulse_sink_desc_get(sink));
+        printf("\tchannels: %u\n", pulse_sink_channels_count(sink));
+        printf("\tmuted: %s\n", pulse_sink_muted_get(sink) ? "yes" : "no");
+        printf("\tavg: %g\n", pulse_sink_avg_get_pct(sink));
+        printf("\tbalance: %f\n", pulse_sink_balance_get(sink));
+     }
+}
+
 static Eina_Bool
 _pulse_connected(Pulse *d, int type __UNUSED__, Pulse *ev)
 {
@@ -118,6 +138,9 @@ _pulse_connected(Pulse *d, int type __UNUSED__, Pulse *ev)
         return ECORE_CALLBACK_RENEW;
      }
    pulse_cb_set(conn, id, (Pulse_Cb)_pulse_sinks_get);
+   id = pulse_sources_get(conn);
+   if (id)
+     pulse_cb_set(conn, id, (Pulse_Cb)_pulse_sources_get);
    return ECORE_CALLBACK_RENEW;
 }
 
@@ -129,6 +152,8 @@ _pulse_disconnected(Pulse *d, int type __UNUSED__, Pulse *ev)
    if (d != ev) return ECORE_CALLBACK_PASS_ON;
 
    EINA_LIST_FREE(sinks, sink)
+     pulse_sink_free(sink);
+   EINA_LIST_FREE(sources, sink)
      pulse_sink_free(sink);
 
    if (last_disc && (ecore_time_unix_get() - last_disc < 1))
@@ -151,6 +176,14 @@ _pulse_sink_find(const char *name)
    Eina_List *l;
    Pulse_Sink *sink;
    EINA_LIST_FOREACH(sinks, l, sink)
+     {
+        const char *sink_name;
+
+        sink_name = pulse_sink_name_get(sink);
+        if ((sink_name == name) || (!strcmp(sink_name, name)))
+          return sink;
+     }
+   EINA_LIST_FOREACH(sources, l, sink)
      {
         const char *sink_name;
 
@@ -223,6 +256,8 @@ e_mixer_pulse_shutdown(void)
    Pulse_Sink *sink;
    EINA_LIST_FREE(sinks, sink)
      pulse_sink_free(sink);
+   EINA_LIST_FREE(sources, sink)
+     pulse_sink_free(sink);
 
    pulse_free(conn);
    conn = NULL;
@@ -264,6 +299,8 @@ e_mixer_pulse_get_cards(void)
    Pulse_Sink *sink;
 
    EINA_LIST_FOREACH(sinks, l, sink)
+     ret = eina_list_append(ret, pulse_sink_name_get(sink));
+   EINA_LIST_FOREACH(sources, l, sink)
      ret = eina_list_append(ret, pulse_sink_name_get(sink));
    return ret;
 }
@@ -414,9 +451,9 @@ e_mixer_pulse_set_volume(E_Mixer_System *self, E_Mixer_Channel *channel, int lef
 
 #ifdef BAD_CH_MAPPING
    if (!channel) return 0;
-   id = pulse_sink_channel_volume_set(conn, (void *)self, 
+   id = pulse_type_channel_volume_set(conn, (void *)self, 
                                       ((uintptr_t)channel) - 1, 
-                                      (left + right) / 2);
+                                      (left + right) / 2, source);
    if (!id) return 0;
    pulse_cb_set(conn, id, (Pulse_Cb)_pulse_result_cb);
 #else
@@ -456,9 +493,11 @@ int
 e_mixer_pulse_set_mute(E_Mixer_System *self, E_Mixer_Channel *channel __UNUSED__, int mute)
 {
    uint32_t idx, id;
+   Eina_Bool source = EINA_FALSE;
 
    idx = pulse_sink_idx_get((void *)self);
-   id = pulse_sink_mute_set(conn, pulse_sink_idx_get((void *)self), mute);
+   source = !!eina_list_data_find(sources, self);
+   id = pulse_type_mute_set(conn, pulse_sink_idx_get((void *)self), mute, source);
    if (!id) return 0;
    pulse_cb_set(conn, id, (Pulse_Cb)_pulse_result_cb);
    return 1;
@@ -489,10 +528,12 @@ e_mixer_pulse_set_state(E_Mixer_System *self, E_Mixer_Channel *channel, const E_
 {
 #ifdef BAD_CH_MAPPING
    uint32_t id;
+   Eina_Bool source = EINA_FALSE;
    if (!channel) return 0;
-   id = pulse_sink_channel_volume_set(conn, (void *)self, 
+   source = !!eina_list_data_find(sources, self);
+   id = pulse_type_channel_volume_set(conn, (void *)self, 
                                       ((uintptr_t)channel) - 1, 
-                                      (state->left + state->right) / 2);
+                                      (state->left + state->right) / 2, source);
    if (!id) return 0;
    pulse_cb_set(conn, id, (Pulse_Cb)_pulse_result_cb);
 #else

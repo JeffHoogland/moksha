@@ -150,14 +150,50 @@ static Eina_Bool on_rear(pa_channel_position_t p) {
     return !!(PA_CHANNEL_POSITION_MASK(p) & PA_CHANNEL_POSITION_MASK_REAR);
 }
 
+static void
+pulse_sink_port_info_free(Pulse_Sink_Port_Info *pi)
+{
+   if (!pi) return;
+   eina_stringshare_del(pi->name);
+   eina_stringshare_del(pi->description);
+   free(pi);
+}
+
 void
 pulse_sink_free(Pulse_Sink *sink)
 {
+   Pulse_Sink_Port_Info *pi;
    if (!sink) return;
+   if (sink->source)
+     {
+        if (eina_hash_del_by_key(pulse_sources, (uintptr_t*)&sink->index))
+          return;
+     }
+   else
+     {
+        if (eina_hash_del_by_key(pulse_sinks, (uintptr_t*)&sink->index))
+          return;
+     }
    eina_stringshare_del(sink->name);
    eina_stringshare_del(sink->description);
-   eina_hash_del_by_key(pulse_sinks, (uintptr_t*)&sink->index);
+   EINA_LIST_FREE(sink->ports, pi)
+     pulse_sink_port_info_free(pi);
+   eina_stringshare_del(sink->active_port);
    free(sink);
+}
+
+const Eina_List *
+pulse_sink_ports_get(Pulse_Sink *sink)
+{
+   EINA_SAFETY_ON_NULL_RETURN_VAL(sink, NULL);
+   return sink->ports;
+}
+
+const char *
+pulse_sink_port_active_get(Pulse_Sink *sink)
+{
+   EINA_SAFETY_ON_NULL_RETURN_VAL(sink, NULL);
+   return sink->active_port;
 }
 
 const char *
