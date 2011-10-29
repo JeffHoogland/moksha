@@ -185,14 +185,10 @@ main(int argc, char **argv)
         if (file[0]) break;
      }
    if (maxlevel <= 0) maxlevel = 255;
-   printf("curlevel = %i\n", curlevel);
-   printf("maxlevel = %i\n", maxlevel);
-   printf("file = %s\n", file);
-   printf("buf = %s\n", buf);
    if (curlevel >= 0)
      {
         curlevel = ((maxlevel * level) + (500 / maxlevel)) / 1000;
-        printf("SET: %i, %i/%i\n", level, curlevel, maxlevel);
+//        printf("SET: %i, %i/%i\n", level, curlevel, maxlevel);
         return _bl_write_file(buf, curlevel);
      }
    return -1;

@@ -361,8 +361,7 @@ _bl_sys_level_get(void)
    val = _bl_sys_num_get(bl_sysval);
    if ((val >= 0) && (val <= maxval))
       bl_val = (double)val / (double)maxval;
-   printf("%s, %s\n", bl_sysvalmax, bl_sysval);
-   printf("GET: %i/%i (%1.3f)\n", val, maxval, bl_val);
+//   printf("GET: %i/%i (%1.3f)\n", val, maxval, bl_val);
 }
 
 static Eina_Bool
