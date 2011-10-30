@@ -57,7 +57,6 @@ main(int argc, char **argv)
 {
    int i;
    int level;
-   char *valstr;
    const char *f;
    int maxlevel = 0, curlevel = -1;
    Eina_List *devs;
