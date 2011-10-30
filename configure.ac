@@ -739,6 +739,7 @@ AC_E_OPTIONAL_MODULE([systray], true)
 AC_E_OPTIONAL_MODULE([comp], true)
 AC_E_OPTIONAL_MODULE([shot], true)
 AC_E_OPTIONAL_MODULE([backlight], true)
+AC_E_OPTIONAL_MODULE([tasks], true)
 
 SUSPEND=""
 HIBERNATE=""
@@ -890,6 +891,8 @@ src/modules/shot/Makefile
 src/modules/shot/module.desktop
 src/modules/backlight/Makefile
 src/modules/backlight/module.desktop
+src/modules/tasks/Makefile
+src/modules/tasks/module.desktop
 src/preload/Makefile
 data/Makefile
 data/images/Makefile

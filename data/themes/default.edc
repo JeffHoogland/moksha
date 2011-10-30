@@ -261,6 +261,16 @@ color_classes {
       name: "comp_focus-out_color";
       color: 255 255 255 220;
    }
+   color_class {
+      name: "tasks_text";
+      color: 0 0 0 255;
+      color3: 0 0 0 0;
+   }
+   color_class {
+      name: "tasks_text_focused";
+      color: 224 224 224 255;
+      color3: 0 0 0 64;
+   }
 }
 
 /*
@@ -40635,6 +40645,672 @@ collections {
 	 target: "e.text.label";
 	 target: "label2";
 	 }
+      }
+   }
+
+/////////////////////////////////////////////////////////////////////////////
+/*** MOD: TASKS ***/
+
+   group { name:"modules/tasks/item";
+      images {
+         image: "bt_base1.png" COMP;
+         image: "bt_base2.png" COMP;
+         image: "bt_hilight.png" COMP;
+         image: "bt_shine.png" COMP;
+         image: "bt_glow.png" COMP;
+         image: "bt_dis_base.png" COMP;
+         image: "bt_dis_hilight.png" COMP;
+         image: "exclam.png" COMP;
+      }
+      parts {
+         part { name: "button_image";
+            mouse_events: 1;
+            description { state: "default" 0.0;
+               image {
+                  normal: "bt_dis_base.png";
+                  border: 4 4 4 4;
+               }
+            }
+            description { state: "clicked" 0.0;
+               inherit: "default" 0.0;
+               image.normal: "bt_base1.png";
+            }
+            description { state: "focused" 0.0;
+               inherit: "default" 0.0;
+               image {
+                  normal: "bt_base2.png";
+                  border: 7 7 7 7;
+               }
+            }
+         }
+         part { name: "icon_area"; type: RECT;
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               visible: 0;
+               aspect: 1.0 1.0;
+               aspect_preference: VERTICAL;
+               align: 0.0 0.5;
+               rel1 {
+                  relative: 0.0 0.0;
+                  offset: 3  3;
+                  to: "button_image";
+               }
+               rel2 {
+                  relative: 0.0 1.0;
+                  offset: 3   -4;
+                  to: "button_image";
+               }
+            }
+            description { state: "iconified" 0.0;
+               inherit: "default" 0.0;
+               rel1.relative: 0.0 0.25;
+               rel2.relative: 0.0 0.75;
+            }
+         }
+         part { name: "icon_area2"; type: RECT;
+            description { state: "default" 0.0;
+               visible: 0;
+               rel1.to: "icon_area";
+               rel2.to: "icon_area";
+            }
+            description { state: "uw0" 0.0;
+               inherit: "default" 0.0;
+               rel1.offset: -3 -2;
+               rel2.offset: -4 -3;
+            }
+            description { state: "uw1" 0.0;
+               inherit: "default" 0.0;
+               rel1.offset: 5 -2;
+               rel2.offset: 4 -3;
+            }
+            description { state: "uw2" 0.0;
+               inherit: "default" 0.0;
+               rel1.offset: -1 4;
+               rel2.offset: -2 3;
+            }
+            description { state: "uw3" 0.0;
+               inherit: "default" 0.0;
+               rel1.offset: -2 -1;
+               rel2.offset: -3 -2;
+            }
+            description { state: "uw4" 0.0;
+               inherit: "default" 0.0;
+               rel1.offset: -4 1;
+               rel2.offset: -5 0;
+            }
+         }
+         part { name: "e.swallow.icon";
+            type: SWALLOW;
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               aspect: 1.0 1.0;
+               rel1.to: "icon_area2";
+               rel2.to: "icon_area2";
+            }
+         }
+         part { name: "urgent";
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               visible: 0;
+               color: 255 255 255 0;
+               aspect: 1.0 1.0;
+               aspect_preference: BOTH;
+               rel1.to: "icon_area";
+               rel2.to: "icon_area";
+               image.normal: "exclam.png";
+            }
+            description { state: "visible" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+               color: 255 255 255 255;
+            }
+         }
+         part { name: "urgent2";
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               visible: 0;
+               color: 255 255 255 0;
+               aspect: 1.0 1.0;
+               aspect_preference: BOTH;
+               rel1.to: "icon_area";
+               rel2.to: "icon_area";
+               image.normal: "exclam.png";
+            }
+            description { state: "visible" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+               color: 255 255 255 255;
+            }
+            description { state: "faded" 0.0;
+               inherit: "default" 0.0;
+               rel1.relative: -1.0 -1.0;
+               rel2.relative: 2.0 2.0;
+               visible: 1;
+               color: 255 255 255 0;
+            }
+         }
+         part { name: "e.text.label"; type: TEXT;
+            effect: SOFT_SHADOW;
+            mouse_events: 0;
+            scale: 1;
+            description { state: "default" 0.0;
+               rel1 {
+                  relative: 1.0  0.0;
+                  offset: 2    3;
+                  to_x: "icon_area";
+                  to_y: "button_image";
+               }
+               rel2 {
+                  relative: 1.0  1.0;
+                  offset: -4   -4;
+                  to: "button_image";
+               }
+               color_class: "tasks_text";
+               text {
+                  font: "Sans";
+                  size: 10;
+                  min: 0 1;
+                  align: 0.0 0.5;
+                  text_class: "tasks_text";
+               }
+            }
+            description { state: "clicked" 0.0;
+               inherit: "default" 0.0;
+               color_class: "tasks_text_focused";
+               text.font: "Sans:style=Bold";
+               text.text_class: "tasks_text_focused";
+            }
+            description { state: "focused" 0.0;
+               inherit: "default" 0.0;
+               color_class: "tasks_text_focused";
+               text.font: "Sans:style=Bold";
+               text.text_class: "tasks_text_focused";
+            }
+         }
+         part { name: "over1";
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               rel2.relative: 1.0 0.5;
+               image {
+                  normal: "bt_dis_hilight.png";
+                  border: 4 4 4 0;
+               }
+            }
+            description { state: "focused" 0.0;
+               inherit: "default" 0.0;
+               image {
+                  normal: "bt_hilight.png";
+                  border: 7 7 7 0;
+               }
+            }
+         }
+         part { name: "over2";
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               visible: 0;
+               rel1.to: "button_image";
+               rel2.to: "button_image";
+               image {
+                  normal: "bt_shine.png";
+                  border: 7 7 7 7;
+               }
+            }
+            description { state: "focused" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+            }
+         }
+         part { name: "over3";
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               visible: 0;
+               color: 255 255 255 0;
+               image {
+                  normal: "bt_glow.png";
+                  border: 7 7 9 9;
+               }
+               fill.smooth : 0;
+            }
+            description { state: "clicked" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+               color: 255 255 255 255;
+            }
+         }
+      }
+      programs {
+         program { name: "button_click";
+            signal: "mouse,down,1";
+            source: "button_image";
+            action: STATE_SET "clicked" 0.0;
+            target: "button_image";
+            target: "over3";
+            target: "e.text.label";
+         }
+         program { name: "button_unclick";
+            signal: "mouse,up,1";
+            source: "button_image";
+            action: STATE_SET "default" 0.0;
+            target: "button_image";
+            target: "over3";
+            target: "e.text.label";
+         }
+         program { name: "button_unclick2";
+            signal: "mouse,clicked,1";
+            source: "button_image";
+            action: SIGNAL_EMIT "e,action,click" "";
+         }
+         program { name: "focused";
+            signal: "e,state,focused";
+            source: "e";
+            action: STATE_SET "focused" 0.0;
+            target: "button_image";
+            target: "over1";
+            target: "e.text.label";
+         }
+         program { name: "unfocused";
+            signal: "e,state,unfocused";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "button_image";
+            target: "over1";
+            target: "e.text.label";
+         }
+         program { name: "urgent";
+            signal: "e,state,urgent";
+            source: "e";
+            action: STATE_SET "visible" 0.0;
+            transition: DECELERATE 0.5;
+            target: "urgent";
+            target: "urgent2";
+            after: "urgent2";
+         }
+         program { name: "urgent2";
+            action: STATE_SET "faded" 0.0;
+            transition: LINEAR 0.5;
+            target: "urgent2";
+            after: "urgent3";
+         }
+         program { name: "urgent3";
+            action: STATE_SET "visible" 0.0;
+            target: "urgent2";
+            after: "urgent2";
+         }
+         program { name: "urgentw0";
+            signal: "e,state,urgent";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            transition: DECELERATE 0.1;
+            target: "icon_area2";
+            after: "urgentw1";
+         }
+         program { name: "urgentw1";
+            action: STATE_SET "uw1" 0.0;
+            transition: DECELERATE 0.1;
+            target: "icon_area2";
+            after: "urgentw2";
+         }
+         program { name: "urgentw2";
+            action: STATE_SET "uw2" 0.0;
+            target: "icon_area2";
+            transition: DECELERATE 0.1;
+            after: "urgentw3";
+         }
+         program { name: "urgentw3";
+            action: STATE_SET "uw3" 0.0;
+            transition: DECELERATE 0.1;
+            target: "icon_area2";
+            after: "urgentw4";
+         }
+         program { name: "urgentw4";
+            action: STATE_SET "uw4" 0.0;
+            transition: DECELERATE 0.1;
+            target: "icon_area2";
+            after: "urgentw0";
+         }
+         program { name: "not_urgent";
+            signal: "e,state,not_urgent";
+            source: "e";
+            action: ACTION_STOP;
+            target: "urgentw0";
+            target: "urgentw1";
+            target: "urgentw2";
+            target: "urgentw3";
+            target: "urgentw4";
+            target: "urgent";
+            target: "urgent2";
+            target: "urgent3";
+            after: "not_urgent2";
+         }
+         program { name: "not_urgent2";
+            action: STATE_SET "default" 0.0;
+            target: "urgent";
+            target: "urgent2";
+            target: "icon_area2";
+         }
+         program { name: "iconified";
+            signal: "e,state,iconified";
+            source: "e";
+            action: STATE_SET "iconified" 0.0;
+            transition: DECELERATE 1.0;
+            target: "icon_area";
+         }
+         program { name: "uniconified";
+            signal: "e,state,uniconified";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            transition: DECELERATE 1.0;
+            target: "icon_area";
+         }
+      }
+   }
+   group { name:"modules/tasks/item_vert";
+      images {
+         image: "bt_base1.png" COMP;
+         image: "bt_base2.png" COMP;
+         image: "bt_hilight.png" COMP;
+         image: "bt_shine.png" COMP;
+         image: "bt_glow.png" COMP;
+         image: "bt_dis_base.png" COMP;
+         image: "bt_dis_hilight.png" COMP;
+         image: "exclam.png" COMP;
+      }
+      parts {
+         part { name: "button_image";
+            mouse_events: 1;
+            description { state: "default" 0.0;
+               image {
+                  normal: "bt_dis_base.png";
+                  border: 4 4 4 4;
+               }
+            }
+            description { state: "clicked" 0.0;
+               inherit: "default" 0.0;
+               image.normal: "bt_base1.png";
+            }
+            description { state: "focused" 0.0;
+               inherit: "default" 0.0;
+               image {
+                  normal: "bt_base2.png";
+                  border: 7 7 7 7;
+               }
+            }
+         }
+         part { name: "icon_area"; type: RECT;
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               visible: 0;
+               aspect: 1.0 1.0;
+               aspect_preference: BOTH;
+               align: 0.5 0.5;
+               rel1 {
+                  offset: 3  3;
+                  to: "button_image";
+               }
+               rel2 {
+                  offset: -4   -4;
+                  to: "button_image";
+               }
+            }
+            description { state: "iconified" 0.0;
+               inherit: "default" 0.0;
+               rel1.relative: 0.25 0.25;
+               rel2.relative: 0.75 0.75;
+            }
+         }
+         part { name: "icon_area2"; type: RECT;
+            description { state: "default" 0.0;
+               visible: 0;
+               rel1.to: "icon_area";
+               rel2.to: "icon_area";
+            }
+            description { state: "uw0" 0.0;
+               inherit: "default" 0.0;
+               rel1.offset: -3 -2;
+               rel2.offset: -4 -3;
+            }
+            description { state: "uw1" 0.0;
+               inherit: "default" 0.0;
+               rel1.offset: 5 -2;
+               rel2.offset: 4 -3;
+            }
+            description { state: "uw2" 0.0;
+               inherit: "default" 0.0;
+               rel1.offset: -1 4;
+               rel2.offset: -2 3;
+            }
+            description { state: "uw3" 0.0;
+               inherit: "default" 0.0;
+               rel1.offset: -2 -1;
+               rel2.offset: -3 -2;
+            }
+            description { state: "uw4" 0.0;
+               inherit: "default" 0.0;
+               rel1.offset: -4 1;
+               rel2.offset: -5 0;
+            }
+         }
+         part { name: "e.swallow.icon";
+            type: SWALLOW;
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               aspect: 1.0 1.0;
+               rel1.to: "icon_area2";
+               rel2.to: "icon_area2";
+            }
+         }
+         part { name: "urgent";
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               visible: 0;
+               color: 255 255 255 0;
+               aspect: 1.0 1.0;
+               aspect_preference: BOTH;
+               rel1.to: "icon_area";
+               rel2.to: "icon_area";
+               image.normal: "exclam.png";
+            }
+            description { state: "visible" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+               color: 255 255 255 255;
+            }
+         }
+         part { name: "urgent2";
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               visible: 0;
+               color: 255 255 255 0;
+               aspect: 1.0 1.0;
+               aspect_preference: BOTH;
+               rel1.to: "icon_area";
+               rel2.to: "icon_area";
+               image.normal: "exclam.png";
+            }
+            description { state: "visible" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+               color: 255 255 255 255;
+            }
+            description { state: "faded" 0.0;
+               inherit: "default" 0.0;
+               rel1.relative: -1.0 -1.0;
+               rel2.relative: 2.0 2.0;
+               visible: 1;
+               color: 255 255 255 0;
+            }
+         }
+         part { name: "over1";
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               rel2.relative: 1.0 0.5;
+               image {
+                  normal: "bt_dis_hilight.png";
+                  border: 4 4 4 0;
+               }
+            }
+            description { state: "focused" 0.0;
+               inherit: "default" 0.0;
+               image {
+                  normal: "bt_hilight.png";
+                  border: 7 7 7 0;
+               }
+            }
+         }
+         part { name: "over2";
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               visible: 0;
+               rel1.to: "button_image";
+               rel2.to: "button_image";
+               image {
+                  normal: "bt_shine.png";
+                  border: 7 7 7 7;
+               }
+            }
+            description { state: "focused" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+            }
+         }
+         part { name: "over3";
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               visible: 0;
+               color: 255 255 255 0;
+               image {
+                  normal: "bt_glow.png";
+                  border: 7 7 9 9;
+               }
+               fill.smooth : 0;
+            }
+            description { state: "clicked" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+               color: 255 255 255 255;
+            }
+         }
+      }
+      programs {
+         program { name: "button_click";
+            signal: "mouse,down,1";
+            source: "button_image";
+            action: STATE_SET "clicked" 0.0;
+            target: "button_image";
+            target: "over3";
+         }
+         program { name: "button_unclick";
+            signal: "mouse,up,1";
+            source: "button_image";
+            action: STATE_SET "default" 0.0;
+            target: "button_image";
+            target: "over3";
+         }
+         program { name: "button_unclick2";
+            signal: "mouse,clicked,1";
+            source: "button_image";
+            action: SIGNAL_EMIT "e,action,click" "";
+         }
+         program { name: "focused";
+            signal: "e,state,focused";
+            source: "e";
+            action: STATE_SET "focused" 0.0;
+            target: "button_image";
+            target: "over1";
+         }
+         program { name: "unfocused";
+            signal: "e,state,unfocused";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "button_image";
+            target: "over1";
+         }
+         program { name: "urgent";
+            signal: "e,state,urgent";
+            source: "e";
+            action: STATE_SET "visible" 0.0;
+            transition: DECELERATE 0.5;
+            target: "urgent";
+            target: "urgent2";
+            after: "urgent2";
+         }
+         program { name: "urgent2";
+            action: STATE_SET "faded" 0.0;
+            transition: LINEAR 0.5;
+            target: "urgent2";
+            after: "urgent3";
+         }
+         program { name: "urgent3";
+            action: STATE_SET "visible" 0.0;
+            target: "urgent2";
+            after: "urgent2";
+         }
+         program { name: "urgentw0";
+            signal: "e,state,urgent";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            transition: DECELERATE 0.1;
+            target: "icon_area2";
+            after: "urgentw1";
+         }
+         program { name: "urgentw1";
+            action: STATE_SET "uw1" 0.0;
+            transition: DECELERATE 0.1;
+            target: "icon_area2";
+            after: "urgentw2";
+         }
+         program { name: "urgentw2";
+            action: STATE_SET "uw2" 0.0;
+            target: "icon_area2";
+            transition: DECELERATE 0.1;
+            after: "urgentw3";
+         }
+         program { name: "urgentw3";
+            action: STATE_SET "uw3" 0.0;
+            transition: DECELERATE 0.1;
+            target: "icon_area2";
+            after: "urgentw4";
+         }
+         program { name: "urgentw4";
+            action: STATE_SET "uw4" 0.0;
+            transition: DECELERATE 0.1;
+            target: "icon_area2";
+            after: "urgentw0";
+         }
+         program { name: "not_urgent";
+            signal: "e,state,not_urgent";
+            source: "e";
+            action: ACTION_STOP;
+            target: "urgentw0";
+            target: "urgentw1";
+            target: "urgentw2";
+            target: "urgentw3";
+            target: "urgentw4";
+            target: "urgent";
+            target: "urgent2";
+            target: "urgent3";
+            after: "not_urgent2";
+         }
+         program { name: "not_urgent2";
+            action: STATE_SET "default" 0.0;
+            target: "urgent";
+            target: "urgent2";
+            target: "icon_area2";
+         }
+         program { name: "iconified";
+            signal: "e,state,iconified";
+            source: "e";
+            action: STATE_SET "iconified" 0.0;
+            transition: DECELERATE 1.0;
+            target: "icon_area";
+         }
+         program { name: "uniconified";
+            signal: "e,state,uniconified";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            transition: DECELERATE 1.0;
+            target: "icon_area";
+         }
       }
    }
 }

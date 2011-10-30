@@ -182,3 +182,7 @@ endif
 if USE_MODULE_BACKLIGHT
 SUBDIRS += backlight
 endif
+
+if USE_MODULE_TASKS
+SUBDIRS += tasks
+endif

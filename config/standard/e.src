@@ -250,7 +250,7 @@ group "E_Config" struct {
                     value "name" string: "pager";
                     value "id" string: "pager";
                     value "geom.pos" int: 32;
-                    value "geom.size" int: 120;
+                    value "geom.size" int: 32;
                     value "geom.res" int: 800;
                     value "geom.pos_x" double: 0.0000000000000000000000000;
                     value "geom.pos_y" double: 0.0000000000000000000000000;
@@ -265,7 +265,7 @@ group "E_Config" struct {
                 group "E_Config_Gadcon_Client" struct {
                     value "name" string: "ibox";
                     value "id" string: "ibox.1";
-                    value "geom.pos" int: 152;
+                    value "geom.pos" int: 64;
                     value "geom.size" int: 32;
                     value "geom.res" int: 800;
                     value "geom.pos_x" double: 0.0000000000000000000000000;
@@ -281,8 +281,8 @@ group "E_Config" struct {
                 group "E_Config_Gadcon_Client" struct {
                     value "name" string: "ibar";
                     value "id" string: "ibar.1";
-                    value "geom.pos" int: 350;
-                    value "geom.size" int: 200;
+                    value "geom.pos" int: 96;
+                    value "geom.size" int: 32;
                     value "geom.res" int: 800;
                     value "geom.pos_x" double: 0.0000000000000000000000000;
                     value "geom.pos_y" double: 0.0000000000000000000000000;
@@ -297,7 +297,7 @@ group "E_Config" struct {
                 group "E_Config_Gadcon_Client" struct {
                     value "name" string: "backlight";
                     value "id" string: "backlight";
-                    value "geom.pos" int: 559;
+                    value "geom.pos" int: 128;
                     value "geom.size" int: 32;
                     value "geom.res" int: 800;
                     value "geom.pos_x" double: 0.0000000000000000000000000;
@@ -313,7 +313,7 @@ group "E_Config" struct {
                 group "E_Config_Gadcon_Client" struct {
                     value "name" string: "temperature";
                     value "id" string: "temperature.1";
-                    value "geom.pos" int: 672;
+                    value "geom.pos" int: 160;
                     value "geom.size" int: 32;
                     value "geom.res" int: 800;
                     value "geom.pos_x" double: 0.0000000000000000000000000;
@@ -329,7 +329,7 @@ group "E_Config" struct {
                 group "E_Config_Gadcon_Client" struct {
                     value "name" string: "cpufreq";
                     value "id" string: "cpufreq";
-                    value "geom.pos" int: 704;
+                    value "geom.pos" int: 192;
                     value "geom.size" int: 32;
                     value "geom.res" int: 800;
                     value "geom.pos_x" double: 0.0000000000000000000000000;
@@ -345,7 +345,7 @@ group "E_Config" struct {
                 group "E_Config_Gadcon_Client" struct {
                     value "name" string: "battery";
                     value "id" string: "battery";
-                    value "geom.pos" int: 736;
+                    value "geom.pos" int: 224;
                     value "geom.size" int: 32;
                     value "geom.res" int: 800;
                     value "geom.pos_x" double: 0.0000000000000000000000000;
@@ -361,7 +361,7 @@ group "E_Config" struct {
                 group "E_Config_Gadcon_Client" struct {
                     value "name" string: "clock";
                     value "id" string: "clock";
-                    value "geom.pos" int: 768;
+                    value "geom.pos" int: 256;
                     value "geom.size" int: 32;
                     value "geom.res" int: 800;
                     value "geom.pos_x" double: 0.0000000000000000000000000;
@@ -377,7 +377,7 @@ group "E_Config" struct {
                 group "E_Config_Gadcon_Client" struct {
                     value "name" string: "connman";
                     value "id" string: "connman";
-                    value "geom.pos" int: 768;
+                    value "geom.pos" int: 288;
                     value "geom.size" int: 32;
                     value "geom.res" int: 800;
                     value "geom.pos_x" double: 0.0000000000000000000000000;
@@ -388,6 +388,22 @@ group "E_Config" struct {
                     value "state_info.flags" int: 0;
                     value "style" string: "plain";
                     value "autoscroll" uchar: 0;
+                    value "resizable" uchar: 0;
+                }
+                group "E_Config_Gadcon_Client" struct {
+                    value "name" string: "tasks";
+                    value "id" string: "tasks.0";
+                    value "geom.pos" int: 320;
+                    value "geom.size" int: 32;
+                    value "geom.res" int: 800;
+                    value "geom.pos_x" double: 0.0000000000000000000000000;
+                    value "geom.pos_y" double: 0.0000000000000000000000000;
+                    value "geom.size_w" double: 0.0000000000000000000000000;
+                    value "geom.size_h" double: 0.0000000000000000000000000;
+                    value "state_info.seq" int: 12;
+                    value "state_info.flags" int: 0;
+                    value "style" string: "inset";
+                    value "autoscroll" uchar: 1;
                     value "resizable" uchar: 0;
                 }
             }

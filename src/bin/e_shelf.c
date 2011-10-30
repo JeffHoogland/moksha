@@ -882,7 +882,7 @@ static void
 _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h)
 {
    E_Shelf *es;
-   Evas_Coord nx, ny, nw, nh, ww, hh;
+   Evas_Coord nx, ny, nw, nh, ww, hh, wantw, wanth;
 
    es = data;
    nx = es->x;
@@ -919,6 +919,8 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
      }
    e_gadcon_swallowed_min_size_set(gc, w, h);
    edje_object_size_min_calc(es->o_base, &nw, &nh);
+   wantw = nw;
+   wanth = nh;
    switch (gc->orient)
      {
       case E_GADCON_ORIENT_FLOAT:
@@ -1041,6 +1043,9 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
       default:
 	break;
      }
+   w -= (wantw - nw);
+   h -= (wanth - nh);
+   e_gadcon_swallowed_min_size_set(gc, w, h);
    e_shelf_move_resize(es, nx, ny, nw, nh);
    e_zone_useful_geometry_dirty(es->zone);
 }

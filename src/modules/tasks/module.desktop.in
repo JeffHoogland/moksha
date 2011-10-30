@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Link
+Name=Tasks
+Icon=e-module-tasks
+X-Enlightenment-ModuleType=utils
+Comment=Gadget to allow you to switch tasks

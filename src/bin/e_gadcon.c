@@ -1132,7 +1132,7 @@ e_gadcon_client_min_size_set(E_Gadcon_Client *gcc, Evas_Coord w, Evas_Coord h)
    E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
    gcc->min.w = w;
    gcc->min.h = h;
-   if ((!gcc->autoscroll) && (!gcc->resizable))
+   if (!gcc->resizable)
      {
 	if (gcc->o_frame)
 	  e_gadcon_layout_pack_min_size_set(gcc->o_frame, w + gcc->pad.w, 
@@ -1679,7 +1679,7 @@ _e_gadcon_moveresize_handle(E_Gadcon_Client *gcc)
    Evas_Coord w, h;
 
    evas_object_geometry_get(gcc->o_box, NULL, NULL, &w, &h);
-   if ((gcc->autoscroll) || (gcc->resizable))
+   if (gcc->resizable)
      {
 	if (e_box_orientation_get(gcc->o_box))
 	  {
@@ -1692,14 +1692,25 @@ _e_gadcon_moveresize_handle(E_Gadcon_Client *gcc)
 	       h = (w * gcc->aspect.h) / gcc->aspect.w;
 	  }
      }
+   if (gcc->autoscroll)
+     {
+	if (e_box_orientation_get(gcc->o_box))
+	  {
+             w = gcc->min.w;
+	  }
+	else
+	  {
+             h = gcc->min.h;
+	  }
+     }
    if (gcc->o_base)
      e_box_pack_options_set(gcc->o_base,
-			    1, 1, /* fill */
-			    1, 1, /* expand */
-			    0.5, 0.5, /* align */
-			    w, h, /* min */
-			    w, h /* max */
-			    );
+                            1, 1, /* fill */
+                            1, 1, /* expand */
+                            0.5, 0.5, /* align */
+                            w, h, /* min */
+                            w, h /* max */
+                           );
 }
 
 static Eina_Bool
@@ -3270,6 +3281,7 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
    E_Gadcon_Layout_Item *bi;
    E_Layout_Item_Container *lc;
    int i, set_prev_pos = 0;
+   static int recurse = 0;
 
    if (sd->frozen) return;
    if (sd->doing_config)
@@ -3278,6 +3290,7 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 	return;
      }
 
+   recurse++;
    min = mino = cur = 0;
 
    _e_gadcon_layout_smart_min_cur_size_calc(sd, &min, &mino, &cur); 
@@ -3301,7 +3314,7 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 	     sd->req = sd->minw;     
 	  }
      }
-   _e_gadcon_layout_smart_gadcons_width_adjust(sd, min, cur);
+   if (recurse == 1) _e_gadcon_layout_smart_gadcons_width_adjust(sd, min, cur);
 
    if (sd->w <= sd->req)
      { 
@@ -3359,7 +3372,7 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 	bi->h = sd->h;
 	xx = sd->x + bi->x;
 	yy = sd->y; // + ((sd->h - bi->h) / 2);
-
+        
 	if (sd->horizontal)
 	  {
 	     evas_object_move(obj, xx, yy);
@@ -3393,6 +3406,7 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 	     evas_object_smart_callback_call(sd->obj, "size_request", NULL);
 	  }
      }
+   recurse--;
 }
 
 static void
@@ -3620,6 +3634,7 @@ _e_gadcon_layout_smart_min_cur_size_calc(E_Smart_Data *sd, int *min, int *mino, 
 	  }
 	else
 	  {
+             bi->ask.size2 = bi->ask.size = bi->min.w;
 	     *min += bi->min.w;
 	     if (bi->min.h > *mino) *mino = bi->min.h;
 	     if (bi->ask.size < bi->min.w)
@@ -3708,6 +3723,7 @@ _e_gadcon_layout_smart_gadcons_width_adjust(E_Smart_Data *sd, int min, int cur)
    else
      return;
 
+   
    sd->items = eina_list_sort(sd->items, eina_list_count(sd->items), 
 			      _e_gadcon_layout_smart_width_smart_sort_reverse_cb);
 
@@ -3755,7 +3771,7 @@ _e_gadcon_layout_smart_gadcons_width_adjust(E_Smart_Data *sd, int min, int cur)
 	  { 
 	     int reduce_by, c2; 
 
-	     while (need)
+	     while (need > 0)
 	       { 
 		  reduce_by = 1;
 		  while (1) 
@@ -3768,11 +3784,14 @@ _e_gadcon_layout_smart_gadcons_width_adjust(E_Smart_Data *sd, int min, int cur)
 		  c2 = c;
 		  EINA_LIST_REVERSE_FOREACH(sd->items, l2, item)
 		    { 
-		       if ((!c2) || (!need)) break;
+		       if ((c2 <= 0) || (need <= 0)) break;
 		       bi2 = evas_object_data_get(item, "e_gadcon_layout_data");
-		       bi2->ask.size2 -= reduce_by; 
-		       need -= reduce_by; 
-		       c2--;
+                       if (bi2->gcc->autoscroll)
+                         {
+                            bi2->ask.size2 -= reduce_by;
+                            need -= reduce_by; 
+                            c2--;
+                         }
 		    } 
 	       }
 	  } 
