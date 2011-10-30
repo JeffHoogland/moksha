@@ -113,15 +113,10 @@ static char tmpbuf[PATH_MAX]; /* general purpose buffer, just use immediately */
 static Eina_Bool 
 _systray_site_is_safe(E_Gadcon_Site site) 
 {
-   /* NB: filter out sites we know are not safe for a systray to sit.
-    * This was done so that systray could be put into illume indicator 
-    * (or anywhere else really) that is 'safe' for systray to be. 
-    * Pretty much, this is anywhere but Desktop and toolbars at the moment */
-   if (e_gadcon_site_is_desktop(site)) 
-     return EINA_FALSE;
-   else if (e_gadcon_site_is_any_toolbar(site)) 
-     return EINA_FALSE;
-   return EINA_TRUE;
+   if (e_gadcon_site_is_shelf(site))
+     return EINA_TRUE;
+
+   return EINA_FALSE;
 }
 
 static const char *
@@ -411,12 +406,10 @@ _systray_atom_st_get(int screen_num)
    return _atom_st_num;
 }
 
-/* XXX TODO: should be in ecore_x */
 static Eina_Bool
 _systray_selection_owner_set(int screen_num, Ecore_X_Window win)
 {
    Ecore_X_Atom atom;
-//   Ecore_X_Display *disp = ecore_x_display_get();
    Ecore_X_Window cur_selection;
    Eina_Bool ret;
 
@@ -503,12 +496,10 @@ _systray_activate(Instance *inst)
    Ecore_X_Atom atom;
    Ecore_X_Window old_win;
    Ecore_X_Window_Attributes attr;
-   Ecore_X_Display *dpy;
 
    if (inst->win.selection != 0) return 1;
 
    atom = _systray_atom_st_get(inst->con->manager->num);
-   dpy = ecore_x_display_get();
    old_win = ecore_x_selection_owner_get(atom);
    if (old_win != 0) return 0;
 
@@ -900,6 +891,14 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 	  (_("Another systray exists"),
 	   _("There can be only one systray gadget and "
 	     "another one already exists."));
+	return NULL;
+     }
+
+   if ((gc->shelf) && (!gc->shelf->popup))
+     {
+	e_util_dialog_internal
+	  (_("Systray Error"),
+	   _("Systray cannot work in a shelf that is set to below everything."));
 	return NULL;
      }
 
