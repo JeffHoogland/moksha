@@ -511,7 +511,7 @@ group "E_Config" struct {
   value "scale.min" double: 1.0000000000000000000000000;
   value "scale.max" double: 3.0000000000000000000000000;
   value "scale.factor" double: 1.0000000000000000000000000;
-  value "scale.base_dpi" int: 142;
+  value "scale.base_dpi" int: 90;
   value "scale.use_dpi" uchar: 1;
   value "scale.use_custom" uchar: 0;
   value "show_cursor" uchar: 1;
