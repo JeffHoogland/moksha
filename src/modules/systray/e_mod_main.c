@@ -113,10 +113,15 @@ static char tmpbuf[PATH_MAX]; /* general purpose buffer, just use immediately */
 static Eina_Bool 
 _systray_site_is_safe(E_Gadcon_Site site) 
 {
-   if (e_gadcon_site_is_shelf(site))
-     return EINA_TRUE;
-
-   return EINA_FALSE;
+   /* NB: filter out sites we know are not safe for a systray to sit.
+    * This was done so that systray could be put into illume indicator 
+    * (or anywhere else really) that is 'safe' for systray to be. 
+    * Pretty much, this is anywhere but Desktop and toolbars at the moment */
+   if (e_gadcon_site_is_desktop(site)) 
+     return EINA_FALSE;
+   else if (e_gadcon_site_is_any_toolbar(site)) 
+     return EINA_FALSE;
+   return EINA_TRUE;
 }
 
 static const char *
