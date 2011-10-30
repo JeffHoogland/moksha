@@ -579,14 +579,19 @@ define([CHECK_MODULE_BATTERY],
   AC_E_CHECK_PKG(BATTERY, [ ecore >= 1.0.999 ecore-file >= 1.0.999 ecore-con >= 1.0.999 eina >= 1.0.999 ], [], [BATTERY=false])
 ])
 
+have_openbsd="no"
 BATTERY_LDFLAGS=
 case "$host_os" in
   darwin*)
     BATTERY_LDFLAGS="-framework Foundation -framework IOKit"
   ;;
+  openbsd*)
+    have_openbsd="yes"
+  ;;
 esac
 
 AC_SUBST(BATTERY_LDFLAGS)
+AM_CONDITIONAL([HAVE_OPENBSD], [test "x${have_openbsd}" = "xyes"])
 
 AM_CONDITIONAL(HAVE_TEMPERATURE, false)
 define([CHECK_MODULE_TEMPERATURE],

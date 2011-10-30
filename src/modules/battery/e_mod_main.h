@@ -47,6 +47,8 @@ struct _Config
 #ifdef HAVE_EEZE
    Eeze_Udev_Watch     *acwatch;
    Eeze_Udev_Watch     *batwatch;
+#endif
+#if defined HAVE_EEZE || defined __OpenBSD__
    Eina_Bool            fuzzy;
    int                  fuzzcount;
 #else
@@ -67,7 +69,7 @@ typedef struct _Ac_Adapter Ac_Adapter;
 struct _Battery
 {
    const char *udi;
-#ifdef HAVE_EEZE
+#if defined HAVE_EEZE || defined __OpenBSD__
    Ecore_Poller *poll;
 #else
    E_DBus_Signal_Handler *prop_change;
@@ -75,7 +77,7 @@ struct _Battery
 #endif
    Eina_Bool present:1;
    Eina_Bool charging:1;
-#ifdef HAVE_EEZE
+#if defined HAVE_EEZE || defined __OpenBSD__
    double last_update;
    double percent;
    double current_charge;
@@ -99,6 +101,9 @@ struct _Battery
    const char *model;
    const char *vendor;
    Eina_Bool got_prop:1;
+#ifdef __OpenBSD__
+   int * mib;
+#endif
 };
 
 struct _Ac_Adapter
@@ -109,6 +114,9 @@ struct _Ac_Adapter
 #endif
    Eina_Bool present:1;
    const char *product;
+#ifdef __OpenBSD__
+   int * mib;
+#endif
 };
 
 Battery *_battery_battery_find(const char *udi);
@@ -119,11 +127,16 @@ void _battery_device_update(void);
 int  _battery_udev_start(void);
 void _battery_udev_stop(void);
 /* end e_mod_udev.c */
-#else
+#elif !defined __OpenBSD__
 /* in e_mod_dbus.c */
 int  _battery_dbus_start(void);
 void _battery_dbus_stop(void);
 /* end e_mod_dbus.c */
+#else
+/* in e_mod_openbsd.c */
+int _battery_openbsd_start(void);
+void _battery_openbsd_stop(void);
+/* end e_mod_openbsd.c */
 #endif
 
 EAPI extern E_Module_Api e_modapi;

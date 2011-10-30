@@ -82,7 +82,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 
 #ifdef HAVE_EEZE
    eeze_init();
-#else
+#elif !defined __OpenBSD__
    e_dbus_init();
    e_hal_init();
 #endif
@@ -103,7 +103,7 @@ _gc_shutdown(E_Gadcon_Client *gcc)
 
 #ifdef HAVE_EEZE
    eeze_shutdown();
-#else
+#elif !defined __OpenBSD__
    e_hal_shutdown();
    e_dbus_shutdown();
 #endif
@@ -364,6 +364,8 @@ _battery_config_updated(void)
      {
 #ifdef HAVE_EEZE
         ok = _battery_udev_start();
+#elif defined __OpenBSD__
+	ok = _battery_openbsd_start();
 #else
         ok = _battery_dbus_start();
 #endif
@@ -674,7 +676,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, alert_timeout, INT);
    E_CONFIG_VAL(D, T, suspend_below, INT);
    E_CONFIG_VAL(D, T, force_mode, INT);
-#ifdef HAVE_EEZE
+#if defined HAVE_EEZE || defined __OpenBSD__
    E_CONFIG_VAL(D, T, fuzzy, INT);
 #endif
 
@@ -688,7 +690,7 @@ e_modapi_init(E_Module *m)
 	battery_config->alert_timeout = 0;
 	battery_config->suspend_below = 0;
 	battery_config->force_mode = 0;
-#ifdef HAVE_EEZE
+#if defined HAVE_EEZE || defined __OpenBSD__
 	battery_config->fuzzy = 0;
 #endif
      }
@@ -763,6 +765,8 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    
 #ifdef HAVE_EEZE
    _battery_udev_stop();
+#elif defined __OpenBSD__
+   _battery_openbsd_stop();
 #else
    _battery_dbus_stop();
 #endif

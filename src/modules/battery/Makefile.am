@@ -2,9 +2,13 @@ MAINTAINERCLEANFILES = Makefile.in
 MODULE = battery
 
 if HAVE_EEZE
-  DEVICE_FILE = e_mod_udev.c
+DEVICE_FILE = e_mod_udev.c
 else
-  DEVICE_FILE = e_mod_dbus.c
+if HAVE_OPENBSD
+DEVICE_FILE = e_mod_openbsd.c
+else
+DEVICE_FILE = e_mod_dbus.c
+endif
 endif
 
 # data files for the module
