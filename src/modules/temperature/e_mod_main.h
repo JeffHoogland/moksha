@@ -45,7 +45,7 @@ struct _Config_Face
    Ecore_Event_Handler *tempget_del_handler;
 
    Eina_Bool have_temp:1;
-#ifdef __FreeBSD__
+#if defined (__FreeBSD__) || defined (__OpenBSD__)
    int mib[5];
 #endif
 };

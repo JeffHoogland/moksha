@@ -6,6 +6,13 @@
 #include <sys/sysctl.h>
 #endif
 
+#ifdef __OpenBSD__
+#include <sys/types.h>
+#include <sys/sysctl.h>
+#include <sys/sensors.h>
+#endif
+
+
 /* gadcon requirements */
 static E_Gadcon_Client *_gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style);
 static void _gc_shutdown(E_Gadcon_Client *gcc);
