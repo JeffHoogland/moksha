@@ -13,7 +13,7 @@ struct _E_Intl_Pair
    const char *locale_translation;
 };
 
-const E_Intl_Pair basic_language_predefined_pairs[ ] = 
+const E_Intl_Pair basic_language_predefined_pairs[ ] =
 {
    {"bg_BG.UTF-8", "lang-bg_BG.png", "Български"},
    {"ca_ES.UTF-8", "lang-ca_ES.png", "Català"},
@@ -46,16 +46,16 @@ const E_Intl_Pair basic_language_predefined_pairs[ ] =
 static const char *lang = NULL;
 static Eina_List *blang_list = NULL;
 
-static int 
-_basic_lang_list_sort(const void *data1, const void *data2) 
+static int
+_basic_lang_list_sort(const void *data1, const void *data2)
 {
    E_Intl_Pair *ln1, *ln2;
    const char *trans1;
    const char *trans2;
-   
+
    if (!data1) return 1;
    if (!data2) return -1;
-   
+
    ln1 = (E_Intl_Pair *)data1;
    ln2 = (E_Intl_Pair *)data2;
 
@@ -64,7 +64,7 @@ _basic_lang_list_sort(const void *data1, const void *data2)
 
    if (!ln2->locale_translation) return -1;
    trans2 = ln2->locale_translation;
-   
+
    return (strcmp(trans1, trans2));
 }
 
@@ -78,7 +78,7 @@ wizard_page_init(E_Wizard_Page *pg __UNUSED__)
 #else
    output = popen("locale -a", "r");
 #endif
-   if (output) 
+   if (output)
      {
 	char line[32];
 
@@ -91,7 +91,7 @@ wizard_page_init(E_Wizard_Page *pg __UNUSED__)
 	       {
 		  char *basic_language;
 
-		  basic_language = 
+		  basic_language =
 		    e_intl_locale_parts_combine
 		    (locale_parts, E_INTL_LOC_LANG | E_INTL_LOC_REGION);
 		  if (basic_language)
@@ -106,10 +106,10 @@ wizard_page_init(E_Wizard_Page *pg __UNUSED__)
 				 basic_language, strlen(basic_language)))
 			      {
 				 if (!eina_list_data_find
-				     (blang_list, 
+				     (blang_list,
 				      &basic_language_predefined_pairs[i]))
 				   blang_list = eina_list_append
-				   (blang_list, 
+				   (blang_list,
 				    &basic_language_predefined_pairs[i]);
 				 break;
 			      }
@@ -120,7 +120,7 @@ wizard_page_init(E_Wizard_Page *pg __UNUSED__)
 		  e_intl_locale_parts_free(locale_parts);
 	       }
 	  }
-	/* Sort basic languages */	
+	/* Sort basic languages */
 	blang_list = eina_list_sort(blang_list, eina_list_count(blang_list), _basic_lang_list_sort);
 	pclose(output);
      }
@@ -152,7 +152,7 @@ wizard_page_show(E_Wizard_Page *pg)
 
    e_prefix_data_snprintf(buf, sizeof(buf), "data/images/%s", "lang-system.png");
    ic = e_util_icon_add(buf, pg->evas);
-   e_widget_ilist_append(ob, ic, _("System Default"), 
+   e_widget_ilist_append(ob, ic, _("System Default"),
                          NULL, NULL, NULL);
    for (i = 1, l = blang_list; l; l = l->next, i++)
      {
@@ -166,7 +166,7 @@ wizard_page_show(E_Wizard_Page *pg)
 	  }
         else
 	  ic = NULL;
-	e_widget_ilist_append(ob, ic, _(pair->locale_translation), 
+	e_widget_ilist_append(ob, ic, _(pair->locale_translation),
 			      NULL, NULL, pair->locale_key);
 	if (e_intl_language_get())
 	  {
