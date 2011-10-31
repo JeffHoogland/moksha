@@ -54,7 +54,7 @@ static void _e_gadcon_client_cb_mouse_move(void *data, Evas *e, Evas_Object *obj
 static void _e_gadcon_client_cb_menu_style_plain(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_gadcon_client_cb_menu_style_inset(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_gadcon_client_cb_menu_autoscroll(void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_gadcon_client_cb_menu_resizable(void *data, E_Menu *m, E_Menu_Item *mi);
+/*static void _e_gadcon_client_cb_menu_resizable(void *data, E_Menu *m, E_Menu_Item *mi);*/
 static void _e_gadcon_client_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_gadcon_client_cb_menu_remove(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_gadcon_client_cb_menu_pre(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -451,7 +451,7 @@ e_gadcon_populate(E_Gadcon *gc)
 		    e_gadcon_layout_pack_options_set(gcc->o_base, gcc);
 
 		  e_gadcon_client_autoscroll_set(gcc, cf_gcc->autoscroll);
-		  e_gadcon_client_resizable_set(gcc, cf_gcc->resizable);
+//		  e_gadcon_client_resizable_set(gcc, cf_gcc->resizable);
 		  if (gcc->client_class->func.orient)
 		    gcc->client_class->func.orient(gcc, gc->orient);
 
@@ -524,7 +524,7 @@ e_gadcon_populate_class(E_Gadcon *gc, const E_Gadcon_Client_Class *cc)
 		    e_gadcon_layout_pack_options_set(gcc->o_base, gcc);
 
 		  e_gadcon_client_autoscroll_set(gcc, cf_gcc->autoscroll);
-		  e_gadcon_client_resizable_set(gcc, cf_gcc->resizable);
+//		  e_gadcon_client_resizable_set(gcc, cf_gcc->resizable);
 		  if (gcc->client_class->func.orient)
 		    gcc->client_class->func.orient(gcc, gc->orient); 
 
@@ -923,7 +923,7 @@ e_gadcon_client_edit_begin(E_Gadcon_Client *gcc)
    e_theme_edje_object_set(gcc->o_control, "base/theme/gadman", 
                            "e/gadman/control");
 
-   if ((gcc->autoscroll) || (gcc->resizable))
+   if ((gcc->autoscroll)/* || (gcc->resizable)*/)
      {
 	if (e_box_orientation_get(gcc->o_box))
 	  edje_object_signal_emit(gcc->o_control, "e,state,hsize,on", "e");
@@ -1132,7 +1132,7 @@ e_gadcon_client_min_size_set(E_Gadcon_Client *gcc, Evas_Coord w, Evas_Coord h)
    E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
    gcc->min.w = w;
    gcc->min.h = h;
-   if (!gcc->resizable)
+/*   if (!gcc->resizable)*/
      {
 	if (gcc->o_frame)
 	  e_gadcon_layout_pack_min_size_set(gcc->o_frame, w + gcc->pad.w, 
@@ -1150,7 +1150,7 @@ e_gadcon_client_aspect_set(E_Gadcon_Client *gcc, int w, int h)
    E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
    gcc->aspect.w = w;
    gcc->aspect.h = h;
-   if ((!gcc->autoscroll) && (!gcc->resizable))
+   if ((!gcc->autoscroll)/* && (!gcc->resizable)*/)
      {
 	if (gcc->o_frame)
 	  {
@@ -1212,7 +1212,7 @@ e_gadcon_client_resizable_set(E_Gadcon_Client *gcc, int resizable)
 {
    E_OBJECT_CHECK(gcc);
    E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
-
+/*
    gcc->resizable = resizable;
    if (gcc->resizable)
      {
@@ -1248,6 +1248,9 @@ e_gadcon_client_resizable_set(E_Gadcon_Client *gcc, int resizable)
                                              gcc->aspect.h);
 	  }
      }
+ */
+   resizable = 0;
+   gcc = NULL;
 }
 
 EAPI int
@@ -1403,14 +1406,14 @@ e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu_gadget
              e_util_menu_item_theme_icon_set(mi, "transform-scale");
              e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_edit, gcc);
 	  }
-
+/*
 	mi = e_menu_item_new(menu_gadget);
 	e_menu_item_label_set(mi, _("Resizeable"));
 	e_util_menu_item_theme_icon_set(mi, "transform-scale");
 	e_menu_item_check_set(mi, 1);
 	if (gcc->resizable) e_menu_item_toggle_set(mi, 1);
 	e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_resizable, gcc);
-
+ */
 	mi = e_menu_item_new(menu_gadget);
 	e_menu_item_label_set(mi, _("Automatically scroll contents"));
 	e_util_menu_item_theme_icon_set(mi, "transform-move");
@@ -1679,6 +1682,7 @@ _e_gadcon_moveresize_handle(E_Gadcon_Client *gcc)
    Evas_Coord w, h;
 
    evas_object_geometry_get(gcc->o_box, NULL, NULL, &w, &h);
+/*   
    if (gcc->resizable)
      {
 	if (e_box_orientation_get(gcc->o_box))
@@ -1692,6 +1696,7 @@ _e_gadcon_moveresize_handle(E_Gadcon_Client *gcc)
 	       h = (w * gcc->aspect.h) / gcc->aspect.w;
 	  }
      }
+ */
    if (gcc->autoscroll)
      {
 	if (e_box_orientation_get(gcc->o_box))
@@ -1795,7 +1800,8 @@ _e_gadcon_client_save(E_Gadcon_Client *gcc)
    gcc->cf->style = NULL;
    if (gcc->style)
      gcc->cf->style = eina_stringshare_add(gcc->style);
-   gcc->cf->resizable = gcc->resizable;
+/*   gcc->cf->resizable = gcc->resizable;*/
+   gcc->cf->resizable = 0;
    e_config_save_queue();
 }
 
@@ -2478,7 +2484,7 @@ _e_gadcon_cb_dnd_enter(void *data, const char *type __UNUSED__, void *event)
 		    e_gadcon_layout_pack_options_set(new_gcc->o_base, new_gcc);
 
 		  e_gadcon_client_autoscroll_set(new_gcc, gcc->autoscroll);
-		  e_gadcon_client_resizable_set(new_gcc, gcc->resizable);
+/*		  e_gadcon_client_resizable_set(new_gcc, gcc->resizable);*/
 		  if (new_gcc->client_class->func.orient)
 		    new_gcc->client_class->func.orient(new_gcc, gc->orient);
 		  new_gcc->state_info.resist = 1;
@@ -2736,7 +2742,7 @@ _e_gadcon_client_cb_menu_autoscroll(void *data, E_Menu *m __UNUSED__, E_Menu_Ite
    _e_gadcon_client_save(gcc);
    e_gadcon_layout_thaw(gcc->gadcon->o_container);
 }
-
+/*
 static void
 _e_gadcon_client_cb_menu_resizable(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
@@ -2750,7 +2756,7 @@ _e_gadcon_client_cb_menu_resizable(void *data, E_Menu *m __UNUSED__, E_Menu_Item
    _e_gadcon_client_save(gcc);
    e_gadcon_layout_thaw(gcc->gadcon->o_container);
 }
-
+*/
 static void
 _e_gadcon_client_cb_menu_edit(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
