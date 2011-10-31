@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-10-23 09:55+0200\n"
-"PO-Revision-Date: 2011-10-23 09:59+0200\n"
+"POT-Creation-Date: 2011-10-31 22:11+0100\n"
+"PO-Revision-Date: 2011-10-31 22:18+0100\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -163,7 +163,7 @@ msgstr ""
 msgid "Window : Actions"
 msgstr "Finestre : Azioni"
 
-#: src/bin/e_actions.c:2688 src/bin/e_fm.c:6168
+#: src/bin/e_actions.c:2688 src/bin/e_fm.c:6168 src/bin/e_gadcon.c:1407
 #: src/bin/e_int_border_menu.c:592
 msgid "Move"
 msgstr "Sposta"
@@ -906,7 +906,7 @@ msgstr ""
 "s<br><br>Questo file è stato cancellato per evitare<br>corruzione di dati."
 "<br>"
 
-#: src/bin/e_config_dialog.c:210 src/modules/battery/e_mod_main.c:719
+#: src/bin/e_config_dialog.c:210 src/modules/battery/e_mod_main.c:721
 #: src/modules/conf/e_mod_main.c:275 src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
 msgid "Advanced"
@@ -1107,7 +1107,7 @@ msgstr "Seleziona un'icona"
 msgid "Select an Executable"
 msgstr "Seleziona un'eseguibile"
 
-#: src/bin/e_entry.c:496 src/bin/e_fm.c:8207 src/bin/e_shelf.c:1698
+#: src/bin/e_entry.c:496 src/bin/e_fm.c:8207 src/bin/e_shelf.c:1703
 #: src/modules/conf_dialogs/e_int_config_profiles.c:135
 #: src/modules/conf_shelves/e_int_config_shelf.c:81
 #: src/modules/ibar/e_mod_config.c:108
@@ -1595,37 +1595,29 @@ msgstr "Informazioni collegamento"
 msgid "Select an Image"
 msgstr "Seleziona un'immagine"
 
-#: src/bin/e_gadcon.c:1370 src/bin/e_int_border_menu.c:118
+#: src/bin/e_gadcon.c:1375 src/bin/e_int_border_menu.c:118
 msgid "Move to"
 msgstr "Sposta in"
 
-#: src/bin/e_gadcon.c:1402 src/modules/gadman/e_mod_gadman.c:720
-msgid "Begin move/resize"
-msgstr "Inizio spostamento/ridimensionamento"
-
-#: src/bin/e_gadcon.c:1408
-msgid "Resizeable"
-msgstr "Ridimensionabile"
-
-#: src/bin/e_gadcon.c:1415
+#: src/bin/e_gadcon.c:1420
 msgid "Automatically scroll contents"
 msgstr "Scorri automaticamente contenuto"
 
-#: src/bin/e_gadcon.c:1426 src/modules/gadman/e_mod_gadman.c:731
+#: src/bin/e_gadcon.c:1431 src/modules/gadman/e_mod_gadman.c:731
 msgid "Plain"
 msgstr "Liscio"
 
-#: src/bin/e_gadcon.c:1435 src/modules/gadman/e_mod_gadman.c:739
+#: src/bin/e_gadcon.c:1440 src/modules/gadman/e_mod_gadman.c:739
 msgid "Inset"
 msgstr "Incassato"
 
-#: src/bin/e_gadcon.c:1444 src/bin/e_int_config_modules.c:54
+#: src/bin/e_gadcon.c:1449 src/bin/e_int_config_modules.c:54
 #: src/modules/conf_theme/e_mod_main.c:30
 #: src/modules/dropshadow/e_mod_main.c:89
 msgid "Look"
 msgstr "Aspetto"
 
-#: src/bin/e_gadcon.c:1455 src/bin/e_widget_config_list.c:66
+#: src/bin/e_gadcon.c:1460 src/bin/e_widget_config_list.c:66
 #: src/modules/conf_applications/e_int_config_apps.c:239
 #: src/modules/conf_applications/e_int_config_apps.c:260
 #: src/modules/conf_applications/e_int_config_apps.c:280
@@ -1633,9 +1625,9 @@ msgstr "Aspetto"
 msgid "Remove"
 msgstr "Elimina"
 
-#: src/bin/e_gadcon.c:1969
-msgid "Stop move/resize this gadget"
-msgstr "Fine spostamento/ridimensionamento di questo gadget"
+#: src/bin/e_gadcon.c:1988
+msgid "Stop moving"
+msgstr "Ferma spostamento"
 
 #: src/bin/e_hints.c:152
 msgid ""
@@ -1749,7 +1741,7 @@ msgid "Window"
 msgstr "Finestra"
 
 #: src/bin/e_int_border_menu.c:138 src/bin/e_int_config_modules.c:59
-#: src/bin/e_int_menus.c:230 src/bin/e_shelf.c:1690
+#: src/bin/e_int_menus.c:230 src/bin/e_shelf.c:1695
 #: src/modules/battery/e_mod_main.c:183 src/modules/clock/e_mod_main.c:296
 #: src/modules/clock/e_mod_main.c:540 src/modules/conf/e_conf.c:124
 #: src/modules/conf/e_conf.c:134 src/modules/conf/e_mod_main.c:102
@@ -1757,7 +1749,7 @@ msgstr "Finestra"
 #: src/modules/conf_theme/e_int_config_cursor.c:133
 #: src/modules/ibar/e_mod_main.c:307 src/modules/ibar/e_mod_main.c:787
 #: src/modules/ibox/e_mod_main.c:299 src/modules/ibox/e_mod_main.c:692
-#: src/modules/pager/e_mod_main.c:790 src/modules/temperature/e_mod_main.c:226
+#: src/modules/pager/e_mod_main.c:790 src/modules/temperature/e_mod_main.c:233
 #: src/modules/mixer/e_mod_main.c:789 src/modules/connman/e_mod_main.c:1300
 msgid "Settings"
 msgstr "Impostazioni"
@@ -3144,11 +3136,11 @@ msgstr ""
 msgid "Shelf #"
 msgstr "Mensola #"
 
-#: src/bin/e_shelf.c:1299 src/modules/conf_shelves/e_int_config_shelf.c:291
+#: src/bin/e_shelf.c:1304 src/modules/conf_shelves/e_int_config_shelf.c:291
 msgid "Are you sure you want to delete this shelf?"
 msgstr "Siete sicuri di voler eliminare questa mensola?"
 
-#: src/bin/e_shelf.c:1300
+#: src/bin/e_shelf.c:1305
 msgid ""
 "You requested to delete this shelf.<br><br>Are you sure you want to delete "
 "it?"
@@ -3156,15 +3148,15 @@ msgstr ""
 "Avete chiesto di eliminare questa mensola.<br><br>Siete sicuri di volerla "
 "eliminare?"
 
-#: src/bin/e_shelf.c:1675
+#: src/bin/e_shelf.c:1680
 msgid "Stop Moving/Resizing Gadgets"
 msgstr "Fine spostamento/ridimensionamento oggetti"
 
-#: src/bin/e_shelf.c:1677
+#: src/bin/e_shelf.c:1682
 msgid "Begin Moving/Resizing Gadgets"
 msgstr "Inizio spostamento/ridimensionamento oggetti"
 
-#: src/bin/e_shelf.c:1685 src/modules/conf_shelves/e_int_config_shelf.c:84
+#: src/bin/e_shelf.c:1690 src/modules/conf_shelves/e_int_config_shelf.c:84
 #: src/modules/ibar/e_mod_main.c:781
 msgid "Contents"
 msgstr "Contenuti"
@@ -3675,24 +3667,24 @@ msgstr "Hardware"
 msgid "Battery"
 msgstr "Battery"
 
-#: src/modules/battery/e_mod_main.c:453
+#: src/modules/battery/e_mod_main.c:455
 msgid "Your battery is low!"
 msgstr "Basso livello batteria!"
 
-#: src/modules/battery/e_mod_main.c:455
+#: src/modules/battery/e_mod_main.c:457
 msgid "AC power is recommended."
 msgstr "Consigliata alimentazione AC."
 
-#: src/modules/battery/e_mod_main.c:530
+#: src/modules/battery/e_mod_main.c:532
 msgid "N/A"
 msgstr "N/D"
 
-#: src/modules/battery/e_mod_main.c:610 src/modules/battery/e_mod_main.c:612
-#: src/modules/battery/e_mod_main.c:619 src/modules/battery/e_mod_main.c:621
+#: src/modules/battery/e_mod_main.c:612 src/modules/battery/e_mod_main.c:614
+#: src/modules/battery/e_mod_main.c:621 src/modules/battery/e_mod_main.c:623
 msgid "ERROR"
 msgstr "ERRORE"
 
-#: src/modules/battery/e_mod_main.c:721
+#: src/modules/battery/e_mod_main.c:723
 msgid "Battery Meter"
 msgstr "Indicatore di carica"
 
@@ -4629,11 +4621,11 @@ msgstr ""
 msgid "Language Settings"
 msgstr "Localizzazione"
 
-#: src/modules/conf_intl/e_int_config_intl.c:889
+#: src/modules/conf_intl/e_int_config_intl.c:893
 msgid "Possible Locale problems"
 msgstr "Possibili problemi di localizzazione"
 
-#: src/modules/conf_intl/e_int_config_intl.c:890
+#: src/modules/conf_intl/e_int_config_intl.c:894
 #, c-format
 msgid ""
 "You have some extra locale environment<br>variables set that may interfere "
@@ -4647,29 +4639,29 @@ msgstr ""
 "si verifichi<br>rimuovete le variabili tramite l'apposita<br>voce del "
 "pannello impostazioni.<br>Le variabili in questione sono le seguenti:<br>%s"
 
-#: src/modules/conf_intl/e_int_config_intl.c:945
-#: src/modules/conf_intl/e_int_config_intl.c:1037
+#: src/modules/conf_intl/e_int_config_intl.c:949
+#: src/modules/conf_intl/e_int_config_intl.c:1041
 msgid "Language Selector"
 msgstr "Selettore lingua"
 
-#: src/modules/conf_intl/e_int_config_intl.c:976
-#: src/modules/conf_intl/e_int_config_intl.c:1427
+#: src/modules/conf_intl/e_int_config_intl.c:980
+#: src/modules/conf_intl/e_int_config_intl.c:1431
 #: src/modules/conf_menus/e_int_config_menus.c:169
-#: src/modules/wizard/page_010.c:151
+#: src/modules/wizard/page_010.c:155
 msgid "System Default"
 msgstr "Predefinito dal sistema"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1010
-#: src/modules/conf_intl/e_int_config_intl.c:1088
+#: src/modules/conf_intl/e_int_config_intl.c:1014
+#: src/modules/conf_intl/e_int_config_intl.c:1092
 msgid "Locale Selected"
 msgstr "Localizzazione selezionata"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1011
-#: src/modules/conf_intl/e_int_config_intl.c:1089
+#: src/modules/conf_intl/e_int_config_intl.c:1015
+#: src/modules/conf_intl/e_int_config_intl.c:1093
 msgid "Locale"
 msgstr "Localizzazione"
 
-#: src/modules/conf_intl/e_mod_main.c:17 src/modules/wizard/page_010.c:142
+#: src/modules/conf_intl/e_mod_main.c:17 src/modules/wizard/page_010.c:146
 msgid "Language"
 msgstr "Lingua"
 
@@ -5725,11 +5717,9 @@ msgid "Custom scaling factor"
 msgstr "Fattore di scala personalizzato"
 
 #: src/modules/conf_theme/e_int_config_scale.c:189
-#: src/modules/conf_theme/e_int_config_scale.c:202
-#: src/modules/conf_theme/e_int_config_scale.c:209
 #, c-format
-msgid "%1.2f times"
-msgstr "%1.2f volte"
+msgid "%1.2f x"
+msgstr "%1.2f x"
 
 #: src/modules/conf_theme/e_int_config_scale.c:193
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:155
@@ -5739,6 +5729,12 @@ msgstr "Regole"
 #: src/modules/conf_theme/e_int_config_scale.c:199
 msgid "Minimum"
 msgstr "Minimo"
+
+#: src/modules/conf_theme/e_int_config_scale.c:202
+#: src/modules/conf_theme/e_int_config_scale.c:209
+#, c-format
+msgid "%1.2f times"
+msgstr "%1.2f volte"
 
 #: src/modules/conf_theme/e_int_config_scale.c:206
 msgid "Maximum"
@@ -7129,6 +7125,10 @@ msgstr "Sfondo"
 msgid "Background Options"
 msgstr "Opzioni dello sfondo"
 
+#: src/modules/gadman/e_mod_gadman.c:720
+msgid "Begin move/resize"
+msgstr "Inizio spostamento/ridimensionamento"
+
 #: src/modules/gadman/e_mod_gadman.c:751
 msgid "Free"
 msgstr "Libero"
@@ -7616,7 +7616,7 @@ msgstr "Bassa temperatura"
 msgid "Temperatures"
 msgstr "Temperature"
 
-#: src/modules/temperature/e_mod_main.c:169
+#: src/modules/temperature/e_mod_main.c:176
 msgid "Temperature"
 msgstr "Temperature"
 
@@ -7628,7 +7628,7 @@ msgstr "Avanti"
 msgid "Welcome to Enlightenment"
 msgstr "Benvenuti in Enlightenment"
 
-#: src/modules/wizard/page_010.c:143 src/modules/wizard/page_020.c:58
+#: src/modules/wizard/page_010.c:147 src/modules/wizard/page_020.c:58
 msgid "Select one"
 msgstr "Selezionare un'opzione"
 
@@ -7892,16 +7892,24 @@ msgstr "Connesso"
 msgid "offline"
 msgstr "Disconnesso"
 
-#: src/modules/systray/e_mod_main.c:900
+#: src/modules/systray/e_mod_main.c:896
 msgid "Another systray exists"
 msgstr "Esiste un'altra istanza di Systray"
 
-#: src/modules/systray/e_mod_main.c:901
+#: src/modules/systray/e_mod_main.c:897
 msgid "There can be only one systray gadget and another one already exists."
 msgstr ""
 "Può esserci una sola istanza di Systray, e attualmente ne esiste già "
 "un'altra."
 
-#: src/modules/systray/e_mod_main.c:1104
+#: src/modules/systray/e_mod_main.c:905
+msgid "Systray Error"
+msgstr "Errore di Systray"
+
+#: src/modules/systray/e_mod_main.c:906
+msgid "Systray cannot work in a shelf that is set to below everything."
+msgstr "Systray non può funzionare in una mensola impostata per stare sotto le finestre."
+
+#: src/modules/systray/e_mod_main.c:1108
 msgid "Systray"
 msgstr "Systray"
