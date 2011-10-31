@@ -40,20 +40,14 @@ notification_popup_notify(E_Notification *n,
    switch (urgency)
      {
       case E_NOTIFICATION_URGENCY_LOW:
-        if (!notification_cfg->show_low)
-          return 0;
+        if (!notification_cfg->show_low) return 0;
         break;
-
       case E_NOTIFICATION_URGENCY_NORMAL:
-        if (!notification_cfg->show_normal)
-          return 0;
+        if (!notification_cfg->show_normal) return 0;
         break;
-
       case E_NOTIFICATION_URGENCY_CRITICAL:
-        if (!notification_cfg->show_critical)
-          return 0;
+        if (!notification_cfg->show_critical) return 0;
         break;
-
       default:
         break;
      }
@@ -92,8 +86,7 @@ notification_popup_notify(E_Notification *n,
 
    if (timeout < 0 || notification_cfg->force_timeout)
      timeout = notification_cfg->timeout;
-   else
-     timeout = (double)timeout / 1000.0;
+   else timeout = (double)timeout / 1000.0;
 
    if (timeout > 0)
      popup->timer = ecore_timer_add(timeout, (Ecore_Task_Cb)_notification_timer_cb, popup);
@@ -130,26 +123,20 @@ _notification_popup_merge(E_Notification *n)
    size_t len;
 
    str1 = e_notification_app_name_get(n);
-   /* printf("merge %s\n", str1); */
-
-   if (!str1)
-     return NULL;
+   if (!str1) return NULL;
 
    EINA_LIST_FOREACH(notification_cfg->popups, l, popup)
      {
-        if (!popup->notif)
-          continue;
-
+        if (!popup->notif) continue;
         if (!(str2 = e_notification_app_name_get(popup->notif)))
           continue;
-
         if (str1 == str2) break;
      }
 
    if (!popup)
      {
         /* printf("- no poup to merge\n"); */
-         return NULL;
+        return NULL;
      }
 
    str1 = e_notification_summary_get(n);
@@ -158,7 +145,7 @@ _notification_popup_merge(E_Notification *n)
    if (str1 && str2 && (str1 != str2))
      {
         /* printf("- summary doesn match, %s, %s\n", str1, str2); */
-         return NULL;
+        return NULL;
      }
 
    l = e_notification_actions_get(popup->notif);
@@ -166,17 +153,17 @@ _notification_popup_merge(E_Notification *n)
    if ((!!l) + (!!l2) == 1)
      {
         /* printf("- actions dont match\n"); */
-         return NULL;
+        return NULL;
      }
    for (i = l, i2 = l2; i && i2; i = i->next, i2 = i2->next)
      {
         if ((!!i) + (!!i2) == 1) return NULL;
         a = i->data, a2 = i2->data;
         if ((!!a) + (!!a2) == 1) return NULL;
-        if (e_notification_action_id_get(a) != e_notification_action_id_get(a2))
-          return NULL;
-        if (e_notification_action_name_get(a) != e_notification_action_name_get(a2))
-          return NULL;
+        if (e_notification_action_id_get(a) != 
+            e_notification_action_id_get(a2)) return NULL;
+        if (e_notification_action_name_get(a) != 
+            e_notification_action_name_get(a2)) return NULL;
      }
 
    /* TODO  p->n is not fallback alert..*/
@@ -187,10 +174,8 @@ _notification_popup_merge(E_Notification *n)
 
    len = strlen(body_old);
    len += strlen(body_new);
-   if (len < 65536)
-     body_final = alloca(len + 5);
-   else
-     body_final = malloc(len + 5);
+   if (len < 65536) body_final = alloca(len + 5);
+   else body_final = malloc(len + 5);
    snprintf(body_final, len, "%s<ps>%s", body_old, body_new);
    /* printf("set body %s\n", body_final); */
 
@@ -278,7 +263,8 @@ _notification_popup_new(E_Notification *n)
    popup->e = popup->win->evas;
 
    /* Setup the theme */
-   snprintf(buf, sizeof(buf), "%s/e-module-notification.edj", notification_mod->dir);
+   snprintf(buf, sizeof(buf), "%s/e-module-notification.edj",
+            notification_mod->dir);
    popup->theme = edje_object_add(popup->e);
 
    if (!e_theme_edje_object_set(popup->theme,
@@ -327,26 +313,24 @@ _notification_popup_place(Popup_Data *popup,
         e_popup_move(popup->win,
                      to_edge, to_edge + pos);
         break;
-
       case CORNER_TR:
         e_popup_move(popup->win,
                      con->w - (w + to_edge),
                      to_edge + pos);
         break;
-
       case CORNER_BL:
         e_popup_move(popup->win,
                      to_edge,
                      (con->h - h) - (to_edge + pos));
         break;
-
       case CORNER_BR:
         e_popup_move(popup->win,
                      con->w - (w + to_edge),
                      (con->h - h) - (to_edge + pos));
         break;
+      default:
+        break;
      }
-
    return pos + h + gap;
 }
 
@@ -379,7 +363,6 @@ _notification_popup_refresh(Popup_Data *popup)
 
    if (popup->app_icon)
      {
-        edje_object_part_unswallow(popup->theme, popup->app_icon);
         evas_object_del(popup->app_icon);
         popup->app_icon = NULL;
      }
@@ -402,8 +385,7 @@ _notification_popup_refresh(Popup_Data *popup)
              if (endptr)
                {
                   height = strtol(endptr, NULL, 10);
-                  if (errno || (height < 1))
-                    height = 80;
+                  if (errno || (height < 1)) height = 80;
                }
              else height = 80;
           }
@@ -419,14 +401,14 @@ _notification_popup_refresh(Popup_Data *popup)
              unsigned int size;
 
              size = e_util_icon_size_normalize(width * e_scale);
-             new_path = efreet_icon_path_find(e_config->icon_theme, icon_path, size);
+             new_path = efreet_icon_path_find(e_config->icon_theme, 
+                                              icon_path, size);
              if (new_path)
                icon_path = new_path;
              else
                {
                   Evas_Object *o = e_icon_add(popup->e);
-                  if (!e_util_icon_theme_set(o, icon_path))
-                    evas_object_del(o);
+                  if (!e_util_icon_theme_set(o, icon_path)) evas_object_del(o);
                   else
                     {
                        popup->app_icon = o;
@@ -438,20 +420,13 @@ _notification_popup_refresh(Popup_Data *popup)
 
         if (!popup->app_icon)
           {
-             popup->app_icon = evas_object_image_add(popup->e);
-             evas_object_image_alpha_set(popup->app_icon, 1);
-             evas_object_image_file_set(popup->app_icon, icon_path, NULL);
-
-             if (evas_object_image_load_error_get(popup->app_icon))
+             popup->app_icon = e_icon_add(popup->e);
+             if (!e_icon_file_set(popup->app_icon, icon_path))
                {
                   evas_object_del(popup->app_icon);
                   popup->app_icon = NULL;
                }
-             else
-               {
-                  evas_object_image_size_get(popup->app_icon, &w, &h);
-                  evas_object_image_fill_set(popup->app_icon, 0, 0, w, h);
-               }
+             else e_icon_size_get(popup->app_icon, &w, &h);
           }
      }
    else
@@ -460,8 +435,10 @@ _notification_popup_refresh(Popup_Data *popup)
         if (!img) img = e_notification_hint_image_data_get(popup->notif);
         if (img)
           {
-             popup->app_icon = e_notification_image_evas_object_add(popup->e, img);
-             evas_object_image_alpha_set(popup->app_icon, 1);
+             popup->app_icon = e_notification_image_evas_object_add(popup->e,
+                                                                    img);
+             evas_object_image_filled_set(popup->app_icon, EINA_TRUE);
+             evas_object_image_alpha_set(popup->app_icon, EINA_TRUE);
              evas_object_image_size_get(popup->app_icon, &w, &h);
           }
      }
@@ -470,28 +447,31 @@ _notification_popup_refresh(Popup_Data *popup)
      {
         char buf[PATH_MAX];
 
-        snprintf(buf, sizeof(buf), "%s/e-module-notification.edj", notification_mod->dir);
+        snprintf(buf, sizeof(buf), "%s/e-module-notification.edj", 
+                 notification_mod->dir);
         popup->app_icon = edje_object_add(popup->e);
-        if (!e_theme_edje_object_set(popup->app_icon, "base/theme/modules/notification",
+        if (!e_theme_edje_object_set(popup->app_icon, 
+                                     "base/theme/modules/notification",
                                      "modules/notification/logo"))
-          edje_object_file_set(popup->app_icon, buf, "modules/notification/logo");
-        w = width; h = height;
+          edje_object_file_set(popup->app_icon, buf, 
+                               "modules/notification/logo");
+        w = width;
+        h = height;
      }
 
-   if (w > width || h > height)
+   if ((w > width) || (h > height))
      {
         int v;
         v = w > h ? w : h;
         h = h * height / v;
         w = w * width / v;
-        evas_object_image_fill_set(popup->app_icon, 0, 0, w, h);
      }
-   evas_object_resize(popup->app_icon, w, h);
    edje_extern_object_min_size_set(popup->app_icon, w, h);
    edje_extern_object_max_size_set(popup->app_icon, w, h);
 
    edje_object_calc_force(popup->theme);
-   edje_object_part_swallow(popup->theme, "notification.swallow.app_icon", popup->app_icon);
+   edje_object_part_swallow(popup->theme, "notification.swallow.app_icon", 
+                            popup->app_icon);
    edje_object_signal_emit(popup->theme, "notification,icon", "notification");
 
    /* Fill up the event message */
@@ -513,13 +493,10 @@ _notification_popup_find(unsigned int id)
    Popup_Data *popup;
 
    if (!id) return NULL;
-
    EINA_LIST_FOREACH(notification_cfg->popups, l, popup)
      {
-        if (e_notification_id_get(popup->notif) == id)
-          return popup;
+        if (e_notification_id_get(popup->notif) == id) return popup;
      }
-
    return NULL;
 }
 
@@ -539,9 +516,7 @@ _notification_popup_del(unsigned int                 id,
              notification_cfg->popups = eina_list_remove_list(notification_cfg->popups, l);
           }
         else
-          {
-             pos = _notification_popup_place(popup, pos);
-          }
+          pos = _notification_popup_place(popup, pos);
      }
 
    next_pos = pos;
@@ -557,9 +532,8 @@ _notification_popdown(Popup_Data                  *popup,
    evas_object_del(popup->theme);
    e_object_del(E_OBJECT(popup->win));
    e_notification_closed_set(popup->notif, 1);
-   e_notification_daemon_signal_notification_closed(notification_cfg->daemon,
-                                                    e_notification_id_get(popup->notif),
-                                                    reason);
+   e_notification_daemon_signal_notification_closed
+     (notification_cfg->daemon, e_notification_id_get(popup->notif), reason);
    e_notification_unref(popup->notif);
    free(popup);
 }
