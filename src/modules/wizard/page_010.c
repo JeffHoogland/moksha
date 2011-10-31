@@ -73,7 +73,11 @@ wizard_page_init(E_Wizard_Page *pg __UNUSED__)
 {
    FILE *output;
 
+#ifdef __OpenBSD__
+   output = popen("ls /usr/share/locale", "r");
+#else
    output = popen("locale -a", "r");
+#endif
    if (output) 
      {
 	char line[32];

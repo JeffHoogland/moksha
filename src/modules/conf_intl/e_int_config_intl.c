@@ -614,7 +614,11 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    e_lang_list = e_intl_language_list();
    
    /* Get list of all locales and start making map */
+#ifdef __OpenBSD__
+   output = popen("ls /usr/share/locale", "r");
+#else
    output = popen("locale -a", "r");
+#endif
    if ( output ) 
      {
 	char line[32];
