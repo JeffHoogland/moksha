@@ -1150,7 +1150,7 @@ e_gadcon_client_aspect_set(E_Gadcon_Client *gcc, int w, int h)
    E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
    gcc->aspect.w = w;
    gcc->aspect.h = h;
-   if ((!gcc->autoscroll)/* && (!gcc->resizable)*/)
+//   if ((!gcc->autoscroll)/* && (!gcc->resizable)*/)
      {
 	if (gcc->o_frame)
 	  {
@@ -1171,6 +1171,7 @@ e_gadcon_client_autoscroll_set(E_Gadcon_Client *gcc, int autoscroll)
    E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
 
    gcc->autoscroll = autoscroll;
+/*   
    if (gcc->autoscroll)
      {
 	if (gcc->o_frame)
@@ -1187,6 +1188,7 @@ e_gadcon_client_autoscroll_set(E_Gadcon_Client *gcc, int autoscroll)
 	  }
      }
    else
+ */
      {
 	if (gcc->o_frame)
 	  {
@@ -1402,7 +1404,7 @@ e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu_gadget
 	if (!gcc->o_control)
 	  {
              mi = e_menu_item_new(menu_gadget);
-             e_menu_item_label_set(mi, _("Begin move/resize"));
+             e_menu_item_label_set(mi, _("Move"));
              e_util_menu_item_theme_icon_set(mi, "transform-scale");
              e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_edit, gcc);
 	  }
@@ -1983,7 +1985,7 @@ _e_gadcon_cb_client_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *o
 	gcc->menu = mn;
 
 	mi = e_menu_item_new(mn);
-	e_menu_item_label_set(mi, _("Stop move/resize this gadget"));
+	e_menu_item_label_set(mi, _("Stop moving"));
 	e_util_menu_item_theme_icon_set(mi, "enlightenment/edit");
 	e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_edit, gcc);
 
@@ -3710,122 +3712,54 @@ _e_gadcon_layout_smart_width_smart_sort_reverse_cb(const void *d1, const void *d
 static void 
 _e_gadcon_layout_smart_gadcons_width_adjust(E_Smart_Data *sd, int min, int cur)
 { 
-   E_Gadcon_Layout_Item *bi2 = NULL;
    E_Gadcon_Layout_Item *bi = NULL;
    Eina_List *l, *l2;
-   Evas_Object *item, *item2;
-   int need, limit = 0, reduce_total, reduce;
-   int max_size, c;
+   Evas_Object *item;
+   int need;
+   int max_size, autosize = 0;
 
    if (sd->w < cur)
      {
-	if (sd->w < min)
-	  max_size = min;
-	else
-	  max_size = cur;
-
+	if (sd->w < min) max_size = min;
+	else max_size = cur;
 	need = max_size - sd->w;
      }
    else
      return;
-
    
    sd->items = eina_list_sort(sd->items, eina_list_count(sd->items), 
 			      _e_gadcon_layout_smart_width_smart_sort_reverse_cb);
-
-   __adjust_size_again:
-   c = 0;
    EINA_LIST_FOREACH(sd->items, l, item)
      { 
-	if (eina_list_next(l)) 
-	  {
-	     item2 = eina_list_data_get(eina_list_next(l));
-	     bi = evas_object_data_get(item, "e_gadcon_layout_data");
-	     bi2 = evas_object_data_get(item2, "e_gadcon_layout_data"); 
-
-	     if (bi->ask.size2 > bi2->ask.size2)
-	       { 
-		  limit = bi2->ask.size2;
-		  c++;
-		  break;
-	       } 
-	     c++;
-	  }
+        bi = evas_object_data_get(item, "e_gadcon_layout_data");
+        if (bi->gcc->autoscroll) autosize += bi->ask.size2;
      } 
 
-   if (eina_list_count(sd->items) == 1) c = 1;
-
-   if (l)
+   if (autosize < 1) autosize = 1;
+   while (need > 0)
      { 
-	reduce = bi->ask.size2 - limit; 
-	reduce_total = reduce * c; 
-
-	if (reduce_total <= need) 
-	  {
-	     /* EINA_FUCK_REVERSE_FOREACH(l, l2, item) */
-	     for (l2 = l; l2;  l2 = l2->prev)
-	       {
-		  item = l2->data;
-		  bi2 = evas_object_data_get(item, "e_gadcon_layout_data"); 
-		  bi2->ask.size2 -= reduce; 
-	       } 
-	     need -= reduce * c;
-	     if (need) 
-	       goto __adjust_size_again;
-	  } 
-	else
-	  { 
-	     int reduce_by, c2; 
-
-	     while (need > 0)
-	       { 
-		  reduce_by = 1;
-		  while (1) 
-		    { 
-		       if (((reduce_by + 1) * c) < need) 
-			 reduce_by++; 
-		       else 
-			 break; 
-		    } 
-		  c2 = c;
-		  EINA_LIST_REVERSE_FOREACH(sd->items, l2, item)
-		    { 
-		       if ((c2 <= 0) || (need <= 0)) break;
-		       bi2 = evas_object_data_get(item, "e_gadcon_layout_data");
-                       if (bi2->gcc->autoscroll)
-                         {
-                            bi2->ask.size2 -= reduce_by;
-                            need -= reduce_by; 
-                            c2--;
-                         }
-		    } 
+        EINA_LIST_REVERSE_FOREACH(sd->items, l2, item)
+          { 
+             if (need <= 0) break;
+             bi = evas_object_data_get(item, "e_gadcon_layout_data");
+             if (bi->gcc->autoscroll)
+               {
+                  int reduce_by; 
+                  
+                  reduce_by = (need * bi->ask.size2) / autosize;
+                  if (reduce_by < 1) reduce_by = 1;
+                  if (bi->ask.size2 - reduce_by > 8)
+                    {
+                       bi->ask.size2 -= reduce_by;
+                       need -= reduce_by ; 
+                    }
+                  else
+                    {
+                       need -= bi->ask.size2 - 8;
+                       bi->ask.size2 = 8;
+                    }
 	       }
 	  } 
-     }
-   else
-     { 
-	int reduce_by, c2; 
-
-	while (need)
-	  { 
-	     reduce_by = 1;
-	     while (1) 
-	       { 
-		  if (((reduce_by + 1) * c) < need) 
-		    reduce_by++; 
-		  else 
-		    break; 
-	       } 
-	     c2 = c;
-	     EINA_LIST_FOREACH(sd->items, l2, item)
-	       {
-                  if ((!c2) || (!need)) break;
-		  bi2 = evas_object_data_get(item, "e_gadcon_layout_data");
-		  bi2->ask.size2 -= reduce_by; 
-		  need -= reduce_by;
-		  c2--;
-	       } 
-	  }
      }
 }
 
