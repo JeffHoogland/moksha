@@ -3715,7 +3715,8 @@ _e_gadcon_layout_smart_gadcons_width_adjust(E_Smart_Data *sd, int min, int cur)
    E_Gadcon_Layout_Item *bi = NULL;
    Eina_List *l, *l2;
    Evas_Object *item;
-   int need;
+   int needed = 0;
+   int need = 0;
    int max_size, autosize = 0;
 
    if (sd->w < cur)
@@ -3738,6 +3739,7 @@ _e_gadcon_layout_smart_gadcons_width_adjust(E_Smart_Data *sd, int min, int cur)
    if (autosize < 1) autosize = 1;
    while (need > 0)
      { 
+        needed = need;
         EINA_LIST_REVERSE_FOREACH(sd->items, l2, item)
           { 
              if (need <= 0) break;
@@ -3760,6 +3762,9 @@ _e_gadcon_layout_smart_gadcons_width_adjust(E_Smart_Data *sd, int min, int cur)
                     }
 	       }
 	  } 
+	/* If the 'needed' size change didn't get modified (no gadget has autoscroll)
+	   then we must break or we end up in an infinite loop */
+	if (need == needed) break;
      }
 }
 
