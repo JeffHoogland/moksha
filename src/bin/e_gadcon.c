@@ -3762,9 +3762,9 @@ _e_gadcon_layout_smart_gadcons_width_adjust(E_Smart_Data *sd, int min, int cur)
                     }
 	       }
 	  } 
-	/* If the 'needed' size change didn't get modified (no gadget has autoscroll)
-	   then we must break or we end up in an infinite loop */
-	if (need == needed) break;
+        /* If the 'needed' size change didn't get modified (no gadget has autoscroll)
+           then we must break or we end up in an infinite loop */
+        if (need == needed) break;
      }
 }
 
