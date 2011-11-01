@@ -55,6 +55,7 @@ struct _CFText_Class
 
 const E_Text_Class_Pair text_class_predefined_names[ ] = {
      {  NULL,		  N_("Core")},
+     { "application",	  N_("Applications")},
      { "title_bar",	  N_("Title Bar")},
      { "menu_item",	  N_("Menu Item")},
      { "menu_title",	  N_("Menu Title")},
@@ -380,6 +381,7 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 
    e_font_apply();
    e_config_save_queue();
+   e_xsettings_config_update();
 
    /* Apply to advanced */
    EINA_LIST_FOREACH(cfdata->text_classes, next, tc)
@@ -525,6 +527,7 @@ _basic_init_data_fill(E_Config_Dialog_Data *cfdata)
 
    /* Populate size list (Select current font) */
    _size_list_load(cfdata, cfdata->font_scale_list, init_size, 1);
+   _size_list_load(cfdata, cfdata->font_px_list, init_size, 0);
 }
 
 static int
@@ -582,6 +585,7 @@ _advanced_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
    e_config->font_hinting = cfdata->hinting;
    e_config_save_queue();
    e_canvas_rehint();
+   e_xsettings_config_update();
    return 1;
 }
 

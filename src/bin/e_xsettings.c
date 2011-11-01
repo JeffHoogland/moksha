@@ -1,3 +1,7 @@
+/* TODO
+   check http://www.pvv.org/~mariusbu/proposal.html
+   for advances in cross toolkit settings */
+
 #include <e.h>
 #include <X11/Xlib.h>
 #include <X11/Xmd.h>            /* For CARD16 */
@@ -48,6 +52,7 @@ static Eina_List *settings = NULL;
 static Eina_Bool running = EINA_FALSE;
 static const char _setting_icon_theme_name[] = "Net/IconThemeName";
 static const char _setting_theme_name[]	     = "Net/ThemeName";
+static const char _setting_font_name[]	     = "Gtk/FontName";
 
 static Ecore_X_Atom
 _e_xsettings_atom_screen_get(int screen_num)
@@ -413,6 +418,38 @@ _e_xsettings_theme_set(void)
 }
 
 static void
+_e_xsettings_font_set(void)
+{
+   E_Font_Default *efd;
+   E_Font_Properties *efp;
+   
+   efd = e_font_default_get("application");
+
+   if (efd && efd->font)
+     {
+        efp = e_font_fontconfig_name_parse(efd->font);
+        if (efp->name)
+          {
+             int size = efd->size;
+             char buf[128];
+             /* TODO better way to convert evas font sizes? */
+             if (size < 0) size /= -10;
+             if (size < 5) size = 5;
+             if (size > 25) size = 25;
+
+             snprintf(buf, sizeof(buf), "%s %d", efp->name, size);
+             _e_xsettings_string_set(_setting_font_name, buf);
+             e_font_properties_free(efp);
+             return;
+          }
+
+        e_font_properties_free(efp);
+     }
+
+   _e_xsettings_string_set(_setting_font_name, NULL);
+}
+
+static void
 _e_xsettings_start(void)
 {
    Eina_List *l;
@@ -420,10 +457,10 @@ _e_xsettings_start(void)
 
    if (running) return;
 
-   DBG("start__________\n");
    _e_xsettings_theme_set();
    _e_xsettings_icon_theme_set();
-
+   _e_xsettings_font_set();
+   
    EINA_LIST_FOREACH(e_manager_list(), l, man)
      {
 	Settings_Manager *sm = E_NEW(Settings_Manager, 1);
@@ -449,7 +486,7 @@ _e_xsettings_stop(void)
    Setting *s;
 
    if (!running) return;
-   DBG("stop__________\n");
+
    EINA_LIST_FREE(managers, sm)
      {
 	if (sm->timer_retry)
@@ -512,6 +549,7 @@ e_xsettings_config_update(void)
      {
         _e_xsettings_theme_set();
         _e_xsettings_icon_theme_set();
+        _e_xsettings_font_set();
         _e_xsettings_update();
      }        
 }
