@@ -28,7 +28,7 @@ _config_tasks_module(Config_Item *ci)
    v->basic.create_widgets = _basic_create_widgets;
 
    con = e_container_current_get(e_manager_current_get());
-   cfd = e_config_dialog_new(con, D_("Tasks Configuration"), "Tasks", 
+   cfd = e_config_dialog_new(con, _("Tasks Configuration"), "Tasks", 
                              "_e_modules_tasks_config_dialog", NULL, 0, v, ci);
    if (tasks_config->config_dialog)
      e_object_del(E_OBJECT(tasks_config->config_dialog));
@@ -70,8 +70,8 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
 
    o = e_widget_list_add(evas, 0, 0);
 
-   of = e_widget_framelist_add(evas, D_("Display"), 0);
-   ob = e_widget_check_add(evas, D_("Show windows from all desktops"),
+   of = e_widget_framelist_add(evas, _("Display"), 0);
+   ob = e_widget_check_add(evas, _("Show windows from all desktops"),
                            &(cfdata->show_all));
    e_widget_framelist_object_append(of, ob);
    ow = e_widget_label_add(evas, _("Minimum Width"));

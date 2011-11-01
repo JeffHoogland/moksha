@@ -99,12 +99,6 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-   char buf[4096];
-
-   snprintf(buf, sizeof(buf), "%s/locale", e_module_dir_get(m));
-   bindtextdomain(PACKAGE, buf);
-   bind_textdomain_codeset(PACKAGE, "UTF-8");
-
    conf_item_edd = E_CONFIG_DD_NEW("Tasks_Config_Item", Config_Item);
 
 #undef T
@@ -307,7 +301,7 @@ _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
 static char *
 _gc_label(E_Gadcon_Client_Class *client_class)
 {
-   return D_("Tasks");
+   return _("Tasks");
 }
 
 static Evas_Object *
@@ -678,14 +672,14 @@ _tasks_cb_item_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
         
 	m = e_menu_new();
         mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, D_("Settings"));
+	e_menu_item_label_set(mi, _("Settings"));
 	e_util_menu_item_theme_icon_set(mi, "preferences-system");
 	e_menu_item_callback_set(mi, _tasks_cb_menu_configure, item->tasks);
         
 	m = e_gadcon_client_util_menu_items_append(item->tasks->gcc, m, 0);
         
         mi = e_menu_item_new(item->border->border_menu);
-        e_menu_item_label_set(mi, D_("Tasks"));
+        e_menu_item_label_set(mi, _("Tasks"));
         e_menu_item_submenu_set(mi, m);
 	e_util_menu_item_theme_icon_set(mi, "preferences-system");
         
