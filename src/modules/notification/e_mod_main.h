@@ -6,19 +6,10 @@
 #include <E_Notification_Daemon.h>
 #include "config.h"
 
-#ifdef ENABLE_NLS
-# include <libintl.h>
-# define D_(string) dgettext(PACKAGE, string)
-#else
-# define bindtextdomain(domain,dir)
-# define bind_textdomain_codeset(domain,codeset)
-# define D_(string) (string)
-#endif
-
 #define MOD_CFG_FILE_EPOCH 0x0002
 #define MOD_CFG_FILE_GENERATION 0x0005
 #define MOD_CFG_FILE_VERSION					\
-  ((MOD_CFG_FILE_EPOCH << 16) | MOD_CFG_FILE_GENERATION)
+((MOD_CFG_FILE_EPOCH << 16) | MOD_CFG_FILE_GENERATION)
 
 #undef  MAX
 #define MAX(x, y) (((x) > (y)) ? (x) : (y))

@@ -514,7 +514,7 @@ _notification_box_cb_empty_mouse_down(Notification_Box *b,
    if (notification_cfg->menu) return;
    m = e_menu_new();
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, D_("Settings"));
+   e_menu_item_label_set(mi, _("Settings"));
    e_util_menu_item_theme_icon_set(mi, "preferences-system");
    e_menu_item_callback_set(mi, (E_Menu_Cb)_notification_box_cb_menu_configuration, b);
 
@@ -653,7 +653,7 @@ _notification_box_cb_icon_mouse_down(Notification_Box_Icon *ic,
 
    m = e_menu_new();
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, D_("Settings"));
+   e_menu_item_label_set(mi, _("Settings"));
    e_util_menu_item_theme_icon_set(mi, "preferences-system");
    e_menu_item_callback_set(mi, (E_Menu_Cb)_notification_box_cb_menu_configuration, ic->n_box);
 

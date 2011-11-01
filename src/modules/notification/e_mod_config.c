@@ -41,7 +41,7 @@ e_int_config_notification_module(E_Container *con,
    v->basic.apply_cfdata = _basic_apply;
 
    snprintf(buf, sizeof(buf), "%s/e-module-notification.edj", notification_mod->dir);
-   cfd = e_config_dialog_new(con, D_("Notification Settings"), "Notification",
+   cfd = e_config_dialog_new(con, _("Notification Settings"), "Notification",
                              "extensions/notification", buf, 0, v, NULL);
    notification_cfg->cfd = cfd;
    return cfd;
@@ -88,56 +88,56 @@ _basic_create(E_Config_Dialog      *cfd __UNUSED__,
 //   E_Manager *man;
 
    o = e_widget_list_add(evas, 0, 0);
-   of = e_widget_framelist_add(evas, D_("Urgency"), 0);
-   ow = e_widget_label_add(evas, D_("Levels of urgency to display:"));
+   of = e_widget_framelist_add(evas, _("Urgency"), 0);
+   ow = e_widget_label_add(evas, _("Levels of urgency to display:"));
    e_widget_framelist_object_append(of, ow);
-   ow = e_widget_check_add(evas, D_("Low"), &(cfdata->show_low));
+   ow = e_widget_check_add(evas, _("Low"), &(cfdata->show_low));
    e_widget_framelist_object_append(of, ow);
-   ow = e_widget_check_add(evas, D_("Normal"), &(cfdata->show_normal));
+   ow = e_widget_check_add(evas, _("Normal"), &(cfdata->show_normal));
    e_widget_framelist_object_append(of, ow);
-   ow = e_widget_check_add(evas, D_("Critical"), &(cfdata->show_critical));
+   ow = e_widget_check_add(evas, _("Critical"), &(cfdata->show_critical));
    e_widget_framelist_object_append(of, ow);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
-   of = e_widget_framelist_add(evas, D_("Default Timeout"), 0);
-   ow = e_widget_check_add(evas, D_("Force timeout for all notifications"), &(cfdata->force_timeout));
+   of = e_widget_framelist_add(evas, _("Default Timeout"), 0);
+   ow = e_widget_check_add(evas, _("Force timeout for all notifications"), &(cfdata->force_timeout));
    e_widget_framelist_object_append(of, ow);
-   ow = e_widget_slider_add(evas, 1, 0, D_("%.1f seconds"), 0.0, 15.0, 0.1, 0,
+   ow = e_widget_slider_add(evas, 1, 0, _("%.1f seconds"), 0.0, 15.0, 0.1, 0,
                             &(cfdata->timeout), NULL, 200);
    e_widget_framelist_object_append(of, ow);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    /* man = e_manager_current_get();
-    * of = e_widget_framelist_add(evas, D_("Placement"), 0);
-    * ow = e_widget_slider_add(evas, 1, 0, D_("%2.0f x"), 0.0, man->w, 1.0, 0,
+    * of = e_widget_framelist_add(evas, _("Placement"), 0);
+    * ow = e_widget_slider_add(evas, 1, 0, _("%2.0f x"), 0.0, man->w, 1.0, 0,
     *                          NULL, &(cfdata->placement.x), 200);
     * e_widget_framelist_object_append(of, ow);
-    * ow = e_widget_slider_add(evas, 1, 0, D_("%2.0f y"), 0.0, man->h, 1.0, 0,
+    * ow = e_widget_slider_add(evas, 1, 0, _("%2.0f y"), 0.0, man->h, 1.0, 0,
     *                          NULL, &(cfdata->placement.y), 200);
     * e_widget_framelist_object_append(of, ow);
     * e_widget_list_object_append(o, of, 1, 1, 0.5); */
 
-   of = e_widget_framelist_add(evas, D_("Popup Corner"), 0);
+   of = e_widget_framelist_add(evas, _("Popup Corner"), 0);
    rg = e_widget_radio_group_new(&(cfdata->corner));
-   ow = e_widget_radio_add(evas, "Top left", CORNER_TL, rg);
+   ow = e_widget_radio_add(evas, _("Top left"), CORNER_TL, rg);
    e_widget_framelist_object_append(of, ow);
-   ow = e_widget_radio_add(evas, "Top right", CORNER_TR, rg);
+   ow = e_widget_radio_add(evas, _("Top right"), CORNER_TR, rg);
    e_widget_framelist_object_append(of, ow);
-   ow = e_widget_radio_add(evas, "Botton left", CORNER_BL, rg);
+   ow = e_widget_radio_add(evas, _("Botton left"), CORNER_BL, rg);
    e_widget_framelist_object_append(of, ow);
-   ow = e_widget_radio_add(evas, "Bottom right", CORNER_BR, rg);
+   ow = e_widget_radio_add(evas, _("Bottom right"), CORNER_BR, rg);
    e_widget_framelist_object_append(of, ow);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
-   /* of = e_widget_framelist_add(evas, D_("Gap"), 0);
-   * ow = e_widget_label_add(evas, D_("Size of the gap between two popups : "));
+   /* of = e_widget_framelist_add(evas, _("Gap"), 0);
+   * ow = e_widget_label_add(evas, _("Size of the gap between two popups : "));
    * e_widget_framelist_object_append(of, ow);
-   * ow = e_widget_slider_add(evas, 1, 0, D_("%2.0f pixels"), 0.0, 50, 1.0, 0,
+   * ow = e_widget_slider_add(evas, 1, 0, _("%2.0f pixels"), 0.0, 50, 1.0, 0,
    *                          NULL, &(cfdata->gap), 200);
    * e_widget_framelist_object_append(of, ow);
    * e_widget_list_object_append(o, of, 1, 1, 0.5); */
-   of = e_widget_framelist_add(evas, D_("Miscellaneous"), 0);
-   ow = e_widget_check_add(evas, D_("Ignore replace ID"), &(cfdata->ignore_replacement));
+   of = e_widget_framelist_add(evas, _("Miscellaneous"), 0);
+   ow = e_widget_check_add(evas, _("Ignore replace ID"), &(cfdata->ignore_replacement));
    e_widget_framelist_object_append(of, ow);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 

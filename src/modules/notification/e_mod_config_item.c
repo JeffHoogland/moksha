@@ -39,7 +39,7 @@ config_notification_box_module(Config_Item *ci)
    /* Create The Dialog */
    snprintf(buf, sizeof(buf), "%s/e-module-notification.edj", e_module_dir_get(notification_mod));
    cfd = e_config_dialog_new(e_container_current_get(e_manager_current_get()),
-                             D_("Notification Box Configuration"),
+                             _("Notification Box Configuration"),
                              "E", "_e_mod_notification_box_config_dialog",
                              buf, 0, v, ci);
    notification_cfg->config_dialog = eina_list_append(notification_cfg->config_dialog, cfd);
@@ -86,23 +86,23 @@ _ci_basic_create_widgets(E_Config_Dialog      *cfd __UNUSED__,
 
    o = e_widget_list_add(evas, 0, 0);
 
-   of = e_widget_framelist_add(evas, D_("General Settings"), 0);
-   ob = e_widget_check_add(evas, D_("Show Icon Label"), &(cfdata->show_label));
+   of = e_widget_framelist_add(evas, _("General Settings"), 0);
+   ob = e_widget_check_add(evas, _("Show Icon Label"), &(cfdata->show_label));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_check_add(evas, D_("Show the popup on mouse over"), &(cfdata->show_popup));
+   ob = e_widget_check_add(evas, _("Show the popup on mouse over"), &(cfdata->show_popup));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_check_add(evas, D_("Focus the source window when clicking"), &(cfdata->focus_window));
+   ob = e_widget_check_add(evas, _("Focus the source window when clicking"), &(cfdata->focus_window));
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
-   of = e_widget_framelist_add(evas, D_("Urgency"), 0);
-   ob = e_widget_label_add(evas, D_("Levels of urgency to store:"));
+   of = e_widget_framelist_add(evas, _("Urgency"), 0);
+   ob = e_widget_label_add(evas, _("Levels of urgency to store:"));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_check_add(evas, D_("Low"), &(cfdata->store_low));
+   ob = e_widget_check_add(evas, _("Low"), &(cfdata->store_low));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_check_add(evas, D_("Normal"), &(cfdata->store_normal));
+   ob = e_widget_check_add(evas, _("Normal"), &(cfdata->store_normal));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_check_add(evas, D_("Critical"), &(cfdata->store_critical));
+   ob = e_widget_check_add(evas, _("Critical"), &(cfdata->store_critical));
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 

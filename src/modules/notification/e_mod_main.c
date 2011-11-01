@@ -125,7 +125,7 @@ _gc_orient(E_Gadcon_Client *gcc,
 static char *
 _gc_label(E_Gadcon_Client_Class *client_class __UNUSED__)
 {
-   return D_("Notification Box");
+   return _("Notification Box");
 }
 
 static Evas_Object *
@@ -214,17 +214,17 @@ _notification_show_presentation(Eina_Bool enabled)
 
    if (enabled)
      {
-        summary = D_("Enter Presentation Mode");
-        body = D_("Enlightenment is in <b>presentation</b> mode."
-                  "<br>During presentation mode, screen saver, lock and "
-                  "power saving will be disabled so you are not interrupted.");
+        summary = _("Enter Presentation Mode");
+        body = _("Enlightenment is in <b>presentation</b> mode."
+                 "<br>During presentation mode, screen saver, lock and "
+                 "power saving will be disabled so you are not interrupted.");
      }
    else
      {
-        summary = D_("Exited Presentation Mode");
-        body = D_("Presentation mode is over."
-                  "<br>Now screen saver, lock and "
-                  "power saving settings will be restored.");
+        summary = _("Exited Presentation Mode");
+        body = _("Presentation mode is over."
+                 "<br>Now screen saver, lock and "
+                 "power saving settings will be restored.");
      }
 
    _notification_show_common(summary, body, 0);
@@ -237,17 +237,17 @@ _notification_show_offline(Eina_Bool enabled)
 
    if (enabled)
      {
-        summary = D_("Enter Offline Mode");
-        body = D_("Enlightenment is in <b>offline</b> mode.<br>"
-                  "During offline mode, modules that use network will stop "
-                  "polling remote services.");
+        summary = _("Enter Offline Mode");
+        body = _("Enlightenment is in <b>offline</b> mode.<br>"
+                 "During offline mode, modules that use network will stop "
+                 "polling remote services.");
      }
    else
      {
-        summary = D_("Exited Offline Mode");
-        body = D_("Now in <b>online</b> mode.<br>"
-                  "Now modules that use network will "
-                  "resume regular tasks.");
+        summary = _("Exited Offline Mode");
+        body = _("Now in <b>online</b> mode.<br>"
+                 "Now modules that use network will "
+                 "resume regular tasks.");
      }
 
    _notification_show_common(summary, body, 0);
@@ -294,15 +294,12 @@ e_modapi_init(E_Module *m)
    E_Notification_Daemon *d;
    char buf[PATH_MAX];
 
-   snprintf(buf, sizeof(buf), "%s/locale", e_module_dir_get(m));
-   bindtextdomain(PACKAGE, buf);
-   bind_textdomain_codeset(PACKAGE, "UTF-8");
-
    snprintf(buf, sizeof(buf), "%s/e-module-notification.edj", m->dir);
    /* register config panel entry */
-   e_configure_registry_category_add("extensions", 90, D_("Extensions"), NULL,
+   e_configure_registry_category_add("extensions", 90, _("Extensions"), NULL,
                                      "preferences-extensions");
-   e_configure_registry_item_add("extensions/notification", 30, D_("Notification"), NULL,
+   e_configure_registry_item_add("extensions/notification", 30, 
+                                 _("Notification"), NULL,
                                  buf, e_int_config_notification_module);
 
    conf_item_edd = E_CONFIG_DD_NEW("Notification_Config_Item", Config_Item);
@@ -335,7 +332,7 @@ e_modapi_init(E_Module *m)
 
    notification_cfg = e_config_domain_load("module.notification", conf_edd);
    if (notification_cfg &&
-       !(e_util_module_config_check(D_("Notification Module"),
+       !(e_util_module_config_check(_("Notification Module"),
                                     notification_cfg->version,
                                     MOD_CFG_FILE_VERSION)))
      {
@@ -354,8 +351,8 @@ e_modapi_init(E_Module *m)
      {
         _notification_cfg_free(notification_cfg);
         notification_cfg = NULL;
-        e_util_dialog_show(D_("Error During DBus Init!"),
-                           D_("Error during DBus init! Please check if "
+        e_util_dialog_show(_("Error During DBus Init!"),
+                           _("Error during DBus init! Please check if "
                               "dbus is correctly installed and running."));
         return NULL;
      }
