@@ -6,23 +6,9 @@
 #define DEF_MENUCLICK 0.25
 #endif
 
-typedef enum _Eet_Union
-{
-  EET_SCREEN_INFO_11 = (int)((1 << 16) | 1),
-  EET_SCREEN_INFO_12 = (int)((1 << 16) | 2),
-  EET_SCREEN_INFO_13 = (int)((1 << 16) | 3),
-  EET_UNKNOWN
-} Eet_Union;
-
-struct {
-   Eet_Union u;
-   const char *name;
-} eet_mapping[] = {
-  { EET_SCREEN_INFO_11, "E_Config_Screen_11" },
-  { EET_SCREEN_INFO_12, "E_Config_Screen_12" },
-  { EET_SCREEN_INFO_12, "E_Config_Screen_13" },
-  { EET_UNKNOWN, NULL }
-};
+#define RANDR_SERIALIZED_SETUP_11 ((int)((1 << 16) | 1))
+#define RANDR_SERIALIZED_SETUP_12 ((int)((1 << 16) | 2))
+#define RANDR_SERIALIZED_SETUP_13 ((int)((1 << 16) | 3))
 
 EAPI E_Config *e_config = NULL;
 
@@ -34,8 +20,6 @@ static void _e_config_free(E_Config *cfg);
 static Eina_Bool _e_config_cb_timer(void *data);
 static int _e_config_eet_close_handle(Eet_File *ef, char *file);
 static void _e_config_acpi_bindings_add(void);
-static const char * _eet_union_type_get(const void *data, Eina_Bool *unknow);
-static Eina_Bool _eet_union_type_set(const char *type, void *data, Eina_Bool unknow);
 
 /* local subsystem globals */
 static int _e_config_save_block = 0;
@@ -65,15 +49,16 @@ static E_Config_DD *_e_config_shelf_desk_edd = NULL;
 static E_Config_DD *_e_config_mime_icon_edd = NULL;
 static E_Config_DD *_e_config_syscon_action_edd = NULL;
 static E_Config_DD *_e_config_env_var_edd = NULL;
-static E_Config_DD *_e_config_screen_size_edd = NULL;
-static E_Config_DD *_e_config_screen_size_mm_edd = NULL;
-static E_Config_DD *_e_config_eina_rectangle_edd = NULL;
-static E_Config_DD *_e_config_screen_info_edd = NULL;
-static E_Config_DD *_e_config_screen_restore_info_11_edd = NULL;
-static E_Config_DD *_e_config_screen_restore_info_12_edd = NULL;
-static E_Config_DD *_e_config_screen_output_edid_hash_edd = NULL;
-static E_Config_DD *_e_config_screen_output_restore_info_edd = NULL;
-static E_Config_DD *_e_config_screen_crtc_restore_info_edd = NULL;
+static E_Config_DD *_e_config_randr_size_edd = NULL;
+static E_Config_DD *_e_config_randr_size_mm_edd = NULL;
+static E_Config_DD *_e_config_randr_edid_hash_edd = NULL;
+static E_Config_DD *_e_config_randr_serialized_setup_edd = NULL;
+static E_Config_DD *_e_config_randr_serialized_setup_11_edd = NULL;
+static E_Config_DD *_e_config_randr_serialized_setup_12_edd = NULL;
+static E_Config_DD *_e_config_randr_serialized_output_policy_edd = NULL;
+static E_Config_DD *_e_config_randr_serialized_output_edd = NULL;
+static E_Config_DD *_e_config_randr_serialized_mode_info_edd = NULL;
+static E_Config_DD *_e_config_randr_serialized_crtc_edd = NULL;
 
 
 EAPI int E_EVENT_CONFIG_ICON_THEME = 0;
@@ -526,107 +511,109 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, val, STR);
    E_CONFIG_VAL(D, T, unset, UCHAR);
 
-   _e_config_screen_size_edd = E_CONFIG_DD_NEW("Ecore_X_Randr_Screen_Size", Ecore_X_Randr_Screen_Size);
+   _e_config_randr_size_edd = E_CONFIG_DD_NEW("Ecore_X_Randr_Screen_Size", Ecore_X_Randr_Screen_Size);
 #undef T
 #undef D
 #define T Ecore_X_Randr_Screen_Size
-#define D _e_config_screen_size_edd
+#define D _e_config_randr_size_edd
    E_CONFIG_VAL(D, T, width, INT);
    E_CONFIG_VAL(D, T, height, INT);
    E_CONFIG_VAL(D, T, width, INT);
    E_CONFIG_VAL(D, T, height, INT);
 
-   _e_config_screen_size_mm_edd = E_CONFIG_DD_NEW("Ecore_X_Randr_Screen_Size_MM", Ecore_X_Randr_Screen_Size_MM);
+   _e_config_randr_size_mm_edd = E_CONFIG_DD_NEW("Ecore_X_Randr_Screen_Size_MM", Ecore_X_Randr_Screen_Size_MM);
 #undef T
 #undef D
 #define T Ecore_X_Randr_Screen_Size_MM
-#define D _e_config_screen_size_mm_edd
+#define D _e_config_randr_size_mm_edd
    E_CONFIG_VAL(D, T, width, INT);
    E_CONFIG_VAL(D, T, height, INT);
    E_CONFIG_VAL(D, T, width_mm, INT);
    E_CONFIG_VAL(D, T, height_mm, INT);
 
-   _e_config_screen_restore_info_11_edd = E_CONFIG_DD_NEW("E_Randr_Screen_Restore_Info_11", E_Randr_Screen_Restore_Info_11);
+   _e_config_randr_edid_hash_edd = E_CONFIG_DD_NEW("E_Randr_Edid_Hash", E_Randr_Edid_Hash);
 #undef T
 #undef D
-#define T E_Randr_Screen_Restore_Info_11
-#define D _e_config_screen_restore_info_11_edd
-   E_CONFIG_SUB(D, T, size, _e_config_screen_size_edd);
+#define T E_Randr_Edid_Hash
+#define D _e_config_randr_edid_hash_edd
+   E_CONFIG_VAL(D, T, hash, INT);
+
+   _e_config_randr_serialized_setup_11_edd = E_CONFIG_DD_NEW("E_Randr_Serialized_Setup_11", E_Randr_Serialized_Setup_11);
+#undef T
+#undef D
+#define T E_Randr_Serialized_Setup_11
+#define D _e_config_randr_serialized_setup_11_edd
+   E_CONFIG_SUB(D, T, size, _e_config_randr_size_edd);
    E_CONFIG_VAL(D, T, orientation, INT);
    E_CONFIG_VAL(D, T, refresh_rate, SHORT);
 
-    _e_config_eina_rectangle_edd = E_CONFIG_DD_NEW("Eina_Rectangle", Eina_Rectangle);
+    _e_config_randr_serialized_output_policy_edd = E_CONFIG_DD_NEW("E_Randr_Serialized_Output_Policy", E_Randr_Serialized_Output_Policy);
 #undef T
 #undef D
-#define T Eina_Rectangle
-#define D _e_config_eina_rectangle_edd
-   E_CONFIG_VAL(D, T, x, INT);
-   E_CONFIG_VAL(D, T, y, INT);
-   E_CONFIG_VAL(D, T, w, INT);
-   E_CONFIG_VAL(D, T, h, INT);
+#define T E_Randr_Serialized_Output_Policy
+#define D _e_config_randr_serialized_output_policy_edd
+   E_CONFIG_VAL(D, T, name, STR);
+   E_CONFIG_VAL(D, T, name_length, INT);
+   E_CONFIG_VAL(D, T, policy, INT);
 
-      _e_config_screen_output_edid_hash_edd = E_CONFIG_DD_NEW("E_Randr_Output_Edid_Hash", E_Randr_Output_Edid_Hash);
+    _e_config_randr_serialized_output_edd = E_CONFIG_DD_NEW("E_Randr_Serialized_Output", E_Randr_Serialized_Output);
 #undef T
 #undef D
-#define T E_Randr_Output_Edid_Hash
-#define D _e_config_screen_output_edid_hash_edd
-   E_CONFIG_VAL(D, T, hash, INT);
-
-   // FIXME: need to totally re-do this randr config stuff - remove the
-   // union stuff. do this differently to not use unions really. not
-   // intended for how it is used here really.
-    _e_config_screen_output_restore_info_edd = E_CONFIG_DD_NEW("E_Randr_Output_Restore_Info", E_Randr_Output_Restore_Info);
-#undef T
-#undef D
-#define T E_Randr_Output_Restore_Info
-#define D _e_config_screen_output_restore_info_edd
-   E_CONFIG_SUB(D, T, edid_hash, _e_config_screen_output_edid_hash_edd);
+#define T E_Randr_Serialized_Output
+#define D _e_config_randr_serialized_output_edd
+   E_CONFIG_VAL(D, T, name, STR);
+   E_CONFIG_VAL(D, T, name_length, INT);
+   E_CONFIG_SUB(D, T, edid_hash, _e_config_randr_edid_hash_edd);
    E_CONFIG_VAL(D, T, backlight_level, DOUBLE);
 
-  _e_config_screen_crtc_restore_info_edd = E_CONFIG_DD_NEW("E_Randr_Crtc_Restore_Info", E_Randr_Crtc_Restore_Info);
+    _e_config_randr_serialized_mode_info_edd = E_CONFIG_DD_NEW("E_Randr_Serialized_Mode_Info", Ecore_X_Randr_Mode_Info);
 #undef T
 #undef D
-#define T E_Randr_Crtc_Restore_Info
-#define D _e_config_screen_crtc_restore_info_edd
-   E_CONFIG_SUB(D, T, geometry, _e_config_eina_rectangle_edd);
-   E_CONFIG_LIST(D, T, outputs, _e_config_screen_output_restore_info_edd);
+#define T Ecore_X_Randr_Mode_Info
+#define D _e_config_randr_serialized_mode_info_edd
+   E_CONFIG_VAL(D, T, width, INT);
+   E_CONFIG_VAL(D, T, height, INT);
+   E_CONFIG_VAL(D, T, dotClock, LL);
+   E_CONFIG_VAL(D, T, hSyncStart, INT);
+   E_CONFIG_VAL(D, T, hSyncEnd, INT);
+   E_CONFIG_VAL(D, T, hTotal, INT);
+   E_CONFIG_VAL(D, T, hSkew, INT);
+   E_CONFIG_VAL(D, T, vSyncStart, INT);
+   E_CONFIG_VAL(D, T, vSyncEnd, INT);
+   E_CONFIG_VAL(D, T, vTotal, INT);
+   E_CONFIG_VAL(D, T, name, STR);
+   E_CONFIG_VAL(D, T, nameLength, INT);
+   E_CONFIG_VAL(D, T, modeFlags, LL);
+
+  _e_config_randr_serialized_crtc_edd = E_CONFIG_DD_NEW("E_Randr_Serialized_Crtc", E_Randr_Serialized_Crtc);
+#undef T
+#undef D
+#define T E_Randr_Serialized_Crtc
+#define D _e_config_randr_serialized_crtc_edd
+   E_CONFIG_LIST(D, T, serialized_outputs, _e_config_randr_serialized_output_edd);
+   E_CONFIG_SUB(D, T, mode_info, _e_config_randr_serialized_mode_info_edd);
+   E_CONFIG_VAL(D, T, pos.x, INT);
+   E_CONFIG_VAL(D, T, pos.y, INT);
+   EET_DATA_DESCRIPTOR_ADD_LIST_STRING(D, T, "Crtc_Possible_Outputs_Names", possible_outputs_names);
    E_CONFIG_VAL(D, T, orientation, INT);
 
-   _e_config_screen_restore_info_12_edd = E_CONFIG_DD_NEW("E_Randr_Screen_Restore_Info_12", E_Randr_Screen_Restore_Info_12);
+   _e_config_randr_serialized_setup_12_edd = E_CONFIG_DD_NEW("E_Randr_Serialized_Setup_12", E_Randr_Serialized_Setup_12);
 #undef T
 #undef D
-#define T E_Randr_Screen_Restore_Info_12
-#define D _e_config_screen_restore_info_12_edd
-   E_CONFIG_LIST(D, T, crtcs, _e_config_screen_crtc_restore_info_edd);
-   E_CONFIG_LIST(D, T, outputs_edid_hashes, _e_config_screen_output_edid_hash_edd);
-   E_CONFIG_VAL(D, T, noutputs, INT);
-   E_CONFIG_VAL(D, T, output_policy, INT);
-   E_CONFIG_VAL(D, T, alignment, INT);
+#define T E_Randr_Serialized_Setup_12
+#define D _e_config_randr_serialized_setup_12_edd
+   E_CONFIG_VAL(D, T, timestamp, DOUBLE);
+   E_CONFIG_LIST(D, T, serialized_crtcs, _e_config_randr_serialized_crtc_edd);
+   E_CONFIG_LIST(D, T, serialized_edid_hashes, _e_config_randr_edid_hash_edd);
 
+   _e_config_randr_serialized_setup_edd = E_CONFIG_DD_NEW("E_Randr_Serialized_Setup", E_Randr_Serialized_Setup);
 #undef T
 #undef D
-#define T E_Randr_Screen_Restore_Info
-#define D _e_config_screen_info_edd
-   Eet_Data_Descriptor_Class eddc;
-   Eet_Data_Descriptor *unified, *edd_11_info, *edd_12_info;
-   EET_EINA_STREAM_DATA_DESCRIPTOR_CLASS_SET(&eddc, T);
-   D = eet_data_descriptor_stream_new(&eddc);
-   eddc.version = EET_DATA_DESCRIPTOR_CLASS_VERSION;
-   eddc.func.type_get = _eet_union_type_get;
-   eddc.func.type_set = _eet_union_type_set;
-   //virtual types to work around EET's inability to differentiate when it
-   //comes to pointers (a->b) vs. values (a.b) in union mappings
-   edd_11_info = E_CONFIG_DD_NEW("E_Randr_Screen_Restore_Info_11_Struct", E_Randr_Screen_Restore_Info_11);
-   E_CONFIG_SUB(edd_11_info, E_Randr_Screen_Restore_Info_Union, restore_info_11, _e_config_screen_restore_info_11_edd);
-   edd_12_info = E_CONFIG_DD_NEW("E_Randr_Screen_Restore_Info_12_Struct", E_Randr_Screen_Restore_Info_12);
-   E_CONFIG_LIST(edd_12_info, E_Randr_Screen_Restore_Info_Union, restore_info_12, _e_config_screen_restore_info_12_edd);
-   unified = eet_data_descriptor_stream_new(&eddc);
-   EET_DATA_DESCRIPTOR_ADD_MAPPING(unified, "E_Config_Screen_11", edd_11_info);
-   EET_DATA_DESCRIPTOR_ADD_MAPPING(unified, "E_Config_Screen_12", edd_12_info);
-   EET_DATA_DESCRIPTOR_ADD_MAPPING(unified, "E_Config_Screen_13", edd_12_info);
-// DISABLE! crashie crashie long time   
-//   EET_DATA_DESCRIPTOR_ADD_UNION(D, T, "E_Randr_Screen_Restore_Info_Union", rrvd_restore_info, randr_version, unified);
-   E_CONFIG_VAL(D, T, randr_version, INT);
+#define T E_Randr_Serialized_Setup
+#define D _e_config_randr_serialized_setup_edd
+   E_CONFIG_SUB(D, T, serialized_setup_11, _e_config_randr_serialized_setup_11_edd);
+   E_CONFIG_LIST(D, T, serialized_setups_12, _e_config_randr_serialized_setup_12_edd);
+   E_CONFIG_LIST(D, T, serialized_outputs_policies, _e_config_randr_serialized_output_policy_edd);
 
    _e_config_edd = E_CONFIG_DD_NEW("E_Config", E_Config);
 #undef T
@@ -787,7 +774,8 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, desklock_ask_presentation, UCHAR);
    E_CONFIG_VAL(D, T, desklock_ask_presentation_timeout, DOUBLE);
 
-   E_CONFIG_LIST(D, T, screen_info, _e_config_screen_info_edd);
+   //randr specifics
+   E_CONFIG_SUB(D, T, randr_serialized_setup, _e_config_randr_serialized_setup_edd);
 
    E_CONFIG_VAL(D, T, screensaver_enable, INT);
    E_CONFIG_VAL(D, T, screensaver_timeout, INT);
@@ -959,7 +947,7 @@ e_config_shutdown(void)
    E_CONFIG_DD_FREE(_e_config_mime_icon_edd);
    E_CONFIG_DD_FREE(_e_config_syscon_action_edd);
    E_CONFIG_DD_FREE(_e_config_env_var_edd);
-   E_CONFIG_DD_FREE(_e_config_screen_info_edd);
+   E_CONFIG_DD_FREE(_e_config_randr_serialized_setup_edd);
    return 1;
 }
 
@@ -1915,10 +1903,13 @@ _e_config_free(E_Config *ecf)
    E_Color_Class *cc;
    E_Path_Dir *epd;
    E_Remember *rem;
-   E_Randr_Screen_Restore_Info *screen_info;
-   E_Randr_Crtc_Restore_Info *crtc_info;
-   E_Randr_Output_Info *output_info;
-   E_Randr_Screen_Restore_Info_12 *restore_info_12;
+   E_Randr_Serialized_Setup *serialized_setup;
+   E_Randr_Serialized_Setup_12 *serialized_setup_12;
+   E_Randr_Serialized_Crtc *serialized_crtc;
+   E_Randr_Serialized_Output_Policy *serialized_output_policy;
+   E_Randr_Serialized_Output *serialized_output;
+   E_Randr_Edid_Hash *edid_hash;
+   char *output_name;
    E_Config_Env_Var *evr;
 
 
@@ -2069,37 +2060,50 @@ _e_config_free(E_Config *ecf)
         if (sca->icon) eina_stringshare_del(sca->icon);
         E_FREE(sca);
      }
-   if (ecf->screen_info)
+   if(ecf->randr_serialized_setup)
      {
-	EINA_LIST_FREE(ecf->screen_info, screen_info)
-	  {
-	     switch (screen_info->randr_version)
-	       {
-		case EET_SCREEN_INFO_11:
-		   free(screen_info->rrvd_restore_info.restore_info_11);
-		   break;
-		case EET_SCREEN_INFO_12:
-		case EET_SCREEN_INFO_13:
-		   EINA_LIST_FREE(screen_info->rrvd_restore_info.restore_info_12, restore_info_12)
-		     {
-			EINA_LIST_FREE(restore_info_12->crtcs, crtc_info)
-			  {
-			     EINA_LIST_FREE(crtc_info->outputs, output_info)
-			       {
-				  free(output_info->name);
-				  free(output_info->edid);
-				  free (output_info);
-			       }
-			     free (crtc_info);
-			  }
-			free(restore_info_12);
-		     }
-		   eina_list_free(screen_info->rrvd_restore_info.restore_info_12);
-		   break;
-	       }
-	     free(screen_info);
-	  }
+           if(ecf->randr_serialized_setup->serialized_setup_11)
+              free(serialized_setup->serialized_setup_11);
+           else if(ecf->randr_serialized_setup->serialized_setups_12)
+             {
+                EINA_LIST_FREE(ecf->randr_serialized_setup->serialized_setups_12, serialized_setup_12)
+                  {
+                     EINA_LIST_FREE(serialized_setup_12->serialized_crtcs, serialized_crtc)
+                       {
+                          if (!serialized_crtc) continue;
+                          EINA_LIST_FREE(serialized_crtc->serialized_outputs, serialized_output)
+                            {
+                               if (serialized_output)
+                                 {
+                                    if (serialized_output->name) free(serialized_output);
+                                    free(serialized_output);
+                                 }
+                            }
+                          EINA_LIST_FREE(serialized_crtc->possible_outputs_names, output_name)
+                            {
+                               if (output_name) free(output_name);
+                            }
+                          if (serialized_crtc->mode_info.name)
+                            free(serialized_crtc->mode_info.name);
+                          free(serialized_crtc);
+                       }
+                     EINA_LIST_FREE(serialized_setup_12->serialized_edid_hashes, edid_hash)
+                       {
+                          if (edid_hash) free(edid_hash);
+                       }
+                     free(serialized_setup_12);
+                  }
+             }
+           EINA_LIST_FREE(ecf->randr_serialized_setup->serialized_outputs_policies, serialized_output_policy)
+             {
+                if (!serialized_output) continue;
+                if (serialized_output_policy->name)
+                  free(serialized_output_policy->name);
+                free(serialized_output_policy);
+             }
+           free(ecf->randr_serialized_setup);
      }
+
    EINA_LIST_FREE(ecf->env_vars, evr)
      {
         if (evr->var) eina_stringshare_del(evr->var);
@@ -2116,14 +2120,14 @@ _e_config_free(E_Config *ecf)
    E_FREE(ecf);
 }
 
-static Eina_Bool
+   static Eina_Bool
 _e_config_cb_timer(void *data)
 {
    e_util_dialog_show(_("Settings Upgraded"), "%s", (char *)data);
    return 0;
 }
 
-static int
+   static int
 _e_config_eet_close_handle(Eet_File *ef, char *file)
 {
    Eet_Error err;
@@ -2133,16 +2137,16 @@ _e_config_eet_close_handle(Eet_File *ef, char *file)
    switch (err)
      {
       case EET_ERROR_NONE:
-        /* all good - no error */
-	break;
+         /* all good - no error */
+         break;
       case EET_ERROR_BAD_OBJECT:
-	erstr = _("The EET file handle is bad.");
-	break;
+         erstr = _("The EET file handle is bad.");
+         break;
       case EET_ERROR_EMPTY:
-	erstr = _("The file data is empty.");
-	break;
+         erstr = _("The file data is empty.");
+         break;
       case EET_ERROR_NOT_WRITABLE:
-	erstr = _("The file is not writable. Perhaps the disk is read-only<br>or you lost permissions to your files.");
+         erstr = _("The file is not writable. Perhaps the disk is read-only<br>or you lost permissions to your files.");
 	break;
       case EET_ERROR_OUT_OF_MEMORY:
 	erstr = _("Memory ran out while preparing the write.<br>Please free up memory.");
@@ -2279,37 +2283,4 @@ _e_config_acpi_bindings_add(void)
    bind->action = eina_stringshare_add("suspend");
    bind->params = eina_stringshare_add("now");
    e_config->acpi_bindings = eina_list_append(e_config->acpi_bindings, bind);
-}
-
-static const char *
-_eet_union_type_get(const void *data, Eina_Bool *unknow)
-{
-   const Eet_Union *u = data;
-   int i;
-
-   if (unknow) *unknow = EINA_FALSE;
-   for (i = 0; eet_mapping[i].name; ++i)
-     if (*u == eet_mapping[i].u)
-       return eet_mapping[i].name;
-
-   if (unknow) *unknow = EINA_TRUE;
-   return NULL;
-}
-
-static Eina_Bool
-_eet_union_type_set(const char *type, void *data, Eina_Bool unknow)
-{
-   Eet_Union *u = data;
-   int i;
-
-   if (unknow) return EINA_FALSE;
-
-   for (i = 0; eet_mapping[i].name; ++i)
-     if (strcmp(eet_mapping[i].name, type) == 0)
-       {
-	  *u = eet_mapping[i].u;
-	  return EINA_TRUE;
-       }
-
-   return EINA_FALSE;
 }

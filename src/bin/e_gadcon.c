@@ -1466,10 +1466,10 @@ e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu_gadget
      {
 	mi = e_menu_item_new(menu_main);
 	if (gcc->client_class->func.label)
-	  snprintf(buf, sizeof(buf), "Gadget %s", 
+	  snprintf(buf, sizeof(buf), "%s", 
 		   gcc->client_class->func.label((E_Gadcon_Client_Class *)gcc->client_class));
 	else
-	  snprintf(buf, sizeof(buf), "Gadget %s", gcc->name);
+	  snprintf(buf, sizeof(buf), "%s", gcc->name);
 
 	e_menu_item_label_set(mi, _(buf));
 	e_menu_item_realize_callback_set(mi, _e_gadcon_client_cb_menu_pre, gcc);
