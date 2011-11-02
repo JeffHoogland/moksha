@@ -114,7 +114,7 @@ _pulse_sources_get(Pulse *p __UNUSED__, Pulse_Tag_Id id __UNUSED__, Eina_List *e
    sources = ev;
    EINA_LIST_FOREACH(ev, l, sink)
      {
-        printf("Sink:\n");
+        printf("Sources:\n");
         printf("\tname: %s\n", pulse_sink_name_get(sink));
         printf("\tidx: %"PRIu32"\n", pulse_sink_idx_get(sink));
         printf("\tdesc: %s\n", pulse_sink_desc_get(sink));
