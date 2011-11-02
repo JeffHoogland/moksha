@@ -1,26 +1,24 @@
 #ifdef E_TYPEDEFS
 
 typedef struct _E_Randr_Crtc_Info E_Randr_Crtc_Info;
-typedef struct _E_Randr_Edid_Hash E_Randr_Edid_Hash;
 typedef struct _E_Randr_Output_Info E_Randr_Output_Info;
 typedef struct _E_Randr_Screen_Info_11 E_Randr_Screen_Info_11;
 typedef struct _E_Randr_Screen_Info_12 E_Randr_Screen_Info_12;
 typedef union _E_Randr_Screen_RRVD_Info E_Randr_Screen_RRVD_Info;
 typedef struct _E_Randr_Screen_Info E_Randr_Screen_Info;
-typedef struct _E_Randr_Serialized_Output_Policy E_Randr_Serialized_Output_Policy;
-typedef struct _E_Randr_Serialized_Output E_Randr_Serialized_Output;
-typedef struct _E_Randr_Serialized_Crtc E_Randr_Serialized_Crtc;
-typedef struct _E_Randr_Serialized_Setup_11 E_Randr_Serialized_Setup_11;
-typedef struct _E_Randr_Serialized_Setup_12 E_Randr_Serialized_Setup_12;
-typedef struct _E_Randr_Serialized_Setup E_Randr_Serialized_Setup;
-
-EAPI void e_randr_store_configuration(E_Randr_Screen_Info *screen_info);
+typedef struct _E_Randr_Output_Edid_Hash E_Randr_Output_Edid_Hash;
+typedef struct _E_Randr_Output_Restore_Info E_Randr_Output_Restore_Info;
+typedef struct _E_Randr_Crtc_Restore_Info E_Randr_Crtc_Restore_Info;
+typedef struct _E_Randr_Screen_Restore_Info_11 E_Randr_Screen_Restore_Info_11;
+typedef struct _E_Randr_Screen_Restore_Info_12 E_Randr_Screen_Restore_Info_12;
+typedef union _E_Randr_Screen_Restore_Info_Union E_Randr_Screen_Restore_Info_Union;
+typedef struct _E_Randr_Screen_Restore_Info E_Randr_Screen_Restore_Info;
 
 #else
 #ifndef E_RANDR_H
 #define E_RANDR_H
 
-struct _E_Randr_Crtc_Info
+struct _E_Randr_Crtc_Info 
 {
    Ecore_X_ID xid;
    Eina_Rectangle geometry;
@@ -37,12 +35,7 @@ struct _E_Randr_Crtc_Info
    Ecore_X_Randr_Mode_Info *current_mode;
 };
 
-struct _E_Randr_Edid_Hash
-{
-   int hash;
-};
-
-struct _E_Randr_Output_Info
+struct _E_Randr_Output_Info 
 {
    Ecore_X_ID xid;
    char *name;
@@ -54,7 +47,6 @@ struct _E_Randr_Output_Info
    int connector_number;
    Ecore_X_Randr_Connector_Type connector_type;
    Ecore_X_Randr_Connection_Status connection_status;
-   Ecore_X_Randr_Output_Policy policy;
    /*
     * Attached Monitor specific:
     */
@@ -65,7 +57,6 @@ struct _E_Randr_Output_Info
    Ecore_X_Randr_Screen_Size size_mm;
    unsigned char *edid;
    unsigned long edid_length;
-   E_Randr_Edid_Hash edid_hash;
    int max_backlight;
    double backlight_level;
    Ecore_X_Render_Subpixel_Order subpixel_order;
@@ -84,7 +75,7 @@ struct _E_Randr_Screen_Info_11
    Ecore_X_Randr_Refresh_Rate current_rate;
 };
 
-struct _E_Randr_Screen_Info_12
+struct _E_Randr_Screen_Info_12 
 {
    Ecore_X_Randr_Screen_Size min_size;
    Ecore_X_Randr_Screen_Size max_size;
@@ -93,17 +84,18 @@ struct _E_Randr_Screen_Info_12
    Eina_List *crtcs;
    Eina_List *outputs;
    E_Randr_Output_Info *primary_output;
+   Ecore_X_Randr_Output_Policy output_policy;
    Ecore_X_Randr_Relative_Alignment alignment;
 };
 
 //RRVD == RandR(R) Version Depended
-union _E_Randr_Screen_RRVD_Info
+union _E_Randr_Screen_RRVD_Info 
 {
    E_Randr_Screen_Info_11 *randr_info_11;
    E_Randr_Screen_Info_12 *randr_info_12;
 };
 
-struct _E_Randr_Screen_Info
+struct _E_Randr_Screen_Info 
 {
    Ecore_X_Window root;
    int randr_version;
@@ -111,67 +103,56 @@ struct _E_Randr_Screen_Info
 };
 
 //Following stuff is just for configuration purposes
-
-struct _E_Randr_Serialized_Output_Policy
-{
-   char *name;
-   int name_length;
-   Ecore_X_Randr_Output_Policy policy;
+struct _E_Randr_Output_Edid_Hash {
+   int hash;
 };
 
-struct _E_Randr_Serialized_Output
+struct _E_Randr_Output_Restore_Info
 {
-   char *name;
-   int name_length;
-   E_Randr_Edid_Hash edid_hash;
+   E_Randr_Output_Edid_Hash edid_hash;
    double backlight_level;
 };
 
-struct _E_Randr_Serialized_Crtc
+struct _E_Randr_Crtc_Restore_Info
 {
-   //List of E_Randr_Serialized_Output objects that were used on the same output
-   Eina_List *serialized_outputs;
-   //the serialized mode_info misses its xid value
-   Ecore_X_Randr_Mode_Info mode_info;
-   Evas_Coord_Point pos;
-   //List of all possible outputs' names
-   //e.g. "LVDS", "CRT-0", "VGA"
-   Eina_List *possible_outputs_names;
+   Eina_Rectangle geometry;
    Ecore_X_Randr_Orientation orientation;
+   //list of the outputs;
+   Eina_List *outputs;
 };
 
-struct _E_Randr_Serialized_Setup_12
+struct _E_Randr_Screen_Restore_Info_11 
 {
-   double timestamp;
-   //List of E_Randr_Serialized_Crtc objects
-   Eina_List *serialized_crtcs;
-   /*
-    * List of E_Randr_Edid_Hash elements of monitors,
-    * that were enabled, when the setup was stored
-    */
-   Eina_List *serialized_edid_hashes;
-};
-
-struct _E_Randr_Serialized_Setup_11
-{
-   Ecore_X_Randr_Screen_Size_MM size;
+   Ecore_X_Randr_Screen_Size size;
    Ecore_X_Randr_Refresh_Rate refresh_rate;
    Ecore_X_Randr_Orientation orientation;
 };
 
-struct _E_Randr_Serialized_Setup
+struct _E_Randr_Screen_Restore_Info_12 
 {
-   E_Randr_Serialized_Setup_11 *serialized_setup_11;
-   //List of E_Randr_Serialized_Setup_12 objects
-   Eina_List *serialized_setups_12;
-   //List of E_Randr_Serialized_Output_Policy objects
-   Eina_List *serialized_outputs_policies;
+   Eina_List *outputs_edid_hashes;
+   int noutputs;
+   Eina_List *crtcs;
+   Ecore_X_Randr_Output_Policy output_policy;
+   Ecore_X_Randr_Relative_Alignment alignment;
+};
+
+union _E_Randr_Screen_Restore_Info_Union 
+{
+   E_Randr_Screen_Restore_Info_11 *restore_info_11;
+   Eina_List *restore_info_12;
+};
+
+struct _E_Randr_Screen_Restore_Info 
+{
+   int randr_version;
+   E_Randr_Screen_Restore_Info_Union rrvd_restore_info;
 };
 
 EINTERN Eina_Bool e_randr_init(void);
 EINTERN int e_randr_shutdown(void);
 
-EAPI extern E_Randr_Screen_Info *e_randr_screen_info;
+extern E_Randr_Screen_Info *e_randr_screen_info;
 
 #endif
 #endif
