@@ -43,7 +43,10 @@ deserialize_sink(Pulse *conn __UNUSED__, Pulse_Tag *tag, Eina_Bool source)
 
    monitor_source_name = driver = NULL;
    EINA_SAFETY_ON_FALSE_GOTO(untag_uint32(tag, &x), error);
-   sink = eina_hash_find(pulse_sinks, &x);
+   if (source && pulse_sources)
+     sink = eina_hash_find(pulse_sources, &x);
+   else if ((!source) && pulse_sinks)
+     sink = eina_hash_find(pulse_sinks, &x);
    exist = !!sink;
    if (!sink) sink = calloc(1, sizeof(Pulse_Sink));
    sink->index = x;
