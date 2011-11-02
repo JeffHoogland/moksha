@@ -459,7 +459,7 @@ pulse_type_mute_set(Pulse *conn, uint32_t sink_num, Eina_Bool mute, Eina_Bool so
    ecore_main_fd_handler_active_set(conn->fdh, read | ECORE_FD_WRITE);
    conn->oq = eina_list_append(conn->oq, tag);
    eina_hash_add(conn->tag_handlers, &tag->tag_count, (uintptr_t*)((uintptr_t)type));
-   h = (source == EINA_TRUE) ? pulse_sources : pulse_sinks;
+   h = (source) ? pulse_sources : pulse_sinks;
    if (h)
      {
         Pulse_Sink *sink;
