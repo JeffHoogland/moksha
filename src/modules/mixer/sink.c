@@ -164,15 +164,19 @@ pulse_sink_free(Pulse_Sink *sink)
 {
    Pulse_Sink_Port_Info *pi;
    if (!sink) return;
-   if (sink->source)
+   if (!sink->deleted)
      {
-        if (eina_hash_del_by_key(pulse_sources, (uintptr_t*)&sink->index))
-          return;
-     }
-   else
-     {
-        if (eina_hash_del_by_key(pulse_sinks, (uintptr_t*)&sink->index))
-          return;
+        sink->deleted = EINA_TRUE;
+        if (sink->source)
+          {
+             eina_hash_del_by_key(pulse_sources, (uintptr_t*)&sink->index);
+             return;
+          }
+        else
+          {
+             eina_hash_del_by_key(pulse_sinks, (uintptr_t*)&sink->index);
+             return;
+          }
      }
    eina_stringshare_del(sink->name);
    eina_stringshare_del(sink->description);

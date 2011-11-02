@@ -459,6 +459,7 @@ struct Pulse_Sink {
     Eina_Bool mute : 1;                          /**< Mute switch of the sink */
     Eina_Bool update : 1;
     Eina_Bool source : 1; /**< sink is actually a source */
+    Eina_Bool deleted : 1; /**< sink has been deleted */
 };
 
 typedef uint32_t pa_pstream_descriptor[PA_PSTREAM_DESCRIPTOR_MAX];
