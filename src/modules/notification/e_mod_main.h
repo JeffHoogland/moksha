@@ -7,7 +7,7 @@
 #include "config.h"
 
 #define MOD_CFG_FILE_EPOCH 0x0002
-#define MOD_CFG_FILE_GENERATION 0x0005
+#define MOD_CFG_FILE_GENERATION 0x0006
 #define MOD_CFG_FILE_VERSION					\
 ((MOD_CFG_FILE_EPOCH << 16) | MOD_CFG_FILE_GENERATION)
 
@@ -41,6 +41,7 @@ struct _Config
   int show_critical;
   int force_timeout;
   int ignore_replacement;
+  int dual_screen;
   float timeout;
   Popup_Corner corner;
 

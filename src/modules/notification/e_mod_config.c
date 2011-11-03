@@ -7,6 +7,7 @@ struct _E_Config_Dialog_Data
    int    show_critical;
    int    force_timeout;
    int    ignore_replacement;
+   int    dual_screen;
    double timeout;
    int    corner;
 };
@@ -76,6 +77,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->corner = notification_cfg->corner;
    cfdata->force_timeout = notification_cfg->force_timeout;
    cfdata->ignore_replacement = notification_cfg->ignore_replacement;
+   cfdata->dual_screen = notification_cfg->dual_screen;
 }
 
 static Evas_Object *
@@ -139,6 +141,8 @@ _basic_create(E_Config_Dialog      *cfd __UNUSED__,
    of = e_widget_framelist_add(evas, _("Miscellaneous"), 0);
    ow = e_widget_check_add(evas, _("Ignore replace ID"), &(cfdata->ignore_replacement));
    e_widget_framelist_object_append(of, ow);
+   ow = e_widget_check_add(evas, _("Use multiple monitor geometry"), &(cfdata->dual_screen));
+   e_widget_framelist_object_append(of, ow);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
 
@@ -156,6 +160,7 @@ _basic_apply(E_Config_Dialog      *cfd __UNUSED__,
    notification_cfg->corner = cfdata->corner;
    notification_cfg->force_timeout = cfdata->force_timeout;
    notification_cfg->ignore_replacement = cfdata->ignore_replacement;
+   notification_cfg->dual_screen = cfdata->dual_screen;
 
    e_modapi_save(notification_mod);
    return 1;

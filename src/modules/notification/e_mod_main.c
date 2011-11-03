@@ -328,6 +328,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, timeout, FLOAT);
    E_CONFIG_VAL(D, T, force_timeout, INT);
    E_CONFIG_VAL(D, T, ignore_replacement, INT);
+   E_CONFIG_VAL(D, T, dual_screen, INT);
    E_CONFIG_LIST(D, T, items, conf_item_edd);
 
    notification_cfg = e_config_domain_load("module.notification", conf_edd);
@@ -461,6 +462,7 @@ _notification_cfg_new(void)
    cfg->timeout = 5.0;
    cfg->force_timeout = 0;
    cfg->ignore_replacement = 0;
+   cfg->dual_screen = 0;
    cfg->corner = CORNER_TR;
 
    return cfg;

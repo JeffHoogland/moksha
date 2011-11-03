@@ -297,13 +297,20 @@ static int
 _notification_popup_place(Popup_Data *popup,
                           int         pos)
 {
-   int w, h;
-   E_Container *con;
-
-   con = e_container_current_get(e_manager_current_get());
-   evas_object_geometry_get(popup->theme, NULL, NULL, &w, &h);
+   int w, h, sw, sh;
    int gap = 10;
    int to_edge = 15;
+   E_Container *con;
+
+   if (notification_cfg->dual_screen)
+     {
+        con = e_container_current_get(e_manager_current_get());
+        sw = con->w;
+        sh = con->h;
+     }
+   else
+     ecore_x_randr_screen_current_size_get(e_manager_current_get()->root, &sw, &sh, NULL, NULL);
+   evas_object_geometry_get(popup->theme, NULL, NULL, &w, &h);
 
    /* XXX for now ignore placement requests */
 
@@ -315,18 +322,18 @@ _notification_popup_place(Popup_Data *popup,
         break;
       case CORNER_TR:
         e_popup_move(popup->win,
-                     con->w - (w + to_edge),
+                     sw - (w + to_edge),
                      to_edge + pos);
         break;
       case CORNER_BL:
         e_popup_move(popup->win,
                      to_edge,
-                     (con->h - h) - (to_edge + pos));
+                     (sh - h) - (to_edge + pos));
         break;
       case CORNER_BR:
         e_popup_move(popup->win,
-                     con->w - (w + to_edge),
-                     (con->h - h) - (to_edge + pos));
+                     sw - (w + to_edge),
+                     (sh - h) - (to_edge + pos));
         break;
       default:
         break;
