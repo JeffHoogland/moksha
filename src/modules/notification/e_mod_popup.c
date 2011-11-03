@@ -392,55 +392,58 @@ _notification_popup_refresh(Popup_Data *popup)
      }
 
    /* Check if the app specify an icon either by a path or by a hint */
-   if ((icon_path = e_notification_app_icon_get(popup->notif)) && *icon_path)
+   img = e_notification_hint_image_data_get(popup->notif);
+   if (!img)
      {
-        if (!memcmp(icon_path, "file://", 7)) icon_path += 7;
-        if (!ecore_file_exists(icon_path))
+        icon_path = e_notification_hint_image_path_get(popup->notif);
+        if ((!icon_path) || (!icon_path[0]))
+          icon_path = e_notification_app_icon_get(popup->notif);
+        if (icon_path)
           {
-             const char *new_path;
-             unsigned int size;
-
-             size = e_util_icon_size_normalize(width * e_scale);
-             new_path = efreet_icon_path_find(e_config->icon_theme, 
-                                              icon_path, size);
-             if (new_path)
-               icon_path = new_path;
-             else
+             if (!strncmp(icon_path, "file://", 7)) icon_path += 7;
+             if (!ecore_file_exists(icon_path))
                {
-                  Evas_Object *o = e_icon_add(popup->e);
-                  if (!e_util_icon_theme_set(o, icon_path)) evas_object_del(o);
+                  const char *new_path;
+                  unsigned int size;
+
+                  size = e_util_icon_size_normalize(width * e_scale);
+                  new_path = efreet_icon_path_find(e_config->icon_theme, 
+                                                   icon_path, size);
+                  if (new_path)
+                    icon_path = new_path;
                   else
                     {
-                       popup->app_icon = o;
-                       w = width;
-                       h = height;
+                       Evas_Object *o = e_icon_add(popup->e);
+                       if (!e_util_icon_theme_set(o, icon_path)) evas_object_del(o);
+                       else
+                         {
+                            popup->app_icon = o;
+                            w = width;
+                            h = height;
+                         }
                     }
                }
-          }
 
-        if (!popup->app_icon)
-          {
-             popup->app_icon = e_icon_add(popup->e);
-             if (!e_icon_file_set(popup->app_icon, icon_path))
+             if (!popup->app_icon)
                {
-                  evas_object_del(popup->app_icon);
-                  popup->app_icon = NULL;
+                  popup->app_icon = e_icon_add(popup->e);
+                  if (!e_icon_file_set(popup->app_icon, icon_path))
+                    {
+                       evas_object_del(popup->app_icon);
+                       popup->app_icon = NULL;
+                    }
+                  else e_icon_size_get(popup->app_icon, &w, &h);
                }
-             else e_icon_size_get(popup->app_icon, &w, &h);
           }
      }
-   else
+   if ((!img) && (!popup->app_icon))
+     img = e_notification_hint_icon_data_get(popup->notif);
+   if (img)
      {
-        img = e_notification_hint_icon_data_get(popup->notif);
-        if (!img) img = e_notification_hint_image_data_get(popup->notif);
-        if (img)
-          {
-             popup->app_icon = e_notification_image_evas_object_add(popup->e,
-                                                                    img);
-             evas_object_image_filled_set(popup->app_icon, EINA_TRUE);
-             evas_object_image_alpha_set(popup->app_icon, EINA_TRUE);
-             evas_object_image_size_get(popup->app_icon, &w, &h);
-          }
+        popup->app_icon = e_notification_image_evas_object_add(popup->e, img);
+        evas_object_image_filled_set(popup->app_icon, EINA_TRUE);
+        evas_object_image_alpha_set(popup->app_icon, EINA_TRUE);
+        evas_object_image_size_get(popup->app_icon, &w, &h);
      }
 
    if (!popup->app_icon)
