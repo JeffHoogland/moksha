@@ -51,8 +51,9 @@ static Eina_List *handlers = NULL;
 static Eina_List *settings = NULL;
 static Eina_Bool running = EINA_FALSE;
 static const char _setting_icon_theme_name[] = "Net/IconThemeName";
-static const char _setting_theme_name[]	     = "Net/ThemeName";
-static const char _setting_font_name[]	     = "Gtk/FontName";
+static const char _setting_theme_name[]      = "Net/ThemeName";
+static const char _setting_font_name[]       = "Gtk/FontName";
+static const char _setting_xft_dpi[]         = "Xft/DPI";
 
 static Ecore_X_Atom
 _e_xsettings_atom_screen_get(int screen_num)
@@ -77,7 +78,7 @@ _e_xsettings_selection_owner_set(Settings_Manager *sm)
    ret = (cur_selection == sm->selection);
    if (!ret)
      fprintf(stderr, "XSETTINGS: tried to set selection to %#x, but got %#x\n",
-	     sm->selection, cur_selection);
+             sm->selection, cur_selection);
 
    return ret;
 }
@@ -114,15 +115,15 @@ _e_xsettings_activate(Settings_Manager *sm)
 
    if (!_e_xsettings_selection_owner_set(sm))
      {
-	ecore_x_window_free(sm->selection);
-	sm->selection = 0;
-	return 0;
+        ecore_x_window_free(sm->selection);
+        sm->selection = 0;
+        return 0;
      }
 
    ecore_x_client_message32_send(e_manager_current_get()->root, _atom_manager,
-				 ECORE_X_EVENT_MASK_WINDOW_CONFIGURE,
-				 ecore_x_current_time_get(), atom,
-				 sm->selection, 0, 0);
+                                 ECORE_X_EVENT_MASK_WINDOW_CONFIGURE,
+                                 ecore_x_current_time_get(), atom,
+                                 sm->selection, 0, 0);
 
    _e_xsettings_apply(sm);
 
@@ -141,7 +142,7 @@ _e_xsettings_activate_retry(void *data)
      fputs("XSETTINGS: activate success!\n", stderr);
    else
      fprintf(stderr, "XSETTINGS: activate failure! retrying in %0.1f seconds\n",
-	     RETRY_TIMEOUT);
+             RETRY_TIMEOUT);
 
    if (!ret)
      return ECORE_CALLBACK_RENEW;
@@ -169,36 +170,36 @@ _e_xsettings_string_set(const char *name, const char *value)
 
    EINA_LIST_FOREACH(settings, l, s)
      {
-	if (s->type != SETTING_TYPE_STRING) continue;
-	if (s->name == name) break;
+        if (s->type != SETTING_TYPE_STRING) continue;
+        if (s->name == name) break;
      }
    if (!value)
      {
-	if (!s) return;
-	DBG("remove %s\n", name);
-	eina_stringshare_del(name);
-	eina_stringshare_del(s->name);
-	eina_stringshare_del(s->s.value);
-	settings = eina_list_remove(settings, s);
-	E_FREE(s);
-	return;
+        if (!s) return;
+        DBG("remove %s\n", name);
+        eina_stringshare_del(name);
+        eina_stringshare_del(s->name);
+        eina_stringshare_del(s->s.value);
+        settings = eina_list_remove(settings, s);
+        E_FREE(s);
+        return;
      }
    if (s)
      {
-	DBG("update %s %s\n", name, value);
-	eina_stringshare_del(name);
-	eina_stringshare_replace(&s->s.value, value);
+        DBG("update %s %s\n", name, value);
+        eina_stringshare_del(name);
+        eina_stringshare_replace(&s->s.value, value);
      }
    else
      {
-	DBG("add %s %s\n", name, value);
-	s = E_NEW(Setting, 1);
-	s->type = SETTING_TYPE_STRING;
-	s->name = name;
-	s->s.value = eina_stringshare_add(value);
-	settings = eina_list_append(settings, s);
+        DBG("add %s %s\n", name, value);
+        s = E_NEW(Setting, 1);
+        s->type = SETTING_TYPE_STRING;
+        s->name = name;
+        s->s.value = eina_stringshare_add(value);
+        settings = eina_list_append(settings, s);
      }
-   
+
    /* type + pad + name-len + last-change-serial + str_len */
    s->length = 12;
    s->length += OFFSET_ADD(strlen(name));
@@ -206,9 +207,9 @@ _e_xsettings_string_set(const char *name, const char *value)
    s->last_change = ecore_x_current_time_get();
 }
 
-/* not used!!!
+
 static void
-_e_xsettings_int_set(const char *name, int value)
+_e_xsettings_int_set(const char *name, int value, Eina_Bool set)
 {
    Setting *s;
    Eina_List *l;
@@ -218,41 +219,40 @@ _e_xsettings_int_set(const char *name, int value)
 
    EINA_LIST_FOREACH(settings, l, s)
      {
-	if (s->type != SETTING_TYPE_INT) continue;
-	if (s->name == name) break;
+        if (s->type != SETTING_TYPE_INT) continue;
+        if (s->name == name) break;
      }
-   if (!value)
+   if (!set)
      {
-	if (!s) return;
-	DBG("remove %s\n", name);
-	eina_stringshare_del(name);
-	eina_stringshare_del(s->name);
-	settings = eina_list_remove(settings, s);
-	E_FREE(s);
-	return;
+        if (!s) return;
+        DBG("remove %s\n", name);
+        eina_stringshare_del(name);
+        eina_stringshare_del(s->name);
+        settings = eina_list_remove(settings, s);
+        E_FREE(s);
+        return;
      }
    if (s)
      {
-	DBG("update %s %d\n", name, value);
-	eina_stringshare_del(name);
-	s->i.value = value;
+        DBG("update %s %d\n", name, value);
+        eina_stringshare_del(name);
+        s->i.value = value;
      }
    else
      {
-	DBG("add %s %d\n", name, value);
-	s = E_NEW(Setting, 1);
-	s->type = SETTING_TYPE_INT;
-	s->name = name;
-	s->i.value = value;
-	settings = eina_list_append(settings, s);
+        DBG("add %s %d\n", name, value);
+        s = E_NEW(Setting, 1);
+        s->type = SETTING_TYPE_INT;
+        s->name = name;
+        s->i.value = value;
+        settings = eina_list_append(settings, s);
      }
-   
+
    // type + pad + name-len + last-change-serial + value
    s->length = 12;
    s->length += OFFSET_ADD(strlen(name));
 }
-*/
-   
+
 static unsigned char *
 _e_xsettings_copy(unsigned char *buffer, Setting *s)
 {
@@ -280,30 +280,30 @@ _e_xsettings_copy(unsigned char *buffer, Setting *s)
    switch (s->type)
      {
       case SETTING_TYPE_INT:
-	 *(CARD32 *)(buffer) = s->i.value;
-	 buffer += 4;
-	 break;
+         *(CARD32 *)(buffer) = s->i.value;
+         buffer += 4;
+         break;
 
       case SETTING_TYPE_STRING:
-	 str_len = strlen (s->s.value);
-	 *(CARD32 *)(buffer) = str_len;
-	 buffer += 4;
+         str_len = strlen (s->s.value);
+         *(CARD32 *)(buffer) = str_len;
+         buffer += 4;
 
-	 memcpy(buffer, s->s.value, str_len);
-	 buffer += str_len;
+         memcpy(buffer, s->s.value, str_len);
+         buffer += str_len;
 
-	 len = OFFSET_ADD(str_len) - str_len;
-	 memset(buffer, 0, len);
-	 buffer += len;
-	 break;
+         len = OFFSET_ADD(str_len) - str_len;
+         memset(buffer, 0, len);
+         buffer += len;
+         break;
 
       case SETTING_TYPE_COLOR:
-	 *(CARD16 *)(buffer) = s->c.red;
-	 *(CARD16 *)(buffer + 2) = s->c.green;
-	 *(CARD16 *)(buffer + 4) = s->c.blue;
-	 *(CARD16 *)(buffer + 6) = s->c.alpha;
-	 buffer += 8;
-	 break;
+         *(CARD16 *)(buffer) = s->c.red;
+         *(CARD16 *)(buffer + 2) = s->c.green;
+         *(CARD16 *)(buffer + 4) = s->c.blue;
+         *(CARD16 *)(buffer + 6) = s->c.alpha;
+         buffer += 8;
+         break;
      }
 
    return buffer;
@@ -323,7 +323,7 @@ _e_xsettings_apply(Settings_Manager *sm)
 
    pos = data = malloc(len);
    if (!data) return;
-   
+
 #if __BYTE_ORDER == __LITTLE_ENDIAN
    *pos = LSBFirst;
 #else
@@ -340,9 +340,9 @@ _e_xsettings_apply(Settings_Manager *sm)
      pos = _e_xsettings_copy(pos, s);
 
    ecore_x_window_prop_property_set(sm->selection,
-				    _atom_xsettings,
-				    _atom_xsettings,
-				    8, data, len);
+                                    _atom_xsettings,
+                                    _atom_xsettings,
+                                    8, data, len);
    free(data);
 }
 
@@ -363,9 +363,9 @@ _cb_icon_theme_change(void *data __UNUSED__, int type __UNUSED__, void *event)
 
    if (e_config->xsettings.match_e17_icon_theme)
      {
-	_e_xsettings_string_set(_setting_icon_theme_name,
-			      ev->icon_theme);
-	_e_xsettings_update();
+        _e_xsettings_string_set(_setting_icon_theme_name,
+                              ev->icon_theme);
+        _e_xsettings_update();
      }
 
    return ECORE_CALLBACK_PASS_ON;
@@ -377,15 +377,16 @@ _e_xsettings_icon_theme_set(void)
 {
    if (e_config->xsettings.match_e17_icon_theme)
      {
-	_e_xsettings_string_set(_setting_icon_theme_name,
-			      e_config->icon_theme);
-	return;
+        _e_xsettings_string_set(_setting_icon_theme_name,
+                                e_config->icon_theme);
+        return;
      }
-   else if (e_config->xsettings.net_icon_theme_name)
+
+   if (e_config->xsettings.net_icon_theme_name)
      {
-	_e_xsettings_string_set(_setting_icon_theme_name,
-			      e_config->xsettings.net_icon_theme_name);
-	return;
+        _e_xsettings_string_set(_setting_icon_theme_name,
+                              e_config->xsettings.net_icon_theme_name);
+        return;
      }
 
    _e_xsettings_string_set(_setting_icon_theme_name, NULL);
@@ -396,22 +397,42 @@ _e_xsettings_theme_set(void)
 {
    if (e_config->xsettings.match_e17_theme)
      {
-	E_Config_Theme *ct;
-	if ((ct = e_theme_config_get("theme")))
-	  {
-	     char *theme;
-	     if ((theme = edje_file_data_get(ct->file, "gtk-theme")))
-	       {
-		  _e_xsettings_string_set(_setting_theme_name, theme);
-		  return;
-	       }
-	  }
+        E_Config_Theme *ct;
+        if ((ct = e_theme_config_get("theme")))
+          {
+             char *theme;
+
+             if ((theme = edje_file_data_get(ct->file, "gtk-theme")))
+               {
+                  char buf[4096], *dir;
+                  Eina_List *xdg_dirs, *l;
+
+                  e_user_homedir_snprintf(buf, sizeof(buf), ".themes/%s", theme);
+                  if (ecore_file_exists(buf))
+                    {
+                       _e_xsettings_string_set(_setting_theme_name, theme);
+                       return;
+                    }
+
+                  xdg_dirs = efreet_data_dirs_get();
+                  EINA_LIST_FOREACH(xdg_dirs, l, dir)
+                    {
+                       snprintf(buf, sizeof(buf), "%s/themes/%s", dir, theme);
+                       if (ecore_file_exists(buf))
+                         {
+                            _e_xsettings_string_set(_setting_theme_name, theme);
+                            return;
+                         }
+                    }
+               }
+          }
      }
-   else if (e_config->xsettings.net_theme_name)
+
+   if (e_config->xsettings.net_theme_name)
      {
-	_e_xsettings_string_set(_setting_theme_name,
-			      e_config->xsettings.net_theme_name);
-	return;
+        _e_xsettings_string_set(_setting_theme_name,
+                              e_config->xsettings.net_theme_name);
+        return;
      }
 
    _e_xsettings_string_set(_setting_theme_name, NULL);
@@ -422,7 +443,7 @@ _e_xsettings_font_set(void)
 {
    E_Font_Default *efd;
    E_Font_Properties *efp;
-   
+
    efd = e_font_default_get("application");
 
    if (efd && efd->font)
@@ -450,6 +471,17 @@ _e_xsettings_font_set(void)
 }
 
 static void
+_e_xsettings_xft_set(void)
+{
+
+   if (e_config->scale.use_dpi)
+     _e_xsettings_int_set(_setting_xft_dpi, e_config->scale.base_dpi, EINA_TRUE);
+   else
+     _e_xsettings_int_set(_setting_xft_dpi, 0, EINA_FALSE);
+
+}
+
+static void
 _e_xsettings_start(void)
 {
    Eina_List *l;
@@ -460,20 +492,20 @@ _e_xsettings_start(void)
    _e_xsettings_theme_set();
    _e_xsettings_icon_theme_set();
    _e_xsettings_font_set();
-   
+
    EINA_LIST_FOREACH(e_manager_list(), l, man)
      {
-	Settings_Manager *sm = E_NEW(Settings_Manager, 1);
-	sm->man = man;
+        Settings_Manager *sm = E_NEW(Settings_Manager, 1);
+        sm->man = man;
 
-	if (!_e_xsettings_activate(sm))
-	  _e_xsettings_retry(sm);
+        if (!_e_xsettings_activate(sm))
+          _e_xsettings_retry(sm);
 
-	managers = eina_list_append(managers, sm);
+        managers = eina_list_append(managers, sm);
      }
 
    handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_CONFIG_ICON_THEME,
-								 _cb_icon_theme_change, NULL));   
+                                                                 _cb_icon_theme_change, NULL));
 
    running = EINA_TRUE;
 }
@@ -489,19 +521,19 @@ _e_xsettings_stop(void)
 
    EINA_LIST_FREE(managers, sm)
      {
-	if (sm->timer_retry)
-	  ecore_timer_del(sm->timer_retry);
+        if (sm->timer_retry)
+          ecore_timer_del(sm->timer_retry);
 
-	_e_xsettings_deactivate(sm);
+        _e_xsettings_deactivate(sm);
 
-	E_FREE(sm);
+        E_FREE(sm);
      }
 
    EINA_LIST_FREE(settings, s)
      {
-	if (s->name) eina_stringshare_del(s->name);
-	if (s->s.value) eina_stringshare_del(s->s.value);
-	E_FREE(s);
+        if (s->name) eina_stringshare_del(s->name);
+        if (s->s.value) eina_stringshare_del(s->s.value);
+        E_FREE(s);
      }
 
    EINA_LIST_FREE(handlers, h)
@@ -518,7 +550,7 @@ e_xsettings_init(void)
 
    if (e_config->xsettings.enabled)
      _e_xsettings_start();
-   
+
    return 1;
 }
 
@@ -526,30 +558,28 @@ EINTERN int
 e_xsettings_shutdown(void)
 {
    _e_xsettings_stop();
-   
+
    return 1;
 }
 
 EAPI void
 e_xsettings_config_update(void)
 {
-   DBG("update\n");
-   
    if (!e_config->xsettings.enabled)
      {
         _e_xsettings_stop();
         return;
      }
-   
+
    if (!running)
      {
         _e_xsettings_start();
-     }        
+     }
    else
      {
         _e_xsettings_theme_set();
         _e_xsettings_icon_theme_set();
         _e_xsettings_font_set();
         _e_xsettings_update();
-     }        
+     }
 }
