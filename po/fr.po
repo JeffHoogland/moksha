@@ -8,13 +8,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-11-01 12:44+0100\n"
-"PO-Revision-Date: 2011-11-01 15:59+0100\n"
+"POT-Creation-Date: 2011-11-04 09:19+0100\n"
+"PO-Revision-Date: 2011-11-04 12:16+0100\n"
 "Last-Translator: dazibao <dazibao@sfr.fr>\n"
 "Language-Team: Enlightenment French Team <sansgourou@gmail.com>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: French\n"
 "X-Poedit-Country: FRANCE\n"
@@ -811,7 +811,7 @@ msgstr "Sélecteur de couleur"
 
 #: src/bin/e_color_dialog.c:46
 #: src/bin/e_config.c:1623
-#: src/bin/e_config.c:2224
+#: src/bin/e_config.c:2229
 #: src/bin/e_config_dialog.c:262
 #: src/bin/e_eap_editor.c:857
 #: src/bin/e_eap_editor.c:921
@@ -863,10 +863,10 @@ msgstr "Les données de configuration ont dû être mises à jour. Votre ancienn
 
 #: src/bin/e_config.c:1001
 msgid "Your settings are NEWER than Enlightenment. This is very<br>strange. This should not happen unless you downgraded<br>Enlightenment or copied the settings from a place where<br>a newer version of Enlightenment was running. This is bad and<br>as a precaution your settings have been now restored to<br>defaults. Sorry for the inconvenience.<br>"
-msgstr "Votre configuration est PLUS RÉCENTE que Enlightenment.<br>C'est vraiment étonnant. Cela ne devrait pas se produire<br>à moins que vous n'ayez installé une version antérieure<br>ou copié la configuration depuis une machine sur laquelle<br>une version plus récente était en cours. Ce n'est pas bon<br>et, par mesure de précaution, les valeurs par défaut de<br>votre configuration ont été restaurées.<br>Désolé pour le désagrément.<br>"
+msgstr "Votre configuration est PLUS RÉCENTE que la version actuelle de E.<br>C'est vraiment étonnant. Cela ne devrait pas se produire<br>à moins que vous n'ayez installé une version antérieure<br>ou copié la configuration depuis une machine sur laquelle<br>une version plus récente de E était en cours. Ce n'est pas bon<br>et, par mesure de précaution, les valeurs par défaut de<br>votre configuration ont été restaurées.<br>Désolé pour le désagrément.<br>"
 
 #: src/bin/e_config.c:1610
-#: src/bin/e_config.c:2211
+#: src/bin/e_config.c:2216
 msgid "Enlightenment Settings Write Problems"
 msgstr "Problèmes d'écriture de la configuration de Enlightenment"
 
@@ -875,87 +875,87 @@ msgstr "Problèmes d'écriture de la configuration de Enlightenment"
 msgid "Enlightenment has an error while moving config files<br>from:<br>%s<br><br>to:<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr "Enlightenment a rencontré une erreur pendant<br>le déplacement de données de configuration<br>de :<br>%s<br><br>vers :<br>%s<br><br>L'écriture a été abandonnée par sécurité.<br>"
 
-#: src/bin/e_config.c:2122
+#: src/bin/e_config.c:2127
 msgid "Settings Upgraded"
 msgstr "Configuration mise à niveau"
 
-#: src/bin/e_config.c:2139
+#: src/bin/e_config.c:2144
 msgid "The EET file handle is bad."
 msgstr "Traitement du fichier EET incorrect."
 
-#: src/bin/e_config.c:2142
+#: src/bin/e_config.c:2147
 msgid "The file data is empty."
 msgstr "Aucune donnée dans le fichier."
 
-#: src/bin/e_config.c:2145
+#: src/bin/e_config.c:2150
 msgid "The file is not writable. Perhaps the disk is read-only<br>or you lost permissions to your files."
 msgstr "Le fichier n'est pas éditable. Le disque est peut-être monté<br>en lecture seule ou les permissions ont été modifiées."
 
-#: src/bin/e_config.c:2148
+#: src/bin/e_config.c:2153
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr "Mémoire insuffisante pour l'écriture.<br>Veuillez libérer de la mémoire."
 
-#: src/bin/e_config.c:2151
+#: src/bin/e_config.c:2156
 msgid "This is a generic error."
 msgstr "Erreur générique."
 
-#: src/bin/e_config.c:2153
+#: src/bin/e_config.c:2158
 msgid "The settings file is too large.<br>It should be very small (a few hundred KB at most)."
 msgstr "Le fichier de configuration est trop gros.<br>Il ne devrait pas dépasser quelques centaines de Ko."
 
-#: src/bin/e_config.c:2156
+#: src/bin/e_config.c:2161
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr "Erreurs d'E/S sur le disque.<br>Peut-être devriez-vous le remplacer ?"
 
-#: src/bin/e_config.c:2159
+#: src/bin/e_config.c:2164
 msgid "You ran out of space while writing the file"
 msgstr "Plus assez d'espace disponible pour l'écriture."
 
-#: src/bin/e_config.c:2162
+#: src/bin/e_config.c:2167
 msgid "The file was closed on it while writing."
 msgstr "Le fichier s'est fermé pendant l'écriture."
 
-#: src/bin/e_config.c:2165
+#: src/bin/e_config.c:2170
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Échec du mappage du fichier en mémoire (mmap)."
 
-#: src/bin/e_config.c:2168
+#: src/bin/e_config.c:2173
 msgid "X509 Encoding failed."
 msgstr "Échec de l'encodage X509."
 
-#: src/bin/e_config.c:2171
+#: src/bin/e_config.c:2176
 msgid "Signature failed."
 msgstr "Échec de la signature."
 
-#: src/bin/e_config.c:2174
+#: src/bin/e_config.c:2179
 msgid "The signature was invalid."
 msgstr "Signature invalide."
 
-#: src/bin/e_config.c:2177
+#: src/bin/e_config.c:2182
 msgid "Not signed."
 msgstr "Non signé."
 
-#: src/bin/e_config.c:2180
+#: src/bin/e_config.c:2185
 msgid "Feature not implemented."
 msgstr "Pas encore implémenté."
 
-#: src/bin/e_config.c:2183
+#: src/bin/e_config.c:2188
 msgid "PRNG was not seeded."
 msgstr "Impossible de générer un germe PRNG."
 
-#: src/bin/e_config.c:2186
+#: src/bin/e_config.c:2191
 msgid "Encryption failed."
 msgstr "Échec du cryptage."
 
-#: src/bin/e_config.c:2189
+#: src/bin/e_config.c:2194
 msgid "Decryption failed."
 msgstr "Échec du décryptage."
 
-#: src/bin/e_config.c:2192
+#: src/bin/e_config.c:2197
 msgid "The error is unknown to Enlightenment."
 msgstr "Enlightenment ne reconnaît pas cette erreur."
 
-#: src/bin/e_config.c:2214
+#: src/bin/e_config.c:2219
 #, c-format
 msgid "Enlightenment has an error while writing<br>its config file.<br>%s<br><br>The file where the error occurred was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr "Une erreur s'est produite au niveau du fichier<br>de configuration dans lequel Enlightenment<br>était en train d'écrire.<br>%s<br><br> Le fichier incriminé était :<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption des données.<br>"
@@ -992,7 +992,7 @@ msgstr "Extensions"
 #: src/bin/e_configure.c:242
 #: src/modules/conf_paths/e_int_config_paths.c:80
 #: src/modules/conf_theme/e_int_config_color_classes.c:847
-#: src/modules/conf_theme/e_int_config_fonts.c:97
+#: src/modules/conf_theme/e_int_config_fonts.c:98
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:234
 msgid "Modules"
 msgstr "Modules"
@@ -1085,7 +1085,7 @@ msgstr "URL"
 #: src/bin/e_eap_editor.c:729
 #: src/bin/e_eap_editor.c:738
 #: src/bin/e_fm_prop.c:394
-#: src/modules/conf_theme/e_int_config_fonts.c:94
+#: src/modules/conf_theme/e_int_config_fonts.c:95
 #: src/modules/fileman/e_int_config_mime_edit.c:147
 msgid "Icon"
 msgstr "Icone"
@@ -1212,7 +1212,7 @@ msgstr "Erreur d'exécution de l'application"
 #: src/bin/e_exec.c:391
 #, c-format
 msgid "Enlightenment was unable to run the application:<br><br>%s<br><br>The application failed to start."
-msgstr "Enlightenment n'a pu démarrer l'application :<br><br>%s<br><br>L'application n'a pas réussi à se lancer."
+msgstr "Enlightenment ne peut exécuter l'application :<br><br>%s<br><br>Son lancement a échoué."
 
 #: src/bin/e_exec.c:495
 msgid "Application Execution Error"
@@ -1754,8 +1754,8 @@ msgstr "Position"
 #: src/bin/e_int_border_locks.c:327
 #: src/bin/e_int_border_remember.c:708
 #: src/bin/e_int_shelf_config.c:185
-#: src/modules/conf_theme/e_int_config_fonts.c:440
-#: src/modules/conf_theme/e_int_config_fonts.c:635
+#: src/modules/conf_theme/e_int_config_fonts.c:442
+#: src/modules/conf_theme/e_int_config_fonts.c:639
 #: src/modules/conf_theme/e_int_config_cursor.c:137
 msgid "Size"
 msgstr "Taille"
@@ -1936,8 +1936,8 @@ msgid "Always on Top"
 msgstr "Toujours au-dessus"
 
 #: src/bin/e_int_border_menu.c:920
-#: src/modules/conf_theme/e_int_config_fonts.c:99
-#: src/modules/conf_theme/e_int_config_fonts.c:263
+#: src/modules/conf_theme/e_int_config_fonts.c:100
+#: src/modules/conf_theme/e_int_config_fonts.c:264
 msgid "Normal"
 msgstr "Normal"
 
@@ -2337,6 +2337,7 @@ msgstr "Applications favorites"
 #: src/modules/conf_applications/e_int_config_apps.c:264
 #: src/modules/conf_menus/e_int_config_menus.c:260
 #: src/modules/conf_menus/e_int_config_menus.c:283
+#: src/modules/conf_theme/e_int_config_fonts.c:58
 #: src/modules/conf_theme/e_mod_main.c:38
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:194
 #: src/modules/everything/evry_plug_apps.c:1367
@@ -2444,7 +2445,7 @@ msgid "Shrink to Content Width"
 msgstr "Redimensionner à la largeur du contenu"
 
 #: src/bin/e_int_shelf_config.c:193
-#: src/modules/conf_theme/e_int_config_fonts.c:626
+#: src/modules/conf_theme/e_int_config_fonts.c:630
 msgid "Style"
 msgstr "Style"
 
@@ -3406,7 +3407,7 @@ msgstr "La configuration a dû être mise à jour. Votre ancienne configuration<
 #: src/bin/e_utils.c:1566
 #, c-format
 msgid "%s Configuration Updated"
-msgstr "Configuration de %s actualisée"
+msgstr "Configuration de %s à jour"
 
 #: src/bin/e_utils.c:1555
 msgid "Your module configuration is NEWER than the module version. This is very<br>strange. This should not happen unless you downgraded<br>the module or copied the configuration from a place where<br>a newer version of the module was running. This is bad and<br>as a precaution your configuration has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
@@ -3625,7 +3626,7 @@ msgstr "Panneau de configuration"
 
 #: src/modules/conf/e_mod_main.c:295
 msgid "Configuration Panel Module Configuration data needed upgrading. Your old configuration<br> has been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means the module needs new configuration<br>data by default for usable functionality that your old<br>configuration simply lacks. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the inconvenience.<br>"
-msgstr "La configuration du module Panneau de contrôle a dû être mise à jour. <br>Votre ancienne configuration a été supprimée et de nouveaux paramètres<br>par défaut sont en place. Cela risque d'arriver en phase de<br>développement, aussi est-il inutile de faire un rapport de bogue.<br>Cela signifie simplement que le module Panneau de contrôle a besoin<br>de cette mise à niveau pour être à nouveau fonctionnel.<br>Vous pouvez maintenant tout reconfigurer selon votre goût.<br>Désolé pour la gêne occasionnée.<br>"
+msgstr "La configuration du module Panneau de contrôle a dû être mise à jour. <br>Votre ancienne configuration a été supprimée et de nouveaux paramètres<br>par défaut sont en place. Cela risque d'arriver en phase de<br>développement, aussi est-il inutile de faire un rapport de bogue.<br>Cela signifie simplement que le module a besoin<br>de cette mise à niveau pour être à nouveau fonctionnel.<br>Vous pouvez maintenant tout reconfigurer selon votre goût.<br>Désolé pour la gêne occasionnée.<br>"
 
 #: src/modules/conf/e_mod_main.c:312
 msgid "Your Configuration Panel Module configuration is NEWER than the module version. This is very<br>strange. This should not happen unless you downgraded<br>the module or copied the configuration from a place where<br>a newer version of the module was running. This is bad and<br>as a precaution your configuration has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
@@ -3645,7 +3646,7 @@ msgstr "Modes"
 
 #: src/modules/conf/e_mod_main.c:510
 msgid "Configuration Panel Configuration Updated"
-msgstr "Configuration de Panneau de contrôle actualisée"
+msgstr "Configuration de Panneau de contrôle à jour"
 
 #: src/modules/conf_applications/e_int_config_apps.c:84
 #: src/modules/conf_applications/e_int_config_apps.c:98
@@ -3738,7 +3739,7 @@ msgstr "Paramétrage des boîtes de dialogue"
 
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:109
 #: src/modules/conf_performance/e_int_config_engine.c:95
-#: src/modules/conf_theme/e_int_config_fonts.c:647
+#: src/modules/conf_theme/e_int_config_fonts.c:651
 #: src/modules/everything/evry_config.c:519
 #: src/modules/ibox/e_mod_config.c:96
 #: src/modules/mixer/conf_gadget.c:191
@@ -4554,7 +4555,7 @@ msgid "Manager"
 msgstr "Gestionnaire"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:349
-#: src/modules/conf_theme/e_int_config_fonts.c:662
+#: src/modules/conf_theme/e_int_config_fonts.c:666
 #: src/modules/conf_theme/e_int_config_transitions.c:180
 #: src/modules/conf_theme/e_int_config_transitions.c:237
 #: src/modules/conf_theme/e_int_config_transitions.c:269
@@ -4697,7 +4698,7 @@ msgid "Images"
 msgstr "Images"
 
 #: src/modules/conf_paths/e_int_config_paths.c:74
-#: src/modules/conf_theme/e_int_config_fonts.c:432
+#: src/modules/conf_theme/e_int_config_fonts.c:434
 #: src/modules/conf_theme/e_mod_main.c:44
 msgid "Fonts"
 msgstr "Polices"
@@ -4983,7 +4984,7 @@ msgid "Menu Background Base"
 msgstr "Fond de base du menu"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:81
-#: src/modules/conf_theme/e_int_config_fonts.c:60
+#: src/modules/conf_theme/e_int_config_fonts.c:61
 msgid "Menu Title"
 msgstr "Titre du menu"
 
@@ -4992,7 +4993,7 @@ msgid "Menu Title Active"
 msgstr "Titre du menu actif"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:83
-#: src/modules/conf_theme/e_int_config_fonts.c:59
+#: src/modules/conf_theme/e_int_config_fonts.c:60
 msgid "Menu Item"
 msgstr "Élément du menu"
 
@@ -5005,12 +5006,12 @@ msgid "Menu Item Disabled"
 msgstr "Élément inactif du menu"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:86
-#: src/modules/conf_theme/e_int_config_fonts.c:64
+#: src/modules/conf_theme/e_int_config_fonts.c:65
 msgid "Move Text"
 msgstr "Texte de déplacement"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:87
-#: src/modules/conf_theme/e_int_config_fonts.c:65
+#: src/modules/conf_theme/e_int_config_fonts.c:66
 msgid "Resize Text"
 msgstr "Texte de redimensionnement"
 
@@ -5027,7 +5028,7 @@ msgid "Winlist Label"
 msgstr "Étiquette de la liste des fenêtres"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:91
-#: src/modules/conf_theme/e_int_config_fonts.c:66
+#: src/modules/conf_theme/e_int_config_fonts.c:67
 msgid "Winlist Title"
 msgstr "Titre de la liste des fenêtres"
 
@@ -5204,7 +5205,7 @@ msgid "Window Manager"
 msgstr "Gestionnaire de fenêtres"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:845
-#: src/modules/conf_theme/e_int_config_fonts.c:80
+#: src/modules/conf_theme/e_int_config_fonts.c:81
 msgid "Widgets"
 msgstr "Objets graphiques"
 
@@ -5212,220 +5213,220 @@ msgstr "Objets graphiques"
 msgid "Others"
 msgstr "Autres"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:58
+#: src/modules/conf_theme/e_int_config_fonts.c:59
 msgid "Title Bar"
 msgstr "Barre de titre"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:61
+#: src/modules/conf_theme/e_int_config_fonts.c:62
 msgid "Textblock Plain"
 msgstr "Bloc de texte simple"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:62
+#: src/modules/conf_theme/e_int_config_fonts.c:63
 msgid "Textblock Light"
 msgstr "Bloc de texte fin"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:63
+#: src/modules/conf_theme/e_int_config_fonts.c:64
 msgid "Textblock Big"
 msgstr "Bloc de texte gros"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:67
+#: src/modules/conf_theme/e_int_config_fonts.c:68
 msgid "Settings Heading"
 msgstr "En-tête de configuration"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:68
+#: src/modules/conf_theme/e_int_config_fonts.c:69
 msgid "About Title"
 msgstr "Titre de l'à propos "
 
-#: src/modules/conf_theme/e_int_config_fonts.c:69
+#: src/modules/conf_theme/e_int_config_fonts.c:70
 msgid "About Version"
 msgstr "Version de l'à propos"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:70
+#: src/modules/conf_theme/e_int_config_fonts.c:71
 msgid "About Text"
 msgstr "Texte de l'à propos"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:71
+#: src/modules/conf_theme/e_int_config_fonts.c:72
 msgid "Desklock Title"
 msgstr "Titre du verrouillage d'écran"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:72
+#: src/modules/conf_theme/e_int_config_fonts.c:73
 msgid "Desklock Password"
 msgstr "Mot de passe du verrouillage d'écran"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:73
+#: src/modules/conf_theme/e_int_config_fonts.c:74
 msgid "Dialog Error"
 msgstr "Boîte de dialogue d'erreur"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:74
+#: src/modules/conf_theme/e_int_config_fonts.c:75
 msgid "Exebuf Command"
 msgstr "Commande Exebuf"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:75
+#: src/modules/conf_theme/e_int_config_fonts.c:76
 msgid "Splash Title"
 msgstr "Titre de l'écran de présentation"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:76
+#: src/modules/conf_theme/e_int_config_fonts.c:77
 msgid "Splash Text"
 msgstr "Texte de l'écran de présentation"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:77
+#: src/modules/conf_theme/e_int_config_fonts.c:78
 msgid "Splash Version"
 msgstr "Version de l'écran de présentation"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:78
+#: src/modules/conf_theme/e_int_config_fonts.c:79
 msgid "Digital Clock"
 msgstr "Horloge numérique"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:81
+#: src/modules/conf_theme/e_int_config_fonts.c:82
 msgid "Entry"
 msgstr "Entrée"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:82
+#: src/modules/conf_theme/e_int_config_fonts.c:83
 msgid "Frame"
 msgstr "Cadre"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:83
+#: src/modules/conf_theme/e_int_config_fonts.c:84
 msgid "Label"
 msgstr "Étiquette"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:84
+#: src/modules/conf_theme/e_int_config_fonts.c:85
 msgid "Buttons"
 msgstr "Boutons"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:85
+#: src/modules/conf_theme/e_int_config_fonts.c:86
 msgid "Slider"
 msgstr "Slider"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:86
+#: src/modules/conf_theme/e_int_config_fonts.c:87
 msgid "Radio Buttons"
 msgstr "Boutons radio"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:87
+#: src/modules/conf_theme/e_int_config_fonts.c:88
 msgid "Check Buttons"
 msgstr "Boutons à cocher"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:88
+#: src/modules/conf_theme/e_int_config_fonts.c:89
 msgid "Text List Item"
 msgstr "Texte de l'élément de liste"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:89
+#: src/modules/conf_theme/e_int_config_fonts.c:90
 msgid "List Item"
 msgstr "Élément de liste"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:90
+#: src/modules/conf_theme/e_int_config_fonts.c:91
 msgid "List Header"
 msgstr "En-tête de liste"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:92
+#: src/modules/conf_theme/e_int_config_fonts.c:93
 msgid "Filemanager"
 msgstr "Gestionnaire de fichiers"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:93
+#: src/modules/conf_theme/e_int_config_fonts.c:94
 msgid "Typebuf"
 msgstr "Typebuf"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:95
+#: src/modules/conf_theme/e_int_config_fonts.c:96
 msgid "Desktop Icon"
 msgstr "Icone de bureau"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:98
-#: src/modules/conf_theme/e_int_config_fonts.c:257
+#: src/modules/conf_theme/e_int_config_fonts.c:99
+#: src/modules/conf_theme/e_int_config_fonts.c:258
 msgid "Small"
 msgstr "Petit"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:100
+#: src/modules/conf_theme/e_int_config_fonts.c:101
 msgid "Large"
 msgstr "Grand"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:101
+#: src/modules/conf_theme/e_int_config_fonts.c:102
 msgid "Small Styled"
 msgstr "Style petit"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:102
+#: src/modules/conf_theme/e_int_config_fonts.c:103
 msgid "Normal Styled"
 msgstr "Style normal"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:103
+#: src/modules/conf_theme/e_int_config_fonts.c:104
 msgid "Large Styled"
 msgstr "Style grand"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:166
+#: src/modules/conf_theme/e_int_config_fonts.c:167
 msgid "Font Settings"
 msgstr "Paramétrage des polices"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:251
+#: src/modules/conf_theme/e_int_config_fonts.c:252
 msgid "Tiny"
 msgstr "Minuscule"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:269
+#: src/modules/conf_theme/e_int_config_fonts.c:270
 msgid "Big"
 msgstr "Gros"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:275
+#: src/modules/conf_theme/e_int_config_fonts.c:276
 msgid "Really Big"
 msgstr "Très gros"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:281
+#: src/modules/conf_theme/e_int_config_fonts.c:282
 msgid "Huge"
 msgstr "Énorme"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:290
+#: src/modules/conf_theme/e_int_config_fonts.c:291
 #, c-format
 msgid "%d pixels"
 msgstr "%d pixels"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:425
+#: src/modules/conf_theme/e_int_config_fonts.c:427
 msgid "Enable Custom Font Classes"
 msgstr "Activer les polices personnalisées"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:449
+#: src/modules/conf_theme/e_int_config_fonts.c:451
 msgid "Basic preview text: 123: 我的天空！"
 msgstr "Aperçu basique du texte : 123: 我的天空！"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:602
+#: src/modules/conf_theme/e_int_config_fonts.c:606
 msgid "Font Classes"
 msgstr "Classes de police"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:610
+#: src/modules/conf_theme/e_int_config_fonts.c:614
 msgid "Enable Font Class"
 msgstr "Activer la classe de police"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:617
+#: src/modules/conf_theme/e_int_config_fonts.c:621
 msgid "Font"
 msgstr "Police"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:643
+#: src/modules/conf_theme/e_int_config_fonts.c:647
 msgid "Advanced Preview Text.. 我真的会写中文"
 msgstr "Aperçu avancé du texte : 我真的会写中文"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:651
+#: src/modules/conf_theme/e_int_config_fonts.c:655
 msgid "Hinting"
 msgstr "Optimisation"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:654
+#: src/modules/conf_theme/e_int_config_fonts.c:658
 msgid "Bytecode"
 msgstr "Bytecode"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:658
+#: src/modules/conf_theme/e_int_config_fonts.c:662
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:193
 #: src/modules/cpufreq/e_mod_main.c:227
 #: src/modules/cpufreq/e_mod_main.c:259
 msgid "Automatic"
 msgstr "Automatique"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:667
+#: src/modules/conf_theme/e_int_config_fonts.c:671
 msgid "Font Fallbacks"
 msgstr "Polices de secours"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:668
+#: src/modules/conf_theme/e_int_config_fonts.c:672
 msgid "Fallback Name"
 msgstr "Nom de la police de secours"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:680
+#: src/modules/conf_theme/e_int_config_fonts.c:684
 msgid "Enable Fallbacks"
 msgstr "Activer les polices de secours"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:689
+#: src/modules/conf_theme/e_int_config_fonts.c:693
 msgid "Hinting / Fallbacks"
 msgstr "Optimisation/Polices de secours"
 

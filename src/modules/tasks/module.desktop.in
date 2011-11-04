@@ -1,6 +1,9 @@
 [Desktop Entry]
 Type=Link
 Name=Tasks
+Name[fr]=Tâches
 Icon=e-module-tasks
 X-Enlightenment-ModuleType=utils
 Comment=Gadget to allow you to switch tasks
+Comment[fr]=Ce gadget vous permet de passer d'une tâche à une autre.
+Comment[it]=Gadget che permette di commutare tra i task.
