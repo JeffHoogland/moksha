@@ -911,7 +911,7 @@ e_border_hide(E_Border *bd,
 
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
-   if (!bd->visible) return;
+   if (!bd->visible) goto send_event;
    ecore_x_window_shadow_tree_flush();
    if (bd->moving)
      _e_border_move_end(bd);
@@ -981,6 +981,9 @@ e_border_hide(E_Border *bd,
    if (!manage)
      ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_MANAGED, &visible, 1);
 
+   bd->post_show = 0;
+
+send_event:
    if (!stopping)
      {
         E_Event_Border_Hide *ev;
@@ -991,7 +994,6 @@ e_border_hide(E_Border *bd,
 //	e_object_breadcrumb_add(E_OBJECT(bd), "border_hide_event");
         ecore_event_add(E_EVENT_BORDER_HIDE, ev, _e_border_event_border_hide_free, NULL);
      }
-   bd->post_show = 0;
 }
 
 static void
