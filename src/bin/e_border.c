@@ -7056,6 +7056,8 @@ _e_border_eval0(E_Border *bd)
                     bd->client.e.state.video_parent_border = tmp;
                     tmp->client.e.state.video_child = eina_list_append(tmp->client.e.state.video_child,
                                                                        bd);
+		    if (bd->desk != tmp->desk)
+		      e_border_desk_set(bd, tmp->desk);
                     break;
                  }
           }
