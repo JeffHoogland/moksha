@@ -617,9 +617,10 @@ pulse_new(void)
 {
    Pulse *conn;
    Eina_Iterator *it;
-   const char *dir, *prev = NULL, *buf = NULL;;
+   const char *prev = NULL, *buf = NULL;;
    time_t time = 0;
    char *home, h[4096];
+   const Eina_File_Direct_Info *info;
 
    conn = calloc(1, sizeof(Pulse));
    EINA_SAFETY_ON_NULL_RETURN_VAL(conn, NULL);
@@ -632,18 +633,18 @@ pulse_new(void)
         home = h;
      }
 
-   it = eina_file_ls(home);
-   EINA_ITERATOR_FOREACH(it, dir)
+   it = eina_file_direct_ls(home);
+   EINA_ITERATOR_FOREACH(it, info)
      {
         const char *rt = NULL;
 
-        rt = strrchr(dir, '-');
+        rt = strrchr(info->path + info->name_start, '-');
         if (rt)
           {
              if (!strcmp(rt + 1, "runtime"))
                {
                   struct stat st;
-                  buf = eina_stringshare_printf("%s/native", dir);
+                  buf = eina_stringshare_printf("%s/native", info->path);
                   if (stat(buf, &st))
                     {
                        eina_stringshare_del(buf);
@@ -654,6 +655,7 @@ pulse_new(void)
                     {
                        time = st.st_atime;
                        prev = buf;
+                       buf = NULL;
                        continue;
                     }
                   if (time > st.st_atime)
@@ -665,24 +667,24 @@ pulse_new(void)
                   eina_stringshare_del(prev);
                   prev = buf;
                   time = st.st_atime;
+                  buf = NULL;
                }
           }
-        eina_stringshare_del(dir);
      }
    eina_iterator_free(it);
-   if ((!buf) || (!prev))
+   if (!prev)
      {
         struct stat st;
         buf = eina_stringshare_add(STATEDIR "/run/pulse/native");
         if (stat(buf, &st))
           {
-             CRI("could not locate local socket!");
+             CRI("could not locate local socket '%s'!", buf);
              free(conn);
              return NULL;
           }
         conn->socket = buf;
      }
-   else conn->socket = buf;
+   else conn->socket = prev;
    conn->con = ecore_event_handler_add(ECORE_CON_EVENT_SERVER_ADD, (Ecore_Event_Handler_Cb)con, conn);
    conn->tag_handlers = eina_hash_int32_new(NULL);
    conn->tag_cbs = eina_hash_int32_new(NULL);
