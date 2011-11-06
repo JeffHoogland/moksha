@@ -1318,7 +1318,7 @@ ACT_FN_GO_EDGE(desk_flip_in_direction, )
 	if (ACT_FLIP_LEFT(zone))
 	  {
 	     e_zone_desk_flip_by(zone, -1, 0);
-	     ecore_x_pointer_warp(zone->container->win, zone->w - offset, y);
+	     ecore_x_pointer_warp(zone->container->win, zone->container->x + zone->x + zone->w - offset, y);
 	     wev->curr.y = y;
 	     wev->curr.x = zone->w - offset;
 	  }
@@ -1327,7 +1327,7 @@ ACT_FN_GO_EDGE(desk_flip_in_direction, )
         if (ACT_FLIP_RIGHT(zone))
           {
              e_zone_desk_flip_by(zone, 1, 0);
-             ecore_x_pointer_warp(zone->container->win, offset, y);
+             ecore_x_pointer_warp(zone->container->win, zone->container->x + zone->x + offset, y);
              wev->curr.y = y;
              wev->curr.x = offset;
           }
@@ -1336,7 +1336,7 @@ ACT_FN_GO_EDGE(desk_flip_in_direction, )
         if (ACT_FLIP_UP(zone))
           {
              e_zone_desk_flip_by(zone, 0, -1);
-             ecore_x_pointer_warp(zone->container->win, x, zone->h - offset);
+             ecore_x_pointer_warp(zone->container->win, x, zone->container->y + zone->y + zone->h - offset);
              wev->curr.x = x;
              wev->curr.y = zone->h - offset;
           }
@@ -1345,7 +1345,7 @@ ACT_FN_GO_EDGE(desk_flip_in_direction, )
 	if (ACT_FLIP_DOWN(zone))
 	  {
 	     e_zone_desk_flip_by(zone, 0, 1);
-	     ecore_x_pointer_warp(zone->container->win, x, offset);
+	     ecore_x_pointer_warp(zone->container->win, x, zone->container->y + zone->y + offset);
 	     wev->curr.x = x;
 	     wev->curr.y = offset;
 	  }
@@ -1354,7 +1354,7 @@ ACT_FN_GO_EDGE(desk_flip_in_direction, )
         if (ACT_FLIP_UP_LEFT(zone))
           {
              e_zone_desk_flip_by(zone, -1, -1);
-             ecore_x_pointer_warp(zone->container->win, zone->w - offset, zone->h - offset);
+             ecore_x_pointer_warp(zone->container->win, zone->container->x + zone->x + zone->w - offset, zone->container->y + zone->y + zone->h - offset);
              wev->curr.x = zone->w - offset;
              wev->curr.y = zone->h - offset;
           }
@@ -1363,7 +1363,7 @@ ACT_FN_GO_EDGE(desk_flip_in_direction, )
         if (ACT_FLIP_UP_RIGHT(zone))
           {
              e_zone_desk_flip_by(zone, 1, -1);
-             ecore_x_pointer_warp(zone->container->win, offset, zone->h - offset);
+             ecore_x_pointer_warp(zone->container->win, zone->container->x + zone->x + offset, zone->container->y + zone->y + zone->h - offset);
              wev->curr.x = offset;
              wev->curr.y = zone->h - offset;
           }
@@ -1372,7 +1372,7 @@ ACT_FN_GO_EDGE(desk_flip_in_direction, )
 	if (ACT_FLIP_DOWN_LEFT(zone))
 	  {
 	     e_zone_desk_flip_by(zone, -1, 1);
-	     ecore_x_pointer_warp(zone->container->win, zone->w - offset, offset);
+	     ecore_x_pointer_warp(zone->container->win, zone->container->x + zone->x + zone->w - offset, zone->container->y + zone->y + offset);
 	     wev->curr.y = offset;
 	     wev->curr.x = zone->w - offset;
 	  }
@@ -1381,7 +1381,7 @@ ACT_FN_GO_EDGE(desk_flip_in_direction, )
 	if (ACT_FLIP_DOWN_RIGHT(zone))
 	  {
 	     e_zone_desk_flip_by(zone, 1, 1);
-	     ecore_x_pointer_warp(zone->container->win, offset, offset);
+	     ecore_x_pointer_warp(zone->container->win, zone->container->x + zone->x + offset, zone->container->y + zone->y + offset);
 	     wev->curr.y = offset;
 	     wev->curr.x = offset;
 	  }
