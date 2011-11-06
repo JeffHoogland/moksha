@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-11-04 09:19+0100\n"
-"PO-Revision-Date: 2011-11-04 12:16+0100\n"
+"POT-Creation-Date: 2011-11-06 11:13+0100\n"
+"PO-Revision-Date: 2011-11-06 21:40+0100\n"
 "Last-Translator: dazibao <dazibao@sfr.fr>\n"
 "Language-Team: Enlightenment French Team <sansgourou@gmail.com>\n"
 "Language: fr\n"
@@ -810,8 +810,8 @@ msgid "Color Selector"
 msgstr "Sélecteur de couleur"
 
 #: src/bin/e_color_dialog.c:46
-#: src/bin/e_config.c:1623
-#: src/bin/e_config.c:2229
+#: src/bin/e_config.c:1611
+#: src/bin/e_config.c:2233
 #: src/bin/e_config_dialog.c:262
 #: src/bin/e_eap_editor.c:857
 #: src/bin/e_eap_editor.c:921
@@ -856,106 +856,106 @@ msgstr "OK"
 msgid "Cancel"
 msgstr "Annuler"
 
-#: src/bin/e_config.c:984
-#: src/bin/e_config.c:1017
+#: src/bin/e_config.c:972
+#: src/bin/e_config.c:1005
 msgid "Settings data needed upgrading. Your old settings have<br>been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means Enlightenment needs new settings<br>data by default for usable functionality that your old<br>settings simply lack. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the hiccup in your settings.<br>"
 msgstr "Les données de configuration ont dû être mises à jour. Votre ancienne<br>configuration a été supprimée et de nouveaux paramètres par<br>défaut sont en place. Cela risque d'arriver en phase de<br>développement, aussi est-il inutile de faire un rapport de bogue.<br>Cela signifie simplement que Enlightenment a besoin<br>de cette mise à niveau pour être à nouveau fonctionnel.<br>Vous pouvez maintenant tout reconfigurer selon votre goût.<br>Désolé pour la gêne occasionnée.<br>"
 
-#: src/bin/e_config.c:1001
+#: src/bin/e_config.c:989
 msgid "Your settings are NEWER than Enlightenment. This is very<br>strange. This should not happen unless you downgraded<br>Enlightenment or copied the settings from a place where<br>a newer version of Enlightenment was running. This is bad and<br>as a precaution your settings have been now restored to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr "Votre configuration est PLUS RÉCENTE que la version actuelle de E.<br>C'est vraiment étonnant. Cela ne devrait pas se produire<br>à moins que vous n'ayez installé une version antérieure<br>ou copié la configuration depuis une machine sur laquelle<br>une version plus récente de E était en cours. Ce n'est pas bon<br>et, par mesure de précaution, les valeurs par défaut de<br>votre configuration ont été restaurées.<br>Désolé pour le désagrément.<br>"
 
-#: src/bin/e_config.c:1610
-#: src/bin/e_config.c:2216
+#: src/bin/e_config.c:1598
+#: src/bin/e_config.c:2220
 msgid "Enlightenment Settings Write Problems"
 msgstr "Problèmes d'écriture de la configuration de Enlightenment"
 
-#: src/bin/e_config.c:1613
+#: src/bin/e_config.c:1601
 #, c-format
 msgid "Enlightenment has an error while moving config files<br>from:<br>%s<br><br>to:<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr "Enlightenment a rencontré une erreur pendant<br>le déplacement de données de configuration<br>de :<br>%s<br><br>vers :<br>%s<br><br>L'écriture a été abandonnée par sécurité.<br>"
 
-#: src/bin/e_config.c:2127
+#: src/bin/e_config.c:2131
 msgid "Settings Upgraded"
 msgstr "Configuration mise à niveau"
 
-#: src/bin/e_config.c:2144
+#: src/bin/e_config.c:2148
 msgid "The EET file handle is bad."
 msgstr "Traitement du fichier EET incorrect."
 
-#: src/bin/e_config.c:2147
+#: src/bin/e_config.c:2151
 msgid "The file data is empty."
 msgstr "Aucune donnée dans le fichier."
 
-#: src/bin/e_config.c:2150
+#: src/bin/e_config.c:2154
 msgid "The file is not writable. Perhaps the disk is read-only<br>or you lost permissions to your files."
 msgstr "Le fichier n'est pas éditable. Le disque est peut-être monté<br>en lecture seule ou les permissions ont été modifiées."
 
-#: src/bin/e_config.c:2153
+#: src/bin/e_config.c:2157
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr "Mémoire insuffisante pour l'écriture.<br>Veuillez libérer de la mémoire."
 
-#: src/bin/e_config.c:2156
+#: src/bin/e_config.c:2160
 msgid "This is a generic error."
 msgstr "Erreur générique."
 
-#: src/bin/e_config.c:2158
+#: src/bin/e_config.c:2162
 msgid "The settings file is too large.<br>It should be very small (a few hundred KB at most)."
 msgstr "Le fichier de configuration est trop gros.<br>Il ne devrait pas dépasser quelques centaines de Ko."
 
-#: src/bin/e_config.c:2161
+#: src/bin/e_config.c:2165
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr "Erreurs d'E/S sur le disque.<br>Peut-être devriez-vous le remplacer ?"
 
-#: src/bin/e_config.c:2164
+#: src/bin/e_config.c:2168
 msgid "You ran out of space while writing the file"
 msgstr "Plus assez d'espace disponible pour l'écriture."
 
-#: src/bin/e_config.c:2167
+#: src/bin/e_config.c:2171
 msgid "The file was closed on it while writing."
 msgstr "Le fichier s'est fermé pendant l'écriture."
 
-#: src/bin/e_config.c:2170
+#: src/bin/e_config.c:2174
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Échec du mappage du fichier en mémoire (mmap)."
 
-#: src/bin/e_config.c:2173
+#: src/bin/e_config.c:2177
 msgid "X509 Encoding failed."
 msgstr "Échec de l'encodage X509."
 
-#: src/bin/e_config.c:2176
+#: src/bin/e_config.c:2180
 msgid "Signature failed."
 msgstr "Échec de la signature."
 
-#: src/bin/e_config.c:2179
+#: src/bin/e_config.c:2183
 msgid "The signature was invalid."
 msgstr "Signature invalide."
 
-#: src/bin/e_config.c:2182
+#: src/bin/e_config.c:2186
 msgid "Not signed."
 msgstr "Non signé."
 
-#: src/bin/e_config.c:2185
+#: src/bin/e_config.c:2189
 msgid "Feature not implemented."
 msgstr "Pas encore implémenté."
 
-#: src/bin/e_config.c:2188
+#: src/bin/e_config.c:2192
 msgid "PRNG was not seeded."
 msgstr "Impossible de générer un germe PRNG."
 
-#: src/bin/e_config.c:2191
+#: src/bin/e_config.c:2195
 msgid "Encryption failed."
 msgstr "Échec du cryptage."
 
-#: src/bin/e_config.c:2194
+#: src/bin/e_config.c:2198
 msgid "Decryption failed."
 msgstr "Échec du décryptage."
 
-#: src/bin/e_config.c:2197
+#: src/bin/e_config.c:2201
 msgid "The error is unknown to Enlightenment."
 msgstr "Enlightenment ne reconnaît pas cette erreur."
 
-#: src/bin/e_config.c:2219
+#: src/bin/e_config.c:2223
 #, c-format
 msgid "Enlightenment has an error while writing<br>its config file.<br>%s<br><br>The file where the error occurred was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr "Une erreur s'est produite au niveau du fichier<br>de configuration dans lequel Enlightenment<br>était en train d'écrire.<br>%s<br><br> Le fichier incriminé était :<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption des données.<br>"
@@ -1912,7 +1912,7 @@ msgstr "ICCCM/NetWM"
 #: src/bin/e_int_border_menu.c:567
 #: src/bin/e_int_border_prop.c:472
 msgid "Sticky"
-msgstr "Ancré(e)"
+msgstr "Ancrée"
 
 #: src/bin/e_int_border_menu.c:578
 msgid "Skip"
@@ -1924,7 +1924,7 @@ msgstr "Minimiser"
 
 #: src/bin/e_int_border_menu.c:632
 msgid "Shade"
-msgstr "Enroulé(e)"
+msgstr "Enroulée"
 
 #: src/bin/e_int_border_menu.c:830
 #, c-format
@@ -2056,7 +2056,7 @@ msgstr "Taille de base"
 
 #: src/bin/e_int_border_prop.c:429
 msgid "Resize Steps"
-msgstr "Phases de redimensionnement"
+msgstr "Redimensionnement incrémentiel"
 
 #: src/bin/e_int_border_prop.c:431
 msgid "Aspect Ratio"
@@ -2080,11 +2080,11 @@ msgstr "Groupe de la fenêtre"
 
 #: src/bin/e_int_border_prop.c:436
 msgid "Transient For"
-msgstr "Transition pour"
+msgstr "Relation transitoire"
 
 #: src/bin/e_int_border_prop.c:437
 msgid "Client Leader"
-msgstr "Fenêtre parente"
+msgstr "Fenêtre principale"
 
 #: src/bin/e_int_border_prop.c:438
 msgid "Gravity"
@@ -2092,7 +2092,7 @@ msgstr "Gravité"
 
 #: src/bin/e_int_border_prop.c:441
 msgid "Take Focus"
-msgstr "Prend le focus"
+msgstr "Prise du focus"
 
 #: src/bin/e_int_border_prop.c:442
 msgid "Accepts Focus"
@@ -2116,11 +2116,11 @@ msgstr "Propriétés NetWM"
 
 #: src/bin/e_int_border_prop.c:471
 msgid "Modal"
-msgstr "Modal(e)"
+msgstr "Modale"
 
 #: src/bin/e_int_border_prop.c:473
 msgid "Shaded"
-msgstr "Enroulé(e)"
+msgstr "Enroulée"
 
 #: src/bin/e_int_border_prop.c:474
 #: src/bin/e_int_border_remember.c:744
@@ -2134,7 +2134,7 @@ msgstr "Ignorer le Pager"
 
 #: src/bin/e_int_border_prop.c:476
 msgid "Hidden"
-msgstr "Caché(e)"
+msgstr "Cachée"
 
 #: src/bin/e_int_border_remember.c:83
 msgid "Window Remember"
@@ -2146,7 +2146,7 @@ msgstr "Les propriétés de la fenêtre sont partagées"
 
 #: src/bin/e_int_border_remember.c:310
 msgid "You are trying to ask Enlightenment to remember to apply<br>properties (such as size, location, border style etc.) to<br>a window that <hilight>does not have unique properties</hilight>.<br><br>This means it shares Name/Class, Transience, Role etc. properties<br>with more than 1 other window on the screen and remembering<br>properties for this window will apply to all other windows<br>that match these properties.<br><br>This is just a warning in case you did not intend this to happen.<br>If you did, simply press <hilight>Apply</hilight> or <hilight>OK</hilight> buttons<br>and your settings will be accepted. Press <hilight>Cancel</hilight> if you<br>are not sure and nothing will be affected."
-msgstr "Vous demandez à Enlightenment de mémoriser les<br>propriétés (telles que la taille, la position,<br>le type de bordure, etc.) d'une fenêtre sans<br><hilight>propriétés distinctives</hilight>.<br><br>Ce qui signifie qu'elle partage son nom et classe, sa fugacité,<br>son rôle, etc., avec au moins une autre fenêtre à l'écran et que la<br>mémorisation des propriétés pour cette fenêtre s'appliquera à<br>toutes les autres fenêtres qui partagent les mêmes propriétés.<br><br>Ceci n'est qu'un avertissement au cas où ce<br>n'était pas ce que vous recherchiez.<br>Cliquez sur <hilight>Appliquer</hilight> ou <hilight>OK</hilight> et<br>vos paramètres seront acceptés. Cliquez<br>sur <hilight>Annuler</hilight> si vous n'êtes pas sûr,<br>et rien ne sera modifié."
+msgstr "Vous demandez à Enlightenment de mémoriser les<br>propriétés (telles que la taille, la position,<br>le type de bordure, etc.) d'une fenêtre sans<br><hilight>propriétés distinctives</hilight>.<br><br>Ce qui signifie qu'elle partage son nom et classe,<br>sa relation transitoire, son rôle, etc., avec au<br>moins une autre fenêtre à l'écran et que la<br>mémorisation des propriétés pour cette fenêtre<br>s'appliquera à toutes les autres fenêtres qui<br>partagent les mêmes propriétés.<br><br>Ceci n'est qu'un avertissement au cas où ce<br>n'était pas ce que vous recherchiez.<br>Cliquez sur <hilight>Appliquer</hilight> ou <hilight>OK</hilight> et<br>vos paramètres seront acceptés.<br>Cliquez sur <hilight>Annuler</hilight> si vous n'êtes pas sûr,<br>et rien ne sera modifié."
 
 #: src/bin/e_int_border_remember.c:516
 msgid "No match properties set"
@@ -2199,7 +2199,7 @@ msgstr "Caractères jokers autorisés"
 
 #: src/bin/e_int_border_remember.c:699
 msgid "Transience"
-msgstr "Fugacité"
+msgstr "Caractère transitoire"
 
 #: src/bin/e_int_border_remember.c:704
 msgid "Properties to remember"
@@ -3785,75 +3785,75 @@ msgstr "Boîtes de dialogue"
 msgid "Profiles"
 msgstr "Profils"
 
-#: src/modules/conf_display/e_int_config_display.c:136
+#: src/modules/conf_display/e_int_config_display.c:129
 #, c-format
 msgid "Does this look OK? <hilight>Save</hilight> if it does, or Restore if not.<br>If you do not press a button, the old resolution of<br>%dx%d at %d Hz will be restored in %d seconds."
 msgstr "Cela vous convient ? Cliquez sur <hilight>Enregistrer</hilight> si c'est le cas, ou Restaurer sinon.<br>Si vous ne cliquez pas, la précédente résolution de<br>%dx%d à %d Hz sera restaurée dans %d secondes."
 
-#: src/modules/conf_display/e_int_config_display.c:143
+#: src/modules/conf_display/e_int_config_display.c:136
 #, c-format
 msgid "Does this look OK? <hilight>Save</hilight> if it does, or Restore if not.<br>If you do not press a button, the old resolution of<br>%dx%d will be restored in %d seconds."
 msgstr "Cela vous convient ? Cliquez sur <hilight>Enregistrer</hilight> si c'est le cas, sur Restaurer sinon.<br>Si vous ne cliquez pas, la précédente résolution de<br>%dx%d sera restaurée dans %d secondes."
 
-#: src/modules/conf_display/e_int_config_display.c:153
+#: src/modules/conf_display/e_int_config_display.c:146
 #, c-format
 msgid "Does this look OK? <hilight>Save</hilight> if it does, or Restore if not.<br>If you do not press a button, the old resolution of<br>%dx%d at %d Hz will be restored <hilight>IMMEDIATELY</hilight>."
 msgstr "Cela vous convient ? Cliquez sur <hilight>Enregistrer</hilight> si c'est le cas, sur Restaurer sinon.<br>Si vous ne cliquez pas, la précédente résolution de<br>%dx%d à %d Hz sera restaurée <hilight>IMMÉDIATEMENT</hilight>."
 
-#: src/modules/conf_display/e_int_config_display.c:160
+#: src/modules/conf_display/e_int_config_display.c:153
 #, c-format
 msgid "Does this look OK? <hilight>Save</hilight> if it does, or Restore if not.<br>If you do not press a button, the old resolution of<br>%dx%d will be restored <hilight>IMMEDIATELY</hilight>."
 msgstr "Cela vous convient ? Cliquez sur <hilight>Enregistrer</hilight> si c'est le cas, sur Restaurer sinon.<br>Si vous ne cliquez pas, la précédente résolution de<br>%dx%d sera restaurée <hilight>IMMÉDIATEMENT</hilight>."
 
-#: src/modules/conf_display/e_int_config_display.c:197
+#: src/modules/conf_display/e_int_config_display.c:190
 msgid "Resolution change"
 msgstr "Modification de la résolution"
 
-#: src/modules/conf_display/e_int_config_display.c:201
+#: src/modules/conf_display/e_int_config_display.c:194
 msgid "Save"
 msgstr "Enregistrer"
 
-#: src/modules/conf_display/e_int_config_display.c:202
+#: src/modules/conf_display/e_int_config_display.c:195
 msgid "Restore"
 msgstr "Restaurer"
 
-#: src/modules/conf_display/e_int_config_display.c:235
+#: src/modules/conf_display/e_int_config_display.c:228
 msgid "Screen Resolution Settings"
 msgstr "Paramétrage de la résolution de l'écran"
 
-#: src/modules/conf_display/e_int_config_display.c:440
+#: src/modules/conf_display/e_int_config_display.c:394
 msgid "Resolution"
 msgstr "Résolution"
 
-#: src/modules/conf_display/e_int_config_display.c:447
+#: src/modules/conf_display/e_int_config_display.c:401
 msgid "Restore on login"
 msgstr "Restaurer à l'ouverture de session"
 
-#: src/modules/conf_display/e_int_config_display.c:451
+#: src/modules/conf_display/e_int_config_display.c:405
 msgid "Refresh"
 msgstr "Rafraîchissement"
 
-#: src/modules/conf_display/e_int_config_display.c:511
+#: src/modules/conf_display/e_int_config_display.c:465
 msgid "Rotation"
 msgstr "Rotation"
 
-#: src/modules/conf_display/e_int_config_display.c:530
+#: src/modules/conf_display/e_int_config_display.c:484
 msgid "Mirroring"
 msgstr "Miroir"
 
-#: src/modules/conf_display/e_int_config_display.c:676
+#: src/modules/conf_display/e_int_config_display.c:630
 msgid "Missing Features"
 msgstr "Fonctionnalités manquantes"
 
-#: src/modules/conf_display/e_int_config_display.c:677
+#: src/modules/conf_display/e_int_config_display.c:631
 msgid "Your X Display Server is missing support for<br>the <hilight>XRandR</hilight> (X Resize and Rotate) extension.<br>You cannot change screen resolutions without<br>the support of this extension. It could also be<br>that at the time <hilight>ecore</hilight> was built, there<br>was no XRandR support detected."
 msgstr "Votre serveur X ne supporte pas l'extension<br><hilight>XRandR</hilight> (redimensionnement et rotation).<br>Vous ne pouvez modifier la résolution de l'écran sans le<br>support de cette extension. Il se peut aussi qu'au moment de la compilation<br>de <hilight>ecore</hilight>, le support de XRandR n'ait pas été détecté."
 
-#: src/modules/conf_display/e_int_config_display.c:689
+#: src/modules/conf_display/e_int_config_display.c:643
 msgid "No Refresh Rates Found"
 msgstr "Aucun taux de rafraîchissement détecté"
 
-#: src/modules/conf_display/e_int_config_display.c:690
+#: src/modules/conf_display/e_int_config_display.c:644
 msgid "No refresh rates were reported by your X Display Server.<br>If you are running a nested X Display Server, then<br>this is to be expected. However, if you are not, then<br>the current refresh rate will be used when setting<br>the resolution, which may cause <hilight>damage</hilight> to your screen."
 msgstr "Aucun taux de rafraîchissement n'a été rapporté par votre serveur X.<br>Si vous utilisez un serveur X imbriqué (nested), alors cela est normal.<br>Néanmoins, si ce n'est pas le cas, le taux de rafraîchissement actuel<br>sera utilisé lors de la sélection de la résolution, ce qui pourrait<br><hilight>endommager</hilight> votre écran."
 
