@@ -127,7 +127,7 @@ e_modapi_init(E_Module *m)
         config = E_NEW(Config_Item, 1);
         config->id = eina_stringshare_add("0");
         config->show_all = 0;
-        config->minw = 80;
+        config->minw = 100;
         config->minh = 32;
         tasks_config->items = eina_list_append(tasks_config->items, config);
      }
