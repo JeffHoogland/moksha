@@ -3,7 +3,7 @@
 
 images {
    image: "icon.png" COMP;
-   image: "video-display.svg" COMP;
+   image: "video-display.png" COMP;
    image: "display.png" COMP;
    image: "display-glass-shine.png" COMP;
 }
@@ -820,7 +820,7 @@ collections {
                state: "default" 0.0;
                aspect: 1.0 1.0;
                aspect_preference: BOTH;
-               image.normal: "video-display.svg";
+               image.normal: "video-display.png";
             }
          }
          part {
