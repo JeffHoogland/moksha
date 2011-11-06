@@ -126,6 +126,10 @@ if USE_MODULE_CONF_INTERACTION
 SUBDIRS += conf_interaction
 endif
 
+if USE_MODULE_CONF_RANDR
+SUBDIRS += conf_randr
+endif
+
 if USE_MODULE_GADMAN
 SUBDIRS += gadman
 endif

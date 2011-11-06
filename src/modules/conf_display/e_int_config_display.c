@@ -23,8 +23,6 @@ static int	    _sort_resolutions	     (const void *d1, const void *d2);
 typedef struct _Resolution Resolution;
 typedef struct _SureBox SureBox;
 
-static E_Randr_Screen_Restore_Info_11 *e_screen_config_11 = NULL;
-
 struct _Resolution
 {
    int id;
@@ -96,13 +94,8 @@ _surebox_dialog_cb_yes(void *data, E_Dialog *dia)
    ecore_x_randr_screen_primary_output_current_size_get(man->root, &c_size.width, &c_size.height, NULL, NULL, NULL);
    c_rate = ecore_x_randr_screen_primary_output_current_refresh_rate_get(man->root);
 
-   if (e_screen_config_11)
-     {
-	e_screen_config_11->size.width = c_size.width;
-	e_screen_config_11->size.height = c_size.height;
-	e_screen_config_11->refresh_rate = c_rate;
-	e_config_save_queue();
-     }
+   e_randr_store_configuration(e_randr_screen_info);
+
    _fill_data(sb->cfdata);
    _load_resolutions(sb->cfdata);
    /* No need to load rates as the currently selected resolution has not been
@@ -242,43 +235,12 @@ static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
    E_Manager *man;
-   E_Randr_Screen_Restore_Info *restore_info;
    Eina_List *iter;
    int rots;
 
    man = e_manager_current_get();
    ecore_x_randr_screen_primary_output_current_size_get(man->root, &cfdata->orig_size.width, &cfdata->orig_size.height, NULL, NULL, &cfdata->orig_size_index);
    cfdata->orig_rate = ecore_x_randr_screen_primary_output_current_refresh_rate_get(man->root);
-
-   EINA_LIST_FOREACH(e_config->screen_info, iter, restore_info)
-     {
-        if (restore_info->randr_version == RANDR_11)
-          {
-             e_screen_config_11 = restore_info->rrvd_restore_info.restore_info_11;
-             break;
-          }
-     }
-
-   if(!e_screen_config_11)
-     {
-        if ((restore_info = E_NEW(E_Randr_Screen_Restore_Info, 1)))
-          {
-             restore_info->randr_version = RANDR_11;
-             if ((e_screen_config_11 = E_NEW(E_Randr_Screen_Restore_Info_11, 1)))
-               {
-                  restore_info->rrvd_restore_info.restore_info_11 = e_screen_config_11;
-                  if (!(e_config->screen_info = eina_list_append(e_config->screen_info, restore_info)))
-                    {
-                       free(e_screen_config_11);
-                       free(restore_info);
-                    }
-               }
-             else
-               {
-                  free (restore_info);
-               }
-          }
-     }
 
    rots = ecore_x_randr_screen_primary_output_orientations_get(man->root);
    if ((rots) && (rots != ECORE_X_RANDR_ORIENTATION_ROT_0))
@@ -352,7 +314,6 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
    rt = eina_list_nth(res->rates, r);
    if (!rt) return 0;
 
-   if (!e_screen_config_11) return EINA_FALSE;
    return ((res->size.width != cfdata->orig_size.width) ||
 	  (res->size.height != cfdata->orig_size.height) ||
 	  (cfdata->has_rates && (*rt != cfdata->orig_rate)) ||
@@ -414,14 +375,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 					  (cfdata->orientation | cfdata->flip));
 	cfdata->orig_orientation = cfdata->orientation;
 	cfdata->orig_flip = cfdata->flip;
-	if (e_screen_config_11)
-	  e_screen_config_11->orientation = (cfdata->orientation | cfdata->flip);
      }
-   else
-     if (e_screen_config_11)
-       e_screen_config_11->orientation = 0;
-
-   e_config_save_queue();
 
    return 1;
 }

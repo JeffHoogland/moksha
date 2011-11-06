@@ -1,0 +1,945 @@
+#define BORDERSIZE 1
+#define SUGGESTION_TIMEOUT 2.5
+
+images {
+   image: "icon.png" COMP;
+   image: "video-display.svg" COMP;
+   image: "display.png" COMP;
+   image: "display-glass-shine.png" COMP;
+}
+
+collections {
+
+   // The icon used in the settings dialog
+   group {
+      name: "icon";
+      parts {
+         part {
+            name: "image";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               aspect: 1.0 1.0;
+               aspect_preference: BOTH;
+               image.normal: "icon.png";
+            }
+         }
+      }
+   }
+
+   /**********************************************/
+   /*********Subdialog - Arrangement**************/
+   /**********************************************/
+
+   //The graphical representation of a single monitor, including its decorations
+   group {
+      name: "e/conf/randr/dialog/subdialog/arrangement/output";
+
+      styles {
+         style {
+            name: "display_name_text";
+            base: "font=Sans:style=Bold font_size=10 text_class=tb_plain align=center valign=center color=#fff style=soft_shadow shadow_color=#0000001f wrap=word";
+            tag:  "br" "\n";
+            tag:  "hilight" "+ font=Sans:style=Bold text_class=tb_light";
+         }
+      }
+
+
+      parts {
+
+         part {
+             name: "display";
+             type: IMAGE;
+             mouse_events: 0;
+
+             description {
+                state: "default" 0.0;
+                image.normal: "display.png";
+                rel1.relative: 0.0 0.0;
+                rel2.relative: 1.0 1.0;
+             }
+         }
+
+         part {
+            name: "e.swallow.content";
+            type: SWALLOW; // background of CRTC's zone
+
+            description {
+               state: "default" 0.0;
+               aspect_preference: BOTH;
+               color: 255 255 255 255;
+               rel1 {
+                  to: "display";
+                  relative: 0.047379 0.049303;
+               }
+               rel2 {
+                  to: "display";
+                  //relative: 0.97 0.657804;
+                  relative: 0.975 0.66;
+               }
+            }
+
+            description {
+               state: "disabled" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 128;
+            }
+         }
+
+         part {
+            name: "output_selected_frame_clip";
+            type: RECT;
+            mouse_events: 0;
+
+            description {
+               state: "default" 0.0;
+               color: 255 255 255 0;
+
+               rel1.relative: 0.0 0.0;
+               rel2.relative: 1.0 1.0;
+            }
+            description {
+               state: "selected" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+         }
+
+         part {
+            name: "output_selected_frame_border_top";
+            type: RECT;
+            clip_to: "output_selected_frame_clip";
+            mouse_events: 0;
+
+            description {
+               state: "default" 0.0;
+               color: 128 128 128 255;
+               min: 0 2;
+               fixed: 0 1;
+               align: 0.5 0.0;
+
+               rel1 {
+                  to: "output_selected_frame_clip";
+                  relative: 0.0 0.0;
+               }
+               rel2 {
+                  to: "output_selected_frame_clip";
+                  relative: 1.0 0.0;
+                  offset: 0 BORDERSIZE;
+               }
+            }
+         }
+
+         part {
+            name: "output_selected_frame_border_right";
+            type: RECT;
+            clip_to: "output_selected_frame_clip";
+            mouse_events: 0;
+
+            description {
+               state: "default" 0.0;
+               color: 128 128 128 255;
+               min: 1 0;
+               fixed: 1 0;
+               align: 1.0 0.5;
+
+               rel1 {
+                  to_x: "output_selected_frame_clip";
+                  to_y: "output_selected_frame_border_top";
+                  relative: 1.0 1.0;
+                  offset: (-BORDERSIZE-1) 0;
+               }
+               rel2 {
+                  to_x: "output_selected_frame_clip";
+                  to_y: "output_selected_frame_border_bottom";
+                  relative: 1.0 0.0;
+               }
+            }
+         }
+
+         part {
+            name: "output_selected_frame_border_bottom";
+            type: RECT;
+            clip_to: "output_selected_frame_clip";
+            mouse_events: 0;
+
+            description {
+               state: "default" 0.0;
+               color: 128 128 128 255;
+               min: 0 2;
+               fixed: 0 1;
+               align: 0.5 1.0;
+
+               rel1 {
+                  to: "output_selected_frame_clip";
+                  relative: 0.0 1.0;
+                  offset: 0 (-BORDERSIZE-1);
+               }
+               rel2 {
+                  to: "output_selected_frame_clip";
+                  relative: 1.0 1.0;
+               }
+            }
+         }
+
+         part {
+            name: "output_selected_frame_border_left";
+            type: RECT;
+            clip_to: "output_selected_frame_clip";
+            mouse_events: 0;
+
+            description {
+               state: "default" 0.0;
+               color: 128 128 128 255;
+               min: 1 0;
+               fixed: 1 0;
+               align: 0.0 0.5;
+
+               rel1 {
+                  to_x: "output_selected_frame_clip";
+                  to_y: "output_selected_frame_border_top";
+                  relative: 0.0 1.0;
+               }
+               rel2 {
+                  to_x: "output_selected_frame_clip";
+                  to_y: "output_selected_frame_border_bottom";
+                  relative: 0.0 0.0;
+                  offset: BORDERSIZE 0;
+               }
+            }
+         }
+
+         part {
+            name: "output_selected_frm_inside";
+            type: RECT;
+            clip_to: "output_selected_frame_clip";
+            mouse_events: 0;
+
+            description {
+               state: "default" 0.0;
+               color: 255 255 255 120;
+
+               rel1 {
+                  to: "output_selected_frame_clip";
+                  offset: BORDERSIZE BORDERSIZE;
+               }
+               rel2 {
+                  to: "output_selected_frame_clip";
+                  offset: -BORDERSIZE -BORDERSIZE;
+               }
+            }
+         }
+
+         part {
+            name: "output_txt_bg";
+            type: RECT;
+                  //clip_to: "output_txt_clip";
+            mouse_events: 0;
+
+            description {
+               state: "default" 0.0;
+               color: 255 255 255 128;
+               align: 0.5 0.5;
+
+               rel1 {
+                  to: "output_txt";
+                  relative: 0.0 0.0;
+                  offset: -5 -5;
+               }
+               rel2 {
+                  to: "output_txt";
+                  relative: 1.0 1.0;
+                  offset: 5 5;
+               }
+            }
+            description {
+               state: "selected" 0.0;
+               inherit: "default" 0.0;
+               color: 0 0 0 255;
+            }
+         }
+
+         part {
+            name: "output_txt";
+            type: TEXTBLOCK;
+                  //clip_to: "output_txt_clip";
+            mouse_events: 0;
+
+            description {
+               align: 0.5 0.5;
+               state: "default" 0.0;
+               color: 0 0 0 255;
+                      // define part coordinates:
+                      //rel1.to: "output_txt_clip";
+                      //rel2.to: "output_txt_clip";
+               rel1.to: "e.swallow.content";
+               rel2.to: "e.swallow.content";
+
+               text {
+                  style: "display_name_text";
+                  text: "output name";
+                  min: 1.0 1.0;
+                  max: 1.0 1.0;
+               }
+            }
+            description {
+               state: "selected" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+         }
+
+         part {
+            name: "selected_toggle_on";
+            type: RECT;
+            mouse_events: 1;
+
+            description {
+               state: "default" 0.0;
+               color: 0 0 0 0;
+               visible: 1;
+
+               rel1 {
+                  to: "e.swallow.content";
+                  relative: 0.0 0.0;
+               }
+               rel2 {
+                  to: "e.swallow.content";
+                  relative: 1.0 1.0;
+               }
+            }
+
+            description {
+               state: "disable" 0.0;
+               inherit: "default" 0.0;
+               visible: 0;
+            }
+         }
+
+         part {
+            name: "selected_toggle_off";
+            type: RECT;
+            mouse_events: 1;
+
+            description {
+               state: "default" 0.0;
+               color: 0 0 0 0;
+               visible: 0;
+
+               rel1 {
+                  to: "selected_toggle_on";
+                  relative: 0.0 0.0;
+               }
+               rel2 {
+                  to: "selected_toggle_on";
+                  relative: 1.0 1.0;
+               }
+            }
+
+            description {
+               state: "disable" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+            }
+         }
+
+         part {
+             name: "display-glass-shine";
+             type: IMAGE;
+
+             description {
+                state: "default" 0.0;
+                image.normal: "display-glass-shine.png";
+             }
+         }
+
+         programs {
+            program {
+               name: "highlight";
+               signal: "mouse,down,1";
+               source: "selected_toggle_on";
+
+               action: STATE_SET "selected" 0.0;
+               transition: LINEAR 0.1;
+                           //target: "e.swallow.content";
+                           //target: "output_selected_clip";
+               target: "output_txt";
+               target: "output_txt_bg";
+               target: "output_selected_frame_clip";
+            }
+
+            program {
+               name: "normal";
+               signal: "mouse,clicked,1";
+               source: "selected_toggle_off";
+
+               action: STATE_SET "default" 0.0;
+               transition: LINEAR 0.1;
+                           //target: "e.swallow.content";
+                           //target: "output_selected_clip";
+               target: "output_txt";
+               target: "output_txt_bg";
+               target: "output_selected_frame_clip";
+            }
+
+            program {
+               name: "selected_toggle_off_on";
+               signal: "mouse,clicked,1";
+               source: "selected_toggle_on";
+               action: STATE_SET "disable" 1.0;
+               target: "selected_toggle_on";
+               target: "selected_toggle_off";
+            }
+
+            program {
+               name: "selected_toggle_on_off";
+               signal: "mouse,clicked,1";
+               source: "selected_toggle_off";
+               action: STATE_SET "default" 1.0;
+               target: "selected_toggle_on";
+               target: "selected_toggle_off";
+            }
+
+            program {
+               name: "emit_highlight";
+               signal: "select";
+               source: "e";
+               after: "highlight";
+            }
+
+            program {
+               name: "emit_normal";
+               signal: "deselect";
+               source: "e";
+               after: "normal";
+            }
+
+            program {
+               name: "disable";
+               signal: "disabled";
+               source: "e";
+               action: STATE_SET "disabled" 0.0;
+               target: "e.swallow.content";
+            }
+
+            program {
+               name: "enable";
+               signal: "enabled";
+               source: "e";
+               action: STATE_SET "default" 0.0;
+               target: "e.swallow.content";
+            }
+
+            program {
+               name: "init";
+               after: "normal";
+            }
+         }
+      }
+   }
+
+   //This group describes the look of the suggestion entity used, when a monitor
+   //representation is dragged. Its size matches the size of the monitor
+   //dragged.
+   group{
+      name: "e/conf/randr/dialog/subdialog/arrangement/suggestion";
+      data {
+         item: "distance_min" "20";
+      }
+
+      /*
+      script {
+         public fade_out_timer_id = 0;
+
+         public suggestion_fade_out ()
+         {
+            cancel_timer(get_int(fade_out_timer_id));
+            run_program(PROGRAM:"hide");
+         }
+      }
+          */
+
+      parts {
+         part {
+            name: "shape_clip";
+            type: RECT;
+            description {
+               state: "default" 0.0;
+               color: 255 255 255 0;
+               rel1.relative: 0.0 0.0;
+               rel2.relative: 1.0 1.0;
+            }
+            description {
+               state: "visible" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+         }
+         part {
+            name: "shape";
+            type: RECT;
+            mouse_events: 0;
+            clip_to: "shape_clip";
+            description {
+               state: "default" 0.0;
+               color: 0 0 0 100;
+               rel1.to: "shape_clip";
+               rel2.to: "shape_clip";
+            }
+         }
+      }
+      programs {
+         program {
+            name: "show_transition";
+            signal: "show";
+            source: "e";
+            action: STATE_SET "visible" 0.0;
+            target: "shape_clip";
+            transition: LINEAR 0.2;
+         }
+         /*
+         program {
+            name: "set_timeout";
+            signal: "show";
+            source: "e";
+            script {
+               new i = timer(SUGGESTION_TIMEOUT, "suggestion_fade_out", 0);
+               set_int(fade_out_timer_id, i);
+            }
+         }
+         */
+         program {
+            name: "hide";
+            signal: "hide";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "shape_clip";
+            transition: LINEAR 0.2;
+         }
+      }
+   }
+
+   /**********************************************/
+   /************Subdialog - Policies**************/
+   /**********************************************/
+   group{
+      name: "e/conf/randr/dialog/subdialog/policies";
+      parts {
+         part {
+            name: "current_displays_setup/clipper";
+            type: RECT;
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               color: 0 0 0 0;
+               rel1.relative: 0.25 0.25;
+               rel2.relative: 0.75 0.75;
+            }
+            description {
+               state: "above" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+               rel1.relative: 0.25 0.5;
+               rel2.relative: 0.75 1.0;
+            }
+            description {
+               state: "right" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+               rel1.relative: 0.0 0.25;
+               rel2.relative: 0.5 0.75;
+            }
+            description {
+               state: "below" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+               rel1.relative: 0.25 0.0;
+               rel2.relative: 0.75 0.5;
+            }
+            description {
+               state: "left" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+               rel1.relative: 0.5 0.25;
+               rel2.relative: 1.0 0.75;
+            }
+            description {
+               state: "clone" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+            description {
+               state: "none" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+         }
+         part {
+            name: "current_displays_setup.swallow.content";
+            type: SWALLOW;
+            clip_to: "current_displays_setup/clipper";
+            description {
+               state: "default" 0.0;
+               rel1.to: "current_displays_setup/clipper";
+               rel2.to: "current_displays_setup/clipper";
+            }
+         }
+         part {
+            name: "new_display/clipper";
+            type: RECT;
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               color: 0 0 0 0;
+               rel1.relative: 0.25 0.25;
+               rel2.relative: 0.75 0.75;
+            }
+            description {
+               state: "above" 0.0;
+               inherit: "default" 0.0;
+               color: 0 0 0 0;
+               rel1.relative: 0.25 0.0;
+               rel2.relative: 0.75 0.5;
+            }
+            description {
+               state: "above_visible" 0.0;
+               inherit: "above" 0.0;
+               color: 255 255 255 255;
+            }
+            description {
+               state: "right" 0.0;
+               inherit: "default" 0.0;
+               color: 0 0 0 0;
+               rel1.relative: 0.5 0.25;
+               rel2.relative: 1.0 0.75;
+            }
+            description {
+               state: "right_visible" 0.0;
+               inherit: "right" 0.0;
+               color: 255 255 255 255;
+            }
+            description {
+               state: "below" 0.0;
+               inherit: "default" 0.0;
+               color: 0 0 0 0;
+               rel1.relative: 0.25 0.5;
+               rel2.relative: 0.75 1.0;
+            }
+            description {
+               state: "below_visible" 0.0;
+               inherit: "below" 0.0;
+               color: 255 255 255 255;
+            }
+            description {
+               state: "left" 0.0;
+               inherit: "default" 0.0;
+               color: 0 0 0 0;
+               rel1.relative: 0.0 0.25;
+               rel2.relative: 0.5 0.75;
+            }
+            description {
+               state: "left_visible" 0.0;
+               inherit: "left" 0.0;
+               color: 255 255 255 255;
+            }
+            description {
+               state: "clone" 0.0;
+               inherit: "default" 0.0;
+               color: 0 0 0 0;
+            }
+            description {
+               state: "clone_visible" 0.0;
+               inherit: "clone" 0.0;
+               color: 255 255 255 255;
+            }
+            description {
+               state: "none" 0.0;
+               inherit: "default" 0.0;
+               color: 0 0 0 0;
+            }
+            description {
+               state: "none_visible" 0.0;
+               inherit: "none" 0.0;
+               color: 255 255 255 255;
+            }
+         }
+         part {
+            name: "new_display.swallow.content";
+            type: SWALLOW;
+            clip_to: "new_display/clipper";
+            description {
+               state: "default" 0.0;
+               rel1.to: "new_display/clipper";
+               rel2.to: "new_display/clipper";
+            }
+         }
+      }
+      /*
+       * The signals emitted to the UI are encoded as their corresponding value
+       * in Ecore_X
+       *
+       * Policy                            = Signal emitted
+       * ECORE_X_RANDR_OUTPUT_POLICY_ABOVE = 1
+       * ECORE_X_RANDR_OUTPUT_POLICY_RIGHT = 2
+       * ECORE_X_RANDR_OUTPUT_POLICY_BELOW = 3
+       * ECORE_X_RANDR_OUTPUT_POLICY_LEFT  = 4
+       * ECORE_X_RANDR_OUTPUT_POLICY_CLONE = 5
+       * ECORE_X_RANDR_OUTPUT_POLICY_NONE  = 6
+       */
+      programs {
+         program {
+            name:   "new_display_hide";
+            signal: "conf,randr,dialog,policies,*";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "new_display/clipper";
+         }
+         program {
+            name:   "current_displays_setup_clipper_above";
+            signal: "conf,randr,dialog,policies,1";
+            source: "e";
+            action: STATE_SET "above" 0.0;
+            target: "current_displays_setup/clipper";
+            target: "new_display/clipper";
+            after: "new_display_above_visible_set";
+            transition: LINEAR 0.5;
+         }
+         program {
+            name:   "new_display_above_visible_set";
+            action: STATE_SET "above_visible" 0.0;
+            target: "new_display/clipper";
+            transition: LINEAR 0.5;
+         }
+         program {
+            name:   "current_displays_setup_clipper_right";
+            signal: "conf,randr,dialog,policies,2";
+            source: "e";
+            action: STATE_SET "right" 0.0;
+            target: "current_displays_setup/clipper";
+            target: "new_display/clipper";
+            after: "new_display_right_visible_set";
+            transition: LINEAR 0.5;
+         }
+         program {
+            name:   "new_display_right_visible_set";
+            action: STATE_SET "right_visible" 0.0;
+            target: "new_display/clipper";
+            transition: LINEAR 0.5;
+         }
+         program {
+            name:   "current_displays_setup_clipper_below";
+            signal: "conf,randr,dialog,policies,3";
+            source: "e";
+            action: STATE_SET "below" 0.0;
+            target: "current_displays_setup/clipper";
+            target: "new_display/clipper";
+            after: "new_display_below_visible_set";
+            transition: LINEAR 0.5;
+         }
+         program {
+            name:   "new_display_below_visible_set";
+            action: STATE_SET "below_visible" 0.0;
+            target: "new_display/clipper";
+            transition: LINEAR 0.5;
+         }
+         program {
+            name:   "current_displays_setup_clipper_left";
+            signal: "conf,randr,dialog,policies,4";
+            source: "e";
+            action: STATE_SET "left" 0.0;
+            target: "current_displays_setup/clipper";
+            target: "new_display/clipper";
+            after: "new_display_left_visible_set";
+            transition: LINEAR 0.5;
+         }
+         program {
+            name:   "new_display_left_visible_set";
+            action: STATE_SET "left_visible" 0.0;
+            target: "new_display/clipper";
+            transition: LINEAR 0.5;
+         }
+         program {
+            name: "current_displays_setup_clipper_clone";
+            signal: "conf,randr,dialog,policies,5";
+            source: "e";
+            action: STATE_SET "clone" 0.0;
+            target: "current_displays_setup/clipper";
+            target: "new_display/clipper";
+            after: "new_display_clone_visible_set";
+            transition: LINEAR 0.5;
+         }
+         program {
+            name:   "new_display_clone_visible_set";
+            action: STATE_SET "clone_visible" 0.0;
+            target: "new_display/clipper";
+            transition: LINEAR 0.5;
+         }
+         program {
+            name:   "current_displays_setup_clipper_none";
+            signal: "conf,randr,dialog,policies,6";
+            source: "e";
+            action: STATE_SET "none" 0.0;
+            target: "current_displays_setup/clipper";
+            target: "new_display/clipper";
+            //after: "new_display_none_visible_set";
+            transition: LINEAR 0.5;
+         }
+         /*
+          * following is an analog program for none, but we don't want to show
+          * it anyway.
+         program {
+            name:   "new_display_none_visible_set";
+            action: STATE_SET "none_visible" 0.0;
+            target: "new_display/clipper";
+            transition: LINEAR 0.5;
+         }
+        */
+      }
+   }
+
+   // Text objects for rotation and reflection
+   group {
+      name: "e/conf/randr/dialog/subdialog/orientation";
+
+      parts {
+         part {
+            name: "clip";
+            type: RECT;
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               rel1.relative: 0.0 0.0;
+               rel2.relative: 1.0 1.0;
+            }
+         }
+         part {
+            name: "display";
+            clip_to: "clip";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               aspect: 1.0 1.0;
+               aspect_preference: BOTH;
+               image.normal: "video-display.svg";
+            }
+         }
+         part {
+            name: "orientation_text";
+            clip_to: "clip";
+            type: TEXT;
+            mouse_events: 0;
+            scale: 1;
+            description {
+               state: "default" 0.0;
+               rel1.relative: 0.0 0.0;
+               rel2.relative: 1.0 0.8;
+               color: 0 0 0 255;
+               text {
+                  //Maybe use some default theme label text style later
+                  text: "Orientation";
+                  font: "Sans:style=Bold";
+                  /* Use the Bold style
+                   * of the Sans font from
+                   * fontconfig */
+                  size: 10;
+                  /* size in pixels - 10 */
+                  min: 0 1;
+                  /* the text will not determine minimum horizontal
+                   * size but WILL determine minimal vertical size
+                   * (thus 0 1 - horiz then vert flags) */
+                  /* align text to top-left of the region
+                   * given */
+                  text_class: "title_bar";
+                  /* text class - so font and size
+                   * can be changed by users */
+               }
+               map {
+                  on: 1;
+                  rotation {
+                     x: 0.0;
+                     y: 0.0;
+                     z: 0.0;
+                  }
+               }
+            }
+            description {
+               state: "rotate" 0.90;
+               inherit: "default" 0.0;
+               map.rotation.z: 270.0;
+            }
+            description {
+               state: "rotate" 0.180;
+               inherit: "default" 0.0;
+               map.rotation.z: 180.0;
+            }
+            description {
+               state: "rotate" 0.270;
+               inherit: "default" 0.0;
+               map.rotation.z: 90.0;
+            }
+            description {
+               state: "reflect_horizontal" 0.0;
+               inherit: "default" 0.0;
+               map.rotation.y: 180.0;
+            }
+            description {
+               state: "reflect_vertical" 0.0;
+               inherit: "default" 0.0;
+               map.rotation.x: 180.0;
+            }
+         }
+      }
+      programs {
+         program {
+            name:   "rot0";
+            signal: "conf,randr,dialog,orientation,current,1";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "orientation_text";
+            transition: LINEAR 0.5;
+         }
+         program {
+            name:   "rot90";
+            signal: "conf,randr,dialog,orientation,current,2";
+            source: "e";
+            action: STATE_SET "rotate" 0.90;
+            target: "orientation_text";
+            transition: LINEAR 0.5;
+         }
+         program {
+            name:   "rot180";
+            signal: "conf,randr,dialog,orientation,current,4";
+            source: "e";
+            action: STATE_SET "rotate" 0.180;
+            target: "orientation_text";
+            transition: LINEAR 0.5;
+         }
+         program {
+            name:   "rot270";
+            signal: "conf,randr,dialog,orientation,current,8";
+            source: "e";
+            action: STATE_SET "rotate" 0.270;
+            target: "orientation_text";
+            transition: LINEAR 0.5;
+         }
+         program {
+            name:   "ref_x";
+            signal: "conf,randr,dialog,orientation,current,16";
+            source: "e";
+            action: STATE_SET "reflect_horizontal" 0.0;
+            target: "orientation_text";
+            transition: LINEAR 0.5;
+         }
+         program {
+            name:   "ref_y";
+            signal: "conf,randr,dialog,orientation,current,32";
+            source: "e";
+            action: STATE_SET "reflect_vertical" 0.0;
+            target: "orientation_text";
+            transition: LINEAR 0.5;
+         }
+      }
+
+   }
+
+}

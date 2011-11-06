@@ -745,6 +745,7 @@ AC_E_OPTIONAL_MODULE([comp], true)
 AC_E_OPTIONAL_MODULE([shot], true)
 AC_E_OPTIONAL_MODULE([backlight], true)
 AC_E_OPTIONAL_MODULE([tasks], true)
+AC_E_OPTIONAL_MODULE([conf_randr], true)
 
 SUSPEND=""
 HIBERNATE=""
@@ -843,6 +844,8 @@ src/modules/conf_interaction/Makefile
 src/modules/conf_interaction/module.desktop
 src/modules/msgbus/Makefile
 src/modules/msgbus/module.desktop
+src/modules/conf_randr/Makefile
+src/modules/conf_randr/module.desktop
 src/modules/gadman/Makefile
 src/modules/gadman/module.desktop
 src/modules/mixer/Makefile
