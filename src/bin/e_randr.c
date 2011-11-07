@@ -1496,7 +1496,7 @@ _e_randr_try_restore_11(E_Randr_Screen_Info_11 *si_11)
    E_Randr_Crtc_Info *ci;
    E_Randr_Output_Info *oi;
    char *s_output_name;
-   Eina_Bool name_found;
+   Eina_Bool name_found = EINA_FALSE;
 
    EINA_LIST_FOREACH(crtcs, iter, ci)
      {
