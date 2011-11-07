@@ -1908,7 +1908,6 @@ _e_config_free(E_Config *ecf)
    E_Color_Class *cc;
    E_Path_Dir *epd;
    E_Remember *rem;
-   E_Randr_Serialized_Setup *serialized_setup;
    E_Randr_Serialized_Setup_12 *serialized_setup_12;
    E_Randr_Serialized_Crtc *serialized_crtc;
    E_Randr_Serialized_Output_Policy *serialized_output_policy;
@@ -2067,9 +2066,8 @@ _e_config_free(E_Config *ecf)
      }
    if(ecf->randr_serialized_setup)
      {
-           if(ecf->randr_serialized_setup->serialized_setup_11)
-              free(serialized_setup->serialized_setup_11);
-           else if(ecf->randr_serialized_setup->serialized_setups_12)
+           free (ecf->randr_serialized_setup->serialized_setup_11);
+           if (ecf->randr_serialized_setup->serialized_setups_12)
              {
                 EINA_LIST_FREE(ecf->randr_serialized_setup->serialized_setups_12, serialized_setup_12)
                   {
