@@ -336,16 +336,6 @@ _load_mimes(E_Config_Dialog_Data *cfdata, char *file)
 			    cfdata->mimes = eina_list_append(cfdata->mimes, mime);
 			 }
 		    }
-                  else
-                    {
-                       glob = _find_glob(mime, ext);
-                       if (!glob)
-                         {
-                            glob = E_NEW(Config_Glob, 1);
-                            glob->name = eina_stringshare_add(ext);
-                            mime->globs = eina_list_append(mime->globs, glob);
-                         }
-                    }
                }
 	  }
 	while ((*p != '\n') && (*p != 0));
