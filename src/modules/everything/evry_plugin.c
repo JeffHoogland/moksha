@@ -179,7 +179,7 @@ evry_plugin_register(Evry_Plugin *p, int type, int priority)
    else if (type == EVRY_PLUGIN_OBJECT)
      evry_conf->conf_objects = conf;
    
-   if ((type == EVRY_PLUGIN_SUBJECT) && (strcmp(p->name, "All")))
+   if ((type == EVRY_PLUGIN_SUBJECT) && (p->name && strcmp(p->name, "All")))
      {
 	char buf[256];
 	snprintf(buf, sizeof(buf), _("Show %s Plugin"), p->name);
