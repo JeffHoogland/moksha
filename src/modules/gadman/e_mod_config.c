@@ -132,7 +132,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    
    
    e_widget_toolbook_page_append(otb, NULL, _("Add Gadget"), o, 1, 1, 1, 1, 0.5, 0.0);
-   o = e_widget_list_add(evas, 0, 0);
    ft = e_widget_table_add(evas, 0);
 
    //Background mode
