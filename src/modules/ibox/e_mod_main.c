@@ -652,12 +652,10 @@ _ibox_cb_icon_mouse_in(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED
 }
 
 static void
-_ibox_cb_icon_mouse_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
+_ibox_cb_icon_mouse_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
-   Evas_Event_Mouse_Out *ev;
    IBox_Icon *ic;
 
-   ev = event_info;
    ic = data;
    _ibox_icon_signal_emit(ic, "e,state,unfocused", "e");
    if (ic->ibox->inst->ci->show_label)
