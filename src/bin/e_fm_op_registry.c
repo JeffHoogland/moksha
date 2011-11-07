@@ -103,26 +103,14 @@ _e_fm2_op_registry_entry_internal_ref(E_Fm2_Op_Registry_Entry_Internal *e)
 static void
 _e_fm2_op_registry_entry_listeners_call(const E_Fm2_Op_Registry_Entry_Internal *e)
 {
-   E_Fm2_Op_Registry_Entry_Listener *l, **shadow;
+   E_Fm2_Op_Registry_Entry_Listener *listener;
+   Eina_Inlist *l;
    const E_Fm2_Op_Registry_Entry *entry;
-   unsigned int i, count;
 
-   /* NB: iterate on a copy in order to allow listeners to be deleted
-    * from callbacks.  number of listeners should be small, so the
-    * following should do fine.
-    */
-   count = eina_inlist_count(e->listeners);
-   if (count < 1) return;
+   if (eina_inlist_count(e->listeners) < 1) return;
 
-   shadow = alloca(sizeof(*shadow) * count);
-
-   i = 0;
-   EINA_INLIST_FOREACH(e->listeners, l)
-     shadow[i++] = l;
-
-   entry = &(e->entry);
-   for (i = 0; i < count; i++)
-     shadow[i]->cb(shadow[i]->data, entry);
+   EINA_INLIST_FOREACH_SAFE(e->listeners, l, listener)
+     listener->cb(listener->data, &e->entry);
 }
 
 static void
