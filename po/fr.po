@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2011-11-06 11:13+0100\n"
-"PO-Revision-Date: 2011-11-06 21:40+0100\n"
+"PO-Revision-Date: 2011-11-07 09:38+0100\n"
 "Last-Translator: dazibao <dazibao@sfr.fr>\n"
 "Language-Team: Enlightenment French Team <sansgourou@gmail.com>\n"
 "Language: fr\n"
@@ -958,7 +958,7 @@ msgstr "Enlightenment ne reconnaît pas cette erreur."
 #: src/bin/e_config.c:2223
 #, c-format
 msgid "Enlightenment has an error while writing<br>its config file.<br>%s<br><br>The file where the error occurred was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
-msgstr "Une erreur s'est produite au niveau du fichier<br>de configuration dans lequel Enlightenment<br>était en train d'écrire.<br>%s<br><br> Le fichier incriminé était :<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption des données.<br>"
+msgstr "Une erreur s'est produite au niveau du fichier<br>de configuration dans lequel Enlightenment<br>était en train d'écrire.<br>%s<br><br>Le fichier incriminé était :<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption des données.<br>"
 
 #: src/bin/e_config_dialog.c:210
 #: src/modules/battery/e_mod_main.c:721
@@ -1816,7 +1816,7 @@ msgstr "Fermer cette fenêtre"
 
 #: src/bin/e_int_border_locks.c:348
 msgid "Exiting my login with this window open"
-msgstr "Fermer ma session en conservant cette fenêtre ouverte"
+msgstr "Fermer ma session en laissant cette fenêtre ouverte"
 
 #: src/bin/e_int_border_locks.c:352
 msgid "Remember these Locks"
@@ -2146,7 +2146,7 @@ msgstr "Les propriétés de la fenêtre sont partagées"
 
 #: src/bin/e_int_border_remember.c:310
 msgid "You are trying to ask Enlightenment to remember to apply<br>properties (such as size, location, border style etc.) to<br>a window that <hilight>does not have unique properties</hilight>.<br><br>This means it shares Name/Class, Transience, Role etc. properties<br>with more than 1 other window on the screen and remembering<br>properties for this window will apply to all other windows<br>that match these properties.<br><br>This is just a warning in case you did not intend this to happen.<br>If you did, simply press <hilight>Apply</hilight> or <hilight>OK</hilight> buttons<br>and your settings will be accepted. Press <hilight>Cancel</hilight> if you<br>are not sure and nothing will be affected."
-msgstr "Vous demandez à Enlightenment de mémoriser les<br>propriétés (telles que la taille, la position,<br>le type de bordure, etc.) d'une fenêtre sans<br><hilight>propriétés distinctives</hilight>.<br><br>Ce qui signifie qu'elle partage son nom et classe,<br>sa relation transitoire, son rôle, etc., avec au<br>moins une autre fenêtre à l'écran et que la<br>mémorisation des propriétés pour cette fenêtre<br>s'appliquera à toutes les autres fenêtres qui<br>partagent les mêmes propriétés.<br><br>Ceci n'est qu'un avertissement au cas où ce<br>n'était pas ce que vous recherchiez.<br>Cliquez sur <hilight>Appliquer</hilight> ou <hilight>OK</hilight> et<br>vos paramètres seront acceptés.<br>Cliquez sur <hilight>Annuler</hilight> si vous n'êtes pas sûr,<br>et rien ne sera modifié."
+msgstr "Vous demandez à Enlightenment de mémoriser les<br>propriétés (telles que la taille, la position,<br>le style de bordure, etc.) d'une fenêtre sans<br><hilight>propriétés distinctives</hilight>.<br><br>Ce qui signifie qu'elle partage son nom et classe,<br>sa relation transitoire, son rôle, etc., avec au<br>moins une autre fenêtre à l'écran et que la<br>mémorisation des propriétés pour cette fenêtre<br>s'appliquera à toutes les autres fenêtres qui<br>partagent les mêmes propriétés.<br><br>Ceci n'est qu'un avertissement au cas où ce<br>n'était pas ce que vous recherchiez.<br>Cliquez sur <hilight>Appliquer</hilight> ou <hilight>OK</hilight> et<br>vos paramètres seront acceptés.<br>Cliquez sur <hilight>Fermer</hilight> si vous n'êtes pas sûr,<br>et rien ne sera modifié."
 
 #: src/bin/e_int_border_remember.c:516
 msgid "No match properties set"
@@ -3855,7 +3855,7 @@ msgstr "Aucun taux de rafraîchissement détecté"
 
 #: src/modules/conf_display/e_int_config_display.c:644
 msgid "No refresh rates were reported by your X Display Server.<br>If you are running a nested X Display Server, then<br>this is to be expected. However, if you are not, then<br>the current refresh rate will be used when setting<br>the resolution, which may cause <hilight>damage</hilight> to your screen."
-msgstr "Aucun taux de rafraîchissement n'a été rapporté par votre serveur X.<br>Si vous utilisez un serveur X imbriqué (nested), alors cela est normal.<br>Néanmoins, si ce n'est pas le cas, le taux de rafraîchissement actuel<br>sera utilisé lors de la sélection de la résolution, ce qui pourrait<br><hilight>endommager</hilight> votre écran."
+msgstr "Aucun taux de rafraîchissement n'a été rapporté par votre serveur X.<br>Si vous utilisez un serveur X imbriqué, alors cela est normal.<br>Néanmoins, si ce n'est pas le cas, le taux de rafraîchissement actuel<br>sera utilisé lors de la sélection de la résolution, ce qui pourrait<br><hilight>endommager</hilight> votre écran."
 
 #: src/modules/conf_display/e_int_config_desks.c:49
 #: src/modules/pager/e_mod_main.c:801
