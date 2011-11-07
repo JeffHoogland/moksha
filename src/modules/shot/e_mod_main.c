@@ -172,7 +172,7 @@ _save_to(const char *file)
         if (z)
           {
              unsigned char *src, *dst, *s, *d;
-             int sstd, dstd, y;
+             int sstd, y;
              
              o = evas_object_image_add(evas_object_evas_get(o_img));
              evas_object_image_colorspace_set(o, EVAS_COLORSPACE_ARGB8888);
@@ -181,7 +181,6 @@ _save_to(const char *file)
              src = evas_object_image_data_get(o_img, EINA_FALSE);
              sstd = evas_object_image_stride_get(o_img);
              dst = evas_object_image_data_get(o, EINA_TRUE);
-             dstd = evas_object_image_stride_get(o);
              d = dst;
              for (y = 0; y < z->h; y++)
                {
