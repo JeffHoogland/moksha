@@ -115,7 +115,6 @@ _e_fm2_op_registry_entry_listeners_call(const E_Fm2_Op_Registry_Entry_Internal *
    if (count < 1) return;
 
    shadow = alloca(sizeof(*shadow) * count);
-   if (!shadow) return;
 
    i = 0;
    EINA_INLIST_FOREACH(e->listeners, l)
