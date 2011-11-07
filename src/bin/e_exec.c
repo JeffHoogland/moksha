@@ -446,10 +446,6 @@ _e_exec_startup_id_pid_find(const Eina_Hash *hash __UNUSED__, const void *key __
    search = data;
    EINA_LIST_FOREACH(value, l, inst)
      {
-        int pid = -1;
-        
-        if (inst->exe)
-           pid = ecore_exe_pid_get(inst->exe);
         if (((search->startup_id > 0) && 
              (search->startup_id == inst->startup_id)) ||
             ((inst->exe) && (search->pid > 1) && 
