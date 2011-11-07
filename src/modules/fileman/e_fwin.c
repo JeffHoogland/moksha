@@ -1180,10 +1180,10 @@ _e_fwin_cb_delete(E_Win *win)
 static void
 _e_fwin_cb_move(E_Win *win)
 {
-   E_Fwin *fwin;
+//   E_Fwin *fwin;
 
    if (!win) return;  //safety
-   fwin = win->data;
+//   fwin = win->data;
    /* _e_fwin_geom_save(fwin); */
 }
 
@@ -1585,15 +1585,13 @@ _e_fwin_zone_del(void *data,
 
 /* fm menu extend */
 static void
-_e_fwin_menu_extend(void                 *data,
+_e_fwin_menu_extend(void                 *data __UNUSED__,
                     Evas_Object          *obj,
                     E_Menu               *m,
                     E_Fm2_Icon_Info *info __UNUSED__)
 {
-   E_Fwin_Page *page;
    E_Menu_Item *mi;
 
-   page = data;
    if (e_fm2_has_parent_get(obj))
      {
         mi = e_menu_item_new(m);
@@ -1936,7 +1934,6 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page,
                }
           }
         if (!need_dia) return;
-        need_dia = 0;
      }
 
    apps = _e_fwin_suggested_apps_list_get(files, &mlist);
