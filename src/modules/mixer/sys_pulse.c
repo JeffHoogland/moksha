@@ -211,9 +211,8 @@ e_mixer_pulse_init(void)
 {
    pulse_init();
    conn = pulse_new();
-   EINA_SAFETY_ON_NULL_GOTO(conn, error);
    if (dbus) goto error;
-   if (!pulse_connect(conn))
+   if ((!conn) || (!pulse_connect(conn)))
      {
         DBusMessage *msg;
 
