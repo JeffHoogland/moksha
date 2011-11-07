@@ -547,5 +547,4 @@ _e_mod_policy_cb_hook_layout(void *data __UNUSED__, void *data2 __UNUSED__)
         if ((_policy) && (_policy->funcs.zone_layout))
           _policy->funcs.zone_layout(zone);
      }
-   zl = eina_list_free(zl);
 }
