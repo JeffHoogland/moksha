@@ -89,8 +89,6 @@ _basic_create_widgets(E_Config_Dialog      *cfd __UNUSED__,
 
    e_widget_table_object_append(tab, of, 0, 0, 1, 1, 1, 1, 1, 1);
 
-   of = e_widget_frametable_add(evas, _("Weekend"), 0);
-
    of = e_widget_frametable_add(evas, _("Week"), 0);
 
    ob = e_widget_label_add(evas, _("Start"));
