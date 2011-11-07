@@ -86,13 +86,11 @@ _surebox_dialog_cb_yes(void *data, E_Dialog *dia)
 {
    SureBox *sb;
    Ecore_X_Randr_Screen_Size c_size;
-   Ecore_X_Randr_Refresh_Rate c_rate;
    E_Manager *man;
 
    sb = data;
    man = e_manager_current_get();
    ecore_x_randr_screen_primary_output_current_size_get(man->root, &c_size.width, &c_size.height, NULL, NULL, NULL);
-   c_rate = ecore_x_randr_screen_primary_output_current_refresh_rate_get(man->root);
 
    e_randr_store_configuration(e_randr_screen_info);
 
