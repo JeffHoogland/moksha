@@ -445,10 +445,7 @@ _e_desktop_edit_update_orig_path(E_Config_Dialog_Data *cfdata)
 static int
 _e_desktop_edit_basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-   E_Desktop_Edit *editor;
    char *str;
-
-   editor = cfdata->editor;
 
    IFFREE(cfdata->desktop->name);
    IFDUP(cfdata->name, cfdata->desktop->name);
