@@ -1220,11 +1220,7 @@ linux_apm_check(void)
    fclose(f);
 
    bat_val = strtol(s1, &endptr, 10);
-   if (*endptr != '%')
-     {
-        bat_val = -1;
-        return;
-     }
+   if (*endptr != '%') return;
 
    if (!strcmp(s3, "sec")) time_val = atoi(s2);
    else if (!strcmp(s3, "min"))
