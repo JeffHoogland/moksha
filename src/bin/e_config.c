@@ -2155,6 +2155,7 @@ _e_config_eet_close_handle(Eet_File *ef, char *file)
 	break;
       case EET_ERROR_WRITE_ERROR:
 	erstr = _("This is a generic error.");
+        break;
       case EET_ERROR_WRITE_ERROR_FILE_TOO_BIG:
 	erstr = _("The settings file is too large.<br>It should be very small (a few hundred KB at most).");
 	break;
