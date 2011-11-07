@@ -43,6 +43,7 @@ e_config_randr_dialog_subdialog_orientation_create_data(E_Config_Dialog_Data *cf
 
    EINA_LIST_FOREACH(cfdata->output_dialog_data_list, iter, odd)
      {
+        ci = odd->crtc;
         if (!ci || !ci->current_mode) continue;
         odd->new_orientation = Ecore_X_Randr_Unset;
         odd->previous_orientation = ci->current_orientation;
