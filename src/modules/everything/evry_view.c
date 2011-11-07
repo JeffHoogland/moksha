@@ -817,11 +817,9 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
 {
    Smart_Data *sd = evas_object_smart_data_get(obj);
    double align = -1;
-   int prev = -1;
 
    if (sd->cur_item)
      {
-	prev = sd->cur_item->y / (1 + sd->cur_item->h);
 	_item_unselect(sd->cur_item);
 	sd->cur_item = NULL;
      }
