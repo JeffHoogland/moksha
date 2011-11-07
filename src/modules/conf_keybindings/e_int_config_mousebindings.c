@@ -1027,6 +1027,7 @@ _auto_apply_changes(E_Config_Dialog_Data *cfdata)
 	action = &(bw->action);
 	params = &(bw->params);
      } 
+   else return;
    
    if (action && *action) eina_stringshare_del(*action); 
    if (params && *params) eina_stringshare_del(*params); 
