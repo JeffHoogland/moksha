@@ -2460,7 +2460,7 @@ _pager_popup_cb_action_show(E_Object *obj __UNUSED__, const char *params __UNUSE
 static void
 _pager_popup_cb_action_switch(E_Object *obj __UNUSED__, const char *params, Ecore_Event_Key *ev)
 {
-   int max_x,max_y, desk_x, desk_y;
+   int max_x,max_y, desk_x;
    int x = 0, y = 0;
 
    if (!act_popup)
@@ -2473,7 +2473,6 @@ _pager_popup_cb_action_switch(E_Object *obj __UNUSED__, const char *params, Ecor
 
    e_zone_desk_count_get(act_popup->pager->zone, &max_x, &max_y);
    desk_x = current_desk->x /* + x <=this is always 0 */;
-   desk_y = current_desk->y /* + y <=this is always 0 */;
 
    if (!strcmp(params, "left"))
      x = -1;
