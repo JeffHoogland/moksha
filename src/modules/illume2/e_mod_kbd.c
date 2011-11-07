@@ -472,8 +472,8 @@ _e_mod_kbd_hide(void)
 
    if (_e_illume_cfg->animation.vkbd.resize_before)
      {
-	_e_mod_kbd_geometry_send();
-	_e_mod_kbd_changes_send();
+        _e_mod_kbd_geometry_send();
+        _e_mod_kbd_changes_send();
      }
 }
 
@@ -632,16 +632,16 @@ _e_mod_kbd_geometry_send(void)
 
    if (_e_illume_kbd->visible)
      ecore_x_e_illume_keyboard_geometry_set(zone->black_win, 
-					    _e_illume_kbd->border->x,
-					    y, 
-					    _e_illume_kbd->border->w, 
-					    _e_illume_kbd->border->h);
+                                            _e_illume_kbd->border->x,
+                                            y, 
+                                            _e_illume_kbd->border->w, 
+                                            _e_illume_kbd->border->h);
    else
      ecore_x_e_illume_keyboard_geometry_set(zone->black_win, 
-					    _e_illume_kbd->border->x,
-					    _e_illume_kbd->border->h + y, 
-					    _e_illume_kbd->border->w, 
-					    _e_illume_kbd->border->h);     
+                                            _e_illume_kbd->border->x,
+                                            _e_illume_kbd->border->h + y, 
+                                            _e_illume_kbd->border->w, 
+                                            _e_illume_kbd->border->h);     
 }
 
 static void 

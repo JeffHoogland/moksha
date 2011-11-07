@@ -71,18 +71,18 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    inst = E_NEW(Instance, 1);
    inst->o_toggle = edje_object_add(gc->evas);
    e_theme_edje_object_set(inst->o_toggle, 
-			   "base/theme/modules/illume_mode_toggle",
-			   "e/modules/illume_mode_toggle/main");
+                           "base/theme/modules/illume_mode_toggle",
+                           "e/modules/illume_mode_toggle/main");
 
    inst->gcc = e_gadcon_client_new(gc, name, id, style, inst->o_toggle);
    inst->gcc->data = inst;
 
    edje_object_signal_callback_add(inst->o_toggle, "e,action,mode,single", "",
-				   _cb_action_mode_single, inst);
+                                   _cb_action_mode_single, inst);
    edje_object_signal_callback_add(inst->o_toggle, "e,action,mode,dual,top", "",
-				   _cb_action_mode_dual_top, inst);
+                                   _cb_action_mode_dual_top, inst);
    edje_object_signal_callback_add(inst->o_toggle, "e,action,mode,dual,left", "",
-				   _cb_action_mode_dual_left, inst);
+                                   _cb_action_mode_dual_left, inst);
 
    _set_icon(inst);
 

@@ -114,24 +114,24 @@ _e_mod_illume_config_select_window_list_changed(void *data)
    switch (stype) 
      {
       case E_ILLUME_SELECT_WINDOW_TYPE_HOME:
-	eina_stringshare_replace(&_e_illume_cfg->policy.home.title, title);
-	eina_stringshare_replace(&_e_illume_cfg->policy.home.class, class);
-	eina_stringshare_replace(&_e_illume_cfg->policy.home.name, name);
+        eina_stringshare_replace(&_e_illume_cfg->policy.home.title, title);
+        eina_stringshare_replace(&_e_illume_cfg->policy.home.class, class);
+        eina_stringshare_replace(&_e_illume_cfg->policy.home.name, name);
         break;
       case E_ILLUME_SELECT_WINDOW_TYPE_VKBD:
-	eina_stringshare_replace(&_e_illume_cfg->policy.vkbd.title, title);
-	eina_stringshare_replace(&_e_illume_cfg->policy.vkbd.class, class);
-	eina_stringshare_replace(&_e_illume_cfg->policy.vkbd.name, name);
+        eina_stringshare_replace(&_e_illume_cfg->policy.vkbd.title, title);
+        eina_stringshare_replace(&_e_illume_cfg->policy.vkbd.class, class);
+        eina_stringshare_replace(&_e_illume_cfg->policy.vkbd.name, name);
         break;
       case E_ILLUME_SELECT_WINDOW_TYPE_SOFTKEY:
-	eina_stringshare_replace(&_e_illume_cfg->policy.softkey.title, title);
-	eina_stringshare_replace(&_e_illume_cfg->policy.softkey.class, class);
-	eina_stringshare_replace(&_e_illume_cfg->policy.softkey.name, name);
+        eina_stringshare_replace(&_e_illume_cfg->policy.softkey.title, title);
+        eina_stringshare_replace(&_e_illume_cfg->policy.softkey.class, class);
+        eina_stringshare_replace(&_e_illume_cfg->policy.softkey.name, name);
         break;
       case E_ILLUME_SELECT_WINDOW_TYPE_INDICATOR:
-	eina_stringshare_replace(&_e_illume_cfg->policy.indicator.title, title);
-	eina_stringshare_replace(&_e_illume_cfg->policy.indicator.class, class);
-	eina_stringshare_replace(&_e_illume_cfg->policy.indicator.name, name);
+        eina_stringshare_replace(&_e_illume_cfg->policy.indicator.title, title);
+        eina_stringshare_replace(&_e_illume_cfg->policy.indicator.class, class);
+        eina_stringshare_replace(&_e_illume_cfg->policy.indicator.name, name);
         break;
      }
 

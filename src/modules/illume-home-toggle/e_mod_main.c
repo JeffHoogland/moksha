@@ -64,14 +64,14 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    inst = E_NEW(Instance, 1);
    inst->o_toggle = edje_object_add(gc->evas);
    e_theme_edje_object_set(inst->o_toggle, 
-			   "base/theme/modules/illume_home_toggle",
-			   "e/modules/illume_home_toggle/main");
+                           "base/theme/modules/illume_home_toggle",
+                           "e/modules/illume_home_toggle/main");
 
    inst->gcc = e_gadcon_client_new(gc, name, id, style, inst->o_toggle);
    inst->gcc->data = inst;
 
    edje_object_signal_callback_add(inst->o_toggle, "e,action,home", "",
-				   _cb_action_home, inst);
+                                   _cb_action_home, inst);
 
    instances = eina_list_append(instances, inst);
    return inst->gcc;

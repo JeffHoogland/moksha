@@ -254,9 +254,9 @@ _il_home_desks_populate(void)
 
              if (sm->type != EFREET_MENU_ENTRY_DESKTOP) continue;
              if (!(desktop = sm->desktop)) continue;
-	     if ((settings) && (sys) && 
-		 (eina_list_data_find(settings, desktop)) && 
-		 (eina_list_data_find(sys, desktop))) continue;
+             if ((settings) && (sys) && 
+                 (eina_list_data_find(settings, desktop)) && 
+                 (eina_list_data_find(sys, desktop))) continue;
              if ((kbd) && (eina_list_data_find(kbd, desktop))) 
                continue;
              efreet_desktop_ref(desktop);
@@ -650,7 +650,7 @@ _il_home_cb_exe_del(void *data __UNUSED__, int type __UNUSED__, void *event)
                }
              exes = eina_list_remove_list(exes, l);
              if (exe->timeout) ecore_timer_del(exe->timeout);
-	     if (exe->desktop) efreet_desktop_free(exe->desktop);
+             if (exe->desktop) efreet_desktop_free(exe->desktop);
              E_FREE(exe);
              break;
           }
@@ -740,17 +740,17 @@ _il_home_cb_bg_change(void *data __UNUSED__, int type, void *event __UNUSED__)
 
    EINA_LIST_FOREACH(hwins, l, hwin) 
      {
-	E_Zone *zone;
-	E_Desk *desk;
-	const char *bgfile;
+        E_Zone *zone;
+        E_Desk *desk;
+        const char *bgfile;
 
-	zone = hwin->zone;
-	desk = e_desk_current_get(zone);
-	if (desk)
-	  bgfile = e_bg_file_get(zone->container->num, zone->num, desk->x, desk->y);
-	else
-	  bgfile = e_bg_file_get(zone->container->num, zone->num, -1, -1);
-	edje_object_file_set(hwin->o_bg, bgfile, "e/desktop/background");
+        zone = hwin->zone;
+        desk = e_desk_current_get(zone);
+        if (desk)
+          bgfile = e_bg_file_get(zone->container->num, zone->num, desk->x, desk->y);
+        else
+          bgfile = e_bg_file_get(zone->container->num, zone->num, -1, -1);
+        edje_object_file_set(hwin->o_bg, bgfile, "e/desktop/background");
      }
 
    return ECORE_CALLBACK_PASS_ON;

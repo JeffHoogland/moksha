@@ -169,7 +169,7 @@ _get_interface_class(int iclass)
                }
              fclose(f);
           }
-	free(name);
+        free(name);
      }
    return 0;
 }

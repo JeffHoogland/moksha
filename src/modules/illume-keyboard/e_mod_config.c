@@ -62,11 +62,11 @@ il_kbd_config_init(E_Module *m)
              il_kbd_cfg->zoom_level = 4;
              il_kbd_cfg->slide_dim = 4;
              il_kbd_cfg->hold_timer = 0.25;
-	     il_kbd_cfg->scale_height = 1.0;
+             il_kbd_cfg->scale_height = 1.0;
           }
         if ((il_kbd_cfg->version & 0xffff) < IL_CONFIG_MIN)
           {
-	     il_kbd_cfg->layout = E_KBD_INT_TYPE_ALPHA;
+             il_kbd_cfg->layout = E_KBD_INT_TYPE_ALPHA;
           }
 
         il_kbd_cfg->version = (IL_CONFIG_MAJ << 16) | IL_CONFIG_MIN;
@@ -184,8 +184,8 @@ _il_kbd_config_ui(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_D
                     }
                   nn++;
                }
-	     EINA_LIST_FREE(kbds, desktop)
-	       efreet_desktop_free(desktop);
+             EINA_LIST_FREE(kbds, desktop)
+               efreet_desktop_free(desktop);
           }
      }
 
@@ -209,9 +209,9 @@ _il_kbd_config_ui(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_D
              e_widget_framelist_object_append(of, ow);
              evas_object_smart_callback_add(ow, "changed", 
                                             _il_kbd_config_changed, NULL);
-	     efreet_desktop_free(desktop);
+             efreet_desktop_free(desktop);
              nn++;
-	  }
+          }
      }
    
    ol = e_widget_label_add(evas, _("Displacement ratio"));
@@ -237,8 +237,8 @@ _il_kbd_config_ui(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_D
    sl = e_widget_slider_add(evas, EINA_TRUE, 0, "%.2f", 0.2, 2.0, 0.1, 0,
                             &(il_kbd_cfg->scale_height), NULL, 150);
    evas_object_smart_callback_add(sl, "changed", 
-				  _il_kbd_config_changed, NULL);
-	
+                                  _il_kbd_config_changed, NULL);
+        
    e_widget_framelist_object_append(of, sl);
 
    e_widget_list_object_append(list, of, 1, 0, 0.0);
@@ -301,8 +301,8 @@ _il_kbd_config_change_timeout(void *data __UNUSED__)
                     }
                   nn++;
                }
-	     EINA_LIST_FREE(kbds, desktop)
-	       efreet_desktop_free(desktop);
+             EINA_LIST_FREE(kbds, desktop)
+               efreet_desktop_free(desktop);
           }
      }
 

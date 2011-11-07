@@ -71,16 +71,16 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    inst = E_NEW(Instance, 1);
    inst->o_toggle = edje_object_add(gc->evas);
    e_theme_edje_object_set(inst->o_toggle, 
-			   "base/theme/modules/illume_kbd_toggle",
-			   "e/modules/illume_kbd_toggle/main");
+                           "base/theme/modules/illume_kbd_toggle",
+                           "e/modules/illume_kbd_toggle/main");
 
    inst->gcc = e_gadcon_client_new(gc, name, id, style, inst->o_toggle);
    inst->gcc->data = inst;
 
    edje_object_signal_callback_add(inst->o_toggle, "e,action,vkbd,enable", "",
-				   _cb_action_vkbd_enable, inst);
+                                   _cb_action_vkbd_enable, inst);
    edje_object_signal_callback_add(inst->o_toggle, "e,action,vkbd,disable", "",
-				   _cb_action_vkbd_disable, inst);
+                                   _cb_action_vkbd_disable, inst);
 
    inst->handlers = 
      eina_list_append(inst->handlers, 
@@ -160,7 +160,7 @@ _cb_action_vkbd_enable(void *data, Evas_Object *obj __UNUSED__, const char *emis
    if (bd->client.vkbd.state == ECORE_X_VIRTUAL_KEYBOARD_STATE_ON) return;
 
    ecore_x_e_virtual_keyboard_state_set(bd->client.win,
-				        ECORE_X_VIRTUAL_KEYBOARD_STATE_ON);
+                                        ECORE_X_VIRTUAL_KEYBOARD_STATE_ON);
 }
 
 static void
@@ -175,7 +175,7 @@ _cb_action_vkbd_disable(void *data, Evas_Object *obj __UNUSED__, const char *emi
    if (bd->client.vkbd.state == ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF) return;
 
    ecore_x_e_virtual_keyboard_state_set(bd->client.win,
-				        ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF);
+                                        ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF);
 }
 
 static Eina_Bool

@@ -15,69 +15,69 @@ _e_kbd_normalise_init(void)
    int i;
    const char *table[][2] =
      {
-	  {"À", "a"},
-	  {"Á", "a"},
-	  {"Â", "a"},
-	  {"Ã", "a"},
-	  {"Ä", "a"},
-	  {"Å", "a"},
-	  {"Æ", "a"},
-	  {"Ç", "c"},
-	  {"È", "e"},
-	  {"É", "e"},
-	  {"Ê", "e"},
-	  {"Ë", "e"},
-	  {"Ì", "i"},
-	  {"Í", "i"},
-	  {"Î", "i"},
-	  {"Ï", "i"},
-	  {"Ð", "d"},
-	  {"Ñ", "n"},
-	  {"Ò", "o"},
-	  {"Ó", "o"},
-	  {"Ô", "o"},
-	  {"Õ", "o"},
-	  {"Ö", "o"},
-	  {"×", "x"},
-	  {"Ø", "o"},
-	  {"Ù", "u"},
-	  {"Ú", "u"},
-	  {"Û", "u"},
-	  {"Ü", "u"},
-	  {"Ý", "y"},
-	  {"Þ", "p"},
-	  {"ß", "s"},
-	  {"à", "a"},
-	  {"á", "a"},
-	  {"â", "a"},
-	  {"ã", "a"},
-	  {"ä", "a"},
-	  {"å", "a"},
-	  {"æ", "a"},
-	  {"ç", "c"},
-	  {"è", "e"},
-	  {"é", "e"},
-	  {"ê", "e"},
-	  {"ë", "e"},
-	  {"ì", "i"},
-	  {"í", "i"},
-	  {"î", "i"},
-	  {"ï", "i"},
-	  {"ð", "o"},
-	  {"ñ", "n"},
-	  {"ò", "o"},
-	  {"ó", "o"},
-	  {"ô", "o"},
-	  {"õ", "o"},
-	  {"ö", "o"},
-	  {"ø", "o"},
-	  {"ù", "u"},
-	  {"ú", "u"},
-	  {"û", "u"},
-	  {"ü", "u"},
-	  {"ý", "y"},
-	  {"þ", "p"},
-	  {"ÿ", "y"}
+          {"À", "a"},
+          {"Á", "a"},
+          {"Â", "a"},
+          {"Ã", "a"},
+          {"Ä", "a"},
+          {"Å", "a"},
+          {"Æ", "a"},
+          {"Ç", "c"},
+          {"È", "e"},
+          {"É", "e"},
+          {"Ê", "e"},
+          {"Ë", "e"},
+          {"Ì", "i"},
+          {"Í", "i"},
+          {"Î", "i"},
+          {"Ï", "i"},
+          {"Ð", "d"},
+          {"Ñ", "n"},
+          {"Ò", "o"},
+          {"Ó", "o"},
+          {"Ô", "o"},
+          {"Õ", "o"},
+          {"Ö", "o"},
+          {"×", "x"},
+          {"Ø", "o"},
+          {"Ù", "u"},
+          {"Ú", "u"},
+          {"Û", "u"},
+          {"Ü", "u"},
+          {"Ý", "y"},
+          {"Þ", "p"},
+          {"ß", "s"},
+          {"à", "a"},
+          {"á", "a"},
+          {"â", "a"},
+          {"ã", "a"},
+          {"ä", "a"},
+          {"å", "a"},
+          {"æ", "a"},
+          {"ç", "c"},
+          {"è", "e"},
+          {"é", "e"},
+          {"ê", "e"},
+          {"ë", "e"},
+          {"ì", "i"},
+          {"í", "i"},
+          {"î", "i"},
+          {"ï", "i"},
+          {"ð", "o"},
+          {"ñ", "n"},
+          {"ò", "o"},
+          {"ó", "o"},
+          {"ô", "o"},
+          {"õ", "o"},
+          {"ö", "o"},
+          {"ø", "o"},
+          {"ù", "u"},
+          {"ú", "u"},
+          {"û", "u"},
+          {"ü", "u"},
+          {"ý", "y"},
+          {"þ", "p"},
+          {"ÿ", "y"}
      }; // 63 items
 
    if (_e_kbd_normalise_ready) return;
@@ -86,17 +86,17 @@ _e_kbd_normalise_init(void)
      _e_kbd_normalise_base[i] = tolower(i);
    for (;i < MAXLATIN; i++)
      {
-	int glyph, j;
+        int glyph, j;
 
-	for (j = 0; j < 63; j++)
-	  {
-	     evas_string_char_next_get(table[j][0], 0, &glyph);
-	     if (glyph == i)
-	       {
-		  _e_kbd_normalise_base[i] = *table[j][1];
-		  break;
-	       }
-	  }
+        for (j = 0; j < 63; j++)
+          {
+             evas_string_char_next_get(table[j][0], 0, &glyph);
+             if (glyph == i)
+               {
+                  _e_kbd_normalise_base[i] = *table[j][1];
+                  break;
+               }
+          }
      }
 }
 
@@ -181,8 +181,8 @@ _e_kbd_dict_line_parse(E_Kbd_Dict *kd __UNUSED__, const char *p, int *usage)
    if (*ps == '\n') *usage = 0;
    else
      {
-	ps++;
-	*usage = atoi(ps);
+        ps++;
+        *usage = atoi(ps);
      }
    return wd;
 }
@@ -212,38 +212,38 @@ _e_kbd_dict_lookup_build(E_Kbd_Dict *kd)
    pglyphs[0] = pglyphs[1] = 0;
    while (p < e)
      {
-	eol = strchr(p, '\n');
-	if (!eol) break;
-	if (eol > p)
-	  {
-	     glyphs[0] = glyphs[1] = 0;
-	     _e_kbd_dict_lookup_build_line(kd, p, eol, glyphs);
-	     if ((glyphs[1] != pglyphs[1]) || (glyphs[0] != pglyphs[0]))
-	       {
-		  int v1, v2;
+        eol = strchr(p, '\n');
+        if (!eol) break;
+        if (eol > p)
+          {
+             glyphs[0] = glyphs[1] = 0;
+             _e_kbd_dict_lookup_build_line(kd, p, eol, glyphs);
+             if ((glyphs[1] != pglyphs[1]) || (glyphs[0] != pglyphs[0]))
+               {
+                  int v1, v2;
 
-		  if (isspace(glyphs[0]))
-		    {
-		       glyphs[0] = 0;
-		       glyphs[1] = 0;
-		    }
-		  else if (isspace(glyphs[1]))
-		    glyphs[1] = 0;
-		  if (glyphs[0] == 0)
-		    {
-		       pglyphs[0] = pglyphs[1] = 0;
-		       p = eol + 1;
-		       continue;
-		    }
-		  v1 = _e_kbd_dict_letter_normalise(glyphs[0]);
-		  v2 = _e_kbd_dict_letter_normalise(glyphs[1]);
-		  if (!kd->lookup.tuples[v1][v2])
-		    kd->lookup.tuples[v1][v2] = p;
-		  pglyphs[0] = v1;
-		  pglyphs[1] = v2;
-	       }
-	  }
-	p = eol + 1;
+                  if (isspace(glyphs[0]))
+                    {
+                       glyphs[0] = 0;
+                       glyphs[1] = 0;
+                    }
+                  else if (isspace(glyphs[1]))
+                    glyphs[1] = 0;
+                  if (glyphs[0] == 0)
+                    {
+                       pglyphs[0] = pglyphs[1] = 0;
+                       p = eol + 1;
+                       continue;
+                    }
+                  v1 = _e_kbd_dict_letter_normalise(glyphs[0]);
+                  v2 = _e_kbd_dict_letter_normalise(glyphs[1]);
+                  if (!kd->lookup.tuples[v1][v2])
+                    kd->lookup.tuples[v1][v2] = p;
+                  pglyphs[0] = v1;
+                  pglyphs[1] = v2;
+               }
+          }
+        p = eol + 1;
      }
 }
 
@@ -256,19 +256,19 @@ _e_kbd_dict_open(E_Kbd_Dict *kd)
    if (kd->file.fd < 0) return 0;
    if (fstat(kd->file.fd, &st) < 0)
      {
-	close(kd->file.fd);
-	return 0;
+        close(kd->file.fd);
+        return 0;
      }
    kd->file.size = st.st_size;
    
    eina_mmap_safety_enabled_set(EINA_TRUE);
    
    kd->file.dict = mmap(NULL, kd->file.size, PROT_READ, MAP_SHARED,
-			kd->file.fd, 0);
+                        kd->file.fd, 0);
    if ((kd->file.dict== MAP_FAILED) || (!kd->file.dict))
      {
-	close(kd->file.fd);
-	return 0;
+        close(kd->file.fd);
+        return 0;
      }
    return 1;
 }
@@ -297,15 +297,15 @@ e_kbd_dict_new(const char *file)
    kd->file.file = eina_stringshare_add(file);
    if (!kd->file.file)
      {
-	free(kd);
-	return NULL;
+        free(kd);
+        return NULL;
      }
    kd->file.fd = -1;
    if (!_e_kbd_dict_open(kd))
      {
-	eina_stringshare_del(kd->file.file);
-	free(kd);
-	return NULL;
+        eina_stringshare_del(kd->file.file);
+        free(kd);
+        return NULL;
      }
    _e_kbd_dict_lookup_build(kd);
    return kd;
@@ -328,10 +328,10 @@ _e_kbd_dict_changed_write_find(E_Kbd_Dict *kd, const char *word)
 
    for (l = kd->changed.writes; l; l = l->next)
      {
-	E_Kbd_Dict_Word *kw;
+        E_Kbd_Dict_Word *kw;
 
-	kw = l->data;
-	if (!strcmp(kw->word, word)) return kw;
+        kw = l->data;
+        if (!strcmp(kw->word, word)) return kw;
      }
    return NULL;
 }
@@ -346,91 +346,91 @@ e_kbd_dict_save(E_Kbd_Dict *kd)
    if (!kd->changed.writes) return;
    if (kd->changed.flush_timer)
      {
-	ecore_timer_del(kd->changed.flush_timer);
-	kd->changed.flush_timer = NULL;
+        ecore_timer_del(kd->changed.flush_timer);
+        kd->changed.flush_timer = NULL;
      }
    ecore_file_unlink(kd->file.file);
    f = fopen(kd->file.file, "w");
    kd->changed.writes = eina_list_sort(kd->changed.writes,
-				       eina_list_count(kd->changed.writes),
-				       _e_kbd_dict_writes_cb_sort);
+                                       eina_list_count(kd->changed.writes),
+                                       _e_kbd_dict_writes_cb_sort);
    if (f)
      {
-	const char *p, *pn;
+        const char *p, *pn;
 
-	p = kd->file.dict;
-	while (p)
-	  {
-	     char *wd;
-	     int usage = 0;
+        p = kd->file.dict;
+        while (p)
+          {
+             char *wd;
+             int usage = 0;
 
-	     pn = _e_kbd_dict_line_next(kd, p);
-	     if (!pn)
+             pn = _e_kbd_dict_line_next(kd, p);
+             if (!pn)
                {
                   fclose(f);
                   return;
                }
-	     wd = _e_kbd_dict_line_parse(kd, p, &usage);
-	     if ((wd) && (strlen(wd) > 0))
-	       {
-		  if (kd->changed.writes)
-		    {
-		       int writeline = 0;
+             wd = _e_kbd_dict_line_parse(kd, p, &usage);
+             if ((wd) && (strlen(wd) > 0))
+               {
+                  if (kd->changed.writes)
+                    {
+                       int writeline = 0;
 
-		       while (kd->changed.writes)
-			 {
-			    E_Kbd_Dict_Word *kw;
-			    int cmp;
+                       while (kd->changed.writes)
+                         {
+                            E_Kbd_Dict_Word *kw;
+                            int cmp;
 
-			    kw = kd->changed.writes->data;
-			    cmp = _e_kbd_dict_normalized_strcmp(kw->word, wd);
-			    if (cmp < 0)
-			      {
-				 fprintf(f, "%s %i\n", kw->word, kw->usage);
-				 writeline = 1;
-				 eina_stringshare_del(kw->word);
-				 free(kw);
-				 kd->changed.writes  = eina_list_remove_list(kd->changed.writes, kd->changed.writes);
-			      }
-			    else if (cmp == 0)
-			      {
-				 fprintf(f, "%s %i\n", wd, kw->usage);
-				 if (!strcmp(kw->word, wd))
-				   writeline = 0;
-				 else
-				   writeline = 1;
-				 eina_stringshare_del(kw->word);
-				 free(kw);
-				 kd->changed.writes  = eina_list_remove_list(kd->changed.writes, kd->changed.writes);
-				 break;
-			      }
-			    else if (cmp > 0)
-			      {
-				 writeline = 1;
-				 break;
-			      }
-			 }
-		       if (writeline)
-			 fprintf(f, "%s %i\n", wd, usage);
-		    }
-		  else
-		    fprintf(f, "%s %i\n", wd, usage);
-	       }
-	     if (wd) free(wd);
-	     p = pn;
-	     if (p >= (kd->file.dict + kd->file.size)) break;
-	  }
-	while (kd->changed.writes)
-	  {
-	     E_Kbd_Dict_Word *kw;
+                            kw = kd->changed.writes->data;
+                            cmp = _e_kbd_dict_normalized_strcmp(kw->word, wd);
+                            if (cmp < 0)
+                              {
+                                 fprintf(f, "%s %i\n", kw->word, kw->usage);
+                                 writeline = 1;
+                                 eina_stringshare_del(kw->word);
+                                 free(kw);
+                                 kd->changed.writes  = eina_list_remove_list(kd->changed.writes, kd->changed.writes);
+                              }
+                            else if (cmp == 0)
+                              {
+                                 fprintf(f, "%s %i\n", wd, kw->usage);
+                                 if (!strcmp(kw->word, wd))
+                                   writeline = 0;
+                                 else
+                                   writeline = 1;
+                                 eina_stringshare_del(kw->word);
+                                 free(kw);
+                                 kd->changed.writes  = eina_list_remove_list(kd->changed.writes, kd->changed.writes);
+                                 break;
+                              }
+                            else if (cmp > 0)
+                              {
+                                 writeline = 1;
+                                 break;
+                              }
+                         }
+                       if (writeline)
+                         fprintf(f, "%s %i\n", wd, usage);
+                    }
+                  else
+                    fprintf(f, "%s %i\n", wd, usage);
+               }
+             if (wd) free(wd);
+             p = pn;
+             if (p >= (kd->file.dict + kd->file.size)) break;
+          }
+        while (kd->changed.writes)
+          {
+             E_Kbd_Dict_Word *kw;
 
-	     kw = kd->changed.writes->data;
-	     fprintf(f, "%s %i\n", kw->word, kw->usage);
-	     eina_stringshare_del(kw->word);
-	     free(kw);
-	     kd->changed.writes  = eina_list_remove_list(kd->changed.writes, kd->changed.writes);
-	  }
-	fclose(f);
+             kw = kd->changed.writes->data;
+             fprintf(f, "%s %i\n", kw->word, kw->usage);
+             eina_stringshare_del(kw->word);
+             free(kw);
+             kd->changed.writes  = eina_list_remove_list(kd->changed.writes, kd->changed.writes);
+          }
+        fclose(f);
      }
    _e_kbd_dict_close(kd);
    if (_e_kbd_dict_open(kd)) _e_kbd_dict_lookup_build(kd);
@@ -463,9 +463,9 @@ _e_kbd_dict_changed_write_add(E_Kbd_Dict *kd, const char *word, int usage)
      e_kbd_dict_save(kd);
    else
      {
-	if (kd->changed.flush_timer)
-	  ecore_timer_del(kd->changed.flush_timer);
-	kd->changed.flush_timer = 
+        if (kd->changed.flush_timer)
+          ecore_timer_del(kd->changed.flush_timer);
+        kd->changed.flush_timer = 
           ecore_timer_add(5.0, _e_kbd_dict_cb_save_flush, kd);
      }
 }
@@ -480,17 +480,17 @@ _e_kbd_dict_find_pointer(E_Kbd_Dict *kd, const char *p, int baselen, const char 
    len = strlen(word);
    while (p)
      {
-	pn = _e_kbd_dict_line_next(kd, p);
-	if (!pn) return NULL;
-	if ((pn - p) > len)
-	  {
-	     if (!_e_kbd_dict_normalized_strncmp(p, word, len))
-	       return p;
-	  }
-	if (_e_kbd_dict_normalized_strncmp(p, word, baselen))
-	  return NULL;
-	p = pn;
-	if (p >= (kd->file.dict + kd->file.size)) break;
+        pn = _e_kbd_dict_line_next(kd, p);
+        if (!pn) return NULL;
+        if ((pn - p) > len)
+          {
+             if (!_e_kbd_dict_normalized_strncmp(p, word, len))
+               return p;
+          }
+        if (_e_kbd_dict_normalized_strncmp(p, word, baselen))
+          return NULL;
+        p = pn;
+        if (p >= (kd->file.dict + kd->file.size)) break;
      }
    return NULL;
 }
@@ -516,12 +516,12 @@ _e_kbd_dict_find(E_Kbd_Dict *kd, const char *word)
    p2 = strlen(tword);
    while (tword[0])
      {
-	p2 = evas_string_char_prev_get(tword, p2, &i);
-	if (p2 < 0) break;
-	tword[p2] = 0;
-	p = eina_hash_find(kd->matches.leads, tword);
-	if (p)
-	  return _e_kbd_dict_find_pointer(kd, p, p2, word);
+        p2 = evas_string_char_prev_get(tword, p2, &i);
+        if (p2 < 0) break;
+        tword[p2] = 0;
+        p = eina_hash_find(kd->matches.leads, tword);
+        if (p)
+          return _e_kbd_dict_find_pointer(kd, p, p2, word);
      }
    /* looking at leads going back letters didn't work */
    p = kd->file.dict;
@@ -533,16 +533,16 @@ _e_kbd_dict_find(E_Kbd_Dict *kd, const char *word)
    v1 = _e_kbd_dict_letter_normalise(glyphs[0]);
    if (glyphs[1] != 0)
      {
-	v2 = _e_kbd_dict_letter_normalise(glyphs[1]);
-	p = kd->lookup.tuples[v1][v2];
+        v2 = _e_kbd_dict_letter_normalise(glyphs[1]);
+        p = kd->lookup.tuples[v1][v2];
      }
    else
      {
-	for (i = 0; i < 128; i++)
-	  {
-	     p = kd->lookup.tuples[v1][i];
-	     if (p) break;
-	  }
+        for (i = 0; i < 128; i++)
+          {
+             p = kd->lookup.tuples[v1][i];
+             if (p) break;
+          }
      }
    return _e_kbd_dict_find_pointer(kd, p, p2, word);
 }
@@ -569,27 +569,27 @@ e_kbd_dict_word_usage_adjust(E_Kbd_Dict *kd, const char *word, int adjust)
    kw = _e_kbd_dict_changed_write_find(kd, word);
    if (kw)
      {
-	kw->usage += adjust;
-	if (kd->changed.flush_timer)
-	  ecore_timer_del(kd->changed.flush_timer);
-	kd->changed.flush_timer = ecore_timer_add(5.0, _e_kbd_dict_cb_save_flush, kd);
+        kw->usage += adjust;
+        if (kd->changed.flush_timer)
+          ecore_timer_del(kd->changed.flush_timer);
+        kd->changed.flush_timer = ecore_timer_add(5.0, _e_kbd_dict_cb_save_flush, kd);
      }
    else
      {
-	const char *line;
-	int usage = 0;
+        const char *line;
+        int usage = 0;
 
-	line = _e_kbd_dict_find_full(kd, word);
-	if (line)
-	  {
-	     char *wd;
+        line = _e_kbd_dict_find_full(kd, word);
+        if (line)
+          {
+             char *wd;
 
-	     // FIXME: we need to find an EXACT line match - case and all
-	     wd = _e_kbd_dict_line_parse(kd, line, &usage);
-	     if (wd) free(wd);
-	  }
-	usage += adjust;
-	_e_kbd_dict_changed_write_add(kd, word, usage);
+             // FIXME: we need to find an EXACT line match - case and all
+             wd = _e_kbd_dict_line_parse(kd, line, &usage);
+             if (wd) free(wd);
+          }
+        usage += adjust;
+        _e_kbd_dict_changed_write_add(kd, word, usage);
      }
 }
 
@@ -604,8 +604,8 @@ e_kbd_dict_word_delete(E_Kbd_Dict *kd, const char *word)
      kw->usage = -1;
    else
      {
-	if (_e_kbd_dict_find_full(kd, word))
-	  _e_kbd_dict_changed_write_add(kd, word, -1);
+        if (_e_kbd_dict_find_full(kd, word))
+          _e_kbd_dict_changed_write_add(kd, word, -1);
      }
 }
 
@@ -617,22 +617,22 @@ e_kbd_dict_word_letter_clear(E_Kbd_Dict *kd)
      e_kbd_dict_word_letter_delete(kd);
    if (kd->matches.deadends)
      {
-	eina_hash_free(kd->matches.deadends);
-	kd->matches.deadends = NULL;
+        eina_hash_free(kd->matches.deadends);
+        kd->matches.deadends = NULL;
      }
    if (kd->matches.leads)
      {
-	eina_hash_free(kd->matches.leads);
-	kd->matches.leads = NULL;
+        eina_hash_free(kd->matches.leads);
+        kd->matches.leads = NULL;
      }
    while (kd->matches.list)
      {
-	E_Kbd_Dict_Word *kw;
+        E_Kbd_Dict_Word *kw;
 
-	kw = kd->matches.list->data;
-	eina_stringshare_del(kw->word);
-	free(kw);
-	kd->matches.list = eina_list_remove_list(kd->matches.list, kd->matches.list);
+        kw = kd->matches.list->data;
+        eina_stringshare_del(kw->word);
+        free(kw);
+        kd->matches.list = eina_list_remove_list(kd->matches.list, kd->matches.list);
     }
 }
 
@@ -673,19 +673,19 @@ e_kbd_dict_word_letter_delete(E_Kbd_Dict *kd)
    list = l->data;
    while (list)
      {
-	E_Kbd_Dict_Letter *kl;
+        E_Kbd_Dict_Letter *kl;
 
-	kl = list->data;
-	eina_stringshare_del(kl->letter);
-	free(kl);
-	list = eina_list_remove_list(list, list);
+        kl = list->data;
+        eina_stringshare_del(kl->letter);
+        free(kl);
+        list = eina_list_remove_list(list, list);
      }
    kd->word.letters = eina_list_remove_list(kd->word.letters, l);
 }
 
 static void
 _e_kbd_dict_matches_lookup_iter(E_Kbd_Dict *kd, Eina_List *word,
-				Eina_List *more)
+                                Eina_List *more)
 {
    Eina_List *l, *list;
    const char *p;
@@ -697,10 +697,10 @@ _e_kbd_dict_matches_lookup_iter(E_Kbd_Dict *kd, Eina_List *word,
    level++;
    for (l = word; l; l = l->next)
      {
-	kl = l->data;
-	len += strlen(kl->letter);
-	dist += kl->dist;
-	if (kl->dist > maxdist) maxdist = kl->dist;
+        kl = l->data;
+        len += strlen(kl->letter);
+        dist += kl->dist;
+        if (kl->dist > maxdist) maxdist = kl->dist;
      }
    if (maxdist < 1) maxdist = 1;
    buf = alloca(len + 20); // 20 - just padding enough for 1 more utf8 char
@@ -708,8 +708,8 @@ _e_kbd_dict_matches_lookup_iter(E_Kbd_Dict *kd, Eina_List *word,
    base[0] = 0;
    for (l = word; l; l = l->next)
      {
-	kl = l->data;
-	strcat(base, kl->letter);
+        kl = l->data;
+        strcat(base, kl->letter);
      }
    baselen = strlen(base);
    strcpy(buf, base);
@@ -717,97 +717,97 @@ _e_kbd_dict_matches_lookup_iter(E_Kbd_Dict *kd, Eina_List *word,
    list = more->data;
    for (l = list; l; l = l->next)
      {
-	kl = l->data;
-	if (kl->dist > maxdist) maxdist = kl->dist;
+        kl = l->data;
+        if (kl->dist > maxdist) maxdist = kl->dist;
      }
    for (l = list; l; l = l->next)
      {
-	kl = l->data;
-	strcpy(bufapp, kl->letter);
-	if ((kd->matches.deadends) && eina_hash_find(kd->matches.deadends, buf))
-	  continue;
-	p = eina_hash_find(kd->matches.leads, buf);
-	if (p) p = _e_kbd_dict_find_pointer(kd, p, baselen, buf);
-	else p = _e_kbd_dict_find(kd, buf);
-	if (!p)
-	  {
-	     if (!kd->matches.deadends)
-	       kd->matches.deadends = eina_hash_string_superfast_new(NULL);
-	     eina_hash_add(kd->matches.deadends, buf, kd);
-	     continue;
-	  }
-	else
-	  {
-	     if (!kd->matches.leads)
-	       kd->matches.leads = eina_hash_string_superfast_new(NULL);
-	     eina_hash_add(kd->matches.leads, buf, p);
-	  }
-	if ((!more->next) || (!more->next->data))
-	  {
-	     d = dist + kl->dist;
-	     md = maxdist;
-	     for (;;)
-	       {
-		  E_Kbd_Dict_Word *kw;
-		  int usage = 0;
+        kl = l->data;
+        strcpy(bufapp, kl->letter);
+        if ((kd->matches.deadends) && eina_hash_find(kd->matches.deadends, buf))
+          continue;
+        p = eina_hash_find(kd->matches.leads, buf);
+        if (p) p = _e_kbd_dict_find_pointer(kd, p, baselen, buf);
+        else p = _e_kbd_dict_find(kd, buf);
+        if (!p)
+          {
+             if (!kd->matches.deadends)
+               kd->matches.deadends = eina_hash_string_superfast_new(NULL);
+             eina_hash_add(kd->matches.deadends, buf, kd);
+             continue;
+          }
+        else
+          {
+             if (!kd->matches.leads)
+               kd->matches.leads = eina_hash_string_superfast_new(NULL);
+             eina_hash_add(kd->matches.leads, buf, p);
+          }
+        if ((!more->next) || (!more->next->data))
+          {
+             d = dist + kl->dist;
+             md = maxdist;
+             for (;;)
+               {
+                  E_Kbd_Dict_Word *kw;
+                  int usage = 0;
 
-		  wd = _e_kbd_dict_line_parse(kd, p, &usage);
-		  if (!wd) break;
-		  if (_e_kbd_dict_normalized_strcmp(wd, buf))
-		    {
-		       free(wd);
-		       break;
-		    }
-		  kw = E_NEW(E_Kbd_Dict_Word, 1);
-		  if (kw)
-		    {
-		       int accuracy;
-		       int w, b, w2, b2, wc, bc;
+                  wd = _e_kbd_dict_line_parse(kd, p, &usage);
+                  if (!wd) break;
+                  if (_e_kbd_dict_normalized_strcmp(wd, buf))
+                    {
+                       free(wd);
+                       break;
+                    }
+                  kw = E_NEW(E_Kbd_Dict_Word, 1);
+                  if (kw)
+                    {
+                       int accuracy;
+                       int w, b, w2, b2, wc, bc;
 
-		       // match any capitalisation
-		       for (w = 0, b = 0; wd[w] && buf[b];)
-			 {
-			    b2 = evas_string_char_next_get(buf, b, &bc);
-			    w2 = evas_string_char_next_get(wd, w, &wc);
-			    if (isupper(bc)) wd[w] = toupper(wc);
-			    w = w2;
-			    b = b2;
-			 }
-		       kw->word = eina_stringshare_add(wd);
-		       // FIXME: magic combination of distance metric and
-		       // frequency of usage. this is simple now, but could
-		       // be tweaked
-		       wc = eina_list_count(word);
-		       if (md < 1) md = 1;
+                       // match any capitalisation
+                       for (w = 0, b = 0; wd[w] && buf[b];)
+                         {
+                            b2 = evas_string_char_next_get(buf, b, &bc);
+                            w2 = evas_string_char_next_get(wd, w, &wc);
+                            if (isupper(bc)) wd[w] = toupper(wc);
+                            w = w2;
+                            b = b2;
+                         }
+                       kw->word = eina_stringshare_add(wd);
+                       // FIXME: magic combination of distance metric and
+                       // frequency of usage. this is simple now, but could
+                       // be tweaked
+                       wc = eina_list_count(word);
+                       if (md < 1) md = 1;
 
-		       // basically a metric to see how far away the keys that
-		       // were actually pressed are away from the letters of
-		       // this word in a physical on-screen sense
-		       accuracy = md - (d / (wc + 1));
-		       // usage is the frequency of usage in the dictionary.
-		       // it its < 1 time, it's assumed to be 1.
-		       if (usage < 1) usage = 1;
-		       // multiply usage by a factor of 100 for better detailed
-		       // sorting. 10 == 1/10th factor
-		       usage = 100 + ((usage - 1) * 10);
-		       // and well just multiply and lets see. maybe this can
-		       // do with multiplication factors etc. but simple for
-		       // now.
-		       kw->usage = (usage * accuracy) / md;
-		       kd->matches.list = eina_list_append(kd->matches.list, kw);
-		    }
-		  free(wd);
-		  p = _e_kbd_dict_line_next(kd, p);
-		  if (p >= (kd->file.dict + kd->file.size)) break;
-		  if (!p) break;
-	       }
-	  }
-	else
-	  {
-	     word = eina_list_append(word, kl);
-	     _e_kbd_dict_matches_lookup_iter(kd, word, more->next);
-	     word = eina_list_remove_list(word, eina_list_last(word));
-	  }
+                       // basically a metric to see how far away the keys that
+                       // were actually pressed are away from the letters of
+                       // this word in a physical on-screen sense
+                       accuracy = md - (d / (wc + 1));
+                       // usage is the frequency of usage in the dictionary.
+                       // it its < 1 time, it's assumed to be 1.
+                       if (usage < 1) usage = 1;
+                       // multiply usage by a factor of 100 for better detailed
+                       // sorting. 10 == 1/10th factor
+                       usage = 100 + ((usage - 1) * 10);
+                       // and well just multiply and lets see. maybe this can
+                       // do with multiplication factors etc. but simple for
+                       // now.
+                       kw->usage = (usage * accuracy) / md;
+                       kd->matches.list = eina_list_append(kd->matches.list, kw);
+                    }
+                  free(wd);
+                  p = _e_kbd_dict_line_next(kd, p);
+                  if (p >= (kd->file.dict + kd->file.size)) break;
+                  if (!p) break;
+               }
+          }
+        else
+          {
+             word = eina_list_append(word, kl);
+             _e_kbd_dict_matches_lookup_iter(kd, word, more->next);
+             word = eina_list_remove_list(word, eina_list_last(word));
+          }
      }
    level--;
 }
@@ -818,18 +818,18 @@ e_kbd_dict_matches_lookup(E_Kbd_Dict *kd)
    // find all matches and sort them
    while (kd->matches.list)
      {
-	E_Kbd_Dict_Word *kw;
+        E_Kbd_Dict_Word *kw;
 
-	kw = kd->matches.list->data;
-	eina_stringshare_del(kw->word);
-	free(kw);
-	kd->matches.list = eina_list_remove_list(kd->matches.list, kd->matches.list);
+        kw = kd->matches.list->data;
+        eina_stringshare_del(kw->word);
+        free(kw);
+        kd->matches.list = eina_list_remove_list(kd->matches.list, kd->matches.list);
     }
    if (kd->word.letters)
      _e_kbd_dict_matches_lookup_iter(kd, NULL, kd->word.letters);
    kd->matches.list = eina_list_sort(kd->matches.list,
-				     eina_list_count(kd->matches.list),
-				     _e_kbd_dict_matches_lookup_cb_sort);
+                                     eina_list_count(kd->matches.list),
+                                     _e_kbd_dict_matches_lookup_cb_sort);
 }
 
 EAPI void
@@ -852,14 +852,14 @@ e_kbd_dict_matches_match_get(E_Kbd_Dict *kd, int *pri_ret)
    // return the word (string utf-8) for the current match
    if (kd->matches.list_ptr)
      {
-	E_Kbd_Dict_Word *kw;
+        E_Kbd_Dict_Word *kw;
 
-	kw = kd->matches.list_ptr->data;
-	if (kw)
-	  {
-	     *pri_ret = kw->usage;
-	     return kw->word;
-	  }
+        kw = kd->matches.list_ptr->data;
+        if (kw)
+          {
+             *pri_ret = kw->usage;
+             return kw->word;
+          }
      }
    return NULL;
 }

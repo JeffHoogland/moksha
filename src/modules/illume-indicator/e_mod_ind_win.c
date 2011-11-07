@@ -394,9 +394,9 @@ _e_mod_ind_win_cb_mouse_move(void *data, Evas *evas __UNUSED__, Evas_Object *obj
         /* tell edj we are going to start moving */
         edje_object_signal_emit(iwin->o_base, "e,action,move,start", "e");
 
-	/* tell quickpanel to hide because we are going to drag */
-	ecore_x_e_illume_quickpanel_state_send(bd->zone->black_win, 
-					      ECORE_X_ILLUME_QUICKPANEL_STATE_OFF);
+        /* tell quickpanel to hide because we are going to drag */
+        ecore_x_e_illume_quickpanel_state_send(bd->zone->black_win, 
+                                              ECORE_X_ILLUME_QUICKPANEL_STATE_OFF);
 
         /* send message that we are going to start dragging */
         ecore_x_e_illume_drag_start_send(bd->client.win);

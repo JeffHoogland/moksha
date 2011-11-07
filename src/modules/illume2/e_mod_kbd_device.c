@@ -39,7 +39,7 @@ e_mod_kbd_device_init(void)
 #ifdef HAVE_EEZE
    eeze_init();
    watch = eeze_udev_watch_add(EEZE_UDEV_TYPE_KEYBOARD, EEZE_UDEV_EVENT_NONE,
-			    _e_mod_kbd_device_udev_event, NULL);
+                            _e_mod_kbd_device_udev_event, NULL);
 #else
    e_dbus_init();
    e_hal_init();
@@ -122,24 +122,24 @@ _e_mod_kbd_device_ignore_load_file(const char *file)
    /* parse out the info in the ignore file */
    while (fgets(buff, sizeof(buff), f))
      {
-	char *p;
-	int len;
+        char *p;
+        int len;
 
-	if (buff[0] == '#') continue;
+        if (buff[0] == '#') continue;
         len = strlen(buff);
-	if (len > 0)
-	  {
-	     if (buff[len - 1] == '\n') buff[len - 1] = 0;
-	  }
-	p = buff;
-	while (isspace(*p)) p++;
+        if (len > 0)
+          {
+             if (buff[len - 1] == '\n') buff[len - 1] = 0;
+          }
+        p = buff;
+        while (isspace(*p)) p++;
 
         /* append this kbd to the ignore list */
-	if (*p) 
-	  {
-	     _ignore_kbds = 
-	       eina_list_append(_ignore_kbds, eina_stringshare_add(p));
-	  }
+        if (*p) 
+          {
+             _ignore_kbds = 
+               eina_list_append(_ignore_kbds, eina_stringshare_add(p));
+          }
      }
    fclose(f);
 }

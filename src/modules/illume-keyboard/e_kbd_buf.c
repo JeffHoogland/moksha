@@ -25,14 +25,14 @@ _e_kbd_buf_layout_unref(E_Kbd_Buf_Layout *kbl)
    if (kbl->ref > 0) return;
    while (kbl->keys)
      {
-	E_Kbd_Buf_Key *ky;
-	
-	ky = kbl->keys->data;
-	if (ky->key) eina_stringshare_del(ky->key);
-	if (ky->key_shift) eina_stringshare_del(ky->key_shift);
-	if (ky->key_capslock) eina_stringshare_del(ky->key_capslock);
-	free(ky);
-	kbl->keys = eina_list_remove_list(kbl->keys, kbl->keys);
+        E_Kbd_Buf_Key *ky;
+        
+        ky = kbl->keys->data;
+        if (ky->key) eina_stringshare_del(ky->key);
+        if (ky->key_shift) eina_stringshare_del(ky->key_shift);
+        if (ky->key_capslock) eina_stringshare_del(ky->key_capslock);
+        free(ky);
+        kbl->keys = eina_list_remove_list(kbl->keys, kbl->keys);
      }
    free(kbl);
 }
@@ -42,9 +42,9 @@ _e_kbd_buf_string_matches_clear(E_Kbd_Buf *kb)
 {
    while (kb->string_matches)
      {
-	if (kb->string_matches->data)
-	  eina_stringshare_del(kb->string_matches->data);
-	kb->string_matches = eina_list_remove_list(kb->string_matches, kb->string_matches);
+        if (kb->string_matches->data)
+          eina_stringshare_del(kb->string_matches->data);
+        kb->string_matches = eina_list_remove_list(kb->string_matches, kb->string_matches);
      }
 }
 
@@ -62,15 +62,15 @@ _e_kbd_buf_at_coord_get(E_Kbd_Buf *kb __UNUSED__, E_Kbd_Buf_Layout *kbl, int x, 
    
    for (l = kbl->keys; l; l = l->next)
      {
-	E_Kbd_Buf_Key *ky;
-	
-	ky = l->data;
-	if (ky->key)
-	  {
-	     if ((x >= ky->x) && (y >= ky->y) &&
-		 (x < (ky->x + ky->w)) && (y < (ky->y + ky->h)))
-	       return ky;
-	  }
+        E_Kbd_Buf_Key *ky;
+        
+        ky = l->data;
+        if (ky->key)
+          {
+             if ((x >= ky->x) && (y >= ky->y) &&
+                 (x < (ky->x + ky->w)) && (y < (ky->y + ky->h)))
+               return ky;
+          }
      }
    return NULL;
 }
@@ -84,21 +84,21 @@ _e_kbd_buf_closest_get(E_Kbd_Buf *kb __UNUSED__, E_Kbd_Buf_Layout *kbl, int x, i
    
    for (l = kbl->keys; l; l = l->next)
      {
-	E_Kbd_Buf_Key *ky;
-	int dist, dx, dy;
-	
-	ky = l->data;
-	if (ky->key)
-	  {
-	     dx = x - (ky->x + (ky->w / 2));
-	     dy = y - (ky->y + (ky->h / 2));
-	     dist = (dx * dx) + (dy * dy);
-	     if (dist < dist_closest)
-	       {
-		  ky_closest = ky;
-		  dist_closest = dist;
-	       }
-	  }
+        E_Kbd_Buf_Key *ky;
+        int dist, dx, dy;
+        
+        ky = l->data;
+        if (ky->key)
+          {
+             dx = x - (ky->x + (ky->w / 2));
+             dy = y - (ky->y + (ky->h / 2));
+             dist = (dx * dx) + (dy * dy);
+             if (dist < dist_closest)
+               {
+                  ky_closest = ky;
+                  dist_closest = dist;
+               }
+          }
      }
    return ky_closest;
 }
@@ -110,17 +110,17 @@ _e_kbd_buf_keystroke_key_string_get(E_Kbd_Buf *kb __UNUSED__, E_Kbd_Buf_Keystrok
    
    if ((ky) && (ky->key))
      {
-	if (ks->shift)
-	  {
-	     if (ky->key_shift) str = ky->key_shift;
-	     else str = ky->key;
-	  }
-	else if (ks->capslock)
-	  {
-	     if (ky->key_capslock) str = ky->key_capslock;
-	     else str = ky->key;
-	  }
-	else str = ky->key;
+        if (ks->shift)
+          {
+             if (ky->key_shift) str = ky->key_shift;
+             else str = ky->key;
+          }
+        else if (ks->capslock)
+          {
+             if (ky->key_capslock) str = ky->key_capslock;
+             else str = ky->key;
+          }
+        else str = ky->key;
      }
    return str;
 }
@@ -133,11 +133,11 @@ _e_kbd_buf_keystroke_string_get(E_Kbd_Buf *kb, E_Kbd_Buf_Keystroke *ks)
    if (ks->key) str = ks->key;
    else
      {
-	E_Kbd_Buf_Key *ky;
-	
-	ky = _e_kbd_buf_at_coord_get(kb, ks->layout, ks->x, ks->y);
-	if (!ky) ky = _e_kbd_buf_closest_get(kb, ks->layout, ks->x, ks->y);
-	str = _e_kbd_buf_keystroke_key_string_get(kb, ks, ky);
+        E_Kbd_Buf_Key *ky;
+        
+        ky = _e_kbd_buf_at_coord_get(kb, ks->layout, ks->x, ks->y);
+        if (!ky) ky = _e_kbd_buf_closest_get(kb, ks->layout, ks->x, ks->y);
+        str = _e_kbd_buf_keystroke_key_string_get(kb, ks, ky);
      }
    return str;
 }
@@ -154,18 +154,18 @@ _e_kbd_buf_actual_string_update(E_Kbd_Buf *kb)
    _e_kbd_buf_actual_string_clear(kb);
    EINA_LIST_FOREACH(kb->keystrokes, l, ks)
      {
-	const char *str;
-	
-	str = _e_kbd_buf_keystroke_string_get(kb, ks);
+        const char *str;
+        
+        str = _e_kbd_buf_keystroke_string_get(kb, ks);
         if (!str) continue;
         if (!actual) actual_size += 64, actual = malloc(actual_size);
         else if ((actual_len + strlen(str) + 1) > actual_size)
-	  {
-	     actual_size += 64;
-	     actual = realloc(actual, actual_size);
-	  }
-	strcpy(actual + actual_len, str);
-	actual_len += strlen(str);
+          {
+             actual_size += 64;
+             actual = realloc(actual, actual_size);
+          }
+        strcpy(actual + actual_len, str);
+        actual_len += strlen(str);
      }
    kb->actual_string = eina_stringshare_add(actual);
    free(actual);
@@ -178,7 +178,7 @@ _e_kbd_buf_matches_find(Eina_List *matches, const char *s)
    
    for (l = matches; l; l = l->next)
      {
-	if (!strcmp(l->data, s)) return s;
+        if (!strcmp(l->data, s)) return s;
      }
    return NULL;
 }
@@ -196,18 +196,18 @@ _e_kbd_buf_matches_update(E_Kbd_Buf *kb)
    dicts[2] = kb->dict.data;
    for (i = 0; i < 3; i++)
      {
-	if (!dicts[i]) continue;
-	e_kbd_dict_matches_lookup(dicts[i]);
-	e_kbd_dict_matches_first(dicts[i]);
-	for (;;)
-	  {
-	     word = e_kbd_dict_matches_match_get(dicts[i], &pri);
-	     if (!word) break;
-	     if (!_e_kbd_buf_matches_find(kb->string_matches, word))
-	       kb->string_matches = eina_list_append(kb->string_matches,
-						     eina_stringshare_add(word));
-	     e_kbd_dict_matches_next(dicts[i]);
-	  }
+        if (!dicts[i]) continue;
+        e_kbd_dict_matches_lookup(dicts[i]);
+        e_kbd_dict_matches_first(dicts[i]);
+        for (;;)
+          {
+             word = e_kbd_dict_matches_match_get(dicts[i], &pri);
+             if (!word) break;
+             if (!_e_kbd_buf_matches_find(kb->string_matches, word))
+               kb->string_matches = eina_list_append(kb->string_matches,
+                                                     eina_stringshare_add(word));
+             e_kbd_dict_matches_next(dicts[i]);
+          }
      }
 }
 
@@ -253,8 +253,8 @@ e_kbd_buf_new(const char *sysdicts, const char *dict)
    kb->dict.sys = e_kbd_dict_new(buf);
    if (!kb->dict.sys)
      {
-	snprintf(buf, sizeof(buf), "%s/dicts/%s", kb->sysdicts, dict);
-	kb->dict.sys = e_kbd_dict_new(buf);
+        snprintf(buf, sizeof(buf), "%s/dicts/%s", kb->sysdicts, dict);
+        kb->dict.sys = e_kbd_dict_new(buf);
      }
 
    e_user_dir_concat_static(buf, "dicts-dynamic");
@@ -264,15 +264,15 @@ e_kbd_buf_new(const char *sysdicts, const char *dict)
    kb->dict.personal = e_kbd_dict_new(buf);
    if (!kb->dict.personal)
      {
-	FILE *f;
-	
-	f = fopen(buf, "w");
-	if (f)
-	  {
-	     fprintf(f, "\n");
-	     fclose(f);
-	  }
-	kb->dict.personal = e_kbd_dict_new(buf);
+        FILE *f;
+        
+        f = fopen(buf, "w");
+        if (f)
+          {
+             fprintf(f, "\n");
+             fclose(f);
+          }
+        kb->dict.personal = e_kbd_dict_new(buf);
      }
    e_user_dir_concat_static(buf, "dicts-dynamic/data.dic");
    kb->dict.data = e_kbd_dict_new(buf);
@@ -312,8 +312,8 @@ e_kbd_buf_dict_set(E_Kbd_Buf *kb, const char *dict)
    kb->dict.sys = e_kbd_dict_new(buf);
    if (!kb->dict.sys)
      {
-	snprintf(buf, sizeof(buf), "%s/dicts/%s", kb->sysdicts, dict);
-	kb->dict.sys = e_kbd_dict_new(buf);
+        snprintf(buf, sizeof(buf), "%s/dicts/%s", kb->sysdicts, dict);
+        kb->dict.sys = e_kbd_dict_new(buf);
      }
 }
 
@@ -323,13 +323,13 @@ e_kbd_buf_clear(E_Kbd_Buf *kb)
    e_kbd_buf_lookup_cancel(kb);
    while (kb->keystrokes)
      {
-	E_Kbd_Buf_Keystroke *ks;
-	
-	ks = kb->keystrokes->data;
-	if (ks->key) eina_stringshare_del(ks->key);
-	_e_kbd_buf_layout_unref(ks->layout);
-	free(ks);
-	kb->keystrokes = eina_list_remove_list(kb->keystrokes, kb->keystrokes);
+        E_Kbd_Buf_Keystroke *ks;
+        
+        ks = kb->keystrokes->data;
+        if (ks->key) eina_stringshare_del(ks->key);
+        _e_kbd_buf_layout_unref(ks->layout);
+        free(ks);
+        kb->keystrokes = eina_list_remove_list(kb->keystrokes, kb->keystrokes);
      }
    _e_kbd_buf_string_matches_clear(kb);
    if (kb->dict.sys) e_kbd_dict_word_letter_clear(kb->dict.sys);
@@ -343,8 +343,8 @@ e_kbd_buf_layout_clear(E_Kbd_Buf *kb)
 {
    if (kb->layout)
      {
-	_e_kbd_buf_layout_unref(kb->layout);
-	kb->layout = NULL;
+        _e_kbd_buf_layout_unref(kb->layout);
+        kb->layout = NULL;
      }
 }
 
@@ -393,9 +393,9 @@ _e_kbd_buf_keystroke_add(E_Kbd_Buf *kb, E_Kbd_Buf_Keystroke *ks)
    str = _e_kbd_buf_keystroke_string_get(kb, ks);
    if (str)
      {
-	if (kb->dict.sys) e_kbd_dict_word_letter_add(kb->dict.sys, str, 0);
-	if (kb->dict.personal) e_kbd_dict_word_letter_add(kb->dict.personal, str, 0);
-	if (kb->dict.data) e_kbd_dict_word_letter_add(kb->dict.data, str, 0);
+        if (kb->dict.sys) e_kbd_dict_word_letter_add(kb->dict.sys, str, 0);
+        if (kb->dict.personal) e_kbd_dict_word_letter_add(kb->dict.personal, str, 0);
+        if (kb->dict.data) e_kbd_dict_word_letter_add(kb->dict.data, str, 0);
      }
 }
 
@@ -433,26 +433,26 @@ _e_kbd_buf_keystroke_point_add(E_Kbd_Buf *kb, E_Kbd_Buf_Keystroke *ks)
    
    for (l = ks->layout->keys; l; l = l->next)
      {
-	E_Kbd_Buf_Key *ky;
-	const char *str;
-	int px, py, dx, dy, d;
+        E_Kbd_Buf_Key *ky;
+        const char *str;
+        int px, py, dx, dy, d;
 
-	ky = l->data;
-	px = ky->x + (ky->w / 2);
-	py = ky->y + (ky->h / 2);
-	dx = ks->x - px;
-	dy = ks->y - py;
-	d = sqrt((dx * dx) + (dy * dy));
-	if (d <= ks->layout->fuzz)
-	  {
-	     str = _e_kbd_buf_keystroke_key_string_get(kb, ks, ky);
-	     if (str)
-	       {
-		  if (kb->dict.sys) e_kbd_dict_word_letter_add(kb->dict.sys, str, d);
-		  if (kb->dict.personal) e_kbd_dict_word_letter_add(kb->dict.personal, str, d);
-		  if (kb->dict.data) e_kbd_dict_word_letter_add(kb->dict.data, str, d);
-	       }
-	  }
+        ky = l->data;
+        px = ky->x + (ky->w / 2);
+        py = ky->y + (ky->h / 2);
+        dx = ks->x - px;
+        dy = ks->y - py;
+        d = sqrt((dx * dx) + (dy * dy));
+        if (d <= ks->layout->fuzz)
+          {
+             str = _e_kbd_buf_keystroke_key_string_get(kb, ks, ky);
+             if (str)
+               {
+                  if (kb->dict.sys) e_kbd_dict_word_letter_add(kb->dict.sys, str, d);
+                  if (kb->dict.personal) e_kbd_dict_word_letter_add(kb->dict.personal, str, d);
+                  if (kb->dict.data) e_kbd_dict_word_letter_add(kb->dict.data, str, d);
+               }
+          }
      }
 }
 
@@ -504,18 +504,18 @@ e_kbd_buf_backspace(E_Kbd_Buf *kb)
    l = eina_list_last(kb->keystrokes);
    if (l)
      {
-	E_Kbd_Buf_Keystroke *ks;
-	
-	ks = l->data;
-	if (ks->key) eina_stringshare_del(ks->key);
-	_e_kbd_buf_layout_unref(ks->layout);
-	free(ks);
-	kb->keystrokes = eina_list_remove_list(kb->keystrokes, l);
-	if (kb->dict.sys) e_kbd_dict_word_letter_delete(kb->dict.sys);
-	if (kb->dict.personal) e_kbd_dict_word_letter_delete(kb->dict.personal);
-	if (kb->dict.data) e_kbd_dict_word_letter_delete(kb->dict.data);
-	_e_kbd_buf_actual_string_update(kb);
-	_e_kbd_buf_matches_update(kb);
+        E_Kbd_Buf_Keystroke *ks;
+        
+        ks = l->data;
+        if (ks->key) eina_stringshare_del(ks->key);
+        _e_kbd_buf_layout_unref(ks->layout);
+        free(ks);
+        kb->keystrokes = eina_list_remove_list(kb->keystrokes, l);
+        if (kb->dict.sys) e_kbd_dict_word_letter_delete(kb->dict.sys);
+        if (kb->dict.personal) e_kbd_dict_word_letter_delete(kb->dict.personal);
+        if (kb->dict.data) e_kbd_dict_word_letter_delete(kb->dict.data);
+        _e_kbd_buf_actual_string_update(kb);
+        _e_kbd_buf_matches_update(kb);
      }
 }
 

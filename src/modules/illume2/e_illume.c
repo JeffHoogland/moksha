@@ -454,8 +454,8 @@ e_illume_border_is_fixed_size(E_Border *bd)
    
    if ((bd->client.mwm.exists) && 
        !((bd->client.mwm.func & ECORE_X_MWM_HINT_FUNC_ALL) ||
-	 (bd->client.mwm.func & ECORE_X_MWM_HINT_FUNC_MAXIMIZE) ||
-	 (bd->client.mwm.func & ECORE_X_MWM_HINT_FUNC_RESIZE)))
+         (bd->client.mwm.func & ECORE_X_MWM_HINT_FUNC_MAXIMIZE) ||
+         (bd->client.mwm.func & ECORE_X_MWM_HINT_FUNC_RESIZE)))
      return EINA_TRUE;
 
    return EINA_FALSE;
