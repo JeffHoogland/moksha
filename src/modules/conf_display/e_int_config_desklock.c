@@ -193,10 +193,8 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *otb, *ol, *ow, *of;
    E_Radio_Group *rg;
-   E_Zone *zone;
    int screen_count;
 
-   zone = e_zone_current_get(cfd->con);
    screen_count = ecore_x_xinerama_screen_count_get();
 
    otb = e_widget_toolbook_add(evas, (24 * e_scale), (24 * e_scale));
