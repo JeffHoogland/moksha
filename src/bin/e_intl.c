@@ -784,6 +784,8 @@ e_intl_locale_parts_combine(E_Locale_Parts *locale_parts, int mask)
    if (mask & E_INTL_LOC_MODIFIER)
      locale_size += strlen(locale_parts->modifier) + 1;
 
+   if (!locale_size) return NULL;
+
    /* Allocate memory */
    locale = (char *) malloc(locale_size);
    locale[0] = 0;
