@@ -724,7 +724,7 @@ _e_randr_event_cb(void *data __UNUSED__, int type, void *ev)
            };
            */
         crtc_info = _e_randr_crtc_info_get(event->crtc);
-	if (!crtc_info) goto on_exit;
+	if (!crtc_info) return ECORE_CALLBACK_RENEW;
 
         if (event->mode != Ecore_X_Randr_None)
           {
@@ -793,7 +793,7 @@ _e_randr_event_cb(void *data __UNUSED__, int type, void *ev)
                 event->win, event->output, event->crtc, event->mode, event->orientation, event->connection, ECORE_X_RANDR_CONNECTION_STATUS_CONNECTED, ECORE_X_RANDR_CONNECTION_STATUS_DISCONNECTED, ECORE_X_RANDR_CONNECTION_STATUS_UNKNOWN, event->subpixel_order);
 
         output_info = _e_randr_output_info_get(event->output);
-        if (!output_info) goto on_exit;
+        if (!output_info) return ECORE_CALLBACK_RENEW;
         
         if ((output_info->crtc = _e_randr_crtc_info_get(event->crtc)))
           {
@@ -878,7 +878,6 @@ _e_randr_event_cb(void *data __UNUSED__, int type, void *ev)
            */
      }
    e_randr_try_restore_configuration(e_randr_screen_info);
- on_exit:
    return ECORE_CALLBACK_RENEW;
 }
 
