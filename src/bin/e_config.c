@@ -2099,9 +2099,8 @@ _e_config_free(E_Config *ecf)
              }
            EINA_LIST_FREE(ecf->randr_serialized_setup->serialized_outputs_policies, serialized_output_policy)
              {
-                if (!serialized_output) continue;
-                if (serialized_output_policy->name)
-                  free(serialized_output_policy->name);
+                if (!serialized_output_policy) continue;
+                free(serialized_output_policy->name);
                 free(serialized_output_policy);
              }
            free(ecf->randr_serialized_setup);
