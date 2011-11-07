@@ -491,10 +491,9 @@ e_mixer_pulse_get_mute(E_Mixer_System *self, E_Mixer_Channel *channel __UNUSED__
 int
 e_mixer_pulse_set_mute(E_Mixer_System *self, E_Mixer_Channel *channel __UNUSED__, int mute)
 {
-   uint32_t idx, id;
+   uint32_t id;
    Eina_Bool source = EINA_FALSE;
 
-   idx = pulse_sink_idx_get((void *)self);
    source = !!eina_list_data_find(sources, self);
    id = pulse_type_mute_set(conn, pulse_sink_idx_get((void *)self), mute, source);
    if (!id) return 0;
