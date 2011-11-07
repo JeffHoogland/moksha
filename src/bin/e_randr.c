@@ -79,7 +79,6 @@ static void _e_randr_output_info_set(E_Randr_Output_Info *output_info);
 static void _e_randr_crtc_info_set(E_Randr_Crtc_Info *crtc_info);
 static const E_Randr_Crtc_Info *_e_randr_policy_crtc_get(E_Randr_Crtc_Info* but, E_Randr_Crtc_Info *hint, Ecore_X_Randr_Output_Policy policy);
 static Ecore_X_Randr_Output *_e_randr_outputs_to_array(Eina_List *outputs_info);
-static E_Randr_Serialized_Setup_12 *	_e_randr_config_find_suiting_config_12(void);
 static Eina_Bool _e_randr_try_enable_output(E_Randr_Output_Info *output_info, Eina_Bool force);
 static void _e_randr_crtcs_possible_output_update(E_Randr_Output_Info *output_info);
 static void _e_randr_crtc_outputs_refs_update(E_Randr_Crtc_Info *crtc_info);
@@ -768,7 +767,6 @@ _e_randr_event_cb(void *data __UNUSED__, int type, void *ev)
    else if (type == ECORE_X_EVENT_RANDR_OUTPUT_CHANGE)
      {
         Ecore_X_Event_Randr_Output_Change *event = ev;
-        const E_Randr_Serialized_Setup_12 *restore_info;
         E_Randr_Output_Info* output_info = NULL;
         /* available information:
            struct _Ecore_X_Event_Randr_Output_Change
@@ -1055,7 +1053,6 @@ _e_randr_free_serialized_mode_info(Ecore_X_Randr_Mode_Info *mode_info)
    Eina_List *iter, *list = NULL;
    E_Randr_Output_Info *oi;
    E_Randr_Serialized_Output_Policy *sop;
-   char *name;
 
    EINA_LIST_FOREACH(outputs, iter, oi)
      {
@@ -1176,7 +1173,6 @@ _e_randr_free_serialized_output(E_Randr_Serialized_Output *so)
    E_Randr_Output_Info *output_info;
    Eina_List *iter;
    char *output_name;
-   size_t len;
 
    if (!(sc = E_NEW(E_Randr_Serialized_Crtc, 1))) return NULL;
    if(!_e_randr_copy_mode_info(&sc->mode_info, crtc_info->current_mode)) goto _e_randr_create_serialized_crtc_free_sc;
@@ -1241,6 +1237,7 @@ _e_randr_free_serialized_crtc(E_Randr_Serialized_Crtc *sc)
 
 _e_randr_create_serialized_setup_11_failed_free_ss:
    free(ss);
+   return NULL;
 }
 
    E_Randr_Serialized_Setup_11
@@ -1316,8 +1313,8 @@ _e_randr_create_serialized_setup_12_failed_free_list_ss:
      {
         _e_randr_free_serialized_crtc(sc);
      }
-_e_randr_create_serialized_setup_12_failed_free_ss:
    free(ss);
+   return NULL;
 }
 
 E_Randr_Serialized_Setup_12
@@ -1382,9 +1379,6 @@ _e_randr_free_serialized_setup_12(E_Randr_Serialized_Setup_12 *ss_12)
 *_e_randr_update_serialized_setup_12(Eina_List *setups_12, E_Randr_Screen_Info_12 *si_12)
 {
    E_Randr_Serialized_Setup_12 *ss_12;
-   E_Randr_Serialized_Output *so;
-   E_Randr_Output_Info *oi;
-   E_Randr_Edid_Hash *edid_hash;
 
    if (setups_12)
      {
@@ -1420,6 +1414,7 @@ _e_randr_free_serialized_setup_12(E_Randr_Serialized_Setup_12 *ss_12)
 
 _e_randr_create_serialized_setup_failed_free_ss:
    free(ss);
+   return NULL;
 }
 
    EAPI void
@@ -2147,7 +2142,7 @@ _e_randr_output_info_hw_info_set(E_Randr_Output_Info *output_info)
    _e_randr_output_modes_add(output_info);
    output_info->edid = ecore_x_randr_output_edid_get(e_randr_screen_info->root, output_info->xid, &output_info->edid_length);
    if (output_info->edid_length > 0)
-     output_info->edid_hash.hash = eina_hash_superfast(output_info->edid, output_info->edid_length);
+     output_info->edid_hash.hash = eina_hash_superfast((char*)output_info->edid, output_info->edid_length);
    //get the outputs we can use on the same CRTC alongside this one.
    if ((outputs = ecore_x_randr_output_clones_get(e_randr_screen_info->root, output_info->xid, &num)))
      {
