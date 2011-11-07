@@ -217,6 +217,7 @@ _del_cb(void *data, void *data2 __UNUSED__)
    E_Config_Dialog_Data *cfdata = data;
    Eina_List *l;
    E_Config_Env_Var *evr = NULL;
+/*
    int i, sel = -1;
    
    EINA_LIST_FOREACH(cfdata->env_vars, l, evr)
@@ -229,12 +230,15 @@ _del_cb(void *data, void *data2 __UNUSED__)
         evr = NULL;
         i++;
      }
+*/
+   evr = eina_list_data_get(cfdata->env_vars);
+   if (evr && strcmp(cfdata->var_str, evr->var)) evr = NULL;
    if (evr)
      {
         eina_stringshare_del(evr->var);
         if (evr->val) eina_stringshare_del(evr->val);
         E_FREE(evr);
-        cfdata->env_vars = eina_list_remove_list(cfdata->env_vars, l);
+//        cfdata->env_vars = eina_list_remove_list(cfdata->env_vars, l);
         e_widget_ilist_clear(cfdata->gui.list);
         e_widget_ilist_freeze(cfdata->gui.list);
         EINA_LIST_FOREACH(cfdata->env_vars, l, evr)
