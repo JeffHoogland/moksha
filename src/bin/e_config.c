@@ -2078,11 +2078,9 @@ _e_config_free(E_Config *ecf)
                           if (!serialized_crtc) continue;
                           EINA_LIST_FREE(serialized_crtc->serialized_outputs, serialized_output)
                             {
-                               if (serialized_output)
-                                 {
-                                    if (serialized_output->name) free(serialized_output);
-                                    free(serialized_output);
-                                 }
+                               if (!serialized_output) continue;
+                               free(serialized_output->name);
+                               free(serialized_output);
                             }
                           EINA_LIST_FREE(serialized_crtc->possible_outputs_names, output_name)
                             {
