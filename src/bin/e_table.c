@@ -291,8 +291,6 @@ _e_table_smart_reconfigure(E_Smart_Data *sd)
 
    if (!sd->changed) return;
    
-   x = sd->x;
-   y = sd->y;
    w = sd->w;
    h = sd->h;
 
@@ -302,16 +300,8 @@ _e_table_smart_reconfigure(E_Smart_Data *sd)
    minh = sd->min.h;
    expandw = 0;
    expandh = 0;
-   if (w < minw)
-     {
-	x = x + ((w - minw) * (1.0 - sd->align.x));
-	w = minw;
-     }
-   if (h < minh)
-     {
-	y = y + ((h - minh) * (1.0 - sd->align.y));
-	h = minh;
-     }
+   if (w < minw) w = minw;
+   if (h < minh) h = minh;
    EINA_LIST_FOREACH(sd->items, l, obj)
      {
 	E_Table_Item *ti;
