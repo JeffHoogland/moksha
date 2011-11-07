@@ -1496,7 +1496,6 @@ _e_randr_try_restore_11(E_Randr_Screen_Info_11 *si_11)
    E_Randr_Crtc_Info *ci;
    E_Randr_Output_Info *oi;
    char *s_output_name;
-   Eina_Bool name_found = EINA_FALSE;
 
    EINA_LIST_FOREACH(crtcs, iter, ci)
      {
@@ -1504,25 +1503,14 @@ _e_randr_try_restore_11(E_Randr_Screen_Info_11 *si_11)
           continue;
         EINA_LIST_FOREACH(sc->possible_outputs_names, s_name_iter, s_output_name)
            {
-              name_found = EINA_FALSE;
               EINA_LIST_FOREACH(ci->possible_outputs, p_output_iter, oi)
                 {
                    if (!strncmp(s_output_name, oi->name, oi->name_length))
-                     {
-                        name_found = EINA_TRUE;
-                        break;
-                     }
+                     return ci;
                 }
-              if (!name_found)
-                break;
            }
-        if (name_found)
-          break;
      }
-   if (name_found)
-     return ci;
-   else
-     return NULL;
+   return NULL;
 }
 
    Eina_List
