@@ -133,8 +133,6 @@ e_syscon_show(E_Zone *zone, const char *defact)
    // extra (example for illume):
    //  home | close | kill
 
-   iw = 64 * e_scale;
-   ih = 64 * e_scale;
 
    o = e_flowlayout_add(popup->evas);
    o_flow_main = o;
