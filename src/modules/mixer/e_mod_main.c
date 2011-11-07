@@ -57,12 +57,12 @@ _mixer_notify(const float val, E_Mixer_Instance *inst __UNUSED__)
    //Names are taken from FDO icon naming scheme
    if (val == 0.0)
      icon = "audio-volume-muted";
-   else if (val > 66.6)
-     icon = "audio-volume-high";
    else if ((val > 33.3) && (val < 66.6))
      icon = "audio-volume-medium";
    else if (val < 33.3)
      icon = "audio-volume-low";
+   else
+     icon = "audio-volume-high";
 
    n = e_notification_full_new(_("Mixer"), 0, icon, _("Volume changed"), buf, 2000);
    e_notification_replaces_id_set(n, EINA_TRUE);
