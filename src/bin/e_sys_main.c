@@ -180,7 +180,7 @@ main(int argc,
              eina_strbuf_append_printf(buf, "%s ", argv[i]);
           }
         ret = system(eina_strbuf_string_get(buf));
-        if ((!strcmp(action, "umount")) && (!ret))
+        if (mp && (!strcmp(action, "umount")) && (!ret))
           {
                if (rmdir(mp))
                  printf("ERROR: COULD NOT UNLINK MOUNT POINT %s\n", mp);
