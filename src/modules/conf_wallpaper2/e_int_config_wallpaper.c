@@ -159,14 +159,11 @@ _e_smart_reconfigure_do(void *data)
    evas = evas_object_evas_get(obj);
    EINA_LIST_FOREACH(sd->items, l, it)
      {
-        xx = sd->x - sd->cx + x;
         if (x > (sd->w - ww))
           {
              x = 0;
              y += hh;
-             xx = sd->x - sd->cx + x;
           }
-        yy = sd->y - sd->cy + y;
         it->x = x;
         it->y = y;
         it->w = ww;
