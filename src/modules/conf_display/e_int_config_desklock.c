@@ -189,7 +189,7 @@ _basic_screensaver_lock_cb_changed(void *data, Evas_Object *o __UNUSED__)
 }
 
 static Evas_Object *
-_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
+_basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *otb, *ol, *ow, *of;
    E_Radio_Group *rg;

@@ -233,7 +233,6 @@ static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
    E_Manager *man;
-   Eina_List *iter;
    int rots;
 
    man = e_manager_current_get();
