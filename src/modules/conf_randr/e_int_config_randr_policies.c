@@ -208,7 +208,7 @@ e_config_randr_dialog_subdialog_policies_basic_check_changed(E_Config_Dialog *cf
 e_config_randr_dialog_subdialog_policies_update_radio_buttons(Evas_Object *crtc)
 {
    E_Config_Randr_Dialog_Output_Dialog_Data *output_dialog_data;
-   E_Randr_Output_Info *output;
+   E_Randr_Output_Info *output = NULL;
    Ecore_X_Randr_Output_Policy policy;
    char signal[40];
 
