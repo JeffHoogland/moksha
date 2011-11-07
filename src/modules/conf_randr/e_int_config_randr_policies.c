@@ -39,18 +39,18 @@ _e_config_randr_dialog_subdialog_policies_radio_add_callbacks(void)
 e_config_randr_dialog_subdialog_policies_create_data(E_Config_Dialog_Data *e_config_runtime_info)
 {
    E_Config_Randr_Dialog_Output_Dialog_Data *odd;
-   E_Randr_Output_Info *oi;
    Eina_List *iter;
 
    if (!e_config_runtime_info || !e_config_runtime_info->output_dialog_data_list) return EINA_FALSE;
 
    EINA_LIST_FOREACH(e_config_runtime_info->output_dialog_data_list, iter, odd)
      {
+        E_Randr_Output_Info *oi;
         if (odd->crtc)
           oi = eina_list_data_get(eina_list_last(odd->crtc->outputs));
         else if (odd->output)
           oi = odd->output;
-        if (!oi) continue;
+        else continue;
         odd->previous_policy = oi->policy;
         odd->new_policy = Ecore_X_Randr_Unset;
      }
