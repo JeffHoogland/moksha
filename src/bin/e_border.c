@@ -2390,7 +2390,6 @@ _e_border_maximize(E_Border *bd, E_Maximize max)
      {
       case E_MAXIMIZE_NONE:
          /* Ignore */
-         max = E_MAXIMIZE_NONE;
          break;
 
       case E_MAXIMIZE_FULLSCREEN:
@@ -4869,6 +4868,7 @@ _e_border_cb_window_configure_request(void *data  __UNUSED__,
                        int zx, zy, zw, zh;
                        int rx = bd->x;
                        int ry = bd->y;
+                       zx = zy = zw = zh = 0;
 
      /*
       * This code does resize and move a window on a
@@ -5080,13 +5080,13 @@ _e_border_cb_window_stack_request(void *data  __UNUSED__,
              if (e->detail == ECORE_X_WINDOW_STACK_ABOVE)
                {
                   EINA_LIST_FOREACH(bd->client.e.state.video_child, l, tmp)
-                    ecore_x_window_raise(tmp->win);
+                    if (tmp) ecore_x_window_raise(tmp->win);
                   ecore_x_window_raise(e->win);
                }
              else if (e->detail == ECORE_X_WINDOW_STACK_BELOW)
                {
                   EINA_LIST_FOREACH(bd->client.e.state.video_child, l, tmp)
-                    ecore_x_window_lower(tmp->win);
+                    if (tmp) ecore_x_window_lower(tmp->win);
                   ecore_x_window_lower(e->win);
                }
           }
