@@ -13,6 +13,10 @@ files_DATA = \
            module.desktop
 
 EXTRA_DIST = \
+           images/display-glass-shine.png \
+           images/display.png \
+           images/icon.png \
+           images/video-display.png \
            e-module-$(MODULE).edc \
            module.desktop.in
 
