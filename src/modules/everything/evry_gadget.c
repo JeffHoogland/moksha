@@ -424,6 +424,7 @@ _gadget_window_show(Instance *inst)
       case E_GADCON_ORIENT_HORIZ:
       case E_GADCON_ORIENT_VERT:
       default:
+	 pw = ph = 1;
 	 break;
      }
 
