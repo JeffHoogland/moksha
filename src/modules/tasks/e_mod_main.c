@@ -178,7 +178,7 @@ e_modapi_init(E_Module *m)
 }
 
 EAPI int
-e_modapi_shutdown(E_Module *m)
+e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    Ecore_Event_Handler *eh;
    Tasks *tasks;
@@ -208,7 +208,7 @@ e_modapi_shutdown(E_Module *m)
 }
 
 EAPI int
-e_modapi_save(E_Module *m)
+e_modapi_save(E_Module *m __UNUSED__)
 {
    e_config_domain_save("module.tasks", conf_edd, tasks_config);
    return 1;
@@ -299,13 +299,13 @@ _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
 }
 
 static char *
-_gc_label(E_Gadcon_Client_Class *client_class)
+_gc_label(E_Gadcon_Client_Class *client_class __UNUSED__)
 {
    return _("Tasks");
 }
 
 static Evas_Object *
-_gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas)
+_gc_icon(E_Gadcon_Client_Class *client_class __UNUSED__, Evas *evas)
 {
    Evas_Object *o;
    char buf[4096];
@@ -318,7 +318,7 @@ _gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas)
 }
 
 static const char *
-_gc_id_new(E_Gadcon_Client_Class *client_class)
+_gc_id_new(E_Gadcon_Client_Class *client_class __UNUSED__)
 {
    Config_Item *config;
 
@@ -641,7 +641,7 @@ _tasks_config_updated(Config_Item *config)
 }
 
 static void
-_tasks_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi)
+_tasks_cb_menu_configure(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    Tasks *tasks;
 
@@ -650,7 +650,7 @@ _tasks_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_tasks_cb_item_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_tasks_cb_item_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
    Evas_Event_Mouse_Down *ev;
    Tasks_Item *item;
@@ -694,7 +694,7 @@ _tasks_cb_item_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 }
 
 static void
-_tasks_cb_item_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_tasks_cb_item_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
    Evas_Event_Mouse_Up *ev;
    Tasks_Item *item;
@@ -767,7 +767,7 @@ _tasks_cb_item_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
 /************ BORDER CALLBACKS *********************/
 
 static Eina_Bool
-_tasks_cb_event_border_add(void *data, int type, void *event)
+_tasks_cb_event_border_add(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    E_Event_Border_Add *ev;
 
@@ -778,7 +778,7 @@ _tasks_cb_event_border_add(void *data, int type, void *event)
 }
 
 static Eina_Bool
-_tasks_cb_event_border_remove(void *data, int type, void *event)
+_tasks_cb_event_border_remove(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    E_Event_Border_Remove *ev;
 
@@ -789,7 +789,7 @@ _tasks_cb_event_border_remove(void *data, int type, void *event)
 }
 
 static Eina_Bool
-_tasks_cb_event_border_iconify(void *data, int type, void *event)
+_tasks_cb_event_border_iconify(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    E_Event_Border_Iconify *ev;
 
@@ -799,7 +799,7 @@ _tasks_cb_event_border_iconify(void *data, int type, void *event)
 }
 
 static Eina_Bool
-_tasks_cb_event_border_uniconify(void *data, int type, void *event)
+_tasks_cb_event_border_uniconify(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    E_Event_Border_Uniconify *ev;
 
@@ -809,7 +809,7 @@ _tasks_cb_event_border_uniconify(void *data, int type, void *event)
 }
 
 static Eina_Bool
-_tasks_cb_window_focus_in(void *data, int type, void *event)
+_tasks_cb_window_focus_in(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    E_Event_Border_Focus_In *ev;
 
@@ -819,7 +819,7 @@ _tasks_cb_window_focus_in(void *data, int type, void *event)
 }
 
 static Eina_Bool
-_tasks_cb_window_focus_out(void *data, int type, void *event)
+_tasks_cb_window_focus_out(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    E_Event_Border_Focus_Out *ev;
 
@@ -829,7 +829,7 @@ _tasks_cb_window_focus_out(void *data, int type, void *event)
 }
 
 static Eina_Bool
-_tasks_cb_event_border_urgent_change(void *data, int type, void *event)
+_tasks_cb_event_border_urgent_change(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    E_Event_Border_Urgent_Change *ev;
 
@@ -842,7 +842,7 @@ _tasks_cb_event_border_urgent_change(void *data, int type, void *event)
 }
 
 static Eina_Bool
-_tasks_cb_event_border_property(void *data, int type, void *event)
+_tasks_cb_event_border_property(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    E_Event_Border_Property *ev;
    E_Border *border;
@@ -854,7 +854,7 @@ _tasks_cb_event_border_property(void *data, int type, void *event)
 }
 
 static Eina_Bool
-_tasks_cb_event_border_icon_change(void *data, int type, void *event)
+_tasks_cb_event_border_icon_change(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    E_Event_Border_Icon_Change *ev;
    E_Border *border;
@@ -866,21 +866,21 @@ _tasks_cb_event_border_icon_change(void *data, int type, void *event)
 }
 
 static Eina_Bool
-_tasks_cb_event_border_zone_set(void *data, int type, void *event)
+_tasks_cb_event_border_zone_set(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    _tasks_refill_all();
    return EINA_TRUE;
 }
 
 static Eina_Bool
-_tasks_cb_event_border_desk_set(void *data, int type, void *event)
+_tasks_cb_event_border_desk_set(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    _tasks_refill_all();
    return EINA_TRUE;
 }
 
 static Eina_Bool
-_tasks_cb_event_desk_show(void *data, int type, void *event)
+_tasks_cb_event_desk_show(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    _tasks_refill_all();
    return EINA_TRUE;
