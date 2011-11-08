@@ -31,7 +31,6 @@ extern E_Config_Dialog_Data *e_config_runtime_info;
 e_config_randr_dialog_subdialog_resolutions_create_data(E_Config_Dialog_Data *cfdata)
 {
    E_Config_Randr_Dialog_Output_Dialog_Data *odd;
-   E_Randr_Crtc_Info *ci;
    Ecore_X_Randr_Mode_Info *mi;
    Eina_List *iter;
 
@@ -76,7 +75,7 @@ e_config_randr_dialog_subdialog_resolutions_basic_create_widgets(Evas *canvas)
 }
 
    Eina_Bool
-e_config_randr_dialog_subdialog_resolutions_basic_apply_data (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+e_config_randr_dialog_subdialog_resolutions_basic_apply_data (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata __UNUSED__)
 {
    //Apply new mode
    Ecore_X_Randr_Mode_Info* selected_mode;
@@ -146,7 +145,7 @@ e_config_randr_dialog_subdialog_resolutions_basic_apply_data (E_Config_Dialog *c
 }
 
    Eina_Bool
-e_config_randr_dialog_subdialog_resolutions_basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+e_config_randr_dialog_subdialog_resolutions_basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata __UNUSED__)
 {
    Ecore_X_Randr_Mode_Info* selected_mode;
    E_Config_Randr_Dialog_Output_Dialog_Data *output_dialog_data;

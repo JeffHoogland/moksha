@@ -155,7 +155,7 @@ _e_config_randr_dialog_subdialog_policies_radio_add_fail:
 }
 
    static void
-_e_config_randr_dialog_subdialog_policies_policy_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_e_config_randr_dialog_subdialog_policies_policy_mouse_up_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
 {
    char signal[29];
    int policy = ECORE_X_RANDR_OUTPUT_POLICY_NONE;
@@ -182,10 +182,8 @@ _e_config_randr_dialog_subdialog_policies_policy_mouse_up_cb(void *data, Evas *e
 }
 
     Eina_Bool
-e_config_randr_dialog_subdialog_policies_basic_apply_data (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+e_config_randr_dialog_subdialog_policies_basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata __UNUSED__)
 {
-   E_Randr_Output_Info *output_info;
-
    if (!e_randr_screen_info || !e_config_runtime_info->gui.selected_output_dd) return EINA_FALSE;
 
    //policy update
@@ -197,11 +195,11 @@ e_config_randr_dialog_subdialog_policies_basic_apply_data (E_Config_Dialog *cfd,
 }
 
    Eina_Bool
-e_config_randr_dialog_subdialog_policies_basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+e_config_randr_dialog_subdialog_policies_basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    if (!e_randr_screen_info || !cfdata || !cfdata->gui.selected_output_dd) return EINA_FALSE;
 
-   return (cfdata->gui.selected_output_dd->previous_policy != cfdata->gui.subdialogs.policies.radio_val);
+   return ((int)cfdata->gui.selected_output_dd->previous_policy != (int)cfdata->gui.subdialogs.policies.radio_val);
 }
 
    void
@@ -210,7 +208,6 @@ e_config_randr_dialog_subdialog_policies_update_radio_buttons(Evas_Object *crtc)
    E_Config_Randr_Dialog_Output_Dialog_Data *output_dialog_data;
    E_Randr_Output_Info *output = NULL;
    Ecore_X_Randr_Output_Policy policy;
-   char signal[40];
 
    //disable widgets, if no crtc is selected
    if (!crtc || !(output_dialog_data = evas_object_data_get(crtc, "output_info")))
@@ -279,7 +276,7 @@ e_config_randr_dialog_subdialog_policies_keep_changes(E_Config_Dialog_Data *cfda
 
    EINA_LIST_FOREACH(cfdata->output_dialog_data_list, iter, odd)
      {
-        if (!odd || (odd->previous_policy == Ecore_X_Randr_Unset)) continue;
+        if (!odd || ((int)odd->previous_policy == Ecore_X_Randr_Unset)) continue;
         odd->previous_policy = odd->new_policy;
         odd->new_policy = Ecore_X_Randr_Unset;
      }
@@ -295,7 +292,7 @@ e_config_randr_dialog_subdialog_policies_discard_changes(E_Config_Dialog_Data *c
 
    EINA_LIST_FOREACH(cfdata->output_dialog_data_list, iter, odd)
      {
-        if (!odd->crtc || (odd->previous_policy == Ecore_X_Randr_Unset)) continue;
+        if (!odd->crtc || ((int)odd->previous_policy == Ecore_X_Randr_Unset)) continue;
         odd->new_policy = odd->previous_policy;
         odd->previous_policy = Ecore_X_Randr_Unset;
      }

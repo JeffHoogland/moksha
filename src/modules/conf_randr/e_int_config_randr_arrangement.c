@@ -25,7 +25,7 @@ void                                              e_config_randr_dialog_subdialo
 static inline Eina_List                         *_e_config_randr_dialog_subdialog_arrangement_neighbors_get                  (Evas_Object *obj);
 static void                                      _e_config_randr_dialog_subdialog_arrangement_determine_positions_recursive  (Evas_Object *obj);
 
-static inline E_Config_Randr_Dialog_Output_Dialog_Data *_e_config_randr_dialog_subdialog_arrangement_output_dialog_data_new        (E_Randr_Crtc_Info *crtc_info, E_Randr_Output_Info *output_info);
+//static inline E_Config_Randr_Dialog_Output_Dialog_Data *_e_config_randr_dialog_subdialog_arrangement_output_dialog_data_new        (E_Randr_Crtc_Info *crtc_info, E_Randr_Output_Info *output_info);
 static inline void                               _e_config_randr_dialog_subdialog_arrangement_suggestion_add                 (Evas *evas);
 static inline void                               _e_config_randr_dialog_subdialog_arrangement_make_suggestion                (Evas_Object *obj);
 static void                                      _e_config_randr_dialog_subdialog_arrangement_smart_class_resize             (Evas_Object *obj, Evas_Coord w, Evas_Coord h);
@@ -136,7 +136,7 @@ e_config_randr_dialog_subdialog_arrangement_basic_create_widgets(Evas *canvas)
 _e_config_randr_dialog_subdialog_arrangement_output_add(Evas *canvas, E_Config_Randr_Dialog_Output_Dialog_Data *output_dialog_data)
 {
    E_Randr_Output_Info *output_info;
-   Evas_Object *output, *bg;
+   Evas_Object *output;
    const char* output_name = NULL;
 
    if (!canvas || !output_dialog_data || !e_config_runtime_info) return NULL;
@@ -280,9 +280,8 @@ _e_config_randr_dialog_subdialog_arrangement_smart_class_resize(Evas_Object *obj
 }
 
    static void
-_e_config_randr_dialog_subdialog_arrangement_output_mouse_down_cb (void *data, Evas *e, Evas_Object *obj, void *event_info)
+_e_config_randr_dialog_subdialog_arrangement_output_mouse_down_cb (void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
 {
-   Evas_Event_Mouse_Down *ev = (Evas_Event_Mouse_Down*)event_info;
    Evas_Object *element = NULL;
    Eina_List *iter;
    Eina_Bool crtc_selected = EINA_FALSE;
@@ -329,7 +328,7 @@ _e_config_randr_dialog_subdialog_arrangement_output_mouse_down_cb (void *data, E
 }
 
    static void
-_e_config_randr_dialog_subdialog_arrangement_output_mouse_move_cb (void *data, Evas *e, Evas_Object *obj, void *event_info)
+_e_config_randr_dialog_subdialog_arrangement_output_mouse_move_cb (void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj, void *event_info)
 {
    Evas_Event_Mouse_Move *ev = event_info;
    Eina_Rectangle geo, parent;
@@ -363,7 +362,7 @@ _e_config_randr_dialog_subdialog_arrangement_output_mouse_move_cb (void *data, E
 }
 
    static void
-_e_config_randr_dialog_subdialog_arrangement_output_mouse_up_cb (void *data, Evas *e, Evas_Object *obj, void *event_info)
+_e_config_randr_dialog_subdialog_arrangement_output_mouse_up_cb (void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
 {
    Evas_Coord_Point coords;
 
@@ -523,7 +522,7 @@ _e_config_randr_dialog_subdialog_arrangement_make_suggestion (Evas_Object *obj)
 }
 
    void
-e_config_randr_dialog_subdialog_arrangement_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+e_config_randr_dialog_subdialog_arrangement_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    E_Config_Randr_Dialog_Output_Dialog_Data *dialog_data;
 
@@ -686,7 +685,7 @@ _e_config_randr_dialog_subdialog_arrangement_determine_positions_recursive(Evas_
 }
 
    Eina_Bool
-e_config_randr_dialog_subdialog_arrangement_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+e_config_randr_dialog_subdialog_arrangement_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata __UNUSED__)
 {
    Eina_List *crtcs, *iter;
    Evas_Object *smart_parent, *crtc, *top_left = NULL;
@@ -751,7 +750,7 @@ e_config_randr_dialog_subdialog_arrangement_basic_apply_data(E_Config_Dialog *cf
 }
 
    Eina_Bool
-e_config_randr_dialog_subdialog_arrangement_basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+e_config_randr_dialog_subdialog_arrangement_basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    Eina_List *iter;
    E_Config_Randr_Dialog_Output_Dialog_Data *output_dialog_data;

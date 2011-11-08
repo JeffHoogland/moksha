@@ -45,7 +45,6 @@ static int               basic_check_changed                 (E_Config_Dialog *c
 static int               basic_apply_data                    (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object      *basic_create_widgets                (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static Eina_Bool         _deferred_noxrandr_error            (void *data);
-static Eina_Bool         _deferred_norates_error             (void *data);
 
 // Functions for the arrangement subdialog interaction
 extern Eina_Bool         e_config_randr_dialog_subdialog_arrangement_create_data                    (E_Config_Dialog_Data *cfdata);
@@ -106,7 +105,6 @@ _e_config_randr_dialog_output_dialog_data_new(E_Randr_Crtc_Info *crtc_info, E_Ra
      }
    return dialog_data;
 
-_e_conf_randr_dialog_create_output_data_failed:
    free(dialog_data);
    return NULL;
 }

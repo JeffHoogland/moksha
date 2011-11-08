@@ -15,7 +15,7 @@ Eina_Bool e_config_randr_dialog_subdialog_orientation_basic_apply_data(E_Config_
 void e_config_randr_dialog_subdialog_orientation_update_radio_buttons(Evas_Object *crtc);
 void e_config_randr_dialog_subdialog_orientation_update_edje(Evas_Object *crtc);
 
-static void _e_config_randr_dialog_subdialog_orientation_policy_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
+//static void _e_config_randr_dialog_subdialog_orientation_policy_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
 extern E_Config_Dialog_Data *e_config_runtime_info;
 extern char _theme_file_path[];
 
@@ -120,7 +120,7 @@ _e_config_randr_dialog_subdialog_orientation_radio_add_fail:
    return NULL;
 }
 
-/*
+#if 0
    static void
 _e_config_randr_dialog_subdialog_orientation_policy_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
@@ -133,7 +133,7 @@ _e_config_randr_dialog_subdialog_orientation_policy_mouse_up_cb(void *data, Evas
     * value. If that is ever changed, remove the used code below and just use the
     * 1-liner below.
     * snprintf(signal, sizeof(signal), "conf,randr,dialog,orientation,%d", e_config_runtime_info->gui.subdialogs.orientation.radio_val);
-    * /
+    */
    if (obj == e_config_runtime_info->gui.subdialogs.orientation.radio_normal) orientation = ECORE_X_RANDR_ORIENTATION_ROT_0;
    if (obj == e_config_runtime_info->gui.subdialogs.orientation.radio_rot90) orientation = ECORE_X_RANDR_ORIENTATION_ROT_90;
    if (obj == e_config_runtime_info->gui.subdialogs.orientation.radio_rot180) orientation = ECORE_X_RANDR_ORIENTATION_ROT_180;
@@ -147,14 +147,13 @@ _e_config_randr_dialog_subdialog_orientation_policy_mouse_up_cb(void *data, Evas
 
    fprintf(stderr, "CONF_RANDR: mouse button released. Emitted signal to orientation: %s\n", signal);
 }
-*/
+#endif
 
    void
 e_config_randr_dialog_subdialog_orientation_update_radio_buttons(Evas_Object *crtc)
 {
    E_Config_Randr_Dialog_Output_Dialog_Data *output_dialog_data;
    Ecore_X_Randr_Orientation supported_oris, ori;
-   char signal[40];
 
    //disable widgets, if no crtc is selected
    if (!crtc)
@@ -267,7 +266,7 @@ e_config_randr_dialog_subdialog_orientation_update_edje(Evas_Object *crtc)
 }
 
    Eina_Bool
-e_config_randr_dialog_subdialog_orientation_basic_apply_data (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+e_config_randr_dialog_subdialog_orientation_basic_apply_data (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata __UNUSED__)
 {
    Ecore_X_Randr_Orientation orientation;
    E_Config_Randr_Dialog_Output_Dialog_Data *output_dialog_data;
@@ -290,14 +289,13 @@ e_config_randr_dialog_subdialog_orientation_basic_apply_data (E_Config_Dialog *c
 }
 
    Eina_Bool
-e_config_randr_dialog_subdialog_orientation_basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+e_config_randr_dialog_subdialog_orientation_basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata __UNUSED__)
 {
-   Ecore_X_Randr_Orientation orientation = ECORE_X_RANDR_ORIENTATION_ROT_0;
    E_Config_Randr_Dialog_Output_Dialog_Data *output_dialog_data;
 
    if (!e_config_runtime_info->gui.subdialogs.orientation.dialog || !e_config_runtime_info->gui.selected_eo || !(output_dialog_data = evas_object_data_get(e_config_runtime_info->gui.selected_eo, "output_info"))) return EINA_FALSE;
 
-   return (output_dialog_data->previous_orientation != e_config_runtime_info->gui.subdialogs.orientation.radio_val);
+   return ((int)output_dialog_data->previous_orientation != (int)e_config_runtime_info->gui.subdialogs.orientation.radio_val);
 }
 
    void
@@ -310,7 +308,7 @@ e_config_randr_dialog_subdialog_orientation_keep_changes(E_Config_Dialog_Data *c
 
    EINA_LIST_FOREACH(cfdata->output_dialog_data_list, iter, odd)
      {
-        if (!odd || (odd->previous_orientation == Ecore_X_Randr_Unset)) continue;
+        if (!odd || ((int)odd->previous_orientation == Ecore_X_Randr_Unset)) continue;
         odd->previous_orientation = odd->new_orientation;
         odd->new_orientation = Ecore_X_Randr_Unset;
      }
@@ -326,7 +324,7 @@ e_config_randr_dialog_subdialog_orientation_discard_changes(E_Config_Dialog_Data
 
    EINA_LIST_FOREACH(cfdata->output_dialog_data_list, iter, odd)
      {
-        if (!odd->crtc || (odd->previous_orientation == Ecore_X_Randr_Unset)) continue;
+        if (!odd->crtc || ((int)odd->previous_orientation == Ecore_X_Randr_Unset)) continue;
         if (ecore_x_randr_crtc_orientation_set(cfdata->manager->root, odd->crtc->xid, odd->previous_orientation))
           {
              odd->new_orientation = odd->previous_orientation;
