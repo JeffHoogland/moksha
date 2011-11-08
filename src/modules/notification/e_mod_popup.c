@@ -13,6 +13,9 @@ static void        _notification_popup_del(unsigned int                 id,
 static void        _notification_popdown(Popup_Data                  *popup,
                                          E_Notification_Closed_Reason reason);
 
+#define POPUP_LIMIT 7
+static int popups_displayed = 0;
+
 /* Util function protos */
 static void _notification_format_message(Popup_Data *popup);
 
@@ -72,6 +75,7 @@ notification_popup_notify(E_Notification *n,
    if (!popup)
      {
         popup = _notification_popup_new(n);
+        if (!popup) return 0;
         notification_cfg->popups = eina_list_append(notification_cfg->popups, popup);
         edje_object_signal_emit(popup->theme, "notification,new", "notification");
      }
@@ -250,6 +254,7 @@ _notification_popup_new(E_Notification *n)
    Popup_Data *popup;
    char buf[PATH_MAX];
 
+   if (popups_displayed > POPUP_LIMIT) return 0;
    popup = E_NEW(Popup_Data, 1);
    if (!popup) return NULL;
    e_notification_ref(n);
@@ -289,6 +294,7 @@ _notification_popup_new(E_Notification *n)
    next_pos = _notification_popup_place(popup, next_pos);
    e_popup_show(popup->win);
    e_popup_layer_set(popup->win, 999);
+   popups_displayed++;
 
    return popup;
 }
@@ -538,6 +544,7 @@ _notification_popdown(Popup_Data                  *popup,
 {
    if (popup->timer) ecore_timer_del(popup->timer);
    e_popup_hide(popup->win);
+   popups_displayed--;
    evas_object_del(popup->app_icon);
    evas_object_del(popup->theme);
    e_object_del(E_OBJECT(popup->win));
